@@ -15,7 +15,7 @@
 	/// Inserted reagent container
 	var/obj/item/reagent_containers/beaker
 	/// Whether separated reagents should be moved back to container or destroyed.
-	var/transfer_mode = TRUE
+	var/is_transfering = TRUE
 	/// List of printable container types
 	var/list/printable_containers
 	/// Container used by default to reset to
@@ -339,7 +339,7 @@
 	.["buffer"] = beaker_data
 
 	//is transfering or destroying reagents. applied only for buffer
-	.["transferMode"] = transfer_mode
+	.["isTransfering"] = is_transfering
 
 	//container along with the suggested type
 	var/obj/item/reagent_containers/suggested_container = default_container
@@ -421,7 +421,7 @@
 			if(amount == -1) // Set custom amount
 				amount = tgui_input_number(ui.user, "Enter amount to transfer", "Transfer amount")
 
-			var/should_transfer = transfer_mode || (target == "buffer") // we should always transfer if target is the buffer
+			var/should_transfer = is_transfering || (target == "buffer") // we should always transfer if target is the buffer
 			if(should_transfer && isnull(beaker)) // if there's no beaker, we cannot transfer
 				say("No reagent container is inserted.")
 				return FALSE
@@ -438,7 +438,7 @@
 			return transfer_reagent(reagents_from, reagents_to, reagent_ref, amount, should_transfer)
 
 		if("toggleTransferMode")
-			transfer_mode = !transfer_mode
+			is_transfering = !is_transfering
 			return TRUE
 
 		if("stopPrinting")

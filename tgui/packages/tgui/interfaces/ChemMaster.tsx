@@ -55,7 +55,7 @@ type Data = {
   maxPrintable: number;
   beaker: AnalyzableBeaker;
   buffer: AnalyzableBeaker;
-  transferMode: BooleanLike;
+  isTransfering: BooleanLike;
   suggestedContainerRef: string;
   selectedContainerRef: string;
   selectedContainerVolume: number;
@@ -93,7 +93,7 @@ const ChemMasterContent = (props: {
     printingProgress,
     printingTotal,
     maxPrintable,
-    transferMode,
+    isTransfering,
     beaker,
     buffer,
     categories,
@@ -153,11 +153,11 @@ const ChemMasterContent = (props: {
               {` / ${buffer.maxVolume} units`}
             </Box>
             <Button
-              color={transferMode ? 'good' : 'bad'}
-              icon={transferMode ? 'exchange-alt' : 'trash'}
+              color={isTransfering ? 'good' : 'bad'}
+              icon={isTransfering ? 'exchange-alt' : 'trash'}
               onClick={() => act('toggleTransferMode')}
             >
-              {transferMode ? 'Moving reagents' : 'Destroying reagents'}
+              {isTransfering ? 'Moving reagents' : 'Destroying reagents'}
             </Button>
           </>
         }
