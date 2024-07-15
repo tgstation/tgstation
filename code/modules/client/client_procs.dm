@@ -59,7 +59,7 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 			var/msg = "Your previous action was ignored because you've done too many in a minute."
 			if (minute != topiclimiter[ADMINSWARNED_AT]) //only one admin message per-minute. (if they spam the admins can just boot/ban them)
 				topiclimiter[ADMINSWARNED_AT] = minute
-				msg += " Administrators have been informed. If you think this message is a mistake, possible fixes could be: 1. Disconnecting any controllers 2. upgrading byond version 3. Clearing cache..."
+				msg += "If you think these alerts are a mistake, possible fixes could be: 1. Disconnecting any controllers 2. Upgrading byond version 3. Clearing cache."
 				log_game("[key_name(src)] Has hit the per-minute topic limit of [mtl] topic calls in a given game minute")
 				message_admins("[ADMIN_LOOKUPFLW(usr)] [ADMIN_KICK(usr)] Has hit the per-minute topic limit of [mtl] topic calls in a given game minute")
 			to_chat(src, span_danger("[msg]"))
