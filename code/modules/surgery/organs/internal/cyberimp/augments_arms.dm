@@ -137,6 +137,7 @@
 /obj/item/organ/internal/cyberimp/arm/proc/Retract()
 	if(!active_item || (active_item in src))
 		return FALSE
+	active_item.resistance_flags = active_item::resistance_flags
 	if(owner)
 		owner.visible_message(
 			span_notice("[owner] retracts [active_item] back into [owner.p_their()] [zone == BODY_ZONE_R_ARM ? "right" : "left"] arm."),

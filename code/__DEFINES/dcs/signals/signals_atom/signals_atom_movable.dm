@@ -9,10 +9,12 @@
 #define COMSIG_MOVABLE_MOVED "movable_moved"
 ///from base of atom/movable/Cross(): (/atom/movable)
 #define COMSIG_MOVABLE_CROSS "movable_cross"
+	#define COMPONENT_BLOCK_CROSS (1<<0)
 ///from base of atom/movable/Move(): (/atom/movable)
 #define COMSIG_MOVABLE_CROSS_OVER "movable_cross_am"
 ///from base of atom/movable/Bump(): (/atom)
 #define COMSIG_MOVABLE_BUMP "movable_bump"
+	#define COMPONENT_INTERCEPT_BUMPED (1<<0)
 ///from base of atom/movable/newtonian_move(): (inertia_direction, start_delay)
 #define COMSIG_MOVABLE_NEWTONIAN_MOVE "movable_newtonian_move"
 	#define COMPONENT_MOVABLE_NEWTONIAN_BLOCK (1<<0)
@@ -123,3 +125,4 @@
 #define COMSIG_MOVABLE_BUMP_PUSHED "movable_bump_pushed"
 	/// Stop it from moving
 	#define COMPONENT_NO_PUSH (1<<0)
+
