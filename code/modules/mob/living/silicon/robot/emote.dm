@@ -7,6 +7,16 @@
 	key_third_person = "boops"
 	message = "boops."
 
+/datum/emote/silicon/beep
+	key = "beep"
+	key_third_person = "beeps"
+	message = "beeps."
+	message_param = "beeps at %t."
+	emote_type = EMOTE_AUDIBLE
+	sound = 'sound/machines/twobeep.ogg'
+	//mob_type_allowed_typecache = list(/mob/living/brain, /mob/living/basic/orbie)
+	//trait_allowed_override = TRAIT_SILICON_EMOTES_ALLOWED
+
 /datum/emote/silicon/buzz
 	key = "buzz"
 	key_third_person = "buzzes"

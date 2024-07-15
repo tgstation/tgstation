@@ -714,20 +714,6 @@
 /datum/emote/living/custom/replace_pronoun(mob/user, message)
 	return message
 
-/datum/emote/living/beep
-	key = "beep"
-	key_third_person = "beeps"
-	message = "beeps."
-	message_param = "beeps at %t."
-	sound = 'sound/machines/twobeep.ogg'
-	mob_type_allowed_typecache = list(/mob/living/carbon/human, /mob/living/brain, /mob/living/silicon, /mob/living/basic/orbie)
-	emote_type = EMOTE_AUDIBLE
-
-/datum/emote/living/beep/can_run_emote(mob/user, status_check = TRUE, intentional = FALSE)
-	if(ishuman(user) && !HAS_TRAIT(user, TRAIT_SILICON_EMOTES_ALLOWED))
-		return FALSE
-	return ..()
-
 /datum/emote/living/inhale
 	key = "inhale"
 	key_third_person = "inhales"
