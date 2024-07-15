@@ -34,6 +34,7 @@
 	foodtypes = SEAFOOD
 	eatverbs = list("bite", "chew", "gnaw", "swallow", "chomp")
 	w_class = WEIGHT_CLASS_SMALL
+	starting_reagent_purity = 1.0
 
 /obj/item/food/fishmeat/carp
 	name = "carp fillet"
