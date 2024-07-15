@@ -279,6 +279,7 @@
 	///at which rate the crab gains maturation
 	var/growth_rate = 100 / (12 MINUTES)
 
+///A chasm crab growth speed is determined by its initial weight and size, ergo bigger crabs for faster lobstrosities
 /obj/item/fish/chasm_crab/update_size_and_weight(new_size = average_size, new_weight = average_weight)
 	. = ..()
 	var/multiplier = 1
@@ -313,13 +314,13 @@
 	if(!aquarium.allow_breeding) //the aquarium has breeding disabled
 		return
 	if(hunger >= 0.4) //I'm hungry and angry
-		anger += growth_rate
+		anger += growth_rate * 0.6
 	if(!locate(/obj/item/aquarium_prop) in aquarium) //the aquarium deco is quite barren
-		anger += growth_rate
+		anger += growth_rate * 0.25
 	var/fish_count = aquarium.get_fishes()
-	if(!ISINRANGE(fish_count, 3, AQUARIUM_MAX_BREEDING_POPULATION * 0.2)) //too lonely or overcrowded
-		anger += growth_rate
-	if(fish_count <= AQUARIUM_MAX_BREEDING_POPULATION * 0.2) //check if there's enough room to maturate.
+	if(!ISINRANGE(fish_count, 3, AQUARIUM_MAX_BREEDING_POPULATION * 0.5)) //too lonely or overcrowded
+		anger += growth_rate * 0.3
+	if(fish_count <= AQUARIUM_MAX_BREEDING_POPULATION * 0.5) //check if there's enough room to maturate.
 		maturation += growth_rate
 
 	if(maturation >= 100)
@@ -335,9 +336,16 @@
 		lob.AddElement(/datum/element/ai_retaliate)
 		lob.ai_controller.planning_subtrees -= SSai_controllers.ai_subtrees[/datum/ai_planning_subtree/simple_find_target]
 		lob.ai_controller.planning_subtrees += SSai_controllers.ai_subtrees[/datum/ai_planning_subtree/target_retaliate]
-	else if(anger < 15) //not really that mad, just a bit unstable.
+	else if(anger < 30) //not really that mad, just a bit unstable.
 		lob.ai_controller.planning_subtrees -= SSai_controllers.ai_subtrees[/datum/ai_planning_subtree/simple_find_target]
 		lob.ai_controller.planning_subtrees += SSai_controllers.ai_subtrees[/datum/ai_planning_subtree/capricious_retaliate]
+
+	animate(lob, pixel_y = 18, time = 0.3 SECONDS, flags = ANIMATION_RELATIVE, easing = CUBIC_EASING|EASE_OUT)
+	animate(pixel_y = -18, time = 0.4 SECONDS, flags = ANIMATION_RELATIVE, easing = CUBIC_EASING|EASE_IN)
+	step(lob, pick(GLOB.alldirs))
+	loc.visible_message(span_boldnotice("a [lob] jumps out of [loc]!"))
+	playsound(loc, 'sound/effects/fish_splash.ogg', 60)
+
 	qdel(src)
 
 /obj/item/fish/chasm_crab/ice
