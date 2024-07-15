@@ -949,3 +949,42 @@
 
 #undef MALF_ION_PROB
 #undef REPLACE_LAW_WITH_ION_PROB
+
+/// Midround Voidwalker Ruleset (From Ghosts)
+/datum/dynamic_ruleset/midround/from_ghosts/voidwalker
+	name = "Voidwalker"
+	midround_ruleset_style = MIDROUND_RULESET_STYLE_LIGHT
+	antag_datum = /datum/antagonist/voidwalker
+	antag_flag = ROLE_VOIDWALKER
+	antag_flag_override = ROLE_VOIDWALKER
+	ruleset_category = parent_type::ruleset_category |  RULESET_CATEGORY_NO_WITTING_CREW_ANTAGONISTS
+	required_enemies = list(2,2,1,1,1,1,1,0,0,0)
+	required_candidates = 1
+	weight = 2
+	cost = 5
+	minimum_players = 40
+	repeatable = TRUE
+	ruleset_lazy_templates = list(LAZY_TEMPLATE_KEY_VOIDWALKER_VOID)
+	/// The space turf we find in acceptable(), cached for ease
+	var/space_turf
+
+/datum/dynamic_ruleset/midround/from_ghosts/voidwalker/acceptable(population = 0, threat_level = 0)
+	space_turf = find_space_spawn()
+	if(!space_turf)
+		return FALSE
+	return ..()
+
+/datum/dynamic_ruleset/midround/from_ghosts/voidwalker/generate_ruleset_body(mob/applicant)
+	var/datum/mind/player_mind = new /datum/mind(applicant.key)
+	player_mind.active = TRUE
+
+	var/mob/living/carbon/human/voidwalker = new (space_turf)
+	player_mind.transfer_to(voidwalker)
+	player_mind.set_assigned_role(SSjob.GetJobType(/datum/job/voidwalker))
+	player_mind.special_role = antag_flag
+	player_mind.add_antag_datum(antag_datum)
+
+	playsound(voidwalker, 'sound/magic/ethereal_exit.ogg', 50, TRUE, -1)
+	message_admins("[ADMIN_LOOKUPFLW(voidwalker)] has been made into a Voidwalker by the midround ruleset.")
+	log_dynamic("[key_name(voidwalker)] was spawned as a Voidwalker by the midround ruleset.")
+	return voidwalker

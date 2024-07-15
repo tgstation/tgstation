@@ -160,7 +160,13 @@
 /obj/item/ammo_casing/shotgun/dart/attackby()
 	return
 
+/obj/item/ammo_casing/shotgun/dart/large
+	name = "XL shotgun dart"
+	desc = "A dart for use in shotguns. Can be injected with up to 25 units of any chemical."
+	reagent_amount = 25
+
 /obj/item/ammo_casing/shotgun/dart/bioterror
+	name = "bioterror dart"
 	desc = "An improved shotgun dart filled with deadly toxins. Can be injected with up to 30 units of any chemical."
 	reagent_amount = 30
 

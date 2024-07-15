@@ -66,7 +66,7 @@
 	only_forced_audio = TRUE
 	vary = TRUE
 
-/datum/emote/carbon/human/scream/run_emote(mob/user, params, type_override, intentional = FALSE)
+/datum/emote/living/carbon/human/scream/run_emote(mob/user, params, type_override, intentional = FALSE)
 	if(!intentional && HAS_TRAIT(user, TRAIT_ANALGESIA))
 		return
 	return ..()

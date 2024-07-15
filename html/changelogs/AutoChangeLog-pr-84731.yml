@@ -1,0 +1,4 @@
+author: "MTandi"
+delete-after: True
+changes:
+  - qol: "Research nodes can be queued, one per player. RDs can place their node at the beginning of the queue."
