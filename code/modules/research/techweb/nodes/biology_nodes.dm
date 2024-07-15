@@ -50,7 +50,7 @@
 	id = TECHWEB_NODE_GENE_ENGINEERING
 	display_name = "Gene Engineering"
 	description = "Research into sophisticated DNA manipulation techniques, enabling the modification of human genetic traits to unlock specific abilities and enhancements."
-	prereq_ids = list(TECHWEB_NODE_SELECTION, TECHWEB_NODE_XENOBIOLOGY)
+	prereq_ids = list(TECHWEB_NODE_MEDBAY_EQUIP)
 	design_ids = list(
 		"dnascanner",
 		"scan_console",

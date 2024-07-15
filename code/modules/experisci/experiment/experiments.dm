@@ -392,29 +392,6 @@
 		return TRUE
 	return FALSE
 
-/datum/experiment/scanning/people/active_dna
-	name = "Human Field Research: DNA Activation"
-	description = "Our intern opened a dodgy link on an email and we forgot to back up our data on genetic modifying. Scan some non-simian samples of sapient crewmembers that have had their genetic DNA activated. \
-		Forcibly mutated DNA isn't what we're looking for."
-	performance_hint = "Inactive mutations can be activated via either deciphering their genetic structure or creating and using an activator on someone who has the unactivated mutation."
-	required_traits_desc = "non-simian activated DNA"
-
-/datum/experiment/scanning/people/active_dna/is_valid_scan_target(mob/living/carbon/human/check)
-	. = ..()
-	if (!.)
-		return
-
-	if(!check.mind || !GET_CLIENT(check))
-		return FALSE
-
-	if(ismonkey(check) || !ishuman(check))
-		return FALSE
-
-	for(var/datum/mutation/human/possible_mut in check.dna.mutations)
-		if(possible_mut.class == MUT_NORMAL)
-			return TRUE
-	return FALSE
-
 /// Scan for cybernetic organs
 /datum/experiment/scanning/people/augmented_organs
 	name = "Human Field Research: Augmented Organs"
