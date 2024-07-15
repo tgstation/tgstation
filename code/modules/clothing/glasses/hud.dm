@@ -238,7 +238,7 @@
 		clothing_traits = list(TRAIT_SECURITY_HUD)
 
 	for(var/trait in clothing_traits)
-			ADD_CLOTHING_TRAIT(user, trait)
+		ADD_CLOTHING_TRAIT(user, trait)
 
 /datum/action/item_action/switch_hud
 	name = "Switch HUD"
