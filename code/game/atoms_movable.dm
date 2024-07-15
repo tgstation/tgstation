@@ -203,6 +203,7 @@
 /atom/movable/Destroy(force)
 	QDEL_NULL(language_holder)
 	QDEL_NULL(em_block)
+	QDEL_NULL(drift_handler)
 
 	unbuckle_all_mobs(force = TRUE)
 

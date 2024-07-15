@@ -56,6 +56,7 @@
 		qdel(drifting_loop)
 	drifting_loop = null
 	parent.inertia_moving = FALSE
+	parent.drift_handler = null
 	return ..()
 
 /datum/drift_handler/proc/apply_initial_visuals(visual_delay)
