@@ -516,9 +516,8 @@
 		disconnect_remote_access()
 
 /**
- * APC early processing. This gets processed before any other machine does.
+ * APC early processing. This gets processed after any other machine on the powernet does.
  * This adds up the total static power usage for the apc's area, then draw that power usage from the grid or APC cell.
- * This is done early so machines that use dynamic power get a more truthful surplus when accessing available energy.
  */
 /obj/machinery/power/apc/proc/early_process()
 	var/total_static_energy_usage = 0

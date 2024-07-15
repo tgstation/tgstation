@@ -14,7 +14,7 @@ SUBSYSTEM_DEF(machines)
 	var/list/currentrun = list()
 	var/list/apc_early_processing = list()
 	var/list/apc_late_processing = list()
-	var/current_part = SSMACHINES_APCS_EARLY
+	var/current_part = SSMACHINES_MACHINES
 	///List of all powernets on the server.
 	var/list/datum/powernet/powernets = list()
 
@@ -82,6 +82,21 @@ SUBSYSTEM_DEF(machines)
 	if (!resumed)
 		for(var/datum/powernet/powernet as anything in powernets)
 			powernet.reset() //reset the power state.
+		current_part = SSMACHINES_MACHINES
+		src.currentrun = processing.Copy()
+
+	//Processing machines, directly wired to the network.
+	if(current_part == SSMACHINES_MACHINES)
+		//cache for sanic speed (lists are references anyways)
+		var/list/currentrun = src.currentrun
+		while(currentrun.len)
+			var/obj/machinery/thing = currentrun[currentrun.len]
+			currentrun.len--
+			if(QDELETED(thing) || thing.process(wait * 0.1) == PROCESS_KILL)
+				processing -= thing
+				thing.datum_flags &= ~DF_ISPROCESSING
+			if (MC_TICK_CHECK)
+				return
 		current_part = SSMACHINES_APCS_EARLY
 		src.currentrun = apc_early_processing.Copy()
 
@@ -97,26 +112,10 @@ SUBSYSTEM_DEF(machines)
 				apc.datum_flags &= ~DF_ISPROCESSING
 			if(MC_TICK_CHECK)
 				return
-		current_part = SSMACHINES_MACHINES
-		src.currentrun = processing.Copy()
-
-	//General machine processing. Their power usage can be dynamic and based on surplus power, so they come after static power usage have been applied.
-	if(current_part == SSMACHINES_MACHINES)
-		//cache for sanic speed (lists are references anyways)
-		var/list/currentrun = src.currentrun
-		while(currentrun.len)
-			var/obj/machinery/thing = currentrun[currentrun.len]
-			currentrun.len--
-			if(QDELETED(thing) || thing.process(wait * 0.1) == PROCESS_KILL)
-				processing -= thing
-				thing.datum_flags &= ~DF_ISPROCESSING
-			if (MC_TICK_CHECK)
-				return
 		current_part = SSMACHINES_APCS_LATE
 		src.currentrun = apc_late_processing.Copy()
 
 	//APC late processing. APCs will use the remaining power on the grid to charge their cells if needed.
-	//This is applied at the end so charging APCs don't cause others to discharge by taking all the power from the grid before machines use power.
 	if(current_part == SSMACHINES_APCS_LATE)
 		//cache for sanic speed (lists are references anyways)
 		var/list/currentrun = src.currentrun
