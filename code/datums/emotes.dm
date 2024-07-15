@@ -299,9 +299,9 @@
  * Returns a bool about whether or not the user can run the emote.
  */
 /datum/emote/proc/can_run_emote(mob/user, status_check = TRUE, intentional = FALSE)
-	if(!is_type_in_typecache(user, mob_type_allowed_typecache))
 	if(trait_required && !HAS_TRAIT(user, trait_required))
 		return FALSE
+	if(!is_type_in_typecache(user, mob_type_allowed_typecache))
 		return FALSE
 	if(is_type_in_typecache(user, mob_type_blacklist_typecache))
 		return FALSE
