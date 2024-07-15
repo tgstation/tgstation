@@ -1,7 +1,0 @@
-author: "KnigTheThrasher"
-delete-after: True
-changes:
-  - rscadd: "Remade Kilo perma (again)"
-  - rscadd: "Remade Armory (it has the cool shit now)"
-  - rscdel: "Removed some decals (it still has way too many of them imo)"
-  - bugfix: "Fixed sec airlocks with wrong access"

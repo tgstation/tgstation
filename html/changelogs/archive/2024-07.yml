@@ -134,3 +134,39 @@
   Absolucy:
   - rscdel: Removed the "NT Artificial Surveillance Protocol", "StationDefender",
       and "Security Master 4000" AI law sets and boards.
+2024-07-15:
+  Absolucy:
+  - bugfix: Everyone can now actually use their implants at roundstart during Cybernetic
+      Revolution as they could before, as they get a compatible cyberlink alongside
+      it if needed.
+  - balance: Changed up the implants some jobs get for cybernetic revolution.
+  - qol: Uninverted the top left corner of the Icebox medbay treatment center.
+  - qol: KiloStation and Blueshift's Xenobio now start with a fully charged 10k cell
+      in their APCs, consistent with other maps.
+  - balance: Reworked the regenerative slime extracts from xenobiology.
+  - balance: Regenerative extracts now apply a status effect that lasts around 15
+      seconds, where it rapidly heals damage.
+  - balance: Regenerative extracts have a cooldown after being applied, where any
+      further of them results in diminishing returns.
+  - balance: Rainbow regenerative extracts have a similar effect to old regenerative
+      extracts, although they do not work if the regen cooldown is active, and they
+      no longer refresh your organs or regrows limbs (unless you're an oozeling).
+  - rscadd: Added a mechcomp vendor into R&D and Engineering on Blueshift.
+  - bugfix: Changing species no longer deletes your skillchips.
+  KnigTheThrasher:
+  - bugfix: fixed cargo express being unlockable by entire cargo all the time
+  - rscadd: Remade Kilo perma (again)
+  - rscadd: Remade Armory (it has the cool shit now)
+  - rscdel: Removed some decals (it still has way too many of them imo)
+  - bugfix: Fixed sec airlocks with wrong access
+  Odairu:
+  - rscdel: nova kimono
+  Uristthedorf:
+  - balance: Razorwhile Spool Nerfed.
+  ancient-engineer:
+  - rscadd: Observing mentors can become imaginary friends at will!
+  ven1883:
+  - rscadd: Adds Hosed, a 3 point quirk that gives you a breathing tube implant.
+  - rscadd: Adds Neuralinked, a 3 point quirk that gives you an NT 1.0 cyberlink.
+  - rscadd: Adds Bright Eyes, a 3 point quirk that gives you High Luminosity Eyes.
+  - rscadd: Changes the quirk blacklist so the above are incompatible with Body Purist

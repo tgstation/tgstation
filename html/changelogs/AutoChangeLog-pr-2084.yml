@@ -1,7 +1,0 @@
-author: "ven1883"
-delete-after: True
-changes:
-  - rscadd: "Adds Hosed, a 3 point quirk that gives you a breathing tube implant."
-  - rscadd: "Adds Neuralinked, a 3 point quirk that gives you an NT 1.0 cyberlink."
-  - rscadd: "Adds Bright Eyes, a 3 point quirk that gives you High Luminosity Eyes."
-  - rscadd: "Changes the quirk blacklist so the above are incompatible with Body Purist"
