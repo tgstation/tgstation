@@ -294,3 +294,6 @@
 
 /// Trait when a drink was renamed by a shaker
 #define SHAKER_LABEL_TRAIT "shaker_trait"
+
+/// Trait added by style component
+#define STYLE_TRAIT "style"

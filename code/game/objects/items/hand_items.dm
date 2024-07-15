@@ -544,6 +544,10 @@
 	damage = 0 // love can't actually hurt you
 	armour_penetration = 100 // but if it could, it would cut through even the thickest plate
 
+/obj/projectile/kiss/Initialize(mapload)
+	. = ..()
+	AddComponent(/datum/component/parriable_projectile)
+
 /obj/projectile/kiss/fire(angle, atom/direct_target)
 	if(firer)
 		name = "[name] blown by [firer]"

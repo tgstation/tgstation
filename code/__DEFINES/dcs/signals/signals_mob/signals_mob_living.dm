@@ -223,11 +223,6 @@
 /// From /obj/effect/temp_visual/resonance/burst() : (mob/creator, mob/living/hit_living)
 #define COMSIG_LIVING_RESONATOR_BURST "living_resonator_burst"
 
-/// From /obj/projectile/attempt_parry() : (obj/projectile/parried_projectile)
-#define COMSIG_LIVING_PROJECTILE_PARRYING "living_projectile_parrying"
-	/// Return to allow the parry to happen
-	#define ALLOW_PARRY (1<<0)
-
 /// From /obj/projectile/on_parry() : (obj/projectile/parried_projectile)
 #define COMSIG_LIVING_PROJECTILE_PARRIED "living_projectile_parried"
 	/// Return to prevent the projectile from executing any code in on_parry()
