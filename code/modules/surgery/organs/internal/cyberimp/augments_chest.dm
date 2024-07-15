@@ -260,3 +260,60 @@
 
 	deactivate(silent = TRUE)
 	return FALSE
+
+/obj/item/organ/internal/cyberimp/chest/spine
+	name = "\improper Herculean gravitronic spinal implant"
+	desc = "This gravitronic spinal interface is able to improve the athletics of a user, allowing them greater physical ability. \
+		Contains a slot which can be upgraded with a gravity anomaly core, improving its performance."
+	implant_color = "#15704c"
+	slot = ORGAN_SLOT_SPINE
+	/// How much faster does the spinal implant improve our lifting speed, workout ability, reducing falling damage and improving climbing and standing speed
+	var/athletics_boost_multiplier = 0.8
+	/// How much additional throwing range does our spinal implant grant us.
+	var/added_throw_range = 2
+	/// How much additional boxing damage and tackling power do we add?
+	var/strength_bonus = 4
+	/// Whether or not a gravity anomaly core has been installed, improving the effectiveness of the spinal implant.
+	var/core_applied = FALSE
+	/// The overlay for our implant to indicate that, yes, this person has an implant inserted.
+	var/mutable_appearance/stone_overlay
+
+/obj/item/organ/internal/cyberimp/chest/spine/emp_act(severity)
+	. = ..()
+	if(!owner || . & EMP_PROTECT_SELF)
+		return
+	to_chat(owner, span_warning("You feel sheering pain as your body is crushed like a soda can!"))
+	owner.apply_damage(20/severity, BRUTE, def_zone = BODY_ZONE_CHEST)
+
+/obj/item/organ/internal/cyberimp/chest/spine/on_mob_insert(mob/living/carbon/organ_owner, special, movement_flags)
+	. = ..()
+	stone_overlay = mutable_appearance(icon = 'icons/effects/effects.dmi', icon_state = "stone")
+	organ_owner.add_overlay(stone_overlay)
+	if(core_applied)
+		organ_owner.AddElement(/datum/element/forced_gravity, 1)
+
+/obj/item/organ/internal/cyberimp/chest/spine/on_mob_remove(mob/living/carbon/organ_owner, special)
+	. = ..()
+	if(stone_overlay)
+		organ_owner.cut_overlay(stone_overlay)
+		stone_overlay = null
+	if(core_applied)
+		organ_owner.RemoveElement(/datum/element/forced_gravity, 1)
+
+/obj/item/organ/internal/cyberimp/chest/spine/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	. = ..()
+	if(core_applied)
+		user.balloon_alert(user, "core already installed!")
+		return ITEM_INTERACT_BLOCKING
+
+	if(istype(tool, /obj/item/assembly/signaler/anomaly/grav))
+		user.balloon_alert(user, "core installed.")
+		athletics_boost_multiplier = 0.25
+		added_throw_range += 2
+		strength_bonus += 4
+		core_applied = TRUE
+		name = "\improper Atlas gravitonic spinal implant"
+		desc = "This gravitronic spinal interface is able to improve the athletics of a user, allowing them greater physical ability. \
+			This one has been improved through the installation of a gravity anomaly core, allowing for personal gravity manipulation."
+		qdel(tool)
+		return ITEM_INTERACT_SUCCESS

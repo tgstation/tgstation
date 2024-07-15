@@ -99,6 +99,13 @@ GLOBAL_LIST_EMPTY(jam_on_wardec)
 	for(var/obj/machinery/computer/camera_advanced/shuttle_docker/dock as anything in GLOB.jam_on_wardec)
 		dock.jammed = TRUE
 
+	var/datum/techweb/station_techweb = locate(/datum/techweb/science) in SSresearch.techwebs
+	if(station_techweb)
+		var/obj/machinery/announcement_system/announcement_system = pick(GLOB.announcement_systems)
+		if (!isnull(announcement_system))
+			announcement_system.broadcast("Additional research data received from Nanotrasen R&D Division following the emergency protocol.", list(RADIO_CHANNEL_SCIENCE))
+		station_techweb.add_point_list(list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_5_POINTS * 3))
+
 	qdel(src)
 
 /obj/item/nuclear_challenge/proc/distribute_tc()
