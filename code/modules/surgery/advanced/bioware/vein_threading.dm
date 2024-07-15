@@ -16,7 +16,7 @@
 
 /datum/surgery/advanced/bioware/vein_threading/mechanic
 	name = "Hydraulics Routing Optimization"
-	desc = "A robotic upgrade which severely reduces the amount of hydraulic flueid lost in case of injury."
+	desc = "A robotic upgrade which severely reduces the amount of hydraulic fluid lost in case of injury."
 	requires_bodypart_type = BODYTYPE_ROBOTIC
 	steps = list(
 		/datum/surgery_step/mechanic_open,
