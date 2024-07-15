@@ -89,6 +89,7 @@
 	name = "donkfillet"
 	desc = "The dreaded donkfish fillet. No sane spaceman would eat this, and it does not get better when cooked."
 	icon_state = "donkfillet"
+	starting_reagent_purity = 0.3
 
 /obj/item/food/fishmeat/octopus
 	name = "octopus tentacle"
