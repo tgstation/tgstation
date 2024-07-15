@@ -13,22 +13,6 @@
 	to_chat(user, span_notice("You got a new perk: [src.name]."))
 	return TRUE
 
-/datum/spellbook_entry/perks/can_refund(mob/living/carbon/human/user, obj/item/spellbook/book)
-	return TRUE
-
-/datum/spellbook_entry/perks/refund_spell(mob/living/carbon/human/user, obj/item/spellbook/book)
-	var/area/centcom/wizard_station/wizard_home = GLOB.areas_by_type[/area/centcom/wizard_station]
-	if(get_area(user) != wizard_home)
-		to_chat(user, span_warning("You can only refund spells at the wizard lair!"))
-		return -1
-	var/datum/antagonist/wizard/wizard_datum = user.mind.has_antag_datum(/datum/antagonist/wizard)
-	if(wizard_datum)
-		var/datum/spellbook_entry/perks/perk_to_remove = locate(src) in wizard_datum.perks
-		if(perk_to_remove)
-			wizard_datum.perks -= perk_to_remove
-			return perk_to_remove.cost
-	return -1
-
 /datum/spellbook_entry/perks/fourhands
 	name = "Four Hands"
 	desc = "Gives you even more hands to perform magic"
@@ -99,7 +83,8 @@
 /datum/spellbook_entry/perks/heart_eater
 	name = "Heart Eater"
 	desc = "Gives you ability to obtain a person's life force by eating their heart. \
-		By eating someone's heart you can increase your maximum health or decrease it but get a random mutation."
+		By eating someone's heart you can increase your damage resistance or gain random mutation. \
+		Heart also give strong healing buff."
 
 /datum/spellbook_entry/perks/heart_eater/buy_spell(mob/living/carbon/human/user, obj/item/spellbook/book, log_buy)
 	. = ..()
@@ -161,6 +146,7 @@
 		return
 	owner = WEAKREF(new_owner)
 	RegisterSignal(new_owner, COMSIG_ENTER_AREA, PROC_REF(check_area))
+	RegisterSignal(new_owner, COMSIG_LIVING_DEATH, PROC_REF(on_owner_death))
 
 /obj/effect/wizard_magnetism/proc/check_area(mob/living/wizard, area/new_area)
 	SIGNAL_HANDLER
@@ -170,14 +156,16 @@
 	START_PROCESSING(SSprocessing, src)
 	UnregisterSignal(wizard, COMSIG_ENTER_AREA)
 
+/obj/effect/wizard_magnetism/proc/on_owner_death()
+	SIGNAL_HANDLER
+
+	stop_orbit()
+
 /obj/effect/wizard_magnetism/process(seconds_per_tick)
 	if(isnull(owner))
 		stop_orbit()
 		return
 	var/mob/living/wizard = owner?.resolve()
-	if(wizard.stat == DEAD)
-		stop_orbit()
-		return
 	var/list/things_in_range = orange(5, wizard) - orange(1, wizard)
 	for(var/obj/take_object in things_in_range)
 		if(!take_object.anchored)

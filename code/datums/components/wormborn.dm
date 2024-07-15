@@ -46,7 +46,6 @@
 	mob_size = MOB_SIZE_HUGE
 	sentience_type = SENTIENCE_BOSS
 	mob_biotypes = MOB_ORGANIC|MOB_SPECIAL
-	var/mob/living/basic/wizard_worm/back
 
 /mob/living/basic/wizard_worm/has_gravity(turf/gravity_turf)
 	return TRUE
@@ -68,21 +67,8 @@
 		prev = new_segment(behind = prev)
 	update_appearance(UPDATE_ICON_STATE)
 
-/mob/living/basic/wizard_worm/proc/register_behind(mob/living/tail)
-	if(!isnull(back))
-		UnregisterSignal(back, COMSIG_QDELETING)
-	back = tail
-	update_appearance(UPDATE_ICON_STATE)
-	if(!isnull(back))
-		RegisterSignal(back, COMSIG_QDELETING, PROC_REF(tail_deleted))
-
 /mob/living/basic/wizard_worm/proc/new_segment(mob/living/basic/wizard_worm/behind)
 	var/mob/living/segment = new type(drop_location(), FALSE)
 	ADD_TRAIT(segment, TRAIT_PERMANENTLY_MORTAL, INNATE_TRAIT)
 	segment.AddComponent(/datum/component/mob_chain, front = behind, vary_icon_state = TRUE)
-	behind.register_behind(segment)
 	return segment
-
-/mob/living/basic/wizard_worm/proc/tail_deleted()
-	SIGNAL_HANDLER
-	register_behind(null)

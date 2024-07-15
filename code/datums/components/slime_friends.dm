@@ -1,5 +1,7 @@
 /datum/component/slime_friends
+	/// Slime maker timer.
 	var/timer
+	/// List to pick from when we need slime colour.
 	var/static/colours = list(
 		/datum/slime_type/adamantine,
 		/datum/slime_type/black,
@@ -31,15 +33,22 @@
 		return COMPONENT_INCOMPATIBLE
 	var/mob/living/living_parent = parent
 	living_parent.faction |= FACTION_SLIME
-	timer = addtimer(CALLBACK(src, PROC_REF(make_slime_friend), living_parent), 20 SECONDS)
+	RegisterSignal(living_parent, COMSIG_ENTER_AREA, PROC_REF(start_slime_prodaction))
 
 /datum/component/slime_friends/Destroy(force)
 	. = ..()
 	var/mob/living/living_parent = parent
 	living_parent.faction -= FACTION_SLIME
-	living_parent.mob_biotypes -= MOB_SLIME
 	timer = null
 
+/// Start slime prodaction when we leave wizden.
+/datum/component/slime_friends/proc/start_slime_prodaction(mob/living/friend, area/new_area)
+	if(new_area == GLOB.areas_by_type[/area/centcom/wizard_station])
+		return
+	timer = addtimer(CALLBACK(src, PROC_REF(make_slime_friend), friend), 20 SECONDS)
+	UnregisterSignal(friend, COMSIG_ENTER_AREA)
+
+/// Slime prodactor proc.
 /datum/component/slime_friends/proc/make_slime_friend(mob/living/friend)
 	timer = addtimer(CALLBACK(src, PROC_REF(make_slime_friend), friend), 20 SECONDS)
 	if(get_area(friend) == GLOB.areas_by_type[/area/centcom/wizard_station])
