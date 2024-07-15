@@ -75,7 +75,7 @@ GLOBAL_DATUM_INIT(orbit_menu, /datum/orbit_menu, new)
 		var/number_of_orbiters = length(mob_poi.get_all_orbiters())
 
 		serialized["ref"] = REF(mob_poi)
-		serialized["full_name"] = mob_poi.name
+		serialized["full_name"] = name
 		if(number_of_orbiters)
 			serialized["orbiters"] = number_of_orbiters
 
