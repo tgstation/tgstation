@@ -251,5 +251,3 @@
 /// from /mob/Process_Spacemove(movement_dir, continuous_move): (movement_dir, continuous_move, atom/backup)
 #define COMSIG_MOB_ATTEMPT_HALT_SPACEMOVE "mob_attempt_halt_spacemove"
 	#define COMPONENT_PREVENT_SPACEMOVE_HALT (1<<0)
-
-#define COMSIG_ATOM_STABILIZE_DRIFT "atom_stabilize_drift"

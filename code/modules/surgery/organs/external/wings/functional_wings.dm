@@ -142,7 +142,7 @@
 		return
 
 	var/max_drift_force = (DEFAULT_INERTIA_SPEED / owner.cached_multiplicative_slowdown - 1) / INERTIA_SPEED_COEF + 1
-	SEND_SIGNAL(owner, COMSIG_ATOM_STABILIZE_DRIFT, owner.client.intended_direction ? dir2angle(owner.client.intended_direction) : null, owner.client.intended_direction ? max_drift_force : 0, FUNCTIONAL_WING_STABILIZATION)
+	owner.drift_handler.stabilize_drift(owner.client.intended_direction ? dir2angle(owner.client.intended_direction) : null, owner.client.intended_direction ? max_drift_force : 0, FUNCTIONAL_WING_STABILIZATION)
 
 ///SPREAD OUR WINGS AND FLLLLLYYYYYY
 /obj/item/organ/external/wings/functional/proc/open_wings()

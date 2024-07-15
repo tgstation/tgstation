@@ -109,6 +109,9 @@
 	/// The pitch adjustment that this movable uses when speaking.
 	var/pitch = 0
 
+	/// Datum that keeps all data related to zero-g drifting and handles related code/comsigs
+	var/datum/drift_handler/drift_handler
+
 	/// The filter to apply to the voice when processing the TTS audio message.
 	var/voice_filter = ""
 
@@ -1265,11 +1268,11 @@
 	if(!isturf(loc) || Process_Spacemove(angle2dir(inertia_angle), continuous_move = TRUE))
 		return FALSE
 
-	if(SEND_SIGNAL(src, COMSIG_MOVABLE_NEWTONIAN_MOVE, inertia_angle, start_delay, drift_force, controlled_cap) & COMPONENT_MOVABLE_NEWTONIAN_BLOCK)
+	if (!isnull(drift_handler))
+		drift_handler.newtonian_impulse(inertia_angle, start_delay, drift_force, controlled_cap)
 		return TRUE
 
-	AddComponent(/datum/component/drift, inertia_angle, instant, start_delay, drift_force)
-
+	drift_handler = new (src, inertia_angle, instant, start_delay, drift_force)
 	return TRUE
 
 /atom/movable/set_explosion_block(explosion_block)
