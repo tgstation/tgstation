@@ -8,6 +8,7 @@
 #include "aesthetics/_aesthetics.dme"
 #include "ai_laws/_ai_laws.dme"
 #include "autohiss/_autohiss.dme"
+#include "balance/_balance.dme"
 #include "barsigns/_barsigns.dme"
 #include "communication/_communication.dme"
 //#include "crawl_speed/_crawl_speed.dme" // Fixing floored melee brawl, or first steps to remove RP speed
