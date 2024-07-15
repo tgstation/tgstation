@@ -312,8 +312,41 @@
 
 /atom/movable/screen/plane_master/area
 	name = "Area"
-	documentation = "Holds the areas themselves, which ends up meaning it holds any overlays/effects we apply to areas. NOT snow or rad storms, those go on above lighting"
+	documentation = "Holds the areas themselves, which ends up meaning it holds any overlays/effects we apply to areas that are otherwise unhomed"
 	plane = AREA_PLANE
+
+/atom/movable/screen/plane_master/weather_mask
+	name = "Weather Mask"
+	documentation = "Deliniates between places WITH weather active and places without.\
+		<br>Used currently just to ensure frills draw properly"
+	plane = WEATHER_MASK_PLANE
+	render_target = WEATHER_MASK_RENDER_TARGET
+	render_relay_planes = list()
+	start_hidden = TRUE
+
+/atom/movable/screen/plane_master/weather_mask/set_home(datum/plane_master_group/home)
+	. = ..()
+	if(!.)
+		return
+	home.AddComponent(/datum/component/hide_weather_planes, src)
+
+// using this as a mask against weather might be kinda? weird cause of potential double transforms. idk how I feel bout it tbh. works for now?
+// weather is weird on multiz stacks anyway so idkkkkk
+/atom/movable/screen/plane_master/weather_frill
+	name = "Weather Frills"
+	documentation = "Holds the \"frills\" of weather, so at its top it can reach up to touch the turf above some and look 3d."
+	plane = WEATHER_FRILL_PLANE
+	start_hidden = TRUE
+
+/atom/movable/screen/plane_master/weather_frill/set_home(datum/plane_master_group/home)
+	. = ..()
+	if(!.)
+		return
+	home.AddComponent(/datum/component/hide_weather_planes, src)
+
+/atom/movable/screen/plane_master/weather_frill/Initialize(mapload, datum/hud/hud_owner, datum/plane_master_group/home, offset)
+	. = ..()
+	add_filter("weather_mask", 1, alpha_mask_filter(render_source = OFFSET_RENDER_TARGET(WEATHER_MASK_RENDER_TARGET, offset), flags = MASK_INVERSE))
 
 /atom/movable/screen/plane_master/massive_obj
 	name = "Massive object"
@@ -357,6 +390,21 @@
 	documentation = "Anything on the game plane that needs a space to draw on that will be above the lighting plane.\
 		<br>Mostly little alerts and effects, also sometimes contains things that are meant to look as if they glow."
 
+/atom/movable/screen/plane_master/weather_frill_fullbright
+	name = "Weather Fullbright Frills"
+	documentation = "Very similar to weather frills except it draws above lighting. Reaches up to touch unweathered turfs."
+	plane = WEATHER_FRILL_FULLBRIGHT_PLANE
+	start_hidden = TRUE
+
+/atom/movable/screen/plane_master/weather_frill_fullbright/Initialize(mapload, datum/hud/hud_owner, datum/plane_master_group/home, offset)
+	. = ..()
+	add_filter("weather_mask", 1, alpha_mask_filter(render_source = OFFSET_RENDER_TARGET(WEATHER_MASK_RENDER_TARGET, offset), flags = MASK_INVERSE))
+
+/atom/movable/screen/plane_master/weather_frill_fullbright/set_home(datum/plane_master_group/home)
+	. = ..()
+	if(!.)
+		return
+	home.AddComponent(/datum/component/hide_weather_planes, src)
 /**
  * Handles emissive overlays and emissive blockers.
  */
