@@ -263,8 +263,8 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/chair/stool, 0)
 /obj/structure/chair/stool/narsie_act()
 	return
 
-/obj/structure/chair/mouse_drop_dragged(atom/over_object, mob/living/user, src_location, over_location, params)
-	if(!istype(user) || over_object != user)
+/obj/structure/chair/mouse_drop_dragged(atom/over_object, mob/user, src_location, over_location, params)
+	if(!isliving(user) || over_object != user)
 		return
 	if(!item_chair || has_buckled_mobs())
 		return
