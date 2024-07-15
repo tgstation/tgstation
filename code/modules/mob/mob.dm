@@ -92,6 +92,7 @@
 		AA.onNewMob(src)
 	set_nutrition(rand(NUTRITION_LEVEL_START_MIN, NUTRITION_LEVEL_START_MAX))
 	. = ..()
+	setup_hud_traits()
 	update_config_movespeed()
 	initialize_actionspeed()
 	update_movespeed(TRUE)
@@ -1598,3 +1599,21 @@
 /mob/key_down(key, client/client, full_key)
 	..()
 	SEND_SIGNAL(src, COMSIG_MOB_KEYDOWN, key, client, full_key)
+
+/mob/proc/setup_hud_traits()
+	RegisterSignal(src, SIGNAL_ADDTRAIT(TRAIT_SECURITY_HUD), PROC_REF(hud_trait_enabled))
+	RegisterSignal(src, SIGNAL_ADDTRAIT(TRAIT_MEDICAL_HUD), PROC_REF(hud_trait_enabled))
+	RegisterSignal(src, SIGNAL_ADDTRAIT(TRAIT_DIAGNOSTIC_HUD), PROC_REF(hud_trait_enabled))
+	RegisterSignal(src, SIGNAL_REMOVETRAIT(TRAIT_SECURITY_HUD), PROC_REF(hud_trait_disabled))
+	RegisterSignal(src, SIGNAL_REMOVETRAIT(TRAIT_MEDICAL_HUD), PROC_REF(hud_trait_disabled))
+	RegisterSignal(src, SIGNAL_REMOVETRAIT(TRAIT_DIAGNOSTIC_HUD), PROC_REF(hud_trait_disabled))
+
+/mob/proc/hud_trait_enabled(datum/source, new_trait)
+	SIGNAL_HANDLER
+	var/datum/atom_hud/datahud = GLOB.huds[GLOB.trait_to_hud[new_trait]]
+	datahud.show_to(src)
+
+/mob/proc/hud_trait_disabled(datum/source, new_trait)
+	SIGNAL_HANDLER
+	var/datum/atom_hud/datahud = GLOB.huds[GLOB.trait_to_hud[new_trait]]
+	datahud.hide_from(src)

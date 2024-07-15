@@ -42,23 +42,4 @@ Happy hunting!
 	icon_state = "sunhudmed"
 	flags_cover = GLASSESCOVERSEYES
 	flash_protect = FLASH_PROTECTION_WELDER
-	clothing_traits = list(TRAIT_REAGENT_SCANNER)
-	var/list/hudlist = list(DATA_HUD_MEDICAL_ADVANCED, DATA_HUD_DIAGNOSTIC_ADVANCED, DATA_HUD_SECURITY_ADVANCED)
-
-/obj/item/clothing/glasses/overwatch/equipped(mob/user, slot)
-	. = ..()
-	if(!(slot & ITEM_SLOT_EYES) || !ishuman(user))
-		return
-	for(var/hud in hudlist)
-		var/datum/atom_hud/our_hud = GLOB.huds[hud]
-		our_hud.show_to(user)
-	user.add_traits(list(TRAIT_MEDICAL_HUD, TRAIT_SECURITY_HUD, TRAIT_DIAGNOSTIC_HUD), GLASSES_TRAIT)
-
-/obj/item/clothing/glasses/overwatch/dropped(mob/user)
-	. = ..()
-	user.remove_traits(list(TRAIT_MEDICAL_HUD, TRAIT_SECURITY_HUD, TRAIT_DIAGNOSTIC_HUD), GLASSES_TRAIT)
-	if(!ishuman(user))
-		return
-	for(var/hud in hudlist)
-		var/datum/atom_hud/our_hud = GLOB.huds[hud]
-		our_hud.hide_from(user)
+	clothing_traits = list(TRAIT_REAGENT_SCANNER, TRAIT_SECURITY_HUD, TRAIT_MEDICAL_HUD, TRAIT_DIAGNOSTIC_HUD)
