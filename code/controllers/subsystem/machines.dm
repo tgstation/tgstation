@@ -11,10 +11,11 @@ SUBSYSTEM_DEF(machines)
 	VAR_PRIVATE/list/all_machines = list()
 
 	var/list/processing = list()
+	var/list/processing_apcs = list()
+
 	var/list/currentrun = list()
-	var/list/apc_early_processing = list()
-	var/list/apc_late_processing = list()
 	var/current_part = SSMACHINES_MACHINES
+	var/apc_channels = list(SSMACHINES_APCS_ENVIRONMENT, SSMACHINES_APCS_LIGHTS, SSMACHINES_APCS_EQUIPMENT)
 	///List of all powernets on the server.
 	var/list/datum/powernet/powernets = list()
 
@@ -98,9 +99,9 @@ SUBSYSTEM_DEF(machines)
 			if (MC_TICK_CHECK)
 				return
 		current_part = SSMACHINES_APCS_EARLY
-		src.currentrun = apc_early_processing.Copy()
+		src.currentrun = processing_apcs.Copy()
 
-	//APC early processing. Draws static power usages from their grids.
+	//Processing static power draw on APCs
 	if(current_part == SSMACHINES_APCS_EARLY)
 		//cache for sanic speed (lists are references anyways)
 		var/list/currentrun = src.currentrun
@@ -108,14 +109,59 @@ SUBSYSTEM_DEF(machines)
 			var/obj/machinery/power/apc/apc = currentrun[currentrun.len]
 			currentrun.len--
 			if(QDELETED(apc) || apc.early_process(wait * 0.1) == PROCESS_KILL)
-				apc_early_processing -= apc
+				processing_apcs -= apc
+				apc.datum_flags &= ~DF_ISPROCESSING
+			if (MC_TICK_CHECK)
+				return
+		current_part = SSMACHINES_APCS_ENVIRONMENT
+		src.currentrun = processing_apcs.Copy()
+
+	//Charge to fulfill the environment channel
+	if(current_part == SSMACHINES_APCS_ENVIRONMENT)
+		//cache for sanic speed (lists are references anyways)
+		var/list/currentrun = src.currentrun
+		while(currentrun.len)
+			var/obj/machinery/power/apc/apc = currentrun[currentrun.len]
+			currentrun.len--
+			if(QDELETED(apc) || apc.charge_channel(SSMACHINES_APCS_ENVIRONMENT, wait * 0.1) == PROCESS_KILL)
+				processing_apcs -= apc
+				apc.datum_flags &= ~DF_ISPROCESSING
+			if(MC_TICK_CHECK)
+				return
+		current_part = SSMACHINES_APCS_LIGHTS
+		src.currentrun = processing_apcs.Copy()
+
+	//Charge to fulfill the lights channel
+	if(current_part == SSMACHINES_APCS_LIGHTS)
+		//cache for sanic speed (lists are references anyways)
+		var/list/currentrun = src.currentrun
+		while(currentrun.len)
+			var/obj/machinery/power/apc/apc = currentrun[currentrun.len]
+			currentrun.len--
+			if(QDELETED(apc) || apc.charge_channel(SSMACHINES_APCS_LIGHTS, wait * 0.1) == PROCESS_KILL)
+				processing_apcs -= apc
+				apc.datum_flags &= ~DF_ISPROCESSING
+			if(MC_TICK_CHECK)
+				return
+		current_part = SSMACHINES_APCS_EQUIPMENT
+		src.currentrun = processing_apcs.Copy()
+
+	//Charge to fulfill the equipment channel or until the cell is full
+	if(current_part == SSMACHINES_APCS_EQUIPMENT)
+		//cache for sanic speed (lists are references anyways)
+		var/list/currentrun = src.currentrun
+		while(currentrun.len)
+			var/obj/machinery/power/apc/apc = currentrun[currentrun.len]
+			currentrun.len--
+			if(QDELETED(apc) || apc.charge_channel(SSMACHINES_APCS_EQUIPMENT, wait * 0.1) == PROCESS_KILL)
+				processing_apcs -= apc
 				apc.datum_flags &= ~DF_ISPROCESSING
 			if(MC_TICK_CHECK)
 				return
 		current_part = SSMACHINES_APCS_LATE
-		src.currentrun = apc_late_processing.Copy()
+		src.currentrun = processing_apcs.Copy()
 
-	//APC late processing. APCs will use the remaining power on the grid to charge their cells if needed.
+	//Processing APCs
 	if(current_part == SSMACHINES_APCS_LATE)
 		//cache for sanic speed (lists are references anyways)
 		var/list/currentrun = src.currentrun
@@ -123,10 +169,11 @@ SUBSYSTEM_DEF(machines)
 			var/obj/machinery/power/apc/apc = currentrun[currentrun.len]
 			currentrun.len--
 			if(QDELETED(apc) || apc.late_process(wait * 0.1) == PROCESS_KILL)
-				apc_late_processing -= apc
+				processing_apcs -= apc
 				apc.datum_flags &= ~DF_ISPROCESSING
-			if(MC_TICK_CHECK)
+			if (MC_TICK_CHECK)
 				return
+
 
 /datum/controller/subsystem/machines/proc/setup_template_powernets(list/cables)
 	var/obj/structure/cable/PC
