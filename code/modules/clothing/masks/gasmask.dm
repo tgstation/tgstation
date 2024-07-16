@@ -255,6 +255,7 @@ GLOBAL_LIST_INIT(clown_mask_options, list(
 	flags_inv = HIDEEARS|HIDEEYES|HIDEFACE|HIDEFACIALHAIR|HIDESNOUT|HIDEHAIR
 	inhand_icon_state = "gas_mask"
 	has_fov = FALSE
+	flags_cover = MASKCOVERSEYES|MASKCOVERSMOUTH
 	clothing_flags = BLOCK_GAS_SMOKE_EFFECT|MASKINTERNALS
 
 /obj/item/clothing/mask/gas/syndicate
