@@ -715,15 +715,6 @@
 /datum/emote/living/custom/replace_pronoun(mob/user, message)
 	return message
 
-/datum/emote/living/beep
-	key = "beep"
-	key_third_person = "beeps"
-	message = "beeps."
-	message_param = "beeps at %t."
-	sound = 'sound/machines/twobeep.ogg'
-	mob_type_allowed_typecache = list(/mob/living/brain, /mob/living/silicon, /mob/living/basic/orbie)
-	emote_type = EMOTE_AUDIBLE
-
 /datum/emote/living/inhale
 	key = "inhale"
 	key_third_person = "inhales"
