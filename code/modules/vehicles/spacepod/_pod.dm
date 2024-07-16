@@ -6,6 +6,7 @@
 // make them move different onstation, perhaps restrict to engine tiles only
 // control scheme/whatever idk how to drive these
 // slots: comms (radio and something else), sensors(HUDs or something, mesons??), engine, 1 secondary slot (cargo and shit), 1 primary slot(tools or gun???), infinite misc modules (locks and shit), armor would either be added during construction or as a slot
+// DONE: defines car.dm in defines
 // ALSO DO NOT FORGET TO REMOVE THIS HUGE ASS COMMENT before finishing
 
 /obj/vehicle/sealed/space_pod
@@ -13,6 +14,10 @@
 	move_resist = MOVE_FORCE_VERY_STRONG
 	icon = 'icons/mob/rideables/vehicles.dmi'
 	icon_state = "engineering_pod"
+	/// Max count of a certain slot. If it is not defined here, it is assumed to be one (1)
+	var/slot_max = list(
+		POD_SLOT_MISC = 3,
+	)
 
 // these variables fucking suck fix later
 
