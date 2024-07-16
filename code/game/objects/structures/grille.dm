@@ -17,6 +17,8 @@
 	integrity_failure = 0.4
 	var/rods_type = /obj/item/stack/rods
 	var/rods_amount = 2
+	/// Whether or not we're disappearing but dramatically
+	var/dramatically_disappearing = FALSE
 
 /datum/armor/structure_grille
 	melee = 50
@@ -364,6 +366,31 @@
 
 /obj/structure/grille/get_dumping_location()
 	return null
+
+/obj/structure/grille/proc/temporary_shatter(time_to_go = 0 SECONDS, time_to_return = 4 SECONDS)
+	if(dramatically_disappearing)
+		return
+
+	//dissapear in 1 second
+	dramatically_disappearing = TRUE
+	addtimer(CALLBACK(src, TYPE_PROC_REF(/atom/movable, moveToNullspace)), time_to_go) //woosh
+
+	// come back in 1 + 4 seconds
+	addtimer(VARSET_CALLBACK(src, atom_integrity, atom_integrity), time_to_go + time_to_return) //set the health back (icon is updated on move)
+	addtimer(CALLBACK(src, TYPE_PROC_REF(/atom/movable, forceMove), loc), time_to_go + time_to_return) //we back boys
+	addtimer(VARSET_CALLBACK(src, dramatically_disappearing, FALSE), time_to_go + time_to_return) //also set the var back
+
+/// Do some very specific checks to see if we *would* get shocked. Returns TRUE if it's shocked
+/obj/structure/grille/proc/is_shocked()
+	var/turf/turf = get_turf(src)
+	var/obj/structure/cable/cable = turf.get_cable_node()
+	var/list/powernet_info = get_powernet_info_from_source(cable)
+
+	if(!powernet_info)
+		return FALSE
+
+	var/datum/powernet/powernet = powernet_info["powernet"]
+	return !!powernet.get_electrocute_damage()
 
 /obj/structure/grille/broken // Pre-broken grilles for map placement
 	icon_state = "brokengrille"

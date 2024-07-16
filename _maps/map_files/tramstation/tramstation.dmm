@@ -5316,7 +5316,7 @@
 	},
 /obj/machinery/light/warm/directional/north,
 /turf/open/misc/dirt/jungle{
-	baseturfs = /turf/open/misc/dirt
+	baseturfs = /turf/open/misc/dirt/station
 	},
 /area/station/science/explab)
 "aMM" = (
@@ -6789,7 +6789,7 @@
 /area/station/command/bridge)
 "bpn" = (
 /mob/living/carbon/human/species/monkey,
-/turf/open/misc/grass/jungle,
+/turf/open/misc/grass/jungle/station,
 /area/station/science/explab)
 "bpu" = (
 /obj/structure/cable,
@@ -7177,7 +7177,7 @@
 "bwU" = (
 /obj/structure/window/reinforced/spawner/directional/west,
 /obj/structure/flora/bush/fullgrass/style_random,
-/turf/open/misc/grass/jungle,
+/turf/open/misc/grass/jungle/station,
 /area/station/science/explab)
 "bxd" = (
 /obj/structure/table,
@@ -10192,7 +10192,7 @@
 	name = "The Monkey Pit";
 	req_access = list("science")
 	},
-/turf/open/misc/grass/jungle,
+/turf/open/misc/grass/jungle/station,
 /area/station/science/explab)
 "cxc" = (
 /obj/structure/chair,
@@ -18853,7 +18853,7 @@
 /area/station/engineering/storage/tech)
 "fEM" = (
 /obj/machinery/light/warm/directional/south,
-/turf/open/misc/grass/jungle,
+/turf/open/misc/grass/jungle/station,
 /area/station/science/explab)
 "fEQ" = (
 /obj/structure/cable,
@@ -18985,7 +18985,7 @@
 "fGK" = (
 /mob/living/carbon/human/species/monkey,
 /obj/structure/window/reinforced/spawner/directional/west,
-/turf/open/misc/grass/jungle,
+/turf/open/misc/grass/jungle/station,
 /area/station/science/explab)
 "fHg" = (
 /obj/structure/chair{
@@ -20544,7 +20544,7 @@
 	name = "The Monkey Pit";
 	req_access = list("science")
 	},
-/turf/open/misc/grass/jungle,
+/turf/open/misc/grass/jungle/station,
 /area/station/science/explab)
 "gkQ" = (
 /obj/machinery/computer/atmos_control/mix_tank{
@@ -22572,7 +22572,7 @@
 /area/station/security/checkpoint/supply)
 "gXo" = (
 /obj/structure/flora/bush/fullgrass/style_random,
-/turf/open/misc/grass/jungle,
+/turf/open/misc/grass/jungle/station,
 /area/station/science/explab)
 "gXA" = (
 /obj/effect/turf_decal/trimline/blue/filled/corner,
@@ -33571,7 +33571,7 @@
 	pixel_x = 5;
 	pixel_y = 16
 	},
-/turf/open/misc/grass/jungle,
+/turf/open/misc/grass/jungle/station,
 /area/station/science/explab)
 "kQX" = (
 /obj/machinery/computer/security{
@@ -33620,7 +33620,7 @@
 /turf/open/floor/wood,
 /area/station/service/bar/backroom)
 "kRR" = (
-/turf/open/misc/grass/jungle,
+/turf/open/misc/grass/jungle/station,
 /area/station/science/explab)
 "kRW" = (
 /obj/effect/decal/cleanable/dirt,
@@ -37882,7 +37882,7 @@
 /area/station/command/meeting_room)
 "mmy" = (
 /obj/structure/flora/bush/jungle/c/style_random,
-/turf/open/misc/grass/jungle,
+/turf/open/misc/grass/jungle/station,
 /area/station/science/explab)
 "mmH" = (
 /obj/effect/turf_decal/delivery,
@@ -41329,7 +41329,7 @@
 "nzO" = (
 /mob/living/carbon/human/species/monkey,
 /turf/open/misc/dirt/jungle{
-	baseturfs = /turf/open/misc/dirt
+	baseturfs = /turf/open/misc/dirt/station
 	},
 /area/station/science/explab)
 "nzR" = (
@@ -41994,7 +41994,7 @@
 /area/station/engineering/supermatter/room)
 "nNh" = (
 /obj/structure/flora/bush/sunny/style_random,
-/turf/open/misc/grass/jungle,
+/turf/open/misc/grass/jungle/station,
 /area/station/science/explab)
 "nNi" = (
 /obj/structure/table/wood,
@@ -42224,7 +42224,7 @@
 "nRd" = (
 /obj/structure/window/reinforced/spawner/directional/north,
 /obj/structure/flora/bush/fullgrass/style_random,
-/turf/open/misc/grass/jungle,
+/turf/open/misc/grass/jungle/station,
 /area/station/science/explab)
 "nRw" = (
 /obj/machinery/atmospherics/pipe/smart/simple/purple/visible{
@@ -44702,7 +44702,7 @@
 /area/station/ai_monitored/command/nuke_storage)
 "oQU" = (
 /obj/structure/window/reinforced/spawner/directional/north,
-/turf/open/misc/grass/jungle,
+/turf/open/misc/grass/jungle/station,
 /area/station/science/explab)
 "oQW" = (
 /obj/effect/turf_decal/siding/thinplating{
@@ -47798,7 +47798,7 @@
 "pTj" = (
 /obj/structure/flora/bush/fullgrass/style_random,
 /turf/open/misc/dirt/jungle{
-	baseturfs = /turf/open/misc/dirt
+	baseturfs = /turf/open/misc/dirt/station
 	},
 /area/station/science/explab)
 "pTl" = (
@@ -55665,7 +55665,7 @@
 /area/station/cargo/miningdock)
 "sGF" = (
 /turf/open/misc/dirt/jungle{
-	baseturfs = /turf/open/misc/dirt
+	baseturfs = /turf/open/misc/dirt/station
 	},
 /area/station/science/explab)
 "sGG" = (
@@ -56951,7 +56951,7 @@
 "tdY" = (
 /obj/structure/flora/bush/jungle/c/style_random,
 /turf/open/misc/dirt/jungle{
-	baseturfs = /turf/open/misc/dirt
+	baseturfs = /turf/open/misc/dirt/station
 	},
 /area/station/science/explab)
 "tdZ" = (
@@ -62532,7 +62532,7 @@
 "uVa" = (
 /obj/structure/window/reinforced/spawner/directional/west,
 /obj/structure/flora/bush/jungle/c/style_random,
-/turf/open/misc/grass/jungle,
+/turf/open/misc/grass/jungle/station,
 /area/station/science/explab)
 "uVb" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -64486,7 +64486,7 @@
 /area/station/engineering/atmos)
 "vCY" = (
 /obj/structure/flora/tree/palm/style_random,
-/turf/open/misc/grass/jungle,
+/turf/open/misc/grass/jungle/station,
 /area/station/science/explab)
 "vCZ" = (
 /turf/closed/wall,
@@ -64526,7 +64526,7 @@
 /obj/structure/flora/bush/fullgrass/style_random,
 /obj/effect/landmark/event_spawn,
 /turf/open/misc/dirt/jungle{
-	baseturfs = /turf/open/misc/dirt
+	baseturfs = /turf/open/misc/dirt/station
 	},
 /area/station/science/explab)
 "vDu" = (
@@ -64576,7 +64576,7 @@
 /area/station/maintenance/central/greater)
 "vEl" = (
 /obj/structure/window/reinforced/spawner/directional/west,
-/turf/open/misc/grass/jungle,
+/turf/open/misc/grass/jungle/station,
 /area/station/science/explab)
 "vEq" = (
 /obj/machinery/atmospherics/components/unary/thermomachine/freezer{
@@ -66687,7 +66687,7 @@
 /obj/structure/window/reinforced/spawner/directional/west,
 /obj/structure/flora/tree/palm/style_random,
 /obj/structure/flora/coconuts,
-/turf/open/misc/grass/jungle,
+/turf/open/misc/grass/jungle/station,
 /area/station/science/explab)
 "wtS" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
@@ -67992,7 +67992,7 @@
 /area/station/commons/dorms)
 "wSp" = (
 /obj/structure/flora/bush/jungle/b/style_random,
-/turf/open/misc/grass/jungle,
+/turf/open/misc/grass/jungle/station,
 /area/station/science/explab)
 "wSx" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
