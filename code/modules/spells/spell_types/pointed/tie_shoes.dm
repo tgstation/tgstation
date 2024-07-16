@@ -18,8 +18,9 @@
 	cast_range = INFINITY
 	active_msg = "You prepare to tie your target's shoes!"
 
-	/// Adds this amount to the next cooldown when cast, per tile.
+	/// Ignores inability to tie laces, such as jackboots, magboots, or sandals.
 	var/bypass_tie_status = FALSE
+	/// Summons shoes to untie if the target has none.
 	var/summons_shoes = FALSE
 
 /datum/action/cooldown/spell/pointed/untie_shoes/New(Target)
@@ -67,11 +68,12 @@
 
 	var/shoe_to_cast = /obj/item/clothing/shoes/sneakers/random
 
-	var/obj/item/clothing/shoes/shoes_to_tie = cast_on.shoes
 	if(HAS_TRAIT(owner, TRAIT_CHUUNIBYOU))
-		shoes_to_tie = /obj/item/clothing/shoes/sneakers/marisa
+		shoe_to_cast = /obj/item/clothing/shoes/sneakers/marisa
 	if(HAS_TRAIT(owner, TRAIT_SPLATTERCASTER))
-		shoes_to_tie = /obj/item/clothing/shoes/laceup
+		shoe_to_cast = /obj/item/clothing/shoes/laceup
+
+	var/obj/item/clothing/shoes/shoes_to_tie = cast_on.shoes
 
 	if(isnull(shoes_to_tie))
 		if(!summons_shoes)
