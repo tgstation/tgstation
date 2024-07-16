@@ -15,7 +15,13 @@ SUBSYSTEM_DEF(machines)
 
 	var/list/currentrun = list()
 	var/current_part = SSMACHINES_MACHINES
-	var/apc_channels = list(SSMACHINES_APCS_ENVIRONMENT, SSMACHINES_APCS_LIGHTS, SSMACHINES_APCS_EQUIPMENT)
+	var/list/apc_steps = list(
+		SSMACHINES_APCS_EARLY,
+		SSMACHINES_APCS_ENVIRONMENT,
+		SSMACHINES_APCS_LIGHTS,
+		SSMACHINES_APCS_EQUIPMENT,
+		SSMACHINES_APCS_LATE
+		)
 	///List of all powernets on the server.
 	var/list/datum/powernet/powernets = list()
 
@@ -98,82 +104,33 @@ SUBSYSTEM_DEF(machines)
 				thing.datum_flags &= ~DF_ISPROCESSING
 			if (MC_TICK_CHECK)
 				return
-		current_part = SSMACHINES_APCS_EARLY
-		src.currentrun = processing_apcs.Copy()
-
-	//Processing static power draw on APCs
-	if(current_part == SSMACHINES_APCS_EARLY)
-		//cache for sanic speed (lists are references anyways)
-		var/list/currentrun = src.currentrun
-		while(currentrun.len)
-			var/obj/machinery/power/apc/apc = currentrun[currentrun.len]
-			currentrun.len--
-			if(QDELETED(apc) || apc.early_process(wait * 0.1) == PROCESS_KILL)
-				processing_apcs -= apc
-				apc.datum_flags &= ~DF_ISPROCESSING
-			if (MC_TICK_CHECK)
-				return
-		current_part = SSMACHINES_APCS_ENVIRONMENT
-		src.currentrun = processing_apcs.Copy()
-
-	//Charge to fulfill the environment channel
-	if(current_part == SSMACHINES_APCS_ENVIRONMENT)
-		//cache for sanic speed (lists are references anyways)
-		var/list/currentrun = src.currentrun
-		while(currentrun.len)
-			var/obj/machinery/power/apc/apc = currentrun[currentrun.len]
-			currentrun.len--
-			if(QDELETED(apc) || apc.charge_channel(SSMACHINES_APCS_ENVIRONMENT, wait * 0.1) == PROCESS_KILL)
-				processing_apcs -= apc
-				apc.datum_flags &= ~DF_ISPROCESSING
-			if(MC_TICK_CHECK)
-				return
-		current_part = SSMACHINES_APCS_LIGHTS
-		src.currentrun = processing_apcs.Copy()
-
-	//Charge to fulfill the lights channel
-	if(current_part == SSMACHINES_APCS_LIGHTS)
-		//cache for sanic speed (lists are references anyways)
-		var/list/currentrun = src.currentrun
-		while(currentrun.len)
-			var/obj/machinery/power/apc/apc = currentrun[currentrun.len]
-			currentrun.len--
-			if(QDELETED(apc) || apc.charge_channel(SSMACHINES_APCS_LIGHTS, wait * 0.1) == PROCESS_KILL)
-				processing_apcs -= apc
-				apc.datum_flags &= ~DF_ISPROCESSING
-			if(MC_TICK_CHECK)
-				return
-		current_part = SSMACHINES_APCS_EQUIPMENT
-		src.currentrun = processing_apcs.Copy()
-
-	//Charge to fulfill the equipment channel or until the cell is full
-	if(current_part == SSMACHINES_APCS_EQUIPMENT)
-		//cache for sanic speed (lists are references anyways)
-		var/list/currentrun = src.currentrun
-		while(currentrun.len)
-			var/obj/machinery/power/apc/apc = currentrun[currentrun.len]
-			currentrun.len--
-			if(QDELETED(apc) || apc.charge_channel(SSMACHINES_APCS_EQUIPMENT, wait * 0.1) == PROCESS_KILL)
-				processing_apcs -= apc
-				apc.datum_flags &= ~DF_ISPROCESSING
-			if(MC_TICK_CHECK)
-				return
-		current_part = SSMACHINES_APCS_LATE
+		current_part = apc_steps[1]
 		src.currentrun = processing_apcs.Copy()
 
 	//Processing APCs
-	if(current_part == SSMACHINES_APCS_LATE)
+	while(current_part in apc_steps)
 		//cache for sanic speed (lists are references anyways)
 		var/list/currentrun = src.currentrun
 		while(currentrun.len)
 			var/obj/machinery/power/apc/apc = currentrun[currentrun.len]
 			currentrun.len--
-			if(QDELETED(apc) || apc.late_process(wait * 0.1) == PROCESS_KILL)
+			if(QDELETED(apc))
 				processing_apcs -= apc
 				apc.datum_flags &= ~DF_ISPROCESSING
-			if (MC_TICK_CHECK)
+			switch(current_part)
+				if(SSMACHINES_APCS_EARLY)
+					apc.early_process(wait * 0.1)
+				if(SSMACHINES_APCS_LATE)
+					apc.late_process(wait * 0.1)
+				else
+					apc.charge_channel(current_part, wait * 0.1)
+			if(MC_TICK_CHECK)
 				return
-
+		var/next_index = apc_steps.Find(current_part) + 1
+		if (!apc_steps[next_index])
+			return
+		current_part = apc_steps[next_index]
+		src.currentrun = processing_apcs.Copy()
 
 /datum/controller/subsystem/machines/proc/setup_template_powernets(list/cables)
 	var/obj/structure/cable/PC
