@@ -1,0 +1,4 @@
+author: "SmArtKar"
+delete-after: True
+changes:
+  - bugfix: "Style meter text is no longer blurry and doesnt overlap with UI anymore."
