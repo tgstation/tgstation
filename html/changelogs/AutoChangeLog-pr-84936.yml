@@ -1,0 +1,4 @@
+author: "lizardqueenlexi"
+delete-after: True
+changes:
+  - bugfix: "You can no longer cause a bluescreen by attempting to recolor non-recolorable loadout items."

@@ -1,0 +1,7 @@
+author: "necromanceranne"
+delete-after: True
+changes:
+  - rscadd: "Pipe pistols now magdump their entire magazine when fired."
+  - rscadd: "Pipeguns and their subtypes have a knockback effect."
+  - bugfix: "Pipe pistols cannot be bayoneted, as intended."
+  - bugfix: "Junk rounds now actually do their extra damage effects against certain mob types. Borgs across the Spinward tremble at the knowledge that these junk weapons can obliterate them with ease."

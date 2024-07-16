@@ -1,0 +1,5 @@
+author: "Xackii"
+delete-after: True
+changes:
+  - rscadd: "new wizard spells category - perks."
+  - rscadd: "adds 9 wizard perks."

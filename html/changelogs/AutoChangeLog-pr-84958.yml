@@ -1,0 +1,4 @@
+author: "lizardqueenlexi"
+delete-after: True
+changes:
+  - bugfix: "Atmosphere can no longer flow through closed necropolis gates."

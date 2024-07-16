@@ -1,0 +1,5 @@
+author: "Ghommie"
+delete-after: True
+changes:
+  - qol: "removed a redundant, annoying reach check that prevents casting a fishing rod before the projectile is generated."
+  - qol: "You can now unhook the currently hooked item of a fishing rod with right-click."
