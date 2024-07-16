@@ -22,6 +22,11 @@
 	var/bypass_tie_status = FALSE
 	var/summons_shoes = FALSE
 
+/datum/action/cooldown/spell/pointed/untie_shoes/New(Target)
+	. = ..()
+	// tgs first spell with multiple invocations!!!!!!
+		invocation = pick("Acetato!", "Agaletto!")
+
 /datum/action/cooldown/spell/pointed/untie_shoes/level_spell(bypass_cap)
 	. = ..()
 	if(spell_level == 2)
@@ -69,22 +74,24 @@
 		shoes_to_tie = /obj/item/clothing/shoes/laceup
 
 	if(isnull(shoes_to_tie))
-		if(summons_shoes)
-			shoes_to_tie = new shoe_to_cast(cast_on)
-			if(!cast_on.equip_to_slot_or_del(shoes_to_tie, ITEM_SLOT_FEET))
-				to_chat(owner, span_warning("Couldn't equip shoes on [cast_on]!"))
-				return FALSE
-			else if(invocation_type != INVOCATION_NONE)
-				playsound(cast_on, 'sound/magic/summonitems_generic.ogg', 50, TRUE)
-			else
-				to_chat(owner, span_warning("[cast_on] isn't wearing any shoes!"))
+		if(!summons_shoes)
+			to_chat(owner, span_warning("[cast_on] isn't wearing any shoes!"))
 			return FALSE
+
+		shoes_to_tie = new shoe_to_cast(cast_on)
+		if(!cast_on.equip_to_slot_or_del(shoes_to_tie,	ITEM_SLOT_FEET))
+			to_chat(owner, span_warning("Couldn't equip shoes on [cast_on]!"))
+			return FALSE
+
+		if(invocation_type != INVOCATION_NONE)
+			playsound(cast_on, 'sound/magic/summonitems_generic.ogg', 50, TRUE)
 
 	switch(shoes_to_tie.tied)
 		if(SHOES_TIED)
 			if(!shoes_to_tie.can_be_tied)
 				if(bypass_tie_status)
 					to_chat(owner, span_warning("You magically grant laces to [cast_on]'s shoes!"))
+					cast_on.balloon_alert(owner, "laced!")
 					shoes_to_tie.can_be_tied = TRUE
 					if(invocation_type != INVOCATION_NONE)
 						playsound(cast_on, 'sound/magic/summonitems_generic.ogg', 50, TRUE)
