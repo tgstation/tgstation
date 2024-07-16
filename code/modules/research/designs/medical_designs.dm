@@ -445,7 +445,7 @@
 	construction_time = 2 SECONDS
 	build_path = /obj/item/organ/internal/cyberimp/arm/strongarm
 	category = list(
-		RND_CATEGORY_CYBERNETICS + RND_SUBCATEGORY_CYBERNETICS_IMPLANTS_UTILITY
+		RND_CATEGORY_CYBERNETICS + RND_SUBCATEGORY_CYBERNETICS_IMPLANTS_COMBAT
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_MEDICAL
 
