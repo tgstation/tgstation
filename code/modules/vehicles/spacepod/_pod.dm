@@ -57,6 +57,6 @@
 		setDir(direction) //first press changes dir
 		return
 	trail.generate_effect()
-
+// may or may not work havent tested
 	newtonian_move(dir2angle(dir), drift_force = force_per_move, controlled_cap = max_speed)
 	setDir(direction)
