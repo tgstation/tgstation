@@ -755,14 +755,16 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	return
 
 /mob/dead/observer/proc/show_data_huds()
-	ADD_TRAIT(src, TRAIT_SECURITY_HUD, ref(src))
-	ADD_TRAIT(src, TRAIT_MEDICAL_HUD, ref(src))
-	ADD_TRAIT(src, TRAIT_DIAGNOSTIC_HUD, ref(src))
+	ADD_TRAIT(src, TRAIT_SECURITY_HUD, REF(src))
+	ADD_TRAIT(src, TRAIT_MEDICAL_HUD, REF(src))
+	ADD_TRAIT(src, TRAIT_DIAGNOSTIC_HUD, REF(src))
+	ADD_TRAIT(src, TRAIT_BOT_PATH_HUD, REF(src))
 
 /mob/dead/observer/proc/remove_data_huds()
-	REMOVE_TRAIT(src, TRAIT_SECURITY_HUD, ref(src))
-	REMOVE_TRAIT(src, TRAIT_MEDICAL_HUD, ref(src))
-	REMOVE_TRAIT(src, TRAIT_DIAGNOSTIC_HUD, ref(src))
+	REMOVE_TRAIT(src, TRAIT_SECURITY_HUD, REF(src))
+	REMOVE_TRAIT(src, TRAIT_MEDICAL_HUD, REF(src))
+	REMOVE_TRAIT(src, TRAIT_DIAGNOSTIC_HUD, REF(src))
+	REMOVE_TRAIT(src, TRAIT_BOT_PATH_HUD, REF(src))
 
 /mob/dead/observer/verb/toggle_data_huds()
 	set name = "Toggle Sec/Med/Diag HUD"

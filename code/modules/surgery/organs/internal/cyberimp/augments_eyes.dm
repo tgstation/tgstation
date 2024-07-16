@@ -13,7 +13,7 @@
 	desc = "These cybernetic eyes will display a HUD over everything you see. Maybe."
 	slot = ORGAN_SLOT_HUD
 	actions_types = list(/datum/action/item_action/toggle_hud)
-	var/HUD_trait = null
+	var/HUD_traits = list()
 	/// Whether the HUD implant is on or off
 	var/toggled_on = TRUE
 
@@ -21,40 +21,43 @@
 /obj/item/organ/internal/cyberimp/eyes/hud/proc/toggle_hud(mob/living/carbon/eye_owner)
 	if(toggled_on)
 		toggled_on = FALSE
-		ADD_TRAIT(eye_owner, HUD_trait, ORGAN_TRAIT)
+		for (var/HUD_trait in HUD_traits)
+			ADD_TRAIT(eye_owner, HUD_trait, ORGAN_TRAIT)
 		balloon_alert(eye_owner, "hud disabled")
 		return
 	toggled_on = TRUE
-	REMOVE_TRAIT(eye_owner, HUD_trait, ORGAN_TRAIT)
+	for (var/HUD_trait in HUD_traits)
+		REMOVE_TRAIT(eye_owner, HUD_trait, ORGAN_TRAIT)
 	balloon_alert(eye_owner, "hud enabled")
 
 /obj/item/organ/internal/cyberimp/eyes/hud/Insert(mob/living/carbon/eye_owner, special = FALSE, movement_flags)
 	. = ..()
 	if(!.)
 		return
-	if(HUD_trait)
+	for (var/HUD_trait in HUD_traits)
 		ADD_TRAIT(eye_owner, HUD_trait, ORGAN_TRAIT)
 	toggled_on = TRUE
 
 /obj/item/organ/internal/cyberimp/eyes/hud/Remove(mob/living/carbon/eye_owner, special, movement_flags)
 	. = ..()
-	if(HUD_trait)
+	for (var/HUD_trait in HUD_traits)
 		REMOVE_TRAIT(eye_owner, HUD_trait, ORGAN_TRAIT)
 	toggled_on = FALSE
 
 /obj/item/organ/internal/cyberimp/eyes/hud/medical
 	name = "Medical HUD implant"
 	desc = "These cybernetic eye implants will display a medical HUD over everything you see."
-	HUD_trait = TRAIT_MEDICAL_HUD
+	HUD_traits = list(TRAIT_MEDICAL_HUD)
 
 /obj/item/organ/internal/cyberimp/eyes/hud/security
 	name = "Security HUD implant"
 	desc = "These cybernetic eye implants will display a security HUD over everything you see."
-	HUD_trait = TRAIT_SECURITY_HUD
+	HUD_traits = list(TRAIT_SECURITY_HUD)
 
 /obj/item/organ/internal/cyberimp/eyes/hud/diagnostic
 	name = "Diagnostic HUD implant"
 	desc = "These cybernetic eye implants will display a diagnostic HUD over everything you see."
+	HUD_traits = list(TRAIT_DIAGNOSTIC_HUD, TRAIT_BOT_PATH_HUD)
 
 /obj/item/organ/internal/cyberimp/eyes/hud/security/syndicate
 	name = "Contraband Security HUD Implant"

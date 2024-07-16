@@ -39,7 +39,7 @@
 		from advanced machinery, exosuits, and other devices, allowing the user to visualize current power levels \
 		and integrity of such. They say these also let you see behind you."
 	icon_state = "diaghud_visor"
-	visor_traits = list(TRAIT_DIAGNOSTIC_HUD)
+	visor_traits = list(TRAIT_DIAGNOSTIC_HUD, TRAIT_BOT_PATH_HUD)
 
 //Security Visor - Gives you a security HUD.
 /obj/item/mod/module/visor/sechud
