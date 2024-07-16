@@ -96,7 +96,7 @@
 	cloner = new(src)
 	sterile = new(src)
 
-/obj/structure/aquarium/evolution/Destroy()
+/obj/structure/aquarium/traits/Destroy()
 	crossbreeder = null
 	cloner = null
 	sterile = null
@@ -226,7 +226,7 @@
 
 /datum/unit_test/raise_a_chasm_crab/Run()
 	var/obj/structure/aquarium/evolution/aquarium = allocate(/obj/structure/aquarium/crab)
-	var/mob/living/basic/mining/lobstrosity/juvenile/lobster = aquarium.crabbie.grow_up(1) //one stands for one second
+	var/mob/living/basic/mining/lobstrosity/juvenile/lobster = aquarium.crabbie.grow_up(1) //one stands for a second
 	TEST_ASSERT(lobster, "The test aquarium's chasm crab didn't grow up into a lobstrosity")
 	allocated |= lobster //make sure it's allocated and thus properly deleted when the test is over
 	TEST_ASSERT_EQUAL(lobster.loc, get_turf(aquarium), "The lobstrosity didn't spawn on the aquarium's turf")
@@ -238,7 +238,7 @@
 /obj/structure/aquarium/crab
 	allow_breeding = TRUE //needed for growing up
 	///Our test subject
-	var/obj/fish/chasm_crab/instant_growth/crabbie
+	var/obj/item/fish/chasm_crab/instant_growth/crabbie
 
 /obj/structure/aquarium/crab/Initialize(mapload)
 	. = ..()
@@ -249,7 +249,7 @@
 	if(gone == crabbie) //the fish item is deleted once it grows up
 		crabbie = null
 
-obj/fish/chasm_crab/instant_growth
+/obj/item/fish/chasm_crab/instant_growth
 	growth_rate = 100
 	fish_traits = list() //We don't want to end up applying traits twice on the resulting lobstrosity
 
