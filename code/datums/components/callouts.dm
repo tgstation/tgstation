@@ -43,11 +43,13 @@
 	cur_user = atom_parent.loc
 
 /datum/component/callouts/RegisterWithParent()
-	. = ..()
 	RegisterSignal(parent, COMSIG_MOB_CLICKON, PROC_REF(on_click))
 	RegisterSignal(parent, COMSIG_ITEM_EQUIPPED, PROC_REF(on_equipped))
 	RegisterSignal(parent, COMSIG_ITEM_DROPPED, PROC_REF(on_dropped))
 	RegisterSignal(parent, COMSIG_ATOM_EXAMINE, PROC_REF(on_examines))
+
+/datum/component/callouts/UnregisterFromParent()
+	UnregisterSignal(parent, list(COMSIG_MOB_CLICKON, COMSIG_ITEM_EQUIPPED, COMSIG_ITEM_DROPPED, COMSIG_ATOM_EXAMINE))
 
 /datum/component/callouts/proc/on_equipped(datum/source, mob/equipper, slot)
 	SIGNAL_HANDLER
