@@ -16,10 +16,10 @@ SUBSYSTEM_DEF(machines)
 	var/list/currentrun = list()
 	var/current_part = SSMACHINES_MACHINES
 	var/list/apc_steps = list(
-		SSMACHINES_APCS_EARLY,
 		SSMACHINES_APCS_ENVIRONMENT,
 		SSMACHINES_APCS_LIGHTS,
 		SSMACHINES_APCS_EQUIPMENT,
+		SSMACHINES_APCS_EARLY,
 		SSMACHINES_APCS_LATE
 		)
 	///List of all powernets on the server.

@@ -529,10 +529,6 @@
  * This adds up the total static power usage for the apc's area, then draw that power usage from the grid or APC cell.
  */
 /obj/machinery/power/apc/proc/early_process()
-	lastused_charge = 0
-	last_charging = charging
-	charging = APC_NOT_CHARGING
-
 	if(isnull(area))
 		return
 
@@ -639,6 +635,11 @@
 
 // charge until the battery is full or to the treshold of the provided channel
 /obj/machinery/power/apc/proc/charge_channel(channel = null, seconds_per_tick)
+	if(channel == SSMACHINES_APCS_ENVIRONMENT)
+		lastused_charge = 0
+		last_charging = charging
+		charging = APC_NOT_CHARGING
+
 	if(!cell || shorted || !operating || !chargemode || !surplus() || !cell.used_charge())
 		return
 
