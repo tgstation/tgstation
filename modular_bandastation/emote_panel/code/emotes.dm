@@ -262,7 +262,7 @@
 	message = "издает неприятное бульканье."
 	message_mime = "бесшумно и неприятно булькает."
 
-/datum/emote/living/beep
+/datum/emote/silicon/beep
 	name = "сигналить"
 	message = "издает сигнал."
 	message_param = "издает сигнал в сторону %t."

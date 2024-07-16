@@ -277,6 +277,9 @@
 #define COMSIG_LIVING_GRAB "living_grab"
 	// Return COMPONENT_CANCEL_ATTACK_CHAIN / COMPONENT_SKIP_ATTACK_CHAIN to stop the grab
 
+///Called when living finish eat (/datum/component/edible/proc/On_Consume)
+#define COMSIG_LIVING_FINISH_EAT "living_finish_eat"
+
 /// From /datum/element/basic_eating/try_eating()
 #define COMSIG_MOB_PRE_EAT "mob_pre_eat"
 	///cancel eating attempt

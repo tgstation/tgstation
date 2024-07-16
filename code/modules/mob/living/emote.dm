@@ -355,6 +355,7 @@
 	message = "screams!"
 	message_mime = "acts out a scream!"
 	emote_type = EMOTE_VISIBLE | EMOTE_AUDIBLE
+	mob_type_blacklist_typecache = list(/mob/living/brain, /mob/living/carbon/human)
 
 /datum/emote/living/scream/run_emote(mob/user, params, type_override, intentional = FALSE)
 	if(!intentional && HAS_TRAIT(user, TRAIT_ANALGESIA))
@@ -713,15 +714,6 @@
 
 /datum/emote/living/custom/replace_pronoun(mob/user, message)
 	return message
-
-/datum/emote/living/beep
-	key = "beep"
-	key_third_person = "beeps"
-	message = "beeps."
-	message_param = "beeps at %t."
-	sound = 'sound/machines/twobeep.ogg'
-	mob_type_allowed_typecache = list(/mob/living/brain, /mob/living/silicon, /mob/living/basic/orbie)
-	emote_type = EMOTE_AUDIBLE
 
 /datum/emote/living/inhale
 	key = "inhale"
