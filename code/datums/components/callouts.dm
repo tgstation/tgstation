@@ -13,10 +13,10 @@
 	var/radio_prefix = null
 	/// List of all callout options
 	var/static/list/callout_options = typecacheof(subtypesof(/datum/callout_option))
-	/// When last callout was used
-	var/last_callout_time = 0
 	/// Text displayed when parent is examined
 	var/examine_text = null
+	/// Cooldown for callouts
+	COOLDOWN_DECLARE(callout_cooldown)
 
 /datum/component/callouts/Initialize(item_slot = null, voiceline = FALSE, radio_prefix = null, examine_text = null)
 	if (!isitem(parent) && !ismob(parent))
@@ -83,8 +83,8 @@
 	if (!LAZYACCESS(modifiers, SHIFT_CLICK) || !LAZYACCESS(modifiers, MIDDLE_CLICK))
 		return
 
-	if (world.time < last_callout_time + CALLOUT_COOLDOWN)
-		clicked_atom.balloon_alert(user, "callout is on cooldown")
+	if (!COOLDOWN_FINISHED(src, callout_cooldown))
+		clicked_atom.balloon_alert(user, "callout is on cooldown!")
 		return COMSIG_MOB_CANCEL_CLICKON
 
 	INVOKE_ASYNC(src, PROC_REF(callout_picker), user, clicked_atom)
@@ -99,7 +99,7 @@
 	if (!selection)
 		return
 
-	last_callout_time = world.time
+	COOLDOWN_START(src, callout_cooldown, CALLOUT_COOLDOWN)
 	new /obj/effect/temp_visual/callout(get_turf(user), user, selection, clicked_atom)
 	if (voiceline)
 		user.say((!isnull(radio_prefix) ? radio_prefix : "") + initial(selection.voiceline), forced = src)
