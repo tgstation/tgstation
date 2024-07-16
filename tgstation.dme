@@ -1047,6 +1047,7 @@
 #include "code\datums\components\bumpattack.dm"
 #include "code\datums\components\burning.dm"
 #include "code\datums\components\butchering.dm"
+#include "code\datums\components\callouts.dm"
 #include "code\datums\components\caltrop.dm"
 #include "code\datums\components\can_flash_from_behind.dm"
 #include "code\datums\components\chasm.dm"

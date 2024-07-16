@@ -1200,5 +1200,7 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 ///Trait given to a turf that should not be allowed to be terraformed, such as turfs holding ore vents.
 #define TRAIT_NO_TERRAFORM "no_terraform"
 
+///Mobs with these trait do not get italicized/quiet speech when speaking in low pressure
+#define TRAIT_SPEECH_BOOSTER "speech_booster"
 
 // END TRAIT DEFINES
