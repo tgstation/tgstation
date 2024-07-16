@@ -1,4 +1,4 @@
-///Datum for basic mobs to define what they can attack.GET_TARGETING_STRATEGY\((/[^,]*)\),
+///Datum for basic mobs to define what they can attack,
 ///Global, just like ai_behaviors
 /datum/targeting_strategy
 

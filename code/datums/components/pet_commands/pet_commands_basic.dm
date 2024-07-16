@@ -139,7 +139,7 @@
 	var/mob/living/living_parent = parent
 	if (!living_parent.ai_controller)
 		return
-	var/datum/targeting_strategy/targeter = GET_TARGETING_STRATEGY(living_parent.ai_controller.blackboard[BB_FISH_TARGETING_STRATEGY])
+	var/datum/targeting_strategy/targeter = GET_TARGETING_STRATEGY(living_parent.ai_controller.blackboard[targeting_strategy_key])
 	if (!targeter)
 		return
 	if (!targeter.can_attack(living_parent, target))

@@ -5,7 +5,7 @@
 		BB_FISH_TARGETING_STRATEGY = /datum/targeting_strategy/fishing,
 		BB_TARGET_MINIMUM_STAT = HARD_CRIT,
 		BB_LOBSTROSITY_EXPLOIT_TRAITS = list(TRAIT_INCAPACITATED, TRAIT_FLOORED, TRAIT_IMMOBILIZED, TRAIT_KNOCKEDOUT),
-		BB_LOBSTROSITY_FINGER_LUST = 0
+		BB_LOBSTROSITY_FINGER_LUST = 0,
 	)
 	ai_traits = PAUSE_DURING_DO_AFTER
 
@@ -14,6 +14,7 @@
 	planning_subtrees = list(
 		/datum/ai_planning_subtree/random_speech/insect,
 		/datum/ai_planning_subtree/hoard_fingers,
+		/datum/ai_planning_subtree/pet_planning,
 		/datum/ai_planning_subtree/simple_find_target,
 		/datum/ai_planning_subtree/targeted_mob_ability/lobster,
 		/datum/ai_planning_subtree/flee_target/lobster,
@@ -23,14 +24,21 @@
 		/datum/ai_planning_subtree/find_and_hunt_target/lobster_fishing,
 		/datum/ai_planning_subtree/find_fingers,
 	)
+	///The basic mob flee distance key is set to this on New()
+	var/flee_distance = 6
+
+/datum/ai_controller/basic_controller/lobstrosity/New(atom/new_pawn)
+	. = ..()
+	set_blackboard_key(BB_BASIC_MOB_FLEE_DISTANCE, flee_distance)
 
 ///Ensure that juveline lobstrosities witll charge at things they can reach.
 /datum/ai_controller/basic_controller/lobstrosity/juvenile
 	planning_subtrees = list(
 		/datum/ai_planning_subtree/random_speech/insect,
 		/datum/ai_planning_subtree/hoard_fingers,
+		/datum/ai_planning_subtree/pet_planning,
 		/datum/ai_planning_subtree/simple_find_target,
-		/datum/ai_planning_subtree/targeted_mob_ability/lobster/juvenile,
+		/datum/ai_planning_subtree/targeted_mob_ability/lobster,
 		/datum/ai_planning_subtree/flee_target/lobster,
 		/datum/ai_planning_subtree/attack_obstacle_in_path,
 		/datum/ai_planning_subtree/basic_melee_attack_subtree/lobster,
@@ -38,12 +46,14 @@
 		/datum/ai_planning_subtree/find_and_hunt_target/lobster_fishing,
 		/datum/ai_planning_subtree/find_fingers,
 	)
+	flee_distance = 3
 
 ///A subtype of juvenile lobster AI that has the target_retaliate behaviour instead of simple_find_target
 /datum/ai_controller/basic_controller/lobstrosity/juvenile/pacific
 	planning_subtrees = list(
 		/datum/ai_planning_subtree/random_speech/insect,
 		/datum/ai_planning_subtree/hoard_fingers,
+		/datum/ai_planning_subtree/pet_planning,
 		/datum/ai_planning_subtree/target_retaliate,
 		/datum/ai_planning_subtree/targeted_mob_ability/lobster/juvenile,
 		/datum/ai_planning_subtree/flee_target/lobster,
@@ -59,6 +69,7 @@
 	planning_subtrees = list(
 		/datum/ai_planning_subtree/random_speech/insect,
 		/datum/ai_planning_subtree/hoard_fingers,
+		/datum/ai_planning_subtree/pet_planning,
 		/datum/ai_planning_subtree/capricious_retaliate,
 		/datum/ai_planning_subtree/targeted_mob_ability/lobster/juvenile,
 		/datum/ai_planning_subtree/flee_target/lobster,
