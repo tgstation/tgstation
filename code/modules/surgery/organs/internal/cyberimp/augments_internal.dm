@@ -151,8 +151,8 @@
 	sparks.set_up(5, 1, src)
 	sparks.start()
 
-	owner.add_traits(list(TRAIT_IGNOREDAMAGESLOWDOWN, TRAIT_BATON_RESISTANCE, TRAIT_STUNIMMUNE), REF(src))
-	addtimer(TRAIT_CALLBACK_REMOVE(owner, TRAIT_IGNOREDAMAGESLOWDOWN, REF(src)), stun_resistance_time)
+	ADD_TRAIT(owner, TRAIT_STUNIMMUNE, REF(src))
+	ADD_TRAIT(owner, TRAIT_BATON_RESISTANCE, REF(src))
 	addtimer(TRAIT_CALLBACK_REMOVE(owner, TRAIT_BATON_RESISTANCE, REF(src)), stun_resistance_time)
 	addtimer(TRAIT_CALLBACK_REMOVE(owner, TRAIT_STUNIMMUNE, REF(src)), stun_resistance_time)
 
