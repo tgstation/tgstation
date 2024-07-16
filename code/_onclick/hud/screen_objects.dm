@@ -90,7 +90,7 @@
 /atom/movable/screen/proc/on_hud_delete(datum/source)
 	SIGNAL_HANDLER
 
-	hud = null
+	set_new_hud(hud_owner = null)
 
 /atom/movable/screen/text
 	icon = null
