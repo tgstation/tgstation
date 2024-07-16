@@ -34,12 +34,12 @@ export function JobIcon(props: Props) {
 
   // We don't need to cast here but typescript isn't smart enough to know that
   const { icon = '', job = '', mind_icon = '', mind_job = '' } = item;
-  const usedIcon = realNameDisplay ? mind_icon : icon;
-  const usedJob = realNameDisplay ? mind_job : job;
+  const usedIcon = realNameDisplay ? mind_icon || icon : icon;
+  const usedJob = realNameDisplay ? mind_job || job : job;
 
   return (
     <div className="JobIcon">
-      {usedIcon === 'borg' ? (
+      {icon === 'borg' ? (
         <Icon color="lightblue" name={JOB2ICON[usedJob]} ml={0.3} mt={0.4} />
       ) : (
         <DmIcon
