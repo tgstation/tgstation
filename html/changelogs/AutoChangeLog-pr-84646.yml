@@ -1,5 +1,0 @@
-author: "Ghommie"
-delete-after: True
-changes:
-  - rscadd: "Examining high-value paintings now can give a positive moodlet."
-  - qol: "Observers can now zoom paintings in and out in the UI."

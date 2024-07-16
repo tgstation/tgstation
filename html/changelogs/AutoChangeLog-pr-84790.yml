@@ -1,5 +1,0 @@
-author: "Ghommie"
-delete-after: True
-changes:
-  - bugfix: "ACTUALLY fixed hoverboards being able to be used in space."
-  - balance: "However, you can soar space with the holy skateboard. at a slower speed."
