@@ -108,7 +108,7 @@
 #define EMOTE_HUMAN_HEM 			"Хмыкнуть"
 #define EMOTE_HUMAN_SCRATCH 		"Почесаться"
 #define EMOTE_HUMAN_WHISTLE 		"Свистеть"
-#define EMOTE_HUMAN_SNUFFLE 		"Нюхать"
+#define EMOTE_HUMAN_SNUFFLE 		"Шмыгать носом"
 #define EMOTE_HUMAN_ROAR 			"Рычать"
 #define EMOTE_HUMAN_RUMBLE 			"Урчать"
 #define EMOTE_HUMAN_THREAT 			"Угрожать"
