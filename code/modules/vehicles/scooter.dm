@@ -212,14 +212,13 @@
 	board_item_type = /obj/item/melee/skateboard/holyboard
 	instability = 3
 	icon_state = "hoverboard_holy"
-/obj/vehicle/ridden/scooter/skateboard/hoverboard/holyboarded/post_buckle_mob(mob/living/M)
-	M.AddComponent(/datum/component/anti_magic, MAGIC_RESISTANCE|MAGIC_RESISTANCE_HOLY)
-	return ..()
 
-/obj/vehicle/ridden/scooter/skateboard/hoverboard/holyboarded/post_unbuckle_mob(mob/living/M)
-	if(!has_buckled_mobs())
-		qdel (M.GetComponent(/datum/component/anti_magic, MAGIC_RESISTANCE|MAGIC_RESISTANCE_HOLY))
-		return ..()
+/obj/vehicle/ridden/scooter/skateboard/hoverboard/make_ridable()
+	AddElement(/datum/element/ridable, /datum/component/riding/vehicle/scooter/skateboard/hover/holy)
+
+/obj/vehicle/ridden/scooter/skateboard/hoverboard/holyboarded/Initialize(mapload)
+	. = ..()
+	AddComponent(/datum/component/anti_magic, MAGIC_RESISTANCE|MAGIC_RESISTANCE_HOLY)
 
 /obj/vehicle/ridden/scooter/skateboard/hoverboard/admin
 	name = "\improper Board Of Directors"

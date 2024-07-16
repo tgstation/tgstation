@@ -13,8 +13,10 @@
 	var/slots
 	/// If set to true, turns all text to uppercase
 	var/uppercase = FALSE
+	/// Any additional checks that we should do before applying the speech modification
+	var/datum/callback/should_modify_speech = null
 
-/datum/component/speechmod/Initialize(replacements = list(), end_string = "", end_string_chance = 100, slots, uppercase = FALSE)
+/datum/component/speechmod/Initialize(replacements = list(), end_string = "", end_string_chance = 100, slots, uppercase = FALSE, should_modify_speech)
 	if (!ismob(parent) && !isitem(parent) && !istype(parent, /datum/mutation/human))
 		return COMPONENT_INCOMPATIBLE
 
@@ -23,6 +25,7 @@
 	src.end_string_chance = end_string_chance
 	src.slots = slots
 	src.uppercase = uppercase
+	src.should_modify_speech = should_modify_speech
 
 	if (istype(parent, /datum/mutation/human))
 		RegisterSignal(parent, COMSIG_MUTATION_GAINED, PROC_REF(on_mutation_gained))
@@ -50,6 +53,8 @@
 
 	var/message = speech_args[SPEECH_MESSAGE]
 	if(message[1] == "*")
+		return
+	if(!isnull(should_modify_speech) && !should_modify_speech.Invoke(source, speech_args))
 		return
 
 	for (var/to_replace in replacements)
@@ -123,3 +128,7 @@
 		return
 	UnregisterSignal(targeted, COMSIG_MOB_SAY)
 	targeted = null
+
+/datum/component/speechmod/Destroy()
+	should_modify_speech = null
+	return ..()

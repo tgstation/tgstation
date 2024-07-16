@@ -131,7 +131,7 @@
 	maptext_height = 120
 	maptext_width = 105
 	maptext_x = 5
-	maptext_y = 100
+	maptext_y = 94
 	maptext = ""
 	layer = SCREENTIP_LAYER
 

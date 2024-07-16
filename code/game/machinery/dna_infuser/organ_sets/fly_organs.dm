@@ -51,7 +51,7 @@
 
 /obj/item/organ/internal/tongue/fly/New(class, timer, datum/mutation/human/copymut)
 	. = ..()
-	AddComponent(/datum/component/speechmod, replacements = speech_replacements)
+	AddComponent(/datum/component/speechmod, replacements = speech_replacements, should_modify_speech = CALLBACK(src, PROC_REF(should_modify_speech)))
 
 /obj/item/organ/internal/tongue/fly/Initialize(mapload)
 	. = ..()
