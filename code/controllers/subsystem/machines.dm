@@ -121,6 +121,7 @@ SUBSYSTEM_DEF(machines)
 				if(SSMACHINES_APCS_EARLY)
 					apc.early_process(wait * 0.1)
 				if(SSMACHINES_APCS_LATE)
+					apc.charge_channel(null, wait * 0.1)
 					apc.late_process(wait * 0.1)
 				else
 					apc.charge_channel(current_part, wait * 0.1)

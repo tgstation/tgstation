@@ -634,18 +634,22 @@
 		cell.charge = cell.maxcharge
 		charging = APC_FULLY_CHARGED
 
-/obj/machinery/power/apc/proc/charge_channel(channel = SSMACHINES_APCS_ENVIRONMENT, seconds_per_tick)
+// charge until the battery is full or to the treshold of the provided channel
+/obj/machinery/power/apc/proc/charge_channel(channel = null, seconds_per_tick)
 	if(!cell || shorted || !operating || !chargemode || !surplus() || !cell.used_charge())
 		return
 
 	// no overcharge past the next treshold
 	var/need_charge_for_channel
-	if(channel == SSMACHINES_APCS_ENVIRONMENT)
-		need_charge_for_channel = (cell.maxcharge * 0.05) - cell.charge
-	else if(channel == SSMACHINES_APCS_LIGHTS)
-		need_charge_for_channel = (cell.maxcharge * (APC_CHANNEL_LIGHT_TRESHOLD + 5) * 0.01) - cell.charge
-	else
-		need_charge_for_channel = cell.used_charge()
+	switch(channel)
+		if(SSMACHINES_APCS_ENVIRONMENT)
+			need_charge_for_channel = (cell.maxcharge * 0.05) - cell.charge
+		if(SSMACHINES_APCS_LIGHTS)
+			need_charge_for_channel = (cell.maxcharge * (APC_CHANNEL_LIGHT_TRESHOLD + 5) * 0.01) - cell.charge
+		if(SSMACHINES_APCS_EQUIPMENT)
+			need_charge_for_channel = (cell.maxcharge * (APC_CHANNEL_EQUIP_TRESHOLD + 5) * 0.01) - cell.charge
+		else
+			need_charge_for_channel = cell.used_charge()
 
 	var/remaining_charge_rate = cell.chargerate - lastused_charge
 	var/need_charge = min(need_charge_for_channel, remaining_charge_rate, cell.maxcharge * CHARGELEVEL) * seconds_per_tick
