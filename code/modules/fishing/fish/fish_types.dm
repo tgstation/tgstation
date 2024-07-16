@@ -302,6 +302,10 @@
 
 /obj/item/fish/chasm_crab/process(seconds_per_tick)
 	. = ..()
+	grow_up(seconds_per_tick)
+
+///Slowly grow up each process tick (in an aquarium). This is its own proc so that it can be used in the unit test.
+/obj/item/fish/chasm_crab/proc/grow_up(seconds_per_tick)
 	var/hunger = CLAMP01((world.time - last_feeding) / feeding_frequency)
 	if(health <= initial(health) * 0.6 || hunger >= 0.6) //if too hurt or hungry, don't grow.
 		anger += growth_rate * 2 * seconds_per_tick
@@ -324,7 +328,7 @@
 		maturation += growth_rate * seconds_per_tick
 
 	if(maturation >= 100)
-		finish_growing()
+		return finish_growing()
 
 ///spawn a juvenile lobstrosity on the aquarium turf
 /obj/item/fish/chasm_crab/proc/finish_growing()
@@ -349,6 +353,7 @@
 	addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(random_step), lob, 1, 100), 0.1 SECONDS)
 
 	qdel(src)
+	return lob
 
 /obj/item/fish/chasm_crab/ice
 	name = "arctic chrab"
