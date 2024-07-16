@@ -45,6 +45,8 @@
 
 /atom/movable/screen/Initialize(mapload, datum/hud/hud_owner)
 	. = ..()
+	if(isnull(hud_owner)) //some screens set their hud owners on /new, this prevents overriding them with null post atoms init
+		return
 	set_new_hud(hud_owner)
 
 /atom/movable/screen/Destroy()
@@ -73,10 +75,11 @@
 
 ///setter used to set our new hud
 /atom/movable/screen/proc/set_new_hud(datum/hud/hud_owner)
-	if(!istype(hud_owner))
-		return
 	if(hud)
 		UnregisterSignal(hud, COMSIG_QDELETING)
+	if(isnull(hud_owner))
+		hud = null
+		return
 	hud = hud_owner
 	RegisterSignal(hud, COMSIG_QDELETING, PROC_REF(on_hud_delete))
 
