@@ -26,7 +26,7 @@
 /datum/action/cooldown/spell/pointed/untie_shoes/New(Target)
 	. = ..()
 	// tgs first spell with multiple invocations!!!!!!
-		invocation = pick("Acetato!", "Agaletto!")
+	invocation = pick("Acetato!", "Agaletto!")
 
 /datum/action/cooldown/spell/pointed/untie_shoes/level_spell(bypass_cap)
 	. = ..()
