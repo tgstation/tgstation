@@ -18,6 +18,7 @@
 	SIGNAL_HANDLER
 	RegisterSignal(soapbox_arrive, COMSIG_MOB_SAY, PROC_REF(soapbox_speech))
 	soapboxers += soapbox_arrive
+
 ///Takes away loud speech from our movable when it leaves the turf our parent is on
 /datum/component/soapbox/proc/on_loc_exited(datum/source, atom/movable/soapbox_leave)
 	SIGNAL_HANDLER
