@@ -1,0 +1,7 @@
+author: "Melbert"
+delete-after: True
+changes:
+  - bugfix: "Using hulk (and a myriad of similar effects) now properly updates your movespeed to ignore the damage movespeed penalty"
+  - bugfix: "Some things which temporarily make you fly don't make you fly forever"
+  - bugfix: "MODsuit ball module now properly makes you immune to damage movespeed penalty when in ball form"
+  - bugfix: "Adding Hulk via VV dropdown doesn't default to adding the strongest hulk available (that which is used by the medieval pirates)"
