@@ -317,7 +317,6 @@
 	//We inherit the cell from the heater prior
 	cell = null
 	interaction_flags_click = FORBID_TELEKINESIS_REACH
-	efficiency = 10 MEGA JOULES / STANDARD_CELL_CHARGE
 	display_panel = FALSE
 	settable_temperature_range = 50
 	///The beaker within the heater
