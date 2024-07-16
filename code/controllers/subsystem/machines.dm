@@ -127,7 +127,7 @@ SUBSYSTEM_DEF(machines)
 			if(MC_TICK_CHECK)
 				return
 		var/next_index = apc_steps.Find(current_part) + 1
-		if (!apc_steps[next_index])
+		if (next_index > apc_steps.len)
 			return
 		current_part = apc_steps[next_index]
 		src.currentrun = processing_apcs.Copy()
