@@ -323,6 +323,12 @@
 	var/obj/item/reagent_containers/beaker = null
 	/// How quickly it delivers heat to the reagents. In watts per joule of the thermal energy difference of the reagent from the temperature difference of the current and target temperatures.
 	var/beaker_conduction_power = 0.1
+	/// The subsystem we're being processed by.
+	var/datum/controller/subsystem/processing/our_subsystem
+
+/obj/machinery/space_heater/improvised_chem_heater/Initialize(mapload)
+	. = ..()
+	our_subsystem = locate(subsystem_type) in Master.subsystems
 
 /obj/machinery/space_heater/improvised_chem_heater/Destroy()
 	. = ..()
@@ -330,7 +336,8 @@
 
 /obj/machinery/space_heater/improvised_chem_heater/heating_examine()
 	. = ..()
-	var/conduction_power = beaker_conduction_power * (set_mode == HEATER_MODE_AUTO ? 0.5 : 1)
+	// Gets the actual conduction power, applying correction from the timestep.
+	var/conduction_power = 1 - (1 - beaker_conduction_power * (set_mode == HEATER_MODE_AUTO ? 0.5 : 1) * our_subsystem.wait / (1 SECONDS)) ** (1 SECONDS / our_subsystem.wait)
 	. += span_notice("Reagent conduction power: <b>[conduction_power < 1 ? display_power(-log(1 - conduction_power), convert = FALSE) : "∞W"]/J</b>")
 
 /obj/machinery/space_heater/improvised_chem_heater/toggle_power(user)
@@ -483,7 +490,7 @@
 		settable_temperature_median + settable_temperature_range)
 
 	// No time integration is used, so we should clamp this to prevent being able to overshoot if there was a subtype with a high initial value.
-	beaker_conduction_power = min((capacitors_rating + 1) * 0.5 * initial(beaker_conduction_power), 1)
+	beaker_conduction_power = min((capacitors_rating + 1) * 0.5 * initial(beaker_conduction_power), 1 SECONDS / our_subsystem.wait)
 
 #undef HEATER_MODE_STANDBY
 #undef HEATER_MODE_HEAT
