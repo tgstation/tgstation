@@ -53,16 +53,17 @@
 	RegisterSignal(parent, COMSIG_ITEM_EQUIPPED, PROC_REF(on_equipped))
 	RegisterSignal(parent, COMSIG_ITEM_DROPPED, PROC_REF(on_dropped))
 	RegisterSignal(parent, COMSIG_ATOM_EXAMINE, PROC_REF(on_examines))
-	RegisterSignal(parent, COMSIG_ATOM_ATTACK_HAND, PROC_REF(on_attack_hand))
+	RegisterSignal(parent, COMSIG_CLICK_CTRL, PROC_REF(on_ctrl_click))
 
 /datum/component/callouts/UnregisterFromParent()
-	UnregisterSignal(parent, list(COMSIG_MOB_CLICKON, COMSIG_ITEM_EQUIPPED, COMSIG_ITEM_DROPPED, COMSIG_ATOM_EXAMINE, COMSIG_ATOM_ATTACK_HAND))
+	UnregisterSignal(parent, list(COMSIG_MOB_CLICKON, COMSIG_ITEM_EQUIPPED, COMSIG_ITEM_DROPPED, COMSIG_ATOM_EXAMINE, COMSIG_CLICK_CTRL))
 
-/datum/component/callouts/proc/on_attack_hand(datum/source, mob/living/user, list/modifiers)
+/datum/component/callouts/proc/on_ctrl_click(datum/source, mob/living/user)
 	SIGNAL_HANDLER
 
-	if(!LAZYACCESS(modifiers, CTRL_CLICK) || !isitem(parent))
+	if(!isitem(parent))
 		return
+
 	var/obj/item/item_parent = parent
 	active = !active
 	item_parent.balloon_alert(user, active ? "callouts enabled" : "callouts disabled")
@@ -123,6 +124,7 @@
 /obj/effect/temp_visual/callout
 	name = "callout"
 	icon = 'icons/effects/callouts.dmi'
+	icon_state = "point"
 	plane = ABOVE_LIGHTING_PLANE
 	duration = CALLOUT_TIME
 
