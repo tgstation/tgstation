@@ -18,6 +18,8 @@
 			kiss_power = 60
 		if(/obj/projectile/kiss/death)
 			kiss_power = 20000
+		if(/obj/projectile/kiss/french)
+			kiss_power = 60
 
 	if(!istype(projectile.firer, /obj/machinery/power/emitter))
 		investigate_log("has been hit by [projectile] fired by [key_name(projectile.firer)]", INVESTIGATE_ENGINE)
