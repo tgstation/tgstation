@@ -655,8 +655,8 @@
 		else
 			need_charge_for_channel = cell.used_charge()
 
-	var/remaining_charge_rate = cell.chargerate - lastused_charge
-	var/need_charge = min(need_charge_for_channel, remaining_charge_rate, cell.maxcharge * CHARGELEVEL) * seconds_per_tick
+	var/remaining_charge_rate = min(cell.chargerate, cell.maxcharge * CHARGELEVEL) - lastused_charge
+	var/need_charge = min(need_charge_for_channel, remaining_charge_rate) * seconds_per_tick
 	//check if we can charge the battery
 	if(need_charge < 0)
 		return
