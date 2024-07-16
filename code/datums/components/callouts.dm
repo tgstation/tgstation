@@ -63,7 +63,7 @@
 
 	if(!LAZYACCESS(modifiers, CTRL_CLICK) || !isitem(parent))
 		return
-	var/item/item_parent = parent
+	var/obj/item/item_parent = parent
 	active = !active
 	item_parent.balloon_alert(user, active ? "callouts enabled" : "callouts disabled")
 
@@ -108,7 +108,7 @@
 /datum/component/callouts/proc/callout_picker(mob/user, atom/clicked_atom)
 	var/list/callout_items = list()
 	for(var/datum/callout_option/callout_option as anything in callout_options)
-		callout_items[callout_option] = image(icon = 'icons/hud/radial.dmi', icon_state = initial(callout_option.icon_state))
+		callout_items[callout_option] = image(icon = 'icons/hud/radial.dmi', icon_state = callout_option::icon_state)
 
 	var/datum/callout_option/selection = show_radial_menu(user, get_turf(clicked_atom), callout_items, entry_animation = FALSE, click_on_hover = TRUE)
 	if (!selection)
@@ -116,8 +116,9 @@
 
 	COOLDOWN_START(src, callout_cooldown, CALLOUT_COOLDOWN)
 	new /obj/effect/temp_visual/callout(get_turf(user), user, selection, clicked_atom)
+	SEND_SIGNAL(user, COMSIG_MOB_CREATED_CALLOUT, selection, clicked_atom)
 	if (voiceline)
-		user.say((!isnull(radio_prefix) ? radio_prefix : "") + initial(selection.voiceline), forced = src)
+		user.say((!isnull(radio_prefix) ? radio_prefix : "") + selection::voiceline, forced = src)
 
 /obj/effect/temp_visual/callout
 	name = "callout"
@@ -129,7 +130,7 @@
 	. = ..()
 	if (isnull(creator))
 		return
-	icon_state = initial(callout.icon_state)
+	icon_state = callout::icon_state
 	color = colorize_string(creator.GetVoice(), 2, 0.9)
 	update_appearance()
 	var/turf/target_loc = get_turf(target)
