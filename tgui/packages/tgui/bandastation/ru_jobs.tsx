@@ -40,6 +40,18 @@ export const JOBS_RU = {
   Psychologist: 'Психолог',
 };
 
+const REVERSED_JOBS_RU = Object.entries(JOBS_RU).reduce(
+  (reversed_jobs, [key, value]) => {
+    reversed_jobs[value] = key;
+    return reversed_jobs;
+  },
+  {},
+);
+
+export function ReverseJobsRu(value: string) {
+  return REVERSED_JOBS_RU[value] || value;
+}
+
 export const DEPARTMENTS_RU = {
   Command: 'Командование',
   Security: 'Безопасность',

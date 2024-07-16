@@ -113,9 +113,14 @@ GLOBAL_LIST_INIT(job_titles_ru, list(
 	JOB_PSYCHOLOGIST = JOB_PSYCHOLOGIST_RU,
 ))
 
+GLOBAL_LIST_EMPTY(job_titles_ru_to_en)
+
 // Use it ONLY for display!!
-/proc/job_title_ru(title)
-	var/job_ru_title = GLOB.job_titles_ru[title]
-	if(job_ru_title)
-		return job_ru_title
-	return title
+/proc/job_title_ru(en_title)
+	return GLOB.job_titles_ru[en_title] || en_title
+
+/proc/job_title_ru_to_en(ru_title)
+	if(!length(GLOB.job_titles_ru_to_en))
+		for(var/key in GLOB.job_titles_ru)
+			GLOB.job_titles_ru_to_en[GLOB.job_titles_ru[key]] = key
+	return GLOB.job_titles_ru_to_en[ru_title] || ru_title
