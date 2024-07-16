@@ -1,0 +1,391 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/turf/template_noop,
+/area/template_noop)
+"b" = (
+/turf/open/floor/plating/airless,
+/area/ruin/space)
+"c" = (
+/turf/closed/wall/r_wall,
+/area/ruin/space)
+"d" = (
+/obj/effect/decal/fakelattice,
+/turf/template_noop,
+/area/template_noop)
+"e" = (
+/obj/structure/lattice,
+/turf/template_noop,
+/area/template_noop)
+"f" = (
+/obj/effect/decal/cleanable/ash,
+/turf/open/floor/plating/airless,
+/area/ruin/space)
+"j" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/plating/airless,
+/area/ruin/space)
+"m" = (
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating/airless,
+/area/ruin/space)
+"p" = (
+/obj/structure/safe,
+/obj/item/book/granter/crafting_recipe/dusting/laser_musket_prime,
+/obj/item/gun/ballistic/revolver/russian,
+/obj/effect/spawner/random/bureaucracy/briefcase,
+/obj/effect/spawner/random/entertainment/money_small,
+/obj/item/storage/bag/money,
+/obj/item/coin/iron,
+/obj/item/coin/gold,
+/obj/item/food/chococoin,
+/turf/open/floor/plating/airless,
+/area/ruin/space)
+"q" = (
+/obj/machinery/vending/hotdog,
+/turf/open/floor/plating/airless,
+/area/ruin/space)
+"t" = (
+/obj/effect/decal/cleanable/plasma,
+/obj/effect/decal/fakelattice,
+/turf/open/floor/plating/airless,
+/area/ruin/space)
+"v" = (
+/obj/machinery/door/airlock/vault,
+/turf/open/floor/plating/airless,
+/area/ruin/space)
+"A" = (
+/obj/effect/decal/cleanable/plasma,
+/turf/open/floor/plating/airless,
+/area/ruin/space)
+"B" = (
+/obj/item/disk/nuclear/fake/obvious,
+/turf/open/floor/plating/airless,
+/area/ruin/space)
+"F" = (
+/obj/effect/mine/explosive/flame,
+/obj/item/toy/nuke,
+/turf/open/floor/plating/airless,
+/area/ruin/space)
+"G" = (
+/obj/effect/decal/fakelattice,
+/turf/open/floor/plating/airless,
+/area/ruin/space)
+"I" = (
+/obj/structure/filingcabinet,
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/plating/airless,
+/area/ruin/space)
+"N" = (
+/obj/item/toy/redbutton,
+/turf/open/floor/plating/airless,
+/area/ruin/space)
+"R" = (
+/obj/effect/decal/cleanable/plastic,
+/turf/open/floor/plating/airless,
+/area/ruin/space)
+"S" = (
+/obj/effect/decal/cleanable/plasma,
+/obj/effect/decal/remains/human,
+/turf/open/floor/plating/airless,
+/area/ruin/space)
+"T" = (
+/obj/structure/sign/warning/directional/west,
+/obj/effect/decal/fakelattice,
+/turf/open/floor/plating/airless,
+/area/ruin/space)
+"V" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/decal/fakelattice,
+/turf/open/floor/plating/airless,
+/area/ruin/space)
+"W" = (
+/obj/item/book/manual/nuclear,
+/obj/effect/decal/cleanable/plasma,
+/turf/open/floor/plating/airless,
+/area/ruin/space)
+
+(1,1,1) = {"
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+"}
+(2,1,1) = {"
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+"}
+(3,1,1) = {"
+a
+a
+a
+a
+a
+a
+a
+e
+a
+e
+a
+a
+a
+a
+a
+a
+a
+"}
+(4,1,1) = {"
+a
+a
+a
+a
+a
+b
+A
+e
+a
+e
+a
+a
+a
+a
+a
+a
+a
+"}
+(5,1,1) = {"
+a
+a
+a
+a
+b
+A
+c
+c
+c
+c
+c
+a
+a
+a
+a
+a
+a
+"}
+(6,1,1) = {"
+a
+a
+a
+a
+V
+G
+c
+I
+B
+p
+c
+d
+d
+d
+a
+a
+a
+"}
+(7,1,1) = {"
+a
+a
+b
+A
+b
+m
+c
+q
+F
+S
+c
+a
+a
+a
+a
+a
+a
+"}
+(8,1,1) = {"
+a
+a
+a
+G
+G
+G
+c
+W
+m
+N
+c
+e
+a
+a
+a
+a
+a
+"}
+(9,1,1) = {"
+a
+a
+a
+a
+A
+f
+c
+c
+v
+c
+c
+j
+a
+a
+a
+a
+a
+"}
+(10,1,1) = {"
+a
+a
+a
+a
+b
+b
+b
+T
+j
+T
+b
+A
+a
+a
+a
+a
+a
+"}
+(11,1,1) = {"
+a
+a
+a
+a
+a
+R
+m
+t
+b
+t
+b
+a
+a
+a
+a
+a
+a
+"}
+(12,1,1) = {"
+a
+a
+a
+a
+a
+a
+a
+a
+b
+t
+a
+a
+a
+a
+a
+a
+a
+"}
+(13,1,1) = {"
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+"}
+(14,1,1) = {"
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+"}
+(15,1,1) = {"
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+"}
