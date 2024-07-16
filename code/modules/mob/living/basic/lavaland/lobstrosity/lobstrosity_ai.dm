@@ -25,11 +25,49 @@
 	)
 
 ///Ensure that juveline lobstrosities witll charge at things they can reach.
-/datum/ai_controller/basic_controller/lobstrosity/New(atom/new_pawn)
-	if(istype(new_pawn, /mob/living/basic/mining/lobstrosity/juvenile))
-		planning_subtrees -= /datum/ai_planning_subtree/targeted_mob_ability/lobster
-		planning_subtrees += /datum/ai_planning_subtree/targeted_mob_ability/lobster/juvenile
-	return ..()
+/datum/ai_controller/basic_controller/lobstrosity/juvenile
+	planning_subtrees = list(
+		/datum/ai_planning_subtree/random_speech/insect,
+		/datum/ai_planning_subtree/hoard_fingers,
+		/datum/ai_planning_subtree/simple_find_target,
+		/datum/ai_planning_subtree/targeted_mob_ability/lobster/short,
+		/datum/ai_planning_subtree/flee_target/lobster,
+		/datum/ai_planning_subtree/attack_obstacle_in_path,
+		/datum/ai_planning_subtree/basic_melee_attack_subtree/lobster,
+		/datum/ai_planning_subtree/find_food,
+		/datum/ai_planning_subtree/find_and_hunt_target/lobster_fishing,
+		/datum/ai_planning_subtree/find_fingers,
+	)
+
+///A subtype of juvenile lobster AI that has the target_retaliate behaviour instead of simple_find_target
+/datum/ai_controller/basic_controller/lobstrosity/juvenile/pacific
+	planning_subtrees = list(
+		/datum/ai_planning_subtree/random_speech/insect,
+		/datum/ai_planning_subtree/hoard_fingers,
+		/datum/ai_planning_subtree/target_retaliate,
+		/datum/ai_planning_subtree/targeted_mob_ability/lobster/short,
+		/datum/ai_planning_subtree/flee_target/lobster,
+		/datum/ai_planning_subtree/attack_obstacle_in_path,
+		/datum/ai_planning_subtree/basic_melee_attack_subtree/lobster,
+		/datum/ai_planning_subtree/find_food,
+		/datum/ai_planning_subtree/find_and_hunt_target/lobster_fishing,
+		/datum/ai_planning_subtree/find_fingers,
+	)
+
+///A subtype of juvenile lobster AI that has the capricious_retaliate behaviour instead of simple_find_target
+/datum/ai_controller/basic_controller/lobstrosity/juvenile/capricious
+	planning_subtrees = list(
+		/datum/ai_planning_subtree/random_speech/insect,
+		/datum/ai_planning_subtree/hoard_fingers,
+		/datum/ai_planning_subtree/capricious_retaliate,
+		/datum/ai_planning_subtree/targeted_mob_ability/lobster/short,
+		/datum/ai_planning_subtree/flee_target/lobster,
+		/datum/ai_planning_subtree/attack_obstacle_in_path,
+		/datum/ai_planning_subtree/basic_melee_attack_subtree/lobster,
+		/datum/ai_planning_subtree/find_food,
+		/datum/ai_planning_subtree/find_and_hunt_target/lobster_fishing,
+		/datum/ai_planning_subtree/find_fingers,
+	)
 
 /datum/ai_planning_subtree/find_and_hunt_target/lobster_fishing
 	target_key = BB_FISHING_TARGET

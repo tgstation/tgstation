@@ -334,11 +334,11 @@
 		trait.apply_to_mob(lob)
 	if(!prob(anger))
 		lob.AddElement(/datum/element/ai_retaliate)
-		lob.ai_controller.planning_subtrees -= SSai_controllers.ai_subtrees[/datum/ai_planning_subtree/simple_find_target]
-		lob.ai_controller.planning_subtrees += SSai_controllers.ai_subtrees[/datum/ai_planning_subtree/target_retaliate]
+		qdel(lob.ai_controller)
+		lob.ai_controller = new /datum/ai_controller/basic_controller/lobstrosity/juvenile/pacific(lob)
 	else if(anger < 30) //not really that mad, just a bit unstable.
-		lob.ai_controller.planning_subtrees -= SSai_controllers.ai_subtrees[/datum/ai_planning_subtree/simple_find_target]
-		lob.ai_controller.planning_subtrees += SSai_controllers.ai_subtrees[/datum/ai_planning_subtree/capricious_retaliate]
+		qdel(lob.ai_controller)
+		lob.ai_controller = new /datum/ai_controller/basic_controller/lobstrosity/juvenile/capricious(lob)
 
 	animate(lob, pixel_y = 18, time = 0.4 SECONDS, flags = ANIMATION_RELATIVE, easing = CUBIC_EASING|EASE_OUT)
 	animate(pixel_y = -18, time = 0.4 SECONDS, flags = ANIMATION_RELATIVE, easing = CUBIC_EASING|EASE_IN)
