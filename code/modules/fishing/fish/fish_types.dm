@@ -277,7 +277,7 @@
 	///The lobstrosity type this matures into
 	var/lob_type = /mob/living/basic/mining/lobstrosity/juvenile/lava
 	///at which rate the crab gains maturation
-	var/growth_rate = 100 / (12 MINUTES)
+	var/growth_rate = 100 / (12 MINUTES) * 10
 
 ///A chasm crab growth speed is determined by its initial weight and size, ergo bigger crabs for faster lobstrosities
 /obj/item/fish/chasm_crab/update_size_and_weight(new_size = average_size, new_weight = average_weight)
@@ -300,11 +300,11 @@
 
 	growth_rate = /obj/item/fish/chasm_crab::growth_rate * multiplier
 
-/obj/item/fish/chasm_crab/process()
+/obj/item/fish/chasm_crab/process(seconds_per_tick)
 	. = ..()
 	var/hunger = CLAMP01((world.time - last_feeding) / feeding_frequency)
 	if(health <= initial(health) * 0.6 || hunger >= 0.6) //if too hurt or hungry, don't grow.
-		anger += growth_rate * 2
+		anger += growth_rate * 2 * seconds_per_tick
 		return
 
 	if(!isaquarium(loc)) //can't grow outside an aquarium.
@@ -314,14 +314,14 @@
 	if(!aquarium.allow_breeding) //the aquarium has breeding disabled
 		return
 	if(hunger >= 0.4) //I'm hungry and angry
-		anger += growth_rate * 0.6
+		anger += growth_rate * 0.6 * seconds_per_tick
 	if(!locate(/obj/item/aquarium_prop) in aquarium) //the aquarium deco is quite barren
-		anger += growth_rate * 0.25
+		anger += growth_rate * 0.25 * seconds_per_tick
 	var/fish_count = length(aquarium.get_fishes())
 	if(!ISINRANGE(fish_count, 3, AQUARIUM_MAX_BREEDING_POPULATION * 0.5)) //too lonely or overcrowded
-		anger += growth_rate * 0.3
+		anger += growth_rate * 0.3 * seconds_per_tick
 	if(fish_count <= AQUARIUM_MAX_BREEDING_POPULATION * 0.5) //check if there's enough room to maturate.
-		maturation += growth_rate
+		maturation += growth_rate * seconds_per_tick
 
 	if(maturation >= 100)
 		finish_growing()
@@ -342,7 +342,7 @@
 
 	animate(lob, pixel_y = 18, time = 0.4 SECONDS, flags = ANIMATION_RELATIVE, easing = CUBIC_EASING|EASE_OUT)
 	animate(pixel_y = -18, time = 0.4 SECONDS, flags = ANIMATION_RELATIVE, easing = CUBIC_EASING|EASE_IN)
-	loc.visible_message(span_boldnotice("a [lob] jumps out of [loc]!"))
+	loc.visible_message(span_boldnotice("\A [lob] jumps out of [loc]!"))
 	playsound(loc, 'sound/effects/fish_splash.ogg', 60)
 
 	///make sure it moves the next tick so that it properly glides to the next location after jumping off the aquarium.
@@ -354,7 +354,7 @@
 	name = "arctic chrab"
 	desc = "A subspecies of chasm chrabs that has adapted to the cold climate and lack of abysmal holes of the icemoon."
 	icon_state = "arctic_chrab"
-	dedicated_in_aquarium_icon_state = "ice_chrab_small"
+	dedicated_in_aquarium_icon_state = "arctic_chrab_small"
 	required_temperature_min = ICEBOX_MIN_TEMPERATURE-20
 	required_temperature_max = MIN_AQUARIUM_TEMP+15
 	evolution_types = list(/datum/fish_evolution/chasm_chrab)

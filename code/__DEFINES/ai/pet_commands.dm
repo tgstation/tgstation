@@ -5,6 +5,8 @@
 #define BB_CURRENT_PET_TARGET "BB_current_pet_target"
 /// Blackboard field for how we target things, as usually we want to be more permissive than normal
 #define BB_PET_TARGETING_STRATEGY "BB_pet_targeting"
+/// Blackboard field for how we target fish.
+#define BB_FISH_TARGETING_STRATEGY "BB_fish_targeting"
 /// Typecache of weakrefs to mobs this mob is friends with, will follow their instructions and won't attack them
 #define BB_FRIENDS_LIST "BB_friends_list"
 /// List of strings we might say to encourage someone to make better choices.

@@ -139,7 +139,7 @@
 	var/mob/living/living_parent = parent
 	if (!living_parent.ai_controller)
 		return
-	var/datum/targeting_strategy/targeter = GET_TARGETING_STRATEGY(living_parent.ai_controller.blackboard[targeting_strategy_key])
+	var/datum/targeting_strategy/targeter = GET_TARGETING_STRATEGY(living_parent.ai_controller.blackboard[BB_FISH_TARGETING_STRATEGY])
 	if (!targeter)
 		return
 	if (!targeter.can_attack(living_parent, target))
@@ -283,12 +283,13 @@
 		return
 	if (!parent.ai_controller || !HAS_TRAIT(parent, TRAIT_PROFOUND_FISHER))
 		return
-	if (!HAS_TRAIT(target, TRAIT_FISHING_SPOT))
-		var/mob/living/living_parent = parent
-		living_parent.balloon_alert_to_viewers("shakes head")
+	var/mob/living/living_parent = parent
+	var/datum/targeting_strategy/targeter = GET_TARGETING_STRATEGY(living_parent.ai_controller.blackboard[BB_FISH_TARGETING_STRATEGY])
+	if (!targeter?.can_attack(living_parent, target))
+		living_parent.balloon_alert_to_viewers("shakes head!")
 		return
 	return ..()
 
 /datum/pet_command/point_targeting/fish/execute_action(datum/ai_controller/controller)
-	controller.queue_behavior(/datum/ai_behavior/hunt_target/unarmed_attack_target/fishing, BB_CURRENT_PET_TARGET, targeting_strategy_key)
+	controller.queue_behavior(/datum/ai_behavior/hunt_target/unarmed_attack_target/reset_target, BB_CURRENT_PET_TARGET, BB_FISH_TARGETING_STRATEGY)
 	return SUBTREE_RETURN_FINISH_PLANNING
