@@ -64,7 +64,7 @@
 /obj/item/choice_beacon/proc/spawn_option(obj/choice_path, mob/living/user)
 	podspawn(list(
 		"target" = get_turf(src),
-		"style" = STYLE_BLUESPACE,
+		"path" = /obj/structure/closet/supplypod/teleporter, // BANDASTATION EDIT - Original: "style" = STYLE_BLUESPACE,
 		"spawn" = choice_path,
 	))
 

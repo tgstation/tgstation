@@ -44,6 +44,9 @@
 // Radio
 #include "radio/code/radio.dm"
 
+// Supply Pods
+#include "supply_pods/code/supply_pods.dm"
+
 // Walls
 #include "walls/code/walls.dm"
 
