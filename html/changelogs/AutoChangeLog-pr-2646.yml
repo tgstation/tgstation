@@ -1,0 +1,4 @@
+author: "Absolucy"
+delete-after: True
+changes:
+  - sound: "The zap sound effects from meteor defense satellites are now around 5x quieter."
