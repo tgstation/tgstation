@@ -94,11 +94,15 @@
 /obj/item/organ/internal/tongue/proc/handle_speech(datum/source, list/speech_args)
 	SIGNAL_HANDLER
 
+	if(should_modify_speech(source, speech_args))
+		modify_speech(source, speech_args)
+
+/obj/item/organ/internal/tongue/proc/should_modify_speech(datum/source, list/speech_args)
 	if(speech_args[SPEECH_LANGUAGE] in languages_native) // Speaking a native language?
 		return FALSE // Don't modify speech
 	if(HAS_TRAIT(source, TRAIT_SIGN_LANG)) // No modifiers for signers - I hate this but I simply cannot get these to combine into one statement
 		return FALSE // Don't modify speech
-	modify_speech(source, speech_args)
+	return TRUE
 
 /obj/item/organ/internal/tongue/proc/modify_speech(datum/source, list/speech_args)
 	return speech_args[SPEECH_MESSAGE]
@@ -195,7 +199,7 @@
 
 /obj/item/organ/internal/tongue/lizard/New(class, timer, datum/mutation/human/copymut)
 	. = ..()
-	AddComponent(/datum/component/speechmod, replacements = speech_replacements)
+	AddComponent(/datum/component/speechmod, replacements = speech_replacements, should_modify_speech = CALLBACK(src, PROC_REF(should_modify_speech)))
 
 /obj/item/organ/internal/tongue/lizard/silver
 	name = "silver tongue"
@@ -542,6 +546,7 @@ GLOBAL_LIST_INIT(english_to_zombie, list())
 	attack_verb_simple = list("beep", "boop")
 	modifies_speech = TRUE
 	taste_sensitivity = 25 // not as good as an organic tongue
+	organ_traits = list(TRAIT_SILICON_EMOTES_ALLOWED)
 	voice_filter = "alimiter=0.9,acompressor=threshold=0.2:ratio=20:attack=10:release=50:makeup=2,highpass=f=1000"
 
 /obj/item/organ/internal/tongue/robot/could_speak_language(datum/language/language_path)

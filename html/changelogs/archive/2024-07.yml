@@ -786,3 +786,112 @@
   vinylspiders:
   - bugfix: password doors and shutters will now play their sound effects again instead
       of just silently opening/closing
+2024-07-14:
+  EuSouAFazer:
+  - rscadd: Cytology Lab has been added to Icebox
+  - rscadd: Delta now has soy seeds on the Cytology Lab
+  - bugfix: Cytology is playable again on Icebox
+  MTandi:
+  - rscadd: Added airlock pump atmos device to create cycling airlocks
+  carlarctg:
+  - bugfix: Fixed new charger power not working fior strange objects
+2024-07-15:
+  Thedragmeme:
+  - bugfix: Fixes the Plague hat having what the Plague mask should have
+2024-07-16:
+  00-Steven:
+  - rscadd: Love is now stored in the heart.
+  - balance: Characters with the Friendly quirk now have physically bigger hearts.
+  Ben10Omintrix:
+  - bugfix: mothroaches will no longer be crawling out of bags every minute
+  FearfulFurnishing:
+  - bugfix: fixing speech modifiers being applied to a tongue's native languages.
+  FlufflesTheDog:
+  - bugfix: Attachment points on toolset implants have been improved, to prevent against
+      recycler related decouplings.
+  GPeckman:
+  - bugfix: You can't attach guns/drills/etc. to the Justice traitor mech anymore.
+  Ghommie:
+  - balance: Grinding fish no longer gives you uselessly high amount of blood and
+      gibs (unless they're very big)
+  - balance: tweaked the Linked Closets station trait.
+  - rscadd: Megaphones now affect text-to-speech.
+  - rscadd: Examining high-value paintings now can give a positive moodlet.
+  - qol: Observers can now zoom paintings in and out in the UI.
+  - bugfix: ACTUALLY fixed hoverboards being able to be used in space.
+  - balance: However, you can soar space with the holy skateboard. at a slower speed.
+  - qol: removed a redundant, annoying reach check that prevents casting a fishing
+      rod before the projectile is generated.
+  - qol: You can now unhook the currently hooked item of a fishing rod with right-click.
+  - balance: reduced the prices of some blackmarket items across the board.
+  - balance: the thermite bottle (from the contraband spawner and the blackmarket),
+      now spawns with 50u of thermite vs 30, enough to melt one reinforced wall.
+  - rscadd: Replaced the science googles from the blackmarket with a security + health
+      scanner HUD.
+  - rscadd: Replaced the single shotgun dart from the blackmarket with a box of XL
+      shotgun darts.
+  - rscadd: The donk pocket box from the blackmarket now comes in different flavors.
+  Hardly3D:
+  - bugfix: Added a preview assistant outfit, allowing assistant jumpskirts to be
+      previewed again on character preferences.
+  MTandi:
+  - qol: Research nodes can be queued, one per player. RDs can place their node at
+      the beginning of the queue.
+  Melbert:
+  - qol: Lattices now make the same footstep sound as catwalks
+  - qol: If you're in oxycrit (>50 oxy damage) or otherwise made unconscious through
+      other means, blood loss will only kill you if you're *actually* missing a lethal
+      amount of blood.
+  MrDas:
+  - bugfix: Clown operative reinforcements' uplink no longer break the syndicates'
+      economy by creating TC from nothingness.
+  Profakos:
+  - bugfix: Fixes dead raptors getting excited when petted or groomed
+  Sadboysuss:
+  - sound: all materials now have a sound for picking up and dropping
+  - code_imp: items now have pitch vary sound support for dropping and picking up
+      items
+  - bugfix: Wawastation xenobio is no longer filled with BZ
+  SmArtKar:
+  - admin: Ghosts can no longer create deathmatch lobbies or join existing ones when
+      admins disable minigames
+  - admin: Outfit manager UI no longer harddels after closing and thus is usable more
+      than once
+  - qol: Pathfinder MODule can now be triggered while wearing the MODsuit to implant
+      yourself without having to pull it out of the suit.
+  - spellcheck: Firelocks no longer output their full name in their balloon alert.
+  - spellcheck: Failure message when a xenomorph tries to force open a welded firelock
+      is now a balloon alert.
+  - bugfix: You can no longer fit an infinite amount of drivers into a clown car -
+      making spy-acquired clown cars usable!
+  - bugfix: Accelerator cannon projectiles no longer grow to absurd sizes after a
+      bit of travel.
+  - bugfix: Fixes overwatch glasses not adding HUDs
+  TheBoondock:
+  - sound: added pickup, dropping and opening sound for pill bottle
+  Xackii:
+  - rscadd: new wizard spells category - perks.
+  - rscadd: adds 9 wizard perks.
+  itseasytosee:
+  - image: Changed some default options in the character creator.
+  larentoun:
+  - bugfix: Correct emote plays when a human scream. Should have sound now.
+  lizardqueenlexi:
+  - bugfix: The Icebox ordnance lab is now once again a habitable temperature.
+  - bugfix: Icebox cytology now has cameras in it.
+  - bugfix: Atmosphere can no longer flow through closed necropolis gates.
+  - bugfix: You can no longer cause a bluescreen by attempting to recolor non-recolorable
+      loadout items.
+  necromanceranne:
+  - rscadd: Pipe pistols now magdump their entire magazine when fired.
+  - rscadd: Pipeguns and their subtypes have a knockback effect.
+  - bugfix: Pipe pistols cannot be bayoneted, as intended.
+  - bugfix: Junk rounds now actually do their extra damage effects against certain
+      mob types. Borgs across the Spinward tremble at the knowledge that these junk
+      weapons can obliterate them with ease.
+  paganiy:
+  - rscadd: If you can't shoot a gun, then... JUST TOSS IT AT THEM (for 0.5 seconds
+      of knockdown and 10-20 an additional brute damage)
+  r3dj4ck0424:
+  - bugfix: Destroying the jungle grass tiles in Tramstation's science wing should
+      no longer open a chasm.
