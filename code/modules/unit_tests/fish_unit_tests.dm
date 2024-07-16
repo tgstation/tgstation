@@ -225,7 +225,7 @@
 /datum/unit_test/raise_a_chasm_crab
 
 /datum/unit_test/raise_a_chasm_crab/Run()
-	var/obj/structure/aquarium/evolution/aquarium = allocate(/obj/structure/aquarium/crab)
+	var/obj/structure/aquarium/crab/aquarium = allocate(/obj/structure/aquarium/crab)
 	var/mob/living/basic/mining/lobstrosity/juvenile/lobster = aquarium.crabbie.grow_up(1) //one stands for a second
 	TEST_ASSERT(lobster, "The test aquarium's chasm crab didn't grow up into a lobstrosity")
 	allocated |= lobster //make sure it's allocated and thus properly deleted when the test is over
