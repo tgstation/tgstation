@@ -21,27 +21,23 @@
 /obj/item/organ/internal/cyberimp/eyes/hud/proc/toggle_hud(mob/living/carbon/eye_owner)
 	if(toggled_on)
 		toggled_on = FALSE
-		for (var/HUD_trait in HUD_traits)
-			ADD_TRAIT(eye_owner, HUD_trait, ORGAN_TRAIT)
+		eye_owner.add_traits(HUD_traits, ORGAN_TRAIT)
 		balloon_alert(eye_owner, "hud disabled")
 		return
 	toggled_on = TRUE
-	for (var/HUD_trait in HUD_traits)
-		REMOVE_TRAIT(eye_owner, HUD_trait, ORGAN_TRAIT)
+	eye_owner.remove_traits(HUD_traits, ORGAN_TRAIT)
 	balloon_alert(eye_owner, "hud enabled")
 
 /obj/item/organ/internal/cyberimp/eyes/hud/Insert(mob/living/carbon/eye_owner, special = FALSE, movement_flags)
 	. = ..()
 	if(!.)
 		return
-	for (var/HUD_trait in HUD_traits)
-		ADD_TRAIT(eye_owner, HUD_trait, ORGAN_TRAIT)
+	eye_owner.add_traits(HUD_traits, ORGAN_TRAIT)
 	toggled_on = TRUE
 
 /obj/item/organ/internal/cyberimp/eyes/hud/Remove(mob/living/carbon/eye_owner, special, movement_flags)
 	. = ..()
-	for (var/HUD_trait in HUD_traits)
-		REMOVE_TRAIT(eye_owner, HUD_trait, ORGAN_TRAIT)
+	eye_owner.remove_traits(HUD_traits, ORGAN_TRAIT)
 	toggled_on = FALSE
 
 /obj/item/organ/internal/cyberimp/eyes/hud/medical

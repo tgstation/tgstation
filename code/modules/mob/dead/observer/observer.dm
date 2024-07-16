@@ -62,6 +62,13 @@ GLOBAL_VAR_INIT(observer_default_invisibility, INVISIBILITY_OBSERVER)
 	/// The POI we're orbiting (orbit menu)
 	var/orbiting_ref
 
+	var/static/list/observer_hud_traits = list(
+		TRAIT_SECURITY_HUD,
+		TRAIT_MEDICAL_HUD,
+		TRAIT_DIAGNOSTIC_HUD,
+		TRAIT_BOT_PATH_HUD
+	)
+
 /mob/dead/observer/Initialize(mapload)
 	set_invisibility(GLOB.observer_default_invisibility)
 
@@ -755,16 +762,10 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	return
 
 /mob/dead/observer/proc/show_data_huds()
-	ADD_TRAIT(src, TRAIT_SECURITY_HUD, REF(src))
-	ADD_TRAIT(src, TRAIT_MEDICAL_HUD, REF(src))
-	ADD_TRAIT(src, TRAIT_DIAGNOSTIC_HUD, REF(src))
-	ADD_TRAIT(src, TRAIT_BOT_PATH_HUD, REF(src))
+	add_traits(observer_hud_traits, REF(src))
 
 /mob/dead/observer/proc/remove_data_huds()
-	REMOVE_TRAIT(src, TRAIT_SECURITY_HUD, REF(src))
-	REMOVE_TRAIT(src, TRAIT_MEDICAL_HUD, REF(src))
-	REMOVE_TRAIT(src, TRAIT_DIAGNOSTIC_HUD, REF(src))
-	REMOVE_TRAIT(src, TRAIT_BOT_PATH_HUD, REF(src))
+	remove_traits(observer_hud_traits, REF(src))
 
 /mob/dead/observer/verb/toggle_data_huds()
 	set name = "Toggle Sec/Med/Diag HUD"
