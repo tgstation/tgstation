@@ -391,7 +391,7 @@
 	///Biotypes we apply an additional amount of damage too
 	var/biotype_bonus_targets = MOB_BEAST | MOB_SPECIAL
 	///Extra damage dealt to our targeted mobs
-	var/biotype_bonus_damage = 40
+	var/biotype_bonus_damage = 20
 	///IF true, the throw attack will not smash people into walls
 	var/non_harmful_throw = TRUE
 	///How far away your attack will throw your oponent
