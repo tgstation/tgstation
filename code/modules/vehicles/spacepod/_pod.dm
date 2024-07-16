@@ -1,4 +1,7 @@
+//
 // space pods
+//
+
 // TODO:
 // proper space movement
 // construction
@@ -6,7 +9,8 @@
 // make them move different onstation, perhaps restrict to engine tiles only
 // control scheme/whatever idk how to drive these
 // slots: comms (radio and something else), sensors(HUDs or something, mesons??), engine, 1 secondary slot (cargo and shit), 1 primary slot(tools or gun???), infinite misc modules (locks and shit), armor would either be added during construction or as a slot
-// DONE: defines car.dm in defines
+// power costs, either only megacell or only cell, how would you charge this??
+// although im not so sure about power costs i dont know why it would need them but ideally a space pod should be capable of functioning for 10-15 minutes of nonstop acceleration by default
 // ALSO DO NOT FORGET TO REMOVE THIS HUGE ASS COMMENT before finishing
 
 /obj/vehicle/sealed/space_pod
