@@ -8,7 +8,6 @@
 	)
 
 /datum/component/soapbox/Initialize(...)
-	. = ..()
 	if(!ismovable(parent))
 		return COMPONENT_INCOMPATIBLE
 	add_connect_loc_behalf_to_parent()
