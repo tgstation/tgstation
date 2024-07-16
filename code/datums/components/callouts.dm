@@ -1,10 +1,12 @@
-#define CALLOUT_TIME (2.5 SECONDS)
+#define CALLOUT_TIME (5 SECONDS)
 #define CALLOUT_COOLDOWN 3 SECONDS
 
 /// Component that allows its owner/owner's wearer to use callouts system - their pointing is replaced with a fancy radial which allows them to summon glowing markers
 /datum/component/callouts
 	/// If parent is clothing, slot on which this component activates
 	var/item_slot
+	/// If we are currently active
+	var/active = TRUE
 	/// Current user of this component
 	var/mob/cur_user
 	/// Whenever the user should shout the voiceline
@@ -51,9 +53,19 @@
 	RegisterSignal(parent, COMSIG_ITEM_EQUIPPED, PROC_REF(on_equipped))
 	RegisterSignal(parent, COMSIG_ITEM_DROPPED, PROC_REF(on_dropped))
 	RegisterSignal(parent, COMSIG_ATOM_EXAMINE, PROC_REF(on_examines))
+	RegisterSignal(parent, COMSIG_ATOM_ATTACK_HAND, PROC_REF(on_attack_hand))
 
 /datum/component/callouts/UnregisterFromParent()
-	UnregisterSignal(parent, list(COMSIG_MOB_CLICKON, COMSIG_ITEM_EQUIPPED, COMSIG_ITEM_DROPPED, COMSIG_ATOM_EXAMINE))
+	UnregisterSignal(parent, list(COMSIG_MOB_CLICKON, COMSIG_ITEM_EQUIPPED, COMSIG_ITEM_DROPPED, COMSIG_ATOM_EXAMINE, COMSIG_ATOM_ATTACK_HAND))
+
+/datum/component/callouts/proc/on_attack_hand(datum/source, mob/living/user, list/modifiers)
+	SIGNAL_HANDLER
+
+	if(!LAZYACCESS(modifiers, CTRL_CLICK) || !isitem(parent))
+		return
+	var/item/item_parent = parent
+	active = !active
+	item_parent.balloon_alert(user, active ? "callouts enabled" : "callouts disabled")
 
 /datum/component/callouts/proc/on_equipped(datum/source, mob/equipper, slot)
 	SIGNAL_HANDLER
@@ -81,6 +93,9 @@
 	SIGNAL_HANDLER
 
 	if (!LAZYACCESS(modifiers, SHIFT_CLICK) || !LAZYACCESS(modifiers, MIDDLE_CLICK))
+		return
+
+	if (!active)
 		return
 
 	if (!COOLDOWN_FINISHED(src, callout_cooldown))
@@ -112,6 +127,8 @@
 
 /obj/effect/temp_visual/callout/Initialize(mapload, mob/creator, datum/callout_option/callout, atom/target)
 	. = ..()
+	if (isnull(creator))
+		return
 	icon_state = initial(callout.icon_state)
 	color = colorize_string(creator.GetVoice(), 2, 0.9)
 	update_appearance()
