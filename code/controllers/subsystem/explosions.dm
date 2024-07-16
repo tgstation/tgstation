@@ -514,7 +514,7 @@ SUBSYSTEM_DEF(explosions)
  * - [creaking_sound][/sound]: The sound that plays when the station creaks during the explosion.
  * - [hull_creaking_sound][/sound]: The sound that plays when the station creaks after the explosion.
  */
-/datum/controller/subsystem/explosions/proc/shake_the_room(turf/epicenter, near_distance, far_distance, quake_factor, echo_factor, creaking, sound/near_sound = sound(get_sfx(SFX_EXPLOSION)), sound/far_sound = sound('sound/effects/explosionfar.ogg'), sound/echo_sound = sound('sound/effects/explosion_distant.ogg'), sound/creaking_sound = sound(get_sfx(SFX_EXPLOSION_CREAKING)), hull_creaking_sound = sound(get_sfx(SFX_HULL_CREAKING)), pressure_affected = TRUE, disable_shaking = FALSE) // monkestation edit: add pressure_affected, disable_shaking
+/datum/controller/subsystem/explosions/proc/shake_the_room(turf/epicenter, near_distance, far_distance, quake_factor, echo_factor, creaking, sound/near_sound = sound(get_sfx(SFX_EXPLOSION)), sound/far_sound = sound('sound/effects/explosionfar.ogg'), sound/echo_sound = sound('sound/effects/explosion_distant.ogg'), sound/creaking_sound = sound(get_sfx(SFX_EXPLOSION_CREAKING)), hull_creaking_sound = sound(get_sfx(SFX_HULL_CREAKING)), pressure_affected = TRUE, disable_shaking = FALSE, sound_mul = 1) // monkestation edit: add pressure_affected, disable_shaking, sound_mul
 	var/frequency = get_rand_frequency()
 	var/blast_z = epicenter.z
 	if(isnull(creaking)) // Autoset creaking.
@@ -535,12 +535,12 @@ SUBSYSTEM_DEF(explosions)
 		var/base_shake_amount = sqrt(near_distance / (distance + 1))
 
 		if(distance <= round(near_distance + world.view - 2, 1)) // If you are close enough to see the effects of the explosion first-hand (ignoring walls)
-			listener.playsound_local(epicenter, null, 100, TRUE, frequency, pressure_affected = pressure_affected, sound_to_use = near_sound) // monkestation edit: pressure_affected
+			listener.playsound_local(epicenter, null, round(100 * sound_mul), TRUE, frequency, pressure_affected = pressure_affected, sound_to_use = near_sound) // monkestation edit: pressure_affected, sound_mul
 			if(base_shake_amount > 0 && !disable_shaking) // monkestation edit: disable_shaking
 				shake_camera(listener, NEAR_SHAKE_DURATION, clamp(base_shake_amount, 0, NEAR_SHAKE_CAP))
 
 		else if(distance < far_distance) // You can hear a far explosion if you are outside the blast radius. Small explosions shouldn't be heard throughout the station.
-			var/far_volume = clamp(far_distance / 2, FAR_LOWER, FAR_UPPER)
+			var/far_volume = round(clamp(far_distance / 2, FAR_LOWER, FAR_UPPER) * sound_mul) // monkestation edit: sound_mul
 			if(creaking)
 				listener.playsound_local(epicenter, null, far_volume, TRUE, frequency, pressure_affected = pressure_affected, sound_to_use = creaking_sound, distance_multiplier = 0) // monkestation edit: pressure_affected
 			else if(prob(FAR_SOUND_PROB)) // Sound variety during meteor storm/tesloose/other bad event
@@ -560,10 +560,10 @@ SUBSYSTEM_DEF(explosions)
 					shake_camera(listener, FAR_SHAKE_DURATION, clamp(quake_factor / 4, 0, FAR_SHAKE_CAP))
 			else
 				echo_volume = 40
-			listener.playsound_local(epicenter, null, echo_volume, TRUE, frequency, pressure_affected = pressure_affected, sound_to_use = echo_sound, distance_multiplier = 0) // monkestation edit: pressure_affected
+			listener.playsound_local(epicenter, null, round(echo_volume * sound_mul), TRUE, frequency, pressure_affected = pressure_affected, sound_to_use = echo_sound, distance_multiplier = 0) // monkestation edit: pressure_affected, sound_mul
 
 		if(creaking) // 5 seconds after the bang, the station begins to creak
-			addtimer(CALLBACK(listener, TYPE_PROC_REF(/mob, playsound_local), epicenter, null, rand(FREQ_LOWER, FREQ_UPPER), TRUE, frequency, null, null, FALSE, hull_creaking_sound, 0), CREAK_DELAY)
+			addtimer(CALLBACK(listener, TYPE_PROC_REF(/mob, playsound_local), epicenter, null, round(rand(FREQ_LOWER, FREQ_UPPER) * sound_mul), TRUE, frequency, null, null, FALSE, hull_creaking_sound, 0), CREAK_DELAY) // monkestation edit: sound_mul
 
 #undef CREAK_DELAY
 #undef QUAKE_CREAK_PROB
