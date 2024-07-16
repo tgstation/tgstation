@@ -618,6 +618,9 @@
 /obj/effect/mapping_helpers/broken_floor,
 /turf/open/floor/iron,
 /area/ruin/space/ancientstation/beta/atmos)
+"cO" = (
+/turf/open/space/basic,
+/area/ruin/space/ancientstation/charlie/engie)
 "cP" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt,
@@ -724,9 +727,6 @@
 /area/ruin/space/ancientstation/delta/hall)
 "dj" = (
 /obj/machinery/door/airlock/external/glass/ruin,
-/obj/effect/mapping_helpers/airlock/cyclelink_helper{
-	dir = 1
-	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4{
 	dir = 6
 	},
@@ -2065,6 +2065,10 @@
 	},
 /turf/open/floor/iron,
 /area/ruin/space/ancientstation/delta/rnd)
+"iY" = (
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/iron/dark,
+/area/ruin/space/ancientstation/charlie/engie)
 "jc" = (
 /obj/effect/turf_decal/stripes/corner{
 	dir = 4
@@ -3653,7 +3657,7 @@
 /obj/structure/cable,
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/door/airlock/external/glass/ruin,
-/turf/open/floor/iron/dark,
+/turf/open/floor/iron/dark/airless,
 /area/ruin/space/ancientstation/charlie/engie)
 "rc" = (
 /obj/effect/decal/cleanable/dirt,
@@ -4257,6 +4261,10 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/plating/airless,
 /area/ruin/space/ancientstation/beta/hall)
+"vs" = (
+/obj/machinery/light/small/red/directional/east,
+/turf/open/floor/iron/dark,
+/area/ruin/space/ancientstation/charlie/engie)
 "vv" = (
 /obj/machinery/light/small/directional/south,
 /obj/structure/closet/crate,
@@ -7217,7 +7225,7 @@
 /area/ruin/space/ancientstation/charlie/sec)
 "Po" = (
 /obj/machinery/door/airlock/external/glass/ruin,
-/turf/open/floor/iron/dark,
+/turf/open/floor/iron/dark/airless,
 /area/ruin/space/ancientstation/delta/hall)
 "Pq" = (
 /obj/machinery/door/airlock/science,
@@ -8103,8 +8111,7 @@
 /area/ruin/space/ancientstation/beta/supermatter)
 "VU" = (
 /obj/machinery/door/airlock/external/glass/ruin,
-/obj/effect/mapping_helpers/airlock/cyclelink_helper,
-/turf/open/floor/iron/dark,
+/turf/open/floor/iron/dark/airless,
 /area/ruin/space/ancientstation/beta/mining)
 "VV" = (
 /turf/open/floor/plating,
@@ -8147,6 +8154,7 @@
 /obj/effect/turf_decal/stripes/corner{
 	dir = 8
 	},
+/obj/structure/sign/warning/vacuum/directional/west,
 /turf/open/floor/iron,
 /area/ruin/space/ancientstation/charlie/engie)
 "Wp" = (
@@ -11281,10 +11289,10 @@ mZ
 RR
 aa
 aa
-aa
-aa
-aa
-aa
+JB
+JB
+JB
+my
 dH
 dH
 my
@@ -11354,7 +11362,7 @@ aa
 my
 aa
 aa
-my
+aa
 aa
 Jg
 aa
@@ -11420,7 +11428,7 @@ aa
 my
 aa
 aa
-JB
+aa
 aa
 Jg
 aa
@@ -11481,12 +11489,12 @@ aa
 aa
 aa
 aa
-aa
+eI
 Ma
 qQ
-Ma
+eI
 aa
-JB
+aa
 aa
 Jg
 aa
@@ -11547,12 +11555,12 @@ aa
 aa
 aa
 aa
-aa
 Ma
+iY
 wR
 Ma
 aa
-JB
+aa
 aa
 Jg
 aa
@@ -11613,8 +11621,8 @@ aa
 aa
 aa
 aa
-aa
 Ma
+vs
 Li
 Ma
 aa
@@ -11679,11 +11687,11 @@ aa
 Ma
 Ma
 eI
-Ma
+eI
 eI
 Wa
 eI
-Ma
+cO
 eI
 Ma
 Ma
