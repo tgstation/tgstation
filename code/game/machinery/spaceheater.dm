@@ -327,8 +327,8 @@
 	var/datum/controller/subsystem/processing/our_subsystem
 
 /obj/machinery/space_heater/improvised_chem_heater/Initialize(mapload)
-	. = ..()
 	our_subsystem = locate(subsystem_type) in Master.subsystems
+	. = ..()
 
 /obj/machinery/space_heater/improvised_chem_heater/Destroy()
 	. = ..()
