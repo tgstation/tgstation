@@ -37,6 +37,7 @@
           - any-glob-to-any-file: ['code/**']
           - any-glob-to-any-file: [modular_bandastation/**]
       - base-branch: 'master'
+      - head-branch: '!merge-upstream'
 
 'НЕ МОДУЛЬНО':
   - all:
@@ -44,6 +45,12 @@
           - any-glob-to-any-file: ['code/**', 'icons/**', '_maps/map_files/**']
           - all-globs-to-all-files: '!modular_bandastation/**'
       - base-branch: 'master'
+      - head-branch: '!merge-upstream'
+
+':pray: Слияние с восходящим потоком':
+  - all:
+    - base-branch: 'master'
+    - head-branch: 'merge-upstream'
 
 ':pencil: Перевод':
   - base-branch: 'translate'
