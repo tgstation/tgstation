@@ -36,8 +36,7 @@
 	var/lid_x = 0
 	/// Controls the Y value of the lid, allowing up and down pixel movement.
 	var/lid_y = 0
-	/// List of people currently atop the box, gaining loud speech
-	var/list/soapboxers = list()
+
 /obj/structure/closet/crate/Initialize(mapload)
 	AddElement(/datum/element/climbable, climb_time = crate_climb_time, climb_stun = 0) //add element in closed state before parent init opens it(if it does)
 	if(elevation)
@@ -63,12 +62,7 @@
 		)
 	if(paint_jobs)
 		paint_jobs = crate_paint_jobs
-
-	var/static/list/loc_connections = list(
-		COMSIG_ATOM_ENTERED = PROC_REF(on_loc_entered),
-		COMSIG_ATOM_EXITED = PROC_REF(on_loc_exited)
-	)
-	AddElement(/datum/element/connect_loc, loc_connections)
+	AddComponent(/datum/component/soapbox)
 
 /obj/structure/closet/crate/Destroy()
 	QDEL_NULL(manifest)
@@ -139,29 +133,6 @@
 			RemoveElement(/datum/element/elevation, pixel_shift = elevation_open)
 		if(elevation)
 			AddElement(/datum/element/elevation, pixel_shift = elevation)
-
-///Applies a proc when movable enters the turf of our crate
-/obj/structure/closet/crate/proc/on_loc_entered(datum/source, atom/movable/soapbox_arrive)
-	SIGNAL_HANDLER
-	if(!opened)
-		RegisterSignal(soapbox_arrive, COMSIG_MOB_SAY, PROC_REF(soapbox_speech))
-		soapboxers += soapbox_arrive
-
-/obj/structure/closet/crate/proc/on_loc_exited(datum/source, atom/movable/soapbox_leave)
-	SIGNAL_HANDLER
-	if(soapbox_leave in soapboxers)
-		UnregisterSignal(soapbox_leave, COMSIG_MOB_SAY)
-		soapboxers -= soapbox_leave
-
-/obj/structure/closet/crate/Moved(atom/old_loc, movement_dir, forced, list/old_locs, momentum_change)
-	. = ..()
-	for(var/atom/movable/loud as anything in soapboxers)
-		UnregisterSignal(loud, COMSIG_MOB_SAY)
-
-///Gives a mob a unique say span
-/obj/structure/closet/crate/proc/soapbox_speech(datum/source, list/speech_args)
-	SIGNAL_HANDLER
-	speech_args[SPEECH_SPANS] |= SPAN_SOAPBOX
 
 ///Spawns two to six maintenance spawners inside the closet
 /obj/structure/closet/proc/populate_with_random_maint_loot()
