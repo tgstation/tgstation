@@ -48,7 +48,7 @@
 		var/mob/living/silicon/robot/cyborg_user = user
 		if (!cyborg_user.combat_mode)
 			return
-	// Snowflake for xeno fetish code
+	// Snowflake for xeno consumption code
 	if (isalienadult(user))
 		var/mob/living/carbon/alien/adult/alien = user
 		if (alien.grab_state == GRAB_AGGRESSIVE && alien.pulling == source)
