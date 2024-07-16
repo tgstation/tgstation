@@ -533,6 +533,9 @@
 	last_charging = charging
 	charging = APC_NOT_CHARGING
 
+	if(isnull(area))
+		return
+
 	var/total_static_energy_usage = 0
 	total_static_energy_usage += APC_CHANNEL_IS_ON(lighting) * area.energy_usage[AREA_USAGE_STATIC_LIGHT]
 	total_static_energy_usage += APC_CHANNEL_IS_ON(equipment) * area.energy_usage[AREA_USAGE_STATIC_EQUIP]
