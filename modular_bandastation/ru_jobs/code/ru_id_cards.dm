@@ -8,7 +8,7 @@
 	assignment = JOB_BARTENDER_RU
 
 /datum/id_trim/job/bitrunner
-	assignment = JOB_BITRUNNER
+	assignment = JOB_BITRUNNER_RU
 
 /datum/id_trim/job/botanist
 	assignment = JOB_BOTANIST_RU
