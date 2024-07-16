@@ -30,7 +30,6 @@
 /area/ruin/space)
 "p" = (
 /obj/structure/safe,
-/obj/item/book/granter/crafting_recipe/dusting/laser_musket_prime,
 /obj/item/gun/ballistic/revolver/russian,
 /obj/effect/spawner/random/bureaucracy/briefcase,
 /obj/effect/spawner/random/entertainment/money_small,
@@ -38,6 +37,8 @@
 /obj/item/coin/iron,
 /obj/item/coin/gold,
 /obj/item/food/chococoin,
+/obj/item/gps/spaceruin,
+/obj/item/folder/syndicate/red,
 /turf/open/floor/plating/airless,
 /area/ruin/space)
 "q" = (
