@@ -113,7 +113,7 @@ GLOBAL_LIST_INIT(command_strings, list(
 	RegisterSignal(src, COMSIG_MOVABLE_MOVED, PROC_REF(handle_loop_movement))
 	RegisterSignal(src, COMSIG_ATOM_WAS_ATTACKED, PROC_REF(after_attacked))
 	RegisterSignal(src, COMSIG_MOB_TRIED_ACCESS, PROC_REF(attempt_access))
-	ADD_TRAIT(src, TRAIT_NO_GLIDE, INNATE_TRAIT)
+	add_traits(list(TRAIT_NO_GLIDE, TRAIT_SILICON_EMOTES_ALLOWED), INNATE_TRAIT)
 	GLOB.bots_list += src
 
 	// Give bots a fancy new ID card that can hold any access.
