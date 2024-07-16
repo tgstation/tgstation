@@ -24,6 +24,7 @@
 	if(soapbox_leave in soapboxers)
 		UnregisterSignal(soapbox_leave, COMSIG_MOB_SAY)
 		soapboxers -= soapbox_leave
+
 ///We don't want our soapboxxer to keep their loud say if the parent is moved out from under them
 /datum/component/soapbox/proc/Parent_moved(datum/source)
 	SIGNAL_HANDLER
