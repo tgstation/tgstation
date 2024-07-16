@@ -336,9 +336,10 @@
 
 /obj/machinery/space_heater/improvised_chem_heater/heating_examine()
 	. = ..()
-	// Gets the actual conduction power, applying correction from the timestep.
-	var/conduction_power = 1 - (1 - beaker_conduction_power * (set_mode == HEATER_MODE_AUTO ? 0.5 : 1) * our_subsystem.wait / (1 SECONDS)) ** (1 SECONDS / our_subsystem.wait)
-	. += span_notice("Reagent conduction power: <b>[conduction_power < 1 ? display_power(-log(1 - conduction_power), convert = FALSE) : "∞W"]/J</b>")
+	// Conducted energy per joule of thermal energy difference in a tick.
+	var/conduction_energy = beaker_conduction_power * (set_mode == HEATER_MODE_AUTO ? 0.5 : 1) * our_subsystem.wait / (1 SECONDS)
+	// This accounts for the timestep inaccuracy.
+	. += span_notice("Reagent conduction power: <b>[conduction_energy < 1 ? display_power(-log(1 - conduction_energy) SECONDS / our_subsystem.wait, convert = FALSE) : "∞W"]/J</b>")
 
 /obj/machinery/space_heater/improvised_chem_heater/toggle_power(user)
 	. = ..()
