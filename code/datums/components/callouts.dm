@@ -6,7 +6,7 @@
 	/// If parent is clothing, slot on which this component activates
 	var/item_slot
 	/// Current user of this component
-	var/cur_user
+	var/mob/cur_user
 	/// Whenever the user should shout the voiceline
 	var/voiceline = FALSE
 	/// If voiceline is true, what prefix the user should use
@@ -36,11 +36,15 @@
 		return
 
 	var/mob/user = atom_parent.loc
-	if (item_slot != null && user.get_item_by_slot(item_slot) != parent)
+	if (!isnull(item_slot) && user.get_item_by_slot(item_slot) != parent)
 		return
 
 	RegisterSignal(atom_parent.loc, COMSIG_MOB_CLICKON, PROC_REF(on_click))
 	cur_user = atom_parent.loc
+
+/datum/component/callouts/Destroy(force)
+	cur_user = null
+	. = ..()
 
 /datum/component/callouts/RegisterWithParent()
 	RegisterSignal(parent, COMSIG_MOB_CLICKON, PROC_REF(on_click))
