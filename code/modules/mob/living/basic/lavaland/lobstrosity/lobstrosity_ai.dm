@@ -22,6 +22,13 @@
 		/datum/ai_planning_subtree/find_fingers,
 	)
 
+///Ensure that juveline lobstrosities witll charge at things they can reach.
+/datum/ai_controller/basic_controller/lobstrosity/New(atom/new_pawn)
+	if(istype(new_pawn, /mob/living/basic/mining/lobstrosity/juvenile))
+		planning_subtrees -= /datum/ai_planning_subtree/targeted_mob_ability/lobster
+		planning_subtrees += /datum/ai_planning_subtree/targeted_mob_ability/lobster/juvenile
+	return ..()
+
 /datum/ai_planning_subtree/find_and_hunt_target/lobster_fishing
 	target_key = BB_FISHING_TARGET
 	hunt_targets = list(/turf/open/lava)
@@ -99,6 +106,10 @@
 	if(QDELETED(target) || in_range(controller.pawn, target))
 		return FALSE
 	return ..()
+
+
+/datum/ai_planning_subtree/targeted_mob_ability/lobster/juvenile
+	use_ability_behaviour = /datum/ai_behavior/targeted_mob_ability/min_range/short
 
 /// Look for loose arms lying around
 /datum/ai_planning_subtree/find_fingers

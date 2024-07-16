@@ -59,3 +59,6 @@
 	if(QDELETED(target))
 		return FALSE
 	set_movement_target(controller, target)
+
+/datum/ai_behavior/targeted_mob_ability/min_range/short
+	required_distance = 3

@@ -237,9 +237,9 @@
 	. = ..()
 	owner.remove_movespeed_modifier(tired_movespeed)
 
-/datum/status_effect/tired_post_charge/easy
+/datum/status_effect/tired_post_charge/lesser
 	id = "tired_post_charge_easy"
-	tired_movespeed = /datum/movespeed_modifier/status_effect/tired_post_charge/easy
+	tired_movespeed = /datum/movespeed_modifier/status_effect/tired_post_charge/lesser
 
 /datum/action/cooldown/mob_cooldown/charge/triple_charge
 	name = "Triple Charge"

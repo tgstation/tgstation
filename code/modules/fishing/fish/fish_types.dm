@@ -317,7 +317,7 @@
 		anger += growth_rate * 0.6
 	if(!locate(/obj/item/aquarium_prop) in aquarium) //the aquarium deco is quite barren
 		anger += growth_rate * 0.25
-	var/fish_count = aquarium.get_fishes()
+	var/fish_count = length(aquarium.get_fishes())
 	if(!ISINRANGE(fish_count, 3, AQUARIUM_MAX_BREEDING_POPULATION * 0.5)) //too lonely or overcrowded
 		anger += growth_rate * 0.3
 	if(fish_count <= AQUARIUM_MAX_BREEDING_POPULATION * 0.5) //check if there's enough room to maturate.
@@ -340,11 +340,13 @@
 		lob.ai_controller.planning_subtrees -= SSai_controllers.ai_subtrees[/datum/ai_planning_subtree/simple_find_target]
 		lob.ai_controller.planning_subtrees += SSai_controllers.ai_subtrees[/datum/ai_planning_subtree/capricious_retaliate]
 
-	animate(lob, pixel_y = 18, time = 0.3 SECONDS, flags = ANIMATION_RELATIVE, easing = CUBIC_EASING|EASE_OUT)
+	animate(lob, pixel_y = 18, time = 0.4 SECONDS, flags = ANIMATION_RELATIVE, easing = CUBIC_EASING|EASE_OUT)
 	animate(pixel_y = -18, time = 0.4 SECONDS, flags = ANIMATION_RELATIVE, easing = CUBIC_EASING|EASE_IN)
-	step(lob, pick(GLOB.alldirs))
 	loc.visible_message(span_boldnotice("a [lob] jumps out of [loc]!"))
 	playsound(loc, 'sound/effects/fish_splash.ogg', 60)
+
+	///make sure it moves the next tick so that it properly glides to the next location after jumping off the aquarium.
+	addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(random_step), lob, 1, 100), 0.1 SECONDS)
 
 	qdel(src)
 

@@ -200,4 +200,4 @@
 	charge_damage = 13
 
 /datum/action/cooldown/mob_cooldown/charge/basic_charge/lobster/apply_post_charge(mob/living/charger)
-	charger.apply_status_effect(/datum/status_effect/tired_post_charge/easy)
+	charger.apply_status_effect(/datum/status_effect/tired_post_charge/lesser)
