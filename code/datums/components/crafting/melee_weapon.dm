@@ -187,7 +187,27 @@
 		/obj/item/assembly/signaler/anomaly/ectoplasm = 1,
 	)
 	machinery = list(
-		/obj/machinery/power/supermatter_crystal = CRAFTING_MACHINERY_CONSUME,
+		/obj/machinery/power/supermatter_crystal/shard = CRAFTING_MACHINERY_CONSUME,
 	)
 	time = 10 SECONDS
+	category = CAT_WEAPON_MELEE
+
+/datum/crafting_recipe/supermatter_sword
+	name = "Supermatter Sword"
+	result = /obj/item/melee/supermatter_sword
+	reqs = list(
+		/obj/item/assembly/signaler/anomaly/pyro = 1,
+		/obj/item/assembly/signaler/anomaly/grav = 1,
+		/obj/item/assembly/signaler/anomaly/flux = 1,
+		/obj/item/assembly/signaler/anomaly/bluespace = 1,
+		/obj/item/assembly/signaler/anomaly/vortex = 1,
+		/obj/item/assembly/signaler/anomaly/bioscrambler = 1,
+		/obj/item/assembly/signaler/anomaly/hallucination = 1,
+		/obj/item/assembly/signaler/anomaly/dimensional = 1,
+		/obj/item/assembly/signaler/anomaly/ectoplasm = 1,
+	)
+	machinery = list(
+		/obj/machinery/power/supermatter_crystal/engine = CRAFTING_MACHINERY_CONSUME,
+	)
+	time = 30 SECONDS
 	category = CAT_WEAPON_MELEE
