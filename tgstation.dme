@@ -6148,6 +6148,7 @@
 #include "code\modules\vehicles\mecha\medical\odysseus.dm"
 #include "code\modules\vehicles\mecha\working\clarke.dm"
 #include "code\modules\vehicles\mecha\working\ripley.dm"
+#include "code\modules\vehicles\spacepod\_pod.dm"
 #include "code\modules\vending\_vending.dm"
 #include "code\modules\vending\assist.dm"
 #include "code\modules\vending\autodrobe.dm"

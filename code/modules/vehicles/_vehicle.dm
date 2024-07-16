@@ -26,8 +26,6 @@
 	var/key_type
 	///The inserted key, needed on some vehicles to start the engine
 	var/obj/item/key/inserted_key
-	/// Whether the vehicle is currently able to move
-	var/canmove = TRUE
 	var/list/autogrant_actions_passenger //plain list of typepaths
 	var/list/autogrant_actions_controller //assoc list "[bitflag]" = list(typepaths)
 	var/list/list/datum/action/occupant_actions //assoc list mob = list(type = action datum assigned to mob)
@@ -145,11 +143,12 @@
 /obj/vehicle/proc/after_remove_occupant(mob/M)
 
 /obj/vehicle/relaymove(mob/living/user, direction)
-	if(!canmove)
-		return FALSE
-	if(is_driver(user))
+	if(is_driver(user) && may_move(user))
 		return relaydrive(user, direction)
 	return FALSE
+
+/obj/vehicle/proc/may_move(user)
+	return TRUE
 
 /obj/vehicle/proc/after_move(direction)
 	return
@@ -183,11 +182,8 @@
 	UnregisterSignal(trailer, COMSIG_QDELETING)
 	trailer = null
 
-/obj/vehicle/Move(newloc, dir)
-	// It is unfortunate, but this is the way to make it not mess up
-	var/atom/old_loc = loc
-	// When we do this, it will set the loc to the new loc
+/obj/vehicle/Moved(atom/old_loc, movement_dir, forced, list/old_locs, momentum_change)
 	. = ..()
-	if(trailer && .)
-		var/dir_to_move = get_dir(trailer.loc, old_loc)
-		step(trailer, dir_to_move)
+	if(trailer)
+		trailer.Move(old_loc, movement_dir)
+
