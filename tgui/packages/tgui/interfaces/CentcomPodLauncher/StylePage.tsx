@@ -37,7 +37,7 @@ export function StylePage(props) {
           style={{
             verticalAlign: 'middle',
             marginRight: '5px',
-            borderRadius: '5px',
+            borderRadius: '20px',
           }}
           tooltipPosition={
             i >= podStyles.length - 2
