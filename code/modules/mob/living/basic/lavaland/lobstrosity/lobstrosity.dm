@@ -77,6 +77,10 @@
 
 	AddComponent(/datum/component/obeys_commands, pet_commands)
 	ai_controller.ai_traits = STOP_MOVING_WHEN_PULLED
+	response_help_continuous = "pets"
+	response_help_simple = "pet"
+	response_disarm_continuous = "gently pushes aside"
+	response_disarm_simple = "gently push aside"
 
 /mob/living/basic/mining/lobstrosity/befriend(mob/living/new_friend)
 	. = ..()
@@ -148,18 +152,18 @@
 
 /mob/living/basic/mining/lobstrosity/juvenile/Initialize(mapload)
 	. = ..()
-	var/growth_step = 1000/(8 MINUTES) //It'll take 8 minutes if you keep the happiness above 40%
+	var/growth_step = 1000/(8 MINUTES) //It should take 8 minutes if you keep the happiness above 40% and at most 14
 	AddComponent(\
 		/datum/component/growth_and_differentiation,\
 		growth_path = grow_type,\
-		growth_probability = 58,\ //without happiness, it takes 14 minutes on average.
+		growth_probability = 58,\
 		lower_growth_value = growth_step,\
 		upper_growth_value = growth_step,\
 		scale_with_happiness = TRUE,\
 		optional_checks = CALLBACK(src, PROC_REF(ready_to_grow)),\
 		optional_grow_behavior = CALLBACK(src, PROC_REF(grow_up))\
 	)
-	AddComponent(/datum/component/tameable, target_foods, tame_chance = 35, bonus_tame_chance = 25)
+	AddComponent(/datum/component/tameable, target_foods, tame_chance = 35, bonus_tame_chance = 20)
 
 /mob/living/basic/mining/lobstrosity/juvenile/add_ranged_armour(list/vulnerable_projectiles)
 	AddElement(\
@@ -174,6 +178,8 @@
 /mob/living/basic/mining/lobstrosity/juvenile/tamed(mob/living/tamer, obj/item/food)
 	. = ..()
 	was_tamed = TRUE
+	// They are more pettable I guess
+	AddElement(/datum/element/pet_bonus, "chitters agreeingly!")
 
 /mob/living/basic/mining/lobstrosity/juvenile/proc/ready_to_grow()
 	return isturf(loc)

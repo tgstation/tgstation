@@ -120,7 +120,7 @@
 
 	if(SPT_PROB(growth_probability, seconds_per_tick))
 		if(lower_growth_value == upper_growth_value)
-			percent += upper_growth_value
+			percent_grown += upper_growth_value
 		else
 			percent_grown += rand(lower_growth_value, upper_growth_value)
 
