@@ -1,3 +1,10 @@
+#define SHRIMP_HARM_RESPONSES list(\
+	"*me stares blankly.",\
+	"*me stares shrimply.",\
+	"*me gives a confused look.",\
+	"*me chitters disageeingly.",\
+)
+
 /datum/ai_controller/basic_controller/lobstrosity
 	blackboard = list(
 		BB_TARGETING_STRATEGY = /datum/targeting_strategy/basic/allow_items,
@@ -7,6 +14,7 @@
 		BB_LOBSTROSITY_FINGER_LUST = 0,
 		BB_LOBSTROSITY_NAIVE_HUNTER = FALSE,
 		BB_BASIC_MOB_FLEE_DISTANCE = 8,
+		BB_OWNER_SELF_HARM_RESPONSES = SHRIMP_HARM_RESPONSES,
 	)
 	ai_traits = PAUSE_DURING_DO_AFTER
 
@@ -35,6 +43,7 @@
 		BB_LOBSTROSITY_FINGER_LUST = 0,
 		BB_LOBSTROSITY_NAIVE_HUNTER = TRUE,
 		BB_BASIC_MOB_FLEE_DISTANCE = 4,
+		BB_OWNER_SELF_HARM_RESPONSES = SHRIMP_HARM_RESPONSES,
 	)
 	planning_subtrees = list(
 		/datum/ai_planning_subtree/random_speech/insect,
@@ -298,3 +307,4 @@
 
 #undef FLEE_TO_RANGE
 #undef MAX_LOBSTROSITY_PATIENCE
+#undef SHRIMP_HARM_RESPONSES
