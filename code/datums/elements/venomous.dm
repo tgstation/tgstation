@@ -22,11 +22,8 @@
 		/datum/component/on_hit_effect,\
 		on_hit_callback = CALLBACK(src, PROC_REF(do_venom)),\
 		thrown_effect = thrown_effect,\
+		associated_datum = src,\
 	)
-
-/datum/element/venomous/Detach(datum/target)
-	qdel(target.GetComponent(/datum/component/on_hit_effect))
-	return ..()
 
 /datum/element/venomous/proc/do_venom(datum/element_owner, atom/venom_source, mob/living/target, hit_zone)
 	if(!istype(target))

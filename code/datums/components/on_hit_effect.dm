@@ -1,20 +1,27 @@
+#define HEY_SET_THIS_ARG "self-explainatory"
 /**
  * ## On Hit Effect Component!
  *
  * Component for other elements/components to rely on for on-hit effects without duplicating the on-hit code.
  * See Lifesteal, or bane for examples.
- *
- * THIS COULD EASILY SUPPORT COMPONENT_DUPE_ALLOWED but the getcomponent makes it throw errors. if you can figure that out feel free to readd the dupe types
  */
 /datum/component/on_hit_effect
+	dupe_mode = COMPONENT_DUPE_ALLOWED
 	///callback used by other components to apply effects
 	var/datum/callback/on_hit_callback
 	///callback optionally used for more checks
 	var/datum/callback/extra_check_callback
 	///optionally should we also apply the effect if thrown at something?
 	var/thrown_effect
+	///The datum that loaded this component
+	var/datum/associated_datum
 
-/datum/component/on_hit_effect/Initialize(on_hit_callback, extra_check_callback, thrown_effect = FALSE)
+/datum/component/on_hit_effect/Initialize(on_hit_callback, extra_check_callback, thrown_effect = FALSE, datum/associated_datum = HEY_SET_THIS_ARG)
+	if(associated_datum == HEY_SET_THIS_ARG)
+		stack_trace("[type] added to [parent.type] without a set 'associated_datum' argument (null is allowed)")
+	else if(!isnull(associated_datum))
+		RegisterSignal(associated_datum, COMSIG_QDELETING, PROC_REF(on_assocated_datum_del))
+		src.associated_datum = associated_datum
 	src.on_hit_callback = on_hit_callback
 	src.extra_check_callback = extra_check_callback
 	if(!(ismachinery(parent) || isstructure(parent) || isgun(parent) || isprojectilespell(parent) || isitem(parent) || isanimal_or_basicmob(parent) || isprojectile(parent)))
@@ -24,6 +31,7 @@
 /datum/component/on_hit_effect/Destroy(force)
 	on_hit_callback = null
 	extra_check_callback = null
+	associated_datum = null
 	return ..()
 
 /datum/component/on_hit_effect/RegisterWithParent()
@@ -39,6 +47,9 @@
 	if(thrown_effect)
 		RegisterSignal(parent, COMSIG_MOVABLE_IMPACT, PROC_REF(on_thrown_hit))
 
+	if(istype(associated_datum, /datum/element))
+		RegisterSignal(parent, COMSIG_ELEMENT_DETACH, PROC_REF(on_element_detach))
+
 /datum/component/on_hit_effect/UnregisterFromParent()
 	UnregisterSignal(parent, list(
 		COMSIG_PROJECTILE_ON_HIT,
@@ -46,7 +57,17 @@
 		COMSIG_HOSTILE_POST_ATTACKINGTARGET,
 		COMSIG_PROJECTILE_SELF_ON_HIT,
 		COMSIG_MOVABLE_IMPACT,
+		COMSIG_ELEMENT_DETACH,
 	))
+
+/datum/component/on_hit_effect/proc/on_assocated_datum_del(datum/source)
+	SIGNAL_HANDLER
+	qdel(src)
+
+/datum/component/on_hit_effect/proc/on_element_detach(datum/source, datum/element/element)
+	SIGNAL_HANDLER
+	if(element == associated_datum)
+		qdel(src)
 
 /datum/component/on_hit_effect/proc/item_afterattack(obj/item/source, atom/target, mob/user, proximity_flag, click_parameters)
 	SIGNAL_HANDLER
@@ -91,3 +112,5 @@
 	if(extra_check_callback && !extra_check_callback.Invoke(source, hit_atom))
 		return
 	on_hit_callback.Invoke(source, source, hit_atom, null)
+
+#undef HEY_SET_THIS_ARG

@@ -27,11 +27,7 @@
 	src.added_damage = added_damage
 	src.requires_combat_mode = requires_combat_mode
 	src.mob_biotypes = mob_biotypes
-	target.AddComponent(/datum/component/on_hit_effect, CALLBACK(src, PROC_REF(do_bane)), CALLBACK(src, PROC_REF(check_bane)))
-
-/datum/element/bane/Detach(datum/target)
-	qdel(target.GetComponent(/datum/component/on_hit_effect))
-	return ..()
+	target.AddComponent(/datum/component/on_hit_effect, CALLBACK(src, PROC_REF(do_bane)), CALLBACK(src, PROC_REF(check_bane)), associated_datum = src)
 
 /datum/element/bane/proc/check_bane(bane_applier, target, bane_weapon)
 	if(!check_biotype_path(bane_applier, target))
