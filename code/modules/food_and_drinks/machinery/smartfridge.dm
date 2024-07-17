@@ -368,8 +368,13 @@
 			if (listofitems[md5name]) // which is fixed in a version we cannot use due to ie8 incompatibility
 				listofitems[md5name]["amount"]++ // The good news is, #30519 made smartfridge UIs non-auto-updating
 			else
-				listofitems[md5name] = list("name" = atom.name, "amount" = 1)
-	sort_list(listofitems)
+				listofitems[md5name] = list(
+					"name" = full_capitalize(atom.name),
+					"icon" = atom.icon,
+					"icon_state" = atom.icon_state,
+					"amount" = 1
+					)
+	sort_list(listofitems, cmp=/proc/cmp_text_asc)
 
 	.["contents"] = listofitems
 	.["name"] = name
