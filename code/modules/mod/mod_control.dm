@@ -322,6 +322,26 @@
 			return ITEM_INTERACT_BLOCKING
 		insert_pai(user, tool)
 		return ITEM_INTERACT_SUCCESS
+	if(istype(tool, /obj/item/mod/paint))
+		var/obj/item/mod/paint/paint_kit = tool
+		if(active || activating)
+			balloon_alert(user, "suit is active!")
+			return ITEM_INTERACT_BLOCKING
+		if(LAZYACCESS(modifiers, RIGHT_CLICK)) // Right click
+			if(paint_kit.editing_mod == src)
+				return ITEM_INTERACT_BLOCKING
+			paint_kit.editing_mod = src
+			paint_kit.proxy_view = new()
+			paint_kit.proxy_view.generate_view("color_matrix_proxy_[REF(user.client)]")
+
+			paint_kit.proxy_view.appearance = paint_kit.editing_mod.appearance
+			paint_kit.proxy_view.color = null
+			paint_kit.proxy_view.display_to(user)
+			paint_kit.ui_interact(user)
+			return ITEM_INTERACT_SUCCESS
+		else // Left click
+			paint_kit.paint_skin(src, user)
+			return ITEM_INTERACT_SUCCESS
 	if(istype(tool, /obj/item/mod/module))
 		if(!open)
 			balloon_alert(user, "open the cover first!")
@@ -445,6 +465,7 @@
 	SEND_SIGNAL(src, COMSIG_MOD_WEARER_SET, wearer)
 	RegisterSignal(wearer, COMSIG_ATOM_EXITED, PROC_REF(on_exit))
 	RegisterSignal(wearer, COMSIG_SPECIES_GAIN, PROC_REF(on_species_gain))
+	RegisterSignal(wearer, COMSIG_MOB_CLICKON, PROC_REF(click_on))
 	update_charge_alert()
 	for(var/obj/item/mod/module/module as anything in modules)
 		module.on_equip()
@@ -452,7 +473,7 @@
 /obj/item/mod/control/proc/unset_wearer()
 	for(var/obj/item/mod/module/module as anything in modules)
 		module.on_unequip()
-	UnregisterSignal(wearer, list(COMSIG_ATOM_EXITED, COMSIG_SPECIES_GAIN))
+	UnregisterSignal(wearer, list(COMSIG_ATOM_EXITED, COMSIG_SPECIES_GAIN, COMSIG_MOB_CLICKON))
 	SEND_SIGNAL(src, COMSIG_MOD_WEARER_UNSET, wearer)
 	wearer.update_spacesuit_hud_icon("0")
 	wearer = null
@@ -486,7 +507,14 @@
 		forceMove(drop_location())
 		return
 
-/obj/item/mod/control/proc/quick_module(mob/user)
+/obj/item/mod/control/proc/click_on(mob/source, atom/A, list/modifiers)
+	SIGNAL_HANDLER
+
+	if (LAZYACCESS(modifiers, CTRL_CLICK) && LAZYACCESS(modifiers, source.client?.prefs.read_preference(/datum/preference/choiced/mod_select) || MIDDLE_CLICK))
+		INVOKE_ASYNC(src, PROC_REF(quick_module), source, get_turf(A))
+		return COMSIG_MOB_CANCEL_CLICKON
+
+/obj/item/mod/control/proc/quick_module(mob/user, anchor_override = null)
 	if(!length(modules))
 		return
 	var/list/display_names = list()
@@ -508,7 +536,9 @@
 	var/radial_anchor = src
 	if(istype(user.loc, /obj/effect/dummy/phased_mob))
 		radial_anchor = get_turf(user.loc) //they're phased out via some module, anchor the radial on the turf so it may still display
-	var/pick = show_radial_menu(user, radial_anchor, items, custom_check = FALSE, require_near = TRUE, tooltips = TRUE)
+	if (!isnull(anchor_override))
+		radial_anchor = anchor_override
+	var/pick = show_radial_menu(user, radial_anchor, items, custom_check = FALSE, require_near = isnull(anchor_override), tooltips = TRUE)
 	if(!pick)
 		return
 	var/module_reference = display_names[pick]

@@ -546,7 +546,7 @@
 
 	if(density)
 		being_held_open = TRUE
-		user.balloon_alert_to_viewers("holding [src] open", "holding [src] open")
+		user.balloon_alert_to_viewers("holding firelock open", "holding firelock open")
 		COOLDOWN_START(src, activation_cooldown, REACTIVATION_DELAY)
 		open()
 		if(QDELETED(user))
@@ -583,7 +583,7 @@
 	UnregisterSignal(user, COMSIG_LIVING_SET_BODY_POSITION)
 	UnregisterSignal(user, COMSIG_QDELETING)
 	if(user)
-		user.balloon_alert_to_viewers("released [src]", "released [src]")
+		user.balloon_alert_to_viewers("released firelock", "released firelock")
 
 /obj/machinery/door/firedoor/attack_ai(mob/user)
 	add_fingerprint(user)
@@ -603,7 +603,7 @@
 /obj/machinery/door/firedoor/attack_alien(mob/user, list/modifiers)
 	add_fingerprint(user)
 	if(welded)
-		to_chat(user, span_warning("[src] refuses to budge!"))
+		balloon_alert(user, "refuses to budge!")
 		return
 	open()
 	if(active)

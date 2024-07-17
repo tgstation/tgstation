@@ -137,6 +137,7 @@
 /obj/item/organ/internal/cyberimp/arm/proc/Retract()
 	if(!active_item || (active_item in src))
 		return FALSE
+	active_item.resistance_flags = active_item::resistance_flags
 	if(owner)
 		owner.visible_message(
 			span_notice("[owner] retracts [active_item] back into [owner.p_their()] [zone == BODY_ZONE_R_ARM ? "right" : "left"] arm."),
@@ -422,8 +423,7 @@
 		return NONE
 	if(!isliving(target))
 		return NONE
-	var/datum/dna/dna = source.has_dna()
-	if(dna?.check_mutation(/datum/mutation/human/hulk)) //NO HULK
+	if(HAS_TRAIT(source, TRAIT_HULK)) //NO HULK
 		return NONE
 	if(!source.can_unarmed_attack())
 		return COMPONENT_SKIP_ATTACK

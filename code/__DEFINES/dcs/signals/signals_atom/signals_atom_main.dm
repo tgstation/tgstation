@@ -68,7 +68,7 @@
 #define COMSIG_ATOM_EXITED "atom_exited"
 ///from base of atom/movable/Moved(): (atom/movable/gone, direction)
 #define COMSIG_ATOM_ABSTRACT_EXITED "atom_abstract_exited"
-///from base of atom/Bumped(): (/atom/movable)
+///from base of atom/Bumped(): (/atom/movable) (the one that gets bumped)
 #define COMSIG_ATOM_BUMPED "atom_bumped"
 ///from base of atom/has_gravity(): (turf/location, list/forced_gravities)
 #define COMSIG_ATOM_HAS_GRAVITY "atom_has_gravity"
@@ -140,3 +140,6 @@
 /// From /obj/effect/particle_effect/sparks/proc/sparks_touched(datum/source, atom/movable/singed)
 #define COMSIG_ATOM_TOUCHED_SPARKS "atom_touched_sparks"
 #define COMSIG_ATOM_TOUCHED_HAZARDOUS_SPARKS "atom_touched_hazardous_sparks"
+
+/// From whoever has been revealed (atom/revealed)
+#define COMSIG_ATOM_REVEAL "atom_reveal"
