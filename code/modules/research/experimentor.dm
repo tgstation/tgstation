@@ -585,7 +585,7 @@
 
 /obj/item/relic/Destroy(force)
 	QDEL_NULL(sparks)
-	..()
+	. = ..()
 
 /obj/item/relic/proc/random_themed_appearance()
 	var/themed_name_prefix
