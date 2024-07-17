@@ -85,7 +85,6 @@
  * * type_override - Override to the current emote_type.
  * * intentional - Bool that says whether the emote was forced (FALSE) or not (TRUE).
  *
- * Returns TRUE if it was able to run the emote, FALSE otherwise.
  */
 /datum/emote/proc/run_emote(mob/user, params, type_override, intentional = FALSE)
 	var/msg = select_message_type(user, message, intentional)
