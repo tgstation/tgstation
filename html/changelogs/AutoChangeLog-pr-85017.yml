@@ -1,0 +1,5 @@
+author: "SyncIt21"
+delete-after: True
+changes:
+  - bugfix: "acid/base buffers should update your target & source holder"
+  - bugfix: "remove reagent operations won't trigger excessive workload"
