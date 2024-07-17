@@ -536,6 +536,7 @@
 	total_static_energy_usage += APC_CHANNEL_IS_ON(lighting) * area.energy_usage[AREA_USAGE_STATIC_LIGHT]
 	total_static_energy_usage += APC_CHANNEL_IS_ON(equipment) * area.energy_usage[AREA_USAGE_STATIC_EQUIP]
 	total_static_energy_usage += APC_CHANNEL_IS_ON(environ) * area.energy_usage[AREA_USAGE_STATIC_ENVIRON]
+
 	if(total_static_energy_usage) //Use power from static power users.
 		draw_energy(total_static_energy_usage)
 
@@ -560,7 +561,6 @@
 	lastused_light = APC_CHANNEL_IS_ON(lighting) ? area.energy_usage[AREA_USAGE_LIGHT] + area.energy_usage[AREA_USAGE_STATIC_LIGHT] : 0
 	lastused_equip = APC_CHANNEL_IS_ON(equipment) ? area.energy_usage[AREA_USAGE_EQUIP] + area.energy_usage[AREA_USAGE_STATIC_EQUIP] : 0
 	lastused_environ = APC_CHANNEL_IS_ON(environ) ? area.energy_usage[AREA_USAGE_ENVIRON] + area.energy_usage[AREA_USAGE_STATIC_ENVIRON] : 0
-	area.clear_usage()
 
 	lastused_total = lastused_light + lastused_equip + lastused_environ + lastused_charge
 
@@ -632,6 +632,7 @@
 // charge until the battery is full or to the treshold of the provided channel
 /obj/machinery/power/apc/proc/charge_channel(channel = null, seconds_per_tick)
 	if(channel == SSMACHINES_APCS_ENVIRONMENT)
+		area.clear_usage()
 		lastused_charge = 0
 		last_charging = charging
 		if(cell && cell.charge < cell.maxcharge)
