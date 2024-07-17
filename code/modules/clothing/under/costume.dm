@@ -85,16 +85,10 @@
 	female_sprite_flags = FEMALE_UNIFORM_TOP_ONLY
 	can_adjust = FALSE
 
-/obj/item/clothing/under/kilt_highlander
-	name = "highlander's kilt"
+/obj/item/clothing/under/costume/kilt/highlander
 	desc = "You're the only one worthy of this kilt."
-	icon_state = "kilt"
-	inhand_icon_state = "kilt"
-	body_parts_covered = CHEST|GROIN|LEGS|FEET
-	female_sprite_flags = FEMALE_UNIFORM_TOP_ONLY
-	can_adjust = FALSE
 
-/obj/item/clothing/under/kilt_highlander/Initialize(mapload)
+/obj/item/clothing/under/costume/kilt/highlander/Initialize(mapload)
 	. = ..()
 	ADD_TRAIT(src, TRAIT_NODROP, HIGHLANDER_TRAIT)
 

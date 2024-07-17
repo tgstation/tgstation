@@ -12,6 +12,7 @@
 		TRAIT_NODISMEMBER,
 		TRAIT_NOFIRE,
 		TRAIT_NOGUNS,
+		TRAIT_TOSS_GUN_HARD,
 		TRAIT_SHOCKIMMUNE,
 	)
 
@@ -56,7 +57,7 @@
 
 	H.regenerate_icons()
 	H.revive(ADMIN_HEAL_ALL)
-	H.equip_to_slot_or_del(new /obj/item/clothing/under/kilt_highlander(H), ITEM_SLOT_ICLOTHING)
+	H.equip_to_slot_or_del(new /obj/item/clothing/under/costume/kilt/highlander(H), ITEM_SLOT_ICLOTHING)
 	H.equip_to_slot_or_del(new /obj/item/radio/headset/syndicate(H), ITEM_SLOT_EARS)
 	H.equip_to_slot_or_del(new /obj/item/clothing/head/beret/highlander(H), ITEM_SLOT_HEAD)
 	H.equip_to_slot_or_del(new /obj/item/clothing/shoes/combat(H), ITEM_SLOT_FEET)
