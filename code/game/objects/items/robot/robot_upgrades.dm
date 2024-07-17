@@ -2,7 +2,7 @@
 // Contains various borg upgrades.
 
 /obj/item/borg/upgrade
-	name = "borg upgrade module."
+	name = "borg upgrade module"
 	desc = "Protected by FRM."
 	icon = 'icons/mob/silicon/robot_items.dmi'
 	icon_state = "module_general"
@@ -73,6 +73,7 @@
 /obj/item/borg/upgrade/rename
 	name = "cyborg reclassification board"
 	desc = "Used to rename a cyborg."
+	icon = 'icons/obj/devices/circuitry_n_data.dmi'
 	icon_state = "cyborg_upgrade1"
 	var/heldname = ""
 	one_use = TRUE
@@ -540,6 +541,7 @@
 /obj/item/borg/upgrade/ai
 	name = "B.O.R.I.S. module"
 	desc = "Bluespace Optimized Remote Intelligence Synchronization. An uplink device which takes the place of an MMI in cyborg endoskeletons, creating a robotic shell controlled by an AI."
+	icon = 'icons/obj/devices/circuitry_n_data.dmi'
 	icon_state = "boris"
 
 /obj/item/borg/upgrade/ai/action(mob/living/silicon/robot/borg, mob/living/user = usr)
@@ -603,7 +605,6 @@
 /obj/item/borg/upgrade/rped
 	name = "engineering cyborg RPED"
 	desc = "A rapid part exchange device for the engineering cyborg."
-	icon = 'icons/obj/storage/storage.dmi'
 	icon_state = "module_engineer"
 	require_model = TRUE
 	model_type = list(/obj/item/robot_model/engineering, /obj/item/robot_model/saboteur)
@@ -614,6 +615,7 @@
 /obj/item/borg/upgrade/inducer
 	name = "engineering integrated power inducer"
 	desc = "An integrated inducer that can charge a device's internal cell from power provided by the cyborg."
+	icon_state = "module_engineer"
 	require_model = TRUE
 	model_type = list(/obj/item/robot_model/engineering, /obj/item/robot_model/saboteur)
 	model_flags = BORG_MODEL_ENGINEERING
@@ -623,7 +625,7 @@
 /obj/item/inducer/cyborg
 	name = "Internal inducer"
 	icon = 'icons/obj/tools.dmi'
-	icon_state = "module_engineer"
+	icon_state = "inducer-engi"
 	cell_type = null
 
 /obj/item/inducer/cyborg/get_cell()
@@ -638,7 +640,6 @@
 /obj/item/borg/upgrade/pinpointer
 	name = "medical cyborg crew pinpointer"
 	desc = "A crew pinpointer module for the medical cyborg. Permits remote access to the crew monitor."
-	icon = 'icons/obj/devices/tracker.dmi'
 	icon_state = "module_medical"
 	require_model = TRUE
 	model_type = list(/obj/item/robot_model/medical, /obj/item/robot_model/syndicate_medical)
