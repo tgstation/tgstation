@@ -34,6 +34,8 @@
 	var/charge_command = /datum/pet_command/point_targeting/use_ability/lob_charge
 	/// At which speed do we amputate limbs
 	var/snip_speed = 5 SECONDS
+	///Lobstrosities are natural anglers. This rapresent their proficiency at fishing when not mindless
+	var/base_fishing_level = SKILL_LEVEL_APPRENTICE
 	/// Things we will eat if we see them (arms, chiefly)
 	var/static/list/target_foods = list(/obj/item/bodypart/arm, /obj/item/fish/lavaloop)
 
@@ -86,6 +88,11 @@
 	. = ..()
 	faction |= new_friend.faction
 	faction -= FACTION_MINING
+
+/mob/living/basic/mining/lobstrosity/mind_initialize()
+	. = ..()
+	if(mind.get_skill_level(/datum/skill/fishing) < base_fishing_level)
+		mind.set_level(/datum/skill/fishing, base_fishing_level, TRUE)
 
 /// Lavaland lobster variant, it basically just looks different
 /mob/living/basic/mining/lobstrosity/lava
@@ -146,6 +153,7 @@
 	snip_speed = 6.5 SECONDS
 	charge_type = /datum/action/cooldown/mob_cooldown/charge/basic_charge/lobster/shrimp
 	charge_command = /datum/pet_command/point_targeting/use_ability/lob_charge/shrimp
+	base_fishing_level = SKILL_LEVEL_NOVICE
 	/// What do we become when we grow up?
 	var/mob/living/basic/mining/lobstrosity/grow_type = /mob/living/basic/mining/lobstrosity
 	/// Were we tamed? If yes, tame the mob we become when we grow up too.
