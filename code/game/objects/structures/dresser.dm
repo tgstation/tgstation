@@ -59,7 +59,7 @@
 			if(new_socks)
 				dressing_human.socks= new_socks
 		if("Socks Color")	//MONKESTATION EDIT
-			var/new_socks_color = input(dressing_human, "Choose your socks color", "Socks Color", dressing_human.socks_color) as color|null
+			var/new_socks_color = tgui_color_picker(dressing_human, "Choose your socks color", "Socks Color", dressing_human.socks_color)
 			if(new_socks_color)
 				dressing_human.socks_color = sanitize_hexcolor(new_socks_color)
 

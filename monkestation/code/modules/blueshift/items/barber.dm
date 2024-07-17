@@ -393,12 +393,11 @@
 		to_chat(user, span_danger("A red light blinks!"))
 		return
 
-	var/selected_color = input(
-			user,
-			"Select marking color",
-			null,
-			COLOR_WHITE,
-		) as color | null
+	var/selected_color = tgui_color_picker(
+		user,
+		"Select marking color",
+		default = COLOR_WHITE,
+	)
 
 	if(!selected_color)
 		return
@@ -447,12 +446,11 @@
 	if(!selected_marking_id)
 		return
 
-	var/selected_color = input(
-			user,
-			"Select marking color",
-			null,
-			COLOR_WHITE,
-		) as color | null
+	var/selected_color = tgui_color_picker(
+		user,
+		"Select marking color",
+		default = COLOR_WHITE,
+	)
 
 	if(!selected_color)
 		return
@@ -500,12 +498,11 @@
 	INVOKE_ASYNC(src, PROC_REF(async_set_color), attacked_mob, user)
 
 /obj/item/lipstick/quantum/proc/async_set_color(mob/attacked_mob, mob/user)
-	var/new_color = input(
-			user,
-			"Select lipstick color",
-			null,
-			COLOR_WHITE,
-		) as color | null
+	var/new_color = tgui_color_picker(
+		user,
+		"Select lipstick color",
+		default = COLOR_WHITE,
+	)
 
 	var/mob/living/carbon/human/target = attacked_mob
 	if(target.is_mouth_covered())
