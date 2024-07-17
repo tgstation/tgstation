@@ -51,7 +51,8 @@
 	return TRUE
 
 /obj/machinery/satellite/update_icon_state()
-	icon_state = "[base_icon_state]_[active ? "active" : "inactive"]"
+	if(base_icon_state) // monkestation edit: meteor sat sprites
+		icon_state = "[base_icon_state]_[active ? "active" : "inactive"]"
 	return ..()
 
 /obj/machinery/satellite/multitool_act(mob/living/user, obj/item/I)

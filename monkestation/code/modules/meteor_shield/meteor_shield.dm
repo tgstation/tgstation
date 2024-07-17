@@ -3,6 +3,9 @@ GLOBAL_VAR_INIT(total_meteors_zapped, 0)
 
 /obj/machinery/satellite/meteor_shield
 	name = "meteor defense satellite"
+	icon = 'monkestation/icons/obj/machines/satellite.dmi'
+	icon_state = "meteor_sat"
+	base_icon_state = null
 	mode = "HK-MPS"
 	kill_range = 16
 	/// Whether the meteor sat checks for line of sight to determine if it can intercept a meteor.
@@ -35,6 +38,16 @@ GLOBAL_VAR_INIT(total_meteors_zapped, 0)
 	. += span_info("It has stopped <b>[meteors_zapped]</b> meteors so far.")
 	. += span_info("Overall, all meteor defense satellites have stopped a combined <b>[GLOB.total_meteors_zapped]</b> meteors this shift.")
 
+/obj/machinery/satellite/meteor_shield/update_overlays()
+	. = ..()
+	if(active)
+		if(obj_flags & EMAGGED)
+			. += "meteor_sat_hacked"
+			. += emissive_appearance(icon, "meteor_sat_hacked_e", src)
+		else
+			. += "meteor_sat_active"
+			. += emissive_appearance(icon, "meteor_sat_active_e", src)
+
 /obj/machinery/satellite/meteor_shield/proc/on_space_move(datum/source)
 	SIGNAL_HANDLER
 	return COMSIG_MOVABLE_STOP_SPACEMOVE
@@ -66,6 +79,7 @@ GLOBAL_VAR_INIT(total_meteors_zapped, 0)
 	. = ..()
 	user.log_message("emagged [src] at [AREACOORD(src)]", LOG_GAME)
 	setup_proximity()
+	update_appearance()
 
 /obj/machinery/satellite/meteor_shield/on_changed_z_level(turf/old_turf, turf/new_turf, same_z_layer, notify_contents)
 	. = ..()
