@@ -339,7 +339,7 @@
 	if(!prob(anger))
 		lob.AddElement(/datum/element/ai_retaliate)
 		qdel(lob.ai_controller)
-		lob.ai_controller = new /datum/ai_controller/basic_controller/lobstrosity/juvenile/pacific(lob)
+		lob.ai_controller = new /datum/ai_controller/basic_controller/lobstrosity/juvenile/calm(lob)
 	else if(anger < 30) //not really that mad, just a bit unstable.
 		qdel(lob.ai_controller)
 		lob.ai_controller = new /datum/ai_controller/basic_controller/lobstrosity/juvenile/capricious(lob)
