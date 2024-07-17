@@ -11,6 +11,6 @@
 	SIGNAL_HANDLER
 
 	if(istype(hit, /obj/structure/window))
-		parent.balloon_alert(parent, "god I love glass")
+		parent.visible_message(span_notice("[parent.name] nuzzles the [hit.name]!"))
 		new /obj/effect/temp_visual/heart(hit.loc)
 		return COMPONENT_CANCEL_ATTACK_CHAIN

@@ -35,7 +35,7 @@
 	RegisterSignal(organ_owner, COMSIG_ATOM_ENTERING, PROC_REF(on_atom_entering))
 
 	organ_owner.AddComponent(/datum/component/space_camo, space_alpha, non_space_alpha, 5 SECONDS)
-	organ_owner.AddComponent(/datum/component/only_pull_people)
+	organ_owner.AddComponent(/datum/component/only_pull_living)
 	organ_owner.AddComponent(/datum/component/glass_pacifist)
 	organ_owner.AddComponent(/datum/component/no_crit_hitting)
 
@@ -57,7 +57,7 @@
 	alpha = 255
 
 	qdel(organ_owner.GetComponent(/datum/component/space_camo))
-	qdel(organ_owner.GetComponent(/datum/component/only_pull_people))
+	qdel(organ_owner.GetComponent(/datum/component/only_pull_living))
 	qdel(organ_owner.GetComponent(/datum/component/glass_pacifist))
 	qdel(organ_owner.GetComponent(/datum/component/no_crit_hitting))
 
@@ -126,8 +126,12 @@
 
 /obj/effect/spawner/glass_debris
 	/// Weighted list for the debris we spawn
-	var/list/debris = list(/obj/effect/decal/cleanable/glass = 2, /obj/effect/decal/cleanable/glass/plasma = 1,\
-		/obj/effect/decal/cleanable/glass/titanium = 1, /obj/effect/decal/cleanable/glass/plastitanium = 1)
+	var/list/debris = list(
+		/obj/effect/decal/cleanable/glass = 2,
+		/obj/effect/decal/cleanable/glass/plasma = 1,
+		/obj/effect/decal/cleanable/glass/titanium = 1,
+		/obj/effect/decal/cleanable/glass/plastitanium = 1,
+		)
 
 /obj/effect/spawner/glass_debris/Initialize(mapload)
 	. = ..()

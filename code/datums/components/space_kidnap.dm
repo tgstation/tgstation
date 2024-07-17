@@ -70,4 +70,4 @@
 	eater?.refresh()
 
 	var/atom/owner = parent
-	owner.balloon_alert(owner, "void eater refreshed!")
+	owner.balloon_alert(owner, "void eater refreshed")

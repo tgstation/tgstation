@@ -81,3 +81,6 @@
 /// Called when the voidwalker kidnapped someone
 /obj/item/void_eater/proc/refresh()
 	force = initial(force)
+
+	color = "#95bdfc"
+	animate(src, color = null, time = 1 SECOND)
