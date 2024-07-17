@@ -19,10 +19,13 @@
 	icon = 'icons/mob/rideables/vehicles.dmi'
 	icon_state = "engineering_pod"
 	/// Max count of a certain slot. If it is not defined here, it is assumed to be one (1)
-	var/slot_max = list(
+	var/list/slot_max = list(
 		POD_SLOT_MISC = 3,
 	)
+	/// Equipment we have, slot = equipment, or slot = list(equipment)
+	var/list/equipped = list()
 
+	var/panel_open = FALSE
 // these variables fucking suck fix later
 
 
