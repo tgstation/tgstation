@@ -180,6 +180,7 @@
 	if(playsound)
 		playsound(grabbed_atom, 'sound/effects/empulse.ogg', 75, TRUE)
 	STOP_PROCESSING(SSfastprocess, src)
+	UnregisterSignal(grabbed_atom, list(COMSIG_MOB_STATCHANGE, COMSIG_MOVABLE_SET_ANCHORED))
 	kinesis_catcher = null
 	mod.wearer.clear_fullscreen("kinesis")
 	grabbed_atom.cut_overlay(kinesis_icon)
