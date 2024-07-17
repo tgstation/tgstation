@@ -3466,12 +3466,7 @@
 /area/virtual_domain/fullbright)
 "Rk" = (
 /obj/structure/table/glass,
-/obj/machinery/fax{
-	fax_name = "Beach Hotel Fax";
-	name = "Beach Hotel's Fax Machine";
-	pixel_y = 8;
-	visible_to_network = 0
-	},
+/obj/item/storage/box/donkpockets,
 /turf/open/floor/iron/dark/diagonal,
 /area/virtual_domain)
 "Rs" = (
