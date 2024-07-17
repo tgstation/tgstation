@@ -19,6 +19,7 @@
 		TRAIT_FREE_HYPERSPACE_MOVEMENT,
 		TRAIT_ADVANCEDTOOLUSER,
 		TRAIT_NO_BLOOD_OVERLAY,
+		TRAIT_NO_THROWING,
 	)
 	changesource_flags = MIRROR_BADMIN
 
@@ -31,7 +32,7 @@
 		BODY_ZONE_R_LEG = /obj/item/bodypart/leg/right/voidwalker,
 	)
 
-	no_equip_flags = ITEM_SLOT_OCLOTHING | ITEM_SLOT_ICLOTHING | ITEM_SLOT_GLOVES | ITEM_SLOT_MASK | ITEM_SLOT_HEAD | ITEM_SLOT_FEET | ITEM_SLOT_BACK | ITEM_SLOT_EARS
+	no_equip_flags = ITEM_SLOT_OCLOTHING | ITEM_SLOT_ICLOTHING | ITEM_SLOT_GLOVES | ITEM_SLOT_MASK | ITEM_SLOT_HEAD | ITEM_SLOT_FEET | ITEM_SLOT_BACK | ITEM_SLOT_EARS | ITEM_SLOT_EYES
 
 	mutantbrain = /obj/item/organ/internal/brain/voidwalker
 	mutanteyes = /obj/item/organ/internal/eyes/voidwalker

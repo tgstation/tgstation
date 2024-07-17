@@ -63,3 +63,11 @@
 
 		var/obj/wisp = new /obj/effect/wisp_mobile (get_turf(pick(GLOB.voidwalker_void)))
 		victim.forceMove(wisp)
+		succesfully_kidnapped()
+
+/datum/component/space_kidnap/proc/succesfully_kidnapped()
+	var/obj/item/void_eater/eater = locate(/obj/item/void_eater) in parent
+	eater?.refresh()
+
+	var/atom/owner = parent
+	owner.balloon_alert(owner, "void eater refreshed!")

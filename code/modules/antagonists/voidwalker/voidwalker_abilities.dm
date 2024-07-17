@@ -3,8 +3,7 @@
 	name = "Unsettle"
 	desc = "Stare directly into someone who doesn't see you. Remain in their view for a bit to stun them for 2 seconds and announce your presence to them. "
 	button_icon_state = "terrify"
-	background_icon_state = "bg_alien"
-	overlay_icon_state = "bg_alien_border"
+	background_icon_state = "bg_void"
 	panel = null
 	spell_requirements = NONE
 	cooldown_time = 8 SECONDS
@@ -43,7 +42,7 @@
 /datum/action/cooldown/spell/pointed/unsettle/proc/check_if_in_view(mob/living/carbon/human/target)
 	SIGNAL_HANDLER
 
-	if(target.is_blind() || !(owner in viewers(target, world.view)))
+	if(target.is_blind() || !(owner in view(target, world.view)))
 		return FALSE
 	return TRUE
 
@@ -59,3 +58,9 @@
 
 /obj/effect/temp_visual/circle_wave/unsettle
 	color = COLOR_PURPLE
+
+/datum/action/cooldown/spell/list_target/telepathy/voidwalker
+	name = "Transmit"
+	background_icon_state = "bg_void"
+	button_icon = 'icons/mob/actions/actions_voidwalker.dmi'
+	button_icon_state = "voidwalker_telepathy"

@@ -26,17 +26,26 @@
 	var/datum/movespeed_modifier/speed_modifier = /datum/movespeed_modifier/grounded_voidwalker
 	/// The void eater weapon
 	var/obj/item/glass_breaker = /obj/item/void_eater
+	/// Our brain transmit telepathy spell
+	var/datum/action/transmit = /datum/action/cooldown/spell/list_target/telepathy/voidwalker
 
 /obj/item/organ/internal/brain/voidwalker/on_mob_insert(mob/living/carbon/organ_owner, special, movement_flags)
 	. = ..()
 
 	RegisterSignal(organ_owner, COMSIG_ATOM_ENTERING, PROC_REF(on_atom_entering))
 
-	organ_owner.AddComponent(/datum/component/space_camo, space_alpha, non_space_alpha, 2 SECONDS)
+	organ_owner.AddComponent(/datum/component/space_camo, space_alpha, non_space_alpha, 5 SECONDS)
+	organ_owner.AddComponent(/datum/component/only_pull_people)
+	organ_owner.AddComponent(/datum/component/glass_pacifist)
+	organ_owner.AddComponent(/datum/component/no_crit_hitting)
+
 	organ_owner.apply_status_effect(regen)
 
 	unsettle = new unsettle(organ_owner)
 	unsettle.Grant(organ_owner)
+
+	transmit = new transmit(organ_owner)
+	transmit.Grant(organ_owner)
 
 	glass_breaker = new/obj/item/void_eater
 	organ_owner.put_in_hands(glass_breaker)
@@ -48,10 +57,17 @@
 	alpha = 255
 
 	qdel(organ_owner.GetComponent(/datum/component/space_camo))
+	qdel(organ_owner.GetComponent(/datum/component/only_pull_people))
+	qdel(organ_owner.GetComponent(/datum/component/glass_pacifist))
+	qdel(organ_owner.GetComponent(/datum/component/no_crit_hitting))
+
 	organ_owner.remove_status_effect(regen)
 
 	unsettle.Remove(organ_owner)
 	unsettle = initial(unsettle)
+
+	transmit.Remove(organ_owner)
+	transmit = initial(transmit)
 
 	if(glass_breaker)
 		qdel(glass_breaker)
@@ -107,3 +123,13 @@
 /obj/effect/spawner/glass_shards/mini
 	min_spawn = 1
 	max_spawn = 2
+
+/obj/effect/spawner/glass_debris
+	/// Weighted list for the debris we spawn
+	var/list/debris = list(/obj/effect/decal/cleanable/glass = 2, /obj/effect/decal/cleanable/glass/plasma = 1,\
+		/obj/effect/decal/cleanable/glass/titanium = 1, /obj/effect/decal/cleanable/glass/plastitanium = 1)
+
+/obj/effect/spawner/glass_debris/Initialize(mapload)
+	. = ..()
+	var/debris_type = pick_weight(debris)
+	new debris_type (loc)
