@@ -440,8 +440,7 @@
 		return NONE
 	if(!isliving(target))
 		return NONE
-	var/datum/dna/dna = source.has_dna()
-	if(dna?.check_mutation(/datum/mutation/human/hulk)) //NO HULK
+	if(HAS_TRAIT(source, TRAIT_HULK)) //NO HULK
 		return NONE
 	if(!COOLDOWN_FINISHED(src, slam_cooldown))
 		return NONE

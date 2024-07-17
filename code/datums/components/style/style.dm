@@ -219,7 +219,7 @@
 
 			rank = rank_changed
 	meter.maptext = "[format_rank_string(rank)][generate_multiplier()][generate_actions()]"
-	meter.maptext_y = 100 - 9 * length(actions)
+	meter.maptext_y = 94 - 12 * length(actions)
 	update_meter(point_to_rank(), go_back)
 
 /datum/component/style/proc/update_meter(new_rank, go_back)
@@ -270,19 +270,15 @@
 			return "SPACED!"
 
 /datum/component/style/proc/format_rank_string(new_rank)
-	var/rank_string = rank_to_string(new_rank)
-	var/final_string = ""
-	final_string += "<span class='maptext' style='font-size: 8px'><font color='[rank_to_color(new_rank)]'><b>[rank_string[1]]</b>"
-	final_string += "<span style='font-size: 7px'>[copytext(rank_string, 2)]</span></font></span>"
-	return final_string
+	return MAPTEXT_PIXELLARI("<font color='[rank_to_color(new_rank)]'>[rank_to_string(new_rank)]</font>")
 
 /datum/component/style/proc/generate_multiplier()
-	return "<br><span class='maptext' style='font-size: 7px'>MULTIPLIER: [point_multiplier]X</span>"
+	return "<br>" + MAPTEXT_GRAND9K("MULTIPLIER: [point_multiplier]X")
 
 /datum/component/style/proc/generate_actions()
 	var/action_string = ""
 	for(var/action in actions)
-		action_string += "<br><span class='maptext'>+ <font color='[action_to_color(actions[action])]'>[actions[action]]</font></span>"
+		action_string += "<br>" + MAPTEXT_GRAND9K("+ <font color='[action_to_color(actions[action])]'>[actions[action]]</font>")
 	return action_string
 
 /datum/component/style/proc/action_to_color(action)

@@ -1,5 +1,0 @@
-author: "Thedragmeme"
-delete-after: True
-changes:
-  - qol: "re-maps the raptor barn to not stick out like a sore thumb"
-  - bugfix: "Miners and the public both can access the raptor barn without having to make a bridge themselves"
