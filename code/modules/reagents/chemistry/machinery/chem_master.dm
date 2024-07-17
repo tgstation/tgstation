@@ -419,7 +419,10 @@
 			var/target = params["target"]
 
 			if(amount == -1) // Set custom amount
-				amount = tgui_input_number(ui.user, "Enter amount to transfer", "Transfer amount")
+				var/mob/user = ui.user //Hold a reference of the user if the UI is closed
+				amount = tgui_input_number(user, "Enter amount to transfer", "Transfer amount")
+				if(!amount || !user.can_perform_action(src))
+					return FALSE
 
 			var/should_transfer = is_transfering || (target == "buffer") // we should always transfer if target is the buffer
 			if(should_transfer && isnull(beaker)) // if there's no beaker, we cannot transfer
