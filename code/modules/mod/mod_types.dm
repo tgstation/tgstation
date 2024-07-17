@@ -171,6 +171,9 @@
 		/obj/item/mod/module/quick_cuff,
 		/obj/item/mod/module/headprotector,
 	)
+	default_pins = list(
+		/obj/item/mod/module/jetpack,
+	)
 
 /obj/item/mod/control/pre_equipped/safeguard
 	theme = /datum/mod_theme/safeguard
