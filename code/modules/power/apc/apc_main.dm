@@ -626,19 +626,16 @@
 		force_update = FALSE
 		queue_icon_update()
 		update()
-	if(charging != last_charging)
+	else if(charging != last_charging)
 		queue_icon_update()
-	// show cell as fully charged if so
-	if(cell.charge >= cell.maxcharge)
-		cell.charge = cell.maxcharge
-		charging = APC_FULLY_CHARGED
 
 // charge until the battery is full or to the treshold of the provided channel
 /obj/machinery/power/apc/proc/charge_channel(channel = null, seconds_per_tick)
 	if(channel == SSMACHINES_APCS_ENVIRONMENT)
 		lastused_charge = 0
 		last_charging = charging
-		charging = APC_NOT_CHARGING
+		if(cell.charge < cell.maxcharge)
+			charging = APC_NOT_CHARGING
 
 	if(!cell || shorted || !operating || !chargemode || !surplus() || !cell.used_charge())
 		return
@@ -662,7 +659,13 @@
 		return
 
 	lastused_charge += charge_cell(need_charge, cell = cell, grid_only = TRUE, channel = AREA_USAGE_APC_CHARGE)
-	charging = APC_CHARGING
+
+	// show cell as fully charged if so
+	if(cell.charge >= cell.maxcharge)
+		cell.charge = cell.maxcharge
+		charging = APC_FULLY_CHARGED
+	else
+		charging = APC_CHARGING
 
 /obj/machinery/power/apc/proc/reset(wire)
 	switch(wire)
