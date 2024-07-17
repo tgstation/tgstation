@@ -962,6 +962,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4{
 	dir = 4
 	},
+/obj/structure/cable,
 /turf/open/floor/iron,
 /area/ruin/space/ancientstation/charlie/engie)
 "em" = (
@@ -974,6 +975,7 @@
 /obj/effect/turf_decal/tile/yellow/half/contrasted{
 	dir = 4
 	},
+/obj/structure/cable,
 /turf/open/floor/iron,
 /area/ruin/space/ancientstation/charlie/engie)
 "eo" = (
@@ -1702,6 +1704,11 @@
 /obj/structure/cable,
 /turf/open/floor/iron,
 /area/ruin/space/ancientstation/charlie/hydro)
+"hJ" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/cable,
+/turf/open/floor/iron,
+/area/ruin/space/ancientstation/charlie/engie)
 "hM" = (
 /obj/structure/sign/departments/science,
 /turf/closed/wall,
@@ -3511,6 +3518,7 @@
 	dir = 1
 	},
 /obj/machinery/computer/apc_control/away,
+/obj/structure/cable,
 /turf/open/floor/iron,
 /area/ruin/space/ancientstation/charlie/engie)
 "pK" = (
@@ -4879,6 +4887,7 @@
 	dir = 4
 	},
 /obj/machinery/firealarm/directional/east,
+/obj/structure/cable,
 /turf/open/floor/iron,
 /area/ruin/space/ancientstation/charlie/engie)
 "zZ" = (
@@ -4887,6 +4896,7 @@
 /obj/effect/turf_decal/tile/yellow/half/contrasted{
 	dir = 4
 	},
+/obj/structure/cable,
 /turf/open/floor/iron,
 /area/ruin/space/ancientstation/charlie/engie)
 "Aa" = (
@@ -5120,6 +5130,7 @@
 /obj/effect/turf_decal/tile/yellow/anticorner/contrasted{
 	dir = 1
 	},
+/obj/structure/cable,
 /turf/open/floor/iron,
 /area/ruin/space/ancientstation/charlie/engie)
 "Bz" = (
@@ -11889,7 +11900,7 @@ mS
 kQ
 oy
 em
-em
+kJ
 em
 fe
 fE
@@ -11955,7 +11966,7 @@ mY
 kQ
 AX
 em
-ju
+hJ
 eM
 pn
 fF
