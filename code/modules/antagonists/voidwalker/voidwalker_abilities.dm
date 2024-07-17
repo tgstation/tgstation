@@ -6,7 +6,7 @@
 	background_icon_state = "bg_void"
 	panel = null
 	spell_requirements = NONE
-	cooldown_time = 8 SECONDS
+	cooldown_time = 12 SECONDS
 	cast_range = 9
 	active_msg = "You prepare to stare down a target..."
 	deactive_msg = "You refocus your eyes..."
@@ -64,3 +64,4 @@
 	background_icon_state = "bg_void"
 	button_icon = 'icons/mob/actions/actions_voidwalker.dmi'
 	button_icon_state = "voidwalker_telepathy"
+	panel = null

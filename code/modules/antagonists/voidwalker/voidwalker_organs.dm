@@ -35,9 +35,10 @@
 	RegisterSignal(organ_owner, COMSIG_ATOM_ENTERING, PROC_REF(on_atom_entering))
 
 	organ_owner.AddComponent(/datum/component/space_camo, space_alpha, non_space_alpha, 5 SECONDS)
-	organ_owner.AddComponent(/datum/component/only_pull_living)
-	organ_owner.AddComponent(/datum/component/glass_pacifist)
-	organ_owner.AddComponent(/datum/component/no_crit_hitting)
+
+	organ_owner.AddElement(/datum/element/only_pull_living)
+	organ_owner.AddElement(/datum/element/glass_pacifist)
+	organ_owner.AddElement(/datum/element/no_crit_hitting)
 
 	organ_owner.apply_status_effect(regen)
 
@@ -57,9 +58,10 @@
 	alpha = 255
 
 	qdel(organ_owner.GetComponent(/datum/component/space_camo))
-	qdel(organ_owner.GetComponent(/datum/component/only_pull_living))
-	qdel(organ_owner.GetComponent(/datum/component/glass_pacifist))
-	qdel(organ_owner.GetComponent(/datum/component/no_crit_hitting))
+
+	organ_owner.RemoveElement(/datum/element/only_pull_living)
+	organ_owner.RemoveElement(/datum/element/glass_pacifist)
+	organ_owner.RemoveElement(/datum/element/no_crit_hitting)
 
 	organ_owner.remove_status_effect(regen)
 
@@ -91,7 +93,7 @@
 	. = ..()
 
 	var/turf/spawn_loc = get_turf(owner)
-	new /obj/effect/spawner/glass_shards (spawn_loc)
+	new /obj/effect/spawner/random/glass_shards (spawn_loc)
 	new /obj/item/cosmic_skull (spawn_loc)
 	playsound(get_turf(owner), SFX_SHATTER, 100)
 
@@ -101,39 +103,29 @@
 	radio_key = /obj/item/encryptionkey/heads/captain
 	actions_types = null
 
-/obj/effect/spawner/glass_shards
-	/// Weighted list for the shards we spawn
-	var/list/shards = list(/obj/item/shard = 2, /obj/item/shard/plasma = 1, /obj/item/shard/titanium = 1, /obj/item/shard/plastitanium = 1)
+/obj/effect/spawner/random/glass_shards
+	loot = list(/obj/item/shard = 2, /obj/item/shard/plasma = 1, /obj/item/shard/titanium = 1, /obj/item/shard/plastitanium = 1)
+	spawn_random_offset = TRUE
+
 	/// Min shards we generate
 	var/min_spawn = 4
 	/// Max shards we generate
 	var/max_spawn = 6
-	/// The we can apply when generating
-	var/pixel_offset = 16
 
-/obj/effect/spawner/glass_shards/Initialize(mapload)
+/obj/effect/spawner/random/glass_shards/Initialize(mapload)
+	spawn_loot_count = rand(min_spawn, max_spawn)
+
 	. = ..()
 
-	for(var/i in 1 to rand(min_spawn, max_spawn))
-		var/shard_type = pick_weight(shards)
-		var/obj/shard = new shard_type (loc)
-		shard.pixel_x = rand(-pixel_offset, pixel_offset)
-		shard.pixel_y = rand(-pixel_offset, pixel_offset)
-
-/obj/effect/spawner/glass_shards/mini
+/obj/effect/spawner/random/glass_shards/mini
 	min_spawn = 1
 	max_spawn = 2
 
-/obj/effect/spawner/glass_debris
+/obj/effect/spawner/random/glass_debris
 	/// Weighted list for the debris we spawn
-	var/list/debris = list(
+	loot = list(
 		/obj/effect/decal/cleanable/glass = 2,
 		/obj/effect/decal/cleanable/glass/plasma = 1,
 		/obj/effect/decal/cleanable/glass/titanium = 1,
 		/obj/effect/decal/cleanable/glass/plastitanium = 1,
 		)
-
-/obj/effect/spawner/glass_debris/Initialize(mapload)
-	. = ..()
-	var/debris_type = pick_weight(debris)
-	new debris_type (loc)

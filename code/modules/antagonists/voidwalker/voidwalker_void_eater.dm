@@ -31,6 +31,11 @@
 
 	AddComponent(/datum/component/temporary_glass_shatterer)
 
+/obj/item/void_eater/on_equipped(mob/user, slot, initial)
+	. = ..()
+
+	RegisterSignal(user, COMSIG_VOIDWALKER_SUCCESFUL_KIDNAP, PROC_REF(refresh))
+
 /obj/item/void_eater/examine(mob/user)
 	. = ..()
 	. += span_notice("The [name] weakens each hit, recharge it by kidnapping someone!")
@@ -48,12 +53,12 @@
 		if(hewmon.stat != DEAD)
 			hewmon.balloon_alert(user, "already voided!")
 			playsound(hewmon, SFX_SHATTER, 60)
-			new /obj/effect/spawner/glass_shards/mini (spawnloc)
+			new /obj/effect/spawner/random/glass_shards/mini (spawnloc)
 			hewmon.adjustBruteLoss(10) // BONUS DAMAGE
 		else
 			hewmon.balloon_alert(user, "shattering...")
 			if(do_after(user, 4 SECONDS, hewmon))
-				new /obj/effect/spawner/glass_shards (spawnloc)
+				new /obj/effect/spawner/random/glass_shards (spawnloc)
 				var/obj/item/organ/brain = hewmon.get_organ_by_type(/obj/item/organ/internal/brain)
 				if(brain)
 					brain.Remove(hewmon)
@@ -75,12 +80,16 @@
 	force = max(force - damage_loss_per_hit, damage_minimum)
 
 	if(prob(5))
-		new /obj/effect/spawner/glass_debris (get_turf(user))
+		new /obj/effect/spawner/random/glass_debris (get_turf(user))
 	return ..()
 
 /// Called when the voidwalker kidnapped someone
-/obj/item/void_eater/proc/refresh()
+/obj/item/void_eater/proc/refresh(mob/living/carbon/human/voidwalker)
+	SIGNAL_HANDLER
+
 	force = initial(force)
 
-	color = "#95bdfc"
-	animate(src, color = null, time = 1 SECOND)
+	color = "#000000"
+	animate(src, color = null, time = 1 SECONDS)//do a color flashy woosh
+
+	to_chat(voidwalker, span_boldnotice("Your [name] refreshes!"))

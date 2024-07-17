@@ -65,9 +65,5 @@
 		victim.forceMove(wisp)
 		succesfully_kidnapped()
 
-/datum/component/space_kidnap/proc/succesfully_kidnapped()
-	var/obj/item/void_eater/eater = locate(/obj/item/void_eater) in parent
-	eater?.refresh()
-
-	var/atom/owner = parent
-	owner.balloon_alert(owner, "void eater refreshed")
+/datum/component/space_kidnap/proc/succesfully_kidnapped(mob/living/carbon/human/kidnappee)
+	SEND_SIGNAL(parent, COMSIG_VOIDWALKER_SUCCESFUL_KIDNAP, kidnappee)
