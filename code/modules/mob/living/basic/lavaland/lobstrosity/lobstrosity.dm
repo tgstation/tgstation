@@ -73,7 +73,8 @@
 		/datum/pet_command/follow,
 		/datum/pet_command/point_targeting/fish,
 	)
-
+	if(!HAS_TRAIT(src, TRAIT_MOB_RELAY_HAPPINESS))
+		AddComponent(/datum/component/happiness)
 	AddComponent(/datum/component/obeys_commands, pet_commands)
 	ai_controller.ai_traits = STOP_MOVING_WHEN_PULLED
 	response_help_continuous = "pets"
@@ -164,6 +165,7 @@
 		optional_grow_behavior = CALLBACK(src, PROC_REF(grow_up))\
 	)
 	AddComponent(/datum/component/tameable, target_foods, tame_chance = 35, bonus_tame_chance = 20)
+	ADD_TRAIT(src, TRAIT_MOB_HIDE_HAPPINESS, INNATE_TRAIT) //Do not let strangers know it gets happy when poked if stray.
 
 /mob/living/basic/mining/lobstrosity/juvenile/add_ranged_armour(list/vulnerable_projectiles)
 	AddElement(\
@@ -180,6 +182,7 @@
 	was_tamed = TRUE
 	// They are more pettable I guess
 	AddElement(/datum/element/pet_bonus, "chitters agreeingly!")
+	REMOVE_TRAIT(src, TRAIT_MOB_HIDE_HAPPINESS, INNATE_TRAIT)
 
 /mob/living/basic/mining/lobstrosity/juvenile/proc/ready_to_grow()
 	return isturf(loc)
@@ -203,13 +206,12 @@
 	icon_dead = "juveline_lobstrosity_dead"
 	grow_type = /mob/living/basic/mining/lobstrosity/lava
 
-/// Shorter, weaker version of the Lobster Rush, but faster
+/// Shorter, weaker version of the Lobster Rush
 /datum/action/cooldown/mob_cooldown/charge/basic_charge/lobster/shrimp
 	name = "Shrimp Rush"
 	charge_distance = 4
-	knockdown_duration = 1.5 SECONDS
+	knockdown_duration = 1.8 SECONDS
 	charge_delay = 0.2 SECONDS
-	charge_speed = 0.3
 	charge_damage = 13
 
 /datum/action/cooldown/mob_cooldown/charge/basic_charge/lobster/apply_post_charge(mob/living/charger)
@@ -225,7 +227,7 @@
 	command_feedback = "growl"
 	pointed_reaction = "and growls"
 	pet_ability_key = BB_TARGETED_ACTION
-	ability_behavior = /datum/ai_behavior/pet_use_ability/long_ranged
+	ability_behavior = /datum/ai_behavior/pet_use_ability/then_attack/long_ranged
 
 /datum/pet_command/point_targeting/use_ability/lob_charge/set_command_target(mob/living/parent, atom/target)
 	if (!target)
@@ -237,4 +239,4 @@
 	return ..()
 
 /datum/pet_command/point_targeting/use_ability/lob_charge/shrimp
-	ability_behavior = /datum/ai_behavior/pet_use_ability/short_ranged
+	ability_behavior = /datum/ai_behavior/pet_use_ability/then_attack/short_ranged

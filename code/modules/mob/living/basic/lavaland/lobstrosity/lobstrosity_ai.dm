@@ -5,6 +5,8 @@
 		BB_TARGET_MINIMUM_STAT = HARD_CRIT,
 		BB_LOBSTROSITY_EXPLOIT_TRAITS = list(TRAIT_INCAPACITATED, TRAIT_FLOORED, TRAIT_IMMOBILIZED, TRAIT_KNOCKEDOUT),
 		BB_LOBSTROSITY_FINGER_LUST = 0,
+		BB_LOBSTROSITY_NAIVE_HUNTER = FALSE,
+		BB_BASIC_MOB_FLEE_DISTANCE = 8,
 	)
 	ai_traits = PAUSE_DURING_DO_AFTER
 
@@ -23,15 +25,17 @@
 		/datum/ai_planning_subtree/find_and_hunt_target/lobster_fishing,
 		/datum/ai_planning_subtree/find_fingers,
 	)
-	///The basic mob flee distance key is set to this on New()
-	var/flee_distance = 6
-
-/datum/ai_controller/basic_controller/lobstrosity/New(atom/new_pawn)
-	. = ..()
-	set_blackboard_key(BB_BASIC_MOB_FLEE_DISTANCE, flee_distance)
-
 ///Ensure that juveline lobstrosities witll charge at things they can reach.
 /datum/ai_controller/basic_controller/lobstrosity/juvenile
+	blackboard = list(
+		BB_TARGETING_STRATEGY = /datum/targeting_strategy/basic/allow_items,
+		BB_PET_TARGETING_STRATEGY = /datum/targeting_strategy/basic/not_friends,
+		BB_TARGET_MINIMUM_STAT = SOFT_CRIT,
+		BB_LOBSTROSITY_EXPLOIT_TRAITS = list(TRAIT_INCAPACITATED, TRAIT_FLOORED, TRAIT_IMMOBILIZED, TRAIT_KNOCKEDOUT),
+		BB_LOBSTROSITY_FINGER_LUST = 0,
+		BB_LOBSTROSITY_NAIVE_HUNTER = TRUE,
+		BB_BASIC_MOB_FLEE_DISTANCE = 4,
+	)
 	planning_subtrees = list(
 		/datum/ai_planning_subtree/random_speech/insect,
 		/datum/ai_planning_subtree/hoard_fingers,
@@ -45,7 +49,6 @@
 		/datum/ai_planning_subtree/find_and_hunt_target/lobster_fishing,
 		/datum/ai_planning_subtree/find_fingers,
 	)
-	flee_distance = 3
 
 ///A subtype of juvenile lobster AI that has the target_retaliate behaviour instead of simple_find_target
 /datum/ai_controller/basic_controller/lobstrosity/juvenile/calm
@@ -106,11 +109,14 @@
 	if (isnull(target) || !istype(target))
 		return ..()
 	var/is_vulnerable = FALSE
-	for (var/trait in controller.blackboard[BB_LOBSTROSITY_EXPLOIT_TRAITS])
-		if (!HAS_TRAIT(target, trait))
-			continue
+	if(controller.blackboard[BB_LOBSTROSITY_NAIVE_HUNTER] && target.body_position == LYING_DOWN)
 		is_vulnerable = TRUE
-		break
+	else
+		for (var/trait in controller.blackboard[BB_LOBSTROSITY_EXPLOIT_TRAITS])
+			if (!HAS_TRAIT(target, trait))
+				continue
+			is_vulnerable = TRUE
+			break
 	if (!is_vulnerable)
 		controller.set_blackboard_key(BB_BASIC_MOB_STOP_FLEEING, FALSE)
 	if (!controller.blackboard[BB_BASIC_MOB_STOP_FLEEING])
@@ -135,6 +141,11 @@
 	if(isnull(target))
 		return ..()
 
+	if(isliving(target))
+		var/mob/living/living_target = target
+		if(controller.blackboard[BB_LOBSTROSITY_NAIVE_HUNTER] && living_target.body_position == LYING_DOWN)
+			controller.set_blackboard_key(BB_BASIC_MOB_STOP_FLEEING, TRUE)
+			return AI_BEHAVIOR_INSTANT | AI_BEHAVIOR_FAILED
 	for (var/trait in controller.blackboard[BB_LOBSTROSITY_EXPLOIT_TRAITS])
 		if (!HAS_TRAIT(target, trait))
 			continue

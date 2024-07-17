@@ -60,6 +60,7 @@
 #define BB_LOBSTROSITY_TARGET_LIMB "BB_lobstrosity_target_limb"
 /// We increment this counter every time we try to move while dragging an arm and if we go too long we'll give up trying to get out of line of sight and just eat the fingers
 #define BB_LOBSTROSITY_FINGER_LUST "BB_lobstrosity_finger_lust"
+#define BB_LOBSTROSITY_NAIVE_HUNTER "BB_lobstrosity_naive_hunter"
 
 // eyeball keys
 ///the death glare ability

@@ -95,13 +95,14 @@
 
 /datum/component/happiness/proc/increase_happiness_level(amount)
 	happiness_level = min(happiness_level + amount, maximum_happiness)
-	var/mob/living/living_parent = parent
-	new /obj/effect/temp_visual/heart(living_parent.loc)
-	living_parent.spin(spintime = 2 SECONDS, speed = 1)
+	if(!HAS_TRAIT(parent, TRAIT_MOB_HIDE_HAPPINESS))
+		var/mob/living/living_parent = parent
+		new /obj/effect/temp_visual/heart(living_parent.loc)
+		living_parent.spin(spintime = 2 SECONDS, speed = 1)
 	START_PROCESSING(SSprocessing, src)
 
 /datum/component/happiness/proc/view_happiness(mob/living/source, mob/living/clicker)
-	if(!istype(clicker) || !COOLDOWN_FINISHED(src, happiness_inspect) || !clicker.CanReach(source))
+	if(HAS_TRAIT(source, TRAIT_MOB_HIDE_HAPPINESS) || !istype(clicker) || !COOLDOWN_FINISHED(src, happiness_inspect) || !clicker.CanReach(source))
 		return
 	var/list/offset_to_add = get_icon_dimensions(source.icon)
 	var/y_position = offset_to_add["height"] + 1
