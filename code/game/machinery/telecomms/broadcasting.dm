@@ -58,6 +58,10 @@
 	var/server_type = /obj/machinery/telecomms/server
 	var/datum/signal/subspace/original
 	var/list/levels
+	/// Blacklisted spans we don't want being put into comms by anything, ever - a place to put any new spans we want to make without letting them annoy people on comms
+	var/list/blacklisted_spans = list(
+		SPAN_SOAPBOX
+	)
 
 /datum/signal/subspace/New(data)
 	src.data = data || list()
@@ -202,6 +206,7 @@
 		if(QDELETED(hearer))
 			stack_trace("null found in the hearers list returned by the spatial grid. this is bad")
 			continue
+		spans -= blacklisted_spans
 		hearer.Hear(rendered, virt, language, message, frequency, spans, message_mods)
 
 	// This following recording is intended for research and feedback in the use of department radio channels

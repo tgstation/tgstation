@@ -44,6 +44,7 @@
 	if(elevation)
 		AddElement(/datum/element/elevation, pixel_shift = elevation)
 	update_appearance()
+	AddComponent(/datum/component/soapbox)
 
 /obj/structure/closet/crate/Destroy()
 	QDEL_NULL(manifest)

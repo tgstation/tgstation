@@ -1205,6 +1205,7 @@
 #include "code\datums\components\sizzle.dm"
 #include "code\datums\components\slippery.dm"
 #include "code\datums\components\smooth_tunes.dm"
+#include "code\datums\components\soapbox.dm"
 #include "code\datums\components\soul_stealer.dm"
 #include "code\datums\components\soulstoned.dm"
 #include "code\datums\components\sound_player.dm"
