@@ -13,6 +13,9 @@
 	on_detach()
 	pod = null
 
+/// Optional, return an actual overlay or an icon state name to show when attached.
+/obj/item/pod_equipment/proc/get_overlay()
+
 /obj/item/pod_equipment/proc/on_attach(mob/user)
 
 /obj/item/pod_equipment/proc/on_detach(mob/user)
