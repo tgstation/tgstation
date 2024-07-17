@@ -12,6 +12,11 @@ GLOBAL_LIST_INIT(store_shoes, generate_store_items(/datum/store_item/shoes))
 	name = "Work Boots"
 	item_path = /obj/item/clothing/shoes/workboots
 
+/datum/store_item/shoes/swat_replica
+	name = "Combat boots"
+	item_path = /obj/item/clothing/shoes/combat/swat_replica
+	item_cost = 1000
+
 /datum/store_item/shoes/mining_boots
 	name = "Mining Boots"
 	item_path = /obj/item/clothing/shoes/workboots/mining
