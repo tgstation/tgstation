@@ -47,7 +47,7 @@
 	//And sending a signal should be agnostic of the order of listeners
 	//So we need to either pick the order agnositic, or destroy safe
 	//And I picked destroy safe. Let's hope this is the right path!
-	if(QDELETED(tracked) || QDELETED(tracked.loc))
+	if(isnull(tracked.loc))
 		return
 
 	tracked_loc = tracked.loc
