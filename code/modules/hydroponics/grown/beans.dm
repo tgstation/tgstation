@@ -44,11 +44,21 @@
 /obj/item/food/grown/koibeans
 	seed = /obj/item/seeds/soya/koi
 	name = "koibean"
-	desc = "Something about these seems fishy."
+	desc = "Something about these seems fishy, they seem really soft, almost squeezable!"
 	icon_state = "koibeans"
 	foodtypes = VEGETABLES
 	tastes = list("koi" = 1)
 	wine_power = 40
+
+//Now squeezable for imitation carpmeat
+/obj/item/food/grown/koibeans/attack_self(mob/living/user)
+	user.visible_message(span_notice("[user] crushes [src] into a slab of carplike meat."), span_notice("You crush [src] into something that resembles a slab of carplike meat."))
+	playsound(user, 'sound/effects/blobattack.ogg', 50, TRUE)
+	var/obj/item/food/fishmeat/carp/imitation/fishie = new(null)
+	fishie.reagents.set_all_reagents_purity(seed.get_reagent_purity())
+	qdel(src)
+	user.put_in_hands(fishie)
+	return TRUE
 
 //Butterbeans, the beans wid da butta!
 // Butterbeans! - Squeeze for a single butter slice!

@@ -148,11 +148,12 @@
 		return FALSE
 	if(equipment_slot == MECHA_WEAPON)
 		if(attach_right)
-			if(mech.equip_by_category[MECHA_R_ARM] && (!special_attaching_interaction(attach_right, mech, user, checkonly = TRUE)))
+			// We need to check for length in case a mech doesn't support any arm attachments at all
+			if((mech.equip_by_category[MECHA_R_ARM] == mech.max_equip_by_category[MECHA_R_ARM]) && (!special_attaching_interaction(attach_right, mech, user, checkonly = TRUE)))
 				to_chat(user, span_warning("\The [mech]'s right arm is full![mech.equip_by_category[MECHA_L_ARM] ? "" : " Try left arm!"]"))
 				return FALSE
 		else
-			if(mech.equip_by_category[MECHA_L_ARM] && (!special_attaching_interaction(attach_right, mech, user, checkonly = TRUE)))
+			if((mech.equip_by_category[MECHA_L_ARM] == mech.max_equip_by_category[MECHA_L_ARM]) && (!special_attaching_interaction(attach_right, mech, user, checkonly = TRUE)))
 				to_chat(user, span_warning("\The [mech]'s left arm is full![mech.equip_by_category[MECHA_R_ARM] ? "" : " Try right arm!"]"))
 				return FALSE
 		return TRUE
