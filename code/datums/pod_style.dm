@@ -1,14 +1,25 @@
-
+/// Datum holding information about pod type visuals, VFX, name and description
+/// These are not created anywhere and thus should not be assigned procs, only being used as data storage
 /datum/pod_style
+	/// Name that pods of this style will be named by default
 	var/name = "supply pod"
+	/// Name that is displayed to admins in pod config panel
 	var/ui_name = "Standard"
-	var/desc = "A Nanotrasen supply drop pod"
+	/// Description assigned to droppods of this style
+	var/desc = "A Nanotrasen supply drop pod."
+	/// Determines if this pod can use animations/masking/overlays
 	var/shape = POD_SHAPE_NORMAL
+	/// Base icon state assigned to this pod
 	var/icon_state = "pod"
+	/// Whenever this pod should have a door overlay added to it. Uses [icon_state]_door sprite
 	var/has_door = TRUE
+	/// Decals added to this pod, if any
 	var/decal_icon = "default"
+	/// Color that this pod glows when landing
 	var/glow_color = "yellow"
+	/// Type of rubble that this pod creates upon landing
 	var/rubble_type = RUBBLE_NORMAL
+	/// ID for TGUI data
 	var/id = "standard"
 
 /datum/pod_style/advanced
