@@ -31,10 +31,14 @@
 
 	AddComponent(/datum/component/temporary_glass_shatterer)
 
-/obj/item/void_eater/on_equipped(mob/user, slot, initial)
+/obj/item/void_eater/pickup(mob/user)
 	. = ..()
 
 	RegisterSignal(user, COMSIG_VOIDWALKER_SUCCESFUL_KIDNAP, PROC_REF(refresh))
+
+/obj/item/void_eater/dropped(mob/user, silent)
+	. = ..()
+	UnregisterSignal(user, COMSIG_VOIDWALKER_SUCCESFUL_KIDNAP)
 
 /obj/item/void_eater/examine(mob/user)
 	. = ..()
