@@ -293,12 +293,12 @@
 		if(FISH_SIZE_BULKY_MAX to INFINITY)
 			multiplier += 0.8
 
-	if(weight < 1000)
+	if(weight <= 800)
 		multiplier -= 0.1 * round((1000 - weight) / 200)
-	else
+	else if(weight >= 1500)
 		multiplier += min(0.1 * round((weight - 1000) / 500), 2)
 
-	growth_rate = /obj/item/fish/chasm_crab::growth_rate * multiplier
+	growth_rate = initial(growth_rate) * multiplier
 
 /obj/item/fish/chasm_crab/process(seconds_per_tick)
 	. = ..()

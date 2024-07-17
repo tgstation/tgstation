@@ -123,12 +123,14 @@
 	icon_state = "arctic_juveline_lobstrosity"
 	icon_living = "arctic_juveline_lobstrosity"
 	icon_dead = "arctic_juveline_lobstrosity_dead"
+	status_flags = parent_type::status_flags | CANPUSH //Young and fairly weak.
 	maxHealth = 65
 	health = 65
 	obj_damage = 6
 	melee_damage_lower = 6
 	melee_damage_upper = 9
 	melee_attack_cooldown = 0.9 SECONDS
+	speed = 0.7
 	mob_size = MOB_SIZE_HUMAN
 	butcher_results = list(
 		/obj/item/food/meat/slab/rawcrab = 1,
@@ -136,6 +138,7 @@
 		/obj/item/organ/internal/monster_core/rush_gland = 1,
 	)
 	crusher_loot = null
+	ai_controller = /datum/ai_controller/basic_controller/lobstrosity/juvenile
 	snip_speed = 6.5 SECONDS
 	charge_type = /datum/action/cooldown/mob_cooldown/charge/basic_charge/lobster/shrimp
 	/// What do we become when we grow up?
@@ -145,10 +148,14 @@
 
 /mob/living/basic/mining/lobstrosity/juvenile/Initialize(mapload)
 	. = ..()
+	var/growth_step = 1000/(8 MINUTES) //It'll take 8 minutes if you keep the happiness above 40%
 	AddComponent(\
 		/datum/component/growth_and_differentiation,\
-		growth_time = rand(12 MINUTES, 15 MINUTES),\
 		growth_path = grow_type,\
+		growth_probability = 58,\ //without happiness, it takes 14 minutes on average.
+		lower_growth_value = growth_step,\
+		upper_growth_value = growth_step,\
+		scale_with_happiness = TRUE,\
 		optional_checks = CALLBACK(src, PROC_REF(ready_to_grow)),\
 		optional_grow_behavior = CALLBACK(src, PROC_REF(grow_up))\
 	)
@@ -174,12 +181,13 @@
 /mob/living/basic/mining/lobstrosity/juvenile/proc/grow_up()
 	var/name_to_use = name == initial(name) ? grow_type::name : name
 	var/mob/living/basic/mining/lobstrosity/grown = change_mob_type(grow_type, get_turf(src), name_to_use)
-	for(var/friend in ai_controller?.blackboard?[BB_FRIENDS_LIST])
-		grown.befriend(friend)
 	if(was_tamed)
 		grown.tamed()
+	for(var/friend in ai_controller?.blackboard?[BB_FRIENDS_LIST])
+		grown.befriend(friend)
 	grown.setBruteLoss(getBruteLoss())
 	grown.setFireLoss(getFireLoss())
+	qdel(src) //We called change_mob_type without 'delete_old_mob = TRUE' since we had to pass down friends and damage
 
 /mob/living/basic/mining/lobstrosity/juvenile/lava
 	name = "juvenile chasm lobstrosity"
@@ -194,7 +202,6 @@
 	name = "Shrimp Rush"
 	charge_distance = 4
 	knockdown_duration = 1.5 SECONDS
-	cooldown_time = 1.4 SECONDS
 	charge_delay = 0.2 SECONDS
 	charge_speed = 0.3
 	charge_damage = 13
