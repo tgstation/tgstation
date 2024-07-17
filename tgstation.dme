@@ -1889,6 +1889,7 @@
 #include "code\datums\storage\subtypes\implant.dm"
 #include "code\datums\storage\subtypes\organ_box.dm"
 #include "code\datums\storage\subtypes\pockets.dm"
+#include "code\datums\storage\subtypes\portable_chem_mixer.dm"
 #include "code\datums\storage\subtypes\rped.dm"
 #include "code\datums\storage\subtypes\surgery_tray.dm"
 #include "code\datums\storage\subtypes\trash.dm"
