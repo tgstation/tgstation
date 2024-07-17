@@ -432,23 +432,6 @@
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_MEDICAL
 
-/datum/design/cyberimp_strongarm
-	name = "Strong-Arm Implant"
-	desc = "When implanted, this cybernetic implant will enhance the muscles of the arm to deliver more power-per-action."
-	id = "ci-strongarm"
-	build_type = PROTOLATHE | AWAY_LATHE | MECHFAB
-	materials = list (
-		/datum/material/iron = SHEET_MATERIAL_AMOUNT*1.25,
-		/datum/material/glass =HALF_SHEET_MATERIAL_AMOUNT * 1.5,
-		/datum/material/silver =HALF_SHEET_MATERIAL_AMOUNT * 1.5
-	)
-	construction_time = 2 SECONDS
-	build_path = /obj/item/organ/internal/cyberimp/arm/strongarm
-	category = list(
-		RND_CATEGORY_CYBERNETICS + RND_SUBCATEGORY_CYBERNETICS_IMPLANTS_COMBAT
-	)
-	departmental_flags = DEPARTMENT_BITFLAG_MEDICAL
-
 /datum/design/cyberimp_medical_hud
 	name = "Medical HUD Implant"
 	desc = "These cybernetic eyes will display a medical HUD over everything you see. Wiggle eyes to control."
