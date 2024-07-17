@@ -43,6 +43,12 @@
 /obj/structure/table/reinforced/rglass,
 /obj/item/kitchen/rollingpin,
 /obj/item/knife/kitchen,
+/obj/item/reagent_containers/condiment/saltshaker{
+	pixel_x = -3
+	},
+/obj/item/reagent_containers/condiment/peppermill{
+	pixel_x = 3
+	},
 /turf/open/floor/fake_seafloor/ironsand,
 /area/station/service/kitchen)
 "cv" = (
@@ -310,7 +316,10 @@
 /turf/open/floor/fake_seafloor/heavy,
 /area/station/service/theater)
 "nL" = (
-/obj/machinery/processor,
+/obj/structure/table/reinforced/rglass,
+/obj/machinery/processor{
+	pixel_y = 6
+	},
 /turf/open/floor/fake_seafloor/ironsand,
 /area/station/service/kitchen)
 "nM" = (
@@ -371,6 +380,7 @@
 "qO" = (
 /obj/machinery/firealarm/directional/west,
 /obj/machinery/camera/directional/west,
+/obj/structure/sink/kitchen/directional/east,
 /turf/open/floor/fake_seafloor/ironsand,
 /area/station/service/kitchen)
 "qX" = (
@@ -406,6 +416,7 @@
 /obj/item/reagent_containers/condiment/rice,
 /obj/machinery/airalarm/directional/north,
 /obj/structure/cable,
+/obj/item/reagent_containers/condiment/sugar,
 /turf/open/floor/fake_seafloor/ironsand,
 /area/station/service/kitchen)
 "sE" = (
@@ -673,6 +684,16 @@
 	},
 /turf/open/floor/fake_seafloor,
 /area/station/commons/lounge)
+"Ef" = (
+/obj/structure/table/reinforced/rglass,
+/obj/item/reagent_containers/condiment/saltshaker{
+	pixel_x = -3
+	},
+/obj/item/reagent_containers/condiment/peppermill{
+	pixel_x = 3
+	},
+/turf/open/floor/fake_seafloor/medium,
+/area/station/commons/lounge)
 "Eq" = (
 /obj/structure/chair/sofa/left/brown{
 	dir = 8
@@ -807,6 +828,9 @@
 /obj/structure/closet/secure_closet/freezer/fridge,
 /obj/machinery/power/apc/auto_name/directional/north,
 /obj/structure/cable,
+/obj/item/reagent_containers/condiment/flour,
+/obj/item/reagent_containers/condiment/flour,
+/obj/item/reagent_containers/condiment/flour,
 /turf/open/floor/fake_seafloor/ironsand,
 /area/station/service/kitchen)
 "KM" = (
@@ -1008,6 +1032,16 @@
 /obj/machinery/camera/directional/west,
 /turf/open/floor/fake_seafloor/heavy,
 /area/station/service/theater)
+"TF" = (
+/obj/structure/table/reinforced/rglass,
+/obj/item/reagent_containers/condiment/peppermill{
+	pixel_x = 3
+	},
+/obj/item/reagent_containers/condiment/saltshaker{
+	pixel_x = -3
+	},
+/turf/open/floor/fake_seafloor/medium,
+/area/station/commons/lounge)
 "TG" = (
 /obj/structure/table/reinforced/rglass,
 /obj/item/holosign_creator/robot_seat/restaurant,
@@ -1250,7 +1284,7 @@ aw
 aw
 aw
 aw
-mG
+Ef
 mG
 mG
 lL
@@ -1875,7 +1909,7 @@ AF
 AF
 AF
 aw
-mG
+TF
 mG
 mG
 "}
