@@ -850,7 +850,7 @@
 	// carbons always get a hat at least
 	var/mob/living/carbon/carbonius = user
 	//hat
-	var/obj/item/clothing/head/costume/disguise_hat = roll_costume(/obj/item/clothing/head/costume, HIDEMASK)
+	var/obj/item/clothing/head/costume/disguise_hat = roll_costume(ITEM_SLOT_HEAD, HIDEMASK)
 	carbonius.dropItemToGround(carbonius.head)
 	carbonius.equip_to_slot_or_del(disguise_hat, ITEM_SLOT_HEAD)
 	if(!ishuman(carbonius))
@@ -859,11 +859,11 @@
 
 	var/mob/living/carbon/human/humerus = carbonius
 	// uniform
-	var/obj/item/clothing/under/costume/disguise_uniform = roll_costume(/obj/item/clothing/under/costume)
+	var/obj/item/clothing/under/costume/disguise_uniform = roll_costume(ITEM_SLOT_ICLOTHING)
 	humerus.dropItemToGround(humerus.w_uniform)
 	humerus.equip_to_slot_or_del(disguise_uniform, ITEM_SLOT_ICLOTHING)
 	// suit
-	var/obj/item/clothing/suit/costume/disguise_suit = roll_costume(/obj/item/clothing/suit/costume)
+	var/obj/item/clothing/suit/costume/disguise_suit = roll_costume(ITEM_SLOT_OCLOTHING)
 	humerus.dropItemToGround(humerus.wear_suit)
 	humerus.equip_to_slot_or_del(disguise_suit, ITEM_SLOT_OCLOTHING)
 	// id
@@ -883,18 +883,17 @@
 	if(random_trim.trim_state && random_trim.assignment)
 		card_id.scribbled_trim = replacetext(random_trim.trim_state, "trim_", "cardboard_")
 	card_id.scribbled_assignment = random_trim.assignment
-	card_id.update_name()
 	card_id.update_appearance()
 	REMOVE_TRAIT(user, TRAIT_NO_JUMPSUIT, REF(src))
 
-/obj/item/relic/proc/roll_costume(type, flagcheck)
+/obj/item/relic/proc/roll_costume(slot, flagcheck)
 	var/list/candidates = list()
-	for(var/obj/item/thingy as anything in subtypesof(type))
-		if(flagcheck && !(initial(thingy.flags_inv) & flagcheck))
+	for(var/obj/item/costume as anything in GLOB.all_autodrobe_items)
+		if(flagcheck && !(initial(costume.flags_inv) & flagcheck))
 			continue
-		if(isnull(initial(thingy.icon_state)))
+		if(slot && !(initial(costume.slot_flags) & slot))
 			continue
-		candidates |= thingy
+		candidates |= costume
 	var/obj/item/new_costume = pick(candidates)
 	new_costume = new new_costume()
 	new_costume.item_flags |= DROPDEL
