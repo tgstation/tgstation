@@ -136,6 +136,7 @@
 	animate(target, pixel_y = final_pixel_y, time = 0.5 SECONDS)
 
 /datum/dance/head_spin/trigger_dance(mob/living/target)
+	ADD_TRAIT(target, TRAIT_IMMOBILIZED, type)
 	animate(target, transform = matrix(180, MATRIX_ROTATE), time = 1, loop = 0)
 	var/matrix/initial_matrix = matrix(target.transform)
 	for (var/i in 1 to 60)
@@ -180,3 +181,4 @@
 
 /datum/dance/head_spin/end_dance(mob/target)
 	continues = FALSE
+	REMOVE_TRAIT(target, TRAIT_IMMOBILIZED, type)
