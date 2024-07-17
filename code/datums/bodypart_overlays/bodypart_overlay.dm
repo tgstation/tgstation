@@ -17,7 +17,7 @@
 	layer = bitflag_to_layer(layer)
 	var/image/main_image = get_image(layer, limb)
 	color_image(main_image, layer, limb)
-	if(blocks_emissive == EMISSIVE_BLOCK_NONE)
+	if(blocks_emissive == EMISSIVE_BLOCK_NONE || !limb)
 		return main_image
 
 	var/list/all_images = list(
