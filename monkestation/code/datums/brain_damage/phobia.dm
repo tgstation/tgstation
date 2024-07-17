@@ -4,7 +4,11 @@
 	/// Whether this phobia is automatically suppressed by the presence of certain antags.
 	var/static/list/suppressed_antags = list(
 		"heresy" = list(
-			"antags" = list(/datum/antagonist/heretic, /datum/antagonist/heretic_monster),
+			"antags" = list(
+				/datum/antagonist/heretic,
+				/datum/antagonist/heretic_monster,
+				/datum/antagonist/lunatic
+			),
 			"suppression_message" = "Due to your connection to the Mansus, you are able to overcome and ignore your mind's fear of it.",
 			"unsuppression_message" = "You feel the fear of heresy return to your mind, as you lose your connection to the Mansus."
 		),
