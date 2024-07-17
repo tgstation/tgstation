@@ -619,9 +619,6 @@
 /obj/effect/mapping_helpers/broken_floor,
 /turf/open/floor/iron,
 /area/ruin/space/ancientstation/beta/atmos)
-"cO" = (
-/turf/open/space/basic,
-/area/ruin/space/ancientstation/charlie/engie)
 "cP" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt,
@@ -11700,7 +11697,7 @@ dl
 eI
 Wa
 eI
-cO
+Ma
 eI
 Ma
 Ma
