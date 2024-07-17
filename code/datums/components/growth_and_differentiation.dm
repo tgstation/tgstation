@@ -61,7 +61,7 @@
 
 	if(scale_with_happiness)
 		if(!HAS_TRAIT(parent, TRAIT_MOB_RELAY_HAPPINESS))
-			AddComponent(/datum/component/happiness)
+			parent.AddComponent(/datum/component/happiness)
 		RegisterSignal(parent, COMSIG_MOB_HAPPINESS_CHANGE, PROC_REF(on_happiness_change))
 
 	// If we haven't started the round, we can't do timer stuff. Let's wait in case we're mapped in or something.

@@ -58,8 +58,6 @@
 #define BB_BASIC_MOB_CURRENT_TARGET "BB_basic_current_target"
 #define BB_BASIC_MOB_CURRENT_TARGET_HIDING_LOCATION "BB_basic_current_target_hiding_location"
 #define BB_TARGETING_STRATEGY "targeting_strategy"
-///The targetting strategy for fishing
-#define BB_FISH_TARGETING_STRATEGY "fish_targeting_strategy"
 ///some behaviors that check current_target also set this on deep crit mobs
 #define BB_BASIC_MOB_EXECUTION_TARGET "BB_basic_execution_target"
 ///Blackboard key for a whitelist typecache of "things we can target while trying to move"

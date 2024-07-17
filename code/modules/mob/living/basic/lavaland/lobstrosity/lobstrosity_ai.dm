@@ -2,7 +2,6 @@
 	blackboard = list(
 		BB_TARGETING_STRATEGY = /datum/targeting_strategy/basic/allow_items,
 		BB_PET_TARGETING_STRATEGY = /datum/targeting_strategy/basic/not_friends,
-		BB_FISH_TARGETING_STRATEGY = /datum/targeting_strategy/fishing,
 		BB_TARGET_MINIMUM_STAT = HARD_CRIT,
 		BB_LOBSTROSITY_EXPLOIT_TRAITS = list(TRAIT_INCAPACITATED, TRAIT_FLOORED, TRAIT_IMMOBILIZED, TRAIT_KNOCKEDOUT),
 		BB_LOBSTROSITY_FINGER_LUST = 0,
@@ -83,7 +82,7 @@
 /datum/ai_planning_subtree/find_and_hunt_target/lobster_fishing
 	target_key = BB_FISHING_TARGET
 	hunt_targets = list(/turf/open/lava)
-	hunting_behavior = /datum/ai_behavior/hunt_target/unarmed_attack_target/reset_target
+	hunting_behavior = /datum/ai_behavior/hunt_target/unarmed_attack_target/reset_target_combat_mode
 
 /datum/ai_planning_subtree/basic_melee_attack_subtree/lobster
 	melee_attack_behavior = /datum/ai_behavior/basic_melee_attack/lobster

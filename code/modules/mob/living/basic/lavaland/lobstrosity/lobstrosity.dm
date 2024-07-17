@@ -41,11 +41,7 @@
 	. = ..()
 	var/static/list/food_types = list(/obj/item/fish/lavaloop)
 	ai_controller.set_blackboard_key(BB_BASIC_FOODS, typecacheof(food_types))
-	var/static/list/fishing_preset = list(
-		/turf/open/lava = /datum/fish_source/lavaland,
-		/turf/open/lava/plasma = /datum/fish_source/lavaland/icemoon,
-	)
-	AddComponent(/datum/component/profound_fisher, npc_fishing_preset = fishing_preset)
+	AddComponent(/datum/component/profound_fisher)
 	AddElement(/datum/element/mob_grabber)
 	AddElement(/datum/element/footstep, FOOTSTEP_MOB_CLAW)
 	AddElement(/datum/element/basic_eating, food_types = target_foods)
@@ -232,13 +228,13 @@
 	ability_behavior = /datum/ai_behavior/pet_use_ability/long_ranged
 
 /datum/pet_command/point_targeting/use_ability/lob_charge/set_command_target(mob/living/parent, atom/target)
-	. = ..()
-	if(!.)
+	if (!target)
 		return
 	var/datum/targeting_strategy/targeter = GET_TARGETING_STRATEGY(parent.ai_controller.blackboard[targeting_strategy_key])
-	if (!targeter?.can_attack(parent, target))
+	if(!targeter?.can_attack(parent, target))
 		parent.balloon_alert_to_viewers("shakes head!")
 		return FALSE
+	return ..()
 
 /datum/pet_command/point_targeting/use_ability/lob_charge/shrimp
 	ability_behavior = /datum/ai_behavior/pet_use_ability/short_ranged

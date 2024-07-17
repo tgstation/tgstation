@@ -16,9 +16,10 @@
 	src.configuration = configuration
 	ADD_TRAIT(target, TRAIT_FISHING_SPOT, REF(src))
 	RegisterSignal(target, COMSIG_PRE_FISHING, PROC_REF(create_fishing_spot))
+	RegisterSignal(target, COMSIG_NPC_FISHING, PROC_REF(return_glob_fishing_spot))
 
 /datum/element/lazy_fishing_spot/Detach(datum/target)
-	UnregisterSignal(target, COMSIG_PRE_FISHING)
+	UnregisterSignal(target, list(COMSIG_PRE_FISHING, COMSIG_NPC_FISHING))
 	REMOVE_TRAIT(target, TRAIT_FISHING_SPOT, REF(src))
 	return ..()
 
@@ -27,3 +28,6 @@
 
 	source.AddComponent(/datum/component/fishing_spot, GLOB.preset_fish_sources[configuration])
 	Detach(source)
+
+/datum/element/lazy_fishing_spot/proc/return_glob_fishing_spot(datum/source, list/arguments)
+	arguments[NPC_FISHING_SPOT] = GLOB.preset_fish_sources[configuration]
