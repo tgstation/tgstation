@@ -75,6 +75,8 @@
 	description = "Research into the cutting edge of chemical analysis, storage, injection, and synthesis."
 	prereq_ids = list(TECHWEB_NODE_CHEM_SYNTHESIS, TECHWEB_NODE_BIO_SCAN)
 	design_ids = list(
+		"smoke_machine",
+		"chem_mass_spec",
 		"chem_master",
 		"ph_meter",
 		"scigoggles",
@@ -84,22 +86,18 @@
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_1_POINTS)
 
-
 /datum/techweb_node/medbay_equip_adv
 	id = TECHWEB_NODE_MEDBAY_EQUIP_ADV
 	display_name = "Advanced Medbay Equipment"
 	description = "State-of-the-art medical gear for keeping the crew in one piece — mostly."
 	prereq_ids = list(TECHWEB_NODE_CHEM_SYNTHESIS)
 	design_ids = list(
-		"smoke_machine",
-		"chem_mass_spec",
 		"healthanalyzer_advanced",
 		"mod_health_analyzer",
 		"crewpinpointer",
 		"defibrillator_compact",
 		"defibmount",
 		"medicalbed_emergency",
-		"piercesyringe",
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_3_POINTS)
 	required_experiments = list(/datum/experiment/scanning/reagent/haloperidol)
