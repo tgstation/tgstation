@@ -1,0 +1,4 @@
+author: "afonamos2"
+delete-after: True
+changes:
+  - bugfix: "malf ai voice changer no longer accepts dangerous inputs"
