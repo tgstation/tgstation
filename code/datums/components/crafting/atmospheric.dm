@@ -359,3 +359,26 @@
 		/obj/item/stack/sheet/iron = 30,
 	)
 	category = CAT_STRUCTURE
+
+/datum/crafting_recipe/airlock_pump
+	name = "External Airlock Pump"
+	tool_behaviors = list(TOOL_WRENCH, TOOL_WELDER)
+	result = /obj/item/pipe/directional/airlock_pump
+	reqs = list(
+		/obj/item/pipe = 1,
+		/obj/item/stack/sheet/iron = 5,
+		/obj/item/stack/cable_coil = 5,
+		/obj/item/analyzer = 1,
+	)
+	time = 2 SECONDS
+	category = CAT_ATMOSPHERIC
+
+/datum/crafting_recipe/airlock_pump/check_requirements(mob/user, list/collected_requirements)
+	return atmos_pipe_check(user, collected_requirements)
+
+/datum/crafting_recipe/airlock_pump/on_craft_completion(mob/user, atom/result)
+	var/obj/item/pipe/crafted_pipe = result
+	crafted_pipe.pipe_type = /obj/machinery/atmospherics/components/unary/airlock_pump
+	crafted_pipe.pipe_color = COLOR_VERY_LIGHT_GRAY
+	crafted_pipe.setDir(user.dir)
+	crafted_pipe.update()

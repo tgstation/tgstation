@@ -1,0 +1,4 @@
+author: "SmArtKar"
+delete-after: True
+changes:
+  - qol: "Ghost orbit menu now always displays person's real name and their roundstart job and cannot be fooled by disguises."

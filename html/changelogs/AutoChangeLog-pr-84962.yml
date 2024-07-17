@@ -1,0 +1,7 @@
+author: "Pickle-Coding"
+delete-after: True
+changes:
+  - bugfix: "Fixes space heater cell relative consumption inadvertently being changed from the introduction of megacells."
+  - qol: "The improvised chemical heater gives a more accurate description of its heating power on examine."
+  - qol: "Improved feedback when attempting to turn on a space heater that is lacking a cell, has no charge or is broken."
+  - code_imp: "Space heater relative cell consumption is consistent regardless of the cell charge scale."

@@ -1,0 +1,4 @@
+author: "DATA-xPUNGED"
+delete-after: True
+changes:
+  - bugfix: "Plague Doctor Mask can now be used with internals again, and is no longer unintentionally pepperproof."

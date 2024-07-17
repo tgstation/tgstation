@@ -1,0 +1,4 @@
+author: "SmArtKar"
+delete-after: True
+changes:
+  - bugfix: "Point blank piercing shots no longer fly directly north after hitting their intended target"

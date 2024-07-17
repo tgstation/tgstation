@@ -1,0 +1,4 @@
+author: "DeltaFire15"
+delete-after: True
+changes:
+  - bugfix: "cold- & heat protection no longer have decimal precision issues."
