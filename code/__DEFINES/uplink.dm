@@ -15,6 +15,17 @@
 /// Can be randomly given to spies for their bounties
 #define UPLINK_SPY (1 << 4)
 
+#define UPLINK_LONE_OP (1 << 5)
+
+/// A blanket define for an item being purchasable by all types of nukie
+#define UPLINK_ALL_SYNDIE_OPS (UPLINK_NUKE_OPS | UPLINK_LONE_OP | UPLINK_CLOWN_OPS)
+
+/// A blanket define for an item being purchasable by all operatives that spawn at the nukie firebase
+#define UPLINK_FIREBASE_OPS (UPLINK_NUKE_OPS | UPLINK_CLOWN_OPS)
+
+/// A define that excludes clown ops from the regular nukeop gear lineup
+#define UPLINK_SERIOUS_OPS (UPLINK_NUKE_OPS | UPLINK_LONE_OP)
+
 /// Progression gets turned into a user-friendly form. This is just an abstract equation that makes progression not too large.
 #define DISPLAY_PROGRESSION(time) round(time/60, 0.01)
 

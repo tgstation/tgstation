@@ -152,6 +152,7 @@
 		"ci-breather",
 		"ci-nutriment",
 		"ci-thrusters",
+		"ci-herculean",
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_3_POINTS)
 

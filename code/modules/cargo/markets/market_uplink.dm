@@ -157,6 +157,9 @@
 	accessible_markets = list(/datum/market/blackmarket)
 	custom_premium_price = PAYCHECK_CREW * 2.5
 
+/obj/item/market_uplink/blackmarket/Initialize(mapload)
+	. = ..()
+	ADD_TRAIT(src, TRAIT_CONTRABAND, INNATE_TRAIT)
 
 /datum/crafting_recipe/blackmarket_uplink
 	name = "Black Market Uplink"

@@ -119,6 +119,12 @@
 	volume = 30
 	inject_flags = INJECT_CHECK_PENETRATE_THICK
 
+/obj/item/reagent_containers/syringe/mod/update_reagent_overlay()
+	if(reagents?.total_volume)
+		var/mutable_appearance/filling_overlay = mutable_appearance('icons/obj/medical/reagent_fillings.dmi', "mod[get_rounded_vol()]")
+		filling_overlay.color = mix_color_from_reagents(reagents.reagent_list)
+		. += filling_overlay
+
 ///Organizer - Lets you shoot organs, immediately replacing them if the target has the organ manipulation surgery.
 /obj/item/mod/module/organizer
 	name = "MOD organizer module"

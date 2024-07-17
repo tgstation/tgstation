@@ -13,6 +13,10 @@
 	/// If this list contains `0`, then it will be receivable on every single
 	/// z-level.
 	var/list/levels
+	/// Blacklisted spans we don't want being put into comms by anything, ever - a place to put any new spans we want to make without letting them annoy people on comms
+	var/list/blacklisted_spans = list(
+		SPAN_SOAPBOX,
+	)
 
 /datum/signal/subspace/New(data)
 	src.data = data || list()
@@ -175,7 +179,7 @@
 		if(!hearer)
 			stack_trace("null found in the hearers list returned by the spatial grid. this is bad")
 			continue
-
+		spans -= blacklisted_spans
 		hearer.Hear(rendered, virt, language, message, frequency, spans, message_mods, message_range = INFINITY)
 
 	// This following recording is intended for research and feedback in the use of department radio channels

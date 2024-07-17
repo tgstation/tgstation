@@ -196,15 +196,13 @@
 		path_hud.add_atom_to_hud(src)
 		path_hud.show_to(src)
 
-	if(HAS_TRAIT(SSstation, STATION_TRAIT_BOTS_GLITCHED))
-		randomize_language_if_on_station()
-
 	if(mapload && is_station_level(z) && bot_mode_flags & BOT_MODE_CAN_BE_SAPIENT && bot_mode_flags & BOT_MODE_ROUNDSTART_POSSESSION)
 		enable_possession(mapload = mapload)
 
 	pa_system = new(src, automated_announcements = automated_announcements)
 	pa_system.Grant(src)
 	RegisterSignal(src, COMSIG_MOB_TRIED_ACCESS, PROC_REF(attempt_access))
+	ADD_TRAIT(src, TRAIT_SILICON_EMOTES_ALLOWED, INNATE_TRAIT)
 
 /mob/living/simple_animal/bot/Destroy()
 	GLOB.bots_list -= src

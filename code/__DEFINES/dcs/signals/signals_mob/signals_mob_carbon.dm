@@ -57,8 +57,6 @@
 /// Called from bodypart being removed /obj/item/bodypart/proc/drop_limb(mob/living/carbon/old_owner, special, dismembered)
 #define COMSIG_BODYPART_REMOVED "bodypart_removed"
 
-/// from /mob/living/carbon/enter_stamcrit()
-#define COMSIG_CARBON_ENTER_STAMCRIT "carbon_enter_stamcrit"
 ///from base of mob/living/carbon/soundbang_act(): (list(intensity))
 #define COMSIG_CARBON_SOUNDBANG "carbon_soundbang"
 ///from /item/organ/proc/Insert() (/obj/item/organ/)
@@ -163,3 +161,8 @@
 /// from /datum/status_effect/limp/proc/check_step(mob/whocares, OldLoc, Dir, forced) iodk where it shuld go
 #define COMSIG_CARBON_LIMPING "mob_limp_check"
 	#define COMPONENT_CANCEL_LIMP (1<<0)
+
+///Called from on_acquiring(mob/living/carbon/human/acquirer)
+#define COMSIG_MUTATION_GAINED "mutation_gained"
+///Called from on_losing(mob/living/carbon/human/owner)
+#define COMSIG_MUTATION_LOST "mutation_lost"
