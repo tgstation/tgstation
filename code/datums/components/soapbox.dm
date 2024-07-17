@@ -4,7 +4,7 @@
 	/// Gives atoms moving over us the soapbox speech and takes it away when they leave
 	var/static/list/loc_connections = list(
 		COMSIG_ATOM_ENTERED = PROC_REF(on_loc_entered),
-		COMSIG_ATOM_EXITED = PROC_REF(on_loc_exited)
+		COMSIG_ATOM_EXITED = PROC_REF(on_loc_exited),
 	)
 
 /datum/component/soapbox/Initialize(...)
@@ -17,14 +17,21 @@
 /datum/component/soapbox/proc/on_loc_entered(datum/source, atom/movable/soapbox_arrive)
 	SIGNAL_HANDLER
 	RegisterSignal(soapbox_arrive, COMSIG_MOB_SAY, PROC_REF(soapbox_speech))
+	RegisterSignal(soapbox_arrive, COMSIG_QDELETING, PROC_REF(on_soapboxer_qdel))
 	soapboxers += soapbox_arrive
 
 ///Takes away loud speech from our movable when it leaves the turf our parent is on
 /datum/component/soapbox/proc/on_loc_exited(datum/source, atom/movable/soapbox_leave)
 	SIGNAL_HANDLER
 	if(soapbox_leave in soapboxers)
-		UnregisterSignal(soapbox_leave, COMSIG_MOB_SAY)
+		UnregisterSignal(soapbox_leave, list(COMSIG_MOB_SAY, COMSIG_QDELETING))
 		soapboxers -= soapbox_leave
+
+/// Make sure we clean up whenever a soapboxer gets qdeleted
+/datum/component/soapbox/proc/on_soapboxer_qdel(datum/source, atom/movable/soapbox_qdeleted)
+	SIGNAL_HANDLER
+	UnregisterSignal(soapbox_qdeleted, COMSIG_QDELETING)
+	on_loc_exited(source, soapbox_qdeleted)
 
 ///We don't want our soapboxxer to keep their loud say if the parent is moved out from under them
 /datum/component/soapbox/proc/parent_moved(datum/source)
