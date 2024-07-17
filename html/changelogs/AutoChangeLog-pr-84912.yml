@@ -1,7 +1,0 @@
-author: "00-Steven"
-delete-after: True
-changes:
-  - rscadd: "Having a robotic voicebox installed now lets you use silicon emotes."
-  - balance: "MMI'd brains/posibrains can now use silicon emotes."
-  - balance: "Simple and basic bots can actually beep."
-  - bugfix: "MMI'd brains/posibrains are no longer both allowed AND blocked from beeping, now just being allowed to beep."

@@ -895,3 +895,30 @@
   r3dj4ck0424:
   - bugfix: Destroying the jungle grass tiles in Tramstation's science wing should
       no longer open a chasm.
+2024-07-17:
+  00-Steven:
+  - rscadd: Having a robotic voicebox installed now lets you use silicon emotes.
+  - balance: MMI'd brains/posibrains can now use silicon emotes.
+  - balance: Simple and basic bots can actually beep.
+  - bugfix: MMI'd brains/posibrains are no longer both allowed AND blocked from beeping,
+      now just being allowed to beep.
+  JohnFulpWillard:
+  - balance: Human AIs no longer have a teleport blocking implant or borg costume,
+      but now has a portable crew monitor.
+  Melbert:
+  - bugfix: Using hulk (and a myriad of similar effects) now properly updates your
+      movespeed to ignore the damage movespeed penalty
+  - bugfix: Some things which temporarily make you fly don't make you fly forever
+  - bugfix: MODsuit ball module now properly makes you immune to damage movespeed
+      penalty when in ball form
+  - bugfix: Adding Hulk via VV dropdown doesn't default to adding the strongest hulk
+      available (that which is used by the medieval pirates)
+  SmArtKar:
+  - bugfix: Ghosts can no longer move chairs
+  - bugfix: You can attack bookshelves in a variety of states once more
+  - bugfix: Style meter text is no longer blurry and doesnt overlap with UI anymore.
+  - qol: You can fire PKAs/plasma cutters point blank at turfs.
+  Thedragmeme:
+  - qol: re-maps the raptor barn to not stick out like a sore thumb
+  - bugfix: Miners and the public both can access the raptor barn without having to
+      make a bridge themselves
