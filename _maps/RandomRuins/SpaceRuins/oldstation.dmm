@@ -417,6 +417,7 @@
 	},
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/door/firedoor,
+/obj/effect/mapping_helpers/airlock/access/all/away/general,
 /turf/open/floor/iron,
 /area/ruin/space/ancientstation/charlie/hall)
 "ce" = (
@@ -1794,6 +1795,7 @@
 	dir = 4
 	},
 /obj/machinery/duct,
+/obj/effect/mapping_helpers/airlock/access/all/away/general,
 /turf/open/floor/iron,
 /area/ruin/space/ancientstation/charlie/hall)
 "ic" = (
@@ -2951,6 +2953,7 @@
 /area/ruin/space/ancientstation/beta/mining)
 "mP" = (
 /obj/machinery/door/airlock/external/glass/ruin,
+/obj/effect/mapping_helpers/airlock/access/all/away/general,
 /turf/open/floor/iron/dark/airless,
 /area/ruin/space/ancientstation/beta/supermatter)
 "mR" = (
@@ -3042,6 +3045,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4{
 	dir = 4
 	},
+/obj/effect/mapping_helpers/airlock/access/all/away/general,
 /turf/open/floor/iron,
 /area/ruin/space/ancientstation/charlie/hall)
 "nc" = (
@@ -3070,6 +3074,7 @@
 	dir = 10
 	},
 /obj/structure/cable,
+/obj/effect/mapping_helpers/airlock/access/all/away/general,
 /turf/open/floor/iron,
 /area/ruin/space/ancientstation/charlie/hall)
 "nf" = (
@@ -3657,6 +3662,7 @@
 /obj/structure/cable,
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/door/airlock/external/glass/ruin,
+/obj/effect/mapping_helpers/airlock/access/all/away/general,
 /turf/open/floor/iron/dark/airless,
 /area/ruin/space/ancientstation/charlie/engie)
 "rc" = (
@@ -4755,6 +4761,7 @@
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
 	dir = 4
 	},
+/obj/effect/mapping_helpers/airlock/access/all/away/general,
 /turf/open/floor/iron/white/textured_large,
 /area/ruin/space/ancientstation/delta/biolab)
 "zm" = (
@@ -7225,6 +7232,7 @@
 /area/ruin/space/ancientstation/charlie/sec)
 "Po" = (
 /obj/machinery/door/airlock/external/glass/ruin,
+/obj/effect/mapping_helpers/airlock/access/all/away/general,
 /turf/open/floor/iron/dark/airless,
 /area/ruin/space/ancientstation/delta/hall)
 "Pq" = (
@@ -8111,6 +8119,7 @@
 /area/ruin/space/ancientstation/beta/supermatter)
 "VU" = (
 /obj/machinery/door/airlock/external/glass/ruin,
+/obj/effect/mapping_helpers/airlock/access/all/away/general,
 /turf/open/floor/iron/dark/airless,
 /area/ruin/space/ancientstation/beta/mining)
 "VV" = (
@@ -11687,7 +11696,7 @@ aa
 Ma
 Ma
 eI
-eI
+dl
 eI
 Wa
 eI
