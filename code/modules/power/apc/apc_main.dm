@@ -634,7 +634,7 @@
 	if(channel == SSMACHINES_APCS_ENVIRONMENT)
 		lastused_charge = 0
 		last_charging = charging
-		if(cell.charge < cell.maxcharge)
+		if(cell && cell.charge < cell.maxcharge)
 			charging = APC_NOT_CHARGING
 
 	if(!cell || shorted || !operating || !chargemode || !surplus() || !cell.used_charge())
