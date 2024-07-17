@@ -202,6 +202,8 @@
 	pointed_reaction = "and growls"
 	/// Blackboard key where a reference to some kind of mob ability is stored
 	var/pet_ability_key
+	/// The AI behavior to use for the ability
+	var/ability_behavior = /datum/ai_behavior/pet_use_ability
 
 /datum/pet_command/point_targeting/use_ability/execute_action(datum/ai_controller/controller)
 	if (!pet_ability_key)
@@ -211,7 +213,7 @@
 		return
 	// We don't check if the target exists because we want to 'sit attentively' if we've been instructed to attack but not given one yet
 	// We also don't check if the cooldown is over because there's no way a pet owner can know that, the behaviour will handle it
-	controller.queue_behavior(/datum/ai_behavior/pet_use_ability, pet_ability_key, BB_CURRENT_PET_TARGET)
+	controller.queue_behavior(ability_behavior, pet_ability_key, BB_CURRENT_PET_TARGET)
 	return SUBTREE_RETURN_FINISH_PLANNING
 
 /datum/pet_command/protect_owner

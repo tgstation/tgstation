@@ -30,6 +30,8 @@
 	var/datum/action/cooldown/mob_cooldown/charge/basic_charge/lobster/charge
 	/// The type of charging ability we give this mob
 	var/charge_type = /datum/action/cooldown/mob_cooldown/charge/basic_charge/lobster
+	/// The pet command for the charging ability we give this mob
+	var/charge_command = /datum/pet_command/point_targeting/use_ability/lob_charge
 	/// At which speed do we amputate limbs
 	var/snip_speed = 5 SECONDS
 	/// Things we will eat if we see them (arms, chiefly)
@@ -67,10 +69,11 @@
 /mob/living/basic/mining/lobstrosity/tamed(mob/living/tamer, obj/item/food)
 	new /obj/effect/temp_visual/heart(loc)
 	/// Pet commands for this mob, however you'll have to tame juvenile lobstrosities to a trained adult one.
-	var/static/list/pet_commands = list(
+	var/list/pet_commands = list(
 		/datum/pet_command/idle,
 		/datum/pet_command/free,
 		/datum/pet_command/point_targeting/attack,
+		charge_command,
 		/datum/pet_command/follow,
 		/datum/pet_command/point_targeting/fish,
 	)
@@ -127,7 +130,7 @@
 	icon_state = "arctic_juveline_lobstrosity"
 	icon_living = "arctic_juveline_lobstrosity"
 	icon_dead = "arctic_juveline_lobstrosity_dead"
-	status_flags = parent_type::status_flags | CANPUSH //Young and fairly weak.
+	status_flags = parent_type::status_flags | CANPUSH
 	maxHealth = 65
 	health = 65
 	obj_damage = 6
@@ -145,6 +148,7 @@
 	ai_controller = /datum/ai_controller/basic_controller/lobstrosity/juvenile
 	snip_speed = 6.5 SECONDS
 	charge_type = /datum/action/cooldown/mob_cooldown/charge/basic_charge/lobster/shrimp
+	charge_command = /datum/pet_command/point_targeting/use_ability/lob_charge/shrimp
 	/// What do we become when we grow up?
 	var/mob/living/basic/mining/lobstrosity/grow_type = /mob/living/basic/mining/lobstrosity
 	/// Were we tamed? If yes, tame the mob we become when we grow up too.
@@ -214,3 +218,27 @@
 
 /datum/action/cooldown/mob_cooldown/charge/basic_charge/lobster/apply_post_charge(mob/living/charger)
 	charger.apply_status_effect(/datum/status_effect/tired_post_charge/lesser)
+
+///Command the lobster to charge at someone.
+/datum/pet_command/point_targeting/use_ability/lob_charge
+	command_name = "Charge"
+	command_desc = "Command your lobstrosity to charge against someone."
+	radial_icon = 'icons/mob/actions/actions_items.dmi'
+	radial_icon_state = "sniper_zoom"
+	speech_commands = list("charge", "slam", "tackle")
+	command_feedback = "growl"
+	pointed_reaction = "and growls"
+	pet_ability_key = BB_TARGETED_ACTION
+	ability_behavior = /datum/ai_behavior/pet_use_ability/long_ranged
+
+/datum/pet_command/point_targeting/use_ability/lob_charge/set_command_target(mob/living/parent, atom/target)
+	. = ..()
+	if(!.)
+		return
+	var/datum/targeting_strategy/targeter = GET_TARGETING_STRATEGY(parent.ai_controller.blackboard[targeting_strategy_key])
+	if (!targeter?.can_attack(parent, target))
+		parent.balloon_alert_to_viewers("shakes head!")
+		return FALSE
+
+/datum/pet_command/point_targeting/use_ability/lob_charge/shrimp
+	ability_behavior = /datum/ai_behavior/pet_use_ability/short_ranged

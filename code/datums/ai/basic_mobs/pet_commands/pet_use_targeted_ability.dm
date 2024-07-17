@@ -22,3 +22,9 @@
 /datum/ai_behavior/pet_use_ability/finish_action(datum/ai_controller/controller, succeeded, ability_key, target_key)
 	. = ..()
 	controller.clear_blackboard_key(target_key)
+
+/datum/ai_behavior/pet_use_ability/short_ranged
+	required_distance = 3
+
+/datum/ai_behavior/pet_use_ability/long_ranged
+	required_distance = 7
