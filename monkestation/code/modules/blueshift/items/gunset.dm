@@ -39,7 +39,7 @@
 /obj/item/storage/toolbox/guncase/m90gl
 	name = "m-90gl gun case"
 	weapon_to_spawn = /obj/item/gun/ballistic/automatic/m90
-	extra_to_spawn = /obj/item/ammo_box/magazine/m223
+	extra_to_spawn = /obj/item/ammo_box/magazine/m556
 
 /obj/item/storage/toolbox/guncase/m90gl/PopulateContents()
 	new weapon_to_spawn (src)
