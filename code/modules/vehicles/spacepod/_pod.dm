@@ -23,8 +23,6 @@
 	icon_state = "engineering_pod" //placeholder
 	light_system = OVERLAY_LIGHT_DIRECTIONAL
 	light_on = FALSE
-	/// air in the pod
-	var/datum/gas_mixture/air = new(TANK_STANDARD_VOLUME * 5)
 	/// Max count of a certain slot. If it is not defined here, it is assumed to be one (1). Use slot_max(slot) to access.
 	var/list/slot_max = list(
 		POD_SLOT_MISC = 3,
@@ -45,11 +43,8 @@
 	/// are stabilizers on
 	var/stabilizers_on = FALSE
 
-	/// is our cabin closed? if so, retain atmos
-	var/closed_cabin = FALSE // figure out how to do this properly, generally exitting the pod and venting everything to space is bad
-	// but the cabin is empty by default so how would we do this?? innate air tank??? air tank slot???
-	// air tank slot is maybe a good choice but we can also make it inserted via maintenance panel
-	// like imagine you find someones unguarded pod and replace its tank with hot plasma that would be extremely funny
+	/// our air tank, cabin air is this
+	var/obj/item/tank/internals/cabin_air_tank
 
 
 /obj/vehicle/sealed/space_pod/Initialize(mapload)
@@ -63,7 +58,8 @@
 
 /obj/vehicle/sealed/space_pod/Destroy()
 	. = ..()
-	QDEL_NULL(air)
+	QDEL_NULL(trail)
+	QDEL_NULL(cabin_air_tank)
 	equipped = null // equipment gets deleted already because its in our contents
 
 /obj/vehicle/sealed/space_pod/update_overlays()
@@ -103,26 +99,11 @@
 
 // atmos
 /obj/vehicle/sealed/space_pod/remove_air(amount)
-	return closed_cabin ? air.remove(amount) : ..()
+	return !isnull(cabin_air_tank) ? cabin_air_tank.remove_air(amount) : ..()
 /obj/vehicle/sealed/space_pod/return_air()
-	return closed_cabin ? air : ..()
+	return !isnull(cabin_air_tank) ? cabin_air_tank.return_air() : ..()
 /obj/vehicle/sealed/space_pod/return_analyzable_air()
-	return air
+	return !isnull(cabin_air_tank) ? cabin_air_tank.return_air() : null // no internal air
 /obj/vehicle/sealed/space_pod/return_temperature()
 	var/datum/gas_mixture/air = return_air()
 	return air?.return_temperature()
-
-/obj/vehicle/sealed/space_pod/proc/toggle_air_seal(mob/user, state)
-	// some sort of cooldown?
-
-	closed_cabin = state
-
-	var/datum/gas_mixture/outside_air = loc.return_air()
-	if(!isnull(outside_air))
-		if(closed_cabin)
-			outside_air.pump_gas_to(air, outside_air.return_pressure())
-		else
-			loc.assume_air(air.remove_ratio(1))
-
-	//visual or sound feedback idk???
-

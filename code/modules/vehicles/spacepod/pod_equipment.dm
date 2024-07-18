@@ -10,6 +10,15 @@
 
 /obj/vehicle/sealed/space_pod/item_interaction(mob/living/user, obj/item/pod_equipment/equipment, list/modifiers)
 	. = NONE
+
+	if(istype(equipment, /obj/item/tank/internals))
+		if(!user.transferItemToLoc(equipment, src))
+			return ITEM_INTERACT_FAILURE
+		cabin_air_tank = equipment
+		to_chat(user, span_notice("You slot [equipment] into [src]."))
+		playsound(src, 'sound/effects/tank_insert_clunky.ogg', 50)
+		return ITEM_INTERACT_SUCCESS
+
 	if(!istype(equipment))
 		return
 
@@ -34,14 +43,21 @@
 		balloon_alert(user, "panel not open!")
 		return ITEM_INTERACT_BLOCKING
 
-	var/picked = tgui_input_list(user, "Remove what?", "Remove what?", get_all_parts())
-	if(!picked)
+	var/obj/picked = tgui_input_list(user, "Remove what?", "Remove what?", get_all_parts() + cabin_air_tank)
+	if(!picked || !user.can_perform_action(src, NEED_DEXTERITY|FORBID_TELEKINESIS_REACH))
 		return ITEM_INTERACT_BLOCKING
 
 	tool.play_tool_sound(src)
 
 	if(!do_after(user, 3 SECONDS, src))
 		return ITEM_INTERACT_FAILURE
+
+	if(istype(picked, /obj/item/tank/internals))
+		if(!user?.put_in_hands(picked))
+			picked.forceMove(drop_location())
+		cabin_air_tank = null
+		return ITEM_INTERACT_SUCCESS
+
 
 	if(unequip_item(picked, user))
 		return ITEM_INTERACT_SUCCESS
