@@ -64637,9 +64637,6 @@
 /obj/effect/mapping_helpers/airlock/cyclelink_helper_multi{
 	cycle_id = "comms-entrance-north"
 	},
-/obj/effect/mapping_helpers/airlock/cyclelink_helper_multi{
-	cycle_id = "comms-entrance-north"
-	},
 /turf/open/floor/catwalk_floor/iron_dark,
 /area/station/tcommsat/server)
 "vTj" = (
