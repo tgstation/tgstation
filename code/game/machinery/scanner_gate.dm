@@ -183,18 +183,18 @@
 			return
 		if(SCANGATE_WANTED)
 			if(ishuman(M))
-				detected_thing = "wanted"
+				detected_thing = "Warrant"
 				var/mob/living/carbon/human/H = M
 				var/perpname = H.get_face_name(H.get_id_name())
 				var/datum/record/crew/target = find_record(perpname)
 				if(!target || (target.wanted_status == WANTED_ARREST))
 					beep = TRUE
 		if(SCANGATE_MINDSHIELD)
-			detected_thing = "mindshielded"
+			detected_thing = "Mindshield"
 			if(HAS_TRAIT(M, TRAIT_MINDSHIELD))
 				beep = TRUE
 		if(SCANGATE_DISEASE)
-			detected_thing = "infected"
+			detected_thing = "[disease_threshold] infection"
 			if(iscarbon(M))
 				var/mob/living/carbon/C = M
 				if(get_disease_severity_value(C.check_virus()) >= get_disease_severity_value(disease_threshold))
@@ -203,35 +203,43 @@
 			if(ishuman(M))
 				var/mob/living/carbon/human/H = M
 				var/datum/species/scan_species = /datum/species/human
-				detected_thing = "[scan_species]"
 				switch(detect_species)
 					if(SCANGATE_LIZARD)
+						detected_thing = "Lizardperson"
 						scan_species = /datum/species/lizard
 					if(SCANGATE_FLY)
+						detected_thing = "Flyperson"
 						scan_species = /datum/species/fly
 					if(SCANGATE_FELINID)
+						detected_thing = "Felinid"
 						scan_species = /datum/species/human/felinid
 					if(SCANGATE_PLASMAMAN)
+						detected_thing = "Plasmaman"
 						scan_species = /datum/species/plasmaman
 					if(SCANGATE_MOTH)
+						detected_thing = "Mothperson"
 						scan_species = /datum/species/moth
 					if(SCANGATE_JELLY)
+						detected_thing = "Jellyperson"
 						scan_species = /datum/species/jelly
 					if(SCANGATE_POD)
+						detected_thing = "Podperson"
 						scan_species = /datum/species/pod
 					if(SCANGATE_GOLEM)
+						detected_thing = "Golem"
 						scan_species = /datum/species/golem
 					if(SCANGATE_ZOMBIE)
+						detected_thing = "Zombie"
 						scan_species = /datum/species/zombie
 				if(is_species(H, scan_species))
 					beep = TRUE
 				if(detect_species == SCANGATE_ZOMBIE) //Can detect dormant zombies
-					detected_thing = "romerol infected"
+					detected_thing = "Romerol infection"
 					if(H.get_organ_slot(ORGAN_SLOT_ZOMBIE))
 						beep = TRUE
 		if(SCANGATE_GUNS)
 			for(var/I in M.get_contents())
-				detected_thing = "armed"
+				detected_thing = "Weapons"
 				if(isgun(I))
 					beep = TRUE
 					break
@@ -240,13 +248,13 @@
 				var/mob/living/carbon/human/H = M
 				if(H.nutrition <= detect_nutrition && detect_nutrition == NUTRITION_LEVEL_STARVING)
 					beep = TRUE
-					detected_thing = "starving"
+					detected_thing = "Starvation"
 				if(H.nutrition >= detect_nutrition && detect_nutrition == NUTRITION_LEVEL_FAT)
 					beep = TRUE
-					detected_thing = "obese"
+					detected_thing = "Obesity"
 		if(SCANGATE_CONTRABAND)
 			for(var/obj/item/content in M.get_all_contents_skipping_traits(TRAIT_CONTRABAND_BLOCKER))
-				detected_thing = "contraband smuggling"
+				detected_thing = "Contraband"
 				if(content.is_contraband())
 					beep = TRUE
 					break
@@ -281,7 +289,7 @@
 		return
 
 	if(detected_thing)
-		src.say("[reverse ? "Not" : "A"] [detected_thing] person detected!!")
+		src.say("[detected_thing][reverse ? " not " : " "]detected!!")
 
 	COOLDOWN_START(src, next_beep, 2 SECONDS)
 	playsound(src, 'sound/machines/scanbuzz.ogg', 100, FALSE)
