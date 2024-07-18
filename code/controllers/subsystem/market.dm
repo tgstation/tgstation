@@ -139,7 +139,7 @@ SUBSYSTEM_DEF(market)
 		if(isnull(market_whitelist) || (path in market_whitelist))
 			markets[path].restock(existing_types)
 
-	for(var/datum/market_item/path as anything in subtypesof(/datum/market_item) - existing_types)
+	for(var/datum/market_item/path as anything in (subtypesof(/datum/market_item) - existing_types))
 		if(!path::restockable)
 			continue
 		initialize_item(path, market_whitelist)
