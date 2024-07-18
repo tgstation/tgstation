@@ -1,4 +1,0 @@
-author: "SyncIt21"
-delete-after: True
-changes:
-  - bugfix: "borgs can't put their integrated tools into the reagent grinder"

@@ -922,3 +922,73 @@
   - qol: re-maps the raptor barn to not stick out like a sore thumb
   - bugfix: Miners and the public both can access the raptor barn without having to
       make a bridge themselves
+2024-07-18:
+  Artemchik542:
+  - bugfix: Justice mech invisibility fix
+  Ben10Omintrix:
+  - bugfix: fixes sentient firebots mauling things from a distance
+  DATA-xPUNGED:
+  - bugfix: Plague Doctor Mask can now be used with internals again, and is no longer
+      unintentionally pepperproof.
+  DeltaFire15:
+  - bugfix: cold- & heat protection no longer have decimal precision issues.
+  MTandi:
+  - bugfix: Fixed emitters, shield gens and other wired machinery having lower power
+      consumption priority than APCs
+  - qol: Made APCs charge more evenly to ensure that environment and lights are working
+      everywhere before giving the power for equipment
+  NewyearnewmeUwu:
+  - image: the smoking pipe east/west sprites are now more consistent
+  Pickle-Coding:
+  - bugfix: Fixes space heater cell relative consumption inadvertently being changed
+      from the introduction of megacells.
+  - qol: The improvised chemical heater gives a more accurate description of its heating
+      power on examine.
+  - qol: Improved feedback when attempting to turn on a space heater that is lacking
+      a cell, has no charge or is broken.
+  - code_imp: Space heater relative cell consumption is consistent regardless of the
+      cell charge scale.
+  Rhials:
+  - bugfix: Xenos have a "resist" ui element now. Cool!
+  Sadboysuss:
+  - bugfix: added a missing cable to Wawastation perma
+  SmArtKar:
+  - bugfix: Fixes hulks being able to activate dualsabers despite not being able to
+      actually do anything with them
+  - qol: Ghost orbit menu now always displays person's real name and their roundstart
+      job and cannot be fooled by disguises.
+  - qol: You can properly aim mining bombs at turfs now
+  - bugfix: Point blank piercing shots no longer fly directly north after hitting
+      their intended target
+  - qol: Stopping orbiting now automatically breaks you out of autoobserve
+  SmArtKar, Kapu:
+  - balance: Projectiles now can hit border objects on other turfs instead of passing
+      through them
+  SyncIt21:
+  - bugfix: fixes runtime in storage datums when hiding the ui
+  - bugfix: you can insert the withdrawal beaker into the portable chem mixer when
+      locked
+  - bugfix: acid/base buffers should update your target & source holder
+  - bugfix: remove reagent operations won't trigger excessive workload
+  - bugfix: borgs can't put their integrated tools into the reagent grinder
+  Yobrocharlie:
+  - bugfix: Removed bitrunning beach brawl fax machine
+  afonamos2:
+  - bugfix: malf ai voice changer no longer accepts dangerous inputs
+  grungussuss:
+  - rscadd: You can now buckle to bar stools
+  grungususs:
+  - spellcheck: fixed a typo for carrot sword description
+  imedial:
+  - rscadd: standing on a closed crate now gives loud mode
+  - spellcheck: fixed a typo in borg research
+  larentoun:
+  - bugfix: Free items in research queue will now correctly be researched automatically.
+  norsvenska:
+  - spellcheck: Removed an unnecessary apostrophe in DeltaStation's genetics monkey
+      pen door.
+  xXPawnStarrXx:
+  - qol: made fish better quality when butchered, smushy koibeans and useable gunner
+      jellyfish.
+  zoomachina:
+  - bugfix: deleting reagents from the chemmaster buffer works without a beaker inserted

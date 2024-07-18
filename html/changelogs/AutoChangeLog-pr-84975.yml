@@ -1,4 +1,0 @@
-author: "SmArtKar, Kapu"
-delete-after: True
-changes:
-  - balance: "Projectiles now can hit border objects on other turfs instead of passing through them"

@@ -1,4 +1,0 @@
-author: "zoomachina"
-delete-after: True
-changes:
-  - bugfix: "deleting reagents from the chemmaster buffer works without a beaker inserted"

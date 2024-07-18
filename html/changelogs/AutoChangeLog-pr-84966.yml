@@ -1,5 +1,0 @@
-author: "SyncIt21"
-delete-after: True
-changes:
-  - bugfix: "fixes runtime in storage datums when hiding the ui"
-  - bugfix: "you can insert the withdrawal beaker into the portable chem mixer when locked"

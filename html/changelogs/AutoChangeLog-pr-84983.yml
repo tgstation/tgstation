@@ -1,5 +1,0 @@
-author: "MTandi"
-delete-after: True
-changes:
-  - bugfix: "Fixed emitters, shield gens and other wired machinery having lower power consumption priority than APCs"
-  - qol: "Made APCs charge more evenly to ensure that environment and lights are working everywhere before giving the power for equipment"

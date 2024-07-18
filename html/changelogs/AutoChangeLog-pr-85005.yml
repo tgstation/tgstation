@@ -1,4 +1,0 @@
-author: "SmArtKar"
-delete-after: True
-changes:
-  - bugfix: "Fixes hulks being able to activate dualsabers despite not being able to actually do anything with them"
