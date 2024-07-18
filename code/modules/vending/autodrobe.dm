@@ -281,7 +281,6 @@ GLOBAL_VAR_INIT(all_autodrobe_items, (autodrobe_costumes_items +\
 /obj/machinery/vending/autodrobe/all_access
 	desc = "A vending machine for costumes. This model appears to have no access restrictions."
 	req_access = null
-s
 /obj/item/vending_refill/autodrobe
 	machine_name = "AutoDrobe"
 	icon_state = "refill_costume"
