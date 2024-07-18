@@ -154,6 +154,10 @@
 /obj/machinery/scanner_gate/crowbar_act(mob/living/user, obj/item/tool)
 	. = ..()
 	if(n_spect)
+		if(locked)
+			balloon_alert(user, "locked!")
+			return ITEM_INTERACT_BLOCKING
+
 		to_chat(user, span_notice("You uninstall [n_spect] from [src]."))
 		n_spect.forceMove(drop_location())
 		return ITEM_INTERACT_SUCCESS
