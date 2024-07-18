@@ -40,6 +40,10 @@
 
 	/// Size modifier for the sprite
 	var/brain_size = 1
+	/// Can this brain become smooth after it gets washed
+	var/can_smoothen_out = TRUE
+	/// We got smooth
+	var/smooth = FALSE
 
 /obj/item/organ/internal/brain/Initialize(mapload)
 	. = ..()
@@ -48,6 +52,8 @@
 
 /obj/item/organ/internal/brain/examine()
 	. = ..()
+	if (smooth)
+		. += span_notice("All the pesky wrinkles are gone. Now it just needs a good drying...")
 	if(brain_size < 1)
 		. += span_notice("It is a bit on the smaller side...")
 	if(brain_size > 1)
@@ -373,6 +379,11 @@
 
 /obj/item/organ/internal/brain/machine_wash(obj/machinery/washing_machine/brainwasher)
 	. = ..()
+	if (can_smoothen_out && !smooth)
+		icon_state = initial(icon_state) + "-smooth"
+		smooth = TRUE
+		update_appearance()
+
 	if(HAS_TRAIT(brainwasher, TRAIT_BRAINWASHING))
 		set_organ_damage(0)
 		cure_all_traumas(TRAUMA_RESILIENCE_LOBOTOMY)
@@ -408,6 +419,7 @@
 	name = "crystalline matrix"
 	desc = "This collection of sparkling gems somehow allows a golem to think."
 	icon_state = "adamantine_resonator"
+	can_smoothen_out = FALSE
 	color = COLOR_GOLEM_GRAY
 	organ_flags = ORGAN_MINERAL
 	organ_traits = list(TRAIT_ADVANCEDTOOLUSER, TRAIT_LITERATE, TRAIT_CAN_STRIP, TRAIT_ROCK_METAMORPHIC)
@@ -416,6 +428,7 @@
 	name = "lustrous brain"
 	desc = "This is your brain on bluespace dust. Not even once."
 	icon_state = "random_fly_4"
+	can_smoothen_out = FALSE
 	organ_traits = list(TRAIT_ADVANCEDTOOLUSER, TRAIT_LITERATE, TRAIT_CAN_STRIP)
 
 /obj/item/organ/internal/brain/lustrous/on_mob_remove(mob/living/carbon/organ_owner, special)
