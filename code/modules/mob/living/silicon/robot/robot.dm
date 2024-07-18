@@ -326,8 +326,8 @@
 	if(!hat_overlay)
 		return
 	cut_overlay(hat_overlay)
-	if(length(hat_dir_offsets))
-		var/offset = hat_dir_offsets[ISDIAGONALDIR(dir) ? dir2text(dir & (WEST|EAST)) : dir2text(dir)]
+	if(islist(hat_offset))
+		var/offset = hat_offset[ISDIAGONALDIR(dir) ? dir2text(dir & (WEST|EAST)) : dir2text(dir)]
 		if(offset)
 			hat_overlay.pixel_w = offset[1]
 			hat_overlay.pixel_z = offset[2]
@@ -741,8 +741,7 @@
 		add_traits(model.model_traits, MODEL_TRAIT)
 
 	hat_offset = model.hat_offset
-	hat_dir_offsets = model.hat_dir_offsets
-	if(length(hat_dir_offsets))
+	if(islist(hat_offset))
 		RegisterSignal(src, COMSIG_ATOM_POST_DIR_CHANGE, PROC_REF(on_dir_change))
 	else
 		UnregisterSignal(src, COMSIG_ATOM_POST_DIR_CHANGE)
