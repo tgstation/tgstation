@@ -36,6 +36,8 @@
 	var/obj/machinery/ltsrbt/pad = allocate(/obj/machinery/ltsrbt)
 
 	pad.item_interaction(user, chip)
+
+	TEST_ASSERT_EQUAL(item, category_items[category_items[1]], "The unit test market item has been replaced during restock.")
 	TEST_ASSERT_EQUAL(item.stock, 2, "The unit test market item is incorrectly stocked after restock. There should be two in stock")
 
 /datum/market/unit_test
