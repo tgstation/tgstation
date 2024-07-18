@@ -25,7 +25,8 @@ type Props = {
 export function OrbitCollapsible(props: Props) {
   const { color, section = [], title } = props;
 
-  const { autoObserve, searchQuery, viewMode } = useContext(OrbitContext);
+  const { autoObserve, realNameDisplay, searchQuery, viewMode } =
+    useContext(OrbitContext);
 
   const filteredSection = section.filter((observable) =>
     isJobOrNameMatch(observable, searchQuery),
@@ -53,6 +54,7 @@ export function OrbitCollapsible(props: Props) {
           const content = (
             <OrbitItem
               autoObserve={autoObserve}
+              realNameDisplay={realNameDisplay}
               color={color}
               item={item}
               key={item.ref}
@@ -66,7 +68,7 @@ export function OrbitCollapsible(props: Props) {
 
           return (
             <Tooltip
-              content={<OrbitTooltip item={item} />}
+              content={<OrbitTooltip item={item} realNameDisplay={false} />}
               key={item.ref}
               position="bottom-start"
             >
