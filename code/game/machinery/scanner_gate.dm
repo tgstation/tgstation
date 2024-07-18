@@ -23,11 +23,11 @@
 	desc = "A gate able to perform mid-depth scans on any organisms who pass under it."
 	icon = 'icons/obj/machines/scangate.dmi'
 	icon_state = "scangate"
+	layer = ABOVE_MOB_LAYER
 	circuit = /obj/item/circuitboard/machine/scanner_gate
+	COOLDOWN_DECLARE(next_beep)
 
 	var/scanline_timer
-	///Internal timer to prevent audio spam.
-	var/next_beep = 0
 	///Bool to check if the scanner's controls are locked by an ID.
 	var/locked = FALSE
 	///Which setting is the scanner checking for? See defines in scanner_gate.dm for the list.
@@ -73,6 +73,8 @@
 
 /obj/machinery/scanner_gate/examine(mob/user)
 	. = ..()
+
+	. += span_notice("It's set to scan for [span_boldnotice(scangate_mode)]")
 	if(locked)
 		. += span_notice("The control panel is ID-locked. Swipe a valid ID to unlock it.")
 	else
@@ -166,20 +168,24 @@
 /obj/machinery/scanner_gate/proc/perform_scan(mob/living/M)
 	var/beep = FALSE
 	var/color = null
+	var/detected_thing = null
 	switch(scangate_mode)
 		if(SCANGATE_NONE)
 			return
 		if(SCANGATE_WANTED)
 			if(ishuman(M))
+				detected_thing = "wanted"
 				var/mob/living/carbon/human/H = M
 				var/perpname = H.get_face_name(H.get_id_name())
 				var/datum/record/crew/target = find_record(perpname)
 				if(!target || (target.wanted_status == WANTED_ARREST))
 					beep = TRUE
 		if(SCANGATE_MINDSHIELD)
+			detected_thing = "mindshielded"
 			if(HAS_TRAIT(M, TRAIT_MINDSHIELD))
 				beep = TRUE
 		if(SCANGATE_DISEASE)
+			detected_thing = "infected"
 			if(iscarbon(M))
 				var/mob/living/carbon/C = M
 				if(get_disease_severity_value(C.check_virus()) >= get_disease_severity_value(disease_threshold))
@@ -188,6 +194,7 @@
 			if(ishuman(M))
 				var/mob/living/carbon/human/H = M
 				var/datum/species/scan_species = /datum/species/human
+				detected_thing = "[scan_species]"
 				switch(detect_species)
 					if(SCANGATE_LIZARD)
 						scan_species = /datum/species/lizard
@@ -210,10 +217,12 @@
 				if(is_species(H, scan_species))
 					beep = TRUE
 				if(detect_species == SCANGATE_ZOMBIE) //Can detect dormant zombies
+					detected_thing = "romerol infected"
 					if(H.get_organ_slot(ORGAN_SLOT_ZOMBIE))
 						beep = TRUE
 		if(SCANGATE_GUNS)
 			for(var/I in M.get_contents())
+				detected_thing = "armed"
 				if(isgun(I))
 					beep = TRUE
 					break
@@ -222,10 +231,13 @@
 				var/mob/living/carbon/human/H = M
 				if(H.nutrition <= detect_nutrition && detect_nutrition == NUTRITION_LEVEL_STARVING)
 					beep = TRUE
+					detected_thing = "starving"
 				if(H.nutrition >= detect_nutrition && detect_nutrition == NUTRITION_LEVEL_FAT)
 					beep = TRUE
+					detected_thing = "obese"
 		if(SCANGATE_CONTRABAND)
 			for(var/obj/item/content in M.get_all_contents_skipping_traits(TRAIT_CONTRABAND_BLOCKER))
+				detected_thing = "contraband smuggling"
 				if(content.is_contraband())
 					beep = TRUE
 					break
@@ -235,7 +247,7 @@
 	if(reverse)
 		beep = !beep
 	if(beep)
-		alarm_beep()
+		alarm_beep(detected_thing)
 		SEND_SIGNAL(src, COMSIG_SCANGATE_PASS_TRIGGER, M)
 		if(!ignore_signals)
 			color = wires.get_color_of_wire(WIRE_ACCEPT)
@@ -251,12 +263,15 @@
 
 	use_energy(active_power_usage)
 
-/obj/machinery/scanner_gate/proc/alarm_beep()
-	if(next_beep <= world.time)
-		next_beep = world.time + (2 SECONDS)
-		playsound(src, 'sound/machines/scanbuzz.ogg', 100, FALSE)
-	var/mutable_appearance/alarm_display = mutable_appearance(icon, "alarm_light")
-	flick_overlay_view(alarm_display, 2 SECONDS)
+/obj/machinery/scanner_gate/proc/alarm_beep(detected_thing)
+	if(!COOLDOWN_FINISHED(src, next_beep))
+		return
+
+	if(detected_thing)
+		src.say("[reverse ? "Not" : "A"] [detected_thing] person detected!!")
+
+	COOLDOWN_START(src, next_beep, 2 SECONDS)
+	playsound(src, 'sound/machines/scanbuzz.ogg', 100, FALSE)
 	set_scanline("alarm", 2 SECONDS)
 
 /obj/machinery/scanner_gate/can_interact(mob/user)
