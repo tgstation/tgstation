@@ -1,26 +1,26 @@
-<!-- This should be copy-pasted into the root of your module folder as readme.md -->
+<!-- Этот шаблон следует скопировать в корень папки вашего модуля как "readme.md" -->
 
-## Module ID: <!--Title of your addition.-->
-
-<!-- Uppercase, UNDERSCORE_CONNECTED name of your module, that you use to mark files. This is so people can case-sensitive search for your edits, if any. -->
+## Module ID: <!--Впишите сюда свой уникальный ID вашего модуля-->
 
 ### Description:
 
-<!-- Here, try to describe what your PR does, what features it provides and any other directly useful information. -->
+<!-- Здесь опишите Ваш PR, расскажите что он добавляет/убирает в проект ну и любую другую непосредственно полезную информацию. 
+Если Вы делаете модуль Реверта фичи, то обязательно укажте ссылку на оригинальный пиар /TG/station, который вы вернули.
+-->
 
-### TG Proc/File Changes:
+### Original TG Changes:
 
 - N/A
-<!-- If you edited any core procs, you should list them here. You should specify the files and procs you changed.
-E.g: 
+<!-- Если вы редактировали какие-либо объекты/процедуры в файлах /TG/station, то укажите их здесь. Укажите файлы и желательно ещё и процедуры, которые вы изменили в них.
+Например: 
 - `code/modules/mob/living.dm`: `proc/overriden_proc`, `var/overriden_var`
 -->
 
 ### Modular Overrides:
 
 - N/A
-<!-- If you added a new modular override (file or code-wise) for your module, you should list it here. Code files should specify what procs they changed, in case of multiple modules using the same file.
-E.g: 
+<!-- Если вы добавили новое модульное переопределение кода /TG/station для вашего модуля, то вы должны указать его здесь. В файлах кода следует указать, какие процедуры были изменены, в случае, если несколько модулей используют один и тот же файл.
+Например: 
 - `modular_meta/master_files/sound/my_cool_sound.ogg`
 - `modular_meta/master_files/code/my_modular_override.dm`: `proc/overriden_proc`, `var/overriden_var`
 -->
@@ -28,14 +28,14 @@ E.g:
 ### Defines:
 
 - N/A
-<!-- If you needed to add any defines, mention the files you added those defines in, along with the name of the defines. -->
+<!-- Если вам потребовалось добавить какие-либо defines (определения), то укажите файлы, в которые вы добавили эти определения, а также их названия. -->
 
 ### TGUI Files:
 
 - N/A
-<!-- TGUI file new or modified for our module. Note that TGUI can't me modular like .dm code! -->
+<!-- Файлы TGUI, новые или измененные под ваш модуль. Обратите внимание, что TGUI не может быть модульным, как .dm код! -->
 
 ### Credits:
 
 - N/A
-<!-- Here go the credits to you, dear coder, and in case of collaborative work or ports, credits to the original source of the code. -->
+<!-- Укажите здесь авторство кода (по желанию) -->
