@@ -45,7 +45,7 @@
 	var/allow_riding = TRUE
 	///Whether the borg can stuff itself into disposals
 	var/canDispose = FALSE
-	///The y offset of the hat put on for symmetrical borg or a list of "north" "south" "east" "west" x,y offsets for the hat offset
+	///The y offset of the hat put on for symmetrical borgs or a list of "north" "south" "east" "west" x,y offsets for asymmetrical ones
 	var/hat_offset = -3
 	///The x offsets of a person riding the borg
 	var/list/ride_offset_x = list("north" = 0, "south" = 0, "east" = -6, "west" = 6)
