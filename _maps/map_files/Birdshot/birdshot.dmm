@@ -5317,6 +5317,9 @@
 	},
 /obj/effect/mapping_helpers/airlock/access/all/engineering/tcoms,
 /obj/machinery/door/firedoor,
+/obj/effect/mapping_helpers/airlock/cyclelink_helper_multi{
+	cycle_id = "comms-entrance-south"
+	},
 /turf/open/floor/catwalk_floor/iron_dark,
 /area/station/tcommsat/server)
 "ccG" = (
@@ -9582,10 +9585,8 @@
 /turf/open/floor/engine,
 /area/station/engineering/supermatter)
 "dGV" = (
-/obj/effect/turf_decal/stripes/line{
-	dir = 9
-	},
-/turf/closed/wall,
+/obj/structure/closet/emcloset,
+/turf/open/floor/catwalk_floor,
 /area/station/engineering/atmos/storage/gas)
 "dHk" = (
 /obj/effect/turf_decal/tile/blue/half/contrasted{
@@ -13154,6 +13155,10 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/dark/textured,
 /area/station/ai_monitored/turret_protected/ai)
+"fai" = (
+/obj/effect/turf_decal/stripes/corner,
+/turf/closed/wall,
+/area/station/engineering/atmos/storage/gas)
 "fap" = (
 /obj/machinery/atmospherics/pipe/smart/manifold/scrubbers/visible{
 	dir = 1
@@ -13756,6 +13761,11 @@
 	c_tag = "Engineering - Canister Storage"
 	},
 /obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/landmark/start/atmospheric_technician,
+/obj/structure/chair/plastic,
+/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
+	dir = 4
+	},
 /turf/open/floor/iron/small,
 /area/station/engineering/atmos/storage/gas)
 "flM" = (
@@ -14752,11 +14762,16 @@
 /turf/open/floor/iron/smooth,
 /area/station/ai_monitored/turret_protected/aisat_interior)
 "fDO" = (
-/obj/effect/turf_decal/stripes/line{
-	dir = 10
+/obj/structure/cable,
+/obj/effect/mapping_helpers/airlock/access/all/engineering/tcoms,
+/obj/machinery/door/airlock/command/glass{
+	name = "Telecommunications Server Room"
 	},
-/turf/closed/wall,
-/area/station/engineering/atmos/storage/gas)
+/obj/effect/mapping_helpers/airlock/cyclelink_helper_multi{
+	cycle_id = "comms-entrance-south"
+	},
+/turf/open/floor/catwalk_floor/iron_dark,
+/area/station/tcommsat/server)
 "fDQ" = (
 /obj/machinery/flasher/directional/north,
 /turf/open/floor/iron/dark/smooth_large,
@@ -26258,14 +26273,21 @@
 /turf/open/floor/iron,
 /area/station/cargo/sorting)
 "jnB" = (
-/obj/structure/chair/plastic{
-	dir = 8
+/obj/structure/table/reinforced,
+/obj/item/folder/yellow{
+	pixel_x = 4
+	},
+/obj/item/storage/pill_bottle/potassiodide{
+	pixel_y = 12;
+	pixel_x = -6
+	},
+/obj/item/pen/screwdriver,
+/obj/item/radio/intercom/directional/west,
+/obj/item/geiger_counter{
+	pixel_x = 7;
+	pixel_y = 14
 	},
 /obj/effect/turf_decal/stripes/corner,
-/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
-	dir = 4
-	},
-/obj/effect/landmark/start/atmospheric_technician,
 /turf/open/floor/iron/small,
 /area/station/engineering/atmos/storage/gas)
 "jnI" = (
@@ -28099,7 +28121,6 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
-/obj/machinery/light_switch/directional/north,
 /turf/open/floor/iron/stairs/old{
 	dir = 4
 	},
@@ -28501,6 +28522,9 @@
 	name = "Telecommunications Server Room"
 	},
 /obj/machinery/atmospherics/pipe/heat_exchanging/junction,
+/obj/effect/mapping_helpers/airlock/cyclelink_helper_multi{
+	cycle_id = "comms-entrance-north"
+	},
 /turf/open/floor/catwalk_floor/iron_dark,
 /area/station/tcommsat/server)
 "jXA" = (
@@ -33675,6 +33699,9 @@
 	},
 /obj/effect/mapping_helpers/airlock/access/all/engineering/tcoms,
 /obj/machinery/door/firedoor,
+/obj/effect/mapping_helpers/airlock/cyclelink_helper_multi{
+	cycle_id = "comms-entrance-south"
+	},
 /turf/open/floor/catwalk_floor/iron_dark,
 /area/station/tcommsat/server)
 "lDo" = (
@@ -46681,6 +46708,7 @@
 	pixel_x = -6;
 	pixel_y = 6
 	},
+/obj/machinery/light_switch/directional/north,
 /turf/open/floor/iron/smooth,
 /area/station/engineering/break_room)
 "qcf" = (
@@ -53464,6 +53492,9 @@
 	name = "Telecommunications Server Room"
 	},
 /obj/machinery/atmospherics/pipe/smart/simple/dark/hidden,
+/obj/effect/mapping_helpers/airlock/cyclelink_helper_multi{
+	cycle_id = "comms-entrance-south"
+	},
 /turf/open/floor/catwalk_floor/iron_dark,
 /area/station/tcommsat/server)
 "srH" = (
@@ -64562,6 +64593,20 @@
 	},
 /turf/open/floor/iron,
 /area/station/hallway/primary/aft)
+"vSM" = (
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/door/airlock/command{
+	name = "Telecomms Server Room"
+	},
+/obj/effect/mapping_helpers/airlock/access/all/engineering/tcoms,
+/obj/machinery/door/firedoor,
+/obj/effect/mapping_helpers/airlock/cyclelink_helper_multi{
+	cycle_id = "comms-entrance-north"
+	},
+/turf/open/floor/catwalk_floor/iron_dark,
+/area/station/tcommsat/server)
 "vSW" = (
 /obj/effect/spawner/random/engineering/atmospherics_portable,
 /turf/open/floor/plating,
@@ -64584,22 +64629,16 @@
 /turf/open/floor/engine/vacuum,
 /area/station/science/ordnance/freezerchamber)
 "vTg" = (
-/obj/structure/table/reinforced,
-/obj/item/folder/yellow{
-	pixel_x = 4
+/obj/structure/cable,
+/obj/effect/mapping_helpers/airlock/access/all/engineering/tcoms,
+/obj/machinery/door/airlock/command/glass{
+	name = "Telecommunications Server Room"
 	},
-/obj/item/storage/pill_bottle/potassiodide{
-	pixel_y = 12;
-	pixel_x = -6
+/obj/effect/mapping_helpers/airlock/cyclelink_helper_multi{
+	cycle_id = "comms-entrance-north"
 	},
-/obj/item/pen/screwdriver,
-/obj/item/radio/intercom/directional/west,
-/obj/item/geiger_counter{
-	pixel_x = 7;
-	pixel_y = 14
-	},
-/turf/open/floor/iron/small,
-/area/station/engineering/atmos/storage/gas)
+/turf/open/floor/catwalk_floor/iron_dark,
+/area/station/tcommsat/server)
 "vTj" = (
 /obj/effect/spawner/random/maintenance,
 /obj/effect/decal/cleanable/dirt/dust,
@@ -66236,6 +66275,9 @@
 	name = "AI Upload"
 	},
 /obj/effect/mapping_helpers/airlock/access/all/command/ai_upload,
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 1
+	},
 /turf/open/floor/iron/dark/textured_half,
 /area/station/ai_monitored/turret_protected/ai_upload)
 "wtv" = (
@@ -67782,6 +67824,7 @@
 	name = "Secure Network Access"
 	},
 /obj/effect/mapping_helpers/airlock/access/all/command/ai_upload,
+/obj/effect/mapping_helpers/airlock/cyclelink_helper,
 /turf/open/floor/iron/dark/textured_half,
 /area/station/ai_monitored/turret_protected/ai_upload_foyer)
 "wQT" = (
@@ -92410,8 +92453,8 @@ yjE
 rNG
 whK
 cTK
-jKU
-jKU
+fai
+dGV
 jRU
 iqB
 ahW
@@ -92664,10 +92707,10 @@ lHd
 nHH
 xTr
 yjE
-dGV
-fDO
 jKU
-vTg
+jKU
+jKU
+jKU
 jKU
 nQB
 pVM
@@ -119491,7 +119534,7 @@ xok
 qID
 iHM
 uSB
-lDc
+vSM
 qxB
 nKj
 jXr
@@ -119751,7 +119794,7 @@ gDB
 ccF
 gMe
 nRr
-pJu
+vTg
 rqm
 vwx
 rYp
@@ -119766,7 +119809,7 @@ woD
 qCY
 toh
 tAT
-pJu
+fDO
 ldx
 gMe
 ccF
