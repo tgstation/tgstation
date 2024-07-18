@@ -1,0 +1,7 @@
+author: "Melbert"
+delete-after: True
+changes:
+  - bugfix: "When Monkified or Humanified, you are no longer knocked down."
+  - bugfix: "When cured of Monkified, you get the cure text now."
+  - bugfix: "The text shown when cured / given Monkification now has color."
+  - bugfix: "Being humanified now tells you what species you become rather than assuming you are a human."
