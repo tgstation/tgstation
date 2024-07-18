@@ -15,7 +15,8 @@
 	name = "Long-To-Short-Range-Bluespace-Transceiver"
 	desc = "The LTSRBT is a compact teleportation machine for receiving and sending items outside the station and inside the station.\nUsing teleportation frequencies stolen from NT it is near undetectable.\nEssential for any illegal market operations on NT stations.\n"
 	icon = 'icons/obj/machines/telecomms.dmi'
-	icon_state = "exonet_node"
+	icon_state = "exonet_node_idle"
+	base_icon_state = "exonet_node"
 	circuit = /obj/item/circuitboard/machine/ltsrbt
 	density = TRUE
 
@@ -70,9 +71,9 @@
 /obj/machinery/ltsrbt/update_icon_state()
 	. = ..()
 	if(machine_stat & NOPOWER)
-		icon_state = "exonet_node_off"
+		icon_state = "[base_icon_state]_off"
 	else
-		icon_state = "exonet_node[(receiving || length(queue)) ? "" : "_idle"]"
+		icon_state = "[base_icon_state][(receiving || length(queue)) ? "" : "_idle"]"
 
 /obj/machinery/ltsrbt/RefreshParts()
 	. = ..()
