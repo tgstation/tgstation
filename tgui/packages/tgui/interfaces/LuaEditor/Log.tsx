@@ -1,4 +1,6 @@
-import { useBackend, useLocalState } from '../../backend';
+import { Dispatch, SetStateAction } from 'react';
+
+import { useBackend } from '../../backend';
 import {
   Box,
   Button,
@@ -9,6 +11,7 @@ import {
 } from '../../components';
 import { logger } from '../../logging';
 import { ListMapper } from './ListMapper';
+import { LuaEditorData, LuaEditorModal } from './types';
 
 const parsePanic = (name, panic_json) => {
   const panic_info = JSON.parse(panic_json);
@@ -47,28 +50,22 @@ const parsePanic = (name, panic_json) => {
   );
 };
 
-export const Log = (props) => {
-  const { act, data } = useBackend();
+type LogProps = {
+  setViewedChunk: Dispatch<SetStateAction<string | undefined>>;
+  setModal: Dispatch<SetStateAction<LuaEditorModal>>;
+};
+
+export const Log = (props: LogProps) => {
+  const { act, data } = useBackend<LuaEditorData>();
   const { stateLog } = data;
-  const [, setViewedChunk] = useLocalState('viewedChunk');
-  const [, setModal] = useLocalState('modal');
+  const { setViewedChunk, setModal } = props;
   return stateLog.map((element, i) => {
-    const {
-      name,
-      status,
-      return_values,
-      variants,
-      message,
-      line,
-      file,
-      stack,
-      chunk,
-      repeats,
-    } = element;
+    const { status, repeats } = element;
     let output;
     let messageColor;
     switch (status) {
-      case 'sleep':
+      case 'sleep': {
+        const { chunk, name } = element;
         if (chunk) {
           messageColor = 'blue';
           output = (
@@ -78,7 +75,9 @@ export const Log = (props) => {
           );
         }
         break;
-      case 'yield':
+      }
+      case 'yield': {
+        const { name, return_values, variants } = element;
         output = (
           <>
             <b>{name}</b> yielded
@@ -109,7 +108,9 @@ export const Log = (props) => {
         );
         messageColor = 'yellow';
         break;
-      case 'finished':
+      }
+      case 'finished': {
+        const { name, return_values, variants } = element;
         output = (
           <>
             <b>{name}</b> returned
@@ -142,14 +143,20 @@ export const Log = (props) => {
         );
         messageColor = 'green';
         break;
-      case 'error':
+      }
+      case 'error': {
+        const { message } = element;
         output = message;
         messageColor = 'red';
         break;
-      case 'panic':
+      }
+      case 'panic': {
+        const { name, message } = element;
         output = parsePanic(name, message);
         break;
-      case 'runtime':
+      }
+      case 'runtime': {
+        const { file, line, message, stack } = element;
         output = (
           <>
             Runtime at {file}:{line}: {message}
@@ -164,15 +171,19 @@ export const Log = (props) => {
         );
         messageColor = 'red';
         break;
-      case 'print':
+      }
+      case 'print': {
+        const { message } = element;
         output = message;
         break;
+      }
       default:
         logger.warn(`unknown log status ${status}`);
     }
     if (output === undefined) {
       return;
     }
+    const { chunk } = element;
     if (chunk) {
       output = (
         <>

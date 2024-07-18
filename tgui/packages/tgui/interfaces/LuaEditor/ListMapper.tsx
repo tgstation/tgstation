@@ -1,7 +1,7 @@
 import { BooleanLike } from 'common/react';
-import React from 'react';
+import React, { Dispatch, SetStateAction } from 'react';
 
-import { useBackend, useLocalState } from '../../backend';
+import { useBackend } from '../../backend';
 import {
   Box,
   Button,
@@ -12,7 +12,8 @@ import {
 } from '../../components';
 import { BoxProps } from '../../components/Box';
 import { logger } from '../../logging';
-import { Variant, VariantList } from './index';
+import { CallInfo, LuaEditorModal, Variant, VariantList } from './types';
+import { ListElement, ListPath } from './types';
 
 const mapListVariantsInner = (value: any, variant: Variant) => {
   if (Array.isArray(variant)) {
@@ -93,10 +94,6 @@ const mapListVariants = (list: any[], variants: VariantList) => {
   });
 };
 
-type ListPath = { index: number; type: 'key' | 'value' | 'entry' }[];
-
-type ListElement = { key: any; value: any };
-
 type ListMapperProps = BoxProps & {
   list: ListElement[];
 } & Partial<{
@@ -108,29 +105,32 @@ type ListMapperProps = BoxProps & {
     collapsible: BooleanLike;
     callType: 'callFunction' | 'resumeTask';
     path: ListPath;
+    setToCall: Dispatch<SetStateAction<CallInfo>>;
+    setModal: Dispatch<SetStateAction<LuaEditorModal>>;
   }>;
-
-type CallInfo = {
-  type: 'callFunction' | 'resumeTask';
-  params: Partial<{ index: number; indices: number[] }>;
-};
 
 export const ListMapper = (props: ListMapperProps) => {
   const { act } = useBackend();
 
   const { variants, list: _, ...safeProps } = props;
 
-  const { path, editable, name, vvAct, skipNulls, collapsible, ...rest } =
-    safeProps;
+  const {
+    path,
+    editable,
+    name,
+    vvAct,
+    skipNulls,
+    collapsible,
+    setToCall,
+    setModal,
+    ...rest
+  } = safeProps;
 
   let { list } = props;
 
   if (variants) {
     list = mapListVariants(list, variants);
   }
-
-  const [, setToCall] = useLocalState<CallInfo | null>('toCallTaskInfo', null);
-  const [, setModal] = useLocalState<string | null>('modal', null);
 
   const ThingNode = (
     thing: any,
@@ -161,7 +161,7 @@ export const ListMapper = (props: ListMapperProps) => {
             />
           );
         case 'function':
-          if (canCall) {
+          if (canCall && setToCall && setModal) {
             return (
               <Button
                 tooltip="Click to call"
