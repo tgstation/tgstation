@@ -35,14 +35,16 @@
 	var/panel_open = FALSE
 	/// ion trail effect
 	var/datum/effect_system/trail_follow/ion/trail
-	/// max drift speed we can get via moving intentionally
-	var/max_speed = 10 NEWTONS //fucking balls value change this
-	/// Force per tick movement held down
-	var/force_per_move = 3 NEWTONS
-	/// Force per process run to bring us to a halt
-	var/stabilizer_force = 1 NEWTONS
+
+	/// max drift speed we can get via moving intentionally, modified by thrusters
+	var/max_speed = 0
+	/// Force per tick movement held down, modified by engine
+	var/force_per_move = 0
+	/// Force per process run to bring us to a halt, modified by thrusters
+	var/stabilizer_force = 0
 	/// are stabilizers on
 	var/stabilizers_on = FALSE
+
 	/// is our cabin closed? if so, retain atmos
 	var/closed_cabin = FALSE // figure out how to do this properly, generally exitting the pod and venting everything to space is bad
 	// but the cabin is empty by default so how would we do this?? innate air tank??? air tank slot???
@@ -83,6 +85,8 @@
 
 /obj/vehicle/sealed/space_pod/vehicle_move(direction)
 	. = ..()
+	if(!max_speed || !force_per_move)
+		return
 	if(has_gravity())
 		if(!COOLDOWN_FINISHED(src, cooldown_vehicle_move))
 			return
