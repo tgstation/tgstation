@@ -10,7 +10,7 @@
 | Website                   | Link                                                                      |
 |---------------------------|---------------------------------------------------------------------------|
 | MassMeta Code             | [https://github.com/Huz2e/massmeta](https://github.com/Huz2e/massmeta)    |
-| Guide to Modularization   | [./massmeta/readme.md](./massmeta/readme.md)                              |
+| Guide to Modularization   | [./massmeta/modularization_guide.md](./massmeta/modularization_guide.md)  |
 | MassMeta Discord          | [https://discord.gg/massmeta](https://discord.gg/KBsjSv7Kh9)              |
 | MassMeta Wiki             | [https://massmeta.ru](https://massmeta.ru/w/index.php/Заглавная_страница) |
 | /TG/ Website              | [https://www.tgstation13.org](https://www.tgstation13.org)                |
@@ -43,7 +43,7 @@ Space Station 13 is a paranoia-laden round-based roleplaying game set against th
 ## Contributors
 [Guides for Contributors](.github/CONTRIBUTING.md)
 
-[/tg/station HACKMD account(BLOCKED in RU)](https://hackmd.io/@tgstation) - Design documentation here
+[/tg/station HACKMD account (BLOCKED in RU)](https://hackmd.io/@tgstation) - Design documentation here
 
 ## LICENSE
 
