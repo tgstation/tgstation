@@ -13,7 +13,7 @@ type Item = {
 };
 
 type Data = {
-  contents: Item[];
+  contents: Record<string, Item>;
   name: string;
   isdryer: BooleanLike;
   drying: BooleanLike;
@@ -47,7 +47,7 @@ export const SmartVend = (props) => {
           {contents.length === 0 ? (
             <NoticeBox>{data.name} is empty.</NoticeBox>
           ) : (
-            Object.values(contents).map((value, key) => (
+            Object.keys(contents).map((key) => (
               <Button
                 color="transparent"
                 key={key}
@@ -55,27 +55,27 @@ export const SmartVend = (props) => {
                 p={0}
                 height="64px"
                 width="64px"
-                tooltip={value.name}
+                tooltip={contents[key].name}
                 tooltipPosition="bottom"
                 textAlign="right"
-                disabled={value.amount < 1}
+                disabled={contents[key].amount < 1}
                 onClick={() =>
                   act('Release', {
-                    name: value.name,
+                    key: key,
                     amount: 1,
                   })
                 }
               >
                 <DmIcon
                   fallback={fallback}
-                  icon={value.icon}
-                  icon_state={value.icon_state}
+                  icon={contents[key].icon}
+                  icon_state={contents[key].icon_state}
                   height="64px"
                   width="64px"
                 />
-                {value.amount > 1 && (
+                {contents[key].amount > 1 && (
                   <Button
-                    width="24px"
+                    minWidth="24px"
                     height="24px"
                     lineHeight="24px"
                     textAlign="center"
@@ -86,12 +86,12 @@ export const SmartVend = (props) => {
                     fontSize="14px"
                     onClick={(e) => {
                       act('Release', {
-                        name: value.name,
+                        key: key,
                       });
                       e.stopPropagation();
                     }}
                   >
-                    {value.amount}
+                    {contents[key].amount}
                   </Button>
                 )}
               </Button>
