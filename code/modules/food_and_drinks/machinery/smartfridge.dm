@@ -393,23 +393,22 @@
 
 	switch(action)
 		if("Release")
-			var/desired = 0
+			var/amount = text2num(params["amount"])
+			var/desired = 1
 
 			if(isAI(living_mob))
 				to_chat(living_mob, span_warning("[src] does not respect your authority!"))
 				return
 
-			if (params["amount"])
-				desired = text2num(params["amount"])
-			else
-				desired = tgui_input_number(living_mob, "How many items would you like to take out?", "Release", max_value = 50)
+			if (amount > 1)
+				desired = tgui_input_number(living_mob, "How many items would you like to take out?", "Release", default = min(amount, 50), max_value = min(amount, 50))
 				if(!desired)
 					return
 
 			for(var/obj/item/dispensed_item in src)
 				if(desired <= 0)
 					break
-				if(istype(dispensed_item, text2path(params["key"])))
+				if(istype(dispensed_item, text2path(params["path"])))
 					if(dispensed_item in component_parts)
 						CRASH("Attempted removal of [dispensed_item] component_part from smartfridge via smartfridge interface.")
 					//dispense the item

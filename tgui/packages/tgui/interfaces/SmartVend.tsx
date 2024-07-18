@@ -78,7 +78,7 @@ export const SmartVend = (props) => {
                 disabled={item.amount < 1}
                 onClick={() =>
                   act('Release', {
-                    key: item.path,
+                    path: item.path,
                     amount: 1,
                   })
                 }
@@ -104,7 +104,8 @@ export const SmartVend = (props) => {
                     fontSize="14px"
                     onClick={(e) => {
                       act('Release', {
-                        key: item.path,
+                        path: item.path,
+                        amount: item.amount,
                       });
                       e.stopPropagation();
                     }}
