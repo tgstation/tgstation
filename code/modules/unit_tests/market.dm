@@ -1,8 +1,8 @@
 #define CATEGORY_CODERBUS "Coderbus"
-/// Ensures black market items have acceptable variable values.
-/datum/unit_test/blackmarket
+/// Ensures market items have acceptable variable values and restocking works.
+/datum/unit_test/market
 
-/datum/unit_test/blackmarket/Run()
+/datum/unit_test/market/Run()
 	for(var/datum/market_item/prototype as anything in subtypesof(/datum/market_item))
 		if(prototype::abstract_path == prototype) //skip abstract paths
 			continue
@@ -24,8 +24,8 @@
 			TEST_FAIL("[prototype] doesn't have a set desc")
 
 
-	var/datum/market/blackmarket/market = SSmarket.markets[/datum/market/blackmarket]
-	TEST_ASSERT(market, "Couldn't find the black market.")
+	var/datum/market/unit_test/market = SSmarket.markets[/datum/market/unit_test]
+	TEST_ASSERT(market, "Couldn't find the unit test market.")
 	var/datum/market_item/unit_test/item = market.available_items[CATEGORY_CODERBUS][/datum/market/unit_test]
 	TEST_ASSERT(item, "Couldn't find the unit test market item.")
 	TEST_ASSERT_EQUAL(item.stock, 1, "The unit test market item is incorrectly stocked. Only one should be in stock.")
