@@ -190,7 +190,6 @@ GLOBAL_LIST_EMPTY(selfdestructs_when_boss_dies)
 	else
 		lockon_zone = target.loc
 	if(lockon_zone == my_turf)
-	if(get_turf(owner) == get_turf(owner))
 		return
 	my_turf.Beam(lockon_zone, icon_state = "1-full", beam_color = COLOR_MEDIUM_DARK_RED, time = barrage_delay)
 	playsound(lockon_zone, 'sound/machines/terminal_prompt_deny.ogg', vol = 60, vary = TRUE)
