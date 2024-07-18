@@ -26,8 +26,9 @@
 	src.drift_force = drift_force
 	drifting_loop = GLOB.move_manager.smooth_move(moving = parent, angle = inertia_angle, delay = 1, subsystem = SSspacedrift, priority = MOVEMENT_SPACE_PRIORITY, flags = flags)
 
-	if(!drifting_loop) //Really want to qdel here but can't
-		return COMPONENT_INCOMPATIBLE
+	if(!drifting_loop)
+		qdel(src)
+		return
 
 	drifting_loop.set_speed(get_loop_delay(parent))
 
