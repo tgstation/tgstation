@@ -20,6 +20,7 @@
 /datum/drift_handler/New(atom/movable/parent, inertia_angle, instant = FALSE, start_delay = 0, drift_force = 1)
 	. = ..()
 	src.parent = parent
+	parent.drift_handler = src
 	var/flags = MOVEMENT_LOOP_OUTSIDE_CONTROL
 	if(instant)
 		flags |= MOVEMENT_LOOP_START_FAST
