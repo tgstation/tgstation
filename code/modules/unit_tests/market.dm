@@ -26,7 +26,8 @@
 
 	var/datum/market/unit_test/market = SSmarket.markets[/datum/market/unit_test]
 	TEST_ASSERT(market, "Couldn't find the unit test market.")
-	var/datum/market_item/unit_test/item = market.available_items[CATEGORY_CODERBUS][/datum/market/unit_test]
+	var/list/category_items = market.available_items[CATEGORY_CODERBUS]
+	var/datum/market_item/unit_test/item = category_items[category_items[1]]
 	TEST_ASSERT(item, "Couldn't find the unit test market item.")
 	TEST_ASSERT_EQUAL(item.stock, 1, "The unit test market item is incorrectly stocked. Only one should be in stock.")
 
@@ -43,9 +44,11 @@
 
 /datum/market_item/unit_test
 	name = "Your Own Special Singularity"
+	desc = "ALL HAIL LORD SINGULOTH!!!"
 	category = CATEGORY_CODERBUS
 	markets = list(/datum/market/unit_test)
 	item = /obj/singularity
+	price = 42069
 	stock_min = 1
 	stock = 1
 	stock_max = 2
