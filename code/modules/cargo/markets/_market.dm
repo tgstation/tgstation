@@ -79,12 +79,13 @@
  */
 /datum/market/proc/restock(list/existing_items)
 	for(var/list/category in available_items)
-		for(var/identifier in available_items[category])
-			var/datum/market_item/item = available_items[category][identifier]
-			existing_items += item.type
+		var/category_list = available_items[category]
+		for(var/identifier in category_list)
+			var/datum/market_item/item = category_list[identifier]
+			existing_items |= item.type
 			if(!item.restockable || item.stock >= item.stock_max || !prob(item.availability_prob))
 				continue
-			item.stock += rand(1, item.stock_max - item.stock_min)
+			item.stock += rand(1, item.stock_max - item.stock)
 
 /datum/market/blackmarket
 	name = "Black Market"

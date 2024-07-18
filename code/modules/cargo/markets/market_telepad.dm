@@ -145,17 +145,19 @@
 
 /obj/machinery/ltsrbt/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
 	var/creds_value = tool.get_item_credit_value()
-	if(isnull(creds_value))
+	if(!creds_value)
 		return NONE
 
 	. = ITEM_INTERACT_SUCCESS
 
 	if(machine_stat & NOPOWER)
+		to_chat(world, "nopower")
 		return
 
 	if(creds_value < restock_cost)
 		say("Insufficient credits!")
 		playsound(src, 'sound/machines/buzz-sigh.ogg', 40, FALSE)
+		to_chat(world, "nocreds")
 		return
 
 	if(istype(tool, /obj/item/holochip))
