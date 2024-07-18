@@ -495,7 +495,7 @@
 	text_lose_indication = span_notice("Your flinching subsides.")
 	difficulty = 16
 
-/datum/mutation/human/spastic/on_acquiring()
+/datum/mutation/human/spastic/on_acquiring(mob/living/carbon/human/owner, forced = FALSE)
 	if(..())
 		return
 	owner.apply_status_effect(/datum/status_effect/spasms)
@@ -514,7 +514,7 @@
 	text_lose_indication = span_notice("Your right foot feels alright.")
 	difficulty = 16
 
-/datum/mutation/human/extrastun/on_acquiring()
+/datum/mutation/human/extrastun/on_acquiring(mob/living/carbon/human/owner, forced = FALSE)
 	. = ..()
 	if(.)
 		return
@@ -546,7 +546,7 @@
 	text_gain_indication = span_warning("You get an intense feeling of heartburn.")
 	text_lose_indication = span_notice("Your internal organs feel at ease.")
 
-/datum/mutation/human/martyrdom/on_acquiring()
+/datum/mutation/human/martyrdom/on_acquiring(mob/living/carbon/human/owner, forced = FALSE)
 	. = ..()
 	if(.)
 		return TRUE
@@ -593,7 +593,7 @@
 	quality = NEGATIVE //holy shit no eyes or tongue or ears
 	text_gain_indication = span_warning("Something feels off.")
 
-/datum/mutation/human/headless/on_acquiring()
+/datum/mutation/human/headless/on_acquiring(mob/living/carbon/human/owner, forced = FALSE)
 	. = ..()
 	if(.)//cant add
 		return TRUE

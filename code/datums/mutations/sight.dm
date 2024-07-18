@@ -148,17 +148,17 @@
 	if(!(type in visual_indicators))
 		visual_indicators[type] = list(mutable_appearance('icons/mob/effects/genetics.dmi', "lasereyes", -FRONT_MUTATIONS_LAYER))
 
-/datum/mutation/human/laser_eyes/on_acquiring(mob/living/carbon/human/H)
+/datum/mutation/human/laser_eyes/on_acquiring(mob/living/carbon/human/owner, forced = FALSE)
 	. = ..()
 	if(.)
 		return
-	RegisterSignal(H, COMSIG_MOB_ATTACK_RANGED, PROC_REF(on_ranged_attack))
+	RegisterSignal(owner, COMSIG_MOB_ATTACK_RANGED, PROC_REF(on_ranged_attack))
 
-/datum/mutation/human/laser_eyes/on_losing(mob/living/carbon/human/H)
+/datum/mutation/human/laser_eyes/on_losing(mob/living/carbon/human/owner)
 	. = ..()
 	if(.)
 		return
-	UnregisterSignal(H, COMSIG_MOB_ATTACK_RANGED)
+	UnregisterSignal(owner, COMSIG_MOB_ATTACK_RANGED)
 
 /datum/mutation/human/laser_eyes/get_visual_indicator()
 	return visual_indicators[type][1]
