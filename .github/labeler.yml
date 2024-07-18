@@ -2,47 +2,47 @@
   - changed-files:
       - any-glob-to-any-file: ['tgui/**']
 
-'Звук':
+':sound: Звук':
   - changed-files:
       - any-glob-to-any-file: ['**/*.ogg']
 
-'Изменение Карты':
+':world_map: Изменение Карты':
   - all:
       - changed-files:
           - any-glob-to-any-file: ['**/*.dmm']
 
-'Спрайты':
+':paintbrush: Спрайты':
   - changed-files:
       - any-glob-to-any-file: ['**/*.dmi']
 
-'Инструменты':
+':guitar: Инструменты':
   - changed-files:
-      - any-glob-to-any-file: ['.gihub/workflows/**', 'tools/**']
+      - any-glob-to-any-file: ['.gihub/**', 'tools/**', '.vscode/**', '.bin/**']
 
-'Требуется изменение конфига':
+':floppy_disk: Изменение конфига':
   - changed-files:
       - any-glob-to-any-file: ['config/**']
 
-'Документация':
+':neckbeard: Документация':
   - changed-files:
       - any-glob-to-any-file: ['**/*.md']
 
-'SQL':
+':cd: SQL':
   - changed-files:
       - any-glob-to-any-file: ['SQL/**']
 
-'Частичная модульность':
+':feelsgood: Частичная модульность':
   - all:
       - changed-files:
-          - any-glob-to-any-file: ['code/**']
+          - any-glob-to-any-file: ['code/**', 'icons/**', 'sounds/**', '_maps/map_files/**', 'tgui/**']
           - any-glob-to-any-file: [modular_bandastation/**]
       - base-branch: 'master'
       - head-branch: '!merge-upstream'
 
-'НЕ МОДУЛЬНО':
+':finnadie: НЕ МОДУЛЬНО':
   - all:
       - changed-files:
-          - any-glob-to-any-file: ['code/**', 'icons/**', '_maps/map_files/**']
+          - any-glob-to-any-file: ['code/**', 'icons/**', 'sounds/**', '_maps/map_files/**']
           - all-globs-to-all-files: '!modular_bandastation/**'
       - base-branch: 'master'
       - head-branch: '!merge-upstream'
@@ -55,8 +55,11 @@
 ':pencil: Перевод':
   - base-branch: 'translate'
 
-'Фикс':
+':wrench: Фикс':
   - head-branch: ['^fix', 'fix']
 
 ':trollface: Фича':
   - head-branch: ['^feat', 'feat']
+
+':shipit: Улучшение':
+  - head-branch: ['^tweak', 'tweak']
