@@ -29,13 +29,15 @@
 
 	owner.set_jitter(20 SECONDS)
 
-/datum/mutation/human/epilepsy/on_acquiring(mob/living/carbon/human/acquirer)
-	if(..())
+/datum/mutation/human/epilepsy/on_acquiring(mob/living/carbon/human/acquirer, forced = FALSE)
+	. = ..()
+	if(.)
 		return
 	RegisterSignal(owner, COMSIG_MOB_FLASHED, PROC_REF(get_flashed_nerd))
 
 /datum/mutation/human/epilepsy/on_losing(mob/living/carbon/human/owner)
-	if(..())
+	. = ..()
+	if(.)
 		return
 	UnregisterSignal(owner, COMSIG_MOB_FLASHED)
 
@@ -56,8 +58,9 @@
 	text_gain_indication = span_danger("You feel strange.")
 	locked = TRUE
 
-/datum/mutation/human/bad_dna/on_acquiring(mob/living/carbon/human/owner)
-	if(..())
+/datum/mutation/human/bad_dna/on_acquiring(mob/living/carbon/human/owner, forced = FALSE)
+	. = ..()
+	if(.)
 		return
 	to_chat(owner, text_gain_indication)
 	var/mob/new_mob
@@ -120,14 +123,16 @@
 	conflicts = list(/datum/mutation/human/gigantism, /datum/mutation/human/acromegaly)
 	locked = TRUE // Default intert species for now, so locked from regular pool.
 
-/datum/mutation/human/dwarfism/on_acquiring(mob/living/carbon/human/owner)
-	if(..())
+/datum/mutation/human/dwarfism/on_acquiring(mob/living/carbon/human/owner, forced = FALSE)
+	. = ..()
+	if(.)
 		return
 	ADD_TRAIT(owner, TRAIT_DWARF, GENETIC_MUTATION)
 	owner.visible_message(span_danger("[owner] suddenly shrinks!"), span_notice("Everything around you seems to grow.."))
 
 /datum/mutation/human/dwarfism/on_losing(mob/living/carbon/human/owner)
-	if(..())
+	. = ..()
+	if(.)
 		return
 	REMOVE_TRAIT(owner, TRAIT_DWARF, GENETIC_MUTATION)
 	owner.visible_message(span_danger("[owner] suddenly grows!"), span_notice("Everything around you seems to shrink.."))
@@ -141,8 +146,9 @@
 	synchronizer_coeff = 1
 	conflicts = list(/datum/mutation/human/dwarfism)
 
-/datum/mutation/human/acromegaly/on_acquiring(mob/living/carbon/human/owner)
-	if(..())
+/datum/mutation/human/acromegaly/on_acquiring(mob/living/carbon/human/owner, forced = FALSE)
+	. = ..()
+	if(.)
 		return
 	ADD_TRAIT(owner, TRAIT_TOO_TALL, GENETIC_MUTATION)
 	owner.visible_message(span_danger("[owner] suddenly grows tall!"), span_notice("You feel a small strange urge to fight small men with slingshots. Or maybe play some basketball."))
@@ -150,7 +156,8 @@
 	owner.regenerate_icons()
 
 /datum/mutation/human/acromegaly/on_losing(mob/living/carbon/human/owner)
-	if(..())
+	. = ..()
+	if(.)
 		return
 	REMOVE_TRAIT(owner, TRAIT_TOO_TALL, GENETIC_MUTATION)
 	owner.visible_message(span_danger("[owner] suddenly shrinks!"), span_notice("You return to your usual height."))
@@ -178,15 +185,17 @@
 	difficulty = 12
 	conflicts = list(/datum/mutation/human/dwarfism)
 
-/datum/mutation/human/gigantism/on_acquiring(mob/living/carbon/human/owner)
-	if(..())
+/datum/mutation/human/gigantism/on_acquiring(mob/living/carbon/human/owner, forced = FALSE)
+	. = ..()
+	if(.)
 		return
 	ADD_TRAIT(owner, TRAIT_GIANT, GENETIC_MUTATION)
 	owner.update_transform(1.25)
 	owner.visible_message(span_danger("[owner] suddenly grows!"), span_notice("Everything around you seems to shrink.."))
 
 /datum/mutation/human/gigantism/on_losing(mob/living/carbon/human/owner)
-	if(..())
+	. = ..()
+	if(.)
 		return
 	REMOVE_TRAIT(owner, TRAIT_GIANT, GENETIC_MUTATION)
 	owner.update_transform(0.8)
@@ -200,13 +209,15 @@
 	quality = MINOR_NEGATIVE
 	text_gain_indication = span_danger("You feel lightheaded.")
 
-/datum/mutation/human/clumsy/on_acquiring(mob/living/carbon/human/owner)
-	if(..())
+/datum/mutation/human/clumsy/on_acquiring(mob/living/carbon/human/owner, forced = FALSE)
+	. = ..()
+	if(.)
 		return
 	ADD_TRAIT(owner, TRAIT_CLUMSY, GENETIC_MUTATION)
 
 /datum/mutation/human/clumsy/on_losing(mob/living/carbon/human/owner)
-	if(..())
+	. = ..()
+	if(.)
 		return
 	REMOVE_TRAIT(owner, TRAIT_CLUMSY, GENETIC_MUTATION)
 
@@ -243,13 +254,15 @@
 	quality = NEGATIVE
 	text_gain_indication = span_danger("You can't seem to hear anything.")
 
-/datum/mutation/human/deaf/on_acquiring(mob/living/carbon/human/owner)
-	if(..())
+/datum/mutation/human/deaf/on_acquiring(mob/living/carbon/human/owner, forced = FALSE)
+	. = ..()
+	if(.)
 		return
 	ADD_TRAIT(owner, TRAIT_DEAF, GENETIC_MUTATION)
 
 /datum/mutation/human/deaf/on_losing(mob/living/carbon/human/owner)
-	if(..())
+	. = ..()
+	if(.)
 		return
 	REMOVE_TRAIT(owner, TRAIT_DEAF, GENETIC_MUTATION)
 
@@ -268,7 +281,7 @@
 	var/datum/species/original_species = /datum/species/human
 	var/original_name
 
-/datum/mutation/human/race/on_acquiring(mob/living/carbon/human/owner)
+/datum/mutation/human/race/on_acquiring(mob/living/carbon/human/owner, forced = FALSE)
 	if(..())
 		return
 	if(!ismonkey(owner))
@@ -295,7 +308,7 @@
 	var/glow_color
 	var/obj/effect/dummy/lighting_obj/moblight/glow
 
-/datum/mutation/human/glow/on_acquiring(mob/living/carbon/human/owner)
+/datum/mutation/human/glow/on_acquiring(mob/living/carbon/human/owner, forced = FALSE)
 	. = ..()
 	if(.)
 		return
@@ -340,7 +353,7 @@
 	instability = POSITIVE_INSTABILITY_MINI
 	difficulty = 16
 
-/datum/mutation/human/strong/on_acquiring(mob/living/carbon/human/owner)
+/datum/mutation/human/strong/on_acquiring(mob/living/carbon/human/owner, forced = FALSE)
 	. = ..()
 	if(.)
 		return
@@ -361,7 +374,7 @@
 	text_gain_indication = span_notice("You feel stimmed.")
 	difficulty = 16
 
-/datum/mutation/human/stimmed/on_acquiring(mob/living/carbon/human/owner)
+/datum/mutation/human/stimmed/on_acquiring(mob/living/carbon/human/owner, forced = FALSE)
 	. = ..()
 	if(.)
 		return
@@ -382,13 +395,15 @@
 	difficulty = 16
 	instability = POSITIVE_INSTABILITY_MODERATE
 
-/datum/mutation/human/insulated/on_acquiring(mob/living/carbon/human/owner)
-	if(..())
+/datum/mutation/human/insulated/on_acquiring(mob/living/carbon/human/owner, forced = FALSE)
+	. = ..()
+	if(.)
 		return
 	ADD_TRAIT(owner, TRAIT_SHOCKIMMUNE, GENETIC_MUTATION)
 
 /datum/mutation/human/insulated/on_losing(mob/living/carbon/human/owner)
-	if(..())
+	. = ..()
+	if(.)
 		return
 	REMOVE_TRAIT(owner, TRAIT_SHOCKIMMUNE, GENETIC_MUTATION)
 
@@ -408,13 +423,15 @@
 		owner.adjust_fire_stacks(2 * GET_MUTATION_POWER(src))
 		owner.ignite_mob()
 
-/datum/mutation/human/fire/on_acquiring(mob/living/carbon/human/owner)
-	if(..())
+/datum/mutation/human/fire/on_acquiring(mob/living/carbon/human/owner, forced = FALSE)
+	. = ..()
+	if(.)
 		return
 	owner.physiology.burn_mod *= 0.5
 
 /datum/mutation/human/fire/on_losing(mob/living/carbon/human/owner)
-	if(..())
+	. = ..()
+	if(.)
 		return
 	owner.physiology.burn_mod *= 2
 

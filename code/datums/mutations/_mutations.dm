@@ -115,20 +115,22 @@
 	owner = null
 	return ..()
 
-/datum/mutation/human/proc/on_acquiring(mob/living/carbon/human/acquirer)
-	if(!acquirer || !istype(acquirer) || acquirer.stat == DEAD || (src in acquirer.dna.mutations))
+/datum/mutation/human/proc/on_acquiring(mob/living/carbon/human/acquirer, forced = FALSE)
+	if(!acquirer || !istype(acquirer) || (src in acquirer.dna.mutations))
 		return TRUE
-	if(species_allowed && !species_allowed.Find(acquirer.dna.species.id))
+	if (acquirer.stat == DEAD && !forced)
+	if(species_allowed && !species_allowed.Find(acquirer.dna.species.id) && !forced)
 		return TRUE
-	if(health_req && acquirer.health < health_req)
+	if(health_req && acquirer.health < health_req && !forced)
 		return TRUE
-	if(limb_req && !acquirer.get_bodypart(limb_req))
+	if(limb_req && !acquirer.get_bodypart(limb_req) && !forced)
 		return TRUE
-	for(var/datum/mutation/human/mewtayshun as anything in acquirer.dna.mutations) //check for conflicting powers
-		if(!(mewtayshun.type in conflicts) && !(type in mewtayshun.conflicts))
-			continue
-		to_chat(acquirer, span_warning("You feel your genes resisting something."))
-		return TRUE
+	if (!forced)
+		for(var/datum/mutation/human/mewtayshun as anything in acquirer.dna.mutations) //check for conflicting powers
+			if(!(mewtayshun.type in conflicts) && !(type in mewtayshun.conflicts))
+				continue
+			to_chat(acquirer, span_warning("You feel your genes resisting something."))
+			return TRUE
 	owner = acquirer
 	dna = acquirer.dna
 	dna.mutations += src

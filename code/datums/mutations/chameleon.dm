@@ -9,8 +9,9 @@
 	instability = POSITIVE_INSTABILITY_MAJOR
 	power_coeff = 1
 
-/datum/mutation/human/chameleon/on_acquiring(mob/living/carbon/human/owner)
-	if(..())
+/datum/mutation/human/chameleon/on_acquiring(mob/living/carbon/human/owner, forced = FALSE)
+	. = ..()
+	if(.)
 		return
 	owner.alpha = CHAMELEON_MUTATION_DEFAULT_TRANSPARENCY
 	RegisterSignal(owner, COMSIG_MOVABLE_MOVED, PROC_REF(on_move))

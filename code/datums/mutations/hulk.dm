@@ -28,8 +28,9 @@
 /datum/mutation/human/hulk/proc/add_speechmod()
 	AddComponent(/datum/component/speechmod, replacements = list("." = "!"), end_string = "!!", uppercase = TRUE)
 
-/datum/mutation/human/hulk/on_acquiring(mob/living/carbon/human/owner)
-	if(..())
+/datum/mutation/human/hulk/on_acquiring(mob/living/carbon/human/owner, forced = FALSE)
+	. = ..()
+	if(.)
 		return
 	for(var/obj/item/bodypart/part as anything in owner.bodyparts)
 		part.variable_color = bodypart_color

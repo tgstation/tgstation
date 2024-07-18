@@ -139,8 +139,9 @@ GLOBAL_LIST_INIT(total_uf_len_by_block, populate_total_uf_len_by_block())
 	for(var/datum/mutation/human/mutation in mutations)
 		new_dna.add_mutation(mutation, mutation.class, mutation.timeout)
 
-//See mutation.dm for what 'class' does. 'time' is time till it removes itself in decimals. 0 for no timer
-/datum/dna/proc/add_mutation(mutation, class = MUT_OTHER, time)
+/// See mutation.dm for what 'class' does. 'time' is time till it removes itself in decimals. 0 for no timer
+/// Forced ensures that the mutation is added no matter what
+/datum/dna/proc/add_mutation(mutation, class = MUT_OTHER, time, forced = FALSE)
 	var/mutation_type = mutation
 	if(istype(mutation, /datum/mutation/human))
 		var/datum/mutation/human/HM = mutation
@@ -148,7 +149,7 @@ GLOBAL_LIST_INIT(total_uf_len_by_block, populate_total_uf_len_by_block())
 	if(get_mutation(mutation_type))
 		return
 	SEND_SIGNAL(holder, COMSIG_CARBON_GAIN_MUTATION, mutation_type, class)
-	return force_give(new mutation_type (class, time, copymut = mutation))
+	return force_give(new mutation_type (class, time, copymut = mutation), forced)
 
 /datum/dna/proc/remove_mutation(mutation_type)
 	SEND_SIGNAL(holder, COMSIG_CARBON_LOSE_MUTATION, mutation_type)
@@ -386,11 +387,11 @@ GLOBAL_LIST_INIT(total_uf_len_by_block, populate_total_uf_len_by_block())
 			set_uni_feature_block(blocknumber, construct_block(SSaccessories.pod_hair_list.Find(features["pod_hair"]), length(SSaccessories.pod_hair_list)))
 
 //Please use add_mutation or activate_mutation instead
-/datum/dna/proc/force_give(datum/mutation/human/human_mutation)
+/datum/dna/proc/force_give(datum/mutation/human/human_mutation, forced = FALSE)
 	if(holder && human_mutation)
 		if(human_mutation.class == MUT_NORMAL)
 			set_se(1, human_mutation)
-		. = human_mutation.on_acquiring(holder)
+		. = human_mutation.on_acquiring(holder, forced = forced)
 		if(.)
 			qdel(human_mutation)
 		update_instability()

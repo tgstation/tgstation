@@ -6,7 +6,7 @@
 	quality = MINOR_NEGATIVE
 	text_gain_indication = span_danger("You can't see very well.")
 
-/datum/mutation/human/nearsight/on_acquiring(mob/living/carbon/human/owner)
+/datum/mutation/human/nearsight/on_acquiring(mob/living/carbon/human/owner, forced = FALSE)
 	if(..())
 		return
 	owner.become_nearsighted(GENETIC_MUTATION)
@@ -24,13 +24,15 @@
 	quality = NEGATIVE
 	text_gain_indication = span_danger("You can't seem to see anything.")
 
-/datum/mutation/human/blind/on_acquiring(mob/living/carbon/human/owner)
-	if(..())
+/datum/mutation/human/blind/on_acquiring(mob/living/carbon/human/owner, forced = FALSE)
+	. = ..()
+	if(.)
 		return
 	owner.become_blind(GENETIC_MUTATION)
 
 /datum/mutation/human/blind/on_losing(mob/living/carbon/human/owner)
-	if(..())
+	. = ..()
+	if(.)
 		return
 	owner.cure_blind(GENETIC_MUTATION)
 
@@ -115,14 +117,16 @@
 	instability = POSITIVE_INSTABILITY_MAJOR
 	locked = TRUE
 
-/datum/mutation/human/xray/on_acquiring(mob/living/carbon/human/owner)
-	if(..())
+/datum/mutation/human/xray/on_acquiring(mob/living/carbon/human/owner, forced = FALSE)
+	. = ..()
+	if(.)
 		return
 	ADD_TRAIT(owner, TRAIT_XRAY_VISION, GENETIC_MUTATION)
 	owner.update_sight()
 
 /datum/mutation/human/xray/on_losing(mob/living/carbon/human/owner)
-	if(..())
+	. = ..()
+	if(.)
 		return
 	REMOVE_TRAIT(owner, TRAIT_XRAY_VISION, GENETIC_MUTATION)
 	owner.update_sight()
@@ -189,13 +193,15 @@
 	text_gain_indication = span_danger("You feel unable to read or write.")
 	text_lose_indication = span_danger("You feel able to read and write again.")
 
-/datum/mutation/human/illiterate/on_acquiring(mob/living/carbon/human/owner)
-	if(..())
+/datum/mutation/human/illiterate/on_acquiring(mob/living/carbon/human/owner, forced = FALSE)
+	. = ..()
+	if(.)
 		return
 	ADD_TRAIT(owner, TRAIT_ILLITERATE, GENETIC_MUTATION)
 
 /datum/mutation/human/illiterate/on_losing(mob/living/carbon/human/owner)
-	if(..())
+	. = ..()
+	if(.)
 		return
 	REMOVE_TRAIT(owner, TRAIT_ILLITERATE, GENETIC_MUTATION)
 
