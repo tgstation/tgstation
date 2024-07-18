@@ -54,6 +54,8 @@
 
 	human_who_gained_species.AddComponent(/datum/component/planet_allergy)
 
+	human_who_gained_species.fully_replace_character_name(null, pick(GLOB.voidwalker_names))
+
 /datum/species/voidwalker/on_species_loss(mob/living/carbon/human/human, datum/species/new_species, pref_load)
 	. = ..()
 
@@ -66,11 +68,6 @@
 		qdel(radio)
 
 	qdel(human.GetComponent(/datum/component/planet_allergy))
-
-/datum/species/voidwalker/on_species_gain(mob/living/carbon/nameless, datum/species/old_species)
-	. = ..()
-
-	nameless.fully_replace_character_name(null, pick(GLOB.voidwalker_names)) // nightmare names as placeholder, need to think of something :/
 
 /datum/species/voidwalker/check_roundstart_eligible()
 	return FALSE

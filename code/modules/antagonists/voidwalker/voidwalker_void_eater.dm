@@ -76,7 +76,7 @@
 		target_mob.balloon_alert(user, "is in crit!")
 		return COMPONENT_CANCEL_ATTACK_CHAIN
 
-	hewmon.reagents.add_reagent(/datum/reagent/medicine/atropine, 2) // stabilize for kidnapping
+	target_mob.apply_status_effect(/datum/status_effect/void_eatered)
 
 	if(force == damage_minimum + damage_loss_per_hit)
 		user.balloon_alert(user, "void eater blunted!")
