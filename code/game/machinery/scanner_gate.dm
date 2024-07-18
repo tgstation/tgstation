@@ -336,6 +336,11 @@
 						detect_nutrition = NUTRITION_LEVEL_FAT
 			. = TRUE
 
+/obj/machinery/scanner_gate/preset
+	locked = TRUE
+	req_access = ACCESS_SECURITY
+	scangate_mode = SCANGATE_GUNS
+
 #undef SCANGATE_NONE
 #undef SCANGATE_MINDSHIELD
 #undef SCANGATE_DISEASE
