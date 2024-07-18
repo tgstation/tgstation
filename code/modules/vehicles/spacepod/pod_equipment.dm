@@ -17,7 +17,7 @@
 		balloon_alert(user, "panel not open!")
 		return ITEM_INTERACT_BLOCKING
 
-	if(equipment_count_in_slot(equipment.slot) > slot_max(equipment.slot))
+	if(length(equipped[equipment.slot]) > slot_max(equipment.slot))
 		balloon_alert(user, "not enough space!")
 		return ITEM_INTERACT_BLOCKING
 
@@ -53,10 +53,7 @@
 	else
 		equipment.forceMove(src)
 
-	if(slot_max(equipment.slot) > 1)
-		equipped[equipment.slot] += list(equipment) // makes the list if it doesnt exist fun fun
-	else
-		equipped[equipment.slot] = equipment
+	equipped[equipment.slot] += list(equipment) // makes the list if it doesnt exist fun fun
 
 	equipment.pod = src
 	equipment.on_attach(user)
@@ -66,10 +63,7 @@
 	if(!user?.put_in_hands(equipment))
 		equipment.forceMove(drop_location())
 
-	if(slot_max(equipment.slot) > 1)
-		equipped[equipment.slot] -= list(equipment)
-	else
-		equipped[equipment.slot] = null
+	equipped[equipment.slot] -= list(equipment)
 
 	equipment.on_detach(user)
 	equipment.pod = null

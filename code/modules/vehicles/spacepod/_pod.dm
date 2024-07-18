@@ -25,11 +25,11 @@
 	light_on = FALSE
 	/// air in the pod
 	var/datum/gas_mixture/air = new(TANK_STANDARD_VOLUME * 5)
-	/// Max count of a certain slot. If it is not defined here, it is assumed to be one (1)
+	/// Max count of a certain slot. If it is not defined here, it is assumed to be one (1). Use slot_max(slot) to access.
 	var/list/slot_max = list(
 		POD_SLOT_MISC = 3,
 	)
-	/// Equipment we have, slot = equipment, or slot = list(equipment)
+	/// Equipment we have, slot = list(equipment)
 	var/list/equipped = list()
 	/// is our panel open? required for adding and removing parts
 	var/panel_open = FALSE
