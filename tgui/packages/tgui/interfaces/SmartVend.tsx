@@ -27,8 +27,10 @@ export const SmartVend = (props) => {
   );
   return (
     <Window width={498} height={550}>
-      <Window.Content scrollable>
+      <Window.Content>
         <Section
+          fill
+          scrollable
           style={{
             textTransform: 'capitalize',
           }}
