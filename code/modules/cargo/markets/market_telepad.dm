@@ -151,13 +151,13 @@
 	. = ITEM_INTERACT_SUCCESS
 
 	if(machine_stat & NOPOWER)
-		to_chat(world, "nopower")
+		stack_trace("nopower")
 		return
 
 	if(creds_value < restock_cost)
 		say("Insufficient credits!")
 		playsound(src, 'sound/machines/buzz-sigh.ogg', 40, FALSE)
-		to_chat(world, "nocreds")
+		stack_trace("nocreds")
 		return
 
 	if(istype(tool, /obj/item/holochip))
