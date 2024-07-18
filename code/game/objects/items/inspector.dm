@@ -8,7 +8,7 @@
  */
 /obj/item/inspector
 	name = "\improper N-spect scanner"
-	desc = "Central Command standard issue inspection device. Can perform either wide area scans that central command can use to verify the security of the station, or detailed scan. Can scan people and items for being contraband."
+	desc = "Central Command standard issue inspection device. Can perform either wide area scans that central command can use to verify the security of the station, or detailed scan. Can scan people for contraband on their person or items being contraband."
 	icon = 'icons/obj/devices/scanner.dmi'
 	icon_state = "inspector"
 	worn_icon_state = "salestagger"
