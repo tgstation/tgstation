@@ -53,13 +53,13 @@
 		return
 
 	if(istype(target, /obj/machinery/door/firedoor))
-		var/obj/machinery/door/firedoor/targetfiredoor = clamptarget
+		var/obj/machinery/door/firedoor/targetfiredoor = target
 		playsound(chassis, clampsound, 50, FALSE, -6)
 		targetfiredoor.try_to_crowbar(src, source)
 		return ..()
 
 	if(istype(target, /obj/machinery/door/airlock))
-		var/obj/machinery/door/airlock/targetairlock = clamptarget
+		var/obj/machinery/door/airlock/targetairlock = target
 		playsound(chassis, clampsound, 50, FALSE, -6)
 		targetairlock.try_to_crowbar(src, source, TRUE)
 		return ..()
@@ -104,10 +104,7 @@
 			span_notice("[chassis] pushes you aside."))
 		return ..()
 
-	if(LAZYACCESS(modifiers, RIGHT_CLICK) && iscarbon(victim))//meme clamp here
-		if(!killer_clamp)
-			to_chat(source, span_notice("You longingly wish to tear [victim]'s arms off."))
-			return
+	if(iscarbon(victim))//meme clamp here
 		var/mob/living/carbon/carbon_victim = target
 		var/torn_off = FALSE
 		var/obj/item/bodypart/affected = carbon_victim.get_bodypart(BODY_ZONE_L_ARM)
@@ -118,14 +115,12 @@
 		if(affected != null)
 			affected.dismember(damtype)
 			torn_off = TRUE
-		if(!torn_off)
-			to_chat(source, span_notice("[carbon_victim]'s arms are already torn off, you must find a challenger worthy of the kill clamp!"))
-			return
-		playsound(src, get_dismember_sound(), 80, TRUE)
-		carbon_victim.visible_message(span_danger("[chassis] rips [carbon_victim]'s arms off!"), \
-					span_userdanger("[chassis] rips your arms off!"))
-		log_combat(source, carbon_victim, "removed both arms with a real clamp,", "[name]", "(COMBAT MODE: [uppertext(source.combat_mode)] (DAMTYPE: [uppertext(damtype)])")
-		return ..()
+		if(torn_off)
+			playsound(src, get_dismember_sound(), 80, TRUE)
+			carbon_victim.visible_message(span_danger("[chassis] rips [carbon_victim]'s arms off!"), \
+						span_userdanger("[chassis] rips your arms off!"))
+			log_combat(source, carbon_victim, "removed both arms with a real clamp,", "[name]", "(COMBAT MODE: [uppertext(source.combat_mode)] (DAMTYPE: [uppertext(damtype)])")
+			return ..()
 
 	victim.take_overall_damage(clamp_damage)
 	if(isnull(victim)) //get gibbed stoopid
