@@ -1,0 +1,4 @@
+author: "SmArtKar"
+delete-after: True
+changes:
+  - bugfix: "Removed some rogue decals and added a wall to Birdshot atmos storage, and added cycling to upload/telecommunication entrances."
