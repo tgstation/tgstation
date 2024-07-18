@@ -1,0 +1,4 @@
+author: "kawaiinick"
+delete-after: True
+changes:
+  - qol: "secmods jetpacks are now pinned by default"
