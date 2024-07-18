@@ -78,7 +78,7 @@
  * If you want to selectively restock markets, call SSmarket.restock(market_or_list_of_markets) instead.
  */
 /datum/market/proc/restock(list/existing_items)
-	for(var/list/category in available_items)
+	for(var/category in available_items)
 		var/category_list = available_items[category]
 		for(var/identifier in category_list)
 			var/datum/market_item/item = category_list[identifier]
