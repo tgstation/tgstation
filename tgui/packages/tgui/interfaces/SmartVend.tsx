@@ -1,11 +1,14 @@
 import { BooleanLike } from 'common/react';
+import { createSearch } from 'common/string';
+import { useState } from 'react';
 import { DmIcon, Icon } from 'tgui-core/components';
 
 import { useBackend } from '../backend';
-import { Button, NoticeBox, Section } from '../components';
+import { Button, Input, NoticeBox, Section } from '../components';
 import { Window } from '../layouts';
 
 type Item = {
+  path: string;
   name: string;
   amount: number;
   icon: string;
@@ -21,7 +24,13 @@ type Data = {
 
 export const SmartVend = (props) => {
   const { act, data } = useBackend<Data>();
-  const { contents = [] } = data;
+  const [searchText, setSearchText] = useState('');
+  const search = createSearch(searchText, (item: Item) => item.name);
+  const contents =
+    searchText.length > 0
+      ? Object.values(data.contents).filter(search)
+      : Object.values(data.contents);
+
   const fallback = (
     <Icon name="spinner" lineHeight="64px" size={3} spin color="gray" />
   );
@@ -36,46 +45,53 @@ export const SmartVend = (props) => {
           }}
           title="Storage"
           buttons={
-            !!data.isdryer && (
+            data.isdryer ? (
               <Button
                 icon={data.drying ? 'stop' : 'tint'}
                 onClick={() => act('Dry')}
               >
                 {data.drying ? 'Stop drying' : 'Dry'}
               </Button>
+            ) : (
+              <Input
+                autoFocus
+                placeholder={'Search...'}
+                value={searchText}
+                onInput={(e, value) => setSearchText(value)}
+              />
             )
           }
         >
           {contents.length === 0 ? (
             <NoticeBox>{data.name} is empty.</NoticeBox>
           ) : (
-            Object.keys(contents).map((key) => (
+            contents.map((item) => (
               <Button
-                color="transparent"
-                key={key}
+                color="black"
+                key={item.path}
                 m={1}
                 p={0}
                 height="64px"
                 width="64px"
-                tooltip={contents[key].name}
+                tooltip={item.name}
                 tooltipPosition="bottom"
                 textAlign="right"
-                disabled={contents[key].amount < 1}
+                disabled={item.amount < 1}
                 onClick={() =>
                   act('Release', {
-                    key: key,
+                    key: item.path,
                     amount: 1,
                   })
                 }
               >
                 <DmIcon
                   fallback={fallback}
-                  icon={contents[key].icon}
-                  icon_state={contents[key].icon_state}
+                  icon={item.icon}
+                  icon_state={item.icon_state}
                   height="64px"
                   width="64px"
                 />
-                {contents[key].amount > 1 && (
+                {item.amount > 1 && (
                   <Button
                     minWidth="24px"
                     height="24px"
@@ -88,12 +104,12 @@ export const SmartVend = (props) => {
                     fontSize="14px"
                     onClick={(e) => {
                       act('Release', {
-                        key: key,
+                        key: item.path,
                       });
                       e.stopPropagation();
                     }}
                   >
-                    {contents[key].amount}
+                    {item.amount}
                   </Button>
                 )}
               </Button>

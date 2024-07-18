@@ -350,6 +350,7 @@
 	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
 		ui = new(user, src, "SmartVend", name)
+		ui.set_autoupdate(FALSE)
 		ui.open()
 
 /obj/machinery/smartfridge/ui_data(mob/user)
@@ -368,12 +369,12 @@
 				listofitems[key]["amount"]++
 			else
 				listofitems[key] = list(
+					"path" = key,
 					"name" = full_capitalize(atom.name),
 					"icon" = atom.icon,
 					"icon_state" = atom.icon_state,
 					"amount" = 1
 					)
-
 	.["contents"] = sort_list(listofitems)
 	.["name"] = name
 	.["isdryer"] = FALSE
