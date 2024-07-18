@@ -25,19 +25,19 @@
 
 
 	var/datum/market/unit_test/market = SSmarket.markets[/datum/market/unit_test]
-	TEST_ASSERT(market, "Couldn't find the unit test market.")
+	TEST_ASSERT(market, "Couldn't find the unit test market")
 	var/list/category_items = market.available_items[CATEGORY_CODERBUS]
 	var/datum/market_item/unit_test/item = category_items[category_items[1]]
-	TEST_ASSERT(item, "Couldn't find the unit test market item.")
-	TEST_ASSERT_EQUAL(item.stock, 1, "The unit test market item is incorrectly stocked. Only one should be in stock.")
+	TEST_ASSERT(item, "Couldn't find the unit test market item")
+	TEST_ASSERT_EQUAL(item.stock, 1, "The unit test market item is incorrectly stocked. Only one should be in stock")
 
 	var/mob/living/user = allocate(/mob/living)
-	var/obj/item/holochip/chip = allocate(/obj/item/holochip, INFINITY)
+	var/obj/item/holochip/chip = allocate(/obj/item/holochip, run_loc_floor_bottom_left, INFINITY)
 	var/obj/machinery/ltsrbt/pad = allocate(/obj/machinery/ltsrbt)
 
 	pad.item_interaction(user, chip)
 
-	TEST_ASSERT_EQUAL(item, category_items[category_items[1]], "The unit test market item has been replaced during restock.")
+	TEST_ASSERT_EQUAL(item, category_items[category_items[1]], "The unit test market item has been replaced during restock")
 	TEST_ASSERT_EQUAL(item.stock, 2, "The unit test market item is incorrectly stocked after restock. There should be two in stock")
 
 /datum/market/unit_test
