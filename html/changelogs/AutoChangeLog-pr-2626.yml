@@ -1,4 +1,0 @@
-author: "Odairu"
-delete-after: True
-changes:
-  - rscadd: "gives loudmode to people who stand on crates (doesn't work with comms"

@@ -178,3 +178,27 @@
   Absolucy:
   - sound: The zap sound effects from meteor defense satellites are now around 5x
       quieter.
+2024-07-18:
+  Absolucy:
+  - bugfix: NIFs and such now properly use the tgui color picker.
+  - balance: The headspin dance now immobilizes you, so you can't abuse it to make
+      it harder to hit you anymore.
+  - bugfix: Lunatics are no longer afraid of their own amulettes.
+  Absolucy, Flleeppyy:
+  - sound: Added a new sound for midround prompts!
+  Absolucy, SirNightKnight:
+  - image: Added brand new sprites for meteor defense satellites!
+  Gboster-0:
+  - code_imp: Midi2Piano now works!
+  KnigTheThrasher:
+  - rscadd: Added basic items to tram ocean kitchen, now you have a sink...wow so
+      cool
+  Marabout2:
+  - rscadd: 'Added the replica of the swat boots.
+
+      :cl:'
+  Odairu:
+  - rscadd: gives loudmode to people who stand on crates (doesn't work with comms
+  ThePooba:
+  - rscadd: costs to blueshift nukeops gun kits
+  - bugfix: m90GL provides correct toploading ammo magazines
