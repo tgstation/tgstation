@@ -327,7 +327,7 @@
 		return
 	cut_overlay(hat_overlay)
 	if(islist(hat_offset))
-		var/offset = hat_offset[ISDIAGONALDIR(dir) ? dir2text(dir & (WEST|EAST)) : dir2text(dir)]
+		var/list/offset = hat_offset[ISDIAGONALDIR(dir) ? dir2text(dir & (WEST|EAST)) : dir2text(dir)]
 		if(offset)
 			hat_overlay.pixel_w = offset[1]
 			hat_overlay.pixel_z = offset[2]
