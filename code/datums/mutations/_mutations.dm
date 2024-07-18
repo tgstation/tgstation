@@ -119,6 +119,7 @@
 	if(!acquirer || !istype(acquirer) || (src in acquirer.dna.mutations))
 		return TRUE
 	if (acquirer.stat == DEAD && !forced)
+		return TRUE
 	if(species_allowed && !species_allowed.Find(acquirer.dna.species.id) && !forced)
 		return TRUE
 	if(health_req && acquirer.health < health_req && !forced)
