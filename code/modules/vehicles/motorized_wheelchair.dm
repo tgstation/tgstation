@@ -100,7 +100,6 @@
 /obj/vehicle/ridden/wheelchair/motorized/attack_hand(mob/living/user, list/modifiers)
 	if(!power_cell || !panel_open)
 		return ..()
-	power_cell.update_appearance()
 	to_chat(user, span_notice("You remove [power_cell] from [src]."))
 	user.put_in_hands(power_cell)
 	power_cell = null

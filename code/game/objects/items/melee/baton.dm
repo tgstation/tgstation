@@ -504,7 +504,6 @@
 /obj/item/melee/baton/security/Exited(atom/movable/mov_content)
 	. = ..()
 	if(mov_content == cell)
-		cell.update_appearance()
 		cell = null
 		active = FALSE
 		update_appearance()
