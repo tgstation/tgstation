@@ -62,12 +62,11 @@ export const SmartVend = (props) => {
             )
           }
         >
-          {contents.length === 0 ? (
-            <NoticeBox>{data.name} is empty.</NoticeBox>
+          {!contents.length ? (
+            <NoticeBox>Nothing found.</NoticeBox>
           ) : (
             contents.map((item) => (
               <Button
-                color="black"
                 key={item.path}
                 m={1}
                 p={0}
@@ -93,6 +92,7 @@ export const SmartVend = (props) => {
                 />
                 {item.amount > 1 && (
                   <Button
+                    color="transparent"
                     minWidth="24px"
                     height="24px"
                     lineHeight="24px"
