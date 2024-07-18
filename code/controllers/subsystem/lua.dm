@@ -48,6 +48,9 @@ SUBSYSTEM_DEF(lua)
 		arguments = list()
 	else if(!islist(arguments))
 		arguments = list(arguments)
+	else
+		var/list/args_list = arguments
+		arguments = args_list.Copy()
 	resumes += list(list("state" = state, "index" = index, "arguments" = arguments))
 
 /datum/controller/subsystem/lua/proc/kill_task(datum/lua_state/state, is_sleep, index)

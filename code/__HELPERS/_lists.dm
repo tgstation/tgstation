@@ -1020,7 +1020,7 @@
 			else
 				value = prepare_lua_editor_list(value, visited)
 		var/list/to_add = list()
-		if(value)
+		if(!isnull(value))
 			var/final_key = new_key
 			while(duplicate_keys[final_key])
 				duplicate_keys[new_key]++
@@ -1288,7 +1288,7 @@
 /proc/compare_lua_logs(list/log_1, list/log_2)
 	if(log_1 == log_2)
 		return TRUE
-	for(var/field in list("status", "name", "message"))
+	for(var/field in list("status", "name", "message", "chunk"))
 		if(log_1[field] != log_2[field])
 			return FALSE
 	switch(log_1["status"])
