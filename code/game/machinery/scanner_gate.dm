@@ -47,9 +47,9 @@
 	///Does the scanner ignore light_pass and light_fail for sending signals?
 	var/ignore_signals = FALSE
 	///Modifier to the chance of scanner being false positive
-	var/false_positive = 0
+	var/minus_false_positive = 0
 	///Base false positive chance
-	var/base_false_positive = 8
+	var/base_false_positive = 5
 	///Is an n-spect scanner attached to the gate? Enables contraband scanning.
 	var/obj/item/inspector/n_spect = null
 
@@ -67,7 +67,7 @@
 /obj/machinery/scanner_gate/RefreshParts()
 	. = ..()
 	for(var/datum/stock_part/scanning_module/scanning_module in component_parts)
-		false_positive = scanning_module.tier //The better are scanninning modules - the lower is chance of False Positives
+		minus_false_positive = scanning_module.tier //The better are scanninning modules - the lower is chance of False Positives
 
 /obj/machinery/scanner_gate/Destroy()
 	qdel(wires)
@@ -256,7 +256,7 @@
 	if(reverse)
 		beep = !beep
 
-	if(prob(base_false_positive - false_positive)) //False positive
+	if(prob(base_false_positive - minus_false_positive)) //False positive
 		beep = TRUE
 
 	if(beep)
