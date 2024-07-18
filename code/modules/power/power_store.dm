@@ -162,6 +162,7 @@
 	if(!force && charge < used)
 		return 0
 	charge -= power_used
+	update_appearance()
 	if(!istype(loc, /obj/machinery/power/apc))
 		SSblackbox.record_feedback("tally", "cell_used", 1, type)
 	return power_used
@@ -173,6 +174,7 @@
 /obj/item/stock_parts/power_store/proc/give(amount)
 	var/power_used = min(maxcharge-charge,amount)
 	charge += power_used
+	update_appearance()
 	if(rigged && amount > 0)
 		explode()
 	return power_used
@@ -186,6 +188,7 @@
 /obj/item/stock_parts/power_store/proc/change(amount)
 	var/energy_used = clamp(amount, -charge, maxcharge - charge)
 	charge += energy_used
+	update_appearance()
 	if(rigged && energy_used)
 		explode()
 	return energy_used
