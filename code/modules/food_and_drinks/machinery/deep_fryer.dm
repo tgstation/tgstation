@@ -169,6 +169,7 @@ GLOBAL_LIST_INIT(oilfry_blacklisted_items, typecacheof(list(
 	frying_burnt = FALSE
 	fry_loop.stop()
 	cook_time = 0
+	flick("fryer_stop", src)
 	icon_state = "fryer_off"
 
 /obj/machinery/deepfryer/proc/start_fry(obj/item/frying_item, mob/user)
@@ -188,6 +189,7 @@ GLOBAL_LIST_INIT(oilfry_blacklisted_items, typecacheof(list(
 		ADD_TRAIT(frying, TRAIT_FOOD_CHEF_MADE, REF(user.mind))
 	SEND_SIGNAL(frying, COMSIG_ITEM_ENTERED_FRYER)
 
+	flick("fryer_start", src)
 	icon_state = "fryer_on"
 	fry_loop.start()
 
