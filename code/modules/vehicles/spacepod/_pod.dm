@@ -8,7 +8,7 @@
 // equipment
 // make them move different onstation, perhaps restrict to engine tiles only
 // control scheme/whatever idk how to drive these
-// slots: comms (radio and something else), sensors(HUDs or something, mesons??), engine, 1 secondary slot (cargo and shit), 1 primary slot(tools or gun???), infinite misc modules (locks and shit), armor would either be added during construction or as a slot
+// slots: comms (radio and something else), sensors(HUDs or something, mesons??), engine, 1 secondary slot (cargo and shit), 1 primary slot(tools or gun???), 3 misc modules (locks and shit), armor would either be added during construction or as a slot
 // power costs, either only megacell or only cell, how would you charge this??
 // although im not so sure about power costs i dont know why it would need them but ideally a space pod should be capable of functioning for 10-15 minutes of nonstop acceleration by default
 // innate armor potentially, also actual armor and also figure out integrity and inertia_force_weight
@@ -23,6 +23,7 @@
 	icon_state = "engineering_pod" //placeholder
 	light_system = OVERLAY_LIGHT_DIRECTIONAL
 	light_on = FALSE
+	max_occupants = 2
 	/// Max count of a certain slot. If it is not defined here, it is assumed to be one (1). Use slot_max(slot) to access.
 	var/list/slot_max = list(
 		POD_SLOT_MISC = 3,

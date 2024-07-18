@@ -56,6 +56,7 @@
 		if(!user?.put_in_hands(picked))
 			picked.forceMove(drop_location())
 		cabin_air_tank = null
+		playsound(src, 'sound/effects/tank_remove_thunk.ogg', 50)
 		return ITEM_INTERACT_SUCCESS
 
 
