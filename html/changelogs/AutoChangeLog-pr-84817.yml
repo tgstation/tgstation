@@ -1,0 +1,4 @@
+author: "thegrb93"
+delete-after: True
+changes:
+  - qol: "Allow custom borg hat placement for custom borg skins"
