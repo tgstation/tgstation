@@ -44,6 +44,9 @@
 	var/animated = TRUE
 	/// Determines whether we play a rustle sound when inserting/removing items.
 	var/rustle_sound = TRUE
+	/// The sound to play when we open/access the storage
+	var/open_sound
+	var/open_sound_vary = TRUE
 
 	/// The maximum amount of items that can be inserted into this storage.
 	var/max_slots = 7
@@ -444,7 +447,7 @@ GLOBAL_LIST_EMPTY(cached_storage_typecaches)
 	if(!can_insert(to_insert, user, messages = messages, force = force))
 		return FALSE
 
-	SEND_SIGNAL(parent, COMSIG_STORAGE_STORED_ITEM, to_insert, user, force)
+	SEND_SIGNAL(parent, COMSIG_ATOM_STORED_ITEM, to_insert, user, force)
 	SEND_SIGNAL(src, COMSIG_STORAGE_STORED_ITEM, to_insert, user, force)
 	to_insert.forceMove(real_location)
 	item_insertion_feedback(user, to_insert, override)
@@ -920,7 +923,7 @@ GLOBAL_LIST_EMPTY(cached_storage_typecaches)
 		animate_parent()
 
 	if(rustle_sound)
-		playsound(parent, SFX_RUSTLE, 50, TRUE, -5)
+		playsound(parent, (open_sound ? open_sound : SFX_RUSTLE), 50, open_sound_vary, -5)
 
 	return TRUE
 
@@ -1024,7 +1027,7 @@ GLOBAL_LIST_EMPTY(cached_storage_typecaches)
 		var/atom/movable/movable_loc = real_location
 		movable_loc.lose_active_storage(src)
 
-	if (isnull(storage_interfaces[to_hide]))
+	if (!length(storage_interfaces) || isnull(storage_interfaces[to_hide]))
 		return TRUE
 
 	is_using -= to_hide

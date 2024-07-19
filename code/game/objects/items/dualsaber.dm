@@ -56,10 +56,9 @@
 /// Triggered on wield of two handed item
 /// Specific hulk checks due to reflection chance for balance issues and switches hitsounds.
 /obj/item/dualsaber/proc/on_wield(obj/item/source, mob/living/carbon/user)
-	if(user?.has_dna())
-		if(user.dna.check_mutation(/datum/mutation/human/hulk))
-			to_chat(user, span_warning("You lack the grace to wield this!"))
-			return COMPONENT_TWOHANDED_BLOCK_WIELD
+	if(user && HAS_TRAIT(user, TRAIT_HULK))
+		to_chat(user, span_warning("You lack the grace to wield this!"))
+		return COMPONENT_TWOHANDED_BLOCK_WIELD
 	update_weight_class(w_class_on)
 	hitsound = 'sound/weapons/blade1.ogg'
 	START_PROCESSING(SSobj, src)
@@ -123,12 +122,11 @@
 	. = ..()
 
 /obj/item/dualsaber/attack(mob/target, mob/living/carbon/human/user)
-	if(user.has_dna())
-		if(user.dna.check_mutation(/datum/mutation/human/hulk))
-			to_chat(user, span_warning("You grip the blade too hard and accidentally drop it!"))
-			if(HAS_TRAIT(src, TRAIT_WIELDED))
-				user.dropItemToGround(src, force=TRUE)
-				return
+	if(HAS_TRAIT(user, TRAIT_HULK))
+		to_chat(user, span_warning("You grip the blade too hard and accidentally drop it!"))
+		if(HAS_TRAIT(src, TRAIT_WIELDED))
+			user.dropItemToGround(src, force=TRUE)
+			return
 	..()
 	if(!HAS_TRAIT(src, TRAIT_WIELDED))
 		return

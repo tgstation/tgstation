@@ -1,4 +1,0 @@
-author: "zoomachina"
-delete-after: True
-changes:
-  - bugfix: "fixed dubious chem dispenser feedback when the beaker is full"
