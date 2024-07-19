@@ -1,4 +1,0 @@
-author: "Melbert"
-delete-after: True
-changes:
-  - bugfix: "Fixes xenos being able to do that one mechanic that involves mouse-dragging people to you"

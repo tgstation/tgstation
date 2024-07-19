@@ -1,6 +1,0 @@
-author: "carlarctg"
-delete-after: True
-changes:
-  - bugfix: "Fixed sometimes obtaining the nodrop highlander kilt with relics"
-  - bugfix: "Fixed bioscramble function not working for strange objects unless dropped"
-  - bugfix: "Fixed the disguiser cardboard ID not overlaying properly"

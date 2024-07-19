@@ -1,7 +1,0 @@
-author: "MTandi"
-delete-after: True
-changes:
-  - bugfix: "APC icon properly turns green on full charge"
-  - bugfix: "APC shows correct charging rate in UI"
-  - code_imp: "Added early machine process for shield generators and emitters to prioritize power draw"
-  - code_imp: "Added late machine process for power monitors to gather accurate powernet load"

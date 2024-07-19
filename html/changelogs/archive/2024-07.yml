@@ -992,3 +992,48 @@
       jellyfish.
   zoomachina:
   - bugfix: deleting reagents from the chemmaster buffer works without a beaker inserted
+2024-07-19:
+  Ghommie:
+  - bugfix: Fixed beyblade *flipping.
+  Kocma-san:
+  - bugfix: fixed a table in the mining office at the metastation
+  L0pz:
+  - image: Added new unique sprites for cyborg upgrade modules
+  MTandi:
+  - bugfix: APC icon properly turns green on full charge
+  - bugfix: APC shows correct charging rate in UI
+  - code_imp: Added early machine process for shield generators and emitters to prioritize
+      power draw
+  - code_imp: Added late machine process for power monitors to gather accurate powernet
+      load
+  Melbert:
+  - qol: Monkeys that pray are given bonana
+  - bugfix: When Monkified or Humanified, you are no longer knocked down.
+  - bugfix: When cured of Monkified, you get the cure text now.
+  - bugfix: The text shown when cured / given Monkification now has color.
+  - bugfix: Being humanified now tells you what species you become rather than assuming
+      you are a human.
+  - bugfix: Fixes xenos being able to do that one mechanic that involves mouse-dragging
+      people to you
+  - bugfix: Non-humans should look less transparent while in space
+  Momo8289:
+  - qol: Tweaked the colour of orange atmos pipes to be more distinct from the red
+      pipes, especially in darkness.
+  SmArtKar:
+  - bugfix: Revenge of the Pun Pun no longer runtimes on init
+  - bugfix: Fixed kinesis runtime due to un-unregistered signals
+  - bugfix: Removed some rogue decals and added a wall to Birdshot atmos storage,
+      and added cycling to upload/telecommunication entrances.
+  - bugfix: Elevator music no longer haunts you endlessly if you step off mid-transit
+  - refactor: HUD traits now apply their corresponding hud automatically
+  TheNobodyofimportance:
+  - qol: Holofan and two thermomachine and emitter boards in lavaland syndicate base.
+  carlarctg:
+  - qol: Moths that pray get a moffin
+  - bugfix: Fixed sometimes obtaining the nodrop highlander kilt with relics
+  - bugfix: Fixed bioscramble function not working for strange objects unless dropped
+  - bugfix: Fixed the disguiser cardboard ID not overlaying properly
+  kawaiinick:
+  - qol: secmods jetpacks are now pinned by default
+  vinylspiders:
+  - bugfix: fixed a hard del with soapboxes
