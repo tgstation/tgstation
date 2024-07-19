@@ -279,3 +279,11 @@
 /obj/item/knife/shiv/carrot/suicide_act(mob/living/carbon/user)
 	user.visible_message(span_suicide("[user] forcefully drives \the [src] into [user.p_their()] eye! It looks like [user.p_theyre()] trying to commit suicide!"))
 	return BRUTELOSS
+
+/obj/item/knife/shiv/parsnip
+	name = "parsnip shiv"
+	icon_state = "parsnipshiv"
+	inhand_icon_state = "parsnipshiv"
+	desc = "Truly putting 'snip' in the 'parsnip', and it's not sub-par either!"
+	custom_materials = null
+
