@@ -27,3 +27,4 @@
 #include "world_topics/_world_topics.dme"
 #include "preferences/_preferences.dme"
 #include "drinks/_drinks.dme"
+#include "jukebox/_jukebox.dme"

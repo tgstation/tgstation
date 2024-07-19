@@ -130,7 +130,7 @@
 		var/datum/track/one_song = songs[song_name]
 		UNTYPED_LIST_ADD(songs_data, list( \
 			"name" = song_name, \
-			"length" = DisplayTimeText(one_song.song_length), \
+			"length" = one_song.song_length  /* BANDASTATION EDIT - ORIGINAL: DisplayTimeText(one_song.song_length) */, \
 			"beat" = one_song.song_beat, \
 		))
 
