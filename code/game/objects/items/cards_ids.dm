@@ -835,6 +835,12 @@
 /obj/item/card/id/proc/get_trim_sechud_icon_state()
 	return trim?.sechud_icon_state || SECHUD_UNKNOWN
 
+/obj/item/card/id/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
+	if(iscash(interacting_with))
+		insert_money(interacting_with, user)
+		return ITEM_INTERACT_SUCCESS
+	return NONE
+
 /obj/item/card/id/away
 	name = "\proper a perfectly generic identification card"
 	desc = "A perfectly generic identification card. Looks like it could use some flavor."
@@ -1436,6 +1442,9 @@
 	if(isidcard(interacting_with))
 		theft_target = WEAKREF(interacting_with)
 		ui_interact(user)
+		return ITEM_INTERACT_SUCCESS
+	if(iscash(interacting_with))
+		insert_money(interacting_with, user)
 		return ITEM_INTERACT_SUCCESS
 	return NONE
 
