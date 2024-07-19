@@ -3,3 +3,4 @@
 #include "code/balance_riding.dm"
 #include "code/events.dm"
 #include "code/station_traits.dm"
+#include "code/supply_packs.dm"
