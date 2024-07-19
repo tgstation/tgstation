@@ -40,6 +40,7 @@
 @include meta.load-css('./components/RoundGauge.scss');
 @include meta.load-css('./components/SearchItem.scss');
 @include meta.load-css('./components/Section.scss');
+@include meta.load-css('./components/SideDropdown.scss');
 @include meta.load-css('./components/Slider.scss');
 @include meta.load-css('./components/Stack.scss');
 @include meta.load-css('./components/Table.scss');
@@ -90,7 +91,6 @@
 
 // NT Theme
 .Layout__content {
-  background-image: url('../assets/bg-nanotrasen.svg');
   background-size: 70%;
   background-position: center;
   background-repeat: no-repeat;

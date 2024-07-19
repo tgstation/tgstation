@@ -4,8 +4,12 @@
 @use '../functions';
 @use '../colors';
 
-$msgcolor-outgoing: hsl(213, 50%, 35%);
-$msgcolor-incoming: hsl(213, 0%, 20%);
+$msgcolor-outgoing: #006b8f; // EffigyEdit Change
+$msgcolor-incoming: #424651; // EffigyEdit Change
+// EffigyEdit Add - Subtle texting
+$msgcolor-subtle-outgoing: #a56ebf;
+$msgcolor-subtle-incoming: #7c538f;
+// EffigyEdit Add End
 
 $msgpadding: 0.7rem;
 
@@ -49,6 +53,20 @@ $msgpadding: 0.7rem;
     text-align: right;
     float: right;
   }
+
+  // EffigyEdit Add - Subtle texting
+  &_subtle_outgoing {
+    @extend .NtosChatMessage;
+    background-color: $msgcolor-subtle-outgoing;
+    text-align: right;
+    float: right;
+  }
+
+  &_subtle {
+    @extend .NtosChatMessage;
+    background-color: $msgcolor-subtle-incoming;
+  }
+  // EffigyEdit Add End
 
   &__timestamp {
     height: 0.9rem;

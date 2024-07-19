@@ -6,10 +6,10 @@
 @use 'sass:color';
 @use 'sass:math';
 
-$color-fg: #ffffff !default;
-$color-bg: #252525 !default;
-$color-bg-section: rgba(0, 0, 0, 0.33) !default;
-$color-bg-grad-spread: 2% !default;
+$color-fg: #e6e7eb !default;
+$color-bg: #212329 !default;
+$color-bg-section: rgba(0, 0, 0, 0.17) !default;
+$color-bg-grad-spread: 0% !default;
 $color-bg-start: color.adjust(
   $color-bg,
   $lightness: $color-bg-grad-spread
@@ -18,10 +18,11 @@ $color-bg-end: color.adjust(
   $color-bg,
   $lightness: -$color-bg-grad-spread
 ) !default;
+$color-bg-alt: #575c6a !default;
 
-$unit: 12px;
+$unit: 14px;
 $font-size: 1 * $unit !default;
-$border-radius: 0.16em !default;
+$border-radius: 0 !default;
 
 @function em($px) {
   @return 1em * math.div($px, $unit);

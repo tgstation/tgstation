@@ -8,15 +8,12 @@
 @use '../colors.scss';
 
 $text-color: rgba(255, 255, 255, 0.75) !default;
-$background-color: #363636 !default;
+$background-color: base.$color-bg !default;
 $shadow-color-core: #161616 !default;
 $shadow-color: rgba(0, 0, 0, 0.1) !default;
 
 .TitleBar {
   background-color: $background-color;
-  border-bottom: 1px solid $shadow-color-core;
-  box-shadow: 0 2px 2px $shadow-color;
-  box-shadow: 0 base.rem(2px) base.rem(2px) $shadow-color;
   user-select: none;
   -ms-user-select: none;
 }
@@ -41,13 +38,13 @@ $shadow-color: rgba(0, 0, 0, 0.1) !default;
   position: absolute;
   display: inline-block;
   top: 0;
-  left: 46px;
-  left: base.rem(46px);
+  left: 42px;
+  left: base.rem(42px);
   color: $text-color;
-  font-size: 14px;
-  font-size: base.rem(14px);
-  line-height: 31px;
-  line-height: base.rem(31px);
+  font-size: 16px;
+  font-size: base.rem(16px);
+  line-height: 37px;
+  line-height: base.rem(37px);
   white-space: nowrap;
   pointer-events: none;
 }
@@ -74,22 +71,22 @@ $shadow-color: rgba(0, 0, 0, 0.1) !default;
   left: 12px;
   left: base.rem(12px);
   transition: color 0.5s;
-  font-size: 20px;
-  font-size: base.rem(20px);
-  line-height: 32px !important;
-  line-height: base.rem(32px) !important;
+  font-size: 18px;
+  font-size: base.rem(18px);
+  line-height: 36px !important;
+  line-height: base.rem(36px) !important;
 }
 
 .TitleBar__close {
   position: absolute;
   top: -1px;
   right: 0;
-  width: 45px;
-  width: base.rem(45px);
+  width: 32px;
+  width: base.rem(32px);
   height: 32px;
   height: base.rem(32px);
-  font-size: 20px;
-  font-size: base.rem(20px);
+  font-size: 24px;
+  font-size: base.rem(24px);
   line-height: 31px;
   line-height: base.rem(31px);
   text-align: center;

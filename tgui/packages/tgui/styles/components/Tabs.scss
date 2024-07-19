@@ -12,11 +12,11 @@ $color-default: color.scale(
   colors.fg(colors.$primary),
   $lightness: 75%
 ) !default;
-$text-color: rgba(255, 255, 255, 0.5) !default;
+$text-color: #e6e7eb !default;
 $text-color-selected: color.scale($color-default, $lightness: 25%) !default;
-$tab-color: transparent !default;
+$tab-color: #424651 !default;
 $tab-color-hovered: rgba(255, 255, 255, 0.075) !default;
-$tab-color-selected: rgba(255, 255, 255, 0.125) !default;
+$tab-color-selected: #2ccaff !default;
 $border-radius: base.$border-radius !default;
 $fg-map: colors.$fg-map !default;
 
@@ -72,8 +72,9 @@ $fg-map: colors.$fg-map !default;
   justify-content: space-between;
   background-color: $tab-color;
   color: $text-color;
-  min-height: 2.25em;
-  min-width: 4em;
+  min-height: 1.75em;
+  min-width: 5.5em;
+  margin-right: 10px;
 }
 
 .Tab:not(.Tab--selected):hover {
@@ -103,42 +104,17 @@ $fg-map: colors.$fg-map !default;
 }
 
 .Tabs--horizontal {
-  .Tab {
-    border-top: math.div(1em, 6) solid transparent;
-    border-bottom: math.div(1em, 6) solid transparent;
-    border-top-left-radius: 0.25em;
-    border-top-right-radius: 0.25em;
-  }
-
   .Tab--selected {
-    border-bottom: math.div(1em, 6) solid $color-default;
+    color: #202020;
   }
 }
 
 .Tabs--vertical {
   .Tab {
     min-height: 2em;
-    border-left: math.div(1em, 6) solid transparent;
-    border-right: math.div(1em, 6) solid transparent;
-    border-top-left-radius: 0.25em;
-    border-bottom-left-radius: 0.25em;
   }
 
   .Tab--selected {
-    border-right: math.div(1em, 6) solid $color-default;
-  }
-}
-
-@each $color-name, $color-value in $fg-map {
-  .Tab--selected.Tab--color--#{$color-name} {
-    color: color.scale($color-value, $lightness: 25%);
-  }
-
-  .Tabs--horizontal .Tab--selected.Tab--color--#{$color-name} {
-    border-bottom-color: $color-value;
-  }
-
-  .Tabs--vertical .Tab--selected.Tab--color--#{$color-name} {
-    border-right-color: $color-value;
+    color: #202020;
   }
 }

@@ -8,27 +8,28 @@
 @use 'sass:meta';
 
 // Base colors
-$black: #000000 !default;
-$white: #ffffff !default;
-$red: #db2828 !default;
-$orange: #f2711c !default;
-$yellow: #fbd608 !default;
-$olive: #b5cc18 !default;
-$green: #20b142 !default;
-$teal: #00b5ad !default;
-$blue: #2185d0 !default;
-$violet: #6435c9 !default;
-$purple: #a333c8 !default;
-$pink: #e03997 !default;
-$brown: #a5673f !default;
-$grey: #767676 !default;
-$light-grey: #aaa !default;
+$black: #212329 !default;
+$white: #e6e7eb !default;
+$red: #f0197d !default;
+$orange: #ff7f50 !default;
+$yellow: #ffe45e !default;
+$olive: #04c869 !default;
+$green: #21fa90 !default;
+$teal: #7df9ff !default;
+$blue: #2ccaff !default;
+$darkblue: #21649f !default;
+$violet: #7b55dd !default;
+$purple: #b81fff !default;
+$pink: #ff5cad !default;
+$brown: #936d62 !default;
+$grey: #575c6a !default;
+$light-grey: #a5aab6 !default;
 
-$primary: #4972a1 !default;
-$good: #5baa27 !default;
-$average: #f08f11 !default;
-$bad: #db2828 !default;
-$label: #7e90a7 !default;
+$primary: #2ccaff !default;
+$good: #2ccaff !default;
+$average: #ffe45e !default;
+$bad: #f0197d !default;
+$label: #e6e7eb !default;
 
 // Background and foreground color lightness ratios
 $bg-lightness: -15% !default;
@@ -54,6 +55,7 @@ $_gen_map: (
   'green': $green,
   'teal': $teal,
   'blue': $blue,
+  'darkblue': $darkblue,
   'violet': $violet,
   'purple': $purple,
   'pink': $pink,

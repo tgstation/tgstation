@@ -16,7 +16,7 @@ $background-color: base.$color-bg !default;
 
 .Dialog__content {
   background-color: $background-color;
-  font-family: Consolas, monospace;
+  font-family: 'Ubuntu Mono', Consolas, monospace; // EffigyEdit Change - Custom UI
   font-size: base.em(14px);
   display: flex;
   flex-direction: column;

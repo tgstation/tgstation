@@ -12,14 +12,14 @@ $text-color: Input.$text-color !default;
 $background-color: Input.$background-color !default;
 $border-color: Input.$border-color !default;
 $border-radius: Input.$border-radius !default;
+$box-color: #2ccaff !default;
 
 .NumberInput {
   position: relative;
   display: inline-block;
   border: base.em(1px) solid $border-color;
-  border: base.em(1px) solid rgba($border-color, 0.75);
   border-radius: $border-radius;
-  color: $border-color;
+  color: $text-color;
   background-color: $background-color;
   padding: 0 base.em(4px);
   margin-right: base.em(2px);
@@ -50,8 +50,8 @@ $border-radius: Input.$border-radius !default;
   left: 0;
   width: base.em(3px);
   box-sizing: border-box;
-  border-bottom: base.em(1px) solid $border-color;
-  background-color: $border-color;
+  border-bottom: base.em(1px) solid $box-color;
+  background-color: $box-color;
 }
 
 .NumberInput__input {
@@ -64,12 +64,12 @@ $border-radius: Input.$border-radius !default;
   border: 0;
   outline: 0;
   width: 100%;
-  font-size: base.em(12px);
+  font-size: base.em(14px);
   line-height: base.em(17px);
   height: base.em(17px);
   margin: 0;
   padding: 0 0.5em;
-  font-family: Verdana, sans-serif;
+  font-family: 'Chakra Petch', sans-serif;
   background-color: $background-color;
   color: $text-color;
   text-align: right;

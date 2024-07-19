@@ -6,7 +6,7 @@
 @use 'sass:color';
 @use 'sass:meta';
 
-$nanotrasen: #2c2c2c;
+$nanotrasen: #384e68;
 
 @use '../colors.scss' with (
   $fg-map-keys: (),
@@ -16,7 +16,7 @@ $nanotrasen: #2c2c2c;
   $color-bg: color.scale($nanotrasen, $lightness: -45%)
 );
 
-.theme-ntos_darkmode {
+.theme-ntos {
   // Components
   @include meta.load-css(
     '../components/Button.scss',

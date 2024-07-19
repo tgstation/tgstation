@@ -15,20 +15,21 @@ $background-color: base.$color-bg !default;
   display: inline-block;
   text-align: center;
   width: 100%;
-  font-family: Consolas, monospace;
+  font-family: 'Ubuntu Mono', Consolas, monospace; // EffigyEdit Change - Custom UI
   font-size: base.em(26px);
 }
 
 .NtosNotepad__AboutDialog__text {
   display: flex;
   flex-direction: column;
-  font-size: base.em(12px);
+  font-size: base.em(14px);
 }
 
 .NtosNotepad__textarea {
   background-color: base.$color-bg-section;
   height: 100%;
   overflow-y: scroll;
+  font-family: 'Ubuntu Mono', Consolas, monospace; // EffigyEdit Change - Custom UI
 }
 
 .NtosNotepad__StatusBar {

@@ -7,19 +7,19 @@
 @use '../colors.scss';
 @use '../functions.scss' as *;
 
-$color-default: colors.bg(colors.$primary) !default;
-$color-disabled: #999999 !default;
-$color-selected: colors.bg(colors.$green) !default;
+$color-default: #424651 !default;
+$color-disabled: #9ba0ae !default;
+$color-selected: #2ccaff !default;
 $color-caution: colors.bg(colors.$yellow) !default;
 $color-danger: colors.bg(colors.$red) !default;
-$color-transparent-text: rgba(255, 255, 255, 0.5) !default;
+$color-transparent-text: rgba(230, 231, 235, 0.7) !default;
 $border-radius: base.$border-radius !default;
 $bg-map: colors.$bg-map !default;
 
 @mixin button-color($color) {
   // Adapt text color to background luminance to ensure high contast
   $luminance: luminance($color);
-  $text-color: if($luminance > 0.4, rgba(0, 0, 0, 1), rgba(255, 255, 255, 1));
+  $text-color: if($luminance > 0.4, rgb(33, 33, 33), rgba(230, 231, 235, 1));
 
   transition:
     color 50ms,

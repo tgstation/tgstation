@@ -5,8 +5,8 @@
 
 @use '../base.scss';
 
-$color: rgba(255, 255, 255, 0.1) !default;
-$thickness: base.em(2px) !default;
+$color: base.$color-bg !default;
+$thickness: base.em(7px) !default;
 $spacing: 0.5em;
 
 .Divider--horizontal {
