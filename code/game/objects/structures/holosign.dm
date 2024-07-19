@@ -255,6 +255,7 @@
 /obj/structure/holosign/barrier/medical/Bumped(atom/movable/AM)
 	. = ..()
 	icon_state = base_icon_state
+	update_icon_state()
 	if(!ishuman(AM) && CheckHuman(AM))
 		return
 
@@ -263,7 +264,7 @@
 
 	playsound(get_turf(src),'sound/machines/buzz-sigh.ogg', 65, TRUE, 4)
 	COOLDOWN_START(src, virus_detected, 1 SECONDS)
-	flick("holo_medical-deny", src)
+	icon_state = "holo_medical-deny"
 	update_icon_state()
 
 /obj/structure/holosign/barrier/medical/proc/CheckHuman(mob/living/carbon/human/sickboi)
