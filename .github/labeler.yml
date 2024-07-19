@@ -1,19 +1,19 @@
 'TGUI':
   - changed-files:
-      - any-glob-to-any-file: ['tgui/**']
+      - any-glob-to-any-file: 'tgui/**'
 
 ':sound: Звук':
   - changed-files:
-      - any-glob-to-any-file: ['**/*.ogg']
+      - any-glob-to-any-file: '**/*.ogg'
 
 ':world_map: Изменение Карты':
   - all:
       - changed-files:
-          - any-glob-to-any-file: ['**/*.dmm']
+          - any-glob-to-any-file: '**/*.dmm'
 
 ':paintbrush: Спрайты':
   - changed-files:
-      - any-glob-to-any-file: ['**/*.dmi']
+      - any-glob-to-any-file: '**/*.dmi'
 
 ':guitar: Инструменты':
   - changed-files:
@@ -21,21 +21,21 @@
 
 ':floppy_disk: Изменение конфига':
   - changed-files:
-      - any-glob-to-any-file: ['config/**']
+      - any-glob-to-any-file: 'config/**'
 
 ':neckbeard: Документация':
   - changed-files:
-      - any-glob-to-any-file: ['**/*.md']
+      - any-glob-to-any-file: '**/*.md'
 
 ':cd: SQL':
   - changed-files:
-      - any-glob-to-any-file: ['SQL/**']
+      - any-glob-to-any-file: 'SQL/**'
 
 ':feelsgood: Частичная модульность':
   - all:
       - changed-files:
           - any-glob-to-any-file: ['code/**', 'icons/**', 'sounds/**', '_maps/map_files/**', 'tgui/**']
-          - any-glob-to-any-file: [modular_bandastation/**]
+          - any-glob-to-any-file: 'modular_bandastation/**'
       - base-branch: 'master'
       - head-branch: '!merge-upstream'
 
