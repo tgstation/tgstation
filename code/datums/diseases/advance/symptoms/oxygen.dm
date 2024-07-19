@@ -44,7 +44,7 @@
 				infected_mob.blood_volume += 1
 		else
 			if(prob(base_message_chance))
-				to_chat(infected_mob, span_notice("[pick("Your lungs feel great.", "You realize you haven't been breathing.", "You don't feel the need to breathe.")]"))
+				to_chat(infected_mob, span_notice("Your lungs feel great."))
 	return
 
 /datum/symptom/oxygen/on_stage_change(datum/disease/advance/A)
@@ -54,6 +54,7 @@
 	var/mob/living/carbon/M = A.affected_mob
 	if(A.stage >= 4)
 		ADD_TRAIT(M, TRAIT_NOBREATH, DISEASE_TRAIT)
+		to_chat(infected_mob, span_notice(pick("You realize you haven't been breathing.", "You don't feel the need to breathe.")))
 	else
 		REMOVE_TRAIT(M, TRAIT_NOBREATH, DISEASE_TRAIT)
 	return TRUE
