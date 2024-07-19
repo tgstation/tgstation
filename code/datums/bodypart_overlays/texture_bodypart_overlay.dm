@@ -19,5 +19,6 @@
 	return "[type]"
 
 /datum/bodypart_overlay/texture/spacey
+	blocks_emissive = EMISSIVE_BLOCK_NONE
 	texture_icon_state = "spacey"
 	texture_icon = 'icons/mob/human/textures.dmi'

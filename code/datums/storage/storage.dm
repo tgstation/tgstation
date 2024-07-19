@@ -1027,7 +1027,7 @@ GLOBAL_LIST_EMPTY(cached_storage_typecaches)
 		var/atom/movable/movable_loc = real_location
 		movable_loc.lose_active_storage(src)
 
-	if (isnull(storage_interfaces[to_hide]))
+	if (!length(storage_interfaces) || isnull(storage_interfaces[to_hide]))
 		return TRUE
 
 	is_using -= to_hide

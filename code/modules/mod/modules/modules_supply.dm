@@ -561,6 +561,7 @@
 	light_power = 1
 	light_color = COLOR_LIGHT_ORANGE
 	embed_type = null
+	can_hit_turfs = TRUE
 
 /obj/projectile/bullet/mining_bomb/Initialize(mapload)
 	. = ..()

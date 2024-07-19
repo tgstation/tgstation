@@ -4,7 +4,7 @@
 	/// Gives atoms moving over us the soapbox speech and takes it away when they leave
 	var/static/list/loc_connections = list(
 		COMSIG_ATOM_ENTERED = PROC_REF(on_loc_entered),
-		COMSIG_ATOM_EXITED = PROC_REF(on_loc_exited)
+		COMSIG_ATOM_EXITED = PROC_REF(on_loc_exited),
 	)
 
 /datum/component/soapbox/Initialize(...)
@@ -16,6 +16,8 @@
 ///Applies loud speech to our movable when entering the turf our parent is on
 /datum/component/soapbox/proc/on_loc_entered(datum/source, atom/movable/soapbox_arrive)
 	SIGNAL_HANDLER
+	if(QDELETED(soapbox_arrive))
+		return
 	RegisterSignal(soapbox_arrive, COMSIG_MOB_SAY, PROC_REF(soapbox_speech))
 	soapboxers += soapbox_arrive
 
