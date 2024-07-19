@@ -281,7 +281,7 @@
 	var/datum/species/original_species = /datum/species/human
 	var/original_name
 
-/datum/mutation/human/race/on_acquiring(mob/living/carbon/human/owner)
+/datum/mutation/human/race/on_acquiring(mob/living/carbon/human/owner, forced = FALSE)
 	if(ismonkey(owner))
 		return TRUE
 	. = ..()
