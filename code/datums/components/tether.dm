@@ -34,7 +34,9 @@
 
 /datum/component/tether/RegisterWithParent()
 	RegisterSignal(parent, COMSIG_MOVABLE_PRE_MOVE, PROC_REF(check_tether))
+	RegisterSignal(parent, COMSIG_MOVABLE_MOVED, PROC_REF(check_snap))
 	RegisterSignal(tether_target, COMSIG_MOVABLE_PRE_MOVE, PROC_REF(check_tether))
+	RegisterSignal(tether_target, COMSIG_MOVABLE_MOVED, PROC_REF(check_snap))
 	RegisterSignal(tether_target, COMSIG_QDELETING, PROC_REF(on_delete))
 	RegisterSignal(tether_beam, COMSIG_CLICK, PROC_REF(beam_click))
 	// Also snap if the beam gets deleted, more of a backup check than anything
@@ -45,9 +47,9 @@
 		RegisterSignal(embed_target, COMSIG_QDELETING, PROC_REF(on_delete))
 
 /datum/component/tether/UnregisterFromParent()
-	UnregisterSignal(parent, COMSIG_MOVABLE_PRE_MOVE)
+	UnregisterSignal(parent, list(COMSIG_MOVABLE_PRE_MOVE, COMSIG_MOVABLE_MOVED))
 	if (!QDELETED(tether_target))
-		UnregisterSignal(tether_target, list(COMSIG_MOVABLE_PRE_MOVE, COMSIG_QDELETING))
+		UnregisterSignal(tether_target, list(COMSIG_MOVABLE_PRE_MOVE, COMSIG_MOVABLE_MOVED, COMSIG_QDELETING))
 	if (!QDELETED(tether_beam))
 		UnregisterSignal(tether_beam, list(COMSIG_CLICK, COMSIG_QDELETING))
 		qdel(tether_beam)
@@ -56,6 +58,9 @@
 
 /datum/component/tether/proc/check_tether(atom/source, new_loc)
 	SIGNAL_HANDLER
+
+	if (check_snap())
+		return
 
 	if (!isturf(new_loc))
 		to_chat(source, span_warning("[tether_name] prevents you from entering [new_loc]!"))
@@ -99,6 +104,15 @@
 	if (isnull(handler))
 		return
 	handler.remove_angle_force(get_angle(anchor, source))
+
+/datum/component/tether/proc/check_snap()
+	SIGNAL_HANDLER
+
+	var/atom/atom_target = parent
+	// Something broke us out, snap the tether
+	if (get_dist(atom_target, tether_target) > cur_dist + 1 || !isturf(atom_target.loc) || !isturf(tether_target.loc) || atom_target.z != tether_target.z)
+		atom_target.visible_message(span_warning("[atom_target]'s [tether_name] snaps!"), span_userdanger("Your [tether_name] snaps!"), span_hear("You hear a cable snapping."))
+		qdel(src)
 
 /datum/component/tether/proc/on_delete()
 	SIGNAL_HANDLER
