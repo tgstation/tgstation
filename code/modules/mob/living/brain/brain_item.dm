@@ -42,8 +42,8 @@
 	var/brain_size = 1
 	/// Can this brain become smooth after it gets washed
 	var/can_smoothen_out = TRUE
-	/// We got smooth
-	var/smooth = FALSE
+	/// We got smooth from being washed
+	var/smooth_brain = FALSE
 
 /obj/item/organ/internal/brain/Initialize(mapload)
 	. = ..()
@@ -52,7 +52,7 @@
 
 /obj/item/organ/internal/brain/examine()
 	. = ..()
-	if (smooth)
+	if (smooth_brain)
 		. += span_notice("All the pesky wrinkles are gone. Now it just needs a good drying...")
 	if(brain_size < 1)
 		. += span_notice("It is a bit on the smaller side...")
@@ -136,6 +136,10 @@
 	if(!special)
 		organ_owner.update_body_parts()
 		organ_owner.clear_mood_event("brain_damage")
+
+/obj/item/organ/internal/brain/update_icon_state()
+	icon_state = "[initial(icon_state)][smooth_brain ? "-smooth_brain" : ""]"
+	return ..()
 
 /obj/item/organ/internal/brain/proc/transfer_identity(mob/living/L)
 	name = "[L.name]'s [initial(name)]"
@@ -379,9 +383,8 @@
 
 /obj/item/organ/internal/brain/machine_wash(obj/machinery/washing_machine/brainwasher)
 	. = ..()
-	if (can_smoothen_out && !smooth)
-		icon_state = initial(icon_state) + "-smooth"
-		smooth = TRUE
+	if (can_smoothen_out && !smooth_brain)
+		smooth_brain = TRUE
 		update_appearance()
 
 	if(HAS_TRAIT(brainwasher, TRAIT_BRAINWASHING))
@@ -505,6 +508,11 @@
 	if(args.len > 2)
 		arguments = args.Copy(3)
 	. = brain_gain_trauma(trauma, resilience, arguments)
+
+/obj/item/organ/internal/brain/vv_edit_var(var_name, var_value)
+	. = ..()
+	if(var_name == NAMEOF(src, smooth_brain))
+		update_appearance()
 
 //Direct trauma gaining proc. Necessary to assign a trauma to its brain. Avoid using directly.
 /obj/item/organ/internal/brain/proc/brain_gain_trauma(datum/brain_trauma/trauma, resilience, list/arguments)
