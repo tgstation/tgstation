@@ -1,25 +1,24 @@
 import { exhaustiveCheck } from 'common/exhaustive';
 import { useState } from 'react';
 
-import { useBackend } from '../../backend';
-import { Button, Stack } from '../../components';
-import { Window } from '../../layouts';
-import { AntagsPage } from './AntagsPage';
-import { PreferencesMenuData } from './data';
-import { MainPage } from './Effigy/MainPage';
-import { JobsPage } from './JobsPage';
-import { LoadoutPage } from './loadout/index';
-import { PageButton } from './PageButton';
-import { QuirksPage } from './QuirksPage';
-import { SpeciesPage } from './SpeciesPage';
-
+import { useBackend } from '../../../backend';
+import { Flex, SideDropdown, Stack } from '../../../components';
+import { Window } from '../../../layouts';
+import { AntagsPage } from '../AntagsPage';
+import { PreferencesMenuData } from '../data';
+import { JobsPage } from '../JobsPage';
+import { PageButton } from '../PageButton';
+import { QuirksPage } from '../QuirksPage';
+import { SpeciesPage } from '../SpeciesPage';
+import { MainPage } from './MainPage';
 enum Page {
   Antags,
   Main,
   Jobs,
+  Limbs,
+  Languages,
   Species,
   Quirks,
-  Loadout,
 }
 
 const CharacterProfiles = (props: {
@@ -27,24 +26,24 @@ const CharacterProfiles = (props: {
   onClick: (index: number) => void;
   profiles: (string | null)[];
 }) => {
-  const { profiles } = props;
-
+  const { profiles, activeSlot, onClick } = props;
   return (
-    <Stack justify="center" wrap>
-      {profiles.map((profile, slot) => (
-        <Stack.Item key={slot}>
-          <Button
-            selected={slot === props.activeSlot}
-            onClick={() => {
-              props.onClick(slot);
-            }}
-            fluid
-          >
-            {profile ?? 'New Character'}
-          </Button>
-        </Stack.Item>
-      ))}
-    </Stack>
+    <Flex align="center" justify="left">
+      <Flex.Item width="336px">
+        <SideDropdown
+          width="100%"
+          selected={activeSlot}
+          displayText={profiles[activeSlot]}
+          options={profiles.map((profile, slot) => ({
+            value: slot,
+            displayText: profile ?? 'New Character',
+          }))}
+          onSelected={(slot) => {
+            onClick(slot);
+          }}
+        />
+      </Flex.Item>
+    </Flex>
   );
 };
 
@@ -77,39 +76,28 @@ export const CharacterPreferenceWindow = (props) => {
     case Page.Quirks:
       pageContents = <QuirksPage />;
       break;
-
-    case Page.Loadout:
-      pageContents = <LoadoutPage />;
-      break;
-
     default:
       exhaustiveCheck(currentPage);
   }
 
   return (
-    <Window title="Character Preferences" width={1143} height={820}>
-      <Window.Content scrollable>
+    <Window title="Character Preferences" width={1143} height={754}>
+      <Window.Content>
         <Stack vertical fill>
           <Stack.Item>
-            <CharacterProfiles
-              activeSlot={data.active_slot - 1}
-              onClick={(slot) => {
-                act('change_slot', {
-                  slot: slot + 1,
-                });
-              }}
-              profiles={data.character_profiles}
-            />
-          </Stack.Item>
-          {!data.content_unlocked && (
-            <Stack.Item align="center">
-              Buy BYOND premium for more slots!
-            </Stack.Item>
-          )}
-          <Stack.Divider />
-          <Stack.Item>
             <Stack fill>
-              <Stack.Item grow>
+              <Stack.Item width="224.5px" fontSize="14px">
+                <CharacterProfiles
+                  activeSlot={data.active_slot - 1}
+                  onClick={(slot) => {
+                    act('change_slot', {
+                      slot: slot + 1,
+                    });
+                  }}
+                  profiles={data.character_profiles}
+                />
+              </Stack.Item>
+              <Stack.Item grow={1} ml="10px">
                 <PageButton
                   currentPage={currentPage}
                   page={Page.Main}
@@ -120,17 +108,7 @@ export const CharacterPreferenceWindow = (props) => {
                 </PageButton>
               </Stack.Item>
 
-              <Stack.Item grow>
-                <PageButton
-                  currentPage={currentPage}
-                  page={Page.Loadout}
-                  setPage={setCurrentPage}
-                >
-                  Loadout
-                </PageButton>
-              </Stack.Item>
-
-              <Stack.Item grow>
+              <Stack.Item grow={1}>
                 <PageButton
                   currentPage={currentPage}
                   page={Page.Jobs}
@@ -143,8 +121,27 @@ export const CharacterPreferenceWindow = (props) => {
                   Occupations
                 </PageButton>
               </Stack.Item>
+              <Stack.Item grow={1}>
+                <PageButton
+                  currentPage={currentPage}
+                  page={Page.Limbs}
+                  setPage={setCurrentPage}
+                >
+                  Augments+
+                </PageButton>
+              </Stack.Item>
 
-              <Stack.Item grow>
+              <Stack.Item grow={1}>
+                <PageButton
+                  currentPage={currentPage}
+                  page={Page.Languages}
+                  setPage={setCurrentPage}
+                >
+                  Languages
+                </PageButton>
+              </Stack.Item>
+
+              <Stack.Item grow={1}>
                 <PageButton
                   currentPage={currentPage}
                   page={Page.Antags}
@@ -154,7 +151,7 @@ export const CharacterPreferenceWindow = (props) => {
                 </PageButton>
               </Stack.Item>
 
-              <Stack.Item grow>
+              <Stack.Item grow={1}>
                 <PageButton
                   currentPage={currentPage}
                   page={Page.Quirks}
@@ -165,8 +162,8 @@ export const CharacterPreferenceWindow = (props) => {
               </Stack.Item>
             </Stack>
           </Stack.Item>
-          <Stack.Divider />
-          <Stack.Item>{pageContents}</Stack.Item>
+
+          <Stack.Item mt={1}>{pageContents}</Stack.Item>
         </Stack>
       </Window.Content>
     </Window>

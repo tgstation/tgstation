@@ -40,6 +40,7 @@ export { ProgressBar } from './ProgressBar';
 export { RestrictedInput } from './RestrictedInput';
 export { RoundGauge } from './RoundGauge';
 export { Section } from './Section';
+export { SideDropdown } from './SideDropdown';
 export { Slider } from './Slider';
 export { Stack } from './Stack';
 export { StyleableSection } from './StyleableSection';
