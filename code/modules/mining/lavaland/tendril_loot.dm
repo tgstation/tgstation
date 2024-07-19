@@ -251,7 +251,6 @@
 	to_chat(user, span_notice("You return the wisp to the lantern."))
 	icon_state = "lantern-blue-on"
 	inhand_icon_state = "lantern-blue-on"
-	wisp.stop_orbit()
 	wisp.forceMove(src)
 	SSblackbox.record_feedback("tally", "wisp_lantern", 1, "Returned")
 
