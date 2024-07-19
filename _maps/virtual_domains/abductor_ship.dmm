@@ -267,7 +267,7 @@
 /area/virtual_domain)
 "KX" = (
 /turf/open/floor/holofloor/hyperspace,
-/area/space/virtural_domain)
+/area/space/virtual_domain)
 "Lz" = (
 /obj/structure/table/abductor,
 /obj/item/melee/baton/abductor{

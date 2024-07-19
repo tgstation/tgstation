@@ -43,13 +43,13 @@
 	icon_state = "bit_ice"
 	area_flags = UNIQUE_AREA | NOTELEPORT | EVENT_PROTECTED | HIDDEN_AREA
 
-/area/ruin/space/virtural_domain
+/area/ruin/space/virtual_domain
 	name = "Virtual Domain Unexplored Location"
 	icon = 'icons/area/areas_station.dmi'
 	icon_state = "bit_ruin"
 	area_flags = UNIQUE_AREA | NOTELEPORT | EVENT_PROTECTED | HIDDEN_AREA
 
-/area/space/virtural_domain
+/area/space/virtual_domain
 	name = "Virtual Domain Space"
 	icon = 'icons/area/areas_station.dmi'
 	icon_state = "bit_space"

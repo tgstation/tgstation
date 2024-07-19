@@ -9,20 +9,20 @@
 "bs" = (
 /obj/effect/turf_decal/sand,
 /turf/open/floor/iron/airless,
-/area/ruin/space/virtural_domain)
+/area/ruin/space/virtual_domain)
 "bF" = (
 /obj/effect/turf_decal/sand/plating,
 /turf/open/floor/plating{
 	initial_gas_mix = "TEMP=2.7"
 	},
-/area/ruin/space/virtural_domain)
+/area/ruin/space/virtual_domain)
 "bJ" = (
 /turf/closed/wall/rust,
 /area/virtual_domain)
 "cz" = (
 /obj/effect/baseturf_helper/virtual_domain,
 /turf/open/misc/asteroid/airless,
-/area/ruin/space/virtural_domain)
+/area/ruin/space/virtual_domain)
 "cL" = (
 /obj/structure/table/reinforced,
 /obj/item/reagent_containers/cup/glass/drinkingglass{
@@ -41,7 +41,7 @@
 /turf/open/floor/iron/airless{
 	icon_state = "stairs-l"
 	},
-/area/ruin/space/virtural_domain)
+/area/ruin/space/virtual_domain)
 "eF" = (
 /turf/closed/indestructible/binary,
 /area/space)
@@ -67,7 +67,7 @@
 /obj/effect/turf_decal/sand,
 /obj/effect/turf_decal/sand,
 /turf/open/floor/iron/airless,
-/area/ruin/space/virtural_domain)
+/area/ruin/space/virtual_domain)
 "iP" = (
 /obj/machinery/suit_storage_unit/standard_unit,
 /turf/template_noop,
@@ -85,7 +85,7 @@
 /turf/open/floor/iron/airless{
 	icon_state = "stairs-r"
 	},
-/area/ruin/space/virtural_domain)
+/area/ruin/space/virtual_domain)
 "ll" = (
 /obj/structure/sign/poster/contraband/clown/directional/north,
 /turf/open/floor/iron/vaporwave,
@@ -122,7 +122,7 @@
 /turf/open/floor/plating{
 	initial_gas_mix = "TEMP=2.7"
 	},
-/area/ruin/space/virtural_domain)
+/area/ruin/space/virtual_domain)
 "xb" = (
 /obj/structure/chair/stool/directional/west,
 /turf/open/floor/iron/vaporwave,
@@ -140,7 +140,7 @@
 /turf/open/floor/plating{
 	initial_gas_mix = "TEMP=2.7"
 	},
-/area/ruin/space/virtural_domain)
+/area/ruin/space/virtual_domain)
 "Cq" = (
 /obj/item/instrument/eguitar,
 /turf/open/floor/holofloor/beach,
@@ -163,7 +163,7 @@
 /turf/open/floor/iron/airless{
 	icon_state = "recharge_floor_asteroid"
 	},
-/area/ruin/space/virtural_domain)
+/area/ruin/space/virtual_domain)
 "HA" = (
 /turf/open/floor/holofloor/beach/coast,
 /area/virtual_domain)
@@ -189,7 +189,7 @@
 /turf/open/floor/iron/airless{
 	icon_state = "stairs-m"
 	},
-/area/ruin/space/virtural_domain)
+/area/ruin/space/virtual_domain)
 "LG" = (
 /obj/effect/baseturf_helper/virtual_domain,
 /turf/template_noop,
@@ -197,7 +197,7 @@
 "LJ" = (
 /obj/structure/lattice,
 /turf/open/misc/asteroid/airless,
-/area/ruin/space/virtural_domain)
+/area/ruin/space/virtual_domain)
 "LP" = (
 /obj/structure/flora/tree/palm,
 /obj/machinery/light/directional/east,
@@ -213,14 +213,14 @@
 "NT" = (
 /obj/effect/baseturf_helper/virtual_domain,
 /turf/open/space/basic,
-/area/space/virtural_domain)
+/area/space/virtual_domain)
 "Pv" = (
 /turf/open/space/basic,
-/area/space/virtural_domain)
+/area/space/virtual_domain)
 "Qh" = (
 /obj/structure/closet/crate/bin,
 /turf/open/misc/asteroid/airless,
-/area/ruin/space/virtural_domain)
+/area/ruin/space/virtual_domain)
 "Uy" = (
 /obj/modular_map_root/safehouse{
 	key = "shuttle_space"
@@ -233,18 +233,18 @@
 /turf/open/floor/plating{
 	initial_gas_mix = "TEMP=2.7"
 	},
-/area/ruin/space/virtural_domain)
+/area/ruin/space/virtual_domain)
 "UV" = (
 /obj/structure/lattice,
 /turf/open/floor/plating/airless,
-/area/ruin/space/virtural_domain)
+/area/ruin/space/virtual_domain)
 "Vc" = (
 /obj/structure/flora/tree/palm,
 /turf/open/misc/asteroid/airless,
-/area/ruin/space/virtural_domain)
+/area/ruin/space/virtual_domain)
 "Vp" = (
 /turf/open/misc/asteroid/airless,
-/area/ruin/space/virtural_domain)
+/area/ruin/space/virtual_domain)
 "XJ" = (
 /obj/structure/fans/tiny,
 /obj/machinery/door/airlock/hatch,
@@ -260,7 +260,7 @@
 /turf/open/floor/plating{
 	initial_gas_mix = "TEMP=2.7"
 	},
-/area/ruin/space/virtural_domain)
+/area/ruin/space/virtual_domain)
 "YE" = (
 /mob/living/basic/butterfly,
 /turf/open/floor/iron/vaporwave,

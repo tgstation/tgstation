@@ -90,7 +90,7 @@
 /area/virtual_domain)
 "B" = (
 /turf/open/space,
-/area/space/virtural_domain)
+/area/space/virtual_domain)
 "F" = (
 /obj/structure/closet/crate/internals,
 /obj/item/gun/ballistic/revolver/mateba,

@@ -4,7 +4,7 @@
 /area/virtual_domain/fullbright)
 "c" = (
 /turf/open/space/basic,
-/area/space/virtural_domain)
+/area/space/virtual_domain)
 "e" = (
 /obj/effect/baseturf_helper/virtual_domain,
 /turf/closed/mineral/random,

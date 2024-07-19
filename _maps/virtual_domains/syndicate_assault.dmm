@@ -370,7 +370,7 @@
 /area/virtual_domain/protected_space)
 "nB" = (
 /turf/closed/mineral/random,
-/area/ruin/space/virtural_domain)
+/area/ruin/space/virtual_domain)
 "nG" = (
 /obj/machinery/light/directional/south,
 /turf/open/floor/mineral/plastitanium/red,
@@ -434,7 +434,7 @@
 /area/virtual_domain)
 "qx" = (
 /turf/open/space/basic,
-/area/space/virtural_domain)
+/area/space/virtual_domain)
 "qU" = (
 /obj/structure/sign/poster/contraband/c20r,
 /turf/closed/wall/r_wall/syndicate,
@@ -576,7 +576,7 @@
 /area/virtual_domain)
 "we" = (
 /turf/closed/mineral/random/high_chance,
-/area/ruin/space/virtural_domain)
+/area/ruin/space/virtual_domain)
 "wK" = (
 /obj/machinery/door/airlock/grunge{
 	name = "Syndicate Ship Airlock"
@@ -645,7 +645,7 @@
 /area/virtual_domain)
 "yZ" = (
 /turf/closed/mineral,
-/area/ruin/space/virtural_domain)
+/area/ruin/space/virtual_domain)
 "zi" = (
 /obj/machinery/vending/cigarette/syndicate,
 /turf/open/floor/mineral/plastitanium,
@@ -672,7 +672,7 @@
 /obj/structure/lattice/catwalk,
 /obj/structure/cable,
 /turf/open/space/basic,
-/area/space/virtural_domain)
+/area/space/virtual_domain)
 "BN" = (
 /obj/structure/transit_tube/crossing,
 /turf/template_noop,
@@ -1042,7 +1042,7 @@
 "QG" = (
 /obj/structure/tank_dispenser/oxygen,
 /turf/closed/mineral/random,
-/area/ruin/space/virtural_domain)
+/area/ruin/space/virtual_domain)
 "QX" = (
 /obj/effect/landmark/bitrunning/mob_segment,
 /turf/open/floor/mineral/plastitanium,

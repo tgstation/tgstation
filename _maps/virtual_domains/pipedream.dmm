@@ -24,7 +24,7 @@
 /area/virtual_domain)
 "aK" = (
 /turf/open/space/basic,
-/area/space/virtural_domain)
+/area/space/virtual_domain)
 "aL" = (
 /obj/effect/turf_decal/tile/yellow/half/contrasted,
 /turf/open/floor/iron,
@@ -744,7 +744,7 @@
 "wl" = (
 /obj/item/shard,
 /turf/open/space/basic,
-/area/space/virtural_domain)
+/area/space/virtual_domain)
 "wm" = (
 /obj/effect/turf_decal/tile/yellow/half/contrasted{
 	dir = 1
@@ -897,7 +897,7 @@
 "Av" = (
 /obj/item/stack/rods/two,
 /turf/open/space/basic,
-/area/space/virtural_domain)
+/area/space/virtual_domain)
 "Aw" = (
 /obj/structure/lattice/catwalk{
 	name = "industrial lift"
