@@ -284,10 +284,10 @@
 	. = ..()
 	if(!ismob(thing))
 		return
-	RegisterSignal(thing, COMSIG_MOB_UPDATE_SIGHT, PROC_REF(update_user_sight))
 	var/mob/being = thing
-	to_chat(thing, span_notice("The wisp enhances your vision."))
-	ADD_TRAIT(thing, TRAIT_THERMAL_VISION, REF(src))
+	RegisterSignal(being, COMSIG_MOB_UPDATE_SIGHT, PROC_REF(update_user_sight))
+	to_chat(being, span_notice("The wisp enhances your vision."))
+	ADD_TRAIT(being, TRAIT_THERMAL_VISION, REF(src))
 	being.update_sight()
 
 /obj/effect/wisp/stop_orbit(datum/component/orbiter/orbits)
