@@ -234,6 +234,7 @@
 	// Continue to placing if we don't do anything else
 	if(deck_act_value != NONE)
 		return deck_act_value
+
 	if(!user.combat_mode)
 		return table_place_act(user, tool, modifiers)
 
