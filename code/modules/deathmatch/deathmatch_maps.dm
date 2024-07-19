@@ -187,9 +187,16 @@
 
 /datum/lazy_template/deathmatch/race_wars
 	name = "Race Wars"
-	desc = "Choose your favorite species and prove its superiority against all the other, lamer species. And also anyone else playing as your species."
+	desc = "Choose your favorite species and prove its superiority against all the other, lamer species. And also your own."
 	max_players = 8
-	allowed_loadouts = list(/datum/outfit/deathmatch_loadout/assistant)
+	allowed_loadouts = list(
+		/datum/outfit/deathmatch_loadout/humanity,
+		/datum/outfit/deathmatch_loadout/lizardkind,
+		/datum/outfit/deathmatch_loadout/mothman,
+		/datum/outfit/deathmatch_loadout/ethereal,
+		/datum/outfit/deathmatch_loadout/plasmamen,
+		/datum/outfit/deathmatch_loadout/felinid,
+	)
 	map_name = "race_wars"
 	key = "race_wars"
 

@@ -14,3 +14,6 @@
 		"Wait until they're grouped up...",
 	)
 
+/obj/item/book/granter/action/spell/lightningbolt/lightning_fast
+	reading_time = 1 SECONDS
+	pages_to_mastery = 1

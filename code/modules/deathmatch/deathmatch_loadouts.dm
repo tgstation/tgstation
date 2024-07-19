@@ -544,26 +544,31 @@
 		/datum/action/cooldown/spell/conjure/simian,
 	)
 
-// Moth: Engineer, Pirate, Pacifism
-// Ethereal: Nomad, Electricity, Medieval
-// Plasmaman: Plasma, Fire, Skeleton
+//bridge
+//maint inbetween both
+//jannie
+//medbay
+//robotics
+//atmos
+//dorms >:3
 
-// Human: Station, Superiority, Silicon
-// Bridge Assistant covers all niches of humanity pretty well.
 /datum/outfit/deathmatch_loadout/humanity
 	name = "Deathmatch: Human Race"
 	display_name = "Humanity"
 	desc = "The most ambitious and successful race. Or just the most rapacious, depending on who you ask."
+	species_override = /datum/species/human
 
-	uniform = /obj/item/clothing/under/trek/command/next
-	neck = /obj/item/clothing/neck/large_scarf/blue
-	belt = /obj/item/storage/belt/utility/full/inducer
-	ears = /obj/item/radio/headset/headset_com
-	glasses = /obj/item/clothing/glasses/sunglasses
-	gloves = /obj/item/clothing/gloves/fingerless
 	head = /obj/item/clothing/head/soft/black
-	shoes = /obj/item/clothing/shoes/sneakers/black
+	glasses = /obj/item/clothing/glasses/sunglasses
+	ears = /obj/item/radio/headset/headset_com
+	neck = /obj/item/clothing/neck/large_scarf/blue
+	//suit
+	uniform = /obj/item/clothing/under/trek/command/next
 	l_pocket = /obj/item/gun/energy/e_gun/mini
+	r_pocket = /obj/item/extinguisher/mini
+	gloves = /obj/item/clothing/gloves/fingerless
+	belt = /obj/item/storage/belt/utility/full/inducer
+	shoes = /obj/item/clothing/shoes/sneakers/black
 
 // Lizard: Desert, Soldier, Trash
 
@@ -571,6 +576,7 @@
 	name = "Deathmatch: Lizard Race"
 	display_name = "Lizardfolk"
 	desc = "They may be heavily discrimated against, they may be most often seen doing menial activities, but at least they, uh, uhh..."
+	species_override = /datum/species/lizard
 
 	head = /obj/item/clothing/head/soft/purple
 	suit = /obj/item/clothing/suit/caution
@@ -578,9 +584,9 @@
 	uniform = /obj/item/clothing/under/rank/civilian/janitor
 	l_pocket = /obj/item/ammo_casing/junk/ripper
 	r_pocket = /obj/item/ammo_casing/junk/reaper
+	gloves = /obj/item/clothing/gloves/color/black
 	belt = /obj/item/storage/belt/janitor/full
 	shoes = /obj/item/clothing/shoes/chameleon/noslip
-	gloves = /obj/item/clothing/gloves/color/black
 	r_hand  = /obj/item/mop/advanced
 	backpack_contents = list(
 		/obj/item/toy/plush/lizard_plushie/green,
@@ -595,17 +601,19 @@
 	name = "Deathmatch: Moth Race"
 	display_name = "Mothmen"
 	desc = "An innocent and fluffy visage hides the combat ability of a particularly hairy kitten."
+	species_override = /datum/species/moth
 
-	id_trim = /datum/id_trim/job/medical_doctor
-	uniform = /obj/item/clothing/under/rank/medical/scrubs/blue
+	head = /obj/item/clothing/head/utility/head_mirror
+	glasses = /obj/item/clothing/glasses/hud/health
 	suit = /obj/item/clothing/suit/hooded/wintercoat/medical
 	suit_store = /obj/item/flashlight/pen/paramedic
+	id_trim = /datum/id_trim/job/medical_doctor
+	uniform = /obj/item/clothing/under/rank/medical/scrubs/blue
 	belt = /obj/item/storage/belt/medical/paramedic
-	head = /obj/item/clothing/head/utility/head_mirror
 	shoes = /obj/item/clothing/shoes/sneakers/white
-	l_hand = /obj/item/storage/medkit/surgery
+	l_hand = /obj/item/circular_saw
 
-	backpack = /obj/item/storage/backpack/medic
+	back = /obj/item/storage/backpack/medic
 
 	backpack_contents = list(
 		/obj/item/toy/plush/moth,
@@ -616,27 +624,75 @@
 		/obj/item/grown/peaceflower
 	)
 
+// Roboticist??
 /datum/outfit/deathmatch_loadout/ethereal
 	name = "Deathmatch: Ethereal Race"
 	display_name = "Etherealkind"
-	desc = "Who are these guys??"
+	desc = "Prepare to be SHOCKED as you are reminded of this race's existence."
+	species_override = /datum/species/ethereal
 
-	id_trim = /datum/id_trim/job/medical_doctor
-	uniform = /obj/item/clothing/under/rank/medical/scrubs/blue
-	suit = /obj/item/clothing/suit/hooded/wintercoat/medical
-	suit_store = /obj/item/flashlight/pen/paramedic
-	belt = /obj/item/storage/belt/medical/paramedic
-	head = /obj/item/clothing/head/utility/head_mirror
-	shoes = /obj/item/clothing/shoes/sneakers/white
-	l_hand = /obj/item/storage/medkit/surgery
+	head = /obj/item/clothing/head/soft/black
+	id_trim = /datum/id_trim/job/roboticist
+	suit = /obj/item/clothing/suit/toggle/labcoat/roboticist
+	suit_store = null
+	uniform = /obj/item/clothing/under/rank/rnd/roboticist
+	l_pocket = /obj/item/assembly/flash
+	belt = /obj/item/storage/belt/utility/full
+	shoes = /obj/item/clothing/shoes/sneakers/black
+	l_hand = /obj/item/gun/energy/tesla_cannon
 
-	backpack = /obj/item/storage/backpack/medic
+	back = /obj/item/storage/backpack/science
 
 	backpack_contents = list(
-		/obj/item/toy/plush/moth,
-		/obj/item/storage/medkit/brute,
-		/obj/item/storage/medkit/burn,
-		/obj/item/statuebust/hippocratic
-		/obj/item/grown/peaceflower,
-		/obj/item/grown/peaceflower
+		/obj/item/dnainjector/shock,
+		/obj/item/book/granter/action/spell/lightningbolt/lightning_fast,
+		/obj/item/etherealballdeployer
 	)
+
+/datum/outfit/deathmatch_loadout/plasmamen
+	name = "Deathmatch: Plasmaman Race"
+	display_name = "Plasmamen"
+	desc = "Burn baby burn!"
+	species_override = /datum/species/plasmaman
+
+	head = /obj/item/clothing/head/helmet/space/plasmaman/atmospherics
+	suit = /obj/item/clothing/suit/hazardvest
+	suit_store = /obj/item/flashlight
+	uniform = /obj/item/clothing/under/plasmaman/atmospherics
+	id_trim = /datum/id_trim/job/atmospheric_technician
+	belt = /obj/item/storage/belt/utility/atmostech
+	gloves = /obj/item/clothing/gloves/color/plasmaman/atmos
+	shoes = /obj/item/clothing/shoes/workboots
+	l_hand = /obj/item/flamethrower
+
+	back = /obj/item/storage/backpack/industrial
+
+	backpack_contents = list(
+		/obj/item/item/tank/internals/plasma,
+		/obj/item/item/tank/internals/plasma,
+		/obj/item/stack/sheet/mineral/uranium/half,
+		/obj/item/stack/sheet/mineral/plasma/half,
+		/obj/item/reagent_containers/condiment/milk,
+		/obj/item/storage/medkit/burn,
+		/obj/item/melee/baton/security,//unloaded
+		/obj/item/stock_parts/cell/high,
+		/obj/item/reagent_containers/syringe/plasma
+	)
+
+/datum/outfit/deathmatch_loadout/felinid
+	name = "Deathmatch: Felinid Race"
+	display_name = "Felinids"
+	desc = "Strictly inferior to humans in every way."
+	species_override = /datum/species/felinid
+
+	head = /obj/item/clothing/head/soft/rainbow
+	glasses = null
+	ears = /obj/item/radio/headset
+	neck = /obj/item/clothing/neck/petcollar
+	//suit
+	uniform = /obj/item/clothing/under/color/rainbow
+	l_pocket = /obj/item/toy/cattoy
+	r_pocket = /obj/item/restraints/handcuffs/fake
+	gloves = /obj/item/clothing/gloves/color/rainbow
+	belt = /obj/item/melee/curator_whip
+	shoes = /obj/item/clothing/shoes/sneakers/rainbow
