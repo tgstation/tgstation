@@ -8,7 +8,7 @@
 
 /datum/element/on_hit_effect/Attach(datum/target)
 	. = ..()
-	if(!HAS_TRAIT(target, TRAIT_WADDLING))
+	if(!HAS_TRAIT(target, TRAIT_ON_HIT_EFFECT))
 		stack_trace("[type] added to [target] without adding TRAIT_ON_HIT_EFFECT first. Please use AddElementTrait instead.")
 	if(ismachinery(target) || isstructure(target) || isgun(target) || isprojectilespell(target))
 		RegisterSignal(target, COMSIG_PROJECTILE_ON_HIT, PROC_REF(on_projectile_hit))
