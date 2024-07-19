@@ -57,8 +57,7 @@
 	trail.auto_process = FALSE
 	trail.set_up(src)
 	trail.start()
-	// todo
-	//START_PROCESSING(SSnewtonian_movement, src)
+	START_PROCESSING(SSnewtonian_movement, src)
 
 /obj/vehicle/sealed/space_pod/Destroy()
 	. = ..()
@@ -89,7 +88,7 @@
 		if (!braking)
 			return
 
-	drift_handler.stabilize_drift(dir2angle(dir), 0, stabilizer_force)
+	drift_handler.stabilize_drift(target_force = 0, stabilization_force = stabilizer_force)
 
 
 /obj/vehicle/sealed/space_pod/vehicle_move(direction)
@@ -104,7 +103,7 @@
 		return try_step_multiz(direction)
 // may or may not work havent tested
 	setDir(direction)
-	newtonian_move(dir2angle(direction), drift_force = force_per_move, controlled_cap = max_speed)
+	newtonian_move(dir2angle(direction), instant = TRUE, drift_force = force_per_move, controlled_cap = max_speed)
 
 /obj/vehicle/sealed/space_pod/mob_enter(mob/mob, silent)
 	. = ..()
@@ -121,14 +120,14 @@
 
 // atmos
 /obj/vehicle/sealed/space_pod/proc/cycle_tank_air(to_tank = FALSE)
-	if(!isnull(cabin_air_tank))
+	if(isnull(cabin_air_tank))
 		return
 	var/datum/gas_mixture/from = to_tank ? cabin_air : cabin_air_tank.return_air()
-	var/datum/gas_mixture/to = to_tank ? cabin_air_tank.return_air() : cabin_air
+	var/datum/gas_mixture/target = to_tank ? cabin_air_tank.return_air() : cabin_air
 	var/datum/gas_mixture/removed = from.remove(from.total_moles())
 	if(!removed)
 		return
-	to.merge(removed)
+	target.merge(removed)
 
 /obj/vehicle/sealed/space_pod/remove_air(amount)
 	return !isnull(cabin_air_tank) ? cabin_air.remove(amount) : ..()
