@@ -1607,7 +1607,6 @@
 		return
 	exposed_human.set_facial_haircolor("#9922ff", update = FALSE)
 	exposed_human.set_haircolor(color, update = TRUE)
-	exposed_human.update_body_parts()
 
 /datum/reagent/medicine/polypyr/overdose_process(mob/living/affected_mob, seconds_per_tick, times_fired)
 	. = ..()

@@ -231,6 +231,47 @@
 	update_lips(null, null, update = TRUE)
 	return TRUE
 
+/// Helper to update a bunch of hair stuff at once
+/mob/living/proc/set_hair_and_style(
+	new_style,
+	new_color,
+	new_grad_style,
+	new_grad_color,
+	new_facial_style,
+	new_facial_color,
+	new_facial_grad_style,
+	new_facial_grad_color,
+)
+	return
+
+/mob/living/carbon/human/set_hair_and_style(
+	new_style,
+	new_color,
+	new_grad_style,
+	new_grad_color,
+	new_facial_style,
+	new_facial_color,
+	new_facial_grad_style,
+	new_facial_grad_color,
+)
+	if(new_style)
+		set_hairstyle(new_style, update = FALSE)
+	if(new_color)
+		set_haircolor(new_color, update = FALSE)
+	if(new_grad_style)
+		set_hair_gradient_style(new_grad_style, update = FALSE)
+	if(new_grad_color)
+		set_hair_gradient_color(new_grad_color, update = FALSE)
+	if(new_facial_style)
+		set_facial_hairstyle(new_facial_style, update = FALSE)
+	if(new_facial_color)
+		set_facial_haircolor(new_facial_color, FALSE, update = FALSE)
+	if(new_facial_grad_style)
+		set_facial_hair_gradient_style(new_facial_grad_style, update = FALSE)
+	if(new_facial_grad_color)
+		set_facial_hair_gradient_color(new_facial_grad_color, update = FALSE)
+	update_body_parts(TRUE)
+
 /**
  * Set the hair style of a human.
  * Update calls update_body_parts().
@@ -266,7 +307,7 @@
 		my_head?.hair_color = hex_string
 
 	if(update)
-		update_body_parts()
+		update_body_parts(TRUE) // TRUE to force an update, for bodypart overlays primarily
 
 /**
  * Set the hair gradient style of a human.

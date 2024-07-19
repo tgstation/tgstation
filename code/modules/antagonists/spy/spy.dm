@@ -192,8 +192,7 @@
 
 /datum/antagonist/spy/get_preview_icon()
 	var/mob/living/carbon/human/dummy/consistent/dummy = new()
-	dummy.set_haircolor(COLOR_SILVER, update = FALSE)
-	dummy.set_hairstyle("CIA", update = FALSE)
+	dummy.set_hair_and_style("CIA", COLOR_SILVER)
 	return finish_preview_icon(render_preview_outfit(preview_outfit, dummy))
 
 /datum/outfit/spy

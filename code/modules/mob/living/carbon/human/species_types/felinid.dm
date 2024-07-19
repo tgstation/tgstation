@@ -3,7 +3,6 @@
 	name = "Felinid"
 	id = SPECIES_FELINE
 	examine_limb_id = SPECIES_HUMAN
-	mutant_bodyparts = list("ears" = "Cat", "wings" = "None")
 	mutantbrain = /obj/item/organ/internal/brain/felinid
 	mutanttongue = /obj/item/organ/internal/tongue/cat
 	mutantears = /obj/item/organ/internal/ears/cat
@@ -43,13 +42,20 @@
 		if(target_human.dna.features["ears"] == "None")
 			mutantears = /obj/item/organ/internal/ears
 		else
-			var/obj/item/organ/internal/ears/cat/ears = new(FALSE, target_human.dna.features["ears"])
+			var/obj/item/organ/internal/ears/cat/ears = new()
 			ears.Insert(target_human, movement_flags = DELETE_IF_REPLACED)
 	return ..()
 
 /datum/species/human/felinid/randomize_features(mob/living/carbon/human/human_mob)
 	var/list/features = ..()
-	features["ears"] = pick("None", "Cat")
+	// Future todo: Integrate this with the bodypart overlay itself better
+	var/list/all_valid_ears = list()
+	for(var/sa_name in SSaccessories.ears_list)
+		var/datum/sprite_accessory/accessory = SSaccessories.ears_list[sa_name]
+		if(initial(accessory.locked) || !initial(accessory.natural_spawn))
+			continue
+		all_valid_ears += sa_name
+	features["ears"] = pick(all_valid_ears)
 	return features
 
 /datum/species/human/felinid/get_laugh_sound(mob/living/carbon/human/felinid)
@@ -182,13 +188,11 @@
 		to_chat(purrbated_human, span_boldnotice("You are no longer a cat."))
 
 /datum/species/human/felinid/prepare_human_for_preview(mob/living/carbon/human/human_for_preview)
-	human_for_preview.set_haircolor("#ffcccc", update = FALSE) // pink
-	human_for_preview.set_hairstyle("Hime Cut", update = TRUE)
-
-	var/obj/item/organ/internal/ears/cat/cat_ears = human_for_preview.get_organ_by_type(/obj/item/organ/internal/ears/cat)
-	if (cat_ears)
-		cat_ears.color = human_for_preview.hair_color
-		human_for_preview.update_body()
+	human_for_preview.dna.features["ears"] = /datum/sprite_accessory/ears/cat::name
+	human_for_preview.set_hair_and_style(
+		new_style = "Hime Cut",
+		new_color = "#ffcccc",
+	)
 
 /datum/species/human/felinid/get_physical_attributes()
 	return "Felinids are very similar to humans in almost all respects, with their biggest differences being the ability to lick their wounds, \

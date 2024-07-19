@@ -27,9 +27,11 @@
 	if(!visualsOnly)
 		return
 
-	user.set_facial_hairstyle("Shaved", update = FALSE)
-	user.set_haircolor("#4B3D28", update = FALSE)
-	user.set_hairstyle("Business Hair")
+	user.set_hair_and_style(
+		new_style = "Business Hair",
+		new_color = "#4B3D28",
+		new_facial_style = "Shaved",
+	)
 
 /datum/outfit/cyber_police/post_equip(mob/living/carbon/human/user, visualsOnly)
 	var/obj/item/clothing/under/officer_uniform = user.w_uniform
@@ -37,4 +39,3 @@
 		officer_uniform.has_sensor = NO_SENSORS
 		officer_uniform.sensor_mode = SENSOR_OFF
 		user.update_suit_sensors()
-

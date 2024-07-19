@@ -29,13 +29,9 @@
 	var/gender_specific = FALSE
 	/// Determines if the accessory will be skipped by color preferences.
 	var/use_static
-	/**
-	 * Currently only used by mutantparts so don't worry about hair and stuff.
-	 * This is the source that this accessory will get its color from. Default is MUTCOLOR, but can also be HAIR, FACEHAIR, EYECOLOR and 0 if none.
-	 */
-	var/color_src = MUTANT_COLOR
-	/// Decides if this sprite has an "inner" part, such as the fleshy parts on ears.
-	var/hasinner = FALSE
+	/// If TRUE, the sprite accessory will be colored based on the bodypart overlay's draw_color var
+	/// If FALSE, no color will be applied at all.
+	var/color_src = TRUE
 	/// Is this part locked from roundstart selection? Used for parts that apply effects.
 	var/locked = FALSE
 	/// Should we center the sprite?
@@ -1779,7 +1775,7 @@
 	name = "Cat"
 	icon = 'icons/mob/human/cat_features.dmi'
 	icon_state = "default"
-	color_src = HAIR_COLOR
+	color_src = TRUE
 
 /datum/sprite_accessory/tails/monkey/default
 	name = "Monkey"
@@ -1883,15 +1879,10 @@
 	icon = 'icons/mob/human/cat_features.dmi'
 	em_block = TRUE
 
-/datum/sprite_accessory/ears/none
-	name = "None"
-	icon_state = "none"
-
 /datum/sprite_accessory/ears/cat
 	name = "Cat"
 	icon_state = "cat"
-	hasinner = TRUE
-	color_src = HAIR_COLOR
+	color_src = TRUE
 
 /datum/sprite_accessory/ears/cat/big
 	name = "Big"
@@ -1914,11 +1905,12 @@
 	icon_state = "round"
 
 /datum/sprite_accessory/ears/fox
+	// This shouldn't evem be in the cat ear accessory list at all,
+	// but bodypart overlays don't support that yet
 	icon = 'icons/mob/human/fox_features.dmi'
 	name = "Fox"
 	icon_state = "fox"
-	hasinner = TRUE
-	color_src = HAIR_COLOR
+	color_src = TRUE
 	locked = TRUE
 
 /datum/sprite_accessory/wings/none
@@ -2140,19 +2132,9 @@
 	name = "Aquatic"
 	icon_state = "aqua"
 
-/datum/sprite_accessory/legs //legs are a special case, they aren't actually sprite_accessories but are updated with them.
-	icon = null //These datums exist for selecting legs on preference, and little else
-	em_block = TRUE
-
-/datum/sprite_accessory/legs/none
-	name = "Normal Legs"
-
-/datum/sprite_accessory/legs/digitigrade_lizard
-	name = DIGITIGRADE_LEGS
-
 /datum/sprite_accessory/caps
 	icon = 'icons/mob/human/species/mush_cap.dmi'
-	color_src = HAIR_COLOR
+	color_src = TRUE
 	em_block = TRUE
 
 /datum/sprite_accessory/caps/round
@@ -2161,7 +2143,7 @@
 
 /datum/sprite_accessory/moth_wings
 	icon = 'icons/mob/human/species/moth/moth_wings.dmi'
-	color_src = null
+	color_src = FALSE
 	em_block = TRUE
 
 /datum/sprite_accessory/moth_wings/plain
@@ -2267,7 +2249,7 @@
 
 /datum/sprite_accessory/moth_antennae //Finally splitting the sprite
 	icon = 'icons/mob/human/species/moth/moth_antennae.dmi'
-	color_src = null
+	color_src = FALSE
 
 /datum/sprite_accessory/moth_antennae/plain
 	name = "Plain"
@@ -2358,7 +2340,7 @@
 
 /datum/sprite_accessory/moth_markings // the markings that moths can have. finally something other than the boring tan
 	icon = 'icons/mob/human/species/moth/moth_markings.dmi'
-	color_src = null
+	color_src = FALSE
 
 /datum/sprite_accessory/moth_markings/none
 	name = "None"

@@ -106,7 +106,7 @@
 	bodypart_flags = BODYPART_UNREMOVABLE
 	max_damage = LIMB_MAX_HP_ALIEN_CORE
 	acceptable_bodyshape = BODYSHAPE_HUMANOID
-	wing_types = NONE
+	wing_types = null
 
 /obj/item/bodypart/chest/larva
 	icon = 'icons/mob/human/species/alien/bodyparts.dmi'
@@ -119,7 +119,7 @@
 	max_damage = LIMB_MAX_HP_ALIEN_LARVA
 	bodytype = BODYTYPE_LARVA_PLACEHOLDER | BODYTYPE_ORGANIC
 	acceptable_bodytype = BODYTYPE_LARVA_PLACEHOLDER
-	wing_types = NONE
+	wing_types = null
 
 /// Parent Type for arms, should not appear in game.
 /obj/item/bodypart/arm

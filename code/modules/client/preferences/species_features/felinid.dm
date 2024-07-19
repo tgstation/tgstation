@@ -20,7 +20,6 @@
 	savefile_identifier = PREFERENCE_CHARACTER
 	category = PREFERENCE_CATEGORY_SECONDARY_FEATURES
 	can_randomize = FALSE
-	relevant_mutant_bodypart = "ears"
 
 /datum/preference/choiced/ears/init_possible_values()
 	return assoc_to_keys_features(SSaccessories.ears_list)
@@ -30,3 +29,8 @@
 
 /datum/preference/choiced/ears/create_default_value()
 	return /datum/sprite_accessory/ears/cat::name
+
+/datum/preference/choiced/ears/is_accessible(datum/preferences/preferences)
+	if(!..())
+		return FALSE
+	return ispath(preferences.read_preference(/datum/preference/choiced/species), /datum/species/human/felinid)

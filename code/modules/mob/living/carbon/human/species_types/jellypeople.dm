@@ -109,9 +109,7 @@
 
 /datum/species/jelly/prepare_human_for_preview(mob/living/carbon/human/human)
 	human.dna.features["mcolor"] = COLOR_PINK
-	human.hairstyle = "Bob Hair 2"
-	human.hair_color = COLOR_PINK
-	human.update_body(is_creating = TRUE)
+	human.set_hair_and_style("Bob Hair 2", COLOR_PINK)
 
 // Slimes have both TRAIT_NOBLOOD and an exotic bloodtype set, so they need to be handled uniquely here.
 // They may not be roundstart but in the unlikely event they become one might as well not leave a glaring issue open.

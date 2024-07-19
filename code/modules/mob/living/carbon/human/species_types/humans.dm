@@ -4,14 +4,12 @@
 	inherent_traits = list(
 		TRAIT_USES_SKINTONES,
 	)
-	mutant_bodyparts = list("wings" = "None")
 	skinned_type = /obj/item/stack/sheet/animalhide/human
 	changesource_flags = MIRROR_BADMIN | WABBAJACK | MIRROR_MAGIC | MIRROR_PRIDE | ERT_SPAWN | RACE_SWAP | SLIME_EXTRACT
 	payday_modifier = 1.1
 
 /datum/species/human/prepare_human_for_preview(mob/living/carbon/human/human)
-	human.set_haircolor("#bb9966", update = FALSE) // brown
-	human.set_hairstyle("Business Hair", update = TRUE)
+	human.set_hair_and_style("Business Hair", "#bb9966")
 
 /datum/species/human/get_scream_sound(mob/living/carbon/human/human)
 	if(human.physique == MALE)

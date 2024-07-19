@@ -15,6 +15,10 @@
 	now_fixed = "<span class='info'>Noise slowly begins filling your ears once more.</span>"
 	low_threshold_cleared = "<span class='info'>The ringing in your ears has died down.</span>"
 
+	/// What broad type of ear overlay do we have
+	var/ear_overlay_type
+	/// The ear overlay type
+	var/datum/bodypart_overlay/mutant/ear_overlay
 	/// `deaf` measures "ticks" of deafness. While > 0, the person is unable to hear anything.
 	var/deaf = 0
 
@@ -45,6 +49,10 @@
 		adjustEarDamage(0, 4)
 		SEND_SOUND(owner, sound('sound/weapons/flash_ring.ogg'))
 
+/obj/item/organ/internal/ears/Destroy()
+	QDEL_NULL(ear_overlay)
+	return ..()
+
 /obj/item/organ/internal/ears/apply_organ_damage(damage_amount, maximum, required_organ_flag)
 	. = ..()
 	update_temp_deafness()
@@ -52,11 +60,29 @@
 /obj/item/organ/internal/ears/on_mob_insert(mob/living/carbon/organ_owner, special, movement_flags)
 	. = ..()
 	update_temp_deafness()
+	imprint_ear(organ_owner)
 
 /obj/item/organ/internal/ears/on_mob_remove(mob/living/carbon/organ_owner, special)
 	. = ..()
 	UnregisterSignal(organ_owner, COMSIG_MOB_SAY)
 	REMOVE_TRAIT(organ_owner, TRAIT_DEAF, EAR_DAMAGE)
+
+/// Called on first insert to generate an ear overlay
+/obj/item/organ/internal/ears/proc/imprint_ear(mob/living/carbon/ear_owner)
+	if(ear_overlay || !ear_overlay_type)
+		return
+	ear_overlay = new ear_overlay_type()
+	bodypart_owner?.add_bodypart_overlay(ear_overlay)
+
+/obj/item/organ/internal/ears/on_bodypart_insert(obj/item/bodypart/limb, movement_flags)
+	. = ..()
+	if(ear_overlay)
+		limb.add_bodypart_overlay(ear_overlay)
+
+/obj/item/organ/internal/ears/on_bodypart_remove(obj/item/bodypart/limb, movement_flags)
+	. = ..()
+	if(ear_overlay)
+		limb.remove_bodypart_overlay(ear_overlay)
 
 /**
  * Snowflake proc to handle temporary deafness
@@ -136,28 +162,14 @@
 	icon_state = "kitty"
 	visual = TRUE
 	damage_multiplier = 2
-	// Keeps track of which cat ears sprite is associated with this.
-	var/variant = "Cat"
+	ear_overlay_type = /datum/bodypart_overlay/mutant/ears/felinid
 
-/obj/item/organ/internal/ears/cat/Initialize(mapload, variant_pref)
+/obj/item/organ/internal/ears/cat/imprint_ear(mob/living/carbon/ear_owner)
 	. = ..()
-	if(variant_pref)
-		variant = variant_pref
-
-/obj/item/organ/internal/ears/cat/on_mob_insert(mob/living/carbon/human/ear_owner)
-	. = ..()
-	if(istype(ear_owner) && ear_owner.dna)
-		color = ear_owner.hair_color
-		ear_owner.dna.features["ears"] = ear_owner.dna.species.mutant_bodyparts["ears"] = variant
-		ear_owner.dna.update_uf_block(DNA_EARS_BLOCK)
-		ear_owner.update_body()
-
-/obj/item/organ/internal/ears/cat/on_mob_remove(mob/living/carbon/human/ear_owner)
-	. = ..()
-	if(istype(ear_owner) && ear_owner.dna)
-		color = ear_owner.hair_color
-		ear_owner.dna.species.mutant_bodyparts -= "ears"
-		ear_owner.update_body()
+	var/ear_to_use = ear_owner.dna?.features?["ears"]
+	if(isnull(ear_to_use) || ear_to_use == SPRITE_ACCESSORY_NONE)
+		ear_to_use = /datum/sprite_accessory/ears/cat::name
+	ear_overlay.set_appearance_from_name(ear_owner.dna.features["ears"])
 
 /obj/item/organ/internal/ears/penguin
 	name = "penguin ears"
@@ -225,3 +237,45 @@
 	if(. & EMP_PROTECT_SELF)
 		return
 	apply_organ_damage(20 / severity)
+
+// Overlay applied for the eccentric ear types
+/datum/bodypart_overlay/mutant/ears
+	layers = EXTERNAL_FRONT|EXTERNAL_BEHIND
+	color_source = ORGAN_COLOR_HAIR
+	feature_key = "ears"
+
+/datum/bodypart_overlay/mutant/ears/get_global_feature_list()
+	return SSaccessories.ears_list
+
+/datum/bodypart_overlay/mutant/ears/can_draw_on_bodypart(mob/living/carbon/human/human)
+	var/obj/item/bodypart/head/head = human.get_bodypart(BODY_ZONE_HEAD)
+	if(isnull(head) || IS_ROBOTIC_LIMB(head))
+		return FALSE
+	for(var/obj/item/worn_item in human.get_equipped_items())
+		if(worn_item.flags_inv & HIDEHAIR)
+			return FALSE
+	return TRUE
+
+/datum/bodypart_overlay/mutant/ears/get_image(image_layer, obj/item/bodypart/limb)
+	var/mutable_appearance/created = ..()
+	var/mutable_appearance/inner = mutable_appearance(sprite_datum.icon, layer = image_layer, appearance_flags = RESET_COLOR)
+	var/gender = (sprite_datum.gender_specific && limb?.limb_gender == FEMALE) ? "f" : "m"
+	inner.icon_state = "[gender]_[feature_key]inner_[sprite_datum.icon_state]_[mutant_bodyparts_layertext(image_layer)]"
+
+	if(sprite_datum.center)
+		center_image(inner, sprite_datum.dimension_x, sprite_datum.dimension_y)
+
+	created.underlays += inner
+	return created
+
+/datum/bodypart_overlay/mutant/ears/felinid
+
+/datum/bodypart_overlay/mutant/ears/felinid/New()
+	. = ..()
+	set_appearance(/datum/sprite_accessory/ears/cat)
+
+/datum/bodypart_overlay/mutant/ears/fox
+
+/datum/bodypart_overlay/mutant/ears/fox/New()
+	. = ..()
+	set_appearance(/datum/sprite_accessory/ears/fox)
