@@ -180,6 +180,9 @@ INITIALIZE_IMMEDIATE(/turf/closed/indestructible/splashscreen)
 	smoothing_groups = SMOOTH_GROUP_ABDUCTOR_WALLS + SMOOTH_GROUP_WALLS + SMOOTH_GROUP_CLOSED_TURFS
 	canSmoothWith = SMOOTH_GROUP_ABDUCTOR_WALLS
 
+/turf/closed/indestructible/alien/nodiagonal
+	icon_state = "abductor_wall-15"
+	smoothing_flags = SMOOTH_BITMASK
 
 /turf/closed/indestructible/cult
 	name = "runed metal wall"
