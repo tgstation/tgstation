@@ -47,4 +47,4 @@
 #define COMSIG_BANK_ACCOUNT_DEBT_PAID "bank_account_debt_paid"
 
 ///from /datum/component/on_hit_effect/send_signal(): (user, target, hit_zone)
-#define COMSIG_ON_HIT_EFFECT
+#define COMSIG_ON_HIT_EFFECT "comsig_on_hit_effect"

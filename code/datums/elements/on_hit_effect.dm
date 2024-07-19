@@ -39,7 +39,7 @@
 	if(!proximity_flag)
 		return
 
-	send_signal(source, user, target, user.zone_selected)
+	on_hit(source, user, target, user.zone_selected)
 
 /datum/element/on_hit_effect/proc/hostile_attackingtarget(mob/living/attacker, atom/target, success)
 	SIGNAL_HANDLER
@@ -47,19 +47,19 @@
 	if(!success)
 		return
 
-	send_signal(attacker, attacker, target, attacker.zone_selected)
+	on_hit(attacker, attacker, target, attacker.zone_selected)
 
 /datum/element/on_hit_effect/proc/on_projectile_hit(datum/fired_from, atom/movable/firer, atom/target, angle, body_zone)
 	SIGNAL_HANDLER
-	send_signal(fired_from, firer, target, body_zone)
+	on_hit(fired_from, firer, target, body_zone)
 
 /datum/element/on_hit_effect/proc/on_projectile_self_hit(datum/source, mob/firer, atom/target, angle, body_zone)
 	SIGNAL_HANDLER
-	send_signal(source, firer, target, body_zone)
+	on_hit(source, firer, target, body_zone)
 
 /datum/element/on_hit_effect/proc/on_thrown_hit(datum/source, atom/hit_atom, datum/thrownthing/throwingdatum)
 	SIGNAL_HANDLER
-	send_signal(source, source, hit_atom, null, TRUE)
+	on_hit(source, source, hit_atom, null, TRUE)
 
-/datum/element/on_hit_effect/proc/send_signal(atom/source, atom/movable/attacker, atom/target, body_zone, throw_hit = FALSE)
+/datum/element/on_hit_effect/proc/on_hit(atom/source, atom/movable/attacker, atom/target, body_zone, throw_hit = FALSE)
 	SEND_SIGNAL(source, COMSIG_ON_HIT_EFFECT, attacker, target, body_zone, throw_hit)
