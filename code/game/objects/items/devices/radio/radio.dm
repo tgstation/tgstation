@@ -428,7 +428,7 @@
 
 	var/list/spans = data["spans"]
 	if(SPAN_COMMAND in spans)
-		playsound(src, 'sound/misc/radio_important.ogg', 30, FALSE, -5, 5)
+		playsound(src, 'sound/misc/radio_important.ogg', 30, TRUE, -5, 5)
 
 /obj/item/radio/ui_state(mob/user)
 	return GLOB.inventory_state
