@@ -590,7 +590,7 @@
 	borg.set_anchored(FALSE)
 	REMOVE_TRAIT(borg, TRAIT_NO_TRANSFORM, REF(src))
 	borg.hasExpanded = TRUE
-	borg.update_transform(2)
+	borg.update_transform(1.25) // SS220 BandaStation EDIT - RESIZE UPDATE
 
 /obj/item/borg/upgrade/expand/deactivate(mob/living/silicon/robot/borg, mob/living/user = usr)
 	. = ..()
@@ -598,7 +598,7 @@
 		return .
 	if (borg.hasExpanded)
 		borg.hasExpanded = FALSE
-		borg.update_transform(0.5)
+		borg.update_transform(0.835) // SS220 BandaStation EDIT - RESIZE UPDATE
 
 /obj/item/borg/upgrade/rped
 	name = "engineering cyborg RPED"
