@@ -28,47 +28,89 @@
 	icon = 'icons/effects/effects.dmi'
 	icon_state = "void_conduit"
 	anchored = TRUE
-	///Counter for each process goes up by 1, when it's high enough our conduit will pulse
-	var/conduit_pulse_counter
+	/////Counter for each process goes up by 1, when it's high enough our conduit will pulse
+	//var/conduit_pulse_counter
 
 /obj/structure/void_conduit/Initialize(mapload)
 	. = ..()
 	START_PROCESSING(SSobj, src)
-	declare_effect_radius()
 
 /obj/structure/void_conduit/Destroy(force)
 	STOP_PROCESSING(SSobj, src)
 	return ..()
 
 /obj/structure/void_conduit/process(seconds_per_tick)
-	var/turf/our_turf = get_turf(src)
-	var/adjacent_turfs = our_turf.get_atmos_adjacent_turfs(alldir = TRUE)
-	for(var/turf/tile in adjacent_turfs)
-		do_conduit_freeze(tile)
-	conduit_pulse_counter++
-	if(conduit_pulse_counter >= 2)
-		conduit_pulse_counter = 0
-		declare_effect_radius()
-		do_conduit_pulse()
+//	var/turf/our_turf = get_turf(src)
+//	var/adjacent_turfs = our_turf.get_atmos_adjacent_turfs(alldir = TRUE)
+//	for(var/turf/tile in adjacent_turfs)
+//		do_conduit_freeze(tile)
+	//conduit_pulse_counter++
+	//if(conduit_pulse_counter >= 2)
+	//	conduit_pulse_counter = 0
+	do_conduit_freeze()
+	do_conduit_pulse()
 
-///Siphons out and freezes nearby turfs
-/obj/structure/void_conduit/proc/do_conduit_freeze(turf/tile)
-	var/datum/gas_mixture/environment = tile.return_air()
-	environment.temperature = 0
-	tile.remove_air(environment.total_moles() * 0.8)
+///Siphons out the air from the area we are in
+/obj/structure/void_conduit/proc/do_conduit_freeze()
+	var/area/our_area = get_area(loc)
+	if(isnull(our_area))
+		return
+	var/list/turf_list = our_area.get_turfs_by_zlevel(z)
+	if(!islist(turf_list))
+		return
+	for(var/turf/turf_to_siphon as anything in turf_list)
+		var/datum/gas_mixture/environment = turf_to_siphon.return_air()
+		turf_to_siphon.remove_air(environment.total_moles() * 0.9)
 
-///Pulses out various effects
+///Sends out a pulse
 /obj/structure/void_conduit/proc/do_conduit_pulse()
+	var/list/turfs_to_affect = list()
+	for(var/turf/affected_turf as anything in range(10, loc))
+		var/distance = get_dist(loc, affected_turf)
+		if(!turfs_to_affect["[distance]"])
+			turfs_to_affect["[distance]"] = list()
+		turfs_to_affect["[distance]"] += affected_turf
 
-/obj/structure/void_conduit/proc/declare_effect_radius()
-	var/list/affected_atom = list()
-	for(var/atom/atom in dview(10, loc))
+	for(var/distance in 0 to 10)
+		if(!turfs_to_affect["[distance]"])
+			continue
+		addtimer(CALLBACK(src, PROC_REF(handle_effects), turfs_to_affect["[distance]"]), (1 SECONDS) * distance)
+
+	new /obj/effect/temp_visual/circle_wave/void_conduit(get_turf(src))
+
+///Applies the effects of the pulse "hitting" something. Freezes non-heretic, destroys airlocks/windows
+/obj/structure/void_conduit/proc/handle_effects(list/turfs)
+	for(var/mob/living/affected_mob in turfs)
+		if(IS_HERETIC(affected_mob))
+			affected_mob.apply_status_effect(/datum/status_effect/void_conduit)
+		else
+			affected_mob.apply_status_effect(/datum/status_effect/void_chill, 1)
+	for(var/obj/machinery/door/affected_door in turfs)
+		affected_door.take_damage(37.5)
+	for(var/obj/structure/door_assembly/affected_assembly in turfs)
+		affected_assembly.take_damage(37.5)
+	for(var/obj/structure/window/affected_window in turfs)
+		affected_window.take_damage(15)
+
+	for(var/turf/affected_turf in turfs)
+		var/datum/gas_mixture/environment = affected_turf.return_air()
+		environment.temperature *= 0.9
 		var/mutable_appearance/floor_overlay = mutable_appearance('icons/turf/overlays.dmi', "greyOverlay", ABOVE_OPEN_TURF_LAYER)
 		floor_overlay.color = COLOR_RED
 		floor_overlay.mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 		floor_overlay.alpha = 200
-		atom.flick_overlay_view(floor_overlay, 2 SECONDS)
-		affected_atom += atom
+		affected_turf.flick_overlay_view(floor_overlay, 1 SECONDS)
+
+/*
+/obj/structure/void_conduit/proc/declare_effect_radius()
+	//var/list/affected_atom = list()
+	//for(var/atom/atom in range(10, loc))
+	//	var/mutable_appearance/floor_overlay = mutable_appearance('icons/turf/overlays.dmi', "greyOverlay", ABOVE_OPEN_TURF_LAYER)
+	//	floor_overlay.color = COLOR_RED
+	//	floor_overlay.mouse_opacity = MOUSE_OPACITY_TRANSPARENT
+	//	floor_overlay.alpha = 200
+	//	atom.flick_overlay_view(floor_overlay, 2 SECONDS)
+	//	affected_atom += atom
 
 	for(var/mob/living/affected_mob in affected_atom)
 		if(IS_HERETIC(affected_mob))
@@ -78,7 +120,7 @@
 	for(var/obj/machinery/door/affected_door in affected_atom)
 		affected_door.take_damage(75)
 	for(var/obj/structure/door_assembly/affected_assembly in affected_atom)
-		affected_door.take_damage(75)
+		affected_assembly.take_damage(75)
 	for(var/obj/structure/window/affected_window in affected_atom)
 		affected_window.take_damage(30)
 
@@ -89,6 +131,7 @@
 //		floor_overlay.mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 //		floor_overlay.alpha = 200
 //		atom.flick_overlay_view(floor_overlay, 2 SECONDS)
+*/
 
 /datum/status_effect/void_conduit
 	duration = 15 SECONDS
