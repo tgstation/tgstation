@@ -206,10 +206,11 @@
 
 	balloon_alert(user, "attached tether")
 	user.AddComponent(/datum/component/tether, src, 7, "tether")
+	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
 /obj/item/tether_anchor/mouse_drop_receive(atom/target, mob/user, params)
 	if (!can_interact(user) || !user.CanReach(src) || !isturf(loc))
-		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+		return
 
 	if (!isliving(target) || !target.CanReach(src))
 		return

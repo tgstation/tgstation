@@ -12,7 +12,7 @@
 	/// Embedded item that the tether "should" originate from
 	var/atom/embed_target
 	/// Beam effect
-	var/obj/effect/ebeam/tether/tether_beam
+	var/datum/beam/tether_beam
 
 /datum/component/tether/Initialize(atom/tether_target, max_dist = 7, tether_name, atom/embed_target = null, start_distance = null)
 	if(!ismovable(parent) || !istype(tether_target) || !tether_target.loc)
@@ -25,7 +25,7 @@
 	if (start_distance != null)
 		cur_dist = start_distance
 	var/datum/beam/beam = tether_target.Beam(parent, "line", 'icons/obj/clothing/modsuit/mod_modules.dmi', emissive = FALSE, beam_type = /obj/effect/ebeam/tether)
-	tether_beam = beam.visuals
+	tether_beam = beam
 	if (ispath(tether_name, /atom))
 		var/atom/tmp = tether_name
 		src.tether_name = initial(tmp.name)
@@ -38,9 +38,9 @@
 	RegisterSignal(tether_target, COMSIG_MOVABLE_PRE_MOVE, PROC_REF(check_tether))
 	RegisterSignal(tether_target, COMSIG_MOVABLE_MOVED, PROC_REF(check_snap))
 	RegisterSignal(tether_target, COMSIG_QDELETING, PROC_REF(on_delete))
-	RegisterSignal(tether_beam, COMSIG_CLICK, PROC_REF(beam_click))
+	RegisterSignal(tether_beam.visuals, COMSIG_CLICK, PROC_REF(beam_click))
 	// Also snap if the beam gets deleted, more of a backup check than anything
-	RegisterSignal(tether_beam, COMSIG_QDELETING, PROC_REF(on_delete))
+	RegisterSignal(tether_beam.visuals, COMSIG_QDELETING, PROC_REF(on_delete))
 
 	if (!isnull(embed_target))
 		RegisterSignal(embed_target, COMSIG_ITEM_UNEMBEDDED, PROC_REF(on_embedded_removed))
@@ -51,7 +51,7 @@
 	if (!QDELETED(tether_target))
 		UnregisterSignal(tether_target, list(COMSIG_MOVABLE_PRE_MOVE, COMSIG_MOVABLE_MOVED, COMSIG_QDELETING))
 	if (!QDELETED(tether_beam))
-		UnregisterSignal(tether_beam, list(COMSIG_CLICK, COMSIG_QDELETING))
+		UnregisterSignal(tether_beam.visuals, list(COMSIG_CLICK, COMSIG_QDELETING))
 		qdel(tether_beam)
 	if (!QDELETED(embed_target))
 		UnregisterSignal(embed_target, list(COMSIG_ITEM_UNEMBEDDED, COMSIG_QDELETING))
