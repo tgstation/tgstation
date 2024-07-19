@@ -1,0 +1,8 @@
+author: "SmArtKar"
+delete-after: True
+changes:
+  - refactor: "Refactored parrying to be projectile-side and not user-side."
+  - rscadd: "You can now parry crusher projectiles to give them some more range, add damage and make the mark always count as a backstab."
+  - rscadd: "Projectile parrying has been significantly improved, making parrying and boosting projectiles actually possible. Includes a small grace period as lag compensation for players with higher pings."
+  - balance: "Crusher marks can now be detonated by any crusher, not only the one that applied it, as to incentivise coop mining for crusher users."
+  - balance: "Projectile boosting now gives a significantly bigger damage and speed increase"
