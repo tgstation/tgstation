@@ -7,6 +7,7 @@
 	unique_name = TRUE
 	pass_flags = PASSBLOB
 	faction = list(ROLE_BLOB)
+	damage_coeff = list(BRUTE = 1, BURN = 1, TOX = 1, STAMINA = 0, OXY = 1)
 	combat_mode = TRUE
 	bubble_icon = "blob"
 	speak_emote = null

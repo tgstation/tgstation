@@ -10,6 +10,7 @@
 
 	gender = NEUTER
 	mob_biotypes = MOB_BUG|MOB_ROBOTIC
+	damage_coeff = list(BRUTE = 1, BURN = 1, TOX = 0, STAMINA = 0, OXY = 0)
 	speak_emote = list("vibrates")
 
 

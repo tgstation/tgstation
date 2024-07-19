@@ -10,6 +10,7 @@
 	response_help_simple = "pass through"
 	combat_mode = TRUE
 	basic_mob_flags = DEL_ON_DEATH
+	damage_coeff = list(BRUTE = 1, BURN = 1, TOX = 0, STAMINA = 0, OXY = 0)
 	maxHealth = 40
 	health = 40
 	melee_damage_lower = 15

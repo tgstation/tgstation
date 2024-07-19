@@ -8,6 +8,7 @@
 	basic_mob_flags = DEL_ON_DEATH
 	gender = NEUTER
 	mob_biotypes = MOB_ROBOTIC
+	damage_coeff = list(BRUTE = 1, BURN = 1, TOX = 0, STAMINA = 0, OXY = 0)
 
 	health = 15
 	maxHealth = 15

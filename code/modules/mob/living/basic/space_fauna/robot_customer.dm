@@ -13,6 +13,7 @@
 	max_grab = GRAB_AGGRESSIVE
 	basic_mob_flags = DEL_ON_DEATH
 	mob_biotypes = MOB_ROBOTIC|MOB_HUMANOID
+	damage_coeff = list(BRUTE = 1, BURN = 1, TOX = 0, STAMINA = 0, OXY = 0)
 	sentience_type = SENTIENCE_ARTIFICIAL
 
 	unsuitable_atmos_damage = 0

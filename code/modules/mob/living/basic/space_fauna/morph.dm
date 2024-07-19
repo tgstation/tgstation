@@ -11,6 +11,7 @@
 	combat_mode = TRUE
 
 	mob_biotypes = MOB_BEAST
+	damage_coeff = list(BRUTE = 1, BURN = 1, TOX = 0, STAMINA = 0, OXY = 0)
 	pass_flags = PASSTABLE
 
 	maxHealth = 150

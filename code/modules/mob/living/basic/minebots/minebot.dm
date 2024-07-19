@@ -7,6 +7,7 @@
 	icon_living = "mining_drone"
 	basic_mob_flags = DEL_ON_DEATH
 	status_flags = CANSTUN|CANKNOCKDOWN|CANPUSH
+	damage_coeff = list(BRUTE = 1, BURN = 1, TOX = 0, STAMINA = 0, OXY = 0)
 	mouse_opacity = MOUSE_OPACITY_ICON
 	combat_mode = TRUE
 	habitable_atmos = null

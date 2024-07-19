@@ -6,6 +6,7 @@
 	icon_living = "leaper"
 	icon_dead = "leaper_dead"
 	mob_biotypes = MOB_ORGANIC|MOB_BEAST
+	damage_coeff = list(BRUTE = 1, BURN = 1, TOX = 1, STAMINA = 0, OXY = 1)
 
 	melee_damage_lower = 15
 	melee_damage_upper = 20

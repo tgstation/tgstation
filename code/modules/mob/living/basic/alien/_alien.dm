@@ -18,6 +18,7 @@
 	bubble_icon = "alien"
 	combat_mode = TRUE
 	faction = list(ROLE_ALIEN)
+	damage_coeff = list(BRUTE = 1, BURN = 1, TOX = 1, STAMINA = 0, OXY = 1)
 
 	// Going for a dark purple here
 	lighting_cutoff_red = 30

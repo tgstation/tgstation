@@ -11,6 +11,7 @@
 	combat_mode = TRUE
 	mob_biotypes = MOB_HUMANOID
 	gold_core_spawnable = NO_SPAWN
+	damage_coeff = list(BRUTE = 1, BURN = 1, TOX = 0, STAMINA = 0, OXY = 0)
 
 	response_help_continuous = "touches"
 	response_help_simple = "touch"
