@@ -54,6 +54,7 @@
 
 		// immediately disconnect from atmos
 		reserved_turf.blocks_air = TRUE
+		CALCULATE_ADJACENT_TURFS(turf, KILLS_EXCITED)
 
 	// Makes the linter happy, even tho we don't await this
 	INVOKE_ASYNC(SSmapping, TYPE_PROC_REF(/datum/controller/subsystem/mapping, reserve_turfs), release_turfs)
