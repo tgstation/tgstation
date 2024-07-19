@@ -336,10 +336,10 @@
 	add_overlay(hat_overlay)
 
 /mob/living/silicon/robot/setDir(newdir)
-    var/old_dir = dir
-    . = ..()
-    if(. != old_dir)
-        update_worn_icons()
+	var/old_dir = dir
+	. = ..()
+	if(. != old_dir)
+		update_worn_icons()
 
 /mob/living/silicon/robot/on_changed_z_level(turf/old_turf, turf/new_turf, same_z_layer, notify_contents)
 	if(same_z_layer || QDELING(src))
