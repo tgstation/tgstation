@@ -43,8 +43,10 @@
 	/// Force per process run to bring us to a halt, modified by thrusters
 	var/stabilizer_force = 0
 
-	/// our air tank, cabin air is this
+	/// our air tank, used to cycle cabin air
 	var/obj/item/tank/internals/cabin_air_tank
+	/// our air tank, used to cycle cabin air
+	var/datum/gas_mixture/cabin_air = new(TANK_STANDARD_VOLUME * 5)
 	/// our power cell (should this be a megacell only thing or cell only?)
 	var/obj/item/stock_parts/power_store/cell/cell
 
@@ -72,19 +74,20 @@
 			continue
 		. += overlay
 
-// brakes
+// brakes, or autostabilize if not driven
 /obj/vehicle/sealed/space_pod/process()
 	if(isnull(drift_handler))
 		return
 
-	var/braking = FALSE
-	for(var/mob/driver as anything in return_drivers())
-		if(driver.client?.keys_held["Shift"])
-			braking = TRUE
-			break
+	if(return_drivers())
+		var/braking = FALSE
+		for(var/mob/driver as anything in return_drivers())
+			if(driver.client?.keys_held["Shift"])
+				braking = TRUE
+				break
 
-	if (!braking)
-		return
+		if (!braking)
+			return
 
 	drift_handler.stabilize_drift(dir2angle(dir), 0, stabilizer_force)
 
@@ -99,18 +102,40 @@
 		COOLDOWN_START(src, cooldown_vehicle_move, 1 SECONDS) // INTENTIONALLY make it painful to use onstation
 		after_move(direction)
 		return try_step_multiz(direction)
-	trail.generate_effect()
 // may or may not work havent tested
 	setDir(direction)
 	newtonian_move(dir2angle(direction), drift_force = force_per_move, controlled_cap = max_speed)
 
+/obj/vehicle/sealed/space_pod/mob_enter(mob/mob, silent)
+	. = ..()
+	if(!. || length(occupants) > 1) //first occupant only
+		return
+	panel_open = FALSE //automatic screws,,,, waow....
+	cycle_tank_air()
+
+/obj/vehicle/sealed/space_pod/mob_exit(mob/M, silent, randomstep = FALSE)
+	. = ..()
+	if(!. || length(occupants) != 0) //when everyone exits
+		return
+	cycle_tank_air(to_tank = TRUE)
+
 // atmos
+/obj/vehicle/sealed/space_pod/proc/cycle_tank_air(to_tank = FALSE)
+	if(!isnull(cabin_air_tank))
+		return
+	var/datum/gas_mixture/from = to_tank ? cabin_air : cabin_air_tank.return_air()
+	var/datum/gas_mixture/to = to_tank ? cabin_air_tank.return_air() : cabin_air
+	var/datum/gas_mixture/removed = from.remove(from.total_moles())
+	if(!removed)
+		return
+	to.merge(removed)
+
 /obj/vehicle/sealed/space_pod/remove_air(amount)
-	return !isnull(cabin_air_tank) ? cabin_air_tank.remove_air(amount) : ..()
+	return !isnull(cabin_air_tank) ? cabin_air.remove(amount) : ..()
 /obj/vehicle/sealed/space_pod/return_air()
-	return !isnull(cabin_air_tank) ? cabin_air_tank.return_air() : ..()
+	return !isnull(cabin_air_tank) ? cabin_air : ..()
 /obj/vehicle/sealed/space_pod/return_analyzable_air()
-	return !isnull(cabin_air_tank) ? cabin_air_tank.return_air() : null // no internal air
+	return !isnull(cabin_air_tank) ? cabin_air : null // no internal air
 /obj/vehicle/sealed/space_pod/return_temperature()
 	var/datum/gas_mixture/air = return_air()
 	return air?.return_temperature()
