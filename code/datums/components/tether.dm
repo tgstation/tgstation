@@ -68,20 +68,24 @@
 			return COMPONENT_MOVABLE_BLOCK_PRE_MOVE
 
 	var/atom/blocker
+	var/anchor_dir = get_dir(source, anchor)
 	for (var/turf/line_turf in get_line(anchor, new_loc))
 		if (line_turf.density && line_turf != anchor.loc && line_turf != source.loc)
 			blocker = line_turf
 			break
-		for (var/atom/in_turf in line_turf)
-			if (line_turf == anchor.loc || line_turf == source.loc)
-				if ((in_turf.flags_1 & ON_BORDER_1) && (in_turf.dir & get_dir(source, anchor)))
+		if (line_turf == anchor.loc || line_turf == source.loc)
+			for (var/atom/in_turf in line_turf)
+				if ((in_turf.flags_1 & ON_BORDER_1) && (in_turf.dir & anchor_dir))
 					blocker = in_turf
 					break
-				continue
+		else
+			for (var/atom/in_turf in line_turf)
+				if (in_turf.density && in_turf != source && in_turf != tether_target)
+					blocker = in_turf
+					break
 
-			if (in_turf.density && in_turf != source && in_turf != tether_target)
-				blocker = in_turf
-				break
+		if (!isnull(blocker))
+			break
 
 	if (blocker)
 		to_chat(source, span_warning("[tether_name] catches on [blocker] and prevents you from moving!"))
@@ -111,7 +115,7 @@
 
 /datum/component/tether/proc/on_embedded_removed(atom/source, mob/living/victim)
 	SIGNAL_HANDLER
-	parent.AddComponent(/datum/component/tether, source, max_dist, "MODtether", cur_dist)
+	parent.AddComponent(/datum/component/tether, source, max_dist, tether_name, cur_dist)
 	qdel(src)
 
 /datum/component/tether/proc/beam_click(atom/source, atom/location, control, params, mob/user)

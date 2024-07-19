@@ -69,13 +69,14 @@
 	// Ignore the next glide because it's literally just us
 	ignore_next_glide = TRUE
 	parent.set_glide_size(MOVEMENT_ADJUSTED_GLIDE_SIZE(visual_delay, SSspacedrift.visual_delay))
-	if(ismob(parent))
-		var/mob/mob_parent = parent
-		//Ok this is slightly weird, but basically, we need to force the client to glide at our rate
-		//Make sure moving into a space move looks like a space move essentially
-		//There is an inbuilt assumption that gliding will be added as a part of a move call, but eh
-		//It's ok if it's not, it's just important if it is.
-		mob_parent.client?.visual_delay = MOVEMENT_ADJUSTED_GLIDE_SIZE(visual_delay, SSspacedrift.visual_delay)
+	if(!ismob(parent))
+		return
+	var/mob/mob_parent = parent
+	//Ok this is slightly weird, but basically, we need to force the client to glide at our rate
+	//Make sure moving into a space move looks like a space move essentially
+	//There is an inbuilt assumption that gliding will be added as a part of a move call, but eh
+	//It's ok if it's not, it's just important if it is.
+	mob_parent.client?.visual_delay = MOVEMENT_ADJUSTED_GLIDE_SIZE(visual_delay, SSspacedrift.visual_delay)
 
 /datum/drift_handler/proc/newtonian_impulse(inertia_angle, start_delay, additional_force, controlled_cap)
 	SIGNAL_HANDLER

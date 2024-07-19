@@ -191,13 +191,24 @@
 	max_integrity = 60
 	interaction_flags_atom = INTERACT_ATOM_ATTACK_HAND | INTERACT_ATOM_UI_INTERACT
 
+/obj/item/tether_anchor/examine(mob/user)
+	. = ..()
+	. += span_info("It can be secured by using a wrench on it. Use right-click to tether yourself to [src].")
+
 /obj/item/tether_anchor/wrench_act(mob/living/user, obj/item/tool)
 	. = ..()
 	default_unfasten_wrench(user, tool)
 	return ITEM_INTERACT_SUCCESS
 
+/obj/item/tether_anchor/attack_hand_secondary(mob/user, list/modifiers)
+	if (!can_interact(user) || !user.CanReach(src) || !isturf(loc))
+		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+
+	balloon_alert(user, "attached tether")
+	user.AddComponent(/datum/component/tether, src, 7, "tether")
+
 /datum/embed_data/tether_projectile
-	embed_chance=35
+	embed_chance=65 // spiky
 	fall_chance=10
 	ignore_throwspeed_threshold=TRUE
 	pain_stam_pct=0.4
