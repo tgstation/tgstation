@@ -104,6 +104,7 @@
 	icon_state = "brain"
 	greyscale_config = /datum/greyscale_config/mutant_organ
 	greyscale_colors = CARP_COLORS
+	can_smoothen_out = FALSE
 
 	///Timer counting down. When finished, the owner gets a bad moodlet.
 	var/cooldown_timer
