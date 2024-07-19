@@ -122,13 +122,10 @@
 		qdel(old_part)
 
 /datum/preference/choiced/lizard_legs/is_accessible(datum/preferences/preferences)
-	. = ..()
-	if(!.)
-		return .
+	if(!..())
+		return FALSE
 	var/datum/species/species_type = preferences.read_preference(/datum/preference/choiced/species)
-	if(initial(species_type.digitigrade_customization) != DIGITIGRADE_OPTIONAL)
-		return .
-	return TRUE
+	return initial(species_type.digitigrade_customization) == DIGITIGRADE_OPTIONAL
 
 /datum/preference/choiced/lizard_snout
 	savefile_key = "feature_lizard_snout"

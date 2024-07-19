@@ -6,6 +6,10 @@
 	///Defines what kind of 'organ' we're looking at. Sprites have names like 'm_mothwings_firemoth_ADJ'. 'mothwings' would then be feature_key
 	var/feature_key = ""
 
+	/// What DNA block is associated with this overlay?
+	/// When that DNA block is changed, the overlay itself will change to reflect the new DNA.
+	var/dna_block = null
+
 	///The color this organ draws with. Updated by bodypart/inherit_color()
 	var/draw_color
 	///Where does this organ inherit it's color from?
@@ -136,3 +140,10 @@
 		CRASH("External organ [type] couldn't find sprite accessory [accessory_name]!")
 	else
 		CRASH("External organ [type] had fetch_sprite_datum called with a null accessory name!")
+
+/datum/bodypart_overlay/mutant/proc/mutate_appearance(list/dna_features, obj/item/bodypart/host_limb)
+	if(!dna_block)
+		return
+
+	var/list/feature_list = get_global_feature_list()
+	set_appearance_from_name(feature_list[deconstruct_block(get_uni_feature_block(dna_features, dna_block), feature_list.len)])

@@ -265,7 +265,7 @@
 	if(new_facial_style)
 		set_facial_hairstyle(new_facial_style, update = FALSE)
 	if(new_facial_color)
-		set_facial_haircolor(new_facial_color, FALSE, update = FALSE)
+		set_facial_haircolor(new_facial_color, update = FALSE)
 	if(new_facial_grad_style)
 		set_facial_hair_gradient_style(new_facial_grad_style, update = FALSE)
 	if(new_facial_grad_color)

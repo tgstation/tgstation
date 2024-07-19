@@ -72,7 +72,6 @@
 
 	preference = "feature_mushperson_cap"
 
-	dna_block = DNA_MUSHROOM_CAPS_BLOCK
 	restyle_flags = EXTERNAL_RESTYLE_PLANT
 
 	bodypart_overlay = /datum/bodypart_overlay/mutant/mushroom_cap
@@ -80,6 +79,7 @@
 /// Bodypart overlay for the mushroom cap organ
 /datum/bodypart_overlay/mutant/mushroom_cap
 	layers = EXTERNAL_ADJACENT
+	dna_block = DNA_MUSHROOM_CAPS_BLOCK
 	feature_key = "caps"
 
 /datum/bodypart_overlay/mutant/mushroom_cap/get_global_feature_list()

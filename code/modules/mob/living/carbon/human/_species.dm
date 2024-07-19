@@ -1379,7 +1379,8 @@ GLOBAL_LIST_EMPTY(features_by_species)
 	for (var/preference_type in GLOB.preference_entries)
 		var/datum/preference/preference = GLOB.preference_entries[preference_type]
 
-		if ((preference.relevant_inherent_trait in inherent_traits) \
+		if ( \
+			(preference.relevant_inherent_trait in inherent_traits) \
 			|| (preference.relevant_external_organ in external_organs) \
 			|| (preference.relevant_head_flag && check_head_flags(preference.relevant_head_flag)) \
 			|| (preference.relevant_body_markings in body_markings) \

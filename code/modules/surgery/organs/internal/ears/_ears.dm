@@ -60,7 +60,8 @@
 /obj/item/organ/internal/ears/on_mob_insert(mob/living/carbon/organ_owner, special, movement_flags)
 	. = ..()
 	update_temp_deafness()
-	imprint_ear(organ_owner)
+	if(!ear_overlay && ear_overlay_type)
+		imprint_ear(organ_owner)
 
 /obj/item/organ/internal/ears/on_mob_remove(mob/living/carbon/organ_owner, special)
 	. = ..()
@@ -69,8 +70,6 @@
 
 /// Called on first insert to generate an ear overlay
 /obj/item/organ/internal/ears/proc/imprint_ear(mob/living/carbon/ear_owner)
-	if(ear_overlay || !ear_overlay_type)
-		return
 	ear_overlay = new ear_overlay_type()
 	bodypart_owner?.add_bodypart_overlay(ear_overlay)
 
@@ -269,6 +268,7 @@
 	return created
 
 /datum/bodypart_overlay/mutant/ears/felinid
+	dna_block = DNA_EARS_BLOCK
 
 /datum/bodypart_overlay/mutant/ears/felinid/New()
 	. = ..()

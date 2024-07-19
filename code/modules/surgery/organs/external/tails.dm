@@ -7,7 +7,6 @@
 	zone = BODY_ZONE_PRECISE_GROIN
 	slot = ORGAN_SLOT_EXTERNAL_TAIL
 
-	dna_block = DNA_TAIL_BLOCK
 	restyle_flags = EXTERNAL_RESTYLE_FLESH
 
 	// defaults to cat, but the parent type shouldn't be created regardless
@@ -140,6 +139,7 @@
 ///Tail parent type, with wagging functionality
 /datum/bodypart_overlay/mutant/tail
 	layers = EXTERNAL_FRONT|EXTERNAL_BEHIND
+	dna_block = DNA_TAIL_BLOCK
 	var/wagging = FALSE
 
 /datum/bodypart_overlay/mutant/tail/get_base_icon_state()
@@ -175,12 +175,11 @@
 
 	bodypart_overlay = /datum/bodypart_overlay/mutant/tail/monkey
 
-	dna_block = DNA_MONKEY_TAIL_BLOCK
-
 ///Monkey tail bodypart overlay
 /datum/bodypart_overlay/mutant/tail/monkey
 	color_source = NONE
 	feature_key = "tail_monkey"
+	dna_block = DNA_MONKEY_TAIL_BLOCK
 
 /datum/bodypart_overlay/mutant/tail/monkey/get_global_feature_list()
 	return SSaccessories.tails_list_monkey
@@ -193,11 +192,11 @@
 	bodypart_overlay = /datum/bodypart_overlay/mutant/tail/lizard
 
 	wag_flags = WAG_ABLE
-	dna_block = DNA_LIZARD_TAIL_BLOCK
 
 ///Lizard tail bodypart overlay datum
 /datum/bodypart_overlay/mutant/tail/lizard
 	feature_key = "tail_lizard"
+	dna_block = DNA_LIZARD_TAIL_BLOCK
 
 /datum/bodypart_overlay/mutant/tail/lizard/get_global_feature_list()
 	return SSaccessories.tails_list_lizard
