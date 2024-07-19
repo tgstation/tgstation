@@ -106,8 +106,8 @@
 
 		data["fish_list"] += list(list(
 			"fish_name" = fishie.name,
-			"fish_icon" = fishie.icon,
-			"fishie_icon_state" = fishie.icon_state,
+			"fish_icon" = fishie::icon,
+			"fishie_icon_state" = fishie::icon_state,
 			"fish_health" = fishie.status == FISH_DEAD ? 0 : PERCENT(fishie.health/initial(fishie.health)),
 			"fish_size" = fishie.size,
 			"fish_weight" = fishie.weight,
