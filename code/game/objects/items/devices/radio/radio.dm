@@ -95,6 +95,9 @@
 	///can we radio host
 	var/radio_host = FALSE
 
+	/// If TRUE, then this message will always be received intact, regardless of exospheric anomalies / processor issues.
+	var/lossless = FALSE
+
 /obj/item/radio/Initialize(mapload)
 	set_wires(new /datum/wires/radio(src))
 	secure_radio_connections = list()
@@ -331,6 +334,10 @@
 		signal.levels = list(0)
 		signal.broadcast()
 		return
+	// monkestation edit: "lossless" var
+	if(lossless)
+		signal.data["compression"] = 0
+	// monkestation end
 
 	// All radios make an attempt to use the subspace system first
 	signal.send_to_receivers()

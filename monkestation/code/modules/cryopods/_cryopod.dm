@@ -35,6 +35,7 @@ GLOBAL_LIST_EMPTY(valid_cryopods)
 	verb_say = "coldly states"
 	verb_ask = "queries"
 	verb_exclaim = "alarms"
+	can_language_malfunction = FALSE
 
 	/// Used for logging people entering cryosleep and important items they are carrying.
 	var/list/frozen_crew = list()
@@ -52,6 +53,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/computer/cryopod, 32)
 	. = ..()
 	GLOB.cryopod_computers += src
 	radio = new radio(src)
+	radio.lossless = TRUE
 
 /obj/machinery/computer/cryopod/Destroy()
 	GLOB.cryopod_computers -= src

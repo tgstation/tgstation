@@ -5804,6 +5804,8 @@
 #include "monkestation\code\datums\wires\particle_accelerator.dm"
 #include "monkestation\code\game\atom.dm"
 #include "monkestation\code\game\sound.dm"
+#include "monkestation\code\game\machinery\_machinery.dm"
+#include "monkestation\code\game\machinery\announcement_system.dm"
 #include "monkestation\code\game\machinery\cloning.dm"
 #include "monkestation\code\game\machinery\exp_cloner.dm"
 #include "monkestation\code\game\machinery\launch_pad.dm"
