@@ -249,7 +249,7 @@ DEFAULT_LAWS 4
 ## See datums\ai_laws.dm for the full law lists
 ## IE, SPECIFIED_LAWS asimovpp, SPECIFIED_LAWS robocop, SPECIFIED_LAWS antimov
 
-SPECIFIED_LAWS nt_default
+SPECIFIED_LAWS crewsimovpp
 
 ## RANDOM LAWS ##
 ## ------------------------------------------------------------------------------------------
@@ -263,6 +263,7 @@ RANDOM_LAWS paladin
 RANDOM_LAWS robocop
 RANDOM_LAWS corporate
 RANDOM_LAWS nt_default
+RANDOM_LAWS crewsimovpp
 
 ## Quirky laws. Shouldn't cause too much harm
 #RANDOM_LAWS hippocratic
