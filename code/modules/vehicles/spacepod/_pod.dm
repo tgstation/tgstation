@@ -78,9 +78,11 @@
 	if(isnull(drift_handler))
 		return
 
-	if(return_drivers())
+	var/list/drivers = return_drivers()
+
+	if(drivers)
 		var/braking = FALSE
-		for(var/mob/driver as anything in return_drivers())
+		for(var/mob/driver as anything in drivers)
 			if(driver.client?.keys_held["Shift"])
 				braking = TRUE
 				break
