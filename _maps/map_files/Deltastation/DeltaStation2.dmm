@@ -20234,10 +20234,8 @@
 /turf/open/floor/iron,
 /area/station/maintenance/department/chapel)
 "eOW" = (
-/obj/machinery/vending/hydroseeds{
-	slogan_delay = 700
-	},
 /obj/effect/turf_decal/bot,
+/obj/machinery/vending/hydroseeds/permabrig,
 /turf/open/floor/iron/dark,
 /area/station/security/prison/garden)
 "ePa" = (
@@ -86884,7 +86882,6 @@
 /obj/item/seeds/ambrosia,
 /obj/item/seeds/grass,
 /obj/item/seeds/carrot,
-/obj/item/seeds/tomato,
 /obj/item/seeds/potato,
 /obj/item/seeds/garlic,
 /obj/item/seeds/onion,

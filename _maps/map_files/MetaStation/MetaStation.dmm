@@ -22838,6 +22838,11 @@
 /obj/machinery/camera/autoname/directional/west,
 /turf/open/floor/iron/white,
 /area/station/security/prison/mess)
+"irc" = (
+/obj/machinery/netpod,
+/obj/machinery/camera/directional/west,
+/turf/open/floor/catwalk_floor/iron_dark,
+/area/station/security/bitden)
 "irL" = (
 /obj/effect/turf_decal/trimline/blue/filled/line,
 /turf/open/floor/iron/white,
@@ -33549,10 +33554,8 @@
 /obj/effect/turf_decal/trimline/green/filled/line{
 	dir = 1
 	},
-/obj/machinery/vending/hydroseeds{
-	slogan_delay = 700
-	},
 /obj/effect/turf_decal/bot,
+/obj/machinery/vending/hydroseeds/permabrig,
 /turf/open/floor/iron,
 /area/station/security/prison/garden)
 "lXm" = (
@@ -54430,7 +54433,6 @@
 /obj/item/seeds/ambrosia,
 /obj/item/seeds/grass,
 /obj/item/seeds/carrot,
-/obj/item/seeds/tomato,
 /obj/item/seeds/potato,
 /obj/item/seeds/garlic,
 /obj/item/seeds/onion,
@@ -87341,7 +87343,7 @@ mxQ
 lMJ
 rZK
 cTa
-cTa
+irc
 ixX
 ngv
 qIL

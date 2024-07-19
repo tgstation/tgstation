@@ -14478,6 +14478,10 @@
 	},
 /turf/open/floor/wood,
 /area/station/service/lawoffice)
+"ePU" = (
+/obj/effect/spawner/random/structure/grille,
+/turf/open/space/basic,
+/area/space/nearstation)
 "ePX" = (
 /obj/structure/cable,
 /obj/machinery/duct,
@@ -34183,7 +34187,6 @@
 /obj/item/seeds/ambrosia,
 /obj/item/seeds/grass,
 /obj/item/seeds/carrot,
-/obj/item/seeds/tomato,
 /obj/item/seeds/potato,
 /obj/item/seeds/garlic,
 /obj/item/seeds/onion,
@@ -56030,10 +56033,8 @@
 /obj/machinery/power/apc/auto_name/directional/south,
 /obj/structure/cable,
 /obj/machinery/light/small/directional/south,
-/obj/machinery/vending/hydroseeds{
-	slogan_delay = 700
-	},
 /obj/effect/turf_decal/bot,
+/obj/machinery/vending/hydroseeds/permabrig,
 /turf/open/floor/iron/dark,
 /area/station/security/prison/garden)
 "sLG" = (
@@ -72567,6 +72568,11 @@
 	},
 /turf/open/floor/carpet/purple,
 /area/station/command/heads_quarters/rd)
+"ylq" = (
+/obj/effect/spawner/random/structure/grille,
+/obj/structure/lattice,
+/turf/open/space/basic,
+/area/space/nearstation)
 "ylx" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
@@ -94281,10 +94287,10 @@ uoo
 uoo
 ksa
 uoo
-ksa
-uoo
-uoo
-ksa
+fEP
+fEP
+fEP
+ePU
 fEP
 uoo
 aeM
@@ -94538,11 +94544,11 @@ ksa
 uoo
 uoo
 uoo
+fEP
+ksa
+ksa
 uoo
-fEP
-fEP
-fEP
-fEP
+ksa
 ksa
 aeM
 joc
@@ -94795,8 +94801,8 @@ ksa
 ksa
 uoo
 ksa
+ylq
 ksa
-fEP
 kFk
 kFk
 kFk
@@ -95052,8 +95058,8 @@ ksa
 ksa
 ksa
 ksa
-ksa
-fEP
+ylq
+uoo
 kFk
 apg
 bdb
@@ -95309,8 +95315,8 @@ ksa
 ksa
 ksa
 ksa
+ylq
 ksa
-fEP
 kFk
 apg
 wGs
@@ -95566,8 +95572,8 @@ ksa
 uoo
 uoo
 ksa
+ylq
 ksa
-fEP
 kFk
 apg
 vIP
@@ -95823,8 +95829,8 @@ uoo
 uoo
 ksa
 ksa
+ylq
 ksa
-fEP
 kFk
 kzh
 emc
@@ -96081,7 +96087,7 @@ ksa
 ksa
 ksa
 fEP
-fEP
+ksa
 kFk
 gSB
 lIO
@@ -96338,7 +96344,7 @@ ksa
 ksa
 fEP
 fEP
-ksa
+uoo
 kFk
 xZo
 nKe

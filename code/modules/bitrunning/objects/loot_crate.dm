@@ -5,8 +5,8 @@
 #define ORE_MULTIPLIER_GOLD 0.6
 #define ORE_MULTIPLIER_TITANIUM 0.5
 #define ORE_MULTIPLIER_URANIUM 0.4
-#define ORE_MULTIPLIER_DIAMOND 0.3
-#define ORE_MULTIPLIER_BLUESPACE_CRYSTAL 0.2
+#define ORE_MULTIPLIER_DIAMOND 0.5 //MONKESTATION EDIT: Compenstation for removing crystals (was .3)
+/*#define ORE_MULTIPLIER_BLUESPACE_CRYSTAL 0.2*/ //MONKESTATION REMOVAL
 
 /obj/structure/closet/crate/secure/bitrunning // Base class. Do not spawn this.
 	name = "base class cache"
@@ -55,7 +55,7 @@
 
 	if(reward_points > 3)
 		new /obj/item/stack/ore/diamond(src, calculate_loot(reward_points, rewards_multiplier, ORE_MULTIPLIER_DIAMOND))
-		new /obj/item/stack/ore/bluespace_crystal(src, calculate_loot(reward_points, rewards_multiplier, ORE_MULTIPLIER_BLUESPACE_CRYSTAL))
+		/*new /obj/item/stack/ore/bluespace_crystal(src, calculate_loot(reward_points, rewards_multiplier, ORE_MULTIPLIER_BLUESPACE_CRYSTAL))*/
 
 /// Handles generating random numbers & calculating loot totals
 /obj/structure/closet/crate/secure/bitrunning/decrypted/proc/calculate_loot(reward_points, rewards_multiplier, ore_multiplier)
@@ -85,4 +85,4 @@
 #undef ORE_MULTIPLIER_TITANIUM
 #undef ORE_MULTIPLIER_URANIUM
 #undef ORE_MULTIPLIER_DIAMOND
-#undef ORE_MULTIPLIER_BLUESPACE_CRYSTAL
+/*#undef ORE_MULTIPLIER_BLUESPACE_CRYSTAL*/

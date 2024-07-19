@@ -10999,6 +10999,10 @@
 /obj/effect/mapping_helpers/broken_floor,
 /turf/open/floor/plating,
 /area/station/maintenance/port/greater)
+"dBi" = (
+/obj/effect/spawner/structure/window,
+/turf/open/floor/plating,
+/area/station/security/prison/garden)
 "dBs" = (
 /obj/effect/turf_decal/bot,
 /obj/effect/decal/cleanable/dirt,
@@ -11945,7 +11949,6 @@
 /obj/item/seeds/ambrosia,
 /obj/item/seeds/grass,
 /obj/item/seeds/carrot,
-/obj/item/seeds/tomato,
 /obj/item/seeds/potato,
 /obj/item/seeds/garlic,
 /obj/item/seeds/onion,
@@ -21562,9 +21565,7 @@
 /obj/effect/turf_decal/trimline/green/filled/line{
 	dir = 5
 	},
-/obj/machinery/vending/hydroseeds{
-	slogan_delay = 700
-	},
+/obj/machinery/vending/hydroseeds/permabrig,
 /turf/open/floor/iron/dark,
 /area/station/security/prison/garden)
 "gPy" = (
@@ -44780,10 +44781,6 @@
 	},
 /turf/open/floor/carpet/green,
 /area/station/service/lawoffice)
-"ojw" = (
-/obj/effect/turf_decal/sand/plating,
-/turf/closed/wall/r_wall,
-/area/station/security/prison/garden)
 "ojz" = (
 /obj/effect/turf_decal/trimline/green/filled/line{
 	dir = 5
@@ -45747,6 +45744,10 @@
 /obj/effect/turf_decal/tile/blue,
 /turf/open/floor/iron,
 /area/station/service/janitor)
+"oBd" = (
+/obj/effect/spawner/structure/window,
+/turf/open/floor/plating,
+/area/station/security/prison)
 "oBe" = (
 /obj/effect/turf_decal/delivery,
 /obj/machinery/door/window/right/directional/north{
@@ -71488,12 +71489,10 @@
 	dir = 1
 	},
 /obj/structure/table,
-/obj/machinery/microwave,
-/obj/effect/spawner/random/food_or_drink/donkpockets{
-	pixel_x = -6;
+/obj/effect/turf_decal/bot,
+/obj/machinery/reagentgrinder{
 	pixel_y = 8
 	},
-/obj/effect/turf_decal/bot,
 /turf/open/floor/iron/kitchen,
 /area/station/security/prison/mess)
 "wua" = (
@@ -75657,10 +75656,6 @@
 /obj/effect/mapping_helpers/broken_floor,
 /turf/open/floor/plating,
 /area/station/maintenance/port/greater)
-"xOm" = (
-/obj/effect/spawner/structure/window/reinforced,
-/turf/open/floor/plating,
-/area/station/security/prison)
 "xOB" = (
 /turf/closed/wall/r_wall/rust,
 /area/station/engineering/main)
@@ -83257,7 +83252,7 @@ uep
 dap
 sei
 dap
-xOm
+oBd
 wsX
 kwk
 pzM
@@ -85589,7 +85584,7 @@ kjb
 jhk
 uFa
 myp
-jYh
+dBi
 myp
 gOL
 ovi
@@ -86871,12 +86866,12 @@ tWp
 lga
 lQr
 sAv
-mWy
-mWy
-mWy
+oBd
+oBd
+oBd
 ifQ
-ojw
-ojw
+myp
+myp
 jYh
 jYh
 myp
