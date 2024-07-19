@@ -118,7 +118,7 @@
 			return FALSE
 
 	if(freq == FREQ_SYNDICATE)
-		if(!(syndie))
+		if(!(special_channels &= RADIO_SPECIAL_SYNDIE))
 			return FALSE//Prevents broadcast of messages over devices lacking the encryption
 
 	return TRUE

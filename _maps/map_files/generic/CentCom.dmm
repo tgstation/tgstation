@@ -2414,7 +2414,7 @@
 /obj/machinery/door/window/left/directional/south,
 /obj/item/radio/intercom{
 	desc = "Talk smack through this.";
-	syndie = 1
+	special_channels = RADIO_SPECIAL_SYNDIE
 	},
 /turf/open/floor/iron/grimy,
 /area/centcom/central_command_areas/courtroom)
