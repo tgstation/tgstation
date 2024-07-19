@@ -16,7 +16,6 @@
 #include "database220/_database220.dme"
 #include "discord/_discord.dme"
 #include "emote_panel/_emote_panel.dme" // Waiting for upstream merge
-#include "events/_events.dme"
 #include "examine_panel/_examine_panel.dme"
 #include "gunhud/_gunhud.dme"
 #include "keybinding/_keybinding.dme"
