@@ -14,3 +14,9 @@
 	log_admin("[key_name(usr)] kicked [key_name(to_kick)].")
 	message_admins(span_adminnotice("[key_name_admin(usr)] kicked [key_name_admin(to_kick)]."))
 	qdel(to_kick)
+
+/// When passed a mob, client, or mind, returns their admin holder, if they have one.
+/proc/get_admin_holder(doohickey) as /datum/admins
+	RETURN_TYPE(/datum/admins)
+	var/client/client = CLIENT_FROM_VAR(doohickey)
+	return client?.holder

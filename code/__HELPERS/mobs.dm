@@ -455,12 +455,12 @@ GLOBAL_LIST_EMPTY(species_list)
 			toggles = prefs.toggles
 			ignoring = prefs.ignoring
 		if(admin_only)
-			if (!M.client?.holder)
+			if (!M.client?.holder?.check_for_rights(R_ADMIN)) // monkestation edit: only include admins with the +ADMIN permission
 				return
 			else
 				message += span_deadsay(" (This is viewable to admins only).")
 		var/override = FALSE
-		if(M.client?.holder && (chat_toggles & CHAT_DEAD))
+		if(M.client?.holder?.check_for_rights(R_ADMIN) && (chat_toggles & CHAT_DEAD)) // monkestation edit: only include admins with the +ADMIN permission
 			override = TRUE
 		if(HAS_TRAIT(M, TRAIT_SIXTHSENSE) && message_type == DEADCHAT_REGULAR)
 			override = TRUE
