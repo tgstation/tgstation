@@ -115,7 +115,7 @@
  * Arguments:
  * * awakener: user who interacted with the blade
  */
-/datum/component/spirit_holding/proc/custom_name(mob/awakener, var/iteration = 1)
+/datum/component/spirit_holding/proc/custom_name(mob/awakener, iteration = 1)
 	if(iteration > 5)
 		return "indecision" // The spirit of indecision
 	var/chosen_name = sanitize_name(tgui_input_text(bound_spirit, "What are you named?", "Spectral Nomenclature", max_length = MAX_NAME_LEN))
