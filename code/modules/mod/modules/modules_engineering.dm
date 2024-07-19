@@ -207,6 +207,27 @@
 	balloon_alert(user, "attached tether")
 	user.AddComponent(/datum/component/tether, src, 7, "tether")
 
+/obj/item/tether_anchor/mouse_drop_receive(atom/target, mob/user, params)
+	if (!can_interact(user) || !user.CanReach(src) || !isturf(loc))
+		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+
+	if (!isliving(target) || !target.CanReach(src))
+		return
+
+	if (target == user)
+		balloon_alert(user, "attached tether")
+		user.AddComponent(/datum/component/tether, src, 7, "tether")
+		return
+
+	balloon_alert(user, "attaching tether...")
+	to_chat(target, span_userdanger("[user] is trying to attach a tether to you!"))
+	if (!do_after(user, 5 SECONDS, target))
+		return
+
+	balloon_alert(user, "attached tether")
+	to_chat(target, span_userdanger("[user] attaches a tether to you!"))
+	target.AddComponent(/datum/component/tether, src, 7, "tether")
+
 /datum/embed_data/tether_projectile
 	embed_chance=65 // spiky
 	fall_chance=10

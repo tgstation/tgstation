@@ -91,7 +91,6 @@
 		to_chat(source, span_warning("[tether_name] catches on [blocker] and prevents you from moving!"))
 		return COMPONENT_MOVABLE_BLOCK_PRE_MOVE
 
-	/* Kind of jank atm
 	if (get_dist(anchor, new_loc) != cur_dist || !ismovable(source))
 		return
 
@@ -99,15 +98,7 @@
 	var/datum/drift_handler/handler = movable_source.drift_handler
 	if (isnull(handler))
 		return
-
-	var/angle = get_angle(movable_source, anchor)
-	var/angle_diff = abs(angle - handler.drifting_loop.angle)
-	if (angle_diff > 180)
-		angle_diff = 360 - angle_diff
-
-	var/force = handler.drift_force * sin(angle_diff)
-	movable_source.newtonian_move(angle, TRUE, drift_force = (force * force) / cur_dist)
-	*/
+	handler.remove_angle_force(get_angle(anchor, source))
 
 /datum/component/tether/proc/on_delete()
 	SIGNAL_HANDLER
