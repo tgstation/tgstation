@@ -347,6 +347,7 @@ GLOBAL_LIST(fishing_property_cache)
 	var/multiplier = 1/(length(exploded_turfs)**0.5)
 	for(var/turf/turf as anything in exploded_turfs)
 		explosive_spawn(turf, exploded_turfs[turf], multiplier)
+	exploded_turfs = null
 
 /datum/fish_source/proc/explosive_spawn(location, severity, multiplier = 1)
 	for(var/i in 1 to (severity + 2))
