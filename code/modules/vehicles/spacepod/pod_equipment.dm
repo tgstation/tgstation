@@ -6,6 +6,7 @@
 	panel_open = !panel_open
 	tool.play_tool_sound(src)
 	update_appearance()
+	balloon_alert(user, "panel [panel_open ? "open" : "closed"]")
 	return ITEM_INTERACT_SUCCESS
 
 /obj/vehicle/sealed/space_pod/item_interaction(mob/living/user, obj/item/pod_equipment/equipment, list/modifiers)
@@ -37,6 +38,8 @@
 		balloon_alert(user, "not enough space!")
 		return ITEM_INTERACT_BLOCKING
 
+	balloon_alert(user, "attaching...")
+
 	if(!do_after(user, 3 SECONDS, src))
 		return ITEM_INTERACT_FAILURE
 
@@ -55,6 +58,8 @@
 		return ITEM_INTERACT_BLOCKING
 
 	tool.play_tool_sound(src)
+
+	balloon_alert(user, "removing...")
 
 	if(!do_after(user, 3 SECONDS, src))
 		return ITEM_INTERACT_FAILURE

@@ -19,8 +19,8 @@
 	move_force = MOVE_FORCE_VERY_STRONG
 	move_resist = MOVE_FORCE_EXTREMELY_STRONG
 	resistance_flags = FIRE_PROOF | ACID_PROOF
-	icon = 'icons/mob/rideables/vehicles.dmi' //placeholder
-	icon_state = "engineering_pod" //placeholder
+	icon = 'icons/mob/rideables/spacepod/pod.dmi'
+	icon_state = "cockpit_pod" //placeholder
 	light_system = OVERLAY_LIGHT_DIRECTIONAL
 	light_on = FALSE
 	max_occupants = 2
