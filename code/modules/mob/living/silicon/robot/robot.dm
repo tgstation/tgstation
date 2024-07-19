@@ -325,8 +325,9 @@
 /mob/living/silicon/robot/proc/update_worn_icons()
 	if(!hat_overlay)
 		return
+	cut_overlay(hat_overlay)
+
 	if(islist(hat_offset))
-		cut_overlay(hat_overlay)
 		var/list/offset = hat_offset[ISDIAGONALDIR(dir) ? dir2text(dir & (WEST|EAST)) : dir2text(dir)]
 		if(offset)
 			hat_overlay.pixel_w = offset[1]
