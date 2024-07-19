@@ -232,7 +232,7 @@
 	if(istype(tool, /obj/item/toy/cards/deck))
 		deck_act_value = deck_act(user, tool, modifiers, TRUE)
 	// Continue to placing if we don't do anything else
-	if(deck_act_value)
+	if(deck_act_value != NONE)
 		return deck_act_value
 	if(!user.combat_mode)
 		return table_place_act(user, tool, modifiers)
@@ -249,7 +249,7 @@
 		. = riding_offhand_act(user, tool)
 
 	// Continue to placing if we don't do anything else
-	if(.)
+	if(. != NONE)
 		return .
 
 	if(!user.combat_mode)
