@@ -191,6 +191,8 @@ GLOBAL_LIST_INIT(specific_fish_icons, zebra_typecacheof(list(
 
 ///Simplified version of dispense_reward that doesn't need a fisherman.
 /datum/fish_source/proc/simple_dispense_reward(reward_path, atom/spawn_location, turf/fishing_spot)
+	if(isnull(reward_path))
+		return null
 	if((reward_path in fish_counts)) // This is limited count result
 		fish_counts[reward_path] -= 1
 		if(!fish_counts[reward_path])
