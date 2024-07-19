@@ -19,11 +19,13 @@
 
 /obj/machinery/computer/monitor/Initialize(mapload)
 	. = ..()
+	//Add to the late process queue to record the accurate power usage data
+	SSmachines.processing_late += src
 	search()
 	history["supply"] = list()
 	history["demand"] = list()
 
-/obj/machinery/computer/monitor/process()
+/obj/machinery/computer/monitor/process_late()
 	if(!get_powernet())
 		update_use_power(IDLE_POWER_USE)
 		search()

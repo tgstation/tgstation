@@ -41,6 +41,12 @@ GLOBAL_LIST_INIT(fish_traits, init_subtypes_w_path_keys(/datum/fish_trait, list(
 	SEND_SIGNAL(prey, COMSIG_FISH_EATEN_BY_OTHER_FISH, predator)
 	qdel(prey)
 
+/// Proc that inserts a reagent to the grind_results list of the fish. You'll still have to set the processed comsig proc yourself.
+/datum/fish_trait/proc/add_to_reagents(obj/item/fish/fish, reagent_type, amount)
+	LAZYINITLIST(fish.grind_results)
+	fish.grind_results.Insert(1, reagent_type)
+	fish.grind_results[reagent_type] = amount
+
 /datum/fish_trait/wary
 	name = "Wary"
 	catalog_description = "This fish will avoid visible fish lines, cloaked line recommended."
@@ -254,7 +260,7 @@ GLOBAL_LIST_INIT(fish_traits, init_subtypes_w_path_keys(/datum/fish_trait, list(
 /datum/fish_trait/yucky/apply_to_fish(obj/item/fish/fish)
 	RegisterSignal(fish, COMSIG_ATOM_PROCESSED, PROC_REF(add_yuck))
 	ADD_TRAIT(fish, TRAIT_YUCKY_FISH, FISH_TRAIT_DATUM)
-	LAZYSET(fish.grind_results, /datum/reagent/yuck, 3)
+	add_to_reagents(fish, /datum/reagent/yuck, 3)
 
 /datum/fish_trait/yucky/proc/add_yuck(obj/item/fish/source, mob/living/user, obj/item/process_item, list/results)
 	var/amount = source.grind_results[/datum/reagent/yuck] / length(results)
@@ -269,12 +275,12 @@ GLOBAL_LIST_INIT(fish_traits, init_subtypes_w_path_keys(/datum/fish_trait, list(
 /datum/fish_trait/toxic/apply_to_fish(obj/item/fish/fish)
 	RegisterSignal(fish, COMSIG_ATOM_PROCESSED, PROC_REF(add_toxin))
 	RegisterSignal(fish, COMSIG_FISH_EATEN_BY_OTHER_FISH, PROC_REF(on_eaten))
-	LAZYSET(fish.grind_results, /datum/reagent/toxin/tetrodotoxin, 2.5)
+	add_to_reagents(fish, /datum/reagent/toxin/tetrodotoxin, 2.5)
 
 /datum/fish_trait/toxic/proc/add_toxin(obj/item/fish/source, mob/living/user, obj/item/process_item, list/results)
 	var/amount = source.grind_results[ /datum/reagent/toxin/tetrodotoxin] / length(results)
 	for(var/atom/result as anything in results)
-		result.reagents?.add_reagent( /datum/reagent/toxin/tetrodotoxin, amount)
+		result.reagents?.add_reagent(/datum/reagent/toxin/tetrodotoxin, amount)
 
 /datum/fish_trait/toxic/proc/on_eaten(obj/item/fish/source, obj/item/fish/predator)
 	if(HAS_TRAIT(predator, TRAIT_FISH_TOXIN_IMMUNE))
