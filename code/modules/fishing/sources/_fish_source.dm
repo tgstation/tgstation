@@ -199,6 +199,7 @@ GLOBAL_LIST_INIT(specific_fish_icons, zebra_typecacheof(list(
 
 	var/atom/movable/reward = spawn_reward(reward_path, spawn_location, fishing_spot)
 	SEND_SIGNAL(src, COMSIG_FISH_SOURCE_REWARD_DISPENSED, reward)
+	return reward
 
 /// Spawns a reward from a atom path right where the fisherman is. Part of the dispense_reward() logic.
 /datum/fish_source/proc/spawn_reward(reward_path, atom/spawn_location, turf/fishing_spot)
