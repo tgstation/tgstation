@@ -144,10 +144,11 @@
 		nicknamed 'Bulldog' by boarding parties. Compatible only with specialized 8-round drum magazines. \
 		Can have a secondary magazine attached to quickly swap between ammo types, or just to keep shooting."
 	icon_state = "bulldog"
-	inhand_icon_state = "bulldog"
-	worn_icon_state = "bulldog"
 	lefthand_file = 'icons/mob/inhands/weapons/guns_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/guns_righthand.dmi'
+	inhand_icon_state = "bulldog"
+	worn_icon = 'icons/mob/clothing/back.dmi'
+	worn_icon_state = "bulldog"
 	inhand_x_dimension = 32
 	inhand_y_dimension = 32
 	projectile_damage_multiplier = 1.2
@@ -168,9 +169,9 @@
 	internal_magazine = FALSE
 	tac_reloads = TRUE
 	burst_fire_selection = TRUE
-	///the type of secondary magazine for the bulldog
+	/// The type of secondary magazine for the bulldog
 	var/secondary_magazine_type
-	///the secondary magazine
+	/// The secondary magazine
 	var/obj/item/ammo_box/magazine/secondary_magazine
 
 /obj/item/gun/ballistic/shotgun/bulldog/Initialize(mapload)
