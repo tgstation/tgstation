@@ -35,17 +35,18 @@
 	/// ion trail effect
 	var/datum/effect_system/trail_follow/ion/trail
 
+	// speed vars are here if someone wants to make their own turbo subtype pod or admin abuse
 	/// max drift speed we can get via moving intentionally, modified by thrusters
 	var/max_speed = 0
 	/// Force per tick movement held down, modified by engine
 	var/force_per_move = 0
 	/// Force per process run to bring us to a halt, modified by thrusters
 	var/stabilizer_force = 0
-	/// are stabilizers on
-	var/stabilizers_on = FALSE
 
 	/// our air tank, cabin air is this
 	var/obj/item/tank/internals/cabin_air_tank
+	/// our power cell
+	var/obj/item/stock_parts/power_store/cell/cell
 
 
 /obj/vehicle/sealed/space_pod/Initialize(mapload)
@@ -71,14 +72,22 @@
 			continue
 		. += overlay
 
-/*
+// brakes
 /obj/vehicle/sealed/space_pod/process()
-	if (!stabilizers_on || isnull(user.drift_handler))
+	if(isnull(drift_handler))
 		return
 
-	var/max_drift_force = (DEFAULT_INERTIA_SPEED / user.cached_multiplicative_slowdown - 1) / INERTIA_SPEED_COEF + 1
-	drift_handler.stabilize_drift(dir2angle(dir), user.client.intended_direction ? max_drift_force : 0, stabilizer_force)
-*/
+	var/braking = FALSE
+	for(var/mob/driver as anything in return_drivers())
+		if(driver.client?.keys_held["Shift"])
+			braking = TRUE
+			break
+
+	if (!braking)
+		return
+
+	drift_handler.stabilize_drift(dir2angle(dir), 0, stabilizer_force)
+
 
 /obj/vehicle/sealed/space_pod/vehicle_move(direction)
 	. = ..()
@@ -90,13 +99,12 @@
 		COOLDOWN_START(src, cooldown_vehicle_move, 1 SECONDS) // INTENTIONALLY make it painful to use onstation
 		after_move(direction)
 		return try_step_multiz(direction)
-	if(direction != dir)
+	if(dir != direction)
 		setDir(direction) //first press changes dir
 		return
 	trail.generate_effect()
 // may or may not work havent tested
 	newtonian_move(dir2angle(dir), drift_force = force_per_move, controlled_cap = max_speed)
-	setDir(direction)
 
 // atmos
 /obj/vehicle/sealed/space_pod/remove_air(amount)

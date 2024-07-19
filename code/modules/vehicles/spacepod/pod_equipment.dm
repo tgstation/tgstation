@@ -1,7 +1,7 @@
 /obj/vehicle/sealed/space_pod/screwdriver_act(mob/living/user, obj/item/tool)
 	. = NONE
-	if(return_drivers())
-		balloon_alert(user, "mustnt have drivers!")
+	if(length(occupants))
+		balloon_alert(user, "mustnt have passengers or drivers!")
 		return ITEM_INTERACT_BLOCKING
 	panel_open = !panel_open
 	tool.play_tool_sound(src)
@@ -11,12 +11,19 @@
 /obj/vehicle/sealed/space_pod/item_interaction(mob/living/user, obj/item/pod_equipment/equipment, list/modifiers)
 	. = NONE
 
-	if(istype(equipment, /obj/item/tank/internals))
+	if(istype(equipment, /obj/item/tank/internals) && isnull(cabin_air_tank) && panel_open) //these two could be done better
 		if(!user.transferItemToLoc(equipment, src))
 			return ITEM_INTERACT_FAILURE
 		cabin_air_tank = equipment
 		to_chat(user, span_notice("You slot [equipment] into [src]."))
 		playsound(src, 'sound/effects/tank_insert_clunky.ogg', 50)
+		return ITEM_INTERACT_SUCCESS
+
+	if(istype(equipment, /obj/item/stock_parts/power_store/cell) && isnull(cell) && panel_open)
+		if(!user.transferItemToLoc(equipment, src))
+			return ITEM_INTERACT_FAILURE
+		cell = equipment
+		to_chat(user, span_notice("You slot [equipment] into [src]."))
 		return ITEM_INTERACT_SUCCESS
 
 	if(!istype(equipment))
@@ -85,3 +92,5 @@
 	equipment.on_detach(user)
 	equipment.pod = null
 
+/obj/vehicle/sealed/space_pod/get_cell()
+	return cell
