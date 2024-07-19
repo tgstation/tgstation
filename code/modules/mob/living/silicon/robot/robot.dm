@@ -20,6 +20,7 @@
 	RegisterSignal(src, COMSIG_PROCESS_BORGCHARGER_OCCUPANT, PROC_REF(charge))
 	RegisterSignal(src, COMSIG_LIGHT_EATER_ACT, PROC_REF(on_light_eater))
 	RegisterSignal(src, COMSIG_HIT_BY_SABOTEUR, PROC_REF(on_saboteur))
+	RegisterSignal(src, COMSIG_ATOM_POST_DIR_CHANGE, PROC_REF(on_dir_change))
 
 	robot_modules_background = new()
 	robot_modules_background.icon_state = "block"
@@ -740,7 +741,6 @@
 		add_traits(model.model_traits, MODEL_TRAIT)
 
 	hat_offset = model.hat_offset
-	RegisterSignal(src, COMSIG_ATOM_POST_DIR_CHANGE, PROC_REF(on_dir_change))
 
 	INVOKE_ASYNC(src, PROC_REF(updatename))
 
