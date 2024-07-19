@@ -1,6 +1,6 @@
 #define PREF "PREF"
 
-/proc/effigy_debug(message, type)
+/proc/debug_effigy(message, type)
 	var/msg_type = type
 	if(isnull(type))
 		msg_type = "GAME"
