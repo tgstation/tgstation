@@ -116,17 +116,18 @@
 	return ..()
 
 /datum/mutation/human/proc/on_acquiring(mob/living/carbon/human/acquirer, forced = FALSE)
+	SHOULD_CALL_PARENT(TRUE)
 	if(!acquirer || !istype(acquirer) || (src in acquirer.dna.mutations))
 		return TRUE
-	if (acquirer.stat == DEAD && !forced)
-		return TRUE
-	if(species_allowed && !species_allowed.Find(acquirer.dna.species.id) && !forced)
-		return TRUE
-	if(health_req && acquirer.health < health_req && !forced)
-		return TRUE
-	if(limb_req && !acquirer.get_bodypart(limb_req) && !forced)
-		return TRUE
 	if (!forced)
+		if (acquirer.stat == DEAD)
+			return TRUE
+		if(species_allowed && !species_allowed.Find(acquirer.dna.species.id))
+			return TRUE
+		if(health_req && acquirer.health < health_req)
+			return TRUE
+		if(limb_req && !acquirer.get_bodypart(limb_req))
+			return TRUE
 		for(var/datum/mutation/human/mewtayshun as anything in acquirer.dna.mutations) //check for conflicting powers
 			if(!(mewtayshun.type in conflicts) && !(type in mewtayshun.conflicts))
 				continue
@@ -159,6 +160,7 @@
 	return
 
 /datum/mutation/human/proc/on_losing(mob/living/carbon/human/owner)
+	SHOULD_CALL_PARENT(TRUE)
 	if(!istype(owner) || !(owner.dna.mutations.Remove(src)))
 		return TRUE
 	. = FALSE
