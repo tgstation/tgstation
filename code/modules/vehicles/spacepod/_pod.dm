@@ -45,7 +45,7 @@
 
 	/// our air tank, cabin air is this
 	var/obj/item/tank/internals/cabin_air_tank
-	/// our power cell
+	/// our power cell (should this be a megacell only thing or cell only?)
 	var/obj/item/stock_parts/power_store/cell/cell
 
 
@@ -99,12 +99,10 @@
 		COOLDOWN_START(src, cooldown_vehicle_move, 1 SECONDS) // INTENTIONALLY make it painful to use onstation
 		after_move(direction)
 		return try_step_multiz(direction)
-	if(dir != direction)
-		setDir(direction) //first press changes dir
-		return
 	trail.generate_effect()
 // may or may not work havent tested
-	newtonian_move(dir2angle(dir), drift_force = force_per_move, controlled_cap = max_speed)
+	setDir(direction)
+	newtonian_move(dir2angle(direction), drift_force = force_per_move, controlled_cap = max_speed)
 
 // atmos
 /obj/vehicle/sealed/space_pod/remove_air(amount)
@@ -116,3 +114,13 @@
 /obj/vehicle/sealed/space_pod/return_temperature()
 	var/datum/gas_mixture/air = return_air()
 	return air?.return_temperature()
+
+/obj/vehicle/sealed/space_pod/debug_prebuilt/Initialize(mapload)//remove or improve later
+	. = ..()
+	equip_item(new /obj/item/pod_equipment/sensors)
+	equip_item(new /obj/item/pod_equipment/comms)
+	equip_item(new /obj/item/pod_equipment/thrusters)
+	equip_item(new /obj/item/pod_equipment/engine)
+	cabin_air_tank = new /obj/item/tank/internals/oxygen(src)
+	cell = new /obj/item/stock_parts/power_store/battery/bluespace(src)
+
