@@ -1,0 +1,10 @@
+author: "DrDiasyl aka DrTuxedo"
+delete-after: True
+changes:
+  - rscadd: "Security and Engineering holosigns can now be opened with their projector by clicking them from afar"
+  - rscadd: "SecVendor starts with 2 Security holosigns"
+  - qol: "Holosigns don't block projectiles anymore"
+  - qol: "Security holosigns now take 2 seconds to create instead of 3"
+  - image: "Janitor, Security, Medical, and Engineering holosigns now have cleaner sprites"
+  - code_imp: "Holosigns now use proper cooldowns instead of the world.time"
+  - spellcheck: "Holosigns and holosign creators' descriptions give more information now"
