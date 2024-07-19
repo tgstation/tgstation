@@ -1259,7 +1259,10 @@ GLOBAL_LIST_EMPTY(vending_machines_to_restock)
 
 		var/atom/printed = record.product_path
 		// If it's not GAGS and has no innate colors we have to care about, we use DMIcon
-		if(ispath(printed, /atom) && !initial(printed.greyscale_config) && !initial(printed.color))
+		if(ispath(printed, /atom) \
+			&& (!initial(printed.greyscale_config) || !initial(printed.greyscale_colors)) \
+			&& !initial(printed.color) \
+		)
 			static_record["icon"] = initial(printed.icon)
 			static_record["icon_state"] = initial(printed.icon_state)
 

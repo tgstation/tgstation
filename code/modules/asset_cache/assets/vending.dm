@@ -19,12 +19,14 @@
 		var/icon_file
 		var/icon_state = initial(item.icon_state)
 		var/icon_color = initial(item.color)
-		if (initial(item.greyscale_colors) && initial(item.greyscale_config))
+		// GAGS icons must be pregenerated
+		if(initial(item.greyscale_config) && initial(item.greyscale_colors))
 			icon_file = SSgreyscale.GetColoredIconByType(initial(item.greyscale_config), initial(item.greyscale_colors))
+		// Colored atoms must be pregenerated
 		else if(icon_color && icon_state)
 			icon_file = initial(item.icon)
+		// Otherwise we can rely on DMIcon, so skip it to save init time
 		else
-			// We don't need to make an icon of this, we can fallback to DMIcon to save init time
 			continue
 
 		if (PERFORM_ALL_TESTS(focus_only/invalid_vending_machine_icon_states))
