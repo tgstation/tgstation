@@ -78,7 +78,7 @@
 	datum/language/language,  // the language of the message
 	message,  // the text content of the message
 	spans,  // the list of spans applied to the message
-	list/message_mods // the list of modification applied to the message. Whispering, singing, ect
+	list/message_mods, // the list of modification applied to the message. Whispering, singing, ect
 )
 	src.source = source
 	src.frequency = frequency
@@ -92,7 +92,7 @@
 		"compression" = rand(COMPRESSION_VOCAL_SIGNAL_MIN, COMPRESSION_VOCAL_SIGNAL_MAX),
 		"language" = lang_instance.name,
 		"spans" = spans,
-		"mods" = message_mods
+		"mods" = message_mods,
 	)
 	levels = SSmapping.get_connected_levels(get_turf(source))
 

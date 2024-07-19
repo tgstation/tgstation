@@ -352,6 +352,8 @@
 		signal.broadcast()
 		return
 
+	playsound(talking_movable, 'sound/misc/radio_talk.ogg', 40, TRUE, -1, 2)
+
 	// All radios make an attempt to use the subspace system first
 	signal.send_to_receivers()
 
@@ -422,6 +424,11 @@
 /obj/item/radio/proc/on_receive_message(list/data)
 	SEND_SIGNAL(src, COMSIG_RADIO_RECEIVE_MESSAGE, data)
 	flick_overlay_view(overlay_speaker_active, 5 SECONDS)
+	playsound(src, 'sound/misc/radio_receive.ogg', 20, TRUE, -5, 5)
+
+	var/list/spans = data["spans"]
+	if(SPAN_COMMAND in spans)
+		playsound(src, 'sound/misc/radio_important.ogg', 30, FALSE, -5, 5)
 
 /obj/item/radio/ui_state(mob/user)
 	return GLOB.inventory_state
