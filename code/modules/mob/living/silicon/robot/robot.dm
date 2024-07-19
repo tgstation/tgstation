@@ -20,7 +20,6 @@
 	RegisterSignal(src, COMSIG_PROCESS_BORGCHARGER_OCCUPANT, PROC_REF(charge))
 	RegisterSignal(src, COMSIG_LIGHT_EATER_ACT, PROC_REF(on_light_eater))
 	RegisterSignal(src, COMSIG_HIT_BY_SABOTEUR, PROC_REF(on_saboteur))
-	RegisterSignal(src, COMSIG_ATOM_POST_DIR_CHANGE, PROC_REF(on_dir_change))
 
 	robot_modules_background = new()
 	robot_modules_background.icon_state = "block"
@@ -326,19 +325,20 @@
 /mob/living/silicon/robot/proc/update_worn_icons()
 	if(!hat_overlay)
 		return
-	cut_overlay(hat_overlay)
-
-	var/list/offset = hat_offset[ISDIAGONALDIR(dir) ? dir2text(dir & (WEST|EAST)) : dir2text(dir)]
-	if(offset)
-		hat_overlay.pixel_w = offset[1]
-		hat_overlay.pixel_z = offset[2]
+	if(islist(hat_offset))
+		cut_overlay(hat_overlay)
+		var/list/offset = hat_offset[ISDIAGONALDIR(dir) ? dir2text(dir & (WEST|EAST)) : dir2text(dir)]
+		if(offset)
+			hat_overlay.pixel_w = offset[1]
+			hat_overlay.pixel_z = offset[2]
 
 	add_overlay(hat_overlay)
 
-/mob/living/silicon/robot/proc/on_dir_change(mob/living/silicon/robot/owner, olddir, newdir)
-	SIGNAL_HANDLER
-	if(olddir != newdir)
-		update_worn_icons()
+/mob/living/silicon/robot/setDir(newdir)
+    var/old_dir = dir
+    . = ..()
+    if(. != old_dir)
+        update_worn_icons()
 
 /mob/living/silicon/robot/on_changed_z_level(turf/old_turf, turf/new_turf, same_z_layer, notify_contents)
 	if(same_z_layer || QDELING(src))
