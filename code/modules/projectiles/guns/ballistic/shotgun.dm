@@ -140,10 +140,12 @@
 
 /obj/item/gun/ballistic/shotgun/bulldog
 	name = "\improper Bulldog Shotgun"
-	desc = "A 2-round burst fire, mag-fed shotgun for combat in narrow corridors, nicknamed 'Bulldog' by boarding parties. Compatible only with specialized 8-round drum magazines. Can have a secondary magazine attached to quickly swap between ammo types, or just to keep shooting."
+	desc = "A 2-round burst fire, mag-fed shotgun for combat in narrow corridors, \
+		nicknamed 'Bulldog' by boarding parties. Compatible only with specialized 8-round drum magazines. \
+		Can have a secondary magazine attached to quickly swap between ammo types, or just to keep shooting."
 	icon_state = "bulldog"
 	inhand_icon_state = "bulldog"
-	worn_icon_state = "cshotgun"
+	worn_icon_state = "bulldog"
 	lefthand_file = 'icons/mob/inhands/weapons/guns_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/guns_righthand.dmi'
 	inhand_x_dimension = 32
@@ -199,8 +201,6 @@
 		. += "[icon_state]_secondary_mag_[initial(secondary_magazine.icon_state)]"
 		if(!secondary_magazine.ammo_count())
 			. += "[icon_state]_secondary_mag_empty"
-	else
-		. += "[icon_state]_no_secondary_mag"
 
 /obj/item/gun/ballistic/shotgun/bulldog/handle_chamber(empty_chamber = TRUE, from_firing = TRUE, chamber_next_round = TRUE)
 	if(!secondary_magazine)
