@@ -303,7 +303,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
 
 		if(existing_organ)
 			// we dont want to remove organs that were not from the old species (such as from freak surgery or prosthetics)
-			if(existing_organ.type != old_species.get_mutant_organ_type_for_slot(slot) && !replace_current)
+			if(old_species && existing_organ.type != old_species.get_mutant_organ_type_for_slot(slot) && !replace_current)
 				continue
 
 			// we don't want to remove organs that are the same as the new one
