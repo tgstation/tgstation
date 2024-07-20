@@ -53,5 +53,9 @@
 	if(ghost.client.ghost_critter_cooldown > world.time)
 		return
 
+	var/confirm_critter = tgui_alert(usr, "Would you like to spawn as a ghost critter? This will make you unrevivable.", "Ghost critter confirmation", list("Yes", "No"))
+	if(!confirm_critter || confirm_critter == "No")
+		return
+
 	ghost.client.try_critter_spawn(src)
 	qdel(ghost)
