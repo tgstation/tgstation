@@ -1,6 +1,0 @@
-author: "GPeckman"
-delete-after: True
-changes:
-  - rscadd: "Added the civilian modsuit module as a standalone model. It offers no slowdown while activated but does NOT protect you from the void of space. You can print the plating from an exosuit fabricator and build it like a normal modsuit."
-  - rscdel: "Removed the civilian skin from the standard modsuit, as it is now a standalone model."
-  - image: "Tweaked the sprites for the civilian modsuit head, both in-hand and on the mob. Also added a civilian mod plating sprite."
