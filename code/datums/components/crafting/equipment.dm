@@ -24,7 +24,7 @@
 	category = CAT_EQUIPMENT
 
 /datum/crafting_recipe/improvisedshield
-	name = "Improvised Shield"
+	name = "Moonflower Shield"
 	result = /obj/item/shield/buckler/moonflower
 	reqs = list(
 		/obj/item/seeds/sunflower/moonflower = 3,
