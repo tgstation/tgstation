@@ -27,6 +27,7 @@
 	name = "watermelon"
 	desc = "It's full of watery goodness."
 	icon_state = "watermelon"
+	inhand_icon_state = "watermelon"
 	bite_consumption_mod = 2
 	w_class = WEIGHT_CLASS_NORMAL
 	foodtypes = FRUIT
@@ -172,6 +173,7 @@
 	name = "barrelmelon"
 	desc = "The nutriments within this melon have been compressed and fermented into rich alcohol."
 	icon_state = "barrelmelon"
+	inhand_icon_state = "barrelmelon"
 	distill_reagent = /datum/reagent/medicine/antihol //You can call it a integer overflow.
 
 /obj/item/food/grown/barrelmelon/make_processable()
