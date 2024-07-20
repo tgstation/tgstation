@@ -837,8 +837,7 @@
 
 /obj/item/card/id/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
 	if(iscash(interacting_with))
-		insert_money(interacting_with, user)
-		return ITEM_INTERACT_SUCCESS
+		return insert_money(interacting_with, user) ? ITEM_INTERACT_SUCCESS : ITEM_INTERACT_BLOCKING
 	return NONE
 
 /obj/item/card/id/away
