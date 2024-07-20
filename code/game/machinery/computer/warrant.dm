@@ -181,9 +181,10 @@
 	playsound(source, 'sound/machines/printer.ogg', 100, TRUE)
 
 	var/obj/item/paper/paperslip/ticket = new(null)
-	ticket.name = "ticket for [target.name]"
-	ticket.desc = "A [warrant.fine]cr ticket for [target.name]."
+	ticket.name = "ticket to [target.name]"
+	ticket.desc = "A [warrant.fine]cr ticket for [target.name]. The back of it feels sticky."
 	ticket.color = COLOR_VERY_SOFT_YELLOW
+	ticket.embed_type = /datum/embed_data/sticky_tape //Stick them into your face
 	ticket.add_raw_text(ticket_text)
 	ticket.update_icon()
 
