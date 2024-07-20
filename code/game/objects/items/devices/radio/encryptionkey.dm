@@ -214,7 +214,7 @@
 	name = "syndicate binary encryption key"
 	icon_state = "cypherkey_syndicate"
 	channels = list(RADIO_CHANNEL_SYNDICATE = 1)
-	special_channels = RADIO_SPECIAL_SYNDIE //TODO MAKE SURE THIS THING CAN USE BINARY TOO. SAME TIME AS THE SYNDIE BORG. SERIOUSLY.
+	special_channels = RADIO_SPECIAL_SYNDIE
 	greyscale_config = /datum/greyscale_config/encryptionkey_syndicate
 	greyscale_colors = "#171717#990000"
 

@@ -563,7 +563,7 @@
 			channels[ch_name] = TRUE
 
 /obj/item/radio/borg/syndicate
-	special_channels = RADIO_SPECIAL_SYNDIE //TODO - MAKE SURE THIS CAN STILL ACCESS BINARY
+	special_channels = RADIO_SPECIAL_SYNDIE
 	keyslot = /obj/item/encryptionkey/syndicate
 
 /obj/item/radio/borg/syndicate/Initialize(mapload)
