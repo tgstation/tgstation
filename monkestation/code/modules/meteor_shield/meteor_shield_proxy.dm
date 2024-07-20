@@ -1,6 +1,6 @@
 /obj/effect/abstract/meteor_shield_proxy
 	invisibility = INVISIBILITY_ABSTRACT
-	/// The meteor shield sat this is proxying - any HasProximity calls will be forwarded to it.
+	/// The meteor shield sat this is proxying - it will received all our meteor_acts
 	var/obj/machinery/satellite/meteor_shield/parent
 	/// Our proximity monitor.
 	var/datum/proximity_monitor/advanced/meteor_shield/monitor
@@ -23,9 +23,6 @@
 		UnregisterSignal(parent, list(COMSIG_MOVABLE_MOVED, COMSIG_MOVABLE_Z_CHANGED, COMSIG_QDELETING))
 	parent = null
 	return ..()
-
-/obj/effect/abstract/meteor_shield_proxy/HasProximity(obj/effect/meteor/meteor)
-	parent.HasProximity(meteor)
 
 /obj/effect/abstract/meteor_shield_proxy/proc/on_parent_moved()
 	SIGNAL_HANDLER

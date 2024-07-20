@@ -262,6 +262,20 @@
 	if(length(z_transitions))
 		legend += z_transitions
 
+	if(length(GLOB.meteor_shielded_turfs))
+		var/icon/canvas = icon(HOLOMAP_ICON, "blank")
+		var/z_has_coverage = FALSE
+		for(var/turf/open/shielded_turf as anything in GLOB.meteor_shielded_turfs)
+			if(shielded_turf?.z != current_z_level)
+				continue
+			var/offset_x = HOLOMAP_CENTER_X + shielded_turf.x
+			var/offset_y = HOLOMAP_CENTER_Y + shielded_turf.y
+			var/color = ((offset_x ^ offset_y) % 2 == 0) ? HOLOMAP_AREACOLOR_SHIELD_1 : HOLOMAP_AREACOLOR_SHIELD_2
+			canvas.DrawBox(color, offset_x, offset_y)
+			z_has_coverage = TRUE
+		if(z_has_coverage)
+			legend["Meteor Shield"] = list("icon" = image('monkestation/code/modules/holomaps/icons/8x8.dmi', icon_state = "meteor_shield"), "markers" = list(image(canvas)))
+
 	return legend
 
 /obj/machinery/station_map/engineering
@@ -293,20 +307,6 @@
 
 	if(length(fire_alarms))
 		extra_overlays["Fire Alarms"] = list("icon" = image('monkestation/code/modules/holomaps/icons/8x8.dmi', icon_state = "fire_marker"), "markers" = fire_alarms)
-
-	if(length(GLOB.meteor_shielded_turfs))
-		var/icon/canvas = icon(HOLOMAP_ICON, "blank")
-		var/z_has_coverage = FALSE
-		for(var/turf/open/shielded_turf as anything in GLOB.meteor_shielded_turfs)
-			if(shielded_turf?.z != current_z_level)
-				continue
-			var/offset_x = HOLOMAP_CENTER_X + shielded_turf.x
-			var/offset_y = HOLOMAP_CENTER_Y + shielded_turf.y
-			var/color = ((offset_x ^ offset_y) % 2 == 0) ? HOLOMAP_AREACOLOR_SHIELD_1 : HOLOMAP_AREACOLOR_SHIELD_2
-			canvas.DrawBox(color, offset_x, offset_y)
-			z_has_coverage = TRUE
-		if(z_has_coverage)
-			extra_overlays["Meteor Shield"] = list("icon" = image('monkestation/code/modules/holomaps/icons/8x8.dmi', icon_state = "meteor_shield"), "markers" = list(image(canvas)))
 
 	/*
 	var/list/air_alarms = list()

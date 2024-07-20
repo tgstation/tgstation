@@ -1,4 +1,4 @@
-/obj/machinery/satellite/meteor_shield/HasProximity(obj/effect/meteor/meteor)
+/obj/machinery/satellite/meteor_shield/proc/meteor_act(obj/effect/meteor/meteor)
 	if(!active || !istype(meteor) || QDELING(meteor) || (obj_flags & EMAGGED))
 		return
 	var/turf/our_turf = get_turf(src)
@@ -12,7 +12,20 @@
 		SSblackbox.record_feedback("tally", "meteors_zapped", 1, "[meteor.type]")
 		meteors_zapped++
 		GLOB.total_meteors_zapped++
+		// alright time for a god-awful hack
+		// some meteors use spawner effects rather than directly spawning
+		// and there's not really any "clean" way to get specifically what it spawns from what I know
+		// so let's just... compare the adjacent turfs before and after.
+		var/nudge_dir
+		if(meteor.dest) // if the meteor has a set destination, we'll use that
+			nudge_dir = get_dir(meteor_turf, get_turf(meteor.dest))
+		else
+			// alright we're just gonna go towards the center, prolly good enough
+			var/turf/center = locate(round(world.maxx * 0.5, 1), round(world.maxy * 0.5, 1), meteor.z)
+			nudge_dir = get_dir(meteor_turf, center)
+		var/list/nearby = range(1, meteor_turf)
 		meteor.make_debris()
+		addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(meteor_debris_drift), nearby, meteor_turf, nudge_dir), 5)
 		qdel(meteor)
 
 /obj/machinery/satellite/meteor_shield/proc/check_los(turf/source, turf/target) as num
@@ -46,3 +59,10 @@
 		disable_shaking = TRUE,
 		sound_mul = 0.2
 	)
+
+/proc/meteor_debris_drift(list/nearby, turf/center, direction)
+	nearby ^= range(1, center)
+	for(var/atom/movable/debris in nearby)
+		if(QDELING(debris) || debris.anchored)
+			continue
+		debris.newtonian_move(direction, instant = TRUE)
