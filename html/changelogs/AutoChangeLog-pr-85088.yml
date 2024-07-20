@@ -1,0 +1,4 @@
+author: "SmArtKar"
+delete-after: True
+changes:
+  - bugfix: "Context maptext now properly dynamically adjusts itself instead of using hardcoded pixel values"

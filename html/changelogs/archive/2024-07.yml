@@ -895,3 +895,207 @@
   r3dj4ck0424:
   - bugfix: Destroying the jungle grass tiles in Tramstation's science wing should
       no longer open a chasm.
+2024-07-17:
+  00-Steven:
+  - rscadd: Having a robotic voicebox installed now lets you use silicon emotes.
+  - balance: MMI'd brains/posibrains can now use silicon emotes.
+  - balance: Simple and basic bots can actually beep.
+  - bugfix: MMI'd brains/posibrains are no longer both allowed AND blocked from beeping,
+      now just being allowed to beep.
+  JohnFulpWillard:
+  - balance: Human AIs no longer have a teleport blocking implant or borg costume,
+      but now has a portable crew monitor.
+  Melbert:
+  - bugfix: Using hulk (and a myriad of similar effects) now properly updates your
+      movespeed to ignore the damage movespeed penalty
+  - bugfix: Some things which temporarily make you fly don't make you fly forever
+  - bugfix: MODsuit ball module now properly makes you immune to damage movespeed
+      penalty when in ball form
+  - bugfix: Adding Hulk via VV dropdown doesn't default to adding the strongest hulk
+      available (that which is used by the medieval pirates)
+  SmArtKar:
+  - bugfix: Ghosts can no longer move chairs
+  - bugfix: You can attack bookshelves in a variety of states once more
+  - bugfix: Style meter text is no longer blurry and doesnt overlap with UI anymore.
+  - qol: You can fire PKAs/plasma cutters point blank at turfs.
+  Thedragmeme:
+  - qol: re-maps the raptor barn to not stick out like a sore thumb
+  - bugfix: Miners and the public both can access the raptor barn without having to
+      make a bridge themselves
+2024-07-18:
+  Artemchik542:
+  - bugfix: Justice mech invisibility fix
+  Ben10Omintrix:
+  - bugfix: fixes sentient firebots mauling things from a distance
+  DATA-xPUNGED:
+  - bugfix: Plague Doctor Mask can now be used with internals again, and is no longer
+      unintentionally pepperproof.
+  DeltaFire15:
+  - bugfix: cold- & heat protection no longer have decimal precision issues.
+  MTandi:
+  - bugfix: Fixed emitters, shield gens and other wired machinery having lower power
+      consumption priority than APCs
+  - qol: Made APCs charge more evenly to ensure that environment and lights are working
+      everywhere before giving the power for equipment
+  NewyearnewmeUwu:
+  - image: the smoking pipe east/west sprites are now more consistent
+  Pickle-Coding:
+  - bugfix: Fixes space heater cell relative consumption inadvertently being changed
+      from the introduction of megacells.
+  - qol: The improvised chemical heater gives a more accurate description of its heating
+      power on examine.
+  - qol: Improved feedback when attempting to turn on a space heater that is lacking
+      a cell, has no charge or is broken.
+  - code_imp: Space heater relative cell consumption is consistent regardless of the
+      cell charge scale.
+  Rhials:
+  - bugfix: Xenos have a "resist" ui element now. Cool!
+  Sadboysuss:
+  - bugfix: added a missing cable to Wawastation perma
+  SmArtKar:
+  - bugfix: Fixes hulks being able to activate dualsabers despite not being able to
+      actually do anything with them
+  - qol: Ghost orbit menu now always displays person's real name and their roundstart
+      job and cannot be fooled by disguises.
+  - qol: You can properly aim mining bombs at turfs now
+  - bugfix: Point blank piercing shots no longer fly directly north after hitting
+      their intended target
+  - qol: Stopping orbiting now automatically breaks you out of autoobserve
+  SmArtKar, Kapu:
+  - balance: Projectiles now can hit border objects on other turfs instead of passing
+      through them
+  SyncIt21:
+  - bugfix: fixes runtime in storage datums when hiding the ui
+  - bugfix: you can insert the withdrawal beaker into the portable chem mixer when
+      locked
+  - bugfix: acid/base buffers should update your target & source holder
+  - bugfix: remove reagent operations won't trigger excessive workload
+  - bugfix: borgs can't put their integrated tools into the reagent grinder
+  Yobrocharlie:
+  - bugfix: Removed bitrunning beach brawl fax machine
+  afonamos2:
+  - bugfix: malf ai voice changer no longer accepts dangerous inputs
+  grungussuss:
+  - rscadd: You can now buckle to bar stools
+  grungususs:
+  - spellcheck: fixed a typo for carrot sword description
+  imedial:
+  - rscadd: standing on a closed crate now gives loud mode
+  - spellcheck: fixed a typo in borg research
+  larentoun:
+  - bugfix: Free items in research queue will now correctly be researched automatically.
+  norsvenska:
+  - spellcheck: Removed an unnecessary apostrophe in DeltaStation's genetics monkey
+      pen door.
+  xXPawnStarrXx:
+  - qol: made fish better quality when butchered, smushy koibeans and useable gunner
+      jellyfish.
+  zoomachina:
+  - bugfix: deleting reagents from the chemmaster buffer works without a beaker inserted
+2024-07-19:
+  Ghommie:
+  - bugfix: Fixed beyblade *flipping.
+  Kocma-san:
+  - bugfix: fixed a table in the mining office at the metastation
+  L0pz:
+  - image: Added new unique sprites for cyborg upgrade modules
+  MTandi:
+  - bugfix: APC icon properly turns green on full charge
+  - bugfix: APC shows correct charging rate in UI
+  - code_imp: Added early machine process for shield generators and emitters to prioritize
+      power draw
+  - code_imp: Added late machine process for power monitors to gather accurate powernet
+      load
+  Melbert:
+  - qol: Monkeys that pray are given bonana
+  - bugfix: When Monkified or Humanified, you are no longer knocked down.
+  - bugfix: When cured of Monkified, you get the cure text now.
+  - bugfix: The text shown when cured / given Monkification now has color.
+  - bugfix: Being humanified now tells you what species you become rather than assuming
+      you are a human.
+  - bugfix: Fixes xenos being able to do that one mechanic that involves mouse-dragging
+      people to you
+  - bugfix: Non-humans should look less transparent while in space
+  Momo8289:
+  - qol: Tweaked the colour of orange atmos pipes to be more distinct from the red
+      pipes, especially in darkness.
+  SmArtKar:
+  - bugfix: Revenge of the Pun Pun no longer runtimes on init
+  - bugfix: Fixed kinesis runtime due to un-unregistered signals
+  - bugfix: Removed some rogue decals and added a wall to Birdshot atmos storage,
+      and added cycling to upload/telecommunication entrances.
+  - bugfix: Elevator music no longer haunts you endlessly if you step off mid-transit
+  - refactor: HUD traits now apply their corresponding hud automatically
+  TheNobodyofimportance:
+  - qol: Holofan and two thermomachine and emitter boards in lavaland syndicate base.
+  carlarctg:
+  - qol: Moths that pray get a moffin
+  - bugfix: Fixed sometimes obtaining the nodrop highlander kilt with relics
+  - bugfix: Fixed bioscramble function not working for strange objects unless dropped
+  - bugfix: Fixed the disguiser cardboard ID not overlaying properly
+  kawaiinick:
+  - qol: secmods jetpacks are now pinned by default
+  vinylspiders:
+  - bugfix: fixed a hard del with soapboxes
+2024-07-20:
+  AyIong:
+  - bugfix: Announcement subheader will no longer overlap the header if the second
+      one is very long
+  DrDiasyl aka DrTuxedo:
+  - rscadd: Security and Engineering holosigns can now be opened with their projector
+      by clicking them from afar
+  - rscadd: SecVendor starts with 2 Security holosigns
+  - qol: Holosigns don't block projectiles anymore
+  - qol: Security holosigns now take 2 seconds to create instead of 3
+  - image: Janitor, Security, Medical, and Engineering holosigns now have cleaner
+      sprites
+  - code_imp: Holosigns now use proper cooldowns instead of the world.time
+  - spellcheck: Holosigns and holosign creators' descriptions give more information
+      now
+  GPeckman:
+  - rscadd: Added the civilian modsuit module as a standalone model. It offers no
+      slowdown while activated but does NOT protect you from the void of space. You
+      can print the plating from an exosuit fabricator and build it like a normal
+      modsuit.
+  - rscdel: Removed the civilian skin from the standard modsuit, as it is now a standalone
+      model.
+  - image: Tweaked the sprites for the civilian modsuit head, both in-hand and on
+      the mob. Also added a civilian mod plating sprite.
+  Ghommie:
+  - bugfix: fixed megaphone tts filter.
+  MTandi:
+  - image: New deep fryer sprite
+  SmArtKar:
+  - refactor: Refactored parrying to be projectile-side and not user-side.
+  - rscadd: You can now parry crusher projectiles to give them some more range, add
+      damage and make the mark always count as a backstab.
+  - rscadd: Projectile parrying has been significantly improved, making parrying and
+      boosting projectiles actually possible. Includes a small grace period as lag
+      compensation for players with higher pings.
+  - balance: Crusher marks can now be detonated by any crusher, not only the one that
+      applied it, as to incentivise coop mining for crusher users.
+  - balance: Projectile boosting now gives a significantly bigger damage and speed
+      increase
+  - bugfix: Fixed a signal reg error caused by add_occupant being called twice
+  - bugfix: Sentient floorbots can now rip up tiles when emagged
+  - code_imp: Slight cleanup in floorbot code
+  - image: Brainwashing victims now have smoothed out brain sprites without those
+      pesky wrinkles
+  - bugfix: Blob victory no longer spams spore zombie notifications to ghosts
+  paganiy:
+  - qol: Moving the light bulb removal function from the left mouse button to the
+      right one.
+  - qol: Added & improved tips related to the light fixture
+  san7890:
+  - admin: Ticking "Job Playtime Exempt" on a player's Job Playtime Tracker panel
+      will also exempt them from BYOND Account Age restrictions now. It previously
+      only exempted them from actual living playtime minutes - this is for the BYOND
+      Account Age in days.
+  thegrb93:
+  - qol: Allow custom borg hat placement for custom borg skins
+  theselfish:
+  - rscadd: Bitrunning and (spawn) Miner jumpsuits are now in their drobe.
+  - qol: The Coroner Drobe got sorted into less 'shove everything in' and more 'in
+      a sane format'.
+  zoomachina:
+  - qol: chem dispenser displays units instead of kilowatts

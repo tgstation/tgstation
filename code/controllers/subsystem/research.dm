@@ -102,10 +102,11 @@ SUBSYSTEM_DEF(research)
 
 		techweb_list.last_income = world.time
 
-		if(techweb_list.research_queue_nodes.len)
+		if(length(techweb_list.research_queue_nodes))
 			techweb_list.research_node_id(techweb_list.research_queue_nodes[1]) // Attempt to research the first node in queue if possible
 
-			for(var/datum/techweb_node/node as anything in techweb_list.research_queue_nodes)
+			for(var/node_id in techweb_list.research_queue_nodes)
+				var/datum/techweb_node/node = SSresearch.techweb_node_by_id(node_id)
 				if(node.is_free(techweb_list)) // Automatically research all free nodes in queue if any
 					techweb_list.research_node(node)
 
