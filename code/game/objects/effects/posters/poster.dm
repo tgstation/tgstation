@@ -25,6 +25,7 @@
 	. = ..()
 	. += span_notice("You can booby-trap the poster by using a glass shard on it before you put it up.")
 
+
 /obj/item/poster/Initialize(mapload, obj/structure/sign/poster/new_poster_structure)
 	. = ..()
 
@@ -93,6 +94,8 @@
 	icon = 'icons/obj/poster.dmi'
 	anchored = TRUE
 	buildable_sign = FALSE //Cannot be unwrenched from a wall.
+	///Does it have more info that can be read?
+	var/detailed = FALSE
 	var/ruined = FALSE
 	var/random_basetype
 	var/never_random = FALSE // used for the 'random' subclasses.
@@ -118,6 +121,11 @@
 		desc = "A large piece of space-resistant printed paper. [desc]"
 
 	AddElement(/datum/element/beauty, 300)
+
+/obj/structure/sign/poster/examine(mob/user)
+	. = ..()
+	if(detailed)
+		. += span_notice("<i>You can examine [src] closer to read it.</i>")
 
 /// Adds contextual screentips
 /obj/structure/sign/poster/add_context(atom/source, list/context, obj/item/held_item, mob/user)
