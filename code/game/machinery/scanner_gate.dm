@@ -83,7 +83,7 @@
 /obj/machinery/scanner_gate/examine(mob/user)
 	. = ..()
 
-	. += span_notice("It's set to scan for [span_boldnotice(scangate_mode)]")
+	. += span_notice("It's set to scan for [span_boldnotice(scangate_mode)].")
 	if(locked)
 		. += span_notice("The control panel is ID-locked. Swipe a valid ID to unlock it.")
 	else
@@ -269,10 +269,7 @@
 		beep = !beep
 
 	if(prob(base_false_beep - minus_false_beep)) //False positive/negative
-		if(prob(50))
-			beep = TRUE
-		else
-			beep = FALSE
+		beep = prob(50)
 
 	if(beep)
 		alarm_beep(detected_thing)
@@ -296,7 +293,7 @@
 		return
 
 	if(detected_thing)
-		src.say("[detected_thing][reverse ? " not " : " "]detected!!")
+		say("[detected_thing][reverse ? " not " : " "]detected!!")
 
 	COOLDOWN_START(src, next_beep, 2 SECONDS)
 	playsound(src, 'sound/machines/scanbuzz.ogg', 100, FALSE)
@@ -364,7 +361,7 @@
 						detect_nutrition = NUTRITION_LEVEL_FAT
 			. = TRUE
 
-/obj/machinery/scanner_gate/preset
+/obj/machinery/scanner_gate/preset_guns
 	locked = TRUE
 	req_access = ACCESS_SECURITY
 	scangate_mode = SCANGATE_GUNS
