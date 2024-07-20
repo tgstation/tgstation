@@ -50,6 +50,9 @@
 	/// our power cell (should this be a megacell only thing or cell only?)
 	var/obj/item/stock_parts/power_store/cell/cell
 
+	/// mob = list(action)
+	var/list/equipment_actions = list()
+
 
 /obj/vehicle/sealed/space_pod/Initialize(mapload)
 	. = ..()
@@ -63,7 +66,12 @@
 	. = ..()
 	QDEL_NULL(trail)
 	QDEL_NULL(cabin_air_tank)
+	QDEL_LIST_ASSOC_VAL(equipment_actions)
 	equipped = null // equipment gets deleted already because its in our contents
+
+/obj/vehicle/sealed/space_pod/generate_actions()
+	initialize_controller_action_type(/datum/action/vehicle/sealed/headlights, VEHICLE_CONTROL_DRIVE)
+	return ..() //eject goes first
 
 /obj/vehicle/sealed/space_pod/update_overlays()
 	. = ..()
@@ -106,19 +114,27 @@
 	setDir(direction)
 	newtonian_move(dir2angle(direction), instant = TRUE, drift_force = force_per_move, controlled_cap = max_speed)
 	trail.generate_effect()
+	after_move(direction)
 
-/obj/vehicle/sealed/space_pod/mob_enter(mob/mob, silent)
+/obj/vehicle/sealed/space_pod/after_add_occupant(mob/occupant)
 	. = ..()
-	if(!. || length(occupants) > 1) //first occupant only
-		return
-	panel_open = FALSE //automatic screws,,,, waow....
-	cycle_tank_air()
+	if(length(occupants) == 1) //first occupant only
+		panel_open = FALSE //automatic screws,,,, waow....
+		cycle_tank_air()
+	for(var/obj/item/pod_equipment/equipment as anything in get_all_parts())
+		var/datum/action/action = equipment.grant_occupant_action(occupant, occupants[occupant])
+		if(isnull(action))
+			continue
+		action.Grant(occupant)
+		equipment_actions[occupant] += list(action)
 
-/obj/vehicle/sealed/space_pod/mob_exit(mob/M, silent, randomstep = FALSE)
+/obj/vehicle/sealed/space_pod/after_remove_occupant(mob/former)
 	. = ..()
-	if(!. || length(occupants) != 0) //when everyone exits
-		return
-	cycle_tank_air(to_tank = TRUE)
+	if(!length(occupants)) //when everyone exits
+		cycle_tank_air(to_tank = TRUE)
+	if(equipment_actions[former])
+		QDEL_LIST(equipment_actions[former])
+		equipment_actions -= former
 
 // atmos
 /obj/vehicle/sealed/space_pod/proc/cycle_tank_air(to_tank = FALSE)

@@ -20,8 +20,12 @@
 
 /obj/item/pod_equipment/proc/on_detach(mob/user)
 
+/obj/item/pod_equipment/proc/grant_occupant_action(mob/occupant, flag = NONE)
 
-// todo
-// also potentially attaching code could be on the pod equipment itself
+//equipment action
+/datum/action/vehicle/sealed/spacepod_equipment
+	var/datum/callback/callback_on_click
 
-// primary and equipment slot items have no reason to have a shared parent type aside from /obj/item/pod_equipment, just set the slot
+/datum/action/vehicle/sealed/spacepod_equipment/Trigger(trigger_flags)
+	. = ..()
+	callback_on_click.Invoke(owner)

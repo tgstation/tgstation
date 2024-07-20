@@ -53,7 +53,7 @@
 		balloon_alert(user, "panel not open!")
 		return ITEM_INTERACT_BLOCKING
 
-	var/obj/picked = tgui_input_list(user, "Remove what?", "Remove what?", get_all_parts() + cabin_air_tank)
+	var/obj/picked = tgui_input_list(user, "Remove what?", "Remove what?", get_all_parts() + cabin_air_tank + cell)
 	if(!picked || !user.can_perform_action(src, NEED_DEXTERITY|FORBID_TELEKINESIS_REACH))
 		return ITEM_INTERACT_BLOCKING
 
