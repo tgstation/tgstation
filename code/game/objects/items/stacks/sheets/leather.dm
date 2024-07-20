@@ -6,6 +6,9 @@
 	novariants = TRUE
 	merge_type = /obj/item/stack/sheet/animalhide
 
+	pickup_sound = null
+	drop_sound = null
+
 /obj/item/stack/sheet/animalhide/human
 	name = "human skin"
 	desc = "The by-product of human farming."
