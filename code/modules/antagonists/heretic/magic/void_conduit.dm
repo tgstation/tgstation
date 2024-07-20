@@ -1,4 +1,4 @@
-/datum/action/cooldown/spell/conjure/void_conduit
+/datum/action/cooldown/spell/conjure/void_conduit //XANTODO Clean this shit up afterwards
 	name = "Void Conduit"
 	desc = "Opens a gate to the Void; it quickly lowers the temperature and pressure of the room while siphoning all gasses. \
 		The gate releases an intermittent pulse that damages windows and airlocks, \
@@ -6,7 +6,10 @@
 		Heretics receive a small heal and are granted the cold resistance and low pressure resistance trait."
 	background_icon_state = "bg_heretic"
 	overlay_icon_state = "bg_heretic_border"
-	button_icon_state = "icebeam"
+	button_icon = 'icons/mob/actions/actions_ecult.dmi'
+	button_icon_state = "void_rift"
+
+	cooldown_time = 90 SECONDS
 
 	sound = null
 	school = SCHOOL_FORBIDDEN
@@ -28,6 +31,7 @@
 	icon = 'icons/effects/effects.dmi'
 	icon_state = "void_conduit"
 	anchored = TRUE
+	max_integrity = 200
 	/////Counter for each process goes up by 1, when it's high enough our conduit will pulse
 	//var/conduit_pulse_counter
 
@@ -136,6 +140,7 @@
 /datum/status_effect/void_conduit
 	duration = 15 SECONDS
 	status_type = STATUS_EFFECT_REPLACE
+	alert_type = null
 
 /datum/status_effect/void_conduit/on_apply()
 	ADD_TRAIT(owner, TRAIT_RESISTLOWPRESSURE, "void_conduit")

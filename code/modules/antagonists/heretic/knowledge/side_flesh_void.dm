@@ -37,6 +37,20 @@
 	route = PATH_SIDE
 	depth = 8
 
+/datum/heretic_knowledge/spell/void_stasis
+	name = "Void Stasis"
+	//XANTODO desc + gain_text
+	desc = "Debug"
+	gain_text = "Void Stasis DEBUG GAINED"
+	next_knowledge = list(
+		/datum/heretic_knowledge/spell/void_phase,
+		/datum/heretic_knowledge/summon/raw_prophet,
+	)
+	spell_to_add = /datum/action/cooldown/spell/pointed/void_stasis
+	cost = 1
+	route = PATH_SIDE
+	depth = 8
+
 /datum/heretic_knowledge/spell/cleave
 	name = "Blood Cleave"
 	desc = "Grants you Cleave, an area-of-effect targeted spell \

@@ -133,27 +133,15 @@
 	mark_type = /datum/status_effect/eldritch/void
 
 /datum/heretic_knowledge/knowledge_ritual/void
-	next_knowledge = list(/datum/heretic_knowledge/spell/void_cone)
+	next_knowledge = list(/datum/heretic_knowledge/spell/void_conduit)
 	route = PATH_VOID
 
 /datum/heretic_knowledge/spell/void_conduit
 	name = "Void Conduit"
 	desc = "Grants you Void Conduit, a spell which summons a rift in space, which freezes the area and destroys airlocks and windows."
-	gain_text = ":) :) :) :) :) :) :) :) :) :) :) :)"
+	gain_text = ":) :) :) :) :) :) :) :) :) :) :) :)" //XANTODO desc and gain text
 	next_knowledge = list(/datum/heretic_knowledge/spell/void_phase)
 	spell_to_add = /datum/action/cooldown/spell/conjure/void_conduit
-	cost = 1
-	route = PATH_VOID
-	depth = 7
-
-/datum/heretic_knowledge/spell/void_cone
-	name = "Void Blast"
-	desc = "Grants you Void Blast, a spell that shoots out a freezing blast in a cone in front of you, \
-		freezing the ground and any victims within."
-	gain_text = "Every door I open racks my body. I am afraid of what is behind them. Someone is expecting me, \
-		and my legs start to drag. Is that... snow?"
-	next_knowledge = list(/datum/heretic_knowledge/spell/void_phase)
-	spell_to_add = /datum/action/cooldown/spell/cone/staggered/cone_of_cold/void
 	cost = 1
 	route = PATH_VOID
 	depth = 7
@@ -168,6 +156,7 @@
 		/datum/heretic_knowledge/blade_upgrade/void,
 		/datum/heretic_knowledge/reroll_targets,
 		/datum/heretic_knowledge/spell/blood_siphon,
+		/datum/heretic_knowledge/spell/void_stasis,
 		/datum/heretic_knowledge/rune_carver,
 	)
 	spell_to_add = /datum/action/cooldown/spell/pointed/void_phase
@@ -178,12 +167,18 @@
 
 /datum/heretic_knowledge/blade_upgrade/void
 	name = "Seeking Blade"
-	desc = "You can now attack distant marked targets with your Void Blade, teleporting directly next to them."
+	desc = "You can now attack distant marked targets with your Void Blade, teleporting directly next to them. Your blade even freezes your enemies"
 	gain_text = "Fleeting memories, fleeting feet. I mark my way with frozen blood upon the snow. Covered and forgotten."
 	next_knowledge = list(/datum/heretic_knowledge/spell/void_pull)
 	route = PATH_VOID
 	research_tree_icon_path = 'icons/ui_icons/antags/heretic/knowledge.dmi'
 	research_tree_icon_state = "blade_upgrade_void"
+
+/datum/heretic_knowledge/blade_upgrade/void/do_melee_effects(mob/living/source, mob/living/target, obj/item/melee/sickly_blade/blade)
+	if(source == target)
+		return
+
+	target.apply_status_effect(/datum/status_effect/void_chill, 2)
 
 /datum/heretic_knowledge/blade_upgrade/void/do_ranged_effects(mob/living/user, mob/living/target, obj/item/melee/sickly_blade/blade)
 	if(!target.has_status_effect(/datum/status_effect/eldritch))
@@ -250,7 +245,7 @@
 		sound = 'sound/ambience/antag/heretic/ascend_void.ogg',
 		color_override = "blue",
 	)
-	ADD_TRAIT(user, TRAIT_RESISTLOWPRESSURE, MAGIC_TRAIT)
+	user.add_traits(list(TRAIT_RESISTLOWPRESSURE, TRAIT_NEGATES_GRAVITY, TRAIT_MOVE_FLYING, TRAIT_FREE_HYPERSPACE_MOVEMENT), MAGIC_TRAIT)
 
 	// Let's get this show on the road!
 	sound_loop = new(user, TRUE, TRUE)
@@ -272,10 +267,30 @@
 /datum/heretic_knowledge/ultimate/void_final/proc/on_life(mob/living/source, seconds_per_tick, times_fired)
 	SIGNAL_HANDLER
 
-	for(var/mob/living/carbon/close_carbon in view(5, source))
+	for(var/mob/living/carbon/close_carbon in range(10, source))
 		if(IS_HERETIC_OR_MONSTER(close_carbon))
 			continue
 		close_carbon.adjust_silence_up_to(2 SECONDS, 20 SECONDS)
+
+	var/list/effective_range = range(10, source)
+
+	for(var/mob/living/affected_mob in effective_range)
+		if(IS_HERETIC(affected_mob))
+			affected_mob.apply_status_effect(/datum/status_effect/void_conduit)
+		else
+			affected_mob.apply_status_effect(/datum/status_effect/void_chill, 1)
+	for(var/obj/machinery/door/affected_door in effective_range)
+		affected_door.take_damage(75)
+	for(var/obj/structure/door_assembly/affected_assembly in effective_range)
+		affected_assembly.take_damage(75)
+	for(var/obj/structure/window/affected_window in effective_range)
+		affected_window.take_damage(30)
+	for(var/obj/structure/grille/affected_grille in effective_range)
+		affected_grille.take_damage(30)
+
+	for(var/turf/affected_turf in effective_range)
+		var/datum/gas_mixture/environment = affected_turf.return_air()
+		environment.temperature *= 0.9
 
 	// Telegraph the storm in every area on the station.
 	var/list/station_levels = SSmapping.levels_by_trait(ZTRAIT_STATION)

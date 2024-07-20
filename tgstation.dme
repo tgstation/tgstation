@@ -3184,6 +3184,7 @@
 #include "code\modules\antagonists\heretic\magic\void_conduit.dm"
 #include "code\modules\antagonists\heretic\magic\void_phase.dm"
 #include "code\modules\antagonists\heretic\magic\void_pull.dm"
+#include "code\modules\antagonists\heretic\magic\void_stasis.dm"
 #include "code\modules\antagonists\heretic\magic\wave_of_desperation.dm"
 #include "code\modules\antagonists\heretic\status_effects\buffs.dm"
 #include "code\modules\antagonists\heretic\status_effects\debuffs.dm"
