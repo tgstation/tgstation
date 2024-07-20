@@ -14,12 +14,12 @@
 
 /obj/item/encryptionkey/examine(mob/user)
 	. = ..()
-	if(LAZYLEN(channels) || (special_channels & RADIO_SPECIAL_BINARY))
+	if(LAZYLEN(channels) || special_channels & RADIO_SPECIAL_BINARY)
 		var/list/examine_text_list = list()
 		for(var/i in channels)
 			examine_text_list += "[GLOB.channel_tokens[i]] - [LOWER_TEXT(i)]"
 
-		if((special_channels & RADIO_SPECIAL_BINARY))
+		if(special_channels & RADIO_SPECIAL_BINARY)
 			examine_text_list += "[GLOB.channel_tokens[MODE_BINARY]] - [MODE_BINARY]"
 
 		. += span_notice("It can access the following channels; [jointext(examine_text_list, ", ")].")
