@@ -153,3 +153,4 @@
 		CRASH("External organ [type] couldn't find sprite accessory [accessory_name]!")
 	else
 		CRASH("External organ [type] had fetch_sprite_datum called with a null accessory name!")
+
