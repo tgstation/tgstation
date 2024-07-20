@@ -2,6 +2,7 @@
 
 #define BASALT_LIGHT_BRIGHT 2
 #define BASALT_LIGHT_DIM 1.4
+#define BASALT_LIGHT_POWER 0.6
 
 /turf/open/misc/asteroid //floor piece
 	gender = PLURAL
@@ -170,9 +171,9 @@ GLOBAL_LIST_EMPTY(dug_up_basalt)
 /turf/open/misc/asteroid/basalt/proc/set_basalt_light()
 	switch(icon_state)
 		if("basalt1", "basalt2", "basalt3")
-			set_light(BASALT_LIGHT_BRIGHT, 0.6, LIGHT_COLOR_LAVA) //more light
+			set_light(BASALT_LIGHT_BRIGHT, BASALT_LIGHT_POWER, LIGHT_COLOR_LAVA) //more light
 		if("basalt5", "basalt9")
-			set_light(BASALT_LIGHT_DIM, 0.6, LIGHT_COLOR_LAVA) //barely anything!
+			set_light(BASALT_LIGHT_DIM, BASALT_LIGHT_POWER, LIGHT_COLOR_LAVA) //barely anything!
 
 ///////Surface. The surface is warm, but survivable without a suit. Internals are required. The floors break to chasms, which drop you into the underground.
 
