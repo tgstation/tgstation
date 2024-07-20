@@ -1,4 +1,0 @@
-author: "AyIong"
-delete-after: True
-changes:
-  - bugfix: "Announcement subheader will no longer overlap the header if the second one is very long"

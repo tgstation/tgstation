@@ -1,4 +1,0 @@
-author: "SmArtKar"
-delete-after: True
-changes:
-  - bugfix: "Blob victory no longer spams spore zombie notifications to ghosts"
