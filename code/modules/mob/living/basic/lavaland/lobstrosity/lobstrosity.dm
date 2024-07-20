@@ -75,8 +75,7 @@
 		/datum/pet_command/follow,
 		/datum/pet_command/point_targeting/fish,
 	)
-	if(!HAS_TRAIT(src, TRAIT_MOB_RELAY_HAPPINESS))
-		AddComponent(/datum/component/happiness)
+	AddComponent(/datum/component/happiness)
 	AddComponent(/datum/component/obeys_commands, pet_commands)
 	ai_controller.ai_traits = STOP_MOVING_WHEN_PULLED
 	response_help_continuous = "pets"
@@ -173,6 +172,7 @@
 		optional_grow_behavior = CALLBACK(src, PROC_REF(grow_up))\
 	)
 	AddComponent(/datum/component/tameable, target_foods, tame_chance = 35, bonus_tame_chance = 20)
+	AddComponent(/datum/component/swarming, 16, 11)
 	ADD_TRAIT(src, TRAIT_MOB_HIDE_HAPPINESS, INNATE_TRAIT) //Do not let strangers know it gets happy when poked if stray.
 
 /mob/living/basic/mining/lobstrosity/juvenile/add_ranged_armour(list/vulnerable_projectiles)
@@ -185,11 +185,26 @@
 		throw_blocked_message = throw_blocked_message,\
 	)
 
+#define MAX_JUVENILES_ALLOWED_ON_TURF 3
+
+///Juvenile lobstrosities can swarm and pass through each other, but only 3 at most can stand the same turf.
+/mob/living/basic/mining/lobstrosity/juvenile/CanAllowThrough(atom/movable/mover, border_dir)
+	if(!istype(mover, /mob/living/basic/mining/lobstrosity/juvenile))
+		return ..()
+	var/juveniles_count = 0
+	for(var/mob/living/basic/mining/lobstrosity/juvenile/lob in loc)
+		juveniles_count++
+		if(juveniles_count > MAX_JUVENILES_ALLOWED_ON_TURF)
+			return ..()
+	return TRUE
+
+#undef MAX_JUVENILES_ALLOWED_ON_TURF
+
 /mob/living/basic/mining/lobstrosity/juvenile/tamed(mob/living/tamer, obj/item/food)
 	. = ..()
 	was_tamed = TRUE
 	// They are more pettable I guess
-	AddElement(/datum/element/pet_bonus, "chitters agreeingly!")
+	AddElement(/datum/element/pet_bonus, "chitters pleasantly!")
 	REMOVE_TRAIT(src, TRAIT_MOB_HIDE_HAPPINESS, INNATE_TRAIT)
 
 /mob/living/basic/mining/lobstrosity/juvenile/proc/ready_to_grow()

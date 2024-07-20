@@ -97,5 +97,5 @@
 	fish_source.pre_challenge_started(rod, user, challenge)
 	challenge.start(user)
 
-/datum/component/fishing_spot/proc/return_fishing_spot(datum/source, list/arguments)
-	arguments[NPC_FISHING_SPOT] = fish_source
+/datum/component/fishing_spot/proc/return_fishing_spot(datum/source, list/fish_spot_container)
+	fish_spot_container[NPC_FISHING_SPOT] = fish_source

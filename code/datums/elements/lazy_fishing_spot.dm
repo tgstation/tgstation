@@ -29,5 +29,5 @@
 	source.AddComponent(/datum/component/fishing_spot, GLOB.preset_fish_sources[configuration])
 	Detach(source)
 
-/datum/element/lazy_fishing_spot/proc/return_glob_fishing_spot(datum/source, list/arguments)
-	arguments[NPC_FISHING_SPOT] = GLOB.preset_fish_sources[configuration]
+/datum/element/lazy_fishing_spot/proc/return_glob_fishing_spot(datum/source, list/fish_spot_container)
+	fish_spot_container[NPC_FISHING_SPOT] = GLOB.preset_fish_sources[configuration]

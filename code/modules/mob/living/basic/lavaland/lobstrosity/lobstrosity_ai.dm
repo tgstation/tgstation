@@ -2,7 +2,7 @@
 	"*me stares blankly.",\
 	"*me stares shrimply.",\
 	"*me gives a confused look.",\
-	"*me chitters disageeingly.",\
+	"*me chitters unpleasantly.",\
 )
 
 /datum/ai_controller/basic_controller/lobstrosity

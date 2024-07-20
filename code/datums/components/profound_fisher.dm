@@ -34,11 +34,13 @@
 		INVOKE_ASYNC(src, PROC_REF(pretend_fish), target)
 	return COMPONENT_HOSTILE_NO_ATTACK
 
-/datum/component/profound_fisher/proc/pretend_fish(atom/target, datum/fish_source/fish_spot)
+/datum/component/profound_fisher/proc/pretend_fish(atom/target)
 	var/mob/living/living_parent = parent
 	if(DOING_INTERACTION_WITH_TARGET(living_parent, target))
 		return
-	SEND_SIGNAL(target, COMSIG_NPC_FISHING, args)
+	var/list/fish_spot_container[NPC_FISHING_SPOT]
+	SEND_SIGNAL(target, COMSIG_NPC_FISHING, fish_spot_container)
+	var/datum/fish_source/fish_spot = fish_spot_container[NPC_FISHING_SPOT]
 	if(isnull(fish_spot))
 		return null
 	var/obj/effect/fishing_lure/lure = new(get_turf(target), target)
@@ -49,8 +51,7 @@
 		qdel(lure)
 		return
 	var/reward_loot = fish_spot.roll_reward(our_rod, parent)
-	if(ispath(reward_loot))
-		fish_spot.dispense_reward(reward_loot, parent, target)
+	fish_spot.dispense_reward(reward_loot, parent, target)
 	playsound(lure, 'sound/effects/bigsplash.ogg', 100)
 	qdel(lure)
 

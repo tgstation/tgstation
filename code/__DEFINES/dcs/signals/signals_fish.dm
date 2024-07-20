@@ -28,8 +28,7 @@
 
 /// Called when an ai-controlled mob interacts with the fishing spot
 #define COMSIG_NPC_FISHING "npc_fishing"
-	#define NPC_FISHING_TARGET 1 //Only here for clarity since it's redundant. The target's the source of the comsig.
-	#define NPC_FISHING_SPOT 2
+	#define NPC_FISHING_SPOT 1
 
 /// Sent by the target of the fishing rod cast
 #define COMSIG_FISHING_ROD_CAST "fishing_rod_cast"

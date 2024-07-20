@@ -6,6 +6,7 @@
  * A component that allows mobs to have happiness levels
  */
 /datum/component/happiness
+	dupe_mode = COMPONENT_DUPE_UNIQUE //Prioritize the old comp over, which may have callbacks and stuff specific to the mob.
 	///our current happiness level
 	var/happiness_level
 	///our maximum happiness level
@@ -42,8 +43,6 @@
 	src.happiness_callback = happiness_callback
 	src.callback_percentages = callback_percentages
 
-	ADD_TRAIT(parent, TRAIT_SUBTREE_REQUIRED_OPERATIONAL_DATUM, type)
-
 /datum/component/happiness/RegisterWithParent()
 
 	if(on_petted_change)
@@ -53,11 +52,9 @@
 	if(on_eat_change)
 		RegisterSignal(parent, COMSIG_MOB_ATE, PROC_REF(on_eat))
 	RegisterSignal(parent, COMSIG_SHIFT_CLICKED_ON, PROC_REF(view_happiness))
-	ADD_TRAIT(parent, TRAIT_MOB_RELAY_HAPPINESS, REF(src))
 
 /datum/component/happiness/UnregisterFromParent()
 	UnregisterSignal(parent, list(COMSIG_HOSTILE_PRE_ATTACKINGTARGET, COMSIG_COMPONENT_CLEAN_ACT, COMSIG_MOB_ATE))
-	REMOVE_TRAIT(parent, TRAIT_MOB_RELAY_HAPPINESS, REF(src))
 	happiness_callback = null
 
 /datum/component/happiness/proc/on_eat(datum/source)
