@@ -1,0 +1,5 @@
+author: "Absolucy"
+delete-after: True
+changes:
+  - bugfix: "Meteor shields should zap meteors even more reliably now."
+  - qol: "The debris from a zapped meteor now drifts, rather than staying in one spot where it was zapped."
