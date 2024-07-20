@@ -15,7 +15,7 @@ export const BrigTimer = (props) => {
   const { act, data } = useBackend<Data>();
   const { timing, minutes, seconds, flash_charging } = data;
   return (
-    <Window width={300} height={138}>
+    <Window width={350} height={138}>
       <Window.Content scrollable>
         <Section
           title="Cell Timer"
@@ -52,19 +52,19 @@ export const BrigTimer = (props) => {
           />
           <br />
           <Button
-            icon="hourglass-start"
-            content="Short"
-            onClick={() => act('preset', { preset: 'short' })}
+            icon="hourglass-end"
+            content="Mischief"
+            onClick={() => act('preset', { preset: 'mischief' })}
+          />
+          <Button
+            icon="hourglass-half"
+            content="Misdemeanor"
+            onClick={() => act('preset', { preset: 'misdemeanor' })}
           />
           <Button
             icon="hourglass-start"
-            content="Medium"
-            onClick={() => act('preset', { preset: 'medium' })}
-          />
-          <Button
-            icon="hourglass-start"
-            content="Long"
-            onClick={() => act('preset', { preset: 'long' })}
+            content="Felony"
+            onClick={() => act('preset', { preset: 'felony' })}
           />
         </Section>
       </Window.Content>
