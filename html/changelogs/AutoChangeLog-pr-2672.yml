@@ -1,6 +1,0 @@
-author: "Absolucy"
-delete-after: True
-changes:
-  - qol: "The arrivals and cryopod announcers now always broadcast successfully regardless of whether telecomms is working or not."
-  - qol: "Bot Language Matrix Malfunction no longer affects the arrivals and cryopod announcers."
-  - qol: "Bot Language Matrix Malfunction no longer affects things built AFTER roundstart bots/machines built after roundstart will speak normally."
