@@ -232,6 +232,10 @@
 	damage_type = BRUTE
 	pass_flags = PASSTABLE
 
+/obj/projectile/herald/Initialize(mapload)
+	. = ..()
+	AddComponent(/datum/component/parriable_projectile)
+
 /obj/projectile/herald/on_hit(atom/target, blocked = 0, pierce_hit)
 	if(ismob(target) && ismob(firer))
 		var/mob/living/mob_target = target

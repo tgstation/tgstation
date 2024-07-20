@@ -1,4 +1,0 @@
-author: "san7890"
-delete-after: True
-changes:
-  - admin: "Ticking \"Job Playtime Exempt\" on a player's Job Playtime Tracker panel will also exempt them from BYOND Account Age restrictions now. It previously only exempted them from actual living playtime minutes - this is for the BYOND Account Age in days."
