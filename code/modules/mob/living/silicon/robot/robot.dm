@@ -128,6 +128,7 @@
 	QDEL_NULL(wires)
 	QDEL_NULL(model)
 	QDEL_NULL(eye_lights)
+	QDEL_NULL(hat_overlay)
 	QDEL_NULL(inv1)
 	QDEL_NULL(inv2)
 	QDEL_NULL(inv3)
@@ -312,11 +313,33 @@
 			add_overlay("ov-opencover +c")
 		else
 			add_overlay("ov-opencover -c")
+
 	if(hat)
-		var/mutable_appearance/head_overlay = hat.build_worn_icon(default_layer = 20, default_icon_file = 'icons/mob/clothing/head/default.dmi')
-		head_overlay.pixel_z += hat_offset
-		add_overlay(head_overlay)
+		hat_overlay = hat.build_worn_icon(default_layer = 20, default_icon_file = 'icons/mob/clothing/head/default.dmi')
+		update_worn_icons()
+	else if(hat_overlay)
+		QDEL_NULL(hat_overlay)
+
 	update_appearance(UPDATE_OVERLAYS)
+
+/mob/living/silicon/robot/proc/update_worn_icons()
+	if(!hat_overlay)
+		return
+	cut_overlay(hat_overlay)
+
+	if(islist(hat_offset))
+		var/list/offset = hat_offset[ISDIAGONALDIR(dir) ? dir2text(dir & (WEST|EAST)) : dir2text(dir)]
+		if(offset)
+			hat_overlay.pixel_w = offset[1]
+			hat_overlay.pixel_z = offset[2]
+
+	add_overlay(hat_overlay)
+
+/mob/living/silicon/robot/setDir(newdir)
+	var/old_dir = dir
+	. = ..()
+	if(. != old_dir)
+		update_worn_icons()
 
 /mob/living/silicon/robot/on_changed_z_level(turf/old_turf, turf/new_turf, same_z_layer, notify_contents)
 	if(same_z_layer || QDELING(src))

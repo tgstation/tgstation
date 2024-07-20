@@ -7125,7 +7125,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/effect/spawner/random/structure/crate,
 /obj/structure/disposalpipe/segment{
-	dir = 6
+	dir = 4
 	},
 /turf/open/floor/plating,
 /area/station/maintenance/port/fore)
@@ -9494,7 +9494,6 @@
 /obj/structure/cable,
 /obj/effect/spawner/random/maintenance,
 /obj/machinery/recharge_station,
-/obj/structure/disposalpipe/segment,
 /turf/open/floor/plating,
 /area/station/maintenance/port/fore)
 "dvn" = (
@@ -9633,16 +9632,6 @@
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/effect/turf_decal/stripes/corner{
 	dir = 4
-	},
-/obj/structure/table,
-/obj/item/storage/box/bandages{
-	pixel_y = 6;
-	pixel_x = 4
-	},
-/obj/effect/spawner/random/entertainment/deck,
-/obj/effect/spawner/random/entertainment/cigarette_pack{
-	pixel_x = -6;
-	pixel_y = 8
 	},
 /turf/open/floor/iron,
 /area/station/cargo/miningoffice)
@@ -14534,6 +14523,8 @@
 /mob/living/simple_animal/bot/mulebot{
 	name = "Leaping Rabbit"
 	},
+/obj/structure/disposalpipe/segment,
+/obj/structure/disposalpipe/segment,
 /turf/open/floor/plating,
 /area/station/maintenance/port/fore)
 "fhp" = (
@@ -27075,9 +27066,12 @@
 /area/station/cargo/miningoffice)
 "jBp" = (
 /obj/effect/turf_decal/tile/brown/half/contrasted,
-/obj/machinery/conveyor_switch/oneway{
-	id = "mining";
+/obj/effect/turf_decal/bot,
+/obj/structure/disposalpipe/trunk{
 	dir = 1
+	},
+/obj/machinery/disposal/bin{
+	name = "Jim Norton's Quebecois Coffee disposal unit"
 	},
 /turf/open/floor/iron,
 /area/station/cargo/miningoffice)
@@ -40297,6 +40291,9 @@
 "omV" = (
 /obj/effect/spawner/random/structure/grille,
 /obj/structure/cable,
+/obj/structure/disposalpipe/segment{
+	dir = 6
+	},
 /turf/open/floor/plating,
 /area/station/maintenance/port/fore)
 "onf" = (
@@ -44982,13 +44979,16 @@
 /area/station/security/brig)
 "pVV" = (
 /obj/effect/turf_decal/tile/brown/half/contrasted,
-/obj/machinery/disposal/bin{
-	name = "Jim Norton's Quebecois Coffee disposal unit"
+/obj/structure/table,
+/obj/item/storage/box/bandages{
+	pixel_y = 6;
+	pixel_x = 4
 	},
-/obj/effect/turf_decal/bot,
-/obj/structure/disposalpipe/trunk{
-	dir = 1
+/obj/effect/spawner/random/entertainment/cigarette_pack{
+	pixel_x = -6;
+	pixel_y = 8
 	},
+/obj/effect/spawner/random/entertainment/deck,
 /turf/open/floor/iron,
 /area/station/cargo/miningoffice)
 "pVZ" = (
@@ -46937,18 +46937,9 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
 	},
-/obj/structure/table,
-/obj/item/flashlight/lamp{
-	pixel_x = -7;
-	pixel_y = 9
-	},
-/obj/item/folder/yellow{
-	pixel_y = -5;
-	pixel_x = 5
-	},
-/obj/item/pen/blue{
-	pixel_x = 4;
-	pixel_y = -3
+/obj/machinery/conveyor_switch/oneway{
+	id = "mining";
+	dir = 1
 	},
 /turf/open/floor/iron,
 /area/station/cargo/miningoffice)
@@ -47475,6 +47466,9 @@
 /obj/machinery/requests_console/directional/south{
 	department = "Mining";
 	name = "Mining Requests Console"
+	},
+/obj/structure/disposalpipe/segment{
+	dir = 4
 	},
 /turf/open/floor/iron,
 /area/station/cargo/miningoffice)
@@ -87691,7 +87685,7 @@ hJO
 duG
 omV
 fhn
-jXu
+cuh
 jBp
 wsk
 qHt
@@ -87948,7 +87942,7 @@ bkJ
 iIE
 cAf
 dve
-cuh
+jXu
 pVV
 qqr
 iId

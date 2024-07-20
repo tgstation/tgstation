@@ -336,6 +336,7 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_SECURITY_HUD "sec_hud"
 /// for something granting you a diagnostic hud
 #define TRAIT_DIAGNOSTIC_HUD "diag_hud"
+#define TRAIT_BOT_PATH_HUD "bot_path_hud"
 /// Is a medbot healing you
 #define TRAIT_MEDIBOTCOMINGTHROUGH "medbot"
 #define TRAIT_PASSTABLE "passtable"
@@ -1209,5 +1210,9 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 
 /// Given to a mob that can throw to make them not able to throw
 #define TRAIT_NO_THROWING "no_throwing"
+
+///Trait which allows mobs to parry mining mob projectiles
+#define TRAIT_MINING_PARRYING "mining_parrying"
+
 
 // END TRAIT DEFINES

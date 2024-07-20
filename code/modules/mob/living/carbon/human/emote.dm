@@ -18,7 +18,7 @@
 	message = "pushes up their glasses."
 	emote_type = EMOTE_VISIBLE
 
-/datum/emote/living/carbon/human/glasses/can_run_emote(mob/user, status_check = TRUE, intentional)
+/datum/emote/living/carbon/human/glasses/can_run_emote(mob/user, status_check = TRUE, intentional, params)
 	var/obj/eyes_slot = user.get_item_by_slot(ITEM_SLOT_EYES)
 	if(istype(eyes_slot, /obj/item/clothing/glasses/regular) || istype(eyes_slot, /obj/item/clothing/glasses/sunglasses))
 		return ..()
@@ -66,9 +66,9 @@
 	only_forced_audio = TRUE
 	vary = TRUE
 
-/datum/emote/living/carbon/human/scream/run_emote(mob/user, params, type_override, intentional = FALSE)
+/datum/emote/living/carbon/human/scream/can_run_emote(mob/user, status_check = TRUE , intentional, params)
 	if(!intentional && HAS_TRAIT(user, TRAIT_ANALGESIA))
-		return
+		return FALSE
 	return ..()
 
 /datum/emote/living/carbon/human/scream/get_sound(mob/living/carbon/human/user)
@@ -119,8 +119,6 @@
 
 /datum/emote/living/carbon/human/wag/run_emote(mob/user, params, type_override, intentional)
 	. = ..()
-	if(!.)
-		return
 	var/obj/item/organ/external/tail/oranges_accessory = user.get_organ_slot(ORGAN_SLOT_EXTERNAL_TAIL)
 	//I am so sorry my son
 	//We bypass helpers here cause we already have the tail
@@ -137,7 +135,7 @@
 	else
 		. = "wags " + message
 
-/datum/emote/living/carbon/human/wag/can_run_emote(mob/user, status_check, intentional)
+/datum/emote/living/carbon/human/wag/can_run_emote(mob/user, status_check, intentional, params)
 	var/obj/item/organ/external/tail/tail = user.get_organ_slot(ORGAN_SLOT_EXTERNAL_TAIL)
 	if(tail?.wag_flags & WAG_ABLE)
 		return ..()
@@ -150,8 +148,6 @@
 
 /datum/emote/living/carbon/human/wing/run_emote(mob/user, params, type_override, intentional)
 	. = ..()
-	if(!.)
-		return
 	var/obj/item/organ/external/wings/functional/wings = user.get_organ_slot(ORGAN_SLOT_EXTERNAL_WINGS)
 	if(isnull(wings))
 		CRASH("[type] ran on a mob that has no wings!")
@@ -165,7 +161,7 @@
 	var/emote_verb = wings.wings_open ? "closes" : "opens"
 	return "[emote_verb] [message]"
 
-/datum/emote/living/carbon/human/wing/can_run_emote(mob/user, status_check = TRUE, intentional)
+/datum/emote/living/carbon/human/wing/can_run_emote(mob/user, status_check = TRUE, intentional, params)
 	if(!istype(user.get_organ_slot(ORGAN_SLOT_EXTERNAL_WINGS), /obj/item/organ/external/wings/functional))
 		return FALSE
 	return ..()
@@ -178,7 +174,7 @@
 ///Snowflake emotes only for le epic chimp
 /datum/emote/living/carbon/human/monkey
 
-/datum/emote/living/carbon/human/monkey/can_run_emote(mob/user, status_check = TRUE, intentional)
+/datum/emote/living/carbon/human/monkey/can_run_emote(mob/user, status_check = TRUE, intentional, params)
 	if(ismonkey(user))
 		return ..()
 	return FALSE
