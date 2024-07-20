@@ -122,11 +122,15 @@
 		panel_open = FALSE //automatic screws,,,, waow....
 		cycle_tank_air()
 	for(var/obj/item/pod_equipment/equipment as anything in get_all_parts())
-		var/datum/action/action = equipment.grant_occupant_action(occupant, occupants[occupant])
+		var/datum/action/action = equipment.create_occupant_actions(occupant, occupants[occupant])
 		if(isnull(action))
 			continue
-		action.Grant(occupant)
-		equipment_actions[occupant] += list(action)
+		if(islist(action))
+			for(var/datum/action/actual_action as anything in action)
+				actual_action.Grant(occupant)
+		else
+			action.Grant(occupant)
+		equipment_actions[occupant] += islist(action) ? action : list(action)
 
 /obj/vehicle/sealed/space_pod/after_remove_occupant(mob/former)
 	. = ..()

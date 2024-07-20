@@ -12,13 +12,15 @@
 	. = ..()
 	QDEL_NULL(gps)
 
-/obj/item/pod_equipment/sensors/grant_occupant_action(mob/occupant, flag = NONE)
+/obj/item/pod_equipment/sensors/create_occupant_actions(mob/occupant, flag = NONE)
 	if(!(flag & VEHICLE_CONTROL_DRIVE))
 		return FALSE
 
 	var/datum/action/vehicle/sealed/spacepod_equipment/equipment_action = new(src)
 	equipment_action.callback_on_click = CALLBACK(src, PROC_REF(on_use))
 	equipment_action.name = name
+	equipment_action.button_icon = /obj/item/gps::icon
+	equipment_action.button_icon_state = /obj/item/gps/engineering::icon_state
 	return equipment_action
 
 /obj/item/pod_equipment/sensors/proc/on_use(mob/user)

@@ -20,10 +20,12 @@
 
 /obj/item/pod_equipment/proc/on_detach(mob/user)
 
-/obj/item/pod_equipment/proc/grant_occupant_action(mob/occupant, flag = NONE)
+/obj/item/pod_equipment/proc/create_occupant_actions(mob/occupant, flag = NONE)
 
 //equipment action
 /datum/action/vehicle/sealed/spacepod_equipment
+	background_icon_state = "bg_tech"
+	overlay_icon_state = "bg_tech_border"
 	var/datum/callback/callback_on_click
 
 /datum/action/vehicle/sealed/spacepod_equipment/Trigger(trigger_flags)
