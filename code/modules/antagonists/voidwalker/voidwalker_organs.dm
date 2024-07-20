@@ -115,7 +115,7 @@
 /obj/effect/spawner/random/glass_shards/Initialize(mapload)
 	spawn_loot_count = rand(min_spawn, max_spawn)
 
-	. = ..()
+	return ..()
 
 /obj/effect/spawner/random/glass_shards/mini
 	min_spawn = 1
