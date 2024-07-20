@@ -229,9 +229,6 @@
 /obj/machinery/smartfridge/update_overlays()
 	. = ..()
 
-	if(panel_open)
-		. += mutable_appearance(icon, "[base_icon_state]-panel")
-
 	var/shown_contents_length = visible_items()
 	if(visible_contents && shown_contents_length)
 		var/content_level = "[base_icon_state]-[contents_overlay_icon]"
@@ -541,9 +538,8 @@
 /obj/machinery/smartfridge/drying/rack
 	name = "drying rack"
 	desc = "A wooden contraption, used to dry plant products, food and hide."
-	icon = 'icons/obj/service/hydroponics/equipment.dmi'
-	icon_state = "drying_rack"
-	base_icon_state = "drying_rack"
+	icon_state = "drying-rack"
+	base_icon_state = "drying-rack"
 	resistance_flags = FLAMMABLE
 	visible_contents = FALSE
 	base_build_path = /obj/machinery/smartfridge/drying/rack
@@ -592,9 +588,9 @@
 /obj/machinery/smartfridge/drying/rack/update_overlays()
 	. = ..()
 	if(drying)
-		. += "drying_rack_drying"
+		. += "[base_icon_state]-drying"
 	if(contents.len)
-		. += "drying_rack_filled"
+		. += "[base_icon_state]-filled"
 
 // ----------------------------
 //  Bar drink smartfridge
@@ -796,7 +792,8 @@
 	name = "disk compartmentalizer"
 	desc = "A machine capable of storing a variety of disks. Denoted by most as the DSU (disk storage unit)."
 	icon_state = "disktoaster"
-	icon = 'icons/obj/machines/vending.dmi'
+	base_icon_state = "disktoaster"
+	has_emissive = TRUE
 	pass_flags = PASSTABLE
 	can_atmos_pass = ATMOS_PASS_YES
 	visible_contents = FALSE
