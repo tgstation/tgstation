@@ -9,8 +9,10 @@
 /datum/crafting_recipe/durathread_robe
 	name = "Durathread Robe"
 	result = /obj/item/clothing/suit/wizrobe/durathread
-	reqs = list(/obj/item/stack/sheet/durathread = 3,
-				/obj/item/stack/sheet/leather = 6)
+	reqs = list(
+		/obj/item/stack/sheet/durathread = 3,
+		/obj/item/stack/sheet/leather = 6,
+	)
 	time = 5 SECONDS
 	category = CAT_CLOTHING
 
