@@ -143,7 +143,7 @@
 	return TRUE
 
 /// Finishes printing, resets the printer.
-/obj/machinery/computer/warrant/proc/print_finish(obj/item/paper/paperslip/ticket)
+/obj/machinery/computer/warrant/proc/print_finish(obj/item/paper/paperslip/ticket/ticket)
 	printing = FALSE
 	playsound(source, 'sound/machines/terminal_eject.ogg', 100, TRUE)
 	ticket.forceMove(get_turf(source))
@@ -166,25 +166,23 @@
 		return FALSE
 
 	var/ticket_text = "<center><h1><b>Ticket to [target.name]</b><h1></center><BR>"
-    ticket_text += "<center>Cited for [warrant.name]</h2></center><br><br>"
-    ticket_text += "<b>Details:</b><br>[warrant.details]<br>"
-    ticket_text += "<b>Issued by:</b><br>[warrant.author]<br>"
-    ticket_text += "<b>Issued on:</b><br>[warrant.time]<br>"
-    ticket_text += "<b>Comments:</b><br>[!target.security_note ? "None." : target.security_note]<br><br>"
-    ticket_text += "<center><b>FINE:</b> [warrant.fine] credits</center><br>"
-    ticket_text += "<i>Citations can be paid with the warrant console at the Brig entrance. \
-        Not paying this citation may result in further prosecution from the Security department of [GLOB.station_name]. \
-        If you have any problems with the citation reason - contact a Lawyer. <b>You've been warned.</b></i>"
+	ticket_text += "<center>Cited for [warrant.name]</h2></center><br><br>"
+	ticket_text += "<b>Details:</b><br>[warrant.details]<br>"
+	ticket_text += "<b>Issued by:</b><br>[warrant.author]<br>"
+	ticket_text += "<b>Issued on:</b><br>[warrant.time]<br>"
+	ticket_text += "<b>Comments:</b><br>[!target.security_note ? "None." : target.security_note]<br><br>"
+	ticket_text += "<center><b>FINE:</b> [warrant.fine] credits</center><br>"
+	ticket_text += "<i>Citations can be paid with the warrant console at the Brig entrance. \
+		Not paying this citation may result in further prosecution from the Security department of [GLOB.station_name]. \
+		If you have any problems with the citation reason - contact a Lawyer. <b>You've been warned.</b></i>"
 
 	printing = TRUE
 	balloon_alert(source, "printing")
 	playsound(source, 'sound/machines/printer.ogg', 100, TRUE)
 
-	var/obj/item/paper/paperslip/ticket = new(null)
+	var/obj/item/paper/paperslip/ticket/ticket = new(null)
 	ticket.name = "ticket to [target.name]"
-	ticket.desc = "A [warrant.fine]cr ticket for [target.name]. The back of it feels <b>sticky</b>."
-	ticket.color = COLOR_VERY_SOFT_YELLOW
-	ticket.embed_type = /datum/embed_data/sticky_tape //Stick them into criminals face
+	ticket.desc = "A [warrant.fine]cr ticket for [target.name]."
 	ticket.add_raw_text(ticket_text)
 	ticket.update_icon()
 
