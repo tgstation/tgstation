@@ -34,7 +34,7 @@
 		// If it's not your tail AND of different species, we are horrified
 		if(IS_WEAKREF_OF(receiver, original_owner))
 			receiver.add_mood_event("tail_regained", /datum/mood_event/tail_regained_right)
-		else if(type in receiver.dna.species.external_organs)
+		else if(type in receiver.dna.species.mutant_organs)
 			receiver.add_mood_event("tail_regained", /datum/mood_event/tail_regained_species)
 		else
 			receiver.add_mood_event("tail_regained", /datum/mood_event/tail_regained_wrong)
