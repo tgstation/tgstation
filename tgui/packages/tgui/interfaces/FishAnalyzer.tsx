@@ -59,7 +59,14 @@ type Data = {
 export const FishAnalyzer = (props) => {
   const { act, data } = useBackend<Data>();
   const { fish_list = [], fish_scanned } = data;
-  const [searchItem, setSearchItem] = useState('');
+  const [searchText, setSearchText] = useState('');
+
+  const search = createSearch(searchText, (fish: fishData) => fish.fish_name);
+
+  const fish_filtered =
+    searchText.length > 0
+      ? fish_list.filter((fish) => search(fish))
+      : fish_list;
 
   return (
     <Window
@@ -82,9 +89,9 @@ export const FishAnalyzer = (props) => {
                   height="20px"
                   width="150px"
                   placeholder="Search Fish..."
-                  value={searchItem}
+                  value={searchText}
                   onInput={(e, value) => {
-                    setSearchItem(value);
+                    setSearchText(value);
                   }}
                   fluid
                 />
@@ -94,7 +101,7 @@ export const FishAnalyzer = (props) => {
           <Stack.Item grow>
             <Section title="Fish" fill scrollable>
               <Stack wrap>
-                {fish_list.map((fish, index) => (
+                {fish_filtered.map((fish, index) => (
                   <Stack.Item
                     position="relative"
                     mt={2}
