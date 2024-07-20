@@ -48,24 +48,24 @@
 	if(seed)
 		melon_pulp_count += round(seed.potency / 25)
 
-	user.balloon_alert(user, "scooped out [melon_pulp_count] pulp")
-	for(var/i in melon_pulp_count)
+	user.balloon_alert(user, "scooped out [melon_pulp_count] pulp(s)")
+	for(var/i in 1 to melon_pulp_count)
 		new /obj/item/food/watermelonmush(user.loc)
 
 	var/melon_armour
 	var/melon_chestplate_chance = (max(0, seed.potency - 50) / 50)
-	if (!prob(melon_chestplate_chance))
-		if(seed.resistance_flags & FIRE_PROOF)
-			melon_armour = new /obj/item/clothing/head/helmet/durability/watermelon/fire_resist
-		else
-			melon_armour = new /obj/item/clothing/head/helmet/durability/watermelon
-		to_chat(user, span_notice("You hollow the melon into a chestplate with [I]."))
-	else
+	if (prob(melon_chestplate_chance))
 		if(seed.resistance_flags & FIRE_PROOF)
 			melon_armour = new /obj/item/clothing/suit/armor/durability/watermelon/fire_resist
 		else
 			melon_armour = new /obj/item/clothing/suit/armor/durability/watermelon
 		to_chat(user, span_notice("You hollow the melon into a helmet with [I]."))
+	else
+		if(seed.resistance_flags & FIRE_PROOF)
+			melon_armour = new /obj/item/clothing/head/helmet/durability/watermelon/fire_resist
+		else
+			melon_armour = new /obj/item/clothing/head/helmet/durability/watermelon
+		to_chat(user, span_notice("You hollow the melon into a chestplate with [I]."))
 	remove_item_from_storage(user)
 	qdel(src)
 	user.put_in_hands(melon_armour)
@@ -116,24 +116,24 @@
 	if(seed)
 		holymelon_pulp_count += round(seed.potency / 25)
 
-	user.balloon_alert(user, "scooped out [holymelon_pulp_count] pulp")
-	for(var/i in holymelon_pulp_count)
+	user.balloon_alert(user, "scooped out [holymelon_pulp_count] pulp(s)")
+	for(var/i in 1 to holymelon_pulp_count)
 		new /obj/item/food/holymelonmush(user.loc)
 
 	var/holymelon_armour
 	var/holymelon_chestplate_chance = (max(0, seed.potency - 50) / 50)
-	if (!prob(holymelon_chestplate_chance))
-		if(seed.resistance_flags & FIRE_PROOF)
-			holymelon_armour = new /obj/item/clothing/head/helmet/durability/holymelon/fire_resist
-		else
-			holymelon_armour = new /obj/item/clothing/head/helmet/durability/holymelon
-		to_chat(user, span_notice("You hollow the holymelon into a chestplate with [I]."))
-	else
+	if (prob(holymelon_chestplate_chance))
 		if(seed.resistance_flags & FIRE_PROOF)
 			holymelon_armour = new /obj/item/clothing/suit/armor/durability/holymelon/fire_resist
 		else
 			holymelon_armour = new /obj/item/clothing/suit/armor/durability/holymelon
 		to_chat(user, span_notice("You hollow the holymelon into a helmet with [I]."))
+	else
+		if(seed.resistance_flags & FIRE_PROOF)
+			holymelon_armour = new /obj/item/clothing/head/helmet/durability/holymelon/fire_resist
+		else
+			holymelon_armour = new /obj/item/clothing/head/helmet/durability/holymelon
+		to_chat(user, span_notice("You hollow the holymelon into a chestplate with [I]."))
 	remove_item_from_storage(user)
 	qdel(src)
 	user.put_in_hands(holymelon_armour)
@@ -187,24 +187,25 @@
 	if(seed)
 		barrelmelon_pulp_count += round(seed.potency / 25)
 
-	user.balloon_alert(user, "scooped out [barrelmelon_pulp_count] pulp")
-	for(var/i in barrelmelon_pulp_count)
+	user.balloon_alert(user, "scooped out [barrelmelon_pulp_count] pulp(s)")
+	for(var/i in 1 to barrelmelon_pulp_count)
 		new /obj/item/food/barrelmelonmush(user.loc)
 
 	var/barrelmelon_armour
 	var/barrelmelon_chestplate_chance = (max(0, seed.potency - 50) / 50)
-	if (!prob(barrelmelon_chestplate_chance))
-		if(seed.resistance_flags & FIRE_PROOF)
-			barrelmelon_armour = new /obj/item/clothing/head/helmet/durability/barrelmelon/fire_resist
-		else
-			barrelmelon_armour = new /obj/item/clothing/head/helmet/durability/barrelmelon
-		to_chat(user, span_notice("You hollow the barrelmelon into a chestplate with [I]."))
-	else
+	if (prob(barrelmelon_chestplate_chance))
 		if(seed.resistance_flags & FIRE_PROOF)
 			barrelmelon_armour = new /obj/item/clothing/suit/armor/durability/barrelmelon/fire_resist
 		else
 			barrelmelon_armour = new /obj/item/clothing/suit/armor/durability/barrelmelon
 		to_chat(user, span_notice("You hollow the barrelmelon into a helmet with [I]."))
+	else
+		if(seed.resistance_flags & FIRE_PROOF)
+			barrelmelon_armour = new /obj/item/clothing/head/helmet/durability/barrelmelon/fire_resist
+		else
+			barrelmelon_armour = new /obj/item/clothing/head/helmet/durability/barrelmelon
+		to_chat(user, span_notice("You hollow the barrelmelon into a chestplate with [I]."))
+
 	remove_item_from_storage(user)
 	qdel(src)
 	user.put_in_hands(barrelmelon_armour)

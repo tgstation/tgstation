@@ -26,20 +26,19 @@
 	wine_power = 30
 
 /obj/item/food/grown/carrot/attackby(obj/item/I, mob/user, params)
-	if(I.get_sharpness())
-		var/carrot_blade
-		var/carrot_sword_chance = (max(0, seed.potency - 50) / 50)
-		if (prob(carrot_sword_chance))
-			carrot_blade = new /obj/item/claymore/carrot
-			to_chat(user, span_notice("You sharpen the carrot into a sword with [I]."))
-		else
-			carrot_blade = new /obj/item/knife/shiv/carrot
-			to_chat(user, span_notice("You sharpen the carrot into a shiv with [I]."))
-		remove_item_from_storage(user)
-		qdel(src)
-		user.put_in_hands(carrot_blade)
-	else
+	if(!I.get_sharpness())
 		return ..()
+	var/carrot_blade
+	var/carrot_sword_chance = (max(0, seed.potency - 50) / 50)
+	if (prob(carrot_sword_chance))
+		carrot_blade = new /obj/item/claymore/carrot
+		to_chat(user, span_notice("You sharpen the carrot into a sword with [I]."))
+	else
+		carrot_blade = new /obj/item/knife/shiv/carrot
+		to_chat(user, span_notice("You sharpen the carrot into a shiv with [I]."))
+	remove_item_from_storage(user)
+	qdel(src)
+	user.put_in_hands(carrot_blade)
 
 // Parsnip
 /obj/item/seeds/carrot/parsnip
@@ -63,20 +62,20 @@
 	wine_power = 35
 
 /obj/item/food/grown/parsnip/attackby(obj/item/I, mob/user, params)
-	if(I.get_sharpness())
-		var/parsnip_blade
-		var/parsnip_sword_chance = (max(0, seed.potency - 50) / 50)
-		if (prob(parsnip_sword_chance))
-			parsnip_blade = new /obj/item/melee/parsnip_sabre
-			to_chat(user, span_notice("You sharpen the parsnip into a sabre with [I]."))
-		else
-			parsnip_blade = new /obj/item/knife/shiv/parsnip
-			to_chat(user, span_notice("You sharpen the parsnip into a shiv with [I]."))
-		remove_item_from_storage(user)
-		qdel(src)
-		user.put_in_hands(parsnip_blade)
-	else
+	if(!I.get_sharpness())
 		return ..()
+	var/parsnip_blade
+	var/parsnip_sword_chance = (max(0, seed.potency - 50) / 50)
+	if (prob(parsnip_sword_chance))
+		parsnip_blade = new /obj/item/melee/parsnip_sabre
+		to_chat(user, span_notice("You sharpen the parsnip into a sabre with [I]."))
+	else
+		parsnip_blade = new /obj/item/knife/shiv/parsnip
+		to_chat(user, span_notice("You sharpen the parsnip into a shiv with [I]."))
+	remove_item_from_storage(user)
+	qdel(src)
+	user.put_in_hands(parsnip_blade)
+
 
 // Cahn'root
 /obj/item/seeds/carrot/cahnroot

@@ -576,7 +576,7 @@
 	name = "Watermelon Helmet"
 	desc = "A helmet cut out from a watermelon. Might take a few hits, but don't expect it whitstand much."
 	icon_state = "watermelon"
-	inhand_icon_state = null
+	inhand_icon_state = "watermelon"
 	flags_inv = HIDEEARS
 	dog_fashion = /datum/dog_fashion/head/watermelon
 	armor_type = /datum/armor/helmet_watermelon
@@ -608,7 +608,7 @@
 	name = "Holymelon Helmet"
 	desc = "A helmet from a hollowed out holymelon. Might take a few hits, but don't expect it whitstand much."
 	icon_state = "holymelon"
-	inhand_icon_state = null
+	inhand_icon_state = "holymelon"
 	flags_inv = HIDEEARS
 	dog_fashion = /datum/dog_fashion/head/holymelon
 	armor_type = /datum/armor/helmet_watermelon
@@ -622,7 +622,7 @@
 	name = "Barrelmelon Helmet"
 	desc = "A helmet from hollowed out barrelmelon. As sturdy as if made from actual wood, though its rigid structure makes it break up quicker."
 	icon_state = "barrelmelon"
-	inhand_icon_state = null
+	inhand_icon_state = "barrelmelon"
 	flags_inv = HIDEEARS
 	dog_fashion = /datum/dog_fashion/head/barrelmelon
 	armor_type = /datum/armor/helmet_barrelmelon
