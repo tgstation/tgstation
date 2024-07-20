@@ -31,6 +31,7 @@ type fishData = {
   fish_hunger: number;
   fish_fluid_compatible: BooleanLike;
   fish_fluid_type: string;
+  fish_suitable_temp: BooleanLike;
   fish_breed_timer: number;
   fish_traits: traitData[];
   fish_evolutions: evolutionData[];
@@ -52,46 +53,53 @@ type evolutionData = {
 
 type Data = {
   fish_list: fishData[];
+  fish_scanned: BooleanLike;
 };
 
 export const FishAnalyzer = (props) => {
   const { act, data } = useBackend<Data>();
-  const { fish_list = [] } = data;
+  const { fish_list = [], fish_scanned } = data;
   const [searchItem, setSearchItem] = useState('');
 
   return (
-    <Window title="Fish Analyzer" width={700} height={400}>
+    <Window
+      title="Fish Analyzer"
+      width={fish_scanned ? 530 : 700}
+      height={fish_scanned ? 270 : 460}
+    >
       <Window.Content
         style={{ background: 'linear-gradient(to right,#2e0b64, #848ffb)' }}
       >
         <Stack fill vertical>
-          <Stack.Item>
-            <Section>
-              <Input
-                autoFocus
-                position="relative"
-                mt={0.5}
-                bottom="5%"
-                height="20px"
-                width="150px"
-                placeholder="Search Fish..."
-                value={searchItem}
-                onInput={(e, value) => {
-                  setSearchItem(value);
-                }}
-                fluid
-              />
-            </Section>
-          </Stack.Item>
+          {!fish_scanned && (
+            <Stack.Item>
+              <Section>
+                <Input
+                  autoFocus
+                  position="relative"
+                  mt={0.5}
+                  bottom="5%"
+                  height="20px"
+                  width="150px"
+                  placeholder="Search Fish..."
+                  value={searchItem}
+                  onInput={(e, value) => {
+                    setSearchItem(value);
+                  }}
+                  fluid
+                />
+              </Section>
+            </Stack.Item>
+          )}
           <Stack.Item grow>
-            <Section title="Fishets" fill scrollable>
+            <Section title="Fish" fill scrollable>
               <Stack wrap>
                 {fish_list.map((fish, index) => (
                   <Stack.Item
                     position="relative"
                     mt={2}
                     ml={2}
-                    width="44%"
+                    width={fish_scanned ? '100%' : '44%'}
                     minHeight="120px"
                     key={index}
                     style={{
@@ -116,7 +124,7 @@ export const FishAnalyzer = (props) => {
                                 />
                               </Stack.Item>
                               <Stack.Item style={{ fontSize: '10px' }}>
-                                {fish.fish_weight}kg
+                                {fish.fish_weight}g
                               </Stack.Item>
                               <Stack.Item style={{ fontSize: '10px' }}>
                                 {fish.fish_size}cm
@@ -269,7 +277,15 @@ export const FishAnalyzer = (props) => {
                       </Stack.Item>
                       <Stack.Item>
                         <Flex>
-                          <Flex.Item width="25%" grow>
+                          <Flex.Item
+                            width="25%"
+                            grow
+                            style={{
+                              color: fish.fish_suitable_temp
+                                ? '#1ac400'
+                                : 'red',
+                            }}
+                          >
                             {fish.fish_min_temp}k - {fish.fish_max_temp}k
                           </Flex.Item>
                           <Flex.Item

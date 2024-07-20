@@ -82,45 +82,57 @@
 
 /obj/item/fish_analyzer/ui_static_data(mob/user)
 	var/list/data = list()
-	var/obj/structure/aquarium/aquarium = scanned_item?.resolve()
+	var/atom/scanned_object = scanned_item?.resolve()
 	data["fish_list"] = list()
+	data["fish_scanned"] = FALSE
 
+	if(isfish(scanned_object))
+		data["fish_scanned"] = TRUE
+		return extract_fish_info(data, scanned_object)
+
+	var/obj/structure/aquarium/aquarium = scanned_object
 	for(var/obj/item/fish/fishie in aquarium)
-		var/list/fish_traits = list()
-		var/list/fish_evolutions = list()
+		extract_fish_info(data, fishie, aquarium)
 
-		for(var/evolution_type in fishie.evolution_types)
-			var/datum/fish_evolution/evolution = GLOB.fish_evolutions[evolution_type]
-			var/obj/item/evolution_fish = evolution.new_fish_type
-			fish_evolutions += list(list(
-				"evolution_name" = evolution.name,
-				"evolution_icon" = evolution_fish::icon,
-				"evolution_icon_state" = evolution_fish::icon_state,
-				"evolution_probability" = evolution.probability,
-				"evolution_conditions" = evolution.conditions_note,
-			))
+	return data
 
-		for(var/trait_type in fishie.fish_traits)
-			var/datum/fish_trait/trait = GLOB.fish_traits[trait_type]
-			fish_traits += list(list("trait_name" = trait.name, "trait_desc" = trait.catalog_description, "trait_inherit" = trait.diff_traits_inheritability))
+/obj/item/fish_analyzer/proc/extract_fish_info(list/data, obj/item/fish/fishie, obj/structure/aquarium/aquarium)
+	var/list/fish_traits = list()
+	var/list/fish_evolutions = list()
 
-		data["fish_list"] += list(list(
-			"fish_name" = fishie.name,
-			"fish_icon" = fishie::icon,
-			"fishie_icon_state" = fishie::icon_state,
-			"fish_health" = fishie.status == FISH_DEAD ? 0 : PERCENT(fishie.health/initial(fishie.health)),
-			"fish_size" = fishie.size,
-			"fish_weight" = fishie.weight,
-			"fish_food" = fishie.food::name,
-			"fish_food_color" = fishie.food::color,
-			"fish_min_temp" = fishie.required_temperature_min,
-			"fish_max_temp" = fishie.required_temperature_max,
-			"fish_hunger" = HAS_TRAIT(fishie, TRAIT_FISH_NO_HUNGER) ? 0 :  PERCENT(min((world.time - fishie.last_feeding) / fishie.feeding_frequency, 1)),
-			"fish_fluid_compatible" = compatible_fluid_type(fishie.required_fluid_type, aquarium.fluid_type),
-			"fish_fluid_type" = fishie.required_fluid_type,
-			"fish_breed_timer" = round(max(fishie.breeding_wait - world.time, 0) / 10),
-			"fish_traits" = fish_traits,
-			"fish_evolutions" = fish_evolutions,
+	for(var/evolution_type in fishie.evolution_types)
+		var/datum/fish_evolution/evolution = GLOB.fish_evolutions[evolution_type]
+		var/obj/item/evolution_fish = evolution.new_fish_type
+		fish_evolutions += list(list(
+			"evolution_name" = evolution.name,
+			"evolution_icon" = evolution_fish::icon,
+			"evolution_icon_state" = evolution_fish::icon_state,
+			"evolution_probability" = evolution.probability,
+			"evolution_conditions" = evolution.conditions_note,
 		))
+
+	for(var/trait_type in fishie.fish_traits)
+		var/datum/fish_trait/trait = GLOB.fish_traits[trait_type]
+		fish_traits += list(list("trait_name" = trait.name, "trait_desc" = trait.catalog_description, "trait_inherit" = trait.diff_traits_inheritability))
+
+	data["fish_list"] += list(list(
+		"fish_name" = fishie.name,
+		"fish_icon" = fishie::icon,
+		"fish_icon_state" = fishie::icon_state,
+		"fish_health" = fishie.status == FISH_DEAD ? 0 : PERCENT(fishie.health/initial(fishie.health)),
+		"fish_size" = fishie.size,
+		"fish_weight" = fishie.weight,
+		"fish_food" = fishie.food::name,
+		"fish_food_color" = fishie.food::color,
+		"fish_min_temp" = fishie.required_temperature_min,
+		"fish_max_temp" = fishie.required_temperature_max,
+		"fish_hunger" = HAS_TRAIT(fishie, TRAIT_FISH_NO_HUNGER) ? 0 :  PERCENT(min((world.time - fishie.last_feeding) / fishie.feeding_frequency, 1)),
+		"fish_fluid_compatible" = aquarium ? compatible_fluid_type(fishie.required_fluid_type, aquarium.fluid_type) : null,
+		"fish_fluid_type" = fishie.required_fluid_type,
+		"fish_breed_timer" = round(max(fishie.breeding_wait - world.time, 0) / 10),
+		"fish_traits" = fish_traits,
+		"fish_evolutions" = fish_evolutions,
+		"fish_suitable_temp" = aquarium ? ISINRANGE(aquarium.fluid_temp, fishie.required_temperature_min, fishie.required_temperature_max) : null
+	))
 
 	return data
