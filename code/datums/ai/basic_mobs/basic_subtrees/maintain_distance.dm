@@ -13,6 +13,9 @@
 
 /datum/ai_planning_subtree/maintain_distance/SelectBehaviors(datum/ai_controller/controller, seconds_per_tick)
 	. = ..()
+	var/mob/living/living_pawn = controller.pawn
+	if(LAZYLEN(living_pawn.do_afters))
+		return
 	var/atom/target = controller.blackboard[target_key]
 	if (!isliving(target) || !can_see(controller.pawn, target, view_distance))
 		return // Don't run away from cucumbers, they're not snakes
