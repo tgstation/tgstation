@@ -427,14 +427,14 @@
 // ----------------------------
 //  Drying Rack 'smartfridge'
 // ----------------------------
-/obj/machinery/smartfridge/drying_rack
+/obj/machinery/smartfridge/drying/rack
 	name = "drying rack"
 	desc = "A wooden contraption, used to dry plant products, food and hide."
 	icon = 'icons/obj/service/hydroponics/equipment.dmi'
-	icon_state = "drying_rack"
+	icon_state = "drying/rack"
 	resistance_flags = FLAMMABLE
 	visible_contents = FALSE
-	base_build_path = /obj/machinery/smartfridge/drying_rack //should really be seeing this without admin fuckery.
+	base_build_path = /obj/machinery/smartfridge/drying/rack //should really be seeing this without admin fuckery.
 	use_power = NO_POWER_USE
 	idle_power_usage = 0
 	has_emissive = FALSE
@@ -444,7 +444,7 @@
 	/// The reference to the last user's mind. Needed for the chef made trait to be properly applied correctly to dried food.
 	var/datum/weakref/current_user
 
-/obj/machinery/smartfridge/drying_rack/Initialize(mapload)
+/obj/machinery/smartfridge/drying/rack/Initialize(mapload)
 	. = ..()
 
 	//you can't weld down wood
@@ -453,15 +453,15 @@
 	//so we don't drop any of the parent smart fridge parts upon deconstruction
 	clear_components()
 
-/obj/machinery/smartfridge/drying_rack/Destroy()
+/obj/machinery/smartfridge/drying/rack/Destroy()
 	current_user = null
 	return ..()
 
 /// We cleared out the components in initialize so we can optimize this
-/obj/machinery/smartfridge/drying_rack/visible_items()
+/obj/machinery/smartfridge/drying/rack/visible_items()
 	return contents.len
 
-/obj/machinery/smartfridge/drying_rack/add_context(atom/source, list/context, obj/item/held_item, mob/living/user)
+/obj/machinery/smartfridge/drying/rack/add_context(atom/source, list/context, obj/item/held_item, mob/living/user)
 	if(isnull(held_item))
 		return NONE
 
@@ -475,7 +475,7 @@
 
 	return tool_tip_set ? CONTEXTUAL_SCREENTIP_SET : NONE
 
-/obj/machinery/smartfridge/drying_rack/structure_examine()
+/obj/machinery/smartfridge/drying/rack/structure_examine()
 	. = ""
 	if(anchored)
 		. += span_info("It's currently anchored to the floor. It can be [EXAMINE_HINT("wrenched")] loose.")
@@ -483,31 +483,31 @@
 		. += span_info("It's not anchored to the floor. It can be [EXAMINE_HINT("wrenched")] down.")
 	. += span_info("The whole rack can be [EXAMINE_HINT("pried")] apart.")
 
-/obj/machinery/smartfridge/drying_rack/welder_act(mob/living/user, obj/item/tool)
+/obj/machinery/smartfridge/drying/rack/welder_act(mob/living/user, obj/item/tool)
 	return NONE
 
-/obj/machinery/smartfridge/drying_rack/welder_act_secondary(mob/living/user, obj/item/tool)
+/obj/machinery/smartfridge/drying/rack/welder_act_secondary(mob/living/user, obj/item/tool)
 	return NONE
 
-/obj/machinery/smartfridge/drying_rack/default_deconstruction_screwdriver()
+/obj/machinery/smartfridge/drying/rack/default_deconstruction_screwdriver()
 	return NONE
 
-/obj/machinery/smartfridge/drying_rack/exchange_parts()
+/obj/machinery/smartfridge/drying/rack/exchange_parts()
 	return
 
-/obj/machinery/smartfridge/drying_rack/on_deconstruction(disassembled)
+/obj/machinery/smartfridge/drying/rack/on_deconstruction(disassembled)
 	new /obj/item/stack/sheet/mineral/wood(drop_location(), 10)
 
-/obj/machinery/smartfridge/drying_rack/crowbar_act(mob/living/user, obj/item/tool)
+/obj/machinery/smartfridge/drying/rack/crowbar_act(mob/living/user, obj/item/tool)
 	if(default_deconstruction_crowbar(tool, ignore_panel = TRUE))
 		return ITEM_INTERACT_SUCCESS
 
-/obj/machinery/smartfridge/drying_rack/ui_data(mob/user)
+/obj/machinery/smartfridge/drying/rack/ui_data(mob/user)
 	. = ..()
 	.["isdryer"] = TRUE
 	.["drying"] = drying
 
-/obj/machinery/smartfridge/drying_rack/ui_act(action, params)
+/obj/machinery/smartfridge/drying/rack/ui_act(action, params)
 	. = ..()
 	if(.)
 		update_appearance() // This is to handle a case where the last item is taken out manually instead of through drying pop-out
@@ -518,15 +518,15 @@
 			toggle_drying(FALSE, usr)
 			return TRUE
 
-/obj/machinery/smartfridge/drying_rack/powered()
+/obj/machinery/smartfridge/drying/rack/powered()
 	return !anchored ? FALSE : ..()
 
-/obj/machinery/smartfridge/drying_rack/power_change()
+/obj/machinery/smartfridge/drying/rack/power_change()
 	. = ..()
 	if(!powered())
 		toggle_drying(TRUE)
 
-/obj/machinery/smartfridge/drying_rack/load(obj/item/dried_object, mob/user) //For updating the filled overlay
+/obj/machinery/smartfridge/drying/rack/load(obj/item/dried_object, mob/user) //For updating the filled overlay
 	. = ..()
 	if(!.)
 		return
@@ -534,14 +534,14 @@
 	if(drying && user?.mind)
 		current_user = WEAKREF(user.mind)
 
-/obj/machinery/smartfridge/drying_rack/update_overlays()
+/obj/machinery/smartfridge/drying/rack/update_overlays()
 	. = ..()
 	if(drying)
-		. += "drying_rack_drying"
+		. += "drying/rack_drying"
 	if(contents.len)
-		. += "drying_rack_filled"
+		. += "drying/rack_filled"
 
-/obj/machinery/smartfridge/drying_rack/process()
+/obj/machinery/smartfridge/drying/rack/process()
 	if(drying)
 		for(var/obj/item/item_iterator in src)
 			if(!accept_check(item_iterator))
@@ -552,7 +552,7 @@
 		update_appearance()
 		use_energy(active_power_usage)
 
-/obj/machinery/smartfridge/drying_rack/accept_check(obj/item/O)
+/obj/machinery/smartfridge/drying/rack/accept_check(obj/item/O)
 	return HAS_TRAIT(O, TRAIT_DRYABLE)
 
 /**
@@ -560,7 +560,7 @@
  * Arguments
  * * forceoff - if TRUE will force the dryer off always
  */
-/obj/machinery/smartfridge/drying_rack/proc/toggle_drying(forceoff, mob/user)
+/obj/machinery/smartfridge/drying/rack/proc/toggle_drying(forceoff, mob/user)
 	if(drying || forceoff)
 		drying = FALSE
 		current_user = FALSE
@@ -572,10 +572,10 @@
 		update_use_power(ACTIVE_POWER_USE)
 	update_appearance()
 
-/obj/machinery/smartfridge/drying_rack/proc/rack_dry(obj/item/target)
+/obj/machinery/smartfridge/drying/rack/proc/rack_dry(obj/item/target)
 	SEND_SIGNAL(target, COMSIG_ITEM_DRIED, current_user)
 
-/obj/machinery/smartfridge/drying_rack/emp_act(severity)
+/obj/machinery/smartfridge/drying/rack/emp_act(severity)
 	. = ..()
 	if(. & EMP_PROTECT_SELF)
 		return

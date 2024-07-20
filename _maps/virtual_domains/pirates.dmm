@@ -217,7 +217,7 @@
 	},
 /area/virtual_domain/fullbright)
 "mR" = (
-/obj/machinery/smartfridge/drying_rack,
+/obj/machinery/smartfridge/drying/rack,
 /turf/open/misc/beach/sand,
 /area/virtual_domain/fullbright)
 "nb" = (
