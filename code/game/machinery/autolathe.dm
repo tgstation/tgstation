@@ -29,8 +29,11 @@
 	var/datum/component/material_container/materials
 	///direction we output onto (if 0, on top of us)
 	var/drop_direction = 0
+	//looping sound for printing items
+	var/datum/looping_sound/lathe_print/print_sound
 
 /obj/machinery/autolathe/Initialize(mapload)
+	print_sound = new(src,  FALSE)
 	materials = AddComponent( \
 		/datum/component/material_container, \
 		SSmaterials.materials_by_category[MAT_CATEGORY_ITEM_MATERIAL], \
@@ -48,6 +51,7 @@
 	register_context()
 
 /obj/machinery/autolathe/Destroy()
+	QDEL_NULL(print_sound)
 	materials = null
 	QDEL_NULL(wires)
 	return ..()
@@ -125,7 +129,6 @@
 		ui = new(user, src, "Autolathe")
 		ui.open()
 
-
 /**
  * Converts all the designs supported by this autolathe into UI data
  * Arguments
@@ -186,7 +189,6 @@
 		data["designs"] += handle_designs(stored_research.hacked_designs)
 
 	return data
-
 
 /obj/machinery/autolathe/ui_assets(mob/user)
 	return list(
@@ -292,6 +294,8 @@
 	busy = TRUE
 	icon_state = "autolathe_n"
 	SStgui.update_uis(src)
+	// play this after all checks passed individually for each item.
+	print_sound.start()
 	var/turf/target_location
 	if(drop_direction)
 		target_location = get_step(src, drop_direction)
@@ -355,8 +359,9 @@
 		var/number_to_make = (initial(stack_item.amount) * items_remaining)
 		while(number_to_make > max_stack_amount)
 			created = new stack_item(null, max_stack_amount) //it's imporant to spawn things in nullspace, since obj's like stacks qdel when they enter a tile/merge with other stacks of the same type, resulting in runtimes.
-			created.pixel_x = created.base_pixel_x + rand(-6, 6)
-			created.pixel_y = created.base_pixel_y + rand(-6, 6)
+			if(isitem(created))
+				created.pixel_x = created.base_pixel_x + rand(-6, 6)
+				created.pixel_y = created.base_pixel_y + rand(-6, 6)
 			created.forceMove(target)
 			number_to_make -= max_stack_amount
 
@@ -366,8 +371,9 @@
 		created = new design.build_path(null)
 		split_materials_uniformly(materials_needed, material_cost_coefficient, created)
 
-	created.pixel_x = created.base_pixel_x + rand(-6, 6)
-	created.pixel_y = created.base_pixel_y + rand(-6, 6)
+	if(isitem(created))
+		created.pixel_x = created.base_pixel_x + rand(-6, 6)
+		created.pixel_y = created.base_pixel_y + rand(-6, 6)
 	SSblackbox.record_feedback("nested tally", "lathe_printed_items", 1, list("[type]", "[created.type]"))
 	created.forceMove(target)
 
@@ -387,7 +393,7 @@
 */
 /obj/machinery/autolathe/proc/finalize_build()
 	PROTECTED_PROC(TRUE)
-
+	print_sound.stop()
 	icon_state = initial(icon_state)
 	busy = FALSE
 	SStgui.update_uis(src)

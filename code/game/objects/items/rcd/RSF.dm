@@ -45,7 +45,7 @@ RSF
 		/obj/item/toy/cards/deck = 200,
 		/obj/item/paper = 10,
 		/obj/item/pen = 50,
-		/obj/item/clothing/mask/cigarette = 10,
+		/obj/item/cigarette = 10,
 	)
 	///An associated list of fuel and it's value
 	var/list/matter_by_item = list(/obj/item/rcd_ammo = 10,)

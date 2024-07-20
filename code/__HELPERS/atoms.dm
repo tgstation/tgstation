@@ -33,6 +33,18 @@
 		processing += checked_atom.contents
 		. += checked_atom
 
+///Returns the src and all recursive contents, but skipping going any deeper if an atom has a specific trait.
+/atom/proc/get_all_contents_skipping_traits(skipped_trait)
+	. = list(src)
+	if(!skipped_trait)
+		CRASH("get_all_contents_skipping_traits called without a skipped_trait")
+	var/i = 0
+	while(i < length(.))
+		var/atom/checked_atom = .[++i]
+		if(HAS_TRAIT(checked_atom, skipped_trait))
+			continue
+		. += checked_atom.contents
+
 ///Returns a list of all locations (except the area) the movable is within.
 /proc/get_nested_locs(atom/movable/atom_on_location, include_turf = FALSE)
 	. = list()
@@ -325,14 +337,3 @@ rough example of the "cone" made by the 3 dirs checked
 		"x" = icon_width > world.icon_size && pixel_x != 0 ? (icon_width - world.icon_size) * 0.5 : 0,
 		"y" = icon_height > world.icon_size && pixel_y != 0 ? (icon_height - world.icon_size) * 0.5 : 0,
 	)
-
-/**
- * Called before an item is put into this atom's storage datum via the item clicking on this atom
- *
- * This can be used to add item-atom interactions that you want handled before inserting something into storage
- * (But it's also fairly snowflakey)
- *
- * Returning FALSE will block that item from being put into our storage
- */
-/atom/proc/storage_insert_on_interacted_with(datum/storage, obj/item/inserted, mob/living/user)
-	return TRUE

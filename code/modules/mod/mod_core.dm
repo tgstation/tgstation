@@ -85,7 +85,7 @@
 		Which one you have in your suit is unclear, but either way, \
 		it's been repurposed to be an internal power source for a Modular Outerwear Device."
 	/// Installed cell.
-	var/obj/item/stock_parts/cell/cell
+	var/obj/item/stock_parts/power_store/cell
 
 /obj/item/mod/core/standard/Destroy()
 	QDEL_NULL(cell)
@@ -97,7 +97,8 @@
 		install_cell(cell)
 	RegisterSignal(mod, COMSIG_ATOM_EXAMINE, PROC_REF(on_examine))
 	RegisterSignal(mod, COMSIG_ATOM_ATTACK_HAND, PROC_REF(on_attack_hand))
-	RegisterSignal(mod, COMSIG_ATOM_ATTACKBY, PROC_REF(on_attackby))
+	RegisterSignal(mod, COMSIG_ATOM_STORAGE_ITEM_INTERACT_INSERT, PROC_REF(on_mod_storage_insert))
+	RegisterSignal(mod, COMSIG_ATOM_ITEM_INTERACTION, PROC_REF(on_mod_interaction))
 	RegisterSignal(mod, COMSIG_MOD_WEARER_SET, PROC_REF(on_wearer_set))
 	if(mod.wearer)
 		on_wearer_set(mod, mod.wearer)
@@ -105,7 +106,13 @@
 /obj/item/mod/core/standard/uninstall()
 	if(!QDELETED(cell))
 		cell.forceMove(drop_location())
-	UnregisterSignal(mod, list(COMSIG_ATOM_EXAMINE, COMSIG_ATOM_ATTACK_HAND, COMSIG_ATOM_ATTACKBY, COMSIG_MOD_WEARER_SET))
+	UnregisterSignal(mod, list(
+		COMSIG_ATOM_EXAMINE,
+		COMSIG_ATOM_ATTACK_HAND,
+		COMSIG_ATOM_STORAGE_ITEM_INTERACT_INSERT,
+		COMSIG_ATOM_ITEM_INTERACTION,
+		COMSIG_MOD_WEARER_SET,
+	))
 	if(mod.wearer)
 		on_wearer_unset(mod, mod.wearer)
 	return ..()
@@ -114,15 +121,15 @@
 	return cell
 
 /obj/item/mod/core/standard/charge_amount()
-	var/obj/item/stock_parts/cell/charge_source = charge_source()
+	var/obj/item/stock_parts/power_store/charge_source = charge_source()
 	return charge_source?.charge || 0
 
 /obj/item/mod/core/standard/max_charge_amount(amount)
-	var/obj/item/stock_parts/cell/charge_source = charge_source()
+	var/obj/item/stock_parts/power_store/charge_source = charge_source()
 	return charge_source?.maxcharge || 1
 
 /obj/item/mod/core/standard/add_charge(amount)
-	var/obj/item/stock_parts/cell/charge_source = charge_source()
+	var/obj/item/stock_parts/power_store/charge_source = charge_source()
 	if(isnull(charge_source))
 		return FALSE
 	. = charge_source.give(amount)
@@ -131,7 +138,7 @@
 	return .
 
 /obj/item/mod/core/standard/subtract_charge(amount)
-	var/obj/item/stock_parts/cell/charge_source = charge_source()
+	var/obj/item/stock_parts/power_store/charge_source = charge_source()
 	if(isnull(charge_source))
 		return FALSE
 	. = charge_source.use(amount, TRUE)
@@ -206,23 +213,37 @@
 	cell_to_move.forceMove(drop_location())
 	user.put_in_hands(cell_to_move)
 
-/obj/item/mod/core/standard/proc/on_attackby(datum/source, obj/item/attacking_item, mob/user)
+/obj/item/mod/core/standard/proc/on_mod_storage_insert(datum/source, obj/item/thing, mob/living/user)
 	SIGNAL_HANDLER
 
-	if(istype(attacking_item, /obj/item/stock_parts/cell))
-		if(!mod.open)
-			mod.balloon_alert(user, "open the cover first!")
-			playsound(mod, 'sound/machines/scanbuzz.ogg', 25, TRUE, SILENCED_SOUND_EXTRARANGE)
-			return NONE
-		if(cell)
-			mod.balloon_alert(user, "cell already installed!")
-			playsound(mod, 'sound/machines/scanbuzz.ogg', 25, TRUE, SILENCED_SOUND_EXTRARANGE)
-			return COMPONENT_NO_AFTERATTACK
-		install_cell(attacking_item)
-		mod.balloon_alert(user, "cell installed")
-		playsound(mod, 'sound/machines/click.ogg', 50, TRUE, SILENCED_SOUND_EXTRARANGE)
-		return COMPONENT_NO_AFTERATTACK
-	return NONE
+	return replace_cell(thing, user) ? BLOCK_STORAGE_INSERT : NONE
+
+/obj/item/mod/core/standard/proc/on_mod_interaction(datum/source, mob/living/user, obj/item/thing)
+	SIGNAL_HANDLER
+
+	if(mod.atom_storage) // handled by the storage signal
+		return NONE
+
+	return item_interaction(user, thing)
+
+/obj/item/mod/core/standard/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	return replace_cell(tool, user) ? ITEM_INTERACT_SUCCESS : NONE
+
+/obj/item/mod/core/standard/proc/replace_cell(obj/item/attacking_item, mob/user)
+	if(!istype(attacking_item, /obj/item/stock_parts/power_store/cell))
+		return FALSE
+	if(!mod.open)
+		mod.balloon_alert(user, "open the cover first!")
+		playsound(mod, 'sound/machines/scanbuzz.ogg', 25, TRUE, SILENCED_SOUND_EXTRARANGE)
+		return FALSE
+	if(cell)
+		mod.balloon_alert(user, "cell already installed!")
+		playsound(mod, 'sound/machines/scanbuzz.ogg', 25, TRUE, SILENCED_SOUND_EXTRARANGE)
+		return FALSE
+	install_cell(attacking_item)
+	mod.balloon_alert(user, "cell installed")
+	playsound(mod, 'sound/machines/click.ogg', 50, TRUE, SILENCED_SOUND_EXTRARANGE)
+	return TRUE
 
 /obj/item/mod/core/standard/proc/on_wearer_set(datum/source, mob/user)
 	SIGNAL_HANDLER
@@ -239,7 +260,7 @@
 /obj/item/mod/core/standard/proc/on_borg_charge(datum/source, datum/callback/charge_cell, seconds_per_tick)
 	SIGNAL_HANDLER
 
-	var/obj/item/stock_parts/cell/target_cell = charge_source()
+	var/obj/item/stock_parts/power_store/target_cell = charge_source()
 	if(isnull(target_cell))
 		return
 
@@ -303,15 +324,11 @@
 
 /obj/item/mod/core/plasma/install(obj/item/mod/control/mod_unit)
 	. = ..()
-	RegisterSignal(mod, COMSIG_ATOM_ATTACKBY, PROC_REF(on_attackby))
+	RegisterSignal(mod, COMSIG_ATOM_STORAGE_ITEM_INTERACT_INSERT, PROC_REF(on_mod_storage_insert))
+	RegisterSignal(mod, COMSIG_ATOM_ITEM_INTERACTION, PROC_REF(on_mod_interaction))
 
 /obj/item/mod/core/plasma/uninstall()
-	UnregisterSignal(mod, COMSIG_ATOM_ATTACKBY)
-	return ..()
-
-/obj/item/mod/core/plasma/attackby(obj/item/attacking_item, mob/user, params)
-	if(charge_plasma(attacking_item, user))
-		return TRUE
+	UnregisterSignal(mod, list(COMSIG_ATOM_STORAGE_ITEM_INTERACT_INSERT, COMSIG_ATOM_ITEM_INTERACTION))
 	return ..()
 
 /obj/item/mod/core/plasma/charge_source()
@@ -350,19 +367,28 @@
 
 	return "empty"
 
-/obj/item/mod/core/plasma/proc/on_attackby(datum/source, obj/item/attacking_item, mob/user)
+/obj/item/mod/core/plasma/proc/on_mod_storage_insert(datum/source, obj/item/thing, mob/living/user)
 	SIGNAL_HANDLER
 
-	if(charge_plasma(attacking_item, user))
-		return COMPONENT_NO_AFTERATTACK
-	return NONE
+	return charge_plasma(thing, user) ? BLOCK_STORAGE_INSERT : NONE
+
+/obj/item/mod/core/plasma/proc/on_mod_interaction(datum/source, mob/living/user, obj/item/thing)
+	SIGNAL_HANDLER
+
+	if(mod.atom_storage) // handled by the storage signal
+		return NONE
+
+	return item_interaction(thing, user)
+
+/obj/item/mod/core/plasma/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	return charge_plasma(tool, user) ? ITEM_INTERACT_SUCCESS : NONE
 
 /obj/item/mod/core/plasma/proc/charge_plasma(obj/item/stack/plasma, mob/user)
 	var/charge_given = is_type_in_list(plasma, charger_list, zebra = TRUE)
 	if(!charge_given)
 		return FALSE
 	var/uses_needed = min(plasma.amount, ROUND_UP((max_charge_amount() - charge_amount()) / charge_given))
-	if(!plasma.use(uses_needed))
+	if(uses_needed <= 0 || !plasma.use(uses_needed))
 		return FALSE
 	add_charge(uses_needed * charge_given)
 	balloon_alert(user, "core refueled")

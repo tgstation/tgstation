@@ -71,6 +71,7 @@
 	. = ..()
 	if(currently_hooked)
 		context[SCREENTIP_CONTEXT_LMB] = "Reel in"
+		context[SCREENTIP_CONTEXT_RMB] = "Unhook"
 		return CONTEXTUAL_SCREENTIP_SET
 	return NONE
 
@@ -212,15 +213,22 @@
 	cast_line(interacting_with, user)
 	return ITEM_INTERACT_SUCCESS
 
+/obj/item/fishing_rod/interact_with_atom_secondary(atom/interacting_with, mob/living/user, list/modifiers)
+	return ranged_interact_with_atom_secondary(interacting_with, user, modifiers)
+
+/obj/item/fishing_rod/ranged_interact_with_atom_secondary(atom/interacting_with, mob/living/user, list/modifiers)
+	//Stop reeling, delete the fishing line
+	if(currently_hooked)
+		QDEL_NULL(fishing_line)
+		return ITEM_INTERACT_BLOCKING
+	return ..()
+
 /// If the line to whatever that is is clear and we're not already busy, try fishing in it
 /obj/item/fishing_rod/proc/cast_line(atom/target, mob/user)
 	if(casting || currently_hooked)
 		return
 	if(!hook)
 		balloon_alert(user, "install a hook first!")
-		return
-	if(!CheckToolReach(user, target, cast_range))
-		balloon_alert(user, "cannot reach there!")
 		return
 	if(!COOLDOWN_FINISHED(src, casting_cd))
 		return
@@ -277,6 +285,8 @@
 		if(istype(bait, /obj/item/food/bait))
 			var/obj/item/food/bait/real_bait = bait
 			bait_state = real_bait.rod_overlay_icon_state
+		if(istype(bait, /obj/item/stock_parts/power_store/cell/lead))
+			bait_state = "battery_overlay"
 		. += bait_state
 
 /obj/item/fishing_rod/worn_overlays(mutable_appearance/standing, isinhands, icon_file)

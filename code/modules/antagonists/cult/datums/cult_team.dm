@@ -16,8 +16,15 @@
 	var/reckoning_complete = FALSE
 	///Has the cult risen, and gotten red eyes?
 	var/cult_risen = FALSE
-	///Has the cult asceneded, and gotten halos?
+	///Has the cult ascended, and gotten halos?
 	var/cult_ascendent = FALSE
+
+	/// List that keeps track of which items have been unlocked after a heretic was sacked.
+	var/list/unlocked_heretic_items = list(
+		CURSED_BLADE_UNLOCKED = FALSE,
+		CRIMSON_FOCUS_UNLOCKED = FALSE,
+		PROTEON_ORB_UNLOCKED = FALSE,
+	)
 
 	///Has narsie been summoned yet?
 	var/narsie_summoned = FALSE

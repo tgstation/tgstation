@@ -95,8 +95,8 @@ If you create T5+ please take a pass at mech_fabricator.dm. The parts being good
 /obj/item/storage/part_replacer/bluespace/proc/on_part_entered(datum/source, obj/item/inserted_component)
 	SIGNAL_HANDLER
 
-	if(istype(inserted_component, /obj/item/stock_parts/cell))
-		var/obj/item/stock_parts/cell/inserted_cell = inserted_component
+	if(istype(inserted_component, /obj/item/stock_parts/power_store))
+		var/obj/item/stock_parts/power_store/inserted_cell = inserted_component
 		if(inserted_cell.rigged || inserted_cell.corrupted)
 			message_admins("[ADMIN_LOOKUPFLW(usr)] has inserted rigged/corrupted [inserted_cell] into [src].")
 			usr.log_message("has inserted rigged/corrupted [inserted_cell] into [src].", LOG_GAME)
@@ -144,7 +144,7 @@ If you create T5+ please take a pass at mech_fabricator.dm. The parts being good
 		new /obj/item/stock_parts/servo(src)
 		new /obj/item/stock_parts/micro_laser(src)
 		new /obj/item/stock_parts/matter_bin(src)
-		new /obj/item/stock_parts/cell/high(src)
+		new /obj/item/stock_parts/power_store/cell/high(src)
 
 /obj/item/storage/part_replacer/bluespace/tier2
 
@@ -155,7 +155,7 @@ If you create T5+ please take a pass at mech_fabricator.dm. The parts being good
 		new /obj/item/stock_parts/servo/nano(src)
 		new /obj/item/stock_parts/micro_laser/high(src)
 		new /obj/item/stock_parts/matter_bin/adv(src)
-		new /obj/item/stock_parts/cell/super(src)
+		new /obj/item/stock_parts/power_store/cell/super(src)
 
 /obj/item/storage/part_replacer/bluespace/tier3
 
@@ -166,7 +166,7 @@ If you create T5+ please take a pass at mech_fabricator.dm. The parts being good
 		new /obj/item/stock_parts/servo/pico(src)
 		new /obj/item/stock_parts/micro_laser/ultra(src)
 		new /obj/item/stock_parts/matter_bin/super(src)
-		new /obj/item/stock_parts/cell/hyper(src)
+		new /obj/item/stock_parts/power_store/cell/hyper(src)
 
 /obj/item/storage/part_replacer/bluespace/tier4
 
@@ -177,7 +177,7 @@ If you create T5+ please take a pass at mech_fabricator.dm. The parts being good
 		new /obj/item/stock_parts/servo/femto(src)
 		new /obj/item/stock_parts/micro_laser/quadultra(src)
 		new /obj/item/stock_parts/matter_bin/bluespace(src)
-		new /obj/item/stock_parts/cell/bluespace(src)
+		new /obj/item/stock_parts/power_store/cell/bluespace(src)
 
 /obj/item/storage/part_replacer/cargo //used in a cargo crate
 

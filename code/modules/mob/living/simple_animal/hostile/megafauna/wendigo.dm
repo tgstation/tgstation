@@ -187,11 +187,14 @@ Difficulty: Hard
 	if(!true_spawn)
 		return ..()
 
+	create_portal()
+	return ..()
+
+/mob/living/simple_animal/hostile/megafauna/wendigo/proc/create_portal()
 	var/obj/effect/portal/permanent/one_way/exit = new /obj/effect/portal/permanent/one_way(starting)
 	exit.id = "wendigo arena exit"
 	exit.add_atom_colour(COLOR_RED_LIGHT, ADMIN_COLOUR_PRIORITY)
 	exit.set_light(20, 1, COLOR_SOFT_RED)
-	return ..()
 
 /obj/projectile/colossus/wendigo_shockwave
 	name = "wendigo shockwave"
@@ -264,5 +267,8 @@ Difficulty: Hard
 	icon_state = "wendigo_skull"
 	w_class = WEIGHT_CLASS_TINY
 	throwforce = 0
+
+/mob/living/simple_animal/hostile/megafauna/wendigo/noportal/create_portal()
+	return
 
 #undef WENDIGO_ENRAGED

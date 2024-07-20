@@ -89,7 +89,7 @@
 	},
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/cell_charger,
-/obj/item/stock_parts/cell,
+/obj/item/stock_parts/power_store/cell,
 /turf/open/floor/plating,
 /area/ruin/plasma_facility/operations)
 "bv" = (
@@ -166,7 +166,7 @@
 	pixel_x = -7;
 	pixel_y = 8
 	},
-/obj/item/stock_parts/cell/high{
+/obj/item/stock_parts/power_store/cell/high{
 	pixel_x = -18;
 	pixel_y = -3
 	},

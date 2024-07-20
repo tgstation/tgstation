@@ -38,7 +38,7 @@
 
 	switch(item_set)
 		if(BIG_FAT_DOOBIE)
-			loadout += /obj/item/clothing/mask/cigarette/rollie/trippy
+			loadout += /obj/item/cigarette/rollie/trippy
 			ruins_spaceworthiness = TRUE
 		if(BOXING)
 			loadout += /obj/item/clothing/mask/luchador

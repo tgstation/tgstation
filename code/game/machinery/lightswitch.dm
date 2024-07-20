@@ -42,8 +42,8 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/light_switch, 26)
 	if(isnull(held_item))
 		context[SCREENTIP_CONTEXT_LMB] = area.lightswitch ? "Flick off" : "Flick on"
 		return CONTEXTUAL_SCREENTIP_SET
-	if(held_item.tool_behaviour != TOOL_SCREWDRIVER)
-		context[SCREENTIP_CONTEXT_RMB] = "Deconstruct"
+	if(held_item.tool_behaviour == TOOL_SCREWDRIVER)
+		context[SCREENTIP_CONTEXT_LMB] = "Deconstruct"
 		return CONTEXTUAL_SCREENTIP_SET
 	return .
 
@@ -69,17 +69,20 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/light_switch, 26)
 /obj/machinery/light_switch/examine(mob/user)
 	. = ..()
 	. += "It is [(machine_stat & NOPOWER) ? "unpowered" : (area.lightswitch ? "on" : "off")]."
+	. += span_notice("It's <b>screwed</b> and secured to the wall.")
 
 /obj/machinery/light_switch/interact(mob/user)
 	. = ..()
 	set_lights(!area.lightswitch)
 
-/obj/machinery/light_switch/attackby_secondary(obj/item/weapon, mob/user, params)
-	if(weapon.tool_behaviour == TOOL_SCREWDRIVER)
-		to_chat(user, "You pop \the [src] off the wall.")
-		deconstruct()
-		return COMPONENT_CANCEL_ATTACK_CHAIN
-	return ..()
+/obj/machinery/light_switch/screwdriver_act(mob/living/user, obj/item/tool)
+	user.visible_message(span_notice("[user] starts unscrewing [src]..."), span_notice("You start unscrewing [src]..."))
+	if(!tool.use_tool(src, user, 40, volume = 50))
+		return ITEM_INTERACT_BLOCKING
+	user.visible_message(span_notice("[user] unscrews [src]!"), span_notice("You detach [src] from the wall."))
+	playsound(src, 'sound/items/deconstruct.ogg', 50, TRUE)
+	deconstruct(TRUE)
+	return ITEM_INTERACT_SUCCESS
 
 /obj/machinery/light_switch/proc/set_lights(status)
 	if(area.lightswitch == status)

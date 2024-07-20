@@ -81,6 +81,9 @@
  */
 /obj/item/circuit_component/controller/proc/send_right_signal(atom/source, mob/user)
 	SIGNAL_HANDLER
-	if(!user.Adjacent(source))
+
+	if(!user.can_perform_action(source))
 		return
+
 	handle_trigger(source, user, "extra", right)
+	return CLICK_ACTION_SUCCESS

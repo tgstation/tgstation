@@ -265,6 +265,13 @@
 	description = "We pulled this one out of Mothball just for you!"
 	occupancy_limit = "40"
 
+/datum/map_template/shuttle/emergency/wawa
+	suffix = "wawa"
+	name = "Wawa Stand-in Emergency Shuttle"
+	description = "Due to a recent clerical error in the funding department, a lot of funding went to lizard plushies. Due to the costs, Nanotrasen has supplied a nearby garbage truck as a stand-in. Better learn how to share spots."
+	credit_cost = CARGO_CRATE_VALUE * 6
+	occupancy_limit = "25"
+
 /datum/map_template/shuttle/emergency/scrapheap
 	suffix = "scrapheap"
 	name = "Standby Evacuation Vessel \"Scrapheap Challenge\""

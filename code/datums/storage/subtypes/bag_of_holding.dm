@@ -38,7 +38,7 @@
 
 	user.investigate_log("has been gibbed by a bag of holding recursive insertion.", INVESTIGATE_DEATHS)
 	user.gib()
-	var/obj/boh_tear/tear = new(rift_loc)
+	var/obj/reality_tear/tear = new(rift_loc)
 	tear.start_disaster()
 	qdel(to_insert)
 	qdel(parent)

@@ -177,10 +177,10 @@
 	var/accepted_type = /obj/item/energy_katana
 
 /obj/item/mod/module/weapon_recall/on_suit_activation()
-	ADD_TRAIT(mod.wearer, TRAIT_NOGUNS, MOD_TRAIT)
+	mod.wearer.add_traits(list(TRAIT_NOGUNS, TRAIT_TOSS_GUN_HARD), MOD_TRAIT)
 
 /obj/item/mod/module/weapon_recall/on_suit_deactivation(deleting = FALSE)
-	REMOVE_TRAIT(mod.wearer, TRAIT_NOGUNS, MOD_TRAIT)
+	mod.wearer.remove_traits(list(TRAIT_NOGUNS, TRAIT_TOSS_GUN_HARD), MOD_TRAIT)
 
 /obj/item/mod/module/weapon_recall/on_use()
 	if(!linked_weapon)
@@ -418,11 +418,7 @@
 	if(IS_SPACE_NINJA(mod.wearer))
 		mod.wearer.say(pick_list_replacements(NINJA_FILE, "lines"), forced = type)
 	to_chat(mod.wearer, span_notice("You have used the adrenaline boost."))
-	mod.wearer.SetUnconscious(0)
-	mod.wearer.SetStun(0)
-	mod.wearer.SetKnockdown(0)
-	mod.wearer.SetImmobilized(0)
-	mod.wearer.SetParalyzed(0)
+	mod.wearer.SetAllImmobility(0)
 	mod.wearer.adjustStaminaLoss(-200)
 	mod.wearer.remove_status_effect(/datum/status_effect/speech/stutter)
 	mod.wearer.reagents.add_reagent(/datum/reagent/medicine/stimulants, 5)
@@ -430,24 +426,18 @@
 	addtimer(CALLBACK(src, PROC_REF(boost_aftereffects), mod.wearer), 7 SECONDS)
 
 /obj/item/mod/module/adrenaline_boost/on_install()
-	RegisterSignal(mod, COMSIG_ATOM_ATTACKBY, PROC_REF(on_attackby))
+	RegisterSignal(mod, COMSIG_ATOM_ITEM_INTERACTION, PROC_REF(try_boost))
 
 /obj/item/mod/module/adrenaline_boost/on_uninstall(deleting = FALSE)
-	UnregisterSignal(mod, COMSIG_ATOM_ATTACKBY)
+	UnregisterSignal(mod, COMSIG_ATOM_ITEM_INTERACTION)
 
-/obj/item/mod/module/adrenaline_boost/attackby(obj/item/attacking_item, mob/user, params)
-	if(charge_boost(attacking_item, user))
-		return TRUE
-	return ..()
-
-/obj/item/mod/module/adrenaline_boost/proc/on_attackby(datum/source, obj/item/attacking_item, mob/user)
+/obj/item/mod/module/adrenaline_boost/proc/try_boost(source, mob/user, obj/item/attacking_item)
 	SIGNAL_HANDLER
-
-	if(charge_boost(attacking_item, user))
+	if(charge_boost(attacking_item))
 		return COMPONENT_NO_AFTERATTACK
 	return NONE
 
-/obj/item/mod/module/adrenaline_boost/proc/charge_boost(obj/item/attacking_item, mob/user)
+/obj/item/mod/module/adrenaline_boost/proc/charge_boost(obj/item/attacking_item)
 	if(!attacking_item.is_open_container())
 		return FALSE
 	if(reagents.has_reagent(reagent_required, reagent_required_amount))

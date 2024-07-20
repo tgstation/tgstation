@@ -32,10 +32,6 @@
  * Backpack Types
  */
 
-/obj/item/storage/backpack/old/Initialize(mapload)
-	. = ..()
-	atom_storage.max_total_storage = 12
-
 /obj/item/bag_of_holding_inert
 	name = "inert bag of holding"
 	desc = "What is currently a just an unwieldly block of metal with a slot ready to accept a bluespace anomaly core."
@@ -51,9 +47,8 @@
 
 /obj/item/bag_of_holding_inert/Initialize(mapload)
 	. = ..()
-	AddComponent(/datum/component/slapcrafting,\
-		slapcraft_recipes = list(/datum/crafting_recipe/boh)\
-	)
+	var/static/list/recipes = list(/datum/crafting_recipe/boh)
+	AddElement(/datum/element/slapcrafting, recipes)
 
 /obj/item/storage/backpack/holding
 	name = "bag of holding"
@@ -282,11 +277,11 @@
 		/datum/component/blood_walk,\
 		blood_type = /obj/effect/decal/cleanable/blood,\
 		blood_spawn_chance = 15,\
-		max_blood = 300,\
+		max_blood = custom_materials[custom_materials[1]] / SHEET_MATERIAL_AMOUNT,\
 	)
 	AddComponent(
 		/datum/component/bloody_spreader,\
-		blood_left = INFINITY,\
+		blood_left = custom_materials[custom_materials[1]] / SHEET_MATERIAL_AMOUNT,\
 		blood_dna = list("MEAT DNA" = "MT+"),\
 		diseases = null,\
 	)
@@ -392,6 +387,7 @@
 	AddElement(/datum/element/undertile, TRAIT_T_RAY_VISIBLE, INVISIBILITY_OBSERVER, use_anchor = TRUE)
 	atom_storage.max_total_storage = 15
 	atom_storage.set_holdable(cant_hold_list = /obj/item/storage/backpack/satchel/flat) //muh recursive backpacks
+	ADD_TRAIT(src, TRAIT_CONTRABAND_BLOCKER, INNATE_TRAIT)
 
 /obj/item/storage/backpack/satchel/flat/PopulateContents()
 	for(var/items in 1 to 4)

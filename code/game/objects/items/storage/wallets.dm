@@ -18,7 +18,7 @@
 		/obj/item/stack/spacecash,
 		/obj/item/holochip,
 		/obj/item/card,
-		/obj/item/clothing/mask/cigarette,
+		/obj/item/cigarette,
 		/obj/item/clothing/accessory/dogtag,
 		/obj/item/coin,
 		/obj/item/coupon,

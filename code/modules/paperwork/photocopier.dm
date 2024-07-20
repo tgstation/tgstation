@@ -495,10 +495,9 @@ GLOBAL_LIST_INIT(paper_blanks, init_paper_blanks())
 /obj/machinery/photocopier/proc/make_ass_copy()
 	if(!check_ass())
 		return null
-	var/butt_icon_state = ass.get_butt_sprite()
-	if(isnull(butt_icon_state))
+	var/icon/temp_img = ass.get_butt_sprite()
+	if(isnull(temp_img))
 		return null
-	var/icon/temp_img = icon('icons/mob/butts.dmi', butt_icon_state)
 	var/obj/item/photo/copied_ass = new /obj/item/photo(src)
 	var/datum/picture/toEmbed = new(name = "[ass]'s Ass", desc = "You see [ass]'s ass on the photo.", image = temp_img)
 	toEmbed.psize_x = 128

@@ -101,7 +101,7 @@
 		. = INITIALIZE_HINT_QDEL
 		CRASH("Somebody fucked up.")
 	if(_lifespan > 0)
-		addtimer(src, PROC_REF(expire), _lifespan, TIMER_DELETE_ME)
+		addtimer(CALLBACK(src, PROC_REF(expire)), _lifespan, TIMER_DELETE_ME)
 	link_portal(_linked)
 	hardlinked = automatic_link
 	if(isturf(hard_target_override))

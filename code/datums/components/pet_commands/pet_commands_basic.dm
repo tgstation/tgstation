@@ -222,6 +222,8 @@
 	var/protect_range = 9
 	///the behavior we will use when he is attacked
 	var/protect_behavior = /datum/ai_behavior/basic_melee_attack
+	///message cooldown to prevent too many people from telling you not to commit suicide
+	COOLDOWN_DECLARE(self_harm_message_cooldown)
 
 /datum/pet_command/protect_owner/add_new_friend(mob/living/tamer)
 	RegisterSignal(tamer, COMSIG_ATOM_WAS_ATTACKED, PROC_REF(set_attacking_target))
@@ -251,6 +253,13 @@
 
 	var/mob/living/basic/owner = weak_parent.resolve()
 	if(isnull(owner))
+		return
+	if(source == attacker)
+		var/list/interventions = owner.ai_controller?.blackboard[BB_OWNER_SELF_HARM_RESPONSES] || list()
+		if (length(interventions) && COOLDOWN_FINISHED(src, self_harm_message_cooldown) && prob(30))
+			COOLDOWN_START(src, self_harm_message_cooldown, 5 SECONDS)
+			var/chosen_statement = pick(interventions)
+			INVOKE_ASYNC(owner, TYPE_PROC_REF(/atom/movable, say), chosen_statement)
 		return
 	var/mob/living/current_target = owner.ai_controller?.blackboard[BB_CURRENT_PET_TARGET]
 	if(attacker == current_target) //we are already dealing with this target

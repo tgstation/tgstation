@@ -1,8 +1,8 @@
 /datum/techweb_node/alientech //AYYYYYYYYLMAOO tech
-	id = "alientech"
+	id = TECHWEB_NODE_ALIENTECH
 	display_name = "Alien Technology"
 	description = "Things used by the greys."
-	prereq_ids = list("bluespace_travel")
+	prereq_ids = list(TECHWEB_NODE_BLUESPACE_TRAVEL)
 	required_items_to_unlock = list(
 		/obj/item/stack/sheet/mineral/abductor,
 		/obj/item/abductor,
@@ -33,10 +33,10 @@
 	SSshuttle.shuttle_purchase_requirements_met[SHUTTLE_UNLOCK_ALIENTECH] = TRUE
 
 /datum/techweb_node/alien_engi
-	id = "alien_engi"
+	id = TECHWEB_NODE_ALIEN_ENGI
 	display_name = "Alien Engineering"
 	description = "Alien engineering tools"
-	prereq_ids = list("alientech", "exp_tools")
+	prereq_ids = list(TECHWEB_NODE_ALIENTECH, TECHWEB_NODE_EXP_TOOLS)
 	design_ids = list(
 		"alien_crowbar",
 		"alien_multitool",
@@ -61,10 +61,10 @@
 	hidden = TRUE
 
 /datum/techweb_node/alien_surgery
-	id = "alien_surgery"
+	id = TECHWEB_NODE_ALIEN_SURGERY
 	display_name = "Alien Surgery"
 	description = "Abductors did nothing wrong."
-	prereq_ids = list("alientech", "surgery_tools")
+	prereq_ids = list(TECHWEB_NODE_ALIENTECH, TECHWEB_NODE_SURGERY_TOOLS)
 	design_ids = list(
 		"alien_cautery",
 		"alien_drill",

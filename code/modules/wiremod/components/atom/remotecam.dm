@@ -262,7 +262,7 @@
 	if (current_camera_emp)
 		close_camera()
 		return
-	var/obj/item/stock_parts/cell/cell = parent.get_cell()
+	var/obj/item/stock_parts/power_store/cell = parent.get_cell()
 	//If cell doesn't exist, or we ran out of power
 	if(!cell?.use(current_camera_range > 0 ? REMOTECAM_ENERGY_USAGE_FAR : REMOTECAM_ENERGY_USAGE_NEAR))
 		close_camera()
@@ -393,7 +393,7 @@
 	if(!bci.owner || bci.owner.is_blind() || bci.owner.stat >= UNCONSCIOUS)
 		close_camera()
 		return
-	var/obj/item/stock_parts/cell/cell = parent.get_cell()
+	var/obj/item/stock_parts/power_store/cell = parent.get_cell()
 	//If cell doesn't exist, or we ran out of power
 	if(!cell?.use(current_camera_range > 0 ? REMOTECAM_ENERGY_USAGE_FAR : REMOTECAM_ENERGY_USAGE_NEAR))
 		close_camera()
@@ -422,7 +422,7 @@
 	if(shell_parent.loc.atom_storage)
 		close_camera()
 		return
-	var/obj/item/stock_parts/cell/cell = parent.get_cell()
+	var/obj/item/stock_parts/power_store/cell = parent.get_cell()
 	//If cell doesn't exist, or we ran out of power
 	if(!cell?.use(REMOTECAM_ENERGY_USAGE_NEAR))
 		close_camera()

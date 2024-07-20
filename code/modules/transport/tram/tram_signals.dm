@@ -473,6 +473,7 @@
 	icon_state = "sensor-base"
 	desc = "Uses an infrared beam to detect passing trams. Works when paired with a sensor on the other side of the track."
 	layer = TRAM_RAIL_LAYER
+	plane = FLOOR_PLANE
 	use_power = NO_POWER_USE
 	circuit = /obj/item/circuitboard/machine/guideway_sensor
 	/// Sensors work in a married pair

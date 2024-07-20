@@ -10,7 +10,7 @@
 	school = SCHOOL_FORBIDDEN
 	cooldown_time = 70 SECONDS
 
-	invocation = "FL'MS"
+	invocation = "EID'R-ELDR!!!"
 	invocation_type = INVOCATION_WHISPER
 	spell_requirements = NONE
 
@@ -72,8 +72,8 @@
 	school = SCHOOL_FORBIDDEN
 	cooldown_time = 30 SECONDS
 
-	invocation = "C'SC'DE"
-	invocation_type = INVOCATION_WHISPER
+	invocation = "ILLA-LASARA'FOSS!!!"
+	invocation_type = INVOCATION_SHOUT
 	spell_requirements = NONE
 
 	/// The radius the flames will go around the caster.
@@ -112,7 +112,7 @@
 	school = SCHOOL_FORBIDDEN
 	cooldown_time = 300
 
-	invocation = "F'RE"
+	invocation = "Eld'sky!"
 	invocation_type = INVOCATION_WHISPER
 	spell_requirements = NONE
 
@@ -129,16 +129,17 @@
 		INVOKE_ASYNC(src, PROC_REF(fire_line), owner, line_target(offset, flame_line_length, target, owner))
 
 /datum/action/cooldown/spell/pointed/ash_beams/proc/line_target(offset, range, atom/at, atom/user)
+	var/turf/user_loc = get_turf(user)
 	if(!at)
 		return
-	var/angle = ATAN2(at.x - user.x, at.y - user.y) + offset
+	var/angle = ATAN2(at.x - user_loc.x, at.y - user_loc.y) + offset
 	var/turf/T = get_turf(user)
 	for(var/i in 1 to range)
-		var/turf/check = locate(user.x + cos(angle) * i, user.y + sin(angle) * i, user.z)
+		var/turf/check = locate(user_loc.x + cos(angle) * i, user_loc.y + sin(angle) * i, user_loc.z)
 		if(!check)
 			break
 		T = check
-	return (get_line(user, T) - get_turf(user))
+	return (get_line(user_loc, T) - user_loc)
 
 /datum/action/cooldown/spell/pointed/ash_beams/proc/fire_line(atom/source, list/turfs)
 	var/list/hit_list = list()

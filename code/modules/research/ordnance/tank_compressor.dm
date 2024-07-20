@@ -321,10 +321,6 @@
 	data["transferRate"] = transfer_rate
 	data["lastPressure"] = last_recorded_pressure
 
-	data["inputData"] = gas_mixture_parser(airs[2], "Input Port")
-	data["outputData"] = gas_mixture_parser(airs[1], "Ouput Port")
-	data["bufferData"] = gas_mixture_parser(leaked_gas_buffer, "Gas Buffer")
-
 	data["disk"] = inserted_disk?.name
 	data["storage"] = "[inserted_disk?.used_capacity] / [inserted_disk?.max_capacity] GQ"
 	data["records"] = list()

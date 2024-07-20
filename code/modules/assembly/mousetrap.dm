@@ -153,7 +153,7 @@
  * * user: The mob handling the trap
  */
 /obj/item/assembly/mousetrap/proc/clumsy_check(mob/living/carbon/human/user)
-	if(!armed)
+	if(!armed || !user)
 		return FALSE
 	if((HAS_TRAIT(user, TRAIT_DUMB) || HAS_TRAIT(user, TRAIT_CLUMSY)) && prob(50))
 		var/which_hand = BODY_ZONE_PRECISE_L_HAND

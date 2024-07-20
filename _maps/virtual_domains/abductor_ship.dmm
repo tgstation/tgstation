@@ -153,7 +153,7 @@
 "sv" = (
 /obj/structure/table/abductor,
 /obj/item/crowbar/abductor,
-/obj/item/stock_parts/cell/infinite/abductor{
+/obj/item/stock_parts/power_store/cell/infinite/abductor{
 	pixel_x = 5;
 	pixel_y = -3
 	},

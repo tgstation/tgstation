@@ -55,7 +55,7 @@
 
 /obj/item/newspaper/add_context(atom/source, list/context, obj/item/held_item, mob/living/user)
 	if(held_item)
-		if(istype(held_item, /obj/item/pen))
+		if(IS_WRITING_UTENSIL(held_item))
 			context[SCREENTIP_CONTEXT_LMB] = "Scribble"
 			return CONTEXTUAL_SCREENTIP_SET
 		if(held_item.get_temperature())

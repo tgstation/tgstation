@@ -220,7 +220,7 @@
 	/// Whitelist of charging machines
 	var/static/list/charge_machines = typecacheof(list(/obj/machinery/cell_charger, /obj/machinery/recharger, /obj/machinery/recharge_station, /obj/machinery/mech_bay_recharge_port))
 	/// Whitelist of chargable items
-	var/static/list/charge_items = typecacheof(list(/obj/item/stock_parts/cell, /obj/item/gun/energy))
+	var/static/list/charge_items = typecacheof(list(/obj/item/stock_parts/power_store, /obj/item/gun/energy))
 
 /obj/item/borg/charger/update_icon_state()
 	icon_state = "charger_[mode]"
@@ -259,9 +259,9 @@
 			to_chat(user, span_notice("You stop charging yourself."))
 
 		else if(is_type_in_list(target, charge_items))
-			var/obj/item/stock_parts/cell/cell = target
+			var/obj/item/stock_parts/power_store/cell = target
 			if(!istype(cell))
-				cell = locate(/obj/item/stock_parts/cell) in target
+				cell = locate(/obj/item/stock_parts/power_store) in target
 			if(!cell)
 				to_chat(user, span_warning("[target] has no power cell!"))
 				return
@@ -298,9 +298,9 @@
 			to_chat(user, span_notice("You stop charging yourself."))
 
 	else if(is_type_in_list(target, charge_items))
-		var/obj/item/stock_parts/cell/cell = target
+		var/obj/item/stock_parts/power_store/cell = target
 		if(!istype(cell))
-			cell = locate(/obj/item/stock_parts/cell) in target
+			cell = locate(/obj/item/stock_parts/power_store) in target
 		if(!cell)
 			to_chat(user, span_warning("[target] has no power cell!"))
 			return
