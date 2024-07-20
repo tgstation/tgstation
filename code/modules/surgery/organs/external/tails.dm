@@ -178,10 +178,6 @@
 ///Fox tail bodypart overlay
 /datum/bodypart_overlay/mutant/tail/cat/fox
 
-/datum/bodypart_overlay/mutant/tail/cat/fox/New()
-	. = ..()
-	set_appearance(/datum/sprite_accessory/tails/human/fox)
-
 /obj/item/organ/external/tail/monkey
 	name = "monkey tail"
 	preference = "feature_monkey_tail"
