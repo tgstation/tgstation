@@ -1,5 +1,5 @@
 /datum/export/fish
-	cost = 100
+	cost = 50
 	unit_name = "fish"
 	export_types = list(/obj/item/fish)
 
