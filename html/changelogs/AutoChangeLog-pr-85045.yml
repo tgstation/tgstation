@@ -1,0 +1,14 @@
+author: "Time-Green"
+delete-after: True
+changes:
+  - rscadd: "Gives voidwalker telepathy"
+  - bugfix: "Fixes the Unsettle ability ignoring line of sight (which was it's sole gimmick, im just dumb)"
+  - balance: "Voidwalkers cannot break windows anymore or throw objects"
+  - balance: "Voidwalkers can no longer harm people in crit"
+  - balance: "Voidwalkers can only pull mobs"
+  - balance: "Voidwalkers' space dive enter has been increased by 1 seconds, but dive exit decreased by 1 second"
+  - balance: "Void eater becomes blunt during use. Kidnap people to refresh it"
+  - balance: "Removes voidwalker glasses slot"
+  - balance: "Gives voidwalkers chunky fingers"
+  - balance: "Voidwalker applies NODEATH on hit"
+  - balance: "Voided victims get dumped in safer places"
