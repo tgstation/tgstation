@@ -3,7 +3,7 @@
 	filedesc = "Citations & Fines"
 	download_access = list(ACCESS_BRIG_ENTRANCE)
 	downloader_category = PROGRAM_CATEGORY_SECURITY
-	program_open_overlay = "crew"
+	program_open_overlay = "warrant"
 	extended_desc = "This program allows any user to read, pay, and print citations on go."
 	size = 2
 	program_flags = PROGRAM_ON_NTNET_STORE | PROGRAM_REQUIRES_NTNET
