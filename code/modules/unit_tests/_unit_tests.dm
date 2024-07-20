@@ -139,6 +139,7 @@
 #include "dummy_spawn.dm"
 #include "dynamic_ruleset_sanity.dm"
 #include "egg_glands.dm"
+#include "embedding.dm"
 #include "emoting.dm"
 #include "ensure_subtree_operational_datum.dm"
 #include "explosion_action.dm"

@@ -50,10 +50,11 @@ GLOBAL_VAR_INIT(roaches_deployed, FALSE)
 		/obj/item/clothing/under/rank/security/officer/grey = 3,
 		/obj/item/clothing/under/pants/slacks = 3,
 		/obj/item/clothing/under/rank/security/officer/blueshirt = 3,
+		/obj/item/clothing/gloves/color/black/security/blu = 3,
 		/obj/item/clothing/suit/armor/vest/secjacket = 3,
 		/obj/item/clothing/suit/hooded/wintercoat/security = 3,
 		/obj/item/clothing/suit/armor/vest = 3,
-		/obj/item/clothing/gloves/color/black = 3,
+		/obj/item/clothing/gloves/color/black/security = 3,
 		/obj/item/clothing/shoes/jackboots/sec = 3,
 		/obj/item/storage/backpack/security = 3,
 		/obj/item/storage/backpack/satchel/sec = 3,
@@ -183,12 +184,14 @@ GLOBAL_VAR_INIT(roaches_deployed, FALSE)
 		/obj/item/clothing/head/beret/cargo = 3,
 		/obj/item/clothing/mask/bandana/striped/cargo = 3,
 		/obj/item/clothing/head/soft = 3,
+		/obj/item/clothing/head/utility/hardhat/orange = 3,
 		/obj/item/clothing/under/rank/cargo/tech = 3,
 		/obj/item/clothing/under/rank/cargo/tech/skirt = 3,
 		/obj/item/clothing/under/rank/cargo/tech/alt = 3,
 		/obj/item/clothing/under/rank/cargo/tech/skirt/alt = 3,
 		/obj/item/clothing/suit/toggle/cargo_tech = 3,
 		/obj/item/clothing/suit/hooded/wintercoat/cargo = 3,
+		/obj/item/clothing/suit/hazardvest = 3,
 		/obj/item/clothing/gloves/fingerless = 3,
 		/obj/item/clothing/shoes/sneakers/black = 3,
 		/obj/item/storage/backpack = 3,
@@ -199,13 +202,13 @@ GLOBAL_VAR_INIT(roaches_deployed, FALSE)
 		/obj/item/storage/bag/mail = 3,
 		/obj/item/radio/headset/headset_cargo = 3,
 		/obj/item/clothing/accessory/pocketprotector = 3,
-		/obj/item/clothing/head/utility/hardhat/orange = 3,
-		/obj/item/clothing/suit/hazardvest = 3,
 	)
 	premium = list(
 		/obj/item/clothing/head/costume/mailman = 1,
 		/obj/item/clothing/under/misc/mailman = 1,
 		/obj/item/clothing/under/rank/cargo/miner = 3,
+		/obj/item/clothing/under/rank/cargo/miner/lavaland = 3,
+		/obj/item/clothing/under/rank/cargo/bitrunner = 3,
 	)
 	refill_canister = /obj/item/vending_refill/wardrobe/cargo_wardrobe
 	payment_department = ACCOUNT_CAR
@@ -343,19 +346,18 @@ GLOBAL_VAR_INIT(roaches_deployed, FALSE)
 	product_ads = "Any day above ground is a good one!;My day starts when yours ends!;And they call this a dying business!;See you when you're dead!"
 	vend_reply = "Don't forget your \"Buy one get one free\" burial deal!"
 	products = list(
-		/obj/item/cautery/cruel = 1,
-		/obj/item/clothing/gloves/latex/coroner = 1,
 		/obj/item/clothing/head/utility/surgerycap/black = 1,
 		/obj/item/clothing/mask/surgical = 1,
-		/obj/item/clothing/shoes/sneakers/black = 1,
 		/obj/item/clothing/suit/apron/surgical = 1,
 		/obj/item/clothing/suit/hooded/wintercoat/medical/coroner = 1,
 		/obj/item/clothing/suit/toggle/labcoat/coroner = 1,
 		/obj/item/clothing/under/rank/medical/coroner = 1,
 		/obj/item/clothing/under/rank/medical/coroner/skirt = 1,
 		/obj/item/clothing/under/rank/medical/scrubs/coroner = 1,
+		/obj/item/clothing/shoes/sneakers/black = 1,
+		/obj/item/clothing/gloves/latex/coroner = 1,
+		/obj/item/cautery/cruel = 1,
 		/obj/item/hemostat/cruel = 1,
-		/obj/item/radio/headset/headset_srvmed = 2,
 		/obj/item/retractor/cruel = 1,
 		/obj/item/scalpel/cruel = 1,
 		/obj/item/storage/backpack/coroner = 1,
@@ -363,6 +365,7 @@ GLOBAL_VAR_INIT(roaches_deployed, FALSE)
 		/obj/item/storage/backpack/messenger/coroner = 1,
 		/obj/item/storage/backpack/satchel/coroner = 1,
 		/obj/item/storage/box/bodybags = 3,
+		/obj/item/radio/headset/headset_srvmed = 2,
 		/obj/item/toy/crayon/white = 2,
 	)
 	contraband = list(

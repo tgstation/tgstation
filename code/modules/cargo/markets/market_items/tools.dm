@@ -60,8 +60,8 @@
 	item = /obj/item/binoculars
 	stock = 1
 
-	price_min = CARGO_CRATE_VALUE * 2
-	price_max = CARGO_CRATE_VALUE * 4.8
+	price_min = CARGO_CRATE_VALUE * 1.75
+	price_max = CARGO_CRATE_VALUE * 4
 	availability_prob = 30
 
 /datum/market_item/tool/riot_shield
@@ -76,23 +76,13 @@
 
 /datum/market_item/tool/thermite_bottle
 	name = "Thermite Bottle"
-	desc = "30u of Thermite to assist in creating a quick access point or get away!"
+	desc = "50u of Thermite to assist in creating a quick access point or get away!"
 	item = /obj/item/reagent_containers/cup/bottle/thermite
-
-	price_min = CARGO_CRATE_VALUE * 2.5
-	price_max = CARGO_CRATE_VALUE * 7.5
-	stock_max = 3
-	availability_prob = 30
-
-/datum/market_item/tool/science_goggles
-	name = "Science Goggles"
-	desc = "These glasses scan the contents of containers and projects their contents to the user in an easy to read format."
-	item = /obj/item/clothing/glasses/science
 
 	price_min = CARGO_CRATE_VALUE * 0.75
 	price_max = CARGO_CRATE_VALUE
 	stock_max = 3
-	availability_prob = 50
+	availability_prob = 30
 
 /**
  * # Fake N-spect scanner black market entry

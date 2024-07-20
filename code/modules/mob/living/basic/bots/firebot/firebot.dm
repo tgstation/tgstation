@@ -74,15 +74,15 @@
 	internal_ext.refill()
 
 /mob/living/basic/bot/firebot/melee_attack(atom/attacked_atom, list/modifiers, ignore_cooldown = FALSE)
-	use_extinguisher(attacked_atom)
+	use_extinguisher(attacked_atom, modifiers)
 
 /mob/living/basic/bot/firebot/RangedAttack(atom/attacked_atom, list/modifiers)
-	use_extinguisher(attacked_atom)
+	use_extinguisher(attacked_atom, modifiers)
 
-/mob/living/basic/bot/firebot/proc/use_extinguisher(atom/attacked_atom)
+/mob/living/basic/bot/firebot/proc/use_extinguisher(atom/attacked_atom, list/modifiers)
 	if(!(bot_mode_flags & BOT_MODE_ON))
 		return
-	spray_water(attacked_atom)
+	spray_water(attacked_atom, modifiers)
 
 /mob/living/basic/bot/firebot/emag_act(mob/user, obj/item/card/emag/emag_card)
 	. = ..()
@@ -137,12 +137,12 @@
 	foam.start()
 	COOLDOWN_START(src, foam_cooldown, FOAM_INTERVAL)
 
-/mob/living/basic/bot/firebot/proc/spray_water(atom/attacked_atom)
+/mob/living/basic/bot/firebot/proc/spray_water(atom/attacked_atom, list/modifiers)
 	if(firebot_mode_flags & FIREBOT_STATIONARY_MODE)
 		flick("firebots_use", src)
 	else
 		flick("firebot1_use", src)
-	internal_ext?.melee_attack_chain(src, attacked_atom)
+	internal_ext?.interact_with_atom(attacked_atom, src, modifiers)
 
 /mob/living/basic/bot/firebot/update_icon_state()
 	. = ..()

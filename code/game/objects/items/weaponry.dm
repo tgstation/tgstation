@@ -162,7 +162,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 
 /obj/item/claymore/carrot
 	name = "carrot sword"
-	desc = "A full-sized carrot sword. Definitely \not\ good for the eyes, not anymore."
+	desc = "A full-sized carrot sword. Definitely <b>not</b> good for the eyes, not anymore."
 	icon_state = "carrot_sword"
 	inhand_icon_state = "carrot_sword"
 	worn_icon_state = "carrot_sword"
