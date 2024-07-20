@@ -43,6 +43,8 @@
 	src.happiness_callback = happiness_callback
 	src.callback_percentages = callback_percentages
 
+	ADD_TRAIT(parent, TRAIT_SUBTREE_REQUIRED_OPERATIONAL_DATUM, type)
+
 /datum/component/happiness/RegisterWithParent()
 
 	if(on_petted_change)
