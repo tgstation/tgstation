@@ -187,8 +187,8 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sign/poster/official/report_crimes, 3
 	. += "\t[span_info("<b>Misdemeanor:</b> Brig - 5 Minutes, Labor - 300-500 Points, Fine - 300 Credits")]"
 	. += "\t[span_info("<b>Felony:</b> Brig - 8 Minutes, Labor - 500-800 Points")]"
 	. += "\t[span_info("<b>Grand Felony:</b> Permabrig, Exile, Implantation")]"
-	. += "\t[span_info("<b>Capital Crime:</b> Permabrig, Exile, Implantation, Cyborgification, Execution")]"
-	. += "\t[span_warning("Information might be outdated! Reference local Space Law copies.")]"
+	. += "\t[span_info("<b>Capital Crime:</b> Permabrig, Exile, Implantation, Cyborgification, Re-Education")]"
+	. += "\t[span_warning("Information might be outdated. Reference local Space Law copies.")]"
 	return .
 
 MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sign/poster/official/crime_reference, 32)

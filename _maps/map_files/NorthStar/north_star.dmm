@@ -695,12 +695,12 @@
 /turf/open/floor/iron/dark,
 /area/station/hallway/floor3/aft)
 "ait" = (
-/obj/structure/sign/poster/official/random/directional/north,
 /obj/item/pillow,
 /obj/effect/turf_decal/box,
 /obj/machinery/flasher/directional/west{
 	id = "drunktank"
 	},
+/obj/structure/sign/poster/official/crime_reference/directional/north,
 /turf/open/floor/iron/dark,
 /area/station/security/holding_cell)
 "aiw" = (

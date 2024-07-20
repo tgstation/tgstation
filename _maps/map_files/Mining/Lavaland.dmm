@@ -8100,6 +8100,7 @@
 /obj/machinery/light/small/directional/west,
 /obj/machinery/airalarm/directional/north,
 /obj/effect/decal/cleanable/dirt,
+/obj/structure/sign/poster/official/crime_reference/directional/west,
 /turf/open/floor/iron/smooth,
 /area/mine/laborcamp)
 "Uc" = (
