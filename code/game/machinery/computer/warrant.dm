@@ -184,7 +184,7 @@
 	ticket.name = "ticket to [target.name]"
 	ticket.desc = "A [warrant.fine]cr ticket for [target.name]. The back of it feels <b>sticky</b>."
 	ticket.color = COLOR_VERY_SOFT_YELLOW
-	ticket.embed_type = /datum/embed_data/sticky_tape //Stick them into your face
+	ticket.embed_type = /datum/embed_data/sticky_tape //Stick them into criminals face
 	ticket.add_raw_text(ticket_text)
 	ticket.update_icon()
 
