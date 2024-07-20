@@ -1,7 +1,7 @@
 /*
- System for drawing organs with overlays. These overlays are drawn directly on the bodypart, attached to a person or not
- Works in tandem with the /datum/sprite_accessory datum to generate sprites
- Unlike normal organs, we're actually inside a persons limbs at all times
+System for drawing organs with overlays. These overlays are drawn directly on the bodypart, attached to a person or not
+Works in tandem with the /datum/sprite_accessory datum to generate sprites
+Unlike normal organs, we're actually inside a persons limbs at all times
 */
 /obj/item/organ
 	///The overlay datum that actually draws stuff on the limb

@@ -295,14 +295,20 @@ GLOBAL_LIST_EMPTY(features_by_species)
 		var/obj/item/organ/new_organ = get_mutant_organ_type_for_slot(slot)
 
 		// if we have an extra organ that before changing that the species didnt have, we can keep it unless replace_current = TRUE
-		if(!new_organ && existing_organ && replace_current)
-			existing_organ.Remove(organ_holder)
-			qdel(existing_organ)
+		if(!new_organ)
+			if(existing_organ && replace_current)
+				existing_organ.Remove(organ_holder)
+				qdel(existing_organ)
 			continue
 
-		// at this point we already know new_organ is not null
-		if(existing_organ?.type == new_organ)
-			continue // we don't want to remove organs that are the same as the new one
+		if(existing_organ)
+			// we dont want to remove organs that were not from the old species (such as from freak surgery or prosthetics)
+			if(existing_organ.type != old_species.get_mutant_organ_type_for_slot(slot) && !replace_current)
+				continue
+
+			// we don't want to remove organs that are the same as the new one
+			if(existing_organ.type == new_organ)
+				continue
 
 		if(visual_only && (!initial(new_organ.bodypart_overlay) && !initial(new_organ.visual)))
 			continue
@@ -374,7 +380,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
 	if(old_species.type != type)
 		replace_body(human_who_gained_species, src)
 
-	regenerate_organs(human_who_gained_species, old_species, visual_only = human_who_gained_species.visual_only_organs)
+	regenerate_organs(human_who_gained_species, old_species, replace_current = FALSE, visual_only = human_who_gained_species.visual_only_organs)
 
 	// Drop the items the new species can't wear
 	INVOKE_ASYNC(src, PROC_REF(worn_items_fit_body_check), human_who_gained_species, TRUE)
