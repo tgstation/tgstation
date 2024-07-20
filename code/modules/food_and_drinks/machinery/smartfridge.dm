@@ -457,7 +457,7 @@
 
 /obj/machinery/smartfridge/drying/update_overlays()
 	. = ..()
-	if(powered() && !(machine_stat & BROKEN))
+	if(visible_contents && powered() && !(machine_stat & BROKEN))
 		var/suffix = drying ? "on" : "off"
 		. += mutable_appearance(icon, "[base_icon_state]-[suffix]")
 		. += emissive_appearance(icon, "[base_icon_state]-[suffix]", src, alpha = src.alpha)
