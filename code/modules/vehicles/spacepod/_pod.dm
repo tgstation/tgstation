@@ -3,15 +3,15 @@
 //
 
 // TODO:
-// proper space movement
+// proper space movement (maybe like 80% done??? they still get stuck on lattices)
 // construction
 // equipment
-// make them move different onstation, perhaps restrict to engine tiles only
 // control scheme/whatever idk how to drive these
 // slots: comms (radio and something else), sensors(HUDs or something, mesons??), engine, 1 secondary slot (cargo and shit), 1 primary slot(tools or gun???), 3 misc modules (locks and shit), armor would either be added during construction or as a slot
 // power costs, either only megacell or only cell, how would you charge this??
 // although im not so sure about power costs i dont know why it would need them but ideally a space pod should be capable of functioning for 10-15 minutes of nonstop acceleration by default
 // innate armor potentially, also actual armor and also figure out integrity and inertia_force_weight
+// figure out whether this should use action buttons or an UI or a combination of both for equipment
 // ALSO DO NOT FORGET TO REMOVE THIS HUGE ASS COMMENT before finishing
 
 /obj/vehicle/sealed/space_pod
@@ -100,12 +100,12 @@
 	if(has_gravity())
 		if(!COOLDOWN_FINISHED(src, cooldown_vehicle_move))
 			return
-		COOLDOWN_START(src, cooldown_vehicle_move, 1 SECONDS) // INTENTIONALLY make it painful to use onstation
+		COOLDOWN_START(src, cooldown_vehicle_move, istype(loc, /turf/open/floor/engine) ? 0.3 SECONDS : 2 SECONDS) //moves much better on engine tiles
 		after_move(direction)
 		return try_step_multiz(direction)
-// may or may not work havent tested
 	setDir(direction)
 	newtonian_move(dir2angle(direction), instant = TRUE, drift_force = force_per_move, controlled_cap = max_speed)
+	trail.generate_effect()
 
 /obj/vehicle/sealed/space_pod/mob_enter(mob/mob, silent)
 	. = ..()

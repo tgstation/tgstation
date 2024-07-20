@@ -1256,7 +1256,7 @@
 	if(!isturf(loc))
 		return TRUE
 
-	if(locate(/obj/structure/lattice) in range(1, get_turf(src))) //Not realistic but makes pushing things in space easier
+	if(!continuous_move && locate(/obj/structure/lattice) in range(1, get_turf(src))) //Not realistic but makes pushing things in space easier
 		return TRUE
 
 	return FALSE
