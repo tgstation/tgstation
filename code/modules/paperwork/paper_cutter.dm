@@ -218,6 +218,10 @@
 	. = ..()
 	ADD_TRAIT(src, TRAIT_CUSTOM_TAP_SOUND, INNATE_TRAIT)
 
+/obj/item/paper/paperslip/ticket/examine(mob/user)
+	. = ..()
+	. += span_notice("You can hit someone with [src] to <b>stick</b> it to them.")
+
 /obj/item/paper/paperslip/ticket/attack(mob/M, mob/user)
 	. = ..()
 	src.forceMove(get_turf(user))
