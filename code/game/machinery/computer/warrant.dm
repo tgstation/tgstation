@@ -1,5 +1,5 @@
 /obj/machinery/computer/warrant
-	name = "security citations console"
+	name = "security citation console"
 	desc = "Used to view outstanding citations and fines."
 	icon_screen = "warrant"
 	icon_keyboard = "id_key"
@@ -172,7 +172,7 @@
     ticket_text += "<b>Issued on:</b><br>[warrant.time]<br>"
     ticket_text += "<b>Comments:</b><br>[!target.security_note ? "None." : target.security_note]<br><br>"
     ticket_text += "<center><b>FINE:</b> [warrant.fine] credits</center><br>"
-    ticket_text += "<i>Citations can be paid with the warrant console at the Brig entrance. \
+    ticket_text += "<i>Citations can be paid with the citation console at the Brig entrance. \
         Not paying this citation may result in further prosecution from the Security department of [GLOB.station_name]. \
         If you have any problems with the citation reason - contact a Lawyer. <b>You've been warned.</b></i>"
 
