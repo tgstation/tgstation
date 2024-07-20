@@ -348,6 +348,7 @@
 /obj/machinery/power/shieldwallgen/Destroy()
 	for(var/d in GLOB.cardinals)
 		cleanup_field(d)
+	QDEL_NULL(wires)
 	return ..()
 
 /obj/machinery/power/shieldwallgen/should_have_node()
