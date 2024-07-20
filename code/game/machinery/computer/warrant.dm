@@ -172,7 +172,7 @@
 	ticket_text += "<b>Issued on:</b><br>[warrant.time]<br>"
 	ticket_text += "<b>Comments:</b><br>[!target.security_note ? "None." : target.security_note]<br><br>"
 	ticket_text += "<center><b>FINE:</b> [warrant.fine] credits</center><br>"
-	ticket_text += "<i>Citations can paid with Citation Console at Brig enterance. \
+	ticket_text += "<i>Citations can paid with citation console at Brig enterance. \
 		Not paying this citation may result in further prosecution from Security department of [GLOB.station_name]. \
 		If you have any problems with the citation reason - contact Lawyer. <b>You've been warned.</b></i>"
 
@@ -182,7 +182,7 @@
 
 	var/obj/item/paper/paperslip/ticket = new(null)
 	ticket.name = "ticket to [target.name]"
-	ticket.desc = "A [warrant.fine]cr ticket for [target.name]. The back of it feels sticky."
+	ticket.desc = "A [warrant.fine]cr ticket for [target.name]. The back of it feels <b>sticky</b>."
 	ticket.color = COLOR_VERY_SOFT_YELLOW
 	ticket.embed_type = /datum/embed_data/sticky_tape //Stick them into your face
 	ticket.add_raw_text(ticket_text)
