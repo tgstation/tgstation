@@ -78,6 +78,7 @@
 /datum/component/jetpack/Destroy(force)
 	if(trail)
 		QDEL_NULL(trail)
+	user = null
 	check_on_move = null
 	return ..()
 

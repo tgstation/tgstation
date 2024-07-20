@@ -1273,7 +1273,10 @@
 		drift_handler.newtonian_impulse(inertia_angle, start_delay, drift_force, controlled_cap)
 		return TRUE
 
-	drift_handler = new (src, inertia_angle, instant, start_delay, drift_force)
+	new /datum/drift_handler(src, inertia_angle, instant, start_delay, drift_force)
+	// Something went wrong and it failed to create itself, most likely we have a higher priority loop already
+	if (QDELETED(drift_handler))
+		return FALSE
 	return TRUE
 
 /atom/movable/set_explosion_block(explosion_block)

@@ -111,6 +111,7 @@
 	icon_state = "paperball"
 	base_icon_state = "paperball"
 	projectile_type = /obj/projectile/bullet/paperball
+	newtonian_force = 0.5
 
 /obj/item/ammo_casing/rebar/Initialize(mapload)
 	. = ..()

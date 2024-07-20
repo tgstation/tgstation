@@ -90,11 +90,13 @@
 		/obj/item/mod/module/flashlight,
 		/obj/item/mod/module/jetpack,
 		/obj/item/mod/module/headprotector,
+		/obj/item/mod/module/tether,
 	)
 	default_pins = list(
 		/obj/item/mod/module/magboot/advanced,
 		/obj/item/mod/module/flashlight,
 		/obj/item/mod/module/jetpack,
+		/obj/item/mod/module/tether,
 	)
 
 /obj/item/mod/control/pre_equipped/loader

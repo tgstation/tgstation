@@ -148,5 +148,5 @@ GLOBAL_VAR_INIT(glide_size_multiplier, 1.0)
 #define INERTIA_FORCE_THROW_FLOOR 7 NEWTONS
 /// How much inertia is required past the floor to add 1 strength
 #define INERTIA_FORCE_PER_THROW_FORCE 4.5 NEWTONS
-// Results in maximum speed of 2 tiles per tick
+// Results in maximum speed of 1 tile per tick, capped at about 2/3rds of maximum force
 #define INERTIA_SPEED_COEF 0.375
