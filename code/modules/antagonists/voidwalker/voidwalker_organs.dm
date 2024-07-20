@@ -13,6 +13,7 @@
 	name = "cosmic brain"
 	desc = "A mind fully integrated into the cosmic thread."
 	icon = 'icons/obj/medical/organs/shadow_organs.dmi'
+	can_smoothen_out = FALSE
 
 	/// Alpha we have in space
 	var/space_alpha = 15
