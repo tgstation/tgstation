@@ -4426,6 +4426,9 @@
 /obj/item/stack/sheet/plastitaniumglass{
 	amount = 15
 	},
+/obj/item/holosign_creator/atmos,
+/obj/item/circuitboard/machine/thermomachine,
+/obj/item/circuitboard/machine/thermomachine,
 /turf/open/floor/iron,
 /area/ruin/syndicate_lava_base/engineering)
 "YP" = (

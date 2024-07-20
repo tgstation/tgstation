@@ -53,17 +53,13 @@
 	hud_icons = list(FAN_HUD)
 
 /datum/atom_hud/data/diagnostic
-
-/datum/atom_hud/data/diagnostic/basic
 	hud_icons = list(DIAG_HUD, DIAG_STAT_HUD, DIAG_BATT_HUD, DIAG_MECH_HUD, DIAG_BOT_HUD, DIAG_TRACK_HUD, DIAG_CAMERA_HUD, DIAG_AIRLOCK_HUD, DIAG_LAUNCHPAD_HUD)
 
-/datum/atom_hud/data/diagnostic/advanced
-	hud_icons = list(DIAG_HUD, DIAG_STAT_HUD, DIAG_BATT_HUD, DIAG_MECH_HUD, DIAG_BOT_HUD, DIAG_TRACK_HUD, DIAG_CAMERA_HUD, DIAG_AIRLOCK_HUD, DIAG_LAUNCHPAD_HUD, DIAG_PATH_HUD)
-
 /datum/atom_hud/data/bot_path
-	// This hud exists so the bot can see itself, that's all
-	uses_global_hud_category = FALSE
 	hud_icons = list(DIAG_PATH_HUD)
+
+/datum/atom_hud/data/bot_path/private
+	uses_global_hud_category = FALSE
 
 /datum/atom_hud/abductor
 	hud_icons = list(GLAND_HUD)
