@@ -58521,7 +58521,7 @@
 /area/station/science/robotics/lab)
 "pbr" = (
 /obj/machinery/light/directional/east,
-/obj/machinery/deepfryer,
+/obj/machinery/smartfridge/drying,
 /turf/open/floor/iron/kitchen,
 /area/station/service/kitchen)
 "pbt" = (

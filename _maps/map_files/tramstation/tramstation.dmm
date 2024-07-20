@@ -11263,7 +11263,7 @@
 /turf/open/floor/engine,
 /area/station/engineering/supermatter/room)
 "cON" = (
-/obj/machinery/deepfryer,
+/obj/machinery/smartfridge/drying,
 /turf/open/floor/iron/white/side{
 	dir = 8
 	},

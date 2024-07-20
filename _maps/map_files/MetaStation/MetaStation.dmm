@@ -36123,7 +36123,7 @@
 	dir = 8
 	},
 /obj/effect/decal/cleanable/dirt,
-/obj/machinery/deepfryer,
+/obj/machinery/smartfridge/drying,
 /obj/effect/turf_decal/bot,
 /obj/effect/turf_decal/trimline/brown/warning{
 	dir = 9

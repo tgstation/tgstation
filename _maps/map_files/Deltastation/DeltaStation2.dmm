@@ -22839,9 +22839,8 @@
 /turf/open/floor/iron,
 /area/station/security/checkpoint/medical/medsci)
 "fGn" = (
-/obj/machinery/deepfryer,
-/obj/effect/turf_decal/bot,
 /obj/structure/extinguisher_cabinet/directional/south,
+/obj/machinery/smartfridge/drying,
 /turf/open/floor/iron/cafeteria,
 /area/station/service/kitchen)
 "fGt" = (
