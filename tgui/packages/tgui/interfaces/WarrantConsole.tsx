@@ -13,7 +13,6 @@ import {
   Stack,
   Tabs,
 } from '../components';
-import { Window } from '../layouts';
 
 type Data = {
   records: WarrantRecord[];
@@ -42,20 +41,16 @@ export const WarrantConsole = (props) => {
   );
 
   return (
-    <Window width={500} height={500}>
-      <Window.Content>
-        <Stack fill>
-          <Stack.Item grow={2}>
-            <RecordList />
-          </Stack.Item>
-          {selectedRecord && (
-            <Stack.Item grow={3}>
-              <ViewRecord />
-            </Stack.Item>
-          )}
-        </Stack>
-      </Window.Content>
-    </Window>
+    <Stack fill>
+      <Stack.Item grow={2}>
+        <RecordList />
+      </Stack.Item>
+      {selectedRecord && (
+        <Stack.Item grow={3}>
+          <ViewRecord />
+        </Stack.Item>
+      )}
+    </Stack>
   );
 };
 
