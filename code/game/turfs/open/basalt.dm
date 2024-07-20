@@ -11,7 +11,11 @@
 	AddElement(/datum/element/diggable, /obj/item/stack/ore/glass/basalt, 2)
 	if(prob(15))
 		icon_state = "basalt[rand(0, 12)]"
-		set_basalt_light(src)
+		switch(icon_state)
+			if("basalt1", "basalt2", "basalt3")
+				set_light(BASALT_LIGHT_BRIGHT, 0.6, LIGHT_COLOR_LAVA) //more light
+			if("basalt5", "basalt9")
+				set_light(BASALT_LIGHT_DIM, 0.6, LIGHT_COLOR_LAVA) //barely anything!
 
 /turf/open/misc/basalt/safe
 	planetary_atmos = FALSE
