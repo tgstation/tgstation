@@ -166,15 +166,15 @@
 		return FALSE
 
 	var/ticket_text = "<center><h1><b>Ticket to [target.name]</b><h1></center><BR>"
-	ticket_text += "<center>Citated for [warrant.name]</h2></center><br><br>"
-	ticket_text += "<b>Details:</b><br>[warrant.details]<br>"
-	ticket_text += "<b>Issued by:</b><br>[warrant.author]<br>"
-	ticket_text += "<b>Issued on:</b><br>[warrant.time]<br>"
-	ticket_text += "<b>Comments:</b><br>[!target.security_note ? "None." : target.security_note]<br><br>"
-	ticket_text += "<center><b>FINE:</b> [warrant.fine] credits</center><br>"
-	ticket_text += "<i>Citations can paid with citation console at Brig enterance. \
-		Not paying this citation may result in further prosecution from Security department of [GLOB.station_name]. \
-		If you have any problems with the citation reason - contact Lawyer. <b>You've been warned.</b></i>"
+    ticket_text += "<center>Citated for [warrant.name]</h2></center><br><br>"
+    ticket_text += "<b>Details:</b><br>[warrant.details]<br>"
+    ticket_text += "<b>Issued by:</b><br>[warrant.author]<br>"
+    ticket_text += "<b>Issued on:</b><br>[warrant.time]<br>"
+    ticket_text += "<b>Comments:</b><br>[!target.security_note ? "None." : target.security_note]<br><br>"
+    ticket_text += "<center><b>FINE:</b> [warrant.fine] credits</center><br>"
+    ticket_text += "<i>Citations can be paid with the warrant console at the Brig entrance. \
+        Not paying this citation may result in further prosecution from the Security department of [GLOB.station_name]. \
+        If you have any problems with the citation reason - contact a Lawyer. <b>You've been warned.</b></i>"
 
 	printing = TRUE
 	balloon_alert(source, "printing")
