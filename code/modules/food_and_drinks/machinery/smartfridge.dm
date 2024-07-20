@@ -800,6 +800,7 @@
 	pass_flags = PASSTABLE
 	can_atmos_pass = ATMOS_PASS_YES
 	visible_contents = FALSE
+	has_emissive = FALSE
 	base_build_path = /obj/machinery/smartfridge/disks
 
 /obj/machinery/smartfridge/disks/accept_check(obj/item/weapon)
