@@ -18,3 +18,12 @@
 	cost = 20
 	surplus = 40
 	refundable = TRUE
+
+/datum/uplink_item/stealthy_tools/chameleonheadsetdeluxe
+	name = "Advanced Chameleon Headset"
+	desc = "A premium model Chameleon Headset. All the features you love of the original, but now with flashbang \
+			protection, voice amplification, memory-foam, HD Sound Quality, and extra-wide spectrum dial. Usually reserved \
+			for high-ranking Cybersun officers, a few spares have been reserved for field agents."
+	purchasable_from = ~(UPLINK_NUKE_OPS | UPLINK_CLOWN_OPS)
+	item = /obj/item/radio/headset/chameleon/advanced
+	cost = 2
