@@ -137,12 +137,12 @@
 	source.newtonian_move(dir2angle(source.client.intended_direction), drift_force = FUNCTIONAL_WING_FORCE, controlled_cap = max_drift_force)
 	source.setDir(source.client.intended_direction)
 
-/obj/item/organ/external/wings/functional/process()
+/obj/item/organ/external/wings/functional/process(seconds_per_tick)
 	if (!owner || !can_fly(owner) || isnull(owner.drift_handler))
 		return
 
 	var/max_drift_force = (DEFAULT_INERTIA_SPEED / owner.cached_multiplicative_slowdown - 1) / INERTIA_SPEED_COEF + 1
-	owner.drift_handler.stabilize_drift(owner.client.intended_direction ? dir2angle(owner.client.intended_direction) : null, owner.client.intended_direction ? max_drift_force : 0, FUNCTIONAL_WING_STABILIZATION)
+	owner.drift_handler.stabilize_drift(owner.client.intended_direction ? dir2angle(owner.client.intended_direction) : null, owner.client.intended_direction ? max_drift_force : 0, FUNCTIONAL_WING_STABILIZATION * (seconds_per_tick / 1 SECONDS))
 
 ///SPREAD OUR WINGS AND FLLLLLYYYYYY
 /obj/item/organ/external/wings/functional/proc/open_wings()
