@@ -8,7 +8,7 @@
  */
 /obj/item/inspector
 	name = "\improper N-spect scanner"
-	desc = "Central Command standard issue inspection device. Can perform either wide area scans that central command can use to verify the security of the station, or detailed scans to determine if an item is contraband."
+	desc = "Central Command standard issue inspection device. Can perform either wide area scans that central command can use to verify the security of the station, or detailed scan. Can scan people for contraband on their person or items being contraband."
 	icon = 'icons/obj/devices/scanner.dmi'
 	icon_state = "inspector"
 	worn_icon_state = "salestagger"
@@ -20,6 +20,7 @@
 	interaction_flags_click = NEED_DEXTERITY
 	throw_range = 1
 	throw_speed = 1
+	COOLDOWN_DECLARE(scanning_person) //Cooldown for scanning a carbon
 	///How long it takes to print on time each mode, ordered NORMAL, FAST, HONK
 	var/list/time_list = list(5 SECONDS, 1 SECONDS, 0.1 SECONDS)
 	///Which print time mode we're on.
@@ -106,18 +107,28 @@
 	if(!cell || !cell.use(INSPECTOR_ENERGY_USAGE_LOW))
 		balloon_alert(user, "check cell!")
 		return ITEM_INTERACT_BLOCKING
-	if(!isitem(interacting_with))
-		return ITEM_INTERACT_BLOCKING
-	var/obj/item/contraband_item = interacting_with
-	var/contraband_status = contraband_item.is_contraband()
-	if((!contraband_status && scans_correctly) || (contraband_status && !scans_correctly))
+
+	if(iscarbon(interacting_with)) //Prevents insta scanning people
+		if(!COOLDOWN_FINISHED(src, scanning_person))
+			return ITEM_INTERACT_BLOCKING
+
+		visible_message(span_warning("[user] starts scanning [interacting_with] with [src]"))
+		to_chat(interacting_with, span_userdanger("[user] is trying to scan you for contraband!"))
+		balloon_alert_to_viewers("scanning...")
+		playsound(src, 'sound/effects/genetics.ogg', 40, FALSE)
+		COOLDOWN_START(src, scanning_person, 4 SECONDS)
+		if(!do_after(user, 4 SECONDS, interacting_with))
+			return ITEM_INTERACT_BLOCKING
+
+	if(contraband_scan(interacting_with, user))
+		playsound(src, 'sound/machines/uplinkerror.ogg', 40)
+		balloon_alert(user, "contraband detected!")
+		return ITEM_INTERACT_SUCCESS
+	else
 		playsound(src, 'sound/machines/ping.ogg', 20)
 		balloon_alert(user, "clear")
 		return ITEM_INTERACT_SUCCESS
 
-	playsound(src, 'sound/machines/uplinkerror.ogg', 40)
-	balloon_alert(user, "contraband detected!")
-	return ITEM_INTERACT_SUCCESS
 
 /obj/item/inspector/add_context(atom/source, list/context, obj/item/held_item, mob/user)
 	var/update_context = FALSE
@@ -144,6 +155,29 @@
 		context[SCREENTIP_CONTEXT_LMB] = "Contraband Scan"
 		return CONTEXTUAL_SCREENTIP_SET
 	return NONE
+
+/**
+ * Scans the carbon or item for contraband.
+ *
+ * Arguments:
+ * - scanned - what or who is scanned?
+ * - user - who is performing the scanning?
+ */
+/obj/item/inspector/proc/contraband_scan(scanned, user)
+	if(iscarbon(scanned))
+		var/mob/living/carbon/scanned_carbon = scanned
+		for(var/obj/item/content in scanned_carbon.get_all_contents_skipping_traits(TRAIT_CONTRABAND_BLOCKER))
+			var/contraband_content = content.is_contraband()
+			if((contraband_content && scans_correctly) || (!contraband_content && !scans_correctly))
+				return TRUE
+
+	if(isitem(scanned))
+		var/obj/item/contraband_item = scanned
+		var/contraband_status = contraband_item.is_contraband()
+		if((contraband_status && scans_correctly) || (!contraband_status && !scans_correctly))
+			return TRUE
+
+	return FALSE
 
 /**
  * Create our report

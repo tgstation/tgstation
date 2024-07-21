@@ -6978,9 +6978,8 @@
 /area/centcom/tdome/observation)
 "Ga" = (
 /obj/structure/table/reinforced,
-/obj/item/book/manual/wiki/security_space_law,
-/obj/item/taperecorder,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
+/obj/machinery/fax,
 /turf/open/floor/iron/dark,
 /area/centcom/central_command_areas/ferry)
 "Gb" = (

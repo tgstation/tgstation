@@ -1099,3 +1099,46 @@
       a sane format'.
   zoomachina:
   - qol: chem dispenser displays units instead of kilowatts
+2024-07-21:
+  DrDiasyl aka DrTuxedo:
+  - rscadd: Scanner gates now blare into the chat the reason why it got triggered
+  - rscadd: Scanner gates now can have false positives/negatives, and the chance of
+      them being reduced when they are upgraded
+  - rscadd: Brig entrances now have scanner gates preset to detect GUNS
+  - rscadd: You can now scan people with N-Spector for contraband
+  - image: Scanner gates now have a better sprite with dirs
+  - qol: Scanner gates description now tells to what mode they are set
+  - bugfix: You no longer can remove N-Spector from scanner gates without unlocking
+      them first
+  Inari-Whitebear:
+  - spellcheck: Fixed a typo in the description for the Syndicate Rebar Crossbow in
+      the Uplink.
+  MTandi:
+  - qol: Mod UI is narrow again
+  Melbert:
+  - bugfix: Fixed roundstart monkeys not having monkified
+  - bugfix: Fixed being "de-monkified" while dead making it difficult to actually
+      de-monkey you going forward
+  - bugfix: Fixed genetic scanner showing dead mobs as "transforming"
+  SmArtKar:
+  - bugfix: Closing mind transfer popup does not transfer your mind anymore
+  - bugfix: Recalling lantern wisp now properly removes its effects from you
+  - bugfix: Context maptext now properly dynamically adjusts itself instead of using
+      hardcoded pixel values
+  - bugfix: Fixes organizer sometimes deleting brains
+  Time-Green:
+  - rscadd: Gives voidwalker telepathy
+  - bugfix: Fixes the Unsettle ability ignoring line of sight (which was it's sole
+      gimmick, im just dumb)
+  - balance: Voidwalkers cannot break windows anymore or throw objects
+  - balance: Voidwalkers can no longer harm people in crit
+  - balance: Voidwalkers can only pull mobs
+  - balance: Voidwalkers' space dive enter has been increased by 1 seconds, but dive
+      exit decreased by 1 second
+  - balance: Void eater becomes blunt during use. Kidnap people to refresh it
+  - balance: Removes voidwalker glasses slot
+  - balance: Gives voidwalkers chunky fingers
+  - balance: Voidwalker applies NODEATH on hit
+  - balance: Voided victims get dumped in safer places
+  carlarctg:
+  - bugfix: Fixed null description in cerulean regenerative extract
