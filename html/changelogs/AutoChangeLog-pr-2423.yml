@@ -1,0 +1,5 @@
+author: "Absolucy"
+delete-after: True
+changes:
+  - bugfix: "(JohnFulpWillard) Science Xenos no longer turn the entire roundend report into bold letters."
+  - bugfix: "(Melbert) Captive Xeno end round report should make a tad more sense."
