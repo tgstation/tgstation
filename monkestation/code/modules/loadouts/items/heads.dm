@@ -279,7 +279,7 @@ GLOBAL_LIST_INIT(loadout_helmets, generate_loadout_items(/datum/loadout_item/hea
 	item_path = /obj/item/clothing/head/playbunnyears
 
 /datum/loadout_item/head/propeller_hat
-	name = "Rainbow Propeller Tie"
+	name = "Rainbow Propeller Hat"
 	item_path = /obj/item/clothing/head/soft/propeller_hat
 
 /*
