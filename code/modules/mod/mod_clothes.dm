@@ -12,6 +12,7 @@
 	cold_protection = HEAD
 	item_flags = IMMUTABLE_SLOW
 	supports_variations_flags = CLOTHING_SNOUTED_VARIATION
+	clothing_traits = list(TRAIT_SNOWSTORM_IMMUNE)
 
 /obj/item/clothing/suit/mod
 	name = "MOD chestplate"
@@ -33,6 +34,7 @@
 	cold_protection = CHEST|GROIN
 	item_flags = IMMUTABLE_SLOW
 	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION
+	clothing_traits = list(TRAIT_SNOWSTORM_IMMUNE)
 
 /obj/item/clothing/gloves/mod
 	name = "MOD gauntlets"
