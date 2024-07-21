@@ -111,7 +111,7 @@
 
 	parts += "<span class='header'>The [name] were:</span> <br>"
 
-	if(check_captivity(progenitor))
+	if(check_captivity(progenitor.current) == CAPTIVE_XENO_PASS)
 		parts += span_greentext("The progenitor of this hive was [progenitor.key], as [progenitor], who successfully escaped captivity!") + "<br>"
 	else
 		parts += span_redtext("The progenitor of this hive was [progenitor.key], as [progenitor], who failed to escape captivity") + "<br>"
@@ -138,7 +138,7 @@
 	else
 		thank_you_message = "xenofauna combat effectiveness"
 
-	parts += "<span class='neutraltext'>Nanotrasen thanks the crew of [station_name()] for providing much needed research data on <b>[thank_you_message]<b>.</span>"
+	parts += "<span class='neutraltext'>Nanotrasen thanks the crew of [station_name()] for providing much needed research data on <b>[thank_you_message]</b>.</span>"
 
 	return "<div class='panel redborder'>[parts.Join("<br>")]</div> <br>"
 
