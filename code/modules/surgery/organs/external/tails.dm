@@ -150,9 +150,6 @@
 		return FALSE
 	return TRUE
 
-/datum/bodypart_overlay/mutant/tail/get_global_feature_list()
-	return SSaccessories.tails_list_human
-
 /obj/item/organ/external/tail/cat
 	name = "tail"
 	preference = "feature_human_tail"
@@ -161,6 +158,9 @@
 
 	wag_flags = WAG_ABLE
 
+/datum/bodypart_overlay/mutant/tail/get_global_feature_list()
+	return SSaccessories.tails_list_human
+
 /obj/item/organ/external/tail/cat/get_butt_sprite()
 	return icon('icons/mob/butts.dmi', BUTT_SPRITE_CAT)
 
@@ -168,15 +168,6 @@
 /datum/bodypart_overlay/mutant/tail/cat
 	feature_key = "tail_cat"
 	color_source = ORGAN_COLOR_HAIR
-
-/obj/item/organ/external/tail/cat/fox
-	name = "fox tail"
-	bodypart_overlay = /datum/bodypart_overlay/mutant/tail/cat/fox
-	dna_block = null
-	sprite_accessory_override = /datum/sprite_accessory/tails/human/fox
-
-///Fox tail bodypart overlay
-/datum/bodypart_overlay/mutant/tail/cat/fox
 
 /obj/item/organ/external/tail/monkey
 	name = "monkey tail"
