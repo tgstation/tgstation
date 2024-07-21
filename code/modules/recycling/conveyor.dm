@@ -373,7 +373,7 @@ GLOBAL_LIST_EMPTY(conveyors_by_id)
 
 /obj/machinery/conveyor_switch/Destroy()
 	LAZYREMOVE(GLOB.conveyors_by_id[id], src)
-	. = ..()
+	return ..()
 
 /obj/machinery/conveyor_switch/vv_edit_var(var_name, var_value)
 	if (var_name == NAMEOF(src, id))
