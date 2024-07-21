@@ -68,12 +68,14 @@
 	AddElement(/datum/element/ai_retaliate)
 	AddElement(/datum/element/swabable, CELL_LINE_TABLE_FROG, CELL_VIRUS_TABLE_GENERIC_MOB, 1, 5)
 
+/* monkestation edit: overriden in [monkestation\code\modules\mob\living\basic\vermin\frog.dm]
 /mob/living/basic/frog/proc/on_entered(datum/source, AM as mob|obj)
 	SIGNAL_HANDLER
 	if(!stat && isliving(AM))
 		var/mob/living/L = AM
 		if(L.mob_size > MOB_SIZE_TINY)
 			playsound(src, stepped_sound, 50, TRUE)
+monkestation end */
 
 /datum/ai_controller/basic_controller/frog
 	blackboard = list(
