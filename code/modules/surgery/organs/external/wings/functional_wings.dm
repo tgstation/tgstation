@@ -138,7 +138,7 @@
 	source.setDir(source.client.intended_direction)
 
 /obj/item/organ/external/wings/functional/process()
-	if (!owner || !can_fly(owner))
+	if (!owner || !can_fly(owner) || isnull(owner.drift_handler))
 		return
 
 	var/max_drift_force = (DEFAULT_INERTIA_SPEED / owner.cached_multiplicative_slowdown - 1) / INERTIA_SPEED_COEF + 1
