@@ -10,7 +10,7 @@
 	/// What is the source (PDA or src)
 	var/source
 
-/obj/machinery/computer/warrant/Initialize()
+/obj/machinery/computer/warrant/Initialize(mapload)
 	. = ..()
 	if(!source)
 		source = src
