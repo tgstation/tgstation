@@ -1,0 +1,5 @@
+author: "Ical92"
+delete-after: True
+changes:
+  - bugfix: "general bitrunning fixes and 102% faster loading times"
+  - bugfix: "bitrunning domains are no longer affected by nebulas in the real world"

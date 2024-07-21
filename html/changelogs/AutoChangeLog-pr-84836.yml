@@ -1,0 +1,6 @@
+author: "00-Steven"
+delete-after: True
+changes:
+  - refactor: "Refactored table item interactions, please report any issues."
+  - bugfix: "Fixed being unable to use decks to draw cards directly onto tables."
+  - qol: "Right clicking a table with a tray puts it down regardless of it having contents."

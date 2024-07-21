@@ -35,7 +35,7 @@
 	/// Flavor text shown to players when they spawn as this construct
 	var/playstyle_string = "You are a generic construct. Your job is to not exist, and you should probably adminhelp this."
 	/// The construct's master
-	var/master = null
+	var/mob/construct_master = null
 	/// Whether this construct is currently seeking nar nar
 	var/seeking = FALSE
 	/// Whether this construct can repair other constructs or cult buildings. Gets the healing_touch component if so.

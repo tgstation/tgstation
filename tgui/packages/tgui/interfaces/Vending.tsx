@@ -14,7 +14,7 @@ import {
 
 import { createSearch } from '../../common/string';
 import { useBackend } from '../backend';
-import { Input } from '../components';
+import { DmIcon, Input } from '../components';
 import { Window } from '../layouts';
 
 type VendingData = {
@@ -45,6 +45,8 @@ type ProductRecord = {
   max_amount: number;
   ref: string;
   category: string;
+  icon?: string;
+  icon_state?: string;
 };
 
 type CoinRecord = ProductRecord & {
@@ -288,20 +290,22 @@ const VendingRow = (props) => {
       (discount ? redPrice : product.price) > user?.cash);
 
   return (
-    <Table.Row>
-      <Table.Cell collapsing>
+    <Table.Row height="32px">
+      <Table.Cell collapsing width="36px">
         <ProductImage product={product} />
       </Table.Cell>
-      <Table.Cell bold>{capitalizeAll(product.name)}</Table.Cell>
-      <Table.Cell>
+      <Table.Cell verticalAlign="middle" bold>
+        {capitalizeAll(product.name)}
+      </Table.Cell>
+      <Table.Cell verticalAlign="middle">
         {!!productStock?.colorable && (
           <ProductColorSelect disabled={disabled} product={product} />
         )}
       </Table.Cell>
-      <Table.Cell collapsing textAlign="right">
+      <Table.Cell collapsing textAlign="right" verticalAlign="middle">
         <ProductStock custom={custom} product={product} remaining={remaining} />
       </Table.Cell>
-      <Table.Cell collapsing textAlign="center">
+      <Table.Cell collapsing textAlign="center" verticalAlign="middle">
         <ProductButton
           custom={custom}
           disabled={disabled}
@@ -319,20 +323,30 @@ const VendingRow = (props) => {
 const ProductImage = (props) => {
   const { product } = props;
 
-  return product.img ? (
-    <img
-      src={`data:image/jpeg;base64,${product.img}`}
-      style={{
-        verticalAlign: 'middle',
-      }}
-    />
-  ) : (
-    <span
-      className={classes(['vending32x32', product.path])}
-      style={{
-        verticalAlign: 'middle',
-      }}
-    />
+  return (
+    <Box width="32px" height="32px">
+      {product.img ? (
+        <img
+          src={`data:image/jpeg;base64,${product.img}`}
+          style={{
+            verticalAlign: 'middle',
+          }}
+        />
+      ) : product.icon && product.icon_state ? (
+        <DmIcon
+          icon={product.icon}
+          icon_state={product.icon_state}
+          fallback={<Icon name="spinner" size={2} spin />}
+        />
+      ) : (
+        <span
+          className={classes(['vending32x32', product.path])}
+          style={{
+            verticalAlign: 'middle',
+          }}
+        />
+      )}
+    </Box>
   );
 };
 
@@ -347,6 +361,7 @@ const ProductColorSelect = (props) => {
     <Button
       icon="palette"
       tooltip="Change color"
+      width="24px"
       disabled={disabled}
       onClick={() => act('select_colors', { ref: product.ref })}
     />

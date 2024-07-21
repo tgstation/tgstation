@@ -1,0 +1,4 @@
+author: "Jackriip"
+delete-after: True
+changes:
+  - refactor: "refactored global set_basalt_light proc into object proc"

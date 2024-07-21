@@ -606,7 +606,7 @@
 
 /obj/item/toy/mecha/deathripley/super_special_attack(obj/item/toy/mecha/victim)
 	playsound(src, 'sound/weapons/sonic_jackhammer.ogg', 20, TRUE)
-	if(victim.combat_health < combat_health) //Instantly kills the other mech if it's health is below our's.
+	if(victim.combat_health < combat_health) //Instantly kills the other mech if its health is below ours.
 		say("EXECUTE!!")
 		victim.combat_health = 0
 	else //Otherwise, just deal one damage.
