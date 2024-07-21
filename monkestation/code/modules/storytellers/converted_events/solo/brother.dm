@@ -30,8 +30,7 @@
 		JOB_SECURITY_ASSISTANT,
 	)
 	required_enemies = 1
-	// BBs should be less common/abundant than normal traitors, albeit not overly so.
-	weight = 16
+	weight = 12
 	maximum_antags = 2
 	denominator = 30
 	cost = 0.45 // so it doesn't eat up threat for a relatively low-threat antag
@@ -40,6 +39,11 @@
 	name = "Blood Brothers"
 	roundstart = TRUE
 	earliest_start = 0 SECONDS
+	extra_spawned_events = list(
+		/datum/round_event_control/antagonist/solo/traitor/roundstart = 12,
+		/datum/round_event_control/antagonist/solo/bloodsucker/roundstart = 4,
+		/datum/round_event_control/antagonist/solo/heretic/roundstart = 2,
+	)
 
 /datum/round_event_control/antagonist/solo/brother/midround
 	name = "Sleeper Agents (Blood Brothers)"
