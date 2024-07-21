@@ -1,5 +1,5 @@
 /// Deals extra damage to mobs of a certain type, species, or biotype.
-/// This doesn't directly modify the normal damage of the weapon, instead it applies it's own damage seperatedly ON TOP of normal damage
+/// This doesn't directly modify the normal damage of the weapon, instead it applies its own damage seperatedly ON TOP of normal damage
 /// ie. a sword that does 10 damage with a bane elment attacthed that has a 0.5 damage_multiplier will do:
 /// 10 damage from the swords normal attack + 5 damage (50%) from the bane element
 /datum/element/bane
