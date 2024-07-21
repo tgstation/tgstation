@@ -215,3 +215,13 @@
   - balance: Replaced perma seed vendors with custom ones
   - balance: Moved perma gamer stuff in blueshift out of perma to a certain funny
       room
+2024-07-21:
+  Absolucy:
+  - bugfix: Meteor shields should zap meteors even more reliably now.
+  - qol: The debris from a zapped meteor now drifts, rather than staying in one spot
+      where it was zapped.
+  Odairu:
+  - balance: took away watchers gatling gun
+  Wisemonster:
+  - qol: Ghost critter spawn points now have a confirmation prompt before making you
+      a critter

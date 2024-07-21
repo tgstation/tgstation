@@ -1,4 +1,0 @@
-author: "Wisemonster"
-delete-after: True
-changes:
-  - qol: "Ghost critter spawn points now have a confirmation prompt before making you a critter"
