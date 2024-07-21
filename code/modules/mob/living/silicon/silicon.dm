@@ -38,9 +38,7 @@
 
 	///Are our siliconHUDs on? TRUE for yes, FALSE for no.
 	var/sensors_on = TRUE
-	var/med_hud = DATA_HUD_MEDICAL_ADVANCED //Determines the med hud to use
-	var/sec_hud = DATA_HUD_SECURITY_ADVANCED //Determines the sec hud to use
-	var/d_hud = DATA_HUD_DIAGNOSTIC_BASIC //Determines the diag hud to use
+	var/list/silicon_huds = list(DATA_HUD_MEDICAL_ADVANCED, DATA_HUD_SECURITY_ADVANCED, DATA_HUD_DIAGNOSTIC)
 
 	var/law_change_counter = 0
 	var/obj/machinery/camera/builtInCamera = null
@@ -80,6 +78,7 @@
 	)
 
 	add_traits(traits_to_apply, ROUNDSTART_TRAIT)
+	ADD_TRAIT(src, TRAIT_SILICON_EMOTES_ALLOWED, INNATE_TRAIT)
 	RegisterSignal(src, COMSIG_LIVING_ELECTROCUTE_ACT, PROC_REF(on_silicon_shocked))
 
 /mob/living/silicon/Destroy()
@@ -391,20 +390,14 @@
 	return -10
 
 /mob/living/silicon/proc/remove_sensors()
-	var/datum/atom_hud/secsensor = GLOB.huds[sec_hud]
-	var/datum/atom_hud/medsensor = GLOB.huds[med_hud]
-	var/datum/atom_hud/diagsensor = GLOB.huds[d_hud]
-	secsensor.hide_from(src)
-	medsensor.hide_from(src)
-	diagsensor.hide_from(src)
+	for (var/hud_type in silicon_huds)
+		var/datum/atom_hud/silicon_hud = GLOB.huds[hud_type]
+		silicon_hud.hide_from(src)
 
 /mob/living/silicon/proc/add_sensors()
-	var/datum/atom_hud/secsensor = GLOB.huds[sec_hud]
-	var/datum/atom_hud/medsensor = GLOB.huds[med_hud]
-	var/datum/atom_hud/diagsensor = GLOB.huds[d_hud]
-	secsensor.show_to(src)
-	medsensor.show_to(src)
-	diagsensor.show_to(src)
+	for (var/hud_type in silicon_huds)
+		var/datum/atom_hud/silicon_hud = GLOB.huds[hud_type]
+		silicon_hud.show_to(src)
 
 /mob/living/silicon/proc/toggle_sensors()
 	if(incapacitated())

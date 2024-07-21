@@ -89,7 +89,7 @@
 	name = "Mafia Security Officer"
 
 	uniform = /obj/item/clothing/under/rank/security/officer
-	gloves = /obj/item/clothing/gloves/color/black
+	gloves = /obj/item/clothing/gloves/color/black/security
 	head = /obj/item/clothing/head/helmet/sec
 	suit = /obj/item/clothing/suit/armor/vest/alt
 	shoes = /obj/item/clothing/shoes/jackboots
@@ -116,7 +116,7 @@
 	uniform = /obj/item/clothing/under/rank/security/head_of_security
 	shoes = /obj/item/clothing/shoes/jackboots
 	suit = /obj/item/clothing/suit/armor/hos/trenchcoat
-	gloves = /obj/item/clothing/gloves/color/black
+	gloves = /obj/item/clothing/gloves/color/black/security
 	head = /obj/item/clothing/head/hats/hos/beret
 	glasses = /obj/item/clothing/glasses/hud/security/sunglasses
 
@@ -126,7 +126,7 @@
 	uniform = /obj/item/clothing/under/rank/security/warden
 	shoes = /obj/item/clothing/shoes/jackboots
 	suit = /obj/item/clothing/suit/armor/vest/warden/alt
-	gloves = /obj/item/clothing/gloves/color/black
+	gloves = /obj/item/clothing/gloves/color/black/security
 	head = /obj/item/clothing/head/hats/warden/red
 	glasses = /obj/item/clothing/glasses/hud/security/sunglasses
 

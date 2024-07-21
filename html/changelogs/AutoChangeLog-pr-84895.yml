@@ -1,8 +1,0 @@
-author: "Ghommie"
-delete-after: True
-changes:
-  - balance: "reduced the prices of some blackmarket items across the board."
-  - balance: "the thermite bottle (from the contraband spawner and the blackmarket), now spawns with 50u of thermite vs 30, enough to melt one reinforced wall."
-  - rscadd: "Replaced the science googles from the blackmarket with a security + health scanner HUD."
-  - rscadd: "Replaced the single shotgun dart from the blackmarket with a box of XL shotgun darts."
-  - rscadd: "The donk pocket box from the blackmarket now comes in different flavors."

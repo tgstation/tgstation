@@ -79,6 +79,8 @@
 	var/pickup_sound
 	///Sound uses when dropping the item, or when its thrown.
 	var/drop_sound
+	///Do the drop and pickup sounds vary?
+	var/sound_vary = FALSE
 	///Whether or not we use stealthy audio levels for this item's attack sounds
 	var/stealthy_audio = FALSE
 	///Sound which is produced when blocking an attack
@@ -677,7 +679,7 @@
 	item_flags &= ~IN_INVENTORY
 	SEND_SIGNAL(src, COMSIG_ITEM_DROPPED, user)
 	if(!silent)
-		playsound(src, drop_sound, DROP_SOUND_VOLUME, ignore_walls = FALSE)
+		playsound(src, drop_sound, DROP_SOUND_VOLUME, vary = sound_vary, ignore_walls = FALSE)
 	user?.update_equipment_speed_mods()
 
 /// called just as an item is picked up (loc is not yet changed)
@@ -1266,7 +1268,7 @@
 	if((item_flags & ABSTRACT) || HAS_TRAIT(src, TRAIT_NODROP))
 		return
 	user.dropItemToGround(src, silent = TRUE)
-	if(throwforce && HAS_TRAIT(user, TRAIT_PACIFISM))
+	if(throwforce && (HAS_TRAIT(user, TRAIT_PACIFISM)) || HAS_TRAIT(user, TRAIT_NO_THROWING))
 		to_chat(user, span_notice("You set [src] down gently on the ground."))
 		return
 	return src
@@ -1729,7 +1731,7 @@
 				return FALSE
 			return TRUE
 	return FALSE
-	
+
 /// Fetches embedding data
 /obj/item/proc/get_embed()
 	RETURN_TYPE(/datum/embed_data)
