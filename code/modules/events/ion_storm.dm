@@ -106,7 +106,7 @@
 	var/ionallergysev = pick_list(ION_FILE, "ionallergysev")
 	//Species, for when the AI has to commit genocide. Plural.
 	var/ionspecies = pick_list(ION_FILE, "ionspecies")
-	//Abstract concepts for the AI to decide on it's own definition of.
+	//Abstract concepts for the AI to decide on its own definition of.
 	var/ionabstract = pick_list(ION_FILE, "ionabstract")
 	//Foods. Drinks aren't included due to grammar; if you want to add drinks, make a new set
 	//of possible laws for best effect. Unless you want the crew having to drink hamburgers.

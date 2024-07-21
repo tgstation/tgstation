@@ -1,6 +1,6 @@
 // This file contains any stuff related to admin-visible traits.
 // There's likely more than a few traits missing from this file, do consult the `_traits.dm` file in this folder to see every global trait that exists.
-// quirks have it's own panel so we don't need them here.
+// quirks have their own panel so we don't need them here.
 
 GLOBAL_LIST_INIT(admin_visible_traits, list(
 	/atom = list(

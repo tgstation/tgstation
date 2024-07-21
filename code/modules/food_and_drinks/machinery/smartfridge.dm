@@ -364,14 +364,18 @@
 
 		var/atom/movable/atom = item
 		if (!QDELETED(atom))
-			var/md5name = md5(atom.name) // This needs to happen because of a bug in a TGUI component, https://github.com/ractivejs/ractive/issues/744
-			if (listofitems[md5name]) // which is fixed in a version we cannot use due to ie8 incompatibility
-				listofitems[md5name]["amount"]++ // The good news is, #30519 made smartfridge UIs non-auto-updating
+			var/key = "[atom.type]"
+			if (listofitems[key])
+				listofitems[key]["amount"]++
 			else
-				listofitems[md5name] = list("name" = atom.name, "amount" = 1)
-	sort_list(listofitems)
-
-	.["contents"] = listofitems
+				listofitems[key] = list(
+					"path" = key,
+					"name" = full_capitalize(atom.name),
+					"icon" = atom.icon,
+					"icon_state" = atom.icon_state,
+					"amount" = 1
+					)
+	.["contents"] = sort_list(listofitems)
 	.["name"] = name
 	.["isdryer"] = FALSE
 
@@ -389,32 +393,29 @@
 
 	switch(action)
 		if("Release")
-			var/desired = 0
+			var/amount = text2num(params["amount"])
+			var/desired = 1
 
 			if(isAI(living_mob))
 				to_chat(living_mob, span_warning("[src] does not respect your authority!"))
 				return
 
-			if (params["amount"])
-				desired = text2num(params["amount"])
-			else
-				desired = tgui_input_number(living_mob, "How many items would you like to take out?", "Release", max_value = 50)
+			if (amount > 1)
+				desired = tgui_input_number(living_mob, "How many items would you like to take out?", "Release", default = min(amount, 50), max_value = min(amount, 50))
 				if(!desired)
 					return
 
 			for(var/obj/item/dispensed_item in src)
 				if(desired <= 0)
 					break
-				// Grab the first item in contents which name matches our passed name.
-				// format_text() is used here to strip \improper and \proper from both names,
-				// which is required for correct string comparison between them.
-				if(format_text(dispensed_item.name) == format_text(params["name"]))
+				if(istype(dispensed_item, text2path(params["path"])))
 					if(dispensed_item in component_parts)
 						CRASH("Attempted removal of [dispensed_item] component_part from smartfridge via smartfridge interface.")
 					//dispense the item
 					if(!living_mob.put_in_hands(dispensed_item))
 						dispensed_item.forceMove(drop_location())
 						adjust_item_drop_location(dispensed_item)
+					playsound(src, 'sound/machines/machine_vend.ogg', 50, TRUE, extrarange = -3)
 					use_energy(active_power_usage)
 					desired--
 

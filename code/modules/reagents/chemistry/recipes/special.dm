@@ -345,9 +345,9 @@ GLOBAL_LIST_INIT(medicine_reagents, build_medicine_reagents())
 			dat += " <li>heating it above [recipe.required_temp] degrees"
 			dat += " but not above [recipe.overheat_temp] degrees"
 		if(recipe.thermic_constant > 0)
-			dat += "<li> taking care of it's exothermic nature</li>"
+			dat += "<li> taking care of its exothermic nature</li>"
 		else if(recipe.thermic_constant < 0)
-			dat += "<li> taking care of it's endothermic nature</li>"
+			dat += "<li> taking care of its endothermic nature</li>"
 	var/datum/chemical_reaction/randomized/random_recipe = recipe
 	if(random_recipe)
 		if(random_recipe.randomize_req_ph)

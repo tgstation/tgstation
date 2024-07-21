@@ -1,0 +1,4 @@
+author: "carlarctg"
+delete-after: True
+changes:
+  - rscadd: "Adds Untie Shoes, a 1-point wizard spell. It can be upgraded to untie jackboots, summon shoes to untie, and become completely silent!"
