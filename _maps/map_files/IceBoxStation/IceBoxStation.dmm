@@ -15783,6 +15783,7 @@
 	cycle_id = "brigoutpost"
 	},
 /obj/effect/mapping_helpers/airlock/access/all/security/entrance,
+/obj/machinery/scanner_gate/preset_guns,
 /turf/open/floor/iron/dark/textured_edge{
 	dir = 8
 	},
@@ -18827,6 +18828,7 @@
 	cycle_id = "brigoutpost"
 	},
 /obj/effect/mapping_helpers/airlock/access/all/security/entrance,
+/obj/machinery/scanner_gate/preset_guns,
 /turf/open/floor/iron/dark/textured_edge{
 	dir = 4
 	},
