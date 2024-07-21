@@ -323,10 +323,11 @@ GLOBAL_LIST_EMPTY(hivemind_users)
 	var/list/all_who_can_hear = assoc_to_keys(connected_network.linked_mobs) + network_owner
 
 	for(var/mob/living/recipient as anything in all_who_can_hear)
-		to_chat(recipient, formatted_message)
+		var/avoid_highlighting = (recipient == user) || (network_owner == user)
+		to_chat(recipient, formatted_message, type = MESSAGE_TYPE_RADIO, avoid_highlighting = avoid_highlighting)
 
 	for(var/mob/recipient as anything in GLOB.dead_mob_list)
-		to_chat(recipient, "[FOLLOW_LINK(recipient, user)] [formatted_message]")
+		to_chat(recipient, "[FOLLOW_LINK(recipient, user)] [formatted_message]", type = MESSAGE_TYPE_RADIO)
 
 /obj/item/disk/nifsoft_uploader/money_sense
 	name = "Automatic Apprasial"
