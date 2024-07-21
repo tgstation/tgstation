@@ -20235,7 +20235,9 @@
 /area/station/maintenance/department/chapel)
 "eOW" = (
 /obj/effect/turf_decal/bot,
-/obj/machinery/vending/hydroseeds/permabrig,
+/obj/machinery/vending/hydroseeds{
+	slogan_delay = 700
+	},
 /turf/open/floor/iron/dark,
 /area/station/security/prison/garden)
 "ePa" = (

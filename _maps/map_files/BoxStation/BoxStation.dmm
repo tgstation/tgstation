@@ -56034,7 +56034,9 @@
 /obj/structure/cable,
 /obj/machinery/light/small/directional/south,
 /obj/effect/turf_decal/bot,
-/obj/machinery/vending/hydroseeds/permabrig,
+/obj/machinery/vending/hydroseeds{
+	slogan_delay = 700
+	},
 /turf/open/floor/iron/dark,
 /area/station/security/prison/garden)
 "sLG" = (

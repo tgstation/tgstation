@@ -60745,7 +60745,9 @@
 	dir = 6;
 	network = list("ss13","Security","prison")
 	},
-/obj/machinery/vending/hydroseeds/permabrig,
+/obj/machinery/vending/hydroseeds{
+	slogan_delay = 700
+	},
 /turf/open/floor/iron/dark,
 /area/station/security/prison/garden)
 "stc" = (

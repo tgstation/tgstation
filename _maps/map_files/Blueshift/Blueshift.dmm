@@ -48000,7 +48000,9 @@
 /area/station/cargo/miningoffice)
 "jqh" = (
 /obj/item/radio/intercom/directional/north,
-/obj/machinery/vending/hydroseeds/permabrig,
+/obj/machinery/vending/hydroseeds{
+	slogan_delay = 700
+	},
 /turf/open/floor/iron/dark,
 /area/station/security/prison/garden)
 "jqr" = (
