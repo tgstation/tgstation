@@ -166,6 +166,17 @@
 	force = 15
 	throwforce = 15
 
+/obj/item/knife/combat/root
+	name = "cahn'root dagger"
+	icon = 'icons/obj/weapons/stabby.dmi'
+	icon_state = "rootdagger"
+	worn_icon_state = "root_dagger"
+	inhand_icon_state = "rootshiv"
+	embed_type = /datum/embed_data/combat_knife/weak
+	desc = "A root dagger, deceptively sharp. Perfect to hide and stab someone with, or make a couple and throw them at enemies."
+	force = 15
+	throwforce = 15
+
 /obj/item/knife/combat/bone
 	name = "bone dagger"
 	inhand_icon_state = "bone_dagger"
@@ -284,6 +295,13 @@
 	name = "parsnip shiv"
 	icon_state = "parsnipshiv"
 	inhand_icon_state = "parsnipshiv"
+	desc = "Truly putting 'snip' in the 'parsnip', and it's not sub-par either!"
+	custom_materials = null
+
+/obj/item/knife/shiv/root
+	name = "cahn'root shiv"
+	icon_state = "rootshiv"
+	inhand_icon_state = "rootshiv"
 	desc = "Truly putting 'snip' in the 'parsnip', and it's not sub-par either!"
 	custom_materials = null
 

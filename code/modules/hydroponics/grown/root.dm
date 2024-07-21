@@ -104,6 +104,21 @@
 	tastes = list("sweet dirt" = 1)
 	distill_reagent = /datum/reagent/consumable/rootbeer
 
+/obj/item/food/grown/cahnroot/attackby(obj/item/I, mob/user, params)
+	if(!I.get_sharpness())
+		return ..()
+	var/root_blade
+	var/root_dagger_chance = (max(0, seed.potency - 25) / 50)
+	if (prob(root_dagger_chance))
+		root_blade = new /obj/item/knife/combat/root
+		to_chat(user, span_notice("You sharpen the cahn'root into a dagger with [I]."))
+	else
+		root_blade = new /obj/item/knife/shiv/root
+		to_chat(user, span_notice("You sharpen the cahn'root into a shiv with [I]."))
+	remove_item_from_storage(user)
+	qdel(src)
+	user.put_in_hands(root_blade)
+
 // White-Beet
 /obj/item/seeds/whitebeet
 	name = "pack of white-beet seeds"
