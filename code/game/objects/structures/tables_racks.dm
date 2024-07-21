@@ -228,74 +228,99 @@
 	if(istype(tool, /obj/item/construction/rcd))
 		return NONE
 
+	var/deck_act_value = NONE
 	if(istype(tool, /obj/item/toy/cards/deck))
-		var/obj/item/toy/cards/deck/dealer_deck = tool
-		if(HAS_TRAIT(dealer_deck, TRAIT_WIELDED)) // deal a card faceup on the table
-			var/obj/item/toy/singlecard/card = dealer_deck.draw(user)
-			if(card)
-				card.Flip()
-				attackby(card, user, list2params(modifiers))
-			return ITEM_INTERACT_SUCCESS
+		deck_act_value = deck_act(user, tool, modifiers, TRUE)
+	// Continue to placing if we don't do anything else
+	if(deck_act_value != NONE)
+		return deck_act_value
 
-	return item_interaction(user, tool, modifiers)
-
-/obj/structure/table/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
-	if(istype(tool, /obj/item/storage/bag/tray))
-		var/obj/item/storage/bag/tray/tray = tool
-		if(tray.contents.len > 0) // If the tray isn't empty
-			for(var/obj/item/thing in tray.contents)
-				AfterPutItemOnTable(thing, user)
-			tool.atom_storage.remove_all(drop_location())
-			user.visible_message(span_notice("[user] empties [tool] on [src]."))
-			return ITEM_INTERACT_SUCCESS
-		// If the tray IS empty, continue on (tray will be placed on the table like other items)
-
-	if(istype(tool, /obj/item/toy/cards/deck))
-		var/obj/item/toy/cards/deck/dealer_deck = tool
-		if(HAS_TRAIT(dealer_deck, TRAIT_WIELDED)) // deal a card facedown on the table
-			var/obj/item/toy/singlecard/card = dealer_deck.draw(user)
-			if(card)
-				attackby(card, user, list2params(modifiers))
-			return ITEM_INTERACT_SUCCESS
-
-	if(istype(tool, /obj/item/riding_offhand))
-		var/obj/item/riding_offhand/riding_item = tool
-		var/mob/living/carried_mob = riding_item.rider
-		if(carried_mob == user) //Piggyback user.
-			return NONE
-		if(user.combat_mode)
-			user.unbuckle_mob(carried_mob)
-			tablelimbsmash(user, carried_mob)
-		else
-			var/tableplace_delay = 3.5 SECONDS
-			var/skills_space = ""
-			if(HAS_TRAIT(user, TRAIT_QUICKER_CARRY))
-				tableplace_delay = 2 SECONDS
-				skills_space = " expertly"
-			else if(HAS_TRAIT(user, TRAIT_QUICK_CARRY))
-				tableplace_delay = 2.75 SECONDS
-				skills_space = " quickly"
-
-			var/obj/item/organ/internal/cyberimp/chest/spine/potential_spine = user.get_organ_slot(ORGAN_SLOT_SPINE)
-			if(istype(potential_spine))
-				tableplace_delay *= potential_spine.athletics_boost_multiplier
-
-			carried_mob.visible_message(span_notice("[user] begins to[skills_space] place [carried_mob] onto [src]..."),
-				span_userdanger("[user] begins to[skills_space] place [carried_mob] onto [src]..."))
-			if(do_after(user, tableplace_delay, target = carried_mob))
-				user.unbuckle_mob(carried_mob)
-				tableplace(user, carried_mob)
-		return ITEM_INTERACT_SUCCESS
-
-	// Where putting things on tables is handled.
-	if(!user.combat_mode && !(tool.item_flags & ABSTRACT) && user.transferItemToLoc(tool, drop_location(), silent = FALSE))
-		//Clamp it so that the icon never moves more than 16 pixels in either direction (thus leaving the table turf)
-		tool.pixel_x = clamp(text2num(LAZYACCESS(modifiers, ICON_X)) - 16, -(world.icon_size/2), world.icon_size/2)
-		tool.pixel_y = clamp(text2num(LAZYACCESS(modifiers, ICON_Y)) - 16, -(world.icon_size/2), world.icon_size/2)
-		AfterPutItemOnTable(tool, user)
-		return ITEM_INTERACT_SUCCESS
+	if(!user.combat_mode)
+		return table_place_act(user, tool, modifiers)
 
 	return NONE
+
+/obj/structure/table/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	. = NONE
+	if(istype(tool, /obj/item/storage/bag/tray))
+		. = tray_act(user, tool)
+	else if(istype(tool, /obj/item/toy/cards/deck))
+		. = deck_act(user, tool, modifiers, FALSE)
+	else if(istype(tool, /obj/item/riding_offhand))
+		. = riding_offhand_act(user, tool)
+
+	// Continue to placing if we don't do anything else
+	if(. != NONE)
+		return .
+
+	if(!user.combat_mode)
+		return table_place_act(user, tool, modifiers)
+
+	return NONE
+
+/obj/structure/table/proc/tray_act(mob/living/user, obj/item/storage/bag/tray/used_tray)
+	if(used_tray.contents.len <= 0)
+		return NONE // If the tray IS empty, continue on (tray will be placed on the table like other items)
+
+	for(var/obj/item/thing in used_tray.contents)
+		AfterPutItemOnTable(thing, user)
+	used_tray.atom_storage.remove_all(drop_location())
+	user.visible_message(span_notice("[user] empties [used_tray] on [src]."))
+	return ITEM_INTERACT_SUCCESS
+
+/obj/structure/table/proc/deck_act(mob/living/user, obj/item/toy/cards/deck/dealer_deck, list/modifiers, flip)
+	if(!HAS_TRAIT(dealer_deck, TRAIT_WIELDED))
+		return NONE
+
+	var/obj/item/toy/singlecard/card = dealer_deck.draw(user)
+	if(isnull(card))
+		return ITEM_INTERACT_BLOCKING
+	if(flip)
+		card.Flip()
+	return table_place_act(user, card, modifiers)
+
+/obj/structure/table/proc/riding_offhand_act(mob/living/user, obj/item/riding_offhand/riding_item)
+	var/mob/living/carried_mob = riding_item.rider
+	if(carried_mob == user) //Piggyback user.
+		return NONE
+
+	if(user.combat_mode)
+		user.unbuckle_mob(carried_mob)
+		tablelimbsmash(user, carried_mob)
+		return ITEM_INTERACT_SUCCESS
+
+	var/tableplace_delay = 3.5 SECONDS
+	var/skills_space = ""
+	if(HAS_TRAIT(user, TRAIT_QUICKER_CARRY))
+		tableplace_delay = 2 SECONDS
+		skills_space = " expertly"
+	else if(HAS_TRAIT(user, TRAIT_QUICK_CARRY))
+		tableplace_delay = 2.75 SECONDS
+		skills_space = " quickly"
+
+	var/obj/item/organ/internal/cyberimp/chest/spine/potential_spine = user.get_organ_slot(ORGAN_SLOT_SPINE)
+	if(istype(potential_spine))
+		tableplace_delay *= potential_spine.athletics_boost_multiplier
+
+	carried_mob.visible_message(span_notice("[user] begins to[skills_space] place [carried_mob] onto [src]..."),
+		span_userdanger("[user] begins to[skills_space] place [carried_mob] onto [src]..."))
+	if(!do_after(user, tableplace_delay, target = carried_mob))
+		return ITEM_INTERACT_BLOCKING
+	user.unbuckle_mob(carried_mob)
+	tableplace(user, carried_mob)
+	return ITEM_INTERACT_SUCCESS
+
+// Where putting things on tables is handled.
+/obj/structure/table/proc/table_place_act(mob/living/user, obj/item/tool, list/modifiers)
+	if(tool.item_flags & ABSTRACT)
+		return NONE
+	if(!user.transferItemToLoc(tool, drop_location(), silent = FALSE))
+		return ITEM_INTERACT_BLOCKING
+	//Clamp it so that the icon never moves more than 16 pixels in either direction (thus leaving the table turf)
+	tool.pixel_x = clamp(text2num(LAZYACCESS(modifiers, ICON_X)) - 16, -(world.icon_size/2), world.icon_size/2)
+	tool.pixel_y = clamp(text2num(LAZYACCESS(modifiers, ICON_Y)) - 16, -(world.icon_size/2), world.icon_size/2)
+	AfterPutItemOnTable(tool, user)
+	return ITEM_INTERACT_SUCCESS
 
 /obj/structure/table/proc/AfterPutItemOnTable(obj/item/thing, mob/living/user)
 	return

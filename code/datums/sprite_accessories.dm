@@ -1781,13 +1781,6 @@
 	icon_state = "default"
 	color_src = HAIR_COLOR
 
-/datum/sprite_accessory/tails/human/fox
-	name = "Fox"
-	icon_state = "fox"
-	icon = 'icons/mob/human/cat_features.dmi'
-	color_src = HAIR_COLOR
-	locked = TRUE
-
 /datum/sprite_accessory/tails/monkey/default
 	name = "Monkey"
 	icon = 'icons/mob/human/species/monkey/monkey_tail.dmi'

@@ -41,7 +41,6 @@
 		/mob/living/basic/pet/fox,
 	)
 	output_organs = list(
-		/obj/item/organ/external/tail/cat/fox,
 		/obj/item/organ/internal/ears/fox,
 	)
 	infusion_desc = "inexcusable"
