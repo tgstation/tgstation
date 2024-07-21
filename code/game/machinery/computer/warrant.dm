@@ -10,10 +10,6 @@
 	/// What is the source (PDA or src)
 	var/source
 
-/obj/machinery/computer/warrant/Initialize(mapload)
-	. = ..()
-	source = src
-
 /obj/machinery/computer/warrant/ui_interact(mob/user, datum/tgui/ui)
 	. = ..()
 	ui = SStgui.try_update_ui(user, src, ui)
@@ -84,6 +80,12 @@
 
 /// Pays towards a listed fine.
 /obj/machinery/computer/warrant/proc/pay_fine(mob/user, list/params)
+	var/internal_source
+	if(source)
+		internal_source = source
+	else
+		internal_Source = src
+
 	var/datum/record/crew/target = locate(params["crew_ref"]) in GLOB.manifest.general
 	if(!target)
 		return FALSE
@@ -94,26 +96,26 @@
 
 	if(!isliving(user) || issilicon(user))
 		to_chat(user, span_warning("ACCESS DENIED"))
-		playsound(source, 'sound/machines/terminal_error.ogg', 100, TRUE)
+		playsound(internal_source, 'sound/machines/terminal_error.ogg', 100, TRUE)
 		return FALSE
 
 	var/mob/living/player = user
 	var/obj/item/card/id/auth = player.get_idcard(TRUE)
 	if(!auth)
 		to_chat(user, span_warning("ACCESS DENIED: No ID card detected."))
-		playsound(source, 'sound/machines/terminal_error.ogg', 100, TRUE)
+		playsound(internal_source, 'sound/machines/terminal_error.ogg', 100, TRUE)
 		return FALSE
 
 	var/datum/bank_account/account = auth.registered_account
 	if(!account?.account_holder || account.account_holder == "Unassigned")
 		to_chat(user, span_warning("ACCESS DENIED: No account linked to ID."))
-		playsound(source, 'sound/machines/terminal_error.ogg', 100, TRUE)
+		playsound(internal_source, 'sound/machines/terminal_error.ogg', 100, TRUE)
 		return FALSE
 
 	var/amount = params["amount"]
 	if(!amount || !isnum(amount) || amount > warrant.fine || !account.adjust_money(-amount, "Paid fine for [target.name]"))
 		to_chat(user, span_warning("ACCESS DENIED: Invalid amount."))
-		playsound(source, 'sound/machines/terminal_error.ogg', 100, TRUE)
+		playsound(internal_source, 'sound/machines/terminal_error.ogg', 100, TRUE)
 		return FALSE
 
 	account.bank_card_talk("You have paid [amount]cr towards [target.name]'s fine of [warrant.fine]cr.")
@@ -142,18 +144,24 @@
 	return TRUE
 
 /// Finishes printing, resets the printer.
-/obj/machinery/computer/warrant/proc/print_finish(obj/item/paper/paperslip/ticket/ticket)
+/obj/machinery/computer/warrant/proc/print_finish(obj/item/paper/paperslip/ticket/ticket, internal_source)
 	printing = FALSE
-	playsound(source, 'sound/machines/terminal_eject.ogg', 100, TRUE)
-	ticket.forceMove(get_turf(source))
+	playsound(internal_source, 'sound/machines/terminal_eject.ogg', 100, TRUE)
+	ticket.forceMove(get_turf(internal_source))
 
 	return TRUE
 
 /// Prints a ticket for a listed fine.
 /obj/machinery/computer/warrant/proc/print_ticket(mob/user, list/params)
+	var/internal_source
+	if(source)
+		internal_source = source
+	else
+		internal_Source = src
+
 	if(printing)
-		balloon_alert(source, "printer busy")
-		playsound(source, 'sound/machines/terminal_error.ogg', 100, TRUE)
+		balloon_alert(internal_source, "printer busy")
+		playsound(internal_source, 'sound/machines/terminal_error.ogg', 100, TRUE)
 		return FALSE
 
 	var/datum/record/crew/target = locate(params["crew_ref"]) in GLOB.manifest.general
@@ -176,8 +184,8 @@
 		If you have any problems with the citation reason - contact a Lawyer. <b>You've been warned.</b></i>"
 
 	printing = TRUE
-	balloon_alert(source, "printing")
-	playsound(source, 'sound/machines/printer.ogg', 100, TRUE)
+	balloon_alert(internal_source, "printing")
+	playsound(internal_source, 'sound/machines/printer.ogg', 100, TRUE)
 
 	var/obj/item/paper/paperslip/ticket/ticket = new(null)
 	ticket.name = "ticket to [target.name]"
@@ -185,6 +193,6 @@
 	ticket.add_raw_text(ticket_text)
 	ticket.update_icon()
 
-	addtimer(CALLBACK(src, PROC_REF(print_finish), ticket), 2 SECONDS)
+	addtimer(CALLBACK(src, PROC_REF(print_finish), ticket, internal_source), 2 SECONDS)
 
 	return TRUE
