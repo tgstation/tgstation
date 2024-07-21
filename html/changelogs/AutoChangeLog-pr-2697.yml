@@ -1,0 +1,4 @@
+author: "KnigTheThrasher"
+delete-after: True
+changes:
+  - bugfix: "Makes nif catalogue functional again"
