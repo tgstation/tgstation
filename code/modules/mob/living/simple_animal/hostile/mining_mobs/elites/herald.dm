@@ -6,9 +6,9 @@
 /**
  * # Herald
  *
- * A slow-moving projectile user with a few tricks up it's sleeve.  Less unga-bunga than Colossus, with more cleverness in it's fighting style.
- * As it's health gets lower, the amount of projectiles fired per-attack increases.
- * It's attacks are as follows:
+ * A slow-moving projectile user with a few tricks up its sleeve.  Less unga-bunga than Colossus, with more cleverness in its fighting style.
+ * As its health gets lower, the amount of projectiles fired per-attack increases.
+ * Its attacks are as follows:
  * - Fires three projectiles in a given direction.
  * - Fires a spread in every cardinal and diagonal direction at once, then does it again after a bit.
  * - Shoots a single, golden bolt.  Wherever it lands, the herald will be teleported to the location.
