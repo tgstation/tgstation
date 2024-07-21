@@ -202,7 +202,7 @@ export const FishAnalyzer = (props) => {
                                     average: [0.5, 0.9],
                                     bad: [-Infinity, 0.5],
                                   }}
-                                 />
+                                />
                               </Stack.Item>
                               <Stack.Item>
                                 Hunger:{' '}
@@ -214,7 +214,7 @@ export const FishAnalyzer = (props) => {
                                     average: [0.5, 0.9],
                                     bad: [-Infinity, 0.5],
                                   }}
-                                 />
+                                />
                               </Stack.Item>
                               <Stack.Item mt={2}>
                                 {fish.fish_evolutions.length === 0 ? (
