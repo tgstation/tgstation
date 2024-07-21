@@ -666,7 +666,7 @@ ADMIN_VERB(centcom_podlauncher, R_ADMIN, "Config/Launch Supplypod", "Configure a
 /area/centcom/central_command_areas/supplypod/pod_storage/Initialize(mapload) //temp_pod holding area
 	. = ..()
 	var/obj/imgbound = locate() in locate(200,SUPPLYPOD_X_OFFSET*-4.5, 1)
-	call(GLOB.podlauncher, "RegisterSignal")(imgbound, "ctrl_click", "give_podlauncher")
+	GLOB.podlauncher.RegisterSignal(imgbound, COMSIG_CLICK_CTRL, TYPE_PROC_REF(/datum/centcom_podlauncher, give_podlauncher))
 
 /datum/centcom_podlauncher/proc/createOrderedArea(area/area_to_order) //This assumes the area passed in is a continuous square
 	if (isnull(area_to_order)) //If theres no supplypod bay mapped into centcom, throw an error
