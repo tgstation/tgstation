@@ -23,3 +23,6 @@ irod_rod_pick_up.ogg - https://freesound.org/people/lostphosphene/sounds/258265/
 plastic_pick_up.ogg - https://freesound.org/people/Jessica190091/sounds/491304/ , License: CC BY 4.0
 plastic_drop.ogg - https://freesound.org/people/martian/sounds/338854/ , License: CC0
 } - edited by sadboysuss
+
+heavy_pickup.ogg by F.M.Audio - https://freesound.org/people/F.M.Audio/sounds/612762/
+heavy_drop.ogg by rottako - https://freesound.org/people/rottako/sounds/693581/

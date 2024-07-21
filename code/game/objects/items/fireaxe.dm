@@ -27,6 +27,10 @@
 	var/force_unwielded = 5
 	/// How much damage to do wielded
 	var/force_wielded = 24
+	/// Can it butcher?
+	var/butcher = TRUE
+	/// Do you need 2 hands to use it?
+	var/is_two_handed = FALSE
 
 /datum/armor/item_fireaxe
 	fire = 100
@@ -34,14 +38,15 @@
 
 /obj/item/fireaxe/Initialize(mapload)
 	. = ..()
-	AddComponent(/datum/component/butchering, \
-		speed = 10 SECONDS, \
-		effectiveness = 80, \
-		bonus_modifier = 0 , \
-		butcher_sound = hitsound, \
-	)
+	if(butcher)
+		AddComponent(/datum/component/butchering, \
+			speed = 10 SECONDS, \
+			effectiveness = 80, \
+			bonus_modifier = 0 , \
+			butcher_sound = hitsound, \
+		)
 	//axes are not known for being precision butchering tools
-	AddComponent(/datum/component/two_handed, force_unwielded=force_unwielded, force_wielded=force_wielded, icon_wielded="[base_icon_state]1")
+	AddComponent(/datum/component/two_handed, force_unwielded=force_unwielded, force_wielded=force_wielded, require_twohands = is_two_handed, icon_wielded="[base_icon_state]1")
 
 /obj/item/fireaxe/update_icon_state()
 	icon_state = "[base_icon_state]0"
@@ -85,7 +90,9 @@
 	toolspeed = 1
 	usesound = 'sound/items/crowbar.ogg'
 
-//boarding axe
+/*
+ * Boarding Axe
+ */
 /obj/item/fireaxe/boardingaxe
 	icon_state = "boarding_axe0"
 	base_icon_state = "boarding_axe"
@@ -94,3 +101,70 @@
 	force_unwielded = 5
 	force_wielded = 30
 	demolition_mod = 3
+
+/*
+ * Battering Ram
+ */
+/obj/item/fireaxe/batteringram
+	icon_state = "battering_ram0"
+	base_icon_state = "battering_ram"
+	name = "battering ram"
+	desc = "An extremely heavy and unwieldy hunk of metal used to break down airlocks. Why would anyone ram a sliding airlock?"
+
+	w_class = WEIGHT_CLASS_HUGE
+	item_flags = SLOWS_WHILE_IN_HAND | IMMUTABLE_SLOW
+	sharpness = NONE
+	butcher = FALSE
+	is_two_handed = TRUE
+
+	force_unwielded = 5
+	force_wielded = 18
+	demolition_mod = 1.5
+	wound_bonus = 15 // RIP bones
+	bare_wound_bonus = 0
+
+	slowdown = 1
+	drag_slowdown = 1.5 // So you cannot circumvent the slowdown
+	throw_range = 2
+
+	attack_verb_continuous = list("slams", "breaks", "demolishes", "rams", "batters", "breaches")
+	attack_verb_simple = list("slam", "break", "demolish", "ram", "batter", "breach")
+
+	hitsound = 'sound/effects/bang.ogg'
+	pickup_sound = 'sound/items/handling/heavy_pickup.ogg'
+	drop_sound = 'sound/items/handling/heavy_drop.ogg'
+
+/obj/item/fireaxe/batteringram/attack(mob/living/target_mob, mob/living/user, params)
+	. = ..()
+	if(!target_mob.anchored && target_mob.body_position == STANDING_UP)
+		if(target_mob.move_intent == MOVE_INTENT_WALK) // Walking has better grip on the floor
+			return
+		if(!has_gravity()) // Should've learned physics
+			var/user_throwtarget = get_step(user, get_dir(target_mob, user))
+			user.safe_throw_at(user_throwtarget, 1, 1, force = MOVE_FORCE_NORMAL)
+		var/throwtarget = get_step(target_mob, get_dir(user, target_mob))
+		target_mob.safe_throw_at(throwtarget, 1, 1, force = MOVE_FORCE_NORMAL)
+		visible_message(span_warning("[user] violently pushes [target_mob] with [src]!"))
+
+/obj/item/fireaxe/batteringram/afterattack(atom/target, mob/user, click_parameters)
+	. = ..()
+	if(!isliving(target))
+		playsound(target, hitsound, 100, TRUE)
+
+	var/mob/living/living_user = user
+	if(!living_user)
+		return
+
+	if((HAS_TRAIT(living_user, TRAIT_CLUMSY)) && prob(30)) // https://tenor.com/view/police-raid-fall-out-funny-gif-9719355
+		var/throwtarget = get_step(living_user, get_dir(target, living_user))
+		living_user.Knockdown(3 SECONDS)
+		living_user.safe_throw_at(throwtarget, 1, 1, force = MOVE_FORCE_NORMAL)
+
+		to_chat(living_user, span_userdanger("You try to [pick(attack_verb_simple)] [target], but slip and fall due inertia!"))
+		visible_message(span_warning("[living_user] slips!"))
+		playsound(living_user, 'sound/misc/slip.ogg', 100)
+
+/obj/item/fireaxe/batteringram/suicide_act(mob/living/user)
+	user.visible_message(span_suicide("[user] [pick(attack_verb_continuous )] [user.p_them()]self open! It looks like [user.p_theyre()] trying to commit suicide!"))
+	playsound(user, hitsound, 100, ignore_walls = FALSE)
+	return BRUTELOSS

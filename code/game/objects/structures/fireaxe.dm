@@ -20,6 +20,8 @@
 	var/item_overlay = "axe"
 	/// Whether we should populate our own contents on Initialize()
 	var/populate_contents = TRUE
+	/// Is the held_item must be unwielded?
+	var/must_be_unwielded = TRUE
 
 MAPPING_DIRECTIONAL_HELPERS(/obj/structure/fireaxecabinet, 32)
 
@@ -70,7 +72,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/fireaxecabinet, 32)
 			update_appearance()
 	else if(open || broken)
 		if(istype(attacking_item, item_path) && !held_item)
-			if(HAS_TRAIT(attacking_item, TRAIT_WIELDED))
+			if(HAS_TRAIT(attacking_item, TRAIT_WIELDED) && must_be_unwielded)
 				balloon_alert(user, "unwield it!")
 				return
 			if(!user.transferItemToLoc(attacking_item, src))
@@ -243,3 +245,24 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/fireaxecabinet/mechremoval/empty, 32)
 	desc = "Home to a very special crowbar. Apply to wall to use."
 	icon_state = "mechremoval"
 	result_path = /obj/structure/fireaxecabinet/mechremoval/empty
+
+/obj/structure/fireaxecabinet/batteringram
+	name = "battering ram cabinet"
+	desc = "There is a small label that reads \"For Special Operations Only\" along with details for safe use of the ram. As if."
+	icon_state = "batteringram"
+	item_path = /obj/item/fireaxe/batteringram
+	item_overlay = "ram"
+	must_be_unwielded = FALSE
+
+MAPPING_DIRECTIONAL_HELPERS(/obj/structure/fireaxecabinet/mechremoval, 32)
+
+/obj/structure/fireaxecabinet/batteringram/empty
+	populate_contents = FALSE
+
+MAPPING_DIRECTIONAL_HELPERS(/obj/structure/fireaxecabinet/batteringram/empty, 32)
+
+/obj/item/wallframe/fireaxecabinet/batteringram
+	name = "battering ram cabinet"
+	desc = "Place to put your big KNOCK-KNOCK stick in. Apply to wall to use."
+	icon_state = "batteringram"
+	result_path = /obj/structure/fireaxecabinet/batteringram/empty
