@@ -1,0 +1,4 @@
+author: "Absolucy"
+delete-after: True
+changes:
+  - bugfix: "Makes the hivemind keyboard consistent with chat highlighting."
