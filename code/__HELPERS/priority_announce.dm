@@ -201,7 +201,7 @@
 
 			/// SS220 TTS START
 			var/mob/living/silicon/ai/active_ai = DEFAULTPICK(active_ais(TRUE, null), null)
-			var/datum/tts_seed/announcement_tts_seed = active_ai ? active_ai.get_tts_seed() :  /datum/tts_seed/silero/glados
+			var/datum/tts_seed/announcement_tts_seed = active_ai ? active_ai.get_tts_seed() : /datum/tts_seed/silero/glados
 			INVOKE_ASYNC(
 				SStts220, \
 				TYPE_PROC_REF(/datum/controller/subsystem/tts220, get_tts), \
@@ -210,7 +210,6 @@
 				announcement, \
 				announcement_tts_seed, \
 				FALSE, \
-				/datum/singleton/sound_effect/radio_robot, \
 			)
 			/// SS220 TTS END
 
