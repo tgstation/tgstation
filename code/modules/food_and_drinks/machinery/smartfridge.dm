@@ -30,6 +30,8 @@
 	var/can_be_welded_down = TRUE
 	/// Whether the smartfridge is welded down to the floor disabling unwrenching
 	var/welded_down = FALSE
+	/// The sound of item retrieval
+	var/vend_sound = 'sound/machines/machine_vend.ogg'
 
 /obj/machinery/smartfridge/Initialize(mapload)
 	. = ..()
@@ -418,7 +420,8 @@
 					if(!living_mob.put_in_hands(dispensed_item))
 						dispensed_item.forceMove(drop_location())
 						adjust_item_drop_location(dispensed_item)
-					playsound(src, 'sound/machines/machine_vend.ogg', 50, TRUE, extrarange = -3)
+					if(vend_sound)
+						playsound(src, vend_sound, 50, TRUE, extrarange = -3)
 					use_energy(active_power_usage)
 					desired--
 
@@ -444,6 +447,7 @@
 	can_atmos_pass = ATMOS_PASS_YES
 	can_be_welded_down = FALSE
 	max_n_of_items = 25
+	vend_sound = null
 	/// Is the rack currently drying stuff
 	var/drying = FALSE
 	/// The reference to the last user's mind. Needed for the chef made trait to be properly applied correctly to dried food.
