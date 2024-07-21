@@ -818,9 +818,6 @@
 	name = "\improper Syndicate Securitron";
 	desc = "A little security robot, reprogrammed by the syndicate. He looks downright surly."
 	},
-/obj/machinery/navbeacon{
-	location = "breakroom1"
-	},
 /turf/open/floor/carpet/donk,
 /area/ruin/space/has_grav/hauntedtradingpost/employees/breakroom)
 "hi" = (
@@ -4479,12 +4476,6 @@
 /obj/machinery/navbeacon{
 	location = "hall1";
 	codes_txt = "patrol;next_patrol=hall2"
-	},
-/mob/living/basic/bot/firebot{
-	additional_access = /datum/id_trim/away/hauntedtradingpost;
-	bot_mode_flags = 3;
-	req_one_access = list("syndicate");
-	faction = list("Syndicate")
 	},
 /turf/open/floor/carpet/orange,
 /area/ruin/space/has_grav/hauntedtradingpost/public/corridor)
