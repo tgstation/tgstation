@@ -5,11 +5,16 @@
  */
 /turf/open/floor/plating
 	name = "plating"
-	icon_state = "plating"
+	icon = 'icons/turf/floors/plating.dmi'
+	icon_state = "plating-0"
 	base_icon_state = "plating"
 	overfloor_placed = FALSE
 	underfloor_accessibility = UNDERFLOOR_INTERACTABLE
 	baseturfs = /turf/baseturf_bottom
+	smoothing_flags = SMOOTH_BITMASK
+	smoothing_groups = SMOOTH_GROUP_TURF_OPEN + SMOOTH_GROUP_PLATING
+	canSmoothWith = SMOOTH_GROUP_PLATING
+	flags_1 = NONE
 	footstep = FOOTSTEP_PLATING
 	barefootstep = FOOTSTEP_HARD_BAREFOOT
 	clawfootstep = FOOTSTEP_HARD_CLAW
