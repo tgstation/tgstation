@@ -844,7 +844,7 @@
 /atom/movable/proc/Moved(atom/old_loc, movement_dir, forced, list/old_locs, momentum_change = TRUE)
 	SHOULD_CALL_PARENT(TRUE)
 
-	if (!inertia_moving && momentum_change && movement_dir)
+	if (!moving_diagonally && !inertia_moving && momentum_change && movement_dir)
 		newtonian_move(dir2angle(movement_dir))
 	// If we ain't moving diagonally right now, update our parallax
 	// We don't do this all the time because diag movements should trigger one call to this, not two
