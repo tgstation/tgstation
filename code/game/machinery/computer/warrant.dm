@@ -12,8 +12,7 @@
 
 /obj/machinery/computer/warrant/Initialize(mapload)
 	. = ..()
-	if(!source)
-		source = src
+	source = src
 
 /obj/machinery/computer/warrant/ui_interact(mob/user, datum/tgui/ui)
 	. = ..()
