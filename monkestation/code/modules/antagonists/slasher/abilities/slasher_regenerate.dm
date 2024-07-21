@@ -18,6 +18,7 @@
 	id = "bloody_heal"
 	alert_type = null
 	tick_interval = 1 SECONDS
+	show_duration = TRUE
 
 /datum/status_effect/bloody_heal/on_creation(mob/living/new_owner, duration = 5 SECONDS)
 	src.duration = duration

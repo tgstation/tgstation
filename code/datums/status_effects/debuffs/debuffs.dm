@@ -641,6 +641,7 @@
 	duration = 150
 	status_type = STATUS_EFFECT_REFRESH
 	alert_type = /atom/movable/screen/alert/status_effect/convulsing
+	show_duration = TRUE
 
 /datum/status_effect/convulsing/on_creation(mob/living/zappy_boy)
 	. = ..()

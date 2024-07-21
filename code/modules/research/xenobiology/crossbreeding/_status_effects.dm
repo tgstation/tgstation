@@ -7,6 +7,7 @@
 	id = "rainbow_protection"
 	duration = 100
 	alert_type = /atom/movable/screen/alert/status_effect/rainbow_protection
+	show_duration = TRUE
 	var/originalcolor
 
 /datum/status_effect/rainbow_protection/on_apply()
@@ -37,6 +38,7 @@
 	id = "slimeskin"
 	duration = 300
 	alert_type = /atom/movable/screen/alert/status_effect/slimeskin
+	show_duration = TRUE
 	var/originalcolor
 
 /datum/status_effect/slimeskin/on_apply()

@@ -16,8 +16,6 @@
 	var/list/override_types
 	/// For how much firestacks does one our stack count
 	var/stack_modifier = 1
-	/// A particle effect, for things like embers
-	var/obj/effect/abstract/particle_holder/particle_effect
 
 /datum/status_effect/fire_handler/refresh(mob/living/new_owner, new_stacks, forced = FALSE)
 	if(forced)
@@ -83,19 +81,6 @@
 
 			adjust_stacks(override_effect.stacks)
 			qdel(override_effect)
-
-	update_particles()
-
-/datum/status_effect/fire_handler/on_remove()
-	if(particle_effect)
-		QDEL_NULL(particle_effect)
-	return ..()
-
-/**
- * Updates the particles for the status effects
- */
-/datum/status_effect/fire_handler/proc/update_particles()
-	SHOULD_CALL_PARENT(FALSE)
 
 /**
  * Setter and adjuster procs for firestacks

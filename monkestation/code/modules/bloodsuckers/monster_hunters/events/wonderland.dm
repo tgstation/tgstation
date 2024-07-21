@@ -110,8 +110,7 @@ GLOBAL_LIST_EMPTY(wonderland_marks)
 	id = "Blood"
 	duration = 20 SECONDS
 	alert_type = /atom/movable/screen/alert/status_effect/cursed_blood
-
-
+	show_duration = TRUE
 
 /atom/movable/screen/alert/status_effect/cursed_blood
 	name = "Cursed Blood"
