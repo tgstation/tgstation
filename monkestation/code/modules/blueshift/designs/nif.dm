@@ -1,3 +1,16 @@
+/datum/design/nif/standard
+	name = "Nanite Implant Framework"
+	desc = "A brain implant that infuses the user with nanites."
+	id = "nif_standard"
+	build_path = /obj/item/organ/internal/cyberimp/brain/nif/standard
+	build_type = PROTOLATHE | MECHFAB
+	construction_time = 8 SECONDS
+	materials = list(/datum/material/iron = 6000, /datum/material/glass = 4000, /datum/material/silver = 2000 , /datum/material/gold = 2000)
+	category = list(
+		RND_CATEGORY_CYBERNETICS + RND_SUBCATEGORY_CYBERNETICS_IMPLANTS_TOOLS
+	)
+	departmental_flags = DEPARTMENT_BITFLAG_SCIENCE | DEPARTMENT_BITFLAG_MEDICAL
+
 /datum/design/nifsoft_remover
 	name = "Lopland 'Wrangler' NIF-Cutter"
 	desc = "A small device that lets the user remove NIFSofts from a NIF user."
