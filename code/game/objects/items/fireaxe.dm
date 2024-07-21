@@ -29,8 +29,8 @@
 	var/force_wielded = 24
 	/// Can it butcher?
 	var/butcher = TRUE
-	/// Do you need 2 hands to use it?
-	var/is_two_handed = FALSE
+	/// Do you ALWAYS need 2 hands to hold it?
+	var/is_only_two_hande = FALSE
 
 /datum/armor/item_fireaxe
 	fire = 100
@@ -115,7 +115,7 @@
 	item_flags = SLOWS_WHILE_IN_HAND | IMMUTABLE_SLOW
 	sharpness = NONE
 	butcher = FALSE
-	is_two_handed = TRUE
+	is_only_two_handed = TRUE
 
 	force_unwielded = 5
 	force_wielded = 18

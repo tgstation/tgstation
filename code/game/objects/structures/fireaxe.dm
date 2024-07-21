@@ -254,7 +254,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/fireaxecabinet/mechremoval/empty, 32)
 	item_overlay = "ram"
 	must_be_unwielded = FALSE
 
-MAPPING_DIRECTIONAL_HELPERS(/obj/structure/fireaxecabinet/mechremoval, 32)
+MAPPING_DIRECTIONAL_HELPERS(/obj/structure/fireaxecabinet/batteringram, 32)
 
 /obj/structure/fireaxecabinet/batteringram/empty
 	populate_contents = FALSE
