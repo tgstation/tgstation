@@ -1,19 +1,18 @@
-import { createSearch, toTitleCase } from 'common/string';
+import { createSearch } from 'common/string';
 import { useState } from 'react';
 import { BooleanLike } from 'tgui-core/react';
+
 import { useBackend } from '../backend';
 import {
+  Box,
   Button,
+  DmIcon,
   Flex,
-  Image,
+  Icon,
   Input,
+  ProgressBar,
   Section,
   Stack,
-  LabeledList,
-  Box,
-  ProgressBar,
-  Icon,
-  DmIcon,
 } from '../components';
 import { Window } from '../layouts';
 
@@ -203,7 +202,7 @@ export const FishAnalyzer = (props) => {
                                     average: [0.5, 0.9],
                                     bad: [-Infinity, 0.5],
                                   }}
-                                ></ProgressBar>
+                                 />
                               </Stack.Item>
                               <Stack.Item>
                                 Hunger:{' '}
@@ -215,7 +214,7 @@ export const FishAnalyzer = (props) => {
                                     average: [0.5, 0.9],
                                     bad: [-Infinity, 0.5],
                                   }}
-                                ></ProgressBar>
+                                 />
                               </Stack.Item>
                               <Stack.Item mt={2}>
                                 {fish.fish_evolutions.length === 0 ? (
