@@ -293,17 +293,18 @@ GLOBAL_LIST_EMPTY(features_by_species)
 	for(var/slot in get_all_slots())
 		var/obj/item/organ/existing_organ = organ_holder.get_organ_slot(slot)
 		var/obj/item/organ/new_organ = get_mutant_organ_type_for_slot(slot)
+		var/old_organ_type = old_species?.get_mutant_organ_type_for_slot(slot)
 
-		// if we have an extra organ that before changing that the species didnt have, we can keep it unless replace_current = TRUE
+		// if we have an extra organ that before changing that the species didnt have, remove it
 		if(!new_organ)
-			if(existing_organ && replace_current)
+			if(existing_organ && (old_organ_type == existing_organ.type || replace_current))
 				existing_organ.Remove(organ_holder)
 				qdel(existing_organ)
 			continue
 
 		if(existing_organ)
 			// we dont want to remove organs that were not from the old species (such as from freak surgery or prosthetics)
-			if(old_species && existing_organ.type != old_species.get_mutant_organ_type_for_slot(slot) && !replace_current)
+			if(existing_organ.type != old_organ_type && !replace_current)
 				continue
 
 			// we don't want to remove organs that are the same as the new one
