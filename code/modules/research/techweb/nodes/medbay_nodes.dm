@@ -46,7 +46,6 @@
 	design_ids = list(
 		"plumbing_rcd",
 		"plumbing_rcd_service",
-		"plumbing_rcd_sci",
 		"plunger",
 		"fluid_ducts",
 	)
