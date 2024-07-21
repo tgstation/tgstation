@@ -137,7 +137,6 @@ GLOBAL_LIST_EMPTY_TYPED(air_alarms, /obj/machinery/airalarm)
 /obj/machinery/airalarm/Destroy()
 	if(my_area)
 		my_area = null
-	QDEL_NULL(wires)
 	QDEL_NULL(alarm_manager)
 	GLOB.air_alarms -= src
 	return ..()

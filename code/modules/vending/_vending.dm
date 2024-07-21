@@ -283,7 +283,6 @@ GLOBAL_LIST_EMPTY(vending_machines_to_restock)
 	register_context()
 
 /obj/machinery/vending/Destroy()
-	QDEL_NULL(wires)
 	QDEL_NULL(coin)
 	QDEL_NULL(bill)
 	QDEL_NULL(sec_radio)

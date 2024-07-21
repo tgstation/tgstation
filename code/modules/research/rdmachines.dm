@@ -35,7 +35,6 @@
 	if(stored_research)
 		log_research("[src] disconnected from techweb [stored_research] (destroyed).")
 		stored_research = null
-	QDEL_NULL(wires)
 	return ..()
 
 /obj/machinery/rnd/examine(mob/user)

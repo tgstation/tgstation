@@ -125,7 +125,6 @@
 		GLOB.available_ai_shells -= src
 
 	QDEL_NULL(modularInterface)
-	QDEL_NULL(wires)
 	QDEL_NULL(model)
 	QDEL_NULL(eye_lights)
 	QDEL_NULL(hat_overlay)

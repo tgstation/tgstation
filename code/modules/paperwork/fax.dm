@@ -78,7 +78,6 @@ GLOBAL_VAR_INIT(nt_fax_department, pick("NT HR Department", "NT Legal Department
 
 /obj/machinery/fax/Destroy()
 	QDEL_NULL(loaded_item_ref)
-	QDEL_NULL(wires)
 	return ..()
 
 /obj/machinery/fax/update_overlays()

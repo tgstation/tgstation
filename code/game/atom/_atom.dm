@@ -166,6 +166,9 @@
 	if(atom_storage)
 		QDEL_NULL(atom_storage)
 
+	if(wires)
+		QDEL_NULL(wires)
+
 	orbiters = null // The component is attached to us normaly and will be deleted elsewhere
 
 	// Checking length(overlays) before cutting has significant speed benefits
