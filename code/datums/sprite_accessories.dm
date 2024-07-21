@@ -1913,14 +1913,6 @@
 	name = "Round"
 	icon_state = "round"
 
-/datum/sprite_accessory/ears/fox
-	icon = 'icons/mob/human/fox_features.dmi'
-	name = "Fox"
-	icon_state = "fox"
-	hasinner = TRUE
-	color_src = HAIR_COLOR
-	locked = TRUE
-
 /datum/sprite_accessory/wings/none
 	name = "None"
 	icon_state = "none"

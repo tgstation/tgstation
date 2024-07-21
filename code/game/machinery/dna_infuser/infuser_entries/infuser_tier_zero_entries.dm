@@ -27,25 +27,6 @@
 	infusion_desc = "fly-like"
 	tier = DNA_MUTANT_TIER_ZERO
 
-/datum/infuser_entry/vulpini
-	name = "Fox"
-	infuse_mob_name = "vulpini"
-	desc = "Foxes are now quite rare because of the \"fox ears\" craze back in 2555. I mean, also because we're spacefarers who destroyed foxes' natural habitats ages ago, but that applies to most animals."
-	threshold_desc = DNA_INFUSION_NO_THRESHOLD
-	qualities = list(
-		"oh come on really",
-		"you bring SHAME to all geneticists",
-		"i hope it was worth it",
-	)
-	input_obj_or_mob = list(
-		/mob/living/basic/pet/fox,
-	)
-	output_organs = list(
-		/obj/item/organ/internal/ears/fox,
-	)
-	infusion_desc = "inexcusable"
-	tier = DNA_MUTANT_TIER_ZERO
-
 /datum/infuser_entry/mothroach
 	name = "Mothroach"
 	infuse_mob_name = "lepi-blattidae"

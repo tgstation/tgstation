@@ -2139,7 +2139,6 @@
 #include "code\game\machinery\dna_infuser\infuser_entries\infuser_tier_zero_entries.dm"
 #include "code\game\machinery\dna_infuser\organ_sets\carp_organs.dm"
 #include "code\game\machinery\dna_infuser\organ_sets\fly_organs.dm"
-#include "code\game\machinery\dna_infuser\organ_sets\fox_organs.dm"
 #include "code\game\machinery\dna_infuser\organ_sets\goliath_organs.dm"
 #include "code\game\machinery\dna_infuser\organ_sets\gondola_organs.dm"
 #include "code\game\machinery\dna_infuser\organ_sets\rat_organs.dm"
