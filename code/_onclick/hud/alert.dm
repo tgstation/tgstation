@@ -253,6 +253,12 @@
 
 	return carbon_owner.help_shake_act(carbon_owner)
 
+/atom/movable/screen/alert/embeddedobject/sticky
+	name = "Sticked Object"
+	desc = "Something sticky got stuck on your skin, might be harmless (paper) or dangerous (grenade). \
+		Examine yourself and click the underlined item to pull the object out."
+	icon_state = ALERT_STICKED_OBJECT
+
 /atom/movable/screen/alert/negative
 	name = "Negative Gravity"
 	desc = "You're getting pulled upwards. While you won't have to worry about falling down anymore, you may accidentally fall upwards!"
