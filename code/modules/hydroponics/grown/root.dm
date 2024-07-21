@@ -28,7 +28,10 @@
 /obj/item/food/grown/carrot/attackby(obj/item/I, mob/user, params)
 	if(!I.get_sharpness())
 		return ..()
+
+	/// The blade carrot will turn into once sharpened
 	var/carrot_blade
+	/// Chance for it to become a sword rather than a shiv
 	var/carrot_sword_chance = (max(0, seed.potency - 50) / 50)
 	if (prob(carrot_sword_chance))
 		carrot_blade = new /obj/item/claymore/carrot
@@ -64,9 +67,12 @@
 /obj/item/food/grown/parsnip/attackby(obj/item/I, mob/user, params)
 	if(!I.get_sharpness())
 		return ..()
+
+	/// The blade parsnip will turn into once sharpened
 	var/parsnip_blade
-	var/parsnip_sword_chance = (max(0, seed.potency - 50) / 50)
-	if (prob(parsnip_sword_chance))
+	/// Chance for it to become a sabre rather than a shiv
+	var/parsnip_sabre_chance = (max(0, seed.potency - 50) / 50)
+	if (prob(parsnip_sabre_chance))
 		parsnip_blade = new /obj/item/melee/parsnip_sabre
 		to_chat(user, span_notice("You sharpen the parsnip into a sabre with [I]."))
 	else
@@ -107,7 +113,10 @@
 /obj/item/food/grown/cahnroot/attackby(obj/item/I, mob/user, params)
 	if(!I.get_sharpness())
 		return ..()
+
+	/// The blade cahn'root will turn into once sharpened
 	var/root_blade
+	/// Chance for it to become a dagger rather than a shiv
 	var/root_dagger_chance = (max(0, seed.potency - 25) / 50)
 	if (prob(root_dagger_chance))
 		root_blade = new /obj/item/knife/combat/root

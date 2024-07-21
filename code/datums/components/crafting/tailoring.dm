@@ -117,6 +117,14 @@
 	time = 4 SECONDS
 	category = CAT_CLOTHING
 
+/datum/crafting_recipe/grass_sheath
+	name = "Grass Sabre Sheath"
+	result = /obj/item/storage/belt/grass_sabre
+	reqs = list(/obj/item/food/grown/grass = 4,
+				/obj/item/food/grown/grass/fairy = 2)
+	time = 4 SECONDS
+	category = CAT_CONTAINERS
+
 /datum/crafting_recipe/fannypack
 	name = "Fannypack"
 	result = /obj/item/storage/belt/fannypack

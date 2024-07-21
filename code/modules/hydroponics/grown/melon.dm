@@ -52,7 +52,9 @@
 	for(var/i in 1 to melon_pulp_count)
 		new /obj/item/food/watermelonmush(user.loc)
 
+	/// The piece of armour melon turns into; either chetsplate or helmet
 	var/melon_armour
+	/// Chance for the armour to be a chestplate instead of the helmet
 	var/melon_chestplate_chance = (max(0, seed.potency - 50) / 50)
 	if (prob(melon_chestplate_chance))
 		if(seed.resistance_flags & FIRE_PROOF)
@@ -120,7 +122,9 @@
 	for(var/i in 1 to holymelon_pulp_count)
 		new /obj/item/food/holymelonmush(user.loc)
 
+	/// The piece of armour holymelon turns into; either chetsplate or helmet
 	var/holymelon_armour
+	/// Chance for the armour to be a chestplate instead of the helmet
 	var/holymelon_chestplate_chance = (max(0, seed.potency - 50) / 50)
 	if (prob(holymelon_chestplate_chance))
 		if(seed.resistance_flags & FIRE_PROOF)
@@ -191,7 +195,9 @@
 	for(var/i in 1 to barrelmelon_pulp_count)
 		new /obj/item/food/barrelmelonmush(user.loc)
 
+	/// The piece of armour barrelmelon turns into; either chetsplate or helmet
 	var/barrelmelon_armour
+	/// Chance for the armour to be a chestplate instead of the helmet
 	var/barrelmelon_chestplate_chance = (max(0, seed.potency - 50) / 50)
 	if (prob(barrelmelon_chestplate_chance))
 		if(seed.resistance_flags & FIRE_PROOF)
