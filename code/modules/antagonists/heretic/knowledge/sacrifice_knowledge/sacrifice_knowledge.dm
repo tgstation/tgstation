@@ -214,7 +214,7 @@
 		heretic_datum.knowledge_points += 3
 		heretic_datum.high_value_sacrifices++
 		feedback += " <i>graciously</i>"
-	else if(cultist_datum)
+	if(cultist_datum)
 		heretic_datum.knowledge_points += 1
 		grant_reward(user, sacrifice, loc)
 		// easier to read
@@ -229,9 +229,9 @@
 					span_narsie(" one of our own. Destroy and sacrifice the infidel before it claims more!")
 					to_chat(mind.current, message)
 			// he(retic) gets a warn too
-			var/message = span_cult_bold("You feel that your action has attracted") + \
-			span_cult_bold_italic(" attention.")
-			to_chat(user, message)
+			to_chat(user, span_narsiesmall("How DARE you!? I will see you destroyed for this."))
+			var/non_flavor_warning = span_cult_bold("You feel that your action has attracted ") + span_hypnophrase("attention") + span_cult_bold(".")
+			to_chat(user, non_flavor_warning)
 		return
 	else
 		heretic_datum.knowledge_points += 2
@@ -263,12 +263,6 @@
 	var/datum/antagonist/heretic/antag = IS_HERETIC(user)
 	antag.rewards_given++
 
-	// We limit the amount so the heretic doesn't just turn into a frickin' god (early)
-	to_chat(user, span_hierophant("You feel the rotten energies of the infidel warp and twist, mixing with that of your own..."))
-	if(prob(8 * antag.rewards_given))
-		to_chat(user, span_hierophant("Faint, dark red sparks flit around the dust, then fade. It looks like your patrons weren't able to fashion something out of it."))
-		return
-
 	// Cool effect for the rune as well as the item
 	var/obj/effect/heretic_rune/rune = locate() in range(2, user)
 	if(rune)
@@ -285,7 +279,7 @@
 /datum/heretic_knowledge/hunt_and_sacrifice/proc/deposit_reward(mob/user, turf/loc, loop = 0, obj/rune)
 	if(loop > 5) // Max limit for retrying a reward
 		return
-	// Remove the rays, we don't need them anymore.
+	// Remove the outline, we don't need it anymore.
 	rune?.remove_filter("reward_outline")
 	playsound(loc, 'sound/magic/repulse.ogg', 75, TRUE)
 	var/datum/antagonist/heretic/heretic_datum = IS_HERETIC(user)
