@@ -56906,6 +56906,10 @@
 /obj/structure/cable,
 /turf/open/floor/plating,
 /area/station/command/heads_quarters/ce)
+"tcP" = (
+/obj/structure/fireaxecabinet/batteringram/directional/west,
+/turf/open/space/basic,
+/area/space)
 "tda" = (
 /obj/structure/chair{
 	dir = 4
@@ -62322,6 +62326,7 @@
 	},
 /obj/item/storage/lockbox/loyalty,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
+/obj/structure/fireaxecabinet/batteringram/directional/east,
 /turf/open/floor/iron/dark,
 /area/station/ai_monitored/security/armory)
 "uQb" = (
@@ -77965,7 +77970,7 @@ vXM
 vXM
 vXM
 vXM
-vXM
+tcP
 vXM
 vXM
 vXM

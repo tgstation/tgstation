@@ -81489,6 +81489,7 @@
 	pixel_y = 6
 	},
 /obj/effect/turf_decal/tile/neutral/fourcorners,
+/obj/structure/fireaxecabinet/batteringram/directional/east,
 /turf/open/floor/iron/dark,
 /area/station/ai_monitored/security/armory)
 "urq" = (

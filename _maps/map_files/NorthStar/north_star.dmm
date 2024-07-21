@@ -68194,6 +68194,7 @@
 	req_access = list("armory")
 	},
 /obj/item/gun/energy/temperature/security,
+/obj/structure/fireaxecabinet/batteringram/directional/west,
 /turf/open/floor/iron/dark,
 /area/station/ai_monitored/security/armory)
 "rBW" = (

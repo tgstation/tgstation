@@ -45675,6 +45675,7 @@
 	dir = 8
 	},
 /obj/effect/spawner/random/armory/barrier_grenades,
+/obj/structure/fireaxecabinet/batteringram/directional/south,
 /turf/open/floor/iron/dark/textured,
 /area/station/ai_monitored/security/armory/upper)
 "nGQ" = (
