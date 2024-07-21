@@ -142,7 +142,7 @@
 
 	bodypart_overlay = /datum/bodypart_overlay/mutant/cat_ears
 
-/// Bodypart overlay for the mushroom cap organ
+/// Bodypart overlay for the horrible cat ears
 /datum/bodypart_overlay/mutant/cat_ears
 	layers = EXTERNAL_FRONT | EXTERNAL_BEHIND
 	color_source = ORGAN_COLOR_HAIR
