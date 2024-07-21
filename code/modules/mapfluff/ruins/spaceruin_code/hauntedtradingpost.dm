@@ -178,15 +178,17 @@ GLOBAL_LIST_EMPTY(tripwire_suicide_pact)
 	)
 	AddElement(/datum/element/connect_loc, loc_connections)
 
-/obj/machinery/button/door/invisible_tripwire/proc/on_entered(atom/victim)
+/obj/machinery/button/door/invisible_tripwire/proc/on_entered(atom/source, atom/movable/victim)
+	SIGNAL_HANDLER
+	if(!isliving(victim))
+		return
 	var/mob/living/target = victim
-	for(target in loc)
-		if(target.stat != DEAD && target.mob_size == MOB_SIZE_HUMAN && target.mob_biotypes != MOB_ROBOTIC)
-			tripwire_triggered(target)
-			if(multiuse && uses_remaining < 1)
-				uses_remaining--
-			if(resets_self)
-				addtimer(CALLBACK(src, PROC_REF(tripwire_triggered), victim), reset_timer)
+	if(target.stat != DEAD && target.mob_size == MOB_SIZE_HUMAN && target.mob_biotypes != MOB_ROBOTIC)
+		tripwire_triggered(target)
+		if(multiuse && uses_remaining < 1)
+			uses_remaining--
+		if(resets_self)
+			addtimer(CALLBACK(src, PROC_REF(tripwire_triggered), victim), reset_timer)
 
 /obj/machinery/button/door/invisible_tripwire/proc/tripwire_triggered(atom/victim)
 	interact(victim)
