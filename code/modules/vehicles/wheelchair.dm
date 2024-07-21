@@ -8,7 +8,7 @@
 	armor_type = /datum/armor/ridden_wheelchair
 	density = FALSE //Thought I couldn't fix this one easily, phew
 	/// Run speed delay is multiplied with this for vehicle move delay.
-	var/delay_multiplier = 6.7
+	var/delay_multiplier = 3
 	/// This variable is used to specify which overlay icon is used for the wheelchair, ensures wheelchair can cover your legs
 	var/overlay_icon = "wheelchair_overlay"
 	var/image/wheels_overlay
