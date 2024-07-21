@@ -1135,7 +1135,7 @@ GLOBAL_LIST_EMPTY(transformation_animation_objects)
 	if((x_dimension == world.icon_size) && (y_dimension == world.icon_size))
 		return image_to_center
 
-	//Offset the image so that it's bottom left corner is shifted this many pixels
+	//Offset the image so that its bottom left corner is shifted this many pixels
 	//This makes it infinitely easier to draw larger inhands/images larger than world.iconsize
 	//but still use them in game
 	var/x_offset = -((x_dimension / world.icon_size) - 1) * (world.icon_size * 0.5)
