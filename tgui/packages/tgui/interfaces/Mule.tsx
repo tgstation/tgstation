@@ -97,7 +97,7 @@ const MuleControls = (props) => {
           Report-Delivery
         </Button.Checkbox>
         <br />
-        {allowPossession && (
+        {!!allowPossession && (
           <Button.Checkbox
             checked={possessionEnabled}
             onClick={() => act('toggle_personality')}
