@@ -107,10 +107,9 @@
 		fireheal = min(user.getFireLoss_nonProsthetic(), actual_regen) / 1.2 // 20% slower than being in a coffin
 		mult *= 3
 	// Heal if Damaged
-	if((bruteheal + fireheal > 0) && mult != 0) // Just a check? Don't heal/spend, and return.
+	if((bruteheal + fireheal > 0) && mult > 0) // Just a check? Don't heal/spend, and return.
 		// We have damage. Let's heal (one time)
-		user.adjustBruteLoss(-bruteheal * mult, forced = TRUE) // Heal BRUTE / BURN in random portions throughout the body.
-		user.adjustFireLoss(-fireheal * mult, forced = TRUE)
+		user.heal_overall_damage(brute = bruteheal * mult, burn = fireheal * mult) // Heal BRUTE / BURN in random portions throughout the body.
 		AddBloodVolume(((bruteheal * -0.5) + (fireheal * -1)) * costMult * mult) // Costs blood to heal
 		return TRUE
 
@@ -142,12 +141,15 @@
 
 /datum/antagonist/bloodsucker/proc/heal_vampire_organs()
 	var/mob/living/carbon/bloodsuckeruser = owner.current
+	if(!iscarbon(bloodsuckeruser))
+		return
 
 	bloodsuckeruser.cure_husk()
 	bloodsuckeruser.regenerate_organs(regenerate_existing = FALSE)
 
 	for(var/obj/item/organ/organ as anything in bloodsuckeruser.organs)
 		organ.set_organ_damage(0)
+	bloodsuckeruser.cure_all_traumas(TRAUMA_RESILIENCE_MAGIC) // i think vampires ARE magic, so, yeah
 	if(!HAS_TRAIT(bloodsuckeruser, TRAIT_MASQUERADE))
 		var/obj/item/organ/internal/heart/current_heart = bloodsuckeruser.get_organ_slot(ORGAN_SLOT_HEART)
 		current_heart?.beating = FALSE
@@ -155,7 +157,7 @@
 	if(current_eyes)
 		current_eyes.flash_protect = max(initial(current_eyes.flash_protect) - 1, FLASH_PROTECTION_SENSITIVE)
 		current_eyes.color_cutoffs = list(25, 8, 5)
-		current_eyes.sight_flags = SEE_MOBS
+		current_eyes.sight_flags |= SEE_MOBS
 	bloodsuckeruser.update_sight()
 
 	if(bloodsuckeruser.stat == DEAD)
@@ -227,7 +229,7 @@
 		owner.current.set_eye_blur_if_lower((8 - 8 * (bloodsucker_blood_volume / BLOOD_VOLUME_BAD))*2 SECONDS)
 
 	// The more blood, the better the Regeneration, get too low blood, and you enter Frenzy.
-	if(bloodsucker_blood_volume < (FRENZY_THRESHOLD_ENTER + (humanity_lost * 5)) && !frenzied)
+	if(bloodsucker_blood_volume < (FRENZY_THRESHOLD_ENTER + (humanity_lost * 5)) && !frenzied && COOLDOWN_FINISHED(src, bloodsucker_frenzy_cooldown))
 		owner.current.apply_status_effect(/datum/status_effect/frenzy)
 	else if(bloodsucker_blood_volume < BLOOD_VOLUME_BAD)
 		additional_regen = 0.1
@@ -286,8 +288,7 @@
 	user.remove_all_embedded_objects()
 	playsound(owner.current, 'sound/effects/tendril_destroyed.ogg', 40, TRUE)
 
-	var/unique_death = SEND_SIGNAL(src, BLOODSUCKER_FINAL_DEATH)
-	if(unique_death & DONT_DUST)
+	if(SEND_SIGNAL(src, BLOODSUCKER_FINAL_DEATH) & DONT_DUST)
 		return
 
 	// Elders get dusted, Fledglings get gibbed.

@@ -167,6 +167,8 @@
 #define BLOODSUCKER_TRAIT "bloodsucker_trait"
 /// Source trait for bloodsuckers in torpor.
 #define TORPOR_TRAIT "torpor_trait"
+/// Source trait for bloodsuckers using fortitude.
+#define FORTITUDE_TRAIT "fortitude_trait"
 /// Source trait for bloodsucker mesmerization.
 #define MESMERIZED_TRAIT "mesmerized_trait"
 /// Source trait for Monster Hunter-related traits

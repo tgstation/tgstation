@@ -125,6 +125,7 @@
 	created_on = world.time
 
 /obj/effect/client_image_holder/phobetor/Destroy()
+	seer = null
 	if(linked_to)
 		linked_to.linked_to = null
 		QDEL_NULL(linked_to)
@@ -140,7 +141,9 @@
 	for(var/mob/living/nearby_viewers in viewers(target_turf))
 		if(nearby_viewers == subject)
 			continue
-		if(!isliving(nearby_viewers) || !nearby_viewers.mind)
+		if(!isliving(nearby_viewers) || !nearby_viewers.mind || !nearby_viewers.client)
+			continue
+		if(IS_BLOODSUCKER(nearby_viewers) || IS_VASSAL(nearby_viewers) || HAS_MIND_TRAIT(nearby_viewers, TRAIT_OCCULTIST))
 			continue
 		if(nearby_viewers.has_unlimited_silicon_privilege || nearby_viewers.is_blind())
 			continue

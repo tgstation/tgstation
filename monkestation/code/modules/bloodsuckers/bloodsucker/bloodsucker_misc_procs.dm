@@ -127,7 +127,7 @@
 		return returnIcon + returnString
 	// Viewer not a Vamp AND not the target's vassal?
 	if(!viewer.mind.has_antag_datum((/datum/antagonist/bloodsucker)) && !(viewer in vassals))
-		if(!(HAS_TRAIT(viewer.mind, TRAIT_OCCULTIST) && broke_masquerade))
+		if(!(HAS_MIND_TRAIT(viewer, TRAIT_OCCULTIST) && broke_masquerade))
 			return FALSE
 	// Default String
 	var/returnString = "\[<span class='warning'><EM>[return_full_name()]</EM></span>\]"
@@ -150,21 +150,23 @@
 	return getBruteLoss()
 
 /mob/living/carbon/getBruteLoss_nonProsthetic()
-	var/amount = 0
+	if(dna?.species?.inherent_biotypes & MOB_ROBOTIC) // technically it's not a prosthetic if it's a "natural" part of their species
+		return getBruteLoss()
+	. = 0
 	for(var/obj/item/bodypart/chosen_bodypart as anything in bodyparts)
 		if(!IS_ORGANIC_LIMB(chosen_bodypart))
 			continue
-		amount += chosen_bodypart.brute_dam
-	return amount
+		. += chosen_bodypart.brute_dam
 
 /// Burn
 /mob/living/proc/getFireLoss_nonProsthetic()
 	return getFireLoss()
 
 /mob/living/carbon/getFireLoss_nonProsthetic()
-	var/amount = 0
+	if(dna?.species?.inherent_biotypes & MOB_ROBOTIC) // technically it's not a prosthetic if it's a "natural" part of their species
+		return getFireLoss()
+	. = 0
 	for(var/obj/item/bodypart/chosen_bodypart as anything in bodyparts)
 		if(!IS_ORGANIC_LIMB(chosen_bodypart))
 			continue
-		amount += chosen_bodypart.burn_dam
-	return amount
+		. += chosen_bodypart.burn_dam

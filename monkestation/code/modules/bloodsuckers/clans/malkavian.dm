@@ -7,12 +7,6 @@
 		and become the enforcer of the Masquerade code."
 	blood_drink_type = BLOODSUCKER_DRINK_INHUMANELY
 
-/datum/bloodsucker_clan/malkavian/on_enter_frenzy(datum/antagonist/bloodsucker/source)
-	ADD_TRAIT(bloodsuckerdatum.owner.current, TRAIT_STUNIMMUNE, FRENZY_TRAIT)
-
-/datum/bloodsucker_clan/malkavian/on_exit_frenzy(datum/antagonist/bloodsucker/source)
-	REMOVE_TRAIT(bloodsuckerdatum.owner.current, TRAIT_STUNIMMUNE, FRENZY_TRAIT)
-
 /datum/bloodsucker_clan/malkavian/New(datum/antagonist/bloodsucker/owner_datum)
 	. = ..()
 	RegisterSignal(SSdcs, COMSIG_BLOODSUCKER_BROKE_MASQUERADE, PROC_REF(on_bloodsucker_broke_masquerade))

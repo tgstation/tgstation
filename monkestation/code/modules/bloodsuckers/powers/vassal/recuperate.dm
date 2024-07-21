@@ -9,7 +9,7 @@
 		If you aren't a bloodless race, you will additionally heal Burn damage.\n\
 		The power will cancel out if you are incapacitated or dead."
 	power_flags = BP_AM_TOGGLE
-	check_flags = BP_CANT_USE_WHILE_INCAPACITATED|BP_CANT_USE_WHILE_UNCONSCIOUS
+	check_flags = BP_CANT_USE_WHILE_UNCONSCIOUS
 	purchase_flags = NONE
 	bloodcost = 1.5
 	cooldown_time = 10 SECONDS
@@ -18,7 +18,10 @@
 	. = ..()
 	if(!.)
 		return
-	if(user.stat >= DEAD || user.incapacitated())
+	if(user.blood_volume <= BLOOD_VOLUME_OKAY)
+		user.balloon_alert(user, "not enough blood!")
+		return FALSE
+	if(user.stat >= DEAD)
 		user.balloon_alert(user, "you are incapacitated...")
 		return FALSE
 	return TRUE

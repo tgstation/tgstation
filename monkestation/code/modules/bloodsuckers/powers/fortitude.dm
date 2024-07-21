@@ -22,9 +22,9 @@
 	owner.balloon_alert(owner, "fortitude turned on.")
 	to_chat(owner, span_notice("Your flesh, skin, and muscles become as steel."))
 	// Traits & Effects
-	owner.add_traits(list(TRAIT_PIERCEIMMUNE, TRAIT_NODISMEMBER, TRAIT_PUSHIMMUNE), BLOODSUCKER_TRAIT)
+	owner.add_traits(list(TRAIT_PIERCEIMMUNE, TRAIT_NODISMEMBER, TRAIT_PUSHIMMUNE, TRAIT_NO_SPRINT), FORTITUDE_TRAIT)
 	if(level_current >= 4)
-		ADD_TRAIT(owner, TRAIT_STUNIMMUNE, BLOODSUCKER_TRAIT) // They'll get stun resistance + this, who cares.
+		owner.add_traits(list(TRAIT_STUNIMMUNE, TRAIT_CANT_STAMCRIT), FORTITUDE_TRAIT) // They'll get stun resistance + this, who cares.
 	var/mob/living/carbon/human/bloodsucker_user = owner
 	if(IS_BLOODSUCKER(owner) || IS_VASSAL(owner))
 		fortitude_resist = max(0.3, 0.7 - level_current * 0.1)
@@ -34,7 +34,6 @@
 	was_running = ((owner.m_intent == MOVE_INTENT_RUN) || (owner.m_intent == MOVE_INTENT_SPRINT))
 	if(was_running)
 		bloodsucker_user.set_move_intent(MOVE_INTENT_WALK)
-	ADD_TRAIT(bloodsucker_user, TRAIT_NO_SPRINT, BLOODSUCKER_TRAIT)
 
 /datum/action/cooldown/bloodsucker/fortitude/process(seconds_per_tick)
 	// Checks that we can keep using this.
@@ -59,14 +58,13 @@
 	var/mob/living/carbon/human/bloodsucker_user = owner
 	if(IS_BLOODSUCKER(owner) || IS_VASSAL(owner))
 		bloodsucker_user.physiology.brute_mod /= fortitude_resist
-		if(!HAS_TRAIT_FROM(bloodsucker_user, TRAIT_STUNIMMUNE, BLOODSUCKER_TRAIT))
+		if(!HAS_TRAIT_FROM(bloodsucker_user, TRAIT_STUNIMMUNE, FORTITUDE_TRAIT))
 			bloodsucker_user.physiology.stamina_mod /= fortitude_resist
 	// Remove Traits & Effects
-	owner.remove_traits(list(TRAIT_PIERCEIMMUNE, TRAIT_NODISMEMBER, TRAIT_PUSHIMMUNE, TRAIT_STUNIMMUNE), BLOODSUCKER_TRAIT)
+	owner.remove_traits(list(TRAIT_PIERCEIMMUNE, TRAIT_NODISMEMBER, TRAIT_PUSHIMMUNE, TRAIT_NO_SPRINT, TRAIT_STUNIMMUNE, TRAIT_CANT_STAMCRIT), FORTITUDE_TRAIT)
 
 	if(was_running && bloodsucker_user.m_intent == MOVE_INTENT_WALK)
 		bloodsucker_user.set_move_intent(MOVE_INTENT_RUN)
 	owner.balloon_alert(owner, "fortitude turned off.")
-	REMOVE_TRAIT(bloodsucker_user, TRAIT_NO_SPRINT, BLOODSUCKER_TRAIT)
 
 	return ..()

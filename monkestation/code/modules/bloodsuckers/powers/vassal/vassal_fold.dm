@@ -41,8 +41,8 @@
 		target_ref = WEAKREF(owner.pulling)
 		return TRUE
 
-	var/blood_bag = locate(/obj/item/reagent_containers/blood) in user.held_items
-	if(!blood_bag)
+	var/obj/item/reagent_containers/blood/blood_bag = user.is_holding_item_of_type(/obj/item/reagent_containers/blood)
+	if(QDELETED(blood_bag))
 		owner.balloon_alert(owner, "blood bag needed!")
 		return FALSE
 	if(istype(blood_bag, /obj/item/reagent_containers/blood/o_minus/bloodsucker))
@@ -72,7 +72,7 @@
 	if(target_ref)
 		var/mob/living/target = target_ref.resolve()
 		var/datum/antagonist/ex_vassal/former_vassal = target.mind.has_antag_datum(/datum/antagonist/ex_vassal)
-		if(!former_vassal || former_vassal.revenge_vassal)
+		if(QDELETED(former_vassal) || former_vassal.revenge_vassal)
 			target_ref = null
 			return
 		if(do_after(owner, 5 SECONDS, target))
@@ -81,10 +81,10 @@
 		DeactivatePower()
 		return
 
-	if(bloodbag)
+	if(!QDELETED(bloodbag))
 		var/mob/living/living_owner = owner
 		living_owner.blood_volume -= 150
 		QDEL_NULL(bloodbag)
-		var/obj/item/reagent_containers/blood/o_minus/bloodsucker/new_bag = new(owner.loc)
-		owner.put_in_active_hand(new_bag)
+		var/obj/item/reagent_containers/blood/o_minus/bloodsucker/new_bag = new(owner.drop_location())
+		owner.put_in_hands(new_bag)
 		DeactivatePower()

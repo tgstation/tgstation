@@ -108,7 +108,7 @@
 	if(!isliving(user))
 		return FALSE
 	// Torpor?
-	if((check_flags & BP_CANT_USE_IN_TORPOR) && HAS_TRAIT_FROM(user, TRAIT_NODEATH, TORPOR_TRAIT))
+	if((check_flags & BP_CANT_USE_IN_TORPOR) && bloodsuckerdatum_power?.is_in_torpor())
 		to_chat(user, span_warning("Not while you're in Torpor."))
 		return FALSE
 	// Frenzy?
@@ -124,12 +124,12 @@
 		to_chat(user, span_warning("You can't do this while you are unconcious!"))
 		return FALSE
 	// Incapacitated?
-	if((check_flags & BP_CANT_USE_WHILE_INCAPACITATED) && (user.incapacitated(IGNORE_RESTRAINTS, IGNORE_GRAB)))
+	if((check_flags & BP_CANT_USE_WHILE_INCAPACITATED) && (user.incapacitated(IGNORE_RESTRAINTS | IGNORE_GRAB)))
 		to_chat(user, span_warning("Not while you're incapacitated!"))
 		return FALSE
 	// Constant Cost (out of blood)
 	if(constant_bloodcost > 0 && bloodsuckerdatum_power?.bloodsucker_blood_volume <= 0)
-		to_chat(user, span_warning("You don't have the blood to upkeep [src]."))
+		to_chat(user, span_warning("You don't have the blood to upkeep [src]!"))
 		return FALSE
 	return TRUE
 
@@ -187,10 +187,10 @@
 	SHOULD_CALL_PARENT(TRUE) //Need this to call parent so the cooldown system works
 	. = ..()
 	if(!active) // if we're not active anyways, then we shouldn't be processing!!!
-		return PROCESS_KILL
+		return
 	if(!ContinueActive(owner)) // We can't afford the Power? Deactivate it.
 		DeactivatePower()
-		return PROCESS_KILL
+		return
 	// We can keep this up (For now), so Pay Cost!
 	if(!(power_flags & BP_AM_COSTLESS_UNCONSCIOUS) && owner.stat != CONSCIOUS)
 		if(bloodsuckerdatum_power)

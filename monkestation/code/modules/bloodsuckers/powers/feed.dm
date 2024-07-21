@@ -24,6 +24,8 @@
 	var/warning_target_bloodvol = BLOOD_VOLUME_MAX_LETHAL
 	///Reference to the target we've fed off of
 	var/datum/weakref/target_ref
+	/// Whether the target was alive or not when we started feeding.
+	var/started_alive = TRUE
 	///Are we feeding with passive grab or not?
 	var/silent_feed = TRUE
 
@@ -54,11 +56,12 @@
 	if(!QDELETED(feed_target))
 		log_combat(user, feed_target, "fed on blood", addition="(and took [blood_taken] blood)")
 		to_chat(user, span_notice("You slowly release [feed_target]."))
-		if(feed_target.stat == DEAD)
+		if(feed_target.stat == DEAD && !started_alive)
 			user.add_mood_event("drankkilled", /datum/mood_event/drankkilled)
 			bloodsuckerdatum_power.AddHumanityLost(10)
 
 	target_ref = null
+	started_alive = TRUE
 	warning_target_bloodvol = BLOOD_VOLUME_MAX_LETHAL
 	blood_taken = 0
 	REMOVE_TRAIT(user, TRAIT_IMMOBILIZED, FEED_TRAIT)
@@ -82,6 +85,7 @@
 		feed_timer = 2 SECONDS
 
 	owner.balloon_alert(owner, "feeding off [feed_target]...")
+	started_alive = (feed_target.stat < HARD_CRIT)
 	if(!do_after(owner, feed_timer, feed_target, NONE, TRUE))
 		owner.balloon_alert(owner, "feed stopped")
 		DeactivatePower()
@@ -113,7 +117,7 @@
 			continue
 		if(watchers.is_blind() || watchers.is_nearsighted_currently())
 			continue
-		if(IS_BLOODSUCKER(watchers) || IS_VASSAL(watchers) || HAS_TRAIT(watchers.mind, TRAIT_OCCULTIST))
+		if(IS_BLOODSUCKER(watchers) || IS_VASSAL(watchers) || HAS_MIND_TRAIT(watchers, TRAIT_OCCULTIST))
 			continue
 		owner.balloon_alert(owner, "feed noticed!")
 		bloodsuckerdatum_power.give_masquerade_infraction()
@@ -168,7 +172,7 @@
 	// Drank mindless as Ventrue? - BAD
 	if(bloodsuckerdatum_power.my_clan?.blood_drink_type == BLOODSUCKER_DRINK_SNOBBY && QDELETED(feed_target.mind))
 		user.add_mood_event("drankblood", /datum/mood_event/drankblood_bad)
-	if(feed_target.stat >= DEAD)
+	if(feed_target.stat >= DEAD && !started_alive)
 		user.add_mood_event("drankblood", /datum/mood_event/drankblood_dead)
 
 	if(!IS_BLOODSUCKER(feed_target))
