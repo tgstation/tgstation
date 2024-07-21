@@ -116,9 +116,7 @@
 	// No subtypes
 	if(type != /obj/item/radio)
 		return
-	AddComponent(/datum/component/slapcrafting,\
-		slapcraft_recipes = list(/datum/crafting_recipe/improv_explosive)\
-	)
+	AddElement(/datum/element/slapcrafting, string_list(list(/datum/crafting_recipe/improv_explosive)))
 
 	RegisterSignal(src, COMSIG_HIT_BY_SABOTEUR, PROC_REF(on_saboteur))
 
@@ -399,7 +397,6 @@
 			// left hands are odd slots
 			if (idx && (idx % 2) == (message_mods[RADIO_EXTENSION] == MODE_L_HAND))
 				return
-
 	talk_into(speaker, raw_message, , spans, language=message_language, message_mods=filtered_mods)
 
 /// Checks if this radio can receive on the given frequency.

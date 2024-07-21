@@ -266,9 +266,6 @@
 	reagents.expose_temperature(1000)
 	return ..() | COMPONENT_MICROWAVE_SUCCESS
 
-/obj/item/reagent_containers/fire_act(temperature, volume)
-	reagents.expose_temperature(temperature)
-
 /// Updates the icon of the container when the reagents change. Eats signal args
 /obj/item/reagent_containers/proc/on_reagent_change(datum/reagents/holder, ...)
 	SIGNAL_HANDLER

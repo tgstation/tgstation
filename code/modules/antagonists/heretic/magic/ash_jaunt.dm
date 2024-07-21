@@ -10,7 +10,7 @@
 	school = SCHOOL_FORBIDDEN
 	cooldown_time = 15 SECONDS
 
-	invocation = "ASH'N P'SSG'"
+	invocation = "Askgraar' goetur!"
 	invocation_type = INVOCATION_WHISPER
 	spell_requirements = NONE
 

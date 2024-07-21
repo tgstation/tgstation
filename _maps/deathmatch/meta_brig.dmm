@@ -258,6 +258,16 @@
 "du" = (
 /turf/closed/indestructible/fakedoor,
 /area/deathmatch)
+"dy" = (
+/obj/structure/chair/stool/directional/east,
+/obj/effect/turf_decal/trimline/red/warning{
+	dir = 4
+	},
+/obj/machinery/flasher/directional/north{
+	id = "visitorflash"
+	},
+/turf/open/floor/iron,
+/area/deathmatch)
 "dA" = (
 /obj/effect/turf_decal/tile/blue{
 	dir = 8
@@ -1625,8 +1635,13 @@
 /turf/open/indestructible/dark,
 /area/deathmatch)
 "yN" = (
-/turf/cordon,
-/area/template_noop)
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/chair/stool/directional/east,
+/obj/effect/turf_decal/trimline/red/warning{
+	dir = 4
+	},
+/turf/open/floor/iron,
+/area/deathmatch)
 "yO" = (
 /obj/effect/turf_decal/trimline/red/filled/line{
 	dir = 4
@@ -3618,8 +3633,8 @@ IJ
 Yh
 Yh
 Yh
-yN
-yN
+dy
+YW
 yN
 IJ
 IJ

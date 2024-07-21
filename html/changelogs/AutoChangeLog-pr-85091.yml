@@ -1,0 +1,4 @@
+author: "SmArtKar"
+delete-after: True
+changes:
+  - qol: "Self-respiration no longer sends misleading messages and instead tells about lack of need to breathe once it actually gives you the effect"

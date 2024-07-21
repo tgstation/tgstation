@@ -115,6 +115,8 @@
 
 	///the type of damage overlay (if any) to use when this bodypart is bruised/burned.
 	var/dmg_overlay_type = "human"
+	///a color (optionally matrix) for the damage overlays to give the limb
+	var/damage_overlay_color
 	/// If we're bleeding, which icon are we displaying on this part
 	var/bleed_overlay_icon
 
@@ -199,6 +201,8 @@
 	var/any_existing_wound_can_mangle_our_interior
 	/// get_damage() / total_damage must surpass this to allow our limb to be disabled, even temporarily, by an EMP.
 	var/robotic_emp_paralyze_damage_percent_threshold = 0.3
+	/// A potential texturing overlay to put on the limb
+	var/datum/bodypart_overlay/texture/texture_bodypart_overlay
 
 /obj/item/bodypart/apply_fantasy_bonuses(bonus)
 	. = ..()
@@ -223,6 +227,10 @@
 		RegisterSignal(src, SIGNAL_REMOVETRAIT(TRAIT_PARALYSIS), PROC_REF(on_paralysis_trait_loss))
 
 	RegisterSignal(src, COMSIG_ATOM_RESTYLE, PROC_REF(on_attempt_feature_restyle))
+
+	if(texture_bodypart_overlay)
+		texture_bodypart_overlay = new texture_bodypart_overlay()
+		add_bodypart_overlay(texture_bodypart_overlay)
 
 	if(!IS_ORGANIC_LIMB(src))
 		grind_results = null
@@ -351,7 +359,7 @@
 				check_list += "\t [span_boldwarning("Your [name] is suffering [wound.a_or_from] [LOWER_TEXT(wound.name)]!!!")]"
 
 	for(var/obj/item/embedded_thing in embedded_objects)
-		var/stuck_word = embedded_thing.isEmbedHarmless() ? "stuck" : "embedded"
+		var/stuck_word = embedded_thing.is_embed_harmless() ? "stuck" : "embedded"
 		check_list += "\t <a href='?src=[REF(examiner)];embedded_object=[REF(embedded_thing)];embedded_limb=[REF(src)]' class='warning'>There is \a [embedded_thing] [stuck_word] in your [name]!</a>"
 
 /obj/item/bodypart/blob_act()
@@ -1059,7 +1067,8 @@
 			for(var/external_layer in overlay.all_layers)
 				if(overlay.layers & external_layer)
 					. += overlay.get_overlay(external_layer, src)
-
+			for(var/datum/layer in .)
+				overlay.modify_bodypart_appearance(layer)
 	return .
 
 /obj/item/bodypart/proc/huskify_image(image/thing_to_husk, draw_blood = TRUE)
@@ -1096,15 +1105,15 @@
 	if(embed in embedded_objects) // go away
 		return
 	// We don't need to do anything with projectile embedding, because it will never reach this point
-	RegisterSignal(embed, COMSIG_ITEM_EMBEDDING_UPDATE, PROC_REF(embedded_object_changed))
 	embedded_objects += embed
+	RegisterSignal(embed, COMSIG_ITEM_EMBEDDING_UPDATE, PROC_REF(embedded_object_changed))
 	refresh_bleed_rate()
 
 /// INTERNAL PROC, DO NOT USE
 /// Cleans up any attachment we have to the embedded object, removes it from our list
 /obj/item/bodypart/proc/_unembed_object(obj/item/unembed)
-	UnregisterSignal(unembed, COMSIG_ITEM_EMBEDDING_UPDATE)
 	embedded_objects -= unembed
+	UnregisterSignal(unembed, COMSIG_ITEM_EMBEDDING_UPDATE)
 	refresh_bleed_rate()
 
 /obj/item/bodypart/proc/embedded_object_changed(obj/item/embedded_source)
@@ -1157,7 +1166,7 @@
 		cached_bleed_rate += 0.5
 
 	for(var/obj/item/embeddies in embedded_objects)
-		if(!embeddies.isEmbedHarmless())
+		if(!embeddies.is_embed_harmless())
 			cached_bleed_rate += 0.25
 
 	for(var/datum/wound/iter_wound as anything in wounds)

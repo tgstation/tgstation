@@ -108,8 +108,6 @@
 	overlay_state_inactive = "module_jetpack"
 	overlay_state_active = "module_jetpack_on"
 	required_slots = list(ITEM_SLOT_BACK)
-	/// Do we give the wearer a speed buff.
-	var/full_speed = FALSE
 	/// Do we have stabilizers? If yes the user won't move from inertia.
 	var/stabilize = TRUE
 	/// Callback to see if we can thrust the user.
@@ -143,14 +141,6 @@
 		/datum/effect_system/trail_follow/ion/grav_allowed \
 	)
 
-/obj/item/mod/module/jetpack/on_activation()
-	if(full_speed)
-		mod.wearer.add_movespeed_modifier(/datum/movespeed_modifier/jetpack/fullspeed)
-
-/obj/item/mod/module/jetpack/on_deactivation(display_message = TRUE, deleting = FALSE)
-	if(full_speed)
-		mod.wearer.remove_movespeed_modifier(/datum/movespeed_modifier/jetpack/fullspeed)
-
 /obj/item/mod/module/jetpack/get_configuration()
 	. = ..()
 	.["stabilizers"] = add_ui_configuration("Stabilizers", "bool", stabilize)
@@ -166,15 +156,6 @@
 	if(!drain_power(use_energy_cost))
 		return FALSE
 	return TRUE
-
-/obj/item/mod/module/jetpack/advanced
-	name = "MOD advanced ion jetpack module"
-	desc = "An improvement on the previous model of electric thrusters. This one achieves higher speeds through \
-		mounting of more jets and application of red paint."
-	icon_state = "jetpack_advanced"
-	overlay_state_inactive = "module_jetpackadv"
-	overlay_state_active = "module_jetpackadv_on"
-	full_speed = TRUE
 
 /// Cooldown to use if we didn't actually launch a jump jet
 #define FAILED_ACTIVATION_COOLDOWN 3 SECONDS

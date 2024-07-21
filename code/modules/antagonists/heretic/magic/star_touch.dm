@@ -13,7 +13,7 @@
 	sound = 'sound/items/welder.ogg'
 	school = SCHOOL_FORBIDDEN
 	cooldown_time = 15 SECONDS
-	invocation = "ST'R 'N'RG'!"
+	invocation = "An'gar sig!"
 	invocation_type = INVOCATION_SHOUT
 	spell_requirements = NONE
 	antimagic_flags = MAGIC_RESISTANCE

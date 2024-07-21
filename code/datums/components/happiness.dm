@@ -69,6 +69,11 @@
 	SIGNAL_HANDLER
 	if(!COOLDOWN_FINISHED(src, groom_cooldown))
 		return
+
+	var/mob/living/living_parent = parent
+	if (living_parent.stat != CONSCIOUS)
+		return
+
 	COOLDOWN_START(src, groom_cooldown, GROOM_COOLDOWN)
 	increase_happiness_level(on_groom_change)
 
@@ -76,15 +81,12 @@
 	SIGNAL_HANDLER
 	if(!LAZYACCESS(modifiers, LEFT_CLICK) || petter.combat_mode)
 		return
-	pet_animal()
 
-/datum/component/happiness/proc/on_animal_petted(datum/source, mob/living/petter)
-	SIGNAL_HANDLER
-
-	if(petter.combat_mode)
+	var/mob/living/living_parent = parent
+	if (living_parent.stat != CONSCIOUS)
 		return
+
 	pet_animal()
-	return COMSIG_BASIC_ATTACK_CANCEL_CHAIN
 
 /datum/component/happiness/proc/pet_animal()
 	if(!COOLDOWN_FINISHED(src, pet_cooldown))

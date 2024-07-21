@@ -92,7 +92,7 @@
 
 /obj/structure/table/update_icon(updates=ALL)
 	. = ..()
-	if((updates & UPDATE_SMOOTHING) && (smoothing_flags & (SMOOTH_CORNERS|SMOOTH_BITMASK)))
+	if((updates & UPDATE_SMOOTHING) && (smoothing_flags & USES_SMOOTHING))
 		QUEUE_SMOOTH(src)
 		QUEUE_SMOOTH_NEIGHBORS(src)
 
@@ -275,6 +275,11 @@
 			else if(HAS_TRAIT(user, TRAIT_QUICK_CARRY))
 				tableplace_delay = 2.75 SECONDS
 				skills_space = " quickly"
+
+			var/obj/item/organ/internal/cyberimp/chest/spine/potential_spine = user.get_organ_slot(ORGAN_SLOT_SPINE)
+			if(istype(potential_spine))
+				tableplace_delay *= potential_spine.athletics_boost_multiplier
+
 			carried_mob.visible_message(span_notice("[user] begins to[skills_space] place [carried_mob] onto [src]..."),
 				span_userdanger("[user] begins to[skills_space] place [carried_mob] onto [src]..."))
 			if(do_after(user, tableplace_delay, target = carried_mob))

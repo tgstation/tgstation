@@ -525,6 +525,7 @@ GLOBAL_LIST_EMPTY(antagonists)
 		"antag_team_hud_[REF(src)]",
 		hud_image_on(target),
 		antag_to_check || type,
+		get_team() && WEAKREF(get_team()),
 	))
 
 	// Add HUDs that they couldn't see before

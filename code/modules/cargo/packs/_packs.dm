@@ -77,6 +77,7 @@
 				continue
 			A.flags_1 |= ADMIN_SPAWNED_1
 
+
 /// For generating supply packs at runtime. Returns a list of supply packs to use instead of this one.
 /datum/supply_pack/proc/generate_supply_packs()
 	return

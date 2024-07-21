@@ -4,14 +4,39 @@
 	name = "junk bullet"
 	icon_state = "trashball"
 	damage = 30
-	embedding = list(embed_chance=15, fall_chance=3, jostle_chance=4, ignore_throwspeed_threshold=TRUE, pain_stam_pct=0.4, pain_mult=5, jostle_pain_mult=6, rip_time=10)
-	var/bane_mob_biotypes = MOB_ROBOTIC
-	var/bane_multiplier = 1.5
-	var/bane_added_damage = 0
+	embed_type = /datum/embed_data/bullet_junk
+	/// What biotype does our junk projectile especially harm?
+	var/extra_damage_mob_biotypes = MOB_ROBOTIC
+	/// How much do we multiply our total base damage?
+	var/extra_damage_multiplier = 1.5
+	/// How much extra damage do we do on top of this total damage? Separate from the multiplier and unaffected by it.
+	var/extra_damage_added_damage = 0
+	/// What damage type is our extra damage?
+	var/extra_damage_type = BRUTE
 
-/obj/projectile/bullet/junk/Initialize(mapload)
+/obj/projectile/bullet/junk/on_hit(atom/target, blocked = 0, pierce_hit)
 	. = ..()
-	AddElement(/datum/element/bane, mob_biotypes = bane_mob_biotypes, target_type = /mob/living, damage_multiplier = bane_multiplier, added_damage = bane_added_damage, requires_combat_mode = FALSE)
+
+	if(!isliving(target))
+		return
+	var/mob/living/living_target = target
+
+	var/is_correct_biotype = living_target.mob_biotypes & extra_damage_mob_biotypes
+	if(extra_damage_mob_biotypes && is_correct_biotype)
+		var/multiplied_damage = extra_damage_multiplier ? ((damage * extra_damage_multiplier) - damage) : 0
+		var/finalized_damage = multiplied_damage + extra_damage_added_damage
+		if(finalized_damage)
+			living_target.apply_damage(finalized_damage, damagetype = extra_damage_type, def_zone = BODY_ZONE_CHEST, wound_bonus = wound_bonus)
+
+/datum/embed_data/bullet_junk
+	embed_chance=15
+	fall_chance=3
+	jostle_chance=4
+	ignore_throwspeed_threshold=TRUE
+	pain_stam_pct=0.4
+	pain_mult=5
+	jostle_pain_mult=6
+	rip_time=10
 
 /obj/projectile/bullet/incendiary/fire/junk
 	name = "burning oil"
@@ -28,9 +53,10 @@
 	name = "bundle of live electrical parts"
 	icon_state = "tesla_projectile"
 	damage = 15
-	embedding = null
+	embed_type = null
 	shrapnel_type = null
-	bane_multiplier = 3
+	extra_damage_added_damage = 30
+	extra_damage_type = BURN
 
 /obj/projectile/bullet/junk/shock/on_hit(atom/target, blocked = 0, pierce_hit)
 	. = ..()
@@ -41,17 +67,27 @@
 /obj/projectile/bullet/junk/hunter
 	name = "junk hunter bullet"
 	icon_state = "gauss"
-	bane_mob_biotypes = MOB_ROBOTIC | MOB_BEAST | MOB_SPECIAL
-	bane_multiplier = 0
-	bane_added_damage = 50
+	extra_damage_mob_biotypes = MOB_ROBOTIC | MOB_BEAST | MOB_SPECIAL
+	extra_damage_multiplier = 0
+	extra_damage_added_damage = 50
 
 /obj/projectile/bullet/junk/ripper
 	name = "junk ripper bullet"
 	icon_state = "redtrac"
 	damage = 10
-	embedding = list(embed_chance=100, fall_chance=3, jostle_chance=4, ignore_throwspeed_threshold=TRUE, pain_stam_pct=0.4, pain_mult=5, jostle_pain_mult=6, rip_time=10)
+	embed_type = /datum/embed_data/bullet_junk_ripper
 	wound_bonus = 10
 	bare_wound_bonus = 30
+
+/datum/embed_data/bullet_junk_ripper
+	embed_chance=100
+	fall_chance=3
+	jostle_chance=4
+	ignore_throwspeed_threshold=TRUE
+	pain_stam_pct=0.4
+	pain_mult=5
+	jostle_pain_mult=6
+	rip_time=10
 
 /obj/projectile/bullet/junk/reaper
 	name = "junk reaper bullet"

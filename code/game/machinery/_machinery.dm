@@ -177,7 +177,7 @@
 		flags_1 |= PREVENT_CONTENTS_EXPLOSION_1
 	}
 
-	if(HAS_TRAIT(SSstation, STATION_TRAIT_BOTS_GLITCHED))
+	if(HAS_TRAIT(SSstation, STATION_TRAIT_MACHINES_GLITCHED) && mapload)
 		randomize_language_if_on_station()
 	SEND_GLOBAL_SIGNAL(COMSIG_GLOB_NEW_MACHINE, src)
 
@@ -284,7 +284,15 @@
 /obj/machinery/proc/locate_machinery()
 	return
 
+///Early process for machines added to SSmachines.processing_early to prioritize power draw
+/obj/machinery/proc/process_early()
+	return PROCESS_KILL
+
 /obj/machinery/process()//If you dont use process or power why are you here
+	return PROCESS_KILL
+
+///Late process for machines added to SSmachines.processing_late to gather accurate recordings
+/obj/machinery/proc/process_late()
 	return PROCESS_KILL
 
 /obj/machinery/proc/process_atmos()//If you dont use process why are you here
@@ -831,10 +839,13 @@
 		return //Just delete us, no need to call anything else.
 
 	on_deconstruction(disassembled)
+
+	if(circuit)
+		spawn_frame(disassembled)
+
 	if(!LAZYLEN(component_parts))
 		dump_contents() //drop everything inside us
 		return //we don't have any parts.
-	spawn_frame(disassembled)
 
 	for(var/part in component_parts)
 		if(istype(part, /datum/stock_part))

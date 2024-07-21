@@ -12,10 +12,12 @@ export function OrbitSearchBar(props) {
   const {
     autoObserve,
     bladeOpen,
+    realNameDisplay,
     searchQuery,
     viewMode,
     setAutoObserve,
     setBladeOpen,
+    setRealNameDisplay,
     setSearchQuery,
     setViewMode,
   } = useContext(OrbitContext);
@@ -100,6 +102,17 @@ export function OrbitSearchBar(props) {
             icon="sync-alt"
             onClick={() => act('refresh')}
             tooltip="Refresh"
+            tooltipPosition="bottom-start"
+          />
+        </Stack.Item>
+        <Stack.Item>
+          <Button
+            color="transparent"
+            icon="passport"
+            onClick={() => setRealNameDisplay(!realNameDisplay)}
+            selected={realNameDisplay}
+            tooltip="Toggle real name display. When active, you'll see real
+            names instead of disguises in orbit menu."
             tooltipPosition="bottom-start"
           />
         </Stack.Item>
