@@ -663,11 +663,6 @@ ADMIN_VERB(centcom_podlauncher, R_ADMIN, "Config/Launch Supplypod", "Configure a
 	preLaunch() //Fill acceptable turfs from orderedArea, then fill launchList from acceptableTurfs (see proc for more info)
 	refreshView()
 
-/area/centcom/central_command_areas/supplypod/pod_storage/Initialize(mapload) //temp_pod holding area
-	. = ..()
-	var/obj/imgbound = locate() in locate(200,SUPPLYPOD_X_OFFSET*-4.5, 1)
-	GLOB.podlauncher.RegisterSignal(imgbound, COMSIG_CLICK_CTRL, TYPE_PROC_REF(/datum/centcom_podlauncher, give_podlauncher))
-
 /datum/centcom_podlauncher/proc/createOrderedArea(area/area_to_order) //This assumes the area passed in is a continuous square
 	if (isnull(area_to_order)) //If theres no supplypod bay mapped into centcom, throw an error
 		to_chat(holder.mob, "No /area/centcom/central_command_areas/supplypod/loading/one (or /two or /three or /four) in the world! You can make one yourself (then refresh) for now, but yell at a mapper to fix this, today!")
@@ -861,14 +856,6 @@ ADMIN_VERB(centcom_podlauncher, R_ADMIN, "Config/Launch Supplypod", "Configure a
 	refreshView()
 
 GLOBAL_DATUM_INIT(podlauncher, /datum/centcom_podlauncher, new)
-//Proc for admins to enable others to use podlauncher after roundend
-/datum/centcom_podlauncher/proc/give_podlauncher(mob/living/user, override)
-	if (SSticker.current_state < GAME_STATE_FINISHED)
-		return
-	if (!istype(user))
-		user = override
-	if (user)
-		setup(user)//setup the datum
 
 //Set the dropoff location and indicator to either a specific turf or somewhere in an area
 /datum/centcom_podlauncher/proc/setDropoff(target)
