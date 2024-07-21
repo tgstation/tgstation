@@ -119,6 +119,7 @@
 	add_control_flags(M, control_flags)
 	after_add_occupant(M)
 	grant_passenger_actions(M)
+	SEND_SIGNAL(src, COMSIG_VEHICLE_OCCUPANT_ADDED, M, occupants[M])
 	return TRUE
 
 /obj/vehicle/proc/after_add_occupant(mob/M)
@@ -132,6 +133,7 @@
 	SHOULD_CALL_PARENT(TRUE)
 	if(!istype(M))
 		return FALSE
+	SEND_SIGNAL(src, COMSIG_VEHICLE_OCCUPANT_REMOVED, M, occupants[M])
 	remove_control_flags(M, ALL)
 	remove_passenger_actions(M)
 	LAZYREMOVE(occupants, M)

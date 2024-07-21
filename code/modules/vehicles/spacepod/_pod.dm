@@ -51,7 +51,7 @@
 	var/obj/item/stock_parts/power_store/cell/cell
 
 	/// mob = list(action)
-	var/list/equipment_actions = list()
+	var/list/list/equipment_actions = list()
 
 
 /obj/vehicle/sealed/space_pod/Initialize(mapload)
@@ -126,7 +126,8 @@
 		if(isnull(action))
 			continue
 		if(islist(action))
-			for(var/datum/action/actual_action as anything in action)
+			var/list/as_list = action
+			for(var/datum/action/actual_action as anything in as_list)
 				actual_action.Grant(occupant)
 		else
 			action.Grant(occupant)
@@ -167,6 +168,7 @@
 	equip_item(new /obj/item/pod_equipment/comms)
 	equip_item(new /obj/item/pod_equipment/thrusters)
 	equip_item(new /obj/item/pod_equipment/engine)
+	equip_item(new /obj/item/pod_equipment/primary/projectile_weapon/kinetic_accelerator)
 	cabin_air_tank = new /obj/item/tank/internals/oxygen(src)
 	cell = new /obj/item/stock_parts/power_store/battery/bluespace(src)
 
