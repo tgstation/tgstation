@@ -25,13 +25,11 @@
 	if(instant)
 		flags |= MOVEMENT_LOOP_START_FAST
 	src.drift_force = drift_force
-	drifting_loop = GLOB.move_manager.smooth_move(moving = parent, angle = inertia_angle, delay = 1, subsystem = SSspacedrift, priority = MOVEMENT_SPACE_PRIORITY, flags = flags)
+	drifting_loop = GLOB.move_manager.smooth_move(moving = parent, angle = inertia_angle, delay = get_loop_delay(parent), subsystem = SSspacedrift, priority = MOVEMENT_SPACE_PRIORITY, flags = flags)
 
 	if(!drifting_loop)
 		qdel(src)
 		return
-
-	drifting_loop.set_speed(get_loop_delay(parent))
 
 	RegisterSignal(drifting_loop, COMSIG_MOVELOOP_START, PROC_REF(drifting_start))
 	RegisterSignal(drifting_loop, COMSIG_MOVELOOP_STOP, PROC_REF(drifting_stop))
@@ -101,7 +99,7 @@
 		return
 
 	drifting_loop.set_angle(delta_to_angle(force_x, force_y))
-	drifting_loop.set_speed(get_loop_delay(parent))
+	drifting_loop.set_delay(get_loop_delay(parent))
 
 /datum/drift_handler/proc/drifting_start()
 	SIGNAL_HANDLER
@@ -224,7 +222,7 @@
 		return COMPONENT_PREVENT_SPACEMOVE_HALT
 
 	drift_force -= INERTIA_FORCE_SPACEMOVE_REDUCTION / source.inertia_force_weight
-	drifting_loop.set_speed(get_loop_delay(source))
+	drifting_loop.set_delay(get_loop_delay(source))
 	return COMPONENT_PREVENT_SPACEMOVE_HALT
 
 /datum/drift_handler/proc/get_loop_delay(atom/movable/movable)

@@ -902,8 +902,6 @@
 	/// Sign for our movement
 	var/x_sign = 1
 	var/y_sign = 1
-	/// Actual speed, in case we move faster than 1 tile per tick
-	var/speed = 1
 
 /datum/move_loop/smooth_move/setup(delay, timeout, angle)
 	. = ..()
@@ -915,9 +913,6 @@
 	if(..() && angle == src.angle)
 		return TRUE
 	return FALSE
-
-/datum/move_loop/smooth_move/proc/set_speed(new_speed)
-	delay = max(1, round(new_speed, 0.1))
 
 /datum/move_loop/smooth_move/move()
 	var/atom/old_loc = moving.loc
