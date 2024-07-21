@@ -131,7 +131,8 @@
 		notify_ghosts(
 			"[user] has planted \a [src] on [target] with a [det_time] second fuse!",
 			source = bomb_target_image,
-			flashwindow = FALSE,
+			action = (isturf(target) ? NOTIFY_JUMP : NOTIFY_ORBIT),
+			notify_flags = NOTIFY_CATEGORY_NOFLASH,
 			header = "Explosive Planted",
 		)
 

@@ -152,6 +152,7 @@
 		notify_ghosts(
 			"[src] has been activated!",
 			source = src,
+			notify_flags = NOTIFY_CATEGORY_NOFLASH,
 			header = "Divine Intervention",
 			ghost_sound = 'sound/machines/warning-buzzer.ogg',
 			notify_volume = 75,
@@ -169,6 +170,7 @@
 		notify_ghosts(
 			"[src] has been activated!",
 			source = src,
+			notify_flags = NOTIFY_CATEGORY_NOFLASH,
 			header = "Mistakes Were Made",
 			ghost_sound = 'sound/machines/warning-buzzer.ogg',
 			notify_volume = 75,

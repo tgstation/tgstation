@@ -41,7 +41,12 @@
 /obj/effect/spawner/random/maintenance/post_spawn(atom/movable/spawned_loot) //if an oddity spawns then ghosts should be told, as they could be pretty interesting to watch
 	if(spawned_loot.type in GLOB.oddity_loot) //running locate() will also return TRUE on parents of the typepath as well, mainly boxes
 		SSpoints_of_interest.make_point_of_interest(spawned_loot)
-		notify_ghosts("Maintenance has an object of interest: [spawned_loot]!", source=spawned_loot, action=NOTIFY_ORBIT, header="Something's Interesting!")
+		notify_ghosts(
+			"Maintenance has an object of interest: [spawned_loot]!",
+			source = spawned_loot,
+			action = NOTIFY_ORBIT,
+			header = "Something's Interesting!",
+		)
 //monkestation edit end
 /obj/effect/spawner/random/maintenance/two
 	name = "2 x maintenance loot spawner"

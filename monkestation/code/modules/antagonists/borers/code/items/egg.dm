@@ -56,9 +56,8 @@
 			"A cortical borer egg has been laid in \the [src_area.name].",
 			source = src,
 			action = NOTIFY_PLAY,
-			flashwindow = FALSE,
+			notify_flags = (NOTIFY_CATEGORY_NOFLASH & ~GHOST_NOTIFY_NOTIFY_SUICIDERS),
 			ignore_key = POLL_IGNORE_DRONE,
-			notify_suiciders = FALSE,
 		)
 
 /obj/item/borer_egg/attack_ghost(mob/user)

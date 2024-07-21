@@ -39,7 +39,13 @@
 		new /obj/effect/anomaly/dimensional/wonderland(get_safe_random_station_turf(), null, FALSE)
 	for(var/i = 1 to 4)
 		var/obj/structure/wonderland_rift/rift = new(get_safe_random_station_turf())
-		notify_ghosts("A doorway to the wonderland has been opened!", source = rift, action = NOTIFY_ORBIT, flashwindow = FALSE, header = "Wonderland Rift Opened")
+		notify_ghosts(
+			"A doorway to the wonderland has been opened!",
+			source = rift,
+			action = NOTIFY_ORBIT,
+			notify_flags = NOTIFY_CATEGORY_NOFLASH,
+			header = "Wonderland Rift Opened",
+		)
 	for(var/mob/living/target as anything in GLOB.mob_living_list)
 		if(QDELETED(target))
 			continue

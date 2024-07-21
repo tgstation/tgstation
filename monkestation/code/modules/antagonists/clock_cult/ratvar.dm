@@ -63,8 +63,12 @@ GLOBAL_DATUM(cult_ratvar, /obj/ratvar)
 	var/area/area = get_area(src)
 	if(area)
 		var/mutable_appearance/alert_overlay = mutable_appearance('monkestation/icons/obj/clock_cult/clockwork_effects.dmi', "ratvar_alert")
-		notify_ghosts("Rat'var has risen in [area]. Reach out to the Justicar to be given a new shell for your soul.", source = src, \
-					alert_overlay = alert_overlay, action = NOTIFY_PLAY)
+		notify_ghosts(
+			"Rat'var has risen in [area]. Reach out to the Justicar to be given a new shell for your soul.",
+			source = src,
+			alert_overlay = alert_overlay,
+			action = NOTIFY_PLAY,
+		)
 	gods_battle()
 	START_PROCESSING(SSobj, src)
 

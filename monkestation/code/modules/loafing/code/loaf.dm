@@ -100,7 +100,12 @@
 /obj/item/food/prison_loaf/proc/critical()
 	src.critical = TRUE
 	var/turf/T = get_turf(src)
-	notify_ghosts("A [src] has been condensed to the point of criticality!", source=src, action=NOTIFY_ORBIT, header="Loaf Criticality!!")
+	notify_ghosts(
+		"A [src] has been condensed to the point of criticality!",
+		source = src,
+		action = NOTIFY_ORBIT,
+		header = "Loaf Criticality!!"
+	)
 	log_game("\A [src] has been condensed to the point of criticality at [AREACOORD(T)].")
 	message_admins("A [src.name] has been condensed to the point of criticality at [ADMIN_VERBOSEJMP(T)].")
 	death_time = world.time + lifespan
@@ -136,7 +141,12 @@
 	var/turf/end_turf = get_edge_target_turf(get_random_station_turf(), turn(startside, 180))
 	var/turf/start_turf = get_turf(usr)
 	var/atom/rod = new /obj/effect/immovablerod/loaf(start_turf, end_turf)
-	notify_ghosts("[usr.name] has an object of interest: [rod]!", source=rod, action=NOTIFY_ORBIT, header="Something's Interesting!")
+	notify_ghosts(
+		"[usr.name] has an object of interest: [rod]!",
+		source = rod,
+		action = NOTIFY_ORBIT,
+		header = "Something's Interesting!"
+	)
 	qdel(src)
 
 /obj/effect/immovablerod/loaf

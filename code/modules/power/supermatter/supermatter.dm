@@ -500,6 +500,13 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 	final_countdown = TRUE
 	SEND_GLOBAL_SIGNAL(COMSIG_MAIN_SM_DELAMINATING, final_countdown)
 
+	notify_ghosts(
+		"[src] has begun the delamination process!",
+		source = src,
+		header = "Meltdown Incoming",
+		notify_flags = NOTIFY_CATEGORY_DEFAULT,
+	)
+
 	var/datum/sm_delam/last_delamination_strategy = delamination_strategy
 	var/list/count_down_messages = delamination_strategy.count_down_messages()
 

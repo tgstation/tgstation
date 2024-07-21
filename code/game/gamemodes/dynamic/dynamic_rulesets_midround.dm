@@ -169,7 +169,12 @@
 		if(makeBody)
 			new_character = generate_ruleset_body(applicant)
 		finish_setup(new_character, i)
-		notify_ghosts("[applicant.name] has been picked for the ruleset [name]!", source = new_character, action = NOTIFY_ORBIT, header="Something Interesting!")
+		notify_ghosts(
+			"[applicant.name] has been picked for the ruleset [name]!",
+			source = new_character,
+			action = NOTIFY_ORBIT,
+			header = "Something Interesting!",
+		)
 
 /datum/dynamic_ruleset/midround/from_ghosts/proc/generate_ruleset_body(mob/applicant)
 	var/mob/living/carbon/human/new_character = make_body(applicant)

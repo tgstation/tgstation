@@ -33,7 +33,12 @@
 /// Called when the attached flower bud has borne fruit (ie. is ready)
 /obj/effect/mob_spawn/ghost_role/venus_human_trap/proc/bear_fruit()
 	ready = TRUE
-	notify_ghosts("[src] has borne fruit!", source = src, action = NOTIFY_PLAY, ignore_key = POLL_IGNORE_VENUSHUMANTRAP)
+	notify_ghosts(
+		"[src] has borne fruit!",
+		source = src,
+		action = NOTIFY_PLAY,
+		ignore_key = POLL_IGNORE_VENUSHUMANTRAP,
+	)
 
 /obj/effect/mob_spawn/ghost_role/venus_human_trap/allow_spawn(mob/user, silent = FALSE)
 	. = ..()

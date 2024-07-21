@@ -84,6 +84,8 @@
 		/mob/living/basic/spider/growing/spiderling/guard,
 		/mob/living/basic/spider/growing/spiderling/scout,
 	)
+	/// Do we flash the byond window when this particular egg type is available?
+	var/flash_window = FALSE
 
 /obj/effect/mob_spawn/ghost_role/spider/Initialize(mapload)
 	. = ..()
@@ -101,7 +103,16 @@
 	amount_grown += rand(5, 15) * seconds_per_tick
 	if(amount_grown >= 100 && !ready)
 		ready = TRUE
-		notify_ghosts("[src] is ready to hatch!", null, enter_link = "<a href=?src=[REF(src)];activate=1>(Click to play)</a>", source = src, action = NOTIFY_ORBIT, ignore_key = POLL_IGNORE_SPIDER)
+		var/notify_flags_to_pass = NOTIFY_CATEGORY_NOFLASH
+		if(flash_window)
+			notify_flags_to_pass &= GHOST_NOTIFY_FLASH_WINDOW
+		notify_ghosts(
+			"[src] is ready to hatch!",
+			source = src,
+			action = NOTIFY_PLAY,
+			ignore_key = POLL_IGNORE_SPIDER,
+			notify_flags = notify_flags_to_pass,
+		)
 		STOP_PROCESSING(SSobj, src)
 
 /obj/effect/mob_spawn/ghost_role/spider/Topic(href, href_list)
@@ -142,6 +153,7 @@
 		/mob/living/basic/spider/growing/spiderling/viper,
 		/mob/living/basic/spider/growing/spiderling/midwife,
 	)
+	flash_window = TRUE
 
 /obj/effect/mob_spawn/ghost_role/spider/bloody
 	name = "bloody egg cluster"
@@ -156,6 +168,7 @@
 		/mob/living/basic/flesh_spider,
 	)
 	granted_datum = /datum/antagonist/spider/flesh
+	flash_window = TRUE
 
 /obj/effect/mob_spawn/ghost_role/spider/midwife
 	name = "midwife egg cluster"
@@ -166,6 +179,7 @@
 	potentialspawns = list(
 		/mob/living/basic/spider/giant/midwife, // We don't want the event to end instantly because of a 2 hp spiderling dying
 	)
+	flash_window = TRUE
 
 /**
  * Makes a ghost into a spider based on the type of egg cluster.
