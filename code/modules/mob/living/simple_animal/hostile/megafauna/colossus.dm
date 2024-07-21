@@ -188,6 +188,10 @@
 	plane = GAME_PLANE
 	var/explode_hit_objects = TRUE
 
+/obj/projectile/colossus/Initialize(mapload)
+	. = ..()
+	AddComponent(/datum/component/parriable_projectile)
+
 /obj/projectile/colossus/can_hit_target(atom/target, direct_target = FALSE, ignore_loc = FALSE, cross_failed = FALSE)
 	if(isliving(target))
 		direct_target = TRUE

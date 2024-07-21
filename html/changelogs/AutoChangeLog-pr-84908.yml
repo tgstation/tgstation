@@ -1,0 +1,9 @@
+author: "carlarctg"
+delete-after: True
+changes:
+  - spellcheck: "Renamed the Crimson Focus to the Crimson Medallion"
+  - bugfix: "Fixed harvesters not being properly bound to their master, nor dying when they do"
+  - bugfix: "Fixed heads totally overriding cultist sacrifice rewards"
+  - rscadd: "Heretic blade now converts to a nullblade"
+  - rscadd: "Added wooshing, shaking, and glowing to flinging around with the heretic blade"
+  - balance: "Removed the probability to not gain a reward when sacrificing a cultist"
