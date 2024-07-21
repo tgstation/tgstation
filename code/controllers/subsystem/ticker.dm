@@ -22,7 +22,7 @@ SUBSYSTEM_DEF(ticker)
 
 	var/datum/game_mode/mode = null
 
-	var/login_music //music played in pregame lobby
+	var/login_music_done = FALSE // monkestation edit: : fix-lobby-music
 	var/round_end_sound //music/jingle played when the world reboots
 	var/round_end_sound_sent = TRUE //If all clients have loaded it
 
@@ -75,6 +75,25 @@ SUBSYSTEM_DEF(ticker)
 	var/list/jobs_to_reward = list(JOB_JANITOR,)
 
 /datum/controller/subsystem/ticker/Initialize()
+	// monkestation start: fix-lobby-music
+	var/old_login_music = trim(file2text("data/last_round_lobby_music.txt"))
+
+	var/base_provisional_music_path = "[global.config.directory]/title_music/sounds/"
+	var/list/provisional_title_music = flist(base_provisional_music_path)
+	for(var/S in provisional_title_music)
+		var/fullpath = base_provisional_music_path + S
+		if (fexists(fullpath))
+			try
+				var/list/json = json_decode(file2text(fullpath))
+				if (json["url"] != old_login_music)
+					GLOB.jukebox_track_files += fullpath
+			catch
+				if (S == "exclude") continue
+				log_runtime("Failed to parse [fullpath], likely an invalid file.")
+	login_music_done = TRUE
+	// monkestation end
+
+	/* //monkestation removal start: fix-lobby-music
 	var/list/byond_sound_formats = list(
 		"mid" = TRUE,
 		"midi" = TRUE,
@@ -129,6 +148,7 @@ SUBSYSTEM_DEF(ticker)
 		login_music = pick(music)
 	else
 		login_music = "[global.config.directory]/title_music/sounds/[pick(music)]"
+	*/ // monkestation removal end
 
 
 	if(!GLOB.syndicate_code_phrase)
@@ -563,7 +583,9 @@ SUBSYSTEM_DEF(ticker)
 	force_ending = SSticker.force_ending
 	mode = SSticker.mode
 
-	login_music = SSticker.login_music
+	//monkestation removal start: fix-lobby-music
+	// login_music = SSticker.login_music
+	//monkestation removal end
 	round_end_sound = SSticker.round_end_sound
 
 	minds = SSticker.minds
@@ -762,8 +784,9 @@ SUBSYSTEM_DEF(ticker)
 		if(M.client.prefs.read_preference(/datum/preference/toggle/sound_endofround))
 			SEND_SOUND(M.client, end_of_round_sound_ref)
 
-	text2file(login_music, "data/last_round_lobby_music.txt")
-
+	// monkestation removal start: fix-lobby-music
+	// text2file(login_music, "data/last_round_lobby_music.txt")
+	// monkestation removal end
 /datum/controller/subsystem/ticker/proc/choose_round_end_song()
 	var/list/reboot_sounds = flist("[global.config.directory]/reboot_themes/")
 	var/list/possible_themes = list()

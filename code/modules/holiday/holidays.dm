@@ -214,11 +214,13 @@
 /datum/holiday/april_fools/celebrate()
 	. = ..()
 	SSjob.set_overflow_role(/datum/job/clown)
+	/* monkestation removal start: fix-lobby-music
 	SSticker.login_music = 'sound/ambience/clown.ogg'
 	for(var/i in GLOB.new_player_list)
 		var/mob/dead/new_player/P = i
 		if(P.client)
 			P.client.playtitlemusic()
+	*/
 
 /datum/holiday/spess
 	name = "Cosmonautics Day"

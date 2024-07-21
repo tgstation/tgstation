@@ -28,7 +28,7 @@ SUBSYSTEM_DEF(media_tracks)
 
 /datum/controller/subsystem/media_tracks/proc/load_tracks()
 	for(var/filename in GLOB.jukebox_track_files)
-		message_admins("Loading jukebox track: [filename]")
+		message_admins("Loading jukebox track(s): [filename]")
 
 		if(!fexists(filename))
 			log_runtime("File not found: [filename]")
@@ -40,31 +40,42 @@ SUBSYSTEM_DEF(media_tracks)
 			log_runtime("Failed to read tracks from [filename], json_decode failed.")
 			continue
 
-		for(var/entry in jsonData)
+		var/is_json_obj = json_encode(jsonData)[1] == "{"
+		var/is_json_arr = json_encode(jsonData)[1] == "\["
+		// Some files could be an object, since SSticker adds lobby tracks from jsons that aren't arrays
+		if (is_json_obj)
+			process_track(jsonData, filename)
+		else if (is_json_arr)
+			for(var/entry in jsonData)
+				process_track(entry, filename)
+		else
+			// how did we end up here?
+			log_runtime("Failed to read tracks from [filename], is not object or array.")
 
-			// Critical problems that will prevent the track from working
-			if(!istext(entry["url"]))
-				log_runtime("Jukebox entry in [filename]: bad or missing 'url'. Tracks must have a URL.")
-				continue
-			if(!istext(entry["title"]))
-				log_runtime("Jukebox entry in [filename]: bad or missing 'title'. Tracks must have a title.")
-				continue
-			if(!isnum(entry["duration"]))
-				log_runtime("Jukebox entry in [filename]: bad or missing 'duration'. Tracks must have a duration (in deciseconds).")
-				continue
+/datum/controller/subsystem/media_tracks/proc/process_track(var/list/entry, var/filename)
+	// Critical problems that will prevent the track from working
+	if(!istext(entry["url"]))
+		log_runtime("Jukebox entry in [filename]: bad or missing 'url'. Tracks must have a URL.")
+		return
+	if(!istext(entry["title"]))
+		log_runtime("Jukebox entry in [filename]: bad or missing 'title'. Tracks must have a title.")
+		return
+	if(!isnum(entry["duration"]))
+		log_runtime("Jukebox entry in [filename]: bad or missing 'duration'. Tracks must have a duration (in deciseconds).")
+		return
 
-			// Noncritical problems, we can keep going anyway, but warn so it can be fixed
-			if(!istext(entry["artist"]))
-				warning("Jukebox entry in [filename], [entry["title"]]: bad or missing 'artist'. Please consider crediting the artist.")
-			if(!istext(entry["genre"]))
-				warning("Jukebox entry in [filename], [entry["title"]]: bad or missing 'genre'. Please consider adding a genre.")
+	// Noncritical problems, we can keep going anyway, but warn so it can be fixed
+	if(!istext(entry["artist"]))
+		warning("Jukebox entry in [filename], [entry["title"]]: bad or missing 'artist'. Please consider crediting the artist.")
+	if(!istext(entry["genre"]))
+		warning("Jukebox entry in [filename], [entry["title"]]: bad or missing 'genre'. Please consider adding a genre.")
 
-			var/datum/media_track/T = new(entry["url"], entry["title"], entry["duration"], entry["artist"], entry["genre"])
+	var/datum/media_track/T = new(entry["url"], entry["title"], entry["duration"], entry["artist"], entry["genre"])
 
-			T.secret = entry["secret"] ? 1 : 0
-			T.lobby = entry["lobby"] ? 1 : 0
+	T.secret = entry["secret"] ? 1 : 0
+	T.lobby = entry["lobby"] ? 1 : 0
 
-			all_tracks += T
+	all_tracks += T
 
 /datum/controller/subsystem/media_tracks/proc/sort_tracks()
 	message_admins("Sorting media tracks...")
@@ -78,6 +89,8 @@ SUBSYSTEM_DEF(media_tracks)
 			jukebox_tracks += T
 		if(T.lobby)
 			lobby_tracks += T
+
+	message_admins("Total tracks - Jukebox: [jukebox_tracks.len] - Lobby: [lobby_tracks.len]")
 
 /datum/controller/subsystem/media_tracks/proc/manual_track_add()
 	var/client/C = usr.client

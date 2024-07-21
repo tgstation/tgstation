@@ -253,6 +253,12 @@ GLOBAL_REAL(Master, /datum/controller/master)
 	to_chat(world, span_boldannounce("[msg]"))
 	log_world(msg)
 
+	// monkestation edit below
+	// basically, most songs end around the 5 minute mark,
+	// so lets give them time to actually play. we're resetting the countdown back to default
+	// because who knows how long we took for initializations, and whatever.
+	SSticker.SetTimeLeft(CONFIG_GET(number/lobby_countdown) * 10) // monkestation edit
+
 
 	if(world.system_type == MS_WINDOWS && CONFIG_GET(flag/toast_notification_on_init) && !length(GLOB.clients))
 		world.shelleo("start /min powershell -ExecutionPolicy Bypass -File tools/initToast/initToast.ps1 -name \"[world.name]\" -icon %CD%\\icons\\ui_icons\\common\\tg_16.png -port [world.port]")
