@@ -5,7 +5,7 @@
 #define BOULDER_SIZE_MEDIUM 10
 /// Durability of a small size boulder from a small size vent.
 #define BOULDER_SIZE_SMALL 5
-/// How many boulders can a single ore vent have on it's tile before it stops producing more?
+/// How many boulders can a single ore vent have on its tile before it stops producing more?
 #define MAX_BOULDERS_PER_VENT 10
 /// Time multiplier
 #define INATE_BOULDER_SPEED_MULTIPLIER 3

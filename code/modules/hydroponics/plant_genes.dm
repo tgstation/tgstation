@@ -487,7 +487,7 @@
 /**
  * A plant trait that causes the plant's capacity to double.
  *
- * When harvested, the plant's individual capacity is set to double it's default.
+ * When harvested, the plant's individual capacity is set to double its default.
  * However, the plant's maximum yield is also halved, only up to 5.
  */
 /datum/plant_gene/trait/maxchem
@@ -763,7 +763,7 @@
 /**
  * A plant trait that causes the plant's food reagents to ferment instead.
  *
- * In practice, it replaces the plant's nutriment and vitamins with half as much of it's fermented reagent.
+ * In practice, it replaces the plant's nutriment and vitamins with half as much of its fermented reagent.
  * This exception is executed in seeds.dm under 'prepare_result'.
  *
  * Incompatible with auto-juicing composition.

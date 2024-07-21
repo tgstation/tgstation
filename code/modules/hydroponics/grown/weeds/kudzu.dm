@@ -1,4 +1,4 @@
-// A very special plant, deserving it's own file.
+// A very special plant, deserving its own file.
 
 /obj/item/seeds/kudzu
 	name = "pack of kudzu seeds"

@@ -5,7 +5,7 @@
 /**
  * Called when a mob examines (shift click or verb) this atom
  *
- * Default behaviour is to get the name and icon of the object and it's reagents where
+ * Default behaviour is to get the name and icon of the object and its reagents where
  * the [TRANSPARENT] flag is set on the reagents holder
  *
  * Produces a signal [COMSIG_ATOM_EXAMINE]
