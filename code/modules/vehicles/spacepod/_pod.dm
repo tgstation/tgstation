@@ -75,6 +75,9 @@
 
 /obj/vehicle/sealed/space_pod/update_overlays()
 	. = ..()
+	var/image/window = iconstate2appearance(icon, "window") //this doesnt work i dont know why
+	window.alpha = 200
+	. += window
 	for(var/obj/item/pod_equipment/equipment as anything in get_all_parts())
 		var/overlay = equipment.get_overlay()
 		if(isnull(overlay))
@@ -169,6 +172,7 @@
 	equip_item(new /obj/item/pod_equipment/thrusters)
 	equip_item(new /obj/item/pod_equipment/engine)
 	equip_item(new /obj/item/pod_equipment/primary/projectile_weapon/kinetic_accelerator)
+	equip_item(new /obj/item/pod_equipment/cargo_hold)
 	cabin_air_tank = new /obj/item/tank/internals/oxygen(src)
 	cell = new /obj/item/stock_parts/power_store/battery/bluespace(src)
 

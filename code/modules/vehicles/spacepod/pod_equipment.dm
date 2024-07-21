@@ -40,7 +40,7 @@
 
 	balloon_alert(user, "attaching...")
 
-	if(!do_after(user, 3 SECONDS, src))
+	if(!do_after(user, 2 SECONDS, src))
 		return ITEM_INTERACT_FAILURE
 
 	if(equip_item(equipment, user))
@@ -61,7 +61,7 @@
 
 	balloon_alert(user, "removing...")
 
-	if(!do_after(user, 3 SECONDS, src))
+	if(!do_after(user, 2 SECONDS, src))
 		return ITEM_INTERACT_FAILURE
 
 	if(istype(picked, /obj/item/tank/internals))

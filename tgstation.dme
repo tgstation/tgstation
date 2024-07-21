@@ -6160,6 +6160,7 @@
 #include "code\modules\vehicles\spacepod\equipment\thrusters.dm"
 #include "code\modules\vehicles\spacepod\equipment\primary\_primary.dm"
 #include "code\modules\vehicles\spacepod\equipment\primary\guns.dm"
+#include "code\modules\vehicles\spacepod\equipment\secondary\cargohold.dm"
 #include "code\modules\vending\_vending.dm"
 #include "code\modules\vending\assist.dm"
 #include "code\modules\vending\autodrobe.dm"
