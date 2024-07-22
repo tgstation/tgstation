@@ -1,7 +1,7 @@
+import { createSearch } from 'common/string';
 import { useState } from 'react';
 
 import { BooleanLike } from '../../common/react';
-import { createSearch } from 'common/string';
 import { useBackend } from '../backend';
 import {
   Button,
@@ -328,10 +328,9 @@ const Categories = ({
           </Button>
         </Stack.Item>
         {categories.map((category) => (
-          <Stack.Item mt={0.25}>
+          <Stack.Item mt={0.25} key={category}>
             <Button
               fluid
-              key={category}
               icon="chevron-right"
               color="transparent"
               selected={selectedCategory === category}
