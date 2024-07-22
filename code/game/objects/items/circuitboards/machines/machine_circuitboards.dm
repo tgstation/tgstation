@@ -572,6 +572,11 @@
 		return
 	. += span_info("[src] is set to [fridges_name_paths[build_path]]. You can use a screwdriver to reconfigure it.")
 
+/obj/item/circuitboard/machine/dehydrator
+	name = "Dehydrator"
+	build_path = /obj/machinery/smartfridge/drying
+	req_components = list(/datum/stock_part/matter_bin = 1)
+	needs_anchored = FALSE
 
 /obj/item/circuitboard/machine/space_heater
 	name = "Space Heater"
