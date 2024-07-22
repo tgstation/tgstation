@@ -14,7 +14,7 @@
 	var/buildstacktype = /obj/item/stack/sheet/iron
 	///Number of sheets of material to drop when broken or deconstructed.
 	var/buildstackamount = 1
-	///Does the sink have a water recycler to recollect it's water supply?
+	///Does the sink have a water recycler to recollect its water supply?
 	var/has_water_reclaimer = TRUE
 	///Units of water to reclaim per second
 	var/reclaim_rate = 0.5

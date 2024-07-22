@@ -442,6 +442,10 @@
 /obj/machinery/food_cart,
 /turf/open/floor/plating,
 /area/virtual_domain)
+"eZ" = (
+/obj/effect/baseturf_helper/virtual_domain,
+/turf/open/water/beach,
+/area/virtual_domain/fullbright)
 "fe" = (
 /obj/effect/turf_decal/siding/wood{
 	dir = 8
@@ -1145,10 +1149,6 @@
 	},
 /turf/open/floor/wood/large,
 /area/virtual_domain)
-"oX" = (
-/obj/effect/baseturf_helper/virtual_domain,
-/turf/closed/indestructible/binary,
-/area/virtual_domain/fullbright)
 "oZ" = (
 /obj/effect/turf_decal/sand,
 /obj/effect/turf_decal/siding/wood{
@@ -5690,7 +5690,7 @@ SR
 SR
 SR
 SR
-oX
+SR
 "}
 (19,1,1) = {"
 SR
@@ -5771,7 +5771,7 @@ cO
 cO
 cO
 cO
-cO
+eZ
 SR
 "}
 (20,1,1) = {"

@@ -1887,7 +1887,7 @@
 	extended_desc = "A bulky and only legal by technicality suit, this ominous black and red MODsuit is only worn by \
 		Nanotrasen Black Ops teams. If you can see this suit, you fucked up. A collaborative joint effort between \
 		Apadyne and Nanotrasen the construction and modules gives the user robust protection against \
-		anything that can be thrown at it, along with acute combat awareness tools for it's wearer. \
+		anything that can be thrown at it, along with acute combat awareness tools for its wearer. \
 		Whether the wearer uses it or not is up to them. \
 		There seems to be a little inscription on the wrist that reads; \'squiddie', d'aww."
 	default_skin = "apocryphal"

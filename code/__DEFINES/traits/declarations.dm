@@ -771,7 +771,7 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_DANGEROUS_OBJECT "dangerous_object"
 /// determines whether or not objects are haunted and teleport/attack randomly
 #define TRAIT_HAUNTED "haunted"
-/// An item that, if it has contents, will ignore it's contents when scanning for contraband.
+/// An item that, if it has contents, will ignore its contents when scanning for contraband.
 #define TRAIT_CONTRABAND_BLOCKER "contraband_blocker"
 
 //quirk traits

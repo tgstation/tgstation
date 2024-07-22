@@ -1142,3 +1142,48 @@
   - balance: Voided victims get dumped in safer places
   carlarctg:
   - bugfix: Fixed null description in cerulean regenerative extract
+2024-07-22:
+  00-Steven:
+  - refactor: Refactored table item interactions, please report any issues.
+  - bugfix: Fixed being unable to use decks to draw cards directly onto tables.
+  - qol: Right clicking a table with a tray puts it down regardless of it having contents.
+  Ical92:
+  - bugfix: general bitrunning fixes and 102% faster loading times
+  - bugfix: bitrunning domains are no longer affected by nebulas in the real world
+  Jackriip:
+  - refactor: refactored global set_basalt_light proc into object proc
+  JoshAdamPowell:
+  - admin: 'Nanotrasen has brought Central Command kicking and screaming into the
+      20th Century by providing them with a real fax machine.
+
+      :cl:'
+  MTandi:
+  - rscadd: 'Charlie: Replaced external cycling airlocks with airlock pumps'
+  - qol: Updated smart fridge UI
+  Melbert:
+  - rscadd: Fox infusion has more content related to it now
+  - refactor: Refactored how vending machine icons are displayed, please report if
+      you see any broken icons. Also if all the icons look like missing file icons
+      for you, you gotta update byond man, you're like a year out of date.
+  SmArtKar:
+  - refactor: Pod code now uses datums instead of being a huge nested list
+  - qol: Self-respiration no longer sends misleading messages and instead tells about
+      lack of need to breathe once it actually gives you the effect
+  Thedragmeme:
+  - image: Adds a series of traditional yukata's and kimono's
+  - image: Adds in black sandals and a traditional hairpin for the back of the hair
+  carlarctg:
+  - rscadd: Adds Untie Shoes, a 1-point wizard spell. It can be upgraded to untie
+      jackboots, summon shoes to untie, and become completely silent!
+  - spellcheck: Renamed the Crimson Focus to the Crimson Medallion
+  - bugfix: Fixed harvesters not being properly bound to their master, nor dying when
+      they do
+  - bugfix: Fixed heads totally overriding cultist sacrifice rewards
+  - rscadd: Heretic blade now converts to a nullblade
+  - rscadd: Added wooshing, shaking, and glowing to flinging around with the heretic
+      blade
+  - balance: Removed the probability to not gain a reward when sacrificing a cultist
+  - bugfix: HONK mech now waddles
+  necromanceranne:
+  - qol: There is a larger stock of roundstart clothing availalbe in the clothing
+      vendors. Now you can get your entire gang in matching outfits!
