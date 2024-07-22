@@ -454,7 +454,7 @@
 	charge = 20 * STANDARD_BATTERY_CHARGE
 
 /obj/machinery/power/smes/engineering
-	charge = 20 * STANDARD_BATTERY_CHARGE // Engineering starts with some charge to trickle charge the station APCs before engine is running
+	charge = 50 * STANDARD_BATTERY_CHARGE // Engineering starts with some charge for singulo //sorry little one, singulo as engine is gone
 	output_level = 90 KILO WATTS
 
 /obj/machinery/power/smes/engineering/standby
