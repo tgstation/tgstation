@@ -128,7 +128,7 @@
 /obj/structure/cable,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron/dark,
-/area/station/engineering/main)
+/area/station/engineering/engine_smes)
 "acB" = (
 /obj/structure/disposalpipe/segment,
 /turf/open/floor/carpet,
@@ -10028,7 +10028,7 @@
 /obj/machinery/computer/atmos_alert,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron/dark,
-/area/station/engineering/main)
+/area/station/engineering/engine_smes)
 "dHi" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -10983,7 +10983,7 @@
 	},
 /obj/structure/cable,
 /turf/open/floor/iron,
-/area/station/engineering/main)
+/area/station/engineering/engine_smes)
 "dWI" = (
 /obj/effect/turf_decal/tile/yellow/anticorner/contrasted,
 /turf/open/floor/iron/white,
@@ -18809,7 +18809,7 @@
 	},
 /obj/structure/cable,
 /turf/open/floor/iron,
-/area/station/engineering/main)
+/area/station/engineering/engine_smes)
 "gLr" = (
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -18883,14 +18883,14 @@
 /turf/open/floor/engine,
 /area/station/engineering/supermatter/room)
 "gMG" = (
-/obj/machinery/status_display/evac/directional/north,
 /obj/machinery/camera/directional/north{
 	c_tag = "Engineering - Power Monitoring"
 	},
 /obj/machinery/computer/station_alert,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
+/obj/machinery/firealarm/directional/north,
 /turf/open/floor/iron/dark,
-/area/station/engineering/main)
+/area/station/engineering/engine_smes)
 "gMQ" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -24045,7 +24045,7 @@
 /obj/effect/spawner/structure/window/reinforced,
 /obj/structure/cable,
 /turf/open/floor/plating,
-/area/station/engineering/main)
+/area/station/engineering/engine_smes)
 "iBp" = (
 /obj/effect/turf_decal/delivery,
 /obj/effect/mapping_helpers/airlock/cyclelink_helper,
@@ -28929,6 +28929,9 @@
 /obj/machinery/pdapainter/medbay,
 /turf/open/floor/iron/dark,
 /area/station/command/heads_quarters/cmo)
+"khg" = (
+/turf/closed/wall/r_wall,
+/area/station/engineering/engine_smes)
 "khm" = (
 /obj/effect/turf_decal/trimline/red/filled/line{
 	dir = 8
@@ -30069,13 +30072,14 @@
 /turf/open/floor/iron,
 /area/station/command/teleporter)
 "kCq" = (
-/obj/machinery/firealarm/directional/west,
 /obj/machinery/modular_computer/preset/engineering,
 /obj/structure/cable,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /obj/machinery/incident_display/delam/directional/north,
+/obj/machinery/power/apc/auto_name/directional/west,
+/obj/effect/mapping_helpers/apc/cell_10k,
 /turf/open/floor/iron/dark,
-/area/station/engineering/main)
+/area/station/engineering/engine_smes)
 "kCt" = (
 /obj/machinery/status_display/door_timer{
 	id = "Cell 2";
@@ -36272,6 +36276,12 @@
 /obj/effect/turf_decal/tile/neutral,
 /turf/open/floor/iron,
 /area/station/hallway/primary/central)
+"mSq" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
+	},
+/turf/open/floor/iron,
+/area/station/engineering/engine_smes)
 "mSB" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -39931,11 +39941,11 @@
 /area/station/maintenance/starboard/greater)
 "ofk" = (
 /obj/machinery/light_switch/directional/west,
-/obj/machinery/power/smes/engineering,
+/obj/machinery/power/smes/engineering/standby,
 /obj/structure/cable,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron/dark,
-/area/station/engineering/main)
+/area/station/engineering/engine_smes)
 "ofQ" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/plating,
@@ -46267,7 +46277,7 @@
 /obj/effect/turf_decal/stripes/line,
 /obj/structure/cable,
 /turf/open/floor/iron,
-/area/station/engineering/main)
+/area/station/engineering/engine_smes)
 "quz" = (
 /obj/structure/table,
 /obj/structure/bedsheetbin{
@@ -53797,7 +53807,7 @@
 	dir = 9
 	},
 /turf/open/floor/iron,
-/area/station/engineering/main)
+/area/station/engineering/engine_smes)
 "sXm" = (
 /obj/machinery/seed_extractor,
 /obj/effect/decal/cleanable/dirt,
@@ -58600,7 +58610,7 @@
 	dir = 6
 	},
 /turf/open/floor/iron,
-/area/station/engineering/main)
+/area/station/engineering/engine_smes)
 "uGp" = (
 /obj/effect/turf_decal/trimline/red/filled/line{
 	dir = 4
@@ -61724,7 +61734,7 @@
 	},
 /obj/effect/mapping_helpers/airlock/access/all/engineering/general,
 /turf/open/floor/iron,
-/area/station/engineering/main)
+/area/station/engineering/engine_smes)
 "vHM" = (
 /obj/effect/turf_decal/trimline/red/filled/line,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -66457,6 +66467,7 @@
 	},
 /obj/structure/cable,
 /obj/machinery/power/apc/auto_name/directional/east,
+/obj/effect/mapping_helpers/apc/cell_10k,
 /turf/open/floor/iron/dark/telecomms,
 /area/station/tcommsat/server)
 "xqc" = (
@@ -108009,7 +108020,7 @@ kCq
 sXe
 gLo
 ofk
-uXd
+khg
 fDL
 hSt
 qhw
@@ -108263,10 +108274,10 @@ ssI
 mBw
 uXd
 dHg
-gLK
+mSq
 qul
 acs
-uXd
+khg
 dIm
 nLz
 vGl
@@ -108523,7 +108534,7 @@ gMG
 dWG
 uGm
 acs
-uXd
+khg
 qJd
 nLz
 fEL
@@ -108780,7 +108791,7 @@ iBm
 iBm
 vHs
 iBm
-uXd
+khg
 sqE
 cKW
 dJP

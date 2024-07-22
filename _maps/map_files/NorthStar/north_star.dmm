@@ -5208,6 +5208,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/effect/landmark/navigate_destination/tcomms,
+/obj/structure/cable,
 /turf/open/floor/catwalk_floor/iron_smooth,
 /area/station/tcommsat/computer)
 "bna" = (
@@ -24790,7 +24791,6 @@
 	},
 /area/station/security/brig)
 "gwH" = (
-/obj/structure/cable,
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4,
 /turf/open/floor/iron/smooth_large,
 /area/station/tcommsat/computer)
@@ -25046,6 +25046,7 @@
 "gzT" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/structure/cable,
 /turf/open/floor/catwalk_floor/iron_smooth,
 /area/station/tcommsat/computer)
 "gzU" = (
@@ -30926,7 +30927,7 @@
 /area/space)
 "ibL" = (
 /obj/structure/cable,
-/obj/machinery/power/smes/engineering,
+/obj/machinery/power/smes/engineering/standby,
 /obj/item/radio/intercom/directional/west,
 /turf/open/floor/iron,
 /area/station/engineering/engine_smes)
@@ -35397,6 +35398,7 @@
 	dir = 8
 	},
 /obj/machinery/light/small/directional/north,
+/obj/effect/mapping_helpers/apc/cell_10k,
 /turf/open/floor/iron/smooth_large,
 /area/station/tcommsat/server)
 "jkH" = (
@@ -50586,7 +50588,6 @@
 /area/station/science/ordnance/testlab)
 "mZV" = (
 /obj/machinery/airalarm/directional/north,
-/obj/structure/cable,
 /turf/open/floor/iron/smooth,
 /area/station/tcommsat/computer)
 "mZZ" = (
@@ -51746,8 +51747,6 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
-/obj/machinery/power/terminal,
-/obj/structure/cable,
 /obj/machinery/power/port_gen/pacman,
 /turf/open/floor/plating,
 /area/station/tcommsat/computer)
@@ -66401,12 +66400,12 @@
 /turf/open/floor/iron/dark,
 /area/station/commons/storage/tools)
 "rcc" = (
-/obj/structure/cable,
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
-/obj/machinery/power/smes/full,
 /obj/machinery/light/directional/east,
+/obj/structure/table,
+/obj/item/stack/sheet/mineral/plasma/thirty,
 /turf/open/floor/plating,
 /area/station/tcommsat/computer)
 "rcd" = (
@@ -72139,7 +72138,6 @@
 /turf/open/floor/pod/light,
 /area/station/maintenance/floor2/starboard)
 "sHG" = (
-/obj/item/stack/sheet/mineral/plasma/thirty,
 /obj/item/wrench,
 /obj/structure/cable,
 /obj/effect/turf_decal/stripes/line{

@@ -24778,6 +24778,7 @@
 	pixel_x = 6;
 	pixel_y = 5
 	},
+/obj/effect/mapping_helpers/apc/cell_10k,
 /turf/open/floor/iron/grimy,
 /area/station/tcommsat/server)
 "iOL" = (
@@ -28835,11 +28836,13 @@
 /turf/open/floor/iron/white/small,
 /area/station/science/ordnance/storage)
 "kcW" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/machinery/power/smes/full,
+/obj/machinery/power/smes/engineering/standby,
 /obj/structure/cable,
-/turf/open/floor/circuit,
-/area/station/tcommsat/server)
+/obj/effect/turf_decal/bot{
+	dir = 1
+	},
+/turf/open/floor/iron/smooth_large,
+/area/station/engineering/supermatter/room)
 "kdg" = (
 /obj/effect/turf_decal/siding/wood{
 	dir = 8
@@ -47485,8 +47488,6 @@
 /area/station/science/xenobiology)
 "qsg" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/machinery/power/terminal,
-/obj/structure/cable,
 /obj/structure/chair/stool/directional/east,
 /turf/open/floor/circuit,
 /area/station/tcommsat/server)
@@ -91168,7 +91169,7 @@ oTf
 pUM
 kMe
 qkq
-wRy
+kcW
 ayK
 swK
 jTf
@@ -120052,7 +120053,7 @@ uzK
 dde
 nVF
 qsg
-kcW
+eFV
 wos
 udv
 tSq

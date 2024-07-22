@@ -2885,7 +2885,7 @@
 /obj/structure/cable,
 /obj/machinery/power/smes/engineering,
 /turf/open/floor/circuit/green,
-/area/station/engineering/main)
+/area/station/engineering/engine_smes)
 "aJw" = (
 /obj/effect/spawner/random/structure/tank_holder,
 /obj/effect/mapping_helpers/burnt_floor,
@@ -7173,7 +7173,7 @@
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /obj/machinery/light/small/directional/south,
 /turf/open/floor/iron/dark,
-/area/station/engineering/main)
+/area/station/engineering/engine_smes)
 "bKp" = (
 /obj/machinery/atmospherics/components/binary/pump/on{
 	dir = 1;
@@ -9309,7 +9309,7 @@
 	},
 /obj/effect/mapping_helpers/airlock/access/all/engineering/general,
 /turf/open/floor/iron,
-/area/station/engineering/main)
+/area/station/engineering/engine_smes)
 "clr" = (
 /obj/structure/window/reinforced/spawner/directional/south,
 /turf/open/space/basic,
@@ -11444,10 +11444,6 @@
 	c_tag = "Telecomms - Chamber Starboard";
 	name = "telecomms camera";
 	network = list("ss13","tcomms")
-	},
-/obj/structure/cable,
-/obj/machinery/power/terminal{
-	dir = 1
 	},
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron/dark/telecomms,
@@ -16595,7 +16591,6 @@
 /turf/open/floor/iron,
 /area/station/maintenance/port/aft)
 "ecq" = (
-/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/heat_exchanging/simple{
 	dir = 10
 	},
@@ -17560,6 +17555,11 @@
 /obj/machinery/air_sensor/nitrogen_tank,
 /turf/open/floor/engine/n2,
 /area/station/engineering/atmos)
+"eqL" = (
+/obj/structure/cable,
+/obj/machinery/power/smes/engineering/standby,
+/turf/open/floor/circuit/green,
+/area/station/engineering/engine_smes)
 "eqM" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -23947,8 +23947,10 @@
 	},
 /obj/item/radio/intercom/directional/east,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
+/obj/machinery/power/apc/auto_name/directional/south,
+/obj/effect/mapping_helpers/apc/cell_10k,
 /turf/open/floor/iron/dark,
-/area/station/engineering/main)
+/area/station/engineering/engine_smes)
 "fVh" = (
 /obj/machinery/atmospherics/components/binary/pump/on/scrubbers/hidden/layer2{
 	dir = 8;
@@ -26762,7 +26764,7 @@
 	},
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron/dark,
-/area/station/engineering/main)
+/area/station/engineering/engine_smes)
 "gCo" = (
 /obj/structure/frame/machine{
 	anchored = 1
@@ -33689,6 +33691,7 @@
 /obj/structure/cable,
 /obj/machinery/power/apc/auto_name/directional/west,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
+/obj/effect/mapping_helpers/apc/cell_10k,
 /turf/open/floor/iron/dark/telecomms,
 /area/station/tcommsat/server)
 "irr" = (
@@ -35686,7 +35689,7 @@
 	},
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron/dark,
-/area/station/engineering/main)
+/area/station/engineering/engine_smes)
 "iSk" = (
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron/dark,
@@ -43572,6 +43575,12 @@
 	},
 /turf/open/floor/iron,
 /area/station/engineering/atmos/storage)
+"kQi" = (
+/obj/machinery/atmospherics/pipe/heat_exchanging/simple{
+	dir = 4
+	},
+/turf/open/floor/circuit/green/telecomms/mainframe,
+/area/station/tcommsat/server)
 "kQr" = (
 /obj/effect/spawner/random/engineering/atmospherics_portable,
 /obj/effect/turf_decal/bot,
@@ -51618,7 +51627,7 @@
 /obj/effect/turf_decal/stripes/line,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron/dark,
-/area/station/engineering/main)
+/area/station/engineering/engine_smes)
 "mQK" = (
 /obj/item/wrench,
 /obj/item/crowbar,
@@ -60642,7 +60651,7 @@
 /obj/machinery/power/smes/engineering,
 /obj/machinery/light_switch/directional/east,
 /turf/open/floor/circuit/green,
-/area/station/engineering/main)
+/area/station/engineering/engine_smes)
 "pkA" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -60697,7 +60706,7 @@
 	},
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron/dark,
-/area/station/engineering/main)
+/area/station/engineering/engine_smes)
 "pla" = (
 /obj/effect/spawner/structure/window/reinforced,
 /obj/structure/cable,
@@ -64994,9 +65003,8 @@
 /turf/open/floor/carpet/green,
 /area/station/service/library)
 "qlY" = (
-/obj/machinery/power/smes/full,
-/obj/structure/cable,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
+/obj/structure/cable,
 /turf/open/floor/iron/dark/telecomms,
 /area/station/tcommsat/server)
 "qmd" = (
@@ -76367,7 +76375,6 @@
 "tcH" = (
 /obj/structure/table/glass,
 /obj/item/folder/yellow,
-/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/heat_exchanging/simple{
 	dir = 4
 	},
@@ -78246,7 +78253,7 @@
 	},
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron/dark,
-/area/station/engineering/main)
+/area/station/engineering/engine_smes)
 "tCW" = (
 /obj/structure/sign/warning/no_smoking/directional/south,
 /obj/effect/turf_decal/tile/yellow{
@@ -82008,7 +82015,7 @@
 	},
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron/dark,
-/area/station/engineering/main)
+/area/station/engineering/engine_smes)
 "uxI" = (
 /obj/structure/table/glass,
 /obj/effect/turf_decal/stripes/line{
@@ -88308,7 +88315,7 @@
 /obj/structure/cable,
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
-/area/station/engineering/main)
+/area/station/engineering/engine_smes)
 "wdb" = (
 /turf/open/floor/circuit/green,
 /area/station/science/robotics/mechbay)
@@ -94469,10 +94476,9 @@
 /obj/machinery/computer/atmos_alert{
 	dir = 1
 	},
-/obj/structure/cable,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron/dark,
-/area/station/engineering/main)
+/area/station/engineering/engine_smes)
 "xDm" = (
 /obj/machinery/door/poddoor/preopen{
 	id = "atmoslock";
@@ -124120,7 +124126,7 @@ uAI
 lWx
 fti
 wGA
-aJu
+eqL
 uxG
 pkZ
 xDi
@@ -135686,8 +135692,8 @@ lkL
 lkL
 ilI
 rRz
-ilI
-ilI
+qlY
+qlY
 hup
 lkL
 lkL
@@ -136199,7 +136205,7 @@ lkL
 lkL
 lkL
 ilI
-rRz
+kQi
 ilI
 ilI
 hup
@@ -136458,7 +136464,7 @@ ilI
 ilI
 ecq
 sau
-oMp
+mOo
 oMp
 oMp
 oMp
@@ -136713,9 +136719,9 @@ lkL
 jDi
 tCI
 hiH
-hup
 ilI
-hup
+ilI
+ilI
 kfC
 rSJ
 hup
@@ -136970,9 +136976,9 @@ xkw
 jDi
 uEh
 fYw
-hup
+ilI
 jQw
-hup
+ilI
 jPC
 pFy
 qoD
@@ -137227,9 +137233,9 @@ xkw
 jDi
 jDi
 jDi
-uHp
 jDi
-uHp
+jDi
+jDi
 jDi
 jDi
 hup
@@ -137484,8 +137490,8 @@ fOw
 ilI
 ilI
 ilI
-hup
-qlY
+ilI
+ilI
 cMD
 ilI
 ilI

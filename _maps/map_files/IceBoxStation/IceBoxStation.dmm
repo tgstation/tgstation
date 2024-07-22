@@ -599,6 +599,7 @@
 /obj/machinery/light/small/directional/west,
 /obj/machinery/power/apc/auto_name/directional/north,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
+/obj/effect/mapping_helpers/apc/cell_10k,
 /turf/open/floor/iron/dark,
 /area/station/engineering/engine_smes)
 "akQ" = (
@@ -30377,6 +30378,7 @@
 	},
 /obj/effect/mapping_helpers/airlock/access/all/engineering/tcoms,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
+/obj/structure/cable,
 /turf/open/floor/iron/dark,
 /area/station/tcommsat/computer)
 "jem" = (
@@ -31408,6 +31410,7 @@
 "juS" = (
 /obj/structure/cable,
 /obj/machinery/power/apc/auto_name/directional/north,
+/obj/effect/mapping_helpers/apc/cell_10k,
 /turf/open/floor/circuit/telecomms/mainframe,
 /area/station/tcommsat/server)
 "jvc" = (
@@ -36108,9 +36111,12 @@
 /turf/open/floor/iron/large,
 /area/station/engineering/atmos/storage/gas)
 "kNp" = (
+/obj/machinery/power/smes/engineering/standby,
+/obj/effect/turf_decal/delivery,
 /obj/structure/cable,
-/turf/open/floor/iron/dark/telecomms,
-/area/station/tcommsat/server)
+/obj/effect/turf_decal/tile/neutral/fourcorners,
+/turf/open/floor/iron/dark/textured,
+/area/station/engineering/engine_smes)
 "kNA" = (
 /obj/structure/disposalpipe/segment,
 /obj/structure/girder,
@@ -70594,11 +70600,6 @@
 	},
 /turf/open/floor/iron/smooth,
 /area/mine/laborcamp/security)
-"vbn" = (
-/obj/machinery/power/smes/full,
-/obj/structure/cable,
-/turf/open/floor/circuit/telecomms/mainframe,
-/area/station/tcommsat/server)
 "vbC" = (
 /obj/structure/chair{
 	dir = 4
@@ -72592,13 +72593,6 @@
 /obj/effect/mapping_helpers/airlock/access/all/supply/mining_station,
 /turf/open/floor/iron/smooth,
 /area/mine/living_quarters)
-"vFs" = (
-/obj/machinery/power/terminal{
-	dir = 1
-	},
-/obj/structure/cable,
-/turf/open/floor/iron/dark/telecomms,
-/area/station/tcommsat/server)
 "vFO" = (
 /obj/structure/window/reinforced/spawner/directional/west,
 /obj/structure/window/reinforced/spawner/directional/east,
@@ -237499,9 +237493,9 @@ mNY
 vjx
 mDf
 nLb
-kNp
-vbn
-vFs
+xaI
+csT
+xaI
 mMk
 qAV
 fyw
@@ -237756,9 +237750,9 @@ mNY
 krU
 qjq
 cEM
-aQR
 csT
-aQR
+csT
+csT
 eTi
 rfR
 aGB
@@ -238015,7 +238009,7 @@ aQR
 aQR
 aQR
 fxR
-aQR
+csT
 csT
 csT
 cQH
@@ -238270,9 +238264,9 @@ mNY
 ctI
 hLZ
 qNv
-csT
-csT
 aQR
+aQR
+csT
 eso
 rop
 wTA
@@ -238528,8 +238522,8 @@ prF
 bdR
 xaI
 xaI
-csT
-kNp
+aQR
+xaI
 xaI
 dBh
 xYI
@@ -239564,7 +239558,7 @@ aMs
 mNY
 kCn
 mNY
-lEA
+kNp
 uJn
 ijZ
 bXo
