@@ -174,7 +174,7 @@
 
 	/**
 	 * we process the list in reverse so that atoms without parents/contents are deleted first & their parents are deleted next & so on.
-	 * this is the reverse order in which get_all_contents() returns it's list
+	 * this is the reverse order in which get_all_contents() returns its list
 	 * if we delete an atom containing stuff then all its stuff are deleted with it as well so we will end recycling deleted items down the list and gain nothing from them
 	 */
 	for(var/i = length(nom); i >= 1; i--)

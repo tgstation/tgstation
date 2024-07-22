@@ -15189,6 +15189,7 @@
 	cycle_id = "sci-entrance"
 	},
 /obj/structure/disposalpipe/segment,
+/obj/machinery/scanner_gate/preset_guns,
 /turf/open/floor/iron/textured_half,
 /area/station/security/brig/entrance)
 "fKx" = (
@@ -30896,6 +30897,7 @@
 	cycle_id = "sci-entrance"
 	},
 /obj/structure/disposalpipe/segment,
+/obj/machinery/scanner_gate/preset_guns,
 /turf/open/floor/iron/textured_half,
 /area/station/security/brig/entrance)
 "kKD" = (

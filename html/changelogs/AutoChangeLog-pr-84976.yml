@@ -1,5 +1,0 @@
-author: "SmArtKar"
-delete-after: True
-changes:
-  - bugfix: "Sentient floorbots can now rip up tiles when emagged"
-  - code_imp: "Slight cleanup in floorbot code"

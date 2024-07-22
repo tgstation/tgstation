@@ -10210,6 +10210,7 @@
 /obj/structure/disposalpipe/segment,
 /obj/effect/turf_decal/tile/red/fourcorners,
 /obj/effect/mapping_helpers/airlock/access/all/security/general,
+/obj/machinery/scanner_gate/preset_guns,
 /turf/open/floor/iron/dark,
 /area/station/security/checkpoint)
 "cBq" = (
@@ -29793,6 +29794,7 @@
 	},
 /obj/structure/disposalpipe/segment,
 /obj/effect/mapping_helpers/airlock/access/all/security/entrance,
+/obj/machinery/scanner_gate/preset_guns,
 /turf/open/floor/iron/dark,
 /area/station/security/brig)
 "hLP" = (
@@ -35063,6 +35065,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/structure/cable,
 /obj/effect/mapping_helpers/airlock/access/all/security/entrance,
+/obj/machinery/scanner_gate/preset_guns,
 /turf/open/floor/iron/dark,
 /area/station/security/brig)
 "jfs" = (
@@ -55322,6 +55325,7 @@
 /obj/effect/turf_decal/tile/red/fourcorners,
 /obj/effect/mapping_helpers/airlock/access/all/security/general,
 /obj/structure/disposalpipe/segment,
+/obj/machinery/scanner_gate/preset_guns,
 /turf/open/floor/iron/dark,
 /area/station/security/checkpoint)
 "ojM" = (
