@@ -231,7 +231,7 @@ const FishItem = (props) => {
                   <Stack mt={-2} vertical>
                     {fish.fish_evolutions.map((evolution, index) => (
                       <Stack.Item key={index}>
-                        <EvolutionData evolution={evolution} fish={fish} />
+                        <EvolutionItem evolution={evolution} fish={fish} />
                       </Stack.Item>
                     ))}
                   </Stack>
@@ -267,7 +267,7 @@ const FishItem = (props) => {
   );
 };
 
-const EvolutionData = (props) => {
+const EvolutionItem = (props) => {
   const { evolution, fish } = props;
 
   return (
