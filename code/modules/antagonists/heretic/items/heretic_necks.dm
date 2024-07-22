@@ -9,16 +9,16 @@
 	. = ..()
 	AddElement(/datum/element/heretic_focus)
 
-/obj/item/clothing/neck/heretic_focus/crimson_focus
-	name = "Crimson Focus"
+/obj/item/clothing/neck/heretic_focus/crimson_medallion
+	name = "Crimson Medallion"
 	desc = "A blood-red focusing glass that provides a link to the world beyond, and worse. Its eye is constantly twitching and gazing in all directions. It almost seems to be silently screaming..."
-	icon_state = "crimson_focus"
+	icon_state = "crimson_medallion"
 	/// The aura healing component. Used to delete it when taken off.
 	var/datum/component/component
 	/// If active or not, used to add and remove its cult and heretic buffs.
 	var/active = FALSE
 
-/obj/item/clothing/neck/heretic_focus/crimson_focus/equipped(mob/living/user, slot)
+/obj/item/clothing/neck/heretic_focus/crimson_medallion/equipped(mob/living/user, slot)
 	. = ..()
 	if(!(slot & ITEM_SLOT_NECK))
 		return
@@ -51,7 +51,7 @@
 		healing_color = team_color, \
 	)
 
-/obj/item/clothing/neck/heretic_focus/crimson_focus/dropped(mob/living/user)
+/obj/item/clothing/neck/heretic_focus/crimson_medallion/dropped(mob/living/user)
 	. = ..()
 
 	if(!istype(user))
@@ -75,7 +75,7 @@
 	magic_holder?.magic_enhanced = FALSE
 
 
-/obj/item/clothing/neck/heretic_focus/crimson_focus/attack_self(mob/living/user, modifiers)
+/obj/item/clothing/neck/heretic_focus/crimson_medallion/attack_self(mob/living/user, modifiers)
 	. = ..()
 	to_chat(user, span_danger("You start tightly squeezing [src]..."))
 	if(!do_after(user, 1.25 SECONDS, src))
@@ -90,7 +90,7 @@
 	user.reagents?.add_reagent(/datum/reagent/eldritch, rand(6, 10))
 	qdel(src)
 
-/obj/item/clothing/neck/heretic_focus/crimson_focus/examine(mob/user)
+/obj/item/clothing/neck/heretic_focus/crimson_medallion/examine(mob/user)
 	. = ..()
 
 	var/magic_dude

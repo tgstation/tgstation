@@ -79,7 +79,7 @@
 	use_power = IDLE_POWER_USE
 	idle_power_usage = BASE_MACHINE_IDLE_CONSUMPTION * 0.75
 	active_power_usage = BASE_MACHINE_ACTIVE_CONSUMPTION * 1.5
-	flags_1 = PREVENT_CLICK_UNDER_1
+	flags_1 = PREVENT_CLICK_UNDER_1 | IGNORE_TURF_PIXEL_OFFSET_1
 	interaction_flags_mouse_drop = NEED_DEXTERITY
 
 	///If TRUE will eject the mob once healing is complete

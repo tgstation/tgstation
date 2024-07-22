@@ -17,6 +17,7 @@
 	RegisterSignal(parent, COMSIG_FISHING_ROD_CAST, PROC_REF(handle_cast))
 	RegisterSignal(parent, COMSIG_ATOM_EXAMINE, PROC_REF(on_examined))
 	RegisterSignal(parent, COMSIG_ATOM_EXAMINE_MORE, PROC_REF(on_examined_more))
+	RegisterSignal(parent, COMSIG_ATOM_EX_ACT, PROC_REF(explosive_fishing))
 	ADD_TRAIT(parent, TRAIT_FISHING_SPOT, REF(src))
 
 /datum/component/fishing_spot/Destroy()
@@ -95,3 +96,7 @@
 	var/datum/fishing_challenge/challenge = new(src, result, rod, user)
 	fish_source.pre_challenge_started(rod, user, challenge)
 	challenge.start(user)
+
+/datum/component/fishing_spot/proc/explosive_fishing(atom/location, severity)
+	SIGNAL_HANDLER
+	fish_source.spawn_reward_from_explosion(location, severity)

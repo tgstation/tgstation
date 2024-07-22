@@ -202,7 +202,7 @@
 	else
 		. += "[icon_state]_no_secondary_mag"
 
-/obj/item/gun/ballistic/shotgun/bulldog/handle_chamber()
+/obj/item/gun/ballistic/shotgun/bulldog/handle_chamber(empty_chamber = TRUE, from_firing = TRUE, chamber_next_round = TRUE)
 	if(!secondary_magazine)
 		return ..()
 	var/secondary_shells_left = LAZYLEN(secondary_magazine.stored_ammo)

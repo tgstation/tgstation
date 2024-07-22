@@ -8,7 +8,7 @@
  */
 /obj/item/inspector
 	name = "\improper N-spect scanner"
-	desc = "Central Command-issued inspection device. Performs inspections according to Nanotrasen protocols when activated, then prints an encrypted report regarding the maintenance of the station. Definitely not giving you cancer."
+	desc = "Central Command standard issue inspection device. Can perform either wide area scans that central command can use to verify the security of the station, or detailed scan. Can scan people for contraband on their person or items being contraband."
 	icon = 'icons/obj/devices/scanner.dmi'
 	icon_state = "inspector"
 	worn_icon_state = "salestagger"
@@ -20,6 +20,7 @@
 	interaction_flags_click = NEED_DEXTERITY
 	throw_range = 1
 	throw_speed = 1
+	COOLDOWN_DECLARE(scanning_person) //Cooldown for scanning a carbon
 	///How long it takes to print on time each mode, ordered NORMAL, FAST, HONK
 	var/list/time_list = list(5 SECONDS, 1 SECONDS, 0.1 SECONDS)
 	///Which print time mode we're on.
@@ -32,11 +33,15 @@
 	var/cell_cover_open = FALSE
 	///Energy used per print.
 	var/energy_per_print = INSPECTOR_ENERGY_USAGE_NORMAL
+	///Does this item scan for contraband correctly? If not, will provide a flipped response.
+	var/scans_correctly = TRUE
 
 /obj/item/inspector/Initialize(mapload)
 	. = ..()
 	if(ispath(cell))
 		cell = new cell(src)
+	register_context()
+	register_item_context()
 
 // Clean up the cell on destroy
 /obj/item/inspector/Exited(atom/movable/gone, direction)
@@ -87,11 +92,92 @@
 	if(!cell_cover_open)
 		. += "Its cell cover is closed. It looks like it could be <strong>pried</strong> out, but doing so would require an appropriate tool."
 		return
-	. += "It's cell cover is open, exposing the cell slot. It looks like it could be <strong>pried</strong> in, but doing so would require an appropriate tool."
+	. += "Its cell cover is open, exposing the cell slot. It looks like it could be <strong>pried</strong> in, but doing so would require an appropriate tool."
 	if(!cell)
 		. += "The slot for a cell is empty."
 	else
 		. += "\The [cell] is firmly in place. [span_info("Ctrl-click with an empty hand to remove it.")]"
+
+/obj/item/inspector/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
+	if(!user.Adjacent(interacting_with))
+		return ITEM_INTERACT_BLOCKING
+	if(cell_cover_open)
+		balloon_alert(user, "close cover first!")
+		return ITEM_INTERACT_BLOCKING
+	if(!cell || !cell.use(INSPECTOR_ENERGY_USAGE_LOW))
+		balloon_alert(user, "check cell!")
+		return ITEM_INTERACT_BLOCKING
+
+	if(iscarbon(interacting_with)) //Prevents insta scanning people
+		if(!COOLDOWN_FINISHED(src, scanning_person))
+			return ITEM_INTERACT_BLOCKING
+
+		visible_message(span_warning("[user] starts scanning [interacting_with] with [src]"))
+		to_chat(interacting_with, span_userdanger("[user] is trying to scan you for contraband!"))
+		balloon_alert_to_viewers("scanning...")
+		playsound(src, 'sound/effects/genetics.ogg', 40, FALSE)
+		COOLDOWN_START(src, scanning_person, 4 SECONDS)
+		if(!do_after(user, 4 SECONDS, interacting_with))
+			return ITEM_INTERACT_BLOCKING
+
+	if(contraband_scan(interacting_with, user))
+		playsound(src, 'sound/machines/uplinkerror.ogg', 40)
+		balloon_alert(user, "contraband detected!")
+		return ITEM_INTERACT_SUCCESS
+	else
+		playsound(src, 'sound/machines/ping.ogg', 20)
+		balloon_alert(user, "clear")
+		return ITEM_INTERACT_SUCCESS
+
+
+/obj/item/inspector/add_context(atom/source, list/context, obj/item/held_item, mob/user)
+	var/update_context = FALSE
+	if(cell_cover_open && cell)
+		context[SCREENTIP_CONTEXT_CTRL_LMB] = "Remove cell"
+		update_context = TRUE
+
+	if(cell_cover_open && !cell && istype(held_item, /obj/item/stock_parts/power_store/cell))
+		context[SCREENTIP_CONTEXT_LMB] = "Install cell"
+		update_context = TRUE
+
+	if(held_item?.tool_behaviour == TOOL_CROWBAR)
+		context[SCREENTIP_CONTEXT_LMB] = "[cell_cover_open ? "close" : "open"] battery panel"
+		update_context = TRUE
+
+	if(update_context)
+		return CONTEXTUAL_SCREENTIP_SET
+	return NONE
+
+/obj/item/inspector/add_item_context(obj/item/source, list/context, atom/target, mob/living/user)
+	if(cell_cover_open || !cell)
+		return NONE
+	if(isitem(target))
+		context[SCREENTIP_CONTEXT_LMB] = "Contraband Scan"
+		return CONTEXTUAL_SCREENTIP_SET
+	return NONE
+
+/**
+ * Scans the carbon or item for contraband.
+ *
+ * Arguments:
+ * - scanned - what or who is scanned?
+ * - user - who is performing the scanning?
+ */
+/obj/item/inspector/proc/contraband_scan(scanned, user)
+	if(iscarbon(scanned))
+		var/mob/living/carbon/scanned_carbon = scanned
+		for(var/obj/item/content in scanned_carbon.get_all_contents_skipping_traits(TRAIT_CONTRABAND_BLOCKER))
+			var/contraband_content = content.is_contraband()
+			if((contraband_content && scans_correctly) || (!contraband_content && !scans_correctly))
+				return TRUE
+
+	if(isitem(scanned))
+		var/obj/item/contraband_item = scanned
+		var/contraband_status = contraband_item.is_contraband()
+		if((contraband_status && scans_correctly) || (!contraband_status && !scans_correctly))
+			return TRUE
+
+	return FALSE
 
 /**
  * Create our report
@@ -178,6 +264,7 @@
  * Can be crafted into a bananium HONK-spect scanner
  */
 /obj/item/inspector/clown
+	scans_correctly = FALSE
 	///will only cycle through modes with numbers lower than this
 	var/max_mode = CLOWN_INSPECTOR_PRINT_SOUND_MODE_LAST
 	///names of modes, ordered first to last

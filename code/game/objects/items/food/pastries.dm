@@ -387,7 +387,8 @@
 
 /obj/item/food/icecream/make_edible()
 	. = ..()
-	AddComponent(/datum/component/ice_cream_holder, filled_name = "ice cream", change_desc = TRUE, prefill_flavours = prefill_flavours)
+	var/max_scoops = check_holidays(ICE_CREAM_DAY) ? DEFAULT_MAX_ICE_CREAM_SCOOPS * 4 : DEFAULT_MAX_ICE_CREAM_SCOOPS
+	AddComponent(/datum/component/ice_cream_holder, max_scoops, filled_name = "ice cream", change_desc = TRUE, prefill_flavours = prefill_flavours)
 
 /obj/item/food/icecream/chocolate
 	name = "chocolate cone"

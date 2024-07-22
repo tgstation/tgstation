@@ -128,7 +128,7 @@
 		/datum/surgery_step/mechanic_close,
 	)
 
-///Organ manipulation base class. Do not use, it wont work. Use it's subtypes
+///Organ manipulation base class. Do not use, it wont work. Use its subtypes
 /datum/surgery_step/manipulate_organs
 	name = "manipulate organs"
 	repeatable = TRUE
