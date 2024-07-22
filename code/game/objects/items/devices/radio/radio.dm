@@ -356,7 +356,7 @@
 	if(iscarbon(talking_movable))
 		var/mob/living/carbon/talking_carbon = talking_movable
 		if(talking_carbon.client?.prefs.read_preference(/datum/preference/toggle/radio_noise))
-			SEND_SOUND(talking_movable, 'sound/misc/radio_talk.ogg')
+			SEND_SOUND(talking_carbon, 'sound/misc/radio_talk.ogg')
 
 	// All radios make an attempt to use the subspace system first
 	signal.send_to_receivers()
