@@ -84,7 +84,7 @@
 	if(source)
 		internal_source = source
 	else
-		internal_Source = src
+		internal_source = get_turf(src)
 
 	var/datum/record/crew/target = locate(params["crew_ref"]) in GLOB.manifest.general
 	if(!target)
@@ -157,7 +157,7 @@
 	if(source)
 		internal_source = source
 	else
-		internal_Source = src
+		internal_source = get_turf(src)
 
 	if(printing)
 		balloon_alert(internal_source, "printer busy")
