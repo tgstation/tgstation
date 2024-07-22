@@ -1,2 +1,8 @@
 output_name = "reinforced_wall"
 template = "bitmask/diagonal_32x32.toml"
+
+# When we cut up our blockls, we're cutting "around" a central point
+# We typically want to cut around the center, so let's do that here
+[cut_pos]
+x = 16
+y = 14
