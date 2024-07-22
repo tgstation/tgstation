@@ -1,0 +1,3 @@
+#include "_objects.dm"
+
+#include "code/structures/posters.dm"

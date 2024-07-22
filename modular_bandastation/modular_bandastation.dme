@@ -28,3 +28,4 @@
 #include "preferences/_preferences.dme"
 #include "drinks/_drinks.dme"
 #include "jukebox/_jukebox.dme"
+#include "objects/_objects.dme"
