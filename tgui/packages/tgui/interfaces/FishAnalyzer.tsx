@@ -63,9 +63,7 @@ export const FishAnalyzer = (props) => {
   const search = createSearch(searchText, (fish: FishData) => fish.fish_name);
 
   const fish_filtered =
-    searchText.length > 0
-      ? fish_list.filter((fish) => search(fish))
-      : fish_list;
+    searchText.length > 0 ? fish_list.filter(search) : fish_list;
 
   return (
     <Window
