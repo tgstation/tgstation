@@ -119,6 +119,12 @@
 	volume = 30
 	inject_flags = INJECT_CHECK_PENETRATE_THICK
 
+/obj/item/reagent_containers/syringe/mod/update_reagent_overlay()
+	if(reagents?.total_volume)
+		var/mutable_appearance/filling_overlay = mutable_appearance('icons/obj/medical/reagent_fillings.dmi', "mod[get_rounded_vol()]")
+		filling_overlay.color = mix_color_from_reagents(reagents.reagent_list)
+		. += filling_overlay
+
 ///Organizer - Lets you shoot organs, immediately replacing them if the target has the organ manipulation surgery.
 /obj/item/mod/module/organizer
 	name = "MOD organizer module"
@@ -206,15 +212,20 @@
 				continue
 			succeed = TRUE
 			break
-	if(succeed)
-		var/list/organs_to_boot_out = organ_receiver.get_organ_slot(organ.slot)
-		for(var/obj/item/organ/organ_evacced as anything in organs_to_boot_out)
-			if(organ_evacced.organ_flags & ORGAN_UNREMOVABLE)
-				continue
-			organ_evacced.Remove(target)
-			organ_evacced.forceMove(get_turf(target))
-		organ.Insert(target)
-	else
+
+	if(!succeed)
+		organ.forceMove(drop_location())
+		organ = null
+		return
+
+	var/list/organs_to_boot_out = organ_receiver.get_organ_slot(organ.slot)
+	for(var/obj/item/organ/organ_evacced as anything in organs_to_boot_out)
+		if(organ_evacced.organ_flags & ORGAN_UNREMOVABLE)
+			continue
+		organ_evacced.Remove(target, special = TRUE)
+		organ_evacced.forceMove(get_turf(target))
+
+	if (!organ.Insert(target))
 		organ.forceMove(drop_location())
 	organ = null
 

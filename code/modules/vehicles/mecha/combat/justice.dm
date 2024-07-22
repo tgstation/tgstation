@@ -57,8 +57,9 @@
 
 /obj/vehicle/sealed/mecha/justice/update_icon_state()
 	. = ..()
-	if(LAZYLEN(occupants))
-		icon_state = weapons_safety ? "[base_icon_state]" : "[base_icon_state]-angry"
+	if(!LAZYLEN(occupants))
+		return
+	icon_state = weapons_safety ? "[base_icon_state]" : "[base_icon_state]-angry"
 	if(!has_gravity())
 		icon_state = "[icon_state]-fly"
 

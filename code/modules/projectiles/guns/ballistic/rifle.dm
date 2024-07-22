@@ -273,13 +273,14 @@
 	obj_flags = UNIQUE_RENAME
 	can_be_sawn_off = FALSE
 	trigger_guard = TRIGGER_GUARD_ALLOW_ALL
+	pb_knockback = 3
 
 	SET_BASE_PIXEL(-8, 0)
 
 /obj/item/gun/ballistic/rifle/boltaction/pipegun/add_bayonet_point()
 	AddComponent(/datum/component/bayonet_attachable, offset_x = 35, offset_y = 10)
 
-/obj/item/gun/ballistic/rifle/boltaction/pipegun/handle_chamber()
+/obj/item/gun/ballistic/rifle/boltaction/pipegun/handle_chamber(empty_chamber = TRUE, from_firing = TRUE, chamber_next_round = TRUE)
 	. = ..()
 	do_sparks(1, TRUE, src)
 
@@ -303,13 +304,16 @@
 	accepted_magazine_type = /obj/item/ammo_box/magazine/internal/boltaction/pipegun/pistol
 	projectile_damage_multiplier = 0.50
 	spread = 15 //kinda inaccurate
+	burst_size = 3 //but it empties the entire magazine when it fires
+	fire_delay = 0.3 // and by empties, I mean it does it all at once
 	slot_flags = ITEM_SLOT_BELT
 	w_class = WEIGHT_CLASS_NORMAL
 	weapon_weight = WEAPON_MEDIUM
+	semi_auto = TRUE
 
 	SET_BASE_PIXEL(0, 0)
 
-/obj/item/gun/ballistic/rifle/boltaction/pipegun/pipepistol/add_bayonet_point()
+/obj/item/gun/ballistic/rifle/boltaction/pipegun/pistol/add_bayonet_point()
 	return
 
 /obj/item/gun/ballistic/rifle/boltaction/pipegun/prime
@@ -330,6 +334,7 @@
 	inhand_icon_state = "regal_pipepistol"
 	accepted_magazine_type = /obj/item/ammo_box/magazine/internal/boltaction/pipegun/pistol/prime
 	projectile_damage_multiplier = 1
+	burst_size = 6 // WHOLE CLIP
 	spread = 0
 
 /// MAGICAL BOLT ACTIONS ///

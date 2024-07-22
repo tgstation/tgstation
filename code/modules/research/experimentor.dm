@@ -96,7 +96,6 @@
 		/obj/item/construction/rcd,
 		/obj/item/grenade,
 		/obj/item/aicard,
-		/obj/item/storage/backpack/holding,
 		/obj/item/slime_extract,
 		/obj/item/transfer_valve))
 
@@ -254,16 +253,16 @@
 			visible_message(span_notice("[exp_on] is gripped in just the right way, enhancing its focus."))
 			malfunction_probability_coeff_modifier++
 			RefreshParts() //recalculate malfunction_probability_coeff
-		else if(prob(EFFECT_PROB_VERYLOW-malfunction_probability_coeff))
+		else if(prob(EFFECT_PROB_VERYLOW * (100 - malfunction_probability_coeff) * 0.01))
 			visible_message(span_danger("[src] malfunctions and destroys [exp_on], lashing its arms out at nearby people!"))
 			for(var/mob/living/m in oview(1, src))
 				m.apply_damage(15, BRUTE, pick(BODY_ZONE_HEAD,BODY_ZONE_CHEST,BODY_ZONE_CHEST))
 				investigate_log("Experimentor dealt minor brute to [m].", INVESTIGATE_EXPERIMENTOR)
 			ejectItem(TRUE)
-		else if(prob(EFFECT_PROB_LOW-malfunction_probability_coeff))
+		else if(prob(EFFECT_PROB_LOW * (100 - malfunction_probability_coeff) * 0.01))
 			visible_message(span_warning("[src] malfunctions!"))
 			exp = SCANTYPE_OBLITERATE
-		else if(prob(EFFECT_PROB_MEDIUM-malfunction_probability_coeff))
+		else if(prob(EFFECT_PROB_MEDIUM * (100 - malfunction_probability_coeff) * 0.01))
 			visible_message(span_danger("[src] malfunctions, throwing the [exp_on]!"))
 			var/mob/living/target = locate(/mob/living) in oview(7,src)
 			if(target)
@@ -275,23 +274,23 @@
 	////////////////////////////////////////////////////////////////////////////////////////////////
 	if(exp == SCANTYPE_IRRADIATE)
 		visible_message(span_danger("[src] reflects radioactive rays at [exp_on]!"))
-		if(prob(EFFECT_PROB_LOW) && criticalReaction)
+		if(prob(EFFECT_PROB_VERYLOW) && criticalReaction)
 			visible_message(span_notice("[exp_on] has activated an unknown subroutine!"))
 			cloneMode = TRUE
 			investigate_log("Experimentor has made a clone of [exp_on]", INVESTIGATE_EXPERIMENTOR)
 			ejectItem()
-		else if(prob(EFFECT_PROB_VERYLOW-malfunction_probability_coeff))
+		else if(prob(EFFECT_PROB_VERYLOW * (100 - malfunction_probability_coeff) * 0.01))
 			visible_message(span_danger("[src] malfunctions, melting [exp_on] and leaking radiation!"))
 			radiation_pulse(src, max_range = 6, threshold = 0.3)
 			ejectItem(TRUE)
-		else if(prob(EFFECT_PROB_LOW-malfunction_probability_coeff))
+		else if(prob(EFFECT_PROB_LOW * (100 - malfunction_probability_coeff) * 0.01))
 			visible_message(span_warning("[src] malfunctions, spewing toxic waste!"))
 			for(var/turf/T in oview(1, src))
 				if(!T.density)
 					if(prob(EFFECT_PROB_VERYHIGH) && !(locate(/obj/effect/decal/cleanable/greenglow) in T))
 						var/obj/effect/decal/cleanable/reagentdecal = new/obj/effect/decal/cleanable/greenglow(T)
 						reagentdecal.reagents.add_reagent(/datum/reagent/uranium/radium, 7)
-		else if(prob(EFFECT_PROB_MEDIUM-malfunction_probability_coeff))
+		else if(prob(EFFECT_PROB_MEDIUM * (100 - malfunction_probability_coeff) * 0.01))
 			var/savedName = "[exp_on]"
 			ejectItem(TRUE)
 			var/newPath = text2path(pick_weight(valid_items()))
@@ -308,7 +307,7 @@
 		if(prob(EFFECT_PROB_LOW) && criticalReaction)
 			visible_message(span_notice("[exp_on] achieves the perfect mix!"))
 			new /obj/item/stack/sheet/mineral/plasma(get_turf(pick(oview(1,src))))
-		else if(prob(EFFECT_PROB_VERYLOW-malfunction_probability_coeff))
+		else if(prob(EFFECT_PROB_VERYLOW * (100 - malfunction_probability_coeff) * 0.01))
 			visible_message(span_danger("[src] destroys [exp_on], leaking dangerous gas!"))
 			chosenchem = pick(/datum/reagent/carbon,/datum/reagent/uranium/radium,/datum/reagent/toxin,/datum/reagent/consumable/condensedcapsaicin,/datum/reagent/drug/mushroomhallucinogen,/datum/reagent/drug/space_drugs,/datum/reagent/consumable/ethanol,/datum/reagent/consumable/ethanol/beepsky_smash)
 			var/datum/reagents/tmp_holder = new/datum/reagents(50)
@@ -321,7 +320,7 @@
 			smoke.start()
 			qdel(tmp_holder)
 			ejectItem(TRUE)
-		else if(prob(EFFECT_PROB_VERYLOW-malfunction_probability_coeff))
+		else if(prob(EFFECT_PROB_VERYLOW * (100 - malfunction_probability_coeff) * 0.01))
 			visible_message(span_danger("[src]'s chemical chamber has sprung a leak!"))
 			chosenchem = pick(/datum/reagent/mutationtoxin/classic,/datum/reagent/cyborg_mutation_nanomachines,/datum/reagent/toxin/acid)
 			var/datum/reagents/tmp_holder = new/datum/reagents(50)
@@ -335,10 +334,10 @@
 			ejectItem(TRUE)
 			warn_admins(usr, "[chosenchem] smoke")
 			investigate_log("Experimentor has released <font color='red'>[chosenchem]</font> smoke!", INVESTIGATE_EXPERIMENTOR)
-		else if(prob(EFFECT_PROB_LOW-malfunction_probability_coeff))
+		else if(prob(EFFECT_PROB_LOW * (100 - malfunction_probability_coeff) * 0.01))
 			visible_message(span_warning("[src] malfunctions, spewing harmless gas."))
 			throwSmoke(loc)
-		else if(prob(EFFECT_PROB_MEDIUM-malfunction_probability_coeff))
+		else if(prob(EFFECT_PROB_MEDIUM * (100 - malfunction_probability_coeff) * 0.01))
 			visible_message(span_warning("[src] melts [exp_on], ionizing the air around it!"))
 			empulse(loc, 4, 6)
 			investigate_log("Experimentor has generated an Electromagnetic Pulse.", INVESTIGATE_EXPERIMENTOR)
@@ -356,7 +355,7 @@
 			C.name = "Cup of Suspicious Liquid"
 			C.desc = "It has a large hazard symbol printed on the side in fading ink."
 			investigate_log("Experimentor has made a cup of [chosenchem] coffee.", INVESTIGATE_EXPERIMENTOR)
-		else if(prob(EFFECT_PROB_VERYLOW-malfunction_probability_coeff))
+		else if(prob(EFFECT_PROB_VERYLOW * (100 - malfunction_probability_coeff) * 0.01))
 			var/turf/start = get_turf(src)
 			var/mob/M = locate(/mob/living) in view(src, 3)
 			var/turf/MT = get_turf(M)
@@ -366,12 +365,12 @@
 				var/obj/projectile/magic/fireball/FB = new /obj/projectile/magic/fireball(start)
 				FB.preparePixelProjectile(MT, start)
 				FB.fire()
-		else if(prob(EFFECT_PROB_LOW-malfunction_probability_coeff))
+		else if(prob(EFFECT_PROB_LOW * (100 - malfunction_probability_coeff) * 0.01))
 			visible_message(span_danger("[src] malfunctions, melting [exp_on] and releasing a burst of flame!"))
 			explosion(src, devastation_range = -1, flame_range = 2, adminlog = FALSE)
 			investigate_log("Experimentor started a fire.", INVESTIGATE_EXPERIMENTOR)
 			ejectItem(TRUE)
-		else if(prob(EFFECT_PROB_MEDIUM-malfunction_probability_coeff))
+		else if(prob(EFFECT_PROB_MEDIUM * (100 - malfunction_probability_coeff) * 0.01))
 			visible_message(span_warning("[src] malfunctions, melting [exp_on] and leaking hot air!"))
 			var/datum/gas_mixture/env = loc.return_air()
 			if(env)
@@ -380,7 +379,7 @@
 			air_update_turf(FALSE, FALSE)
 			investigate_log("Experimentor has released hot air.", INVESTIGATE_EXPERIMENTOR)
 			ejectItem(TRUE)
-		else if(prob(EFFECT_PROB_MEDIUM-malfunction_probability_coeff))
+		else if(prob(EFFECT_PROB_MEDIUM * (100 - malfunction_probability_coeff) * 0.01))
 			visible_message(span_warning("[src] malfunctions, activating its emergency coolant systems!"))
 			throwSmoke(loc)
 			for(var/mob/living/m in oview(1, src))
@@ -400,7 +399,7 @@
 			C.name = "Cup of Suspicious Liquid"
 			C.desc = "It has a large hazard symbol printed on the side in fading ink."
 			investigate_log("Experimentor has made a cup of [chosenchem] coffee.", INVESTIGATE_EXPERIMENTOR)
-		else if(prob(EFFECT_PROB_VERYLOW-malfunction_probability_coeff))
+		else if(prob(EFFECT_PROB_VERYLOW * (100 - malfunction_probability_coeff) * 0.01))
 			visible_message(span_danger("[src] malfunctions, shattering [exp_on] and releasing a dangerous cloud of coolant!"))
 			var/datum/reagents/tmp_holder = new/datum/reagents(50)
 			tmp_holder.my_atom = src
@@ -412,7 +411,7 @@
 			smoke.start()
 			qdel(tmp_holder)
 			ejectItem(TRUE)
-		else if(prob(EFFECT_PROB_LOW-malfunction_probability_coeff))
+		else if(prob(EFFECT_PROB_LOW * (100 - malfunction_probability_coeff) * 0.01))
 			visible_message(span_warning("[src] malfunctions, shattering [exp_on] and leaking cold air!"))
 			var/datum/gas_mixture/env = loc.return_air()
 			if(env)
@@ -421,7 +420,7 @@
 			air_update_turf(FALSE, FALSE)
 			investigate_log("Experimentor has released cold air.", INVESTIGATE_EXPERIMENTOR)
 			ejectItem(TRUE)
-		else if(prob(EFFECT_PROB_MEDIUM-malfunction_probability_coeff))
+		else if(prob(EFFECT_PROB_MEDIUM * (100 - malfunction_probability_coeff) * 0.01))
 			visible_message(span_warning("[src] malfunctions, releasing a flurry of chilly air as [exp_on] pops out!"))
 			var/datum/effect_system/fluid_spread/smoke/smoke = new
 			smoke.set_up(0, holder = src, location = loc)
@@ -433,14 +432,14 @@
 		if(prob(EFFECT_PROB_LOW) && criticalReaction)
 			visible_message(span_warning("[src]'s crushing mechanism slowly and smoothly descends, flattening the [exp_on]!"))
 			new /obj/item/stack/sheet/plasteel(get_turf(pick(oview(1,src))))
-		else if(prob(EFFECT_PROB_VERYLOW-malfunction_probability_coeff))
+		else if(prob(EFFECT_PROB_VERYLOW * (100 - malfunction_probability_coeff) * 0.01))
 			visible_message(span_danger("[src]'s crusher goes way too many levels too high, crushing right through space-time!"))
 			playsound(src, 'sound/effects/supermatter.ogg', 50, TRUE, -3)
 			investigate_log("Experimentor has triggered the 'throw things' reaction.", INVESTIGATE_EXPERIMENTOR)
 			for(var/atom/movable/AM in oview(7,src))
 				if(!AM.anchored)
 					AM.throw_at(src,10,1)
-		else if(prob(EFFECT_PROB_LOW-malfunction_probability_coeff))
+		else if(prob(EFFECT_PROB_LOW * (100 - malfunction_probability_coeff) * 0.01))
 			visible_message(span_danger("[src]'s crusher goes one level too high, crushing right into space-time!"))
 			playsound(src, 'sound/effects/supermatter.ogg', 50, TRUE, -3)
 			investigate_log("Experimentor has triggered the 'minor throw things' reaction.", INVESTIGATE_EXPERIMENTOR)
@@ -467,7 +466,7 @@
 		ejectItem()
 
 	//Global reactions
-	if(prob(EFFECT_PROB_VERYLOW-malfunction_probability_coeff) && loaded_item)
+	if(prob(EFFECT_PROB_VERYLOW * (100 - malfunction_probability_coeff) * 0.01) && loaded_item)
 		var/globalMalf = rand(1,100)
 		if(globalMalf < 15)
 			visible_message(span_warning("[src]'s onboard detection system has malfunctioned!"))
@@ -575,10 +574,18 @@
 	COOLDOWN_DECLARE(cooldown)
 	//What visual theme this artefact has. Current possible choices: "prototype", "necrotech"
 	var/artifact_theme = "prototype"
+	var/datum/effect_system/spark_spread/sparks
 
 /obj/item/relic/Initialize(mapload)
 	. = ..()
+	sparks = new()
+	sparks.set_up(5, 1, src)
+	sparks.attach(src)
 	random_themed_appearance()
+
+/obj/item/relic/Destroy(force)
+	QDEL_NULL(sparks)
+	. = ..()
 
 /obj/item/relic/proc/random_themed_appearance()
 	var/themed_name_prefix
@@ -721,34 +728,38 @@
 
 /obj/item/relic/proc/do_the_teleport(mob/user)
 	var/turf/userturf = get_turf(user)
-	if(loc == user && !is_centcom_level(userturf.z)) //Because Nuke Ops bringing this back on their shuttle, then looting the ERT area is 2fun4you!
-		visible_message(span_notice("[src] twists and bends, relocating itself!"))
-		throw_smoke(userturf)
-		do_teleport(user, userturf, 8, asoundin = 'sound/effects/phasein.ogg', channel = TELEPORT_CHANNEL_BLUESPACE)
-		throw_smoke(get_turf(user))
-		warn_admins(user, "Teleport", 0)
+	//Because Nuke Ops bringing this back on their shuttle, then looting the ERT area is 2fun4you!
+	if(is_centcom_level(userturf.z))
+		return
+	var/to_teleport = ismovable(loc) ? loc : src
+	visible_message(span_notice("[to_teleport] twists and bends, relocating itself!"))
+	throw_smoke(get_turf(to_teleport))
+	do_teleport(to_teleport, userturf, 8, asoundin = 'sound/effects/phasein.ogg', channel = TELEPORT_CHANNEL_BLUESPACE)
+	throw_smoke(get_turf(to_teleport))
+	warn_admins(user, "Teleport", 0)
 
 // Creates a glass and fills it up with a drink.
 /obj/item/relic/proc/drink_dispenser(mob/user)
 	var/obj/item/reagent_containers/cup/glass/drinkingglass/freebie = new(get_step_rand(user))
-	playsound(freebie, 'sound/effects/phasein.ogg', rand(25,50), TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
+	playsound(freebie, SFX_SPARKS, rand(25,50), TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
+	sparks.start()
 	addtimer(CALLBACK(src, PROC_REF(dispense_drink), freebie), 0.5 SECONDS)
 
 /obj/item/relic/proc/dispense_drink(obj/item/reagent_containers/cup/glass/glasser)
+	playsound(glasser, 'sound/effects/phasein.ogg', rand(25,50), TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
 	glasser.reagents.add_reagent(get_random_drink_id(), rand(glasser.volume * 0.3, glasser.volume))
-	playsound(glasser, SFX_SPARKS, rand(25,50), TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
 	throw_smoke(get_turf(glasser))
 
 // Scrambles your organs. 33% chance to delete after use.
 /obj/item/relic/proc/tummy_ache(mob/user)
-	new /obj/effect/temp_visual/bioscrambler_wave/light(get_turf(src))
+	new /obj/effect/temp_visual/circle_wave/bioscrambler/light(get_turf(src))
 	to_chat(user, span_notice("Your stomach starts growling..."))
 	addtimer(CALLBACK(src, PROC_REF(scrambliticus), user), rand(1 SECONDS, 3 SECONDS)) // throw it away!
 
 /obj/item/relic/proc/scrambliticus(mob/user)
-	new /obj/effect/temp_visual/bioscrambler_wave(get_turf(src))
+	new /obj/effect/temp_visual/circle_wave/bioscrambler/light(get_turf(src))
 	playsound(src, 'sound/magic/cosmic_energy.ogg', vol = 50, vary = TRUE)
-	for(var/mob/living/carbon/nearby in hearers(2, src))
+	for(var/mob/living/carbon/nearby in range(2, get_turf(src))) //needs get_turf() to work
 		nearby.bioscramble(name)
 		playsound(nearby, SFX_SPARKS, rand(25,50), TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
 		throw_smoke(get_turf(nearby))
@@ -777,7 +788,10 @@
 	if(!length(chargeable_batteries))
 		to_chat(user, span_notice("You have a strange feeling for a moment, but then it passes."))
 		return
-	for(var/obj/item/stock_parts/power_store/to_charge as anything in recharges)
+	for(var/obj/item/stock_parts/power_store/to_charge as anything in chargeable_batteries)
+		if(!recharges)
+			return
+		recharges--
 		to_charge = pick(chargeable_batteries)
 		to_charge.charge = to_charge.maxcharge
 		// The device powered by the cell is assumed to be its location.
@@ -836,7 +850,7 @@
 	// carbons always get a hat at least
 	var/mob/living/carbon/carbonius = user
 	//hat
-	var/obj/item/clothing/head/costume/disguise_hat = roll_costume(/obj/item/clothing/head/costume, HIDEMASK)
+	var/obj/item/clothing/head/costume/disguise_hat = roll_costume(ITEM_SLOT_HEAD, HIDEMASK)
 	carbonius.dropItemToGround(carbonius.head)
 	carbonius.equip_to_slot_or_del(disguise_hat, ITEM_SLOT_HEAD)
 	if(!ishuman(carbonius))
@@ -845,11 +859,11 @@
 
 	var/mob/living/carbon/human/humerus = carbonius
 	// uniform
-	var/obj/item/clothing/under/costume/disguise_uniform = roll_costume(/obj/item/clothing/under/costume)
+	var/obj/item/clothing/under/costume/disguise_uniform = roll_costume(ITEM_SLOT_ICLOTHING)
 	humerus.dropItemToGround(humerus.w_uniform)
 	humerus.equip_to_slot_or_del(disguise_uniform, ITEM_SLOT_ICLOTHING)
 	// suit
-	var/obj/item/clothing/suit/costume/disguise_suit = roll_costume(/obj/item/clothing/suit/costume)
+	var/obj/item/clothing/suit/costume/disguise_suit = roll_costume(ITEM_SLOT_OCLOTHING)
 	humerus.dropItemToGround(humerus.wear_suit)
 	humerus.equip_to_slot_or_del(disguise_suit, ITEM_SLOT_OCLOTHING)
 	// id
@@ -861,7 +875,6 @@
 	if(!card_id)
 		return
 	card_id.scribbled_name = "[pick(GLOB.first_names)] [pick(GLOB.last_names)]"
-	card_id.update_name()
 	card_id.details_colors = list(ready_random_color(), ready_random_color(), ready_random_color())
 	card_id.item_flags |= DROPDEL
 
@@ -870,17 +883,17 @@
 	if(random_trim.trim_state && random_trim.assignment)
 		card_id.scribbled_trim = replacetext(random_trim.trim_state, "trim_", "cardboard_")
 	card_id.scribbled_assignment = random_trim.assignment
-	card_id.update_overlays()
+	card_id.update_appearance()
 	REMOVE_TRAIT(user, TRAIT_NO_JUMPSUIT, REF(src))
 
-/obj/item/relic/proc/roll_costume(type, flagcheck)
+/obj/item/relic/proc/roll_costume(slot, flagcheck)
 	var/list/candidates = list()
-	for(var/obj/item/thingy as anything in subtypesof(type))
-		if(flagcheck && !(initial(thingy.flags_inv) & flagcheck))
+	for(var/obj/item/costume as anything in GLOB.all_autodrobe_items)
+		if(flagcheck && !(initial(costume.flags_inv) & flagcheck))
 			continue
-		if(isnull(initial(thingy.icon_state)))
+		if(slot && !(initial(costume.slot_flags) & slot))
 			continue
-		candidates |= thingy
+		candidates |= costume
 	var/obj/item/new_costume = pick(candidates)
 	new_costume = new new_costume()
 	new_costume.item_flags |= DROPDEL

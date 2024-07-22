@@ -40,7 +40,7 @@
 	var/potency = 10
 	/// Amount of growth sprites the plant has.
 	var/growthstages = 6
-	// Chance that a plant will mutate in each stage of it's life.
+	// Chance that a plant will mutate in each stage of its life.
 	var/instability = 5
 	/// How rare the plant is. Used for giving points to cargo when shipping off to CentCom.
 	var/rarity = 0

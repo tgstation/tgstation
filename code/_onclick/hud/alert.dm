@@ -549,9 +549,9 @@ or shoot a gun to move around via Newton's 3rd Law of Motion."
 		construct_owner = null
 
 	// construct track
-	if(construct_owner?.seeking && construct_owner.master)
-		blood_target = construct_owner.master
-		desc = "Your blood sense is leading you to [construct_owner.master]"
+	if(construct_owner?.seeking && construct_owner.construct_master)
+		blood_target = construct_owner.construct_master
+		desc = "Your blood sense is leading you to [construct_owner.construct_master]"
 
 	// cult track
 	var/datum/antagonist/cult/antag = owner.mind.has_antag_datum(/datum/antagonist/cult,TRUE)
