@@ -1,0 +1,4 @@
+author: "Absolucy"
+delete-after: True
+changes:
+  - bugfix: "Hopefully fixed cleaner slimes getting stuck on some faraway target whenever you move them."
