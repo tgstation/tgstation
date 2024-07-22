@@ -733,6 +733,10 @@
 	},
 /turf/open/floor/wood/tile,
 /area/station/service/bar)
+"UW" = (
+/mob/living/carbon/human/species/monkey/punpun,
+/turf/open/floor/wood/tile,
+/area/station/service/bar)
 "VG" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -929,7 +933,7 @@ zS
 WR
 Jg
 pA
-pA
+UW
 OZ
 Lh
 ax

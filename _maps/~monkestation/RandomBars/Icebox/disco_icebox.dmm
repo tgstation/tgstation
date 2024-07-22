@@ -673,6 +673,7 @@
 /area/station/commons/lounge)
 "ZK" = (
 /obj/structure/table/wood/fancy/blue,
+/mob/living/carbon/human/species/monkey/punpun,
 /turf/open/floor/eighties,
 /area/station/service/bar)
 
