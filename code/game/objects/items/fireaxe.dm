@@ -30,7 +30,7 @@
 	/// Can it butcher?
 	var/butcher = TRUE
 	/// Do you ALWAYS need 2 hands to hold it?
-	var/is_only_two_hande = FALSE
+	var/is_only_two_handed = FALSE
 
 /datum/armor/item_fireaxe
 	fire = 100
@@ -46,7 +46,7 @@
 			butcher_sound = hitsound, \
 		)
 	//axes are not known for being precision butchering tools
-	AddComponent(/datum/component/two_handed, force_unwielded=force_unwielded, force_wielded=force_wielded, require_twohands = is_two_handed, icon_wielded="[base_icon_state]1")
+	AddComponent(/datum/component/two_handed, force_unwielded=force_unwielded, force_wielded=force_wielded, require_twohands = is_only_two_handed, icon_wielded="[base_icon_state]1")
 
 /obj/item/fireaxe/update_icon_state()
 	icon_state = "[base_icon_state]0"
@@ -117,10 +117,9 @@
 	butcher = FALSE
 	is_only_two_handed = TRUE
 
-	force_unwielded = 5
 	force_wielded = 18
 	demolition_mod = 1.5
-	wound_bonus = 15 // RIP bones
+	wound_bonus = 20 // RIP bones
 	bare_wound_bonus = 0
 
 	slowdown = 1
@@ -137,19 +136,21 @@
 /obj/item/fireaxe/batteringram/attack(mob/living/target_mob, mob/living/user, params)
 	. = ..()
 	if(!target_mob.anchored && target_mob.body_position == STANDING_UP)
-		if(target_mob.move_intent == MOVE_INTENT_WALK) // Walking has better grip on the floor
-			return
+		var/no_gravity = FALSE
 		if(!has_gravity()) // Should've learned physics
 			var/user_throwtarget = get_step(user, get_dir(target_mob, user))
 			user.safe_throw_at(user_throwtarget, 1, 1, force = MOVE_FORCE_NORMAL)
+			no_gravity = TRUE
 		var/throwtarget = get_step(target_mob, get_dir(user, target_mob))
-		target_mob.safe_throw_at(throwtarget, 1, 1, force = MOVE_FORCE_NORMAL)
-		visible_message(span_warning("[user] violently pushes [target_mob] with [src]!"))
+		target_mob.safe_throw_at(throwtarget, 1, 1, force = MOVE_FORCE_NORMAL, spin = no_gravity) // Same force as shove
 
 /obj/item/fireaxe/batteringram/afterattack(atom/target, mob/user, click_parameters)
 	. = ..()
 	if(!isliving(target))
 		playsound(target, hitsound, 100, TRUE)
+		for(var/mob/bystanders in urange(2, target))
+			if(!bystanders.stat && !isAI(bystanders))
+				shake_camera(bystanders, 1, 0.5)
 
 	var/mob/living/living_user = user
 	if(!living_user)
@@ -158,13 +159,13 @@
 	if((HAS_TRAIT(living_user, TRAIT_CLUMSY)) && prob(30)) // https://tenor.com/view/police-raid-fall-out-funny-gif-9719355
 		var/throwtarget = get_step(living_user, get_dir(target, living_user))
 		living_user.Knockdown(3 SECONDS)
-		living_user.safe_throw_at(throwtarget, 1, 1, force = MOVE_FORCE_NORMAL)
+		living_user.safe_throw_at(throwtarget, 1, 1, force = MOVE_FORCE_STRONG)
 
 		to_chat(living_user, span_userdanger("You try to [pick(attack_verb_simple)] [target], but slip and fall due inertia!"))
 		visible_message(span_warning("[living_user] slips!"))
 		playsound(living_user, 'sound/misc/slip.ogg', 100)
 
 /obj/item/fireaxe/batteringram/suicide_act(mob/living/user)
-	user.visible_message(span_suicide("[user] [pick(attack_verb_continuous )] [user.p_them()]self open! It looks like [user.p_theyre()] trying to commit suicide!"))
+	user.visible_message(span_suicide("[user] [pick(attack_verb_continuous)] [user.p_them()]self open! It looks like [user.p_theyre()] trying to commit suicide!"))
 	playsound(user, hitsound, 100, ignore_walls = FALSE)
 	return BRUTELOSS
