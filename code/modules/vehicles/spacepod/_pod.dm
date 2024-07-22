@@ -4,7 +4,6 @@
 
 // TODO:
 // proper space movement (maybe like 80% done??? they still get stuck on lattices)
-// construction
 // equipment
 // control scheme/whatever idk how to drive these
 // slots: comms (radio and something else), sensors(HUDs or something, mesons??), engine, 1 secondary slot (cargo and shit), 1 primary slot(tools or gun???), 3 misc modules (locks and shit), armor would either be added during construction or as a slot
@@ -15,12 +14,13 @@
 // figure out a way around not being able to remove people from a pod (eg kick out intruders or dead dudes)
 // ALSO DO NOT FORGET TO REMOVE THIS HUGE ASS COMMENT before finishing
 
+// this is the iron variant
 /obj/vehicle/sealed/space_pod
 	layer = ABOVE_MOB_LAYER
 	move_force = MOVE_FORCE_VERY_STRONG
 	move_resist = MOVE_FORCE_EXTREMELY_STRONG
 	resistance_flags = FIRE_PROOF | ACID_PROOF
-	icon = 'icons/mob/rideables/spacepod/pod.dmi'
+	icon = 'icons/mob/rideables/spacepod/pod_small.dmi'
 	icon_state = "cockpit_pod" //placeholder
 	light_system = OVERLAY_LIGHT_DIRECTIONAL
 	light_on = FALSE
