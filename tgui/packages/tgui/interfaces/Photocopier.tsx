@@ -301,11 +301,11 @@ const Categories = ({
     <Section
       fill
       scrollable
-      title="Categories"
+      title="Blanks"
       buttons={
         <Button
           icon="times"
-          tooltip="Close category"
+          tooltip="Close selected blank category"
           disabled={!selectedCategory}
           onClick={() => {
             setSelectedCategory('');
