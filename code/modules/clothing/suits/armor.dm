@@ -769,7 +769,7 @@
 	resistance_flags = FIRE_PROOF
 	armor_type = /datum/armor/watermelon_fr
 
-/obj/item/clothing/suit/armor/durability/holymelon(mapload)
+/obj/item/clothing/suit/armor/durability/holymelon/Initialize(mapload)
 	. = ..()
 	if(decayed)
 		decay()
