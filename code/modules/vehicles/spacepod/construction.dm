@@ -16,7 +16,7 @@
 
 /obj/item/pod_runner
 	name = "pod frame runner"
-	desc = "A metal runner with pod frame parts. Use a wirecutter to snip them free."
+	desc = "A metal runner with pod frame parts. Use a wirecutter to snip them free. For your own sake, do this in the hangar bay and not robotics."
 	var/build_path = /obj/structure/pod_construction
 
 /obj/item/pod_runner/wirecutter_act(mob/living/user, obj/item/tool)
@@ -146,7 +146,7 @@
 	)
 
 /datum/component/construction/mecha/pod/custom_action(obj/item/item, mob/living/user, diff)
-	if(diff == BACKWARD || index == 10) //3rd last step
+	if(diff == BACKWARD || index != 10) //3rd last step
 		return ..()
 	var/obj/item/stack/sheet/as_sheet = item
 	var/static/list/datum/pod_construct/constructs

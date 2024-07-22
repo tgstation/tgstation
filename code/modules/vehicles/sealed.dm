@@ -76,13 +76,13 @@
 /obj/vehicle/sealed/proc/enter_checks(mob/M)
 	return occupant_amount() < max_occupants
 
-/obj/vehicle/sealed/proc/mob_enter(mob/M, silent = FALSE)
+/obj/vehicle/sealed/proc/mob_enter(mob/M, silent = FALSE, flags)
 	if(!istype(M))
 		return FALSE
 	if(!silent)
 		M.visible_message(span_notice("[M] climbs into \the [src]!"))
 	M.forceMove(src)
-	add_occupant(M)
+	add_occupant(M, flags)
 	return TRUE
 
 /obj/vehicle/sealed/proc/mob_try_exit(mob/M, mob/user, silent = FALSE, randomstep = FALSE)

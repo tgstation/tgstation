@@ -457,3 +457,27 @@
 /datum/action/vehicle/sealed/headlights/vim/Trigger(trigger_flags)
 	. = ..()
 	SEND_SIGNAL(vehicle_entered_target, COMSIG_VIM_HEADLIGHTS_TOGGLED, vehicle_entered_target.headlights_toggle)
+
+/datum/action/vehicle/sealed/kick_out
+	name = "Kick Out"
+	desc = "Kick someone out of this vehicle."
+	background_icon_state = "bg_tech"
+	overlay_icon_state = "bg_tech_border"
+
+/datum/action/vehicle/sealed/kick_out/Trigger(trigger_flags)
+	. = ..()
+	if(owner.can_perform_action(vehicle_entered_target, NEED_HANDS))
+		return
+	var/list/occupants = vehicle_entered_target.occupants.Copy()
+	for(var/occupant in occupants)
+		if(occupant == owner)
+			occupants -= occupant
+
+	if(!length(occupants))
+		vehicle_entered_target.balloon_alert(owner, "nobody else!")
+		return
+	var/mob/living/to_kick = length(occupants) == 1 ? occupants[1] : tgui_input_list(owner, "Kick whom?", "Kick whom?", occupants)
+	if(!to_kick || owner.loc != vehicle_entered_target) //kicked out before them get lost buddy
+		return
+	to_kick.Knockdown(1)
+	vehicle_entered_target.mob_exit(to_kick, randomstep = TRUE)

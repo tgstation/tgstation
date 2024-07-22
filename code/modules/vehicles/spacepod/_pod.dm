@@ -4,8 +4,7 @@
 
 // TODO:
 // proper space movement (maybe like 80% done??? they still get stuck on lattices)
-// equipment
-// control scheme/whatever idk how to drive these
+// equipment variants and their research
 // slots: comms (radio and something else), sensors(HUDs or something, mesons??), engine, 1 secondary slot (cargo and shit), 1 primary slot(tools or gun???), 3 misc modules (locks and shit), armor would either be added during construction or as a slot
 // power costs, either only megacell or only cell, how would you charge this??
 // although im not so sure about power costs i dont know why it would need them but ideally a space pod should be capable of functioning for 10-15 minutes of nonstop acceleration by default
@@ -71,6 +70,7 @@
 	equipped = null // equipment gets deleted already because its in our contents
 
 /obj/vehicle/sealed/space_pod/generate_actions()
+	initialize_passenger_action_type(/datum/action/vehicle/sealed/kick_out)
 	initialize_controller_action_type(/datum/action/vehicle/sealed/headlights, VEHICLE_CONTROL_DRIVE)
 	return ..() //eject goes first
 
@@ -84,6 +84,32 @@
 		if(isnull(overlay))
 			continue
 		. += overlay
+
+/obj/vehicle/sealed/space_pod/mob_try_exit(mob/removing, mob/user, silent = FALSE, randomstep = FALSE)
+	if(user != removing)
+		return ..()
+	if(user.can_perform_action(src, NEED_HANDS)) // you need hands to use the door handle buddy
+		return ..()
+
+/obj/vehicle/sealed/space_pod/container_resist_act(mob/living/user)
+	. = ..()
+	mob_try_exit(user, user)
+
+/obj/vehicle/sealed/space_pod/mouse_drop_receive(mob/living/dropped, mob/living/dropper, params)
+	. = ..()
+	if(!istype(dropped) || !istype(dropper) || !dropper.can_interact_with(src))
+		return
+	if(length(occupants) >= max_occupants - max_drivers)
+		balloon_alert(dropper, "not enough passenger spots!")
+		return
+	dropper.visible_message(span_warning("[dropper] begins forcing [dropped] into [src]!"), span_userdanger("[dropper] begins forcing you into [src]!"))
+	if(!do_after(dropper, 4 SECONDS, dropped, extra_checks = CALLBACK(src, PROC_REF(enter_checks))))
+		return
+	if(!dropped.Adjacent(src))
+		return
+	mob_enter(dropped, flags = NONE) // force occupancy
+	dropper.visible_message(span_warning("[dropped] is forced into [src] by [dropper]!"))
+
 
 // brakes, or autostabilize if not driven
 /obj/vehicle/sealed/space_pod/process()
@@ -102,21 +128,21 @@
 		if (!braking)
 			return
 
-	drift_handler.stabilize_drift(target_force = 0, stabilization_force = stabilizer_force)
+	//braking without drivers is half as strong incase you put like a bomb in your trunk or something and jumped out
+	drift_handler.stabilize_drift(target_force = 0, stabilization_force = !length(drivers) ? stabilizer_force / 2 : stabilizer_force)
 
 
 /obj/vehicle/sealed/space_pod/vehicle_move(direction)
 	. = ..()
 	if(!max_speed || !force_per_move)
 		return
-	if(has_gravity())
+	if(has_gravity() || !newtonian_move(dir2angle(direction), instant = TRUE, drift_force = force_per_move, controlled_cap = max_speed))
 		if(!COOLDOWN_FINISHED(src, cooldown_vehicle_move))
 			return
 		COOLDOWN_START(src, cooldown_vehicle_move, istype(loc, /turf/open/floor/engine) ? 0.3 SECONDS : 2 SECONDS) //moves much better on engine tiles
 		after_move(direction)
 		return try_step_multiz(direction)
 	setDir(direction)
-	newtonian_move(dir2angle(direction), instant = TRUE, drift_force = force_per_move, controlled_cap = max_speed)
 	trail.generate_effect()
 	after_move(direction)
 

@@ -117,13 +117,14 @@
 
 	LAZYSET(occupants, M, NONE)
 	add_control_flags(M, control_flags)
+	if(isnull(control_flags))
+		auto_assign_occupant_flags(M)
 	after_add_occupant(M)
 	grant_passenger_actions(M)
 	SEND_SIGNAL(src, COMSIG_VEHICLE_OCCUPANT_ADDED, M, occupants[M])
 	return TRUE
 
 /obj/vehicle/proc/after_add_occupant(mob/M)
-	auto_assign_occupant_flags(M)
 
 /obj/vehicle/proc/auto_assign_occupant_flags(mob/M) //override for each type that needs it. Default is assign driver if drivers is not at max.
 	if(driver_amount() < max_drivers)
