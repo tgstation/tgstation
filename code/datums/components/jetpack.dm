@@ -142,12 +142,12 @@
 		return FALSE
 	trail.oldposition = get_turf(source)
 
-/datum/component/jetpack/process()
+/datum/component/jetpack/process(seconds_per_tick)
 	if (!should_trigger(user) || !stabilize || isnull(user.drift_handler))
 		return
 
 	var/max_drift_force = (DEFAULT_INERTIA_SPEED / user.cached_multiplicative_slowdown - 1) / INERTIA_SPEED_COEF + 1
-	user.drift_handler.stabilize_drift(user.client.intended_direction ? dir2angle(user.client.intended_direction) : null, user.client.intended_direction ? max_drift_force : 0, stabilization_force)
+	user.drift_handler.stabilize_drift(user.client.intended_direction ? dir2angle(user.client.intended_direction) : null, user.client.intended_direction ? max_drift_force : 0, stabilization_force * (seconds_per_tick * 1 SECONDS))
 
 /datum/component/jetpack/proc/on_client_move(mob/source, list/move_args)
 	SIGNAL_HANDLER

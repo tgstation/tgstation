@@ -25,13 +25,11 @@
 	if(instant)
 		flags |= MOVEMENT_LOOP_START_FAST
 	src.drift_force = drift_force
-	drifting_loop = GLOB.move_manager.smooth_move(moving = parent, angle = inertia_angle, delay = 1, subsystem = SSspacedrift, priority = MOVEMENT_SPACE_PRIORITY, flags = flags)
+	drifting_loop = GLOB.move_manager.smooth_move(moving = parent, angle = inertia_angle, delay = get_loop_delay(parent), subsystem = SSspacedrift, priority = MOVEMENT_SPACE_PRIORITY, flags = flags)
 
 	if(!drifting_loop)
 		qdel(src)
 		return
-
-	drifting_loop.set_speed(get_loop_delay(parent))
 
 	RegisterSignal(drifting_loop, COMSIG_MOVELOOP_START, PROC_REF(drifting_start))
 	RegisterSignal(drifting_loop, COMSIG_MOVELOOP_STOP, PROC_REF(drifting_stop))
@@ -42,7 +40,7 @@
 	if(drifting_loop.status & MOVELOOP_STATUS_RUNNING)
 		drifting_start(drifting_loop) // There's a good chance it'll autostart, gotta catch that
 
-	var/visual_delay = parent.inertia_move_multiplier
+	var/visual_delay = get_loop_delay(parent)
 
 	// Start delay is essentially a more granular version of instant
 	// Isn't used in the standard case, just for things that have odd wants
@@ -101,7 +99,7 @@
 		return
 
 	drifting_loop.set_angle(delta_to_angle(force_x, force_y))
-	drifting_loop.set_speed(get_loop_delay(parent))
+	drifting_loop.set_delay(get_loop_delay(parent))
 
 /datum/drift_handler/proc/drifting_start()
 	SIGNAL_HANDLER
@@ -212,19 +210,17 @@
 	if (get_dir(source, backup) == movement_dir || source.loc == backup.loc)
 		if (drift_force >= INERTIA_FORCE_THROW_FLOOR)
 			source.throw_at(backup, 1, floor(1 + (drift_force - INERTIA_FORCE_THROW_FLOOR) / INERTIA_FORCE_PER_THROW_FORCE), spin = FALSE)
-		qdel(src)
 		return
 
 	if (drift_force < INERTIA_FORCE_SPACEMOVE_GRAB)
-		qdel(src)
 		return
 
 	if (drift_force <= INERTIA_FORCE_SPACEMOVE_REDUCTION / source.inertia_force_weight)
-		glide_to_halt(round(20 / get_loop_delay(source)))
+		glide_to_halt(get_loop_delay(source))
 		return COMPONENT_PREVENT_SPACEMOVE_HALT
 
 	drift_force -= INERTIA_FORCE_SPACEMOVE_REDUCTION / source.inertia_force_weight
-	drifting_loop.set_speed(get_loop_delay(source))
+	drifting_loop.set_delay(get_loop_delay(source))
 	return COMPONENT_PREVENT_SPACEMOVE_HALT
 
 /datum/drift_handler/proc/get_loop_delay(atom/movable/movable)
