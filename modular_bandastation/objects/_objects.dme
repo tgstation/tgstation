@@ -1,3 +1,4 @@
 #include "_objects.dm"
 
+#include "code/material_pouch.dm"
 #include "code/structures/posters.dm"
