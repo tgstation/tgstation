@@ -106,6 +106,9 @@
 	if(!isliving(over))
 		return
 
+	if(!isliving(usr) && !check_rights(R_FUN)) // monkestation edit: a bug? nah, its a feature!
+		return
+
 	if(!spillable)
 		return
 
