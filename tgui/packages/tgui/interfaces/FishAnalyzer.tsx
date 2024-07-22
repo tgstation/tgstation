@@ -158,7 +158,7 @@ const FishItem = (props) => {
           <Flex.Item grow ml={1}>
             <Stack vertical>
               <Stack.Item style={{ fontSize: '13px', fontWeight: 'bold' }}>
-                {DisectName(fish.fish_name).toUpperCase()}
+                {dissectName(fish.fish_name).toUpperCase()}
               </Stack.Item>
               <Stack.Item
                 ml={1}
@@ -261,7 +261,7 @@ const FishItem = (props) => {
               color: fish.fish_fluid_compatible ? '#1ac400' : 'red',
             }}
           >
-            {DisectName(fish.fish_fluid_type)}
+            {dissectName(fish.fish_fluid_type)}
           </Flex.Item>
         </Flex>
       </Stack.Item>
@@ -305,14 +305,6 @@ const EvolutionData = (props) => {
   );
 };
 
-function DisectName(input: string): string {
-  if (input.length > 12) {
-    const firstSpace = input.indexOf(' ');
-
-    if (!firstSpace) {
-      return input.substring(0, 12);
-    }
-    return input.substring(0, firstSpace);
-  }
-  return input;
+function dissectName(input: string): string {
+  return input.split(' ')[0].slice(0, 12);
 }
