@@ -240,8 +240,8 @@
 // Largely a sanity check
 /obj/item/organ/internal/heart/cybernetic/on_mob_remove(mob/living/carbon/heart_owner, special = FALSE)
 	. = ..()
-	if(HAS_TRAIT_FROM(owner, TRAIT_NOSOFTCRIT, ORGAN_TRAIT))
-		REMOVE_TRAIT(owner, TRAIT_NOSOFTCRIT, ORGAN_TRAIT)
+	if(HAS_TRAIT_FROM(heart_owner, TRAIT_NOSOFTCRIT, ORGAN_TRAIT))
+		REMOVE_TRAIT(heart_owner, TRAIT_NOSOFTCRIT, ORGAN_TRAIT)
 
 /obj/item/organ/internal/heart/cybernetic/tier2
 	name = "cybernetic heart"
