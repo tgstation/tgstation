@@ -16,7 +16,7 @@ import {
 } from '../components';
 import { Window } from '../layouts';
 
-type fishData = {
+type FishData = {
   fish_name: string;
   fish_icon: string;
   fish_icon_state: string;
@@ -32,17 +32,17 @@ type fishData = {
   fish_fluid_type: string;
   fish_suitable_temp: BooleanLike;
   fish_breed_timer: number;
-  fish_traits: traitData[];
-  fish_evolutions: evolutionData[];
+  fish_traits: TraitData[];
+  fish_evolutions: EvolutionData[];
 };
 
-type traitData = {
+type TraitData = {
   trait_name: string;
   trait_desc: string;
   trait_inherit: number;
 };
 
-type evolutionData = {
+type EvolutionData = {
   evolution_name: string;
   evolution_icon: string;
   evolution_icon_state: string;
@@ -51,7 +51,7 @@ type evolutionData = {
 };
 
 type Data = {
-  fish_list: fishData[];
+  fish_list: FishData[];
   fish_scanned: BooleanLike;
 };
 
@@ -60,7 +60,7 @@ export const FishAnalyzer = (props) => {
   const { fish_list = [], fish_scanned } = data;
   const [searchText, setSearchText] = useState('');
 
-  const search = createSearch(searchText, (fish: fishData) => fish.fish_name);
+  const search = createSearch(searchText, (fish: FishData) => fish.fish_name);
 
   const fish_filtered =
     searchText.length > 0
@@ -74,7 +74,9 @@ export const FishAnalyzer = (props) => {
       height={fish_scanned ? 270 : 460}
     >
       <Window.Content
-        style={{ background: 'linear-gradient(to right,#2e0b64, #848ffb)' }}
+        style={{
+          background: '#402784',
+        }}
       >
         <Stack fill vertical>
           {!fish_scanned && (
@@ -115,199 +117,7 @@ export const FishAnalyzer = (props) => {
                       border: '3px solid #6f1d94',
                     }}
                   >
-                    <Stack vertical>
-                      <Stack.Item minHeight="105px">
-                        <Flex>
-                          <Flex.Item width="40px">
-                            <Stack vertical>
-                              <Stack.Item>
-                                <DmIcon
-                                  style={{ background: '#1a0940' }}
-                                  icon={fish.fish_icon}
-                                  icon_state={fish.fish_icon_state}
-                                  height="40px"
-                                  width="40px"
-                                />
-                              </Stack.Item>
-                              <Stack.Item style={{ fontSize: '10px' }}>
-                                {fish.fish_weight}g
-                              </Stack.Item>
-                              <Stack.Item style={{ fontSize: '10px' }}>
-                                {fish.fish_size}cm
-                              </Stack.Item>
-                            </Stack>
-                          </Flex.Item>
-                          <Flex.Item grow ml={1}>
-                            <Stack vertical>
-                              <Stack.Item
-                                style={{ fontSize: '13px', fontWeight: 'bold' }}
-                              >
-                                {DisectName(fish.fish_name).toUpperCase()}
-                              </Stack.Item>
-                              <Stack.Item
-                                ml={1}
-                                textAlign="center"
-                                style={{
-                                  borderRadius: '1em',
-                                  background: fish.fish_food_color,
-                                  color: 'white',
-                                }}
-                              >
-                                {fish.fish_food}
-                              </Stack.Item>
-                              <Stack.Item mt={2}>
-                                {fish.fish_traits.length === 0 ? (
-                                  <Button
-                                    color="transparent"
-                                    tooltip="Fish has no traits!"
-                                  >
-                                    None
-                                  </Button>
-                                ) : (
-                                  <Stack vertical>
-                                    {fish.fish_traits.map((trait, index) => (
-                                      <Stack.Item mt={-1} key={index}>
-                                        <Button
-                                          color="transparent"
-                                          tooltip={
-                                            <Stack vertical>
-                                              <Stack.Item>
-                                                Inheritance:{' '}
-                                                {trait.trait_inherit}
-                                              </Stack.Item>
-                                              <Stack.Item>
-                                                {trait.trait_desc}
-                                              </Stack.Item>
-                                            </Stack>
-                                          }
-                                        >
-                                          {trait.trait_name}
-                                        </Button>
-                                      </Stack.Item>
-                                    ))}
-                                  </Stack>
-                                )}
-                              </Stack.Item>
-                            </Stack>
-                          </Flex.Item>
-                          <Flex.Item grow ml={2}>
-                            <Stack vertical>
-                              <Stack.Item>
-                                Health:{' '}
-                                <ProgressBar
-                                  width="95%"
-                                  value={fish.fish_health / 100}
-                                  ranges={{
-                                    good: [0.9, Infinity],
-                                    average: [0.5, 0.9],
-                                    bad: [-Infinity, 0.5],
-                                  }}
-                                />
-                              </Stack.Item>
-                              <Stack.Item>
-                                Hunger:{' '}
-                                <ProgressBar
-                                  width="95%"
-                                  value={fish.fish_hunger / 100}
-                                  ranges={{
-                                    good: [0.9, Infinity],
-                                    average: [0.5, 0.9],
-                                    bad: [-Infinity, 0.5],
-                                  }}
-                                />
-                              </Stack.Item>
-                              <Stack.Item mt={2}>
-                                {fish.fish_evolutions.length === 0 ? (
-                                  <Box mb={2}>No evolutions!</Box>
-                                ) : (
-                                  <Stack mt={-2} vertical>
-                                    {fish.fish_evolutions.map(
-                                      (evolution, index) => (
-                                        <Stack.Item key={index}>
-                                          <Flex>
-                                            <Flex.Item mt={1}>
-                                              <DmIcon
-                                                icon={fish.fish_icon}
-                                                icon_state={
-                                                  fish.fish_icon_state
-                                                }
-                                                height="32px"
-                                                width="32px"
-                                              />
-                                            </Flex.Item>
-                                            <Flex.Item>
-                                              <Stack
-                                                ml={0.5}
-                                                vertical
-                                                align="center"
-                                              >
-                                                <Stack.Item
-                                                  mt={2}
-                                                  style={{ fontSize: '8px' }}
-                                                >
-                                                  {
-                                                    evolution.evolution_probability
-                                                  }
-                                                  %
-                                                </Stack.Item>
-                                                <Stack.Item mt={-0.2}>
-                                                  <Icon
-                                                    style={{ fontSize: '15px' }}
-                                                    color="red"
-                                                    name="arrow-right"
-                                                  />
-                                                </Stack.Item>
-                                              </Stack>
-                                            </Flex.Item>
-                                            <Flex.Item>
-                                              <DmIcon
-                                                mt={1}
-                                                icon={evolution.evolution_icon}
-                                                icon_state={
-                                                  evolution.evolution_icon_state
-                                                }
-                                                height="32px"
-                                                width="32px"
-                                              />
-                                            </Flex.Item>
-                                          </Flex>
-                                        </Stack.Item>
-                                      ),
-                                    )}
-                                  </Stack>
-                                )}
-                              </Stack.Item>
-                            </Stack>
-                          </Flex.Item>
-                        </Flex>
-                      </Stack.Item>
-                      <Stack.Item>
-                        <Flex>
-                          <Flex.Item
-                            width="25%"
-                            grow
-                            style={{
-                              color: fish.fish_suitable_temp
-                                ? '#1ac400'
-                                : 'red',
-                            }}
-                          >
-                            {fish.fish_min_temp}k - {fish.fish_max_temp}k
-                          </Flex.Item>
-                          <Flex.Item
-                            ml={3}
-                            grow
-                            style={{
-                              color: fish.fish_fluid_compatible
-                                ? '#1ac400'
-                                : 'red',
-                            }}
-                          >
-                            {DisectName(fish.fish_fluid_type)}
-                          </Flex.Item>
-                        </Flex>
-                      </Stack.Item>
-                    </Stack>
+                    <FishItem fish={fish} />
                   </Stack.Item>
                 ))}
               </Stack>
@@ -316,6 +126,182 @@ export const FishAnalyzer = (props) => {
         </Stack>
       </Window.Content>
     </Window>
+  );
+};
+
+const FishItem = (props) => {
+  const { fish } = props;
+
+  return (
+    <Stack vertical>
+      <Stack.Item minHeight="105px">
+        <Flex>
+          <Flex.Item width="40px">
+            <Stack vertical>
+              <Stack.Item>
+                <DmIcon
+                  style={{ background: '#1a0940' }}
+                  icon={fish.fish_icon}
+                  icon_state={fish.fish_icon_state}
+                  height="40px"
+                  width="40px"
+                />
+              </Stack.Item>
+              <Stack.Item style={{ fontSize: '10px' }}>
+                {fish.fish_weight}g
+              </Stack.Item>
+              <Stack.Item style={{ fontSize: '10px' }}>
+                {fish.fish_size}cm
+              </Stack.Item>
+            </Stack>
+          </Flex.Item>
+          <Flex.Item grow ml={1}>
+            <Stack vertical>
+              <Stack.Item style={{ fontSize: '13px', fontWeight: 'bold' }}>
+                {DisectName(fish.fish_name).toUpperCase()}
+              </Stack.Item>
+              <Stack.Item
+                ml={1}
+                textAlign="center"
+                style={{
+                  borderRadius: '1em',
+                  background: fish.fish_food_color,
+                  color: 'white',
+                }}
+              >
+                {fish.fish_food}
+              </Stack.Item>
+              <Stack.Item mt={2}>
+                {fish.fish_traits.length === 0 ? (
+                  <Button color="transparent" tooltip="Fish has no traits!">
+                    None
+                  </Button>
+                ) : (
+                  <Stack vertical>
+                    {fish.fish_traits.map((trait, index) => (
+                      <Stack.Item mt={-1} key={index}>
+                        <Button
+                          color="transparent"
+                          tooltip={
+                            <Stack vertical>
+                              <Stack.Item>
+                                Inheritance: {trait.trait_inherit}
+                              </Stack.Item>
+                              <Stack.Item>{trait.trait_desc}</Stack.Item>
+                            </Stack>
+                          }
+                        >
+                          {trait.trait_name}
+                        </Button>
+                      </Stack.Item>
+                    ))}
+                  </Stack>
+                )}
+              </Stack.Item>
+            </Stack>
+          </Flex.Item>
+          <Flex.Item grow ml={2}>
+            <Stack vertical>
+              <Stack.Item>
+                Health:{' '}
+                <ProgressBar
+                  width="95%"
+                  value={fish.fish_health / 100}
+                  ranges={{
+                    good: [0.9, Infinity],
+                    average: [0.5, 0.9],
+                    bad: [-Infinity, 0.5],
+                  }}
+                />
+              </Stack.Item>
+              <Stack.Item>
+                Hunger:{' '}
+                <ProgressBar
+                  width="95%"
+                  value={fish.fish_hunger / 100}
+                  ranges={{
+                    good: [0.9, Infinity],
+                    average: [0.5, 0.9],
+                    bad: [-Infinity, 0.5],
+                  }}
+                />
+              </Stack.Item>
+              <Stack.Item mt={2}>
+                {fish.fish_evolutions.length === 0 ? (
+                  <Box mb={2}>No evolutions!</Box>
+                ) : (
+                  <Stack mt={-2} vertical>
+                    {fish.fish_evolutions.map((evolution, index) => (
+                      <Stack.Item key={index}>
+                        <EvolutionData evolution={evolution} fish={fish} />
+                      </Stack.Item>
+                    ))}
+                  </Stack>
+                )}
+              </Stack.Item>
+            </Stack>
+          </Flex.Item>
+        </Flex>
+      </Stack.Item>
+      <Stack.Item>
+        <Flex>
+          <Flex.Item
+            width="25%"
+            grow
+            style={{
+              color: fish.fish_suitable_temp ? '#1ac400' : 'red',
+            }}
+          >
+            {fish.fish_min_temp}k - {fish.fish_max_temp}k
+          </Flex.Item>
+          <Flex.Item
+            ml={3}
+            grow
+            style={{
+              color: fish.fish_fluid_compatible ? '#1ac400' : 'red',
+            }}
+          >
+            {DisectName(fish.fish_fluid_type)}
+          </Flex.Item>
+        </Flex>
+      </Stack.Item>
+    </Stack>
+  );
+};
+
+const EvolutionData = (props) => {
+  const { evolution, fish } = props;
+
+  return (
+    <Flex>
+      <Flex.Item mt={1}>
+        <DmIcon
+          icon={fish.fish_icon}
+          icon_state={fish.fish_icon_state}
+          height="32px"
+          width="32px"
+        />
+      </Flex.Item>
+      <Flex.Item>
+        <Stack ml={0.5} vertical align="center">
+          <Stack.Item mt={2} style={{ fontSize: '8px' }}>
+            {evolution.evolution_probability}%
+          </Stack.Item>
+          <Stack.Item mt={-0.2}>
+            <Icon style={{ fontSize: '15px' }} color="red" name="arrow-right" />
+          </Stack.Item>
+        </Stack>
+      </Flex.Item>
+      <Flex.Item>
+        <DmIcon
+          mt={1}
+          icon={evolution.evolution_icon}
+          icon_state={evolution.evolution_icon_state}
+          height="32px"
+          width="32px"
+        />
+      </Flex.Item>
+    </Flex>
   );
 };
 
