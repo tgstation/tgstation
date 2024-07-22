@@ -9,6 +9,7 @@
 // although im not so sure about power costs i dont know why it would need them but ideally a space pod should be capable of functioning for 10-15 minutes of nonstop acceleration by default
 // innate armor potentially, also actual armor and also figure out integrity and inertia_force_weight
 // figure out whether this should use action buttons or an UI or a combination of both for equipment
+// crashing into people and walls and stuff
 // ALSO DO NOT FORGET TO REMOVE THIS HUGE ASS COMMENT before finishing
 
 // this is the iron variant
