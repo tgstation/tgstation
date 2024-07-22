@@ -302,6 +302,6 @@
 	name = "cahn'root shiv"
 	icon_state = "rootshiv"
 	inhand_icon_state = "rootshiv"
-	desc = "Truly putting 'snip' in the 'parsnip', and it's not sub-par either!"
+	desc = "A root sharpened into a shiv. A root source of someone's stab wounds soon, most likely."
 	custom_materials = null
 
