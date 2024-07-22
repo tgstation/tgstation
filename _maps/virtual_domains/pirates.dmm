@@ -121,6 +121,11 @@
 /obj/effect/baseturf_helper/virtual_domain,
 /turf/closed/indestructible/binary,
 /area/virtual_domain/fullbright)
+"gc" = (
+/obj/structure/flora/rock/pile/jungle/style_2,
+/obj/effect/baseturf_helper/virtual_domain,
+/turf/open/misc/dirt/jungle,
+/area/virtual_domain/protected_space)
 "gf" = (
 /obj/effect/turf_decal/weather/sand{
 	dir = 5
@@ -138,10 +143,6 @@
 	icon_state = "wood_large"
 	},
 /area/virtual_domain/fullbright)
-"gA" = (
-/obj/effect/baseturf_helper/virtual_domain,
-/turf/closed/indestructible/binary,
-/area/virtual_domain/protected_space/fullbright)
 "gB" = (
 /obj/effect/turf_decal/weather/sand{
 	dir = 9
@@ -149,6 +150,10 @@
 /turf/open/floor/wood{
 	icon_state = "wood_large"
 	},
+/area/virtual_domain/fullbright)
+"gD" = (
+/obj/item/flashlight/flare/torch,
+/turf/open/misc/beach/sand,
 /area/virtual_domain/fullbright)
 "gK" = (
 /obj/structure/flora/bush/flowers_br/style_random,
@@ -220,10 +225,6 @@
 	dir = 4
 	},
 /area/virtual_domain/fullbright)
-"mR" = (
-/obj/machinery/smartfridge/drying_rack,
-/turf/open/misc/beach/sand,
-/area/virtual_domain/fullbright)
 "nb" = (
 /obj/structure/fermenting_barrel{
 	pixel_x = 6;
@@ -270,6 +271,10 @@
 "pn" = (
 /obj/structure/flora/bush/flowers_br/style_random,
 /turf/open/misc/grass,
+/area/virtual_domain/fullbright)
+"ps" = (
+/obj/machinery/smartfridge/drying/rack,
+/turf/open/misc/beach/sand,
 /area/virtual_domain/fullbright)
 "py" = (
 /turf/closed/indestructible/binary,
@@ -345,6 +350,9 @@
 /obj/effect/decal/cleanable/cobweb,
 /turf/open/floor/wood/parquet,
 /area/virtual_domain)
+"tA" = (
+/turf/closed/mineral/random/jungle,
+/area/virtual_domain/protected_space)
 "tH" = (
 /obj/structure/closet/cabinet,
 /obj/item/clothing/head/costume/pirate/armored,
@@ -440,6 +448,13 @@
 /area/template_noop)
 "xp" = (
 /turf/open/water/beach,
+/area/virtual_domain/fullbright)
+"yF" = (
+/obj/effect/light_emitter{
+	set_cap = 3;
+	set_luminosity = 5
+	},
+/turf/open/misc/beach/coast,
 /area/virtual_domain/fullbright)
 "zc" = (
 /obj/item/gun/energy/laser/hellgun{
@@ -584,13 +599,6 @@
 /obj/structure/flora/rock/pile/style_3,
 /turf/open/misc/dirt/jungle,
 /area/virtual_domain/protected_space)
-"Gx" = (
-/obj/effect/light_emitter{
-	set_cap = 3;
-	set_luminosity = 5
-	},
-/turf/open/misc/beach/coast,
-/area/virtual_domain/fullbright)
 "Gy" = (
 /obj/structure/flora/rock/style_2,
 /turf/open/water/beach,
@@ -606,9 +614,6 @@
 	},
 /turf/open/floor/carpet/blue,
 /area/virtual_domain)
-"HU" = (
-/turf/closed/mineral/random/jungle,
-/area/virtual_domain/protected_space)
 "Iv" = (
 /obj/structure/flora/rock/style_3,
 /turf/open/water/beach,
@@ -653,6 +658,10 @@
 	dir = 1
 	},
 /area/virtual_domain/fullbright)
+"KP" = (
+/obj/effect/baseturf_helper/virtual_domain,
+/turf/closed/indestructible/binary,
+/area/virtual_domain/protected_space/fullbright)
 "KS" = (
 /obj/effect/turf_decal/siding/wood{
 	dir = 8
@@ -661,6 +670,13 @@
 /obj/effect/landmark/bitrunning/cache_spawn,
 /turf/open/floor/carpet/blue,
 /area/virtual_domain)
+"KU" = (
+/obj/effect/light_emitter{
+	set_cap = 3;
+	set_luminosity = 5
+	},
+/turf/open/water/beach,
+/area/virtual_domain/fullbright)
 "KV" = (
 /obj/structure/flora/rock/pile/jungle/style_3{
 	pixel_x = -15;
@@ -744,11 +760,6 @@
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/carpet/blue,
 /area/virtual_domain)
-"Oz" = (
-/obj/structure/flora/rock/pile/jungle/style_2,
-/obj/effect/baseturf_helper/virtual_domain,
-/turf/open/misc/dirt/jungle,
-/area/virtual_domain/protected_space)
 "OD" = (
 /obj/effect/turf_decal/weather/sand{
 	dir = 6
@@ -766,10 +777,6 @@
 /turf/open/floor/wood{
 	icon_state = "wood_large"
 	},
-/area/virtual_domain/fullbright)
-"Qt" = (
-/obj/item/flashlight/flare/torch,
-/turf/open/misc/beach/sand,
 /area/virtual_domain/fullbright)
 "QF" = (
 /obj/effect/turf_decal/weather/dirt,
@@ -900,13 +907,6 @@
 	},
 /turf/open/floor/wood,
 /area/virtual_domain/protected_space/fullbright)
-"Uy" = (
-/obj/effect/light_emitter{
-	set_cap = 3;
-	set_luminosity = 5
-	},
-/turf/open/water/beach,
-/area/virtual_domain/fullbright)
 "Vx" = (
 /obj/structure/flora/rock/style_4,
 /turf/open/water/beach,
@@ -1503,7 +1503,7 @@ py
 py
 py
 py
-gA
+KP
 "}
 (12,1,1) = {"
 xg
@@ -1601,7 +1601,7 @@ Ul
 Ul
 Ul
 Hn
-mR
+ps
 eS
 eS
 eS
@@ -2094,9 +2094,9 @@ eS
 eS
 nr
 eS
-Qt
-Gx
-Uy
+gD
+yF
+KU
 xp
 xp
 xp
@@ -2137,12 +2137,12 @@ DM
 DM
 DM
 DM
-HU
-HU
+tA
+tA
 eP
 sb
-HU
-HU
+tA
+tA
 hb
 hb
 xp
@@ -2182,10 +2182,10 @@ DM
 DM
 DM
 DM
-HU
+tA
 fd
 OW
-HU
+tA
 DM
 DM
 hb
@@ -2226,11 +2226,11 @@ DM
 DM
 DM
 DM
-HU
+tA
 KV
 OW
-HU
-HU
+tA
+tA
 DM
 DM
 hb
@@ -2270,13 +2270,13 @@ DM
 DM
 DM
 DM
-HU
+tA
 qk
 IW
 sb
-HU
-HU
-HU
+tA
+tA
+tA
 DM
 DM
 DM
@@ -2314,16 +2314,16 @@ DM
 DM
 DM
 DM
-HU
+tA
 Gl
 qk
 IW
 hn
 sb
-HU
-HU
-HU
-HU
+tA
+tA
+tA
+tA
 DM
 hb
 hb
@@ -2358,17 +2358,17 @@ hb
 DM
 DM
 DM
-HU
-HU
+tA
+tA
 qk
 qk
 Oi
 OW
 sb
 be
-Oz
-HU
-HU
+gc
+tA
+tA
 DM
 hb
 hb
@@ -2403,8 +2403,8 @@ hb
 DM
 DM
 DM
-HU
-HU
+tA
+tA
 qk
 CL
 IW
@@ -2412,8 +2412,8 @@ sb
 QG
 qk
 rm
-HU
-HU
+tA
+tA
 DM
 hb
 xg
@@ -2448,7 +2448,7 @@ hb
 DM
 DM
 DM
-HU
+tA
 oB
 qk
 wu
@@ -2457,7 +2457,7 @@ QF
 BX
 qk
 rm
-HU
+tA
 DM
 hb
 xg
@@ -2492,8 +2492,8 @@ hb
 hb
 DM
 DM
-HU
-HU
+tA
+tA
 qk
 qk
 NU
@@ -2501,7 +2501,7 @@ db
 hq
 zc
 ID
-HU
+tA
 DM
 hb
 xg
@@ -2537,15 +2537,15 @@ hb
 hb
 hb
 DM
-HU
-HU
-HU
-HU
-HU
-HU
-HU
-HU
-HU
+tA
+tA
+tA
+tA
+tA
+tA
+tA
+tA
+tA
 DM
 hb
 xg

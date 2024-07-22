@@ -53,7 +53,6 @@
 /obj/machinery/autolathe/Destroy()
 	QDEL_NULL(print_sound)
 	materials = null
-	QDEL_NULL(wires)
 	return ..()
 
 /obj/machinery/autolathe/examine(mob/user)
