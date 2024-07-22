@@ -454,8 +454,11 @@
 	charge = 20 * STANDARD_BATTERY_CHARGE
 
 /obj/machinery/power/smes/engineering
-	charge = 50 * STANDARD_BATTERY_CHARGE // Engineering starts with some charge for singulo //sorry little one, singulo as engine is gone
+	charge = 20 * STANDARD_BATTERY_CHARGE // Engineering starts with some charge to trickle charge the station APCs before engine is running
 	output_level = 90 KILO WATTS
+
+/obj/machinery/power/smes/engineering/standby
+	output_attempt = FALSE // Engineering has one unit on standby to kickstart the grid for emitters
 
 /obj/machinery/power/smes/magical
 	name = "magical power storage unit"

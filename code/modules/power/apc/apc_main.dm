@@ -7,10 +7,10 @@
 
 ///Cap for how fast cells charge, as a percentage per second (.01 means cellcharge is capped to 1% per second)
 #define CHARGELEVEL 0.01
-///Charge percentage at which the lights channel stops working
-#define APC_CHANNEL_LIGHT_TRESHOLD 15
 ///Charge percentage at which the equipment channel stops working
-#define APC_CHANNEL_EQUIP_TRESHOLD 30
+#define APC_CHANNEL_EQUIP_TRESHOLD 15
+///Charge percentage at which the lights channel stops working
+#define APC_CHANNEL_LIGHT_TRESHOLD 30
 ///Charge percentage at which the APC icon indicates discharging
 #define APC_CHANNEL_ALARM_TRESHOLD 75
 
@@ -590,7 +590,7 @@
 			if(!nightshift_lights || (nightshift_lights && !low_power_nightshift_lights))
 				low_power_nightshift_lights = TRUE
 				INVOKE_ASYNC(src, PROC_REF(set_nightshift), TRUE)
-		else if(cell.percent() < APC_CHANNEL_LIGHT_TRESHOLD) // turn off lighting & equipment
+		else if(cell.percent() < APC_CHANNEL_EQUIP_TRESHOLD) // turn off lighting & equipment
 			equipment = autoset(equipment, AUTOSET_OFF)
 			lighting = autoset(lighting, AUTOSET_OFF)
 			environ = autoset(environ, AUTOSET_ON)
@@ -598,9 +598,9 @@
 			if(!nightshift_lights || (nightshift_lights && !low_power_nightshift_lights))
 				low_power_nightshift_lights = TRUE
 				INVOKE_ASYNC(src, PROC_REF(set_nightshift), TRUE)
-		else if(cell.percent() < APC_CHANNEL_EQUIP_TRESHOLD) // turn off equipment
-			equipment = autoset(equipment, AUTOSET_OFF)
-			lighting = autoset(lighting, AUTOSET_ON)
+		else if(cell.percent() < APC_CHANNEL_LIGHT_TRESHOLD) // turn off lighting
+			equipment = autoset(equipment, AUTOSET_ON)
+			lighting = autoset(lighting, AUTOSET_OFF)
 			environ = autoset(environ, AUTOSET_ON)
 			alarm_manager.send_alarm(ALARM_POWER)
 			if(!nightshift_lights || (nightshift_lights && !low_power_nightshift_lights))
