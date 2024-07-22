@@ -69,11 +69,6 @@
 	for(var/datum/stock_part/scanning_module/scanning_module in component_parts)
 		minus_false_beep = scanning_module.tier //The better are scanninning modules - the lower is chance of False Positives
 
-/obj/machinery/scanner_gate/Destroy()
-	qdel(wires)
-	set_wires(null)
-	. = ..()
-
 /obj/machinery/scanner_gate/atom_deconstruct(disassembled)
 	. = ..()
 	if(n_spect)

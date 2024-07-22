@@ -51,8 +51,6 @@
 	set_wires(new /datum/wires/explosive/c4(src))
 
 /obj/item/grenade/c4/Destroy()
-	qdel(wires)
-	set_wires(null)
 	target = null
 	return ..()
 
