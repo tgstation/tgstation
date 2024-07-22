@@ -53,7 +53,7 @@
 			. += span_notice("It's operating on the [LOWER_TEXT(GLOB.cable_layer_to_name["[cable_layer]"])].")
 		else
 			. += span_warning("It's disconnected from the [LOWER_TEXT(GLOB.cable_layer_to_name["[cable_layer]"])].")
-		. += span_notice("It's power line can be changed with a [EXAMINE_HINT("multitool")].")
+		. += span_notice("Its power line can be changed with a [EXAMINE_HINT("multitool")].")
 
 /obj/machinery/power/multitool_act(mob/living/user, obj/item/tool)
 	if(can_change_cable_layer)

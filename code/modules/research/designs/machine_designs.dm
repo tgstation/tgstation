@@ -582,6 +582,16 @@
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_SERVICE
 
+/datum/design/board/dehydrator
+	name = "Dehydrator Board"
+	desc = "The circuit board for a dehydrator."
+	id = "dehydrator"
+	build_path = /obj/item/circuitboard/machine/dehydrator
+	category = list(
+		RND_CATEGORY_MACHINE + RND_SUBCATEGORY_MACHINE_KITCHEN
+	)
+	departmental_flags = DEPARTMENT_BITFLAG_SERVICE
+
 /datum/design/board/vatgrower
 	name = "Growing Vat Board"
 	desc = "The circuit board for a growing vat."
