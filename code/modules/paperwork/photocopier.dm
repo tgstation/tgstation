@@ -149,6 +149,8 @@ GLOBAL_LIST_INIT(paper_blanks, init_paper_blanks())
 
 	static_data["blanks"] = blank_infos
 	static_data["categories"] = category_names
+	static_data["max_paper_count"] = MAX_PAPER_CAPACITY
+	static_data["max_copies"] = MAX_COPIES_AT_ONCE
 
 	return static_data
 
@@ -276,7 +278,7 @@ GLOBAL_LIST_INIT(paper_blanks, init_paper_blanks())
 			if(!(params["code"] in GLOB.paper_blanks))
 				return FALSE
 			var/list/blank = GLOB.paper_blanks[params["code"]]
-			do_copies(CALLBACK(src, PROC_REF(make_blank_print), blank), usr, PAPER_PAPER_USE, PAPER_TONER_USE, 1)
+			do_copies(CALLBACK(src, PROC_REF(make_blank_print), blank), usr, PAPER_PAPER_USE, PAPER_TONER_USE, num_copies)
 			return TRUE
 
 /// Returns the color used for the printing operation. If the color is below TONER_LOW_PERCENTAGE, it returns a gray color.
