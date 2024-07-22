@@ -19,13 +19,18 @@
 	. = ..()
 	RegisterSignal(pod, COMSIG_MOUSEDROPPED_ONTO, PROC_REF(dragged_onto_pod))
 	RegisterSignal(pod, COMSIG_MOUSEDROP_ONTO, PROC_REF(dragged_elsewhere))
+	RegisterSignal(pod, COMSIG_ATOM_DESTRUCTION, PROC_REF(dump_contents))
 
 /obj/item/pod_equipment/cargo_hold/on_detach(mob/user)
 	. = ..()
-	UnregisterSignal(pod, list(COMSIG_MOUSEDROPPED_ONTO, COMSIG_MOUSEDROP_ONTO))
+	UnregisterSignal(pod, list(COMSIG_MOUSEDROPPED_ONTO, COMSIG_MOUSEDROP_ONTO, COMSIG_ATOM_DESTRUCTION))
 	if(!QDELING(src))
-		for(var/atom/movable/content as anything in contents)
-			content.forceMove(pod.drop_location())
+		dump_contents()
+
+/obj/item/pod_equipment/cargo_hold/dump_contents()
+	SIGNAL_HANDLER
+	for(var/atom/movable/content as anything in contents)
+		content.forceMove(pod.drop_location())
 
 /obj/item/pod_equipment/cargo_hold/proc/dragged_elsewhere(datum/source, atom/onto, mob/user)
 	SIGNAL_HANDLER
