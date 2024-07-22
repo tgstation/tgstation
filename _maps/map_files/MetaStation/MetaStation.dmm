@@ -20225,7 +20225,7 @@
 	dir = 8
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/structure/cable/multilayer/connected,
+/obj/structure/cable,
 /turf/open/floor/iron/dark,
 /area/station/ai_monitored/aisat/exterior)
 "hmq" = (
@@ -24311,6 +24311,12 @@
 	},
 /turf/open/floor/iron/dark/corner,
 /area/station/engineering/storage_shared)
+"iHB" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
+	},
+/turf/open/floor/iron,
+/area/station/engineering/engine_smes)
 "iHD" = (
 /turf/closed/wall/r_wall,
 /area/station/security/courtroom)
@@ -28929,9 +28935,6 @@
 /obj/machinery/pdapainter/medbay,
 /turf/open/floor/iron/dark,
 /area/station/command/heads_quarters/cmo)
-"khg" = (
-/turf/closed/wall/r_wall,
-/area/station/engineering/engine_smes)
 "khm" = (
 /obj/effect/turf_decal/trimline/red/filled/line{
 	dir = 8
@@ -36276,12 +36279,6 @@
 /obj/effect/turf_decal/tile/neutral,
 /turf/open/floor/iron,
 /area/station/hallway/primary/central)
-"mSq" = (
-/obj/effect/turf_decal/stripes/line{
-	dir = 1
-	},
-/turf/open/floor/iron,
-/area/station/engineering/engine_smes)
 "mSB" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -50988,6 +50985,9 @@
 /obj/machinery/meter,
 /turf/open/floor/iron,
 /area/station/engineering/atmos)
+"rZw" = (
+/turf/closed/wall/r_wall,
+/area/station/engineering/engine_smes)
 "rZy" = (
 /obj/machinery/camera/directional/east{
 	c_tag = "AI Chamber - Starboard";
@@ -53672,7 +53672,6 @@
 /turf/open/floor/iron,
 /area/station/security/brig)
 "sVx" = (
-/obj/machinery/power/smes/full,
 /obj/structure/cable,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron/dark,
@@ -61193,6 +61192,7 @@
 /obj/machinery/holopad,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/structure/cable/layer3,
+/obj/structure/cable,
 /turf/open/floor/iron/dark,
 /area/station/ai_monitored/aisat/exterior)
 "vyZ" = (
@@ -68272,6 +68272,7 @@
 "xXK" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4,
 /obj/structure/cable/layer3,
+/obj/structure/cable,
 /turf/open/floor/iron/dark,
 /area/station/ai_monitored/aisat/exterior)
 "xXM" = (
@@ -108020,7 +108021,7 @@ kCq
 sXe
 gLo
 ofk
-khg
+rZw
 fDL
 hSt
 qhw
@@ -108274,10 +108275,10 @@ ssI
 mBw
 uXd
 dHg
-mSq
+iHB
 qul
 acs
-khg
+rZw
 dIm
 nLz
 vGl
@@ -108534,7 +108535,7 @@ gMG
 dWG
 uGm
 acs
-khg
+rZw
 qJd
 nLz
 fEL
@@ -108791,7 +108792,7 @@ iBm
 iBm
 vHs
 iBm
-khg
+rZw
 sqE
 cKW
 dJP
