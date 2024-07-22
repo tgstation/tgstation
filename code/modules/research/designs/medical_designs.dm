@@ -1188,7 +1188,7 @@
 
 /datum/design/surgery/vein_threading/mechanic
 	name = "Hydraulics Routing Optimization"
-	desc = "A robotic upgrade which severely reduces the amount of hydraulic flueid lost in case of injury."
+	desc = "A robotic upgrade which severely reduces the amount of hydraulic fluid lost in case of injury."
 	id = "surgery_vein_thread_mechanic"
 	surgery = /datum/surgery/advanced/bioware/vein_threading/mechanic
 
