@@ -32,8 +32,7 @@
 	. = ..()
 	take_turf = get_step(src, take_here)
 	drop_turf = get_step(src, drop_here)
-	manipulator_hand = new/obj/effect/big_manipulator_hand(get_turf(src))
-	manipulator_hand.dir = take_here
+	create_manipulator_hand()
 	RegisterSignal(manipulator_hand, COMSIG_QDELETING, PROC_REF(on_hand_qdel))
 	manipulator_lvl()
 
@@ -48,7 +47,11 @@
 
 /obj/machinery/big_manipulator/Moved(atom/old_loc, movement_dir, forced, list/old_locs, momentum_change)
 	. = ..()
-
+	if(isnull(get_turf(src)))
+		qdel(manipulator_hand)
+		return
+	if(!manipulator_hand)
+		create_manipulator_hand()
 	manipulator_hand.forceMove(get_turf(src))
 
 /obj/machinery/big_manipulator/wrench_act(mob/living/user, obj/item/tool)
@@ -92,6 +95,12 @@
 
 	manipulator_lvl()
 
+/// Creat manipulator hand effect on manipulator core.
+/obj/machinery/big_manipulator/proc/create_manipulator_hand()
+	manipulator_hand = new/obj/effect/big_manipulator_hand(get_turf(src))
+	manipulator_hand.dir = take_here
+
+/// Check servo tier and change manipulator speed, power_use and colour.
 /obj/machinery/big_manipulator/proc/manipulator_lvl()
 	var/datum/stock_part/servo/locate_servo = locate() in component_parts
 	if(!locate_servo)
