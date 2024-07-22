@@ -57,7 +57,7 @@
 		return
 
 	var/max_drift_force = (DEFAULT_INERTIA_SPEED / owner.cached_multiplicative_slowdown - 1) / INERTIA_SPEED_COEF + 1
-	owner.drift_handler.stabilize_drift(owner.client.intended_direction ? dir2angle(owner.client.intended_direction) : null, owner.client.intended_direction ? max_drift_force : 0, MOTH_WING_FORCE * (seconds_per_tick / 1 SECONDS))
+	owner.drift_handler.stabilize_drift(owner.client.intended_direction ? dir2angle(owner.client.intended_direction) : null, owner.client.intended_direction ? max_drift_force : 0, MOTH_WING_FORCE * (seconds_per_tick * 1 SECONDS))
 
 /obj/item/organ/external/wings/moth/proc/on_client_move(mob/source, list/move_args)
 	SIGNAL_HANDLER
