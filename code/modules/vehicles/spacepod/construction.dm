@@ -165,3 +165,9 @@
 		return
 	result = construct.build_path
 	return ..()
+
+/datum/component/construction/mecha/pod/spawn_result()
+	var/obj/vehicle/sealed/space_pod/pod = new result(drop_location())
+	pod.panel_open = TRUE
+	pod.update_appearance(UPDATE_OVERLAYS)
+	qdel(parent)

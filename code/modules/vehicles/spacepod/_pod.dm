@@ -3,14 +3,12 @@
 //
 
 // TODO:
-// proper space movement (maybe like 80% done??? they still get stuck on lattices)
-// equipment variants and their research
+// equipment variants (done? maybe a lock module, finish comms module, and maybe a few proper guns) and their research
 // slots: comms (radio and something else), sensors(HUDs or something, mesons??), engine, 1 secondary slot (cargo and shit), 1 primary slot(tools or gun???), 3 misc modules (locks and shit), armor would either be added during construction or as a slot
 // power costs, either only megacell or only cell, how would you charge this??
 // although im not so sure about power costs i dont know why it would need them but ideally a space pod should be capable of functioning for 10-15 minutes of nonstop acceleration by default
 // innate armor potentially, also actual armor and also figure out integrity and inertia_force_weight
 // figure out whether this should use action buttons or an UI or a combination of both for equipment
-// figure out a way around not being able to remove people from a pod (eg kick out intruders or dead dudes)
 // ALSO DO NOT FORGET TO REMOVE THIS HUGE ASS COMMENT before finishing
 
 // this is the iron variant
@@ -97,7 +95,7 @@
 		return
 	for(var/mob/living/driver as anything in return_drivers())
 		driver.Knockdown(1 SECONDS)
-		mob_exit(to_kick, randomstep = TRUE)
+		mob_exit(driver, randomstep = TRUE)
 
 /obj/vehicle/sealed/space_pod/mob_try_exit(mob/removing, mob/user, silent = FALSE, randomstep = FALSE)
 	if(user != removing)
@@ -210,8 +208,8 @@
 	. = ..()
 	equip_item(new /obj/item/pod_equipment/sensors)
 	equip_item(new /obj/item/pod_equipment/comms)
-	equip_item(new /obj/item/pod_equipment/thrusters)
-	equip_item(new /obj/item/pod_equipment/engine)
+	equip_item(new /obj/item/pod_equipment/thrusters/default)
+	equip_item(new /obj/item/pod_equipment/engine/default)
 	equip_item(new /obj/item/pod_equipment/primary/projectile_weapon/kinetic_accelerator)
 	equip_item(new /obj/item/pod_equipment/cargo_hold)
 	cabin_air_tank = new /obj/item/tank/internals/oxygen(src)
