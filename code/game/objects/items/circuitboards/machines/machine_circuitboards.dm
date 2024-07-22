@@ -329,7 +329,7 @@
 
 /obj/item/circuitboard/machine/scanner_gate
 	name = "Scanner Gate"
-	greyscale_colors = CIRCUIT_COLOR_ENGINEERING
+	greyscale_colors = CIRCUIT_COLOR_SECURITY
 	build_path = /obj/machinery/scanner_gate
 	req_components = list(
 		/datum/stock_part/scanning_module = 3)

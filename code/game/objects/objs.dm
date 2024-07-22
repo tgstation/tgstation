@@ -199,7 +199,7 @@ GLOBAL_LIST_EMPTY(objects_by_id_tag)
 /obj/proc/plunger_act(obj/item/plunger/attacking_plunger, mob/living/user, reinforced)
 	return SEND_SIGNAL(src, COMSIG_PLUNGER_ACT, attacking_plunger, user, reinforced)
 
-// Should move all contained objects to it's location.
+// Should move all contained objects to its location.
 /obj/proc/dump_contents()
 	SHOULD_CALL_PARENT(FALSE)
 	CRASH("Unimplemented.")

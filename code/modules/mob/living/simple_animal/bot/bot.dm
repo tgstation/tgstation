@@ -95,8 +95,8 @@
 	var/turf/nearest_beacon_loc
 
 	///The type of data HUD the bot uses. Diagnostic by default.
-	var/data_hud_type = DATA_HUD_DIAGNOSTIC_BASIC
-	var/datum/atom_hud/data/bot_path/path_hud
+	var/data_hud_type = DATA_HUD_DIAGNOSTIC
+	var/datum/atom_hud/data/bot_path/private/path_hud
 	var/path_image_icon = 'icons/mob/silicon/aibots.dmi'
 	var/path_image_icon_state = "path_indicator"
 	var/path_image_color = COLOR_WHITE
@@ -165,7 +165,7 @@
 	. = ..()
 	GLOB.bots_list += src
 
-	path_hud = new /datum/atom_hud/data/bot_path()
+	path_hud = new /datum/atom_hud/data/bot_path/private()
 	for(var/hud in path_hud.hud_icons) // You get to see your own path
 		set_hud_image_active(hud, exclusive_hud = path_hud)
 
@@ -202,6 +202,7 @@
 	pa_system = new(src, automated_announcements = automated_announcements)
 	pa_system.Grant(src)
 	RegisterSignal(src, COMSIG_MOB_TRIED_ACCESS, PROC_REF(attempt_access))
+	ADD_TRAIT(src, TRAIT_SILICON_EMOTES_ALLOWED, INNATE_TRAIT)
 
 /mob/living/simple_animal/bot/Destroy()
 	GLOB.bots_list -= src
@@ -1147,7 +1148,7 @@ Pass a positive integer as an argument to override a bot's default speed.
 	path = newpath ? newpath : list()
 	if(!path_hud)
 		return
-	var/list/path_huds_watching_me = list(GLOB.huds[DATA_HUD_DIAGNOSTIC_ADVANCED])
+	var/list/path_huds_watching_me = list(GLOB.huds[DATA_HUD_DIAGNOSTIC], GLOB.huds[DATA_HUD_BOT_PATH])
 	if(path_hud)
 		path_huds_watching_me += path_hud
 	for(var/datum/atom_hud/hud as anything in path_huds_watching_me)

@@ -208,14 +208,9 @@
 	var/wound_falloff_tile
 	///How much we want to drop the embed_chance value, if we can embed, per tile, for falloff purposes
 	var/embed_falloff_tile
-	var/static/list/projectile_connections = list(
-		COMSIG_ATOM_ENTERED = PROC_REF(on_entered),
-		COMSIG_ATOM_ATTACK_HAND = PROC_REF(attempt_parry),
-	)
+	var/static/list/projectile_connections = list(COMSIG_ATOM_ENTERED = PROC_REF(on_entered))
 	/// If true directly targeted turfs can be hit
 	var/can_hit_turfs = FALSE
-	/// If this projectile has been parried before
-	var/parried = FALSE
 
 /obj/projectile/Initialize(mapload)
 	. = ..()
@@ -420,33 +415,6 @@
 		return
 	Impact(A)
 
-/// Signal proc for when a mob attempts to attack this projectile or the turf it's on with an empty hand.
-/obj/projectile/proc/attempt_parry(datum/source, mob/user, list/modifiers)
-	SIGNAL_HANDLER
-
-	if(parried)
-		return FALSE
-
-	if(SEND_SIGNAL(user, COMSIG_LIVING_PROJECTILE_PARRYING, src) & ALLOW_PARRY)
-		on_parry(user, modifiers)
-		return TRUE
-
-	return FALSE
-
-
-/// Called when a mob with PARRY_TRAIT clicks on this projectile or the tile its on, reflecting the projectile within 7 degrees and increasing the bullet's stats.
-/obj/projectile/proc/on_parry(mob/user, list/modifiers)
-	if(SEND_SIGNAL(user, COMSIG_LIVING_PROJECTILE_PARRIED, src) & INTERCEPT_PARRY_EFFECTS)
-		return
-
-	parried = TRUE
-	set_angle(dir2angle(user.dir) + rand(-3, 3))
-	firer = user
-	speed *= 0.8 // Go 20% faster when parried
-	damage *= 1.15 // And do 15% more damage
-	add_atom_colour(COLOR_RED_LIGHT, TEMPORARY_COLOUR_PRIORITY)
-
-
 /**
  * Called when the projectile hits something
  * This can either be from it bumping something,
@@ -528,7 +496,7 @@
 		return process_hit(T, select_target(T, target, bumped), bumped, hit_something) // try to hit something else
 	// at this point we are going to hit the thing
 	// in which case send signal to it
-	if (SEND_SIGNAL(target, COMSIG_PROJECTILE_PREHIT, args, src) & PROJECTILE_INTERRUPT_HIT)
+	if ((SEND_SIGNAL(target, COMSIG_PROJECTILE_PREHIT, args, src) & PROJECTILE_INTERRUPT_HIT) || (SEND_SIGNAL(src, COMSIG_PROJECTILE_SELF_PREHIT, args) & PROJECTILE_INTERRUPT_HIT))
 		qdel(src)
 		return BULLET_ACT_BLOCK
 	if(mode == PROJECTILE_PIERCE_HIT)
@@ -565,7 +533,7 @@
  */
 /obj/projectile/proc/select_target(turf/our_turf, atom/target, atom/bumped)
 	// 1. special bumped border object check
-	if((bumped?.flags_1 & ON_BORDER_1) && can_hit_target(bumped, original == bumped, FALSE, TRUE))
+	if((bumped?.flags_1 & ON_BORDER_1) && can_hit_target(bumped, original == bumped, TRUE, TRUE))
 		return bumped
 	// 2. original
 	if(can_hit_target(original, TRUE, FALSE, original == bumped))
@@ -776,7 +744,7 @@
 			required_moves = SSprojectiles.global_max_tick_moves
 			time_offset += overrun * speed
 		time_offset += MODULUS(elapsed_time_deciseconds, speed)
-
+	SEND_SIGNAL(src, COMSIG_PROJECTILE_BEFORE_MOVE)
 	for(var/i in 1 to required_moves)
 		pixel_move(pixel_speed_multiplier, FALSE)
 
@@ -816,7 +784,6 @@
 	fired = TRUE
 	play_fov_effect(starting, 6, "gunfire", dir = NORTH, angle = Angle)
 	SEND_SIGNAL(src, COMSIG_PROJECTILE_FIRE)
-	RegisterSignal(src, COMSIG_ATOM_ATTACK_HAND, PROC_REF(attempt_parry))
 	if(hitscan)
 		process_hitscan()
 		if(QDELETED(src))
@@ -936,21 +903,25 @@
 			trajectory.increment(-trajectory_multiplier)
 			qdel(src)
 			return
-		if(T.z != loc.z)
-			var/old = loc
-			before_z_change(loc, T)
-			trajectory_ignore_forcemove = TRUE
-			forceMove(T)
-			trajectory_ignore_forcemove = FALSE
-			after_z_change(old, loc)
-			if(!hitscanning)
-				pixel_x = trajectory.return_px()
-				pixel_y = trajectory.return_py()
-			forcemoved = TRUE
-			hitscan_last = loc
-		else if(T != loc)
+		if (T == loc)
+			continue
+		if (T.z == loc.z)
 			step_towards(src, T)
 			hitscan_last = loc
+			SEND_SIGNAL(src, COMSIG_PROJECTILE_PIXEL_STEP)
+			continue
+		var/old = loc
+		before_z_change(loc, T)
+		trajectory_ignore_forcemove = TRUE
+		forceMove(T)
+		trajectory_ignore_forcemove = FALSE
+		after_z_change(old, loc)
+		if(!hitscanning)
+			pixel_x = trajectory.return_px()
+			pixel_y = trajectory.return_py()
+		forcemoved = TRUE
+		hitscan_last = loc
+		SEND_SIGNAL(src, COMSIG_PROJECTILE_PIXEL_STEP)
 	if(QDELETED(src)) //deleted on last move
 		return
 	if(!hitscanning && !forcemoved)
