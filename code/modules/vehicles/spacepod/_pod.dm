@@ -85,10 +85,24 @@
 			continue
 		. += overlay
 
+/obj/vehicle/sealed/space_pod/mob_try_enter(mob/rider)
+	if(!istype(rider))
+		return FALSE
+	if(!rider.can_perform_action(src, NEED_HANDS)) // you need hands to use the door handle buddy
+		return ..()
+	if(length(occupants) < max_occupants)
+		return
+	rider.balloon_alert_to_viewers("kicking driver out!")
+	if(!do_after(rider, 5 SECONDS, src))
+		return
+	for(var/mob/living/driver as anything in return_drivers())
+		driver.Knockdown(1 SECONDS)
+		mob_exit(to_kick, randomstep = TRUE)
+
 /obj/vehicle/sealed/space_pod/mob_try_exit(mob/removing, mob/user, silent = FALSE, randomstep = FALSE)
 	if(user != removing)
 		return ..()
-	if(user.can_perform_action(src, NEED_HANDS)) // you need hands to use the door handle buddy
+	if(!HAS_TRAIT(removing, TRAIT_RESTRAINED)) // you need hands to use the door handle buddy
 		return ..()
 
 /obj/vehicle/sealed/space_pod/container_resist_act(mob/living/user)
