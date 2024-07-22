@@ -56906,10 +56906,6 @@
 /obj/structure/cable,
 /turf/open/floor/plating,
 /area/station/command/heads_quarters/ce)
-"tcP" = (
-/obj/structure/fireaxecabinet/batteringram/directional/west,
-/turf/open/space/basic,
-/area/space)
 "tda" = (
 /obj/structure/chair{
 	dir = 4
@@ -77970,7 +77966,7 @@ vXM
 vXM
 vXM
 vXM
-tcP
+vXM
 vXM
 vXM
 vXM
