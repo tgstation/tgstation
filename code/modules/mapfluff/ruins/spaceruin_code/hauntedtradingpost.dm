@@ -191,7 +191,7 @@ GLOBAL_LIST_EMPTY(tripwire_suicide_pact)
 			addtimer(CALLBACK(src, PROC_REF(tripwire_triggered), victim), reset_timer)
 
 /obj/machinery/button/door/invisible_tripwire/proc/tripwire_triggered(atom/victim)
-	INVOKE_ASYNC(src, PROC_REF(interact), victim)
+	INVOKE_ASYNC(src, TYPE_PROC_REF(/atom, interact), victim)
 	if(multiuse && uses_remaining != 1)
 		return
 	if(suicide_pact&& suicide_pact_id)
