@@ -21,7 +21,6 @@ type Data = {
   isAI: BooleanLike;
   is_photo: BooleanLike;
   categories: string[];
-  category: string;
   color_mode: string;
   num_copies: number;
   max_copies: number;
@@ -41,12 +40,17 @@ type Blank = {
 
 export const Photocopier = (props) => {
   const [selectedBlank, setSelectedBlank] = useState('');
+  const [selectedCategory, setSelectedCategory] = useState('');
 
   return (
-    <Window title="Photocopier" width={550} height={575}>
+    <Window
+      title="Photocopier"
+      width={selectedCategory ? 550 : 225}
+      height={575}
+    >
       <Window.Content>
         <Stack fill>
-          <Stack.Item basis="40%">
+          <Stack.Item basis={selectedCategory ? '40%' : '100%'}>
             <Stack fill vertical>
               <Stack.Item>
                 <Status selectedBlank={selectedBlank} />
@@ -55,20 +59,26 @@ export const Photocopier = (props) => {
                 <Actions selectedBlank={selectedBlank} />
               </Stack.Item>
               <Stack.Item grow>
-                <Categories />
-              </Stack.Item>
-            </Stack>
-          </Stack.Item>
-          <Stack.Item basis="60%">
-            <Stack fill vertical>
-              <Stack.Item grow>
-                <Blanks
-                  selectedBlank={selectedBlank}
-                  setSelectedBlank={setSelectedBlank}
+                <Categories
+                  selectedCategory={selectedCategory}
+                  setSelectedCategory={setSelectedCategory}
                 />
               </Stack.Item>
             </Stack>
           </Stack.Item>
+          {selectedCategory && (
+            <Stack.Item basis="60%">
+              <Stack fill vertical>
+                <Stack.Item grow>
+                  <Blanks
+                    selectedCategory={selectedCategory}
+                    selectedBlank={selectedBlank}
+                    setSelectedBlank={setSelectedBlank}
+                  />
+                </Stack.Item>
+              </Stack>
+            </Stack.Item>
+          )}
         </Stack>
       </Window.Content>
     </Window>
@@ -276,23 +286,35 @@ const Actions = ({ selectedBlank }) => {
   );
 };
 
-const Categories = (props) => {
+const Categories = ({ selectedCategory, setSelectedCategory }) => {
   const { act, data } = useBackend<Data>();
   const { categories } = data;
 
   return (
-    <Section fill scrollable title="Categories">
+    <Section
+      fill
+      scrollable
+      title="Categories"
+      buttons={
+        <Button
+          icon="times"
+          tooltip="Close category"
+          disabled={!selectedCategory}
+          onClick={() => {
+            setSelectedCategory('');
+          }}
+        />
+      }
+    >
       <Stack fill vertical>
         <Button
           fluid
           icon="chevron-right"
           color="transparent"
-          selected={!data.category}
-          onClick={() =>
-            act('choose_category', {
-              category: '',
-            })
-          }
+          selected={selectedCategory === 'All Blanks'}
+          onClick={() => {
+            setSelectedCategory('All Blanks');
+          }}
         >
           All Blanks
         </Button>
@@ -302,12 +324,10 @@ const Categories = (props) => {
             key={category}
             icon="chevron-right"
             color="transparent"
-            selected={data.category === category}
-            onClick={() =>
-              act('choose_category', {
-                category: category,
-              })
-            }
+            selected={selectedCategory === category}
+            onClick={() => {
+              setSelectedCategory(category);
+            }}
           >
             {category}
           </Button>
@@ -317,26 +337,25 @@ const Categories = (props) => {
   );
 };
 
-const Blanks = ({ selectedBlank, setSelectedBlank }) => {
+const Blanks = ({ selectedCategory, selectedBlank, setSelectedBlank }) => {
   const { act, data } = useBackend<Data>();
-  const { blanks, category } = data;
+  const { blanks } = data;
 
   const [searchText, setSearchText] = useState('');
   const sortedBlanks = sortBy(blanks || [], (blank) => blank.name);
-  const selectedCategory = category || null;
   const visibleBlanks = searchText
     ? sortedBlanks.filter((blank) =>
         blank.name.toLowerCase().includes(searchText.toLowerCase()),
       )
-    : selectedCategory
-      ? sortedBlanks.filter((blank) => blank.category === selectedCategory)
-      : sortedBlanks;
+    : selectedCategory === 'All Blanks'
+      ? sortedBlanks
+      : sortedBlanks.filter((blank) => blank.category === selectedCategory);
 
   return (
     <Section
       fill
       scrollable
-      title={data.category || 'All Blanks'}
+      title={selectedCategory}
       buttons={
         <Input
           width={8.75}
