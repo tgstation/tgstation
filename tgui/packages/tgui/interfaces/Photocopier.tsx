@@ -46,7 +46,7 @@ export const Photocopier = (props) => {
     <Window
       title="Photocopier"
       width={selectedCategory ? 550 : 225}
-      height={575}
+      height={525}
     >
       <Window.Content>
         <Stack fill>
@@ -183,22 +183,23 @@ const Actions = ({ selectedBlank }) => {
       <Stack fill vertical textAlign="center">
         <Stack.Item>
           <Stack align="center" textAlign="left">
-            <Stack.Item width="50%" color="grey">
+            <Stack.Item grow color="label">
               Copies:
             </Stack.Item>
-            <Slider
-              animated
-              width="50%"
-              minValue={1}
-              value={num_copies}
-              maxValue={max_copies}
-              stepPixelSize={10}
-              onChange={(e, value) =>
-                act('set_copies', {
-                  num_copies: value,
-                })
-              }
-            />
+            <Stack.Item grow>
+              <Slider
+                animated
+                minValue={1}
+                value={num_copies}
+                maxValue={max_copies}
+                stepPixelSize={10}
+                onChange={(e, value) =>
+                  act('set_copies', {
+                    num_copies: value,
+                  })
+                }
+              />
+            </Stack.Item>
           </Stack>
         </Stack.Item>
         {!!isAI && (
