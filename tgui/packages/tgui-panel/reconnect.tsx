@@ -19,7 +19,6 @@ export const ReconnectButton = () => {
     <>
       <Button
         color="white"
-        icon="history"
         onClick={() => {
           Byond.command('.reconnect');
         }}
