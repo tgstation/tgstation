@@ -319,14 +319,6 @@ export const FishAnalyzer = (props) => {
   );
 };
 
-function DisectName(input: string): string {
-  if (input.length > 12) {
-    const firstSpace = input.indexOf(' ');
-
-    if (!firstSpace) {
-      return input.substring(0, 12);
-    }
-    return input.substring(0, firstSpace);
-  }
-  return input;
+function dissectName(input: string): string {
+  return input.split(' ')[0].slice(0, 12);
 }
