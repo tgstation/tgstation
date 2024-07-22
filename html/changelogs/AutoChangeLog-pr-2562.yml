@@ -1,4 +1,0 @@
-author: "Melbert"
-delete-after: True
-changes:
-  - qol: "Some alerts, such as Fleshmend's, show their remaining duration on their icon."

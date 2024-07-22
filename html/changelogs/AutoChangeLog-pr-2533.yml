@@ -1,5 +1,0 @@
-author: "Syndie Kate"
-delete-after: True
-changes:
-  - qol: "NIFs can now be acquired without asking admins."
-  - qol: "The NIF catalogue is now downloadable.\n:cl:"

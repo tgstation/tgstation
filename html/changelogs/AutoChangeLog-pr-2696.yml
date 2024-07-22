@@ -1,4 +1,0 @@
-author: "flleeppyy"
-delete-after: True
-changes:
-  - server: "lobby music can now *actually* be added to `config/title_music/sounds`, check the README.md in the title_music folder."
