@@ -42,9 +42,10 @@
 
 /obj/reality_tear/proc/reality_collapse()
 	playsound(loc, 'sound/effects/supermatter.ogg', 200, vary = TRUE, extrarange = 3, falloff_exponent = 1, frequency = 0.5, pressure_affected = FALSE, ignore_walls = TRUE, falloff_distance = 7)
-	var/obj/singularity/bagulo = new(loc)
-	bagulo.expand(STAGE_TWO)
-	bagulo.energy = 400
+	if(SSmapping.level_trait(z, ZTRAIT_STATION))
+		var/obj/singularity/bagulo = new(loc)
+		bagulo.expand(STAGE_TWO)
+		bagulo.energy = 400
 	qdel(src)
 
 /obj/reality_tear/attack_tk(mob/user)
