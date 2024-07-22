@@ -1,7 +1,7 @@
-import { sortBy } from 'common/collections';
 import { useState } from 'react';
 
 import { BooleanLike } from '../../common/react';
+import { createSearch } from 'common/string';
 import { useBackend } from '../backend';
 import {
   Button,
@@ -85,7 +85,7 @@ export const Photocopier = (props) => {
   );
 };
 
-const Status = ({ selectedBlank }) => {
+const Status = ({ selectedBlank }: { selectedBlank: string | null }) => {
   const { act, data } = useBackend<Data>();
   const {
     has_toner,
@@ -166,7 +166,7 @@ const Status = ({ selectedBlank }) => {
   );
 };
 
-const Actions = ({ selectedBlank }) => {
+const Actions = ({ selectedBlank }: { selectedBlank: string | null }) => {
   const { act, data } = useBackend<Data>();
   const {
     has_item,
@@ -238,7 +238,7 @@ const Actions = ({ selectedBlank }) => {
             </Stack.Item>
           </Stack>
         </Stack.Item>
-        {!!has_item && is_photo && (
+        {!!has_item && !!is_photo && (
           <Stack.Item>
             <Stack>
               <Stack.Item grow>
@@ -287,7 +287,13 @@ const Actions = ({ selectedBlank }) => {
   );
 };
 
-const Categories = ({ selectedCategory, setSelectedCategory }) => {
+const Categories = ({
+  selectedCategory,
+  setSelectedCategory,
+}: {
+  selectedCategory: string | null;
+  setSelectedCategory: (category: string) => void;
+}) => {
   const { act, data } = useBackend<Data>();
   const { categories } = data;
 
@@ -307,47 +313,60 @@ const Categories = ({ selectedCategory, setSelectedCategory }) => {
         />
       }
     >
-      <Stack fill vertical>
-        <Button
-          fluid
-          icon="chevron-right"
-          color="transparent"
-          selected={selectedCategory === 'All Blanks'}
-          onClick={() => {
-            setSelectedCategory('All Blanks');
-          }}
-        >
-          All Blanks
-        </Button>
-        {categories.map((category) => (
+      <Stack fill vertical zebra>
+        <Stack.Item>
           <Button
             fluid
-            key={category}
             icon="chevron-right"
             color="transparent"
-            selected={selectedCategory === category}
+            selected={selectedCategory === 'All Blanks'}
             onClick={() => {
-              setSelectedCategory(category);
+              setSelectedCategory('All Blanks');
             }}
           >
-            {category}
+            All Blanks
           </Button>
+        </Stack.Item>
+        {categories.map((category) => (
+          <Stack.Item mt={0.25}>
+            <Button
+              fluid
+              key={category}
+              icon="chevron-right"
+              color="transparent"
+              selected={selectedCategory === category}
+              onClick={() => {
+                setSelectedCategory(category);
+              }}
+            >
+              {category}
+            </Button>
+          </Stack.Item>
         ))}
       </Stack>
     </Section>
   );
 };
 
-const Blanks = ({ selectedCategory, selectedBlank, setSelectedBlank }) => {
+const Blanks = ({
+  selectedCategory,
+  selectedBlank,
+  setSelectedBlank,
+}: {
+  selectedCategory: string | null;
+  selectedBlank: string | null;
+  setSelectedBlank: (blank: string) => void;
+}) => {
   const { act, data } = useBackend<Data>();
   const { blanks } = data;
 
   const [searchText, setSearchText] = useState('');
-  const sortedBlanks = sortBy(blanks || [], (blank) => blank.name);
+  const search = createSearch<Blank>(searchText, (blank: Blank) => blank.name);
+  const sortedBlanks = (blanks || []).sort((a, b) =>
+    a.name.localeCompare(b.name),
+  );
   const visibleBlanks = searchText
-    ? sortedBlanks.filter((blank) =>
-        blank.name.toLowerCase().includes(searchText.toLowerCase()),
-      )
+    ? sortedBlanks.filter(search)
     : selectedCategory === 'All Blanks'
       ? sortedBlanks
       : sortedBlanks.filter((blank) => blank.category === selectedCategory);
@@ -366,20 +385,21 @@ const Blanks = ({ selectedCategory, selectedBlank, setSelectedBlank }) => {
         />
       }
     >
-      {visibleBlanks.map((blank) => (
-        <Stack.Item key={blank.code} width="100%">
-          <Button
-            fluid
-            ellipsis
-            mb={0.5}
-            color="transparent"
-            selected={blank.code === selectedBlank}
-            onClick={() => setSelectedBlank(blank.code)}
-          >
-            {blank.name}
-          </Button>
-        </Stack.Item>
-      ))}
+      <Stack fill vertical zebra>
+        {visibleBlanks.map((blank) => (
+          <Stack.Item key={blank.code} mt={0.5}>
+            <Button
+              fluid
+              ellipsis
+              color="transparent"
+              selected={blank.code === selectedBlank}
+              onClick={() => setSelectedBlank(blank.code)}
+            >
+              {blank.name}
+            </Button>
+          </Stack.Item>
+        ))}
+      </Stack>
     </Section>
   );
 };
