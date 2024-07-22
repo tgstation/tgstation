@@ -67,6 +67,7 @@
 			qdel(src)
 		return FALSE
 	var/mob/living/released_mob = held_mob
+	SEND_SIGNAL(released_mob, COMSIG_MOB_DROPPED, loc, src) // monkestation edit: COMSIG_MOB_DROPPED
 	held_mob = null // stops the held mob from being release()'d twice.
 	if(isliving(loc))
 		var/mob/living/L = loc

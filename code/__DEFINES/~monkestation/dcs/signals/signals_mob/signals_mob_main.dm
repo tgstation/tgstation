@@ -25,3 +25,6 @@
 #define COMSIG_MOBSTACKER_DESTROY "mobstack_destroy_stack"
 
 #define COMSIG_SLIME_REGEN_CALC "slime_regen_calc"
+
+#define COMSIG_MOB_PICKED_UP "mob_picked_up"
+#define COMSIG_MOB_DROPPED "mob_dropped"

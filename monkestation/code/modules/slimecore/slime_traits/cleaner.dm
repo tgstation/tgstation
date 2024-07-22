@@ -53,6 +53,14 @@
 		/obj/item/popsicle_stick,
 		/obj/item/broken_bottle,
 	))
+	/// Signals where we'll reset the cleaning target whenever sent.
+	var/static/list/reset_signals = list(
+		COMSIG_ATOM_PULLED,
+		COMSIG_ATOM_SUCKED,
+		COMSIG_MOB_PICKED_UP,
+		COMSIG_MOB_DROPPED,
+		SIGNAL_ADDTRAIT(VACPACK_THROW),
+	)
 
 /datum/slime_trait/cleaner/on_add(mob/living/basic/slime/parent)
 	. = ..()
@@ -67,13 +75,16 @@
 
 	ADD_TRAIT(parent, TRAIT_SLIME_DUST_IMMUNE, "trait")
 	parent.recompile_ai_tree()
+	RegisterSignals(parent, reset_signals, PROC_REF(reset_target))
 
 /datum/slime_trait/cleaner/on_remove(mob/living/basic/slime/parent)
 	. = ..()
-
+	UnregisterSignal(parent, reset_signals)
 	parent.slime_flags &= ~(CLEANER_SLIME | PASSIVE_SLIME)
-
 	parent.recompile_ai_tree()
-
 	qdel(parent.GetComponent(/datum/component/pollution_scrubber))
 	REMOVE_TRAIT(parent, TRAIT_SLIME_DUST_IMMUNE, "trait")
+
+/datum/slime_trait/cleaner/proc/reset_target(datum/source)
+	SIGNAL_HANDLER
+	host.ai_controller.clear_blackboard_key(BB_CLEAN_TARGET)

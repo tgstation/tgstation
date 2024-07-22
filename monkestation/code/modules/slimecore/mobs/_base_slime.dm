@@ -232,6 +232,7 @@
 		new_planning_subtree |= add_or_replace_tree(/datum/ai_planning_subtree/flee_target)
 
 	if(slime_flags & CLEANER_SLIME)
+		ai_controller.clear_blackboard_key(BB_CLEAN_TARGET)
 		new_planning_subtree |= add_or_replace_tree(/datum/ai_planning_subtree/cleaning_subtree_slime)
 
 	if(!(slime_flags & PASSIVE_SLIME))
