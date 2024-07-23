@@ -198,9 +198,11 @@
 	return ..()
 
 /obj/item/melee/parsnip_sabre/on_exit_storage(datum/storage/container)
+	. = ..()
 	playsound(container.parent, 'sound/items/unsheath.ogg', 25, TRUE)
 
 /obj/item/melee/parsnip_sabre/on_enter_storage(datum/storage/container)
+	. = ..()
 	playsound(container.parent, 'sound/items/sheath.ogg', 25, TRUE)
 
 /obj/item/melee/beesword
