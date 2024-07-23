@@ -41,7 +41,7 @@
 	var/obj/projectile/bullet_fired = initial(ballistic_ammo.projectile_type)
 	var/expected_bullet_damage = round(dummy_gun.projectile_damage_multiplier * initial(bullet_fired.damage) * (1 - expected_bullet_armor / 100), DAMAGE_PRECISION)
 
-	var/obj/item/mecha_parts/mecha_equipment/left_arm_equipment = demo_mech.equip_by_category[MECHA_L_ARM]
+	var/obj/item/mecha_parts/mecha_equipment/left_arm_equipment = demo_mech.equip_by_category[MECHA_L_ARM][1]
 	TEST_ASSERT_NOTNULL(left_arm_equipment, "[demo_mech] spawned without any equipment in their left arm slot.")
 
 	// Now it's time to actually beat the heck out of the mech to see if it takes damage correctly.
@@ -73,7 +73,7 @@
 	check_integrity(left_arm_equipment, pre_bullet_arm_integrity, expected_bullet_damage, "shot with a bullet")
 
 	// Additional check: The right arm of the mech should have taken no damage by this point.
-	var/obj/item/mecha_parts/mecha_equipment/right_arm_equipment = demo_mech.equip_by_category[MECHA_R_ARM]
+	var/obj/item/mecha_parts/mecha_equipment/right_arm_equipment = demo_mech.equip_by_category[MECHA_R_ARM][1]
 	TEST_ASSERT_NOTNULL(right_arm_equipment, "[demo_mech] spawned without any equipment in their right arm slot.")
 	TEST_ASSERT_EQUAL(right_arm_equipment.get_integrity(), right_arm_equipment.max_integrity, "[demo_mech] somehow took damage to its right arm, despite not being targeted.")
 
