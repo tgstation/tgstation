@@ -94,8 +94,8 @@
 	inhand_icon_state = "smartgun"
 	accepted_magazine_type = /obj/item/ammo_box/magazine/smartgun
 	burst_size = 3
-	spread = 25
-	dual_wield_spread = 25
+	spread = 40
+	dual_wield_spread = 30
 	actions_types = list()
 	bolt_type = BOLT_TYPE_LOCKING
 	can_suppress = FALSE
