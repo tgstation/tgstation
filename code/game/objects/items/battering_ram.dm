@@ -59,7 +59,7 @@
 	if(swung)
 		balloon_alert(user, "swinging!")
 		return TRUE
-	if(!isturf(A))
+	if(!isturf(A) && !istype(A, /obj/structure/fireaxecabinet/batteringram))
 		swung = TRUE
 		visible_message(span_warning("[user] swings [src] back for a blow into [A]!"))
 		playsound(user, 'sound/weapons/throw.ogg', 50, TRUE)
