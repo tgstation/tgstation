@@ -231,9 +231,9 @@
 		ui.open()
 
 /obj/machinery/big_manipulator/ui_data(mob/user)
-  var/list/data = list()
-  data["active"] = on
-  return data
+	var/list/data = list()
+	data["active"] = on
+	return data
 
 /obj/machinery/big_manipulator/ui_act(action, params, datum/tgui/ui)
 	. = ..()
