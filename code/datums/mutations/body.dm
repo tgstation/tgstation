@@ -292,8 +292,6 @@
 	owner.monkeyize()
 
 /datum/mutation/human/race/on_losing(mob/living/carbon/human/owner)
-	if(owner.stat == DEAD)
-		return
 	. = ..()
 	if(.)
 		return
@@ -302,6 +300,7 @@
 
 	owner.fully_replace_character_name(null, original_name)
 	owner.humanize(original_species)
+	original_species = null
 
 /datum/mutation/human/glow
 	name = "Glowy"
