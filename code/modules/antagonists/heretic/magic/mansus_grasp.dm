@@ -10,7 +10,7 @@
 	school = SCHOOL_EVOCATION
 	cooldown_time = 10 SECONDS
 
-	invocation = "R'CH T'H TR'TH!"
+	invocation = "Ad verum per aspera!"
 	invocation_type = INVOCATION_SHOUT
 	// Mimes can cast it. Chaplains can cast it. Anyone can cast it, so long as they have a hand.
 	spell_requirements = SPELL_CASTABLE_WITHOUT_INVOCATION
@@ -38,11 +38,35 @@
 
 	var/mob/living/living_hit = victim
 	living_hit.apply_damage(10, BRUTE, wound_bonus = CANT_WOUND)
-	if(iscarbon(victim))
-		var/mob/living/carbon/carbon_hit = victim
-		carbon_hit.adjust_timed_status_effect(4 SECONDS, /datum/status_effect/speech/slurring/heretic)
-		carbon_hit.AdjustKnockdown(5 SECONDS)
-		carbon_hit.adjustStaminaLoss(80)
+	if(!iscarbon(victim))
+		return TRUE
+
+	var/mob/living/carbon/carbon_hit = victim
+
+	// Cultists are momentarily disoriented by the stunning aura. Enough for both parties to go 'oh shit' but only a mild combat ability.
+	// Cultists have an identical effect on their stun hand. The heretic's faster spell charge time is made up for by their lack of teammates.
+	if(IS_CULTIST(carbon_hit))
+		carbon_hit.AdjustKnockdown(0.5 SECONDS)
+		carbon_hit.adjust_confusion_up_to(1.5 SECONDS, 3 SECONDS)
+		carbon_hit.adjust_dizzy_up_to(1.5 SECONDS, 3 SECONDS)
+		ADD_TRAIT(carbon_hit, TRAIT_NO_SIDE_KICK, REF(src)) // We don't want this to be a good stunning tool, just minor disorientation
+		addtimer(TRAIT_CALLBACK_REMOVE(carbon_hit, TRAIT_NO_SIDE_KICK, REF(src)), 1 SECONDS)
+
+		var/old_color = carbon_hit.color
+		carbon_hit.color = COLOR_CULT_RED
+		animate(carbon_hit, color = old_color, time = 4 SECONDS, easing = EASE_IN)
+		carbon_hit.mob_light(range = 1.5, power = 2.5, color = COLOR_CULT_RED, duration = 0.5 SECONDS)
+		playsound(carbon_hit, 'sound/magic/curse.ogg', 50, TRUE)
+
+		to_chat(caster, span_warning("An unholy force intervenes as you grasp [carbon_hit], absorbing most of the effects!"))
+		to_chat(carbon_hit, span_warning("As [caster] grasps you with eldritch forces, your blood magic absorbs most of the effects!"))
+		carbon_hit.balloon_alert_to_viewers("absorbed!")
+		return TRUE
+
+	carbon_hit.adjust_timed_status_effect(4 SECONDS, /datum/status_effect/speech/slurring/heretic)
+	carbon_hit.AdjustKnockdown(5 SECONDS)
+	carbon_hit.adjustStaminaLoss(80)
+	carbon_hit.apply_status_effect(/datum/status_effect/next_shove_stuns)
 
 	return TRUE
 

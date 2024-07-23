@@ -1,4 +1,0 @@
-author: "MGOOOOOO"
-delete-after: True
-changes:
-  - bugfix: "Missing legs no longer slow you down in non-gravity environments."

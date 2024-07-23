@@ -1,5 +1,0 @@
-author: "SyncIt21"
-delete-after: True
-changes:
-  - refactor: "Mouse drag & drop attack chain has been refactored. Report any bugs on GitHub"
-  - bugfix: "You cannot close the cryo tube on yourself with Alt click like before"

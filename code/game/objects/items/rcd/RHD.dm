@@ -89,20 +89,22 @@
 	silo_mats = null
 	return ..()
 
-/obj/item/construction/pre_attack(atom/target, mob/user, params)
-	if(istype(target, /obj/item/rcd_upgrade))
-		install_upgrade(target, user)
-		return TRUE
-	if(insert_matter(target, user))
-		return TRUE
+/obj/item/construction/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
+	SHOULD_CALL_PARENT(TRUE)
+	if(istype(interacting_with, /obj/item/rcd_upgrade))
+		install_upgrade(interacting_with, user)
+		return ITEM_INTERACT_SUCCESS
+	if(insert_matter(interacting_with, user))
+		return ITEM_INTERACT_SUCCESS
 	return ..()
 
-/obj/item/construction/attackby(obj/item/item, mob/user, params)
-	if(istype(item, /obj/item/rcd_upgrade))
-		install_upgrade(item, user)
-		return TRUE
-	if(insert_matter(item, user))
-		return TRUE
+/obj/item/construction/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	SHOULD_CALL_PARENT(TRUE)
+	if(istype(tool, /obj/item/rcd_upgrade))
+		install_upgrade(tool, user)
+		return ITEM_INTERACT_SUCCESS
+	if(insert_matter(tool, user))
+		return ITEM_INTERACT_SUCCESS
 	return ..()
 
 /// Installs an upgrade into the RCD checking if it is already installed, or if it is a banned upgrade

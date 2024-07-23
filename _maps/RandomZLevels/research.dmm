@@ -76,8 +76,8 @@
 	},
 /obj/structure/frame/machine,
 /obj/item/circuitboard/machine/smes,
-/obj/item/stock_parts/cell/high,
-/obj/item/stock_parts/cell/high/empty,
+/obj/item/stock_parts/power_store/cell/high,
+/obj/item/stock_parts/power_store/cell/high/empty,
 /turf/open/floor/plating,
 /area/awaymission/research/interior/engineering)
 "aw" = (
@@ -96,12 +96,12 @@
 /area/awaymission/research/interior/engineering)
 "az" = (
 /obj/effect/gibspawner/human,
-/obj/item/stock_parts/cell/high,
+/obj/item/stock_parts/power_store/cell/high,
 /turf/open/floor/plating,
 /area/awaymission/research/interior/engineering)
 "aA" = (
 /obj/item/stack/sheet/plasteel,
-/obj/item/stock_parts/cell/high,
+/obj/item/stock_parts/power_store/cell/high,
 /turf/open/floor/plating,
 /area/awaymission/research/interior/engineering)
 "aB" = (
@@ -125,11 +125,11 @@
 "aF" = (
 /obj/item/stack/rods,
 /obj/item/stack/sheet/iron,
-/obj/item/stock_parts/cell/high/empty,
+/obj/item/stock_parts/power_store/cell/high/empty,
 /turf/open/floor/plating,
 /area/awaymission/research/interior/engineering)
 "aG" = (
-/obj/item/stock_parts/cell/high,
+/obj/item/stock_parts/power_store/cell/high,
 /turf/open/floor/plating,
 /area/awaymission/research/interior/engineering)
 "aH" = (
@@ -161,7 +161,7 @@
 /turf/open/floor/mineral/plastitanium/red,
 /area/awaymission/research/interior/engineering)
 "aM" = (
-/obj/item/stock_parts/cell/high/empty,
+/obj/item/stock_parts/power_store/cell/high/empty,
 /turf/open/floor/plating,
 /area/awaymission/research/interior/engineering)
 "aO" = (
@@ -2461,9 +2461,7 @@
 /turf/open/floor/wood,
 /area/awaymission/research/interior/dorm)
 "lN" = (
-/obj/structure/window/reinforced/spawner/directional/north{
-	layer = 2.9
-	},
+/obj/structure/window/reinforced/spawner/directional/north,
 /obj/machinery/airalarm/directional/east,
 /obj/effect/turf_decal/siding/yellow{
 	dir = 4
@@ -2707,25 +2705,19 @@
 "mK" = (
 /obj/structure/flora/bush/flowers_br/style_random,
 /obj/structure/window/reinforced/spawner/directional/south,
-/obj/structure/window/reinforced/spawner/directional/north{
-	layer = 2.9
-	},
+/obj/structure/window/reinforced/spawner/directional/north,
 /turf/open/floor/grass,
 /area/awaymission/research/interior/escapepods)
 "mL" = (
 /obj/structure/flora/bush/ferny/style_random,
 /obj/structure/window/reinforced/spawner/directional/south,
-/obj/structure/window/reinforced/spawner/directional/north{
-	layer = 2.9
-	},
+/obj/structure/window/reinforced/spawner/directional/north,
 /turf/open/floor/grass,
 /area/awaymission/research/interior/escapepods)
 "mM" = (
 /obj/structure/flora/bush/grassy/style_random,
 /obj/structure/window/reinforced/spawner/directional/south,
-/obj/structure/window/reinforced/spawner/directional/north{
-	layer = 2.9
-	},
+/obj/structure/window/reinforced/spawner/directional/north,
 /turf/open/floor/grass,
 /area/awaymission/research/interior/escapepods)
 "mO" = (

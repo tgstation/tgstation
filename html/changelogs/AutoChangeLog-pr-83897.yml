@@ -1,4 +1,0 @@
-author: "ShizCalev"
-delete-after: True
-changes:
-  - bugfix: "Fixed a bug with station traits being added to modify weights for events that couldn't actually occur on the current map!"

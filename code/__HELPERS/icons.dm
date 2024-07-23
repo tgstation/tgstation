@@ -420,6 +420,10 @@ world
 				} \
 				current_layer = base_layer + appearance.layer + current_layer / 1000; \
 			} \
+			/* If we are using topdown rendering, chop that part off so things layer together as expected */ \
+			if((current_layer >= TOPDOWN_LAYER && current_layer < EFFECTS_LAYER) || current_layer > TOPDOWN_LAYER + EFFECTS_LAYER) { \
+				current_layer -= TOPDOWN_LAYER; \
+			} \
 			for (var/index_to_compare_to in 1 to layers.len) { \
 				var/compare_to = layers[index_to_compare_to]; \
 				if (current_layer < layers[compare_to]) { \
@@ -431,9 +435,10 @@ world
 		}
 
 	var/static/icon/flat_template = icon('icons/blanks/32x32.dmi', "nothing")
+	var/icon/flat = icon(flat_template)
 
 	if(!appearance || appearance.alpha <= 0)
-		return icon(flat_template)
+		return flat
 
 	if(start)
 		if(!defdir)
@@ -474,10 +479,15 @@ world
 	if(!base_icon_dir)
 		base_icon_dir = curdir
 
+	// Expand our canvas to fit if we're too big
+	if(render_icon)
+		var/icon/active_icon = icon(curicon)
+		if(active_icon.Width() != 32 || active_icon.Height() != 32)
+			flat.Scale(active_icon.Width(), active_icon.Height())
+
 	var/curblend = appearance.blend_mode || defblend
 
 	if(appearance.overlays.len || appearance.underlays.len)
-		var/icon/flat = icon(flat_template)
 		// Layers will be a sorted list of icons/overlays, based on the order in which they are displayed
 		var/list/layers = list()
 		var/image/copy
@@ -1125,7 +1135,7 @@ GLOBAL_LIST_EMPTY(transformation_animation_objects)
 	if((x_dimension == world.icon_size) && (y_dimension == world.icon_size))
 		return image_to_center
 
-	//Offset the image so that it's bottom left corner is shifted this many pixels
+	//Offset the image so that its bottom left corner is shifted this many pixels
 	//This makes it infinitely easier to draw larger inhands/images larger than world.iconsize
 	//but still use them in game
 	var/x_offset = -((x_dimension / world.icon_size) - 1) * (world.icon_size * 0.5)

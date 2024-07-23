@@ -1,7 +1,6 @@
 
 /datum/surgery/amputation
 	name = "Amputation"
-	requires_bodypart_type = NONE
 	surgery_flags = SURGERY_REQUIRE_RESTING | SURGERY_REQUIRE_LIMB | SURGERY_MORBID_CURIOSITY
 	possible_locs = list(
 		BODY_ZONE_R_ARM,
@@ -19,6 +18,15 @@
 		/datum/surgery_step/sever_limb,
 	)
 
+/datum/surgery/amputation/mechanic
+	name = "Disassemble"
+	requires_bodypart_type = BODYTYPE_ROBOTIC
+	steps = list(
+		/datum/surgery_step/mechanic_open,
+		/datum/surgery_step/open_hatch,
+		/datum/surgery_step/sever_limb/mechanic, //The benefit of being robotic; people can pull you apart in an instant! Wait, that's not a benefit...
+	)
+
 /datum/surgery/amputation/can_start(mob/user, mob/living/patient)
 	if(HAS_TRAIT(patient, TRAIT_NODISMEMBER))
 		return FALSE
@@ -34,10 +42,25 @@
 		/obj/item/melee/arm_blade = 80,
 		/obj/item/fireaxe = 50,
 		/obj/item/hatchet = 40,
-		/obj/item/knife/butcher = 25)
+		/obj/item/knife/butcher = 25,
+	)
 	time = 64
 	preop_sound = 'sound/surgery/scalpel1.ogg'
 	success_sound = 'sound/surgery/organ2.ogg'
+	surgery_effects_mood = TRUE
+
+/datum/surgery_step/sever_limb/mechanic
+	name = "detach limb (wrench or crowbar)"
+	implements = list(
+		/obj/item/shovel/giant_wrench = 300,
+		TOOL_WRENCH = 100,
+		TOOL_CROWBAR = 100,
+		TOOL_SCALPEL = 50,
+		TOOL_SAW = 50,
+	)
+	time = 20 //WAIT I NEED THAT!!
+	preop_sound = 'sound/items/ratchet.ogg'
+	preop_sound = 'sound/machines/doorclick.ogg'
 
 /datum/surgery_step/sever_limb/preop(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
 	display_results(
@@ -47,7 +70,7 @@
 		span_notice("[user] begins to sever [target]'s [target.parse_zone_with_bodypart(target_zone)]!"),
 		span_notice("[user] begins to sever [target]'s [target.parse_zone_with_bodypart(target_zone)]!"),
 	)
-	display_pain(target, "You feel a gruesome pain in your [parse_zone(target_zone)]'s joint!", mood_event_type = /datum/mood_event/surgery)
+	display_pain(target, "You feel a gruesome pain in your [parse_zone(target_zone)]'s joint!")
 
 
 /datum/surgery_step/sever_limb/success(mob/user, mob/living/carbon/human/target, target_zone, obj/item/tool, datum/surgery/surgery, default_display_results = FALSE)
@@ -58,7 +81,7 @@
 		span_notice("[user] severs [target]'s [target.parse_zone_with_bodypart(target_zone)]!"),
 		span_notice("[user] severs [target]'s [target.parse_zone_with_bodypart(target_zone)]!"),
 	)
-	display_pain(target, "You can no longer feel your severed [target.parse_zone_with_bodypart(target_zone)]!", mood_event_type = /datum/mood_event/surgery/success)
+	display_pain(target, "You can no longer feel your severed [target.parse_zone_with_bodypart(target_zone)]!")
 
 	if(HAS_MIND_TRAIT(user, TRAIT_MORBID) && ishuman(user))
 		var/mob/living/carbon/human/morbid_weirdo = user
@@ -67,8 +90,4 @@
 	if(surgery.operated_bodypart)
 		var/obj/item/bodypart/target_limb = surgery.operated_bodypart
 		target_limb.drop_limb()
-	return ..()
-
-/datum/surgery_step/sever_limb/failure(mob/user, mob/living/target, target_zone, obj/item/tool, datum/surgery/surgery, fail_prob)
-	display_pain(target, mood_event_type = /datum/mood_event/surgery/failure)
 	return ..()

@@ -8,13 +8,13 @@
 	reagent_flags = OPENCONTAINER
 	fill_icon_state = "maunafilling"
 	fill_icon_thresholds = list(25)
-	var/obj/item/stock_parts/cell/cell
+	var/obj/item/stock_parts/power_store/cell
 	var/open = FALSE
 	var/on = FALSE
 
 /obj/item/reagent_containers/cup/maunamug/Initialize(mapload, vol)
 	. = ..()
-	cell = new /obj/item/stock_parts/cell(src)
+	cell = new /obj/item/stock_parts/power_store/cell(src)
 
 /obj/item/reagent_containers/cup/maunamug/get_cell()
 	return cell
@@ -75,7 +75,7 @@
 
 /obj/item/reagent_containers/cup/maunamug/attackby(obj/item/I, mob/user, params)
 	add_fingerprint(user)
-	if(!istype(I, /obj/item/stock_parts/cell))
+	if(!istype(I, /obj/item/stock_parts/power_store/cell))
 		return ..()
 	if(!open)
 		to_chat(user, span_warning("The battery case must be open to insert a power cell!"))

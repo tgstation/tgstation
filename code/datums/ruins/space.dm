@@ -508,3 +508,8 @@
 	name = "Space-Ruin Decommissioned Garbage Truck NX4"
 	description = "An NX-760 interstellar transport barge. At the end of their life cycle, they are often filled with trash and launched into unexplored space to become someone else's problem. This one is full of commercial trash, and spiders."
 
+/datum/map_template/ruin/space/hauntedtradingpost
+	id = "hauntedtradingpost"
+	suffix = "hauntedtradingpost.dmm"
+	name = "Space-Ruin Donk Co. Interstellar Trading Post 6016"
+	description = "A small station for trading ships to dock at. It's been abandoned for some time, but its security systems have kept looters away. Rumored to be haunted."

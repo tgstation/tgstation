@@ -171,20 +171,20 @@
 	desc = "A colorful cardboard box for the clown"
 	illustration = "clown"
 
-/obj/item/storage/box/clown/storage_insert_on_interacted_with(datum/storage, obj/item/inserted, mob/living/user)
-	if(istype(inserted, /obj/item/bodypart/arm/left/robot) || istype(inserted, /obj/item/bodypart/arm/right/robot))
-		if(contents.len) //prevent accidently deleting contents
-			balloon_alert(user, "items inside!")
-			return FALSE
-		if(!user.temporarilyRemoveItemFromInventory(inserted))
-			return FALSE
-		qdel(inserted)
-		loc.balloon_alert(user, "wheels added, honk!")
-		var/obj/item/bot_assembly/honkbot/A = new
-		qdel(src)
-		user.put_in_hands(A)
-		return FALSE
-	return TRUE
+/obj/item/storage/box/clown/tool_act(mob/living/user, obj/item/tool, list/modifiers)
+	if(!istype(tool, /obj/item/bodypart/arm/left/robot) && !istype(tool, /obj/item/bodypart/arm/right/robot))
+		return ..()
+	if(contents.len) //prevent accidently deleting contents
+		balloon_alert(user, "items inside!")
+		return ITEM_INTERACT_BLOCKING
+	if(!user.temporarilyRemoveItemFromInventory(tool))
+		return ITEM_INTERACT_BLOCKING
+	qdel(tool)
+	loc.balloon_alert(user, "wheels added, honk!")
+	var/obj/item/bot_assembly/honkbot/A = new
+	qdel(src)
+	user.put_in_hands(A)
+	return ITEM_INTERACT_SUCCESS
 
 /obj/item/storage/box/clown/suicide_act(mob/living/user)
 	user.visible_message(span_suicide("[user] opens [src] and gets consumed by [p_them()]! It looks like [user.p_theyre()] trying to commit suicide!"))

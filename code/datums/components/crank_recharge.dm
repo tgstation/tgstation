@@ -1,7 +1,7 @@
 // Cranking feature on the laser musket and smoothbore disabler, could probably be used on more than guns
 /datum/component/crank_recharge
 	/// Our cell to charge
-	var/obj/item/stock_parts/cell/charging_cell
+	var/obj/item/stock_parts/power_store/charging_cell
 	/// Whether we spin our gun to reload (and therefore need the relevant trait)
 	var/spin_to_win = FALSE
 	/// How much charge we give our cell on each crank
@@ -20,7 +20,7 @@
 	. = ..()
 	if(!isitem(parent))
 		return COMPONENT_INCOMPATIBLE
-	if(isnull(charging_cell) || !istype(charging_cell, /obj/item/stock_parts/cell))
+	if(isnull(charging_cell) || !istype(charging_cell, /obj/item/stock_parts/power_store))
 		return COMPONENT_INCOMPATIBLE
 	src.charging_cell = charging_cell
 	src.spin_to_win = spin_to_win

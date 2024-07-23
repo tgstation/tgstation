@@ -15,7 +15,7 @@
 	invocation_self_message = span_notice("You form a wall in front of yourself.")
 	invocation_type = INVOCATION_EMOTE
 
-	spell_requirements = SPELL_REQUIRES_MIME_VOW
+	spell_requirements = SPELL_REQUIRES_HUMAN|SPELL_REQUIRES_MIME_VOW
 	antimagic_flags = NONE
 	spell_max_level = 1
 

@@ -66,6 +66,15 @@
 	if(in_range(user, src) || isobserver(user))
 		. += span_notice("The status display reads: Maximum range: <b>[range]</b> units.")
 
+/obj/machinery/launchpad/multitool_act(mob/living/user, obj/item/multitool/multi)
+	. = NONE
+	if(!panel_open)
+		return
+
+	multi.set_buffer(src)
+	balloon_alert(user, "saved to buffer")
+	return ITEM_INTERACT_SUCCESS
+
 /obj/machinery/launchpad/attackby(obj/item/weapon, mob/user, params)
 	if(!stationary)
 		return ..()
@@ -73,14 +82,6 @@
 	if(default_deconstruction_screwdriver(user, "lpad-idle-open", "lpad-idle", weapon))
 		update_indicator()
 		return
-
-	if(panel_open && weapon.tool_behaviour == TOOL_MULTITOOL)
-		if(!multitool_check_buffer(user, weapon))
-			return
-		var/obj/item/multitool/multi = weapon
-		multi.set_buffer(src)
-		balloon_alert(user, "saved to buffer")
-		return TRUE
 
 	if(default_deconstruction_crowbar(weapon))
 		return
@@ -97,7 +98,7 @@
 /// Updates diagnostic huds
 /obj/machinery/launchpad/proc/update_hud()
 	var/image/holder = hud_list[DIAG_LAUNCHPAD_HUD]
-	var/mutable_appearance/target = mutable_appearance('icons/effects/effects.dmi', "launchpad_target", ABOVE_OPEN_TURF_LAYER, src, GAME_PLANE)
+	var/mutable_appearance/target = mutable_appearance('icons/effects/effects.dmi', "launchpad_target", ABOVE_NORMAL_TURF_LAYER, src, GAME_PLANE)
 	holder.appearance = target
 
 	update_indicator()
@@ -351,15 +352,15 @@
 		user.transferItemToLoc(src, pad, TRUE)
 		atom_storage.close_all()
 
-/obj/item/storage/briefcase/launchpad/storage_insert_on_interacted_with(datum/storage, obj/item/inserted, mob/living/user)
-	if(istype(inserted, /obj/item/launchpad_remote))
-		var/obj/item/launchpad_remote/remote = inserted
-		if(remote.pad == WEAKREF(src.pad))
-			return TRUE
-		remote.pad = WEAKREF(src.pad)
-		to_chat(user, span_notice("You link [pad] to [remote]."))
-		return FALSE // no insert
-	return TRUE
+/obj/item/storage/briefcase/launchpad/tool_act(mob/living/user, obj/item/tool, list/modifiers)
+	if(!istype(tool, /obj/item/launchpad_remote))
+		return ..()
+	var/obj/item/launchpad_remote/remote = tool
+	if(remote.pad == WEAKREF(src.pad))
+		return ..()
+	remote.pad = WEAKREF(src.pad)
+	to_chat(user, span_notice("You link [pad] to [remote]."))
+	return ITEM_INTERACT_BLOCKING
 
 /obj/item/launchpad_remote
 	name = "folder"

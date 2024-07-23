@@ -46,8 +46,8 @@
 
 	var/static/list/slapcraft_recipe_list = list(/datum/crafting_recipe/flashlight_eyes)
 
-	AddComponent(
-		/datum/component/slapcrafting,\
+	AddElement(
+		/datum/element/slapcrafting,\
 		slapcraft_recipes = slapcraft_recipe_list,\
 	)
 
@@ -170,7 +170,7 @@
 			organ_list += (O.gender == "plural" ? O.name : "\an [O.name]")
 
 	var/pill_count = 0
-	for(var/datum/action/item_action/hands_free/activate_pill/AP in M.actions)
+	for(var/datum/action/item_action/activate_pill/AP in M.actions)
 		pill_count++
 
 	if(M == user)//if we're looking on our own mouth
@@ -928,6 +928,7 @@
 	light_range = 4
 	light_power = 2
 	alpha = 0
+	layer = ABOVE_OPEN_TURF_LAYER
 	plane = FLOOR_PLANE
 	anchored = TRUE
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF

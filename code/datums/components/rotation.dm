@@ -55,6 +55,7 @@
 /datum/component/simple_rotation/proc/rotate_right(datum/source, mob/user)
 	SIGNAL_HANDLER
 	rotate(user, ROTATION_CLOCKWISE)
+	return CLICK_ACTION_SUCCESS
 
 /datum/component/simple_rotation/proc/rotate_left(datum/source, mob/user)
 	SIGNAL_HANDLER

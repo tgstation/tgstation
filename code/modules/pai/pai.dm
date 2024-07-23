@@ -149,7 +149,7 @@
 	return ..()
 
 // See software.dm for Topic()
-/mob/living/silicon/pai/can_perform_action(atom/movable/target, action_bitflags)
+/mob/living/silicon/pai/can_perform_action(atom/target, action_bitflags)
 	action_bitflags |= ALLOW_RESTING // Resting is just an aesthetic feature for them
 	action_bitflags &= ~ALLOW_SILICON_REACH // They don't get long reach like the rest of silicons
 	return ..(target, action_bitflags)
@@ -164,7 +164,6 @@
 	QDEL_NULL(signaler)
 	QDEL_NULL(leash)
 	card = null
-	GLOB.pai_list.Remove(src)
 	return ..()
 
 // Need to override parent here because the message we dispatch is turf-based, not based on the location of the object because that could be fuckin anywhere
@@ -221,7 +220,6 @@
 	if(istype(loc, /obj/item/modular_computer))
 		give_messenger_ability()
 	START_PROCESSING(SSfastprocess, src)
-	GLOB.pai_list += src
 	make_laws()
 	for(var/law in laws.inherent)
 		lawcheck += law
@@ -460,7 +458,7 @@
 	to_chat(src, span_userdanger("Your mental faculties leave you."))
 	to_chat(src, span_rose("oblivion... "))
 	balloon_alert(user, "personality wiped")
-	playsound(src, "sound/machines/buzz-two.ogg", 30, TRUE)
+	playsound(src, 'sound/machines/buzz-two.ogg', 30, TRUE)
 	qdel(src)
 	return TRUE
 
@@ -470,7 +468,7 @@
 
 	for(var/mob/living/cultist as anything in invokers)
 		to_chat(cultist, span_cult_italic("You don't think this is what Nar'Sie had in mind when She asked for blood sacrifices..."))
-	return STOP_SACRIFICE
+	return STOP_SACRIFICE|SILENCE_SACRIFICE_MESSAGE
 
 /// Updates the distance we can be from our pai card
 /mob/living/silicon/pai/proc/increment_range(increment_amount)

@@ -378,7 +378,7 @@
 	addtimer(CALLBACK(src, PROC_REF(send_away)), 2 SECONDS)
 
 /obj/effect/temp_visual/teleporting_tornado/proc/send_away()
-	var/turf/ending_turfs = find_safe_turf()
+	var/turf/ending_turfs = get_safe_random_station_turf()
 	for(var/mob/stored_mobs as anything in pickedup_mobs)
 		do_teleport(stored_mobs, ending_turfs, channel = TELEPORT_CHANNEL_MAGIC)
 		animate(stored_mobs, pixel_y = null, time = 1 SECONDS)

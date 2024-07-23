@@ -7,11 +7,12 @@
 	flags = IGNORE_NOSLOW
 
 /datum/movespeed_modifier/snail
-	movetypes = ~FLYING
+	blacklisted_movetypes = FLYING
 	variable = TRUE
 
+// no reason for leg loss (or gain) to affect speed if drifting
 /datum/movespeed_modifier/bodypart
-	movetypes = ~FLYING
+	blacklisted_movetypes = (FLYING|FLOATING)
 	variable = TRUE
 
 /datum/movespeed_modifier/dna_vault_speedup

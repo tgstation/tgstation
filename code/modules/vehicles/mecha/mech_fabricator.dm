@@ -49,10 +49,22 @@
 	/// All designs in the techweb that can be fabricated by this machine, since the last update.
 	var/list/datum/design/cached_designs
 
+	//looping sound for printing items
+	var/datum/looping_sound/lathe_print/print_sound
+
+	/// Local designs that only this mechfab have(using when mechfab emaged so it's illegal designs).
+	var/list/datum/design/illegal_local_designs
+
 /obj/machinery/mecha_part_fabricator/Initialize(mapload)
+	print_sound = new(src,  FALSE)
 	rmat = AddComponent(/datum/component/remote_materials, mapload && link_on_init)
 	cached_designs = list()
+	illegal_local_designs = list()
 	RefreshParts() //Recalculating local material sizes if the fab isn't linked
+	return ..()
+
+/obj/machinery/mecha_part_fabricator/Destroy()
+	QDEL_NULL(print_sound)
 	return ..()
 
 /obj/machinery/mecha_part_fabricator/post_machine_initialize()
@@ -134,6 +146,26 @@
 	balloon_alert(user, "rotated to [dir2text(dir)].")
 	return CLICK_ACTION_SUCCESS
 
+/obj/machinery/mecha_part_fabricator/emag_act(mob/user, obj/item/card/emag/emag_card)
+	if(obj_flags & EMAGGED)
+		return FALSE
+	if(user.job != JOB_ROBOTICIST)
+		to_chat(user, span_warning("You clicking and typing but don’t understand what to do with it"))
+		return FALSE
+	obj_flags |= EMAGGED
+	for(var/found_illegal_mech_nods in SSresearch.techweb_nodes)
+		var/datum/techweb_node/illegal_mech_node = SSresearch.techweb_nodes[found_illegal_mech_nods]
+		if(!illegal_mech_node?.illegal_mech_node)
+			continue
+		for(var/id in illegal_mech_node.design_ids)
+			var/datum/design/illegal_mech_design = SSresearch.techweb_design_by_id(id)
+			illegal_local_designs |= illegal_mech_design
+			cached_designs |= illegal_mech_design
+	say("R$c!i&ed ERROR de#i$ns. C@n%ec$%ng to ~NULL~ se%ve$s.")
+	playsound(src, 'sound/machines/uplinkerror.ogg', 50, TRUE)
+	update_static_data_for_all_viewers()
+	return TRUE
+
 /**
  * Updates the `final_sets` and `buildable_parts` for the current mecha fabricator.
  */
@@ -163,7 +195,7 @@
 /obj/machinery/mecha_part_fabricator/proc/on_start_printing()
 	add_overlay("fab-active")
 	update_use_power(ACTIVE_POWER_USE)
-
+	print_sound.start()
 /**
  * Intended to be called when the exofab has stopped working and is no longer printing items.
  *
@@ -174,6 +206,7 @@
 	update_use_power(IDLE_POWER_USE)
 	desc = initial(desc)
 	process_queue = FALSE
+	print_sound.stop()
 
 /**
  * Attempts to build the next item in the build queue.
@@ -342,7 +375,7 @@
 
 	for(var/datum/design/design in cached_designs)
 		var/cost = list()
-		var/list/materials = design["materials"]
+		var/list/materials = design.materials
 		for(var/datum/material/mat in materials)
 			cost[mat.name] = OPTIMAL_COST(materials[mat] * component_coeff)
 
@@ -409,7 +442,7 @@
 				if(!istext(design_id))
 					continue
 
-				if(!stored_research.researched_designs.Find(design_id))
+				if(!(stored_research.researched_designs.Find(design_id) || is_type_in_list(SSresearch.techweb_design_by_id(design_id), illegal_local_designs)))
 					continue
 
 				var/datum/design/design = SSresearch.techweb_design_by_id(design_id)

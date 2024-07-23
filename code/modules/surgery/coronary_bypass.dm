@@ -12,6 +12,19 @@
 		/datum/surgery_step/close,
 	)
 
+/datum/surgery/gastrectomy/mechanic
+	name = "Engine Diagnostic"
+	requires_bodypart_type = BODYTYPE_ROBOTIC
+	steps = list(
+		/datum/surgery_step/mechanic_open,
+		/datum/surgery_step/open_hatch,
+		/datum/surgery_step/mechanic_unwrench,
+		/datum/surgery_step/incise_heart/mechanic,
+		/datum/surgery_step/coronary_bypass/mechanic,
+		/datum/surgery_step/mechanic_wrench,
+		/datum/surgery_step/mechanic_close,
+	)
+
 /datum/surgery/coronary_bypass/can_start(mob/user, mob/living/carbon/target)
 	var/obj/item/organ/internal/heart/target_heart = target.get_organ_slot(ORGAN_SLOT_HEART)
 	if(isnull(target_heart) || target_heart.damage < 60 || target_heart.operated)
@@ -31,6 +44,18 @@
 	preop_sound = 'sound/surgery/scalpel1.ogg'
 	success_sound = 'sound/surgery/scalpel2.ogg'
 	failure_sound = 'sound/surgery/organ2.ogg'
+	surgery_effects_mood = TRUE
+
+/datum/surgery_step/incise_heart/mechanic
+	name = "access engine internals (scalpel or crowbar)"
+	implements = list(
+		TOOL_SCALPEL = 95,
+		TOOL_CROWBAR = 95,
+		/obj/item/melee/energy/sword = 65,
+		/obj/item/knife = 45,
+		/obj/item/shard = 35)
+	preop_sound = 'sound/items/ratchet.ogg'
+	success_sound = 'sound/machines/doorclick.ogg'
 
 /datum/surgery_step/incise_heart/preop(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
 	display_results(
@@ -40,7 +65,7 @@
 		span_notice("[user] begins to make an incision in [target]'s heart."),
 		span_notice("[user] begins to make an incision in [target]'s heart."),
 	)
-	display_pain(target, "You feel a horrendous pain in your heart, it's almost enough to make you pass out!", mood_event_type = /datum/mood_event/surgery)
+	display_pain(target, "You feel a horrendous pain in your heart, it's almost enough to make you pass out!")
 
 /datum/surgery_step/incise_heart/success(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery, default_display_results = FALSE)
 	if(ishuman(target))
@@ -53,7 +78,6 @@
 				span_notice("Blood pools around the incision in [target_human]'s heart."),
 				span_notice("Blood pools around the incision in [target_human]'s heart."),
 			)
-			display_pain(target, mood_event_type = /datum/mood_event/surgery/success)
 			var/obj/item/bodypart/target_bodypart = target_human.get_bodypart(target_zone)
 			target_bodypart.adjustBleedStacks(10)
 			target_human.adjustBruteLoss(10)
@@ -69,7 +93,6 @@
 			span_warning("[user] screws up, causing blood to spurt out of [target_human]'s chest!"),
 			span_warning("[user] screws up, causing blood to spurt out of [target_human]'s chest!"),
 		)
-		display_pain(target, mood_event_type = /datum/mood_event/surgery/failure)
 		var/obj/item/bodypart/target_bodypart = target_human.get_bodypart(target_zone)
 		target_bodypart.adjustBleedStacks(10)
 		target_human.adjustOrganLoss(ORGAN_SLOT_HEART, 10)
@@ -88,6 +111,17 @@
 	success_sound = 'sound/surgery/hemostat1.ogg'
 	failure_sound = 'sound/surgery/organ2.ogg'
 
+/datum/surgery_step/coronary_bypass/mechanic
+	name = "perform maintenance (hemostat or wrench)"
+	implements = list(
+		TOOL_HEMOSTAT = 90,
+		TOOL_WRENCH = 90,
+		TOOL_WIRECUTTER = 35,
+		/obj/item/stack/package_wrap = 15,
+		/obj/item/stack/cable_coil = 5)
+	preop_sound = 'sound/items/ratchet.ogg'
+	success_sound = 'sound/machines/doorclick.ogg'
+
 /datum/surgery_step/coronary_bypass/preop(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
 	display_results(
 		user,
@@ -103,6 +137,8 @@
 	var/obj/item/organ/internal/heart/target_heart = target.get_organ_slot(ORGAN_SLOT_HEART)
 	if(target_heart) //slightly worrying if we lost our heart mid-operation, but that's life
 		target_heart.operated = TRUE
+		if(target_heart.organ_flags & ORGAN_EMP) //If our organ is failing due to an EMP, fix that
+			target_heart.organ_flags &= ~ORGAN_EMP
 	display_results(
 		user,
 		target,

@@ -1,5 +1,0 @@
-author: "JupiterJaeden"
-delete-after: True
-changes:
-  - qol: "you can now take pulled objects with you when going up and down in zero gravity"
-  - bugfix: "conga lines now work correctly when going up and down ladders, and in zero gravity"

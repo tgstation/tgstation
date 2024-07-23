@@ -107,6 +107,12 @@
 		return
 	return ..(ceiling)
 
+///Used for marking mapping errors. These should only be created by cases explicitly caught by unit tests, and should NEVER actually appear in production.
+/obj/effect/mapping_error
+	name = "I AM ERROR"
+	desc = "IF YOU SEE ME, YELL AT A MAPPER!!!"
+	icon = 'icons/effects/mapping_helpers.dmi'
+	icon_state = "mapping_error"
 
 /obj/effect/mapping_helpers
 	icon = 'icons/effects/mapping_helpers.dmi'
@@ -260,6 +266,16 @@
 		log_mapping("[src] at [AREACOORD(src)] tried to autoname the [airlock] but it's already autonamed!")
 	else
 		airlock.autoname = TRUE
+
+/obj/effect/mapping_helpers/airlock/inaccessible
+	name = "airlock inaccessible helper"
+	icon_state = "airlock_inaccessible"
+
+/obj/effect/mapping_helpers/airlock/inaccessible/payload(obj/machinery/door/airlock/airlock)
+	if(airlock.req_one_access != null)
+		log_mapping("[src] at [AREACOORD(src)] tried to set req_access, but req__one_access was already set!")
+	else
+		airlock.req_access += list(ACCESS_INACCESSIBLE)
 
 //air alarm helpers
 /obj/effect/mapping_helpers/airalarm
@@ -563,17 +579,17 @@
 	if(!mapload)
 		log_mapping("[src] spawned outside of mapload!")
 		return INITIALIZE_HINT_QDEL
-	check_validity()
-	return INITIALIZE_HINT_QDEL
+	return INITIALIZE_HINT_LATELOAD
 
-/obj/effect/mapping_helpers/turn_off_lights_with_lightswitch/proc/check_validity()
+/obj/effect/mapping_helpers/turn_off_lights_with_lightswitch/LateInitialize()
 	var/area/needed_area = get_area(src)
 	if(!needed_area.lightswitch)
 		stack_trace("[src] at [AREACOORD(src)] [(needed_area.type)] tried to turn lights off but they are already off!")
 	var/obj/machinery/light_switch/light_switch = locate(/obj/machinery/light_switch) in needed_area
 	if(!light_switch)
-		stack_trace("Trying to turn off lights with lightswitch in area without lightswitches. In [(needed_area.type)] to be precise.")
-	needed_area.lightswitch = FALSE
+		CRASH("Trying to turn off lights with lightswitch in area without lightswitches. In [(needed_area.type)] to be precise.")
+	light_switch.set_lights(FALSE)
+	qdel(src)
 
 //needs to do its thing before spawn_rivers() is called
 INITIALIZE_IMMEDIATE(/obj/effect/mapping_helpers/no_lava)
@@ -1183,7 +1199,7 @@ INITIALIZE_IMMEDIATE(/obj/effect/mapping_helpers/no_atoms_ontop)
 	if(response.errored || response.status_code != 200)
 		query_in_progress = FALSE
 		CRASH("Failed to fetch mapped custom json from url [json_url], code: [response.status_code], error: [response.error]")
-	var/json_data = response["body"]
+	var/json_data = response.body
 	json_cache[json_url] = json_data
 	query_in_progress = FALSE
 	return json_data

@@ -1,4 +1,0 @@
-author: "Watermelon914"
-delete-after: True
-changes:
-  - qol: "Bots can now bind voice lines to an action slot. Lowers cooldown for all bot voicelines to 5 seconds."

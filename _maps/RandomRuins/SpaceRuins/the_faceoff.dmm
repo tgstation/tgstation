@@ -347,7 +347,7 @@
 /area/ruin/space)
 "mn" = (
 /obj/structure/table/reinforced/plastitaniumglass,
-/obj/item/clothing/mask/cigarette/syndicate,
+/obj/item/cigarette/syndicate,
 /obj/item/storage/fancy/cigarettes/cigpack_syndicate{
 	pixel_y = 7
 	},
@@ -622,7 +622,7 @@
 /area/ruin/space)
 "yd" = (
 /obj/structure/table/reinforced/plastitaniumglass,
-/obj/item/clothing/mask/cigarette/syndicate,
+/obj/item/cigarette/syndicate,
 /obj/effect/spawner/random/entertainment/lighter,
 /turf/open/floor/mineral/plastitanium/airless,
 /area/ruin/space)
@@ -701,7 +701,7 @@
 /area/ruin/space)
 "Cz" = (
 /obj/structure/table/reinforced/plastitaniumglass,
-/obj/item/clothing/mask/cigarette/syndicate,
+/obj/item/cigarette/syndicate,
 /obj/effect/spawner/random/entertainment/lighter,
 /turf/open/floor/iron/dark/airless,
 /area/ruin/space)

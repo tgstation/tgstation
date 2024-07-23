@@ -1,4 +1,0 @@
-author: "MGOOOOOO"
-delete-after: True
-changes:
-  - bugfix: "Catwalk deconstruction yields iron rods as intended."

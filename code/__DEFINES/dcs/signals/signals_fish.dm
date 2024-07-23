@@ -1,6 +1,12 @@
 // Aquarium related signals
 #define COMSIG_AQUARIUM_SURFACE_CHANGED "aquarium_surface_changed"
 #define COMSIG_AQUARIUM_FLUID_CHANGED "aquarium_fluid_changed"
+///Called on aquarium/attackby: (aquarium)
+#define COMSIG_TRY_INSERTING_IN_AQUARIUM "item_try_inserting_in_aquarium"
+	///The item will be inserted into the aquarium
+	#define COMSIG_CAN_INSERT_IN_AQUARIUM (1<<0)
+	///The item won't be inserted into the aquarium, but will early return attackby anyway.
+	#define COMSIG_CANNOT_INSERT_IN_AQUARIUM (1<<1)
 
 // Fish signals
 #define COMSIG_FISH_STATUS_CHANGED "fish_status_changed"
@@ -15,7 +21,7 @@
 /// Fishing challenge completed
 #define COMSIG_FISHING_CHALLENGE_COMPLETED "fishing_completed"
 /// Sent to the fisherman when the reward is dispensed: (reward)
-#define COMSIG_MOB_FISHING_REWARD_DISPENSED "mob_fishing_reward_dispensed"
+#define COMSIG_FISH_SOURCE_REWARD_DISPENSED "mob_fish_source_reward_dispensed"
 
 /// Called when you try to use fishing rod on anything
 #define COMSIG_PRE_FISHING "pre_fishing"

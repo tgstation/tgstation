@@ -136,9 +136,9 @@
 
 /obj/item/hand_tele/proc/try_dispel_portal(atom/target, mob/user)
 	if(is_parent_of_portal(target))
-		qdel(target)
-		to_chat(user, span_notice("You dispel [target] with \the [src]!"))
-		playsound(loc, "sound/effects/portal_close.ogg", 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
+		to_chat(user, span_notice("You dispel [target] with [src]!"))
+		var/obj/effect/portal/portal = target
+		portal.expire()
 		return TRUE
 	return FALSE
 
@@ -254,7 +254,7 @@
 	var/list/obj/effect/portal/created = create_portal_pair(get_turf(user), get_teleport_turf(get_turf(teleport_target)), 300, 1, null)
 	if(LAZYLEN(created) != 2)
 		return
-	playsound(loc, pick("sound/effects/portal_open_1.ogg", "sound/effects/portal_open_2.ogg", "sound/effects/portal_open_3.ogg" ), 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
+
 	var/obj/effect/portal/portal1 = created[1]
 	var/obj/effect/portal/portal2 = created[2]
 
@@ -428,9 +428,9 @@
 		new /obj/effect/temp_visual/teleport_abductor/syndi_teleporter(current_location)
 		new /obj/effect/temp_visual/teleport_abductor/syndi_teleporter(destination)
 		make_bloods(current_location, destination, user)
-		playsound(current_location, 'sound/effects/portal_travel.ogg', 50, 1, SHORT_RANGE_SOUND_EXTRARANGE)
+		playsound(current_location, SFX_PORTAL_ENTER, 50, 1, SHORT_RANGE_SOUND_EXTRARANGE)
 		playsound(destination, 'sound/effects/phasein.ogg', 25, 1, SHORT_RANGE_SOUND_EXTRARANGE)
-		playsound(destination, 'sound/effects/portal_travel.ogg', 50, 1, SHORT_RANGE_SOUND_EXTRARANGE)
+		playsound(destination, SFX_PORTAL_ENTER, 50, 1, SHORT_RANGE_SOUND_EXTRARANGE)
 
 /obj/item/syndicate_teleporter/proc/malfunctioning(mob/guy_teleporting, turf/current_location)
 	var/area/current_area = get_area(current_location)
@@ -465,9 +465,9 @@
 		balloon_alert(user, "emergency teleport triggered!")
 		if (!HAS_TRAIT(user, TRAIT_NOBLOOD))
 			make_bloods(mobloc, emergency_destination, user)
-		playsound(mobloc, 'sound/effects/portal_travel.ogg', 50, 1, SHORT_RANGE_SOUND_EXTRARANGE)
+		playsound(mobloc, SFX_PORTAL_ENTER, 50, 1, SHORT_RANGE_SOUND_EXTRARANGE)
 		playsound(emergency_destination, 'sound/effects/phasein.ogg', 25, 1, SHORT_RANGE_SOUND_EXTRARANGE)
-		playsound(emergency_destination, 'sound/effects/portal_travel.ogg', 50, 1, SHORT_RANGE_SOUND_EXTRARANGE)
+		playsound(emergency_destination, SFX_PORTAL_ENTER, 50, 1, SHORT_RANGE_SOUND_EXTRARANGE)
 	else //We tried to save. We failed. Death time.
 		get_fragged(user, destination)
 
@@ -477,9 +477,9 @@
 	victim.forceMove(destination)
 	new /obj/effect/temp_visual/teleport_abductor/syndi_teleporter(mobloc)
 	new /obj/effect/temp_visual/teleport_abductor/syndi_teleporter(destination)
-	playsound(mobloc, 'sound/effects/portal_travel.ogg', 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
-	playsound(destination, 'sound/effects/portal_travel.ogg', 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
-	playsound(destination, "sound/magic/disintegrate.ogg", 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
+	playsound(mobloc, SFX_PORTAL_ENTER, 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
+	playsound(destination, SFX_PORTAL_ENTER, 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
+	playsound(destination, 'sound/magic/disintegrate.ogg', 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
 	if(!not_holding_tele)
 		to_chat(victim, span_userdanger("You teleport into [destination], [src] tries to save you, but..."))
 	else

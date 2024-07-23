@@ -31,7 +31,7 @@
 	SIGNAL_HANDLER
 
 	if(istype(attacking_item, /obj/item/kinetic_crusher))
-		total_damage += damage_dealt
+		total_damage += (-1 * damage_dealt)
 
 /datum/status_effect/syphon_mark
 	id = "syphon_mark"

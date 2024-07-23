@@ -2,7 +2,6 @@
 	name = "Lobotomy"
 	desc = "An invasive surgical procedure which guarantees removal of almost all brain traumas, but might cause another permanent trauma in return."
 	possible_locs = list(BODY_ZONE_HEAD)
-	requires_bodypart_type = NONE
 	steps = list(
 		/datum/surgery_step/incise,
 		/datum/surgery_step/retract_skin,
@@ -10,6 +9,19 @@
 		/datum/surgery_step/clamp_bleeders,
 		/datum/surgery_step/lobotomize,
 		/datum/surgery_step/close,
+	)
+
+/datum/surgery/advanced/lobotomy/mechanic
+	name = "Wetware OS Destructive Defragmentation"
+	desc = "A destructive robotic defragmentation method which guarantees removal of almost all brain traumas, but might cause another permanent trauma in return."
+	requires_bodypart_type = BODYTYPE_ROBOTIC
+	steps = list(
+		/datum/surgery_step/mechanic_open,
+		/datum/surgery_step/open_hatch,
+		/datum/surgery_step/mechanic_unwrench,
+		/datum/surgery_step/lobotomize/mechanic,
+		/datum/surgery_step/mechanic_wrench,
+		/datum/surgery_step/mechanic_close,
 	)
 
 /datum/surgery/advanced/lobotomy/can_start(mob/user, mob/living/carbon/target)
@@ -34,6 +46,19 @@
 	preop_sound = 'sound/surgery/scalpel1.ogg'
 	success_sound = 'sound/surgery/scalpel2.ogg'
 	failure_sound = 'sound/surgery/organ2.ogg'
+	surgery_effects_mood = TRUE
+
+/datum/surgery_step/lobotomize/mechanic
+	name = "execute neural defragging (multitool)"
+	implements = list(
+		TOOL_MULTITOOL = 85,
+		/obj/item/melee/energy/sword = 55,
+		/obj/item/knife = 35,
+		/obj/item/shard = 25,
+		/obj/item = 20,
+	)
+	preop_sound = 'sound/items/taperecorder/tape_flip.ogg'
+	success_sound = 'sound/items/taperecorder/taperecorder_close.ogg'
 
 /datum/surgery_step/lobotomize/tool_check(mob/user, obj/item/tool)
 	if(implement_type == /obj/item && !tool.get_sharpness())
@@ -48,7 +73,7 @@
 		span_notice("[user] begins to perform a lobotomy on [target]'s brain."),
 		span_notice("[user] begins to perform surgery on [target]'s brain."),
 	)
-	display_pain(target, "Your head pounds with unimaginable pain!", mood_event_type = /datum/mood_event/surgery)
+	display_pain(target, "Your head pounds with unimaginable pain!")
 
 /datum/surgery_step/lobotomize/success(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery, default_display_results = FALSE)
 	display_results(
@@ -58,7 +83,7 @@
 		span_notice("[user] successfully lobotomizes [target]!"),
 		span_notice("[user] completes the surgery on [target]'s brain."),
 	)
-	display_pain(target, "Your head goes totally numb for a moment, the pain is overwhelming!", mood_event_type = /datum/mood_event/surgery/success)
+	display_pain(target, "Your head goes totally numb for a moment, the pain is overwhelming!")
 
 	target.cure_all_traumas(TRAUMA_RESILIENCE_LOBOTOMY)
 	if(target.mind && target.mind.has_antag_datum(/datum/antagonist/brainwashed))
@@ -86,7 +111,7 @@
 			span_notice("[user] successfully lobotomizes [target]!"),
 			span_notice("[user] completes the surgery on [target]'s brain."),
 		)
-		display_pain(target, "The pain in your head only seems to get worse!", mood_event_type = /datum/mood_event/surgery/failure)
+		display_pain(target, "The pain in your head only seems to get worse!")
 		target_brain.apply_organ_damage(80)
 		switch(rand(1,3))
 			if(1)

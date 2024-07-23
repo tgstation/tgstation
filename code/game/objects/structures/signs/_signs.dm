@@ -85,7 +85,7 @@
 	return TRUE
 
 /obj/structure/sign/attackby(obj/item/I, mob/user, params)
-	if(is_editable && istype(I, /obj/item/pen))
+	if(is_editable && IS_WRITING_UTENSIL(I))
 		if(!length(GLOB.editable_sign_types))
 			CRASH("GLOB.editable_sign_types failed to populate")
 		var/choice = tgui_input_list(user, "Select a sign type", "Sign Customization", GLOB.editable_sign_types)
@@ -187,12 +187,12 @@
 
 /obj/item/sign/add_context(atom/source, list/context, obj/item/held_item, mob/user)
 	. = ..()
-	if(is_editable && istype(held_item, /obj/item/pen))
+	if(is_editable && IS_WRITING_UTENSIL(held_item))
 		context[SCREENTIP_CONTEXT_LMB] = "Change design"
 		return CONTEXTUAL_SCREENTIP_SET
 
 /obj/item/sign/attackby(obj/item/I, mob/user, params)
-	if(is_editable && istype(I, /obj/item/pen))
+	if(is_editable && IS_WRITING_UTENSIL(I))
 		if(!length(GLOB.editable_sign_types))
 			CRASH("GLOB.editable_sign_types failed to populate")
 		var/choice = tgui_input_list(user, "Select a sign type", "Sign Customization", GLOB.editable_sign_types)

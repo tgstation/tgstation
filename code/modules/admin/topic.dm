@@ -1413,7 +1413,7 @@
 			if(response.body == "[]")
 				dat += "<center><b>0 bans detected for [ckey]</b></center>"
 			else
-				bans = json_decode(response["body"])
+				bans = json_decode(response.body)
 
 				//Ignore bans from non-whitelisted sources, if a whitelist exists
 				var/list/valid_sources
@@ -1722,6 +1722,16 @@
 		if(!paper_to_show)
 			return
 		paper_to_show.ui_interact(usr)
+
+	else if (href_list["print_fax"])
+		if(!check_rights(R_ADMIN))
+			return
+
+		for(var/obj/machinery/fax/FAX as anything in SSmachines.get_machines_by_type_and_subtypes(/obj/machinery/fax))
+			if(!is_centcom_level(FAX.z))
+				continue
+
+			FAX.receive(locate(href_list["print_fax"]), href_list["fax_name"])
 	else if(href_list["play_internet"])
 		if(!check_rights(R_SOUND))
 			return

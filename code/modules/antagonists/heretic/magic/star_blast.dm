@@ -10,7 +10,7 @@
 	school = SCHOOL_FORBIDDEN
 	cooldown_time = 20 SECONDS
 
-	invocation = "R'T'T' ST'R!"
+	invocation = "Pi-rig is'zara!"
 	invocation_type = INVOCATION_SHOUT
 	spell_requirements = NONE
 
@@ -41,7 +41,7 @@
 	. = ..()
 	var/mob/living/cast_on = firer
 	for(var/mob/living/nearby_mob in range(star_mark_range, target))
-		if(cast_on == nearby_mob)
+		if(cast_on == nearby_mob || cast_on.buckled == nearby_mob)
 			continue
 		nearby_mob.apply_status_effect(/datum/status_effect/star_mark, cast_on)
 

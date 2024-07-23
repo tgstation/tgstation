@@ -91,7 +91,7 @@
 #define BB_TARGETLESS_TIME "BB_targetless_time"
 
 ///Tipped blackboards
-///Bool that means a basic mob will start reacting to being tipped in it's planning
+///Bool that means a basic mob will start reacting to being tipped in its planning
 #define BB_BASIC_MOB_TIP_REACTING "BB_basic_tip_reacting"
 ///the motherfucker who tipped us
 #define BB_BASIC_MOB_TIPPER "BB_basic_tip_tipper"
@@ -162,3 +162,6 @@
 // Used to hold state without making bigass lists
 /// For /datum/ai_behavior/find_potential_targets, what if any field are we using currently
 #define BB_FIND_TARGETS_FIELD(type) "bb_find_targets_field_[type]"
+
+///mothroach next meal key!
+#define BB_MOTHROACH_NEXT_EAT "mothroach_next_eat"

@@ -75,7 +75,7 @@
 	back = /obj/item/storage/backpack/satchel/leather
 	shoes = /obj/item/clothing/shoes/laceup
 	glasses = /obj/item/clothing/glasses/monocle
-	mask = /obj/item/clothing/mask/cigarette/pipe
+	mask = /obj/item/cigarette/pipe
 	ears = /obj/item/radio/headset
 
 	backpack_contents = list(
