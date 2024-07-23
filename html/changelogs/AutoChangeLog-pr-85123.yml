@@ -1,0 +1,4 @@
+author: "FeenieRU"
+delete-after: True
+changes:
+  - qol: "Now IDs and PDAs have money-reader module for picking some cash into your bank by swiping on money."

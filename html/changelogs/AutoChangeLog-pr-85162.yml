@@ -1,0 +1,4 @@
+author: "larentoun"
+delete-after: True
+changes:
+  - config: "Added an entry for TRAITOR_SCALING_MULTIPLIER, disabled by default"
