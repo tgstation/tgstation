@@ -69,7 +69,7 @@
 		return ..()
 
 	/// The blade parsnip will turn into once sharpened
-	var/obj/item/melee/parsnip_blade
+	var/obj/item/parsnip_blade
 	/// Chance for it to become a sabre rather than a shiv
 	var/parsnip_sabre_chance = (max(0, seed.potency - 50) / 50)
 	if (prob(parsnip_sabre_chance))
