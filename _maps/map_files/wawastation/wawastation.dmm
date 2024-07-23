@@ -56578,6 +56578,7 @@
 /obj/machinery/camera/motion/directional/north{
 	c_tag = "Security Armory"
 	},
+/obj/structure/fireaxecabinet/batteringram/directional/north,
 /turf/open/floor/iron/dark,
 /area/station/ai_monitored/security/armory)
 "tSn" = (

@@ -85,7 +85,9 @@
 	toolspeed = 1
 	usesound = 'sound/items/crowbar.ogg'
 
-//boarding axe
+/*
+ * Boarding Axe
+ */
 /obj/item/fireaxe/boardingaxe
 	icon_state = "boarding_axe0"
 	base_icon_state = "boarding_axe"

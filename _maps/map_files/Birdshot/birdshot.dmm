@@ -25362,6 +25362,7 @@
 	},
 /obj/structure/rack,
 /obj/effect/spawner/random/armory/e_gun,
+/obj/structure/fireaxecabinet/batteringram/directional/west,
 /turf/open/floor/iron/dark/small,
 /area/station/ai_monitored/security/armory)
 "iXM" = (
