@@ -306,6 +306,25 @@ INITIALIZE_IMMEDIATE(/obj/effect/landmark/start/new_player)
 	GLOB.newplayer_start += loc
 	return INITIALIZE_HINT_QDEL
 
+/obj/effect/landmark/start/pun_pun
+	name = "Pun Pun"
+	icon = 'icons/mob/human/human.dmi'
+	icon_state = "monkey"
+
+/obj/effect/landmark/start/pun_pun/Initialize(mapload)
+	. = ..()
+	if(!mapload)
+		return
+	if(!(locate(/datum/station_trait/job/pun_pun) in SSstation.station_traits))
+		. = INITIALIZE_HINT_LATELOAD
+
+	// 1 Pun Pun should exist
+	REGISTER_REQUIRED_MAP_ITEM(1, 1)
+
+/obj/effect/landmark/start/pun_pun/LateInitialize()
+	new /mob/living/carbon/human/species/monkey/punpun(loc)
+	qdel(src)
+
 /obj/effect/landmark/latejoin
 	name = "JoinLate"
 

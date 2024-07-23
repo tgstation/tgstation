@@ -156,6 +156,29 @@
 		)
 	job = /datum/job/bartender
 
+/datum/id_trim/job/pun_pun
+	assignment = "busser"
+	trim_state = "trim_busser"
+	department_color = COLOR_SERVICE_LIME
+	subdepartment_color = COLOR_SERVICE_LIME
+	sechud_icon_state = SECHUD_BUSSER
+	minimal_access = list(
+		ACCESS_MINERAL_STOREROOM,
+		ACCESS_SERVICE,
+		ACCESS_THEATRE,
+		)
+	extra_access = list(
+		ACCESS_HYDROPONICS,
+		ACCESS_KITCHEN,
+		ACCESS_BAR,
+		)
+	template_access = list(
+		ACCESS_CAPTAIN,
+		ACCESS_CHANGE_IDS,
+		ACCESS_HOP,
+		)
+	job = /datum/job/pun_pun
+
 /datum/id_trim/job/bitrunner
 	assignment = JOB_BITRUNNER
 	trim_state = "trim_bitrunner"
