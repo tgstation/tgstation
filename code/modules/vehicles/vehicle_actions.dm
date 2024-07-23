@@ -466,7 +466,7 @@
 
 /datum/action/vehicle/sealed/kick_out/Trigger(trigger_flags)
 	. = ..()
-	if(owner.can_perform_action(vehicle_entered_target, NEED_HANDS))
+	if(HAS_TRAIT(owner, TRAIT_RESTRAINED))
 		return
 	var/list/occupants = vehicle_entered_target.occupants.Copy()
 	for(var/occupant in occupants)

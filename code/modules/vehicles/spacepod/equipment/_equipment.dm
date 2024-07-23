@@ -1,10 +1,12 @@
 /obj/item/pod_equipment
 	icon = 'icons/testing/greyscale_error.dmi'
 	w_class = WEIGHT_CLASS_HUGE
-	// the pod we are attached to
+	/// the pod we are attached to
 	var/obj/vehicle/sealed/space_pod/pod
-	// the slot we go in
+	/// the slot we go in
 	var/slot
+	/// multiplier for power usage by moving
+	var/movement_power_usage_mult = 1
 
 /obj/item/pod_equipment/examine(mob/user)
 	. = ..()

@@ -14,6 +14,7 @@
 
 // this is the iron variant
 /obj/vehicle/sealed/space_pod
+	name = "space pod"
 	layer = ABOVE_MOB_LAYER
 	move_force = MOVE_FORCE_VERY_STRONG
 	move_resist = MOVE_FORCE_EXTREMELY_STRONG
@@ -33,7 +34,6 @@
 	var/panel_open = FALSE
 	/// ion trail effect
 	var/datum/effect_system/trail_follow/ion/trail
-
 	// speed vars are here if someone wants to make their own turbo subtype pod or admin abuse
 	/// max drift speed we can get via moving intentionally, modified by thrusters
 	var/max_speed = 0
@@ -46,8 +46,8 @@
 	var/obj/item/tank/internals/cabin_air_tank
 	/// our air tank, used to cycle cabin air
 	var/datum/gas_mixture/cabin_air = new(TANK_STANDARD_VOLUME * 5)
-	/// our power cell (should this be a megacell only thing or cell only?)
-	var/obj/item/stock_parts/power_store/cell/cell
+	/// our battery
+	var/obj/item/stock_parts/power_store/battery/cell
 
 	/// mob = list(action)
 	var/list/list/equipment_actions = list()
@@ -75,7 +75,7 @@
 
 /obj/vehicle/sealed/space_pod/update_overlays()
 	. = ..()
-	var/image/window = iconstate2appearance(icon, "window") //this doesnt work i dont know why
+	var/image/window = mutable_appearance(icon, "window") //this doesnt work i dont know why
 	window.alpha = 200
 	. += window
 	for(var/obj/item/pod_equipment/equipment as anything in get_all_parts())
@@ -90,7 +90,7 @@
 	if(!rider.can_perform_action(src, NEED_HANDS)) // you need hands to use the door handle buddy
 		return ..()
 	if(length(occupants) < max_occupants)
-		return
+		return ..()
 	rider.balloon_alert_to_viewers("kicking driver out!")
 	if(!do_after(rider, 5 SECONDS, src))
 		return
@@ -110,18 +110,18 @@
 
 /obj/vehicle/sealed/space_pod/mouse_drop_receive(mob/living/dropped, mob/living/dropper, params)
 	. = ..()
-	if(!istype(dropped) || !istype(dropper) || !dropper.can_interact_with(src))
+	if(dropped == dropper || !istype(dropped) || !istype(dropper) || !dropper.can_interact_with(src))
 		return
 	if(length(occupants) >= max_occupants - max_drivers)
 		balloon_alert(dropper, "not enough passenger spots!")
 		return
-	dropper.visible_message(span_warning("[dropper] begins forcing [dropped] into [src]!"), span_userdanger("[dropper] begins forcing you into [src]!"))
+	dropped.visible_message(span_warning("[dropper] begins forcing [dropped] into [src]!"), span_userdanger("[dropper] begins forcing you into [src]!"))
 	if(!do_after(dropper, 4 SECONDS, dropped, extra_checks = CALLBACK(src, PROC_REF(enter_checks))))
 		return
 	if(!dropped.Adjacent(src))
 		return
 	mob_enter(dropped, flags = NONE) // force occupancy
-	dropper.visible_message(span_warning("[dropped] is forced into [src] by [dropper]!"))
+	dropped.visible_message(span_warning("[dropped] is forced into [src] by [dropper]!"))
 
 
 // brakes, or autostabilize if not driven
@@ -144,17 +144,22 @@
 	//braking without drivers is half as strong incase you put like a bomb in your trunk or something and jumped out
 	drift_handler.stabilize_drift(target_force = 0, stabilization_force = !length(drivers) ? stabilizer_force / 2 : stabilizer_force)
 
-
 /obj/vehicle/sealed/space_pod/vehicle_move(direction)
 	. = ..()
 	if(!max_speed || !force_per_move)
 		return
+	if(!COOLDOWN_FINISHED(src, cooldown_vehicle_move))
+		return
+	var/power_used = (STANDARD_BATTERY_CHARGE / 1000 * 3) * force_per_move
+	for(var/obj/item/pod_equipment/equip as anything in get_all_parts())
+		power_used *= equip.movement_power_usage_mult
+	if(!use_power(power_used))
+		return
 	if(has_gravity() || !newtonian_move(dir2angle(direction), instant = TRUE, drift_force = force_per_move, controlled_cap = max_speed))
-		if(!COOLDOWN_FINISHED(src, cooldown_vehicle_move))
-			return
 		COOLDOWN_START(src, cooldown_vehicle_move, istype(loc, /turf/open/floor/engine) ? 0.3 SECONDS : 2 SECONDS) //moves much better on engine tiles
 		after_move(direction)
 		return try_step_multiz(direction)
+	COOLDOWN_START(src, cooldown_vehicle_move, 1 DECISECONDS)
 	setDir(direction)
 	trail.generate_effect()
 	after_move(direction)

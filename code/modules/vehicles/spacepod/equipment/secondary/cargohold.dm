@@ -28,7 +28,6 @@
 		dump_contents()
 
 /obj/item/pod_equipment/cargo_hold/dump_contents()
-	SIGNAL_HANDLER
 	for(var/atom/movable/content as anything in contents)
 		content.forceMove(pod.drop_location())
 

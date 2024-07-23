@@ -6,3 +6,9 @@
 	. = list()
 	for(var/slot in equipped)
 		. += equipped[slot] //byond works its magic im not sure whats the point of this proc actually
+/// Uses the pods power cell if possible
+/obj/vehicle/sealed/space_pod/proc/use_power(amount)
+	var/obj/item/stock_parts/power_store/cell = get_cell()
+	if(isnull(cell))
+		return FALSE
+	return cell.use(amount)
