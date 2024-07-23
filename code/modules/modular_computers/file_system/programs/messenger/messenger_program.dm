@@ -15,7 +15,7 @@
 	undeletable = TRUE // It comes by default in tablets, can't be downloaded, takes no space and should obviously not be able to be deleted.
 	power_cell_use = NONE
 	program_flags = PROGRAM_HEADER | PROGRAM_RUNS_WITHOUT_POWER | PROGRAM_CIRCUITS_RUN_WHEN_CLOSED
-	can_run_on_flags = PROGRAM_PDA
+	can_run_on_flags = PROGRAM_PDA | PROGRAM_AI
 	ui_header = "ntnrc_idle.gif"
 	tgui_id = "NtosMessenger"
 	program_icon = "comment-alt"
