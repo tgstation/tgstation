@@ -30,7 +30,7 @@
 		return ..()
 
 	/// The blade carrot will turn into once sharpened
-	var/carrot_blade
+	var/obj/item/melee/carrot_blade
 	/// Chance for it to become a sword rather than a shiv
 	var/carrot_sword_chance = (max(0, seed.potency - 50) / 50)
 	if (prob(carrot_sword_chance))
@@ -69,7 +69,7 @@
 		return ..()
 
 	/// The blade parsnip will turn into once sharpened
-	var/parsnip_blade
+	var/obj/item/melee/parsnip_blade
 	/// Chance for it to become a sabre rather than a shiv
 	var/parsnip_sabre_chance = (max(0, seed.potency - 50) / 50)
 	if (prob(parsnip_sabre_chance))
@@ -115,7 +115,7 @@
 		return ..()
 
 	/// The blade cahn'root will turn into once sharpened
-	var/root_blade
+	var/obj/item/melee/root_blade
 	/// Chance for it to become a dagger rather than a shiv
 	var/root_dagger_chance = (max(0, seed.potency - 25) / 50)
 	if (prob(root_dagger_chance))
