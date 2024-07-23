@@ -79,9 +79,10 @@
 	icon_state = "smartgun"
 	damage = 10
 	embed_type = /datum/embed_data/bullet_c160smart
-	homing_turn_speed = 2
-	homing_inaccuracy_min = 4
-	homing_inaccuracy_max = 16
+	homing_turn_speed = 0.35
+	homing_inaccuracy_min = 0
+	homing_inaccuracy_max = 6
+	speed = 1.5
 
 /datum/embed_data/bullet_c160smart
 	embed_chance = 10
