@@ -588,9 +588,10 @@
 		transform = transform.Scale(1, -1)
 	return ..()
 
-/obj/projectile/fishing_cast/Impact(atom/hit_atom)
+/obj/projectile/fishing_cast/on_hit(atom/target, blocked = 0, pierce_hit)
 	. = ..()
-	owner.hook_hit(hit_atom)
+	if(blocked < 100)
+		owner.hook_hit(target)
 	qdel(src)
 
 /obj/projectile/fishing_cast/fire(angle, atom/direct_target)

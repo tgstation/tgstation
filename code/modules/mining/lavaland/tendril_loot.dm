@@ -246,13 +246,13 @@
 		inhand_icon_state = "lantern-blue"
 		wisp.orbit(user, 20)
 		SSblackbox.record_feedback("tally", "wisp_lantern", 1, "Freed")
+		return
 
-	else
-		to_chat(user, span_notice("You return the wisp to the lantern."))
-		icon_state = "lantern-blue-on"
-		inhand_icon_state = "lantern-blue-on"
-		wisp.forceMove(src)
-		SSblackbox.record_feedback("tally", "wisp_lantern", 1, "Returned")
+	to_chat(user, span_notice("You return the wisp to the lantern."))
+	icon_state = "lantern-blue-on"
+	inhand_icon_state = "lantern-blue-on"
+	wisp.forceMove(src)
+	SSblackbox.record_feedback("tally", "wisp_lantern", 1, "Returned")
 
 /obj/item/wisp_lantern/Initialize(mapload)
 	. = ..()
@@ -278,26 +278,30 @@
 	light_flags = LIGHT_ATTACHED
 	layer = ABOVE_ALL_MOB_LAYER
 	plane = ABOVE_GAME_PLANE
-	var/sight_flags = SEE_MOBS
 	var/list/color_cutoffs = list(10, 25, 25)
 
 /obj/effect/wisp/orbit(atom/thing, radius, clockwise, rotation_speed, rotation_segments, pre_rotation, lockinorbit)
 	. = ..()
-	if(ismob(thing))
-		RegisterSignal(thing, COMSIG_MOB_UPDATE_SIGHT, PROC_REF(update_user_sight))
-		var/mob/being = thing
-		being.update_sight()
-		to_chat(thing, span_notice("The wisp enhances your vision."))
+	if(!ismob(thing))
+		return
+	var/mob/being = thing
+	RegisterSignal(being, COMSIG_MOB_UPDATE_SIGHT, PROC_REF(update_user_sight))
+	to_chat(being, span_notice("The wisp enhances your vision."))
+	ADD_TRAIT(being, TRAIT_THERMAL_VISION, REF(src))
+	being.update_sight()
 
 /obj/effect/wisp/stop_orbit(datum/component/orbiter/orbits)
-	. = ..()
-	if(ismob(orbits.parent))
-		UnregisterSignal(orbits.parent, COMSIG_MOB_UPDATE_SIGHT)
-		to_chat(orbits.parent, span_notice("Your vision returns to normal."))
+	if(!ismob(orbit_target))
+		return ..()
+	var/mob/being = orbit_target
+	UnregisterSignal(being, COMSIG_MOB_UPDATE_SIGHT)
+	to_chat(being, span_notice("Your vision returns to normal."))
+	REMOVE_TRAIT(being, TRAIT_THERMAL_VISION, REF(src))
+	being.update_sight()
+	return ..()
 
 /obj/effect/wisp/proc/update_user_sight(mob/user)
 	SIGNAL_HANDLER
-	user.add_sight(sight_flags)
 	if(!isnull(color_cutoffs))
 		user.lighting_color_cutoffs = blend_cutoff_colors(user.lighting_color_cutoffs, color_cutoffs)
 

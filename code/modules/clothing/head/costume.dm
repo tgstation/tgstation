@@ -199,3 +199,9 @@
 	It's only a replica, and probably wouldn't protect you from anything."
 	icon_state = "allies_helmet"
 	inhand_icon_state = null
+
+/obj/item/clothing/head/costume/hairpin
+	name = "fancy hairpin"
+	desc = "A delicate hairpin normally paired with traditional clothing"
+	icon_state = "hairpin_fancy"
+	inhand_icon_state = "hairpin_fancy"
