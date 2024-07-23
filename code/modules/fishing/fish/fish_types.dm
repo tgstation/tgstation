@@ -243,7 +243,7 @@
 	required_temperature_min = MIN_AQUARIUM_TEMP+10
 	required_temperature_max = MIN_AQUARIUM_TEMP+32
 
-//Chasm fish
+/// Commonly found on the mining fishing spots. Can be grown into lobstrosities
 /obj/item/fish/chasm_crab
 	name = "chasm chrab"
 	desc = "The young of the lobstrosity mature in pools below the earth, eating what falls in until large enough to clamber out. Those found near the station are well-fed."
@@ -270,17 +270,102 @@
 	evolution_types = list(/datum/fish_evolution/ice_chrab)
 	compatible_types = list(/obj/item/fish/chasm_crab/ice)
 	beauty = FISH_BEAUTY_GOOD
+	///Chasm crabs mature into juveline lobstrositiess with time. This is the progess from 0 to 100
+	var/maturation = 0
+	///This value represents how much the crab needs aren't being met. Higher values translate to a more likely hostile lobstrosity.
+	var/anger = 0
+	///The lobstrosity type this matures into
+	var/lob_type = /mob/living/basic/mining/lobstrosity/juvenile/lava
+	///at which rate the crab gains maturation
+	var/growth_rate = 100 / (12 MINUTES) * 10
+
+///A chasm crab growth speed is determined by its initial weight and size, ergo bigger crabs for faster lobstrosities
+/obj/item/fish/chasm_crab/update_size_and_weight(new_size = average_size, new_weight = average_weight)
+	. = ..()
+	var/multiplier = 1
+	switch(size)
+		if(0 to FISH_SIZE_TINY_MAX)
+			multiplier -= 0.2
+		if(FISH_SIZE_SMALL_MAX to FISH_SIZE_NORMAL_MAX)
+			multiplier += 0.2
+		if(FISH_SIZE_NORMAL_MAX to FISH_SIZE_BULKY_MAX)
+			multiplier += 0.5
+		if(FISH_SIZE_BULKY_MAX to INFINITY)
+			multiplier += 0.8
+
+	if(weight <= 800)
+		multiplier -= 0.1 * round((1000 - weight) / 200)
+	else if(weight >= 1500)
+		multiplier += min(0.1 * round((weight - 1000) / 500), 2)
+
+	growth_rate = initial(growth_rate) * multiplier
+
+/obj/item/fish/chasm_crab/process(seconds_per_tick)
+	. = ..()
+	grow_up(seconds_per_tick)
+
+///Slowly grow up each process tick (in an aquarium). This is its own proc so that it can be used in the unit test.
+/obj/item/fish/chasm_crab/proc/grow_up(seconds_per_tick)
+	var/hunger = CLAMP01((world.time - last_feeding) / feeding_frequency)
+	if(health <= initial(health) * 0.6 || hunger >= 0.6) //if too hurt or hungry, don't grow.
+		anger += growth_rate * 2 * seconds_per_tick
+		return
+
+	if(!isaquarium(loc)) //can't grow outside an aquarium.
+		return
+
+	var/obj/structure/aquarium/aquarium = loc
+	if(!aquarium.allow_breeding) //the aquarium has breeding disabled
+		return
+	if(hunger >= 0.4) //I'm hungry and angry
+		anger += growth_rate * 0.6 * seconds_per_tick
+	if(!locate(/obj/item/aquarium_prop) in aquarium) //the aquarium deco is quite barren
+		anger += growth_rate * 0.25 * seconds_per_tick
+	var/fish_count = length(aquarium.get_fishes())
+	if(!ISINRANGE(fish_count, 3, AQUARIUM_MAX_BREEDING_POPULATION * 0.5)) //too lonely or overcrowded
+		anger += growth_rate * 0.3 * seconds_per_tick
+	if(fish_count <= AQUARIUM_MAX_BREEDING_POPULATION * 0.5) //check if there's enough room to maturate.
+		maturation += growth_rate * seconds_per_tick
+
+	if(maturation >= 100)
+		return finish_growing()
+
+///spawn a juvenile lobstrosity on the aquarium turf
+/obj/item/fish/chasm_crab/proc/finish_growing()
+	var/mob/living/basic/mining/lobstrosity/juvenile/lob = new lob_type(get_turf(src))
+	for(var/trait_type in fish_traits)
+		var/datum/fish_trait/trait = GLOB.fish_traits[trait_type]
+		trait.apply_to_mob(lob)
+	if(!prob(anger))
+		lob.AddElement(/datum/element/ai_retaliate)
+		qdel(lob.ai_controller)
+		lob.ai_controller = new /datum/ai_controller/basic_controller/lobstrosity/juvenile/calm(lob)
+	else if(anger < 30) //not really that mad, just a bit unstable.
+		qdel(lob.ai_controller)
+		lob.ai_controller = new /datum/ai_controller/basic_controller/lobstrosity/juvenile/capricious(lob)
+
+	animate(lob, pixel_y = 18, time = 0.4 SECONDS, flags = ANIMATION_RELATIVE, easing = CUBIC_EASING|EASE_OUT)
+	animate(pixel_y = -18, time = 0.4 SECONDS, flags = ANIMATION_RELATIVE, easing = CUBIC_EASING|EASE_IN)
+	loc.visible_message(span_boldnotice("\A [lob] jumps out of [loc]!"))
+	playsound(loc, 'sound/effects/fish_splash.ogg', 60)
+
+	///make sure it moves the next tick so that it properly glides to the next location after jumping off the aquarium.
+	addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(random_step), lob, 1, 100), 0.1 SECONDS)
+
+	qdel(src)
+	return lob
 
 /obj/item/fish/chasm_crab/ice
 	name = "arctic chrab"
 	desc = "A subspecies of chasm chrabs that has adapted to the cold climate and lack of abysmal holes of the icemoon."
 	icon_state = "arctic_chrab"
-	dedicated_in_aquarium_icon_state = "ice_chrab_small"
+	dedicated_in_aquarium_icon_state = "arctic_chrab_small"
 	required_temperature_min = ICEBOX_MIN_TEMPERATURE-20
 	required_temperature_max = MIN_AQUARIUM_TEMP+15
 	evolution_types = list(/datum/fish_evolution/chasm_chrab)
 	compatible_types = list(/obj/item/fish/chasm_crab)
 	beauty = FISH_BEAUTY_GREAT
+	lob_type = /mob/living/basic/mining/lobstrosity/juvenile
 
 /obj/item/fish/donkfish
 	name = "donk co. company patent donkfish"
