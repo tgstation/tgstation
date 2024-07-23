@@ -250,7 +250,7 @@
 	obj_icon_state = "watermelon"
 
 /datum/dog_fashion/head/holymelon
-	name = "Holymelon Palladin %REAL_NAME%"
+	name = "Holymelon Paladin %REAL_NAME%"
 	desc = "Extraterrestial powers beware, %NAME% is here to smite you down!"
 	obj_icon_state = "holymelon"
 
