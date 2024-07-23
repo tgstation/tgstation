@@ -49,7 +49,6 @@
 	desc = "A 9mm incendiary bullet casing."
 	projectile_type = /obj/projectile/bullet/incendiary/c9mm
 
-
 // .50AE (Desert Eagle)
 
 /obj/item/ammo_casing/a50ae
@@ -57,3 +56,16 @@
 	desc = "A .50AE bullet casing."
 	caliber = CALIBER_50AE
 	projectile_type = /obj/projectile/bullet/a50ae
+
+// .160 Smart (Abielle smartgun)
+
+/obj/item/ammo_casing/c160smart
+	name = ".160 smart bullet casing"
+	desc = "A .160 smart bullet with a small charge of booster propellant at the bottom."
+	icon_state = smartgun_casing
+	caliber = CALIBER_160SMART
+	projectile_type = /obj/projectile/bullet/c160smart
+
+/obj/item/ammo_casing/c160smart/Initialize(mapload)
+	. = ..()
+	AddElement(/datum/element/caseless)
