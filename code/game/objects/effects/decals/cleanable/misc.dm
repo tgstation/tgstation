@@ -331,6 +331,9 @@
 /obj/effect/decal/cleanable/wrapping/pinata/syndie
 	icon_state = "syndie_pinata_shreds"
 
+/obj/effect/decal/cleanable/wrapping/pinata/donk
+	icon_state = "donk_pinata_shreds"
+
 /obj/effect/decal/cleanable/garbage
 	name = "decomposing garbage"
 	desc = "A split open garbage bag, its stinking content seems to be partially liquified. Yuck!"
