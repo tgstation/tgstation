@@ -368,10 +368,8 @@ const Blanks = (props: BlanksProps) => {
   const { blanks } = data;
 
   const [searchText, setSearchText] = useState('');
-  const search = createSearch<Blank>(searchText, (blank: Blank) => blank.name);
-  const sortedBlanks = (blanks || []).sort((a, b) =>
-    a.name.localeCompare(b.name),
-  );
+  const search = createSearch(searchText, (blank: Blank) => blank.name);
+  const sortedBlanks = blanks.sort((a, b) => (a.name > b.name ? 1 : -1));
   const visibleBlanks = searchText
     ? sortedBlanks.filter(search)
     : selectedCategory === 'All Blanks'
