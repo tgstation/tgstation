@@ -1,12 +1,12 @@
 import { BooleanLike } from 'common/react';
-import { useState } from 'react';
+
 import { useBackend } from '../backend';
 import { Button, Section, Stack } from '../components';
 import { Window } from '../layouts';
 
 type ManipulatorData = {
-    status: BooleanLike;
-  };
+  active: BooleanLike;
+};
 
 export const BigManipulator = (props) => {
   const { data, act } = useBackend<ManipulatorData>();
@@ -16,12 +16,12 @@ export const BigManipulator = (props) => {
       <Window.Content>
         <Section title="Action panel">
           <Stack>
-              <Button
-                icon="power-off"
-                content={active ? 'On' : 'Off'}
-                selected={active}
-                onClick={() => act('on')}
-              />
+            <Button
+              icon="power-off"
+              content={active ? 'On' : 'Off'}
+              selected={active}
+              onClick={() => act('on')}
+            />
           </Stack>
         </Section>
       </Window.Content>
