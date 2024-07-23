@@ -460,6 +460,14 @@
 /obj/machinery/power/smes/engineering/standby
 	output_attempt = FALSE // Engineering has one unit on standby to kickstart the grid for emitters
 
+/obj/machinery/power/smes/engineering/telecoms
+	name = "telecoms battery backup"
+	desc = "A high-capacity superconducting magnetic energy storage (SMES) unit. This model is a variant designed for use in protecting telecommunications equipment."
+	circuit = /obj/item/circuitboard/machine/smes/telecoms
+	charge = 30 * STANDARD_BATTERY_CHARGE
+	input_level = 70 KILO WATTS
+	output_level = 40 KILO WATTS
+
 /obj/machinery/power/smes/magical
 	name = "magical power storage unit"
 	desc = "A high-capacity superconducting magnetic energy storage (SMES) unit. Magically produces power."
@@ -468,7 +476,6 @@
 	capacity = INFINITY
 	charge = INFINITY
 	..()
-
 
 #undef SMES_CLEVEL_1
 #undef SMES_CLEVEL_2

@@ -21,6 +21,16 @@
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_ENGINEERING
 
+/datum/design/board/telecoms_smes
+	name = "Telecoms Battery Backup Board"
+	desc = "The circuit board for a Telecoms Battery Backup."
+	id = "telecoms_smes"
+	build_path = /obj/item/circuitboard/machine/smes/telecoms
+	category = list(
+		RND_CATEGORY_MACHINE + RND_SUBCATEGORY_MACHINE_ENGINEERING
+	)
+	departmental_flags = DEPARTMENT_BITFLAG_ENGINEERING
+
 /datum/design/board/announcement_system
 	name = "Automated Announcement System Board"
 	desc = "The circuit board for an automated announcement system."

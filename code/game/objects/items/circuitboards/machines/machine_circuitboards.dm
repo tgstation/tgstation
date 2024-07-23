@@ -344,6 +344,14 @@
 		/datum/stock_part/capacitor = 1)
 	def_components = list(/obj/item/stock_parts/power_store/battery = /obj/item/stock_parts/power_store/battery/high/empty)
 
+/obj/item/circuitboard/machine/smes/telecoms
+	name = "Telecoms Battery Backup"
+	build_path = /obj/machinery/power/smes/engineering/telecoms
+	req_components = list(
+		/obj/item/stack/cable_coil = 5,
+		/obj/item/stock_parts/power_store/battery = 3,
+		/datum/stock_part/capacitor = 1)
+
 /obj/item/circuitboard/machine/techfab/department/engineering
 	name = "\improper Departmental Techfab - Engineering"
 	greyscale_colors = CIRCUIT_COLOR_ENGINEERING

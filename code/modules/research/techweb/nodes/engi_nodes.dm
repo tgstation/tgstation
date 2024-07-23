@@ -155,6 +155,7 @@
 		"apc_control",
 		"powermonitor",
 		"smes",
+		"telecoms_smes",
 		"emitter",
 		"grounding_rod",
 		"tesla_coil",
