@@ -85,8 +85,13 @@ export const Photocopier = (props) => {
   );
 };
 
-const Status = ({ selectedBlank }: { selectedBlank: string | null }) => {
+type StatusProps = {
+  selectedBlank: string | null;
+};
+
+const Status = (props: StatusProps) => {
   const { act, data } = useBackend<Data>();
+  const { selectedBlank } = props;
   const {
     has_toner,
     copies_left,
@@ -166,8 +171,13 @@ const Status = ({ selectedBlank }: { selectedBlank: string | null }) => {
   );
 };
 
-const Actions = ({ selectedBlank }: { selectedBlank: string | null }) => {
+type ActionsProps = {
+  selectedBlank: string | null;
+};
+
+const Actions = (props: ActionsProps) => {
   const { act, data } = useBackend<Data>();
+  const { selectedBlank } = props;
   const {
     has_item,
     is_photo,
@@ -287,15 +297,14 @@ const Actions = ({ selectedBlank }: { selectedBlank: string | null }) => {
   );
 };
 
-const Categories = ({
-  selectedCategory,
-  setSelectedCategory,
-}: {
+type CategoriesProps = {
   selectedCategory: string | null;
   setSelectedCategory: (category: string) => void;
-}) => {
+};
+
+const Categories = (props: CategoriesProps) => {
   const { act, data } = useBackend<Data>();
-  const { categories } = data;
+  const { selectedCategory, setSelectedCategory } = props;
 
   return (
     <Section
@@ -327,7 +336,7 @@ const Categories = ({
             All Blanks
           </Button>
         </Stack.Item>
-        {categories.map((category) => (
+        {data.categories.map((category) => (
           <Stack.Item mt={0.25} key={category}>
             <Button
               fluid
@@ -347,16 +356,15 @@ const Categories = ({
   );
 };
 
-const Blanks = ({
-  selectedCategory,
-  selectedBlank,
-  setSelectedBlank,
-}: {
+type BlanksProps = {
   selectedCategory: string | null;
   selectedBlank: string | null;
   setSelectedBlank: (blank: string) => void;
-}) => {
+};
+
+const Blanks = (props: BlanksProps) => {
   const { act, data } = useBackend<Data>();
+  const { selectedCategory, selectedBlank, setSelectedBlank } = props;
   const { blanks } = data;
 
   const [searchText, setSearchText] = useState('');
