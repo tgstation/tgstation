@@ -91,7 +91,7 @@
 #define BB_TARGETLESS_TIME "BB_targetless_time"
 
 ///Tipped blackboards
-///Bool that means a basic mob will start reacting to being tipped in it's planning
+///Bool that means a basic mob will start reacting to being tipped in its planning
 #define BB_BASIC_MOB_TIP_REACTING "BB_basic_tip_reacting"
 ///the motherfucker who tipped us
 #define BB_BASIC_MOB_TIPPER "BB_basic_tip_tipper"

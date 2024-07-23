@@ -1,4 +1,4 @@
-// A very special plant, deserving it's own file.
+// A very special plant, deserving its own file.
 
 // Yes, i'm talking about cabbage, baby! No, just kidding, but cabbages are the precursor to replica pods, so they are here as well.
 /obj/item/seeds/cabbage

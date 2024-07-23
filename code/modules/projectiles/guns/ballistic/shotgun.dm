@@ -341,3 +341,18 @@
 	if(LAZYACCESS(params2list(params), RIGHT_CLICK))
 		return hook.try_fire_gun(target, user, params)
 	return ..()
+
+/obj/item/gun/ballistic/shotgun/musket
+	name = "\improper Donk Co. Musket"
+	icon = 'icons/obj/weapons/guns/ballistic.dmi'
+	icon_state = "donk_musket"
+	inhand_icon_state = "donk_musket"
+	worn_icon_state = "donk_musket"
+	desc = "A large-bore boltloading firearm with a classy wooden frame. Cheap, accurate, and easy to maintain. Reload and rack after every shot."
+	semi_auto = TRUE
+	alternative_caliber = CALIBER_50BMG
+	casing_ejector = TRUE
+	bolt_type = BOLT_TYPE_LOCKING
+	bolt_wording = "bolt"
+	internal_magazine = TRUE
+	accepted_magazine_type = /obj/item/ammo_box/magazine/internal/shot/musket

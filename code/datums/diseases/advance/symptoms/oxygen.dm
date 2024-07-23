@@ -44,22 +44,23 @@
 				infected_mob.blood_volume += 1
 		else
 			if(prob(base_message_chance))
-				to_chat(infected_mob, span_notice("[pick("Your lungs feel great.", "You realize you haven't been breathing.", "You don't feel the need to breathe.")]"))
+				to_chat(infected_mob, span_notice("Your lungs feel great."))
 	return
 
-/datum/symptom/oxygen/on_stage_change(datum/disease/advance/A)
+/datum/symptom/oxygen/on_stage_change(datum/disease/advance/advanced_disease)
 	. = ..()
 	if(!.)
 		return FALSE
-	var/mob/living/carbon/M = A.affected_mob
-	if(A.stage >= 4)
-		ADD_TRAIT(M, TRAIT_NOBREATH, DISEASE_TRAIT)
+	var/mob/living/carbon/infected_mob = advanced_disease.affected_mob
+	if(advanced_disease.stage >= 4)
+		ADD_TRAIT(infected_mob, TRAIT_NOBREATH, DISEASE_TRAIT)
+		to_chat(infected_mob, span_notice(pick("You realize you haven't been breathing.", "You don't feel the need to breathe.")))
 	else
-		REMOVE_TRAIT(M, TRAIT_NOBREATH, DISEASE_TRAIT)
+		REMOVE_TRAIT(infected_mob, TRAIT_NOBREATH, DISEASE_TRAIT)
 	return TRUE
 
-/datum/symptom/oxygen/End(datum/disease/advance/A)
+/datum/symptom/oxygen/End(datum/disease/advance/advanced_disease)
 	. = ..()
 	if(!.)
 		return
-	REMOVE_TRAIT(A.affected_mob, TRAIT_NOBREATH, DISEASE_TRAIT)
+	REMOVE_TRAIT(advanced_disease.affected_mob, TRAIT_NOBREATH, DISEASE_TRAIT)

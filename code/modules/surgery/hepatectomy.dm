@@ -13,6 +13,18 @@
 		/datum/surgery_step/close,
 	)
 
+/datum/surgery/hepatectomy/mechanic
+	name = "Impurity Management System Diagnostic"
+	requires_bodypart_type = BODYTYPE_ROBOTIC
+	steps = list(
+		/datum/surgery_step/mechanic_open,
+		/datum/surgery_step/open_hatch,
+		/datum/surgery_step/mechanic_unwrench,
+		/datum/surgery_step/hepatectomy/mechanic,
+		/datum/surgery_step/mechanic_wrench,
+		/datum/surgery_step/mechanic_close,
+	)
+
 /datum/surgery/hepatectomy/can_start(mob/user, mob/living/carbon/target)
 	var/obj/item/organ/internal/liver/target_liver = target.get_organ_slot(ORGAN_SLOT_LIVER)
 	if(isnull(target_liver) || target_liver.damage < 50 || target_liver.operated)
@@ -34,6 +46,17 @@
 	failure_sound = 'sound/surgery/organ2.ogg'
 	surgery_effects_mood = TRUE
 
+/datum/surgery_step/hepatectomy/mechanic
+	name = "perform maintenance (scalpel or wirecutter)"
+	implements = list(
+		TOOL_SCALPEL = 95,
+		TOOL_WRENCH = 95,
+		/obj/item/melee/energy/sword = 65,
+		/obj/item/knife = 45,
+		/obj/item/shard = 35)
+	preop_sound = 'sound/items/ratchet.ogg'
+	success_sound = 'sound/machines/doorclick.ogg'
+
 /datum/surgery_step/hepatectomy/preop(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
 	display_results(
 		user,
@@ -50,6 +73,8 @@
 	human_target.setOrganLoss(ORGAN_SLOT_LIVER, 10) //not bad, not great
 	if(target_liver)
 		target_liver.operated = TRUE
+		if(target_liver.organ_flags & ORGAN_EMP) //If our organ is failing due to an EMP, fix that
+			target_liver.organ_flags &= ~ORGAN_EMP
 	display_results(
 		user,
 		target,

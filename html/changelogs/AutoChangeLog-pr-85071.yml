@@ -1,5 +1,0 @@
-author: "theselfish"
-delete-after: True
-changes:
-  - rscadd: "Bitrunning and (spawn) Miner jumpsuits are now in their drobe."
-  - qol: "The Coroner Drobe got sorted into less 'shove everything in' and more 'in a sane format'."
