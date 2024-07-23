@@ -590,10 +590,9 @@
 
 /obj/projectile/fishing_cast/on_hit(atom/target, blocked = 0, pierce_hit)
 	. = ..()
-	var/obj/item/fishing_rod/rod_ref = owner //we need to execute hook_hit after qdel, since the current line has to be cleared.
-	qdel(src)
 	if(blocked < 100)
-		rod_ref.hook_hit(target)
+		QDEL_NULL(our_line) //we need to delete the old beam datum, otherwise it won't let you fish.
+		owner.hook_hit(target)
 
 /obj/projectile/fishing_cast/fire(angle, atom/direct_target)
 	. = ..()
