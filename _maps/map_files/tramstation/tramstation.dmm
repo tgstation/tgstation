@@ -2831,7 +2831,6 @@
 	},
 /obj/machinery/power/apc/auto_name/directional/north,
 /obj/structure/cable,
-/obj/effect/mapping_helpers/apc/cell_10k,
 /turf/open/floor/iron,
 /area/station/engineering/engine_smes)
 "anv" = (
@@ -33716,6 +33715,13 @@
 /obj/structure/fluff/tram_rail/floor,
 /turf/open/floor/glass/reinforced/tram,
 /area/station/hallway/primary/tram/right)
+"kTL" = (
+/obj/machinery/power/terminal{
+	dir = 8
+	},
+/obj/structure/cable,
+/turf/open/floor/iron/dark/telecomms,
+/area/station/tcommsat/server)
 "kTR" = (
 /obj/structure/closet{
 	name = "Beekeeper Uniform"
@@ -42067,6 +42073,10 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron,
 /area/station/hallway/secondary/service)
+"nOa" = (
+/obj/structure/cable,
+/turf/open/floor/iron/dark/telecomms,
+/area/station/tcommsat/server)
 "nOd" = (
 /turf/open/openspace,
 /area/station/solars/starboard/fore)
@@ -57417,6 +57427,13 @@
 /obj/effect/turf_decal/tile/purple/fourcorners,
 /turf/open/floor/iron/white,
 /area/station/science/xenobiology)
+"tms" = (
+/obj/machinery/power/smes{
+	charge = 5e+06
+	},
+/obj/structure/cable,
+/turf/open/floor/circuit/telecomms/mainframe,
+/area/station/tcommsat/server)
 "tmz" = (
 /obj/effect/turf_decal/siding/wood{
 	dir = 1
@@ -60823,7 +60840,6 @@
 	c_tag = "Secure - Telecomms Server Room West"
 	},
 /obj/structure/cable,
-/obj/effect/mapping_helpers/apc/cell_10k,
 /turf/open/floor/circuit/telecomms/mainframe,
 /area/station/tcommsat/server)
 "utY" = (
@@ -62325,7 +62341,7 @@
 /turf/open/floor/iron/dark,
 /area/station/service/hydroponics)
 "uQm" = (
-/obj/machinery/power/smes/engineering/standby,
+/obj/machinery/power/smes/engineering,
 /obj/structure/cable,
 /turf/open/floor/iron,
 /area/station/engineering/engine_smes)
@@ -98216,11 +98232,11 @@ dwR
 ngp
 dwR
 dwR
-sMr
-sMr
-sMr
 ney
-cXL
+ney
+sMr
+sMr
+nOa
 cXL
 vNH
 aaa
@@ -98477,7 +98493,7 @@ sMr
 uGX
 drH
 ney
-ney
+tms
 etf
 vNH
 aaa
@@ -98730,11 +98746,11 @@ ocK
 ngp
 dwR
 dwR
-ney
-ney
-ney
-ney
-cXL
+sMr
+sMr
+sMr
+sMr
+kTL
 cXL
 vNH
 aac
