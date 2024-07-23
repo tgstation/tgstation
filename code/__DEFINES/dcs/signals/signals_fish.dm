@@ -21,7 +21,7 @@
 /// Fishing challenge completed
 #define COMSIG_FISHING_CHALLENGE_COMPLETED "fishing_completed"
 /// Sent to the fisherman when the reward is dispensed: (reward)
-#define COMSIG_MOB_FISHING_REWARD_DISPENSED "mob_fishing_reward_dispensed"
+#define COMSIG_FISH_SOURCE_REWARD_DISPENSED "mob_fish_source_reward_dispensed"
 
 /// Called when you try to use fishing rod on anything
 #define COMSIG_PRE_FISHING "pre_fishing"

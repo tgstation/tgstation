@@ -52,8 +52,7 @@
 	if(command_radio)
 		radio.command = TRUE
 		radio.use_command = TRUE
-
-	if(ispath(uplink_type, /obj/item/uplink/nuclear) || tc) // /obj/item/uplink/nuclear understands 0 tc
+	if(ispath(uplink_type, /obj/item/uplink) || tc) // /obj/item/uplink understands 0 tc
 		var/obj/item/uplink = new uplink_type(nukie, nukie.key, tc)
 		nukie.equip_to_slot_or_del(uplink, ITEM_SLOT_BACKPACK, indirect_action = TRUE)
 

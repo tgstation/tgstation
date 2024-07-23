@@ -183,7 +183,7 @@
 			special_effects |= FISHING_MINIGAME_RULE_KILL
 
 	if(special_effects & FISHING_MINIGAME_RULE_KILL && ispath(reward_path,/obj/item/fish))
-		RegisterSignal(user, COMSIG_MOB_FISHING_REWARD_DISPENSED, PROC_REF(hurt_fish))
+		RegisterSignal(comp.fish_source, COMSIG_FISH_SOURCE_REWARD_DISPENSED, PROC_REF(hurt_fish))
 
 	difficulty += comp.fish_source.calculate_difficulty(reward_path, rod, user, src)
 	difficulty = clamp(round(difficulty), 1, 100)

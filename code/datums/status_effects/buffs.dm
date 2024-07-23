@@ -84,7 +84,7 @@
 	icon_state = "blooddrunk"
 
 /datum/status_effect/blooddrunk/on_apply()
-	ADD_TRAIT(owner, TRAIT_IGNOREDAMAGESLOWDOWN, BLOODDRUNK_TRAIT)
+	owner.add_movespeed_mod_immunities(id, /datum/movespeed_modifier/damage_slowdown)
 	if(ishuman(owner))
 		var/mob/living/carbon/human/human_owner = owner
 		human_owner.physiology.brute_mod *= 0.1
@@ -104,7 +104,7 @@
 		human_owner.physiology.tox_mod *= 10
 		human_owner.physiology.oxy_mod *= 10
 		human_owner.physiology.stamina_mod *= 10
-	REMOVE_TRAIT(owner, TRAIT_IGNOREDAMAGESLOWDOWN, BLOODDRUNK_TRAIT)
+	owner.remove_movespeed_mod_immunities(id, /datum/movespeed_modifier/damage_slowdown)
 	owner.remove_stun_absorption(id)
 
 //Used by changelings to rapidly heal
@@ -383,7 +383,7 @@
 	show_duration = TRUE
 
 /datum/status_effect/regenerative_core/on_apply()
-	ADD_TRAIT(owner, TRAIT_IGNOREDAMAGESLOWDOWN, STATUS_EFFECT_TRAIT)
+	owner.add_movespeed_mod_immunities(id, /datum/movespeed_modifier/damage_slowdown)
 	owner.adjustBruteLoss(-25)
 	owner.adjustFireLoss(-25)
 	owner.fully_heal(HEAL_CC_STATUS)
@@ -394,7 +394,7 @@
 	return TRUE
 
 /datum/status_effect/regenerative_core/on_remove()
-	REMOVE_TRAIT(owner, TRAIT_IGNOREDAMAGESLOWDOWN, STATUS_EFFECT_TRAIT)
+	owner.remove_movespeed_mod_immunities(id, /datum/movespeed_modifier/damage_slowdown)
 
 /datum/status_effect/lightningorb
 	id = "Lightning Orb"
@@ -570,7 +570,8 @@
 	owner.AddElement(/datum/element/forced_gravity, 0)
 	owner.AddElement(/datum/element/simple_flying)
 	owner.add_stun_absorption(source = id, priority = 4)
-	owner.add_traits(list(TRAIT_IGNOREDAMAGESLOWDOWN, TRAIT_FREE_HYPERSPACE_MOVEMENT), MAD_WIZARD_TRAIT)
+	owner.add_movespeed_mod_immunities(id, /datum/movespeed_modifier/damage_slowdown)
+	ADD_TRAIT(owner, TRAIT_FREE_HYPERSPACE_MOVEMENT, id)
 	owner.playsound_local(get_turf(owner), 'sound/chemistry/ahaha.ogg', vol = 100, vary = TRUE, use_reverb = TRUE)
 	return TRUE
 
@@ -587,7 +588,8 @@
 	owner.RemoveElement(/datum/element/forced_gravity, 0)
 	owner.RemoveElement(/datum/element/simple_flying)
 	owner.remove_stun_absorption(id)
-	owner.remove_traits(list(TRAIT_IGNOREDAMAGESLOWDOWN, TRAIT_FREE_HYPERSPACE_MOVEMENT), MAD_WIZARD_TRAIT)
+	owner.remove_movespeed_mod_immunities(id, /datum/movespeed_modifier/damage_slowdown)
+	REMOVE_TRAIT(owner, TRAIT_FREE_HYPERSPACE_MOVEMENT, id)
 
 /// Gives you a brief period of anti-gravity
 /datum/status_effect/jump_jet

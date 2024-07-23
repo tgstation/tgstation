@@ -112,7 +112,6 @@
 
 /obj/machinery/microwave/Destroy()
 	QDEL_LIST(ingredients)
-	QDEL_NULL(wires)
 	QDEL_NULL(soundloop)
 	QDEL_NULL(particles)
 	if(!isnull(cell))

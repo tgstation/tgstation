@@ -480,6 +480,10 @@
 	reaction = /datum/chemical_reaction/food/soup/jellyfish_stew
 	category = CAT_LIZARD
 
+/datum/crafting_recipe/food/reaction/soup/jellyfish_stew_two
+	reaction = /datum/chemical_reaction/food/soup/jellyfish_stew_two
+	category = CAT_LIZARD
+
 /datum/crafting_recipe/food/reaction/soup/rootbread_soup
 	reaction = /datum/chemical_reaction/food/soup/rootbread_soup
 	category = CAT_LIZARD

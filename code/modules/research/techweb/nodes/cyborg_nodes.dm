@@ -90,7 +90,7 @@
 
 /datum/techweb_node/borg_utility
 	id = TECHWEB_NODE_BORG_UTILITY
-	display_name = "Untility Cyborg Upgrades"
+	display_name = "Utility Cyborg Upgrades"
 	description = "Let them wipe our floors for us."
 	prereq_ids = list(TECHWEB_NODE_BORG_SERVICES, TECHWEB_NODE_SANITATION)
 	design_ids = list(

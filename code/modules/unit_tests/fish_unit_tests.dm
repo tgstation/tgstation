@@ -253,5 +253,21 @@
 	growth_rate = 100
 	fish_traits = list() //We don't want to end up applying traits twice on the resulting lobstrosity
 
+/datum/unit_test/explosive_fishing
+
+/datum/unit_test/explosive_fishing/Run()
+	var/datum/fish_source/source = GLOB.preset_fish_sources[/datum/fish_source/unit_test]
+	source.spawn_reward_from_explosion(run_loc_floor_bottom_left, 1)
+	if(length(source.fish_table))
+		TEST_FAIL("The unit test item wasn't removed/spawned from fish_table during 'spawn_reward_from_explosion'.")
+
+/datum/fish_source/unit_test
+	fish_table = list(
+		/obj/item/wrench = 1,
+	)
+	fish_counts = list(
+		/obj/item/wrench = 1,
+	)
+
 #undef TRAIT_FISH_TESTING
 

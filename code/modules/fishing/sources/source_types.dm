@@ -14,6 +14,7 @@
 		/obj/item/fish/clownfish/lube = 2,
 	)
 	fishing_difficulty = FISHING_DEFAULT_DIFFICULTY + 5
+	explosive_malus = TRUE
 
 /datum/fish_source/ocean/beach
 	catalog_description = "Beach shore water"
@@ -159,7 +160,7 @@
 			challenge.special_effects |= effect
 
 ///Cherry on top, fish caught from the randomizer portal also have (almost completely) random traits
-/datum/fish_source/portal/random/spawn_reward(reward_path, mob/fisherman, turf/fishing_spot)
+/datum/fish_source/portal/random/spawn_reward(reward_path, atom/movable/spawn_location, turf/fishing_spot)
 	if(!ispath(reward_path, /obj/item/fish))
 		return ..()
 
@@ -170,7 +171,7 @@
 			var/datum/fish_trait/trait = GLOB.fish_traits[trait_type]
 			weighted_traits[trait.type] = round(trait.inheritability**2/100)
 
-	var/obj/item/fish/caught_fish = new reward_path(get_turf(fisherman), FALSE)
+	var/obj/item/fish/caught_fish = new reward_path(spawn_location, FALSE)
 	var/list/new_traits = list()
 	for(var/iteration in rand(1, 4))
 		new_traits |= pick_weight(weighted_traits)
@@ -206,7 +207,8 @@
 
 	return rod.hook.chasm_detritus_type
 
-/datum/fish_source/chasm
+/datum/fish_source/chasm/spawn_reward_from_explosion(atom/location, severity)
+	return //Spawned content would immediately fall back into the chasm, so it wouldn't matter.
 
 /datum/fish_source/lavaland
 	catalog_description = "Lava vents"
@@ -223,6 +225,7 @@
 	)
 
 	fishing_difficulty = FISHING_DEFAULT_DIFFICULTY + 10
+	explosive_malus = TRUE
 
 /datum/fish_source/lavaland/reason_we_cant_fish(obj/item/fishing_rod/rod, mob/fisherman, atom/parent)
 	. = ..()
@@ -354,6 +357,15 @@
 	if(basin.myseed)
 		return "There's a plant growing in [parent]."
 
+	return ..()
+
+/datum/fish_source/hydro_tray/spawn_reward_from_explosion(atom/location, severity)
+	if(!istype(location, /obj/machinery/hydroponics/constructable))
+		return ..()
+
+	var/obj/machinery/hydroponics/constructable/basin = location
+	if(basin.myseed || basin.waterlevel <= 0)
+		return
 	return ..()
 
 /datum/fish_source/hydro_tray/spawn_reward(reward_path, mob/fisherman, turf/fishing_spot)
