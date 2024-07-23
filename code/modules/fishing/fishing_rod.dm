@@ -590,20 +590,20 @@
 
 /obj/projectile/fishing_cast/on_hit(atom/target, blocked = 0, pierce_hit)
 	. = ..()
-	if(blocked < 100)
-		owner.hook_hit(target)
+	var/obj/item/fishing_rod/rod_ref = owner //we need to execute hook_hit after qdel, since the current line has to be cleared.
 	qdel(src)
+	if(blocked < 100)
+		rod_ref.hook_hit(target)
 
 /obj/projectile/fishing_cast/fire(angle, atom/direct_target)
 	. = ..()
 	our_line = owner.create_fishing_line(src)
 
 /obj/projectile/fishing_cast/Destroy()
-	. = ..()
 	QDEL_NULL(our_line)
 	owner?.casting = FALSE
-
-
+	owner = null
+	return ..()
 
 /datum/beam/fishing_line
 	// Is the fishing rod held in left side hand
