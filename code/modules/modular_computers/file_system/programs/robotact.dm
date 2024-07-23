@@ -7,7 +7,7 @@
 	program_open_overlay = "command"
 	program_flags = NONE
 	undeletable = TRUE
-	can_run_on_flags = PROGRAM_PDA
+	can_run_on_flags = PROGRAM_SILICON // it's restricted to silicons
 	size = 5
 	tgui_id = "NtosRobotact"
 	program_icon = "terminal"
