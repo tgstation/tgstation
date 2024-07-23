@@ -1187,3 +1187,32 @@
   necromanceranne:
   - qol: There is a larger stock of roundstart clothing availalbe in the clothing
       vendors. Now you can get your entire gang in matching outfits!
+2024-07-23:
+  AyIong:
+  - qol: Chat notifications are now at the top
+  Ben10Omintrix:
+  - refactor: mulebot UI has been refactored
+  Ghommie:
+  - bugfix: Fixes fishing rods not working on adjacent targets.
+  - rscadd: You can now fish with explosives.
+  - bugfix: Fixed an inconsistency with examining fishing spots with sufficiently
+      high fishing skill (or skillchip).
+  Holoo-1:
+  - bugfix: fixed ghost huds
+  MTandi:
+  - rscadd: Dehydrator, a machine version of drying rack, with a circuit board and
+      available on some kitchens roundstart.
+  - image: Updated the color palette of Smart Fridge
+  SmArtKar:
+  - code_imp: Removed 8 cases of double indentation
+  - bugfix: Holopads no longer suck in unsuspecting people when crowbared
+  - bugfix: Surgical tape and edagger's embedding values have been fixed
+  Time-Green:
+  - bugfix: Shuttle events meteors now dont sometimes kill everyone
+  necromanceranne:
+  - rscadd: Robotic variants of many of the standard and advanced humanoid surgeries.
+      You cannot perform self surgery with these surgeries.
+  - balance: It is easier to do robotic surgeries with normal surgery tools.
+  - qol: It is now possible to detect EMP organ failure cascades via health scanners.
+  - qol: EMP organ failure cascades can be reversed by doing organ repair surgeries
+      targeting the failing organ.

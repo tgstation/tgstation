@@ -10,6 +10,16 @@
 /// Key where we keep the spine traps ability
 #define BB_METEOR_HEART_SPINE_TRAPS "BB_meteor_spine_traps"
 
+// Cybersun AI core AI keys
+///key for lightning strike attack
+#define BB_CYBERSUN_CORE_LIGHTNING "BB_lightning_strike"
+///key for big laser attack
+#define BB_CYBERSUN_CORE_BARRAGE "BB_cybersun_barrage"
+
+// Donk Exenteration Drone keys
+// key for aoe slash attack
+#define BB_DEDBOT_SLASH "BB_dedbot_exenterate"
+
 // Spider AI keys
 /// Key where we store a turf to put webs on
 #define BB_SPIDER_WEB_TARGET "BB_spider_web_target"
