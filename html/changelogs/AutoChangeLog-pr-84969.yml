@@ -1,0 +1,6 @@
+author: "Ghommie"
+delete-after: True
+changes:
+  - rscadd: "You can raise lobstrosities from chasm chrabs inside an aquarium with the 'allow breeding' setting on. Keep the fish well fed, healthy and not lonely if you don't want an hostile one."
+  - rscadd: "Juveline lobstrosities (from chasms, plasma rivers, or aquariums, xenobio too) can be tamed with arms and lavaloop fishes."
+  - rscadd: "For lobstrosities grown from aquariums, they can have additional effects based on the fish traits they had in the aquarium, like being venomous or even flying."
