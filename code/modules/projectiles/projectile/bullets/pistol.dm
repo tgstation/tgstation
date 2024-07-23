@@ -76,6 +76,7 @@
 
 /obj/projectile/bullet/c160smart
 	name = ".160 smart bullet"
+	icon_state = "smartgun"
 	damage = 10
 	embed_type = /datum/embed_data/bullet_c160smart
 	homing = TRUE

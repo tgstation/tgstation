@@ -62,7 +62,7 @@
 /obj/item/ammo_casing/c160smart
 	name = ".160 smart bullet casing"
 	desc = "A .160 smart bullet with a small charge of booster propellant at the bottom."
-	icon_state = smartgun_casing
+	icon_state = "smartgun_casing"
 	caliber = CALIBER_160SMART
 	projectile_type = /obj/projectile/bullet/c160smart
 
