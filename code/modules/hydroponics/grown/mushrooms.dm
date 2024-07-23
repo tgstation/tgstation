@@ -207,9 +207,9 @@
 	remove_item_from_storage(user)
 	qdel(src)
 	if(seed.resistance_flags & FIRE_PROOF)
-		user.put_in_hands(new /obj/item/clothing/head/wizard/chanterelle/fr)
+		user.put_in_hands(new /obj/item/clothing/head/wizard/chanterelle/fr())
 	else
-		user.put_in_hands(new /obj/item/clothing/head/wizard/chanterelle)
+		user.put_in_hands(new /obj/item/clothing/head/wizard/chanterelle())
 
 //Jupiter Cup
 /obj/item/seeds/chanter/jupitercup
