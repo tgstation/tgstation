@@ -78247,11 +78247,11 @@
 /obj/machinery/power/terminal{
 	dir = 1
 	},
+/obj/structure/extinguisher_cabinet/directional/east,
 /obj/effect/turf_decal/stripes/line{
 	dir = 5
 	},
 /obj/effect/turf_decal/tile/neutral/fourcorners,
-/obj/machinery/airalarm/directional/east,
 /turf/open/floor/iron/dark,
 /area/station/engineering/engine_smes)
 "tCW" = (
