@@ -36,9 +36,9 @@
 	var/effectQuiet = FALSE //The female sniper. If true, the pod makes no noise (including related explosions, opening sounds, etc)
 	var/effectMissile = FALSE //If true, the pod deletes the second it lands. If you give it an explosion, it will act like a missile exploding as it hits the ground
 	var/effectCircle = FALSE //If true, allows the pod to come in at any angle. Bit of a weird feature but whatever its here
-	var/style = STYLE_STANDARD //Style is a variable that keeps track of what the pod is supposed to look like. It acts as an index to the GLOB.podstyles list in cargo.dm defines to get the proper icon/name/desc for the pod.
+	var/datum/pod_style/style = /datum/pod_style //Style is a variable that keeps track of what the pod is supposed to look like. Only stores a path, type is set for ease of var access
 	var/reversing = FALSE //If true, the pod will not send any items. Instead, after opening, it will close again (picking up items/mobs) and fly back to centcom
-	var/list/reverse_dropoff_coords //Turf that the reverse pod will drop off it's newly-acquired cargo to
+	var/list/reverse_dropoff_coords //Turf that the reverse pod will drop off its newly-acquired cargo to
 	var/fallingSoundLength = 11
 	var/fallingSound = 'sound/weapons/mortar_long_whistle.ogg'//Admin sound to play before the pod lands
 	var/landingSound //Admin sound to play when the pod lands
@@ -61,7 +61,7 @@
 	var/list/turfs_in_cargo = list()
 
 /obj/structure/closet/supplypod/bluespacepod
-	style = STYLE_BLUESPACE
+	style = /datum/pod_style/advanced
 	bluespace = TRUE
 	explosionSize = list(0,0,1,2)
 
@@ -83,7 +83,7 @@
 	name = "Syndicate Extraction Pod"
 	desc = "A specalised, blood-red styled pod for extracting high-value targets out of active mission areas. <b>Targets must be manually stuffed inside the pod for proper delivery.</b>"
 	specialised = TRUE
-	style = STYLE_SYNDICATE
+	style = /datum/pod_style/syndicate
 	bluespace = TRUE
 	explosionSize = list(0,0,1,2)
 	delays = list(POD_TRANSIT = 25, POD_FALLING = 4, POD_OPENING = 30, POD_LEAVING = 30)
@@ -93,7 +93,7 @@
 	reverse_option_list = list("Mobs"=TRUE,"Objects"=FALSE,"Anchored"=FALSE,"Underfloor"=FALSE,"Wallmounted"=FALSE,"Floors"=FALSE,"Walls"=FALSE, "Mecha"=FALSE)
 
 /obj/structure/closet/supplypod/centcompod
-	style = STYLE_CENTCOM
+	style = /datum/pod_style/centcom
 	bluespace = TRUE
 	explosionSize = list(0,0,0,0)
 	delays = list(POD_TRANSIT = 20, POD_FALLING = 4, POD_OPENING = 30, POD_LEAVING = 30)
@@ -121,13 +121,13 @@
 	desc = "An intimidating supply pod, covered in the blood-red markings"
 	bluespace = TRUE
 	explosionSize = list(0,0,0,0)
-	style = STYLE_SYNDICATE
+	style = /datum/pod_style/syndicate
 	specialised = TRUE
 
 /obj/structure/closet/supplypod/deadmatch_missile
 	name = "cruise missile"
 	desc = "A big ass missile, likely launched from some far-off deep space missile silo."
-	style = STYLE_RED_MISSILE
+	style = /datum/pod_style/missile/syndicate
 	explosionSize = list(0,1,2,2)
 	effectShrapnel = TRUE
 	specialised = TRUE
@@ -153,33 +153,32 @@
 		style = customStyle
 	setStyle(style) //Upon initialization, give the supplypod an iconstate, name, and description based on the "style" variable. This system is important for the centcom_podlauncher to function correctly
 
-/obj/structure/closet/supplypod/proc/setStyle(chosenStyle) //Used to give the sprite an icon state, name, and description.
-	style = chosenStyle
-	var/base = GLOB.podstyles[chosenStyle][POD_BASE] //GLOB.podstyles is a 2D array we treat as a dictionary. The style represents the verticle index, with the icon state, name, and desc being stored in the horizontal indexes of the 2D array.
-	icon_state = base
-	decal = GLOB.podstyles[chosenStyle][POD_DECAL]
-	rubble_type = GLOB.podstyles[chosenStyle][POD_RUBBLE_TYPE]
+/obj/structure/closet/supplypod/proc/setStyle(datum/pod_style/chosen_style) //Used to give the sprite an icon state, name, and description.
+	style = chosen_style
+	icon_state = chosen_style::icon_state
+	decal = chosen_style::decal_icon
+	rubble_type = chosen_style::rubble_type
 	if (!adminNamed && !specialised) //We dont want to name it ourselves if it has been specifically named by an admin using the centcom_podlauncher datum
-		name = GLOB.podstyles[chosenStyle][POD_NAME]
-		desc = GLOB.podstyles[chosenStyle][POD_DESC]
-	if (GLOB.podstyles[chosenStyle][POD_DOOR])
-		door = "[base]_door"
+		name = chosen_style::name
+		desc = chosen_style::desc
+	if (chosen_style::has_door)
+		door = "[icon_state]_door"
 	else
 		door = FALSE
 	update_appearance()
 
 /obj/structure/closet/supplypod/proc/SetReverseIcon()
 	fin_mask = "bottomfin"
-	if (GLOB.podstyles[style][POD_SHAPE] == POD_SHAPE_NORML)
-		icon_state = GLOB.podstyles[style][POD_BASE] + "_reverse"
+	if (style::shape == POD_SHAPE_NORMAL)
+		icon_state = style::icon_state + "_reverse"
 	pixel_x = initial(pixel_x)
 	transform = matrix()
 	update_appearance()
 
 /obj/structure/closet/supplypod/proc/backToNonReverseIcon()
 	fin_mask = initial(fin_mask)
-	if (GLOB.podstyles[style][POD_SHAPE] == POD_SHAPE_NORML)
-		icon_state = GLOB.podstyles[style][POD_BASE]
+	if (style::shape == POD_SHAPE_NORMAL)
+		icon_state = style::icon_state
 	pixel_x = initial(pixel_x)
 	transform = matrix()
 	update_appearance()
@@ -189,13 +188,13 @@
 
 /obj/structure/closet/supplypod/update_overlays()
 	. = ..()
-	if(style == STYLE_INVISIBLE)
+	if(ispath(style, /datum/pod_style/invisible))
 		return
 
 	if(rubble)
 		. += rubble.getForeground(src)
 
-	if(style == STYLE_SEETHROUGH)
+	if(ispath(style, /datum/pod_style/seethrough))
 		for(var/atom/A in contents)
 			var/mutable_appearance/itemIcon = new(A)
 			itemIcon.transform = matrix().Translate(-1 * SUPPLYPOD_X_OFFSET, 0)
@@ -227,7 +226,7 @@
 		if(decal)
 			. += decal
 		return
-	else if (GLOB.podstyles[style][POD_SHAPE] != POD_SHAPE_NORML) //If we're not a normal pod shape (aka, if we don't have fins), just add the door without masking
+	else if (style::shape != POD_SHAPE_NORMAL) //If we're not a normal pod shape (aka, if we don't have fins), just add the door without masking
 		. += door
 	else
 		var/icon/masked_door = new(icon, door) //The door we want to apply
@@ -280,7 +279,7 @@
 	reversing = FALSE //Now that we're done reversing, we set this to false (otherwise we would get stuck in an infinite loop of calling the close proc at the bottom of open_pod() )
 	bluespace = TRUE //Make it so that the pod doesn't stay in centcom forever
 	pod_flags &= ~FIRST_SOUNDS //Make it so we play sounds now
-	if (!effectQuiet && style != STYLE_SEETHROUGH)
+	if (!effectQuiet && !ispath(style, /datum/pod_style/seethrough))
 		audible_message(span_notice("The pod hisses, closing and launching itself away from the station."), span_notice("The ground vibrates, and you hear the sound of engines firing."))
 	stay_after_drop = FALSE
 	holder.pixel_z = initial(holder.pixel_z)
@@ -351,14 +350,14 @@
 		opened = TRUE //We set opened to TRUE to avoid spending time trying to open (due to being deleted) during the Destroy() proc
 		qdel(src)
 		return
-	if (style == STYLE_GONDOLA) //Checks if we are supposed to be a gondola pod. If so, create a gondolapod mob, and move this pod to nullspace. I'd like to give a shout out, to my man oranges
+	if (ispath(style, /datum/pod_style/gondola)) //Checks if we are supposed to be a gondola pod. If so, create a gondolapod mob, and move this pod to nullspace. I'd like to give a shout out, to my man oranges
 		var/mob/living/basic/pet/gondola/gondolapod/benis = new(turf_underneath, src)
 		benis.contents |= contents //Move the contents of this supplypod into the gondolapod mob.
 		for (var/mob/living/mob_in_pod in benis.contents)
 			mob_in_pod.reset_perspective(null)
 		moveToNullspace()
 		addtimer(CALLBACK(src, PROC_REF(open_pod), benis), delays[POD_OPENING]) //After the opening delay passes, we use the open proc from this supplyprod while referencing the contents of the "holder", in this case the gondolapod mob
-	else if (style == STYLE_SEETHROUGH)
+	else if (ispath(style, /datum/pod_style/seethrough))
 		open_pod(src)
 	else
 		addtimer(CALLBACK(src, PROC_REF(open_pod), src), delays[POD_OPENING]) //After the opening delay passes, we use the open proc from this supplypod, while referencing this supplypod's contents
@@ -381,11 +380,11 @@
 	for (var/cargo in holder.contents)
 		var/atom/movable/movable_cargo = cargo
 		movable_cargo.forceMove(turf_underneath)
-	if (!effectQuiet && !openingSound && style != STYLE_SEETHROUGH && !(pod_flags & FIRST_SOUNDS)) //If we aren't being quiet, play the default pod open sound
+	if (!effectQuiet && !openingSound && !ispath(style, /datum/pod_style/seethrough) && !(pod_flags & FIRST_SOUNDS)) //If we aren't being quiet, play the default pod open sound
 		playsound(get_turf(holder), open_sound, 15, TRUE, -3)
 	if (broken) //If the pod is opening because it's been destroyed, we end here
 		return
-	if (style == STYLE_SEETHROUGH)
+	if (ispath(style, /datum/pod_style/seethrough))
 		startExitSequence(src)
 	else
 		if (reversing)
@@ -400,7 +399,7 @@
 		close(holder)
 	else if (bluespace) //If we're a bluespace pod, then delete ourselves (along with our holder, if a separate holder exists)
 		deleteRubble()
-		if (!effectQuiet && style != STYLE_INVISIBLE && style != STYLE_SEETHROUGH)
+		if (!effectQuiet && !ispath(style, /datum/pod_style/invisible) && !ispath(style, /datum/pod_style/seethrough))
 			do_sparks(5, TRUE, holder) //Create some sparks right before closing
 		qdel(src) //Delete ourselves and the holder
 		if (holder != src)
@@ -537,10 +536,10 @@
 	update_appearance()
 
 /obj/structure/closet/supplypod/proc/addGlow()
-	if (GLOB.podstyles[style][POD_SHAPE] != POD_SHAPE_NORML)
+	if (style::shape != POD_SHAPE_NORMAL)
 		return
 	glow_effect = new(src)
-	glow_effect.icon_state = "pod_glow_" + GLOB.podstyles[style][POD_GLOW]
+	glow_effect.icon_state = "pod_glow_" + style::glow_color
 	vis_contents += glow_effect
 	glow_effect.layer = GASFIRE_LAYER
 	SET_PLANE_EXPLICIT(glow_effect, ABOVE_GAME_PLANE, src)
@@ -629,7 +628,7 @@
 	if (type == RUBBLE_THIN)
 		icon_state += "_thin"
 		foreground += "_thin"
-	if (pod.style == STYLE_BOX)
+	if (ispath(pod.style, /datum/pod_style/box))
 		verticle_offset = -2
 	else
 		verticle_offset = initial(verticle_offset)
@@ -651,7 +650,7 @@
 	transform = matrix() * 1.5
 	animate(src, transform = matrix()*0.01, time = pod.delays[POD_TRANSIT]+pod.delays[POD_FALLING])
 
-/obj/effect/pod_landingzone //This is the object that forceMoves the supplypod to it's location
+/obj/effect/pod_landingzone //This is the object that forceMoves the supplypod to its location
 	name = "Landing Zone Indicator"
 	desc = "A holographic projection designating the landing zone of something. It's probably best to stand back."
 	icon = 'icons/obj/supplypods_32x32.dmi'
@@ -717,12 +716,12 @@
 	pod.transform = matrix().Turn(rotation)
 	pod.layer = FLY_LAYER
 	SET_PLANE_EXPLICIT(pod, ABOVE_GAME_PLANE, src)
-	if (pod.style != STYLE_INVISIBLE && pod.style != STYLE_TELEPORT) // BANDASTATION EDIT. Original: if (pod.style != STYLE_INVISIBLE)
+	if (!ispath(pod.style, /datum/pod_style/invisible) && !ispath(pod.style, /datum/pod_style/teleport))
 		animate(pod, pixel_z = -1 * abs(sin(rotation))*4, pixel_x = SUPPLYPOD_X_OFFSET + (sin(rotation) * 20), time = pod.delays[POD_FALLING], easing = LINEAR_EASING) //Make the pod fall! At an angle!
 	addtimer(CALLBACK(src, PROC_REF(endLaunch)), pod.delays[POD_FALLING], TIMER_CLIENT_TIME) //Go onto the last step after a very short falling animation
 
 /obj/effect/pod_landingzone/proc/setupSmoke(rotation)
-	if (pod.style == STYLE_INVISIBLE || pod.style == STYLE_SEETHROUGH)
+	if (ispath(pod.style, /datum/pod_style/invisible) || ispath(pod.style, /datum/pod_style/seethrough))
 		return
 	var/turf/our_turf = get_turf(drop_location())
 	for ( var/i in 1 to length(smoke_effects))
@@ -741,7 +740,7 @@
 		QDEL_IN(smoke_part, pod.delays[POD_FALLING] + 35)
 
 /obj/effect/pod_landingzone/proc/drawSmoke()
-	if (pod.style == STYLE_INVISIBLE || pod.style == STYLE_SEETHROUGH)
+	if (ispath(pod.style, /datum/pod_style/invisible) || ispath(pod.style, /datum/pod_style/seethrough))
 		return
 	for (var/obj/effect/supplypod_smoke/smoke_part in smoke_effects)
 		animate(smoke_part, alpha = 0, time = 20, flags = ANIMATION_PARALLEL)

@@ -27,17 +27,27 @@
 	var/datum/movespeed_modifier/speed_modifier = /datum/movespeed_modifier/grounded_voidwalker
 	/// The void eater weapon
 	var/obj/item/glass_breaker = /obj/item/void_eater
+	/// Our brain transmit telepathy spell
+	var/datum/action/transmit = /datum/action/cooldown/spell/list_target/telepathy/voidwalker
 
 /obj/item/organ/internal/brain/voidwalker/on_mob_insert(mob/living/carbon/organ_owner, special, movement_flags)
 	. = ..()
 
 	RegisterSignal(organ_owner, COMSIG_ATOM_ENTERING, PROC_REF(on_atom_entering))
 
-	organ_owner.AddComponent(/datum/component/space_camo, space_alpha, non_space_alpha, 2 SECONDS)
+	organ_owner.AddComponent(/datum/component/space_camo, space_alpha, non_space_alpha, 5 SECONDS)
+
+	organ_owner.AddElement(/datum/element/only_pull_living)
+	organ_owner.AddElement(/datum/element/glass_pacifist)
+	organ_owner.AddElement(/datum/element/no_crit_hitting)
+
 	organ_owner.apply_status_effect(regen)
 
 	unsettle = new unsettle(organ_owner)
 	unsettle.Grant(organ_owner)
+
+	transmit = new transmit(organ_owner)
+	transmit.Grant(organ_owner)
 
 	glass_breaker = new/obj/item/void_eater
 	organ_owner.put_in_hands(glass_breaker)
@@ -49,10 +59,18 @@
 	alpha = 255
 
 	qdel(organ_owner.GetComponent(/datum/component/space_camo))
+
+	organ_owner.RemoveElement(/datum/element/only_pull_living)
+	organ_owner.RemoveElement(/datum/element/glass_pacifist)
+	organ_owner.RemoveElement(/datum/element/no_crit_hitting)
+
 	organ_owner.remove_status_effect(regen)
 
 	unsettle.Remove(organ_owner)
 	unsettle = initial(unsettle)
+
+	transmit.Remove(organ_owner)
+	transmit = initial(transmit)
 
 	if(glass_breaker)
 		qdel(glass_breaker)
@@ -76,7 +94,7 @@
 	. = ..()
 
 	var/turf/spawn_loc = get_turf(owner)
-	new /obj/effect/spawner/glass_shards (spawn_loc)
+	new /obj/effect/spawner/random/glass_shards (spawn_loc)
 	new /obj/item/cosmic_skull (spawn_loc)
 	playsound(get_turf(owner), SFX_SHATTER, 100)
 
@@ -86,25 +104,29 @@
 	radio_key = /obj/item/encryptionkey/heads/captain
 	actions_types = null
 
-/obj/effect/spawner/glass_shards
-	/// Weighted list for the shards we spawn
-	var/list/shards = list(/obj/item/shard = 2, /obj/item/shard/plasma = 1, /obj/item/shard/titanium = 1, /obj/item/shard/plastitanium = 1)
+/obj/effect/spawner/random/glass_shards
+	loot = list(/obj/item/shard = 2, /obj/item/shard/plasma = 1, /obj/item/shard/titanium = 1, /obj/item/shard/plastitanium = 1)
+	spawn_random_offset = TRUE
+
 	/// Min shards we generate
 	var/min_spawn = 4
 	/// Max shards we generate
 	var/max_spawn = 6
-	/// The we can apply when generating
-	var/pixel_offset = 16
 
-/obj/effect/spawner/glass_shards/Initialize(mapload)
-	. = ..()
+/obj/effect/spawner/random/glass_shards/Initialize(mapload)
+	spawn_loot_count = rand(min_spawn, max_spawn)
 
-	for(var/i in 1 to rand(min_spawn, max_spawn))
-		var/shard_type = pick_weight(shards)
-		var/obj/shard = new shard_type (loc)
-		shard.pixel_x = rand(-pixel_offset, pixel_offset)
-		shard.pixel_y = rand(-pixel_offset, pixel_offset)
+	return ..()
 
-/obj/effect/spawner/glass_shards/mini
+/obj/effect/spawner/random/glass_shards/mini
 	min_spawn = 1
 	max_spawn = 2
+
+/obj/effect/spawner/random/glass_debris
+	/// Weighted list for the debris we spawn
+	loot = list(
+		/obj/effect/decal/cleanable/glass = 2,
+		/obj/effect/decal/cleanable/glass/plasma = 1,
+		/obj/effect/decal/cleanable/glass/titanium = 1,
+		/obj/effect/decal/cleanable/glass/plastitanium = 1,
+		)

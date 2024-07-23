@@ -116,7 +116,6 @@
 		uninstall(module, deleting = TRUE)
 	if(core)
 		QDEL_NULL(core)
-	QDEL_NULL(wires)
 	QDEL_NULL(mod_link)
 	for(var/datum/mod_part/part_datum as anything in get_part_datums(all = TRUE))
 		part_datum.part_item = null

@@ -1099,3 +1099,120 @@
       a sane format'.
   zoomachina:
   - qol: chem dispenser displays units instead of kilowatts
+2024-07-21:
+  DrDiasyl aka DrTuxedo:
+  - rscadd: Scanner gates now blare into the chat the reason why it got triggered
+  - rscadd: Scanner gates now can have false positives/negatives, and the chance of
+      them being reduced when they are upgraded
+  - rscadd: Brig entrances now have scanner gates preset to detect GUNS
+  - rscadd: You can now scan people with N-Spector for contraband
+  - image: Scanner gates now have a better sprite with dirs
+  - qol: Scanner gates description now tells to what mode they are set
+  - bugfix: You no longer can remove N-Spector from scanner gates without unlocking
+      them first
+  Inari-Whitebear:
+  - spellcheck: Fixed a typo in the description for the Syndicate Rebar Crossbow in
+      the Uplink.
+  MTandi:
+  - qol: Mod UI is narrow again
+  Melbert:
+  - bugfix: Fixed roundstart monkeys not having monkified
+  - bugfix: Fixed being "de-monkified" while dead making it difficult to actually
+      de-monkey you going forward
+  - bugfix: Fixed genetic scanner showing dead mobs as "transforming"
+  SmArtKar:
+  - bugfix: Closing mind transfer popup does not transfer your mind anymore
+  - bugfix: Recalling lantern wisp now properly removes its effects from you
+  - bugfix: Context maptext now properly dynamically adjusts itself instead of using
+      hardcoded pixel values
+  - bugfix: Fixes organizer sometimes deleting brains
+  Time-Green:
+  - rscadd: Gives voidwalker telepathy
+  - bugfix: Fixes the Unsettle ability ignoring line of sight (which was it's sole
+      gimmick, im just dumb)
+  - balance: Voidwalkers cannot break windows anymore or throw objects
+  - balance: Voidwalkers can no longer harm people in crit
+  - balance: Voidwalkers can only pull mobs
+  - balance: Voidwalkers' space dive enter has been increased by 1 seconds, but dive
+      exit decreased by 1 second
+  - balance: Void eater becomes blunt during use. Kidnap people to refresh it
+  - balance: Removes voidwalker glasses slot
+  - balance: Gives voidwalkers chunky fingers
+  - balance: Voidwalker applies NODEATH on hit
+  - balance: Voided victims get dumped in safer places
+  carlarctg:
+  - bugfix: Fixed null description in cerulean regenerative extract
+2024-07-22:
+  00-Steven:
+  - refactor: Refactored table item interactions, please report any issues.
+  - bugfix: Fixed being unable to use decks to draw cards directly onto tables.
+  - qol: Right clicking a table with a tray puts it down regardless of it having contents.
+  Ical92:
+  - bugfix: general bitrunning fixes and 102% faster loading times
+  - bugfix: bitrunning domains are no longer affected by nebulas in the real world
+  Jackriip:
+  - refactor: refactored global set_basalt_light proc into object proc
+  JoshAdamPowell:
+  - admin: 'Nanotrasen has brought Central Command kicking and screaming into the
+      20th Century by providing them with a real fax machine.
+
+      :cl:'
+  MTandi:
+  - rscadd: 'Charlie: Replaced external cycling airlocks with airlock pumps'
+  - qol: Updated smart fridge UI
+  Melbert:
+  - rscadd: Fox infusion has more content related to it now
+  - refactor: Refactored how vending machine icons are displayed, please report if
+      you see any broken icons. Also if all the icons look like missing file icons
+      for you, you gotta update byond man, you're like a year out of date.
+  SmArtKar:
+  - refactor: Pod code now uses datums instead of being a huge nested list
+  - qol: Self-respiration no longer sends misleading messages and instead tells about
+      lack of need to breathe once it actually gives you the effect
+  Thedragmeme:
+  - image: Adds a series of traditional yukata's and kimono's
+  - image: Adds in black sandals and a traditional hairpin for the back of the hair
+  carlarctg:
+  - rscadd: Adds Untie Shoes, a 1-point wizard spell. It can be upgraded to untie
+      jackboots, summon shoes to untie, and become completely silent!
+  - spellcheck: Renamed the Crimson Focus to the Crimson Medallion
+  - bugfix: Fixed harvesters not being properly bound to their master, nor dying when
+      they do
+  - bugfix: Fixed heads totally overriding cultist sacrifice rewards
+  - rscadd: Heretic blade now converts to a nullblade
+  - rscadd: Added wooshing, shaking, and glowing to flinging around with the heretic
+      blade
+  - balance: Removed the probability to not gain a reward when sacrificing a cultist
+  - bugfix: HONK mech now waddles
+  necromanceranne:
+  - qol: There is a larger stock of roundstart clothing availalbe in the clothing
+      vendors. Now you can get your entire gang in matching outfits!
+2024-07-23:
+  AyIong:
+  - qol: Chat notifications are now at the top
+  Ben10Omintrix:
+  - refactor: mulebot UI has been refactored
+  Ghommie:
+  - bugfix: Fixes fishing rods not working on adjacent targets.
+  - rscadd: You can now fish with explosives.
+  - bugfix: Fixed an inconsistency with examining fishing spots with sufficiently
+      high fishing skill (or skillchip).
+  Holoo-1:
+  - bugfix: fixed ghost huds
+  MTandi:
+  - rscadd: Dehydrator, a machine version of drying rack, with a circuit board and
+      available on some kitchens roundstart.
+  - image: Updated the color palette of Smart Fridge
+  SmArtKar:
+  - code_imp: Removed 8 cases of double indentation
+  - bugfix: Holopads no longer suck in unsuspecting people when crowbared
+  - bugfix: Surgical tape and edagger's embedding values have been fixed
+  Time-Green:
+  - bugfix: Shuttle events meteors now dont sometimes kill everyone
+  necromanceranne:
+  - rscadd: Robotic variants of many of the standard and advanced humanoid surgeries.
+      You cannot perform self surgery with these surgeries.
+  - balance: It is easier to do robotic surgeries with normal surgery tools.
+  - qol: It is now possible to detect EMP organ failure cascades via health scanners.
+  - qol: EMP organ failure cascades can be reversed by doing organ repair surgeries
+      targeting the failing organ.
