@@ -115,7 +115,7 @@
 		return ..()
 
 	/// The blade cahn'root will turn into once sharpened
-	var/obj/item/melee/root_blade
+	var/obj/item/knife/root_blade
 	/// Chance for it to become a dagger rather than a shiv
 	var/root_dagger_chance = (max(0, seed.potency - 25) / 50)
 	if (prob(root_dagger_chance))
