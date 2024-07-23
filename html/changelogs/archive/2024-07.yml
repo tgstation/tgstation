@@ -306,3 +306,12 @@
   flleeppyy:
   - server: lobby music can now *actually* be added to `config/title_music/sounds`,
       check the README.md in the title_music folder.
+2024-07-23:
+  Absolucy:
+  - bugfix: Hopefully fixed cleaner slimes getting stuck on some faraway target whenever
+      you move them.
+  KnigTheThrasher:
+  - rscadd: Added Pun Pun to every IceBox random bar so you can whoop his ass and
+      so my map tests are green again
+  flleeppyy:
+  - admin: restricted making players chug as ghost a "FUN" only feature.
