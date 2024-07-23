@@ -38,7 +38,7 @@
 	/// How much damage to do unwielded
 	var/force_unwielded = 5
 	/// How much damage to do wielded
-	var/force_wielded = 18
+	var/force_wielded = 20
 	/// Is it being swung?
 	var/swung = FALSE
 
@@ -88,7 +88,7 @@
 
 	if(!isliving(target))
 		if(istype(target, /obj/machinery/door))
-			if(!target.density && target.integrity_failure != 0)
+			if(!target.density && target.get_integrity() != 0)
 				living_user.Knockdown(3 SECONDS)
 				living_user.safe_throw_at(target, 1, 1, force = MOVE_FORCE_STRONG, spin = FALSE)
 
