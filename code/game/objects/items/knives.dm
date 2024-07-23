@@ -171,6 +171,8 @@
 	icon = 'icons/obj/weapons/stabby.dmi'
 	icon_state = "rootdagger"
 	worn_icon_state = "root_dagger"
+	lefthand_file = 'icons/mob/inhands/weapons/swords_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/weapons/swords_righthand.dmi'
 	inhand_icon_state = "rootshiv"
 	embed_type = /datum/embed_data/combat_knife/weak
 	desc = "A root dagger, deceptively sharp. Perfect to hide and stab someone with, or make a couple and throw them at enemies."
