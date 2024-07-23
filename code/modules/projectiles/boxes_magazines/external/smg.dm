@@ -35,6 +35,8 @@
 	icon_state = "smartgun"
 	base_icon_state = "smartgun"
 	ammo_type = /obj/item/ammo_casing/c160smart
+	multiple_sprites = AMMO_BOX_FULL_EMPTY
+	multiple_sprite_use_base = TRUE
 	caliber = CALIBER_160SMART
 	max_ammo = 50
 

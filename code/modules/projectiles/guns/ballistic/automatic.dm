@@ -97,6 +97,7 @@
 	spread = 25
 	dual_wield_spread = 25
 	actions_types = list()
+	bolt_type = BOLT_TYPE_LOCKING
 	can_suppress = FALSE
 	mag_display = TRUE
 	empty_indicator = TRUE
