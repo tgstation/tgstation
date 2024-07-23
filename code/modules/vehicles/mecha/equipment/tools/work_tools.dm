@@ -52,16 +52,10 @@
 			to_chat(source, "No providable supplies found in cargo hold")
 		return
 
-	if(istype(target, /obj/machinery/door/firedoor))
-		var/obj/machinery/door/firedoor/targetfiredoor = target
+	if(istype(target, /obj/machinery/door/firedoor) || istype(target, /obj/machinery/door/airlock))
+		var/obj/machinery/door/target_door = target
 		playsound(chassis, clampsound, 50, FALSE, -6)
-		targetfiredoor.try_to_crowbar(src, source)
-		return ..()
-
-	if(istype(target, /obj/machinery/door/airlock))
-		var/obj/machinery/door/airlock/targetairlock = target
-		playsound(chassis, clampsound, 50, FALSE, -6)
-		targetairlock.try_to_crowbar(src, source, TRUE)
+		target_door.try_to_crowbar(src, source)
 		return ..()
 
 	if(isobj(target))
