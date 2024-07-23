@@ -30,7 +30,7 @@
 		return ..()
 
 	/// The blade carrot will turn into once sharpened
-	var/obj/item/melee/carrot_blade
+	var/obj/item/carrot_blade
 	/// Chance for it to become a sword rather than a shiv
 	var/carrot_sword_chance = (max(0, seed.potency - 50) / 50)
 	if (prob(carrot_sword_chance))
