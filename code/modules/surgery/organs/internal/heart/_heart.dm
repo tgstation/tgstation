@@ -256,7 +256,7 @@
 /obj/item/organ/internal/heart/cybernetic/tier3
 	name = "upgraded cybernetic heart"
 	desc = "An electronic device designed to mimic the functions of an organic human heart. In case of physical trauma, the heart has temporary failsafes to maintain patient stability \
-		and mobility for a brief moment. In addition, the heart is able to safely self-replicate blood without the possibility of toxin buildup"
+		and mobility for a brief moment. In addition, the heart is able to safely self-replicate blood without risk of toxin buildup."
 	icon_state = "heart-c-u2-on"
 	base_icon_state = "heart-c-u2"
 	maxHealth = 2 * STANDARD_ORGAN_THRESHOLD
