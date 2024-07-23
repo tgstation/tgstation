@@ -407,14 +407,22 @@ Used by the AI doomsday and the self-destruct nuke.
 		add_new_zlevel("[name][i ? " [i + 1]" : ""]", level, contain_turfs = FALSE)
 		++i
 
+	SSautomapper.preload_templates_from_toml(files) // BANDASTATION EDIT ADDITION - We need to load our templates AFTER the Z level exists, otherwise, there is no z level to preload.
+	var/turf_blacklist = SSautomapper.get_turf_blacklists(files) // BANDASTATION EDIT ADDITION - We use blacklisted turfs to carve out places for our templates.
+
 	// load the maps
 	for (var/P in parsed_maps)
 		var/datum/parsed_map/pm = P
+		pm.turf_blacklist = turf_blacklist // BANDASTATION EDIT ADDITION - apply blacklist
 		var/bounds = pm.bounds
 		var/x_offset = bounds ? round(world.maxx / 2 - bounds[MAP_MAXX] / 2) + 1 : 1
 		var/y_offset = bounds ? round(world.maxy / 2 - bounds[MAP_MAXY] / 2) + 1 : 1
 		if (!pm.load(x_offset, y_offset, start_z + parsed_maps[P], no_changeturf = TRUE, new_z = TRUE))
 			errorList |= pm.original_path
+	// BANDASTATION EDIT ADDITION BEGIN - We need to load our templates from cache after our space has been carved out.
+	if(!LAZYLEN(errorList))
+		SSautomapper.load_templates_from_cache(files)
+	// BANDASTATION EDIT ADDITION END
 	if(!silent)
 		INIT_ANNOUNCE("Loaded [name] in [(REALTIMEOFDAY - start_time)/10]s!")
 	return parsed_maps

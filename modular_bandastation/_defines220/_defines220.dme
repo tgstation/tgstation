@@ -2,6 +2,7 @@
 
 #include "code/signals_atom.dm"
 #include "code/signals_item.dm"
+#include "code/defines/automapper.dm"
 #include "code/defines/keybindings.dm"
 #include "code/defines/misc.dm"
 #include "code/defines/spans.dm"

@@ -1,0 +1,4 @@
+#include "code\area_spawn_entries.dm"
+#include "code\area_spawn_subsystem.dm"
+#include "code\automap_template.dm"
+#include "code\automapper_subsystem.dm"
