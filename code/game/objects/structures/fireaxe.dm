@@ -250,7 +250,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/fireaxecabinet/mechremoval/empty, 32)
 	name = "battering ram cabinet"
 	desc = "There is a small label that reads \"For Special Operations Only\" along with details for safe use of the ram. As if."
 	icon_state = "batteringram"
-	item_path = /obj/item/fireaxe/batteringram
+	item_path = /obj/item/batteringram
 	item_overlay = "ram"
 	must_be_unwielded = FALSE
 
