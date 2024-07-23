@@ -1,5 +1,7 @@
 #include "_objects.dm"
 
+#include "code/wallets.dm"
+#include "code/hampters.dm"
 #include "code/papershredder.dm"
 #include "code/material_pouch.dm"
 #include "code/structures/posters.dm"
