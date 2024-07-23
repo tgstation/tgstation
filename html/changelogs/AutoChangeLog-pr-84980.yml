@@ -1,7 +1,0 @@
-author: "necromanceranne"
-delete-after: True
-changes:
-  - rscadd: "Robotic variants of many of the standard and advanced humanoid surgeries. You cannot perform self surgery with these surgeries."
-  - balance: "It is easier to do robotic surgeries with normal surgery tools."
-  - qol: "It is now possible to detect EMP organ failure cascades via health scanners."
-  - qol: "EMP organ failure cascades can be reversed by doing organ repair surgeries targeting the failing organ."

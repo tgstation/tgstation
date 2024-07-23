@@ -18889,7 +18889,7 @@
 /obj/structure/sign/nanotrasen{
 	pixel_x = 32
 	},
-/obj/machinery/keycard_auth/directional/south,
+/obj/machinery/keycard_auth/wall_mounted/directional/south,
 /obj/effect/turf_decal/tile/purple,
 /obj/effect/turf_decal/tile/neutral/opposingcorners{
 	dir = 1
@@ -22286,7 +22286,7 @@
 /turf/open/floor/iron,
 /area/station/service/kitchen)
 "fyH" = (
-/obj/machinery/keycard_auth/directional/south{
+/obj/machinery/keycard_auth/wall_mounted/directional/south{
 	pixel_x = 6
 	},
 /obj/machinery/light_switch/directional/south{
@@ -25568,7 +25568,7 @@
 /turf/open/floor/iron,
 /area/station/maintenance/starboard/aft)
 "goc" = (
-/obj/machinery/keycard_auth/directional/south{
+/obj/machinery/keycard_auth/wall_mounted/directional/south{
 	pixel_y = -38
 	},
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
@@ -27297,7 +27297,7 @@
 	pixel_y = -6;
 	req_access = list("hos")
 	},
-/obj/machinery/keycard_auth/directional/east{
+/obj/machinery/keycard_auth/wall_mounted/directional/east{
 	pixel_x = 38;
 	pixel_y = 6
 	},
@@ -74159,7 +74159,7 @@
 	pixel_x = 38;
 	pixel_y = 3
 	},
-/obj/machinery/keycard_auth/directional/east{
+/obj/machinery/keycard_auth/wall_mounted/directional/east{
 	pixel_x = 40;
 	pixel_y = -8
 	},
@@ -76984,7 +76984,7 @@
 /area/station/command/bridge)
 "tns" = (
 /obj/structure/table/wood,
-/obj/machinery/keycard_auth/directional/west,
+/obj/machinery/keycard_auth/wall_mounted/directional/west,
 /obj/item/flashlight/lamp,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron/dark,
@@ -90617,7 +90617,7 @@
 /obj/machinery/modular_computer/preset/id{
 	dir = 1
 	},
-/obj/machinery/keycard_auth/directional/south{
+/obj/machinery/keycard_auth/wall_mounted/directional/south{
 	pixel_x = -5
 	},
 /obj/machinery/button/door/directional/south{
