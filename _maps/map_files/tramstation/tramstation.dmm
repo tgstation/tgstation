@@ -4092,6 +4092,12 @@
 "aBV" = (
 /turf/open/floor/catwalk_floor,
 /area/station/command/teleporter)
+"aBW" = (
+/obj/machinery/smartfridge/drying,
+/turf/open/floor/iron/white/side{
+	dir = 8
+	},
+/area/station/service/kitchen)
 "aBY" = (
 /turf/open/floor/iron,
 /area/station/hallway/secondary/command)
@@ -11262,12 +11268,6 @@
 	},
 /turf/open/floor/engine,
 /area/station/engineering/supermatter/room)
-"cON" = (
-/obj/machinery/deepfryer,
-/turf/open/floor/iron/white/side{
-	dir = 8
-	},
-/area/station/service/kitchen)
 "cPg" = (
 /obj/machinery/power/smes/engineering,
 /obj/structure/sign/warning/electric_shock/directional/west,
@@ -52362,6 +52362,19 @@
 	},
 /turf/open/floor/iron/white,
 /area/station/science/lower)
+"rwS" = (
+/obj/structure/table,
+/obj/item/storage/box/chemimp{
+	pixel_x = 6
+	},
+/obj/item/storage/box/trackimp{
+	pixel_x = -3
+	},
+/obj/item/storage/lockbox/loyalty,
+/obj/effect/turf_decal/tile/neutral/fourcorners,
+/obj/structure/fireaxecabinet/batteringram/directional/east,
+/turf/open/floor/iron/dark,
+/area/station/ai_monitored/security/armory)
 "rxw" = (
 /obj/structure/girder,
 /obj/structure/grille,
@@ -62312,19 +62325,6 @@
 	},
 /turf/open/floor/iron,
 /area/station/hallway/secondary/service)
-"uPZ" = (
-/obj/structure/table,
-/obj/item/storage/box/chemimp{
-	pixel_x = 6
-	},
-/obj/item/storage/box/trackimp{
-	pixel_x = -3
-	},
-/obj/item/storage/lockbox/loyalty,
-/obj/effect/turf_decal/tile/neutral/fourcorners,
-/obj/structure/fireaxecabinet/batteringram/directional/east,
-/turf/open/floor/iron/dark,
-/area/station/ai_monitored/security/armory)
 "uQb" = (
 /obj/effect/turf_decal/trimline/green/filled/line,
 /obj/machinery/firealarm/directional/south,
@@ -155717,7 +155717,7 @@ aaa
 aaa
 dEv
 ggE
-uPZ
+rwS
 eSj
 dst
 nvI
@@ -170391,7 +170391,7 @@ eSx
 llj
 whs
 fEG
-cON
+aBW
 mkl
 fxS
 eSx

@@ -342,7 +342,7 @@ GLOBAL_LIST_INIT(fish_traits, init_subtypes_w_path_keys(/datum/fish_trait, list(
 	inheritability = 90
 	diff_traits_inheritability = 45
 	guaranteed_inheritance_types = list(/obj/item/fish/clownfish/lube)
-	catalog_description = "This fish exudes a viscous, slippery lubrificant. It's reccomended not to step on it."
+	catalog_description = "This fish exudes a viscous, slippery lubrificant. It's recommended not to step on it."
 	added_difficulty = 5
 
 /datum/fish_trait/lubed/apply_to_fish(obj/item/fish/fish)
