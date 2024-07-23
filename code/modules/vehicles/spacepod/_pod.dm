@@ -5,9 +5,7 @@
 // TODO:
 // equipment variants (done? maybe a lock module, finish comms module, and maybe a few proper guns) and their research
 // slots: comms (radio and something else), sensors(HUDs or something, mesons??), engine, 1 secondary slot (cargo and shit), 1 primary slot(tools or gun???), 3 misc modules (locks and shit), armor would either be added during construction or as a slot
-// power costs, either only megacell or only cell, how would you charge this??
-// although im not so sure about power costs i dont know why it would need them but ideally a space pod should be capable of functioning for 10-15 minutes of nonstop acceleration by default
-// innate armor potentially, also actual armor and also figure out integrity and inertia_force_weight
+// innate armor potentially
 // figure out whether this should use action buttons or an UI or a combination of both for equipment
 // crashing into people and walls and stuff
 // ALSO DO NOT FORGET TO REMOVE THIS HUGE ASS COMMENT before finishing
@@ -24,6 +22,7 @@
 	light_system = OVERLAY_LIGHT_DIRECTIONAL
 	light_on = FALSE
 	max_occupants = 2
+	max_integrity = 350
 	/// Max count of a certain slot. If it is not defined here, it is assumed to be one (1). Use slot_max(slot) to access.
 	var/list/slot_max = list(
 		POD_SLOT_MISC = 3,
@@ -53,13 +52,26 @@
 	var/list/list/equipment_actions = list()
 
 
-/obj/vehicle/sealed/space_pod/Initialize(mapload)
+/obj/vehicle/sealed/space_pod/Initialize(mapload, dont_equip)
 	. = ..()
+	if(!dont_equip)
+		spawn_equip()
 	trail = new
 	trail.auto_process = FALSE
 	trail.set_up(src)
 	trail.start()
 	START_PROCESSING(SSnewtonian_movement, src)
+
+/// This proc is responsible for outfitting the pod when spawned (admin or otherwise)
+/obj/vehicle/sealed/space_pod/proc/spawn_equip()
+	equip_item(new /obj/item/pod_equipment/sensors)
+	equip_item(new /obj/item/pod_equipment/comms)
+	equip_item(new /obj/item/pod_equipment/thrusters/default)
+	equip_item(new /obj/item/pod_equipment/engine/default)
+	equip_item(new /obj/item/pod_equipment/primary/projectile_weapon/energy/kinetic_accelerator)
+	equip_item(new /obj/item/pod_equipment/cargo_hold)
+	cabin_air_tank = new /obj/item/tank/internals/oxygen(src)
+	cell = new /obj/item/stock_parts/power_store/battery(src)
 
 /obj/vehicle/sealed/space_pod/Destroy()
 	. = ..()
@@ -209,15 +221,4 @@
 /obj/vehicle/sealed/space_pod/return_temperature()
 	var/datum/gas_mixture/air = return_air()
 	return air?.return_temperature()
-
-/obj/vehicle/sealed/space_pod/debug_prebuilt/Initialize(mapload)//remove or improve later
-	. = ..()
-	equip_item(new /obj/item/pod_equipment/sensors)
-	equip_item(new /obj/item/pod_equipment/comms)
-	equip_item(new /obj/item/pod_equipment/thrusters/default)
-	equip_item(new /obj/item/pod_equipment/engine/default)
-	equip_item(new /obj/item/pod_equipment/primary/projectile_weapon/kinetic_accelerator)
-	equip_item(new /obj/item/pod_equipment/cargo_hold)
-	cabin_air_tank = new /obj/item/tank/internals/oxygen(src)
-	cell = new /obj/item/stock_parts/power_store/battery/bluespace(src)
 

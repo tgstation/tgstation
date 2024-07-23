@@ -8,6 +8,14 @@
 	build_path = /obj/vehicle/sealed/space_pod
 	build_needed_item = /obj/item/stack/sheet/iron
 
+/datum/pod_construct/plasteel
+	build_path = /obj/vehicle/sealed/space_pod/plasteel
+	build_needed_item = /obj/item/stack/sheet/plasteel
+
+/datum/pod_construct/titanium
+	build_path = /obj/vehicle/sealed/space_pod/titanium
+	build_needed_item = /obj/item/stack/sheet/titanium
+
 // uncool boring stuff below
 
 /obj/item/circuitboard/pod
@@ -167,7 +175,7 @@
 	return ..()
 
 /datum/component/construction/mecha/pod/spawn_result()
-	var/obj/vehicle/sealed/space_pod/pod = new result(drop_location())
+	var/obj/vehicle/sealed/space_pod/pod = new result(drop_location(), /*dont_equip*/ TRUE)
 	pod.panel_open = TRUE
 	pod.update_appearance(UPDATE_OVERLAYS)
 	qdel(parent)
