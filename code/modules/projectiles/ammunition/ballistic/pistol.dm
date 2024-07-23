@@ -26,7 +26,7 @@
 	desc = "A 10mm reaper bullet casing."
 	projectile_type = /obj/projectile/bullet/c10mm/reaper
 
-// 9mm (Makarov, Stechkin APS, PP-95)
+// 9mm (Makarov, Stechkin APS)
 
 /obj/item/ammo_casing/c9mm
 	name = "9mm bullet casing"

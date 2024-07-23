@@ -373,16 +373,18 @@
 //Meme weapons: Literally just weapons used as a joke, shouldn't be particularly expensive.
 
 /datum/uplink_item/weapon_kits/surplus_smg
-	name = "Surplus SMG Case (Flukie)"
-	desc = "A horribly outdated automatic weapon. Why would you want to use this? Comes with...rations."
-	item = /obj/item/gun/ballistic/automatic/plastikov
-	cost = 2
+	name = "Surplus Smart-SMG Case (Flukie)"
+	desc = "An outdated smart-SMG with limited stopping power, however it's bullets will gradually track towards whatever \
+		the gun was shot at. This does require you to actually aim at the person you are shooting at before firing, but \
+		surely a highly trained operative such as yourself can manage that."
+	item = /obj/item/storage/toolbox/guncase/smartgun
+	cost = 5
 	purchasable_from = UPLINK_SERIOUS_OPS
 
 /datum/uplink_item/ammo_nuclear/surplus_smg
-	name = "Surplus SMG Magazine (Surplus)"
-	desc = "A cylindrical magazine designed for the PP-95 SMG."
-	item = /obj/item/ammo_box/magazine/plastikov9mm
+	name = "Surplus Smart-SMG Magazine (Smartgun)"
+	desc = "A large box magazine made for use in the Adielle smart-SMG."
+	item = /obj/item/ammo_box/magazine/smartgun
 	cost = 1
 	purchasable_from = UPLINK_SERIOUS_OPS
 	uplink_item_flags = SYNDIE_TRIPS_CONTRABAND
