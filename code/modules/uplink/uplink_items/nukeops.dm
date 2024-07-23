@@ -373,12 +373,12 @@
 //Meme weapons: Literally just weapons used as a joke, shouldn't be particularly expensive.
 
 /datum/uplink_item/weapon_kits/surplus_smg
-	name = "Surplus Smart-SMG Case (Flukie)"
+	name = "Surplus Smart-SMG (Flukie)"
 	desc = "An outdated smart-SMG with limited stopping power, however it's bullets will gradually track towards whatever \
 		the gun was shot at. This does require you to actually aim at the person you are shooting at before firing, but \
 		surely a highly trained operative such as yourself can manage that."
-	item = /obj/item/storage/toolbox/guncase/smartgun
-	cost = 5
+	item = /obj/item/gun/ballistic/automatic/smartgun
+	cost = 2
 	purchasable_from = UPLINK_SERIOUS_OPS
 
 /datum/uplink_item/ammo_nuclear/surplus_smg
