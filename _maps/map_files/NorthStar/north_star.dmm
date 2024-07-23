@@ -30926,7 +30926,7 @@
 /area/space)
 "ibL" = (
 /obj/structure/cable,
-/obj/machinery/power/smes/engineering,
+/obj/machinery/power/smes/engineering/standby,
 /obj/item/radio/intercom/directional/west,
 /turf/open/floor/iron,
 /area/station/engineering/engine_smes)
@@ -66405,7 +66405,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
-/obj/machinery/power/smes/full,
+/obj/machinery/power/smes/engineering/telecoms,
 /obj/machinery/light/directional/east,
 /turf/open/floor/plating,
 /area/station/tcommsat/computer)
@@ -76676,6 +76676,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/power/apc/auto_name/directional/south,
+/obj/effect/mapping_helpers/apc/cell_10k,
 /turf/open/floor/iron,
 /area/station/engineering/engine_smes)
 "tNG" = (

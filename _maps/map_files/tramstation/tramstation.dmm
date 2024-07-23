@@ -2831,6 +2831,7 @@
 	},
 /obj/machinery/power/apc/auto_name/directional/north,
 /obj/structure/cable,
+/obj/effect/mapping_helpers/apc/cell_10k,
 /turf/open/floor/iron,
 /area/station/engineering/engine_smes)
 "anv" = (
@@ -57428,9 +57429,7 @@
 /turf/open/floor/iron/white,
 /area/station/science/xenobiology)
 "tms" = (
-/obj/machinery/power/smes{
-	charge = 5e+06
-	},
+/obj/machinery/power/smes/engineering/telecoms,
 /obj/structure/cable,
 /turf/open/floor/circuit/telecomms/mainframe,
 /area/station/tcommsat/server)
@@ -60840,6 +60839,7 @@
 	c_tag = "Secure - Telecomms Server Room West"
 	},
 /obj/structure/cable,
+/obj/effect/mapping_helpers/apc/cell_10k,
 /turf/open/floor/circuit/telecomms/mainframe,
 /area/station/tcommsat/server)
 "utY" = (
@@ -62341,7 +62341,7 @@
 /turf/open/floor/iron/dark,
 /area/station/service/hydroponics)
 "uQm" = (
-/obj/machinery/power/smes/engineering,
+/obj/machinery/power/smes/engineering/standby,
 /obj/structure/cable,
 /turf/open/floor/iron,
 /area/station/engineering/engine_smes)

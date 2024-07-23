@@ -2885,7 +2885,7 @@
 /obj/structure/cable,
 /obj/machinery/power/smes/engineering,
 /turf/open/floor/circuit/green,
-/area/station/engineering/main)
+/area/station/engineering/engine_smes)
 "aJw" = (
 /obj/effect/spawner/random/structure/tank_holder,
 /obj/effect/mapping_helpers/burnt_floor,
@@ -7173,7 +7173,7 @@
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /obj/machinery/light/small/directional/south,
 /turf/open/floor/iron/dark,
-/area/station/engineering/main)
+/area/station/engineering/engine_smes)
 "bKp" = (
 /obj/machinery/atmospherics/components/binary/pump/on{
 	dir = 1;
@@ -8339,6 +8339,9 @@
 	dir = 4
 	},
 /area/station/hallway/primary/central/fore)
+"bYp" = (
+/turf/closed/wall/r_wall,
+/area/station/engineering/engine_smes)
 "bYq" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/rack,
@@ -9309,7 +9312,7 @@
 	},
 /obj/effect/mapping_helpers/airlock/access/all/engineering/general,
 /turf/open/floor/iron,
-/area/station/engineering/main)
+/area/station/engineering/engine_smes)
 "clr" = (
 /obj/structure/window/reinforced/spawner/directional/south,
 /turf/open/space/basic,
@@ -23945,10 +23948,12 @@
 /obj/machinery/modular_computer/preset/engineering{
 	dir = 1
 	},
-/obj/item/radio/intercom/directional/east,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
+/obj/machinery/power/apc/auto_name/directional/east,
+/obj/item/radio/intercom/directional/south,
+/obj/effect/mapping_helpers/apc/cell_10k,
 /turf/open/floor/iron/dark,
-/area/station/engineering/main)
+/area/station/engineering/engine_smes)
 "fVh" = (
 /obj/machinery/atmospherics/components/binary/pump/on/scrubbers/hidden/layer2{
 	dir = 8;
@@ -26762,7 +26767,7 @@
 	},
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron/dark,
-/area/station/engineering/main)
+/area/station/engineering/engine_smes)
 "gCo" = (
 /obj/structure/frame/machine{
 	anchored = 1
@@ -28463,7 +28468,7 @@
 "gXx" = (
 /obj/structure/cable,
 /turf/closed/wall/r_wall,
-/area/station/maintenance/port)
+/area/station/engineering/engine_smes)
 "gXS" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/structure/railing/corner{
@@ -35686,7 +35691,7 @@
 	},
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron/dark,
-/area/station/engineering/main)
+/area/station/engineering/engine_smes)
 "iSk" = (
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron/dark,
@@ -51618,7 +51623,7 @@
 /obj/effect/turf_decal/stripes/line,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron/dark,
-/area/station/engineering/main)
+/area/station/engineering/engine_smes)
 "mQK" = (
 /obj/item/wrench,
 /obj/item/crowbar,
@@ -60642,7 +60647,7 @@
 /obj/machinery/power/smes/engineering,
 /obj/machinery/light_switch/directional/east,
 /turf/open/floor/circuit/green,
-/area/station/engineering/main)
+/area/station/engineering/engine_smes)
 "pkA" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -60697,7 +60702,7 @@
 	},
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron/dark,
-/area/station/engineering/main)
+/area/station/engineering/engine_smes)
 "pla" = (
 /obj/effect/spawner/structure/window/reinforced,
 /obj/structure/cable,
@@ -78240,13 +78245,13 @@
 /obj/machinery/power/terminal{
 	dir = 1
 	},
-/obj/structure/extinguisher_cabinet/directional/east,
 /obj/effect/turf_decal/stripes/line{
 	dir = 5
 	},
 /obj/effect/turf_decal/tile/neutral/fourcorners,
+/obj/machinery/airalarm/directional/east,
 /turf/open/floor/iron/dark,
-/area/station/engineering/main)
+/area/station/engineering/engine_smes)
 "tCW" = (
 /obj/structure/sign/warning/no_smoking/directional/south,
 /obj/effect/turf_decal/tile/yellow{
@@ -82008,7 +82013,7 @@
 	},
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron/dark,
-/area/station/engineering/main)
+/area/station/engineering/engine_smes)
 "uxI" = (
 /obj/structure/table/glass,
 /obj/effect/turf_decal/stripes/line{
@@ -88308,7 +88313,7 @@
 /obj/structure/cable,
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
-/area/station/engineering/main)
+/area/station/engineering/engine_smes)
 "wdb" = (
 /turf/open/floor/circuit/green,
 /area/station/science/robotics/mechbay)
@@ -94472,7 +94477,7 @@
 /obj/structure/cable,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron/dark,
-/area/station/engineering/main)
+/area/station/engineering/engine_smes)
 "xDm" = (
 /obj/machinery/door/poddoor/preopen{
 	id = "atmoslock";
@@ -124891,9 +124896,9 @@ wGA
 wGA
 wGA
 wGA
-pTC
-pTC
-pTC
+bYp
+bYp
+bYp
 gXx
 pTC
 vcB
