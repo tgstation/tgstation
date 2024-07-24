@@ -1,4 +1,0 @@
-author: "FlufflesTheDog"
-delete-after: True
-changes:
-  - bugfix: "Attachment points on toolset implants have been improved, to prevent against recycler related decouplings."

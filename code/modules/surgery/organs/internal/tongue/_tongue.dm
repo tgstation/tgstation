@@ -546,6 +546,7 @@ GLOBAL_LIST_INIT(english_to_zombie, list())
 	attack_verb_simple = list("beep", "boop")
 	modifies_speech = TRUE
 	taste_sensitivity = 25 // not as good as an organic tongue
+	organ_traits = list(TRAIT_SILICON_EMOTES_ALLOWED)
 	voice_filter = "alimiter=0.9,acompressor=threshold=0.2:ratio=20:attack=10:release=50:makeup=2,highpass=f=1000"
 
 /obj/item/organ/internal/tongue/robot/could_speak_language(datum/language/language_path)

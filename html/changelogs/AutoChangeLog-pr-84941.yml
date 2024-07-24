@@ -1,4 +1,0 @@
-author: "SmArtKar"
-delete-after: True
-changes:
-  - bugfix: "Accelerator cannon projectiles no longer grow to absurd sizes after a bit of travel."

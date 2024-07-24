@@ -1,4 +1,0 @@
-author: "TheBoondock"
-delete-after: True
-changes:
-  - sound: "added pickup, dropping and opening sound for pill bottle"

@@ -6,7 +6,7 @@
 
 
 /**
- * Render relay object assigned to a plane master to be able to relay it's render onto other planes that are not it's own
+ * Render relay object assigned to a plane master to be able to relay its render onto other planes that are not its own
  */
 /atom/movable/render_plane_relay
 	screen_loc = "CENTER"

@@ -225,8 +225,6 @@
 #define SPEED_TRAIT "speed_trait"
 /// Trait given to mobs that have been autopsied
 #define AUTOPSY_TRAIT "autopsy_trait"
-/// Trait given by [/datum/status_effect/blessing_of_insanity]
-#define MAD_WIZARD_TRAIT "mad_wizard_trait"
 
 ///From the market_crash event
 #define MARKET_CRASH_EVENT_TRAIT "crashed_market_event"
@@ -294,3 +292,6 @@
 
 /// Trait when a drink was renamed by a shaker
 #define SHAKER_LABEL_TRAIT "shaker_trait"
+
+/// Trait added by style component
+#define STYLE_TRAIT "style"

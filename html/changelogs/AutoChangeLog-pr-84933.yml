@@ -1,4 +1,0 @@
-author: "r3dj4ck0424"
-delete-after: True
-changes:
-  - bugfix: "Destroying the jungle grass tiles in Tramstation's science wing should no longer open a chasm."
