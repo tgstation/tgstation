@@ -10,7 +10,7 @@
 	school = SCHOOL_FORBIDDEN
 	cooldown_time = 70 SECONDS
 
-	invocation = "FL'MS"
+	invocation = "EID'R-ELDR!!!"
 	invocation_type = INVOCATION_WHISPER
 	spell_requirements = NONE
 
@@ -53,7 +53,8 @@
 		return
 
 	for(var/turf/nearby_turf as anything in RANGE_TURFS(1, owner))
-		new /obj/effect/hotspot(nearby_turf)
+		var/obj/effect/hotspot/flame_tile = locate(nearby_turf) || new(nearby_turf)
+		flame_tile.alpha = 125
 		nearby_turf.hotspot_expose(750, 25 * seconds_between_ticks, 1)
 		for(var/mob/living/fried_living in nearby_turf.contents - owner)
 			fried_living.apply_damage(2.5 * seconds_between_ticks, BURN)
@@ -71,8 +72,8 @@
 	school = SCHOOL_FORBIDDEN
 	cooldown_time = 30 SECONDS
 
-	invocation = "C'SC'DE"
-	invocation_type = INVOCATION_WHISPER
+	invocation = "ILLA-LASARA'FOSS!!!"
+	invocation_type = INVOCATION_SHOUT
 	spell_requirements = NONE
 
 	/// The radius the flames will go around the caster.
@@ -86,7 +87,8 @@
 /datum/action/cooldown/spell/fire_cascade/proc/fire_cascade(atom/centre, flame_radius = 1)
 	for(var/i in 0 to flame_radius)
 		for(var/turf/nearby_turf as anything in spiral_range_turfs(i + 1, centre))
-			new /obj/effect/hotspot(nearby_turf)
+			var/obj/effect/hotspot/flame_tile = locate(nearby_turf) || new(nearby_turf)
+			flame_tile.alpha = 125
 			nearby_turf.hotspot_expose(750, 50, 1)
 			for(var/mob/living/fried_living in nearby_turf.contents - owner)
 				fried_living.apply_damage(5, BURN)
@@ -110,7 +112,7 @@
 	school = SCHOOL_FORBIDDEN
 	cooldown_time = 300
 
-	invocation = "F'RE"
+	invocation = "Eld'sky!"
 	invocation_type = INVOCATION_WHISPER
 	spell_requirements = NONE
 
@@ -127,16 +129,17 @@
 		INVOKE_ASYNC(src, PROC_REF(fire_line), owner, line_target(offset, flame_line_length, target, owner))
 
 /datum/action/cooldown/spell/pointed/ash_beams/proc/line_target(offset, range, atom/at, atom/user)
+	var/turf/user_loc = get_turf(user)
 	if(!at)
 		return
-	var/angle = ATAN2(at.x - user.x, at.y - user.y) + offset
+	var/angle = ATAN2(at.x - user_loc.x, at.y - user_loc.y) + offset
 	var/turf/T = get_turf(user)
 	for(var/i in 1 to range)
-		var/turf/check = locate(user.x + cos(angle) * i, user.y + sin(angle) * i, user.z)
+		var/turf/check = locate(user_loc.x + cos(angle) * i, user_loc.y + sin(angle) * i, user_loc.z)
 		if(!check)
 			break
 		T = check
-	return (get_line(user, T) - get_turf(user))
+	return (get_line(user_loc, T) - user_loc)
 
 /datum/action/cooldown/spell/pointed/ash_beams/proc/fire_line(atom/source, list/turfs)
 	var/list/hit_list = list()

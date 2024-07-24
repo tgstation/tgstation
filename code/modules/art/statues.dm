@@ -310,12 +310,11 @@ Point with the chisel at the target to choose what to sculpt or hit block to cho
 Hit block again to start sculpting.
 Moving interrupts
 */
-/obj/item/chisel/pre_attack(atom/target, mob/living/user, params)
-	. = ..()
+/obj/item/chisel/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
 	if(sculpting)
-		return TRUE
-	if(istype(target, /obj/structure/carving_block))
-		var/obj/structure/carving_block/sculpt_block = target
+		return ITEM_INTERACT_BLOCKING
+	if(istype(interacting_with, /obj/structure/carving_block))
+		var/obj/structure/carving_block/sculpt_block = interacting_with
 
 		if(sculpt_block.completion) // someone already started sculpting this so just finish
 			set_block(sculpt_block, user, silent = TRUE)
@@ -326,19 +325,20 @@ Moving interrupts
 			set_block(sculpt_block, user)
 		else if(sculpt_block == prepared_block)
 			show_generic_statues_prompt(user)
-		return TRUE
+		return ITEM_INTERACT_SUCCESS
+
 	else if(prepared_block) //We're aiming at something next to us with block prepared
-		prepared_block.set_target(target, user)
-		return TRUE
+		prepared_block.set_target(interacting_with, user)
+		return ITEM_INTERACT_SUCCESS
+
+	return NONE
 
 // We aim at something distant.
-/obj/item/chisel/afterattack(atom/target, mob/user, proximity_flag, click_parameters)
-	. = ..()
-
-	if (!sculpting && prepared_block && ismovable(target) && prepared_block.completion == 0)
-		prepared_block.set_target(target,user)
-
-	return . | AFTERATTACK_PROCESSED_ITEM
+/obj/item/chisel/ranged_interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
+	if (!sculpting && prepared_block && ismovable(interacting_with) && prepared_block.completion == 0)
+		prepared_block.set_target(interacting_with, user)
+		return ITEM_INTERACT_SUCCESS
+	return ITEM_INTERACT_BLOCKING
 
 /// Starts or continues the sculpting action on the carving block material
 /obj/item/chisel/proc/start_sculpting(mob/living/user)

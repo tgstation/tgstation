@@ -317,6 +317,15 @@ DEFINE_BITFIELD(turret_flags, list(
 		remove_control()
 	check_should_process()
 
+/obj/machinery/porta_turret/multitool_act(mob/living/user, obj/item/multitool/tool)
+	. = NONE
+	if(locked)
+		return
+
+	tool.set_buffer(src)
+	balloon_alert(user, "saved to multitool buffer")
+	return ITEM_INTERACT_SUCCESS
+
 /obj/machinery/porta_turret/attackby(obj/item/I, mob/user, params)
 	if(machine_stat & BROKEN)
 		if(I.tool_behaviour == TOOL_CROWBAR)
@@ -364,12 +373,6 @@ DEFINE_BITFIELD(turret_flags, list(
 			to_chat(user, span_notice("Controls are now [locked ? "locked" : "unlocked"]."))
 		else
 			to_chat(user, span_alert("Access denied."))
-	else if(I.tool_behaviour == TOOL_MULTITOOL && !locked)
-		if(!multitool_check_buffer(user, I))
-			return
-		var/obj/item/multitool/M = I
-		M.set_buffer(src)
-		balloon_alert(user, "saved to multitool buffer")
 	else
 		return ..()
 
@@ -420,17 +423,23 @@ DEFINE_BITFIELD(turret_flags, list(
 		power_change()
 		SetInvisibility(INVISIBILITY_NONE, id=type)
 		spark_system.start() //creates some sparks because they look cool
+		has_cover = FALSE
 		qdel(cover) //deletes the cover - no need on keeping it there!
+
+/obj/machinery/porta_turret/atom_fix()
+	set_machine_stat(machine_stat & ~BROKEN)
+	has_cover = initial(has_cover)
+	check_should_process()
+	return ..()
+
 
 /obj/machinery/porta_turret/process()
 	//the main machinery process
-	if(cover == null && anchored) //if it has no cover and is anchored
-		if(machine_stat & BROKEN) //if the turret is borked
-			qdel(cover) //delete its cover, assuming it has one. Workaround for a pesky little bug
-		else
-			if(has_cover)
-				cover = new /obj/machinery/porta_turret_cover(loc) //if the turret has no cover and is anchored, give it a cover
-				cover.parent_turret = src //assign the cover its parent_turret, which would be this (src)
+	if(has_cover && cover == null && anchored && !(machine_stat & BROKEN)) //if it has no cover and is anchored
+		cover = new /obj/machinery/porta_turret_cover(loc) //if the turret has no cover and is anchored, give it a cover
+		cover.parent_turret = src //assign the cover its parent_turret, which would be this (src)
+		if(raised)
+			cover.icon_state = "openTurretCover"
 
 	if(!on || (machine_stat & (NOPOWER|BROKEN)))
 		return PROCESS_KILL
@@ -961,18 +970,19 @@ DEFINE_BITFIELD(turret_flags, list(
 		. += {"[span_notice("Ctrl-click [src] to [ enabled ? "disable" : "enable"] turrets.")]
 					[span_notice("Alt-click [src] to set turrets to [ lethal ? "stun" : "kill"].")]"}
 
-/obj/machinery/turretid/attackby(obj/item/attacking_item, mob/user, params)
+/obj/machinery/turretid/multitool_act(mob/living/user, obj/item/multitool/multi_tool)
+	. = NONE
 	if(machine_stat & BROKEN)
 		return
 
-	if(attacking_item.tool_behaviour == TOOL_MULTITOOL)
-		if(!multitool_check_buffer(user, attacking_item))
-			return
-		var/obj/item/multitool/M = attacking_item
-		if(M.buffer && istype(M.buffer, /obj/machinery/porta_turret))
-			turrets |= WEAKREF(M.buffer)
-			to_chat(user, span_notice("You link \the [M.buffer] with \the [src]."))
-			return
+	if(multi_tool.buffer && istype(multi_tool.buffer, /obj/machinery/porta_turret))
+		turrets |= WEAKREF(multi_tool.buffer)
+		to_chat(user, span_notice("You link \the [multi_tool.buffer] with \the [src]."))
+		return ITEM_INTERACT_SUCCESS
+
+/obj/machinery/turretid/attackby(obj/item/attacking_item, mob/user, params)
+	if(machine_stat & BROKEN)
+		return
 
 	if (issilicon(user))
 		return attack_hand(user)

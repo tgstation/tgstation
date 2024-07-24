@@ -19,6 +19,8 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 GLOBAL_LIST_EMPTY(dynamic_station_traits)
 /// Rulesets which have been forcibly enabled or disabled
 GLOBAL_LIST_EMPTY(dynamic_forced_rulesets)
+/// Bitflags used during init by Dynamic to determine which rulesets we're allowed to use, used by station traits for gamemode-esque experiences
+GLOBAL_VAR_INIT(dynamic_ruleset_categories, RULESET_CATEGORY_DEFAULT)
 
 SUBSYSTEM_DEF(dynamic)
 	name = "Dynamic"
@@ -374,21 +376,23 @@ SUBSYSTEM_DEF(dynamic)
 /// Generate the advisory level depending on the shown threat level.
 /datum/controller/subsystem/dynamic/proc/generate_advisory_level()
 	var/advisory_string = ""
-	if (prob(PULSAR_REPORT_CHANCE))
-		if(HAS_TRAIT(SSstation, STATION_TRAIT_BANANIUM_SHIPMENTS))
-			advisory_string += "Advisory Level: <b>Clown Planet</b></center><BR>"
-			advisory_string += "Your sector's advisory level is Clown Planet! Our bike horns have picked up on a large bananium stash. Clowns show a large influx of clowns on your station. We highly advise you to slip any threats to keep Honkotrasen assets within the Banana Sector. The Department of Intelligence advises defending chemistry from any clowns that are trying to make baldium or space lube."
-			return advisory_string
+	if(prob(PULSAR_REPORT_CHANCE))
+		for(var/datum/station_trait/our_trait as anything in shuffle(SSstation.station_traits))
+			advisory_string += our_trait.get_pulsar_message()
+			if(length(advisory_string))
+				return advisory_string
 
 		advisory_string += "Advisory Level: <b>Pulsar Star</b></center><BR>"
 		advisory_string += "Your sector's advisory level is Pulsar Star. A large, unknown electromagnetic field has stormed through nearby surveillance equipment, causing major data loss. Partial data was recovered and showed no credible threats to Nanotrasen assets within the Spinward Sector; however, the Department of Intelligence advises maintaining high alert against potential threats due to the lack of complete data."
 		return advisory_string
+	//a white dwarf shift leads to a green security alert on report and special announcement, this prevents a meta check if the alert report is fake or not.
+	if(round(shown_threat) == 0 && round(threat_level) == 0)
+		advisory_string += "Advisory Level: <b>White Dwarf</b></center><BR>"
+		advisory_string += "Your sector's advisory level is White Dwarf. Our surveillance has ruled out any and all potential threats known in our database, eliminating most risks to our assets in the Spinward Sector. We advise a lower level of security, alongside distributing resources on potential profit."
+		return advisory_string
 
 	switch(round(shown_threat))
-		if(0)
-			advisory_string += "Advisory Level: <b>White Dwarf</b></center><BR>"
-			advisory_string += "Your sector's advisory level is White Dwarf. Our surveillance has ruled out any and all potential threats known in our database, eliminating most risks to our assets in the Spinward Sector. We advise a lower level of security, alongside distributing resources on potential profit."
-		if(1 to 19)
+		if(0 to 19)
 			var/show_core_territory = (GLOB.current_living_antags.len > 0)
 			if (prob(FAKE_GREENSHIFT_FORM_CHANCE))
 				show_core_territory = !show_core_territory
@@ -642,7 +646,6 @@ SUBSYSTEM_DEF(dynamic)
 	var/concatenated_message = msg.Join()
 	log_admin(concatenated_message)
 	to_chat(GLOB.admins, concatenated_message)
-
 
 /// Initializes the internal ruleset variables
 /datum/controller/subsystem/dynamic/proc/setup_rulesets()
@@ -940,6 +943,8 @@ SUBSYSTEM_DEF(dynamic)
 		ruleset.restricted_roles |= ruleset.protected_roles
 	if(CONFIG_GET(flag/protect_assistant_from_antagonist))
 		ruleset.restricted_roles |= JOB_ASSISTANT
+	if(!(ruleset.ruleset_category & GLOB.dynamic_ruleset_categories))
+		ruleset.requirements = list(101,101,101,101,101,101,101,101,101,101)
 
 /// Get station traits and call for their config
 /datum/controller/subsystem/dynamic/proc/configure_station_trait_costs()

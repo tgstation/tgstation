@@ -32,6 +32,7 @@ Fluoride Stare: After someone says 5 words, blah blah blah...
 	. = ..()
 	AddElement(/datum/element/organ_set_bonus, /datum/status_effect/organ_set_bonus/gondola)
 	AddElement(/datum/element/noticable_organ, "%PRONOUN_They radiate%PRONOUN_s an aura of serenity.")
+	AddElement(/datum/element/update_icon_blocker)
 
 /obj/item/organ/internal/heart/gondola/Insert(mob/living/carbon/receiver, special, movement_flags)
 	. = ..()

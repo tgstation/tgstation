@@ -97,6 +97,15 @@
 /obj/effect/decal/cleanable/trail_holder/can_bloodcrawl_in()
 	return TRUE
 
+// normal version of the above trail holder object for use in less convoluted things
+/obj/effect/decal/cleanable/blood/trails
+	desc = "Looks like a corpse was smeared all over the floor like ketchup. Kinda makes you hungry."
+	random_icon_states = list("trails_1", "trails_2")
+	icon_state = "trails_1"
+	beauty = -50
+	dryname = "dried tracks"
+	drydesc = "Looks like a corpse was smeared all over the floor like ketchup, but it's all dried up and nasty now, ew. You lose some of your appetite."
+
 /obj/effect/decal/cleanable/blood/gibs
 	name = "gibs"
 	desc = "They look bloody and gruesome."
@@ -111,8 +120,6 @@
 	drydesc = "They look bloody and gruesome while some terrible smell fills the air."
 	decal_reagent = /datum/reagent/consumable/liquidgibs
 	reagent_amount = 5
-	///Information about the diseases our streaking spawns
-	var/list/streak_diseases
 
 /obj/effect/decal/cleanable/blood/gibs/Initialize(mapload, list/datum/disease/diseases)
 	. = ..()
@@ -120,7 +127,6 @@
 	RegisterSignal(src, COMSIG_MOVABLE_PIPE_EJECTING, PROC_REF(on_pipe_eject))
 
 /obj/effect/decal/cleanable/blood/gibs/Destroy()
-	LAZYNULL(streak_diseases)
 	return ..()
 
 /obj/effect/decal/cleanable/blood/gibs/replace_decal(obj/effect/decal/cleanable/C)
@@ -147,8 +153,7 @@
 	streak(dirs)
 
 /obj/effect/decal/cleanable/blood/gibs/proc/streak(list/directions, mapload=FALSE)
-	LAZYINITLIST(streak_diseases)
-	SEND_SIGNAL(src, COMSIG_GIBS_STREAK, directions, streak_diseases)
+	SEND_SIGNAL(src, COMSIG_GIBS_STREAK, directions)
 	var/direction = pick(directions)
 	var/delay = 2
 	var/range = pick(0, 200; 1, 150; 2, 50; 3, 17; 50) //the 3% chance of 50 steps is intentional and played for laughs.
@@ -170,7 +175,7 @@
 	SIGNAL_HANDLER
 	if(NeverShouldHaveComeHere(loc))
 		return
-	new /obj/effect/decal/cleanable/blood/splatter(loc, streak_diseases)
+	new /obj/effect/decal/cleanable/blood/splatter(loc)
 
 /obj/effect/decal/cleanable/blood/gibs/up
 	icon_state = "gibup1"
@@ -291,7 +296,7 @@
 
 /obj/effect/decal/cleanable/blood/footprints/update_icon()
 	. = ..()
-	alpha = min(BLOODY_FOOTPRINT_BASE_ALPHA + (255 - BLOODY_FOOTPRINT_BASE_ALPHA) * bloodiness / (BLOOD_ITEM_MAX / 2), 255)
+	alpha = max(BLOODY_FOOTPRINT_BASE_ALPHA, min(255 * (bloodiness / 15), 255))
 
 //Cache of bloody footprint images
 //Key:

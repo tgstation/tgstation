@@ -4,6 +4,12 @@
 		. -= addiction
 		.[addiction::name] = addiction
 
+/proc/setup_smoker_addictions(list/possible_addictions)
+	. = possible_addictions
+	for(var/obj/item/storage/addiction as anything in .)
+		. -= addiction
+		.[format_text(addiction::name)] = addiction // Format text to remove \improper used in cigarette packs
+
 /datum/preference/choiced/junkie
 	category = PREFERENCE_CATEGORY_MANUALLY_RENDERED
 	savefile_key = "junkie"

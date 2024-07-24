@@ -6,6 +6,7 @@
 
 	GLOB.carbon_list += src
 	ADD_TRAIT(src, TRAIT_CAN_HOLD_ITEMS, INNATE_TRAIT) // Carbons are assumed to be innately capable of having arms, we check their arms count instead
+	breathing_loop = new(src, _direct = TRUE)
 
 /mob/living/carbon/Destroy()
 	//This must be done first, so the mob ghosts correctly before DNA etc is nulled
@@ -21,21 +22,20 @@
 		qdel(scar)
 	remove_from_all_data_huds()
 	QDEL_NULL(dna)
+	QDEL_NULL(breathing_loop)
 	GLOB.carbon_list -= src
 
-/mob/living/carbon/item_tending(mob/living/user, obj/item/tool, list/modifiers)
+/mob/living/carbon/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
 	. = ..()
 	if(. & ITEM_INTERACT_ANY_BLOCKER)
 		return .
-
+	// Needs to happen after parent call otherwise wounds are prioritized over surgery
 	for(var/datum/wound/wound as anything in shuffle(all_wounds))
 		if(wound.try_treating(tool, user))
 			return ITEM_INTERACT_SUCCESS
-
 	return .
 
-/mob/living/carbon/CtrlShiftClick(mob/user)
-	..()
+/mob/living/carbon/click_ctrl_shift(mob/user)
 	if(iscarbon(user))
 		var/mob/living/carbon/carbon_user = user
 		carbon_user.give(src)
@@ -117,12 +117,14 @@
 	throw_mode = THROW_MODE_DISABLED
 	if(hud_used)
 		hud_used.throw_icon.icon_state = "act_throw_off"
+	SEND_SIGNAL(src, COMSIG_LIVING_THROW_MODE_TOGGLE, throw_mode)
 
 
 /mob/living/carbon/proc/throw_mode_on(mode = THROW_MODE_TOGGLE)
 	throw_mode = mode
 	if(hud_used)
 		hud_used.throw_icon.icon_state = "act_throw_on"
+	SEND_SIGNAL(src, COMSIG_LIVING_THROW_MODE_TOGGLE, throw_mode)
 
 /mob/proc/throw_item(atom/target)
 	SEND_SIGNAL(src, COMSIG_MOB_THROW, target)
@@ -151,7 +153,7 @@
 				if(grab_state >= GRAB_NECK)
 					neckgrab_throw = TRUE
 				stop_pulling()
-				if(HAS_TRAIT(src, TRAIT_PACIFISM))
+				if(HAS_TRAIT(src, TRAIT_PACIFISM) || HAS_TRAIT(src, TRAIT_NO_THROWING))
 					to_chat(src, span_notice("You gently let go of [throwable_mob]."))
 					return FALSE
 	else
@@ -171,6 +173,8 @@
 	if(HAS_TRAIT(thrown_thing, TRAIT_DWARF))
 		power_throw++
 	if(neckgrab_throw)
+		power_throw++
+	if(HAS_TRAIT(src, TRAIT_TOSS_GUN_HARD) && isgun(thrown_thing))
 		power_throw++
 	if(isitem(thrown_thing))
 		var/obj/item/thrown_item = thrown_thing
@@ -193,6 +197,11 @@
 					span_danger("You [verb_text] [thrown_thing][power_throw_text]"))
 	log_message("has thrown [thrown_thing] [power_throw_text]", LOG_ATTACK)
 	var/extra_throw_range = HAS_TRAIT(src, TRAIT_THROWINGARM) ? 2 : 0
+
+	var/obj/item/organ/internal/cyberimp/chest/spine/potential_spine = get_organ_slot(ORGAN_SLOT_SPINE)
+	if(istype(potential_spine))
+		extra_throw_range += potential_spine.added_throw_range
+
 	newtonian_move(get_dir(target, src))
 	thrown_thing.safe_throw_at(target, thrown_thing.throw_range + extra_throw_range, max(1,thrown_thing.throw_speed + power_throw), src, null, null, null, move_force)
 
@@ -227,13 +236,6 @@
 /mob/living/carbon/on_fall()
 	. = ..()
 	loc.handle_fall(src)//it's loc so it doesn't call the mob's handle_fall which does nothing
-
-/mob/living/carbon/is_muzzled()
-	for (var/obj/item/clothing/clothing in get_equipped_items())
-		if(clothing.clothing_flags & BLOCKS_SPEECH)
-			return TRUE
-	return FALSE
-
 
 /mob/living/carbon/resist_buckle()
 	if(!HAS_TRAIT(src, TRAIT_RESTRAINED))
@@ -567,19 +569,6 @@
 	else
 		remove_movespeed_modifier(/datum/movespeed_modifier/carbon_softcrit)
 	SEND_SIGNAL(src, COMSIG_LIVING_HEALTH_UPDATE)
-
-/mob/living/carbon/update_stamina()
-	var/stam = getStaminaLoss()
-	if(stam > DAMAGE_PRECISION && (maxHealth - stam) <= crit_threshold)
-		if (!stat)
-			enter_stamcrit()
-	else if(HAS_TRAIT_FROM(src, TRAIT_INCAPACITATED, STAMINA))
-		REMOVE_TRAIT(src, TRAIT_INCAPACITATED, STAMINA)
-		REMOVE_TRAIT(src, TRAIT_IMMOBILIZED, STAMINA)
-		REMOVE_TRAIT(src, TRAIT_FLOORED, STAMINA)
-	else
-		return
-	update_stamina_hud()
 
 /mob/living/carbon/update_sight()
 	if(!client)
@@ -1125,14 +1114,14 @@
 			return
 		var/list/limb_list = list()
 		if(edit_action == "remove")
-			for(var/obj/item/bodypart/B as anything in bodyparts)
-				limb_list += B.body_zone
+			for(var/obj/item/bodypart/iter_part as anything in bodyparts)
+				limb_list += iter_part.body_zone
 				limb_list -= BODY_ZONE_CHEST
 		else
 			limb_list = list(BODY_ZONE_HEAD, BODY_ZONE_L_ARM, BODY_ZONE_R_ARM, BODY_ZONE_L_LEG, BODY_ZONE_R_LEG, BODY_ZONE_CHEST)
 		var/result = input(usr, "Please choose which bodypart to [edit_action]","[capitalize(edit_action)] Bodypart") as null|anything in sort_list(limb_list)
 		if(result)
-			var/obj/item/bodypart/BP = get_bodypart(result)
+			var/obj/item/bodypart/part = get_bodypart(result)
 			var/list/limbtypes = list()
 			switch(result)
 				if(BODY_ZONE_CHEST)
@@ -1149,9 +1138,9 @@
 					limbtypes = typesof(/obj/item/bodypart/leg/right)
 			switch(edit_action)
 				if("remove")
-					if(BP)
-						BP.drop_limb()
-						admin_ticket_log("[key_name_admin(usr)] has removed [src]'s [parse_zone(BP.body_zone)]")
+					if(part)
+						part.drop_limb()
+						admin_ticket_log("[key_name_admin(usr)] has removed [src]'s [part.plaintext_zone]")
 					else
 						to_chat(usr, span_boldwarning("[src] doesn't have such bodypart."))
 						admin_ticket_log("[key_name_admin(usr)] has attempted to modify the bodyparts of [src]")
@@ -1159,8 +1148,8 @@
 					var/limb2add = input(usr, "Select a bodypart type to add", "Add/Replace Bodypart") as null|anything in sort_list(limbtypes)
 					var/obj/item/bodypart/new_bp = new limb2add()
 					if(new_bp.replace_limb(src, special = TRUE))
-						admin_ticket_log("key_name_admin(usr)] has replaced [src]'s [BP.type] with [new_bp.type]")
-						qdel(BP)
+						admin_ticket_log("key_name_admin(usr)] has replaced [src]'s [part.type] with [new_bp.type]")
+						qdel(part)
 					else
 						to_chat(usr, "Failed to replace bodypart! They might be incompatible.")
 						admin_ticket_log("[key_name_admin(usr)] has attempted to modify the bodyparts of [src]")

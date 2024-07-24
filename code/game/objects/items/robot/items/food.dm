@@ -117,25 +117,45 @@
 	user.visible_message(span_warning("[user] shoots a high-velocity gumball at [target]!"))
 	check_amount()
 
-/obj/item/borg/lollipop/afterattack(atom/target, mob/living/user, proximity, click_params)
+/obj/item/borg/lollipop/ranged_interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
 	check_amount()
 	if(iscyborg(user))
 		var/mob/living/silicon/robot/robot_user = user
-		if(!robot_user.cell.use(0.012 * STANDARD_CELL_CHARGE))
+		if(!robot_user.cell?.use(0.012 * STANDARD_CELL_CHARGE))
 			to_chat(user, span_warning("Not enough power."))
-			return AFTERATTACK_PROCESSED_ITEM
+			return ITEM_INTERACT_BLOCKING
+
+	switch(mode)
+		if(THROW_LOLLIPOP_MODE)
+			shootL(interacting_with, user, list2params(modifiers))
+			return ITEM_INTERACT_SUCCESS
+
+		if(THROW_GUMBALL_MODE)
+			shootG(interacting_with, user, list2params(modifiers))
+			return ITEM_INTERACT_SUCCESS
+
+	return NONE
+
+/obj/item/borg/lollipop/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
+	check_amount()
+	if(iscyborg(user))
+		var/mob/living/silicon/robot/robot_user = user
+		if(!robot_user.cell?.use(0.012 * STANDARD_CELL_CHARGE))
+			to_chat(user, span_warning("Not enough power."))
+			return ITEM_INTERACT_BLOCKING
+
 	switch(mode)
 		if(DISPENSE_LOLLIPOP_MODE, DISPENSE_ICECREAM_MODE)
-			if(!proximity)
-				return AFTERATTACK_PROCESSED_ITEM
-			dispense(target, user)
-		if(THROW_LOLLIPOP_MODE)
-			shootL(target, user, click_params)
-		if(THROW_GUMBALL_MODE)
-			shootG(target, user, click_params)
-	return ..() | AFTERATTACK_PROCESSED_ITEM
+			dispense(interacting_with, user)
+			return ITEM_INTERACT_SUCCESS
+
+	return NONE
 
 /obj/item/borg/lollipop/attack_self(mob/living/user)
+	switch_mode(user)
+	return ..()
+
+/obj/item/borg/lollipop/proc/switch_mode(mob/living/user)
 	switch(mode)
 		if(DISPENSE_LOLLIPOP_MODE)
 			mode = THROW_LOLLIPOP_MODE
@@ -149,7 +169,17 @@
 		if(DISPENSE_ICECREAM_MODE)
 			mode = DISPENSE_LOLLIPOP_MODE
 			to_chat(user, span_notice("Module is now dispensing lollipops."))
-	..()
+
+/obj/item/borg/lollipop/ice_cream
+	name = "ice cream fabricator"
+	desc = "Reward humans with vanilla ice cream. Can't go wrong with it."
+	candy = 4
+	candymax = 4
+	charge_delay = 15 SECONDS
+	mode = DISPENSE_ICECREAM_MODE
+
+/obj/item/borg/lollipop/ice_cream/switch_mode(mob/living/user)
+	return
 
 /obj/item/ammo_casing/gumball
 	name = "Gumball"
@@ -170,7 +200,7 @@
 	icon_state = "gumball"
 	damage = 0
 	speed = 0.5
-	embedding = null
+	embed_type = null
 
 /obj/projectile/bullet/gumball/Initialize(mapload)
 	. = ..()
@@ -203,29 +233,30 @@
 	icon_state = "lollipop_1"
 	damage = 0
 	speed = 0.5
-	embedding = null
+	embed_type = null
 	var/head_color
 
 /obj/projectile/bullet/lollipop/harmful
-	embedding = list(
-		embed_chance = 35,
-		fall_chance = 2,
-		jostle_chance = 0,
-		ignore_throwspeed_threshold = TRUE,
-		pain_stam_pct = 0.5,
-		pain_mult = 3,
-		rip_time = 10,
-	)
+	embed_type = /datum/embed_data/lollipop
 	damage = 10
 	shrapnel_type = /obj/item/food/lollipop/cyborg
 	embed_falloff_tile = 0
+
+/datum/embed_data/lollipop
+	embed_chance = 35
+	fall_chance = 2
+	jostle_chance = 0
+	ignore_throwspeed_threshold = TRUE
+	pain_stam_pct = 0.5
+	pain_mult = 3
+	rip_time = 10
 
 /obj/projectile/bullet/lollipop/Initialize(mapload)
 	. = ..()
 	var/mutable_appearance/head = mutable_appearance('icons/obj/weapons/guns/projectiles.dmi', "lollipop_2")
 	head.color = head_color = rgb(rand(0, 255), rand(0, 255), rand(0, 255))
 	add_overlay(head)
-	if(!embedding)
+	if(!embed_type)
 		AddElement(/datum/element/projectile_drop, /obj/item/food/lollipop/cyborg)
 	RegisterSignals(src, list(COMSIG_PROJECTILE_ON_SPAWN_DROP, COMSIG_PROJECTILE_ON_SPAWN_EMBEDDED), PROC_REF(handle_drop))
 

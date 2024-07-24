@@ -8,7 +8,7 @@
  * * sets lastKnownIP
  * * sets computer_id
  * * logs the login
- * * tells the world to update it's status (for player count)
+ * * tells the world to update its status (for player count)
  * * create mob huds for the mob if needed
  * * reset next_move to 1
  * * Set statobj to our mob
@@ -99,7 +99,10 @@
 
 	update_client_colour()
 	update_mouse_pointer()
-	refresh_looping_ambience()
+	update_ambience_area(get_area(src))
+
+	if(!can_hear())
+		stop_sound_channel(CHANNEL_AMBIENCE)
 
 	if(client)
 		if(client.view_size)

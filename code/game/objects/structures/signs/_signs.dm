@@ -85,7 +85,7 @@
 	return TRUE
 
 /obj/structure/sign/attackby(obj/item/I, mob/user, params)
-	if(is_editable && istype(I, /obj/item/pen))
+	if(is_editable && IS_WRITING_UTENSIL(I))
 		if(!length(GLOB.editable_sign_types))
 			CRASH("GLOB.editable_sign_types failed to populate")
 		var/choice = tgui_input_list(user, "Select a sign type", "Sign Customization", GLOB.editable_sign_types)
@@ -187,12 +187,12 @@
 
 /obj/item/sign/add_context(atom/source, list/context, obj/item/held_item, mob/user)
 	. = ..()
-	if(is_editable && istype(held_item, /obj/item/pen))
+	if(is_editable && IS_WRITING_UTENSIL(held_item))
 		context[SCREENTIP_CONTEXT_LMB] = "Change design"
 		return CONTEXTUAL_SCREENTIP_SET
 
 /obj/item/sign/attackby(obj/item/I, mob/user, params)
-	if(is_editable && istype(I, /obj/item/pen))
+	if(is_editable && IS_WRITING_UTENSIL(I))
 		if(!length(GLOB.editable_sign_types))
 			CRASH("GLOB.editable_sign_types failed to populate")
 		var/choice = tgui_input_list(user, "Select a sign type", "Sign Customization", GLOB.editable_sign_types)
@@ -209,11 +209,10 @@
 		return
 	return ..()
 
-/obj/item/sign/afterattack(atom/target, mob/user, proximity)
-	. = ..()
-	if(!iswallturf(target) || !proximity)
-		return
-	var/turf/target_turf = target
+/obj/item/sign/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
+	if(!iswallturf(interacting_with))
+		return NONE
+	var/turf/target_turf = interacting_with
 	var/turf/user_turf = get_turf(user)
 	var/obj/structure/sign/placed_sign = new sign_path(user_turf) //We place the sign on the turf the user is standing, and pixel shift it to the target wall, as below.
 	//This is to mimic how signs and other wall objects are usually placed by mappers, and so they're only visible from one side of a wall.
@@ -233,6 +232,7 @@
 	placed_sign.setDir(dir)
 	placed_sign.find_and_hang_on_wall(TRUE, placed_sign.knock_down_callback)
 	qdel(src)
+	return ITEM_INTERACT_SUCCESS
 
 /obj/item/sign/welder_act(mob/living/user, obj/item/I)
 	. = ..()

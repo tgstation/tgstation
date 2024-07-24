@@ -9,4 +9,5 @@ ADMIN_VERB_AND_CONTEXT_MENU(fix_air, R_ADMIN, "Fix Air", "Fixes air in a specifi
 			continue
 		var/datum/gas_mixture/GM = SSair.parse_gas_string(valid_range_turf.initial_gas_mix, /datum/gas_mixture/turf)
 		valid_range_turf.copy_air(GM)
+		valid_range_turf.temperature = initial(valid_range_turf.temperature)
 		valid_range_turf.update_visuals()

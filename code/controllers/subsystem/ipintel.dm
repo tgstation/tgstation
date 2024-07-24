@@ -106,7 +106,7 @@ SUBSYSTEM_DEF(ipintel)
 	intel.result = data["result"]
 	if(istext(intel.result))
 		intel.result = text2num(intel.result)
-	intel.date = SQLtime()
+	intel.date = ISOtime()
 	intel.address = address
 	cached_queries[address] = intel
 	add_intel_to_database(intel)

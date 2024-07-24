@@ -107,7 +107,7 @@
 	body_parts_covered = CHEST|GROIN
 
 /obj/item/clothing/suit/armor/vest/marine/pmc
-	desc = "A set of the finest mass produced, stamped plasteel armor plates, for an all-around door-kicking and ass-smashing. Its stellar survivability making up is for it's lack of space worthiness"
+	desc = "A set of the finest mass produced, stamped plasteel armor plates, for an all-around door-kicking and ass-smashing. Its stellar survivability making up is for its lack of space worthiness"
 	min_cold_protection_temperature = HELMET_MIN_TEMP_PROTECT
 	max_heat_protection_temperature = HELMET_MAX_TEMP_PROTECT
 	clothing_flags = THICKMATERIAL
@@ -292,25 +292,6 @@
 	fire = 80
 	acid = 80
 	wound = 20
-
-/obj/item/clothing/suit/armor/bone
-	name = "bone armor"
-	desc = "A tribal armor plate, crafted from animal bone."
-	icon_state = "bonearmor"
-	inhand_icon_state = null
-	blood_overlay_type = "armor"
-	armor_type = /datum/armor/armor_bone
-	body_parts_covered = CHEST|GROIN|LEGS|FEET|ARMS
-
-/datum/armor/armor_bone
-	melee = 35
-	bullet = 25
-	laser = 25
-	energy = 35
-	bomb = 25
-	fire = 50
-	acid = 50
-	wound = 10
 
 /obj/item/clothing/suit/armor/balloon_vest
 	name = "balloon vest"
@@ -671,7 +652,7 @@
 
 /obj/item/clothing/suit/armor/militia
 	name = "station defender's coat"
-	desc = "A well worn uniform used by militia across the frontier, it's thick padding useful for cushioning blows."
+	desc = "A well worn uniform used by militia across the frontier, its thick padding useful for cushioning blows."
 	icon_state = "militia"
 	inhand_icon_state = "b_suit"
 	body_parts_covered = CHEST|GROIN|ARMS

@@ -17,7 +17,7 @@
 			signals_to_add += list(COMSIG_ITEM_ATTACK, COMSIG_ITEM_ATTACK_ATOM, COMSIG_ITEM_HIT_REACT, COMSIG_ITEM_ATTACK_SELF, COMSIG_ITEM_EQUIPPED, COMSIG_ITEM_DROPPED)
 		var/atom/atom_parent = parent
 		if(atom_parent.atom_storage)
-			signals_to_add += list(COMSIG_STORAGE_STORED_ITEM)
+			signals_to_add += list(COMSIG_ATOM_STORED_ITEM)
 		else if(isstructure(parent))
 			signals_to_add += list(COMSIG_ATOM_ATTACK_HAND)
 

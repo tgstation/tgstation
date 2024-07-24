@@ -261,7 +261,7 @@ Difficulty: Extremely Hard
 	clone.real_name = user.real_name
 	INVOKE_ASYNC(user.dna, TYPE_PROC_REF(/datum/dna, transfer_identity), clone)
 	clone.updateappearance(mutcolor_update=1)
-	var/turf/T = find_safe_turf()
+	var/turf/T = find_maintenance_spawn(atmos_sensitive = TRUE, require_darkness = TRUE) || find_safe_turf()
 	user.forceMove(T)
 	user.revive(ADMIN_HEAL_ALL)
 	INVOKE_ASYNC(user, TYPE_PROC_REF(/mob/living/carbon, set_species), /datum/species/shadow)

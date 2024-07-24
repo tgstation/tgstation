@@ -150,7 +150,7 @@
 			else
 				camera_ref = null
 			if(!spying)
-				playsound(computer, get_sfx(SFX_TERMINAL_TYPE), 25, FALSE)
+				playsound(computer, SFX_TERMINAL_TYPE, 25, FALSE)
 			if(isnull(camera_ref))
 				return TRUE
 			if(internal_tracker)
@@ -209,7 +209,7 @@
 
 	var/list/visible_turfs = list()
 
-	// Get the camera's turf to correctly gather what's visible from it's turf, in case it's located in a moving object (borgs / mechs)
+	// Get the camera's turf to correctly gather what's visible from its turf, in case it's located in a moving object (borgs / mechs)
 	var/new_cam_turf = get_turf(active_camera)
 
 	// If we're not forcing an update for some reason and the cameras are in the same location,

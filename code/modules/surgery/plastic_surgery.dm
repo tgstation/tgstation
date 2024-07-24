@@ -42,11 +42,11 @@
 	display_results(
 		user,
 		target,
-		span_notice("You begin to insert [tool] into the incision in [target]'s [parse_zone(target_zone)]..."),
-		span_notice("[user] begins to insert [tool] into the incision in [target]'s [parse_zone(target_zone)]."),
-		span_notice("[user] begins to insert [tool] into the incision in [target]'s [parse_zone(target_zone)]."),
+		span_notice("You begin to insert [tool] into the incision in [target]'s [target.parse_zone_with_bodypart(target_zone)]..."),
+		span_notice("[user] begins to insert [tool] into the incision in [target]'s [target.parse_zone_with_bodypart(target_zone)]."),
+		span_notice("[user] begins to insert [tool] into the incision in [target]'s [target.parse_zone_with_bodypart(target_zone)]."),
 	)
-	display_pain(target, "You feel something inserting just below the skin in your [parse_zone(target_zone)].")
+	display_pain(target, "You feel something inserting just below the skin in your [target.parse_zone_with_bodypart(target_zone)].")
 
 /datum/surgery_step/insert_plastic/success(mob/user, mob/living/target, target_zone, obj/item/stack/tool, datum/surgery/surgery, default_display_results)
 	. = ..()
@@ -60,6 +60,7 @@
 		/obj/item/knife = 50,
 		TOOL_WIRECUTTER = 35)
 	time = 64
+	surgery_effects_mood = TRUE
 
 /datum/surgery_step/reshape_face/preop(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
 	user.visible_message(span_notice("[user] begins to alter [target]'s appearance."), span_notice("You begin to alter [target]'s appearance..."))

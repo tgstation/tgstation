@@ -3,7 +3,7 @@
 	invocation_type = INVOCATION_NONE
 
 	/// Typepath of whatever item we summon
-	var/obj/item/item_type
+	var/obj/item_type
 	/// If TRUE, we delete any previously created items when we cast the spell
 	var/delete_old = TRUE
 	/// List of weakrefs to items summoned
@@ -57,13 +57,17 @@
 
 	var/mob/mob_caster = cast_on
 	if(istype(mob_caster))
-		var/obj/item/existing_item = mob_caster.get_active_held_item()
+		var/obj/existing_item = mob_caster.get_active_held_item()
 		if(existing_item)
 			mob_caster.dropItemToGround(existing_item)
 
 	var/obj/item/created = make_item(cast_on)
 	if(QDELETED(created))
 		CRASH("[type] tried to create an item, but failed. It's item type is [item_type].")
+
+	if(!isitem(created))
+		created.forceMove(cast_on.drop_location())
+		return
 
 	if(istype(mob_caster))
 		mob_caster.put_in_hands(created, del_on_fail = delete_on_failure)

@@ -109,9 +109,6 @@
 	for(var/datum/quirk/target_quirk as anything in target.quirks)
 		LAZYADD(quirks, new target_quirk.type)
 
-	hair_gradient_style = LAZYLISTDUPLICATE(target.grad_style)
-	hair_gradient_colours = LAZYLISTDUPLICATE(target.grad_color)
-
 	voice = target.voice
 	voice_filter = target.voice_filter
 
@@ -120,8 +117,6 @@
 	target.real_name = name
 	target.age = age
 	target.physique = physique
-	target.grad_style = LAZYLISTDUPLICATE(hair_gradient_style)
-	target.grad_color = LAZYLISTDUPLICATE(hair_gradient_colours)
 	target.voice = voice
 	target.voice_filter = voice_filter
 

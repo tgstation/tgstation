@@ -202,6 +202,8 @@
 	pointed_reaction = "and growls"
 	/// Blackboard key where a reference to some kind of mob ability is stored
 	var/pet_ability_key
+	/// The AI behavior to use for the ability
+	var/ability_behavior = /datum/ai_behavior/pet_use_ability
 
 /datum/pet_command/point_targeting/use_ability/execute_action(datum/ai_controller/controller)
 	if (!pet_ability_key)
@@ -211,7 +213,7 @@
 		return
 	// We don't check if the target exists because we want to 'sit attentively' if we've been instructed to attack but not given one yet
 	// We also don't check if the cooldown is over because there's no way a pet owner can know that, the behaviour will handle it
-	controller.queue_behavior(/datum/ai_behavior/pet_use_ability, pet_ability_key, BB_CURRENT_PET_TARGET)
+	controller.queue_behavior(ability_behavior, pet_ability_key, BB_CURRENT_PET_TARGET)
 	return SUBTREE_RETURN_FINISH_PLANNING
 
 /datum/pet_command/protect_owner
@@ -222,6 +224,8 @@
 	var/protect_range = 9
 	///the behavior we will use when he is attacked
 	var/protect_behavior = /datum/ai_behavior/basic_melee_attack
+	///message cooldown to prevent too many people from telling you not to commit suicide
+	COOLDOWN_DECLARE(self_harm_message_cooldown)
 
 /datum/pet_command/protect_owner/add_new_friend(mob/living/tamer)
 	RegisterSignal(tamer, COMSIG_ATOM_WAS_ATTACKED, PROC_REF(set_attacking_target))
@@ -252,8 +256,41 @@
 	var/mob/living/basic/owner = weak_parent.resolve()
 	if(isnull(owner))
 		return
+	if(source == attacker)
+		var/list/interventions = owner.ai_controller?.blackboard[BB_OWNER_SELF_HARM_RESPONSES] || list()
+		if (length(interventions) && COOLDOWN_FINISHED(src, self_harm_message_cooldown) && prob(30))
+			COOLDOWN_START(src, self_harm_message_cooldown, 5 SECONDS)
+			var/chosen_statement = pick(interventions)
+			INVOKE_ASYNC(owner, TYPE_PROC_REF(/atom/movable, say), chosen_statement)
+		return
 	var/mob/living/current_target = owner.ai_controller?.blackboard[BB_CURRENT_PET_TARGET]
 	if(attacker == current_target) //we are already dealing with this target
 		return
 	if(isliving(attacker) && can_see(owner, attacker, protect_range))
 		set_command_active(owner, attacker)
+
+/**
+ * # Fish command: command the mob to fish at the next fishing spot you point at. Requires the profound fisher component
+ */
+/datum/pet_command/point_targeting/fish
+	command_name = "Fish"
+	command_desc = "Command your pet to try fishing at a nearby fishing spot."
+	radial_icon = 'icons/obj/aquarium/fish.dmi'
+	radial_icon_state = "goldfish"
+	speech_commands = list("fish")
+
+// Refuse to target things we can't target, chiefly other friends
+/datum/pet_command/point_targeting/fish/set_command_target(mob/living/parent, atom/target)
+	if (!target)
+		return
+	if(!parent.ai_controller || !HAS_TRAIT(parent, TRAIT_PROFOUND_FISHER))
+		return
+	var/datum/targeting_strategy/targeter = GET_TARGETING_STRATEGY(/datum/targeting_strategy/fishing)
+	if (!targeter?.can_attack(parent, target))
+		parent.balloon_alert_to_viewers("shakes head!")
+		return
+	return ..()
+
+/datum/pet_command/point_targeting/fish/execute_action(datum/ai_controller/controller)
+	controller.queue_behavior(/datum/ai_behavior/hunt_target/unarmed_attack_target/reset_target_combat_mode, BB_CURRENT_PET_TARGET)
+	return SUBTREE_RETURN_FINISH_PLANNING

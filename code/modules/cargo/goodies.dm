@@ -12,21 +12,21 @@
 	contains = list(/obj/item/modular_computer/pda/clear)
 
 /datum/supply_pack/goody/dumdum38
-	name = ".38 DumDum Speedloader"
+	name = ".38 DumDum Speedloader Single-Pack"
 	desc = "Contains one speedloader of .38 DumDum ammunition, good for embedding in soft targets."
 	cost = PAYCHECK_CREW * 2
 	access_view = ACCESS_WEAPONS
 	contains = list(/obj/item/ammo_box/c38/dumdum)
 
 /datum/supply_pack/goody/match38
-	name = ".38 Match Grade Speedloader"
+	name = ".38 Match Grade Speedloader Single-Pack"
 	desc = "Contains one speedloader of match grade .38 ammunition, perfect for showing off trickshots."
 	cost = PAYCHECK_CREW * 2
 	access_view = ACCESS_WEAPONS
 	contains = list(/obj/item/ammo_box/c38/match)
 
 /datum/supply_pack/goody/rubber
-	name = ".38 Rubber Speedloader"
+	name = ".38 Rubber Speedloader Single-Pack"
 	desc = "Contains one speedloader of bouncy rubber .38 ammunition, for when you want to bounce your shots off anything and everything."
 	cost = PAYCHECK_CREW * 1.5
 	access_view = ACCESS_WEAPONS
@@ -41,14 +41,14 @@
 
 /datum/supply_pack/goody/stingbang
 	name = "Stingbang Single-Pack"
-	desc = "Contains one \"stingbang\" grenade, perfect for playing meanhearted pranks."
+	desc = "Contains one \"Stingbang\" grenade, perfect for playing meanhearted pranks."
 	cost = PAYCHECK_COMMAND * 2.5
 	access_view = ACCESS_WEAPONS
 	contains = list(/obj/item/grenade/stingbang)
 
 /datum/supply_pack/goody/Survivalknives_single
 	name = "Survival Knife Single-Pack"
-	desc = "Contains one sharpened survival knive. Guaranteed to fit snugly inside any Nanotrasen-standard boot."
+	desc = "Contains one sharpened survival knife. Guaranteed to fit snugly inside any Nanotrasen-standard boot."
 	cost = PAYCHECK_COMMAND * 1.75
 	contains = list(/obj/item/knife/combat/survival)
 
@@ -61,21 +61,21 @@
 
 /datum/supply_pack/goody/disabler_single
 	name = "Disabler Single-Pack"
-	desc = "Contains one disabler, the nonlethal workhorse of Nanotrasen security everywehere. Comes in a energy holster, just in case you happen to have an extra disabler."
+	desc = "Contains one disabler, the non-lethal workhorse of Nanotrasen security everywhere. Comes in a energy holster, just in case you happen to have an extra disabler."
 	cost = PAYCHECK_COMMAND * 3
 	access_view = ACCESS_WEAPONS
 	contains = list(/obj/item/storage/belt/holster/energy/disabler)
 
 /datum/supply_pack/goody/energy_single
 	name = "Energy Gun Single-Pack"
-	desc = "Contains one energy gun, capable of firing both nonlethal and lethal blasts of light."
+	desc = "Contains one energy gun, capable of firing both non-lethal and lethal blasts of light."
 	cost = PAYCHECK_COMMAND * 12
 	access_view = ACCESS_WEAPONS
 	contains = list(/obj/item/gun/energy/e_gun)
 
 /datum/supply_pack/goody/laser_single
 	name = "Laser Gun Single-Pack"
-	desc = "Contains one laser gun, the lethal workhorse of Nanotrasen security everywehere."
+	desc = "Contains one laser gun, the lethal workhorse of Nanotrasen security everywhere."
 	cost = PAYCHECK_COMMAND * 6
 	access_view = ACCESS_WEAPONS
 	contains = list(/obj/item/gun/energy/laser)
@@ -161,7 +161,7 @@
 	contains = list(/obj/item/toy/plush/beeplushie)
 
 /datum/supply_pack/goody/blahaj
-	name = "Shark plushie"
+	name = "Shark Plushie"
 	desc = "A soft, warm companion for midday naps."
 	cost = PAYCHECK_CREW * 5
 	contains = list(/obj/item/toy/plush/shark)
@@ -179,7 +179,7 @@
 	contains = list(/obj/item/dyespray)
 
 /datum/supply_pack/goody/beach_ball
-	name = "Beach Ball"
+	name = "Beach Ball Single-Pack"
 	// uses desc from item
 	cost = PAYCHECK_CREW
 	contains = list(/obj/item/toy/beach_ball/branded)
@@ -208,19 +208,19 @@
 	contains = list(/obj/item/food/ready_donk)
 
 /datum/supply_pack/goody/pill_mutadone
-	name = "Emergency Mutadone Pill"
+	name = "Emergency Mutadone Pill Single-Pack"
 	desc = "A single pill for curing genetic defects. Useful for when you can't procure one from medbay."
 	cost = PAYCHECK_CREW * 2.5
 	contains = list(/obj/item/reagent_containers/pill/mutadone)
 
 /datum/supply_pack/goody/rapid_lighting_device
-	name = "Rapid Lighting Device (RLD)"
+	name = "Rapid Lighting Device (RLD) Single-Pack"
 	desc = "A device used to rapidly provide lighting sources to an area. Reload with iron, plasteel, glass or compressed matter cartridges."
 	cost = PAYCHECK_CREW * 10
 	contains = list(/obj/item/construction/rld)
 
 /datum/supply_pack/goody/fishing_toolbox
-	name = "Fishing toolbox"
+	name = "Fishing Toolbox"
 	desc = "Complete toolbox set for your fishing adventure. Advanced hooks and lines sold separetely."
 	cost = PAYCHECK_CREW * 2
 	contains = list(/obj/item/storage/toolbox/fishing)
@@ -238,86 +238,86 @@
 	contains = list(/obj/item/storage/box/fishing_lines)
 
 /datum/supply_pack/goody/fishing_hook_rescue
-	name = "Rescue Fishing Hook"
+	name = "Rescue Fishing Hook Single-Pack"
 	desc = "For when your fellow miner has inevitably fallen into a chasm, and it's up to you to save them."
 	cost = PAYCHECK_CREW * 12
 	contains = list(/obj/item/fishing_hook/rescue)
 
 /datum/supply_pack/goody/premium_bait
-	name = "Deluxe fishing bait"
+	name = "Deluxe Fishing Bait Single-Pack"
 	desc = "When the standard variety is not good enough for you."
 	cost = PAYCHECK_CREW
 	contains = list(/obj/item/bait_can/worm/premium)
 
 /datum/supply_pack/goody/fish_feed
-	name = "Can of fish food"
+	name = "Can of Fish Food Single-Pack"
 	desc = "For keeping your little friends fed and alive."
 	cost = PAYCHECK_CREW * 1
 	contains = list(/obj/item/fish_feed)
 
 /datum/supply_pack/goody/naturalbait
-	name = "Freshness Jars full of Natural Bait"
+	name = "Freshness Jars full of Natural Bait Single-Pack"
 	desc = "Homemade in the Spinward Sector."
 	cost = PAYCHECK_CREW * 4 //rock on
 	contains = list(/obj/item/storage/pill_bottle/naturalbait)
 
 /datum/supply_pack/goody/telescopic_fishing_rod
-	name = "Telescopic Fishing Rod"
+	name = "Telescopic Fishing Rod Single-Pack"
 	desc = "A collapsible fishing rod that can fit within a backpack."
 	cost = PAYCHECK_CREW * 8
 	contains = list(/obj/item/fishing_rod/telescopic)
 
 /datum/supply_pack/goody/fish_analyzer
-	name = "Fish Analyzer"
+	name = "Fish Analyzer Single-Pack"
 	desc = "A single analyzer to monitor fish's status and traits with, in case you don't have the technology to print one."
 	cost = PAYCHECK_CREW * 2.5
 	contains = list(/obj/item/fish_analyzer)
 
 /datum/supply_pack/goody/fish_catalog
-	name = "Fishing Catalog"
+	name = "Fishing Catalog Single-Pack"
 	desc = "A catalog containing all the fishy info you'll ever need."
 	cost = PAYCHECK_LOWER
 	contains = list(/obj/item/book/manual/fish_catalog)
 
 /datum/supply_pack/goody/coffee_mug
-	name = "Coffee Mug"
+	name = "Coffee Mug Single-Pack"
 	desc = "A bog standard coffee mug, for drinking coffee."
 	cost = PAYCHECK_LOWER
 	contains = list(/obj/item/reagent_containers/cup/glass/mug)
 
 /datum/supply_pack/goody/nt_mug
-	name = "Nanotrasen Coffee Mug"
+	name = "Nanotrasen Coffee Mug Single-Pack"
 	desc = "A blue mug bearing the logo of your corporate masters. Usually given out at inductions or events, we'll send one out special for a nominal fee."
 	cost = PAYCHECK_LOWER
 	contains = list(/obj/item/reagent_containers/cup/glass/mug/nanotrasen)
 
 /datum/supply_pack/goody/coffee_cartridge
-	name = "Coffee Cartridge"
+	name = "Coffee Cartridge Single-Pack"
 	desc = "A basic cartridge for a coffeemaker. Makes 4 pots."
 	cost = PAYCHECK_LOWER
 	contains = list(/obj/item/coffee_cartridge)
 
 /datum/supply_pack/goody/coffee_cartridge_fancy
-	name = "Fancy Coffee Cartridge"
+	name = "Fancy Coffee Cartridge Single-Pack"
 	desc = "A fancy cartridge for a coffeemaker. Makes 4 pots."
 	cost = PAYCHECK_CREW
 	contains = list(/obj/item/coffee_cartridge/fancy)
 
 /datum/supply_pack/goody/coffeepot
-	name = "Coffeepot"
+	name = "Coffeepot Single-Pack"
 	desc = "A standard-sized coffeepot, for use with a coffeemaker."
 	cost = PAYCHECK_CREW
 	contains = list(/obj/item/reagent_containers/cup/coffeepot)
 
 /datum/supply_pack/goody/climbing_hook
-	name = "Climbing hook"
+	name = "Climbing Hook Single-Pack"
 	desc = "A less cheap imported climbing hook. Absolutely no use outside of planetary stations."
 	cost = PAYCHECK_CREW * 5
 	contains = list(/obj/item/climbing_hook)
 
 /datum/supply_pack/goody/double_barrel
-	name = "Double Barrel Shotgun"
-	desc = "Lost your beloved bunny to a demonic invasion? Clown broke in and stole your beloved gun? No worries! Get a new gun so long as you can pay the absurd fees."
+	name = "Double-barreled Shotgun Single-Pack"
+	desc = "Lost your beloved bunny to a demonic invasion? Clown broke in and stole your beloved gun? No worries! Get a new gun as long as you can pay the absurd fees."
 	cost = PAYCHECK_COMMAND * 18
 	access_view = ACCESS_WEAPONS
 	contains = list(/obj/item/gun/ballistic/shotgun/doublebarrel)

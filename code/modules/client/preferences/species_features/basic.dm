@@ -52,7 +52,7 @@
 	return random_eye_color()
 
 /datum/preference/choiced/facial_hairstyle
-	priority = PREFERENCE_PRIORITY_BODYPARTS
+	priority = PREFERENCE_PRORITY_LATE_BODY_TYPE
 	savefile_key = "facial_style_name"
 	savefile_identifier = PREFERENCE_CHARACTER
 	category = PREFERENCE_CATEGORY_FEATURES
@@ -69,15 +69,32 @@
 /datum/preference/choiced/facial_hairstyle/apply_to_human(mob/living/carbon/human/target, value)
 	target.set_facial_hairstyle(value, update = FALSE)
 
+/datum/preference/choiced/facial_hairstyle/create_default_value()
+	return /datum/sprite_accessory/facial_hair/shaved::name
+
+/datum/preference/choiced/facial_hairstyle/create_informed_default_value(datum/preferences/preferences)
+	var/gender = preferences.read_preference(/datum/preference/choiced/gender)
+	var/species_type = preferences.read_preference(/datum/preference/choiced/species)
+	var/datum/species/species_real = GLOB.species_prototypes[species_type]
+	if(!gender || !species_real || !species_real.sexes)
+		return ..()
+
+	var/picked_beard = random_facial_hairstyle(gender)
+	var/datum/sprite_accessory/beard_style = SSaccessories.facial_hairstyles_list[picked_beard]
+	if(!beard_style || !beard_style.natural_spawn || beard_style.locked) // Invalid, go with god(bald)
+		return ..()
+
+	return picked_beard
+
 /datum/preference/choiced/facial_hairstyle/compile_constant_data()
 	var/list/data = ..()
 
-	data[SUPPLEMENTAL_FEATURE_KEY] = "facial_hair_color"
+	data[SUPPLEMENTAL_FEATURE_KEY] = /datum/preference/color/facial_hair_color::savefile_key
 
 	return data
 
 /datum/preference/color/facial_hair_color
-	priority = PREFERENCE_PRIORITY_BODYPARTS
+	priority = PREFERENCE_PRORITY_LATE_BODY_TYPE // Need to happen after hair oclor is set so we can match by default
 	savefile_key = "facial_hair_color"
 	savefile_identifier = PREFERENCE_CHARACTER
 	category = PREFERENCE_CATEGORY_SUPPLEMENTAL_FEATURES
@@ -86,12 +103,16 @@
 /datum/preference/color/facial_hair_color/apply_to_human(mob/living/carbon/human/target, value)
 	target.set_facial_haircolor(value, update = FALSE)
 
+/datum/preference/color/facial_hair_color/create_informed_default_value(datum/preferences/preferences)
+	return preferences.read_preference(/datum/preference/color/hair_color) || random_hair_color()
+
 /datum/preference/choiced/facial_hair_gradient
-	priority = PREFERENCE_PRIORITY_BODYPARTS
+	priority = PREFERENCE_PRORITY_LATE_BODY_TYPE
 	category = PREFERENCE_CATEGORY_SECONDARY_FEATURES
 	savefile_identifier = PREFERENCE_CHARACTER
 	savefile_key = "facial_hair_gradient"
 	relevant_head_flag = HEAD_FACIAL_HAIR
+	can_randomize = FALSE
 
 /datum/preference/choiced/facial_hair_gradient/init_possible_values()
 	return assoc_to_keys_features(SSaccessories.facial_hair_gradients_list)
@@ -100,10 +121,10 @@
 	target.set_facial_hair_gradient_style(new_style = value, update = FALSE)
 
 /datum/preference/choiced/facial_hair_gradient/create_default_value()
-	return "None"
+	return /datum/sprite_accessory/gradient/none::name
 
 /datum/preference/color/facial_hair_gradient
-	priority = PREFERENCE_PRIORITY_BODYPARTS
+	priority = PREFERENCE_PRORITY_LATE_BODY_TYPE
 	category = PREFERENCE_CATEGORY_SECONDARY_FEATURES
 	savefile_identifier = PREFERENCE_CHARACTER
 	savefile_key = "facial_hair_gradient_color"
@@ -115,10 +136,10 @@
 /datum/preference/color/facial_hair_gradient/is_accessible(datum/preferences/preferences)
 	if (!..(preferences))
 		return FALSE
-	return preferences.read_preference(/datum/preference/choiced/facial_hair_gradient) != "None"
+	return preferences.read_preference(/datum/preference/choiced/facial_hair_gradient) != /datum/sprite_accessory/gradient/none::name
 
 /datum/preference/color/hair_color
-	priority = PREFERENCE_PRIORITY_BODYPARTS
+	priority = PREFERENCE_PRIORITY_BODY_TYPE
 	savefile_key = "hair_color"
 	savefile_identifier = PREFERENCE_CHARACTER
 	category = PREFERENCE_CATEGORY_SUPPLEMENTAL_FEATURES
@@ -127,8 +148,11 @@
 /datum/preference/color/hair_color/apply_to_human(mob/living/carbon/human/target, value)
 	target.set_haircolor(value, update = FALSE)
 
+/datum/preference/color/hair_color/create_informed_default_value(datum/preferences/preferences)
+	return random_hair_color()
+
 /datum/preference/choiced/hairstyle
-	priority = PREFERENCE_PRIORITY_BODYPARTS
+	priority = PREFERENCE_PRIORITY_BODY_TYPE // Happens after gender so we can picka hairstyle based on that
 	savefile_key = "hairstyle_name"
 	savefile_identifier = PREFERENCE_CHARACTER
 	category = PREFERENCE_CATEGORY_FEATURES
@@ -146,19 +170,37 @@
 /datum/preference/choiced/hairstyle/apply_to_human(mob/living/carbon/human/target, value)
 	target.set_hairstyle(value, update = FALSE)
 
+/datum/preference/choiced/hairstyle/create_default_value()
+	return /datum/sprite_accessory/hair/bald::name
+
+/datum/preference/choiced/hairstyle/create_informed_default_value(datum/preferences/preferences)
+	var/gender = preferences.read_preference(/datum/preference/choiced/gender)
+	var/species_type = preferences.read_preference(/datum/preference/choiced/species)
+	var/datum/species/species_real = GLOB.species_prototypes[species_type]
+	if(!gender || !species_real || !species_real.sexes)
+		return ..()
+
+	var/picked_hair = random_hairstyle(gender)
+	var/datum/sprite_accessory/hair_style = SSaccessories.hairstyles_list[picked_hair]
+	if(!hair_style || !hair_style.natural_spawn || hair_style.locked) // Invalid, go with god(bald)
+		return ..()
+
+	return picked_hair
+
 /datum/preference/choiced/hairstyle/compile_constant_data()
 	var/list/data = ..()
 
-	data[SUPPLEMENTAL_FEATURE_KEY] = "hair_color"
+	data[SUPPLEMENTAL_FEATURE_KEY] = /datum/preference/color/hair_color::savefile_key
 
 	return data
 
 /datum/preference/choiced/hair_gradient
-	priority = PREFERENCE_PRIORITY_BODYPARTS
+	priority = PREFERENCE_PRIORITY_BODY_TYPE
 	category = PREFERENCE_CATEGORY_SECONDARY_FEATURES
 	savefile_identifier = PREFERENCE_CHARACTER
 	savefile_key = "hair_gradient"
 	relevant_head_flag = HEAD_HAIR
+	can_randomize = FALSE
 
 /datum/preference/choiced/hair_gradient/init_possible_values()
 	return assoc_to_keys_features(SSaccessories.hair_gradients_list)
@@ -167,10 +209,10 @@
 	target.set_hair_gradient_style(new_style = value, update = FALSE)
 
 /datum/preference/choiced/hair_gradient/create_default_value()
-	return "None"
+	return /datum/sprite_accessory/gradient/none::name
 
 /datum/preference/color/hair_gradient
-	priority = PREFERENCE_PRIORITY_BODYPARTS
+	priority = PREFERENCE_PRIORITY_BODY_TYPE
 	category = PREFERENCE_CATEGORY_SECONDARY_FEATURES
 	savefile_identifier = PREFERENCE_CHARACTER
 	savefile_key = "hair_gradient_color"
@@ -182,4 +224,4 @@
 /datum/preference/color/hair_gradient/is_accessible(datum/preferences/preferences)
 	if (!..(preferences))
 		return FALSE
-	return preferences.read_preference(/datum/preference/choiced/hair_gradient) != "None"
+	return preferences.read_preference(/datum/preference/choiced/hair_gradient) != /datum/sprite_accessory/gradient/none::name

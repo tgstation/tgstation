@@ -7,6 +7,7 @@
 	range = 21
 	projectile_phasing = PASSTABLE | PASSMOB | PASSMACHINE | PASSSTRUCTURE
 	hitscan = TRUE
+	hit_threshhold = LOW_OBJ_LAYER // required to be able to hit floor lights
 	var/disrupt_duration = 15 SECONDS
 
 /obj/projectile/energy/fisher/on_hit(atom/target, blocked, pierce_hit)

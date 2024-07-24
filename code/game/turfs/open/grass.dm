@@ -10,10 +10,13 @@
 	barefootstep = FOOTSTEP_GRASS
 	clawfootstep = FOOTSTEP_GRASS
 	heavyfootstep = FOOTSTEP_GENERIC_HEAVY
-	smoothing_flags = SMOOTH_BITMASK | SMOOTH_BROKEN_TURF | SMOOTH_BURNT_TURF
+	smoothing_flags = SMOOTH_BITMASK
 	smoothing_groups = SMOOTH_GROUP_TURF_OPEN + SMOOTH_GROUP_FLOOR_GRASS
 	canSmoothWith = SMOOTH_GROUP_FLOOR_GRASS + SMOOTH_GROUP_CLOSED_TURFS
+	smooth_broken = TRUE
+	smooth_burnt = TRUE
 	layer = HIGH_TURF_LAYER
+	rust_resistance = RUST_RESISTANCE_ORGANIC
 	damaged_dmi = 'icons/turf/floors/grass_damaged.dmi'
 	/// The icon used for smoothing.
 	var/smooth_icon = 'icons/turf/floors/grass.dmi'
@@ -23,13 +26,13 @@
 	var/base_burnt_icon_state = "grass_damaged"
 
 /turf/open/misc/grass/broken_states()
-	if (!smoothing_junction || !(smoothing_flags & SMOOTH_BROKEN_TURF))
+	if (!smoothing_junction || !smooth_broken)
 		return list("[base_broken_icon_state]-255")
 
 	return list("[base_broken_icon_state]-[smoothing_junction]")
 
 /turf/open/misc/grass/burnt_states()
-	if (!smoothing_junction || !(smoothing_flags & SMOOTH_BURNT_TURF))
+	if (!smoothing_junction || !smooth_burnt)
 		return list("[base_burnt_icon_state]-255")
 
 	return list("[base_burnt_icon_state]-[smoothing_junction]")

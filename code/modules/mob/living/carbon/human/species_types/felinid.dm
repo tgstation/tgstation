@@ -21,6 +21,8 @@
 	family_heirlooms = list(/obj/item/toy/cattoy)
 	/// When false, this is a felinid created by mass-purrbation
 	var/original_felinid = TRUE
+	/// Yummy!
+	species_cookie = /obj/item/food/nugget
 
 // Prevents felinids from taking toxin damage from carpotoxin
 /datum/species/human/felinid/handle_chemical(datum/reagent/chem, mob/living/carbon/human/affected, seconds_per_tick, times_fired)
@@ -228,7 +230,7 @@
 			SPECIES_PERK_ICON = FA_ICON_PERSON_FALLING,
 			SPECIES_PERK_NAME = "Catlike Grace",
 			SPECIES_PERK_DESC = "Felinids have catlike instincts allowing them to land upright on their feet.  \
-				Instead of being knocked down from falling, you only recieve a short slowdown. \
+				Instead of being knocked down from falling, you only receive a short slowdown. \
 				However, they do not have catlike legs, and the fall will deal additional damage.",
 		),
 		list(

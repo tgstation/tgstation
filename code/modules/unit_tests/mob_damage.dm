@@ -580,3 +580,22 @@
 
 	if(!verify_damage(gusgus, 0, included_types = BRUTELOSS))
 		TEST_FAIL("heal_overall_damage did not apply its healing correctly on the mouse!")
+
+/// Tests that humans get the tox_vomit status effect when heavily poisoned
+/datum/unit_test/human_tox_damage
+
+/datum/unit_test/human_tox_damage/Run()
+	// Spawn a dummy, give it a bunch of tox damage. It should get the status effect.
+	var/mob/living/carbon/human/dummy = allocate(/mob/living/carbon/human/consistent)
+	dummy.setToxLoss(75)
+	var/datum/status_effect/tox_effect = dummy.has_status_effect(/datum/status_effect/tox_vomit)
+	TEST_ASSERT_NOTNULL(tox_effect, "Dummy didn't get tox_vomit status effect despite at [dummy.getToxLoss()] toxin damage (Method: SET)!")
+	// Clear the toxin damage away, and force a status effect tick: It should delete itself
+	dummy.setToxLoss(0)
+	tox_effect.tick(initial(tox_effect.tick_interval))
+	TEST_ASSERT(QDELETED(tox_effect), "Dummy still has tox_vomit status effect despite at [dummy.getToxLoss()] toxin damage (Method: SET)!")
+	// Test another method of gaining tox damage, use an entirely clean slate just to be sure
+	var/mob/living/carbon/human/dummy_two = allocate(/mob/living/carbon/human/consistent)
+	dummy_two.adjustToxLoss(75)
+	var/datum/status_effect/tox_effect_two = dummy_two.has_status_effect(/datum/status_effect/tox_vomit)
+	TEST_ASSERT_NOTNULL(tox_effect_two, "Dummy didn't get tox_vomit status effect at [dummy_two.getToxLoss()] toxin damage (METHOD: ADJUST)!")

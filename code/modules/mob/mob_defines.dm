@@ -134,9 +134,6 @@
 	/// What job does this mob have
 	var/job = null//Living
 
-	/// Can this mob enter shuttles
-	var/move_on_shuttle = 1
-
 	/// bitflags defining which status effects can be inflicted (replaces canknockdown, canstun, etc)
 	var/status_flags = CANSTUN|CANKNOCKDOWN|CANUNCONSCIOUS|CANPUSH
 
@@ -194,3 +191,6 @@
 	var/active_typing_indicator
 	///the icon currently used for the thinking indicator's bubble
 	var/active_thinking_indicator
+
+	/// A ref of the area we're taking our ambient loop from.
+	var/area/ambience_tracked_area

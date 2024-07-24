@@ -99,14 +99,20 @@
 	blink_activated = !blink_activated
 	to_chat(user, span_notice("You [blink_activated ? "enable" : "disable"] the blink function on [src]."))
 
-/obj/item/hierophant_club/afterattack(atom/target, mob/user, proximity_flag, click_parameters)
-	. = ..()
-	. |= AFTERATTACK_PROCESSED_ITEM
+/obj/item/hierophant_club/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
 	// If our target is the beacon and the hierostaff is next to the beacon, we're trying to pick it up.
-	if((target == beacon) && target.Adjacent(src))
-		return
+	if(interacting_with == beacon)
+		return NONE
 	if(blink_activated)
-		blink.teleport(user, target)
+		blink.teleport(user, interacting_with)
+		return ITEM_INTERACT_SUCCESS
+	return NONE
+
+/obj/item/hierophant_club/ranged_interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
+	if(blink_activated)
+		blink.teleport(user, interacting_with)
+		return ITEM_INTERACT_SUCCESS
+	return NONE
 
 /obj/item/hierophant_club/update_icon_state()
 	icon_state = inhand_icon_state = "hierophant_club[blink?.current_charges > 0 ? "_ready":""][(!QDELETED(beacon)) ? "":"_beacon"]"
@@ -261,10 +267,10 @@
 	heat_protection = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
 	max_heat_protection_temperature = FIRE_IMMUNITY_MAX_TEMP_PROTECT
 	body_parts_covered = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
-	clothing_flags = THICKMATERIAL
+	clothing_flags = THICKMATERIAL|HEADINTERNALS
 	resistance_flags = FIRE_PROOF|LAVA_PROOF|ACID_PROOF
 	transparent_protection = HIDESUITSTORAGE|HIDEJUMPSUIT
-	allowed = list(/obj/item/flashlight, /obj/item/tank/internals, /obj/item/resonator, /obj/item/mining_scanner, /obj/item/t_scanner/adv_mining_scanner, /obj/item/gun/energy/recharge/kinetic_accelerator, /obj/item/pickaxe)
+	allowed = null
 	greyscale_colors = "#4d4d4d#808080"
 	greyscale_config = /datum/greyscale_config/heck_suit
 	greyscale_config_worn = /datum/greyscale_config/heck_suit/worn
@@ -283,6 +289,7 @@
 	. = ..()
 	AddElement(/datum/element/radiation_protected_clothing)
 	AddElement(/datum/element/gags_recolorable)
+	allowed = GLOB.mining_suit_allowed
 
 /obj/item/clothing/suit/hooded/hostile_environment/process(seconds_per_tick)
 	var/mob/living/carbon/wearer = loc
@@ -748,7 +755,7 @@
 				"wings" = "None",
 				"frills" = "None",
 				"spines" = "Long",
-				"body_markings" = "Dark Tiger Body",
+				"lizard_markings" = "Dark Tiger Body",
 				"legs" = DIGITIGRADE_LEGS,
 			)
 			consumer.eye_color_left = "#FEE5A3"
@@ -794,40 +801,43 @@
 	var/timer = 0
 	var/static/list/banned_turfs = typecacheof(list(/turf/open/space, /turf/closed))
 
-/obj/item/lava_staff/afterattack(atom/target, mob/user, proximity_flag, click_parameters)
-	. = ..()
+/obj/item/lava_staff/ranged_interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
+	return interact_with_atom(interacting_with, user, modifiers)
+
+/obj/item/lava_staff/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
 	if(timer > world.time)
-		return
-	. |= AFTERATTACK_PROCESSED_ITEM
-	if(is_type_in_typecache(target, banned_turfs))
-		return
-	if(target in view(user.client.view, get_turf(user)))
-		var/turf/open/T = get_turf(target)
-		if(!istype(T))
-			return
-		if(!islava(T))
-			var/obj/effect/temp_visual/lavastaff/L = new /obj/effect/temp_visual/lavastaff(T)
-			L.alpha = 0
-			animate(L, alpha = 255, time = create_delay)
-			user.visible_message(span_danger("[user] points [src] at [T]!"))
-			timer = world.time + create_delay + 1
-			if(do_after(user, create_delay, target = T))
-				var/old_name = T.name
-				if(T.TerraformTurf(turf_type, flags = CHANGETURF_INHERIT_AIR))
-					user.visible_message(span_danger("[user] turns \the [old_name] into [transform_string]!"))
-					message_admins("[ADMIN_LOOKUPFLW(user)] fired the lava staff at [ADMIN_VERBOSEJMP(T)]")
-					user.log_message("fired the lava staff at [AREACOORD(T)].", LOG_ATTACK)
-					timer = world.time + create_cooldown
-					playsound(T,'sound/magic/fireball.ogg', 200, TRUE)
-			else
-				timer = world.time
-			qdel(L)
-		else
+		return NONE
+	if(is_type_in_typecache(interacting_with, banned_turfs))
+		return NONE
+	if(!(interacting_with in view(user.client.view, get_turf(user))))
+		return NONE
+	var/turf/open/T = get_turf(interacting_with)
+	if(!istype(T))
+		return NONE
+	if(!islava(T))
+		var/obj/effect/temp_visual/lavastaff/L = new /obj/effect/temp_visual/lavastaff(T)
+		L.alpha = 0
+		animate(L, alpha = 255, time = create_delay)
+		user.visible_message(span_danger("[user] points [src] at [T]!"))
+		timer = world.time + create_delay + 1
+		if(do_after(user, create_delay, target = T))
 			var/old_name = T.name
-			if(T.TerraformTurf(reset_turf_type, flags = CHANGETURF_INHERIT_AIR))
-				user.visible_message(span_danger("[user] turns \the [old_name] into [reset_string]!"))
-				timer = world.time + reset_cooldown
+			if(T.TerraformTurf(turf_type, flags = CHANGETURF_INHERIT_AIR))
+				user.visible_message(span_danger("[user] turns \the [old_name] into [transform_string]!"))
+				message_admins("[ADMIN_LOOKUPFLW(user)] fired the lava staff at [ADMIN_VERBOSEJMP(T)]")
+				user.log_message("fired the lava staff at [AREACOORD(T)].", LOG_ATTACK)
+				timer = world.time + create_cooldown
 				playsound(T,'sound/magic/fireball.ogg', 200, TRUE)
+		else
+			timer = world.time
+		qdel(L)
+	else
+		var/old_name = T.name
+		if(T.TerraformTurf(reset_turf_type, flags = CHANGETURF_INHERIT_AIR))
+			user.visible_message(span_danger("[user] turns \the [old_name] into [reset_string]!"))
+			timer = world.time + reset_cooldown
+			playsound(T,'sound/magic/fireball.ogg', 200, TRUE)
+	return ITEM_INTERACT_SUCCESS
 
 /obj/effect/temp_visual/lavastaff
 	icon_state = "lavastaff_warn"
@@ -1027,23 +1037,27 @@
 	affected_weather.wind_down()
 	user.log_message("has dispelled a storm at [AREACOORD(user_turf)].", LOG_GAME)
 
-/obj/item/storm_staff/afterattack(atom/target, mob/user, proximity_flag, click_parameters)
-	. = ..()
-	. |= AFTERATTACK_PROCESSED_ITEM
+/obj/item/storm_staff/ranged_interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
+	return thunder_blast(interacting_with, user) ? ITEM_INTERACT_SUCCESS : ITEM_INTERACT_BLOCKING
+
+/obj/item/storm_staff/afterattack(atom/target, mob/user, click_parameters)
+	thunder_blast(target, user)
+
+/obj/item/storm_staff/proc/thunder_blast(atom/target, mob/user)
 	if(!thunder_charges)
 		balloon_alert(user, "needs to charge!")
-		return
+		return FALSE
 	var/turf/target_turf = get_turf(target)
 	var/area/target_area = get_area(target)
 	if(!target_turf || !target_area || (is_type_in_list(target_area, excluded_areas)))
 		balloon_alert(user, "can't bolt here!")
-		return
+		return FALSE
 	if(target_turf in targeted_turfs)
 		balloon_alert(user, "already targeted!")
-		return
+		return FALSE
 	if(HAS_TRAIT(user, TRAIT_PACIFISM))
 		balloon_alert(user, "you don't want to harm!")
-		return
+		return FALSE
 	var/power_boosted = FALSE
 	for(var/datum/weather/weather as anything in SSweather.processing)
 		if(weather.stage != MAIN_STAGE)
@@ -1059,6 +1073,7 @@
 	thunder_charges--
 	addtimer(CALLBACK(src, PROC_REF(recharge)), thunder_charge_time)
 	user.log_message("fired the staff of storms at [AREACOORD(target_turf)].", LOG_ATTACK)
+	return TRUE
 
 /obj/item/storm_staff/proc/recharge(mob/user)
 	thunder_charges = min(thunder_charges + 1, max_thunder_charges)

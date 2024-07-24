@@ -40,6 +40,8 @@
 	var/list/experiments_to_unlock = list()
 	/// Whether or not this node should show on the wiki
 	var/show_on_wiki = TRUE
+	/// Hidden Mech nodes unlocked when mech fabricator emaged.
+	var/illegal_mech_node = FALSE
 
 /datum/techweb_node/error_node
 	id = "ERROR"
@@ -92,6 +94,17 @@
 				actual_costs[booster] -= min(boostlist[booster], delta)
 
 	return actual_costs
+
+/datum/techweb_node/proc/is_free(datum/techweb/host)
+	var/list/costs = get_price(host)
+	var/total_points = 0
+
+	for(var/point_type in costs)
+		total_points += costs[point_type]
+
+	if(total_points == 0)
+		return TRUE
+	return FALSE
 
 /datum/techweb_node/proc/price_display(datum/techweb/TN)
 	return techweb_point_display_generic(get_price(TN))

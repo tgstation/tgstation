@@ -43,6 +43,8 @@
 	var/move_self = TRUE
 	///If the singularity has eaten a supermatter shard and can go to stage six
 	var/consumed_supermatter = FALSE
+	/// Is the black hole collapsing into nothing
+	var/collapsing = FALSE
 	/// How long it's been since the singulo last acted, in seconds
 	var/time_since_act = 0
 	/// What the game tells ghosts when you make one
@@ -309,6 +311,10 @@
 	return TRUE
 
 /obj/singularity/proc/consume(atom/thing)
+	if(istype(thing, /obj/item/storage/backpack/holding) && !consumed_supermatter && !collapsing)
+		consume_boh(thing)
+		return
+
 	var/gain = thing.singularity_act(current_size, src)
 	energy += gain
 	if(istype(thing, /obj/machinery/power/supermatter_crystal) && !consumed_supermatter)
@@ -319,6 +325,25 @@
 	desc = "[initial(desc)] It glows fiercely with inner fire."
 	consumed_supermatter = TRUE
 	set_light(10)
+
+/obj/singularity/proc/consume_boh(obj/boh)
+	collapsing = TRUE
+	name = "unstable [initial(name)]"
+	desc = "[initial(desc)] It seems to be collapsing in on itself."
+	visible_message(
+		message = span_danger("As [src] consumes [boh], it begins to collapse in on itself!"),
+		blind_message = span_hear("You hear aggressive crackling!"),
+		vision_distance = 15,
+	)
+	playsound(loc, 'sound/effects/clockcult_gateway_disrupted.ogg', 200, vary = TRUE, extrarange = 3, falloff_exponent = 1, frequency = -1, pressure_affected = FALSE, ignore_walls = TRUE, falloff_distance = 7)
+	addtimer(CALLBACK(src, PROC_REF(consume_boh_sfx)), 4 SECONDS)
+	animate(src, time = 4 SECONDS, transform = transform.Scale(0.25), flags = ANIMATION_PARALLEL, easing = ELASTIC_EASING)
+	animate(time = 0.5 SECONDS, alpha = 0)
+	QDEL_IN(src, 4.1 SECONDS)
+	qdel(boh)
+
+/obj/singularity/proc/consume_boh_sfx()
+	playsound(loc, 'sound/effects/supermatter.ogg', 200, vary = TRUE, extrarange = 3, falloff_exponent = 1, frequency = 0.5, pressure_affected = FALSE, ignore_walls = TRUE, falloff_distance = 7)
 
 /obj/singularity/proc/check_cardinals_range(steps, retry_with_move = FALSE)
 	. = length(GLOB.cardinals) //Should be 4.

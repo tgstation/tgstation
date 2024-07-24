@@ -11,7 +11,7 @@
 /obj/item/restraints
 	breakouttime = 1 MINUTES
 	dye_color = DYE_PRISONER
-	icon = 'icons/obj/restraints.dmi'
+	icon = 'icons/obj/weapons/restraints.dmi'
 
 /obj/item/restraints/suicide_act(mob/living/carbon/user)
 	user.visible_message(span_suicide("[user] is strangling [user.p_them()]self with [src]! It looks like [user.p_theyre()] trying to commit suicide!"))
@@ -214,8 +214,8 @@
 
 	var/static/list/slapcraft_recipe_list = list(/datum/crafting_recipe/bola, /datum/crafting_recipe/gonbola)
 
-	AddComponent(
-		/datum/component/slapcrafting,\
+	AddElement(
+		/datum/element/slapcrafting,\
 		slapcraft_recipes = slapcraft_recipe_list,\
 	)
 
@@ -451,7 +451,7 @@
  * Does not trigger on tiny mobs.
  * If ignore_movetypes is FALSE, does not trigger on floating / flying / etc. mobs.
  */
-/obj/item/restraints/legcuffs/beartrap/proc/spring_trap(atom/movable/target, ignore_movetypes = FALSE)
+/obj/item/restraints/legcuffs/beartrap/proc/spring_trap(atom/movable/target, ignore_movetypes = FALSE, hit_prone = FALSE)
 	if(!armed || !isturf(loc) || !isliving(target))
 		return
 
@@ -477,7 +477,7 @@
 		victim.visible_message(span_danger("[victim] triggers \the [src]."), \
 				span_userdanger("You trigger \the [src]!"))
 	var/def_zone = BODY_ZONE_CHEST
-	if(iscarbon(victim) && victim.body_position == STANDING_UP)
+	if(iscarbon(victim) && (victim.body_position == STANDING_UP || hit_prone))
 		var/mob/living/carbon/carbon_victim = victim
 		def_zone = pick(BODY_ZONE_L_LEG, BODY_ZONE_R_LEG)
 		if(!carbon_victim.legcuffed && carbon_victim.num_legs >= 2) //beartrap can't cuff your leg if there's already a beartrap or legcuffs, or you don't have two legs.
@@ -523,6 +523,7 @@
 
 /obj/item/restraints/legcuffs/beartrap/energy/cyborg
 	breakouttime = 2 SECONDS // Cyborgs shouldn't have a strong restraint
+	slowdown = 3
 
 /obj/item/restraints/legcuffs/bola
 	name = "bola"
@@ -536,6 +537,8 @@
 	gender = NEUTER
 	///Amount of time to knock the target down for once it's hit in deciseconds.
 	var/knockdown = 0
+	///Reference of the mob we will attempt to snare
+	var/datum/weakref/ensnare_mob_ref
 
 /obj/item/restraints/legcuffs/bola/throw_at(atom/target, range, speed, mob/thrower, spin=1, diagonals_first = 0, datum/callback/callback, gentle = FALSE, quickstart = TRUE)
 	if(!..())
@@ -545,21 +548,32 @@
 /obj/item/restraints/legcuffs/bola/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
 	if(..() || !iscarbon(hit_atom))//if it gets caught or the target can't be cuffed,
 		return//abort
-	ensnare(hit_atom)
+	//The mob has been hit, save the reference for ensnaring
+	ensnare_mob_ref = WEAKREF(hit_atom)
+
+/obj/item/restraints/legcuffs/bola/after_throw(datum/callback/callback)
+	. = ..()
+	if (isnull(ensnare_mob_ref))
+		return
+	var/atom/ensnare_mob = ensnare_mob_ref.resolve()
+	if (!isnull(ensnare_mob))
+		ensnare(ensnare_mob)
+	ensnare_mob_ref = null
 
 /**
  * Attempts to legcuff someone with the bola
  *
  * Arguments:
- * * C - the carbon that we will try to ensnare
+ * * snared_mob - the carbon that we will try to ensnare
  */
-/obj/item/restraints/legcuffs/bola/proc/ensnare(mob/living/carbon/C)
-	if(!C.legcuffed && C.num_legs >= 2)
-		visible_message(span_danger("\The [src] ensnares [C]!"), span_userdanger("\The [src] ensnares you!"))
-		C.equip_to_slot(src, ITEM_SLOT_LEGCUFFED)
-		SSblackbox.record_feedback("tally", "handcuffs", 1, type)
-		C.Knockdown(knockdown)
-		playsound(src, 'sound/effects/snap.ogg', 50, TRUE)
+/obj/item/restraints/legcuffs/bola/proc/ensnare(mob/living/carbon/snared_mob)
+	if(snared_mob.legcuffed || snared_mob.num_legs < 2)
+		return
+	visible_message(span_danger("\The [src] ensnares [snared_mob]!"), span_userdanger("\The [src] ensnares you!"))
+	snared_mob.equip_to_slot(src, ITEM_SLOT_LEGCUFFED)
+	SSblackbox.record_feedback("tally", "handcuffs", 1, type)
+	snared_mob.Knockdown(knockdown)
+	playsound(src, 'sound/effects/snap.ogg', 50, TRUE)
 
 /**
  * A traitor variant of the bola.
@@ -595,7 +609,9 @@
 
 /obj/item/restraints/legcuffs/bola/energy/ensnare(atom/hit_atom)
 	var/obj/item/restraints/legcuffs/beartrap/energy/cyborg/B = new (get_turf(hit_atom))
-	B.spring_trap(hit_atom, ignore_movetypes = TRUE)
+	B.spring_trap(hit_atom, ignore_movetypes = TRUE, hit_prone = TRUE)
+	if(B.loc != hit_atom)
+		qdel(B)
 	qdel(src)
 
 /**

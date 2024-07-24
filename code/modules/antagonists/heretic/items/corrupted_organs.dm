@@ -2,6 +2,7 @@
 /obj/item/organ/internal/eyes/corrupt
 	name = "corrupt orbs"
 	desc = "These eyes have seen something they shouldn't have."
+	organ_flags = ORGAN_ORGANIC | ORGAN_EDIBLE | ORGAN_VIRGIN | ORGAN_PROMINENT
 	/// The override images we are applying
 	var/list/hallucinations
 
@@ -39,6 +40,7 @@
 /obj/item/organ/internal/tongue/corrupt
 	name = "corrupt tongue"
 	desc = "This one tells only lies."
+	organ_flags = ORGAN_ORGANIC | ORGAN_EDIBLE | ORGAN_VIRGIN | ORGAN_PROMINENT
 
 /obj/item/organ/internal/tongue/corrupt/Initialize(mapload)
 	. = ..()
@@ -65,6 +67,7 @@
 /obj/item/organ/internal/liver/corrupt
 	name = "corrupt liver"
 	desc = "After what you've seen you could really go for a drink."
+	organ_flags = ORGAN_ORGANIC | ORGAN_EDIBLE | ORGAN_VIRGIN | ORGAN_PROMINENT
 	/// How much extra ingredients to add?
 	var/amount_added = 5
 	/// What extra ingredients can we add?
@@ -108,6 +111,7 @@
 /obj/item/organ/internal/stomach/corrupt
 	name = "corrupt stomach"
 	desc = "This parasite demands an unwholesome diet in order to be satisfied."
+	organ_flags = ORGAN_ORGANIC | ORGAN_EDIBLE | ORGAN_VIRGIN | ORGAN_PROMINENT
 	/// Do we have an unholy thirst?
 	var/thirst_satiated = FALSE
 	/// Timer for when we get thirsty again
@@ -173,6 +177,7 @@
 /obj/item/organ/internal/heart/corrupt
 	name = "corrupt heart"
 	desc = "What corruption is this spreading along with the blood?"
+	organ_flags = ORGAN_ORGANIC | ORGAN_EDIBLE | ORGAN_VIRGIN | ORGAN_PROMINENT
 	/// How long until the next heart?
 	COOLDOWN_DECLARE(hand_cooldown)
 
@@ -192,6 +197,7 @@
 /obj/item/organ/internal/lungs/corrupt
 	name = "corrupt lungs"
 	desc = "Some things SHOULD be drowned in tar."
+	organ_flags = ORGAN_ORGANIC | ORGAN_EDIBLE | ORGAN_VIRGIN | ORGAN_PROMINENT
 	/// How likely are we not to cough every time we take a breath?
 	var/cough_chance = 15
 	/// How much gas to emit?
@@ -226,6 +232,7 @@
 /obj/item/organ/internal/appendix/corrupt
 	name = "corrupt appendix"
 	desc = "What kind of dark, cosmic force is even going to bother to corrupt an appendix?"
+	organ_flags = ORGAN_ORGANIC | ORGAN_EDIBLE | ORGAN_VIRGIN | ORGAN_PROMINENT
 	/// How likely are we to spawn worms?
 	var/worm_chance = 2
 

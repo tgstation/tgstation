@@ -220,7 +220,7 @@
 		if (bolt_type == BOLT_TYPE_OPEN && bolt_locked)
 			. += "[icon_state]_bolt"
 
-	if(suppressed)
+	if(suppressed && can_unsuppress) // if it can't be unsuppressed, we assume the suppressor is integrated into the gun itself and don't generate an overlay
 		var/mutable_appearance/MA = mutable_appearance(icon, "[icon_state]_suppressor")
 		if(suppressor_x_offset)
 			MA.pixel_x = suppressor_x_offset
@@ -572,9 +572,9 @@
 	if (bolt_locked)
 		. += "The [bolt_wording] is locked back and needs to be released before firing or de-fouling."
 	if (suppressed)
-		. += "It has a suppressor attached that can be removed with <b>alt+click</b>."
+		. += "It has a suppressor [can_unsuppress ? "attached that can be removed with <b>alt+click</b>." : "that is integral or can't otherwise be removed."]"
 	if(can_misfire)
-		. += span_danger("You get the feeling this might explode if you fire it....")
+		. += span_danger("You get the feeling this might explode if you fire it...")
 		if(misfire_probability > 0)
 			. += span_danger("Given the state of the gun, there is a [misfire_probability]% chance it'll misfire.")
 
@@ -638,8 +638,7 @@ GLOBAL_LIST_INIT(gun_saw_types, typecacheof(list(
 	if(sawn_off)
 		balloon_alert(user, "it's already shortened!")
 		return
-	if(bayonet)
-		balloon_alert(user, "[bayonet.name] must be removed!")
+	if (SEND_SIGNAL(src, COMSIG_GUN_BEING_SAWNOFF, user) & COMPONENT_CANCEL_SAWING_OFF)
 		return
 	user.changeNext_move(CLICK_CD_MELEE)
 	user.visible_message(span_notice("[user] begins to shorten [src]."), span_notice("You begin to shorten [src]..."))
@@ -649,27 +648,30 @@ GLOBAL_LIST_INIT(gun_saw_types, typecacheof(list(
 		user.visible_message(span_danger("[src] goes off!"), span_danger("[src] goes off in your face!"))
 		return
 
-	if(do_after(user, 3 SECONDS, target = src))
-		if(sawn_off)
-			return
-		user.visible_message(span_notice("[user] shortens [src]!"), span_notice("You shorten [src]."))
-		sawn_off = TRUE
-		if(handle_modifications)
-			name = "sawn-off [src.name]"
-			desc = sawn_desc
-			update_weight_class(WEIGHT_CLASS_NORMAL)
-			//The file might not have a "gun" icon, let's prepare for this
-			lefthand_file = 'icons/mob/inhands/weapons/guns_lefthand.dmi'
-			righthand_file = 'icons/mob/inhands/weapons/guns_righthand.dmi'
-			inhand_x_dimension = 32
-			inhand_y_dimension = 32
-			inhand_icon_state = "gun"
-			worn_icon_state = "gun"
-			slot_flags &= ~ITEM_SLOT_BACK //you can't sling it on your back
-			slot_flags |= ITEM_SLOT_BELT //but you can wear it on your belt (poorly concealed under a trenchcoat, ideally)
-			recoil = SAWN_OFF_RECOIL
-			update_appearance()
+	if(!do_after(user, 3 SECONDS, target = src))
+		return
+	if(sawn_off)
+		return
+	user.visible_message(span_notice("[user] shortens [src]!"), span_notice("You shorten [src]."))
+	sawn_off = TRUE
+	SEND_SIGNAL(src, COMSIG_GUN_SAWN_OFF)
+	if(!handle_modifications)
 		return TRUE
+	name = "sawn-off [src.name]"
+	desc = sawn_desc
+	update_weight_class(WEIGHT_CLASS_NORMAL)
+	//The file might not have a "gun" icon, let's prepare for this
+	lefthand_file = 'icons/mob/inhands/weapons/guns_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/weapons/guns_righthand.dmi'
+	inhand_x_dimension = 32
+	inhand_y_dimension = 32
+	inhand_icon_state = "gun"
+	worn_icon_state = "gun"
+	slot_flags &= ~ITEM_SLOT_BACK //you can't sling it on your back
+	slot_flags |= ITEM_SLOT_BELT //but you can wear it on your belt (poorly concealed under a trenchcoat, ideally)
+	recoil = SAWN_OFF_RECOIL
+	update_appearance()
+	return TRUE
 
 /obj/item/gun/ballistic/proc/guncleaning(mob/user, obj/item/A)
 	if(misfire_probability == initial(misfire_probability))
@@ -732,6 +734,24 @@ GLOBAL_LIST_INIT(gun_saw_types, typecacheof(list(
 		magazine = new spawn_magazine_type(src)
 	chamber_round()
 	update_appearance()
+
+/obj/item/gun/ballistic/toss_gun_hard(mob/living/carbon/thrower, mob/living/target)
+	. = ..()
+	if(!.)
+		return
+	switch(bolt_type)
+		if(BOLT_TYPE_NO_BOLT) //emptying the revolver cylinder
+			attack_self()
+			return
+		if(BOLT_TYPE_OPEN) //emptying the chamber of an automatic weapon, because rack() doesn't do this to it
+			handle_chamber(chamber_next_round = FALSE)
+	if(!internal_magazine && magazine) //if a magazine is attached to the weapon, we remove it and throw it aside
+		magazine.forceMove(drop_location())
+		magazine.throw_at(get_edge_target_turf(src, pick(GLOB.alldirs)), 1, 1)
+		magazine = null
+		update_icon() //updating the sprite of weapons without a magazine
+	if(!isnull(chambered)) //if there is a cartridge in the chamber, we remove it
+		rack()
 
 /obj/item/suppressor
 	name = "suppressor"

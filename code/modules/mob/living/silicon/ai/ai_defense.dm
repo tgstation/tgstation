@@ -64,6 +64,10 @@
 	. = ..()
 	if(user.combat_mode)
 		return
+	if(stat != DEAD && !incapacitated() && (client || deployed_shell?.client))
+		// alive and well AIs control their floor bolts
+		balloon_alert(user, "the AI's bolt motors resist.")
+		return ITEM_INTERACT_SUCCESS
 	balloon_alert(user, "[!is_anchored ? "tightening" : "loosening"] bolts...")
 	balloon_alert(src, "bolts being [!is_anchored ? "tightened" : "loosened"]...")
 	if(!tool.use_tool(src, user, 4 SECONDS))

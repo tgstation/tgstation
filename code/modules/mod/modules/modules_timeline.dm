@@ -28,9 +28,6 @@
 	UnregisterSignal(mod, COMSIG_MOD_MODULE_REMOVAL)
 
 /obj/item/mod/module/eradication_lock/on_use()
-	. = ..()
-	if(!.)
-		return
 	true_owner_ckey = mod.wearer.ckey
 	balloon_alert(mod.wearer, "user remembered")
 	drain_power(use_energy_cost)
@@ -65,11 +62,9 @@
 	use_energy_cost = DEFAULT_CHARGE_DRAIN * 5
 	incompatible_modules = list(/obj/item/mod/module/rewinder)
 	cooldown_time = 20 SECONDS
+	required_slots = list(ITEM_SLOT_BACK)
 
 /obj/item/mod/module/rewinder/on_use()
-	. = ..()
-	if(!.)
-		return
 	balloon_alert(mod.wearer, "anchor point set")
 	playsound(src, 'sound/items/modsuit/time_anchor_set.ogg', 50, TRUE)
 	//stops all mods from triggering during rewinding
@@ -109,16 +104,17 @@
 	use_energy_cost = DEFAULT_CHARGE_DRAIN * 5
 	incompatible_modules = list(/obj/item/mod/module/timestopper)
 	cooldown_time = 60 SECONDS
+	required_slots = list(ITEM_SLOT_BACK)
 	///The current timestop in progress.
 	var/obj/effect/timestop/channelled/timestop
 
-/obj/item/mod/module/timestopper/on_use()
-	. = ..()
-	if(!.)
-		return
+/obj/item/mod/module/timestopper/used()
 	if(timestop)
 		mod.balloon_alert(mod.wearer, "already freezing time!")
-		return
+		return FALSE
+	return ..()
+
+/obj/item/mod/module/timestopper/on_use()
 	//stops all mods from triggering during timestop- including timestop itself
 	for(var/obj/item/mod/module/module as anything in mod.modules)
 		RegisterSignal(module, COMSIG_MODULE_TRIGGERED, PROC_REF(on_module_triggered))
@@ -157,18 +153,18 @@
 	incompatible_modules = list(/obj/item/mod/module/timeline_jumper)
 	cooldown_time = 5 SECONDS
 	allow_flags = MODULE_ALLOW_PHASEOUT
+	required_slots = list(ITEM_SLOT_BACK)
 	///The dummy for phasing from this module, the wearer is phased out while this exists.
 	var/obj/effect/dummy/phased_mob/chrono/phased_mob
 
-/obj/item/mod/module/timeline_jumper/on_use()
-	. = ..()
-	if(!.)
-		return
+/obj/item/mod/module/timeline_jumper/used()
 	var/area/noteleport_check = get_area(mod.wearer)
 	if(noteleport_check && noteleport_check.area_flags & NOTELEPORT)
 		to_chat(mod.wearer, span_danger("Some dull, universal force is between you and the [phased_mob ? "current timeline" : "stream between timelines"]."))
 		return FALSE
+	return ..()
 
+/obj/item/mod/module/timeline_jumper/on_use()
 	if(!phased_mob)
 		//phasing out
 		mod.visible_message(span_warning("[mod.wearer] leaps out of the timeline!"))
@@ -210,6 +206,7 @@
 	use_energy_cost = DEFAULT_CHARGE_DRAIN * 5
 	incompatible_modules = list(/obj/item/mod/module/tem)
 	cooldown_time = 0.5 SECONDS
+	required_slots = list(ITEM_SLOT_BACK)
 	///Reference to the chrono field being controlled by this module
 	var/obj/structure/chrono_field/field = null
 	///Where the chronofield maker was when the field went up

@@ -15,6 +15,9 @@
 	VAR_FINAL/obj/effect/abstract/particle_holder/soup_smoke
 	/// Typepath of particles to use for the particle holder.
 	VAR_FINAL/particle_type = /particles/smoke/steam/mild
+	/// Ref to our looping sound played when cooking
+	VAR_FINAL/datum/looping_sound/soup/soup_sound
+
 	/// The color of the flames around the burner.
 	var/flame_color = "#006eff"
 	/// Container's pixel x when placed on the stove
@@ -35,6 +38,12 @@
 	if(spawn_container)
 		spawn_container.forceMove(parent)
 		add_container(spawn_container)
+
+	soup_sound = new(parent)
+
+/datum/component/stove/Destroy()
+	QDEL_NULL(soup_sound)
+	return ..()
 
 /datum/component/stove/RegisterWithParent()
 	RegisterSignal(parent, COMSIG_ATOM_ATTACKBY, PROC_REF(on_attackby))
@@ -235,7 +244,7 @@
 	update_smoke_type()
 	real_parent.update_appearance(UPDATE_OVERLAYS)
 
-/datum/component/stove/proc/update_smoke_type(datum/source, new_temp, old_temp)
+/datum/component/stove/proc/update_smoke_type(datum/source, ...)
 	SIGNAL_HANDLER
 
 	var/existing_temp = container?.reagents.chem_temp || 0
@@ -250,6 +259,7 @@
 
 /datum/component/stove/proc/update_smoke()
 	if(on && container?.reagents.total_volume > 0)
+		soup_sound.start()
 		// Don't override existing particles, wasteful
 		if(isnull(soup_smoke) || soup_smoke.particles.type != particle_type)
 			QDEL_NULL(soup_smoke)
@@ -261,3 +271,4 @@
 		return
 
 	QDEL_NULL(soup_smoke)
+	soup_sound?.stop()

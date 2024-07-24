@@ -111,8 +111,6 @@ GLOBAL_PROTECT(lua_usr)
 		for(var/path_element in function)
 			new_function_path += path_element
 		function = new_function_path
-	var/msg = "[key_name(usr)] called the lua function \"[function]\" with arguments: [english_list(call_args)]"
-	log_lua(msg)
 
 	var/tmp_usr = GLOB.lua_usr
 	GLOB.lua_usr = usr

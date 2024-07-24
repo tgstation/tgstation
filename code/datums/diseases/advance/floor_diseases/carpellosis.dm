@@ -6,7 +6,7 @@
 	desc = "You have an angry space carp inside."
 	form = "Parasite"
 	agent = "Carp Ella"
-	cures = list(/datum/reagent/carpet)
+	cures = list(/datum/reagent/chlorine)
 	viable_mobtypes = list(/mob/living/carbon/human)
 	spread_flags = DISEASE_SPREAD_NON_CONTAGIOUS
 	severity = DISEASE_SEVERITY_MEDIUM

@@ -62,7 +62,7 @@
 		if(HAS_TRAIT_FROM(affected_mob, TRAIT_NO_TRANSFORM, REF(src)))
 			return
 		ADD_TRAIT(affected_mob, TRAIT_NO_TRANSFORM, REF(src))
-		for(var/obj/item/W in affected_mob.get_equipped_items(include_pockets = TRUE))
+		for(var/obj/item/W in affected_mob.get_equipped_items(INCLUDE_POCKETS))
 			affected_mob.dropItemToGround(W)
 		for(var/obj/item/I in affected_mob.held_items)
 			affected_mob.dropItemToGround(I)
@@ -335,7 +335,7 @@
 	)
 	stage4 = list(span_danger("You can't feel your arms. It does not bother you anymore."), span_danger("You forgive the clown for hurting you."))
 	stage5 = list(span_danger("You have become a Gondola."))
-	new_form = /mob/living/simple_animal/pet/gondola
+	new_form = /mob/living/basic/pet/gondola
 
 
 /datum/disease/transformation/gondola/stage_act(seconds_per_tick, times_fired)

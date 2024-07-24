@@ -302,6 +302,15 @@ GLOBAL_VAR_INIT(hhMysteryRoomNumber, rand(1, 999999))
 	explosive_resistance = INFINITY
 	var/obj/item/hilbertshotel/parentSphere
 
+/turf/closed/indestructible/hoteldoor/Initialize(mapload)
+	. = ..()
+	register_context()
+
+/turf/closed/indestructible/hoteldoor/add_context(atom/source, list/context, obj/item/held_item, mob/user)
+	. = ..()
+	context[SCREENTIP_CONTEXT_ALT_LMB] = "Peek through"
+	return CONTEXTUAL_SCREENTIP_SET
+
 /turf/closed/indestructible/hoteldoor/proc/promptExit(mob/living/user)
 	if(!isliving(user))
 		return
@@ -345,6 +354,10 @@ GLOBAL_VAR_INIT(hhMysteryRoomNumber, rand(1, 999999))
 		promptExit(user)
 
 /turf/closed/indestructible/hoteldoor/click_alt(mob/user)
+	if(user.is_blind())
+		to_chat(user, span_warning("Drats! Your vision is too poor to use this!"))
+		return CLICK_ACTION_BLOCKING
+
 	to_chat(user, span_notice("You peak through the door's bluespace peephole..."))
 	user.reset_perspective(parentSphere)
 	var/datum/action/peephole_cancel/PHC = new
@@ -511,14 +524,12 @@ GLOBAL_VAR_INIT(hhMysteryRoomNumber, rand(1, 999999))
 	icon_state = "hilbertsanalyzer"
 	worn_icon_state = "analyzer"
 
-/obj/item/analyzer/hilbertsanalyzer/afterattack(atom/target, mob/user, proximity)
-	. = ..()
-	if(istype(target, /obj/item/hilbertshotel))
-		. |= AFTERATTACK_PROCESSED_ITEM
-		if(!proximity)
+/obj/item/analyzer/hilbertsanalyzer/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
+	if(istype(interacting_with, /obj/item/hilbertshotel))
+		if(!Adjacent(interacting_with))
 			to_chat(user, span_warning("It's to far away to scan!"))
-			return .
-		var/obj/item/hilbertshotel/sphere = target
+			return ITEM_INTERACT_BLOCKING
+		var/obj/item/hilbertshotel/sphere = interacting_with
 		if(sphere.activeRooms.len)
 			to_chat(user, "Currently Occupied Rooms:")
 			for(var/roomnumber in sphere.activeRooms)
@@ -531,7 +542,8 @@ GLOBAL_VAR_INIT(hhMysteryRoomNumber, rand(1, 999999))
 				to_chat(user, roomnumber)
 		else
 			to_chat(user, "No vacated rooms.")
-		return .
+		return ITEM_INTERACT_SUCCESS
+	return ..()
 
 /obj/effect/landmark/transport/transport_id/hilbert
 	specific_transport_id = HILBERT_LINE_1

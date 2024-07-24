@@ -1,5 +1,7 @@
 /**
  * # The path of Blades. Stab stab.
+ * Spell names are in this language: ARAMAIC
+ * Both are related: Aramaic-Damascus-Blade
  *
  * Goes as follows:
  *
@@ -43,6 +45,8 @@
 	result_atoms = list(/obj/item/melee/sickly_blade/dark)
 	limit = 5 // It's the blade path, it's a given
 	route = PATH_BLADE
+	research_tree_icon_path = 'icons/obj/weapons/khopesh.dmi'
+	research_tree_icon_state = "dark_blade"
 
 /datum/heretic_knowledge/blade_grasp
 	name = "Grasp of the Blade"
@@ -52,6 +56,9 @@
 	next_knowledge = list(/datum/heretic_knowledge/blade_dance)
 	cost = 1
 	route = PATH_BLADE
+	depth = 3
+	research_tree_icon_path = 'icons/ui_icons/antags/heretic/knowledge.dmi'
+	research_tree_icon_state = "grasp_blade"
 
 /datum/heretic_knowledge/blade_grasp/on_gain(mob/user, datum/antagonist/heretic/our_heretic)
 	RegisterSignal(user, COMSIG_HERETIC_MANSUS_GRASP_ATTACK, PROC_REF(on_mansus_grasp))
@@ -111,6 +118,9 @@
 	)
 	cost = 1
 	route = PATH_BLADE
+	depth = 4
+	research_tree_icon_path = 'icons/mob/actions/actions_ecult.dmi'
+	research_tree_icon_state = "shatter"
 	/// Whether the counter-attack is ready or not.
 	/// Used instead of cooldowns, so we can give feedback when it's ready again
 	var/riposte_ready = TRUE
@@ -231,6 +241,7 @@
 	spell_to_add = /datum/action/cooldown/spell/realignment
 	cost = 1
 	route = PATH_BLADE
+	depth = 7
 
 /// The amount of blood flow reduced per level of severity of gained bleeding wounds for Stance of the Torn Champion.
 #define BLOOD_FLOW_PER_SEVEIRTY -1
@@ -251,6 +262,10 @@
 	)
 	cost = 1
 	route = PATH_BLADE
+	depth = 8
+	research_tree_icon_path = 'icons/effects/blood.dmi'
+	research_tree_icon_state = "suitblood"
+	research_tree_icon_dir = SOUTH
 	/// Whether we're currently in duelist stance, gaining certain buffs (low health)
 	var/in_duelist_stance = FALSE
 
@@ -310,6 +325,8 @@
 		a flurry of blades, neither hitting their mark, for the Champion was indomitable."
 	next_knowledge = list(/datum/heretic_knowledge/spell/furious_steel)
 	route = PATH_BLADE
+	research_tree_icon_path = 'icons/ui_icons/antags/heretic/knowledge.dmi'
+	research_tree_icon_state = "blade_upgrade_blade"
 	/// How much force do we apply to the offhand?
 	var/offand_force_decrement = 0
 	/// How much force was the last weapon we offhanded with? If it's different, we need to re-calculate the decrement
@@ -380,6 +397,7 @@
 	spell_to_add = /datum/action/cooldown/spell/pointed/projectile/furious_steel
 	cost = 1
 	route = PATH_BLADE
+	depth = 10
 
 /datum/heretic_knowledge/ultimate/blade_final
 	name = "Maelstrom of Silver"
@@ -393,6 +411,7 @@
 	gain_text = "The Torn Champion is freed! I will become the blade reunited, and with my greater ambition, \
 		I AM UNMATCHED! A STORM OF STEEL AND SILVER IS UPON US! WITNESS MY ASCENSION!"
 	route = PATH_BLADE
+	ascension_achievement = /datum/award/achievement/misc/blade_ascension
 
 /datum/heretic_knowledge/ultimate/blade_final/is_valid_sacrifice(mob/living/carbon/human/sacrifice)
 	. = ..()
@@ -409,7 +428,6 @@
 		sound = 'sound/ambience/antag/heretic/ascend_blade.ogg',
 		color_override = "pink",
 	)
-	user.client?.give_award(/datum/award/achievement/misc/blade_ascension, user)
 	ADD_TRAIT(user, TRAIT_NEVER_WOUNDED, name)
 	RegisterSignal(user, COMSIG_HERETIC_BLADE_ATTACK, PROC_REF(on_eldritch_blade))
 	user.apply_status_effect(/datum/status_effect/protective_blades/recharging, null, 8, 30, 0.25 SECONDS, 1 MINUTES)

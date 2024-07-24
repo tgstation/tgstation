@@ -508,7 +508,7 @@
 /obj/item/mecha_parts/camera_kit
 	name = "exosuit-mounted camera"
 	desc = "A security camera meant for exosuit-mounted surveillance-on-the-go."
-	icon = 'icons/mob/mecha_equipment.dmi'
+	icon = 'icons/obj/devices/mecha_equipment.dmi'
 	icon_state = "mecha_camera"
 	w_class = WEIGHT_CLASS_SMALL
 

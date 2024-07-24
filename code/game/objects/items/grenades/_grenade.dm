@@ -16,7 +16,6 @@
 	flags_1 = PREVENT_CONTENTS_EXPLOSION_1 // We detonate upon being exploded.
 	obj_flags = CONDUCTS_ELECTRICITY
 	slot_flags = ITEM_SLOT_BELT
-	resistance_flags = FLAMMABLE
 	max_integrity = 40
 	/// Bitfields which prevent the grenade from detonating if set. Includes ([GRENADE_DUD]|[GRENADE_USED])
 	var/dud_flags = NONE
@@ -26,7 +25,7 @@
 	var/type_cluster = FALSE
 	///How long it takes for a grenade to explode after being armed
 	var/det_time = 5 SECONDS
-	///Will this state what it's det_time is when examined?
+	///Will this state what its det_time is when examined?
 	var/display_timer = TRUE
 	///Used in botch_check to determine how a user's clumsiness affects that user's ability to prime a grenade correctly.
 	var/clumsy_check = GRENADE_CLUMSY_FUMBLE
@@ -263,8 +262,8 @@
 			qdel(src)
 		return TRUE //It hit the grenade, not them
 
-/obj/item/grenade/afterattack(atom/target, mob/user)
-	. = ..()
+/obj/item/grenade/ranged_interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
 	if(active)
-		user.throw_item(target)
-		return . | AFTERATTACK_PROCESSED_ITEM
+		user.throw_item(interacting_with)
+		return ITEM_INTERACT_SUCCESS
+	return NONE

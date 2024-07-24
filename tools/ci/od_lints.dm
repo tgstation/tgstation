@@ -12,7 +12,6 @@
 #pragma SoftReservedKeyword error
 #pragma DuplicateVariable error
 #pragma DuplicateProcDefinition error
-#pragma TooManyArguments error
 #pragma PointlessParentCall error
 #pragma PointlessBuiltinCall error
 #pragma SuspiciousMatrixCall error

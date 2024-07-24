@@ -297,7 +297,8 @@
 	},
 /obj/docking_port/mobile/emergency{
 	dir = 2;
-	name = "Lance Emergency Shuttle"
+	name = "Lance Emergency Shuttle";
+	port_direction = 1
 	},
 /turf/open/floor/iron/dark,
 /area/shuttle/escape)
@@ -1284,7 +1285,7 @@
 "Nx" = (
 /obj/structure/table/reinforced,
 /obj/machinery/cell_charger,
-/obj/item/stock_parts/cell/high,
+/obj/item/stock_parts/power_store/cell/high,
 /obj/effect/turf_decal/tile/dark_blue/opposingcorners{
 	dir = 1
 	},

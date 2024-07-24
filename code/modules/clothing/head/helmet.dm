@@ -4,6 +4,7 @@
 	icon = 'icons/obj/clothing/head/helmet.dmi'
 	worn_icon = 'icons/mob/clothing/head/helmet.dmi'
 	icon_state = "helmet"
+	base_icon_state = "helmet"
 	inhand_icon_state = "helmet"
 	armor_type = /datum/armor/head_helmet
 	cold_protection = HEAD
@@ -31,6 +32,7 @@
 	AddElement(/datum/element/update_icon_updates_onmob)
 
 /obj/item/clothing/head/helmet/sec
+	var/flipped_visor = FALSE
 
 /obj/item/clothing/head/helmet/sec/Initialize(mapload)
 	. = ..()
@@ -59,6 +61,19 @@
 		return TRUE
 
 	return ..()
+
+/obj/item/clothing/head/helmet/sec/click_alt(mob/user)
+	flipped_visor = !flipped_visor
+	balloon_alert(user, "visor flipped")
+	// base_icon_state is modified for seclight attachment component
+	base_icon_state = "[initial(base_icon_state)][flipped_visor ? "-novisor" : ""]"
+	icon_state = base_icon_state
+	if (flipped_visor)
+		flags_cover &= ~HEADCOVERSEYES
+	else
+		flags_cover |= HEADCOVERSEYES
+	update_appearance()
+	return CLICK_ACTION_SUCCESS
 
 /obj/item/clothing/head/helmet/alt
 	name = "bulletproof helmet"
@@ -122,7 +137,7 @@
 
 /obj/item/clothing/head/helmet/marine/pmc
 	icon_state = "marine"
-	desc = "A tactical black helmet, designed to protect one's head from various injuries sustained in operations. Its stellar survivability making up is for it's lack of space worthiness"
+	desc = "A tactical black helmet, designed to protect one's head from various injuries sustained in operations. Its stellar survivability making up is for its lack of space worthiness"
 	min_cold_protection_temperature = HELMET_MIN_TEMP_PROTECT
 	max_heat_protection_temperature = HELMET_MAX_TEMP_PROTECT
 	clothing_flags = null
@@ -395,6 +410,7 @@
 	armor_type = /datum/armor/helmet_knight
 	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE|HIDEHAIR|HIDESNOUT
 	flags_cover = HEADCOVERSEYES | HEADCOVERSMOUTH
+	resistance_flags = NONE
 	strip_delay = 80
 	dog_fashion = null
 	clothing_traits = list(TRAIT_HEAD_INJURY_BLOCKED)
@@ -423,25 +439,6 @@
 	inhand_icon_state = null
 	armor_type = /datum/armor/knight_greyscale
 	material_flags = MATERIAL_EFFECTS | MATERIAL_ADD_PREFIX | MATERIAL_COLOR | MATERIAL_AFFECT_STATISTICS //Can change color and add prefix
-
-/obj/item/clothing/head/helmet/skull
-	name = "skull helmet"
-	desc = "An intimidating tribal helmet, it doesn't look very comfortable."
-	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE|HIDESNOUT
-	flags_cover = HEADCOVERSEYES
-	armor_type = /datum/armor/helmet_skull
-	icon_state = "skull"
-	inhand_icon_state = null
-	strip_delay = 100
-
-/datum/armor/helmet_skull
-	melee = 35
-	bullet = 25
-	laser = 25
-	energy = 35
-	bomb = 25
-	fire = 50
-	acid = 50
 
 /obj/item/clothing/head/helmet/durathread
 	name = "durathread helmet"
@@ -530,8 +527,9 @@
 	desc = "A cheaply made kettle helmet with an added faceplate to protect your eyes and mouth."
 	icon_state = "military"
 	inhand_icon_state = "knight_helmet"
-	flags_inv = HIDEEARS|HIDEEYES|HIDEFACE|HIDEHAIR|HIDESNOUT
+	flags_inv = HIDEEARS|HIDEEYES|HIDEFACE|HIDESNOUT
 	flags_cover = HEADCOVERSEYES | HEADCOVERSMOUTH | PEPPERPROOF
+	flash_protect = FLASH_PROTECTION_FLASH
 	strip_delay = 80
 	dog_fashion = null
 	armor_type = /datum/armor/helmet_military
@@ -558,6 +556,7 @@
 	armor_type = /datum/armor/helmet_warlord
 	flags_inv = HIDEEARS|HIDEEYES|HIDEFACE|HIDEMASK|HIDEHAIR|HIDEFACIALHAIR|HIDESNOUT
 	flags_cover = HEADCOVERSEYES | HEADCOVERSMOUTH | PEPPERPROOF
+	flash_protect = FLASH_PROTECTION_FLASH
 	slowdown = 0.2
 
 /datum/armor/helmet_warlord

@@ -9,6 +9,7 @@
 	VAR_PROTECTED/mob/user
 
 	VAR_PRIVATE/atom/movable/screen/tutorial_instruction/instruction_screen
+	VAR_PRIVATE/atom/movable/screen/tutorial_skip/skip_button
 
 /datum/tutorial/New(mob/user)
 	src.user = user
@@ -17,10 +18,11 @@
 
 /datum/tutorial/Destroy(force)
 	user.client?.screen -= instruction_screen
+	user.client?.screen -= skip_button
 	QDEL_NULL(instruction_screen)
+	QDEL_NULL(skip_button)
 
 	user = null
-
 	return ..()
 
 /// Gets the [`/datum/tutorial_manager`] that owns this tutorial.
@@ -70,6 +72,7 @@
 
 	if (!isnull(instruction_screen))
 		animate(instruction_screen, time = INSTRUCTION_SCREEN_DELAY, alpha = 0, easing = SINE_EASING)
+		animate(skip_button, time = INSTRUCTION_SCREEN_DELAY, alpha = 0, easing = SINE_EASING)
 		delay += INSTRUCTION_SCREEN_DELAY
 
 	QDEL_IN(src, delay)
@@ -97,6 +100,10 @@
 /// If a message already exists, will fade it out and replace it.
 /datum/tutorial/proc/show_instruction(message)
 	PROTECTED_PROC(TRUE)
+	if(isnull(skip_button))
+		skip_button = new
+		user.client?.screen += skip_button
+		RegisterSignal(skip_button, COMSIG_SCREEN_ELEMENT_CLICK, PROC_REF(dismiss))
 
 	if (isnull(instruction_screen))
 		instruction_screen = new(null, null, message, user.client)

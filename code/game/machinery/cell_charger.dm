@@ -6,7 +6,7 @@
 	power_channel = AREA_USAGE_EQUIP
 	circuit = /obj/item/circuitboard/machine/cell_charger
 	pass_flags = PASSTABLE
-	var/obj/item/stock_parts/cell/charging = null
+	var/obj/item/stock_parts/power_store/cell/charging = null
 	var/charge_rate = 0.25 * STANDARD_CELL_RATE
 
 /obj/machinery/cell_charger/update_overlays()
@@ -42,7 +42,7 @@
 	return ITEM_INTERACT_SUCCESS
 
 /obj/machinery/cell_charger/attackby(obj/item/W, mob/user, params)
-	if(istype(W, /obj/item/stock_parts/cell) && !panel_open)
+	if(istype(W, /obj/item/stock_parts/power_store/cell) && !panel_open)
 		if(machine_stat & BROKEN)
 			to_chat(user, span_warning("[src] is broken!"))
 			return
@@ -130,18 +130,16 @@
 		charge_rate *= capacitor.tier
 
 /obj/machinery/cell_charger/process(seconds_per_tick)
-	if(!charging || !anchored || (machine_stat & (BROKEN|NOPOWER)))
-		return
-
-	if(charging.percent() >= 100)
+	if(!charging || charging.percent() >= 100 || !anchored || !is_operational)
 		return
 
 	var/main_draw = charge_rate * seconds_per_tick
 	if(!main_draw)
 		return
 
-	//use a small bit for the charger itself, but power usage scales up with the part tier
-	use_energy(main_draw * 0.01)
-	charge_cell(main_draw, charging, grid_only = TRUE)
+	//charge cell, account for heat loss from work done
+	var/charge_given = charge_cell(main_draw, charging, grid_only = TRUE)
+	if(charge_given)
+		use_energy((charge_given + active_power_usage) * 0.01)
 
 	update_appearance()

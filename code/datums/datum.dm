@@ -93,7 +93,7 @@
  * Default implementation of clean-up code.
  *
  * This should be overridden to remove all references pointing to the object being destroyed, if
- * you do override it, make sure to call the parent and return it's return value by default
+ * you do override it, make sure to call the parent and return its return value by default
  *
  * Return an appropriate [QDEL_HINT][QDEL_HINT_QUEUE] to modify handling of your deletion;
  * in most cases this is [QDEL_HINT_QUEUE].
@@ -206,7 +206,7 @@
 
 ///Serializes into JSON. Does not encode type.
 /datum/proc/serialize_json(list/options)
-	. = serialize_list(options)
+	. = serialize_list(options, list())
 	if(!islist(.))
 		. = null
 	else
