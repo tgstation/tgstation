@@ -230,7 +230,7 @@
 			bloodiest_wound.adjust_blood_flow(-1 * seconds_per_tick)
 
 /obj/item/organ/internal/heart/cybernetic/proc/stabilize_heart()
-	REMOVE_TRAIT(owner, TRAIT_NOSOFTCRIT, ORGAN_TRAIT)
+	ADD_TRAIT(owner, TRAIT_NOSOFTCRIT, ORGAN_TRAIT)
 	stabilization_available = FALSE
 
 	addtimer(TRAIT_CALLBACK_REMOVE(owner, TRAIT_NOSOFTCRIT, ORGAN_TRAIT), stabilization_duration)
