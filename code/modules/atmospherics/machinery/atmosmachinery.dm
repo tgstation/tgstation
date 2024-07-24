@@ -112,7 +112,7 @@
 		turf_loc.add_blueprints_preround(src)
 
 	if(hide)
-		RegisterSignal(src, COMSIG_OBJ_HIDE, PROC_REF(on_hide))
+		setup_hiding()
 
 	SSspatial_grid.add_grid_awareness(src, SPATIAL_GRID_CONTENTS_TYPE_ATMOS)
 	SSspatial_grid.add_grid_membership(src, turf_loc, SPATIAL_GRID_CONTENTS_TYPE_ATMOS)
@@ -131,6 +131,13 @@
 	QDEL_NULL(cap_overlay)
 
 	return ..()
+
+/**
+ * Ran on Initialize if hide is TRUE, allows subtypes to register things to run before updating caps.
+ */
+/obj/machinery/atmospherics/proc/setup_hiding()
+	SHOULD_CALL_PARENT(TRUE)
+	RegisterSignal(src, COMSIG_OBJ_HIDE, PROC_REF(on_hide))
 
 /**
  * Handler for `COMSIG_OBJ_HIDE`, connects only if `hide` is set to `TRUE`. Calls `update_cap_visuals` on pipe and its connected nodes
