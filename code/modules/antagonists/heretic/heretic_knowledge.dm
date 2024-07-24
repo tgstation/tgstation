@@ -632,7 +632,6 @@
 		/obj/item/paper,
 		/obj/item/toy/crayon,
 		/obj/item/flashlight,
-		/obj/item/clipboard,
 	)
 
 	var/static/list/potential_uncommoner_items = list(
