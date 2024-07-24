@@ -168,19 +168,19 @@
 	maxHealth = STANDARD_ORGAN_THRESHOLD * 0.75 //This also hits defib timer, so a bit higher than its less important counterparts
 	failing_desc = "seems to be broken."
 
-	// Whether or not we have a stabilization available. This prevents our owner from entering softcrit for an amount of time.
+	/// Whether or not we have a stabilization available. This prevents our owner from entering softcrit for an amount of time.
 	var/stabilization_available = FALSE
 
-	// How long our stabilization lasts for.
+	/// How long our stabilization lasts for.
 	var/stabilization_duration = 10 SECONDS
 
-	// Whether our heart suppresses bleeders and restores blood automatically.
+	/// Whether our heart suppresses bleeders and restores blood automatically.
 	var/bleed_prevention = FALSE
 
-	// THe probability that our blood replication causes toxin damage.
+	/// The probability that our blood replication causes toxin damage.
 	var/toxification_probability = 20
 
-	//Chance of permanent effects if emp-ed.
+	/// Chance of permanent effects if emp-ed.
 	var/emp_vulnerability = 80
 
 /obj/item/organ/internal/heart/cybernetic/emp_act(severity)
