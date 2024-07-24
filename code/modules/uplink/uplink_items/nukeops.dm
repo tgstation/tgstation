@@ -383,7 +383,7 @@
 
 /datum/uplink_item/ammo_nuclear/surplus_smg
 	name = "Surplus Smart-SMG Magazine (Smartgun)"
-	desc = "A large box magazine made for use in the Adielle smart-SMG."
+	desc = "A large box magazine made for use in the Abielle smart-SMG."
 	item = /obj/item/ammo_box/magazine/smartgun
 	cost = 1
 	purchasable_from = UPLINK_SERIOUS_OPS
