@@ -212,7 +212,7 @@
 		return
 
 	if(stabilization_available && owner.health <= owner.crit_threshold)
-		stabilizer_heart()
+		stabilize_heart()
 
 	if(bleed_prevention && ishuman(owner) && owner.blood_volume < BLOOD_VOLUME_NORMAL)
 		var/mob/living/carbon/human/wounded_owner = owner
@@ -229,7 +229,7 @@
 		if(bloodiest_wound)
 			bloodiest_wound.adjust_blood_flow(-1 * seconds_per_tick)
 
-/obj/item/organ/internal/heart/cybernetic/proc/stabilizer_heart()
+/obj/item/organ/internal/heart/cybernetic/proc/stabilize_heart()
 	REMOVE_TRAIT(owner, TRAIT_NOSOFTCRIT, ORGAN_TRAIT)
 	stabilization_available = FALSE
 
