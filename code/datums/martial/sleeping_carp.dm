@@ -9,7 +9,7 @@
 	help_verb = /mob/living/proc/sleeping_carp_help
 	display_combos = TRUE
 	/// List of traits applied to users of this martial art.
-	var/list/scarp_traits = list(TRAIT_NOGUNS, TRAIT_HARDLY_WOUNDED, TRAIT_NODISMEMBER, TRAIT_HEAVY_SLEEPER)
+	var/list/scarp_traits = list(TRAIT_NOGUNS, TRAIT_TOSS_GUN_HARD, TRAIT_HARDLY_WOUNDED, TRAIT_NODISMEMBER, TRAIT_HEAVY_SLEEPER)
 
 /datum/martial_art/the_sleeping_carp/on_teach(mob/living/new_holder)
 	. = ..()
@@ -188,8 +188,7 @@
 		return FALSE
 	if(!(carp_user.mobility_flags & MOBILITY_USE)) //NO UNABLE TO USE
 		return FALSE
-	var/datum/dna/dna = carp_user.has_dna()
-	if(dna?.check_mutation(/datum/mutation/human/hulk)) //NO HULK
+	if(HAS_TRAIT(carp_user, TRAIT_HULK)) //NO HULK
 		return FALSE
 	if(!isturf(carp_user.loc)) //NO MOTHERFLIPPIN MECHS!
 		return FALSE

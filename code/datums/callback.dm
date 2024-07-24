@@ -26,7 +26,7 @@
  * ## PROC TYPEPATH SHORTCUTS
  * (these operate on paths, not types, so to these shortcuts, datum is NOT a parent of atom, etc...)
  *
- * ### proc defined on current(src) object OR overridden at src or any of it's parents:
+ * ### proc defined on current(src) object OR overridden at src or any of its parents:
  * PROC_REF(procname)
  *
  * `CALLBACK(src, PROC_REF(some_proc_here))`

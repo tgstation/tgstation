@@ -318,7 +318,7 @@
 		patient_status = pick(
 			"The only kiosk is kiosk, but is the only patient, patient?",
 			"Breathing manually.",
-			"Constact NTOS site admin.",
+			"Contact NTOS site admin.",
 			"97% carbon, 3% natural flavoring",
 			"The ebb and flow wears us all in time.",
 			"It's Lupus. You have Lupus.",

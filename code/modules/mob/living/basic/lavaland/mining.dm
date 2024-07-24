@@ -27,14 +27,7 @@
 	var/static/list/vulnerable_projectiles
 	if(!vulnerable_projectiles)
 		vulnerable_projectiles = string_list(MINING_MOB_PROJECTILE_VULNERABILITY)
-	AddElement(\
-		/datum/element/ranged_armour,\
-		minimum_projectile_force = 30,\
-		below_projectile_multiplier = 0.3,\
-		vulnerable_projectile_types = vulnerable_projectiles,\
-		minimum_thrown_force = 20,\
-		throw_blocked_message = throw_blocked_message,\
-	)
+	add_ranged_armour(vulnerable_projectiles)
 	if(crusher_loot)
 		AddElement(\
 			/datum/element/crusher_loot,\
@@ -43,6 +36,16 @@
 			drop_immediately = basic_mob_flags & DEL_ON_DEATH,\
 		)
 	RegisterSignal(src, COMSIG_ATOM_WAS_ATTACKED, PROC_REF(check_ashwalker_peace_violation))
+
+/mob/living/basic/mining/proc/add_ranged_armour(list/vulnerable_projectiles)
+	AddElement(\
+		/datum/element/ranged_armour,\
+		minimum_projectile_force = 30,\
+		below_projectile_multiplier = 0.3,\
+		vulnerable_projectile_types = vulnerable_projectiles,\
+		minimum_thrown_force = 20,\
+		throw_blocked_message = throw_blocked_message,\
+	)
 
 /mob/living/basic/mining/proc/check_ashwalker_peace_violation(datum/source, mob/living/carbon/human/possible_ashwalker)
 	SIGNAL_HANDLER

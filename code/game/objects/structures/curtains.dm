@@ -146,7 +146,7 @@
 		set_opacity(TRUE)
 
 /obj/structure/curtain/cloth/fancy/mechanical/attack_hand(mob/user, list/modifiers)
-		return
+	return
 
 /obj/structure/curtain/cloth/fancy/mechanical/start_closed
 	icon_state = "cur_fancy-closed"

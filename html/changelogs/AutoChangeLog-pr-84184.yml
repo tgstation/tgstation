@@ -1,4 +1,0 @@
-author: "00-Steven"
-delete-after: True
-changes:
-  - bugfix: "You can see runechat above fullscreen overlays on lower multi-z levels again. Rejoice, blind players. Please report any weird rendering layering issues."

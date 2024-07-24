@@ -83,37 +83,6 @@
 				SEALED_MESSAGE = BOOT_SEAL_MESSAGE,
 			),
 		),
-		"civilian" = list(
-			/obj/item/clothing/head/mod = list(
-				UNSEALED_CLOTHING = SNUG_FIT|THICKMATERIAL,
-				SEALED_CLOTHING = STOPSPRESSUREDAMAGE|HEADINTERNALS,
-				UNSEALED_INVISIBILITY = HIDEFACIALHAIR|HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE|HIDEHAIR|HIDESNOUT,
-				UNSEALED_COVER = HEADCOVERSMOUTH|HEADCOVERSEYES|PEPPERPROOF,
-				UNSEALED_MESSAGE = HELMET_UNSEAL_MESSAGE,
-				SEALED_MESSAGE = HELMET_SEAL_MESSAGE,
-			),
-			/obj/item/clothing/suit/mod = list(
-				UNSEALED_CLOTHING = THICKMATERIAL,
-				SEALED_CLOTHING = STOPSPRESSUREDAMAGE,
-				SEALED_INVISIBILITY = HIDEJUMPSUIT,
-				UNSEALED_MESSAGE = CHESTPLATE_UNSEAL_MESSAGE,
-				SEALED_MESSAGE = CHESTPLATE_SEAL_MESSAGE,
-			),
-			/obj/item/clothing/gloves/mod = list(
-				UNSEALED_CLOTHING = THICKMATERIAL,
-				SEALED_CLOTHING = STOPSPRESSUREDAMAGE,
-				CAN_OVERSLOT = TRUE,
-				UNSEALED_MESSAGE = GAUNTLET_UNSEAL_MESSAGE,
-				SEALED_MESSAGE = GAUNTLET_SEAL_MESSAGE,
-			),
-			/obj/item/clothing/shoes/mod = list(
-				UNSEALED_CLOTHING = THICKMATERIAL,
-				SEALED_CLOTHING = STOPSPRESSUREDAMAGE,
-				CAN_OVERSLOT = TRUE,
-				UNSEALED_MESSAGE = BOOT_UNSEAL_MESSAGE,
-				SEALED_MESSAGE = BOOT_SEAL_MESSAGE,
-			),
-		),
 	)
 
 #ifdef UNIT_TESTS
@@ -206,6 +175,58 @@
 	laser = 5
 	energy = 5
 	bio = 100
+	fire = 25
+	acid = 25
+	wound = 5
+
+/datum/mod_theme/civilian
+	name = "civilian"
+	desc = "A light-weight civilian suit that offers unmatched ease of movement but no protection from the vacuum of space."
+	extended_desc = "An experimental design by Nakamura Engineering, intended to be marketed towards planet-bound customers. \
+		This model sacrifices the protection from biological and chemical threats and the vacuum of space in exchange for \
+		vastly improved mobility. Due to the slimmed-down profile, it also has less capacity for modifications compared to \
+		mainline models."
+	default_skin = "civilian"
+	armor_type = /datum/armor/mod_theme_civilian
+	max_heat_protection_temperature = ARMOR_MAX_TEMP_PROTECT
+	min_cold_protection_temperature = ARMOR_MIN_TEMP_PROTECT
+	complexity_max = DEFAULT_MAX_COMPLEXITY - 3
+	slowdown_inactive = 0.5
+	slowdown_active = 0
+	variants = list(
+		"civilian" = list(
+			/obj/item/clothing/head/mod = list(
+				UNSEALED_CLOTHING = SNUG_FIT|THICKMATERIAL,
+				UNSEALED_MESSAGE = HELMET_UNSEAL_MESSAGE,
+				SEALED_MESSAGE = HELMET_SEAL_MESSAGE,
+			),
+			/obj/item/clothing/suit/mod = list(
+				UNSEALED_CLOTHING = THICKMATERIAL,
+				SEALED_INVISIBILITY = HIDEJUMPSUIT,
+				UNSEALED_MESSAGE = CHESTPLATE_UNSEAL_MESSAGE,
+				SEALED_MESSAGE = CHESTPLATE_SEAL_MESSAGE,
+			),
+			/obj/item/clothing/gloves/mod = list(
+				UNSEALED_CLOTHING = THICKMATERIAL,
+				CAN_OVERSLOT = TRUE,
+				UNSEALED_MESSAGE = GAUNTLET_UNSEAL_MESSAGE,
+				SEALED_MESSAGE = GAUNTLET_SEAL_MESSAGE,
+			),
+			/obj/item/clothing/shoes/mod = list(
+				UNSEALED_CLOTHING = THICKMATERIAL,
+				CAN_OVERSLOT = TRUE,
+				UNSEALED_MESSAGE = BOOT_UNSEAL_MESSAGE,
+				SEALED_MESSAGE = BOOT_SEAL_MESSAGE,
+			),
+		),
+	)
+
+/datum/armor/mod_theme_civilian
+	melee = 5
+	bullet = 5
+	laser = 5
+	energy = 5
+	bio = 50
 	fire = 25
 	acid = 25
 	wound = 5
@@ -1866,7 +1887,7 @@
 	extended_desc = "A bulky and only legal by technicality suit, this ominous black and red MODsuit is only worn by \
 		Nanotrasen Black Ops teams. If you can see this suit, you fucked up. A collaborative joint effort between \
 		Apadyne and Nanotrasen the construction and modules gives the user robust protection against \
-		anything that can be thrown at it, along with acute combat awareness tools for it's wearer. \
+		anything that can be thrown at it, along with acute combat awareness tools for its wearer. \
 		Whether the wearer uses it or not is up to them. \
 		There seems to be a little inscription on the wrist that reads; \'squiddie', d'aww."
 	default_skin = "apocryphal"

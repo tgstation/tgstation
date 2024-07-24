@@ -1,5 +1,0 @@
-author: "carlarctg"
-delete-after: True
-changes:
-  - rscadd: "Adds six new strange object powers! Drink dispenser, bioscrambler, recharger, hugger, dimensional, disguiser."
-  - code_imp: "Removed some unused code and items, and added a proc that returns a random #colorstring."

@@ -5786,9 +5786,9 @@
 /turf/open/floor/iron,
 /area/station/maintenance/disposal/incinerator)
 "caV" = (
-/obj/machinery/airalarm/directional/east,
-/obj/effect/decal/cleanable/dirt,
-/turf/open/floor/iron,
+/obj/vehicle/sealed/mecha/ripley/cargo,
+/obj/effect/decal/cleanable/generic,
+/turf/open/floor/iron/recharge_floor,
 /area/station/cargo/warehouse)
 "cbg" = (
 /obj/effect/turf_decal/tile/purple{
@@ -7125,7 +7125,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/effect/spawner/random/structure/crate,
 /obj/structure/disposalpipe/segment{
-	dir = 6
+	dir = 4
 	},
 /turf/open/floor/plating,
 /area/station/maintenance/port/fore)
@@ -9494,7 +9494,6 @@
 /obj/structure/cable,
 /obj/effect/spawner/random/maintenance,
 /obj/machinery/recharge_station,
-/obj/structure/disposalpipe/segment,
 /turf/open/floor/plating,
 /area/station/maintenance/port/fore)
 "dvn" = (
@@ -9633,16 +9632,6 @@
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/effect/turf_decal/stripes/corner{
 	dir = 4
-	},
-/obj/structure/table,
-/obj/item/storage/box/bandages{
-	pixel_y = 6;
-	pixel_x = 4
-	},
-/obj/effect/spawner/random/entertainment/deck,
-/obj/effect/spawner/random/entertainment/cigarette_pack{
-	pixel_x = -6;
-	pixel_y = 8
 	},
 /turf/open/floor/iron,
 /area/station/cargo/miningoffice)
@@ -12952,6 +12941,20 @@
 	},
 /turf/open/floor/iron,
 /area/station/hallway/primary/aft)
+"eEa" = (
+/obj/structure/extinguisher_cabinet/directional/south,
+/obj/effect/turf_decal/tile/bar,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/smartfridge/drying,
+/obj/effect/turf_decal/bot,
+/obj/effect/turf_decal/trimline/brown/warning{
+	dir = 9
+	},
+/turf/open/floor/iron/cafeteria,
+/area/station/service/kitchen)
 "eEf" = (
 /obj/machinery/camera/directional/north{
 	c_tag = "Bar - Backroom"
@@ -13142,11 +13145,10 @@
 /area/station/commons/lounge)
 "eIc" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/machinery/light/small/dim/directional/south,
-/obj/machinery/mech_bay_recharge_port{
+/obj/structure/sign/warning/directional/south,
+/obj/machinery/computer/mech_bay_power_console{
 	dir = 8
 	},
-/obj/structure/sign/warning/directional/south,
 /turf/open/floor/iron,
 /area/station/cargo/warehouse)
 "eIy" = (
@@ -13420,6 +13422,13 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron/white,
 /area/station/medical/medbay/central)
+"eMK" = (
+/obj/machinery/mech_bay_recharge_port{
+	dir = 1
+	},
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/iron,
+/area/station/cargo/warehouse)
 "eMW" = (
 /obj/structure/flora/bush/pale/style_random,
 /obj/structure/flora/bush/ferny/style_random,
@@ -13799,7 +13808,7 @@
 /obj/effect/turf_decal/siding/wood{
 	dir = 9
 	},
-/obj/machinery/keycard_auth/directional/north{
+/obj/machinery/keycard_auth/wall_mounted/directional/north{
 	pixel_x = -5
 	},
 /turf/open/floor/wood/large,
@@ -14528,6 +14537,8 @@
 /mob/living/simple_animal/bot/mulebot{
 	name = "Leaping Rabbit"
 	},
+/obj/structure/disposalpipe/segment,
+/obj/structure/disposalpipe/segment,
 /turf/open/floor/plating,
 /area/station/maintenance/port/fore)
 "fhp" = (
@@ -15256,25 +15267,6 @@
 /obj/machinery/light/small/directional/west,
 /turf/open/floor/iron,
 /area/station/engineering/atmos)
-"frH" = (
-/obj/machinery/door/firedoor,
-/obj/machinery/door/airlock/security/glass{
-	id_tag = "outerbrig";
-	name = "Brig"
-	},
-/obj/effect/decal/cleanable/dirt,
-/obj/structure/cable,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/machinery/flasher/directional/east{
-	id = "secentranceflasher"
-	},
-/obj/effect/mapping_helpers/airlock/cyclelink_helper_multi{
-	cycle_id = "brig-entrance"
-	},
-/obj/effect/mapping_helpers/airlock/access/all/security/entrance,
-/turf/open/floor/iron,
-/area/station/security/brig)
 "frZ" = (
 /obj/effect/turf_decal/delivery,
 /obj/machinery/atmospherics/components/binary/pump{
@@ -15581,15 +15573,6 @@
 /obj/effect/turf_decal/tile/red/fourcorners,
 /turf/open/floor/iron,
 /area/station/security/checkpoint/engineering)
-"fAk" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/effect/spawner/random/structure/crate,
-/obj/effect/turf_decal/bot_white,
-/obj/effect/turf_decal/arrows/red{
-	dir = 1
-	},
-/turf/open/floor/iron,
-/area/station/cargo/warehouse)
 "fAt" = (
 /obj/machinery/disposal/bin,
 /obj/structure/disposalpipe/trunk{
@@ -16178,20 +16161,6 @@
 /obj/machinery/power/tracker,
 /turf/open/floor/plating/airless,
 /area/station/solars/starboard/fore)
-"fLS" = (
-/obj/machinery/door/firedoor,
-/obj/machinery/door/airlock/security/glass{
-	id_tag = "outerbrig";
-	name = "Brig"
-	},
-/obj/effect/decal/cleanable/dirt,
-/obj/structure/cable,
-/obj/effect/mapping_helpers/airlock/cyclelink_helper_multi{
-	cycle_id = "brig-entrance"
-	},
-/obj/effect/mapping_helpers/airlock/access/all/security/entrance,
-/turf/open/floor/iron,
-/area/station/security/brig)
 "fMf" = (
 /obj/structure/chair/office{
 	dir = 1
@@ -16271,7 +16240,6 @@
 /obj/effect/spawner/random/maintenance,
 /obj/effect/spawner/random/maintenance,
 /obj/effect/spawner/random/maintenance,
-/obj/effect/turf_decal/stripes/corner,
 /obj/item/reagent_containers/cup/soda_cans/pwr_game,
 /obj/structure/sign/poster/contraband/random/directional/south,
 /turf/open/floor/iron,
@@ -16906,7 +16874,7 @@
 /obj/machinery/computer/crew{
 	dir = 4
 	},
-/obj/machinery/keycard_auth/directional/south{
+/obj/machinery/keycard_auth/wall_mounted/directional/south{
 	pixel_x = 6
 	},
 /obj/machinery/button/door/directional/south{
@@ -22013,7 +21981,7 @@
 /turf/open/floor/wood,
 /area/station/command/heads_quarters/captain/private)
 "hSt" = (
-/obj/machinery/keycard_auth/directional/west,
+/obj/machinery/keycard_auth/wall_mounted/directional/west,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron/dark,
 /area/station/command/heads_quarters/ce)
@@ -22320,11 +22288,12 @@
 /turf/open/floor/iron/dark,
 /area/station/security/office)
 "hYl" = (
-/obj/effect/decal/cleanable/dirt,
 /obj/structure/sink{
 	dir = 8;
 	pixel_x = 14
 	},
+/obj/effect/turf_decal/stripes/line,
+/obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron,
 /area/station/cargo/warehouse)
 "hYr" = (
@@ -24148,7 +24117,7 @@
 	dir = 8
 	},
 /obj/machinery/status_display/ai/directional/north,
-/obj/machinery/keycard_auth/directional/east,
+/obj/machinery/keycard_auth/wall_mounted/directional/east,
 /turf/open/floor/wood,
 /area/station/command/heads_quarters/captain/private)
 "iDq" = (
@@ -25501,6 +25470,26 @@
 	},
 /turf/open/floor/iron,
 /area/station/engineering/atmos)
+"jau" = (
+/obj/machinery/door/firedoor,
+/obj/machinery/door/airlock/security/glass{
+	id_tag = "outerbrig";
+	name = "Brig"
+	},
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/flasher/directional/east{
+	id = "secentranceflasher"
+	},
+/obj/effect/mapping_helpers/airlock/cyclelink_helper_multi{
+	cycle_id = "brig-entrance"
+	},
+/obj/effect/mapping_helpers/airlock/access/all/security/entrance,
+/obj/machinery/scanner_gate/preset_guns,
+/turf/open/floor/iron,
+/area/station/security/brig)
 "jay" = (
 /obj/structure/chair{
 	dir = 4
@@ -27078,9 +27067,12 @@
 /area/station/cargo/miningoffice)
 "jBp" = (
 /obj/effect/turf_decal/tile/brown/half/contrasted,
-/obj/machinery/conveyor_switch/oneway{
-	id = "mining";
+/obj/effect/turf_decal/bot,
+/obj/structure/disposalpipe/trunk{
 	dir = 1
+	},
+/obj/machinery/disposal/bin{
+	name = "Jim Norton's Quebecois Coffee disposal unit"
 	},
 /turf/open/floor/iron,
 /area/station/cargo/miningoffice)
@@ -28981,6 +28973,7 @@
 	},
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/sign/poster/contraband/random/directional/south,
+/obj/machinery/airalarm/directional/west,
 /turf/open/floor/iron,
 /area/station/cargo/warehouse)
 "kir" = (
@@ -31863,9 +31856,15 @@
 /turf/open/floor/engine,
 /area/station/science/xenobiology)
 "ljH" = (
-/obj/effect/decal/cleanable/generic,
-/obj/vehicle/sealed/mecha/ripley/cargo,
-/turf/open/floor/iron/recharge_floor,
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
+/obj/effect/turf_decal/caution{
+	dir = 8
+	},
+/obj/machinery/light/small/dim/directional/south,
+/turf/open/floor/iron,
 /area/station/cargo/warehouse)
 "ljL" = (
 /obj/structure/chair/comfy/black,
@@ -35016,7 +35015,7 @@
 /obj/machinery/computer/records/security{
 	dir = 4
 	},
-/obj/machinery/keycard_auth/directional/west,
+/obj/machinery/keycard_auth/wall_mounted/directional/west,
 /obj/machinery/requests_console/directional/north{
 	department = "Head of Security's Desk";
 	name = "Head of Security Requests Console"
@@ -36118,20 +36117,6 @@
 /obj/effect/turf_decal/tile/neutral/half/contrasted,
 /turf/open/floor/iron/dark,
 /area/station/security/range)
-"mPZ" = (
-/obj/structure/extinguisher_cabinet/directional/south,
-/obj/effect/turf_decal/tile/bar,
-/obj/effect/turf_decal/tile/neutral{
-	dir = 8
-	},
-/obj/effect/decal/cleanable/dirt,
-/obj/machinery/deepfryer,
-/obj/effect/turf_decal/bot,
-/obj/effect/turf_decal/trimline/brown/warning{
-	dir = 9
-	},
-/turf/open/floor/iron/cafeteria,
-/area/station/service/kitchen)
 "mQa" = (
 /obj/machinery/camera/directional/north{
 	c_tag = "Port Primary Hallway - Middle"
@@ -39017,10 +39002,10 @@
 /turf/open/floor/iron,
 /area/station/hallway/secondary/command)
 "nNB" = (
-/obj/effect/turf_decal/bot_white,
 /obj/effect/turf_decal/arrows/red{
 	dir = 1
 	},
+/obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron,
 /area/station/cargo/warehouse)
 "nNH" = (
@@ -40151,6 +40136,7 @@
 /obj/effect/turf_decal/arrows/red{
 	dir = 1
 	},
+/obj/effect/spawner/random/structure/crate,
 /turf/open/floor/iron,
 /area/station/cargo/warehouse)
 "okj" = (
@@ -40292,6 +40278,9 @@
 "omV" = (
 /obj/effect/spawner/random/structure/grille,
 /obj/structure/cable,
+/obj/structure/disposalpipe/segment{
+	dir = 6
+	},
 /turf/open/floor/plating,
 /area/station/maintenance/port/fore)
 "onf" = (
@@ -42569,6 +42558,21 @@
 /obj/machinery/duct,
 /turf/open/floor/iron,
 /area/station/maintenance/starboard/greater)
+"pdI" = (
+/obj/machinery/door/firedoor,
+/obj/machinery/door/airlock/security/glass{
+	id_tag = "outerbrig";
+	name = "Brig"
+	},
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/cable,
+/obj/effect/mapping_helpers/airlock/cyclelink_helper_multi{
+	cycle_id = "brig-entrance"
+	},
+/obj/effect/mapping_helpers/airlock/access/all/security/entrance,
+/obj/machinery/scanner_gate/preset_guns,
+/turf/open/floor/iron,
+/area/station/security/brig)
 "pdT" = (
 /obj/effect/spawner/random/vending/colavend,
 /obj/effect/turf_decal/delivery,
@@ -43411,7 +43415,7 @@
 /turf/open/floor/wood,
 /area/station/command/heads_quarters/hos)
 "psy" = (
-/obj/machinery/keycard_auth/directional/east,
+/obj/machinery/keycard_auth/wall_mounted/directional/east,
 /turf/open/floor/carpet,
 /area/station/command/heads_quarters/hop)
 "psz" = (
@@ -44977,13 +44981,16 @@
 /area/station/security/brig)
 "pVV" = (
 /obj/effect/turf_decal/tile/brown/half/contrasted,
-/obj/machinery/disposal/bin{
-	name = "Jim Norton's Quebecois Coffee disposal unit"
+/obj/structure/table,
+/obj/item/storage/box/bandages{
+	pixel_y = 6;
+	pixel_x = 4
 	},
-/obj/effect/turf_decal/bot,
-/obj/structure/disposalpipe/trunk{
-	dir = 1
+/obj/effect/spawner/random/entertainment/cigarette_pack{
+	pixel_x = -6;
+	pixel_y = 8
 	},
+/obj/effect/spawner/random/entertainment/deck,
 /turf/open/floor/iron,
 /area/station/cargo/miningoffice)
 "pVZ" = (
@@ -46002,6 +46009,7 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
 	dir = 8
 	},
+/obj/effect/turf_decal/stripes/corner,
 /turf/open/floor/iron,
 /area/station/cargo/warehouse)
 "qph" = (
@@ -46931,18 +46939,9 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
 	},
-/obj/structure/table,
-/obj/item/flashlight/lamp{
-	pixel_x = -7;
-	pixel_y = 9
-	},
-/obj/item/folder/yellow{
-	pixel_y = -5;
-	pixel_x = 5
-	},
-/obj/item/pen/blue{
-	pixel_x = 4;
-	pixel_y = -3
+/obj/machinery/conveyor_switch/oneway{
+	id = "mining";
+	dir = 1
 	},
 /turf/open/floor/iron,
 /area/station/cargo/miningoffice)
@@ -47469,6 +47468,9 @@
 /obj/machinery/requests_console/directional/south{
 	department = "Mining";
 	name = "Mining Requests Console"
+	},
+/obj/structure/disposalpipe/segment{
+	dir = 4
 	},
 /turf/open/floor/iron,
 /area/station/cargo/miningoffice)
@@ -48528,7 +48530,7 @@
 /area/station/command/teleporter)
 "rhL" = (
 /obj/machinery/computer/security/mining,
-/obj/machinery/keycard_auth/directional/north,
+/obj/machinery/keycard_auth/wall_mounted/directional/north,
 /obj/item/radio/intercom/directional/north{
 	pixel_y = 34
 	},
@@ -50410,9 +50412,13 @@
 /turf/open/floor/iron/dark,
 /area/station/ai_monitored/turret_protected/ai_upload_foyer)
 "rPp" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
+/obj/effect/turf_decal/caution{
+	dir = 8
+	},
 /obj/effect/decal/cleanable/dirt,
-/obj/effect/turf_decal/stripes/line,
-/obj/effect/turf_decal/caution,
 /turf/open/floor/iron,
 /area/station/cargo/warehouse)
 "rPA" = (
@@ -54054,7 +54060,7 @@
 /obj/item/aicard,
 /obj/item/pai_card,
 /obj/item/circuitboard/aicore,
-/obj/machinery/keycard_auth/directional/north{
+/obj/machinery/keycard_auth/wall_mounted/directional/north{
 	pixel_x = -5
 	},
 /obj/machinery/button/door/directional/north{
@@ -87194,7 +87200,7 @@ fqe
 vHa
 nNB
 qoY
-fAk
+rPp
 rPp
 ljH
 vQs
@@ -87452,7 +87458,7 @@ vde
 tGU
 hYl
 caV
-rPp
+eMK
 eIc
 vQs
 hyW
@@ -87681,7 +87687,7 @@ hJO
 duG
 omV
 fhn
-jXu
+cuh
 jBp
 wsk
 qHt
@@ -87938,7 +87944,7 @@ bkJ
 iIE
 cAf
 dve
-cuh
+jXu
 pVV
 qqr
 iId
@@ -97195,7 +97201,7 @@ uok
 bzV
 ezg
 uVv
-fLS
+pdI
 pjh
 gpc
 gGo
@@ -97709,7 +97715,7 @@ lsP
 vYF
 eaP
 lTj
-frH
+jau
 afj
 qGs
 gCD
@@ -105457,7 +105463,7 @@ mal
 bDK
 oRs
 pem
-mPZ
+eEa
 huG
 huG
 huG
