@@ -404,9 +404,9 @@
 	id = "ci-surgery"
 	build_type = PROTOLATHE | AWAY_LATHE | MECHFAB
 	materials = list (
-		/datum/material/iron = SHEET_MATERIAL_AMOUNT*1.25,
-		/datum/material/glass =HALF_SHEET_MATERIAL_AMOUNT * 1.5,
-		/datum/material/silver =HALF_SHEET_MATERIAL_AMOUNT * 1.5
+		/datum/material/iron = SHEET_MATERIAL_AMOUNT * 1.25,
+		/datum/material/glass = HALF_SHEET_MATERIAL_AMOUNT * 1.5,
+		/datum/material/silver = HALF_SHEET_MATERIAL_AMOUNT * 1.5,
 	)
 	construction_time = 2 SECONDS
 	build_path = /obj/item/organ/internal/cyberimp/arm/surgery
@@ -421,9 +421,9 @@
 	id = "ci-toolset"
 	build_type = PROTOLATHE | AWAY_LATHE | MECHFAB
 	materials = list (
-		/datum/material/iron = SHEET_MATERIAL_AMOUNT*1.25,
-		/datum/material/glass =HALF_SHEET_MATERIAL_AMOUNT * 1.5,
-		/datum/material/silver =HALF_SHEET_MATERIAL_AMOUNT * 1.5
+		/datum/material/iron = SHEET_MATERIAL_AMOUNT * 1.25,
+		/datum/material/glass = HALF_SHEET_MATERIAL_AMOUNT * 1.5,
+		/datum/material/silver = HALF_SHEET_MATERIAL_AMOUNT * 1.5,
 	)
 	construction_time = 2 SECONDS
 	build_path = /obj/item/organ/internal/cyberimp/arm/toolset
