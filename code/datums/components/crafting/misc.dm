@@ -43,7 +43,7 @@
 		/obj/item/stack/sheet/mineral/wood = 1,
 		/obj/item/stack/rods = 1,
 	)
-	tool_paths = list(TOOL_WIRECUTTER)
+	tool_behaviors = list(TOOL_WIRECUTTER)
 	category = CAT_MISC
 
 /datum/crafting_recipe/cardboard_id
