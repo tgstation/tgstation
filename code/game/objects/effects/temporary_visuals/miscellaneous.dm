@@ -242,8 +242,8 @@
 	duration = 5
 
 /obj/effect/temp_visual/fire
-	icon = 'icons/effects/fire.dmi'
-	icon_state = "3"
+	icon = 'icons/effects/atmos/fire_heavy.dmi'
+	icon_state = "-1"
 	light_range = LIGHT_RANGE_FIRE
 	light_color = LIGHT_COLOR_FIRE
 	duration = 10

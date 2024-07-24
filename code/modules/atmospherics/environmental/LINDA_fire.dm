@@ -15,6 +15,30 @@
 /turf/proc/hotspot_expose(exposed_temperature, exposed_volume, soh = 0)
 	return
 
+/turf/open/proc/set_active_hotspot(obj/effect/hotspot/new_lad)
+	if(active_hotspot == new_lad)
+		return
+	var/hotspot_around = NONE
+	if(active_hotspot)
+		if(new_lad)
+			hotspot_around = active_hotspot.smoothing_junction
+		if(!QDELETED(active_hotspot))
+			QDEL_NULL(active_hotspot)
+	else
+		for(var/direction in GLOB.cardinals)
+			var/turf/potentially_open = get_step(src, direction)
+			if(!isopenturf(potentially_open))
+				continue
+			var/turf/open/potentially_hotboxed = potentially_open
+			if(!potentially_hotboxed.active_hotspot)
+				continue
+			var/existing_directions = potentially_hotboxed.active_hotspot.smoothing_junction
+			potentially_hotboxed.active_hotspot.set_smoothed_icon_state(existing_directions | REVERSE_DIR(direction))
+			hotspot_around |= direction
+
+	active_hotspot = new_lad
+	active_hotspot.set_smoothed_icon_state(hotspot_around)
+
 /**
  * Handles the creation of hotspots and initial activation of turfs.
  * Setting the conditions for the reaction to actually happen for gasmixtures
@@ -55,10 +79,10 @@
 	if(((exposed_temperature > PLASMA_MINIMUM_BURN_TEMPERATURE) && (plas > 0.5 || trit > 0.5 || h2 > 0.5)) || \
 		((exposed_temperature < FREON_MAXIMUM_BURN_TEMPERATURE) && (freon > 0.5)))
 
-		active_hotspot = new /obj/effect/hotspot(src, exposed_volume*25, exposed_temperature)
+		set_active_hotspot(new /obj/effect/hotspot(src, exposed_volume*25, exposed_temperature))
 
 		active_hotspot.just_spawned = (current_cycle < SSair.times_fired)
-			//remove just_spawned protection if no longer processing this cell
+		//remove just_spawned protection if no longer processing this cell
 		SSair.add_to_active(src)
 
 /**
@@ -68,7 +92,7 @@
 /obj/effect/hotspot
 	anchored = TRUE
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
-	icon = 'icons/effects/fire.dmi'
+	icon = 'icons/effects/atmos/fire_light.dmi'
 	icon_state = "1"
 	layer = GASFIRE_LAYER
 	blend_mode = BLEND_ADD
@@ -77,6 +101,7 @@
 	light_power = 1
 	light_color = LIGHT_COLOR_FIRE
 
+	var/fire_stage = ""
 	/**
 	 * Volume is the representation of how big and healthy a fire is.
 	 * Hotspot volume will be divided by turf volume to get the ratio for temperature setting on non bypassing mode.
@@ -93,6 +118,17 @@
 	///Are we burning freon?
 	var/cold_fire = FALSE
 
+GLOBAL_LIST_INIT(hotspot_icons, list(
+	"light" = list(
+		'icons/effects/atmos/fire_light.dmi',
+	),
+	"medium" = list(
+		'icons/effects/atmos/fire_medium.dmi',
+	),
+	"heavy" = list(
+		'icons/effects/atmos/fire_heavy.dmi',
+	)
+))
 
 /obj/effect/hotspot/Initialize(mapload, starting_volume, starting_temperature)
 	. = ..()
@@ -109,6 +145,18 @@
 		COMSIG_ATOM_ABSTRACT_ENTERED = PROC_REF(on_entered),
 	)
 	AddElement(/datum/element/connect_loc, loc_connections)
+
+/obj/effect/hotspot/set_smoothed_icon_state(new_junction)
+	. = ..()
+	// If we have a connection down offset physically down so we render correctly
+	if(new_junction & SOUTH)
+		// this ensures things physically below us but visually overlapping us render how we would want
+		pixel_y = -16
+		pixel_z = 16
+	// Otherwise render normally, to avoid weird layering
+	else
+		pixel_y = 0
+		pixel_z = 0
 
 /**
  * Perform interactions between the hotspot and the gasmixture.
@@ -129,7 +177,7 @@
 	if(!istype(location) || !(location.air))
 		return
 
-	location.active_hotspot = src
+	location.set_active_hotspot(src)
 
 	bypassing = !just_spawned && (volume > CELL_VOLUME*0.95)
 
@@ -175,6 +223,9 @@
 	var/heat_b = heat2colour_b(temperature)
 	var/heat_a = 255
 	var/greyscale_fire = 1 //This determines how greyscaled the fire is.
+	// Note:
+	// The overlays applied to hotspots are not 3/4th'd. They COULD be but we have not gotten to that point yet.
+	// Wallening todo?
 
 	if(cold_fire)
 		heat_r = 0
@@ -198,7 +249,7 @@
 		sparkle_overlay.alpha = sparkle_amt * 255
 		add_overlay(sparkle_overlay)
 	if(temperature > 400000 && temperature < 1500000) //Lightning because very anime.
-		var/mutable_appearance/lightning_overlay = mutable_appearance(icon, "overcharged")
+		var/mutable_appearance/lightning_overlay = mutable_appearance('icons/effects/atmos/fire.dmi', "overcharged")
 		lightning_overlay.blend_mode = BLEND_ADD
 		add_overlay(lightning_overlay)
 	if(temperature > 4500000) //This is where noblium happens. Some fusion-y effects.
@@ -263,7 +314,7 @@
 	perform_exposure()
 
 	if(bypassing)
-		icon_state = "3"
+		set_fire_stage("heavy")
 		if(!cold_fire)
 			location.burn_tile()
 
@@ -279,20 +330,26 @@
 
 	else
 		if(volume > CELL_VOLUME*0.4)
-			icon_state = "2"
+			set_fire_stage("medium")
 		else
-			icon_state = "1"
+			set_fire_stage("light")
 
 	if((visual_update_tick++ % 7) == 0)
 		update_color()
 
 	return TRUE
 
+/obj/effect/hotspot/proc/set_fire_stage(stage)
+	if(fire_stage == stage)
+		return
+	fire_stage = stage
+	icon = pick(GLOB.hotspot_icons[fire_stage])
+
 /obj/effect/hotspot/Destroy()
 	SSair.hotspots -= src
 	var/turf/open/T = loc
 	if(istype(T) && T.active_hotspot == src)
-		T.active_hotspot = null
+		T.set_active_hotspot(null)
 	return ..()
 
 /obj/effect/hotspot/proc/on_entered(datum/source, atom/movable/arrived, atom/old_loc, list/atom/old_locs)

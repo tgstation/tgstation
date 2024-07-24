@@ -236,8 +236,8 @@
 /obj/effect/temp_visual/drakewall
 	desc = "An ash drakes true flame."
 	name = "Fire Barrier"
-	icon = 'icons/effects/fire.dmi'
-	icon_state = "1"
+	icon = 'icons/effects/atmos/fire_light.dmi'
+	icon_state = "-1"
 	anchored = TRUE
 	opacity = FALSE
 	density = TRUE
