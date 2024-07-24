@@ -1,0 +1,4 @@
+author: "MTandi"
+delete-after: True
+changes:
+  - bugfix: "Borgs and AI can now use research queue"
