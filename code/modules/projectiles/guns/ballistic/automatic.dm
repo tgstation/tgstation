@@ -93,7 +93,7 @@
 	icon_state = "smartgun"
 	inhand_icon_state = "smartgun"
 	accepted_magazine_type = /obj/item/ammo_box/magazine/smartgun
-	burst_size = 5
+	burst_size = 4
 	fire_delay = 1
 	spread = 40
 	dual_wield_spread = 20
