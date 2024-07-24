@@ -41,6 +41,11 @@
 	stored.forceMove(get_turf(usr))
 	return
 
+/obj/item/borg/apparatus/get_proxy_attacker_for(atom/target, mob/user)
+	if(stored) // Use the stored item if available
+		return stored
+	return ..()
+
 /**
 * Attack_self will pass for the stored item.
 */
@@ -57,10 +62,6 @@
 	return CLICK_ACTION_SUCCESS
 
 /obj/item/borg/apparatus/pre_attack(atom/atom, mob/living/user, params)
-	if(stored)
-		stored.melee_attack_chain(user, atom, params)
-		return TRUE
-
 	if(istype(atom.loc, /mob/living/silicon/robot) || istype(atom.loc, /obj/item/robot_model) || HAS_TRAIT(atom, TRAIT_NODROP))
 		return ..() // Borgs should not be grabbing their own modules
 
