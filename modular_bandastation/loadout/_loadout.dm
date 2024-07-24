@@ -1,4 +1,4 @@
 /datum/modpack/loadout
 	name = "Loadout"
-	desc = "Изменения в loadout."
-	author = "larentoun"
+	desc = "Добавляет новые вещи в loadout и изменяет уже существующие."
+	author = "larentoun, Chorden"

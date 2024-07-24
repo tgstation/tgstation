@@ -52,7 +52,7 @@
 
 /obj/item/toy/plush/hampter/old_captain
 	name = "хамптер старый капитан"
-	desc = "ПЛюшевый хамптер капитан в старой униформе. Это какой год?"
+	desc = "Плюшевый хамптер капитан в старой униформе. Это какой год?"
 	icon_state = "hampter_old-cap"
 	inhand_icon_state = "hampter_old-cap"
 	worn_icon_state = "hampter_old-cap"
