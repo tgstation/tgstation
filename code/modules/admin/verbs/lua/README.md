@@ -286,7 +286,7 @@ end
 NOTE: if `func` is an anonymous function declared inside the call to `SS13.register_signal`, it cannot be referenced in order to unregister that signal with `SS13.unregister_signal`
 
 ## SS13.unregister_signal(datum, signal, func)
-Unregister a signal previously registered using `SS13.register_signal`. `func` must be a function for which a handler for the specified signal has already been registered.
+Unregister a signal previously registered using `SS13.register_signal`. `func` must be a function for which a handler for the specified signal has already been registered. If `func` is `nil`, all handlers for that signal will be unregistered.
 
 ## SS13.set_timeout(time, func)
 Creates a timer which will execute `func` after `time` **seconds**. `func` should not expect to be passed any arguments, as it will not be passed any. Unlike `SS13.wait`, `SS13.set_timeout` does not yield or sleep the current task, making it suitable for use in signal handlers for `SS13.register_signal`

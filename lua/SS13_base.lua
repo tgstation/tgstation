@@ -84,6 +84,9 @@ local function create_qdeleting_callback(datum)
 end
 
 function SS13.register_signal(datum, signal, func)
+	if not type(func) == "function" then
+		return
+	end
 	if not SS13.istype(datum, "/datum") then
 		return
 	end
@@ -120,6 +123,9 @@ function SS13.register_signal(datum, signal, func)
 end
 
 function SS13.unregister_signal(datum, signal, func)
+	if not (func == nil or type(func) == "function") then
+		return
+	end
 	if not __SS13_signal_handlers[datum] then
 		return
 	end
@@ -127,10 +133,19 @@ function SS13.unregister_signal(datum, signal, func)
 	if not handler_data then
 		return
 	end
-	handler_data.functions[func] = nil
-	if not (#handler_data.functions or (signal == "parent_qdeleting")) then
-		handler_data.callback:UnregisterSignal(datum, signal)
-		__SS13_signal_handlers[datum][signal] = nil
+	if func == nil then
+		if signal == "parent_qdeleting" then
+			handler_data.functions = []
+		else
+			handler_data.callback:UnregisterSignal(datum, signal)
+			__SS13_signal_handlers[datum][signal] = nil
+		end
+	else
+		handler_data.functions[func] = nil
+		if not (#handler_data.functions or (signal == "parent_qdeleting")) then
+			handler_data.callback:UnregisterSignal(datum, signal)
+			__SS13_signal_handlers[datum][signal] = nil
+		end
 	end
 end
 
