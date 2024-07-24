@@ -30,6 +30,7 @@
 
 /turf/open/floor/plating/abductor2
 	name = "alien plating"
+	icon = 'icons/turf/floors.dmi'
 	icon_state = "alienplating"
 	base_icon_state = "alienplating"
 	tiled_dirt = FALSE
