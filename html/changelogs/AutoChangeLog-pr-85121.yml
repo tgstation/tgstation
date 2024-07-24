@@ -1,6 +1,0 @@
-author: "Paxilmaniac"
-delete-after: True
-changes:
-  - bugfix: "Fixes bulldog shotgun unique mag display not working on the sprite"
-  - image: "resprites the bulldog shotgun along with inhands and new worn sprites"
-  - code_imp: "cleans up a little of the code surrounding the bulldog"

@@ -1216,3 +1216,62 @@
   - qol: It is now possible to detect EMP organ failure cascades via health scanners.
   - qol: EMP organ failure cascades can be reversed by doing organ repair surgeries
       targeting the failing organ.
+2024-07-24:
+  AyIong:
+  - qol: Photocopier updated their UI
+  Ben10Omintrix:
+  - qol: fish analyzers now have a UI
+  DaCoolBoss:
+  - rscadd: Adds the Haunted Trading Post space ruin.
+  - rscadd: Adds 10+ unique items for the Haunted Trading Post
+  - rscadd: Adds 5 dangerous mobs for the Haunted Trading Post
+  - rscadd: Adds 4 new types of hazardous traps for the Haunted Trading Post.
+  FeenieRU:
+  - qol: Now IDs and PDAs have money-reader module for picking some cash into your
+      bank by swiping on money.
+  Ghommie:
+  - rscadd: You can raise lobstrosities from chasm chrabs inside an aquarium with
+      the 'allow breeding' setting on. Keep the fish well fed, healthy and not lonely
+      if you don't want an hostile one.
+  - rscadd: Juveline lobstrosities (from chasms, plasma rivers, or aquariums, xenobio
+      too) can be tamed with arms and lavaloop fishes.
+  - rscadd: For lobstrosities grown from aquariums, they can have additional effects
+      based on the fish traits they had in the aquarium, like being venomous or even
+      flying.
+  Jacquerel, Kok0nut, Imaginos:
+  - image: Wall-mounted and Table-mounted ID card authorisation machines now use different
+      sprites
+  - bugfix: Wall-mounted ID card authorisation devices will now be destroyed if their
+      wall is destroyed
+  Majkl-J:
+  - bugfix: fixes bitrunning breaking upon repeatedly climbing in and out the pod
+  Paxilmaniac:
+  - bugfix: Fixes bulldog shotgun unique mag display not working on the sprite
+  - image: resprites the bulldog shotgun along with inhands and new worn sprites
+  - code_imp: cleans up a little of the code surrounding the bulldog
+  SmArtKar:
+  - bugfix: Stacking machine consoles link to machinery now
+  - bugfix: You can now put dead mice into mortars/grinders properly
+  - balance: Mechs now take armor into consideration when calculating punch damage
+  - bugfix: Mechs no longer deal direct limb damage
+  - bugfix: Drills automatically pick up ore on non-ripley mechs now without having
+      to move
+  - bugfix: Drills no longer dismember people immune to melee damage
+  - bugfix: Drills now take armor from correct bodyparts when attacking
+  - code_imp: Cleaned up one-letter variables in mech drill code
+  - bugfix: You can no longer microwave kisses, slappers, and other abstract items
+  - bugfix: Having your liver fail no longer keeps drug traits active without metabolizing
+      them
+  - code_imp: Cleaned up clamp code.
+  - bugfix: Clamp no longer anchors down some objects upon failing to pick them up
+  - bugfix: Deathsquad KILL CLAMP finally works once more
+  - bugfix: Fixes Hereditary Manifold Sickness's 4th stage not updating health when
+      it should
+  - bugfix: You can no longer dupe metal by breaking walls under small light fixtures
+  Time-Green:
+  - bugfix: Animal/people skin is no longer metallic sounding
+  larentoun:
+  - config: Added an entry for TRAITOR_SCALING_MULTIPLIER, disabled by default
+  nikothedude:
+  - bugfix: Alexander no longer causes harddels
+  - bugfix: Removed a theoretical infinite block exploit from alexander

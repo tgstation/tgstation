@@ -1,6 +1,0 @@
-author: "SmArtKar"
-delete-after: True
-changes:
-  - code_imp: "Cleaned up clamp code."
-  - bugfix: "Clamp no longer anchors down some objects upon failing to pick them up"
-  - bugfix: "Deathsquad KILL CLAMP finally works once more"

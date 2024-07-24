@@ -1,4 +1,0 @@
-author: "SmArtKar"
-delete-after: True
-changes:
-  - bugfix: "Fixes Hereditary Manifold Sickness's 4th stage not updating health when it should"
