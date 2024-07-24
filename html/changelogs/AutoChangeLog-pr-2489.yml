@@ -1,5 +1,0 @@
-author: "Absolucy, Majkl-J"
-delete-after: True
-changes:
-  - bugfix: "Having an inorganic chest/legs no longer makes you drop your ID, belt or pocketed stuff upon losing your jumpsuit"
-  - code_imp: "The check that prevents your stuff from dropping when you have robotic parts is now more robust."
