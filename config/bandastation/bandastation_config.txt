@@ -5,3 +5,8 @@
 #TTS_API_URL_SILERO
 
 #WHITELIST220
+
+## A minimum amount of security required on roundstart
+## If there is less security than this value, a percent of roundstart threat will be pushed to midround
+## Example: with value of 5, if there is 2 security members out of 5, then 3/5 of roundstart threat will be moved to midround
+#ROUNDSTART_SECURITY_FOR_THREAT 5
