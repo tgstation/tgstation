@@ -7,9 +7,9 @@
 	// Clears away the frill mask
 	// Wallening todo: make this better. Also why are these not cached exactly?
 	if(client)
-		client.images.Remove(frill_oval_mask)
-	LAZYREMOVE(update_on_z, frill_oval_mask)
-	frill_oval_mask = null
+		client.images.Remove(frill_mask)
+	LAZYREMOVE(update_on_z, frill_mask)
+	frill_mask = null
 
 	..()
 
