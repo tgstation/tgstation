@@ -14,7 +14,7 @@
 
 /datum/pod_construct/titanium
 	build_path = /obj/vehicle/sealed/space_pod/titanium
-	build_needed_item = /obj/item/stack/sheet/titanium
+	build_needed_item = /obj/item/stack/sheet/mineral/titanium
 
 // uncool boring stuff below
 

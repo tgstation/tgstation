@@ -12,3 +12,9 @@
 	if(isnull(cell))
 		return FALSE
 	return cell.use(amount)
+/// check if we have enough power
+/obj/vehicle/sealed/space_pod/proc/has_enough_power(amount)
+	var/obj/item/stock_parts/power_store/cell = get_cell()
+	if(isnull(cell))
+		return FALSE
+	return cell.charge >= amount

@@ -34,7 +34,7 @@
 		balloon_alert(user, "panel not open!")
 		return ITEM_INTERACT_BLOCKING
 
-	if(length(equipped[equipment.slot]) > slot_max(equipment.slot))
+	if(length(equipped[equipment.slot]) > slot_max(equipment.slot) || !isnull(locate(equipment.type) in equipped[equipment.slot]))
 		balloon_alert(user, "not enough space!")
 		return ITEM_INTERACT_BLOCKING
 

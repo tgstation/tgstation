@@ -8,6 +8,7 @@
 // innate armor potentially
 // figure out whether this should use action buttons or an UI or a combination of both for equipment
 // crashing into people and walls and stuff
+// misc slot equipment: Warp Drive. Allows you to warp to bluespace gigabeacons at HUGE energy cost. Not equipped by default, one starts in the pod bay. A bluespace gigabeacon is outside the hangar bay
 // ALSO DO NOT FORGET TO REMOVE THIS HUGE ASS COMMENT before finishing
 
 // this is the iron variant
@@ -61,6 +62,7 @@
 	trail.set_up(src)
 	trail.start()
 	START_PROCESSING(SSnewtonian_movement, src)
+	update_appearance()
 
 /// This proc is responsible for outfitting the pod when spawned (admin or otherwise)
 /obj/vehicle/sealed/space_pod/proc/spawn_equip()
@@ -70,8 +72,9 @@
 	equip_item(new /obj/item/pod_equipment/engine/default)
 	equip_item(new /obj/item/pod_equipment/primary/projectile_weapon/energy/kinetic_accelerator)
 	equip_item(new /obj/item/pod_equipment/cargo_hold)
+	equip_item(new /obj/item/pod_equipment/warp_drive)
 	cabin_air_tank = new /obj/item/tank/internals/oxygen(src)
-	cell = new /obj/item/stock_parts/power_store/battery(src)
+	cell = new /obj/item/stock_parts/power_store/battery/high(src)
 
 /obj/vehicle/sealed/space_pod/Destroy()
 	. = ..()

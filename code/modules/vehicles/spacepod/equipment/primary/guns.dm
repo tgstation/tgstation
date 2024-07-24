@@ -10,7 +10,7 @@
 	/// effect when we fire
 	var/effect_path = /obj/effect/temp_visual/dir_setting/firing_effect/blue
 
-/obj/item/pod_equipment/primary/projectile_weapon/prefire_checks(mob/living/user)
+/obj/item/pod_equipment/primary/projectile_weapon/proc/prefire_checks(mob/living/user)
 	return TRUE
 
 /obj/item/pod_equipment/primary/projectile_weapon/action(mob/living/user)

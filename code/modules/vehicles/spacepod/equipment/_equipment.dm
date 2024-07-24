@@ -26,7 +26,7 @@
 
 /obj/item/pod_equipment/proc/create_occupant_actions(mob/occupant, flag = NONE)
 
-//equipment action
+/// generic equipment action, for the really simple actions
 /datum/action/vehicle/sealed/spacepod_equipment
 	background_icon_state = "bg_tech"
 	overlay_icon_state = "bg_tech_border"
