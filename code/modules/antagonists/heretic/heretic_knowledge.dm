@@ -632,6 +632,7 @@
 		/obj/item/paper,
 		/obj/item/toy/crayon,
 		/obj/item/flashlight,
+		/obj/item/clipboard,
 	)
 
 	var/static/list/potential_uncommoner_items = list(
@@ -639,7 +640,6 @@
 		/obj/item/restraints/handcuffs/cable/zipties,
 		/obj/item/circular_saw,
 		/obj/item/scalpel,
-		/obj/item/binoculars,
 		/obj/item/clothing/gloves/color/yellow,
 		/obj/item/melee/baton/security,
 		/obj/item/clothing/glasses/sunglasses,
