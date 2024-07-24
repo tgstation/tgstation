@@ -18,6 +18,10 @@
 	name = "Mining Station Public Storage"
 	icon_state = "mining_storage"
 
+/area/mine/lobby/raptor
+	name = "Nanotrasen Raptor Farm"
+	icon_state = "mining_storage"
+
 /area/mine/production
 	name = "Mining Station Production Wing"
 	icon_state = "mining_production"

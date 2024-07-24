@@ -304,7 +304,6 @@
 	QDEL_NULL(ui_view)
 	QDEL_NULL(trackers)
 	QDEL_NULL(chassis_camera)
-	QDEL_NULL(wires)
 
 	GLOB.mechas_list -= src //global mech list
 	for(var/datum/atom_hud/data/diagnostic/diag_hud in GLOB.huds)

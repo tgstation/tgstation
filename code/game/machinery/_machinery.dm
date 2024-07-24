@@ -284,7 +284,15 @@
 /obj/machinery/proc/locate_machinery()
 	return
 
+///Early process for machines added to SSmachines.processing_early to prioritize power draw
+/obj/machinery/proc/process_early()
+	return PROCESS_KILL
+
 /obj/machinery/process()//If you dont use process or power why are you here
+	return PROCESS_KILL
+
+///Late process for machines added to SSmachines.processing_late to gather accurate recordings
+/obj/machinery/proc/process_late()
 	return PROCESS_KILL
 
 /obj/machinery/proc/process_atmos()//If you dont use process why are you here
@@ -405,6 +413,10 @@
 /obj/machinery/proc/close_machine(atom/movable/target, density_to_set = TRUE)
 	state_open = FALSE
 	set_density(density_to_set)
+	if (!density)
+		update_appearance()
+		return
+
 	if(!target)
 		for(var/atom in loc)
 			if (!(can_be_occupant(atom)))

@@ -2,7 +2,6 @@
 	name = "Revival"
 	desc = "An experimental surgical procedure which involves reconstruction and reactivation of the patient's brain even long after death. \
 		The body must still be able to sustain life."
-	requires_bodypart_type = NONE
 	possible_locs = list(BODY_ZONE_CHEST)
 	target_mobtypes = list(/mob/living)
 	surgery_flags = SURGERY_REQUIRE_RESTING | SURGERY_MORBID_CURIOSITY
@@ -14,6 +13,19 @@
 		/datum/surgery_step/incise,
 		/datum/surgery_step/revive,
 		/datum/surgery_step/close,
+	)
+
+/datum/surgery/revival/mechanic
+	name = "Full System Reboot"
+	requires_bodypart_type = BODYTYPE_ROBOTIC
+	steps = list(
+		/datum/surgery_step/mechanic_open,
+		/datum/surgery_step/open_hatch,
+		/datum/surgery_step/mechanic_unwrench,
+		/datum/surgery_step/prepare_electronics,
+		/datum/surgery_step/revive,
+		/datum/surgery_step/mechanic_wrench,
+		/datum/surgery_step/mechanic_close,
 	)
 
 /datum/surgery/revival/can_start(mob/user, mob/living/target)
