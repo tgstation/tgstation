@@ -324,11 +324,13 @@
 		qdel(src)
 
 /datum/nanite_program/proc/send_code_any(setting)
-	if (!activated)
+	if(!activated)
 		return
 
 	var/datum/nanite_extra_setting/code_setting = extra_settings[setting]
-	SEND_SIGNAL(host_mob, COMSIG_NANITE_SIGNAL, code_setting.get_value(), "a [name] program")
+	var/code_value = code_setting?.get_value()
+	if(code_value)
+		SEND_SIGNAL(host_mob, COMSIG_NANITE_SIGNAL, code_value, "a [name] program")
 
 /datum/nanite_program/proc/send_code()
 	send_code_any(NES_SENT_CODE)
