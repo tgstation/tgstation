@@ -651,7 +651,8 @@
 		if(HAS_TRAIT(node, TRAIT_UNDERFLOOR))
 			continue
 
-		if(isplatingturf(get_turf(node)))
+		var/turf/node_turf = get_turf(node)
+		if(isplatingturf(node_turf) || iscatwalkturf(node_turf))
 			continue
 
 		var/connected_dir = get_dir(src, node)
