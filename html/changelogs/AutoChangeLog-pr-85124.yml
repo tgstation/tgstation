@@ -1,5 +1,0 @@
-author: "Jacquerel, Kok0nut, Imaginos"
-delete-after: True
-changes:
-  - image: "Wall-mounted and Table-mounted ID card authorisation machines now use different sprites"
-  - bugfix: "Wall-mounted ID card authorisation devices will now be destroyed if their wall is destroyed"
