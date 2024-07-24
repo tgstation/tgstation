@@ -25,7 +25,7 @@
 		if(istype(user) && user.client)
 			projectile.hit_prone_targets = user.combat_mode
 
-		projectile.fire(dir2angle(pod))
+		projectile.fire(dir2angle(pod.dir))
 		pod.newtonian_move(dir2angle(REVERSE_DIR(pod.dir)), fire_force)
 	else
 		var/obj/item/ammo_casing/casing = new casing_path

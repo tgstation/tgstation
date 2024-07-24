@@ -9,7 +9,7 @@
 
 /obj/item/pod_equipment/sensors/on_attach(mob/user)
 	. = ..()
-	gps = AddComponent(/datum/component/gps/item, "POD[rand(0,999)]", state = GLOB.not_incapacitated_state, overlay_state = FALSE)
+	gps = pod.AddComponent(/datum/component/gps/item, "POD[rand(0,999)]", state = GLOB.contained_state, overlay_state = FALSE)
 	gps.tracking = FALSE
 	START_PROCESSING(SSobj, src)
 	if(islist(traits_given))

@@ -145,7 +145,7 @@
 /obj/vehicle/proc/after_remove_occupant(mob/M)
 
 /obj/vehicle/relaymove(mob/living/user, direction)
-	if(is_driver(user) && may_move(user))
+	if(is_driver(user) && may_move(user) && user.moving_diagonally != FIRST_DIAG_STEP)
 		return relaydrive(user, direction)
 	return FALSE
 

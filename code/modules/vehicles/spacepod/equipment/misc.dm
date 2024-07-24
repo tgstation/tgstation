@@ -2,9 +2,9 @@
 /obj/item/pod_equipment/warp_drive
 	slot = POD_SLOT_MISC
 	name = "Bluespace Warp Drive"
-	desc = "A sensor suite for space pods, containing some tech doodads and a built-in GPS. Manufacted by Nanotrasen, and has weird labels like \"Not for infowar\" or manufacted on \"Tau Ceti IV\"."
+	desc = "Warp drive for space pods, used to warp to a Bluespace Navigation Gigabeacon, assuming it is functional and in space."
 	/// percentage of power needed to warp
-	var/power_percentage_used = 60
+	var/power_percentage_used = 50
 
 /obj/item/pod_equipment/warp_drive/examine(mob/user)
 	. = ..()
@@ -38,6 +38,13 @@
 		pod.balloon_alert(owner, "need atleast [drive.power_percentage_used]% power!")
 		return
 
+	if(!istype(get_area(vehicle_entered_target), /area/space)) // dont use onstation stupid
+		vehicle_entered_target.balloon_alert(owner, "only in space!")
+		return
+	if(!isnull(pod.drift_handler))
+		vehicle_entered_target.balloon_alert(owner, "must come to a halt!")
+		return
+
 	var/dest = tgui_input_list(owner, "Destination?", "Destination?", find_beacons())
 	if(!dest || QDELING(pod) || !(owner in pod.occupants))
 		return
@@ -45,13 +52,14 @@
 	pod.balloon_alert_to_viewers("warping!")
 	apply_wibbly_filters(pod)
 	RegisterSignal(pod, COMSIG_ATOM_AFTER_ATTACKEDBY, PROC_REF(disrupted))
-	ADD_TRAIT(pod, TRAIT_NO_TRANSFORM, REF(src))
-	if(!do_after(owner, 10 SECONDS, pod, extra_checks = CALLBACK(src, PROC_REF(is_disrupted))))
+	if(!do_after(owner, 5 SECONDS, pod, extra_checks = CALLBACK(src, PROC_REF(progress_checks))))
 		cancel_effects()
 		return
 	cancel_effects()
 	if(!pod.use_power(necessary_power))
 		return
+	playsound(pod.loc, SFX_PORTAL_ENTER, 50, TRUE)
+	playsound(dest, SFX_PORTAL_ENTER, 50, TRUE)
 	do_teleport(pod, dest, precision=1)
 
 /datum/action/vehicle/sealed/pod_warp/proc/find_beacons()
@@ -65,8 +73,8 @@
 	if(!length(.))
 		vehicle_entered_target.balloon_alert(owner, "no working beacons!")
 
-/datum/action/vehicle/sealed/pod_warp/proc/is_disrupted()
-	return !disrupted
+/datum/action/vehicle/sealed/pod_warp/proc/progress_checks()
+	return !disrupted && isnull(vehicle_entered_target.drift_handler)
 
 /datum/action/vehicle/sealed/pod_warp/proc/disrupted(atom/source, obj/item/item, mob/living/user, params)
 	SIGNAL_HANDLER
@@ -78,6 +86,5 @@
 	addtimer(VARSET_CALLBACK(src, disrupted, FALSE), 3 SECONDS)
 
 /datum/action/vehicle/sealed/pod_warp/proc/cancel_effects()
-	remove_wibbly_filters(src)
-	REMOVE_TRAIT(vehicle_entered_target, TRAIT_NO_TRANSFORM, REF(src))
+	remove_wibbly_filters(vehicle_entered_target)
 	UnregisterSignal(vehicle_entered_target, COMSIG_ATOM_AFTER_ATTACKEDBY)
