@@ -14,11 +14,6 @@
 
 #define FISH_TRAIT_MINOR_DIFFICULTY_BOOST 5
 
-// These define how the fish will behave in the minigame
-#define FISH_AI_DUMB "dumb"
-#define FISH_AI_ZIPPY "zippy"
-#define FISH_AI_SLOW "slow"
-
 ///Slot defines for the fishing rod and its equipment
 #define ROD_SLOT_BAIT "bait"
 #define ROD_SLOT_LINE "line"
@@ -161,3 +156,22 @@
 #define FISH_BEAUTY_GOOD 450
 #define FISH_BEAUTY_GREAT 600
 #define FISH_BEAUTY_EXCELLENT 700
+
+
+//Minigame defines
+/// The height of the minigame slider. Not in pixels, but minigame units.
+#define FISHING_MINIGAME_AREA 1000
+/// Any lower than this, and the target position of the fish is considered null
+#define FISH_TARGET_MIN_DISTANCE 6
+/// The friction applied to fish jumps, so that it decelerates over time
+#define FISH_FRICTION_MULT 0.9
+/// Used to decide whether the fish can jump in a certain direction
+#define FISH_SHORT_JUMP_MIN_DISTANCE 100
+/// The maximum distance for a short jump
+#define FISH_SHORT_JUMP_MAX_DISTANCE 200
+// Acceleration mod when bait is over fish
+#define FISH_ON_BAIT_ACCELERATION_MULT 0.6
+/// The minimum velocity required for the bait to bounce
+#define BAIT_MIN_VELOCITY_BOUNCE 150
+/// The extra deceleration of velocity that happens when the bait switches direction
+#define BAIT_DECELERATION_MULT 1.5

@@ -109,7 +109,7 @@ GLOBAL_LIST_INIT(fish_traits, init_subtypes_w_path_keys(/datum/fish_trait, list(
 	catalog_description = "This fish tends to stay near the waterbed.";
 
 /datum/fish_trait/heavy/minigame_mod(obj/item/fishing_rod/rod, mob/fisherman, datum/fishing_challenge/minigame)
-	minigame.fish_idle_velocity -= 10
+	minigame.mover.fish_idle_velocity -= 10
 
 /datum/fish_trait/carnivore
 	name = "Carnivore"

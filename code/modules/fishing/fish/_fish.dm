@@ -97,8 +97,8 @@
 	 */
 	var/list/fish_traits = list()
 
-	/// Fishing behaviour
-	var/fish_ai_type = FISH_AI_DUMB
+	/// path to datums that dictate how the fish moves during the fishing minigame
+	var/fish_movement_type = /datum/fish_movement
 
 	/// Base additive modifier to fishing difficulty
 	var/fishing_difficulty_modifier = 0

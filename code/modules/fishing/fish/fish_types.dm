@@ -151,7 +151,7 @@
 	average_weight = 500
 	stable_population = 3
 	disliked_bait = list(/obj/item/food/bait/worm, /obj/item/food/bait/doughball)
-	fish_ai_type = FISH_AI_ZIPPY
+	fish_movement_type = /datum/fish_movement/zippy
 	required_temperature_min = MIN_AQUARIUM_TEMP+23
 	required_temperature_max = MIN_AQUARIUM_TEMP+28
 
@@ -239,7 +239,7 @@
 	required_fluid_type = AQUARIUM_FLUID_SALTWATER
 	stable_population = 10
 	fillet_type = /obj/item/food/fishmeat/armorfish
-	fish_ai_type = FISH_AI_SLOW
+	fish_movement_type = /datum/fish_movement/slow
 	required_temperature_min = MIN_AQUARIUM_TEMP+10
 	required_temperature_max = MIN_AQUARIUM_TEMP+32
 
@@ -340,7 +340,7 @@
 	fish_traits = list(/datum/fish_trait/necrophage)
 	required_temperature_min = MIN_AQUARIUM_TEMP+15
 	required_temperature_max = MIN_AQUARIUM_TEMP+35
-	fish_ai_type = FISH_AI_ZIPPY
+	fish_movement_type = /datum/fish_movement/zippy
 	favorite_bait = list(
 		list(
 			"Type" = "Foodtype",
@@ -418,7 +418,7 @@
 	dedicated_in_aquarium_icon_state = "bonemass_small"
 	sprite_width = 10
 	sprite_height = 7
-	fish_ai_type = FISH_AI_ZIPPY
+	fish_movement_type = /datum/fish_movement/zippy
 	random_case_rarity = FISH_RARITY_GOOD_LUCK_FINDING_THIS
 	required_fluid_type = AQUARIUM_FLUID_ANY_WATER
 	min_pressure = HAZARD_LOW_PRESSURE
@@ -593,7 +593,7 @@
 	average_weight = 500
 	resistance_flags = FIRE_PROOF | LAVA_PROOF
 	required_fluid_type = AQUARIUM_FLUID_ANY_WATER //if we can survive hot lava and freezing plasrivers, we can survive anything
-	fish_ai_type = FISH_AI_ZIPPY
+	fish_movement_type = /datum/fish_movement/zippy
 	min_pressure = HAZARD_LOW_PRESSURE
 	required_temperature_min = MIN_AQUARIUM_TEMP+30
 	required_temperature_max = MIN_AQUARIUM_TEMP+35
