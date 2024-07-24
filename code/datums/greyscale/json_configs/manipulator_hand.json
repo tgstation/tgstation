@@ -2,14 +2,14 @@
 	"hand": [
 		{
 			"type": "icon_state",
-			"icon_state": "hand_colour",
-			"blend_mode": "overlay",
-			"color_ids": [ 1 ]
+			"icon_state": "hand",
+			"blend_mode": "overlay"
 		},
 		{
 			"type": "icon_state",
-			"icon_state": "hand",
-			"blend_mode": "overlay"
+			"icon_state": "hand_colour",
+			"blend_mode": "overlay",
+			"color_ids": [ 1 ]
 		}
 	]
 }
