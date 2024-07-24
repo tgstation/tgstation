@@ -4470,7 +4470,7 @@
 /obj/machinery/computer/security/mining{
 	dir = 8
 	},
-/obj/machinery/keycard_auth/directional/east,
+/obj/machinery/keycard_auth/wall_mounted/directional/east,
 /obj/effect/turf_decal/tile/dark_blue/half/contrasted{
 	dir = 4
 	},
@@ -4631,7 +4631,7 @@
 /area/station/commons/toilet/restrooms)
 "bFe" = (
 /obj/machinery/suit_storage_unit/hos,
-/obj/machinery/keycard_auth/directional/east{
+/obj/machinery/keycard_auth/wall_mounted/directional/east{
 	pixel_y = -12
 	},
 /turf/open/floor/iron/dark,
@@ -12562,7 +12562,7 @@
 /obj/effect/turf_decal/trimline/dark_blue/filled/line{
 	dir = 6
 	},
-/obj/machinery/keycard_auth/directional/east,
+/obj/machinery/keycard_auth/wall_mounted/directional/east,
 /obj/machinery/button/door/directional/east{
 	pixel_y = 12;
 	name = "privacy shutter control";
@@ -37730,7 +37730,7 @@
 	id = "qmprivacy";
 	name = "Privacy Shutters Control"
 	},
-/obj/machinery/keycard_auth/directional/west{
+/obj/machinery/keycard_auth/wall_mounted/directional/west{
 	pixel_y = 12
 	},
 /turf/open/floor/wood,
@@ -51356,7 +51356,7 @@
 /turf/closed/wall,
 /area/station/cargo/storage)
 "sdn" = (
-/obj/machinery/keycard_auth/directional/south,
+/obj/machinery/keycard_auth/wall_mounted/directional/south,
 /turf/open/floor/glass/reinforced/plasma,
 /area/station/command/heads_quarters/rd)
 "sdA" = (
@@ -56698,7 +56698,7 @@
 /obj/structure/table/wood,
 /obj/item/flashlight/lamp,
 /obj/machinery/camera/autoname/directional/north,
-/obj/machinery/keycard_auth/directional/north,
+/obj/machinery/keycard_auth/wall_mounted/directional/north,
 /turf/open/floor/carpet/green,
 /area/station/command/heads_quarters/hop)
 "tUG" = (
@@ -57974,7 +57974,7 @@
 	dir = 10
 	},
 /obj/structure/cable,
-/obj/machinery/keycard_auth/directional/west{
+/obj/machinery/keycard_auth/wall_mounted/directional/west{
 	pixel_y = -10
 	},
 /obj/item/pen/screwdriver,
@@ -67454,7 +67454,7 @@
 	name = "Captain's Fax Machine"
 	},
 /obj/structure/table/reinforced,
-/obj/machinery/keycard_auth/directional/south{
+/obj/machinery/keycard_auth/wall_mounted/directional/south{
 	pixel_y = -24;
 	pixel_x = 8
 	},

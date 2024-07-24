@@ -8609,7 +8609,7 @@
 /area/station/engineering/gravity_generator)
 "bWb" = (
 /obj/machinery/suit_storage_unit/hos,
-/obj/machinery/keycard_auth/directional/east,
+/obj/machinery/keycard_auth/wall_mounted/directional/east,
 /turf/open/floor/carpet,
 /area/station/command/heads_quarters/hos)
 "bWi" = (
@@ -8748,7 +8748,7 @@
 /obj/effect/turf_decal/trimline/brown/filled/line{
 	dir = 4
 	},
-/obj/machinery/keycard_auth/directional/east,
+/obj/machinery/keycard_auth/wall_mounted/directional/east,
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/button/door/directional/east{
@@ -12937,7 +12937,7 @@
 /obj/machinery/modular_computer/preset/id{
 	dir = 8
 	},
-/obj/machinery/keycard_auth/directional/north,
+/obj/machinery/keycard_auth/wall_mounted/directional/north,
 /obj/machinery/button/door/directional/north{
 	name = "CMO Privacy Shutters";
 	pixel_y = 38;
@@ -43044,7 +43044,7 @@
 	id = "hopqueuestart";
 	req_access = list("kitchen")
 	},
-/obj/machinery/keycard_auth/directional/south{
+/obj/machinery/keycard_auth/wall_mounted/directional/south{
 	pixel_x = 26
 	},
 /obj/machinery/button/door/directional/south{
@@ -50250,7 +50250,7 @@
 /area/station/science/server)
 "qKW" = (
 /obj/structure/table/reinforced,
-/obj/machinery/keycard_auth/directional/south,
+/obj/machinery/keycard_auth/wall_mounted/directional/south,
 /obj/item/rcl/pre_loaded,
 /obj/machinery/computer/security/telescreen/ce/directional/west,
 /obj/effect/turf_decal/trimline/yellow/filled/line{
@@ -56560,7 +56560,7 @@
 /obj/machinery/computer/communications{
 	dir = 8
 	},
-/obj/machinery/keycard_auth/directional/north{
+/obj/machinery/keycard_auth/wall_mounted/directional/north{
 	pixel_x = 26
 	},
 /obj/machinery/status_display/ai/directional/north,

@@ -27,40 +27,20 @@
 	src.added_damage = added_damage
 	src.requires_combat_mode = requires_combat_mode
 	src.mob_biotypes = mob_biotypes
-	target.AddComponent(/datum/component/on_hit_effect, CALLBACK(src, PROC_REF(do_bane)), CALLBACK(src, PROC_REF(check_bane)))
+	target.AddElementTrait(TRAIT_ON_HIT_EFFECT, REF(src), /datum/element/on_hit_effect)
+	RegisterSignal(target, COMSIG_ON_HIT_EFFECT, PROC_REF(do_bane))
 
-/datum/element/bane/Detach(datum/target)
-	qdel(target.GetComponent(/datum/component/on_hit_effect))
+/datum/element/bane/Detach(datum/source)
+	UnregisterSignal(source, COMSIG_ON_HIT_EFFECT)
+	REMOVE_TRAIT(source, TRAIT_ON_HIT_EFFECT, REF(src))
 	return ..()
 
-/datum/element/bane/proc/check_bane(bane_applier, target, bane_weapon)
-	if(!check_biotype_path(bane_applier, target))
+/datum/element/bane/proc/do_bane(datum/element_owner, mob/living/bane_applier, mob/living/baned_target, hit_zone, throw_hit)
+	if(!check_biotype_path(bane_applier, baned_target))
 		return
-	var/atom/movable/atom_owner = bane_weapon
-	if(SEND_SIGNAL(atom_owner, COMSIG_OBJECT_PRE_BANING, target) & COMPONENT_CANCEL_BANING)
+	if(SEND_SIGNAL(element_owner, COMSIG_OBJECT_PRE_BANING, baned_target) & COMPONENT_CANCEL_BANING)
 		return
-	return TRUE
 
-/**
- * Checks typepaths and the mob's biotype, returning TRUE if correct and FALSE if wrong.
- * Additionally checks if combat mode is required, and if so whether it's enabled or not.
- */
-/datum/element/bane/proc/check_biotype_path(mob/living/bane_applier, atom/target)
-	if(!isliving(target))
-		return FALSE
-	var/mob/living/living_target = target
-	if(bane_applier)
-		if(requires_combat_mode && !bane_applier.combat_mode)
-			return FALSE
-	var/is_correct_biotype = living_target.mob_biotypes & mob_biotypes
-	if(mob_biotypes && !(is_correct_biotype))
-		return FALSE
-	if(ispath(target_type, /mob/living))
-		return istype(living_target, target_type)
-	else //species type
-		return is_species(living_target, target_type)
-
-/datum/element/bane/proc/do_bane(datum/element_owner, mob/living/bane_applier, mob/living/baned_target, hit_zone)
 	var/force_boosted
 	var/applied_dam_type
 
@@ -91,3 +71,22 @@
 	baned_target.apply_damage(extra_damage, applied_dam_type, hit_zone)
 	SEND_SIGNAL(baned_target, COMSIG_LIVING_BANED, bane_applier, baned_target) // for extra effects when baned.
 	SEND_SIGNAL(element_owner, COMSIG_OBJECT_ON_BANING, baned_target)
+
+/**
+ * Checks typepaths and the mob's biotype, returning TRUE if correct and FALSE if wrong.
+ * Additionally checks if combat mode is required, and if so whether it's enabled or not.
+ */
+/datum/element/bane/proc/check_biotype_path(mob/living/bane_applier, atom/target)
+	if(!isliving(target))
+		return FALSE
+	var/mob/living/living_target = target
+	if(bane_applier)
+		if(requires_combat_mode && !bane_applier.combat_mode)
+			return FALSE
+	var/is_correct_biotype = living_target.mob_biotypes & mob_biotypes
+	if(mob_biotypes && !(is_correct_biotype))
+		return FALSE
+	if(ispath(target_type, /mob/living))
+		return istype(living_target, target_type)
+	else //species type
+		return is_species(living_target, target_type)

@@ -838,7 +838,7 @@
 	id = "captain_privacy";
 	name = "Privacy Shutters"
 	},
-/obj/machinery/keycard_auth/directional/east,
+/obj/machinery/keycard_auth/wall_mounted/directional/east,
 /obj/structure/table/wood,
 /obj/item/book/manual/wiki/security_space_law,
 /obj/item/hand_tele,
@@ -29629,7 +29629,7 @@
 /obj/structure/railing{
 	dir = 4
 	},
-/obj/machinery/keycard_auth/directional/south,
+/obj/machinery/keycard_auth/wall_mounted/directional/south,
 /obj/item/kirbyplants/random,
 /turf/open/floor/wood/large,
 /area/station/command/heads_quarters/hop)
@@ -30243,7 +30243,7 @@
 	name = "Privacy Shutters Control";
 	pixel_y = 6
 	},
-/obj/machinery/keycard_auth/directional/west{
+/obj/machinery/keycard_auth/wall_mounted/directional/west{
 	pixel_y = -8
 	},
 /turf/open/floor/wood,
@@ -42277,7 +42277,7 @@
 /turf/open/floor/carpet,
 /area/station/command/heads_quarters/captain)
 "kWD" = (
-/obj/machinery/keycard_auth/directional/north{
+/obj/machinery/keycard_auth/wall_mounted/directional/north{
 	pixel_x = -22
 	},
 /obj/effect/turf_decal/tile/blue/fourcorners,
@@ -45077,7 +45077,7 @@
 /obj/effect/turf_decal/tile/neutral/opposingcorners{
 	dir = 8
 	},
-/obj/machinery/keycard_auth/directional/east{
+/obj/machinery/keycard_auth/wall_mounted/directional/east{
 	pixel_x = 25;
 	pixel_y = 16
 	},
@@ -63318,7 +63318,7 @@
 /obj/structure/chair/wood{
 	dir = 4
 	},
-/obj/machinery/keycard_auth/directional/north,
+/obj/machinery/keycard_auth/wall_mounted/directional/north,
 /turf/open/floor/carpet,
 /area/station/command/heads_quarters/captain)
 "qoJ" = (
@@ -64977,7 +64977,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/structure/cable,
-/obj/machinery/keycard_auth/directional/south{
+/obj/machinery/keycard_auth/wall_mounted/directional/south{
 	pixel_x = 6
 	},
 /obj/effect/landmark/start/chief_engineer,
@@ -75266,7 +75266,7 @@
 /obj/machinery/computer/security/qm{
 	dir = 8
 	},
-/obj/machinery/keycard_auth/directional/north,
+/obj/machinery/keycard_auth/wall_mounted/directional/north,
 /turf/open/floor/wood/large,
 /area/station/command/heads_quarters/qm)
 "tun" = (
@@ -91848,7 +91848,7 @@
 /turf/open/floor/iron/smooth,
 /area/station/cargo/sorting)
 "xEv" = (
-/obj/machinery/keycard_auth/directional/north{
+/obj/machinery/keycard_auth/wall_mounted/directional/north{
 	pixel_x = 9
 	},
 /obj/machinery/button/door/directional/north{
