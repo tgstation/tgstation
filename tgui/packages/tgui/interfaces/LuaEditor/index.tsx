@@ -200,8 +200,8 @@ export const LuaEditor = () => {
               })}
             />
             <MenuBar.Dropdown.MenuItem
-              displayText="Run"
-              onClick={closeMenuAndThen(() => act('runFile'))}
+              displayText="Upload and Run"
+              onClick={closeMenuAndThen(() => act('runCodeFile'))}
             />
           </MenuBar.Dropdown>
         </MenuBar>
