@@ -72,4 +72,5 @@
 
 /obj/item/ammo_casing/c160smart/ready_proj(atom/target, mob/living/user, quiet, zone_override, atom/fired_from)
 	. = ..()
-	loaded_projectile.set_homing_target(target)
+	if(!isturf(target))
+		loaded_projectile.set_homing_target(target)
