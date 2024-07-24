@@ -235,7 +235,7 @@
 
 	addtimer(TRAIT_CALLBACK_REMOVE(owner, TRAIT_NOSOFTCRIT, ORGAN_TRAIT), stabilization_duration)
 
-	addtimer(VARSET_CALLBACK(src, stabilization_available, TRUE), 5 MINUTES)
+	addtimer(VARSET_CALLBACK(src, stabilization_available, TRUE), 5 MINUTES, TIMER_DELETE_ME)
 
 // Largely a sanity check
 /obj/item/organ/internal/heart/cybernetic/on_mob_remove(mob/living/carbon/heart_owner, special = FALSE)
