@@ -15,4 +15,4 @@
  *
  * make sure you add an update to the schema_version stable in the db changelog
  */
-#define DB_MINOR_VERSION_220 1
+#define DB_MINOR_VERSION_220 2

@@ -1,0 +1,7 @@
+#include "_loadout.dm"
+
+#include "code/client.dm"
+#include "code/loadout_categories.dm"
+#include "code/loadout_items.dm"
+#include "code/loadout_preference.dm"
+#include "code/categories/accessories.dm"

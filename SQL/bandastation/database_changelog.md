@@ -2,17 +2,35 @@ Any time you make a change to the schema files, remember to increment the databa
 
 Make sure to also update `DB_MAJOR_VERSION_220` and `DB_MINOR_VERSION_220`, which can be found in `code/modular_bandastation/_defines220/code/defines/subsystems.dm`.
 
-The latest database version is 1.1; The query to update the schema revision table is:
+The latest database version is 1.2; The query to update the schema revision table is:
 
 ```sql
-INSERT INTO `schema_revision_220` (`major`, `minor`) VALUES (1, 1);
+INSERT INTO `schema_revision_220` (`major`, `minor`) VALUES (1, 2);
 ```
 or
 
 ```sql
-INSERT INTO `SS13_schema_revision_220` (`major`, `minor`) VALUES (1, 1);
+INSERT INTO `SS13_schema_revision_220` (`major`, `minor`) VALUES (1, 2);
 ```
 
+-----------------------------------------------------
+Version 1.2, 22 July 2024, by larentoun
+Created the table: budget
+
+```sql
+CREATE TABLE `budget` (
+    `id` INT(11) NOT NULL AUTO_INCREMENT,
+    `date` DATETIME NOT NULL DEFAULT current_timestamp(),
+    `ckey` VARCHAR(32) NULL DEFAULT NULL COLLATE 'utf8mb4_unicode_ci',
+    `amount` INT(10) UNSIGNED NOT NULL,
+    `source` VARCHAR(32) NOT NULL COLLATE 'utf8mb4_general_ci',
+    `date_start` DATETIME NOT NULL DEFAULT current_timestamp(),
+    `date_end` DATETIME NULL DEFAULT (current_timestamp() + interval 1 month),
+    `is_valid` TINYINT(1) NOT NULL DEFAULT '1',
+    `discord_id` bigint(20) DEFAULT NULL,
+    PRIMARY KEY (`id`) USING BTREE
+) COLLATE='utf8mb4_general_ci' ENGINE=InnoDB;
+```
 -----------------------------------------------------
 Version 1.1, 17 April 2024, by larentoun
 Created the tables: schema_revision220, ckey_whitelist, admin_wl
