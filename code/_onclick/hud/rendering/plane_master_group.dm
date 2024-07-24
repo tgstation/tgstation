@@ -146,6 +146,7 @@
 		var/scale = scale_by ** (offset)
 		var/matrix/multiz_shrink = matrix()
 		multiz_shrink.Scale(scale)
+		multiz_shrink.Translate(0, -16 * offset)
 		offsets += multiz_shrink
 
 	// So we can talk in 1 -> max_offset * 2 + 1, rather then -max_offset -> max_offset

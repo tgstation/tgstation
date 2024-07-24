@@ -477,4 +477,9 @@
 	base_icon_state = "window_frame_paperframe"
 	frame_icon = 'icons/obj/smooth_structures/window_frames/frame_faces/window_frame_paperframe.dmi'
 	sheet_type = /obj/item/stack/sheet/paperframes
+	window_type = /obj/item/stack/sheet/paperframes
 	custom_materials = list(/datum/material/paper = WINDOW_FRAME_BASE_MATERIAL_AMOUNT)
+
+/obj/structure/window_frame/paperframe/grille_and_window
+	has_grille = TRUE
+	start_with_window = TRUE

@@ -3857,7 +3857,7 @@
 /turf/open/floor/iron,
 /area/misc/testroom)
 "Pc" = (
-/obj/structure/window/paperframe,
+/obj/effect/spawner/structure/window/paper,
 /turf/open/floor/iron,
 /area/misc/testroom)
 "Pf" = (

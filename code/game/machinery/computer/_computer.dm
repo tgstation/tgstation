@@ -1,4 +1,5 @@
 /obj/machinery/computer
+	SET_BASE_VISUAL_PIXEL(0, WALLENING_OFFSET)
 	name = "computer"
 	icon = 'icons/obj/machines/computer.dmi'
 	icon_state = "computer"

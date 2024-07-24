@@ -37,6 +37,10 @@
 	var/buildstackamount = 1
 	var/framestackamount = 2
 	var/deconstruction_ready = TRUE
+	var/bottom_placable_y = 9
+	var/top_placable_y = 37
+	var/bottom_placable_x = 4
+	var/top_placable_x = 28
 
 /obj/structure/table/Initialize(mapload, _buildstack)
 	. = ..()
@@ -276,8 +280,9 @@
 			if(!LAZYACCESS(modifiers, ICON_X) || !LAZYACCESS(modifiers, ICON_Y))
 				return
 			//Clamp it so that the icon never moves more than 16 pixels in either direction (thus leaving the table turf)
-			I.pixel_x = clamp(text2num(LAZYACCESS(modifiers, ICON_X)) - 16, -(world.icon_size/2), world.icon_size/2)
-			I.pixel_y = clamp(text2num(LAZYACCESS(modifiers, ICON_Y)) - 16, -(world.icon_size/2), world.icon_size/2)
+			// +- 8 to bound it to a typical item hitbox (16x16) instead of the assumed max of 32x32
+			I.pixel_x = clamp(text2num(LAZYACCESS(modifiers, ICON_X)) - 16, bottom_placable_x - 8, top_placable_x + 8)
+			I.pixel_y = clamp(text2num(LAZYACCESS(modifiers, ICON_Y)) - 16, bottom_placable_y - 8, top_placable_y + 8)
 			AfterPutItemOnTable(I, user)
 			return TRUE
 	else
@@ -322,6 +327,22 @@
 		return TRUE
 	return FALSE
 
+/obj/structure/table/set_smoothed_icon_state(new_junction)
+	. = ..()
+	bottom_placable_x = initial(bottom_placable_x)
+	bottom_placable_y = initial(bottom_placable_y)
+	top_placable_x = initial(top_placable_x)
+	top_placable_y = initial(top_placable_y)
+	// Allow free movement if we smooth in a direction, while handling bounding
+	if(new_junction & NORTH)
+		top_placable_y = 32 + 8
+	if(new_junction & SOUTH)
+		bottom_placable_y = 0 - 8
+	if(new_junction & EAST)
+		top_placable_x = 32 + 8
+	if(new_junction & WEST)
+		bottom_placable_x = 0 - 8
+
 /obj/structure/table/proc/table_living(datum/source, mob/living/shover, mob/living/target, shove_flags, obj/item/weapon)
 	SIGNAL_HANDLER
 	if((shove_flags & SHOVE_KNOCKDOWN_BLOCKED) || !(shove_flags & SHOVE_BLOCKED))
@@ -351,6 +372,7 @@
 
 ///Table on wheels
 /obj/structure/table/rolling
+	SET_BASE_VISUAL_PIXEL(0, WALLENING_OFFSET)
 	name = "Rolling table"
 	desc = "An NT brand \"Rolly poly\" rolling table. It can and will move."
 	anchored = FALSE
@@ -359,6 +381,11 @@
 	canSmoothWith = null
 	icon = 'icons/obj/smooth_structures/rollingtable.dmi'
 	icon_state = "rollingtable"
+	// this one's 32x32 so it uses different clickable bounds
+	bottom_placable_y = 12
+	top_placable_y = 29
+	bottom_placable_x = 4
+	top_placable_x = 28
 	/// Lazylist of the items that we have on our surface.
 	var/list/attached_items = null
 

@@ -338,8 +338,8 @@ INITIALIZE_IMMEDIATE(/turf/closed/indestructible/splashscreen)
 
 /turf/closed/indestructible/resin
 	name = "resin wall"
-	icon = 'icons/obj/smooth_structures/alien/resin_wall.dmi'
-	smoothing_groups = SMOOTH_GROUP_ALIEN_WALLS + SMOOTH_GROUP_ALIEN_RESIN
+	icon = 'icons/obj/smooth_structures/alien/resin_wall_1.dmi'
+	smoothing_groups = SMOOTH_GROUP_ALIEN_WALLS
 	canSmoothWith = SMOOTH_GROUP_ALIEN_WALLS
 
 /turf/closed/indestructible/resin/membrane
@@ -348,7 +348,8 @@ INITIALIZE_IMMEDIATE(/turf/closed/indestructible/splashscreen)
 	icon_state = "resin_membrane-0"
 	base_icon_state = "resin_membrane"
 	opacity = FALSE
-	smoothing_groups = SMOOTH_GROUP_ALIEN_WALLS + SMOOTH_GROUP_ALIEN_RESIN
+	use_splitvis = FALSE
+	smoothing_groups = SMOOTH_GROUP_ALIEN_WALLS
 	canSmoothWith = SMOOTH_GROUP_ALIEN_WALLS
 
 /turf/closed/indestructible/resin/membrane/Initialize(mapload)

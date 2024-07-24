@@ -188,31 +188,31 @@ DEFINE_BITFIELD(smoothing_junction, list(
 #define SMOOTH_GROUP_GLASS_TABLES S_OBJ(56) ///obj/structure/table/glass
 
 #define SMOOTH_GROUP_ALIEN_NEST S_OBJ(60) ///obj/structure/bed/nest
-#define SMOOTH_GROUP_ALIEN_RESIN S_OBJ(61) ///obj/structure/alien/resin
-#define SMOOTH_GROUP_ALIEN_WALLS S_OBJ(62) ///obj/structure/alien/resin/wall, /obj/structure/alien/resin/membrane
-#define SMOOTH_GROUP_ALIEN_WEEDS S_OBJ(63) ///obj/structure/alien/weeds
+#define SMOOTH_GROUP_ALIEN_WALLS S_OBJ(61) ///obj/structure/alien/resin/wall, /obj/structure/alien/resin/membrane
+#define SMOOTH_GROUP_ALIEN_WEEDS S_OBJ(62) ///obj/structure/alien/weeds
 
-#define SMOOTH_GROUP_SECURITY_BARRICADE S_OBJ(64) ///obj/structure/barricade/security
-#define SMOOTH_GROUP_SANDBAGS S_OBJ(65) ///obj/structure/barricade/sandbags
+#define SMOOTH_GROUP_SECURITY_BARRICADE S_OBJ(63) ///obj/structure/barricade/security
+#define SMOOTH_GROUP_SANDBAGS S_OBJ(64) ///obj/structure/barricade/sandbags
 
-#define SMOOTH_GROUP_HEDGE_FLUFF S_OBJ(66) ///obj/structure/hedge
+#define SMOOTH_GROUP_HEDGE_FLUFF S_OBJ(65) ///obj/structure/hedge
 
-#define SMOOTH_GROUP_SHUTTLE_PARTS S_OBJ(67) ///obj/structure/window/reinforced/shuttle, /obj/structure/window/reinforced/plasma/plastitanium, /turf/closed/indestructible/opsglass, /obj/machinery/power/shuttle_engine
+#define SMOOTH_GROUP_SHUTTLE_PARTS S_OBJ(66) ///obj/structure/window/reinforced/shuttle, /obj/structure/window/reinforced/plasma/plastitanium, /turf/closed/indestructible/opsglass, /obj/machinery/power/shuttle_engine
 
-#define SMOOTH_GROUP_CLEANABLE_DIRT S_OBJ(68) ///obj/effect/decal/cleanable/dirt
+#define SMOOTH_GROUP_CLEANABLE_DIRT S_OBJ(67) ///obj/effect/decal/cleanable/dirt
 
-#define SMOOTH_GROUP_GRILLE S_OBJ(69) ///obj/structure/grille
-#define SMOOTH_GROUP_GAS_TANK S_OBJ(70)
-#define SMOOTH_GROUP_THINDOWS S_OBJ(71)
+#define SMOOTH_GROUP_GRILLE S_OBJ(68) ///obj/structure/grille
+#define SMOOTH_GROUP_GAS_TANK S_OBJ(69)
+#define SMOOTH_GROUP_THINDOWS S_OBJ(70)
 
-#define SMOOTH_GROUP_SPIDER_WEB S_OBJ(72) // /obj/structure/spider/stickyweb
-#define SMOOTH_GROUP_SPIDER_WEB_WALL S_OBJ(73) // /obj/structure/spider/stickyweb/sealed
-#define SMOOTH_GROUP_SPIDER_WEB_ROOF S_OBJ(74) // /obj/structure/spider/passage
-#define SMOOTH_GROUP_SPIDER_WEB_WALL_TOUGH S_OBJ(75) // /obj/structure/spider/stickyweb/sealed/thick
-#define SMOOTH_GROUP_SPIDER_WEB_WALL_MIRROR S_OBJ(76) // /obj/structure/spider/stickyweb/sealed/reflector
-#define SMOOTH_GROUP_GLITTER_PINK S_OBJ(77) // /obj/effect/decal/cleanable/glitter/pink
-#define SMOOTH_GROUP_GLITTER_WHITE S_OBJ(78) // /obj/effect/decal/cleanable/glitter/white
-#define SMOOTH_GROUP_GLITTER_BLUE S_OBJ(79) // /obj/effect/decal/cleanable/glitter/blue
+#define SMOOTH_GROUP_SPIDER_WEB S_OBJ(71) // /obj/structure/spider/stickyweb
+#define SMOOTH_GROUP_SPIDER_WEB_WALL S_OBJ(72) // /obj/structure/spider/stickyweb/sealed
+#define SMOOTH_GROUP_SPIDER_WEB_ROOF S_OBJ(73) // /obj/structure/spider/passage
+#define SMOOTH_GROUP_SPIDER_WEB_WALL_TOUGH S_OBJ(74) // /obj/structure/spider/stickyweb/sealed/thick
+#define SMOOTH_GROUP_SPIDER_WEB_WALL_MIRROR S_OBJ(75) // /obj/structure/spider/stickyweb/sealed/reflector
+#define SMOOTH_GROUP_GLITTER_PINK S_OBJ(76) // /obj/effect/decal/cleanable/glitter/pink
+#define SMOOTH_GROUP_GLITTER_WHITE S_OBJ(77) // /obj/effect/decal/cleanable/glitter/white
+#define SMOOTH_GROUP_GLITTER_BLUE S_OBJ(78) // /obj/effect/decal/cleanable/glitter/blue
+#define SMOOTH_GROUP_SHIELD_GEN_WALL S_OBJ(79) // /obj/machinery/shieldwall
 
 /// Performs the work to set smoothing_groups and canSmoothWith.
 /// An inlined function used in both turf/Initialize and atom/Initialize.

@@ -49,10 +49,20 @@ GLOBAL_LIST_EMPTY(window_appearances)
 		stack_trace("We tried to splitvis something without bitmask smoothing. What?")
 		return COMPONENT_INCOMPATIBLE
 
-	icon_path = parent_atom.icon
-	parent_atom.icon = ""
-	add_smoothing()
+	reset_icon()
 	RegisterSignal(parent, COMSIG_ATOM_SET_SMOOTHED_ICON_STATE, PROC_REF(on_junction_change))
+	RegisterSignal(parent, COMSIG_ATOM_UPDATE_ICON, PROC_REF(update_icon))
+
+/datum/component/window_smoothing/proc/reset_icon()
+	var/atom/parent_atom = parent
+	if(!parent_atom.icon)
+		return
+	if(icon_path != parent_atom.icon)
+		if(icon_path)
+			remove_smoothing()
+		icon_path = parent_atom.icon
+		add_smoothing(parent_atom.smoothing_junction)
+	parent_atom.icon = ""
 
 /datum/component/window_smoothing/proc/add_smoothing(new_junction)
 	var/atom/parent = src.parent
@@ -80,6 +90,8 @@ GLOBAL_LIST_EMPTY(window_appearances)
 	// Now we'll check above
 	// If there's nothin, we'll use a frill. Otherwise we won't
 	paired_turf = get_step(our_turf, NORTH)
+	#warn ok this shit ain't working. Instead of trying to track walls like this, we should attach an effect object to the turf of our window that smooths for walls, and pass that into window logic
+
 	// We only display an above state if there's a wall, OR if we're smoothing with nothing up there
 	if(isclosedturf(paired_turf) && (!ignored_turf || !istype(paired_turf, ignored_turf)))
 		our_appearances += get_window_appearance(offset, icon_path, junction, "upper", TRUE, pixel_y = 32)
@@ -95,7 +107,7 @@ GLOBAL_LIST_EMPTY(window_appearances)
 
 	parent.overlays += our_appearances
 
-/datum/component/window_smoothing/proc/remove_smoothing(new_junction)
+/datum/component/window_smoothing/proc/remove_smoothing()
 	var/atom/atom_parent = parent
 	atom_parent.overlays -= our_appearances
 	our_appearances.Cut()
@@ -111,6 +123,10 @@ GLOBAL_LIST_EMPTY(window_appearances)
 	SIGNAL_HANDLER
 	remove_smoothing()
 	add_smoothing(new_junction)
+
+/datum/component/window_smoothing/proc/update_icon(datum/source)
+	SIGNAL_HANDLER
+	reset_icon()
 
 /datum/component/window_smoothing/proc/tied_turf_deleted(turf/source)
 	SIGNAL_HANDLER

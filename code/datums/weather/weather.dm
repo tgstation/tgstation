@@ -59,9 +59,9 @@
 	/// Since it's above everything else, this is the layer used by default. TURF_LAYER is below mobs and walls if you need to use that.
 	var/overlay_layer = AREA_LAYER
 	/// Plane for the overlay
-	var/overlay_plane = AREA_PLANE
+	var/overlay_plane = WEATHER_PLANE
 	/// Should the weather draw with frills?
-	/// If so it needs to operate on the AREA_PLANE
+	/// If so it needs to operate on the WEATHER_PLANE
 	var/has_frills = TRUE
 	/// If the weather has no purpose other than looks
 	var/aesthetic = FALSE
@@ -91,7 +91,7 @@
 /datum/weather/New(z_levels)
 	..()
 	impacted_z_levels = z_levels
-	if(has_frills && overlay_plane != AREA_PLANE)
+	if(has_frills && overlay_plane != WEATHER_PLANE)
 		stack_trace("[type] created with frills but not on the area plane, this will break to hell")
 
 /**
@@ -265,12 +265,13 @@
 		// I prefer it to creating 2 extra plane masters however, so it's a cost I'm willing to pay
 		// LU
 		if(use_glow)
-			var/mutable_appearance/glow_overlay = mutable_appearance('icons/effects/glow_weather.dmi', weather_state, overlay_layer, null, ABOVE_LIGHTING_PLANE, 100, offset_const = offset)
+			var/mutable_appearance/glow_overlay = mutable_appearance('icons/effects/glow_weather.dmi', weather_state, overlay_layer, null, WEATHER_GLOW_PLANE, 100, offset_const = offset)
 			glow_overlay.color = weather_color
 			gen_overlay_cache += glow_overlay
 			if(has_frills)
-				var/mutable_appearance/glow_frill_overlay = mutable_appearance('icons/effects/glow_weather.dmi', "[weather_state]_top", overlay_layer, null, WEATHER_FRILL_FULLBRIGHT_PLANE, 100, offset_const = offset)
+				var/mutable_appearance/glow_frill_overlay = mutable_appearance('icons/effects/glow_weather.dmi', "[weather_state]_top", overlay_layer, null, WEATHER_FRILL_GLOW_PLANE, 100, offset_const = offset)
 				glow_frill_overlay.color = weather_color
+				glow_frill_overlay.pixel_z = 32
 				gen_overlay_cache += glow_frill_overlay
 
 		if(has_frills)

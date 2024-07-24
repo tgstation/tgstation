@@ -146,7 +146,7 @@ again.
 /obj/effect/spawner/structure/window/reinforced/damaged
 	name = "damaged reinforced window spawner"
 	spawn_list = list(/obj/structure/window_frame/reinforced/damaged/grille_and_window)
-	
+
 //tinted
 
 /obj/effect/spawner/structure/window/reinforced/tinted
@@ -180,6 +180,12 @@ again.
 	icon_state = "plastitaniumwindow_spawner"
 	spawn_list = list(/obj/structure/window_frame/plastitanium/grille_and_window)
 
+//paper window
+
+/obj/effect/spawner/structure/window/paper
+	name = "paper window spawner"
+	icon_state = "paperwindow_spawner"
+	spawn_list = list(/obj/structure/window_frame/paperframe/grille_and_window)
 
 //ice window
 
