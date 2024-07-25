@@ -6,7 +6,6 @@ on:
       - closed
     branches:
       - master
-      - project/actually-master
 permissions:
   contents: write
 jobs:
