@@ -44,9 +44,12 @@
 		/datum/pet_command/point_targeting/fetch,
 		/datum/pet_command/play_dead,
 	)
+	///icon state of the collar we can wear
+	var/collar_icon
 
 /mob/living/basic/pet/dog/Initialize(mapload)
 	. = ..()
+	AddElement(/datum/element/wear_collar, collar_icon_state = collar_icon)
 	ADD_TRAIT(src, TRAIT_WOUND_LICKER, INNATE_TRAIT)
 	AddElement(/datum/element/pet_bonus, "woofs happily!")
 	AddElement(/datum/element/footstep, FOOTSTEP_MOB_CLAW)
