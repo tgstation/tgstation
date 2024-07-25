@@ -8,8 +8,8 @@ import {
   Divider,
   Input,
   LabeledList,
-  Slider,
   Section,
+  Slider,
   Stack,
 } from 'tgui/components';
 
