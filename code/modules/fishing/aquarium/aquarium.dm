@@ -45,7 +45,7 @@
 
 	var/list/fluid_types = list(AQUARIUM_FLUID_SALTWATER, AQUARIUM_FLUID_FRESHWATER, AQUARIUM_FLUID_SULPHWATEVER, AQUARIUM_FLUID_AIR)
 
-	var/panel_open = TRUE
+	var/panel_open = FALSE
 
 	///Current layers in use by aquarium contents
 	var/list/used_layers = list()

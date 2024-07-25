@@ -97,6 +97,7 @@
 /// Store the target for the AI blackboard
 /datum/pet_command/proc/set_command_target(mob/living/parent, atom/target)
 	parent.ai_controller.set_blackboard_key(BB_CURRENT_PET_TARGET, target)
+	return TRUE
 
 /// Provide information about how to display this command in a radial menu
 /datum/pet_command/proc/provide_radial_data()
@@ -159,7 +160,7 @@
 
 	parent.ai_controller.CancelActions()
 	// Deciding if they can actually do anything with this target is the behaviour's job
-	set_command_target(parent, pointed_atom)
-	// These are usually hostile actions so should have a record in chat
-	parent.visible_message(span_warning("[parent] follows [friend]'s gesture towards [pointed_atom] [pointed_reaction]!"))
+	if(set_command_target(parent, pointed_atom))
+		// These are usually hostile actions so should have a record in chat
+		parent.visible_message(span_warning("[parent] follows [friend]'s gesture towards [pointed_atom][pointed_reaction ? " [pointed_reaction]" : ""]!"))
 	return TRUE

@@ -9,7 +9,7 @@ GLOBAL_DATUM_INIT(keycard_events, /datum/events, new)
 /obj/machinery/keycard_auth
 	name = "Keycard Authentication Device"
 	desc = "This device is used to trigger station functions, which require more than one ID card to authenticate, or to give the Janitor access to a department."
-	icon = 'icons/obj/machines/wallmounts.dmi'
+	icon = 'icons/obj/machines/keycard_auth_table.dmi'
 	icon_state = "auth_off"
 	power_channel = AREA_USAGE_ENVIRON
 	req_access = list(ACCESS_KEYCARD_AUTH)
@@ -22,8 +22,6 @@ GLOBAL_DATUM_INIT(keycard_events, /datum/events, new)
 	var/waiting = FALSE
 
 	COOLDOWN_DECLARE(access_grant_cooldown)
-
-MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/keycard_auth, 26)
 
 /obj/machinery/keycard_auth/Initialize(mapload)
 	. = ..()
@@ -157,6 +155,16 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/keycard_auth, 26)
 			make_maint_all_access()
 		if(KEYCARD_BSA_UNLOCK)
 			toggle_bluespace_artillery()
+
+/// Subtype which is stuck to a wall
+/obj/machinery/keycard_auth/wall_mounted
+	icon = 'icons/obj/machines/wallmounts.dmi'
+
+MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/keycard_auth/wall_mounted, 26)
+
+/obj/machinery/keycard_auth/wall_mounted/Initialize(mapload)
+	. = ..()
+	find_and_hang_on_wall()
 
 GLOBAL_VAR_INIT(emergency_access, FALSE)
 /proc/make_maint_all_access()

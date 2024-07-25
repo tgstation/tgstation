@@ -23,11 +23,11 @@
 	desc = "A gate able to perform mid-depth scans on any organisms who pass under it."
 	icon = 'icons/obj/machines/scangate.dmi'
 	icon_state = "scangate"
+	layer = ABOVE_MOB_LAYER
 	circuit = /obj/item/circuitboard/machine/scanner_gate
+	COOLDOWN_DECLARE(next_beep)
 
 	var/scanline_timer
-	///Internal timer to prevent audio spam.
-	var/next_beep = 0
 	///Bool to check if the scanner's controls are locked by an ID.
 	var/locked = FALSE
 	///Which setting is the scanner checking for? See defines in scanner_gate.dm for the list.
@@ -46,6 +46,10 @@
 	var/light_fail = FALSE
 	///Does the scanner ignore light_pass and light_fail for sending signals?
 	var/ignore_signals = FALSE
+	///Modifier to the chance of scanner being false positive/negative
+	var/minus_false_beep = 0
+	///Base false positive/negative chance
+	var/base_false_beep = 5
 	///Is an n-spect scanner attached to the gate? Enables contraband scanning.
 	var/obj/item/inspector/n_spect = null
 
@@ -60,10 +64,10 @@
 	AddElement(/datum/element/connect_loc, loc_connections)
 	register_context()
 
-/obj/machinery/scanner_gate/Destroy()
-	qdel(wires)
-	set_wires(null)
+/obj/machinery/scanner_gate/RefreshParts()
 	. = ..()
+	for(var/datum/stock_part/scanning_module/scanning_module in component_parts)
+		minus_false_beep = scanning_module.tier //The better are scanninning modules - the lower is chance of False Positives
 
 /obj/machinery/scanner_gate/atom_deconstruct(disassembled)
 	. = ..()
@@ -73,6 +77,8 @@
 
 /obj/machinery/scanner_gate/examine(mob/user)
 	. = ..()
+
+	. += span_notice("It's set to scan for [span_boldnotice(scangate_mode)].")
 	if(locked)
 		. += span_notice("The control panel is ID-locked. Swipe a valid ID to unlock it.")
 	else
@@ -143,6 +149,10 @@
 /obj/machinery/scanner_gate/crowbar_act(mob/living/user, obj/item/tool)
 	. = ..()
 	if(n_spect)
+		if(locked)
+			balloon_alert(user, "locked!")
+			return ITEM_INTERACT_BLOCKING
+
 		to_chat(user, span_notice("You uninstall [n_spect] from [src]."))
 		n_spect.forceMove(drop_location())
 		return ITEM_INTERACT_SUCCESS
@@ -166,20 +176,24 @@
 /obj/machinery/scanner_gate/proc/perform_scan(mob/living/M)
 	var/beep = FALSE
 	var/color = null
+	var/detected_thing = null
 	switch(scangate_mode)
 		if(SCANGATE_NONE)
 			return
 		if(SCANGATE_WANTED)
 			if(ishuman(M))
+				detected_thing = "Warrant"
 				var/mob/living/carbon/human/H = M
 				var/perpname = H.get_face_name(H.get_id_name())
 				var/datum/record/crew/target = find_record(perpname)
 				if(!target || (target.wanted_status == WANTED_ARREST))
 					beep = TRUE
 		if(SCANGATE_MINDSHIELD)
+			detected_thing = "Mindshield"
 			if(HAS_TRAIT(M, TRAIT_MINDSHIELD))
 				beep = TRUE
 		if(SCANGATE_DISEASE)
+			detected_thing = "[disease_threshold] infection"
 			if(iscarbon(M))
 				var/mob/living/carbon/C = M
 				if(get_disease_severity_value(C.check_virus()) >= get_disease_severity_value(disease_threshold))
@@ -190,30 +204,41 @@
 				var/datum/species/scan_species = /datum/species/human
 				switch(detect_species)
 					if(SCANGATE_LIZARD)
+						detected_thing = "Lizardperson"
 						scan_species = /datum/species/lizard
 					if(SCANGATE_FLY)
+						detected_thing = "Flyperson"
 						scan_species = /datum/species/fly
 					if(SCANGATE_FELINID)
+						detected_thing = "Felinid"
 						scan_species = /datum/species/human/felinid
 					if(SCANGATE_PLASMAMAN)
+						detected_thing = "Plasmaman"
 						scan_species = /datum/species/plasmaman
 					if(SCANGATE_MOTH)
+						detected_thing = "Mothperson"
 						scan_species = /datum/species/moth
 					if(SCANGATE_JELLY)
+						detected_thing = "Jellyperson"
 						scan_species = /datum/species/jelly
 					if(SCANGATE_POD)
+						detected_thing = "Podperson"
 						scan_species = /datum/species/pod
 					if(SCANGATE_GOLEM)
+						detected_thing = "Golem"
 						scan_species = /datum/species/golem
 					if(SCANGATE_ZOMBIE)
+						detected_thing = "Zombie"
 						scan_species = /datum/species/zombie
 				if(is_species(H, scan_species))
 					beep = TRUE
 				if(detect_species == SCANGATE_ZOMBIE) //Can detect dormant zombies
+					detected_thing = "Romerol infection"
 					if(H.get_organ_slot(ORGAN_SLOT_ZOMBIE))
 						beep = TRUE
 		if(SCANGATE_GUNS)
 			for(var/I in M.get_contents())
+				detected_thing = "Weapons"
 				if(isgun(I))
 					beep = TRUE
 					break
@@ -222,10 +247,13 @@
 				var/mob/living/carbon/human/H = M
 				if(H.nutrition <= detect_nutrition && detect_nutrition == NUTRITION_LEVEL_STARVING)
 					beep = TRUE
+					detected_thing = "Starvation"
 				if(H.nutrition >= detect_nutrition && detect_nutrition == NUTRITION_LEVEL_FAT)
 					beep = TRUE
+					detected_thing = "Obesity"
 		if(SCANGATE_CONTRABAND)
 			for(var/obj/item/content in M.get_all_contents_skipping_traits(TRAIT_CONTRABAND_BLOCKER))
+				detected_thing = "Contraband"
 				if(content.is_contraband())
 					beep = TRUE
 					break
@@ -234,8 +262,12 @@
 
 	if(reverse)
 		beep = !beep
+
+	if(prob(base_false_beep - minus_false_beep)) //False positive/negative
+		beep = prob(50)
+
 	if(beep)
-		alarm_beep()
+		alarm_beep(detected_thing)
 		SEND_SIGNAL(src, COMSIG_SCANGATE_PASS_TRIGGER, M)
 		if(!ignore_signals)
 			color = wires.get_color_of_wire(WIRE_ACCEPT)
@@ -251,12 +283,15 @@
 
 	use_energy(active_power_usage)
 
-/obj/machinery/scanner_gate/proc/alarm_beep()
-	if(next_beep <= world.time)
-		next_beep = world.time + (2 SECONDS)
-		playsound(src, 'sound/machines/scanbuzz.ogg', 100, FALSE)
-	var/mutable_appearance/alarm_display = mutable_appearance(icon, "alarm_light")
-	flick_overlay_view(alarm_display, 2 SECONDS)
+/obj/machinery/scanner_gate/proc/alarm_beep(detected_thing)
+	if(!COOLDOWN_FINISHED(src, next_beep))
+		return
+
+	if(detected_thing)
+		say("[detected_thing][reverse ? " not " : " "]detected!!")
+
+	COOLDOWN_START(src, next_beep, 2 SECONDS)
+	playsound(src, 'sound/machines/scanbuzz.ogg', 100, FALSE)
 	set_scanline("alarm", 2 SECONDS)
 
 /obj/machinery/scanner_gate/can_interact(mob/user)
@@ -320,6 +355,11 @@
 					if("Obese")
 						detect_nutrition = NUTRITION_LEVEL_FAT
 			. = TRUE
+
+/obj/machinery/scanner_gate/preset_guns
+	locked = TRUE
+	req_access = ACCESS_SECURITY
+	scangate_mode = SCANGATE_GUNS
 
 #undef SCANGATE_NONE
 #undef SCANGATE_MINDSHIELD

@@ -30,7 +30,7 @@
 
 	/// If the cyborg starts movement free and not under lockdown
 	var/locomotion = TRUE
-	/// If the cyborg synchronizes it's laws with it's master AI
+	/// If the cyborg synchronizes its laws with its master AI
 	var/lawsync = TRUE
 	/// If the cyborg starts with a master AI
 	var/aisync = TRUE

@@ -1,16 +1,22 @@
 import { BooleanLike } from 'common/react';
+import { createSearch } from 'common/string';
+import { useState } from 'react';
+import { DmIcon, Icon } from 'tgui-core/components';
 
 import { useBackend } from '../backend';
-import { Button, NoticeBox, Section, Table } from '../components';
+import { Button, Input, NoticeBox, Section } from '../components';
 import { Window } from '../layouts';
 
 type Item = {
+  path: string;
   name: string;
   amount: number;
+  icon: string;
+  icon_state: string;
 };
 
 type Data = {
-  contents: Item[];
+  contents: Record<string, Item>;
   name: string;
   isdryer: BooleanLike;
   drying: BooleanLike;
@@ -18,64 +24,97 @@ type Data = {
 
 export const SmartVend = (props) => {
   const { act, data } = useBackend<Data>();
-  const { contents = [] } = data;
+  const [searchText, setSearchText] = useState('');
+  const search = createSearch(searchText, (item: Item) => item.name);
+  const contents =
+    searchText.length > 0
+      ? Object.values(data.contents).filter(search)
+      : Object.values(data.contents);
+
+  const fallback = (
+    <Icon name="spinner" lineHeight="64px" size={3} spin color="gray" />
+  );
   return (
-    <Window width={440} height={550}>
-      <Window.Content scrollable>
+    <Window width={498} height={550}>
+      <Window.Content>
         <Section
+          fill
+          scrollable
+          style={{
+            textTransform: 'capitalize',
+          }}
           title="Storage"
           buttons={
-            !!data.isdryer && (
+            data.isdryer ? (
               <Button
                 icon={data.drying ? 'stop' : 'tint'}
                 onClick={() => act('Dry')}
               >
                 {data.drying ? 'Stop drying' : 'Dry'}
               </Button>
+            ) : (
+              <Input
+                autoFocus
+                placeholder={'Search...'}
+                value={searchText}
+                onInput={(e, value) => setSearchText(value)}
+              />
             )
           }
         >
-          {contents.length === 0 ? (
-            <NoticeBox>Unfortunately, this {data.name} is empty.</NoticeBox>
+          {!contents.length ? (
+            <NoticeBox>Nothing found.</NoticeBox>
           ) : (
-            <Table>
-              <Table.Row header>
-                <Table.Cell>Item</Table.Cell>
-                <Table.Cell collapsing />
-                <Table.Cell collapsing textAlign="center">
-                  {data.isdryer ? 'Take' : 'Dispense'}
-                </Table.Cell>
-              </Table.Row>
-              {Object.values(contents).map((value, key) => (
-                <Table.Row key={key}>
-                  <Table.Cell>{value.name}</Table.Cell>
-                  <Table.Cell collapsing textAlign="right">
-                    {value.amount}
-                  </Table.Cell>
-                  <Table.Cell collapsing>
-                    <Button
-                      content="One"
-                      disabled={value.amount < 1}
-                      onClick={() =>
-                        act('Release', {
-                          name: value.name,
-                          amount: 1,
-                        })
-                      }
-                    />
-                    <Button
-                      content="Many"
-                      disabled={value.amount <= 1}
-                      onClick={() =>
-                        act('Release', {
-                          name: value.name,
-                        })
-                      }
-                    />
-                  </Table.Cell>
-                </Table.Row>
-              ))}
-            </Table>
+            contents.map((item) => (
+              <Button
+                key={item.path}
+                m={1}
+                p={0}
+                height="64px"
+                width="64px"
+                tooltip={item.name}
+                tooltipPosition="bottom"
+                textAlign="right"
+                disabled={item.amount < 1}
+                onClick={() =>
+                  act('Release', {
+                    path: item.path,
+                    amount: 1,
+                  })
+                }
+              >
+                <DmIcon
+                  fallback={fallback}
+                  icon={item.icon}
+                  icon_state={item.icon_state}
+                  height="64px"
+                  width="64px"
+                />
+                {item.amount > 1 && (
+                  <Button
+                    color="transparent"
+                    minWidth="24px"
+                    height="24px"
+                    lineHeight="24px"
+                    textAlign="center"
+                    position="absolute"
+                    left="0"
+                    bottom="0"
+                    fontWeight="bold"
+                    fontSize="14px"
+                    onClick={(e) => {
+                      act('Release', {
+                        path: item.path,
+                        amount: item.amount,
+                      });
+                      e.stopPropagation();
+                    }}
+                  >
+                    {item.amount}
+                  </Button>
+                )}
+              </Button>
+            ))
           )}
         </Section>
       </Window.Content>

@@ -100,6 +100,11 @@ TRAITOR_SCALING_COEFF 6
 BROTHER_SCALING_COEFF 6
 CHANGELING_SCALING_COEFF 6
 
+## Global scaling for traitor progression.
+## Higher values will accelerate traitor progression, while lower values will decrease it.
+## Bypasses an upper limit of 1 MINUTE
+#TRAITOR_SCALING_MULTIPLIER 1
+
 ## Variables calculate how number of open security officer positions will scale to population.
 ## Used as (Officers = Population / Coeff)
 ## Set to 0 to disable scaling and use default numbers instead.

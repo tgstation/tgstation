@@ -201,7 +201,7 @@ GLOBAL_LIST_EMPTY(order_console_products)
 					ordered_paths += item.item_path
 			podspawn(list(
 				"target" = get_turf(living_user),
-				"style" = STYLE_BLUESPACE,
+				"style" = /datum/pod_style/advanced,
 				"spawn" = ordered_paths,
 			))
 			grocery_list.Cut()

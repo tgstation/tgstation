@@ -96,6 +96,20 @@ Nothing else in the console has ID requirements.
 		stored_research = tool.buffer
 	return TRUE
 
+/obj/machinery/computer/rdconsole/proc/enqueue_node(id, mob/user)
+	if(!stored_research || !stored_research.available_nodes[id] || stored_research.researched_nodes[id])
+		say("Node enqueue failed: Either no techweb is found, node is already researched or is not available!")
+		return FALSE
+	stored_research.enqueue_node(id, user)
+	return TRUE
+
+/obj/machinery/computer/rdconsole/proc/dequeue_node(id, mob/user)
+	if(!stored_research || !stored_research.available_nodes[id] || stored_research.researched_nodes[id])
+		say("Node dequeue failed: Either no techweb is found, node is already researched or is not available!")
+		return FALSE
+	stored_research.dequeue_node(id, user)
+	return TRUE
+
 /obj/machinery/computer/rdconsole/proc/research_node(id, mob/user)
 	if(!stored_research || !stored_research.available_nodes[id] || stored_research.researched_nodes[id])
 		say("Node unlock failed: Either no techweb is found, node is already researched or is not available!")
@@ -171,6 +185,7 @@ Nothing else in the console has ID requirements.
 		return data
 	data += list(
 		"nodes" = list(),
+		"queue_nodes" = stored_research.research_queue_nodes,
 		"experiments" = list(),
 		"researched_designs" = stored_research.researched_designs,
 		"points" = stored_research.research_points,
@@ -194,6 +209,10 @@ Nothing else in the console has ID requirements.
 	// Serialize all nodes to display
 	for(var/v in stored_research.tiers)
 		var/datum/techweb_node/n = SSresearch.techweb_node_by_id(v)
+		var/enqueued_by_user = FALSE
+
+		if((v in stored_research.research_queue_nodes) && stored_research.research_queue_nodes[v] == user)
+			enqueued_by_user = TRUE
 
 		// Ensure node is supposed to be visible
 		if (stored_research.hidden_nodes[v])
@@ -201,8 +220,11 @@ Nothing else in the console has ID requirements.
 
 		data["nodes"] += list(list(
 			"id" = n.id,
+			"is_free" = n.is_free(stored_research),
 			"can_unlock" = stored_research.can_unlock_node(n),
+			"have_experiments_done" = stored_research.have_experiments_for_node(n),
 			"tier" = stored_research.tiers[n.id],
+			"enqueued_by_user" = enqueued_by_user
 		))
 
 	// Get experiments and serialize them
@@ -321,6 +343,12 @@ Nothing else in the console has ID requirements.
 			return TRUE
 		if ("researchNode")
 			research_node(params["node_id"], usr)
+			return TRUE
+		if ("enqueueNode")
+			enqueue_node(params["node_id"], usr)
+			return TRUE
+		if ("dequeueNode")
+			dequeue_node(params["node_id"], usr)
 			return TRUE
 		if ("ejectDisk")
 			eject_disk(params["type"])

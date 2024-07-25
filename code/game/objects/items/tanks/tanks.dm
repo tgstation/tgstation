@@ -69,7 +69,7 @@
 	if (QDELETED(breathing_mob))
 		breathing_mob = null
 		return
-	// Close open air tank if it got dropped by it's current user.
+	// Close open air tank if it got dropped by its current user.
 	if (loc != breathing_mob)
 		breathing_mob.cutoff_internals()
 

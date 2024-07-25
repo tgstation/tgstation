@@ -34,7 +34,7 @@
 	)
 
 /datum/preference/choiced/backpack/create_default_value()
-	return GBACKPACK
+	return DBACKPACK
 
 /datum/preference/choiced/backpack/icon_for(value)
 	switch (value)
@@ -80,6 +80,9 @@
 		PREF_SKIRT,
 	)
 
+/datum/preference/choiced/jumpsuit/create_default_value()
+	return PREF_SUIT
+
 /datum/preference/choiced/jumpsuit/icon_for(value)
 	switch (value)
 		if (PREF_SUIT)
@@ -89,15 +92,6 @@
 
 /datum/preference/choiced/jumpsuit/apply_to_human(mob/living/carbon/human/target, value)
 	target.jumpsuit_style = value
-
-/datum/preference/choiced/jumpsuit/create_informed_default_value(datum/preferences/preferences)
-	switch(preferences.read_preference(/datum/preference/choiced/gender))
-		if(MALE)
-			return PREF_SUIT
-		if(FEMALE)
-			return PREF_SKIRT
-
-	return ..()
 
 /// Socks preference
 /datum/preference/choiced/socks
