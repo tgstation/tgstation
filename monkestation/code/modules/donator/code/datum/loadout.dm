@@ -540,3 +540,10 @@
     name = "Fluffy Kobold Transformation"
     item_path = /obj/item/effect_granter/donator/fluffykobold
     requires_purchase = FALSE
+
+//Mysterybark
+/datum/loadout_item/head/western_wizard_hat
+	name = "Western Wizard Hat"
+	item_path = /obj/item/clothing/head/costume/western_wizard_hat
+	donator_only = TRUE
+	requires_purchase = FALSE

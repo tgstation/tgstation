@@ -440,3 +440,12 @@
 	icon_state = "bluedragon66_biocoat"
 	name = "plague doctor bio-suit"
 	desc = "A sterile biosuit under a thick coat, offering two layers of protection against potential biohazards. Although it's meant to be paired together with it's counterpart, it's sleek and functional- making it quite appealing."
+
+/obj/item/clothing/head/costume/western_wizard_hat
+	name = "western wizard hat"
+	desc = "A man, a hero, a traveler- the western wizard."
+	icon = 'monkestation/code/modules/donator/icons/obj/clothing.dmi'
+	worn_icon = 'monkestation/code/modules/donator/icons/mob/clothing.dmi'
+	icon_state = "western_wizard_hat"
+	inhand_icon_state = null
+	worn_y_offset = 16
