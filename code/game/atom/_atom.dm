@@ -951,7 +951,7 @@
 	var/map_height
 	WXH_TO_HEIGHT(client.MeasureText(new_maptext, null, active_hud.screentip_text.maptext_width), map_height)
 	active_hud.screentip_text.maptext = new_maptext
-	active_hud.screentip_text.maptext_y = 16 - map_height
+	active_hud.screentip_text.maptext_y = 26 - map_height
 
 /**
  * This proc is used for telling whether something can pass by this atom in a given direction, for use by the pathfinding system.
