@@ -49,3 +49,38 @@
 
 /datum/mood_event/food/top
 	quality = FOOD_QUALITY_TOP
+
+/datum/mood_event/full_dinner
+	description = "I had a good lunch and now I'm full of energy for work."
+	mood_change = 6
+	timeout = 10 MINUTES
+
+/datum/mood_event/came_late_dinners
+	description = "I was a little late, but I still managed to have lunch."
+	mood_change = 4
+	timeout = 10 MINUTES
+
+/datum/mood_event/dinner_left_early
+	description = "I've eaten, and that's enough. Work is more important."
+	mood_change = 0
+	timeout = 10 MINUTES
+
+/datum/mood_event/introvert_on_dinner
+	description = "I don't like dining in crowded places."
+	mood_change = -4
+	timeout = 10 MINUTES
+
+/datum/mood_event/out_dinner_room_eating
+	description = "I don't like eating outside the cafeteria, but work is more important."
+	mood_change = -4
+	timeout = 10 MINUTES
+
+/datum/mood_event/out_dinner_room_eating_introvert
+	description = "I like to have lunch alone."
+	mood_change = 8
+	timeout = 10 MINUTES
+
+/datum/mood_event/dont_eat_on_dinner
+	description = "Lunch is over, and I haven't eaten anything!"
+	mood_change = -8
+	timeout = 10 MINUTES
