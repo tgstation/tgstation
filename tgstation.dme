@@ -6645,6 +6645,7 @@
 #include "monkestation\code\modules\coin-events\challenges\challenge\no_sprint.dm"
 #include "monkestation\code\modules\coin-events\challenges\challenge\paranoia.dm"
 #include "monkestation\code\modules\conveyor\code\conveyor.dm"
+#include "monkestation\code\modules\conveyor_sorter\code\conveyor_sorter.dm"
 #include "monkestation\code\modules\cryopods\_cryopod.dm"
 #include "monkestation\code\modules\cryopods\ai_cryo.dm"
 #include "monkestation\code\modules\cryopods\cryo_admin_helpers.dm"
