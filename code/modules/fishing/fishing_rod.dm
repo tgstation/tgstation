@@ -118,7 +118,7 @@
 					kill_fish = FALSE
 					break
 			if(kill_fish)
-				fish.set_status(FISH_DEAD, silet = TRUE)
+				fish.set_status(FISH_DEAD, silent = TRUE)
 
 	QDEL_NULL(bait)
 	update_icon()
