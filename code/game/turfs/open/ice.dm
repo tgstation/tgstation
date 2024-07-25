@@ -42,7 +42,7 @@
 	if(do_after(user, 5 SECONDS, src))
 		balloon_alert(user, "dug hole")
 		AddComponent(/datum/component/fishing_spot, GLOB.preset_fish_sources[/datum/fish_source/ice_fishing])
-		add_overlay("ice_hole")
+		add_overlay(mutable_appearance('icons/turf/overlays.dmi', "ice_hole"))
 		can_make_hole = FALSE
 	return ITEM_INTERACT_SUCCESS
 
