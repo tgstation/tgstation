@@ -12,9 +12,8 @@
 	underfloor_accessibility = UNDERFLOOR_INTERACTABLE
 	baseturfs = /turf/baseturf_bottom
 	smoothing_flags = SMOOTH_BITMASK
-	smoothing_groups = SMOOTH_GROUP_PLATING
+	smoothing_groups = SMOOTH_GROUP_TURF_OPEN + SMOOTH_GROUP_PLATING
 	canSmoothWith = SMOOTH_GROUP_PLATING
-	flags_1 = NONE
 	footstep = FOOTSTEP_PLATING
 	barefootstep = FOOTSTEP_HARD_BAREFOOT
 	clawfootstep = FOOTSTEP_HARD_CLAW
@@ -53,6 +52,21 @@
 		. += span_notice("You could probably make this plating more resilient with some plasteel.")
 
 #define PLATE_REINFORCE_COST 2
+
+/turf/open/floor/plating/Initialize(mapload)
+	. = ..()
+	update_appearance()
+
+/turf/open/floor/plating/update_icon(updates=ALL)
+	. = ..()
+	if(!. || !(updates & UPDATE_SMOOTHING))
+		return
+	if(!broken && !burnt)
+		if(smoothing_flags & USES_SMOOTHING)
+			QUEUE_SMOOTH(src)
+	else
+		if(smoothing_flags & USES_SMOOTHING)
+			QUEUE_SMOOTH_NEIGHBORS(src)
 
 /turf/open/floor/plating/attackby(obj/item/C, mob/user, params)
 	if(..())
