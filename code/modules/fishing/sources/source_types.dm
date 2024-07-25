@@ -403,8 +403,6 @@
 	)
 	fishing_difficulty = FISHING_DEFAULT_DIFFICULTY + 15
 
-#define RANDOM_SEED "Random seed"
-
 /datum/fish_source/hydro_tray
 	catalog_description = "Hydroponics trays"
 	fish_table = list(
@@ -448,7 +446,7 @@
 	return ..()
 
 /datum/fish_source/hydro_tray/spawn_reward(reward_path, mob/fisherman, turf/fishing_spot)
-	if(reward_path != RANDOM_SEED)
+	if(reward_path != FISHING_RANDOM_SEED)
 		var/mob/living/created_reward = ..()
 		if(istype(created_reward))
 			created_reward.name = "small [created_reward.name]"
@@ -469,5 +467,3 @@
 
 	var/picked_path = pick(seeds_to_draw_from)
 	return new picked_path(get_turf(fishing_spot))
-
-#undef RANDOM_SEED

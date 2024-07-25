@@ -44,11 +44,11 @@
 		/datum/reagent/consumable/nutriment/vitamin = 3,
 	)
 	bite_consumption = 7
-	crafting_complexity = FOOD_COMPLEXITY_2
+	crafting_complexity = FOOD_COMPLEXITY_1
 
 /obj/item/food/fishmeat/quality/Initialize(mapload)
 	. = ..()
-	ADD_TRAIT(src, TRAIT_QUALITY_FOOD_INGREDIENT, INNATE_TRAIT)
+	AddElement(/datum/element/quality_food_ingredient, FOOD_COMPLEXITY_1)
 
 /obj/item/food/fishmeat/salmon
 	name = "salmon fillet"
@@ -60,11 +60,11 @@
 		/datum/reagent/consumable/nutriment/fat/oil = 2,
 	)
 	bite_consumption = 4.5
-	crafting_complexity = FOOD_COMPLEXITY_2
+	crafting_complexity = FOOD_COMPLEXITY_1
 
 /obj/item/food/fishmeat/salmon/Initialize(mapload)
 	. = ..()
-	ADD_TRAIT(src, TRAIT_QUALITY_FOOD_INGREDIENT, INNATE_TRAIT)
+	AddElement(/datum/element/quality_food_ingredient, FOOD_COMPLEXITY_1)
 
 /obj/item/food/fishmeat/carp
 	name = "carp fillet"

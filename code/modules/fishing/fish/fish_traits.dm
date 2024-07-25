@@ -579,23 +579,16 @@ GLOBAL_LIST_INIT(spontaneous_fish_traits, populate_spontaneous_fish_traits())
 /datum/fish_trait/electrogenesis/apply_to_fish(obj/item/fish/fish)
 	. = ..()
 	ADD_TRAIT(fish, TRAIT_FISH_ELECTROGENESIS, FISH_TRAIT_DATUM)
-	RegisterSignal(fish, COMSIG_ITEM_ATTACK, PROC_REF(on_item_attack))
+	RegisterSignal(src, COMSIG_FISH_FORCE_UPDATED, PROC_REF(on_force_updated))
 
-/datum/fish_trait/electrogenesis/proc/on_item_attack(obj/item/fish/fish, mob/living/target, mob/living/user)
+/datum/fish_trait/electrogenesis/proc/on_force_updated(obj/item/fish/fish, weight_rank, bonus_or_malus)
 	SIGNAL_HANDLER
-
 	if(fish.status == FISH_ALIVE)
-		fish.force = 16
+		fish.force += 10 - fish.w_class
 		fish.damtype = BURN
 		fish.attack_verb_continuous = list("shocks", "zaps")
 		fish.attack_verb_simple = list("shock", "zap")
 		fish.hitsound = 'sound/effects/sparks4.ogg'
-	else
-		fish.force = fish::force
-		fish.damtype = fish::damtype
-		fish.attack_verb_continuous = fish::attack_verb_continuous
-		fish.attack_verb_simple = fish::attack_verb_simple
-		fish.hitsound = fish::hitsound
 
 /datum/fish_trait/electrogenesis/apply_to_mob(mob/living/basic/mob)
 	. = ..()
@@ -624,6 +617,11 @@ GLOBAL_LIST_INIT(spontaneous_fish_traits, populate_spontaneous_fish_traits())
 /datum/fish_trait/stinger/apply_to_fish(obj/item/fish/fish)
 	. = ..()
 	ADD_TRAIT(src, TRAIT_FISH_STINGER, FISH_TRAIT_DATUM)
+	RegisterSignal(src, COMSIG_FISH_FORCE_UPDATED, PROC_REF(on_force_updated))
+
+/datum/fish_trait/stinger/proc/on_force_updated(obj/item/fish/fish, weight_rank, bonus_or_malus)
+	SIGNAL_HANDLER
+	fish.force += 1 + fish.w_class - bonus_or_malus
 
 /datum/fish_trait/toxic_barbs
 	name = "Toxic Barbs"

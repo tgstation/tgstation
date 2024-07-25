@@ -1,5 +1,7 @@
 /// Use in fish tables to denote miss chance.
 #define FISHING_DUD "dud"
+///Used in the the hydro tray fishing spot to define a random seed reward
+#define FISHING_RANDOM_SEED "Random seed"
 
 // Baseline fishing difficulty levels
 #define FISHING_DEFAULT_DIFFICULTY 15
@@ -85,6 +87,10 @@
 #define FISH_ICON_CRAB "crab"
 #define FISH_ICON_JELLYFISH "jellyfish"
 #define FISH_ICON_BONE "bone"
+#define FISH_ICON_ELECTRIC "electric"
+#define FISH_ICON_WEAPON "weapon"
+#define FISH_ICON_CRITTER "critter"
+#define FISH_ICON_SEED "seed"
 
 #define AQUARIUM_ANIMATION_FISH_SWIM "fish"
 #define AQUARIUM_ANIMATION_FISH_DEAD "dead"
@@ -109,6 +115,7 @@
 #define FISH_SIZE_BULKY_MAX 120
 ///size threshold for requiring two-handed carry
 #define FISH_SIZE_TWO_HANDS_REQUIRED 135
+#define FISH_SIZE_HUGE_MAX 165
 
 ///The coefficient for maximum weight/size divergence relative to the averages.
 #define MAX_FISH_DEVIATION_COEFF 2.5
@@ -124,6 +131,8 @@
 #define FISH_WEIGHT_SLOWDOWN_DIVISOR 500
 ///The sub-one exponent that results in the final slowdown of the fish item
 #define FISH_WEIGHT_SLOWDOWN_EXPONENT 0.54
+///Used to calculate the force of the fish by comparing (1 + log(weight/this_define)) and the w_class of the item.
+#define FISH_WEIGHT_FORCE_DIVISOR 250
 
 ///The breeding timeout for newly instantiated fish is multiplied by this.
 #define NEW_FISH_BREEDING_TIMEOUT_MULT 2

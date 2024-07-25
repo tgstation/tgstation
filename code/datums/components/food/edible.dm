@@ -590,10 +590,14 @@ Behavior that's still missing from this component that original food items had t
 
 /// Get the complexity of the crafted food
 /datum/component/edible/proc/get_recipe_complexity()
+	var/list/complexities = GET_TRAIT_SOURCES(parent, TRAIT_QUALITY_FOOD)
+	var/complexity_to_add = 0
+	for(var/complexity as anything in complexities)
+		complexity_to_add = max(complexity_to_add, text2num(complexity))
 	if(!HAS_TRAIT(parent, TRAIT_FOOD_CHEF_MADE) || !istype(parent, /obj/item/food))
-		return 0 // It is factory made. Soulless.
+		return complexity_to_add // It is factory made. Soulless.
 	var/obj/item/food/food = parent
-	return food.crafting_complexity
+	return food.crafting_complexity + complexity_to_add
 
 /// Get food quality adjusted according to eater's preferences
 /datum/component/edible/proc/get_perceived_food_quality(mob/living/carbon/human/eater)

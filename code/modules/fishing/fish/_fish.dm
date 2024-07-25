@@ -7,6 +7,8 @@
 	lefthand_file = 'icons/mob/inhands/fish_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/fish_righthand.dmi'
 	force = 6
+	throwforce = 6
+	throw_range = 8
 	attack_verb_continuous = list("slaps", "whacks")
 	attack_verb_simple = list("slap", "whack")
 	hitsound = 'sound/weapons/slap.ogg'
@@ -233,12 +235,18 @@
 			if(init_icon_state)
 				inhand_icon_state = "fish_bulky"
 			update_weight_class(WEIGHT_CLASS_BULKY)
-		if(FISH_SIZE_BULKY_MAX to INFINITY)
+		if(FISH_SIZE_BULKY_MAX to FISH_SIZE_HUGE_MAX)
 			if(init_icon_state)
 				inhand_icon_state = "fish_huge"
 			update_weight_class(WEIGHT_CLASS_HUGE)
-			if(size > FISH_SIZE_TWO_HANDS_REQUIRED)
-				AddComponent(/datum/component/two_handed, require_twohands = TRUE)
+		if(FISH_SIZE_HUGE_MAX to INFINITY)
+			if(init_icon_state)
+				inhand_icon_state = "fish_huge"
+			update_weight_class(WEIGHT_CLASS_GIGANTIC)
+
+	if(size > FISH_SIZE_TWO_HANDS_REQUIRED)
+		inhand_icon_state = "[inhand_icon_state]_wielded"
+		AddComponent(/datum/component/two_handed, require_twohands = TRUE)
 
 	if(fillet_type)
 		var/init_fillets = initial(num_fillets)
@@ -255,6 +263,65 @@
 		slowdown = round((weight/FISH_WEIGHT_SLOWDOWN_DIVISOR)**FISH_WEIGHT_SLOWDOWN_EXPONENT, 0.1)
 	for(var/reagent_type in grind_results)
 		grind_results[reagent_type] *= FLOOR(weight/FISH_GRIND_RESULTS_WEIGHT_DIVISOR, 0.1)
+
+	update_fish_force()
+
+///Reset weapon-related variables of this items and recalculates those values based on the fish weight and size.
+/obj/item/fish/proc/update_fish_force()
+	var/obj/item/fish/fish_path = type
+	force = fish_path::force
+	throwforce = fish_path::throwforce
+	throw_range = fish_path::throw_range
+	demolition_mod = fish_path::demolition_mod
+	attack_verb_continuous = fish_path::attack_verb_continuous
+	attack_verb_simple = fish_path::attack_verb_simple
+	hitsound = fish_path::hitsound
+	damtype = fish_path::damtype
+	attack_speed = fish_path::attack_speed
+	block_chance = fish_path::block_chance
+	armour_penetration = fish_path::armour_penetration
+	wound_bonus = fish_path::wound_bonus
+	bare_wound_bonus = fish_path::bare_wound_bonus
+	toolspeed = fish_path::toolspeed
+
+	var/weight_rank = max(round(1 + log(weight/FISH_WEIGHT_FORCE_DIVISOR), 1), 1)
+
+	throw_range -= weight_rank
+	get_force_rank()
+
+	var/bonus_malus = weight_rank - w_class
+	if(bonus_malus)
+		calculate_fish_force_bonus(bonus_malus)
+
+	throwforce = force
+
+	SEND_SIGNAL(src, COMSIG_FISH_FORCE_UPDATED, weight_rank, weight_rank - w_class)
+
+///A proc that makes the fish slightly stronger or weaker if there's a noticeable discrepancy between size and weight.
+/obj/item/fish/proc/calculate_fish_force_bonus(bonus_malus)
+	demolition_mod += bonus_malus
+	attack_speed += bonus_malus
+	var/one_fifth_or_sixth = bonus_malus > 0 ? (6/5) : (5/6)
+	force = round(force * (one_fifth_or_sixth^abs(bonus_malus)), 0.1)
+
+/obj/item/fish/proc/get_force_rank()
+	switch(w_class)
+		if(WEIGHT_CLASS_TINY)
+			force -= 3
+			attack_speed -= 0.1 SECONDS
+		if(WEIGHT_CLASS_NORMAL)
+			force += 2
+		if(WEIGHT_CLASS_BULKY)
+			force += 5
+			attack_speed += 0.1 SECONDS
+		if(WEIGHT_CLASS_HUGE)
+			force += 9
+			attack_speed += 0.2 SECONDS
+			demolition_mod += 0.2
+		if(WEIGHT_CLASS_GIGANTIC)
+			force += 14
+			attack_speed += 0.4 SECONDS
+			demolition_mod += 0.5
 
 /**
  * This proc has fish_traits list populated with fish_traits paths from three different lists:
@@ -407,6 +474,7 @@
 				else
 					visible_message(message)
 	update_appearance()
+	update_fish_force()
 	SEND_SIGNAL(src, COMSIG_FISH_STATUS_CHANGED)
 
 /obj/item/fish/proc/use_lazarus(datum/source, obj/item/lazarus_injector/injector, mob/user)

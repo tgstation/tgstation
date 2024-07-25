@@ -914,11 +914,24 @@
 
 /obj/item/fish/swordfish
 	name = "swordfish"
+	desc = "A large billfish, most famous for its elongated bill, while also fairly popular for cooking, and as a fearsome weapon in the hands of a veteran spess-fisherman."
 	icon = 'icons/obj/aquarium/wide.dmi'
 	icon_state = "swordfish"
 	inhand_icon_state = "swordfish"
 	dedicated_in_aquarium_icon = 'icons/obj/aquarium/fish.dmi'
 	dedicated_in_aquarium_icon_state = "swordfish_small"
+	force = 18
+	sharpness = SHARP_EDGED
+	attack_verb_continuous = list("slashes", "cuts", "pierces")
+	attack_verb_simple = list("slash", "cut", "pierce")
+	block_sound = 'sound/weapons/parry.ogg'
+	hitsound = 'sound/weapons/rapierhit.ogg'
+	demolition_mod = 0.75
+	attack_speed = 1 SECONDS
+	block_chance = 50
+	wound_bonus = 10
+	bare_wound_bonus = 20
+	armour_penetration = 75
 	base_pixel_x = -18
 	pixel_x = -18
 	sprite_width = 13
@@ -926,7 +939,7 @@
 	stable_population = 3
 	average_size = 140
 	average_weight = 4000
-	breeding_timeout = 8.5 MINUTES
+	breeding_timeout = 8 MINUTES
 	feeding_frequency = 4 MINUTES
 	health = 200
 	beauty = FISH_BEAUTY_EXCELLENT
@@ -943,12 +956,76 @@
 	)
 	fish_traits = list(/datum/fish_trait/carnivore, /datum/fish_trait/predator, /datum/fish_trait/stinger)
 
+/obj/item/fish/swordfish/get_force_rank()
+	switch(w_class)
+		if(WEIGHT_CLASS_TINY)
+			force -= 11
+			attack_speed -= 0.4 SECONDS
+			block_chance -= 45
+			armour_penetration -= 20
+			wound_bonus -= 15
+			bare_wound_bonus -= 20
+		if(WEIGHT_CLASS_SMALL)
+			force -= 8
+			attack_speed -= 0.3 SECONDS
+			block_chance -= 30
+			armour_penetration -= 15
+			wound_bonus -= 10
+			bare_wound_bonus -= 20
+		if(WEIGHT_CLASS_NORMAL)
+			force -= 5
+			attack_speed -= 0.2 SECONDS
+			block_chance -= 20
+			armour_penetration -= 10
+			wound_bonus -= 10
+			bare_wound_bonus -= 15
+		if(WEIGHT_CLASS_BULKY)
+			force -= 2
+			attack_speed -= 0.1 SECONDS
+			block_chance -= 10
+			armour_penetration -= 5
+			wound_bonus -= 5
+			bare_wound_bonus -= 10
+		if(WEIGHT_CLASS_GIGANTIC)
+			force += 5
+			attack_speed += 0.2 SECONDS
+			demolition_mod += 0.15
+			block_chance += 10
+			armour_penetration += 5
+			wound_bonus += 5
+			bare_wound_bonus += 10
+
+	if(status == FISH_DEAD)
+		force -= 3 + w_class
+		block_chance -= 25
+		armour_penetration -= 30
+		wound_bonus -= 10
+		bare_wound_bonus -= 10
+
+/obj/item/fish/swordfish/calculate_fish_force_bonus(bonus_malus)
+	. = ..()
+	armour_penetration += bonus_malus * 5
+	wound_bonus += bonus_malus * 3
+	bare_wound_bonus += bonus_malus * 5
+	block_chance += bonus_malus * 7
+
 /obj/item/fish/chainsawfish
 	name = "chainsawfish"
+	desc = "A very, very angry bioweapon, whose sole purpose is to rip and tear."
 	icon_state = "chainsawfish"
 	inhand_icon_state = "chainsawfish"
+	icon_state_dead = "chainsawfish_dead"
 	dedicated_in_aquarium_icon = 'icons/obj/aquarium/fish.dmi'
 	dedicated_in_aquarium_icon_state = "chainsaw_small"
+	force = 22
+	demolition_mod = 1.5
+	block_chance = 15
+	attack_verb_continuous = list("saws", "tears", "lacerates", "cuts", "chops", "dices")
+	attack_verb_simple = list("saw", "tear", "lacerate", "cut", "chop", "dice")
+	hitsound = 'sound/weapons/chainsawhit.ogg'
+	sharpness = SHARP_EDGED
+	tool_behaviour = TOOL_SAW
+	toolspeed = 0.5
 	base_pixel_x = -16
 	pixel_x = -16
 	sprite_width = 8
@@ -973,6 +1050,84 @@
 	fish_traits = list(/datum/fish_trait/aggressive, /datum/fish_trait/carnivore, /datum/fish_trait/predator, /datum/fish_trait/stinger)
 	required_temperature_min = MIN_AQUARIUM_TEMP+18
 	required_temperature_max = MIN_AQUARIUM_TEMP+26
+
+/obj/item/fish/chainsawfish/Initialize(mapload)
+	. = ..()
+	AddElement(/datum/element/update_icon_updates_onmob)
+
+/obj/item/fish/chainsawfish/update_icon_state()
+	if(status == FISH_DEAD)
+		inhand_icon_state = "chainsawfish_dead"
+	else
+		inhand_icon_state = "chainsawfish"
+	if(HAS_TRAIT(src, TRAIT_WIELDED))
+		inhand_icon_state = "[inhand_icon_state]_wielded"
+	return ..()
+
+/obj/item/fish/chainsawfish/get_force_rank()
+	switch(w_class)
+		if(WEIGHT_CLASS_TINY)
+			force -= 10
+			attack_speed -= 0.2 SECONDS
+			demolition_mod -= 0.4
+			block_chance -= 15
+			armour_penetration -= 10
+			wound_bonus -= 10
+			bare_wound_bonus -= 10
+			toolspeed += 0.6
+		if(WEIGHT_CLASS_SMALL)
+			force -= 8
+			attack_speed -= 0.1 SECONDS
+			demolition_mod -= 0.3
+			block_chance -= 10
+			armour_penetration -= 10
+			wound_bonus -= 10
+			bare_wound_bonus -= 10
+			toolspeed += 0.4
+		if(WEIGHT_CLASS_NORMAL)
+			force -= 5
+			demolition_mod -= 0.15
+			block_chance -= 5
+			armour_penetration -= 5
+			wound_bonus -= 5
+			bare_wound_bonus -= 5
+			toolspeed += 0.2
+		if(WEIGHT_CLASS_HUGE)
+			force += 2
+			attack_speed += 0.2 SECONDS
+			demolition_mod += 0.15
+			armour_penetration += 10
+			block_chance += 10
+			wound_bonus += 10
+			bare_wound_bonus += 5
+		if(WEIGHT_CLASS_GIGANTIC)
+			force += 6
+			attack_speed += 0.4 SECONDS
+			demolition_mod += 0.3
+			block_chance += 20
+			armour_penetration += 20
+			wound_bonus += 15
+			bare_wound_bonus += 10
+			toolspeed -= 0.1
+
+	if(status == FISH_DEAD)
+		force -= 8 + w_class
+		hitsound = SFX_SWING_HIT
+		block_chance -= 25
+		demolition_mod -= 0.3
+		armour_penetration -= 15
+		wound_bonus -= 5
+		bare_wound_bonus -= 5
+		toolspeed += 1
+
+/obj/item/fish/chainsawfish/calculate_fish_force_bonus(bonus_malus)
+	. = ..()
+	armour_penetration += bonus_malus * 3
+	wound_bonus += bonus_malus * 2
+	bare_wound_bonus += bonus_malus * 3
+	block_chance += bonus_malus * 2
+	toolspeed -= bonus_malus * 0.1
+	demolition_mod += bonus_malus * 0.1
 
 /obj/item/fish/soul
 	name = "soulfish"
@@ -1000,7 +1155,7 @@
 
 /obj/item/fish/skin_crab
 	name = "skin crab"
-	desc = "<i>\"And on the eight day, a demential mockery of both humanity and crabity was made.\"<i> Fascinating."
+	desc = "<i>\"And on the eighth day, a demential mockery of both humanity and crabity was made.\"<i> Fascinating."
 	icon_state = "skin_crab"
 	dedicated_in_aquarium_icon_state = "skin_crab_small"
 	sprite_width = 7
@@ -1009,7 +1164,7 @@
 	average_weight = 750
 	stable_population = 5
 	show_in_catalog = FALSE
-	beauty = FISH_BEAUTY_EXCELLENT
+	beauty = FISH_BEAUTY_GREAT
 	favorite_bait = list(
 		list(
 			"Type" = "Foodtype",
