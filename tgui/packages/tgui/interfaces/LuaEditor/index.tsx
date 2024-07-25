@@ -62,7 +62,6 @@ export const LuaEditor = () => {
 
   const sectionRef = useRef<HTMLDivElement>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
-  const saveButtonRef = useRef<HTMLAnchorElement>(null);
 
   useLayoutEffect(() => {
     const { data } = useBackend<LuaEditorData>();
@@ -169,7 +168,6 @@ export const LuaEditor = () => {
             }
           }}
         />
-        <a hidden download ref={saveButtonRef} />
         <MenuBar>
           <MenuBar.Dropdown
             entry="file"
@@ -186,18 +184,6 @@ export const LuaEditor = () => {
             <MenuBar.Dropdown.MenuItem
               displayText="Open"
               onClick={closeMenuAndThen(() => fileInputRef.current?.click())}
-            />
-            <MenuBar.Dropdown.MenuItem
-              displayText="Save"
-              onClick={closeMenuAndThen(() => {
-                if (saveButtonRef.current) {
-                  const outFile = new File([scriptInput], 'script.lua');
-                  let outUrl = URL.createObjectURL(outFile);
-                  saveButtonRef.current.href = outUrl;
-                  saveButtonRef.current.click();
-                  URL.revokeObjectURL(outUrl);
-                }
-              })}
             />
             <MenuBar.Dropdown.MenuItem
               displayText="Upload and Run"
