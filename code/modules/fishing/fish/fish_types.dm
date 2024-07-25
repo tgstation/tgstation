@@ -14,8 +14,8 @@
 	favorite_bait = list(/obj/item/food/bait/worm)
 	required_temperature_min = MIN_AQUARIUM_TEMP+18
 	required_temperature_max = MIN_AQUARIUM_TEMP+26
-	evolution_types = list(/datum/fish_evolution/three_eyes, /datum/fish_evolution/chainsawfish, /obj/item/fish/three_eyes/gill)
-	compatible_types = list(/obj/item/fish/goldfish/gill, /obj/item/fish/three_eyes)
+	evolution_types = list(/datum/fish_evolution/three_eyes, /datum/fish_evolution/chainsawfish)
+	compatible_types = list(/obj/item/fish/goldfish/gill, /obj/item/fish/three_eyes, /obj/item/fish/three_eyes/gill)
 
 /obj/item/fish/goldfish/gill
 	name = "McGill"
