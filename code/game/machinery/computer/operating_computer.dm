@@ -155,7 +155,8 @@
 				"next_step" = capitalize(surgery_step.name),
 				"chems_needed" = chems_needed,
 				"alternative_step" = alternative_step,
-				"alt_chems_needed" = alt_chems_needed
+				"alt_chems_needed" = alt_chems_needed,
+				"chems_present" = surgery_step.chem_check(patient)
 			))
 	return data
 
