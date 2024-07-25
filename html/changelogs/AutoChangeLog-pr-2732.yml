@@ -1,0 +1,9 @@
+author: "KnigTheThrasher"
+delete-after: True
+changes:
+  - rscadd: "Added new door in kitchen"
+  - bugfix: "Fixed atmos gas tank being flipped in the wrong direction"
+  - rscadd: "More platings in atmos gas tanks"
+  - bugfix: "Fixed permabrig access"
+  - bugfix: "Added ceiling to the ptl room"
+  - bugfix: "Fixed coffins in morgue"
