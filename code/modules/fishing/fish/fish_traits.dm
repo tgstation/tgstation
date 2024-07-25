@@ -14,6 +14,8 @@ GLOBAL_LIST_INIT(fish_traits, init_subtypes_w_path_keys(/datum/fish_trait, list(
 	var/list/guaranteed_inheritance_types
 	/// Depending on the value, fish with trait will be reported as more or less difficult in the catalog.
 	var/added_difficulty = 0
+	/// Reagents added to the fish when gained
+	var/list/reagents_to_add
 
 /// Difficulty modifier from this mod, needs to return a list with two values
 /datum/fish_trait/proc/difficulty_mod(obj/item/fishing_rod/rod, mob/fisherman)
@@ -31,7 +33,11 @@ GLOBAL_LIST_INIT(fish_traits, init_subtypes_w_path_keys(/datum/fish_trait, list(
 
 /// Applies some special qualities to the fish that has been spawned
 /datum/fish_trait/proc/apply_to_fish(obj/item/fish/fish)
-	return
+	SHOULD_CALL_PARENT(TRUE)
+	if(reagents_to_add)
+		for(var/reagent in reagents_to_add)
+			add_to_reagents(fish, reagent, reagents_to_add[reagent])
+		RegisterSignal(fish, COMSIG_ATOM_PROCESSED, PROC_REF(process_reagents))
 
 /// Proc used by both the predator and necrophage traits.
 /datum/fish_trait/proc/eat_fish(obj/item/fish/predator, obj/item/fish/prey)
@@ -46,6 +52,19 @@ GLOBAL_LIST_INIT(fish_traits, init_subtypes_w_path_keys(/datum/fish_trait, list(
 	LAZYINITLIST(fish.grind_results)
 	fish.grind_results.Insert(1, reagent_type)
 	fish.grind_results[reagent_type] = amount
+
+/datum/fish_trait/yucky/proc/process_reagents(obj/item/fish/source, mob/living/user, obj/item/process_item, list/results)
+	SIGNAL_HANDLER
+	var/results_with_reagents = 0
+	for(var/atom/result as anything in results)
+		if(result.reagents)
+			results_with_reagents++
+	if(!results_with_reagents)
+		return
+	for(var/reagent in reagents_to_add)
+		var/amount = round(source.grind_results[reagent] / results_with_reagents, 0.1)
+		for(var/atom/result as anything in results)
+			result.reagents?.add_reagent(reagent, amount)
 
 /datum/fish_trait/wary
 	name = "Wary"
@@ -94,6 +113,7 @@ GLOBAL_LIST_INIT(fish_traits, init_subtypes_w_path_keys(/datum/fish_trait, list(
 		.[MULTIPLICATIVE_FISHING_MOD] = 0
 
 /datum/fish_trait/nocturnal/apply_to_fish(obj/item/fish/fish)
+	. = ..()
 	RegisterSignal(fish, COMSIG_FISH_LIFE, PROC_REF(check_light))
 
 /datum/fish_trait/nocturnal/proc/check_light(obj/item/fish/source, seconds_per_tick)
@@ -150,6 +170,7 @@ GLOBAL_LIST_INIT(fish_traits, init_subtypes_w_path_keys(/datum/fish_trait, list(
 	catalog_description = "This fish emits an invisible toxin that emulsifies other fish for it to feed on."
 
 /datum/fish_trait/emulsijack/apply_to_fish(obj/item/fish/fish)
+	. = ..()
 	RegisterSignal(fish, COMSIG_FISH_LIFE, PROC_REF(emulsify))
 	ADD_TRAIT(fish, TRAIT_RESIST_EMULSIFY, FISH_TRAIT_DATUM)
 
@@ -173,6 +194,7 @@ GLOBAL_LIST_INIT(fish_traits, init_subtypes_w_path_keys(/datum/fish_trait, list(
 	incompatible_traits = list(/datum/fish_trait/vegan)
 
 /datum/fish_trait/necrophage/apply_to_fish(obj/item/fish/fish)
+	. = ..()
 	RegisterSignal(fish, COMSIG_FISH_LIFE, PROC_REF(eat_dead_fishes))
 
 /datum/fish_trait/necrophage/proc/eat_dead_fishes(obj/item/fish/source, seconds_per_tick)
@@ -192,6 +214,7 @@ GLOBAL_LIST_INIT(fish_traits, init_subtypes_w_path_keys(/datum/fish_trait, list(
 	diff_traits_inheritability = 25
 
 /datum/fish_trait/parthenogenesis/apply_to_fish(obj/item/fish/fish)
+	. = ..()
 	ADD_TRAIT(fish, TRAIT_FISH_SELF_REPRODUCE, FISH_TRAIT_DATUM)
 
 /**
@@ -205,7 +228,16 @@ GLOBAL_LIST_INIT(fish_traits, init_subtypes_w_path_keys(/datum/fish_trait, list(
 	incompatible_traits = list(/datum/fish_trait/crossbreeder)
 
 /datum/fish_trait/no_mating/apply_to_fish(obj/item/fish/fish)
+	. = ..()
 	ADD_TRAIT(fish, TRAIT_FISH_NO_MATING, FISH_TRAIT_DATUM)
+
+///Prevent offsprings of fish with this trait from being of the same type (unless self-mating or the partner also has the trait)
+/datum/fish_trait/recessive
+	diff_traits_inheritability = 0
+
+/datum/fish_trait/no_mating/apply_to_fish(obj/item/fish/fish)
+	. = ..()
+	ADD_TRAIT(fish, TRAIT_FISH_RECESSIVE, FISH_TRAIT_DATUM)
 
 /datum/fish_trait/revival
 	diff_traits_inheritability = 15
@@ -214,6 +246,7 @@ GLOBAL_LIST_INIT(fish_traits, init_subtypes_w_path_keys(/datum/fish_trait, list(
 	guaranteed_inheritance_types = list(/obj/item/fish/boned, /obj/item/fish/mastodon)
 
 /datum/fish_trait/revival/apply_to_fish(obj/item/fish/fish)
+	. = ..()
 	RegisterSignal(fish, COMSIG_FISH_STATUS_CHANGED, PROC_REF(check_status))
 
 /datum/fish_trait/revival/proc/check_status(obj/item/fish/source)
@@ -238,6 +271,7 @@ GLOBAL_LIST_INIT(fish_traits, init_subtypes_w_path_keys(/datum/fish_trait, list(
 	incompatible_traits = list(/datum/fish_trait/vegan)
 
 /datum/fish_trait/predator/apply_to_fish(obj/item/fish/fish)
+	. = ..()
 	RegisterSignal(fish, COMSIG_FISH_LIFE, PROC_REF(eat_fishes))
 
 /datum/fish_trait/predator/proc/eat_fishes(obj/item/fish/source, seconds_per_tick)
@@ -256,31 +290,21 @@ GLOBAL_LIST_INIT(fish_traits, init_subtypes_w_path_keys(/datum/fish_trait, list(
 /datum/fish_trait/yucky
 	name = "Yucky"
 	catalog_description = "This fish tastes so repulsive, other fishes won't try to eat it."
+	reagents_to_add = list(/datum/reagent/yuck = 3)
 
 /datum/fish_trait/yucky/apply_to_fish(obj/item/fish/fish)
-	RegisterSignal(fish, COMSIG_ATOM_PROCESSED, PROC_REF(add_yuck))
+	. = ..()
 	ADD_TRAIT(fish, TRAIT_YUCKY_FISH, FISH_TRAIT_DATUM)
-	add_to_reagents(fish, /datum/reagent/yuck, 3)
-
-/datum/fish_trait/yucky/proc/add_yuck(obj/item/fish/source, mob/living/user, obj/item/process_item, list/results)
-	var/amount = source.grind_results[/datum/reagent/yuck] / length(results)
-	for(var/atom/result as anything in results)
-		result.reagents?.add_reagent(/datum/reagent/yuck, amount)
 
 /datum/fish_trait/toxic
 	name = "Toxic"
 	catalog_description = "This fish contains toxins in its liver. Feeding it to predatory fishes or people is not reccomended."
 	diff_traits_inheritability = 25
+	reagents_to_add = list(/datum/reagent/toxin/tetrodotoxin = 2.5)
 
 /datum/fish_trait/toxic/apply_to_fish(obj/item/fish/fish)
-	RegisterSignal(fish, COMSIG_ATOM_PROCESSED, PROC_REF(add_toxin))
+	. = ..()
 	RegisterSignal(fish, COMSIG_FISH_EATEN_BY_OTHER_FISH, PROC_REF(on_eaten))
-	add_to_reagents(fish, /datum/reagent/toxin/tetrodotoxin, 2.5)
-
-/datum/fish_trait/toxic/proc/add_toxin(obj/item/fish/source, mob/living/user, obj/item/process_item, list/results)
-	var/amount = source.grind_results[ /datum/reagent/toxin/tetrodotoxin] / length(results)
-	for(var/atom/result as anything in results)
-		result.reagents?.add_reagent(/datum/reagent/toxin/tetrodotoxin, amount)
 
 /datum/fish_trait/toxic/proc/on_eaten(obj/item/fish/source, obj/item/fish/predator)
 	if(HAS_TRAIT(predator, TRAIT_FISH_TOXIN_IMMUNE))
@@ -303,6 +327,7 @@ GLOBAL_LIST_INIT(fish_traits, init_subtypes_w_path_keys(/datum/fish_trait, list(
 	diff_traits_inheritability = 40
 
 /datum/fish_trait/toxin_immunity/apply_to_fish(obj/item/fish/fish)
+	. = ..()
 	ADD_TRAIT(fish, TRAIT_FISH_TOXIN_IMMUNE, FISH_TRAIT_DATUM)
 
 /datum/fish_trait/crossbreeder
@@ -313,6 +338,7 @@ GLOBAL_LIST_INIT(fish_traits, init_subtypes_w_path_keys(/datum/fish_trait, list(
 	incompatible_traits = list(/datum/fish_trait/no_mating)
 
 /datum/fish_trait/crossbreeder/apply_to_fish(obj/item/fish/fish)
+	. = ..()
 	ADD_TRAIT(fish, TRAIT_FISH_CROSSBREEDER, FISH_TRAIT_DATUM)
 
 /datum/fish_trait/aggressive
@@ -322,6 +348,7 @@ GLOBAL_LIST_INIT(fish_traits, init_subtypes_w_path_keys(/datum/fish_trait, list(
 	catalog_description = "This fish is aggressively territorial, and may attack fish that come close to it."
 
 /datum/fish_trait/aggressive/apply_to_fish(obj/item/fish/fish)
+	. = ..()
 	RegisterSignal(fish, COMSIG_FISH_LIFE, PROC_REF(try_attack_fish))
 
 /datum/fish_trait/aggressive/proc/try_attack_fish(obj/item/fish/source, seconds_per_tick)
@@ -346,6 +373,7 @@ GLOBAL_LIST_INIT(fish_traits, init_subtypes_w_path_keys(/datum/fish_trait, list(
 	added_difficulty = 5
 
 /datum/fish_trait/lubed/apply_to_fish(obj/item/fish/fish)
+	. = ..()
 	fish.AddComponent(/datum/component/slippery, 8 SECONDS, SLIDE|GALOSHES_DONT_HELP)
 
 /datum/fish_trait/lubed/minigame_mod(obj/item/fishing_rod/rod, mob/fisherman, datum/fishing_challenge/minigame)
@@ -359,6 +387,7 @@ GLOBAL_LIST_INIT(fish_traits, init_subtypes_w_path_keys(/datum/fish_trait, list(
 	catalog_description = "This fish has developed a primitive adaptation to life on both land and water."
 
 /datum/fish_trait/amphibious/apply_to_fish(obj/item/fish/fish)
+	. = ..()
 	ADD_TRAIT(fish, TRAIT_FISH_AMPHIBIOUS, FISH_TRAIT_DATUM)
 	if(fish.required_fluid_type == AQUARIUM_FLUID_AIR)
 		fish.required_fluid_type = AQUARIUM_FLUID_FRESHWATER
@@ -371,6 +400,7 @@ GLOBAL_LIST_INIT(fish_traits, init_subtypes_w_path_keys(/datum/fish_trait, list(
 	incompatible_traits = list(/datum/fish_trait/predator, /datum/fish_trait/necrophage)
 
 /datum/fish_trait/mixotroph/apply_to_fish(obj/item/fish/fish)
+	. = ..()
 	ADD_TRAIT(fish, TRAIT_FISH_NO_HUNGER, FISH_TRAIT_DATUM)
 
 /datum/fish_trait/antigrav
@@ -384,6 +414,7 @@ GLOBAL_LIST_INIT(fish_traits, init_subtypes_w_path_keys(/datum/fish_trait, list(
 	minigame.special_effects |= FISHING_MINIGAME_RULE_ANTIGRAV
 
 /datum/fish_trait/antigrav/apply_to_fish(obj/item/fish/fish)
+	. = ..()
 	fish.AddElement(/datum/element/forced_gravity, NEGATIVE_GRAVITY)
 
 ///Anxiety means the fish will die if in a location with more than 3 fish (including itself)
@@ -395,6 +426,7 @@ GLOBAL_LIST_INIT(fish_traits, init_subtypes_w_path_keys(/datum/fish_trait, list(
 	catalog_description = "This fish tends to die of stress when forced to be around too many other fish."
 
 /datum/fish_trait/anxiety/apply_to_fish(obj/item/fish/fish)
+	. = ..()
 	RegisterSignal(fish, COMSIG_FISH_LIFE, PROC_REF(on_fish_life))
 
 ///signal sent when the anxiety fish is fed, killing it if sharing contents with too many fish.
@@ -417,6 +449,7 @@ GLOBAL_LIST_INIT(fish_traits, init_subtypes_w_path_keys(/datum/fish_trait, list(
 	catalog_description = "This fish is electroreceptive, and will generate electric fields. Can be harnessed inside a bioelectric generator."
 
 /datum/fish_trait/electrogenesis/apply_to_fish(obj/item/fish/fish)
+	. = ..()
 	ADD_TRAIT(fish, TRAIT_FISH_ELECTROGENESIS, FISH_TRAIT_DATUM)
 	RegisterSignal(fish, COMSIG_ITEM_ATTACK, PROC_REF(on_item_attack))
 

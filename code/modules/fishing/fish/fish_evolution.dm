@@ -78,6 +78,7 @@ GLOBAL_LIST_INIT(fish_evolutions, init_subtypes_w_path_keys(/datum/fish_evolutio
 /datum/fish_evolution/purple_sludgefish
 	probability = 5
 	new_fish_type = /obj/item/fish/sludgefish/purple
+	new_traits = list(/datum/fish_trait/recessive)
 	removed_traits = list(/datum/fish_trait/no_mating)
 
 /datum/fish_evolution/mastodon

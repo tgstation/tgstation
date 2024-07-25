@@ -23,6 +23,7 @@ GLOBAL_LIST_INIT(specific_fish_icons, zebra_typecacheof(list(
 	/obj/item/fish/holo/puffer = FISH_ICON_CHUNKY,
 	/obj/item/fish/mastodon = FISH_ICON_BONE,
 	/obj/item/fish/pufferfish = FISH_ICON_CHUNKY,
+	/obj/item/fish/sand_crab = FISH_ICON_CRAB,
 	/obj/item/fish/slimefish = FISH_ICON_SLIME,
 	/obj/item/fish/sludgefish = FISH_ICON_SLIME,
 	/obj/item/fish/starfish = FISH_ICON_STAR,
@@ -45,6 +46,10 @@ GLOBAL_LIST_INIT(specific_fish_icons, zebra_typecacheof(list(
 	var/list/fish_table = list()
 	/// If a key from fish_table is present here, that fish is availible in limited quantity and is reduced by one on successful fishing
 	var/list/fish_counts = list()
+	/// Any limited quantity stuff in this list will be readded to the counts after a while
+	var/list/fish_count_regen
+	/// A list of stuff that's currently waiting to be readded to fish_counts
+	var/list/currently_on_regen
 	/// Text shown as baloon alert when you roll a dud in the table
 	var/duds = list("it was nothing", "the hook is empty")
 	/// Baseline difficulty for fishing in this spot
@@ -193,15 +198,25 @@ GLOBAL_LIST_INIT(specific_fish_icons, zebra_typecacheof(list(
 /datum/fish_source/proc/simple_dispense_reward(reward_path, atom/spawn_location, turf/fishing_spot)
 	if(isnull(reward_path))
 		return null
-	if((reward_path in fish_counts)) // This is limited count result
+	if(reward_path in fish_counts) // This is limited count result
 		fish_counts[reward_path] -= 1
-		if(!fish_counts[reward_path])
-			fish_counts -= reward_path //Ran out of these since rolling (multiple fishermen on same source most likely)
-			fish_table -= reward_path
+		var/regen_time = fish_count_regen?[reward_path]
+		if(regen_time)
+			LAZYADDASSOC(currently_on_regen, reward_path, 1)
+			if(currently_on_regen[reward_path] == 1)
+				addtimer(CALLBACK(src, PROC_REF(regen_count), reward_path), regen_time)
 
 	var/atom/movable/reward = spawn_reward(reward_path, spawn_location, fishing_spot)
 	SEND_SIGNAL(src, COMSIG_FISH_SOURCE_REWARD_DISPENSED, reward)
 	return reward
+
+/datum/fish_source/proc/regen_count(reward_path, regen_time)
+	fish_counts[reward_path] += 1
+	currently_on_regen[reward_path] -= 1
+	if(!currently_on_regen[reward_path])
+		LAZYREMOVE(currently_on_regen, reward_path)
+	else
+		addtimer(CALLBACK(src, PROC_REF(regen_count), reward_path), regen_time)
 
 /// Spawns a reward from a atom path right where the fisherman is. Part of the dispense_reward() logic.
 /datum/fish_source/proc/spawn_reward(reward_path, atom/spawn_location, turf/fishing_spot)
@@ -251,6 +266,14 @@ GLOBAL_LIST(fishing_property_cache)
 	else
 		return HAS_TRAIT(bait, identifier)
 
+/// Returns the fish table, with with the unavailable items from fish_counts removed.
+/datum/fish_source/proc/get_fish_table()
+	var/list/table = fish_table.Copy()
+	for(var/result in table)
+		if(fish_counts[result] == 0)
+			final_table -= result
+	return table
+
 /// Builds a fish weights table modified by bait/rod/user properties
 /datum/fish_source/proc/get_modified_fish_table(obj/item/fishing_rod/rod, mob/fisherman)
 	var/obj/item/bait = rod.bait
@@ -272,7 +295,7 @@ GLOBAL_LIST(fishing_property_cache)
 
 	var/list/fish_list_properties = collect_fish_properties()
 
-	var/list/final_table = fish_table.Copy()
+	var/list/final_table = get_fish_table()
 	for(var/result in final_table)
 		final_table[result] *= rod.hook?.get_hook_bonus_multiplicative(result)
 		final_table[result] += rod.hook?.get_hook_bonus_additive(result)//Decide on order here so it can be multiplicative
@@ -353,7 +376,7 @@ GLOBAL_LIST(fishing_property_cache)
 	for(var/i in 1 to (severity + 2))
 		if(!prob((100 + 100 * severity)/i * multiplier))
 			continue
-		var/reward_loot = pick_weight(fish_table)
+		var/reward_loot = pick_weight(get_fish_table())
 		var/atom/movable/reward = simple_dispense_reward(reward_loot, location, location)
 		if(isnull(reward))
 			continue

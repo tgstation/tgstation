@@ -16,7 +16,7 @@
 	obj_flags = UNIQUE_RENAME
 
 	/// Resulting width of aquarium visual icon - default size of "fish_greyscale" state
-	var/sprite_width = 3
+	var/sprite_width = 5
 	/// Resulting height of aquarium visual icon - default size of "fish_greyscale" state
 	var/sprite_height = 3
 
@@ -125,6 +125,9 @@
 	/// Average weight for this fish type in grams
 	var/average_weight = 1000
 
+	///The general deviation from the average weight and size this fish has in the wild
+	var/weight_size_deviation = 0.2
+
 	/// When outside of an aquarium, these gases that are checked (as well as pressure and temp) to assert if the environment is safe or not.
 	var/list/safe_air_limits = list(
 		/datum/gas/oxygen = list(12, 100),
@@ -195,7 +198,7 @@
 	. += span_notice("It weighs [weight] g.")
 
 ///Randomizes weight and size.
-/obj/item/fish/proc/randomize_size_and_weight(base_size = average_size, base_weight = average_weight, deviation = 0.2)
+/obj/item/fish/proc/randomize_size_and_weight(base_size = average_size, base_weight = average_weight, deviation = weight_size_deviation)
 	var/size_deviation = 0.2 * base_size
 	var/new_size = round(clamp(gaussian(base_size, size_deviation), average_size * 1/MAX_FISH_DEVIATION_COEFF, average_size * MAX_FISH_DEVIATION_COEFF))
 
@@ -459,7 +462,7 @@
 		return FALSE
 	if(!being_targeted && length(aquarium.get_fishes()) >= AQUARIUM_MAX_BREEDING_POPULATION)
 		return FALSE
-	return aquarium.allow_breeding && health >= initial(health) * 0.8 && stable_population > 1 && world.time >= breeding_wait
+	return aquarium.allow_breeding && health >= initial(health) * 0.8 && stable_population >= 1 && world.time >= breeding_wait
 
 #undef AQUARIUM_MAX_BREEDING_POPULATION
 
@@ -496,36 +499,48 @@
 					second_fish = other_fish
 					break
 
-	if(!second_fish && !HAS_TRAIT(src, TRAIT_FISH_SELF_REPRODUCE))
-		return FALSE
+	if(!second_fish)
+		if(!HAS_TRAIT(src, TRAIT_FISH_SELF_REPRODUCE))
+			return FALSE
+		if(length(aquarium.tracked_fish_by_type[type]) >= stable_population)
+			return FALSE
+
+	if(PERFORM_ALL_TESTS(fish_breeding) && second_fish && !length(evolution_types))
+		return create_offspring(second_fish.type, second_fish, chosen_evolution)
 
 	var/chosen_type
 	var/datum/fish_evolution/chosen_evolution
-	if(PERFORM_ALL_TESTS(fish_breeding) && second_fish && !length(evolution_types))
-		chosen_type = second_fish.type
-	else
-		var/list/possible_evolutions = list()
-		for(var/evolution_type in evolution_types)
+	var/list/possible_evolutions = list()
+	for(var/evolution_type in evolution_types)
+		var/datum/fish_evolution/evolution = GLOB.fish_evolutions[evolution_type]
+		if(evolution.check_conditions(src, second_fish, aquarium))
+			possible_evolutions += evolution
+	if(second_fish?.evolution_types)
+		var/secondary_evolutions = (second_fish.evolution_types - evolution_types)
+		for(var/evolution_type in secondary_evolutions)
 			var/datum/fish_evolution/evolution = GLOB.fish_evolutions[evolution_type]
-			if(evolution.check_conditions(src, second_fish, aquarium))
+			if(evolution.check_conditions(second_fish, src, aquarium))
 				possible_evolutions += evolution
-		if(second_fish?.evolution_types)
-			var/secondary_evolutions = (second_fish.evolution_types - evolution_types)
-			for(var/evolution_type in secondary_evolutions)
-				var/datum/fish_evolution/evolution = GLOB.fish_evolutions[evolution_type]
-				if(evolution.check_conditions(second_fish, src, aquarium))
-					possible_evolutions += evolution
 
-		if(length(possible_evolutions))
-			chosen_evolution = pick(possible_evolutions)
-			chosen_type = chosen_evolution.new_fish_type
-		else if(second_fish)
-			if(length(aquarium.tracked_fish_by_type[type]) >= stable_population)
+	if(length(possible_evolutions))
+		chosen_evolution = pick(possible_evolutions)
+		chosen_type = chosen_evolution.new_fish_type
+	else if(second_fish)
+		var/recessive = HAS_TRAIT(src, TRAIT_FISH_RECESSIVE)
+		var/recessive_partner = HAS_TRAIT(second_fish, TRAIT_FISH_RECESSIVE)
+		if(length(aquarium.tracked_fish_by_type[type]) >= stable_population)
+			if(recessive_partner && !recessive)
+				return FALSE
+			chosen_type = second_fish.type
+		else
+			if(recessive && !recessive_partner)
 				chosen_type = second_fish.type
+			else if(recessive_partner && !recessive)
+				chosen_type = type
 			else
 				chosen_type = pick(second_fish.type, type)
-		else
-			chosen_type = type
+	else
+		chosen_type = type
 
 	return create_offspring(chosen_type, second_fish, chosen_evolution)
 

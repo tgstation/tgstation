@@ -10,7 +10,6 @@
 /// The window of time between biting phase and back to baiting phase
 #define BITING_TIME_WINDOW 4 SECONDS
 
-
 ///Defines to know how the bait is moving on the minigame slider.
 #define REELING_STATE_IDLE 0
 #define REELING_STATE_UP 1
@@ -28,8 +27,6 @@
 	var/start_time
 	/// Is it finished (either by win/lose or window closing)
 	var/completed = FALSE
-	/// Fish AI type to use
-	var/fish_ai = FISH_AI_DUMB
 	/// Rule modifiers (eg weighted bait)
 	var/special_effects = NONE
 	/// A list of possible active minigame effects. If not empty, one will be picked from time to time.
@@ -159,7 +156,7 @@
 
 	mover.adjust_to_difficulty()
 
-	bait_height -= difficulty
+	bait_height -= round(difficulty * BAIT_HEIGHT_DIFFICULTY_MALUS)
 	bait_pixel_height = round(MINIGAME_BAIT_HEIGHT * (bait_height/initial(bait_height)), 1)
 
 /datum/fishing_challenge/Destroy(force)
@@ -507,9 +504,7 @@
 		bait_velocity += velocity_change
 
 	//check that the fish area is still intersecting the bait now that it has moved
-	fish_on_bait = (fish_position + fish_height >= bait_position) && (bait_position + bait_height >= fish_position)
-
-	if(fish_on_bait)
+	if(is_fish_on_bait())
 		completion += completion_gain * seconds_per_tick
 		if(completion >= 100)
 			complete(TRUE)
@@ -520,6 +515,10 @@
 			complete(FALSE)
 
 	completion = clamp(completion, 0, 100)
+
+///Returns TRUE if the fish and the bait are intersecting
+/datum/fishing_challenge/proc/is_fish_on_bait()
+	return (fish_position + fish_height >= bait_position) && (bait_position + bait_height >= fish_position)
 
 ///update the vertical pixel position of both fish and bait, and the icon state of the completion bar
 /datum/fishing_challenge/proc/update_visuals()
@@ -619,15 +618,6 @@
 #undef WAIT_PHASE
 #undef BITING_PHASE
 #undef MINIGAME_PHASE
-
-#undef FISHING_MINIGAME_AREA
-#undef FISH_TARGET_MIN_DISTANCE
-#undef FISH_FRICTION_MULT
-#undef FISH_SHORT_JUMP_MIN_DISTANCE
-#undef FISH_SHORT_JUMP_MAX_DISTANCE
-#undef FISH_ON_BAIT_ACCELERATION_MULT
-#undef BAIT_MIN_VELOCITY_BOUNCE
-#undef BAIT_DECELERATION_MULT
 
 #undef MINIGAME_SLIDER_HEIGHT
 #undef MINIGAME_BAIT_HEIGHT

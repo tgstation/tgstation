@@ -1,17 +1,24 @@
 /datum/fish_source/ocean
 	fish_table = list(
 		FISHING_DUD = 15,
-		/obj/item/coin/gold = 5,
+		/obj/item/coin/gold = 7,
 		/obj/item/fish/clownfish = 15,
 		/obj/item/fish/pufferfish = 15,
 		/obj/item/fish/cardinal = 15,
 		/obj/item/fish/greenchromis = 15,
-		/obj/item/fish/lanternfish = 5,
-		/obj/item/fish/zipzap = 5,
-		/obj/item/fish/clownfish/lube = 3,
+		/obj/item/fish/stingray = 10,
+		/obj/item/fish/lanternfish = 7,
+		/obj/item/fish/zipzap = 7,
+		/obj/item/fish/clownfish/lube = 5,
+		/obj/item/fish/swordfish = 5,
 	)
 	fish_counts = list(
 		/obj/item/fish/clownfish/lube = 2,
+		/obj/item/fish/swordfish = 2,
+	)
+	fish_count_regen = list(
+		/obj/item/fish/clownfish/lube = 3 MINUTES,
+		/obj/item/fish/swordfish = 5 MINUTES,
 	)
 	fishing_difficulty = FISHING_DEFAULT_DIFFICULTY + 5
 	explosive_malus = TRUE
@@ -19,12 +26,63 @@
 /datum/fish_source/ocean/beach
 	catalog_description = "Beach shore water"
 
+/datum/fish_source/ice_fishing
+	catalog_description = "Ice-covered water"
+	fish_table = list(
+		FISHING_DUD = 4,
+		/obj/item/fish/arctic_char = 5,
+		/obj/item/fish/sockeye_salmon = 5,
+		/obj/item/fish/chasm_crab/ice = 2,
+		/obj/item/fish/boned = 1,
+	)
+	fishing_difficulty = FISHING_DEFAULT_DIFFICULTY + 20
+
+/datum/fish_source/river
+	catalog_description = "River water"
+	fish_table = list(
+		FISHING_DUD = 4,
+		/obj/item/fish/goldfish = 5,
+		/obj/item/fish/guppy = 5,
+		/obj/item/fish/angelfish = 4,
+		/obj/item/fish/catfish = 4,
+		/obj/item/fish/slimefish = 2,
+		/obj/item/fish/three_eyes = 1,
+		/obj/item/fish/sockeye_salmon = 1,
+		/obj/item/fish/arctic_char = 1,
+	)
+	fishing_difficulty = FISHING_DEFAULT_DIFFICULTY + 5
+
+/datum/fish_source/sand
+	catalog_description = "Sand"
+	fish_table = list(
+		FISHING_DUD = 8,
+		/obj/item/fish/sand_crab = 10,
+		/obj/item/fish/sand_surfer = 10,
+		/obj/item/fish/hollow = 10,
+		/obj/item/coin/gold = 3,
+	)
+	fishing_difficulty = FISHING_DEFAULT_DIFFICULTY + 20
+
+/datum/fish_source/cursed_spring
+	catalog_description = null //it's a secret (sorta, I know you're reading this)
+	fish_table = list(
+		FISHING_DUD = 2,
+		/obj/item/fish/soul = 2,
+		/obj/item/fish/skin_crab = 2,
+		/obj/item/fishing_rod/telescopic/master = 1,
+	)
+	fish_counts = list(
+		/obj/item/fishing_rod/telescopic/master = 1,
+	)
+	fishing_difficulty = FISHING_DEFAULT_DIFFICULTY + 25
+
 /datum/fish_source/portal
 	fish_table = list(
 		FISHING_DUD = 7,
 		/obj/item/fish/goldfish = 10,
 		/obj/item/fish/guppy = 10,
 		/obj/item/fish/angelfish = 10,
+		/obj/item/fish/three_eyes = 3,
 	)
 	catalog_description = "Aquarium dimension (Fishing portal generator)"
 	///The name of this option shown in the radial menu on the fishing portal generator
@@ -70,6 +128,14 @@
 		/obj/item/fish/needlefish = 5,
 		/obj/item/fish/armorfish = 5,
 		/obj/item/fish/zipzap = 5,
+		/obj/item/fish/stingray = 4,
+		/obj/item/fish/swordfish = 3,
+	)
+	fish_counts = list(
+		/obj/item/fish/swordfish = 2,
+	)
+	fish_count_regen = list(
+		/obj/item/fish/swordfish = 5 MINUTES,
 	)
 	catalog_description = "Ocean dimension (Fishing portal generator)"
 	fishing_difficulty = FISHING_DEFAULT_DIFFICULTY + 10
@@ -101,6 +167,13 @@
 		/obj/item/fish/donkfish = 5,
 		/obj/item/fish/emulsijack = 5,
 		/obj/item/fish/jumpercable = 5,
+		/obj/item/fish/chainsaw = 3,
+	)
+	fish_counts = list(
+		/obj/item/fish/chainsaw = 1,
+	)
+	fish_count_regen = list(
+		/obj/item/fish/chainsaw = 7 MINUTES,
 	)
 	catalog_description = "Syndicate dimension (Fishing portal generator)"
 	radial_name = "Syndicate"
@@ -127,6 +200,7 @@
 
 	///rewards not found in other fishing portals
 	fish_table = list(
+		/obj/item/fish/three_eyes = 3,
 		/obj/item/fish/holo/checkered = 1,
 	)
 
@@ -320,11 +394,16 @@
 		/obj/item/clothing/gloves/bracer = 2,
 		/obj/effect/decal/remains/human = 2,
 		/obj/item/fish/mastodon = 1,
+		/obj/item/fishing_rod/telescopic/master = 1,
 	)
 	fish_counts = list(
 		/obj/item/clothing/gloves/bracer = 1,
 		/obj/effect/decal/remains/human = 1,
 		/obj/item/fish/mastodon = 1,
+		/obj/item/fishing_rod/telescopic/master = 1,
+	)
+	fish_count_regen = list(
+		/obj/item/fish/mastodon = 8 MINUTES,
 	)
 	fishing_difficulty = FISHING_DEFAULT_DIFFICULTY + 15
 

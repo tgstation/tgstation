@@ -21,6 +21,8 @@
 	random_case_rarity = FISH_RARITY_NOPE
 	show_in_catalog = FALSE
 	beauty = FISH_BEAUTY_GOOD
+	compatible_types = list(/obj/item/fish/goldfish)
+	fish_traits = list(/datum/fish_trait/recessive)
 
 /obj/item/fish/angelfish
 	name = "angelfish"
@@ -167,6 +169,7 @@
 	stable_population = 3
 	required_temperature_min = MIN_AQUARIUM_TEMP+23
 	required_temperature_max = MIN_AQUARIUM_TEMP+28
+	fillet_type = /obj/item/food/fishmeat/quality //Too bad they're poisonous
 	fish_traits = list(/datum/fish_trait/heavy, /datum/fish_trait/toxic)
 	beauty = FISH_BEAUTY_GOOD
 
@@ -451,7 +454,7 @@
 	required_fluid_type = AQUARIUM_FLUID_ANY_WATER
 	min_pressure = HAZARD_LOW_PRESSURE
 	health = 300
-	stable_population = 2 //This means they can only crossbreed.
+	stable_population = 1 //This means they can only crossbreed.
 	grind_results = list(/datum/reagent/bone_dust = 5, /datum/reagent/consumable/liquidgibs = 5)
 	fillet_type = /obj/item/stack/sheet/bone
 	num_fillets = 2
@@ -679,3 +682,88 @@
 	//anxiety naturally limits the amount of zipzaps per tank, so they are stronger alone
 	electrogenesis_power = 20 MEGA JOULES
 	beauty = FISH_BEAUTY_GOOD
+
+/obj/item/fish/sockeye_salmon
+	name = "sockeye salmon"
+	desc = "A fairly common and iconic salmon endemic of the Pacific Ocean. At some point imported into outer space, where we're now."
+	icon_state = "sockeye_salmon"
+	dedicated_in_aquarium_icon_state = "sockeye_small"
+	sprite_width = 6
+	sprite_height = 4
+	stable_population = 6
+	required_temperature_min = MIN_AQUARIUM_TEMP+3
+	required_temperature_max = MIN_AQUARIUM_TEMP+19
+	required_fluid_type = AQUARIUM_FLUID_ANADROMOUS
+	fillet_type = /obj/item/food/fishmeat/salmon
+	beauty = FISH_BEAUTY_GOOD
+
+/obj/item/fish/arctic_char
+	name = "arctic char"
+	desc = "A cold-water anadromous fish widespread around the Northern Hemisphere of Earth, yet it has somehow found a way here."
+	icon_state = "arctic_char"
+	dedicated_in_aquarium_icon_state = "arctic_char"
+	sprite_width = 7
+	sprite_height = 4
+	stable_population = 6
+	average_size = 60
+	average_weight = 1200
+	weight_size_deviation = 0.5
+	required_temperature_min = MIN_AQUARIUM_TEMP+3
+	required_temperature_max = MIN_AQUARIUM_TEMP+19
+	required_fluid_type = AQUARIUM_FLUID_ANADROMOUS
+
+/obj/item/fish/stingray
+
+/obj/item/fish/sand_surfer
+
+/obj/item/fish/hollow
+
+/obj/item/fish/swordfish
+
+/obj/item/fish/chainsaw
+
+
+/obj/item/fish/soul
+	name = "soulfish"
+	desc = "A distant yet vaguely close critter, like a long lost relative. You feel your soul rejuvenated just from looking at it... Also, what the fuck is this shit?!"
+	icon_state = "soulfish"
+	dedicated_in_aquarium_icon_state = "soul_small"
+	sprite_width = 7
+	sprite_height = 6
+	average_size = 60
+	average_weight = 1200
+	stable_population = 4
+	show_in_catalog = FALSE
+	beauty = FISH_BEAUTY_EXCELLENT
+	fish_movement_type = /datum/fish_movement/choppy //Glideless movement? in my fishing minigame?
+	favorite_bait = list(
+		list(
+			"Type" = "Foodtype",
+			"Value" = FRIED
+		),
+	)
+	fillet_type = /obj/item/food/meat/cutlet/plain/human
+	required_temperature_min = MIN_AQUARIUM_TEMP+3
+	required_temperature_max = MIN_AQUARIUM_TEMP+38
+	random_case_rarity = FISH_RARITY_NOPE
+
+/obj/item/fish/skin_crab
+	name = "skin crab"
+	desc = "<i>\"And on the eight day, a demential mockery of both humanity and crabity was made.\"<i> Fascinating."
+	icon_state = "skin_crab"
+	dedicated_in_aquarium_icon_state = "skin_crab_small"
+	sprite_width = 7
+	sprite_height = 6
+	average_size = 40
+	average_weight = 750
+	stable_population = 5
+	show_in_catalog = FALSE
+	beauty = FISH_BEAUTY_EXCELLENT
+	favorite_bait = list(
+		list(
+			"Type" = "Foodtype",
+			"Value" = FRIED
+		),
+	)
+	fillet_type = /obj/item/food/meat/slab/rawcrab
+	random_case_rarity = FISH_RARITY_NOPE
