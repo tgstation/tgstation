@@ -144,6 +144,10 @@
 		var/atom/movable/thing = to_eat[1]
 		to_eat -= thing
 
+		if (thing.flags_1 & HOLOGRAM_1)
+			qdel(thing)
+			continue
+
 		if (thing.resistance_flags & INDESTRUCTIBLE)
 			if (!isturf(thing.loc) && !isliving(thing.loc))
 				thing.forceMove(loc)
