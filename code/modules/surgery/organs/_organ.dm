@@ -63,11 +63,6 @@
 	/// String displayed when the organ has decayed.
 	var/failing_desc = "has decayed for too long, and has turned a sickly color. It probably won't work without repairs."
 
-	///Does this organ have any bodytypes to pass to it's bodypart_owner?
-	var/external_bodytypes = NONE
-	///Does this organ have any bodyshapes to pass to it's bodypart_owner?
-	var/external_bodyshapes = NONE
-
 // Players can look at prefs before atoms SS init, and without this
 // they would not be able to see external organs, such as moth wings.
 // This is also necessary because assets SS is before atoms, and so

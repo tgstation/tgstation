@@ -144,7 +144,7 @@
 
 /// Bodypart overlay for the horrible cat ears
 /datum/bodypart_overlay/mutant/cat_ears
-	layers = EXTERNAL_FRONT | EXTERNAL_BEHIND
+	layers = EXTERNAL_FRONT | EXTERNAL_ADJACENT
 	color_source = ORGAN_COLOR_HAIR
 	feature_key = "ears"
 
@@ -160,9 +160,9 @@
 	return TRUE
 
 /datum/bodypart_overlay/mutant/cat_ears/color_image(image/overlay, draw_layer, obj/item/bodypart/limb)
-	if(draw_layer == bitflag_to_layer(colorless_layer))
-		return
-	return ..()
+	if(draw_layer != bitflag_to_layer(colorless_layer))
+		return ..()
+	return overlay
 
 /obj/item/organ/internal/ears/penguin
 	name = "penguin ears"
