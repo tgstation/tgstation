@@ -76,10 +76,11 @@
 	incompatible_traits = list(/datum/fish_trait/dummy/two)
 	inheritability = 100
 	diff_traits_inheritability = 100
+	reagents_to_add = list(/datum/reagent = 10)
 
 /datum/fish_trait/dummy/apply_to_fish(obj/item/fish/fish)
+	. = ..()
 	ADD_TRAIT(fish, TRAIT_FISH_TESTING, FISH_TRAIT_DATUM)
-	fish.grind_results[/datum/reagent] = 10
 
 /datum/fish_trait/dummy/two
 	incompatible_traits = list(/datum/fish_trait/dummy)

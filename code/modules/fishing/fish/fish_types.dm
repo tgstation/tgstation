@@ -581,7 +581,7 @@
 		return
 	holo_area.linked.add_to_spawned(src)
 
-/obj/item/fish/holo/set_status(new_status)
+/obj/item/fish/holo/set_status(new_status, silent = FALSE)
 	. = ..()
 	if(status == FISH_DEAD)
 		animate(src, alpha = 0, 3 SECONDS, easing = SINE_EASING)
