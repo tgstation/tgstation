@@ -135,7 +135,7 @@ function SS13.unregister_signal(datum, signal, func)
 	end
 	if func == nil then
 		if signal == "parent_qdeleting" then
-			handler_data.functions = []
+			handler_data.functions = {}
 		else
 			handler_data.callback:UnregisterSignal(datum, signal)
 			__SS13_signal_handlers[datum][signal] = nil
