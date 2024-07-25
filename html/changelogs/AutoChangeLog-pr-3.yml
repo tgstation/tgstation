@@ -1,0 +1,4 @@
+author: "Paxilmaniac"
+delete-after: True
+changes:
+  - rscadd: "Adds a preference (true by default) for facing your cursor in combat mode"
