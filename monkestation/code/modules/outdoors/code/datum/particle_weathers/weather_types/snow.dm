@@ -1,5 +1,6 @@
 /turf
 	var/weather_affectable = TRUE
+
 /datum/particle_weather/snow_gentle
 	name = "Snow"
 	display_name = "Snow"
@@ -21,6 +22,11 @@
 	target_trait = PARTICLEWEATHER_SNOW
 
 	weather_additional_events = list("wind" = list(5, /datum/weather_event/wind))
+
+/datum/particle_weather/snow_gentle/can_weather_effect(mob/living/mob_to_check)
+	if(HAS_TRAIT(mob_to_check, TRAIT_RESISTCOLD))
+		return FALSE
+	return ..()
 
 /datum/particle_weather/snow_storm
 	name = "Snowstorm"
@@ -51,3 +57,8 @@
 	. = ..()
 	if(ishuman(L))
 		L.adjust_eye_blur(5)
+
+/datum/particle_weather/snow_storm/can_weather_effect(mob/living/mob_to_check)
+	if(HAS_TRAIT(mob_to_check, TRAIT_RESISTCOLD))
+		return FALSE
+	return ..()
