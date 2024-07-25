@@ -516,8 +516,6 @@ GLOBAL_LIST_INIT(cloth_recipes, list ( \
 	drop_sound = 'sound/items/handling/cloth_drop.ogg'
 	pickup_sound = 'sound/items/handling/cloth_pickup.ogg'
 	grind_results = list(/datum/reagent/cellulose = 20)
-	pickup_sound = 'sound/items/cloth_pick_up.ogg'
-	drop_sound = 'sound/items/cloth_drop.ogg'
 
 /obj/item/stack/sheet/cloth/get_main_recipes()
 	. = ..()
