@@ -396,7 +396,10 @@
 	new /obj/item/aquarium_prop/sand(src)
 	new /obj/item/aquarium_prop/seaweed(src)
 
-	new /obj/item/fish/goldfish/gill(src)
+	if(prob(85))
+		new /obj/item/fish/goldfish/gill(src)
+	else
+		new /obj/item/fish/three_eyes/gill(src)
 
 	reagents.add_reagent(/datum/reagent/consumable/nutriment, 2)
 

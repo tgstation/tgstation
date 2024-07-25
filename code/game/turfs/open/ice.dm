@@ -32,13 +32,13 @@
 	if(can_make_hole)
 		. += span_info("You could use a [EXAMINE_HINT("shovel")] or a [EXAMINE_HINT("pick")] to dig a fishing hole here.")
 
-/turf/open/misc/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+/turf/open/misc/ice/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
 	if(!can_make_hole)
 		return NONE
-	if(tool.tool_behaviour != TOOL_SHOVEL && attack_item.tool_behaviour != TOOL_MINING)
+	if(tool.tool_behaviour != TOOL_SHOVEL && tool.tool_behaviour != TOOL_MINING)
 		return NONE
 	balloon_alert(user, "digging...")
-	playsound(interacting_with, 'sound/effects/shovel_dig.ogg', 50, TRUE)
+	playsound(src, 'sound/effects/shovel_dig.ogg', 50, TRUE)
 	if(do_after(user, 5 SECONDS, src))
 		balloon_alert(user, "dug hole")
 		AddComponent(/datum/component/fishing_spot, GLOB.preset_fish_sources[/datum/fish_source/ice_fishing])

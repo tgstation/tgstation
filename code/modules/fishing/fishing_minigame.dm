@@ -356,6 +356,10 @@
 			if(BITING_TIME_WINDOW - 0.5 SECONDS to BITING_TIME_WINDOW)
 				completion *= 1.4
 	completion = round(completion, 1)
+	//randomize the position of the fish a little
+	fish_position = rand(0, (FISHING_MINIGAME_AREA - fish_height) * 0.8)
+	var/diff_dist = 100 + difficulty
+	bait_position = clamp(round(fish_position + rand(-diff_dist, diff_dist) - bait_height * 0.5), 0, FISHING_MINIGAME_AREA - bait_height)
 	if(!prepare_minigame_hud())
 		return
 	phase = MINIGAME_PHASE

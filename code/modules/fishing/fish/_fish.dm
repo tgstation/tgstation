@@ -6,7 +6,6 @@
 	icon_state = "bugfish"
 	lefthand_file = 'icons/mob/inhands/fish_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/fish_righthand.dmi'
-	inhand_icon_state = "fish_normal"
 	force = 6
 	attack_verb_continuous = list("slaps", "whacks")
 	attack_verb_simple = list("slap", "whack")
@@ -209,25 +208,38 @@
 
 ///Updates weight and size, along with weight class, number of fillets you can get and grind results.
 /obj/item/fish/proc/update_size_and_weight(new_size = average_size, new_weight = average_weight)
-	if(size && fillet_type)
-		RemoveElement(/datum/element/processable, TOOL_KNIFE, fillet_type, num_fillets, 0.5 SECONDS, screentip_verb = "Cut")
+	SEND_SIGNAL(src, COMSIG_FISH_UPDATE_SIZE_AND_WEIGHT, new_size, new_weight)
+	if(size)
+		if(fillet_type)
+			RemoveElement(/datum/element/processable, TOOL_KNIFE, fillet_type, num_fillets, 0.5 SECONDS, screentip_verb = "Cut")
+		if(size > FISH_SIZE_TWO_HANDS_REQUIRED)
+			qdel(GetComponent(/datum/component/two_handed))
 	size = new_size
+	var/init_icon_state = initial(inhand_icon_state)
 	switch(size)
 		if(0 to FISH_SIZE_TINY_MAX)
 			update_weight_class(WEIGHT_CLASS_TINY)
-			inhand_icon_state = "fish_small"
+			if(init_icon_state)
+				inhand_icon_state = "fish_small"
 		if(FISH_SIZE_TINY_MAX to FISH_SIZE_SMALL_MAX)
-			inhand_icon_state = "fish_small"
+			if(init_icon_state)
+				inhand_icon_state = "fish_small"
 			update_weight_class(WEIGHT_CLASS_SMALL)
 		if(FISH_SIZE_SMALL_MAX to FISH_SIZE_NORMAL_MAX)
-			inhand_icon_state = "fish_normal"
+			if(init_icon_state)
+				inhand_icon_state = "fish_normal"
 			update_weight_class(WEIGHT_CLASS_NORMAL)
 		if(FISH_SIZE_NORMAL_MAX to FISH_SIZE_BULKY_MAX)
-			inhand_icon_state = "fish_bulky"
+			if(init_icon_state)
+				inhand_icon_state = "fish_bulky"
 			update_weight_class(WEIGHT_CLASS_BULKY)
 		if(FISH_SIZE_BULKY_MAX to INFINITY)
-			inhand_icon_state = "fish_huge"
+			if(init_icon_state)
+				inhand_icon_state = "fish_huge"
 			update_weight_class(WEIGHT_CLASS_HUGE)
+			if(size > FISH_SIZE_TWO_HANDS_REQUIRED)
+				AddComponent(/datum/component/two_handed, require_twohands = TRUE)
+
 	if(fillet_type)
 		var/init_fillets = initial(num_fillets)
 		var/amount = max(round(init_fillets * size / FISH_FILLET_NUMBER_SIZE_DIVISOR, 1), 1)
@@ -238,6 +250,9 @@
 		for(var/reagent_type in grind_results)
 			grind_results[reagent_type] /= FLOOR(weight/FISH_GRIND_RESULTS_WEIGHT_DIVISOR, 0.1)
 	weight = new_weight
+
+	if(weight > FISH_WEIGHT_SLOWDOWN)
+		slowdown = round((weight/FISH_WEIGHT_SLOWDOWN_DIVISOR)**FISH_WEIGHT_SLOWDOWN_EXPONENT, 0.1)
 	for(var/reagent_type in grind_results)
 		grind_results[reagent_type] *= FLOOR(weight/FISH_GRIND_RESULTS_WEIGHT_DIVISOR, 0.1)
 
@@ -371,7 +386,7 @@
 
 	SEND_SIGNAL(src, COMSIG_FISH_LIFE, seconds_per_tick)
 
-/obj/item/fish/proc/set_status(new_status)
+/obj/item/fish/proc/set_status(new_status, silent = FALSE)
 	if(status == new_status)
 		return
 	switch(new_status)
@@ -385,11 +400,12 @@
 			status = FISH_DEAD
 			STOP_PROCESSING(SSobj, src)
 			stop_flopping()
-			var/message = span_notice(replacetext(death_text, "%SRC", "[src]"))
-			if(isaquarium(loc))
-				loc.visible_message(message)
-			else
-				visible_message(message)
+			if(!silent)
+				var/message = span_notice(replacetext(death_text, "%SRC", "[src]"))
+				if(isaquarium(loc))
+					loc.visible_message(message)
+				else
+					visible_message(message)
 	update_appearance()
 	SEND_SIGNAL(src, COMSIG_FISH_STATUS_CHANGED)
 
@@ -505,7 +521,7 @@
 			return FALSE
 
 	if(PERFORM_ALL_TESTS(fish_breeding) && second_fish && !length(evolution_types))
-		return create_offspring(second_fish.type, second_fish, chosen_evolution)
+		return create_offspring(second_fish.type, second_fish)
 
 	var/chosen_type
 	var/datum/fish_evolution/chosen_evolution

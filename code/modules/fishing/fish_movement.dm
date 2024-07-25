@@ -133,7 +133,7 @@
 	///What the long jump velocity was when move_fish was first called.
 	var/initial_long_jump_vel
 	///Time to reach full speed, in seconds.
-	var/accel_time_cap = 23 SECONDS
+	var/accel_time_cap = 27 SECONDS
 
 /datum/fish_movement/accelerando/move_fish(seconds_per_tick)
 	var/seconds_elapsed = (times_fired * seconds_per_tick)
@@ -175,7 +175,7 @@
 /datum/fish_movement/flee/adjust_to_difficulty()
 	. = ..()
 	//Adjust the fleeing velocity, up to five times the initial value.
-	max_fleeing_velocity = max_fleeing_velocity + (max_fleeing_velocity * master.difficulty/100) * 4
+	max_fleeing_velocity += round(max_fleeing_velocity * master.difficulty * 0.04)
 
 /datum/fish_movement/flee/move_fish(seconds_per_tick)
 	if(!times_fired)
@@ -183,12 +183,12 @@
 
 	//The distance from top and bottom of the fish, in a 0 to 1 percentile
 	var/top = FISHING_MINIGAME_AREA - master.fish_height
-	var/dist_top_percent = (FISHING_MINIGAME_AREA - master.fish_position)/top
+	var/dist_top_percent = (top - master.fish_position)/top
 	var/dist_bot_percent = master.fish_position/FISHING_MINIGAME_AREA
 
 	//The distance from top of the bait, in a 0 to 1 percentile
 	var/bait_top = FISHING_MINIGAME_AREA - master.bait_height
-	var/bait_top_percent = (FISHING_MINIGAME_AREA - master.bait_position)/bait_top
+	var/bait_top_percent = (bait_top - master.bait_position)/bait_top
 
 	/**
 	 * The absolute difference between the distance of bait and fish and the area of the minigame, divided by 2
@@ -209,5 +209,40 @@
 	var/percent_to_use = (should_go_top ? dist_top_percent : -dist_bot_percent)
 
 	fish_idle_velocity = init_idle_velocity + round(max_fleeing_velocity * clamp(percent_to_use - dist_bait_from_mid, -1, 1) * dist_percent_diff)
+
+	return ..()
+
+///Fish movement datum that weakly pushes the fish up and then down with greater force once it reaches the top of the minigame.
+/datum/fish_movement/plunger
+	///Is the fish plunging to the bottom of the minigame area, or should it swim up?
+	var/is_plunging = TRUE
+	///The added idle velocity when plunging
+	var/plunging_speed = -12
+	///The added idle velocity when not plunging
+	var/raising_speed = 4
+
+/datum/fish_movement/plunger/adjust_to_difficulty()
+	. = ..()
+	//Adjust the fleeing velocity, up to five times the initial value.
+	plunging_speed += round(plunging_speed * master.difficulty * 0.03)
+	raising_speed += round(raising_speed * master.difficulty * 0.01)
+	fish_idle_velocity += plunging_speed //so it can be safely subtracted if the fish starts at the bottom.
+
+/datum/fish_movement/plunger/move_fish(seconds_per_tick)
+	if(is_plunging)
+		if(target_position > master.fish_position) //nothing should stop us from plunging.
+			target_position = null
+		var/dist_bot_percent = master.fish_position/FISHING_MINIGAME_AREA
+		if(dist_bot_percent <= 0.06)
+			fish_idle_velocity -= plunging_speed
+			fish_idle_velocity += raising_speed
+			is_plunging = FALSE
+	else
+		var/top = FISHING_MINIGAME_AREA - master.fish_height
+		var/dist_top_percent = (top - master.fish_position)/top
+		if(dist_top_percent <= 0.06)
+			fish_idle_velocity -= raising_speed
+			fish_idle_velocity += plunging_speed
+			is_plunging = TRUE
 
 	return ..()

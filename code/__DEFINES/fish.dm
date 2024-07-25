@@ -105,8 +105,10 @@
 ///Fish size thresholds for w_class.
 #define FISH_SIZE_TINY_MAX 30
 #define FISH_SIZE_SMALL_MAX 50
-#define FISH_SIZE_NORMAL_MAX 90
-#define FISH_SIZE_BULKY_MAX 130
+#define FISH_SIZE_NORMAL_MAX 87
+#define FISH_SIZE_BULKY_MAX 120
+///size threshold for requiring two-handed carry
+#define FISH_SIZE_TWO_HANDS_REQUIRED 135
 
 ///The coefficient for maximum weight/size divergence relative to the averages.
 #define MAX_FISH_DEVIATION_COEFF 2.5
@@ -115,6 +117,13 @@
 #define FISH_GRIND_RESULTS_WEIGHT_DIVISOR 500
 ///The number of fillets is multiplied by the fish' size and divided by this.
 #define FISH_FILLET_NUMBER_SIZE_DIVISOR 30
+
+///The slowdown of the fish when carried begins at this value
+#define FISH_WEIGHT_SLOWDOWN 2100
+///The value of the slowdown equals to the weight divided by this (and then at the power of a sub-1 exponent)
+#define FISH_WEIGHT_SLOWDOWN_DIVISOR 500
+///The sub-one exponent that results in the final slowdown of the fish item
+#define FISH_WEIGHT_SLOWDOWN_EXPONENT 0.54
 
 ///The breeding timeout for newly instantiated fish is multiplied by this.
 #define NEW_FISH_BREEDING_TIMEOUT_MULT 2

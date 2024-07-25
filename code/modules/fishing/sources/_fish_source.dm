@@ -249,29 +249,12 @@ GLOBAL_LIST(fishing_property_cache)
 		GLOB.fishing_property_cache = fish_property_table
 	return GLOB.fishing_property_cache
 
-/// Checks if bait matches identifier from fav/disliked bait list
-/datum/fish_source/proc/is_matching_bait(obj/item/bait, identifier)
-	if(ispath(identifier)) //Just a path
-		return istype(bait, identifier)
-	if(islist(identifier))
-		var/list/special_identifier = identifier
-		switch(special_identifier["Type"])
-			if("Foodtype")
-				var/obj/item/food/food_bait = bait
-				return istype(food_bait) && food_bait.foodtypes & special_identifier["Value"]
-			if("Reagent")
-				return bait.reagents?.has_reagent(special_identifier["Value"], special_identifier["Amount"], check_subtypes = TRUE)
-			else
-				CRASH("Unknown bait identifier in fish favourite/disliked list")
-	else
-		return HAS_TRAIT(bait, identifier)
-
 /// Returns the fish table, with with the unavailable items from fish_counts removed.
 /datum/fish_source/proc/get_fish_table()
 	var/list/table = fish_table.Copy()
 	for(var/result in table)
 		if(fish_counts[result] == 0)
-			final_table -= result
+			table -= result
 	return table
 
 /// Builds a fish weights table modified by bait/rod/user properties
@@ -382,7 +365,7 @@ GLOBAL_LIST(fishing_property_cache)
 			continue
 		if(isfish(reward))
 			var/obj/item/fish/fish = reward
-			fish.set_status(FISH_DEAD)
+			fish.set_status(FISH_DEAD, silent = TRUE)
 		if(isitem(reward))
 			reward.pixel_x = rand(-9, 9)
 			reward.pixel_y = rand(-9, 9)

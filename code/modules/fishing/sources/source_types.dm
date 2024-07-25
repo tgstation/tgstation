@@ -46,9 +46,9 @@
 		/obj/item/fish/angelfish = 4,
 		/obj/item/fish/catfish = 4,
 		/obj/item/fish/slimefish = 2,
-		/obj/item/fish/three_eyes = 1,
 		/obj/item/fish/sockeye_salmon = 1,
 		/obj/item/fish/arctic_char = 1,
+		/obj/item/fish/three_eyes = 1,
 	)
 	fishing_difficulty = FISHING_DEFAULT_DIFFICULTY + 5
 
@@ -58,7 +58,7 @@
 		FISHING_DUD = 8,
 		/obj/item/fish/sand_crab = 10,
 		/obj/item/fish/sand_surfer = 10,
-		/obj/item/fish/hollow = 10,
+		/obj/item/fish/bumpy = 10,
 		/obj/item/coin/gold = 3,
 	)
 	fishing_difficulty = FISHING_DEFAULT_DIFFICULTY + 20
@@ -67,8 +67,8 @@
 	catalog_description = null //it's a secret (sorta, I know you're reading this)
 	fish_table = list(
 		FISHING_DUD = 2,
-		/obj/item/fish/soul = 2,
-		/obj/item/fish/skin_crab = 2,
+		/obj/item/fish/soul = 3,
+		/obj/item/fish/skin_crab = 3,
 		/obj/item/fishing_rod/telescopic/master = 1,
 	)
 	fish_counts = list(
@@ -167,13 +167,13 @@
 		/obj/item/fish/donkfish = 5,
 		/obj/item/fish/emulsijack = 5,
 		/obj/item/fish/jumpercable = 5,
-		/obj/item/fish/chainsaw = 3,
+		/obj/item/fish/chainsawfish = 3,
 	)
 	fish_counts = list(
-		/obj/item/fish/chainsaw = 1,
+		/obj/item/fish/chainsawfish = 1,
 	)
 	fish_count_regen = list(
-		/obj/item/fish/chainsaw = 7 MINUTES,
+		/obj/item/fish/chainsawfish = 7 MINUTES,
 	)
 	catalog_description = "Syndicate dimension (Fishing portal generator)"
 	radial_name = "Syndicate"

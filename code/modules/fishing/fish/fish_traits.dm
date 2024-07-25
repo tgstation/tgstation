@@ -85,7 +85,8 @@ GLOBAL_LIST_INIT(spontaneous_fish_traits, populate_spontaneous_fish_traits())
 	fish.grind_results.Insert(1, reagent_type)
 	fish.grind_results[reagent_type] = amount
 
-/datum/fish_trait/yucky/proc/process_reagents(obj/item/fish/source, mob/living/user, obj/item/process_item, list/results)
+/// Proc that handles adding reagents from the trait to the fillets from butchered fish.
+/datum/fish_trait/proc/process_reagents(obj/item/fish/source, mob/living/user, obj/item/process_item, list/results)
 	SIGNAL_HANDLER
 	var/results_with_reagents = 0
 	for(var/atom/result as anything in results)
@@ -97,6 +98,23 @@ GLOBAL_LIST_INIT(spontaneous_fish_traits, populate_spontaneous_fish_traits())
 		var/amount = round(source.grind_results[reagent] / results_with_reagents, 0.1)
 		for(var/atom/result as anything in results)
 			result.reagents?.add_reagent(reagent, amount)
+
+/// Proc that adds or changes the venomous when the fish size and/or weight are updated
+/datum/fish_trait/proc/add_venom(obj/item/fish/source, venom_path, new_weight, mult = 0.25)
+	if(source.size)
+		var/old_amount = max(round((source.weight/FISH_GRIND_RESULTS_WEIGHT_DIVISOR) * mult, 0.1), mult)
+		source.RemoveElement(/datum/element/venomous, venom_path, old_amount)
+
+	var/new_amount = max(round((new_weight/FISH_GRIND_RESULTS_WEIGHT_DIVISOR) * mult, 0.1), mult)
+	source.AddElement(/datum/element/venomous, venom_path, new_amount)
+
+/// Proc that changes the venomous element based on if the fish is alive or dead (basically dead fish are weaker).
+/datum/fish_trait/proc/change_venom_on_death(obj/item/fish/source, venom_path, live_mult, dead_mult)
+	var/live_amount = max(round((source.weight/FISH_GRIND_RESULTS_WEIGHT_DIVISOR) * live_mult, 0.1), live_mult)
+	var/dead_amount = max(round((source.weight/FISH_GRIND_RESULTS_WEIGHT_DIVISOR) * dead_mult, 0.1), dead_mult)
+	var/is_dead = source.status == FISH_DEAD
+	source.RemoveElement(/datum/element/venomous, venom_path, is_dead ? live_amount : dead_amount)
+	source.AddElement(/datum/element/venomous, venom_path, is_dead ? dead_amount : live_amount)
 
 /datum/fish_trait/wary
 	name = "Wary"
@@ -129,7 +147,7 @@ GLOBAL_LIST_INIT(spontaneous_fish_traits, populate_spontaneous_fish_traits())
 		return
 	if(HAS_TRAIT(rod.bait, TRAIT_OMNI_BAIT))
 		return
-	if(HAS_TRAIT(rod.bait, TRAIT_GOOD_QUALITY_BAIT) || HAS_TRAIT(rod.bait, TRAIT_GREAT_QUALITY_BAIT))
+	if(!HAS_TRAIT(rod.bait, TRAIT_GOOD_QUALITY_BAIT) && !HAS_TRAIT(rod.bait, TRAIT_GREAT_QUALITY_BAIT))
 		.[MULTIPLICATIVE_FISHING_MOD] = 0
 
 
@@ -310,6 +328,8 @@ GLOBAL_LIST_INIT(spontaneous_fish_traits, populate_spontaneous_fish_traits())
 
 ///Prevent offsprings of fish with this trait from being of the same type (unless self-mating or the partner also has the trait)
 /datum/fish_trait/recessive
+	name = "Recessive"
+	catalog_description = "If crossbred, offsprings will always be of the mate species, unless it also possess the trait."
 	diff_traits_inheritability = 0
 
 /datum/fish_trait/no_mating/apply_to_fish(obj/item/fish/fish)
@@ -361,7 +381,7 @@ GLOBAL_LIST_INIT(spontaneous_fish_traits, populate_spontaneous_fish_traits())
 		return
 	var/obj/structure/aquarium/aquarium = source.loc
 	for(var/obj/item/fish/victim in aquarium.get_fishes(TRUE, source))
-		if(victim.size < source.size * 0.75) // It's a big fish eat small fish world
+		if(victim.size < source.size * 0.7) // It's a big fish eat small fish world
 			continue
 		if(victim.status != FISH_ALIVE || victim == source || HAS_TRAIT(victim, TRAIT_YUCKY_FISH) || SPT_PROB(80, seconds_per_tick))
 			continue
@@ -379,13 +399,27 @@ GLOBAL_LIST_INIT(spontaneous_fish_traits, populate_spontaneous_fish_traits())
 
 /datum/fish_trait/toxic
 	name = "Toxic"
-	catalog_description = "This fish contains toxins in its liver. Feeding it to predatory fishes or people is not reccomended."
+	catalog_description = "This fish contains toxins. Feeding it to predatory fishes or people is not reccomended."
 	diff_traits_inheritability = 25
 	reagents_to_add = list(/datum/reagent/toxin/tetrodotoxin = 2.5)
 
 /datum/fish_trait/toxic/apply_to_fish(obj/item/fish/fish)
 	. = ..()
+	RegisterSignal(fish, COMSIG_FISH_UPDATE_SIZE_AND_WEIGHT, PROC_REF(make_venomous))
+	RegisterSignal(fish, COMSIG_FISH_STATUS_CHANGED, PROC_REF(on_status_change))
 	RegisterSignal(fish, COMSIG_FISH_EATEN_BY_OTHER_FISH, PROC_REF(on_eaten))
+
+/datum/fish_trait/toxic/proc/make_venomous(obj/item/fish/source, new_size, new_weight)
+	SIGNAL_HANDLER
+	if(!HAS_TRAIT(source, TRAIT_FISH_STINGER))
+		return
+	add_venom(source, /datum/reagent/toxin/tetrodotoxin, new_weight, mult = source.status == FISH_DEAD ? 0.1 : 0.25)
+
+/datum/fish_trait/toxic/proc/on_status_change(obj/item/fish/source)
+	SIGNAL_HANDLER
+	if(!HAS_TRAIT(source, TRAIT_FISH_STINGER))
+		return
+	change_venom_on_death(source, /datum/reagent/toxin/tetrodotoxin, 0.25, 0.1)
 
 /datum/fish_trait/toxic/proc/on_eaten(obj/item/fish/source, obj/item/fish/predator)
 	if(HAS_TRAIT(predator, TRAIT_FISH_TOXIN_IMMUNE))
@@ -497,7 +531,7 @@ GLOBAL_LIST_INIT(spontaneous_fish_traits, populate_spontaneous_fish_traits())
 	inheritability = 75
 	diff_traits_inheritability = 25
 	catalog_description = "This fish will invert the gravity of the bait at random. May fall upward outside after being caught."
-	added_difficulty = 15
+	added_difficulty = 20
 
 /datum/fish_trait/antigrav/minigame_mod(obj/item/fishing_rod/rod, mob/fisherman, datum/fishing_challenge/minigame)
 	minigame.special_effects |= FISHING_MINIGAME_RULE_ANTIGRAV
@@ -579,3 +613,39 @@ GLOBAL_LIST_INIT(spontaneous_fish_traits, populate_spontaneous_fish_traits())
 /datum/fish_trait/stunted/apply_to_mob(mob/living/basic/mob)
 	. = ..()
 	qdel(mob.GetComponent(/datum/component/growth_and_differentiation))
+
+/datum/fish_trait/stinger
+	name = "Stinger"
+	inheritability = 80
+	diff_traits_inheritability = 35
+	catalog_description = "This fish is equipped with a sharp stringer or bill capable of delivering damage and toxins."
+	spontaneous_manifest_types = list(/obj/item/fish/stingray = 100, /obj/item/fish/swordfish = 100, /obj/item/fish/chainsawfish = 100)
+
+/datum/fish_trait/stinger/apply_to_fish(obj/item/fish/fish)
+	. = ..()
+	ADD_TRAIT(src, TRAIT_FISH_STINGER, FISH_TRAIT_DATUM)
+
+/datum/fish_trait/toxic_barbs
+	name = "Toxic Barbs"
+	catalog_description = "This fish' stinger, bill or otherwise, is coated with simple, yet effetive venom."
+	spontaneous_manifest_types = list(/obj/item/fish/stingray = 35)
+
+/datum/fish_trait/toxic_barbs/apply_to_fish(obj/item/fish/fish)
+	. = ..()
+	RegisterSignal(fish, COMSIG_FISH_UPDATE_SIZE_AND_WEIGHT, PROC_REF(make_venomous))
+	RegisterSignal(fish, COMSIG_FISH_STATUS_CHANGED, PROC_REF(on_status_change))
+
+/datum/fish_trait/toxic_barbs/proc/make_venomous(obj/item/fish/source, new_size, new_weight)
+	SIGNAL_HANDLER
+	if(!HAS_TRAIT(source, TRAIT_FISH_STINGER))
+		///Remove the trait from the fish so it doesn't show on the analyzer as it doesn't do anything on stingerless ones.
+		source.fish_traits -= type
+		UnregisterSignal(source, list(COMSIG_FISH_UPDATE_SIZE_AND_WEIGHT, COMSIG_FISH_STATUS_CHANGED))
+		return
+	add_venom(source, /datum/reagent/toxin/venom, new_weight, mult = source.status == FISH_DEAD ? 0.3 : 0.7)
+
+/datum/fish_trait/toxic_barbs/proc/on_status_change(obj/item/fish/source)
+	SIGNAL_HANDLER
+	if(!HAS_TRAIT(source, TRAIT_FISH_STINGER))
+		return
+	change_venom_on_death(source, /datum/reagent/toxin/venom, 0.7, 0.3)

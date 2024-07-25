@@ -10,9 +10,12 @@
 	stable_population = 3
 	average_size = 30
 	average_weight = 500
+	weight_size_deviation = 0.35
 	favorite_bait = list(/obj/item/food/bait/worm)
 	required_temperature_min = MIN_AQUARIUM_TEMP+18
 	required_temperature_max = MIN_AQUARIUM_TEMP+26
+	evolution_types = list(/datum/fish_evolution/three_eyes, /datum/fish_evolution/chainsawfish, /obj/item/fish/three_eyes/gill)
+	compatible_types = list(/obj/item/fish/goldfish/gill, /obj/item/fish/three_eyes)
 
 /obj/item/fish/goldfish/gill
 	name = "McGill"
@@ -21,7 +24,7 @@
 	random_case_rarity = FISH_RARITY_NOPE
 	show_in_catalog = FALSE
 	beauty = FISH_BEAUTY_GOOD
-	compatible_types = list(/obj/item/fish/goldfish)
+	compatible_types = list(/obj/item/fish/goldfish, /obj/item/fish/three_eyes)
 	fish_traits = list(/datum/fish_trait/recessive)
 
 /obj/item/fish/angelfish
@@ -70,8 +73,9 @@
 	icon_state = "catfish"
 	dedicated_in_aquarium_icon_state = "fish_greyscale"
 	aquarium_vc_color = "#907420"
-	average_size = 100
-	average_weight = 2000
+	average_size = 80
+	average_weight = 1600
+	weight_size_deviation = 0.35
 	stable_population = 3
 	favorite_bait = list(
 		list(
@@ -112,6 +116,7 @@
 	evolution_types = null
 	compatible_types = list(/obj/item/fish/clownfish)
 	food = /datum/reagent/lube
+	fishing_difficulty_modifier = 5
 	beauty = FISH_BEAUTY_GREAT
 
 /obj/item/fish/cardinal
@@ -172,7 +177,6 @@
 	fillet_type = /obj/item/food/fishmeat/quality //Too bad they're poisonous
 	fish_traits = list(/datum/fish_trait/heavy, /datum/fish_trait/toxic)
 	beauty = FISH_BEAUTY_GOOD
-
 
 /obj/item/fish/lanternfish
 	name = "lanternfish"
@@ -535,7 +539,7 @@
 	sprite_height = 7
 	show_in_catalog = FALSE
 	random_case_rarity = FISH_RARITY_NOPE
-	fishing_difficulty_modifier = 5
+	fishing_difficulty_modifier = 30
 	required_fluid_type = AQUARIUM_FLUID_ANY_WATER
 	min_pressure = HAZARD_LOW_PRESSURE
 	health = 300
@@ -792,21 +796,183 @@
 	stable_population = 6
 	average_size = 60
 	average_weight = 1200
-	weight_size_deviation = 0.5
+	weight_size_deviation = 0.5 // known for their size dismophism
 	required_temperature_min = MIN_AQUARIUM_TEMP+3
 	required_temperature_max = MIN_AQUARIUM_TEMP+19
 	required_fluid_type = AQUARIUM_FLUID_ANADROMOUS
 
 /obj/item/fish/stingray
+	name = "stingray"
+	desc = "A type of ray, most known for its venomous stinger. Despite that, They're normally docile, if not a bit easily frightened."
+	icon_state = "stingray"
+	dedicated_in_aquarium_icon_state = "stingray_small"
+	stable_population = 4
+	sprite_height = 7
+	sprite_width = 8
+	average_size = 60
+	average_weight = 700
+	beauty = FISH_BEAUTY_GREAT
+	random_case_rarity = FISH_RARITY_RARE
+	required_fluid_type = AQUARIUM_FLUID_SALTWATER //Someone ought to add river rays later I guess.
+	fish_movement_type = /datum/fish_movement/flee
+	fish_traits = list(/datum/fish_trait/stinger, /datum/fish_trait/toxic_barbs, /datum/fish_trait/wary, /datum/fish_trait/carnivore, /datum/fish_trait/predator)
 
 /obj/item/fish/sand_surfer
+	name = "sand surfer"
+	desc = "A bronze alien \"fish\" living and swimming underneath faraway sandy places."
+	icon_state = "sand_surfer"
+	dedicated_in_aquarium_icon_state = "sand_surfer_small"
+	sprite_height = 6
+	sprite_width = 6
+	stable_population = 5
+	average_size = 65
+	average_weight = 1100
+	weight_size_deviation = 0.35
+	random_case_rarity = FISH_RARITY_RARE
+	required_fluid_type = AQUARIUM_FLUID_AIR
+	required_temperature_min = MIN_AQUARIUM_TEMP+25
+	required_temperature_max = MIN_AQUARIUM_TEMP+60
+	fish_movement_type = /datum/fish_movement/plunger
+	fishing_difficulty_modifier = 5
+	fish_traits = list(/datum/fish_trait/shiny_lover)
+	beauty = FISH_BEAUTY_GOOD
 
-/obj/item/fish/hollow
+/obj/item/fish/sand_crab
+	name = "burrower crab"
+	desc = "A sand-dwelling crustacean. It looks like a crab and tastes like a crab, but waddles like a fish."
+	icon_state = "crab"
+	dedicated_in_aquarium_icon_state = "crab_small"
+	sprite_height = 6
+	sprite_width = 10
+	average_size = 60
+	average_weight = 1000
+	weight_size_deviation = 0.1
+	required_fluid_type = AQUARIUM_FLUID_SALTWATER
+	required_temperature_min = MIN_AQUARIUM_TEMP+20
+	required_temperature_max = MIN_AQUARIUM_TEMP+40
+	fillet_type = /obj/item/food/meat/slab/rawcrab
+	fish_traits = list(/datum/fish_trait/amphibious, /datum/fish_trait/shiny_lover, /datum/fish_trait/carnivore)
+	fish_movement_type = /datum/fish_movement/slow
+	favorite_bait = list(
+		list(
+			"Type" = "Foodtype",
+			"Value" = SEAFOOD,
+		),
+	)
+
+/obj/item/fish/bumpy
+	name = "bump-fish"
+	desc = "An misshapen fish-thing all covered in stubby little tendrils"
+	icon_state = "bumpy"
+	dedicated_in_aquarium_icon_state = "bumpy_small"
+	sprite_height = 4
+	sprite_width = 5
+	stable_population = 4
+	required_fluid_type = AQUARIUM_FLUID_ANY_WATER
+	required_temperature_min = MIN_AQUARIUM_TEMP+15
+	required_temperature_max = MIN_AQUARIUM_TEMP+40
+	beauty = FISH_BEAUTY_BAD
+	fish_traits = list(/datum/fish_trait/amphibious, /datum/fish_trait/vegan)
+	favorite_bait = list(
+		list(
+			"Type" = "Foodtype",
+			"Value" = VEGETABLES,
+		),
+	)
+
+/obj/item/fish/three_eyes
+	name = "three-eyed goldfish"
+	desc = "A goldfish with an extra half a pair of eyes. You wonder what it's been feeding on lately..."
+	icon_state = "three_eyes"
+	sprite_width = 8
+	sprite_height = 8
+	average_size = 30
+	average_weight = 500
+	stable_population = 4
+	fish_traits = list(/datum/fish_trait/recessive, /datum/fish_trait/shiny_lover)
+	compatible_types = list(/obj/item/fish/goldfish, /obj/item/fish/goldfish/gill, /obj/item/fish/three_eyes/gill)
+	beauty = FISH_BEAUTY_GOOD
+	fishing_difficulty_modifier = 10
+	random_case_rarity = FISH_RARITY_VERY_RARE
+	food = /datum/reagent/toxin/mutagen
+	favorite_bait = list(
+		list(
+			"Type" = "Reagent",
+			"Value" = /datum/reagent/toxin/mutagen,
+			"Amount" = 3,
+		),
+	)
+
+/obj/item/fish/three_eyes/gill
+	name = "McGill"
+	desc = "A great rubber duck tool for Lawyers who can't get a grasp over their case. It looks kinda different today..."
+	compatible_types = list(/obj/item/fish/goldfish, /obj/item/fish/three_eyes)
+	beauty = FISH_BEAUTY_GREAT
+	show_in_catalog = FALSE
+	stable_population = 1
+	random_case_rarity = FISH_RARITY_NOPE
 
 /obj/item/fish/swordfish
+	name = "swordfish"
+	icon = 'icons/obj/aquarium/wide.dmi'
+	icon_state = "swordfish"
+	inhand_icon_state = "swordfish"
+	dedicated_in_aquarium_icon = 'icons/obj/aquarium/fish.dmi'
+	dedicated_in_aquarium_icon_state = "swordfish_small"
+	base_pixel_x = -18
+	pixel_x = -18
+	sprite_width = 13
+	sprite_height = 6
+	stable_population = 3
+	average_size = 140
+	average_weight = 4000
+	breeding_timeout = 8.5 MINUTES
+	feeding_frequency = 4 MINUTES
+	health = 200
+	beauty = FISH_BEAUTY_EXCELLENT
+	random_case_rarity = FISH_RARITY_GOOD_LUCK_FINDING_THIS
+	required_fluid_type = AQUARIUM_FLUID_SALTWATER
+	fish_movement_type = /datum/fish_movement/plunger
+	fishing_difficulty_modifier = 35
+	fillet_type = /obj/item/food/fishmeat/quality
+	favorite_bait = list(
+		list(
+			"Type" = "Foodtype",
+			"Value" = SEAFOOD,
+		),
+	)
+	fish_traits = list(/datum/fish_trait/carnivore, /datum/fish_trait/predator, /datum/fish_trait/stinger)
 
-/obj/item/fish/chainsaw
-
+/obj/item/fish/chainsawfish
+	name = "chainsawfish"
+	icon_state = "chainsawfish"
+	inhand_icon_state = "chainsawfish"
+	dedicated_in_aquarium_icon = 'icons/obj/aquarium/fish.dmi'
+	dedicated_in_aquarium_icon_state = "chainsaw_small"
+	base_pixel_x = -16
+	pixel_x = -16
+	sprite_width = 8
+	sprite_height = 5
+	stable_population = 3
+	average_size = 85
+	average_weight = 2500
+	breeding_timeout = 7.5 MINUTES
+	feeding_frequency = 3 MINUTES
+	health = 200
+	beauty = FISH_BEAUTY_GREAT
+	random_case_rarity = FISH_RARITY_GOOD_LUCK_FINDING_THIS
+	required_fluid_type = AQUARIUM_FLUID_FRESHWATER
+	fish_movement_type = /datum/fish_movement/accelerando
+	fishing_difficulty_modifier = 40
+	favorite_bait = list(
+		list(
+			"Type" = "Foodtype",
+			"Value" = GORE
+		),
+	)
+	fish_traits = list(/datum/fish_trait/aggressive, /datum/fish_trait/carnivore, /datum/fish_trait/predator, /datum/fish_trait/stinger)
+	required_temperature_min = MIN_AQUARIUM_TEMP+18
+	required_temperature_max = MIN_AQUARIUM_TEMP+26
 
 /obj/item/fish/soul
 	name = "soulfish"
@@ -820,7 +986,7 @@
 	stable_population = 4
 	show_in_catalog = FALSE
 	beauty = FISH_BEAUTY_EXCELLENT
-	fish_movement_type = /datum/fish_movement/choppy //Glideless movement? in my fishing minigame?
+	fish_movement_type = /datum/fish_movement/choppy //Glideless legacy movement? in my fishing minigame?
 	favorite_bait = list(
 		list(
 			"Type" = "Foodtype",
