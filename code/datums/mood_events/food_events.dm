@@ -55,7 +55,7 @@
 	mood_change = 6
 	timeout = 10 MINUTES
 
-/datum/mood_event/came_late_dinners
+/datum/mood_event/came_late_dinner
 	description = "I was a little late, but I still managed to have lunch."
 	mood_change = 4
 	timeout = 10 MINUTES
