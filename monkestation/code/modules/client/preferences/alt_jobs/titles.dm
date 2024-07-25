@@ -351,6 +351,7 @@
 		"Pathologist",
 		"Fish Doctor",
 		"Junior Pathologist",
+		"Plague Doctor",
 	)
 
 /datum/job/warden
