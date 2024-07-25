@@ -43,6 +43,7 @@
 		/datum/reagent/toxin/acid,
 		/datum/reagent/water,
 		/datum/reagent/fuel,
+		/datum/reagent/silver
 	)
 
 /obj/machinery/plumbing/synthesizer/Initialize(mapload, bolt, layer)
