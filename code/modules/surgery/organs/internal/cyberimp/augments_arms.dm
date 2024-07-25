@@ -17,6 +17,10 @@
 	var/extend_sound = 'sound/mecha/mechmove03.ogg'
 	/// Sound played when retracting
 	var/retract_sound = 'sound/mecha/mechmove03.ogg'
+	/// Organ slot that the implant occupies for the right arm
+	var/right_arm_organ_slot = ORGAN_SLOT_RIGHT_ARM_AUG
+	/// Organ slot that the implant occupies for the left arm
+	var/left_arm_organ_slot = ORGAN_SLOT_LEFT_ARM_AUG
 
 /obj/item/organ/internal/cyberimp/arm/Initialize(mapload)
 	. = ..()
@@ -48,9 +52,9 @@
 /obj/item/organ/internal/cyberimp/arm/proc/SetSlotFromZone()
 	switch(zone)
 		if(BODY_ZONE_L_ARM)
-			slot = ORGAN_SLOT_LEFT_ARM_AUG
+			slot = left_arm_organ_slot
 		if(BODY_ZONE_R_ARM)
-			slot = ORGAN_SLOT_RIGHT_ARM_AUG
+			slot = right_arm_organ_slot
 		else
 			CRASH("Invalid zone for [type]")
 
@@ -370,18 +374,24 @@
 		/obj/item/knife/combat/cyborg,
 	)
 
-/obj/item/organ/internal/cyberimp/arm/muscle
+/obj/item/organ/internal/cyberimp/arm/strongarm
 	name = "\proper Strong-Arm empowered musculature implant"
 	desc = "When implanted, this cybernetic implant will enhance the muscles of the arm to deliver more power-per-action."
 	icon_state = "muscle_implant"
 
 	zone = BODY_ZONE_R_ARM
-	slot = ORGAN_SLOT_RIGHT_ARM_AUG
+	slot = ORGAN_SLOT_RIGHT_ARM_MUSCLE
+	right_arm_organ_slot = ORGAN_SLOT_RIGHT_ARM_MUSCLE
+	left_arm_organ_slot = ORGAN_SLOT_LEFT_ARM_MUSCLE
 
 	actions_types = list()
 
 	///The amount of damage the implant adds to our unarmed attacks.
 	var/punch_damage = 5
+	///Biotypes we apply an additional amount of damage too
+	var/biotype_bonus_targets = MOB_BEAST | MOB_SPECIAL
+	///Extra damage dealt to our targeted mobs
+	var/biotype_bonus_damage = 20
 	///IF true, the throw attack will not smash people into walls
 	var/non_harmful_throw = TRUE
 	///How far away your attack will throw your oponent
@@ -392,17 +402,24 @@
 	var/throw_power_max = 4
 	///How long will the implant malfunction if it is EMP'd
 	var/emp_base_duration = 9 SECONDS
+	///How long before we get another slam punch; consider that these usually come in pairs of two
+	var/slam_cooldown_duration = 5 SECONDS
+	///Tracks how soon we can perform another slam attack
+	COOLDOWN_DECLARE(slam_cooldown)
 
-/obj/item/organ/internal/cyberimp/arm/muscle/on_mob_insert(mob/living/carbon/arm_owner)
+/obj/item/organ/internal/cyberimp/arm/strongarm/l
+	zone = BODY_ZONE_L_ARM
+
+/obj/item/organ/internal/cyberimp/arm/strongarm/on_mob_insert(mob/living/carbon/arm_owner)
 	. = ..()
 	if(ishuman(arm_owner)) //Sorry, only humans
 		RegisterSignal(arm_owner, COMSIG_LIVING_EARLY_UNARMED_ATTACK, PROC_REF(on_attack_hand))
 
-/obj/item/organ/internal/cyberimp/arm/muscle/on_mob_remove(mob/living/carbon/arm_owner)
+/obj/item/organ/internal/cyberimp/arm/strongarm/on_mob_remove(mob/living/carbon/arm_owner)
 	. = ..()
 	UnregisterSignal(arm_owner, COMSIG_LIVING_EARLY_UNARMED_ATTACK)
 
-/obj/item/organ/internal/cyberimp/arm/muscle/emp_act(severity)
+/obj/item/organ/internal/cyberimp/arm/strongarm/emp_act(severity)
 	. = ..()
 	if((organ_flags & ORGAN_FAILING) || . & EMP_PROTECT_SELF)
 		return
@@ -410,11 +427,11 @@
 	organ_flags |= ORGAN_FAILING
 	addtimer(CALLBACK(src, PROC_REF(reboot)), 90 / severity)
 
-/obj/item/organ/internal/cyberimp/arm/muscle/proc/reboot()
+/obj/item/organ/internal/cyberimp/arm/strongarm/proc/reboot()
 	organ_flags &= ~ORGAN_FAILING
 	owner.balloon_alert(owner, "your arm stops spasming!")
 
-/obj/item/organ/internal/cyberimp/arm/muscle/proc/on_attack_hand(mob/living/carbon/human/source, atom/target, proximity, modifiers)
+/obj/item/organ/internal/cyberimp/arm/strongarm/proc/on_attack_hand(mob/living/carbon/human/source, atom/target, proximity, modifiers)
 	SIGNAL_HANDLER
 
 	if(source.get_active_hand() != hand || !proximity)
@@ -424,6 +441,8 @@
 	if(!isliving(target))
 		return NONE
 	if(HAS_TRAIT(source, TRAIT_HULK)) //NO HULK
+		return NONE
+	if(!COOLDOWN_FINISHED(src, slam_cooldown))
 		return NONE
 	if(!source.can_unarmed_attack())
 		return COMPONENT_SKIP_ATTACK
@@ -454,13 +473,16 @@
 	var/obj/item/bodypart/attacking_bodypart = hand
 	potential_damage += rand(attacking_bodypart.unarmed_damage_low, attacking_bodypart.unarmed_damage_high)
 
+	var/is_correct_biotype = living_target.mob_biotypes & biotype_bonus_targets
+	if(biotype_bonus_targets && is_correct_biotype) //If we are punching one of our special biotype targets, increase the damage floor by a factor of two.
+		potential_damage += biotype_bonus_damage
+
 	source.do_attack_animation(target, ATTACK_EFFECT_SMASH)
 	playsound(living_target.loc, 'sound/weapons/punch1.ogg', 25, TRUE, -1)
 
 	var/target_zone = living_target.get_random_valid_zone(source.zone_selected)
 	var/armor_block = living_target.run_armor_check(target_zone, MELEE, armour_penetration = attacking_bodypart.unarmed_effectiveness)
-	living_target.apply_damage(potential_damage, attacking_bodypart.attack_type, target_zone, armor_block)
-	living_target.apply_damage(potential_damage*1.5, STAMINA, target_zone, armor_block)
+	living_target.apply_damage(potential_damage * 2, attacking_bodypart.attack_type, target_zone, armor_block)
 
 	if(source.body_position != LYING_DOWN) //Throw them if we are standing
 		var/atom/throw_target = get_edge_target_turf(living_target, source.dir)
@@ -477,5 +499,7 @@
 	to_chat(source, span_danger("You [picked_hit_type] [target]!"))
 
 	log_combat(source, target, "[picked_hit_type]ed", "muscle implant")
+
+	COOLDOWN_START(src, slam_cooldown, slam_cooldown_duration)
 
 	return COMPONENT_CANCEL_ATTACK_CHAIN
