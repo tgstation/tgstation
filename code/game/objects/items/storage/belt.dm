@@ -855,6 +855,50 @@
 	new /obj/item/melee/sabre(src)
 	update_appearance()
 
+/obj/item/storage/belt/grass_sabre
+	name = "sabre sheath"
+	desc = "An simple grass sheath designed to hold a sabre of... some sorts. Actual metal one might be too sharp, though..."
+	icon_state = "grass_sheath"
+	inhand_icon_state = "grass_sheath"
+	worn_icon_state = "grass_sheath"
+	w_class = WEIGHT_CLASS_BULKY
+	interaction_flags_click = parent_type::interaction_flags_click | NEED_DEXTERITY | NEED_HANDS
+
+/obj/item/storage/belt/grass_sabre/Initialize(mapload)
+	. = ..()
+	AddElement(/datum/element/update_icon_updates_onmob)
+
+	atom_storage.max_slots = 1
+	atom_storage.rustle_sound = FALSE
+	atom_storage.max_specific_storage = WEIGHT_CLASS_BULKY
+	atom_storage.set_holdable(/obj/item/melee/sabre)
+	atom_storage.click_alt_open = FALSE
+
+/obj/item/storage/belt/grass_sabre/examine(mob/user)
+	. = ..()
+	if(length(contents))
+		. += span_notice("Alt-click it to quickly draw the blade.")
+
+/obj/item/storage/belt/grass_sabre/click_alt(mob/user)
+	if(length(contents))
+		var/obj/item/I = contents[1]
+		user.visible_message(span_notice("[user] takes [I] out of [src]."), span_notice("You take [I] out of [src]."))
+		user.put_in_hands(I)
+		update_appearance()
+	else
+		balloon_alert(user, "it's empty!")
+	return CLICK_ACTION_SUCCESS
+
+/obj/item/storage/belt/grass_sabre/update_icon_state()
+	icon_state = initial(inhand_icon_state)
+	inhand_icon_state = initial(inhand_icon_state)
+	worn_icon_state = initial(worn_icon_state)
+	if(contents.len)
+		icon_state += "-sabre"
+		inhand_icon_state += "-sabre"
+		worn_icon_state += "-sabre"
+	return ..()
+
 /obj/item/storage/belt/plant
 	name = "botanical belt"
 	desc = "A sturdy leather belt used to hold most hydroponics supplies."
