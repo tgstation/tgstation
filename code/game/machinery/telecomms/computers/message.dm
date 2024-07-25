@@ -210,14 +210,16 @@
 			var/job = tgui_input_text(usr, "What is the sender's job?", "Job")
 
 			var/recipient
+			var/list/tablet_to_messenger = list()
 			var/list/viewable_tablets = list()
-			for (var/obj/item/modular_computer/tablet as anything in GLOB.TabletMessengers)
-				var/datum/computer_file/program/messenger/message_app = locate() in tablet.stored_files
+			for (var/messenger_ref in GLOB.pda_messengers)
+				var/datum/computer_file/program/messenger/message_app = GLOB.pda_messengers[messenger_ref]
 				if(!message_app || message_app.invisible)
 					continue
-				if(!tablet.saved_identification)
+				if(!message_app.computer.saved_identification)
 					continue
-				viewable_tablets += tablet
+				viewable_tablets += message_app.computer
+				tablet_to_messenger[message_app.computer] = message_app
 			if(length(viewable_tablets) > 0)
 				recipient = tgui_input_list(usr, "Select a tablet from the list", "Tablet Selection", viewable_tablets)
 			else
@@ -234,14 +236,11 @@
 				notice_message = "NOTICE: No message entered!"
 				return attack_hand(usr)
 
-			var/datum/signal/subspace/messaging/tablet_msg/signal = new(src, list(
-				"name" = "[sender]",
-				"job" = "[job]",
-				"message" = html_decode(message),
-				"ref" = REF(src),
-				"targets" = list(recipient),
-				"rigged" = FALSE,
-				"automated" = FALSE,
+			var/datum/signal/subspace/messaging/tablet_message/signal = new(src, list(
+				"fakename" = "[sender]",
+				"fakejob" = "[job]",
+				"message" = message,
+				"targets" = list(tablet_to_messenger[recipient]),
 			))
 			// This will log the signal and transmit it to the target
 			linkedServer.receive_information(signal, null)

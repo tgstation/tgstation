@@ -19,6 +19,7 @@ SUBSYSTEM_DEF(modular_computers)
 	var/intrusion_detection_enabled = TRUE
 	///Boolean to show a message warning if there's an active intrusion for Wirecarp users.
 	var/intrusion_detection_alarm = FALSE
+	var/next_picture_id = 0
 
 /datum/controller/subsystem/modular_computers/Initialize()
 	build_software_lists()
@@ -76,5 +77,14 @@ SUBSYSTEM_DEF(modular_computers)
 /datum/controller/subsystem/modular_computers/proc/purge_logs()
 	logs = list()
 	add_log("-!- LOGS DELETED BY SYSTEM OPERATOR -!-")
+
+/**
+ * Returns a name which a /datum/picture can be assigned to.
+ * Use this function to get asset names and to avoid cache duplicates/overwriting.
+ */
+/datum/controller/subsystem/modular_computers/proc/get_next_picture_name()
+	var/next_uid = next_picture_id
+	next_picture_id++
+	return "ntos_picture_[next_uid].png"
 
 #undef MAX_LOG_COUNT

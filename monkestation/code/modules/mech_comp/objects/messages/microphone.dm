@@ -14,7 +14,7 @@
 	lose_hearing_sensitivity()
 	return ..()
 
-/obj/item/mcobject/messaging/microphone/Hear(message, atom/movable/speaker, message_language, raw_message, radio_freq, list/spans, list/message_mods, atom/sound_loc)
+/obj/item/mcobject/messaging/microphone/Hear(message, atom/movable/speaker, message_language, raw_message, radio_freq, list/spans, list/message_mods, message_range)
 	. = ..()
 	if(!anchored)
 		return

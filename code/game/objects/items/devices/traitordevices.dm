@@ -274,6 +274,12 @@ effective or pretty fucking useless.
 
 		animate(user,alpha = clamp(255 - charge,0,255),time = 10)
 
+/// Checks if a given atom is in range of a radio jammer, returns TRUE if it is.
+/proc/is_within_radio_jammer_range(atom/source)
+	for(var/obj/item/jammer/jammer as anything in GLOB.active_jammers)
+		if(IN_GIVEN_RANGE(source, jammer, jammer.range))
+			return TRUE
+	return FALSE
 
 /obj/item/jammer
 	name = "radio jammer"
