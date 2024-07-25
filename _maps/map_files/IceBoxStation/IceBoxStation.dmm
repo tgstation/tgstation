@@ -14374,7 +14374,7 @@
 /turf/open/floor/iron,
 /area/station/commons/locker)
 "ehy" = (
-/obj/machinery/keycard_auth/directional/east,
+/obj/machinery/keycard_auth/wall_mounted/directional/east,
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
 	dir = 1
 	},
@@ -27806,7 +27806,7 @@
 	pixel_y = 4
 	},
 /obj/item/folder/yellow,
-/obj/machinery/keycard_auth/directional/west{
+/obj/machinery/keycard_auth/wall_mounted/directional/west{
 	pixel_x = -25;
 	pixel_y = -5
 	},
@@ -29286,7 +29286,7 @@
 /obj/item/bedsheet/cmo,
 /obj/machinery/light_switch/directional/south,
 /obj/effect/landmark/start/chief_medical_officer,
-/obj/machinery/keycard_auth/directional/east,
+/obj/machinery/keycard_auth/wall_mounted/directional/east,
 /obj/machinery/camera{
 	c_tag = "Chief Medical Officer Bedroom";
 	dir = 4;
@@ -42052,7 +42052,7 @@
 /turf/open/floor/iron/white,
 /area/station/medical/medbay/aft)
 "mGV" = (
-/obj/machinery/keycard_auth/directional/south,
+/obj/machinery/keycard_auth/wall_mounted/directional/south,
 /turf/open/floor/iron,
 /area/station/command/heads_quarters/ce)
 "mHd" = (
@@ -43692,7 +43692,7 @@
 	dir = 1
 	},
 /obj/structure/window/reinforced/spawner/directional/west,
-/obj/machinery/keycard_auth/directional/south,
+/obj/machinery/keycard_auth/wall_mounted/directional/south,
 /obj/machinery/camera/autoname/directional/south{
 	c_tag = "Research Director's Office";
 	network = list("ss13","rd")
@@ -61853,7 +61853,7 @@
 /area/station/maintenance/department/medical/central)
 "sqU" = (
 /obj/machinery/newscaster/directional/west,
-/obj/machinery/keycard_auth/directional/south,
+/obj/machinery/keycard_auth/wall_mounted/directional/south,
 /turf/open/floor/wood,
 /area/station/command/heads_quarters/captain)
 "sqW" = (
@@ -74304,7 +74304,7 @@
 /obj/machinery/computer/cargo{
 	dir = 4
 	},
-/obj/machinery/keycard_auth/directional/west,
+/obj/machinery/keycard_auth/wall_mounted/directional/west,
 /obj/effect/turf_decal/tile/blue/anticorner/contrasted{
 	dir = 8
 	},
