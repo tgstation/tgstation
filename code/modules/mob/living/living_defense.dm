@@ -151,6 +151,7 @@
 	combat_mode = new_mode
 	if(hud_used?.action_intent)
 		hud_used.action_intent.update_appearance()
+	face_mouse = (client?.prefs?.read_preference(/datum/preference/toggle/face_cursor_combat_mode) && combat_mode) ? TRUE : FALSE // DOPPLER SHIFT ADDITION
 	if(silent || !(client?.prefs.read_preference(/datum/preference/toggle/sound_combatmode)))
 		return
 	if(combat_mode)
