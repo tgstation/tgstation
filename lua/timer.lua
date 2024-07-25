@@ -47,7 +47,7 @@ __Timer_timer_process = function(seconds_per_tick)
 		if timeData.executing == true then
 			continue
 		end
-		if _exec.time / _exec.limit > 0.85 then
+		if _exec.time / (dm.world.tick_lag * 100) > 0.85 then
 			sleep()
 		end
 		if dm.world.time >= timeData.executeTime then
