@@ -37,9 +37,9 @@
 	var/datum/reagents/R = beaker:reagents
 
 	if (href_list["isolate"])
-		var/datum/reagent/blood/Blood
-		for(var/datum/reagent/blood/B in R.reagent_list)
-			if(B && B.data["viruses"])
+		var/datum/reagent/Blood
+		for(var/datum/reagent/B in R.reagent_list)
+			if(length(B.data) && ("viruses" in B.data))
 				Blood = B
 				break
 		// /vg/: Try to fix isolators
@@ -85,13 +85,15 @@
 			dat += "[beaker] is empty."
 		else
 			dat += "Contained reagents:<ul>"
-			for(var/datum/reagent/blood/G in R.reagent_list)
-				if(G.data["viruses"])
+			var/passes = FALSE
+			for(var/datum/reagent/G in R.reagent_list)
+				if(length(G.data) && ("viruses" in G.data))
 					var/list/virus = G.data["viruses"]
+					passes = TRUE
 					for (var/datum/disease/advanced/V as anything in virus)
-						dat += "<li>[G.name]: <A href='?src=\ref[src];isolate=[V.uniqueID]'>Isolate pathogen #[V.uniqueID]</a></li>"
-				else
-					dat += "<li><em>No pathogen</em></li>"
+						dat |= "<li>[G.name]: <A href='?src=\ref[src];isolate=[V.uniqueID]'>Isolate pathogen #[V.uniqueID]</a></li>"
+			if(!passes)
+				dat += "<li><em>No pathogen</em></li>"
 	user << browse("<TITLE>Pathogenic Isolator</TITLE>Isolator menu:<BR><BR>[dat]</ul>", "window=isolator;size=575x400")
 	onclose(user, "isolator")
 	return

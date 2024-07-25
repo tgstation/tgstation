@@ -12,4 +12,4 @@ PROCESSING_SUBSYSTEM_DEF(actualfastprocess)
 PROCESSING_SUBSYSTEM_DEF(pathogen_processing)
 	name = "Pathogen Cloud Processing"
 	wait = 1 SECONDS
-	stat_tag = "SP"
+	stat_tag = "PC"

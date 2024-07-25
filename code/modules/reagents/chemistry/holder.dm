@@ -1219,6 +1219,7 @@
 		my_turf.pollute_turf(selected_reaction.pollutant_type, selected_reaction.pollutant_amount * multiplier)
 
 	selected_reaction.on_reaction(src, null, multiplier)
+	selected_reaction.reaction_finish(src, null, multiplier)
 
 ///Possibly remove - see if multiple instant reactions is okay (Though, this "sorts" reactions by temp decending)
 ///Presently unused

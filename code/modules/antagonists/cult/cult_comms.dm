@@ -100,8 +100,25 @@
 /datum/action/innate/cult/mastervote/Activate()
 	var/choice = tgui_alert(owner, "The mantle of leadership is heavy. Success in this role requires an expert level of communication and experience. Are you sure?",, list("Yes", "No"))
 	if(choice == "Yes" && IsAvailable())
-		var/datum/antagonist/cult/cult_antag = owner.mind.has_antag_datum(/datum/antagonist/cult, TRUE)
-		poll_cultists_for_leader(owner, cult_antag.cult_team)
+		var/datum/antagonist/cult/mind_cult_datum = owner.mind.has_antag_datum(/datum/antagonist/cult)
+		start_poll_cultists_for_leader(owner, mind_cult_datum.cult_team)
+
+///Start the poll for Cult Leaeder.
+/proc/start_poll_cultists_for_leader(mob/living/nominee, datum/team/cult/team)
+	if(world.time < CULT_POLL_WAIT)
+		to_chat(nominee, "It would be premature to select a leader while everyone is still settling in, try again in [DisplayTimeText(CULT_POLL_WAIT-world.time)].")
+		return
+	team.cult_vote_called = TRUE
+	for(var/datum/mind/team_member as anything in team.members)
+		if(!team_member.current)
+			continue
+		team_member.current.update_mob_action_buttons()
+		if(team_member.current.incapacitated())
+			continue
+		SEND_SOUND(team_member.current, 'sound/hallucinations/im_here1.ogg')
+		to_chat(team_member.current, span_cultlarge("Acolyte [nominee] has asserted that [nominee.p_theyre()] worthy of leading the cult. A vote will be called shortly."))
+
+	addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(poll_cultists_for_leader), nominee, team), 10 SECONDS)
 
 ///Polls all Cultists on whether the person putting themselves forward should be made the Cult Leader, if they can actually be such.
 /proc/poll_cultists_for_leader(mob/living/nominee, datum/team/cult/team)

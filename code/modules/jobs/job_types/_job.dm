@@ -173,6 +173,29 @@
 		for(var/i in roundstart_experience)
 			spawned_human.mind.adjust_experience(i, roundstart_experience[i], TRUE)
 
+	if(prob(25))
+		var/virus_choice = pick(subtypesof(/datum/disease/advanced)- typesof(/datum/disease/advanced/premade))
+		var/list/anti = list(
+			ANTIGEN_BLOOD	= 2,
+			ANTIGEN_COMMON	= 2,
+			ANTIGEN_RARE	= 1,
+			ANTIGEN_ALIEN	= 0,
+		)
+		var/list/bad = list(
+			EFFECT_DANGER_HELPFUL	= 1,
+			EFFECT_DANGER_FLAVOR	= 2,
+			EFFECT_DANGER_ANNOYING	= 2,
+			EFFECT_DANGER_HINDRANCE	= 2,
+			EFFECT_DANGER_HARMFUL	= 2,
+			EFFECT_DANGER_DEADLY	= 2,
+		)
+		var/datum/disease/advanced/disease = new virus_choice
+		disease.makerandom(list(50,90),list(10,100),anti,bad,src)
+
+		disease.disease_flags |= DISEASE_DORMANT
+		disease.spread_flags &= ~(DISEASE_SPREAD_AIRBORNE | DISEASE_SPREAD_CONTACT_FLUIDS | DISEASE_SPREAD_CONTACT_SKIN | DISEASE_SPREAD_BLOOD)
+
+		spawned.infect_disease(disease, TRUE, "Random Dormant Disease [key_name(src)]")
 
 /datum/job/proc/announce_job(mob/living/joining_mob, job_title)
 	if(head_announce)

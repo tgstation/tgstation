@@ -54,7 +54,7 @@
 	id_trim = /datum/id_trim/job/virologist
 	uniform = /obj/item/clothing/under/rank/medical/virologist
 	backpack_contents = list(
-//		/obj/item/extrapolator = 1, //monkestation edit - extrapolator is useless with pathology.
+		/obj/item/extrapolator = 1, //monkestation edit
 		/obj/item/storage/box/tube = 1,
 	)
 	suit = /obj/item/clothing/suit/toggle/labcoat/virologist

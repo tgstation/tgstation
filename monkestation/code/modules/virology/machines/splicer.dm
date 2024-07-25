@@ -45,7 +45,8 @@
 		var/obj/item/disk/disease/disk = I
 		visible_message(span_notice("[user] swipes \the [disk] against \the [src]."), span_notice("You swipe \the [disk] against \the [src], copying the data into the machine's buffer."))
 		memorybank = disk.effect
-		flick_overlay("splicer_disk", src)
+		var/image/disk_icon = image(icon, src, "splicer_disk")
+		flick_overlay_global(disk_icon, GLOB.clients, 2 SECONDS)
 		addtimer(CALLBACK(src, TYPE_PROC_REF(/atom, update_icon)), 2, TIMER_OVERRIDE | TIMER_UNIQUE)
 
 	attack_hand(user)
@@ -121,7 +122,8 @@
 		burning--
 		if(!burning)
 			update_icon()
-			flick_overlay("splicer_print", src)
+			var/image/print = image(icon, src, "splicer_print")
+			flick_overlay_global(print, GLOB.clients, 2 SECONDS)
 			var/obj/item/disk/disease/d = new /obj/item/disk/disease(src)
 			if(analysed)
 				d.name = "\improper [memorybank.name] GNA disk (Stage: [memorybank.stage])"
@@ -139,41 +141,25 @@
 /obj/machinery/computer/diseasesplicer/update_overlays()
 	..()
 	. = list() // We don't use any of the overlays from the parent
-	if (dish)
-		var/mutable_appearance/dish_outline = mutable_appearance(icon, "smalldish2-outline")
-		dish_outline.alpha = 128
-		dish_outline.pixel_x = -1
-		dish_outline.pixel_y = -13
-		. += dish_outline
-		var/mutable_appearance/dish_content = mutable_appearance(icon, "smalldish2-empty")
-		dish_content.alpha = 128
-		dish_content.pixel_x = -1
-		dish_content.pixel_y = -13
-		if (dish.contained_virus)
-			dish_content.icon_state = "smalldish2-color"
-			dish_content.color = dish.contained_virus.color
-		. += dish_content
 
 	if(machine_stat & (BROKEN|NOPOWER))
 		return
 
 	if (dish?.contained_virus)
 		if (dish.analysed)
-			var/mutable_appearance/scan_pattern = mutable_appearance(icon, "pattern-[dish.contained_virus.pattern]b")
-			scan_pattern.color = "#00FF00"
-			scan_pattern.pixel_x = -2
-			scan_pattern.pixel_y = 4
+			var/mutable_appearance/scan_pattern = mutable_appearance(icon, "pattern-[dish.contained_virus.pattern]-s")
+			. +=  emissive_appearance(icon, "pattern-[dish.contained_virus.pattern]-s", src)
+
 			. += scan_pattern
 		else
 			. += mutable_appearance(icon, "splicer_unknown")
 
-	if(scanning || splicing)
-		var/mutable_appearance/splicer_glass = emissive_appearance(icon, "splicer_glass")
-		splicer_glass.blend_mode = BLEND_ADD
-		. += splicer_glass
-
 	if (memorybank)
-		. += emissive_appearance(icon, "splicer_buffer")
+		. += emissive_appearance(icon, "splicer_buffer", src)
+		. += mutable_appearance(icon, "splicer_buffer", src)
+
+	. += emissive_appearance(icon, "splicer_screen", src)
+	. += emissive_appearance(icon, "splicer_keyboard", src)
 
 /obj/machinery/computer/diseasesplicer/proc/buffer2dish()
 	if(!memorybank || !dish?.contained_virus)
@@ -207,7 +193,8 @@
 	qdel(dish)
 	dish = null
 	update_icon()
-	flick("splicer_scan", src)
+	var/image/scan = image(icon, src, "splicer_scan")
+	flick_overlay_global(scan, GLOB.clients, 2 SECONDS)
 
 /obj/machinery/computer/diseasesplicer/proc/eject_dish()
 	if(!dish)

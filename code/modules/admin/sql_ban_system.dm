@@ -342,6 +342,7 @@
 				ROLE_SENTIENCE,
 			),
 			"Antagonist Positions" = list(
+				ROLE_PLAGUERAT,
 				ROLE_ABDUCTOR,
 				ROLE_ALIEN,
 				ROLE_BLOB,

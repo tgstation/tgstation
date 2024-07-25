@@ -22,7 +22,7 @@ GLOBAL_LIST_INIT(inspectable_diseases, list())
 
 	//Other
 	var/list/viable_mobtypes = list() //typepaths of viable mobs
-	var/mob/living/carbon/affected_mob = null
+	var/mob/living/affected_mob = null
 	var/list/cures = list() //list of cures if the disease has the CURABLE flag, these are reagent ids
 	/// The probability of spreading through the air every second
 	var/infectivity = 41
@@ -186,18 +186,29 @@ GLOBAL_LIST_INIT(inspectable_diseases, list())
 		"subID",
 		"uniqueID",
 		"childID",
-		"symptoms",
 		"stageprob",
 		"antigen",
 		)
 
 	var/datum/disease/D = copy_type ? new copy_type() : new type()
+	if(disease_flags & DISEASE_COPYSTAGE)
+		D.stage = stage
+
 	for(var/V in copy_vars)
 		var/val = vars[V]
 		if(islist(val))
 			var/list/L = val
 			val = L.Copy()
 		D.vars[V] = val
+
+	var/list/new_symptoms = list()
+	for(var/datum/symptom/symptom as anything in symptoms)
+		var/datum/symptom/copied_symptom = symptom.Copy()
+		new_symptoms += copied_symptom
+		SEND_SIGNAL(copied_symptom, COMSIG_SYMPTOM_ATTACH, D)
+
+	D.symptoms = new_symptoms
+
 	return D
 
 /datum/disease/proc/after_add()

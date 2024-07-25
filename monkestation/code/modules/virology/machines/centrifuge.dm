@@ -89,14 +89,14 @@
 	if (!tube)
 		return FALSE
 
-	var/datum/reagent/blood/blood = locate() in tube.reagents.reagent_list
-	if (blood && blood.data && blood.data["immunity"])
-		var/list/immune_system = blood.data["immunity"]
-		if (istype(immune_system) && immune_system.len > 0)
-			var/list/antibodies = immune_system[2]
-			for (var/antibody in antibodies)
-				if (antibodies[antibody] >= 30)
-					return TRUE
+	for(var/datum/reagent/blood in tube.reagents.reagent_list)
+		if (blood && length(blood.data) && ("immunity" in blood.data))
+			var/list/immune_system = blood.data["immunity"]
+			if (istype(immune_system) && immune_system.len > 0)
+				var/list/antibodies = immune_system[2]
+				for (var/antibody in antibodies)
+					if (antibodies[antibody] >= 30)
+						return TRUE
 
 //Also handles luminosity
 /obj/machinery/disease2/centrifuge/update_icon()
@@ -122,13 +122,11 @@
 	. = ..()
 	if(!(machine_stat & (BROKEN|NOPOWER)))
 		if(on)
-			var/mutable_appearance/centrifuge_light = emissive_appearance(icon,"centrifuge_light",src)
+			var/mutable_appearance/centrifuge_light = emissive_appearance(icon,"centrifuge-emisisve",src)
 			.+= centrifuge_light
 			var/mutable_appearance/centrifuge_glow = emissive_appearance(icon,"centrifuge_glow",src)
 			centrifuge_glow.blend_mode = BLEND_ADD
 			.+= centrifuge_glow
-			var/mutable_appearance/centrifuge_light_n = mutable_appearance(icon,"centrifuge_light",src)
-			.+= centrifuge_light_n
 			var/mutable_appearance/centrifuge_glow_n = mutable_appearance(icon,"centrifuge_glow",src)
 			centrifuge_glow.blend_mode = BLEND_ADD
 			.+= centrifuge_glow_n
@@ -155,8 +153,13 @@
 	var/dat = ""
 	var/valid = tube_valid[slot]
 
-	var/datum/reagent/blood/blood = locate() in tube.reagents.reagent_list
-	if (!blood)
+	var/passes = FALSE
+	for(var/datum/reagent/blood in tube.reagents.reagent_list)
+		if (!length(blood.data) || !("blood_DNA" in blood.data))
+			continue
+		passes = TRUE
+
+	if(!passes)
 		var/datum/reagent/vaccine/vaccine = locate() in tube.reagents.reagent_list
 		if (!vaccine)
 			dat += "<A href='?src=\ref[src];ejectvial=[slot]'>[tube.name] (no blood detected)</a>"
@@ -180,12 +183,13 @@
 					dat += "<A href='?src=\ref[src];ejectvial=[slot]'>[tube.name] (synthesizing vaccine ([target]): [round(progress)]%)</a> <A href='?src=\ref[src];interrupt=[slot]'>X</a>"
 
 		else
-			if(blood.data && blood.data["viruses"])
-				var/list/blood_diseases = blood.data["viruses"]
-				if (blood_diseases && blood_diseases.len > 0)
-					dat += "<A href='?src=\ref[src];ejectvial=[slot]'>[tube.name] (pathogen detected)</a> <A href='?src=\ref[src];isolate=[slot]'>ISOLATE TO DISH</a> [valid ? "<A href='?src=\ref[src];synthvaccine=[slot]'>SYNTHESIZE VACCINE</a>" : "(not enough antibodies for a vaccine)"]"
-				else
-					dat += "<A href='?src=\ref[src];ejectvial=[slot]'>[tube.name] (no pathogen detected)</a> [valid ? "<A href='?src=\ref[src];synthvaccine=[slot]'>SYNTHESIZE VACCINE</a>" : "(not enough antibodies for a vaccine)"]"
+			for(var/datum/reagent/blood in tube.reagents.reagent_list)
+				if(length(blood.data) && blood.data["viruses"])
+					var/list/blood_diseases = blood.data["viruses"]
+					if (blood_diseases && blood_diseases.len > 0)
+						dat += "<A href='?src=\ref[src];ejectvial=[slot]'>[tube.name] (pathogen detected)</a> <A href='?src=\ref[src];isolate=[slot]'>ISOLATE TO DISH</a> [valid ? "<A href='?src=\ref[src];synthvaccine=[slot]'>SYNTHESIZE VACCINE</a>" : "(not enough antibodies for a vaccine)"]"
+					else
+						dat += "<A href='?src=\ref[src];ejectvial=[slot]'>[tube.name] (no pathogen detected)</a> [valid ? "<A href='?src=\ref[src];synthvaccine=[slot]'>SYNTHESIZE VACCINE</a>" : "(not enough antibodies for a vaccine)"]"
 	return dat
 
 /obj/machinery/disease2/centrifuge/attack_hand(mob/user, list/modifiers)
@@ -291,8 +295,8 @@
 				result[3] += (efficiency * 2)
 			if (result[3] >= 100)
 				special = CENTRIFUGE_LIGHTSPECIAL_BLINKING
-				var/amt= tube.reagents.get_reagent_amount(/datum/reagent/blood)
-				tube.reagents.remove_reagent(/datum/reagent/blood, amt)
+				var/amt= tube.reagents.total_volume
+				tube.reagents.remove_all(amt)
 				var/data = list("antigen" = list(result[2]))
 				tube.reagents.add_reagent(/datum/reagent/vaccine, amt,data)
 				result = list(0,0,0,0,0)
@@ -371,30 +375,30 @@
 	if (!tube)
 		return result
 
-	var/datum/reagent/blood/blood = locate() in tube.reagents.reagent_list
-	if (blood && blood.data && blood.data["viruses"])
-		var/list/blood_viruses = blood.data["viruses"]
-		if (istype(blood_viruses) && blood_viruses.len > 0)
-			var/list/pathogen_list = list()
-			for (var/datum/disease/advanced/D as anything  in blood_viruses)
-				if(!istype(D))
-					continue
-				var/pathogen_name = "Unknown [D.form]"
-				pathogen_list[pathogen_name] = D
+	for(var/datum/reagent/blood in tube.reagents.reagent_list)
+		if (blood && length(blood.data) && ("viruses" in blood.data))
+			var/list/blood_viruses = blood.data["viruses"]
+			if (istype(blood_viruses) && blood_viruses.len > 0)
+				var/list/pathogen_list = list()
+				for (var/datum/disease/advanced/D as anything  in blood_viruses)
+					if(!istype(D))
+						continue
+					var/pathogen_name = "Unknown [D.form]"
+					pathogen_list[pathogen_name] = D
 
-			popup.close()
-			user.unset_machine()
-			var/choice = input(user, "Choose a pathogen to isolate on a growth dish.", "Isolate to dish") as null|anything in pathogen_list
-			user.set_machine()
-			if (!choice)
-				return result
-			var/datum/disease/advanced/target = pathogen_list[choice]
+				popup.close()
+				user.unset_machine()
+				var/choice = input(user, "Choose a pathogen to isolate on a growth dish.", "Isolate to dish") as null|anything in pathogen_list
+				user.set_machine()
+				if (!choice)
+					return result
+				var/datum/disease/advanced/target = pathogen_list[choice]
 
-			result[1] = "dish"
-			result[2] = "Unknown [target.form]"
-			result[3] = 0
-			result[4] = target
-			result[5] = length(pathogen_list)
+				result[1] = "dish"
+				result[2] = "Unknown [target.form]"
+				result[3] = 0
+				result[4] = target
+				result[5] = length(pathogen_list)
 
 	return result
 
@@ -403,44 +407,44 @@
 	if (!tube)
 		return result
 
-	var/datum/reagent/blood/blood = locate() in tube.reagents.reagent_list
-	if (blood && blood.data && blood.data["immunity"])
-		var/list/immune_system = blood.data["immunity"]
-		if (istype(immune_system) && immune_system.len > 0)
-			if (immune_system[1] < 1)
-				to_chat(user,span_warning("Impossible to acquire antibodies from this blood sample. It seems that it came from a donor with a poor immune system, either due to recent cloning or a radium overload.") )
-				return result
+	for(var/datum/reagent/blood in tube.reagents.reagent_list)
+		if (blood && length(blood.data) &&("immunity" in blood.data))
+			var/list/immune_system = blood.data["immunity"]
+			if (istype(immune_system) && immune_system.len > 0)
+				if (immune_system[1] < 1)
+					to_chat(user,span_warning("Impossible to acquire antibodies from this blood sample. It seems that it came from a donor with a poor immune system, either due to recent cloning or a radium overload.") )
+					return result
 
-			var/list/antibodies = immune_system[2]
-			var/list/antibody_choices = list()
-			for (var/antibody in antibodies)
-				if (antibodies[antibody] >= 30)
-					if (antibodies[antibody] > 50)
-						var/delay = max(1,60 / max(1,(antibodies[antibody] - 50)))
-						antibody_choices["[antibody] (Expected Duration: [round(delay)] seconds)"] = antibody
-					else if (antibodies[antibody] < 50)
-						var/delay = max(1,50 - min(49,antibodies[antibody] - 25))
-						antibody_choices["[antibody] (Expected Duration: [round(delay)] minutes)"] = antibody
-					else
-						antibody_choices["[antibody] (Expected Duration: one minute)"] = antibody
+				var/list/antibodies = immune_system[2]
+				var/list/antibody_choices = list()
+				for (var/antibody in antibodies)
+					if (antibodies[antibody] >= 30)
+						if (antibodies[antibody] > 50)
+							var/delay = max(1,60 / max(1,(antibodies[antibody] - 50)))
+							antibody_choices["[antibody] (Expected Duration: [round(delay)] seconds)"] = antibody
+						else if (antibodies[antibody] < 50)
+							var/delay = max(1,50 - min(49,antibodies[antibody] - 25))
+							antibody_choices["[antibody] (Expected Duration: [round(delay)] minutes)"] = antibody
+						else
+							antibody_choices["[antibody] (Expected Duration: one minute)"] = antibody
 
-			if (antibody_choices.len <= 0)
-				to_chat(user,span_warning("Impossible to create a vaccine from this blood sample. Antibody levels too low. Minimal level = 30%. The higher the concentration, the faster the vaccine is synthesized.") )
-				return result
+				if (antibody_choices.len <= 0)
+					to_chat(user,span_warning("Impossible to create a vaccine from this blood sample. Antibody levels too low. Minimal level = 30%. The higher the concentration, the faster the vaccine is synthesized.") )
+					return result
 
-			popup.close()
-			user.unset_machine()
-			var/choice = input(user, "Choose an antibody to develop into a vaccine. This will destroy the blood sample. The higher the concentration, the faster the vaccine is synthesized.", "Synthesize Vaccine") as null|anything in antibody_choices
-			user.set_machine()
-			if (!choice)
-				return result
+				popup.close()
+				user.unset_machine()
+				var/choice = input(user, "Choose an antibody to develop into a vaccine. This will destroy the blood sample. The higher the concentration, the faster the vaccine is synthesized.", "Synthesize Vaccine") as null|anything in antibody_choices
+				user.set_machine()
+				if (!choice)
+					return result
 
-			var/antibody = antibody_choices[choice]
+				var/antibody = antibody_choices[choice]
 
-			result[1] = "vaccine"
-			result[2] = antibody
-			result[3] = 0
-			result[4] = antibodies[antibody]
+				result[1] = "vaccine"
+				result[2] = antibody
+				result[3] = 0
+				result[4] = antibodies[antibody]
 
 	return result
 
@@ -453,6 +457,10 @@
 	visible_message("\The [src] prints a growth dish.")
 	spawn(10)
 		var/obj/item/weapon/virusdish/dish = new/obj/item/weapon/virusdish(src.loc)
+		if(D.disease_flags & DISEASE_DORMANT)
+			visible_message("Activating Virus Sample")
+			D.disease_flags &= ~DISEASE_DORMANT
+			D.randomize_spread()
 		dish.contained_virus = D.Copy()
 		dish.contained_virus.infectionchance = dish.contained_virus.infectionchance_base
 		dish.update_appearance()

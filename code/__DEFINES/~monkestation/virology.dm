@@ -47,3 +47,16 @@
 #define DISEASE_TRAUMA "trauma"
 #define DISEASE_DECLONING "decloning"
 #define DISEASE_ANXIETY "anxiety"
+
+#define DISEASE_DORMANT (1 << 3)
+#define DISEASE_COPYSTAGE (1<<4)
+#define DISEASE_ANALYZED (1<<5)
+
+#define COMSIG_CRACKER_PUZZLE_FAILURE "cracker_puzzle_failure"
+#define COMSIG_CRACKER_PUZZLE_SUCCESS "cracker_puzzle_success"
+
+#define COMSIG_SYMPTOM_ATTACH "symptom_attach"
+#define COMSIG_SYMPTOM_DETACH "symptom_detach"
+#define COMSIG_SYMPTOM_TRIGGER "symptom_trigger"
+
+#define COMSIG_CARBON_TAKE_BRUTE_DAMAGE "carbon_take_brute"

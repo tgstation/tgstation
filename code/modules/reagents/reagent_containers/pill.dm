@@ -15,6 +15,7 @@
 	var/rename_with_volume = FALSE
 	var/self_delay = 0 //pills are instant, this is because patches inheret their aplication from pills
 	var/dissolvable = TRUE
+	var/skips_attack = FALSE
 
 /obj/item/reagent_containers/pill/Initialize(mapload)
 	. = ..()
@@ -24,6 +25,9 @@
 		name += " ([reagents.total_volume]u)"
 
 /obj/item/reagent_containers/pill/attack(mob/M, mob/user, def_zone)
+	if(skips_attack)
+		return ..()
+
 	if(!canconsume(M, user))
 		return FALSE
 

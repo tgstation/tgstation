@@ -33,7 +33,7 @@
 	required_enemies = 5
 	// I give up, just there should be enough heads with 35 players...
 	min_players = 35
-	earliest_start = 45 MINUTES
+	earliest_start = 60 MINUTES
 	weight = 4
 	max_occurrences = 1
 	prompted_picking = TRUE

@@ -11,6 +11,7 @@
 	self_delay = 30 // three seconds
 	dissolvable = FALSE
 
+/*
 /obj/item/reagent_containers/pill/patch/attack(mob/living/L, mob/user)
 	if(ishuman(L))
 		var/obj/item/bodypart/affecting = L.get_bodypart(check_zone(user.zone_selected))
@@ -21,6 +22,7 @@
 			to_chat(user, span_notice("Medicine won't work on a robotic limb!"))
 			return
 	..()
+*/
 
 /obj/item/reagent_containers/pill/patch/canconsume(mob/eater, mob/user)
 	if(!iscarbon(eater))

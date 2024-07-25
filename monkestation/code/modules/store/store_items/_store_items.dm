@@ -24,17 +24,22 @@
 	if(!buyers_preferences.has_coins(item_cost))
 		to_chat(buyer, span_warning("You don't have the funds to buy the [name]"))
 		return FALSE
-	buyers_preferences.adjust_metacoins(buyer.ckey, -item_cost, donator_multipler = FALSE)
 
-	logger.Log(LOG_CATEGORY_META, "[buyer] bought a [name] for [item_cost]", list("currency_left" = buyer.prefs.metacoins))
+
 	if(!one_time_buy)
-		finalize_purchase(buyer)
+		if(finalize_purchase(buyer))
+			buyers_preferences.adjust_metacoins(buyer.ckey, -item_cost, donator_multipler = FALSE)
+		logger.Log(LOG_CATEGORY_META, "[buyer] bought a [name] for [item_cost]", list("currency_left" = buyer.prefs.metacoins))
 		return
+	else
+		buyers_preferences.adjust_metacoins(buyer.ckey, -item_cost, donator_multipler = FALSE)
+	logger.Log(LOG_CATEGORY_META, "[buyer] bought a [name] for [item_cost]", list("currency_left" = buyer.prefs.metacoins))
 	attempt_spawn(buyer)
 
 
 /datum/store_item/proc/finalize_purchase(client/buyer)
 	SHOULD_CALL_PARENT(TRUE)
+
 	var/fail_message ="<span class='warning'>Failed to add purchase to database. You have not been charged.</span>"
 	if(!SSdbcore.IsConnected())
 		to_chat(buyer, fail_message)

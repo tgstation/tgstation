@@ -5,8 +5,9 @@ import {
   Button,
   Section,
   Stack,
-  Dropdown,
   FitText,
+  Tabs,
+  Table,
 } from '../../components';
 import { CharacterPreview } from '../common/CharacterPreview';
 import { PreferencesMenuData, createSetPreference } from './data';
@@ -140,16 +141,17 @@ export const LoadoutManager = (props) => {
                 tooltip="Confirm loadout and exit UI."
                 onClick={() => act('close_ui', { revert: 0 })}
               />
-              <Dropdown
-                width="100%"
-                selected={selectedTabName}
-                displayText={selectedTabName}
-                options={loadout_tabs.map((curTab) => ({
-                  value: curTab,
-                  displayText: curTab.name,
-                }))}
-                onSelected={(curTab) => setSelectedTab(curTab.name)}
-              />
+              <Tabs>
+                {loadout_tabs.map((curTab) => (
+                  <Tabs.Tab
+                    key={curTab.name}
+                    selected={selectedTabName === curTab.name}
+                    onClick={() => setSelectedTab(curTab.name)}
+                  >
+                    {curTab.name}
+                  </Tabs.Tab>
+                ))}
+              </Tabs>
             </Section>
           </Stack.Item>
           <Stack.Item grow>
@@ -172,9 +174,15 @@ export const LoadoutManager = (props) => {
                       />
                     }
                   >
-                    <Stack grow vertical>
-                      {selectedTab.contents.map((item) => (
-                        <Stack.Item key={item.name}>
+                    <Table grow vertical>
+                      {selectedTab.contents.map((item, index) => (
+                        <Table.Row
+                          header
+                          key={item.name}
+                          backgroundColor={
+                            index % 2 === 0 ? '#19181e' : '#16151b'
+                          }
+                        >
                           <Stack fontSize="15px">
                             <Stack.Item grow align="left">
                               {item.name}
@@ -268,9 +276,9 @@ export const LoadoutManager = (props) => {
                               />
                             </Stack.Item>
                           </Stack>
-                        </Stack.Item>
+                        </Table.Row>
                       ))}
-                    </Stack>
+                    </Table>
                   </Section>
                 ) : (
                   <Section fill>

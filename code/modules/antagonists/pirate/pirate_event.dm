@@ -16,9 +16,9 @@
 /datum/round_event/pirates
 	///admin chosen pirate team
 	var/list/datum/pirate_gang/gang_list = list(
-		/datum/pirate_gang/psykers,
-		/datum/pirate_gang/skeletons,
-		/datum/pirate_gang/rogues
+		new /datum/pirate_gang/psykers,
+		new /datum/pirate_gang/skeletons,
+		new /datum/pirate_gang/rogues
 	)
 
 /datum/round_event/pirates/start()

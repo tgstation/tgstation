@@ -10,7 +10,7 @@ SUBSYSTEM_DEF(autotransfer)
 
 /datum/controller/subsystem/autotransfer/Initialize(timeofday)
 	starttime = world.time
-	targettime = starttime + 60 MINUTES
+	targettime = starttime + 90 MINUTES
 
 	return SS_INIT_SUCCESS
 
@@ -38,8 +38,6 @@ SUBSYSTEM_DEF(autotransfer)
 	if(EMERGENCY_ESCAPED_OR_ENDGAMED)
 		return FALSE
 	if(!SSticker.HasRoundStarted() || SSautotransfer.called || SSshuttle.emergency.mode == SHUTTLE_CALL)
-		return FALSE
-	if(length(GLOB.player_list) < 25)
 		return FALSE
 	if(started_time)
 		var/next_allowed_time = SSautotransfer.targettime

@@ -27,7 +27,7 @@
 	var/image/visual_maptext/created = new /image/visual_maptext
 	animate(created, maptext_y = y_offset - 4, time = 0.01)
 
-	created.maptext = "<span class='pixel c ol' style=\"[style]\">[message]</span>"
+	created.maptext = "<span style=\"[style]\">[message]</span>"
 	created.loc = target
 	created.maptext_x = x_offset
 	animate(created, alpha = alpha, maptext_y = y_offset, time = 4, flags = ANIMATION_END_NOW)

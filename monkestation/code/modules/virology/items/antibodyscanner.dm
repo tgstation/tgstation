@@ -26,6 +26,7 @@
 		return
 
 	playsound(user, 'sound/items/weeoo1.ogg', 50, 1)
+	L.visual_masked_scan()
 	var/info = ""
 	var/icon/scan = icon('monkestation/code/modules/virology/icons/virology_bg.dmi',"immunitybg")
 	var/display_width = scan.Width()
@@ -142,3 +143,15 @@
 				to_chat(user,span_danger("However, since its lid has been opened, unprotected contact with the dish can result in infection."))
 
 	. = ..()
+
+
+/obj/effect/abstract/blank/scan
+	alpha = 255
+	icon = 'monkestation/code/modules/virology/icons/items.dmi'
+	icon_state = "scan"
+
+/atom/movable/proc/visual_masked_scan()
+	var/obj/effect/abstract/blank/scan/scanline = new
+
+	vis_contents += scanline
+	addtimer(CALLBACK(src, GLOBAL_PROC_REF(qdel), scanline), 2 SECONDS)

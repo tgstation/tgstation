@@ -29,6 +29,9 @@
 	var/max_count = -1
 		// How many times the effect should be allowed to activate. If -1, always activate.
 
+	var/datum/symptom_varient/attached_varient
+		// This is our attached varient used for updating desc and Symptom copy code.
+
 
 /datum/symptom/proc/minormutate()
 	if (prob(20))
@@ -39,14 +42,15 @@
 
 
 /datum/symptom/proc/can_run_effect(active_stage = -1, seconds_per_tick)
-	if((count < max_count || max_count == -1) && (stage <= active_stage || active_stage == -1) && prob(min(chance * seconds_per_tick, max_chance)))
-		return 1
-	return 0
+	if((count < max_count || max_count == -1) && (stage <= active_stage || active_stage == -1 || badness == EFFECT_DANGER_HELPFUL) && prob(min(chance * seconds_per_tick, max_chance)))
+		return TRUE
+	return FALSE
 
 /datum/symptom/proc/run_effect(mob/living/carbon/mob, datum/disease/advanced/disease)
 	if(count < 1)
 		first_activate(mob, disease)
 	activate(mob, disease)
+	SEND_SIGNAL(src, COMSIG_SYMPTOM_TRIGGER)
 	count += 1
 
 ///this runs the first time its activated
@@ -72,3 +76,12 @@
 /datum/symptom/proc/disable_effect(mob/living/mob, datum/disease/advanced/disease)
 	if (count > 0)
 		deactivate(mob, disease)
+
+
+/datum/symptom/proc/update_name()
+	var/name_string = ""
+	if(attached_varient)
+		name_string += "[attached_varient.name] "
+	name_string += initial(name)
+
+	name = name_string

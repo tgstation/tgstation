@@ -39,6 +39,8 @@
 	/// responsible for disease stuff
 	var/list/ratdisease = list()
 
+	var/chooses_bodycolor = TRUE
+
 /mob/living/basic/mouse/Initialize(mapload, tame = FALSE, new_body_color)
 	. = ..()
 	if(contributes_to_ratcap)
@@ -46,11 +48,12 @@
 	ADD_TRAIT(src, TRAIT_VENTCRAWLER_ALWAYS, INNATE_TRAIT)
 
 	src.tame = tame
-	body_color = new_body_color
-	if(isnull(body_color))
-		body_color = pick("brown", "gray", "white")
-	held_state = "mouse_[body_color]" // not handled by variety element
-	AddElement(/datum/element/animal_variety, "mouse", body_color, FALSE)
+	if(chooses_bodycolor)
+		body_color = new_body_color
+		if(isnull(body_color))
+			body_color = pick("brown", "gray", "white")
+		held_state = "mouse_[body_color]" // not handled by variety element
+		AddElement(/datum/element/animal_variety, "mouse", body_color, FALSE)
 	AddElement(/datum/element/swabable, CELL_LINE_TABLE_MOUSE, CELL_VIRUS_TABLE_GENERIC_MOB, 1, 10)
 	AddComponent(/datum/component/squeak, list('sound/effects/mousesqueek.ogg' = 1), 100, extrarange = SHORT_RANGE_SOUND_EXTRARANGE) //as quiet as a mouse or whatever
 	var/static/list/loc_connections = list(

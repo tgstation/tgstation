@@ -23,8 +23,7 @@
 	. = ..()
 	var/turf/our_turf = get_turf(src)
 	if(use_vis_overlay)
-		alpha = 0
-		SSvis_overlays.add_vis_overlay(src, icon, icon_state, ABOVE_MOB_LAYER, MUTATE_PLANE(GAME_PLANE_UPPER, our_turf), dir, add_appearance_flags = RESET_ALPHA) //you see mobs under it, but you hit them like they are above it
+		SSvis_overlays.add_vis_overlay(src, icon, icon_state, ABOVE_MOB_LAYER, MUTATE_PLANE(GAME_PLANE_UPPER, our_turf), dir) //you see mobs under it, but you hit them like they are above it
 	if(source_projector)
 		projector = source_projector
 		LAZYADD(projector.signs, src)
@@ -164,7 +163,7 @@
 	icon_state = "holo_medical"
 	alpha = 125 //lazy :)
 	var/force_allaccess = FALSE
-	var/buzzcd = 0
+	COOLDOWN_DECLARE(buzzcd)
 
 /obj/structure/holosign/barrier/medical/examine(mob/user)
 	. = ..()
@@ -187,14 +186,16 @@
 	. = ..()
 	icon_state = "holo_medical"
 	if(ishuman(AM) && !CheckHuman(AM))
-		if(buzzcd < world.time)
+		if(COOLDOWN_FINISHED(src, buzzcd))
+			var/obj/item/holosign_creator/medical/medical = projector
+			medical.try_alert(AM, get_area(src))
 			playsound(get_turf(src),'sound/machines/buzz-sigh.ogg',65,TRUE,4)
-			buzzcd = (world.time + 60)
+			COOLDOWN_START(src, buzzcd, 6 SECONDS)
 		icon_state = "holo_medical-deny"
 
 /obj/structure/holosign/barrier/medical/proc/CheckHuman(mob/living/carbon/human/sickboi)
-	var/threat = sickboi.check_virus()
-	if(get_disease_severity_value(threat) > get_disease_severity_value(DISEASE_SEVERITY_MINOR))
+	var/threat = sickboi.check_virus_new()
+	if(threat >= DISEASE_HOLOSIGN_BLOCK)
 		return FALSE
 	return TRUE
 

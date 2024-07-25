@@ -195,3 +195,32 @@
 	if(M.getBruteLoss() || M.getFireLoss() || M.getToxLoss())
 		return TRUE
 	return FALSE
+
+/datum/symptom/toxolysis
+	name = "Toxolysis"
+	desc = "The virus rapidly breaks down any foreign chemicals in the bloodstream."
+	max_multiplier = 10
+	stage = 2
+	var/food_conversion = FALSE
+
+/datum/symptom/toxolysis/activate(mob/living/carbon/mob, datum/disease/advanced/disease)
+	. = ..()
+	var/mob/living/M = mob
+	switch(round(multiplier))
+		if(9, 10)
+			food_conversion = TRUE
+			Heal(M, multiplier)
+		if(4, 5, 6, 7, 8)
+			Heal(M, multiplier)
+		else
+			multiplier = min(multiplier + 0.1, max_multiplier)
+	return
+
+/datum/symptom/toxolysis/proc/Heal(mob/living/M, datum/disease/advance/A, actual_power)
+	for(var/datum/reagent/R in M.reagents.reagent_list) //Not just toxins!
+		M.reagents.remove_reagent(R.type, actual_power)
+		if(food_conversion)
+			M.adjust_nutrition(0.3)
+		if(prob(2))
+			to_chat(M, span_notice("You feel a mild warmth as your blood purifies itself."))
+	return TRUE

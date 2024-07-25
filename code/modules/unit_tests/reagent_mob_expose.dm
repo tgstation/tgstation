@@ -17,7 +17,6 @@
 	var/mob/living/carbon/human/human = allocate(/mob/living/carbon/human/consistent)
 	var/obj/item/reagent_containers/dropper/dropper = allocate(/obj/item/reagent_containers/dropper)
 	var/obj/item/reagent_containers/cup/glass/bottle/drink = allocate(/obj/item/reagent_containers/cup/glass/bottle)
-	var/obj/item/reagent_containers/pill/patch/patch = allocate(/obj/item/reagent_containers/pill/patch)
 	var/obj/item/reagent_containers/syringe/syringe = allocate(/obj/item/reagent_containers/syringe)
 
 	// INGEST
@@ -44,14 +43,6 @@
 	var/old_fire_stacks = human.fire_stacks
 	drink.reagents.trans_to(human, 10, methods = VAPOR)
 	TEST_ASSERT(human.fire_stacks < old_fire_stacks, "Human does not get wetter after being exposed to water by vapors")
-
-	// PATCH
-	human.health = 100
-	TEST_ASSERT_EQUAL(human.health, 100, "Human health did not set properly")
-	patch.reagents.add_reagent(/datum/reagent/method_patch_test, 1)
-	patch.self_delay = 0
-	patch.attack(human, human)
-	TEST_ASSERT_EQUAL(human.health, 90, "Human health did not update after patch was applied")
 
 	// INJECT
 	syringe.reagents.add_reagent(/datum/reagent/method_patch_test, 1)

@@ -170,7 +170,7 @@
 	death_message = "lets out one final oxygen-deprived honk before [p_they()] go[p_es()] limp and lifeless.."
 	death()
 
-/mob/living/simple_animal/hostile/retaliate/goose/vomit/proc/vomit()
+/mob/living/simple_animal/hostile/retaliate/goose/vomit/vomit()
 	if (stat == DEAD)
 		return
 	var/turf/T = get_turf(src)

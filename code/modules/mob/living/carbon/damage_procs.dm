@@ -101,6 +101,8 @@
 		take_overall_damage(brute = amount, updating_health = updating_health, required_bodytype = required_bodytype)
 	else
 		heal_overall_damage(brute = abs(amount), required_bodytype = required_bodytype, updating_health = updating_health)
+	if(amount < 0)
+		SEND_SIGNAL(src, COMSIG_CARBON_TAKE_BRUTE_DAMAGE, amount)
 	return amount
 
 /mob/living/carbon/setBruteLoss(amount, updating_health = TRUE, forced = FALSE, required_bodytype)

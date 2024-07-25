@@ -24,17 +24,8 @@ new /datum/disease_ability/symptom/medium/polyvitiligo,
 new /datum/disease_ability/symptom/medium/itching,
 new /datum/disease_ability/symptom/powerful/fire,
 new /datum/disease_ability/symptom/powerful/flesh_eating,
-new /datum/disease_ability/symptom/powerful/heal/starlight,
 new /datum/disease_ability/symptom/powerful/heal/oxygen,
-new /datum/disease_ability/symptom/powerful/heal/chem,
-new /datum/disease_ability/symptom/powerful/heal/metabolism,
-new /datum/disease_ability/symptom/powerful/heal/dark,
-new /datum/disease_ability/symptom/powerful/heal/water,
-new /datum/disease_ability/symptom/powerful/heal/plasma,
-new /datum/disease_ability/symptom/powerful/heal/radiation,
-new /datum/disease_ability/symptom/powerful/heal/coma,
 ))
-
 /datum/disease_ability
 	var/name
 	var/cost = 0
@@ -366,36 +357,9 @@ new /datum/disease_ability/symptom/powerful/heal/coma,
 
 /****HEALING SUBTYPE****/
 
-/datum/disease_ability/symptom/powerful/heal/starlight
-	symptoms = list(/datum/symptom/heal/starlight)
 
 /datum/disease_ability/symptom/powerful/heal/oxygen
 	symptoms = list(/datum/symptom/oxygen)
-
-/datum/disease_ability/symptom/powerful/heal/chem
-	symptoms = list(/datum/symptom/heal/chem)
-
-/datum/disease_ability/symptom/powerful/heal/metabolism
-	symptoms = list(/datum/symptom/heal/metabolism)
-	short_desc = "Increase the metabolism of victims, causing them to process chemicals and grow hungry faster."
-	long_desc = "Increase the metabolism of victims, causing them to process chemicals twice as fast and grow hungry more quickly."
-
-/datum/disease_ability/symptom/powerful/heal/dark
-	symptoms = list(/datum/symptom/heal/darkness)
-
-/datum/disease_ability/symptom/powerful/heal/water
-	symptoms = list(/datum/symptom/heal/water)
-
-/datum/disease_ability/symptom/powerful/heal/plasma
-	symptoms = list(/datum/symptom/heal/plasma)
-
-/datum/disease_ability/symptom/powerful/heal/radiation
-	symptoms = list(/datum/symptom/heal/radiation)
-
-/datum/disease_ability/symptom/powerful/heal/coma
-	symptoms = list(/datum/symptom/heal/coma)
-	short_desc = "Cause victims to fall into a healing coma when hurt."
-	long_desc = "Cause victims to fall into a healing coma when hurt."
 
 /datum/disease_ability/symptom/medium/nano_boost
 	symptoms = list(/datum/symptom/nano_boost)

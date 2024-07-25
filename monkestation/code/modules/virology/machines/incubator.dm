@@ -25,9 +25,9 @@
 
 	var/on = FALSE
 
-	var/mutatechance = 5
-	var/growthrate = 4
-	var/can_focus = 0 //Whether the machine can focus on an effect to mutate it or not
+	var/mutatechance = 10
+	var/growthrate = 8
+	var/can_focus = FALSE //Whether the machine can focus on an effect to mutate it or not
 	var/effect_focus = 0 //What effect of the disease are we focusing on?
 
 /obj/machinery/disease2/incubator/New()
@@ -47,13 +47,13 @@
 	var/scancount = 0
 	var/lasercount = 0
 	for(var/datum/stock_part/scanning_module/SP in component_parts)
-		scancount += SP.tier-1
+		scancount += SP.tier * 0.5
 	for(var/datum/stock_part/micro_laser/SP in component_parts)
-		lasercount += SP.tier-1
+		lasercount += SP.tier * 0.5
 	if(lasercount >= 4)
-		can_focus = 1
+		can_focus = TRUE
 	else
-		can_focus = 0
+		can_focus = FALSE
 	mutatechance = initial(mutatechance) * max(1, scancount)
 	growthrate = initial(growthrate) + lasercount
 
@@ -226,6 +226,7 @@
 
 	data["on"] = on
 	data["can_focus"] = can_focus
+	data["focus_stage"] = effect_focus
 	var/list/dish_ui_data = list()
 	data["dishes"] = dish_ui_data
 
@@ -249,6 +250,15 @@
 		dish_ui_datum["minor_mutations_robustness"] = mutatechance //add support for other reagents
 		dish_ui_datum["minor_mutations_effects"] = mutatechance //add support for other reagents
 		dish_ui_datum["dish_slot"] = i
+
+		var/list/symptom_data = list()
+		var/obj/item/weapon/virusdish/dish = dish_datum.dish
+		for(var/datum/symptom/symptom in dish.contained_virus.symptoms)
+			if(!(dish.contained_virus.disease_flags & DISEASE_ANALYZED))
+				symptom_data += list(list("name" = "Unknown", "desc" = "Unknown", "strength" = symptom.multiplier, "max_strength" = symptom.max_multiplier, "chance" = symptom.chance, "max_chance" = symptom.max_chance, "stage" = symptom.stage))
+				continue
+			symptom_data += list(list("name" = symptom.name, "desc" = symptom.desc, "strength" = symptom.multiplier, "max_strength" = symptom.max_multiplier, "chance" = symptom.chance, "max_chance" = symptom.max_chance, "stage" = symptom.stage))
+		dish_ui_datum["symptom_data"] = symptom_data
 
 	return data
 
@@ -403,6 +413,7 @@
 				overlays += reagents_light_n
 				overlays += reagents_light
 
+		/*
 		if (dish_datum.updates_new & INCUBATOR_DISH_MAJOR)
 			if (!(dish_datum.updates & INCUBATOR_DISH_MAJOR))
 				dish_datum.updates += INCUBATOR_DISH_MAJOR
@@ -441,6 +452,7 @@
 
 				overlays += effect_light_n
 				overlays += effect_light
+			*/
 
 	return overlays
 

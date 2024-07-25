@@ -18,10 +18,12 @@
 /datum/disease/revblight/cure(add_resistance = TRUE, mob/living/carbon/target)
 	if(affected_mob)
 		affected_mob.remove_atom_colour(TEMPORARY_COLOUR_PRIORITY, "#1d2953")
-		if(affected_mob.dna && affected_mob.dna.species)
-			affected_mob.dna.species.handle_mutant_bodyparts(affected_mob)
-			affected_mob.set_haircolor(null, override = TRUE)
-		to_chat(affected_mob, span_notice("You feel better."))
+		if(ishuman(affected_mob))
+			var/mob/living/carbon/human/human = affected_mob
+			if(human.dna && human.dna.species)
+				human.dna.species.handle_mutant_bodyparts(human)
+				human.set_haircolor(null, override = TRUE)
+			to_chat(affected_mob, span_notice("You feel better."))
 	..()
 
 
@@ -62,9 +64,11 @@
 				to_chat(affected_mob, span_revenbignotice("You feel like [pick("nothing's worth it anymore", "nobody ever needed your help", "nothing you did mattered", "everything you tried to do was worthless")]."))
 				affected_mob.stamina.adjust(-22.5 * seconds_per_tick, FALSE)
 				new /obj/effect/temp_visual/revenant(affected_mob.loc)
-				if(affected_mob.dna && affected_mob.dna.species)
-					affected_mob.dna.species.handle_mutant_bodyparts(affected_mob,"#1d2953")
-					affected_mob.set_haircolor("#1d2953", override = TRUE)
+				if(ishuman(affected_mob))
+					var/mob/living/carbon/human/human = affected_mob
+					if(human.dna && human.dna.species)
+						human.dna.species.handle_mutant_bodyparts(human,"#1d2953")
+						affected_mob.set_haircolor("#1d2953", override = TRUE)
 				affected_mob.visible_message(span_warning("[affected_mob] looks terrifyingly gaunt..."), span_revennotice("You suddenly feel like your skin is <i>wrong</i>..."))
 				affected_mob.add_atom_colour("#1d2953", TEMPORARY_COLOUR_PRIORITY)
 				addtimer(CALLBACK(src, PROC_REF(cure)), 10 SECONDS)
