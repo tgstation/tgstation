@@ -271,6 +271,9 @@
 	if(movement_type & FLYING || HAS_TRAIT(src, TRAIT_FREE_FLOAT_MOVEMENT))
 		return TRUE
 
+	if (HAS_TRAIT(src, TRAIT_NOGRAV_ALWAYS_DRIFT))
+		return FALSE
+
 	var/atom/movable/backup = get_spacemove_backup(movement_dir, continuous_move)
 	if(!backup)
 		return FALSE

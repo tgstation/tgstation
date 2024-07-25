@@ -294,3 +294,6 @@
 
 /// Trait when a drink was renamed by a shaker
 #define SHAKER_LABEL_TRAIT "shaker_trait"
+
+/// Trait given by a jetpack
+#define JETPACK_TRAIT "jetpack_trait"

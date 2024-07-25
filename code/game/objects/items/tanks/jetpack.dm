@@ -41,7 +41,7 @@
  * Arguments
  * stabilize - Should this jetpack be stabalized
  */
-/obj/item/tank/jetpack/proc/configure_jetpack(stabilize)
+/obj/item/tank/jetpack/proc/configure_jetpack(stabilize, mob/user = null)
 	src.stabilize = stabilize
 
 	AddComponent( \
@@ -55,6 +55,12 @@
 		thrust_callback, \
 		/datum/effect_system/trail_follow/ion, \
 	)
+
+	if (!isnull(user) && user.get_item_by_slot(slot_flags) == src)
+		if (!stabilize)
+			ADD_TRAIT(user, TRAIT_NOGRAV_ALWAYS_DRIFT, JETPACK_TRAIT)
+		else
+			REMOVE_TRAIT(user, TRAIT_NOGRAV_ALWAYS_DRIFT, JETPACK_TRAIT)
 
 /obj/item/tank/jetpack/item_action_slot_check(slot)
 	if(slot & slot_flags)
@@ -81,7 +87,7 @@
 		cycle(user)
 	else if(istype(action, /datum/action/item_action/jetpack_stabilization))
 		if(on)
-			configure_jetpack(!stabilize)
+			configure_jetpack(!stabilize, user)
 			to_chat(user, span_notice("You turn the jetpack stabilization [stabilize ? "on" : "off"]."))
 	else
 		toggle_internals(user)
@@ -115,6 +121,8 @@
 	update_icon(UPDATE_ICON_STATE)
 	if(full_speed)
 		user.add_movespeed_modifier(/datum/movespeed_modifier/jetpack/full_speed)
+	if (!stabilize)
+		ADD_TRAIT(user, TRAIT_NOGRAV_ALWAYS_DRIFT, JETPACK_TRAIT)
 	return TRUE
 
 /obj/item/tank/jetpack/proc/turn_off(mob/user)
@@ -123,6 +131,7 @@
 	update_icon(UPDATE_ICON_STATE)
 	if(user)
 		user.remove_movespeed_modifier(/datum/movespeed_modifier/jetpack/full_speed)
+		REMOVE_TRAIT(user, TRAIT_NOGRAV_ALWAYS_DRIFT, JETPACK_TRAIT)
 
 /obj/item/tank/jetpack/proc/allow_thrust(num, use_fuel = TRUE)
 	if(!ismob(loc))

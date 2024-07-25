@@ -104,7 +104,7 @@
 /obj/item/organ/external/wings/functional/proc/toggle_flight(mob/living/carbon/human/human)
 	if(!HAS_TRAIT_FROM(human, TRAIT_MOVE_FLOATING, SPECIES_FLIGHT_TRAIT))
 		human.physiology.stun_mod *= 2
-		human.add_traits(list(TRAIT_NO_FLOATING_ANIM, TRAIT_MOVE_FLOATING, TRAIT_IGNORING_GRAVITY), SPECIES_FLIGHT_TRAIT)
+		human.add_traits(list(TRAIT_NO_FLOATING_ANIM, TRAIT_MOVE_FLOATING, TRAIT_IGNORING_GRAVITY, TRAIT_NOGRAV_ALWAYS_DRIFT), SPECIES_FLIGHT_TRAIT)
 		human.add_movespeed_modifier(/datum/movespeed_modifier/jetpack/wings)
 		human.AddElement(/datum/element/forced_gravity, 0)
 		passtable_on(human, SPECIES_FLIGHT_TRAIT)
@@ -117,7 +117,7 @@
 		return
 
 	human.physiology.stun_mod *= 0.5
-	human.remove_traits(list(TRAIT_NO_FLOATING_ANIM, TRAIT_MOVE_FLOATING, TRAIT_IGNORING_GRAVITY), SPECIES_FLIGHT_TRAIT)
+	human.remove_traits(list(TRAIT_NO_FLOATING_ANIM, TRAIT_MOVE_FLOATING, TRAIT_IGNORING_GRAVITY, TRAIT_NOGRAV_ALWAYS_DRIFT), SPECIES_FLIGHT_TRAIT)
 	human.remove_movespeed_modifier(/datum/movespeed_modifier/jetpack/wings)
 	human.RemoveElement(/datum/element/forced_gravity, 0)
 	passtable_off(human, SPECIES_FLIGHT_TRAIT)
