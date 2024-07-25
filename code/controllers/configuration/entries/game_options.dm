@@ -70,6 +70,7 @@
 /// Determines how fast traitors scale in general.
 /datum/config_entry/number/traitor_scaling_multiplier
 	default = 1
+	integer = FALSE
 	min_val = 0.01
 
 /// Determines how many potential objectives a traitor can have.

@@ -1,0 +1,5 @@
+author: "LT3"
+delete-after: True
+changes:
+  - bugfix: "Fixed elevator panel allowing conflicting inputs"
+  - bugfix: "Fixed elevator sound being out of sync with movement"
