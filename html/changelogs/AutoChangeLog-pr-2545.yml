@@ -1,0 +1,5 @@
+author: "Absolucy"
+delete-after: True
+changes:
+  - bugfix: "Snowstorms on Icebox won't damage you if you're immune to damage from cold temperatures anyways."
+  - bugfix: "Actually hopefully probably fixed the Weather slider in the volume mixer not working."
