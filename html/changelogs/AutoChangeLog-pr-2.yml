@@ -1,0 +1,4 @@
+author: "Paxilmaniac"
+delete-after: True
+changes:
+  - bugfix: "cleans out tg codeowners from the codeowners file so checks actually pass"
