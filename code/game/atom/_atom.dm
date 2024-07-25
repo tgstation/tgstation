@@ -853,6 +853,9 @@
 	if (isnull(user))
 		return
 
+	if(user.face_mouse) // DOPPLER SHIFT ADDITION
+		user.face_atom(src) // DOPPLER SHIFT ADDITION
+
 	// Screentips
 	var/datum/hud/active_hud = user.hud_used
 	if(!active_hud)
