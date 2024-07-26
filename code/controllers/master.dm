@@ -78,6 +78,8 @@ GLOBAL_REAL(Master, /datum/controller/master)
 
 	/// Whether the Overview UI will update as fast as possible for viewers.
 	var/overview_fast_update = FALSE
+	/// Enables rolling usage averaging
+	var/use_rolling_usage = FALSE
 	/// How long to run our rolling usage averaging
 	var/rolling_usage_length = 5 SECONDS
 
@@ -153,6 +155,17 @@ ADMIN_VERB(cmd_controller_view_ui, R_SERVER|R_DEBUG, "Controller Overview", "Vie
 	if(isnull(ui))
 		ui = new /datum/tgui(user, src, "ControllerOverview")
 		ui.open()
+		use_rolling_usage = TRUE
+
+/datum/controller/master/ui_close(mob/user)
+	var/valid_found = FALSE
+	for(var/datum/tgui/open_ui as anything in open_uis)
+		if(open_ui.user == user)
+			continue
+		valid_found = TRUE
+	if(!valid_found)
+		use_rolling_usage = FALSE
+	return ..()
 
 /datum/controller/master/ui_data(mob/user)
 	var/list/data = list()
@@ -160,18 +173,13 @@ ADMIN_VERB(cmd_controller_view_ui, R_SERVER|R_DEBUG, "Controller Overview", "Vie
 	var/list/subsystem_data = list()
 	for(var/datum/controller/subsystem/subsystem as anything in subsystems)
 		var/list/rolling_usage = subsystem.rolling_usage
-		// First, trim er up
-		var/cut_to = 0
-		while(cut_to + 1 <= length(rolling_usage) && text2num(rolling_usage[cut_to + 1]) < (world.time - rolling_usage_length) / world.tick_lag)
-			cut_to += 1
-		if(cut_to)
-			rolling_usage.Cut(1, cut_to + 1)
+		subsystem.prune_rolling_usage()
 
 		// Then we sum
 		var/sum = 0
-		for(var/tick in rolling_usage)
-			sum += rolling_usage[tick]
-		var/average = sum / (rolling_usage_length / world.tick_lag)
+		for(var/i in 2 to length(rolling_usage) step 2)
+			sum += rolling_usage[i]
+		var/average = sum / DS2TICKS(rolling_usage_length)
 
 		subsystem_data += list(list(
 			"name" = subsystem.name,
@@ -789,14 +797,11 @@ ADMIN_VERB(cmd_controller_view_ui, R_SERVER|R_DEBUG, "Controller Overview", "Vie
 			var/state = queue_node.ignite(queue_node_paused)
 			tick_usage = TICK_USAGE - tick_usage
 
-			var/list/rolling_usage = queue_node.rolling_usage
-			var/tick_num = world.time / world.tick_lag
-			var/cut_to = 0
-			while(cut_to + 1 <= length(rolling_usage) && text2num(rolling_usage[cut_to + 1]) < tick_num - (rolling_usage_length / world.tick_lag))
-				cut_to += 1
-			if(cut_to)
-				rolling_usage.Cut(1, cut_to + 1)
-			rolling_usage["[tick_num]"] = tick_usage
+			if(use_rolling_usage)
+				queue_node.prune_rolling_usage()
+				// Rolling usage is an unrolled list that we know the order off
+				// OPTIMIZATION POSTING
+				queue_node.rolling_usage += list(DS2TICKS(world.time), tick_usage)
 
 			if(queue_node.profiler_focused)
 				world.Profile(PROFILE_STOP)
@@ -937,29 +942,4 @@ ADMIN_VERB(cmd_controller_view_ui, R_SERVER|R_DEBUG, "Controller Overview", "Vie
 		return FALSE
 	last_profiled = REALTIMEOFDAY
 	SSprofiler.DumpFile(allow_yield = FALSE)
-
-/datum/controller/master/proc/display_rolling_avg()
-	var/list/summed = list()
-	for(var/datum/controller/subsystem/processing as anything in subsystems)
-		var/list/rolling_usage = processing.rolling_usage
-		// First, trim er up
-		var/cut_to = 0
-		while(cut_to + 1 <= length(rolling_usage) && text2num(rolling_usage[cut_to + 1]) < (world.time - rolling_usage_length) / world.tick_lag)
-			cut_to += 1
-		if(cut_to)
-			rolling_usage.Cut(1, cut_to + 1)
-
-		// Then we sum
-		var/sum = 0
-		for(var/tick in rolling_usage)
-			sum += rolling_usage[tick]
-		summed[processing.type] = sum / (rolling_usage_length / world.tick_lag)
-
-	sortTim(summed, cmp = /proc/cmp_numeric_dsc, associative = TRUE)
-	var/list/output = list()
-	for(var/key in summed)
-		output += "[key] = [summed[key]]"
-	log_world(output.Join("\n"))
-	message_admins(output.Join("\n"))
-
 
