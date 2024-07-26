@@ -44,10 +44,10 @@ export function SubsystemDialog(props: Props) {
           <LabeledList.Item label="Next Fire">{next_fire}</LabeledList.Item>
           <LabeledList.Item label="Cost">{cost_ms}ms</LabeledList.Item>
           <LabeledList.Item label="Tick Usage">
-            {(tick_usage * 0.01).toFixed(2)}%
+            {(tick_usage).toFixed(2)}%
           </LabeledList.Item>
           <LabeledList.Item label="Tick Overrun">
-            {(tick_overrun * 0.01).toFixed(2)}%
+            {(tick_overrun).toFixed(2)}%
           </LabeledList.Item>
           {initialization_failure_message && (
             <LabeledList.Item color="bad">

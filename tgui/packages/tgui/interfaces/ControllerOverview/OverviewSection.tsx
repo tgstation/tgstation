@@ -44,10 +44,10 @@ export function OverviewSection(props) {
         <Stack.Item grow>
           <LabeledList>
             <LabeledList.Item label="Overall Usage">
-              {(overallUsage * 0.01).toFixed(2)}%
+              {(overallUsage).toFixed(2)}%
             </LabeledList.Item>
             <LabeledList.Item label="Overall Overrun">
-              {(overallOverrun * 0.01).toFixed(2)}%
+              {(overallOverrun).toFixed(2)}%
             </LabeledList.Item>
           </LabeledList>
         </Stack.Item>

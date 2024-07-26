@@ -78,6 +78,10 @@ GLOBAL_REAL(Master, /datum/controller/master)
 
 	/// Whether the Overview UI will update as fast as possible for viewers.
 	var/overview_fast_update = FALSE
+	/// List of tick usage by subsystem fired this tick
+	var/list/cost_this_tick = list()
+	/// Tick usage LAST tick
+	var/list/cost_last_tick = list()
 
 /datum/controller/master/New()
 	if(!config)
@@ -604,6 +608,9 @@ ADMIN_VERB(cmd_controller_view_ui, R_SERVER|R_DEBUG, "Controller Overview", "Vie
 			error_level++
 			continue
 
+		cost_last_tick = cost_this_tick
+		cost_this_tick = list()
+		cost_this_tick["tick"] = world.time
 		if (queue_head)
 			if (RunQueue() <= 0) //error running queue
 				stack_trace("MC: RunQueue failed. Current error_level is [round(error_level, 0.25)]")
@@ -763,6 +770,7 @@ ADMIN_VERB(cmd_controller_view_ui, R_SERVER|R_DEBUG, "Controller Overview", "Vie
 			tick_usage = TICK_USAGE
 			var/state = queue_node.ignite(queue_node_paused)
 			tick_usage = TICK_USAGE - tick_usage
+			cost_this_tick[queue_node.type] = TICK_DELTA_TO_MS(tick_usage)
 
 			if(queue_node.profiler_focused)
 				world.Profile(PROFILE_STOP)
