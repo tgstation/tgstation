@@ -136,25 +136,6 @@ GLOBAL_LIST_INIT(autodrobe_animal_items, list(
 	/obj/item/clothing/mask/animal/horsehead = 3,
 ))
 
-GLOBAL_LIST_INIT(autodrobe_other_items, list(
-	/obj/item/clothing/under/costume/buttondown/slacks/service = 3,
-	/obj/item/clothing/under/costume/buttondown/skirt/service = 3,
-	/obj/item/clothing/neck/bowtie = 6,
-	/obj/item/clothing/accessory/waistcoat = 4,
-	/obj/item/clothing/under/suit/waiter = 4,
-	/obj/item/clothing/suit/apron = 3,
-	/obj/item/clothing/suit/apron/overalls = 3,
-	/obj/item/clothing/head/costume/maidheadband = 3,
-	/obj/item/clothing/under/costume/maid = 3,
-	/obj/item/clothing/gloves/maid = 3,
-	/obj/item/clothing/neck/maid = 3,
-	/obj/item/clothing/under/rank/civilian/janitor/maid = 3,
-	/obj/item/clothing/accessory/maidapron = 3,
-	/obj/item/clothing/mask/gas/prop = 4,
-	/obj/item/clothing/mask/gas/atmosprop = 3,
-	/obj/item/clothing/mask/animal/small/tribal = 1,
-))
-
 GLOBAL_LIST_INIT(autodrobe_service_items, list(
 	/obj/item/clothing/under/costume/buttondown/slacks/service = 3,
 	/obj/item/clothing/under/costume/buttondown/skirt/service = 3,
@@ -169,6 +150,21 @@ GLOBAL_LIST_INIT(autodrobe_service_items, list(
 	/obj/item/clothing/neck/maid = 3,
 	/obj/item/clothing/under/rank/civilian/janitor/maid = 3,
 	/obj/item/clothing/accessory/maidapron = 3,
+))
+
+GLOBAL_LIST_INIT(autodrobe_other_items, list(
+	/obj/item/clothing/head/wig/random = 6,
+	/obj/item/clothing/head/flatcap = 3,
+	/obj/item/clothing/suit/jacket/miljacket = 3,
+	/obj/item/clothing/shoes/jackboots = 3,
+	/obj/item/clothing/mask/fakemoustache = 3,
+	/obj/item/clothing/glasses/cold= 3,
+	/obj/item/clothing/glasses/heat= 3,
+	/obj/item/clothing/mask/gas/cyborg = 3,
+	/obj/item/clothing/mask/joy = 3,
+	/obj/item/clothing/mask/gas/prop = 4,
+	/obj/item/clothing/mask/gas/atmosprop = 3,
+	/obj/item/clothing/mask/animal/small/tribal = 1,
 ))
 
 GLOBAL_LIST_INIT(autodrobe_premium_items, list(
@@ -230,9 +226,11 @@ GLOBAL_VAR_INIT(all_autodrobe_items, (autodrobe_costumes_items +\
 	req_access = list(ACCESS_THEATRE)
 	product_slogans = "Dress for success!;Suited and booted!;It's show time!;Why leave style up to fate? Use AutoDrobe!"
 	vend_reply = "Thank you for using AutoDrobe!"
+
 	/**
 	 * Categories are filled in Initialize!
 	 */
+
 	refill_canister = /obj/item/vending_refill/autodrobe
 	default_price = PAYCHECK_CREW * 0.8 //Default of 40.
 	extra_price = PAYCHECK_COMMAND

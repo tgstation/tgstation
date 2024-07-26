@@ -1275,3 +1275,23 @@
   nikothedude:
   - bugfix: Alexander no longer causes harddels
   - bugfix: Removed a theoretical infinite block exploit from alexander
+2024-07-25:
+  Ghommie:
+  - bugfix: Fixed fishing.
+  MTandi:
+  - bugfix: Borgs and AI can now use research queue
+  Vekter:
+  - spellcheck: Reworded Voidwalker's objectives to be more descriptive of their actual
+      goals as opposed to just fluff.
+  necromanceranne:
+  - balance: Strong-arm implants go on cooldown when activated, but deal more overall
+      lethal damage on a single blow.
+  - balance: The strong-arm implant does additional damage to fauna and some other
+      dangerous mobs.
+  - qol: You can pair toolset arm implants with the strong-arm implants.
+  - balance: Quality cybernetic hearts combat bleeds and restore blood, rather than
+      inject you with epinephrine when you enter crit. This can result in mild toxin
+      buildup, however.
+  - balance: Upgraded cybernetic hearts give an extremely brief amount of action when
+      you enter softcrit (but not hardcrit).
+  - bugfix: Restores some of the items accidentally lost in the autodrobe.
