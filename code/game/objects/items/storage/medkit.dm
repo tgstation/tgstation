@@ -20,6 +20,7 @@
 	throw_range = 7
 	drop_sound = 'sound/items/medkit_drop.ogg'
 	pickup_sound = 'sound/items/medkit_pick_up.ogg'
+	sound_vary = TRUE
 	var/empty = FALSE
 	/// Defines damage type of the medkit. General ones stay null. Used for medibot healing bonuses
 	var/damagetype_healed
@@ -81,8 +82,8 @@
 /obj/item/storage/medkit/Initialize(mapload)
 	. = ..()
 	atom_storage.max_specific_storage = WEIGHT_CLASS_SMALL
-	atom_storage.open_sound = 'sound/items/handling/pill_bottle_open.ogg'
-	atom_storage.open_sound_vary = FALSE
+	atom_storage.open_sound = 'sound/items/medkit_open.ogg'
+	atom_storage.open_sound_vary = TRUE
 
 /obj/item/storage/medkit/regular
 	icon_state = "medkit"
