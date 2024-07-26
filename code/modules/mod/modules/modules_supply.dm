@@ -118,7 +118,7 @@
 	icon_state = "drill"
 	module_type = MODULE_ACTIVE
 	complexity = 1
-	use_energy_cost = DEFAULT_CHARGE_DRAIN
+	use_energy_cost = DEFAULT_CHARGE_DRAIN * 0.2
 	incompatible_modules = list(/obj/item/mod/module/drill)
 	cooldown_time = 0.5 SECONDS
 	overlay_state_active = "module_drill"
