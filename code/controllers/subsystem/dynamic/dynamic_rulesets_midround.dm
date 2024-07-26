@@ -964,18 +964,15 @@
 	cost = 5
 	minimum_players = 40
 	repeatable = TRUE
+	signup_item_path = /obj/item/cosmic_skull
 	ruleset_lazy_templates = list(LAZY_TEMPLATE_KEY_VOIDWALKER_VOID)
 	/// The space turf we find in acceptable(), cached for ease
 	var/space_turf
 
 /datum/dynamic_ruleset/midround/from_ghosts/voidwalker/acceptable(population = 0, threat_level = 0)
-	if(SSmapping.is_planetary()) // Will die on planetary gravity
-		if (ruleset_forced == RULESET_FORCE_ENABLED) // Warning to admins that this antag is not designed for planetary based maps.
-			message_admins("[name] failed to spawn due to planetary gravity and will die inside it!")
-		return FALSE
-	// Checks for space carp landmarks
 	space_turf = find_space_spawn()
-	if(space_turf)
+	// Space only antag and will die on planetary gravity.
+	if(SSmapping.is_planetary() || !space_turf)
 		return FALSE
 	return ..()
 
