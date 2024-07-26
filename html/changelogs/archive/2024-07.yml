@@ -326,3 +326,32 @@
   - bugfix: Fixed an annoyingly common runtime error with nanites.
   OliverOtter:
   - rscdel: Old Coat decription
+2024-07-26:
+  Absolucy:
+  - bugfix: Snowstorms on Icebox won't damage you if you're immune to damage from
+      cold temperatures anyways.
+  - bugfix: Actually hopefully probably fixed the Weather slider in the volume mixer
+      not working.
+  DimWhat:
+  - rscadd: Added an alternate job name for pathologist.
+  KnigTheThrasher:
+  - rscadd: Added new door in kitchen
+  - bugfix: Fixed atmos gas tank being flipped in the wrong direction
+  - rscadd: More platings in atmos gas tanks
+  - bugfix: Fixed permabrig access
+  - bugfix: Added ceiling to the ptl room
+  - bugfix: Fixed coffins in morgue
+  ThePooba:
+  - rscadd: Butchering a corpse now transfers the reagents to the resultant meat
+  - bugfix: Silver was missing from chemists plumbing synthesizer
+  - bugfix: Morphs can now spawn from the morph event
+  - bugfix: Bottles of tickles and laughter from wizardbook can now spawn their demons
+  Tractor Mann:
+  - rscadd: Ported Conveyer Sorters! get the research done and automatically start
+      moving stuff off the belt!
+  distributivgesetz:
+  - rscadd: Updated Direct Messenger to v6.5.3. Now including brand new individual
+      chat rooms, proper image attachments and a revolutionary message input field!
+  - rscadd: Added a "Reset Imprint" option to the PDA painter.
+  - refactor: Refactored PDA imprinting code just a bit.
+  - bugfix: PDAs should now properly respond to rigged messages.

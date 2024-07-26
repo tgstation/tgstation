@@ -1,7 +1,0 @@
-author: "distributivgesetz"
-delete-after: True
-changes:
-  - rscadd: "Updated Direct Messenger to v6.5.3. Now including brand new individual chat rooms, proper image attachments and a revolutionary message input field!"
-  - rscadd: "Added a \"Reset Imprint\" option to the PDA painter."
-  - refactor: "Refactored PDA imprinting code just a bit."
-  - bugfix: "PDAs should now properly respond to rigged messages."

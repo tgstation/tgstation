@@ -1,7 +1,0 @@
-author: "ThePooba"
-delete-after: True
-changes:
-  - rscadd: "Butchering a corpse now transfers the reagents to the resultant meat"
-  - bugfix: "Silver was missing from chemists plumbing synthesizer"
-  - bugfix: "Morphs can now spawn from the morph event"
-  - bugfix: "Bottles of tickles and laughter from wizardbook can now spawn their demons"
