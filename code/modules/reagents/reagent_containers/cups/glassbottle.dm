@@ -316,6 +316,12 @@
 	icon_state = "rumbottle"
 	list_reagents = list(/datum/reagent/consumable/ethanol/rum = 100)
 
+/obj/item/reagent_containers/cup/glass/bottle/rum/aged
+	name = "Captain Pete's Vintage spiced rum"
+	desc = "Shiver me timbers, a vintage edition of Captain Pete's rum. It's pratically GRIFF in a bottle from over 50 years ago."
+	icon_state = "rumbottle_gold"
+	list_reagents = list(/datum/reagent/consumable/ethanol/rum/aged = 100)
+
 /obj/item/reagent_containers/cup/glass/bottle/maltliquor
 	name = "\improper Rabid Bear malt liquor"
 	desc = "A 40 full of malt liquor. Kicks stronger than, well, a rabid bear."
