@@ -16,9 +16,9 @@
 	role_name = "Void Walker"
 
 // Space only antag
-/datum/round_event/ghost_role/voidwalker/can_spawn_event()
+/datum/round_event_control/ghost_role/voidwalker/can_spawn_event()
 	. = ..()
-	var/space_check = find_space_spawn
+	var/space_check = find_space_spawn()
 	if(!space_check)
 		return FALSE
 	return TRUE
