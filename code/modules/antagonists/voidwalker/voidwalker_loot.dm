@@ -6,7 +6,7 @@
 	icon = 'icons/obj/weapons/voidwalker_items.dmi'
 	icon_state = "cosmic_skull_charged"
 
-	light_on = 1
+	light_on = TRUE
 	light_color = "#CC00CC"
 	light_range = 3
 	/// Icon state for when drained
@@ -40,4 +40,4 @@
 	uses--
 	if(uses <= 0 )
 		icon_state = drained_icon_state
-		light_on = 0
+		light_on = FALSE
