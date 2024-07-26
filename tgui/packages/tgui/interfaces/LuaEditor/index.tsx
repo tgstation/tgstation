@@ -121,6 +121,8 @@ export const LuaEditor = () => {
             skipNulls
             vvAct={(path) => act('vvGlobal', { indices: path })}
             callType="callFunction"
+            setToCall={setToCall}
+            setModal={setModal}
           />
         );
       }
