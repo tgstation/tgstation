@@ -76,6 +76,11 @@
 		balloon_alert(neo, "nothing loaded!")
 		return
 
+	balloon_alert(neo, "establishing connection...")
+	if(!do_after(neo, 2 SECONDS, src))
+		open_machine()
+		return
+
 	var/mob/living/carbon/current_avatar = avatar_ref?.resolve()
 	if(isnull(current_avatar) || current_avatar.stat != CONSCIOUS) // We need a viable avatar
 		current_avatar = server.start_new_connection(neo, netsuit)
@@ -130,9 +135,6 @@
 
 /// Checks for cases to eject/fail connecting an avatar
 /obj/machinery/netpod/proc/validate_entry(mob/living/neo, mob/living/avatar)
-	if(!do_after(neo, 2 SECONDS, src))
-		return FALSE
-
 	// Very invalid
 	if(QDELETED(neo) || QDELETED(avatar) || QDELETED(src) || !is_operational)
 		return FALSE

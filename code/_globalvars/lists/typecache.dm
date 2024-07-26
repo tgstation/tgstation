@@ -22,7 +22,7 @@ GLOBAL_LIST_INIT(typecache_elevated_structures, typecacheof(list(
 	/obj/structure/table,
 	//Kitchen
 	/obj/machinery/smartfridge,
-	/obj/machinery/smartfridge/drying_rack, // Redundant, given above, but this is for the sake of explicitness.
+	/obj/machinery/smartfridge/drying, // Redundant, given above, but this is for the sake of explicitness.
 	/obj/structure/bonfire,
 	/obj/machinery/grill,
 	/obj/machinery/griddle,

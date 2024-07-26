@@ -17,9 +17,6 @@
 
 	damage_overlay_color = GLASSY_OVERLAY_MATRIX
 
-	brute_modifier = 0.9
-	burn_modifier = 0.8
-
 	light_brute_msg = "splintered"
 	medium_brute_msg = "cracked"
 	heavy_brute_msg = "shattered"
@@ -39,9 +36,6 @@
 	limb_id = SPECIES_VOIDWALKER
 	is_dimorphic = FALSE
 	blocks_emissive = EMISSIVE_BLOCK_NONE
-
-	brute_modifier = 0.9
-	burn_modifier = 0.8
 
 	damage_overlay_color = GLASSY_OVERLAY_MATRIX
 
@@ -65,8 +59,7 @@
 	is_dimorphic = FALSE
 	blocks_emissive = EMISSIVE_BLOCK_NONE
 
-	brute_modifier = 0.9
-	burn_modifier = 0.8
+	bodypart_traits = list(TRAIT_CHUNKYFINGERS)
 
 	damage_overlay_color = GLASSY_OVERLAY_MATRIX
 
@@ -90,8 +83,7 @@
 	is_dimorphic = FALSE
 	blocks_emissive = EMISSIVE_BLOCK_NONE
 
-	brute_modifier = 0.9
-	burn_modifier = 0.8
+	bodypart_traits = list(TRAIT_CHUNKYFINGERS)
 
 	damage_overlay_color = GLASSY_OVERLAY_MATRIX
 
@@ -115,9 +107,6 @@
 	is_dimorphic = FALSE
 	blocks_emissive = EMISSIVE_BLOCK_NONE
 
-	brute_modifier = 0.9
-	burn_modifier = 0.8
-
 	damage_overlay_color = GLASSY_OVERLAY_MATRIX
 
 	light_brute_msg = "splintered"
@@ -139,9 +128,6 @@
 	limb_id = SPECIES_VOIDWALKER
 	is_dimorphic = FALSE
 	blocks_emissive = EMISSIVE_BLOCK_NONE
-
-	brute_modifier = 0.9
-	burn_modifier = 0.8
 
 	damage_overlay_color = GLASSY_OVERLAY_MATRIX
 

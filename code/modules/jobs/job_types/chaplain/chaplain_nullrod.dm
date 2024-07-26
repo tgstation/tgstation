@@ -564,7 +564,7 @@
 /obj/item/nullrod/bostaff
 	name = "monk's staff"
 	desc = "A long, tall staff made of polished wood. Traditionally used in ancient old-Earth martial arts, it is now used to harass the clown."
-	force = 15
+	force = 14
 	block_chance = 40
 	block_sound = 'sound/weapons/genhit.ogg'
 	slot_flags = ITEM_SLOT_BACK
@@ -578,7 +578,20 @@
 	worn_icon_state = "bostaff0"
 	lefthand_file = 'icons/mob/inhands/weapons/staves_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/staves_righthand.dmi'
-	menu_description = "A staff which provides a medium-low chance of blocking incoming melee attacks and deals a little less damage. Can be worn on the back."
+	menu_description = "A staff which provides a medium-low chance of blocking incoming melee attacks and deals less damage, unless dual-wielded. Can be worn on the back."
+
+/obj/item/nullrod/bostaff/Initialize(mapload)
+	. = ..()
+	AddComponent(/datum/component/two_handed, \
+		force_unwielded = 14, \
+		force_wielded = 18, \
+		icon_wielded = "[base_icon_state]1", \
+	)
+
+/obj/item/nullrod/bostaff/update_icon_state()
+	icon_state = "[base_icon_state]0"
+	return ..()
+
 
 // Arrhythmic Knife - Lets your walk without rhythm by varying your walk speed. Can't be put away.
 

@@ -702,6 +702,8 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_HONKSPAMMING "trait_honkspamming"
 /// Required by the waddling element since there are multiple sources of it.
 #define TRAIT_WADDLING "trait_waddling"
+/// Required by the on_hit_effect element, which is in turn added by other elements.
+#define TRAIT_ON_HIT_EFFECT "trait_on_hit_effect"
 
 ///Used for managing KEEP_TOGETHER in [/atom/var/appearance_flags]
 #define TRAIT_KEEP_TOGETHER "keep-together"
@@ -771,7 +773,7 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_DANGEROUS_OBJECT "dangerous_object"
 /// determines whether or not objects are haunted and teleport/attack randomly
 #define TRAIT_HAUNTED "haunted"
-/// An item that, if it has contents, will ignore it's contents when scanning for contraband.
+/// An item that, if it has contents, will ignore its contents when scanning for contraband.
 #define TRAIT_CONTRABAND_BLOCKER "contraband_blocker"
 
 //quirk traits
@@ -978,6 +980,10 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_HULK "hulk"
 /// Isn't attacked harmfully by blob structures
 #define TRAIT_BLOB_ALLY "blob_ally"
+/// Has the chuuni component
+#define TRAIT_CHUUNIBYOU "chuunibyou"
+/// Has splattercasting
+#define TRAIT_SPLATTERCASTER "splattercaster"
 
 ///Traits given by station traits
 #define STATION_TRAIT_ASSISTANT_GIMMICKS "station_trait_assistant_gimmicks"
@@ -1124,8 +1130,8 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 /// Trait given to a dragon who fails to defend their rifts
 #define TRAIT_RIFT_FAILURE "fail_dragon_loser"
 
-///this mob is able to relay happiness, given by /datum/component/happiness
-#define TRAIT_MOB_RELAY_HAPPINESS "mob_relay_happiness"
+///this trait hides most visible fluff and interactions of happiness, likely temporarily.
+#define TRAIT_MOB_HIDE_HAPPINESS "mob_hide_happiness"
 ///trait determines if this mob can breed given by /datum/component/breeding
 #define TRAIT_MOB_BREEDER "mob_breeder"
 ///trait given to mobs that are hatched
@@ -1207,6 +1213,12 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 
 ///Trait given to a turf that should not be allowed to be terraformed, such as turfs holding ore vents.
 #define TRAIT_NO_TERRAFORM "no_terraform"
+
+/// Given to a mob that can throw to make them not able to throw
+#define TRAIT_NO_THROWING "no_throwing"
+
+///Trait which allows mobs to parry mining mob projectiles
+#define TRAIT_MINING_PARRYING "mining_parrying"
 
 
 // END TRAIT DEFINES

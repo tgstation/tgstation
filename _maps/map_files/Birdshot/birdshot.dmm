@@ -2626,7 +2626,7 @@
 "bah" = (
 /obj/structure/cable,
 /obj/item/kirbyplants/organic/applebush,
-/obj/machinery/keycard_auth/directional/south,
+/obj/machinery/keycard_auth/wall_mounted/directional/south,
 /turf/open/floor/iron/dark/textured_corner{
 	dir = 4
 	},
@@ -13242,7 +13242,7 @@
 /obj/item/aicard,
 /obj/item/pai_card,
 /obj/item/circuitboard/aicore,
-/obj/machinery/keycard_auth/directional/north{
+/obj/machinery/keycard_auth/wall_mounted/directional/north{
 	pixel_x = -5
 	},
 /obj/machinery/button/door/directional/north{
@@ -15189,6 +15189,7 @@
 	cycle_id = "sci-entrance"
 	},
 /obj/structure/disposalpipe/segment,
+/obj/machinery/scanner_gate/preset_guns,
 /turf/open/floor/iron/textured_half,
 /area/station/security/brig/entrance)
 "fKx" = (
@@ -16397,7 +16398,7 @@
 /obj/machinery/computer/security/hos{
 	dir = 4
 	},
-/obj/machinery/keycard_auth/directional/south,
+/obj/machinery/keycard_auth/wall_mounted/directional/south,
 /turf/open/floor/carpet/red,
 /area/station/command/heads_quarters/hos)
 "gfb" = (
@@ -30896,6 +30897,7 @@
 	cycle_id = "sci-entrance"
 	},
 /obj/structure/disposalpipe/segment,
+/obj/machinery/scanner_gate/preset_guns,
 /turf/open/floor/iron/textured_half,
 /area/station/security/brig/entrance)
 "kKD" = (
@@ -35235,7 +35237,7 @@
 /obj/machinery/computer/communications{
 	dir = 1
 	},
-/obj/machinery/keycard_auth/directional/south,
+/obj/machinery/keycard_auth/wall_mounted/directional/south,
 /turf/open/floor/wood/large,
 /area/station/command/heads_quarters/captain)
 "mau" = (
@@ -39218,7 +39220,7 @@
 /obj/machinery/modular_computer/preset/id{
 	dir = 1
 	},
-/obj/machinery/keycard_auth/directional/south,
+/obj/machinery/keycard_auth/wall_mounted/directional/south,
 /turf/open/floor/wood,
 /area/station/command/heads_quarters/qm)
 "nxX" = (
@@ -49782,7 +49784,7 @@
 /turf/open/floor/wood/tile,
 /area/station/maintenance/central/lesser)
 "rdH" = (
-/obj/machinery/keycard_auth/directional/south,
+/obj/machinery/keycard_auth/wall_mounted/directional/south,
 /turf/open/floor/mineral/titanium,
 /area/station/command/heads_quarters/ce)
 "rdM" = (
@@ -68088,7 +68090,7 @@
 	pixel_x = 6;
 	req_access = list("medical")
 	},
-/obj/machinery/keycard_auth/directional/east,
+/obj/machinery/keycard_auth/wall_mounted/directional/east,
 /turf/open/floor/wood/parquet,
 /area/station/command/heads_quarters/cmo)
 "wTX" = (

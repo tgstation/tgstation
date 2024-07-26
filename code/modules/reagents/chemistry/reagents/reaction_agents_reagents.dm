@@ -110,7 +110,7 @@
 
 /datum/reagent/reaction_agent/speed_agent
 	name = "Tempomyocin"
-	description = "This reagent will consume itself and speed up an ongoing reaction, modifying the current reaction's purity by it's own."
+	description = "This reagent will consume itself and speed up an ongoing reaction, modifying the current reaction's purity by its own."
 	ph = 10
 	color = "#e61f82"
 

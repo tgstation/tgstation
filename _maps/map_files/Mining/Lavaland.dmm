@@ -3267,7 +3267,7 @@
 /turf/open/floor/iron/dark,
 /area/mine/laborcamp/security)
 "qB" = (
-/obj/machinery/smartfridge/drying_rack,
+/obj/machinery/smartfridge/drying/rack,
 /obj/item/food/cheese/firm_cheese,
 /turf/open/floor/wood/parquet,
 /area/mine/lobby/raptor)

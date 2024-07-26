@@ -4,7 +4,7 @@
  * The component datum
  *
  * A component should be a single standalone unit
- * of functionality, that works by receiving signals from it's parent
+ * of functionality, that works by receiving signals from its parent
  * object to provide some single functionality (i.e a slippery component)
  * that makes the object it's attached to cause people to slip over.
  * Useful when you want shared behaviour independent of type inheritance
