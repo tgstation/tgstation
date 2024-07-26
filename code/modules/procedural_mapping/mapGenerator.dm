@@ -14,6 +14,10 @@
 		buildmode_name = copytext_char("[type]", 20) // / d a t u m / m a p g e n e r a t o r / = 20 characters.
 	initialiseModules()
 
+/// Populate terrain with flora, fauna, features and basically everything that isn't a turf.
+/datum/map_generator/proc/populate_terrain(list/turfs, area/generate_in)
+	return
+
 //Defines the region the map represents, sets map
 //Returns the map
 /datum/map_generator/proc/defineRegion(turf/Start, turf/End, replace = 0)

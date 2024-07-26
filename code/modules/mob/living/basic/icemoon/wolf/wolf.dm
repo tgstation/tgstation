@@ -89,3 +89,15 @@
 	. = ..()
 	faction = new_friend.faction.Copy()
 	visible_message(span_notice("[src] lowers [src.p_their()] snout at [new_friend]'s offering and begins to wag [src.p_their()] tail."))
+
+/obj/item/crusher_trophy/wolf_ear
+	name = "wolf ear"
+	desc = "It's a wolf ear."
+	icon_state = "wolf_ear"
+	denied_type = /obj/item/crusher_trophy/wolf_ear
+
+/obj/item/crusher_trophy/wolf_ear/effect_desc()
+	return "mark detonation to gain a slight speed boost temporarily"
+
+/obj/item/crusher_trophy/wolf_ear/on_mark_detonation(mob/living/target, mob/living/user)
+	user.apply_status_effect(/datum/status_effect/speed_boost, 1 SECONDS)

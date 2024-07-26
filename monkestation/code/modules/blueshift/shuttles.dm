@@ -33,3 +33,24 @@
 	name = "NMC Chimera (Mining)"
 	prefix = "_maps/shuttles/nova/"
 	suffix = "nova"
+
+/datum/map_template/shuttle/mining/nova/large
+	name = "NMC Manticore (Mining)"
+	prefix = "_maps/shuttles/nova/"
+	suffix = "nova_large"
+
+/datum/map_template/shuttle/cargo/nova/delta
+	name = "Supply Shuttle (Delta)"
+	prefix = "_maps/shuttles/nova/"
+	suffix = "nova_delta"	//I hate this. Delta station is one tile different docking-wise, which fucks it ALL up unless we either a) change the map (this would be nonmodular and also press the engine against disposals) or b) this (actually easy, just dumb)
+
+/datum/map_template/shuttle/cargo/nova/ouroboros
+	name = "Supply Shuttle (Ouroboros)"
+	suffix = "ouroboros"
+
+/datum/map_template/shuttle/whiteship/ouroboros
+	name = "JN Chasse-Galerie"
+	description = "A small Jim Nortons shuttle meant to be a mobile cafe. No hostiles onboard, but multiple corpses of Jim Nortons employees."
+	prefix = "_maps/shuttles/nova/"
+	port_id = "whiteship"
+	suffix = "ouroboros"

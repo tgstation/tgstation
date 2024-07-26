@@ -10,7 +10,14 @@
 	if(!weather_type)
 		return
 
-	SSparticle_weather.run_weather(new weather_type(), TRUE)
+	var/where = input("Choose Where", "Weather") as null|anything in list("Eclipse", "Default")
+	if(!where)
+		return
+
+	var/send_value = FALSE
+	if(where == "Eclipse")
+		send_value = TRUE
+	SSparticle_weather.run_weather(new weather_type(where), TRUE, send_value)
 
 	message_admins("[key_name_admin(usr)] started weather of type [weather_type].")
 	log_admin("[key_name(usr)] started weather of type [weather_type].")

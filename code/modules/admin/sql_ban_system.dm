@@ -372,6 +372,7 @@
 				ROLE_VAMPIRICACCIDENT,
 				ROLE_WIZARD,
 				BAN_OPFOR,
+				ROLE_ASSAULT_OPERATIVE,
 			),
 		)
 		for(var/department in long_job_lists)

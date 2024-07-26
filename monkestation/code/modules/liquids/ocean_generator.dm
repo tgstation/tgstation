@@ -107,7 +107,7 @@
 	flora_spawn_list = null
 
 	///2D list of all biomes based on heat and humidity combos.
-	var/list/possible_biomes = list(
+	possible_biomes = list(
 	BIOME_LOW_HEAT = list(
 		BIOME_LOW_HUMIDITY = /datum/biome/ocean_sand/above,
 		BIOME_LOWMEDIUM_HUMIDITY = /datum/biome/ocean_sand_flora/above,
@@ -134,7 +134,7 @@
 		)
 	)
 	///Used to select "zoom" level into the perlin noise, higher numbers result in slower transitions
-	var/perlin_zoom = 65
+	perlin_zoom = 65
 
 
 /datum/map_generator/cave_generator/trench/generate_terrain(list/turfs, area/generate_in)

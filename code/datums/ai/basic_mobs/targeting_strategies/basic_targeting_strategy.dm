@@ -37,6 +37,11 @@
 		if(container.resistance_flags & INDESTRUCTIBLE)
 			return FALSE
 
+	if(isstructure(the_target))
+		if(!HAS_TRAIT(the_target, TRAIT_MOB_DESTROYABLE))
+			return FALSE
+		return TRUE
+
 	if(ismob(the_target)) //Target is in godmode, ignore it.
 		if(living_mob.loc == the_target)
 			return FALSE // We've either been eaten or are shapeshifted, let's assume the latter because we're still alive

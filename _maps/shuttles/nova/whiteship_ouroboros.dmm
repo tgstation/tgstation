@@ -1,0 +1,964 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"bl" = (
+/obj/machinery/suit_storage_unit/spaceruin,
+/obj/effect/turf_decal/bot_white,
+/obj/machinery/light/warm/directional/north,
+/turf/open/floor/iron/dark/textured_large,
+/area/shuttle/abandoned)
+"bp" = (
+/obj/machinery/atmospherics/components/unary/vent_pump/on{
+	dir = 4
+	},
+/obj/machinery/vending/dinnerware,
+/obj/machinery/light/warm/directional/west,
+/turf/open/floor/iron/large,
+/area/shuttle/abandoned)
+"bv" = (
+/obj/machinery/door/airlock/shuttle{
+	name = "Kitchen Access"
+	},
+/obj/effect/decal/cleanable/blood/tracks{
+	dir = 8
+	},
+/obj/effect/mapping_helpers/airlock/cutaiwire,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
+/turf/open/floor/iron/dark/textured_large,
+/area/shuttle/abandoned)
+"by" = (
+/obj/structure/table/wood,
+/turf/open/floor/wood/tile,
+/area/shuttle/abandoned)
+"cx" = (
+/obj/machinery/atmospherics/components/unary/vent_pump/on{
+	dir = 1
+	},
+/turf/open/floor/plating,
+/area/shuttle/abandoned)
+"cz" = (
+/obj/machinery/computer/order_console/cook{
+	dir = 8
+	},
+/obj/effect/turf_decal/box/white,
+/turf/open/floor/iron/dark/small,
+/area/shuttle/abandoned/bridge)
+"di" = (
+/obj/machinery/atmospherics/components/tank/air{
+	dir = 4
+	},
+/turf/open/floor/plating,
+/area/shuttle/abandoned/engine)
+"dN" = (
+/obj/item/storage/box/coffeepack/robusta{
+	pixel_x = 6
+	},
+/obj/item/storage/box/coffeepack/robusta{
+	pixel_x = -6
+	},
+/obj/item/storage/box/coffeepack/robusta{
+	pixel_y = 3
+	},
+/obj/item/storage/box/coffeepack{
+	pixel_y = -3;
+	pixel_x = 6
+	},
+/obj/item/storage/box/coffeepack{
+	pixel_y = -3;
+	pixel_x = -6
+	},
+/obj/item/storage/box/coffeepack{
+	pixel_y = -6
+	},
+/obj/effect/turf_decal/bot,
+/obj/structure/closet/crate,
+/turf/open/floor/plating,
+/area/shuttle/abandoned/engine)
+"dY" = (
+/obj/effect/spawner/structure/window/reinforced/shuttle,
+/obj/machinery/door/poddoor{
+	id = "whiteship_windows";
+	name = "Exterior Window Blast Door"
+	},
+/turf/open/floor/plating,
+/area/shuttle/abandoned/bridge)
+"ea" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
+/obj/effect/turf_decal/bot_white,
+/obj/effect/turf_decal/caution{
+	dir = 1
+	},
+/turf/open/floor/iron/large,
+/area/shuttle/abandoned)
+"eR" = (
+/obj/machinery/button/door{
+	id = "whiteship_windows";
+	name = "Blast Door Control";
+	pixel_x = -24
+	},
+/obj/machinery/computer/camera_advanced/shuttle_docker/whiteship,
+/obj/effect/turf_decal/box/white,
+/turf/open/floor/iron/dark/small,
+/area/shuttle/abandoned/bridge)
+"eW" = (
+/obj/effect/decal/cleanable/blood/old,
+/obj/effect/decal/cleanable/blood/innards,
+/obj/effect/decal/cleanable/blood/tracks{
+	dir = 10
+	},
+/obj/effect/decal/cleanable/blood/tracks{
+	dir = 8
+	},
+/obj/effect/mob_spawn/corpse/human/assistant{
+	name = "Jim Nortons Employee"
+	},
+/turf/open/floor/wood/tile,
+/area/shuttle/abandoned)
+"fd" = (
+/obj/machinery/microwave,
+/obj/structure/table/reinforced/titaniumglass,
+/turf/open/floor/iron/large,
+/area/shuttle/abandoned)
+"fq" = (
+/turf/open/floor/iron/large,
+/area/shuttle/abandoned)
+"fr" = (
+/obj/structure/chair/wood{
+	dir = 1
+	},
+/turf/open/floor/wood/tile,
+/area/shuttle/abandoned)
+"ft" = (
+/turf/closed/wall/mineral/plastitanium/nodiagonal,
+/area/shuttle/abandoned/engine)
+"gf" = (
+/obj/structure/table/reinforced/titaniumglass,
+/turf/open/floor/iron/large,
+/area/shuttle/abandoned)
+"gD" = (
+/obj/structure/chair/wood,
+/obj/effect/decal/cleanable/blood/tracks{
+	dir = 4
+	},
+/turf/open/floor/wood/tile,
+/area/shuttle/abandoned)
+"hH" = (
+/turf/open/floor/wood/tile,
+/area/shuttle/abandoned)
+"ix" = (
+/turf/template_noop,
+/area/template_noop)
+"iH" = (
+/obj/effect/decal/cleanable/blood/gibs/core,
+/obj/effect/decal/cleanable/blood/tracks{
+	dir = 4
+	},
+/obj/effect/decal/cleanable/blood/tracks{
+	dir = 8
+	},
+/obj/effect/decal/cleanable/blood,
+/obj/item/clothing/head/soft/green{
+	color = "#00a62e";
+	desc = "It's a baseball hat in a tasteful green colour.";
+	name = "Jim Norton's Quebecois Coffee cap"
+	},
+/obj/effect/mob_spawn/corpse/human/assistant{
+	name = "Jim Nortons Employee"
+	},
+/turf/open/floor/iron/dark/textured_large,
+/area/shuttle/abandoned)
+"iW" = (
+/obj/effect/decal/cleanable/blood/splatter,
+/obj/effect/spawner/random/trash/mess,
+/obj/effect/decal/cleanable/blood/tracks{
+	dir = 9
+	},
+/obj/effect/decal/cleanable/blood/gibs,
+/obj/effect/mob_spawn/corpse/human/cook{
+	mob_name = "Jimothiar Norton"
+	},
+/obj/effect/turf_decal/loading_area{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
+/turf/open/floor/plating,
+/area/shuttle/abandoned/engine)
+"iX" = (
+/obj/machinery/power/shuttle_engine/heater{
+	dir = 8
+	},
+/obj/structure/window/reinforced/spawner/directional/east,
+/obj/structure/window/reinforced/spawner/directional/north,
+/turf/open/floor/plating/airless,
+/area/shuttle/abandoned/engine)
+"iY" = (
+/obj/effect/decal/cleanable/blood/tracks{
+	dir = 10
+	},
+/obj/machinery/atmospherics/components/unary/vent_pump/on,
+/turf/open/floor/wood/tile,
+/area/shuttle/abandoned)
+"kN" = (
+/obj/item/coffee_cartridge/decaf{
+	pixel_x = -5;
+	pixel_y = 10
+	},
+/obj/item/coffee_cartridge/bootleg{
+	pixel_x = -5;
+	pixel_y = 15
+	},
+/obj/item/coffee_cartridge/fancy{
+	pixel_x = 6;
+	pixel_y = 5
+	},
+/obj/item/coffee_cartridge{
+	pixel_y = 9;
+	pixel_x = 6
+	},
+/obj/item/storage/fancy/coffee_condi_display{
+	pixel_y = -4
+	},
+/obj/structure/table/reinforced/titaniumglass,
+/turf/open/floor/iron/dark/textured_large,
+/area/shuttle/abandoned)
+"lq" = (
+/obj/effect/decal/cleanable/blood/drip,
+/obj/effect/decal/cleanable/blood/tracks{
+	dir = 9
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
+/turf/open/floor/wood/tile,
+/area/shuttle/abandoned)
+"ls" = (
+/obj/structure/table/wood,
+/obj/effect/decal/cleanable/blood/tracks,
+/obj/item/plate/small{
+	pixel_y = 1
+	},
+/obj/item/clothing/head/soft/green{
+	color = "#00a62e";
+	desc = "It's a baseball hat in a tasteful green colour.";
+	name = "Jim Norton's Quebecois Coffee cap";
+	pixel_x = 16
+	},
+/turf/open/floor/wood/tile,
+/area/shuttle/abandoned)
+"lX" = (
+/obj/effect/decal/cleanable/blood/gibs,
+/obj/effect/decal/cleanable/blood/tracks{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
+/obj/machinery/button/door/directional/south,
+/obj/effect/decal/cleanable/blood/tracks{
+	dir = 10
+	},
+/turf/open/floor/iron/dark/textured_large,
+/area/shuttle/abandoned)
+"mk" = (
+/obj/machinery/digital_clock,
+/turf/closed/wall/mineral/titanium/nodiagonal,
+/area/shuttle/abandoned)
+"ml" = (
+/turf/closed/wall/mineral/titanium,
+/area/shuttle/abandoned)
+"mT" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
+/obj/machinery/light/warm/directional/south,
+/turf/open/floor/iron/dark/textured_large,
+/area/shuttle/abandoned)
+"nk" = (
+/obj/item/chair/wood{
+	pixel_y = -6;
+	dir = 1
+	},
+/obj/effect/decal/cleanable/blood/drip,
+/obj/effect/decal/cleanable/blood/tracks{
+	dir = 1
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
+/obj/effect/decal/cleanable/blood/tracks{
+	dir = 6
+	},
+/turf/open/floor/wood/tile,
+/area/shuttle/abandoned)
+"nt" = (
+/obj/machinery/griddle,
+/turf/open/floor/iron/large,
+/area/shuttle/abandoned)
+"oC" = (
+/obj/effect/spawner/structure/window/reinforced/shuttle,
+/obj/machinery/door/poddoor{
+	id = "whiteship_windows";
+	name = "Exterior Window Blast Door"
+	},
+/turf/open/floor/plating,
+/area/shuttle/abandoned)
+"oP" = (
+/obj/effect/decal/cleanable/blood/footprints{
+	dir = 8
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
+/turf/open/floor/wood/tile,
+/area/shuttle/abandoned)
+"pD" = (
+/turf/closed/wall/mineral/titanium/nodiagonal,
+/area/shuttle/abandoned)
+"rp" = (
+/obj/machinery/smartfridge/food,
+/turf/open/floor/iron/large,
+/area/shuttle/abandoned)
+"rU" = (
+/turf/closed/wall/mineral/titanium,
+/area/shuttle/abandoned/bridge)
+"sM" = (
+/obj/machinery/power/shuttle_engine/heater{
+	dir = 8
+	},
+/obj/structure/window/reinforced/spawner/directional/east,
+/turf/open/floor/plating/airless,
+/area/shuttle/abandoned/engine)
+"tL" = (
+/turf/closed/wall/mineral/titanium/nodiagonal,
+/area/shuttle/abandoned/bridge)
+"tY" = (
+/obj/structure/chair/comfy/shuttle{
+	dir = 4
+	},
+/turf/open/floor/carpet/green,
+/area/shuttle/abandoned/bridge)
+"vc" = (
+/obj/machinery/oven,
+/turf/open/floor/iron/large,
+/area/shuttle/abandoned)
+"vO" = (
+/obj/effect/spawner/structure/window/reinforced/shuttle,
+/obj/machinery/door/poddoor{
+	id = "whiteship_windows";
+	name = "Interior Window Blast Door"
+	},
+/turf/open/floor/plating,
+/area/shuttle/abandoned)
+"vQ" = (
+/obj/item/plate{
+	pixel_y = 2
+	},
+/obj/item/food/poutine{
+	pixel_y = 3
+	},
+/obj/item/food/poutine{
+	pixel_y = 6;
+	pixel_x = 4
+	},
+/obj/item/food/poutine{
+	pixel_y = 6;
+	pixel_x = -4
+	},
+/obj/item/food/poutine{
+	pixel_y = 7
+	},
+/obj/structure/table/reinforced/titaniumglass,
+/turf/open/floor/iron/dark/textured_large,
+/area/shuttle/abandoned)
+"we" = (
+/obj/structure/chair/comfy/shuttle{
+	dir = 8
+	},
+/obj/effect/turf_decal/bot_white,
+/turf/open/floor/iron/dark/textured_large,
+/area/shuttle/abandoned)
+"wt" = (
+/obj/machinery/atmospherics/components/unary/vent_pump/on{
+	dir = 8
+	},
+/obj/effect/turf_decal/bot_white,
+/obj/machinery/suit_storage_unit/open,
+/obj/machinery/light/warm/directional/east,
+/turf/open/floor/iron/dark/small,
+/area/shuttle/abandoned/bridge)
+"ye" = (
+/obj/structure/chair/comfy/shuttle{
+	dir = 1
+	},
+/turf/open/floor/carpet/green,
+/area/shuttle/abandoned/bridge)
+"yi" = (
+/obj/effect/decal/cleanable/blood/tracks{
+	dir = 6
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
+/turf/open/floor/wood/tile,
+/area/shuttle/abandoned)
+"yM" = (
+/obj/machinery/power/shuttle_engine/heater{
+	dir = 8
+	},
+/obj/structure/window/reinforced/spawner/directional/east,
+/obj/structure/window/reinforced/spawner/directional/south,
+/turf/open/floor/plating/airless,
+/area/shuttle/abandoned/engine)
+"Bq" = (
+/obj/machinery/holopad/secure,
+/turf/open/floor/iron/dark/textured_large,
+/area/shuttle/abandoned)
+"Cc" = (
+/obj/structure/table/reinforced/titaniumglass,
+/turf/open/floor/iron/dark/textured_large,
+/area/shuttle/abandoned)
+"Ci" = (
+/obj/machinery/door/poddoor{
+	id = "whiteship_windows";
+	name = "Interior Window Blast Door"
+	},
+/obj/effect/spawner/structure/window/reinforced/plasma/plastitanium,
+/turf/open/floor/plating,
+/area/shuttle/abandoned/engine)
+"Cy" = (
+/obj/effect/decal/cleanable/blood/tracks{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
+/obj/structure/sink/kitchen/directional/south,
+/turf/open/floor/iron/dark/textured_large,
+/area/shuttle/abandoned)
+"Dm" = (
+/obj/item/chair/wood{
+	pixel_y = -6
+	},
+/turf/open/floor/wood/tile,
+/area/shuttle/abandoned)
+"Dq" = (
+/obj/structure/sign/poster/official/jim_nortons,
+/turf/closed/wall/mineral/titanium/nodiagonal,
+/area/shuttle/abandoned)
+"DB" = (
+/obj/effect/decal/cleanable/blood/tracks{
+	dir = 5
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
+/turf/open/floor/iron/dark/textured_large,
+/area/shuttle/abandoned)
+"DC" = (
+/obj/machinery/door/airlock/shuttle{
+	name = "Cockpit"
+	},
+/obj/effect/mapping_helpers/airlock/cutaiwire,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
+/obj/machinery/door/poddoor{
+	id = "whiteship_windows";
+	name = "Interior Window Blast Door"
+	},
+/turf/open/floor/iron/dark/textured_large,
+/area/shuttle/abandoned/bridge)
+"DM" = (
+/obj/machinery/coffeemaker/impressa{
+	pixel_y = 4
+	},
+/obj/structure/table/reinforced/titaniumglass,
+/turf/open/floor/iron/dark/textured_large,
+/area/shuttle/abandoned)
+"Ev" = (
+/obj/effect/decal/cleanable/blood/tracks,
+/obj/effect/decal/cleanable/blood/drip,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
+/turf/open/floor/iron/dark/textured_large,
+/area/shuttle/abandoned)
+"Fe" = (
+/obj/effect/decal/cleanable/blood/tracks{
+	dir = 8
+	},
+/obj/effect/decal/cleanable/blood/hitsplatter{
+	dir = 4
+	},
+/obj/effect/mapping_helpers/airlock/cutaiwire,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
+/obj/machinery/door/airlock/hatch{
+	name = "Maintenance Hatch"
+	},
+/turf/open/floor/plating,
+/area/shuttle/abandoned/engine)
+"FQ" = (
+/obj/item/reagent_containers/condiment/sugar{
+	pixel_y = 4;
+	pixel_x = -6
+	},
+/obj/item/reagent_containers/condiment/sugar{
+	pixel_x = -6
+	},
+/obj/item/reagent_containers/condiment/flour{
+	pixel_x = 6;
+	pixel_y = 3
+	},
+/obj/item/reagent_containers/condiment/flour{
+	pixel_x = 6
+	},
+/obj/item/reagent_containers/condiment/flour{
+	pixel_x = 6;
+	pixel_y = -3
+	},
+/obj/item/reagent_containers/condiment/flour{
+	pixel_x = 6;
+	pixel_y = -6
+	},
+/obj/effect/turf_decal/bot,
+/obj/structure/closet/crate,
+/obj/machinery/atmospherics/components/unary/vent_pump/on{
+	dir = 1
+	},
+/turf/open/floor/plating,
+/area/shuttle/abandoned/engine)
+"FZ" = (
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 1
+	},
+/obj/effect/mapping_helpers/airlock/cutaiwire,
+/obj/docking_port/mobile{
+	callTime = 250;
+	can_move_docking_ports = 1;
+	shuttle_id = "whiteship";
+	launch_status = 0;
+	movement_force = list("KNOCKDOWN"=0,"THROW"=0);
+	name = "Jim Nortons White Ship"
+	},
+/obj/machinery/door/airlock/external/ruin{
+	name = "Jim Nortons Delivery Ship"
+	},
+/turf/open/floor/plating,
+/area/shuttle/abandoned)
+"Ge" = (
+/obj/machinery/oven,
+/obj/machinery/light/warm/directional/west,
+/turf/open/floor/iron/dark/textured_large,
+/area/shuttle/abandoned)
+"Gr" = (
+/obj/machinery/atmospherics/components/tank/air,
+/obj/machinery/button/door{
+	id = "whiteship_windows";
+	name = "Blast Door Control";
+	pixel_x = 24
+	},
+/obj/machinery/light/cold/dim/directional/north,
+/turf/open/floor/plating,
+/area/shuttle/abandoned/engine)
+"GX" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
+/obj/machinery/holopad/secure,
+/turf/open/floor/carpet/green,
+/area/shuttle/abandoned/bridge)
+"Hk" = (
+/obj/effect/decal/cleanable/blood/tracks{
+	dir = 8
+	},
+/obj/effect/decal/cleanable/blood/drip,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
+/turf/open/floor/iron/large,
+/area/shuttle/abandoned)
+"HD" = (
+/obj/item/plate/small{
+	pixel_y = 5;
+	pixel_x = -7
+	},
+/obj/item/plate/small{
+	pixel_y = -1
+	},
+/obj/item/plate/small{
+	pixel_y = 1
+	},
+/obj/item/plate/small{
+	pixel_y = 3
+	},
+/obj/structure/table/reinforced/titaniumglass,
+/turf/open/floor/iron/dark/textured_large,
+/area/shuttle/abandoned)
+"IE" = (
+/obj/effect/mapping_helpers/airlock/cyclelink_helper,
+/obj/effect/mapping_helpers/airlock/cutaiwire,
+/obj/machinery/atmospherics/pipe/smart/simple/supply/hidden{
+	dir = 1
+	},
+/obj/machinery/door/airlock/external/ruin{
+	name = "Jim Nortons Delivery Ship"
+	},
+/turf/open/floor/plating,
+/area/shuttle/abandoned)
+"IK" = (
+/obj/machinery/power/smes/engineering{
+	charge = 1e+006
+	},
+/obj/structure/cable,
+/obj/machinery/light/cold/dim/directional/south,
+/turf/open/floor/plating,
+/area/shuttle/abandoned/engine)
+"IO" = (
+/obj/effect/decal/cleanable/blood/tracks,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
+/turf/open/floor/iron/large,
+/area/shuttle/abandoned)
+"Jj" = (
+/obj/machinery/power/shuttle_engine/propulsion/right{
+	dir = 8
+	},
+/turf/open/floor/plating/airless,
+/area/shuttle/abandoned/engine)
+"JS" = (
+/obj/effect/spawner/structure/window/reinforced/shuttle,
+/obj/machinery/door/poddoor{
+	id = "whiteship_windows";
+	name = "Interior Window Blast Door"
+	},
+/turf/open/floor/plating,
+/area/shuttle/abandoned/bridge)
+"Kt" = (
+/obj/effect/decal/cleanable/blood/footprints,
+/obj/effect/decal/cleanable/blood/footprints{
+	dir = 8
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
+/turf/open/floor/wood/tile,
+/area/shuttle/abandoned)
+"Lm" = (
+/obj/effect/spawner/structure/window/reinforced/shuttle,
+/obj/machinery/door/poddoor{
+	id = "whiteship_windows";
+	name = "Exterior Window Blast Door"
+	},
+/obj/effect/decal/cleanable/blood/splatter/over_window,
+/turf/open/floor/plating,
+/area/shuttle/abandoned)
+"Mk" = (
+/obj/structure/tank_dispenser,
+/obj/effect/turf_decal/bot_white,
+/turf/open/floor/iron/large,
+/area/shuttle/abandoned)
+"MH" = (
+/obj/machinery/griddle,
+/turf/open/floor/iron/dark/textured_large,
+/area/shuttle/abandoned)
+"Na" = (
+/obj/machinery/atmospherics/components/unary/vent_pump/on{
+	dir = 8
+	},
+/turf/open/floor/iron/large,
+/area/shuttle/abandoned)
+"NM" = (
+/obj/structure/cable,
+/turf/open/floor/plating,
+/area/shuttle/abandoned/engine)
+"Ou" = (
+/obj/item/reagent_containers/cup/glass/bottle/juice/cream{
+	pixel_x = -6;
+	pixel_y = 6
+	},
+/obj/item/reagent_containers/cup/glass/bottle/juice/cream{
+	pixel_x = 6;
+	pixel_y = 6
+	},
+/obj/item/reagent_containers/cup/glass/bottle/juice/cream{
+	pixel_y = 3
+	},
+/obj/item/reagent_containers/condiment/milk{
+	pixel_x = 6
+	},
+/obj/item/reagent_containers/condiment/milk{
+	pixel_x = -6
+	},
+/obj/item/reagent_containers/condiment/milk{
+	pixel_y = -3
+	},
+/obj/item/reagent_containers/condiment/soymilk{
+	pixel_y = -6;
+	pixel_x = 6
+	},
+/obj/item/reagent_containers/condiment/soymilk{
+	pixel_y = -6;
+	pixel_x = -6
+	},
+/obj/effect/turf_decal/bot,
+/obj/structure/closet/crate/freezer{
+	name = "milk freezer"
+	},
+/turf/open/floor/plating,
+/area/shuttle/abandoned/engine)
+"PB" = (
+/obj/effect/decal/cleanable/blood/drip,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
+/turf/open/floor/iron/large,
+/area/shuttle/abandoned)
+"PV" = (
+/obj/effect/mapping_helpers/airlock/cutaiwire,
+/obj/machinery/door/airlock/hatch{
+	name = "Maintenance Hatch"
+	},
+/turf/open/floor/plating,
+/area/shuttle/abandoned/engine)
+"QS" = (
+/obj/effect/decal/cleanable/blood/tracks,
+/obj/effect/decal/cleanable/blood/gibs/old,
+/obj/item/clothing/head/soft/green{
+	color = "#00a62e";
+	desc = "It's a baseball hat in a tasteful green colour.";
+	name = "Jim Norton's Quebecois Coffee cap";
+	pixel_x = 16
+	},
+/obj/effect/mob_spawn/corpse/human/assistant{
+	name = "Jim Nortons Employee"
+	},
+/turf/open/floor/wood/tile,
+/area/shuttle/abandoned)
+"SC" = (
+/obj/machinery/computer/shuttle/white_ship/bridge,
+/obj/effect/turf_decal/box/white,
+/turf/open/floor/iron/dark/small,
+/area/shuttle/abandoned/bridge)
+"SG" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
+/obj/effect/decal/cleanable/blood/tracks{
+	dir = 5
+	},
+/obj/effect/decal/cleanable/blood/tracks{
+	dir = 6
+	},
+/turf/open/floor/iron/large,
+/area/shuttle/abandoned)
+"SH" = (
+/obj/structure/table/wood,
+/obj/item/plate/small{
+	pixel_y = 1
+	},
+/turf/open/floor/wood/tile,
+/area/shuttle/abandoned)
+"Ty" = (
+/obj/machinery/power/shuttle_engine/propulsion/left{
+	dir = 8
+	},
+/turf/open/floor/plating/airless,
+/area/shuttle/abandoned/engine)
+"TG" = (
+/obj/machinery/power/port_gen/pacman,
+/obj/item/stack/sheet/mineral/plasma/five,
+/obj/machinery/power/terminal{
+	dir = 4
+	},
+/obj/structure/cable,
+/turf/open/floor/plating,
+/area/shuttle/abandoned/engine)
+"TW" = (
+/obj/item/reagent_containers/cup/glass/mug{
+	pixel_y = 12
+	},
+/obj/item/reagent_containers/cup/glass/mug{
+	pixel_y = 7;
+	pixel_x = -6
+	},
+/obj/item/reagent_containers/cup/glass/mug{
+	pixel_y = 7;
+	pixel_x = 4
+	},
+/obj/structure/table/reinforced/titaniumglass,
+/turf/open/floor/iron/dark/textured_large,
+/area/shuttle/abandoned)
+"UO" = (
+/mob/living/simple_animal/bot/mulebot,
+/obj/effect/decal/cleanable/blood/tracks{
+	dir = 8
+	},
+/obj/effect/turf_decal/delivery,
+/turf/open/floor/plating,
+/area/shuttle/abandoned/engine)
+"WB" = (
+/obj/effect/decal/cleanable/blood/drip,
+/turf/open/floor/iron/large,
+/area/shuttle/abandoned)
+"ZF" = (
+/obj/structure/table,
+/turf/open/floor/iron/dark/small,
+/area/shuttle/abandoned/bridge)
+
+(1,1,1) = {"
+ix
+Ty
+Jj
+ix
+ix
+Ty
+Jj
+ix
+"}
+(2,1,1) = {"
+ft
+sM
+sM
+Ty
+Jj
+sM
+sM
+ft
+"}
+(3,1,1) = {"
+ft
+di
+UO
+iX
+yM
+Ou
+TG
+ft
+"}
+(4,1,1) = {"
+ft
+Gr
+iW
+FQ
+dN
+NM
+IK
+ft
+"}
+(5,1,1) = {"
+ft
+ft
+Fe
+Ci
+Ci
+PV
+ft
+ft
+"}
+(6,1,1) = {"
+ml
+pD
+Cy
+gf
+MH
+WB
+pD
+ml
+"}
+(7,1,1) = {"
+Dq
+Ge
+PB
+vQ
+nt
+iH
+bp
+Dq
+"}
+(8,1,1) = {"
+pD
+vc
+DB
+IO
+Ev
+SG
+lX
+pD
+"}
+(9,1,1) = {"
+oC
+DM
+Na
+Bq
+fd
+HD
+Hk
+Lm
+"}
+(10,1,1) = {"
+oC
+kN
+TW
+gf
+Cc
+rp
+bv
+oC
+"}
+(11,1,1) = {"
+oC
+SH
+QS
+iY
+Kt
+nk
+yi
+oC
+"}
+(12,1,1) = {"
+pD
+by
+fr
+Dm
+lq
+eW
+ls
+pD
+"}
+(13,1,1) = {"
+Dq
+by
+fr
+hH
+oP
+gD
+by
+Dq
+"}
+(14,1,1) = {"
+ml
+mk
+bl
+fq
+mT
+pD
+vO
+pD
+"}
+(15,1,1) = {"
+ix
+pD
+Mk
+we
+ea
+IE
+cx
+FZ
+"}
+(16,1,1) = {"
+ix
+tL
+tL
+JS
+DC
+tL
+tL
+tL
+"}
+(17,1,1) = {"
+ix
+dY
+eR
+ye
+GX
+tY
+tL
+rU
+"}
+(18,1,1) = {"
+ix
+dY
+SC
+ZF
+wt
+cz
+tL
+ix
+"}
+(19,1,1) = {"
+ix
+tL
+dY
+dY
+tL
+tL
+rU
+ix
+"}

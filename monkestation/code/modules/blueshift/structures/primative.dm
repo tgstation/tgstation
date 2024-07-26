@@ -581,6 +581,10 @@ GLOBAL_LIST_INIT(stone_recipes, list ( \
 	/// The maximum number of items this structure can store
 	var/maximum_contained_items = 10
 
+/obj/structure/millstone/Initialize(mapload)
+	. = ..()
+	create_reagents(250, (TRANSPARENT | AMOUNT_VISIBLE | OPENCONTAINER))
+
 /obj/structure/millstone/examine(mob/user)
 	. = ..()
 
@@ -720,6 +724,9 @@ GLOBAL_LIST_INIT(stone_recipes, list ( \
 	user.mind.adjust_experience(/datum/skill/primitive, 5)
 
 	for(var/target_item as anything in contents)
+		var/obj/item/food/grown/food_item = target_item
+		if(food_item.mill_reagent)
+			reagents.add_reagent(food_item.mill_reagent, food_item.seed.potency * 0.2)
 		seedify(target_item, t_max = 1)
 
 	return
@@ -2587,3 +2594,9 @@ GLOBAL_LIST_INIT(clay_recipes, list ( \
 /// Called on an object when a tool with wrench capabilities is used to right click an object
 /atom/proc/blowrod_act_secondary(mob/living/user, obj/item/tool)
 	return
+
+/obj/item/food/grown
+	var/datum/reagent/mill_reagent
+
+/obj/item/food/grown/wheat
+	mill_reagent = /datum/reagent/consumable/flour

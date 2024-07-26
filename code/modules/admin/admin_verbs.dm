@@ -148,6 +148,7 @@ GLOBAL_LIST_INIT(admin_verbs_fun, list(
 	/client/proc/show_tip,
 	/client/proc/smite,
 	/client/proc/spawn_liquid, //monkestation addition
+	/client/proc/spawn_sunbeam,
 	/client/proc/spawn_pollution, //monkestation addition
 	/client/proc/summon_ert,
 	/client/proc/summon_twitch_event, //monkestation addition

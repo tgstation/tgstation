@@ -59,3 +59,12 @@ map blueshift
 	minplayers 75
 	votable
 endmap
+
+map voidraptor
+	minplayers 40
+	votable
+endmap
+
+map ouroboros
+	votable
+endmap

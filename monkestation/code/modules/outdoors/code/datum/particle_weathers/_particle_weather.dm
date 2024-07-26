@@ -62,7 +62,10 @@ GLOBAL_LIST_EMPTY(siren_objects)
 			color_animating = pick(affecting_value)
 			animate_flags = ELASTIC_EASING | EASE_IN | EASE_OUT
 			spawn(duration - rand(0, duration*10)/10)
-				playsound_z(SSmapping.levels_by_trait(ZTRAIT_STATION), pick(sound_effects), 50, _mixer_channel = CHANNEL_WEATHER)
+				if(initiator_ref.plane_type == "Default")
+					playsound_z(SSmapping.levels_by_trait(ZTRAIT_STATION), pick(sound_effects), 50, _mixer_channel = CHANNEL_WEATHER)
+				else
+					playsound_z(SSmapping.levels_by_trait(ZTRAIT_ECLIPSE), pick(sound_effects), 50, _mixer_channel = CHANNEL_WEATHER)
 		if(GLE_STAGE_THIRD)
 			color_animating = SSoutdoor_effects.current_color
 			animate_flags = CIRCULAR_EASING | EASE_IN
@@ -150,6 +153,7 @@ GLOBAL_LIST_EMPTY(siren_objects)
 	var/list/weather_messages = list()
 	var/list/weather_warnings = list("siren" = null, "message" = TRUE)
 	var/list/weather_sounds = list()
+	var/list/indoor_weather_sounds = list()
 	var/list/wind_sounds = list(/datum/looping_sound/wind)
 	var/scale_vol_with_severity = TRUE
 
@@ -189,6 +193,14 @@ GLOBAL_LIST_EMPTY(siren_objects)
 
 	var/last_message = ""
 
+	var/plane_type = "Default"
+	var/eclipse = FALSE
+
+/datum/particle_weather/New(plane_type)
+	. = ..()
+	if(plane_type)
+		src.plane_type = plane_type
+
 /datum/particle_weather/proc/severity_mod()
 	return severity / max_severity
 
@@ -224,11 +236,13 @@ GLOBAL_LIST_EMPTY(siren_objects)
 	addtimer(CALLBACK(src, PROC_REF(wind_down)), weather_duration)
 	weather_warnings()
 	if(particle_effect_type)
-		SSparticle_weather.set_particle_effect(new particle_effect_type);
+		SSparticle_weather.set_particle_effect(new particle_effect_type, plane_type);
 
 	if(weather_special_effect)
-		SSparticle_weather.weather_special_effect = new weather_special_effect(src)
-
+		if(plane_type == "Default")
+			SSparticle_weather.weather_special_effect = new weather_special_effect(src)
+		else if(plane_type == "Eclipse")
+			SSparticle_weather.weather_special_effect_eclipse = new weather_special_effect(src)
 	change_severity()
 
 
@@ -242,13 +256,17 @@ GLOBAL_LIST_EMPTY(siren_objects)
 		severity = rand(min_severity, max_severity)
 	else
 		var/new_severity = severity + rand(-max_severity_change, max_severity_change)
-		new_severity = min(max(new_severity, min_severity), max_severity)
+		new_severity = clamp(new_severity, min_severity, max_severity)
 		severity = new_severity
 
-	severity += wind_severity
+	severity = clamp(severity + wind_severity, min_severity, max_severity)
 
-	if(SSparticle_weather.particle_effect)
-		SSparticle_weather.particle_effect.animate_severity(severity_mod())
+	if(plane_type == "Default")
+		if(SSparticle_weather.particle_effect)
+			SSparticle_weather.particle_effect.animate_severity(severity_mod())
+	else if(plane_type == "Eclipse")
+		if(SSparticle_weather.particle_effect_eclipse)
+			SSparticle_weather.particle_effect_eclipse.animate_severity(severity_mod())
 
 	if(last_message != scale_range_pick(min_severity, max_severity, severity, weather_messages))
 		messaged_mobs = list()
@@ -258,15 +276,19 @@ GLOBAL_LIST_EMPTY(siren_objects)
 
 /datum/particle_weather/proc/wind_down()
 	severity = 0
-	if(SSparticle_weather.particle_effect)
-		SSparticle_weather.particle_effect.animate_severity(severity_mod())
+	if(plane_type == "Default")
+		if(SSparticle_weather.particle_effect)
+			SSparticle_weather.particle_effect.animate_severity(severity_mod())
+	else if(plane_type == "Eclipse")
+		if(SSparticle_weather.particle_effect_eclipse)
+			SSparticle_weather.particle_effect_eclipse.animate_severity(severity_mod())
 
 		//Wait for the last particle to fade, then qdel yourself
 		addtimer(CALLBACK(src, PROC_REF(end)), SSparticle_weather.particle_effect.lifespan + SSparticle_weather.particle_effect.fade)
 
 /datum/particle_weather/proc/end()
 	running = FALSE
-	SSparticle_weather.stop_weather()
+	SSparticle_weather.stop_weather(plane_type)
 
 /datum/particle_weather/proc/can_weather(mob/living/mob_to_check)
 	var/turf/mob_turf = get_turf(mob_to_check)
@@ -301,14 +323,18 @@ GLOBAL_LIST_EMPTY(siren_objects)
 	if(!islist(messaged_mobs))
 		messaged_mobs = list()
 	messaged_mobs |= L
+	weather_sound_effect(L)
 	if(can_weather(L) && running)
-		weather_sound_effect(L)
 		if(can_weather_effect(L))
 			if((last_message || weather_messages) && (!messaged_mobs[L] || world.time > messaged_mobs[L]))
 				weather_message(L)
 			affect_mob_effect(L, delta_time)
 	else
-		stop_weather_sound_effect(L)
+		var/turf/mob_turf = get_turf(L)
+		if(plane_type == "Default" && !SSmapping.level_has_all_traits(mob_turf.z, list(ZTRAIT_STATION)))
+			stop_weather_sound_effect(L)
+		if(plane_type == "Eclipse" && !SSmapping.level_has_all_traits(mob_turf.z, list(ZTRAIT_ECLIPSE)))
+			stop_weather_sound_effect(L)
 		messaged_mobs[L] = 0
 
 /datum/particle_weather/proc/affect_mob_effect(mob/living/L, delta_time, calculated_damage)
@@ -318,22 +344,45 @@ GLOBAL_LIST_EMPTY(siren_objects)
 
 /datum/particle_weather/proc/weather_sound_effect(mob/living/L)
 	var/datum/looping_sound/current_sound = current_sounds[L]
-	if(current_sound)
-		//SET VOLUME
-		if(scale_vol_with_severity)
-			current_sound.volume = initial(current_sound.volume) * severity_mod()
-		if(!current_sound.loop_started) //don't restart already playing sounds
-			current_sound.start()
+	var/turf/mob_turf = get_turf(L)
+	if(!mob_turf)
 		return
 
-	var/temp_sound = scale_range_pick(min_severity, max_severity, severity, weather_sounds)
-	if(temp_sound)
-		current_sound = new temp_sound(L, FALSE, TRUE, FALSE, CHANNEL_WEATHER)
-		current_sounds[L] = current_sound
-		//SET VOLUME
-		if(scale_vol_with_severity)
-			current_sound.volume = initial(current_sound.volume) * severity_mod()
-		current_sound.start()
+
+	if(mob_turf.turf_flags & TURF_WEATHER)
+		if(current_sound?.type in weather_sounds)
+			if(scale_vol_with_severity)
+				current_sound.volume = initial(current_sound.volume) * severity_mod()
+			if(!current_sound.loop_started) //don't restart already playing sounds
+				current_sound.start()
+			return
+		if(current_sound)
+			current_sound.stop()
+		var/temp_sound = scale_range_pick(min_severity, max_severity, severity, weather_sounds)
+		if(temp_sound)
+			current_sound = new temp_sound(L, FALSE, TRUE, FALSE, CHANNEL_WEATHER)
+			current_sounds[L] = current_sound
+			//SET VOLUME
+			if(scale_vol_with_severity)
+				current_sound.volume = initial(current_sound.volume) * severity_mod()
+			current_sound.start()
+	else
+		if(current_sound?.type in indoor_weather_sounds)
+			if(scale_vol_with_severity)
+				current_sound.volume = initial(current_sound.volume) * severity_mod()
+			if(!current_sound.loop_started) //don't restart already playing sounds
+				current_sound.start()
+			return
+		if(current_sound)
+			current_sound.stop()
+		var/temp_sound = scale_range_pick(min_severity, max_severity, severity, indoor_weather_sounds)
+		if(temp_sound)
+			current_sound = new temp_sound(L, FALSE, TRUE, FALSE, CHANNEL_WEATHER)
+			current_sounds[L] = current_sound
+			//SET VOLUME
+			if(scale_vol_with_severity)
+				current_sound.volume = initial(current_sound.volume) * severity_mod()
+			current_sound.start()
 
 	if(wind_severity && weather_sounds)
 		var/datum/looping_sound/current_wind_sound = current_wind_sounds[L]
@@ -394,6 +443,11 @@ GLOBAL_LIST_EMPTY(siren_objects)
 /datum/looping_sound/rain
 	mid_sounds = 'monkestation/code/modules/outdoors/sound/weather/rain/weather_rain.ogg'
 	mid_length = 40 SECONDS
+	volume = 200
+
+/datum/looping_sound/indoor_rain
+	mid_sounds = 'monkestation/code/modules/outdoors/sound/weather/rain/weather_rain_indoors.ogg'
+	mid_length = 15 SECONDS
 	volume = 200
 
 /datum/looping_sound/storm

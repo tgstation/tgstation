@@ -114,7 +114,9 @@ DEFINE_BITFIELD(smoothing_flags, list(
 #define SMOOTH_GROUP_LOWERED_PLASTEEL S_TURF(61)
 #define SMOOTH_GROUP_FISSURE S_TURF(62)
 
-#define MAX_S_TURF 62 //Always match this value with the one above it.
+#define SMOOTH_GROUP_MUSHROOM S_TURF(63)
+
+#define MAX_S_TURF 63 //Always match this value with the one above it.
 
 #define S_OBJ(num) ("-" + #num + ",")
 /* /obj included */

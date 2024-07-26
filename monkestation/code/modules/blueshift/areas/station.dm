@@ -583,3 +583,35 @@
 /area/station/science/xenobiology/control
 	name = "\improper Xenobiology Control Room"
 	icon_state = "xenobio"
+
+/area/station/hallway/secondary/recreation
+	name = "\improper Recreation Hallway"
+	icon_state = "hall"
+
+/area/station/common/carpshop
+	name = "Carp Pro Shop"
+	icon = 'monkestation/code/modules/blueshift/icons/areas/areas_station.dmi'
+	icon_state = "carp_pro_shop"
+
+/area/station/common/spa
+	name = "Public Spa"
+	icon = 'monkestation/code/modules/blueshift/icons/areas/areas_station.dmi'
+	icon_state = "spa"
+
+/area/station/science/robotics/augments
+	name = "\improper Augmentation Theater"
+	icon_state = "robotics"
+	sound_environment = SOUND_AREA_TUNNEL_ENCLOSED
+
+/area/station/ai_monitored/turret_protected/aisat/equipment
+	name ="\improper AI Satellite Equipment"
+	icon_state = "ai"
+
+/area/station/ai_monitored/turret_protected/aisat/teleporter
+	name ="\improper AI Satellite Teleporter"
+	icon_state = "ai"
+
+/area/station/security/checkpoint/service
+	name = "Security Post - Service"
+	icon = 'monkestation/code/modules/blueshift/icons/areas/areas_station.dmi'
+	icon_state = "checkpoint_serv"

@@ -384,9 +384,6 @@
 	possible_disguises = null
 
 /obj/item/mod/module/chameleon/on_use()
-	if(mod.active || mod.activating)
-		balloon_alert(mod.wearer, "suit active!")
-		return
 	. = ..()
 	if(!.)
 		return

@@ -207,13 +207,22 @@ GLOBAL_LIST_EMPTY(teleportlocs)
 	power_change() // all machines set to current power level, also updates icon
 	update_beauty()
 
-/area/proc/RunGeneration()
+/// Generate turfs, including cool cave wall gen
+/area/proc/RunTerrainGeneration()
 	if(map_generator)
 		map_generator = new map_generator()
 		var/list/turfs = list()
 		for(var/turf/T in contents)
 			turfs += T
 		map_generator.generate_terrain(turfs, src)
+
+/// Populate the previously generated terrain with mobs and objects
+/area/proc/RunTerrainPopulation()
+	if(map_generator)
+		var/list/turfs = list()
+		for(var/turf/T in contents)
+			turfs += T
+		map_generator.populate_terrain(turfs, src)
 
 /area/proc/test_gen()
 	if(map_generator)
@@ -464,6 +473,13 @@ GLOBAL_LIST_EMPTY(teleportlocs)
 
 	if(ambient_buzz != old_area.ambient_buzz)
 		L.refresh_looping_ambience()
+
+	if(isliving(arrived))
+		if(SSparticle_weather.running_eclipse_weather || SSparticle_weather.running_weather)
+			if(SSparticle_weather.running_eclipse_weather && SSmapping.level_has_all_traits(arrived.z, list(ZTRAIT_ECLIPSE)))
+				SSparticle_weather.running_eclipse_weather.weather_sound_effect(arrived)
+			if(SSparticle_weather.running_weather && SSmapping.level_has_all_traits(arrived.z, list(ZTRAIT_STATION)))
+				SSparticle_weather.running_weather.weather_sound_effect(arrived)
 
 ///Tries to play looping ambience to the mobs.
 /mob/proc/refresh_looping_ambience()

@@ -183,5 +183,11 @@ TRIMLINE_SUBTYPE_HELPER(/obj/effect/turf_decal/trimline/dark_purple)
 
 TRIMLINE_SUBTYPE_HELPER(/obj/effect/turf_decal/trimline/gray)
 
+/obj/effect/turf_decal/tile/holiday/random // so many colors
+	name = "colorful tile decal"
+	color = "#E300FF" //bright pink as default for mapping
+
+TILE_DECAL_SUBTYPE_HELPER(/obj/effect/turf_decal/tile/holiday/random)
+
 #undef TILE_DECAL_SUBTYPE_HELPER
 #undef TRIMLINE_SUBTYPE_HELPER

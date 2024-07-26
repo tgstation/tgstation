@@ -71,7 +71,9 @@
 		if(antag_selection_loops >= 100)
 			log_storyteller("h_r_a failed, antag_selection_loops went over 100")
 			return FALSE
-		if(!length(candidates))
+		if(!length(weighted_candidates))
+			if((EVENT_TRACK_ROLESET in SSgamemode.forced_next_events))
+				break
 			if(length(SSgamemode.roundstart_antag_minds) < SSgamemode.current_roundstart_event.base_antags) //we got below our min antags, reroll
 				log_storyteller("h_r_a failed, below required candidates for selected roundstart event")
 				return FALSE
@@ -167,6 +169,11 @@
 
 //// Attempt to pick a roundstart ruleset to be our desired ruleset
 /datum/controller/subsystem/job/proc/pick_desired_roundstart()
+	if((EVENT_TRACK_ROLESET in SSgamemode.forced_next_events) && (SSgamemode.forced_next_events[EVENT_TRACK_ROLESET]))
+		SSgamemode.current_roundstart_event = SSgamemode.forced_next_events[EVENT_TRACK_ROLESET]
+		log_storyteller("p_d_r pass, Forced Selected Roleset: [SSgamemode.current_roundstart_event]")
+		return
+
 	var/static/list/valid_rolesets
 	if(!valid_rolesets)
 		valid_rolesets = list()

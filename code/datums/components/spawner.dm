@@ -11,10 +11,15 @@
 	var/list/faction
 	/// List of weak references to things we have already created
 	var/list/spawned_things = list()
-	/// Time until we next spawn
+	/// How many mobs can we spawn maximum each time we try to spawn? (1 - max)
+	var/max_spawn_per_attempt
+	/// Distance from the spawner to spawn mobs
+	var/spawn_distance
+	/// Distance from the spawner to exclude mobs from spawning
+	var/spawn_distance_exclude
 	COOLDOWN_DECLARE(spawn_delay)
 
-/datum/component/spawner/Initialize(spawn_types = list(), spawn_time = 30 SECONDS, max_spawned = 5, faction = list(FACTION_MINING), spawn_text = null)
+/datum/component/spawner/Initialize(spawn_types = list(), spawn_time = 30 SECONDS, max_spawned = 5, max_spawn_per_attempt = 1 , faction = list(FACTION_MINING), spawn_text = null, spawn_distance = 1, spawn_distance_exclude = 0)
 	if (!islist(spawn_types))
 		CRASH("invalid spawn_types to spawn specified for spawner component!")
 	src.spawn_time = spawn_time
@@ -22,8 +27,13 @@
 	src.faction = faction
 	src.spawn_text = spawn_text
 	src.max_spawned = max_spawned
+	src.max_spawn_per_attempt = max_spawn_per_attempt
+	src.spawn_distance = spawn_distance
+	src.spawn_distance_exclude = spawn_distance_exclude
 
 	RegisterSignal(parent, COMSIG_QDELETING, PROC_REF(stop_spawning))
+	RegisterSignal(parent, COMSIG_SPAWNER_START_SPAWNING, PROC_REF(start_spawning))
+	RegisterSignal(parent, COMSIG_SPAWNER_STOP_SPAWNING, PROC_REF(stop_spawning))
 	START_PROCESSING((spawn_time < 2 SECONDS ? SSfastprocess : SSprocessing), src)
 
 /datum/component/spawner/process()
@@ -36,29 +46,59 @@
 	STOP_PROCESSING(SSprocessing, src)
 	spawned_things = list()
 
+/datum/component/spawner/proc/start_spawning(force)
+	SIGNAL_HANDLER
+
+	START_PROCESSING((spawn_time < 2 SECONDS ? SSfastprocess : SSprocessing), src)
+
 /// Try to create a new mob
 /datum/component/spawner/proc/try_spawn_mob()
+	if(!length(spawn_types))
+		return
 	if(!COOLDOWN_FINISHED(src, spawn_delay))
 		return
 	validate_references()
-	if(length(spawned_things) >= max_spawned)
+	var/spawned_total = length(spawned_things)
+	if(spawned_total >= max_spawned)
 		return
 	var/atom/spawner = parent
 	COOLDOWN_START(src, spawn_delay, spawn_time)
-
 	var/chosen_mob_type = pick(spawn_types)
-	var/atom/created = new chosen_mob_type(spawner.loc)
-	created.flags_1 |= (spawner.flags_1 & ADMIN_SPAWNED_1)
-	spawned_things += WEAKREF(created)
-	if (isliving(created))
-		var/mob/living/created_mob = created
-		created_mob.faction = src.faction
-		RegisterSignal(created, COMSIG_MOB_STATCHANGE, PROC_REF(mob_stat_changed))
+	var/adjusted_spawn_count = 1
+	var/max_spawn_this_attempt = min(max_spawn_per_attempt, max_spawned - spawned_total)
+	if (max_spawn_this_attempt > 1)
+		adjusted_spawn_count = rand(1, max_spawn_this_attempt)
+	for(var/i in 1 to adjusted_spawn_count)
+		var/atom/created
+		var/turf/picked_spot
+
+		if(spawn_distance == 1)
+			created = new chosen_mob_type(spawner.loc)
+		else if(spawn_distance >= 1 && spawn_distance_exclude >= 1)
+			picked_spot = pick(turf_peel(spawn_distance, spawn_distance_exclude, spawner.loc, view_based = TRUE))
+			if(!picked_spot)
+				picked_spot = pick(circle_range_turfs(spawner.loc, spawn_distance))
+			if(picked_spot == spawner.loc)
+				SEND_SIGNAL(spawner, COMSIG_SPAWNER_SPAWNED_DEFAULT)
+			created = new chosen_mob_type(picked_spot)
+		else if (spawn_distance >= 1)
+			picked_spot = pick(circle_range_turfs(spawner.loc, spawn_distance))
+			created = new chosen_mob_type(picked_spot)
+
+		created.flags_1 |= (spawner.flags_1 & ADMIN_SPAWNED_1)
+		spawned_things += WEAKREF(created)
+
+		if (isliving(created))
+			var/mob/living/created_mob = created
+			created_mob.faction = src.faction
+			RegisterSignal(created, COMSIG_MOB_STATCHANGE, PROC_REF(mob_stat_changed))
+
+		SEND_SIGNAL(src, COMSIG_SPAWNER_SPAWNED, created)
+		RegisterSignal(created, COMSIG_QDELETING, PROC_REF(on_deleted))
+		after_mob_spawn(created)
 
 	if (spawn_text)
-		spawner.visible_message(span_danger("[created] [spawn_text] [spawner]."))
-
-	RegisterSignal(created, COMSIG_QDELETING, PROC_REF(on_deleted))
+		spawner.visible_message(span_danger("A creature [spawn_text] [spawner]."))
 
 /// Remove weakrefs to atoms which have been killed or deleted without us picking it up somehow
 /datum/component/spawner/proc/validate_references()
@@ -85,3 +125,6 @@
 		return
 	spawned_things -= WEAKREF(source)
 	UnregisterSignal(source, list(COMSIG_QDELETING, COMSIG_MOB_STATCHANGE))
+
+/datum/component/spawner/proc/after_mob_spawn(mob/living/basic/created)
+	return

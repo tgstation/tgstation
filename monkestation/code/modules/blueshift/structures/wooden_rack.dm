@@ -149,6 +149,10 @@ GLOBAL_LIST_INIT(monke_wood_recipes, list(
 	. += GLOB.monke_wood_recipes
 
 GLOBAL_LIST_INIT(monke_iron_recipes, list(
+	new/datum/stack_recipe("wall mounted fire-safety closet", /obj/item/wallframe/firecloset, 2, time = 1.5 SECONDS, category = CAT_FURNITURE),
+	new/datum/stack_recipe("wall mounted emergency closet", /obj/item/wallframe/emcloset, 2, time = 1.5 SECONDS,category = CAT_FURNITURE),
+	new/datum/stack_recipe("wall mounted closet", /obj/item/wallframe/closet, 2, time = 1.5 SECONDS, category = CAT_FURNITURE),
+	new/datum/stack_recipe("metal shelf", /obj/structure/rack/shelf, 1, time = 2 SECONDS, one_per_turf = TRUE, on_solid_ground = TRUE, category = CAT_STRUCTURE),
 	new/datum/stack_recipe("stack of rails", /obj/item/stack/rail_track, res_amount = 5, max_res_amount = 5, time = 0, on_solid_ground = TRUE, category = CAT_MISC), \
 	new/datum/stack_recipe("minecart", /obj/vehicle/ridden/rail_cart, 10, time = 3 SECONDS, one_per_turf = TRUE, on_solid_ground = TRUE, category = CAT_MISC),
 	new/datum/stack_recipe("forge", /obj/structure/reagent_forge, 10, time = 2 SECONDS, one_per_turf = TRUE, on_solid_ground = TRUE, category = CAT_TOOLS),

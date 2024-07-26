@@ -1,0 +1,337 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"aK" = (
+/obj/structure/marker_beacon/burgundy,
+/turf/closed/wall/mineral/titanium/nodiagonal,
+/area/shuttle/supply)
+"bh" = (
+/turf/closed/wall/mineral/titanium/nodiagonal,
+/area/shuttle/supply)
+"dO" = (
+/obj/structure/marker_beacon/burgundy,
+/turf/closed/wall/mineral/titanium,
+/area/shuttle/supply)
+"fh" = (
+/obj/structure/fluff/metalpole/end{
+	dir = 1;
+	pixel_y = 32
+	},
+/turf/closed/wall/mineral/titanium/spaceship/nodiagonal,
+/area/shuttle/supply)
+"hv" = (
+/obj/effect/turf_decal/tile/neutral/diagonal_edge,
+/obj/effect/turf_decal/tile/neutral/diagonal_centre,
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/light/directional/west,
+/turf/open/floor/iron/dark/diagonal,
+/area/shuttle/supply)
+"hC" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/turf_decal/tile/neutral/diagonal_edge,
+/obj/effect/turf_decal/tile/neutral/diagonal_centre,
+/turf/open/floor/iron/dark/diagonal,
+/area/shuttle/supply)
+"hV" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/turf_decal/caution/white{
+	dir = 4
+	},
+/turf/open/floor/iron/shuttle/cargo{
+	dir = 1
+	},
+/area/shuttle/supply)
+"kh" = (
+/turf/closed/wall/mineral/titanium/spaceship,
+/area/shuttle/supply)
+"lb" = (
+/obj/docking_port/mobile/supply{
+	dir = 4
+	},
+/obj/machinery/door/airlock/grunge{
+	name = "Supply Shuttle Airlock";
+	req_access = list("cargo")
+	},
+/obj/effect/turf_decal/delivery/white,
+/turf/open/floor/iron/dark/textured_large,
+/area/shuttle/supply)
+"oU" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/turf_decal/tile/neutral/diagonal_edge,
+/obj/effect/turf_decal/tile/neutral/diagonal_centre,
+/obj/effect/turf_decal/box/white/corners{
+	dir = 8
+	},
+/turf/open/floor/iron/dark/diagonal,
+/area/shuttle/supply)
+"pD" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/turf_decal/tile/neutral/diagonal_edge,
+/obj/effect/turf_decal/tile/neutral/diagonal_centre,
+/obj/machinery/light/directional/east,
+/turf/open/floor/iron/dark/diagonal,
+/area/shuttle/supply)
+"sN" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/turf_decal/tile/neutral/diagonal_edge,
+/obj/effect/turf_decal/tile/neutral/diagonal_centre,
+/obj/effect/turf_decal/box/white/corners,
+/turf/open/floor/iron/dark/diagonal,
+/area/shuttle/supply)
+"sR" = (
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/iron/shuttle/cargo{
+	dir = 1
+	},
+/area/shuttle/supply)
+"uB" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/turf_decal/tile/neutral/diagonal_edge,
+/obj/effect/turf_decal/tile/neutral/diagonal_centre,
+/obj/effect/turf_decal/box/white/corners,
+/obj/effect/turf_decal/box/white/corners{
+	dir = 8
+	},
+/turf/open/floor/iron/dark/diagonal,
+/area/shuttle/supply)
+"vd" = (
+/obj/machinery/conveyor{
+	dir = 8;
+	id = "cargounload"
+	},
+/obj/machinery/door/poddoor{
+	id = "cargounload";
+	name = "Supply Dock Unloading Door"
+	},
+/turf/open/floor/plating,
+/area/shuttle/supply)
+"wI" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/turf_decal/loading_area/white{
+	dir = 4
+	},
+/turf/open/floor/iron/shuttle/cargo{
+	dir = 1
+	},
+/area/shuttle/supply)
+"zx" = (
+/turf/closed/wall/mineral/titanium/spaceship/nodiagonal,
+/area/shuttle/supply)
+"zP" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/turf_decal/tile/neutral/diagonal_edge,
+/obj/effect/turf_decal/tile/neutral/diagonal_centre,
+/obj/effect/turf_decal/box/white/corners{
+	dir = 1
+	},
+/obj/effect/turf_decal/box/white/corners{
+	dir = 4
+	},
+/obj/structure/sign/warning/directional/west,
+/turf/open/floor/iron/dark/diagonal,
+/area/shuttle/supply)
+"CR" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
+	},
+/obj/machinery/power/shuttle_engine/propulsion{
+	dir = 1
+	},
+/turf/open/floor/plating/airless,
+/area/shuttle/supply)
+"Gf" = (
+/obj/machinery/door/poddoor{
+	id = "cargoload";
+	name = "Supply Dock Loading Door"
+	},
+/obj/machinery/conveyor{
+	dir = 4;
+	id = "cargoload"
+	},
+/turf/open/floor/plating,
+/area/shuttle/supply)
+"Ow" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/turf_decal/tile/neutral/diagonal_edge,
+/obj/effect/turf_decal/tile/neutral/diagonal_centre,
+/obj/effect/turf_decal/box/white/corners{
+	dir = 4
+	},
+/turf/open/floor/iron/dark/diagonal,
+/area/shuttle/supply)
+"PH" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/turf_decal/tile/neutral/diagonal_edge,
+/obj/effect/turf_decal/tile/neutral/diagonal_centre,
+/obj/structure/sign/warning/no_smoking/circle/directional/east,
+/turf/open/floor/iron/dark/diagonal,
+/area/shuttle/supply)
+"SL" = (
+/obj/structure/marker_beacon/olive,
+/turf/closed/wall/mineral/titanium,
+/area/shuttle/supply)
+"Uj" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/turf_decal/loading_area/white{
+	dir = 8
+	},
+/turf/open/floor/iron/shuttle/cargo{
+	dir = 1
+	},
+/area/shuttle/supply)
+"UC" = (
+/obj/machinery/button/door/directional/west{
+	id = "cargoload";
+	name = "Loading Doors";
+	pixel_y = -8
+	},
+/obj/machinery/button/door/directional/west{
+	id = "cargounload";
+	name = "Loading Doors";
+	pixel_y = 8
+	},
+/obj/machinery/light/directional/west,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/iron/shuttle/cargo{
+	dir = 1
+	},
+/area/shuttle/supply)
+"UX" = (
+/obj/structure/marker_beacon/olive,
+/turf/closed/wall/mineral/titanium/nodiagonal,
+/area/shuttle/supply)
+"VP" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/turf_decal/tile/neutral/diagonal_edge,
+/obj/effect/turf_decal/tile/neutral/diagonal_centre,
+/obj/effect/turf_decal/box/white/corners{
+	dir = 1
+	},
+/turf/open/floor/iron/dark/diagonal,
+/area/shuttle/supply)
+"Xb" = (
+/obj/machinery/door/airlock/grunge{
+	name = "Supply Shuttle Airlock";
+	req_access = list("cargo")
+	},
+/obj/effect/turf_decal/delivery/white,
+/turf/open/floor/iron/dark/textured_large,
+/area/shuttle/supply)
+"Xe" = (
+/obj/structure/window/reinforced/plasma/spawner/directional/south,
+/obj/effect/turf_decal/stripes/line,
+/obj/machinery/power/shuttle_engine/heater{
+	dir = 1
+	},
+/turf/open/floor/plating/airless,
+/area/shuttle/supply)
+"Zh" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
+	},
+/obj/machinery/power/shuttle_engine/propulsion{
+	dir = 1
+	},
+/obj/structure/fluff/metalpole/end{
+	dir = 1;
+	pixel_y = 32
+	},
+/turf/open/floor/plating/airless,
+/area/shuttle/supply)
+
+(1,1,1) = {"
+kh
+zx
+UX
+vd
+lb
+bh
+Xb
+Gf
+bh
+bh
+bh
+SL
+"}
+(2,1,1) = {"
+Zh
+Xe
+sR
+Uj
+hV
+UC
+hV
+wI
+zP
+hv
+uB
+bh
+"}
+(3,1,1) = {"
+CR
+Xe
+sR
+sR
+sR
+sR
+sR
+sR
+sR
+sR
+sR
+bh
+"}
+(4,1,1) = {"
+fh
+zx
+VP
+hC
+hC
+oU
+sR
+VP
+hC
+hC
+oU
+bh
+"}
+(5,1,1) = {"
+CR
+Xe
+hC
+hC
+hC
+hC
+sR
+hC
+hC
+hC
+hC
+bh
+"}
+(6,1,1) = {"
+Zh
+Xe
+Ow
+pD
+hC
+sN
+sR
+Ow
+PH
+pD
+sN
+bh
+"}
+(7,1,1) = {"
+kh
+zx
+aK
+bh
+bh
+bh
+bh
+bh
+bh
+bh
+bh
+dO
+"}

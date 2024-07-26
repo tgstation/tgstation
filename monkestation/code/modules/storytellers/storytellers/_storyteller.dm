@@ -68,6 +68,10 @@
 
 	if(SSgamemode.current_roundstart_event && !SSgamemode.ran_roundstart && (guarantees_roundstart_roleset || roundstart_checks))
 		buy_event(SSgamemode.current_roundstart_event, EVENT_TRACK_ROLESET, TRUE)
+		if(EVENT_TRACK_ROLESET in SSgamemode.forced_next_events)
+			SSgamemode.forced_next_events[EVENT_TRACK_ROLESET] = null
+			SSgamemode.forced_next_events -= EVENT_TRACK_ROLESET
+
 		log_storyteller("Running SSgamemode.current_roundstart_event\[[SSgamemode.current_roundstart_event]\]")
 		SSgamemode.current_roundstart_event = null
 		if(!ignores_roundstart)

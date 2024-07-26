@@ -1,3 +1,8 @@
+/// The signal sent when an atom/movable should try to toggle their hiding.
+/// Gets called on the target, with (hiding, play_feedback = TRUE) as its args.
+/// Used for `/datum/element/can_hide`
+#define COMSIG_MOVABLE_TOGGLE_HIDING "movable_toggle_hiding"
+
 /// from base of atom/ratvar_act()
 #define COMSIG_ATOM_RATVAR_ACT "atom_ratvar_act"
 

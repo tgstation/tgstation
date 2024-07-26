@@ -318,7 +318,7 @@ SUBSYSTEM_DEF(outdoor_effects)
 
 	OE.sunlight_overlay = MA
 	//Get weather overlay if not weatherproof
-	OE.overlays = OE.weatherproof ? list(OE.sunlight_overlay) : list(OE.sunlight_overlay, get_weather_overlay())
+	OE.overlays = OE.weatherproof ? list(OE.sunlight_overlay) : list(OE.sunlight_overlay, get_weather_overlay(OE.z))
 	OE.luminosity = MA.luminosity
 
 //Retrieve an overlay from the list - create if necessary
@@ -331,12 +331,16 @@ SUBSYSTEM_DEF(outdoor_effects)
 	return sunlight_overlays[index]
 
 //get our weather overlay
-/datum/controller/subsystem/outdoor_effects/proc/get_weather_overlay()
+/datum/controller/subsystem/outdoor_effects/proc/get_weather_overlay(z_level)
+	var/plane_level =  WEATHER_OVERLAY_PLANE
+	if(SSmapping.level_has_all_traits(z_level, list(ZTRAIT_ECLIPSE)))
+		plane_level = WEATHER_OVERLAY_PLANE_ECLIPSE
+
 	var/mutable_appearance/MA = new /mutable_appearance()
 	MA.blend_mode   	  = BLEND_OVERLAY
 	MA.icon 			  = 'monkestation/code/modules/outdoors/icons/effects/weather_overlay.dmi'
 	MA.icon_state 		  = "weather_overlay"
-	MA.plane			  = WEATHER_OVERLAY_PLANE /* we put this on a lower level than lighting so we dont multiply anything */
+	MA.plane			  = plane_level /* we put this on a lower level than lighting so we dont multiply anything */
 	MA.invisibility 	  = INVISIBILITY_LIGHTING
 	return MA
 

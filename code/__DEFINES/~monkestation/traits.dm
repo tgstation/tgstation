@@ -48,3 +48,6 @@
 #define TRAIT_COVERED_BY_METEOR_SHIELD		"covered_by_meteor_shield"
 /// Liquids cannot spread over this turf.
 #define TRAIT_BLOCK_LIQUID_SPREAD			"block_liquid_spread"
+
+///added to structures we want the mobs to be able to target.
+#define TRAIT_MOB_DESTROYABLE "mob_destroyable"

@@ -70,6 +70,9 @@
 		close_map(user)
 		return
 
+	if(watching_mob && watching_mob != user)
+		return
+
 	open_map(user)
 
 /// Tries to open the map for the given mob. Returns FALSE if it doesn't meet the criteria, TRUE if the map successfully opened with no runtimes.

@@ -1,0 +1,30 @@
+{
+	"version": 1,
+	"map_name": "Ouroboros",
+	"map_path": "map_files/Ouroboros",
+	"map_file": "Ouroboros.dmm",
+	"shuttles": {
+		"emergency": "emergency_nova",
+		"ferry": "ferry_fancy",
+		"mining": "mining_nova_large",
+		"cargo": "cargo_ouroboros",
+		"whiteship": "whiteship_ouroboros"
+	},
+	"traits": [
+		{
+			"Up": true,
+			"Baseturf": "/turf/open/misc/asteroid/moon/airless",
+			"Linkage": "Cross"
+		},
+		{
+			"Down": true,
+			"Baseturf": "/turf/open/openspace",
+			"Linkage": "Cross"
+		}
+	],
+	"job_changes": {
+		"Captain": {
+			"special_charter": "asteroid field"
+		}
+	}
+}

@@ -133,13 +133,16 @@
 			if(!check)
 				return
 			select_armament(usr, check)
+			SStgui.update_uis(src)
 		if("buy_ammo")
 			var/check = check_item(params["armament_ref"])
 			if(!check)
 				return
 			buy_ammo(usr, check, params["quantity"])
+			SStgui.update_uis(src)
 		if("eject_card")
 			eject_card(usr)
+			SStgui.update_uis(src)
 
 /datum/component/armament/proc/buy_ammo(mob/user, datum/armament_entry/armament_entry, quantity = 1)
 	if(!armament_entry.magazine)
@@ -402,6 +405,7 @@
 	if(!ui)
 		ui = new(user, src, "CargoImportConsole")
 		ui.open()
+		ui.set_autoupdate(FALSE)
 
 /datum/component/armament/company_imports/select_armament(mob/user, datum/armament_entry/company_import/armament_entry)
 	var/datum/bank_account/buyer = SSeconomy.get_dep_account(ACCOUNT_CAR)
@@ -550,6 +554,7 @@
 			if(!istype(the_person))
 				if(issilicon(the_person))
 					self_paid = FALSE
+				SStgui.update_uis(src)
 				return
 
 			if(console_state == IRN_CONSOLE)
@@ -561,6 +566,7 @@
 				return
 
 			self_paid = !self_paid
+			SStgui.update_uis(src)
 
 #undef MAX_AMMO_AMOUNT
 #undef CARGO_CONSOLE

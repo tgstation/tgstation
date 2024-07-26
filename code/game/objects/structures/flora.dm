@@ -299,7 +299,7 @@
 	. = ..()
 	var/turf/my_turf = get_turf(src)
 	playsound(my_turf, 'sound/effects/meteorimpact.ogg', 100 , FALSE, FALSE)
-	var/obj/structure/flora/tree/stump/new_stump = new(my_turf)
+	var/obj/structure/flora/tree/stump/new_stump = new stump_type(my_turf)
 	new_stump.name = "[name] stump"
 
 /obj/structure/flora/tree/uproot(mob/living/user)

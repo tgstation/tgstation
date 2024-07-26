@@ -31,6 +31,7 @@
 
 	/// Set to TRUE to call ex_act parent
 	var/explodable = FALSE
+	var/changes_icon = TRUE
 
 
 
@@ -50,7 +51,8 @@
 	new dig_result(src, 5)
 	if (prob(worm_chance))
 		new /obj/item/food/bait/worm(src)
-	icon_state = "[base_icon_state]_dug"
+	if(changes_icon)
+		icon_state = "[base_icon_state]_dug"
 
 /// If the user can dig the turf
 /turf/open/misc/asteroid/proc/can_dig(mob/user)

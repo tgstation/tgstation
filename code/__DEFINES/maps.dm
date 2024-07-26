@@ -178,11 +178,13 @@ Always compile, always use that verb, and always make sure that it works for wha
 
 #define BIOME_LOW_HEAT "low_heat"
 #define BIOME_LOWMEDIUM_HEAT "lowmedium_heat"
+#define BIOME_MEDIUM_HEAT "medium_heat"
 #define BIOME_HIGHMEDIUM_HEAT "highmedium_heat"
 #define BIOME_HIGH_HEAT "high_heat"
 
 #define BIOME_LOW_HUMIDITY "low_humidity"
 #define BIOME_LOWMEDIUM_HUMIDITY "lowmedium_humidity"
+#define BIOME_MEDIUM_HUMIDITY "medium_humidity"
 #define BIOME_HIGHMEDIUM_HUMIDITY "highmedium_humidity"
 #define BIOME_HIGH_HUMIDITY "high_humidity"
 
@@ -223,6 +225,8 @@ Always compile, always use that verb, and always make sure that it works for wha
 //monkestation start
 #define ZTRAIT_OSHAN "OshanTrait"
 
+#define ZTRAIT_ECLIPSE "Eclipse"
+
 ///Z level traits for Lavaland
 #define ZTRAITS_TRENCH list(\
 	ZTRAIT_GRAVITY = TRUE, \
@@ -240,3 +244,28 @@ Always compile, always use that verb, and always make sure that it works for wha
 #define PARTICLEWEATHER_DUST "weather_dust"
 #define PARTICLEWEATHER_RADS "weather_rads"
 //monkestation end
+
+#define ZTRAITS_ECLIPSE list(\
+	list(\
+		ZTRAIT_LINKAGE = CROSSLINKED, \
+		ZTRAIT_UP = TRUE, \
+		ZTRAIT_GRAVITY = TRUE, \
+		ZTRAIT_MINING = TRUE, \
+		ZTRAIT_NOPARALLAX = TRUE, \
+		ZTRAIT_DAYCYCLE = TRUE, \
+		ZTRAIT_BOMBCAP_MULTIPLIER = 2, \
+		ZTRAIT_BASETURF = /turf/open/misc/dirt/forest, \
+		ZTRAIT_ECLIPSE = TRUE, \
+	), \
+	list(\
+		ZTRAIT_LINKAGE = CROSSLINKED, \
+		ZTRAIT_DOWN = TRUE, \
+		ZTRAIT_GRAVITY = TRUE, \
+		ZTRAIT_MINING = TRUE, \
+		ZTRAIT_NOPARALLAX = TRUE, \
+		ZTRAIT_DAYCYCLE = TRUE, \
+		ZTRAIT_BOMBCAP_MULTIPLIER = 2, \
+		ZTRAIT_BASETURF = /turf/open/openspace/forest, \
+		ZTRAIT_ECLIPSE = TRUE, \
+	)\
+)

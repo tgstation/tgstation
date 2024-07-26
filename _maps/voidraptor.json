@@ -1,0 +1,22 @@
+{
+	"version": 1,
+	"map_name": "Void Raptor",
+	"map_path": "map_files/Voidraptor",
+	"map_file": "VoidRaptor.dmm",
+	"shuttles": {
+		"emergency": "emergency_nova",
+		"ferry": "ferry_fancy",
+		"mining": "mining_nova_large",
+		"cargo": "cargo_nova_delta",
+		"whiteship": "whiteship_delta"
+	},
+	"orbit_shift_replacement": "Attention crew, it appears that someone has shifted your ship into more dangerous territory.",
+	"job_changes": {
+		"Cook": {
+			"additional_cqc_areas": ["/area/station/service/cafeteria"]
+		},
+		"Captain": {
+			"special_charter": "ship"
+		}
+	}
+}

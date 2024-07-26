@@ -871,6 +871,7 @@ SUBSYSTEM_DEF(shuttle)
 	// truthy value means that it cannot dock for some reason
 	// but we can ignore the someone else docked error because we'll
 	// be moving into their place shortly
+
 	if((result != SHUTTLE_CAN_DOCK) && (result != SHUTTLE_SOMEONE_ELSE_DOCKED))
 		CRASH("Template shuttle [preview_shuttle] cannot dock at [dest_dock] ([result]).")
 

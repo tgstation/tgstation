@@ -63,6 +63,14 @@
 		flashed.balloon_alert(source, "[flashed.p_their()] mind is vacant!")
 		return
 
+	/*
+	// monkestation edit: allow people to opt-out of BB
+	if(!(ROLE_BROTHER in flashed.client?.prefs?.be_special) || is_banned_from(flashed.ckey, list(ROLE_BROTHER, ROLE_SYNDICATE)))
+		flashed.balloon_alert(source, "unwilling to play role!")
+		return
+	// monkestation end
+	*/
+
 	for(var/datum/objective/brother_objective as anything in source.mind.get_all_objectives())
 		// If the objective has a target, are we flashing them?
 		if(flashed == brother_objective.target?.current)

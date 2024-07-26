@@ -92,6 +92,12 @@
 			redirect = "DeltaStation"
 		if("Tramstation")
 			redirect = "TramStation"
+		if("Blueshift")
+			redirect = "Blueshift"
+		if("Ouroboros")
+			redirect = "Ouroboros"
+		if("Void Raptor")
+			redirect = "VoidRaptor"
 	if(client)
 		client << link("https://maps.monkestation.com/Monke/[redirect]/")
 

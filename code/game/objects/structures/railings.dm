@@ -150,6 +150,7 @@
 	item_deconstruct = /obj/item/stack/sheet/mineral/wood
 	plane = GAME_PLANE_FOV_HIDDEN
 	layer = ABOVE_MOB_LAYER
+	standard_smoothing = FALSE
 
 /obj/structure/railing/wooden_fence/Initialize(mapload)
 	. = ..()

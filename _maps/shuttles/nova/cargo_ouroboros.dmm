@@ -1,0 +1,220 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/turf/open/floor/catwalk_floor/iron,
+/area/shuttle/supply)
+"d" = (
+/obj/machinery/light/cold/no_nightlight/directional/south,
+/turf/open/floor/catwalk_floor/iron,
+/area/shuttle/supply)
+"e" = (
+/obj/machinery/conveyor{
+	id = "QMLoad2";
+	dir = 4
+	},
+/obj/structure/fans/tiny/invisible,
+/obj/machinery/door/poddoor{
+	id = "QMLoaddoor3";
+	name = "Supply Shuttle Loading Door"
+	},
+/turf/open/floor/plating,
+/area/shuttle/supply)
+"f" = (
+/obj/machinery/light/cold/no_nightlight/directional/north,
+/turf/open/floor/catwalk_floor/iron,
+/area/shuttle/supply)
+"g" = (
+/obj/machinery/light/cold/no_nightlight/directional/west,
+/turf/open/floor/catwalk_floor/iron,
+/area/shuttle/supply)
+"h" = (
+/obj/structure/railing,
+/turf/open/floor/catwalk_floor/iron,
+/area/shuttle/supply)
+"i" = (
+/obj/structure/marker_beacon/bronze,
+/turf/closed/wall/mineral/titanium/nodiagonal,
+/area/shuttle/supply)
+"j" = (
+/obj/machinery/light/cold/no_nightlight/directional/east,
+/obj/machinery/button/door/directional/east{
+	id = "QMLoaddoor3";
+	name = "Supply Shuttle Loading Door"
+	},
+/turf/open/floor/catwalk_floor/iron,
+/area/shuttle/supply)
+"m" = (
+/obj/machinery/conveyor{
+	dir = 8;
+	id = "QMLoad"
+	},
+/turf/open/floor/plating,
+/area/shuttle/supply)
+"s" = (
+/obj/machinery/power/shuttle_engine/heater,
+/obj/structure/window/reinforced/spawner/directional/north,
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
+	},
+/turf/open/floor/plating/airless,
+/area/shuttle/supply)
+"v" = (
+/turf/closed/wall/mineral/titanium/spaceship/nodiagonal,
+/area/shuttle/supply)
+"y" = (
+/obj/effect/turf_decal/stripes/line,
+/obj/machinery/power/shuttle_engine/propulsion,
+/turf/open/floor/plating/airless,
+/area/shuttle/supply)
+"z" = (
+/obj/machinery/light/cold/no_nightlight/directional/east,
+/turf/open/floor/catwalk_floor/iron,
+/area/shuttle/supply)
+"B" = (
+/obj/machinery/conveyor{
+	dir = 8;
+	id = "QMLoad"
+	},
+/obj/machinery/door/poddoor{
+	id = "QMLoaddoor3";
+	name = "Supply Shuttle Loading Door"
+	},
+/obj/structure/fans/tiny/invisible,
+/turf/open/floor/plating,
+/area/shuttle/supply)
+"C" = (
+/obj/machinery/conveyor{
+	id = "QMLoad2";
+	dir = 4
+	},
+/turf/open/floor/plating,
+/area/shuttle/supply)
+"D" = (
+/obj/structure/marker_beacon/burgundy,
+/turf/closed/wall/mineral/titanium/spaceship/nodiagonal,
+/area/shuttle/supply)
+"F" = (
+/turf/open/floor/iron/half{
+	dir = 1
+	},
+/area/shuttle/supply)
+"M" = (
+/obj/machinery/door/airlock/shuttle{
+	name = "Supply Shuttle Airlock"
+	},
+/obj/effect/mapping_helpers/airlock/access/all/supply/general,
+/obj/docking_port/mobile/supply,
+/turf/open/floor/plating,
+/area/shuttle/supply)
+"Q" = (
+/obj/structure/marker_beacon/bronze,
+/turf/closed/wall/mineral/titanium,
+/area/shuttle/supply)
+"S" = (
+/obj/machinery/door/airlock/shuttle{
+	name = "Supply Shuttle Airlock"
+	},
+/obj/effect/mapping_helpers/airlock/access/all/supply/general,
+/turf/open/floor/plating,
+/area/shuttle/supply)
+"X" = (
+/turf/closed/wall/mineral/titanium/nodiagonal,
+/area/shuttle/supply)
+
+(1,1,1) = {"
+Q
+X
+X
+X
+i
+X
+X
+X
+i
+v
+v
+D
+"}
+(2,1,1) = {"
+X
+a
+F
+a
+g
+a
+F
+a
+g
+a
+s
+y
+"}
+(3,1,1) = {"
+X
+a
+F
+a
+a
+a
+F
+a
+a
+a
+s
+y
+"}
+(4,1,1) = {"
+X
+f
+F
+a
+a
+a
+F
+a
+a
+d
+v
+v
+"}
+(5,1,1) = {"
+X
+a
+F
+a
+a
+a
+F
+a
+a
+a
+s
+y
+"}
+(6,1,1) = {"
+X
+h
+C
+a
+j
+a
+m
+a
+z
+a
+s
+y
+"}
+(7,1,1) = {"
+Q
+X
+e
+S
+i
+M
+B
+X
+i
+v
+v
+D
+"}
