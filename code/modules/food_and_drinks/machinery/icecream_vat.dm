@@ -75,13 +75,15 @@
 
 	RegisterSignal(src, COMSIG_ATOM_REAGENT_EXAMINE, PROC_REF(allow_reagent_scan))
 
-	create_reagents(300, NO_REACT|TRANSPARENT)
+	var/ice_cream_day = check_holidays(ICE_CREAM_DAY) //ice cream vats are more "robust" on this holiday
+
+	create_reagents(ice_cream_day ? 400 : 300, NO_REACT|TRANSPARENT)
 	reagents.chem_temp = T0C //So ice doesn't melt
 	register_context()
 
 	if(preinstall_reagents)
 		for(var/reagent in icecream_vat_reagents)
-			reagents.add_reagent(reagent, icecream_vat_reagents[reagent], reagtemp = T0C)
+			reagents.add_reagent(reagent, icecream_vat_reagents[reagent] * (ice_cream_day ? 2.5 : 1), reagtemp = T0C)
 
 /obj/machinery/icecream_vat/Exited(atom/movable/gone, direction)
 	. = ..()

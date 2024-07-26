@@ -8,7 +8,7 @@
 
 	///The color this organ draws with. Updated by bodypart/inherit_color()
 	var/draw_color
-	///Where does this organ inherit it's color from?
+	///Where does this organ inherit its color from?
 	var/color_source = ORGAN_COLOR_INHERIT
 	///Take on the dna/preference from whoever we're gonna be inserted in
 	var/imprint_on_next_insertion = TRUE

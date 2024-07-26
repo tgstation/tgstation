@@ -385,7 +385,7 @@
 	item = /obj/item/ammo_box/magazine/plastikov9mm
 	cost = 1
 	purchasable_from = UPLINK_SERIOUS_OPS
-	illegal_tech = FALSE
+	uplink_item_flags = SYNDIE_TRIPS_CONTRABAND
 
 // Explosives and Grenades
 // ~~ Grenades ~~
@@ -394,6 +394,7 @@
 	cost = 15
 	surplus = 35
 	purchasable_from = UPLINK_ALL_SYNDIE_OPS
+
 /datum/uplink_item/explosives/grenades/buzzkill
 	name = "Buzzkill Grenade Box"
 	desc = "A box with three grenades that release a swarm of angry bees upon activation. These bees indiscriminately attack friend or foe \

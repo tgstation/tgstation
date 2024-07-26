@@ -4,6 +4,7 @@
 
 /datum/uplink_item/stealthy_weapons
 	category = /datum/uplink_category/stealthy
+	uplink_item_flags = SYNDIE_ILLEGAL_TECH
 
 
 /datum/uplink_item/stealthy_weapons/dart_pistol

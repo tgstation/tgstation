@@ -78,8 +78,8 @@
 	var/purchase_log_vis = TRUE // Visible in the purchase log?
 	/// Whether this purchase is restricted or not (VR/Events related)
 	var/restricted = FALSE
-	/// Can this item be deconstructed to unlock certain techweb research nodes?
-	var/illegal_tech = TRUE
+	/// Flags related to if an item will provide illegal tech, or trips contraband detectors once spawned in as an item.
+	var/uplink_item_flags = SYNDIE_ILLEGAL_TECH | SYNDIE_TRIPS_CONTRABAND
 	/// String to be shown instead of the price, e.g for the Random item.
 	var/cost_override_string = ""
 	/// Whether this item locks all other items from being purchased. Used by syndicate balloon and a few other purchases.
@@ -142,6 +142,12 @@
 		spawned_item = spawn_path
 	if(refundable)
 		spawned_item.AddElement(/datum/element/uplink_reimburse, (refund_amount ? refund_amount : cost))
+
+
+	if(uplink_item_flags & SYNDIE_TRIPS_CONTRABAND) // Ignore things that shouldn't be detectable as contraband on the station.
+		ADD_TRAIT(spawned_item, TRAIT_CONTRABAND, INNATE_TRAIT)
+		for(var/obj/contained as anything in spawned_item.get_all_contents())
+			ADD_TRAIT(contained, TRAIT_CONTRABAND, INNATE_TRAIT)
 	var/mob/living/carbon/human/human_user = user
 	if(istype(human_user) && isitem(spawned_item) && human_user.put_in_hands(spawned_item))
 		to_chat(human_user, span_boldnotice("[spawned_item] materializes into your hands!"))
@@ -154,8 +160,10 @@
 /// Can be used to "de-restrict" some items, such as Nukie guns spawning with Syndicate pins
 /datum/uplink_item/proc/spawn_item_for_generic_use(mob/user)
 	var/atom/movable/created = new item(user.loc)
-
-	if(isgun(created))
+	if(uplink_item_flags & SYNDIE_TRIPS_CONTRABAND) // Things that shouldn't be detectable as contraband on the station.
+		ADD_TRAIT(created, TRAIT_CONTRABAND, INNATE_TRAIT)
+		for(var/obj/contained as anything in created.get_all_contents())
+			ADD_TRAIT(contained, TRAIT_CONTRABAND, INNATE_TRAIT)
 		replace_pin(created)
 	else if(istype(created, /obj/item/storage/toolbox/guncase))
 		for(var/obj/item/gun/gun in created)
@@ -205,7 +213,7 @@
 	name = "Objective-Specific Equipment"
 	desc = "Equipment necessary for accomplishing specific objectives. If you are seeing this, something has gone wrong."
 	limited_stock = 1
-	illegal_tech = FALSE
+	uplink_item_flags = SYNDIE_TRIPS_CONTRABAND
 	purchasable_from = parent_type::purchasable_from & ~UPLINK_SPY // Ditto
 
 /datum/uplink_item/special_equipment/purchase(mob/user, datum/component/uplink/U)

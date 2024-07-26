@@ -735,6 +735,24 @@ GLOBAL_LIST_INIT(gun_saw_types, typecacheof(list(
 	chamber_round()
 	update_appearance()
 
+/obj/item/gun/ballistic/toss_gun_hard(mob/living/carbon/thrower, mob/living/target)
+	. = ..()
+	if(!.)
+		return
+	switch(bolt_type)
+		if(BOLT_TYPE_NO_BOLT) //emptying the revolver cylinder
+			attack_self()
+			return
+		if(BOLT_TYPE_OPEN) //emptying the chamber of an automatic weapon, because rack() doesn't do this to it
+			handle_chamber(chamber_next_round = FALSE)
+	if(!internal_magazine && magazine) //if a magazine is attached to the weapon, we remove it and throw it aside
+		magazine.forceMove(drop_location())
+		magazine.throw_at(get_edge_target_turf(src, pick(GLOB.alldirs)), 1, 1)
+		magazine = null
+		update_icon() //updating the sprite of weapons without a magazine
+	if(!isnull(chambered)) //if there is a cartridge in the chamber, we remove it
+		rack()
+
 /obj/item/suppressor
 	name = "suppressor"
 	desc = "A syndicate small-arms suppressor for maximum espionage."

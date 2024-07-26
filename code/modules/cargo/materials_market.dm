@@ -232,7 +232,7 @@
 			var/material_str = params["material"]
 			var/quantity = text2num(params["quantity"])
 
-			//find material from it's name
+			//find material from its name
 			var/datum/material/material_bought
 			var/obj/item/stack/sheet/sheet_to_buy
 			for(var/datum/material/mat as anything in SSstock_market.materials_prices)
@@ -346,7 +346,7 @@
 	var/datum/material/export_mat
 	/// Quantity of export material
 	var/quantity = 0
-	/// Is this stock block currently updating it's value with the market (aka fluid)?
+	/// Is this stock block currently updating its value with the market (aka fluid)?
 	var/fluid = FALSE
 
 /obj/item/stock_block/Initialize(mapload)
@@ -358,9 +358,9 @@
 	. = ..()
 	. += span_notice("\The [src] is worth [export_value] cr, from selling [quantity] sheets of [initial(export_mat?.name)].")
 	if(fluid)
-		. += span_warning("\The [src] is currently liquid! It's value is based on the market price.")
+		. += span_warning("\The [src] is currently liquid! Its value is based on the market price.")
 	else
-		. += span_notice("\The [src]'s value is still [span_boldnotice("locked in")]. [span_boldnotice("Sell it")] before it's value becomes liquid!")
+		. += span_notice("\The [src]'s value is still [span_boldnotice("locked in")]. [span_boldnotice("Sell it")] before its value becomes liquid!")
 
 /obj/item/stock_block/proc/value_warning()
 	visible_message(span_warning("\The [src] is starting to become liquid!"))

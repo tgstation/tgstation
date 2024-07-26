@@ -74,6 +74,9 @@ ADMIN_VERB(toggle_ooc_dead, R_ADMIN, "Toggle Dead OOC", "Toggle the OOC channel 
 	message_admins("[key_name_admin(user)] toggled Dead OOC.")
 	SSblackbox.record_feedback("nested tally", "admin_toggle", 1, list("Toggle Dead OOC", "[GLOB.dooc_allowed ? "Enabled" : "Disabled"]"))
 
+ADMIN_VERB(toggle_vote_dead, R_ADMIN, "Toggle Dead Vote", "Toggle the vote for dead players on or off.", ADMIN_CATEGORY_SERVER)
+	SSvote.toggle_dead_voting(user)
+
 ADMIN_VERB(start_now, R_SERVER, "Start Now", "Start the round RIGHT NOW.", ADMIN_CATEGORY_SERVER)
 	var/static/list/waiting_states = list(GAME_STATE_PREGAME, GAME_STATE_STARTUP)
 	if(!(SSticker.current_state in waiting_states))

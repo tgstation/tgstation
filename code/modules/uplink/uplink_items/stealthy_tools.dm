@@ -4,6 +4,7 @@
 
 /datum/uplink_item/stealthy_tools
 	category = /datum/uplink_category/stealthy_tools
+	uplink_item_flags = SYNDIE_ILLEGAL_TECH
 
 
 /datum/uplink_item/stealthy_tools/agent_card
@@ -86,11 +87,11 @@
 /datum/uplink_item/stealthy_tools/smugglersatchel
 	name = "Smuggler's Satchel"
 	desc = "This satchel is thin enough to be hidden in the gap between plating and tiling; great for stashing \
-			your stolen goods. Comes with a crowbar, a floor tile and some contraband inside."
+			your stolen goods. Comes with a crowbar, a floor tile and some contraband inside. Its contents cannot be detected by contraband scanners."
 	item = /obj/item/storage/backpack/satchel/flat/with_tools
 	cost = 1
 	surplus = 30
-	illegal_tech = FALSE
+	uplink_item_flags = NONE
 
 /datum/uplink_item/stealthy_tools/mail_counterfeit
 	name = "GLA Brand Mail Counterfeit Device"
