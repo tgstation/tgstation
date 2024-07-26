@@ -775,7 +775,7 @@
 /obj/item/fish/sockeye_salmon
 	name = "sockeye salmon"
 	desc = "A fairly common and iconic salmon endemic of the Pacific Ocean. At some point imported into outer space, where we're now."
-	icon_state = "sockeye_salmon"
+	icon_state = "sockeye"
 	dedicated_in_aquarium_icon_state = "sockeye_small"
 	sprite_width = 6
 	sprite_height = 4
@@ -1012,6 +1012,7 @@
 /obj/item/fish/chainsawfish
 	name = "chainsawfish"
 	desc = "A very, very angry bioweapon, whose sole purpose is to rip and tear."
+	icon = 'icons/obj/aquarium/wide.dmi'
 	icon_state = "chainsawfish"
 	inhand_icon_state = "chainsawfish"
 	icon_state_dead = "chainsawfish_dead"
