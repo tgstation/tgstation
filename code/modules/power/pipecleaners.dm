@@ -29,6 +29,7 @@ By design, d1 is the smallest direction and d2 is the highest
 	icon = 'icons/obj/pipes_n_cables/pipe_cleaner.dmi'
 	icon_state = "0-1"
 	layer = WIRE_LAYER //Above hidden pipes, GAS_PIPE_HIDDEN_LAYER
+	plane = FLOOR_PLANE
 	anchored = TRUE
 	obj_flags = CAN_BE_HIT
 	color = CABLE_HEX_COLOR_RED
@@ -106,15 +107,13 @@ By design, d1 is the smallest direction and d2 is the highest
 		QDEL_NULL(stored)
 	return ..() // then go ahead and delete the pipe_cleaner
 
-/obj/structure/pipe_cleaner/deconstruct(disassembled = TRUE)
-	if(!(obj_flags & NO_DECONSTRUCTION))
-		var/turf/T = get_turf(loc)
-		if(T)
-			stored.forceMove(T)
-			stored = null
-		else
-			qdel(stored)
-	qdel(src)
+/obj/structure/pipe_cleaner/atom_deconstruct(disassembled = TRUE)
+	var/turf/location = get_turf(loc)
+	if(location)
+		stored.forceMove(location)
+		stored = null
+	else
+		qdel(stored)
 
 ///////////////////////////////////
 // General procedures
@@ -165,10 +164,9 @@ By design, d1 is the smallest direction and d2 is the highest
 	stored.color = colorC
 	stored.update_appearance()
 
-/obj/structure/pipe_cleaner/AltClick(mob/living/user)
-	if(!user.can_perform_action(src))
-		return
+/obj/structure/pipe_cleaner/click_alt(mob/living/user)
 	cut_pipe_cleaner(user)
+	return CLICK_ACTION_SUCCESS
 
 ///////////////////////////////////////////////
 // The pipe cleaner coil object, used for laying pipe cleaner
@@ -405,7 +403,7 @@ By design, d1 is the smallest direction and d2 is the highest
 
 	// exisiting pipe_cleaner doesn't point at our position or we have a supplied direction, so see if it's a stub
 	else if(C.d1 == 0)
-							// if so, make it a full pipe_cleaner pointing from it's old direction to our dirn
+							// if so, make it a full pipe_cleaner pointing from its old direction to our dirn
 		var/nd1 = C.d2 // these will be the new directions
 		var/nd2 = dirn
 

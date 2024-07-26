@@ -78,7 +78,7 @@
 /// Starts the movement process, persists while the holder is moving through pipes
 /obj/structure/disposalholder/proc/start_moving()
 	var/delay = world.tick_lag
-	var/datum/move_loop/our_loop = SSmove_manager.move_disposals(src, delay = delay, timeout = delay * count)
+	var/datum/move_loop/our_loop = GLOB.move_manager.move_disposals(src, delay = delay, timeout = delay * count)
 	if(our_loop)
 		RegisterSignal(our_loop, COMSIG_MOVELOOP_PREPROCESS_CHECK, PROC_REF(pre_move))
 		RegisterSignal(our_loop, COMSIG_MOVELOOP_POSTPROCESS, PROC_REF(try_expel))
@@ -172,7 +172,7 @@
 	for(var/obj/structure/disposalpipe/P in T)
 		if(fdir & P.dpdir) // find pipe direction mask that matches flipped dir
 			if(QDELING(P))
-				to_chat(world, "DEBUG -- [src] here, new pipe is being thanos'd")
+				CRASH("Pipe is being deleted while being used by a disposal holder at ([P.x], [P.y], [P.z]")
 			return P
 	// if no matching pipe, return null
 	return null

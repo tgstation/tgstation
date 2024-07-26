@@ -53,3 +53,10 @@
 		/datum/ai_planning_subtree/target_retaliate,
 		/datum/ai_planning_subtree/basic_melee_attack_subtree,
 	)
+
+///Subtype used in the caves away mission
+/mob/living/basic/bat/away_caves
+	name = "cave bat"
+	desc = "A rare breed of bat which roosts deep in caves."
+	minimum_survivable_temperature = 0
+	gold_core_spawnable = NO_SPAWN

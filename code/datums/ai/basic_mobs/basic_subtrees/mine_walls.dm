@@ -21,19 +21,16 @@
 	set_movement_target(controller, target)
 
 /datum/ai_behavior/mine_wall/perform(seconds_per_tick, datum/ai_controller/controller, target_key)
-	. = ..()
 	var/mob/living/basic/living_pawn = controller.pawn
 	var/turf/closed/mineral/target = controller.blackboard[target_key]
 	var/is_gibtonite_turf = istype(target, /turf/closed/mineral/gibtonite)
 	if(QDELETED(target))
-		finish_action(controller, FALSE, target_key)
-		return
+		return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_FAILED
 	living_pawn.melee_attack(target)
 	if(is_gibtonite_turf)
 		living_pawn.manual_emote("sighs...") //accept whats about to happen to us
 
-	finish_action(controller, TRUE, target_key)
-	return
+	return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_SUCCEEDED
 
 /datum/ai_behavior/mine_wall/finish_action(datum/ai_controller/controller, success, target_key)
 	. = ..()
@@ -42,17 +39,15 @@
 /datum/ai_behavior/find_mineral_wall
 
 /datum/ai_behavior/find_mineral_wall/perform(seconds_per_tick, datum/ai_controller/controller, found_wall_key)
-	. = ..()
 	var/mob/living_pawn = controller.pawn
 
 	for(var/turf/closed/mineral/potential_wall in oview(9, living_pawn))
 		if(!check_if_mineable(controller, potential_wall)) //check if its surrounded by walls
 			continue
 		controller.set_blackboard_key(found_wall_key, potential_wall) //closest wall first!
-		finish_action(controller, TRUE)
-		return
+		return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_SUCCEEDED
 
-	finish_action(controller, FALSE)
+	return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_FAILED
 
 /datum/ai_behavior/find_mineral_wall/proc/check_if_mineable(datum/ai_controller/controller, turf/target_wall)
 	var/mob/living/source = controller.pawn

@@ -20,11 +20,11 @@ export type Data = {
 };
 
 export type NavBeaconControl = {
-  location: String;
+  location: string;
   patrol_enabled: BooleanLike;
-  patrol_next: String;
+  patrol_next: string;
   delivery_enabled: BooleanLike;
-  delivery_direction: String;
+  delivery_direction: string;
   cover_locked: BooleanLike;
 };
 
@@ -107,7 +107,7 @@ export const NavBeaconControlSection = (props: DisabledProps) => {
           <Dropdown
             disabled={!!props.disabled}
             options={static_controls.direction_options}
-            displayText={controls.delivery_direction || 'none'}
+            selected={controls.delivery_direction}
             onSelected={(value) =>
               act('set_delivery_direction', {
                 direction: value,

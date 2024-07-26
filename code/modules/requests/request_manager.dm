@@ -163,17 +163,18 @@ GLOBAL_DATUM_INIT(requests, /datum/request_manager, new)
 
 	switch(action)
 		if ("pp")
-			var/mob/M = request.owner?.mob
-			usr.client.holder.show_player_panel(M)
+			SSadmin_verbs.dynamic_invoke_verb(ui.user, /datum/admin_verb/show_player_panel, request.owner?.mob)
 			return TRUE
+
 		if ("vv")
 			var/mob/M = request.owner?.mob
 			usr.client.debug_variables(M)
 			return TRUE
+
 		if ("sm")
-			var/mob/M = request.owner?.mob
-			usr.client.cmd_admin_subtle_message(M)
+			SSadmin_verbs.dynamic_invoke_verb(ui.user, /datum/admin_verb/cmd_admin_subtle_message, request.owner?.mob)
 			return TRUE
+
 		if ("flw")
 			var/mob/M = request.owner?.mob
 			usr.client.admin_follow(M)
@@ -192,8 +193,9 @@ GLOBAL_DATUM_INIT(requests, /datum/request_manager, new)
 					D.traitor_panel()
 					return TRUE
 			else
-				usr.client.holder.show_traitor_panel(M)
+				SSadmin_verbs.dynamic_invoke_verb(usr, /datum/admin_verb/show_traitor_panel, M)
 				return TRUE
+
 		if ("logs")
 			var/mob/M = request.owner?.mob
 			if(!ismob(M))
@@ -201,16 +203,11 @@ GLOBAL_DATUM_INIT(requests, /datum/request_manager, new)
 				return TRUE
 			show_individual_logging_panel(M, null, null)
 			return TRUE
+
 		if ("smite")
-			if(!check_rights(R_FUN))
-				to_chat(usr, "Insufficient permissions to smite, you require +FUN", confidential = TRUE)
-				return TRUE
-			var/mob/living/carbon/human/H = request.owner?.mob
-			if (!H || !istype(H))
-				to_chat(usr, "This can only be used on instances of type /mob/living/carbon/human", confidential = TRUE)
-				return TRUE
-			usr.client.smite(H)
+			SSadmin_verbs.dynamic_invoke_verb(ui.user, /datum/admin_verb/admin_smite, request.owner?.mob)
 			return TRUE
+
 		if ("rply")
 			if (request.req_type == REQUEST_PRAYER)
 				to_chat(usr, "Cannot reply to a prayer", confidential = TRUE)
@@ -246,12 +243,10 @@ GLOBAL_DATUM_INIT(requests, /datum/request_manager, new)
 			return TRUE
 
 /datum/request_manager/ui_data(mob/user)
-	. = list(
-		"requests" = list()
-	)
+	var/list/data = list()
 	for (var/ckey in requests)
 		for (var/datum/request/request as anything in requests[ckey])
-			var/list/data = list(
+			data["requests"] += list(list(
 				"id" = request.id,
 				"req_type" = request.req_type,
 				"owner" = request.owner ? "[REF(request.owner)]" : null,
@@ -261,8 +256,8 @@ GLOBAL_DATUM_INIT(requests, /datum/request_manager, new)
 				"additional_info" = request.additional_information,
 				"timestamp" = request.timestamp,
 				"timestamp_str" = gameTimestamp(wtime = request.timestamp)
-			)
-			.["requests"] += list(data)
+			))
+	return data
 
 #undef REQUEST_PRAYER
 #undef REQUEST_CENTCOM

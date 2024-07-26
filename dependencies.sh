@@ -5,14 +5,15 @@
 
 # byond version
 export BYOND_MAJOR=515
-export BYOND_MINOR=1630
+export BYOND_MINOR=1637
 
 #rust_g git tag
-export RUST_G_VERSION=3.1.0
+export RUST_G_VERSION=3.3.0
 
 #node version
-export NODE_VERSION=14
-export NODE_VERSION_PRECISE=14.16.1
+export NODE_VERSION_LTS=20.13.0
+# compatiblility mode MUST work with windows 7
+export NODE_VERSION_COMPAT=20.2.0
 
 # SpacemanDMM git tag
 export SPACEMAN_DMM_VERSION=suite-1.8
@@ -24,10 +25,10 @@ export PYTHON_VERSION=3.9.0
 export AUXLUA_REPO=tgstation/auxlua
 
 #auxlua git tag
-export AUXLUA_VERSION=1.4.1
+export AUXLUA_VERSION=1.4.4
 
 #hypnagogic repo
-export CUTTER_REPO=actioninja/hypnagogic
+export CUTTER_REPO=spacestation13/hypnagogic
 
 #hypnagogic git tag
-export CUTTER_VERSION=v3.0.1
+export CUTTER_VERSION=v3.1.0

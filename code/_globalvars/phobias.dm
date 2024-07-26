@@ -57,7 +57,7 @@ GLOBAL_LIST_INIT(phobia_regexes, list(
 GLOBAL_LIST_INIT(phobia_mobs, list(
 	"aliens" = typecacheof(list(
 		/mob/living/carbon/alien,
-		/mob/living/simple_animal/slime,
+		/mob/living/basic/slime,
 	)),
 	"anime" = typecacheof(list(/mob/living/basic/guardian)),
 	"birds" = typecacheof(list(
@@ -245,7 +245,7 @@ GLOBAL_LIST_INIT(phobia_objs, list(
 		/obj/item/clothing/suit/hooded/carp_costume,
 		/obj/item/clothing/head/fedora/carpskin,
 		/obj/item/clothing/mask/gas/carp,
-		/obj/item/clothing/mask/cigarette/carp,
+		/obj/item/cigarette/carp,
 		/obj/item/clothing/under/suit/carpskin,
 		/obj/item/food/cubancarp,
 		/obj/item/food/fishmeat/carp,
@@ -492,7 +492,6 @@ GLOBAL_LIST_INIT(phobia_objs, list(
 		/obj/item/clothing/suit/wizrobe,
 		/obj/item/clothing/under/rank/civilian/chaplain,
 		/obj/item/codex_cicatrix,
-		/obj/item/cult_bastard,
 		/obj/item/gun/magic,
 		/obj/item/melee/cultblade,
 		/obj/item/melee/rune_carver,

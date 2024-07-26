@@ -8,23 +8,29 @@
 	spillable = TRUE
 	obj_flags = UNIQUE_RENAME
 	resistance_flags = ACID_PROOF
-	var/sealed = FALSE
 	fill_icon_thresholds = list(10, 20, 30, 40, 50, 60, 70, 80, 90, 100)
 	has_variable_transfer_amount = FALSE
+	interaction_flags_click = NEED_DEXTERITY
+	/// Whether this has been sealed shut
+	var/sealed = FALSE
 
-/obj/item/reagent_containers/chem_pack/AltClick(mob/living/user)
-	if(user.can_perform_action(src, NEED_DEXTERITY) && !sealed)
-		if(iscarbon(user) && (HAS_TRAIT(user, TRAIT_CLUMSY) && prob(50)))
-			to_chat(user, span_warning("Uh... whoops! You accidentally spill the content of the bag onto yourself."))
-			SplashReagents(user)
-			return
+/obj/item/reagent_containers/chem_pack/click_alt(mob/living/user)
+	if(sealed)
+		balloon_alert(user, "sealed!")
+		return CLICK_ACTION_BLOCKING
 
-		reagents.flags = NONE
-		reagent_flags = DRAWABLE | INJECTABLE //To allow for sabotage or ghetto use.
-		reagents.flags = reagent_flags
-		spillable = FALSE
-		sealed = TRUE
-		to_chat(user, span_notice("You seal the bag."))
+	if(iscarbon(user) && (HAS_TRAIT(user, TRAIT_CLUMSY) && prob(50)))
+		to_chat(user, span_warning("Uh... whoops! You accidentally spill the content of the bag onto yourself."))
+		SplashReagents(user)
+		return CLICK_ACTION_BLOCKING
+
+	reagents.flags = NONE
+	reagent_flags = DRAWABLE | INJECTABLE //To allow for sabotage or ghetto use.
+	reagents.flags = reagent_flags
+	spillable = FALSE
+	sealed = TRUE
+	balloon_alert(user, "sealed")
+	return CLICK_ACTION_SUCCESS
 
 /obj/item/reagent_containers/chem_pack/examine()
 	. = ..()

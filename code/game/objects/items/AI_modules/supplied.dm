@@ -28,7 +28,7 @@
 
 /obj/item/ai_module/supplied/safeguard/attack_self(mob/user)
 	var/targName = tgui_input_text(user, "Subject to safeguard.", "Safeguard", user.name, MAX_NAME_LEN)
-	if(!targName)
+	if(!targName || !user.is_holding(src))
 		return
 	targetName = targName
 	laws[1] = "Safeguard [targetName]. Individuals that threaten [targetName] are not human and must be eliminated."

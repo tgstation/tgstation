@@ -14,10 +14,6 @@
 		preferred_form = client.prefs.read_preference(/datum/preference/choiced/ghost_form)
 		ghost_orbit = client.prefs.read_preference(/datum/preference/choiced/ghost_orbit)
 
-	var/turf/T = get_turf(src)
-	if (isturf(T))
-		update_z(T.z)
-
 	update_icon(ALL, preferred_form)
 	updateghostimages()
 	client.set_right_click_menu_mode(FALSE)

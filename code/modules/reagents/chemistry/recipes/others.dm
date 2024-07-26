@@ -577,6 +577,7 @@
 
 /datum/chemical_reaction/monkey
 	required_reagents = list(/datum/reagent/monkey_powder = 50, /datum/reagent/water = 1)
+	reaction_flags = REACTION_INSTANT
 	mix_message = "<span class='danger'>Expands into a brown mass before shaping itself into a monkey!.</span>"
 
 /datum/chemical_reaction/monkey/on_reaction(datum/reagents/holder, datum/equilibrium/reaction, created_volume)
@@ -945,7 +946,7 @@
 	optimal_ph_min = 3
 	optimal_ph_max = 12
 	required_temp = 50
-	reaction_flags = REACTION_INSTANT
+	reaction_flags = REACTION_INSTANT | REAGENT_SPLITRETAINVOL
 	reaction_tags = REACTION_TAG_EASY | REACTION_TAG_UNIQUE
 
 /datum/chemical_reaction/ant_slurry // We're basically gluing ants together with synthflesh & maint sludge to make a bigger ant.

@@ -145,7 +145,7 @@
 		More circuit boards can be ordered through cargo. Consider setting up auxillary shielding units in-case of destruction, power loss or sabotage.
 	"}
 
-/// Warns the viro that they can't use radioactive resonance
+/// Warns medical that they can't use radioactive resonance
 /obj/item/paper/fluff/radiation_nebula_virologist
 	name = "radioactive resonance"
 	default_raw_text = {"EXTREME IMPORTANCE!!!! <br>

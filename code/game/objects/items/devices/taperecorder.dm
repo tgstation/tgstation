@@ -61,11 +61,9 @@
 		. += span_notice("The wire panel is [open_panel ? "opened" : "closed"]. The display reads:")
 		. += "[readout()]"
 
-/obj/item/taperecorder/AltClick(mob/user)
-	. = ..()
-	if(!can_interact(user))
-		return
+/obj/item/taperecorder/click_alt(mob/user)
 	play()
+	return CLICK_ACTION_SUCCESS
 
 /obj/item/taperecorder/proc/update_available_icons()
 	icons_available = list()

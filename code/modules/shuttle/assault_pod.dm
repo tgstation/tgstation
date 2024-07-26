@@ -17,8 +17,8 @@
 /obj/item/assault_pod
 	name = "Assault Pod Targeting Device"
 	icon = 'icons/obj/devices/remote.dmi'
-	icon_state = "gangtool-red"
-	inhand_icon_state = "radio"
+	icon_state = "designator_syndicate"
+	inhand_icon_state = "nukietalkie"
 	lefthand_file = 'icons/mob/inhands/items/devices_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/items/devices_righthand.dmi'
 	desc = "Used to select a landing zone for assault pods."
@@ -28,6 +28,7 @@
 	var/width = 7
 	var/height = 7
 	var/lz_dir = 1
+	var/lzname = "assault_pod"
 
 
 /obj/item/assault_pod/attack_self(mob/living/user)
@@ -45,8 +46,8 @@
 		return
 	var/turf/T = pick(turfs)
 	var/obj/docking_port/stationary/landing_zone = new /obj/docking_port/stationary(T)
-	landing_zone.shuttle_id = "assault_pod([REF(src)])"
-	landing_zone.port_destinations = "assault_pod([REF(src)])"
+	landing_zone.shuttle_id = "[lzname]([REF(src)])"
+	landing_zone.port_destinations = "[lzname]([REF(src)])"
 	landing_zone.name = "Landing Zone"
 	landing_zone.dwidth = dwidth
 	landing_zone.dheight = dheight
@@ -61,3 +62,23 @@
 	to_chat(user, span_notice("Landing zone set."))
 
 	qdel(src)
+
+/obj/item/assault_pod/medieval //for the medieval pirates
+	name = "Shuttle placement designator"
+	icon = 'icons/obj/scrolls.dmi'
+	icon_state = "blueprints"
+	inhand_icon_state = null
+	desc = "A map of the station used to select where you want to land your shuttle."
+	shuttle_id = "pirate"
+	dwidth = 1
+	dheight = 1
+	width = 15
+	height = 9
+	lzname = "pirate"
+
+/obj/item/assault_pod/medieval/Initialize(mapload)
+	. = ..()
+	var/counter = length(SSmachines.get_machines_by_type_and_subtypes(/obj/machinery/computer/shuttle/pirate))
+	if(counter != 1)
+		shuttle_id = "[shuttle_id]_[counter]"
+		lzname = "[lzname] [counter]"

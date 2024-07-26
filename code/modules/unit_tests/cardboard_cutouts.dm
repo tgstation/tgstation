@@ -25,9 +25,3 @@
 
 	var/obj/item/cardboard_cutout/xenomorph/xenomorph_cutout = new
 	test_screenshot("xenomorph_cutout", getFlatIcon(xenomorph_cutout))
-
-/obj/item/cardboard_cutout/nuclear_operative
-	starting_cutout = "Nuclear Operative"
-
-/obj/item/cardboard_cutout/xenomorph
-	starting_cutout = "Xenomorph"

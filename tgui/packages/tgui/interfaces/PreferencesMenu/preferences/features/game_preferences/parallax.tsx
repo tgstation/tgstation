@@ -1,4 +1,5 @@
-import { Feature, FeatureDropdownInput } from '../base';
+import { Feature } from '../base';
+import { FeatureDropdownInput } from '../dropdowns';
 
 export const parallax: Feature<string> = {
   name: 'Parallax (fancy space)',

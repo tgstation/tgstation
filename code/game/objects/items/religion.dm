@@ -343,15 +343,18 @@
 	var/staffcooldown = 0
 	var/staffwait = 30
 
-/obj/item/godstaff/afterattack(atom/target, mob/user, proximity_flag, click_parameters)
-	. = ..()
+/obj/item/godstaff/ranged_interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
+	return interact_with_atom(interacting_with, user, modifiers)
+
+/obj/item/godstaff/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
 	if(staffcooldown + staffwait > world.time)
-		return
-	. |= AFTERATTACK_PROCESSED_ITEM
+		return ITEM_INTERACT_BLOCKING
+
 	user.visible_message(span_notice("[user] chants deeply and waves [user.p_their()] staff!"))
-	if(do_after(user, 2 SECONDS, src))
-		target.add_atom_colour(conversion_color, WASHABLE_COLOUR_PRIORITY) //wololo
+	if(do_after(user, 2 SECONDS, interacting_with))
+		interacting_with.add_atom_colour(conversion_color, WASHABLE_COLOUR_PRIORITY) //wololo
 	staffcooldown = world.time
+	return ITEM_INTERACT_SUCCESS
 
 /obj/item/godstaff/red
 	icon_state = "godstaff-red"
@@ -418,8 +421,8 @@
 
 /obj/item/claymore/weak
 	desc = "This one is rusted."
-	force = 30
-	armour_penetration = 15
+	force = 24
+	armour_penetration = 10
 
 /obj/item/claymore/weak/ceremonial
 	desc = "A rusted claymore, once at the heart of a powerful scottish clan struck down and oppressed by tyrants, it has been passed down the ages as a symbol of defiance."

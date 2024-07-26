@@ -3,8 +3,6 @@
 /datum/ai_behavior/tipped_reaction
 
 /datum/ai_behavior/tipped_reaction/perform(seconds_per_tick, datum/ai_controller/controller, tipper_key, reacting_key)
-	. = ..()
-
 	var/mob/living/carbon/tipper = controller.blackboard[tipper_key]
 
 	// visible part of the visible message
@@ -28,7 +26,7 @@
 		seen_message = "[controller.pawn] seems resigned to its fate."
 		self_message = "You resign yourself to your fate."
 	controller.pawn.visible_message(span_notice("[seen_message]"), span_notice("[self_message]"))
-	finish_action(controller, TRUE, tipper_key, reacting_key)
+	return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_SUCCEEDED
 
 /datum/ai_behavior/tipped_reaction/finish_action(datum/ai_controller/controller, succeeded, tipper_key, reacting_key)
 	. = ..()

@@ -18,7 +18,6 @@
 
 // Late initialize to allow for the rnd servers to initialize first
 /obj/item/experi_scanner/LateInitialize()
-	. = ..()
 	var/static/list/handheld_signals = list(
 		COMSIG_ITEM_PRE_ATTACK = TYPE_PROC_REF(/datum/component/experiment_handler, try_run_handheld_experiment),
 		COMSIG_ITEM_AFTERATTACK = TYPE_PROC_REF(/datum/component/experiment_handler, ignored_handheld_experiment_attempt),
@@ -36,7 +35,7 @@
 	user.forceMove(src)
 	user.AddComponent(/datum/component/itembound, src) //basically a bread smite but with a bloody finale
 	icon_state = "experiscanner_closed"
-	add_atom_colour("#FF0000", ADMIN_COLOUR_PRIORITY)
+	add_atom_colour(COLOR_RED, ADMIN_COLOUR_PRIORITY)
 
 	playsound(src, 'sound/effects/pope_entry.ogg', 60, TRUE)
 	playsound(src, 'sound/machines/destructive_scanner/ScanDangerous.ogg', 40)
@@ -57,7 +56,7 @@
 	result_toilet.buildstacktype = /obj/effect/decal/remains/human //this also prevents the toilet from dropping meat sheets. if you want to cheese the meat exepriments, sacrifice more people
 
 	icon_state = "experiscanner"
-	remove_atom_colour(ADMIN_COLOUR_PRIORITY, "#FF0000")
+	remove_atom_colour(ADMIN_COLOUR_PRIORITY, COLOR_RED)
 
 	user.gib(DROP_BRAIN) //we delete everything but the brain, as it's going to be moved to the cistern
 	toilet_brain.forceMove(result_toilet)

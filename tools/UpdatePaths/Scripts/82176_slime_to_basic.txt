@@ -1,0 +1,2 @@
+/mob/living/simple_animal/slime{rabid=1;slime_type=/datum/slime_type/bluespace} : /mob/living/basic/slime/hilbert{@OLD;rabid=@SKIP;slime_type=@SKIP}
+/mob/living/simple_animal/slime/@SUBTYPES : /mob/living/basic/slime/@SUBTYPES{@OLD}

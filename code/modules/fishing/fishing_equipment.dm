@@ -15,7 +15,7 @@
 	///A list of traits that this fishing line has, checked by fish traits and the minigame.
 	var/list/fishing_line_traits
 	/// Color of the fishing line
-	var/line_color = "#808080"
+	var/line_color = COLOR_GRAY
 
 /obj/item/fishing_line/reinforced
 	name = "reinforced fishing line reel"
@@ -303,6 +303,13 @@
 	new /obj/item/fishing_line/bouncy(src)
 	new /obj/item/fishing_line/reinforced(src)
 	new /obj/item/fishing_line/cloaked(src)
+
+/obj/item/storage/box/fish_debug
+	name = "box full of fish"
+
+/obj/item/storage/box/fish_debug/PopulateContents()
+	for(var/fish_type in subtypesof(/obj/item/fish))
+		new fish_type(src)
 
 #undef MAGNET_HOOK_BONUS_MULTIPLIER
 #undef RESCUE_HOOK_FISH_MULTIPLIER

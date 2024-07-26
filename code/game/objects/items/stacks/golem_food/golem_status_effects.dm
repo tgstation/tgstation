@@ -3,6 +3,7 @@
 	id = "golem_status"
 	duration = 5 MINUTES
 	alert_type = /atom/movable/screen/alert/status_effect/golem_status
+	show_duration = TRUE
 	/// Icon state prefix for overlay to display on golem limbs
 	var/overlay_state_prefix
 	/// Name of the mineral we ate to get this
@@ -160,6 +161,11 @@
 	owner.remove_traits(list(TRAIT_ANTIMAGIC, TRAIT_HOLY), TRAIT_STATUS_EFFECT(id))
 	return ..()
 
+/// What do we multiply our damage by to convert it into power?
+#define ENERGY_PER_DAMAGE (0.005 * STANDARD_CELL_CHARGE)
+/// Multiplier to apply to burn damage, not 0 so that we can reverse it more easily
+#define BURN_MULTIPLIER 0.05
+
 /// Heat immunity, turns heat damage into local power
 /datum/status_effect/golem/plasma
 	overlay_state_prefix = "plasma"
@@ -167,10 +173,6 @@
 	applied_fluff = "Plasma cooling rods sprout from your body. You can take the heat!"
 	alert_icon_state = "sheet-plasma"
 	alert_desc = "You are protected from high pressure and can convert heat damage into power."
-	/// What do we multiply our damage by to convert it into power?
-	var/power_multiplier = 5
-	/// Multiplier to apply to burn damage, not 0 so that we can reverse it more easily
-	var/burn_multiplier = 0.05
 
 /datum/status_effect/golem/plasma/on_apply()
 	. = ..()
@@ -179,14 +181,14 @@
 	owner.add_traits(list(TRAIT_RESISTHIGHPRESSURE, TRAIT_RESISTHEAT, TRAIT_ASHSTORM_IMMUNE), TRAIT_STATUS_EFFECT(id))
 	RegisterSignal(owner, COMSIG_MOB_APPLY_DAMAGE, PROC_REF(on_burned))
 	var/mob/living/carbon/human/human_owner = owner
-	human_owner.physiology.burn_mod *= burn_multiplier
+	human_owner.physiology.burn_mod *= BURN_MULTIPLIER
 	return TRUE
 
 /datum/status_effect/golem/plasma/on_remove()
 	owner.remove_traits(list(TRAIT_RESISTHIGHPRESSURE, TRAIT_RESISTHEAT, TRAIT_ASHSTORM_IMMUNE), TRAIT_STATUS_EFFECT(id))
 	UnregisterSignal(owner, COMSIG_MOB_APPLY_DAMAGE)
 	var/mob/living/carbon/human/human_owner = owner
-	human_owner.physiology.burn_mod /= burn_multiplier
+	human_owner.physiology.burn_mod /= BURN_MULTIPLIER
 	return ..()
 
 /// When we take fire damage (or... technically also cold damage, we don't differentiate), zap a nearby APC
@@ -195,7 +197,6 @@
 	if(damagetype != BURN)
 		return
 
-	var/power = damage * power_multiplier
 	var/obj/machinery/power/energy_accumulator/ground = get_closest_atom(/obj/machinery/power/energy_accumulator, view(4, owner), owner)
 	if (ground)
 		zap_effect(ground)
@@ -206,7 +207,10 @@
 	if (!our_apc)
 		return
 	zap_effect(our_apc)
-	our_apc.cell?.give(power)
+	our_apc.cell?.give(damage * ENERGY_PER_DAMAGE)
+
+#undef ENERGY_PER_DAMAGE
+#undef BURN_MULTIPLIER
 
 /// Shoot a beam at the target atom
 /datum/status_effect/golem/plasma/proc/zap_effect(atom/target)
@@ -291,7 +295,7 @@
 
 /// Make our arm do slashing effects
 /datum/status_effect/golem/diamond/proc/set_arm_fluff(obj/item/bodypart/arm/arm)
-	arm.unarmed_attack_verb = "slash"
+	arm.unarmed_attack_verbs = list("slash")
 	arm.grappled_attack_verb = "lacerate"
 	arm.unarmed_attack_effect = ATTACK_EFFECT_CLAW
 	arm.unarmed_attack_sound = 'sound/weapons/slash.ogg'
@@ -312,7 +316,7 @@
 /datum/status_effect/golem/diamond/proc/reset_arm_fluff(obj/item/bodypart/arm/arm)
 	if (!arm)
 		return
-	arm.unarmed_attack_verb = initial(arm.unarmed_attack_verb)
+	arm.unarmed_attack_verbs = initial(arm.unarmed_attack_verbs)
 	arm.unarmed_attack_effect = initial(arm.unarmed_attack_effect)
 	arm.unarmed_attack_sound = initial(arm.unarmed_attack_sound)
 	arm.unarmed_miss_sound = initial(arm.unarmed_miss_sound)

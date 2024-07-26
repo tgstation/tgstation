@@ -5,6 +5,7 @@
 /obj/item/modular_computer/pda/heads
 	greyscale_config = /datum/greyscale_config/tablet/head
 	greyscale_colors = "#67A364#a92323"
+	max_capacity = parent_type::max_capacity * 2
 	starting_programs = list(
 		/datum/computer_file/program/crew_manifest,
 		/datum/computer_file/program/status,
@@ -97,6 +98,7 @@
 		/datum/computer_file/program/crew_manifest,
 		/datum/computer_file/program/robocontrol,
 		/datum/computer_file/program/science,
+		/datum/computer_file/program/scipaper_program,
 		/datum/computer_file/program/status,
 		/datum/computer_file/program/signal_commander,
 	)
@@ -187,6 +189,7 @@
 	starting_programs = list(
 		/datum/computer_file/program/atmosscan,
 		/datum/computer_file/program/science,
+		/datum/computer_file/program/scipaper_program,
 		/datum/computer_file/program/signal_commander,
 	)
 
@@ -228,15 +231,6 @@
 	starting_programs = list(
 		/datum/computer_file/program/records/medical,
 		/datum/computer_file/program/radar/lifeline,
-	)
-
-/obj/item/modular_computer/pda/viro
-	name = "virology PDA"
-	greyscale_config = /datum/greyscale_config/tablet/stripe_double
-	greyscale_colors = "#FAFAFA#355FAC#57C451"
-	starting_programs = list(
-		/datum/computer_file/program/records/medical,
-		/datum/computer_file/program/robocontrol,
 	)
 
 /obj/item/modular_computer/pda/chemist
@@ -348,8 +342,10 @@
 	)
 	AddComponent(/datum/component/wearertargeting/sitcomlaughter, CALLBACK(src, PROC_REF(after_sitcom_laugh)))
 
-/// Return true if our wearer is in a position to slip someone
+/// Returns whether the PDA can slip or not, if we have a wearer then check if they are in a position to slip someone.
 /obj/item/modular_computer/pda/clown/proc/try_slip(mob/living/slipper, mob/living/slippee)
+	if(isnull(slipper))
+		return TRUE
 	if(!istype(slipper.get_item_by_slot(ITEM_SLOT_FEET), /obj/item/clothing/shoes/clown_shoes))
 		to_chat(slipper,span_warning("[src] failed to slip anyone. Perhaps I shouldn't have abandoned my legacy..."))
 		return FALSE

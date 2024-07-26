@@ -28,7 +28,7 @@ SUBSYSTEM_DEF(economy)
 	  * A list of sole account datums can be obtained with flatten_list(), another variable would be redundant rn.
 	  */
 	var/list/bank_accounts_by_id = list()
-	/// A list of bank accounts indexed by their assigned job.
+	/// A list of bank accounts indexed by their assigned job typepath.
 	var/list/bank_accounts_by_job = list()
 	///List of the departmental budget cards in existance.
 	var/list/dep_cards = list()

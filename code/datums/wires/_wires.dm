@@ -41,6 +41,9 @@
 	/// If every instance of these wires should be random. Prevents wires from showing up in station blueprints.
 	var/randomize = FALSE
 
+	/// Lazy assoc list of refs to mobs to refs to photos they have studied for wires
+	var/list/studied_photos
+
 /datum/wires/New(atom/holder)
 	..()
 	if(!istype(holder, holder_type))
@@ -258,8 +261,13 @@
 		return TRUE
 
 	// Station blueprints do that too, but only if the wires are not randomized.
-	if(user.is_holding_item_of_type(/obj/item/areaeditor/blueprints) && !randomize)
-		return TRUE
+	if(!randomize)
+		if(user.is_holding_item_of_type(/obj/item/blueprints))
+			return TRUE
+		if(!isnull(user.mind))
+			for(var/obj/item/photo/photo in user.held_items)
+				if(LAZYACCESS(studied_photos, REF(user.mind)) == REF(photo))
+					return TRUE
 
 	return FALSE
 
@@ -273,6 +281,37 @@
  */
 /datum/wires/proc/always_reveal_wire(color)
 	return FALSE
+
+#define STUDY_INTERACTION_KEY "studying_photo"
+
+/**
+ * Attempts to study a photo for blueprints.
+ */
+/datum/wires/proc/try_study_photo(mob/user)
+	if(randomize)
+		return
+	if(isnull(user.mind))
+		return
+	if(DOING_INTERACTION(user, STUDY_INTERACTION_KEY))
+		return
+	if(LAZYACCESS(studied_photos, REF(user.mind)))
+		return
+	for(var/obj/item/photo/photo in user.held_items)
+		if(!photo.picture?.has_blueprints)
+			continue
+
+		var/study_length = 1 SECONDS * floor(min(photo.picture.psize_x, photo.picture.psize_y) / 32)
+		if(study_length >= 4 SECONDS)
+			to_chat(user, span_notice("<i>You squint [photo]... Hey, there's blueprints in the frame! Really wish the photo was zoomed in, though. \
+				It's rather difficult to make out the wires.</i>"))
+		else
+			to_chat(user, span_notice("<i>You glance at [photo], looking for wires in the pictured blueprints.</i>"))
+
+		if(do_after(user, study_length, holder, interaction_key = STUDY_INTERACTION_KEY, hidden = TRUE))
+			LAZYSET(studied_photos, REF(user.mind), REF(photo))
+		return
+
+#undef STUDY_INTERACTION_KEY
 
 /datum/wires/ui_host()
 	return holder
@@ -290,6 +329,7 @@
 	if (!ui)
 		ui = new(user, src, "Wires", "[holder.name] Wires")
 		ui.open()
+	try_study_photo(user)
 
 /datum/wires/ui_data(mob/user)
 	var/list/data = list()

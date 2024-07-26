@@ -43,7 +43,7 @@
 	flashing = flash
 	. = ..()
 	if(flash)
-		addtimer(CALLBACK(src, TYPE_PROC_REF(/atom/, update_icon)), 5)
+		addtimer(CALLBACK(src, TYPE_PROC_REF(/atom/, update_icon)), 0.5 SECONDS)
 	holder?.update_icon(updates)
 
 /obj/item/assembly/flash/update_overlays()

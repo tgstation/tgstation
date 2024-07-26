@@ -30,7 +30,7 @@
 	if(!relay_information(signal_copy, /obj/machinery/telecomms/hub))
 		relay_information(signal_copy, /obj/machinery/telecomms/bus)
 
-	use_power(idle_power_usage)
+	use_energy(idle_power_usage)
 
 /**
  * Checks whether the signal can be received by this receiver or not, based on

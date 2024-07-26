@@ -2,9 +2,9 @@
 /obj/effect/anomaly/dimensional
 	name = "dimensional anomaly"
 	icon_state = "dimensional"
-	aSignal = /obj/item/assembly/signaler/anomaly/dimensional
+	anomaly_core = /obj/item/assembly/signaler/anomaly/dimensional
 	immortal = TRUE
-	immobile = TRUE
+	move_chance = 0
 	/// Range of effect, if left alone anomaly will convert a 2(range)+1 squared area.
 	var/range = 3
 	/// List of turfs this anomaly will try to transform before relocating

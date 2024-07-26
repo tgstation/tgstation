@@ -147,9 +147,9 @@
 	for(var/datum/stock_part/micro_laser/laser in component_parts)
 		cms_coefficient /= laser.tier
 
-/obj/machinery/chem_mass_spec/item_interaction(mob/living/user, obj/item/item, list/modifiers, is_right_clicking)
+/obj/machinery/chem_mass_spec/item_interaction(mob/living/user, obj/item/item, list/modifiers)
 	if((item.item_flags & ABSTRACT) || (item.flags_1 & HOLOGRAM_1) || !can_interact(user) || !user.can_perform_action(src, FORBID_TELEKINESIS_REACH))
-		return ..()
+		return NONE
 
 	if(is_reagent_container(item) && item.is_open_container())
 		if(processing_reagents)
@@ -160,13 +160,14 @@
 		if(!user.transferItemToLoc(beaker, src))
 			return ITEM_INTERACT_BLOCKING
 
+		var/is_right_clicking = LAZYACCESS(modifiers, RIGHT_CLICK)
 		replace_beaker(user, !is_right_clicking, beaker)
 		to_chat(user, span_notice("You add [beaker] to [is_right_clicking ? "output" : "input"] slot."))
 		update_appearance()
 		ui_interact(user)
 		return ITEM_INTERACT_SUCCESS
 
-	return ..()
+	return NONE
 
 /obj/machinery/chem_mass_spec/wrench_act(mob/living/user, obj/item/tool)
 	. = ITEM_INTERACT_BLOCKING
@@ -240,11 +241,11 @@
 		lower_mass_range = calculate_mass(smallest = TRUE)
 		upper_mass_range = calculate_mass(smallest = FALSE)
 		estimate_time()
-
 	else //replace output beaker
 		if(!QDELETED(beaker2))
 			try_put_in_hand(beaker2, user)
 		beaker2 = new_beaker
+		log.Cut()
 
 	update_appearance()
 
@@ -257,8 +258,8 @@
 		return
 
 	for(var/datum/reagent/reagent as anything in beaker1.reagents.reagent_list)
-		//we don't bother about impure chems
-		if(istype(reagent, /datum/reagent/inverse) || (reagent.inverse_chem_val > reagent.purity && reagent.inverse_chem))
+		//we don't deal chems that are so impure that they are about to become inverted
+		if(reagent.inverse_chem_val > reagent.purity && reagent.inverse_chem)
 			continue
 		//out of our selected range
 		if(reagent.mass < lower_mass_range || reagent.mass > upper_mass_range)
@@ -299,10 +300,7 @@
 			var/purity = target.purity
 			var/is_inverse = FALSE
 
-			if(istype(reagent, /datum/reagent/inverse))
-				log = "Too impure to use" //we don't bother about impure chems
-				is_inverse = TRUE
-			else if(reagent.inverse_chem_val > reagent.purity && reagent.inverse_chem)
+			if(reagent.inverse_chem_val > reagent.purity && reagent.inverse_chem)
 				purity = target.get_inverse_purity()
 				target = GLOB.chemical_reagents_list[reagent.inverse_chem]
 				log = "Too impure to use" //we don't bother about impure chems
@@ -351,12 +349,8 @@
 
 /obj/machinery/chem_mass_spec/ui_act(action, params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
-	if(.)
+	if(. || processing_reagents)
 		return
-
-	if(processing_reagents)
-		balloon_alert(ui.user, "still processing")
-		return ..()
 
 	switch(action)
 		if("activate")
@@ -433,32 +427,25 @@
 			replace_beaker(ui.user, FALSE)
 			return TRUE
 
-/obj/machinery/chem_mass_spec/AltClick(mob/living/user)
-	. = ..()
-	if(!can_interact(user))
-		return
+/obj/machinery/chem_mass_spec/click_alt(mob/living/user)
 	if(processing_reagents)
 		balloon_alert(user, "still processing!")
-		return ..()
+		return CLICK_ACTION_BLOCKING
 	replace_beaker(user, TRUE)
+	return CLICK_ACTION_SUCCESS
 
-/obj/machinery/chem_mass_spec/alt_click_secondary(mob/living/user)
-	. = ..()
-	if(!can_interact(user))
-		return
+/obj/machinery/chem_mass_spec/click_alt_secondary(mob/living/user)
 	if(processing_reagents)
 		balloon_alert(user, "still processing!")
-		return ..()
+		return
 	replace_beaker(user, FALSE)
 
 /obj/machinery/chem_mass_spec/process(seconds_per_tick)
 	if(!processing_reagents)
 		return PROCESS_KILL
 
-	if(!is_operational || panel_open || !anchored || (machine_stat & (BROKEN | NOPOWER)))
+	if(!is_operational || panel_open || !anchored)
 		return
-
-	use_power(active_power_usage)
 
 	progress_time += seconds_per_tick
 	if(progress_time >= delay_time)
@@ -467,8 +454,8 @@
 
 		log.Cut()
 		for(var/datum/reagent/reagent as anything in beaker1.reagents.reagent_list)
-			//we don't bother about impure chems
-			if(istype(reagent, /datum/reagent/inverse) || (reagent.inverse_chem_val > reagent.purity && reagent.inverse_chem))
+			//we don't deal chems that are so impure that they are about to become inverted
+			if(reagent.inverse_chem_val > reagent.purity && reagent.inverse_chem)
 				continue
 			//out of our selected range
 			if(reagent.mass < lower_mass_range || reagent.mass > upper_mass_range)
@@ -489,3 +476,5 @@
 		estimate_time()
 		update_appearance()
 		return PROCESS_KILL
+
+	use_energy(active_power_usage * seconds_per_tick)

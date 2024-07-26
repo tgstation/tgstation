@@ -36,7 +36,7 @@ GLOBAL_DATUM(highlander_controller, /datum/highlander_controller)
 			robot.gib()
 			continue
 		robot.make_scottish()
-	addtimer(CALLBACK(SSshuttle.emergency, TYPE_PROC_REF(/obj/docking_port/mobile/emergency, request), null, 1), 50)
+	addtimer(CALLBACK(SSshuttle.emergency, TYPE_PROC_REF(/obj/docking_port/mobile/emergency, request), null, 1), 5 SECONDS)
 
 /datum/highlander_controller/Destroy(force)
 	. = ..()

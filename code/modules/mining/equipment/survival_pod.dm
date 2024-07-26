@@ -214,8 +214,6 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/door/window/survival_pod/left, 0)
 
 /obj/item/gps/computer/wrench_act(mob/living/user, obj/item/I)
 	..()
-	if(obj_flags & NO_DECONSTRUCTION)
-		return TRUE
 
 	user.visible_message(span_warning("[user] disassembles [src]."),
 		span_notice("You start to disassemble [src]..."), span_hear("You hear clanking and banging noises."))
@@ -251,7 +249,18 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/door/window/survival_pod/left, 0)
 	light_color = COLOR_VERY_PALE_LIME_GREEN
 	max_n_of_items = 10
 	pixel_y = -4
-	obj_flags = parent_type::obj_flags | NO_DECONSTRUCTION
+
+/obj/machinery/smartfridge/survival_pod/welder_act(mob/living/user, obj/item/tool)
+	return NONE
+
+/obj/machinery/smartfridge/survival_pod/wrench_act(mob/living/user, obj/item/tool)
+	return NONE
+
+/obj/machinery/smartfridge/survival_pod/screwdriver_act(mob/living/user, obj/item/tool)
+	return NONE
+
+/obj/machinery/smartfridge/survival_pod/crowbar_act(mob/living/user, obj/item/tool)
+	return NONE
 
 /obj/machinery/smartfridge/survival_pod/Initialize(mapload)
 	AddElement(/datum/element/update_icon_blocker)

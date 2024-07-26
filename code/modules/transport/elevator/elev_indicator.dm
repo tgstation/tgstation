@@ -36,11 +36,7 @@
 	/// The elevator's current floor relative to its lowest floor being 1
 	var/current_lift_floor = 1
 
-/obj/machinery/lift_indicator/Initialize(mapload)
-	. = ..()
-	return INITIALIZE_HINT_LATELOAD
-
-/obj/machinery/lift_indicator/LateInitialize()
+/obj/machinery/lift_indicator/post_machine_initialize()
 	. = ..()
 
 	for(var/datum/transport_controller/linear/possible_match as anything in SStransport.transports_by_type[TRANSPORT_TYPE_ELEVATOR])
@@ -109,7 +105,7 @@
 		set_lift_state(0, 0, force = !is_operational)
 		return PROCESS_KILL
 
-	use_power(active_power_usage)
+	use_energy(active_power_usage)
 
 	var/obj/structure/transport/linear/lift_part = lift.transport_modules[1]
 

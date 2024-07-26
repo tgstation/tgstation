@@ -4,7 +4,7 @@
 	max_slots = 30
 	allow_big_nesting = TRUE
 
-/datum/storage/bag_of_holding/attempt_insert(obj/item/to_insert, mob/user, override, force)
+/datum/storage/bag_of_holding/attempt_insert(obj/item/to_insert, mob/user, override, force, messages)
 	var/list/obj/item/storage/backpack/holding/matching = typecache_filter_list(to_insert.get_all_contents(), typecacheof(/obj/item/storage/backpack/holding))
 	matching -= parent
 	matching -= real_location
@@ -32,13 +32,13 @@
 		span_userdanger("The Bluespace interfaces of the two devices catastrophically malfunction!"),
 		span_danger("The Bluespace interfaces of the two devices catastrophically malfunction!"),
 	)
-	playsound(rift_loc, 'sound/effects/supermatter.ogg', 200, TRUE)
 
 	message_admins("[ADMIN_LOOKUPFLW(user)] detonated a bag of holding at [ADMIN_VERBOSEJMP(rift_loc)].")
 	user.log_message("detonated a bag of holding at [loc_name(rift_loc)].", LOG_ATTACK, color = "red")
 
 	user.investigate_log("has been gibbed by a bag of holding recursive insertion.", INVESTIGATE_DEATHS)
 	user.gib()
-	new /obj/boh_tear(rift_loc)
+	var/obj/reality_tear/tear = new(rift_loc)
+	tear.start_disaster()
 	qdel(to_insert)
 	qdel(parent)

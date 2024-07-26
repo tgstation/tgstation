@@ -2,7 +2,7 @@
 /mob/living/carbon/human/proc/set_service_style()
 	var/static/list/approved_hair_colors = list(
 		"#4B3D28",
-		"#000000",
+		COLOR_BLACK,
 		"#8D4A43",
 		"#D2B48C",
 	)

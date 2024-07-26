@@ -54,7 +54,7 @@
 	var/obj/item/circuitboard/computer/tram_controls/my_circuit = circuit
 	split_mode = my_circuit.split_mode
 
-/obj/machinery/computer/tram_controls/LateInitialize()
+/obj/machinery/computer/tram_controls/post_machine_initialize()
 	. = ..()
 	if(!id_tag)
 		id_tag = assign_random_name()

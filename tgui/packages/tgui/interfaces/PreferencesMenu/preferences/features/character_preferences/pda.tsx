@@ -1,9 +1,5 @@
-import {
-  Feature,
-  FeatureChoiced,
-  FeatureDropdownInput,
-  FeatureShortTextInput,
-} from '../base';
+import { Feature, FeatureChoiced, FeatureShortTextInput } from '../base';
+import { FeatureDropdownInput } from '../dropdowns';
 
 export const pda_theme: FeatureChoiced = {
   name: 'PDA Theme',

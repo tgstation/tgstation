@@ -5,7 +5,7 @@
 #define BOULDER_SIZE_MEDIUM 10
 /// Durability of a small size boulder from a small size vent.
 #define BOULDER_SIZE_SMALL 5
-/// How many boulders can a single ore vent have on it's tile before it stops producing more?
+/// How many boulders can a single ore vent have on its tile before it stops producing more?
 #define MAX_BOULDERS_PER_VENT 10
 /// Time multiplier
 #define INATE_BOULDER_SPEED_MULTIPLIER 3
@@ -38,6 +38,17 @@
 #define VENT_CHANCE_LOW 5
 /// The chance of ore spawning in a wall that is VENT_PROX_FAR tiles to a vent.
 #define VENT_CHANCE_FAR 1
+
+/// The amount of ore that is mined from a wall that is VENT_PROX_VERY_HIGH tiles to a vent.
+#define ORE_WALL_VERY_HIGH 5
+/// The amount of ore that is mined from a wall that is VENT_PROX_HIGH tiles to a vent.
+#define ORE_WALL_HIGH 4
+/// The amount of ore that is mined from a wall that is VENT_PROX_MEDIUM tiles to a vent.
+#define ORE_WALL_MEDIUM 3
+/// The amount of ore that is mined from a wall that is VENT_PROX_LOW tiles to a vent.
+#define ORE_WALL_LOW 2
+/// The amount of ore that is mined from a wall that is VENT_PROX_FAR tiles to a vent.
+#define ORE_WALL_FAR 1
 
 /// The number of points a miner gets for discovering a vent, multiplied by BOULDER_SIZE when completing a wave defense minus the discovery bonus.
 #define MINER_POINT_MULTIPLIER 100

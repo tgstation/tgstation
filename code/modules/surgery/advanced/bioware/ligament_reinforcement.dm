@@ -9,18 +9,32 @@
 		/datum/surgery_step/clamp_bleeders,
 		/datum/surgery_step/incise,
 		/datum/surgery_step/incise,
-		/datum/surgery_step/reinforce_ligaments,
+		/datum/surgery_step/apply_bioware/reinforce_ligaments,
 		/datum/surgery_step/close,
 	)
 
-	bioware_target = BIOWARE_LIGAMENTS
+	status_effect_gained = /datum/status_effect/bioware/ligaments/reinforced
 
-/datum/surgery_step/reinforce_ligaments
+/datum/surgery/advanced/bioware/ligament_reinforcement/mechanic
+	name = "Anchor Point Reinforcement"
+	desc = "A surgical procedure which adds reinforced limb anchor points to the patient's chassis, preventing dismemberment. \
+		However, the nerve connections as a result are more easily interrupted, making it easier to disable limbs with damage."
+	requires_bodypart_type = BODYTYPE_ROBOTIC
+	steps = list(
+		/datum/surgery_step/mechanic_open,
+		/datum/surgery_step/open_hatch,
+		/datum/surgery_step/mechanic_unwrench,
+		/datum/surgery_step/prepare_electronics,
+		/datum/surgery_step/prepare_electronics,
+		/datum/surgery_step/apply_bioware/reinforce_ligaments,
+		/datum/surgery_step/mechanic_wrench,
+		/datum/surgery_step/mechanic_close,
+	)
+
+/datum/surgery_step/apply_bioware/reinforce_ligaments
 	name = "reinforce ligaments (hand)"
-	accept_hand = TRUE
-	time = 125
 
-/datum/surgery_step/reinforce_ligaments/preop(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
+/datum/surgery_step/apply_bioware/reinforce_ligaments/preop(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
 	display_results(
 		user,
 		target,
@@ -30,7 +44,11 @@
 	)
 	display_pain(target, "Your limbs burn with severe pain!")
 
-/datum/surgery_step/reinforce_ligaments/success(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery, default_display_results = FALSE)
+/datum/surgery_step/apply_bioware/reinforce_ligaments/success(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery, default_display_results = FALSE)
+	. = ..()
+	if(!.)
+		return
+
 	display_results(
 		user,
 		target,
@@ -39,18 +57,3 @@
 		span_notice("[user] finishes manipulating [target]'s ligaments."),
 	)
 	display_pain(target, "Your limbs feel more secure, but also more frail.")
-	new /datum/bioware/reinforced_ligaments(target)
-	return ..()
-
-/datum/bioware/reinforced_ligaments
-	name = "Reinforced Ligaments"
-	desc = "The ligaments and nerve endings that connect the torso to the limbs are protected by a mix of bone and tissues, and are much harder to separate from the body, but are also easier to wound."
-	mod_type = BIOWARE_LIGAMENTS
-
-/datum/bioware/reinforced_ligaments/on_gain()
-	..()
-	owner.add_traits(list(TRAIT_NODISMEMBER, TRAIT_EASILY_WOUNDED), EXPERIMENTAL_SURGERY_TRAIT)
-
-/datum/bioware/reinforced_ligaments/on_lose()
-	..()
-	owner.remove_traits(list(TRAIT_NODISMEMBER, TRAIT_EASILY_WOUNDED), EXPERIMENTAL_SURGERY_TRAIT)

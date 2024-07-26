@@ -1,5 +1,5 @@
 /obj/machinery/modular_shield_generator
-	name = "Modular Shield Generator"
+	name = "modular shield generator"
 	desc = "A forcefield generator, it seems more stationary than its cousins. It cant handle G-force and will require frequent reboots when built on mobile craft."
 	icon = 'icons/obj/machines/modular_shield_generator.dmi'
 	icon_state = "gen_recovering_closed"
@@ -382,7 +382,7 @@
 ///The general code used for machines that want to connect to the network
 /obj/machinery/modular_shield/module
 
-	name = "Modular Shield Debugger" //Filler name and sprite for testing
+	name = "modular shield debugger" //Filler name and sprite for testing
 	desc = "This is filler for testing you shouldn`t see this."
 	icon = 'icons/obj/machines/mech_bay.dmi'
 	icon_state = "recharge_port"
@@ -506,7 +506,7 @@
 
 /obj/machinery/modular_shield/module/node
 
-	name = "Modular Shield Node"
+	name = "modular shield node"
 	desc = "A waist high mess of humming pipes and wires that extend the modular shield network."
 	icon = 'icons/obj/machines/modular_shield_generator.dmi'
 	icon_state = "node_off_closed"
@@ -587,7 +587,7 @@
 
 /obj/machinery/modular_shield/module/charger
 
-	name = "Modular Shield Charger"
+	name = "modular shield charger"
 	desc = "A machine that somehow fabricates hardlight using electrons."
 	icon = 'icons/obj/machines/modular_shield_generator.dmi'
 	icon_state = "charger_off_closed"
@@ -615,7 +615,7 @@
 
 /obj/machinery/modular_shield/module/relay
 
-	name = "Modular Shield Relay"
+	name = "modular shield relay"
 	desc = "It helps the shield generator project farther out."
 	icon = 'icons/obj/machines/modular_shield_generator.dmi'
 	icon_state = "relay_off_closed"
@@ -643,7 +643,7 @@
 
 /obj/machinery/modular_shield/module/well
 
-	name = "Modular Shield Well"
+	name = "modular shield well"
 	desc = "A device used to hold more hardlight for the modular shield generator."
 	icon = 'icons/obj/machines/modular_shield_generator.dmi'
 	icon_state = "well_off_closed"
@@ -672,12 +672,13 @@
 
 //The shield itself
 /obj/structure/emergency_shield/modular
-	name = "Modular energy shield"
+	name = "modular energy shield"
 	desc = "An energy shield with varying configurations."
 	color = "#00ffff"
 	density = FALSE
 	alpha = 100
 	resistance_flags = INDESTRUCTIBLE //the shield itself is indestructible or atleast should be
+	no_damage_feedback = "weakening the generator sustaining it"
 
 	///The shield generator sustaining us
 	var/obj/machinery/modular_shield_generator/shield_generator

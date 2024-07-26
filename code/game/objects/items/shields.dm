@@ -99,6 +99,24 @@
 	max_integrity = 55
 	w_class = WEIGHT_CLASS_NORMAL
 
+/obj/item/shield/buckler/moonflower
+	name = "moonflower buckler"
+	desc = "A buckler made from a steel-cap reinforced moonflower."
+	icon_state = "moonflower_buckler"
+	inhand_icon_state = "moonflower_buckler"
+	block_chance = 40
+	max_integrity = 40
+	w_class = WEIGHT_CLASS_NORMAL
+
+/obj/item/shield/kite
+	name = "kite shield"
+	desc = "Protect your internal organs with this almond shaped shield."
+	icon_state = "kite"
+	inhand_icon_state = "kite"
+	custom_materials = list(/datum/material/wood = SHEET_MATERIAL_AMOUNT * 15)
+	shield_break_sound = 'sound/effects/grillehit.ogg'
+	max_integrity = 60
+
 /obj/item/shield/roman
 	name = "\improper Roman shield"
 	desc = "Bears an inscription on the inside: <i>\"Romanes venio domus\"</i>."
@@ -136,8 +154,8 @@
 	. = ..()
 	var/static/list/slapcraft_recipe_list = list(/datum/crafting_recipe/strobeshield)
 
-	AddComponent(
-		/datum/component/slapcrafting,\
+	AddElement(
+		/datum/element/slapcrafting,\
 		slapcraft_recipes = slapcraft_recipe_list,\
 	)
 
@@ -231,7 +249,7 @@
 			return
 		else
 			to_chat(user, span_notice("You begin to replace the bulb..."))
-			if(do_after(user, 20, target = user))
+			if(do_after(user, 2 SECONDS, target = user))
 				if(QDELETED(flash) || flash.burnt_out)
 					return
 				playsound(src, 'sound/items/deconstruct.ogg', 50, TRUE)

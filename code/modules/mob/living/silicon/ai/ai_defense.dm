@@ -2,6 +2,7 @@
 /mob/living/silicon/ai/attackby(obj/item/W, mob/user, params)
 	if(istype(W, /obj/item/ai_module))
 		var/obj/item/ai_module/MOD = W
+		disconnect_shell()
 		if(!mind) //A player mind is required for law procs to run antag checks.
 			to_chat(user, span_warning("[src] is entirely unresponsive!"))
 			return
@@ -63,6 +64,10 @@
 	. = ..()
 	if(user.combat_mode)
 		return
+	if(stat != DEAD && !incapacitated() && (client || deployed_shell?.client))
+		// alive and well AIs control their floor bolts
+		balloon_alert(user, "the AI's bolt motors resist.")
+		return ITEM_INTERACT_SUCCESS
 	balloon_alert(user, "[!is_anchored ? "tightening" : "loosening"] bolts...")
 	balloon_alert(src, "bolts being [!is_anchored ? "tightened" : "loosened"]...")
 	if(!tool.use_tool(src, user, 4 SECONDS))
@@ -137,7 +142,7 @@
 		return ITEM_INTERACT_SUCCESS
 	balloon_alert(src, "neural network being disconnected...")
 	balloon_alert(user, "disconnecting neural network...")
-	if(!tool.use_tool(src, user, (stat == DEAD ? 40 SECONDS : 5 SECONDS)))
+	if(!tool.use_tool(src, user, (stat == DEAD ? 5 SECONDS : 40 SECONDS)))
 		return ITEM_INTERACT_SUCCESS
 	if(IS_MALF_AI(src))
 		to_chat(user, span_userdanger("The voltage inside the wires rises dramatically!"))

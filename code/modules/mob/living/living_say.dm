@@ -115,18 +115,18 @@ GLOBAL_LIST_INIT(message_modes_stat_limits, list(
 	var/original_message = message
 	message = get_message_mods(message, message_mods)
 	saymode = SSradio.saymodes[message_mods[RADIO_KEY]]
-	if (!forced)
+	if (!forced && !saymode)
 		message = check_for_custom_say_emote(message, message_mods)
 
 	if(!message)
 		return
 
 	if(message_mods[RADIO_EXTENSION] == MODE_ADMIN)
-		client?.cmd_admin_say(message)
+		SSadmin_verbs.dynamic_invoke_verb(client, /datum/admin_verb/cmd_admin_say, message)
 		return
 
 	if(message_mods[RADIO_EXTENSION] == MODE_DEADMIN)
-		client?.dsay(message)
+		SSadmin_verbs.dynamic_invoke_verb(client, /datum/admin_verb/dsay, message)
 		return
 
 	// dead is the only state you can never emote
@@ -208,9 +208,9 @@ GLOBAL_LIST_INIT(message_modes_stat_limits, list(
 
 	spans |= speech_span
 
-	if(language)
-		var/datum/language/L = GLOB.language_datum_instances[language]
-		spans |= L.spans
+	var/datum/language/spoken_lang = GLOB.language_datum_instances[language]
+	if(LAZYLEN(spoken_lang?.spans))
+		spans |= spoken_lang.spans
 
 	if(message_mods[MODE_SING])
 		var/randomnote = pick("\u2669", "\u266A", "\u266B")
@@ -401,27 +401,13 @@ GLOBAL_LIST_INIT(message_modes_stat_limits, list(
 
 		var/list/filter = list()
 		var/list/special_filter = list()
-		var/voice_to_use = voice
-		var/use_radio = FALSE
 		if(length(voice_filter) > 0)
 			filter += voice_filter
 
 		if(length(tts_filter) > 0)
 			filter += tts_filter.Join(",")
-		if(ishuman(src))
-			var/mob/living/carbon/human/human_speaker = src
-			if(istype(human_speaker.wear_mask, /obj/item/clothing/mask))
-				var/obj/item/clothing/mask/worn_mask = human_speaker.wear_mask
-				if(!worn_mask.mask_adjusted)
-					if(worn_mask.voice_override)
-						voice_to_use = worn_mask.voice_override
-					if(worn_mask.voice_filter)
-						filter += worn_mask.voice_filter
-					use_radio = worn_mask.use_radio_beeps_tts
-		if(use_radio)
-			special_filter += TTS_FILTER_RADIO
-		if(issilicon(src))
-			special_filter += TTS_FILTER_SILICON
+
+		var/voice_to_use = get_tts_voice(filter, special_filter)
 
 		INVOKE_ASYNC(SStts, TYPE_PROC_REF(/datum/controller/subsystem/tts, queue_tts_message), src, html_decode(tts_message_to_use), message_language, voice_to_use, filter.Join(","), listened, message_range = message_range, pitch = pitch, special_filters = special_filter.Join("|"))
 
@@ -431,6 +417,22 @@ GLOBAL_LIST_INIT(message_modes_stat_limits, list(
 	INVOKE_ASYNC(GLOBAL_PROC, GLOBAL_PROC_REF(flick_overlay_global), say_popup, speech_bubble_recipients, 3 SECONDS)
 	LAZYADD(update_on_z, say_popup)
 	addtimer(CALLBACK(src, PROC_REF(clear_saypopup), say_popup), 3.5 SECONDS)
+
+/mob/living/proc/get_tts_voice(list/filter, list/special_filter)
+	. = voice
+	var/obj/item/clothing/mask/mask = get_item_by_slot(ITEM_SLOT_MASK)
+	if(!istype(mask) || mask.up)
+		return
+	if(mask.voice_override)
+		. = mask.voice_override
+	if(mask.voice_filter)
+		filter += mask.voice_filter
+	if(mask.use_radio_beeps_tts)
+		special_filter |= TTS_FILTER_RADIO
+
+/mob/living/silicon/get_tts_voice(list/filter, list/special_filter)
+	. = ..()
+	special_filter |= TTS_FILTER_SILICON
 
 /mob/living/proc/clear_saypopup(image/say_popup)
 	LAZYREMOVE(update_on_z, say_popup)
@@ -454,11 +456,12 @@ GLOBAL_LIST_INIT(message_modes_stat_limits, list(
 		message = unintelligize(message)
 
 	tts_filter = list()
-	var/list/data = list(message, tts_message, tts_filter)
+	var/list/data = list(message, tts_message, tts_filter, capitalize_message)
 	SEND_SIGNAL(src, COMSIG_LIVING_TREAT_MESSAGE, data)
 	message = data[TREAT_MESSAGE_ARG]
 	tts_message = data[TREAT_TTS_MESSAGE_ARG]
 	tts_filter = data[TREAT_TTS_FILTER_ARG]
+	capitalize_message = data[TREAT_CAPITALIZE_MESSAGE]
 
 	if(!tts_message)
 		tts_message = message

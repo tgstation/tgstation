@@ -12,12 +12,8 @@
 	layer = MOB_LAYER
 	var/scanning = FALSE
 
-/obj/machinery/destructive_scanner/Initialize(mapload)
-	..()
-	return INITIALIZE_HINT_LATELOAD
-
 // Late load to ensure the component initialization occurs after the machines are initialized
-/obj/machinery/destructive_scanner/LateInitialize()
+/obj/machinery/destructive_scanner/post_machine_initialize()
 	. = ..()
 
 	var/static/list/destructive_signals = list(
@@ -42,7 +38,7 @@
 			return
 		aggressive = TRUE
 	start_closing(aggressive)
-	use_power(idle_power_usage)
+	use_energy(idle_power_usage)
 
 ///Closes the machine to kidnap everything in the turf into it.
 /obj/machinery/destructive_scanner/proc/start_closing(aggressive)
@@ -55,7 +51,7 @@
 	scanning = TRUE
 	update_icon()
 	playsound(src, 'sound/machines/destructive_scanner/TubeDown.ogg', 100)
-	use_power(idle_power_usage)
+	use_energy(idle_power_usage)
 	addtimer(CALLBACK(src, PROC_REF(start_scanning), aggressive), 1.2 SECONDS)
 
 ///Starts scanning the fancy scanning effects
@@ -64,7 +60,7 @@
 		playsound(src, 'sound/machines/destructive_scanner/ScanDangerous.ogg', 100, extrarange = 5)
 	else
 		playsound(src, 'sound/machines/destructive_scanner/ScanSafe.ogg', 100)
-	use_power(active_power_usage)
+	use_energy(active_power_usage)
 	addtimer(CALLBACK(src, PROC_REF(finish_scanning), aggressive), 6 SECONDS)
 
 

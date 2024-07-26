@@ -21,7 +21,7 @@
 	paycheck = null
 	paycheck_department = null
 
-	mind_traits = list(DISPLAYS_JOB_IN_BINARY)
+	mind_traits = list(TRAIT_DISPLAY_JOB_IN_BINARY)
 	liver_traits = list(TRAIT_HUMAN_AI_METABOLISM)
 
 	departments_list = list(
@@ -83,7 +83,7 @@
 /datum/job/human_ai/announce_job(mob/living/joining_mob)
 	. = ..()
 	if(SSticker.HasRoundStarted())
-		minor_announce("Due to a research mishaps, [joining_mob] has been sent to be your replacement AI at [AREACOORD(joining_mob)]. Please treat them with respect.")
+		minor_announce("Due to a research mishap, [joining_mob] has been sent to be your replacement AI at [AREACOORD(joining_mob)]. Please treat them with respect.")
 
 /datum/job/human_ai/get_radio_information()
 	return "<b>Prefix your message with :b to speak with cyborgs.</b>"
@@ -98,18 +98,13 @@
 		/obj/item/door_remote/omni = 1,
 		/obj/item/machine_remote = 1,
 		/obj/item/secure_camera_console_pod = 1,
-	)
-	implants = list(
-		/obj/item/implant/teleport_blocker,
+		/obj/item/sensor_device = 1,
 	)
 
 	uniform = /obj/item/clothing/under/rank/station_trait/human_ai
 	belt = /obj/item/modular_computer/pda/human_ai
 	ears = /obj/item/radio/headset/silicon/human_ai
 	glasses = /obj/item/clothing/glasses/hud/diagnostic
-
-	suit = /obj/item/clothing/suit/costume/cardborg
-	head = /obj/item/clothing/head/costume/cardborg
 
 	l_pocket = /obj/item/laser_pointer/infinite_range //to punish borgs, this works through the camera console.
 	r_pocket = /obj/item/assembly/flash/handheld
@@ -148,8 +143,8 @@
 	return ..()
 
 /obj/item/secure_camera_console_pod
-	name = "advanced camera control pod"
-	desc = "Calls down a secure camera console to use for all your AI stuff, may only be activated in the SAT."
+	name = "pre-packaged advanced camera control"
+	desc = "A pre-packaged camera console used for all your AI stuff, programmed to only active in the SAT."
 	icon = 'icons/obj/devices/remote.dmi'
 	icon_state = "botpad_controller"
 	inhand_icon_state = "radio"
@@ -163,9 +158,9 @@
 	if(!is_type_in_typecache(current_area, allowed_areas))
 		user.balloon_alert(user, "not in the sat!")
 		return
-	podspawn(list(
-		"target" = get_turf(src),
-		"style" = STYLE_BLUESPACE,
-		"spawn" = /obj/machinery/computer/camera_advanced,
-	))
+	user.balloon_alert(user, "unpacking...")
+	if(!do_after(user, 5 SECONDS, src))
+		return
+	playsound(src, 'sound/items/drill_use.ogg', 40, TRUE)
+	new /obj/machinery/computer/camera_advanced/human_ai(get_turf(src))
 	qdel(src)

@@ -187,7 +187,7 @@
 	tear_reality()
 	SEND_SIGNAL(src, COMSIG_GRAND_RUNE_COMPLETE, cheese_sacrificed)
 	flick("[icon_state]_activate", src)
-	addtimer(CALLBACK(src, PROC_REF(remove_rune)), 6)
+	addtimer(CALLBACK(src, PROC_REF(remove_rune)), 0.6 SECONDS)
 	SSblackbox.record_feedback("amount", "grand_runes_invoked", 1)
 
 /obj/effect/grand_rune/proc/remove_rune()

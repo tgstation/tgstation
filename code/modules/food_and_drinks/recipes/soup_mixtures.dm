@@ -564,7 +564,7 @@
 		"someone's parents" = 2,
 	)
 	glass_price = FOOD_PRICE_EXOTIC
-	color = "#FF0000"
+	color = COLOR_RED
 
 /datum/glass_style/has_foodtype/soup/clownchili
 	required_drink_type = /datum/reagent/consumable/nutriment/soup/clownchili
@@ -618,7 +618,7 @@
 	name = "Tomato Soup"
 	description = "Drinking this feels like being a vampire! A tomato vampire..."
 	data = list("tomato" = 1)
-	color = "#FF0000"
+	color = COLOR_RED
 
 /datum/glass_style/has_foodtype/soup/tomato
 	required_drink_type = /datum/reagent/consumable/nutriment/soup/tomato
@@ -1325,7 +1325,7 @@
 	name = "Corn Chowder"
 	description = "A creamy bowl of corn chowder, with bacon bits and mixed vegetables. One bowl is never enough."
 	data = list("creamy broth" = 1, "bacon" = 1, "mixed vegetables" = 1)
-	color = "#FFF200"
+	color = COLOR_CRAYON_YELLOW
 
 /datum/glass_style/has_foodtype/soup/corn_chowder
 	required_drink_type = /datum/reagent/consumable/nutriment/soup/corn_chowder
@@ -1468,6 +1468,20 @@
 		/datum/reagent/consumable/nutriment/soup/jellyfish = 30,
 		/datum/reagent/water = 5,
 	)
+
+//Fresh Jellyfish fillet soup!
+/datum/chemical_reaction/food/soup/jellyfish_stew_two
+	required_reagents = list(/datum/reagent/water = 50)
+	required_ingredients = list(
+		/obj/item/food/fishmeat/gunner_jellyfish = 1,
+		/obj/item/food/grown/soybeans = 1,
+		/obj/item/food/grown/redbeet = 1,
+		/obj/item/food/grown/potato = 1
+	)
+	results = list(
+		/datum/reagent/consumable/nutriment/soup/jellyfish = 50,
+	)
+
 
 // Rootbread Soup
 /datum/reagent/consumable/nutriment/soup/rootbread

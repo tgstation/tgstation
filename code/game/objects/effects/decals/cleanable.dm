@@ -1,5 +1,6 @@
 /obj/effect/decal/cleanable
 	gender = PLURAL
+	plane = GAME_PLANE
 	layer = FLOOR_CLEAN_LAYER
 	var/list/random_icon_states = null
 	///I'm sorry but cleanable/blood code is ass, and so is blood_DNA
@@ -84,7 +85,7 @@
 				qdel(src)
 				return
 	if(W.get_temperature()) //todo: make heating a reagent holder proc
-		if(istype(W, /obj/item/clothing/mask/cigarette))
+		if(istype(W, /obj/item/cigarette))
 			return
 		else
 			var/hotness = W.get_temperature()

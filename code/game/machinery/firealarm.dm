@@ -179,15 +179,7 @@
 				var/current_level = SSsecurity_level.get_current_level_as_number()
 				. += mutable_appearance(icon, "fire_[current_level]")
 				. += emissive_appearance(icon, "fire_level_e", src, alpha = src.alpha)
-				switch(current_level)
-					if(SEC_LEVEL_GREEN)
-						set_light(l_color = LIGHT_COLOR_BLUEGREEN)
-					if(SEC_LEVEL_BLUE)
-						set_light(l_color = LIGHT_COLOR_ELECTRIC_CYAN)
-					if(SEC_LEVEL_RED)
-						set_light(l_color = LIGHT_COLOR_FLARE)
-					if(SEC_LEVEL_DELTA)
-						set_light(l_color = LIGHT_COLOR_INTENSE_RED)
+				set_light(l_color = SSsecurity_level?.current_security_level?.fire_alarm_light_color || LIGHT_COLOR_BLUEGREEN)
 			else
 				. += mutable_appearance(icon, "fire_offstation")
 				. += emissive_appearance(icon, "fire_level_e", src, alpha = src.alpha)
@@ -394,7 +386,7 @@
 
 				else if(istype(tool, /obj/item/electroadaptive_pseudocircuit))
 					var/obj/item/electroadaptive_pseudocircuit/pseudoc = tool
-					if(!pseudoc.adapt_circuit(user, 15))
+					if(!pseudoc.adapt_circuit(user, circuit_cost = 0.015 * STANDARD_CELL_CHARGE))
 						return
 					user.visible_message(span_notice("[user] fabricates a circuit and places it into [src]."), \
 					span_notice("You adapt a fire alarm circuit and slot it into the assembly."))

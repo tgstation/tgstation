@@ -1,20 +1,75 @@
-/proc/lizard_name(gender)
-	if(gender == MALE)
-		return "[pick(GLOB.lizard_names_male)]-[pick(GLOB.lizard_names_male)]"
-	else
-		return "[pick(GLOB.lizard_names_female)]-[pick(GLOB.lizard_names_female)]"
+/**
+ * Generate a random name based off of one of the roundstart languages
+ *
+ * * gender - What gender to pick from. Picks between male, female if not provided.
+ * * unique - If the name should be unique, IE, avoid picking names that mobs already have.
+ * * list/language_weights - A list of language weights to pick from.
+ * If not provided, it will default to a list of roundstart languages, with common being the most likely.
+ */
+/proc/generate_random_name(gender, unique, list/language_weights)
+	if(isnull(language_weights))
+		language_weights = list()
+		for(var/lang_type in GLOB.uncommon_roundstart_languages)
+			language_weights[lang_type] = 1
+		language_weights[/datum/language/common] = 20
 
-/proc/ethereal_name()
-	var/tempname = "[pick(GLOB.ethereal_names)] [random_capital_letter()]"
-	if(prob(65))
-		tempname += random_capital_letter()
-	return tempname
+	var/datum/language/picked = GLOB.language_datum_instances[pick_weight(language_weights)]
+	if(unique)
+		return picked.get_random_unique_name(gender)
+	return picked.get_random_name(gender)
 
-/proc/plasmaman_name()
-	return "[pick(GLOB.plasmaman_names)] \Roman[rand(1,99)]"
+/**
+ * Generate a random name based off of a species
+ * This will pick a name from the species language, and avoid picking common if there are alternatives
+ *
+ * * gender - What gender to pick from. Picks between male, female if not provided.
+ * * unique - If the name should be unique, IE, avoid picking names that mobs already have.
+ * * datum/species/species_type - The species to pick from
+ * * include_all - Makes the generated name a mix of all the languages the species can speak rather than just one of them
+ * Does this on a per-name basis, IE "Lizard first name, uncommon last name".
+ */
+/proc/generate_random_name_species_based(gender, unique, datum/species/species_type, include_all = FALSE)
+	ASSERT(ispath(species_type, /datum/species))
+	var/datum/language_holder/holder = GLOB.prototype_language_holders[species_type::species_language_holder]
 
-/proc/moth_name()
-	return "[pick(GLOB.moth_first)] [pick(GLOB.moth_last)]"
+	var/list/languages_to_pick_from = list()
+	for(var/language in holder.spoken_languages)
+		languages_to_pick_from[language] = 1
+
+	if(length(languages_to_pick_from) >= 2)
+		// Basically, if we have alternatives, don't pick common it's boring
+		languages_to_pick_from -= /datum/language/common
+
+	if(!include_all || length(languages_to_pick_from) <= 1)
+		return generate_random_name(gender, unique, languages_to_pick_from)
+
+	var/list/name_parts = list()
+	for(var/lang_type in shuffle(languages_to_pick_from))
+		name_parts += GLOB.language_datum_instances[lang_type].get_random_name(gender, name_count = 1, force_use_syllables = TRUE)
+	return jointext(name_parts, " ")
+
+/**
+ * Generates a random name for the mob based on their gender or species (for humans)
+ *
+ * * unique - If the name should be unique, IE, avoid picking names that mobs already have.
+ */
+/mob/proc/generate_random_mob_name(unique)
+	return generate_random_name_species_based(gender, unique, /datum/species/human)
+
+/mob/living/carbon/generate_random_mob_name(unique)
+	return generate_random_name_species_based(gender, unique, dna?.species?.type || /datum/species/human)
+
+/mob/living/silicon/generate_random_mob_name(unique)
+	return generate_random_name(gender, unique, list(/datum/language/machine = 1))
+
+/mob/living/basic/drone/generate_random_mob_name(unique)
+	return generate_random_name(gender, unique, list(/datum/language/machine = 1))
+
+/mob/living/basic/bot/generate_random_mob_name(unique)
+	return generate_random_name(gender, unique, list(/datum/language/machine = 1))
+
+/mob/living/simple_animal/bot/generate_random_mob_name(unique)
+	return generate_random_name(gender, unique, list(/datum/language/machine = 1))
 
 GLOBAL_VAR(command_name)
 /proc/command_name()
@@ -194,16 +249,11 @@ GLOBAL_DATUM(syndicate_code_response_regex, /regex)
 			if(1)//1 and 2 can only be selected once each to prevent more than two specific names/places/etc.
 				switch(rand(1,2))//Mainly to add more options later.
 					if(1)
-						if(names.len && prob(70))
+						if(length(names) && prob(70))
 							. += pick(names)
 						else
-							if(prob(10))
-								. += pick(lizard_name(MALE),lizard_name(FEMALE))
-							else
-								var/new_name = pick(pick(GLOB.first_names_male,GLOB.first_names_female))
-								new_name += " "
-								new_name += pick(GLOB.last_names)
-								. += new_name
+							. += generate_random_name()
+
 					if(2)
 						var/datum/job/job = pick(SSjob.joinable_occupations)
 						if(job)
@@ -215,22 +265,22 @@ GLOBAL_DATUM(syndicate_code_response_regex, /regex)
 			if(2)
 				switch(rand(1,3))//Food, drinks, or places. Only selectable once.
 					if(1)
-						. += lowertext(pick(drinks))
+						. += LOWER_TEXT(pick(drinks))
 					if(2)
-						. += lowertext(pick(foods))
+						. += LOWER_TEXT(pick(foods))
 					if(3)
-						. += lowertext(pick(locations))
+						. += LOWER_TEXT(pick(locations))
 				safety -= 2
 			if(3)
 				switch(rand(1,4))//Abstract nouns, objects, adjectives, threats. Can be selected more than once.
 					if(1)
-						. += lowertext(pick(nouns))
+						. += LOWER_TEXT(pick(nouns))
 					if(2)
-						. += lowertext(pick(objects))
+						. += LOWER_TEXT(pick(objects))
 					if(3)
-						. += lowertext(pick(adjectives))
+						. += LOWER_TEXT(pick(adjectives))
 					if(4)
-						. += lowertext(pick(threats))
+						. += LOWER_TEXT(pick(threats))
 		if(!return_list)
 			if(words == 1)
 				. += "."

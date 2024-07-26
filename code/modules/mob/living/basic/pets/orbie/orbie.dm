@@ -13,7 +13,7 @@
 	light_range = 6
 	light_color = "#64bee1"
 	health = 100
-	habitable_atmos = list("min_oxy" = 0, "max_oxy" = 0, "min_plas" = 0, "max_plas" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
+	habitable_atmos = null
 	unsuitable_atmos_damage = 0
 	can_buckle_to = FALSE
 	density = FALSE
@@ -50,6 +50,7 @@
 	var/static/list/food_types = list(/obj/item/food/virtual_chocolate)
 	AddComponent(/datum/component/obeys_commands, pet_commands)
 	AddElement(/datum/element/basic_eating, food_types = food_types)
+	ADD_TRAIT(src, TRAIT_SILICON_EMOTES_ALLOWED, INNATE_TRAIT)
 	RegisterSignal(src, COMSIG_ATOM_CAN_BE_PULLED, PROC_REF(on_pulled))
 	RegisterSignal(src, COMSIG_VIRTUAL_PET_LEVEL_UP, PROC_REF(on_level_up))
 	RegisterSignal(src, COMSIG_MOB_CLICKON, PROC_REF(on_click))

@@ -51,9 +51,23 @@
 /// key that holds items we arent interested in hoarding
 #define BB_IGNORE_ITEMS "ignore_items"
 
+// Cultist pet keys
+///our ability to summon runes
+#define BB_RUNE_ABILITY "rune_ability"
+///the cult team we serve
+#define BB_CULT_TEAM "cult_team"
+///our dead cultist we revive
+#define BB_DEAD_CULTIST "dead_cultist"
+///nearby runes
+#define BB_NEARBY_RUNE "nearby_rune"
+///occupied runes
+#define BB_OCCUPIED_RUNE "occupied_rune"
+///friendly cultists we befriend
+#define BB_FRIENDLY_CULTIST "friendly_cultist"
+
 //virtual pet keys
 ///the last PDA message we must relay
-#define BB_LAST_RECIEVED_MESSAGE "last_recieved_message"
+#define BB_LAST_RECEIVED_MESSAGE "last_received_message"
 ///our current virtual pet level
 #define BB_VIRTUAL_PET_LEVEL "virtual_pet_level"
 ///the target we will play with

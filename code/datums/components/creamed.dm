@@ -50,9 +50,9 @@ GLOBAL_LIST_INIT(creamable, typecacheof(list(
 		carbon_parent.add_mood_event("creampie", /datum/mood_event/creampie)
 		carbon_parent.update_body_parts()
 	else if(iscorgi(parent))
-		normal_overlay = mutable_appearance('icons/effects/creampie.dmi', "creampie_corgi")
+		normal_overlay = mutable_appearance('icons/mob/effects/creampie.dmi', "creampie_corgi")
 	else if(isAI(parent))
-		normal_overlay = mutable_appearance('icons/effects/creampie.dmi', "creampie_ai")
+		normal_overlay = mutable_appearance('icons/mob/effects/creampie.dmi', "creampie_ai")
 
 	RegisterSignals(parent, list(
 		COMSIG_COMPONENT_CLEAN_ACT,

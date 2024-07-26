@@ -281,7 +281,7 @@
 	pixel_x = -9;
 	pixel_y = -4
 	},
-/obj/item/stock_parts/cell/lead{
+/obj/item/stock_parts/power_store/cell/lead{
 	pixel_y = -8;
 	pixel_x = 2
 	},
@@ -820,9 +820,7 @@
 /area/shuttle/pirate)
 "yN" = (
 /obj/effect/turf_decal/bot,
-/obj/machinery/power/smes/engineering{
-	charge = 1e+006
-	},
+/obj/machinery/power/smes/ship,
 /obj/structure/cable,
 /turf/open/floor/plating,
 /area/shuttle/pirate)
@@ -1029,16 +1027,9 @@
 /obj/structure/railing{
 	dir = 10
 	},
-/obj/machinery/shower/directional/south{
-	layer = 4
-	},
+/obj/machinery/shower/directional/south,
 /obj/effect/turf_decal/box,
-/obj/structure/fluff{
-	desc = "What, you think the water just magically soaks into the metallic flooring?";
-	icon = 'icons/obj/mining_zones/survival_pod.dmi';
-	icon_state = "fan_tiny";
-	name = "shower drain"
-	},
+/obj/structure/fluff/shower_drain,
 /turf/open/floor/iron/dark,
 /area/shuttle/pirate)
 "Dy" = (
@@ -1427,7 +1418,11 @@
 	},
 /area/shuttle/pirate)
 "LV" = (
-/obj/machinery/computer/camera_advanced/shuttle_docker/syndicate/pirate,
+/obj/machinery/computer/camera_advanced/shuttle_docker/syndicate/pirate{
+	y_offset = 11;
+	x_offset = -4;
+	view_range = 10
+	},
 /obj/effect/turf_decal/trimline/dark_blue/filled/line{
 	dir = 5
 	},

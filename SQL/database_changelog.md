@@ -2,19 +2,32 @@ Any time you make a change to the schema files, remember to increment the databa
 
 Make sure to also update `DB_MAJOR_VERSION` and `DB_MINOR_VERSION`, which can be found in `code/__DEFINES/subsystem.dm`.
 
-The latest database version is 5.26; The query to update the schema revision table is:
+The latest database version is 5.27; The query to update the schema revision table is:
 
 ```sql
-INSERT INTO `schema_revision` (`major`, `minor`) VALUES (5, 26);
+INSERT INTO `schema_revision` (`major`, `minor`) VALUES (5, 27);
 ```
 or
 
 ```sql
-INSERT INTO `SS13_schema_revision` (`major`, `minor`) VALUES (5, 26);
+INSERT INTO `SS13_schema_revision` (`major`, `minor`) VALUES (5, 27);
 ```
 
 In any query remember to add a prefix to the table names if you use one.
-
+-----------------------------------------------------
+Version 5.27, 26 April 2024, by zephyrtfa
+Add the ip intel whitelist table
+```sql
+DROP TABLE IF EXISTS `ipintel_whitelist`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `ipintel_whitelist` (
+	`ckey` varchar(32) NOT NULL,
+	`admin_ckey` varchar(32) NOT NULL,
+	PRIMARY KEY (`ckey`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+```
 -----------------------------------------------------
 Version 5.26, 03 December 2023, by distributivgesetz
 Set the default value of cloneloss to 0, as it's obsolete and it won't be set by blackbox anymore.

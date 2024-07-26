@@ -23,6 +23,8 @@
 
 /datum/action/cooldown/mob_cooldown/charge/Activate(atom/target_atom)
 	disable_cooldown_actions()
+	// No charging and meleeing (overridded by StartCooldown after charge ends)
+	next_melee_use_time = world.time + 100 SECONDS
 	charge_sequence(owner, target_atom, charge_delay, charge_past)
 	StartCooldown()
 	enable_cooldown_actions()
@@ -44,7 +46,7 @@
 
 	if(charger in charging)
 		// Stop any existing charging, this'll clean things up properly
-		SSmove_manager.stop_looping(charger)
+		GLOB.move_manager.stop_looping(charger)
 
 	charging += charger
 	actively_moving = FALSE
@@ -60,7 +62,7 @@
 
 	var/time_to_hit = min(get_dist(charger, target), charge_distance) * charge_speed
 
-	var/datum/move_loop/new_loop = SSmove_manager.home_onto(charger, target, delay = charge_speed, timeout = time_to_hit, priority = MOVEMENT_ABOVE_SPACE_PRIORITY)
+	var/datum/move_loop/new_loop = GLOB.move_manager.home_onto(charger, target, delay = charge_speed, timeout = time_to_hit, priority = MOVEMENT_ABOVE_SPACE_PRIORITY)
 	if(!new_loop)
 		return
 	RegisterSignal(new_loop, COMSIG_MOVELOOP_PREPROCESS_CHECK, PROC_REF(pre_move), override = TRUE)
@@ -96,7 +98,7 @@
 /datum/action/cooldown/mob_cooldown/charge/update_status_on_signal(mob/source, new_stat, old_stat)
 	. = ..()
 	if(new_stat == DEAD)
-		SSmove_manager.stop_looping(source) //This will cause the loop to qdel, triggering an end to our charging
+		GLOB.move_manager.stop_looping(source) //This will cause the loop to qdel, triggering an end to our charging
 
 /datum/action/cooldown/mob_cooldown/charge/proc/do_charge_indicator(atom/charger, atom/charge_target)
 	var/turf/target_turf = get_turf(charge_target)
@@ -104,7 +106,7 @@
 		return
 	new /obj/effect/temp_visual/dragon_swoop/bubblegum(target_turf)
 	var/obj/effect/temp_visual/decoy/D = new /obj/effect/temp_visual/decoy(charger.loc, charger)
-	animate(D, alpha = 0, color = "#FF0000", transform = matrix()*2, time = 3)
+	animate(D, alpha = 0, color = COLOR_RED, transform = matrix()*2, time = 3)
 
 /datum/action/cooldown/mob_cooldown/charge/proc/on_move(atom/source, atom/new_loc)
 	SIGNAL_HANDLER
@@ -225,14 +227,19 @@
 	id = "tired_post_charge"
 	duration = 1 SECONDS
 	alert_type = null
+	var/tired_movespeed = /datum/movespeed_modifier/status_effect/tired_post_charge
 
 /datum/status_effect/tired_post_charge/on_apply()
 	. = ..()
-	owner.add_movespeed_modifier(/datum/movespeed_modifier/status_effect/tired_post_charge)
+	owner.add_movespeed_modifier(tired_movespeed)
 
 /datum/status_effect/tired_post_charge/on_remove()
 	. = ..()
-	owner.remove_movespeed_modifier(/datum/movespeed_modifier/status_effect/tired_post_charge)
+	owner.remove_movespeed_modifier(tired_movespeed)
+
+/datum/status_effect/tired_post_charge/lesser
+	id = "tired_post_charge_easy"
+	tired_movespeed = /datum/movespeed_modifier/status_effect/tired_post_charge/lesser
 
 /datum/action/cooldown/mob_cooldown/charge/triple_charge
 	name = "Triple Charge"

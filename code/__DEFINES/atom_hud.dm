@@ -58,8 +58,8 @@
 #define DATA_HUD_SECURITY_ADVANCED 2
 #define DATA_HUD_MEDICAL_BASIC 3
 #define DATA_HUD_MEDICAL_ADVANCED 4
-#define DATA_HUD_DIAGNOSTIC_BASIC 5
-#define DATA_HUD_DIAGNOSTIC_ADVANCED 6
+#define DATA_HUD_DIAGNOSTIC 5
+#define DATA_HUD_BOT_PATH 6
 #define DATA_HUD_ABDUCTOR 7
 #define DATA_HUD_SENTIENT_DISEASE 8
 #define DATA_HUD_AI_DETECT 9
@@ -81,6 +81,7 @@
 #define SECHUD_ASSISTANT "hudassistant"
 #define SECHUD_ATMOSPHERIC_TECHNICIAN "hudatmospherictechnician"
 #define SECHUD_BARTENDER "hudbartender"
+#define SECHUD_BITAVATAR "hudbitavatar"
 #define SECHUD_BITRUNNER "hudbitrunner"
 #define SECHUD_BOTANIST "hudbotanist"
 #define SECHUD_BRIDGE_ASSISTANT "hudbridgeassistant"
@@ -114,7 +115,6 @@
 #define SECHUD_SHAFT_MINER "hudshaftminer"
 #define SECHUD_STATION_ENGINEER "hudstationengineer"
 #define SECHUD_VETERAN_ADVISOR "hudveteranadvisor"
-#define SECHUD_VIROLOGIST "hudvirologist"
 #define SECHUD_WARDEN "hudwarden"
 
 #define SECHUD_CHEF "hudchef"

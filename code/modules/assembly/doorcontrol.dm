@@ -32,7 +32,7 @@
 			if(openclose == null || !sync_doors)
 				openclose = M.density
 			INVOKE_ASYNC(M, openclose ? TYPE_PROC_REF(/obj/machinery/door/poddoor, open) : TYPE_PROC_REF(/obj/machinery/door/poddoor, close))
-	addtimer(VARSET_CALLBACK(src, cooldown, FALSE), 10)
+	addtimer(VARSET_CALLBACK(src, cooldown, FALSE), 1 SECONDS)
 
 /obj/item/assembly/control/curtain
 	name = "curtain controller"
@@ -53,7 +53,7 @@
 			if(openclose == null || !sync_doors)
 				openclose = M.density
 			INVOKE_ASYNC(M, openclose ? TYPE_PROC_REF(/obj/structure/curtain/cloth/fancy/mechanical, open) : TYPE_PROC_REF(/obj/structure/curtain/cloth/fancy/mechanical, close))
-	addtimer(VARSET_CALLBACK(src, cooldown, FALSE), 5)
+	addtimer(VARSET_CALLBACK(src, cooldown, FALSE), 0.5 SECONDS)
 
 
 /obj/item/assembly/control/airlock
@@ -101,7 +101,7 @@
 	for(var/D in open_or_close)
 		INVOKE_ASYNC(D,  doors_need_closing ? TYPE_PROC_REF(/obj/machinery/door/airlock, close) : TYPE_PROC_REF(/obj/machinery/door/airlock, open))
 
-	addtimer(VARSET_CALLBACK(src, cooldown, FALSE), 10)
+	addtimer(VARSET_CALLBACK(src, cooldown, FALSE), 1 SECONDS)
 
 
 /obj/item/assembly/control/massdriver
@@ -130,7 +130,7 @@
 		if (M.id == src.id)
 			INVOKE_ASYNC(M, TYPE_PROC_REF(/obj/machinery/door/poddoor, close))
 
-	addtimer(VARSET_CALLBACK(src, cooldown, FALSE), 10)
+	addtimer(VARSET_CALLBACK(src, cooldown, FALSE), 1 SECONDS)
 
 
 /obj/item/assembly/control/igniter
@@ -149,7 +149,7 @@
 		if(M.id == src.id)
 			INVOKE_ASYNC(M, TYPE_PROC_REF(/obj/machinery/igniter, toggle))
 
-	addtimer(VARSET_CALLBACK(src, cooldown, FALSE), 30)
+	addtimer(VARSET_CALLBACK(src, cooldown, FALSE), 3 SECONDS)
 
 /obj/item/assembly/control/flasher
 	name = "flasher controller"
@@ -163,7 +163,7 @@
 		if(M.id == src.id)
 			INVOKE_ASYNC(M, TYPE_PROC_REF(/obj/machinery/flasher, flash))
 
-	addtimer(VARSET_CALLBACK(src, cooldown, FALSE), 50)
+	addtimer(VARSET_CALLBACK(src, cooldown, FALSE), 5 SECONDS)
 
 
 /obj/item/assembly/control/crematorium
@@ -178,4 +178,4 @@
 		if (C.id == id)
 			C.cremate(usr)
 
-	addtimer(VARSET_CALLBACK(src, cooldown, FALSE), 50)
+	addtimer(VARSET_CALLBACK(src, cooldown, FALSE), 5 SECONDS)

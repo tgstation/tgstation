@@ -1,12 +1,14 @@
 /obj/vehicle/ridden/wheelchair //ported from Hippiestation (by Jujumatic)
 	name = "wheelchair"
 	desc = "A chair with big wheels. It looks like you can move in this on your own."
-	icon = 'icons/obj/vehicles.dmi'
+	icon = 'icons/mob/rideables/vehicles.dmi'
 	icon_state = "wheelchair"
 	layer = OBJ_LAYER
 	max_integrity = 100
 	armor_type = /datum/armor/ridden_wheelchair
-	density = FALSE //Thought I couldn't fix this one easily, phew
+	density = FALSE
+	interaction_flags_mouse_drop = ALLOW_RESTING
+
 	/// Run speed delay is multiplied with this for vehicle move delay.
 	var/delay_multiplier = 6.7
 	/// This variable is used to specify which overlay icon is used for the wheelchair, ensures wheelchair can cover your legs
@@ -63,8 +65,6 @@
 	qdel(src)
 	return ITEM_INTERACT_SUCCESS
 
-/obj/vehicle/ridden/wheelchair/AltClick(mob/user)
-	return ..() // This hotkey is BLACKLISTED since it's used by /datum/component/simple_rotation
 
 /obj/vehicle/ridden/wheelchair/update_overlays()
 	. = ..()
@@ -92,7 +92,7 @@
 /obj/item/wheelchair
 	name = "wheelchair"
 	desc = "A collapsed wheelchair that can be carried around."
-	icon = 'icons/obj/vehicles.dmi'
+	icon = 'icons/mob/rideables/vehicles.dmi'
 	icon_state = "wheelchair_folded"
 	inhand_icon_state = "wheelchair_folded"
 	lefthand_file = 'icons/mob/inhands/items_lefthand.dmi'
@@ -107,7 +107,7 @@
 /obj/item/wheelchair/gold
 	name = "gold wheelchair"
 	desc = "A collapsed, shiny wheelchair that can be carried around."
-	icon = 'icons/obj/vehicles.dmi'
+	icon = 'icons/mob/rideables/vehicles.dmi'
 	icon_state = "wheelchair_folded_gold"
 	inhand_icon_state = "wheelchair_folded_gold"
 	lefthand_file = 'icons/mob/inhands/items_lefthand.dmi'
@@ -124,21 +124,24 @@
 	fire = 30
 	acid = 40
 
-/obj/vehicle/ridden/wheelchair/MouseDrop(over_object, src_location, over_location)  //Lets you collapse wheelchair
-	. = ..()
-	if(over_object != usr || !Adjacent(usr) || !foldabletype)
-		return FALSE
-	if(!ishuman(usr) || !usr.can_perform_action(src))
+/obj/vehicle/ridden/wheelchair/mouse_drop_dragged(atom/over_object, mob/user)  //Lets you collapse wheelchair
+	if(over_object != user || !foldabletype || !ishuman(user))
 		return FALSE
 	if(has_buckled_mobs())
 		return FALSE
-	usr.visible_message(span_notice("[usr] collapses [src]."), span_notice("You collapse [src]."))
+	user.visible_message(span_notice("[user] collapses [src]."), span_notice("You collapse [src]."))
 	var/obj/vehicle/ridden/wheelchair/wheelchair_folded = new foldabletype(get_turf(src))
-	usr.put_in_hands(wheelchair_folded)
+	user.put_in_hands(wheelchair_folded)
 	qdel(src)
 
 /obj/item/wheelchair/attack_self(mob/user)  //Deploys wheelchair on in-hand use
 	deploy_wheelchair(user, user.loc)
+
+/obj/item/wheelchair/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
+	if(isopenturf(interacting_with))
+		deploy_wheelchair(user, interacting_with)
+		return ITEM_INTERACT_SUCCESS
+	return NONE
 
 /obj/item/wheelchair/proc/deploy_wheelchair(mob/user, atom/location)
 	var/obj/vehicle/ridden/wheelchair/wheelchair_unfolded = new unfolded_type(location)

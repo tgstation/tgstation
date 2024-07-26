@@ -54,9 +54,6 @@
 
 	slot_flags = ITEM_SLOT_BACK
 	accepted_magazine_type = /obj/item/ammo_box/magazine/internal/boltaction
-	can_bayonet = TRUE
-	knife_x_offset = 42
-	knife_y_offset = 12
 	can_be_sawn_off = TRUE
 	weapon_weight = WEAPON_HEAVY
 	var/jamming_chance = 20
@@ -67,11 +64,13 @@
 
 	SET_BASE_PIXEL(-8, 0)
 
+/obj/item/gun/ballistic/rifle/boltaction/add_bayonet_point()
+	AddComponent(/datum/component/bayonet_attachable, offset_x = 32, offset_y = 12)
+
 /obj/item/gun/ballistic/rifle/boltaction/sawoff(mob/user)
 	. = ..()
 	if(.)
 		spread = 36
-		can_bayonet = FALSE
 		SET_BASE_PIXEL(0, 0)
 		update_appearance()
 
@@ -160,6 +159,7 @@
 		You are now probably one of the few people in the universe to ever hold an \"Obrez Moderna\". \
 		All you had to do was take an allen wrench to the stock to take it off. But no, you just had to \
 		go for the saw."
+	accepted_magazine_type = /obj/item/ammo_box/magazine/internal/boltaction/phasic
 
 /obj/item/gun/ballistic/rifle/boltaction/prime/Initialize(mapload)
 	. = ..()
@@ -170,10 +170,32 @@
 	if(.)
 		name = "\improper Obrez Moderna" // wear it loud and proud
 
+/obj/item/gun/ballistic/rifle/boltaction/donkrifle
+	name = "\improper Donk Co. Jezail"
+	desc = "A mass-manufactured bolt-action sporting rifle with a distinctively long barrel. Powerful enough to take down a space bear from a thousand paces. The lengthened barrel gives it good accuracy and power, even at range."
+	w_class = WEIGHT_CLASS_HUGE
+	lefthand_file = 'icons/mob/inhands/weapons/64x_guns_left.dmi'
+	righthand_file = 'icons/mob/inhands/weapons/64x_guns_right.dmi'
+	inhand_x_dimension = 64
+	inhand_y_dimension = 64
+	icon_state = "jezail"
+	inhand_icon_state = "jezail"
+	worn_icon_state = "jezail"
+	accepted_magazine_type = /obj/item/ammo_box/magazine/internal/boltaction/jezail
+	can_be_sawn_off = TRUE
+	sawn_desc = "A mass-manufactured bolt-action sporting rifle with a distinctively long barrel. Powerful enough to take down a space bear from a thousand paces. Its barrel has been cut off, so its power and accuracy have been impaired."
+
+/obj/item/gun/ballistic/rifle/boltaction/donkrifle/sawoff(mob/user) //the heavy price one pays for fitting this in a backpack
+	. = ..()
+	if(.)
+		projectile_damage_multiplier = 0.75
+		spread = 50
+
 /obj/item/gun/ballistic/rifle/rebarxbow
 	name = "Heated Rebar Crossbow"
 	desc = "Made from an inducer, iron rods, and some wire, this crossbow fires sharpened iron rods, made from the plentiful iron rods found stationwide. \
-			Only holds one rod in the magazine - you can craft the crossbow with a crowbar to try and force a second rod in, but risks a misfire, or worse..."
+		   Additionally, can fire specialty ammo made from the materials in the atmos crystalizer - zaukerite, metallic hydrogen, and healium crytals all work. \
+		   Very slow to reload - you can craft the crossbow with a crowbar to try loosen the crossbar, but risks a misfire, or worse..."
 	icon = 'icons/obj/weapons/guns/ballistic.dmi'
 	icon_state = "rebarxbow"
 	inhand_icon_state = "rebarxbow"
@@ -194,7 +216,7 @@
 	weapon_weight = WEAPON_HEAVY
 	initial_caliber = CALIBER_REBAR
 	accepted_magazine_type = /obj/item/ammo_box/magazine/internal/boltaction/rebarxbow/normal
-	fire_sound = 'sound/items/syringeproj.ogg'
+	fire_sound = 'sound/items/xbow_lock.ogg'
 	can_be_sawn_off = FALSE
 	tac_reloads = FALSE
 	var/draw_time = 3 SECONDS
@@ -219,6 +241,10 @@
 	bolt_locked = FALSE
 	update_appearance()
 
+/obj/item/gun/ballistic/rifle/rebarxbow/shoot_live_shot(mob/living/user)
+	..()
+	rack()
+
 /obj/item/gun/ballistic/rifle/rebarxbow/can_shoot()
 	if (bolt_locked)
 		return FALSE
@@ -230,24 +256,22 @@
 
 /obj/item/gun/ballistic/rifle/rebarxbow/forced
 	name = "Stressed Rebar Crossbow"
-	desc = "Some idiot decided that they would risk shooting themselves in the face if it meant they could have a bit more ammo in this crossbow. Hopefully, it was worth it."
+	desc = "Some idiot decided that they would risk shooting themselves in the face if it meant they could have a draw this crossbow a bit faster. Hopefully, it was worth it."
 	// Feel free to add a recipe to allow you to change it back if you would like, I just wasn't sure if you could have two recipes for the same thing.
 	can_misfire = TRUE
+	draw_time = 1.5
 	misfire_probability = 25
 	accepted_magazine_type = /obj/item/ammo_box/magazine/internal/boltaction/rebarxbow/force
 
 /obj/item/gun/ballistic/rifle/rebarxbow/syndie
 	name = "Syndicate Rebar Crossbow"
 	desc = "The syndicate liked the bootleg rebar crossbow NT engineers made, so they showed what it could be if properly developed. \
-			Holds three shots without a chance of exploding, and features a built in scope. Normally uses special syndicate jagged iron bars, but can be wrenched to shoot inferior normal ones."
+			Holds three shots without a chance of exploding, and features a built in scope. Compatable with all known crossbow ammunition."
 	icon_state = "rebarxbowsyndie"
 	inhand_icon_state = "rebarxbowsyndie"
 	worn_icon_state = "rebarxbowsyndie"
 	w_class = WEIGHT_CLASS_NORMAL
-	can_modify_ammo = TRUE
-	initial_caliber = CALIBER_REBAR_SYNDIE
-	alternative_caliber = CALIBER_REBAR_SYNDIE_NORMAL
-	alternative_ammo_misfires = FALSE
+	initial_caliber = CALIBER_REBAR
 	draw_time = 1
 	accepted_magazine_type = /obj/item/ammo_box/magazine/internal/boltaction/rebarxbow/syndie
 
@@ -255,46 +279,86 @@
 	. = ..()
 	AddComponent(/datum/component/scope, range_modifier = 2) //enough range to at least be useful for stealth
 
+/// PIPE GUNS ///
+
 /obj/item/gun/ballistic/rifle/boltaction/pipegun
 	name = "pipegun"
-	desc = "An excellent weapon for flushing out tunnel rats and enemy assistants, but its rifling leaves much to be desired."
-	icon = 'icons/obj/weapons/guns/ballistic.dmi'
-	icon_state = "musket"
-	inhand_icon_state = "musket"
-	worn_icon_state = "musket"
-	lefthand_file = 'icons/mob/inhands/weapons/64x_guns_left.dmi'
-	righthand_file = 'icons/mob/inhands/weapons/64x_guns_right.dmi'
-	inhand_x_dimension = 64
-	inhand_y_dimension = 64
+	desc = "A symbol that the true masters of this place are not those who merely inhabit it, but the one willing to twist it towards a killing intent."
+	icon_state = "pipegun"
+	inhand_icon_state = "pipegun"
+	worn_icon_state = "pipegun"
 	fire_sound = 'sound/weapons/gun/sniper/shot.ogg'
 	accepted_magazine_type = /obj/item/ammo_box/magazine/internal/boltaction/pipegun
-	initial_caliber = CALIBER_SHOTGUN
-	alternative_caliber = CALIBER_STRILKA310
-	initial_fire_sound = 'sound/weapons/gun/sniper/shot.ogg'
-	alternative_fire_sound = 'sound/weapons/gun/shotgun/shot.ogg'
-	can_modify_ammo = TRUE
-	can_bayonet = TRUE
-	knife_x_offset = 25
-	knife_y_offset = 11
+
+	projectile_damage_multiplier = 1.35
+	obj_flags = UNIQUE_RENAME
 	can_be_sawn_off = FALSE
-	projectile_damage_multiplier = 0.75
+	trigger_guard = TRIGGER_GUARD_ALLOW_ALL
+	pb_knockback = 3
 
-	SET_BASE_PIXEL(0, 0)
+	SET_BASE_PIXEL(-8, 0)
 
-/obj/item/gun/ballistic/rifle/boltaction/pipegun/handle_chamber()
+/obj/item/gun/ballistic/rifle/boltaction/pipegun/add_bayonet_point()
+	AddComponent(/datum/component/bayonet_attachable, offset_x = 35, offset_y = 10)
+
+/obj/item/gun/ballistic/rifle/boltaction/pipegun/handle_chamber(empty_chamber = TRUE, from_firing = TRUE, chamber_next_round = TRUE)
 	. = ..()
 	do_sparks(1, TRUE, src)
 
+/obj/item/gun/ballistic/rifle/boltaction/pipegun/examine_more(mob/user)
+	. = ..()
+	. += span_notice("<b><i>Looking down at the [name], you recall a tale told to you in some distant memory...</i></b>")
+
+	. += span_info("It's said that the first slaying committed on a Nanotrasen space station was by an assistant.")
+	. += span_info("That this act, done by toolbox, maybe spear, was what consigned their kind to a life of destitution, rejection and violence.")
+	. += span_info("They carry the weight of this act visibly; the grey jumpsuit. Breathing deeply filtered air. And with bloodsoaked yellow hands clenched into fists. Eyes, sharp and waiting. Hunters in the dark.")
+	. += span_info("Eventually, these killing spirits sought to stake a claim on the metal tombs they were trapped within. Rejecting their status. Determined to be something more.")
+	. += span_info("This weapon is one such tool. And it is a grim one indeed. Wrought from scrap, pulled from the station's walls and floors and the very nails holding it together.")
+	. += span_info("It is a symbol that the true masters of this place are not those who merely inhabit it. But the one willing to twist it towards a killing intent.")
+
+/obj/item/gun/ballistic/rifle/boltaction/pipegun/pistol
+	name = "pipe pistol"
+	desc = "It is foolish to think that anyone wearing the grey is incapable of hurting you, simply because they are not baring their teeth."
+	icon_state = "pipepistol"
+	inhand_icon_state = "pipepistol"
+	worn_icon_state = "gun"
+	accepted_magazine_type = /obj/item/ammo_box/magazine/internal/boltaction/pipegun/pistol
+	projectile_damage_multiplier = 0.50
+	spread = 15 //kinda inaccurate
+	burst_size = 3 //but it empties the entire magazine when it fires
+	fire_delay = 0.3 // and by empties, I mean it does it all at once
+	slot_flags = ITEM_SLOT_BELT
+	w_class = WEIGHT_CLASS_NORMAL
+	weapon_weight = WEAPON_MEDIUM
+	semi_auto = TRUE
+
+	SET_BASE_PIXEL(0, 0)
+
+/obj/item/gun/ballistic/rifle/boltaction/pipegun/pistol/add_bayonet_point()
+	return
+
 /obj/item/gun/ballistic/rifle/boltaction/pipegun/prime
 	name = "regal pipegun"
-	desc = "Older, territorial assistants typically possess more valuable loot."
-	icon_state = "musket_prime"
-	inhand_icon_state = "musket_prime"
-	worn_icon_state = "musket_prime"
+	desc = "To call this 'regal' is a cruel irony. For the only noteworthy quality of nobility is in how it is wielded to kill. \
+		All monarchs deserve to be crowned. But none will remember the dead tyrant for the red stain they left on the carpet."
+	icon_state = "regal_pipegun"
+	inhand_icon_state = "regal_pipegun"
+	worn_icon_state = "regal_pipegun"
 	accepted_magazine_type = /obj/item/ammo_box/magazine/internal/boltaction/pipegun/prime
-	projectile_damage_multiplier = 1
+	projectile_damage_multiplier = 2
 
-/// MAGICAL BOLT ACTIONS + ARCANE BARRAGE? ///
+/obj/item/gun/ballistic/rifle/boltaction/pipegun/pistol/prime
+	name = "regal pipe pistol"
+	desc = "What value is there in honesty towards the dishonest? So that they might twist the arm and slit the wrist? \
+		The open palm is no sign of weakness; it is to draw the eyes away from the other hand, lying in wait."
+	icon_state = "regal_pipepistol"
+	inhand_icon_state = "regal_pipepistol"
+	accepted_magazine_type = /obj/item/ammo_box/magazine/internal/boltaction/pipegun/pistol/prime
+	projectile_damage_multiplier = 1
+	burst_size = 6 // WHOLE CLIP
+	spread = 0
+
+/// MAGICAL BOLT ACTIONS ///
 
 /obj/item/gun/ballistic/rifle/enchanted
 	name = "enchanted bolt action rifle"

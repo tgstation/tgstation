@@ -10,7 +10,7 @@
 	icon_state = "ai_core"
 
 /atom/movable/screen/ai/aicore/Click()
-	if(..())
+	if(isobserver(usr))
 		return
 	var/mob/living/silicon/ai/AI = usr
 	AI.view_core()
@@ -172,6 +172,66 @@
 	var/mob/living/silicon/ai/AI = usr
 	AI.drop_new_multicam()
 
+/atom/movable/screen/ai/floor_indicator
+	icon_state = "zindicator"
+	screen_loc = ui_ai_floor_indicator
+
+/atom/movable/screen/ai/floor_indicator/Initialize(mapload, datum/hud/hud_owner)
+	. = ..()
+	if(istype(hud_owner))
+		RegisterSignal(hud_owner, COMSIG_HUD_OFFSET_CHANGED, PROC_REF(update_z))
+		update_z()
+
+/atom/movable/screen/ai/floor_indicator/proc/update_z(datum/hud/source)
+	SIGNAL_HANDLER
+	var/mob/living/silicon/ai/ai = get_mob() //if you use this for anyone else i will find you
+	if(isnull(ai))
+		return
+	var/turf/locturf = isturf(ai.loc) ? get_turf(ai.eyeobj) : get_turf(ai) //must be a var cuz error
+	var/ai_z = locturf.z
+	var/text = "Level<br/>[ai_z]"
+	if(SSmapping.level_trait(ai_z, ZTRAIT_STATION))
+		text = "Floor<br/>[ai_z - 1]"
+	else if (SSmapping.level_trait(ai_z, ZTRAIT_NOPHASE))
+		text = "ERROR"
+	maptext = MAPTEXT_TINY_UNICODE("<div align='center' valign='middle' style='position:relative; top:0px; left:0px'>[text]</div>")
+
+/atom/movable/screen/ai/go_up
+	name = "go up"
+	icon_state = "up"
+	screen_loc = ui_ai_godownup
+
+/atom/movable/screen/ai/go_up/Initialize(mapload)
+	. = ..()
+	register_context()
+
+/atom/movable/screen/ai/go_up/add_context(atom/source, list/context, obj/item/held_item, mob/user)
+	. = ..()
+	context[SCREENTIP_CONTEXT_LMB] = "Go up a floor"
+	return CONTEXTUAL_SCREENTIP_SET
+
+/atom/movable/screen/ai/go_up/Click(location,control,params)
+	var/mob/ai = get_mob() //the core
+	flick("uppressed",src)
+	if(!isturf(ai.loc) || usr != ai) //aicard and stuff
+		return
+	ai.up()
+
+/atom/movable/screen/ai/go_up/down
+	name = "go down"
+	icon_state = "down"
+
+/atom/movable/screen/ai/go_up/down/add_context(atom/source, list/context, obj/item/held_item, mob/user)
+	. = ..()
+	context[SCREENTIP_CONTEXT_LMB] = "Go down a floor"
+	return CONTEXTUAL_SCREENTIP_SET
+
+/atom/movable/screen/ai/go_up/down/Click(location,control,params)
+	var/mob/ai = get_mob() //the core
+	flick("downpressed",src)
+	if(!isturf(ai.loc) || usr != ai) //aicard and stuff
+		return
+	ai.down()
 
 /datum/hud/ai
 	ui_style = 'icons/hud/screen_ai.dmi'
@@ -187,8 +247,11 @@
 	static_inventory += using
 
 // Z-level floor change
-	using = new /atom/movable/screen/floor_menu(null, src)
-	using.screen_loc = ui_ai_floor_menu
+	using = new /atom/movable/screen/ai/floor_indicator(null, src) //These come with their own predefined screen locs
+	static_inventory += using
+	using = new /atom/movable/screen/ai/go_up(null, src)
+	static_inventory += using
+	using = new /atom/movable/screen/ai/go_up/down(null, src)
 	static_inventory += using
 
 //AI core

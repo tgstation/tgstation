@@ -22,7 +22,7 @@
 	stamina = 55
 	wound_bonus = 20
 	sharpness = NONE
-	embedding = null
+	embed_type = null
 
 /obj/projectile/bullet/shotgun_beanbag/a40mm
 	name = "rubber slug"
@@ -54,8 +54,8 @@
 	jitter = 40 SECONDS
 	range = 7
 	icon_state = "spark"
-	color = "#FFFF00"
-	embedding = null
+	color = COLOR_YELLOW
+	embed_type = null
 
 /obj/projectile/bullet/shotgun_frag12
 	name ="frag12 slug"
@@ -84,7 +84,7 @@
 	damage = 3
 	stamina = 11
 	sharpness = NONE
-	embedding = null
+	embed_type = null
 	speed = 1.2
 	stamina_falloff_tile = -0.25
 	ricochets_max = 4
@@ -106,20 +106,20 @@
 	name = "incapacitating pellet"
 	damage = 1
 	stamina = 6
-	embedding = null
+	embed_type = null
 
-/obj/projectile/bullet/pellet/shotgun_improvised
-	damage = 5
-	wound_bonus = -5
-	demolition_mod = 3 //Very good at acts of vandalism
-
-/obj/projectile/bullet/pellet/shotgun_improvised/Initialize(mapload)
-	. = ..()
-	range = rand(3, 8)
-
-/obj/projectile/bullet/pellet/shotgun_improvised/on_range()
-	do_sparks(1, TRUE, src)
-	..()
+/obj/projectile/bullet/pellet/flechette
+	name = "flechette"
+	icon_state = "flechette"
+	damage = 6
+	wound_bonus = -25
+	bare_wound_bonus = 50
+	wound_falloff_tile = -10
+	speed = 0.8
+	ricochet_decay_chance = 0.6
+	ricochet_decay_damage = 0.3
+	demolition_mod = 10
+	weak_against_armour = TRUE
 
 // Mech Scattershot
 

@@ -6,7 +6,7 @@
 /obj/item/surgery_tray
 	name = "surgery tray"
 	desc = "A Deforest brand medical cart. It is a folding model, meaning the wheels on the bottom can be retracted and the body used as a tray."
-	icon = 'icons/obj/medicart.dmi'
+	icon = 'icons/obj/medical/medicart.dmi'
 	icon_state = "tray"
 	w_class = WEIGHT_CLASS_BULKY
 	slowdown = 1
@@ -42,7 +42,7 @@
 	. = ..()
 	if(is_portable)
 		desc = "The wheels and bottom storage of this medical cart have been stowed away, \
-			leaving a cumbersome tray in it's place."
+			leaving a cumbersome tray in its place."
 	else
 		desc = initial(desc)
 
@@ -150,12 +150,10 @@
 	for(var/atom/movable/tool as anything in contents)
 		tool.forceMove(drop_point)
 
-/obj/item/surgery_tray/deconstruct(disassembled = TRUE)
-	if(!(obj_flags & NO_DECONSTRUCTION))
-		dump_contents()
-		new /obj/item/stack/rods(drop_location(), 2)
-		new /obj/item/stack/sheet/mineral/silver(drop_location())
-	return ..()
+/obj/item/surgery_tray/atom_deconstruct(disassembled = TRUE)
+	dump_contents()
+	new /obj/item/stack/rods(drop_location(), 2)
+	new /obj/item/stack/sheet/mineral/silver(drop_location())
 
 /obj/item/surgery_tray/deployed
 	is_portable = FALSE

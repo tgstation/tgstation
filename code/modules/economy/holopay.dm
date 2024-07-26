@@ -65,9 +65,8 @@
 		if(BURN)
 			playsound(loc, 'sound/weapons/egloves.ogg', 80, TRUE)
 
-/obj/structure/holopay/deconstruct()
+/obj/structure/holopay/atom_deconstruct(dissambled = TRUE)
 	dissipate()
-	return ..()
 
 /obj/structure/holopay/Destroy()
 	linked_card?.my_store = null
@@ -239,7 +238,7 @@
  * Deletes the holopay thereafter.
  */
 /obj/structure/holopay/proc/dissipate()
-	playsound(loc, "sound/effects/empulse.ogg", 40, TRUE)
+	playsound(loc, 'sound/effects/empulse.ogg', 40, TRUE)
 	visible_message(span_notice("The pay stand vanishes."))
 	qdel(src)
 
@@ -255,7 +254,7 @@
 	/// Account checks
 	var/obj/item/card/id/id_card
 	id_card = user.get_idcard(TRUE)
-	if(!id_card || !id_card.registered_account || !id_card.registered_account.account_job)
+	if(isnull(id_card) || id_card.can_be_used_in_payment(user))
 		balloon_alert(user, "invalid account")
 		to_chat(user, span_warning("You don't have a valid account."))
 		return FALSE

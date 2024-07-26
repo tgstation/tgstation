@@ -143,6 +143,8 @@
 	var/datum/proximity_monitor/proximity_monitor
 	///Material container for materials
 	var/datum/component/material_container/materials
+	/// What can be input into the machine?
+	var/accepted_type = /obj/item/stack
 
 /obj/machinery/mineral/processing_unit/Initialize(mapload)
 	. = ..()
@@ -153,7 +155,7 @@
 		SSmaterials.materials_by_category[MAT_CATEGORY_SILO], \
 		INFINITY, \
 		MATCONTAINER_EXAMINE, \
-		allowed_items = /obj/item/stack \
+		allowed_items = accepted_type \
 	)
 	if(!GLOB.autounlock_techwebs[/datum/techweb/autounlocking/smelter])
 		GLOB.autounlock_techwebs[/datum/techweb/autounlocking/smelter] = new /datum/techweb/autounlocking/smelter
@@ -166,7 +168,7 @@
 	stored_research = null
 	return ..()
 
-/obj/machinery/mineral/processing_unit/proc/process_ore(obj/item/stack/ore/O)
+/obj/machinery/mineral/processing_unit/proc/process_ore(obj/item/stack/O)
 	if(QDELETED(O))
 		return
 	var/material_amount = materials.get_item_material_amount(O)
@@ -225,7 +227,7 @@
 /obj/machinery/mineral/processing_unit/pickup_item(datum/source, atom/movable/target, direction)
 	if(QDELETED(target))
 		return
-	if(istype(target, /obj/item/stack/ore))
+	if(istype(target, accepted_type))
 		process_ore(target)
 
 /obj/machinery/mineral/processing_unit/process(seconds_per_tick)
@@ -281,5 +283,9 @@
 /obj/machinery/mineral/processing_unit/proc/generate_mineral(P)
 	var/O = new P(src)
 	unload_mineral(O)
+
+/// Only accepts ore, for the work camp
+/obj/machinery/mineral/processing_unit/gulag
+	accepted_type = /obj/item/stack/ore
 
 #undef SMELT_AMOUNT

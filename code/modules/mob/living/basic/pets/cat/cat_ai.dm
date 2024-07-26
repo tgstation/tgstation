@@ -60,15 +60,13 @@
 	set_movement_target(controller, target)
 
 /datum/ai_behavior/enter_cat_home/perform(seconds_per_tick, datum/ai_controller/controller, target_key)
-	. = ..()
 	var/obj/structure/cat_house/home = controller.blackboard[target_key]
 	var/mob/living/basic/living_pawn = controller.pawn
 	if(living_pawn == home.resident_cat || isnull(home.resident_cat))
 		living_pawn.melee_attack(home)
-		finish_action(controller, TRUE, target_key)
-		return
+		return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_SUCCEEDED
 
-	finish_action(controller, FALSE, target_key)
+	return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_FAILED
 
 /datum/ai_behavior/enter_cat_home/finish_action(datum/ai_controller/controller, success, target_key)
 	. = ..()
@@ -133,8 +131,7 @@
 	var/mob/living/target = controller.blackboard[target_key]
 
 	if(QDELETED(target))
-		finish_action(controller, TRUE, target_key)
-		return
+		return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_SUCCEEDED
 
 	var/mob/living/living_pawn = controller.pawn
 	var/list/threaten_list = controller.blackboard[cries_key]
@@ -149,7 +146,7 @@
 
 	loser_controller.set_blackboard_key(BB_BASIC_MOB_FLEE_TARGET, target)
 	target.ai_controller.clear_blackboard_key(BB_TRESSPASSER_TARGET)
-	finish_action(controller, TRUE, target_key)
+	return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_SUCCEEDED
 
 /datum/ai_behavior/territorial_struggle/finish_action(datum/ai_controller/controller, success, target_key)
 	. = ..()
@@ -191,19 +188,16 @@
 	set_movement_target(controller, target)
 
 /datum/ai_behavior/play_with_mouse/perform(seconds_per_tick, datum/ai_controller/controller, target_key)
-	. = ..()
 	var/mob/living/basic/mouse/target = controller.blackboard[target_key]
 
 	if(QDELETED(target))
-		finish_action(controller, TRUE, target_key)
-		return
+		return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_SUCCEEDED
 
 	consume_chance = istype(target, /mob/living/basic/mouse/brown/tom) ? 5 : initial(consume_chance)
 	if(prob(consume_chance))
 		target.splat()
-		finish_action(controller, TRUE, target_key)
-		return
-	finish_action(controller, FALSE, target_key)
+		return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_SUCCEEDED
+	return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_FAILED
 
 /datum/ai_behavior/play_with_mouse/finish_action(datum/ai_controller/controller, success, target_key)
 	. = ..()
@@ -272,22 +266,19 @@
 	set_movement_target(controller, target)
 
 /datum/ai_behavior/deliver_food_to_kitten/perform(seconds_per_tick, datum/ai_controller/controller, target_key, food_key)
-	. = ..()
 	var/mob/living/target = controller.blackboard[target_key]
 
 	if(QDELETED(target))
-		finish_action(controller, FALSE, target_key, food_key)
-		return
+		return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_FAILED
 
 	var/mob/living/living_pawn = controller.pawn
 	var/atom/movable/food = controller.blackboard[food_key]
 
 	if(isnull(food) || !(food in living_pawn))
-		finish_action(controller, FALSE, target_key, food_key)
-		return
+		return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_FAILED
 
 	food.forceMove(get_turf(living_pawn))
-	finish_action(controller, TRUE, target_key, food_key)
+	return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_SUCCEEDED
 
 /datum/ai_behavior/deliver_food_to_kitten/finish_action(datum/ai_controller/controller, success, target_key, food_key)
 	. = ..()

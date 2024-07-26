@@ -26,9 +26,10 @@ export const FUNDAMENTAL_DATA_TYPES = {
         defaultValue={0}
       >
         <NumberInput
+          step={1}
           value={value}
           color={color}
-          onChange={(e, val) => setValue(val)}
+          onChange={(val) => setValue(val)}
           unit={name}
         />
       </BasicInput>
@@ -87,7 +88,7 @@ export const FUNDAMENTAL_DATA_TYPES = {
         color={'transparent'}
         options={data}
         onSelected={setValue}
-        displayText={value}
+        selected={value}
         menuWidth={large ? '200px' : undefined}
       />
     );

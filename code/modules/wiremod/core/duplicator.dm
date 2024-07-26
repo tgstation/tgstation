@@ -220,30 +220,24 @@ GLOBAL_LIST_INIT(circuit_dupe_whitelisted_types, list(
 	rel_x = component_data["rel_x"]
 	rel_y = component_data["rel_y"]
 
-/client/proc/load_circuit()
-	set name = "Load Circuit"
-	set category = "Admin.Fun"
-
-	if(!check_rights(R_VAREDIT))
-		return
-
+ADMIN_VERB(load_circuit, R_VAREDIT, "Load Circuit", "Loads a circuit from a file or direct input.", ADMIN_CATEGORY_FUN)
 	var/list/errors = list()
 
-	var/option = alert(usr, "Load by file or direct input?", "Load by file or string", "File", "Direct Input")
+	var/option = alert(user, "Load by file or direct input?", "Load by file or string", "File", "Direct Input")
 	var/txt
 	switch(option)
 		if("File")
-			txt = file2text(input(usr, "Input File") as file|null)
+			txt = file2text(input(user, "Input File") as null|file)
 		if("Direct Input")
-			txt = input(usr, "Input JSON", "Input JSON") as text|null
+			txt = input(user, "Input JSON", "Input JSON") as text|null
 
 	if(!txt)
 		return
 
-	var/obj/item/integrated_circuit/loaded/circuit = new(mob.drop_location())
+	var/obj/item/integrated_circuit/loaded/circuit = new(user.mob.drop_location())
 	circuit.load_circuit_data(txt, errors)
 
 	if(length(errors))
-		to_chat(src, span_warning("The following errors were found whilst compiling the circuit data:"))
+		to_chat(user, span_warning("The following errors were found whilst compiling the circuit data:"))
 		for(var/error in errors)
-			to_chat(src, span_warning(error))
+			to_chat(user, span_warning(error))

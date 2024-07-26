@@ -43,7 +43,7 @@
 	if(!on)
 		return
 	. = ..()
-	use_power(active_power_usage) //use power for analyzing gases
+	use_energy(active_power_usage) //use power for analyzing gases
 
 /obj/machinery/air_sensor/process()
 	//update appearance according to power state
@@ -57,7 +57,7 @@
 
 /obj/machinery/air_sensor/examine(mob/user)
 	. = ..()
-	. += span_notice("Use multitool to link it to an injector/vent or reset it's ports")
+	. += span_notice("Use multitool to link it to an injector/vent or reset its ports")
 	. += span_notice("Click with hand to turn it off.")
 
 /obj/machinery/air_sensor/attack_hand(mob/living/user, list/modifiers)
@@ -196,7 +196,7 @@
 		if(initial(sensor.chamber_id) != target_chamber)
 			continue
 
-		//make real air sensor in it's place
+		//make real air sensor in its place
 		var/obj/machinery/air_sensor/new_sensor = new sensor(get_turf(src))
 		new_sensor.inlet_id = input_id
 		new_sensor.outlet_id = output_id
@@ -221,8 +221,6 @@
 	deconstruct(TRUE)
 	return ITEM_INTERACT_SUCCESS
 
-/obj/item/air_sensor/deconstruct(disassembled)
-	if(!(obj_flags & NO_DECONSTRUCTION))
-		new /obj/item/analyzer(loc)
-		new /obj/item/stack/sheet/iron(loc, 1)
-	return ..()
+/obj/item/air_sensor/atom_deconstruct(disassembled)
+	new /obj/item/analyzer(loc)
+	new /obj/item/stack/sheet/iron(loc, 1)

@@ -91,6 +91,14 @@
 	painting_metadata.height = height
 	ADD_KEEP_TOGETHER(src, INNATE_TRAIT)
 
+/obj/item/canvas/Destroy()
+	last_patron = null
+	if(istype(loc,/obj/structure/sign/painting))
+		var/obj/structure/sign/painting/frame = loc
+		frame.remove_art_element(painting_metadata.credit_value)
+	painting_metadata = null
+	return ..()
+
 /obj/item/canvas/proc/reset_grid()
 	grid = new/list(width,height)
 	for(var/x in 1 to width)
@@ -102,6 +110,8 @@
 	ui_interact(user)
 
 /obj/item/canvas/ui_state(mob/user)
+	if(isobserver(user))
+		return GLOB.observer_state
 	if(finalized)
 		return GLOB.physical_obscured_state
 	else
@@ -154,6 +164,9 @@
 	if(.)
 		return
 	var/mob/user = usr
+	///this is here to allow observers to zoom in and out but not do anything else.
+	if(action != "zoom_in" && action != "zoom_out" && isobserver(user))
+		return
 	switch(action)
 		if("paint")
 			if(finalized)
@@ -256,7 +269,7 @@
 	if(!id_card)
 		to_chat(user, span_warning("You don't even have a id and you want to be an art patron?"))
 		return
-	if(!id_card.registered_account || !id_card.registered_account.account_job)
+	if(!id_card.can_be_used_in_payment(user))
 		to_chat(user, span_warning("No valid non-departmental account found."))
 		return
 	var/datum/bank_account/account = id_card.registered_account
@@ -265,7 +278,7 @@
 		return
 	var/sniped_amount = painting_metadata.credit_value
 	var/offer_amount = tgui_input_number(user, "How much do you want to offer?", "Patronage Amount", (painting_metadata.credit_value + 1), account.account_balance, painting_metadata.credit_value)
-	if(!offer_amount || QDELETED(user) || QDELETED(src) || !usr.can_perform_action(src, FORBID_TELEKINESIS_REACH))
+	if(!offer_amount || QDELETED(user) || QDELETED(src) || !istype(loc, /obj/structure/sign/painting) || !user.can_perform_action(loc, FORBID_TELEKINESIS_REACH))
 		return
 	if(sniped_amount != painting_metadata.credit_value)
 		return
@@ -276,19 +289,26 @@
 	var/datum/bank_account/service_account = SSeconomy.get_dep_account(ACCOUNT_SRV)
 	service_account.adjust_money(offer_amount * SERVICE_PERCENTILE_CUT)
 	///We give the curator(s) a cut (unless they're themselves the patron), as it's their job to curate and promote art among other things.
-	var/list/curator_accounts = SSeconomy.bank_accounts_by_job[/datum/job/curator] - account
-	var/curators_length = length(curator_accounts)
-	if(curators_length)
-		var/curator_cut = round(offer_amount * CURATOR_PERCENTILE_CUT / curators_length)
-		if(curator_cut)
-			for(var/datum/bank_account/curator as anything in curator_accounts)
-				curator.adjust_money(curator_cut, "Painting: Patronage cut")
-				curator.bank_card_talk("Cut on patronage received, account now holds [curator.account_balance] cr.")
+	if(SSeconomy.bank_accounts_by_job[/datum/job/curator])
+		var/list/curator_accounts = SSeconomy.bank_accounts_by_job[/datum/job/curator] - account
+		var/curators_length = length(curator_accounts)
+		if(curators_length)
+			var/curator_cut = round(offer_amount * CURATOR_PERCENTILE_CUT / curators_length)
+			if(curator_cut)
+				for(var/datum/bank_account/curator as anything in curator_accounts)
+					curator.adjust_money(curator_cut, "Painting: Patronage cut")
+					curator.bank_card_talk("Cut on patronage received, account now holds [curator.account_balance] cr.")
+
+	if(istype(loc, /obj/structure/sign/painting))
+		var/obj/structure/sign/painting/frame = loc
+		frame.remove_art_element(painting_metadata.credit_value)
+		frame.add_art_element(offer_amount)
 
 	painting_metadata.patron_ckey = user.ckey
 	painting_metadata.patron_name = user.real_name
 	painting_metadata.credit_value = offer_amount
 	last_patron = WEAKREF(user.mind)
+
 	to_chat(user, span_notice("Nanotrasen Trust Foundation thanks you for your contribution. You're now an official patron of this painting."))
 	var/list/possible_frames = SSpersistent_paintings.get_available_frames(offer_amount)
 	if(possible_frames.len <= 1) // Not much room for choices here.
@@ -349,7 +369,7 @@
 	var/result = rustg_dmi_create_png(png_filename, "[width]", "[height]", image_data)
 	if(result)
 		CRASH("Error generating painting png : [result]")
-	painting_metadata.md5 = md5(lowertext(image_data))
+	painting_metadata.md5 = md5(LOWER_TEXT(image_data))
 	generated_icon = new(png_filename)
 	icon_generated = TRUE
 	update_appearance()
@@ -565,13 +585,17 @@
 /obj/structure/sign/painting/Exited(atom/movable/movable, atom/newloc)
 	. = ..()
 	if(movable == current_canvas)
+		if(!QDELETED(current_canvas))
+			remove_art_element(current_canvas.painting_metadata.credit_value)
 		current_canvas = null
 		update_appearance()
 
-/obj/structure/sign/painting/AltClick(mob/user)
-	. = ..()
-	if(current_canvas?.can_select_frame(user))
-		INVOKE_ASYNC(current_canvas, TYPE_PROC_REF(/obj/item/canvas, select_new_frame), user)
+/obj/structure/sign/painting/click_alt(mob/user)
+	if(!current_canvas?.can_select_frame(user))
+		return CLICK_ACTION_BLOCKING
+
+	INVOKE_ASYNC(current_canvas, TYPE_PROC_REF(/obj/item/canvas, select_new_frame), user)
+	return CLICK_ACTION_SUCCESS
 
 /obj/structure/sign/painting/proc/frame_canvas(mob/user, obj/item/canvas/new_canvas)
 	if(!(new_canvas.type in accepted_canvas_types))
@@ -582,6 +606,7 @@
 		if(!current_canvas.finalized)
 			current_canvas.finalize(user)
 		to_chat(user,span_notice("You frame [current_canvas]."))
+		add_art_element()
 		update_appearance()
 		return TRUE
 	return FALSE
@@ -651,9 +676,30 @@
 	new_canvas.finalized = TRUE
 	new_canvas.name = "painting - [painting.title]"
 	current_canvas = new_canvas
+	add_art_element()
 	current_canvas.update_appearance()
 	update_appearance()
 	return TRUE
+
+/obj/structure/sign/painting/proc/add_art_element()
+	var/artistic_value = get_art_value(current_canvas.painting_metadata.credit_value)
+	if(artistic_value)
+		AddElement(/datum/element/art, artistic_value)
+
+/obj/structure/sign/painting/proc/remove_art_element(patronage)
+	var/artistic_value = get_art_value(patronage)
+	if(artistic_value)
+		RemoveElement(/datum/element/art, artistic_value)
+
+/obj/structure/sign/painting/proc/get_art_value(patronage)
+	switch(patronage)
+		if(PATRONAGE_SUPERB_FRAME to INFINITY)
+			return GREAT_ART
+		if(PATRONAGE_EXCELLENT_FRAME to PATRONAGE_SUPERB_FRAME)
+			return GOOD_ART
+		if(PATRONAGE_NICE_FRAME to PATRONAGE_EXCELLENT_FRAME)
+			return OK_ART
+	return 0
 
 /obj/structure/sign/painting/proc/save_persistent()
 	if(!persistence_id || !current_canvas || current_canvas.no_save || current_canvas.painting_metadata.loaded_from_json)
@@ -662,7 +708,7 @@
 		stack_trace("Invalid persistence_id - [persistence_id]")
 		return
 	var/data = current_canvas.get_data_string()
-	var/md5 = md5(lowertext(data))
+	var/md5 = md5(LOWER_TEXT(data))
 	var/list/current = SSpersistent_paintings.paintings[persistence_id]
 	if(!current)
 		current = list()
@@ -829,7 +875,7 @@
 	righthand_file = 'icons/mob/inhands/equipment/palette_righthand.dmi'
 	w_class = WEIGHT_CLASS_TINY
 	///Chosen paint color
-	var/current_color = "#000000"
+	var/current_color = COLOR_BLACK
 
 /obj/item/paint_palette/Initialize(mapload)
 	. = ..()

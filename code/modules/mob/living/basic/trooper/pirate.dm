@@ -55,7 +55,7 @@
 	r_hand = /obj/item/gun/energy/laser
 	ai_controller = /datum/ai_controller/basic_controller/trooper/ranged
 	/// Type of bullet we use
-	var/casingtype = /obj/item/ammo_casing/energy/laser
+	var/projectiletype = /obj/projectile/beam/laser
 	/// Sound to play when firing weapon
 	var/projectilesound = 'sound/weapons/laser.ogg'
 	/// number of burst shots
@@ -67,7 +67,7 @@
 	. = ..()
 	AddComponent(\
 		/datum/component/ranged_attacks,\
-		casing_type = casingtype,\
+		projectile_type = projectiletype,\
 		projectile_sound = projectilesound,\
 		cooldown_time = ranged_cooldown,\
 		burst_shots = burst_shots,\

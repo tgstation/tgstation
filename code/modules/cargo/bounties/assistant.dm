@@ -198,11 +198,11 @@
 	wanted_types = list(/obj/item/pneumatic_cannon/ghetto = TRUE)
 
 /datum/bounty/item/assistant/improvised_shells
-	name = "Improvised Shotgun Shells"
-	description = "Budget cuts are hitting our security department pretty hard. Send some improvised shotgun shells when you can."
+	name = "Junk Shells"
+	description = "Our assistant militia has chewed through all our iron supplies. To stop them making bullets out of station property, we need junk shells, pronto."
 	reward = CARGO_CRATE_VALUE * 4
 	required_count = 5
-	wanted_types = list(/obj/item/ammo_casing/shotgun/improvised = TRUE)
+	wanted_types = list(/obj/item/ammo_casing/junk = TRUE)
 
 /datum/bounty/item/assistant/flamethrower
 	name = "Flamethrower"
@@ -257,7 +257,7 @@
 	..()
 	fluid_type = pick(AQUARIUM_FLUID_FRESHWATER, AQUARIUM_FLUID_SALTWATER, AQUARIUM_FLUID_SULPHWATEVER)
 	name = "[fluid_type] Fish"
-	description = "We need [lowertext(fluid_type)] fish to populate our aquariums with. Fishes that are dead or bought from cargo will only be paid half as much."
+	description = "We need [LOWER_TEXT(fluid_type)] fish to populate our aquariums with. Fishes that are dead or bought from cargo will only be paid half as much."
 
 /datum/bounty/item/assistant/fish/fluid/can_ship_fish(obj/item/fish/fishie)
 	return compatible_fluid_type(fishie.required_fluid_type, fluid_type)

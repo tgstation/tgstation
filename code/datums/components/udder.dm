@@ -181,7 +181,7 @@
 		return
 	var/transferred = reagents.trans_to(milk_holder, rand(5,10))
 	if(transferred)
-		user.visible_message(span_notice("[user] milks [src] using \the [milk_holder]."), span_notice("You milk [src] using \the [milk_holder]."))
+		user.visible_message(span_notice("[user] milks [udder_mob] using \the [milk_holder]."), span_notice("You milk [udder_mob] using \the [milk_holder]."))
 	else
 		to_chat(user, span_warning("The udder is dry. Wait a bit longer..."))
 
@@ -204,3 +204,16 @@
 		reagents.add_reagent(/datum/reagent/medicine/salglu_solution, rand(2,5))
 	if(on_generate_callback)
 		on_generate_callback.Invoke(reagents.total_volume, reagents.maximum_volume)
+
+/obj/item/udder/raptor
+	name = "bird udder"
+
+/obj/item/udder/raptor/generate()
+	if(!prob(production_probability))
+		return FALSE
+	var/happiness_percentage = udder_mob.ai_controller?.blackboard[BB_BASIC_HAPPINESS]
+	if(prob(happiness_percentage))
+		reagents.add_reagent(/datum/reagent/consumable/cream, 5, added_purity = 1)
+	var/minimum_bound = happiness_percentage > 0.6 ? 10 : 5
+	var/upper_bound = minimum_bound + 5
+	reagents.add_reagent(reagent_produced_typepath, rand(minimum_bound, upper_bound), added_purity = 1)

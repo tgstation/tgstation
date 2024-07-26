@@ -32,6 +32,9 @@ GLOBAL_LIST_EMPTY(announcement_systems)
 	radio = new /obj/item/radio/headset/silicon/ai(src)
 	update_appearance()
 
+/obj/machinery/announcement_system/randomize_language_if_on_station()
+	return
+
 /obj/machinery/announcement_system/update_icon_state()
 	icon_state = "[base_icon_state]_[is_operational ? "On" : "Off"][panel_open ? "_Open" : null]"
 	return ..()
@@ -99,7 +102,7 @@ GLOBAL_LIST_EMPTY(announcement_systems)
 
 /// Sends a message to the appropriate channels.
 /obj/machinery/announcement_system/proc/broadcast(message, list/channels)
-	use_power(active_power_usage)
+	use_energy(active_power_usage)
 	if(channels.len == 0)
 		radio.talk_into(src, message, null)
 	else

@@ -155,7 +155,7 @@
 
 ///Returns a list of chemical_reaction datums that have the input STRING as a product
 /proc/get_reagent_type_from_product_string(string)
-	var/input_reagent = replacetext(lowertext(string), " ", "") //95% of the time, the reagent id is a lowercase/no spaces version of the name
+	var/input_reagent = replacetext(LOWER_TEXT(string), " ", "") //95% of the time, the reagent id is a lowercase/no spaces version of the name
 	if (isnull(input_reagent))
 		return
 
@@ -190,11 +190,21 @@
 	var/picked_reagent = pick(random_reagents)
 	return picked_reagent
 
+///Returns a random reagent consumable ethanol object minus blacklisted reagents
+/proc/get_random_drink_id()
+	var/static/list/random_drinks = list()
+	if(!random_drinks.len)
+		for(var/datum/reagent/drink_path as anything in subtypesof(/datum/reagent/consumable/ethanol))
+			if(initial(drink_path.chemical_flags) & REAGENT_CAN_BE_SYNTHESIZED)
+				random_drinks += drink_path
+	var/picked_drink = pick(random_drinks)
+	return picked_drink
+
 ///Returns reagent datum from reagent name string
 /proc/get_chem_id(chem_name)
 	for(var/X in GLOB.chemical_reagents_list)
 		var/datum/reagent/R = GLOB.chemical_reagents_list[X]
-		if(ckey(chem_name) == ckey(lowertext(R.name)))
+		if(ckey(chem_name) == ckey(LOWER_TEXT(R.name)))
 			return X
 
 ///Takes a type in and returns a list of associated recipes

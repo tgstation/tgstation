@@ -202,9 +202,9 @@
 "GR" = (
 /obj/effect/decal/cleanable/blood,
 /obj/effect/mob_spawn/corpse/human/clown,
-/obj/item/ammo_casing/energy/c3dbullet,
 /obj/effect/decal/cleanable/blood/footprints,
 /obj/effect/decal/cleanable/dirt,
+/obj/item/ammo_casing/a357/spent,
 /turf/open/floor/plating/airless,
 /area/ruin)
 "Ij" = (

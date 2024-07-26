@@ -84,7 +84,6 @@
 	desc = "It's a very smart uniform with a special pocket for tip."
 	icon_state = "waiter"
 	inhand_icon_state = "waiter"
-	supports_variations_flags = CLOTHING_MONKEY_VARIATION
 
 /obj/item/clothing/under/suit/black_really
 	name = "executive suit"

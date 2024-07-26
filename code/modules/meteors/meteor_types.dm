@@ -60,8 +60,7 @@
 			get_hit()
 
 	if(z != z_original || loc == get_turf(dest))
-		qdel(src)
-		return
+		moved_off_z()
 
 /obj/effect/meteor/Process_Spacemove(movement_dir = 0, continuous_move = FALSE)
 	return TRUE //Keeps us from drifting for no reason
@@ -76,17 +75,13 @@
 /obj/effect/meteor/proc/chase_target(atom/chasing, delay, home)
 	if(!isatom(chasing))
 		return
-	var/datum/move_loop/new_loop = SSmove_manager.move_towards(src, chasing, delay, home, lifetime)
+	var/datum/move_loop/new_loop = GLOB.move_manager.move_towards(src, chasing, delay, home, lifetime)
 	if(!new_loop)
 		return
 
-	RegisterSignal(new_loop, COMSIG_QDELETING, PROC_REF(handle_stopping))
-
 ///Deals with what happens when we stop moving, IE we die
-/obj/effect/meteor/proc/handle_stopping()
-	SIGNAL_HANDLER
-	if(!QDELETED(src))
-		qdel(src)
+/obj/effect/meteor/proc/moved_off_z()
+	qdel(src)
 
 /obj/effect/meteor/proc/ram_turf(turf/T)
 	//first yell at mobs about them dying horribly
@@ -150,7 +145,7 @@
  * Admin spawned meteors will not grant the user an achievement.
  *
  * Arguments:
- * * user - the person who will be recieving the examine award.
+ * * user - the person who will be receiving the examine award.
  */
 
 /obj/effect/meteor/proc/check_examine_award(mob/user)
@@ -257,15 +252,17 @@
 	desc = "An irradiated chunk of space rock. You could probably stop and appreciate its incandescent green glow, if it weren't moving so fast."
 	icon_state = "glowing"
 	heavy = TRUE
+	hits = 9
 	meteordrop = list(/obj/item/stack/ore/uranium)
-	threat = 15
+	threat = 35
 	signature = "radiation"
 
 /obj/effect/meteor/irradiated/meteor_effect()
 	..()
-	explosion(src, light_impact_range = 4, flash_range = 3, adminlog = FALSE)
-	new /obj/effect/decal/cleanable/greenglow(get_turf(src))
-	radiation_pulse(src, max_range = 3, threshold = RAD_MEDIUM_INSULATION, chance = 80)
+	explosion(src, heavy_impact_range = 1, light_impact_range = 3, flash_range = 6, adminlog = FALSE)
+	for(var/turf/open/floor/surviving_ground in range(2, get_turf(src)))
+		if(prob(70))
+			new /obj/effect/decal/cleanable/greenglow/radioactive(get_turf(surviving_ground))
 
 //Cluster meteor
 /obj/effect/meteor/cluster
@@ -457,8 +454,8 @@
 /obj/effect/meteor/pumpkin
 	name = "PUMPKING"
 	desc = "THE PUMPKING'S COMING!"
-	icon = 'icons/obj/meteor_spooky.dmi'
-	icon_state = "pumpkin"
+	icon = 'icons/obj/meteor.dmi'
+	icon_state = "spooky"
 	hits = 10
 	heavy = TRUE
 	dropamt = 1

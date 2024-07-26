@@ -44,6 +44,21 @@
 	time = 4 SECONDS
 	category = CAT_WEAPON_MELEE
 
+
+/datum/crafting_recipe/balloon_mallet
+	name = "Balloon Mallet"
+	result = /obj/item/balloon_mallet
+	reqs = list(
+		/obj/item/toy/balloon/long = 18,
+	)
+	time = 10 SECONDS
+	category = CAT_WEAPON_MELEE
+
+/datum/crafting_recipe/balloon_mallet/check_requirements(mob/user, list/collected_requirements)
+	. = ..()
+	if(HAS_TRAIT(user, TRAIT_BALLOON_SUTRA))
+		return TRUE
+
 /datum/crafting_recipe/tailwhip
 	name = "Liz O' Nine Tails"
 	result = /obj/item/melee/chainofcommand/tailwhip
@@ -129,7 +144,6 @@
 /datum/crafting_recipe/house_edge
 	name = "House Edge"
 	result = /obj/item/house_edge
-	always_available = FALSE
 	tool_behaviors = list(TOOL_WRENCH, TOOL_SCREWDRIVER, TOOL_WELDER)
 	reqs = list(
 		/obj/item/v8_engine = 1,
@@ -142,6 +156,7 @@
 	)
 	time = 10 SECONDS
 	category = CAT_WEAPON_MELEE
+	crafting_flags = CRAFT_CHECK_DENSITY | CRAFT_MUST_BE_LEARNED
 
 /datum/crafting_recipe/giant_wrench
 	name = "Big Slappy"
@@ -155,4 +170,34 @@
 		/obj/item/pickaxe/drill = 1,
 	)
 	time = 10 SECONDS
+	category = CAT_WEAPON_MELEE
+
+/datum/crafting_recipe/singulo_hammer
+	name = "Singularity Hammer"
+	result = /obj/item/singularityhammer
+	reqs = list(
+		/obj/item/assembly/signaler/anomaly/pyro = 1,
+		/obj/item/assembly/signaler/anomaly/grav = 1,
+		/obj/item/assembly/signaler/anomaly/flux = 1,
+		/obj/item/assembly/signaler/anomaly/bluespace = 1,
+		/obj/item/assembly/signaler/anomaly/vortex = 1,
+		/obj/item/assembly/signaler/anomaly/bioscrambler = 1,
+		/obj/item/assembly/signaler/anomaly/hallucination = 1,
+		/obj/item/assembly/signaler/anomaly/dimensional = 1,
+		/obj/item/assembly/signaler/anomaly/ectoplasm = 1,
+	)
+	machinery = list(
+		/obj/machinery/power/supermatter_crystal = CRAFTING_MACHINERY_CONSUME,
+	)
+	time = 10 SECONDS
+	category = CAT_WEAPON_MELEE
+
+/datum/crafting_recipe/bambostaff
+	name = "Bamboo Bo Staff"
+	result = /obj/item/bambostaff
+	reqs = list(
+		/obj/item/stack/sheet/mineral/bamboo = 4,
+		/obj/item/grown/log/steel = 2,
+	)
+	time = 8 SECONDS
 	category = CAT_WEAPON_MELEE

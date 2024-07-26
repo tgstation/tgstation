@@ -9,8 +9,8 @@
 #define FAV_BAIT_DIFFICULTY_MOD -5
 /// Difficulty modifier when bait is fish's disliked
 #define DISLIKED_BAIT_DIFFICULTY_MOD 15
-/// Difficulty modifier when our fisherman has the trait TRAIT_SETTLER
-#define SETTLER_DIFFICULTY_MOD -5
+/// Difficulty modifier when our fisherman has the trait TRAIT_EXPERT_FISHER
+#define EXPERT_FISHER_DIFFICULTY_MOD -5
 
 #define FISH_TRAIT_MINOR_DIFFICULTY_BOOST 5
 
@@ -147,3 +147,20 @@
 
 ///Fluff. The name of the aquarium company shown in the fish catalog
 #define AQUARIUM_COMPANY "Aquatech Ltd."
+
+/// how long between electrogenesis zaps
+#define ELECTROGENESIS_DURATION 40 SECONDS
+/// a random range the electrogenesis cooldown varies by
+#define ELECTROGENESIS_VARIANCE (rand(-10 SECONDS, 10 SECONDS))
+
+#define FISH_BEAUTY_DISGUSTING -500
+#define FISH_BEAUTY_UGLY -300
+#define FISH_BEAUTY_BAD -200
+#define FISH_BEAUTY_NULL 0
+#define FISH_BEAUTY_GENERIC 250
+#define FISH_BEAUTY_GOOD 450
+#define FISH_BEAUTY_GREAT 600
+#define FISH_BEAUTY_EXCELLENT 700
+
+//Fish breeding stops if fish count exceeds this.
+#define AQUARIUM_MAX_BREEDING_POPULATION 20

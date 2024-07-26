@@ -75,17 +75,16 @@ GLOBAL_VAR(posibrain_notify_cooldown)
 	update_appearance()
 	addtimer(CALLBACK(src, PROC_REF(check_success)), ask_delay)
 
-/obj/item/mmi/posibrain/AltClick(mob/living/user)
-	if(!istype(user) || !user.can_perform_action(src))
-		return
+/obj/item/mmi/posibrain/click_alt(mob/living/user)
 	var/input_seed = tgui_input_text(user, "Enter a personality seed", "Enter seed", ask_role, MAX_NAME_LEN)
 	if(isnull(input_seed))
-		return
-	if(!istype(user) || !user.can_perform_action(src))
+		return CLICK_ACTION_BLOCKING
+	if(!user.can_perform_action(src))
 		return
 	to_chat(user, span_notice("You set the personality seed to \"[input_seed]\"."))
 	ask_role = input_seed
 	update_appearance()
+	return CLICK_ACTION_SUCCESS
 
 /obj/item/mmi/posibrain/proc/check_success()
 	searching = FALSE
@@ -223,3 +222,63 @@ GLOBAL_VAR(posibrain_notify_cooldown)
 
 /obj/item/mmi/posibrain/display/is_occupied()
 	return TRUE
+
+/// Posibrains but spherical. They can roll around and you can kick them
+/obj/item/mmi/posibrain/sphere
+	name = "positronic sphere"
+	desc = "Recent developments on cost-cutting measures have allowed us to cut positronic brain cubes into twice-as-cheap spheres. \
+	Unfortunately, it also allows them to move around the lab via rolling maneuvers."
+	icon_state = "spheribrain"
+	base_icon_state = "spheribrain"
+	immobilize = FALSE
+	/// Delay between movements
+	var/move_delay = 0.5 SECONDS
+	/// when can we move again?
+	var/can_move
+
+/obj/item/mmi/posibrain/sphere/Initialize(mapload, autoping)
+	. = ..()
+
+	var/matrix/matrix = matrix()
+	transform = matrix.Scale(0.8, 0.8)
+
+	brainmob.remove_traits(list(TRAIT_IMMOBILIZED, TRAIT_HANDS_BLOCKED), BRAIN_UNAIDED)
+
+/obj/item/mmi/posibrain/sphere/relaymove(mob/living/user, direction)
+	if(isspaceturf(loc) || !direction || mecha)
+		return
+
+	if(can_move >= world.time)
+		return
+	can_move = world.time + move_delay
+
+	// ESCAPE PRISON
+	if(ismovable(loc) && prob(25))
+		var/obj/item/item = pick(loc.contents)
+		if(istype(loc, /obj/item/storage))
+			item.forceMove(loc.drop_location()) //throw stuff out of the inventory till we free ourselves!
+			playsound(src, SFX_RUSTLE, 30, TRUE)
+		return
+
+	// MOVE US
+	if(isturf(loc))
+		can_move = world.time + move_delay
+		try_step_multiz(direction)
+		SpinAnimation(move_delay, 1, direction == NORTH || direction == EAST)
+
+/obj/item/mmi/posibrain/sphere/Moved(atom/old_loc, movement_dir, forced, list/old_locs, momentum_change)
+	. = ..()
+	if(brainmob && isturf(loc))
+		anchored = TRUE //anchor so we dont broom ourselves.
+		do_sweep(src, brainmob, loc, get_dir(old_loc, loc)) //movement dir doesnt work on objects
+		anchored = FALSE
+
+/// Punt the shit across the room
+/obj/item/mmi/posibrain/sphere/attack_hand_secondary(mob/user, list/modifiers)
+	. = ..()
+	if(. == SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN)
+		return .
+	throw_at(get_edge_target_turf(src, get_dir(user, src)), 7, 1, user)
+	user.do_attack_animation(src)
+	can_move = world.time + move_delay //pweeze stawp
+	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN

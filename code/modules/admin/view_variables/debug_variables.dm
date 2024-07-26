@@ -3,11 +3,12 @@
 /proc/debug_variable(name, value, level, datum/owner, sanitize = TRUE, display_flags = NONE) //if D is a list, name will be index, and value will be assoc value.
 	if(owner)
 		if(islist(owner))
+			var/list/list_owner = owner
 			var/index = name
 			if (value)
-				name = owner[name] //name is really the index until this line
+				name = list_owner[name] //name is really the index until this line
 			else
-				value = owner[name]
+				value = list_owner[name]
 			. = "<li style='backgroundColor:white'>([VV_HREF_TARGET_1V(owner, VV_HK_LIST_EDIT, "E", index)]) ([VV_HREF_TARGET_1V(owner, VV_HK_LIST_CHANGE, "C", index)]) ([VV_HREF_TARGET_1V(owner, VV_HK_LIST_REMOVE, "-", index)]) "
 		else
 			. = "<li style='backgroundColor:white'>([VV_HREF_TARGET_1V(owner, VV_HK_BASIC_EDIT, "E", name)]) ([VV_HREF_TARGET_1V(owner, VV_HK_BASIC_CHANGE, "C", name)]) ([VV_HREF_TARGET_1V(owner, VV_HK_BASIC_MASSEDIT, "M", name)]) "
@@ -30,6 +31,9 @@
 
 // This is split into a seperate proc mostly to make errors that happen not break things too much
 /proc/_debug_variable_value(name, value, level, datum/owner, sanitize, display_flags)
+	if(isappearance(value))
+		value = get_vv_appearance(value)
+
 	. = "<font color='red'>DISPLAY_ERROR:</font> ([value] [REF(value)])" // Make sure this line can never runtime
 
 	if(isnull(value))
@@ -48,10 +52,6 @@
 		#else
 		return "/icon (<span class='value'>[value]</span>)"
 		#endif
-
-	if(isappearance(value))
-		var/image/actually_an_appearance = value
-		return "/appearance (<span class='value'>[actually_an_appearance.icon]</span>)"
 
 	if(isfilter(value))
 		var/datum/filter_value = value

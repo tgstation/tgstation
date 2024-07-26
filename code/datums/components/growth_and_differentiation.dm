@@ -11,6 +11,8 @@
 	var/growth_time
 	/// Integer - Probability we grow per SPT_PROB
 	var/growth_probability
+	/// Stores the growth_probability the component had when it was Initialized
+	var/initial_growth_probability
 	/// Integer - The lower bound for the percentage we have to grow before we can differentiate.
 	var/lower_growth_value
 	/// Integer - The upper bound for the percentage we have to grow before we can differentiate.
@@ -37,6 +39,7 @@
 	growth_probability,
 	lower_growth_value,
 	upper_growth_value,
+	scale_with_happiness,
 	list/signals_to_kill_on,
 	datum/callback/optional_checks,
 	datum/callback/optional_grow_behavior,
@@ -46,7 +49,7 @@
 
 	src.growth_path = growth_path
 	src.growth_time = growth_time
-	src.growth_probability = growth_probability
+	initial_growth_probability = src.growth_probability = growth_probability
 	src.lower_growth_value = lower_growth_value
 	src.upper_growth_value = upper_growth_value
 	src.optional_checks = optional_checks
@@ -55,6 +58,10 @@
 	if(islist(signals_to_kill_on))
 		src.signals_to_kill_on = signals_to_kill_on
 		RegisterSignals(parent, src.signals_to_kill_on, PROC_REF(stop_component_processing_entirely))
+
+	if(scale_with_happiness)
+		parent.AddComponent(/datum/component/happiness)
+		RegisterSignal(parent, COMSIG_MOB_HAPPINESS_CHANGE, PROC_REF(on_happiness_change))
 
 	// If we haven't started the round, we can't do timer stuff. Let's wait in case we're mapped in or something.
 	if(!SSticker.HasRoundStarted() && !isnull(growth_time))
@@ -111,7 +118,16 @@
 		return
 
 	if(SPT_PROB(growth_probability, seconds_per_tick))
-		percent_grown += rand(lower_growth_value, upper_growth_value)
+		if(lower_growth_value == upper_growth_value)
+			percent_grown += upper_growth_value
+		else
+			percent_grown += rand(lower_growth_value, upper_growth_value)
+
+/datum/component/growth_and_differentiation/proc/on_happiness_change(datum/source, happiness_percentage)
+	SIGNAL_HANDLER
+
+	var/probability_to_add = initial_growth_probability * happiness_percentage
+	growth_probability = min(initial_growth_probability + probability_to_add, 100)
 
 /// Grows the mob into its new form.
 /datum/component/growth_and_differentiation/proc/grow(silent)
@@ -143,3 +159,4 @@
 	var/mob/living/transformed_mob = old_mob.change_mob_type(growth_path, old_mob.loc, new_name = new_mob_name, delete_old_mob = TRUE)
 	if(initial(new_mob.unique_name))
 		transformed_mob.set_name()
+	ADD_TRAIT(transformed_mob, TRAIT_MOB_HATCHED, INNATE_TRAIT)

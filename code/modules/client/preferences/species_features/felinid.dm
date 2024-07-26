@@ -6,7 +6,7 @@
 	relevant_external_organ = /obj/item/organ/external/tail/cat
 
 /datum/preference/choiced/tail_human/init_possible_values()
-	return assoc_to_keys_features(GLOB.tails_list_human)
+	return assoc_to_keys_features(SSaccessories.tails_list_human)
 
 /datum/preference/choiced/tail_human/apply_to_human(mob/living/carbon/human/target, value)
 	target.dna.features["tail_cat"] = value
@@ -23,11 +23,10 @@
 	relevant_mutant_bodypart = "ears"
 
 /datum/preference/choiced/ears/init_possible_values()
-	return assoc_to_keys_features(GLOB.ears_list)
+	return assoc_to_keys_features(SSaccessories.ears_list)
 
 /datum/preference/choiced/ears/apply_to_human(mob/living/carbon/human/target, value)
 	target.dna.features["ears"] = value
 
 /datum/preference/choiced/ears/create_default_value()
-	var/datum/sprite_accessory/ears/cat/ears = /datum/sprite_accessory/ears/cat
-	return initial(ears.name)
+	return /datum/sprite_accessory/ears/cat::name

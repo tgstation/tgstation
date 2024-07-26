@@ -92,7 +92,7 @@
 	name = "Power Cell Crate"
 	desc = "Looking for power overwhelming? Look no further. Contains three high-voltage power cells."
 	cost = CARGO_CRATE_VALUE * 3
-	contains = list(/obj/item/stock_parts/cell/high = 3)
+	contains = list(/obj/item/stock_parts/power_store/cell/high = 3)
 	crate_name = "power cell crate"
 	crate_type = /obj/structure/closet/crate/engineering/electrical
 
@@ -214,6 +214,14 @@
 	contains = list(/obj/item/circuitboard/computer/sat_control)
 	crate_name= "shield control board crate"
 
+/datum/supply_pack/engineering/ceturtlenecks
+	name = "Chief Engineer Turtlenecks"
+	desc = "Contains the CE's turtleneck and turtleneck skirt."
+	cost = CARGO_CRATE_VALUE * 2
+	access = ACCESS_CE
+	contains = list(/obj/item/clothing/under/rank/engineering/chief_engineer/turtleneck,
+					/obj/item/clothing/under/rank/engineering/chief_engineer/turtleneck/skirt,
+				)
 
 /// Engine Construction
 

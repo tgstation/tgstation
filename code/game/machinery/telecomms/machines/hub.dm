@@ -31,7 +31,7 @@
 		// Then broadcast that signal to
 		relay_information(signal, /obj/machinery/telecomms/broadcaster)
 
-	use_power(idle_power_usage)
+	use_energy(idle_power_usage)
 
 /obj/machinery/telecomms/hub/update_power()
 	var/old_on = on
@@ -63,7 +63,6 @@
 		"s_relay",
 		"m_relay",
 		"r_relay",
-		"h_relay",
 		"science",
 		"medical",
 		"supply",

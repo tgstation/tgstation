@@ -18,16 +18,8 @@
 /// Does this light ignore inherent offsets? (Pixels, transforms, etc)
 #define LIGHT_IGNORE_OFFSET (1<<2)
 
-// Bay lighting engine shit, not in /code/modules/lighting because BYOND is being shit about it
-/// frequency, in 1/10ths of a second, of the lighting process
-#define LIGHTING_INTERVAL 5
-
 #define MINIMUM_USEFUL_LIGHT_RANGE 1.4
 
-/// type of falloff to use for lighting; 1 for circular, 2 for square
-#define LIGHTING_FALLOFF 1
-/// use lambertian shading for light sources
-#define LIGHTING_LAMBERTIAN 0
 /// light UNDER the floor. primarily used for starlight, shouldn't fuck with this
 #define LIGHTING_HEIGHT_SPACE -0.5
 /// light ON the floor

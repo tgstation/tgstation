@@ -79,9 +79,10 @@ export const TurbineComputer = (props) => {
                 animated
                 value={data.regulator * 100}
                 unit="%"
+                step={1}
                 minValue={1}
                 maxValue={100}
-                onDrag={(e, value) =>
+                onDrag={(value) =>
                   act('regulate', {
                     regulate: value * 0.01,
                   })

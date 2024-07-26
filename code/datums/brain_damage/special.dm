@@ -220,7 +220,7 @@
 	to_chat(owner, span_warning("Your connection to [linked_target] suddenly feels extremely strong... you can feel it pulling you!"))
 	owner.playsound_local(owner, 'sound/magic/lightning_chargeup.ogg', 75, FALSE)
 	returning = TRUE
-	addtimer(CALLBACK(src, PROC_REF(snapback)), 100)
+	addtimer(CALLBACK(src, PROC_REF(snapback)), 10 SECONDS)
 
 /datum/brain_trauma/special/quantum_alignment/proc/snapback()
 	returning = FALSE
@@ -295,7 +295,7 @@
 /datum/brain_trauma/special/death_whispers/proc/whispering()
 	ADD_TRAIT(owner, TRAIT_SIXTHSENSE, TRAUMA_TRAIT)
 	active = TRUE
-	addtimer(CALLBACK(src, PROC_REF(cease_whispering)), rand(50, 300))
+	addtimer(CALLBACK(src, PROC_REF(cease_whispering)), rand(5 SECONDS, 30 SECONDS))
 
 /datum/brain_trauma/special/death_whispers/proc/cease_whispering()
 	REMOVE_TRAIT(owner, TRAIT_SIXTHSENSE, TRAUMA_TRAIT)
@@ -472,3 +472,56 @@
 	owner.mob_mood?.mood_modifier += 1
 	owner.mob_mood?.sanity_level = SANITY_GREAT
 	return ..()
+
+/datum/brain_trauma/special/primal_instincts
+	name = "Feral Instincts"
+	desc = "Patient's mind is stuck in a primal state, causing them to act on instinct rather than reason."
+	scan_desc = "ferality"
+	gain_text = span_warning("Your pupils dilate, and it becomes harder to think straight.")
+	lose_text = span_notice("Your mind clears, and you feel more in control.")
+	resilience = TRAUMA_RESILIENCE_SURGERY
+	/// Tracks any existing AI controller, so we can restore it when we're cured
+	var/old_ai_controller_type
+
+/datum/brain_trauma/special/primal_instincts/on_gain()
+	. = ..()
+	if(!isnull(owner.ai_controller))
+		old_ai_controller_type = owner.ai_controller.type
+		QDEL_NULL(owner.ai_controller)
+
+	owner.ai_controller = new /datum/ai_controller/monkey(owner)
+	owner.ai_controller.continue_processing_when_client = TRUE
+	owner.ai_controller.can_idle = FALSE
+	owner.ai_controller.set_ai_status(AI_STATUS_OFF)
+
+/datum/brain_trauma/special/primal_instincts/on_lose(silent)
+	. = ..()
+	if(QDELING(owner))
+		return
+
+	QDEL_NULL(owner.ai_controller)
+	if(old_ai_controller_type)
+		owner.ai_controller = new old_ai_controller_type(owner)
+	owner.remove_language(/datum/language/monkey, UNDERSTOOD_LANGUAGE, TRAUMA_TRAIT)
+
+/datum/brain_trauma/special/primal_instincts/on_life(seconds_per_tick, times_fired)
+	if(isnull(owner.ai_controller))
+		qdel(src)
+		return
+
+	if(!SPT_PROB(3, seconds_per_tick))
+		return
+
+	owner.grant_language(/datum/language/monkey, UNDERSTOOD_LANGUAGE, TRAUMA_TRAIT)
+	owner.ai_controller.set_blackboard_key(BB_MONKEY_AGGRESSIVE, prob(75))
+	if(owner.ai_controller.ai_status == AI_STATUS_OFF)
+		owner.ai_controller.set_ai_status(AI_STATUS_ON)
+		owner.log_message("became controlled by monkey instincts ([owner.ai_controller.blackboard[BB_MONKEY_AGGRESSIVE] ? "aggressive" : "docile"])", LOG_ATTACK, color = "orange")
+		to_chat(owner, span_warning("You feel the urge to act on your primal instincts..."))
+	// extend original timer if we roll the effect while it's already ongoing
+	addtimer(CALLBACK(src, PROC_REF(primal_instincts_off)), rand(20 SECONDS, 40 SECONDS), TIMER_UNIQUE|TIMER_NO_HASH_WAIT|TIMER_OVERRIDE|TIMER_DELETE_ME)
+
+/datum/brain_trauma/special/primal_instincts/proc/primal_instincts_off()
+	owner.ai_controller.set_ai_status(AI_STATUS_OFF)
+	owner.remove_language(/datum/language/monkey, UNDERSTOOD_LANGUAGE, TRAUMA_TRAIT)
+	to_chat(owner, span_green("The urge subsides."))

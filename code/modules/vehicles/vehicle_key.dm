@@ -1,7 +1,7 @@
 /obj/item/key
 	name = "key"
 	desc = "A small grey key."
-	icon = 'icons/obj/vehicles.dmi'
+	icon = 'icons/mob/rideables/vehicles.dmi'
 	icon_state = "key"
 	w_class = WEIGHT_CLASS_TINY
 
@@ -20,7 +20,7 @@
 		return SHAME
 	user.visible_message(span_suicide("[user] is putting \the [src] in [user.p_their()] ear and starts [user.p_their()] motor! It looks like [user.p_theyre()] trying to commit suicide!"))
 	user.say("Vroom vroom!!", forced="secway key suicide") //Not doing a shamestate here, because even if they fail to speak they're spinning.
-	addtimer(CALLBACK(user, TYPE_PROC_REF(/mob/living/, gib)), 20)
+	addtimer(CALLBACK(user, TYPE_PROC_REF(/mob/living/, gib)), 2 SECONDS)
 	return MANUAL_SUICIDE
 
 /obj/item/key/janitor
@@ -33,9 +33,14 @@
 	attack_verb_continuous = list("stubs", "pokes")
 	attack_verb_simple = list("stub", "poke")
 	sharpness = SHARP_EDGED
-	embedding = list("pain_mult" = 1, "embed_chance" = 30, "fall_chance" = 70)
+	embed_type = /datum/embed_data/janicart_key
 	wound_bonus = -1
 	bare_wound_bonus = 2
+
+/datum/embed_data/janicart_key
+	pain_mult = 1
+	embed_chance = 30
+	fall_chance = 70
 
 /obj/item/key/janitor/suicide_act(mob/living/carbon/user)
 	switch(user.mind?.get_skill_level(/datum/skill/cleaning))
@@ -46,7 +51,7 @@
 		if(SKILL_LEVEL_APPRENTICE to SKILL_LEVEL_JOURNEYMAN) //At least they tried
 			user.visible_message(span_suicide("[user] is putting \the [src] in [user.p_their()] mouth and has inefficiently become one with the janicart! It looks like [user.p_theyre()] trying to commit suicide!"))
 			user.AddElement(/datum/element/cleaning)
-			addtimer(CALLBACK(src, PROC_REF(manual_suicide), user), 51)
+			addtimer(CALLBACK(src, PROC_REF(manual_suicide), user), 5.1 SECONDS)
 			return MANUAL_SUICIDE
 		if(SKILL_LEVEL_EXPERT to SKILL_LEVEL_MASTER) //They are worthy enough, but can it go even further beyond?
 			user.visible_message(span_suicide("[user] is putting \the [src] in [user.p_their()] mouth and has skillfully become one with the janicart! It looks like [user.p_theyre()] trying to commit suicide!"))

@@ -1,3 +1,7 @@
+GLOBAL_VAR_INIT(roaches_deployed, FALSE)
+#define MOTHROACH_START_CHANCE 5
+#define MAX_MOTHROACH_AMOUNT 3
+
 /obj/item/vending_refill/wardrobe
 	icon_state = "refill_clothes"
 
@@ -7,6 +11,29 @@
 	payment_department = NO_FREEBIES
 	panel_type = "panel19"
 	light_mask = "wardrobe-light-mask"
+
+/obj/machinery/vending/wardrobe/Initialize(mapload)
+	. = ..()
+	if(!mapload)
+		return
+	if(GLOB.roaches_deployed || !is_station_level(z) || !prob(MOTHROACH_START_CHANCE))
+		return
+	for(var/count in 1 to rand(1, MAX_MOTHROACH_AMOUNT))
+		new /mob/living/basic/mothroach(src)
+	GLOB.roaches_deployed = TRUE
+
+
+/obj/machinery/vending/wardrobe/on_dispense(obj/item/clothing/food)
+	if(!istype(food))
+		return
+	for(var/mob/living/basic/mothroach/roach in contents)
+		food.take_damage(food.get_integrity() * 0.5)
+
+/obj/machinery/vending/wardrobe/take_damage(damage_amount, damage_type = BRUTE, damage_flag = 0, sound_effect = 1, attack_dir)
+	. = ..()
+	for(var/mob/living/basic/mothroach/roach in contents)
+		roach.ai_controller.set_blackboard_key(BB_BASIC_MOB_FLEE_TARGET, src) //scatter away!
+		roach.forceMove(drop_location())
 
 /obj/machinery/vending/wardrobe/sec_wardrobe
 	name = "\improper SecDrobe"
@@ -23,10 +50,11 @@
 		/obj/item/clothing/under/rank/security/officer/grey = 3,
 		/obj/item/clothing/under/pants/slacks = 3,
 		/obj/item/clothing/under/rank/security/officer/blueshirt = 3,
+		/obj/item/clothing/gloves/color/black/security/blu = 3,
 		/obj/item/clothing/suit/armor/vest/secjacket = 3,
 		/obj/item/clothing/suit/hooded/wintercoat/security = 3,
 		/obj/item/clothing/suit/armor/vest = 3,
-		/obj/item/clothing/gloves/color/black = 3,
+		/obj/item/clothing/gloves/color/black/security = 3,
 		/obj/item/clothing/shoes/jackboots/sec = 3,
 		/obj/item/storage/backpack/security = 3,
 		/obj/item/storage/backpack/satchel/sec = 3,
@@ -156,12 +184,14 @@
 		/obj/item/clothing/head/beret/cargo = 3,
 		/obj/item/clothing/mask/bandana/striped/cargo = 3,
 		/obj/item/clothing/head/soft = 3,
+		/obj/item/clothing/head/utility/hardhat/orange = 3,
 		/obj/item/clothing/under/rank/cargo/tech = 3,
 		/obj/item/clothing/under/rank/cargo/tech/skirt = 3,
 		/obj/item/clothing/under/rank/cargo/tech/alt = 3,
 		/obj/item/clothing/under/rank/cargo/tech/skirt/alt = 3,
 		/obj/item/clothing/suit/toggle/cargo_tech = 3,
 		/obj/item/clothing/suit/hooded/wintercoat/cargo = 3,
+		/obj/item/clothing/suit/hazardvest = 3,
 		/obj/item/clothing/gloves/fingerless = 3,
 		/obj/item/clothing/shoes/sneakers/black = 3,
 		/obj/item/storage/backpack = 3,
@@ -172,13 +202,13 @@
 		/obj/item/storage/bag/mail = 3,
 		/obj/item/radio/headset/headset_cargo = 3,
 		/obj/item/clothing/accessory/pocketprotector = 3,
-		/obj/item/clothing/head/utility/hardhat/orange = 3,
-		/obj/item/clothing/suit/hazardvest = 3,
 	)
 	premium = list(
 		/obj/item/clothing/head/costume/mailman = 1,
 		/obj/item/clothing/under/misc/mailman = 1,
 		/obj/item/clothing/under/rank/cargo/miner = 3,
+		/obj/item/clothing/under/rank/cargo/miner/lavaland = 3,
+		/obj/item/clothing/under/rank/cargo/bitrunner = 3,
 	)
 	refill_canister = /obj/item/vending_refill/wardrobe/cargo_wardrobe
 	payment_department = ACCOUNT_CAR
@@ -316,28 +346,27 @@
 	product_ads = "Any day above ground is a good one!;My day starts when yours ends!;And they call this a dying business!;See you when you're dead!"
 	vend_reply = "Don't forget your \"Buy one get one free\" burial deal!"
 	products = list(
-		/obj/item/toy/crayon/white = 2,
 		/obj/item/clothing/head/utility/surgerycap/black = 1,
 		/obj/item/clothing/mask/surgical = 1,
-		/obj/item/clothing/under/rank/medical/scrubs/coroner = 1,
-		/obj/item/clothing/under/rank/medical/coroner = 1,
-		/obj/item/clothing/under/rank/medical/coroner/skirt = 1,
-		/obj/item/clothing/suit/toggle/labcoat/coroner = 1,
 		/obj/item/clothing/suit/apron/surgical = 1,
 		/obj/item/clothing/suit/hooded/wintercoat/medical/coroner = 1,
-		/obj/item/clothing/gloves/latex/coroner = 1,
+		/obj/item/clothing/suit/toggle/labcoat/coroner = 1,
+		/obj/item/clothing/under/rank/medical/coroner = 1,
+		/obj/item/clothing/under/rank/medical/coroner/skirt = 1,
+		/obj/item/clothing/under/rank/medical/scrubs/coroner = 1,
 		/obj/item/clothing/shoes/sneakers/black = 1,
+		/obj/item/clothing/gloves/latex/coroner = 1,
+		/obj/item/cautery/cruel = 1,
+		/obj/item/hemostat/cruel = 1,
+		/obj/item/retractor/cruel = 1,
+		/obj/item/scalpel/cruel = 1,
 		/obj/item/storage/backpack/coroner = 1,
-		/obj/item/storage/backpack/satchel/coroner = 1,
 		/obj/item/storage/backpack/duffelbag/coroner = 1,
 		/obj/item/storage/backpack/messenger/coroner = 1,
+		/obj/item/storage/backpack/satchel/coroner = 1,
 		/obj/item/storage/box/bodybags = 3,
-		/obj/item/scalpel/cruel = 1,
-		/obj/item/retractor/cruel = 1,
-		/obj/item/hemostat/cruel = 1,
-		/obj/item/cautery/cruel = 1,
-		/obj/item/toy/crayon/white = 1,
 		/obj/item/radio/headset/headset_srvmed = 2,
+		/obj/item/toy/crayon/white = 2,
 	)
 	contraband = list(
 		/obj/item/knife/ritual = 1,
@@ -493,6 +522,8 @@
 		/obj/item/clothing/under/rank/civilian/lawyer/black/skirt = 1,
 		/obj/item/clothing/shoes/laceup = 2,
 		/obj/item/radio/headset/headset_srv = 2,
+		/obj/item/storage/box/evidence = 2,
+		/obj/item/fish_feed = 1,
 	)
 	refill_canister = /obj/item/vending_refill/wardrobe/law_wardrobe
 	payment_department = ACCOUNT_SRV
@@ -703,3 +734,6 @@
 /obj/item/vending_refill/wardrobe/cent_wardrobe
 	machine_name = "CentDrobe"
 	light_color = LIGHT_COLOR_ELECTRIC_GREEN
+
+#undef MOTHROACH_START_CHANCE
+#undef MAX_MOTHROACH_AMOUNT

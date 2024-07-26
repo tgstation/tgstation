@@ -20,11 +20,11 @@
 		return
 	. += span_notice("Right-click to tear off the carbon-copy (you must use both hands).")
 
-/obj/item/paper/carbon/AltClick(mob/living/user)
+/obj/item/paper/carbon/click_alt(mob/living/user)
 	if(!copied)
 		to_chat(user, span_notice("Take off the carbon copy first."))
-		return
-	return ..()
+		return CLICK_ACTION_BLOCKING
+	return CLICK_ACTION_SUCCESS
 
 /obj/item/paper/carbon/proc/removecopy(mob/living/user)
 	if(copied)

@@ -5,9 +5,6 @@
 	desc = "A little cleaning robot, he looks so excited!"
 	icon = 'icons/mob/silicon/aibots.dmi'
 	icon_state = "cleanbot0"
-	pass_flags = PASSMOB | PASSFLAPS
-	density = FALSE
-	anchored = FALSE
 	health = 25
 	maxHealth = 25
 	light_color = "#99ccff"
@@ -330,7 +327,7 @@
 		INVOKE_ASYNC(our_mop, TYPE_PROC_REF(/obj/item, melee_attack_chain), src, target)
 		return COMPONENT_CANCEL_ATTACK_CHAIN
 
-	if(!iscarbon(target) && !is_type_in_typecache(target, huntable_trash))
+	if(!(iscarbon(target) && (bot_access_flags & BOT_COVER_EMAGGED)) && !is_type_in_typecache(target, huntable_trash))
 		return NONE
 
 	visible_message(span_danger("[src] sprays hydrofluoric acid at [target]!"))

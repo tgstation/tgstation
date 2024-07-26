@@ -1,44 +1,45 @@
+#define SPELLBOOK_CATEGORY_ASSISTANCE "Assistance"
 // Wizard spells that assist the caster in some way
 /datum/spellbook_entry/summonitem
 	name = "Summon Item"
 	desc = "Recalls a previously marked item to your hand from anywhere in the universe."
 	spell_type = /datum/action/cooldown/spell/summonitem
-	category = "Assistance"
+	category = SPELLBOOK_CATEGORY_ASSISTANCE
 	cost = 1
 
 /datum/spellbook_entry/charge
 	name = "Charge"
 	desc = "This spell can be used to recharge a variety of things in your hands, from magical artifacts to electrical components. A creative wizard can even use it to grant magical power to a fellow magic user."
 	spell_type = /datum/action/cooldown/spell/charge
-	category = "Assistance"
+	category = SPELLBOOK_CATEGORY_ASSISTANCE
 	cost = 1
 
 /datum/spellbook_entry/shapeshift
 	name = "Wild Shapeshift"
 	desc = "Take on the shape of another for a time to use their natural abilities. Once you've made your choice it cannot be changed."
 	spell_type = /datum/action/cooldown/spell/shapeshift/wizard
-	category = "Assistance"
+	category = SPELLBOOK_CATEGORY_ASSISTANCE
 	cost = 1
 
 /datum/spellbook_entry/tap
 	name = "Soul Tap"
 	desc = "Fuel your spells using your own soul!"
 	spell_type = /datum/action/cooldown/spell/tap
-	category = "Assistance"
+	category = SPELLBOOK_CATEGORY_ASSISTANCE
 	cost = 1
 
 /datum/spellbook_entry/item/staffanimation
 	name = "Staff of Animation"
 	desc = "An arcane staff capable of shooting bolts of eldritch energy which cause inanimate objects to come to life. This magic doesn't affect machines."
 	item_path = /obj/item/gun/magic/staff/animate
-	category = "Assistance"
+	category = SPELLBOOK_CATEGORY_ASSISTANCE
 
 /datum/spellbook_entry/item/soulstones
 	name = "Soulstone Shard Kit"
 	desc = "Soul Stone Shards are ancient tools capable of capturing and harnessing the spirits of the dead and dying. \
 		The spell Artificer allows you to create arcane machines for the captured souls to pilot."
 	item_path = /obj/item/storage/belt/soulstone/full
-	category = "Assistance"
+	category = SPELLBOOK_CATEGORY_ASSISTANCE
 
 /datum/spellbook_entry/item/soulstones/try_equip_item(mob/living/carbon/human/user, obj/item/to_equip)
 	var/was_equipped = user.equip_to_slot_if_possible(to_equip, ITEM_SLOT_BELT, disable_warning = TRUE)
@@ -56,13 +57,13 @@
 	name = "A Necromantic Stone"
 	desc = "A Necromantic stone is able to resurrect three dead individuals as skeletal thralls for you to command."
 	item_path = /obj/item/necromantic_stone
-	category = "Assistance"
+	category = SPELLBOOK_CATEGORY_ASSISTANCE
 
 /datum/spellbook_entry/item/contract
 	name = "Contract of Apprenticeship"
 	desc = "A magical contract binding an apprentice wizard to your service, using it will summon them to your side."
 	item_path = /obj/item/antag_spawner/contract
-	category = "Assistance"
+	category = SPELLBOOK_CATEGORY_ASSISTANCE
 	refundable = TRUE
 
 /datum/spellbook_entry/item/guardian
@@ -70,7 +71,7 @@
 	desc = "A deck of guardian tarot cards, capable of binding a personal guardian to your body. There are multiple types of guardian available, but all of them will transfer some amount of damage to you. \
 	It would be wise to avoid buying these with anything capable of causing you to swap bodies with others."
 	item_path = /obj/item/guardian_creator/wizard
-	category = "Assistance"
+	category = SPELLBOOK_CATEGORY_ASSISTANCE
 
 /datum/spellbook_entry/item/bloodbottle
 	name = "Bottle of Blood"
@@ -80,7 +81,7 @@
 		in their killing, and you yourself may become a victim."
 	item_path = /obj/item/antag_spawner/slaughter_demon
 	limit = 3
-	category = "Assistance"
+	category = SPELLBOOK_CATEGORY_ASSISTANCE
 	refundable = TRUE
 
 /datum/spellbook_entry/item/hugbottle
@@ -95,7 +96,7 @@
 	item_path = /obj/item/antag_spawner/slaughter_demon/laughter
 	cost = 1 //non-destructive; it's just a jape, sibling!
 	limit = 3
-	category = "Assistance"
+	category = SPELLBOOK_CATEGORY_ASSISTANCE
 	refundable = TRUE
 
 /datum/spellbook_entry/item/vendormancer
@@ -105,4 +106,6 @@
 		throw around to squash oponents or be directly detonated. When out of \
 		charges a long channel will restore the charges."
 	item_path = /obj/item/runic_vendor_scepter
-	category = "Assistance"
+	category = SPELLBOOK_CATEGORY_ASSISTANCE
+
+#undef SPELLBOOK_CATEGORY_ASSISTANCE

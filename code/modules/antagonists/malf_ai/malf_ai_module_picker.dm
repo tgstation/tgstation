@@ -24,7 +24,7 @@
 		filtered_modules[AM.category][AM] = AM
 
 	for(var/category in filtered_modules)
-		filtered_modules[category] = sortTim(filtered_modules[category], GLOBAL_PROC_REF(cmp_malfmodules_priority))
+		sortTim(filtered_modules[category], GLOBAL_PROC_REF(cmp_malfmodules_priority))
 
 	return filtered_modules
 

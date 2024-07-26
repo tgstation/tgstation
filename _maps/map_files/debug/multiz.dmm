@@ -50,9 +50,7 @@
 /turf/open/floor/iron,
 /area/station/engineering/main)
 "as" = (
-/obj/machinery/power/smes{
-	charge = 5e+006
-	},
+/obj/machinery/power/smes/full,
 /obj/machinery/airalarm/directional/north{
 	locked = 0;
 	pixel_y = 23

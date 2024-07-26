@@ -91,4 +91,4 @@
 				spell_options -= spell
 
 	granted_action = pick(spell_options)
-	action_name = lowertext(initial(granted_action.name))
+	action_name = LOWER_TEXT(initial(granted_action.name))

@@ -8,7 +8,6 @@
 	alt_covers_chest = TRUE
 	icon = 'icons/obj/clothing/under/syndicate.dmi'
 	worn_icon = 'icons/mob/clothing/under/syndicate.dmi'
-	supports_variations_flags = CLOTHING_MONKEY_VARIATION
 
 /datum/armor/clothing_under/syndicate
 	melee = 10

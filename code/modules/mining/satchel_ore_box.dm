@@ -19,12 +19,10 @@
 	for(var/obj/item/weapon in src)
 		weapon.forceMove(drop)
 
-/obj/structure/ore_box/deconstruct(disassembled = TRUE)
+/obj/structure/ore_box/atom_deconstruct(disassembled = TRUE)
 	new /obj/item/stack/sheet/mineral/wood(loc, 4)
 
 	dump_box_contents()
-
-	return ..()
 
 /obj/structure/ore_box/add_context(atom/source, list/context, obj/item/held_item, mob/user)
 	. = NONE

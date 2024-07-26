@@ -12,10 +12,9 @@
 ///from base of atom/get_examine_name(): (/mob, list/overrides)
 #define COMSIG_ATOM_GET_EXAMINE_NAME "atom_examine_name"
 	//Positions for overrides list
-	#define EXAMINE_POSITION_ARTICLE (1<<0)
-	#define EXAMINE_POSITION_BEFORE (1<<1)
-	//End positions
-	#define COMPONENT_EXNAME_CHANGED (1<<0)
+	#define EXAMINE_POSITION_ARTICLE 1
+	#define EXAMINE_POSITION_BEFORE 2
+	#define EXAMINE_POSITION_NAME 3
 ///from base of atom/examine(): (/mob, list/examine_text, can_see_inside)
 #define COMSIG_ATOM_REAGENT_EXAMINE "atom_reagent_examine"
 	/// Stop the generic reagent examine text
@@ -69,7 +68,7 @@
 #define COMSIG_ATOM_EXITED "atom_exited"
 ///from base of atom/movable/Moved(): (atom/movable/gone, direction)
 #define COMSIG_ATOM_ABSTRACT_EXITED "atom_abstract_exited"
-///from base of atom/Bumped(): (/atom/movable)
+///from base of atom/Bumped(): (/atom/movable) (the one that gets bumped)
 #define COMSIG_ATOM_BUMPED "atom_bumped"
 ///from base of atom/has_gravity(): (turf/location, list/forced_gravities)
 #define COMSIG_ATOM_HAS_GRAVITY "atom_has_gravity"
@@ -134,3 +133,13 @@
 #define COMSIG_ATOM_PRE_CLEAN "atom_pre_clean"
 	///cancel clean
 	#define COMSIG_ATOM_CANCEL_CLEAN (1<<0)
+
+/// From /obj/item/stack/make_item()
+#define COMSIG_ATOM_CONSTRUCTED "atom_constructed"
+
+/// From /obj/effect/particle_effect/sparks/proc/sparks_touched(datum/source, atom/movable/singed)
+#define COMSIG_ATOM_TOUCHED_SPARKS "atom_touched_sparks"
+#define COMSIG_ATOM_TOUCHED_HAZARDOUS_SPARKS "atom_touched_hazardous_sparks"
+
+/// From whoever has been revealed (atom/revealed)
+#define COMSIG_ATOM_REVEAL "atom_reveal"

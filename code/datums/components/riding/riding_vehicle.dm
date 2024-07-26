@@ -169,6 +169,8 @@
 /datum/component/riding/vehicle/scooter/skateboard
 	vehicle_move_delay = 1.5
 	ride_check_flags = RIDER_NEEDS_LEGS | UNBUCKLE_DISABLED_RIDER
+	///If TRUE, the vehicle will be slower (but safer) to ride on walk intent.
+	var/can_slow_down = TRUE
 
 /datum/component/riding/vehicle/scooter/skateboard/handle_specials()
 	. = ..()
@@ -177,8 +179,121 @@
 	set_vehicle_dir_layer(EAST, OBJ_LAYER)
 	set_vehicle_dir_layer(WEST, OBJ_LAYER)
 
+/datum/component/riding/vehicle/scooter/skateboard/RegisterWithParent()
+	. = ..()
+	if(can_slow_down)
+		RegisterSignal(parent, COMSIG_ATOM_EXAMINE, PROC_REF(on_examine))
+	var/obj/vehicle/ridden/scooter/skateboard/board = parent
+	if(istype(board))
+		board.can_slow_down = can_slow_down
+
+/datum/component/riding/vehicle/scooter/skateboard/proc/on_examine(datum/source, mob/user, list/examine_list)
+	SIGNAL_HANDLER
+	examine_list += span_notice("Going slow and nice at [EXAMINE_HINT("walk")] speed will prevent crashing into things.")
+
+/datum/component/riding/vehicle/scooter/skateboard/vehicle_mob_buckle(datum/source, mob/living/rider, force = FALSE)
+	. = ..()
+	if(can_slow_down)
+		RegisterSignal(rider, COMSIG_MOVE_INTENT_TOGGLED, PROC_REF(toggle_move_delay))
+		toggle_move_delay(rider)
+
+/datum/component/riding/vehicle/scooter/skateboard/handle_unbuckle(mob/living/rider)
+	. = ..()
+	if(can_slow_down)
+		toggle_move_delay(rider)
+		UnregisterSignal(rider, COMSIG_MOVE_INTENT_TOGGLED)
+
+/datum/component/riding/vehicle/scooter/skateboard/proc/toggle_move_delay(mob/living/rider)
+	SIGNAL_HANDLER
+	vehicle_move_delay = initial(vehicle_move_delay)
+	if(rider.move_intent == MOVE_INTENT_WALK)
+		vehicle_move_delay += 0.6
+
+/datum/component/riding/vehicle/scooter/skateboard/pro
+	vehicle_move_delay = 1
+
+///This one lets the rider ignore gravity, move in zero g and son on, but only on ground turfs or at most one z-level above them.
+/datum/component/riding/vehicle/scooter/skateboard/hover
+	vehicle_move_delay = 1
+	override_allow_spacemove = TRUE
+
+/datum/component/riding/vehicle/scooter/skateboard/hover/RegisterWithParent()
+	. = ..()
+	RegisterSignal(parent, COMSIG_ATOM_HAS_GRAVITY, PROC_REF(check_grav))
+	RegisterSignal(parent, COMSIG_MOVABLE_SPACEMOVE, PROC_REF(check_drifting))
+	hover_check()
+
+///Makes sure that the vehicle is grav-less if capable of zero-g movement. Forced gravity will honestly screw this.
+/datum/component/riding/vehicle/scooter/skateboard/hover/proc/check_grav(datum/source, turf/gravity_turf, list/gravs)
+	SIGNAL_HANDLER
+	if(override_allow_spacemove)
+		gravs += 0
+
+///Makes sure the vehicle isn't drifting while it can be maneuvered.
+/datum/component/riding/vehicle/scooter/skateboard/hover/proc/check_drifting(datum/source, movement_dir, continuous_move)
+	SIGNAL_HANDLER
+	if(override_allow_spacemove)
+		return COMSIG_MOVABLE_STOP_SPACEMOVE
+
+/datum/component/riding/vehicle/scooter/skateboard/hover/vehicle_moved(atom/movable/source, oldloc, dir, forced)
+	. = ..()
+	hover_check(TRUE)
+
+///Makes sure that the hoverboard can move in zero-g in (open) space but only there's a ground turf on the z-level below.
+/datum/component/riding/vehicle/scooter/skateboard/hover/proc/hover_check(is_moving = FALSE)
+	var/atom/movable/movable = parent
+	if(!is_space_or_openspace(movable.loc))
+		on_hover_enabled()
+		return
+	var/turf/open/our_turf = movable.loc
+	var/turf/below = GET_TURF_BELOW(our_turf)
+
+	if(!check_space_turf(our_turf))
+		on_hover_fail()
+		return
+	//it's open space without support and the turf below is null or space without lattice, or if it'd fall several z-levels.
+	if(isopenspaceturf(our_turf) && our_turf.zPassOut(DOWN) && (isnull(below) || !check_space_turf(below) || (below.zPassOut(DOWN) && below.zPassIn(DOWN))))
+		on_hover_fail(our_turf, below, is_moving)
+		return
+	on_hover_enabled()
+
+///Part of the hover_check proc that returns false if it's a space turf without lattice or such.
+/datum/component/riding/vehicle/scooter/skateboard/hover/proc/check_space_turf(turf/turf)
+	if(!isspaceturf(turf))
+		return TRUE
+	for(var/obj/object in turf.contents)
+		if(object.obj_flags & BLOCK_Z_OUT_DOWN)
+			return TRUE
+	return FALSE
+
+///Called by hover_check() when the hoverboard is on a valid turf.
+/datum/component/riding/vehicle/scooter/skateboard/hover/proc/on_hover_enabled()
+	override_allow_spacemove = TRUE
+
+///Called by hover_check() when the hoverboard is on space or open space turf without a support underneath it.
+/datum/component/riding/vehicle/scooter/skateboard/hover/proc/on_hover_fail(turf/open/our_turf, turf/turf_below, is_moving)
+	override_allow_spacemove = FALSE
+	if(turf_below)
+		our_turf.zFall(parent, falling_from_move = is_moving)
+
+/datum/component/riding/vehicle/scooter/skateboard/hover/holy
+	var/is_slown_down = FALSE
+
+/datum/component/riding/vehicle/scooter/skateboard/hover/holy/on_hover_enabled()
+	if(!is_slown_down)
+		return
+	is_slown_down = FALSE
+	vehicle_move_delay -= 1
+
+/datum/component/riding/vehicle/scooter/skateboard/hover/holy/on_hover_fail(turf/open/our_turf, turf/turf_below, is_moving)
+	if(is_slown_down)
+		return
+	is_slown_down = TRUE
+	vehicle_move_delay += 1
+
 /datum/component/riding/vehicle/scooter/skateboard/wheelys
 	vehicle_move_delay = 0
+	can_slow_down = FALSE
 
 /datum/component/riding/vehicle/scooter/skateboard/wheelys/handle_specials()
 	. = ..()
@@ -273,4 +388,4 @@
 	. = ..()
 	var/obj/vehicle/ridden/wheelchair/motorized/our_chair = parent
 	if(istype(our_chair) && our_chair.power_cell)
-		our_chair.power_cell.use(our_chair.power_usage / max(our_chair.power_efficiency, 1) * 0.05)
+		our_chair.power_cell.use(our_chair.energy_usage / max(our_chair.power_efficiency, 1) * 0.05)
