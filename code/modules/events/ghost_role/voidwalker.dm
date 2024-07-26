@@ -6,7 +6,7 @@
 	min_players = 40
 	dynamic_should_hijack = TRUE
 	category = EVENT_CATEGORY_ENTITIES
-	description = "A Void Walker that rips people out of the station and into the abyss"
+	description = "A Voidwalker that rips people out of the station and into the abyss"
 	min_wizard_trigger_potency = 6
 	max_wizard_trigger_potency = 7
 
