@@ -6,9 +6,8 @@
 // equipment variants (done? maybe a lock module, finish comms module, and maybe a few proper guns) and their research
 // slots: comms (radio and something else), sensors(HUDs or something, mesons??), engine, 1 secondary slot (cargo and shit), 1 primary slot(tools or gun???), 3 misc modules (locks and shit), armor would either be added during construction or as a slot
 // innate armor potentially
-// figure out whether this should use action buttons or an UI or a combination of both for equipment
+// research and print costs
 // crashing into people and walls and stuff
-// misc slot equipment: Warp Drive. Allows you to warp to bluespace gigabeacons at HUGE energy cost. Not equipped by default, one starts in the pod bay. A bluespace gigabeacon is outside the hangar bay
 // ALSO DO NOT FORGET TO REMOVE THIS HUGE ASS COMMENT before finishing
 
 // this is the iron variant
@@ -22,6 +21,8 @@
 	icon_state = "cockpit_pod" //placeholder
 	light_system = OVERLAY_LIGHT_DIRECTIONAL
 	light_on = FALSE
+	light_range = 5
+	light_power = 1.5
 	max_occupants = 2
 	max_integrity = 350
 	/// Max count of a certain slot. If it is not defined here, it is assumed to be one (1). Use slot_max(slot) to access.
@@ -85,7 +86,7 @@
 
 /obj/vehicle/sealed/space_pod/generate_actions()
 	initialize_passenger_action_type(/datum/action/vehicle/sealed/kick_out)
-	initialize_controller_action_type(/datum/action/vehicle/sealed/headlights, VEHICLE_CONTROL_DRIVE)
+	initialize_controller_action_type(/datum/action/vehicle/sealed/pod_status, VEHICLE_CONTROL_DRIVE)
 	return ..() //eject goes first
 
 /obj/vehicle/sealed/space_pod/update_overlays()

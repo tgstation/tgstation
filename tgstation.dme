@@ -6155,6 +6155,7 @@
 #include "code\modules\vehicles\spacepod\construction.dm"
 #include "code\modules\vehicles\spacepod\helpers.dm"
 #include "code\modules\vehicles\spacepod\pod_equipment.dm"
+#include "code\modules\vehicles\spacepod\ui.dm"
 #include "code\modules\vehicles\spacepod\variants.dm"
 #include "code\modules\vehicles\spacepod\equipment\_equipment.dm"
 #include "code\modules\vehicles\spacepod\equipment\comms.dm"

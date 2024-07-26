@@ -7,6 +7,8 @@
 	var/slot
 	/// multiplier for power usage by moving
 	var/movement_power_usage_mult = 1
+	/// interface ID used for our interface, see our tgui folder
+	var/interface_id
 
 /obj/item/pod_equipment/examine(mob/user)
 	. = ..()

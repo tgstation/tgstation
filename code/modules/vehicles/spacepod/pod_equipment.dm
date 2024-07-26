@@ -87,6 +87,11 @@
 	equipment.pod = src
 	equipment.on_attach(user)
 
+	update_static_data_for_all_viewers()
+
+	update_appearance()
+
+
 /obj/vehicle/sealed/space_pod/proc/unequip_item(obj/item/pod_equipment/equipment, mob/living/user)
 	. = TRUE
 	if(!user?.put_in_hands(equipment))
@@ -96,6 +101,10 @@
 
 	equipment.on_detach(user)
 	equipment.pod = null
+
+	update_static_data_for_all_viewers()
+
+	update_appearance()
 
 /obj/vehicle/sealed/space_pod/get_cell()
 	return cell

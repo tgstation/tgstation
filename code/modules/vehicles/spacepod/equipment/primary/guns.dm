@@ -26,7 +26,7 @@
 			projectile.hit_prone_targets = user.combat_mode
 
 		projectile.fire(dir2angle(pod.dir))
-		pod.newtonian_move(dir2angle(REVERSE_DIR(pod.dir)), fire_force)
+		pod.newtonian_move(dir2angle(REVERSE_DIR(pod.dir)), fire_force, controlled_cap = fire_force*2)
 	else
 		var/obj/item/ammo_casing/casing = new casing_path
 		casing.fire_casing(get_step(pod, pod.dir), user, fired_from = src)

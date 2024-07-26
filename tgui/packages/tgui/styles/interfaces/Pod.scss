@@ -1,0 +1,12 @@
+@use '../base.scss';
+@use '../colors.scss';
+
+$background-color: colors.$black !default;
+$border-color: base.$color-bg !default;
+
+.PartDescription {
+  background-color: $background-color;
+  border: thin solid $border-color;
+  border-radius: 0.2em;
+  padding: 0.5em;
+}

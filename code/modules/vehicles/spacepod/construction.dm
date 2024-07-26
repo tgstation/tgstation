@@ -25,6 +25,7 @@
 /obj/item/pod_runner
 	name = "pod frame runner"
 	desc = "A metal runner with pod frame parts. Use a wirecutter to snip them free. For your own sake, do this in the hangar bay and not robotics."
+	/// the path we build incase someone decides to add big pods
 	var/build_path = /obj/structure/pod_construction
 
 /obj/item/pod_runner/wirecutter_act(mob/living/user, obj/item/tool)
@@ -40,21 +41,16 @@
 /obj/structure/pod_construction
 	name = "in-progress pod"
 	density = TRUE
+	base_icon_state = ""
+	icon_state = ""
 
 /obj/structure/pod_construction/Initialize(mapload)
 	. = ..()
-	AddComponent(/datum/component/construction/mecha/pod)
+	AddComponent(/datum/component/construction/pod)
 
 // MAYBE:: window?
-/datum/component/construction/mecha/pod // its convenient to inherit ok
-	inner_plating = /obj/item/stack/sheet/iron
-	inner_plating_amount = 15
-
-/datum/component/construction/mecha/pod/get_steps()
-	return get_frame_steps() + get_circuit_steps() + get_inner_plating_steps() + get_outer_plating_steps()
-
-/datum/component/construction/mecha/pod/get_frame_steps()
-	return list(
+/datum/component/construction/pod // its convenient to inherit ok
+	steps = list(
 		list(
 			"key" = TOOL_WRENCH,
 			"desc" = "The frame can be connected together with a <b>wrench</b>.",
@@ -81,11 +77,7 @@
 			"desc" = "The wiring is added, and can be adjusted with <b>wirecutters</b>.",
 			"forward_message" = "adjusted wiring",
 			"backward_message" = "removed wiring"
-		)
-	)
-
-/datum/component/construction/mecha/pod/get_circuit_steps()
-	return list(
+		),
 		list(
 			"key" = /obj/item/circuitboard/pod,
 			"action" = ITEM_DELETE,
@@ -100,16 +92,12 @@
 			"desc" = "The control module is installed, and can be <b>screwed</b> into place.",
 			"forward_message" = "secured control module",
 			"backward_message" = "removed control module"
-		)
-	)
-
-/datum/component/construction/mecha/pod/get_inner_plating_steps()
-	return list(
+		),
 		list(
-			"key" = inner_plating,
-			"amount" = inner_plating_amount,
+			"key" = /obj/item/stack/sheet/iron,
+			"amount" = 15,
 			"back_key" = TOOL_SCREWDRIVER,
-			"desc" = "[inner_plating_amount] sheets of [initial(inner_plating.name)] can be used as inner plating.",
+			"desc" = "15 sheets of iron can be used as inner plating.",
 			"forward_message" = "installed internal armor layer",
 			"backward_message" = "unsecured control module"
 		),
@@ -126,11 +114,7 @@
 			"desc" = "Inner plating is wrenched, and can be <b>welded</b>.",
 			"forward_message" = "welded internal armor layer",
 			"backward_message" = "unfastened internal armor layer"
-		)
-	)
-
-/datum/component/construction/mecha/pod/get_outer_plating_steps()
-	return list(
+		),
 		list(
 			"key" = /obj/item, // special handling
 			"action" = ITEM_DELETE,
@@ -150,11 +134,16 @@
 			"desc" = "External armor is wrenched, and can be <b>welded</b>.",
 			"forward_message" = "welded external armor layer",
 			"backward_message" = "unfastened external armor layer"
-		)
+		),
 	)
 
-/datum/component/construction/mecha/pod/custom_action(obj/item/item, mob/living/user, diff)
-	if(diff == BACKWARD || index != 10) //3rd last step
+/datum/component/construction/pod/update_parent(step_index)
+	. = ..()
+	var/atom/parent_atom = parent
+	parent_atom.icon_state = "[parent_atom.base_icon_state][index - 1]"
+
+/datum/component/construction/pod/custom_action(obj/item/item, mob/living/user, diff)
+	if(index != 10) //3rd last step
 		return ..()
 	var/obj/item/stack/sheet/as_sheet = item
 	var/static/list/datum/pod_construct/constructs
@@ -174,8 +163,19 @@
 	result = construct.build_path
 	return ..()
 
-/datum/component/construction/mecha/pod/spawn_result()
+/datum/component/construction/pod/spawn_result()
 	var/obj/vehicle/sealed/space_pod/pod = new result(drop_location(), /*dont_equip*/ TRUE)
 	pod.panel_open = TRUE
 	pod.update_appearance(UPDATE_OVERLAYS)
 	qdel(parent)
+
+/datum/component/construction/pod/custom_action(obj/item/I, mob/living/user, diff)
+	if(!..())
+		return FALSE
+
+	if(diff == FORWARD && steps[index]["forward_message"])
+		user.balloon_alert_to_viewers(steps[index]["forward_message"])
+	else if(steps[index]["backward_message"])
+		user.balloon_alert_to_viewers(steps[index]["backward_message"])
+
+	return TRUE
