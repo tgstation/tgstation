@@ -797,11 +797,6 @@ ADMIN_VERB(cmd_controller_view_ui, R_SERVER|R_DEBUG, "Controller Overview", "Vie
 			if(cut_to)
 				rolling_usage.Cut(1, cut_to + 1)
 			rolling_usage["[tick_num]"] = tick_usage
-			/*
-			if(!rolling_cost[queue_node.type])
-				CREATE_ROLLING_AVG(rolling_cost[queue_node.type], 1 SECONDS, queue_node.wait)
-			INSERT_ROLLING_AVG(rolling_cost[queue_node.type], tick_usage)
-			*/
 
 			if(queue_node.profiler_focused)
 				world.Profile(PROFILE_STOP)
