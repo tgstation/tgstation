@@ -13,7 +13,7 @@
 	/// Are the items from this market legal or illegal? If illegal, apply a contrband trait to the bought object.
 	var/legal_status = TRUE
 
-/// Adds item to the available items and add it's category if it is not in categories yet.
+/// Adds item to the available items and add its category if it is not in categories yet.
 /datum/market/proc/add_item(datum/market_item/item)
 	if(ispath(item, /datum/market_item))
 		item = new item()

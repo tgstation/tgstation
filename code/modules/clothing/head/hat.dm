@@ -210,6 +210,19 @@
 	name = "rice hat"
 	desc = "Welcome to the rice fields, motherfucker."
 	icon_state = "rice_hat"
+	var/reversed = FALSE
+	///Sprite while worn normaly.
+	var/frontsprite = "rice_hat"
+	///Sprite while worn in reverse
+	var/reversesprite = "rice_hat_kim"
+
+/obj/item/clothing/head/costume/rice_hat/attack_self(mob/user)
+	if(reversed)
+		icon_state = frontsprite
+		to_chat(user, span_notice("You raise the hat."))
+	else
+		icon_state = reversesprite
+		to_chat(user, span_notice("You lower the hat."))
 
 /obj/item/clothing/head/costume/lizard
 	name = "lizardskin cloche hat"

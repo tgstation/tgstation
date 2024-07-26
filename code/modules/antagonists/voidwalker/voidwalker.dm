@@ -32,7 +32,7 @@
 	return ..()
 
 /datum/antagonist/voidwalker/forge_objectives()
-	var/datum/objective/voidwalker_fluff/objective = new
+	var/datum/objective/voidwalker_objective/objective = new
 	objective.owner = owner
 	objectives += objective
 
@@ -42,20 +42,18 @@
 /datum/outfit/voidwalker/post_equip(mob/living/carbon/human/human, visualsOnly)
 	human.set_species(/datum/species/voidwalker)
 
-/datum/objective/voidwalker_fluff
+/datum/objective/voidwalker_objective
 
-/datum/objective/voidwalker_fluff/New()
+/datum/objective/voidwalker_objective/New()
 	var/list/explanation_texts = list(
-		"Show them the beauty of the void.",
-		"They must see what you have seen. They must walk where you have walked.",
-		"Recover what you have lost.",
-		"Obliterate the tyranny of matter.",
-		"Make them all just like you."
+		"Show them the beauty of the void. Drag them into the cosmic abyss, then impart the truth of the void unto them. Seek to enlighten, not destroy.",
+		"They must see what you have seen. They must walk where you have walked. Bring them to the void and show them the truth. The dead cannot know what you know.",
+		"Recover what you have lost. Bring your children into the inky black and return them to your flock.",
 	)
 	if(prob(20))
 		explanation_text += "Man I fucking love glass."
 	explanation_text = pick(explanation_texts)
 	..()
 
-/datum/objective/voidwalker_fluff/check_completion()
+/datum/objective/voidwalker_objective/check_completion()
 	return owner.current.stat != DEAD
