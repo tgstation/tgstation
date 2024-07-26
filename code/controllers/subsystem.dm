@@ -63,6 +63,10 @@
 	/// Running average of the amount of tick usage (in percents of a game tick) the subsystem has spent past its allocated time without pausing
 	var/tick_overrun = 0
 
+	/// Rolling list of usage each tick
+	var/list/rolling_usage = list()
+
+
 	/// How much of a tick (in percents of a tick) were we allocated last fire.
 	var/tick_allocation_last = 0
 

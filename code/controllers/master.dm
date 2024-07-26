@@ -78,10 +78,8 @@ GLOBAL_REAL(Master, /datum/controller/master)
 
 	/// Whether the Overview UI will update as fast as possible for viewers.
 	var/overview_fast_update = FALSE
-	/// List of tick usage by subsystem fired this tick
-	var/list/cost_this_tick = list()
-	/// Tick usage LAST tick
-	var/list/cost_last_tick = list()
+	/// How long to run our rolling usage averaging
+	var/rolling_usage_length = 5 SECONDS
 
 /datum/controller/master/New()
 	if(!config)
@@ -161,6 +159,20 @@ ADMIN_VERB(cmd_controller_view_ui, R_SERVER|R_DEBUG, "Controller Overview", "Vie
 
 	var/list/subsystem_data = list()
 	for(var/datum/controller/subsystem/subsystem as anything in subsystems)
+		var/list/rolling_usage = subsystem.rolling_usage
+		// First, trim er up
+		var/cut_to = 0
+		while(cut_to + 1 <= length(rolling_usage) && text2num(rolling_usage[cut_to + 1]) < (world.time - rolling_usage_length) / world.tick_lag)
+			cut_to += 1
+		if(cut_to)
+			rolling_usage.Cut(1, cut_to + 1)
+
+		// Then we sum
+		var/sum = 0
+		for(var/tick in rolling_usage)
+			sum += rolling_usage[tick]
+		var/average = sum / (rolling_usage_length / world.tick_lag)
+
 		subsystem_data += list(list(
 			"name" = subsystem.name,
 			"ref" = REF(subsystem),
@@ -171,6 +183,7 @@ ADMIN_VERB(cmd_controller_view_ui, R_SERVER|R_DEBUG, "Controller Overview", "Vie
 			"doesnt_fire" = !!(subsystem.flags & SS_NO_FIRE),
 			"cost_ms" = subsystem.cost,
 			"tick_usage" = subsystem.tick_usage,
+			"usage_per_tick" = average,
 			"tick_overrun" = subsystem.tick_overrun,
 			"initialized" = subsystem.initialized,
 			"initialization_failure_message" = subsystem.initialization_failure_message,
@@ -179,6 +192,7 @@ ADMIN_VERB(cmd_controller_view_ui, R_SERVER|R_DEBUG, "Controller Overview", "Vie
 	data["world_time"] = world.time
 	data["map_cpu"] = world.map_cpu
 	data["fast_update"] = overview_fast_update
+	data["rolling_length"] = rolling_usage_length
 
 	return data
 
@@ -189,6 +203,13 @@ ADMIN_VERB(cmd_controller_view_ui, R_SERVER|R_DEBUG, "Controller Overview", "Vie
 	switch(action)
 		if("toggle_fast_update")
 			overview_fast_update = !overview_fast_update
+			return TRUE
+
+		if("set_rolling_length")
+			var/length = text2num(params["rolling_length"])
+			if(!length || length < 0)
+				return
+			rolling_usage_length = length SECONDS
 			return TRUE
 
 		if("view_variables")
@@ -608,9 +629,6 @@ ADMIN_VERB(cmd_controller_view_ui, R_SERVER|R_DEBUG, "Controller Overview", "Vie
 			error_level++
 			continue
 
-		cost_last_tick = cost_this_tick
-		cost_this_tick = list()
-		cost_this_tick["tick"] = world.time
 		if (queue_head)
 			if (RunQueue() <= 0) //error running queue
 				stack_trace("MC: RunQueue failed. Current error_level is [round(error_level, 0.25)]")
@@ -770,7 +788,20 @@ ADMIN_VERB(cmd_controller_view_ui, R_SERVER|R_DEBUG, "Controller Overview", "Vie
 			tick_usage = TICK_USAGE
 			var/state = queue_node.ignite(queue_node_paused)
 			tick_usage = TICK_USAGE - tick_usage
-			cost_this_tick[queue_node.type] = TICK_DELTA_TO_MS(tick_usage)
+
+			var/list/rolling_usage = queue_node.rolling_usage
+			var/tick_num = world.time / world.tick_lag
+			var/cut_to = 0
+			while(cut_to + 1 <= length(rolling_usage) && text2num(rolling_usage[cut_to + 1]) < tick_num - (rolling_usage_length / world.tick_lag))
+				cut_to += 1
+			if(cut_to)
+				rolling_usage.Cut(1, cut_to + 1)
+			rolling_usage["[tick_num]"] = tick_usage
+			/*
+			if(!rolling_cost[queue_node.type])
+				CREATE_ROLLING_AVG(rolling_cost[queue_node.type], 1 SECONDS, queue_node.wait)
+			INSERT_ROLLING_AVG(rolling_cost[queue_node.type], tick_usage)
+			*/
 
 			if(queue_node.profiler_focused)
 				world.Profile(PROFILE_STOP)
@@ -911,3 +942,29 @@ ADMIN_VERB(cmd_controller_view_ui, R_SERVER|R_DEBUG, "Controller Overview", "Vie
 		return FALSE
 	last_profiled = REALTIMEOFDAY
 	SSprofiler.DumpFile(allow_yield = FALSE)
+
+/datum/controller/master/proc/display_rolling_avg()
+	var/list/summed = list()
+	for(var/datum/controller/subsystem/processing as anything in subsystems)
+		var/list/rolling_usage = processing.rolling_usage
+		// First, trim er up
+		var/cut_to = 0
+		while(cut_to + 1 <= length(rolling_usage) && text2num(rolling_usage[cut_to + 1]) < (world.time - rolling_usage_length) / world.tick_lag)
+			cut_to += 1
+		if(cut_to)
+			rolling_usage.Cut(1, cut_to + 1)
+
+		// Then we sum
+		var/sum = 0
+		for(var/tick in rolling_usage)
+			sum += rolling_usage[tick]
+		summed[processing.type] = sum / (rolling_usage_length / world.tick_lag)
+
+	sortTim(summed, cmp = /proc/cmp_numeric_dsc, associative = TRUE)
+	var/list/output = list()
+	for(var/key in summed)
+		output += "[key] = [summed[key]]"
+	log_world(output.Join("\n"))
+	message_admins(output.Join("\n"))
+
+
