@@ -24,6 +24,8 @@
 
 /datum/element/muffles_speech/proc/emote_override(mob/living/source, key, params, type_override, intentional, datum/emote/emote)
 	SIGNAL_HANDLER
+	if(emote.cant_muffle) // DOPPLER SHIFT ADDITION
+		return NONE // DOPPLER SHIFT ADDITION
 	if(!emote.hands_use_check && (emote.emote_type & EMOTE_AUDIBLE))
 		source.audible_message("makes a [pick("strong ", "weak ", "")]noise.", audible_message_flags = EMOTE_MESSAGE|ALWAYS_SHOW_SELF_MESSAGE)
 		return COMPONENT_CANT_EMOTE
