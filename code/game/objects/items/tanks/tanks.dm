@@ -25,7 +25,6 @@
 	pickup_sound = 'sound/items/gas_tank_pick_up.ogg'
 	drop_sound = 'sound/items/gas_tank_drop.ogg'
 	sound_vary = TRUE
-
 	pressure_resistance = ONE_ATMOSPHERE * 5
 	force = 5
 	throwforce = 10
