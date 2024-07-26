@@ -89,7 +89,7 @@
 	worn_icon_state = "soapsyndie"
 	cleanspeed = 0.5 SECONDS //faster than mops so it's useful for traitors who want to clean crime scenes
 
-obj/item/soap/drone
+/obj/item/soap/drone
 	name = "\improper integrated soap module"
 	inhand_icon_state = "soapnt"
 	worn_icon_state = "soapnt"
