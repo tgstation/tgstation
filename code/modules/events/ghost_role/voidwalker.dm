@@ -1,5 +1,5 @@
 /datum/round_event_control/voidwalker
-	name = "Spawn Void Walker"
+	name = "Spawn Voidwalker"
 	typepath = /datum/round_event/ghost_role/void_walker
 	max_occurrences = 1
 	weight = 2
