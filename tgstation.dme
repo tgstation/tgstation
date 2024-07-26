@@ -6353,5 +6353,9 @@
 #include "interface\fonts\spess_font.dm"
 #include "interface\fonts\tiny_unicode.dm"
 #include "interface\fonts\vcr_osd_mono.dm"
+#include "modular_doppler\emotes\code\emotes.dm"
+#include "modular_doppler\emotes\code\added_emotes\animal_sounds.dm"
+#include "modular_doppler\emotes\code\added_emotes\human_things.dm"
+#include "modular_doppler\emotes\code\added_emotes\robot_sounds.dm"
 #include "modular_doppler\face_mouse_preferences\code\face_mouse_pref.dm"
 // END_INCLUDE
