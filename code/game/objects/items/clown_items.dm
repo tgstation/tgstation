@@ -90,7 +90,7 @@
 	cleanspeed = 0.5 SECONDS //faster than mops so it's useful for traitors who want to clean crime scenes
 
 obj/item/soap/drone
-	name = "\integrated soap module"
+	name = "\imroper integrated soap module"
 	inhand_icon_state = "soapnt"
 	worn_icon_state = "soapnt"
 	cleanspeed = 0.5 SECONDS //can be changed if someone isn't happy
