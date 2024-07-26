@@ -1,0 +1,4 @@
+author: "LT3"
+delete-after: True
+changes:
+  - bugfix: "Fixed delam counter stuck in window near Ice Box bridge"

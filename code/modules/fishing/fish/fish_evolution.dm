@@ -86,10 +86,10 @@ GLOBAL_LIST_INIT(fish_evolutions, init_subtypes_w_path_keys(/datum/fish_evolutio
 	probability = 40
 	new_fish_type = /obj/item/fish/mastodon
 	new_traits = list(/datum/fish_trait/heavy, /datum/fish_trait/amphibious, /datum/fish_trait/predator, /datum/fish_trait/aggressive)
-	conditions_note = "The fish (or its mate) needs to be unusually big both in size and weight."
+	conditions_note = "The fish (and its mate) needs to be unusually big both in size and weight."
 
 /datum/fish_evolution/mastodon/check_conditions(obj/item/fish/source, obj/item/fish/mate, obj/structure/aquarium/aquarium)
-	if((source.size < 144 || source.weight < 4000) && (mate && (mate.size < 144 || mate.weight < 4000)))
+	if((source.size < 120 || source.weight < 3000) || (mate && (mate.size < 120 || mate.weight < 3000)))
 		return FALSE
 	return ..()
 
