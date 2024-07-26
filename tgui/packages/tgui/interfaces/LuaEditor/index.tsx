@@ -1,3 +1,5 @@
+import 'blob-polyfill';
+
 import hljs from 'highlight.js/lib/core';
 import lua from 'highlight.js/lib/languages/lua';
 import {
@@ -8,8 +10,6 @@ import {
   useRef,
   useState,
 } from 'react';
-
-import 'blob-polyfill';
 
 import { useBackend } from '../../backend';
 import {
