@@ -25,6 +25,7 @@
 
 /datum/status_effect/planet_allergy/tick()
 	owner.adjustBruteLoss(1)
+	return ..()
 
 /datum/status_effect/void_eatered
 	duration = 10 SECONDS
