@@ -969,8 +969,7 @@
 	var/space_turf
 
 /datum/dynamic_ruleset/midround/from_ghosts/voidwalker/acceptable(population = 0, threat_level = 0)
-	space_turf = find_space_spawn()
-	if(!space_turf)
+	if(SSmapping.is_planetary())
 		return FALSE
 	return ..()
 
