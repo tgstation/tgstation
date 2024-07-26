@@ -9,11 +9,22 @@
 	///Key of the icon states of all the sprite_datums for easy caching
 	var/cache_key = ""
 
+	/// Whether the overlay blocks emissive light
+	var/blocks_emissive = EMISSIVE_BLOCK_UNIQUE
+
 ///Wrapper for getting the proper image, colored and everything
 /datum/bodypart_overlay/proc/get_overlay(layer, obj/item/bodypart/limb)
 	layer = bitflag_to_layer(layer)
-	. = get_image(layer, limb)
-	color_image(., layer, limb)
+	var/image/main_image = get_image(layer, limb)
+	color_image(main_image, layer, limb)
+	if(blocks_emissive == EMISSIVE_BLOCK_NONE || !limb)
+		return main_image
+
+	var/list/all_images = list(
+		main_image,
+		emissive_blocker(main_image.icon, main_image.icon_state, limb, layer = main_image.layer, alpha = main_image.alpha)
+	)
+	return all_images
 
 ///Generate the image. Needs to be overriden
 /datum/bodypart_overlay/proc/get_image(layer, obj/item/bodypart/limb)

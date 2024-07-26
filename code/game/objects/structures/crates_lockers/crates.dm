@@ -62,6 +62,7 @@
 		)
 	if(paint_jobs)
 		paint_jobs = crate_paint_jobs
+	AddComponent(/datum/component/soapbox)
 
 /obj/structure/closet/crate/Destroy()
 	QDEL_NULL(manifest)

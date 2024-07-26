@@ -107,6 +107,8 @@
  */
 /datum/element/immerse/proc/on_init_or_entered(turf/source, atom/movable/movable)
 	SIGNAL_HANDLER
+	if(QDELETED(movable))
+		return
 	if(HAS_TRAIT(movable, TRAIT_IMMERSED))
 		return
 	if(movable.layer >= ABOVE_ALL_MOB_LAYER || !ISINRANGE(movable.plane, MUTATE_PLANE(FLOOR_PLANE, source), MUTATE_PLANE(GAME_PLANE, source)))

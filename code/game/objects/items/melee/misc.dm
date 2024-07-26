@@ -164,6 +164,47 @@
 		user.death(FALSE)
 	REMOVE_TRAIT(src, TRAIT_NODROP, SABRE_SUICIDE_TRAIT)
 
+
+/obj/item/melee/parsnip_sabre
+	name = "parsnip sabre"
+	desc = "An elegant weapon, if weird weapon. Suprisingly sharp for being made from a parsnip."
+	icon = 'icons/obj/weapons/sword.dmi'
+	icon_state = "parsnip_sabre"
+	inhand_icon_state = "parsnip_sabre"
+	lefthand_file = 'icons/mob/inhands/weapons/swords_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/weapons/swords_righthand.dmi'
+	force = 15
+	throwforce = 10
+	demolition_mod = 0.3
+	w_class = WEIGHT_CLASS_BULKY
+	block_chance = 40
+	armour_penetration = 40
+	sharpness = SHARP_EDGED
+	attack_verb_continuous = list("slashes", "cuts")
+	attack_verb_simple = list("slash", "cut")
+	block_sound = 'sound/weapons/parry.ogg'
+	hitsound = 'sound/weapons/rapierhit.ogg'
+	custom_materials = null
+	wound_bonus = 5
+	bare_wound_bonus = 15
+
+/obj/item/melee/sabre/Initialize(mapload)
+	. = ..()
+	AddComponent(/datum/component/jousting)
+
+/obj/item/melee/parsnip_sabre/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK, damage_type = BRUTE)
+	if(attack_type == PROJECTILE_ATTACK || attack_type == LEAP_ATTACK)
+		final_block_chance = 0 //Don't bring a sword to a gunfight, and also you aren't going to really block someone full body tackling you with a sword
+	return ..()
+
+/obj/item/melee/parsnip_sabre/on_exit_storage(datum/storage/container)
+	. = ..()
+	playsound(container.parent, 'sound/items/unsheath.ogg', 25, TRUE)
+
+/obj/item/melee/parsnip_sabre/on_enter_storage(datum/storage/container)
+	. = ..()
+	playsound(container.parent, 'sound/items/sheath.ogg', 25, TRUE)
+
 /obj/item/melee/beesword
 	name = "The Stinger"
 	desc = "Taken from a giant bee and folded over one thousand times in pure honey. Can sting through anything."

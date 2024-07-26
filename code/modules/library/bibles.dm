@@ -316,7 +316,7 @@ GLOBAL_LIST_INIT(bibleitemstates, list(
 		playsound(src,'sound/hallucinations/veryfar_noise.ogg',40,TRUE)
 		if(do_after(user, 4 SECONDS, target = sword))
 			playsound(src,'sound/effects/pray_chaplain.ogg',60,TRUE)
-			new /obj/item/nullrod/claymore(get_turf(sword))
+			new /obj/item/nullrod/nullblade(get_turf(sword))
 			user.visible_message(span_notice("[user] exorcises [sword]!"))
 			qdel(sword)
 			return ITEM_INTERACT_SUCCESS
