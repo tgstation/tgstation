@@ -75,10 +75,10 @@ export default function PodDisplay(_props: any): JSX.Element {
                 }}
               />
             </LabeledList.Item>
+            <LabeledList.Divider />
             <LabeledList.Item label="Cabin Pressure">
               {cabinPressure}
             </LabeledList.Item>
-            <LabeledList.Divider />
             <LabeledList.Item label="Acceleration">
               {acceleration} / {maxAcceleration}
             </LabeledList.Item>
