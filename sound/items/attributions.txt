@@ -23,3 +23,9 @@ irod_rod_pick_up.ogg - https://freesound.org/people/lostphosphene/sounds/258265/
 plastic_pick_up.ogg - https://freesound.org/people/Jessica190091/sounds/491304/ , License: CC BY 4.0
 plastic_drop.ogg - https://freesound.org/people/martian/sounds/338854/ , License: CC0
 } - edited by sadboysuss
+
+{
+gas_tank_drop.ogg
+gas_tank_pick_up.ogg
+} - https://freesound.org/people/Globofonia/sounds/698346/ , License CC0
+edited by grungussuss
