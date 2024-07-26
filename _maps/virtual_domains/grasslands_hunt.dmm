@@ -115,6 +115,17 @@
 	},
 /turf/open/floor/grass,
 /area/virtual_domain/fullbright)
+"gT" = (
+/obj/structure/table/wood,
+/obj/item/gun/ballistic/rifle/boltaction{
+	pixel_y = 8
+	},
+/obj/item/gun/ballistic/rifle/boltaction{
+	pixel_y = 4
+	},
+/obj/item/gun/ballistic/rifle/boltaction,
+/turf/template_noop,
+/area/virtual_domain/safehouse)
 "hH" = (
 /obj/effect/turf_decal/weather/dirt,
 /obj/structure/flora/bush/grassy/style_random,
@@ -225,6 +236,11 @@
 	},
 /turf/open/water,
 /area/virtual_domain/fullbright)
+"lQ" = (
+/obj/structure/table/wood,
+/obj/item/storage/cans/sixbeer,
+/turf/template_noop,
+/area/virtual_domain/safehouse)
 "nn" = (
 /obj/structure/flora/bush/sparsegrass/style_random,
 /turf/open/floor/grass,
@@ -242,6 +258,11 @@
 /obj/structure/flora/rock/pile/jungle/style_random,
 /turf/open/floor/grass,
 /area/virtual_domain/fullbright)
+"od" = (
+/obj/item/knife/hunting,
+/obj/structure/table/wood,
+/turf/template_noop,
+/area/virtual_domain/safehouse)
 "or" = (
 /obj/effect/turf_decal/weather/dirt{
 	dir = 4
@@ -2226,8 +2247,8 @@ aD
 aD
 fm
 Lx
-Lx
-Lx
+gT
+lQ
 Lx
 Lx
 Lx
@@ -2536,7 +2557,7 @@ fm
 Lx
 Dk
 Lx
-Lx
+od
 Lx
 Lx
 nn
