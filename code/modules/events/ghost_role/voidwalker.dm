@@ -20,7 +20,7 @@
 /datum/round_event/ghost_role/void_walker
 	minimum_required = 40
 	fakeable = FALSE
-	role_name = "void walker"
+	role_name = "voidwalker"
 
 /datum/round_event/ghost_role/void_walker/spawn_role()
 	var/spawn_location = find_space_spawn()
