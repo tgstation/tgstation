@@ -402,7 +402,7 @@
 	sprite_height = 5
 	stable_population = 12
 	average_size = 110
-	average_weight = 10000
+	average_weight = 6000
 	random_case_rarity = FISH_RARITY_GOOD_LUCK_FINDING_THIS
 	required_temperature_min = MIN_AQUARIUM_TEMP+10
 	required_temperature_max = MIN_AQUARIUM_TEMP+30
