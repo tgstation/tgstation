@@ -89,6 +89,13 @@
 	worn_icon_state = "soapsyndie"
 	cleanspeed = 0.5 SECONDS //faster than mops so it's useful for traitors who want to clean crime scenes
 
+obj/item/soap/drone
+	name = "\integrated soap module"
+	inhand_icon_state = "soapnt"
+	worn_icon_state = "soapnt"
+	cleanspeed = 0.5 SECONDS //can be changed if someone isn't happy
+	uses = 999999999 //turns out cyborg soap has limited uses so I summon stupidly large number
+
 /obj/item/soap/omega
 	name = "\improper Omega soap"
 	desc = "The most advanced soap known to mankind. The beginning of the end for germs."
