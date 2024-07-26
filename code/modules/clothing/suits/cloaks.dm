@@ -86,3 +86,16 @@
 	icon_state = "playercloak"
 	element_type = /datum/element/skill_reward/veteran
 
+/obj/item/clothing/neck/cloak/det
+	name = "detective's brown cloak"
+	desc = "Huge, totally oversized detective's cloak."
+	icon = 'icons/obj/clothing/cloaks.dmi'
+	icon_state = "det_cloak"
+	inhand_icon_state = null
+	w_class = WEIGHT_CLASS_NORMAL
+	body_parts_covered = CHEST|GROIN|LEGS|ARMS
+	flags_inv = HIDESUITSTORAGE
+
+/obj/item/clothing/neck/cloak/det/dark
+	name = "detective's dark cloak"
+	icon_state = "det_cloak_dark"
