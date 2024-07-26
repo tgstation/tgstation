@@ -229,6 +229,11 @@
 
 	return CLICK_ACTION_SUCCESS
 
+/obj/item/clothing/head/fedora/det_hat/dark
+	name = "dark detective's fedora"
+	desc = "Fedora that darker than your sins and crimes."
+	icon_state = "fedora"
+	inhand_icon_state = "fedora"
 
 #undef CANDY_CD_TIME
 
