@@ -32,7 +32,7 @@
 	attack_sound = 'sound/weapons/slash.ogg'
 	attack_vis_effect = ATTACK_EFFECT_CLAW
 	///icon of the collar we can wear
-	var/collar_icon = "cat"
+	var/collar_icon_state = "cat"
 	///can this cat breed?
 	var/can_breed = TRUE
 	///can hold items?
@@ -55,7 +55,7 @@
 /mob/living/basic/pet/cat/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/cultist_pet, pet_cult_icon_state = cult_icon_state)
-	AddElement(/datum/element/wear_collar, collar_icon_state = collar_icon, collar_resting_icon_state = TRUE)
+	AddElement(/datum/element/wear_collar, collar_icon_state = collar_icon_state, collar_resting_icon_state = TRUE)
 	AddElement(/datum/element/ai_retaliate)
 	AddElement(/datum/element/pet_bonus, "purrs!")
 	AddElement(/datum/element/footstep, footstep_type = FOOTSTEP_MOB_CLAW)
@@ -158,7 +158,7 @@
 		/obj/item/organ/external/tail/cat = 1,
 		/obj/item/food/breadslice/plain = 1
 	)
-	collar_icon = null
+	collar_icon_state = null
 
 /mob/living/basic/pet/cat/breadcat/add_cell_sample()
 	return
@@ -188,7 +188,7 @@
 	can_breed = FALSE
 	ai_controller = /datum/ai_controller/basic_controller/cat/kitten
 	can_hold_item = FALSE
-	collar_icon = "kitten"
+	collar_icon_state = "kitten"
 
 /mob/living/basic/pet/cat/kitten/Initialize(mapload)
 	. = ..()
