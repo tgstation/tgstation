@@ -579,7 +579,7 @@ GLOBAL_LIST_INIT(spontaneous_fish_traits, populate_spontaneous_fish_traits())
 /datum/fish_trait/electrogenesis/apply_to_fish(obj/item/fish/fish)
 	. = ..()
 	ADD_TRAIT(fish, TRAIT_FISH_ELECTROGENESIS, FISH_TRAIT_DATUM)
-	RegisterSignal(src, COMSIG_FISH_FORCE_UPDATED, PROC_REF(on_force_updated))
+	RegisterSignal(fish, COMSIG_FISH_FORCE_UPDATED, PROC_REF(on_force_updated))
 
 /datum/fish_trait/electrogenesis/proc/on_force_updated(obj/item/fish/fish, weight_rank, bonus_or_malus)
 	SIGNAL_HANDLER
@@ -616,8 +616,8 @@ GLOBAL_LIST_INIT(spontaneous_fish_traits, populate_spontaneous_fish_traits())
 
 /datum/fish_trait/stinger/apply_to_fish(obj/item/fish/fish)
 	. = ..()
-	ADD_TRAIT(src, TRAIT_FISH_STINGER, FISH_TRAIT_DATUM)
-	RegisterSignal(src, COMSIG_FISH_FORCE_UPDATED, PROC_REF(on_force_updated))
+	ADD_TRAIT(fish, TRAIT_FISH_STINGER, FISH_TRAIT_DATUM)
+	RegisterSignal(fish, COMSIG_FISH_FORCE_UPDATED, PROC_REF(on_force_updated))
 
 /datum/fish_trait/stinger/proc/on_force_updated(obj/item/fish/fish, weight_rank, bonus_or_malus)
 	SIGNAL_HANDLER
