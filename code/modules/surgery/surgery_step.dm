@@ -98,6 +98,7 @@
 
 	if(!chem_check(target))
 		user.balloon_alert(user, "missing [LOWER_TEXT(get_chem_list())]!")
+		to_chat(user, span_warning("[target] is missing the [LOWER_TEXT(get_chem_list())] required to perform this surgery step!"))
 		surgery.step_in_progress = FALSE
 		return FALSE
 
