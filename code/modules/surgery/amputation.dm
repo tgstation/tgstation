@@ -77,7 +77,6 @@
 		/obj/item/fireaxe = 90,
 		/obj/item/hatchet = 75,
 		TOOL_SCALPEL = 25,
-
 	)
 	time = 30
 	preop_sound = 'sound/surgery/saw.ogg'
