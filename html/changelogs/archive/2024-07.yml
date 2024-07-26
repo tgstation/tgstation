@@ -1295,3 +1295,32 @@
   - balance: Upgraded cybernetic hearts give an extremely brief amount of action when
       you enter softcrit (but not hardcrit).
   - bugfix: Restores some of the items accidentally lost in the autodrobe.
+2024-07-26:
+  LT3:
+  - bugfix: Fixed elevator panel allowing conflicting inputs
+  - bugfix: Fixed elevator sound being out of sync with movement
+  SmArtKar:
+  - bugfix: Xenomorphs and door pryer basic mobs can now attack airlocks in combat
+      mode
+  - bugfix: Borgs now unequip their equipment upon module change like they should
+  YesterdaysPromise:
+  - rscadd: All the melons are now sliceable, and have inhands, instead of just watermelon
+      and holymelon respectively.
+  - rscadd: You can now hollow out melons of all kinds with a spoon to make helmets
+      or chestplates, based on the potency! If you are unlucky, you can tie up three
+      helmets into a chestplate with durathread using the crafting menu.
+  - rscadd: You can now make a bo staff out of bamboo and steelcap logs.
+  - rscadd: You can now make a moonflower buckler out of moonflowers and steelcap
+      logs.
+  - rscadd: You can also hollow out chantarelle to make mock-up wizard hat.
+  - rscadd: Parsnips, as mutation of carrots, become equaly able to be sharpaned,
+      turning into shivs, or with potency and luck, sabres.
+  - rscadd: You can now craft a durathread robe, and customize it into different variants
+      using specific plants in crafting menu.
+  - rscadd: Carrots gain a new possible mutation; cahn'root, brewable into root beer
+      and sharpanable into shivs or daggers!
+  - rscadd: Rice hat, made from bamboo, now has an alternative style, allowing you
+      to wear it in reverse and be much cooler.
+  - rscadd: Two new arrow variants appear in the crafting menu; sticky and poisonous
+      ones! If you want to make arrows at all though, remember to order bow-maker's
+      crate at cargo.
