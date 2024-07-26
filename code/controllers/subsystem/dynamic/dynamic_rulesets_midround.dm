@@ -969,7 +969,13 @@
 	var/space_turf
 
 /datum/dynamic_ruleset/midround/from_ghosts/voidwalker/acceptable(population = 0, threat_level = 0)
-	if(SSmapping.is_planetary())
+	if(SSmapping.is_planetary()) // Will die on planetary gravity
+		if (ruleset_forced == RULESET_FORCE_ENABLED) // Warning to admins that this antag is not designed for planetary based maps.
+			message_admins("[name] failed to spawn due to planetary gravity and will die inside it!")
+		return FALSE
+	// Checks for space carp landmarks
+	space_turf = find_space_spawn()
+	if(space_turf)
 		return FALSE
 	return ..()
 
