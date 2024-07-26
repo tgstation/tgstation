@@ -5,16 +5,18 @@
 	faction = list(FACTION_HOSTILE)
 	icon = 'icons/mob/simple/simple_human.dmi'
 	gender = MALE
+	basic_mob_flags = DEL_ON_DEATH
 	attack_verb_continuous = "robusts"
 	attack_verb_simple = "robust"
 	maxHealth = 50
 	health = 50
+	death_sound = 'sound/voice/human/gasp_male1.ogg'
 	melee_damage_lower = 15
 	melee_damage_upper = 20
 	obj_damage = 20
 	attack_sound = 'sound/weapons/smash.ogg'
 	ai_controller = /datum/ai_controller/basic_controller/revolutionary
-	/// list of weapons we can have
+	///list of weapons we can have
 	var/static/list/possible_weapons = list(
 		/obj/item/storage/toolbox/mechanical = "robust",
 		/obj/item/spear = "pierce",
@@ -27,7 +29,7 @@
 		"Gondola meat is murder!",
 		"Free Cargonia!",
 		"Mime rights are human rights!",
-		"猫女 Free Terry!",
+		"猫娘 Free Terry!",
 	)
 
 
@@ -48,6 +50,8 @@
 	attack_sound = weapon_of_choice::hitsound
 	attack_verb_simple = possible_weapons[weapon_of_choice]
 	attack_verb_continuous = "[attack_verb_simple]s"
+	var/static/list/death_loot = list(/obj/effect/mob_spawn/corpse/human/revolutionary)
+	AddElement(/datum/element/death_drops, death_loot)
 	apply_dynamic_human_appearance(src, mob_spawn_path = /obj/effect/mob_spawn/corpse/human/revolutionary, l_hand = weapon_of_choice)
 
 
@@ -59,6 +63,7 @@
 /datum/outfit/revolution
 	name = "Revolution"
 	uniform = /obj/item/clothing/under/color/grey
+	head = /obj/item/clothing/head/costume/ushanka
 	mask = /obj/item/clothing/mask/gas
 	gloves = /obj/item/clothing/gloves/color/black
 	shoes = /obj/item/clothing/shoes/jackboots
@@ -71,7 +76,16 @@
 	ai_movement = /datum/ai_movement/basic_avoidance
 	idle_behavior = /datum/idle_behavior/idle_random_walk/less_walking
 	planning_subtrees = list(
-		/datum/ai_planning_subtree/random_speech/blackboard,
+		/datum/ai_planning_subtree/random_speech/blackboard/revolutionary,
 		/datum/ai_planning_subtree/simple_find_target,
 		/datum/ai_planning_subtree/basic_melee_attack_subtree,
 	)
+
+
+/datum/ai_planning_subtree/random_speech/blackboard/revolutionary
+
+
+/datum/ai_planning_subtree/random_speech/blackboard/revolutionary/SelectBehaviors(datum/ai_controller/controller, seconds_per_tick)
+	if(!controller.blackboard_key_exists(BB_BASIC_MOB_CURRENT_TARGET))
+		return
+	return ..()

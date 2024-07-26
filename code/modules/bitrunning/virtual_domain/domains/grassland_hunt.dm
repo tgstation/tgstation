@@ -18,7 +18,7 @@
 	SIGNAL_HANDLER
 
 	for(var/mob/living/fauna as anything in mobs)
-		RegisterSignals(fauna, list(COMSIG_LIVING_DEATH, COMSIG_QDELETING), PROC_REF(on_death))
+		RegisterSignal(fauna, COMSIG_LIVING_DEATH, PROC_REF(on_death))
 
 
 /// Handles deer being slain
