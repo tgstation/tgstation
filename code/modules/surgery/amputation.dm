@@ -82,7 +82,6 @@
 	preop_sound = 'sound/surgery/saw.ogg'
 	success_sound = 'sound/items/wood_drop.ogg'
 
-
 /datum/surgery_step/sever_limb/preop(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
 	display_results(
 		user,
