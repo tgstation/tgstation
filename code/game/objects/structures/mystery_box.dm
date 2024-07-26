@@ -276,7 +276,7 @@ GLOBAL_LIST_INIT(mystery_fishing, list(
 /obj/structure/mystery_box/fishing
 	name = "treasure chest"
 	desc = "A creaky old pirate-y chest that seems equally magial and mysterious, capable of granting the user different pieces of gear."
-	icon_state = "tresure"
+	icon_state = "treasure"
 	uses_left = 18
 	max_integrity = 100
 	damage_deflection = 30
