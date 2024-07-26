@@ -15,7 +15,7 @@
 	for(var/mob/living/carbon/target in orange(4,owner_turf))
 		if(target == owner)
 			continue
-		if(HAS_MIND_TRAIT(target, TRAIT_UNCONVERTABLE))
+		if(HAS_MIND_TRAIT(target, TRAIT_MINDSHIELD))
 			to_chat(target, span_notice("You hear a faint hum fill your ears, which quickly dies down."))
 			continue
 
