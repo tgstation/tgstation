@@ -20,7 +20,7 @@
 		/obj/item/pipe_dispenser,
 		/obj/item/t_scanner,
 		/obj/item/analyzer,
-		/obj/item/soap,
+		/obj/item/soap/nanotrasen/cyborg,
 	)
 	atom_storage.max_total_storage = 40
 	atom_storage.max_specific_storage = WEIGHT_CLASS_NORMAL
@@ -39,8 +39,8 @@
 	builtintools += new /obj/item/multitool/drone(src)
 	builtintools += new /obj/item/pipe_dispenser(src)
 	builtintools += new /obj/item/t_scanner(src)
-	builtintools += new /obj/item/analyzer(src)
-
+	builtintools += new /obj/item/soap/nanotrasen/cyborg(src)
+	builtintools += new 
 	for(var/obj/item/tool as anything in builtintools)
 		tool.AddComponent(/datum/component/holderloving, src, TRUE)
 
