@@ -1,0 +1,4 @@
+author: "Thlumyn"
+delete-after: True
+changes:
+  - bugfix: "self-resp viruses don't spam messages as often"

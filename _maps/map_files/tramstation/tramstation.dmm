@@ -8220,6 +8220,7 @@
 	},
 /obj/machinery/vending/modularpc,
 /obj/structure/table,
+/obj/machinery/light/small/directional/north,
 /turf/open/floor/iron,
 /area/station/commons/storage/primary)
 "bNI" = (
@@ -9748,6 +9749,7 @@
 	pixel_y = 11
 	},
 /obj/item/stock_parts/power_store/cell/high,
+/obj/machinery/light/small/directional/south,
 /turf/open/floor/iron,
 /area/station/commons/storage/primary)
 "cpl" = (
@@ -16419,6 +16421,7 @@
 	},
 /obj/structure/sign/clock/directional/east,
 /obj/effect/landmark/event_spawn,
+/obj/machinery/light/directional/east,
 /turf/open/floor/iron/smooth,
 /area/station/commons/storage/primary)
 "eHr" = (
