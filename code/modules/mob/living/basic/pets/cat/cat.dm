@@ -31,7 +31,6 @@
 	attack_verb_simple = "claw"
 	attack_sound = 'sound/weapons/slash.ogg'
 	attack_vis_effect = ATTACK_EFFECT_CLAW
-	cult_icon_state = "cat_cult"
 	///icon of the collar we can wear
 	var/collar_icon = "cat"
 	///can this cat breed?
@@ -50,9 +49,12 @@
 	var/obj/item/held_food
 	///mutable appearance for held item
 	var/mutable_appearance/held_item_overlay
+	///icon state of our cult icon
+	var/cult_icon_state = "cat_cult"
 
 /mob/living/basic/pet/cat/Initialize(mapload)
 	. = ..()
+	AddElement(/datum/element/cultist_pet, pet_cult_icon_state = cult_icon_state)
 	AddElement(/datum/element/wear_collar, collar_icon_state = collar_icon, collar_resting_icon_state = TRUE)
 	AddElement(/datum/element/ai_retaliate)
 	AddElement(/datum/element/pet_bonus, "purrs!")

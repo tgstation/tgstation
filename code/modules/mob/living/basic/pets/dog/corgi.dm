@@ -10,7 +10,7 @@
 	held_state = "corgi"
 	butcher_results = list(/obj/item/food/meat/slab/corgi = 3, /obj/item/stack/sheet/animalhide/corgi = 1)
 	gold_core_spawnable = FRIENDLY_SPAWN
-	collar_icon = "corgi"
+	collar_icon_state = "corgi"
 	cult_icon_state = "narsian"
 	ai_controller = /datum/ai_controller/basic_controller/dog/corgi
 	///Access card for the corgi.
@@ -546,7 +546,7 @@
 	mob_size = MOB_SIZE_SMALL
 	strippable_inventory_slots = list(/datum/strippable_item/pet_collar, /datum/strippable_item/corgi_id) //puppies are too small to handle hats and back slot items
 	can_breed = FALSE
-	collar_icon = "puppy"
+	collar_icon_state = "puppy"
 
 //PUPPY IAN! SQUEEEEEEEEE~
 /mob/living/basic/pet/dog/corgi/puppy/ian

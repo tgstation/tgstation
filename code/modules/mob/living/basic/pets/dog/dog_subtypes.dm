@@ -11,7 +11,7 @@
 	butcher_results = list(/obj/item/food/meat/slab/pug = 3)
 	cult_icon_state = "pug_cult"
 	gold_core_spawnable = FRIENDLY_SPAWN
-	collar_icon = "pug"
+	collar_icon_state = "pug"
 	held_state = "pug"
 
 /mob/living/basic/pet/dog/pug/Initialize(mapload)
@@ -35,7 +35,7 @@
 	icon_dead = "bullterrier_dead"
 	butcher_results = list(/obj/item/food/meat/slab/corgi = 3) // Would feel redundant to add more new dog meats.
 	gold_core_spawnable = FRIENDLY_SPAWN
-	collar_icon = "bullterrier"
+	collar_icon_state = "bullterrier"
 	held_state = "bullterrier"
 
 /mob/living/basic/pet/dog/bullterrier/lavaland_party
