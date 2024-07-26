@@ -12,11 +12,10 @@
 
 // Only run on station maps.
 /datum/round_event_control/ghost_role/voidwalker/can_spawn_event(players_amt, allow_magic = FALSE)
-	. = ..()
-	var/space_check = find_space_spawn()
-	if(!space_check)
+	var/space_turf = find_space_spawn()
+	if(!space_turf)
 		return FALSE
-	return TRUE
+	return ..()
 
 /datum/round_event/ghost_role/void_walker
 	minimum_required = 40
