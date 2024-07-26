@@ -398,10 +398,11 @@
 
 	if(prob(85))
 		new /obj/item/fish/goldfish/gill(src)
+		reagents.add_reagent(/datum/reagent/consumable/nutriment, 2)
 	else
 		new /obj/item/fish/three_eyes/gill(src)
+		reagents.add_reagent(/datum/reagent/toxin/mutagen, 2) //three eyes goldfish feed on mutagen.
 
-	reagents.add_reagent(/datum/reagent/consumable/nutriment, 2)
 
 /obj/structure/aquarium/prefilled/Initialize(mapload)
 	. = ..()
