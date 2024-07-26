@@ -49,4 +49,5 @@
 		///Keep delaying hunger and breeding while in stasis, and also heal them.
 		fish.last_feeding += seconds_per_tick SECONDS
 		fish.breeding_wait += seconds_per_tick SECONDS
-		fish.adjust_health(fish.health + 1 * seconds_per_tick)
+		if(fish.health < initial(fish.health) * 0.65)
+			fish.adjust_health(fish.health + 1 * seconds_per_tick)
