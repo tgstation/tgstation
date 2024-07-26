@@ -702,6 +702,11 @@
 	},
 /turf/open/floor/iron,
 /area/virtual_domain)
+"fD" = (
+/obj/structure/table/reinforced,
+/obj/effect/spawner/random/armory/laser_gun,
+/turf/template_noop,
+/area/virtual_domain/safehouse)
 "fF" = (
 /obj/structure/chair/office{
 	dir = 1
@@ -1480,7 +1485,6 @@
 /obj/machinery/firealarm/directional/south,
 /obj/structure/rack,
 /obj/item/storage/briefcase/secure,
-/obj/item/clothing/mask/cigarette/cigar,
 /obj/effect/turf_decal/tile/blue/half/contrasted{
 	dir = 1
 	},
@@ -2181,7 +2185,6 @@
 	pixel_y = 4
 	},
 /obj/structure/table/glass,
-/obj/item/stock_parts/cell/high,
 /obj/structure/window/reinforced/spawner/directional/west,
 /turf/open/floor/iron/dark,
 /area/virtual_domain)
@@ -2698,7 +2701,6 @@
 	pixel_x = -4;
 	pixel_y = 2
 	},
-/obj/item/clothing/mask/cigarette/cigar,
 /obj/item/reagent_containers/cup/glass/flask/gold,
 /turf/open/floor/carpet,
 /area/virtual_domain)
@@ -3091,6 +3093,19 @@
 /obj/machinery/computer/old,
 /turf/open/floor/iron/dark,
 /area/virtual_domain)
+"zQ" = (
+/obj/item/storage/belt/security/full{
+	pixel_x = 8;
+	pixel_y = -6
+	},
+/obj/item/storage/belt/security/full,
+/obj/item/storage/belt/security/full{
+	pixel_x = -8;
+	pixel_y = 6
+	},
+/obj/structure/table/reinforced,
+/turf/template_noop,
+/area/virtual_domain/safehouse)
 "zR" = (
 /obj/structure/flora/grass/jungle/b/style_random,
 /obj/structure/flora/bush/lavendergrass/style_random,
@@ -3337,6 +3352,13 @@
 /obj/effect/decal/cleanable/blood,
 /turf/open/indestructible/meat,
 /area/virtual_domain)
+"Ca" = (
+/obj/item/gun/ballistic/shotgun/riot{
+	pixel_y = 6
+	},
+/obj/item/gun/ballistic/shotgun/riot,
+/turf/template_noop,
+/area/virtual_domain/safehouse)
 "Cb" = (
 /obj/effect/turf_decal/bot,
 /obj/machinery/vending/cigarette,
@@ -3390,6 +3412,16 @@
 	},
 /turf/open/floor/iron,
 /area/virtual_domain)
+"Cx" = (
+/obj/structure/table/reinforced,
+/obj/machinery/recharger{
+	pixel_x = -6
+	},
+/obj/machinery/recharger{
+	pixel_x = 6
+	},
+/turf/template_noop,
+/area/virtual_domain/safehouse)
 "Cy" = (
 /obj/machinery/light_switch/directional/south,
 /obj/effect/spawner/random/vending/colavend,
@@ -4368,6 +4400,19 @@
 /obj/item/clothing/mask/facehugger/dead,
 /turf/open/floor/plating,
 /area/virtual_domain)
+"Lq" = (
+/obj/structure/table/reinforced,
+/obj/item/clothing/glasses/hud/security/night{
+	pixel_x = -8;
+	pixel_y = -6
+	},
+/obj/item/clothing/glasses/hud/security/night,
+/obj/item/clothing/glasses/hud/security/night{
+	pixel_x = 8;
+	pixel_y = 8
+	},
+/turf/template_noop,
+/area/virtual_domain/safehouse)
 "Ls" = (
 /obj/modular_map_root/safehouse{
 	key = "shuttle_space"
@@ -6148,7 +6193,6 @@
 "ZS" = (
 /obj/structure/table,
 /obj/machinery/cell_charger,
-/obj/item/stock_parts/cell/high,
 /obj/machinery/light_switch/directional/north,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron/dark,
@@ -7222,8 +7266,8 @@ Pa
 oD
 pB
 hX
-hX
-hX
+zQ
+Lq
 hX
 hX
 hX
@@ -7319,8 +7363,8 @@ Io
 vw
 hX
 hX
-hX
-hX
+fD
+Cx
 hX
 hX
 Fd
@@ -7416,7 +7460,7 @@ wP
 hX
 hX
 hX
-hX
+Ca
 hX
 hX
 Fd

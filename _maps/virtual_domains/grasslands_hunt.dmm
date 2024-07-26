@@ -538,6 +538,10 @@
 /obj/structure/flora/rock/pile/jungle/style_random,
 /turf/open/floor/grass,
 /area/virtual_domain/fullbright)
+"Dk" = (
+/obj/effect/landmark/bitrunning/loot_signal,
+/turf/template_noop,
+/area/virtual_domain/safehouse)
 "DM" = (
 /obj/effect/turf_decal/weather/dirt{
 	dir = 6
@@ -2530,7 +2534,7 @@ YF
 bd
 fm
 Lx
-Lx
+Dk
 Lx
 Lx
 Lx
@@ -4416,7 +4420,7 @@ aD
 Fm
 aD
 aD
-aD
+bG
 aD
 Vt
 PX
