@@ -10,18 +10,18 @@
 	min_wizard_trigger_potency = 6
 	max_wizard_trigger_potency = 7
 
-/datum/round_event/ghost_role/void_walker
-	minimum_required = 40
-	fakeable = FALSE
-	role_name = "Void Walker"
-
-// Space only antag
-/datum/round_event_control/ghost_role/voidwalker/can_spawn_event()
+// Only run on station maps.
+/datum/round_event_control/ghost_role/voidwalker/can_spawn_event(players_amt, allow_magic = FALSE)
 	. = ..()
 	var/space_check = find_space_spawn()
 	if(!space_check)
 		return FALSE
 	return TRUE
+
+/datum/round_event/ghost_role/void_walker
+	minimum_required = 40
+	fakeable = FALSE
+	role_name = "void walker"
 
 /datum/round_event/ghost_role/void_walker/spawn_role()
 	var/spawn_location = find_space_spawn()
