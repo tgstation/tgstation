@@ -178,7 +178,7 @@
 	SIGNAL_HANDLER
 	// This does mean it falls very slightly behind, but otherwise they'll potentially run into us
 	var/next_move_in = drifting_loop.timer - world.time + world.tick_lag
-	was_pulling.newtonian_move(angle2dir(drifting_loop.angle), start_delay = next_move_in)
+	was_pulling.newtonian_move(angle2dir(drifting_loop.angle), start_delay = next_move_in, drift_force = drift_force, controlled_cap = drift_force)
 
 /datum/drift_handler/proc/glide_to_halt(glide_for)
 	if(!ismob(parent))
@@ -212,7 +212,7 @@
 			source.throw_at(backup, 1, floor(1 + (drift_force - INERTIA_FORCE_THROW_FLOOR) / INERTIA_FORCE_PER_THROW_FORCE), spin = FALSE)
 		return
 
-	if (drift_force < INERTIA_FORCE_SPACEMOVE_GRAB)
+	if (drift_force < INERTIA_FORCE_SPACEMOVE_GRAB || isnull(drifting_loop))
 		return
 
 	if (drift_force <= INERTIA_FORCE_SPACEMOVE_REDUCTION / source.inertia_force_weight)

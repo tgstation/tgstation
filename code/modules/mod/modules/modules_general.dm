@@ -147,7 +147,7 @@
 		/datum/effect_system/trail_follow/ion/grav_allowed, \
 	)
 
-	if (!isnull(mod.wearer) && mod.wearer.get_item_by_slot(slot_flags) == src)
+	if (!isnull(mod) && !isnull(mod.wearer) && mod.wearer.get_item_by_slot(slot_flags) == src)
 		if (!stabilize)
 			ADD_TRAIT(mod.wearer, TRAIT_NOGRAV_ALWAYS_DRIFT, MOD_TRAIT)
 		else
