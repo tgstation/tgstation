@@ -252,7 +252,7 @@
 	sprite_height = 9
 	sprite_width = 8
 	stable_population = 4
-	feeding_frequency = 9 MINUTES
+	feeding_frequency = 10 MINUTES
 	random_case_rarity = FISH_RARITY_RARE
 	fillet_type = /obj/item/food/meat/slab/rawcrab
 	required_temperature_min = MIN_AQUARIUM_TEMP+9
