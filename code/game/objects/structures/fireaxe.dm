@@ -20,7 +20,7 @@
 	var/item_overlay = "axe"
 	/// Whether we should populate our own contents on Initialize()
 	var/populate_contents = TRUE
-	/// Is the held_item must be unwielded?
+	/// Whether we need to unwield the item to put it into the cabinet
 	var/must_be_unwielded = TRUE
 
 MAPPING_DIRECTIONAL_HELPERS(/obj/structure/fireaxecabinet, 32)
