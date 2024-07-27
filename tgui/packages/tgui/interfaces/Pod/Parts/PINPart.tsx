@@ -1,10 +1,10 @@
-import { BooleanLike, classes } from 'common/react';
+import { classes } from 'common/react';
 import { useBackend } from '../../../backend';
-import { Button, Box, Stack, Dropdown } from '../../../components';
-import { DropdownEntry } from '../../../components/Dropdown';
-import { NukeKeypad } from '../../NuclearBomb';
+import { Button, Box, Stack } from '../../../components';
 type Data = {
-  partUIData: string[];
+  entered_pin: string;
+  lockstate: string;
+  ref: string;
 };
 
 const KEYPAD = [
@@ -13,13 +13,11 @@ const KEYPAD = [
   ['3', '6', '9', 'E'],
 ] as const;
 
-export default function PINPart(_props: any): JSX.Element {
-  const { act, data } = useBackend<{
-    partUIData: string[];
+export default function PINPart(props: { partData: Data }): JSX.Element {
+  const { act } = useBackend<{
     ourData: Data;
   }>();
-  const { partUIData } = data;
-  const ourData = partUIData['PINPart'];
+  const ourData = props.partData as Data;
   return (
     <Box>
       <Stack>
@@ -35,14 +33,16 @@ export default function PINPart(_props: any): JSX.Element {
                     mb={1}
                     textAlign="center"
                     fontSize="25px"
-                    lineHeight={1.25}
+                    lineHeight={1.2}
                     width="40px"
                     className={classes([
                       'NuclearBomb__Button',
                       'NuclearBomb__Button--keypad',
                       key != '1' && 'NuclearBomb__Button--' + key,
                     ])}
-                    onClick={() => act('keypad', { digit: key })}
+                    onClick={() =>
+                      act('keypad', { partRef: ourData.ref, digit: key })
+                    }
                   >
                     {key}
                   </Button>
@@ -53,16 +53,20 @@ export default function PINPart(_props: any): JSX.Element {
         </Stack.Item>
         <Stack.Divider />
         <Stack.Item>
+          <Box textAlign="center" mb={1} className="NuclearBomb__displayBox">
+            {ourData.entered_pin}
+          </Box>
           <Box
             mb={1}
             width="100%"
             fontSize="1.8em"
+            textAlign="center"
             className="NuclearBomb__displayBox"
           >
-            NOT SET
+            {ourData.lockstate}
           </Box>
-          <Box textAlign="center" mb={1} className="NuclearBomb__displayBox">
-            0000
+          <Box fontSize="10px">
+            If not set, enter one to set it. If set, enter again to remove PIN.
           </Box>
         </Stack.Item>
       </Stack>

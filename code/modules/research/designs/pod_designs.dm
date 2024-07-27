@@ -92,7 +92,7 @@
 	materials = list(
 		/datum/material/iron=SHEET_MATERIAL_AMOUNT*10,
 		/datum/material/titanium=SHEET_MATERIAL_AMOUNT*3,
-		/datum/material/uranium=SHEET_MATERIAL_AMOUNT*2,
+		/datum/material/glass=SHEET_MATERIAL_AMOUNT*2,
 	)
 	construction_time = 5 SECONDS
 	category = list(
@@ -122,6 +122,35 @@
 	materials = list(
 		/datum/material/iron=SHEET_MATERIAL_AMOUNT*10,
 		/datum/material/titanium=SHEET_MATERIAL_AMOUNT*3,
+	)
+	construction_time = 5 SECONDS
+	category = list(
+		RND_CATEGORY_MECHFAB_SPACEPOD + RND_SUBCATEGORY_MECHFAB_POD_SECONDARY
+	)
+
+/datum/design/podpinlock
+	name = /obj/item/pod_equipment/lock/pin::name
+	id = "podpinlock"
+	build_type = MECHFAB
+	build_path = /obj/item/pod_equipment/lock/pin
+	materials = list(
+		/datum/material/iron=SHEET_MATERIAL_AMOUNT*3,
+		/datum/material/glass=SHEET_MATERIAL_AMOUNT*0.5,
+	)
+	construction_time = 5 SECONDS
+	category = list(
+		RND_CATEGORY_MECHFAB_SPACEPOD + RND_SUBCATEGORY_MECHFAB_POD_SECONDARY
+	)
+
+/datum/design/poddnalock
+	name = /obj/item/pod_equipment/lock/dna::name
+	id = "poddnalock"
+	build_type = MECHFAB
+	build_path = /obj/item/pod_equipment/lock/dna
+	materials = list(
+		/datum/material/iron=SHEET_MATERIAL_AMOUNT*3,
+		/datum/material/glass=SHEET_MATERIAL_AMOUNT*0.75,
+		/datum/material/titanium=SHEET_MATERIAL_AMOUNT*0.5,
 	)
 	construction_time = 5 SECONDS
 	category = list(

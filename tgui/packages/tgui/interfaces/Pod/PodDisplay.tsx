@@ -9,7 +9,6 @@ import {
 } from '../../components';
 import { useBackend } from '../../backend';
 import { PodData } from './types';
-import { DataMock } from './constants';
 
 export default function PodDisplay(_props: any): JSX.Element {
   const { act, data } = useBackend<PodData>();
@@ -20,6 +19,7 @@ export default function PodDisplay(_props: any): JSX.Element {
     health,
     acceleration,
     maxAcceleration,
+    forcePerMove,
     cabinPressure,
     headlightsEnabled,
   } = data;
@@ -80,7 +80,7 @@ export default function PodDisplay(_props: any): JSX.Element {
               {cabinPressure}
             </LabeledList.Item>
             <LabeledList.Item label="Acceleration">
-              {acceleration} / {maxAcceleration}
+              {acceleration} / {maxAcceleration} ({forcePerMove})
             </LabeledList.Item>
           </LabeledList>
         </Section>

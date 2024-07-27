@@ -1,4 +1,3 @@
-//DNA Locks maybe?
 /obj/item/pod_equipment/lock
 	slot = POD_SLOT_MISC
 	exclusive_with = list(/obj/item/pod_equipment/lock)
@@ -9,10 +8,12 @@
 
 /obj/item/pod_equipment/lock/pin
 	name = "Pod PIN lock"
+	desc = "Allows you to set a pin lock for a pod."
 	interface_id = "PINPart"
+	/// our actual PIN
 	var/pin
+	/// holds the entered pin in the UI
 	var/entered_pin = ""
-	var/locked = FALSE
 
 /obj/item/pod_equipment/lock/pin/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
@@ -24,30 +25,31 @@
 			var/digit = params["digit"]
 			if(digit == "C")
 				entered_pin = ""
+				return
 			else if(digit == "E")
 				var/entered = text2num(entered_pin)
 				if(isnull(entered))
 					return
+				entered_pin = ""
 				if(isnull(pin))
 					pin = entered
-					entered_pin = ""
 				else if(pin == entered)
-					locked = !locked
-					entered_pin = ""
+					pin = null //reset
 				return
-			if(length(entered_pin) >= 4)
+			if(length_char(entered_pin) >= 4)
 				return
 			entered_pin += digit
 
 /obj/item/pod_equipment/lock/pin/ui_data(mob/user)
 	. = list()
-	.["locked"] = locked
+	.["ref"] = REF(src)
+	.["lockstate"] = !isnull(pin) ? "SET" : "NOT SET"
 	.["entered_pin"] = entered_pin
 	for(var/i = 1 to 4 - length(entered_pin))
 		.["entered_pin"] += "-" //style
 
 /obj/item/pod_equipment/lock/pin/request_permission(mob/requestee)
-	if(isnull(pin) || !locked)
+	if(isnull(pin))
 		return TRUE
 	. = FALSE
 	var/entered_pin = tgui_input_number(requestee, "PIN needed!", "Enter PIN", 0, 9999, 0)
@@ -59,7 +61,30 @@
 	return TRUE
 
 /obj/item/pod_equipment/lock/dna
+	name = "Pod DNA lock"
+	desc = "This device will make the pod only allow your DNA to enter. Use the pod controls to add your DNA, and use it again to remove the lock."
+	interface_id = "DNAPart"
+	/// the unique enzymes of whoever we belong to
 	var/unique_enzymes
+
+/obj/item/pod_equipment/lock/dna/ui_data(mob/user)
+	. = list()
+	.["dnaSet"] = !isnull(unique_enzymes) ? "DNA - SET" : "DNA - NOT SET"
+
+/obj/item/pod_equipment/lock/dna/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
+	. = ..()
+	if(.)
+		return
+	var/mob/living/carbon/carbon = usr
+	if(!request_permission(carbon))
+		return
+	switch(action)
+		if("setprint")
+			. = TRUE
+			if(unique_enzymes)
+				unique_enzymes = null
+			else if(carbon.has_dna())
+				unique_enzymes = carbon.dna.unique_enzymes
 
 /obj/item/pod_equipment/lock/dna/request_permission(mob/living/carbon/user)
 	if(!istype(user))

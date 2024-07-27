@@ -12,6 +12,7 @@
 		"podsensors",
 		"podcargohold",
 		"podextraseats",
+		"podpinlock",
 //t1 parts here
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_2_POINTS)

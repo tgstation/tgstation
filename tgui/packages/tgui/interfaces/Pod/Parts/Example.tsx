@@ -1,5 +1,14 @@
+import { useBackend } from '../../../backend';
 import { Box } from '../../../components';
-
-export default function Example(_props: any): JSX.Element {
-  return <Box>Hello, World!</Box>;
+type Data = {
+  funnydata: string;
+  ref: string;
+};
+// PLEASE supply partRef in act
+export default function Example(props: { partData: Data }): JSX.Element {
+  const { act } = useBackend<{
+    ourData: Data;
+  }>();
+  const ourData = props.partData as Data;
+  return <Box>{ourData.funnydata}</Box>;
 }

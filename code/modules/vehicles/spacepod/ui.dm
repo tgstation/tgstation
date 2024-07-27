@@ -18,13 +18,16 @@
 	.["health"] = get_integrity_percentage()
 	.["acceleration"] = !isnull(drift_handler) ? drift_handler.drift_force : 0
 	.["maxAcceleration"] = max_speed
+	.["forcePerMove"] = force_per_move
 	.["headlightsEnabled"] = light_on
 	.["cabinPressure"] = !isnull(cabin_air_tank) ? "[cabin_air.return_pressure()]kPa" : "No air tank"
 	.["partUIData"] = list()
 	for(var/obj/item/pod_equipment/equipment as anything in get_all_parts())
 		if(!equipment.interface_id)
 			continue
-		.["partUIData"][equipment.interface_id] = equipment.ui_data(user)
+		var/part_ref = REF(equipment)
+		.["partUIData"][part_ref] = equipment.ui_data(user)
+		.["partUIData"][part_ref]["ref"] = part_ref
 
 /obj/vehicle/sealed/space_pod/ui_static_data(mob/user)
 	. = list()
@@ -32,8 +35,9 @@
 	for(var/obj/item/pod_equipment/equipment as anything in get_all_parts())
 		var/list/info = list()
 		info["name"] = equipment.name
-		info["desc"] = equipment.desc //todo maybe use examine?
+		info["desc"] = equipment.desc
 		info["type"] = equipment.interface_id
+		info["ref"] = REF(equipment)
 		.["parts"] += list(info)
 
 /obj/vehicle/sealed/space_pod/ui_status(mob/living/user, datum/ui_state/state)
@@ -51,13 +55,10 @@
 	. = ..()
 	if(.)
 		return
-	var/id = params["partID"]
-	if(!isnull(id))
-		var/result
-		for(var/obj/item/pod_equipment/equipment as anything in get_all_parts())
-			if(equipment.interface_id != id)
-				continue
-			result = equipment.ui_act(action, params, ui, state)
+	var/id = params["partRef"]
+	var/datum/targ = locate(id)
+	if(!isnull(targ))
+		var/result = targ.ui_act(action, params, ui, state)
 		if(result)
 			return result
 

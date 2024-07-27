@@ -8,16 +8,14 @@ type Data = {
   warpPercentage: number;
   beacons: DropdownEntry[];
   selectedBeacon: DropdownEntry;
-  partUIData: string[];
+  ref: string;
 };
 
-export default function WarpDrive(_props: any): JSX.Element {
-  const { act, data } = useBackend<{
-    partUIData: string[];
+export default function WarpDrive(props: { partData: Data }): JSX.Element {
+  const { act } = useBackend<{
     ourData: Data;
   }>();
-  const { partUIData } = data;
-  const ourData = partUIData['WarpDrive'];
+  const ourData = props.partData as Data;
   return (
     <>
       <Stack>
@@ -30,7 +28,7 @@ export default function WarpDrive(_props: any): JSX.Element {
                 selected={ourData.selectedBeacon}
                 onSelected={(value) =>
                   act('set_warp_target', {
-                    partID: 'WarpDrive',
+                    partRef: ourData.ref,
                     target: value,
                   })
                 }
@@ -56,7 +54,7 @@ export default function WarpDrive(_props: any): JSX.Element {
             circular
             height={8}
             width={8}
-            onClick={() => act('warp', { partID: 'WarpDrive' })}
+            onClick={() => act('warp', { partRef: ourData.ref })}
             disabled={!ourData.mayWarp}
             color={ourData.mayWarp ? 'red' : 'grey'}
           >

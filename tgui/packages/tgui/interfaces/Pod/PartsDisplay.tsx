@@ -1,8 +1,8 @@
-import { Fragment, useMemo, useState } from 'react';
+import { useMemo, useState } from 'react';
 import { useBackend } from '../../backend';
 import { Box, Divider, Dropdown, NoticeBox, Section } from '../../components';
 import { Part, PodData } from './types';
-import { DataMock, TAGNAME2TAG } from './constants';
+import { TAGNAME2TAG } from './constants';
 
 export default function PartsDisplay(_props: any): JSX.Element {
   const { data } = useBackend<PodData>();
@@ -12,11 +12,12 @@ export default function PartsDisplay(_props: any): JSX.Element {
 
   const options: string[] = parts.map((part: Part) => part.name);
 
-  const [part, PartTag] = useMemo(() => {
+  const [part, PartTag, partRef] = useMemo(() => {
     const part = parts.find((part: Part) => part.name === selection);
+    const partRef = part?.ref;
     const tag = part?.type ? TAGNAME2TAG[part.type] : undefined;
 
-    return [part, tag];
+    return [part, tag, partRef];
   }, [selection]);
 
   return (
@@ -39,7 +40,7 @@ export default function PartsDisplay(_props: any): JSX.Element {
           {!!PartTag && (
             <>
               <Divider />
-              <PartTag />
+              <PartTag partData={data.partUIData[partRef as string]} />
             </>
           )}
         </>
