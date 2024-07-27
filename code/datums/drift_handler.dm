@@ -25,7 +25,7 @@
 	if(instant)
 		flags |= MOVEMENT_LOOP_START_FAST
 	src.drift_force = drift_force
-	drifting_loop = GLOB.move_manager.smooth_move(moving = parent, angle = inertia_angle, delay = get_loop_delay(parent), subsystem = SSspacedrift, priority = MOVEMENT_SPACE_PRIORITY, flags = flags)
+	drifting_loop = GLOB.move_manager.smooth_move(moving = parent, angle = inertia_angle, delay = get_loop_delay(parent), subsystem = SSnewtonian_movement, priority = MOVEMENT_SPACE_PRIORITY, flags = flags)
 
 	if(!drifting_loop)
 		qdel(src)
@@ -66,7 +66,7 @@
 
 	// Ignore the next glide because it's literally just us
 	ignore_next_glide = TRUE
-	parent.set_glide_size(MOVEMENT_ADJUSTED_GLIDE_SIZE(visual_delay, SSspacedrift.visual_delay))
+	parent.set_glide_size(MOVEMENT_ADJUSTED_GLIDE_SIZE(visual_delay, SSnewtonian_movement.visual_delay))
 	if(!ismob(parent))
 		return
 	var/mob/mob_parent = parent
@@ -74,7 +74,7 @@
 	//Make sure moving into a space move looks like a space move essentially
 	//There is an inbuilt assumption that gliding will be added as a part of a move call, but eh
 	//It's ok if it's not, it's just important if it is.
-	mob_parent.client?.visual_delay = MOVEMENT_ADJUSTED_GLIDE_SIZE(visual_delay, SSspacedrift.visual_delay)
+	mob_parent.client?.visual_delay = MOVEMENT_ADJUSTED_GLIDE_SIZE(visual_delay, SSnewtonian_movement.visual_delay)
 
 /datum/drift_handler/proc/newtonian_impulse(inertia_angle, start_delay, additional_force, controlled_cap)
 	SIGNAL_HANDLER

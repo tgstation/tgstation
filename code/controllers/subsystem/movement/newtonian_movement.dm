@@ -13,6 +13,7 @@ MOVEMENT_SUBSYSTEM_DEF(newtonian_movement)
 	return ..()
 
 /datum/controller/subsystem/movement/newtonian_movement/fire(resumed = FALSE)
+	. = ..()
 	if (!resumed)
 		currentrun = processing.Copy()
 	//cache for sanic speed (lists are references anyways)
