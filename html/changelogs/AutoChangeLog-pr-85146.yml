@@ -1,6 +1,0 @@
-author: "Ghommie"
-delete-after: True
-changes:
-  - rscdel: "Removed a janky fish bounty"
-  - rscadd: "introduced exporting fish through cargo."
-  - balance: "reduced the average weight of the jumpercable. Conversely, eased up the requirements for the bone fish evolution."
