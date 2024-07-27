@@ -32,16 +32,9 @@
 	var/size_at_maximum = 0
 	///list of cultists just before summoning Narsie
 	var/list/true_cultists = list()
-	/// Lesser cults can't summon or sacrifice or anything. Used for DM
-	var/lesser_cult = FALSE
-
-/datum/team/cult/lesser
-	name = "\improper Lesser Cult"
-	show_roundend_report = FALSE
-	lesser_cult = TRUE
 
 /datum/team/cult/proc/check_size()
-	if(cult_ascendent || lesser_cult)
+	if(cult_ascendent)
 		return
 
 	// This proc is unnecessary clutter whilst running cult related unit tests
@@ -96,8 +89,6 @@
 	sac_objective.sac_image = reshape
 
 /datum/team/cult/proc/setup_objectives()
-	if(lesser_cult)
-		return
 	var/datum/objective/sacrifice/sacrifice_objective = new
 	sacrifice_objective.team = src
 	sacrifice_objective.find_target()
@@ -143,8 +134,6 @@
 	return "<div class='panel redborder'>[parts.Join("<br>")]</div>"
 
 /datum/team/cult/proc/is_sacrifice_target(datum/mind/mind)
-	if(lesser_cult)
-		return
 
 	for(var/datum/objective/sacrifice/sac_objective in objectives)
 		if(mind == sac_objective.target)

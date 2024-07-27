@@ -3082,7 +3082,6 @@
 #include "code\modules\antagonists\clown_ops\clownop.dm"
 #include "code\modules\antagonists\clown_ops\outfits.dm"
 #include "code\modules\antagonists\cult\blood_magic.dm"
-#include "code\modules\antagonists\cult\cult.dm"
 #include "code\modules\antagonists\cult\cult_comms.dm"
 #include "code\modules\antagonists\cult\cult_items.dm"
 #include "code\modules\antagonists\cult\cult_objectives.dm"

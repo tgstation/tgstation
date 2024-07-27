@@ -27,14 +27,6 @@
 	default_custom_objective = "Turn a department into a testament for your dark knowledge."
 	hardcore_random_bonus = TRUE
 	stinger_sound = 'sound/ambience/antag/heretic/heretic_gain.ogg'
-
-	/// Used for neutered, lesser, deathmatch heretics. Disallows ascension if untrue.
-	var/can_ascend = TRUE
-	/// Used for neutered, lesser, deathmatch heretics. Disallows any sort of sacrifice if untrue.
-	var/can_sacrifice = TRUE
-	/// Used for neutered, lesser, deathmatch heretics. Disallows any sort of knowledge learning if untrue.
-	var/can_learn = TRUE
-
 	/// Whether we give this antagonist objectives on gain.
 	var/give_objectives = TRUE
 	/// Whether we've ascended! (Completed one of the final rituals)
@@ -101,15 +93,6 @@
 	)
 	/// Simpler version of above used to limit amount of loot that can be hoarded
 	var/rewards_given = 0
-
-/datum/antagonist/heretic/neutered
-	name = "\improper Lesser Heretic"
-	give_objectives = FALSE
-	knowledge_points = -100
-	passive_gain_timer = null
-	can_ascend = FALSE
-	can_sacrifice = FALSE
-	can_learn = FALSE
 
 /datum/antagonist/heretic/Destroy()
 	LAZYNULL(sac_targets)
@@ -246,8 +229,6 @@
 			if(!ispath(researched_path, /datum/heretic_knowledge))
 				CRASH("Heretic attempted to learn non-heretic_knowledge path! (Got: [researched_path])")
 
-			if(!can_learn)
-				return TRUE // why are we returning true on fail
 			if(initial(researched_path.cost) > knowledge_points)
 				return TRUE
 			if(!gain_knowledge(researched_path))
@@ -913,8 +894,6 @@
 		return FALSE // We spurned the offer of the Mansus :(
 	if(feast_of_owls)
 		return FALSE // We sold our ambition for immediate power :/
-	if(!can_ascend)
-		return FALSE
 	for(var/datum/objective/must_be_done as anything in objectives)
 		if(!must_be_done.check_completion())
 			return FALSE

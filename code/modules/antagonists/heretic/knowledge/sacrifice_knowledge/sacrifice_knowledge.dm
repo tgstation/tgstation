@@ -47,10 +47,8 @@
 
 /datum/heretic_knowledge/hunt_and_sacrifice/on_research(mob/user, datum/antagonist/heretic/our_heretic)
 	. = ..()
-	heretic_mind = our_heretic.owner
-	if(!our_heretic.can_sacrifice)
-		return
 	obtain_targets(user, silent = TRUE, heretic_datum = our_heretic)
+	heretic_mind = our_heretic.owner
 
 #ifndef UNIT_TESTS // This is a decently hefty thing to generate while unit testing, so we should skip it.
 	if(!heretic_level_generated)
@@ -110,10 +108,6 @@
 		else
 			loc.balloon_alert(user, "ritual failed, no targets found!")
 			return FALSE
-
-	if(!heretic_datum.can_sacrifice)
-		loc.balloon_alert(user, "lesser heretics cannot sacrifice!")
-		return FALSE
 
 	sacrifice_process(user, selected_atoms, loc)
 	return TRUE

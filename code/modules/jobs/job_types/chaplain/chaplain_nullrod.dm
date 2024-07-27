@@ -696,7 +696,7 @@
 
 /obj/item/brass_spear
 	name = "dull brass spear"
-	desc = "An ancient spear made of brass. The point is sharp, but it looks so dull.. you get a feeling brass isn't a good nonmagical material for a weapon."
+	desc = "An ancient spear made of brass. The point seems sharp, but it feels so dull.. you get a feeling brass isn't good nonmagical material for a weapon."
 	icon = 'icons/obj/weapons/spear.dmi'
 	icon_state = "ratvarian_spear"
 	inhand_icon_state = "ratvarian_spear"

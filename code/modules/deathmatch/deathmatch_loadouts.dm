@@ -900,10 +900,10 @@
 
 //spleef
 
-/datum/outfit/deathmatch_loadout/spleef
-	name = "Deathmatch: Spleef loadout"
-	display_name = "Spleefer"
-	desc = "SPLEEF!!! Snip the catwalks under everyone else and win!!!"
+/datum/outfit/deathmatch_loadout/lattice_battles
+	name = "Deathmatch: Lattice loadout"
+	display_name = "Lattice Battler"
+	desc = "Snip the catwalks under everyone else and win! You're pacifist, so no punching."
 
 	uniform = /obj/item/clothing/under/pants/jeans
 	suit = /obj/item/clothing/suit/costume/wellworn_shirt/graphic
@@ -919,7 +919,7 @@
 
 // We don't want them to just punch each other to death
 
-/datum/outfit/deathmatch_loadout/spleef/pre_equip(mob/living/carbon/human/user, visualsOnly)
+/datum/outfit/deathmatch_loadout/lattice_battles/pre_equip(mob/living/carbon/human/user, visualsOnly)
 	. = ..()
 	ADD_TRAIT(user, TRAIT_PACIFISM, REF(src))
 
@@ -956,7 +956,7 @@
 
 	backpack_contents = list(
 		/obj/item/restraints/legcuffs/bola/cult,
-		/obj/item/cult_shift,
+		/obj/item/reagent_containers/cup/beaker/unholywater,
 	)
 
 // Cultist Artificer, gets all the balanced cult magicks
@@ -982,6 +982,13 @@
 
 	back = /obj/item/storage/backpack/cultpack
 
+	backpack_contents = list(
+		/obj/item/cult_shift,
+		/obj/item/reagent_containers/cup/beaker/unholywater,
+		/obj/item/reagent_containers/cup/beaker/unholywater,
+		/obj/item/reagent_containers/cup/beaker/unholywater,
+	)
+
 	spells_to_add = list(
 		/datum/action/innate/cult/blood_spell/horror,
 		/datum/action/innate/cult/blood_spell/horror,
@@ -993,7 +1000,7 @@
 /datum/outfit/deathmatch_loadout/cultish/artificer/post_equip(mob/living/carbon/human/user, visualsOnly)
 	. = ..()
 	var/datum/action/innate/cult/blood_spell/manipulation/magick = locate() in user
-	magick.charges = 100
+	magick.charges = 300
 
 /datum/outfit/deathmatch_loadout/heresy
 	/// Grants the effects of these knowledges to the DMer
