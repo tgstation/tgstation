@@ -11,7 +11,7 @@
 		possible_jobs += rank
 
 	for(var/job_name in possible_jobs)
-		var/datum/job/job = SSjob.GetJob(job_name)
+		var/datum/job/job = SSjob.get_job(job_name)
 		var/mob/living/player = allocate(job.spawn_type)
 		player.mind_initialize()
 		var/datum/mind/mind = player.mind

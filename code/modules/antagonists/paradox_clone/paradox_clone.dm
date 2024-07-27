@@ -52,7 +52,7 @@
 	kill.update_explanation_text()
 	objectives += kill
 
-	owner.set_assigned_role(SSjob.GetJobType(/datum/job/paradox_clone))
+	owner.set_assigned_role(SSjob.get_job_type(/datum/job/paradox_clone))
 
 	//clone doesnt show up on message lists
 	var/obj/item/modular_computer/pda/messenger = locate() in owner.current

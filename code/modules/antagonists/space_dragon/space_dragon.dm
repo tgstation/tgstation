@@ -67,12 +67,12 @@
 	forge_objectives()
 	rift_ability = new()
 	owner.special_role = ROLE_SPACE_DRAGON
-	owner.set_assigned_role(SSjob.GetJobType(/datum/job/space_dragon))
+	owner.set_assigned_role(SSjob.get_job_type(/datum/job/space_dragon))
 	return ..()
 
 /datum/antagonist/space_dragon/on_removal()
 	owner.special_role = null
-	owner.set_assigned_role(SSjob.GetJobType(/datum/job/unassigned))
+	owner.set_assigned_role(SSjob.get_job_type(/datum/job/unassigned))
 	return ..()
 
 /datum/antagonist/space_dragon/apply_innate_effects(mob/living/mob_override)
