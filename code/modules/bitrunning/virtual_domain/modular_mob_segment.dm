@@ -14,6 +14,9 @@
 
 	var/list/datum/weakref/mob_refs = list()
 	for(var/mob/living/spawned as anything in spawned_mobs)
+		if(QDELETED(spawned))
+			continue
+
 		mob_refs += WEAKREF(spawned)
 
 	return mob_refs

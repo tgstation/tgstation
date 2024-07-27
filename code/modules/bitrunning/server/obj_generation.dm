@@ -117,7 +117,9 @@
 
 		var/datum/modular_mob_segment/segment = new path()
 
-		mutation_candidate_refs += landmark.spawn_mobs(get_turf(landmark), segment)
+		var/list/mob_spawns = landmark.spawn_mobs(get_turf(landmark), segment)
+		if(length(mob_spawns))
+			mutation_candidate_refs += mob_spawns
 
 		qdel(landmark)
 		qdel(segment)
