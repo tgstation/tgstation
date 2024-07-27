@@ -1,0 +1,1090 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"bm" = (
+/obj/structure/lattice/catwalk,
+/obj/structure/closet/crate/large/hats,
+/turf/open/chasm,
+/area/deathmatch)
+"bz" = (
+/obj/structure/railing{
+	dir = 1
+	},
+/obj/item/clothing/head/cone,
+/obj/effect/path_blocker{
+	blocked_types = list(/mob/living)
+	},
+/turf/open/misc/asteroid/moon,
+/area/deathmatch)
+"cB" = (
+/obj/structure/lattice/catwalk,
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/chasm,
+/area/deathmatch)
+"cN" = (
+/obj/structure/railing{
+	dir = 8
+	},
+/obj/effect/path_blocker{
+	blocked_types = list(/mob/living)
+	},
+/turf/open/misc/asteroid/moon,
+/area/deathmatch)
+"df" = (
+/obj/structure/lattice/catwalk,
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/chasm,
+/area/deathmatch)
+"dM" = (
+/turf/open/chasm,
+/area/deathmatch)
+"eK" = (
+/obj/structure/lattice/catwalk,
+/obj/effect/landmark/deathmatch_player_spawn,
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/chasm,
+/area/deathmatch)
+"gz" = (
+/obj/structure/flora/rock/pile/style_random,
+/turf/open/misc/asteroid/moon,
+/area/deathmatch)
+"gN" = (
+/turf/closed/mineral/random,
+/area/deathmatch)
+"gW" = (
+/obj/structure/railing{
+	dir = 1
+	},
+/obj/structure/flora/lunar_plant/style_1,
+/obj/effect/path_blocker{
+	blocked_types = list(/mob/living)
+	},
+/turf/open/misc/asteroid/moon,
+/area/deathmatch)
+"ho" = (
+/obj/structure/railing{
+	dir = 6
+	},
+/obj/structure/flora/lunar_plant/style_1,
+/obj/effect/path_blocker{
+	blocked_types = list(/mob/living)
+	},
+/obj/structure/cable,
+/turf/open/misc/asteroid/moon,
+/area/deathmatch)
+"hH" = (
+/obj/structure/railing{
+	dir = 5
+	},
+/obj/structure/flora/rock/pile/style_random,
+/obj/structure/flora/lunar_plant/style_3,
+/obj/effect/path_blocker{
+	blocked_types = list(/mob/living)
+	},
+/turf/open/misc/asteroid/moon,
+/area/deathmatch)
+"jb" = (
+/obj/structure/flora/rock/style_random,
+/turf/open/misc/asteroid/moon,
+/area/deathmatch)
+"lO" = (
+/obj/structure/railing{
+	dir = 9
+	},
+/obj/structure/flora/rock/pile/style_random,
+/obj/structure/flora/lunar_plant/style_3,
+/obj/effect/path_blocker{
+	blocked_types = list(/mob/living)
+	},
+/turf/open/misc/asteroid/moon,
+/area/deathmatch)
+"nR" = (
+/obj/structure/lattice/catwalk,
+/turf/closed/mineral/random,
+/area/deathmatch)
+"rE" = (
+/obj/structure/flora/rock/pile/style_random,
+/turf/closed/mineral/random,
+/area/deathmatch)
+"rF" = (
+/obj/structure/lattice/catwalk,
+/obj/effect/landmark/deathmatch_player_spawn,
+/obj/structure/cable,
+/turf/open/chasm,
+/area/deathmatch)
+"sl" = (
+/mob/living/basic/spider/giant/hunter/away_caves,
+/obj/effect/decal/cleanable/cobweb/cobweb2,
+/obj/structure/spider/stickyweb,
+/turf/open/misc/asteroid/moon,
+/area/deathmatch)
+"sQ" = (
+/obj/structure/flora/lunar_plant/style_2,
+/turf/open/misc/asteroid/moon,
+/area/deathmatch)
+"tw" = (
+/obj/structure/railing{
+	dir = 4
+	},
+/obj/effect/path_blocker{
+	blocked_types = list(/mob/living)
+	},
+/turf/open/misc/asteroid/moon,
+/area/deathmatch)
+"tL" = (
+/obj/structure/railing,
+/obj/effect/path_blocker{
+	blocked_types = list(/mob/living)
+	},
+/obj/structure/cable,
+/turf/open/misc/asteroid/moon,
+/area/deathmatch)
+"uJ" = (
+/obj/structure/railing{
+	dir = 4
+	},
+/obj/item/clothing/head/cone,
+/obj/effect/path_blocker{
+	blocked_types = list(/mob/living)
+	},
+/turf/open/misc/asteroid/moon,
+/area/deathmatch)
+"uO" = (
+/obj/structure/lattice/catwalk,
+/obj/structure/closet/crate/critter,
+/mob/living/basic/mothroach,
+/mob/living/basic/mothroach,
+/mob/living/basic/mothroach,
+/turf/open/chasm,
+/area/deathmatch)
+"vk" = (
+/obj/structure/lattice/catwalk,
+/turf/open/chasm,
+/area/deathmatch)
+"vr" = (
+/obj/structure/flora/lunar_plant/style_2,
+/obj/structure/spider/stickyweb/very_sticky,
+/turf/open/misc/asteroid/moon,
+/area/deathmatch)
+"wb" = (
+/obj/structure/lattice/catwalk,
+/obj/effect/landmark/deathmatch_player_spawn,
+/turf/open/chasm,
+/area/deathmatch)
+"xz" = (
+/obj/structure/lattice/catwalk,
+/obj/structure/lattice/catwalk,
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/chasm,
+/area/deathmatch)
+"yB" = (
+/obj/structure/railing{
+	dir = 8
+	},
+/obj/structure/flora/lunar_plant/style_1,
+/obj/effect/path_blocker{
+	blocked_types = list(/mob/living)
+	},
+/turf/open/misc/asteroid/moon,
+/area/deathmatch)
+"zN" = (
+/obj/structure/lattice/catwalk,
+/obj/structure/cable,
+/turf/open/chasm,
+/area/deathmatch)
+"AS" = (
+/mob/living/basic/pet/cat/space,
+/turf/open/misc/asteroid/moon,
+/area/deathmatch)
+"BL" = (
+/obj/structure/railing{
+	dir = 1
+	},
+/obj/effect/path_blocker{
+	blocked_types = list(/mob/living)
+	},
+/turf/open/misc/asteroid/moon,
+/area/deathmatch)
+"Cf" = (
+/obj/structure/flora/rock/pile/style_random,
+/obj/structure/flora/lunar_plant/style_3,
+/turf/open/misc/asteroid/moon,
+/area/deathmatch)
+"CI" = (
+/mob/living/basic/pet/dog/corgi/puppy/void,
+/turf/open/misc/asteroid/moon,
+/area/deathmatch)
+"CO" = (
+/obj/structure/lattice/catwalk,
+/obj/structure/cable,
+/obj/effect/decal/cleanable/rubble,
+/turf/open/chasm,
+/area/deathmatch)
+"CP" = (
+/obj/structure/lattice/catwalk,
+/obj/item/clothing/head/cone,
+/turf/open/chasm,
+/area/deathmatch)
+"Dk" = (
+/mob/living/basic/wumborian_fugu,
+/turf/open/misc/asteroid/moon,
+/area/deathmatch)
+"Er" = (
+/obj/structure/lattice,
+/turf/open/chasm,
+/area/deathmatch)
+"He" = (
+/turf/open/misc/asteroid/moon,
+/area/deathmatch)
+"HZ" = (
+/obj/structure/lattice,
+/obj/structure/cable,
+/turf/open/chasm,
+/area/deathmatch)
+"Ia" = (
+/obj/machinery/power/floodlight,
+/obj/structure/lattice/catwalk,
+/obj/structure/cable,
+/turf/open/space/basic,
+/area/deathmatch)
+"IT" = (
+/obj/structure/lattice/catwalk,
+/obj/structure/lattice/catwalk,
+/obj/effect/landmark/deathmatch_player_spawn,
+/obj/effect/decal/cleanable/rubble,
+/turf/open/chasm,
+/area/deathmatch)
+"JE" = (
+/obj/structure/railing{
+	dir = 10
+	},
+/obj/structure/flora/lunar_plant/style_1,
+/obj/effect/path_blocker{
+	blocked_types = list(/mob/living)
+	},
+/turf/open/misc/asteroid/moon,
+/area/deathmatch)
+"KO" = (
+/obj/structure/closet/crate/cardboard,
+/turf/open/misc/asteroid/moon,
+/area/deathmatch)
+"LN" = (
+/obj/structure/railing/corner,
+/obj/effect/path_blocker{
+	blocked_types = list(/mob/living)
+	},
+/turf/open/misc/asteroid/moon,
+/area/deathmatch)
+"MF" = (
+/obj/structure/lattice,
+/turf/open/space/basic,
+/area/deathmatch)
+"MZ" = (
+/obj/item/clothing/head/cone,
+/turf/open/misc/asteroid/moon,
+/area/deathmatch)
+"Nf" = (
+/obj/effect/landmark/deathmatch_player_spawn,
+/obj/structure/lattice,
+/turf/open/chasm,
+/area/deathmatch)
+"NA" = (
+/obj/structure/flora/lunar_plant/style_2,
+/obj/effect/path_blocker{
+	blocked_types = list(/mob/living)
+	},
+/turf/open/misc/asteroid/moon,
+/area/deathmatch)
+"NG" = (
+/obj/structure/lattice/catwalk,
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/structure/closet/crate/cardboard,
+/mob/living/basic/mothroach,
+/mob/living/basic/mothroach,
+/mob/living/basic/mothroach,
+/turf/open/chasm,
+/area/deathmatch)
+"NI" = (
+/obj/structure/lattice/catwalk,
+/obj/effect/decal/cleanable/rubble,
+/turf/open/chasm,
+/area/deathmatch)
+"NY" = (
+/obj/structure/railing,
+/obj/effect/path_blocker{
+	blocked_types = list(/mob/living)
+	},
+/turf/open/misc/asteroid/moon,
+/area/deathmatch)
+"Od" = (
+/obj/structure/lattice/catwalk,
+/obj/structure/lattice/catwalk,
+/turf/open/chasm,
+/area/deathmatch)
+"OF" = (
+/obj/machinery/power/port_gen/pacman/pre_loaded,
+/turf/open/misc/asteroid/moon,
+/area/deathmatch)
+"PT" = (
+/obj/structure/lattice/catwalk,
+/obj/structure/closet/crate/cardboard,
+/mob/living/basic/mothroach,
+/mob/living/basic/mothroach,
+/mob/living/basic/mothroach,
+/turf/open/chasm,
+/area/deathmatch)
+"St" = (
+/mob/living/basic/spider/giant/nurse/away_caves,
+/turf/open/misc/asteroid/moon,
+/area/deathmatch)
+"Sv" = (
+/obj/structure/lattice/catwalk,
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/decal/cleanable/rubble,
+/turf/open/chasm,
+/area/deathmatch)
+"SL" = (
+/obj/structure/flora/rock/pile/style_random,
+/obj/structure/flora/lunar_plant/style_3,
+/obj/effect/path_blocker{
+	blocked_types = list(/mob/living)
+	},
+/turf/open/misc/asteroid/moon,
+/area/deathmatch)
+"Uy" = (
+/obj/item/clothing/head/cone,
+/obj/effect/path_blocker{
+	blocked_types = list(/mob/living)
+	},
+/turf/open/misc/asteroid/moon,
+/area/deathmatch)
+"UU" = (
+/obj/structure/railing{
+	dir = 9
+	},
+/obj/structure/flora/rock/style_random,
+/obj/effect/path_blocker{
+	blocked_types = list(/mob/living)
+	},
+/turf/open/misc/asteroid/moon,
+/area/deathmatch)
+"Xf" = (
+/obj/structure/flora/rock/pile/style_random,
+/obj/structure/spider/stickyweb,
+/turf/open/misc/asteroid/moon,
+/area/deathmatch)
+"Xk" = (
+/obj/structure/lattice/catwalk,
+/obj/machinery/power/floodlight,
+/obj/structure/cable,
+/turf/open/chasm,
+/area/deathmatch)
+"Xo" = (
+/obj/structure/flora/rock/style_random,
+/obj/effect/path_blocker{
+	blocked_types = list(/mob/living)
+	},
+/turf/open/misc/asteroid/moon,
+/area/deathmatch)
+"Yu" = (
+/obj/structure/flora/rock/pile/style_random,
+/obj/structure/railing{
+	dir = 6
+	},
+/obj/structure/flora/lunar_plant/style_3,
+/obj/effect/path_blocker{
+	blocked_types = list(/mob/living)
+	},
+/turf/open/misc/asteroid/moon,
+/area/deathmatch)
+"YV" = (
+/obj/structure/lattice/catwalk,
+/obj/item/clothing/head/cone,
+/obj/effect/decal/cleanable/rubble,
+/turf/open/chasm,
+/area/deathmatch)
+"Zp" = (
+/obj/structure/cable,
+/obj/effect/decal/cleanable/garbage,
+/turf/open/misc/asteroid/moon,
+/area/deathmatch)
+"ZH" = (
+/obj/structure/flora/rock/pile/style_random,
+/mob/living/basic/cow/moonicorn,
+/turf/open/misc/asteroid/moon,
+/area/deathmatch)
+
+(1,1,1) = {"
+rE
+gN
+gN
+gN
+gN
+gN
+gN
+gN
+gN
+gN
+gN
+gN
+gN
+gN
+gN
+gN
+gN
+gN
+gN
+gN
+gN
+gN
+gN
+gN
+gN
+"}
+(2,1,1) = {"
+gN
+gN
+He
+He
+jb
+gN
+gN
+gN
+gN
+gN
+gN
+gN
+gN
+gN
+gN
+gN
+gN
+gN
+gN
+gN
+gN
+gN
+gN
+gN
+gN
+"}
+(3,1,1) = {"
+gN
+He
+He
+Dk
+He
+KO
+gN
+gN
+gN
+gN
+gN
+gN
+gN
+gN
+gN
+gN
+gN
+gN
+gN
+gN
+gN
+gN
+gN
+gN
+gN
+"}
+(4,1,1) = {"
+gN
+jb
+Cf
+He
+LN
+tw
+uJ
+tw
+tw
+Yu
+gN
+gN
+gN
+gN
+gN
+gN
+gN
+gN
+gN
+gN
+gN
+gN
+gN
+gN
+gN
+"}
+(5,1,1) = {"
+gN
+gN
+OF
+Zp
+tL
+dM
+Er
+Er
+Er
+Er
+Er
+gN
+nR
+nR
+nR
+nR
+nR
+nR
+nR
+Er
+gN
+gN
+gN
+gN
+gN
+"}
+(6,1,1) = {"
+gN
+gN
+gN
+MZ
+ho
+zN
+HZ
+zN
+vk
+Er
+Er
+Er
+vk
+cB
+vk
+df
+vk
+Er
+dM
+dM
+lO
+gN
+gN
+gN
+gN
+"}
+(7,1,1) = {"
+gN
+gN
+gN
+gN
+gN
+Er
+Er
+rF
+vk
+vk
+Er
+vk
+wb
+vk
+vk
+vk
+vk
+wb
+Er
+dM
+bz
+gN
+gN
+gN
+gN
+"}
+(8,1,1) = {"
+gN
+gN
+gN
+gN
+JE
+Er
+vk
+zN
+vk
+vk
+vk
+NI
+vk
+vk
+vk
+vk
+Er
+vk
+Er
+Er
+BL
+sQ
+gN
+gN
+gN
+"}
+(9,1,1) = {"
+gN
+gN
+sQ
+He
+NY
+Er
+zN
+zN
+vk
+CP
+vk
+vk
+vk
+vk
+vk
+CP
+Er
+vk
+vk
+Er
+BL
+ZH
+gN
+gN
+gN
+"}
+(10,1,1) = {"
+gN
+gN
+gN
+AS
+NY
+Er
+zN
+Er
+Er
+vk
+df
+Sv
+vk
+Er
+vk
+df
+Er
+vk
+vk
+Er
+gW
+jb
+gN
+gN
+gN
+"}
+(11,1,1) = {"
+gN
+gN
+gN
+CI
+NY
+Er
+zN
+df
+Er
+Er
+vk
+vk
+Er
+Er
+vk
+df
+vk
+vk
+df
+vk
+hH
+gN
+gN
+gN
+gN
+"}
+(12,1,1) = {"
+gN
+gN
+gN
+jb
+NY
+Er
+zN
+vk
+vk
+vk
+vk
+vk
+vk
+vk
+vk
+vk
+vk
+vk
+cB
+NG
+gN
+gN
+gN
+gN
+gN
+"}
+(13,1,1) = {"
+gN
+gN
+gN
+gN
+Yu
+Er
+HZ
+eK
+vk
+vk
+vk
+vk
+wb
+CP
+vk
+vk
+vk
+wb
+zN
+Xk
+gN
+gN
+gN
+gN
+gN
+"}
+(14,1,1) = {"
+gN
+gN
+gN
+gN
+gN
+Ia
+HZ
+zN
+zN
+zN
+zN
+zN
+zN
+zN
+zN
+CO
+zN
+zN
+zN
+nR
+gN
+gN
+gN
+gN
+gN
+"}
+(15,1,1) = {"
+gN
+gN
+gN
+gN
+gN
+nR
+bm
+df
+vk
+vk
+vk
+Er
+Er
+vk
+vk
+vk
+Er
+Er
+vk
+nR
+gN
+gN
+gN
+gN
+gN
+"}
+(16,1,1) = {"
+gN
+gN
+gN
+gN
+gN
+nR
+nR
+Er
+Er
+vk
+vk
+Er
+vk
+vk
+vk
+df
+Er
+vk
+vk
+nR
+gN
+gN
+gN
+gN
+gN
+"}
+(17,1,1) = {"
+gN
+gN
+gN
+gN
+gN
+nR
+Er
+Er
+vk
+vk
+NI
+vk
+vk
+vk
+vk
+CP
+vk
+vk
+vk
+nR
+gN
+gN
+gN
+gN
+gN
+"}
+(18,1,1) = {"
+gN
+gN
+gN
+gN
+gN
+Er
+Er
+Er
+vk
+vk
+YV
+vk
+MF
+MF
+vk
+vk
+vk
+vk
+df
+gN
+gN
+gN
+gN
+gN
+gN
+"}
+(19,1,1) = {"
+gN
+gN
+gN
+gN
+SL
+dM
+Er
+Nf
+Od
+xz
+Od
+Er
+Nf
+MF
+MF
+Od
+Od
+IT
+Od
+uO
+gN
+gN
+gN
+gN
+gN
+"}
+(20,1,1) = {"
+gN
+gN
+gN
+gN
+dM
+dM
+dM
+Er
+Er
+Od
+MF
+MF
+Er
+MF
+MF
+MF
+Od
+Od
+Er
+Er
+UU
+gN
+gN
+gN
+gN
+"}
+(21,1,1) = {"
+gN
+gN
+gN
+SL
+dM
+dM
+dM
+dM
+PT
+nR
+nR
+nR
+nR
+nR
+nR
+nR
+vk
+Er
+dM
+dM
+BL
+St
+Xf
+gN
+gN
+"}
+(22,1,1) = {"
+gN
+gN
+gN
+jb
+NA
+dM
+SL
+gN
+gN
+gN
+gN
+gN
+gN
+gN
+gN
+gN
+gN
+lO
+yB
+cN
+Uy
+vr
+gN
+gN
+gN
+"}
+(23,1,1) = {"
+gN
+gN
+gN
+gN
+gz
+Xo
+gN
+gN
+gN
+gN
+gN
+gN
+gN
+gN
+gN
+gN
+gN
+gN
+sl
+gz
+gN
+gN
+gN
+gN
+gN
+"}
+(24,1,1) = {"
+gN
+gN
+gN
+gN
+gN
+gN
+gN
+gN
+gN
+gN
+gN
+gN
+gN
+gN
+gN
+gN
+gN
+gN
+gN
+gN
+gN
+gN
+gN
+gN
+gN
+"}
+(25,1,1) = {"
+gN
+gN
+gN
+gN
+gN
+gN
+gN
+gN
+gN
+gN
+gN
+gN
+gN
+gN
+gN
+gN
+gN
+gN
+gN
+gN
+gN
+gN
+gN
+gN
+gN
+"}

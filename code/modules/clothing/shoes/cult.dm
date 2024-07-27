@@ -10,7 +10,6 @@
 	lace_time = 10 SECONDS
 
 /obj/item/clothing/shoes/cult/alt
-	name = "cultist boots"
 	icon_state = "cultalt"
 
 /obj/item/clothing/shoes/cult/alt/ghost

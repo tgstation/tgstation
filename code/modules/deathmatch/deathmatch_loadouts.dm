@@ -745,13 +745,7 @@
 		/obj/item/sharpener,
 	)
 
-//bridge
-//maint inbetween both
-//jannie
-//medbay
-//robotics
-//atmos
-//dorms >:3
+//species
 
 /datum/outfit/deathmatch_loadout/humanity
 	name = "Deathmatch: Human Race"
@@ -821,8 +815,6 @@
 		/obj/item/storage/medkit/brute,
 		/obj/item/storage/medkit/burn,
 		/obj/item/statuebust/hippocratic
-		/obj/item/grown/peaceflower,
-		/obj/item/grown/peaceflower
 	)
 
 // Roboticist??
@@ -848,6 +840,9 @@
 		/obj/item/dnainjector/shock,
 		/obj/item/book/granter/action/spell/lightningbolt/lightning_fast,
 		/obj/item/etherealballdeployer
+	)
+	granted_spells = list(
+		/datum/action/cooldown/spell/conjure/simian,
 	)
 
 /datum/outfit/deathmatch_loadout/plasmamen
@@ -875,8 +870,6 @@
 		/obj/item/stack/sheet/mineral/plasma/half,
 		/obj/item/reagent_containers/condiment/milk,
 		/obj/item/storage/medkit/burn,
-		/obj/item/melee/baton/security,//unloaded
-		/obj/item/stock_parts/cell/high,
 		/obj/item/reagent_containers/syringe/plasma
 	)
 
@@ -897,3 +890,70 @@
 	gloves = /obj/item/clothing/gloves/color/rainbow
 	belt = /obj/item/melee/curator_whip
 	shoes = /obj/item/clothing/shoes/sneakers/rainbow
+
+//spleef
+
+/datum/outfit/deathmatch_loadout/spleef
+	name = "Deathmatch: Spleef loadout"
+	display_name = "Spleefer"
+	desc = "SPLEEF!!! Snip the catwalks under everyone else and win!!!"
+
+	uniform = /obj/item/clothing/under/pants/jeans
+	suit = /obj/item/clothing/suit/costume/wellworn_shirt/graphic
+	back = /obj/item/storage/backpack
+
+	backpack_contents = list(
+		/obj/item/wirecutters/spleef,
+		/obj/item/stack/rods/fifty,
+		/obj/item/stack/rods/fifty,
+		/obj/item/stack/rods/fifty,
+		/obj/item/stack/rods/fifty,
+	)
+
+// Ragnarok: Fight between religions!
+
+// Cultist Invoker, has all the balanced cult gear
+
+/datum/outfit/deathmatch_loadout/cultist/invoker
+	name = "Deathmatch: Cultist Invoker"
+	display_name = "Cultist invoker"
+	desc = "Prove your superiority with your 'well-balanced' set of equipment!"
+	//species_override = /datum/species/plasmaman
+
+	head = /obj/item/clothing/head/hooded/cult_hoodie/hardened
+	suit = /obj/item/clothing/suit/hooded/cultrobes/hardened
+	suit_store = /obj/item/melee/cultblade
+	uniform = /obj/item/clothing/under/color/black
+	id_trim = null
+	belt = idk
+	gloves = /obj/item/clothing/gloves/color/black
+	shoes = /obj/item/clothing/shoes/cult/alt
+	l_hand = /obj/item/shield/mirror
+
+	back = /obj/item/storage/backpack/cultpack
+
+	backpack_contents = list(
+		/obj/item/restraints/legcuffs/bola/cult,
+		/obj/item/restraints/legcuffs/bola/cult,
+		/obj/item/cult_shift,
+	)
+
+// Cultist Artificer, gets all the balanced cult magicks
+
+/datum/outfit/deathmatch_loadout/cultist/artificer
+	name = "Deathmatch: Cultist Artificer"
+	display_name = "Cultist Artificer"
+	desc = "Prove your superiority with your 'well-balanced' set of equipment!"
+	//species_override = /datum/species/plasmaman
+
+	head = /obj/item/clothing/head/hooded/cult_hoodie/berserkerhood
+	suit = /obj/item/clothing/suit/hooded/cultrobes/berserker
+	suit_store = /obj/item/melee/sickly_blade/cursed
+	uniform = /obj/item/clothing/under/color/black
+	id_trim = null
+	belt = idk
+	gloves = /obj/item/clothing/gloves/color/red
+	shoes = /obj/item/clothing/shoes/cult
+	l_hand = null
+
+	back = null
