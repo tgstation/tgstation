@@ -126,34 +126,37 @@
 
 ///fish movement datum that progressively gets faster until acceleration and velocity are double the starting ones.
 /datum/fish_movement/accelerando
-	short_jump_velocity_limit = 350
-	long_jump_velocity_limit = 175
-	///What the short jump velocity was when move_fish was first called.
-	var/initial_short_jump_vel
-	///What the long jump velocity was when move_fish was first called.
-	var/initial_long_jump_vel
+	///The jump velocity to add each tick
+	var/short_jump_vel_add
+	///The long jump velocity to add each tick
+	var/long_jump_vel_add
 	///Time to reach full speed, in seconds.
-	var/accel_time_cap = 27 SECONDS
+	var/accel_time_cap = 20
 
 /datum/fish_movement/accelerando/move_fish(seconds_per_tick)
 	var/seconds_elapsed = (times_fired * seconds_per_tick)
 	if(seconds_elapsed >= accel_time_cap)
 		return ..()
 	if(!times_fired) //First tick, cache the initial jump velocities
-		initial_short_jump_vel = short_jump_velocity_limit
-		initial_long_jump_vel = long_jump_velocity_limit
+		short_jump_vel_add = short_jump_velocity_limit/accel_time_cap
+		long_jump_vel_add = long_jump_velocity_limit/accel_time_cap
+		return ..()
 
 	if(current_velocity_limit)
-		var/current_limit = current_velocity_limit == short_jump_velocity_limit ? initial_short_jump_vel : initial_long_jump_vel
-		current_velocity_limit += current_limit/accel_time_cap * seconds_per_tick
+		var/vel_add = current_velocity_limit == short_jump_velocity_limit ? short_jump_vel_add : long_jump_vel_add
+		current_velocity_limit += round(vel_add * seconds_per_tick, 0.01)
 
-	short_jump_velocity_limit += initial_short_jump_vel/accel_time_cap * seconds_per_tick
-	long_jump_velocity_limit += initial_long_jump_vel/accel_time_cap * seconds_per_tick
+	short_jump_velocity_limit += round(short_jump_vel_add * seconds_per_tick, 0.01)
+	long_jump_velocity_limit += round(long_jump_vel_add * seconds_per_tick, 0.01)
 	return ..()
 
 /datum/fish_movement/accelerando/get_acceleration(seconds_per_tick)
 	var/acceleration = ..()
 	return acceleration + min(acceleration, acceleration * times_fired * seconds_per_tick / accel_time_cap)
+
+/datum/fish_movement/accelerando/set_fish_position(seconds_per_tick)
+	fish_velocity = round(fish_velocity)
+	return ..()
 
 ///Fish movement datum that updates the fish position once per second.
 /datum/fish_movement/choppy
@@ -182,13 +185,13 @@
 		init_idle_velocity = fish_idle_velocity
 
 	//The distance from top and bottom of the fish, in a 0 to 1 percentile
-	var/top = FISHING_MINIGAME_AREA - master.fish_height
-	var/dist_top_percent = (top - master.fish_position)/top
-	var/dist_bot_percent = master.fish_position/FISHING_MINIGAME_AREA
+	var/fish_area = FISHING_MINIGAME_AREA - master.fish_height
+	var/dist_top_percent = (fish_area - master.fish_position)/fish_area
+	var/dist_bot_percent = master.fish_position/fish_area
 
 	//The distance from top of the bait, in a 0 to 1 percentile
-	var/bait_top = FISHING_MINIGAME_AREA - master.bait_height
-	var/bait_top_percent = (bait_top - master.bait_position)/bait_top
+	var/bait_area = FISHING_MINIGAME_AREA - master.bait_height
+	var/bait_top_percent = (bait_area - master.bait_position)/bait_area
 
 	/**
 	 * The absolute difference between the distance of bait and fish and the area of the minigame, divided by 2
@@ -203,12 +206,12 @@
 	 * The distance from the mid of the bait, in a -1 to 1 value. This ensures that even if the fish is about to
 	 * get cornered by the bait, they'll be pushed toward the other side of the bait eventually.
 	 */
-	var/dist_bait_from_mid = (master.bait_position - (bait_top/2)) / (bait_top/2)
+	var/dist_bait_from_mid = (master.bait_position - (bait_area/2)) / (bait_area/2)
 
 	//In which direction should the fish go? Away from the bait, duh.
 	var/percent_to_use = (should_go_top ? dist_top_percent : -dist_bot_percent)
 
-	fish_idle_velocity = init_idle_velocity + round(max_fleeing_velocity * clamp(percent_to_use - dist_bait_from_mid, -1, 1) * dist_percent_diff)
+	fish_idle_velocity = init_idle_velocity + round(max_fleeing_velocity * (percent_to_use - dist_bait_from_mid) * dist_percent_diff)
 
 	return ..()
 
@@ -217,9 +220,9 @@
 	///Is the fish plunging to the bottom of the minigame area, or should it swim up?
 	var/is_plunging = TRUE
 	///The added idle velocity when plunging
-	var/plunging_speed = -12
+	var/plunging_speed = -18
 	///The added idle velocity when not plunging
-	var/raising_speed = 4
+	var/raising_speed = 3
 
 /datum/fish_movement/plunger/adjust_to_difficulty()
 	. = ..()

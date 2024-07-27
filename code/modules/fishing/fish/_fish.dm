@@ -221,26 +221,26 @@
 	switch(size)
 		if(0 to FISH_SIZE_TINY_MAX)
 			update_weight_class(WEIGHT_CLASS_TINY)
-			if(init_icon_state)
+			if(!init_icon_state)
 				inhand_icon_state = "fish_small"
 		if(FISH_SIZE_TINY_MAX to FISH_SIZE_SMALL_MAX)
-			if(init_icon_state)
+			if(!init_icon_state)
 				inhand_icon_state = "fish_small"
 			update_weight_class(WEIGHT_CLASS_SMALL)
 		if(FISH_SIZE_SMALL_MAX to FISH_SIZE_NORMAL_MAX)
-			if(init_icon_state)
+			if(!init_icon_state)
 				inhand_icon_state = "fish_normal"
 			update_weight_class(WEIGHT_CLASS_NORMAL)
 		if(FISH_SIZE_NORMAL_MAX to FISH_SIZE_BULKY_MAX)
-			if(init_icon_state)
+			if(!init_icon_state)
 				inhand_icon_state = "fish_bulky"
 			update_weight_class(WEIGHT_CLASS_BULKY)
 		if(FISH_SIZE_BULKY_MAX to FISH_SIZE_HUGE_MAX)
-			if(init_icon_state)
+			if(!init_icon_state)
 				inhand_icon_state = "fish_huge"
 			update_weight_class(WEIGHT_CLASS_HUGE)
 		if(FISH_SIZE_HUGE_MAX to INFINITY)
-			if(init_icon_state)
+			if(!init_icon_state)
 				inhand_icon_state = "fish_huge"
 			update_weight_class(WEIGHT_CLASS_GIGANTIC)
 
@@ -259,8 +259,16 @@
 			grind_results[reagent_type] /= FLOOR(weight/FISH_GRIND_RESULTS_WEIGHT_DIVISOR, 0.1)
 	weight = new_weight
 
-	if(weight > FISH_WEIGHT_SLOWDOWN)
-		slowdown = round((weight/FISH_WEIGHT_SLOWDOWN_DIVISOR)**FISH_WEIGHT_SLOWDOWN_EXPONENT, 0.1)
+	if(weight >= FISH_WEIGHT_SLOWDOWN)
+		slowdown = round(((weight/FISH_WEIGHT_SLOWDOWN_DIVISOR)**FISH_WEIGHT_SLOWDOWN_EXPONENT)-1.3, 0.1)
+		drag_slowdown = round(slowdown * 0.5)
+	else
+		slowdown = 0
+		drag_slowdown = 0
+	if(ismob(loc))
+		var/mob/mob = loc
+		mob.update_equipment_speed_mods()
+
 	for(var/reagent_type in grind_results)
 		grind_results[reagent_type] *= FLOOR(weight/FISH_GRIND_RESULTS_WEIGHT_DIVISOR, 0.1)
 
@@ -284,7 +292,7 @@
 	bare_wound_bonus = fish_path::bare_wound_bonus
 	toolspeed = fish_path::toolspeed
 
-	var/weight_rank = max(round(1 + log(weight/FISH_WEIGHT_FORCE_DIVISOR), 1), 1)
+	var/weight_rank = max(round(1 + log(2, weight/FISH_WEIGHT_FORCE_DIVISOR), 1), 1)
 
 	throw_range -= weight_rank
 	get_force_rank()
@@ -295,12 +303,12 @@
 
 	throwforce = force
 
-	SEND_SIGNAL(src, COMSIG_FISH_FORCE_UPDATED, weight_rank, weight_rank - w_class)
+	SEND_SIGNAL(src, COMSIG_FISH_FORCE_UPDATED, weight_rank, bonus_malus)
 
 ///A proc that makes the fish slightly stronger or weaker if there's a noticeable discrepancy between size and weight.
 /obj/item/fish/proc/calculate_fish_force_bonus(bonus_malus)
-	demolition_mod += bonus_malus
-	attack_speed += bonus_malus
+	demolition_mod += bonus_malus * 0.1
+	attack_speed += bonus_malus * 0.1
 	var/one_fifth_or_sixth = bonus_malus > 0 ? (6/5) : (5/6)
 	force = round(force * (one_fifth_or_sixth^abs(bonus_malus)), 0.1)
 

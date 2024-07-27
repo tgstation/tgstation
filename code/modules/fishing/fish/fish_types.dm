@@ -1128,7 +1128,6 @@
 	bare_wound_bonus += bonus_malus * 3
 	block_chance += bonus_malus * 2
 	toolspeed -= bonus_malus * 0.1
-	demolition_mod += bonus_malus * 0.1
 
 /obj/item/fish/soul
 	name = "soulfish"
