@@ -82,30 +82,3 @@
 	worn_icon_state = "cutters"
 	toolspeed = 0.5
 	random_color = FALSE
-
-// SPLEEF
-
-/obj/item/wirecutters/spleef
-	name = "ranged latticecutters"
-	desc = "These special wirecutters can also cut lattices at range! They're very slow at it, though."
-	icon = 'icons/obj/antags/abductor.dmi'
-	icon_state = "cutters"
-	random_color = FALSE
-
-/obj/item/wirecutters/spleef/afterattack(atom/target, mob/user, proximity_flag, click_parameters)
-	. = ..()
-	if(!isstructure(target) || proximity_flag)
-		return
-
-	var/distance = get_dist(user, target)
-
-	var/datum/beam/cutbeam = user.Beam(target, icon_state = "kinesis", time = (1 SECONDS * distance))
-
-	animate(cutbeam, alpha = 255, time = (1 SECONDS * distance), easing = CIRCULAR_EASING | EASE_IN)
-
-	if(!do_after(user, (1 SECONDS * distance), target))
-		qdel(cutbeam)
-		return
-
-	target.attackby(src, user)
-

@@ -276,7 +276,7 @@
 	product = /obj/item/grown/peaceflower
 	genes = list(/datum/plant_gene/trait/stinging, /datum/plant_gene/trait/preserved)
 	mutatelist = null
-	reagents_add = list(/datum/reagent/consumable/pax = 1, /datum/reagent/consumable/laughter = 0.5, /datum/reagent/consumable/nutriment = 0)
+	reagents_add = list(/datum/reagent/pax = 1, /datum/reagent/consumable/laughter = 0.5, /datum/reagent/consumable/nutriment = 0)
 	rarity = 420
 
 /obj/item/grown/peaceflower
@@ -295,7 +295,7 @@
 	throw_range = 3
 	attack_verb_continuous = list("peaces", "flowers", "pacifies")
 	attack_verb_simple = list("peace", "flower", "pacify")
-	grind_results = list(/datum/reagent/consumable/pax = 0, /datum/reagent/consumable/laughter = 0, /datum/reagent/consumable/nutriment = 0)
+	grind_results = list(/datum/reagent/pax = 0, /datum/reagent/consumable/laughter = 0, /datum/reagent/consumable/nutriment = 0)
 
 // Rose
 /obj/item/seeds/rose

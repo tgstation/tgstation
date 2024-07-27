@@ -3,151 +3,125 @@
 /obj/structure/lattice/catwalk,
 /obj/structure/closet/crate/large/hats,
 /turf/open/chasm,
-/area/deathmatch)
+/area/deathmatch/fullbright)
 "bz" = (
-/obj/structure/railing{
+/obj/structure/railing/unbreakable{
 	dir = 1
 	},
 /obj/item/clothing/head/cone,
-/obj/effect/path_blocker{
-	blocked_types = list(/mob/living)
-	},
+/obj/effect/playeronly_barrier,
 /turf/open/misc/asteroid/moon,
-/area/deathmatch)
+/area/deathmatch/fullbright)
 "cB" = (
 /obj/structure/lattice/catwalk,
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/chasm,
-/area/deathmatch)
+/area/deathmatch/fullbright)
 "cN" = (
-/obj/structure/railing{
+/obj/structure/railing/unbreakable{
 	dir = 8
 	},
-/obj/effect/path_blocker{
-	blocked_types = list(/mob/living)
-	},
+/obj/effect/playeronly_barrier,
 /turf/open/misc/asteroid/moon,
-/area/deathmatch)
+/area/deathmatch/fullbright)
 "df" = (
 /obj/structure/lattice/catwalk,
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/chasm,
-/area/deathmatch)
+/area/deathmatch/fullbright)
 "dM" = (
 /turf/open/chasm,
-/area/deathmatch)
+/area/deathmatch/fullbright)
 "eK" = (
 /obj/structure/lattice/catwalk,
 /obj/effect/landmark/deathmatch_player_spawn,
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/chasm,
-/area/deathmatch)
+/area/deathmatch/fullbright)
 "gz" = (
 /obj/structure/flora/rock/pile/style_random,
 /turf/open/misc/asteroid/moon,
-/area/deathmatch)
+/area/deathmatch/fullbright)
 "gN" = (
 /turf/closed/mineral/random,
-/area/deathmatch)
+/area/deathmatch/fullbright)
 "gW" = (
-/obj/structure/railing{
+/obj/structure/railing/unbreakable{
 	dir = 1
 	},
 /obj/structure/flora/lunar_plant/style_1,
-/obj/effect/path_blocker{
-	blocked_types = list(/mob/living)
-	},
+/obj/effect/playeronly_barrier,
 /turf/open/misc/asteroid/moon,
-/area/deathmatch)
+/area/deathmatch/fullbright)
 "ho" = (
-/obj/structure/railing{
+/obj/structure/flora/lunar_plant/style_1,
+/obj/effect/playeronly_barrier,
+/obj/structure/railing/unbreakable{
 	dir = 6
 	},
-/obj/structure/flora/lunar_plant/style_1,
-/obj/effect/path_blocker{
-	blocked_types = list(/mob/living)
-	},
-/obj/structure/cable,
 /turf/open/misc/asteroid/moon,
-/area/deathmatch)
+/area/deathmatch/fullbright)
 "hH" = (
-/obj/structure/railing{
+/obj/structure/railing/unbreakable{
 	dir = 5
 	},
 /obj/structure/flora/rock/pile/style_random,
 /obj/structure/flora/lunar_plant/style_3,
-/obj/effect/path_blocker{
-	blocked_types = list(/mob/living)
-	},
+/obj/effect/playeronly_barrier,
 /turf/open/misc/asteroid/moon,
-/area/deathmatch)
+/area/deathmatch/fullbright)
 "jb" = (
 /obj/structure/flora/rock/style_random,
 /turf/open/misc/asteroid/moon,
-/area/deathmatch)
+/area/deathmatch/fullbright)
 "lO" = (
-/obj/structure/railing{
+/obj/structure/railing/unbreakable{
 	dir = 9
 	},
 /obj/structure/flora/rock/pile/style_random,
 /obj/structure/flora/lunar_plant/style_3,
-/obj/effect/path_blocker{
-	blocked_types = list(/mob/living)
-	},
+/obj/effect/playeronly_barrier,
 /turf/open/misc/asteroid/moon,
-/area/deathmatch)
+/area/deathmatch/fullbright)
 "nR" = (
 /obj/structure/lattice/catwalk,
 /turf/closed/mineral/random,
-/area/deathmatch)
+/area/deathmatch/fullbright)
 "rE" = (
 /obj/structure/flora/rock/pile/style_random,
 /turf/closed/mineral/random,
-/area/deathmatch)
-"rF" = (
-/obj/structure/lattice/catwalk,
-/obj/effect/landmark/deathmatch_player_spawn,
-/obj/structure/cable,
-/turf/open/chasm,
-/area/deathmatch)
+/area/deathmatch/fullbright)
 "sl" = (
 /mob/living/basic/spider/giant/hunter/away_caves,
 /obj/effect/decal/cleanable/cobweb/cobweb2,
 /obj/structure/spider/stickyweb,
 /turf/open/misc/asteroid/moon,
-/area/deathmatch)
+/area/deathmatch/fullbright)
 "sQ" = (
 /obj/structure/flora/lunar_plant/style_2,
 /turf/open/misc/asteroid/moon,
-/area/deathmatch)
+/area/deathmatch/fullbright)
 "tw" = (
-/obj/structure/railing{
+/obj/structure/railing/unbreakable{
 	dir = 4
 	},
-/obj/effect/path_blocker{
-	blocked_types = list(/mob/living)
-	},
+/obj/effect/playeronly_barrier,
 /turf/open/misc/asteroid/moon,
-/area/deathmatch)
+/area/deathmatch/fullbright)
 "tL" = (
-/obj/structure/railing,
-/obj/effect/path_blocker{
-	blocked_types = list(/mob/living)
-	},
-/obj/structure/cable,
+/obj/structure/railing/unbreakable,
+/obj/effect/playeronly_barrier,
 /turf/open/misc/asteroid/moon,
-/area/deathmatch)
+/area/deathmatch/fullbright)
 "uJ" = (
-/obj/structure/railing{
+/obj/structure/railing/unbreakable{
 	dir = 4
 	},
 /obj/item/clothing/head/cone,
-/obj/effect/path_blocker{
-	blocked_types = list(/mob/living)
-	},
+/obj/effect/playeronly_barrier,
 /turf/open/misc/asteroid/moon,
-/area/deathmatch)
+/area/deathmatch/fullbright)
 "uO" = (
 /obj/structure/lattice/catwalk,
 /obj/structure/closet/crate/critter,
@@ -155,263 +129,216 @@
 /mob/living/basic/mothroach,
 /mob/living/basic/mothroach,
 /turf/open/chasm,
-/area/deathmatch)
+/area/deathmatch/fullbright)
 "vk" = (
 /obj/structure/lattice/catwalk,
 /turf/open/chasm,
-/area/deathmatch)
+/area/deathmatch/fullbright)
 "vr" = (
 /obj/structure/flora/lunar_plant/style_2,
 /obj/structure/spider/stickyweb/very_sticky,
 /turf/open/misc/asteroid/moon,
-/area/deathmatch)
+/area/deathmatch/fullbright)
 "wb" = (
 /obj/structure/lattice/catwalk,
 /obj/effect/landmark/deathmatch_player_spawn,
 /turf/open/chasm,
-/area/deathmatch)
+/area/deathmatch/fullbright)
 "xz" = (
 /obj/structure/lattice/catwalk,
 /obj/structure/lattice/catwalk,
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/chasm,
-/area/deathmatch)
+/area/deathmatch/fullbright)
 "yB" = (
-/obj/structure/railing{
+/obj/structure/railing/unbreakable{
 	dir = 8
 	},
 /obj/structure/flora/lunar_plant/style_1,
-/obj/effect/path_blocker{
-	blocked_types = list(/mob/living)
-	},
+/obj/effect/playeronly_barrier,
 /turf/open/misc/asteroid/moon,
-/area/deathmatch)
-"zN" = (
-/obj/structure/lattice/catwalk,
-/obj/structure/cable,
-/turf/open/chasm,
-/area/deathmatch)
+/area/deathmatch/fullbright)
 "AS" = (
 /mob/living/basic/pet/cat/space,
 /turf/open/misc/asteroid/moon,
-/area/deathmatch)
+/area/deathmatch/fullbright)
 "BL" = (
-/obj/structure/railing{
+/obj/structure/railing/unbreakable{
 	dir = 1
 	},
-/obj/effect/path_blocker{
-	blocked_types = list(/mob/living)
-	},
+/obj/effect/playeronly_barrier,
 /turf/open/misc/asteroid/moon,
-/area/deathmatch)
+/area/deathmatch/fullbright)
 "Cf" = (
 /obj/structure/flora/rock/pile/style_random,
 /obj/structure/flora/lunar_plant/style_3,
 /turf/open/misc/asteroid/moon,
-/area/deathmatch)
+/area/deathmatch/fullbright)
 "CI" = (
 /mob/living/basic/pet/dog/corgi/puppy/void,
 /turf/open/misc/asteroid/moon,
-/area/deathmatch)
-"CO" = (
-/obj/structure/lattice/catwalk,
-/obj/structure/cable,
-/obj/effect/decal/cleanable/rubble,
-/turf/open/chasm,
-/area/deathmatch)
+/area/deathmatch/fullbright)
 "CP" = (
 /obj/structure/lattice/catwalk,
 /obj/item/clothing/head/cone,
 /turf/open/chasm,
-/area/deathmatch)
+/area/deathmatch/fullbright)
 "Dk" = (
 /mob/living/basic/wumborian_fugu,
 /turf/open/misc/asteroid/moon,
-/area/deathmatch)
-"Er" = (
-/obj/structure/lattice,
-/turf/open/chasm,
-/area/deathmatch)
+/area/deathmatch/fullbright)
 "He" = (
 /turf/open/misc/asteroid/moon,
-/area/deathmatch)
-"HZ" = (
-/obj/structure/lattice,
-/obj/structure/cable,
-/turf/open/chasm,
-/area/deathmatch)
+/area/deathmatch/fullbright)
 "Ia" = (
 /obj/machinery/power/floodlight,
 /obj/structure/lattice/catwalk,
-/obj/structure/cable,
-/turf/open/space/basic,
-/area/deathmatch)
+/turf/open/chasm,
+/area/deathmatch/fullbright)
 "IT" = (
 /obj/structure/lattice/catwalk,
 /obj/structure/lattice/catwalk,
 /obj/effect/landmark/deathmatch_player_spawn,
 /obj/effect/decal/cleanable/rubble,
 /turf/open/chasm,
-/area/deathmatch)
+/area/deathmatch/fullbright)
 "JE" = (
-/obj/structure/railing{
+/obj/structure/railing/unbreakable{
 	dir = 10
 	},
 /obj/structure/flora/lunar_plant/style_1,
-/obj/effect/path_blocker{
-	blocked_types = list(/mob/living)
-	},
+/obj/effect/playeronly_barrier,
 /turf/open/misc/asteroid/moon,
-/area/deathmatch)
+/area/deathmatch/fullbright)
 "KO" = (
 /obj/structure/closet/crate/cardboard,
 /turf/open/misc/asteroid/moon,
-/area/deathmatch)
+/area/deathmatch/fullbright)
 "LN" = (
 /obj/structure/railing/corner,
-/obj/effect/path_blocker{
-	blocked_types = list(/mob/living)
-	},
+/obj/effect/playeronly_barrier,
 /turf/open/misc/asteroid/moon,
-/area/deathmatch)
+/area/deathmatch/fullbright)
 "MF" = (
 /obj/structure/lattice,
-/turf/open/space/basic,
-/area/deathmatch)
+/turf/open/chasm,
+/area/deathmatch/fullbright)
 "MZ" = (
 /obj/item/clothing/head/cone,
 /turf/open/misc/asteroid/moon,
-/area/deathmatch)
+/area/deathmatch/fullbright)
 "Nf" = (
 /obj/effect/landmark/deathmatch_player_spawn,
 /obj/structure/lattice,
 /turf/open/chasm,
-/area/deathmatch)
+/area/deathmatch/fullbright)
 "NA" = (
 /obj/structure/flora/lunar_plant/style_2,
-/obj/effect/path_blocker{
-	blocked_types = list(/mob/living)
-	},
+/obj/effect/playeronly_barrier,
 /turf/open/misc/asteroid/moon,
-/area/deathmatch)
+/area/deathmatch/fullbright)
 "NG" = (
 /obj/structure/lattice/catwalk,
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/structure/closet/crate/cardboard,
-/mob/living/basic/mothroach,
-/mob/living/basic/mothroach,
-/mob/living/basic/mothroach,
+/obj/item/statuebust,
 /turf/open/chasm,
-/area/deathmatch)
+/area/deathmatch/fullbright)
 "NI" = (
 /obj/structure/lattice/catwalk,
 /obj/effect/decal/cleanable/rubble,
 /turf/open/chasm,
-/area/deathmatch)
+/area/deathmatch/fullbright)
 "NY" = (
-/obj/structure/railing,
-/obj/effect/path_blocker{
-	blocked_types = list(/mob/living)
-	},
+/obj/effect/playeronly_barrier,
+/obj/effect/playeronly_barrier,
+/obj/structure/railing/unbreakable,
 /turf/open/misc/asteroid/moon,
-/area/deathmatch)
+/area/deathmatch/fullbright)
 "Od" = (
 /obj/structure/lattice/catwalk,
 /obj/structure/lattice/catwalk,
 /turf/open/chasm,
-/area/deathmatch)
+/area/deathmatch/fullbright)
 "OF" = (
 /obj/machinery/power/port_gen/pacman/pre_loaded,
 /turf/open/misc/asteroid/moon,
-/area/deathmatch)
-"PT" = (
-/obj/structure/lattice/catwalk,
-/obj/structure/closet/crate/cardboard,
-/mob/living/basic/mothroach,
-/mob/living/basic/mothroach,
-/mob/living/basic/mothroach,
-/turf/open/chasm,
-/area/deathmatch)
+/area/deathmatch/fullbright)
 "St" = (
 /mob/living/basic/spider/giant/nurse/away_caves,
 /turf/open/misc/asteroid/moon,
-/area/deathmatch)
+/area/deathmatch/fullbright)
 "Sv" = (
 /obj/structure/lattice/catwalk,
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/effect/decal/cleanable/rubble,
 /turf/open/chasm,
-/area/deathmatch)
+/area/deathmatch/fullbright)
 "SL" = (
 /obj/structure/flora/rock/pile/style_random,
 /obj/structure/flora/lunar_plant/style_3,
-/obj/effect/path_blocker{
-	blocked_types = list(/mob/living)
-	},
+/obj/effect/playeronly_barrier,
 /turf/open/misc/asteroid/moon,
-/area/deathmatch)
+/area/deathmatch/fullbright)
 "Uy" = (
 /obj/item/clothing/head/cone,
-/obj/effect/path_blocker{
-	blocked_types = list(/mob/living)
+/obj/effect/playeronly_barrier,
+/obj/structure/railing/corner/unbreakable{
+	dir = 1
 	},
 /turf/open/misc/asteroid/moon,
-/area/deathmatch)
+/area/deathmatch/fullbright)
 "UU" = (
 /obj/structure/railing{
 	dir = 9
 	},
 /obj/structure/flora/rock/style_random,
-/obj/effect/path_blocker{
-	blocked_types = list(/mob/living)
-	},
+/obj/effect/playeronly_barrier,
 /turf/open/misc/asteroid/moon,
-/area/deathmatch)
+/area/deathmatch/fullbright)
 "Xf" = (
 /obj/structure/flora/rock/pile/style_random,
 /obj/structure/spider/stickyweb,
 /turf/open/misc/asteroid/moon,
-/area/deathmatch)
+/area/deathmatch/fullbright)
 "Xk" = (
 /obj/structure/lattice/catwalk,
 /obj/machinery/power/floodlight,
-/obj/structure/cable,
 /turf/open/chasm,
-/area/deathmatch)
+/area/deathmatch/fullbright)
 "Xo" = (
 /obj/structure/flora/rock/style_random,
-/obj/effect/path_blocker{
-	blocked_types = list(/mob/living)
-	},
+/obj/effect/playeronly_barrier,
 /turf/open/misc/asteroid/moon,
-/area/deathmatch)
+/area/deathmatch/fullbright)
 "Yu" = (
 /obj/structure/flora/rock/pile/style_random,
-/obj/structure/railing{
+/obj/structure/railing/unbreakable{
 	dir = 6
 	},
 /obj/structure/flora/lunar_plant/style_3,
-/obj/effect/path_blocker{
-	blocked_types = list(/mob/living)
-	},
+/obj/effect/playeronly_barrier,
 /turf/open/misc/asteroid/moon,
-/area/deathmatch)
+/area/deathmatch/fullbright)
+"YH" = (
+/obj/effect/playeronly_barrier,
+/turf/open/misc/asteroid/moon,
+/area/deathmatch/fullbright)
 "YV" = (
 /obj/structure/lattice/catwalk,
 /obj/item/clothing/head/cone,
 /obj/effect/decal/cleanable/rubble,
 /turf/open/chasm,
-/area/deathmatch)
+/area/deathmatch/fullbright)
 "Zp" = (
-/obj/structure/cable,
 /obj/effect/decal/cleanable/garbage,
 /turf/open/misc/asteroid/moon,
-/area/deathmatch)
+/area/deathmatch/fullbright)
 "ZH" = (
 /obj/structure/flora/rock/pile/style_random,
 /mob/living/basic/cow/moonicorn,
 /turf/open/misc/asteroid/moon,
-/area/deathmatch)
+/area/deathmatch/fullbright)
 
 (1,1,1) = {"
 rE
@@ -526,13 +453,13 @@ gN
 gN
 OF
 Zp
-tL
+NY
 dM
-Er
-Er
-Er
-Er
-Er
+MF
+MF
+MF
+MF
+MF
 gN
 nR
 nR
@@ -541,7 +468,7 @@ nR
 nR
 nR
 nR
-Er
+MF
 gN
 gN
 gN
@@ -554,19 +481,19 @@ gN
 gN
 MZ
 ho
-zN
-HZ
-zN
 vk
-Er
-Er
-Er
+MF
+vk
+vk
+MF
+MF
+MF
 vk
 cB
 vk
 df
 vk
-Er
+MF
 dM
 dM
 lO
@@ -581,12 +508,12 @@ gN
 gN
 gN
 gN
-Er
-Er
-rF
+MF
+MF
+wb
 vk
 vk
-Er
+MF
 vk
 wb
 vk
@@ -594,7 +521,7 @@ vk
 vk
 vk
 wb
-Er
+MF
 dM
 bz
 gN
@@ -608,9 +535,9 @@ gN
 gN
 gN
 JE
-Er
+MF
 vk
-zN
+vk
 vk
 vk
 vk
@@ -619,10 +546,10 @@ vk
 vk
 vk
 vk
-Er
+MF
 vk
-Er
-Er
+MF
+MF
 BL
 sQ
 gN
@@ -633,23 +560,23 @@ gN
 gN
 gN
 sQ
-He
-NY
-Er
-zN
-zN
-vk
-CP
-vk
-vk
+YH
+tL
+MF
 vk
 vk
 vk
 CP
-Er
 vk
 vk
-Er
+vk
+vk
+vk
+CP
+MF
+vk
+vk
+MF
 BL
 ZH
 gN
@@ -661,22 +588,22 @@ gN
 gN
 gN
 AS
-NY
-Er
-zN
-Er
-Er
+tL
+MF
+vk
+MF
+MF
 vk
 df
 Sv
 vk
-Er
+MF
 vk
 df
-Er
+MF
 vk
 vk
-Er
+MF
 gW
 jb
 gN
@@ -688,16 +615,16 @@ gN
 gN
 gN
 CI
-NY
-Er
-zN
+tL
+MF
+vk
 df
-Er
-Er
+MF
+MF
 vk
 vk
-Er
-Er
+MF
+MF
 vk
 df
 vk
@@ -715,9 +642,9 @@ gN
 gN
 gN
 jb
-NY
-Er
-zN
+tL
+MF
+vk
 vk
 vk
 vk
@@ -743,8 +670,8 @@ gN
 gN
 gN
 Yu
-Er
-HZ
+MF
+MF
 eK
 vk
 vk
@@ -756,7 +683,7 @@ vk
 vk
 vk
 wb
-zN
+vk
 Xk
 gN
 gN
@@ -771,19 +698,19 @@ gN
 gN
 gN
 Ia
-HZ
-zN
-zN
-zN
-zN
-zN
-zN
-zN
-zN
-CO
-zN
-zN
-zN
+MF
+vk
+vk
+vk
+vk
+vk
+vk
+vk
+vk
+NI
+vk
+vk
+vk
 nR
 gN
 gN
@@ -803,13 +730,13 @@ df
 vk
 vk
 vk
-Er
-Er
+MF
+MF
 vk
 vk
 vk
-Er
-Er
+MF
+MF
 vk
 nR
 gN
@@ -826,16 +753,16 @@ gN
 gN
 nR
 nR
-Er
-Er
+MF
+MF
 vk
 vk
-Er
+MF
 vk
 vk
 vk
 df
-Er
+MF
 vk
 vk
 nR
@@ -852,8 +779,8 @@ gN
 gN
 gN
 nR
-Er
-Er
+MF
+MF
 vk
 vk
 NI
@@ -878,9 +805,9 @@ gN
 gN
 gN
 gN
-Er
-Er
-Er
+MF
+MF
+MF
 vk
 vk
 YV
@@ -906,12 +833,12 @@ gN
 gN
 SL
 dM
-Er
+MF
 Nf
 Od
 xz
 Od
-Er
+MF
 Nf
 MF
 MF
@@ -934,19 +861,19 @@ gN
 dM
 dM
 dM
-Er
-Er
-Od
-MF
-MF
-Er
-MF
 MF
 MF
 Od
+MF
+MF
+MF
+MF
+MF
+MF
 Od
-Er
-Er
+Od
+MF
+MF
 UU
 gN
 gN
@@ -962,7 +889,7 @@ dM
 dM
 dM
 dM
-PT
+uO
 nR
 nR
 nR
@@ -971,7 +898,7 @@ nR
 nR
 nR
 vk
-Er
+MF
 dM
 dM
 BL

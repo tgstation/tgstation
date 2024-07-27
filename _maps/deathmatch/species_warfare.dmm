@@ -44,6 +44,7 @@
 /obj/effect/landmark/deathmatch_player_spawn,
 /obj/structure/bed,
 /obj/effect/spawner/random/bedsheet,
+/obj/machinery/light/small/blacklight/directional/north,
 /turf/open/floor/wood,
 /area/deathmatch)
 "cs" = (
@@ -155,6 +156,7 @@
 /mob/living/basic/pet/cat/feral,
 /obj/structure/bed,
 /obj/item/bedsheet/runtime,
+/obj/machinery/light/small/blacklight/directional/south,
 /turf/open/floor/wood,
 /area/deathmatch)
 "gI" = (
@@ -203,7 +205,6 @@
 /area/deathmatch)
 "is" = (
 /obj/item/grenade/spawnergrenade/cat,
-/obj/item/grenade/spawnergrenade/cat,
 /turf/open/floor/wood,
 /area/deathmatch)
 "iu" = (
@@ -233,15 +234,14 @@
 /area/deathmatch)
 "iV" = (
 /obj/effect/decal/cleanable/ash,
+/obj/item/card/id/advanced/engioutpost,
 /turf/open/indestructible,
 /area/deathmatch)
 "jm" = (
 /obj/effect/turf_decal/tile/dark_blue/anticorner/contrasted{
 	dir = 4
 	},
-/obj/structure/table/glass,
-/obj/item/storage/fancy/cigarettes/cigars/havana,
-/obj/item/lighter/slime,
+/obj/structure/closet/firecloset/full,
 /turf/open/indestructible/dark,
 /area/deathmatch)
 "jn" = (
@@ -263,7 +263,7 @@
 	dir = 4
 	},
 /obj/machinery/rnd/production/protolathe/offstation,
-/obj/machinery/light/built/directional/east,
+/obj/machinery/light/directional/east,
 /turf/open/indestructible/white,
 /area/deathmatch)
 "ko" = (
@@ -272,7 +272,7 @@
 	},
 /obj/structure/extinguisher_cabinet/directional/east,
 /obj/machinery/vending/cigarette/syndicate,
-/obj/machinery/light/built/directional/east,
+/obj/machinery/light/directional/east,
 /turf/open/indestructible,
 /area/deathmatch)
 "kY" = (
@@ -350,10 +350,7 @@
 /area/deathmatch)
 "nT" = (
 /obj/effect/turf_decal/tile/purple/anticorner/contrasted,
-/mob/living/basic/bot/medbot,
-/obj/item/toy/plush/slimeplushie{
-	pixel_y = 10
-	},
+/obj/structure/closet/firecloset/full,
 /turf/open/indestructible/white,
 /area/deathmatch)
 "oq" = (
@@ -369,9 +366,11 @@
 /turf/open/indestructible,
 /area/deathmatch)
 "oD" = (
-/obj/effect/turf_decal/tile/yellow/fourcorners,
-/obj/machinery/portable_atmospherics/canister/hydrogen,
-/turf/open/indestructible,
+/obj/effect/turf_decal/tile/dark_blue/half/contrasted{
+	dir = 8
+	},
+/obj/machinery/light/small/blacklight/directional/west,
+/turf/open/indestructible/dark/textured,
 /area/deathmatch)
 "oN" = (
 /obj/effect/turf_decal/tile/yellow/half/contrasted{
@@ -399,7 +398,7 @@
 	dir = 8
 	},
 /obj/structure/extinguisher_cabinet/directional/west,
-/obj/machinery/light/built/directional/west,
+/obj/machinery/light/directional/west,
 /turf/open/indestructible,
 /area/deathmatch)
 "pL" = (
@@ -430,6 +429,9 @@
 /obj/item/mecha_parts/mecha_equipment/hydraulic_clamp,
 /obj/item/mecha_parts/mecha_equipment/drill,
 /obj/item/mecha_parts/mecha_equipment/weapon/energy/mecha_kineticgun,
+/obj/item/toy/plush/slimeplushie{
+	pixel_y = 10
+	},
 /turf/open/floor/iron/dark,
 /area/deathmatch)
 "ru" = (
@@ -443,6 +445,7 @@
 /obj/structure/bed,
 /obj/effect/spawner/random/bedsheet,
 /obj/item/melee/supermatter_sword,
+/obj/machinery/light/small/blacklight/directional/south,
 /turf/open/floor/wood,
 /area/deathmatch)
 "rP" = (
@@ -537,7 +540,6 @@
 	dir = 8
 	},
 /obj/effect/landmark/deathmatch_player_spawn,
-/obj/machinery/light/floor,
 /turf/open/indestructible,
 /area/deathmatch)
 "vb" = (
@@ -657,7 +659,6 @@
 /area/deathmatch)
 "xT" = (
 /obj/effect/turf_decal/tile/blue/half/contrasted,
-/obj/structure/table/reinforced,
 /obj/item/storage/medkit/brute{
 	pixel_x = -3;
 	pixel_y = -3
@@ -667,6 +668,7 @@
 	pixel_y = 3
 	},
 /obj/structure/cable,
+/obj/structure/table/glass,
 /turf/open/indestructible/white,
 /area/deathmatch)
 "yq" = (
@@ -688,6 +690,7 @@
 	},
 /obj/effect/decal/cleanable/blood,
 /obj/machinery/light/cold/dim/directional/east,
+/obj/structure/closet/firecloset/full,
 /turf/open/indestructible/white,
 /area/deathmatch)
 "yU" = (
@@ -697,7 +700,7 @@
 /area/deathmatch)
 "zg" = (
 /obj/effect/turf_decal/tile/purple/half/contrasted,
-/obj/structure/closet/emcloset,
+/obj/item/kirbyplants/random,
 /turf/open/indestructible,
 /area/deathmatch)
 "zs" = (
@@ -761,13 +764,13 @@
 /mob/living/basic/migo/hatsune,
 /obj/structure/bed,
 /obj/item/bedsheet/cult,
+/obj/machinery/light/small/blacklight/directional/south,
 /turf/open/floor/wood,
 /area/deathmatch)
 "AZ" = (
 /obj/effect/turf_decal/tile/blue/half/contrasted{
 	dir = 1
 	},
-/obj/structure/table/reinforced,
 /obj/item/storage/medkit/brute{
 	pixel_x = -3;
 	pixel_y = -3
@@ -776,6 +779,7 @@
 	pixel_x = 3;
 	pixel_y = 3
 	},
+/obj/structure/table/glass,
 /turf/open/indestructible/white,
 /area/deathmatch)
 "Bc" = (
@@ -856,7 +860,7 @@
 	dir = 4
 	},
 /obj/machinery/vending/wardrobe/engi_wardrobe,
-/obj/machinery/light/built/directional/east,
+/obj/machinery/light/directional/east,
 /turf/open/indestructible,
 /area/deathmatch)
 "Es" = (
@@ -882,12 +886,6 @@
 	dir = 1
 	},
 /turf/open/indestructible/dark,
-/area/deathmatch)
-"FN" = (
-/obj/effect/turf_decal/tile/green/half/contrasted{
-	dir = 1
-	},
-/turf/closed/indestructible/reinforced,
 /area/deathmatch)
 "FY" = (
 /obj/effect/turf_decal/tile/blue/half/contrasted,
@@ -935,7 +933,7 @@
 	dir = 4
 	},
 /obj/structure/extinguisher_cabinet/directional/east,
-/obj/machinery/light/built/directional/east,
+/obj/machinery/light/directional/east,
 /turf/open/indestructible,
 /area/deathmatch)
 "GY" = (
@@ -949,7 +947,7 @@
 /obj/effect/turf_decal/tile/dark_blue/half/contrasted{
 	dir = 1
 	},
-/obj/structure/closet/emcloset,
+/obj/structure/closet/firecloset/full,
 /turf/open/indestructible,
 /area/deathmatch)
 "Hy" = (
@@ -998,7 +996,6 @@
 	dir = 1
 	},
 /obj/structure/closet/secure_closet/engineering_electrical,
-/obj/item/card/id/advanced/engioutpost,
 /turf/open/indestructible,
 /area/deathmatch)
 "IR" = (
@@ -1143,10 +1140,11 @@
 /turf/open/indestructible,
 /area/deathmatch)
 "Nv" = (
-/obj/effect/turf_decal/tile/purple/half/contrasted{
+/obj/effect/turf_decal/tile/dark_blue/half/contrasted{
 	dir = 4
 	},
-/turf/closed/indestructible/reinforced,
+/obj/machinery/light/small/blacklight/directional/east,
+/turf/open/indestructible/dark/textured,
 /area/deathmatch)
 "ND" = (
 /obj/effect/turf_decal/tile/dark_blue/fourcorners,
@@ -1178,12 +1176,6 @@
 /obj/effect/turf_decal/tile/dark_blue,
 /turf/open/indestructible/dark,
 /area/deathmatch)
-"OD" = (
-/obj/effect/turf_decal/tile/purple/half/contrasted{
-	dir = 8
-	},
-/turf/closed/indestructible/reinforced,
-/area/deathmatch)
 "OF" = (
 /obj/effect/turf_decal/tile/dark_blue/full,
 /obj/structure/rack,
@@ -1206,10 +1198,9 @@
 /turf/open/indestructible,
 /area/deathmatch)
 "Qo" = (
-/obj/effect/turf_decal/tile/green/half/contrasted{
-	dir = 8
-	},
-/turf/closed/indestructible/reinforced,
+/obj/effect/turf_decal/tile/purple/half/contrasted,
+/mob/living/basic/bot/medbot,
+/turf/open/indestructible/white,
 /area/deathmatch)
 "QM" = (
 /obj/effect/decal/cleanable/dirt/dust,
@@ -1282,7 +1273,7 @@
 /area/deathmatch)
 "TZ" = (
 /obj/effect/turf_decal/tile/yellow/fourcorners,
-/obj/machinery/portable_atmospherics/canister/tritium,
+/obj/machinery/portable_atmospherics/canister/zauker,
 /turf/open/indestructible,
 /area/deathmatch)
 "Uj" = (
@@ -1355,13 +1346,14 @@
 /area/deathmatch)
 "Yb" = (
 /obj/effect/turf_decal/tile/yellow/anticorner/contrasted,
-/obj/item/kirbyplants/random,
+/obj/structure/closet/firecloset/full,
 /turf/open/indestructible,
 /area/deathmatch)
 "Yo" = (
 /mob/living/basic/cat_butcherer,
 /obj/structure/bed,
 /obj/item/bedsheet/runtime,
+/obj/machinery/light/small/blacklight/directional/north,
 /turf/open/floor/wood,
 /area/deathmatch)
 "Yr" = (
@@ -1369,6 +1361,7 @@
 /obj/structure/bed,
 /obj/effect/spawner/random/bedsheet,
 /obj/effect/decal/cleanable/vomit,
+/obj/machinery/light/small/blacklight/directional/north,
 /turf/open/floor/wood,
 /area/deathmatch)
 "YJ" = (
@@ -1396,12 +1389,6 @@
 	dir = 8
 	},
 /turf/open/indestructible,
-/area/deathmatch)
-"ZL" = (
-/obj/effect/turf_decal/tile/yellow/half/contrasted{
-	dir = 1
-	},
-/turf/closed/indestructible/reinforced,
 /area/deathmatch)
 "ZO" = (
 /obj/effect/turf_decal/tile/green,
@@ -1777,7 +1764,7 @@ Iu
 Kv
 Gl
 cs
-OD
+zJ
 jw
 jw
 jw
@@ -1825,7 +1812,7 @@ gI
 Ot
 fg
 fP
-Dm
+Nv
 fP
 iK
 QM
@@ -1893,7 +1880,7 @@ gI
 DV
 ju
 fP
-nb
+oD
 fP
 iK
 Vl
@@ -1912,7 +1899,7 @@ fV
 oq
 Mn
 Mn
-qF
+Qo
 Za
 rV
 jw
@@ -1947,7 +1934,7 @@ ru
 jR
 YJ
 nT
-Nv
+zJ
 rV
 rV
 jw
@@ -1997,11 +1984,11 @@ bX
 zJ
 cl
 sJ
-Qo
+zJ
 Lk
 vb
 vm
-Qo
+zJ
 sJ
 rO
 zJ
@@ -2014,8 +2001,8 @@ XZ
 Os
 IU
 JZ
-dB
 TZ
+dB
 zJ
 rV
 jw
@@ -2048,8 +2035,8 @@ Vl
 EC
 IU
 JZ
+TZ
 dB
-oD
 zJ
 jw
 jw
@@ -2063,7 +2050,7 @@ Za
 Za
 zJ
 zJ
-FN
+zJ
 zJ
 zJ
 Ia
@@ -2209,7 +2196,7 @@ zJ
 is
 gH
 zJ
-ZL
+zJ
 cy
 cy
 zJ

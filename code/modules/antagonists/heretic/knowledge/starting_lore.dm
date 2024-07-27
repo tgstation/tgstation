@@ -108,7 +108,7 @@ GLOBAL_LIST_INIT(heretic_start_knowledge, initialize_starting_knowledge())
 	return TRUE
 
 /datum/heretic_knowledge/living_heart/recipe_snowflake_check(mob/living/user, list/atoms, list/selected_atoms, turf/loc)
-	var/datum/antagonist/heretic/our_heretic = IS_HERETIC(user)
+	var/datum/antagonist/heretic/our_heretic = GET_HERETIC(user)
 	var/obj/item/organ/our_living_heart = user.get_organ_slot(our_heretic.living_heart_organ_slot)
 	// Obviously you need a heart in your chest to do a ritual on your... heart
 	if(!our_living_heart)
@@ -146,7 +146,7 @@ GLOBAL_LIST_INIT(heretic_start_knowledge, initialize_starting_knowledge())
 	return FALSE
 
 /datum/heretic_knowledge/living_heart/on_finished_recipe(mob/living/user, list/selected_atoms, turf/loc)
-	var/datum/antagonist/heretic/our_heretic = IS_HERETIC(user)
+	var/datum/antagonist/heretic/our_heretic = GET_HERETIC(user)
 	var/obj/item/organ/our_new_heart = user.get_organ_slot(our_heretic.living_heart_organ_slot)
 
 	// Our heart is robotic or synthetic - we need to replace it, and we fortunately should have one by here
@@ -323,7 +323,7 @@ GLOBAL_LIST_INIT(heretic_start_knowledge, initialize_starting_knowledge())
 	user.set_temp_blindness(reward SECONDS)
 	user.AdjustParalyzed(reward SECONDS)
 	user.playsound_local(get_turf(user), 'sound/ambience/antag/heretic/heretic_gain_intense.ogg', 100, FALSE, pressure_affected = FALSE, use_reverb = FALSE)
-	var/datum/antagonist/heretic/heretic_datum = IS_HERETIC(user)
+	var/datum/antagonist/heretic/heretic_datum = GET_HERETIC(user)
 	for(var/i in 1 to reward)
 		user.emote("scream")
 		playsound(loc, 'sound/items/eatfood.ogg', 100, TRUE)

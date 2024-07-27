@@ -204,9 +204,9 @@
 	map_name = "finaldestination"
 	key = "finaldestination"
 
-/datum/lazy_template/deathmatch/race_wars
-	name = "Race Wars"
-	desc = "Choose your favorite species and prove its superiority against all the other, lamer species. And also your own."
+/datum/lazy_template/deathmatch/species_warfare
+	name = "Species Warfare"
+	desc = "Choose your favorite species and prove its superiority against all the other, lamer species. And also anyone else of your own."
 	max_players = 8
 	allowed_loadouts = list(
 		/datum/outfit/deathmatch_loadout/humanity,
@@ -216,8 +216,33 @@
 		/datum/outfit/deathmatch_loadout/plasmamen,
 		/datum/outfit/deathmatch_loadout/felinid,
 	)
-	map_name = "race_wars"
-	key = "race_wars"
+	map_name = "species_warfare"
+	key = "species_warfare"
+
+/datum/lazy_template/deathmatch/spleef
+	name = "Spleef"
+	desc = "Snip catwalks and lattices under others and become the SPLEEF MASTER!"
+	max_players = 8
+	allowed_loadouts = list(
+		/datum/outfit/deathmatch_loadout/spleef
+	)
+	map_name = "spleef"
+	key = "spleef"
+
+/datum/lazy_template/deathmatch/ragnarok
+	name = "Ragnarok"
+	desc = "Cultists, heretics, and chaplains all duking it out in the jungle to retrieve the McGuffin."
+	max_players = 8
+	allowed_loadouts = list(
+		/datum/outfit/deathmatch_loadout/cultish/invoker,
+		/datum/outfit/deathmatch_loadout/cultish/artificer,
+		/datum/outfit/deathmatch_loadout/heresy/warrior,
+		/datum/outfit/deathmatch_loadout/heresy/scribe,
+		/datum/outfit/deathmatch_loadout/holy_crusader,
+		/datum/outfit/deathmatch_loadout/clock_cult,
+	)
+	map_name = "ragnarok"
+	key = "ragnarok"
 
 /datum/turf_reservation/indestructible_plating
 	turf_type = /turf/open/indestructible/plating //a little hacky but i guess it has to be done

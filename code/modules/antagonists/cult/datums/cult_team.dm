@@ -32,9 +32,16 @@
 	var/size_at_maximum = 0
 	///list of cultists just before summoning Narsie
 	var/list/true_cultists = list()
+	/// Lesser cults can't summon or sacrifice or anything. Used for DM
+	var/lesser_cult = FALSE
+
+/datum/team/cult/lesser
+	name = "\improper Lesser Cult"
+	show_roundend_report = FALSE
+	lesser_cult = TRUE
 
 /datum/team/cult/proc/check_size()
-	if(cult_ascendent)
+	if(cult_ascendent || lesser_cult)
 		return
 
 	// This proc is unnecessary clutter whilst running cult related unit tests
@@ -65,7 +72,7 @@
 		for(var/datum/mind/mind as anything in members)
 			if(mind.current)
 				SEND_SOUND(mind.current, 'sound/ambience/antag/bloodcult/bloodcult_halos.ogg')
-				to_chat(mind.current, span_cult_large(span_warning("Your cult is ascendent and the red harvest approaches - you cannot hide your true nature for much longer!!")))
+				to_chat(mind.current, span_cult_large(span_warning("Your cult is ascendant and the red harvest approaches - you cannot hide your true nature for much longer!!")))
 				mind.current.AddElement(/datum/element/cult_halo)
 		cult_ascendent = TRUE
 		log_game("The blood cult has ascended with [cultplayers] players.")
@@ -89,6 +96,8 @@
 	sac_objective.sac_image = reshape
 
 /datum/team/cult/proc/setup_objectives()
+	if(lesser_cult)
+		return
 	var/datum/objective/sacrifice/sacrifice_objective = new
 	sacrifice_objective.team = src
 	sacrifice_objective.find_target()
@@ -134,6 +143,9 @@
 	return "<div class='panel redborder'>[parts.Join("<br>")]</div>"
 
 /datum/team/cult/proc/is_sacrifice_target(datum/mind/mind)
+	if(lesser_cult)
+		return
+
 	for(var/datum/objective/sacrifice/sac_objective in objectives)
 		if(mind == sac_objective.target)
 			return TRUE

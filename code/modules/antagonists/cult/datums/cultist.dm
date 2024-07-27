@@ -16,6 +16,7 @@
 	var/give_equipment = FALSE
 	///Reference to the Blood cult team they are part of.
 	var/datum/team/cult/cult_team
+	var/lesser_cult = FALSE
 
 /datum/antagonist/cult/can_be_owned(datum/mind/new_owner)
 	if(!is_convertable_to_cult(new_owner.current, cult_team))
@@ -128,6 +129,8 @@
 		//todo remove this and allow admin buttons to create more than one cult
 		for(var/datum/antagonist/cult/H in GLOB.antagonists)
 			if(!H.owner)
+				continue
+			if(H.lesser_cult != lesser_cult)
 				continue
 			if(H.cult_team)
 				cult_team = H.cult_team
@@ -281,3 +284,6 @@
 ///Used to check if the owner is counted as a secondary invoker for runes.
 /datum/antagonist/cult/proc/check_invoke_validity()
 	return TRUE
+
+/datum/antagonist/cult/lesser
+	lesser_cult = TRUE
