@@ -259,6 +259,9 @@ GLOBAL_LIST(fishing_property_cache)
 	///Multiplier used to make fishes more common compared to everything else.
 	var/result_multiplier = 1
 
+
+	var/list/final_table = fish_table.Copy()
+
 	if(bait)
 		if(HAS_TRAIT(bait, TRAIT_GREAT_QUALITY_BAIT))
 			result_multiplier = 9
@@ -269,10 +272,10 @@ GLOBAL_LIST(fishing_property_cache)
 		else if(HAS_TRAIT(bait, TRAIT_BASIC_QUALITY_BAIT))
 			result_multiplier = 2
 			leveling_exponent = 0.1
+		final_table -= FISHING_DUD
 
 	var/list/fish_list_properties = collect_fish_properties()
 
-	var/list/final_table = fish_table.Copy()
 	for(var/result in final_table)
 		final_table[result] *= rod.hook?.get_hook_bonus_multiplicative(result)
 		final_table[result] += rod.hook?.get_hook_bonus_additive(result)//Decide on order here so it can be multiplicative
