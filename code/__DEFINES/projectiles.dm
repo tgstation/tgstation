@@ -30,12 +30,12 @@
 #define CALIBER_50AE ".50AE"
 /// The caliber used by the gyrojet pistol.
 #define CALIBER_75 ".75"
-/// The caliber used by [one revolver variant][/obj/item/gun/ballistic/revolver/nagant].
-#define CALIBER_N762 "n762"
 /// The caliber used by the the M-90gl Carbine, and NT-ARG 'Boarder'.
 #define CALIBER_A223 "a223"
 /// The caliber used by bolt action rifles.
 #define CALIBER_STRILKA310 ".310_strilka"
+/// The caliber used by soviet revolvers.
+#define CALIBER_SHORT310 ".310_short"
 /// The caliber used by shotguns.
 #define CALIBER_SHOTGUN "shotgun"
 /// The caliber used by grenade launchers.

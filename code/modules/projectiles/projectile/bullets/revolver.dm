@@ -1,8 +1,17 @@
-// 7.62x38mmR (Nagant Revolver)
+// .310 Short (Sakhno-Manni Revolver)
 
-/obj/projectile/bullet/n762
-	name = "7.62x38mmR bullet"
-	damage = 60
+/obj/projectile/bullet/short310
+	name = ".310 Short bullet"
+	damage = 35
+	armour_penetration = 0
+	wound_bonus = -45
+	wound_falloff_tile = 0
+	speed = 1.3
+
+/obj/projectile/bullet/short310/surplus
+	name = ".310 Short surplus bullet"
+	damage = 30
+	weak_against_armour = TRUE //this is specifically more important for fighting carbons than fighting noncarbons. Against a simple mob, this is still a full force bullet
 
 // .50AE (Desert Eagle)
 

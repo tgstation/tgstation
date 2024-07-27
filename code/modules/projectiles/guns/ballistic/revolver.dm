@@ -164,14 +164,15 @@
 	recoil = 8
 	pin = /obj/item/firing_pin
 
-/obj/item/gun/ballistic/revolver/nagant
-	name = "\improper Nagant revolver"
-	desc = "An old model of revolver that originated in Russia. Able to be suppressed. Uses 7.62x38mmR ammo."
-	icon_state = "nagant"
-	can_suppress = TRUE
-
-	accepted_magazine_type = /obj/item/ammo_box/magazine/internal/cylinder/rev762
-
+/obj/item/gun/ballistic/revolver/sakhnomanni
+	name = "\improper Sakhno-Manni revolver"
+	desc = "A Sakhno-Manni Double Firing Revolver, designed as a companion to the more famous Sakhno Precision Rifle. \
+		Firing shortened .310 ammunition, the weapon compensates for its poor performance by firing two shots with \
+		every trigger pull. Far more popular with collectors than practical shooters."
+	icon_state = "sakhnomanni"
+	fire_delay = 1.5
+	burst_size = 2
+	accepted_magazine_type = /obj/item/ammo_box/magazine/internal/cylinder/short310
 
 // A gun to play Russian Roulette!
 // You can spin the chamber to randomize the position of the bullet.

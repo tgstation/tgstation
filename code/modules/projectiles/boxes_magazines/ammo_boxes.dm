@@ -136,12 +136,6 @@
 		These fancy bullets pass right though valuables until they end up in a far less expensive human skull."
 	ammo_type = /obj/item/ammo_casing/strilka310/phasic
 
-/obj/item/ammo_box/n762
-	name = "ammo box (7.62x38mmR)"
-	icon_state = "10mmbox"
-	ammo_type = /obj/item/ammo_casing/n762
-	max_ammo = 14
-
 /obj/item/ammo_box/foambox
 	name = "ammo box (Foam Darts)"
 	icon = 'icons/obj/weapons/guns/toy.dmi'

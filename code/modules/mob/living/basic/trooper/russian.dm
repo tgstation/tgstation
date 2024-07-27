@@ -26,9 +26,9 @@
 	r_hand = /obj/item/gun/ballistic/automatic/pistol
 	loot = list(
 		/obj/effect/mob_spawn/corpse/human/russian/ranged,
-		/obj/item/gun/ballistic/revolver/nagant,
+		/obj/item/gun/ballistic/revolver/sakhnomanni,
 	)
-	var/casingtype = /obj/item/ammo_casing/n762
+	var/casingtype = /obj/item/ammo_casing/short310
 	var/projectilesound = 'sound/weapons/gun/revolver/shot.ogg'
 
 /mob/living/basic/trooper/russian/ranged/Initialize(mapload)
