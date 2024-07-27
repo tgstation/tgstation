@@ -3,7 +3,6 @@
 /obj/projectile/bullet/short310
 	name = ".310 Short bullet"
 	damage = 35
-	armour_penetration = 0
 	wound_bonus = -45
 	wound_falloff_tile = 0
 	speed = 1.3
