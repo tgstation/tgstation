@@ -331,9 +331,6 @@
 	RegisterSignal(dampening_field, COMSIG_DAMPENER_RELEASE, PROC_REF(release_projectile))
 
 /obj/item/mod/module/projectile_dampener/on_deactivation(display_message, deleting = FALSE)
-	. = ..()
-	if(!.)
-		return
 	QDEL_NULL(dampening_field)
 
 /obj/item/mod/module/projectile_dampener/proc/dampen_projectile(datum/source, obj/projectile/projectile)
