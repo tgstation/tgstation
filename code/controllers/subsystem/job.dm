@@ -321,12 +321,11 @@ SUBSYSTEM_DEF(job)
 	return
 
 
-/**
- * Will try to select a head, ignoring ALL non-head preferences for every level until.
- *
- * Basically tries to ensure there is at least one head in every shift if anyone has that job preference enabled at all.
+/*
+ * Forces a random Head of Staff role to be assigned to a random eligible player.
+ * Returns TRUE if a player was selected and assigned the role. FALSE otherwise.
  */
-/datum/controller/subsystem/job/proc/FillHeadPosition()
+/datum/controller/subsystem/job/proc/force_one_head_assignment()
 	var/datum/job_department/command_department = get_department_type(/datum/job_department/command)
 	if(!command_department)
 		return FALSE
@@ -346,14 +345,18 @@ SUBSYSTEM_DEF(job)
 
 /**
  * Attempts to fill out all possible head positions for players with that job at a a given job priority level.
+ * Returns the number of Head positions assigned.
  *
  * Arguments:
  * * level - One of the JP_LOW, JP_MEDIUM or JP_HIGH defines. Attempts to find candidates with head jobs at this priority only.
  */
-/datum/controller/subsystem/job/proc/CheckHeadPositions(level)
+/datum/controller/subsystem/job/proc/fill_all_head_positions_at_priority(level)
+	. = 0
 	var/datum/job_department/command_department = get_department_type(/datum/job_department/command)
+
 	if(!command_department)
 		return
+
 	for(var/datum/job/job as anything in command_department.department_jobs)
 		if((job.current_positions >= job.total_positions) && job.total_positions != -1)
 			continue
@@ -362,7 +365,8 @@ SUBSYSTEM_DEF(job)
 			continue
 		var/mob/dead/new_player/candidate = pick(candidates)
 		// Eligibility checks done as part of FindOccupationCandidates
-		AssignRole(candidate, job, do_eligibility_checks = FALSE)
+		if(AssignRole(candidate, job, do_eligibility_checks = FALSE))
+			.++
 
 /// Attempts to fill out all available AI positions.
 /datum/controller/subsystem/job/proc/fill_ai_positions()
@@ -397,63 +401,63 @@ SUBSYSTEM_DEF(job)
 		if(player.ready == PLAYER_READY_TO_PLAY && player.check_preferences() && player.mind && is_unassigned_job(player.mind.assigned_role))
 			unassigned += player
 
-	initial_players_to_assign = unassigned.len
+	initial_players_to_assign = length(unassigned)
 
-	JobDebug("DO, Len: [unassigned.len]")
+	JobDebug("DO, Len: [initial_players_to_assign]")
 
 	//Scale number of open security officer slots to population
 	setup_officer_positions()
 
 	//Jobs will have fewer access permissions if the number of players exceeds the threshold defined in game_options.txt
-	var/mat = CONFIG_GET(number/minimal_access_threshold)
-	if(mat)
-		if(mat > unassigned.len)
+	var/min_access_threshold = CONFIG_GET(number/minimal_access_threshold)
+	if(min_access_threshold)
+		if(min_access_threshold > initial_players_to_assign)
 			CONFIG_SET(flag/jobs_have_minimal_access, FALSE)
 		else
 			CONFIG_SET(flag/jobs_have_minimal_access, TRUE)
 
-	//Shuffle players and jobs
-	unassigned = shuffle(unassigned)
+	//Shuffle player list.
+	shuffle_inplace(unassigned)
 
 	HandleFeedbackGathering()
 
-	// Dynamic has picked a ruleset that requires enforcing some jobs before others.
-	JobDebug("DO, Assigning Priority Positions: [length(dynamic_forced_occupations)]")
+	// Assign any priority positions before all other standard job selections.
+	JobDebug("DO, Assigning priority positions")
 	assign_priority_positions()
+	JobDebug("DO, Priority assignment complete")
 
-	//People who wants to be the overflow role, sure, go on.
-	JobDebug("DO, Running Overflow Check 1")
-	var/datum/job/overflow_datum = GetJobType(overflow_role)
-	var/list/overflow_candidates = FindOccupationCandidates(overflow_datum, JP_LOW)
-	JobDebug("AC1, Candidates: [overflow_candidates.len]")
-	for(var/mob/dead/new_player/player in overflow_candidates)
-		JobDebug("AC1 pass, Player: [player]")
-		// Eligibility checks done as part of FindOccupationCandidates
-		AssignRole(player, GetJobType(overflow_role), do_eligibility_checks = FALSE)
-		overflow_candidates -= player
-	JobDebug("DO, AC1 end")
+	// The overflow role is toggle on/off. Toggling it on sets the job priority to JP_HIGH. Since only one job can be JP_HIGH at a time,
+	// the overflow role has limitless slots AND job assignment prefers to give players their JP_HIGH roles first, everyone with overflow
+	// enabled will get this job. So we can assign it immediately to all players that have it enabled.
+	JobDebug("DO, Assigning early overflow roles")
+	assign_all_overflow_positions()
+	JobDebug("DO, Early overflow roles assigned.")
 
-	//Select one head
-	JobDebug("DO, Running Head Check")
-	FillHeadPosition()
-	JobDebug("DO, Head Check end")
+	// At this point we can assume the following:
+	// From assign_priority_positions()
+	// 1. If possible, any necessary job roles to allow Dynamic rulesets to execute (such as an AI for malf AI) are satisfied.
+	// 2. All Head of Staff roles with any player pref set to JP_HIGH are filled out.
+	// 3. If any player not selected by the above has any Head of Staff preference enabled at any JP_ level, there is at least one Head of Staff.
+	//
+	// From assign_all_overflow_positions()
+	// 4. Anyone with the overflow role enabled has been given the overflow role.
 
-	// Fill out any remaining AI positions.
-	JobDebug("DO, Running AI Check")
-	fill_ai_positions()
-	JobDebug("DO, AI Check end")
 
-	//Other jobs are now checked
+
+	// Shuffle the joinable occupation list and filter out ineligible occupations due to above job assignments.
+	var/list/available_occupations = joinable_occupations.Copy()
+	for(var/datum/job/job in available_occupations)
+		// Make sure the job isn't filled. If it is, remove it from the list so it doesn't get checked.
+		if((job.current_positions >= job.spawn_positions) && job.spawn_positions != -1)
+			JobDebug("FOC job is filled, Job: [job], Current: [job.current_positions], Limit: [job.spawn_positions]")
+			available_occupations -= job
+
 	JobDebug("DO, Running standard job assignment")
-	// New job giving system by Donkie
-	// This will cause lots of more loops, but since it's only done once it shouldn't really matter much at all.
-	// Hopefully this will add more randomness and fairness to job giving.
 
-	// Loop through all levels from high to low
-	var/list/shuffledoccupations = shuffle(joinable_occupations)
 	for(var/level in level_order)
-		//Check the head jobs first each level
-		CheckHeadPositions(level)
+		JobDebug("FOC, Filling in head roles, Level: [job_priority_level_to_string(level)]")
+		// Fill the head jobs first each level
+		fill_all_head_positions_at_priority(level)
 
 		// Loop through all unassigned players
 		for(var/mob/dead/new_player/player in unassigned)
@@ -461,34 +465,27 @@ SUBSYSTEM_DEF(job)
 				if(PopcapReached())
 					RejectPlayer(player)
 
+			JobDebug("FOC, Finding a job, Player: [player], Level: [job_priority_level_to_string(level)]")
+
 			// Loop through all jobs
-			for(var/datum/job/job in shuffledoccupations) // SHUFFLE ME BABY
-				if(!job)
-					JobDebug("FOC invalid/null job in occupations, Player: [player], Job: [job]")
-					shuffledoccupations -= job
-					continue
-
-				// Make sure the job isn't filled. If it is, remove it from the list so it doesn't get checked again.
-				if((job.current_positions >= job.spawn_positions) && job.spawn_positions != -1)
-					JobDebug("FOC job filled and not overflow, Player: [player], Job: [job], Current: [job.current_positions], Limit: [job.spawn_positions]")
-					shuffledoccupations -= job
-					continue
-
+			for(var/datum/job/job in shuffle(available_occupations))
 				// Filter any job that doesn't fit the current level.
 				var/player_job_level = player.client?.prefs.job_preferences[job.title]
 				if(isnull(player_job_level))
-					JobDebug("FOC player job not enabled, Player: [player]")
+					JobDebug("FOC player job not enabled, Job: [job]")
 					continue
-				else if(player_job_level != level)
-					JobDebug("FOC player job enabled but at different level, Player: [player], TheirLevel: [job_priority_level_to_string(player_job_level)], ReqLevel: [job_priority_level_to_string(level)]")
-					continue
-
-				if(check_job_eligibility(player, job, "DO", add_job_to_log = TRUE) != JOB_AVAILABLE)
+				if(player_job_level != level)
+					JobDebug("FOC player job enabled but at different level, TheirLevel: [job_priority_level_to_string(player_job_level)], ReqLevel: [job_priority_level_to_string(level)]")
 					continue
 
-				JobDebug("DO pass, Player: [player], Level:[level], Job:[job.title]")
+				if(check_job_eligibility(player, job, "FOC", add_job_to_log = TRUE) != JOB_AVAILABLE)
+					continue
+
+				JobDebug("FOC assigning role, Player: [player], Level:[job_priority_level_to_string(level)], Job:[job.title]")
 				AssignRole(player, job, do_eligibility_checks = FALSE)
-				unassigned -= player
+				if((job.current_positions >= job.spawn_positions) && job.spawn_positions != -1)
+					JobDebug("FOC job is now filled, Job: [job], Positions: [job.current_positions], Limit: [job.spawn_positions]")
+					available_occupations -= job
 				break
 
 	JobDebug("DO, Ending standard job assignment")
@@ -667,7 +664,7 @@ SUBSYSTEM_DEF(job)
 		return
 	if(PopcapReached())
 		JobDebug("Popcap overflow Check observer located, Player: [player]")
-	JobDebug("Player rejected :[player]")
+	JobDebug("Player rejected, failed to qualify for any desired job: [player]")
 	unassigned -= player
 	if(!run_divide_occupation_pure)
 		to_chat(player, "<span class='infoplain'><b>You have failed to qualify for any job you desired.</b></span>")
@@ -846,12 +843,41 @@ SUBSYSTEM_DEF(job)
 	safe_code_timer_id = null
 	safe_code_request_loc = null
 
-/// Blindly assigns the required roles to every player in the dynamic_forced_occupations list.
+/// Assigns roles that are considered high priority, either due to dynamic needing to force a specific role for a specific ruleset
+/// or making sure roles critical to round progression exist where possible every shift.
 /datum/controller/subsystem/job/proc/assign_priority_positions()
+	JobDebug("APP, Assigning Dynamic Priority Positions: [length(dynamic_forced_occupations)]")
 	for(var/mob/new_player in dynamic_forced_occupations)
-		// Eligibility checks already carried out as part of the dynamic ruleset trim_candidates proc.area
+		// Eligibility checks already carried out as part of the dynamic ruleset trim_candidates proc.
 		// However no guarantee of game state between then and now, so don't skip eligibility checks on AssignRole.
 		AssignRole(new_player, GetJob(dynamic_forced_occupations[new_player]))
+
+	// Get JP_HIGH department Heads of Staff in place. Indirectly useful for the Revolution ruleset to have as many Heads as possible.
+	JobDebug("APP, Assigning all JP_HIGH head of staff roles.")
+	var/head_count = fill_all_head_positions_at_priority(JP_HIGH)
+
+	// If nobody has JP_HIGH on a Head role, try to force at least one Head of Staff so every shift has the best chance
+	// of having at least one leadership role.
+	if(head_count == 0)
+		force_one_head_position()
+
+	// Fill out all AI positions.
+	JobDebug("APP, Filling all AI positions")
+	fill_ai_positions()
+
+/datum/controller/subsystem/job/proc/assign_all_overflow_positions()
+	// The overflow role is toggle on/off. Toggling it on sets the job priority to JP_HIGH. Since only one job can be JP_HIGH at a time,
+	// the overflow role has limitless slots AND job assignment prefers to give players their JP_HIGH roles first, everyone with overflow
+	// enabled will get this job. So we can assign it immediately to all players that have it enabled.
+	JobDebug("OVRFLW, Assigning all overflow roles")
+	var/datum/job/overflow_datum = GetJobType(overflow_role)
+	var/list/overflow_candidates = FindOccupationCandidates(overflow_datum, JP_HIGH)
+	JobDebug("OVRFLW, Candidates: [overflow_candidates.len]")
+	for(var/mob/dead/new_player/player in overflow_candidates)
+		JobDebug("OVRFLW selection, Player: [player]")
+		// Eligibility checks done as part of FindOccupationCandidates, so skip them.
+		AssignRole(player, GetJobType(overflow_role), do_eligibility_checks = FALSE)
+	JobDebug("OVRFLW, All overflow roles assigned.")
 
 /// Takes a job priority #define such as JP_LOW and gets its string representation for logging.
 /datum/controller/subsystem/job/proc/job_priority_level_to_string(priority)
