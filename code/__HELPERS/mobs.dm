@@ -632,7 +632,7 @@ GLOBAL_LIST_INIT(skin_tone_names, list(
 		else
 			return zone
 
-///Takes a zone and returns it's "parent" zone, if it has one.
+///Takes a zone and returns its "parent" zone, if it has one.
 /proc/deprecise_zone(precise_zone)
 	switch(precise_zone)
 		if(BODY_ZONE_PRECISE_GROIN)

@@ -1,4 +1,0 @@
-author: "FearfulFurnishing"
-delete-after: True
-changes:
-  - bugfix: "fixing speech modifiers being applied to a tongue's native languages."

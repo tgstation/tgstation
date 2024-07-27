@@ -447,7 +447,7 @@ GLOBAL_LIST_EMPTY(cached_storage_typecaches)
 	if(!can_insert(to_insert, user, messages = messages, force = force))
 		return FALSE
 
-	SEND_SIGNAL(parent, COMSIG_STORAGE_STORED_ITEM, to_insert, user, force)
+	SEND_SIGNAL(parent, COMSIG_ATOM_STORED_ITEM, to_insert, user, force)
 	SEND_SIGNAL(src, COMSIG_STORAGE_STORED_ITEM, to_insert, user, force)
 	to_insert.forceMove(real_location)
 	item_insertion_feedback(user, to_insert, override)
@@ -1027,7 +1027,7 @@ GLOBAL_LIST_EMPTY(cached_storage_typecaches)
 		var/atom/movable/movable_loc = real_location
 		movable_loc.lose_active_storage(src)
 
-	if (isnull(storage_interfaces[to_hide]))
+	if (!length(storage_interfaces) || isnull(storage_interfaces[to_hide]))
 		return TRUE
 
 	is_using -= to_hide

@@ -129,23 +129,6 @@ export const SOUNDS = [
   },
 ];
 
-export const STYLES = [
-  { title: 'Standard' },
-  { title: 'Advanced' },
-  { title: 'Nanotrasen' },
-  { title: 'Syndicate' },
-  { title: 'Deathsquad' },
-  { title: 'Cultist' },
-  { title: 'Missile' },
-  { title: 'Syndie Missile' },
-  { title: 'Supply Box' },
-  { title: 'Clown Pod' },
-  { title: 'Fruit' },
-  { title: 'Invisible' },
-  { title: 'Gondola' },
-  { title: 'Seethrough' },
-] as const;
-
 export const BAYS = [
   { title: '1' },
   { title: '2' },

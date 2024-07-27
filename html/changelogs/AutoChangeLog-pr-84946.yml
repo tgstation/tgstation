@@ -1,4 +1,0 @@
-author: "Melbert"
-delete-after: True
-changes:
-  - qol: "If you're in oxycrit (>50 oxy damage) or otherwise made unconscious through other means, blood loss will only kill you if you're *actually* missing a lethal amount of blood."

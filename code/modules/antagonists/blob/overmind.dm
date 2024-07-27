@@ -206,7 +206,7 @@ GLOBAL_LIST_EMPTY(blob_nodes)
 			if(live_guy.stat != DEAD)
 				live_guy.investigate_log("has died from blob takeover.", INVESTIGATE_DEATHS)
 			live_guy.death()
-			create_spore(guy_turf)
+			create_spore(guy_turf, spore_type = /mob/living/basic/blob_minion/spore)
 		else
 			live_guy.fully_heal()
 

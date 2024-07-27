@@ -1,4 +1,0 @@
-author: "SmArtKar"
-delete-after: True
-changes:
-  - admin: "Ghosts can no longer create deathmatch lobbies or join existing ones when admins disable minigames"

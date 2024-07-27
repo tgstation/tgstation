@@ -23,6 +23,17 @@
 	time = 4 SECONDS
 	category = CAT_EQUIPMENT
 
+/datum/crafting_recipe/improvisedshield
+	name = "Moonflower Shield"
+	result = /obj/item/shield/buckler/moonflower
+	reqs = list(
+		/obj/item/seeds/sunflower/moonflower = 3,
+		/obj/item/grown/log/steel = 3,
+	)
+	time = 4 SECONDS
+	category = CAT_EQUIPMENT
+
+
 /datum/crafting_recipe/radiogloves
 	name = "Radio Gloves"
 	result = /obj/item/clothing/gloves/radio
