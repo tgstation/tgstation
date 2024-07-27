@@ -44367,6 +44367,7 @@
 /area/station/service/chapel)
 "pnO" = (
 /obj/structure/cable,
+/obj/machinery/airalarm/directional/south,
 /turf/open/floor/plating,
 /area/station/maintenance/disposal/incinerator)
 "pnQ" = (
