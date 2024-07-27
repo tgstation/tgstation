@@ -160,6 +160,10 @@
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/visible/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/dark/visible,
+/obj/machinery/airlock_controller/incinerator_atmos{
+	pixel_x = -38;
+	pixel_y = -6
+	},
 /turf/open/floor/engine,
 /area/station/maintenance/disposal/incinerator)
 "aem" = (
@@ -205,8 +209,15 @@
 /obj/machinery/atmospherics/components/trinary/filter/flipped/layer2{
 	dir = 4
 	},
-/obj/structure/extinguisher_cabinet/directional/north,
 /obj/machinery/light/small/directional/north,
+/obj/machinery/button/door/incinerator_vent_atmos_aux{
+	pixel_x = 8;
+	pixel_y = 24
+	},
+/obj/machinery/button/door/incinerator_vent_atmos_main{
+	pixel_x = 8;
+	pixel_y = 36
+	},
 /turf/open/floor/plating,
 /area/station/maintenance/disposal/incinerator)
 "aeX" = (
@@ -12439,6 +12450,9 @@
 "eKd" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden,
 /obj/machinery/light/small/directional/west,
+/obj/machinery/airlock_sensor/incinerator_atmos{
+	pixel_y = -21
+	},
 /turf/open/floor/engine,
 /area/station/maintenance/disposal/incinerator)
 "eKf" = (
@@ -21401,6 +21415,7 @@
 "hMX" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/visible/layer2,
 /obj/structure/cable,
+/obj/structure/extinguisher_cabinet/directional/west,
 /turf/open/floor/plating,
 /area/station/maintenance/disposal/incinerator)
 "hNb" = (
@@ -32421,6 +32436,10 @@
 	},
 /turf/open/floor/iron/white/small,
 /area/station/command/heads_quarters/cmo)
+"ljR" = (
+/obj/machinery/button/ignition/incinerator/atmos,
+/turf/closed/wall/r_wall,
+/area/station/maintenance/disposal/incinerator)
 "ljT" = (
 /obj/structure/window/spawner/directional/east,
 /obj/structure/window/spawner/directional/west,
@@ -81902,7 +81921,7 @@ wBo
 sRf
 wBo
 hFO
-wBo
+ljR
 mPB
 wWm
 nlR
