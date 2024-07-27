@@ -1,4 +1,0 @@
-author: "larentoun"
-delete-after: True
-changes:
-  - bugfix: "Correct emote plays when a human scream. Should have sound now."

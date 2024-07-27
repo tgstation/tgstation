@@ -44,6 +44,8 @@
 	var/list/mob_type_blacklist_typecache
 	/// Types that can use this emote regardless of their state.
 	var/list/mob_type_ignore_stat_typecache
+	/// Trait that is required to use this emote.
+	var/trait_required
 	/// In which state can you use this emote? (Check stat.dm for a full list of them)
 	var/stat_allowed = CONSCIOUS
 	/// Sound to play when emote is called.
@@ -83,20 +85,15 @@
  * * type_override - Override to the current emote_type.
  * * intentional - Bool that says whether the emote was forced (FALSE) or not (TRUE).
  *
- * Returns TRUE if it was able to run the emote, FALSE otherwise.
  */
 /datum/emote/proc/run_emote(mob/user, params, type_override, intentional = FALSE)
-	if(!can_run_emote(user, TRUE, intentional))
-		return FALSE
-	if(SEND_SIGNAL(user, COMSIG_MOB_PRE_EMOTED, key, params, type_override, intentional, src) & COMPONENT_CANT_EMOTE)
-		return TRUE // We don't return FALSE because the error output would be incorrect, provide your own if necessary.
 	var/msg = select_message_type(user, message, intentional)
 	if(params && message_param)
 		msg = select_param(user, params)
 
 	msg = replace_pronoun(user, msg)
 	if(!msg)
-		return TRUE
+		return
 
 	user.log_message(msg, LOG_EMOTE)
 
@@ -136,7 +133,7 @@
 				viewer.show_message("<span class='emote'><b>[user]</b> [msg]</span>", MSG_AUDIBLE)
 			else if(is_visual)
 				viewer.show_message("<span class='emote'><b>[user]</b> [msg]</span>", MSG_VISUAL)
-		return TRUE // Early exit so no dchat message
+		return // Early exit so no dchat message
 
 	// The emote has some important information, and should always be shown to the user
 	else if(is_important)
@@ -183,7 +180,7 @@
 				continue
 			to_chat(ghost, "<span class='emote'>[FOLLOW_LINK(ghost, user)] [dchatmsg]</span>")
 
-	return TRUE
+	return
 
 
 
@@ -293,10 +290,13 @@
  * * user - Person that is trying to send the emote.
  * * status_check - Bool that says whether we should check their stat or not.
  * * intentional - Bool that says whether the emote was forced (FALSE) or not (TRUE).
+ * * params - Parameters added after the emote.
  *
  * Returns a bool about whether or not the user can run the emote.
  */
-/datum/emote/proc/can_run_emote(mob/user, status_check = TRUE, intentional = FALSE)
+/datum/emote/proc/can_run_emote(mob/user, status_check = TRUE, intentional = FALSE, params)
+	if(trait_required && !HAS_TRAIT(user, trait_required))
+		return FALSE
 	if(!is_type_in_typecache(user, mob_type_allowed_typecache))
 		return FALSE
 	if(is_type_in_typecache(user, mob_type_blacklist_typecache))

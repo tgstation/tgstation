@@ -302,7 +302,7 @@
 		demand_connects = new_demand_connects
 		supply_connects = new_supply_connects
 
-///Give the direction of a pipe, and it'll return wich direction it originally was when it's object pointed SOUTH
+///Give the direction of a pipe, and it'll return wich direction it originally was when its object pointed SOUTH
 /datum/component/plumbing/proc/get_original_direction(dir)
 	var/atom/movable/parent_movable = parent
 	return turn(dir, dir2angle(parent_movable.dir) - 180)

@@ -14,6 +14,7 @@
 		/obj/item/fish/clownfish/lube = 2,
 	)
 	fishing_difficulty = FISHING_DEFAULT_DIFFICULTY + 5
+	explosive_malus = TRUE
 
 /datum/fish_source/ocean/beach
 	catalog_description = "Beach shore water"
@@ -159,7 +160,7 @@
 			challenge.special_effects |= effect
 
 ///Cherry on top, fish caught from the randomizer portal also have (almost completely) random traits
-/datum/fish_source/portal/random/spawn_reward(reward_path, mob/fisherman, turf/fishing_spot)
+/datum/fish_source/portal/random/spawn_reward(reward_path, atom/movable/spawn_location, turf/fishing_spot)
 	if(!ispath(reward_path, /obj/item/fish))
 		return ..()
 
@@ -170,16 +171,11 @@
 			var/datum/fish_trait/trait = GLOB.fish_traits[trait_type]
 			weighted_traits[trait.type] = round(trait.inheritability**2/100)
 
-	var/obj/item/fish/caught_fish = new reward_path(get_turf(fisherman), FALSE)
-	var/list/fixed_traits = list()
-	for(var/trait_type in caught_fish.fish_traits)
-		var/datum/fish_trait/trait = GLOB.fish_traits[trait_type]
-		if(caught_fish.type in trait.guaranteed_inheritance_types)
-			fixed_traits += trait_type
+	var/obj/item/fish/caught_fish = new reward_path(spawn_location, FALSE)
 	var/list/new_traits = list()
 	for(var/iteration in rand(1, 4))
 		new_traits |= pick_weight(weighted_traits)
-	caught_fish.inherit_traits(new_traits, fixed_traits = fixed_traits)
+	caught_fish.inherit_traits(new_traits)
 	caught_fish.randomize_size_and_weight(deviation = 0.3)
 	caught_fish.progenitors = full_capitalize(caught_fish.name)
 	return caught_fish
@@ -211,7 +207,8 @@
 
 	return rod.hook.chasm_detritus_type
 
-/datum/fish_source/chasm
+/datum/fish_source/chasm/spawn_reward_from_explosion(atom/location, severity)
+	return //Spawned content would immediately fall back into the chasm, so it wouldn't matter.
 
 /datum/fish_source/lavaland
 	catalog_description = "Lava vents"
@@ -228,6 +225,7 @@
 	)
 
 	fishing_difficulty = FISHING_DEFAULT_DIFFICULTY + 10
+	explosive_malus = TRUE
 
 /datum/fish_source/lavaland/reason_we_cant_fish(obj/item/fishing_rod/rod, mob/fisherman, atom/parent)
 	. = ..()
@@ -241,14 +239,15 @@
 	catalog_description = "Liquid plasma vents"
 	fish_table = list(
 		FISHING_DUD = 5,
-		/obj/item/fish/chasm_crab/ice = 15,
-		/obj/item/fish/lavaloop/plasma_river = 15,
-		/obj/item/coin/plasma = 3,
-		/obj/item/stack/ore/plasma = 3,
+		/obj/item/fish/chasm_crab/ice = 30,
+		/obj/item/fish/lavaloop/plasma_river = 30,
+		/obj/item/coin/plasma = 6,
+		/obj/item/stack/ore/plasma = 6,
+		/obj/effect/decal/remains/plasma = 2,
+		/obj/item/stack/sheet/mineral/runite = 2,
+		/obj/item/stack/sheet/mineral/adamantine = 2,
 		/mob/living/basic/mining/lobstrosity = 1,
-		/obj/effect/decal/remains/plasma = 1,
-		/obj/item/stack/sheet/mineral/runite = 1,
-		/obj/item/stack/sheet/mineral/adamantine = 1,
+		/mob/living/basic/mining/lobstrosity/juvenile = 1,
 	)
 	fish_counts = list(
 		/obj/item/stack/sheet/mineral/adamantine = 3,
@@ -358,6 +357,15 @@
 	if(basin.myseed)
 		return "There's a plant growing in [parent]."
 
+	return ..()
+
+/datum/fish_source/hydro_tray/spawn_reward_from_explosion(atom/location, severity)
+	if(!istype(location, /obj/machinery/hydroponics/constructable))
+		return ..()
+
+	var/obj/machinery/hydroponics/constructable/basin = location
+	if(basin.myseed || basin.waterlevel <= 0)
+		return
 	return ..()
 
 /datum/fish_source/hydro_tray/spawn_reward(reward_path, mob/fisherman, turf/fishing_spot)

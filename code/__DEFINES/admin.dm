@@ -73,6 +73,8 @@
 #define ADMIN_LUAVIEW_CHUNK(state, log_index) "(<a href='?_src_=holder;[HrefToken(forceGlobal = TRUE)];lua_state=[REF(state)];log_index=[log_index]'>VIEW CODE</a>)"
 /// Displays "(SHOW)" in the chat, when clicked it tries to show atom(paper). First you need to set the request_state variable to TRUE for the paper.
 #define ADMIN_SHOW_PAPER(atom) "(<A href='?_src_=holder;[HrefToken(forceGlobal = TRUE)];show_paper=[REF(atom)]'>SHOW</a>)"
+/// Displays "(PRINT)" in the chat, when clicked it will try to print the atom(paper) on the CentCom fax machine.
+#define ADMIN_PRINT_FAX(atom, fax_name) "(<a href='?_src_=holder;[HrefToken(forceGlobal = TRUE)];print_fax=[REF(atom)];fax_name=[fax_name]'>PRINT</a>)"
 /// Displays "(PLAY)" in the chat, when clicked it tries to play internet sounds from the request.
 #define ADMIN_PLAY_INTERNET(text, credit) "(<A href='?_src_=holder;[HrefToken(forceGlobal = TRUE)];play_internet=[url_encode(text)];credit=[credit]'>PLAY</a>)"
 /// Displays "(SEE Z-LEVEL LAYOUT)" in the chat, when clicked it shows the z-level layouts for the current world state.
@@ -87,7 +89,7 @@
 	if(!drop_atom)
 		return //not a valid atom.
 	var/turf/drop_turf = get_step(drop_atom, 0) //resolve where the thing is.
-	if(!drop_turf) //incase it's inside a valid drop container, inside another container. ie if a mech picked up a closet and has it inside it's internal storage.
+	if(!drop_turf) //incase it's inside a valid drop container, inside another container. ie if a mech picked up a closet and has it inside its internal storage.
 		var/atom/last_try = drop_atom.loc?.drop_location() //one last try, otherwise fuck it.
 		if(last_try)
 			drop_turf = get_step(last_try, 0)
