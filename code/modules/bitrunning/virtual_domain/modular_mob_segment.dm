@@ -40,7 +40,7 @@
 
 	var/list/mob/living/spawned_mobs = list()
 
-	var/total_amount = exact ? rand(1, max) : length(mobs)
+	var/total_amount = exact ? length(mobs) : rand(1, max)
 
 	shuffle_inplace(mobs)
 
