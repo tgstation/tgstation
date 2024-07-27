@@ -50,6 +50,7 @@
 "cs" = (
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /obj/vehicle/sealed/mecha/ripley,
+/obj/item/mecha_parts/mecha_equipment/air_tank/full,
 /turf/open/floor/iron/dark,
 /area/deathmatch)
 "cy" = (
@@ -197,6 +198,7 @@
 "hG" = (
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /obj/effect/decal/cleanable/oil/slippery,
+/obj/item/mecha_parts/mecha_equipment/ripleyupgrade,
 /turf/open/floor/iron/dark,
 /area/deathmatch)
 "hR" = (
@@ -426,12 +428,10 @@
 "rq" = (
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /obj/structure/table/reinforced,
-/obj/item/mecha_parts/mecha_equipment/hydraulic_clamp,
-/obj/item/mecha_parts/mecha_equipment/drill,
-/obj/item/mecha_parts/mecha_equipment/weapon/energy/mecha_kineticgun,
 /obj/item/toy/plush/slimeplushie{
 	pixel_y = 10
 	},
+/obj/item/mecha_parts/mecha_equipment/weapon/energy/mecha_kineticgun,
 /turf/open/floor/iron/dark,
 /area/deathmatch)
 "ru" = (
@@ -439,6 +439,7 @@
 	dir = 4
 	},
 /obj/machinery/rnd/production/circuit_imprinter/offstation,
+/obj/item/mecha_parts/mecha_equipment/wormhole_generator,
 /turf/open/indestructible/white,
 /area/deathmatch)
 "rO" = (
@@ -808,6 +809,7 @@
 /obj/effect/turf_decal/tile/purple/half/contrasted{
 	dir = 1
 	},
+/obj/item/mecha_parts/mecha_equipment/drill/diamonddrill,
 /turf/open/indestructible/white,
 /area/deathmatch)
 "BH" = (
@@ -977,6 +979,7 @@
 /obj/structure/table/reinforced,
 /obj/item/stack/sheet/iron/fifty,
 /obj/item/stack/sheet/glass/fifty,
+/obj/item/mecha_parts/mecha_equipment/weapon/energy/plasma,
 /turf/open/indestructible/white,
 /area/deathmatch)
 "Iz" = (
@@ -1048,6 +1051,7 @@
 	dir = 8
 	},
 /obj/structure/mecha_wreckage/durand,
+/obj/item/mecha_parts/mecha_equipment/repair_droid,
 /turf/open/indestructible/white,
 /area/deathmatch)
 "Lk" = (
@@ -1200,6 +1204,7 @@
 "Qo" = (
 /obj/effect/turf_decal/tile/purple/half/contrasted,
 /mob/living/basic/bot/medbot,
+/obj/item/mecha_parts/mecha_equipment/gravcatapult,
 /turf/open/indestructible/white,
 /area/deathmatch)
 "QM" = (
@@ -1228,6 +1233,7 @@
 /obj/effect/turf_decal/tile/purple/anticorner/contrasted{
 	dir = 8
 	},
+/obj/item/mecha_parts/mecha_equipment/extinguisher,
 /turf/open/indestructible/white,
 /area/deathmatch)
 "Sh" = (
