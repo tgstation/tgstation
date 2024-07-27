@@ -1,6 +1,6 @@
 /mob/living/basic/revolutionary
 	name = "Revolutionary"
-	desc = "He stands for a cause..."
+	desc = "They stand for a cause..."
 	mob_biotypes = MOB_ORGANIC|MOB_HUMANOID
 	faction = list(FACTION_HOSTILE)
 	icon = 'icons/mob/simple/simple_human.dmi'
@@ -10,7 +10,6 @@
 	attack_verb_simple = "robust"
 	maxHealth = 50
 	health = 50
-	death_sound = 'sound/voice/human/gasp_male1.ogg'
 	melee_damage_lower = 15
 	melee_damage_upper = 20
 	obj_damage = 20
@@ -22,7 +21,7 @@
 		/obj/item/spear = "pierce",
 	)
 	/// List of causes we support
-	var/static/list/causes = list(
+	var/static/list/phrases = list(
 		"The revolution will not be televized!",
 		"VIVA!",
 		"Dirty pig!",
@@ -31,18 +30,51 @@
 		"Mime rights are human rights!",
 		"猫娘 Free Terry!",
 	)
+	/// List of causes to #support
+	var/static/list/causes = list(
+		"Worker's rights",
+		"Icemoon climate change",
+		"Fair clown treatment",
+		"Lizards",
+		"Moths",
+		"Stop Lavaland drilling",
+		"The Captain has been replaced by a robot",
+		"Free Cargonia",
+		"Befriend all space dragons",
+		"The Grey Tide",
+		"Rising cost of medbay",
+	)
+	/// Monkey screeches
+	var/static/list/monkey_screeches = list(
+		'sound/creatures/monkey/monkey_screech_1.ogg',
+		'sound/creatures/monkey/monkey_screech_2.ogg',
+		'sound/creatures/monkey/monkey_screech_3.ogg',
+		'sound/creatures/monkey/monkey_screech_4.ogg',
+	)
+	/// Male screams
+	var/static/list/male_screams = list(
+		'sound/voice/human/malescream_1.ogg',
+		'sound/voice/human/malescream_2.ogg',
+		'sound/voice/human/malescream_3.ogg',
+		'sound/voice/human/malescream_4.ogg',
+		'sound/voice/human/malescream_5.ogg',
+	)
+	/// Female screams
+	var/static/list/female_scream = list(
+		'sound/voice/human/femalescream_1.ogg',
+		'sound/voice/human/femalescream_2.ogg',
+		'sound/voice/human/femalescream_3.ogg',
+		'sound/voice/human/femalescream_4.ogg',
+		'sound/voice/human/femalescream_5.ogg',
+	)
 
 
 /mob/living/basic/revolutionary/Initialize(mapload)
 	. = ..()
+	shuffle_inplace(phrases)
 	var/static/list/display_emote = list(
-		BB_EMOTE_SAY = causes,
-		BB_EMOTE_SOUND = list(
-			'sound/creatures/monkey/monkey_screech_1.ogg',
-			'sound/creatures/monkey/monkey_screech_2.ogg',
-			'sound/creatures/monkey/monkey_screech_3.ogg',
-			'sound/creatures/monkey/monkey_screech_4.ogg',
-		),
+		BB_EMOTE_SAY = phrases,
+		BB_EMOTE_SOUND = monkey_screeches,
 		BB_SPEAK_CHANCE = 5,
 	)
 	ai_controller.set_blackboard_key(BB_BASIC_MOB_SPEAK_LINES, display_emote)
@@ -50,9 +82,28 @@
 	attack_sound = weapon_of_choice::hitsound
 	attack_verb_simple = possible_weapons[weapon_of_choice]
 	attack_verb_continuous = "[attack_verb_simple]s"
+
 	var/static/list/death_loot = list(/obj/effect/mob_spawn/corpse/human/revolutionary)
 	AddElement(/datum/element/death_drops, death_loot)
 	apply_dynamic_human_appearance(src, mob_spawn_path = /obj/effect/mob_spawn/corpse/human/revolutionary, l_hand = weapon_of_choice)
+
+	var/gender = pick("male", "female", "enby")
+	var/first_name
+	switch(gender)
+		if("male")
+			first_name = pick(GLOB.first_names_male)
+			death_sound = pick(male_screams + monkey_screeches)
+		if("female")
+			first_name = pick(GLOB.first_names_female)
+			death_sound = pick(male_screams + monkey_screeches)
+		if("enby")
+			first_name = pick(GLOB.first_names)
+			death_sound = pick(male_screams + female_scream + monkey_screeches)
+
+	fully_replace_character_name(name, "[first_name] [pick(GLOB.last_names)]")
+	desc += span_infoplain("\nToday, that cause is: ")
+	shuffle_inplace(causes)
+	desc += span_notice("#[pick(causes)].")
 
 
 /obj/effect/mob_spawn/corpse/human/revolutionary
@@ -88,4 +139,5 @@
 /datum/ai_planning_subtree/random_speech/blackboard/revolutionary/SelectBehaviors(datum/ai_controller/controller, seconds_per_tick)
 	if(!controller.blackboard_key_exists(BB_BASIC_MOB_CURRENT_TARGET))
 		return
+
 	return ..()
