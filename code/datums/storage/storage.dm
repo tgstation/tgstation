@@ -449,10 +449,34 @@ GLOBAL_LIST_EMPTY(cached_storage_typecaches)
 
 	SEND_SIGNAL(parent, COMSIG_ATOM_STORED_ITEM, to_insert, user, force)
 	SEND_SIGNAL(src, COMSIG_STORAGE_STORED_ITEM, to_insert, user, force)
+	RegisterSignal(to_insert, COMSIG_MOUSEDROPPED_ONTO, PROC_REF(mousedrop_receive))
 	to_insert.forceMove(real_location)
 	item_insertion_feedback(user, to_insert, override)
 	parent.update_appearance()
 	return TRUE
+
+/// Since items inside storages ignore transparency for QOL reasons, we're tracking when things are dropped onto them instead of our UI elements
+/datum/storage/proc/mousedrop_receive(atom/dropped_onto, atom/movable/target, mob/user, params)
+	SIGNAL_HANDLER
+
+	if (src != user.active_storage)
+		return
+
+	if (!user.can_perform_action(parent, FORBID_TELEKINESIS_REACH))
+		return
+
+	if (target.loc != real_location) // what even
+		UnregisterSignal(target, COMSIG_MOUSEDROPPED_ONTO)
+		return
+
+	var/drop_index = real_location.contents.Find(dropped_onto)
+	real_location.contents -= target
+	// Use an empty list if we're dropping onto the last item
+	var/list/to_move = real_location.contents.len >= drop_index ? real_location.contents.Copy(drop_index) : list()
+	real_location.contents -= to_move
+	real_location.contents += target
+	real_location.contents += to_move
+	refresh_views()
 
 /**
  * Inserts every item in a given list, with a progress bar
@@ -544,6 +568,7 @@ GLOBAL_LIST_EMPTY(cached_storage_typecaches)
 	refresh_views()
 	parent.update_appearance()
 
+	UnregisterSignal(thing, COMSIG_MOUSEDROPPED_ONTO)
 	SEND_SIGNAL(parent, COMSIG_ATOM_REMOVED_ITEM, thing, remove_to_loc, silent)
 	SEND_SIGNAL(src, COMSIG_STORAGE_REMOVED_ITEM, thing, remove_to_loc, silent)
 	return TRUE
