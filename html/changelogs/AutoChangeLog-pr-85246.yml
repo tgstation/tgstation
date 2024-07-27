@@ -1,0 +1,4 @@
+author: "SmArtKar"
+delete-after: True
+changes:
+  - bugfix: "People with tooltips enabled no longer lag the server when they move their mouse. Oops."
