@@ -248,7 +248,7 @@
 			ert_antag.random_names = ertemplate.random_names
 
 			ert_operative.mind.add_antag_datum(ert_antag,ert_team)
-			ert_operative.mind.set_assigned_role(SSjob.GetJobType(ert_antag.ert_job_path))
+			ert_operative.mind.set_assigned_role(SSjob.get_job_type(ert_antag.ert_job_path))
 
 			//Logging and cleanup
 			ert_operative.log_message("has been selected as \a [ert_antag.name].", LOG_GAME)

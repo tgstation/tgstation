@@ -523,7 +523,7 @@ ADMIN_VERB(spawn_debug_full_crew, R_DEBUG, "Spawn Debug Full Crew", "Creates a f
 	// Then, spawn a human and slap a person into it.
 	var/number_made = 0
 	for(var/rank in SSjob.name_occupations)
-		var/datum/job/job = SSjob.GetJob(rank)
+		var/datum/job/job = SSjob.get_job(rank)
 
 		// JOB_CREW_MEMBER is all jobs that pretty much aren't silicon
 		if(!(job.job_flags & JOB_CREW_MEMBER))
@@ -535,7 +535,7 @@ ADMIN_VERB(spawn_debug_full_crew, R_DEBUG, "Spawn Debug Full Crew", "Creates a f
 		new_guy.mind.name = "[rank] Dummy"
 
 		// Assign the rank to the new player dummy.
-		if(!SSjob.AssignRole(new_guy, job, do_eligibility_checks = FALSE))
+		if(!SSjob.assign_role(new_guy, job, do_eligibility_checks = FALSE))
 			qdel(new_guy)
 			to_chat(user, "[rank] wasn't able to be spawned.")
 			continue
@@ -547,7 +547,7 @@ ADMIN_VERB(spawn_debug_full_crew, R_DEBUG, "Spawn Debug Full Crew", "Creates a f
 		qdel(new_guy)
 
 		// Then equip up the human with job gear.
-		SSjob.EquipRank(character, job)
+		SSjob.equip_rank(character, job)
 		job.after_latejoin_spawn(character)
 
 		// Finally, ensure the minds are tracked and in the manifest.
