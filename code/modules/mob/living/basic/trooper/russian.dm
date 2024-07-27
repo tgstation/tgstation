@@ -30,10 +30,12 @@
 	)
 	var/casingtype = /obj/item/ammo_casing/short310
 	var/projectilesound = 'sound/weapons/gun/revolver/shot.ogg'
+	var/burstshots = 2
+	var/burstintervals = 1.5
 
 /mob/living/basic/trooper/russian/ranged/Initialize(mapload)
 	. = ..()
-	AddComponent(/datum/component/ranged_attacks, casing_type = casingtype, projectile_sound = projectilesound, cooldown_time = 1 SECONDS)
+	AddComponent(/datum/component/ranged_attacks, casing_type = casingtype, projectile_sound = projectilesound, burst_shots = burstshots, burst_intervals = burstintervals, cooldown_time = 1 SECONDS)
 
 /mob/living/basic/trooper/russian/ranged/lootless
 	loot = list()
