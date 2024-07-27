@@ -902,12 +902,19 @@
 	/// Sign for our movement
 	var/x_sign = 1
 	var/y_sign = 1
+	/// Actual move delay, as delay will be modified by move() depending on what direction we move in
+	var/saved_delay
 
 /datum/move_loop/smooth_move/setup(delay, timeout, angle)
 	. = ..()
 	if(!.)
 		return FALSE
 	set_angle(angle)
+	saved_delay = delay
+
+/datum/move_loop/smooth_move/set_delay(new_delay)
+	. = ..()
+	saved_delay = delay
 
 /datum/move_loop/smooth_move/compare_loops(datum/move_loop/loop_type, priority, flags, extra_info, delay, timeout, atom/chasing, home = FALSE)
 	if(..() && angle == src.angle)
@@ -933,8 +940,14 @@
 
 	var/turf/next_turf = locate(moving.x + (move_x ? x_sign : 0), moving.y + (move_y ? y_sign : 0), moving.z)
 	moving.Move(next_turf, get_dir(moving, next_turf), FALSE, !(flags & MOVEMENT_LOOP_NO_DIR_UPDATE))
+
 	if (old_loc == moving?.loc)
 		return MOVELOOP_FAILURE
+
+	delay = saved_delay
+	if (move_x && move_y)
+		delay *= 1.4
+
 	return MOVELOOP_SUCCESS
 
 /datum/move_loop/smooth_move/proc/set_angle(new_angle)
