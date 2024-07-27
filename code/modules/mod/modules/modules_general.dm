@@ -147,6 +147,12 @@
 		/datum/effect_system/trail_follow/ion/grav_allowed, \
 	)
 
+	if (!isnull(mod) && !isnull(mod.wearer) && mod.wearer.get_item_by_slot(slot_flags) == src)
+		if (!stabilize)
+			ADD_TRAIT(mod.wearer, TRAIT_NOGRAV_ALWAYS_DRIFT, MOD_TRAIT)
+		else
+			REMOVE_TRAIT(mod.wearer, TRAIT_NOGRAV_ALWAYS_DRIFT, MOD_TRAIT)
+
 /obj/item/mod/module/jetpack/get_configuration()
 	. = ..()
 	.["stabilizers"] = add_ui_configuration("Stabilizers", "bool", stabilize)
@@ -165,9 +171,12 @@
 
 /obj/item/mod/module/jetpack/on_activation()
 	mod.wearer.add_movespeed_modifier(/datum/movespeed_modifier/jetpack/full_speed)
+	if (!stabilize)
+		ADD_TRAIT(mod.wearer, TRAIT_NOGRAV_ALWAYS_DRIFT, MOD_TRAIT)
 
 /obj/item/mod/module/jetpack/on_deactivation(display_message = TRUE, deleting = FALSE)
 	mod.wearer.remove_movespeed_modifier(/datum/movespeed_modifier/jetpack/full_speed)
+	REMOVE_TRAIT(mod.wearer, TRAIT_NOGRAV_ALWAYS_DRIFT, MOD_TRAIT)
 
 /obj/item/mod/module/jetpack/advanced
 	name = "MOD advanced ion jetpack module"

@@ -271,6 +271,9 @@
 	if(movement_type & FLYING || HAS_TRAIT(src, TRAIT_FREE_FLOAT_MOVEMENT))
 		return TRUE
 
+	if (HAS_TRAIT(src, TRAIT_NOGRAV_ALWAYS_DRIFT))
+		return FALSE
+
 	var/atom/movable/backup = get_spacemove_backup(movement_dir, continuous_move)
 	if(!backup)
 		return FALSE
@@ -328,7 +331,7 @@
 		if(rebound.last_pushoff == world.time)
 			continue
 		if(continuous_move && !pass_allowed)
-			var/datum/move_loop/move/rebound_engine = GLOB.move_manager.processing_on(rebound, SSspacedrift)
+			var/datum/move_loop/move/rebound_engine = GLOB.move_manager.processing_on(rebound, SSnewtonian_movement)
 			// If you're moving toward it and you're both going the same direction, stop
 			if(moving_direction == get_dir(src, pushover) && rebound_engine && moving_direction == rebound_engine.direction)
 				continue

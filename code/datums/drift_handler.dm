@@ -25,7 +25,7 @@
 	if(instant)
 		flags |= MOVEMENT_LOOP_START_FAST
 	src.drift_force = drift_force
-	drifting_loop = GLOB.move_manager.smooth_move(moving = parent, angle = inertia_angle, delay = get_loop_delay(parent), subsystem = SSspacedrift, priority = MOVEMENT_SPACE_PRIORITY, flags = flags)
+	drifting_loop = GLOB.move_manager.smooth_move(moving = parent, angle = inertia_angle, delay = get_loop_delay(parent), subsystem = SSnewtonian_movement, priority = MOVEMENT_SPACE_PRIORITY, flags = flags)
 
 	if(!drifting_loop)
 		qdel(src)
@@ -66,7 +66,7 @@
 
 	// Ignore the next glide because it's literally just us
 	ignore_next_glide = TRUE
-	parent.set_glide_size(MOVEMENT_ADJUSTED_GLIDE_SIZE(visual_delay, SSspacedrift.visual_delay))
+	parent.set_glide_size(MOVEMENT_ADJUSTED_GLIDE_SIZE(visual_delay, SSnewtonian_movement.visual_delay))
 	if(!ismob(parent))
 		return
 	var/mob/mob_parent = parent
@@ -74,7 +74,7 @@
 	//Make sure moving into a space move looks like a space move essentially
 	//There is an inbuilt assumption that gliding will be added as a part of a move call, but eh
 	//It's ok if it's not, it's just important if it is.
-	mob_parent.client?.visual_delay = MOVEMENT_ADJUSTED_GLIDE_SIZE(visual_delay, SSspacedrift.visual_delay)
+	mob_parent.client?.visual_delay = MOVEMENT_ADJUSTED_GLIDE_SIZE(visual_delay, SSnewtonian_movement.visual_delay)
 
 /datum/drift_handler/proc/newtonian_impulse(inertia_angle, start_delay, additional_force, controlled_cap)
 	SIGNAL_HANDLER
@@ -178,7 +178,7 @@
 	SIGNAL_HANDLER
 	// This does mean it falls very slightly behind, but otherwise they'll potentially run into us
 	var/next_move_in = drifting_loop.timer - world.time + world.tick_lag
-	was_pulling.newtonian_move(angle2dir(drifting_loop.angle), start_delay = next_move_in)
+	was_pulling.newtonian_move(angle2dir(drifting_loop.angle), start_delay = next_move_in, drift_force = drift_force, controlled_cap = drift_force)
 
 /datum/drift_handler/proc/glide_to_halt(glide_for)
 	if(!ismob(parent))
@@ -212,7 +212,7 @@
 			source.throw_at(backup, 1, floor(1 + (drift_force - INERTIA_FORCE_THROW_FLOOR) / INERTIA_FORCE_PER_THROW_FORCE), spin = FALSE)
 		return
 
-	if (drift_force < INERTIA_FORCE_SPACEMOVE_GRAB)
+	if (drift_force < INERTIA_FORCE_SPACEMOVE_GRAB || isnull(drifting_loop))
 		return
 
 	if (drift_force <= INERTIA_FORCE_SPACEMOVE_REDUCTION / source.inertia_force_weight)
@@ -247,7 +247,7 @@
 	force_x -= min(force_projection, drift_projection) * sin(target_angle)
 	force_x -= min(force_projection, drift_projection) * cos(target_angle)
 	applied_force = min(sqrt(force_x * force_x + force_y * force_y), stabilization_force)
-	parent.newtonian_move(force_angle, drift_force = applied_force)
+	parent.newtonian_move(force_angle, instant = TRUE, drift_force = applied_force)
 
 /// Removes all force in a certain direction
 /datum/drift_handler/proc/remove_angle_force(target_angle)
