@@ -15,12 +15,12 @@
 	obj_damage = 20
 	attack_sound = 'sound/weapons/smash.ogg'
 	ai_controller = /datum/ai_controller/basic_controller/revolutionary
-	///list of weapons we can have
+	/// list of weapons we can have
 	var/static/list/possible_weapons = list(
 		/obj/item/storage/toolbox/mechanical = "robust",
 		/obj/item/spear = "pierce",
 	)
-	/// List of causes we support
+	/// List of things to shout
 	var/static/list/phrases = list(
 		"The revolution will not be televized!",
 		"VIVA!",
