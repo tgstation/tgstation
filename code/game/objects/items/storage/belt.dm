@@ -373,7 +373,8 @@
 		/obj/item/restraints/handcuffs,
 		/obj/item/restraints/legcuffs/bola,
 	))
-	atom_storage.open_sound = 'sound/items/holster_open.ogg'
+	atom_storage.open_sound = 'sound/items/holster.ogg'
+	atom_storage.close_sound = 'sound/items/holster.ogg'
 	atom_storage.open_sound_vary = TRUE
 
 /obj/item/storage/belt/security/full/PopulateContents()
