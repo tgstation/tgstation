@@ -238,7 +238,7 @@
 
 /obj/item/mecha_parts/mecha_equipment/rcd/Destroy()
 	GLOB.rcd_list -= src
-	qdel(internal_rcd)
+	QDEL_NULL(internal_rcd)
 	return ..()
 
 /obj/item/mecha_parts/mecha_equipment/rcd/get_snowflake_data()
