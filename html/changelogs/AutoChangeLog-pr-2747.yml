@@ -1,0 +1,4 @@
+author: "Absolucy"
+delete-after: True
+changes:
+  - bugfix: "Fixed a runtime error relating to airlocks closing and liquids."
