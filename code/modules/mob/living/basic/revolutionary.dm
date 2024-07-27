@@ -19,6 +19,9 @@
 	var/static/list/possible_weapons = list(
 		/obj/item/storage/toolbox/mechanical = "robust",
 		/obj/item/spear = "pierce",
+		/obj/item/fireaxe = "slice",
+		/obj/item/melee/baseball_bat = "bat",
+		/obj/item/melee/baton = "discipline",
 	)
 	/// List of things to shout
 	var/static/list/phrases = list(
