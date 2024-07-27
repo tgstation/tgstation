@@ -4,10 +4,11 @@
 
 // TODO:
 // equipment variants (done? maybe a lock module, finish comms module, and maybe a few proper guns) and their research
-// slots: comms (radio and something else), sensors(HUDs or something, mesons??), engine, 1 secondary slot (cargo and shit), 1 primary slot(tools or gun???), 3 misc modules (locks and shit), armor would either be added during construction or as a slot
-// innate armor potentially
+// todo comms slot, make it interact with hangar bay doors, hangar door forcefield that blocks gas if room powered
+// ONCE EVERYTHING IS DONE, add hangar bays, must have 1-3 pods idk, maybe t1 megacells + oxygen tanks, and a manual?? not sure
 // research and print costs
-// crashing into people and walls and stuff
+// crashing into people and walls and stuff (ok fuck this im assigning this to you riku)
+// sprites
 // ALSO DO NOT FORGET TO REMOVE THIS HUGE ASS COMMENT before finishing
 
 // this is the iron variant
@@ -53,6 +54,10 @@
 	/// mob = list(action)
 	var/list/list/equipment_actions = list()
 
+	/// are we locked? needed to enter or open panel
+	var/pin
+	var/pin_locked = FALSE
+
 
 /obj/vehicle/sealed/space_pod/Initialize(mapload, dont_equip)
 	. = ..()
@@ -64,6 +69,7 @@
 	trail.start()
 	START_PROCESSING(SSnewtonian_movement, src)
 	update_appearance()
+	RegisterSignal(src, COMSIG_ATOM_POST_DIR_CHANGE, PROC_REF(onSetDir))
 
 /// This proc is responsible for outfitting the pod when spawned (admin or otherwise)
 /obj/vehicle/sealed/space_pod/proc/spawn_equip()
@@ -84,6 +90,47 @@
 	QDEL_LIST_ASSOC_VAL(equipment_actions)
 	equipped = null // equipment gets deleted already because its in our contents
 
+/obj/vehicle/sealed/space_pod/atom/atom_destruction(damage_flag)
+	. = ..()
+	explosion(loc, devastation_range = 1, heavy_impact_range = 2)
+
+/* // this is done so poorly
+/obj/vehicle/sealed/space_pod/Bump(bumped)
+	. = ..()
+	if(isnull(drift_handler))
+		return
+	// 0 to 2 newtons shouldnt even damage an object
+	var/penalized_force = drift_handler.drift_force-(6 NEWTONS)
+	if(!penalized_force)
+		return
+	playsound(src, 'sound/effects/meteorimpact.ogg', 40, TRUE)
+	for(var/mob/shake_it in get_hearers_in_range(3, src))
+		if(shake_it.stat != DEAD && !isAI(shake_it))
+			shake_camera(shake_it, 3, 1)
+	var/effective_force_against_object = penalized_force
+	if(isclosedturf(bumped))
+		var/turf/closed/bumped_turf = bumped
+		effective_force_against_object = max(effective_force_against_object-bumped_turf.explosive_resistance, 0)
+		take_damage(penalized_force * 25, BRUTE)
+		if(prob(effective_force_against_object * 2))
+			bumped_turf.ScrapeAway(1, CHANGETURF_INHERIT_AIR)
+	else if(isobj(bumped))
+		var/obj/bumped_atom = bumped
+		effective_force_against_object = max(effective_force_against_object-bumped_atom.explosion_block, 0)
+		bumped_atom.take_damage(effective_force_against_object * 50, BRUTE, attack_dir = REVERSE_DIR(dir))
+		take_damage(penalized_force * 35, BRUTE)
+		drift_handler.remove_angle_force(angle2dir(dir))
+	else if(isliving(bumped))
+		var/mob/living/poor_sap = bumped
+		take_damage(penalized_force * 10, BRUTE) //weaker cuz i want to see someone ram a dude
+		poor_sap.apply_damage(penalized_force * 7, BRUTE)
+*/
+
+
+/obj/vehicle/sealed/space_pod/proc/onSetDir(datum/source, old_dir, new_dir)
+	SIGNAL_HANDLER
+	transform = transform.Turn(dir2angle(new_dir) - dir2angle(old_dir))
+
 /obj/vehicle/sealed/space_pod/generate_actions()
 	initialize_passenger_action_type(/datum/action/vehicle/sealed/kick_out)
 	initialize_controller_action_type(/datum/action/vehicle/sealed/pod_status, VEHICLE_CONTROL_DRIVE)
@@ -91,8 +138,8 @@
 
 /obj/vehicle/sealed/space_pod/update_overlays()
 	. = ..()
-	var/image/window = mutable_appearance(icon, "window") //this doesnt work i dont know why
-	window.alpha = 200
+	var/image/window = mutable_appearance(icon, "window")
+	window.alpha = 150
 	. += window
 	for(var/obj/item/pod_equipment/equipment as anything in get_all_parts())
 		var/overlay = equipment.get_overlay()
@@ -102,6 +149,9 @@
 
 /obj/vehicle/sealed/space_pod/mob_try_enter(mob/rider)
 	if(!istype(rider))
+		return FALSE
+	if(!allowed(rider) || !does_lock_permit_it(rider))
+		balloon_alert(rider, "no access!")
 		return FALSE
 	if(!rider.can_perform_action(src, NEED_HANDS)) // you need hands to use the door handle buddy
 		return ..()
@@ -131,6 +181,8 @@
 	if(length(occupants) >= max_occupants - max_drivers)
 		balloon_alert(dropper, "not enough passenger spots!")
 		return
+	if(!does_lock_permit_it(dropper))
+		return
 	dropped.visible_message(span_warning("[dropper] begins forcing [dropped] into [src]!"), span_userdanger("[dropper] begins forcing you into [src]!"))
 	if(!do_after(dropper, 4 SECONDS, dropped, extra_checks = CALLBACK(src, PROC_REF(enter_checks))))
 		return
@@ -141,6 +193,7 @@
 
 
 // brakes, or autostabilize if not driven
+// figure out a way around it drifting off in space when it shouldnt, perhaps use the move loop directly
 /obj/vehicle/sealed/space_pod/process()
 	if(isnull(drift_handler))
 		return
@@ -171,12 +224,12 @@
 		power_used *= equip.movement_power_usage_mult
 	if(!use_power(power_used))
 		return
+	setDir(direction)
 	if(has_gravity() || !newtonian_move(dir2angle(direction), instant = TRUE, drift_force = force_per_move, controlled_cap = max_speed))
 		COOLDOWN_START(src, cooldown_vehicle_move, istype(loc, /turf/open/floor/engine) ? 0.3 SECONDS : 2 SECONDS) //moves much better on engine tiles
 		after_move(direction)
 		return try_step_multiz(direction)
 	COOLDOWN_START(src, cooldown_vehicle_move, 1 DECISECONDS)
-	setDir(direction)
 	trail.generate_effect()
 	after_move(direction)
 

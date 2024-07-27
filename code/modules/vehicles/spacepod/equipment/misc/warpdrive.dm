@@ -79,7 +79,7 @@
 	apply_wibbly_filters(pod)
 	RegisterSignal(pod, COMSIG_ATOM_AFTER_ATTACKEDBY, PROC_REF(disrupted))
 	var/duration = 2 SECONDS
-	duration *= (/obj/item/stock_parts/power_store/battery/bluespace::maxcharge / cell.max_charge) / 10
+	duration *= (/obj/item/stock_parts/power_store/battery/bluespace::maxcharge / cell.maxcharge) / 10
 	if(!do_after(user, duration, pod, extra_checks = CALLBACK(src, PROC_REF(may_warp))))
 		cancel_effects()
 		return

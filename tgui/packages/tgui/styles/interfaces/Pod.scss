@@ -10,3 +10,7 @@ $border-color: base.$color-bg !default;
   border-radius: 0.2em;
   padding: 0.5em;
 }
+
+.Pod .Dropdown__menu {
+  max-height: 16rem;
+}

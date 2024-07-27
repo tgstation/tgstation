@@ -22,6 +22,7 @@ export default function PartsDisplay(_props: any): JSX.Element {
   return (
     <Section
       fill
+      className="Pod"
       title={
         <Dropdown
           width="100%"

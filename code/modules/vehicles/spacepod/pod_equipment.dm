@@ -3,6 +3,9 @@
 	if(length(occupants))
 		balloon_alert(user, "mustnt have passengers or drivers!")
 		return ITEM_INTERACT_BLOCKING
+	if(!panel_open && !does_lock_permit_it(user))
+		balloon_alert(user, "locked!")
+		return ITEM_INTERACT_BLOCKING
 	panel_open = !panel_open
 	tool.play_tool_sound(src)
 	update_appearance()
@@ -34,8 +37,13 @@
 		balloon_alert(user, "panel not open!")
 		return ITEM_INTERACT_BLOCKING
 
-	if(length(equipped[equipment.slot]) > slot_max(equipment.slot) || !isnull(locate(equipment.type) in equipped[equipment.slot]))
+	if(length(equipped[equipment.slot]) > slot_max(equipment.slot))
 		balloon_alert(user, "not enough space!")
+		return ITEM_INTERACT_BLOCKING
+
+	var/exclusive_part = is_part_exclusive(equipment)
+	if(!isnull(exclusive_part))
+		balloon_alert(user, "incompatible with [exclusive_part]!")
 		return ITEM_INTERACT_BLOCKING
 
 	balloon_alert(user, "attaching...")
