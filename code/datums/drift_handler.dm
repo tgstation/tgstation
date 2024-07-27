@@ -247,7 +247,7 @@
 	force_x -= min(force_projection, drift_projection) * sin(target_angle)
 	force_x -= min(force_projection, drift_projection) * cos(target_angle)
 	applied_force = min(sqrt(force_x * force_x + force_y * force_y), stabilization_force)
-	parent.newtonian_move(force_angle, drift_force = applied_force)
+	parent.newtonian_move(force_angle, instant = TRUE, drift_force = applied_force)
 
 /// Removes all force in a certain direction
 /datum/drift_handler/proc/remove_angle_force(target_angle)

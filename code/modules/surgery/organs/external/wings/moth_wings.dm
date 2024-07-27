@@ -66,7 +66,7 @@
 		return
 
 	var/max_drift_force = (DEFAULT_INERTIA_SPEED / source.cached_multiplicative_slowdown - 1) / INERTIA_SPEED_COEF + 1
-	source.newtonian_move(dir2angle(source.client.intended_direction), drift_force = MOTH_WING_FORCE, controlled_cap = max_drift_force)
+	source.newtonian_move(dir2angle(source.client.intended_direction), instant = TRUE, drift_force = MOTH_WING_FORCE, controlled_cap = max_drift_force)
 	source.setDir(source.client.intended_direction)
 
 ///check if our wings can burn off ;_;
