@@ -547,6 +547,16 @@
 	},
 /turf/open/floor/carpet,
 /area/virtual_domain)
+"er" = (
+/obj/effect/turf_decal/tile/bar{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/obj/machinery/firealarm/directional/north,
+/turf/open/floor/iron,
+/area/virtual_domain)
 "eu" = (
 /obj/effect/mapping_helpers/burnt_floor,
 /turf/open/floor/plating,
@@ -1213,9 +1223,6 @@
 /obj/machinery/door/poddoor/preopen{
 	name = "Bridge Blast Door"
 	},
-/obj/machinery/door/poddoor/preopen{
-	name = "Bridge Blast Door"
-	},
 /turf/open/floor/plating,
 /area/virtual_domain)
 "kt" = (
@@ -1603,6 +1610,7 @@
 	dir = 4
 	},
 /obj/effect/decal/cleanable/glass,
+/obj/machinery/firealarm/directional/north,
 /turf/open/floor/iron,
 /area/virtual_domain)
 "nP" = (
@@ -2301,10 +2309,6 @@
 /turf/open/floor/iron,
 /area/virtual_domain)
 "tj" = (
-/obj/machinery/computer/security/telescreen/minisat{
-	dir = 1;
-	pixel_y = -29
-	},
 /obj/structure/bed/dogbed/renault,
 /mob/living/basic/pet/fox,
 /obj/item/stack/spacecash/c1000{
@@ -2390,6 +2394,11 @@
 	dir = 8
 	},
 /obj/item/trash/can/food/pine_nuts,
+/turf/open/floor/iron,
+/area/virtual_domain)
+"tM" = (
+/obj/effect/turf_decal/tile/neutral,
+/obj/item/crowbar,
 /turf/open/floor/iron,
 /area/virtual_domain)
 "tO" = (
@@ -3582,6 +3591,14 @@
 /obj/structure/flora/bush/sparsegrass/style_random,
 /obj/structure/flora/tree/jungle/small/style_5,
 /turf/open/misc/grass/jungle,
+/area/virtual_domain)
+"Ed" = (
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/obj/effect/decal/cleanable/glass,
+/obj/machinery/firealarm/directional/south,
+/turf/open/floor/iron,
 /area/virtual_domain)
 "El" = (
 /obj/effect/decal/cleanable/blood/gibs/limb,
@@ -4865,10 +4882,6 @@
 /obj/structure/rack,
 /obj/item/aicard,
 /obj/item/radio/off,
-/obj/machinery/computer/security/telescreen/minisat{
-	dir = 1;
-	pixel_y = -29
-	},
 /obj/effect/turf_decal/tile/blue/half/contrasted{
 	dir = 1
 	},
@@ -5098,9 +5111,6 @@
 /area/virtual_domain)
 "QA" = (
 /obj/effect/spawner/structure/window/reinforced,
-/obj/machinery/door/poddoor/preopen{
-	name = "Bridge Blast Door"
-	},
 /obj/machinery/door/poddoor/preopen{
 	name = "Bridge Blast Door"
 	},
@@ -5693,6 +5703,7 @@
 	dir = 8
 	},
 /obj/effect/mapping_helpers/broken_floor,
+/obj/item/crowbar,
 /turf/open/floor/iron,
 /area/virtual_domain)
 "Wh" = (
@@ -6511,7 +6522,7 @@ uz
 HM
 uS
 uS
-yD
+er
 Hb
 Ol
 ps
@@ -6866,7 +6877,7 @@ aw
 Ne
 RT
 bg
-ZY
+Ed
 uS
 kW
 lL
@@ -7682,7 +7693,7 @@ Bv
 Bv
 ul
 wa
-Ol
+tM
 Nh
 zg
 Fj
