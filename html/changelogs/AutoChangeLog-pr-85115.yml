@@ -1,0 +1,4 @@
+author: "DrDiasyl aka DrTuxedo"
+delete-after: True
+changes:
+  - sound: "Hearing and talking into the radio now produces a sound. Heads get a special sound."

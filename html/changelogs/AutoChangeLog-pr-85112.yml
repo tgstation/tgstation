@@ -1,5 +1,0 @@
-author: "Melbert"
-delete-after: True
-changes:
-  - qol: "All randomly spawned monkeys (and lizardpeople) will spawn with tails. You can still select to be tailless."
-  - code_imp: "Cleaned up some code relating to species features (like tails, markings, etc). Report any oddities"
