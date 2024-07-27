@@ -1,0 +1,4 @@
+author: "grungussuss"
+delete-after: True
+changes:
+  - sound: "only the scream emote can be heard through walls"
