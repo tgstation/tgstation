@@ -451,7 +451,7 @@
 	average_size = 20
 	average_weight = 400
 	health = 50
-	breeding_timeout = 3 MINUTES
+	breeding_timeout = 2.5 MINUTES
 	fish_traits = list(/datum/fish_trait/parthenogenesis, /datum/fish_trait/no_mating)
 	required_temperature_min = MIN_AQUARIUM_TEMP+10
 	required_temperature_max = MIN_AQUARIUM_TEMP+40
