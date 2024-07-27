@@ -2,7 +2,6 @@
 	name = "Lobotomy"
 	desc = "An invasive surgical procedure which guarantees removal of almost all brain traumas, but might cause another permanent trauma in return."
 	possible_locs = list(BODY_ZONE_HEAD)
-	requires_bodypart_type = NONE
 	steps = list(
 		/datum/surgery_step/incise,
 		/datum/surgery_step/retract_skin,
@@ -10,6 +9,19 @@
 		/datum/surgery_step/clamp_bleeders,
 		/datum/surgery_step/lobotomize,
 		/datum/surgery_step/close,
+	)
+
+/datum/surgery/advanced/lobotomy/mechanic
+	name = "Wetware OS Destructive Defragmentation"
+	desc = "A destructive robotic defragmentation method which guarantees removal of almost all brain traumas, but might cause another permanent trauma in return."
+	requires_bodypart_type = BODYTYPE_ROBOTIC
+	steps = list(
+		/datum/surgery_step/mechanic_open,
+		/datum/surgery_step/open_hatch,
+		/datum/surgery_step/mechanic_unwrench,
+		/datum/surgery_step/lobotomize/mechanic,
+		/datum/surgery_step/mechanic_wrench,
+		/datum/surgery_step/mechanic_close,
 	)
 
 /datum/surgery/advanced/lobotomy/can_start(mob/user, mob/living/carbon/target)
@@ -35,6 +47,18 @@
 	success_sound = 'sound/surgery/scalpel2.ogg'
 	failure_sound = 'sound/surgery/organ2.ogg'
 	surgery_effects_mood = TRUE
+
+/datum/surgery_step/lobotomize/mechanic
+	name = "execute neural defragging (multitool)"
+	implements = list(
+		TOOL_MULTITOOL = 85,
+		/obj/item/melee/energy/sword = 55,
+		/obj/item/knife = 35,
+		/obj/item/shard = 25,
+		/obj/item = 20,
+	)
+	preop_sound = 'sound/items/taperecorder/tape_flip.ogg'
+	success_sound = 'sound/items/taperecorder/taperecorder_close.ogg'
 
 /datum/surgery_step/lobotomize/tool_check(mob/user, obj/item/tool)
 	if(implement_type == /obj/item && !tool.get_sharpness())

@@ -55,9 +55,12 @@
 	////Power consumption of the light per lamp_intensity.
 	var/lamp_power_consumption = BORG_LAMP_POWER_CONSUMPTION
 
+	// Overlay for borg eye lights
 	var/mutable_appearance/eye_lights
 	///Holds a reference to the timer taking care of blinking lights on dead cyborgs
 	var/eye_flash_timer = null
+	// Overlay for borg hat
+	var/mutable_appearance/hat_overlay
 
 
 	// Hud
@@ -135,7 +138,7 @@
 
 	var/hasExpanded = FALSE
 	var/obj/item/hat
-	var/hat_offset = -3
+	var/hat_offset = list("north" = list(0, -3), "south" = list(0, -3), "east" = list(4, -3), "west" = list(-4, -3))
 
 	///What types of mobs are allowed to ride/buckle to this mob
 	var/static/list/can_ride_typecache = typecacheof(/mob/living/carbon/human)

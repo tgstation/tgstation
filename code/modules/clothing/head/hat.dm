@@ -53,11 +53,12 @@
 
 /obj/item/clothing/head/bio_hood/plague
 	name = "plague doctor's hat"
-	desc = "These were once used by plague doctors. Will protect you from exposure to the Pestilence."
+	desc = "These were once used by plague doctors. This hat will only slightly protect you from exposure to the Pestilence."
 	icon_state = "plaguedoctor"
-	clothing_flags = THICKMATERIAL | BLOCK_GAS_SMOKE_EFFECT | SNUG_FIT | STACKABLE_HELMET_EXEMPT
 	armor_type = /datum/armor/bio_hood_plague
 	flags_inv = NONE
+	clothing_flags = SNUG_FIT
+	flags_cover = NONE
 
 /datum/armor/bio_hood_plague
 	bio = 100
@@ -209,6 +210,19 @@
 	name = "rice hat"
 	desc = "Welcome to the rice fields, motherfucker."
 	icon_state = "rice_hat"
+	var/reversed = FALSE
+	///Sprite while worn normaly.
+	var/frontsprite = "rice_hat"
+	///Sprite while worn in reverse
+	var/reversesprite = "rice_hat_kim"
+
+/obj/item/clothing/head/costume/rice_hat/attack_self(mob/user)
+	if(reversed)
+		icon_state = frontsprite
+		to_chat(user, span_notice("You raise the hat."))
+	else
+		icon_state = reversesprite
+		to_chat(user, span_notice("You lower the hat."))
 
 /obj/item/clothing/head/costume/lizard
 	name = "lizardskin cloche hat"
