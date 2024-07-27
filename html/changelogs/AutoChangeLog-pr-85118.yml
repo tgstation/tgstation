@@ -1,5 +1,0 @@
-author: "Ghommie"
-delete-after: True
-changes:
-  - rscadd: "You can now fish with explosives."
-  - bugfix: "Fixed an inconsistency with examining fishing spots with sufficiently high fishing skill (or skillchip)."
