@@ -1,0 +1,4 @@
+author: "StrangeWeirdKitten"
+delete-after: True
+changes:
+  - bugfix: "Voidwalker should not run on planetary maps."

@@ -1,0 +1,4 @@
+author: "Helg2"
+delete-after: True
+changes:
+  - rscadd: "Emergency climbing hooks now spawn in emergency boxes on all of the multi-z level stations."

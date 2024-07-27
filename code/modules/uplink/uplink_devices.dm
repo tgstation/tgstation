@@ -48,7 +48,7 @@
 	hidden_uplink.uplink_handler.debug_mode = TRUE
 
 /obj/item/uplink/nuclear
-	uplink_flag = UPLINK_ALL_SYNDIE_OPS
+	uplink_flag = UPLINK_NUKE_OPS
 
 /obj/item/uplink/nuclear/debug
 	name = "debug nuclear uplink"

@@ -200,7 +200,8 @@
 /atom/proc/attack_paw(mob/user, list/modifiers)
 	if(SEND_SIGNAL(src, COMSIG_ATOM_ATTACK_PAW, user, modifiers) & COMPONENT_CANCEL_ATTACK_CHAIN)
 		return TRUE
-	return FALSE
+	if(interaction_flags_atom & INTERACT_ATOM_ATTACK_PAW)
+		. = _try_interact(user)
 
 
 /*
