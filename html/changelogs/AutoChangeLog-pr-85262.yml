@@ -1,0 +1,4 @@
+author: "grungussuss"
+delete-after: True
+changes:
+  - sound: "the sneeze projectile no longer makes a sound when making contact."

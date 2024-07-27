@@ -1,0 +1,4 @@
+author: "LT3"
+delete-after: True
+changes:
+  - bugfix: "Players now receive a notification when trying to perform surgery steps that involve chemicals"
