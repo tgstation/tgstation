@@ -30,7 +30,7 @@ export const ChatPageSettings = (props) => {
   return (
     <Section>
       <Stack align="center">
-        {!page.isMain && (
+        {!!!page.isMain && (
           <Stack.Item>
             <Button
               color="blue"
@@ -60,7 +60,7 @@ export const ChatPageSettings = (props) => {
             }
           />
         </Stack.Item>
-        {!page.isMain && (
+        {!!!page.isMain && (
           <Stack.Item ml={0.5}>
             <Button
               color="blue"
@@ -93,22 +93,23 @@ export const ChatPageSettings = (props) => {
             Mute
           </Button.Checkbox>
         </Stack.Item>
-        <Stack.Item>
-          <Button
-            color="red"
-            icon="times"
-            disabled={page.isMain}
-            onClick={() =>
-              dispatch(
-                removeChatPage({
-                  pageId: page.id,
-                }),
-              )
-            }
-          >
-            Remove
-          </Button>
-        </Stack.Item>
+        {!!!page.isMain && (
+          <Stack.Item>
+            <Button
+              color="red"
+              icon="times"
+              onClick={() =>
+                dispatch(
+                  removeChatPage({
+                    pageId: page.id,
+                  }),
+                )
+              }
+            >
+              Remove
+            </Button>
+          </Stack.Item>
+        )}
       </Stack>
       <Divider />
       <Section title="Messages to display" level={2}>
