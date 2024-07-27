@@ -111,8 +111,8 @@
 
 	///assoc list: key-typepathlist before init, key-equipmentlist after
 	var/list/equip_by_category = list(
-		MECHA_L_ARM = null,
-		MECHA_R_ARM = null,
+		MECHA_L_ARM = list(),
+		MECHA_R_ARM = list(),
 		MECHA_UTILITY = list(),
 		MECHA_POWER = list(),
 		MECHA_ARMOR = list(),

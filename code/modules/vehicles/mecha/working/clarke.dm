@@ -13,8 +13,8 @@
 	step_energy_drain = 12 //slightly higher energy drain since you movin those wheels FAST
 	armor_type = /datum/armor/mecha_clarke
 	equip_by_category = list(
-		MECHA_L_ARM = null,
-		MECHA_R_ARM = null,
+		MECHA_L_ARM = list(),
+		MECHA_R_ARM = list(),
 		MECHA_UTILITY = list(/obj/item/mecha_parts/mecha_equipment/orebox_manager),
 		MECHA_POWER = list(),
 		MECHA_ARMOR = list(),

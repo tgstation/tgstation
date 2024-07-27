@@ -28,8 +28,8 @@
 	stepsound = 'sound/mecha/powerloader_step.ogg'
 	turnsound = 'sound/mecha/powerloader_turn2.ogg'
 	equip_by_category = list(
-		MECHA_L_ARM = null,
-		MECHA_R_ARM = null,
+		MECHA_L_ARM = list(),
+		MECHA_R_ARM = list(),
 		MECHA_UTILITY = list(/obj/item/mecha_parts/mecha_equipment/ejector),
 		MECHA_POWER = list(),
 		MECHA_ARMOR = list(),
@@ -105,8 +105,8 @@
 	wreckage = /obj/structure/mecha_wreckage/ripley/paddy
 	silicon_icon_state = "paddy-empty"
 	equip_by_category = list(
-		MECHA_L_ARM = null,
-		MECHA_R_ARM = null,
+		MECHA_L_ARM = list(),
+		MECHA_R_ARM = list(),
 		MECHA_UTILITY = list(/obj/item/mecha_parts/mecha_equipment/ejector/seccage),
 		MECHA_POWER = list(),
 		MECHA_ARMOR = list(),
@@ -188,8 +188,8 @@
 	accesses = list(ACCESS_SECURITY)
 	mecha_flags = CAN_STRAFE | HAS_LIGHTS | MMI_COMPATIBLE | ID_LOCK_ON
 	equip_by_category = list(
-		MECHA_L_ARM = /obj/item/mecha_parts/mecha_equipment/weapon/energy/disabler,
-		MECHA_R_ARM = /obj/item/mecha_parts/mecha_equipment/weapon/paddy_claw,
+		MECHA_L_ARM = list(/obj/item/mecha_parts/mecha_equipment/weapon/energy/disabler),
+		MECHA_R_ARM = list(/obj/item/mecha_parts/mecha_equipment/weapon/paddy_claw),
 		MECHA_UTILITY = list(/obj/item/mecha_parts/mecha_equipment/ejector/seccage),
 		MECHA_POWER = list(),
 		MECHA_ARMOR = list(),
@@ -210,8 +210,8 @@
 	enter_delay = 40
 	silicon_icon_state = null
 	equip_by_category = list(
-		MECHA_L_ARM = /obj/item/mecha_parts/mecha_equipment/hydraulic_clamp/kill/fake,
-		MECHA_R_ARM = null,
+		MECHA_L_ARM = list(/obj/item/mecha_parts/mecha_equipment/hydraulic_clamp/kill/fake),
+		MECHA_R_ARM = list(),
 		MECHA_UTILITY = list(/obj/item/mecha_parts/mecha_equipment/ejector),
 		MECHA_POWER = list(),
 		MECHA_ARMOR = list(),
@@ -220,8 +220,8 @@
 /obj/vehicle/sealed/mecha/ripley/deathripley/real
 	desc = "OH SHIT IT'S THE DEATHSQUAD WE'RE ALL GONNA DIE. FOR REAL"
 	equip_by_category = list(
-		MECHA_L_ARM = /obj/item/mecha_parts/mecha_equipment/hydraulic_clamp/kill,
-		MECHA_R_ARM = null,
+		MECHA_L_ARM = list(/obj/item/mecha_parts/mecha_equipment/hydraulic_clamp/kill),
+		MECHA_R_ARM = list(),
 		MECHA_UTILITY = list(/obj/item/mecha_parts/mecha_equipment/ejector),
 		MECHA_POWER = list(),
 		MECHA_ARMOR = list(),
