@@ -467,8 +467,9 @@ SUBSYSTEM_DEF(job)
 
 			job_debug("JOBS: Finding a job for player: [player], at job priority pref: [job_priority_level_to_string(level)]")
 
-			// Loop through all jobs
-			for(var/datum/job/job in shuffle(available_occupations))
+			// Loop through all jobs and build a list of jobs this player could be eligible for.
+			var/list/possible_jobs = list()
+			for(var/datum/job/job in available_occupations)
 				// Filter any job that doesn't fit the current level.
 				var/player_job_level = player.client?.prefs.job_preferences[job.title]
 				if(isnull(player_job_level))
@@ -481,12 +482,16 @@ SUBSYSTEM_DEF(job)
 				if(check_job_eligibility(player, job, "JOBS", add_job_to_log = TRUE) != JOB_AVAILABLE)
 					continue
 
-				job_debug("JOBS: Now assigning role to player: [player], Job:[job.title]")
-				assign_role(player, job, do_eligibility_checks = FALSE)
-				if((job.current_positions >= job.spawn_positions) && job.spawn_positions != -1)
-					job_debug("JOBS: Job is now full, Job: [job], Positions: [job.current_positions], Limit: [job.spawn_positions]")
-					available_occupations -= job
-				break
+				possible_jobs += job
+
+			// Pick one of those jobs at random.
+			var/datum/job/picked_job = pick(possible_jobs)
+
+			job_debug("JOBS: Now assigning role to player: [player], Job:[picked_job.title]")
+			assign_role(player, picked_job, do_eligibility_checks = FALSE)
+			if((picked_job.current_positions >= picked_job.spawn_positions) && picked_job.spawn_positions != -1)
+				job_debug("JOBS: Job is now full, Job: [picked_job], Positions: [picked_job.current_positions], Limit: [picked_job.spawn_positions]")
+				available_occupations -= picked_job
 
 	job_debug("DO: Ending standard job assignment")
 
