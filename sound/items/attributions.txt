@@ -13,7 +13,7 @@ pen_click.ogg from https://freesound.org/people/LexzachGames/sounds/431492/ , li
 night_vision_on.ogg by Syna-Max -- https://freesound.org/s/60345/ -- License: Attribution NonCommercial 4.0
 
 {
-metal_drop.ogg - https://freesound.org/people/13FPanská_Tolar_David/sounds/378682/ , License: CC0
+metal_drop.ogg - https://freesound.org/people/Robinhood76/sounds/85418/ , License: CC BY-NC 4.0
 metal_pick_up.ogg - https://freesound.org/people/Hotlavaman/sounds/108673/ , License: CC0
 glass_drop.ogg - https://freesound.org/people/Hotlavaman/sounds/108673/ , License: CC0
 glass_pick_up.ogg - https://freesound.org/people/tcrocker68/sounds/235602/ , License: CC0
