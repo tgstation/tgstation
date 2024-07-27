@@ -261,16 +261,9 @@
 	become_hearing_sensitive(trait_source = ROUNDSTART_TRAIT)
 	add_traits(list(TRAIT_ASHSTORM_IMMUNE, TRAIT_SNOWSTORM_IMMUNE), ROUNDSTART_TRAIT) //stormy weather (keeps rainin' all the time)
 	for(var/key in equip_by_category)
-		if(key == MECHA_L_ARM || key == MECHA_R_ARM)
-			var/path = equip_by_category[key]
-			if(!path)
-				continue
-			var/obj/item/mecha_parts/mecha_equipment/thing = new path
-			thing.attach(src, key == MECHA_R_ARM)
-			continue
 		for(var/path in equip_by_category[key])
 			var/obj/item/mecha_parts/mecha_equipment/thing = new path
-			thing.attach(src, FALSE)
+			thing.attach(src, key == MECHA_R_ARM)
 			equip_by_category[key] -= path
 
 	AddElement(/datum/element/falling_hazard, damage = 80, wound_bonus = 10, hardhat_safety = FALSE, crushes = TRUE)
