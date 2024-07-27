@@ -80,6 +80,7 @@
 	equip_item(new /obj/item/pod_equipment/primary/projectile_weapon/energy/kinetic_accelerator)
 	equip_item(new /obj/item/pod_equipment/cargo_hold)
 	equip_item(new /obj/item/pod_equipment/warp_drive)
+	equip_item(new /obj/item/pod_equipment/lock/pin)
 	cabin_air_tank = new /obj/item/tank/internals/oxygen(src)
 	cell = new /obj/item/stock_parts/power_store/battery/high(src)
 

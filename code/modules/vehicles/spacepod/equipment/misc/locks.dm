@@ -18,7 +18,7 @@
 	. = ..()
 	if(.)
 		return
-	switch("action")
+	switch(action)
 		if("keypad")
 			. = TRUE
 			var/digit = params["digit"]
