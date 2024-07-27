@@ -373,6 +373,8 @@
 		/obj/item/restraints/handcuffs,
 		/obj/item/restraints/legcuffs/bola,
 	))
+	atom_storage.open_sound = 'sound/items/holster_open.ogg'
+	atom_storage.open_sound_vary = TRUE
 
 /obj/item/storage/belt/security/full/PopulateContents()
 	new /obj/item/reagent_containers/spray/pepper(src)
