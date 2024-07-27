@@ -18,3 +18,8 @@
 /datum/movespeed_modifier/dna_vault_speedup
 	blacklisted_movetypes = (FLYING|FLOATING)
 	multiplicative_slowdown = -0.4
+
+/// The movespeed modifier from the heavy fish trait when applied to mobs.
+/datum/movespeed_modifier/heavy_fish
+	multiplicative_slowdown = 0.4
+	flags = IGNORE_NOSLOW
