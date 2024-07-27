@@ -1,0 +1,4 @@
+author: "Rhials"
+delete-after: True
+changes:
+  - bugfix: "Clown Ops gear has been returned to being available only to clown ops. Whoops!"
