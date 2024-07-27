@@ -160,6 +160,10 @@
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/visible/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/dark/visible,
+/obj/machinery/airlock_controller/incinerator_atmos{
+	pixel_x = -40;
+	pixel_y = -8
+	},
 /turf/open/floor/engine,
 /area/station/maintenance/disposal/incinerator)
 "aem" = (
@@ -205,8 +209,15 @@
 /obj/machinery/atmospherics/components/trinary/filter/flipped/layer2{
 	dir = 4
 	},
-/obj/structure/extinguisher_cabinet/directional/north,
 /obj/machinery/light/small/directional/north,
+/obj/machinery/button/door/incinerator_vent_atmos_aux{
+	pixel_x = 8;
+	pixel_y = 24
+	},
+/obj/machinery/button/door/incinerator_vent_atmos_main{
+	pixel_x = 8;
+	pixel_y = 36
+	},
 /turf/open/floor/plating,
 /area/station/maintenance/disposal/incinerator)
 "aeX" = (
@@ -12448,6 +12459,9 @@
 "eKd" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden,
 /obj/machinery/light/small/directional/west,
+/obj/machinery/airlock_sensor/incinerator_atmos{
+	pixel_y = -20
+	},
 /turf/open/floor/engine,
 /area/station/maintenance/disposal/incinerator)
 "eKf" = (
@@ -43441,6 +43455,10 @@
 	},
 /turf/open/floor/iron,
 /area/station/hallway/secondary/entry)
+"oYf" = (
+/obj/machinery/button/ignition/incinerator/atmos,
+/turf/closed/wall/r_wall,
+/area/station/maintenance/disposal/incinerator)
 "oYi" = (
 /obj/effect/turf_decal/trimline/neutral/line,
 /obj/effect/turf_decal/trimline/neutral/line{
@@ -44352,6 +44370,7 @@
 /area/station/service/chapel)
 "pnO" = (
 /obj/structure/cable,
+/obj/machinery/airalarm/directional/south,
 /turf/open/floor/plating,
 /area/station/maintenance/disposal/incinerator)
 "pnQ" = (
@@ -81899,7 +81918,7 @@ wBo
 sRf
 wBo
 hFO
-wBo
+oYf
 mPB
 wWm
 nlR
