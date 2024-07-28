@@ -44,7 +44,7 @@
 	var/animated = TRUE
 	/// Determines whether we play a rustle sound when inserting/removing items.
 	var/do_rustle = TRUE
-	var/rustle_vary = FALSE
+	var/rustle_vary = TRUE
 	/// Path for the item's rustle sound.
 	var/rustle_sound = SFX_RUSTLE
 	/// The sound to play when we open/access the storage
