@@ -355,3 +355,6 @@
   - rscadd: Added a "Reset Imprint" option to the PDA painter.
   - refactor: Refactored PDA imprinting code just a bit.
   - bugfix: PDAs should now properly respond to rigged messages.
+2024-07-28:
+  Absolucy:
+  - bugfix: Fixed a runtime error relating to airlocks closing and liquids.
