@@ -27,6 +27,8 @@
 /// The window of time between biting phase and back to baiting phase
 #define BITING_TIME_WINDOW 4 SECONDS
 
+/// The multiplier of how much the difficulty negatively impacts the bait height
+#define BAIT_HEIGHT_DIFFICULTY_MALUS 1.3
 
 ///Defines to know how the bait is moving on the minigame slider.
 #define REELING_STATE_IDLE 0
@@ -36,7 +38,7 @@
 ///The pixel height of the minigame bar
 #define MINIGAME_SLIDER_HEIGHT 76
 ///The standard pixel height of the bait
-#define MINIGAME_BAIT_HEIGHT 24
+#define MINIGAME_BAIT_HEIGHT 27
 ///The standard pixel height of the fish (minus a pixel on each direction for the sake of a better looking sprite)
 #define MINIGAME_FISH_HEIGHT 4
 
@@ -82,7 +84,7 @@
 	/// How much space the fish takes on the minigame slider
 	var/fish_height = 50
 	/// How much space the bait takes on the minigame slider
-	var/bait_height = 320
+	var/bait_height = 360
 	/// The height in pixels of the bait bar
 	var/bait_pixel_height = MINIGAME_BAIT_HEIGHT
 	/// The height in pixels of the fish
@@ -182,14 +184,16 @@
 		if(rod.hook.fishing_hook_traits & FISHING_HOOK_KILL)
 			special_effects |= FISHING_MINIGAME_RULE_KILL
 
+	completion_loss += fisherman.mind?.get_skill_modifier(/datum/skill/fishing, SKILL_VALUE_MODIFIER)/5
+
 	if(special_effects & FISHING_MINIGAME_RULE_KILL && ispath(reward_path,/obj/item/fish))
 		RegisterSignal(comp.fish_source, COMSIG_FISH_SOURCE_REWARD_DISPENSED, PROC_REF(hurt_fish))
 
 	difficulty += comp.fish_source.calculate_difficulty(reward_path, rod, user, src)
-	difficulty = clamp(round(difficulty), 1, 100)
+	difficulty = clamp(round(difficulty), FISHING_EASY_DIFFICULTY - 5, 100)
 
 	if(difficulty > FISHING_EASY_DIFFICULTY)
-		completion -= round(MAX_FISH_COMPLETION_MALUS * (difficulty/100), 1)
+		completion -= MAX_FISH_COMPLETION_MALUS * (difficulty * 0.01)
 
 	if(HAS_MIND_TRAIT(user, TRAIT_REVEAL_FISH))
 		fish_icon = GLOB.specific_fish_icons[reward_path] || "fish"
@@ -211,7 +215,7 @@
 	else
 		long_jump_chance *= difficulty
 
-	bait_height -= difficulty
+	bait_height -= round(difficulty * BAIT_HEIGHT_DIFFICULTY_MALUS)
 	bait_pixel_height = round(MINIGAME_BAIT_HEIGHT * (bait_height/initial(bait_height)), 1)
 
 /datum/fishing_challenge/Destroy(force)
@@ -409,7 +413,6 @@
 				completion *= 1.2
 			if(BITING_TIME_WINDOW - 0.5 SECONDS to BITING_TIME_WINDOW)
 				completion *= 1.4
-	completion = round(completion, 1)
 	if(!prepare_minigame_hud())
 		return
 	phase = MINIGAME_PHASE

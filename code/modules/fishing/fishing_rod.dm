@@ -583,17 +583,15 @@
 	if(owner.hook)
 		icon_state = owner.hook.icon_state
 		transform = transform.Scale(1, -1)
-	return ..()
+	. = ..()
+	if(!QDELETED(src))
+		our_line = owner.create_fishing_line(src)
 
 /obj/projectile/fishing_cast/on_hit(atom/target, blocked = 0, pierce_hit)
 	. = ..()
 	if(blocked < 100)
 		QDEL_NULL(our_line) //we need to delete the old beam datum, otherwise it won't let you fish.
 		owner.hook_hit(target)
-
-/obj/projectile/fishing_cast/fire(angle, atom/direct_target)
-	. = ..()
-	our_line = owner.create_fishing_line(src)
 
 /obj/projectile/fishing_cast/Destroy()
 	QDEL_NULL(our_line)
