@@ -10,17 +10,17 @@
 	products = list(
 		/obj/item/storage/bag/xeno = 5,
 		/obj/item/reagent_containers/condiment/protein = 10,
-		/obj/item/storage/box/swab = 3
-		/obj/item/storage/box/petri = 3
-		/obj/item/storage/box/monkeycubes = 3
-		/obj/item/biopsy_tool = 3
-		/obj/item/clothing/suit/toggle/labcoat = 5
-		/obj/item/clothing/suit/bio_suit = 3
-		/obj/item/clothing/head/bio_hood = 3
+		/obj/item/storage/box/swab = 3,
+		/obj/item/storage/box/petri = 3,
+		/obj/item/storage/box/monkeycubes = 3,
+		/obj/item/biopsy_tool = 3,
+		/obj/item/clothing/suit/toggle/labcoat = 5,
+		/obj/item/clothing/suit/bio_suit = 3,
+		/obj/item/clothing/head/bio_hood = 3,
 	)
 	contraband = list(
-		/obj/item/knife/kitchen = 3
-		/obj/item/petri_dish/random = 3
+		/obj/item/knife/kitchen = 3,
+		/obj/item/petri_dish/random = 3,
 	)
 	refill_canister = /obj/item/vending_refill/cytopro
 	default_price = PAYCHECK_CREW
