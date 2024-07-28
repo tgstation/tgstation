@@ -1,0 +1,4 @@
+author: "flleeppyy"
+delete-after: True
+changes:
+  - bugfix: "oozeling revival bug involving going to CC and returning to corpse"
