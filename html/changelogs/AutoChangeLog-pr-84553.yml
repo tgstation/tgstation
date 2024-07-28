@@ -1,5 +1,0 @@
-author: "SyncIt21"
-delete-after: True
-changes:
-  - bugfix: "material container won't consume the contents of an item if that item itself is rejected for any reason"
-  - qol: "you can use any storage medium & not just bags/boxes to dump stuff into material containers"

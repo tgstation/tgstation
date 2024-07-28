@@ -139,7 +139,7 @@
 /mob/living/carbon/proc/has_embedded_objects(include_harmless=FALSE)
 	for(var/obj/item/bodypart/bodypart as anything in bodyparts)
 		for(var/obj/item/embedded in bodypart.embedded_objects)
-			if(!include_harmless && embedded.isEmbedHarmless())
+			if(!include_harmless && embedded.is_embed_harmless())
 				continue
 			return TRUE
 
@@ -178,7 +178,7 @@
 	if(new_bodypart)
 		new_bodypart.update_limb(is_creating = TRUE)
 
-/// Makes sure that the owner's bodytype flags match the flags of all of it's parts and organs
+/// Makes sure that the owner's bodytype flags match the flags of all of its parts and organs
 /mob/living/carbon/proc/synchronize_bodytypes()
 	var/all_limb_flags = NONE
 	for(var/obj/item/bodypart/limb as anything in bodyparts)
@@ -188,7 +188,7 @@
 
 	bodytype = all_limb_flags
 
-/// Makes sure that the owner's bodyshape flags match the flags of all of it's parts and organs
+/// Makes sure that the owner's bodyshape flags match the flags of all of its parts and organs
 /mob/living/carbon/proc/synchronize_bodyshapes()
 	var/all_limb_flags = NONE
 	for(var/obj/item/bodypart/limb as anything in bodyparts)

@@ -120,13 +120,18 @@
 	. = ..()
 	if(prob(15))
 		icon_state = "basalt[rand(0, 12)]"
-		set_basalt_light(src)
+		switch(icon_state)
+			if("basalt1", "basalt2", "basalt3")
+				set_light(BASALT_LIGHT_RANGE_BRIGHT, BASALT_LIGHT_POWER, LIGHT_COLOR_LAVA)
+			if("basalt5", "basalt9")
+				set_light(BASALT_LIGHT_RANGE_DIM, BASALT_LIGHT_POWER, LIGHT_COLOR_LAVA)
 
 /turf/open/floor/holofloor/space
 	name = "\proper space"
 	desc = "Space-looking floor. Thankfully, the deadly aspects of space are not emulated here."
 	icon = 'icons/turf/space.dmi'
 	icon_state = "space"
+	layer = SPACE_LAYER
 	plane = PLANE_SPACE
 
 /turf/open/floor/holofloor/hyperspace

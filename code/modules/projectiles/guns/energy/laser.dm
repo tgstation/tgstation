@@ -16,8 +16,8 @@
 		return
 	var/static/list/slapcraft_recipe_list = list(/datum/crafting_recipe/xraylaser, /datum/crafting_recipe/hellgun, /datum/crafting_recipe/ioncarbine)
 
-	AddComponent(
-		/datum/component/slapcrafting,\
+	AddElement(
+		/datum/element/slapcrafting,\
 		slapcraft_recipes = slapcraft_recipe_list,\
 	)
 
@@ -44,6 +44,15 @@
 /obj/item/gun/energy/laser/carbine/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/automatic_fire, 0.15 SECONDS, allow_akimbo = FALSE)
+
+/obj/item/gun/energy/laser/carbine/cybersun
+	name = "\improper Cybersun S-120"
+	desc = "A laser gun primarily used by syndicate security guards. It fires a rapid spray of low-power plasma beams."
+	icon_state = "cybersun_s120"
+	inhand_icon_state = "s120"
+	ammo_type = list(/obj/item/ammo_casing/energy/lasergun/carbine/cybersun)
+	spread = 14
+	pin = /obj/item/firing_pin/implant/pindicate
 
 /obj/item/gun/energy/laser/carbine/practice
 	name = "practice laser carbine"
@@ -139,12 +148,14 @@
 	icon_state = "scatterlaser"
 	range = 255
 	damage = 6
+	var/size_per_tile = 0.1
+	var/max_scale = 4
 
 /obj/projectile/beam/laser/accelerator/Range()
 	..()
 	damage += 7
 	transform = 0
-	transform *= 1 + (((damage - 6)/7) * 0.2)//20% larger per tile
+	transform *= min(1 + (decayedRange - range) * size_per_tile, max_scale)
 
 ///X-ray gun
 

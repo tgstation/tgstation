@@ -53,6 +53,9 @@ Buildable meters
 /obj/item/pipe/directional/he_exchanger
 	icon_state_preview = "heunary"
 	pipe_type = /obj/machinery/atmospherics/components/unary/heat_exchanger
+/obj/item/pipe/directional/airlock_pump
+	icon_state_preview = "airlock_pump"
+	pipe_type = /obj/machinery/atmospherics/components/unary/airlock_pump
 /obj/item/pipe/binary
 	RPD_type = PIPE_STRAIGHT
 /obj/item/pipe/binary/layer_adapter
@@ -120,8 +123,8 @@ Buildable meters
 		return ..()
 	var/static/list/slapcraft_recipe_list = list(/datum/crafting_recipe/ghettojetpack, /datum/crafting_recipe/pipegun, /datum/crafting_recipe/smoothbore_disabler, /datum/crafting_recipe/improvised_pneumatic_cannon)
 
-	AddComponent(
-		/datum/component/slapcrafting,\
+	AddElement(
+		/datum/element/slapcrafting,\
 		slapcraft_recipes = slapcraft_recipe_list,\
 	)
 

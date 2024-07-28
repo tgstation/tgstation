@@ -148,7 +148,7 @@
 	},
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/machinery/light/small/directional/west,
-/obj/machinery/smartfridge/drying_rack,
+/obj/machinery/smartfridge/drying/rack,
 /turf/open/floor/iron,
 /area/virtual_domain/safehouse)
 "O" = (

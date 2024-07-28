@@ -20,7 +20,7 @@
 
 /obj/item/market_uplink/Initialize(mapload)
 	. = ..()
-	// We don't want to go through this at mapload because the SSblackmarket isn't initialized yet.
+	// We don't want to go through this at mapload because the SSmarket isn't initialized yet.
 	if(mapload)
 		return
 
@@ -30,7 +30,7 @@
 /obj/item/market_uplink/proc/update_viewing_category()
 	if(accessible_markets.len)
 		viewing_market = accessible_markets[1]
-		var/list/categories = SSblackmarket.markets[viewing_market].categories
+		var/list/categories = SSmarket.markets[viewing_market].categories
 		if(categories?.len)
 			viewing_category = categories[1]
 
@@ -45,7 +45,7 @@
 
 /obj/item/market_uplink/ui_data(mob/user)
 	var/list/data = list()
-	var/datum/market/market = viewing_market ? SSblackmarket.markets[viewing_market] : null
+	var/datum/market/market = viewing_market ? SSmarket.markets[viewing_market] : null
 	var/obj/item/card/id/id_card
 	if(isliving(user))
 		var/mob/living/livin = user
@@ -86,11 +86,11 @@
 
 /obj/item/market_uplink/ui_static_data(mob/user)
 	var/list/data = list()
-	data["delivery_method_description"] = SSblackmarket.shipping_method_descriptions
-	data["ltsrbt_built"] = SSblackmarket.telepads.len
+	data["delivery_method_description"] = SSmarket.shipping_method_descriptions
+	data["ltsrbt_built"] = SSmarket.telepads.len
 	data["markets"] = list()
 	for(var/M in accessible_markets)
-		var/datum/market/BM = SSblackmarket.markets[M]
+		var/datum/market/BM = SSmarket.markets[M]
 		data["markets"] += list(list(
 			"id" = M,
 			"name" = BM.name
@@ -107,7 +107,7 @@
 				return
 			if(isnull(viewing_market))
 				return
-			if(!(params["category"] in SSblackmarket.markets[viewing_market].categories))
+			if(!(params["category"] in SSmarket.markets[viewing_market].categories))
 				return
 			viewing_category = params["category"]
 			. = TRUE
@@ -120,7 +120,7 @@
 
 			viewing_market = market
 
-			var/list/categories = SSblackmarket.markets[viewing_market].categories
+			var/list/categories = SSmarket.markets[viewing_market].categories
 			if(categories?.len)
 				viewing_category = categories[1]
 			else
@@ -142,7 +142,7 @@
 			if(isnull(selected_item))
 				buying = FALSE
 				return
-			var/datum/market/market = SSblackmarket.markets[viewing_market]
+			var/datum/market/market = SSmarket.markets[viewing_market]
 			market.purchase(selected_item, viewing_category, params["method"], src, usr)
 
 			buying = FALSE
@@ -157,6 +157,9 @@
 	accessible_markets = list(/datum/market/blackmarket)
 	custom_premium_price = PAYCHECK_CREW * 2.5
 
+/obj/item/market_uplink/blackmarket/Initialize(mapload)
+	. = ..()
+	ADD_TRAIT(src, TRAIT_CONTRABAND, INNATE_TRAIT)
 
 /datum/crafting_recipe/blackmarket_uplink
 	name = "Black Market Uplink"

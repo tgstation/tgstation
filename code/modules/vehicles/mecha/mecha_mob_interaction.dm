@@ -41,7 +41,6 @@
 		return FALSE
 	if(ishuman(newoccupant) && !Adjacent(newoccupant))
 		return FALSE
-	add_occupant(newoccupant)
 	mecha_flags &= ~PANEL_OPEN //Close panel if open
 	newoccupant.forceMove(src)
 	newoccupant.update_mouse_pointer()

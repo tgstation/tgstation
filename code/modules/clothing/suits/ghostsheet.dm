@@ -22,8 +22,18 @@
 	if(!isinhands && check_holidays(HALLOWEEN))
 		. += emissive_appearance('icons/mob/simple/mob.dmi', "ghost", offset_spokesman = src, alpha = src.alpha)
 
-/obj/item/clothing/suit/costume/ghost_sheet/spooky
+/obj/item/clothing/suit/spooky_ghost_sheet
 	name = "spooky ghost"
 	desc = "This is obviously just a bedsheet, but maybe try it on?"
+	icon = 'icons/obj/clothing/suits/costume.dmi'
+	worn_icon = 'icons/mob/clothing/suits/costume.dmi'
 	user_vars_to_edit = list("name" = "Spooky Ghost", "real_name" = "Spooky Ghost" , "incorporeal_move" = INCORPOREAL_MOVE_BASIC, "appearance_flags" = KEEP_TOGETHER|TILE_BOUND, "alpha" = 150)
+	inhand_icon_state = null
+	throwforce = 0
+	throw_speed = 1
+	throw_range = 2
+	w_class = WEIGHT_CLASS_TINY
+	flags_inv = HIDEGLOVES|HIDEEARS|HIDEFACE|HIDEHAIR|HIDEFACIALHAIR|HIDESNOUT
+	species_exception = list(/datum/species/golem)
+	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION_NO_NEW_ICON
 	alternate_worn_layer = ABOVE_BODY_FRONT_LAYER //so the bedsheet goes over everything but fire

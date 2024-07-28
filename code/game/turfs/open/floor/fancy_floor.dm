@@ -34,9 +34,9 @@
 /turf/open/floor/wood/try_replace_tile(obj/item/stack/tile/T, mob/user, params)
 	if(T.turf_type == type)
 		return
-	var/obj/item/tool = user.is_holding_item_of_type(/obj/item/screwdriver)
+	var/obj/item/tool = user.is_holding_tool_quality(TOOL_SCREWDRIVER)
 	if(!tool)
-		tool = user.is_holding_item_of_type(/obj/item/crowbar)
+		tool = user.is_holding_tool_quality(TOOL_CROWBAR)
 	if(!tool)
 		return
 	var/turf/open/floor/plating/P = pry_tile(tool, user, TRUE)
@@ -242,7 +242,11 @@
 	AddElement(/datum/element/diggable, /obj/item/stack/ore/glass/basalt, 2, worm_chance = 0)
 	if(prob(15))
 		icon_state = "basalt[rand(0, 12)]"
-		set_basalt_light(src)
+		switch(icon_state)
+			if("basalt1", "basalt2", "basalt3")
+				set_light(BASALT_LIGHT_RANGE_BRIGHT, BASALT_LIGHT_POWER, LIGHT_COLOR_LAVA)
+			if("basalt5", "basalt9")
+				set_light(BASALT_LIGHT_RANGE_DIM, BASALT_LIGHT_POWER, LIGHT_COLOR_LAVA)
 
 /turf/open/floor/carpet
 	name = "carpet"
@@ -871,6 +875,7 @@
 	icon = 'icons/turf/space.dmi'
 	icon_state = "space"
 	floor_tile = /obj/item/stack/tile/fakespace
+	layer = SPACE_LAYER
 	plane = PLANE_SPACE
 	tiled_dirt = FALSE
 	damaged_dmi = 'icons/turf/space.dmi'
