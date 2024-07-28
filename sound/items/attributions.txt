@@ -42,4 +42,4 @@ cardboad_box_rustle.ogg - made by sadboysuss
 toolbox_open.ogg - made by sadboysuss
 toolbox_rustle.ogg - made by sadboysuss
 medkit_rustle.ogg - made by sadboysuss
-} 
+} - license: CC-by-SA
