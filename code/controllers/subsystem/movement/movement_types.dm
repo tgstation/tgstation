@@ -913,7 +913,8 @@
 	saved_delay = delay
 
 /datum/move_loop/smooth_move/set_delay(new_delay)
-	delay = max(round(new_delay, 0.5), 0.5)
+	new_delay = round(new_delay, world.tick_lag)
+	. = ..()
 	saved_delay = delay
 
 /datum/move_loop/smooth_move/compare_loops(datum/move_loop/loop_type, priority, flags, extra_info, delay, timeout, atom/chasing, home = FALSE)
