@@ -630,6 +630,7 @@
 					return
 				else
 					repeated = TRUE
+					break
 
 		if(!repeated)
 			valid_reagents += donor_reagent
