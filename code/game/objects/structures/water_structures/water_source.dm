@@ -147,3 +147,20 @@
 	icon_state = "[base_icon_state]-splash"
 	. = ..()
 	icon_state = base_icon_state
+
+/obj/structure/water_source/puddle/attack_hand_secondary(mob/living/carbon/human/user, list/modifiers)
+	. = ..()
+	if(. == SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN)
+		return
+	if(DOING_INTERACTION_WITH_TARGET(user, src))
+		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+	icon_state = "[base_icon_state]-splash"
+	balloon_alert(user, "scooping tadpoles...")
+	if(do_after(user, src, 5 SECONDS))
+		playsound(loc, 'sound/effects/slosh.ogg', 15, TRUE)
+		balloon_alert(user, "got a tadpole")
+		var/obj/item/fish/tadpole/tadpole = new(loc)
+		tadpole.randomize_size_and_weight()
+		user.put_in_hands(tadpole)
+	icon_state = base_icon_state
+	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
