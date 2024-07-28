@@ -432,7 +432,7 @@ GLOBAL_LIST_EMPTY(virtual_pets_list)
 		/datum/emote/living/jump,
 		/datum/emote/living/shiver,
 		/datum/emote/spin,
-		/datum/emote/living/beep,
+		/datum/emote/silicon/beep,
 	)
 	data["possible_emotes"] = list("none")
 	for(var/datum/emote/target_emote as anything in possible_emotes)

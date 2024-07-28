@@ -122,7 +122,6 @@
 
 /obj/item/radio/Destroy()
 	remove_radio_all(src) //Just to be sure
-	QDEL_NULL(wires)
 	if(istype(keyslot))
 		QDEL_NULL(keyslot)
 	return ..()
@@ -352,6 +351,12 @@
 		signal.broadcast()
 		return
 
+
+	if(iscarbon(talking_movable))
+		var/mob/living/carbon/talking_carbon = talking_movable
+		if(talking_carbon.client?.prefs.read_preference(/datum/preference/toggle/radio_noise))
+			SEND_SOUND(talking_carbon, 'sound/misc/radio_talk.ogg')
+
 	// All radios make an attempt to use the subspace system first
 	signal.send_to_receivers()
 
@@ -397,7 +402,6 @@
 			// left hands are odd slots
 			if (idx && (idx % 2) == (message_mods[RADIO_EXTENSION] == MODE_L_HAND))
 				return
-
 	talk_into(speaker, raw_message, , spans, language=message_language, message_mods=filtered_mods)
 
 /// Checks if this radio can receive on the given frequency.
@@ -423,6 +427,16 @@
 /obj/item/radio/proc/on_receive_message(list/data)
 	SEND_SIGNAL(src, COMSIG_RADIO_RECEIVE_MESSAGE, data)
 	flick_overlay_view(overlay_speaker_active, 5 SECONDS)
+
+	if(iscarbon(loc))
+		var/mob/living/carbon/holder = loc
+		if(!holder.client?.prefs.read_preference(/datum/preference/toggle/radio_noise))
+			return
+
+		var/list/spans = data["spans"]
+		SEND_SOUND(holder, 'sound/misc/radio_receive.ogg')
+		if(SPAN_COMMAND in spans)
+			SEND_SOUND(holder, 'sound/misc/radio_important.ogg')
 
 /obj/item/radio/ui_state(mob/user)
 	return GLOB.inventory_state

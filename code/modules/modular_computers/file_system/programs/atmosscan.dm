@@ -27,7 +27,7 @@
 	on_analyze(source=source, target=get_turf(computer))
 	return COMPONENT_CANCEL_ATTACK_CHAIN
 
-/// Keep this in sync with it's tool based counterpart [/obj/proc/analyzer_act] and [/atom/proc/tool_act]
+/// Keep this in sync with its tool based counterpart [/obj/proc/analyzer_act] and [/atom/proc/tool_act]
 /datum/computer_file/program/atmosscan/tap(atom/A, mob/living/user, params)
 	if(atmozphere_mode != ATMOZPHERE_SCAN_CLICK)
 		return FALSE
