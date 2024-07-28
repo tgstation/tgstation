@@ -10,6 +10,15 @@
 /// The window of time between biting phase and back to baiting phase
 #define BITING_TIME_WINDOW 4 SECONDS
 
+// Acceleration mod when bait is over fish
+#define FISH_ON_BAIT_ACCELERATION_MULT 0.6
+/// The minimum velocity required for the bait to bounce
+#define BAIT_MIN_VELOCITY_BOUNCE 150
+/// The extra deceleration of velocity that happens when the bait switches direction
+#define BAIT_DECELERATION_MULT 1.5
+/// The multiplier of how much the difficulty negatively impacts the bait height
+#define BAIT_HEIGHT_DIFFICULTY_MALUS 1.08
+
 ///Defines to know how the bait is moving on the minigame slider.
 #define REELING_STATE_IDLE 0
 #define REELING_STATE_UP 1
@@ -638,6 +647,11 @@
 #undef REELING_STATE_IDLE
 #undef REELING_STATE_UP
 #undef REELING_STATE_DOWN
+
+#undef FISH_ON_BAIT_ACCELERATION_MULT
+#undef BAIT_MIN_VELOCITY_BOUNCE
+#undef BAIT_DECELERATION_MULT
+#undef BAIT_HEIGHT_DIFFICULTY_MALUS
 
 #undef MAX_FISH_COMPLETION_MALUS
 #undef BITING_TIME_WINDOW

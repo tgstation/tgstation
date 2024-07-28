@@ -15,6 +15,7 @@
 	///The grind results of the fish. They scale with the weight of the fish.
 	grind_results = list(/datum/reagent/blood = 5, /datum/reagent/consumable/liquidgibs = 5)
 	obj_flags = UNIQUE_RENAME
+	item_flags = IMMUTABLE_SLOW
 
 	/// Resulting width of aquarium visual icon - default size of "fish_greyscale" state
 	var/sprite_width = 5
@@ -150,6 +151,10 @@
 	/// The beauty this fish provides to the aquarium it's inserted in.
 	var/beauty = FISH_BEAUTY_GENERIC
 
+	//wip pr testing stuff
+	var/weight_rank
+	var/bonus_malus
+
 /obj/item/fish/Initialize(mapload, apply_qualities = TRUE)
 	. = ..()
 	AddComponent(/datum/component/aquarium_content, icon, PROC_REF(get_aquarium_animation), list(COMSIG_FISH_STIRRED), beauty)
@@ -197,6 +202,7 @@
 	// All spacemen have magic eyes of fish weight perception until fish scale (get it?) is implemented.
 	. += span_notice("It's [size] cm long.")
 	. += span_notice("It weighs [weight] g.")
+	. += "size rank [w_class] - weight rank [weight_rank] - bonus_malus [bonus_malus]"
 
 ///Randomizes weight and size.
 /obj/item/fish/proc/randomize_size_and_weight(base_size = average_size, base_weight = average_weight, deviation = weight_size_deviation)
@@ -213,7 +219,7 @@
 	SEND_SIGNAL(src, COMSIG_FISH_UPDATE_SIZE_AND_WEIGHT, new_size, new_weight)
 	if(size)
 		if(fillet_type)
-			RemoveElement(/datum/element/processable, TOOL_KNIFE, fillet_type, num_fillets, 0.5 SECONDS, screentip_verb = "Cut")
+			RemoveElement(/datum/element/processable, TOOL_KNIFE, fillet_type, num_fillets, 0.5 SECONDS * num_fillets, screentip_verb = "Cut")
 		if(size > FISH_SIZE_TWO_HANDS_REQUIRED)
 			qdel(GetComponent(/datum/component/two_handed))
 	size = new_size
@@ -252,7 +258,7 @@
 		var/init_fillets = initial(num_fillets)
 		var/amount = max(round(init_fillets * size / FISH_FILLET_NUMBER_SIZE_DIVISOR, 1), 1)
 		num_fillets = amount
-		AddElement(/datum/element/processable, TOOL_KNIFE, fillet_type, num_fillets, 0.5 SECONDS, screentip_verb = "Cut")
+		AddElement(/datum/element/processable, TOOL_KNIFE, fillet_type, num_fillets, 0.5 SECONDS * num_fillets, screentip_verb = "Cut")
 
 	if(weight)
 		for(var/reagent_type in grind_results)
@@ -261,7 +267,7 @@
 
 	if(weight >= FISH_WEIGHT_SLOWDOWN)
 		slowdown = round(((weight/FISH_WEIGHT_SLOWDOWN_DIVISOR)**FISH_WEIGHT_SLOWDOWN_EXPONENT)-1.3, 0.1)
-		drag_slowdown = round(slowdown * 0.5)
+		drag_slowdown = round(slowdown * 0.5, 1)
 	else
 		slowdown = 0
 		drag_slowdown = 0
@@ -276,28 +282,27 @@
 
 ///Reset weapon-related variables of this items and recalculates those values based on the fish weight and size.
 /obj/item/fish/proc/update_fish_force()
-	var/obj/item/fish/fish_path = type
-	force = fish_path::force
-	throwforce = fish_path::throwforce
-	throw_range = fish_path::throw_range
-	demolition_mod = fish_path::demolition_mod
-	attack_verb_continuous = fish_path::attack_verb_continuous
-	attack_verb_simple = fish_path::attack_verb_simple
-	hitsound = fish_path::hitsound
-	damtype = fish_path::damtype
-	attack_speed = fish_path::attack_speed
-	block_chance = fish_path::block_chance
-	armour_penetration = fish_path::armour_penetration
-	wound_bonus = fish_path::wound_bonus
-	bare_wound_bonus = fish_path::bare_wound_bonus
-	toolspeed = fish_path::toolspeed
+	force = initial(force)
+	throwforce = initial(throwforce)
+	throw_range = initial(throw_range)
+	demolition_mod = initial(demolition_mod)
+	attack_verb_continuous = initial(attack_verb_continuous)
+	attack_verb_simple = initial(attack_verb_simple)
+	hitsound = initial(hitsound)
+	damtype = initial(damtype)
+	attack_speed = initial(attack_speed)
+	block_chance = initial(block_chance)
+	armour_penetration = initial(armour_penetration)
+	wound_bonus = initial(wound_bonus)
+	bare_wound_bonus = initial(bare_wound_bonus)
+	toolspeed = initial(toolspeed)
 
-	var/weight_rank = max(round(1 + log(2, weight/FISH_WEIGHT_FORCE_DIVISOR), 1), 1)
+	weight_rank = max(round(1 + log(2, weight/FISH_WEIGHT_FORCE_DIVISOR), 1), 1)
 
 	throw_range -= weight_rank
 	get_force_rank()
 
-	var/bonus_malus = weight_rank - w_class
+	bonus_malus = weight_rank - w_class
 	if(bonus_malus)
 		calculate_fish_force_bonus(bonus_malus)
 
@@ -309,7 +314,7 @@
 /obj/item/fish/proc/calculate_fish_force_bonus(bonus_malus)
 	demolition_mod += bonus_malus * 0.1
 	attack_speed += bonus_malus * 0.1
-	var/one_fifth_or_sixth = bonus_malus > 0 ? (6/5) : (5/6)
+	var/one_fifth_or_sixth = bonus_malus > 0 ? 6/5 : 5/6
 	force = round(force * (one_fifth_or_sixth^abs(bonus_malus)), 0.1)
 
 /obj/item/fish/proc/get_force_rank()

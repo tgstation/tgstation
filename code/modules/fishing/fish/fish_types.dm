@@ -68,7 +68,7 @@
 	required_temperature_max = MIN_AQUARIUM_TEMP+28
 
 /obj/item/fish/catfish
-	name = "cory catfish"
+	name = "catfish"
 	desc = "A catfish has about 100,000 taste buds, and their bodies are covered with them to help detect chemicals present in the water and also to respond to touch."
 	icon_state = "catfish"
 	dedicated_in_aquarium_icon_state = "fish_greyscale"
@@ -188,8 +188,8 @@
 	source_height = 21
 	sprite_width = 8
 	sprite_height = 8
-	average_size = 100
-	average_weight = 1500
+	average_size = 50
+	average_weight = 1000
 	stable_population = 3
 	fish_traits = list(/datum/fish_trait/nocturnal)
 	required_temperature_min = MIN_AQUARIUM_TEMP+2 //My source is that the water at a depth 6600 feet is pretty darn cold.
@@ -204,8 +204,8 @@
 	required_fluid_type = AQUARIUM_FLUID_SALTWATER
 	stable_population = 2
 	fillet_type = /obj/item/food/fishmeat/moonfish
-	average_size = 100
-	average_weight = 2000
+	average_size = 60
+	average_weight = 1000
 	required_temperature_min = MIN_AQUARIUM_TEMP+20
 	required_temperature_max = MIN_AQUARIUM_TEMP+30
 	beauty = FISH_BEAUTY_GOOD
@@ -229,6 +229,7 @@
 	sprite_width = 7
 	required_fluid_type = AQUARIUM_FLUID_SALTWATER
 	stable_population = 12
+	breeding_timeout = 1 MINUTES
 	fillet_type = null
 	average_size = 20
 	average_weight = 300
@@ -243,8 +244,11 @@
 	dedicated_in_aquarium_icon_state = "armorfish_small"
 	sprite_height = 5
 	sprite_width = 6
+	average_size = 25
+	average_weight = 350
 	required_fluid_type = AQUARIUM_FLUID_SALTWATER
 	stable_population = 10
+	breeding_timeout = 1.25 MINUTES
 	fillet_type = /obj/item/food/fishmeat/armorfish
 	fish_movement_type = /datum/fish_movement/slow
 	required_temperature_min = MIN_AQUARIUM_TEMP+10
@@ -548,7 +552,7 @@
 	fillet_type = /obj/item/stack/sheet/bone
 	num_fillets = 2
 	feeding_frequency = 2 MINUTES
-	breeding_timeout = 10 MINUTES
+	breeding_timeout = 5 MINUTES
 	average_size = 180
 	average_weight = 5000
 	death_text = "%SRC stops moving."
@@ -939,7 +943,7 @@
 	stable_population = 3
 	average_size = 140
 	average_weight = 4000
-	breeding_timeout = 8 MINUTES
+	breeding_timeout = 4.5 MINUTES
 	feeding_frequency = 4 MINUTES
 	health = 200
 	beauty = FISH_BEAUTY_EXCELLENT
@@ -1034,7 +1038,7 @@
 	stable_population = 3
 	average_size = 85
 	average_weight = 2500
-	breeding_timeout = 7.5 MINUTES
+	breeding_timeout = 4.25 MINUTES
 	feeding_frequency = 3 MINUTES
 	health = 200
 	beauty = FISH_BEAUTY_GREAT

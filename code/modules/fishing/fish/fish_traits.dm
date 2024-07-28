@@ -621,7 +621,7 @@ GLOBAL_LIST_INIT(spontaneous_fish_traits, populate_spontaneous_fish_traits())
 
 /datum/fish_trait/stinger/proc/on_force_updated(obj/item/fish/fish, weight_rank, bonus_or_malus)
 	SIGNAL_HANDLER
-	fish.force += 1 + fish.w_class - bonus_or_malus
+	fish.force += 1 + fish.w_class + bonus_or_malus
 
 /datum/fish_trait/toxic_barbs
 	name = "Toxic Barbs"

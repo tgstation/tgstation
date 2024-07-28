@@ -49,6 +49,7 @@ GLOBAL_LIST_INIT(specific_fish_icons, generate_specific_fish_icons())
 	))
 
 	return_list[FISHING_RANDOM_SEED] = FISH_ICON_SEED
+	return return_list
 
 /**
  * Where the fish actually come from - every fishing spot has one assigned but multiple fishing holes
