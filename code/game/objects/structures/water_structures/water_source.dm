@@ -144,7 +144,7 @@
 /obj/structure/water_source/puddle/add_context(atom/source, list/context, obj/item/held_item, mob/user)
 	. = ..()
 	if(isnull(held_item))
-		context[SCREENTIP_CONTEXT_LMB] = "Scoop Tadpoles"
+		context[SCREENTIP_CONTEXT_RMB] = "Scoop Tadpoles"
 
 //ATTACK HAND IGNORING PARENT RETURN VALUE
 /obj/structure/water_source/puddle/attack_hand(mob/user, list/modifiers)
