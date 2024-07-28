@@ -125,7 +125,6 @@
 
 /obj/item/fish/tadpole/proc/on_growth(mob/living/basic/frog/result)
 	playsound(result, result.attack_sound, 50, TRUE) // reeeeeeeeeeeeeee...
-	qdel(src)
 
 /obj/item/fish/tadpole/get_export_price(price, percent)
 	return 2 //two credits. Tadpoles aren't really that valueable.
@@ -384,8 +383,6 @@
 	else if(anger < 30) //not really that mad, just a bit unstable.
 		qdel(result.ai_controller)
 		result.ai_controller = new /datum/ai_controller/basic_controller/lobstrosity/juvenile/capricious(result)
-
-	qdel(src)
 
 /obj/item/fish/chasm_crab/ice
 	name = "arctic chrab"
