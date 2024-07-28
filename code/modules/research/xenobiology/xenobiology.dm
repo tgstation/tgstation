@@ -799,7 +799,7 @@
 
 	user.do_attack_animation(interacting_with)
 	prompted = 1
-	if(tgui_alert(usr,"This will permanently transfer your consciousness to [switchy_mob]. Are you sure you want to do this?",,list("Yes","No")) == "No")
+	if(tgui_alert(usr,"This will permanently transfer your consciousness to [switchy_mob]. Are you sure you want to do this?",,list("Yes","No")) != "Yes")
 		prompted = 0
 		return ITEM_INTERACT_BLOCKING
 

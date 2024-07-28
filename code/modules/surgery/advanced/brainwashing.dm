@@ -1,7 +1,10 @@
 /obj/item/disk/surgery/brainwashing
 	name = "Brainwashing Surgery Disk"
 	desc = "The disk provides instructions on how to impress an order on a brain, making it the primary objective of the patient."
-	surgeries = list(/datum/surgery/advanced/brainwashing)
+	surgeries = list(
+		/datum/surgery/advanced/brainwashing,
+		/datum/surgery/advanced/brainwashing/mechanic,
+	)
 
 /datum/surgery/advanced/brainwashing
 	name = "Brainwashing"
@@ -14,6 +17,19 @@
 		/datum/surgery_step/clamp_bleeders,
 		/datum/surgery_step/brainwash,
 		/datum/surgery_step/close,
+	)
+
+/datum/surgery/advanced/brainwashing/mechanic
+	name = "Reprogramming"
+	desc = "Malware which directly implants a directive into the robotic patient's operating system, making it their absolute priority. It can be cleared using a mindshield implant."
+	requires_bodypart_type = BODYTYPE_ROBOTIC
+	steps = list(
+		/datum/surgery_step/mechanic_open,
+		/datum/surgery_step/open_hatch,
+		/datum/surgery_step/mechanic_unwrench,
+		/datum/surgery_step/brainwash/mechanic,
+		/datum/surgery_step/mechanic_wrench,
+		/datum/surgery_step/mechanic_close,
 	)
 
 /datum/surgery/advanced/brainwashing/can_start(mob/user, mob/living/carbon/target)
@@ -36,6 +52,17 @@
 	success_sound = 'sound/surgery/hemostat1.ogg'
 	failure_sound = 'sound/surgery/organ2.ogg'
 	var/objective
+
+/datum/surgery_step/brainwash/mechanic
+	name = "reprogram (multitool)"
+	implements = list(
+		TOOL_MULTITOOL = 85,
+		TOOL_HEMOSTAT = 50,
+		TOOL_WIRECUTTER = 50,
+		/obj/item/stack/package_wrap = 35,
+		/obj/item/stack/cable_coil = 15)
+	preop_sound = 'sound/items/taperecorder/tape_flip.ogg'
+	success_sound = 'sound/items/taperecorder/taperecorder_close.ogg'
 
 /datum/surgery_step/brainwash/preop(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
 	objective = tgui_input_text(user, "Choose the objective to imprint on your victim's brain", "Brainwashing")

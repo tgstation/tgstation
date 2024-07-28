@@ -588,21 +588,21 @@
 		transform = transform.Scale(1, -1)
 	return ..()
 
-/obj/projectile/fishing_cast/Impact(atom/hit_atom)
+/obj/projectile/fishing_cast/on_hit(atom/target, blocked = 0, pierce_hit)
 	. = ..()
-	owner.hook_hit(hit_atom)
-	qdel(src)
+	if(blocked < 100)
+		QDEL_NULL(our_line) //we need to delete the old beam datum, otherwise it won't let you fish.
+		owner.hook_hit(target)
 
 /obj/projectile/fishing_cast/fire(angle, atom/direct_target)
 	. = ..()
 	our_line = owner.create_fishing_line(src)
 
 /obj/projectile/fishing_cast/Destroy()
-	. = ..()
 	QDEL_NULL(our_line)
 	owner?.casting = FALSE
-
-
+	owner = null
+	return ..()
 
 /datum/beam/fishing_line
 	// Is the fishing rod held in left side hand
