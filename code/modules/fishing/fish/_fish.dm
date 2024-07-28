@@ -292,12 +292,12 @@
 	bare_wound_bonus = initial(bare_wound_bonus)
 	toolspeed = initial(toolspeed)
 
-	weight_rank = max(round(1 + log(2, weight/FISH_WEIGHT_FORCE_DIVISOR), 1), 1)
+	var/weight_rank = max(round(1 + log(2, weight/FISH_WEIGHT_FORCE_DIVISOR), 1), 1)
 
 	throw_range -= weight_rank
 	get_force_rank()
 
-	bonus_malus = weight_rank - w_class
+	var/bonus_malus = weight_rank - w_class
 	if(bonus_malus)
 		calculate_fish_force_bonus(bonus_malus)
 
