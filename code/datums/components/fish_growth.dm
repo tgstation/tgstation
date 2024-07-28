@@ -20,7 +20,7 @@
 	src.result_type = result_type
 	src.growth_rate = growth_rate
 	src.use_drop_loc = use_drop_loc
-	src.del_on_grow
+	src.del_on_grow = del_on_grow
 
 /datum/component/fish_growth/CheckDupeComponent(result_type, growth_rate, use_drop_loc = TRUE, del_on_grow = TRUE)
 	if(result_type == src.result_type)
