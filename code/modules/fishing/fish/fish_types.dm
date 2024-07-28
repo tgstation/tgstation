@@ -114,7 +114,7 @@
 	else
 		deltimer(del_timerid)
 
-/obj/item/fish/tadpole/proc/growth_checks(seconds_per_tick)
+/obj/item/fish/tadpole/proc/growth_checks(datum/source, seconds_per_tick)
 	SIGNAL_HANDLER
 	var/hunger = CLAMP01((world.time - last_feeding) / feeding_frequency)
 	if(hunger >= 0.7) //too hungry to grow
@@ -123,7 +123,8 @@
 	if(!aquarium.allow_breeding) //the aquarium has breeding disabled
 		return COMPONENT_DONT_GROW
 
-/obj/item/fish/tadpole/proc/on_growth(mob/living/basic/frog/result)
+/obj/item/fish/tadpole/proc/on_growth(datum/source, mob/living/basic/frog/result)
+	SIGNAL_HANDLER
 	playsound(result, result.attack_sound, 50, TRUE) // reeeeeeeeeeeeeee...
 
 /obj/item/fish/tadpole/get_export_price(price, percent)
@@ -351,7 +352,7 @@
 
 	AddComponent(/datum/component/fish_growth, lob_type, initial(growth_rate) * multiplier)
 
-/obj/item/fish/chasm_crab/proc/growth_checks(seconds_per_tick)
+/obj/item/fish/chasm_crab/proc/growth_checks(datum/source, seconds_per_tick)
 	SIGNAL_HANDLER
 	var/hunger = CLAMP01((world.time - last_feeding) / feeding_frequency)
 	if(health <= initial(health) * 0.6 || hunger >= 0.6) //if too hurt or hungry, don't grow.
@@ -375,7 +376,8 @@
 	if(fish_count > AQUARIUM_MAX_BREEDING_POPULATION * 0.5) //check if there's enough room to maturate.
 		return COMPONENT_DONT_GROW
 
-/obj/item/fish/chasm_crab/proc/on_growth(mob/living/basic/mining/lobstrosity/juvenile/result)
+/obj/item/fish/chasm_crab/proc/on_growth(datum/source, mob/living/basic/mining/lobstrosity/juvenile/result)
+	SIGNAL_HANDLER
 	if(!prob(anger))
 		result.AddElement(/datum/element/ai_retaliate)
 		qdel(result.ai_controller)
