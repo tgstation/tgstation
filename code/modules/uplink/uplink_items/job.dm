@@ -391,3 +391,12 @@
 	refundable = FALSE
 	purchasable_from = parent_type::purchasable_from & ~UPLINK_SPY
 
+/datum/uplink_item/role_restricted/malf_upgrade
+	name = "Combat Software Upgrade"
+	desc = "A highly illegal, highly dangerous upgrade for artificial intelligence units, granting them a variety of powers as well as the ability to hack APCs. \
+		This upgrade does not override any active laws, and must be applied directly to an active AI core."
+	item = /obj/item/malf_upgrade
+	cost = 10
+	restricted_roles = list(JOB_RESEARCH_DIRECTOR)
+	surplus = 0
+	refundable = TRUE
