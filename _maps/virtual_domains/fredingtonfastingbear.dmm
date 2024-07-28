@@ -45,7 +45,7 @@
 "cp" = (
 /obj/effect/turf_decal/tile/bar/opposingcorners,
 /obj/effect/turf_decal/tile/bar/opposingcorners,
-/mob/living/basic/bear/snow,
+/mob/living/basic/bear/snow/bitrunning,
 /turf/open/floor/iron/kitchen,
 /area/virtual_domain)
 "cY" = (
@@ -436,7 +436,7 @@
 /turf/open/floor/iron/kitchen/small,
 /area/virtual_domain)
 "vw" = (
-/mob/living/basic/bear/butter,
+/mob/living/basic/bear/butter/bitrunning,
 /turf/open/floor/iron/kitchen,
 /area/virtual_domain)
 "vy" = (
@@ -594,7 +594,7 @@
 /turf/open/floor/iron/cafeteria,
 /area/virtual_domain/protected_space/fullbright)
 "Dz" = (
-/mob/living/basic/bear/fightpit,
+/mob/living/basic/bear/bitrunning,
 /turf/open/floor/iron/kitchen,
 /area/virtual_domain)
 "DV" = (
@@ -658,7 +658,7 @@
 /area/virtual_domain)
 "Ho" = (
 /obj/effect/decal/cleanable/fuel_pool/hivis,
-/mob/living/basic/bear/fightpit,
+/mob/living/basic/bear/bitrunning,
 /turf/open/floor/iron/kitchen,
 /area/virtual_domain)
 "HE" = (
@@ -687,7 +687,7 @@
 /turf/open/floor/wood,
 /area/virtual_domain)
 "If" = (
-/mob/living/basic/bear/russian,
+/mob/living/basic/bear/russian/bitrunning,
 /turf/open/floor/wood,
 /area/virtual_domain)
 "Io" = (
@@ -737,7 +737,7 @@
 /turf/open/floor/iron/kitchen,
 /area/virtual_domain)
 "KJ" = (
-/mob/living/basic/bear/fightpit,
+/mob/living/basic/bear/bitrunning,
 /turf/open/floor/iron/kitchen/small,
 /area/virtual_domain)
 "Ln" = (
@@ -830,7 +830,7 @@
 /turf/open/floor/wood,
 /area/virtual_domain)
 "OD" = (
-/mob/living/basic/bear/russian,
+/mob/living/basic/bear/russian/bitrunning,
 /turf/open/floor/iron/kitchen,
 /area/virtual_domain)
 "OM" = (
@@ -917,7 +917,7 @@
 "TW" = (
 /obj/effect/turf_decal/tile/dark_red/opposingcorners,
 /obj/effect/turf_decal/tile/dark_red/opposingcorners,
-/mob/living/basic/bear/snow,
+/mob/living/basic/bear/snow/bitrunning,
 /turf/open/floor/iron/kitchen,
 /area/virtual_domain)
 "Uj" = (
@@ -1018,7 +1018,7 @@
 /turf/open/floor/iron/kitchen/small,
 /area/virtual_domain)
 "Zj" = (
-/mob/living/basic/bear/fightpit,
+/mob/living/basic/bear/bitrunning,
 /turf/open/floor/wood,
 /area/virtual_domain)
 "Zp" = (

@@ -70,6 +70,10 @@
 	honey_food.forceMove(get_turf(src))
 
 //SPACE BEARS! SQUEEEEEEEE~     OW! FUCK! IT BIT MY HAND OFF!!
+/mob/living/basic/bear/bitrunning
+	faction = list(ROLE_SYNDICATE)
+	ai_controller = /datum/ai_controller/basic_controller/trooper
+
 /mob/living/basic/bear/hudson
 	name = "Hudson"
 	gender = MALE
@@ -81,6 +85,10 @@
 	icon_living = "snowbear"
 	icon_dead = "snowbear_dead"
 	desc = "It's a polar bear, in space, but not actually in space."
+
+/mob/living/basic/bear/snow/bitrunning
+	faction = list(ROLE_SYNDICATE)
+	ai_controller = /datum/ai_controller/basic_controller/trooper
 
 /mob/living/basic/bear/snow/misha
 	name = "Misha"
@@ -117,6 +125,10 @@
 	maxHealth = 120
 	gold_core_spawnable = HOSTILE_SPAWN
 	armored = TRUE
+
+/mob/living/basic/bear/russian/bitrunning
+	faction = list(ROLE_SYNDICATE)
+	ai_controller = /datum/ai_controller/basic_controller/trooper
 
 /mob/living/basic/bear/butter //The mighty companion to Cak. Several functions used from it.
 	name = "Terrygold"
@@ -187,3 +199,7 @@
 	victim.Knockdown(20)
 	playsound(loc, 'sound/misc/slip.ogg', 15)
 	victim.visible_message(span_danger("[victim] slips on [src]'s butter!"))
+
+/mob/living/basic/bear/butter/bitrunning
+	faction = list(ROLE_SYNDICATE)
+	ai_controller = /datum/ai_controller/basic_controller/trooper
