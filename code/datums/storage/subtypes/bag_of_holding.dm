@@ -24,6 +24,7 @@
 		|| QDELETED(user) \
 		|| !user.can_perform_action(parent, NEED_DEXTERITY) \
 		|| !can_insert(to_insert, user) \
+		|| SSmapping.level_trait(user.z, ZTRAIT_RESERVED) \
 	)
 		return
 
