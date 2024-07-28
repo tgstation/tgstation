@@ -4,7 +4,7 @@ import { useState } from 'react';
 import { DmIcon, Icon } from 'tgui-core/components';
 
 import { useBackend } from '../backend';
-import { Button, Input, NoticeBox, Section } from '../components';
+import { Box, Button, Input, NoticeBox, Section } from '../components';
 import { Window } from '../layouts';
 
 type Item = {
@@ -40,9 +40,6 @@ export const SmartVend = (props) => {
         <Section
           fill
           scrollable
-          style={{
-            textTransform: 'capitalize',
-          }}
           title="Storage"
           buttons={
             data.isdryer ? (
@@ -66,54 +63,63 @@ export const SmartVend = (props) => {
             <NoticeBox>Nothing found.</NoticeBox>
           ) : (
             contents.map((item) => (
-              <Button
-                key={item.path}
-                m={1}
-                p={0}
-                height="64px"
-                width="64px"
-                tooltip={item.name}
-                tooltipPosition="bottom"
-                textAlign="right"
-                disabled={item.amount < 1}
-                onClick={() =>
-                  act('Release', {
-                    path: item.path,
-                    amount: 1,
-                  })
-                }
-              >
-                <DmIcon
-                  fallback={fallback}
-                  icon={item.icon}
-                  icon_state={item.icon_state}
+              <Box key={item.path} m={1} p={0} inline width="64px">
+                <Button
                   height="64px"
                   width="64px"
-                />
-                {item.amount > 1 && (
-                  <Button
-                    color="transparent"
-                    minWidth="24px"
-                    height="24px"
-                    lineHeight="24px"
-                    textAlign="center"
-                    position="absolute"
-                    left="0"
-                    bottom="0"
-                    fontWeight="bold"
-                    fontSize="14px"
-                    onClick={(e) => {
-                      act('Release', {
-                        path: item.path,
-                        amount: item.amount,
-                      });
-                      e.stopPropagation();
-                    }}
-                  >
-                    {item.amount}
-                  </Button>
-                )}
-              </Button>
+                  tooltip={item.name}
+                  tooltipPosition="bottom"
+                  textAlign="right"
+                  disabled={item.amount < 1}
+                  onClick={() =>
+                    act('Release', {
+                      path: item.path,
+                      amount: 1,
+                    })
+                  }
+                >
+                  <DmIcon
+                    fallback={fallback}
+                    icon={item.icon}
+                    icon_state={item.icon_state}
+                    height="64px"
+                    width="64px"
+                  />
+                  {item.amount > 1 && (
+                    <Button
+                      color="transparent"
+                      minWidth="24px"
+                      height="24px"
+                      lineHeight="24px"
+                      textAlign="center"
+                      position="absolute"
+                      left="0"
+                      bottom="0"
+                      fontWeight="bold"
+                      fontSize="14px"
+                      onClick={(e) => {
+                        act('Release', {
+                          path: item.path,
+                          amount: item.amount,
+                        });
+                        e.stopPropagation();
+                      }}
+                    >
+                      {item.amount}
+                    </Button>
+                  )}
+                </Button>
+                <Box
+                  style={{
+                    overflow: 'hidden',
+                    whiteSpace: 'nowrap',
+                    textOverflow: 'ellipsis',
+                    textAlign: 'center',
+                  }}
+                >
+                  {item.name}
+                </Box>
+              </Box>
             ))
           )}
         </Section>

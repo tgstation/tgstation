@@ -369,7 +369,7 @@
 
 		var/atom/movable/atom = item
 		if (!QDELETED(atom))
-			var/key = "[atom.type]"
+			var/key = "[atom.type]-[atom.name]"
 			if (listofitems[key])
 				listofitems[key]["amount"]++
 			else
@@ -414,7 +414,7 @@
 			for(var/obj/item/dispensed_item in src)
 				if(desired <= 0)
 					break
-				if(istype(dispensed_item, text2path(params["path"])))
+				if(params["path"] == "[dispensed_item.type]-[dispensed_item.name]")
 					if(dispensed_item in component_parts)
 						CRASH("Attempted removal of [dispensed_item] component_part from smartfridge via smartfridge interface.")
 					//dispense the item
