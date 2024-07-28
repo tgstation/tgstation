@@ -23,11 +23,11 @@
 	)
 	contraband = list(
 		/obj/item/knife/kitchen = 3,
-		/obj/item/petri_dish/random = 3
+		/obj/item/petri_dish/random = 6
 	)
 	refill_canister = /obj/item/vending_refill/cytopro
 	default_price = PAYCHECK_CREW * 0.6
-	extra_price = PAYCHECK_COMMAND
+	extra_price = PAYCHECK_COMMAND * 0.5
 	payment_department = ACCOUNT_SCI
 
 /obj/item/vending_refill/cytopro
