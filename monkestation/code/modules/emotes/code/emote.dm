@@ -141,6 +141,14 @@
 	return ..()
 
 /datum/emote/living/scream/get_sound(mob/living/user)
+	if ((is_cat_enough(user, TRUE) && issilicon(user)) || (is_cat_enough(user, TRUE) && isipc(user)))
+		return pick(
+			'monkestation/sound/voice/screams/silicon/catscream1.ogg',
+			'monkestation/sound/voice/screams/silicon/catscream2.ogg',
+			'monkestation/sound/voice/screams/silicon/catscream3.ogg',
+			'monkestation/sound/voice/screams/silicon/catscream4.ogg',
+			'monkestation/sound/voice/screams/silicon/catscream5.ogg',
+		)
 	if(issilicon(user))
 		return pick(
 			'monkestation/sound/voice/screams/silicon/robotAUGH1.ogg',
@@ -148,13 +156,14 @@
 			'monkestation/sound/voice/screams/silicon/robotAUGH3.ogg',
 			'monkestation/sound/voice/screams/silicon/robotAUGH4.ogg',
 			'monkestation/sound/voice/screams/silicon/robotAUGH5.ogg')
+	if(is_cat_enough(user))
+		return pick('monkestation/sound/voice/feline/scream1.ogg', 'monkestation/sound/voice/feline/scream2.ogg', 'monkestation/sound/voice/feline/scream3.ogg')
+	// It's not fair to NOT scream like a cat when we're cat, so alt screams get lowest priority
 	if(ishuman(user))
 		var/mob/living/carbon/human/human_user = user
 		if(length(human_user.alternative_screams))
 			return pick(human_user.alternative_screams)
 		. = human_user.dna.species.get_scream_sound(user)
-	if(is_cat_enough(user))
-		return pick('monkestation/sound/voice/feline/scream1.ogg', 'monkestation/sound/voice/feline/scream2.ogg', 'monkestation/sound/voice/feline/scream3.ogg')
 
 /datum/emote/living/scream/should_vary(mob/living/user)
 	if(ishuman(user) && !is_cat_enough(user))
@@ -186,6 +195,12 @@
 	return ..() && is_cat_enough(user, include_all_anime = TRUE)
 
 /datum/emote/living/meow/get_sound(mob/living/user)
+	if(issilicon(user) || isipc(user))
+		return pick(
+			'monkestation/sound/voice/feline/silicon/meow1.ogg',
+			'monkestation/sound/voice/feline/silicon/meow2.ogg',
+			'monkestation/sound/voice/feline/silicon/meow3.ogg',
+		)
 	return pick('monkestation/sound/voice/feline/meow1.ogg', 'monkestation/sound/voice/feline/meow2.ogg', 'monkestation/sound/voice/feline/meow3.ogg', 'monkestation/sound/voice/feline/meow4.ogg')
 
 /datum/emote/living/bark/can_run_emote(mob/user, status_check = TRUE, intentional = FALSE)

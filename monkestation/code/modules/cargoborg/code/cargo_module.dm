@@ -34,5 +34,5 @@
 	borg_skins = list(
 		"Technician" = list(SKIN_ICON_STATE = "cargoborg", SKIN_ICON = CYBORG_ICON_CARGO),
 		"Zoomba" = list(SKIN_ICON_STATE = "zoomba_cargo", SKIN_ICON = CYBORG_ICON_CARGO),
-		"Kerfus" = list(SKIN_ICON_STATE = "kerfus_cargo", SKIN_LIGHT_KEY = NONE, SKIN_ICON = CYBORG_ICON_CARGO),
+		"Kerfus" = list(SKIN_ICON_STATE = "kerfus_cargo", SKIN_LIGHT_KEY = NONE, SKIN_ICON = CYBORG_ICON_CARGO, SKIN_TRAITS = list(TRAIT_CAT)),
 	)
