@@ -11,7 +11,7 @@
 	"Deadeye": "This creature can always hit opponents, regardless of effects or immunities.",
 	"Death-Defying": "Any time the creature would be destroyed in combat, flip a coin. If heads, the creature is not destroyed.",
 	"Double Strike": "This creature deals its damage twice: first as First Strike damage, and then a second time as Regular damage.",
-	"Exterminate": "This creature gains +2/+1 when in combat against a Creature with the Human subtype."
+	"Exterminate": "This creature gains +2/+1 when in combat against a Creature with the Human subtype.",
 	"Faction": "Groupings of cards that can often share effects and traits together.",
 	"First Strike": "This creature has attack priority in combat (i.e. it deals its damage to the opponent before taking any damage in return).",
 	"Flying": "This creature can't be blocked, except by other creatures with Flying or Long-Ranged.",
