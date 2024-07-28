@@ -137,6 +137,15 @@
 	base_icon_state = "puddle"
 	resistance_flags = UNACIDABLE
 
+/obj/structure/water_source/puddle/Initialize(mapload)
+	. = ..()
+	register_context()
+
+/obj/structure/water_source/puddle/add_context(atom/source, list/context, obj/item/held_item, mob/user)
+	. = ..()
+	if(isnull(held_item))
+		context[SCREENTIP_CONTEXT_LMB] = "Scoop Tadpoles"
+
 //ATTACK HAND IGNORING PARENT RETURN VALUE
 /obj/structure/water_source/puddle/attack_hand(mob/user, list/modifiers)
 	icon_state = "[base_icon_state]-splash"
