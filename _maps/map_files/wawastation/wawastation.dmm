@@ -55786,6 +55786,10 @@
 /obj/effect/landmark/start/hangover/closet,
 /turf/open/floor/iron/dark/smooth_large,
 /area/station/hallway/primary/central)
+"tGP" = (
+/obj/machinery/vending/cytopro,
+/turf/open/floor/iron/white,
+/area/station/science/research)
 "tGR" = (
 /obj/effect/turf_decal/trimline/yellow/filled/line{
 	dir = 8
@@ -170892,7 +170896,7 @@ nmj
 wPX
 dfM
 xtZ
-dfM
+tGP
 mzB
 dVp
 vqN

@@ -49807,6 +49807,12 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron,
 /area/mine/laborcamp)
+"oSg" = (
+/obj/machinery/vending/cytopro,
+/turf/open/floor/iron/cafeteria{
+	dir = 8
+	},
+/area/station/science/research)
 "oSm" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -259330,7 +259336,7 @@ oHK
 goq
 goq
 rDH
-usP
+oSg
 wLl
 nsZ
 uoC
