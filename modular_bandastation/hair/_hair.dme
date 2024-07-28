@@ -1,0 +1,3 @@
+#include "_hair.dm"
+
+#include "code/hair.dm"
