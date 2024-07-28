@@ -65,6 +65,8 @@
 	if(!istype(what_we_ate, /obj/item/organ/internal/heart))
 		return
 	var/obj/item/organ/internal/heart/we_ate_heart = what_we_ate
+	if (we_ate_heart.organ_flags & ORGAN_ROBOTIC)
+		return
 	var/obj/item/organ/internal/heart/previous_heart = last_heart_we_ate?.resolve()
 	if(we_ate_heart == previous_heart)
 		return
