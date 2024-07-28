@@ -400,6 +400,7 @@
 		if("Release")
 			var/amount = text2num(params["amount"])
 			var/desired = 1
+			var/dispensed_amount = 0
 
 			if(isAI(living_mob))
 				to_chat(living_mob, span_warning("[src] does not respect your authority!"))
@@ -420,11 +421,11 @@
 					if(!living_mob.put_in_hands(dispensed_item))
 						dispensed_item.forceMove(drop_location())
 						adjust_item_drop_location(dispensed_item)
-					if(vend_sound)
-						playsound(src, vend_sound, 50, TRUE, extrarange = -3)
 					use_energy(active_power_usage)
+					dispensed_amount++
 					desired--
-
+			if(dispensed_amount && vend_sound)
+				playsound(src, vend_sound, 50, TRUE, extrarange = -3)
 			if (visible_contents)
 				update_appearance()
 			return
