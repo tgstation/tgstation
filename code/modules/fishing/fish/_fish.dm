@@ -15,7 +15,7 @@
 	///The grind results of the fish. They scale with the weight of the fish.
 	grind_results = list(/datum/reagent/blood = 5, /datum/reagent/consumable/liquidgibs = 5)
 	obj_flags = UNIQUE_RENAME
-	item_flags = IMMUTABLE_SLOW|SLOWS_WHILE_IN_HANDS
+	item_flags = IMMUTABLE_SLOW|SLOWS_WHILE_IN_HAND
 
 	/// Resulting width of aquarium visual icon - default size of "fish_greyscale" state
 	var/sprite_width = 5
