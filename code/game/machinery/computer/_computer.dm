@@ -134,6 +134,7 @@
 	SHOULD_CALL_PARENT(TRUE)
 	. = ..()
 	update_use_power(ACTIVE_POWER_USE)
+	playsound(src, SFX_KEYBOARD_CLICKS, 35, TRUE, FALSE)
 
 /obj/machinery/computer/ui_close(mob/user)
 	SHOULD_CALL_PARENT(TRUE)
