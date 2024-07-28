@@ -18,85 +18,97 @@ If you make a derivative work from this code, you must include this notification
 /datum/martial_art/wrestling
 	name = "Wrestling"
 	id = MARTIALART_WRESTLING
-	var/datum/action/slam/slam = new/datum/action/slam()
-	var/datum/action/throw_wrassle/throw_wrassle = new/datum/action/throw_wrassle()
-	var/datum/action/kick/kick = new/datum/action/kick()
-	var/datum/action/strike/strike = new/datum/action/strike()
-	var/datum/action/drop/drop = new/datum/action/drop()
+	// Monkestation Edit: Changes datum names to be less confusing
+	var/datum/action/wrestle_slam/wrestle_slam = new/datum/action/wrestle_slam()
+	var/datum/action/wrestle_throw/wrestle_throw = new/datum/action/wrestle_throw()
+	var/datum/action/wrestle_kick/wrestle_kick = new/datum/action/wrestle_kick()
+	var/datum/action/wrestle_strike/wrestle_strike = new/datum/action/wrestle_strike()
+	var/datum/action/wrestle_drop/wrestle_drop = new/datum/action/wrestle_drop()
+	// Monkestation Edit end
 
 /datum/martial_art/wrestling/proc/check_streak(mob/living/attacker, mob/living/defender)
 	switch(streak)
 		if("drop")
 			streak = ""
-			drop(attacker, defender)
+			wrestle_drop(attacker, defender)
 			return TRUE
 		if("strike")
 			streak = ""
-			strike(attacker, defender)
+			wrestle_strike(attacker, defender)
 			return TRUE
 		if("kick")
 			streak = ""
-			kick(attacker, defender)
+			wrestle_kick(attacker, defender)
 			return TRUE
 		if("throw")
 			streak = ""
-			throw_wrassle(attacker, defender)
+			wrestle_throw(attacker, defender)
 			return TRUE
 		if("slam")
 			streak = ""
-			slam(attacker, defender)
+			wrestle_slam(attacker, defender)
 			return TRUE
 	return FALSE
 
-/datum/action/slam
-	name = "Slam (Cinch) - Slam a grappled opponent into the floor."
+/datum/action/wrestle_slam
+	name = "Slam (Cinch)"
+	desc = "Slam a grappled opponent into the floor." //Monkestation Edit: Moves description from name to desc
+	button_icon = 'monkestation/icons/hud/martial_arts_actions.dmi'
 	button_icon_state = "wrassle_slam"
 
-/datum/action/slam/Trigger(trigger_flags)
+/datum/action/wrestle_slam/Trigger(trigger_flags)
 	if(owner.incapacitated())
 		to_chat(owner, span_warning("You can't WRESTLE while you're OUT FOR THE COUNT."))
 		return
 	owner.visible_message(span_danger("[owner] prepares to BODY SLAM!"), "<b><i>Your next attack will be a BODY SLAM.</i></b>")
 	owner.mind.martial_art.streak = "slam"
 
-/datum/action/throw_wrassle
-	name = "Throw (Cinch) - Spin a cinched opponent around and throw them."
+/datum/action/wrestle_throw
+	name = "Throw (Cinch)"
+	desc = "Spin a cinched opponent around and throw them." //Monkestation Edit: adds desc
+	button_icon = 'monkestation/icons/hud/martial_arts_actions.dmi'
 	button_icon_state = "wrassle_throw"
 
-/datum/action/throw_wrassle/Trigger(trigger_flags)
+/datum/action/wrestle_throw/Trigger(trigger_flags)
 	if(owner.incapacitated())
 		to_chat(owner, span_warning("You can't WRESTLE while you're OUT FOR THE COUNT."))
 		return
 	owner.visible_message(span_danger("[owner] prepares to THROW!"), "<b><i>Your next attack will be a THROW.</i></b>")
 	owner.mind.martial_art.streak = "throw"
 
-/datum/action/kick
-	name = "Kick - A powerful kick, sends people flying away from you. Also useful for escaping from bad situations."
+/datum/action/wrestle_kick
+	name = "Kick"
+	desc = "A powerful kick, sends people flying away from you. Also useful for escaping from bad situations." //Monkestation Edit: adds desc
+	button_icon = 'monkestation/icons/hud/martial_arts_actions.dmi'
 	button_icon_state = "wrassle_kick"
 
-/datum/action/kick/Trigger(trigger_flags)
+/datum/action/wrestle_kick/Trigger(trigger_flags)
 	if(owner.incapacitated())
 		to_chat(owner, span_warning("You can't WRESTLE while you're OUT FOR THE COUNT."))
 		return
 	owner.visible_message(span_danger("[owner] prepares to KICK!"), "<b><i>Your next attack will be a KICK.</i></b>")
 	owner.mind.martial_art.streak = "kick"
 
-/datum/action/strike
-	name = "Strike - Hit a neaby opponent with a quick attack."
+/datum/action/wrestle_strike
+	name = "Strike"
+	desc = "Hit a neaby opponent with a quick attack." //Monkestation Edit: adds desc
+	button_icon = 'monkestation/icons/hud/martial_arts_actions.dmi'
 	button_icon_state = "wrassle_strike"
 
-/datum/action/strike/Trigger(trigger_flags)
+/datum/action/wrestle_strike/Trigger(trigger_flags)
 	if(owner.incapacitated())
 		to_chat(owner, span_warning("You can't WRESTLE while you're OUT FOR THE COUNT."))
 		return
 	owner.visible_message(span_danger("[owner] prepares to STRIKE!"), "<b><i>Your next attack will be a STRIKE.</i></b>")
 	owner.mind.martial_art.streak = "strike"
 
-/datum/action/drop
-	name = "Drop - Smash down onto an opponent."
+/datum/action/wrestle_drop
+	name = "Drop"
+	desc = "Smash down onto an opponent." //Monkestation Edit: adds desc
+	button_icon = 'monkestation/icons/hud/martial_arts_actions.dmi'
 	button_icon_state = "wrassle_drop"
 
-/datum/action/drop/Trigger(trigger_flags)
+/datum/action/wrestle_drop/Trigger(trigger_flags)
 	if(owner.incapacitated())
 		to_chat(owner, span_warning("You can't WRESTLE while you're OUT FOR THE COUNT."))
 		return
@@ -107,19 +119,19 @@ If you make a derivative work from this code, you must include this notification
 	if(..())
 		to_chat(owner, span_userdanger("SNAP INTO A THIN TIM!"))
 		to_chat(owner, span_danger("Place your cursor over a move at the top of the screen to see what it does."))
-		drop.Grant(owner)
-		kick.Grant(owner)
-		slam.Grant(owner)
-		throw_wrassle.Grant(owner)
-		strike.Grant(owner)
+		wrestle_drop.Grant(owner)
+		wrestle_kick.Grant(owner)
+		wrestle_slam.Grant(owner)
+		wrestle_throw.Grant(owner)
+		wrestle_strike.Grant(owner)
 
 /datum/martial_art/wrestling/on_remove(mob/living/owner)
 	to_chat(owner, span_userdanger("You no longer feel that the tower of power is too sweet to be sour..."))
-	drop.Remove(owner)
-	kick.Remove(owner)
-	slam.Remove(owner)
-	throw_wrassle.Remove(owner)
-	strike.Remove(owner)
+	wrestle_drop.Remove(owner)
+	wrestle_kick.Remove(owner)
+	wrestle_slam.Remove(owner)
+	wrestle_throw.Remove(owner)
+	wrestle_strike.Remove(owner)
 
 /datum/martial_art/wrestling/harm_act(mob/living/attacker, mob/living/defender)
 	if(check_streak(attacker, defender))
@@ -127,7 +139,7 @@ If you make a derivative work from this code, you must include this notification
 	log_combat(attacker, defender, "punched with wrestling")
 	..()
 
-/datum/martial_art/wrestling/proc/throw_wrassle(mob/living/attacker, mob/living/defender)
+/datum/martial_art/wrestling/proc/wrestle_throw(mob/living/attacker, mob/living/defender)
 	if(!defender)
 		return
 	if(!attacker.pulling || attacker.pulling != defender)
@@ -211,7 +223,7 @@ If you make a derivative work from this code, you must include this notification
 	if (defender)
 		animate(defender, transform = null, time = 1, loop = 0)
 
-/datum/martial_art/wrestling/proc/slam(mob/living/attacker, mob/living/defender)
+/datum/martial_art/wrestling/proc/wrestle_slam(mob/living/attacker, mob/living/defender)
 	if(!defender)
 		return
 	if(!attacker.pulling || attacker.pulling != defender)
@@ -327,7 +339,7 @@ If you make a derivative work from this code, you must include this notification
 	if (attacker && (T && isturf(T) && get_dist(attacker, T) <= 1))
 		attacker.forceMove(T)
 
-/datum/martial_art/wrestling/proc/strike(mob/living/attacker, mob/living/defender)
+/datum/martial_art/wrestling/proc/wrestle_strike(mob/living/attacker, mob/living/defender)
 	if(!defender)
 		return
 	var/turf/T = get_turf(attacker)
@@ -346,7 +358,7 @@ If you make a derivative work from this code, you must include this notification
 		defender.Unconscious(2 SECONDS)
 	log_combat(attacker, defender, "headbutted")
 
-/datum/martial_art/wrestling/proc/kick(mob/living/attacker, mob/living/defender)
+/datum/martial_art/wrestling/proc/wrestle_kick(mob/living/attacker, mob/living/defender)
 	if(!defender)
 		return
 	attacker.emote("scream")
@@ -365,7 +377,7 @@ If you make a derivative work from this code, you must include this notification
 		defender.throw_at(T, 3, 2)
 	log_combat(attacker, defender, "roundhouse-kicked")
 
-/datum/martial_art/wrestling/proc/drop(mob/living/attacker, mob/living/defender)
+/datum/martial_art/wrestling/proc/wrestle_drop(mob/living/attacker, mob/living/defender)
 	if(!defender)
 		return
 	var/obj/surface = null

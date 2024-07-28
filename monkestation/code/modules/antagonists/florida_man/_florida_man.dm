@@ -29,6 +29,9 @@
 		DB.Grant(floridan)
 		CB.Grant(floridan)
 		RG.Grant(floridan)
+
+		var/datum/martial_art/wrestling/wrestling = new
+		wrestling.teach(floridan)
 	. = ..()
 
 
