@@ -35134,6 +35134,7 @@
 	dir = 8
 	},
 /obj/structure/window/reinforced/spawner/directional/south,
+/obj/machinery/vending/cytopro,
 /turf/open/floor/iron/dark/textured_large,
 /area/station/science/cytology)
 "myB" = (
