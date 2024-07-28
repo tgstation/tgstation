@@ -469,6 +469,9 @@ GLOBAL_LIST_EMPTY(cached_storage_typecaches)
 		UnregisterSignal(target, COMSIG_MOUSEDROPPED_ONTO)
 		return
 
+	if(numerical_stacking)
+		return
+
 	var/drop_index = real_location.contents.Find(dropped_onto)
 	real_location.contents -= target
 	// Use an empty list if we're dropping onto the last item
