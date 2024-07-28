@@ -226,7 +226,7 @@
 
 /datum/unit_test/raise_a_chasm_crab/Run()
 	var/obj/structure/aquarium/crab/aquarium = allocate(/obj/structure/aquarium/crab)
-	SEND_SIGNAL(aquarium.crabbie.grow_up, COMSIG_FISH_LIFE, 1) //give the fish growth component a small push.
+	SEND_SIGNAL(aquarium.crabbie, COMSIG_FISH_LIFE, 1) //give the fish growth component a small push.
 	var/mob/living/basic/mining/lobstrosity/juvenile/lobster = locate() in aquarium.loc
 	TEST_ASSERT_EQUAL(lobster.loc, get_turf(aquarium), "The lobstrosity didn't spawn on the aquarium's turf")
 	TEST_ASSERT(QDELETED(aquarium.crabbie), "The test aquarium's chasm crab didn't delete itself.")
