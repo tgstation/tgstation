@@ -229,7 +229,6 @@
 /obj/item/organ/internal/brain/slime/proc/rebuild_body(mob/user, nugget = TRUE)
 	if(rebuilt)
 		return
-	rebuilt = TRUE
 	set_organ_damage(-maxHealth) // heals the brain fully
 
 	if(gps_active) // making sure the gps signal is removed if it's active on revival
@@ -249,6 +248,7 @@
 		return TRUE
 	var/mob/living/carbon/human/new_body = new /mob/living/carbon/human(drop_location())
 
+	rebuilt = TRUE
 	brainmob.client?.prefs?.safe_transfer_prefs_to(new_body)
 	new_body.underwear = "Nude"
 	new_body.undershirt = "Nude"
