@@ -28,12 +28,15 @@
 	sprite_datum = get_random_appearance()
 
 ///Grab a random appearance datum (thats not locked)
-/datum/bodypart_overlay/mutant/proc/get_random_appearance()
+/datum/bodypart_overlay/mutant/proc/get_random_appearance() as /datum/sprite_accessory
+	RETURN_TYPE(/datum/sprite_accessory)
 	var/list/valid_restyles = list()
 	var/list/feature_list = get_global_feature_list()
 	for(var/accessory in feature_list)
 		var/datum/sprite_accessory/accessory_datum = feature_list[accessory]
 		if(initial(accessory_datum.locked)) //locked is for stuff that shouldn't appear here
+			continue
+		if(!initial(accessory_datum.natural_spawn))
 			continue
 		valid_restyles += accessory_datum
 	return pick(valid_restyles)

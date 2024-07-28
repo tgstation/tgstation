@@ -964,7 +964,7 @@
 /obj/structure/cable,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /obj/machinery/light/small/directional/north,
-/obj/machinery/computer/security/telescreen/engine/directional/north,
+/obj/machinery/incident_display/delam/directional/north,
 /turf/open/floor/iron/dark,
 /area/station/engineering/engine_smes)
 "apS" = (
@@ -15758,6 +15758,7 @@
 /obj/item/analyzer,
 /obj/item/pipe_dispenser,
 /obj/item/flashlight,
+/obj/machinery/incident_display/delam/directional/north,
 /turf/open/floor/engine,
 /area/station/engineering/supermatter/room)
 "eEm" = (
@@ -29665,7 +29666,7 @@
 	},
 /obj/machinery/holopad,
 /obj/effect/landmark/start/depsec/medical,
-/obj/machinery/computer/security/telescreen/cmo/directional/east,
+/obj/machinery/computer/security/telescreen/med_sec/directional/east,
 /turf/open/floor/iron/dark/smooth_large,
 /area/station/security/checkpoint/medical)
 "iTJ" = (
@@ -41854,7 +41855,6 @@
 /obj/effect/turf_decal/tile/blue/half/contrasted{
 	dir = 1
 	},
-/obj/machinery/incident_display/bridge/directional/north,
 /turf/open/floor/iron,
 /area/station/hallway/primary/central)
 "mDw" = (
@@ -58115,6 +58115,7 @@
 /obj/item/stock_parts/power_store/cell/high/empty,
 /obj/machinery/cell_charger,
 /obj/effect/turf_decal/tile/brown/fourcorners,
+/obj/item/radio/intercom/directional/west,
 /turf/open/floor/iron/dark,
 /area/station/engineering/lobby)
 "rlS" = (
@@ -63820,7 +63821,7 @@
 /turf/open/floor/iron/white,
 /area/station/medical/chemistry)
 "sSS" = (
-/obj/item/radio/intercom/directional/north,
+/obj/machinery/incident_display/delam/directional/north,
 /turf/open/floor/iron/dark,
 /area/station/engineering/lobby)
 "sTe" = (
@@ -67390,7 +67391,6 @@
 /obj/machinery/modular_computer/preset/civilian{
 	dir = 8
 	},
-/obj/structure/sign/poster/official/build/directional/north,
 /turf/open/floor/iron/dark,
 /area/station/engineering/lobby)
 "tZR" = (
@@ -74289,8 +74289,8 @@
 /area/station/medical/virology)
 "wiM" = (
 /obj/machinery/computer/station_alert,
-/obj/item/radio/intercom/directional/north,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
+/obj/machinery/computer/security/telescreen/engine/directional/north,
 /turf/open/floor/iron/dark,
 /area/station/engineering/engine_smes)
 "wiO" = (
@@ -79384,9 +79384,14 @@
 /turf/open/floor/iron/dark,
 /area/station/medical/morgue)
 "xFM" = (
-/obj/machinery/incident_display/delam,
-/turf/closed/wall/r_wall,
-/area/station/engineering/supermatter/room)
+/obj/effect/turf_decal/bot{
+	dir = 1
+	},
+/obj/machinery/suit_storage_unit/engine,
+/obj/effect/turf_decal/tile/neutral/fourcorners,
+/obj/item/radio/intercom/directional/west,
+/turf/open/floor/iron/dark/textured,
+/area/station/engineering/engine_smes)
 "xFT" = (
 /obj/effect/turf_decal/trimline/green/filled/corner,
 /obj/effect/turf_decal/trimline/blue/filled/warning/corner,
@@ -240599,7 +240604,7 @@ gTK
 gTK
 myX
 sSJ
-xFM
+gka
 eEh
 fab
 eDC
@@ -240852,7 +240857,7 @@ mNY
 wiM
 tMD
 ehJ
-rpF
+xFM
 twt
 tXB
 sSJ

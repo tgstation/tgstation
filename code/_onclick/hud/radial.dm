@@ -7,6 +7,7 @@ GLOBAL_LIST_EMPTY(radial_menus)
 	icon = 'icons/hud/radial.dmi'
 	plane = ABOVE_HUD_PLANE
 	vis_flags = VIS_INHERIT_PLANE
+	var/click_on_hover = FALSE
 	var/datum/radial_menu/parent
 
 /atom/movable/screen/radial/proc/set_parent(new_value)
@@ -39,6 +40,8 @@ GLOBAL_LIST_EMPTY(radial_menus)
 		icon_state = "[parent.radial_slice_icon]_focus"
 	if(tooltips)
 		openToolTip(usr, src, params, title = name)
+	if (click_on_hover && !isnull(usr) && !isnull(parent))
+		Click(location, control, params)
 
 /atom/movable/screen/radial/slice/MouseExited(location, control, params)
 	. = ..()
@@ -146,7 +149,7 @@ GLOBAL_LIST_EMPTY(radial_menus)
 			starting_angle = 180
 			ending_angle = 45
 
-/datum/radial_menu/proc/setup_menu(use_tooltips, set_page = 1)
+/datum/radial_menu/proc/setup_menu(use_tooltips, set_page = 1, click_on_hover = FALSE)
 	if(ending_angle > starting_angle)
 		zone = ending_angle - starting_angle
 	else
@@ -183,18 +186,26 @@ GLOBAL_LIST_EMPTY(radial_menus)
 	page_data[page] = current
 	pages = page
 	current_page = clamp(set_page, 1, pages)
-	update_screen_objects(anim = entry_animation)
+	update_screen_objects(entry_animation, click_on_hover)
 
-/datum/radial_menu/proc/update_screen_objects(anim = FALSE)
+/datum/radial_menu/proc/update_screen_objects(anim = FALSE, click_on_hover = FALSE)
 	var/list/page_choices = page_data[current_page]
 	var/angle_per_element = round(zone / page_choices.len)
 	for(var/i in 1 to elements.len)
-		var/atom/movable/screen/radial/E = elements[i]
+		var/atom/movable/screen/radial/element = elements[i]
 		var/angle = WRAP(starting_angle + (i - 1) * angle_per_element,0,360)
 		if(i > page_choices.len)
-			HideElement(E)
+			HideElement(element)
+			element.click_on_hover = FALSE
 		else
-			SetElement(E,page_choices[i],angle,anim = anim,anim_order = i)
+			SetElement(element,page_choices[i],angle,anim = anim,anim_order = i)
+			// Only activate click on hover after the animation plays
+			if (!click_on_hover)
+				continue
+			if (anim)
+				addtimer(VARSET_CALLBACK(element, click_on_hover, TRUE), i * 0.5)
+			else
+				element.click_on_hover = TRUE
 
 /datum/radial_menu/proc/HideElement(atom/movable/screen/radial/slice/E)
 	E.cut_overlays()
@@ -272,7 +283,7 @@ GLOBAL_LIST_EMPTY(radial_menus)
 /datum/radial_menu/proc/get_next_id()
 	return "c_[choices.len]"
 
-/datum/radial_menu/proc/set_choices(list/new_choices, use_tooltips, set_page = 1)
+/datum/radial_menu/proc/set_choices(list/new_choices, use_tooltips, click_on_hover = FALSE, set_page = 1)
 	if(choices.len)
 		Reset()
 	for(var/E in new_choices)
@@ -286,7 +297,7 @@ GLOBAL_LIST_EMPTY(radial_menus)
 
 			if (istype(new_choices[E], /datum/radial_menu_choice))
 				choice_datums[id] = new_choices[E]
-	setup_menu(use_tooltips, set_page)
+	setup_menu(use_tooltips, set_page, click_on_hover)
 
 /datum/radial_menu/proc/extract_image(to_extract_from)
 	if (istype(to_extract_from, /datum/radial_menu_choice))
@@ -345,7 +356,7 @@ GLOBAL_LIST_EMPTY(radial_menus)
 	Choices should be a list where list keys are movables or text used for element names and return value
 	and list values are movables/icons/images used for element icons
 */
-/proc/show_radial_menu(mob/user, atom/anchor, list/choices, uniqueid, radius, datum/callback/custom_check, require_near = FALSE, tooltips = FALSE, no_repeat_close = FALSE, radial_slice_icon = "radial_slice", autopick_single_option = TRUE)
+/proc/show_radial_menu(mob/user, atom/anchor, list/choices, uniqueid, radius, datum/callback/custom_check, require_near = FALSE, tooltips = FALSE, no_repeat_close = FALSE, radial_slice_icon = "radial_slice", autopick_single_option = TRUE, entry_animation = TRUE, click_on_hover = FALSE)
 	if(!user || !anchor || !length(choices))
 		return
 
@@ -362,6 +373,7 @@ GLOBAL_LIST_EMPTY(radial_menus)
 		return
 
 	var/datum/radial_menu/menu = new
+	menu.entry_animation = entry_animation
 	GLOB.radial_menus[uniqueid] = menu
 	if(radius)
 		menu.radius = radius
@@ -370,7 +382,7 @@ GLOBAL_LIST_EMPTY(radial_menus)
 	menu.anchor = anchor
 	menu.radial_slice_icon = radial_slice_icon
 	menu.check_screen_border(user) //Do what's needed to make it look good near borders or on hud
-	menu.set_choices(choices, tooltips)
+	menu.set_choices(choices, tooltips, click_on_hover)
 	menu.show_to(user)
 	menu.wait(user, anchor, require_near)
 	var/answer = menu.selected_choice
