@@ -65,6 +65,7 @@ export const SmartVend = (props) => {
             contents.map((item) => (
               <Box key={item.path} m={1} p={0} inline width="64px">
                 <Button
+                  p={0}
                   height="64px"
                   width="64px"
                   tooltip={item.name}
