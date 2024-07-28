@@ -25,7 +25,7 @@
 		|| QDELETED(user) \
 		|| !user.can_perform_action(parent, NEED_DEXTERITY) \
 		|| !can_insert(to_insert, user) \
-		|| bag_area.area_flags & NO_BOH \
+		|| (bag_area.area_flags & NO_BOH) \
 	)
 		return
 
