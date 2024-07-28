@@ -10596,9 +10596,7 @@
 	},
 /obj/effect/turf_decal/tile/red/fourcorners,
 /obj/machinery/light/small/directional/west,
-/obj/machinery/computer/security/telescreen/cmo/directional/west{
-	name = "Medbay Monitor"
-	},
+/obj/machinery/computer/security/telescreen/med_sec/directional/west,
 /turf/open/floor/iron/dark,
 /area/station/security/checkpoint/medical)
 "dQO" = (
