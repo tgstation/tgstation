@@ -82,6 +82,8 @@
 		if(use_anchor)
 			source.set_anchored(FALSE)
 
+	SEND_SIGNAL(source, COMSIG_UNDERTILE_UPDATED)
+
 /datum/element/undertile/Detach(atom/movable/source, visibility_trait, invisibility_level = INVISIBILITY_MAXIMUM)
 	. = ..()
 

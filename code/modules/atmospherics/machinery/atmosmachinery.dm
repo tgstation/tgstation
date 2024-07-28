@@ -133,16 +133,16 @@
 	return ..()
 
 /**
- * Ran on Initialize if hide is TRUE, allows subtypes to register things to run before updating caps.
+ * Ran on `Initialize` if hide is `TRUE`, allows subtypes to register their own hiding logic.
+ * Including registering cap updating checks to run on different signals.
  */
 /obj/machinery/atmospherics/proc/setup_hiding()
-	SHOULD_CALL_PARENT(TRUE)
 	RegisterSignal(src, COMSIG_OBJ_HIDE, PROC_REF(on_hide))
 
 /**
- * Handler for `COMSIG_OBJ_HIDE`, connects only if `hide` is set to `TRUE`. Calls `update_cap_visuals` on pipe and its connected nodes
+ * Handler for signals registered in `setup_hiding`, connects only if `hide` is set to `TRUE`. Calls `update_cap_visuals` on pipe and its connected nodes
  */
-/obj/machinery/atmospherics/proc/on_hide(datum/source, underfloor_accessibility)
+/obj/machinery/atmospherics/proc/on_hide(datum/source)
 	SHOULD_CALL_PARENT(TRUE)
 	SIGNAL_HANDLER
 
