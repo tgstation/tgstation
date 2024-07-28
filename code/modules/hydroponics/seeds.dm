@@ -625,15 +625,17 @@
 			if(donor_reagent.reagent_id == receptor_reagent.reagent_id)
 				if(receptor_reagent.rate < donor_reagent.rate)
 					receptor_reagent.rate = donor_reagent.rate
-					// sucessfull pollination/upgrade, we stop here.
+					// sucessful pollination/upgrade, we stop here.
 					reagents_from_genes()
 					return
 				else
 					repeated = TRUE
+
 		if(!repeated)
 			valid_reagents += donor_reagent
 
-	var/datum/plant_gene/reagent/selected_reagent = pick(valid_reagents)
-	// picked a valid reagent that our receptor seed don't have and add the gene to it
-	genes += selected_reagent
-	reagents_from_genes()
+	if(valid_reagents.len > 0)
+		// pick a valid reagent that our receptor seed don't have and add the gene to it
+		var/datum/plant_gene/reagent/selected_reagent = pick(valid_reagents)
+		genes += selected_reagent
+		reagents_from_genes()
