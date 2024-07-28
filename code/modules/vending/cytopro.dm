@@ -3,10 +3,10 @@
 	desc = "For all your cytology needs!"
 	product_slogans = "Cloning? Don't be ridiculous.;Don't be uncultured, get some cells growing!;Who needs farms when we got vats?"
 	product_ads = "Grow your own little creatures!;Biology, at your fingertips!"
-	icon_state = "nutri"
-	icon_deny = "nutri-deny"
+	icon_state = "cytopro"
+	icon_deny = "cytopro-deny"
 	panel_type = "panel2"
-	light_mask = "nutri-light-mask"
+	light_mask = "cytopro-light-mask"
 	products = list(
 		/obj/item/cultivator = 3,
 		/obj/item/plant_analyzer = 4,
