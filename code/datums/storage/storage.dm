@@ -925,7 +925,7 @@ GLOBAL_LIST_EMPTY(cached_storage_typecaches)
 	if(animated)
 		animate_parent()
 
-	if(do_rustle)
+	if(do_rustle && !silent)
 		playsound(parent, (open_sound ? open_sound : SFX_RUSTLE), 50, open_sound_vary, -5)
 
 	return TRUE
