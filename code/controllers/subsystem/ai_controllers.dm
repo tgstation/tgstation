@@ -10,9 +10,6 @@ SUBSYSTEM_DEF(ai_controllers)
 	var/planning_status = AI_STATUS_ON
 	/// The tick cost of all active AI, calculated on fire.
 	var/our_cost
-	/// The tick cost of all idle AI, calculated on fire.
-	var/cost_idle
-
 
 /datum/controller/subsystem/ai_controllers/Initialize()
 	setup_subtrees()
