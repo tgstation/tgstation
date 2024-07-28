@@ -281,11 +281,11 @@
 	//You need to be holding the rod to use it.
 	if(LAZYACCESS(modifiers, SHIFT_CLICK) || LAZYACCESS(modifiers, CTRL_CLICK) || LAZYACCESS(modifiers, ALT_CLICK))
 		return
-	if(!source.get_active_held_item(used_rod) && !HAS_TRAIT(source, TRAIT_PROFOUND_FISHER))
+	if(!HAS_TRAIT(source, TRAIT_PROFOUND_FISHER) && source.get_active_held_item() != used_rod)
 		return
-	if(phase == WAIT_PHASE) //Reset wait
+	if(phase == WAIT_PHASE)
 		send_alert("miss!")
-		start_baiting_phase(TRUE)
+		start_baiting_phase(TRUE) //Add in another 3 to 5 seconds for that blunder.
 	else if(phase == BITING_PHASE)
 		start_minigame_phase()
 	return COMSIG_MOB_CANCEL_CLICKON
@@ -333,7 +333,7 @@
 	if(penalty)
 		wait_time = min(timeleft(next_phase_timer) + rand(3 SECONDS, 5 SECONDS), 30 SECONDS)
 	else
-		wait_time = rand(1 SECONDS, 30 SECONDS)
+		wait_time = rand(3 SECONDS, 25 SECONDS)
 		if(special_effects & FISHING_MINIGAME_AUTOREEL && wait_time >= 15 SECONDS)
 			wait_time = max(wait_time - 7.5 SECONDS, 15 SECONDS)
 	deltimer(next_phase_timer)
