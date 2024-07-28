@@ -3,6 +3,7 @@ MOVEMENT_SUBSYSTEM_DEF(newtonian_movement)
 	name = "Newtonian Movement"
 	flags = SS_NO_INIT|SS_TICKER
 	runlevels = RUNLEVEL_GAME | RUNLEVEL_POSTGAME
+	wait = 0.5
 
 	var/stat_tag = "P" //Used for logging
 	var/list/processing = list()
