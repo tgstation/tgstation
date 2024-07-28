@@ -17,7 +17,9 @@
 /turf/open/floor/circuit/Initialize(mapload)
 	SSmapping.nuke_tiles += src
 	RegisterSignal(loc, COMSIG_AREA_POWER_CHANGE, PROC_REF(handle_powerchange))
-	handle_powerchange(get_area(src), TRUE)
+	var/area/cur_area = get_area(src)
+	if (!isnull(cur_area))
+		handle_powerchange(cur_area, TRUE)
 	. = ..()
 
 /turf/open/floor/circuit/Destroy()
