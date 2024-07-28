@@ -21,6 +21,7 @@
 	maxHealth = 75
 	blood_volume = BLOOD_VOLUME_NORMAL
 	ai_controller = /datum/ai_controller/basic_controller/deer
+	habitable_atmos = list("max_co2" = 10) //MONKESTATION ADDITION: deers won't die in colony atmos
 	/// Things that will scare us into being stationary. Vehicles are scary to deers because they might have headlights.
 	var/static/list/stationary_scary_things = list(/obj/vehicle)
 
