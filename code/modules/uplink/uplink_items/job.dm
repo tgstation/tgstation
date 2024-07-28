@@ -396,7 +396,7 @@
 	desc = "A highly illegal, highly dangerous upgrade for artificial intelligence units, granting them a variety of powers as well as the ability to hack APCs. \
 		This upgrade does not override any active laws, and must be applied directly to an active AI core."
 	item = /obj/item/malf_upgrade
-	cost = 10
+	cost = 16
 	restricted_roles = list(JOB_RESEARCH_DIRECTOR)
 	surplus = 0
 	refundable = TRUE
