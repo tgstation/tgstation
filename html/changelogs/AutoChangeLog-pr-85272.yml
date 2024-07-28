@@ -1,4 +1,0 @@
-author: "Axidyuwu"
-delete-after: True
-changes:
-  - bugfix: "now Justice invisibility turns off in non combat mode as it supposed to"
