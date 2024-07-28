@@ -5,3 +5,11 @@
 #include "code/papershredder.dm"
 #include "code/material_pouch.dm"
 #include "code/structures/posters.dm"
+
+#include "code/clothing/head/hat.dm"
+#include "code/clothing/head/soft_caps.dm"
+#include "code/clothing/suits/cloaks.dm"
+#include "code/clothing/suits/jacket.dm"
+#include "code/clothing/suits/wintercoats.dm"
+#include "code/clothing/under/jobs/rnd.dm"
+#include "code/vending/vending.dm"
