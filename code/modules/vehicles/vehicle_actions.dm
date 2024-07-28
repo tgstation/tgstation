@@ -481,3 +481,7 @@
 		return
 	to_kick.Knockdown(1 SECONDS)
 	vehicle_entered_target.mob_exit(to_kick, randomstep = TRUE)
+
+/datum/action/vehicle/sealed/climb_out/pod
+	button_icon = 'icons/mob/actions/actions_mecha.dmi'
+	button_icon_state = "mech_eject" //spriting is hard ok

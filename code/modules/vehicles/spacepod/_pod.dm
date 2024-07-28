@@ -9,6 +9,7 @@
 // research and print costs
 // crashing into people and walls and stuff (ok fuck this im assigning this to you riku)
 // sprites
+// replace spawn_equip or add new subtype, but probably the former; to have a more reasonable roundstart loadout
 // ALSO DO NOT FORGET TO REMOVE THIS HUGE ASS COMMENT before finishing
 
 // this is the iron variant
@@ -135,7 +136,7 @@
 /obj/vehicle/sealed/space_pod/generate_actions()
 	initialize_passenger_action_type(/datum/action/vehicle/sealed/kick_out)
 	initialize_controller_action_type(/datum/action/vehicle/sealed/pod_status, VEHICLE_CONTROL_DRIVE)
-	return ..() //eject goes first
+	initialize_passenger_action_type(/datum/action/vehicle/sealed/climb_out/pod)
 
 /obj/vehicle/sealed/space_pod/update_overlays()
 	. = ..()

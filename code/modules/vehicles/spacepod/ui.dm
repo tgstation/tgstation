@@ -4,7 +4,8 @@
 	desc = "See an overview of the pod."
 	background_icon_state = "bg_tech"
 	overlay_icon_state = "bg_tech_border"
-	button_icon_state = "mech_view_stats"
+	button_icon = 'icons/obj/tram/tram_controllers.dmi'
+	button_icon_state = "tram-controller"
 
 /datum/action/vehicle/sealed/pod_status/Trigger(trigger_flags)
 	. = ..()
