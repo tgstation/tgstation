@@ -616,3 +616,24 @@
 
 /obj/item/grown/get_plant_seed()
 	return seed
+
+/obj/item/seeds/proc/perform_reagent_pollination(obj/item/seeds/donor)
+	var/list/datum/plant_gene/reagent/valid_reagents = list()
+	for(var/datum/plant_gene/reagent/donor_reagent in donor.genes)
+		var/repeated = FALSE
+		for(var/datum/plant_gene/reagent/receptor_reagent in genes)
+			if(donor_reagent.reagent_id == receptor_reagent.reagent_id)
+				if(receptor_reagent.rate < donor_reagent.rate)
+					receptor_reagent.rate = donor_reagent.rate
+					// sucessfull pollination/upgrade, we stop here.
+					reagents_from_genes()
+					return
+				else
+					repeated = TRUE
+		if(!repeated)
+			valid_reagents += donor_reagent
+
+	var/datum/plant_gene/reagent/selected_reagent = pick(valid_reagents)
+	// picked a valid reagent that our receptor seed don't have and add the gene to it
+	genes += selected_reagent
+	reagents_from_genes()
