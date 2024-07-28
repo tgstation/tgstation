@@ -22,7 +22,7 @@ export SPACEMAN_DMM_VERSION=suite-1.8
 export PYTHON_VERSION=3.9.0
 
 #dreamluau repo
-export DREAMLUAU_REPO="y0sh1m4s73r/dreamluau"
+export DREAMLUAU_REPO="tgstation/dreamluau"
 
 #dreamluau git tag
 export DREAMLUAU_VERSION=0.1.0
