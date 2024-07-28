@@ -1367,3 +1367,44 @@
   - bugfix: wawastation ordnance no longer has a light fixture on a window and looks
       objectively slightly better
   - bugfix: wawastation engineering water tanks are now highcap
+2024-07-28:
+  00-Steven:
+  - bugfix: Clicking on a table in the lootpanel with an item in-hand tries to place
+      it in the center again.
+  Axidyuwu:
+  - bugfix: now Justice invisibility turns off in non combat mode as it supposed to
+  Deadgebert:
+  - bugfix: peg limbs can now be amputated
+  DrDiasyl aka DrTuxedo:
+  - sound: Hearing and talking into the radio now produces a sound. Heads get a special
+      sound.
+  Helg2:
+  - rscadd: Emergency climbing hooks now spawn in emergency boxes on all of the multi-z
+      level stations.
+  JohnFulpWillard:
+  - bugfix: '[Mafia] The show_help button no longer shows you who the Obsessed''s
+      target is.'
+  LT3:
+  - bugfix: Players now receive a notification when trying to perform surgery steps
+      that involve chemicals
+  Rhials:
+  - bugfix: Monkey wizards can now interact with grand ritual runes.
+  - bugfix: Clown Ops gear has been returned to being available only to clown ops.
+      Whoops!
+  SmArtKar:
+  - bugfix: People with tooltips enabled no longer lag the server when they move their
+      mouse. Oops.
+  - bugfix: Mirage grenade dispensers and ionic jump jets now work
+  StrangeWeirdKitten:
+  - bugfix: Voidwalker should not run on planetary maps.
+  grungussuss:
+  - bugfix: Med sec telescreens are no longer the same item as the CMO telescreen.
+  - spellcheck: correcte name for the CMO telescreen mount
+  - bugfix: birdshot holodeck's lighting has been fixed.
+  - sound: medkits now have sounds
+  - sound: gas tanks now have sound
+  - sound: the default metal sound has been changed
+  - bugfix: lavaland no longer has roundstart atmos processing because of a passive
+      vent
+  - sound: only the scream emote can be heard through walls
+  - sound: the sneeze projectile no longer makes a sound when making contact.

@@ -186,7 +186,7 @@
 
 	var/datum/market_item/stolen_good/new_item = new(thing, item_price)
 
-	return SSblackmarket.markets[/datum/market/blackmarket].add_item(new_item)
+	return SSmarket.markets[/datum/market/blackmarket].add_item(new_item)
 
 /// Steal an item
 /datum/spy_bounty/objective_item
