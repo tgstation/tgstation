@@ -186,6 +186,7 @@
 /obj/machinery/LateInitialize()
 	SHOULD_NOT_OVERRIDE(TRUE)
 	post_machine_initialize()
+	CheckParts()
 
 /obj/machinery/Destroy(force)
 	SSmachines.unregister_machine(src)
