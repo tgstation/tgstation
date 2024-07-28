@@ -15,7 +15,7 @@
 	///The grind results of the fish. They scale with the weight of the fish.
 	grind_results = list(/datum/reagent/blood = 5, /datum/reagent/consumable/liquidgibs = 5)
 	obj_flags = UNIQUE_RENAME
-	item_flags = IMMUTABLE_SLOW
+	item_flags = IMMUTABLE_SLOW|SLOWS_WHILE_IN_HANDS
 
 	/// Resulting width of aquarium visual icon - default size of "fish_greyscale" state
 	var/sprite_width = 5
@@ -151,10 +151,6 @@
 	/// The beauty this fish provides to the aquarium it's inserted in.
 	var/beauty = FISH_BEAUTY_GENERIC
 
-	//wip pr testing stuff
-	var/weight_rank
-	var/bonus_malus
-
 /obj/item/fish/Initialize(mapload, apply_qualities = TRUE)
 	. = ..()
 	AddComponent(/datum/component/aquarium_content, icon, PROC_REF(get_aquarium_animation), list(COMSIG_FISH_STIRRED), beauty)
@@ -202,7 +198,6 @@
 	// All spacemen have magic eyes of fish weight perception until fish scale (get it?) is implemented.
 	. += span_notice("It's [size] cm long.")
 	. += span_notice("It weighs [weight] g.")
-	. += "size rank [w_class] - weight rank [weight_rank] - bonus_malus [bonus_malus]"
 
 ///Randomizes weight and size.
 /obj/item/fish/proc/randomize_size_and_weight(base_size = average_size, base_weight = average_weight, deviation = weight_size_deviation)
@@ -314,8 +309,7 @@
 /obj/item/fish/proc/calculate_fish_force_bonus(bonus_malus)
 	demolition_mod += bonus_malus * 0.1
 	attack_speed += bonus_malus * 0.1
-	var/one_fifth_or_sixth = bonus_malus > 0 ? 6/5 : 5/6
-	force = round(force * (one_fifth_or_sixth^abs(bonus_malus)), 0.1)
+	force = round(force * (1 + bonus_malus * 0.1), 0.1)
 
 /obj/item/fish/proc/get_force_rank()
 	switch(w_class)
@@ -332,9 +326,9 @@
 			attack_speed += 0.2 SECONDS
 			demolition_mod += 0.2
 		if(WEIGHT_CLASS_GIGANTIC)
-			force += 14
+			force += 13
 			attack_speed += 0.4 SECONDS
-			demolition_mod += 0.5
+			demolition_mod += 0.4
 
 /**
  * This proc has fish_traits list populated with fish_traits paths from three different lists:

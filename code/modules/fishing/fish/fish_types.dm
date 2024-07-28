@@ -818,7 +818,6 @@
 	beauty = FISH_BEAUTY_GREAT
 	random_case_rarity = FISH_RARITY_RARE
 	required_fluid_type = AQUARIUM_FLUID_SALTWATER //Someone ought to add river rays later I guess.
-	fish_movement_type = /datum/fish_movement/flee
 	fish_traits = list(/datum/fish_trait/stinger, /datum/fish_trait/toxic_barbs, /datum/fish_trait/wary, /datum/fish_trait/carnivore, /datum/fish_trait/predator)
 
 /obj/item/fish/sand_surfer
@@ -945,12 +944,12 @@
 	average_weight = 4000
 	breeding_timeout = 4.5 MINUTES
 	feeding_frequency = 4 MINUTES
-	health = 200
+	health = 180
 	beauty = FISH_BEAUTY_EXCELLENT
 	random_case_rarity = FISH_RARITY_GOOD_LUCK_FINDING_THIS
 	required_fluid_type = AQUARIUM_FLUID_SALTWATER
 	fish_movement_type = /datum/fish_movement/plunger
-	fishing_difficulty_modifier = 35
+	fishing_difficulty_modifier = 25
 	fillet_type = /obj/item/food/fishmeat/quality
 	favorite_bait = list(
 		list(
@@ -984,7 +983,7 @@
 			wound_bonus -= 10
 			bare_wound_bonus -= 15
 		if(WEIGHT_CLASS_BULKY)
-			force -= 2
+			force -= 3
 			attack_speed -= 0.1 SECONDS
 			block_chance -= 10
 			armour_penetration -= 5
@@ -1000,7 +999,7 @@
 			bare_wound_bonus += 10
 
 	if(status == FISH_DEAD)
-		force -= 3 + w_class
+		force -= 4 + w_class
 		block_chance -= 25
 		armour_penetration -= 30
 		wound_bonus -= 10
@@ -1040,12 +1039,12 @@
 	average_weight = 2500
 	breeding_timeout = 4.25 MINUTES
 	feeding_frequency = 3 MINUTES
-	health = 200
+	health = 180
 	beauty = FISH_BEAUTY_GREAT
 	random_case_rarity = FISH_RARITY_GOOD_LUCK_FINDING_THIS
 	required_fluid_type = AQUARIUM_FLUID_FRESHWATER
 	fish_movement_type = /datum/fish_movement/accelerando
-	fishing_difficulty_modifier = 40
+	fishing_difficulty_modifier = 30
 	favorite_bait = list(
 		list(
 			"Type" = "Foodtype",
@@ -1106,7 +1105,7 @@
 			wound_bonus += 10
 			bare_wound_bonus += 5
 		if(WEIGHT_CLASS_GIGANTIC)
-			force += 6
+			force += 4
 			attack_speed += 0.4 SECONDS
 			demolition_mod += 0.3
 			block_chance += 20

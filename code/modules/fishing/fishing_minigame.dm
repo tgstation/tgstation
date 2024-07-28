@@ -16,8 +16,6 @@
 #define BAIT_MIN_VELOCITY_BOUNCE 150
 /// The extra deceleration of velocity that happens when the bait switches direction
 #define BAIT_DECELERATION_MULT 1.5
-/// The multiplier of how much the difficulty negatively impacts the bait height
-#define BAIT_HEIGHT_DIFFICULTY_MALUS 1.08
 
 ///Defines to know how the bait is moving on the minigame slider.
 #define REELING_STATE_IDLE 0
@@ -165,7 +163,7 @@
 
 	mover.adjust_to_difficulty()
 
-	bait_height -= round(difficulty * BAIT_HEIGHT_DIFFICULTY_MALUS)
+	bait_height -= round(difficulty)
 	bait_pixel_height = round(MINIGAME_BAIT_HEIGHT * (bait_height/initial(bait_height)), 1)
 
 /datum/fishing_challenge/Destroy(force)

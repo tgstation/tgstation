@@ -167,93 +167,41 @@
 	fish_velocity = round(fish_velocity)
 	return ..()
 
-///Fish movement datum that updates the fish position once per second.
+///Fish movement datum that updates the fish position twice per second.
 /datum/fish_movement/choppy
 	///We keep of the theorical fish position to eventually use
 	var/faux_position = 0
 
 /datum/fish_movement/choppy/set_fish_position(seconds_per_tick)
 	faux_position = clamp(faux_position + fish_velocity * seconds_per_tick, 0, FISHING_MINIGAME_AREA - master.fish_height)
-	if(!((times_fired * SSfishing.wait) % (1 SECONDS)))
+	if(!((times_fired * SSfishing.wait) % (0.5 SECONDS)))
 		master.fish_position = faux_position
-
-///Fish movement datum that pushes the fish away from the bait.
-/datum/fish_movement/flee
-	///What the fish idle velocity was when move_fish was first called.
-	var/init_idle_velocity
-	///What's the absolute maximum idle velocity that we add to the fish before it moves.
-	var/max_fleeing_velocity = 5
-
-/datum/fish_movement/flee/adjust_to_difficulty()
-	. = ..()
-	//Adjust the fleeing velocity, up to five times the initial value.
-	max_fleeing_velocity += round(max_fleeing_velocity * master.difficulty * 0.04)
-
-/datum/fish_movement/flee/move_fish(seconds_per_tick)
-	if(!times_fired)
-		init_idle_velocity = fish_idle_velocity
-
-	//The distance from top and bottom of the fish, in a 0 to 1 percentile
-	var/fish_area = FISHING_MINIGAME_AREA - master.fish_height
-	var/dist_top_percent = (fish_area - master.fish_position)/fish_area
-	var/dist_bot_percent = master.fish_position/fish_area
-
-	//The distance from top of the bait, in a 0 to 1 percentile
-	var/bait_area = FISHING_MINIGAME_AREA - master.bait_height
-	var/bait_top_percent = (bait_area - master.bait_position)/bait_area
-
-	/**
-	 * The absolute difference between the distance of bait and fish and the area of the minigame, divided by 2
-	 * This stops the fish from sliding over all the way to the opposite side, as the velocity tapers down.
-	 * to zero once the distance between the two is about half the minigame area or more.
-	 */
-	var/dist_percent_diff = 1 - abs(dist_top_percent - bait_top_percent) * 2
-
-	var/should_go_top = master.fish_position + master.fish_height/2 >= master.bait_position + master.bait_height/2
-
-	/**
-	 * The distance from the mid of the bait, in a -1 to 1 value. This ensures that even if the fish is about to
-	 * get cornered by the bait, they'll be pushed toward the other side of the bait eventually.
-	 */
-	var/dist_bait_from_mid = (master.bait_position - (bait_area/2)) / (bait_area/2)
-
-	//In which direction should the fish go? Away from the bait, duh.
-	var/percent_to_use = (should_go_top ? dist_top_percent : -dist_bot_percent)
-
-	fish_idle_velocity = init_idle_velocity + round(max_fleeing_velocity * (percent_to_use - dist_bait_from_mid) * dist_percent_diff)
-
-	return ..()
 
 ///Fish movement datum that weakly pushes the fish up and then down with greater force once it reaches the top of the minigame.
 /datum/fish_movement/plunger
 	///Is the fish plunging to the bottom of the minigame area, or should it swim up?
 	var/is_plunging = TRUE
 	///The added idle velocity when plunging
-	var/plunging_speed = -18
-	///The added idle velocity when not plunging
-	var/raising_speed = 3
+	var/plunging_speed = -22
 
 /datum/fish_movement/plunger/adjust_to_difficulty()
 	. = ..()
 	//Adjust the fleeing velocity, up to five times the initial value.
 	plunging_speed += round(plunging_speed * master.difficulty * 0.03)
-	raising_speed += round(raising_speed * master.difficulty * 0.01)
 	fish_idle_velocity += plunging_speed //so it can be safely subtracted if the fish starts at the bottom.
 
 /datum/fish_movement/plunger/move_fish(seconds_per_tick)
+	var/fish_area = FISHING_MINIGAME_AREA - master.fish_height
 	if(is_plunging)
 		if(target_position > master.fish_position) //nothing should stop us from plunging.
 			target_position = null
-		var/dist_bot_percent = master.fish_position/FISHING_MINIGAME_AREA
-		if(dist_bot_percent <= 0.06)
+		var/dist_bot_percent = master.fish_position/fish_area
+		if(dist_bot_percent <= 0.04)
 			fish_idle_velocity -= plunging_speed
-			fish_idle_velocity += raising_speed
 			is_plunging = FALSE
 	else
-		var/top = FISHING_MINIGAME_AREA - master.fish_height
-		var/dist_top_percent = (top - master.fish_position)/top
-		if(dist_top_percent <= 0.06)
-			fish_idle_velocity -= raising_speed
+		var/dist_top_percent = (fish_area - master.fish_position)/fish_area
+		if(dist_top_percent <= 0.04)
 			fish_idle_velocity += plunging_speed
 			is_plunging = TRUE
 
