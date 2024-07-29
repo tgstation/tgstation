@@ -375,7 +375,7 @@ GLOBAL_LIST_EMPTY(tcgcard_radial_choices)
 	series = "coreset_2564"
 	contains_coin = 10
 
-/obj/item/cardpack/resin
+/obj/item/cardpack/resin_frontier
 	name = "/TG/C Booster Pack: Resin Frontier"
 	desc = "Contains six cards of varying rarity from the Resin Frontier set. Fight for humanity with the TGJMC or join the xeno menace!"
 	icon_state = "cardpack_resinfrontier"

@@ -34,7 +34,7 @@
 			"products" = list(
 				/obj/item/cardpack/coreset_2560 = 20, //Card packs have had their count raised to 20 from 10 until card persistance is implimented.
 				/obj/item/cardpack/coreset_2564 = 20,
-				/obj/item/cardpack/resin = 20,
+				/obj/item/cardpack/resin_frontier = 20,
 				/obj/item/cardpack/blood_and_stone = 20,
 				/obj/item/cardpack/techno_shock = 20,
 			),
