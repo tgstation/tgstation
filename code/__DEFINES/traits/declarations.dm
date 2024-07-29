@@ -225,6 +225,8 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_REVEAL_FISH "reveal_fish"
 ///This trait gets you a list of fishes that can be caught when examining a fishing spot.
 #define TRAIT_EXAMINE_FISHING_SPOT "examine_fishing_spot"
+///lobstrosities and carps will prioritize/flee from those that have this trait (given by the skill-locked hat)
+#define TRAIT_SCARY_FISHERMAN "scary_fisherman"
 ///Trait given to turfs or objects that can be fished from
 #define TRAIT_FISHING_SPOT "fishing_spot"
 ///Trait given to mobs that can fish without a rod

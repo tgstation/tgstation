@@ -152,3 +152,24 @@ GLOBAL_LIST_INIT(target_interested_atoms, typecacheof(list(/mob, /obj/machinery/
 /// Returns the desired final target from the filtered list of targets
 /datum/ai_behavior/find_potential_targets/proc/pick_final_target(datum/ai_controller/controller, list/filtered_targets)
 	return pick(filtered_targets)
+
+/// Targets with the trait specified by the BB_TARGET_PRIORITY_TRAIT blackboard key will be prioritized over the rest.
+/datum/ai_behavior/find_potential_targets/prioritize_trait
+	///The trait we're currently checking to pick the final target
+	var/current_trait
+
+/datum/ai_behavior/find_potential_targets/prioritize_trait/perform(seconds_per_tick, datum/ai_controller/controller, target_key, targeting_strategy_key, hiding_location_key, priority_trait_key)
+	current_trait = priority_trait_key
+	. = ..()
+	current_trait = null
+
+/datum/ai_behavior/find_potential_targets/prioritize_trait/pick_final_target(datum/ai_controller/controller, list/filtered_targets)
+	if(!current_trait)
+		return ..()
+	var/priority_targets = list()
+	for(var/atom/target as anything in filtered_targets)
+		if(HAS_TRAIT(target, controller.))
+			priority_targets += target
+	if(length(priority_targets))
+		return pick(priority_targets)
+	return ..()
