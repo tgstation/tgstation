@@ -39,6 +39,7 @@
 	builtintools += new /obj/item/multitool/drone(src)
 	builtintools += new /obj/item/pipe_dispenser(src)
 	builtintools += new /obj/item/t_scanner(src)
+	builtintools += new /obj/item/analyzer(src)
 	builtintools += new /obj/item/soap/drone(src)
 	for(var/obj/item/tool as anything in builtintools)
 		tool.AddComponent(/datum/component/holderloving, src, TRUE)
