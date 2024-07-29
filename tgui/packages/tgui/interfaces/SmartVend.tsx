@@ -214,7 +214,7 @@ const ItemList = ({ item }) => {
         <Box
           style={{
             marginTop: '20px',
-            border: '1px dotted gray',
+            borderBottom: '1px dotted gray',
           }}
         />
       </Stack.Item>
