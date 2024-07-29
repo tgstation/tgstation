@@ -12,7 +12,7 @@
 	/// Icon to use as a 32x32 preview in crafting menus and such
 	var/icon_preview
 	var/icon_state_preview
-	/// The vertical pixel offset applied when the object is anchored on a tile with table
+	/// The vertical pixel_z offset applied when the object is anchored on a tile with table
 	/// Ignored when set to 0 - to avoid shifting directional wall-mounted objects above tables
 	var/anchored_tabletop_offset = 0
 
