@@ -56,7 +56,6 @@
 	// Used to denote traitors who have joined midround and therefore have no access to secondary objectives.
 	// Progression elements are best left to the roundstart antagonists
 	// There will still be a timelock on uplink items
-	name = "\improper Infiltrator"
 	give_secondary_objectives = FALSE
 	uplink_flag_given = UPLINK_INFILTRATORS
 
