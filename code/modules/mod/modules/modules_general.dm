@@ -666,10 +666,6 @@
 	/// Original cover flags for the MOD helmet, before a hat is placed
 	var/former_flags
 	var/former_visor_flags
-	var/static/transferable_hat_traits = list(
-		TRAIT_SCARY_FISHERMAN,
-		TRAIT_HEAD_INJURY_BLOCKED,
-		TRAIT_HATED_BY_DOGS,
 
 /obj/item/mod/module/hat_stabilizer/on_suit_activation()
 	var/obj/item/clothing/helmet = mod.get_part_from_slot(ITEM_SLOT_HEAD)
