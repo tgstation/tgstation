@@ -1,0 +1,4 @@
+author: "SmArtKar"
+delete-after: True
+changes:
+  - bugfix: "Fixed mapload circuit floors not drawing power and deconstructing circuit floors not reducing power load"

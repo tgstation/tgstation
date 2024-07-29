@@ -1,5 +1,0 @@
-author: "carlarctg"
-delete-after: True
-changes:
-  - bugfix: "Fixed possessed blades being broken"
-  - code_imp: "If testing is enabled everyone is polled in ghost polls."
