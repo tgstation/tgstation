@@ -68,6 +68,10 @@
 	if(HAS_TRAIT(owner, TRAIT_DEAF))
 		return "Subject is deaf."
 
+/obj/item/organ/internal/ears/show_on_condensed_scans()
+	// Always show if we have an appendix
+	return ..() || (owner.stat != DEAD && HAS_TRAIT(owner, TRAIT_DEAF))
+
 /**
  * Snowflake proc to handle temporary deafness
  *

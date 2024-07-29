@@ -168,6 +168,11 @@
 
 	return "<B>[condition.Join()]</B>"
 
+/datum/wound/burn/flesh/severity_text(simple = FALSE)
+	if(infestation > WOUND_INFECTION_MODERATE)
+		return "Infected, [..()]"
+	return ..()
+
 /datum/wound/burn/flesh/get_scanner_description(mob/user)
 	if(strikes_to_lose_limb <= 0) // Unclear if it can go below 0, best to not take the chance
 		var/oopsie = "Type: [name]\nSeverity: [severity_text()]"
@@ -308,7 +313,7 @@
 	treat_text = "Swiftly apply healing aids such as Synthflesh or regenerative mesh to the wound. \
 		Disinfect the wound and surgically debride any infected skin, and wrap in clean gauze / use ointment to prevent further infection. \
 		If the limb has locked up, it must be amputated, augmented or treated with cryogenics."
-	treat_text_short = "Apply healing aid such as regenerative mesh or Synthflesh and disinfect."
+	treat_text_short = "Apply healing aid such as regenerative mesh or Synthflesh and disinfect / debride."
 	examine_desc = "appears seriously charred, with aggressive red splotches"
 	occur_text = "chars rapidly, exposing ruined tissue and spreading angry red burns"
 	severity = WOUND_SEVERITY_SEVERE
@@ -337,7 +342,7 @@
 	treat_text = "Immediately apply healing aids such as Synthflesh or regenerative mesh to the wound. \
 		Disinfect the wound and surgically debride any infected skin, and wrap in clean gauze / use ointment to prevent further infection. \
 		If the limb has locked up, it must be amputated, augmented or treated with cryogenics."
-	treat_text_short = "Apply healing aid such as regenerative mesh or Synthflesh and disinfect."
+	treat_text_short = "Apply healing aid such as regenerative mesh or Synthflesh and disinfect / debride."
 	examine_desc = "is a ruined mess of blanched bone, melted fat, and charred tissue"
 	occur_text = "vaporizes as flesh, bone, and fat melt together in a horrifying mess"
 	severity = WOUND_SEVERITY_CRITICAL

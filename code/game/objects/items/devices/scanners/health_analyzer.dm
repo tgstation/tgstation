@@ -33,6 +33,8 @@
 	var/last_scan_text
 	var/scanner_busy = FALSE
 
+	var/print = FALSE
+
 /obj/item/healthanalyzer/Initialize(mapload)
 	. = ..()
 	register_item_context()
@@ -152,7 +154,7 @@
 		mob_status = span_alert("<b>Deceased</b>")
 		oxy_loss = max(rand(1, 40), oxy_loss, (300 - (tox_loss + fire_loss + brute_loss))) // Random oxygen loss
 
-	render_list += "[span_info("Analyzing results for <b>[target]</b>:")]<br><span class='info ml-1'>Overall status: [mob_status]</span><br>"
+	render_list += "[span_info("Analyzing results for <b>[target]</b> ([station_time_timestamp()]):")]<br><span class='info ml-1'>Overall status: [mob_status]</span><br>"
 
 	if(ishuman(target))
 		var/mob/living/carbon/human/humantarget = target
@@ -203,19 +205,25 @@
 		if(brute_loss > 0 || fire_loss > 0 || oxy_loss > 0 || tox_loss > 0 || fire_loss > 0)
 			render_list += "<hr>"
 			var/dmgreport = "<span class='info ml-1'>Body status:</span>\
-							<table class='ml-2'><tr><font face='Verdana'>\
+							<font face='Verdana'>\
+							<table class='ml-2'>\
+							<tr>\
 							<td style='width:7em;'><font color='#ff0000'><b>Damage:</b></font></td>\
 							<td style='width:5em;'><font color='#ff3333'><b>Brute</b></font></td>\
 							<td style='width:4em;'><font color='#ff9933'><b>Burn</b></font></td>\
 							<td style='width:4em;'><font color='#00cc66'><b>Toxin</b></font></td>\
-							<td style='width:8em;'><font color='#00cccc'><b>Suffocation</b></font></td></tr>\
-							<tr><td><font color='#ff3333'><b>Overall:</b></font></td>\
+							<td style='width:8em;'><font color='#00cccc'><b>Suffocation</b></font></td>\
+							</tr>\
+							<tr>\
+							<td><font color='#ff3333'><b>Overall:</b></font></td>\
 							<td><font color='#ff3333'><b>[ceil(brute_loss)]</b></font></td>\
 							<td><font color='#ff9933'><b>[ceil(fire_loss)]</b></font></td>\
 							<td><font color='#00cc66'><b>[ceil(tox_loss)]</b></font></td>\
-							<td><font color='#33ccff'><b>[ceil(oxy_loss)]</b></font></td></tr>"
+							<td><font color='#33ccff'><b>[ceil(oxy_loss)]</b></font></td>\
+							</tr>"
 
 			if(mode == SCANNER_VERBOSE)
+				// Follow same body zone list every time so it's consistent across all humans
 				for(var/zone in BODY_ZONES_ALL)
 					var/obj/item/bodypart/limb = carbontarget.get_bodypart(zone)
 					if(isnull(limb))
@@ -224,7 +232,7 @@
 						dmgreport += "<td><font color='#cc3333'>-</font></td>"
 						dmgreport += "<td><font color='#ff9933'>-</font></td>"
 						dmgreport += "</tr>"
-						dmgreport += "<tr><td colspan=6><span class='alert ml-2'>&rdsh; Physical trauma: Dismembered</td></tr>"
+						dmgreport += "<tr><td colspan=6><span class='alert ml-2'>&rdsh; Physical trauma: Dismembered</span></td></tr>"
 						continue
 					var/has_any_embeds = length(limb.embedded_objects) >= 1
 					var/has_any_wounds = length(limb.wounds) >= 1
@@ -250,15 +258,15 @@
 								displayed = "[embedded_amt] [embedded_name]\s"
 							if(tochat)
 								displayed = span_tooltip("Use a hemostat to remove.", displayed)
-							dmgreport += "<tr><td colspan=6><span class='alert ml-2'>&rdsh; Foreign object(s): [displayed]</td></tr>"
+							dmgreport += "<tr><td colspan=6><span class='alert ml-2'>&rdsh; Foreign object(s): [displayed]</span></td></tr>"
 					if(has_any_wounds)
 						for(var/datum/wound/wound as anything in limb.wounds)
 							var/displayed = "[wound.name] ([wound.severity_text()])"
 							if(tochat)
 								displayed = span_tooltip(wound.treat_text_short, displayed)
-							dmgreport += "<tr><td colspan=6><span class='alert ml-2'>&rdsh; Physical trauma: [displayed]</td></tr>"
+							dmgreport += "<tr><td colspan=6><span class='alert ml-2'>&rdsh; Physical trauma: [displayed]</span></td></tr>"
 
-			dmgreport += "</font></table>"
+			dmgreport += "</table></font>"
 			render_list += dmgreport // tables do not need extra linebreak
 
 	if(ishuman(target))
@@ -267,57 +275,67 @@
 		// Organ damage, missing organs
 		var/render = FALSE
 		var/toReport = "<span class='info ml-1'>Organ status:</span>\
-			<table class='ml-2'><tr>\
+			<font face='Verdana'>\
+			<table class='ml-2'>\
+			<tr>\
 			<td style='width:8em;'><font color='#ff0000'><b>Organ:</b></font></td>\
 			[advanced ? "<td style='width:4em;'><font color='#ff0000'><b>Dmg</b></font></td>" : ""]\
-			<td style='width:30em;'><font color='#ff0000'><b>Status</b></font></td>"
-
-		for(var/obj/item/organ/organ as anything in humantarget.organs)
-			var/status = organ.get_status_text(advanced, tochat)
-			var/appendix = organ.get_status_appendix(advanced, tochat)
-			if (status || appendix)
-				status ||= "<font color='#ffcc33'>OK</font>"
-				render = TRUE
-				toReport += "<tr><td><font color='#cc3333'>[capitalize(organ.name)]:</font></td>\
-					[advanced ? "<td><font color='#ff3333'>[organ.damage > 0 ? ceil(organ.damage) : "0"]</font></td>" : ""]\
-					<td>[status]</td></tr>"
-				if(appendix)
-					toReport += "<tr><td colspan=4><span class='alert ml-2'>&rdsh; [appendix]</span></td></tr>"
+			<td style='width:30em;'><font color='#ff0000'><b>Status</b></font></td>\
+			</tr>"
 
 		var/list/missing_organs = list()
 		if(!humantarget.get_organ_slot(ORGAN_SLOT_BRAIN))
-			missing_organs += "Brain"
+			missing_organs[ORGAN_SLOT_BRAIN] = "Brain"
 		if(!humantarget.needs_heart() && !humantarget.get_organ_slot(ORGAN_SLOT_HEART))
-			missing_organs += "Heart"
+			missing_organs[ORGAN_SLOT_HEART] = "Heart"
 		if(!HAS_TRAIT_FROM(humantarget, TRAIT_NOBREATH, SPECIES_TRAIT) && !isnull(humantarget.dna.species.mutantlungs) && !humantarget.get_organ_slot(ORGAN_SLOT_LUNGS))
-			missing_organs += "Lungs"
+			missing_organs[ORGAN_SLOT_LUNGS] = "Lungs"
 		if(!HAS_TRAIT_FROM(humantarget, TRAIT_LIVERLESS_METABOLISM, SPECIES_TRAIT) && !isnull(humantarget.dna.species.mutantliver) && !humantarget.get_organ_slot(ORGAN_SLOT_LIVER))
-			missing_organs += "Liver"
+			missing_organs[ORGAN_SLOT_LIVER] = "Liver"
 		if(!HAS_TRAIT_FROM(humantarget, TRAIT_NOHUNGER, SPECIES_TRAIT) && !isnull(humantarget.dna.species.mutantstomach) && !humantarget.get_organ_slot(ORGAN_SLOT_STOMACH))
-			missing_organs += "Stomach"
+			missing_organs[ORGAN_SLOT_STOMACH] ="Stomach"
 		if(!isnull(humantarget.dna.species.mutanttongue) && !humantarget.get_organ_slot(ORGAN_SLOT_TONGUE))
-			missing_organs += "Tongue"
+			missing_organs[ORGAN_SLOT_TONGUE] = "Tongue"
 		if(!isnull(humantarget.dna.species.mutantears) && !humantarget.get_organ_slot(ORGAN_SLOT_EARS))
-			missing_organs += "Ears"
+			missing_organs[ORGAN_SLOT_EARS] = "Ears"
 		if(!isnull(humantarget.dna.species.mutantears) && !humantarget.get_organ_slot(ORGAN_SLOT_EYES))
-			missing_organs += "Eyes"
+			missing_organs[ORGAN_SLOT_EYES] = "Eyes"
 
-		if(length(missing_organs))
-			render = TRUE
-			for(var/organ in missing_organs)
-				toReport += "<tr><td><font color='#cc3333'>[organ]:</font></td>\
-					[advanced ? "<td><font color='#ff3333'>-</font></td>" : ""]\
-					<td><font color='#cc3333'>Missing</font></td></tr>"
+		// Follow same order as in the organ_process_order so it's consistent across all humans
+		for(var/sorted_slot in GLOB.organ_process_order)
+			var/obj/item/organ/organ = humantarget.get_organ_slot(sorted_slot)
+			if(isnull(organ))
+				if(missing_organs[sorted_slot])
+					render = TRUE
+					toReport += "<tr><td><font color='#cc3333'>[missing_organs[sorted_slot]]:</font></td>\
+						[advanced ? "<td><font color='#ff3333'>-</font></td>" : ""]\
+						<td><font color='#cc3333'>Missing</font></td></tr>"
+				continue
+			if(mode != SCANNER_VERBOSE && !organ.show_on_condensed_scans())
+				continue
+			var/status = organ.get_status_text(advanced, tochat)
+			var/appendix = organ.get_status_appendix(advanced, tochat)
+			if(status || appendix)
+				status ||= "<font color='#ffcc33'>OK</font>" // otherwise flawless organs have no status reported by default
+				render = TRUE
+				toReport += "<tr>\
+					<td><font color='#cc3333'>[capitalize(organ.name)]:</font></td>\
+					[advanced ? "<td><font color='#ff3333'>[organ.damage > 0 ? ceil(organ.damage) : "0"]</font></td>" : ""]\
+					<td>[status]</td>\
+					</tr>"
+				if(appendix)
+					toReport += "<tr><td colspan=4><span class='alert ml-2'>&rdsh; [appendix]</span></td></tr>"
 
 		if(render)
 			render_list += "<hr>"
-			render_list += toReport + "</table>" // tables do not need extra linebreak
+			render_list += toReport + "</table></font>" // tables do not need extra linebreak
 
 		// Cybernetics
 		var/list/cyberimps
 		for(var/obj/item/organ/internal/cyberimp/cyberimp in humantarget.organs)
 			if(IS_ROBOTIC_ORGAN(cyberimp) && !(cyberimp.organ_flags & ORGAN_HIDDEN))
-				LAZYADD(cyberimps, capitalize(cyberimp.get_examine_string(user)))
+				var/cyberimp_name = tochat ? capitalize(cyberimp.get_examine_string(user)) : capitalize(cyberimp.name)
+				LAZYADD(cyberimps, cyberimp_name)
 		if(LAZYLEN(cyberimps))
 			if(!render)
 				render_list += "<hr>"
@@ -327,7 +345,9 @@
 		render_list += "<hr>"
 		//Genetic stability
 		if(advanced && humantarget.has_dna())
-			render_list += "<span class='info ml-1'>Genetic Stability: [humantarget.dna.stability]%.</span><br>"
+			if(humantarget.dna.stability != initial(humantarget.dna.stability))
+				render_list += "<span class='info ml-1'>Genetic Stability: [humantarget.dna.stability]%.</span><br>"
+			mutant = humantarget.dna.check_mutation(/datum/mutation/human/hulk)
 
 		// Hulk and body temperature
 		var/datum/species/targetspecies = humantarget.dna.species
@@ -382,13 +402,13 @@
 			render_list += "<hr>"
 			disease_hr = TRUE
 		render_list += "<span class='alert ml-1'>\
-		<b>Warning: [disease.form] detected</b><br>\
-		<div class='ml-2'>\
-		Name: [disease.name].br>\
-		Type: [disease.spread_text].br>\
-		Stage: [disease.stage]/[disease.max_stages].br>\
-		Possible Cure: [disease.cure_text]</div>\
-		</span>"
+			<b>Warning: [disease.form] detected</b><br>\
+			<div class='ml-2'>\
+			Name: [disease.name].<br>\
+			Type: [disease.spread_text].<br>\
+			Stage: [disease.stage]/[disease.max_stages].<br>\
+			Possible Cure: [disease.cure_text]</div>\
+			</span>"
 
 	// Time of death
 	if(target.station_timestamp_timeofdeath && (target.stat == DEAD || (HAS_TRAIT(target, TRAIT_FAKEDEATH) && !advanced)))

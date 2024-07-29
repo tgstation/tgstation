@@ -144,6 +144,10 @@
 				return "Subject is permanently nearsighted."
 		return "Subject is nearsighted."
 
+/obj/item/organ/internal/eyes/show_on_condensed_scans()
+	// Always show if we have an appendix
+	return ..() || (owner.stat != DEAD && !HAS_TRAIT(owner, TRAIT_KNOCKEDOUT) && (owner.is_blind() || owner.is_nearsighted()))
+
 /// This proc generates a list of overlays that the eye should be displayed using for the given parent
 /obj/item/organ/internal/eyes/proc/generate_body_overlay(mob/living/carbon/human/parent)
 	if(!istype(parent) || parent.get_organ_by_type(/obj/item/organ/internal/eyes) != src)

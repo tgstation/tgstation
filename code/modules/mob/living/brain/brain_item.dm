@@ -283,7 +283,11 @@
 		trauma_desc += capitalize(trauma.scan_desc)
 		LAZYADD(trauma_text, trauma_desc)
 	if(LAZYLEN(trauma_text))
-		return "Trauma detected: [english_list(trauma_text, and_text = ", and ")].</span>\n"
+		return "Mental trauma: [english_list(trauma_text, and_text = ", and ")]."
+
+/obj/item/organ/internal/brain/show_on_condensed_scans()
+	// Always show it's kinda important
+	return TRUE
 
 /obj/item/organ/internal/brain/attack(mob/living/carbon/C, mob/user)
 	if(!istype(C))

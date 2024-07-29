@@ -333,26 +333,35 @@ INITIALIZE_IMMEDIATE(/obj/item/organ)
 			. = span_tooltip("Replace surgically or wait for EMP to subside.", .)
 		return .
 
+	var/tech_text = ""
 	if(owner.has_reagent(/datum/reagent/inverse/technetium))
-		return "<font color='#E42426'>[round((damage/maxHealth)*100, 1)]% damaged</font>"
+		tech_text = "[round((damage / maxHealth)*100, 1)]% damaged"
 
 	if(organ_flags & ORGAN_FAILING)
-		. = "<font color='#cc3333'>Non-Functional</font>"
+		. = "<font color='#cc3333'>[tech_text || "Non-Functional"]</font>"
 		if(add_tooltips)
 			. = span_tooltip("Replace surgically or perform an organ repair operation.", .)
 		return .
 
 	if(damage > high_threshold)
-		. = "<font color='#ff9933'>Severely Damaged</font>"
+		. = "<font color='#ff9933'>[tech_text || "Severely Damaged"]</font>"
 		if(add_tooltips && owner.stat != DEAD)
 			. = span_tooltip("[healing_factor ? "Treat with rest or use specialty medication." : "Use specialty medication."]", .)
 		return .
 
 	if(damage > low_threshold)
-		. = "<font color='#ffcc33'>Mildly Damaged</font>"
+		. = "<font color='#ffcc33'>[tech_text || "Mildly Damaged"] </font>"
 		if(add_tooltips && owner.stat != DEAD)
 			. = span_tooltip("[healing_factor ? "Treat with rest." : "Use specialty medication."]", .)
 		return .
+
+	if(tech_text)
+		. = "<font color='#33cc33'>[tech_text]</font>"
+
+/// Determines if this organ is shown when a user has condensed scans enabled
+/obj/item/organ/proc/show_on_condensed_scans()
+	// We don't need to show *most* damaged organs as they have no effects associated
+	return (organ_flags & (ORGAN_FAILING|ORGAN_VITAL|ORGAN_IRRADIATED))
 
 /// Similar to get_status_text, but appends the text after the damage report, for additional status info
 /obj/item/organ/proc/get_status_appendix(advanced, add_tooltips)
