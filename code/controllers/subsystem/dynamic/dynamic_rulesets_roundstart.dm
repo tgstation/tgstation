@@ -9,7 +9,7 @@ GLOBAL_VAR_INIT(revolutionary_win, FALSE)
 /datum/dynamic_ruleset/roundstart/traitor
 	name = "Traitors"
 	antag_flag = ROLE_TRAITOR
-	antag_datum = /datum/antagonist/traitor
+	antag_datum = /datum/antagonist/traitor/infiltrator
 	minimum_required_age = 0
 	protected_roles = list(
 		JOB_CAPTAIN,
