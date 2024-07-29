@@ -549,16 +549,21 @@
 	damage_type = BRUTE
 	damage = 0 // love can't actually hurt you
 	armour_penetration = 100 // but if it could, it would cut through even the thickest plate
+	var/silent_blown = FALSE
 
 /obj/projectile/kiss/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/parriable_projectile)
 
 /obj/projectile/kiss/fire(angle, atom/direct_target)
-	def_zone = BODY_ZONE_HEAD // let's keep it PG, people
+	if(firer && !silent_blown)
+		name = "[name] blown by [firer]"
+
 	return ..()
 
 /obj/projectile/kiss/Impact(atom/A)
+	def_zone = BODY_ZONE_HEAD // let's keep it PG, people
+
 	if(damage > 0 || !isliving(A)) // if we do damage or we hit a nonliving thing, we don't have to worry about a harmless hit because we can't wrongly do damage anyway
 		return ..()
 
@@ -644,6 +649,7 @@
 	damage = 25
 	wound_bonus = -20
 	bare_wound_bonus = 40
+	silent_blown = TRUE
 
 /obj/projectile/kiss/french
 	name = "french kiss (is that a hint of garlic?)"
