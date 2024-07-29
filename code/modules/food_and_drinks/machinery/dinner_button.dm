@@ -31,4 +31,4 @@
 	minor_announce("Attention crew! It's lunchtime! Head over for a delicious meal prepared just for you. Bon appétit!", "Kitchen announcement")
 	playsound(src, button_sound, 70, TRUE, -1)
 	button_used = TRUE
-	return TRUE
+	return
