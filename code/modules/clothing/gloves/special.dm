@@ -155,3 +155,12 @@
 	siemens_coefficient = 0.3
 	clothing_traits = list(TRAIT_QUICKER_CARRY, TRAIT_CHUNKYFINGERS)
 	clothing_flags = THICKMATERIAL
+
+/obj/item/clothing/gloves/fishing
+	name = "hardcore fishing gloves"
+	desc = "A pair of gloves to fish without a fishing rod but only your pure, raw strength."
+	icon_state = "fishing_gloves"
+
+/obj/item/clothing/gloves/fishing/Initialize(mapload)
+	. = ..()
+	AddComponent(/datum/component/profound_fisher, new /obj/item/fishing_rod/mob_fisher/baitless(src))

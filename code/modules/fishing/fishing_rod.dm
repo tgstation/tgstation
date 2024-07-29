@@ -147,7 +147,7 @@
 	ui_interact(user)
 
 /// Generates the fishing line visual from the current user to the target and updates inhands
-/obj/item/fishing_rod/proc/create_fishing_line(atom/movable/target, target_py = null)
+/obj/item/fishing_rod/proc/create_fishing_line(atom/movable/target, atom/movable/firer, target_py = null)
 	if(!display_fishing_line)
 		return null
 	var/mob/user = loc
@@ -183,7 +183,7 @@
 	if(!hook.can_be_hooked(target_atom))
 		return
 	currently_hooked = target_atom
-	create_fishing_line(target_atom)
+	create_fishing_line(target_atom, user)
 	hook.hook_attached(target_atom, src)
 	SEND_SIGNAL(src, COMSIG_FISHING_ROD_HOOKED_ITEM, target_atom, user)
 
@@ -197,6 +197,9 @@
 		return BEAM_CANCEL_DRAW
 
 /obj/item/fishing_rod/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
+	//this stops telekinesis (which would be broken anyway) but allows the profound fisher component to work.
+	if(!user.contains(src) && !isnull(loc))
+		return ..()
 	return ranged_interact_with_atom(interacting_with, user, modifiers)
 
 /obj/item/fishing_rod/ranged_interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
@@ -214,6 +217,9 @@
 	return ITEM_INTERACT_SUCCESS
 
 /obj/item/fishing_rod/interact_with_atom_secondary(atom/interacting_with, mob/living/user, list/modifiers)
+	//this stops telekinesis (which would be broken anyway) but allows the profound fisher component to work.
+	if(!user.contains(src) && !isnull(loc))
+		return ..()
 	return ranged_interact_with_atom_secondary(interacting_with, user, modifiers)
 
 /obj/item/fishing_rod/ranged_interact_with_atom_secondary(atom/interacting_with, mob/living/user, list/modifiers)
@@ -379,6 +385,8 @@
 
 /// Ideally this will be replaced with generic slotted storage datum + display
 /obj/item/fishing_rod/proc/use_slot(slot, mob/user, obj/item/new_item)
+	if(fishing_line || HAS_TRAIT(user, TRAIT_GONE_FISHING))
+		return
 	var/obj/item/current_item
 	switch(slot)
 		if(ROD_SLOT_BAIT)
@@ -596,7 +604,7 @@
 
 /obj/projectile/fishing_cast/fire(angle, atom/direct_target)
 	. = ..()
-	our_line = owner.create_fishing_line(src)
+	our_line = owner.create_fishing_line(src, firer)
 
 /obj/projectile/fishing_cast/Destroy()
 	QDEL_NULL(our_line)

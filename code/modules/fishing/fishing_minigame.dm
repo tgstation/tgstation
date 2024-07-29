@@ -238,6 +238,7 @@
 	interrupt()
 
 /datum/fishing_challenge/proc/interrupt_challenge(datum/source, reason)
+	SIGNAL_HANDLER
 	if(reason)
 		send_alert(reason)
 	interrupt()
@@ -245,14 +246,17 @@
 /datum/fishing_challenge/proc/start(mob/living/user)
 	/// Create fishing line visuals
 	if(used_rod.display_fishing_line)
-		fishing_line = used_rod.create_fishing_line(lure, target_py = 5)
+		fishing_line = used_rod.create_fishing_line(lure, user, target_py = 4)
 		RegisterSignal(fishing_line, COMSIG_QDELETING, PROC_REF(on_line_deleted))
 	else //if the rod doesnt have a fishing line, then it ends when they move away
-		RegisterSignal(user, COMSIG_MOVABLE_MOVED, PROC_REF(on_user_move))
+		RegisterSignal(user, COMSIG_MOVABLE_MOVED, PROC_REF(on_lure_or_user_move))
+		RegisterSignal(lure, COMSIG_MOVABLE_MOVED, PROC_REF(on_lure_or_user_move))
 	active_effects = bitfield_to_list(special_effects & FISHING_MINIGAME_ACTIVE_EFFECTS)
 	// If fishing line breaks los / rod gets dropped / deleted
 	RegisterSignal(used_rod, COMSIG_ITEM_ATTACK_SELF, PROC_REF(on_attack_self))
-	ADD_TRAIT(user, TRAIT_GONE_FISHING, REF(src))
+	ADD_TRAIT(user, TRAIT_GONE_FISHING, TRAIT_GENERIC)
+	RegisterSignal(user, SIGNAL_REMOVETRAIT(TRAIT_GONE_FISHING), PROC_REF(no_longer_fishing))
+	RegisterSignal(user, SIGNAL_ADDTRAIT(TRAIT_HANDS_BLOCKED), PROC_REF(on_hands_blocked))
 	user.add_mood_event("fishing", /datum/mood_event/fishing)
 	RegisterSignal(user, COMSIG_MOB_CLICKON, PROC_REF(handle_click))
 	start_baiting_phase()
@@ -266,10 +270,23 @@
 	user.balloon_alert(user, user.is_holding(used_rod) ? "line snapped" : "rod dropped")
 	interrupt()
 
-/datum/fishing_challenge/proc/on_user_move(datum/source)
+/datum/fishing_challenge/proc/on_lure_or_user_move(datum/source)
 	SIGNAL_HANDLER
 
-	user.balloon_alert(user, "too far!")
+	if(!user.CanReach(lure))
+		user.balloon_alert(user, "too far!")
+		interrupt()
+
+/datum/fishing_challenge/proc/on_hands_blocked(datum/source)
+	SIGNAL_HANDLER
+	if(completed) //the rod was dropped and therefore challenge already completed.
+		return
+	user.balloon_alert(user, "hands blocked!")
+	interrupt()
+
+/datum/fishing_challenge/proc/no_longer_fishing(datum/source)
+	SIGNAL_HANDLER
+	user.balloon_alert(user, "interrupted!")
 	interrupt()
 
 /datum/fishing_challenge/proc/handle_click(mob/source, atom/target, modifiers)
@@ -309,8 +326,9 @@
 	completed = TRUE
 	if(phase == MINIGAME_PHASE)
 		remove_minigame_hud()
-	if(user)
-		REMOVE_TRAIT(user, TRAIT_GONE_FISHING, REF(src))
+	if(!QDELETED(user))
+		UnregisterSignal(user, SIGNAL_REMOVETRAIT(TRAIT_GONE_FISHING))
+		REMOVE_TRAIT(user, TRAIT_GONE_FISHING, TRAIT_GENERIC)
 		if(start_time)
 			var/seconds_spent = (world.time - start_time) * 0.1
 			if(!(special_effects & FISHING_MINIGAME_RULE_NO_EXP))
