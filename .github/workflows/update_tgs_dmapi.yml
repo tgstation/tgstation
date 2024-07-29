@@ -28,8 +28,8 @@ jobs:
     - name: Commit and Push
       continue-on-error: true
       run: |
-        git config user.name tgstation-server
-        git config user.email tgstation-server@users.noreply.github.com
+        git config user.name "tgstation-server-ci[bot]"
+        git config user.email "161980869+tgstation-server-ci[bot]@users.noreply.github.com"
         git add .
         git commit -m 'Update TGS DMAPI'
         git push -f -u origin tgs-dmapi-update
