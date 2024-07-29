@@ -32,6 +32,8 @@
 	var/welded_down = FALSE
 	/// The sound of item retrieval
 	var/vend_sound = 'sound/machines/machine_vend.ogg'
+	/// Whether the UI should be set to list view by default
+	var/default_list_view = FALSE
 
 /obj/machinery/smartfridge/Initialize(mapload)
 	. = ..()
@@ -383,6 +385,7 @@
 	.["contents"] = sort_list(listofitems)
 	.["name"] = name
 	.["isdryer"] = FALSE
+	.["default_list_view"] = default_list_view
 
 /obj/machinery/smartfridge/Exited(atom/movable/gone, direction) // Update the UIs in case something inside is removed
 	. = ..()
@@ -728,6 +731,7 @@
 	desc = "A refrigerated storage unit for medicine storage."
 	base_build_path = /obj/machinery/smartfridge/chemistry
 	contents_overlay_icon = "chem"
+	default_list_view = TRUE
 
 /obj/machinery/smartfridge/chemistry/accept_check(obj/item/weapon)
 	// not an item or reagent container
@@ -778,6 +782,7 @@
 	desc = "A refrigerated storage unit for volatile sample storage."
 	base_build_path = /obj/machinery/smartfridge/chemistry/virology
 	contents_overlay_icon = "viro"
+	default_list_view = TRUE
 
 /obj/machinery/smartfridge/chemistry/virology/preloaded
 	initial_contents = list(
