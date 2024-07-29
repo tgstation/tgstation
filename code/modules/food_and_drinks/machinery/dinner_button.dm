@@ -2,7 +2,7 @@
 	name = "lunch button"
 	desc = "Casts an announcement to the station, reminding the crew about food."
 	icon = 'icons/obj/service/kitchen.dmi'
-	icon_state = "button_supper"
+	icon_state = "button_lunch"
 	layer = OBJ_LAYER
 	anchored = TRUE
 	pass_flags = PASSTABLE // Able to place on tables
