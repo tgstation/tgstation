@@ -50,4 +50,4 @@
 		fish.last_feeding += seconds_per_tick SECONDS
 		fish.breeding_wait += seconds_per_tick SECONDS
 		if(fish.health < initial(fish.health) * 0.65)
-			fish.adjust_health(fish.health + 1 * seconds_per_tick)
+			fish.adjust_health(fish.health + 0.75 * seconds_per_tick)
