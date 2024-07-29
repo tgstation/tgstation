@@ -666,6 +666,10 @@
 	/// Original cover flags for the MOD helmet, before a hat is placed
 	var/former_flags
 	var/former_visor_flags
+	var/static/transferable_hat_traits = list(
+		TRAIT_SCARY_FISHERMAN,
+		TRAIT_HEAD_INJURY_BLOCKED,
+		TRAIT_HATED_BY_DOGS,
 
 /obj/item/mod/module/hat_stabilizer/on_suit_activation()
 	var/obj/item/clothing/helmet = mod.get_part_from_slot(ITEM_SLOT_HEAD)
@@ -712,6 +716,7 @@
 		attached_hat = hat
 		var/obj/item/clothing/helmet = mod.get_part_from_slot(ITEM_SLOT_HEAD)
 		if(istype(helmet))
+			helmet.attach_clothing_traits(attached_hat.clothing_traits)
 			former_flags = helmet.flags_cover
 			former_visor_flags = helmet.visor_flags_cover
 			helmet.flags_cover |= attached_hat.flags_cover
@@ -734,11 +739,12 @@
 		balloon_alert(user, "hat removed")
 	else
 		balloon_alert_to_viewers("the hat falls to the floor!")
-	attached_hat = null
 	var/obj/item/clothing/helmet = mod.get_part_from_slot(ITEM_SLOT_HEAD)
 	if(istype(helmet))
+		helmet.detach_clothing_traits(attached_hat)
 		helmet.flags_cover = former_flags
 		helmet.visor_flags_cover = former_visor_flags
+	attached_hat = null
 	mod.wearer.update_clothing(mod.slot_flags)
 
 /obj/item/mod/module/hat_stabilizer/syndicate
