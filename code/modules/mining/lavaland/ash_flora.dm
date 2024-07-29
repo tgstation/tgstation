@@ -261,7 +261,7 @@
 	graft_gene = /datum/plant_gene/trait/fire_resistance
 
 /obj/item/seeds/lavaland/cactus
-	name = "pack of fruiting cactus seeds"
+	name = "fruiting cactus seed pack"
 	desc = "These seeds grow into fruiting cacti."
 	icon_state = "seed-cactus"
 	species = "cactus"
@@ -275,7 +275,7 @@
 
 ///Star Cactus seeds, mutation of lavaland cactus.
 /obj/item/seeds/star_cactus
-	name = "pack of star cacti seeds"
+	name = "star cacti seed pack"
 	desc = "These seeds grow into star cacti."
 	icon_state = "seed-starcactus"
 	species = "starcactus"
@@ -358,7 +358,7 @@
 	reagents_add = list(/datum/reagent/toxin/mushroom_powder = 0.1, /datum/reagent/medicine/coagulant/seraka_extract = 0.02)
 
 /obj/item/seeds/lavaland/fireblossom
-	name = "pack of fire blossom seeds"
+	name = "fire blossom seed pack"
 	desc = "These seeds grow into fire blossoms."
 	plantname = "Fire Blossom"
 	icon_state = "seed-fireblossom"
