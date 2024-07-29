@@ -150,17 +150,19 @@
 	if(isnull(affecting) || !IS_ROBOTIC_LIMB(affecting))
 		return NONE
 
+	user.visible_message(span_notice("[user] starts to fix some of the dents on [attacked_humanoid == user ? user.p_their() : "[attacked_humanoid]'s"] [affecting.name]."),
+		span_notice("You start fixing some of the dents on [attacked_humanoid == user ? "your" : "[attacked_humanoid]'s"] [affecting.name]."))
 	var/use_delay = 0
-
 	if(user == attacked_humanoid)
-		user.visible_message(span_notice("[user] starts to fix some of the dents on [attacked_humanoid]'s [affecting.name]."),
-			span_notice("You start fixing some of the dents on [attacked_humanoid == user ? "your" : "[attacked_humanoid]'s"] [affecting.name]."))
 		use_delay = 5 SECONDS
 
 	if(!use_tool(attacked_humanoid, user, use_delay, volume=50, amount=1))
 		return ITEM_INTERACT_BLOCKING
 
-	attacked_humanoid.item_heal(user, brute_heal = 15, burn_heal = 0, heal_message_brute = "dents", heal_message_burn = "burnt wires", required_bodytype = BODYTYPE_ROBOTIC)
+	if (!attacked_humanoid.item_heal(user, brute_heal = 15, burn_heal = 0, heal_message_brute = "dents", heal_message_burn = "burnt wires", required_bodytype = BODYTYPE_ROBOTIC))
+		return ITEM_INTERACT_BLOCKING
+
+	INVOKE_ASYNC(src, PROC_REF(interact_with_atom), interacting_with, user, modifiers)
 	return ITEM_INTERACT_SUCCESS
 
 /obj/item/weldingtool/afterattack(atom/target, mob/user, click_parameters)
