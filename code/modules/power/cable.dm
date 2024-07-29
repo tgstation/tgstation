@@ -573,6 +573,9 @@ GLOBAL_LIST_INIT(wire_node_generating_types, typecacheof(list(/obj/structure/gri
 	if(user.combat_mode)
 		return NONE
 
+	return try_heal_loop(interacting_with, user)
+
+/obj/item/stack/cable_coil/proc/try_heal_loop(atom/interacting_with, mob/living/user, repeating = FALSE)
 	var/mob/living/carbon/human/attacked_humanoid = interacting_with
 	var/obj/item/bodypart/affecting = attacked_humanoid.get_bodypart(check_zone(user.zone_selected))
 	if(isnull(affecting) || !IS_ROBOTIC_LIMB(affecting))
@@ -581,7 +584,7 @@ GLOBAL_LIST_INIT(wire_node_generating_types, typecacheof(list(/obj/structure/gri
 	user.visible_message(span_notice("[user] starts to fix some of the wires in [attacked_humanoid == user ? user.p_their() : "[attacked_humanoid]'s"] [affecting.name]."),
 		span_notice("You start fixing some of the wires in [attacked_humanoid == user ? "your" : "[attacked_humanoid]'s"] [affecting.name]."))
 
-	var/use_delay = 1 SECONDS
+	var/use_delay = repeating ? 1 SECONDS : 0
 	if(user == attacked_humanoid)
 		use_delay = 5 SECONDS
 
@@ -592,7 +595,7 @@ GLOBAL_LIST_INIT(wire_node_generating_types, typecacheof(list(/obj/structure/gri
 		return ITEM_INTERACT_BLOCKING
 
 	if (use(1) && amount > 0)
-		INVOKE_ASYNC(src, PROC_REF(interact_with_atom), interacting_with, user, modifiers)
+		INVOKE_ASYNC(src, PROC_REF(try_heal_loop), interacting_with, user, TRUE)
 
 	return ITEM_INTERACT_SUCCESS
 
