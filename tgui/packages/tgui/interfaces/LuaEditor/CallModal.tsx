@@ -1,12 +1,20 @@
-import { useBackend, useLocalState } from '../../backend';
+import { Dispatch, SetStateAction } from 'react';
+
+import { useBackend } from '../../backend';
 import { Button, Modal, Section } from '../../components';
 import { ListMapper } from './ListMapper';
+import { CallInfo, LuaEditorData, LuaEditorModal } from './types';
 
-export const CallModal = (props) => {
-  const { act, data } = useBackend();
+type CallModalProps = {
+  setModal: Dispatch<SetStateAction<LuaEditorModal>>;
+  toCall: CallInfo;
+  setToCall: Dispatch<SetStateAction<CallInfo | undefined>>;
+};
+
+export const CallModal = (props: CallModalProps) => {
+  const { act, data } = useBackend<LuaEditorData>();
   const { callArguments } = data;
-  const [, setModal] = useLocalState('modal');
-  const [toCall, setToCall] = useLocalState('toCallTaskInfo');
+  const { setModal, toCall, setToCall } = props;
   const { type, params } = toCall;
   return (
     <Modal
@@ -23,8 +31,8 @@ export const CallModal = (props) => {
             color="red"
             icon="window-close"
             onClick={() => {
-              setModal(null);
-              setToCall(null);
+              setModal(undefined);
+              setToCall(undefined);
               act('clearArgs');
             }}
           >
@@ -35,8 +43,8 @@ export const CallModal = (props) => {
         <ListMapper name="Arguments" list={callArguments} editable />
         <Button
           onClick={() => {
-            setModal(null);
-            setToCall(null);
+            setModal(undefined);
+            setToCall(undefined);
             act(type, params);
           }}
         >
