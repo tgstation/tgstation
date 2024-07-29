@@ -1,5 +1,0 @@
-author: "grungussuss"
-delete-after: True
-changes:
-  - bugfix: "Med sec telescreens are no longer the same item as the CMO telescreen."
-  - spellcheck: "correcte name for the CMO telescreen mount"

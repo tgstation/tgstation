@@ -1,0 +1,8 @@
+author: "Ghommie"
+delete-after: True
+changes:
+  - qol: "Aquariums start unanchored and don't autoconnect to plumbing. Their reproduction prevention is also disabled by default."
+  - balance: "Made it a tad easier to control the bait during the minigame. Buffed the fishing skill. No fishing duds at all when using ANY bait."
+  - balance: "Chasm Chrabs take less time to grow into Lobstrosities but need food a bit more frequently."
+  - balance: "\"Profound fisher\" mobs will have less RNG-dependant time fishing."
+  - bugfix: "You can now ACTUALLY interact with other things while fishing if the fishing rod isn't in your active hand."

@@ -1,0 +1,4 @@
+author: "grungussuss"
+delete-after: True
+changes:
+  - sound: "leather, skins and cardboard have their own sound now"
