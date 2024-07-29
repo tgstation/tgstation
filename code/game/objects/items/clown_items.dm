@@ -94,7 +94,7 @@
 	inhand_icon_state = "soapnt"
 	worn_icon_state = "soapnt"
 	cleanspeed = 0.5 SECONDS //can be changed if someone isn't happy
-	uses = 999999999 //turns out cyborg soap has limited uses so I summon stupidly large number
+	uses = INFINITY
 
 /obj/item/soap/omega
 	name = "\improper Omega soap"
