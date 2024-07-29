@@ -35,8 +35,7 @@ img {
 
 #menu {
 	display: flex;
-	overflow-x: auto;
-	overflow-y: hidden;
+	flex-wrap: wrap-reverse;
 	padding: 0.25em 0.25em 0;
 	background-color: #ffffff;
 }
