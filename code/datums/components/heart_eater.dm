@@ -65,10 +65,11 @@
 	if(!istype(what_we_ate, /obj/item/organ/internal/heart))
 		return
 	var/obj/item/organ/internal/heart/we_ate_heart = what_we_ate
-	if (!HAS_TRAIT(we_ate_heart, TRAIT_USED_ORGAN))
-		return
 	var/obj/item/organ/internal/heart/previous_heart = last_heart_we_ate?.resolve()
 	if(we_ate_heart == previous_heart)
+		return
+	if (!HAS_TRAIT(we_ate_heart, TRAIT_USED_ORGAN))
+		to_chat(eater, span_warning("This heart is utterly lifeless, you won't receive any boons from consuming it!"))
 		return
 	bites_taken = 0
 
