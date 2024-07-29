@@ -193,7 +193,7 @@
 
 	var/message = "Subject is irradiated."
 	if(tochat)
-		message = span_tooltip("Supply antitoxin medication.", message)
+		message = span_tooltip("Supply antiradiation or antitoxin, such as [/datum/reagent/medicine/potass_iodide::name] or [/datum/reagent/medicine/pen_acid::name].", message)
 
 	render_list += "<span class='alert ml-1'>[message]</span><br>"
 

@@ -8,7 +8,7 @@
 	layer = ABOVE_MOB_LAYER
 	zone = BODY_ZONE_HEAD
 	slot = ORGAN_SLOT_BRAIN
-	organ_flags = ORGAN_ORGANIC | ORGAN_VITAL
+	organ_flags = ORGAN_ORGANIC | ORGAN_VITAL | ORGAN_PROMINENT
 	attack_verb_continuous = list("attacks", "slaps", "whacks")
 	attack_verb_simple = list("attack", "slap", "whack")
 
@@ -284,10 +284,6 @@
 		LAZYADD(trauma_text, trauma_desc)
 	if(LAZYLEN(trauma_text))
 		return "Mental trauma: [english_list(trauma_text, and_text = ", and ")]."
-
-/obj/item/organ/internal/brain/show_on_condensed_scans()
-	// Always show it's kinda important
-	return TRUE
 
 /obj/item/organ/internal/brain/attack(mob/living/carbon/C, mob/user)
 	if(!istype(C))

@@ -321,7 +321,7 @@ INITIALIZE_IMMEDIATE(/obj/item/organ)
 
 /// Called by medical scanners to get a simple summary of how healthy the organ is. Returns an empty string if things are fine.
 /obj/item/organ/proc/get_status_text(advanced, add_tooltips)
-	if(advanced && (organ_flags & ORGAN_PROMINENT))
+	if(advanced && (organ_flags & ORGAN_HAZARDOUS))
 		. = "<font color='#cc3333'>Harmful Foreign Body</font>"
 		if(add_tooltips)
 			. = span_tooltip("Remove surgically.", .)
@@ -340,13 +340,13 @@ INITIALIZE_IMMEDIATE(/obj/item/organ)
 	if(organ_flags & ORGAN_FAILING)
 		. = "<font color='#cc3333'>[tech_text || "Non-Functional"]</font>"
 		if(add_tooltips)
-			. = span_tooltip("Replace surgically or perform an organ repair operation.", .)
+			. = span_tooltip("Repair or replace surgically.", .)
 		return .
 
 	if(damage > high_threshold)
 		. = "<font color='#ff9933'>[tech_text || "Severely Damaged"]</font>"
 		if(add_tooltips && owner.stat != DEAD)
-			. = span_tooltip("[healing_factor ? "Treat with rest or use specialty medication." : "Use specialty medication."]", .)
+			. = span_tooltip("[healing_factor ? "Treat with rest or use specialty medication." : "Repair surgically or use specialty medication."]", .)
 		return .
 
 	if(damage > low_threshold)
@@ -361,7 +361,7 @@ INITIALIZE_IMMEDIATE(/obj/item/organ)
 /// Determines if this organ is shown when a user has condensed scans enabled
 /obj/item/organ/proc/show_on_condensed_scans()
 	// We don't need to show *most* damaged organs as they have no effects associated
-	return (organ_flags & (ORGAN_FAILING|ORGAN_VITAL|ORGAN_IRRADIATED))
+	return (organ_flags & (ORGAN_PROMINENT|ORGAN_HAZARDOUS|ORGAN_FAILING|ORGAN_VITAL))
 
 /// Similar to get_status_text, but appends the text after the damage report, for additional status info
 /obj/item/organ/proc/get_status_appendix(advanced, add_tooltips)

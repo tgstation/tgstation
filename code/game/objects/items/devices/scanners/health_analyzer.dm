@@ -171,7 +171,7 @@
 			if(HAS_TRAIT_FROM(target, TRAIT_HUSK, BURN))
 				var/reason = "severe burns"
 				if(tochat)
-					reason = span_tooltip("Tend burns and apply a de-husking agent, such as Synthflesh.", reason)
+					reason = span_tooltip("Tend burns and apply a de-husking agent, such as [/datum/reagent/medicine/synthflesh::name].", reason)
 				render_list += "<span class='alert ml-1'>Subject has been husked by [reason].</span><br>"
 			else if (HAS_TRAIT_FROM(target, TRAIT_HUSK, CHANGELING_DRAIN))
 				var/reason = "desiccation"
@@ -255,7 +255,7 @@
 							var/displayed = embedded_name
 							var/embedded_amt = embedded_names[embedded_name]
 							if(embedded_amt > 1)
-								displayed = "[embedded_amt] [embedded_name]\s"
+								displayed = "[embedded_amt]x [embedded_name]"
 							if(tochat)
 								displayed = span_tooltip("Use a hemostat to remove.", displayed)
 							dmgreport += "<tr><td colspan=6><span class='alert ml-2'>&rdsh; Foreign object(s): [displayed]</span></td></tr>"
