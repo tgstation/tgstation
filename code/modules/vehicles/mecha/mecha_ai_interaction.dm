@@ -12,7 +12,7 @@
 		to_chat(user, "<a href='?src=[REF(user)];ai_take_control=[REF(src)]'>[span_userdanger("ASSUME DIRECT CONTROL?")]</a><br>")
 		return
 	examine(user)
-	if(length(return_drivers()) > 0)
+	if(length(return_occupants()) >= max_occupants)
 		to_chat(user, span_warning("This exosuit has a pilot and cannot be controlled."))
 		return
 	var/can_control_mech = FALSE
