@@ -121,6 +121,29 @@
 #define OFFSET_X 1
 #define OFFSET_Y 2
 
+/// Similar to get_status_text, but appends the text after the damage report, for additional status info
+/obj/item/organ/internal/eyes/get_status_appendix(advanced, add_tooltips)
+	if(owner.stat == DEAD || HAS_TRAIT(owner, TRAIT_KNOCKEDOUT))
+		return
+	if(owner.is_blind())
+		if(advanced)
+			if(owner.is_blind_from(EYE_DAMAGE))
+				return "Subject is blind from eye damage."
+			if(owner.is_blind_from(GENETIC_MUTATION))
+				return "Subject is genetically blind."
+			if(owner.is_blind_from(QUIRK_TRAIT))
+				return "Subject is permanently blind."
+		return "Subject is blind."
+	if(owner.is_nearsighted())
+		if(advanced)
+			if(owner.is_nearsighted_from(EYE_DAMAGE))
+				return "Subject is nearsighted from eye damage."
+			if(owner.is_nearsighted_from(GENETIC_MUTATION))
+				return "Subject is genetically nearsighted."
+			if(owner.is_nearsighted_from(QUIRK_TRAIT))
+				return "Subject is permanently nearsighted."
+		return "Subject is nearsighted."
+
 /// This proc generates a list of overlays that the eye should be displayed using for the given parent
 /obj/item/organ/internal/eyes/proc/generate_body_overlay(mob/living/carbon/human/parent)
 	if(!istype(parent) || parent.get_organ_by_type(/obj/item/organ/internal/eyes) != src)

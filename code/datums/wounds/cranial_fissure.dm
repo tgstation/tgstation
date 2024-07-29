@@ -29,7 +29,8 @@
 /datum/wound/cranial_fissure
 	name = "Cranial Fissure"
 	desc = "Patient's crown is agape, revealing severe damage to the skull."
-	treat_text = "Immediate surgical reconstruction of the skull."
+	treat_text = "Surgical reconstruction of the skull is necessary."
+	treat_text_short = "Surgical reconstruction required."
 	examine_desc = "is split open"
 	occur_text = "is split into two separated chunks"
 

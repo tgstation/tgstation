@@ -258,6 +258,33 @@
 	else
 		return span_info("This one is completely devoid of life.")
 
+/obj/item/organ/internal/brain/get_status_appendix(advanced, add_tooltips)
+	var/list/trauma_text
+	for(var/datum/brain_trauma/trauma as anything in traumas)
+		var/trauma_desc = ""
+		switch(trauma.resilience)
+			if(TRAUMA_RESILIENCE_SURGERY)
+				trauma_desc = "Severe "
+				if(add_tooltips)
+					trauma_desc = span_tooltip("Repair via brain surgery.", trauma_desc)
+			if(TRAUMA_RESILIENCE_LOBOTOMY)
+				trauma_desc = "Deep-rooted "
+				if(add_tooltips)
+					trauma_desc = span_tooltip("Repair via Lobotomy.", trauma_desc)
+			if(TRAUMA_RESILIENCE_WOUND)
+				trauma_desc = "Fracture-derived "
+				if(add_tooltips)
+					trauma_desc = span_tooltip("Repair via treatment of wounds afflicting the head.", trauma_desc)
+			if(TRAUMA_RESILIENCE_MAGIC, TRAUMA_RESILIENCE_ABSOLUTE)
+				trauma_desc = "Permanent "
+				if(add_tooltips)
+					trauma_desc = span_tooltip("Irreparable under normal circumstances.", trauma_desc)
+
+		trauma_desc += capitalize(trauma.scan_desc)
+		LAZYADD(trauma_text, trauma_desc)
+	if(LAZYLEN(trauma_text))
+		return "Trauma detected: [english_list(trauma_text, and_text = ", and ")].</span>\n"
+
 /obj/item/organ/internal/brain/attack(mob/living/carbon/C, mob/user)
 	if(!istype(C))
 		return ..()

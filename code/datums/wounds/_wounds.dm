@@ -23,6 +23,8 @@
 	var/desc = ""
 	/// The basic treatment suggested by health analyzers
 	var/treat_text = ""
+	/// Even more basic treatment
+	var/treat_text_short = ""
 	/// What the limb looks like on a cursory examine
 	var/examine_desc = "is badly hurt"
 
