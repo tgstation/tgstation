@@ -1,0 +1,6 @@
+author: "Paxilmaniac"
+delete-after: True
+changes:
+  - balance: "The nukeops surplus smg, the pp-95, has been reworked into the Abielle Smart-SMG. It performs nearly identically to the pp-95, however it's projectiles get a slight homing ability towards whatever you click on."
+  - sound: "New firing sounds for the surplus smg, credit to the m41 sound effects from tgmc"
+  - image: "New sprites for the surplus smg, made by me"
