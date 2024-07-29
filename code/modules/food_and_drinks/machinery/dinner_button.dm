@@ -15,7 +15,11 @@
 	announce()
 
 /obj/machinery/foodbutton/proc/announce(mob/living/user)
+	if(!allowed(user))
+		balloon_alert(user, "access denied!")
+		return
 	if(button_used)
+		balloon_alert(user, "already used!")
 		return
 	if(world.time - SSticker.round_start_time < STOP_SERVING_BREAKFAST)
 		balloon_alert(user, "too early!")
