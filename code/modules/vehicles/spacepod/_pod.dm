@@ -96,38 +96,37 @@
 	. = ..()
 	explosion(loc, devastation_range = 1, heavy_impact_range = 2)
 
-/* // this is done so poorly
-/obj/vehicle/sealed/space_pod/Bump(bumped)
+/obj/vehicle/sealed/space_pod/Bump(atom/bumped)
 	. = ..()
 	if(isnull(drift_handler))
 		return
-	// 0 to 2 newtons shouldnt even damage an object
-	var/penalized_force = drift_handler.drift_force-(6 NEWTONS)
-	if(!penalized_force)
+	if(drift_handler.drift_force < 3 NEWTONS) // need to be moving at a decent speed for anything to happen
 		return
-	playsound(src, 'sound/effects/meteorimpact.ogg', 40, TRUE)
+
+	var/strength = 1 + (drift_handler.drift_force - 3 NEWTONS) * 0.2 // strength of the impact
+
+	playsound(src, 'sound/effects/meteorimpact.ogg', min(40 * strength, 100), TRUE)
+
 	for(var/mob/shake_it in get_hearers_in_range(3, src))
 		if(shake_it.stat != DEAD && !isAI(shake_it))
-			shake_camera(shake_it, 3, 1)
-	var/effective_force_against_object = penalized_force
+			shake_camera(shake_it, 0.3 SECONDS, min(strength, 2.5))
+
+	if(bumped.resistance_flags & INDESTRUCTIBLE) // damage handling goes past this point
+		return
+
 	if(isclosedturf(bumped))
 		var/turf/closed/bumped_turf = bumped
-		effective_force_against_object = max(effective_force_against_object-bumped_turf.explosive_resistance, 0)
-		take_damage(penalized_force * 25, BRUTE)
-		if(prob(effective_force_against_object * 2))
+		take_damage(strength * 100, BRUTE)
+		if(strength > bumped_turf.explosive_resistance + 0.5) // normal walls have a resistance of 1 and rwalls 2, so you need a speed of at least 5.5 newtons to break a wall and 10.5 to break an rwall
 			bumped_turf.ScrapeAway(1, CHANGETURF_INHERIT_AIR)
 	else if(isobj(bumped))
 		var/obj/bumped_atom = bumped
-		effective_force_against_object = max(effective_force_against_object-bumped_atom.explosion_block, 0)
-		bumped_atom.take_damage(effective_force_against_object * 50, BRUTE, attack_dir = REVERSE_DIR(dir))
-		take_damage(penalized_force * 35, BRUTE)
-		drift_handler.remove_angle_force(angle2dir(dir))
+		bumped_atom.take_damage(strength * 100, BRUTE, attack_dir = REVERSE_DIR(dir))
+		take_damage(strength * 70, BRUTE)
 	else if(isliving(bumped))
 		var/mob/living/poor_sap = bumped
-		take_damage(penalized_force * 10, BRUTE) //weaker cuz i want to see someone ram a dude
-		poor_sap.apply_damage(penalized_force * 7, BRUTE)
-*/
-
+		take_damage(strength * 50, BRUTE) //weaker cuz i want to see someone ram a dude
+		poor_sap.apply_damage(strength * 20, BRUTE)
 
 /obj/vehicle/sealed/space_pod/proc/onSetDir(datum/source, old_dir, new_dir)
 	SIGNAL_HANDLER
