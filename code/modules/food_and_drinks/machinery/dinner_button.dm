@@ -18,7 +18,10 @@
 
 /obj/machinery/foodbutton/proc/announce(mob/living/user)
 	if(button_used)
-		return FALSE
+		return
+	if(world.time - SSticker.round_start_time < STOP_SERVING_BREAKFAST)
+		balloon_alert(user, "too early!")
+		return
 	minor_announce("Attention crew! It's lunchtime! Head over for a delicious meal prepared just for you. Bon appétit!", "Kitchen announcement")
 	playsound(src, button_sound, 70, TRUE, -1)
 	button_used = TRUE
