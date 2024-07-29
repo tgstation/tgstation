@@ -102,8 +102,8 @@
 	name = "Syndicate Operative - Reinforcement"
 	tc = 0
 	backpack_contents = list(
-		/obj/item/gun/ballistic/automatic/plastikov = 1,
-		/obj/item/ammo_box/magazine/plastikov9mm = 2,
+		/obj/item/gun/ballistic/automatic/smartgun = 1,
+		/obj/item/ammo_box/magazine/smartgun = 2,
 	)
 	var/faction = "The Syndicate"
 
