@@ -10,9 +10,6 @@
 	var/button_used = FALSE // only one announcement per shift
 	var/button_sound = 'sound/machines/pda_button2.ogg'
 
-/obj/machinery/foodbutton/Initialize(mapload)
-	. = ..()
-
 /obj/machinery/foodbutton/attack_hand(mob/living/user)
 	. = ..()
 	announce()
