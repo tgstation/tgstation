@@ -144,12 +144,6 @@
 /obj/effect/landmark/deathmatch_player_spawn,
 /turf/open/chasm,
 /area/deathmatch/fullbright)
-"xz" = (
-/obj/structure/lattice/catwalk,
-/obj/structure/lattice/catwalk,
-/obj/effect/decal/cleanable/dirt/dust,
-/turf/open/chasm,
-/area/deathmatch/fullbright)
 "yB" = (
 /obj/structure/railing/unbreakable{
 	dir = 8
@@ -196,7 +190,6 @@
 /turf/open/chasm,
 /area/deathmatch/fullbright)
 "IT" = (
-/obj/structure/lattice/catwalk,
 /obj/structure/lattice/catwalk,
 /obj/effect/landmark/deathmatch_player_spawn,
 /obj/effect/decal/cleanable/rubble,
@@ -835,17 +828,17 @@ SL
 dM
 MF
 Nf
+vk
 Od
-xz
-Od
+vk
 MF
 Nf
 MF
 MF
-Od
+vk
 Od
 IT
-Od
+vk
 uO
 gN
 gN
@@ -863,14 +856,14 @@ dM
 dM
 MF
 MF
-Od
+vk
 MF
 MF
 MF
 MF
 MF
 MF
-Od
+vk
 Od
 MF
 MF

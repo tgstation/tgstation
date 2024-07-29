@@ -5,8 +5,6 @@
 /area/deathmatch/teleport)
 "aN" = (
 /obj/structure/flora/rock/pile/jungle/style_random,
-/turf/open/misc/grass/jungle,
-/turf/open/misc/asteroid/moon,
 /turf/open/misc/asteroid/moon,
 /area/deathmatch/teleport)
 "bb" = (
