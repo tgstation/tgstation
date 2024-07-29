@@ -358,3 +358,11 @@
 2024-07-28:
   Absolucy:
   - bugfix: Fixed a runtime error relating to airlocks closing and liquids.
+2024-07-29:
+  KnigTheThrasher:
+  - bugfix: Fixes deers dying from atmos in colonies
+  Oricana-16:
+  - rscadd: Florida man learned how to wrestle.
+  flleeppyy:
+  - rscadd: Kerfus cyborgs, cat/kitten pAI's and IPC's now have unique cat sounds.
+  - bugfix: oozeling revival bug involving going to CC and returning to corpse
