@@ -111,6 +111,8 @@
 	tag = null
 	datum_flags &= ~DF_USE_TAG //In case something tries to REF us
 	weak_reference = null //ensure prompt GCing of weakref.
+	DREAMLUAU_CLEAR_REF_USERDATA(vars) // vars ceases existing when src does, so we need to clear any lua refs to it that exist.
+	DREAMLUAU_CLEAR_REF_USERDATA(src)
 
 	if(_active_timers)
 		var/list/timers = _active_timers

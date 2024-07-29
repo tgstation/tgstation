@@ -22,11 +22,11 @@ export SPACEMAN_DMM_VERSION=suite-1.8
 # Python version for mapmerge and other tools
 export PYTHON_VERSION=3.9.0
 
-#auxlua repo
-export AUXLUA_REPO=tgstation/auxlua
+#dreamluau repo
+export DREAMLUAU_REPO="tgstation/dreamluau"
 
-#auxlua git tag
-export AUXLUA_VERSION=1.4.4
+#dreamluau git tag
+export DREAMLUAU_VERSION=0.1.0
 
 #hypnagogic repo
 export CUTTER_REPO=spacestation13/hypnagogic
