@@ -219,15 +219,15 @@
 	map_name = "species_warfare"
 	key = "species_warfare"
 
-/datum/lazy_template/deathmatch/spleef
-	name = "Spleef"
-	desc = "Snip catwalks and lattices under others and become the SPLEEF MASTER!"
+/datum/lazy_template/deathmatch/lattice_battles
+	name = "Lattice Battles"
+	desc = "Tired of fisticuffs all the time? Just snip the catwalk underneath instead!"
 	max_players = 8
 	allowed_loadouts = list(
-		/datum/outfit/deathmatch_loadout/spleef
+		/datum/outfit/deathmatch_loadout/lattice_battles
 	)
-	map_name = "spleef"
-	key = "spleef"
+	map_name = "lattice_battles"
+	key = "lattice_battles"
 
 /datum/lazy_template/deathmatch/ragnarok
 	name = "Ragnarok"
