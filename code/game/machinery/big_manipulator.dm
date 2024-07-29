@@ -1,3 +1,4 @@
+/// Manipulator Core. Main part of the mechanism that carries out the entire process.
 /obj/machinery/big_manipulator
 	name = "Big Manipulator"
 	desc = "Take and drop objects. Innovation..."
@@ -42,11 +43,13 @@
 	if(isnull(containment_obj))
 		return
 	var/obj/obj_resolve = containment_obj?.resolve()
+	if(isnull(obj_resolve))
+		return
 	obj_resolve.forceMove(get_turf(obj_resolve))
-	obj_resolve = null
 
 /obj/machinery/big_manipulator/Moved(atom/old_loc, movement_dir, forced, list/old_locs, momentum_change)
 	. = ..()
+	take_and_drop_turfs_check()
 	if(isnull(get_turf(src)))
 		qdel(manipulator_hand)
 		return
@@ -77,7 +80,7 @@
 /obj/machinery/big_manipulator/default_unfasten_wrench(mob/user, obj/item/wrench, time)
 	. = ..()
 	if(. == SUCCESSFUL_UNFASTEN)
-		anchored_check()
+		take_and_drop_turfs_check()
 
 /obj/machinery/big_manipulator/screwdriver_act(mob/living/user, obj/item/tool)
 	if(default_deconstruction_screwdriver(user, icon_state, icon_state, tool))
@@ -129,9 +132,9 @@
 
 	active_power_usage = BASE_MACHINE_ACTIVE_CONSUMPTION * power_use_lvl
 
-/// Changing take and drop turf tiles when we anchore manipulator.
-/obj/machinery/big_manipulator/proc/anchored_check()
-	if(anchored)
+/// Changing take and drop turf tiles when we anchore manipulator or if manipulator not in turf.
+/obj/machinery/big_manipulator/proc/take_and_drop_turfs_check()
+	if(anchored && isturf(src.loc))
 		take_turf = get_step(src, take_here)
 		drop_turf = get_step(src, drop_here)
 	else
@@ -154,7 +157,7 @@
 			take_here = NORTH
 			drop_here = SOUTH
 	manipulator_hand.dir = take_here
-	anchored_check()
+	take_and_drop_turfs_check()
 
 /// Deliting hand will destroy our manipulator core.
 /obj/machinery/big_manipulator/proc/on_hand_qdel()
@@ -201,7 +204,6 @@
 /// Third take and drop proc from [take and drop procs loop]:
 /// Drop our item and start manipulator hand backward animation.
 /obj/machinery/big_manipulator/proc/drop_thing(atom/movable/target)
-	for(var/obj/somthing as anything in drop_turf.contents)
 	target.forceMove(drop_turf)
 	do_rotate_animation(0)
 	addtimer(CALLBACK(src, PROC_REF(end_work)), working_speed)
@@ -249,6 +251,7 @@
 			is_work_check()
 			return TRUE
 
+/// Manipulator hand. Effect we animate to show that the manipulator is working and moving something.
 /obj/effect/big_manipulator_hand
 	name = "Manipulator claw"
 	desc = "Take and drop objects. Innovation..."
