@@ -278,7 +278,7 @@ GLOBAL_LIST_EMPTY(objects_by_id_tag)
 		return FALSE
 	return TRUE
 
-/// Adjusts the vertical pixel offset when the object is anchored on a tile with table
+/// Adjusts the vertical pixel_z offset when the object is anchored on a tile with table
 /obj/proc/check_on_table()
 	if(anchored_tabletop_offset == 0)
 		return
