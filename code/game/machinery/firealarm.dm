@@ -141,8 +141,10 @@
 /obj/machinery/firealarm/proc/set_status()
 	if(!(my_area.fire || LAZYLEN(my_area.active_firelocks)) || (obj_flags & EMAGGED))
 		soundloop.stop()
-	else // MASSMETA EDIT ADDITION START
-		soundloop.start() // MASSMETA EDIT ADDITION END
+	// MASSMETA EDIT ADDITION START
+	else
+		soundloop.start()
+	// MASSMETA EDIT ADDITION END
 	update_appearance()
 
 /obj/machinery/firealarm/update_appearance(updates)
