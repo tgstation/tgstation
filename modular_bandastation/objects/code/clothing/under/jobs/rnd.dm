@@ -21,7 +21,7 @@
 /obj/item/clothing/under/rank/rnd/roboticist/alt/skirt
 	name = "standart roboticist's jumpskirt"
 	desc = "Комбинезон робототехника нового образца с юбкой. Ничего выдающегося, кроме качественного материала. На бирке указано: 'Flameholdeir Industries'. Эстетика в простоте - а кстати, а где моя катана?"
-	icon_state = "robotics_skirt"
+	icon_state = "robotics_skirt_alt"
 	body_parts_covered = CHEST|GROIN|ARMS
 	dying_key = DYE_REGISTRY_JUMPSKIRT
 	female_sprite_flags = FEMALE_UNIFORM_TOP_ONLY
