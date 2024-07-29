@@ -580,9 +580,13 @@ GLOBAL_LIST_INIT(wire_node_generating_types, typecacheof(list(/obj/structure/gri
 
 	user.visible_message(span_notice("[user] starts to fix some of the wires in [attacked_humanoid == user ? user.p_their() : "[attacked_humanoid]'s"] [affecting.name]."),
 		span_notice("You start fixing some of the wires in [attacked_humanoid == user ? "your" : "[attacked_humanoid]'s"] [affecting.name]."))
+
+	var/use_delay = 1 SECONDS
 	if(user == attacked_humanoid)
-		if(!do_after(user, 5 SECONDS, attacked_humanoid))
-			return ITEM_INTERACT_BLOCKING
+		use_delay = 5 SECONDS
+
+	if(!do_after(user, use_delay, attacked_humanoid))
+		return ITEM_INTERACT_BLOCKING
 
 	if (!attacked_humanoid.item_heal(user, brute_heal = 0, burn_heal = 15, heal_message_brute = "dents", heal_message_burn = "burnt wires", required_bodytype = BODYTYPE_ROBOTIC))
 		return ITEM_INTERACT_BLOCKING
