@@ -6,6 +6,7 @@
 	layer = OBJ_LAYER
 	anchored = TRUE
 	pass_flags = PASSTABLE // Able to place on tables
+	req_access = list(ACCESS_KITCHEN)
 	var/button_used = FALSE // only one announcement per shift
 	var/button_sound = 'sound/machines/pda_button2.ogg'
 
