@@ -14,6 +14,10 @@
 	. = ..()
 	announce()
 
+/obj/machinery/foodbutton/attack_paw(mob/living/user)
+	. = ..()
+	announce()
+
 /obj/machinery/foodbutton/proc/announce(mob/living/user)
 	if(!allowed(user))
 		balloon_alert(user, "access denied!")
