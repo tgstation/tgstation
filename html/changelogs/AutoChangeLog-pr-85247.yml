@@ -1,4 +1,0 @@
-author: "grungussuss"
-delete-after: True
-changes:
-  - bugfix: "lavaland no longer has roundstart atmos processing because of a passive vent"
