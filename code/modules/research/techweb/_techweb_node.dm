@@ -90,8 +90,7 @@
 		var/list/boostlist = host.boosted_nodes[id]
 		for(var/booster in boostlist)
 			if(actual_costs[booster])
-				var/delta = max(0, actual_costs[booster] - TECHWEB_MIN_BOOST_POINTS)
-				actual_costs[booster] -= min(boostlist[booster], delta)
+				actual_costs[booster] = max(actual_costs[booster] - boostlist[booster], 0)
 
 	return actual_costs
 

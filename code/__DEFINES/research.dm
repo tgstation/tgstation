@@ -11,9 +11,6 @@
 #define TECHWEB_TIER_4_POINTS 160
 #define TECHWEB_TIER_5_POINTS 200
 
-/// Minimal amount of points that a node can be reduced to by research paper boosts
-#define TECHWEB_MIN_BOOST_POINTS 10
-
 //! Amount of points gained per second by a single R&D server, see: [research][code/controllers/subsystem/research.dm]
 #define TECHWEB_SINGLE_SERVER_INCOME 1
 
