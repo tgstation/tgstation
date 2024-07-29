@@ -315,7 +315,7 @@
 	STOP_PROCESSING(SSobj, src)
 
 /obj/item/fish/proc/exit_stasis()
-	ADD_TRAIT(src, TRAIT_FISH_STASIS, INNATE_TRAIT)
+	REMOVE_TRAIT(src, TRAIT_FISH_STASIS, INNATE_TRAIT)
 	if(status != FISH_DEAD)
 		START_PROCESSING(SSobj, src)
 

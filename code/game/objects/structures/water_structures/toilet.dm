@@ -36,6 +36,7 @@
 	update_appearance(UPDATE_ICON)
 	if(mapload && SSmapping.level_trait(z, ZTRAIT_STATION))
 		AddElement(/datum/element/lazy_fishing_spot, /datum/fish_source/toilet)
+	AddElement(/datum/element/fish_safe_storage)
 	register_context()
 
 /obj/structure/toilet/add_context(atom/source, list/context, obj/item/held_item, mob/user)
