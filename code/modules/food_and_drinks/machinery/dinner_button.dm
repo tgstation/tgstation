@@ -1,5 +1,5 @@
 /obj/machinery/foodbutton
-	name = "dinner button"
+	name = "lunch button"
 	desc = "Casts an announcement to the station, reminding the crew about food."
 	icon = 'icons/obj/service/kitchen.dmi'
 	icon_state = "button_supper"
