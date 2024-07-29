@@ -309,5 +309,7 @@
 		name = "\improper Atlas gravitonic spinal implant"
 		desc = "This gravitronic spinal interface is able to improve the athletics of a user, allowing them greater physical ability. \
 			This one has been improved through the installation of a gravity anomaly core, allowing for personal gravity manipulation."
+		icon_state = "herculean_implant_core"
+		update_appearance()
 		qdel(tool)
 		return ITEM_INTERACT_SUCCESS
