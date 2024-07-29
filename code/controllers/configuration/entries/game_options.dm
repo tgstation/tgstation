@@ -278,8 +278,8 @@
 ///An override to gateway_delay for specific maps or start points
 /datum/config_entry/keyed_list/gateway_delays_by_id
 	default = list(
-		AWAYSTART_BEACH = 10 MINUTES,
-		AWAYSTART_MUSEUM = 15 MINUTES,
+		AWAYSTART_BEACH = 5 MINUTES, //Chill RP zone
+		AWAYSTART_MUSEUM = 12 MINUTES, //Chill place with some cool puzzles and effects.
 	)
 	key_mode = KEY_MODE_TEXT
 	value_mode = VALUE_MODE_NUM
