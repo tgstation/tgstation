@@ -24772,10 +24772,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/visible,
 /turf/open/floor/plating,
 /area/station/maintenance/port/aft)
-"hto" = (
-/obj/structure/girder,
-/turf/closed/wall,
-/area/station/maintenance/starboard/aft)
 "htp" = (
 /obj/machinery/door/poddoor/preopen{
 	id = "xenobio2";
@@ -259618,7 +259614,7 @@ lXi
 vzD
 vzD
 vzD
-hto
+vzD
 jOj
 vzD
 daT
