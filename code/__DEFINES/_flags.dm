@@ -136,6 +136,8 @@ GLOBAL_LIST_INIT(bitflags, list(1, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024, 204
 #define VIRTUAL_SAFE_AREA (1<<16)
 /// This area does not allow the Binary channel
 #define BINARY_JAMMING (1<<17)
+/// This area prevents Bag of Holding rifts from being opened.
+#define NO_BOH (1<<18)
 
 /*
 	These defines are used specifically with the atom/pass_flags bitmask

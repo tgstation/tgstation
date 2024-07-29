@@ -957,7 +957,7 @@
 /area/station/hallway/secondary/exit/departure_lounge)
 "fP" = (
 /obj/machinery/light/directional/north,
-/obj/machinery/keycard_auth/directional/north,
+/obj/machinery/keycard_auth/wall_mounted/directional/north,
 /turf/open/floor/iron,
 /area/station/hallway/secondary/exit/departure_lounge)
 "fQ" = (
@@ -1055,7 +1055,7 @@
 "gz" = (
 /obj/structure/table,
 /obj/item/card/id/advanced/gold/captains_spare,
-/obj/machinery/keycard_auth/directional/north,
+/obj/machinery/keycard_auth/wall_mounted/directional/north,
 /turf/open/floor/iron,
 /area/station/hallway/secondary/exit/departure_lounge)
 "gE" = (

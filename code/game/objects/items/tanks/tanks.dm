@@ -22,6 +22,9 @@
 	slot_flags = ITEM_SLOT_BACK
 	worn_icon = 'icons/mob/clothing/back.dmi' //since these can also get thrown into suit storage slots. if something goes on the belt, set this to null.
 	hitsound = 'sound/weapons/smash.ogg'
+	pickup_sound = 'sound/items/gas_tank_pick_up.ogg'
+	drop_sound = 'sound/items/gas_tank_drop.ogg'
+	sound_vary = TRUE
 	pressure_resistance = ONE_ATMOSPHERE * 5
 	force = 5
 	throwforce = 10
@@ -69,7 +72,7 @@
 	if (QDELETED(breathing_mob))
 		breathing_mob = null
 		return
-	// Close open air tank if it got dropped by it's current user.
+	// Close open air tank if it got dropped by its current user.
 	if (loc != breathing_mob)
 		breathing_mob.cutoff_internals()
 

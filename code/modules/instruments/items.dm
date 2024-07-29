@@ -17,7 +17,7 @@
 /obj/item/instrument/Initialize(mapload)
 	. = ..()
 	song = new(src, allowed_instrument_ids, instrument_range)
-	allowed_instrument_ids = null //We don't need this clogging memory after it's used.
+	allowed_instrument_ids = null //We don't need this clogging memory after its used.
 
 /obj/item/instrument/Destroy()
 	QDEL_NULL(song)

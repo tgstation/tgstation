@@ -277,7 +277,7 @@
 		var/value = coin_values[coin_type] //Change this to use initial value once we change to mat datum coins.
 		var/coin_count = round(remaining_payout / value)
 
-		if(!coin_count) //Cant make coins of this type, as we can't reach it's value.
+		if(!coin_count) //Cant make coins of this type, as we can't reach its value.
 			continue
 
 		remaining_payout -= value * coin_count

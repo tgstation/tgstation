@@ -211,6 +211,7 @@ Striking a noncultist, however, will tear their flesh."}
 			awakener = awakener,\
 			allow_renaming = FALSE,\
 			allow_channeling = FALSE,\
+			allow_exorcism = FALSE,\
 		)
 
 	// Get the heretic's new body and antag datum.
