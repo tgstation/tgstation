@@ -1,0 +1,5 @@
+author: "KazooBard"
+delete-after: True
+changes:
+  - rscadd: "The heretic's ritual of knowledge no longer requires binoculars"
+  - rscadd: "Clipboards are craftable using a wood plank, an iron rod and wirecutters"
