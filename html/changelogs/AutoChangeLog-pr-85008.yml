@@ -1,5 +1,0 @@
-author: "SmArtKar"
-delete-after: True
-changes:
-  - rscadd: "Mining headsets now allow you to make callouts via pointing. You can use them to communicate with fellow miners or order your army of bots and raptors!"
-  - rscadd: "Mining headsets keep your voice loud and clear in low-pressure environments (not vacuum!)"
