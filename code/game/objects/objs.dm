@@ -280,5 +280,12 @@ GLOBAL_LIST_EMPTY(objects_by_id_tag)
 
 /// Adjusts the vertical pixel offset when the object is anchored on a tile with table
 /obj/proc/check_on_table()
-	if(anchored_tabletop_offset != 0 && !istype(src, /obj/structure/table) && locate(/obj/structure/table) in loc)
-		pixel_y = anchored ? anchored_tabletop_offset : initial(pixel_y)
+	if(anchored_tabletop_offset == 0)
+		return
+	if(istype(src, /obj/structure/table))
+		return
+
+	if(anchored && locate(/obj/structure/table) in loc)
+		pixel_z = anchored_tabletop_offset
+	else
+		pixel_z = initial(pixel_z)
