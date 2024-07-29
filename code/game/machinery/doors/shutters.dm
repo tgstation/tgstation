@@ -3,6 +3,7 @@
 	name = "shutters"
 	desc = "Heavy duty mechanical shutters with an atmospheric seal that keeps them airtight once closed."
 	icon = 'icons/obj/doors/shutters.dmi'
+	icon_state = "closed_bottom"
 	layer = SHUTTER_LAYER
 	closingLayer = SHUTTER_LAYER
 	damage_deflection = 20
@@ -42,7 +43,7 @@
 			playsound(src, animation_sound, 50, TRUE)
 
 /obj/machinery/door/poddoor/shutters/preopen
-	icon_state = "open_map"
+	icon_state = "open_bottom"
 	density = FALSE
 	opacity = FALSE
 
@@ -54,7 +55,7 @@
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
 
 /obj/machinery/door/poddoor/shutters/indestructible/preopen
-	icon_state = "open_map"
+	icon_state = "open_bottom"
 	density = FALSE
 	opacity = FALSE
 
@@ -73,7 +74,7 @@
 			return 0.66 SECONDS
 
 /obj/machinery/door/poddoor/shutters/radiation/preopen
-	icon_state = "open_map"
+	icon_state = "open_bottom"
 	density = FALSE
 	opacity = FALSE
 	rad_insulation = RAD_NO_INSULATION
@@ -111,7 +112,7 @@
 			return 0.91 SECONDS
 
 /obj/machinery/door/poddoor/shutters/window/preopen
-	icon_state = "open_map"
+	icon_state = "open_bottom"
 	density = FALSE
 
 /obj/machinery/door/poddoor/shutters/window/indestructible
