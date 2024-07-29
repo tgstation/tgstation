@@ -1,0 +1,4 @@
+author: "Vekter"
+delete-after: True
+changes:
+  - bugfix: "Fixes an exploit that allowed players to open a Bag of Holding rift in the Heretic dimension."
