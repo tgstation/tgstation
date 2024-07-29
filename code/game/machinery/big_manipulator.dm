@@ -183,7 +183,7 @@
 	if(on_work)
 		return
 	if(!use_energy(active_power_usage, force = FALSE))
-		on = !on
+		on = FALSE
 		say("Not enough energy!")
 		return
 	if(isitem(target))
@@ -214,12 +214,12 @@
 
 /// Rotates manipulator hand 90 degrees.
 /obj/machinery/big_manipulator/proc/do_rotate_animation(backward)
-	animate(manipulator_hand, transform = matrix(90, MATRIX_ROTATE), working_speed/2)
-	addtimer(CALLBACK(src, PROC_REF(finish_rotate_animation), backward), working_speed/2)
+	animate(manipulator_hand, transform = matrix(90, MATRIX_ROTATE), working_speed*0.5)
+	addtimer(CALLBACK(src, PROC_REF(finish_rotate_animation), backward), working_speed*0.5)
 
 /// Rotates manipulator hand from 90 degrees to 180 or 0 if backward.
 /obj/machinery/big_manipulator/proc/finish_rotate_animation(backward)
-	animate(manipulator_hand, transform = matrix(180 * backward, MATRIX_ROTATE), working_speed/2)
+	animate(manipulator_hand, transform = matrix(180 * backward, MATRIX_ROTATE), working_speed*0.5)
 
 /obj/machinery/big_manipulator/ui_interact(mob/user, datum/tgui/ui)
 	if(!anchored)
