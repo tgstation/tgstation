@@ -1,7 +1,6 @@
 /datum/surgery/brain_surgery
 	name = "Brain surgery"
 	possible_locs = list(BODY_ZONE_HEAD)
-	requires_bodypart_type = NONE
 	steps = list(
 		/datum/surgery_step/incise,
 		/datum/surgery_step/retract_skin,
@@ -9,6 +8,19 @@
 		/datum/surgery_step/clamp_bleeders,
 		/datum/surgery_step/fix_brain,
 		/datum/surgery_step/close,
+	)
+
+/datum/surgery/brain_surgery/mechanic
+	name = "Wetware OS Diagnostics"
+	requires_bodypart_type = BODYTYPE_ROBOTIC
+	possible_locs = list(BODY_ZONE_HEAD)
+	steps = list(
+		/datum/surgery_step/mechanic_open,
+		/datum/surgery_step/open_hatch,
+		/datum/surgery_step/mechanic_unwrench,
+		/datum/surgery_step/fix_brain/mechanic,
+		/datum/surgery_step/mechanic_wrench,
+		/datum/surgery_step/mechanic_close,
 	)
 
 /datum/surgery_step/fix_brain
@@ -22,6 +34,16 @@
 	preop_sound = 'sound/surgery/hemostat1.ogg'
 	success_sound = 'sound/surgery/hemostat1.ogg'
 	failure_sound = 'sound/surgery/organ2.ogg'
+
+/datum/surgery_step/fix_brain/mechanic
+	name = "perform neural debugging (hemostat or multitool)"
+	implements = list(
+		TOOL_HEMOSTAT = 85,
+		TOOL_MULTITOOL = 85,
+		TOOL_SCREWDRIVER = 35,
+		/obj/item/pen = 15)
+	preop_sound = 'sound/items/taperecorder/tape_flip.ogg'
+	success_sound = 'sound/items/taperecorder/taperecorder_close.ogg'
 
 /datum/surgery/brain_surgery/can_start(mob/user, mob/living/carbon/target)
 	return target.get_organ_slot(ORGAN_SLOT_BRAIN) && ..()

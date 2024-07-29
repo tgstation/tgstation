@@ -9593,7 +9593,7 @@
 /turf/open/floor/iron,
 /area/centcom/tdome/arena)
 "TO" = (
-/obj/machinery/keycard_auth/directional/south,
+/obj/machinery/keycard_auth/wall_mounted/directional/south,
 /obj/structure/table/reinforced,
 /obj/item/stack/package_wrap{
 	pixel_y = 11;
@@ -10389,7 +10389,7 @@
 /turf/open/floor/wood,
 /area/centcom/central_command_areas/admin)
 "Xr" = (
-/obj/machinery/keycard_auth/directional/south,
+/obj/machinery/keycard_auth/wall_mounted/directional/south,
 /obj/structure/table/reinforced,
 /obj/machinery/recharger,
 /obj/machinery/button/door/indestructible{
