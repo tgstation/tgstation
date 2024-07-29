@@ -62,6 +62,7 @@
 
 /datum/search_object/Destroy(force)
 	item = null
+	icon = null
 
 	return ..()
 
@@ -74,6 +75,9 @@
 /// Parent item has been altered, search object no longer valid
 /datum/search_object/proc/on_item_moved(atom/source)
 	SIGNAL_HANDLER
+
+	if(QDELETED(src))
+		return
 
 	qdel(src)
 
