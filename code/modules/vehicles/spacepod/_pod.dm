@@ -6,7 +6,6 @@
 // equipment variants (done? maybe a lock module, finish comms module, and maybe a few proper guns) and their research
 // ONCE EVERYTHING IS DONE, add hangar bays, must have 1-3 pods idk, maybe t1 megacells + oxygen tanks, and a manual?? not sure
 // research and print costs
-// crashing into people and walls and stuff (ok fuck this im assigning this to you riku)
 // sprites
 // replace spawn_equip or add new subtype, but probably the former; to have a more reasonable roundstart loadout
 // ALSO DO NOT FORGET TO REMOVE THIS HUGE ASS COMMENT before finishing
@@ -53,10 +52,6 @@
 
 	/// mob = list(action)
 	var/list/list/equipment_actions = list()
-
-	/// are we locked? needed to enter or open panel
-	var/pin
-	var/pin_locked = FALSE
 
 
 /obj/vehicle/sealed/space_pod/Initialize(mapload, dont_equip)
