@@ -12,7 +12,7 @@
 	/// Time between bait retrievals
 	var/cooldown_time = 5 SECONDS
 	/// How many uses does it have left.
-	var/uses_left = 30
+	var/uses_left = 20
 
 /obj/item/bait_can/attack_self(mob/user, modifiers)
 	. = ..()
@@ -59,4 +59,5 @@
 	name = "can o' super-baits"
 	desc = "This can got the nectar of god."
 	bait_type = /obj/item/food/bait/doughball/synthetic/super
+	uses_left = 12
 
