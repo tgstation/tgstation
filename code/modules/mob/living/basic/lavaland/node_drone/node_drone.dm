@@ -78,7 +78,6 @@
 	. = ..()
 	if(attached_vent)
 		var/time_remaining = COOLDOWN_TIMELEFT(attached_vent, wave_cooldown)
-		say("time_remaining is [time_remaining]")
 		var/wave_timers
 		switch(attached_vent?.boulder_size)
 			if(BOULDER_SIZE_SMALL)
@@ -88,7 +87,6 @@
 			if(BOULDER_SIZE_LARGE)
 				wave_timers = WAVE_DURATION_LARGE
 		var/remaining_fraction = (time_remaining / wave_timers)
-		say("fraction is [remaining_fraction]")
 		if(remaining_fraction <= 0.3)
 			. += "node_progress_4"
 			return
