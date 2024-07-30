@@ -162,16 +162,3 @@
 	if(loc == cleaner)
 		return CLEAN_ALLOWED
 	return CLEAN_ALLOWED|CLEAN_NO_XP
-
-/obj/item/reagent_containers/cup/rag/small
-	name = "small damp rag"
-
-/obj/item/reagent_containers/cup/rag/small
-	amount_per_transfer_from_this = 0
-	has_variable_transfer_amount = FALSE
-	volume = 0
-	spillable = FALSE
-
-
-/obj/item/reagent_containers/cup/rag/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
-	return
