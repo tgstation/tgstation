@@ -177,7 +177,7 @@
 
 /datum/sfx/warpspeed
 	id = SFX_WARPSPEED
-	sound_files = 'sound/runtime/hyperspace/hyperspace_begin.ogg'
+	sound_files = list('sound/runtime/hyperspace/hyperspace_begin.ogg')
 
 /datum/sfx/sm_calm
 	id = SFX_SM_CALM
@@ -349,7 +349,7 @@
 
 /datum/sfx/sear
 	id = SFX_SEAR
-	sound_files = 'sound/weapons/sear.ogg'
+	sound_files = list('sound/weapons/sear.ogg')
 
 /datum/sfx/reel
 	id = SFX_REEL
@@ -371,11 +371,11 @@
 
 /datum/sfx/portal_close
 	id = SFX_PORTAL_CLOSE
-	sound_files = 'sound/effects/portal_close.ogg'
+	sound_files = list('sound/effects/portal_close.ogg')
 
 /datum/sfx/portal_enter
 	id = SFX_PORTAL_ENTER
-	sound_files = 'sound/effects/portal_travel.ogg'
+	sound_files = list('sound/effects/portal_travel.ogg')
 
 /datum/sfx/portal_created
 	id = SFX_PORTAL_CREATED

@@ -108,7 +108,7 @@
 	if(!sound_to_use)
 		sound_to_use = sound(get_sfx(soundin))
 
-	sound_to_use.wait = 0 //No queue
+	sound_to_use.wait = FALSE //No queue
 	sound_to_use.channel = channel || SSsounds.random_available_channel()
 	sound_to_use.volume = vol
 
@@ -211,11 +211,11 @@
 		for(var/sfx_subtype in subtypesof(/datum/sfx))
 			var/datum/sfx/sfx = new sfx_subtype()
 			if(isnull(sfx.id))
-				stack_trace("[sfx_subtype]` without `id` defined")
+				stack_trace("SFX category [sfx_subtype]` has no `id` defined")
 				continue
 
 			if(length(sfx.sound_files) == 0)
-				stack_trace("[sfx_subtype]` with empty `sound_files`")
+				stack_trace("SFX category [sfx_subtype] has no sound files associated")
 				continue
 
 			sfx_by_id[sfx.id] = sfx
