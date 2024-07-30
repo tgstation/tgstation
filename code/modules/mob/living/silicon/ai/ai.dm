@@ -1011,11 +1011,11 @@
 
 	if(!istype(apc) || QDELETED(apc) || apc.machine_stat & BROKEN)
 		to_chat(src, span_danger("Hack aborted. The designated APC no longer exists on the power network."))
-		playsound(get_turf(src), 'sound/machines/buzz-two.ogg', 50, TRUE, ignore_walls = FALSE)
+		playsound(get_turf(src), 'sound/machines/buzz-two.ogg', 50, TRUE)
 		return
 	if(apc.aidisabled)
 		to_chat(src, span_danger("Hack aborted. [apc] is no longer responding to our systems."))
-		playsound(get_turf(src), 'sound/machines/buzz-sigh.ogg', 50, TRUE, ignore_walls = FALSE)
+		playsound(get_turf(src), 'sound/machines/buzz-sigh.ogg', 50, TRUE)
 		return
 
 	malf_picker.processing_time += 10
@@ -1039,7 +1039,7 @@
 	apc.flicker_hacked_icon()
 	apc.set_hacked_hud()
 	hacked_apcs += apc
-	playsound(get_turf(src), 'sound/machines/ding.ogg', 50, TRUE, ignore_walls = FALSE)
+	playsound(get_turf(src), 'sound/machines/ding.ogg', 50, TRUE)
 	to_chat(src, "Hack complete. [apc] is now under your exclusive control.")
 
 /mob/living/silicon/ai/verb/deploy_to_shell(mob/living/silicon/robot/target)

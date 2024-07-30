@@ -175,7 +175,7 @@
 
 /obj/item/gun/proc/fire_sounds()
 	if(suppressed)
-		playsound(src, suppressed_sound, suppressed_volume, vary_fire_sound, ignore_walls = FALSE, extrarange = SILENCED_SOUND_EXTRARANGE, falloff_distance = 0)
+		playsound(src, suppressed_sound, suppressed_volume, vary_fire_sound, extrarange = SILENCED_SOUND_EXTRARANGE, falloff_distance = 0)
 	else
 		playsound(src, fire_sound, fire_sound_volume, vary_fire_sound, TRUE, TRUE)
 
