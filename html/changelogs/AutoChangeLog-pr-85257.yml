@@ -1,5 +1,0 @@
-author: "AyIong"
-delete-after: True
-changes:
-  - rscadd: "Stat Panel now scales like a chat, depends on the font size. Defaults from the chat font size, but you can separate it."
-  - refactor: "Refactored Stat Panel styles and Byond skin theme applying. Stat Panel now looks more like a TGUI"
