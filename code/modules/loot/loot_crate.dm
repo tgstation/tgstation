@@ -87,7 +87,7 @@
 				for(var/j in i + 1 to length(sanitised))
 					if(sanitised[i] == sanitised[j])
 						sanitycheck = FALSE //if a digit is repeated, reject the input
-			if(input)
+			if(input == code)
 				if(!spawned_loot)
 					spawn_loot()
 				tamperproof = 0 // set explosion chance to zero, so we dont accidently hit it with a multitool and instantly die
