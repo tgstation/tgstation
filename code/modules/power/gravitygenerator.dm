@@ -78,6 +78,7 @@ GLOBAL_LIST_EMPTY(gravity_generators)
 /obj/machinery/gravity_generator/part/Destroy()
 	atom_break()
 	if(main_part)
+		main_part.generator_parts -= src
 		UnregisterSignal(main_part, COMSIG_ATOM_UPDATED_ICON)
 		main_part = null
 	return ..()
@@ -193,13 +194,8 @@ GLOBAL_LIST_EMPTY(gravity_generators)
 		part.sprite_number = count
 		part.main_part = src
 		generator_parts += part
-		RegisterSignal(part, COMSIG_QDELETING, PROC_REF(on_part_qdeleted))
 		part.update_appearance()
 		part.RegisterSignal(src, COMSIG_ATOM_UPDATED_ICON, TYPE_PROC_REF(/obj/machinery/gravity_generator/part, on_update_icon))
-
-/obj/machinery/gravity_generator/main/proc/on_part_qdeleted(obj/machinery/gravity_generator/part/source)
-	SIGNAL_HANDLER
-	generator_parts -= source
 
 /obj/machinery/gravity_generator/main/set_broken()
 	. = ..()
