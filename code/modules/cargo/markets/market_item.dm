@@ -5,7 +5,7 @@
 	var/desc
 	/// The category this item belongs to, should be already declared in the market that this item is accessible in.
 	var/category
-	/// "/datum/market"s that this item should be in, used by SSblackmarket on init.
+	/// "/datum/market"s that this item should be in, used by SSmarket on init.
 	var/list/markets = list(/datum/market/blackmarket)
 
 	/// Price for the item, if not set creates a price according to the *_min and *_max vars.
@@ -27,7 +27,7 @@
 	var/stock_min = 1
 	/// Maximum amount that there should be of this item in the market if generated randomly.
 	var/stock_max = 0
-	/// Probability for this item to be available. Used by SSblackmarket on init.
+	/// Probability for this item to be available. Used by SSmarket on init.
 	var/availability_prob
 
 	///The identifier for the market item, generated on runtime and used to access them in the market categories.
@@ -35,6 +35,9 @@
 
 	///If set, these will override the shipment methods set by the market
 	var/list/shipping_override
+
+	/// Can this item be restocked
+	var/restockable = TRUE
 
 /datum/market_item/New()
 	if(isnull(price))
@@ -82,7 +85,7 @@
 	CRASH("Invalid item type for market item [item || "null"]")
 
 /**
- * Buys the item and makes SSblackmarket handle it.
+ * Buys the item and makes SSmarket handle it.
  *
  * @param uplink The uplink that is buying the item.
  * @param buyer The mob that is buying the item.
@@ -102,8 +105,8 @@
 	// Alright, the item has been purchased.
 	var/datum/market_purchase/purchase = new(src, uplink, shipping_method, legal_status)
 
-	// SSblackmarket takes care of the shipping.
-	if(SSblackmarket.queue_item(purchase))
+	// SSmarket takes care of the shipping.
+	if(SSmarket.queue_item(purchase))
 		stock--
 		buyer.log_message("has succesfully purchased [name] using [shipping_method] for shipping.", LOG_ECON)
 		return TRUE
@@ -139,7 +142,7 @@
 /datum/market_purchase/Destroy()
 	entry = null
 	uplink = null
-	SSblackmarket.queued_purchases -= src
+	SSmarket.queued_purchases -= src
 	return ..()
 
 /datum/market_purchase/proc/on_instance_del(datum/source)

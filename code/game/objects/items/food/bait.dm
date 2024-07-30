@@ -66,3 +66,9 @@
 /obj/item/food/bait/doughball/synthetic/Initialize(mapload)
 	. = ..()
 	ADD_TRAIT(src, TRAIT_OMNI_BAIT, INNATE_TRAIT)
+
+/obj/item/food/bait/doughball/syntethic/unconsumable
+
+/obj/item/food/bait/doughball/synthetic/unconsumable/Initialize(mapload)
+	. = ..()
+	ADD_TRAIT(src, TRAIT_BAIT_UNCONSUMABLE, INNATE_TRAIT)
