@@ -20,7 +20,7 @@
 	help_text,
 	)
 
-	if(!isliving(parent) || !isliving(old_body) || !server.is_operational || !pod.is_operational)
+	if(!isliving(parent) || !isliving(old_body) || !old_mind || !server.is_operational || !pod.is_operational)
 		return COMPONENT_INCOMPATIBLE
 
 	var/mob/living/avatar = parent
@@ -66,7 +66,7 @@
 	if(alias && avatar.real_name != alias)
 		avatar.fully_replace_character_name(avatar.real_name, alias)
 
-	for(var/skill_type in old_mind?.known_skills)
+	for(var/skill_type in old_mind.known_skills)
 		avatar.mind.set_experience(skill_type, old_mind.get_skill_exp(skill_type), silent = TRUE)
 
 	avatar.playsound_local(avatar, 'sound/magic/blink.ogg', 25, TRUE)
