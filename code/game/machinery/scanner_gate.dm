@@ -189,8 +189,8 @@
 				if(!target || (target.wanted_status == WANTED_ARREST))
 					beep = TRUE
 		if(SCANGATE_MINDSHIELD)
+			detected_thing = "Mindshield"
 			if(ishuman(thing))
-				detected_thing = "Mindshield"
 				var/mob/living/carbon/human/scanned_human = thing
 				if(HAS_TRAIT(scanned_human, TRAIT_MINDSHIELD))
 					beep = TRUE
@@ -250,8 +250,8 @@
 							beep = TRUE
 							break
 			else
-				for(var/scanned_item in thing.contents)
-					if(isgun(scanned_item))
+				for(var/obj/item/content in thing.get_all_contents_skipping_traits(TRAIT_CONTRABAND_BLOCKER))
+					if(isgun(content))
 						beep = TRUE
 						break
 		if(SCANGATE_NUTRITION)
