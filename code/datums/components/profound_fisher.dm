@@ -23,7 +23,7 @@
 		RegisterSignal(gloves, COMSIG_ATOM_REQUESTING_CONTEXT_FROM_ITEM, PROC_REF(on_requesting_context_from_item))
 		var/mob/living/wearer = gloves.loc
 		if(istype(wearer) && wearer.get_item_by_slot(ITEM_SLOT_GLOVES) == gloves)
-			on_equip(gloves, wearer, slot)
+			RegisterSignal(wearer, COMSIG_LIVING_UNARMED_ATTACK, PROC_REF(on_unarmed_attack))
 
 /datum/component/profound_fisher/proc/on_requesting_context_from_item(datum/source, list/context, obj/item/held_item, mob/living/user)
 	SIGNAL_HANDLER
@@ -54,7 +54,7 @@
 
 /datum/component/profound_fisher/proc/open_rod_menu(datum/source, mob/user, list/modifiers)
 	SIGNAL_HANDLER
-	INVOKE_ASYNC(our_rod, TYPE_PROC_REF(/atom, ui_interact), user)
+	INVOKE_ASYNC(our_rod, TYPE_PROC_REF(/datum, ui_interact), user)
 	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
 /datum/component/profound_fisher/proc/on_drop(datum/source, atom/dropper)
