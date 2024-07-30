@@ -21,7 +21,7 @@
 	.["maxAcceleration"] = max_speed
 	.["forcePerMove"] = force_per_move
 	.["headlightsEnabled"] = light_on
-	.["cabinPressure"] = !isnull(cabin_air_tank) ? "[cabin_air.return_pressure()]kPa" : "No air tank"
+	.["cabinPressure"] = !isnull(cabin_air_tank) ? "[round(cabin_air.return_pressure(), 0.1)]kPa" : "No air tank"
 	.["partUIData"] = list()
 	for(var/obj/item/pod_equipment/equipment as anything in get_all_parts())
 		if(!equipment.interface_id)
@@ -42,7 +42,7 @@
 		.["parts"] += list(info)
 
 /obj/vehicle/sealed/space_pod/ui_status(mob/living/user, datum/ui_state/state)
-	if(isnull(occupants[user]) || !(occupants[user] & VEHICLE_CONTROL_DRIVE))
+	if(!(user in occupants) || !(occupants[user] & VEHICLE_CONTROL_DRIVE))
 		return UI_CLOSE
 	return user.stat < HARD_CRIT ? UI_INTERACTIVE : UI_UPDATE
 

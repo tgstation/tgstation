@@ -38,13 +38,3 @@
 /obj/item/pod_equipment/proc/on_detach(mob/user)
 
 /obj/item/pod_equipment/proc/create_occupant_actions(mob/occupant, flag = NONE)
-
-/// generic equipment action, for the really simple actions
-/datum/action/vehicle/sealed/spacepod_equipment
-	background_icon_state = "bg_tech"
-	overlay_icon_state = "bg_tech_border"
-	var/datum/callback/callback_on_click
-
-/datum/action/vehicle/sealed/spacepod_equipment/Trigger(trigger_flags)
-	. = ..()
-	callback_on_click.Invoke(owner)

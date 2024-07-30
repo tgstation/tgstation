@@ -10,7 +10,7 @@
 	. += span_notice("A label says that the engine allows a maximum speed of up to <b>[max_speed]</b> newtons, and may exert <b>[stabilizer_force]</b> for stabilization.")
 
 /obj/item/pod_equipment/thrusters/get_overlay()
-	return icon_state
+	return "thrusters"
 
 /obj/item/pod_equipment/thrusters/on_attach(mob/user)
 	. = ..()

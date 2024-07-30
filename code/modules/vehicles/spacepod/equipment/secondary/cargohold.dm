@@ -1,6 +1,7 @@
 /obj/item/pod_equipment/cargo_hold
 	name = "Cargo Hold"
 	desc = "Advanced spatial management tech in the form of a trunk. Wow."
+	interface_id = "CargoHold"
 	slot = POD_SLOT_SECONDARY
 	/// what items can we hold inside
 	var/static/list/cargo_whitelist = typecacheof(list(
@@ -47,6 +48,8 @@
 	if(target_turf.is_blocked_turf_ignore_climbable())
 		pod.balloon_alert(user, "destination blocked!")
 		return
+	if(!pod.does_lock_permit_it(user))
+		return
 	var/atom/movable/picked = length(contents) == 1 ? contents[1] : tgui_input_list(user, "What to remove?", "Remove what from cargo hold?", contents)
 	if(!picked)
 		return
@@ -77,3 +80,20 @@
 		return
 	dropped_atom.Move(src)
 	pod.visible_message(span_notice("[user] loads [dropped_atom] into [pod]."))
+
+/obj/item/pod_equipment/cargo_hold/ui_data(mob/user)
+	. = list()
+	if(length(contents))
+		var/atom/stored = contents[1]
+		.["storedName"] = stored.name
+
+/obj/item/pod_equipment/cargo_hold/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
+	. = ..()
+	if(.)
+		return
+	switch(action)
+		if("eject")
+			if(!length(contents))
+				return
+			var/atom/movable/to_drop = contents[1]
+			to_drop.Move(get_step(pod, pod.dir))

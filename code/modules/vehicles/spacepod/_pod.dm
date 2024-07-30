@@ -4,7 +4,6 @@
 
 // TODO:
 // equipment variants (done? maybe a lock module, finish comms module, and maybe a few proper guns) and their research
-// todo comms slot, make it interact with hangar bay doors, hangar door forcefield that blocks gas if room powered
 // ONCE EVERYTHING IS DONE, add hangar bays, must have 1-3 pods idk, maybe t1 megacells + oxygen tanks, and a manual?? not sure
 // research and print costs
 // crashing into people and walls and stuff (ok fuck this im assigning this to you riku)
@@ -139,9 +138,9 @@
 
 /obj/vehicle/sealed/space_pod/update_overlays()
 	. = ..()
-	var/image/window = mutable_appearance(icon, "window")
-	window.alpha = 150
-	. += window
+	. += "window"
+	if(panel_open)
+		. += "panel_open[!isnull(cabin_air_tank) ? "_t" : ""]"
 	for(var/obj/item/pod_equipment/equipment as anything in get_all_parts())
 		var/overlay = equipment.get_overlay()
 		if(isnull(overlay))
@@ -233,31 +232,6 @@
 	COOLDOWN_START(src, cooldown_vehicle_move, 1 DECISECONDS)
 	trail.generate_effect()
 	after_move(direction)
-
-/obj/vehicle/sealed/space_pod/after_add_occupant(mob/occupant)
-	. = ..()
-	if(length(occupants) == 1) //first occupant only
-		panel_open = FALSE //automatic screws,,,, waow....
-		cycle_tank_air()
-	for(var/obj/item/pod_equipment/equipment as anything in get_all_parts())
-		var/datum/action/action = equipment.create_occupant_actions(occupant, occupants[occupant])
-		if(isnull(action))
-			continue
-		if(islist(action))
-			var/list/as_list = action
-			for(var/datum/action/actual_action as anything in as_list)
-				actual_action.Grant(occupant)
-		else
-			action.Grant(occupant)
-		equipment_actions[occupant] += islist(action) ? action : list(action)
-
-/obj/vehicle/sealed/space_pod/after_remove_occupant(mob/former)
-	. = ..()
-	if(!length(occupants)) //when everyone exits
-		cycle_tank_air(to_tank = TRUE)
-	if(equipment_actions[former])
-		QDEL_LIST(equipment_actions[former])
-		equipment_actions -= former
 
 // atmos
 /obj/vehicle/sealed/space_pod/proc/cycle_tank_air(to_tank = FALSE)
