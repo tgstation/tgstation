@@ -7,6 +7,8 @@ import {
   Box,
   Button,
   Dimmer,
+  DmIcon,
+  Icon,
   Section,
   Stack,
   Tabs,
@@ -27,6 +29,8 @@ import { PrimaryObjectiveMenu } from './PrimaryObjectiveMenu';
 type UplinkItem = {
   id: string;
   name: string;
+  icon: string;
+  icon_state: string;
   cost: number;
   desc: string;
   category: string;
@@ -90,6 +94,8 @@ type ServerData = {
 type ItemExtraData = Item & {
   extraData: {
     ref?: string;
+    icon: string;
+    icon_state: string;
   };
 };
 
@@ -198,7 +204,7 @@ export class Uplink extends Component<{}, UplinkState> {
       shop_locked,
     } = data;
     const { allItems, allCategories, currentTab } = this.state as UplinkState;
-
+    const fallback = <Icon m="18px" name="spinner" spin />;
     const itemsToAdd = [...allItems];
     const items: ItemExtraData[] = [];
     itemsToAdd.push(...extra_purchasable);
@@ -224,19 +230,32 @@ export class Uplink extends Component<{}, UplinkState> {
       items.push({
         id: item.id,
         name: item.name,
+        icon: item.icon,
+        icon_state: item.icon_state,
         category: item.category,
         desc: (
-          <Box>
-            {item.desc}
-            {(item.lock_other_purchases && (
-              <Box color="orange" bold>
-                Taking this item will lock you from further purchasing from the
-                marketplace. Additionally, if you have already purchased an
-                item, you will not be able to purchase this.
-              </Box>
-            )) ||
-              null}
-          </Box>
+          <Stack>
+            <Stack.Item>
+              <DmIcon
+                fallback={fallback}
+                icon={item.icon}
+                icon_state={item.icon_state}
+                width="64px"
+                mr={1}
+              />
+            </Stack.Item>
+            <Stack.Item>
+              {item.desc}
+              {(item.lock_other_purchases && (
+                <Box color="orange" bold>
+                  Taking this item will lock you from further purchasing from
+                  the marketplace. Additionally, if you have already purchased
+                  an item, you will not be able to purchase this.
+                </Box>
+              )) ||
+                null}
+            </Stack.Item>
+          </Stack>
         ),
         cost: (
           <Box>
@@ -259,6 +278,8 @@ export class Uplink extends Component<{}, UplinkState> {
           (item.lock_other_purchases && purchased_items > 0),
         extraData: {
           ref: item.ref,
+          icon: item.icon,
+          icon_state: item.icon_state,
         },
       });
     }

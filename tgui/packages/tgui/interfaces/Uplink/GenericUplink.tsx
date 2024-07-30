@@ -94,6 +94,8 @@ export const GenericUplink = (props: GenericUplinkProps) => {
 export type Item = {
   id: string | number;
   name: string;
+  icon: string;
+  icon_state: string;
   category: string;
   cost: JSX.Element | string;
   desc: JSX.Element | string;

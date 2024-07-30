@@ -227,9 +227,12 @@
 	for(var/datum/uplink_item/item as anything in uplink_handler.extra_purchasable)
 		if(item.stock_key in stock_list)
 			extra_purchasable_stock[REF(item)] = stock_list[item.stock_key]
+		var/atom/actual_item = item.item
 		extra_purchasable += list(list(
 			"id" = item.type,
 			"name" = item.name,
+			"icon" = actual_item ? initial(actual_item.icon) : null,
+			"icon_state" = actual_item ? initial(actual_item.icon_state) : null,
 			"cost" = item.cost,
 			"desc" = item.desc,
 			"category" = item.category ? initial(item.category.name) : null,
