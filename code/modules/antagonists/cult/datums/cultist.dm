@@ -282,5 +282,3 @@
 /datum/antagonist/cult/proc/check_invoke_validity()
 	return TRUE
 
-/datum/antagonist/cult/lesser
-	lesser_cult = TRUE
