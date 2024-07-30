@@ -139,7 +139,7 @@
 
 	playsound(loc, 'sound/machines/click.ogg', 20, TRUE)
 
-/obj/item/wargame_projector/ranged_interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
+/obj/item/wargame_projector/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
 	if(istype(interacting_with, /obj/structure/wargame_hologram))
 		qdel(interacting_with)
 		return ITEM_INTERACT_SUCCESS
@@ -152,9 +152,7 @@
 	QDEL_LAZYLIST(projections)
 	. = ..()
 
-/*
-Actual projector types, split between the 'categories' of things they can project
-*/
+/// Actual projector types, split between the 'categories' of things they can project
 
 /obj/item/wargame_projector/ships
 	name = "holographic unit projector"
@@ -166,6 +164,7 @@ Actual projector types, split between the 'categories' of things they can projec
 		/obj/structure/wargame_hologram/unidentified,
 		/obj/structure/wargame_hologram/missile_warning,
 		/obj/structure/wargame_hologram/strike_craft,
+		/obj/structure/wargame_hologram/strike_craft_util,
 		/obj/structure/wargame_hologram/strike_craft/wing,
 		/obj/structure/wargame_hologram/ship_marker,
 		/obj/structure/wargame_hologram/ship_marker/medium,

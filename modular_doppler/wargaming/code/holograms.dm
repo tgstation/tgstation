@@ -33,7 +33,7 @@
 	desc = "A hologram of a single strike craft."
 	icon_state = "strikesingle"
 
-/obj/structure/wargame_hologram/strike_craft
+/obj/structure/wargame_hologram/strike_craft_util
 	name = "skiff marker"
 	desc = "A hologram of a single utility skiff."
 	icon_state = "strike_utility"
