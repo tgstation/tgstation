@@ -13,3 +13,7 @@
 	var/obj/structure/closet/supplypod/pod = .
 	pod.explosionSize = list(1,2,3,3)
 	return pod
+
+// Holidays Removal
+/datum/holiday/pride_week/shouldCelebrate(dd, mm, yyyy, ddd)
+	return FALSE

@@ -189,7 +189,7 @@
 	)
 	/// List of selectable large options
 	var/static/list/graffiti_large_h = list(
-		"furrypride" = CRAYON_COST_LARGE,
+		//"furrypride" = CRAYON_COST_LARGE, // BANDASTATION REMOVAL
 		"paint" = CRAYON_COST_LARGE,
 		"secborg" = CRAYON_COST_LARGE,
 		"yiffhell" = CRAYON_COST_LARGE,
