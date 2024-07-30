@@ -171,7 +171,7 @@
 			if(HAS_TRAIT_FROM(target, TRAIT_HUSK, BURN))
 				var/reason = "severe burns"
 				if(tochat)
-					reason = span_tooltip("Tend burns and apply a de-husking agent, such as [/datum/reagent/medicine/synthflesh::name].", reason)
+					reason = span_tooltip("Tend burns and apply a de-husking agent, such as [/datum/reagent/medicine/c2/synthflesh::name].", reason)
 				render_list += "<span class='alert ml-1'>Subject has been husked by [reason].</span><br>"
 			else if (HAS_TRAIT_FROM(target, TRAIT_HUSK, CHANGELING_DRAIN))
 				var/reason = "desiccation"
