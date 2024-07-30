@@ -38,7 +38,7 @@
 		" rue": " roe",
 		"grab": "crapple",
 		"self": "shellf",
-		"cell": "shell"
+		"cell": "shell",
 		"come": "chum",
 		"plank ": "plankton ",
 		"meant": "manta",
@@ -109,7 +109,7 @@
 		"billion": [
 			"billion",
 			"krillion"
-		],
+		]
 	}
 
 }
