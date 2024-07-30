@@ -65,7 +65,7 @@ export function SettingsStatPanel(props) {
             </LabeledList.Item>
           </LabeledList>
         </Stack.Item>
-        <Stack.Divider />
+        <Stack.Divider mt={2.5} />
         <Stack.Item textAlign="center">
           <Button
             fluid
