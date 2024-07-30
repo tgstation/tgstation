@@ -208,7 +208,10 @@
 	wearer.mind?.adjust_experience(/datum/skill/athletics, experience)
 	wearer.apply_status_effect(/datum/status_effect/exercised)
 
+///The internal fishing rod of the athletic fishing gloves. The more athletic you're, the easier the minigame will be.
 /obj/item/fishing_rod/mob_fisher/athletic
+	icon = /obj/item/clothing/gloves/fishing::icon
+	icon_state = /obj/item/clothing/gloves/fishing::icon_state
 	line = null
 	bait = null
 	ui_description = "The integrated fishing rod of a pair of athletic fishing gloves"
