@@ -19776,6 +19776,10 @@
 /obj/structure/closet/emcloset,
 /turf/open/floor/iron,
 /area/station/hallway/primary/port)
+"fUv" = (
+/obj/structure/ladder,
+/turf/open/floor/plating,
+/area/station/maintenance/starboard/fore)
 "fUx" = (
 /obj/effect/landmark/generic_maintenance_landmark,
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
@@ -51117,7 +51121,7 @@
 /area/station/maintenance/port/greater)
 "ply" = (
 /obj/effect/decal/cleanable/dirt/dust,
-/obj/effect/spawner/random/trash/caution_sign,
+/obj/structure/ladder,
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/lesser)
 "plN" = (
@@ -52976,14 +52980,14 @@
 /turf/open/floor/iron,
 /area/station/engineering/atmos/storage)
 "pOC" = (
-/obj/machinery/computer/order_console/cook{
-	dir = 4
-	},
 /obj/item/radio/intercom/directional/north,
+/obj/machinery/newscaster/directional/west,
 /obj/effect/turf_decal/tile/bar{
 	dir = 1
 	},
-/obj/machinery/newscaster/directional/west,
+/obj/machinery/computer/order_console/cook{
+	dir = 4
+	},
 /turf/open/floor/iron,
 /area/station/service/kitchen/coldroom)
 "pOK" = (
@@ -250557,7 +250561,7 @@ knl
 dGO
 xPf
 lRs
-tml
+fUv
 kKL
 kKL
 aft
