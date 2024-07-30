@@ -1019,7 +1019,7 @@ SUBSYSTEM_DEF(dynamic)
 #define MAXIMUM_DYN_DISTANCE 5
 
 /**
- * Returns the comulative distribution of threat centre and width, and a random location of -0.5 to 0.5
+ * Returns the comulative distribution of threat centre and width, and a random location of -5 to 5
  * plus or minus the otherwise unattainable lower and upper percentiles. All multiplied by the maximum
  * threat and then rounded to the nearest interval.
  * rand() calls without arguments returns a value between 0 and 1, allowing for smaller intervals.
