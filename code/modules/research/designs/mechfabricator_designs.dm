@@ -2732,8 +2732,8 @@
 	id = "mod_fishing"
 	materials = list(
 		/datum/material/titanium = HALF_SHEET_MATERIAL_AMOUNT,
-		/datum/material/glass = HALF_MATERIAL_AMOUNT,
-		/datum/material/iron = HALF_MATERIAL_AMOUNT,
+		/datum/material/glass = HALF_SHEET_MATERIAL_AMOUNT,
+		/datum/material/iron = HALF_SHEET_MATERIAL_AMOUNT,
 		/datum/material/plastic = HALF_SHEET_MATERIAL_AMOUNT,
 	)
 	build_path = /obj/item/mod/module/fishing_gloves
