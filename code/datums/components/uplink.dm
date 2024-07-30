@@ -231,8 +231,8 @@
 		extra_purchasable += list(list(
 			"id" = item.type,
 			"name" = item.name,
-			"icon" = actual_item ? initial(actual_item.icon) : null,
-			"icon_state" = actual_item ? initial(actual_item.icon_state) : null,
+			"icon" = actual_item.icon,
+			"icon_state" = actual_item.icon_state,
 			"cost" = item.cost,
 			"desc" = item.desc,
 			"category" = item.category ? initial(item.category.name) : null,

@@ -13,16 +13,16 @@ export const PrimaryObjectiveMenu = (props: PrimaryObjectiveMenuProps) => {
   const { primary_objectives, final_objective, can_renegotiate } = props;
   return (
     <Section fill>
-      <Section>
-        <Box mt={3} mb={3} bold fontSize={1.2} align="center" color="white">
-          {
-            'Agent, your Primary Objectives are as follows. Complete these at all costs.'
-          }
+      <Section align="center">
+        <Box my={4} bold fontSize={1.2} color="green">
+          WELCOME, AGENT.
         </Box>
-        <Box mt={3} mb={5} bold fontSize={1.2} align="center" color="white">
-          {
-            'Completing Secondary Objectives may allow you to aquire additional equipment.'
-          }
+        <Box my={2} bold fontSize={1.2}>
+          Your Primary Objectives are as follows. Complete these at all costs.
+        </Box>
+        <Box my={2} bold fontSize={1.2}>
+          Completing Secondary Objectives may allow you to aquire additional
+          equipment.
         </Box>
       </Section>
       {final_objective && (

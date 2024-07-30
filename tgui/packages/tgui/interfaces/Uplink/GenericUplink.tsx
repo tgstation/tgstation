@@ -58,10 +58,11 @@ export const GenericUplink = (props: GenericUplinkProps) => {
     >
       <Stack>
         {searchText.length === 0 && (
-          <Stack.Item mr={1}>
+          <Stack.Item mr={1} width="128px">
             <Tabs vertical>
               {categories.map((category) => (
                 <Tabs.Tab
+                  py={0.8}
                   key={category}
                   selected={category === selectedCategory}
                   onClick={() => setSelectedCategory(category)}

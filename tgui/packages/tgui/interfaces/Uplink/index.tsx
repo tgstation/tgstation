@@ -1,5 +1,6 @@
 import { BooleanLike } from 'common/react';
 import { Component, Fragment } from 'react';
+import { LabeledList } from 'tgui-core/components';
 
 import { resolveAsset } from '../../assets';
 import { useBackend } from '../../backend';
@@ -296,96 +297,102 @@ export class Uplink extends Component<{}, UplinkState> {
     progressionPercentage = Math.round(progressionPercentage * 1000) / 10;
     return (
       <Window width={820} height={580} theme="syndicate">
-        <Window.Content scrollable={currentTab !== 0 || !has_objectives}>
-          <Stack vertical fill>
-            <Stack.Item>
-              <Section>
-                <Stack>
-                  <Stack.Item grow={1} align="center">
-                    <Box fontSize={0.8}>
-                      SyndOS Version 3.17 &nbsp;
-                      <Box color="green" as="span">
-                        Connection Secure
-                      </Box>
-                    </Box>
-                    <Box color="green" bold fontSize={1.2}>
-                      WELCOME, AGENT.
-                    </Box>
+        <Window.Content>
+          <Stack fill>
+            <Stack.Item width="200px">
+              <Stack vertical fill>
+                {!!lockable && (
+                  <Stack.Item>
+                    <Button
+                      lineHeight={3}
+                      textAlign="center"
+                      icon="lock"
+                      color="bad"
+                      fluid
+                      bold
+                      onClick={() => act('lock')}
+                    >
+                      LOCK
+                    </Button>
                   </Stack.Item>
-                  <Stack.Item align="center">
-                    <Box bold fontSize={1.2}>
-                      <Tooltip
-                        content={
-                          (!!has_progression && (
-                            <Box>
-                              <Box>
-                                <Box>Your current level of threat.</Box> Threat
-                                determines
-                                {has_objectives
-                                  ? ' the severity of secondary objectives you get and '
-                                  : ' '}
-                                what items you can purchase.&nbsp;
-                                <Box mt={0.5}>
-                                  {/* A minute in deciseconds */}
-                                  Threat passively increases by{' '}
-                                  <Box color="green" as="span">
-                                    {calculateProgression(
-                                      current_progression_scaling,
-                                    )}
-                                  </Box>
-                                  &nbsp;every minute
-                                </Box>
-                                {Math.abs(progressionPercentage) > 0 && (
-                                  <Box mt={0.5}>
-                                    Because your threat level is
-                                    {progressionPercentage < 0
-                                      ? ' ahead '
-                                      : ' behind '}
-                                    of where it should be, you are getting
-                                    <Box
-                                      as="span"
-                                      color={
-                                        progressionPercentage < 0
-                                          ? 'red'
-                                          : 'green'
-                                      }
-                                      ml={1}
-                                      mr={1}
-                                    >
-                                      {progressionPercentage}%
+                )}
+                <Stack.Item>
+                  <Section>
+                    <LabeledList>
+                      <LabeledList.Item label="Threat">
+                        <Box bold>
+                          <Tooltip
+                            content={
+                              (!!has_progression && (
+                                <Box>
+                                  <Box>
+                                    <Box>Your current level of threat.</Box>{' '}
+                                    Threat determines
+                                    {has_objectives
+                                      ? ' the severity of secondary objectives you get and '
+                                      : ' '}
+                                    what items you can purchase.&nbsp;
+                                    <Box mt={0.5}>
+                                      {/* A minute in deciseconds */}
+                                      Threat passively increases by{' '}
+                                      <Box color="green" as="span">
+                                        {calculateProgression(
+                                          current_progression_scaling,
+                                        )}
+                                      </Box>
+                                      &nbsp;every minute
                                     </Box>
-                                    {progressionPercentage < 0
-                                      ? 'less'
-                                      : 'more'}{' '}
-                                    threat every minute
+                                    {Math.abs(progressionPercentage) > 0 && (
+                                      <Box mt={0.5}>
+                                        Because your threat level is
+                                        {progressionPercentage < 0
+                                          ? ' ahead '
+                                          : ' behind '}
+                                        of where it should be, you are getting
+                                        <Box
+                                          as="span"
+                                          color={
+                                            progressionPercentage < 0
+                                              ? 'red'
+                                              : 'green'
+                                          }
+                                          ml={1}
+                                          mr={1}
+                                        >
+                                          {progressionPercentage}%
+                                        </Box>
+                                        {progressionPercentage < 0
+                                          ? 'less'
+                                          : 'more'}{' '}
+                                        threat every minute
+                                      </Box>
+                                    )}
+                                    {dangerLevelsTooltip}
                                   </Box>
-                                )}
-                                {dangerLevelsTooltip}
-                              </Box>
-                            </Box>
-                          )) ||
-                          "Your current threat level. You are a killing machine and don't need to improve your threat level."
-                        }
-                      >
-                        {/* If we have no progression,
+                                </Box>
+                              )) ||
+                              "Your current threat level. You are a killing machine and don't need to improve your threat level."
+                            }
+                          >
+                            {/* If we have no progression,
                       just give them a generic title */}
-                        {has_progression
-                          ? calculateDangerLevel(progression_points, false)
-                          : calculateDangerLevel(dangerDefault, false)}
-                      </Tooltip>
-                    </Box>
-                    <Box color="good" bold fontSize={1.2} textAlign="right">
-                      {telecrystals} TC
-                    </Box>
-                  </Stack.Item>
-                </Stack>
-              </Section>
-            </Stack.Item>
-            <Stack.Item>
-              <Section fitted>
-                <Stack align="center">
-                  <Stack.Item grow={1}>
-                    <Tabs fluid textAlign="center">
+                            {has_progression
+                              ? calculateDangerLevel(progression_points, false)
+                              : calculateDangerLevel(dangerDefault, false)}
+                          </Tooltip>
+                        </Box>
+                      </LabeledList.Item>
+                      <LabeledList.Item label="TC">
+                        <Box color="good" bold fontSize={1.2}>
+                          {telecrystals}
+                        </Box>
+                      </LabeledList.Item>
+                    </LabeledList>
+                  </Section>
+                </Stack.Item>
+                <Stack.Item grow={1}>
+                  <Section fitted>
+                    <Tabs vertical fluid>
                       {!!has_objectives && (
                         <>
                           <Tabs.Tab
@@ -409,19 +416,15 @@ export class Uplink extends Component<{}, UplinkState> {
                         Market
                       </Tabs.Tab>
                     </Tabs>
-                  </Stack.Item>
-                  {!!lockable && (
-                    <Stack.Item mr={1}>
-                      <Button
-                        icon="times"
-                        content="Lock"
-                        color="transparent"
-                        onClick={() => act('lock')}
-                      />
-                    </Stack.Item>
-                  )}
-                </Stack>
-              </Section>
+                  </Section>
+                </Stack.Item>
+                <Stack.Item>
+                  <Box fontSize={0.8}>SyndOS Version 3.17</Box>
+                  <Box fontSize={0.8} color="green">
+                    Connection Secure
+                  </Box>
+                </Stack.Item>
+              </Stack>
             </Stack.Item>
             <Stack.Item grow>
               {(currentTab === 0 && has_objectives && (
@@ -465,7 +468,7 @@ export class Uplink extends Component<{}, UplinkState> {
                     handleRequestObjectives={() => act('regenerate_objectives')}
                   />
                 )) || (
-                  <Section>
+                  <Section fill scrollable>
                     <GenericUplink
                       currency=""
                       categories={allCategories}
