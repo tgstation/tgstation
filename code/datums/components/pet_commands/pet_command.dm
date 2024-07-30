@@ -96,9 +96,9 @@
  */
 /datum/pet_command/proc/find_command_in_text(spoken_text, check_verbosity = FALSE)
 	for (var/command as anything in speech_commands)
-		if (!findtext(spoken_text, command))
+		if (!findtext_char(spoken_text, command))
 			continue
-		if(check_verbosity && length(spoken_text) > length(command) + MAX_NAME_LEN)
+		if(check_verbosity && length_char(spoken_text) > length_char(command) + MAX_NAME_LEN)
 			continue
 		return TRUE
 	return FALSE
