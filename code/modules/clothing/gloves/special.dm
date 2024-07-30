@@ -216,6 +216,9 @@
 	bait = null
 	ui_description = "The integrated fishing rod of a pair of athletic fishing gloves"
 
+/obj/item/fishing_rod/mob_fisher/athletic/get_fishing_overlays()
+	return list()
+
 /obj/item/fishing_rod/mob_fisher/athletic/hook_hit(atom/atom_hit_by_hook_projectile, mob/user)
 	difficulty_modifier = -3 * user.mind?.get_skill_level(/datum/skill/athletics)
 	return ..()
