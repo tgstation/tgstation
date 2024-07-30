@@ -36,12 +36,9 @@
 	qdel(src)
 
 /datum/component/profound_fisher/Destroy()
-	if(!QDELETED(our_rod) && istype(our_rod, /obj/item/fishing_rod/mob_fisher))
-		QDEL_NULL(our_rod)
-	else
-		our_rod.internal = FALSE
-		UnregisterSignal(our_rod, COMSIG_QDELETING)
-		our_rod = null
+	our_rod.internal = FALSE
+	UnregisterSignal(our_rod, COMSIG_QDELETING)
+	our_rod = null
 	return ..()
 
 /datum/component/profound_fisher/proc/on_equip(obj/item/source, atom/equipper, slot)
