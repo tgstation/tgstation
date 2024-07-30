@@ -635,7 +635,7 @@
 		'sound/voice/human/wilhelm_scream.ogg',
 	)
 
-	playsound(holder.my_atom, pick(screams), created_volume*5,TRUE)
+	playsound(holder.my_atom, pick(screams), created_volume*5,TRUE, TRUE, TRUE)
 
 /datum/chemical_reaction/hair_dye
 	results = list(/datum/reagent/hair_dye = 5)
@@ -897,7 +897,7 @@
 		eigen.data["location_created"] = location
 
 	do_sparks(5,FALSE,location)
-	playsound(location, 'sound/effects/phasein.ogg', 80, TRUE)
+	playsound(location, 'sound/effects/phasein.ogg', 80, TRUE, TRUE, TRUE)
 
 /datum/chemical_reaction/eigenstate/overheated(datum/reagents/holder, datum/equilibrium/equilibrium, step_volume_added)
 	. = ..()
@@ -905,7 +905,7 @@
 		return
 	var/turf/location = get_turf(holder.my_atom)
 	do_sparks(3,FALSE,location)
-	playsound(location, 'sound/effects/phasein.ogg', 80, TRUE)
+	playsound(location, 'sound/effects/phasein.ogg', 80, TRUE, TRUE, TRUE)
 	for(var/mob/living/nearby_mob in range(location, 3))
 		do_sparks(3,FALSE,nearby_mob)
 		do_teleport(nearby_mob, get_turf(holder.my_atom), 3, no_effects=TRUE)
@@ -920,7 +920,7 @@
 	var/turf/location = get_turf(holder.my_atom)
 	do_sparks(3,FALSE,location)
 	holder.chem_temp += 10
-	playsound(location, 'sound/effects/phasein.ogg', 80, TRUE)
+	playsound(location, 'sound/effects/phasein.ogg', 80, TRUE, TRUE, TRUE)
 	for(var/obj/machinery/duct/duct in range(location, 3))
 		do_teleport(duct, location, 3, no_effects=TRUE)
 		equilibrium.data["ducts_teleported"] = TRUE //If we teleported a duct - call the process in

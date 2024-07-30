@@ -46,7 +46,7 @@
 	if(suppressed)
 		playsound(src, suppressed_sound, suppressed_volume, vary_fire_sound, ignore_walls = FALSE, extrarange = SILENCED_SOUND_EXTRARANGE, falloff_distance = 0, frequency = frequency_to_use)
 	else
-		playsound(src, fire_sound, fire_sound_volume, vary_fire_sound, frequency = frequency_to_use)
+		playsound(src, fire_sound, fire_sound_volume, vary_fire_sound, frequency = frequency_to_use, TRUE, TRUE)
 
 /**
  * Signal proc for [COMSIG_ITEM_MAGICALLY_CHARGED]
@@ -133,7 +133,7 @@
 
 /obj/item/gun/magic/suicide_act(mob/living/user)
 	user.visible_message(span_suicide("[user] is twisting [src] above [user.p_their()] head, releasing a magical blast! It looks like [user.p_theyre()] trying to commit suicide!"))
-	playsound(loc, fire_sound, 50, TRUE, -1)
+	playsound(loc, fire_sound, 50, TRUE, -1, TRUE, TRUE)
 	return FIRELOSS
 
 /obj/item/gun/magic/vv_edit_var(var_name, var_value)

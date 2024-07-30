@@ -299,7 +299,7 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 	zap_factors = calculate_zap_transmission_rate()
 	var/delta_time = (SSmachines.times_fired - last_power_zap_perspective_machines) * SSmachines.wait / (1 SECONDS)
 	if(delta_time && internal_energy && (last_power_zap + (4 - internal_energy * 0.001) SECONDS) < world.time)
-		playsound(src, 'sound/weapons/emitter2.ogg', 70, TRUE)
+		playsound(src, 'sound/weapons/emitter2.ogg', 70, TRUE, TRUE, TRUE)
 		hue_angle_shift = clamp(903 * log(10, (internal_energy + 8000)) - 3590, -50, 240)
 		var/zap_color = color_matrix_rotate_hue(hue_angle_shift)
 		supermatter_zap(

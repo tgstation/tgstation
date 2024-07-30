@@ -218,7 +218,7 @@
 		message_admins(message, 0, 1)
 		log_game("[reaction_name] chemical mob spawn reaction occuring at [AREACOORD(T)] carried by [key_name(M)] with last fingerprint [A.fingerprintslast? A.fingerprintslast : "N/A"]")
 
-		playsound(get_turf(holder.my_atom), 'sound/effects/phasein.ogg', 100, TRUE)
+		playsound(get_turf(holder.my_atom), 'sound/effects/phasein.ogg', 100, TRUE, TRUE, TRUE)
 
 		for(var/mob/living/carbon/C in viewers(get_turf(holder.my_atom), null))
 			C.flash_act()
@@ -346,7 +346,7 @@
  */
 /datum/chemical_reaction/proc/explode_deafen(datum/reagents/holder, datum/equilibrium/equilibrium, power = 3, stun = 20, range = 2)
 	var/location = get_turf(holder.my_atom)
-	playsound(location, 'sound/effects/bang.ogg', 25, TRUE)
+	playsound(location, 'sound/effects/bang.ogg', 25, TRUE, TRUE, TRUE)
 	for(var/mob/living/carbon/carbon_mob in get_hearers_in_view(range, location))
 		carbon_mob.soundbang_act(1, stun, power)
 
@@ -403,7 +403,7 @@
 	var/turf/this_turf = get_turf(holder.my_atom)
 	if(sound_and_text)
 		holder.my_atom.audible_message("The [holder.my_atom] suddenly explodes, sending a shockwave rippling through the air!")
-		playsound(this_turf, 'sound/chemistry/shockwave_explosion.ogg', 80, TRUE)
+		playsound(this_turf, 'sound/chemistry/shockwave_explosion.ogg', 80, TRUE, TRUE, TRUE)
 	//Modified goonvortex
 	for(var/atom/movable/movey as anything in orange(range, this_turf))
 		if(!istype(movey, /atom/movable))

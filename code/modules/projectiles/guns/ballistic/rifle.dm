@@ -443,7 +443,7 @@
 /obj/item/gun/ballistic/rifle/sniper_rifle/reset_semicd()
 	. = ..()
 	if(suppressed)
-		playsound(src, 'sound/machines/eject.ogg', 25, TRUE, ignore_walls = FALSE, extrarange = SILENCED_SOUND_EXTRARANGE, falloff_distance = 0)
+		playsound(src, 'sound/machines/eject.ogg', 25, TRUE, extrarange = SILENCED_SOUND_EXTRARANGE, falloff_distance = 0)
 	else
 		playsound(src, 'sound/machines/eject.ogg', 50, TRUE)
 

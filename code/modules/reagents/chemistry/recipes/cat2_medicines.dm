@@ -131,7 +131,7 @@
 		if(living_mob.flash_act(1, length = 5))
 			living_mob.set_eye_blur(20 SECONDS)
 	holder.my_atom.audible_message(span_notice("[icon2html(holder.my_atom, viewers(DEFAULT_MESSAGE_RANGE, src))] The [holder.my_atom] lets out a loud bang!"))
-	playsound(holder.my_atom, 'sound/effects/explosion1.ogg', 50, 1)
+	playsound(holder.my_atom, 'sound/effects/explosion1.ogg', 50, 1, FALSE, TRUE, TRUE)
 
 /datum/chemical_reaction/medicine/hercuri
 	results = list(/datum/reagent/medicine/c2/hercuri = 5)
@@ -154,7 +154,7 @@
 /datum/chemical_reaction/medicine/hercuri/overheated(datum/reagents/holder, datum/equilibrium/equilibrium, step_volume_added)
 	if(off_cooldown(holder, equilibrium, 2, "hercuri_freeze"))
 		return
-	playsound(holder.my_atom, 'sound/magic/ethereal_exit.ogg', 50, 1)
+	playsound(holder.my_atom, 'sound/magic/ethereal_exit.ogg', 50, 1, FALSE, TRUE, TRUE)
 	holder.my_atom.visible_message("The reaction frosts over, releasing its chilly contents!")
 	var/radius = max((equilibrium.step_target_vol/50), 1)
 	freeze_radius(holder, equilibrium, 200, radius, 60 SECONDS) //drying agent exists

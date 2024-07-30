@@ -112,7 +112,7 @@
 
 /obj/item/gun/ballistic/automatic/smartgun/fire_sounds()
 	var/picked_fire_sound = pick(firing_sound_list)
-	playsound(src, picked_fire_sound, fire_sound_volume, vary_fire_sound)
+	playsound(src, picked_fire_sound, fire_sound_volume, vary_fire_sound, TRUE, TRUE)
 
 /obj/item/gun/ballistic/automatic/mini_uzi
 	name = "\improper Type U3 Uzi"

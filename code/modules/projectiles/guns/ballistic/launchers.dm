@@ -108,7 +108,7 @@
 		span_userdanger("You aim [src] at the ground to perform a bisnasty rocket jump..."))
 	if(can_shoot())
 		ADD_TRAIT(user, TRAIT_NO_TRANSFORM, REF(src))
-		playsound(src, 'sound/vehicles/rocketlaunch.ogg', 80, TRUE, 5)
+		playsound(src, 'sound/vehicles/rocketlaunch.ogg', 80, TRUE, 5, TRUE, TRUE)
 		animate(user, pixel_z = 300, time = 30, flags = ANIMATION_RELATIVE, easing = LINEAR_EASING)
 		sleep(7 SECONDS)
 		animate(user, pixel_z = -300, time = 5, flags = ANIMATION_RELATIVE, easing = LINEAR_EASING)

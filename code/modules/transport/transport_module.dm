@@ -321,7 +321,7 @@
 				hit_wall.dismantle_wall(devastated = TRUE)
 				for(var/mob/nearby_witness in urange(8, src))
 					shake_camera(nearby_witness, 2, 3)
-				playsound(hit_wall, 'sound/effects/meteorimpact.ogg', 100, TRUE)
+				playsound(hit_wall, 'sound/effects/meteorimpact.ogg', 100, TRUE, TRUE, TRUE)
 
 			for(var/mob/living/crushed in dest_turf.contents)
 				to_chat(crushed, span_userdanger("You are crushed by [src]!"))
@@ -350,7 +350,7 @@
 				hit_wall.dismantle_wall(devastated = TRUE)
 				for(var/mob/client_mob in SSspatial_grid.orthogonal_range_search(src, SPATIAL_GRID_CONTENTS_TYPE_CLIENTS, 8))
 					shake_camera(client_mob, 2, 3)
-				playsound(hit_wall, 'sound/effects/meteorimpact.ogg', 100, TRUE)
+				playsound(hit_wall, 'sound/effects/meteorimpact.ogg', 100, TRUE, TRUE, TRUE)
 
 	else
 		///potentially finds a spot to throw the victim at for daring to be hit by a tram. is null if we havent found anything to throw
@@ -367,7 +367,7 @@
 				for(var/mob/client_mob in SSspatial_grid.orthogonal_range_search(collided_wall, SPATIAL_GRID_CONTENTS_TYPE_CLIENTS, 8))
 					shake_camera(client_mob, duration = 2, strength = 3)
 
-				playsound(collided_wall, 'sound/effects/meteorimpact.ogg', 100, TRUE)
+				playsound(collided_wall, 'sound/effects/meteorimpact.ogg', 100, TRUE, TRUE, TRUE)
 
 			if(ismineralturf(dest_turf))
 				var/turf/closed/mineral/dest_mineral_turf = dest_turf
@@ -400,7 +400,7 @@
 				if(istype(victim_machine, /obj/machinery/field)) //graceful break handles this scenario
 					continue
 				if(victim_machine.layer >= LOW_OBJ_LAYER) //avoids stuff that is probably flush with the ground
-					playsound(src, 'sound/effects/bang.ogg', 50, TRUE)
+					playsound(src, 'sound/effects/bang.ogg', 50, TRUE, TRUE, TRUE)
 					visible_message(span_danger("[src] smashes through [victim_machine]!"))
 					qdel(victim_machine)
 
@@ -419,7 +419,7 @@
 				if(transport_controller_datum.ignored_smashthroughs[victim_living.type])
 					continue
 				to_chat(victim_living, span_userdanger("[src] collides into you!"))
-				playsound(src, 'sound/effects/splat.ogg', 50, TRUE)
+				playsound(src, 'sound/effects/splat.ogg', 50, TRUE, TRUE, TRUE)
 				var/damage = 0
 				switch(extra_ouch)
 					if(TRUE)

@@ -215,7 +215,7 @@
 	return BULLET_ACT_HIT
 
 /obj/projectile/bullet/rebar/supermatter/proc/dust_feedback(atom/target)
-	playsound(get_turf(src), 'sound/effects/supermatter.ogg', 10, TRUE)
+	playsound(get_turf(src), 'sound/effects/supermatter.ogg', 10, TRUE, TRUE, TRUE)
 	visible_message(span_danger("[target] is hit by [src], turning [target.p_them()] to dust in a brilliant flash of light!"))
 
 /obj/projectile/bullet/paperball

@@ -13,7 +13,7 @@
 	. = ..()
 	if(. == BULLET_ACT_HIT && isliving(target))
 		explosion(target, devastation_range = -1, light_impact_range = 2, flame_range = 0, flash_range = 1, adminlog = FALSE)
-		playsound(target.loc, 'sound/effects/meteorimpact.ogg', 40, TRUE)
+		playsound(target.loc, 'sound/effects/meteorimpact.ogg', 40, TRUE, TRUE, TRUE)
 
 /obj/projectile/meteor/Bump(atom/hit_target)
 	if(hit_target == firer)
@@ -23,7 +23,7 @@
 		SSexplosions.med_mov_atom += hit_target
 	if(isturf(hit_target))
 		SSexplosions.medturf += hit_target
-	playsound(src.loc, 'sound/effects/meteorimpact.ogg', 40, TRUE)
+	playsound(src.loc, 'sound/effects/meteorimpact.ogg', 40, TRUE, TRUE, TRUE)
 	for(var/mob/onlookers_in_range in urange(10, src))
 		if(!onlookers_in_range.stat)
 			shake_camera(onlookers_in_range, 3, 1)

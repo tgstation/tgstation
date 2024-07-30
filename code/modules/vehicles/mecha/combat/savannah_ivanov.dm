@@ -110,7 +110,7 @@
 	switch(skyfall_charge_level)
 		if(1)
 			chassis.visible_message(span_warning("[chassis] clicks and whirrs for a moment, with a low hum emerging from the legs."))
-			playsound(chassis, 'sound/items/rped.ogg', 50, TRUE)
+			playsound(chassis, 'sound/items/rped.ogg', 50, TRUE, TRUE, TRUE)
 		if(2)
 			chassis.visible_message(span_warning("[chassis] begins to shake, the sounds of electricity growing louder."))
 			chassis.Shake(1, 1, SKYFALL_SINGLE_CHARGE_TIME-1) // -1 gives space between the animates, so they don't interrupt eachother
@@ -121,12 +121,12 @@
 			chassis.update_appearance(UPDATE_ICON_STATE)
 		if(4)
 			chassis.visible_message(span_warning("[chassis] sparks and shutters as it finalizes preparation."))
-			playsound(chassis, 'sound/mecha/skyfall_power_up.ogg', 50, TRUE)
+			playsound(chassis, 'sound/mecha/skyfall_power_up.ogg', 50, TRUE, TRUE, TRUE)
 			chassis.Shake(3, 3, SKYFALL_SINGLE_CHARGE_TIME-1) // -1 gives space between the animates, so they don't interrupt eachother
 			chassis.spark_system.start()
 		if(SKYFALL_CHARGELEVEL_LAUNCH)
 			chassis.visible_message(span_danger("[chassis] leaps into the air!"))
-			playsound(chassis, 'sound/weapons/gun/general/rocket_launch.ogg', 50, TRUE)
+			playsound(chassis, 'sound/weapons/gun/general/rocket_launch.ogg', 50, TRUE, TRUE, TRUE)
 	if(skyfall_charge_level != SKYFALL_CHARGELEVEL_LAUNCH)
 		skyfall_charge_loop()
 		return
@@ -171,7 +171,7 @@
 /datum/action/vehicle/sealed/mecha/skyfall/proc/land()
 	var/turf/landed_on = get_turf(chassis)
 	chassis.visible_message(span_danger("[chassis] lands from above!"))
-	playsound(chassis, 'sound/effects/explosion1.ogg', 50, 1)
+	playsound(chassis, 'sound/effects/explosion1.ogg', 50, 1, TRUE, TRUE)
 	chassis.resistance_flags &= ~INDESTRUCTIBLE
 	chassis.mecha_flags &= ~(QUIET_STEPS|QUIET_TURNS|CANNOT_INTERACT)
 	chassis.phasing = initial(chassis.phasing)

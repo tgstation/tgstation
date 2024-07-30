@@ -67,9 +67,9 @@
 		return
 	var/aggression = min(((damage / 800) * (internal_energy / 2500)), 1.0) * 100
 	if(damage >= 300)
-		playsound(src, SFX_SM_DELAM, max(50, aggression), FALSE, 40, 30, falloff_distance = 10)
+		playsound(src, SFX_SM_DELAM, max(50, aggression), FALSE, 40, 30, falloff_distance = 10, pressure_affected = FALSE, ignore_walls = TRUE)
 	else
-		playsound(src, SFX_SM_CALM, max(50, aggression), FALSE, 25, 25, falloff_distance = 10)
+		playsound(src, SFX_SM_CALM, max(50, aggression), FALSE, 25, 25, falloff_distance = 10, pressure_affected = FALSE, ignore_walls = TRUE)
 	var/next_sound = round((100 - aggression) * 5)
 	last_accent_sound = world.time + max(SUPERMATTER_ACCENT_SOUND_MIN_COOLDOWN, next_sound)
 
@@ -128,7 +128,7 @@
 		zap_count += 1
 
 	if(zap_count >= 1)
-		playsound(loc, 'sound/weapons/emitter2.ogg', 100, TRUE, extrarange = 10)
+		playsound(loc, 'sound/weapons/emitter2.ogg', 100, TRUE, extrarange = 10, pressure_affected = FALSE, ignore_walls = TRUE)
 		var/delta_time = (SSmachines.times_fired - last_high_energy_zap_perspective_machines) * SSmachines.wait / (1 SECONDS)
 		for(var/i in 1 to zap_count)
 			supermatter_zap(src, range, clamp(internal_energy * 3200, 6.4e6, 3.2e7) * delta_time, flags, zap_cutoff = src.zap_cutoff * delta_time, power_level = internal_energy, zap_icon = src.zap_icon)
@@ -143,7 +143,7 @@
 		supermatter_anomaly_gen(src, PYRO_ANOMALY, rand(5, 10))
 
 /obj/machinery/power/supermatter_crystal/proc/supermatter_pull(turf/center, pull_range = 3)
-	playsound(center, 'sound/weapons/marauder.ogg', 100, TRUE, extrarange = pull_range - world.view)
+	playsound(center, 'sound/weapons/marauder.ogg', 100, TRUE, extrarange = pull_range - world.view, pressure_affected = FALSE, ignore_walls = TRUE)
 	for(var/atom/movable/movable_atom in orange(pull_range,center))
 		if((movable_atom.anchored || movable_atom.move_resist >= MOVE_FORCE_EXTREMELY_STRONG)) //move resist memes.
 			if(istype(movable_atom, /obj/structure/closet))

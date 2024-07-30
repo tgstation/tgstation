@@ -75,7 +75,7 @@
 		projectile_obj.fire()
 		if(!projectile_obj.suppressed && firing_effect_type)
 			new firing_effect_type(get_turf(src), chassis.dir)
-		playsound(chassis, fire_sound, 50, TRUE)
+		playsound(chassis, fire_sound, 50, TRUE, TRUE, TRUE)
 
 		log_combat(source, target, "fired [projectile_obj] at", src, "from [chassis] at [get_area_name(src, TRUE)]")
 
@@ -200,7 +200,7 @@
 /obj/item/mecha_parts/mecha_equipment/weapon/honker/action(mob/source, atom/target, list/modifiers)
 	if(!action_checks(target))
 		return
-	playsound(chassis, 'sound/items/airhorn.ogg', 100, TRUE)
+	playsound(chassis, 'sound/items/airhorn.ogg', 100, TRUE, TRUE, TRUE)
 	to_chat(source, "[icon2html(src, source)]<font color='red' size='5'>HONK</font>")
 	for(var/mob/living/carbon/M in ohearers(6, chassis))
 		if(!M.can_hear())
@@ -383,7 +383,7 @@
 	chassis.use_energy(energy_drain)
 	var/newtonian_target = turn(chassis.dir,180)
 	var/obj/O = new projectile(chassis.loc)
-	playsound(chassis, fire_sound, 50, TRUE)
+	playsound(chassis, fire_sound, 50, TRUE, TRUE, TRUE)
 	log_message("Launched a [O.name] from [name], targeting [target].", LOG_MECHA)
 	projectiles--
 	proj_init(O, source)
