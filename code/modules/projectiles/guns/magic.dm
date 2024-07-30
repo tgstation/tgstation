@@ -46,7 +46,7 @@
 	if(suppressed)
 		playsound(src, suppressed_sound, suppressed_volume, vary_fire_sound, extrarange = SILENCED_SOUND_EXTRARANGE, falloff_distance = 0, frequency = frequency_to_use)
 	else
-		playsound(src, fire_sound, fire_sound_volume, vary_fire_sound, frequency = frequency_to_use, TRUE, TRUE)
+		playsound(src, fire_sound, fire_sound_volume, vary_fire_sound, frequency = frequency_to_use, ignore_walls = TRUE)
 
 /**
  * Signal proc for [COMSIG_ITEM_MAGICALLY_CHARGED]

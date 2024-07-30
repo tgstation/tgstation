@@ -110,7 +110,7 @@
 	if (isnull(head))
 		return ..()
 
-	playsound(user, 'sound/weapons/slice.ogg', vol = 80, vary = TRUE, TRUE, TRUE)
+	playsound(user, 'sound/weapons/slice.ogg', vol = 80, vary = TRUE, ignore_walls = TRUE)
 
 	target_mob.balloon_alert(user, "cutting off head...")
 	if (!do_after(user, 2 SECONDS, target_mob, extra_checks = CALLBACK(src, PROC_REF(has_same_head), target_mob, head)))
