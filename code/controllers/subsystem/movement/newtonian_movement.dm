@@ -3,7 +3,6 @@ MOVEMENT_SUBSYSTEM_DEF(newtonian_movement)
 	name = "Newtonian Movement"
 	flags = SS_NO_INIT|SS_TICKER
 	runlevels = RUNLEVEL_GAME | RUNLEVEL_POSTGAME
-	wait = 0.5
 
 	var/stat_tag = "P" //Used for logging
 	var/list/processing = list()
@@ -25,7 +24,7 @@ MOVEMENT_SUBSYSTEM_DEF(newtonian_movement)
 		current_run.len--
 		if(QDELETED(thing))
 			processing -= thing
-		else if(thing.process(wait * 0.1) == PROCESS_KILL)
+		else if(thing.process(TICKS2DS(wait) * 0.1) == PROCESS_KILL)
 			// fully stop so that a future START_PROCESSING will work
 			STOP_PROCESSING(src, thing)
 		if (MC_TICK_CHECK)
