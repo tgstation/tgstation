@@ -6,6 +6,7 @@
 
 /datum/sfx/proc/get_random_sound()
 	if(length(sound_files) == 0)
+		stack_trace("SFX category [type] has no sound files associated")
 		return null
 
 	return pick(sound_files)
