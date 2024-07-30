@@ -161,8 +161,8 @@
 /obj/effect/temp_visual/paperwiz_dying/Initialize(mapload)
 	. = ..()
 	visible_message(span_boldannounce("The wizard cries out in pain as a gate appears behind him, sucking him in!"))
-	playsound(get_turf(src), 'sound/magic/mandswap.ogg', 50, vary = TRUE, pressure_affected = TRUE)
-	playsound(get_turf(src), 'sound/hallucinations/wail.ogg', 50, vary = TRUE, pressure_affected = TRUE)
+	playsound(get_turf(src), 'sound/magic/mandswap.ogg', 50, vary = TRUE)
+	playsound(get_turf(src), 'sound/hallucinations/wail.ogg', 50, vary = TRUE)
 	RegisterSignal(src, COMSIG_PREQDELETED, PROC_REF(on_delete))
 
 /obj/effect/temp_visual/paperwiz_dying/proc/on_delete()
