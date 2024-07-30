@@ -40,6 +40,7 @@
 	var/cure_chance = 4
 	var/carrier = FALSE //If our host is only a carrier
 	var/bypasses_immunity = FALSE //Does it skip species virus immunity check? Some things may diseases and not viruses
+	/// How quickly the disease spreads between mobs. Lower is faster.
 	var/spreading_modifier = 1
 	var/severity = DISEASE_SEVERITY_NONTHREAT
 	/// If the disease requires an organ for the effects to function, robotic organs are immune to disease unless inorganic biology symptom is present
