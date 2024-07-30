@@ -14,6 +14,9 @@ import { updateSettings } from './actions';
 import { selectSettings } from './selectors';
 
 const TabsViews = ['default', 'classic', 'nowrap'];
+const LinkedToChat = () => (
+  <NoticeBox color="red">Unlink Stat Panel from chat!</NoticeBox>
+);
 
 export function SettingsStatPanel(props) {
   const { statLinked, statFontSize, statTabsStyle } =
@@ -45,9 +48,7 @@ export function SettingsStatPanel(props) {
               <LabeledList.Item label="Font size">
                 <Stack.Item grow>
                   {statLinked ? (
-                    <NoticeBox color="red" fontSize={0.95}>
-                      Unlink Stat Panel from chat!
-                    </NoticeBox>
+                    <LinkedToChat />
                   ) : (
                     <Slider
                       width="100%"
