@@ -12,8 +12,8 @@ import { changeSettingsTab } from './actions';
 import { SETTINGS_TABS } from './constants';
 import { selectActiveTab } from './selectors';
 import { SettingsGeneral } from './SettingsGeneral';
-import { TextHighlightSettings } from './TextHighlight';
 import { SettingsStatPanel } from './SettingsStatPanel';
+import { TextHighlightSettings } from './TextHighlight';
 
 export function SettingsPanel(props) {
   const activeTab = useSelector(selectActiveTab);

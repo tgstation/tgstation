@@ -4,10 +4,10 @@ import { useDispatch, useSelector } from 'tgui/backend';
 import {
   Button,
   LabeledList,
+  NoticeBox,
   Section,
   Slider,
   Stack,
-  NoticeBox,
 } from 'tgui/components';
 
 import { updateSettings } from './actions';
