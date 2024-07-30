@@ -45,6 +45,7 @@
 	catalog_description = "Beach dimension (Fishing portal generator)"
 	radial_name = "Beach"
 	radial_state = "palm_beach"
+	overlay_state = "portal_beach"
 
 /datum/fish_source/portal/chasm
 	background = "background_lavaland"

@@ -451,11 +451,12 @@
 	addtimer(CALLBACK(src, PROC_REF(launch_payload)), 4 SECONDS)
 
 /obj/item/roulette_wheel_beacon/proc/launch_payload()
-	var/obj/structure/closet/supplypod/centcompod/toLaunch = new()
-
-	new /obj/machinery/roulette(toLaunch)
-
-	new /obj/effect/pod_landingzone(drop_location(), toLaunch)
+	podspawn(list(
+		"target" = drop_location(),
+		"path" = /obj/structure/closet/supplypod/centcompod,
+		"spawn" = /obj/machinery/roulette
+	))
+	
 	qdel(src)
 
 #undef ROULETTE_DOZ_COL_PAYOUT

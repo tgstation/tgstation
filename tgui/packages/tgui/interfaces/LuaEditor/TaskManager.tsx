@@ -1,33 +1,32 @@
-import { useBackend, useLocalState } from '../../backend';
-import { Button, LabeledList, Section, Stack } from '../../components';
+import { Dispatch, SetStateAction } from 'react';
 
-export const TaskManager = (props) => {
-  const { act, data } = useBackend();
-  const [, setToCall] = useLocalState('toCallTaskInfo');
-  const [, setModal] = useLocalState('modal');
-  let { tasks } = data;
-  tasks?.sort((a, b) => {
-    if (a.status < b.status) {
-      return -1;
-    } else if (a.status > b.status) {
-      return 1;
-    } else {
-      return 0;
-    }
-  });
-  const sleeps = tasks.filter((info) => info.status === 'sleep');
-  const yields = tasks.filter((info) => info.status === 'yield');
+import { useBackend } from '../../backend';
+import { Button, LabeledList, Section, Stack } from '../../components';
+import { CallInfo, LuaEditorData, LuaEditorModal } from './types';
+
+type TaskManagerProps = {
+  setToCall: Dispatch<SetStateAction<CallInfo>>;
+  setModal: Dispatch<SetStateAction<LuaEditorModal>>;
+};
+
+export const TaskManager = (props: TaskManagerProps) => {
+  const { act, data } = useBackend<LuaEditorData>();
+  const { setToCall, setModal } = props;
+  const { tasks } = data;
+  const { sleeps = [], yields = [] } = tasks;
   return (
     <Stack fill width="100%" justify="space-around">
-      <Stack.Item grow="1" shrink="1">
+      <Stack.Item grow shrink>
         <Section title="Sleeps" fill>
           <LabeledList>
-            {sleeps.map((info, i) => (
-              <LabeledList.Item key={i} label={info.name}>
+            {sleeps.map(({ index, name }, i) => (
+              <LabeledList.Item key={i} label={name}>
                 <Button
                   color="red"
                   icon="window-close"
-                  onClick={() => act('killTask', { info: info })}
+                  onClick={() =>
+                    act('killTask', { is_sleep: true, index: index })
+                  }
                 >
                   Kill
                 </Button>
@@ -36,16 +35,16 @@ export const TaskManager = (props) => {
           </LabeledList>
         </Section>
       </Stack.Item>
-      <Stack.Item grow="1" shrink="1">
+      <Stack.Item grow shrink>
         <Section title="Yields" fill>
           <LabeledList>
-            {yields.map((info, i) => (
-              <LabeledList.Item key={i} label={info.name}>
+            {yields.map(({ index, name }, i) => (
+              <LabeledList.Item key={i} label={name}>
                 <Button
                   onClick={() => {
                     setToCall({
                       type: 'resumeTask',
-                      params: { index: info.index },
+                      params: { index: index },
                     });
                     setModal('call');
                   }}
@@ -56,7 +55,7 @@ export const TaskManager = (props) => {
                   color="red"
                   icon="window-close"
                   onClick={() => {
-                    act('killTask', { info: info });
+                    act('killTask', { is_sleep: false, index: index });
                   }}
                 >
                   Kill
