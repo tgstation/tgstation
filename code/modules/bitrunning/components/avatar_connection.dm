@@ -66,6 +66,9 @@
 	if(alias && avatar.real_name != alias)
 		avatar.fully_replace_character_name(avatar.real_name, alias)
 
+	for(var/skill_type in old_mind?.known_skills)
+		avatar.mind.set_experience(skill_type, old_mind.get_skill_exp(skill_type), silent = TRUE)
+
 	avatar.playsound_local(avatar, 'sound/magic/blink.ogg', 25, TRUE)
 	avatar.set_static_vision(2 SECONDS)
 	avatar.set_temp_blindness(1 SECONDS) // I'm in
@@ -280,6 +283,9 @@
 
 	if(isnull(old_mind) || isnull(old_body))
 		return
+
+	for(var/skill_type in avatar.mind.known_skills)
+		old_mind.set_experience(skill_type, avatar.mind.get_skill_exp(skill_type), silent = TRUE)
 
 	ghost.mind = old_mind
 	if(old_body.stat != DEAD)
