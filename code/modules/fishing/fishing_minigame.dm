@@ -256,11 +256,11 @@
 		RegisterSignal(user, COMSIG_MOVABLE_MOVED, PROC_REF(on_lure_or_user_move))
 		RegisterSignal(lure, COMSIG_MOVABLE_MOVED, PROC_REF(on_lure_or_user_move))
 		RegisterSignal(user, SIGNAL_ADDTRAIT(TRAIT_HANDS_BLOCKED), PROC_REF(on_hands_blocked))
+	RegisterSignal(user, SIGNAL_REMOVETRAIT(TRAIT_PROFOUND_FISHER), PROC_REF(no_longer_fishing))
 	active_effects = bitfield_to_list(special_effects & FISHING_MINIGAME_ACTIVE_EFFECTS)
 	// If fishing line breaks los / rod gets dropped / deleted
 	RegisterSignal(used_rod, COMSIG_ITEM_ATTACK_SELF, PROC_REF(on_attack_self))
 	ADD_TRAIT(user, TRAIT_GONE_FISHING, WEAKREF(src))
-	RegisterSignal(user, SIGNAL_REMOVETRAIT(TRAIT_GONE_FISHING), PROC_REF(no_longer_fishing))
 	user.add_mood_event("fishing", /datum/mood_event/fishing)
 	RegisterSignal(user, COMSIG_MOB_CLICKON, PROC_REF(handle_click))
 	start_baiting_phase()

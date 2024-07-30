@@ -21,15 +21,20 @@
 		RegisterSignal(gloves, COMSIG_ATOM_EXAMINE, PROC_REF(on_examine))
 		gloves.flags_1 |= HAS_CONTEXTUAL_SCREENTIPS_1
 		RegisterSignal(gloves, COMSIG_ATOM_REQUESTING_CONTEXT_FROM_ITEM, PROC_REF(on_requesting_context_from_item))
+		var/mob/living/wearer = gloves.loc
+		if(istype(wearer) && wearer.get_item_by_slot(ITEM_SLOT_GLOVES) == gloves)
+			on_equip(gloves, wearer, slot)
 
 /datum/component/profound_fisher/proc/on_requesting_context_from_item(datum/source, list/context, obj/item/held_item, mob/living/user)
 	SIGNAL_HANDLER
-	if(isnull(held_item))
+	if(isnull(held_item) && user.contains(parent))
 		context[SCREENTIP_CONTEXT_RMB] = "Open rod UI"
+		return CONTEXTUAL_SCREENTIP_SET
 
 /datum/component/profound_fisher/proc/on_examine(datum/source, mob/user, list/examine_list)
 	SIGNAL_HANDLER
-	examine_list += "[EXAMINE_HINT("Right-Click")] with an empty hand to open the integrated fishing rod interface."
+	examine_list += span_info("When [EXAMINE_HINT("held")] or [EXAMINE_HINT("equipped")], [EXAMINE_HINT("right-click")] with a empty hand to open the integrated fishing rod interface.")
+	examine_list += span_tinynoticeital("To fish, you need to turn combat mode off.")
 
 /datum/component/profound_fisher/proc/on_rod_qdel(datum/source)
 	SIGNAL_HANDLER
@@ -48,14 +53,14 @@
 	RegisterSignal(equipper, COMSIG_LIVING_UNARMED_ATTACK, PROC_REF(on_unarmed_attack))
 
 /datum/component/profound_fisher/proc/open_rod_menu(datum/source, mob/user, list/modifiers)
-	our_rod.ui_interact(user)
+	SIGNAL_HANDLER
+	INVOKE_ASYNC(our_rod, TYPE_PROC_REF(/atom, ui_interact), user)
 	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
 /datum/component/profound_fisher/proc/on_drop(datum/source, atom/dropper)
 	SIGNAL_HANDLER
 	UnregisterSignal(dropper, COMSIG_LIVING_UNARMED_ATTACK)
-	if(HAS_TRAIT(dropper, TRAIT_PROFOUND_FISHER)) //The dropper is fishing thanks to an equipment with this on.
-		REMOVE_TRAIT(dropper, TRAIT_GONE_FISHING, TRAIT_GENERIC)
+	REMOVE_TRAIT(dropper, TRAIT_PROFOUND_FISHER, TRAIT_GENERIC) //this will cancel the current minigame if the fishing rod was internal.
 
 /datum/component/profound_fisher/proc/on_unarmed_attack(mob/living/source, atom/attack_target, proximity_flag, list/modifiers)
 	SIGNAL_HANDLER
@@ -79,7 +84,8 @@
 	if(!HAS_TRAIT(target, TRAIT_FISHING_SPOT) || HAS_TRAIT(user, TRAIT_GONE_FISHING))
 		return FALSE
 	if(user.combat_mode || !user.CanReach(target))
-		return NONE
+		return FALSE
+	return TRUE
 
 /datum/component/profound_fisher/proc/begin_fishing(mob/living/user, atom/target)
 	RegisterSignal(user, SIGNAL_ADDTRAIT(TRAIT_GONE_FISHING), PROC_REF(actually_fishing_with_internal_rod))

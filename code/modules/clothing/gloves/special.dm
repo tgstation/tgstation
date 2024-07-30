@@ -159,7 +159,7 @@
 ///A pair of gloves that both allow the user to fish without the need of a held fishing rod and provides athletics experience.
 /obj/item/clothing/gloves/fishing
 	name = "athletic fishing gloves"
-	desc = "A pair of gloves to fish without a fishing rod but your raw <b>athletics</b> strength. It doubles as a good workout device."
+	desc = "A pair of gloves to fish without a fishing rod but your raw <b>athletics</b> strength. It doubles as a good workout device. <i><b>WARNING</b>: May cause injuries when catching bigger fish.</i>"
 	icon_state = "fishing_gloves"
 
 /obj/item/clothing/gloves/fishing/Initialize(mapload)
@@ -216,9 +216,34 @@
 	bait = null
 	ui_description = "The integrated fishing rod of a pair of athletic fishing gloves"
 
+/obj/item/fishing_rod/mob_fisher/athletic/Initialize(mapload)
+	. = ..()
+	RegisterSignal(src, COMSIG_FISHING_ROD_CAUGHT_FISH, PROC_REF(noodling_is_dangerous))
+
 /obj/item/fishing_rod/mob_fisher/athletic/get_fishing_overlays()
 	return list()
 
 /obj/item/fishing_rod/mob_fisher/athletic/hook_hit(atom/atom_hit_by_hook_projectile, mob/user)
 	difficulty_modifier = -3 * user.mind?.get_skill_level(/datum/skill/athletics)
 	return ..()
+
+/obj/item/fishing_rod/mob_fisher/athletic/proc/noodling_is_dangerous(datum/source, atom/movable/reward, mob/living/user)
+	SIGNAL_HANDLER
+	if(!isfish(reward))
+		return
+	var/damage = 0
+	var/obj/item/fish/fishe = reward
+	switch(fishe.w_class)
+		if(WEIGHT_CLASS_BULKY)
+			damage = 10
+		if(WEIGHT_CLASS_HUGE)
+			damage = 14
+		if(WEIGHT_CLASS_GIGANTIC)
+			damage = 18
+	if(!damage && fishe.weight >= 2000)
+		damage = 5
+	damage = round(damage * fishe.weight * 0.0005)
+	if(damage)
+		var/body_zone = pick(BODY_ZONE_R_ARM, BODY_ZONE_L_ARM)
+		user.apply_damage(damage, BRUTE, body_zone, user.run_armor_check(body_zone, MELEE))
+		playsound(src,'sound/weapons/bite.ogg', damage * 2, TRUE)

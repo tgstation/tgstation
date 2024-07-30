@@ -260,6 +260,12 @@
 		ui.set_autoupdate(FALSE)
 		ui.open()
 
+/obj/item/fishing_rod/ui_state()
+	if(internal)
+		return GLOB.deep_inventory_state
+	else
+		return GLOB.default_state
+
 /obj/item/fishing_rod/update_overlays()
 	. = ..()
 	. += get_fishing_overlays()
@@ -593,10 +599,6 @@
 	if(blocked < 100)
 		QDEL_NULL(our_line) //we need to delete the old beam datum, otherwise it won't let you fish.
 		owner.hook_hit(target, firer)
-
-/obj/projectile/fishing_cast/fire(angle, atom/direct_target)
-	. = ..()
-	our_line = owner.create_fishing_line(src, firer)
 
 /obj/projectile/fishing_cast/Destroy()
 	QDEL_NULL(our_line)

@@ -2728,7 +2728,7 @@
 	)
 
 /datum/design/module/fishing_glove
-	name = "MOD fishing glove Module"
+	name = "MOD Fishing Glove Module"
 	id = "mod_fishing"
 	materials = list(
 		/datum/material/titanium = HALF_SHEET_MATERIAL_AMOUNT,
@@ -2736,7 +2736,7 @@
 		/datum/material/iron = HALF_SHEET_MATERIAL_AMOUNT,
 		/datum/material/plastic = HALF_SHEET_MATERIAL_AMOUNT,
 	)
-	build_path = /obj/item/mod/module/fishing_gloves
+	build_path = /obj/item/mod/module/fishing_glove
 
 /datum/design/posisphere
 	name = "Positronic Sphere"
