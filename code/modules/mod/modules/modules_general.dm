@@ -174,9 +174,6 @@
 	required_slots = list(ITEM_SLOT_BACK)
 
 /obj/item/mod/module/jump_jet/on_use()
-	. = ..()
-	if (!.)
-		return FALSE
 	if (DOING_INTERACTION(mod.wearer, mod.wearer))
 		balloon_alert(mod.wearer, "busy!")
 		return
@@ -863,16 +860,10 @@
 	return ..()
 
 /obj/item/mod/module/recycler/on_activation()
-	. = ..()
-	if(!.)
-		return
 	connector = AddComponent(/datum/component/connect_loc_behalf, mod.wearer, loc_connections)
 	RegisterSignal(mod.wearer, COMSIG_MOVABLE_MOVED, PROC_REF(on_wearer_moved))
 
 /obj/item/mod/module/recycler/on_deactivation(display_message, deleting = FALSE)
-	. = ..()
-	if(!.)
-		return
 	QDEL_NULL(connector)
 	UnregisterSignal(mod.wearer, COMSIG_MOVABLE_MOVED, PROC_REF(on_wearer_moved))
 

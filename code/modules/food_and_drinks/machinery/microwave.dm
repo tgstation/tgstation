@@ -381,6 +381,9 @@
 	if(operating)
 		return NONE
 
+	if (item.item_flags & ABSTRACT)
+		return NONE
+
 	if(broken > NOT_BROKEN)
 		balloon_alert(user, "it's broken!")
 		return ITEM_INTERACT_BLOCKING

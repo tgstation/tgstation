@@ -72,3 +72,11 @@
 	name = "super-doughball"
 	desc = "No fish will be able to resist this."
 	bait_quality = TRAIT_GREAT_QUALITY_BAIT
+
+///Used by the advanced fishing rod
+/obj/item/food/bait/doughball/syntethic/unconsumable
+
+/obj/item/food/bait/doughball/synthetic/unconsumable/Initialize(mapload)
+	. = ..()
+	ADD_TRAIT(src, TRAIT_BAIT_UNCONSUMABLE, INNATE_TRAIT)
+
