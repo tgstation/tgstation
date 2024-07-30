@@ -1,6 +1,6 @@
 /obj/item/storage/briefcase/secure/wargame_kit
 	name = "DIY Wargaming Kit"
-	desc = "Contains everything an aspiring naval officer (or just massive nerd) would need for a proper modern naval wargame."
+	desc = "Contains everything an aspiring naval officer (or just huge fucking nerd) would need for a proper modern naval wargame."
 	custom_premium_price = PAYCHECK_CREW * 2
 
 /obj/item/storage/briefcase/secure/white/wargame_kit/PopulateContents()
