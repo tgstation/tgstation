@@ -1,5 +1,5 @@
 /**
- * Datum for spawning loot
+ * Datum for spawning multiple different atoms or applying some special spawning behavior
  */
 /datum/loot
 	/// Actual loot. loot[typepath] = amount
