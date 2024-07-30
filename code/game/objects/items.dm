@@ -846,7 +846,7 @@
 			if (mob_throw_hit_sound)
 				playsound(hit_atom, mob_throw_hit_sound, volume, TRUE, -1)
 			else if(hitsound)
-				playsound(hit_atom, hitsound, volume, TRUE, -1)
+				playsound(hit_atom, hitsound, volume, TRUE, -1, TRUE, TRUE)
 			else
 				playsound(hit_atom, 'sound/weapons/genhit.ogg',volume, TRUE, -1)
 		else

@@ -69,11 +69,11 @@
 	heat = 0
 
 /obj/item/clothing/head/utility/hardhat/cakehat/energycake/turn_on(mob/living/user)
-	playsound(src, 'sound/weapons/saberon.ogg', 5, TRUE)
+	playsound(src, 'sound/weapons/saberon.ogg', 5, TRUE, TRUE, TRUE)
 	to_chat(user, span_warning("You turn on \the [src]."))
 	return ..()
 
 /obj/item/clothing/head/utility/hardhat/cakehat/energycake/turn_off(mob/living/user)
-	playsound(src, 'sound/weapons/saberoff.ogg', 5, TRUE)
+	playsound(src, 'sound/weapons/saberoff.ogg', 5, TRUE, TRUE, TRUE)
 	to_chat(user, span_warning("You turn off \the [src]."))
 	return ..()
