@@ -252,7 +252,7 @@
 	sprite_height = 9
 	sprite_width = 8
 	stable_population = 4
-	feeding_frequency = 15 MINUTES
+	feeding_frequency = 10 MINUTES
 	random_case_rarity = FISH_RARITY_RARE
 	fillet_type = /obj/item/food/meat/slab/rawcrab
 	required_temperature_min = MIN_AQUARIUM_TEMP+9
@@ -277,7 +277,7 @@
 	///The lobstrosity type this matures into
 	var/lob_type = /mob/living/basic/mining/lobstrosity/juvenile/lava
 	///at which rate the crab gains maturation
-	var/growth_rate = 100 / (12 MINUTES) * 10
+	var/growth_rate = 100 / (10 MINUTES) * 10
 
 ///A chasm crab growth speed is determined by its initial weight and size, ergo bigger crabs for faster lobstrosities
 /obj/item/fish/chasm_crab/update_size_and_weight(new_size = average_size, new_weight = average_weight)
@@ -451,7 +451,7 @@
 	average_size = 20
 	average_weight = 400
 	health = 50
-	breeding_timeout = 5 MINUTES
+	breeding_timeout = 2.5 MINUTES
 	fish_traits = list(/datum/fish_trait/parthenogenesis, /datum/fish_trait/no_mating)
 	required_temperature_min = MIN_AQUARIUM_TEMP+10
 	required_temperature_max = MIN_AQUARIUM_TEMP+40
