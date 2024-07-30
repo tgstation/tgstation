@@ -856,7 +856,7 @@
 	icon_state = "floor5-old"
 	},
 /obj/item/ammo_casing/spent,
-/obj/item/gun/ballistic/automatic/plastikov,
+/obj/item/gun/ballistic/automatic/smartgun,
 /obj/effect/mob_spawn/corpse/human/syndicatepilot,
 /turf/open/floor/mineral/plastitanium/red,
 /area/ruin/space/has_grav/infested_frigate)
@@ -2790,7 +2790,7 @@
 	icon_state = "plastitaniumtiny"
 	},
 /mob/living/basic/alien/queen/large{
-	loot = list(/obj/effect/gibspawner/xeno,/obj/item/ammo_box/magazine/plastikov9mm,/obj/effect/mob_spawn/corpse/human/syndicatecommando/soft_suit);
+	loot = list(/obj/effect/gibspawner/xeno,/obj/item/ammo_box/magazine/smartgun,/obj/effect/mob_spawn/corpse/human/syndicatecommando/soft_suit);
 	desc = "What you saw in your dreams last night.";
 	faction = list("syndicate","xenomorph")
 	},
