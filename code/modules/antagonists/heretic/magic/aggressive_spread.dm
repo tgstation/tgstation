@@ -10,8 +10,8 @@
 	school = SCHOOL_FORBIDDEN
 	cooldown_time = 30 SECONDS
 
-	invocation = "Agresiv'noe rasprostra-neniye!"
-	invocation_type = INVOCATION_SHOUT
+	invocation = "A'GRSV SPR'D"
+	invocation_type = INVOCATION_WHISPER
 	spell_requirements = NONE
 
 	aoe_radius = 2
