@@ -144,6 +144,7 @@
 		"light_tube",
 		"crossing_signal",
 		"guideway_sensor",
+		"podcommsreceiverdoor",
 	)
 
 /datum/techweb_node/energy_manipulation
