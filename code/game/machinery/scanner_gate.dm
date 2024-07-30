@@ -291,7 +291,7 @@
 			color = wires.get_color_of_wire(WIRE_DENY)
 			var/obj/item/assembly/assembly = wires.get_attached(color)
 			assembly?.activate()
-		set_scanline("scanning", 10)
+		set_scanline("scanning", 1 SECONDS)
 
 	use_energy(active_power_usage)
 
