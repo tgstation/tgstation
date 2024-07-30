@@ -35,9 +35,35 @@ img {
 
 #menu {
 	display: flex;
-	flex-wrap: wrap-reverse;
+	overflow: hidden;
+	overflow-x: auto;
 	padding: 0.25em 0.25em 0;
 	background-color: #ffffff;
+}
+
+.menu-wrap {
+	flex-wrap: wrap-reverse;
+}
+
+#menu.tabs-classic {
+	padding: 0.15em;
+}
+
+#menu.tabs-classic .button {
+	min-width: 2em;
+	margin: 0.1em;
+	padding: 0.25em 0.4em;
+	border: 0;
+	border-radius: 0.25em;
+}
+
+#menu.tabs-classic .button.active {
+	background-color: #20b142;
+	color: white;
+}
+
+#menu.tabs-classic .button.active:hover {
+	background-color: #32c154;
 }
 
 .button {

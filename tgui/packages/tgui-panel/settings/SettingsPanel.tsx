@@ -13,6 +13,7 @@ import { SETTINGS_TABS } from './constants';
 import { selectActiveTab } from './selectors';
 import { SettingsGeneral } from './SettingsGeneral';
 import { TextHighlightSettings } from './TextHighlight';
+import { SettingsStatPanel } from './SettingsStatPanel';
 
 export function SettingsPanel(props) {
   const activeTab = useSelector(selectActiveTab);
@@ -45,6 +46,7 @@ export function SettingsPanel(props) {
         {activeTab === 'general' && <SettingsGeneral />}
         {activeTab === 'chatPage' && <ChatPageSettings />}
         {activeTab === 'textHighlight' && <TextHighlightSettings />}
+        {activeTab === 'statPanel' && <SettingsStatPanel />}
       </Stack.Item>
     </Stack>
   );
