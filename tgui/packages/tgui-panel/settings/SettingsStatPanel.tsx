@@ -69,7 +69,7 @@ export function SettingsStatPanel(props) {
         <Stack.Item textAlign="center">
           <Button
             fluid
-            icon="link"
+            icon={statLinked ? 'unlink' : 'link'}
             color={statLinked ? 'bad' : 'good'}
             onClick={() =>
               dispatch(updateSettings({ statLinked: !statLinked }))
