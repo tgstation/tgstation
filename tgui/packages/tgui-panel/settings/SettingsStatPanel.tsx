@@ -13,7 +13,7 @@ import {
 import { updateSettings } from './actions';
 import { selectSettings } from './selectors';
 
-const TabsViews = ['default', 'classic', 'nowrap'];
+const TabsViews = ['default', 'classic', 'scrollable'];
 const LinkedToChat = () => (
   <NoticeBox color="red">Unlink Stat Panel from chat!</NoticeBox>
 );

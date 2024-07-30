@@ -719,13 +719,11 @@ function set_font_size(size) {
 function set_tabs_style(style) {
 	if (style == "default") {
 		menu.classList.add('menu-wrap');
-		menu.classList.remove('menu-nowrap');
 		menu.classList.remove('tabs-classic');
 	} else if (style == "classic") {
 		menu.classList.add('menu-wrap');
 		menu.classList.add('tabs-classic');
-		menu.classList.remove('menu-nowrap');
-	} else if (style == "nowrap") {
+	} else if (style == "scrollable") {
 		menu.classList.remove('menu-wrap');
 		menu.classList.remove('tabs-classic');
 	}
