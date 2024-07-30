@@ -58,12 +58,8 @@ img {
 }
 
 #menu.tabs-classic .button.active {
-	background-color: #20b142;
+	background-color: #0668b8;
 	color: white;
-}
-
-#menu.tabs-classic .button.active:hover {
-	background-color: #32c154;
 }
 
 .button {
@@ -87,6 +83,7 @@ img {
 }
 
 .button.active {
+	cursor: default;
 	background-color: #dfdfdf;
 	color: black;
 	border-bottom-color: #000000;
@@ -204,6 +201,10 @@ body.dark {
 
 .dark #menu {
 	background-color: #131313;
+}
+
+.dark #menu.tabs-classic .button.active {
+	background-color: #20b142;
 }
 
 .dark .button {
