@@ -244,10 +244,11 @@
 				beep = TRUE
 			else if(ishuman(thing))
 				var/mob/living/carbon/human/scanned_human = thing
-				for(var/scanned_item in scanned_human.get_contents())
-					if(isgun(scanned_item))
-						beep = TRUE
-						break
+				if(!HAS_TRAIT(scanned_human, TRAIT_MINDSHIELD))
+					for(var/scanned_item in scanned_human.get_contents())
+						if(isgun(scanned_item))
+							beep = TRUE
+							break
 			else
 				for(var/scanned_item in thing.contents)
 					if(isgun(scanned_item))
@@ -302,7 +303,7 @@
 		say("[detected_thing][reverse ? " not " : " "]detected!!")
 
 	COOLDOWN_START(src, next_beep, 2 SECONDS)
-	playsound(src, 'sound/machines/scanbuzz.ogg', 100, FALSE)
+	playsound(src, 'sound/machines/scanbuzz.ogg', 30, FALSE)
 	set_scanline("alarm", 2 SECONDS)
 
 /obj/machinery/scanner_gate/can_interact(mob/user)
