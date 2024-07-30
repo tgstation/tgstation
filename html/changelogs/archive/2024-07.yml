@@ -1408,3 +1408,25 @@
       vent
   - sound: only the scream emote can be heard through walls
   - sound: the sneeze projectile no longer makes a sound when making contact.
+2024-07-29:
+  DaCoolBoss:
+  - spellcheck: military javelin's name is now fully uncapitalised
+  SmArtKar:
+  - rscadd: Mining headsets now allow you to make callouts via pointing. You can use
+      them to communicate with fellow miners or order your army of bots and raptors!
+  - rscadd: Mining headsets keep your voice loud and clear in low-pressure environments
+      (not vacuum!)
+  - qol: If you have auto fit viewport enabled, it will trigger upon entering or exiting
+      fullscreen
+  - bugfix: VIM no longer requires hands to enter
+  - bugfix: Recyclers no longer recycle contents of indestructible items
+  - bugfix: Grass sheath now holds parsnip sabres like its supposed to
+  - spellcheck: Fixed up parsnip sabre description grammar
+  StrangeWeirdKitten:
+  - rscadd: Cosmic Skull glows purple.
+  Time-Green:
+  - bugfix: Fixes void eater not refreshing
+  - bugfix: Fixes planetary gravity not killing voidwalkers and voideds
+  Y0SH1M4S73R:
+  - admin: Admin lua scripting uses a new library that (probably) will not break when
+      BYOND updates.

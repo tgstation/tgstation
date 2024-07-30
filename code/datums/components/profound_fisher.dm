@@ -17,6 +17,11 @@
 		RegisterSignal(parent, COMSIG_ITEM_EQUIPPED, PROC_REF(on_equip))
 		RegisterSignal(parent, COMSIG_ITEM_DROPPED, PROC_REF(on_drop))
 		RegisterSignal(parent, COMSIG_ATOM_ATTACK_HAND_SECONDARY, PROC_REF(open_rod_menu))
+		RegisterSignal(parent, COMSIG_ATOM_EXAMINE, PROC_REF(on_examine))
+
+/datum/component/profound_fisher/proc/on_examine(datum/source, mob/user, list/examine_list)
+	SIGNAL_HANDLER
+	examine_list += "[EXAMINE_HINT("Right-Click")] with an empty hand to open the integrated fishing rod interface."
 
 /datum/component/profound_fisher/proc/on_rod_qdel(datum/source)
 	SIGNAL_HANDLER
@@ -110,6 +115,12 @@
 /obj/item/fishing_rod/mob_fisher
 	display_fishing_line = FALSE
 	line = /obj/item/fishing_line/reinforced
+	bait = /obj/item/food/bait/doughball/synthetic/unconsumable
 
-/obj/item/fishing_rod/mob_fisher/baitless
+/obj/item/fishing_rod/mob_fisher/Initialize(mapload)
+	. = ..()
+	ui_description = "The integrated fishing rod of [loc]"
+
+/obj/item/fishing_rod/mob_fisher/unslotted
+	line = null
 	bait = null

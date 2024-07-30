@@ -25,6 +25,12 @@ plastic_drop.ogg - https://freesound.org/people/martian/sounds/338854/ , License
 } - edited by sadboysuss
 
 {
+skin_drop.ogg - https://freesound.org/people/Crinkem/sounds/501015/ , License: CC4
+skin_pick_up.ogg - https://freesound.org/people/Crinkem/sounds/501015/ , License CC3
+cardboard_drop and cardboard_pick_up - https://freesound.org/people/newagesoup/sounds/364736/ , License CC0
+}
+
+{
 	medkit_open.ogg - https://freesound.org/people/Jandre160108/sounds/365866/ , License: CC BY-NC 4.0
 	medkit_drop.ogg - https://freesound.org/people/Jandre160108/sounds/365866/ , License: CC BY-NC 4.0
 	medkit_pick_up.ogg - https://freesound.org/people/blouhond/sounds/440710/ , License: CC BY 4.0

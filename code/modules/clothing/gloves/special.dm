@@ -163,4 +163,4 @@
 
 /obj/item/clothing/gloves/fishing/Initialize(mapload)
 	. = ..()
-	AddComponent(/datum/component/profound_fisher, new /obj/item/fishing_rod/mob_fisher/baitless(src))
+	AddComponent(/datum/component/profound_fisher, new /obj/item/fishing_rod/mob_fisher/unslotted(src))
