@@ -221,8 +221,4 @@
 			sfx_by_id[sfx.id] = sfx
 
 	var/datum/sfx/sfx = sfx_by_id[soundin]
-	if(isnull(sfx))
-		return soundin
-
-	var/picked_sound = sfx.get_random_sound()
-	return isnull(picked_sound) ? soundin : picked_sound
+	return sfx?.get_random_sound() || soundin
