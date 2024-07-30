@@ -109,7 +109,6 @@
 		sound_to_use = sound(get_sfx(soundin))
 
 	sound_to_use.wait = 0 //No queue
-
 	sound_to_use.channel = channel || SSsounds.random_available_channel()
 	sound_to_use.volume = vol
 
