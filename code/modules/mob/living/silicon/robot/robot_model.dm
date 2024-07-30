@@ -806,7 +806,6 @@
 		/obj/item/rsf,
 		/obj/item/storage/bag/tray,
 		/obj/item/pen,
-		/obj/item/reagent_containers/cup/rag,
 		/obj/item/toy/crayon/spraycan/borg,
 		/obj/item/extinguisher/mini,
 		/obj/item/hand_labeler/borg,
