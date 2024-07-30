@@ -67,7 +67,6 @@ export const BorgShaker = (props) => {
                   act('set_preferred_container', {
                     value: ContainerPreference.InternalBeaker,
                   });
-                  act('update_ui');
                 }}
               />
               <Button
@@ -84,7 +83,6 @@ export const BorgShaker = (props) => {
                   act('set_preferred_container', {
                     value: ContainerPreference.BeverageApparatus,
                   });
-                  act('update_ui');
                 }}
               />
             </>

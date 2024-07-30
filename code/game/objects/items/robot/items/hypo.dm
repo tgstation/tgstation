@@ -355,6 +355,7 @@
 					internal_beaker.reagents.ui_interact(user)
 		if ("set_preferred_container")
 			reagent_search_container = params["value"]
+	return TRUE
 
 /obj/item/reagent_containers/borghypo/borgshaker/ui_data(mob/user)
 	var/list/drink_reagents = list()
@@ -389,7 +390,6 @@
 			data["apparatusHasItem"] = FALSE
 		else
 			data["apparatusHasItem"] = !isnull(beverage_apparatus.stored)
-	// monkestation end
 	return data
 
 /obj/item/reagent_containers/borghypo/borgshaker/attack(mob/M, mob/user)
