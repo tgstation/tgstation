@@ -179,6 +179,9 @@
 		if(design.build_type & MECHFAB)
 			cached_designs |= design
 
+	for(var/datum/design/illegal_disign in illegal_local_designs)
+		cached_designs |= illegal_disign
+
 	var/design_delta = cached_designs.len - previous_design_count
 
 	if(design_delta > 0)
