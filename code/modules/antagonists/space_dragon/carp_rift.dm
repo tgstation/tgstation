@@ -36,7 +36,7 @@
 	if(locate(/obj/structure/carp_rift) in owner.loc)
 		return
 	var/obj/structure/carp_rift/new_rift = new(get_turf(owner))
-	playsound(owner.loc, 'sound/vehicles/rocketlaunch.ogg', 100, TRUE)
+	playsound(owner.loc, 'sound/vehicles/rocketlaunch.ogg', 100, TRUE, FALSE, TRUE)
 	dragon.riftTimer = -1
 	new_rift.dragon = dragon
 	dragon.rift_list += new_rift
@@ -141,7 +141,7 @@
 		. += span_notice("It has [carp_stored] carp available to spawn as.")
 
 /obj/structure/carp_rift/play_attack_sound(damage_amount, damage_type = BRUTE, damage_flag = 0)
-	playsound(src, 'sound/magic/lightningshock.ogg', 50, TRUE)
+	playsound(src, 'sound/magic/lightningshock.ogg', 50, TRUE, FALSE, TRUE)
 
 /obj/structure/carp_rift/Destroy()
 	STOP_PROCESSING(SSobj, src)

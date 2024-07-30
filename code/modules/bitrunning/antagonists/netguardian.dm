@@ -71,7 +71,7 @@
 
 /mob/living/basic/netguardian/death(gibbed)
 	do_sparks(number = 3, cardinal_only = TRUE, source = src)
-	playsound(src, 'sound/mecha/weapdestr.ogg', 100)
+	playsound(src, 'sound/mecha/weapdestr.ogg', 100, FALSE, TRUE, TRUE)
 	return ..()
 
 /mob/living/basic/netguardian/update_overlays()
@@ -91,7 +91,7 @@
 
 /datum/action/cooldown/mob_cooldown/projectile_attack/rapid_fire/netguardian/Activate(atom/target_atom)
 	var/mob/living/player = owner
-	playsound(player, 'sound/mecha/skyfall_power_up.ogg', 120)
+	playsound(player, 'sound/mecha/skyfall_power_up.ogg', 120, FALSE, TRUE, TRUE)
 	player.say("target acquired.", "machine")
 
 	var/overlay_icon = 'icons/mob/nonhuman-player/netguardian.dmi'

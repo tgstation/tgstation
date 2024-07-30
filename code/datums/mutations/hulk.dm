@@ -207,7 +207,7 @@
 			continue
 
 		yeeted_person.adjustBruteLoss(step*0.5)
-		playsound(collateral_mob,'sound/weapons/punch1.ogg',50,TRUE)
+		playsound(collateral_mob,'sound/weapons/punch1.ogg',50,TRUE, TRUE, TRUE)
 		log_combat(the_hulk, collateral_mob, "has smacked with tail swing victim")
 		log_combat(the_hulk, yeeted_person, "has smacked this person into someone while tail swinging") // i have no idea how to better word this
 
@@ -248,7 +248,7 @@
 	yeeted_person.visible_message(span_danger("[the_hulk] throws [yeeted_person]!"), \
 					span_userdanger("You're thrown by [the_hulk]!"), span_hear("You hear aggressive shuffling and a loud thud!"), null, the_hulk)
 	to_chat(the_hulk, span_danger("You throw [yeeted_person]!"))
-	playsound(the_hulk.loc, SFX_SWING_HIT, 50, TRUE)
+	playsound(the_hulk.loc, SFX_SWING_HIT, 50, TRUE, TRUE, TRUE)
 	var/turf/T = get_edge_target_turf(the_hulk, the_hulk.dir)
 	if(!isturf(T))
 		return

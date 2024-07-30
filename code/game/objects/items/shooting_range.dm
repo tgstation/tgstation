@@ -84,4 +84,4 @@
 
 /obj/item/target/clown/bullet_act(obj/projectile/P)
 	. = ..()
-	playsound(src, 'sound/items/bikehorn.ogg', 50, TRUE)
+	playsound(src, 'sound/items/bikehorn.ogg', 50, TRUE, TRUE, TRUE)

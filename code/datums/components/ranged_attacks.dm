@@ -73,7 +73,7 @@
 		firer.fire_projectile(projectile_type, target, projectile_sound)
 		SEND_SIGNAL(parent, COMSIG_BASICMOB_POST_ATTACK_RANGED, target, modifiers)
 		return
-	playsound(firer, projectile_sound, 100, TRUE)
+	playsound(firer, projectile_sound, 100, TRUE, TRUE, TRUE)
 	var/turf/startloc = get_turf(firer)
 	var/obj/item/ammo_casing/casing = new casing_type(startloc)
 	var/target_zone

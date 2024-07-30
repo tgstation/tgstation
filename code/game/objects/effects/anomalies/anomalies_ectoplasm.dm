@@ -145,7 +145,7 @@
 
 	START_PROCESSING(SSobj, src)
 	INVOKE_ASYNC(src, PROC_REF(make_ghost_swarm), candidate_list)
-	playsound(src, pick(spooky_noises), 100, TRUE)
+	playsound(src, pick(spooky_noises), 100, TRUE, TRUE, TRUE)
 	QDEL_IN(WEAKREF(src), 2 MINUTES)
 
 /obj/structure/ghost_portal/process(seconds_per_tick)
@@ -155,9 +155,9 @@
 		playsound(src, pick(spooky_noises), 100)
 
 /obj/structure/ghost_portal/play_attack_sound(damage_amount, damage_type = BRUTE, damage_flag = 0)
-	playsound(loc, 'sound/effects/empulse.ogg', 75, TRUE)
+	playsound(loc, 'sound/effects/empulse.ogg', 75, TRUE, TRUE, TRUE)
 	if(prob(40))
-		playsound(src, pick(spooky_noises), 50)
+		playsound(src, pick(spooky_noises), 50, FALSE, TRUE, TRUE)
 
 /obj/structure/ghost_portal/Destroy()
 	. = ..()

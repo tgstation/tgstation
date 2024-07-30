@@ -75,7 +75,7 @@
 				if(2)
 					to_chat(affected_mob, span_boldwarning("There is no place for you in this timeline."))
 					affected_mob.adjustStaminaLoss(100, forced = TRUE)
-					playsound(affected_mob.loc, 'sound/magic/repulse.ogg', 100, FALSE)
+					playsound(affected_mob.loc, 'sound/magic/repulse.ogg', 100, FALSE, TRUE, TRUE)
 					affected_mob.emote("scream")
 					for(var/mob/living/viewers in viewers(3, affected_mob.loc))
 						viewers.flash_act()

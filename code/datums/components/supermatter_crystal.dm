@@ -56,7 +56,7 @@
 	var/atom/atom_source = source
 	if(!blob || isspaceturf(atom_source)) //does nothing in space
 		return
-	playsound(get_turf(atom_source), 'sound/effects/supermatter.ogg', 50, TRUE)
+	playsound(get_turf(atom_source), 'sound/effects/supermatter.ogg', 50, TRUE, FALSE, TRUE)
 	consume_returns(damage_increase = blob.get_integrity() * 0.05)
 	if(blob.get_integrity() > 100)
 		blob.visible_message(span_danger("\The [blob] strikes at \the [atom_source] and flinches away!"),
@@ -172,13 +172,13 @@
 			dust_arm.dismember()
 			user.visible_message(span_danger("The [item] flashes out of existence on contact with \the [atom_source], resonating with a horrible sound..."),\
 				span_danger("Oops! The [item] flashes out of existence on contact with \the [atom_source], taking your arm with it! That was clumsy of you!"))
-			playsound(atom_source, 'sound/effects/supermatter.ogg', 150, TRUE)
+			playsound(atom_source, 'sound/effects/supermatter.ogg', 150, TRUE, FALSE, TRUE)
 			consume(atom_source, dust_arm)
 			qdel(item)
 			return
 		if(cig.lit || user.combat_mode)
 			user.visible_message(span_danger("A hideous sound echoes as [item] is ashed out on contact with \the [atom_source]. That didn't seem like a good idea..."))
-			playsound(atom_source, 'sound/effects/supermatter.ogg', 150, TRUE)
+			playsound(atom_source, 'sound/effects/supermatter.ogg', 150, TRUE, FALSE, TRUE)
 			consume(atom_source, item)
 			radiation_pulse(atom_source, max_range = 3, threshold = 0.1, chance = 50)
 			return
@@ -186,7 +186,7 @@
 			cig.light()
 			user.visible_message(span_danger("As [user] lights \their [item] on \the [atom_source], silence fills the room..."),\
 				span_danger("Time seems to slow to a crawl as you touch \the [atom_source] with \the [item].</span>\n<span class='notice'>\The [item] flashes alight with an eerie energy as you nonchalantly lift your hand away from \the [atom_source]. Damn."))
-			playsound(atom_source, 'sound/effects/supermatter.ogg', 50, TRUE)
+			playsound(atom_source, 'sound/effects/supermatter.ogg', 50, TRUE, FALSE, TRUE)
 			radiation_pulse(atom_source, max_range = 1, threshold = 0, chance = 100)
 			return
 
@@ -196,7 +196,7 @@
 			span_hear("Everything suddenly goes silent."))
 		user.investigate_log("has been attacked ([item]) by [key_name(user)]", INVESTIGATE_ENGINE)
 		consume(atom_source, item)
-		playsound(get_turf(atom_source), 'sound/effects/supermatter.ogg', 50, TRUE)
+		playsound(get_turf(atom_source), 'sound/effects/supermatter.ogg', 50, TRUE, FALSE, TRUE)
 
 		radiation_pulse(atom_source, max_range = 3, threshold = 0.1, chance = 50)
 		return
@@ -235,7 +235,7 @@
 	else
 		return
 
-	playsound(get_turf(atom_source), 'sound/effects/supermatter.ogg', 50, TRUE)
+	playsound(get_turf(atom_source), 'sound/effects/supermatter.ogg', 50, TRUE, FALSE, TRUE)
 	consume(atom_source, hit_object)
 
 /datum/component/supermatter_crystal/proc/intercept_z_fall(datum/source, list/falling_movables, levels)
@@ -254,7 +254,7 @@
 
 	for(var/mob/living/poor_target in impacted_turf)
 		consume(atom_source, poor_target)
-		playsound(get_turf(atom_source), 'sound/effects/supermatter.ogg', 50, TRUE)
+		playsound(get_turf(atom_source), 'sound/effects/supermatter.ogg', 50, TRUE, FALSE, TRUE)
 		poor_target.visible_message(span_danger("\The [atom_source] slams into \the [poor_target] out of nowhere inducing a resonance... [poor_target.p_their()] body starts to glow and burst into flames before flashing into dust!"),
 			span_userdanger("\The [atom_source] slams into you out of nowhere as your ears are filled with unearthly ringing. Your last thought is \"The fuck.\""),
 			span_hear("You hear an unearthly noise as a wave of heat washes over you."))
@@ -267,7 +267,7 @@
 			continue
 
 		consume(atom_source, hit_object)
-		playsound(get_turf(atom_source), 'sound/effects/supermatter.ogg', 50, TRUE)
+		playsound(get_turf(atom_source), 'sound/effects/supermatter.ogg', 50, TRUE, FALSE, TRUE)
 		atom_source.visible_message(span_danger("\The [atom_source], smacks into the plating out of nowhere, reducing everything below to ash."), null,
 			span_hear("You hear a loud crack as you are washed with a wave of heat."))
 
@@ -284,7 +284,7 @@
 	nom.visible_message(vis_msg, mob_msg, span_hear("You hear an unearthly noise as a wave of heat washes over you."))
 	atom_source.investigate_log("has been attacked ([cause]) by [key_name(nom)]", INVESTIGATE_ENGINE)
 	add_memory_in_range(atom_source, 7, /datum/memory/witness_supermatter_dusting, protagonist = nom, antagonist = atom_source)
-	playsound(get_turf(atom_source), 'sound/effects/supermatter.ogg', 50, TRUE)
+	playsound(get_turf(atom_source), 'sound/effects/supermatter.ogg', 50, TRUE, FALSE, TRUE)
 	consume(atom_source, nom)
 
 /datum/component/supermatter_crystal/proc/consume(atom/source, atom/movable/consumed_object)
