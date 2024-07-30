@@ -149,7 +149,7 @@
 /obj/machinery/mecha_part_fabricator/emag_act(mob/user, obj/item/card/emag/emag_card)
 	if(obj_flags & EMAGGED)
 		return FALSE
-	if(!(user.job == JOB_ROBOTICIST || user.job == JOB_RESEARCH_DIRECTOR))
+	if(!HAS_TRAIT(user, TRAIT_KNOW_ROBO_WIRES))
 		to_chat(user, span_warning("You clicking and typing but don’t understand what to do with it"))
 		return FALSE
 	obj_flags |= EMAGGED
