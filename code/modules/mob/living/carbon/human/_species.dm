@@ -1037,7 +1037,12 @@ GLOBAL_LIST_EMPTY(features_by_species)
 	// In a brawl, drunkenness can make you swing more wildly and with more force, and thus catch your opponent off guard, but it could also totally throw you off if you're too intoxicated
 	// But god is it going to make you sick moving too much while drunk
 	var/user_drunkenness = user.get_drunk_amount()
-	if(user_drunkenness > 30 && user_drunkenness < 60)
+
+	if(user_drunkenness && HAS_TRAIT(user, TRAIT_DRUNKEN_BRAWLER)) // Drunken brawlers only need to be intoxicated, doesn't matter how much
+		limb_accuracy *= 1.2
+		damage *= 1.5
+
+	else if(user_drunkenness > 30 && user_drunkenness < 60)
 		limb_accuracy *= 1.2
 		user.adjust_disgust(2)
 
@@ -1067,8 +1072,11 @@ GLOBAL_LIST_EMPTY(features_by_species)
 	// In a brawl, drunkenness is a boon if you're a bit drunk but not too much. Else you're easier to hit.
 	// But, generally, getting hit while drunk is probably a good way to start throwing up
 	var/target_drunkenness = target.get_drunk_amount()
-	if(target_drunkenness > 30 && target_drunkenness < 60)
-		armor_block *= 2
+	if(user_drunkenness && HAS_TRAIT(user, TRAIT_DRUNKEN_BRAWLER)) // Drunken brawlers only need to be intoxicated, doesn't matter how much
+		armor_block += 20
+
+	else if(target_drunkenness > 30 && target_drunkenness < 60)
+		armor_block += 10
 		target.adjust_disgust(2)
 
 	else if(target_drunkenness >= 60)

@@ -12,6 +12,8 @@
 	outfit = /datum/outfit/job/bartender
 	plasmaman_outfit = /datum/outfit/plasmaman/bar
 
+	mind_traits = list(TRAIT_DRUNKEN_BRAWLER)
+
 	paycheck = PAYCHECK_CREW
 	paycheck_department = ACCOUNT_SRV
 	display_order = JOB_DISPLAY_ORDER_BARTENDER
