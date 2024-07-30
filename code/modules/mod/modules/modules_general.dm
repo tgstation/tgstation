@@ -952,6 +952,75 @@
 	balloon_alert(mod.wearer, "ammo box dispensed.")
 	playsound(src, 'sound/machines/microwave/microwave-end.ogg', 50, TRUE)
 
+/obj/item/mod/module/fishing_gloves
+	name = "MOD fishing glove module"
+	desc = "A MOD module that takes in an external fishing rod to enable the user to fish without having to hold one."
+	icon_state = "fishing_glove"
+	complexity = 1
+	overlay_state_inactive = "fishing_glove"
+	incompatible_modules = (/obj/item/mod/module/fishing_gloves)
+	required_slots = list(ITEM_SLOT_GLOVES)
+	var/obj/item/fishing_rod/equipped
+
+/obj/item/mod/module/fishing_gloves/Initialize(mapload)
+	. = ..()
+	register_context()
+
+/obj/item/mod/module/fishing_gloves/add_context(atom/source, list/context, obj/item/held_item, mob/user)
+	if(!held_item && equipped)
+		context[SCREENTIP_CONTEXT_RMB] = "Remove rod"
+		return CONTEXTUAL_SCREENTIP_SET
+	if(istype(held_item, /obj/item/fishing_rod))
+		context[SCREENTIP_CONTEXT_LMB] = "Insert rod"
+		return CONTEXTUAL_SCREENTIP_SET
+
+/obj/item/mod/module/fishing_gloves/examine(mob/user)
+	. = ..()
+	. += span_info("You can [EXAMINE_HINT("right-click")] the modsuit gloves to open the fishing rod interface once attached and activated.")
+	if(equipped)
+		. += span_info("it has a [icon2html(equipped, user)] installed. [EXAMINE_HINT("Right-Click")] to remove it.")
+
+/obj/item/mod/module/fishing_gloves/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if(!istype(tool, /obj/item/fishing_rod))
+		return ..()
+	if(equipped)
+		balloon_alert(user, "remove current rod first!")
+	if(!user.transferItemToLoc(tool, src))
+		user.balloon_alert(user, "it's stuck!")
+	equipped = tool
+	balloon_alert(user, "rod inserted")
+	playsound(src, 'sound/items/click.ogg', 50, TRUE)
+	return ITEM_INTERACT_SUCCESS
+
+/obj/item/mod/module/fishing_gloves/attack_hand_secondary(mob/user, list/modifiers)
+	. = ..()
+	if(. == SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN)
+		return
+	if(!equipped)
+		return
+	user.put_in_hands(equipped)
+	balloon_alert(user, "rod removed")
+	playsound(src, 'sound/items/click.ogg', 50, TRUE)
+
+/obj/item/mod/module/fishing_gloves/Exited(atom/movable/gone)
+	if(gone == equipped)
+		equipped = null
+		var/obj/item/gloves = mod?.get_part_from_slot(ITEM_SLOT_GLOVES)
+		if(gloves && !QDELETED(mod))
+			qdel(gloves.GetComponent(/datum/component/profound_fisher))
+
+/obj/item/mod/module/fishing_gloves/on_suit_activation()
+	if(!equipped)
+		return
+	var/obj/item/gloves = mod.get_part_from_slot(ITEM_SLOT_GLOVES)
+	if(gloves)
+		gloves.AddComponent(/datum/component/profound_fisher, equipped)
+
+/obj/item/mod/module/fishing_gloves/on_suit_deactivation(deleting = FALSE)
+	var/obj/item/gloves = mod.get_part_from_slot(ITEM_SLOT_GLOVES)
+	if(gloves && !deleting)
+		qdel(gloves.GetComponent(/datum/component/profound_fisher))
+
 /obj/item/mod/module/shock_absorber
 	name = "MOD shock absorption module"
 	desc = "A module that makes the user resistant to the knockdown inflicted by Stun Batons."

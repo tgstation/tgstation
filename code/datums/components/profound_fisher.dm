@@ -4,20 +4,28 @@
 	var/obj/item/fishing_rod/mob_fisher/our_rod
 
 /datum/component/profound_fisher/Initialize(our_rod)
-	var/isclothing = isclothing(parent)
-	if(!isliving(parent) && !isclothing)
+	var/isgloves = istype(parent, /obj/item/clothing/gloves)
+	if(!isliving(parent) && !isgloves)
 		return COMPONENT_INCOMPATIBLE
 	src.our_rod = our_rod || new(parent)
-	src.our_rod.display_fishing_line = FALSE
+	src.our_rod.internal = TRUE
 	RegisterSignal(src.our_rod, COMSIG_QDELETING, PROC_REF(on_rod_qdel))
 
-	if(!isclothing)
+	if(!isgloves)
 		RegisterSignal(parent, COMSIG_HOSTILE_PRE_ATTACKINGTARGET, PROC_REF(pre_attack))
 	else
-		RegisterSignal(parent, COMSIG_ITEM_EQUIPPED, PROC_REF(on_equip))
-		RegisterSignal(parent, COMSIG_ITEM_DROPPED, PROC_REF(on_drop))
-		RegisterSignal(parent, COMSIG_ATOM_ATTACK_HAND_SECONDARY, PROC_REF(open_rod_menu))
-		RegisterSignal(parent, COMSIG_ATOM_EXAMINE, PROC_REF(on_examine))
+		var/obj/item/clothing/gloves = parent
+		RegisterSignal(gloves, COMSIG_ITEM_EQUIPPED, PROC_REF(on_equip))
+		RegisterSignal(gloves, COMSIG_ITEM_DROPPED, PROC_REF(on_drop))
+		RegisterSignal(gloves, COMSIG_ATOM_ATTACK_HAND_SECONDARY, PROC_REF(open_rod_menu))
+		RegisterSignal(gloves, COMSIG_ATOM_EXAMINE, PROC_REF(on_examine))
+		gloves.flags_1 |= HAS_CONTEXTUAL_SCREENTIPS_1
+		RegisterSignal(gloves, COMSIG_ATOM_REQUESTING_CONTEXT_FROM_ITEM, PROC_REF(on_requesting_context_from_item))
+
+/datum/component/profound_fisher/proc/on_requesting_context_from_item(datum/source, list/context, obj/item/held_item, mob/living/user)
+	SIGNAL_HANDLER
+	if(isnull(held_item))
+		context[SCREENTIP_CONTEXT_RMB] = "Open rod UI"
 
 /datum/component/profound_fisher/proc/on_examine(datum/source, mob/user, list/examine_list)
 	SIGNAL_HANDLER
@@ -31,14 +39,14 @@
 	if(!QDELETED(our_rod) && istype(our_rod, /obj/item/fishing_rod/mob_fisher))
 		QDEL_NULL(our_rod)
 	else
-		our_rod.display_fishing_line = TRUE
+		our_rod.internal = FALSE
 		UnregisterSignal(our_rod, COMSIG_QDELETING)
 		our_rod = null
 	return ..()
 
 /datum/component/profound_fisher/proc/on_equip(obj/item/source, atom/equipper, slot)
 	SIGNAL_HANDLER
-	if(!(source.slot_flags & slot))
+	if(slot != ITEM_SLOT_GLOVES)
 		return
 	RegisterSignal(equipper, COMSIG_LIVING_UNARMED_ATTACK, PROC_REF(on_unarmed_attack))
 
@@ -83,7 +91,7 @@
 
 /datum/component/profound_fisher/proc/actually_fishing_with_internal_rod(datum/source)
 	SIGNAL_HANDLER
-	ADD_TRAIT(source, TRAIT_PROFOUND_FISHER, TRAIT_GENERIC)
+	ADD_TRAIT(source, TRAIT_PROFOUND_FISHER, REF(parent))
 	RegisterSignal(source, SIGNAL_REMOVETRAIT(TRAIT_GONE_FISHING), PROC_REF(remove_profound_fisher))
 
 /datum/component/profound_fisher/proc/remove_profound_fisher(datum/source)
@@ -113,14 +121,6 @@
 	qdel(lure)
 
 /obj/item/fishing_rod/mob_fisher
-	display_fishing_line = FALSE
 	line = /obj/item/fishing_line/reinforced
 	bait = /obj/item/food/bait/doughball/synthetic/unconsumable
-
-/obj/item/fishing_rod/mob_fisher/Initialize(mapload)
-	. = ..()
-	ui_description = "The integrated fishing rod of [loc]"
-
-/obj/item/fishing_rod/mob_fisher/unslotted
-	line = null
-	bait = null
+	resistance_flags = INDESTRUCTIBLE

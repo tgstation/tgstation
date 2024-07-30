@@ -249,18 +249,18 @@
 
 /datum/fishing_challenge/proc/start(mob/living/user)
 	/// Create fishing line visuals
-	if(used_rod.display_fishing_line)
-		fishing_line = used_rod.create_fishing_line(lure, user, target_py = 4)
+	if(!used_rod.internal)
+		fishing_line = used_rod.create_fishing_line(lure, user, target_py = 5)
 		RegisterSignal(fishing_line, COMSIG_QDELETING, PROC_REF(on_line_deleted))
 	else //if the rod doesnt have a fishing line, then it ends when they move away
 		RegisterSignal(user, COMSIG_MOVABLE_MOVED, PROC_REF(on_lure_or_user_move))
 		RegisterSignal(lure, COMSIG_MOVABLE_MOVED, PROC_REF(on_lure_or_user_move))
+		RegisterSignal(user, SIGNAL_ADDTRAIT(TRAIT_HANDS_BLOCKED), PROC_REF(on_hands_blocked))
 	active_effects = bitfield_to_list(special_effects & FISHING_MINIGAME_ACTIVE_EFFECTS)
 	// If fishing line breaks los / rod gets dropped / deleted
 	RegisterSignal(used_rod, COMSIG_ITEM_ATTACK_SELF, PROC_REF(on_attack_self))
-	ADD_TRAIT(user, TRAIT_GONE_FISHING, TRAIT_GENERIC)
+	ADD_TRAIT(user, TRAIT_GONE_FISHING, WEAKREF(src))
 	RegisterSignal(user, SIGNAL_REMOVETRAIT(TRAIT_GONE_FISHING), PROC_REF(no_longer_fishing))
-	RegisterSignal(user, SIGNAL_ADDTRAIT(TRAIT_HANDS_BLOCKED), PROC_REF(on_hands_blocked))
 	user.add_mood_event("fishing", /datum/mood_event/fishing)
 	RegisterSignal(user, COMSIG_MOB_CLICKON, PROC_REF(handle_click))
 	start_baiting_phase()
@@ -295,9 +295,12 @@
 
 /datum/fishing_challenge/proc/handle_click(mob/source, atom/target, modifiers)
 	SIGNAL_HANDLER
-	//You need to be holding the rod to use it.
+	if(HAS_TRAIT(source, TRAIT_HANDS_BLOCKED)) //blocked, can't do stuff
+		return
+	//Doing other stuff
 	if(LAZYACCESS(modifiers, SHIFT_CLICK) || LAZYACCESS(modifiers, CTRL_CLICK) || LAZYACCESS(modifiers, ALT_CLICK))
 		return
+	//You need to be actively holding on the fishing rod to use it, unless you've the profound_fisher trait.
 	if(!HAS_TRAIT(source, TRAIT_PROFOUND_FISHER) && source.get_active_held_item() != used_rod)
 		return
 	if(phase == WAIT_PHASE)
@@ -332,7 +335,7 @@
 		remove_minigame_hud()
 	if(!QDELETED(user))
 		UnregisterSignal(user, SIGNAL_REMOVETRAIT(TRAIT_GONE_FISHING))
-		REMOVE_TRAIT(user, TRAIT_GONE_FISHING, TRAIT_GENERIC)
+		user.remove_traits(list(TRAIT_GONE_FISHING, TRAIT_ACTIVELY_FISHING), WEAKREF(src))
 		if(start_time)
 			var/seconds_spent = (world.time - start_time) * 0.1
 			if(!(special_effects & FISHING_MINIGAME_RULE_NO_EXP))
@@ -433,6 +436,7 @@
 				completion *= 1.4
 	if(!prepare_minigame_hud())
 		return
+	ADD_TRAIT(user, TRAIT_ACTIVELY_FISHING, WEAKREF(src))
 	phase = MINIGAME_PHASE
 	deltimer(next_phase_timer)
 	if((FISHING_MINIGAME_RULE_KILL in special_effects) && ispath(reward_path,/obj/item/fish))

@@ -36,8 +36,8 @@
 	/// The default color for the reel overlay if no line is equipped.
 	var/default_line_color = "gray"
 
-	///should there be a fishing line?
-	var/display_fishing_line = TRUE
+	///Is this currently being used by the profound fisher component?
+	var/internal = FALSE
 
 	///The name of the icon state of the reel overlay
 	var/reel_overlay = "reel_overlay"
@@ -147,21 +147,18 @@
 	ui_interact(user)
 
 /// Generates the fishing line visual from the current user to the target and updates inhands
-/obj/item/fishing_rod/proc/create_fishing_line(atom/movable/target, atom/movable/firer, target_py = null)
-	if(!display_fishing_line)
-		return null
-	var/mob/user = loc
-	if(!istype(user))
+/obj/item/fishing_rod/proc/create_fishing_line(atom/movable/target, mob/living/firer, target_py = null)
+	if(internal)
 		return null
 	if(fishing_line)
 		QDEL_NULL(fishing_line)
 	var/beam_color = line?.line_color || default_line_color
-	fishing_line = new(user, target, icon_state = "fishing_line", beam_color = beam_color,  emissive = FALSE, override_target_pixel_y = target_py)
-	fishing_line.lefthand = user.get_held_index_of_item(src) % 2 == 1
+	fishing_line = new(firer, target, icon_state = "fishing_line", beam_color = beam_color, emissive = FALSE, override_target_pixel_y = target_py)
+	fishing_line.lefthand = firer.get_held_index_of_item(src) % 2 == 1
 	RegisterSignal(fishing_line, COMSIG_BEAM_BEFORE_DRAW, PROC_REF(check_los))
 	RegisterSignal(fishing_line, COMSIG_QDELETING, PROC_REF(clear_line))
 	INVOKE_ASYNC(fishing_line, TYPE_PROC_REF(/datum/beam/, Start))
-	user.update_held_items()
+	firer.update_held_items()
 	return fishing_line
 
 /obj/item/fishing_rod/proc/clear_line(datum/source)
@@ -197,8 +194,8 @@
 		return BEAM_CANCEL_DRAW
 
 /obj/item/fishing_rod/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
-	//this stops telekinesis (which would be broken anyway) but allows the profound fisher component to work.
-	if(!user.contains(src) && !isnull(loc))
+	//this prevent trying to use telekinesis to fish (which would be broken anyway)
+	if(!user.contains(src))
 		return ..()
 	return ranged_interact_with_atom(interacting_with, user, modifiers)
 
@@ -217,9 +214,6 @@
 	return ITEM_INTERACT_SUCCESS
 
 /obj/item/fishing_rod/interact_with_atom_secondary(atom/interacting_with, mob/living/user, list/modifiers)
-	//this stops telekinesis (which would be broken anyway) but allows the profound fisher component to work.
-	if(!user.contains(src) && !isnull(loc))
-		return ..()
 	return ranged_interact_with_atom_secondary(interacting_with, user, modifiers)
 
 /obj/item/fishing_rod/ranged_interact_with_atom_secondary(atom/interacting_with, mob/living/user, list/modifiers)
@@ -251,9 +245,8 @@
 	COOLDOWN_START(src, casting_cd, 1 SECONDS)
 
 /// Called by hook projectile when hitting things
-/obj/item/fishing_rod/proc/hook_hit(atom/atom_hit_by_hook_projectile)
-	var/mob/user = loc
-	if(!hook || !istype(user))
+/obj/item/fishing_rod/proc/hook_hit(atom/atom_hit_by_hook_projectile, mob/user)
+	if(!hook)
 		return
 	if(SEND_SIGNAL(atom_hit_by_hook_projectile, COMSIG_FISHING_ROD_CAST, src, user) & FISHING_ROD_CAST_HANDLED)
 		return
@@ -599,7 +592,7 @@
 	. = ..()
 	if(blocked < 100)
 		QDEL_NULL(our_line) //we need to delete the old beam datum, otherwise it won't let you fish.
-		owner.hook_hit(target)
+		owner.hook_hit(target, firer)
 
 /obj/projectile/fishing_cast/fire(angle, atom/direct_target)
 	. = ..()
