@@ -1,0 +1,4 @@
+author: "Sadboysuss"
+delete-after: True
+changes:
+  - bugfix: "rod sounds will now vary in pitch"
