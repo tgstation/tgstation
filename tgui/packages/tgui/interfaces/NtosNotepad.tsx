@@ -239,7 +239,7 @@ interface NotePadTextAreaProps {
   maintainFocus: boolean;
   text: string;
   wordWrap: boolean;
-  setText: (string) => void;
+  setText: (text: string) => void;
   setStatuses: (statuses: Statuses) => void;
 }
 
