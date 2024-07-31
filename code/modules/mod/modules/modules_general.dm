@@ -286,7 +286,6 @@
 	icon_state = "apparatus"
 	complexity = 1
 	incompatible_modules = list(/obj/item/mod/module/mouthhole)
-	overlay_state_inactive = "module_apparatus"
 	required_slots = list(ITEM_SLOT_HEAD|ITEM_SLOT_MASK)
 	/// Former flags of the helmet.
 	var/former_helmet_flags = NONE
