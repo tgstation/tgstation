@@ -114,7 +114,7 @@ export const BlackMarketUplink = (props) => {
                         <Stack.Item>
                           <Image
                             m={1}
-                            src={`data:image/jpeg;base64,${data.loaded_icon}`}
+                            src={`data:image/jpeg;base64,${item.html_icon}`}
                             height="64px"
                             width="64px"
                           />
