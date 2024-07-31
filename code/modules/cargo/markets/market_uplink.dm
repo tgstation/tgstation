@@ -75,7 +75,7 @@
 			var/list/market_category = market.available_items[viewing_category]
 			for(var/id in market_category)
 				var/datum/market_item/item = market_category[id]
-				data += list(list(
+				data["items"] += list(list(
 					"id" = id,
 					"name" = item.name,
 					"cost" = item.price,

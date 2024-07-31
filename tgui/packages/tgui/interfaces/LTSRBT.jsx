@@ -20,6 +20,7 @@ export const LTSRBT = (props) => {
         <Stack vertical fill>
           <Stack.Item>
             <Input
+              inline
               width="80%"
               value={data.name}
               placeholder="Insert a name"
@@ -30,12 +31,13 @@ export const LTSRBT = (props) => {
               }
             />
             <NumberInput
+              inline
               width="20%"
               value={data.price}
               minValue={data.min_price}
               maxValue={data.max_price}
               unit="cr"
-              onChange={(e, value) =>
+              onChange={(value) =>
                 act('change_price', {
                   value: value,
                 })
@@ -58,7 +60,7 @@ export const LTSRBT = (props) => {
           <Stack.Divider />
           <Stack.Item grow>
             <TextArea
-              height="40%"
+              height="90%"
               value={data.desc}
               placeholder="Insert a description (or don't)"
               onChange={(e, value) =>
