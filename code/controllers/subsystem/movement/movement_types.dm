@@ -913,6 +913,7 @@
 	saved_delay = delay
 
 /datum/move_loop/smooth_move/set_delay(new_delay)
+	new_delay = round(new_delay, world.tick_lag)
 	. = ..()
 	saved_delay = delay
 
