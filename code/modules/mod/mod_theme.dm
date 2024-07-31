@@ -533,7 +533,7 @@
 		),
 	)
 
-/datum/mod_theme/loader/New()
+/datum/mod_theme/mining/New()
 	.=..()
 	allowed_suit_storage = GLOB.mining_suit_allowed
 
