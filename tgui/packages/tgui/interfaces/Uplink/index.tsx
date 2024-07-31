@@ -8,6 +8,7 @@ import {
   Button,
   Dimmer,
   NoticeBox,
+  Section,
   Stack,
   Tabs,
   Tooltip,
@@ -286,50 +287,9 @@ export class Uplink extends Component<{}, UplinkState> {
           <Stack fill vertical>
             {!!has_progression && (
               <Stack.Item>
-                <Stack fill>
-                  <Stack.Item grow={1}>
-                    <Tabs fluid textAlign="center">
-                      {!!has_objectives && (
-                        <>
-                          <Tabs.Tab
-                            style={{
-                              overflow: 'hidden',
-                              whiteSpace: 'nowrap',
-                              textOverflow: 'ellipsis',
-                            }}
-                            selected={currentTab === 0}
-                            onClick={() => this.setState({ currentTab: 0 })}
-                          >
-                            Primary Objectives
-                          </Tabs.Tab>
-                          <Tabs.Tab
-                            style={{
-                              overflow: 'hidden',
-                              whiteSpace: 'nowrap',
-                              textOverflow: 'ellipsis',
-                            }}
-                            selected={currentTab === 1}
-                            onClick={() => this.setState({ currentTab: 1 })}
-                          >
-                            Secondary Objectives
-                          </Tabs.Tab>
-                        </>
-                      )}
-                      <Tabs.Tab
-                        style={{
-                          overflow: 'hidden',
-                          whiteSpace: 'nowrap',
-                          textOverflow: 'ellipsis',
-                        }}
-                        selected={currentTab === 2 || !has_objectives}
-                        onClick={() => this.setState({ currentTab: 2 })}
-                      >
-                        Market
-                      </Tabs.Tab>
-                    </Tabs>
-                  </Stack.Item>
-                  <Stack.Item>
-                    <Box bold>
+                <Section fitted>
+                  <Stack fill>
+                    <Stack.Item p="4px">
                       <Tooltip
                         content={
                           (!!has_progression && (
@@ -389,23 +349,67 @@ export class Uplink extends Component<{}, UplinkState> {
                           ? calculateDangerLevel(progression_points, false)
                           : calculateDangerLevel(dangerDefault, false)}
                       </Tooltip>
-                    </Box>
-                  </Stack.Item>
-                  {!!lockable && (
-                    <Stack.Item>
-                      <Button
-                        lineHeight={2.5}
-                        textAlign="center"
-                        icon="lock"
-                        width={10}
-                        bold
-                        onClick={() => act('lock')}
-                      >
-                        LOCK
-                      </Button>
                     </Stack.Item>
-                  )}
-                </Stack>
+
+                    <Stack.Item grow={1}>
+                      <Tabs fluid textAlign="center">
+                        {!!has_objectives && (
+                          <>
+                            <Tabs.Tab
+                              style={{
+                                overflow: 'hidden',
+                                whiteSpace: 'nowrap',
+                                textOverflow: 'ellipsis',
+                              }}
+                              selected={currentTab === 0}
+                              onClick={() => this.setState({ currentTab: 0 })}
+                            >
+                              Primary Objectives
+                            </Tabs.Tab>
+                            <Tabs.Tab
+                              style={{
+                                overflow: 'hidden',
+                                whiteSpace: 'nowrap',
+                                textOverflow: 'ellipsis',
+                              }}
+                              selected={currentTab === 1}
+                              onClick={() => this.setState({ currentTab: 1 })}
+                            >
+                              Secondary Objectives
+                            </Tabs.Tab>
+                          </>
+                        )}
+                        <Tabs.Tab
+                          style={{
+                            overflow: 'hidden',
+                            whiteSpace: 'nowrap',
+                            textOverflow: 'ellipsis',
+                          }}
+                          selected={currentTab === 2 || !has_objectives}
+                          onClick={() => this.setState({ currentTab: 2 })}
+                        >
+                          Market
+                        </Tabs.Tab>
+                      </Tabs>
+                    </Stack.Item>
+
+                    {!!lockable && (
+                      <Stack.Item>
+                        <Button
+                          lineHeight={2.5}
+                          textAlign="center"
+                          icon="lock"
+                          color="transparent"
+                          px={2}
+                          tooltip="Lock"
+                          onClick={() => act('lock')}
+                        >
+                          Lock
+                        </Button>
+                      </Stack.Item>
+                    )}
+                  </Stack>
+                </Section>
               </Stack.Item>
             )}
             <Stack.Item grow>
