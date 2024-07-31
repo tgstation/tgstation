@@ -499,3 +499,12 @@
 	skill_icon = FA_ICON_DRUMSTICK_BITE
 	activate_message = span_notice("You think of your favourite food and realise that you can rotate its flavour in your mind.")
 	deactivate_message = span_notice("You feel your food-based mind palace crumbling...")
+
+/obj/item/skillchip/drunken_brawler
+	name = "F0RC3 4DD1CT10N skillchip"
+	auto_traits = list(TRAIT_DRUNKEN_BRAWLER)
+	skill_name = "Drunken Unarmed Proficiency"
+	skill_description = "When intoxicated, you gain increased unarmed effectiveness."
+	skill_icon = "wine-bottle"
+	activate_message = span_notice("You can honestly could do with a drink. Never know when someone might try and jump you.")
+	deactivate_message = span_notice("You suddenly feel a lot safer going around the station sober...")

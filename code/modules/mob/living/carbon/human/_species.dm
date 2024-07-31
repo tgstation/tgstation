@@ -1072,7 +1072,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
 	// In a brawl, drunkenness is a boon if you're a bit drunk but not too much. Else you're easier to hit.
 	// But, generally, getting hit while drunk is probably a good way to start throwing up
 	var/target_drunkenness = target.get_drunk_amount()
-	if(user_drunkenness && HAS_TRAIT(user, TRAIT_DRUNKEN_BRAWLER)) // Drunken brawlers only need to be intoxicated, doesn't matter how much
+	if(target_drunkenness && HAS_TRAIT(target, TRAIT_DRUNKEN_BRAWLER)) // Drunken brawlers only need to be intoxicated, doesn't matter how much
 		armor_block += 20
 
 	else if(target_drunkenness > 30 && target_drunkenness < 60)

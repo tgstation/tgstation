@@ -12,8 +12,6 @@
 	outfit = /datum/outfit/job/bartender
 	plasmaman_outfit = /datum/outfit/plasmaman/bar
 
-	mind_traits = list(TRAIT_DRUNKEN_BRAWLER)
-
 	paycheck = PAYCHECK_CREW
 	paycheck_department = ACCOUNT_SRV
 	display_order = JOB_DISPLAY_ORDER_BARTENDER
@@ -60,6 +58,8 @@
 	ears = /obj/item/radio/headset/headset_srv
 	glasses = /obj/item/clothing/glasses/sunglasses/reagent
 	shoes = /obj/item/clothing/shoes/laceup
+
+	skillchips = list(/obj/item/skillchip/drunken_brawler)
 
 /datum/outfit/job/bartender/post_equip(mob/living/carbon/human/H, visualsOnly)
 	. = ..()
