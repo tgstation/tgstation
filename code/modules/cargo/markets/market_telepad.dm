@@ -40,12 +40,12 @@
 	var/datum/market_purchase/transmitting
 	/// Queue for purchases that the machine should receive and send.
 	var/list/datum/market_purchase/queue = list()
-	var/open = FALSE
-	var/obj/item/loaded
+	/// The name of the market item that we've set on the UI
 	var/current_name = ""
+	/// The desc of the market item that we've set on the UI
 	var/current_desc = ""
+	/// The price of the market item that we've set on the UI
 	var/current_price = CARGO_CRATE_VALUE
-	var/placed_on_market_recently = FALSE
 	/**
 	 * Attacking the machinery with enough credits will restock the markets, allowing for more/better items.
 	 * The cost doubles each time this is done.
@@ -63,24 +63,29 @@
 	SSmarket.telepads -= src
 	// Bye bye orders.
 	if(length(SSmarket.telepads))
-		for(var/datum/market_purchase/P in queue)
-			SSmarket.queue_item(P)
-	. = ..()
+		for(var/datum/market_purchase/purchase in queue)
+			SSmarket.queue_item(purchase)
+	if(receiving)
+		SSmarket.queue_item(receiving)
+	queue = null
+	receiving = null
+	trasmitting = null
+	return ..()
 
 /obj/machinery/ltsrbt/add_context(atom/source, list/context, obj/item/held_item, mob/user)
 	if(held_item)
-		if(open)
+		if(state_open)
 			context[SCREENTIP_CONTEXT_LMB] = "Insert"
 			return CONTEXTUAL_SCREENTIP_SET
 		if(held_item.get_item_credit_value() && !(machine_stat & NOPOWER))
 			context[SCREENTIP_CONTEXT_LMB] = "Restock"
 			return CONTEXTUAL_SCREENTIP_SET
 		return NONE
-	if(open)
+	if(state_open)
 		context[SCREENTIP_CONTEXT_LMB] = "Close"
 		return CONTEXTUAL_SCREENTIP_SET
 	context[SCREENTIP_CONTEXT_LMB] = "Open"
-	if(loaded && !(machine_stat & NOPOWER))
+	if(occupant && !(machine_stat & NOPOWER))
 		context[SCREENTIP_CONTEXT_RMB] = "Place on market"
 	return CONTEXTUAL_SCREENTIP_SET
 
@@ -97,62 +102,58 @@
 	if(machine_stat & NOPOWER)
 		icon_state = "[base_icon_state]_off"
 	else
-		icon_state = "[base_icon_state][(receiving || length(queue) || placed_on_market_recently) ? "" : "_idle"]"
+		icon_state = "[base_icon_state][(receiving || length(queue) || occupant) ? "" : "_idle"]"
 
 /obj/machinery/ltsrbt/update_overlays()
 	. = ..()
-	if(!open)
+	if(!state_open)
 		. += "[base_icon_state]_closed"
 	else
 		var/mutable_appearance/overlay = mutable_appearance(icon, "[base_icon_state]_open")
 		overlay.pixel_y -= 2
 		. += overlay
 
-/obj/machinery/ltsrbt/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
-	if(!open)
-		if(!user.combat_mode)
-			balloon_alert("open the machine!")
-			return ITEM_INTERACT_BLOCKING
-		return NONE
-	if(locate(/mob/living) in tool.get_all_contents())
-		say("Living being detected, cannot sell!")
-		playsound(src, 'sound/machines/buzz-sigh.ogg', 40, FALSE)
-		return ITEM_INTERACT_BLOCKING
-	if(!user.transferItemToLoc(tool, src))
-		balloon_alert("stuck to your hands!")
-		return ITEM_INTERACT_BLOCKING
-	balloon_alert("item loaded.")
-	loaded = tool
-	open = FALSE
-	playsound(src, 'sound/machines/oven/oven_close.ogg', 75, TRUE)
-
 /obj/machinery/ltsrbt/attack_hand(mob/user, list/modifiers)
 	. = ..()
-	if(. || !open)
+	if(.)
 		return
-	open = !open
-	if(open && loaded)
-		loaded.forceMove(drop_location())
-		current_name = loaded.name
-		current_desc = loaded.desc
+	if(!state_open)
+		open_machine(density_to_set = TRUE)
+	else
+		close_machine()
+
+/obj/machinery/ltsrbt/open_machine(drop = TRUE, density_to_set = FALSE)
+	. = ..()
 	playsound(src, 'sound/machines/oven/oven_open.ogg', 75, TRUE)
-	update_appearance()
+
+/obj/machinery/ltsrbt/close_machine(atom/movable/target, density_to_set = TRUE)
+	. = ..()
+	playsound(src, 'sound/machines/oven/oven_close.ogg', 75, TRUE)
+
+/obj/machinery/ltsrbt/set_occupant(obj/item/new_occupant)
+	. = ..()
+	if(new_occupant)
+		current_name = new_occupant.name
+		current_desc = new_occupant.desc ||
+
+/obj/machinery/ltsrbt/can_be_occupant(atom/movable/atom)
+	return isitem(atom) && !atom.anchored
 
 /obj/machinery/ltsrbt/Exited(atom/movable/gone)
-	if(gone == loaded)
-		loaded = null
+	if(gone == occupant)
 		current_price = initial(current_price)
 		current_name = ""
 		current_desc = ""
+		update_appearance(UPDATE_ICON_STATE)
 	return ..()
 
 /obj/machinery/ltsrbt/attack_hand_secondary(mob/user, list/modifiers)
 	. = ..()
 	if(. == SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN)
 		return
-	if(open)
+	if(state_open)
 		balloon_alert(user, "close it first!")
-	if(!loaded)
+	if(!occupant)
 		balloon_alert(user, "nothing loaded!")
 		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 	if(machine_stat & NOPOWER)
@@ -164,6 +165,48 @@
 	ui_interact(user)
 	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
+/obj/machinery/ltsrbt/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if(user.combat_mode)
+		return NONE
+
+	var/creds_value = tool.get_item_credit_value()
+
+	if(state_open)
+		if(locate(/mob/living) in tool.get_all_contents())
+			say("Living being detected, cannot sell!")
+			playsound(src, 'sound/machines/buzz-sigh.ogg', 40, FALSE)
+			return ITEM_INTERACT_BLOCKING
+		if(!user.transferItemToLoc(tool, src))
+			balloon_alert("stuck to your hands!")
+			return ITEM_INTERACT_BLOCKING
+		balloon_alert("item loaded.")
+		close_machine(tool)
+		return ITEM_INTERACT_SUCCESS
+	else if(!creds_value)
+		balloon_alert("open the machine!")
+		return ITEM_INTERACT_BLOCKING
+
+	if(machine_stat & NOPOWER)
+		return
+
+	if(creds_value < restock_cost)
+		say("Insufficient credits!")
+		playsound(src, 'sound/machines/buzz-sigh.ogg', 40, FALSE)
+		return ITEM_INTERACT_BLOCKING
+
+	if(istype(tool, /obj/item/holochip))
+		var/obj/item/holochip/chip = tool
+		chip.spend(restock_cost)
+	else
+		qdel(tool)
+		if(creds_value != restock_cost)
+			var/obj/item/holochip/change = new(creds_value - restock_cost)
+			user.put_in_hands(change)
+
+	SSmarket.restock()
+	restock_cost *= 2
+	return ITEM_INTERACT_SUCCESS
+
 /obj/machinery/ltsrbt/ui_interact(mob/user, datum/tgui/ui)
 	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
@@ -171,7 +214,7 @@
 		ui.open()
 
 /obj/machinery/ltsrbt/ui_state()
-	if(!loaded || !COOLDOWN_FINISHED(src, recharge_cooldown))
+	if(!occupant || !COOLDOWN_FINISHED(src, recharge_cooldown))
 		return GLOB.never_state //close it.
 	else
 		return GLOB.default_state
@@ -181,19 +224,17 @@
 
 /obj/machinery/ltsrbt/ui_static_data(mob/user)
 	var/list/data = list()
-	if(!loaded || !COOLDOWN_FINISHED(src, recharge_cooldown))
-		return data
-	data["loaded_icon"] = icon2base64(getFlatIcon(loaded, no_anim=TRUE))
+	data["loaded_icon"] = icon2base64(getFlatIcon(occupant, no_anim=TRUE))
 	data["min_price"] = LTSRBT_MIN_PRICE
 	data["max_price"] = LTSRBT_MAX_PRICE
+	return data
 
 /obj/machinery/ltsrbt/ui_data(mob/user)
 	var/list/data = list()
-	if(!loaded || !COOLDOWN_FINISHED(src, recharge_cooldown))
-		return data
 	data["name"] = current_name
 	data["price"] = current_price
 	data["desc"] = current_desc
+	return data
 
 /obj/machinery/ltsrbt/ui_act(action, list/params)
 	. = ..()
@@ -213,7 +254,7 @@
 			current_desc = trim(value, MAX_DESC_LEN)
 			return TRUE
 		if("change_price")
-			current_desc = clamp(params["value"], LTSRBT_MIN_PRICE, LTSRBT_MAX_PRICE)
+			current_price = clamp(params["value"], LTSRBT_MIN_PRICE, LTSRBT_MAX_PRICE)
 			return TRUE
 		if("place_on_market")
 			place_on_market(usr)
@@ -224,9 +265,9 @@
 
 #define LTSRBT_MAX_MARKET_ITEMS 40
 /obj/machinery/ltsrbt/proc/place_on_market(mob/user)
-	if(QDELETED(loaded))
+	if(QDELETED(occupant))
 		return
-	if(locate(/mob/living) in loaded.get_all_contents())
+	if(locate(/mob/living) in occupant.get_all_contents())
 		say("Living being detected, cannot sell!")
 		playsound(src, 'sound/machines/buzz-sigh.ogg', 40, FALSE)
 		return
@@ -245,23 +286,23 @@
 			say("No bank account to charge market fees detected!")
 			playsound(src, 'sound/machines/buzz-sigh.ogg', 40, FALSE)
 			return
-		if(!card.registered_account.adjust_money(PLACE_ON_MARKET_COST, "Market: Placement Fee"))
+		if(!card.registered_account.adjust_money(-PLACE_ON_MARKET_COST, "Market: Placement Fee"))
 			say("Insufficient credits!")
 			playsound(src, 'sound/machines/buzz-sigh.ogg', 40, FALSE)
 			return
 		account = card.registered_account
 
-	loaded.moveToNullspace()
+	var/obj/item/item = occupant //occupant is null'd once it exits the machine so we need this.
+	item.moveToNullspace()
 	//Something happened and the item was deleted or relocated as soon as it was moved to nullspace.
-	if(QDELETED(loaded) || loaded.loc != null)
-		say("Runtime at market_placement.dm, line 153: loaded item gone!") //metajoke
+	if(QDELETED(item) || item.loc != null)
+		say("Runtime at market_placement.dm, line 153: item gone!") //metajoke
 		return
-	var/datum/market_item/local_good/new_item = new(loaded, account)
-	new_item.name = current_name
-	var/item_desc = current_desc
+	var/datum/market_item/local_good/new_item = new(item, account)
+	new_item.name = current_name || item.name
+	new_item.desc = current_desc
 	if(account)
-		item_desc += "[item_desc ? " - " : ""]Seller: [account.account_holder]"
-	new_item.desc = item_desc
+		new_item.desc += "[current_desc ? " - " : ""]Seller: [account.account_holder]"
 	new_item.price = current_price
 
 	our_market.add_item(new_item)
@@ -269,9 +310,6 @@
 	say("Item placed on the market!")
 	playsound(src, 'sound/effects/cashregister.ogg', 40, FALSE)
 	COOLDOWN_START(src, recharge_cooldown, recharge_time * 3)
-	placed_on_market_recently = TRUE
-	update_appearance()
-	addtimer(CALLBACK(src, TYPE_PROC_REF(/atom, update_appearance)), recharge_time * 3 + 0.1 SECONDS)
 
 #undef LTSRBT_MAX_MARKET_ITEMS
 
@@ -313,7 +351,7 @@
 	if(machine_stat & NOPOWER)
 		return
 
-	if(!COOLDOWN_FINISHED(src, recharge_cooldown) && isnull(receiving) && isnull(transmitting))
+	if(!COOLDOWN_FINISHED(src, recharge_cooldown) || (isnull(receiving) && isnull(transmitting)))
 		return
 
 	var/turf/turf = get_turf(src)
@@ -331,43 +369,16 @@
 		transmitting = receiving
 		receiving = null
 
-		COOLDOWN_START(src, recharge_cooldown, recharge_time)
 		return
 	if(transmitting)
 		if(transmitting.item.loc == turf)
 			do_teleport(transmitting.item, get_turf(transmitting.uplink))
 			use_energy(energy_usage_per_teleport / power_efficiency)
 		QDEL_NULL(transmitting)
+		COOLDOWN_START(src, recharge_cooldown, recharge_time)
 		return
 
 	if(length(queue))
 		receiving = pick_n_take(queue)
-
-/obj/machinery/ltsrbt/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
-	var/creds_value = tool.get_item_credit_value()
-	if(!creds_value)
-		return NONE
-
-	. = ITEM_INTERACT_SUCCESS
-
-	if(machine_stat & NOPOWER)
-		return
-
-	if(creds_value < restock_cost)
-		say("Insufficient credits!")
-		playsound(src, 'sound/machines/buzz-sigh.ogg', 40, FALSE)
-		return
-
-	if(istype(tool, /obj/item/holochip))
-		var/obj/item/holochip/chip = tool
-		chip.spend(restock_cost)
-	else
-		qdel(tool)
-		if(creds_value != restock_cost)
-			var/obj/item/holochip/change = new(creds_value - restock_cost)
-			user.put_in_hands(change)
-
-	SSmarket.restock()
-	restock_cost *= 2
 
 #undef DEFAULT_RESTOCK_COST
