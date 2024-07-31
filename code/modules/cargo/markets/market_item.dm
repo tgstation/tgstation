@@ -30,6 +30,9 @@
 	/// Probability for this item to be available. Used by SSmarket on init.
 	var/availability_prob
 
+	/// If set, this html icon will be shown in the UI.
+	var/html_icon
+
 	///The identifier for the market item, generated on runtime and used to access them in the market categories.
 	var/identifier
 
@@ -51,10 +54,12 @@
 	//we're replacing the item to sell, and the old item is an instance!
 	if(ismovable(item))
 		UnregisterSignal(item, COMSIG_QDELETING)
+	html_icon = null
 	item = path_or_ref
 	identifier = "[path_or_ref]"
 	if(ismovable(path_or_ref))
 		RegisterSignal(item, COMSIG_QDELETING, PROC_REF(on_item_del))
+		html_icon = icon2base64(getFlatIcon(path_or_ref, no_anim=TRUE))
 		identifier = "[REF(src)]"
 
 /datum/market_item/Destroy()
