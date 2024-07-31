@@ -384,3 +384,4 @@
 		receiving = pick_n_take(queue)
 
 #undef DEFAULT_RESTOCK_COST
+#undef PLACE_ON_MARKET_COST
