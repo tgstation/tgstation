@@ -1,0 +1,3 @@
+#include "_admin.dm"
+
+#include "code/admin_verbs.dm"

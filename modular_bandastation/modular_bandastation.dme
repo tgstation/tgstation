@@ -5,6 +5,7 @@
 #include "_helpers220/_helpers220.dme"
 #include "_signals220/_signals220.dme"
 #include "_singletons/_singletons.dme"
+#include "admin/_admin.dme"
 #include "aesthetics/_aesthetics.dme"
 #include "automapper/_automapper.dme"
 #include "ai_laws/_ai_laws.dme"
