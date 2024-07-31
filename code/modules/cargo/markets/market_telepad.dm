@@ -110,7 +110,8 @@
 		. += "[base_icon_state]_closed"
 	else
 		var/mutable_appearance/overlay = mutable_appearance(icon, "[base_icon_state]_open")
-		overlay.pixel_y -= 2
+		overlay.pixel_w -= 2
+		overlay.pixel_z -= 1
 		. += overlay
 
 /obj/machinery/ltsrbt/attack_hand(mob/user, list/modifiers)
