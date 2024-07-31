@@ -304,7 +304,7 @@ class NotePadTextArea extends Component<NotePadTextAreaProps> {
     return (
       <TextArea
         ref={this.innerRef}
-        onChange={(_, value) => setText(value)}
+        onInput={(_, value) => setText(value)}
         className="NtosNotepad__textarea"
         nowrap={!wordWrap}
         value={text}
