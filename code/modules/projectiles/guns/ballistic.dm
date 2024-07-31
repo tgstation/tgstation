@@ -582,7 +582,7 @@
 		if(misfire_probability > 0)
 			. += span_danger("Given the state of the gun, there is a [misfire_probability]% chance it'll misfire.")
 	else if(misfire_probability > 0)
-		. += span_warning("You get a feeling, however safe, may explode if loaded with the wrong munitions...")
+		. += span_warning("You get a feeling this might explode if you fire it with the wrong ammunitions...")
 		. += span_warning("Given the state of the gun, there is a [EXAMINE_HINT("[misfire_probability]%")] chance it'll misfire.")
 
 ///Gets the number of bullets in the gun
