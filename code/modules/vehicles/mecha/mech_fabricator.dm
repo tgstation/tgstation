@@ -149,8 +149,9 @@
 /obj/machinery/mecha_part_fabricator/emag_act(mob/user, obj/item/card/emag/emag_card)
 	if(obj_flags & EMAGGED)
 		return FALSE
-	if(user.job != JOB_ROBOTICIST)
-		to_chat(user, span_warning("You clicking and typing but don’t understand what to do with it"))
+	if(!HAS_TRAIT(user, TRAIT_KNOW_ROBO_WIRES))
+		to_chat(user, span_warning("You're unsure about [emag_card ? "where to swipe [emag_card] over" : "how to override"] [src] for any effect. Maybe if you had more knowledge of robotics..."))
+
 		return FALSE
 	obj_flags |= EMAGGED
 	for(var/found_illegal_mech_nods in SSresearch.techweb_nodes)
