@@ -294,18 +294,21 @@
 			return
 		account = card.registered_account
 
-	var/obj/item/item = occupant //occupant is null'd once it exits the machine so we need this.
+	var/obj/item/item = occupant //occupant, name, price and desc will be null'd once it exits the machine so we need this.
+	var/name_to_use = current_name || item.name
+	var/desc_to_use = current_desc
+	if(account)
+		new_item.desc += "[current_desc ? " - " : ""]Seller: [account.account_holder]"
+	var/price_to_use = current_price
 	item.moveToNullspace()
 	//Something happened and the item was deleted or relocated as soon as it was moved to nullspace.
 	if(QDELETED(item) || item.loc != null)
 		say("Runtime at market_placement.dm, line 153: item gone!") //metajoke
 		return
 	var/datum/market_item/local_good/new_item = new(item, account)
-	new_item.name = current_name || item.name
-	new_item.desc = current_desc
-	if(account)
-		new_item.desc += "[current_desc ? " - " : ""]Seller: [account.account_holder]"
-	new_item.price = current_price
+	new_item.name = name_to_use
+	new_item.desc = desc_to_use
+	new_item.price = price_to_use
 
 	our_market.add_item(new_item)
 
@@ -353,7 +356,7 @@
 	if(machine_stat & NOPOWER)
 		return
 
-	if(!COOLDOWN_FINISHED(src, recharge_cooldown) || (isnull(receiving) && isnull(transmitting)))
+	if(!COOLDOWN_FINISHED(src, recharge_cooldown) && isnull(receiving) && isnull(transmitting))
 		return
 
 	var/turf/turf = get_turf(src)
