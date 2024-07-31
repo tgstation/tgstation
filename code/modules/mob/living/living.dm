@@ -254,6 +254,8 @@
 				return
 
 /mob/living/proc/can_mobswap_with(mob/other)
+	if (HAS_TRAIT(other, TRAIT_NOMOBSWAP) || HAS_TRAIT(src, TRAIT_NOMOBSWAP))
+		return FALSE
 
 	var/they_can_move = TRUE
 	var/their_combat_mode = FALSE
@@ -262,9 +264,6 @@
 		var/mob/living/other_living = other
 		their_combat_mode = other_living.combat_mode
 		they_can_move = other_living.mobility_flags & MOBILITY_MOVE
-
-	if (HAS_TRAIT(other, TRAIT_NOMOBSWAP) || HAS_TRAIT(src, TRAIT_NOMOBSWAP))
-		return FALSE
 
 	var/too_strong = other.move_resist > move_force
 
