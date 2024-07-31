@@ -79,6 +79,11 @@
 	bare_wound_bonus = 5
 	wound_falloff_tile = -2.5 // low damage + additional dropoff will already curb wounding potential anything past point blank
 
+/obj/projectile/bullet/pellet/shotgun_buckshot/old
+	damage_falloff_tile = -0.5
+	wound_bonus = 0 ///wounds weren't a thing back in the day.
+	bare_wound_bonus = 0
+
 /obj/projectile/bullet/pellet/shotgun_rubbershot
 	name = "rubber shot pellet"
 	damage = 3
