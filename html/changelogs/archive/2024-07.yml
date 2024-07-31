@@ -1493,3 +1493,15 @@
   - code_imp: 'improves reagent cross pollination code
 
       :cl:'
+2024-07-31:
+  Jacquerel:
+  - image: Big balls are now much rounder, to more easily slide down into a cannon.
+  SmArtKar:
+  - image: All implants have received a fresh coat of paint
+  rroqc:
+  - bugfix: 'fix a bug where botany reagents would dissapear from existing plants
+
+      :cl:'
+  thegrb93:
+  - bugfix: Fixes getting permanently hot or cold if wearing thermal insulation as
+      a lizard
