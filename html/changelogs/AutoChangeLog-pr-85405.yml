@@ -1,0 +1,4 @@
+author: "ArcaneMusic"
+delete-after: True
+changes:
+  - qol: "NODE drones summoned to tap a vent within ore vents now display a green status light to show how much longer they need the vent defended for."
