@@ -167,7 +167,7 @@
 /obj/item/radio/proc/make_syndie() // Turns normal radios into Syndicate radios!
 	qdel(keyslot)
 	keyslot = new /obj/item/encryptionkey/syndicate()
-	special_channels &= RADIO_SPECIAL_SYNDIE
+	special_channels |= RADIO_SPECIAL_SYNDIE
 	recalculateChannels()
 
 /obj/item/radio/interact(mob/user)
@@ -324,7 +324,7 @@
 		channel = null
 
 	// Nearby active jammers prevent the message from transmitting
-	if(is_within_radio_jammer_range(src) && special_channels & RADIO_SPECIAL_SYNDIE)
+	if(is_within_radio_jammer_range(src) && !(special_channels & RADIO_SPECIAL_SYNDIE))
 		return
 
 	// Determine the identity information which will be attached to the signal.
