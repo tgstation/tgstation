@@ -1039,8 +1039,8 @@ GLOBAL_LIST_EMPTY(features_by_species)
 	var/user_drunkenness = user.get_drunk_amount()
 
 	if(user_drunkenness && HAS_TRAIT(user, TRAIT_DRUNKEN_BRAWLER)) // Drunken brawlers only need to be intoxicated, doesn't matter how much
-		limb_accuracy *= 1.2
-		damage *= 1.5
+		limb_accuracy *= 2
+		damage += damage * clamp((user.getFireLoss()*0.5 + user.getBruteLoss()*0.5) / 100, 0.3, 2) //Basically a multiplier of how much extra damage you get based on how low your health is overall. A floor of about a 30%.
 
 	else if(user_drunkenness > 30 && user_drunkenness < 60)
 		limb_accuracy *= 1.2
