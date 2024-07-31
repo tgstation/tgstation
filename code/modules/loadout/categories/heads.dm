@@ -151,6 +151,10 @@
 /datum/loadout_item/head/fraxinella
 	name = "Fraxinella"
 	item_path = /obj/item/food/grown/poppy/geranium/fraxinella
+	
+/datum/loadout_item/head/harebell
+	name = "Harebell"
+	item_path = /obj/item/food/grown/harebell
 
 /datum/loadout_item/head/wig
 	name = "Wig"
