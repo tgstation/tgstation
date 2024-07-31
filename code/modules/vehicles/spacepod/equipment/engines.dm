@@ -23,14 +23,14 @@
 /obj/item/pod_equipment/engine/default
 	name = "ion engine"
 	desc = "A mark II pod engine."
-	force_per_move = 3 NEWTONS
+	force_per_move = 4 NEWTONS
 
 /obj/item/pod_equipment/engine/fast
 	name = "deuterium engine"
 	desc = "A mark III pod engine. Plastered with warning labels."
-	force_per_move = 3.5 NEWTONS
+	force_per_move = 6.5 NEWTONS
 
 /obj/item/pod_equipment/engine/faster
 	name = "improved deuterium engine"
 	desc = "A mark IV pod engine. Probably not healthy in the long term."
-	force_per_move = 5 NEWTONS
+	force_per_move = 8 NEWTONS
