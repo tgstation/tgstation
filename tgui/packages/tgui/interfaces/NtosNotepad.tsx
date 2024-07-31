@@ -309,6 +309,7 @@ class NotePadTextArea extends Component<NotePadTextAreaProps> {
         nowrap={!wordWrap}
         value={text}
         scrollbar
+        autoFocus
       />
     );
   }
