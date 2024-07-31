@@ -397,6 +397,6 @@
 		This upgrade does not override any active laws, and must be applied directly to an active AI core."
 	item = /obj/item/malf_upgrade
 	cost = 16
-	restricted_roles = list(JOB_RESEARCH_DIRECTOR)
+	restricted_roles = list(JOB_ROBOTICIST, JOB_RESEARCH_DIRECTOR)
 	surplus = 0
 	refundable = TRUE
