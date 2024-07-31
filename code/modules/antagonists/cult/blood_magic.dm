@@ -12,7 +12,7 @@
 	default_button_position = DEFAULT_BLOODSPELLS
 	var/list/spells = list()
 	var/channeling = FALSE
-	/// If the magic has been enhanced somehow, likely due to a crimson focus.
+	/// If the magic has been enhanced somehow, likely due to a crimson medallion.
 	var/magic_enhanced = FALSE
 
 /datum/action/innate/cult/blood_magic/Remove()

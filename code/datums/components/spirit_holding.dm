@@ -10,14 +10,17 @@
 	var/allow_renaming
 	/// Allows channeling
 	var/allow_channeling
+	/// Allows exorcism
+	var/allow_exorcism
 	///mob contained in the item.
 	var/mob/living/basic/shade/bound_spirit
 
-/datum/component/spirit_holding/Initialize(datum/mind/soul_to_bind, mob/awakener, allow_renaming = TRUE, allow_channeling = TRUE)
+/datum/component/spirit_holding/Initialize(datum/mind/soul_to_bind, mob/awakener, allow_renaming = TRUE, allow_channeling = TRUE, allow_exorcism = TRUE)
 	if(!ismovable(parent)) //you may apply this to mobs, i take no responsibility for how that works out
 		return COMPONENT_INCOMPATIBLE
 	src.allow_renaming = allow_renaming
 	src.allow_channeling = allow_channeling
+	src.allow_exorcism = allow_exorcism
 	if(soul_to_bind)
 		bind_the_soule(soul_to_bind, awakener, soul_to_bind.name)
 
@@ -107,7 +110,8 @@
 	bound_spirit.get_language_holder().omnitongue = TRUE //Grants omnitongue
 
 	RegisterSignal(parent, COMSIG_ATOM_RELAYMOVE, PROC_REF(block_buckle_message))
-	RegisterSignal(parent, COMSIG_BIBLE_SMACKED, PROC_REF(on_bible_smacked))
+	if(allow_exorcism)
+		RegisterSignal(parent, COMSIG_BIBLE_SMACKED, PROC_REF(on_bible_smacked))
 
 /**
  * custom_name : Simply sends a tgui input text box to the blade asking what name they want to be called, and retries it if the input is invalid.
@@ -139,6 +143,8 @@
  * * exorcist: user who is attempting to remove the spirit
  */
 /datum/component/spirit_holding/proc/attempt_exorcism(mob/exorcist)
+	if(!allow_exorcism)
+		return // just in case
 	var/atom/movable/exorcised_movable = parent
 	to_chat(exorcist, span_notice("You begin to exorcise [parent]..."))
 	playsound(parent, 'sound/hallucinations/veryfar_noise.ogg',40,TRUE)

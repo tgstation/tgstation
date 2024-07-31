@@ -32151,7 +32151,7 @@
 /area/station/science/research/abandoned)
 "hXQ" = (
 /obj/machinery/door/window/left/directional/east{
-	name = "'Monkey Pen";
+	name = "Monkey Pen";
 	req_access = list("genetics")
 	},
 /obj/structure/flora/bush/lavendergrass,
@@ -50664,6 +50664,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
+/obj/machinery/scanner_gate/preset_guns,
 /turf/open/floor/iron/dark,
 /area/station/security/brig)
 "mEH" = (
@@ -80365,6 +80366,7 @@
 	dir = 4
 	},
 /obj/effect/turf_decal/tile/neutral/fourcorners,
+/obj/machinery/scanner_gate/preset_guns,
 /turf/open/floor/iron/dark,
 /area/station/security/brig)
 "ucA" = (

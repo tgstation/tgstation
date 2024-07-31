@@ -10,6 +10,8 @@
 #define MOVE_INTENT_WALK "walk"
 #define MOVE_INTENT_RUN "run"
 
+/// Amount of oxyloss that KOs a human
+#define OXYLOSS_PASSOUT_THRESHOLD 50
 //Blood levels
 #define BLOOD_VOLUME_MAX_LETHAL 2150
 #define BLOOD_VOLUME_EXCESS 2100
