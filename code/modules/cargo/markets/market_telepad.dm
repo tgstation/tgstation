@@ -15,8 +15,8 @@
 	name = "Long-To-Short-Range-Bluespace-Transceiver"
 	desc = "The LTSRBT is a compact teleportation machine for receiving and sending items outside the station and inside the station.\nUsing teleportation frequencies stolen from NT it is near undetectable.\nEssential for any illegal market operations on NT stations.\n"
 	icon = 'icons/obj/machines/telecomms.dmi'
-	icon_state = "exonet_node_idle"
-	base_icon_state = "exonet_node"
+	icon_state = "ltsrbt_idle"
+	base_icon_state = "ltsrbt"
 	circuit = /obj/item/circuitboard/machine/ltsrbt
 	density = TRUE
 
@@ -38,6 +38,8 @@
 	var/datum/market_purchase/transmitting
 	/// Queue for purchases that the machine should receive and send.
 	var/list/datum/market_purchase/queue = list()
+	var/closed = TRUE
+	var/obj/item/loaded
 	/**
 	 * Attacking the machinery with enough credits will restock the markets, allowing for more/better items.
 	 * The cost doubles each time this is done.
@@ -48,6 +50,7 @@
 	. = ..()
 	register_context()
 	SSmarket.telepads += src
+	update_appearance()
 
 /obj/machinery/ltsrbt/Destroy()
 	SSmarket.telepads -= src
@@ -58,14 +61,40 @@
 	. = ..()
 
 /obj/machinery/ltsrbt/add_context(atom/source, list/context, obj/item/held_item, mob/user)
-	if(held_item && held_item.get_item_credit_value())
-		context[SCREENTIP_CONTEXT_LMB] = "Restock"
+	if(held_item)
+		if(open)
+			context[SCREENTIP_CONTEXT_LMB] = "Insert"
+			return CONTEXTUAL_SCREENTIP_SET
+		if(held_item.get_item_credit_value() && !(machine_stat & NOPOWER))
+			context[SCREENTIP_CONTEXT_LMB] = "Restock"
+			return CONTEXTUAL_SCREENTIP_SET
+		return NONE
+	if(open)
+		context[SCREENTIP_CONTEXT_LMB] = "Close"
 		return CONTEXTUAL_SCREENTIP_SET
-	return NONE
+	context[SCREENTIP_CONTEXT_LMB] = "Open"
+	if(loaded && !(machine_stat & NOPOWER))
+		context[SCREENTIP_CONTEXT_RMB] = "Place on market"
+	return CONTEXTUAL_SCREENTIP_SET
+
+/obj/machinery/ltsrbt/attack_hand(mob/user, list/modifiers)
+	. = ..()
+	if(. || !open)
+		return
+	open != open
+	if(open && loaded)
+		loaded.forceMove(drop_location())
+	playsound(src, 'sound/machines/oven/oven_open.ogg', 75, TRUE)
+	update_appearance()
+
+/obj/machinery/ltsrbt/Exited(atom/movable/gone)
+	if(gone == loaded)
+		loaded = null
+	return ..()
 
 /obj/machinery/ltsrbt/examine(mob/user)
 	. = ..()
-	if(machine_stat & NOPOWER)
+	if(!(machine_stat & NOPOWER))
 		. += span_info("A display reads: \"Current market restock price: [EXAMINE_HINT("[restock_cost] cr")]\".")
 
 /obj/machinery/ltsrbt/update_icon_state()
@@ -74,6 +103,33 @@
 		icon_state = "[base_icon_state]_off"
 	else
 		icon_state = "[base_icon_state][(receiving || length(queue)) ? "" : "_idle"]"
+
+/obj/machinery/ltsrbt/update_overlays()
+	. = ..()
+	if(!open)
+		. += "[base_icon_state]_closed"
+	else
+		var/mutable_appearance/overlay = mutable_appearance(icon, "[base_icon_state]_open")
+		overlay.pixel_y -= 1
+		. += overlay
+
+/obj/machinery/ltsrbt/attack_hand_secondary(mob/user, list/modifiers)
+	. = ..()
+	if(. == SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN || open)
+		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+	if(!loaded)
+		balloon_alert(user, "nothing loaded!")
+		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+	if(machine_stat & NOPOWER)
+		balloon_alert(user, "machine unpowered!")
+		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+	if(!COOLDOWN_FINISHED(src, recharge_cooldown))
+		balloon_alert(user, "on cooldown!")
+		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+	INVOKE_ASYNC(src, PROC_REF(start_selling), user)
+	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+
+/obj/machinery/ltsrbt/proc/start_putting_on_market(start_selling)
 
 /obj/machinery/ltsrbt/RefreshParts()
 	. = ..()
