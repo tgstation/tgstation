@@ -10,6 +10,7 @@ import { useBackend } from '../backend';
 import { Box, Divider, MenuBar, Section, TextArea } from '../components';
 import { Dialog, UnsavedChangesDialog } from '../components/Dialog';
 import { NtosWindow } from '../layouts';
+import { NTOSData } from '../layouts/NtosWindow';
 import { createLogger } from '../logging';
 
 const logger = createLogger('NtosNotepad');
@@ -317,11 +318,12 @@ class NotePadTextArea extends Component<NotePadTextAreaProps> {
 
 type AboutDialogProps = {
   close: () => void;
-  clientName: string;
 };
 
 const AboutDialog = (props: AboutDialogProps) => {
-  const { close, clientName } = props;
+  const { close } = props;
+  const { act, data } = useBackend<NTOSData>();
+  const { login } = data;
   const paragraphStyle = { padding: '.5rem 1rem 0 2rem' };
   return (
     <Dialog title="About Notepad" onClose={close} width={'500px'}>
@@ -349,7 +351,7 @@ const AboutDialog = (props: AboutDialogProps) => {
           >
             This product is licensed under the NT Corporation Terms to:
           </span>
-          <span style={{ padding: '0 1rem 0 4rem' }}>{clientName}</span>
+          <span style={{ padding: '0 1rem 0 4rem' }}>{login.IDName}</span>
         </Box>
       </div>
       <div className="Dialog__footer">
@@ -365,7 +367,7 @@ type NoteData = {
 type RetryActionType = (retrying?: boolean) => void;
 
 export const NtosNotepad = (props) => {
-  const { act, data, config } = useBackend<NoteData>();
+  const { act, data } = useBackend<NoteData>();
   const { note } = data;
   const [documentName, setDocumentName] = useState(DEFAULT_DOCUMENT_NAME);
   const [originalText, setOriginalText] = useState(note);
@@ -479,7 +481,7 @@ export const NtosNotepad = (props) => {
         />
       )}
       {activeDialog === Dialogs.ABOUT && (
-        <AboutDialog close={handleCloseDialog} clientName={config.user.name} />
+        <AboutDialog close={handleCloseDialog} />
       )}
     </NtosWindow>
   );
