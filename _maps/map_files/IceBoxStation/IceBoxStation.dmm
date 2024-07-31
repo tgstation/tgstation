@@ -31468,7 +31468,7 @@
 /obj/structure/disposalpipe/segment{
 	dir = 10
 	},
-/obj/structure/ladder,
+/obj/effect/spawner/random/trash/caution_sign,
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/lesser)
 "jwj" = (
@@ -79954,7 +79954,6 @@
 	dir = 4
 	},
 /obj/effect/decal/cleanable/dirt/dust,
-/obj/structure/ladder,
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/fore)
 "xPu" = (
