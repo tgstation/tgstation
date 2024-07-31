@@ -2,7 +2,7 @@ import {
   AnimatedNumber,
   Box,
   Button,
-  DmIcon,
+  Image,
   Modal,
   Section,
   Stack,
@@ -37,8 +37,7 @@ type Item = {
   desc: string;
   amount: number;
   cost: number;
-  icon: string;
-  icon_state: string;
+  html_icon: string;
 };
 
 type DeliveryMethod = {
@@ -111,14 +110,13 @@ export const BlackMarketUplink = (props) => {
                 <Stack align="baseline">
                   <Stack.Item grow>
                     <Stack align="horizontal">
-                      {!!item.icon && (
+                      {!!item.html_icon && (
                         <Stack.Item>
-                          <DmIcon
-                            style={{ background: '#11371F' }}
-                            icon={item.icon}
-                            icon_state={item.icon_state}
-                            height="40px"
-                            width="40px"
+                          <Image
+                            m={1}
+                            src={`data:image/jpeg;base64,${data.loaded_icon}`}
+                            height="64px"
+                            width="64px"
                           />
                         </Stack.Item>
                       )}

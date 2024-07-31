@@ -5,7 +5,6 @@
 	stock = 1
 	availability_prob = 100
 	restockable = FALSE
-	show_icon = TRUE
 	var/datum/bank_account/seller
 
 /datum/market_item/local_good/New(atom/movable/thing, datum/bank_account/seller)

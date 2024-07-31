@@ -74,23 +74,15 @@
 		if(market.available_items[viewing_category])
 			var/list/market_category = market.available_items[viewing_category]
 			for(var/id in market_category)
-				var/datum/market_item/entry = market_category[id]
-				var/list/entry_data = list(
+				var/datum/market_item/item = market_category[id]
+				data += list(list(
 					"id" = id,
-					"name" = entry.name,
-					"cost" = entry.price,
-					"amount" = entry.stock,
-					"desc" = entry.desc || entry.name,
-				)
-				if(entry.show_icon)
-					var/ispath = ispath(entry.item, /atom)
-					entry_data += list(
-						"icon" = ispath ? entry.item::icon : entry.item.icon_state,
-						"icon_state" = ispath ? entry.item::icon_state : entry.item.icon_state,
-					)
-				else
-					entry_data += list("icon" = "", "icon_state" = "")
-				data["items"] += list(entry_data)
+					"name" = item.name,
+					"cost" = item.price,
+					"amount" = item.stock,
+					"desc" = item.desc || item.name,
+					"html_icon" = item.html_icon,
+				))
 	return data
 
 /obj/item/market_uplink/ui_static_data(mob/user)

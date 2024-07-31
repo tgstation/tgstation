@@ -69,7 +69,7 @@
 		SSmarket.queue_item(receiving)
 	queue = null
 	receiving = null
-	trasmitting = null
+	transmitting = null
 	return ..()
 
 /obj/machinery/ltsrbt/add_context(atom/source, list/context, obj/item/held_item, mob/user)
@@ -135,7 +135,7 @@
 	. = ..()
 	if(new_occupant)
 		current_name = new_occupant.name
-		current_desc = new_occupant.desc ||
+		current_desc = new_occupant.desc
 
 /obj/machinery/ltsrbt/can_be_occupant(atom/movable/atom)
 	return isitem(atom) && !atom.anchored
@@ -154,6 +154,7 @@
 		return
 	if(state_open)
 		balloon_alert(user, "close it first!")
+		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 	if(!occupant)
 		balloon_alert(user, "nothing loaded!")
 		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
