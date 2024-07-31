@@ -759,7 +759,9 @@
 /turf/open/indestructible/white,
 /area/lavaland/surface/outdoors/virtual_domain)
 "WT" = (
-/obj/machinery/door/airlock/bananium,
+/obj/machinery/door/airlock/bananium{
+	use_power = 0
+	},
 /turf/open/floor/carpet,
 /area/lavaland/surface/outdoors/virtual_domain)
 "WX" = (
