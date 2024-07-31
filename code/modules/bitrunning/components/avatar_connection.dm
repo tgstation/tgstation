@@ -286,6 +286,7 @@
 
 	for(var/skill_type in avatar.mind.known_skills)
 		old_mind.set_experience(skill_type, avatar.mind.get_skill_exp(skill_type), silent = TRUE)
+		avatar.mind.set_experience(skill_type, 0, silent = TRUE)
 
 	ghost.mind = old_mind
 	if(old_body.stat != DEAD)
