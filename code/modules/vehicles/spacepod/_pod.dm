@@ -3,9 +3,9 @@
 //
 
 // TODO:
-// equipment variants (done? maybe a lock module, finish comms module, and maybe a few proper guns) and their research
+// equipment variants (maybe a few proper guns)
+// the material costs are SO bullshit
 // ONCE EVERYTHING IS DONE, add hangar bays, must have 1-3 pods idk, maybe t1 megacells + oxygen tanks, and a manual?? not sure
-// research and print costs
 // sprites
 // replace spawn_equip or add new subtype, but probably the former; to have a more reasonable roundstart loadout
 // ALSO DO NOT FORGET TO REMOVE THIS HUGE ASS COMMENT before finishing
@@ -18,7 +18,7 @@
 	move_resist = MOVE_FORCE_EXTREMELY_STRONG
 	resistance_flags = FIRE_PROOF | ACID_PROOF
 	icon = 'icons/mob/rideables/spacepod/pod_small.dmi'
-	icon_state = "cockpit_pod" //placeholder
+	icon_state = "cockpit_pod"
 	light_system = OVERLAY_LIGHT_DIRECTIONAL
 	light_on = FALSE
 	light_range = 5
@@ -108,6 +108,8 @@
 	if(bumped.resistance_flags & INDESTRUCTIBLE) // damage handling goes past this point
 		return
 
+	qdel(drift_handler)
+
 	if(isclosedturf(bumped))
 		var/turf/closed/bumped_turf = bumped
 		take_damage(strength * 100, BRUTE)
@@ -121,6 +123,9 @@
 		var/mob/living/poor_sap = bumped
 		take_damage(strength * 50, BRUTE) //weaker cuz i want to see someone ram a dude
 		poor_sap.apply_damage(strength * 20, BRUTE)
+		var/our_turf = get_turf(src)
+		var/throwtarget = get_edge_target_turf(our_turf, get_dir(our_turf, get_step_away(poor_sap, our_turf)))
+		poor_sap.safe_throw_at(throwtarget, 3, max(1, strength*0.75), force = MOVE_FORCE_NORMAL*(strength/2))
 
 /obj/vehicle/sealed/space_pod/proc/onSetDir(datum/source, old_dir, new_dir)
 	SIGNAL_HANDLER
@@ -221,7 +226,9 @@
 		return
 	setDir(direction)
 	if(has_gravity() || !newtonian_move(dir2angle(direction), instant = TRUE, drift_force = force_per_move / (1 SECONDS), controlled_cap = max_speed))
-		COOLDOWN_START(src, cooldown_vehicle_move, istype(loc, /turf/open/floor/engine) ? 0.3 SECONDS : 2 SECONDS) //moves much better on engine tiles
+		if(!istype(get_step(src, direction), /turf/open/floor/engine))
+			return
+		COOLDOWN_START(src, cooldown_vehicle_move, 0.3 SECONDS)
 		after_move(direction)
 		return try_step_multiz(direction)
 	COOLDOWN_START(src, cooldown_vehicle_move, 1 DECISECONDS)

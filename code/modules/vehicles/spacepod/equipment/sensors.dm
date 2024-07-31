@@ -56,21 +56,20 @@
 		return
 	if(pod.use_power(STANDARD_BATTERY_CHARGE / 100000))
 		return
-	close_all_ui()
-
-/obj/item/pod_equipment/sensors/proc/close_all_ui()
-	if(!LAZYLEN(gps?.open_uis))
-		return null
-	for(var/datum/tgui/ui as anything in gps.open_uis)
-		ui.close()
+	SStgui.close_uis(gps)
 
 /obj/item/pod_equipment/sensors/proc/on_use(mob/user)
 	if(pod.use_power(10)) // a noble 10 probably just used to check if the UI is opened
 		gps.interact(user = user)
 		return
-	close_all_ui()
+	SStgui.close_uis(gps)
 
 /obj/item/pod_equipment/sensors/mesons
 	name = "Construction Sensor Suite"
 	desc = "A pod sensor suite with built-in GPS and meson vision."
 	traits_given = list(TRAIT_MESON_VISION)
+
+/obj/item/pod_equipment/sensors/nightvision
+	name = "NV Sensor Suite"
+	desc = "A pod sensor suite with built-in GPS and night vision."
+	traits_given = list(TRAIT_TRUE_NIGHT_VISION)

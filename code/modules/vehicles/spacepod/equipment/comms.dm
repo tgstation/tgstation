@@ -1,5 +1,9 @@
 /obj/item/pod_equipment/comms
+	name = "NT Comms Array"
+	desc = "Standard suite of communication equipment for crew pods."
 	slot = POD_SLOT_COMMS
+	// im not sure whether this is a good idea
+	/// access of this comms array
 	var/list/accesses = list(ACCESS_EXTERNAL_AIRLOCKS) //external airlocks == station hangar
 
 /obj/item/pod_equipment/comms/create_occupant_actions(mob/occupant, flag = NONE)
@@ -10,3 +14,7 @@
 	equipment_action.pod = pod
 	equipment_action.comms = src
 	return equipment_action
+
+/obj/item/pod_equipment/comms/debug
+	name = "all access comms array"
+	accesses = REGION_ACCESS_ALL_GLOBAL
