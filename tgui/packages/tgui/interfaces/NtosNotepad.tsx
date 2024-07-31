@@ -263,10 +263,7 @@ class NotePadTextArea extends Component<NotePadTextAreaProps> {
 
     if (this.props.maintainFocus) {
       this.innerRef.current.focus();
-      return false;
     }
-
-    return true;
   }
 
   // eslint-disable-next-line react/no-deprecated
