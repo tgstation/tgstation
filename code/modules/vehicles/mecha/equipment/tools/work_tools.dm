@@ -98,7 +98,7 @@
 			span_notice("[chassis] pushes you aside."))
 		return ..()
 
-	if(iscarbon(victim))//meme clamp here
+	if(iscarbon(victim) && killer_clamp)//meme clamp here
 		var/mob/living/carbon/carbon_victim = target
 		var/torn_off = FALSE
 		var/obj/item/bodypart/affected = carbon_victim.get_bodypart(BODY_ZONE_L_ARM)

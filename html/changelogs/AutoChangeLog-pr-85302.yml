@@ -1,4 +1,0 @@
-author: "SmArtKar"
-delete-after: True
-changes:
-  - qol: "If you have auto fit viewport enabled, it will trigger upon entering or exiting fullscreen"
