@@ -352,7 +352,7 @@ export class Uplink extends Component<{}, UplinkState> {
                     </Stack.Item>
 
                     <Stack.Item grow={1}>
-                      <Tabs fluid textAlign="center">
+                      <Tabs fluid>
                         {!!has_objectives && (
                           <>
                             <Tabs.Tab
@@ -361,6 +361,7 @@ export class Uplink extends Component<{}, UplinkState> {
                                 whiteSpace: 'nowrap',
                                 textOverflow: 'ellipsis',
                               }}
+                              icon="star"
                               selected={currentTab === 0}
                               onClick={() => this.setState({ currentTab: 0 })}
                             >
@@ -372,6 +373,7 @@ export class Uplink extends Component<{}, UplinkState> {
                                 whiteSpace: 'nowrap',
                                 textOverflow: 'ellipsis',
                               }}
+                              icon="star-half-stroke"
                               selected={currentTab === 1}
                               onClick={() => this.setState({ currentTab: 1 })}
                             >
@@ -385,6 +387,7 @@ export class Uplink extends Component<{}, UplinkState> {
                             whiteSpace: 'nowrap',
                             textOverflow: 'ellipsis',
                           }}
+                          icon="store"
                           selected={currentTab === 2 || !has_objectives}
                           onClick={() => this.setState({ currentTab: 2 })}
                         >
@@ -401,7 +404,6 @@ export class Uplink extends Component<{}, UplinkState> {
                           icon="lock"
                           color="transparent"
                           px={2}
-                          tooltip="Lock"
                           onClick={() => act('lock')}
                         >
                           Lock
