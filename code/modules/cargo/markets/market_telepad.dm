@@ -298,7 +298,7 @@
 	var/name_to_use = current_name || item.name
 	var/desc_to_use = current_desc
 	if(account)
-		new_item.desc += "[current_desc ? " - " : ""]Seller: [account.account_holder]"
+		desc_to_use += "[current_desc ? " - " : ""]Seller: [account.account_holder]"
 	var/price_to_use = current_price
 	item.moveToNullspace()
 	//Something happened and the item was deleted or relocated as soon as it was moved to nullspace.
