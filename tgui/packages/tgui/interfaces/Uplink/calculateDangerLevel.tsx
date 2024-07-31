@@ -90,7 +90,7 @@ export const dangerLevelsTooltip = (
               color="white"
               className={value.gradient}
               style={{
-                borderRadius: '5px',
+                borderRadius: '2px',
                 display: 'inline-block',
               }}
               px={0.8}
@@ -137,14 +137,12 @@ export const calculateDangerLevel = (
       color="white"
       className={dangerLevel.gradient}
       style={{
-        borderRadius: '5px',
+        borderRadius: '2px',
         display: 'inline-block',
       }}
-      lineHeight={2}
+      lineHeight={2.5}
       minWidth={10}
       textAlign="center"
-      px={0.8}
-      py={0.6}
     >
       {dangerLevel.title} ({displayedProgression})
     </Box>

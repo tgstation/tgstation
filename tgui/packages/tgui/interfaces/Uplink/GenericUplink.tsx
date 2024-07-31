@@ -144,9 +144,9 @@ const ItemList = (props: ItemListProps) => {
     <Icon m={compactMode ? '10px' : '26px'} name="spinner" spin />
   );
   return (
-    <Stack vertical>
+    <Stack vertical mt={compactMode ? -0.5 : -1}>
       {items.map((item, index) => (
-        <Stack.Item key={index} mt={compactMode ? '2px' : 1}>
+        <Stack.Item key={index} mt={compactMode ? 0.5 : 1}>
           <Section key={item.name} fitted={compactMode ? true : false}>
             <Stack>
               <Stack.Item>

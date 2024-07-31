@@ -288,7 +288,7 @@ export class Uplink extends Component<{}, UplinkState> {
               <Stack.Item>
                 <Stack fill>
                   <Stack.Item grow={1}>
-                    <Tabs fluid height={3} textAlign="center">
+                    <Tabs fluid textAlign="center">
                       {!!has_objectives && (
                         <>
                           <Tabs.Tab
