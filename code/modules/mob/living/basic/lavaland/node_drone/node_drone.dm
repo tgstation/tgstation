@@ -74,6 +74,31 @@
 	if(flying_state == FLY_IN_STATE || flying_state == FLY_OUT_STATE)
 		icon_state = "mining_node_flying"
 
+/mob/living/basic/node_drone/update_overlays()
+	. = ..()
+	if(attached_vent)
+		var/time_remaining = COOLDOWN_TIMELEFT(attached_vent, wave_cooldown)
+		var/wave_timers
+		switch(attached_vent?.boulder_size)
+			if(BOULDER_SIZE_SMALL)
+				wave_timers = WAVE_DURATION_SMALL
+			if(BOULDER_SIZE_MEDIUM)
+				wave_timers = WAVE_DURATION_MEDIUM
+			if(BOULDER_SIZE_LARGE)
+				wave_timers = WAVE_DURATION_LARGE
+		var/remaining_fraction = (time_remaining / wave_timers)
+		if(remaining_fraction <= 0.3)
+			. += "node_progress_4"
+			return
+		if(remaining_fraction <= 0.55)
+			. += "node_progress_3"
+			return
+		if(remaining_fraction <= 0.80)
+			. += "node_progress_2"
+			return
+		. += "node_progress_1"
+		return
+
 /mob/living/basic/node_drone/proc/arrive(obj/structure/ore_vent/parent_vent)
 	attached_vent = parent_vent
 	maxHealth = 300 + ((attached_vent.boulder_size/BOULDER_SIZE_SMALL) * 100)
