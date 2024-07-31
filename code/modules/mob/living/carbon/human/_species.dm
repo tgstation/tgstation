@@ -1039,8 +1039,10 @@ GLOBAL_LIST_EMPTY(features_by_species)
 	var/user_drunkenness = user.get_drunk_amount()
 
 	if(user_drunkenness && HAS_TRAIT(user, TRAIT_DRUNKEN_BRAWLER)) // Drunken brawlers only need to be intoxicated, doesn't matter how much
-		limb_accuracy *= 2
-		damage += damage * clamp((user.getFireLoss()*0.5 + user.getBruteLoss()*0.5) / 100, 0.3, 2) //Basically a multiplier of how much extra damage you get based on how low your health is overall. A floor of about a 30%.
+		limb_accuracy += clamp((user.getFireLoss() + user.getBruteLoss()) * 0.5, 10, 200)
+		damage += damage * clamp((user.getFireLoss() + user.getBruteLoss()) / 100, 0.3, 2) //Basically a multiplier of how much extra damage you get based on how low your health is overall. A floor of about a 30%.
+		var/drunken_martial_descriptor = pick("Drunken", "Intoxicated", "Tipsy", "Inebriated", "Delirious", "Day-Drinker's", "Firegut", "Blackout")
+		atk_verb = "[drunken_martial_descriptor] [atk_verb]"
 
 	else if(user_drunkenness > 30 && user_drunkenness < 60)
 		limb_accuracy *= 1.2
@@ -1054,7 +1056,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
 
 	var/miss_chance = 100//calculate the odds that a punch misses entirely. considers stamina and brute damage of the puncher. punches miss by default to prevent weird cases
 	if(attacking_bodypart.unarmed_damage_low)
-		if((target.body_position == LYING_DOWN) || HAS_TRAIT(user, TRAIT_PERFECT_ATTACKER) || staggered) //kicks and attacks against staggered targets never miss (provided your species deals more than 0 damage)
+		if((target.body_position == LYING_DOWN) || HAS_TRAIT(user, TRAIT_PERFECT_ATTACKER) || staggered || user_drunkenness && HAS_TRAIT(user, TRAIT_DRUNKEN_BRAWLER)) //kicks and attacks against staggered targets never miss (provided your species deals more than 0 damage) //drunken brawlers while drunk also don't miss
 			miss_chance = 0
 		else
 			miss_chance = clamp(UNARMED_MISS_CHANCE_BASE - limb_accuracy + (user.getFireLoss()*0.5 + user.getBruteLoss()*0.5), 0, UNARMED_MISS_CHANCE_MAX) //Limb miss chance + various damage. capped at 80 so there is at least a chance to land a hit.
