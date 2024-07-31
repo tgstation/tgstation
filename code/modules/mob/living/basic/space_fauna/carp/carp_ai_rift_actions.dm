@@ -47,9 +47,7 @@
 
 /datum/ai_planning_subtree/make_carp_rift/aggressive_teleport/SelectBehaviors(datum/ai_controller/controller, seconds_per_tick)
 	var/atom/movable/target = controller.blackboard[BB_BASIC_MOB_CURRENT_TARGET]
-	if(QDELETED(target) || !controller.blackboard[BB_CARPS_FEAR_FISHERMAN] || !HAS_TRAIT(target, TRAIT_SCARY_FISHERMAN))
-		return ..()
-	if (controller.blackboard[BB_BASIC_MOB_STOP_FLEEING])
+	if(!QDELETED(target) && controller.blackboard[BB_CARPS_FEAR_FISHERMAN] && HAS_TRAIT(target, TRAIT_SCARY_FISHERMAN))
 		return
 	return ..()
 
