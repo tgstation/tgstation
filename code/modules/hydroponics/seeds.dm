@@ -250,7 +250,7 @@
 	///List of plants all harvested from the same batch.
 	var/list/result = list()
 	///Tile of the harvester to deposit the growables.
-	var/output_loc = parent.Adjacent(user) ? user.loc : parent.loc //needed for TK
+	var/output_loc = parent.Adjacent(user) ? user.drop_location() : parent.drop_location() //needed for TK
 	///Name of the grown products.
 	var/product_name
 	var/seed_harvest_ratio = 0.2
@@ -282,7 +282,7 @@
 			maximum_seed_production = floor(harvest_amount * seed_harvest_ratio)
 			if ((plant_yield > 0 && maximum_seed_production == 0) && prob(50))
 				maximum_seed_production = 1
-	
+
 	while(harvest_counter < harvest_amount)
 		while(seed_counter < maximum_seed_production)
 			var/obj/item/seeds/seed_prod
@@ -317,7 +317,7 @@
 	if(harvest_amount >= 1)
 		SSblackbox.record_feedback("tally", "food_harvested", harvest_amount, product_name)
 	return result
-		
+
 
 /**
  * This is where plant chemical products are handled.
