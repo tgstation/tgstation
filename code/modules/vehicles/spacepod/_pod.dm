@@ -38,7 +38,7 @@
 	// speed vars are here if someone wants to make their own turbo subtype pod or admin abuse
 	/// max drift speed we can get via moving intentionally, modified by thrusters
 	var/max_speed = 0
-	/// Force per tick movement held down, modified by engine
+	/// Force per 1 second held down, modified by engine
 	var/force_per_move = 0
 	/// Force per process run to bring us to a halt, modified by thrusters
 	var/stabilizer_force = 0
@@ -220,7 +220,7 @@
 	if(!use_power(power_used))
 		return
 	setDir(direction)
-	if(has_gravity() || !newtonian_move(dir2angle(direction), instant = TRUE, drift_force = force_per_move, controlled_cap = max_speed))
+	if(has_gravity() || !newtonian_move(dir2angle(direction), instant = TRUE, drift_force = force_per_move / (1 SECONDS), controlled_cap = max_speed))
 		COOLDOWN_START(src, cooldown_vehicle_move, istype(loc, /turf/open/floor/engine) ? 0.3 SECONDS : 2 SECONDS) //moves much better on engine tiles
 		after_move(direction)
 		return try_step_multiz(direction)
