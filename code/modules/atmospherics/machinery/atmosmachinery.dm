@@ -133,14 +133,16 @@
 	return ..()
 
 /**
- * Ran on `Initialize` if hide is `TRUE`, allows subtypes to register their own hiding logic.
- * Including registering cap updating checks to run on different signals.
+ * Sets up our pipe hiding logic, consolidated in one place so subtypes may override it.
+ * This lets subtypes implement their own hiding logic without needing to worry about conflicts with the parent hiding logic.
  */
 /obj/machinery/atmospherics/proc/setup_hiding()
+	// Register pipe cap updating when hidden/unhidden
 	RegisterSignal(src, COMSIG_OBJ_HIDE, PROC_REF(on_hide))
 
 /**
- * Handler for signals registered in `setup_hiding`, connects only if `hide` is set to `TRUE`. Calls `update_cap_visuals` on pipe and its connected nodes
+ * Signal handler. Updates both our pipe cap visuals and those of adjacent nodes.
+ * We update adjacent nodes as their pipe caps are based partially on our state, so they need updating as well.
  */
 /obj/machinery/atmospherics/proc/on_hide(datum/source)
 	SHOULD_CALL_PARENT(TRUE)
