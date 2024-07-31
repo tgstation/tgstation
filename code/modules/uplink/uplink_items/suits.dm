@@ -79,3 +79,4 @@
 	purchasable_from = ~UPLINK_ALL_SYNDIE_OPS
 	progression_minimum = 90 MINUTES
 	cost = 16
+	cant_discount = TRUE
