@@ -87,8 +87,8 @@
 	equipped = null // equipment gets deleted already because its in our contents
 
 /obj/vehicle/sealed/space_pod/atom_destruction(damage_flag)
-	. = ..()
 	explosion(loc, devastation_range = 1, heavy_impact_range = 2)
+	return ..()
 
 /obj/vehicle/sealed/space_pod/Bump(atom/bumped)
 	. = ..()
