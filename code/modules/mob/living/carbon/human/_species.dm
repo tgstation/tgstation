@@ -1117,7 +1117,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
 		return
 
 	// If our target is staggered, the target's armor, minus our limb effectiveness sets the minimum necessary amount of damage sustained to cause an effect. Minimum 40, max 200 for sanity reasons
-	if(staggered && (user.getFireLoss()*0.5 + user.getBruteLoss()*0.5) >= min(armor_block - limb_accuracy, 40, 200))
+	if(staggered && (target.getFireLoss()*0.5 + target.getBruteLoss()*0.5) >= min(armor_block - limb_accuracy, 40, 200))
 		stagger_combo(user, target, atk_verb, limb_accuracy, armor_block)
 
 /// Handles the stagger combo effect of our punch. Follows the same logic as the above proc, target is our owner, user is our attacker.
