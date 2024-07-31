@@ -712,6 +712,7 @@
 		attached_hat = hat
 		var/obj/item/clothing/helmet = mod.get_part_from_slot(ITEM_SLOT_HEAD)
 		if(istype(helmet))
+			helmet.attach_clothing_traits(attached_hat.clothing_traits)
 			former_flags = helmet.flags_cover
 			former_visor_flags = helmet.visor_flags_cover
 			helmet.flags_cover |= attached_hat.flags_cover
@@ -734,11 +735,12 @@
 		balloon_alert(user, "hat removed")
 	else
 		balloon_alert_to_viewers("the hat falls to the floor!")
-	attached_hat = null
 	var/obj/item/clothing/helmet = mod.get_part_from_slot(ITEM_SLOT_HEAD)
 	if(istype(helmet))
+		helmet.detach_clothing_traits(attached_hat)
 		helmet.flags_cover = former_flags
 		helmet.visor_flags_cover = former_visor_flags
+	attached_hat = null
 	mod.wearer.update_clothing(mod.slot_flags)
 
 /obj/item/mod/module/hat_stabilizer/syndicate
