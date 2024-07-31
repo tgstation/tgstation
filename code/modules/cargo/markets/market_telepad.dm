@@ -179,13 +179,13 @@
 			playsound(src, 'sound/machines/buzz-sigh.ogg', 40, FALSE)
 			return ITEM_INTERACT_BLOCKING
 		if(!user.transferItemToLoc(tool, src))
-			balloon_alert("stuck to your hands!")
+			balloon_alert(user, "stuck to your hands!")
 			return ITEM_INTERACT_BLOCKING
-		balloon_alert("item loaded.")
+		balloon_alert(user, "item loaded")
 		close_machine(tool)
 		return ITEM_INTERACT_SUCCESS
 	else if(!creds_value)
-		balloon_alert("open the machine!")
+		balloon_alert(user, "open the machine!")
 		return ITEM_INTERACT_BLOCKING
 
 	if(machine_stat & NOPOWER)
