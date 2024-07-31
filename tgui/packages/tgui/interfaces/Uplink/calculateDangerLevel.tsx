@@ -140,6 +140,9 @@ export const calculateDangerLevel = (
         borderRadius: '5px',
         display: 'inline-block',
       }}
+      lineHeight={2}
+      minWidth={10}
+      textAlign="center"
       px={0.8}
       py={0.6}
     >

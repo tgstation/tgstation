@@ -1,6 +1,5 @@
 import { BooleanLike } from 'common/react';
 import { Component, Fragment } from 'react';
-import { LabeledList } from 'tgui-core/components';
 
 import { resolveAsset } from '../../assets';
 import { useBackend } from '../../backend';
@@ -8,9 +7,7 @@ import {
   Box,
   Button,
   Dimmer,
-  DmIcon,
-  Icon,
-  Section,
+  NoticeBox,
   Stack,
   Tabs,
   Tooltip,
@@ -205,7 +202,6 @@ export class Uplink extends Component<{}, UplinkState> {
       shop_locked,
     } = data;
     const { allItems, allCategories, currentTab } = this.state as UplinkState;
-    const fallback = <Icon m="18px" name="spinner" spin />;
     const itemsToAdd = [...allItems];
     const items: ItemExtraData[] = [];
     itemsToAdd.push(...extra_purchasable);
@@ -235,28 +231,17 @@ export class Uplink extends Component<{}, UplinkState> {
         icon_state: item.icon_state,
         category: item.category,
         desc: (
-          <Stack>
-            <Stack.Item>
-              <DmIcon
-                fallback={fallback}
-                icon={item.icon}
-                icon_state={item.icon_state}
-                width="64px"
-                mr={1}
-              />
-            </Stack.Item>
-            <Stack.Item>
-              {item.desc}
-              {(item.lock_other_purchases && (
-                <Box color="orange" bold>
-                  Taking this item will lock you from further purchasing from
-                  the marketplace. Additionally, if you have already purchased
-                  an item, you will not be able to purchase this.
-                </Box>
-              )) ||
-                null}
-            </Stack.Item>
-          </Stack>
+          <>
+            <Box>{item.desc}</Box>
+            {(item.lock_other_purchases && (
+              <NoticeBox mt={1}>
+                Taking this item will lock you from further purchasing from the
+                marketplace. Additionally, if you have already purchased an
+                item, you will not be able to purchase this.
+              </NoticeBox>
+            )) ||
+              null}
+          </>
         ),
         cost: (
           <Box>
@@ -296,103 +281,14 @@ export class Uplink extends Component<{}, UplinkState> {
     // Round it and convert it into a percentage
     progressionPercentage = Math.round(progressionPercentage * 1000) / 10;
     return (
-      <Window width={820} height={580} theme="syndicate">
+      <Window width={700} height={600} theme="syndicate">
         <Window.Content>
-          <Stack fill>
-            <Stack.Item width="200px">
-              <Stack vertical fill>
-                {!!lockable && (
-                  <Stack.Item>
-                    <Button
-                      lineHeight={3}
-                      textAlign="center"
-                      icon="lock"
-                      color="bad"
-                      fluid
-                      bold
-                      onClick={() => act('lock')}
-                    >
-                      LOCK
-                    </Button>
-                  </Stack.Item>
-                )}
-                <Stack.Item>
-                  <Section>
-                    <LabeledList>
-                      <LabeledList.Item label="Threat">
-                        <Box bold>
-                          <Tooltip
-                            content={
-                              (!!has_progression && (
-                                <Box>
-                                  <Box>
-                                    <Box>Your current level of threat.</Box>{' '}
-                                    Threat determines
-                                    {has_objectives
-                                      ? ' the severity of secondary objectives you get and '
-                                      : ' '}
-                                    what items you can purchase.&nbsp;
-                                    <Box mt={0.5}>
-                                      {/* A minute in deciseconds */}
-                                      Threat passively increases by{' '}
-                                      <Box color="green" as="span">
-                                        {calculateProgression(
-                                          current_progression_scaling,
-                                        )}
-                                      </Box>
-                                      &nbsp;every minute
-                                    </Box>
-                                    {Math.abs(progressionPercentage) > 0 && (
-                                      <Box mt={0.5}>
-                                        Because your threat level is
-                                        {progressionPercentage < 0
-                                          ? ' ahead '
-                                          : ' behind '}
-                                        of where it should be, you are getting
-                                        <Box
-                                          as="span"
-                                          color={
-                                            progressionPercentage < 0
-                                              ? 'red'
-                                              : 'green'
-                                          }
-                                          ml={1}
-                                          mr={1}
-                                        >
-                                          {progressionPercentage}%
-                                        </Box>
-                                        {progressionPercentage < 0
-                                          ? 'less'
-                                          : 'more'}{' '}
-                                        threat every minute
-                                      </Box>
-                                    )}
-                                    {dangerLevelsTooltip}
-                                  </Box>
-                                </Box>
-                              )) ||
-                              "Your current threat level. You are a killing machine and don't need to improve your threat level."
-                            }
-                          >
-                            {/* If we have no progression,
-                      just give them a generic title */}
-                            {has_progression
-                              ? calculateDangerLevel(progression_points, false)
-                              : calculateDangerLevel(dangerDefault, false)}
-                          </Tooltip>
-                        </Box>
-                      </LabeledList.Item>
-                      <LabeledList.Item label="TC">
-                        <Box color="good" bold fontSize={1.2}>
-                          {telecrystals}
-                        </Box>
-                      </LabeledList.Item>
-                    </LabeledList>
-                  </Section>
-                </Stack.Item>
-                <Stack.Item grow={1}>
-                  <Section fitted>
-                    <Tabs vertical fluid>
+          <Stack fill vertical>
+            {!!has_progression && (
+              <Stack.Item>
+                <Stack fill>
+                  <Stack.Item grow={1}>
+                    <Tabs fluid height={3} textAlign="center">
                       {!!has_objectives && (
                         <>
                           <Tabs.Tab
@@ -416,16 +312,87 @@ export class Uplink extends Component<{}, UplinkState> {
                         Market
                       </Tabs.Tab>
                     </Tabs>
-                  </Section>
-                </Stack.Item>
-                <Stack.Item>
-                  <Box fontSize={0.8}>SyndOS Version 3.17</Box>
-                  <Box fontSize={0.8} color="green">
-                    Connection Secure
-                  </Box>
-                </Stack.Item>
-              </Stack>
-            </Stack.Item>
+                  </Stack.Item>
+                  <Stack.Item>
+                    <Box bold>
+                      <Tooltip
+                        content={
+                          (!!has_progression && (
+                            <Box>
+                              <Box>
+                                <Box>Your current level of threat.</Box> Threat
+                                determines
+                                {has_objectives
+                                  ? ' the severity of secondary objectives you get and '
+                                  : ' '}
+                                what items you can purchase.&nbsp;
+                                <Box mt={0.5}>
+                                  {/* A minute in deciseconds */}
+                                  Threat passively increases by{' '}
+                                  <Box color="green" as="span">
+                                    {calculateProgression(
+                                      current_progression_scaling,
+                                    )}
+                                  </Box>
+                                  &nbsp;every minute
+                                </Box>
+                                {Math.abs(progressionPercentage) > 0 && (
+                                  <Box mt={0.5}>
+                                    Because your threat level is
+                                    {progressionPercentage < 0
+                                      ? ' ahead '
+                                      : ' behind '}
+                                    of where it should be, you are getting
+                                    <Box
+                                      as="span"
+                                      color={
+                                        progressionPercentage < 0
+                                          ? 'red'
+                                          : 'green'
+                                      }
+                                      ml={1}
+                                      mr={1}
+                                    >
+                                      {progressionPercentage}%
+                                    </Box>
+                                    {progressionPercentage < 0
+                                      ? 'less'
+                                      : 'more'}{' '}
+                                    threat every minute
+                                  </Box>
+                                )}
+                                {dangerLevelsTooltip}
+                              </Box>
+                            </Box>
+                          )) ||
+                          "Your current threat level. You are a killing machine and don't need to improve your threat level."
+                        }
+                      >
+                        {/* If we have no progression,
+                                  just give them a generic title */}
+                        {has_progression
+                          ? calculateDangerLevel(progression_points, false)
+                          : calculateDangerLevel(dangerDefault, false)}
+                      </Tooltip>
+                    </Box>
+                  </Stack.Item>
+                  {!!lockable && (
+                    <Stack.Item>
+                      <Button
+                        lineHeight={2.5}
+                        textAlign="center"
+                        icon="lock"
+                        width={10}
+                        bold
+                        onClick={() => act('lock')}
+                      >
+                        LOCK
+                      </Button>
+                    </Stack.Item>
+                  )}
+                </Stack>
+              </Stack.Item>
+            )}
             <Stack.Item grow>
               {(currentTab === 0 && has_objectives && (
                 <PrimaryObjectiveMenu
@@ -468,9 +435,9 @@ export class Uplink extends Component<{}, UplinkState> {
                     handleRequestObjectives={() => act('regenerate_objectives')}
                   />
                 )) || (
-                  <Section fill scrollable>
+                  <>
                     <GenericUplink
-                      currency=""
+                      currency={`${telecrystals} TC`}
                       categories={allCategories}
                       items={items}
                       handleBuy={(item: ItemExtraData) => {
@@ -495,7 +462,7 @@ export class Uplink extends Component<{}, UplinkState> {
                       </Dimmer>
                     )) ||
                       null}
-                  </Section>
+                  </>
                 )}
             </Stack.Item>
           </Stack>

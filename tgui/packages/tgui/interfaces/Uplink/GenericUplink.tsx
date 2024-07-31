@@ -4,6 +4,8 @@ import { useState } from 'react';
 import {
   Box,
   Button,
+  DmIcon,
+  Icon,
   Input,
   NoticeBox,
   Section,
@@ -36,44 +38,70 @@ export const GenericUplink = (props: GenericUplinkProps) => {
   });
 
   return (
-    <Section
-      title={<Box inline>{currency}</Box>}
-      buttons={
-        <>
-          Search
-          <Input
-            autoFocus
-            value={searchText}
-            onInput={(e, value) => setSearchText(value)}
-            mx={1}
-          />
-          <Button
-            icon={compactMode ? 'list' : 'info'}
-            onClick={() => setCompactMode(!compactMode)}
-          >
-            {compactMode ? 'Compact' : 'Detailed'}
-          </Button>
-        </>
-      }
-    >
-      <Stack>
-        {searchText.length === 0 && (
-          <Stack.Item mr={1} width="128px">
-            <Tabs vertical>
+    <Stack fill>
+      <Stack.Item width="160px">
+        <Stack vertical fill>
+          <Stack.Item>
+            <Stack>
+              <Stack.Item grow={1}>
+                <Button
+                  bold
+                  fluid
+                  lineHeight={2}
+                  style={{
+                    overflow: 'hidden',
+                    whiteSpace: 'nowrap',
+                    textOverflow: 'ellipsis',
+                    textAlign: 'center',
+                  }}
+                >
+                  {currency}
+                </Button>
+              </Stack.Item>
+              <Stack.Item>
+                <Button
+                  fluid
+                  lineHeight={2}
+                  textAlign="center"
+                  icon={compactMode ? 'image' : 'list'}
+                  tooltip={compactMode ? 'Detail view' : 'List view'}
+                  onClick={() => setCompactMode(!compactMode)}
+                />
+              </Stack.Item>
+            </Stack>
+          </Stack.Item>
+          <Stack.Item>
+            <Input
+              autoFocus
+              value={searchText}
+              placeholder="Search..."
+              onInput={(e, value) => setSearchText(value)}
+              fluid
+            />
+          </Stack.Item>
+          <Stack.Item grow={1}>
+            <Tabs vertical fill>
               {categories.map((category) => (
                 <Tabs.Tab
                   py={0.8}
                   key={category}
                   selected={category === selectedCategory}
-                  onClick={() => setSelectedCategory(category)}
+                  onClick={(e) => {
+                    setSelectedCategory(category);
+                    if (searchText.length > 0) {
+                      setSearchText('');
+                    }
+                  }}
                 >
                   {category}
                 </Tabs.Tab>
               ))}
             </Tabs>
           </Stack.Item>
-        )}
-        <Stack.Item grow={1}>
+        </Stack>
+      </Stack.Item>
+      <Stack.Item grow={1}>
+        <Box height="100%" pr={1} mr={-1} style={{ overflowY: 'auto' }}>
           {items.length === 0 && (
             <NoticeBox>
               {searchText.length === 0
@@ -86,9 +114,9 @@ export const GenericUplink = (props: GenericUplinkProps) => {
             items={items}
             handleBuy={handleBuy}
           />
-        </Stack.Item>
-      </Stack>
-    </Section>
+        </Box>
+      </Stack.Item>
+    </Stack>
   );
 };
 
@@ -112,22 +140,66 @@ export type ItemListProps = {
 
 const ItemList = (props: ItemListProps) => {
   const { compactMode, items, handleBuy } = props;
+  const fallback = (
+    <Icon m={compactMode ? '10px' : '26px'} name="spinner" spin />
+  );
   return (
     <Stack vertical>
       {items.map((item, index) => (
-        <Stack.Item key={index}>
-          <Section
-            key={item.name}
-            title={item.name}
-            buttons={
-              <Button
-                content={item.cost}
-                disabled={item.disabled}
-                onClick={(e) => handleBuy(item)}
-              />
-            }
-          >
-            {compactMode ? null : item.desc}
+        <Stack.Item key={index} mt={compactMode ? '2px' : 1}>
+          <Section key={item.name} fitted={compactMode ? true : false}>
+            <Stack>
+              <Stack.Item>
+                <Box
+                  width={compactMode ? '32px' : '64px'}
+                  height={compactMode ? '32px' : '64px'}
+                  position="relative"
+                  m={compactMode ? '2px' : 0}
+                  mr={1}
+                >
+                  <DmIcon
+                    position="absolute"
+                    bottom="0"
+                    fallback={fallback}
+                    icon={item.icon}
+                    icon_state={item.icon_state}
+                    width={compactMode ? '32px' : '64px'}
+                  />
+                </Box>
+              </Stack.Item>
+              <Stack.Item grow={1}>
+                {compactMode ? (
+                  <Stack>
+                    <Stack.Item bold grow={1} lineHeight="36px">
+                      {item.name}
+                    </Stack.Item>
+                    <Stack.Item>
+                      <Button
+                        m="8px"
+                        disabled={item.disabled}
+                        onClick={(e) => handleBuy(item)}
+                      >
+                        {item.cost}
+                      </Button>
+                    </Stack.Item>
+                  </Stack>
+                ) : (
+                  <Section
+                    title={item.name}
+                    buttons={
+                      <Button
+                        disabled={item.disabled}
+                        onClick={(e) => handleBuy(item)}
+                      >
+                        {item.cost}
+                      </Button>
+                    }
+                  >
+                    {item.desc}
+                  </Section>
+                )}
+              </Stack.Item>
+            </Stack>
           </Section>
         </Stack.Item>
       ))}
