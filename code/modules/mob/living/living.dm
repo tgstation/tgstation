@@ -2663,7 +2663,7 @@ GLOBAL_LIST_EMPTY(fire_appearances)
 
 	///The price should be high enough that the contractor can't just buy 'em back with their cut alone.
 	var/datum/market_item/hostage/market_item = new(src, black_market_price || ransom_price)
-	SSblackmarket.markets[/datum/market/blackmarket].add_item(market_item)
+	SSmarket.markets[/datum/market/blackmarket].add_item(market_item)
 
 	if(mind)
 		ADD_TRAIT(mind, TRAIT_HAS_BEEN_KIDNAPPED, TRAIT_GENERIC)
