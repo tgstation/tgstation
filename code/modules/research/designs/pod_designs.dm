@@ -45,9 +45,9 @@
 	build_type = MECHFAB
 	build_path = /obj/item/pod_equipment/thrusters/default
 	materials = list(
-		/datum/material/iron=SHEET_MATERIAL_AMOUNT*8,
-		/datum/material/titanium=SHEET_MATERIAL_AMOUNT*12,
-		/datum/material/silver=SHEET_MATERIAL_AMOUNT*5,
+		/datum/material/iron=SHEET_MATERIAL_AMOUNT*4,
+		/datum/material/titanium=SHEET_MATERIAL_AMOUNT*6,
+		/datum/material/silver=SHEET_MATERIAL_AMOUNT*2.5,
 	)
 	construction_time = 7 SECONDS
 	category = list(
@@ -59,9 +59,9 @@
 	id = "podthruster2"
 	build_path = /obj/item/pod_equipment/thrusters/fast
 	materials = list(
-		/datum/material/iron=SHEET_MATERIAL_AMOUNT*10,
-		/datum/material/titanium=SHEET_MATERIAL_AMOUNT*14,
-		/datum/material/silver=SHEET_MATERIAL_AMOUNT*7,
+		/datum/material/iron=SHEET_MATERIAL_AMOUNT*5,
+		/datum/material/titanium=SHEET_MATERIAL_AMOUNT*7,
+		/datum/material/silver=SHEET_MATERIAL_AMOUNT*3.5,
 	)
 
 /datum/design/pod_thrusters/tier3
@@ -69,9 +69,9 @@
 	id = "podthruster3"
 	build_path = /obj/item/pod_equipment/thrusters/blazer
 	materials = list(
-		/datum/material/iron=SHEET_MATERIAL_AMOUNT*12,
-		/datum/material/titanium=SHEET_MATERIAL_AMOUNT*16,
-		/datum/material/silver=SHEET_MATERIAL_AMOUNT*9,
+		/datum/material/iron=SHEET_MATERIAL_AMOUNT*6,
+		/datum/material/titanium=SHEET_MATERIAL_AMOUNT*8,
+		/datum/material/silver=SHEET_MATERIAL_AMOUNT*4.5,
 	)
 
 /datum/design/pod_engine/light
@@ -79,9 +79,9 @@
 	id = "podengine1"
 	build_path = /obj/item/pod_equipment/engine/light
 	materials = list(
-		/datum/material/iron=SHEET_MATERIAL_AMOUNT*8,
-		/datum/material/titanium=SHEET_MATERIAL_AMOUNT*2,
-		/datum/material/uranium=SHEET_MATERIAL_AMOUNT*2,
+		/datum/material/iron=SHEET_MATERIAL_AMOUNT*4,
+		/datum/material/titanium=SHEET_MATERIAL_AMOUNT*1,
+		/datum/material/uranium=SHEET_MATERIAL_AMOUNT*1,
 	)
 
 /datum/design/pod_engine
@@ -90,9 +90,9 @@
 	build_type = MECHFAB
 	build_path = /obj/item/pod_equipment/engine/default
 	materials = list(
-		/datum/material/iron=SHEET_MATERIAL_AMOUNT*13,
-		/datum/material/titanium=SHEET_MATERIAL_AMOUNT*5,
-		/datum/material/uranium=SHEET_MATERIAL_AMOUNT*4,
+		/datum/material/iron=SHEET_MATERIAL_AMOUNT*6.5,
+		/datum/material/titanium=SHEET_MATERIAL_AMOUNT*2.5,
+		/datum/material/uranium=SHEET_MATERIAL_AMOUNT*2.5,
 	)
 	construction_time = 7 SECONDS
 	category = list(
@@ -104,10 +104,10 @@
 	id = "podengine3"
 	build_path = /obj/item/pod_equipment/engine/fast
 	materials = list(
-		/datum/material/iron=SHEET_MATERIAL_AMOUNT*15,
-		/datum/material/titanium=SHEET_MATERIAL_AMOUNT*8,
-		/datum/material/uranium=SHEET_MATERIAL_AMOUNT*4,
-		/datum/material/gold=SHEET_MATERIAL_AMOUNT*2,
+		/datum/material/iron=SHEET_MATERIAL_AMOUNT*7.5,
+		/datum/material/titanium=SHEET_MATERIAL_AMOUNT*4,
+		/datum/material/uranium=SHEET_MATERIAL_AMOUNT*2,
+		/datum/material/gold=SHEET_MATERIAL_AMOUNT*1,
 	)
 
 /datum/design/pod_engine/tier4
@@ -115,10 +115,10 @@
 	id = "podengine4"
 	build_path = /obj/item/pod_equipment/engine/faster
 	materials = list(
-		/datum/material/iron=SHEET_MATERIAL_AMOUNT*18,
-		/datum/material/titanium=SHEET_MATERIAL_AMOUNT*12,
-		/datum/material/uranium=SHEET_MATERIAL_AMOUNT*6,
-		/datum/material/gold=SHEET_MATERIAL_AMOUNT*4,
+		/datum/material/iron=SHEET_MATERIAL_AMOUNT*9,
+		/datum/material/titanium=SHEET_MATERIAL_AMOUNT*6,
+		/datum/material/uranium=SHEET_MATERIAL_AMOUNT*3,
+		/datum/material/gold=SHEET_MATERIAL_AMOUNT*2,
 	)
 
 /datum/design/podsensors
@@ -187,8 +187,8 @@
 	build_type = MECHFAB
 	build_path = /obj/item/pod_equipment/cargo_hold
 	materials = list(
-		/datum/material/iron=SHEET_MATERIAL_AMOUNT*10,
-		/datum/material/titanium=SHEET_MATERIAL_AMOUNT*6,
+		/datum/material/iron=SHEET_MATERIAL_AMOUNT*7.5,
+		/datum/material/titanium=SHEET_MATERIAL_AMOUNT*5,
 	)
 	construction_time = 5 SECONDS
 	category = list(
@@ -201,7 +201,7 @@
 	build_type = MECHFAB
 	build_path = /obj/item/pod_equipment/extra_seats
 	materials = list(
-		/datum/material/iron=SHEET_MATERIAL_AMOUNT*10,
+		/datum/material/iron=SHEET_MATERIAL_AMOUNT*6,
 		/datum/material/titanium=SHEET_MATERIAL_AMOUNT*3,
 	)
 	construction_time = 5 SECONDS
