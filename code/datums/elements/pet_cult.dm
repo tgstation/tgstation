@@ -1,4 +1,4 @@
-#define PET_CULT_ATTACK 10
+#define PET_CULT_ATTACK_UPPER 15
 #define PET_CULT_HEALTH 50
 
 /datum/element/cultist_pet
@@ -19,7 +19,7 @@
 	src.pet_cult_icon_state = pet_cult_icon_state
 
 	RegisterSignal(target, COMSIG_LIVING_CULT_SACRIFICED, PROC_REF(become_cultist))
-	RegisterSignal(target, COMSIG_MOB_LOGIN, PROC_REF(on_login))
+	RegisterSignal(target, COMSIG_MOB_CLIENT_LOGIN, PROC_REF(on_login))
 	RegisterSignal(target, COMSIG_ATOM_UPDATE_ICON_STATE, PROC_REF(on_icon_state_updated))
 	RegisterSignal(target, COMSIG_ATOM_UPDATE_OVERLAYS, PROC_REF(on_overlays_updated))
 
@@ -58,8 +58,8 @@
 
 	source.mind?.add_antag_datum(/datum/antagonist/cult, team)
 	qdel(source.GetComponent(/datum/component/obeys_commands)) //if we obey commands previously, forget about them
-	source.melee_damage_lower = max(PET_CULT_ATTACK, source::melee_damage_lower)
-	source.melee_damage_upper = max(PET_CULT_ATTACK + 5, source::melee_damage_upper)
+	source.melee_damage_lower = max(PET_CULT_ATTACK_UPPER - 5, source::melee_damage_lower)
+	source.melee_damage_upper = max(PET_CULT_ATTACK_UPPER, source::melee_damage_upper)
 	source.maxHealth = max(PET_CULT_HEALTH, source::maxHealth)
 	source.fully_heal()
 
@@ -123,5 +123,5 @@
 	source.update_appearance(UPDATE_OVERLAYS)
 
 
-#undef PET_CULT_ATTACK
+#undef PET_CULT_ATTACK_UPPER
 #undef PET_CULT_HEALTH
