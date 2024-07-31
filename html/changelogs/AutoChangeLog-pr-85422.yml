@@ -1,0 +1,4 @@
+author: "MTandi"
+delete-after: True
+changes:
+  - image: "Made chem master container icons not blurry"

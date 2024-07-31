@@ -17276,6 +17276,7 @@
 /area/station/science/research)
 "ggl" = (
 /obj/machinery/camera/autoname/directional/west,
+/obj/structure/water_source/puddle,
 /turf/open/floor/grass,
 /area/station/service/hydroponics/garden)
 "ggu" = (
@@ -39047,6 +39048,10 @@
 /obj/effect/turf_decal/tile/dark_blue,
 /turf/open/floor/iron,
 /area/station/command/bridge)
+"nPw" = (
+/obj/structure/water_source/puddle,
+/turf/open/floor/grass,
+/area/station/security/prison/garden)
 "nPM" = (
 /obj/effect/turf_decal/trimline/yellow/filled/line{
 	dir = 4
@@ -82449,7 +82454,7 @@ iUF
 dUc
 xrb
 xrb
-dEG
+nPw
 dEG
 iqf
 cKn

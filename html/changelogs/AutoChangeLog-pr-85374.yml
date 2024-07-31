@@ -1,0 +1,4 @@
+author: "grungussuss"
+delete-after: True
+changes:
+  - bugfix: "the abandoned plasma research facility on icemoon no longer has an item that shouldn't exist"
