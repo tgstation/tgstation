@@ -63,8 +63,8 @@ export const GenericUplink = (props: GenericUplinkProps) => {
                   fluid
                   lineHeight={2}
                   textAlign="center"
-                  icon={compactMode ? 'image' : 'list'}
-                  tooltip={compactMode ? 'Detail view' : 'List view'}
+                  icon={compactMode ? 'maximize' : 'minimize'}
+                  tooltip={compactMode ? 'Detailed view' : 'Compact view'}
                   onClick={() => setCompactMode(!compactMode)}
                 />
               </Stack.Item>
@@ -170,7 +170,16 @@ const ItemList = (props: ItemListProps) => {
               <Stack.Item grow={1}>
                 {compactMode ? (
                   <Stack>
-                    <Stack.Item bold grow={1} lineHeight="36px">
+                    <Stack.Item
+                      bold
+                      grow={1}
+                      lineHeight="36px"
+                      style={{
+                        overflow: 'hidden',
+                        whiteSpace: 'nowrap',
+                        textOverflow: 'ellipsis',
+                      }}
+                    >
                       {item.name}
                     </Stack.Item>
                     <Stack.Item>

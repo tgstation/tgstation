@@ -292,12 +292,22 @@ export class Uplink extends Component<{}, UplinkState> {
                       {!!has_objectives && (
                         <>
                           <Tabs.Tab
+                            style={{
+                              overflow: 'hidden',
+                              whiteSpace: 'nowrap',
+                              textOverflow: 'ellipsis',
+                            }}
                             selected={currentTab === 0}
                             onClick={() => this.setState({ currentTab: 0 })}
                           >
                             Primary Objectives
                           </Tabs.Tab>
                           <Tabs.Tab
+                            style={{
+                              overflow: 'hidden',
+                              whiteSpace: 'nowrap',
+                              textOverflow: 'ellipsis',
+                            }}
                             selected={currentTab === 1}
                             onClick={() => this.setState({ currentTab: 1 })}
                           >
@@ -306,6 +316,11 @@ export class Uplink extends Component<{}, UplinkState> {
                         </>
                       )}
                       <Tabs.Tab
+                        style={{
+                          overflow: 'hidden',
+                          whiteSpace: 'nowrap',
+                          textOverflow: 'ellipsis',
+                        }}
                         selected={currentTab === 2 || !has_objectives}
                         onClick={() => this.setState({ currentTab: 2 })}
                       >
