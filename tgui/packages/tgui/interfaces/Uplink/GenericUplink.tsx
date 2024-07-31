@@ -1,5 +1,6 @@
 import { BooleanLike } from 'common/react';
 import { useState } from 'react';
+import { Tooltip } from 'tgui-core/components';
 
 import {
   Box,
@@ -181,6 +182,11 @@ const ItemList = (props: ItemListProps) => {
                       }}
                     >
                       {item.name}
+                    </Stack.Item>
+                    <Stack.Item>
+                      <Tooltip content={item.desc}>
+                        <Icon name="info-circle" lineHeight="36px" />
+                      </Tooltip>
                     </Stack.Item>
                     <Stack.Item>
                       <Button
