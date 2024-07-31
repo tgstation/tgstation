@@ -64,7 +64,7 @@
 	acid = 30
 
 /obj/machinery/newscaster/pai/ui_state(mob/user)
-	return GLOB.reverse_contained_state
+	return GLOB.deep_inventory_state
 
 MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/newscaster, 30)
 
