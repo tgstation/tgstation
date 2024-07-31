@@ -210,7 +210,13 @@ const ItemList = (props: ItemListProps) => {
                       </Button>
                     }
                   >
-                    {item.desc}
+                    <Box
+                      style={{
+                        opacity: '0.75',
+                      }}
+                    >
+                      {item.desc}
+                    </Box>
                   </Section>
                 )}
               </Stack.Item>
