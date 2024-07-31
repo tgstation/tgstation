@@ -366,3 +366,6 @@
   flleeppyy:
   - rscadd: Kerfus cyborgs, cat/kitten pAI's and IPC's now have unique cat sounds.
   - bugfix: oozeling revival bug involving going to CC and returning to corpse
+2024-07-31:
+  Absolucy:
+  - bugfix: Fixed a runtime relating to granting admins mentor-related verbs.
