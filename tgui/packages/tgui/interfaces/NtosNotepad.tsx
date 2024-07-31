@@ -308,6 +308,7 @@ class NotePadTextArea extends Component<NotePadTextAreaProps> {
         className="NtosNotepad__textarea"
         nowrap={!wordWrap}
         value={text}
+        scrollbar
       />
     );
   }
