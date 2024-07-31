@@ -1,4 +1,4 @@
-/datum/element/wear_collar
+/datum/element/wears_collar
 	element_flags = ELEMENT_BESPOKE
 	argument_hash_start_idx = 2
 	///our icon's pathfile
@@ -8,7 +8,7 @@
 	///iconstate of our collar while resting
 	var/collar_resting_icon_state
 
-/datum/element/wear_collar/Attach(datum/target, collar_icon = 'icons/mob/simple/pets.dmi', collar_resting_icon_state = FALSE, collar_icon_state)
+/datum/element/wears_collar/Attach(datum/target, collar_icon = 'icons/mob/simple/pets.dmi', collar_resting_icon_state = FALSE, collar_icon_state)
 	. = ..()
 
 	if(!isliving(target))
@@ -25,7 +25,7 @@
 	RegisterSignal(target, COMSIG_LIVING_RESTING, PROC_REF(on_rest))
 	RegisterSignal(target, COMSIG_MOB_STATCHANGE, PROC_REF(on_stat_change))
 
-/datum/element/wear_collar/Detach(datum/target)
+/datum/element/wears_collar/Detach(datum/target)
 	. = ..()
 	UnregisterSignal(target, list(
 		COMSIG_ATOM_ATTACKBY,
@@ -36,13 +36,13 @@
 		COMSIG_MOB_STATCHANGE,
 	))
 
-/datum/element/wear_collar/proc/on_stat_change(mob/living/source)
+/datum/element/wears_collar/proc/on_stat_change(mob/living/source)
 	SIGNAL_HANDLER
 
 	if(collar_icon_state)
 		source.update_icon(UPDATE_OVERLAYS)
 
-/datum/element/wear_collar/proc/on_content_exit(mob/living/source, atom/moved)
+/datum/element/wears_collar/proc/on_content_exit(mob/living/source, atom/moved)
 	SIGNAL_HANDLER
 
 	if(!istype(moved, /obj/item/clothing/neck/petcollar))
@@ -51,7 +51,7 @@
 	if(collar_icon_state)
 		source.update_appearance()
 
-/datum/element/wear_collar/proc/on_content_enter(mob/living/source, obj/item/clothing/neck/petcollar/new_collar)
+/datum/element/wears_collar/proc/on_content_enter(mob/living/source, obj/item/clothing/neck/petcollar/new_collar)
 	SIGNAL_HANDLER
 
 	if(!istype(new_collar))
@@ -61,7 +61,7 @@
 	if(collar_icon_state)
 		source.update_appearance()
 
-/datum/element/wear_collar/proc/attach_collar(atom/source, atom/movable/attacking_item, atom/user, params)
+/datum/element/wears_collar/proc/attach_collar(atom/source, atom/movable/attacking_item, atom/user, params)
 	SIGNAL_HANDLER
 
 	if(!istype(attacking_item, /obj/item/clothing/neck/petcollar))
@@ -72,7 +72,7 @@
 	attacking_item.forceMove(source)
 	return COMPONENT_NO_AFTERATTACK
 
-/datum/element/wear_collar/proc/on_overlays_updated(mob/living/source, list/overlays)
+/datum/element/wears_collar/proc/on_overlays_updated(mob/living/source, list/overlays)
 	SIGNAL_HANDLER
 
 	if(!locate(/obj/item/clothing/neck/petcollar) in source)
@@ -89,7 +89,7 @@
 	overlays += mutable_appearance(collar_icon, "[collar_icon_state][icon_tag]tag")
 
 
-/datum/element/wear_collar/proc/on_rest(atom/movable/source)
+/datum/element/wears_collar/proc/on_rest(atom/movable/source)
 	SIGNAL_HANDLER
 
 	source.update_icon(UPDATE_OVERLAYS)
