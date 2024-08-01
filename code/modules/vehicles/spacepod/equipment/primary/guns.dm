@@ -41,9 +41,3 @@
 
 /obj/item/pod_equipment/primary/projectile_weapon/energy/prefire_checks(mob/living/user)
 	return pod.use_power(power_used_to_fire)
-
-/obj/item/pod_equipment/primary/projectile_weapon/energy/kinetic_accelerator
-	cooldown_time = 1.75 SECONDS
-	name = "pod proto-kinetic accelerator"
-	projectile_path = /obj/item/ammo_casing/energy/kinetic::projectile_type
-	fire_sound = /obj/item/ammo_casing/energy/kinetic::fire_sound

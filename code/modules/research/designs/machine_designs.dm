@@ -1248,7 +1248,7 @@
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_SERVICE
 
-/datum/design/board/modular_shield_relay
+/datum/design/board/podcommsreceiverdoor
 	name = "Pod Comms Receiver (Door) Board"
 	desc = "The circuit board for a pod comms receiver for doors."
 	id = "podcommsreceiverdoor"

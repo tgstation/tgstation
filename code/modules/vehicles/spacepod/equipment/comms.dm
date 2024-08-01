@@ -17,4 +17,7 @@
 
 /obj/item/pod_equipment/comms/debug
 	name = "all access comms array"
-	accesses = REGION_ACCESS_ALL_GLOBAL
+
+/obj/item/pod_equipment/comms/debug/Initialize(mapload)
+	. = ..()
+	accesses = SSid_access.get_region_access_list(list(REGION_ALL_GLOBAL))

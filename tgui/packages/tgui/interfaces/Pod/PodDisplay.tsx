@@ -80,7 +80,7 @@ export default function PodDisplay(_props: any): JSX.Element {
               {cabinPressure}
             </LabeledList.Item>
             <LabeledList.Item label="Acceleration">
-              {acceleration} / {maxAcceleration} ({forcePerMove})
+              {acceleration} / {maxAcceleration} ({forcePerMove}N/s)
             </LabeledList.Item>
           </LabeledList>
         </Section>

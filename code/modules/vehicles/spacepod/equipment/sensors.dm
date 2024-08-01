@@ -9,7 +9,7 @@
 
 /obj/item/pod_equipment/sensors/on_attach(mob/user)
 	. = ..()
-	gps = AddComponent(/datum/component/gps/item, "POD[rand(0,999)]", state = GLOB.contained_state, overlay_state = FALSE)
+	gps = AddComponent(/datum/component/gps/item, "POD[rand(0,999)]", state = GLOB.in_vehicle_state, overlay_state = FALSE)
 	gps.tracking = FALSE
 	START_PROCESSING(SSobj, src)
 	if(islist(traits_given))
@@ -60,7 +60,7 @@
 
 /obj/item/pod_equipment/sensors/proc/on_use(mob/user)
 	if(pod.use_power(10)) // a noble 10 probably just used to check if the UI is opened
-		gps.interact(user = user)
+		gps.ui_interact(user)
 		return
 	SStgui.close_uis(gps)
 

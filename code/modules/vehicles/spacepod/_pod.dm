@@ -4,7 +4,6 @@
 
 // TODO:
 // equipment variants (maybe a few proper guns)
-// the material costs are SO bullshit
 // ONCE EVERYTHING IS DONE, add hangar bays, must have 1-3 pods idk, maybe t1 megacells + oxygen tanks, and a manual?? not sure
 // sprites
 // replace spawn_equip or add new subtype, but probably the former; to have a more reasonable roundstart loadout
@@ -45,7 +44,7 @@
 
 	/// our air tank, used to cycle cabin air
 	var/obj/item/tank/internals/cabin_air_tank
-	/// our air tank, used to cycle cabin air
+	/// gas mixture inside the vehicle
 	var/datum/gas_mixture/cabin_air = new(TANK_STANDARD_VOLUME * 5)
 	/// our battery
 	var/obj/item/stock_parts/power_store/battery/cell
@@ -65,6 +64,7 @@
 	START_PROCESSING(SSnewtonian_movement, src)
 	update_appearance()
 	RegisterSignal(src, COMSIG_ATOM_POST_DIR_CHANGE, PROC_REF(onSetDir))
+	ADD_TRAIT(src, TRAIT_CONSIDERED_ANCHORED_FOR_SPACEMOVEBACKUP, INNATE_TRAIT)
 
 /// This proc is responsible for outfitting the pod when spawned (admin or otherwise)
 /obj/vehicle/sealed/space_pod/proc/spawn_equip()
@@ -72,8 +72,8 @@
 	equip_item(new /obj/item/pod_equipment/comms)
 	equip_item(new /obj/item/pod_equipment/thrusters/default)
 	equip_item(new /obj/item/pod_equipment/engine/default)
-	equip_item(new /obj/item/pod_equipment/primary/projectile_weapon/energy/kinetic_accelerator)
-	equip_item(new /obj/item/pod_equipment/cargo_hold)
+	equip_item(new /obj/item/pod_equipment/primary/drill)
+	equip_item(new /obj/item/pod_equipment/orestorage)
 	equip_item(new /obj/item/pod_equipment/warp_drive)
 	equip_item(new /obj/item/pod_equipment/lock/pin)
 	cabin_air_tank = new /obj/item/tank/internals/oxygen(src)
@@ -85,51 +85,6 @@
 	QDEL_NULL(cabin_air_tank)
 	QDEL_LIST_ASSOC_VAL(equipment_actions)
 	equipped = null // equipment gets deleted already because its in our contents
-
-/obj/vehicle/sealed/space_pod/atom_destruction(damage_flag)
-	explosion(loc, devastation_range = 1, heavy_impact_range = 2) //doesnt damage occupants, whether this is a good thing is debatable
-	return ..()
-
-/obj/vehicle/sealed/space_pod/Bump(atom/bumped)
-	. = ..()
-	if(isnull(drift_handler))
-		return
-	if(drift_handler.drift_force < 3 NEWTONS) // need to be moving at a decent speed for anything to happen
-		return
-
-	var/strength = 1 + (drift_handler.drift_force - 3 NEWTONS) * 0.2 // strength of the impact
-
-	playsound(src, 'sound/effects/meteorimpact.ogg', min(40 * strength, 100), TRUE)
-
-	for(var/mob/shake_it in get_hearers_in_range(3, src))
-		if(shake_it.stat != DEAD && !isAI(shake_it))
-			shake_camera(shake_it, 0.3 SECONDS, min(strength, 2.5))
-
-	if(bumped.resistance_flags & INDESTRUCTIBLE) // damage handling goes past this point
-		return
-
-	qdel(drift_handler)
-
-	if(isclosedturf(bumped))
-		var/turf/closed/bumped_turf = bumped
-		take_damage(strength * 100, BRUTE)
-		if(strength > bumped_turf.explosive_resistance + 0.5) // normal walls have a resistance of 1 and rwalls 2, so you need a speed of at least 5.5 newtons to break a wall and 10.5 to break an rwall
-			bumped_turf.ScrapeAway(1, CHANGETURF_INHERIT_AIR)
-	else if(isobj(bumped))
-		var/obj/bumped_atom = bumped
-		bumped_atom.take_damage(strength * 100, BRUTE, attack_dir = REVERSE_DIR(dir))
-		take_damage(strength * 70, BRUTE)
-	else if(isliving(bumped))
-		var/mob/living/poor_sap = bumped
-		take_damage(strength * 50, BRUTE) //weaker cuz i want to see someone ram a dude
-		poor_sap.apply_damage(strength * 20, BRUTE)
-		var/our_turf = get_turf(src)
-		var/throwtarget = get_edge_target_turf(our_turf, get_dir(our_turf, get_step_away(poor_sap, our_turf)))
-		poor_sap.safe_throw_at(throwtarget, 3, max(1, strength*0.75), force = MOVE_FORCE_NORMAL*(strength/2))
-
-/obj/vehicle/sealed/space_pod/proc/onSetDir(datum/source, old_dir, new_dir)
-	SIGNAL_HANDLER
-	transform = transform.Turn(dir2angle(new_dir) - dir2angle(old_dir))
 
 /obj/vehicle/sealed/space_pod/generate_actions()
 	initialize_passenger_action_type(/datum/action/vehicle/sealed/kick_out)
@@ -190,50 +145,6 @@
 		return
 	mob_enter(dropped, flags = NONE) // force occupancy
 	dropped.visible_message(span_warning("[dropped] is forced into [src] by [dropper]!"))
-
-
-// brakes, or autostabilize if not driven
-// figure out a way around it drifting off in space when it shouldnt, perhaps use the move loop directly
-/obj/vehicle/sealed/space_pod/process()
-	if(isnull(drift_handler))
-		return
-
-	var/list/drivers = return_drivers()
-
-	if(drivers)
-		var/braking = FALSE
-		for(var/mob/driver as anything in drivers)
-			if(driver.client?.keys_held["Shift"])
-				braking = TRUE
-				break
-
-		if (!braking)
-			return
-
-	//braking without drivers is half as strong incase you put like a bomb in your trunk or something and jumped out
-	drift_handler.stabilize_drift(target_force = 0, stabilization_force = !length(drivers) ? stabilizer_force / 2 : stabilizer_force)
-
-/obj/vehicle/sealed/space_pod/vehicle_move(direction)
-	. = ..()
-	if(!max_speed || !force_per_move)
-		return
-	if(!COOLDOWN_FINISHED(src, cooldown_vehicle_move))
-		return
-	var/power_used = (STANDARD_BATTERY_CHARGE / 1000 * 3) * force_per_move
-	for(var/obj/item/pod_equipment/equip as anything in get_all_parts())
-		power_used *= equip.movement_power_usage_mult
-	if(!use_power(power_used))
-		return
-	setDir(direction)
-	if(has_gravity() || !newtonian_move(dir2angle(direction), instant = TRUE, drift_force = force_per_move / (1 SECONDS), controlled_cap = max_speed))
-		if(!istype(get_step(src, direction), /turf/open/floor/engine))
-			return
-		COOLDOWN_START(src, cooldown_vehicle_move, 0.3 SECONDS)
-		after_move(direction)
-		return try_step_multiz(direction)
-	COOLDOWN_START(src, cooldown_vehicle_move, 1 DECISECONDS)
-	trail.generate_effect()
-	after_move(direction)
 
 // atmos
 /obj/vehicle/sealed/space_pod/proc/cycle_tank_air(to_tank = FALSE)
