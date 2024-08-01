@@ -147,6 +147,24 @@
 	mob_enter(dropped, flags = NONE) // force occupancy
 	dropped.visible_message(span_warning("[dropped] is forced into [src] by [dropper]!"))
 
+/obj/vehicle/sealed/space_pod/welder_act(mob/living/user, obj/item/welder)
+	if(user.combat_mode || DOING_INTERACTION(user, src))
+		return
+	. = NONE
+	if(atom_integrity >= max_integrity)
+		balloon_alert(user, "no damage!")
+		return
+	if(!welder.tool_start_check(user, amount=1))
+		return
+	user.balloon_alert_to_viewers("repairing pod!")
+	audible_message(span_hear("You hear welding."))
+	while(atom_integrity < max_integrity) //19-20 seconds to repair an iron pod from almost 0 to full
+		if(welder.use_tool(src, user, 1 SECONDS, volume=50))
+			atom_integrity += min(/obj/vehicle/sealed/space_pod::max_integrity / 20, (max_integrity - atom_integrity))
+			audible_message(span_hear("You hear welding."))
+		else
+			break
+
 // atmos
 /obj/vehicle/sealed/space_pod/proc/cycle_tank_air(to_tank = FALSE)
 	if(isnull(cabin_air_tank))

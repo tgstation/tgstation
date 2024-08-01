@@ -237,6 +237,30 @@
 		RND_CATEGORY_MECHFAB_SPACEPOD + RND_SUBCATEGORY_MECHFAB_POD_SECONDARY
 	)
 
+/datum/design/pod_equipment/lgtplating
+	name = /obj/item/pod_equipment/armor::name
+	id = "podlgtplating"
+	build_path = /obj/item/pod_equipment/armor
+	materials = list(
+		/datum/material/iron=SHEET_MATERIAL_AMOUNT*10,
+	)
+	category = list(
+		RND_CATEGORY_MECHFAB_SPACEPOD + RND_SUBCATEGORY_MECHFAB_POD_MISC
+	)
+
+/datum/design/pod_equipment/podefficiency
+	name = /obj/item/pod_equipment/efficiency::name
+	id = "podefficiency"
+	build_path = /obj/item/pod_equipment/efficiency
+	materials = list(
+		/datum/material/iron=SHEET_MATERIAL_AMOUNT*4,
+		/datum/material/glass=HALF_SHEET_MATERIAL_AMOUNT,
+		/datum/material/gold=HALF_SHEET_MATERIAL_AMOUNT,
+	)
+	category = list(
+		RND_CATEGORY_MECHFAB_SPACEPOD + RND_SUBCATEGORY_MECHFAB_POD_MISC
+	)
+
 /datum/design/pod_equipment/plasma_cutter
 	name = /obj/item/pod_equipment/primary/projectile_weapon/energy/plasma_cutter::name
 	id = "podplasmacutter"

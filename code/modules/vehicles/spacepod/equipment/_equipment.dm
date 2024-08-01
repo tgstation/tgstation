@@ -1,5 +1,5 @@
 /obj/item/pod_equipment
-	icon = 'icons/testing/greyscale_error.dmi'
+	icon = 'icons/mob/rideables/spacepod/equipment.dmi'
 	w_class = WEIGHT_CLASS_HUGE
 	/// the pod we are attached to
 	var/obj/vehicle/sealed/space_pod/pod

@@ -31,6 +31,8 @@
 		"podthruster2",
 		"podimpactdrill",
 		"podplasmacutter",
+		"podlgtplating",
+		"podefficiency",
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_2_POINTS)
 
