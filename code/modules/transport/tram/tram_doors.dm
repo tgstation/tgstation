@@ -60,7 +60,7 @@
 
 	SEND_SIGNAL(src, COMSIG_AIRLOCK_OPEN, forced)
 	operating = TRUE
-	update_icon(ALL, AIRLOCK_OPENING)
+	update_icon(ALL, AIRLOCK_OPENING, TRUE)
 
 	if(forced >= BYPASS_DOOR_CHECKS)
 		playsound(src, 'sound/machines/airlockforced.ogg', vol = 40, vary = FALSE)
@@ -78,7 +78,7 @@
 	sleep(animation_segment_delay(AIRLOCK_OPENING_FINISHED))
 	layer = OPEN_DOOR_LAYER
 	operating = FALSE
-	update_icon(ALL, AIRLOCK_OPEN)
+	update_icon(ALL, AIRLOCK_OPEN, TRUE)
 
 	return TRUE
 
@@ -114,7 +114,7 @@
 	playsound(src, doorClose, vol = 40, vary = FALSE)
 	operating = TRUE
 	layer = CLOSED_DOOR_LAYER
-	update_icon(ALL, AIRLOCK_CLOSING)
+	update_icon(ALL, AIRLOCK_CLOSING, TRUE)
 	sleep(animation_segment_delay(AIRLOCK_CLOSING_UNPASSABLE))
 	if(!hungry_door)
 		for(var/turf/checked_turf in locs)
@@ -138,7 +138,7 @@
 	crushing_in_progress = FALSE
 	sleep(animation_segment_delay(AIRLOCK_CLOSING_FINISHED))
 	operating = FALSE
-	update_icon(ALL, AIRLOCK_CLOSED)
+	update_icon(ALL, AIRLOCK_CLOSED, TRUE)
 	retry_counter = 0
 	return TRUE
 
