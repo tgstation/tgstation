@@ -136,11 +136,11 @@ GLOBAL_DATUM_INIT(status_font, /datum/font, new /datum/font/tiny_unicode/size_12
 	line2 = uppertext(line2)
 
 	var/message_changed = FALSE
-	if(line1 != message1 || !message1_visual)
+	if(line1 != message1 || !message_key_1)
 		message1 = line1
 		message_changed = TRUE
 
-	if(line2 != message2 || !message2_visual)
+	if(line2 != message2 || !message_key_2)
 		message2 = line2
 		message_changed = TRUE
 
@@ -162,11 +162,11 @@ GLOBAL_DATUM_INIT(status_font, /datum/font, new /datum/font/tiny_unicode/size_12
 // List in the form key -> status display that shows said key
 GLOBAL_LIST_EMPTY(key_to_status_display)
 
-/proc/generate_status_text(line_y, message, x_offset, text_color, header_text_color, line_pair, alpha)
-	var/key = "[line_y]-[message]-[x_offset]-[text_color]-[header_text_color]-[line_pair]-[alpha]"
+/proc/generate_status_text(line_y, message, x_offset, text_color, header_text_color, line_pair, alpha, matrix/transform)
+	var/key = "[line_y]-[message]-[x_offset]-[text_color]-[header_text_color]-[line_pair]-[alpha]-[json_encode(transform.tolist())]"
 	var/obj/effect/overlay/status_display_text/new_overlay = GLOB.key_to_status_display[key]
 	if(!new_overlay)
-		new_overlay = new(null, line_y, message, text_color, header_text_color, x_offset, line_pair, alpha, key)
+		new_overlay = new(null, line_y, message, text_color, header_text_color, x_offset, line_pair, alpha, transform, key)
 		GLOB.key_to_status_display[key] = new_overlay
 	return new_overlay
 
@@ -185,8 +185,14 @@ GLOBAL_LIST_EMPTY(key_to_status_display)
  * Returns new /obj/effect/overlay/status_display_text or null if unchanged.
  */
 /obj/machinery/status_display/proc/update_message(current_key, line_y, message, x_offset, line_pair)
+	var/matrix/working_transform = matrix()
+	var/working_alpha = alpha
+	if(dir != SOUTH)
+		// Translate the text seperately, since they are vis_contents.
+		working_transform = floor_projections["[dir]"]
+		working_alpha = PROJECTION_TEXT_ALPHA
 	var/obj/effect/overlay/status_display_text/current_overlay = get_status_text(current_key)
-	var/obj/effect/overlay/status_display_text/new_overlay = generate_status_text(line_y, message, x_offset, text_color, header_text_color, line_pair, alpha)
+	var/obj/effect/overlay/status_display_text/new_overlay = generate_status_text(line_y, message, x_offset, text_color, header_text_color, line_pair, working_alpha, working_transform)
 
 	if(current_overlay == new_overlay)
 		return current_key
@@ -242,12 +248,6 @@ GLOBAL_LIST_EMPTY(key_to_status_display)
 	projection_emissive.pixel_y = emissive_offsets[2]
 	projection_emissive.blend_mode = BLEND_ADD
 	. += projection_emissive
-
-	// Translate the text seperately, since they are vis_contents.
-	message1_visual?.transform = floor_matrix
-	message1_visual?.alpha = PROJECTION_TEXT_ALPHA
-	message2_visual?.transform = floor_matrix
-	message2_visual?.alpha = PROJECTION_TEXT_ALPHA
 
 /**
  * Generate a set of vis contents objects for the overlays.
@@ -405,13 +405,14 @@ GLOBAL_LIST_EMPTY(key_to_status_display)
 	// If the line is short enough to not marquee, and it matches this, it's a header.
 	var/static/regex/header_regex = regex("^-.*-$")
 
-/obj/effect/overlay/status_display_text/Initialize(mapload, maptext_y, message, text_color, header_text_color, xoffset = 0, line_pair, alpha, status_key)
+/obj/effect/overlay/status_display_text/Initialize(mapload, maptext_y, message, text_color, header_text_color, xoffset = 0, line_pair, alpha, matrix/transform, status_key)
 	. = ..()
 
 	src.maptext_y = maptext_y
 	src.message = message
 	src.status_key = status_key
 	src.alpha = alpha
+	src.transform = transform
 
 	var/line_width = GLOB.status_font.get_metrics(message)
 
