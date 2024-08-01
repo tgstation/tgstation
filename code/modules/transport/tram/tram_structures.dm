@@ -249,7 +249,6 @@
 	if((smoothing_flags & SMOOTH_BITMASK) && (updates & UPDATE_SMOOTHING))
 		QUEUE_SMOOTH(src)
 
-// wallening todo: help
 /obj/structure/tram/alt/titanium
 	name = "solid tram"
 	desc = "A lightweight titanium composite structure. There is further solid plating where the panels usually attach to the frame."

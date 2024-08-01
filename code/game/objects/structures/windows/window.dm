@@ -5,7 +5,7 @@
 	icon_state = "window"
 	density = TRUE
 	layer = ABOVE_OBJ_LAYER //Just above doors
-	// Wallening todo: why was can_be_unanchored removed from here?
+	can_be_unanchored = TRUE
 	pressure_resistance = 4*ONE_ATMOSPHERE
 	anchored = TRUE //initially is 0 for tile smoothing
 	flags_1 = ON_BORDER_1
@@ -63,7 +63,7 @@
 	air_update_turf(TRUE, TRUE)
 
 	if(fulltile)
-		setDir()
+		setDir(direct)
 		obj_flags &= ~BLOCKS_CONSTRUCTION_DIR
 		obj_flags &= ~IGNORE_DENSITY
 		update_icon_state()

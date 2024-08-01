@@ -1,5 +1,3 @@
-// wallening todo: ensure windows have buildable sprites
-// also make this less crap
 /obj/structure/window/fulltile
 	icon = 'icons/obj/smooth_structures/windows/normal_window.dmi'
 	icon_state = "0-lower"
@@ -244,7 +242,6 @@
 	update_appearance()
 
 
-// Wallening todo: should this be here?
 /obj/structure/window/bronze
 	name = "brass window"
 	desc = "A paper-thin pane of translucent yet reinforced brass. Nevermind, this is just weak bronze!"
