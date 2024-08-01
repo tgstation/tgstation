@@ -183,6 +183,8 @@ export const AntagInfoMalf = (props) => {
       items.push({
         id: item.name,
         name: item.name,
+        icon: item.icon,
+        icon_state: item.icon_state,
         category: category.name,
         cost: `${item.cost} PT`,
         desc: item.desc,
