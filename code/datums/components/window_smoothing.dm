@@ -52,7 +52,7 @@ GLOBAL_LIST_EMPTY(window_appearances)
 	reset_icon()
 	RegisterSignal(parent, COMSIG_ATOM_SET_SMOOTHED_ICON_STATE, PROC_REF(on_junction_change))
 	RegisterSignal(parent, COMSIG_ATOM_UPDATE_ICON, PROC_REF(update_icon))
-	RegisterSignal(parent, COMSIG_ATOM_REMOVE_SMOOTHING, PROC_REF(remove_smoothing))
+	RegisterSignal(parent, COMSIG_MOVABLE_MOVED, PROC_REF(remove_smoothing))
 
 /datum/component/window_smoothing/proc/reset_icon()
 	var/atom/parent_atom = parent

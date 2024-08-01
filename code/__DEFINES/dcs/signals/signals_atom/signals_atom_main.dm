@@ -55,8 +55,6 @@
 #define COMSIG_ATOM_SET_SMOOTHED_ICON_STATE "set_smoothed_icon_state"
 ///from base of [/atom/proc/smooth_icon]: ()
 #define COMSIG_ATOM_SMOOTHED_ICON "atom_smoothed_icon"
-/// from base of whenever the smoothing needs to go: ()
-#define COMSIG_ATOM_REMOVE_SMOOTHING "atom_remove_smoothing"
 ///from [/datum/controller/subsystem/processing/dcs/proc/rotate_decals]: (list/datum/element/decal/rotating)
 #define COMSIG_ATOM_DECALS_ROTATING "atom_decals_rotating"
 ///from base of atom/Entered(): (atom/movable/arrived, atom/old_loc, list/atom/old_locs)

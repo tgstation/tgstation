@@ -684,7 +684,6 @@ MAPPING_DIRECTIONAL_HELPERS_EMPTY(/obj/structure/window/spawner)
 /obj/structure/window/Moved(atom/old_loc, movement_dir, forced, list/old_locs, momentum_change)
 	. = ..()
 
-	SEND_SIGNAL(src, COMSIG_ATOM_REMOVE_SMOOTHING)
 	if(loc)
 		update_nearby_icons()
 
