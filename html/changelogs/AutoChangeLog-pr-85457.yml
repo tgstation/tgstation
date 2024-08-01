@@ -1,0 +1,4 @@
+author: "SmArtKar"
+delete-after: True
+changes:
+  - bugfix: "Rice hat no longer disappears upon being toggled and can be raised back up. Toggling sprites is now done by alt-clicking"
