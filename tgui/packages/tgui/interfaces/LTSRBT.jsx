@@ -14,14 +14,7 @@ import { Window } from '../layouts';
 
 export const LTSRBT = (props) => {
   const { act, data } = useBackend();
-  const {
-    name,
-    price,
-    min_price,
-    max_price,
-    loaded_icon,
-    desc,
-  } = data;
+  const { name, price, min_price, max_price, loaded_icon, desc } = data;
 
   return (
     <Window width={300} height={380} theme="hackerman">
