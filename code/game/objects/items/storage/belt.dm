@@ -373,6 +373,9 @@
 		/obj/item/restraints/handcuffs,
 		/obj/item/restraints/legcuffs/bola,
 	))
+	atom_storage.open_sound = 'sound/items/holster.ogg'
+	atom_storage.open_sound_vary = TRUE
+	atom_storage.rustle_sound = FALSE
 
 /obj/item/storage/belt/security/full/PopulateContents()
 	new /obj/item/reagent_containers/spray/pepper(src)
@@ -857,7 +860,7 @@
 
 /obj/item/storage/belt/grass_sabre
 	name = "sabre sheath"
-	desc = "An simple grass sheath designed to hold a sabre of... some sorts. Actual metal one might be too sharp, though..."
+	desc = "An simple grass sheath designed to hold a sabre of... some sort. Actual metal one might be too sharp, though..."
 	icon_state = "grass_sheath"
 	inhand_icon_state = "grass_sheath"
 	worn_icon_state = "grass_sheath"
@@ -871,7 +874,7 @@
 	atom_storage.max_slots = 1
 	atom_storage.rustle_sound = FALSE
 	atom_storage.max_specific_storage = WEIGHT_CLASS_BULKY
-	atom_storage.set_holdable(/obj/item/melee/sabre)
+	atom_storage.set_holdable(/obj/item/melee/parsnip_sabre)
 	atom_storage.click_alt_open = FALSE
 
 /obj/item/storage/belt/grass_sabre/examine(mob/user)
