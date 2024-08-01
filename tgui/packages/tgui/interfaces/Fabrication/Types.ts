@@ -68,6 +68,16 @@ export type Design = {
    * 32x32.**
    */
   icon: string;
+
+  /**
+   * Whenever this design can be deleted
+   */
+  can_delete: boolean;
+
+  /**
+   * Error displayed next to this design
+   */
+  print_error: string;
 };
 
 /**

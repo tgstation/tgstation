@@ -426,34 +426,49 @@
 				say("Not enough materials.")
 				return TRUE
 
-			if (!can_print(design["dupe_data"]))
-				say("Unknown components detected. Further research required!")
-				return TRUE
+			var/list/design_data = json_decode(design["dupe_data"])
+			if(!design_data)
+				say("Invalid design data.")
+				return FALSE
+
+			var/list/circuit_data = design_data["components"]
+			for(var/identifier in circuit_data)
+				var/list/component_data = circuit_data[identifier]
+				var/comp_type = text2path(component_data["type"])
+				if (!ispath(comp_type, /obj/item/circuit_component))
+					say("[component_data["name"]] component in this circuit has been recalled, unable to proceed.")
+					return TRUE
+
+				if (isnull(current_unlocked_designs[comp_type]))
+					say("[component_data["name"]] component has not been researched yet.")
+					return TRUE
 
 			materials.use_materials(design["materials"], efficiency_coeff, 1, design["name"], design["materials"])
 			print_module(design)
 			balloon_alert_to_viewers("printed [design["name"]]")
+
+		if ("delete")
+			var/design_id = text2num(params["designId"])
+
+			if (design_id < 1 || design_id > length(SSpersistence.circuit_designs))
+				return TRUE
+
+			var/list/design = SSpersistence.circuit_designs[design_id]
+			if (design["author_ckey"] != ui.user.client?.ckey)
+				return TRUE
+
+			if(tgui_alert(ui.user, "Are you sure you want to delete [design["name"]]?", "Module Duplicator", list("Yes","No")) != "Yes")
+				return TRUE
+
+			SSpersistence.circuit_designs -= list(design)
+			scanned_designs -= list(design)
+
 		if ("remove_mat")
 			var/datum/material/material = locate(params["ref"])
 			var/amount = text2num(params["amount"])
 			// SAFETY: eject_sheets checks for valid mats
 			materials.eject_sheets(material, amount)
 
-	return TRUE
-
-/obj/machinery/module_duplicator/proc/can_print(list/design)
-	var/list/design_data = json_decode(design)
-	if(!design_data)
-		return FALSE
-
-	var/list/circuit_data = design_data["components"]
-	for(var/identifier in circuit_data)
-		var/list/component_data = circuit_data[identifier]
-		var/type = text2path(component_data["type"])
-		if(!ispath(type, /obj/item/circuit_component))
-			return FALSE
-		if (isnull(current_unlocked_designs[type]))
-			return FALSE
 	return TRUE
 
 /obj/machinery/module_duplicator/proc/print_module(list/design)
@@ -564,11 +579,35 @@
 			"id" = "[index]",
 			"icon" = "integrated_circuit",
 			"categories" = list("/Saved Circuits"),
+			"can_delete" = (design["author_ckey"] == user.client?.ckey),
+			"print_error" = null,
 		)
+
+		var/list/invalid_list = list()
+		var/list/unresearched_list = list()
+		var/list/design_data = json_decode(design["dupe_data"])
+
+		if(!design_data)
+			index++
+			continue
+
+		var/list/circuit_data = design_data["components"]
+		for(var/identifier in circuit_data)
+			var/list/component_data = circuit_data[identifier]
+			var/comp_type = text2path(component_data["type"])
+			if (!ispath(comp_type, /obj/item/circuit_component))
+				invalid_list |= component_data["name"]
+			else if (isnull(current_unlocked_designs[comp_type]))
+				unresearched_list |= component_data["name"]
+
+		if (invalid_list.len)
+			designs["[index]"]["print_error"] = "Following components have been recalled: [invalid_list.Join(", ")]"
+		if (unresearched_list.len)
+			designs["[index]"]["print_error"] = (designs["[index]"]["print_error"] || "") + "[designs["[index]"]["print_error"] ? "; " : ""]Following components are yet to be researched: [unresearched_list.Join(", ")]"
+
 		index++
 
 	data["designs"] = designs
-
 	return data
 
 /obj/machinery/module_duplicator/crowbar_act(mob/living/user, obj/item/tool)

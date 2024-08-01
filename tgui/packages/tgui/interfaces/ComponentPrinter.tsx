@@ -77,7 +77,9 @@ const Recipe = (props: RecipeProps) => {
 
   const canPrint = !Object.entries(design.cost).some(
     ([material, amount]) =>
-      !available[material] || amount > (available[material] ?? 0),
+      !available[material] ||
+      amount > (available[material] ?? 0) ||
+      !!design.print_error,
   );
 
   return (
@@ -93,6 +95,31 @@ const Recipe = (props: RecipeProps) => {
           <Icon name="question-circle" />
         </div>
       </Tooltip>
+      {!!design.print_error && (
+        <Tooltip content={design.print_error} position="right">
+          <div
+            className={classes([
+              'FabricatorRecipe__Button',
+              'FabricatorRecipe__Button--icon',
+            ])}
+          >
+            <Icon name="circle-exclamation" />
+          </div>
+        </Tooltip>
+      )}
+      {design.can_delete && (
+        <div
+          onClick={() =>
+            design.can_delete && act('delete', { designId: design.id })
+          }
+          className={classes([
+            'FabricatorRecipe__Button',
+            'FabricatorRecipe__Button--icon',
+          ])}
+        >
+          <Icon name="circle-xmark" />
+        </div>
+      )}
       <Tooltip
         content={
           <MaterialCostSequence

@@ -150,6 +150,7 @@ GLOBAL_LIST_INIT(circuit_dupe_whitelisted_types, list(
 		var/list/component_data = list()
 
 		component_data["type"] = component.type
+		component_data["name"] = component.name
 
 		var/list/connections = list()
 		var/list/input_ports_stored_data = list()
