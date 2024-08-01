@@ -6,7 +6,7 @@
 	flags_1 = NONE
 	icon_state = "frame-empty"
 	result_path = /obj/structure/sign/painting/eldritch
-	pixel_shift = 30
+	pixel_shift = -5
 
 /obj/structure/sign/painting/eldritch
 	name = "The debug and a coder who slept"
