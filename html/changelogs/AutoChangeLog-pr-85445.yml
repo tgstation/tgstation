@@ -1,0 +1,4 @@
+author: "FlufflesTheDog"
+delete-after: True
+changes:
+  - bugfix: "Existing gas flow meters have been recalled and replaced due to a faulty screen connection, and once again convey pressure and temperature"

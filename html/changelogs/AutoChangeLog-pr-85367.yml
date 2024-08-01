@@ -1,4 +1,0 @@
-author: "SmArtKar"
-delete-after: True
-changes:
-  - bugfix: "Heart eater wizard perk no longer works activates on organs that haven't been used before"

@@ -1,6 +1,0 @@
-author: "SmArtKar"
-delete-after: True
-changes:
-  - balance: "Discounts now pick 4-6 items each from a unique category"
-  - balance: "Items that cost below 4 TC cannot get discounted anymore"
-  - balance: "Elite syndicate MODs for traitors can no longer get discounted"

@@ -1,4 +1,0 @@
-author: "Helg2"
-delete-after: True
-changes:
-  - bugfix: "Emergency climbing hooks now shouldn't spawn on non multi-z stations."
