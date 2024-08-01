@@ -575,6 +575,8 @@ GLOBAL_LIST_INIT(durathread_recipes, list ( \
 	grind_results = list(/datum/reagent/cellulose = 20)
 	var/loom_result = /obj/item/stack/sheet/cloth
 	var/loom_time = 1 SECONDS
+	drop_sound = 'sound/items/handling/cloth_drop.ogg'
+	pickup_sound = 'sound/items/handling/cloth_pickup.ogg'
 
 /obj/item/stack/sheet/cotton/Initialize(mapload)
 	. = ..()
@@ -588,8 +590,7 @@ GLOBAL_LIST_INIT(durathread_recipes, list ( \
 	merge_type = /obj/item/stack/sheet/cotton/durathread
 	grind_results = list()
 	loom_result = /obj/item/stack/sheet/durathread
-	drop_sound = 'sound/items/handling/cloth_drop.ogg'
-	pickup_sound = 'sound/items/handling/cloth_pickup.ogg'
+
 
 /obj/item/stack/sheet/cotton/wool
 	name = "raw wool bundle"
