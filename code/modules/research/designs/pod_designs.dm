@@ -291,7 +291,7 @@
 /datum/design/pod_equipment/improvedimpactdrill
 	name = /obj/item/pod_equipment/primary/drill/impact/improved::name
 	id = "improvedimpactdrill"
-	build_path = /obj/item/pod_equipment/primary/drill/improved
+	build_path = /obj/item/pod_equipment/primary/drill/impact/improved
 	materials = list(
 		/datum/material/iron=SHEET_MATERIAL_AMOUNT*12,
 		/datum/material/titanium=SHEET_MATERIAL_AMOUNT*8,
