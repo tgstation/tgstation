@@ -5,8 +5,6 @@
 
 /**
  * # The path of Flesh.
- * Spell names are in this language: LATIN
- * Both are related: Latin-Rome-Hedonism-Flesh
  *
  * Goes as follows:
  *
@@ -332,7 +330,7 @@
 		text = "[generate_heretic_text()] Ever coiling vortex. Reality unfolded. ARMS OUTREACHED, THE LORD OF THE NIGHT, [user.real_name] has ascended! Fear the ever twisting hand! [generate_heretic_text()]",
 		title = "[generate_heretic_text()]",
 		sound = 'sound/ambience/antag/heretic/ascend_flesh.ogg',
-		color_override = "red",
+		color_override = "pink",
 	)
 
 	var/datum/action/cooldown/spell/shapeshift/shed_human_form/worm_spell = new(user.mind)
