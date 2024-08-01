@@ -12,19 +12,17 @@ export const PrimaryObjectiveMenu = (props: PrimaryObjectiveMenuProps) => {
   const { act } = useBackend();
   const { primary_objectives, final_objective, can_renegotiate } = props;
   return (
-    <Section fill>
-      <Section>
-        <Box mt={3} mb={3} bold fontSize={1.2} align="center" color="white">
-          {
-            'Agent, your Primary Objectives are as follows. Complete these at all costs.'
-          }
-        </Box>
-        <Box mt={3} mb={5} bold fontSize={1.2} align="center" color="white">
-          {
-            'Completing Secondary Objectives may allow you to aquire additional equipment.'
-          }
-        </Box>
-      </Section>
+    <Section fill scrollable align="center">
+      <Box my={4} bold fontSize={1.2} color="green">
+        WELCOME, AGENT.
+      </Box>
+      <Box my={4} bold fontSize={1.2}>
+        Your Primary Objectives are as follows. Complete these at all costs.
+      </Box>
+      <Box my={4} bold fontSize={1.2}>
+        Completing Secondary Objectives may allow you to aquire additional
+        equipment.
+      </Box>
       {final_objective && (
         <Dimmer>
           <Box
@@ -49,35 +47,33 @@ export const PrimaryObjectiveMenu = (props: PrimaryObjectiveMenuProps) => {
           </Box>
         </Dimmer>
       )}
-      <Section>
-        <Stack vertical fill scrollable>
-          {primary_objectives.map((prim_obj, index) => (
-            <Stack.Item key={index}>
-              <ObjectiveElement
-                key={prim_obj.id}
-                name={prim_obj['task_name']}
-                description={prim_obj['task_text']}
-                dangerLevel={{
-                  minutesLessThan: 0,
-                  title: 'none',
-                  gradient:
-                    index === primary_objectives.length - 1
-                      ? 'reputation-good'
-                      : 'reputation-very-good',
-                }}
-                telecrystalReward={0}
-                telecrystalPenalty={0}
-                progressionReward={0}
-                originalProgression={0}
-                hideTcRep
-                canAbort={false}
-                grow={false}
-                finalObjective={false}
-              />
-            </Stack.Item>
-          ))}
-        </Stack>
-      </Section>
+      <Stack vertical>
+        {primary_objectives.map((prim_obj, index) => (
+          <Stack.Item key={index}>
+            <ObjectiveElement
+              key={prim_obj.id}
+              name={prim_obj['task_name']}
+              description={prim_obj['task_text']}
+              dangerLevel={{
+                minutesLessThan: 0,
+                title: 'none',
+                gradient:
+                  index === primary_objectives.length - 1
+                    ? 'reputation-good'
+                    : 'reputation-very-good',
+              }}
+              telecrystalReward={0}
+              telecrystalPenalty={0}
+              progressionReward={0}
+              originalProgression={0}
+              hideTcRep
+              canAbort={false}
+              grow={false}
+              finalObjective={false}
+            />
+          </Stack.Item>
+        ))}
+      </Stack>
       {!!can_renegotiate && (
         <Box mt={3} mb={5} bold fontSize={1.2} align="center" color="white">
           <Button
@@ -89,6 +85,10 @@ export const PrimaryObjectiveMenu = (props: PrimaryObjectiveMenuProps) => {
           />
         </Box>
       )}
+      <Box my={4} fontSize={0.8}>
+        <Box>SyndOS Version 3.17</Box>
+        <Box color="green">Connection Secure</Box>
+      </Box>
     </Section>
   );
 };

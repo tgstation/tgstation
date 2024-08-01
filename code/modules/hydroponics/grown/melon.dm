@@ -1,6 +1,6 @@
 // Watermelon
 /obj/item/seeds/watermelon
-	name = "pack of watermelon seeds"
+	name = "watermelon seed pack"
 	desc = "These seeds grow into watermelon plants."
 	icon_state = "seed-watermelon"
 	species = "watermelon"
@@ -74,7 +74,7 @@
 
 // Holymelon
 /obj/item/seeds/watermelon/holy
-	name = "pack of holymelon seeds"
+	name = "holymelon seed pack"
 	desc = "These seeds grow into holymelon plants."
 	icon_state = "seed-holymelon"
 	species = "holymelon"
@@ -159,7 +159,7 @@
 
 /// Barrel melon Seeds
 /obj/item/seeds/watermelon/barrel
-	name = "pack of barrelmelon seeds"
+	name = "barrelmelon seed pack"
 	desc = "These seeds grow into barrelmelon plants."
 	icon_state = "seed-barrelmelon"
 	species = "barrelmelon"

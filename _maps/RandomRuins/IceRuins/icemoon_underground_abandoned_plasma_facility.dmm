@@ -25,8 +25,8 @@
 /obj/item/clothing/shoes/galoshes{
 	pixel_y = -5
 	},
-/obj/item/flashlight/eyelight{
-	pixel_y = 11
+/obj/item/flashlight{
+	pixel_y = 8
 	},
 /turf/open/floor/plating/icemoon,
 /area/ruin/plasma_facility/operations)
