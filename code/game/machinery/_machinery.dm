@@ -186,6 +186,7 @@
 /obj/machinery/LateInitialize()
 	SHOULD_NOT_OVERRIDE(TRUE)
 	post_machine_initialize()
+	CheckParts()
 
 /obj/machinery/Destroy(force)
 	SSmachines.unregister_machine(src)
@@ -286,6 +287,7 @@
 
 ///Early process for machines added to SSmachines.processing_early to prioritize power draw
 /obj/machinery/proc/process_early()
+	set waitfor = FALSE
 	return PROCESS_KILL
 
 /obj/machinery/process()//If you dont use process or power why are you here
@@ -293,9 +295,11 @@
 
 ///Late process for machines added to SSmachines.processing_late to gather accurate recordings
 /obj/machinery/proc/process_late()
+	set waitfor = FALSE
 	return PROCESS_KILL
 
 /obj/machinery/proc/process_atmos()//If you dont use process why are you here
+	set waitfor = FALSE
 	return PROCESS_KILL
 
 ///Called when we want to change the value of the machine_stat variable. Holds bitflags.

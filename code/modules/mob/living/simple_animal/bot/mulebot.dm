@@ -754,7 +754,6 @@
 	new /obj/item/stack/cable_coil/cut(Tsec)
 	if(cell)
 		cell.forceMove(Tsec)
-		cell.update_appearance()
 		cell = null
 
 	new /obj/effect/decal/cleanable/oil(loc)

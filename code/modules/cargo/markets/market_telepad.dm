@@ -1,3 +1,5 @@
+#define DEFAULT_RESTOCK_COST 675
+
 /obj/item/circuitboard/machine/ltsrbt
 	name = "LTSRBT (Machine Board)"
 	icon_state = "bluespacearray"
@@ -13,7 +15,8 @@
 	name = "Long-To-Short-Range-Bluespace-Transceiver"
 	desc = "The LTSRBT is a compact teleportation machine for receiving and sending items outside the station and inside the station.\nUsing teleportation frequencies stolen from NT it is near undetectable.\nEssential for any illegal market operations on NT stations.\n"
 	icon = 'icons/obj/machines/telecomms.dmi'
-	icon_state = "exonet_node"
+	icon_state = "exonet_node_idle"
+	base_icon_state = "exonet_node"
 	circuit = /obj/item/circuitboard/machine/ltsrbt
 	density = TRUE
 
@@ -35,18 +38,42 @@
 	var/datum/market_purchase/transmitting
 	/// Queue for purchases that the machine should receive and send.
 	var/list/datum/market_purchase/queue = list()
+	/**
+	 * Attacking the machinery with enough credits will restock the markets, allowing for more/better items.
+	 * The cost doubles each time this is done.
+	 */
+	var/static/restock_cost = DEFAULT_RESTOCK_COST
 
 /obj/machinery/ltsrbt/Initialize(mapload)
 	. = ..()
-	SSblackmarket.telepads += src
+	register_context()
+	SSmarket.telepads += src
 
 /obj/machinery/ltsrbt/Destroy()
-	SSblackmarket.telepads -= src
+	SSmarket.telepads -= src
 	// Bye bye orders.
-	if(length(SSblackmarket.telepads))
+	if(length(SSmarket.telepads))
 		for(var/datum/market_purchase/P in queue)
-			SSblackmarket.queue_item(P)
+			SSmarket.queue_item(P)
 	. = ..()
+
+/obj/machinery/ltsrbt/add_context(atom/source, list/context, obj/item/held_item, mob/user)
+	if(held_item && held_item.get_item_credit_value())
+		context[SCREENTIP_CONTEXT_LMB] = "Restock"
+		return CONTEXTUAL_SCREENTIP_SET
+	return NONE
+
+/obj/machinery/ltsrbt/examine(mob/user)
+	. = ..()
+	if(machine_stat & NOPOWER)
+		. += span_info("A display reads: \"Current market restock price: [EXAMINE_HINT("[restock_cost] cr")]\".")
+
+/obj/machinery/ltsrbt/update_icon_state()
+	. = ..()
+	if(machine_stat & NOPOWER)
+		icon_state = "[base_icon_state]_off"
+	else
+		icon_state = "[base_icon_state][(receiving || length(queue)) ? "" : "_idle"]"
 
 /obj/machinery/ltsrbt/RefreshParts()
 	. = ..()
@@ -67,6 +94,7 @@
 /obj/machinery/ltsrbt/proc/add_to_queue(datum/market_purchase/purchase)
 	if(!recharge_cooldown && !receiving && !transmitting)
 		receiving = purchase
+		update_appearance(UPDATE_ICON_STATE)
 	else
 		queue += purchase
 
@@ -79,6 +107,8 @@
 		receiving = null
 	if(transmitting == purchase)
 		transmitting = null
+
+	update_appearance(UPDATE_ICON_STATE)
 
 /obj/machinery/ltsrbt/process(seconds_per_tick)
 	if(machine_stat & NOPOWER)
@@ -113,3 +143,32 @@
 
 	if(length(queue))
 		receiving = pick_n_take(queue)
+
+/obj/machinery/ltsrbt/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	var/creds_value = tool.get_item_credit_value()
+	if(!creds_value)
+		return NONE
+
+	. = ITEM_INTERACT_SUCCESS
+
+	if(machine_stat & NOPOWER)
+		return
+
+	if(creds_value < restock_cost)
+		say("Insufficient credits!")
+		playsound(src, 'sound/machines/buzz-sigh.ogg', 40, FALSE)
+		return
+
+	if(istype(tool, /obj/item/holochip))
+		var/obj/item/holochip/chip = tool
+		chip.spend(restock_cost)
+	else
+		qdel(tool)
+		if(creds_value != restock_cost)
+			var/obj/item/holochip/change = new(creds_value - restock_cost)
+			user.put_in_hands(change)
+
+	SSmarket.restock()
+	restock_cost *= 2
+
+#undef DEFAULT_RESTOCK_COST

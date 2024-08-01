@@ -96,6 +96,12 @@
 	var/fail_prob = 0//100 - fail_prob = success_prob
 	var/advance = FALSE
 
+	if(!chem_check(target))
+		user.balloon_alert(user, "missing [LOWER_TEXT(get_chem_list())]!")
+		to_chat(user, span_warning("[target] is missing the [LOWER_TEXT(get_chem_list())] required to perform this surgery step!"))
+		surgery.step_in_progress = FALSE
+		return FALSE
+
 	if(preop(user, target, target_zone, tool, surgery) == SURGERY_STEP_FAIL)
 		update_surgery_mood(target, SURGERY_STATE_FAILURE)
 		surgery.step_in_progress = FALSE
@@ -134,9 +140,7 @@
 
 	if(do_after(user, modded_time, target = target, interaction_key = user.has_status_effect(/datum/status_effect/hippocratic_oath) ? target : DOAFTER_SOURCE_SURGERY)) //If we have the hippocratic oath, we can perform one surgery on each target, otherwise we can only do one surgery in total.
 
-		var/chem_check_result = chem_check(target)
-		if((prob(100-fail_prob) || (iscyborg(user) && !silicons_obey_prob)) && chem_check_result && !try_to_fail)
-
+		if((prob(100-fail_prob) || (iscyborg(user) && !silicons_obey_prob)) && !try_to_fail)
 			if(success(user, target, target_zone, tool, surgery))
 				update_surgery_mood(target, SURGERY_STATE_SUCCESS)
 				play_success_sound(user, target, target_zone, tool, surgery)
@@ -146,8 +150,6 @@
 				play_failure_sound(user, target, target_zone, tool, surgery)
 				update_surgery_mood(target, SURGERY_STATE_FAILURE)
 				advance = TRUE
-			if(chem_check_result)
-				return .(user, target, target_zone, tool, surgery, try_to_fail) //automatically re-attempt if failed for reason other than lack of required chemical
 		if(advance && !repeatable)
 			surgery.status++
 			if(surgery.status > surgery.steps.len)

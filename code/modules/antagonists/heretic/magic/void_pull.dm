@@ -11,8 +11,8 @@
 	school = SCHOOL_FORBIDDEN
 	cooldown_time = 40 SECONDS
 
-	invocation = "Sunya'apamkti!"
-	invocation_type = INVOCATION_SHOUT
+	invocation = "BR'NG F'RTH TH'M T' M'."
+	invocation_type = INVOCATION_WHISPER
 	spell_requirements = NONE
 
 	aoe_radius = 7

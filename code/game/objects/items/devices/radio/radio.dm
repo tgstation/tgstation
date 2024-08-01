@@ -351,6 +351,12 @@
 		signal.broadcast()
 		return
 
+
+	if(isliving(talking_movable))
+		var/mob/living/talking_living = talking_movable
+		if(talking_living.client?.prefs.read_preference(/datum/preference/toggle/radio_noise))
+			SEND_SOUND(talking_living, 'sound/misc/radio_talk.ogg')
+
 	// All radios make an attempt to use the subspace system first
 	signal.send_to_receivers()
 
@@ -421,6 +427,18 @@
 /obj/item/radio/proc/on_receive_message(list/data)
 	SEND_SIGNAL(src, COMSIG_RADIO_RECEIVE_MESSAGE, data)
 	flick_overlay_view(overlay_speaker_active, 5 SECONDS)
+
+	if(!isliving(loc))
+		return
+
+	var/mob/living/holder = loc
+	if(!holder.client?.prefs.read_preference(/datum/preference/toggle/radio_noise))
+		return
+
+	var/list/spans = data["spans"]
+	SEND_SOUND(holder, 'sound/misc/radio_receive.ogg')
+	if(SPAN_COMMAND in spans)
+		SEND_SOUND(holder, 'sound/misc/radio_important.ogg')
 
 /obj/item/radio/ui_state(mob/user)
 	return GLOB.inventory_state

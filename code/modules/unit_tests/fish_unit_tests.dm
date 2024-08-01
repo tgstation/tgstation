@@ -226,10 +226,11 @@
 
 /datum/unit_test/raise_a_chasm_crab/Run()
 	var/obj/structure/aquarium/crab/aquarium = allocate(/obj/structure/aquarium/crab)
-	var/mob/living/basic/mining/lobstrosity/juvenile/lobster = aquarium.crabbie.grow_up(1) //one stands for a second
-	TEST_ASSERT(lobster, "The test aquarium's chasm crab didn't grow up into a lobstrosity.[aquarium.crabbie ? " The aquarium crab is still here and at about [aquarium.crabbie.maturation]% maturation" : ""]")
-	allocated |= lobster //make sure it's allocated and thus properly deleted when the test is over
+	SEND_SIGNAL(aquarium.crabbie, COMSIG_FISH_LIFE, 1) //give the fish growth component a small push.
+	var/mob/living/basic/mining/lobstrosity/juvenile/lobster = locate() in aquarium.loc
 	TEST_ASSERT_EQUAL(lobster.loc, get_turf(aquarium), "The lobstrosity didn't spawn on the aquarium's turf")
+	TEST_ASSERT(QDELETED(aquarium.crabbie), "The test aquarium's chasm crab didn't delete itself.")
+	allocated |= lobster //make sure it's allocated and thus properly deleted when the test is over
 	//While ideally impossible to have all traits because of incompatible ones, I want to be sure they don't error out.
 	for(var/trait_type in GLOB.fish_traits)
 		var/datum/fish_trait/trait = GLOB.fish_traits[trait_type]
