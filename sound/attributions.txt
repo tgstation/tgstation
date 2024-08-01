@@ -209,3 +209,7 @@ beaker_pickup.ogg was made by lowering pitch:
 Bottle Tap.wav by alex_alexalex -- https://freesound.org/s/395492/ -- License: Attribution NonCommercial 3.0
 beaker_place.ogg was made by cutting and lowering pitch:
 place glass object.wav by milpower -- https://freesound.org/s/353105/ -- License: Creative Commons 0
+
+glass_reverse.ogg is adapted from a combination of:
+https://freesound.org/people/C_Rogers/sounds/203368/ -- glass-shattering-hit_01.ogg by C_Rogers on freesound.org (CC0)
+https://freesound.org/people/Czarcazas/sounds/330800/ -- Audio reversal/fading of Shattering Glass (Small) by Czarcazas -- https://freesound.org/s/330800/ -- License: Attribution 3.0

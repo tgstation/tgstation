@@ -450,6 +450,7 @@
 	addtimer(CALLBACK(src, TYPE_PROC_REF(/atom/movable, forceMove), loc), time_to_go + time_to_return) //we back boys
 	addtimer(VARSET_CALLBACK(src, dramatically_disappearing, FALSE), time_to_go + time_to_return) //also set the var back
 	addtimer(CALLBACK(src, TYPE_PROC_REF(/atom, update_appearance)), time_to_go + time_to_return)
+	addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(playsound), get_turf(src), 'sound/effects/glass_reverse.ogg', 70, TRUE), time_to_go + time_to_return)
 
 	var/obj/structure/grille/grill = take_grill ? (locate(/obj/structure/grille) in loc) : null
 	if(grill)
