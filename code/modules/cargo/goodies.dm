@@ -321,3 +321,9 @@
 	cost = PAYCHECK_COMMAND * 18
 	access_view = ACCESS_WEAPONS
 	contains = list(/obj/item/gun/ballistic/shotgun/doublebarrel)
+
+/datum/supply_pack/goody/Experimental_Medication
+	name = "Experimental medication Single-Pack"
+	desc = "A single bottle of experimental medication, Overpriced for your inconvienience!"
+	cost = PAYCHECK_CREW * 6.5
+	contains = list(/obj/item/storage/pill_bottle/sansufentanyl)
