@@ -38,7 +38,7 @@
 	if(new_hud)
 		our_hud.master_groups[key] = src
 		show_hud()
-		transform_lower_turfs(our_hud, active_offset)
+		build_planes_offset(our_hud, active_offset)
 	SEND_SIGNAL(src, COMSIG_GROUP_HUD_CHANGED, our_hud)
 
 /// Display a plane master group to some viewer, so show all our planes to it

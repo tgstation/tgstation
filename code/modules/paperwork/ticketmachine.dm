@@ -172,7 +172,7 @@ BUTTON_DIRECTIONAL_HELPERS(/obj/machinery/button/ticket_machine)
 	var/startX = 12 - (2*textLen)
 
 	for(var/i=1; i <= textLen, i++)
-		var/mutable_appearance/number_overlay = mutable_appearance('icons/misc/Font_Minimal.dmi', number_string[i])
+		var/mutable_appearance/number_overlay = mutable_appearance('icons/testing/Font_Minimal.dmi', number_string[i])
 		number_overlay.blend_mode = BLEND_SUBTRACT
 		number_overlay.pixel_x = startX
 		number_overlay.pixel_y = -14

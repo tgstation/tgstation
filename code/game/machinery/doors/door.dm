@@ -47,8 +47,6 @@
 	var/safe = TRUE
 	///whether the door is bolted or not.
 	var/locked = FALSE
-	/// The animation we're currently playing, if any
-	var/animation
 	var/datum/effect_system/spark_spread/spark_system
 	///ignore this, just use explosion_block
 	var/real_explosion_block

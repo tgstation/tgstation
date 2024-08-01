@@ -327,8 +327,8 @@
 	if(LAZYACCESS(modifiers, ICON_X) && LAZYACCESS(modifiers, ICON_Y))
 		//Clamp it so that the icon never moves more than 16 pixels in either direction (thus leaving the table turf)
 		// +- 8 to bound it to a typical item hitbox (16x16) instead of the assumed max of 32x32
-		I.pixel_x = clamp(text2num(LAZYACCESS(modifiers, ICON_X)) - 16, bottom_placable_x - 8, top_placable_x + 8)
-		I.pixel_y = clamp(text2num(LAZYACCESS(modifiers, ICON_Y)) - 16, bottom_placable_y - 8, top_placable_y + 8)
+		tool.pixel_x = clamp(text2num(LAZYACCESS(modifiers, ICON_X)) - 16, bottom_placable_x - 8, top_placable_x + 8)
+		tool.pixel_y = clamp(text2num(LAZYACCESS(modifiers, ICON_Y)) - 16, bottom_placable_y - 8, top_placable_y + 8)
 	AfterPutItemOnTable(tool, user)
 	return ITEM_INTERACT_SUCCESS
 

@@ -69,7 +69,7 @@ LINEN BINS
 		return ITEM_INTERACT_BLOCKING
 
 	forceMove(get_turf(to_cover))
-	pixel_z = target.pixel_z
+	pixel_z = to_cover.pixel_z
 	balloon_alert(user, "covered")
 	coverup(to_cover)
 	add_fingerprint(user)
