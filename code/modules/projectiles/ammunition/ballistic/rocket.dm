@@ -28,6 +28,9 @@
 	base_icon_state = "low_yield_rocket"
 	projectile_type = /obj/projectile/bullet/rocket/weak
 
+/obj/item/ammo_casing/rocket/reverse
+	projectile_type = /obj/projectile/bullet/rocket/reverse
+
 /obj/item/ammo_casing/a75
 	desc = "A .75 bullet casing."
 	caliber = CALIBER_75

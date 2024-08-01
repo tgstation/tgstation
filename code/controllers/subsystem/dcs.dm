@@ -84,7 +84,7 @@ PROCESSING_SUBSYSTEM_DEF(dcs)
 			fullid += REF(key)
 
 	if(named_arguments)
-		named_arguments = sortTim(named_arguments, GLOBAL_PROC_REF(cmp_text_asc))
+		sortTim(named_arguments, GLOBAL_PROC_REF(cmp_text_asc))
 		fullid += named_arguments
 
 	return list2params(fullid)

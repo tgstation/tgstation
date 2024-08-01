@@ -39,18 +39,20 @@
 	icon = 'icons/obj/clothing/gloves.dmi'
 	icon_state = "sprayoncan"
 
-/obj/item/toy/sprayoncan/afterattack(atom/target, mob/living/carbon/user, proximity)
-	if(iscarbon(target) && proximity)
-		var/mob/living/carbon/C = target
-		var/mob/living/carbon/U = user
-		var/success = C.equip_to_slot_if_possible(new /obj/item/clothing/gloves/color/yellow/sprayon, ITEM_SLOT_GLOVES, qdel_on_fail = TRUE, disable_warning = TRUE)
-		if(success)
-			if(C == user)
-				C.visible_message(span_notice("[U] sprays their hands with glittery rubber!"))
-			else
-				C.visible_message(span_warning("[U] sprays glittery rubber on the hands of [C]!"))
+/obj/item/toy/sprayoncan/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
+	if(!iscarbon(interacting_with))
+		return NONE
+	var/mob/living/carbon/C = interacting_with
+	var/mob/living/carbon/U = user
+	var/success = C.equip_to_slot_if_possible(new /obj/item/clothing/gloves/color/yellow/sprayon, ITEM_SLOT_GLOVES, qdel_on_fail = TRUE, disable_warning = TRUE)
+	if(success)
+		if(C == user)
+			C.visible_message(span_notice("[U] sprays their hands with glittery rubber!"))
 		else
-			C.visible_message(span_warning("The rubber fails to stick to [C]'s hands!"))
+			C.visible_message(span_warning("[U] sprays glittery rubber on the hands of [C]!"))
+	else
+		C.visible_message(span_warning("The rubber fails to stick to [C]'s hands!"))
+	return ITEM_INTERACT_SUCCESS
 
 /obj/item/clothing/gloves/color/yellow/sprayon
 	desc = "How're you gonna get 'em off, nerd?"

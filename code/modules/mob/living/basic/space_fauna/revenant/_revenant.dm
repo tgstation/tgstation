@@ -102,7 +102,7 @@
 	RegisterSignal(src, COMSIG_LIVING_BANED, PROC_REF(on_baned))
 	RegisterSignal(src, COMSIG_MOVABLE_PRE_MOVE, PROC_REF(on_move))
 	RegisterSignal(src, COMSIG_LIVING_LIFE, PROC_REF(on_life))
-	set_random_revenant_name()
+	name = generate_random_mob_name()
 
 	GLOB.revenant_relay_mobs |= src
 
@@ -149,6 +149,10 @@
 
 	update_appearance(UPDATE_ICON)
 	update_health_hud()
+
+/mob/living/basic/revenant/AltClickOn(atom/target)
+	if(CAN_I_SEE(target))
+		client.loot_panel.open(get_turf(target))
 
 /mob/living/basic/revenant/get_status_tab_items()
 	. = ..()
@@ -281,7 +285,7 @@
 /mob/living/basic/revenant/gib()
 	death()
 
-/mob/living/basic/revenant/can_perform_action(atom/movable/target, action_bitflags)
+/mob/living/basic/revenant/can_perform_action(atom/target, action_bitflags)
 	return FALSE
 
 /mob/living/basic/revenant/ex_act(severity, target)
@@ -357,13 +361,13 @@
 	returnable_list += span_bold("Be sure to read <a href=\"https://tgstation13.org/wiki/Revenant\">the wiki page</a> to learn more.")
 	return returnable_list
 
-/mob/living/basic/revenant/proc/set_random_revenant_name()
+/mob/living/basic/revenant/generate_random_mob_name()
 	var/list/built_name_strings = list()
 	built_name_strings += pick(strings(REVENANT_NAME_FILE, "spirit_type"))
 	built_name_strings += " of "
 	built_name_strings += pick(strings(REVENANT_NAME_FILE, "adverb"))
 	built_name_strings += pick(strings(REVENANT_NAME_FILE, "theme"))
-	name = built_name_strings.Join("")
+	return built_name_strings.Join("")
 
 /mob/living/basic/revenant/proc/on_baned(obj/item/weapon, mob/living/user)
 	SIGNAL_HANDLER

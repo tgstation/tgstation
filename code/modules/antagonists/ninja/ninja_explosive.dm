@@ -47,15 +47,16 @@
 		return
 	detonation_area = objective.detonation_location
 
-/obj/item/grenade/c4/ninja/afterattack(atom/movable/target, mob/ninja, flag)
-	if(!IS_SPACE_NINJA(ninja))
+/obj/item/grenade/c4/ninja/plant_c4(atom/bomb_target, mob/living/user)
+	if(!IS_SPACE_NINJA(user))
 		say("Access denied.")
-		return
-	. |= AFTERATTACK_PROCESSED_ITEM
-	if (!check_loc(ninja))
-		return .
-	detonator = WEAKREF(ninja)
-	return . | ..()
+		return FALSE
+	if(!check_loc(user))
+		return FALSE
+	if(!..())
+		return FALSE
+	detonator = WEAKREF(user)
+	return TRUE
 
 /obj/item/grenade/c4/ninja/detonate(mob/living/lanced_by)
 	if(!check_loc(detonator.resolve())) // if its moved, deactivate the c4

@@ -6,6 +6,7 @@
 	icon = 'icons/turf/walls/metal_wall.dmi'
 	icon_state = "0-2"
 	explosive_resistance = 1
+	rust_resistance = RUST_RESISTANCE_BASIC
 
 	thermal_conductivity = WALL_HEAT_TRANSFER_COEFFICIENT
 	heat_capacity = 62500 //a little over 5 cm thick , 62500 for 1 m by 2.5 m by 0.25 m iron wall. also indicates the temperature at wich the wall will melt (currently only able to melt with H/E pipes)
@@ -32,8 +33,7 @@
 
 	var/list/dent_decals
 
-/turf/closed/wall/MouseDrop_T(atom/dropping, mob/user, params)
-	..()
+/turf/closed/wall/mouse_drop_receive(atom/dropping, mob/user, params)
 	if(dropping != user)
 		return
 	if(!iscarbon(dropping) && !iscyborg(dropping))
@@ -98,7 +98,7 @@
 	if(is_station_level(z))
 		GLOB.station_turfs += src
 	if(smoothing_flags & SMOOTH_DIAGONAL_CORNERS && fixed_underlay) //Set underlays for the diagonal walls.
-		var/mutable_appearance/underlay_appearance = mutable_appearance(layer = TURF_LAYER, offset_spokesman = src, plane = FLOOR_PLANE)
+		var/mutable_appearance/underlay_appearance = mutable_appearance(layer = LOW_FLOOR_LAYER, offset_spokesman = src, plane = FLOOR_PLANE)
 		if(fixed_underlay["space"])
 			generate_space_underlay(underlay_appearance, src)
 		else
@@ -372,12 +372,11 @@
 
 	add_overlay(dent_decals)
 
-/turf/closed/wall/rust_heretic_act()
+/turf/closed/wall/rust_turf()
 	if(HAS_TRAIT(src, TRAIT_RUSTY))
 		ScrapeAway()
 		return
-	if(prob(70))
-		new /obj/effect/temp_visual/glowing_rune(src)
+
 	return ..()
 
 /turf/closed/wall/metal_foam_base

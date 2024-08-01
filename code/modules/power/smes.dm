@@ -23,7 +23,7 @@
 	can_change_cable_layer = TRUE
 
 	/// The charge capacity.
-	var/capacity = 50 * STANDARD_CELL_CHARGE // The board defaults with 5 high capacity power cells.
+	var/capacity = 50 * STANDARD_BATTERY_CHARGE // The board defaults with 5 high capacity batteries.
 	/// The current charge.
 	var/charge = 0
 
@@ -71,7 +71,7 @@
 		power_coefficient += capacitor.tier
 	input_level_max = initial(input_level_max) * power_coefficient
 	output_level_max = initial(output_level_max) * power_coefficient
-	for(var/obj/item/stock_parts/cell/power_cell in component_parts)
+	for(var/obj/item/stock_parts/power_store/power_cell in component_parts)
 		max_charge += power_cell.maxcharge
 		new_charge += power_cell.charge
 	capacity = max_charge
@@ -203,7 +203,7 @@
 	return ..()
 
 /obj/machinery/power/smes/on_deconstruction(disassembled)
-	for(var/obj/item/stock_parts/cell/cell in component_parts)
+	for(var/obj/item/stock_parts/power_store/cell in component_parts)
 		cell.charge = (charge / capacity) * cell.maxcharge
 
 /obj/machinery/power/smes/Destroy()
@@ -431,7 +431,7 @@
 	outputting = output_attempt
 	output_level = rand(0, output_level_max)
 	input_level = rand(0, input_level_max)
-	charge -= STANDARD_CELL_CHARGE/severity
+	charge -= STANDARD_BATTERY_CHARGE/severity
 	if (charge < 0)
 		charge = 0
 	update_appearance()
@@ -442,19 +442,19 @@
 	name = "super capacity power storage unit"
 	desc = "A super-capacity superconducting magnetic energy storage (SMES) unit. Relatively rare, and typically installed in long-range outposts where minimal maintenance is expected."
 	circuit = /obj/item/circuitboard/machine/smes/super
-	capacity = 100 * STANDARD_CELL_CHARGE
+	capacity = 100 * STANDARD_BATTERY_CHARGE
 
 /obj/machinery/power/smes/super/full
-	charge = 100 * STANDARD_CELL_CHARGE
+	charge = 100 * STANDARD_BATTERY_CHARGE
 
 /obj/machinery/power/smes/full
-	charge = 50 * STANDARD_CELL_CHARGE
+	charge = 50 * STANDARD_BATTERY_CHARGE
 
 /obj/machinery/power/smes/ship
-	charge = 20 * STANDARD_CELL_CHARGE
+	charge = 20 * STANDARD_BATTERY_CHARGE
 
 /obj/machinery/power/smes/engineering
-	charge = 50 * STANDARD_CELL_CHARGE // Engineering starts with some charge for singulo //sorry little one, singulo as engine is gone
+	charge = 50 * STANDARD_BATTERY_CHARGE // Engineering starts with some charge for singulo //sorry little one, singulo as engine is gone
 	output_level = 90 KILO WATTS
 
 /obj/machinery/power/smes/magical

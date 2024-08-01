@@ -22,6 +22,46 @@
 	TEST_ASSERT(!expected_mods.len,
 		"Some message mods were expected, but were not returned by get_message_mods: [json_encode(expected_mods)]. Message: [message]")
 
+/// Test to ensure native tongue languages properly impact speech
+/datum/unit_test/speech_modifiers
+	var/mob/living/carbon/human/talking_lizard
+	var/list/handle_speech_result = null
+
+/datum/unit_test/speech_modifiers/proc/handle_speech(datum/source, list/speech_args)
+	SIGNAL_HANDLER
+
+	TEST_ASSERT(speech_args[SPEECH_MESSAGE], "Handle speech signal does not have a message arg")
+	TEST_ASSERT(speech_args[SPEECH_LANGUAGE], "Handle speech signal does not have a language arg")
+
+	// saving hearing_args directly via handle_speech_result = speech_args won't work since the arg list
+	// is a temporary variable that gets garbage collected after it's done being used by procs
+	// therefore we need to create a new list and transfer the args
+	handle_speech_result = list()
+	handle_speech_result += speech_args
+
+/datum/unit_test/speech_modifiers/Run()
+	talking_lizard = allocate(/mob/living/carbon/human/consistent)
+	talking_lizard.set_species(/datum/species/lizard)
+	var/hissed_quote = "SSShe isss ssso sssasssy"
+	var/unhissed_quote = "She is so sassy"
+
+	RegisterSignal(talking_lizard, COMSIG_MOB_SAY, PROC_REF(handle_speech))
+
+	// lizard's forked tongue causes hissing when speaking common
+	talking_lizard.set_active_language(/datum/language/common)
+	talking_lizard.say(unhissed_quote)
+	TEST_ASSERT(handle_speech_result, "Handle speech signal was not fired")
+	TEST_ASSERT_EQUAL(hissed_quote, handle_speech_result[SPEECH_MESSAGE], "Speech modifier test failed: [handle_speech_result[SPEECH_LANGUAGE]] did not equal [hissed_quote] when spoken by a lizard in language [handle_speech_result[SPEECH_LANGUAGE]]")
+
+	handle_speech_result = null
+
+	// lizard's forked tongue does not cause hissing when speaking native draconic
+	talking_lizard.set_active_language(/datum/language/draconic)
+	talking_lizard.say(unhissed_quote)
+	TEST_ASSERT(handle_speech_result, "Handle speech signal was not fired")
+	TEST_ASSERT_EQUAL(unhissed_quote, handle_speech_result[SPEECH_MESSAGE], "Speech modifier test failed: [handle_speech_result[SPEECH_LANGUAGE]] did not equal [unhissed_quote] when spoken by a lizard in language [handle_speech_result[SPEECH_LANGUAGE]]")
+
+
 /// Test to verify COMSIG_MOB_SAY is sent the exact same list as the message args, as they're operated on
 /datum/unit_test/say_signal
 
@@ -76,7 +116,7 @@
 	TEST_ASSERT(speech_args[SPEECH_LANGUAGE], "Handle speech signal does not have a language arg")
 	TEST_ASSERT(speech_args[SPEECH_RANGE], "Handle speech signal does not have a range arg")
 
-	// saving hearing_args directly via handle_speech_result = speech_args won't work since the arg list
+	// saving speech_args directly via handle_speech_result = speech_args won't work since the arg list
 	// is a temporary variable that gets garbage collected after it's done being used by procs
 	// therefore we need to create a new list and transfer the args
 	handle_speech_result = list()
@@ -126,7 +166,7 @@
 	var/datum/client_interface/mock_client = new()
 	listener.mock_client = mock_client
 
-	RegisterSignal(speaker, COMSIG_MOB_SAY, PROC_REF(handle_speech))
+	RegisterSignal(speaker, COMSIG_MOB_SAY, PROC_REF(handle_speech)) //
 	RegisterSignal(speaker_radio, COMSIG_RADIO_NEW_MESSAGE, PROC_REF(handle_radio_hearing))
 
 	RegisterSignal(listener, COMSIG_MOVABLE_HEAR, PROC_REF(handle_hearing))

@@ -17,6 +17,8 @@
 /// s, null (she looks, they look) "%PRONOUN_s" = "p_s"
 /// es, null (she goes, they go) "%PRONOUN_es" = "p_es"
 
+/// 	Don't forget to update the grep if you add more! tools/ci/check_grep.sh -> pronoun helper spellcheck
+
 /// A list for all the pronoun procs, if you need to iterate or search through it or something.
 #define ALL_PRONOUNS list( \
 	"%PRONOUN_they" = TYPE_PROC_REF(/datum, p_they), \

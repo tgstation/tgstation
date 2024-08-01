@@ -81,7 +81,8 @@
 /mob/living/basic/frog/icemoon_facility
 	name = "Peter Jr."
 	desc = "They seem a little cold."
-	minimum_survivable_temperature = ICEBOX_MIN_TEMPERATURE
+	minimum_survivable_temperature = BODYTEMP_COLD_ICEBOX_SAFE
+	pressure_resistance = 200
 	habitable_atmos = null
 	gold_core_spawnable = NO_SPAWN
 
@@ -108,8 +109,13 @@
 
 /datum/ai_controller/basic_controller/frog
 	blackboard = list(
+		BB_BASIC_MOB_STOP_FLEEING = TRUE, //We only flee from scary fishermen.
 		BB_TARGETING_STRATEGY = /datum/targeting_strategy/basic,
 		BB_PET_TARGETING_STRATEGY = /datum/targeting_strategy/basic/not_friends,
+		BB_OWNER_SELF_HARM_RESPONSES = list(
+			"*me licks its own eyeballs in disapproval.",
+			"*me croaks sadly."
+		)
 	)
 
 	ai_movement = /datum/ai_movement/basic_avoidance
@@ -117,7 +123,8 @@
 	planning_subtrees = list(
 		/datum/ai_planning_subtree/target_retaliate,
 		/datum/ai_planning_subtree/random_speech/frog,
-		/datum/ai_planning_subtree/basic_melee_attack_subtree,
+		/datum/ai_planning_subtree/basic_melee_attack_subtree/no_fisherman,
+		/datum/ai_planning_subtree/flee_target/from_fisherman,
 		/datum/ai_planning_subtree/go_for_swim,
 	)
 
@@ -126,11 +133,18 @@
 		/datum/ai_planning_subtree/pet_planning,
 		/datum/ai_planning_subtree/random_speech/frog,
 		/datum/ai_planning_subtree/simple_find_target,
-		/datum/ai_planning_subtree/basic_melee_attack_subtree,
+		/datum/ai_planning_subtree/basic_melee_attack_subtree/no_fisherman,
+		/datum/ai_planning_subtree/flee_target/from_fisherman,
 	)
 
 /datum/ai_controller/basic_controller/frog/suicide_frog
+	blackboard = list(
+		BB_TARGETING_STRATEGY = /datum/targeting_strategy/basic,
+		BB_PET_TARGETING_STRATEGY = /datum/targeting_strategy/basic/not_friends,
+		BB_TARGET_PRIORITY_TRAIT = TRAIT_SCARY_FISHERMAN, //No fear, only hatred. It has nothing to lose
+	)
+
 	planning_subtrees = list(
-		/datum/ai_planning_subtree/simple_find_target,
+		/datum/ai_planning_subtree/find_target_prioritize_traits,
 		/datum/ai_planning_subtree/basic_melee_attack_subtree,
 	)

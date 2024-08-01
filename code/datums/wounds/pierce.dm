@@ -55,7 +55,7 @@
 			victim.add_splatter_floor(get_step(victim.loc, victim.dir))
 
 /datum/wound/pierce/bleed/get_bleed_rate_of_change()
-	//basically if a species doesn't bleed, the wound is stagnant and will not heal on it's own (nor get worse)
+	//basically if a species doesn't bleed, the wound is stagnant and will not heal on its own (nor get worse)
 	if(!limb.can_bleed())
 		return BLOOD_FLOW_STEADY
 	if(HAS_TRAIT(victim, TRAIT_BLOODY_MESS))

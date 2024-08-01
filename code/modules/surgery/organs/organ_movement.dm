@@ -161,6 +161,7 @@
 	UnregisterSignal(organ_owner, COMSIG_ATOM_EXAMINE)
 	SEND_SIGNAL(src, COMSIG_ORGAN_REMOVED, organ_owner)
 	SEND_SIGNAL(organ_owner, COMSIG_CARBON_LOSE_ORGAN, src, special)
+	ADD_TRAIT(src, TRAIT_USED_ORGAN, ORGAN_TRAIT)
 
 	var/list/diseases = organ_owner.get_static_viruses()
 	if(!LAZYLEN(diseases))
@@ -193,7 +194,6 @@
 
 	// The true movement is here
 	moveToNullspace()
-	bodypart_owner.contents -= src
 	bodypart_owner = null
 
 	on_bodypart_remove(limb)

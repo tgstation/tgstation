@@ -13,4 +13,16 @@
 	icon_state = "calcic"
 	default_priority = 90
 
+/datum/language/calcic/get_random_name(
+	gender = NEUTER,
+	name_count = default_name_count,
+	syllable_min = default_name_syllable_min,
+	syllable_max = default_name_syllable_max,
+	force_use_syllables = FALSE,
+)
+	if(force_use_syllables)
+		return ..()
+
+	return "[pick(GLOB.plasmaman_names)] \Roman[rand(1, 99)]"
+
 // Yeah, this goes to skeletons too, since it's basically just skeleton clacking.

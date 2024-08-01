@@ -7,6 +7,7 @@
 	show_in_antagpanel = FALSE //should only show subtypes
 	show_to_ghosts = TRUE
 	suicide_cry = "FOR THE MOTHERSHIP!!" // They can't even talk but y'know
+	stinger_sound = 'sound/ambience/antag/ayylien.ogg'
 	var/datum/team/abductor_team/team
 	var/sub_role
 	var/outfit

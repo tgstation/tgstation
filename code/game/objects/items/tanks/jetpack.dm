@@ -8,10 +8,15 @@
 	w_class = WEIGHT_CLASS_BULKY
 	distribute_pressure = ONE_ATMOSPHERE * O2STANDARD
 	actions_types = list(/datum/action/item_action/set_internals, /datum/action/item_action/toggle_jetpack, /datum/action/item_action/jetpack_stabilization)
+	/// What gas our jetpack is filled with on initialize
 	var/gas_type = /datum/gas/oxygen
+	/// If the jetpack is currently active
 	var/on = FALSE
-	var/full_speed = TRUE // If the jetpack will have a speedboost in space/nograv or not
+	/// If the jetpack will stop when you stop moving
 	var/stabilize = FALSE
+	/// If our jetpack is disabled, from getting EMPd
+	var/disabled = FALSE
+	/// Callback for the jetpack component
 	var/thrust_callback
 
 /obj/item/tank/jetpack/Initialize(mapload)
@@ -94,20 +99,18 @@
 	icon_state = "[initial(icon_state)][on ? "-on" : ""]"
 
 /obj/item/tank/jetpack/proc/turn_on(mob/user)
+	if(disabled)
+		return FALSE
 	if(SEND_SIGNAL(src, COMSIG_JETPACK_ACTIVATED, user) & JETPACK_ACTIVATION_FAILED)
 		return FALSE
 	on = TRUE
 	update_icon(UPDATE_ICON_STATE)
-	if(full_speed)
-		user.add_movespeed_modifier(/datum/movespeed_modifier/jetpack/fullspeed)
 	return TRUE
 
 /obj/item/tank/jetpack/proc/turn_off(mob/user)
 	SEND_SIGNAL(src, COMSIG_JETPACK_DEACTIVATED, user)
 	on = FALSE
 	update_icon(UPDATE_ICON_STATE)
-	if(user)
-		user.remove_movespeed_modifier(/datum/movespeed_modifier/jetpack/fullspeed)
 
 /obj/item/tank/jetpack/proc/allow_thrust(num, use_fuel = TRUE)
 	if(!ismob(loc))
@@ -139,6 +142,23 @@
 	suffocater.visible_message(span_suicide("[user] is suffocating [user.p_them()]self with [src]! It looks like [user.p_they()] didn't read what that jetpack says!"))
 	return OXYLOSS
 
+/obj/item/tank/jetpack/emp_act(severity)
+	. = ..()
+	if(. & EMP_PROTECT_CONTENTS)
+		return
+	if(ismob(loc) && (item_flags & IN_INVENTORY))
+		var/mob/wearer = loc
+		turn_off(wearer)
+	else
+		turn_off()
+	update_item_action_buttons()
+	disabled = TRUE
+	addtimer(CALLBACK(src, PROC_REF(remove_emp)), 4 SECONDS)
+
+///Removes the disabled flag after getting EMPd
+/obj/item/tank/jetpack/proc/remove_emp()
+	disabled = FALSE
+
 /obj/item/tank/jetpack/improvised
 	name = "improvised jetpack"
 	desc = "A jetpack made from two air tanks, a fire extinguisher and some atmospherics equipment. It doesn't look like it can hold much."
@@ -148,7 +168,6 @@
 	worn_icon_state = "jetpack-improvised"
 	volume = 20 //normal jetpacks have 70 volume
 	gas_type = null //it starts empty
-	full_speed = FALSE //moves at modsuit jetpack speeds
 
 /obj/item/tank/jetpack/improvised/allow_thrust(num)
 	if(!ismob(loc))

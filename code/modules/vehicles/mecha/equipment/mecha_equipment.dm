@@ -4,7 +4,7 @@
  */
 /obj/item/mecha_parts/mecha_equipment
 	name = "mecha equipment"
-	icon = 'icons/mob/mecha_equipment.dmi'
+	icon = 'icons/obj/devices/mecha_equipment.dmi'
 	icon_state = "mecha_equip"
 	force = 5
 	max_integrity = 300
@@ -148,12 +148,13 @@
 		return FALSE
 	if(equipment_slot == MECHA_WEAPON)
 		if(attach_right)
-			if(mech.equip_by_category[MECHA_R_ARM] && (!special_attaching_interaction(attach_right, mech, user, checkonly = TRUE)))
-				to_chat(user, span_warning("\The [mech]'s right arm is full![mech.equip_by_category[MECHA_L_ARM] ? "" : " Try left arm!"]"))
+			// We need to check for length in case a mech doesn't support any arm attachments at all
+			if((!isnull(mech.equip_by_category[MECHA_R_ARM]) || !mech.max_equip_by_category[MECHA_R_ARM]) && (!special_attaching_interaction(attach_right, mech, user, checkonly = TRUE)))
+				to_chat(user, span_warning("\The [mech]'s right arm is full![mech.equip_by_category[MECHA_L_ARM] || !mech.max_equip_by_category[MECHA_L_ARM] ? "" : " Try left arm!"]"))
 				return FALSE
 		else
-			if(mech.equip_by_category[MECHA_L_ARM] && (!special_attaching_interaction(attach_right, mech, user, checkonly = TRUE)))
-				to_chat(user, span_warning("\The [mech]'s left arm is full![mech.equip_by_category[MECHA_R_ARM] ? "" : " Try right arm!"]"))
+			if((!isnull(mech.equip_by_category[MECHA_L_ARM]) || !mech.max_equip_by_category[MECHA_L_ARM]) && (!special_attaching_interaction(attach_right, mech, user, checkonly = TRUE)))
+				to_chat(user, span_warning("\The [mech]'s left arm is full![mech.equip_by_category[MECHA_R_ARM] || !mech.max_equip_by_category[MECHA_R_ARM] ? "" : " Try right arm!"]"))
 				return FALSE
 		return TRUE
 	if(length(mech.equip_by_category[equipment_slot]) == mech.max_equip_by_category[equipment_slot])

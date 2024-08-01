@@ -41,7 +41,7 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 //Instead of just deleting our equipment, we save what we can and reinsert it into SSwardrobe's store
 //Hopefully this makes preference reloading not the worst thing ever
 /mob/living/carbon/human/dummy/delete_equipment()
-	var/list/items_to_check = get_equipped_items(include_pockets = TRUE) + held_items
+	var/list/items_to_check = get_equipped_items(INCLUDE_POCKETS | INCLUDE_HELD)
 	var/list/to_nuke = list() //List of items queued for deletion, can't qdel them before iterating their contents in case they hold something
 	///Travel to the bottom of the contents chain, expanding it out
 	for(var/i = 1; i <= length(items_to_check); i++) //Needs to be a c style loop since it can expand
@@ -76,7 +76,7 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 	cut_overlays(TRUE)
 
 /mob/living/carbon/human/dummy/setup_human_dna()
-	randomize_human(src, randomize_mutations = FALSE)
+	randomize_human_normie(src, randomize_mutations = FALSE)
 
 /mob/living/carbon/human/dummy/log_mob_tag(text)
 	return
@@ -103,7 +103,7 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 /proc/create_consistent_human_dna(mob/living/carbon/human/target)
 	target.dna.features["mcolor"] = COLOR_VIBRANT_LIME
 	target.dna.features["ethcolor"] = COLOR_WHITE
-	target.dna.features["body_markings"] = get_consistent_feature_entry(SSaccessories.body_markings_list)
+	target.dna.features["lizard_markings"] = get_consistent_feature_entry(SSaccessories.lizard_markings_list)
 	target.dna.features["ears"] = get_consistent_feature_entry(SSaccessories.ears_list)
 	target.dna.features["frills"] = get_consistent_feature_entry(SSaccessories.frills_list)
 	target.dna.features["horns"] = get_consistent_feature_entry(SSaccessories.horns_list)

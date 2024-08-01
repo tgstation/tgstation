@@ -28,7 +28,7 @@
 /datum/action/cooldown/spell/conjure/cosmic_expansion/cast(mob/living/cast_on)
 	new expansion_effect(get_turf(cast_on))
 	for(var/mob/living/nearby_mob in range(star_mark_range, cast_on))
-		if(cast_on == nearby_mob)
+		if(cast_on == nearby_mob || cast_on.buckled == nearby_mob)
 			continue
 		nearby_mob.apply_status_effect(/datum/status_effect/star_mark, cast_on)
 	if (ascended)

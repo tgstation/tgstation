@@ -28,7 +28,7 @@
 	pixel_z = 16
 	AddElement(/datum/element/render_over_keep_hitbox)
 	AddComponent(/datum/component/vis_block, "standard", "standard")
-	air_update_turf(TRUE, TRUE) // wallening todo: why is this atmos logic here? should it be upstreamed?
+	air_update_turf(TRUE, TRUE)
 	if(mapload)
 		return INITIALIZE_HINT_LATELOAD
 

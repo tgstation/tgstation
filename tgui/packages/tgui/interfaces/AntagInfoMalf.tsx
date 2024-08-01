@@ -1,9 +1,8 @@
-import { BooleanLike } from 'common/react';
-import { multiline } from 'common/string';
 import { useState } from 'react';
+import { BlockQuote, Button, Section, Stack, Tabs } from 'tgui-core/components';
+import { BooleanLike } from 'tgui-core/react';
 
 import { useBackend } from '../backend';
-import { BlockQuote, Button, Section, Stack, Tabs } from '../components';
 import { Window } from '../layouts';
 import {
   Objective,
@@ -79,7 +78,7 @@ const FlavorSection = (props) => {
           mr={-0.8}
           mt={-0.5}
           icon="hammer"
-          tooltip={multiline`
+          tooltip={`
             This is a gameplay suggestion for bored ais.
             You don't have to follow it, unless you want some
             ideas for how to spend the round.`}

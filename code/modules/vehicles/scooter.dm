@@ -161,9 +161,8 @@
 			victim.visible_message(span_danger("[victim] straight up gets grinded into the ground by [skater]'s [src]! Radical!"))
 	addtimer(CALLBACK(src, PROC_REF(grind)), 0.1 SECONDS)
 
-/obj/vehicle/ridden/scooter/skateboard/MouseDrop(atom/over_object)
-	. = ..()
-	var/mob/living/carbon/skater = usr
+/obj/vehicle/ridden/scooter/skateboard/mouse_drop_dragged(atom/over_object, mob/user)
+	var/mob/living/carbon/skater = user
 	if(!istype(skater))
 		return
 	if (over_object == skater)
@@ -207,6 +206,20 @@
 			to_chat(rider, span_warning("[src] [p_are()] not powerful enough to fly upwards."))
 		return FALSE
 
+/obj/vehicle/ridden/scooter/skateboard/hoverboard/holyboarded
+	name = "holy skateboard"
+	desc = "A board blessed by the gods with the power to grind for our sins. Has the initials 'J.C.' on the underside."
+	board_item_type = /obj/item/melee/skateboard/holyboard
+	instability = 3
+	icon_state = "hoverboard_holy"
+
+/obj/vehicle/ridden/scooter/skateboard/hoverboard/make_ridable()
+	AddElement(/datum/element/ridable, /datum/component/riding/vehicle/scooter/skateboard/hover/holy)
+
+/obj/vehicle/ridden/scooter/skateboard/hoverboard/holyboarded/Initialize(mapload)
+	. = ..()
+	AddComponent(/datum/component/anti_magic, MAGIC_RESISTANCE|MAGIC_RESISTANCE_HOLY)
+
 /obj/vehicle/ridden/scooter/skateboard/hoverboard/admin
 	name = "\improper Board Of Directors"
 	desc = "The engineering complexity of a spaceship concentrated inside of a board. Just as expensive, too."
@@ -224,7 +237,7 @@
 /obj/item/scooter_frame
 	name = "scooter frame"
 	desc = "A metal frame for building a scooter. Looks like you'll need to add some iron to make wheels."
-	icon = 'icons/obj/vehicles.dmi'
+	icon = 'icons/mob/rideables/vehicles.dmi'
 	icon_state = "scooter_frame"
 	w_class = WEIGHT_CLASS_NORMAL
 

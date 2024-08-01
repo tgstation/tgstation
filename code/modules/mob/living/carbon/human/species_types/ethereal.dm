@@ -80,14 +80,6 @@
 	QDEL_NULL(ethereal_light)
 	return ..()
 
-/datum/species/ethereal/random_name(gender,unique,lastname)
-	if(unique)
-		return random_unique_ethereal_name()
-
-	var/randname = ethereal_name()
-
-	return randname
-
 /datum/species/ethereal/randomize_features()
 	var/list/features = ..()
 	features["ethcolor"] = GLOB.color_list_ethereal[pick(GLOB.color_list_ethereal)]

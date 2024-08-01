@@ -7,7 +7,12 @@
 		BB_BASIC_MOB_FLEE_DISTANCE = 30,
 		BB_VISION_RANGE = 9,
 		BB_TARGET_MINIMUM_STAT = HARD_CRIT,
-		BB_REINFORCEMENTS_EMOTE = "unleashes a chilling howl, calling for aid!"
+		BB_REINFORCEMENTS_EMOTE = "unleashes a chilling howl, calling for aid!",
+		BB_OWNER_SELF_HARM_RESPONSES = list(
+			"*me howls in dissaproval.",
+			"*me whines sadly.",
+			"*me attempts to take your hand in its mouth."
+		)
 	)
 
 	ai_movement = /datum/ai_movement/basic_avoidance

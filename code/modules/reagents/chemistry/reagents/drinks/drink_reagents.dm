@@ -358,9 +358,14 @@
 	description = "Coffee and ice, refreshing and cool."
 	color = "#102838" // rgb: 16, 40, 56
 	nutriment_factor = 0
+	overdose_threshold = 80
 	taste_description = "bitter coldness"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 	metabolized_traits = list(TRAIT_STIMULATED)
+
+/datum/reagent/consumable/icecoffee/overdose_process(mob/living/affected_mob, seconds_per_tick, times_fired)
+	. = ..()
+	affected_mob.set_jitter_if_lower(10 SECONDS * REM * seconds_per_tick)
 
 /datum/reagent/consumable/icecoffee/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
 	. = ..()
@@ -368,16 +373,20 @@
 	affected_mob.adjust_drowsiness(-6 SECONDS * REM * seconds_per_tick)
 	affected_mob.AdjustSleeping(-40 * REM * seconds_per_tick)
 	affected_mob.adjust_bodytemperature(-5 * REM * TEMPERATURE_DAMAGE_COEFFICIENT * seconds_per_tick, affected_mob.get_body_temp_normal())
-	affected_mob.set_jitter_if_lower(10 SECONDS * REM * seconds_per_tick)
 
 /datum/reagent/consumable/hot_ice_coffee
 	name = "Hot Ice Coffee"
 	description = "Coffee with pulsing ice shards"
 	color = "#102838" // rgb: 16, 40, 56
 	nutriment_factor = 0
+	overdose_threshold = 80
 	taste_description = "bitter coldness and a hint of smoke"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 	metabolized_traits = list(TRAIT_STIMULATED)
+
+/datum/reagent/consumable/hot_ice_coffee/overdose_process(mob/living/affected_mob, seconds_per_tick, times_fired)
+	. = ..()
+	affected_mob.set_jitter_if_lower(10 SECONDS * REM * seconds_per_tick)
 
 /datum/reagent/consumable/hot_ice_coffee/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
 	. = ..()
@@ -385,7 +394,6 @@
 	affected_mob.adjust_drowsiness(-6 SECONDS * REM * seconds_per_tick)
 	affected_mob.AdjustSleeping(-60 * REM * seconds_per_tick)
 	affected_mob.adjust_bodytemperature(-7 * REM * TEMPERATURE_DAMAGE_COEFFICIENT * seconds_per_tick, affected_mob.get_body_temp_normal())
-	affected_mob.set_jitter_if_lower(10 SECONDS * REM * seconds_per_tick)
 	if(affected_mob.adjustToxLoss(1 * REM * seconds_per_tick, updating_health = FALSE, required_biotype = affected_biotype))
 		return UPDATE_MOB_HEALTH
 
@@ -701,11 +709,16 @@
 	name = "Soy Latte"
 	description = "A nice and tasty beverage while you are reading your hippie books."
 	color = "#cc6404" // rgb: 204,100,4
+	overdose_threshold = 80
 	quality = DRINK_NICE
 	taste_description = "creamy coffee"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 	glass_price = DRINK_PRICE_EASY
 	metabolized_traits = list(TRAIT_STIMULATED)
+
+/datum/reagent/consumable/soy_latte/overdose_process(mob/living/affected_mob, seconds_per_tick, times_fired)
+	. = ..()
+	affected_mob.set_jitter_if_lower(10 SECONDS * REM * seconds_per_tick)
 
 /datum/reagent/consumable/soy_latte/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
 	. = ..()
@@ -714,7 +727,6 @@
 	var/need_mob_update
 	need_mob_update = affected_mob.SetSleeping(0)
 	affected_mob.adjust_bodytemperature(5 * REM * TEMPERATURE_DAMAGE_COEFFICIENT * seconds_per_tick, 0, affected_mob.get_body_temp_normal())
-	affected_mob.set_jitter_if_lower(10 SECONDS * REM * seconds_per_tick)
 	if(affected_mob.getBruteLoss() && SPT_PROB(10, seconds_per_tick))
 		need_mob_update += affected_mob.heal_bodypart_damage(brute = 1 * REM * seconds_per_tick, burn = 0, updating_health = FALSE)
 	if(need_mob_update)
@@ -724,11 +736,16 @@
 	name = "Cafe Latte"
 	description = "A nice, strong and tasty beverage while you are reading."
 	color = "#cc6404" // rgb: 204,100,4
+	overdose_threshold = 80
 	quality = DRINK_NICE
 	taste_description = "bitter cream"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 	glass_price = DRINK_PRICE_EASY
 	metabolized_traits = list(TRAIT_STIMULATED)
+
+/datum/reagent/consumable/cafe_latte/overdose_process(mob/living/affected_mob, seconds_per_tick, times_fired)
+	. = ..()
+	affected_mob.set_jitter_if_lower(10 SECONDS * REM * seconds_per_tick)
 
 /datum/reagent/consumable/cafe_latte/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
 	. = ..()
@@ -737,7 +754,6 @@
 	var/need_mob_update
 	need_mob_update = affected_mob.SetSleeping(0)
 	affected_mob.adjust_bodytemperature(5 * REM * TEMPERATURE_DAMAGE_COEFFICIENT * seconds_per_tick, 0, affected_mob.get_body_temp_normal())
-	affected_mob.set_jitter_if_lower(10 SECONDS * REM * seconds_per_tick)
 	if(affected_mob.getBruteLoss() && SPT_PROB(10, seconds_per_tick))
 		need_mob_update += affected_mob.heal_bodypart_damage(brute = 1 * REM * seconds_per_tick, burn = 0, updating_health = FALSE)
 	if(need_mob_update)
@@ -851,11 +867,28 @@
 	name = "Pumpkin Latte"
 	description = "A mix of pumpkin juice and coffee."
 	color = "#F4A460"
+	overdose_threshold = 80
 	quality = DRINK_VERYGOOD
 	nutriment_factor = 3
 	taste_description = "creamy pumpkin"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 	metabolized_traits = list(TRAIT_STIMULATED)
+
+/datum/reagent/consumable/pumpkin_latte/overdose_process(mob/living/affected_mob, seconds_per_tick, times_fired)
+	. = ..()
+	affected_mob.set_jitter_if_lower(10 SECONDS * REM * seconds_per_tick)
+
+/datum/reagent/consumable/pumpkin_latte/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
+	. = ..()
+	affected_mob.adjust_dizzy(-10 SECONDS * REM * seconds_per_tick)
+	affected_mob.adjust_drowsiness(-6 SECONDS * REM * seconds_per_tick)
+	var/need_mob_update
+	need_mob_update = affected_mob.SetSleeping(0)
+	affected_mob.adjust_bodytemperature(5 * REM * TEMPERATURE_DAMAGE_COEFFICIENT * seconds_per_tick, 0, affected_mob.get_body_temp_normal())
+	if(affected_mob.getBruteLoss() && SPT_PROB(10, seconds_per_tick))
+		need_mob_update += affected_mob.heal_bodypart_damage(brute = 1 * REM * seconds_per_tick, burn = 0, updating_health = FALSE)
+	if(need_mob_update)
+		return UPDATE_MOB_HEALTH
 
 /datum/reagent/consumable/gibbfloats
 	name = "Gibb Floats"
@@ -1033,7 +1066,7 @@
 	affected_mob.update_transform(newsize/current_size)
 	current_size = newsize
 	if(SPT_PROB(23, seconds_per_tick))
-		affected_mob.emote("sneeze")
+		affected_mob.sneeze()
 
 /datum/reagent/consumable/red_queen/on_mob_end_metabolize(mob/living/affected_mob)
 	. = ..()

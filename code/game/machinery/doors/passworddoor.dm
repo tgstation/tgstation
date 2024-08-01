@@ -62,37 +62,49 @@
 		if(access_bypass || ask_for_pass(user))
 			open()
 		else
-			run_animation("deny")
+			run_animation(DOOR_DENY_ANIMATION)
 
 /obj/machinery/door/password/update_icon_state()
 	. = ..()
 	//Deny animation would be nice to have.
-	if(animation && animation != "deny")
+	if(animation && animation != DOOR_DENY_ANIMATION)
 		icon_state = animation
 	else
 		icon_state = density ? "closed" : "open_top"
 
 /obj/machinery/door/password/update_overlays()
 	. = ..()
-	if(!density)
-		// If we're open we layer the bit below us "above" any mobs so they can walk through
-		. += mutable_appearance(icon, "open_bottom", ABOVE_MOB_LAYER, appearance_flags = KEEP_APART)
-		. += emissive_blocker(icon, "open_bottom", src, ABOVE_MOB_LAYER)
+	if(density)
+		return
+	// If we're open we layer the bit below us "above" any mobs so they can walk through
+	. += mutable_appearance(icon, "open_bottom", ABOVE_MOB_LAYER, appearance_flags = KEEP_APART)
+	. += emissive_blocker(icon, "open_bottom", src, ABOVE_MOB_LAYER)
 
-/obj/machinery/door/password/animation_delay(animation)
+/obj/machinery/door/password/animation_length(animation)
 	switch(animation)
-		if("opening")
+		if(DOOR_OPENING_ANIMATION)
+			return 0.9 SECONDS
+		if(DOOR_CLOSING_ANIMATION)
 			return 0.8 SECONDS
-		if("closing")
+
+/obj/machinery/door/password/animation_segment_delay(animation)
+	switch(animation)
+		if(DOOR_OPENING_PASSABLE)
+			return 0.6 SECONDS
+		if(DOOR_OPENING_FINISHED)
+			return 0.9 SECONDS
+		if(DOOR_CLOSING_UNPASSABLE)
+			return 0.3 SECONDS
+		if(DOOR_CLOSING_FINISHED)
 			return 0.8 SECONDS
 
 /obj/machinery/door/password/animation_effects(animation)
 	switch(animation)
-		if("opening")
+		if(DOOR_OPENING_ANIMATION)
 			playsound(src, door_open, 50, TRUE)
-		if("closing")
+		if(DOOR_CLOSING_ANIMATION)
 			playsound(src, door_close, 50, TRUE)
-		if("deny")
+		if(DOOR_DENY_ANIMATION)
 			playsound(src, door_deny, 30, TRUE)
 
 /obj/machinery/door/password/proc/ask_for_pass(mob/user)

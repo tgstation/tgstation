@@ -182,8 +182,8 @@
 	if(!try_heal_checks(patient, user, brute, burn))
 		return FALSE
 	user.visible_message(
-		span_infoplain(span_green("[user] applies [src] on [patient]'s [parse_zone(affecting.body_zone)].")),
-		span_infoplain(span_green("You apply [src] on [patient]'s [parse_zone(affecting.body_zone)]."))
+		span_infoplain(span_green("[user] applies [src] on [patient]'s [affecting.plaintext_zone].")),
+		span_infoplain(span_green("You apply [src] on [patient]'s [affecting.plaintext_zone]."))
 	)
 	var/previous_damage = affecting.get_damage()
 	if(affecting.heal_damage(brute, burn))

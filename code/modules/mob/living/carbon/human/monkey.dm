@@ -4,6 +4,7 @@
 	ai_controller = /datum/ai_controller/monkey
 
 /mob/living/carbon/human/species/monkey/Initialize(mapload, cubespawned = FALSE, mob/spawner)
+	ADD_TRAIT(src, TRAIT_BORN_MONKEY, INNATE_TRAIT)
 	if (cubespawned)
 		var/cap = CONFIG_GET(number/monkeycap)
 		if (LAZYLEN(SSmobs.cubemonkeys) > cap)

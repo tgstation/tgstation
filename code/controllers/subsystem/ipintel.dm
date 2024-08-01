@@ -106,7 +106,7 @@ SUBSYSTEM_DEF(ipintel)
 	intel.result = data["result"]
 	if(istext(intel.result))
 		intel.result = text2num(intel.result)
-	intel.date = SQLtime()
+	intel.date = ISOtime()
 	intel.address = address
 	cached_queries[address] = intel
 	add_intel_to_database(intel)
@@ -119,10 +119,10 @@ SUBSYSTEM_DEF(ipintel)
 	var/datum/db_query/query = SSdbcore.NewQuery(
 		"INSERT INTO [format_table_name("ipintel")] ( \
 			ip, \
-			intel, \
+			intel \
 		) VALUES ( \
-			INET_ATON(:address) \
-			:result, \
+			INET_ATON(:address), \
+			:result \
 		)", list(
 			"address" = intel.address,
 			"result" = intel.result,

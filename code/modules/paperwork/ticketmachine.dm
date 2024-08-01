@@ -45,13 +45,10 @@ WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/machinery/ticket_machine)
 	. += span_notice("The ticket machine shows that ticket #[current_number] is currently being served.")
 	. += span_notice("You can take a ticket out with <b>Left-Click</b> to be number [ticket_number + 1] in queue.")
 
-/obj/machinery/ticket_machine/multitool_act(mob/living/user, obj/item/I)
-	if(!multitool_check_buffer(user, I)) //make sure it has a data buffer
-		return
-	var/obj/item/multitool/M = I
+/obj/machinery/ticket_machine/multitool_act(mob/living/user, obj/item/multitool/M)
 	M.set_buffer(src)
 	balloon_alert(user, "saved to multitool buffer")
-	return TRUE
+	return ITEM_INTERACT_SUCCESS
 
 /obj/machinery/ticket_machine/emag_act(mob/user, obj/item/card/emag/emag_card) //Emag the ticket machine to dispense burning tickets, as well as randomize its number to destroy the HoP's mind.
 	if(obj_flags & EMAGGED)
@@ -175,7 +172,7 @@ BUTTON_DIRECTIONAL_HELPERS(/obj/machinery/button/ticket_machine)
 	var/startX = 12 - (2*textLen)
 
 	for(var/i=1; i <= textLen, i++)
-		var/mutable_appearance/number_overlay = mutable_appearance('icons/misc/Font_Minimal.dmi', number_string[i])
+		var/mutable_appearance/number_overlay = mutable_appearance('icons/testing/Font_Minimal.dmi', number_string[i])
 		number_overlay.blend_mode = BLEND_SUBTRACT
 		number_overlay.pixel_x = startX
 		number_overlay.pixel_y = -14

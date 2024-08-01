@@ -95,7 +95,7 @@
 		context[SCREENTIP_CONTEXT_LMB] = "Combine cards"
 		return CONTEXTUAL_SCREENTIP_SET
 
-	if(istype(held_item, /obj/item/toy/crayon) || istype(held_item, /obj/item/pen))
+	if(IS_WRITING_UTENSIL(held_item))
 		context[SCREENTIP_CONTEXT_LMB] = blank ? "Write on card" : "Mark card"
 		return CONTEXTUAL_SCREENTIP_SET
 
@@ -170,10 +170,10 @@
 			user.balloon_alert_to_viewers("deals a card")
 
 		var/obj/item/toy/cards/cardhand/new_cardhand = new (drop_location())
-		new_cardhand.insert(src)
-		new_cardhand.insert(card)
 		new_cardhand.pixel_x = pixel_x
 		new_cardhand.pixel_y = pixel_y
+		new_cardhand.insert(src)
+		new_cardhand.insert(card)
 
 		if(!isturf(loc)) // make a cardhand in our active hand
 			user.temporarilyRemoveItemFromInventory(src, TRUE)

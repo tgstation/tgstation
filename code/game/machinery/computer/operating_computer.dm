@@ -143,19 +143,23 @@
 			var/chems_needed = surgery_step.get_chem_list()
 			var/alternative_step
 			var/alt_chems_needed = ""
+			var/alt_chems_present = FALSE
 			if(surgery_step.repeatable)
 				var/datum/surgery_step/next_step = procedure.get_surgery_next_step()
 				if(next_step)
 					alternative_step = capitalize(next_step.name)
 					alt_chems_needed = next_step.get_chem_list()
+					alt_chems_present = next_step.chem_check(patient)
 				else
 					alternative_step = "Finish operation"
 			data["procedures"] += list(list(
-				"name" = capitalize("[parse_zone(procedure.location)] [procedure.name]"),
+				"name" = capitalize("[patient.parse_zone_with_bodypart(procedure.location)] [procedure.name]"),
 				"next_step" = capitalize(surgery_step.name),
 				"chems_needed" = chems_needed,
 				"alternative_step" = alternative_step,
-				"alt_chems_needed" = alt_chems_needed
+				"alt_chems_needed" = alt_chems_needed,
+				"chems_present" = surgery_step.chem_check(patient),
+				"alt_chems_present" = alt_chems_present
 			))
 	return data
 

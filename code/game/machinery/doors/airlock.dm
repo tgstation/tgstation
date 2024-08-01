@@ -141,6 +141,9 @@
 	/// Used for papers and photos pinned to the airlock
 	var/note_overlay_file = 'icons/obj/doors/airlocks/tall/overlays.dmi'
 
+	/// Airlock pump that overrides airlock controlls when set up for cycling
+	var/obj/machinery/atmospherics/components/unary/airlock_pump/cycle_pump
+
 	var/cyclelinkeddir = 0
 	var/obj/machinery/door/airlock/cyclelinkedairlock
 	var/shuttledocked = 0
@@ -311,7 +314,6 @@
 	qdel(src)
 
 /obj/machinery/door/airlock/Destroy()
-	QDEL_NULL(wires)
 	QDEL_NULL(electronics)
 	if (cyclelinkedairlock)
 		if (cyclelinkedairlock.cyclelinkedairlock == src)
@@ -617,21 +619,49 @@
 // I HATE AIRLOCKS AHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHH
 /obj/machinery/door/airlock/run_animation(animation)
 	switch(animation)
-		if("opening")
+		if(DOOR_OPENING_ANIMATION)
 			update_icon(ALL, AIRLOCK_OPENING)
-		if("closing")
+		if(DOOR_OPENING_ANIMATION)
 			update_icon(ALL, AIRLOCK_CLOSING)
-		if("deny")
+		if(DOOR_DENY_ANIMATION)
 			if(!machine_stat)
 				update_icon(ALL, AIRLOCK_DENY)
 				playsound(src,doorDeni,50,FALSE,3)
-				addtimer(CALLBACK(src, TYPE_PROC_REF(/atom, update_icon), ALL, AIRLOCK_CLOSED), AIRLOCK_DENY_ANIMATION_TIME)
+				addtimer(CALLBACK(src, PROC_REF(handle_deny_end)), AIRLOCK_DENY_ANIMATION_TIME)
+
+/obj/machinery/door/airlock/proc/handle_deny_end()
+	if(airlock_state == AIRLOCK_DENY)
+		update_icon(ALL, AIRLOCK_CLOSED)
+
+/obj/machinery/door/airlock/animation_length(animation)
+	switch(animation)
+		if(DOOR_OPENING_ANIMATION)
+			return 0.6 SECONDS
+		if(DOOR_CLOSING_ANIMATION)
+			return 0.6 SECONDS
+
+/obj/machinery/door/airlock/animation_segment_delay(animation)
+	switch(animation)
+		if(AIRLOCK_OPENING_TRANSPARENT)
+			return 0.1 SECONDS
+		if(AIRLOCK_OPENING_PASSABLE)
+			return 0.5 SECONDS
+		if(AIRLOCK_OPENING_FINISHED)
+			return 0.6 SECONDS
+		if(AIRLOCK_CLOSING_UNPASSABLE)
+			return 0.2 SECONDS
+		if(AIRLOCK_CLOSING_OPAQUE)
+			return 0.5 SECONDS
+		if(AIRLOCK_CLOSING_FINISHED)
+			return 0.6 SECONDS
 
 /obj/machinery/door/airlock/examine(mob/user)
 	. = ..()
 	if(closeOtherId)
 		. += span_warning("This airlock cycles on ID: [sanitize(closeOtherId)].")
-	else if(!closeOtherId)
+	else if(cyclelinkedairlock)
+		. += span_warning("This airlock cycles with: [cyclelinkedairlock.name].")
+	else
 		. += span_warning("This airlock does not cycle.")
 	if(obj_flags & EMAGGED)
 		. += span_warning("Its access panel is smoking slightly.")
@@ -1236,6 +1266,10 @@
 		INVOKE_ASYNC(src, density ? PROC_REF(open) : PROC_REF(close), BYPASS_DOOR_CHECKS)
 
 /obj/machinery/door/airlock/open(forced = DEFAULT_DOOR_CHECKS)
+	if(cycle_pump && !operating && !welded && !seal && locked && density)
+		cycle_pump.airlock_act(src)
+		return FALSE // The rest will be handled by the pump
+
 	if( operating || welded || locked || seal )
 		return FALSE
 
@@ -1270,19 +1304,21 @@
 	SEND_SIGNAL(src, COMSIG_AIRLOCK_OPEN, forced)
 	operating = TRUE
 	update_icon(ALL, AIRLOCK_OPENING)
-	var/delay = animation_delay("opening")
-	sleep(0.1 SECONDS)
+	var/transparent_delay = animation_segment_delay(AIRLOCK_OPENING_TRANSPARENT)
+	sleep(transparent_delay)
 	set_opacity(0)
 	if(multi_tile)
 		filler.set_opacity(FALSE)
 	update_freelook_sight()
-	sleep(delay - 0.1 SECONDS)
+	var/passable_delay = animation_segment_delay(AIRLOCK_OPENING_PASSABLE) - transparent_delay
+	sleep(passable_delay)
 	set_density(FALSE)
 	if(multi_tile)
 		filler.set_density(FALSE)
 	flags_1 &= ~PREVENT_CLICK_UNDER_1
 	air_update_turf(TRUE, FALSE)
-	sleep(0.1 SECONDS)
+	var/open_delay = animation_segment_delay(AIRLOCK_OPENING_FINISHED) - transparent_delay - passable_delay
+	sleep(open_delay)
 	layer = OPEN_DOOR_LAYER
 	operating = FALSE
 	update_icon(ALL, AIRLOCK_OPEN)
@@ -1351,15 +1387,16 @@
 			filler.density = TRUE
 		flags_1 |= PREVENT_CLICK_UNDER_1
 		air_update_turf(TRUE, TRUE)
-	var/delay = animation_delay("closing")
-	sleep(0.1 SECONDS)
+	var/unpassable_delay = animation_segment_delay(AIRLOCK_CLOSING_UNPASSABLE)
+	sleep(unpassable_delay)
 	if(!air_tight)
 		set_density(TRUE)
 		if(multi_tile)
 			filler.density = TRUE
 		flags_1 |= PREVENT_CLICK_UNDER_1
 		air_update_turf(TRUE, TRUE)
-	sleep(delay - 0.1 SECONDS)
+	var/opaque_delay = animation_segment_delay(AIRLOCK_CLOSING_OPAQUE) - unpassable_delay
+	sleep(opaque_delay)
 	if(dangerous_close)
 		crush()
 	if(visible && !glass)
@@ -1367,7 +1404,9 @@
 		if(multi_tile)
 			filler.set_opacity(TRUE)
 	update_freelook_sight()
-	sleep(0.1 SECONDS)
+	var/close_delay = animation_segment_delay(AIRLOCK_CLOSING_FINISHED) - unpassable_delay - opaque_delay
+	sleep(close_delay)
+	update_icon(ALL, AIRLOCK_CLOSED, 1)
 	operating = FALSE
 	update_icon(ALL, AIRLOCK_CLOSED)
 	delayed_close_requested = FALSE
@@ -1466,9 +1505,9 @@
 		return
 	if(!density) //Already open
 		return ..()
+	if(user.combat_mode)
+		return ..()
 	if(locked || welded || seal) //Extremely generic, as aliens only understand the basics of how airlocks work.
-		if(user.combat_mode)
-			return ..()
 		to_chat(user, span_warning("[src] refuses to budge!"))
 		return
 	add_fingerprint(user)
@@ -1595,10 +1634,12 @@
 		var/obj/item/electronics/airlock/ae
 		if(!electronics)
 			ae = new/obj/item/electronics/airlock(loc)
+			if(closeOtherId)
+				ae.passed_cycle_id = closeOtherId
 			if(length(req_one_access))
 				ae.one_access = 1
 				ae.accesses = req_one_access
-			else
+			else if(length(req_access))
 				ae.accesses = req_access
 		else
 			ae = electronics
@@ -1853,6 +1894,17 @@
 /obj/structure/fluff/airlock_filler/singularity_pull(S, current_size)
 	return
 
+/obj/machinery/door/airlock/proc/set_cycle_pump(obj/machinery/atmospherics/components/unary/airlock_pump/pump)
+	RegisterSignal(pump, COMSIG_QDELETING, PROC_REF(unset_cycle_pump))
+	cycle_pump = pump
+
+/obj/machinery/door/airlock/proc/unset_cycle_pump()
+	SIGNAL_HANDLER
+	if(locked)
+		unbolt()
+		say("Link broken, unbolting.")
+	cycle_pump = null
+
 // Station Airlocks Regular
 
 /obj/machinery/door/airlock/command
@@ -2092,14 +2144,29 @@
 	greyscale_config = null
 	greyscale_colors = null
 
-/obj/machinery/door/airlock/diamond/animation_delay(animation)
+/obj/machinery/door/airlock/diamond/animation_length(animation)
 	switch(animation)
-		if("opening")
+		if(DOOR_OPENING_ANIMATION)
 			return 0.6 SECONDS
-		if("closing")
+		if(DOOR_CLOSING_ANIMATION)
 			return 0.6 SECONDS
-		if("deny")
+		if(DOOR_DENY_ANIMATION)
 			return 0.3 SECONDS
+
+/obj/machinery/door/airlock/diamond/animation_segment_delay(animation)
+	switch(animation)
+		if(AIRLOCK_OPENING_TRANSPARENT)
+			return 0.2 SECONDS
+		if(AIRLOCK_OPENING_PASSABLE)
+			return 0.5 SECONDS
+		if(AIRLOCK_OPENING_FINISHED)
+			return 0.6 SECONDS
+		if(AIRLOCK_CLOSING_UNPASSABLE)
+			return 0.3 SECONDS
+		if(AIRLOCK_CLOSING_OPAQUE)
+			return 0.5 SECONDS
+		if(AIRLOCK_CLOSING_FINISHED)
+			return 0.6 SECONDS
 
 /obj/machinery/door/airlock/diamond/glass
 	normal_integrity = 950
@@ -2298,14 +2365,29 @@
 
 	return ..()
 
-/obj/machinery/door/airlock/external/animation_delay(animation)
+/obj/machinery/door/airlock/external/animation_length(animation)
 	switch(animation)
-		if("opening")
+		if(DOOR_OPENING_ANIMATION)
 			return 0.6 SECONDS
-		if("closing")
+		if(DOOR_CLOSING_ANIMATION)
 			return 0.6 SECONDS
-		if("deny")
+		if(DOOR_DENY_ANIMATION)
 			return 0.3 SECONDS
+
+/obj/machinery/door/airlock/external/animation_segment_delay(animation)
+	switch(animation)
+		if(AIRLOCK_OPENING_TRANSPARENT)
+			return 0.2 SECONDS
+		if(AIRLOCK_OPENING_PASSABLE)
+			return 0.5 SECONDS
+		if(AIRLOCK_OPENING_FINISHED)
+			return 0.6 SECONDS
+		if(AIRLOCK_CLOSING_UNPASSABLE)
+			return 0.3 SECONDS
+		if(AIRLOCK_CLOSING_OPAQUE)
+			return 0.5 SECONDS
+		if(AIRLOCK_CLOSING_FINISHED)
+			return 0.6 SECONDS
 
 // Access free external airlocks
 /obj/machinery/door/airlock/external/ruin
@@ -2348,14 +2430,29 @@
 	greyscale_config = null
 	greyscale_colors = null
 
-/obj/machinery/door/airlock/vault/animation_delay(animation)
+/obj/machinery/door/airlock/vault/animation_length(animation)
 	switch(animation)
-		if("opening")
+		if(DOOR_OPENING_ANIMATION)
 			return 1.9 SECONDS
-		if("closing")
+		if(DOOR_CLOSING_ANIMATION)
 			return 1.9 SECONDS
-		if("deny")
+		if(DOOR_DENY_ANIMATION)
 			return 0.3 SECONDS
+
+/obj/machinery/door/airlock/vault/animation_segment_delay(animation)
+	switch(animation)
+		if(AIRLOCK_OPENING_TRANSPARENT)
+			return 1.3 SECONDS
+		if(AIRLOCK_OPENING_PASSABLE)
+			return 1.8 SECONDS
+		if(AIRLOCK_OPENING_FINISHED)
+			return 1.9 SECONDS
+		if(AIRLOCK_CLOSING_UNPASSABLE)
+			return 0.3 SECONDS
+		if(AIRLOCK_CLOSING_OPAQUE)
+			return 0.6 SECONDS
+		if(AIRLOCK_CLOSING_FINISHED)
+			return 1.9 SECONDS
 
 // Hatch Airlocks
 
@@ -2368,14 +2465,29 @@
 	greyscale_config = null
 	greyscale_colors = null
 
-/obj/machinery/door/airlock/hatch/animation_delay(animation)
+/obj/machinery/door/airlock/hatch/animation_length(animation)
 	switch(animation)
-		if("opening")
+		if(DOOR_OPENING_ANIMATION)
 			return 0.95 SECONDS
-		if("closing")
+		if(DOOR_CLOSING_ANIMATION)
 			return 0.95 SECONDS
-		if("deny")
+		if(DOOR_DENY_ANIMATION)
 			return 0.3 SECONDS
+
+/obj/machinery/door/airlock/hatch/animation_segment_delay(animation)
+	switch(animation)
+		if(AIRLOCK_OPENING_TRANSPARENT)
+			return 0.25 SECONDS
+		if(AIRLOCK_OPENING_PASSABLE)
+			return 0.75 SECONDS
+		if(AIRLOCK_OPENING_FINISHED)
+			return 0.95 SECONDS
+		if(AIRLOCK_CLOSING_UNPASSABLE)
+			return 0.5 SECONDS
+		if(AIRLOCK_CLOSING_OPAQUE)
+			return 0.75 SECONDS
+		if(AIRLOCK_CLOSING_FINISHED)
+			return 0.95 SECONDS
 
 /obj/machinery/door/airlock/maintenance_hatch //Please dear fucking LORD make this a subtype of the above, they're the SAME GOD DAMN THING
 	name = "maintenance hatch"
@@ -2386,14 +2498,29 @@
 	greyscale_config = null
 	greyscale_colors = null
 
-/obj/machinery/door/airlock/maintenance_hatch/animation_delay(animation)
+/obj/machinery/door/airlock/maintenance_hatch/animation_length(animation)
 	switch(animation)
-		if("opening")
+		if(DOOR_OPENING_ANIMATION)
 			return 0.9 SECONDS
-		if("closing")
+		if(DOOR_CLOSING_ANIMATION)
 			return 0.9 SECONDS
-		if("deny")
+		if(DOOR_DENY_ANIMATION)
 			return 0.3 SECONDS
+
+/obj/machinery/door/airlock/maintenance_hatch/animation_segment_delay(animation)
+	switch(animation)
+		if(AIRLOCK_OPENING_TRANSPARENT)
+			return 0.2 SECONDS
+		if(AIRLOCK_OPENING_PASSABLE)
+			return 0.6 SECONDS
+		if(AIRLOCK_OPENING_FINISHED)
+			return 0.9 SECONDS
+		if(AIRLOCK_CLOSING_UNPASSABLE)
+			return 0.4 SECONDS
+		if(AIRLOCK_CLOSING_OPAQUE)
+			return 0.8 SECONDS
+		if(AIRLOCK_CLOSING_FINISHED)
+			return 0.9 SECONDS
 
 // High Security Airlocks
 
@@ -2409,14 +2536,29 @@
 	greyscale_config = null
 	greyscale_colors = null
 
-/obj/machinery/door/airlock/highsecurity/animation_delay(animation)
+/obj/machinery/door/airlock/highsecurity/animation_length(animation)
 	switch(animation)
-		if("opening")
+		if(DOOR_OPENING_ANIMATION)
 			return 1.7 SECONDS
-		if("closing")
+		if(DOOR_CLOSING_ANIMATION)
 			return 1.7 SECONDS
-		if("deny")
+		if(DOOR_DENY_ANIMATION)
 			return 0.3 SECONDS
+
+/obj/machinery/door/airlock/highsecurity/animation_segment_delay(animation)
+	switch(animation)
+		if(AIRLOCK_OPENING_TRANSPARENT)
+			return 1.2 SECONDS
+		if(AIRLOCK_OPENING_PASSABLE)
+			return 1.6 SECONDS
+		if(AIRLOCK_OPENING_FINISHED)
+			return 1.7 SECONDS
+		if(AIRLOCK_CLOSING_UNPASSABLE)
+			return 0.3 SECONDS
+		if(AIRLOCK_CLOSING_OPAQUE)
+			return 0.7 SECONDS
+		if(AIRLOCK_CLOSING_FINISHED)
+			return 1.7 SECONDS
 
 // Shuttle Airlocks
 
@@ -2499,14 +2641,29 @@
 			L.throw_at(throwtarget, 5, 1)
 		return FALSE
 
-/obj/machinery/door/airlock/cult/animation_delay(animation)
+/obj/machinery/door/airlock/cult/animation_length(animation)
 	switch(animation)
-		if("opening")
+		if(DOOR_OPENING_ANIMATION)
 			return 1.6 SECONDS
-		if("closing")
+		if(DOOR_CLOSING_ANIMATION)
 			return 1.6 SECONDS
-		if("deny")
+		if(DOOR_DENY_ANIMATION)
 			return 0.3 SECONDS
+
+/obj/machinery/door/airlock/cult/animation_segment_delay(animation)
+	switch(animation)
+		if(AIRLOCK_OPENING_TRANSPARENT)
+			return 1.3 SECONDS
+		if(AIRLOCK_OPENING_PASSABLE)
+			return 1.4 SECONDS
+		if(AIRLOCK_OPENING_FINISHED)
+			return 1.6 SECONDS
+		if(AIRLOCK_CLOSING_UNPASSABLE)
+			return 0.9 SECONDS
+		if(AIRLOCK_CLOSING_OPAQUE)
+			return 1.1 SECONDS
+		if(AIRLOCK_CLOSING_FINISHED)
+			return 1.6 SECONDS
 
 /obj/machinery/door/airlock/cult/proc/conceal()
 	icon = 'icons/obj/doors/airlocks/tall/maintenance.dmi'

@@ -1,4 +1,0 @@
-author: "cnleth"
-delete-after: True
-changes:
-  - bugfix: "Fire ant colonies created by burning regular ants will now contain fire ants as their reagent"

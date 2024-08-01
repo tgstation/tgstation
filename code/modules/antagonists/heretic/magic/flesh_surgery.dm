@@ -83,7 +83,7 @@
 
 	return .
 
-/// If cast on an organ, we'll restore it's health and even un-fail it.
+/// If cast on an organ, we'll restore its health and even un-fail it.
 /datum/action/cooldown/spell/touch/flesh_surgery/proc/heal_organ(obj/item/melee/touch_attack/hand, obj/item/organ/to_heal, mob/living/carbon/caster)
 	if(to_heal.damage == 0)
 		to_heal.balloon_alert(caster, "already in good condition!")
@@ -135,7 +135,7 @@
 
 	// Round u pto the nearest generic zone (body, chest, arm)
 	var/zone_to_check = check_zone(caster.zone_selected)
-	var/parsed_zone = parse_zone(zone_to_check)
+	var/parsed_zone = victim.parse_zone_with_bodypart(zone_to_check)
 
 	var/list/organs_we_can_remove = list()
 	for(var/obj/item/organ/organ as anything in carbon_victim.organs)

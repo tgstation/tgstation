@@ -1,4 +1,0 @@
-author: "Ghommie"
-delete-after: True
-changes:
-  - rscadd: "Adds an Icebox-specific station trait that brightens outdoors areas on the surface level."

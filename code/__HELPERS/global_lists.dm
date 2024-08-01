@@ -2,13 +2,6 @@
 /////Initial Building/////
 //////////////////////////
 
-/// Inits GLOB.species_list. Not using GLOBAL_LIST_INIT b/c it depends on GLOB.string_lists
-/proc/init_species_list()
-	for(var/species_path in subtypesof(/datum/species))
-		var/datum/species/species = new species_path()
-		GLOB.species_list[species.id] = species_path
-	sort_list(GLOB.species_list, GLOBAL_PROC_REF(cmp_typepaths_asc))
-
 /// Inits GLOB.surgeries
 /proc/init_surgeries()
 	var/surgeries = list()
@@ -20,7 +13,6 @@
 /// Legacy procs that really should be replaced with proper _INIT macros
 /proc/make_datum_reference_lists()
 	// I tried to eliminate this proc but I couldn't untangle their init-order interdependencies -Dominion/Cyberboss
-	init_species_list()
 	init_keybindings()
 	GLOB.emote_list = init_emote_list() // WHY DOES THIS NEED TO GO HERE? IT JUST INITS DATUMS
 	init_crafting_recipes()
@@ -186,7 +178,7 @@ GLOBAL_LIST_INIT(WALLITEMS_INTERIOR, typecacheof(list(
 	/obj/machinery/defibrillator_mount,
 	/obj/machinery/firealarm,
 	/obj/machinery/flasher,
-	/obj/machinery/keycard_auth,
+	/obj/machinery/keycard_auth/wall_mounted,
 	/obj/machinery/light_switch,
 	/obj/machinery/newscaster,
 	/obj/machinery/power/apc,

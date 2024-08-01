@@ -36,7 +36,7 @@
 	var/list/msg = list("<span class='warning'>")
 	for(var/obj/item/bodypart/bodypart as anything in bodyparts)
 		for(var/obj/item/embedded_item as anything in bodypart.embedded_objects)
-			if(embedded_item.isEmbedHarmless())
+			if(embedded_item.is_embed_harmless())
 				msg += "<B>[t_He] [t_has] [icon2html(embedded_item, user)] \a [embedded_item] stuck to [t_his] [bodypart.name]!</B>\n"
 			else
 				msg += "<B>[t_He] [t_has] [icon2html(embedded_item, user)] \a [embedded_item] embedded in [t_his] [bodypart.name]!</B>\n"

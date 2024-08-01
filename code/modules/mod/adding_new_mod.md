@@ -82,16 +82,15 @@ So, now that we have our theme, we want to add a skin to it (or another theme of
 	armor_type = /datum/armor/modtheme_psychological
 	complexity_max = DEFAULT_MAX_COMPLEXITY - 7
 	charge_drain = DEFAULT_CHARGE_DRAIN * 0.5
-	skins = list(
+	variants = list(
 		"psychological" = list(
-			HELMET_LAYER = null,
-			HELMET_FLAGS = list(
+			/obj/item/clothing/head/mod = list(
 			),
-			CHESTPLATE_FLAGS = list(
+			/obj/item/clothing/suit/mod = list(
 			),
-			GAUNTLETS_FLAGS = list(
+			/obj/item/clothing/gloves/mod = list(
 			),
-			BOOTS_FLAGS = list(
+			/obj/item/clothing/shoes/mod = list(
 			),
 		),
 	)
@@ -101,8 +100,7 @@ We now have a psychological skin, this will apply the psychological icons to eve
 For example, if our helmet's icon covers the full head (like the research skin), we want to do something like this.
 
 ```dm
-			HELMET_LAYER = null,
-			HELMET_FLAGS = list(
+			/obj/item/clothing/head/mod = list(
 				UNSEALED_CLOTHING = SNUG_FIT|THICKMATERIAL,
 				SEALED_CLOTHING = STOPSPRESSUREDAMAGE|BLOCK_GAS_SMOKE_EFFECT,
 				UNSEALED_INVISIBILITY = HIDEFACIALHAIR|HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE|HIDEHAIR|HIDESNOUT,
@@ -113,8 +111,8 @@ For example, if our helmet's icon covers the full head (like the research skin),
 Otherwise, with an open helmet that becomes closed (like the engineering skin), we'd do this.
 
 ```dm
-			HELMET_LAYER = NECK_LAYER,
-			HELMET_FLAGS = list(
+			/obj/item/clothing/head/mod = list(
+				UNSEALED_LAYER = NECK_LAYER
 				UNSEALED_CLOTHING = SNUG_FIT,
 				SEALED_CLOTHING = THICKMATERIAL|STOPSPRESSUREDAMAGE,
 				UNSEALED_INVISIBILITY = HIDEFACIALHAIR,
@@ -137,47 +135,46 @@ There are specific cases of helmets that semi-cover the head, like the cosmohonk
 	armor_type = /datum/armor/modtheme_psychological
 	complexity_max = DEFAULT_MAX_COMPLEXITY - 7
 	charge_drain = DEFAULT_CHARGE_DRAIN * 0.5
-	skins = list(
+	variants = list(
 		"psychological" = list(
-			HELMET_LAYER = NECK_LAYER,
-			HELMET_FLAGS = list(
+			/obj/item/clothing/head/mod = list(
+				UNSEALED_LAYER = NECK_LAYER
 				UNSEALED_CLOTHING = SNUG_FIT,
 				SEALED_CLOTHING = THICKMATERIAL|STOPSPRESSUREDAMAGE,
 				UNSEALED_INVISIBILITY = HIDEFACIALHAIR,
 				SEALED_INVISIBILITY = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE|HIDEHAIR|HIDESNOUT,
 				SEALED_COVER = HEADCOVERSMOUTH|HEADCOVERSEYES|PEPPERPROOF,
 			),
-			CHESTPLATE_FLAGS = list(
+			/obj/item/clothing/suit/mod = list(
 				UNSEALED_CLOTHING = THICKMATERIAL,
 				SEALED_CLOTHING = STOPSPRESSUREDAMAGE,
 				SEALED_INVISIBILITY = HIDEJUMPSUIT,
 			),
-			GAUNTLETS_FLAGS = list(
+			/obj/item/clothing/gloves/mod = list(
 				UNSEALED_CLOTHING = THICKMATERIAL,
 				SEALED_CLOTHING = STOPSPRESSUREDAMAGE,
 			),
-			BOOTS_FLAGS = list(
+			/obj/item/clothing/shoes/mod = list(
 				UNSEALED_CLOTHING = THICKMATERIAL,
 				SEALED_CLOTHING = STOPSPRESSUREDAMAGE,
 			),
 		"psychotherapeutic" = list(
-			HELMET_LAYER = null,
-			HELMET_FLAGS = list(
+			/obj/item/clothing/head/mod = list(
 				UNSEALED_CLOTHING = SNUG_FIT|THICKMATERIAL,
 				SEALED_CLOTHING = STOPSPRESSUREDAMAGE,
 				UNSEALED_INVISIBILITY = HIDEFACIALHAIR|HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE|HIDEHAIR|HIDESNOUT,
 				UNSEALED_COVER = HEADCOVERSMOUTH|HEADCOVERSEYES|PEPPERPROOF,
 			),
-			CHESTPLATE_FLAGS = list(
+			/obj/item/clothing/suit/mod = list(
 				UNSEALED_CLOTHING = THICKMATERIAL,
 				SEALED_CLOTHING = STOPSPRESSUREDAMAGE,
 				SEALED_INVISIBILITY = HIDEJUMPSUIT,
 			),
-			GAUNTLETS_FLAGS = list(
+			/obj/item/clothing/gloves/mod = list(
 				UNSEALED_CLOTHING = THICKMATERIAL,
 				SEALED_CLOTHING = STOPSPRESSUREDAMAGE,
 			),
-			BOOTS_FLAGS = list(
+			/obj/item/clothing/shoes/mod = list(
 				UNSEALED_CLOTHING = THICKMATERIAL,
 				SEALED_CLOTHING = STOPSPRESSUREDAMAGE,
 			),
@@ -207,7 +204,7 @@ As we want this effect to be on demand, we probably want this to be an usable mo
 - Usable: You can use these for a one time effect.
 - Active: You can only have one selected at a time. It gives you a special click effect.
 
-As we have an usable module, we want to set a cooldown time. All modules are also incompatible with themselves, have a specific power cost and complexity varying on how powerful they are, so let's update our definition, and also add a new variable for how much brain damage we'll heal.
+As we have an usable module, we want to set a cooldown time. All modules are also incompatible with themselves, have a specific power cost and complexity varying on how powerful they are, and are equippable to certain slots, so let's update our definition, and also add a new variable for how much brain damage we'll heal.
 
 ```dm
 /obj/item/mod/module/neuron_healer
@@ -220,25 +217,20 @@ As we have an usable module, we want to set a cooldown time. All modules are als
 	use_energy_cost = DEFAULT_CHARGE_DRAIN
 	incompatible_modules = list(/obj/item/mod/module/neuron_healer)
 	cooldown_time = 15 SECONDS
+	required_slot = list(ITEM_SLOT_HEAD)
 	var/brain_damage_healed = 25
 ```
 
-Now, we want to override the on_use proc for our new effect. We want to make sure the use checks passed from parent. You can read about most procs and variables by reading [this](modules/_module.dm)
+Now, we want to override the on_use proc for our new effect. You can read about most procs and variables by reading [this](modules/_module.dm)
 
 ```dm
 /obj/item/mod/module/neuron_healer/on_use()
-	. = ..()
-	if(!.)
-		return
 ```
 
 After this, we want to put our special code, a basic effect of healing all mobs nearby for their brain damage and creating a beam to them.
 
 ```dm
 /obj/item/mod/module/neuron_healer/on_use()
-	. = ..()
-	if(!.)
-		return
 	for(var/mob/living/carbon/carbon_mob in range(5, src))
 		if(carbon_mob == mod.wearer)
 			continue
@@ -272,47 +264,46 @@ Now we want to add it to the psychological theme, which is very simple, finishin
 	complexity_max = DEFAULT_MAX_COMPLEXITY - 7
 	charge_drain = DEFAULT_CHARGE_DRAIN * 0.5
 	inbuilt_modules = list(/obj/item/mod/module/neuron_healer/advanced)
-	skins = list(
+	variants = list(
 		"psychological" = list(
-			HELMET_LAYER = NECK_LAYER,
-			HELMET_FLAGS = list(
+			/obj/item/clothing/head/mod = list(
+				UNSEALED_LAYER = NECK_LAYER
 				UNSEALED_CLOTHING = SNUG_FIT,
 				SEALED_CLOTHING = THICKMATERIAL|STOPSPRESSUREDAMAGE,
 				UNSEALED_INVISIBILITY = HIDEFACIALHAIR,
 				SEALED_INVISIBILITY = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE|HIDEHAIR|HIDESNOUT,
 				SEALED_COVER = HEADCOVERSMOUTH|HEADCOVERSEYES|PEPPERPROOF,
 			),
-			CHESTPLATE_FLAGS = list(
+			/obj/item/clothing/suit/mod = list(
 				UNSEALED_CLOTHING = THICKMATERIAL,
 				SEALED_CLOTHING = STOPSPRESSUREDAMAGE,
 				SEALED_INVISIBILITY = HIDEJUMPSUIT,
 			),
-			GAUNTLETS_FLAGS = list(
+			/obj/item/clothing/gloves/mod = list(
 				UNSEALED_CLOTHING = THICKMATERIAL,
 				SEALED_CLOTHING = STOPSPRESSUREDAMAGE,
 			),
-			BOOTS_FLAGS = list(
+			/obj/item/clothing/shoes/mod = list(
 				UNSEALED_CLOTHING = THICKMATERIAL,
 				SEALED_CLOTHING = STOPSPRESSUREDAMAGE,
 			),
 		"psychotherapeutic" = list(
-			HELMET_LAYER = null,
-			HELMET_FLAGS = list(
+			/obj/item/clothing/head/mod = list(
 				UNSEALED_CLOTHING = SNUG_FIT|THICKMATERIAL,
 				SEALED_CLOTHING = STOPSPRESSUREDAMAGE,
 				UNSEALED_INVISIBILITY = HIDEFACIALHAIR|HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE|HIDEHAIR|HIDESNOUT,
 				UNSEALED_COVER = HEADCOVERSMOUTH|HEADCOVERSEYES|PEPPERPROOF,
 			),
-			CHESTPLATE_FLAGS = list(
+			/obj/item/clothing/suit/mod = list(
 				UNSEALED_CLOTHING = THICKMATERIAL,
 				SEALED_CLOTHING = STOPSPRESSUREDAMAGE,
 				SEALED_INVISIBILITY = HIDEJUMPSUIT,
 			),
-			GAUNTLETS_FLAGS = list(
+			/obj/item/clothing/gloves/mod = list(
 				UNSEALED_CLOTHING = THICKMATERIAL,
 				SEALED_CLOTHING = STOPSPRESSUREDAMAGE,
 			),
-			BOOTS_FLAGS = list(
+			/obj/item/clothing/shoes/mod = list(
 				UNSEALED_CLOTHING = THICKMATERIAL,
 				SEALED_CLOTHING = STOPSPRESSUREDAMAGE,
 			),

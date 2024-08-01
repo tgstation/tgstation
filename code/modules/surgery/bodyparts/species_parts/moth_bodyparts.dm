@@ -6,6 +6,7 @@
 	is_dimorphic = FALSE
 	should_draw_greyscale = FALSE
 	head_flags = HEAD_LIPS|HEAD_EYESPRITES|HEAD_EYEHOLES|HEAD_DEBRAIN //what the fuck, moths have lips?
+	teeth_count = 0
 
 /obj/item/bodypart/chest/moth
 	icon = 'icons/mob/human/species/moth/bodyparts.dmi'
@@ -17,7 +18,7 @@
 	wing_types = list(/obj/item/organ/external/wings/functional/moth/megamoth, /obj/item/organ/external/wings/functional/moth/mothra)
 
 /obj/item/bodypart/chest/moth/get_butt_sprite()
-	return BUTT_SPRITE_FUZZY
+	return icon('icons/mob/butts.dmi', BUTT_SPRITE_FUZZY)
 
 /obj/item/bodypart/arm/left/moth
 	icon = 'icons/mob/human/species/moth/bodyparts.dmi'

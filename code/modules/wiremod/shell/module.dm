@@ -271,7 +271,7 @@
 	SIGNAL_HANDLER
 	var/string_list = list()
 	var/is_deployed = TRUE
-	for(var/obj/item/part as anything in attached_module.mod.mod_parts)
+	for(var/obj/item/part as anything in attached_module.mod.get_parts())
 		if(part.loc == attached_module.mod)
 			is_deployed = FALSE
 		else

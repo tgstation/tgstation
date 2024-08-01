@@ -1316,7 +1316,7 @@
 	dir = 1
 	},
 /obj/structure/table,
-/obj/item/stock_parts/cell/lead,
+/obj/item/stock_parts/power_store/cell/lead,
 /turf/open/floor/iron/airless,
 /area/ruin/space/has_grav/crashedship/aft)
 "XW" = (
