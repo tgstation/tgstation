@@ -1,4 +1,0 @@
-author: "Watermelon914"
-delete-after: True
-changes:
-  - admin: "Turfs in lua will no longer become invalid on deletion."

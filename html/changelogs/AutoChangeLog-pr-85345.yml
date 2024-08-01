@@ -1,5 +1,0 @@
-author: "Bisar"
-delete-after: True
-changes:
-  - qol: "Machines check their parts during initialization now; this will usually apply in cases such as a machine in a prefab having been varedited to be upgraded."
-  - code_imp: "All machines check their parts during initialization."

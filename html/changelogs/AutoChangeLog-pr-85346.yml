@@ -1,6 +1,0 @@
-author: "Ghommie"
-delete-after: True
-changes:
-  - rscadd: "Added tadpoles, which can be scooped from puddles with right-click. Functionally they're like most fish, which require an aquarium to survive, and also need to be fed fairly frequently, however they quickly become frogs after about 3 minutes of care."
-  - rscadd: "Every station now has a couple puddles. One at the public garden and the other in prison."
-  - qol: "Changed the name of an aquarium UI button from \"Reproduction Prevention\" to \"Reproduction and Growth\", as it  controls both fish breeding and growth."
