@@ -1,4 +1,0 @@
-author: "Absolucy"
-delete-after: True
-changes:
-  - bugfix: "Harvesting plants will always properly drop on the floor in edge-case scenarios, i.e mechcomp interactors."
