@@ -52,8 +52,8 @@
 	)
 	explanation_text = pick(explanation_texts)
 
-	if(prob(20))
-		explanation_text += " Man I fucking love glass."
+	if(prob(5))
+		explanation_text = "Man I fucking love glass."
 	..()
 
 /datum/objective/voidwalker_objective/check_completion()
