@@ -44,7 +44,6 @@
 	return INITIALIZE_HINT_LATELOAD
 
 /obj/structure/mineral_door/LateInitialize(mapload)
-	. = ..()
 	if(mapload)
 		auto_align()
 
@@ -147,6 +146,7 @@
 	if(!density)
 		// If we're open we layer the bit below us "above" any mobs so they can walk through
 		. += mutable_appearance(icon, "[initial(icon_state)]_open_bottom", ABOVE_MOB_LAYER, appearance_flags = KEEP_APART)
+		. += emissive_blocker(icon, "[initial(icon_state)]_open_bottom", src, ABOVE_MOB_LAYER)
 
 /obj/structure/mineral_door/attackby(obj/item/I, mob/living/user)
 	if(pickaxe_door(user, I))

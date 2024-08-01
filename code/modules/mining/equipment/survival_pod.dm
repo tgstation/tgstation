@@ -167,7 +167,6 @@ MAPPING_DIRECTIONAL_HELPERS_EMPTY(/obj/structure/window/reinforced/survival_pod/
 	glass_type = /obj/machinery/door/airlock/survival_pod/glass
 
 //Windoor
-#warn needs smoothing, I am become depression
 /obj/machinery/door/window/survival_pod
 	icon = 'icons/obj/doors/windoor.dmi'
 	icon_state = "survival"

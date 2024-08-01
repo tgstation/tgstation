@@ -1244,6 +1244,7 @@
 #include "code\datums\components\uplink.dm"
 #include "code\datums\components\usb_port.dm"
 #include "code\datums\components\vacuum.dm"
+#include "code\datums\components\vis_block.dm"
 #include "code\datums\components\vision_hurting.dm"
 #include "code\datums\components\wall_mounted.dm"
 #include "code\datums\components\wearertargeting.dm"

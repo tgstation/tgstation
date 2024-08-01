@@ -69,6 +69,47 @@
 	MAP_SWITCH(pixel_z, pixel_y) = 16; \
 }
 
+/// Directional helpers for cameras (cameras are really annoying)
+/// They have diagonal dirs and also offset south differently
+#define CAMERA_DIRECTIONAL_HELPERS(path) \
+##path/directional/north {\
+	dir = SOUTH; \
+	MAP_SWITCH(pixel_z, pixel_y) = 35; \
+} \
+##path/directional/south {\
+	dir = NORTH; \
+	MAP_SWITCH(pixel_z, pixel_y) = 16; \
+} \
+##path/directional/east {\
+	dir = WEST; \
+	pixel_x = 11; \
+	MAP_SWITCH(pixel_z, pixel_y) = 16; \
+} \
+##path/directional/west {\
+	dir = EAST; \
+	pixel_x = -11; \
+	MAP_SWITCH(pixel_z, pixel_y) = 16; \
+} \
+##path/directional/north_east {\
+	dir = NORTHWEST; \
+	MAP_SWITCH(pixel_z, pixel_y) = 35; \
+} \
+##path/directional/north_west {\
+	dir = NORTHEAST; \
+	MAP_SWITCH(pixel_z, pixel_y) = 16; \
+} \
+##path/directional/south_east {\
+	dir = SOUTHWEST; \
+	pixel_x = 11; \
+	MAP_SWITCH(pixel_z, pixel_y) = 16; \
+} \
+##path/directional/south_west {\
+	dir = SOUTHEAST; \
+	pixel_x = -11; \
+	MAP_SWITCH(pixel_z, pixel_y) = 16; \
+}
+
+
 /// Create directional subtypes for a path to simplify mapping.
 
 #define MAPPING_DIRECTIONAL_HELPERS(path, offset) \

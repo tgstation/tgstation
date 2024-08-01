@@ -90,7 +90,7 @@ GLOBAL_LIST_EMPTY(window_appearances)
 	// Now we'll check above
 	// If there's nothin, we'll use a frill. Otherwise we won't
 	paired_turf = get_step(our_turf, NORTH)
-	#warn ok this shit ain't working. Instead of trying to track walls like this, we should attach an effect object to the turf of our window that smooths for walls, and pass that into window logic
+	// wallening TODO: ok this shit ain't working. Instead of trying to track walls like this, we should attach an effect object to the turf of our window that smooths for walls, and pass that into window logic
 
 	// We only display an above state if there's a wall, OR if we're smoothing with nothing up there
 	if(isclosedturf(paired_turf) && (!ignored_turf || !istype(paired_turf, ignored_turf)))
@@ -100,19 +100,19 @@ GLOBAL_LIST_EMPTY(window_appearances)
 		// Draw to the turf above you so this can be seen without seeing the window's turf. Oh and draw this as a frill
 		// We use the parent's pixel y as a part of this to ensure everything lines up proper when the parent is all shifted around
 		appearance_above = get_window_appearance(offset, icon_path, junction, "upper", FALSE, pixel_y = parent.pixel_y, plane = FRILL_PLANE)
-		paired_turf.overlays += appearance_above
+		paired_turf.add_overlay(appearance_above)
 		RegisterSignal(paired_turf, COMSIG_QDELETING, PROC_REF(tied_turf_deleted), override = TRUE) // Override because this could be called multiple times
 	else
 		UnregisterSignal(paired_turf, COMSIG_QDELETING)
 
-	parent.overlays += our_appearances
+	parent.add_overlay(our_appearances)
 
 /datum/component/window_smoothing/proc/remove_smoothing()
 	var/atom/atom_parent = parent
-	atom_parent.overlays -= our_appearances
+	atom_parent.cut_overlay(our_appearances)
 	our_appearances.Cut()
 
-	paired_turf.overlays -= appearance_above
+	paired_turf.cut_overlay(appearance_above)
 	paired_turf = null
 
 /datum/component/window_smoothing/Destroy()

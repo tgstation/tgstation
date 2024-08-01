@@ -27,17 +27,13 @@
 		overlay.layer = ON_WALL_LAYER
 
 	// We do this to ensure the MAs, when overlayed onto turfs, retain the direction they're set to, rather then inheriting from the turf
-	// This inheriting thing is handled by a hidden flag on the /image (MAs are subtypes of /image)
-	// We use the image() proc in combo with a manually set dir to flip this flag
-	// We can then copy the image's appearance to retain the flag, even on MAs and such
-	var/image/holder = image(overlay, dir = NORTH)
-	standard = new(holder)
+	standard = make_ma_directional(overlay)
 	// Build a hidden overlay, for drawing to ourselves (if we're butted up against another splitvis smoothed wall)
-	var/mutable_appearance/hidden = new(holder)
+	var/mutable_appearance/hidden = new(standard)
 	SET_PLANE_EXPLICIT(hidden, HIDDEN_WALL_PLANE, parent_atom)
 	src.hidden = hidden
 	// We keep a non offset version of the standard overlay to make sure we work if there's nothing in a particular direction
-	non_offset_standard = new /mutable_appearance(holder)
+	non_offset_standard = new /mutable_appearance(standard)
 
 	src.dirs_to_apply = dirs_to_apply
 

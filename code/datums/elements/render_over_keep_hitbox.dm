@@ -9,19 +9,23 @@
  */
 /datum/element/render_over_keep_hitbox
 	element_flags = ELEMENT_BESPOKE
-	argument_hash_start_idx = 1
+	argument_hash_start_idx = 2
+	/// The layer to use for our hitbox, typically quite low
+	/// IIIII do not know how well this works, sidemap do be kinda fuckin us over
+	var/hitbox_layer = 0
 	/// If we should act as if the source object is directional or not
 	var/use_position_layering = FALSE
 	/// If we ARE acting directional, what directions count as "UP" for purposes of layering
 	var/high_directions = NONE
 
-/datum/element/render_over_keep_hitbox/Attach(datum/target, use_position_layering = FALSE, high_directions = NORTH)
+/datum/element/render_over_keep_hitbox/Attach(datum/target, hitbox_layer = 0, use_position_layering = FALSE, high_directions = NORTH)
 	. = ..()
 	if(!ismovable(target))
 		return ELEMENT_INCOMPATIBLE
 	var/atom/movable/atom_target = target
 	atom_target.appearance_flags |= KEEP_TOGETHER
 
+	src.hitbox_layer = hitbox_layer
 	src.use_position_layering = use_position_layering
 	src.high_directions = high_directions
 	// the update_overlays hook only exists because the vis_contents helper clears on update_icon
@@ -78,10 +82,9 @@
 	)
 	visible.render_source = target.render_target
 	visible.vis_flags |= VIS_INHERIT_LAYER
-#warn it would be nice to allow a "lower layer" arg here, to allow windows to render above like, tables, yaknow?
 	var/atom/movable/click_catch = SSvis_overlays.add_vis_overlay(
 		target,
-		layer = 0,
+		layer = hitbox_layer,
 		plane = MUTATE_PLANE(GAME_PLANE, our_turf),
 		add_appearance_flags = KEEP_APART,
 		unique = TRUE
@@ -132,7 +135,7 @@
 	visible.render_source = target.render_target
 	var/atom/movable/click_catch = SSvis_overlays.add_vis_overlay(
 		target,
-		layer = 0,
+		layer = hitbox_layer,
 		plane = MUTATE_PLANE(GAME_PLANE, our_turf),
 		add_appearance_flags = KEEP_APART,
 		pixel_y = click_offset,

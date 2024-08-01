@@ -122,7 +122,7 @@ GLOBAL_LIST_INIT(falsewall_alpha_icons, generate_transparent_falsewalls())
 	. = ..()
 	visuals = new(src)
 	visuals.set_fake_icon(fake_icon)
-	AddElement(/datum/element/split_visibility, fake_icon)
+	AddElement(/datum/element/split_visibility, fake_icon, color)
 	var/obj/item/stack/initialized_mineral = new mineral // Okay this kinda sucks.
 	set_custom_materials(initialized_mineral.mats_per_unit, mineral_amount)
 	qdel(initialized_mineral)
@@ -156,7 +156,7 @@ GLOBAL_LIST_INIT(falsewall_alpha_icons, generate_transparent_falsewalls())
 
 /obj/structure/falsewall/proc/open()
 	vis_contents += visuals
-	RemoveElement(/datum/element/split_visibility, fake_icon)
+	RemoveElement(/datum/element/split_visibility, fake_icon, color)
 	visuals.trim_base(1 SECONDS)
 	animate(src, pixel_z = -24, time = 1 SECONDS)
 	usual_groups = smoothing_groups
@@ -182,7 +182,7 @@ GLOBAL_LIST_INIT(falsewall_alpha_icons, generate_transparent_falsewalls())
 	QUEUE_SMOOTH_NEIGHBORS(src)
 	sleep(0.7 SECONDS)
 	vis_contents -= visuals
-	AddElement(/datum/element/split_visibility, fake_icon)
+	AddElement(/datum/element/split_visibility, fake_icon, color)
 
 /obj/structure/falsewall/update_icon(updates=ALL)
 	. = ..()

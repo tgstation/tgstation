@@ -27,12 +27,12 @@
 	// Render targeting big icons shifts em down, lets counteract
 	pixel_z = 16
 	AddElement(/datum/element/render_over_keep_hitbox)
+	AddComponent(/datum/component/vis_block, "standard", "standard")
 	air_update_turf(TRUE, TRUE) // wallening todo: why is this atmos logic here? should it be upstreamed?
 	if(mapload)
 		return INITIALIZE_HINT_LATELOAD
 
 /obj/structure/plasticflaps/LateInitialize(mapload)
-	. = ..()
 	if(mapload)
 		auto_align()
 

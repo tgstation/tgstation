@@ -13,7 +13,11 @@
 /turf/closed/Initialize(mapload)
 	. = ..()
 	if(use_splitvis)
-		AddElement(/datum/element/split_visibility, icon)
+		// Micro-op to avoid needing to hash a bunch of nulls
+		if(color)
+			AddElement(/datum/element/split_visibility, icon, color)
+		else
+			AddElement(/datum/element/split_visibility, icon)
 	else
 		// We draw a copy to the wall plane so we can use it to mask byond darkness, that's all
 		add_overlay(mutable_appearance('wall_blackness.dmi', "wall_background", UNDER_WALL_LAYER, src, WALL_PLANE))

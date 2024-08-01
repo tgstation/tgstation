@@ -214,15 +214,18 @@
 
 /obj/machinery/door/poddoor/update_overlays()
 	. = ..()
-	var/mutable_appearance/lower = get_lower_overlay()
-	if(lower)
+	var/list/mutable_appearance/lower = get_lower_overlays()
+	if(length(lower))
 		. += lower
 
-/obj/machinery/door/poddoor/proc/get_lower_overlay()
-	if(!density)
-		// If we're open we layer the bit below us "above" any mobs so they can walk through
-		return mutable_appearance(icon, "open_bottom", ABOVE_MOB_LAYER, appearance_flags = KEEP_APART)
-	return
+/obj/machinery/door/poddoor/proc/get_lower_overlays()
+	if(density)
+		return
+	var/list/hand_back = list()
+	// If we're open we layer the bit below us "above" any mobs so they can walk through
+	hand_back += mutable_appearance(icon, "open_bottom", ABOVE_MOB_LAYER, appearance_flags = KEEP_APART)
+	hand_back += emissive_blocker(icon, "open_bottom", src, ABOVE_MOB_LAYER)
+	return hand_back
 
 /obj/machinery/door/poddoor/animation_delay(animation)
 	switch(animation)

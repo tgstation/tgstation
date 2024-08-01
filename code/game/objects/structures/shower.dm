@@ -55,8 +55,6 @@ GLOBAL_LIST_INIT(shower_mode_descriptions, list(
 	var/mode = SHOWER_MODE_UNTIL_EMPTY
 	///The cooldown for SHOWER_MODE_TIMED mode.
 	COOLDOWN_DECLARE(timed_cooldown)
-	///How far to shift the sprite when placing.
-	var/pixel_shift = 16
 
 WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/machinery/shower)
 
@@ -68,20 +66,6 @@ WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/machinery/shower)
 
 	if(has_water_reclaimer != null)
 		src.has_water_reclaimer = has_water_reclaimer
-
-	switch(dir)
-		if(NORTH)
-			pixel_x = 0
-			pixel_y = -pixel_shift
-		if(SOUTH)
-			pixel_x = 0
-			pixel_y = pixel_shift
-		if(EAST)
-			pixel_x = -pixel_shift
-			pixel_y = 0
-		if(WEST)
-			pixel_x = pixel_shift
-			pixel_y = 0
 
 	create_reagents(reagent_capacity)
 	if(src.has_water_reclaimer)
@@ -101,6 +85,22 @@ WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/machinery/shower)
 		. += span_notice("A water recycler is installed. It looks like you could pry it out.")
 	. += span_notice("The auto shut-off is programmed to [GLOB.shower_mode_descriptions["[mode]"]].")
 	. += span_notice("[reagents.total_volume]/[reagents.maximum_volume] liquids remaining.")
+
+/obj/machinery/shower/wall_mount_offset(direction)
+	pixel_x = 0
+	pixel_z = 0
+	pixel_y = 0
+	switch(direction)
+		if(NORTH)
+			pixel_z = -4
+		if(SOUTH)
+			pixel_z = 32
+		if(EAST)
+			pixel_x = -16
+			pixel_z = 12
+		if(WEST)
+			pixel_x = 16
+			pixel_z = 12
 
 /obj/machinery/shower/Destroy()
 	QDEL_NULL(soundloop)
@@ -195,15 +195,6 @@ WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/machinery/shower)
 		return
 	var/mutable_appearance/water_falling = mutable_appearance('icons/obj/watercloset.dmi', "water", ABOVE_MOB_LAYER)
 	water_falling.color = mix_color_from_reagents(reagents.reagent_list)
-	switch(dir)
-		if(NORTH)
-			water_falling.pixel_y += pixel_shift
-		if(SOUTH)
-			water_falling.pixel_y -= pixel_shift
-		if(EAST)
-			water_falling.pixel_x += pixel_shift
-		if(WEST)
-			water_falling.pixel_x -= pixel_shift
 	. += water_falling
 
 /obj/machinery/shower/on_changed_z_level(turf/old_turf, turf/new_turf, same_z_layer, notify_contents)

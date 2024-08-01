@@ -42,11 +42,10 @@
 	update_appearance()
 
 /obj/structure/grille/update_icon(updates=ALL)
-	. = ..()
 	if(QDELETED(src))
 		return
 
-	var/old_icon = icon
+	var/old_base_state = base_icon_state
 	var/ratio = atom_integrity / max_integrity
 	if(ratio <= 0.7)
 		icon = 'icons/obj/smooth_structures/grille_damaged.dmi'
@@ -55,6 +54,8 @@
 		icon = 'icons/obj/smooth_structures/grille.dmi'
 		base_icon_state = "grille"
 
+	if(old_base_state != base_icon_state)
+		icon_state = "[base_icon_state]-[smoothing_junction]"
 	var/old_smoothing_flags = smoothing_flags
 	if(broken)
 		icon = 'icons/obj/smooth_structures/tall_structure_variations.dmi'
@@ -68,15 +69,15 @@
 		smoothing_groups = initial(smoothing_groups)
 		canSmoothWith = initial(canSmoothWith)
 		SETUP_SMOOTHING()
+	. = ..()
 
 	if(!(updates & UPDATE_SMOOTHING))
 		return
 	if(old_smoothing_flags == smoothing_flags && (smoothing_flags & (SMOOTH_CORNERS|SMOOTH_BITMASK|SMOOTH_BITMASK_CARDINALS)))
-		if(old_icon != icon)
-			QUEUE_SMOOTH(src)
 		return
 	// If our flags changed, update EVERYBODY
-	QUEUE_SMOOTH_NEIGHBORS(src) // Update our neighbors about our changes
+	QUEUE_SMOOTH(src)
+	QUEUE_SMOOTH_NEIGHBORS(src)
 
 /obj/structure/grille/examine(mob/user)
 	. = ..()

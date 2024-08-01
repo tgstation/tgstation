@@ -92,6 +92,7 @@
 	if(!density)
 		// If we're open we layer the bit below us "above" any mobs so they can walk through
 		. += mutable_appearance(icon, "open_bottom", ABOVE_MOB_LAYER, appearance_flags = KEEP_APART)
+		. += emissive_blocker(icon, "open_bottom", src, ABOVE_MOB_LAYER)
 
 /obj/machinery/door/puzzle/MatchedLinks(id, list/partners)
 	for(var/partner in partners)

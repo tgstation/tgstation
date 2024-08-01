@@ -291,10 +291,8 @@ WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/structure/urinal)
 	var/has_water_reclaimer = TRUE
 	///Units of water to reclaim per second
 	var/reclaim_rate = 0.5
-	///Amount of shift the pixel for placement
-	var/pixel_shift = 14
 
-INVERT_MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sink, (-14))
+WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/structure/sink)
 
 /obj/structure/sink/Initialize(mapload, ndir = 0, has_water_reclaimer = null)
 	. = ..()
@@ -305,30 +303,39 @@ INVERT_MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sink, (-14))
 	if(has_water_reclaimer != null)
 		src.has_water_reclaimer = has_water_reclaimer
 
-	switch(dir)
-		if(NORTH)
-			pixel_x = 0
-			pixel_y = -pixel_shift
-		if(SOUTH)
-			pixel_x = 0
-			pixel_y = pixel_shift
-		if(EAST)
-			pixel_x = -pixel_shift
-			pixel_y = 0
-		if(WEST)
-			pixel_x = pixel_shift
-			pixel_y = 0
-
 	create_reagents(100, NO_REACT)
 	if(src.has_water_reclaimer)
 		reagents.add_reagent(dispensedreagent, 100)
 	AddComponent(/datum/component/plumbing/simple_demand, extend_pipe_to_edge = TRUE)
+	find_and_hang_on_wall()
 
 /obj/structure/sink/examine(mob/user)
 	. = ..()
 	if(has_water_reclaimer)
 		. += span_notice("A water recycler is installed. It looks like you could pry it out.")
 	. += span_notice("[reagents.total_volume]/[reagents.maximum_volume] liquids remaining.")
+
+/obj/structure/sink/wall_mount_common_plane(direction)
+	return TRUE
+
+/obj/structure/sink/wall_mount_offset(direction)
+	pixel_x = 0
+	pixel_z = 0
+	pixel_y = 0
+	switch(direction)
+		if(NORTH)
+			pixel_z = 24
+			// shift down so we layer correctly
+			pixel_y = -32
+		if(SOUTH)
+			pixel_z = 16
+		if(EAST)
+			pixel_x = -16
+			pixel_z = 12
+		if(WEST)
+			pixel_x = 16
+			pixel_z = 12
+
 
 /obj/structure/sink/attack_hand(mob/living/user, list/modifiers)
 	. = ..()
@@ -519,9 +526,8 @@ INVERT_MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sink, (-14))
 	name = "kitchen sink"
 	icon_state = "sink_alt"
 	pixel_z = 4
-	pixel_shift = 16
 
-INVERT_MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sink/kitchen, (-16))
+WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/structure/sink/kitchen)
 
 /obj/structure/sink/greyscale
 	icon_state = "sink_greyscale"

@@ -1,7 +1,6 @@
 /// Ensures all airlocks have all the icon states they need to function
 /datum/unit_test/airlock_icon_states
 
-TEST_FOCUS(/datum/unit_test/airlock_icon_states)
 /datum/unit_test/airlock_icon_states/Run()
 	var/list/required_icon_states = list(
 		"opening" = FALSE,

@@ -6,6 +6,9 @@
 	icon_state = "closed_bottom"
 	layer = SHUTTER_LAYER
 	closingLayer = SHUTTER_LAYER
+	dir_mask = "shutter"
+	edge_dir_mask = "shutter"
+	inner_transparent_dirs = EAST|WEST
 	damage_deflection = 20
 	armor_type = /datum/armor/poddoor_shutters
 	max_integrity = 100
@@ -25,9 +28,12 @@
 	. = ..()
 	. += emissive_appearance(icon, "emissives", src, alpha = 100)
 
-/obj/machinery/door/poddoor/shutters/get_lower_overlay()
-	return mutable_appearance(icon, "[get_working_state()]_bottom", ABOVE_MOB_LAYER, appearance_flags = KEEP_APART)
-
+/obj/machinery/door/poddoor/shutters/get_lower_overlays()
+	var/list/hand_back = list()
+	hand_back += mutable_appearance(icon, "[get_working_state()]_bottom", ABOVE_MOB_LAYER, appearance_flags = KEEP_APART)
+	hand_back += emissive_blocker(icon, "[get_working_state()]_bottom", src, ABOVE_MOB_LAYER)
+	return hand_back
+	
 /obj/machinery/door/poddoor/shutters/animation_delay(animation)
 	switch(animation)
 		if("opening")

@@ -27,8 +27,8 @@
 /obj/effect/overlay/thermite
 	name = "thermite"
 	desc = "Looks hot."
-	icon = 'icons/effects/atmos/fire_medium.dmi'
-	icon_state = "-1"
+	icon = 'icons/effects/atmos/fire.dmi'
+	icon_state = "2"
 	anchored = TRUE
 	layer = FLY_LAYER
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT

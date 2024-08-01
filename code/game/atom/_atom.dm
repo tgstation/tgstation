@@ -1014,10 +1014,10 @@ GLOBAL_LIST_INIT(lower_priority_connectables, typecacheof(list(
 	var/dirs_avalible = length(dirs_usable)
 	//Only continue if we've got ourself either a corner or a side piece. Only side pieces really work well here, since corners aren't really something we can fudge handling for
 	if(dirs_avalible <= 2 && dirs_avalible != 0)
-		dir = dirs_usable[1] //Just take the first dir avalible
+		setDir(dirs_usable[1]) //Just take the first dir avalible
 		return
 	dirs_usable &= dirs_secondary_priority //Only consider dirs we both share
 	dirs_avalible = length(dirs_usable)
 	if(dirs_avalible <= 2 && dirs_avalible != 0)
-		dir = dirs_usable[1] //Just take the first dir avalible
+		setDir(dirs_usable[1]) //Just take the first dir avalible
 		return

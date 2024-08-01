@@ -519,13 +519,13 @@
 /obj/machinery/door/airlock/proc/is_secure()
 	return (security_level > 0)
 
-/obj/machinery/door/airlock/update_icon(updates=ALL, state=0, override=FALSE)
-	if(operating && !override)
-		return
-
+/obj/machinery/door/airlock/update_icon(updates=ALL, state=0)
 	if(!state)
 		state = density ? AIRLOCK_CLOSED : AIRLOCK_OPEN
-	airlock_state = state
+	// operating is "doing an animtion"
+	// FUCK
+	if(!operating || (state == AIRLOCK_OPENING || state == AIRLOCK_CLOSING || state == AIRLOCK_EMAG))
+		airlock_state = state
 
 	. = ..()
 
@@ -565,6 +565,7 @@
 			frame_state = AIRLOCK_FRAME_OPEN
 			// If we're open we layer the bit below us "above" any mobs so they can walk through
 			. += mutable_appearance(icon, "open_bottom", ABOVE_MOB_LAYER, appearance_flags = KEEP_APART)
+			. += emissive_blocker(icon, "open_bottom", src, ABOVE_MOB_LAYER)
 		if(AIRLOCK_OPENING)
 			frame_state = AIRLOCK_FRAME_OPENING
 			light_state = AIRLOCK_LIGHT_OPENING
@@ -603,17 +604,13 @@
 			var/mutable_appearance/floorlight = mutable_appearance('icons/obj/doors/airlocks/station/overlays.dmi', "unres_[heading]", FLOAT_LAYER, src, ABOVE_LIGHTING_PLANE)
 			switch (heading)
 				if (NORTH)
-					floorlight.pixel_x = 0
 					floorlight.pixel_y = 32
 				if (SOUTH)
-					floorlight.pixel_x = 0
 					floorlight.pixel_y = -32
 				if (EAST)
-					floorlight.pixel_x = 32
-					floorlight.pixel_y = 0
+					floorlight.pixel_x = 28
 				if (WEST)
-					floorlight.pixel_x = -32
-					floorlight.pixel_y = 0
+					floorlight.pixel_x = -28
 			. += floorlight
 	update_greyscale()
 
@@ -1272,7 +1269,7 @@
 
 	SEND_SIGNAL(src, COMSIG_AIRLOCK_OPEN, forced)
 	operating = TRUE
-	update_icon(ALL, AIRLOCK_OPENING, TRUE)
+	update_icon(ALL, AIRLOCK_OPENING)
 	var/delay = animation_delay("opening")
 	sleep(0.1 SECONDS)
 	set_opacity(0)
@@ -1287,8 +1284,8 @@
 	air_update_turf(TRUE, FALSE)
 	sleep(0.1 SECONDS)
 	layer = OPEN_DOOR_LAYER
-	update_icon(ALL, AIRLOCK_OPEN, TRUE)
 	operating = FALSE
+	update_icon(ALL, AIRLOCK_OPEN)
 	if(delayed_close_requested)
 		delayed_close_requested = FALSE
 		addtimer(CALLBACK(src, PROC_REF(close)), FORCING_DOOR_CHECKS)
@@ -1346,7 +1343,7 @@
 		SSexplosions.med_mov_atom += killthis
 	SEND_SIGNAL(src, COMSIG_AIRLOCK_CLOSE, forced)
 	operating = TRUE
-	update_icon(ALL, AIRLOCK_CLOSING, 1)
+	update_icon(ALL, AIRLOCK_CLOSING)
 	layer = CLOSED_DOOR_LAYER
 	if(air_tight)
 		set_density(TRUE)
@@ -1371,8 +1368,8 @@
 			filler.set_opacity(TRUE)
 	update_freelook_sight()
 	sleep(0.1 SECONDS)
-	update_icon(ALL, AIRLOCK_CLOSED, 1)
 	operating = FALSE
+	update_icon(ALL, AIRLOCK_CLOSED)
 	delayed_close_requested = FALSE
 	if(!dangerous_close)
 		CheckForMobs()
@@ -1445,7 +1442,7 @@
 			var/obj/item/card/emag/doorjack/doorjack_card = emag_card
 			doorjack_card.use_charge(user)
 		operating = TRUE
-		update_icon(ALL, AIRLOCK_EMAG, 1)
+		update_icon(ALL, AIRLOCK_EMAG)
 		addtimer(CALLBACK(src, PROC_REF(finish_emag_act)), 0.6 SECONDS)
 		return TRUE
 	return FALSE
@@ -2087,12 +2084,22 @@
 
 /obj/machinery/door/airlock/diamond
 	name = "diamond airlock"
-	icon = 'icons/obj/doors/airlocks/station/diamond.dmi'
+	icon = 'icons/obj/doors/airlocks/tall/mineral/diamond.dmi'
+	overlays_file = 'icons/obj/doors/airlocks/tall/mineral/diamond_overlays.dmi'
 	assemblytype = /obj/structure/door_assembly/door_assembly_diamond
 	normal_integrity = 1000
 	explosion_block = 2
 	greyscale_config = null
 	greyscale_colors = null
+
+/obj/machinery/door/airlock/diamond/animation_delay(animation)
+	switch(animation)
+		if("opening")
+			return 0.6 SECONDS
+		if("closing")
+			return 0.6 SECONDS
+		if("deny")
+			return 0.3 SECONDS
 
 /obj/machinery/door/airlock/diamond/glass
 	normal_integrity = 950

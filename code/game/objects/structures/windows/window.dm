@@ -70,7 +70,7 @@
 	else
 		smoothing_flags = SMOOTH_BITMASK|SMOOTH_BORDER_OBJECT|SMOOTH_OBJ
 		setDir(dir)
-		AddElement(/datum/element/render_over_keep_hitbox, TRUE)
+		AddElement(/datum/element/render_over_keep_hitbox, BELOW_OBJ_LAYER, TRUE)
 
 	//windows only block while reinforced and fulltile
 	if(!reinf || !fulltile)

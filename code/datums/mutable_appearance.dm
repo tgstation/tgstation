@@ -46,3 +46,12 @@
 		stack_trace("Why did you pass in offset_spokesman as [offset_spokesman]? We need an atom to properly offset planes")
 
 	return appearance
+
+/// Takes an input mutable appearance, returns a copy of it with the hidden flag flipped to avoid inheriting dir from what it's drawn on
+/// This inheriting thing is handled by a hidden flag on the /image (MAs are subtypes of /image)
+/proc/make_ma_directional(mutable_appearance/to_process)
+	// We use the image() proc in combo with a manually set dir to flip this flag
+	// We can then copy the image's appearance to retain the flag, even on MAs and such
+	var/image/holder = image(to_process, dir = NORTH)
+	return new /mutable_appearance(holder)
+

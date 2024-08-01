@@ -40,7 +40,7 @@
 
 	SEND_SIGNAL(src, COMSIG_AIRLOCK_OPEN, FALSE)
 	operating = TRUE
-	update_icon(ALL, AIRLOCK_OPENING, TRUE)
+	update_icon(ALL, AIRLOCK_OPENING)
 
 	if(forced >= BYPASS_DOOR_CHECKS)
 		playsound(src, 'sound/machines/airlockforced.ogg', vol = 40, vary = FALSE)
@@ -57,8 +57,8 @@
 	air_update_turf(TRUE, FALSE)
 	sleep(TRAM_DOOR_CYCLE_TIME)
 	layer = OPEN_DOOR_LAYER
-	update_icon(ALL, AIRLOCK_OPEN, TRUE)
 	operating = FALSE
+	update_icon(ALL, AIRLOCK_OPEN)
 
 	return TRUE
 
@@ -94,7 +94,7 @@
 	playsound(src, doorClose, vol = 40, vary = FALSE)
 	operating = TRUE
 	layer = CLOSED_DOOR_LAYER
-	update_icon(ALL, AIRLOCK_CLOSING, 1)
+	update_icon(ALL, AIRLOCK_CLOSING)
 	sleep(TRAM_DOOR_WARNING_TIME)
 	if(!hungry_door)
 		for(var/turf/checked_turf in locs)
@@ -103,8 +103,8 @@
 					say("Please stand clear of the doors!")
 					playsound(src, 'sound/machines/buzz-sigh.ogg', 60, vary = FALSE, extrarange = SHORT_RANGE_SOUND_EXTRARANGE)
 					layer = OPEN_DOOR_LAYER
-					update_icon(ALL, AIRLOCK_OPEN, 1)
 					operating = FALSE
+					update_icon(ALL, AIRLOCK_OPEN)
 					return FALSE
 	SEND_SIGNAL(src, COMSIG_AIRLOCK_CLOSE)
 	sleep(TRAM_DOOR_CRUSH_TIME)
@@ -117,8 +117,8 @@
 	crush()
 	crushing_in_progress = FALSE
 	sleep(TRAM_DOOR_CYCLE_TIME)
-	update_icon(ALL, AIRLOCK_CLOSED, 1)
 	operating = FALSE
+	update_icon(ALL, AIRLOCK_CLOSED)
 	retry_counter = 0
 	return TRUE
 

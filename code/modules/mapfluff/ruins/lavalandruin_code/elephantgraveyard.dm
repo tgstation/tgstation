@@ -88,7 +88,10 @@
 	icon = 'icons/obj/watercloset.dmi'
 	icon_state = "puddle-oil"
 	dispensedreagent = /datum/reagent/fuel/oil
-	pixel_shift = 0
+
+// This is a hole
+/obj/structure/sink/oil_well/find_and_hang_on_wall()
+	return
 
 /obj/structure/sink/oil_well/Initialize(mapload)
 	.=..()

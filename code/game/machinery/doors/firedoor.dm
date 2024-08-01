@@ -8,6 +8,9 @@
 	desc = "Apply crowbar."
 	icon = 'icons/obj/doors/doorfireglass.dmi'
 	icon_state = "door_open"
+	dir_mask = "firelock_mask"
+	edge_dir_mask = "shutter"
+	inner_transparent_dirs = EAST|WEST
 	opacity = FALSE
 	density = FALSE
 	max_integrity = 300
@@ -625,16 +628,26 @@
 /obj/machinery/door/firedoor/update_icon_state()
 	. = ..()
 	if(animation)
-		icon_state = "[base_icon_state]_[animation]"
+		icon_state = "[base_icon_state]_[animation]_top"
 	else
-		icon_state = "[base_icon_state]_[density ? "closed" : "open"]"
+		icon_state = "[base_icon_state]_[density ? "closed" : "open"]_top"
+
+/obj/machinery/door/firedoor/update_overlays()
+	. = ..()
+	var/working_icon_state
+	if(animation)
+		working_icon_state = "[base_icon_state]_[animation]_bottom"
+	else
+		working_icon_state = "[base_icon_state]_[density ? "closed" : "open"]_bottom"
+	. += mutable_appearance(icon, working_icon_state, ABOVE_MOB_LAYER, appearance_flags = KEEP_APART)
+	. += emissive_blocker(icon, working_icon_state, src, ABOVE_MOB_LAYER)
 
 /obj/machinery/door/firedoor/animation_delay(animation)
 	switch(animation)
 		if("opening")
-			return 0.8 SECONDS
+			return 0.9 SECONDS
 		if("closing")
-			return 0.8 SECONDS
+			return 1.3 SECONDS
 		if("deny")
 			return 0.3 SECONDS
 
@@ -712,6 +725,9 @@
 
 /obj/machinery/door/firedoor/border_only
 	icon = 'icons/obj/doors/edge_Doorfire.dmi'
+	// Disable directional opacity please (we are always transparent)
+	dir_mask = ""
+	edge_dir_mask = ""
 	can_crush = FALSE
 	flags_1 = ON_BORDER_1
 	can_atmos_pass = ATMOS_PASS_PROC
@@ -730,7 +746,7 @@
 	// Needed because render targets seem to shift larger then 32x32 icons down constantly. This is a known side effect that should? be changed by 516
 	pixel_y = 0
 	pixel_z = 12
-	AddElement(/datum/element/render_over_keep_hitbox, TRUE, NORTH|WEST|EAST)
+	AddElement(/datum/element/render_over_keep_hitbox, 0, TRUE, NORTH|WEST|EAST)
 	AddElement(/datum/element/connect_loc, loc_connections)
 
 /obj/machinery/door/firedoor/border_only/animation_delay(animation)

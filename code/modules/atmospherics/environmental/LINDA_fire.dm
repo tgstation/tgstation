@@ -92,7 +92,7 @@
 /obj/effect/hotspot
 	anchored = TRUE
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
-	icon = 'icons/effects/atmos/fire_light.dmi'
+	icon = 'icons/effects/atmos/fire.dmi'
 	icon_state = "1"
 	layer = GASFIRE_LAYER
 	blend_mode = BLEND_ADD
@@ -118,18 +118,6 @@
 	///Are we burning freon?
 	var/cold_fire = FALSE
 
-GLOBAL_LIST_INIT(hotspot_icons, list(
-	"light" = list(
-		'icons/effects/atmos/fire_light.dmi',
-	),
-	"medium" = list(
-		'icons/effects/atmos/fire_medium.dmi',
-	),
-	"heavy" = list(
-		'icons/effects/atmos/fire_heavy.dmi',
-	)
-))
-
 /obj/effect/hotspot/Initialize(mapload, starting_volume, starting_temperature)
 	. = ..()
 	SSair.hotspots += src
@@ -147,7 +135,7 @@ GLOBAL_LIST_INIT(hotspot_icons, list(
 	AddElement(/datum/element/connect_loc, loc_connections)
 
 /obj/effect/hotspot/set_smoothed_icon_state(new_junction)
-	. = ..()
+	smoothing_junction = new_junction
 	// If we have a connection down offset physically down so we render correctly
 	if(new_junction & SOUTH)
 		// this ensures things physically below us but visually overlapping us render how we would want
@@ -157,6 +145,8 @@ GLOBAL_LIST_INIT(hotspot_icons, list(
 	else
 		pixel_y = 0
 		pixel_z = 0
+
+	update_color()
 
 /**
  * Perform interactions between the hotspot and the gasmixture.
@@ -218,13 +208,17 @@ GLOBAL_LIST_INIT(hotspot_icons, list(
 /obj/effect/hotspot/proc/update_color()
 	cut_overlays()
 
+	if(!(smoothing_junction & NORTH))
+		var/mutable_appearance/frill = mutable_appearance('icons/effects/atmos/fire.dmi', "[icon_state]_frill")
+		frill.pixel_z = 32
+		add_overlay(frill)
 	var/heat_r = heat2colour_r(temperature)
 	var/heat_g = heat2colour_g(temperature)
 	var/heat_b = heat2colour_b(temperature)
 	var/heat_a = 255
 	var/greyscale_fire = 1 //This determines how greyscaled the fire is.
 	// Note:
-	// The overlays applied to hotspots are not 3/4th'd. They COULD be but we have not gotten to that point yet.
+	// Some of the overlays applied to hotspots are not 3/4th'd. They COULD be but we have not gotten to that point yet.
 	// Wallening todo?
 
 	if(cold_fire)
@@ -250,6 +244,10 @@ GLOBAL_LIST_INIT(hotspot_icons, list(
 		add_overlay(sparkle_overlay)
 	if(temperature > 400000 && temperature < 1500000) //Lightning because very anime.
 		var/mutable_appearance/lightning_overlay = mutable_appearance('icons/effects/atmos/fire.dmi', "overcharged")
+		if(!(smoothing_junction & NORTH))
+			var/mutable_appearance/frill = mutable_appearance('icons/effects/atmos/fire.dmi', "overcharged_frill")
+			frill.pixel_z = 32
+			lightning_overlay.add_overlay(frill)
 		lightning_overlay.blend_mode = BLEND_ADD
 		add_overlay(lightning_overlay)
 	if(temperature > 4500000) //This is where noblium happens. Some fusion-y effects.
@@ -343,7 +341,15 @@ GLOBAL_LIST_INIT(hotspot_icons, list(
 	if(fire_stage == stage)
 		return
 	fire_stage = stage
-	icon = pick(GLOB.hotspot_icons[fire_stage])
+	switch(stage)
+		if("heavy")
+			icon_state = "3"
+		if("medium")
+			icon_state = "2"
+		if("light")
+			icon_state = "1"
+	dir = pick(GLOB.cardinals)
+	update_color()
 
 /obj/effect/hotspot/Destroy()
 	SSair.hotspots -= src

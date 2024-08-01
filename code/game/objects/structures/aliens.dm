@@ -78,7 +78,7 @@
 	move_update_air(T)
 
 /obj/structure/alien/resin/proc/make_splitvis()
-	AddElement(/datum/element/split_visibility, icon)
+	AddElement(/datum/element/split_visibility, icon, color)
 
 /obj/structure/alien/resin/proc/get_icon()
 	if(prob(50))
@@ -124,7 +124,6 @@
 	return attack_hand(user, modifiers)
 
 ///Used in the big derelict ruin exclusively.
-#warn fuckin dies
 /obj/structure/alien/resin/membrane/creature
 	name = "gelatinous membrane"
 	desc = "A strange combination of thin, gelatinous material."

@@ -187,6 +187,7 @@ INITIALIZE_IMMEDIATE(/turf/closed/indestructible/splashscreen)
 	name = "window"
 	icon = MAP_SWITCH('icons/obj/smooth_structures/windows/reinforced_window.dmi', 'icons/obj/smooth_structures/structure_variations.dmi')
 	MAP_SWITCH(, icon_state = "fake_window")
+	layer = ABOVE_OBJ_LAYER
 	opacity = FALSE
 	use_splitvis = FALSE
 	smoothing_groups = SMOOTH_GROUP_WINDOW_FULLTILE
@@ -203,14 +204,15 @@ INITIALIZE_IMMEDIATE(/turf/closed/indestructible/splashscreen)
 
 /turf/closed/indestructible/fakeglass/update_overlays()
 	. = ..()
-	. += mutable_appearance('icons/obj/smooth_structures/window_grille.dmi', "window_grille-[smoothing_junction]")
-	. += mutable_appearance('icons/obj/smooth_structures/window_grille_black.dmi', "window_grille_black-[smoothing_junction]", offset_spokesman = src, plane = OVER_TILE_PLANE)
-	. += mutable_appearance('icons/obj/smooth_structures/window_frames/frame_faces/window_frame_normal.dmi', "window_frame_normal-[smoothing_junction]", appearance_flags = KEEP_APART)
+	. += mutable_appearance('icons/obj/smooth_structures/window_grille.dmi', "window_grille-[smoothing_junction]", BELOW_OBJ_LAYER)
+	. += mutable_appearance('icons/obj/smooth_structures/window_grille_black.dmi', "window_grille_black-[smoothing_junction]", BELOW_OBJ_LAYER, offset_spokesman = src, plane = OVER_TILE_PLANE)
+	. += mutable_appearance('icons/obj/smooth_structures/window_frames/frame_faces/window_frame_normal.dmi', "window_frame_normal-[smoothing_junction]", BELOW_OBJ_LAYER, appearance_flags = KEEP_APART)
 
 /turf/closed/indestructible/opsglass
 	name = "window"
 	icon = MAP_SWITCH('icons/obj/smooth_structures/windows/reinforced_window.dmi', 'icons/obj/smooth_structures/structure_variations.dmi')
 	MAP_SWITCH(, icon_state = "fake_window")
+	layer = ABOVE_OBJ_LAYER
 	opacity = FALSE
 	use_splitvis = FALSE
 	smoothing_groups = SMOOTH_GROUP_SHUTTLE_PARTS + SMOOTH_GROUP_WINDOW_FULLTILE_PLASTITANIUM
@@ -227,9 +229,9 @@ INITIALIZE_IMMEDIATE(/turf/closed/indestructible/splashscreen)
 
 /turf/closed/indestructible/opsglass/update_overlays()
 	. = ..()
-	. += mutable_appearance('icons/obj/smooth_structures/window_grille.dmi', "window_grille-[smoothing_junction]")
-	. += mutable_appearance('icons/obj/smooth_structures/window_grille_black.dmi', "window_grille_black-[smoothing_junction]", offset_spokesman = src, plane = OVER_TILE_PLANE)
-	. += mutable_appearance('icons/obj/smooth_structures/window_frames/frame_faces/window_frame_normal.dmi', "window_frame_normal-[smoothing_junction]", appearance_flags = KEEP_APART)
+	. += mutable_appearance('icons/obj/smooth_structures/window_grille.dmi', "window_grille-[smoothing_junction]", BELOW_OBJ_LAYER)
+	. += mutable_appearance('icons/obj/smooth_structures/window_grille_black.dmi', "window_grille_black-[smoothing_junction]", BELOW_OBJ_LAYER, offset_spokesman = src, plane = OVER_TILE_PLANE)
+	. += mutable_appearance('icons/obj/smooth_structures/window_frames/frame_faces/window_frame_normal.dmi', "window_frame_normal-[smoothing_junction]", BELOW_OBJ_LAYER, appearance_flags = KEEP_APART)
 
 /turf/closed/indestructible/fakedoor
 	name = "airlock"
@@ -261,8 +263,8 @@ INITIALIZE_IMMEDIATE(/turf/closed/indestructible/splashscreen)
 /turf/closed/indestructible/rock/snow
 	name = "mountainside"
 	desc = "An extremely densely-packed rock, sheeted over with centuries worth of ice and snow."
-	icon = 'icons/turf/walls.dmi'
-	icon_state = "snowrock"
+	icon = MAP_SWITCH('icons/turf/walls/mountain_wall.dmi', 'icons/turf/mining.dmi')
+	MAP_SWITCH(,icon_state = "mountainrock")
 	bullet_sizzle = TRUE
 	bullet_bounce_sound = null
 
@@ -278,7 +280,7 @@ INITIALIZE_IMMEDIATE(/turf/closed/indestructible/splashscreen)
 // Something is wrong here huh
 // rock/snow used to have a unique state, do we need to put it back?
 // also we need a sprite for /rock, I think? need to dig more
-#warn wallenin todo, the above
+// wallening todo, replace with /turf/closed/indestructible/rock/snow/ice, it is essentially redundant since we didn't make a unique state for that one state in mining.dmi
 /turf/closed/indestructible/rock/snow/ice/ore
 /turf/closed/indestructible/paper
 	name = "thick paper wall"
