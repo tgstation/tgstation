@@ -1,9 +1,9 @@
 // Proc taken from yogstation, credit to nichlas0010 for the original
-ADMIN_VERB_AND_CONTEXT_MENU(fix_air, R_ADMIN, "Fix Air", "Fixes air in a specified radius.", ADMIN_CATEGORY_GAME, turf/open/locale in world, range = 2 as num)
-	message_admins("[key_name_admin(user)] fixed air with range [range] in area [locale.loc.name]")
-	user.mob.log_message("fixed air with range [range] in area [locale.loc.name]", LOG_ADMIN)
+ADMIN_VERB_AND_CONTEXT_MENU(fix_air, R_ADMIN, "Fix Air", "Fixes air in a specified radius.", ADMIN_CATEGORY_GAME, range = 2 as num)
+	message_admins("[key_name_admin(user)] fixed air with range [range] in area [get_area_name(user)]")
+	user.mob.log_message("fixed air with range [range] in area [get_area_name(user)]", LOG_ADMIN)
 
-	for(var/turf/open/valid_range_turf in range(range,locale))
+	for(var/turf/open/valid_range_turf in range(range, user))
 		if(valid_range_turf.blocks_air)
 		//skip walls
 			continue
