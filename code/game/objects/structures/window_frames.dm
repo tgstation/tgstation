@@ -12,7 +12,6 @@
 	opacity = FALSE
 	density = TRUE
 	rad_insulation = null
-	frill_icon = null // we dont have a frill, our window does
 	armor_type = /datum/armor/window_frame
 	max_integrity = 50
 	anchored = TRUE

@@ -266,7 +266,6 @@ GLOBAL_LIST_INIT(falsewall_alpha_icons, generate_transparent_falsewalls())
 	walltype = /turf/closed/wall/r_wall
 	mineral = /obj/item/stack/sheet/plasteel
 	smoothing_flags = SMOOTH_BITMASK
-	frill_icon = 'icons/effects/frills/wall_reinforced_frill.dmi'
 
 /obj/structure/falsewall/reinforced/examine_status(mob/user)
 	to_chat(user, span_notice("The outer <b>grille</b> is fully intact."))
