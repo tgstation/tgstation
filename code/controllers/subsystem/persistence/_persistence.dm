@@ -20,6 +20,8 @@ SUBSYSTEM_DEF(persistence)
 	var/list/blocked_maps = list()
 	var/list/saved_trophies = list()
 	var/list/picture_logging_information = list()
+	///List of all stored circuit designs
+	var/list/circuit_designs = list()
 
 	/// A json_database linking to data/photo_frames.json.
 	/// Schema is persistence_id => array of photo names.
@@ -62,6 +64,7 @@ SUBSYSTEM_DEF(persistence)
 	load_delamination_counter()
 	load_tram_counter()
 	load_adventures()
+	load_circuits()
 	return SS_INIT_SUCCESS
 
 ///Collects all data to persist.
@@ -74,6 +77,7 @@ SUBSYSTEM_DEF(persistence)
 	save_scars()
 	save_custom_outfits()
 	save_delamination_counter()
+	save_circuits()
 	if(SStransport.can_fire)
 		for(var/datum/transport_controller/linear/tram/transport as anything in SStransport.transports_by_type[TRANSPORT_TYPE_TRAM])
 			save_tram_history(transport.specific_transport_id)

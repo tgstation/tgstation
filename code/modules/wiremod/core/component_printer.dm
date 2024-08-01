@@ -308,8 +308,12 @@
 
 	///The internal material bus
 	var/datum/component/remote_materials/materials
-	///List of designs scanned and saved
+	///List of designs scanned and saved this round on this fabricator
 	var/list/scanned_designs = list()
+	/// The current unlocked circuit component designs. Used by integrated circuits to print off circuit components remotely.
+	var/list/current_unlocked_designs = list()
+	/// The techweb the duplicastor will get researched designs from
+	var/datum/techweb/techweb
 	///Constant material cost per component
 	var/cost_per_component = SHEET_MATERIAL_AMOUNT / 10
 	///Cost efficiency of this machine
@@ -319,6 +323,48 @@
 	. = ..()
 
 	materials = AddComponent(/datum/component/remote_materials, mapload)
+
+/obj/machinery/module_duplicator/post_machine_initialize()
+	. = ..()
+	if(!CONFIG_GET(flag/no_default_techweb_link) && !techweb)
+		CONNECT_TO_RND_SERVER_ROUNDSTART(techweb, src)
+	if(techweb)
+		on_connected_techweb()
+
+/obj/machinery/module_duplicator/proc/connect_techweb(datum/techweb/new_techweb)
+	if(techweb)
+		UnregisterSignal(techweb, list(COMSIG_TECHWEB_ADD_DESIGN, COMSIG_TECHWEB_REMOVE_DESIGN))
+	techweb = new_techweb
+	if(!isnull(techweb))
+		on_connected_techweb()
+
+/obj/machinery/module_duplicator/proc/on_connected_techweb()
+	for (var/researched_design_id in techweb.researched_designs)
+		var/datum/design/design = SSresearch.techweb_design_by_id(researched_design_id)
+		if (!(design.build_type & COMPONENT_PRINTER) || !ispath(design.build_path, /obj/item/circuit_component))
+			continue
+
+		current_unlocked_designs[design.build_path] = design.id
+
+	RegisterSignal(techweb, COMSIG_TECHWEB_ADD_DESIGN, PROC_REF(on_research))
+	RegisterSignal(techweb, COMSIG_TECHWEB_REMOVE_DESIGN, PROC_REF(on_removed))
+
+/obj/machinery/module_duplicator/multitool_act(mob/living/user, obj/item/multitool/tool)
+	if(!QDELETED(tool.buffer) && istype(tool.buffer, /datum/techweb))
+		connect_techweb(tool.buffer)
+	return TRUE
+
+/obj/machinery/module_duplicator/proc/on_research(datum/source, datum/design/added_design, custom)
+	SIGNAL_HANDLER
+	if (!(added_design.build_type & COMPONENT_PRINTER) || !ispath(added_design.build_path, /obj/item/circuit_component))
+		return
+	current_unlocked_designs[added_design.build_path] = added_design.id
+
+/obj/machinery/module_duplicator/proc/on_removed(datum/source, datum/design/added_design, custom)
+	SIGNAL_HANDLER
+	if (!(added_design.build_type & COMPONENT_PRINTER) || !ispath(added_design.build_path, /obj/item/circuit_component))
+		return
+	current_unlocked_designs -= added_design.build_path
 
 /obj/machinery/module_duplicator/ui_interact(mob/user, datum/tgui/ui)
 	ui = SStgui.try_update_ui(user, src, ui)
@@ -355,7 +401,7 @@
 
 	update_static_data_for_all_viewers()
 
-/obj/machinery/module_duplicator/ui_act(action, list/params)
+/obj/machinery/module_duplicator/ui_act(action, list/params, datum/tgui/ui)
 	. = ..()
 	if (.)
 		return
@@ -364,10 +410,13 @@
 		if ("print")
 			var/design_id = text2num(params["designId"])
 
-			if (design_id < 1 || design_id > length(scanned_designs))
+			if (design_id < 1 || design_id > length(SSpersistence.circuit_designs))
 				return TRUE
 
-			var/list/design = scanned_designs[design_id]
+			var/list/design = SSpersistence.circuit_designs[design_id]
+
+			if (design["author_ckey"] != ui.user.client?.ckey && !(design in scanned_designs)) // Get away from here, cheater
+				return TRUE
 
 			if (materials.on_hold())
 				say("Mineral access is on hold, please contact the quartermaster.")
@@ -375,6 +424,10 @@
 
 			if (!materials.mat_container.has_materials(design["materials"], efficiency_coeff))
 				say("Not enough materials.")
+				return TRUE
+
+			if (!can_print(design["dupe_data"]))
+				say("Unknown components detected. Further research required!")
 				return TRUE
 
 			materials.use_materials(design["materials"], efficiency_coeff, 1, design["name"], design["materials"])
@@ -386,6 +439,21 @@
 			// SAFETY: eject_sheets checks for valid mats
 			materials.eject_sheets(material, amount)
 
+	return TRUE
+
+/obj/machinery/module_duplicator/proc/can_print(list/design)
+	var/list/design_data = json_decode(design)
+	if(!design_data)
+		return FALSE
+
+	var/list/circuit_data = design_data["components"]
+	for(var/identifier in circuit_data)
+		var/list/component_data = circuit_data[identifier]
+		var/type = text2path(component_data["type"])
+		if(!ispath(type, /obj/item/circuit_component))
+			return FALSE
+		if (isnull(current_unlocked_designs[type]))
+			return FALSE
 	return TRUE
 
 /obj/machinery/module_duplicator/proc/print_module(list/design)
@@ -440,6 +508,7 @@
 
 		data["materials"] = materials
 		data["integrated_circuit"] = TRUE
+		data["author_ckey"] = user.client?.ckey
 
 	if(!length(data))
 		return ..()
@@ -448,7 +517,10 @@
 		balloon_alert(user, "it needs a name!")
 		return ..()
 
-	for(var/list/component_data as anything in scanned_designs)
+	for(var/list/component_data as anything in SSpersistence.circuit_designs)
+		if (component_data["author_ckey"] != user.client?.ckey && !(component_data in scanned_designs))
+			continue
+
 		if(component_data["name"] == data["name"])
 			balloon_alert(user, "name already exists!")
 			return ..()
@@ -457,6 +529,7 @@
 	addtimer(CALLBACK(src, PROC_REF(finish_module_scan), user, data), 1.4 SECONDS)
 
 /obj/machinery/module_duplicator/proc/finish_module_scan(mob/user, data)
+	SSpersistence.circuit_designs += list(data)
 	scanned_designs += list(data)
 
 	balloon_alert(user, "module has been saved.")
@@ -475,7 +548,9 @@
 	var/list/designs = list()
 
 	var/index = 1
-	for (var/list/design as anything in scanned_designs)
+	for (var/list/design as anything in SSpersistence.circuit_designs)
+		if (design["author_ckey"] != user.client?.ckey && !(design in scanned_designs))
+			continue
 
 		var/list/cost = list()
 		var/list/materials = design["materials"]
