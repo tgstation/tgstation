@@ -209,7 +209,7 @@
 	items_to_add = list(/obj/item/cautery/prt)
 
 /obj/item/borg/upgrade/plunger
-	name = "janitor cyborg plating repair tool"
+	name = "janitor cyborg plunging tool"
 	desc = "An integrated cyborg retractable plunger. It's meant for plunging things, duh."
 	icon_state = "module_janitor"
 	require_model = TRUE
