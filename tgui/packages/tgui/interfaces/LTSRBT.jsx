@@ -13,7 +13,7 @@ import {
 import { Window } from '../layouts';
 
 export const LTSRBT = (props) => {
-  const { act, data } = useBackend<Data>();
+  const { act, data } = useBackend();
   const {
     name,
     price,
