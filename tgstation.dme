@@ -5904,6 +5904,7 @@
 #include "monkestation\code\modules\admin\smites\where_are_your_fingers.dm"
 #include "monkestation\code\modules\admin\verbs\getlogs.dm"
 #include "monkestation\code\modules\admin\verbs\kick_player_by_ckey.dm"
+#include "monkestation\code\modules\admin\verbs\selectequipment.dm"
 #include "monkestation\code\modules\admin\verbs\spawn_mixtape.dm"
 #include "monkestation\code\modules\aesthetics\airlock\airlock.dm"
 #include "monkestation\code\modules\aesthetics\items\clothing.dm"

@@ -166,6 +166,7 @@ const OutfitDisplay = (props) => {
 
 const CurrentlySelectedDisplay = (props) => {
   const { act, data } = useBackend();
+  const [holyEffect, setHolyEffect] = useLocalState('holyEffect', false);
   const { current_outfit } = data;
   const { entry } = props;
   return (
@@ -199,6 +200,13 @@ const CurrentlySelectedDisplay = (props) => {
         </Box>
       </Stack.Item>
       <Stack.Item>
+        <Button.Checkbox
+          checked={holyEffect}
+          onClick={() => setHolyEffect(!holyEffect)}
+          content="Holy Effect"
+        />
+      </Stack.Item>
+      <Stack.Item>
         <Button
           mr={0.8}
           lineHeight={2}
@@ -206,6 +214,7 @@ const CurrentlySelectedDisplay = (props) => {
           onClick={() =>
             act('applyoutfit', {
               path: current_outfit,
+              holyEffect,
             })
           }
         >

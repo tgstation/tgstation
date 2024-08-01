@@ -1,0 +1,7 @@
+/datum/select_equipment/ui_act(action, params)
+	. = ..()
+	if (.)
+		switch(action)
+			if("applyoutfit")
+				if(params["holyEffect"])
+					new /obj/effect/holy(target_mob.loc)
