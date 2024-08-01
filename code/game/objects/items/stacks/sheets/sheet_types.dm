@@ -591,7 +591,6 @@ GLOBAL_LIST_INIT(durathread_recipes, list ( \
 	grind_results = list()
 	loom_result = /obj/item/stack/sheet/durathread
 
-
 /obj/item/stack/sheet/cotton/wool
 	name = "raw wool bundle"
 	desc = "A bundle of raw wool ready to be spun on the loom."
