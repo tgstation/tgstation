@@ -2,6 +2,7 @@ import { BooleanLike } from 'common/react';
 import { useState } from 'react';
 import { Tooltip } from 'tgui-core/components';
 
+import { useBackend } from '../../backend';
 import {
   Box,
   Button,
@@ -22,6 +23,7 @@ type GenericUplinkProps = {
 };
 
 export const GenericUplink = (props: GenericUplinkProps) => {
+  const { act } = useBackend();
   const {
     currency = 'cr',
     categories,
@@ -55,6 +57,7 @@ export const GenericUplink = (props: GenericUplinkProps) => {
                     textOverflow: 'ellipsis',
                     textAlign: 'center',
                   }}
+                  onClick={() => act('buy_raw_tc')}
                 >
                   {currency}
                 </Button>
