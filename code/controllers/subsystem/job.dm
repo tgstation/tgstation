@@ -357,7 +357,7 @@ SUBSYSTEM_DEF(job)
 	var/datum/job_department/command_department = get_department_type(/datum/job_department/command)
 
 	if(!command_department)
-		return
+		return .
 
 	for(var/datum/job/job as anything in command_department.department_jobs)
 		if((job.current_positions >= job.total_positions) && job.total_positions != -1)
