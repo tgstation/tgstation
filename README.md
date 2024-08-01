@@ -1,4 +1,4 @@
-## /tg/station codebase (Wall shaped)
+## /tg/station codebase
 
 [![Build Status](https://github.com/tgstation/tgstation/workflows/CI%20Suite/badge.svg)](https://github.com/tgstation/tgstation/actions?query=workflow%3A%22CI+Suite%22)
 [![Percentage of issues still open](https://isitmaintained.com/badge/open/tgstation/tgstation.svg)](https://isitmaintained.com/project/tgstation/tgstation "Percentage of issues still open")
@@ -7,15 +7,18 @@
 
 [![resentment](.github/images/badges/built-with-resentment.svg)](.github/images/comics/131-bug-free.png) [![technical debt](.github/images/badges/contains-technical-debt.svg)](.github/images/comics/106-tech-debt-modified.png) [![forinfinityandbyond](.github/images/badges/made-in-byond.gif)](https://www.reddit.com/r/SS13/comments/5oplxp/what_is_the_main_problem_with_byond_as_an_engine/dclbu1a)
 
-This is a temporary fork, setup to speed up development of the wallening, a 2 year old project to resprite /tg/station's walls, windows, and wall hangings.
+| Website                   | Link                                           |
+|---------------------------|------------------------------------------------|
+| Website                   | [https://www.tgstation13.org](https://www.tgstation13.org)          |
+| Code                      | [https://github.com/tgstation/tgstation](https://github.com/tgstation/tgstation)    |
+| Wiki                      | [https://tgstation13.org/wiki/Main_Page](https://tgstation13.org/wiki/Main_Page)   |
+| Codedocs                  | [https://codedocs.tgstation13.org/](https://codedocs.tgstation13.org/)       |
+| /tg/station Discord       | [https://tgstation13.org/phpBB/viewforum.php?f=60](https://tgstation13.org/phpBB/viewforum.php?f=60) |
+| Coderbus Discord          | [https://discord.gg/Vh8TJp9](https://discord.gg/Vh8TJp9)               |
 
-We run a modified version of pubby station 24/7, for the purposes of avoiding merge conflicts, and large scale map changes.
-We will not be doing a full map pass until the project is more mature, and ready to be pr'd to master.
+This is the codebase for the /tg/station flavoured fork of SpaceStation 13.
 
-### What you should report
-
-Pubby specific issues, missing sprites, fucked behavior, that sort of thing.
-This codebase is very much still in beta right now, expect lots of missing stuff.
+Space Station 13 is a paranoia-laden round-based roleplaying game set against the backdrop of a nonsensical, metal death trap masquerading as a space station, with charming spritework designed to represent the sci-fi setting and its dangerous undertones. Have fun, and survive!
 
 ## DOWNLOADING
 [Downloading](.github/guides/DOWNLOADING.md)
