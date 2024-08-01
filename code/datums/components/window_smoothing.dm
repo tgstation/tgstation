@@ -52,7 +52,7 @@ GLOBAL_LIST_EMPTY(window_appearances)
 	reset_icon()
 	RegisterSignal(parent, COMSIG_ATOM_SET_SMOOTHED_ICON_STATE, PROC_REF(on_junction_change))
 	RegisterSignal(parent, COMSIG_ATOM_UPDATE_ICON, PROC_REF(update_icon))
-	RegisterSignal(parent, COMSIG_MOVABLE_MOVED, PROC_REF(remove_smoothing))
+	RegisterSignal(parent, COMSIG_MOVABLE_MOVED, PROC_REF(on_moved))
 
 /datum/component/window_smoothing/proc/reset_icon()
 	var/atom/parent_atom = parent
@@ -67,7 +67,12 @@ GLOBAL_LIST_EMPTY(window_appearances)
 
 /datum/component/window_smoothing/proc/add_smoothing(new_junction)
 	var/atom/parent = src.parent
+
+	if(!parent.loc) //we shouldnt add frills if we're in nullspace
+		return
+
 	var/junction = new_junction
+
 	if(isnull(junction))
 		junction = parent.smoothing_junction
 
@@ -130,6 +135,11 @@ GLOBAL_LIST_EMPTY(window_appearances)
 	reset_icon()
 
 /datum/component/window_smoothing/proc/tied_turf_deleted(turf/source)
+	SIGNAL_HANDLER
+	remove_smoothing()
+	add_smoothing()
+
+/datum/component/window_smoothing/proc/on_moved(atom/movable/parent, turf/old_turf, dir)
 	SIGNAL_HANDLER
 	remove_smoothing()
 	add_smoothing()
