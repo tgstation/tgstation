@@ -63,7 +63,7 @@
 		'sound/voice/human/malescream_5.ogg',
 	)
 	/// Female screams
-	var/static/list/female_scream = list(
+	var/static/list/female_screams = list(
 		'sound/voice/human/femalescream_1.ogg',
 		'sound/voice/human/femalescream_2.ogg',
 		'sound/voice/human/femalescream_3.ogg',
@@ -98,10 +98,10 @@
 			death_sound = pick(male_screams + monkey_screeches)
 		if("female")
 			first_name = pick(GLOB.first_names_female)
-			death_sound = pick(male_screams + monkey_screeches)
+			death_sound = pick(female_screams + monkey_screeches)
 		if("enby")
 			first_name = pick(GLOB.first_names)
-			death_sound = pick(male_screams + female_scream + monkey_screeches)
+			death_sound = pick(male_screams + female_screams + monkey_screeches)
 
 	fully_replace_character_name(name, "[first_name] [pick(GLOB.last_names)]")
 	desc += span_infoplain("\nToday, that cause is: ")
