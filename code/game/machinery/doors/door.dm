@@ -628,22 +628,15 @@
 		. += mutable_appearance(icon, "open_bottom", ABOVE_MOB_LAYER, appearance_flags = KEEP_APART)
 		. += emissive_blocker(icon, "open_bottom", src, ABOVE_MOB_LAYER)
 
-/obj/machinery/door/morgue/animation_delay(animation)
-	switch(animation)
-		if("opening")
-			return 1.64 SECONDS
-		if("closing")
-			return 1.64 SECONDS
-
 /obj/machinery/door/get_dumping_location()
 	return null
 
 /obj/machinery/door/morgue/animation_length(animation)
 	switch(animation)
 		if(DOOR_OPENING_ANIMATION)
-			return 1.5 SECONDS
+			return 2.04 SECONDS
 		if(DOOR_CLOSING_ANIMATION)
-			return 1.5 SECONDS
+			return 1.64 SECONDS
 		if(DOOR_DENY_ANIMATION)
 			return 0.1 SECONDS
 
@@ -652,11 +645,11 @@
 		if(DOOR_OPENING_PASSABLE)
 			return 1.4 SECONDS
 		if(DOOR_OPENING_FINISHED)
-			return 1.5 SECONDS
+			return 2.04 SECONDS
 		if(DOOR_CLOSING_UNPASSABLE)
-			return 0.2 SECONDS
+			return 0.54 SECONDS
 		if(DOOR_CLOSING_FINISHED)
-			return 1.5 SECONDS
+			return 1.64 SECONDS
 
 /obj/machinery/door/proc/lock()
 	return

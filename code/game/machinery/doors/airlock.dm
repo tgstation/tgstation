@@ -2144,14 +2144,29 @@
 	greyscale_config = null
 	greyscale_colors = null
 
-/obj/machinery/door/airlock/diamond/animation_delay(animation)
+/obj/machinery/door/airlock/diamond/animation_length(animation)
 	switch(animation)
-		if("opening")
+		if(DOOR_OPENING_ANIMATION)
 			return 0.6 SECONDS
-		if("closing")
+		if(DOOR_CLOSING_ANIMATION)
 			return 0.6 SECONDS
-		if("deny")
+		if(DOOR_DENY_ANIMATION)
 			return 0.3 SECONDS
+
+/obj/machinery/door/airlock/diamond/animation_segment_delay(animation)
+	switch(animation)
+		if(AIRLOCK_OPENING_TRANSPARENT)
+			return 0.2 SECONDS
+		if(AIRLOCK_OPENING_PASSABLE)
+			return 0.5 SECONDS
+		if(AIRLOCK_OPENING_FINISHED)
+			return 0.6 SECONDS
+		if(AIRLOCK_CLOSING_UNPASSABLE)
+			return 0.3 SECONDS
+		if(AIRLOCK_CLOSING_OPAQUE)
+			return 0.5 SECONDS
+		if(AIRLOCK_CLOSING_FINISHED)
+			return 0.6 SECONDS
 
 /obj/machinery/door/airlock/diamond/glass
 	normal_integrity = 950
@@ -2350,14 +2365,29 @@
 
 	return ..()
 
-/obj/machinery/door/airlock/external/animation_delay(animation)
+/obj/machinery/door/airlock/external/animation_length(animation)
 	switch(animation)
-		if("opening")
+		if(DOOR_OPENING_ANIMATION)
 			return 0.6 SECONDS
-		if("closing")
+		if(DOOR_CLOSING_ANIMATION)
 			return 0.6 SECONDS
-		if("deny")
+		if(DOOR_DENY_ANIMATION)
 			return 0.3 SECONDS
+
+/obj/machinery/door/airlock/external/animation_segment_delay(animation)
+	switch(animation)
+		if(AIRLOCK_OPENING_TRANSPARENT)
+			return 0.2 SECONDS
+		if(AIRLOCK_OPENING_PASSABLE)
+			return 0.5 SECONDS
+		if(AIRLOCK_OPENING_FINISHED)
+			return 0.6 SECONDS
+		if(AIRLOCK_CLOSING_UNPASSABLE)
+			return 0.3 SECONDS
+		if(AIRLOCK_CLOSING_OPAQUE)
+			return 0.5 SECONDS
+		if(AIRLOCK_CLOSING_FINISHED)
+			return 0.6 SECONDS
 
 // Access free external airlocks
 /obj/machinery/door/airlock/external/ruin
@@ -2400,14 +2430,29 @@
 	greyscale_config = null
 	greyscale_colors = null
 
-/obj/machinery/door/airlock/vault/animation_delay(animation)
+/obj/machinery/door/airlock/vault/animation_length(animation)
 	switch(animation)
-		if("opening")
+		if(DOOR_OPENING_ANIMATION)
 			return 1.9 SECONDS
-		if("closing")
+		if(DOOR_CLOSING_ANIMATION)
 			return 1.9 SECONDS
-		if("deny")
+		if(DOOR_DENY_ANIMATION)
 			return 0.3 SECONDS
+
+/obj/machinery/door/airlock/vault/animation_segment_delay(animation)
+	switch(animation)
+		if(AIRLOCK_OPENING_TRANSPARENT)
+			return 1.3 SECONDS
+		if(AIRLOCK_OPENING_PASSABLE)
+			return 1.8 SECONDS
+		if(AIRLOCK_OPENING_FINISHED)
+			return 1.9 SECONDS
+		if(AIRLOCK_CLOSING_UNPASSABLE)
+			return 0.3 SECONDS
+		if(AIRLOCK_CLOSING_OPAQUE)
+			return 0.6 SECONDS
+		if(AIRLOCK_CLOSING_FINISHED)
+			return 1.9 SECONDS
 
 // Hatch Airlocks
 
@@ -2420,14 +2465,29 @@
 	greyscale_config = null
 	greyscale_colors = null
 
-/obj/machinery/door/airlock/hatch/animation_delay(animation)
+/obj/machinery/door/airlock/hatch/animation_length(animation)
 	switch(animation)
-		if("opening")
+		if(DOOR_OPENING_ANIMATION)
 			return 0.95 SECONDS
-		if("closing")
+		if(DOOR_CLOSING_ANIMATION)
 			return 0.95 SECONDS
-		if("deny")
+		if(DOOR_DENY_ANIMATION)
 			return 0.3 SECONDS
+
+/obj/machinery/door/airlock/hatch/animation_segment_delay(animation)
+	switch(animation)
+		if(AIRLOCK_OPENING_TRANSPARENT)
+			return 0.25 SECONDS
+		if(AIRLOCK_OPENING_PASSABLE)
+			return 0.75 SECONDS
+		if(AIRLOCK_OPENING_FINISHED)
+			return 0.95 SECONDS
+		if(AIRLOCK_CLOSING_UNPASSABLE)
+			return 0.5 SECONDS
+		if(AIRLOCK_CLOSING_OPAQUE)
+			return 0.75 SECONDS
+		if(AIRLOCK_CLOSING_FINISHED)
+			return 0.95 SECONDS
 
 /obj/machinery/door/airlock/maintenance_hatch //Please dear fucking LORD make this a subtype of the above, they're the SAME GOD DAMN THING
 	name = "maintenance hatch"
@@ -2438,14 +2498,29 @@
 	greyscale_config = null
 	greyscale_colors = null
 
-/obj/machinery/door/airlock/maintenance_hatch/animation_delay(animation)
+/obj/machinery/door/airlock/maintenance_hatch/animation_length(animation)
 	switch(animation)
-		if("opening")
+		if(DOOR_OPENING_ANIMATION)
 			return 0.9 SECONDS
-		if("closing")
+		if(DOOR_CLOSING_ANIMATION)
 			return 0.9 SECONDS
-		if("deny")
+		if(DOOR_DENY_ANIMATION)
 			return 0.3 SECONDS
+
+/obj/machinery/door/airlock/maintenance_hatch/animation_segment_delay(animation)
+	switch(animation)
+		if(AIRLOCK_OPENING_TRANSPARENT)
+			return 0.2 SECONDS
+		if(AIRLOCK_OPENING_PASSABLE)
+			return 0.6 SECONDS
+		if(AIRLOCK_OPENING_FINISHED)
+			return 0.9 SECONDS
+		if(AIRLOCK_CLOSING_UNPASSABLE)
+			return 0.4 SECONDS
+		if(AIRLOCK_CLOSING_OPAQUE)
+			return 0.8 SECONDS
+		if(AIRLOCK_CLOSING_FINISHED)
+			return 0.9 SECONDS
 
 // High Security Airlocks
 
@@ -2461,14 +2536,29 @@
 	greyscale_config = null
 	greyscale_colors = null
 
-/obj/machinery/door/airlock/highsecurity/animation_delay(animation)
+/obj/machinery/door/airlock/highsecurity/animation_length(animation)
 	switch(animation)
-		if("opening")
+		if(DOOR_OPENING_ANIMATION)
 			return 1.7 SECONDS
-		if("closing")
+		if(DOOR_CLOSING_ANIMATION)
 			return 1.7 SECONDS
-		if("deny")
+		if(DOOR_DENY_ANIMATION)
 			return 0.3 SECONDS
+
+/obj/machinery/door/airlock/highsecurity/animation_segment_delay(animation)
+	switch(animation)
+		if(AIRLOCK_OPENING_TRANSPARENT)
+			return 1.2 SECONDS
+		if(AIRLOCK_OPENING_PASSABLE)
+			return 1.6 SECONDS
+		if(AIRLOCK_OPENING_FINISHED)
+			return 1.7 SECONDS
+		if(AIRLOCK_CLOSING_UNPASSABLE)
+			return 0.3 SECONDS
+		if(AIRLOCK_CLOSING_OPAQUE)
+			return 0.7 SECONDS
+		if(AIRLOCK_CLOSING_FINISHED)
+			return 1.7 SECONDS
 
 // Shuttle Airlocks
 
@@ -2551,14 +2641,29 @@
 			L.throw_at(throwtarget, 5, 1)
 		return FALSE
 
-/obj/machinery/door/airlock/cult/animation_delay(animation)
+/obj/machinery/door/airlock/cult/animation_length(animation)
 	switch(animation)
-		if("opening")
+		if(DOOR_OPENING_ANIMATION)
 			return 1.6 SECONDS
-		if("closing")
+		if(DOOR_CLOSING_ANIMATION)
 			return 1.6 SECONDS
-		if("deny")
+		if(DOOR_DENY_ANIMATION)
 			return 0.3 SECONDS
+
+/obj/machinery/door/airlock/cult/animation_segment_delay(animation)
+	switch(animation)
+		if(AIRLOCK_OPENING_TRANSPARENT)
+			return 1.3 SECONDS
+		if(AIRLOCK_OPENING_PASSABLE)
+			return 1.4 SECONDS
+		if(AIRLOCK_OPENING_FINISHED)
+			return 1.6 SECONDS
+		if(AIRLOCK_CLOSING_UNPASSABLE)
+			return 0.9 SECONDS
+		if(AIRLOCK_CLOSING_OPAQUE)
+			return 1.1 SECONDS
+		if(AIRLOCK_CLOSING_FINISHED)
+			return 1.6 SECONDS
 
 /obj/machinery/door/airlock/cult/proc/conceal()
 	icon = 'icons/obj/doors/airlocks/tall/maintenance.dmi'

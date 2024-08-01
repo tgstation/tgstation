@@ -651,20 +651,20 @@
 		if(DOOR_OPENING_ANIMATION)
 			return 0.9 SECONDS
 		if(DOOR_CLOSING_ANIMATION)
-			return 1.3 SECONDS
+			return 1 SECONDS
 		if(DOOR_DENY_ANIMATION)
 			return 0.3 SECONDS
 
 /obj/machinery/door/firedoor/animation_segment_delay(animation)
 	switch(animation)
 		if(DOOR_OPENING_PASSABLE)
-			return 1.0 SECONDS
+			return 0.6 SECONDS
 		if(DOOR_OPENING_FINISHED)
-			return 1.2 SECONDS
+			return 0.9 SECONDS
 		if(DOOR_CLOSING_UNPASSABLE)
 			return 0.2 SECONDS
 		if(DOOR_CLOSING_FINISHED)
-			return 1.2 SECONDS
+			return 1 SECONDS
 
 /obj/machinery/door/firedoor/update_overlays()
 	. = ..()
@@ -764,14 +764,25 @@
 	AddElement(/datum/element/render_over_keep_hitbox, 0, TRUE, NORTH|WEST|EAST)
 	AddElement(/datum/element/connect_loc, loc_connections)
 
-/obj/machinery/door/firedoor/border_only/animation_delay(animation)
+/obj/machinery/door/firedoor/border_only/animation_length(animation)
 	switch(animation)
-		if("opening")
+		if(DOOR_OPENING_ANIMATION)
 			return 0.7 SECONDS
-		if("closing")
+		if(DOOR_CLOSING_ANIMATION)
 			return 0.7 SECONDS
-		if("deny")
+		if(DOOR_DENY_ANIMATION)
 			return 0.4 SECONDS
+
+/obj/machinery/door/firedoor/border_only/animation_segment_delay(animation)
+	switch(animation)
+		if(DOOR_OPENING_PASSABLE)
+			return 0.6 SECONDS
+		if(DOOR_OPENING_FINISHED)
+			return 0.7 SECONDS
+		if(DOOR_CLOSING_UNPASSABLE)
+			return 0.2 SECONDS
+		if(DOOR_CLOSING_FINISHED)
+			return 0.2 SECONDS
 
 /obj/machinery/door/firedoor/border_only/CanAllowThrough(atom/movable/mover, border_dir)
 	. = ..()

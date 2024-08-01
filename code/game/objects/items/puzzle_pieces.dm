@@ -107,14 +107,14 @@
 /obj/machinery/door/puzzle/animation_length(animation)
 	switch(animation)
 		if(DOOR_OPENING_ANIMATION)
-			return 1.0 SECONDS
+			return 0.7 SECONDS
 
 /obj/machinery/door/puzzle/animation_segment_delay(animation)
 	switch(animation)
 		if(DOOR_OPENING_PASSABLE)
-			return 0.8 SECONDS
+			return 0.5 SECONDS
 		if(DOOR_OPENING_FINISHED)
-			return 1.0 SECONDS
+			return 0.7 SECONDS
 
 /obj/machinery/door/puzzle/Bumped(atom/movable/AM)
 	return !density && ..()

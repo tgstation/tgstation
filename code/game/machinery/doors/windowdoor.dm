@@ -103,7 +103,7 @@
 /obj/machinery/door/window/animation_segment_delay(animation)
 	switch(animation)
 		if(DOOR_OPENING_PASSABLE)
-			return 0.7 SECONDS
+			return 0.8 SECONDS
 		if(DOOR_OPENING_FINISHED)
 			return 0.9 SECONDS
 		if(DOOR_CLOSING_UNPASSABLE)

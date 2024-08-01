@@ -37,20 +37,20 @@
 /obj/machinery/door/poddoor/shutters/animation_length(animation)
 	switch(animation)
 		if(DOOR_OPENING_ANIMATION)
-			return 0.8 SECONDS
+			return 0.7 SECONDS
 		if(DOOR_CLOSING_ANIMATION)
 			return 0.7 SECONDS
 
 /obj/machinery/door/poddoor/shutters/animation_segment_delay(animation)
 	switch(animation)
 		if(DOOR_OPENING_PASSABLE)
-			return 0.76 SECONDS
+			return 0.5 SECONDS
 		if(DOOR_OPENING_FINISHED)
-			return 1.388 SECONDS
+			return 0.7 SECONDS
 		if(DOOR_CLOSING_UNPASSABLE)
-			return 0.152 SECONDS
+			return 0.3 SECONDS
 		if(DOOR_CLOSING_FINISHED)
-			return 1.388 SECONDS
+			return 0.7 SECONDS
 
 /obj/machinery/door/poddoor/shutters/animation_effects(animation)
 	switch(animation)
@@ -83,12 +83,23 @@
 	icon_state = "closed"
 	rad_insulation = RAD_EXTREME_INSULATION
 
-/obj/machinery/door/poddoor/shutters/radiation/animation_delay(animation)
+/obj/machinery/door/poddoor/shutters/radiation/animation_length(animation)
 	switch(animation)
-		if("opening")
-			return 0.91 SECONDS
-		if("closing")
-			return 0.66 SECONDS
+		if(DOOR_OPENING_ANIMATION)
+			return 1.01 SECONDS
+		if(DOOR_CLOSING_ANIMATION)
+			return 0.76 SECONDS
+
+/obj/machinery/door/poddoor/shutters/radiation/animation_segment_delay(animation)
+	switch(animation)
+		if(DOOR_OPENING_PASSABLE)
+			return 0.78 SECONDS
+		if(DOOR_OPENING_FINISHED)
+			return 1.01 SECONDS
+		if(DOOR_CLOSING_UNPASSABLE)
+			return 0.26 SECONDS
+		if(DOOR_CLOSING_FINISHED)
+			return 0.76 SECONDS
 
 /obj/machinery/door/poddoor/shutters/radiation/preopen
 	icon_state = "open_bottom"
@@ -121,12 +132,23 @@
 	opacity = FALSE
 	glass = TRUE
 
-/obj/machinery/door/poddoor/shutters/window/animation_delay(animation)
+/obj/machinery/door/poddoor/shutters/window/animation_length(animation)
 	switch(animation)
-		if("opening")
-			return 0.91 SECONDS
-		if("closing")
-			return 0.91 SECONDS
+		if(DOOR_OPENING_ANIMATION)
+			return 1.01 SECONDS
+		if(DOOR_CLOSING_ANIMATION)
+			return 1.01 SECONDS
+
+/obj/machinery/door/poddoor/shutters/window/animation_segment_delay(animation)
+	switch(animation)
+		if(DOOR_OPENING_PASSABLE)
+			return 0.78 SECONDS
+		if(DOOR_OPENING_FINISHED)
+			return 1.01 SECONDS
+		if(DOOR_CLOSING_UNPASSABLE)
+			return 0.23 SECONDS
+		if(DOOR_CLOSING_FINISHED)
+			return 1.01 SECONDS
 
 /obj/machinery/door/poddoor/shutters/window/preopen
 	icon_state = "open_bottom"
