@@ -6184,6 +6184,7 @@
 #include "code\modules\vehicles\spacepod\equipment\engines.dm"
 #include "code\modules\vehicles\spacepod\equipment\sensors.dm"
 #include "code\modules\vehicles\spacepod\equipment\thrusters.dm"
+#include "code\modules\vehicles\spacepod\equipment\misc\armor.dm"
 #include "code\modules\vehicles\spacepod\equipment\misc\locks.dm"
 #include "code\modules\vehicles\spacepod\equipment\misc\warpdrive.dm"
 #include "code\modules\vehicles\spacepod\equipment\primary\_primary.dm"

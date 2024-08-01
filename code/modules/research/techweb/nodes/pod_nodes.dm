@@ -14,6 +14,9 @@
 		"podcargohold",
 		"podextraseats",
 		"podpinlock",
+		"poddrill",
+		"podfoam",
+		"podorehold",
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_1_POINTS)
 
@@ -26,6 +29,8 @@
 		"podsensorsmesons",
 		"podengine3",
 		"podthruster2",
+		"podimpactdrill",
+		"podplasmacutter",
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_2_POINTS)
 
@@ -38,5 +43,6 @@
 		"podsensorsnightvision",
 		"podengine4",
 		"podthruster3",
+		"improvedimpactdrill",
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_3_POINTS)

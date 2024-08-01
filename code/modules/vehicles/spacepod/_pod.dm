@@ -3,9 +3,10 @@
 //
 
 // TODO:
-// equipment variants (maybe a few proper guns)
 // ONCE EVERYTHING IS DONE, add hangar bays, must have 1-3 pods idk, maybe t1 megacells + oxygen tanks, and a manual?? not sure
 // sprites
+// fix bump
+// research n designs
 // replace spawn_equip or add new subtype, but probably the former; to have a more reasonable roundstart loadout
 // ALSO DO NOT FORGET TO REMOVE THIS HUGE ASS COMMENT before finishing
 
