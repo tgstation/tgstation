@@ -13,7 +13,16 @@ import {
 import { Window } from '../layouts';
 
 export const LTSRBT = (props) => {
-  const { act, data } = useBackend();
+  const { act, data } = useBackend<Data>();
+  const {
+    name,
+    price,
+    min_price,
+    max_price,
+    loaded_icon,
+    desc,
+  } = data;
+
   return (
     <Window width={300} height={380} theme="hackerman">
       <Window.Content>
@@ -22,7 +31,7 @@ export const LTSRBT = (props) => {
             <Input
               inline
               width="80%"
-              value={data.name}
+              value={name}
               placeholder="Insert a name"
               onChange={(e, value) =>
                 act('change_name', {
@@ -33,9 +42,9 @@ export const LTSRBT = (props) => {
             <NumberInput
               inline
               width="20%"
-              value={data.price}
-              minValue={data.min_price}
-              maxValue={data.max_price}
+              value={price}
+              minValue={min_price}
+              maxValue={max_price}
               unit="cr"
               onChange={(value) =>
                 act('change_price', {
@@ -45,12 +54,12 @@ export const LTSRBT = (props) => {
             />
           </Stack.Item>
           <Stack.Divider />
-          {!!data.loaded_icon && (
+          {!!loaded_icon && (
             <Stack.Item>
               <Section align="center">
                 <Image
                   m={1}
-                  src={`data:image/jpeg;base64,${data.loaded_icon}`}
+                  src={`data:image/jpeg;base64,${loaded_icon}`}
                   height="96px"
                   width="96px"
                 />
@@ -61,7 +70,7 @@ export const LTSRBT = (props) => {
           <Stack.Item grow>
             <TextArea
               height="90%"
-              value={data.desc}
+              value={desc}
               placeholder="Insert a description (or don't)"
               onChange={(e, value) =>
                 act('change_desc', {
