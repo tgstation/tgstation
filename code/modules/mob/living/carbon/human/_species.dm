@@ -1145,7 +1145,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
 			target.adjust_eye_blur_up_to(5 SECONDS, 10 SECONDS)
 			target.adjust_confusion_up_to(5 SECONDS, 10 SECONDS)
 			target.visible_message(span_danger("[user]'s [atk_verb] hits [target] so hard, they are sent reeling in agony! Damn!"), \
-				span_danger("You are hit viciously by [user]'s [atk_verb], and every becomes a dizzying blur!"), span_hear("You hear a thud!"), COMBAT_MESSAGE_RANGE, user)
+				span_danger("You are hit viciously by [user]'s [atk_verb], and everything becomes a dizzying blur!"), span_hear("You hear a thud!"), COMBAT_MESSAGE_RANGE, user)
 			to_chat(user, span_warning("Your [atk_verb] causes [target] to go stumbling about in a confuzed daze!"))
 
 		if(31 to 40)
@@ -1153,7 +1153,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
 			target.adjust_confusion_up_to(5 SECONDS, 10 SECONDS)
 			target.adjust_temp_blindness_up_to(5 SECONDS, 10 SECONDS)
 			target.visible_message(span_danger("[user]'s [atk_verb] hits [target] so hard, they are sent reeling blindly in agony! Goddamn!"), \
-				span_danger("You are hit viciously by [user]'s [atk_verb], and every becomes a dizzying, blinding blur!"), span_hear("You hear a thud!"), COMBAT_MESSAGE_RANGE, user)
+				span_danger("You are hit viciously by [user]'s [atk_verb], and everything becomes a dizzying, blinding blur!"), span_hear("You hear a thud!"), COMBAT_MESSAGE_RANGE, user)
 			to_chat(user, span_warning("Your [atk_verb] causes [target] to go stumbling about in a confuzed, blind daze!"))
 
 		if (41 to 45)
