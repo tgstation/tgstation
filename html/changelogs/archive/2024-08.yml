@@ -1,0 +1,101 @@
+2024-08-01:
+  00-Steven:
+  - bugfix: You no longer render on top of tall enough objects that get vertically
+      offset when anchored to a table when standing on the tile directly to the north
+      of them. Examples are soda and booze dispensers.
+  - bugfix: Removing the vertical offset some objects get when anchored to a table
+      can be done by unanchoring it at any point, rather than only on a table.
+  ArcaneMusic:
+  - qol: NODE drones summoned to tap a vent within ore vents now display a green status
+      light to show how much longer they need the vent defended for.
+  Axidyuwu:
+  - bugfix: fixes a way of duplicating iron with wallmounted sparklers and light switches
+  Bisar:
+  - qol: Machines check their parts during initialization now; this will usually apply
+      in cases such as a machine in a prefab having been varedited to be upgraded.
+  - code_imp: All machines check their parts during initialization.
+  Ghommie:
+  - rscadd: Added tadpoles, which can be scooped from puddles with right-click. Functionally
+      they're like most fish, which require an aquarium to survive, and also need
+      to be fed fairly frequently, however they quickly become frogs after about 3
+      minutes of care.
+  - rscadd: Every station now has a couple puddles. One at the public garden and the
+      other in prison.
+  - qol: Changed the name of an aquarium UI button from "Reproduction Prevention"
+      to "Reproduction and Growth", as it  controls both fish breeding and growth.
+  - rscadd: Carps, frogs and young lobstrosities now fear people wearing fishing hats!
+      Adults and megacarp favour the 'fight' part of the fear reflex however.
+  - bugfix: The hat stabilizer module now inherits the clothing traits of the attached
+      hat.
+  Helg2:
+  - bugfix: Emergency climbing hooks now shouldn't spawn on non multi-z stations.
+  Jackraxxus:
+  - bugfix: AI mech control beacons and malf AI dominate mech work again.
+  LT3:
+  - bugfix: Scanner gate now detects items thrown through it
+  - bugfix: Scanner gate does not alarm for guns on players with mindshield
+  - bugfix: Scanner gate does not alarm for guns on players with weapons ID card access
+  - sound: Reduced volume of scanner gate alarm
+  MTandi:
+  - image: Made chem master container icons not blurry
+  - bugfix: Portable atmos machine circuit boards list correct components
+  - bugfix: Portable atmos machine circuit boards accept unwrenched fittings
+  - bugfix: Portable atmos machines are movable on construction
+  - qol: smart fridge UI now groups items by type+name instead of just type
+  - qol: smart fridge UI now shows item names next to the images
+  - qol: smart fridge UI has a list view option (default for chem and viro versions)
+  - bugfix: fixed smart fridge stacking sounds when dispensing multiple items
+  - qol: Renamed seed packs to have the plant name at the beginning
+  Majkl-J:
+  - bugfix: Fixes the echolocation screen overlay not appearing with default arguments
+      due to using the wrong icon state
+  Momo8289:
+  - bugfix: The charge indicators on power cells now work properly.
+  - code_imp: Removed some now redundant power cell appearance updates
+  Rhials:
+  - qol: Sentience potions can now be used without a provided summon reason.
+  - rscadd: Spies can now pick their own custom objectives, if they so choose.
+  Sadboysuss:
+  - bugfix: The clown planet domain is now completable
+  - bugfix: rod sounds will now vary in pitch
+  - bugfix: spray can face spraying will no longer work on light-sensitives with eyewear
+      and people wearing eye covering masks
+  - bugfix: birdshot engineering feedback has been applied
+  SmArtKar:
+  - bugfix: Bank cards speak once more
+  - bugfix: Removed a rogue wall grinder on icebox
+  - bugfix: Silicons and simplemobs can also hear radio chatter now
+  - bugfix: Heart eater wizard perk no longer works activates on organs that haven't
+      been used before
+  - qol: You can now reorder items inside storages by dragging them
+  - balance: Mining MODsuits are now considered thick clothing and gained expanded
+      storage.
+  - image: Mining MODsuits got a slight glowup and hide belts now
+  - bugfix: Fixed advanced pods showing up as cultist pods
+  - admin: Subtype vendor no longer requries an ID
+  - qol: You no longer goofily swap with others trying to move in the same direction
+      as you if you're not faster than them
+  - code_imp: Moved mobswap check logic into a separate proc and made it more readable
+  - balance: Discounts now pick 4-6 items each from a unique category
+  - balance: Items that cost below 4 TC cannot get discounted anymore
+  - balance: Elite syndicate MODs for traitors can no longer get discounted
+  - bugfix: Fixed NT Frontier discounts not applying
+  Watermelon914:
+  - admin: Turfs in lua will no longer become invalid on deletion.
+  - bugfix: Fixes SS13.wait not working when called multiple times before it finishes
+      waiting.
+  Xackii:
+  - bugfix: Justice design no longer disappears
+  - bugfix: Mechs can attack other mechs in melee
+  - rscadd: RD can emag mech fabricator(like roboticist).
+  carlarctg:
+  - rscdel: Revert "Heretic spell invocations now use one dead language per path"
+  grungussuss:
+  - bugfix: the abandoned plasma research facility on icemoon no longer has an item
+      that shouldn't exist
+  mc-oofert:
+  - bugfix: wawastation pharmacy now has a hand labeller
+  rroqc:
+  - rscadd: 'durathread robes can now store botany gear
+
+      :cl:'
