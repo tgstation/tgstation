@@ -19,7 +19,7 @@
 	///Units of water to reclaim per second
 	var/reclaim_rate = 0.5
 
-WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/structure/urinal)
+WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/structure/sink)
 
 /obj/structure/sink/Initialize(mapload, ndir = 0, has_water_reclaimer = null)
 	. = ..()
