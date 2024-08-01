@@ -462,6 +462,7 @@
 
 			SSpersistence.circuit_designs -= list(design)
 			scanned_designs -= list(design)
+			update_static_data_for_all_viewers()
 
 		if ("remove_mat")
 			var/datum/material/material = locate(params["ref"])
