@@ -51,15 +51,13 @@
 	user.visible_message(span_suicide("[user] axes [user.p_them()]self from head to toe! It looks like [user.p_theyre()] trying to commit suicide!"))
 	return BRUTELOSS
 
-/obj/item/fireaxe/afterattack(atom/A, mob/user, proximity)
-	. = ..()
-	if(!proximity)
+/obj/item/fireaxe/afterattack(atom/target, mob/user, click_parameters)
+	if(!HAS_TRAIT(src, TRAIT_WIELDED)) //destroys windows and grilles in one hit
 		return
-	if(HAS_TRAIT(src, TRAIT_WIELDED)) //destroys windows and grilles in one hit
-		if(istype(A, /obj/structure/window) || istype(A, /obj/structure/grille))
-			if(!(A.resistance_flags & INDESTRUCTIBLE))
-				var/obj/structure/W = A
-				W.atom_destruction("fireaxe")
+	if(target.resistance_flags & INDESTRUCTIBLE)
+		return
+	if(istype(target, /obj/structure/window) || istype(target, /obj/structure/grille))
+		target.atom_destruction("fireaxe")
 
 /*
  * Bone Axe
@@ -79,7 +77,7 @@
 	icon_state = "metalh2_axe0"
 	base_icon_state = "metalh2_axe"
 	name = "metallic hydrogen axe"
-	desc = "A lightweight crowbar with an extreme sharp fire axe head attached. It trades it's hefty as a weapon by making it easier to carry around when holstered to suits without having to sacrifice your backpack."
+	desc = "A lightweight crowbar with an extreme sharp fire axe head attached. It trades its heft as a weapon by making it easier to carry around when holstered to suits without having to sacrifice your backpack."
 	force_unwielded = 5
 	force_wielded = 15
 	demolition_mod = 2

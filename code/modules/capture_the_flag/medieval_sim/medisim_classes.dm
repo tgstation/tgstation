@@ -26,7 +26,7 @@
 	name = "Redfield Castle Archer"
 	icon_state = "medisim_archer"
 
-	belt = /obj/item/storage/bag/quiver
+	belt = /obj/item/storage/bag/quiver/full
 	suit = /obj/item/clothing/suit/armor/vest/cuirass
 	l_hand = /obj/item/gun/ballistic/bow
 

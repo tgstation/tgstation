@@ -18,8 +18,9 @@
 	if(ismovable(target))
 		RegisterSignal(target, COMSIG_MOVABLE_MOVED, PROC_REF(on_moved))
 
-	var/turf/turf = get_turf(target)
-	if(turf)
+	var/atom/atom_target = target
+	if(isturf(atom_target.loc))
+		var/turf/turf = atom_target.loc
 		if(!HAS_TRAIT(turf, TRAIT_TURF_HAS_ELEVATED_OBJ(pixel_shift)))
 			RegisterSignal(turf, COMSIG_TURF_RESET_ELEVATION, PROC_REF(check_elevation))
 			RegisterSignal(turf, COMSIG_TURF_CHANGE, PROC_REF(pre_change_turf))

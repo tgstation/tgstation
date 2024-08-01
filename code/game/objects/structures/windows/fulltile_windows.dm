@@ -230,7 +230,7 @@
 	else
 		icon = 'icons/obj/smooth_structures/windows/paper_window_torn.dmi'
 	. = ..()
-	if((updates & UPDATE_SMOOTHING) && (smoothing_flags & (SMOOTH_CORNERS|SMOOTH_BITMASK|SMOOTH_BITMASK_CARDINALS)))
+	if((updates & UPDATE_SMOOTHING) && (smoothing_flags & USES_SMOOTHING))
 		QUEUE_SMOOTH(src)
 
 /obj/structure/window/paperframe/attackby(obj/item/W, mob/living/user)

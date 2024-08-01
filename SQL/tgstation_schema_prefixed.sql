@@ -214,6 +214,19 @@ CREATE TABLE `SS13_ipintel` (
   KEY `idx_ipintel` (`ip`,`intel`,`date`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
+--
+-- Table structure for table `ipintel_whitelist`
+--
+
+DROP TABLE IF EXISTS `SS13_ipintel_whitelist`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `SS13_ipintel_whitelist` (
+	`ckey` varchar(32) NOT NULL,
+	`admin_ckey` varchar(32) NOT NULL,
+	PRIMARY KEY (`ckey`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
 
 --
 -- Table structure for table `SS13_legacy_population`

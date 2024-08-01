@@ -199,7 +199,7 @@ WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/structure/sign/warning/gas_mask)
 /obj/structure/sign/warning/chem_diamond
 	name = "\improper REACTIVE CHEMICALS sign"
 	sign_change_name = "Warning - Hazardous Chemicals sign"
-	desc = "A sign that warns of potentially reactive chemicals nearby, be they explosive, flamable, or acidic."
+	desc = "A sign that warns of potentially reactive chemicals nearby, be they explosive, flammable, or acidic."
 	icon_state = "chemdiamond"
 
 WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/structure/sign/warning/chem_diamond)

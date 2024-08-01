@@ -1,7 +1,6 @@
 #define PARTY_COOLDOWN_LENGTH_MIN (6 MINUTES)
 #define PARTY_COOLDOWN_LENGTH_MAX (12 MINUTES)
 
-
 /datum/station_trait/lucky_winner
 	name = "Lucky winner"
 	trait_type = STATION_TRAIT_POSITIVE
@@ -21,15 +20,26 @@
 
 	COOLDOWN_START(src, party_cooldown, rand(PARTY_COOLDOWN_LENGTH_MIN, PARTY_COOLDOWN_LENGTH_MAX))
 
-	var/area/area_to_spawn_in = pick(GLOB.bar_areas)
-	var/turf/T = pick(area_to_spawn_in.contents)
+	var/pizza_type_to_spawn = pick(list(
+		/obj/item/pizzabox/margherita,
+		/obj/item/pizzabox/mushroom,
+		/obj/item/pizzabox/meat,
+		/obj/item/pizzabox/vegetable,
+		/obj/item/pizzabox/pineapple
+	))
 
-	var/obj/structure/closet/supplypod/centcompod/toLaunch = new()
-	var/obj/item/pizzabox/pizza_to_spawn = pick(list(/obj/item/pizzabox/margherita, /obj/item/pizzabox/mushroom, /obj/item/pizzabox/meat, /obj/item/pizzabox/vegetable, /obj/item/pizzabox/pineapple))
-	new pizza_to_spawn(toLaunch)
-	for(var/i in 1 to 6)
-		new /obj/item/reagent_containers/cup/glass/bottle/beer(toLaunch)
-	new /obj/effect/pod_landingzone(T, toLaunch)
+	var/area/bar_area = pick(GLOB.bar_areas)
+	podspawn(list(
+		"target" = pick(bar_area.contents),
+		"path" = /obj/structure/closet/supplypod/centcompod,
+		"spawn" = list(
+			pizza_type_to_spawn,
+			/obj/item/reagent_containers/cup/glass/bottle/beer = 6
+		)
+	))
+
+#undef PARTY_COOLDOWN_LENGTH_MIN
+#undef PARTY_COOLDOWN_LENGTH_MAX
 
 /datum/station_trait/galactic_grant
 	name = "Galactic grant"
@@ -60,6 +70,55 @@
 
 /datum/station_trait/bountiful_bounties/on_round_start()
 	SSeconomy.bounty_modifier *= 1.2
+
+///A positive station trait that scatters a bunch of lit glowsticks throughout maintenance
+/datum/station_trait/glowsticks
+	name = "Glowsticks party"
+	trait_type = STATION_TRAIT_POSITIVE
+	weight = 2
+	show_in_report = TRUE
+	report_message = "We've glowsticks upon glowsticks to spare, so we scattered some around maintenance (plus a couple floor lights)."
+
+/datum/station_trait/glowsticks/New()
+	..()
+	RegisterSignal(SSticker, COMSIG_TICKER_ENTER_PREGAME, PROC_REF(on_pregame))
+
+/datum/station_trait/glowsticks/proc/on_pregame(datum/source)
+	SIGNAL_HANDLER
+	INVOKE_ASYNC(src, PROC_REF(light_up_the_night))
+
+/datum/station_trait/glowsticks/proc/light_up_the_night()
+	var/list/glowsticks = list(
+		/obj/item/flashlight/glowstick,
+		/obj/item/flashlight/glowstick/red,
+		/obj/item/flashlight/glowstick/blue,
+		/obj/item/flashlight/glowstick/cyan,
+		/obj/item/flashlight/glowstick/orange,
+		/obj/item/flashlight/glowstick/yellow,
+		/obj/item/flashlight/glowstick/pink,
+	)
+	for(var/area/station/maintenance/maint in GLOB.areas)
+		var/list/turfs = get_area_turfs(maint)
+		for(var/i in 1 to round(length(turfs) * 0.115))
+			CHECK_TICK
+			var/turf/open/chosen = pick_n_take(turfs)
+			if(!istype(chosen))
+				continue
+			var/skip_this = FALSE
+			for(var/atom/movable/mov as anything in chosen) //stop glowing sticks from spawning on windows
+				if(mov.density && !(mov.pass_flags_self & LETPASSTHROW))
+					skip_this = TRUE
+					break
+			if(skip_this)
+				continue
+			if(prob(3.4)) ///Rare, but this is something that can survive past the lifespawn of glowsticks.
+				new /obj/machinery/light/floor(chosen)
+				continue
+			var/stick_type = pick(glowsticks)
+			var/obj/item/flashlight/glowstick/stick = new stick_type(chosen)
+			///we want a wider range, otherwise they'd all burn out in about 20 minutes.
+			stick.max_fuel = stick.fuel = rand(10 MINUTES, 45 MINUTES)
+			stick.turn_on()
 
 /datum/station_trait/strong_supply_lines
 	name = "Strong supply lines"
@@ -292,6 +351,11 @@
 	weight_multiplier = 3
 	max_occurrences_modifier = 10 //lotta cows
 
+/datum/station_trait/random_event_weight_modifier/wise_cows/get_pulsar_message()
+	var/advisory_string = "Advisory Level: <b>Cow Planet</b></center><BR>" //We're gonna go fast and we're gonna go far.
+	advisory_string += "Your sector's advisory level is Cow Planet. We don't really know what this one means -- the model we use to create these threat reports hasn't produced this result before. Watch out for cows, I guess? Good luck!"
+	return advisory_string
+
 /datum/station_trait/bright_day
 	name = "Bright Day"
 	report_message = "The stars shine bright and the clouds are scarcer than usual. It's a bright day here on the Ice Moon's surface."
@@ -352,12 +416,14 @@
 /// Spawns assistants with some gear, either gimmicky or functional. Maybe, one day, it will inspire an assistant to do something productive or fun
 /datum/station_trait/assistant_gimmicks
 	name = "Geared Assistants Pilot"
-	report_message = "The Nanotrassen Assistant Affairs division is performing a pilot to see if different assistant equipments help improve productivity!"
+	report_message = "The Nanotrassen Assistant Affairs division is performing a pilot to see if different assistant equipment helps improve productivity!"
 	trait_type = STATION_TRAIT_POSITIVE
 	weight = 3
 	trait_to_give = STATION_TRAIT_ASSISTANT_GIMMICKS
 	show_in_report = TRUE
 	blacklist = list(/datum/station_trait/colored_assistants)
 
-#undef PARTY_COOLDOWN_LENGTH_MIN
-#undef PARTY_COOLDOWN_LENGTH_MAX
+/datum/station_trait/random_event_weight_modifier/assistant_gimmicks/get_pulsar_message()
+	var/advisory_string = "Advisory Level: <b>Grey Sky</b></center><BR>"
+	advisory_string += "Your sector's advisory level is Grey Sky. Our sensors detect abnormal activity among the assistants assigned to your station. We advise you to closely monitor the Tool Storage, Bridge, Tech Storage, and Brig for gathering crowds or petty thievery."
+	return advisory_string

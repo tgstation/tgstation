@@ -32,6 +32,10 @@
 	if(REF(dinner) in hunter.faction) //Don't eat our friends...
 		return
 
+	var/static/list/slime_faction = list(FACTION_SLIME)
+	if(faction_check(slime_faction, dinner.faction)) //Don't try to eat slimy things, no matter how hungry we are. Anyone else can be betrayed.
+		return
+
 	if(!hunter.can_feed_on(dinner, check_adjacent = FALSE)) //Are they tasty to slimes?
 		return
 

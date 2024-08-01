@@ -40,8 +40,8 @@
 	AddElement(/datum/element/update_icon_updates_onmob)
 	var/static/list/slapcraft_recipe_list = list(/datum/crafting_recipe/flamethrower)
 
-	AddComponent(
-		/datum/component/slapcrafting,\
+	AddElement(
+		/datum/element/slapcrafting,\
 		slapcraft_recipes = slapcraft_recipe_list,\
 	)
 
@@ -79,21 +79,17 @@
 	if(lit)
 		. += "+lit"
 
-/obj/item/flamethrower/afterattack(atom/target, mob/user, flag)
-	. = ..()
-	. |= AFTERATTACK_PROCESSED_ITEM
-	if(flag)
-		return // too close
+/obj/item/flamethrower/ranged_interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
 	if(HAS_TRAIT(user, TRAIT_PACIFISM))
 		to_chat(user, span_warning("You can't bring yourself to fire \the [src]! You don't want to risk harming anyone..."))
-		log_combat(user, target, "attempted to flamethrower", src, "with gas mixture: {[print_gas_mixture(ptank.return_analyzable_air())]}, flamethrower: \"[name]\" ([src]), igniter: \"[igniter.name]\", tank: \"[ptank.name]\" and tank distribution pressure: \"[siunit(1000 * ptank.distribute_pressure, unit = "Pa", maxdecimals = 9)]\"" + (lit ? " while lit" : "" + " but failed due to pacifism."))
-		return
-	if(user && user.get_active_held_item() == src) // Make sure our user is still holding us
-		var/turf/target_turf = get_turf(target)
-		if(target_turf)
-			var/turflist = get_line(user, target_turf)
-			log_combat(user, target, "flamethrowered", src, "with gas mixture: {[print_gas_mixture(ptank.return_analyzable_air())]}, flamethrower: \"[name]\", igniter: \"[igniter.name]\", tank: \"[ptank.name]\" and tank distribution pressure: \"[siunit(1000 * ptank.distribute_pressure, unit = "Pa", maxdecimals = 9)]\"" + (lit ? " while lit." : "."))
-			flame_turf(turflist)
+		log_combat(user, interacting_with, "attempted to flamethrower", src, "with gas mixture: {[print_gas_mixture(ptank.return_analyzable_air())]}, flamethrower: \"[name]\" ([src]), igniter: \"[igniter.name]\", tank: \"[ptank.name]\" and tank distribution pressure: \"[siunit(1000 * ptank.distribute_pressure, unit = "Pa", maxdecimals = 9)]\"" + (lit ? " while lit" : "" + " but failed due to pacifism."))
+		return ITEM_INTERACT_BLOCKING
+	var/turf/target_turf = get_turf(interacting_with)
+	if(target_turf)
+		var/turflist = get_line(user, target_turf)
+		log_combat(user, interacting_with, "flamethrowered", src, "with gas mixture: {[print_gas_mixture(ptank.return_analyzable_air())]}, flamethrower: \"[name]\", igniter: \"[igniter.name]\", tank: \"[ptank.name]\" and tank distribution pressure: \"[siunit(1000 * ptank.distribute_pressure, unit = "Pa", maxdecimals = 9)]\"" + (lit ? " while lit." : "."))
+		flame_turf(turflist)
+	return ITEM_INTERACT_SUCCESS
 
 /obj/item/flamethrower/wrench_act(mob/living/user, obj/item/tool)
 	. = TRUE

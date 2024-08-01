@@ -1,7 +1,8 @@
 // Ye old forbidden book, the Codex Cicatrix.
 /obj/item/codex_cicatrix
 	name = "Codex Cicatrix"
-	desc = "This book describes the secrets of the veil between worlds."
+	desc = "This heavy tome is full of cryptic scribbles and impossible diagrams. \
+	According to legend, it can be deciphered to reveal the secrets of the veil between worlds."
 	icon = 'icons/obj/antags/eldritch.dmi'
 	base_icon_state = "book"
 	icon_state = "book"
@@ -29,7 +30,7 @@
 
 	. += span_notice("Can be used to tap influences for additional knowledge points.")
 	. += span_notice("Can also be used to draw or remove transmutation runes with ease.")
-	. += span_notice("Additionally, it can work as a focus for your spells in a pinch, though a more specialized relic is recommended, as this may get dropped in combat.")
+	. += span_notice("Additionally, it can work as a focus for your spells when held.")
 
 /obj/item/codex_cicatrix/attack_self(mob/user, modifiers)
 	. = ..()
@@ -45,20 +46,16 @@
 		AddElement(/datum/element/heretic_focus)
 		update_weight_class(WEIGHT_CLASS_NORMAL)
 
-/obj/item/codex_cicatrix/afterattack(atom/target, mob/user, proximity_flag, click_parameters)
-	. = ..()
-	if(!proximity_flag)
-		return
-
+/obj/item/codex_cicatrix/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
 	var/datum/antagonist/heretic/heretic_datum = IS_HERETIC(user)
 	if(!heretic_datum)
-		return
-
-	if(isopenturf(target))
-		var/obj/effect/heretic_influence/influence = locate(/obj/effect/heretic_influence) in target
+		return NONE
+	if(isopenturf(interacting_with))
+		var/obj/effect/heretic_influence/influence = locate(/obj/effect/heretic_influence) in interacting_with
 		if(!influence?.drain_influence_with_codex(user, src))
-			heretic_datum.try_draw_rune(user, target, drawing_time = 8 SECONDS)
-		return TRUE
+			heretic_datum.try_draw_rune(user, interacting_with, drawing_time = 8 SECONDS)
+		return ITEM_INTERACT_BLOCKING
+	return NONE
 
 /// Plays a little animation that shows the book opening and closing.
 /obj/item/codex_cicatrix/proc/open_animation()

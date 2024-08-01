@@ -222,7 +222,7 @@ ADMIN_VERB(secrets, R_NONE, "Secrets", "Abuse harder than you ever have before w
 		if("allspecies")
 			if(!is_funmin)
 				return
-			var/result = input(holder, "Please choose a new species","Species") as null|anything in GLOB.species_list
+			var/result = input(holder, "Please choose a new species","Species") as null|anything in sortTim(GLOB.species_list, GLOBAL_PROC_REF(cmp_text_asc))
 			if(result)
 				SSblackbox.record_feedback("nested tally", "admin_secrets_fun_used", 1, list("Mass Species Change", "[result]"))
 				log_admin("[key_name(holder)] turned all humans into [result]")
@@ -257,6 +257,11 @@ ADMIN_VERB(secrets, R_NONE, "Secrets", "Abuse harder than you ever have before w
 				return
 			holder.anon_names()
 			SSblackbox.record_feedback("nested tally", "admin_secrets_fun_used", 1, list("Anonymous Names"))
+		if("tripleAI")
+			if(!is_funmin)
+				return
+			holder.triple_ai()
+			SSblackbox.record_feedback("nested tally", "admin_secrets_fun_used", 1, list("Triple AI"))
 		if("onlyone")
 			if(!is_funmin)
 				return
@@ -604,6 +609,25 @@ ADMIN_VERB(secrets, R_NONE, "Secrets", "Abuse harder than you ever have before w
 			message_admins("[key_name_admin(holder)] [ctf_controller.instagib_mode ? "enabled" : "disabled"] instagib mode in CTF game: [selected_game]")
 			log_admin("[key_name_admin(holder)] [ctf_controller.instagib_mode ? "enabled" : "disabled"] instagib mode in CTF game: [selected_game]")
 
+		if("mass_heal")
+			if(!is_funmin)
+				return
+			var/heal_mobs = tgui_alert(usr, "Heal all mobs and return ghosts to their bodies?", "Mass Healing", list("Yes", "No"))
+			if(!heal_mobs || heal_mobs != "Yes")
+				return
+
+			for(var/mob/dead/observer/ghost in GLOB.player_list) //Return all ghosts if possible
+				if(!ghost.mind || !ghost.mind.current) //won't do anything if there is no body
+					continue
+				ghost.reenter_corpse()
+
+			for(var/mob/living/player in GLOB.player_list)
+				player.revive(ADMIN_HEAL_ALL, force_grab_ghost = TRUE)
+
+			sound_to_playing_players('sound/effects/pray_chaplain.ogg')
+			message_admins("[key_name_admin(holder)] healed everyone.")
+			log_admin("[key_name(holder)] healed everyone.")
+
 	if(E)
 		E.processing = FALSE
 		if(E.announce_when>0)
@@ -617,7 +641,7 @@ ADMIN_VERB(secrets, R_NONE, "Secrets", "Abuse harder than you ever have before w
 					E.announce_chance = 0
 		E.processing = TRUE
 	if(holder)
-		log_admin("[key_name(holder)] used secret [action]")
+		log_admin("[key_name(holder)] used secret: [action].")
 #undef THUNDERDOME_TEMPLATE_FILE
 #undef HIGHLANDER_DELAY_TEXT
 
@@ -724,4 +748,3 @@ ADMIN_VERB(secrets, R_NONE, "Secrets", "Abuse harder than you ever have before w
 		var/datum/antagonist/malf_ai/antag_datum = new
 		antag_datum.give_objectives = keep_generic_objecives
 		assign_admin_objective_and_antag(player, antag_datum)
-

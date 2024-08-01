@@ -128,25 +128,26 @@
 		return FALSE
 	return adjustFireLoss(diff, updating_health, forced, required_bodytype)
 
-/mob/living/carbon/adjustToxLoss(amount, updating_health = TRUE, forced = FALSE, required_biotype = ALL)
-	if(!can_adjust_tox_loss(amount, forced, required_biotype))
-		return 0
-	if(!forced && HAS_TRAIT(src, TRAIT_TOXINLOVER)) //damage becomes healing and healing becomes damage
-		amount = -amount
-		if(HAS_TRAIT(src, TRAIT_TOXIMMUNE)) //Prevents toxin damage, but not healing
-			amount = min(amount, 0)
-		if(amount > 0)
-			blood_volume = max(blood_volume - (5*amount), 0)
-		else
-			blood_volume = max(blood_volume - amount, 0)
-	else if(!forced && HAS_TRAIT(src, TRAIT_TOXIMMUNE)) //Prevents toxin damage, but not healing
-		amount = min(amount, 0)
-	return ..()
-
-/mob/living/carbon/adjustStaminaLoss(amount, updating_stamina, forced, required_biotype = ALL)
+/mob/living/carbon/human/adjustToxLoss(amount, updating_health = TRUE, forced = FALSE, required_biotype = ALL)
 	. = ..()
-	if(amount > 0)
-		stam_regen_start_time = world.time + STAMINA_REGEN_BLOCK_TIME
+	if(. >= 0) // 0 = no damage, + values = healed damage
+		return .
+
+	if(AT_TOXIN_VOMIT_THRESHOLD(src))
+		apply_status_effect(/datum/status_effect/tox_vomit)
+
+/mob/living/carbon/human/setToxLoss(amount, updating_health, forced, required_biotype)
+	. = ..()
+	if(. >= 0)
+		return .
+
+	if(AT_TOXIN_VOMIT_THRESHOLD(src))
+		apply_status_effect(/datum/status_effect/tox_vomit)
+
+/mob/living/carbon/received_stamina_damage(current_level, amount_actual, amount)
+	. = ..()
+	if((maxHealth - current_level) <= crit_threshold && stat != DEAD)
+		apply_status_effect(/datum/status_effect/incapacitating/stamcrit)
 
 /**
  * If an organ exists in the slot requested, and we are capable of taking damage (we don't have [GODMODE] on), call the damage proc on that organ.

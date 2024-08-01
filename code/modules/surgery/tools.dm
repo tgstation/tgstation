@@ -22,6 +22,9 @@
 	desc = "Micro-mechanical manipulator for retracting stuff."
 	toolspeed = 0.5
 
+/obj/item/retractor/cyborg
+	icon = 'icons/mob/silicon/robot_items.dmi'
+	icon_state = "toolkit_medborg_retractor"
 
 /obj/item/hemostat
 	name = "hemostat"
@@ -49,6 +52,9 @@
 	desc = "Tiny servos power a pair of pincers to stop bleeding."
 	toolspeed = 0.5
 
+/obj/item/hemostat/cyborg
+	icon = 'icons/mob/silicon/robot_items.dmi'
+	icon_state = "toolkit_medborg_hemostat"
 
 /obj/item/cautery
 	name = "cautery"
@@ -79,6 +85,10 @@
 /obj/item/cautery/augment
 	desc = "A heated element that cauterizes wounds."
 	toolspeed = 0.5
+
+/obj/item/cautery/cyborg
+	icon = 'icons/mob/silicon/robot_items.dmi'
+	icon_state = "toolkit_medborg_cautery"
 
 /obj/item/cautery/advanced
 	name = "searing tool"
@@ -175,6 +185,10 @@
 	playsound(user, 'sound/machines/juicer.ogg', 20, TRUE)
 	return MANUAL_SUICIDE
 
+/obj/item/surgicaldrill/cyborg
+	icon = 'icons/mob/silicon/robot_items.dmi'
+	icon_state = "toolkit_medborg_drill"
+
 /obj/item/surgicaldrill/augment
 	desc = "Effectively a small power drill contained within your arm. May or may not pierce the heavens."
 	hitsound = 'sound/weapons/circsawhit.ogg'
@@ -225,6 +239,10 @@
 	user.visible_message(span_suicide("[user] is slitting [user.p_their()] [pick("wrists", "throat", "stomach")] with [src]! It looks like [user.p_theyre()] trying to commit suicide!"))
 	return BRUTELOSS
 
+/obj/item/scalpel/cyborg
+	icon = 'icons/mob/silicon/robot_items.dmi'
+	icon_state = "toolkit_medborg_scalpel"
+
 /obj/item/scalpel/augment
 	desc = "Ultra-sharp blade attached directly to your bone for extra-accuracy."
 	toolspeed = 0.5
@@ -268,13 +286,17 @@
 	//saws are very accurate and fast at butchering
 	var/static/list/slapcraft_recipe_list = list(/datum/crafting_recipe/chainsaw)
 
-	AddComponent(
-		/datum/component/slapcrafting,\
+	AddElement(
+		/datum/element/slapcrafting,\
 		slapcraft_recipes = slapcraft_recipe_list,\
 	)
 
 /obj/item/circular_saw/get_surgery_tool_overlay(tray_extended)
 	return surgical_tray_overlay
+
+/obj/item/circular_saw/cyborg
+	icon = 'icons/mob/silicon/robot_items.dmi'
+	icon_state = "toolkit_medborg_saw"
 
 /obj/item/circular_saw/augment
 	desc = "A small but very fast spinning saw. It rips and tears until it is done."
@@ -294,10 +316,15 @@
 	attack_verb_continuous = list("slaps")
 	attack_verb_simple = list("slap")
 	interaction_flags_atom = parent_type::interaction_flags_atom | INTERACT_ATOM_IGNORE_MOBILITY
+	tool_behaviour = TOOL_DRAPES
 
 /obj/item/surgical_drapes/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/surgery_initiator)
+
+/obj/item/surgical_drapes/cyborg
+	icon = 'icons/mob/silicon/robot_items.dmi'
+	icon_state = "toolkit_medborg_surgicaldrapes"
 
 /obj/item/surgical_processor //allows medical cyborgs to scan and initiate advanced surgeries
 	name = "surgical processor"
@@ -341,11 +368,9 @@
 	. = ..()
 	UnregisterSignal(user, COMSIG_SURGERY_STARTING)
 
-/obj/item/surgical_processor/afterattack(atom/design_holder, mob/user, proximity)
-	if(!proximity)
-		return ..()
+/obj/item/surgical_processor/interact_with_atom(atom/design_holder, mob/living/user, list/modifiers)
 	if(!istype(design_holder, /obj/item/disk/surgery) && !istype(design_holder, /obj/machinery/computer/operating))
-		return ..()
+		return NONE
 	balloon_alert(user, "copying designs...")
 	playsound(src, 'sound/machines/terminal_processing.ogg', 25, TRUE)
 	if(do_after(user, 1 SECONDS, target = design_holder))
@@ -358,7 +383,8 @@
 		playsound(src, 'sound/machines/terminal_success.ogg', 25, TRUE)
 		downloaded = TRUE
 		update_appearance(UPDATE_OVERLAYS)
-	return TRUE
+		return ITEM_INTERACT_SUCCESS
+	return ITEM_INTERACT_BLOCKING
 
 /obj/item/surgical_processor/update_overlays()
 	. = ..()
@@ -580,6 +606,10 @@
 
 /obj/item/bonesetter/get_surgery_tool_overlay(tray_extended)
 	return "bonesetter" + (tray_extended ? "" : "_out")
+
+/obj/item/bonesetter/cyborg
+	icon = 'icons/mob/silicon/robot_items.dmi'
+	icon_state = "toolkit_medborg_bonesetter"
 
 /obj/item/blood_filter
 	name = "blood filter"

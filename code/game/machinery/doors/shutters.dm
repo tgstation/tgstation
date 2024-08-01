@@ -33,19 +33,30 @@
 	hand_back += mutable_appearance(icon, "[get_working_state()]_bottom", ABOVE_MOB_LAYER, appearance_flags = KEEP_APART)
 	hand_back += emissive_blocker(icon, "[get_working_state()]_bottom", src, ABOVE_MOB_LAYER)
 	return hand_back
-	
-/obj/machinery/door/poddoor/shutters/animation_delay(animation)
+
+/obj/machinery/door/poddoor/shutters/animation_length(animation)
 	switch(animation)
-		if("opening")
+		if(DOOR_OPENING_ANIMATION)
 			return 0.8 SECONDS
-		if("closing")
+		if(DOOR_CLOSING_ANIMATION)
 			return 0.7 SECONDS
+
+/obj/machinery/door/poddoor/shutters/animation_segment_delay(animation)
+	switch(animation)
+		if(DOOR_OPENING_PASSABLE)
+			return 0.76 SECONDS
+		if(DOOR_OPENING_FINISHED)
+			return 1.388 SECONDS
+		if(DOOR_CLOSING_UNPASSABLE)
+			return 0.152 SECONDS
+		if(DOOR_CLOSING_FINISHED)
+			return 1.388 SECONDS
 
 /obj/machinery/door/poddoor/shutters/animation_effects(animation)
 	switch(animation)
-		if("opening")
+		if(DOOR_OPENING_ANIMATION)
 			playsound(src, animation_sound, 50, TRUE)
-		if("closing")
+		if(DOOR_CLOSING_ANIMATION)
 			playsound(src, animation_sound, 50, TRUE)
 
 /obj/machinery/door/poddoor/shutters/preopen

@@ -1,6 +1,4 @@
 import { BooleanLike } from 'common/react';
-
-import { useBackend } from '../backend';
 import {
   Box,
   Button,
@@ -11,7 +9,9 @@ import {
   NoticeBox,
   Section,
   Stack,
-} from '../components';
+} from 'tgui-core/components';
+
+import { useBackend } from '../backend';
 import { Window } from '../layouts';
 
 enum VoteConfig {
@@ -43,6 +43,7 @@ type ActiveVote = {
 
 type UserData = {
   ckey: string;
+  isGhost: BooleanLike;
   isLowerAdmin: BooleanLike;
   isUpperAdmin: BooleanLike;
   singleSelection: string | null;
@@ -88,12 +89,24 @@ export const VotePanel = (props) => {
             title="Create Vote"
             buttons={
               !!user.isLowerAdmin && (
-                <Button
-                  icon="refresh"
-                  content="Reset Cooldown"
-                  disabled={LastVoteTime + VoteCD <= 0}
-                  onClick={() => act('resetCooldown')}
-                />
+                <Stack>
+                  <Stack.Item>
+                    <Button
+                      icon="refresh"
+                      content="Reset Cooldown"
+                      disabled={LastVoteTime + VoteCD <= 0}
+                      onClick={() => act('resetCooldown')}
+                    />
+                  </Stack.Item>
+                  <Stack.Item>
+                    <Button
+                      icon="skull"
+                      content="Toggle dead vote"
+                      disabled={!user.isUpperAdmin}
+                      onClick={() => act('toggleDeadVote')}
+                    />
+                  </Stack.Item>
+                </Stack>
               )
             }
           >
@@ -242,7 +255,12 @@ const ChoicesPanel = (props) => {
                   textAlign="right"
                   buttons={
                     <Button
-                      disabled={user.singleSelection === choice.name}
+                      tooltip={
+                        user.isGhost && 'Ghost voting was disabled by an admin.'
+                      }
+                      disabled={
+                        user.singleSelection === choice.name || user.isGhost
+                      }
                       onClick={() => {
                         act('voteSingle', { voteOption: choice.name });
                       }}
@@ -283,6 +301,10 @@ const ChoicesPanel = (props) => {
                   textAlign="right"
                   buttons={
                     <Button
+                      tooltip={
+                        user.isGhost && 'Ghost voting was disabled by an admin.'
+                      }
+                      disabled={user.isGhost}
                       onClick={() => {
                         act('voteMulti', { voteOption: choice.name });
                       }}

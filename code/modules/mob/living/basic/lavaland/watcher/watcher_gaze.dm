@@ -115,6 +115,8 @@
 	var/max_throw = 3
 
 /datum/action/cooldown/mob_cooldown/watcher_gaze/ice/apply_effect(mob/living/viewer)
+	if(!HAS_TRAIT(viewer, TRAIT_RESISTCOLD))
+		return
 	to_chat(viewer, span_warning("You are repulsed by the force of [owner]'s cold stare!"))
 	viewer.apply_status_effect(/datum/status_effect/freon/watcher/extended)
 	viewer.safe_throw_at(

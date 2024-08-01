@@ -50,6 +50,8 @@
 	holder.player_details.post_login_callbacks -= li_cb
 	li_cb = null
 	holder = null
+	modebutton = null
+	dirbutton = null
 	QDEL_NULL(mode)
 	QDEL_LIST(buttons)
 	QDEL_LIST(modeswitch_buttons)

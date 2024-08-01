@@ -12,7 +12,7 @@
 
 /obj/item/multitool
 	name = "multitool"
-	desc = "Used for pulsing wires to test which to cut. Not recommended by doctors."
+	desc = "Used for pulsing wires to test which to cut. Not recommended by doctors. You can activate it in-hand to locate the nearest APC."
 	icon = 'icons/obj/devices/tool.dmi'
 	icon_state = "multitool"
 	inhand_icon_state = "multitool"
@@ -32,10 +32,30 @@
 	usesound = 'sound/weapons/empty.ogg'
 	var/datum/buffer // simple machine buffer for device linkage
 	var/mode = 0
+	var/apc_scanner = TRUE
+	COOLDOWN_DECLARE(next_apc_scan)
 
 /obj/item/multitool/examine(mob/user)
 	. = ..()
 	. += span_notice("Its buffer [buffer ? "contains [buffer]." : "is empty."]")
+
+/obj/item/multitool/attack_self(mob/user, list/modifiers)
+	. = ..()
+
+	if(. || !apc_scanner)
+		return
+
+	if(!COOLDOWN_FINISHED(src, next_apc_scan))
+		return
+
+	COOLDOWN_START(src, next_apc_scan, 1 SECONDS)
+
+	var/area/local_area = get_area(src)
+	var/power_controller = local_area.apc
+	if(power_controller)
+		user.balloon_alert(user, "[get_dist(src, power_controller)]m [dir2text(get_dir(src, power_controller))]")
+	else
+		user.balloon_alert(user, "couldn't find apc!")
 
 /obj/item/multitool/suicide_act(mob/living/carbon/user)
 	user.visible_message(span_suicide("[user] puts the [src] to [user.p_their()] chest. It looks like [user.p_theyre()] trying to pulse [user.p_their()] heart off!"))

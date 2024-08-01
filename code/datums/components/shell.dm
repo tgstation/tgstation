@@ -137,7 +137,7 @@
 
 	examine_text += span_notice("There is an integrated circuit attached. Use a multitool to access the wiring. Use a screwdriver to remove it from [source].")
 	examine_text += span_notice("The cover panel to the integrated circuit is [locked? "locked" : "unlocked"].")
-	var/obj/item/stock_parts/cell/cell = attached_circuit.cell
+	var/obj/item/stock_parts/power_store/cell = attached_circuit.cell
 	examine_text += span_notice("The charge meter reads [cell ? round(cell.percent(), 1) : 0]%.")
 
 	if (shell_flags & SHELL_FLAG_USB_PORT)
@@ -167,13 +167,13 @@
 	if(!is_authorized(attacker))
 		return
 
-	if(istype(item, /obj/item/stock_parts/cell))
+	if(istype(item, /obj/item/stock_parts/power_store/cell))
 		source.balloon_alert(attacker, "can't put cell in directly!")
 		return
 
 	if(istype(item, /obj/item/inducer))
 		var/obj/item/inducer/inducer = item
-		INVOKE_ASYNC(inducer, TYPE_PROC_REF(/obj/item, attack_atom), attached_circuit, attacker, list())
+		INVOKE_ASYNC(inducer, TYPE_PROC_REF(/obj/item, attack_atom), attached_circuit || parent, attacker, list())
 		return COMPONENT_NO_AFTERATTACK
 
 	if(attached_circuit)

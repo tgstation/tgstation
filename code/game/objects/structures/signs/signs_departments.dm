@@ -10,7 +10,7 @@
 /obj/structure/sign/departments/med
 	name = "\improper Medbay sign"
 	sign_change_name = "Department - Medbay"
-	desc = "A sign labeling an area of medical department."
+	desc = "A sign labelling an area of the medical department."
 	icon_state = "med"
 
 WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/structure/sign/departments/med)
@@ -25,7 +25,7 @@ WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/structure/sign/departments/med_alt)
 /obj/structure/sign/departments/medbay
 	name = "\improper Medbay sign"
 	sign_change_name = "Generic Medical"
-	desc = "The Intergalactic symbol of Medical institutions. You'll probably get help here."
+	desc = "The intergalactic symbol of medical institutions. You'll probably get help here."
 	icon_state = "bluecross"
 
 WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/structure/sign/departments/medbay)
@@ -86,7 +86,7 @@ WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/structure/sign/departments/virology)
 /obj/structure/sign/departments/morgue
 	name = "\improper Morgue sign"
 	sign_change_name = "Department - Medbay: Morgue"
-	desc = "A sign labelling an area where station stores its ever-piling bodies."
+	desc = "A sign labelling an area where the station stores its ever-piling bodies."
 	icon_state = "morgue"
 
 WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/structure/sign/departments/morgue)
@@ -218,6 +218,15 @@ WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/structure/sign/departments/lawyer)
 	icon_state = "department_cargo"
 
 WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/structure/sign/departments/cargo)
+
+/obj/structure/sign/departments/exodrone
+	name = "\improper Exodrone sign"
+	sign_change_name = "Department - Cargo: exodrone"
+	desc = "A sign labelling an area where exodrones are used."
+	icon_state = "exodrone"
+
+WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/structure/sign/departments/exodrone)
+
 ///////SECURITY
 
 /obj/structure/sign/departments/security

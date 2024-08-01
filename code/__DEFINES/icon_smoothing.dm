@@ -19,6 +19,8 @@
 /// Is incompatible with SMOOTH_CORNERS because border objects don't have corners
 #define SMOOTH_BORDER_OBJECT (1<<7)
 
+#define USES_SMOOTHING (SMOOTH_CORNERS|SMOOTH_BITMASK|SMOOTH_BITMASK_CARDINALS)
+
 DEFINE_BITFIELD(smoothing_flags, list(
 	"SMOOTH_CORNERS" = SMOOTH_CORNERS,
 	"SMOOTH_BITMASK" = SMOOTH_BITMASK,
@@ -57,7 +59,7 @@ DEFINE_BITFIELD(smoothing_junction, list(
 
 /*smoothing macros*/
 
-#define QUEUE_SMOOTH(thing_to_queue) if(thing_to_queue.smoothing_flags & (SMOOTH_CORNERS|SMOOTH_BITMASK|SMOOTH_BITMASK_CARDINALS)) {SSicon_smooth.add_to_queue(thing_to_queue)}
+#define QUEUE_SMOOTH(thing_to_queue) if(thing_to_queue.smoothing_flags & USES_SMOOTHING) {SSicon_smooth.add_to_queue(thing_to_queue)}
 
 #define QUEUE_SMOOTH_NEIGHBORS(thing_to_queue) for(var/atom/atom_neighbor as anything in orange(1, thing_to_queue)) {QUEUE_SMOOTH(atom_neighbor)}
 

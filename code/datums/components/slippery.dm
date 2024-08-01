@@ -56,7 +56,7 @@
  * * lube_flags - Controls the slip behaviour, they are listed starting [here][SLIDE]
  * * datum/callback/on_slip_callback - Callback to define further custom controls on when slipping is applied
  * * paralyze - length of time to paralyze the crossing mob for (Deciseconds)
- * * force_drop - should the crossing mob drop items in it's hands or not
+ * * force_drop - should the crossing mob drop items in its hands or not
  * * slot_whitelist - flags controlling where on a mob this item can be equipped to make the parent mob slippery full list [here][ITEM_SLOT_OCLOTHING]
  * * datum/callback/on_slip_callback - Callback to add custom behaviours as the crossing mob is slipped
  */

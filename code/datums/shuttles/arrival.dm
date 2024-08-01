@@ -26,10 +26,6 @@
 	suffix = "pubby"
 	name = "arrival shuttle (Pubby)"
 
-/datum/map_template/shuttle/arrival/omega
-	suffix = "omega"
-	name = "arrival shuttle (Omega)"
-
 /datum/map_template/shuttle/arrival/northstar
 	suffix = "northstar"
 	name = "arrival shuttle (North Star)"

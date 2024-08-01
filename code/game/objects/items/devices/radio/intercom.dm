@@ -11,7 +11,7 @@
 	item_flags = NO_BLOOD_ON_ITEM
 
 	overlay_speaker_idle = "intercom_s"
-	overlay_speaker_active = "intercom_recieve"
+	overlay_speaker_active = "intercom_receive"
 
 	overlay_mic_idle = "intercom_m"
 	overlay_mic_active = null

@@ -28,6 +28,10 @@
 		release_projectile(projectile)
 	return ..()
 
+/datum/proximity_monitor/advanced/projectile_dampener/recalculate_field(full_recalc)
+	full_recalc = TRUE // We always perform a full recalc because we need to update ALL the sprites
+	return ..()
+
 /datum/proximity_monitor/advanced/projectile_dampener/process()
 	var/list/ranged = list()
 	for(var/obj/projectile/projectile in range(current_range, get_turf(host)))

@@ -64,7 +64,7 @@
 /obj/item/choice_beacon/proc/spawn_option(obj/choice_path, mob/living/user)
 	podspawn(list(
 		"target" = get_turf(src),
-		"style" = STYLE_BLUESPACE,
+		"style" = /datum/pod_style/advanced,
 		"spawn" = choice_path,
 	))
 
@@ -139,7 +139,7 @@
 	icon_state = "self_delivery"
 	inhand_icon_state = "self_delivery"
 	company_source = "S.E.L.F."
-	company_message = span_bold("Request status: Recieved. Package status: Delivered. Notes: To assure optimal value, use supplied Interdyne-brand autosurgeons to change implantment status.")
+	company_message = span_bold("Request status: Received. Package status: Delivered. Notes: To assure optimal value, use supplied Interdyne-brand autosurgeons to change implantment status.")
 
 /obj/item/choice_beacon/augments/generate_display_names()
 	var/static/list/augment_list

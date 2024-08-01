@@ -10,16 +10,22 @@
 	var/datum/weakref/old_mind_ref
 	///The old body we will be put back into when parent is being deleted.
 	var/datum/weakref/old_body_ref
+	/// Returns the mind if the parent dies by any means
+	var/delete_on_death = FALSE
 
-/datum/component/temporary_body/Initialize(datum/mind/old_mind, mob/living/old_body)
+/datum/component/temporary_body/Initialize(datum/mind/old_mind, mob/living/old_body, delete_on_death = FALSE)
 	if(!isliving(parent) || !isliving(old_body))
 		return COMPONENT_INCOMPATIBLE
 	ADD_TRAIT(old_body, TRAIT_MIND_TEMPORARILY_GONE, REF(src))
 	src.old_mind_ref = WEAKREF(old_mind)
 	src.old_body_ref = WEAKREF(old_body)
+	src.delete_on_death = delete_on_death
 
 /datum/component/temporary_body/RegisterWithParent()
 	RegisterSignal(parent, COMSIG_QDELETING, PROC_REF(on_parent_destroy))
+
+	if(delete_on_death)
+		RegisterSignal(parent, COMSIG_LIVING_DEATH, PROC_REF(on_parent_destroy))
 
 /datum/component/temporary_body/UnregisterFromParent()
 	UnregisterSignal(parent, COMSIG_QDELETING)

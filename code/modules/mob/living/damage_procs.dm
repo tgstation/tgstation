@@ -359,13 +359,30 @@
 /mob/living/proc/adjustToxLoss(amount, updating_health = TRUE, forced = FALSE, required_biotype = ALL)
 	if(!can_adjust_tox_loss(amount, forced, required_biotype))
 		return 0
+
+	if(!forced && HAS_TRAIT(src, TRAIT_TOXINLOVER)) //damage becomes healing and healing becomes damage
+		amount = -amount
+		if(HAS_TRAIT(src, TRAIT_TOXIMMUNE)) //Prevents toxin damage, but not healing
+			amount = min(amount, 0)
+		if(blood_volume)
+			if(amount > 0)
+				blood_volume = max(blood_volume - (5 * amount), 0)
+			else
+				blood_volume = max(blood_volume - amount, 0)
+
+	else if(!forced && HAS_TRAIT(src, TRAIT_TOXIMMUNE)) //Prevents toxin damage, but not healing
+		amount = min(amount, 0)
+
 	. = toxloss
 	toxloss = clamp((toxloss + (amount * CONFIG_GET(number/damage_multiplier))), 0, maxHealth * 2)
 	. -= toxloss
+
 	if(!.) // no change, no need to update
 		return FALSE
+
 	if(updating_health)
 		updatehealth()
+
 
 /mob/living/proc/setToxLoss(amount, updating_health = TRUE, forced = FALSE, required_biotype = ALL)
 	if(!forced && (status_flags & GODMODE))
@@ -434,26 +451,42 @@
 /mob/living/proc/adjustStaminaLoss(amount, updating_stamina = TRUE, forced = FALSE, required_biotype = ALL)
 	if(!can_adjust_stamina_loss(amount, forced, required_biotype))
 		return 0
-	. = staminaloss
+	var/old_amount = staminaloss
 	staminaloss = clamp((staminaloss + (amount * CONFIG_GET(number/damage_multiplier))), 0, max_stamina)
-	. -= staminaloss
-	if(. == 0) // no change, no need to update
+	var/delta = old_amount - staminaloss
+	if(delta <= 0)
+		// need to check for stamcrit AFTER canadjust but BEFORE early return here
+		received_stamina_damage(staminaloss, -1 * delta)
+	if(delta == 0) // no change, no need to update
 		return 0
 	if(updating_stamina)
 		updatehealth()
+	return delta
 
 /mob/living/proc/setStaminaLoss(amount, updating_stamina = TRUE, forced = FALSE, required_biotype = ALL)
 	if(!forced && (status_flags & GODMODE))
-		return FALSE
+		return 0
 	if(!forced && !(mob_biotypes & required_biotype))
-		return FALSE
-	. = staminaloss
+		return 0
+	var/old_amount = staminaloss
 	staminaloss = amount
-	. -= staminaloss
-	if(!.) // no change, no need to update
-		return FALSE
+	var/delta = old_amount - staminaloss
+	if(delta <= 0 && amount >= DAMAGE_PRECISION)
+		received_stamina_damage(staminaloss, -1 * delta, amount)
+	if(delta == 0) // no change, no need to update
+		return 0
 	if(updating_stamina)
 		updatehealth()
+	return delta
+
+/// The mob has received stamina damage
+///
+/// - current_level: The mob's current stamina damage amount (to save unnecessary getStaminaLoss() calls)
+/// - amount_actual: The amount of stamina damage received, in actuality
+/// For example, if you are taking 50 stamina damage but are at 90, you would actually only receive 30 stamina damage (due to the cap)
+/// - amount: The amount of stamina damage received, raw
+/mob/living/proc/received_stamina_damage(current_level, amount_actual, amount)
+	addtimer(CALLBACK(src, PROC_REF(setStaminaLoss), 0, TRUE, TRUE), stamina_regen_time, TIMER_UNIQUE|TIMER_OVERRIDE)
 
 /**
  * heal ONE external organ, organ gets randomly selected from damaged ones.

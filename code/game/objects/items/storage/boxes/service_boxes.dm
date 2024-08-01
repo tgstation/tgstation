@@ -92,13 +92,16 @@
 	atom_storage.max_slots = 10
 	atom_storage.set_holdable(/obj/item/match)
 
+/obj/item/storage/box/matches/tool_act(mob/living/user, obj/item/tool, list/modifiers)
+	if(istype(tool, /obj/item/match))
+		var/obj/item/match/match = tool
+		match.matchignite()
+		return ITEM_INTERACT_SUCCESS
+	return ..()
+
 /obj/item/storage/box/matches/PopulateContents()
 	for(var/i in 1 to 10)
 		new /obj/item/match(src)
-
-/obj/item/storage/box/matches/attackby(obj/item/match/W as obj, mob/user as mob, params)
-	if(istype(W, /obj/item/match))
-		W.matchignite()
 
 /obj/item/storage/box/matches/update_icon_state()
 	. = ..()

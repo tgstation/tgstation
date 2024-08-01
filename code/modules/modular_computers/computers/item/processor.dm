@@ -8,7 +8,7 @@
 	icon_state_unpowered = null
 	icon_state_menu = null
 	hardware_flag = NONE
-	internal_cell = /obj/item/stock_parts/cell/crap
+	internal_cell = /obj/item/stock_parts/power_store/cell/crap
 
 	///The modular computer MACHINE that hosts us.
 	var/obj/machinery/modular_computer/machinery_computer

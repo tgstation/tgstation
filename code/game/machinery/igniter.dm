@@ -4,6 +4,7 @@
 	icon = 'icons/obj/machines/floor.dmi'
 	icon_state = "igniter0"
 	base_icon_state = "igniter"
+	layer = ABOVE_OPEN_TURF_LAYER
 	plane = FLOOR_PLANE
 	max_integrity = 300
 	armor_type = /datum/armor/machinery_igniter
@@ -138,6 +139,7 @@ WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/machinery/igniter)
 	icon = 'icons/obj/igniter.dmi'
 	icon_state = "migniter"
 	result_path = /obj/machinery/sparker
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT)
 	pixel_shift = 26
 
 /obj/machinery/sparker

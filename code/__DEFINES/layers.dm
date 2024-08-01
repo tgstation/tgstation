@@ -160,7 +160,8 @@
 #define ABOVE_OPEN_TURF_LAYER 2.049
 
 //GAME_PLANE layers
-#define CLOSED_TURF_LAYER 2.05
+#define BELOW_CLOSED_TURF_LAYER 2.053
+#define CLOSED_TURF_LAYER 2.058
 #define BULLET_HOLE_LAYER 2.06
 #define ABOVE_NORMAL_TURF_LAYER 2.08
 #define GAS_PIPE_HIDDEN_LAYER 2.35 //layer = initial(layer) + piping_layer / 1000 in atmospherics/update_icon() to determine order of pipe overlap
@@ -173,8 +174,6 @@
 #define PLUMBING_PIPE_VISIBILE_LAYER 2.495//layer = initial(layer) + ducting_layer / 3333 in atmospherics/handle_layer() to determine order of duct overlap
 #define BOT_PATH_LAYER 2.497
 #define LOW_OBJ_LAYER 2.5
-///catwalk overlay of /turf/open/floor/plating/catwalk_floor
-#define CATWALK_LAYER 2.51
 #define LOW_SIGIL_LAYER 2.52
 #define SIGIL_LAYER 2.53
 #define HIGH_PIPE_LAYER 2.54
@@ -242,6 +241,7 @@
 #define ABOVE_ALL_MOB_LAYER 4.7
 #define NAVIGATION_EYE_LAYER 4.9
 //#define FLY_LAYER 5 //For easy recordkeeping; this is a byond define
+#define ABOVE_TREE_LAYER 5.01
 #define HIGH_BUBBLE_LAYER 5.03
 #define GASFIRE_LAYER 5.05
 #define RIPPLE_LAYER 5.1
@@ -312,7 +312,7 @@
 
 ///Layer for lobby menu collapse button
 #define LOBBY_BELOW_MENU_LAYER 2
-///Layer for lobby menu background image and main buttons (Join/Ready, Observe, Charater Prefs)
+///Layer for lobby menu background image and main buttons (Join/Ready, Observe, Character Prefs)
 #define LOBBY_MENU_LAYER 3
 ///Layer for lobby menu shutter, which covers up the menu to collapse/expand it
 #define LOBBY_SHUTTER_LAYER 4
@@ -338,6 +338,15 @@
 #define PLANE_CRITICAL_CUT_RENDER (1<<2)
 
 #define PLANE_CRITICAL_FUCKO_PARALLAX (PLANE_CRITICAL_DISPLAY|PLANE_CRITICAL_NO_RELAY|PLANE_CRITICAL_CUT_RENDER)
+
+//---------- Plane Master offsetting_flags -------------
+// Describes how different plane masters behave regarding being offset
+/// This plane master will not be offset itself, existing only once with an offset of 0
+/// Mostly used for planes that really don't need to be duplicated, like the hud planes
+#define BLOCKS_PLANE_OFFSETTING (1<<0)
+/// This plane master will have its relays offset to match the highest rendering plane that matches the target
+/// Required for making things like the blind fullscreen not render over runechat
+#define OFFSET_RELAYS_MATCH_HIGHEST (1<<1)
 
 /// A value of /datum/preference/numeric/multiz_performance that disables the option
 #define MULTIZ_PERFORMANCE_DISABLE -1

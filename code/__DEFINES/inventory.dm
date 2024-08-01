@@ -106,6 +106,8 @@ DEFINE_BITFIELD(no_equip_flags, list(
 #define HIDESNOUT (1<<12)
 ///hides mutant/moth wings, does not apply to functional wings
 #define HIDEMUTWINGS (1<<13)
+///hides belts and riggings
+#define HIDEBELT (1<<14)
 
 //bitflags for clothing coverage - also used for limbs
 #define HEAD (1<<0)
@@ -239,6 +241,26 @@ GLOBAL_LIST_INIT(chaplain_suit_allowed, list(
 	/obj/item/tank/internals/plasmaman,
 	/obj/item/gun/ballistic/bow/divine,
 	/obj/item/gun/ballistic/revolver/chaplain,
+))
+
+//Allowed list for all mining suits
+
+GLOBAL_LIST_INIT(mining_suit_allowed, list(
+	/obj/item/t_scanner/adv_mining_scanner,
+	/obj/item/melee/cleaving_saw,
+	/obj/item/climbing_hook,
+	/obj/item/flashlight,
+	/obj/item/grapple_gun,
+	/obj/item/tank/internals,
+	/obj/item/gun/energy/recharge/kinetic_accelerator,
+	/obj/item/kinetic_crusher,
+	/obj/item/knife,
+	/obj/item/mining_scanner,
+	/obj/item/organ/internal/monster_core,
+	/obj/item/storage/bag/ore,
+	/obj/item/pickaxe,
+	/obj/item/resonator,
+	/obj/item/spear,
 ))
 
 /// String for items placed into the left pocket.

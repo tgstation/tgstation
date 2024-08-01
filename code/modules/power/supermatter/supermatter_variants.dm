@@ -21,6 +21,21 @@
 	layer = ABOVE_MOB_LAYER
 	moveable = TRUE
 
+
+/obj/machinery/power/supermatter_crystal/shard/Initialize(mapload)
+	. = ..()
+
+	register_context()
+
+
+/obj/machinery/power/supermatter_crystal/shard/add_context(atom/source, list/context, obj/item/held_item, mob/user)
+	. = ..()
+
+	if(held_item?.tool_behaviour == TOOL_WRENCH)
+		context[SCREENTIP_CONTEXT_LMB] = anchored ? "Unanchor" : "Anchor"
+		return CONTEXTUAL_SCREENTIP_SET
+
+
 /// Shard SM with it's processing disabled.
 /obj/machinery/power/supermatter_crystal/shard/hugbox
 	name = "anchored supermatter shard"

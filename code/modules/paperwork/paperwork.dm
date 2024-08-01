@@ -166,7 +166,7 @@
 
 	detailed_desc += span_info(" The stack of documents appear to be a medical report from a nearby station, detailing the autopsy of an unknown xenofauna.")
 	detailed_desc += span_info(" Skipping to the end of the report reveals that the specimen was the station bartender's pet monkey.")
-	detailed_desc += span_info(" The specimen had been exposed to radiation during an 'unrelated incident with the engine', leading to it's mutated form.")
+	detailed_desc += span_info(" The specimen had been exposed to radiation during an 'unrelated incident with the engine', leading to its mutated form.")
 	detailed_desc += span_info(" Regardless, the autopsy results look like they could be useful. You should probably stamp this.")
 
 

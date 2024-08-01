@@ -36,7 +36,7 @@
 	victim = locate() in parts_list
 	if(!victim) //likely a mapspawned one
 		victim = new(src)
-		victim.real_name = random_unique_name(prob(50))
+		victim.real_name = generate_random_name()
 	spear = locate(speartype) in parts_list
 	if(!spear)
 		spear = new speartype(src)

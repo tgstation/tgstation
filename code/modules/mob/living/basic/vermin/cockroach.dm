@@ -68,6 +68,10 @@
 	blackboard = list(
 		BB_TARGETING_STRATEGY = /datum/targeting_strategy/basic,
 		BB_PET_TARGETING_STRATEGY = /datum/targeting_strategy/basic/not_friends,
+		BB_OWNER_SELF_HARM_RESPONSES = list(
+			"*me waves its antennae in disapproval.",
+			"*me chitters sadly."
+		)
 	)
 
 	ai_traits = STOP_MOVING_WHEN_PULLED

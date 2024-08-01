@@ -46,6 +46,9 @@
 		if(!(pawn_mob.mobility_flags & MOBILITY_MOVE))
 			can_move = FALSE
 
+	if(HAS_TRAIT(pawn, TRAIT_NO_TRANSFORM))
+		can_move = FALSE
+
 	return can_move
 
 ///Anything to do before moving; any checks if the pawn should be able to move should be placed in allowed_to_move() and called by this proc

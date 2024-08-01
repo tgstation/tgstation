@@ -47,6 +47,8 @@
 		C.set_jitter_if_lower(30 SECONDS)
 		C.set_stutter(40 SECONDS)
 
+	C.add_mood_event("spooked", /datum/mood_event/spooked)
+
 /datum/element/spooky/proc/spectral_change(mob/living/carbon/human/H, mob/user)
 	if((H.getStaminaLoss() > 95) && (!istype(H.dna.species, /datum/species/skeleton)) && (!istype(H.dna.species, /datum/species/golem)) && (!istype(H.dna.species, /datum/species/android)) && (!istype(H.dna.species, /datum/species/jelly)))
 		H.Paralyze(20)
@@ -63,12 +65,12 @@
 				new instrument(T)
 			else
 				to_chat(H, span_boldwarning("The spooky gods forgot to ship your instrument. Better luck next unlife."))
-		to_chat(H, span_boldnotice("You are the spooky skeleton!"))
+		to_chat(H, span_boldnotice("You are a spooky skeleton!"))
 		to_chat(H, span_boldnotice("A new life and identity has begun. Help your fellow skeletons into bringing out the spooky-pocalypse. You haven't forgotten your past life, and are still beholden to past loyalties."))
 		change_name(H) //time for a new name!
 
 /datum/element/spooky/proc/change_name(mob/living/carbon/human/spooked)
-	var/skeleton_name = sanitize_name(tgui_input_text(spooked, "Enter your new skeleton name", "Spookifier", spooked.real_name, MAX_NAME_LEN))
+	var/skeleton_name = spooked.client ? sanitize_name(tgui_input_text(spooked, "Enter your new skeleton name", "Spookifier", spooked.real_name, MAX_NAME_LEN)) : null
 	if(!skeleton_name)
-		skeleton_name = "spooky skeleton"
+		skeleton_name = "\improper spooky skeleton"
 	spooked.fully_replace_character_name(null, skeleton_name)

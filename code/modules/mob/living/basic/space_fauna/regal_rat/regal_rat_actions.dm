@@ -15,6 +15,15 @@
 	button_icon_state = "coffer"
 	shared_cooldown = NONE
 
+/datum/action/cooldown/mob_cooldown/domain/IsAvailable(feedback = FALSE)
+	. = ..()
+	if (!.)
+		return FALSE
+	if (owner.movement_type & VENTCRAWLING)
+		if (feedback)
+			owner.balloon_alert(owner, "can't use while ventcrawling!")
+		return FALSE
+
 /datum/action/cooldown/mob_cooldown/domain/proc/domain()
 	var/turf/location = get_turf(owner)
 	location.atmos_spawn_air("[GAS_MIASMA]=4;[TURF_TEMPERATURE(T20C)]")
@@ -68,6 +77,15 @@
 		/datum/pet_command/follow,
 		/datum/pet_command/point_targeting/attack/glockroach
 	)
+
+/datum/action/cooldown/mob_cooldown/riot/IsAvailable(feedback = FALSE)
+	. = ..()
+	if (!.)
+		return FALSE
+	if (owner.movement_type & VENTCRAWLING)
+		if (feedback)
+			owner.balloon_alert(owner, "can't use while ventcrawling!")
+		return FALSE
 
 /datum/action/cooldown/mob_cooldown/riot/Activate(atom/target)
 	StartCooldown(10 SECONDS)

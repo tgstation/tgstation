@@ -1,5 +1,0 @@
-author: "Profakos"
-delete-after: True
-changes:
-  - balance: "Bitrunners can now earn Bepis disks, once per medium domain or above, if they scored at least an A."
-  - rscdel: "Bitrunners can not buy Bepis disks from their vendors."

@@ -288,6 +288,7 @@
 	icon_state = "shield_wall_gen"
 	base_icon_state = "shield_wall_gen"
 	layer = SHIELD_GENERATOR_LAYER
+	light_on = FALSE
 	light_range = 2.5
 	light_power = 2
 	light_color = LIGHT_COLOR_BLUE
@@ -327,10 +328,16 @@
 
 /obj/machinery/power/shieldwallgen/Initialize(mapload)
 	. = ..()
+	//Add to the early process queue to prioritize power draw
+	SSmachines.processing_early += src
 	if(anchored)
 		connect_to_network()
 	RegisterSignal(src, COMSIG_ATOM_SINGULARITY_TRY_MOVE, PROC_REF(block_singularity_if_active))
 	set_wires(new /datum/wires/shieldwallgen(src))
+
+/obj/machinery/power/shieldwallgen/update_appearance(updates)
+	. = ..()
+	set_light(l_on = !!active)
 
 /obj/machinery/power/shieldwallgen/update_icon_state()
 	if(anchored)
@@ -375,7 +382,7 @@
 		return FALSE
 	. = ..()
 
-/obj/machinery/power/shieldwallgen/process()
+/obj/machinery/power/shieldwallgen/process_early()
 	if(active)
 		if(active == ACTIVE_SETUPFIELDS)
 			var/fields = 0
@@ -577,7 +584,7 @@
 	smoothing_groups = SMOOTH_GROUP_SHIELD_GEN_WALL
 	canSmoothWith = SMOOTH_GROUP_SHIELD_GEN_WALL
 	light_range = 2.5
-	light_power = 0.6
+	light_power = 0.7
 	light_color = LIGHT_COLOR_BLUE
 	var/primary_direction = NONE
 	var/needs_power = FALSE

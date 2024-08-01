@@ -11,7 +11,9 @@
 	base_icon_state = "infuser"
 	density = TRUE
 	obj_flags = BLOCKS_CONSTRUCTION // Becomes undense when the door is open
+	interaction_flags_mouse_drop = NEED_HANDS | NEED_DEXTERITY
 	circuit = /obj/item/circuitboard/machine/dna_infuser
+
 	/// maximum tier this will infuse
 	var/max_tier_allowed = DNA_MUTANT_TIER_ONE
 	///currently infusing a vict- subject
@@ -99,7 +101,7 @@
 /obj/machinery/dna_infuser/proc/end_infuse(fail_explanation, fail_title)
 	var/mob/living/carbon/human/human_occupant = occupant
 	if(human_occupant.infuse_organ(infusing_into))
-		check_tier_progression(src)
+		check_tier_progression(human_occupant)
 		to_chat(occupant, span_danger("You feel yourself becoming more... [infusing_into.infusion_desc]?"))
 	infusing = FALSE
 	infusing_into = null
@@ -123,7 +125,7 @@
 		&& target.has_status_effect(infusing_into.status_effect_type) \
 	)
 		max_tier_allowed++
-		playsound(src.loc, 'sound/machines/ding.ogg', 50, TRUE)
+		playsound(src, 'sound/machines/ding.ogg', 50, TRUE)
 		visible_message(span_notice("[src] dings as it records the results of the full infusion."))
 
 /obj/machinery/dna_infuser/update_icon_state()
@@ -199,7 +201,7 @@
 	infusing_from = target
 
 // mostly good for dead mobs like corpses (drag to add).
-/obj/machinery/dna_infuser/MouseDrop_T(atom/movable/target, mob/user)
+/obj/machinery/dna_infuser/mouse_drop_receive(atom/target, mob/user, params)
 	// if the machine is closed, already has a infusion target, or the target is not valid then no mouse drop.
 	if(!is_valid_infusion(target, user))
 		return
@@ -208,8 +210,6 @@
 
 /// Verify that the given infusion source/mob is a dead creature.
 /obj/machinery/dna_infuser/proc/is_valid_infusion(atom/movable/target, mob/user)
-	if(user.stat != CONSCIOUS || HAS_TRAIT(user, TRAIT_UI_BLOCKED) || !Adjacent(user) || !user.Adjacent(target) || !ISADVANCEDTOOLUSER(user))
-		return FALSE
 	var/datum/component/edible/food_comp = IS_EDIBLE(target)
 	if(infusing_from)
 		balloon_alert(user, "empty the machine first!")
