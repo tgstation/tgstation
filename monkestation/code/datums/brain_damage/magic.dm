@@ -43,6 +43,7 @@
 	// Not even nullspace will keep it at bay.
 	for (var/obj/effect/client_image_holder/stalker_phantom/stalker in stalkers)
 		if(!stalker || !stalker.loc || stalker.z != owner.z)
+			stalkers -= stalker
 			qdel(stalker)
 			create_stalker()
 
