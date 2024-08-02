@@ -92,7 +92,7 @@ export const Aquarium = (props) => {
                 <Section fill title="Fluid">
                   <Flex direction="column" mb={1}>
                     {fluidTypes.map((f) => (
-                      <Flex.Item key={f}>
+                      <Flex.Item className="candystripe" key={f}>
                         <Button
                           textAlign="center"
                           fluid
@@ -169,7 +169,7 @@ export const Aquarium = (props) => {
                 <Section scrollable fill title="Props">
                   <Stack vertical>
                     {prop_data.map((prop) => (
-                      <Stack.Item key={prop.prop_ref}>
+                      <Stack.Item className="candystripe" key={prop.prop_ref}>
                         <Button
                           fluid
                           color="transparent"
