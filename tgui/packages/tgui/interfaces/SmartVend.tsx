@@ -4,7 +4,7 @@ import { useState } from 'react';
 import { DmIcon, Icon } from 'tgui-core/components';
 
 import { useBackend } from '../backend';
-import { Button, Input, NoticeBox, Section } from '../components';
+import { Button, Input, NoticeBox, Section, ImageButton } from '../components';
 import { Window } from '../layouts';
 
 type Item = {
@@ -35,7 +35,7 @@ export const SmartVend = (props) => {
     <Icon name="spinner" lineHeight="64px" size={3} spin color="gray" />
   );
   return (
-    <Window width={498} height={550}>
+    <Window width={431} height={570}>
       <Window.Content>
         <Section
           fill
@@ -65,56 +65,50 @@ export const SmartVend = (props) => {
           {!contents.length ? (
             <NoticeBox>Nothing found.</NoticeBox>
           ) : (
-            contents.map((item) => (
-              <Button
-                key={item.path}
-                m={1}
-                p={0}
-                height="64px"
-                width="64px"
-                tooltip={item.name}
-                tooltipPosition="bottom"
-                textAlign="right"
-                disabled={item.amount < 1}
-                onClick={() =>
-                  act('Release', {
-                    path: item.path,
-                    amount: 1,
-                  })
-                }
-              >
-                <DmIcon
-                  fallback={fallback}
-                  icon={item.icon}
-                  icon_state={item.icon_state}
-                  height="64px"
-                  width="64px"
-                />
-                {item.amount > 1 && (
-                  <Button
-                    color="transparent"
-                    minWidth="24px"
-                    height="24px"
-                    lineHeight="24px"
-                    textAlign="center"
-                    position="absolute"
-                    left="0"
-                    bottom="0"
-                    fontWeight="bold"
-                    fontSize="14px"
-                    onClick={(e) => {
-                      act('Release', {
-                        path: item.path,
-                        amount: item.amount,
-                      });
-                      e.stopPropagation();
-                    }}
-                  >
-                    {item.amount}
-                  </Button>
-                )}
-              </Button>
-            ))
+            contents.map((item) => {
+              const customAmount = (e) => {
+                act('Release', {
+                  path: item.path,
+                  amount: item.amount,
+                });
+                e.stopPropagation();
+              };
+
+              return (
+                <ImageButton
+                  key={item.path}
+                  dmIcon={item.icon}
+                  dmIconState={item.icon_state}
+                  dmFallback={fallback}
+                  tooltip={item.name}
+                  tooltipPosition="bottom"
+                  disabled={item.amount < 1}
+                  onClick={() =>
+                    act('Release', {
+                      path: item.path,
+                      amount: 1,
+                    })
+                  }
+                  onRightClick={customAmount}
+                  buttons={
+                    item.amount > 1 && (
+                      <Button
+                        compact
+                        color="transparent"
+                        fontWeight="bold"
+                        tooltip="Pick up custom amount"
+                        tooltipPosition="top"
+                        onClick={customAmount}
+                      >
+                        {item.amount}
+                      </Button>
+                    )
+                  }
+                >
+                  {item.name}
+                </ImageButton>
+              );
+            })
           )}
         </Section>
       </Window.Content>

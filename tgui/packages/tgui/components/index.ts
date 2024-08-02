@@ -27,6 +27,7 @@ export { Icon } from './Icon';
 export { Image } from './Image';
 export { InfinitePlane } from './InfinitePlane';
 export { Input } from './Input';
+export { ImageButton } from './ImageButton';
 export { KeyListener } from './KeyListener';
 export { Knob } from './Knob';
 export { LabeledControls } from './LabeledControls';

@@ -1,0 +1,132 @@
+/**
+ * @file
+ * @copyright 2024 Aylong (https://github.com/AyIong)
+ * @license MIT
+ */
+
+@use '../base.scss';
+@use '../colors.scss';
+@use '../functions.scss' as *;
+
+$color-default: colors.bg(base.$color-bg-section) !default;
+$color-disabled: #631d1d !default;
+$color-selected: colors.bg(colors.$green) !default;
+$color-content: colors.$primary !default;
+$bg-map: colors.$bg-map !default;
+
+@mixin button-color(
+  $color,
+  $border-color: rgba(lighten($color, 50%), 0.2),
+  $border-width: 1px 1px 0 1px,
+  $opacity: 0.25,
+  $hoverable: true
+) {
+  $luminance: luminance($color);
+  $text-color: if($luminance > 0.4, rgba(0, 0, 0, 1), rgba(255, 255, 255, 1));
+
+  background-color: rgba($color, $opacity);
+  color: $text-color;
+  border: solid $border-color;
+  border-width: $border-width;
+  transition:
+    color 0.2s,
+    background-color 0.2s;
+
+  @if $hoverable {
+    &:hover {
+      background-color: rgba(lighten($color, 50%), $opacity);
+    }
+  }
+}
+
+@each $color-name, $color-value in $bg-map {
+  .ImageButton--color--#{$color-name} {
+    @include button-color($color-value);
+  }
+}
+
+.ImageButton--color--default {
+  @include button-color(lighten($color-default, 85%));
+}
+
+@each $color-name, $color-value in $bg-map {
+  .ImageButton__content--color--#{$color-name} {
+    @include button-color(
+      $color-value,
+      $border-color: lighten($color-value, 25%),
+      $border-width: 1px 0 0 0,
+      $opacity: 1,
+      $hoverable: false
+    );
+  }
+}
+
+.ImageButton__content--color--default {
+  @include button-color(
+    $color-content,
+    $border-color: lighten($color-content, 25%),
+    $border-width: 1px 0 0 0,
+    $opacity: 1,
+    $hoverable: false
+  );
+}
+
+.ImageButton--disabled {
+  background-color: rgba($color-disabled, 0.25) !important;
+  border-color: rgba($color-disabled, 0.25) !important;
+}
+
+.ImageButton__content--disabled {
+  background-color: $color-disabled !important;
+  border-top: 1px solid lighten($color-disabled, 25%) !important;
+}
+
+.ImageButton--selected {
+  @include button-color($color-selected, $border-color: $color-selected);
+}
+
+.ImageButton__content--selected {
+  @include button-color(
+    $color-selected,
+    $border-color: lighten($color-selected, 25%),
+    $border-width: 1px 0 0 0,
+    $opacity: 1,
+    $hoverable: false
+  );
+}
+
+.ImageButton {
+  display: inline-flex;
+  flex-direction: column;
+  margin: 0.25em;
+
+  &__image {
+    position: relative;
+    line-height: 0;
+    padding: 0.25em;
+    align-self: center;
+  }
+
+  &__buttons {
+    display: flex;
+    position: absolute;
+    overflow: hidden;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+
+    & > * {
+      border-radius: 0 !important;
+    }
+  }
+
+  &__content {
+    -ms-user-select: none;
+    user-select: none;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    text-align: center;
+    white-space: nowrap;
+    padding: 0.15em 0.25em;
+  }
+}
