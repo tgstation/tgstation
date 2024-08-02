@@ -60,7 +60,7 @@ export const ImageButton = (props: Props) => {
     ...rest
   } = props;
 
-  const getFallback = (iconName, iconSpin) => (
+  const getFallback = (iconName: string, iconSpin: boolean) => (
     <Stack height={`${imageSize}px`} width={`${imageSize}px`}>
       <Stack.Item grow textAlign="center" align="center">
         <Icon

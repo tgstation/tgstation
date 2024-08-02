@@ -14,7 +14,7 @@ $color-selected: colors.bg(colors.$green) !default;
 $color-content: colors.$primary !default;
 $bg-map: colors.$bg-map !default;
 
-@mixin button-color(
+@mixin button-style(
   $color,
   $border-color: rgba(lighten($color, 50%), 0.2),
   $border-width: 1px 1px 0 1px,
@@ -41,17 +41,11 @@ $bg-map: colors.$bg-map !default;
 
 @each $color-name, $color-value in $bg-map {
   .ImageButton--color--#{$color-name} {
-    @include button-color($color-value);
+    @include button-style($color-value);
   }
-}
 
-.ImageButton--color--default {
-  @include button-color(lighten($color-default, 85%));
-}
-
-@each $color-name, $color-value in $bg-map {
   .ImageButton__content--color--#{$color-name} {
-    @include button-color(
+    @include button-style(
       $color-value,
       $border-color: lighten($color-value, 25%),
       $border-width: 1px 0 0 0,
@@ -61,38 +55,46 @@ $bg-map: colors.$bg-map !default;
   }
 }
 
-.ImageButton__content--color--default {
-  @include button-color(
-    $color-content,
-    $border-color: lighten($color-content, 25%),
-    $border-width: 1px 0 0 0,
-    $opacity: 1,
-    $hoverable: false
-  );
+.ImageButton {
+  &--color--default {
+    @include button-style(lighten($color-default, 85%));
+  }
+
+  &--disabled {
+    background-color: rgba($color-disabled, 0.25) !important;
+    border-color: rgba($color-disabled, 0.25) !important;
+  }
+
+  &--selected {
+    @include button-style($color-selected, $border-color: $color-selected);
+  }
 }
 
-.ImageButton--disabled {
-  background-color: rgba($color-disabled, 0.25) !important;
-  border-color: rgba($color-disabled, 0.25) !important;
-}
+.ImageButton__content {
+  &--color--default {
+    @include button-style(
+      $color-content,
+      $border-color: lighten($color-content, 25%),
+      $border-width: 1px 0 0 0,
+      $opacity: 1,
+      $hoverable: false
+    );
+  }
 
-.ImageButton__content--disabled {
-  background-color: $color-disabled !important;
-  border-top: 1px solid lighten($color-disabled, 25%) !important;
-}
+  &--disabled {
+    background-color: $color-disabled !important;
+    border-top: 1px solid lighten($color-disabled, 25%) !important;
+  }
 
-.ImageButton--selected {
-  @include button-color($color-selected, $border-color: $color-selected);
-}
-
-.ImageButton__content--selected {
-  @include button-color(
-    $color-selected,
-    $border-color: lighten($color-selected, 25%),
-    $border-width: 1px 0 0 0,
-    $opacity: 1,
-    $hoverable: false
-  );
+  &--selected {
+    @include button-style(
+      $color-selected,
+      $border-color: lighten($color-selected, 25%),
+      $border-width: 1px 0 0 0,
+      $opacity: 1,
+      $hoverable: false
+    );
+  }
 }
 
 .ImageButton {
