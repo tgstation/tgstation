@@ -257,9 +257,6 @@
 	/// Whether or not this client has standard hotkeys enabled
 	var/hotkeys = TRUE
 
-	///Do we see the top part of tall walls when looming over floors?
-	var/frills_over_floors = TRUE
-
 	/// Whether or not this client has the combo HUD enabled
 	var/combo_hud_enabled = FALSE
 

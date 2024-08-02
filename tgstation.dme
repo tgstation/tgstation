@@ -3746,6 +3746,7 @@
 #include "code\modules\client\preferences\darkened_flash.dm"
 #include "code\modules\client\preferences\food_allergy.dm"
 #include "code\modules\client\preferences\fps.dm"
+#include "code\modules\client\preferences\frill_transparency.dm"
 #include "code\modules\client\preferences\gender.dm"
 #include "code\modules\client\preferences\ghost.dm"
 #include "code\modules\client\preferences\ghost_lighting.dm"
