@@ -194,8 +194,8 @@
 /obj/machinery/component_printer/attackby(obj/item/weapon, mob/living/user, params)
 	if (user.combat_mode)
 		return ..()
-	var/obj/item/integrated_circuit/circuit
 
+	var/obj/item/integrated_circuit/circuit
 	if(istype(weapon, /obj/item/integrated_circuit))
 		circuit = weapon
 	else if (istype(weapon, /obj/item/circuit_component/module))
