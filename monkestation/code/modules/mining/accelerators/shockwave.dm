@@ -10,6 +10,7 @@
 	ammo_type = list(/obj/item/ammo_casing/energy/kinetic/shockwave)
 	can_bayonet = FALSE
 	max_mod_capacity = 60
+	pin = /obj/item/firing_pin/explorer/unremovable
 
 /obj/item/ammo_casing/energy/kinetic/shockwave
 	projectile_type = /obj/projectile/kinetic/shockwave
@@ -20,3 +21,6 @@
 /obj/projectile/kinetic/shockwave
 	name = "concussive kinetic force"
 	range = 1
+
+/obj/item/firing_pin/explorer/unremovable
+	pin_removable = FALSE
