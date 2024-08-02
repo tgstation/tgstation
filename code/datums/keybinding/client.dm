@@ -59,20 +59,3 @@
 		return
 	user.mob.button_pressed_F12()
 	return TRUE
-
-/datum/keybinding/client/toggle_frills_over_floors
-	hotkey_keys = list("`")
-	name = "toggle_frills_over_floors"
-	full_name = "Toggle Frills over Floors"
-	description = "Toggles the Frill-over-Floors preference"
-	keybind_signal = COMSIG_KB_CLIENT_MINIMALHUD_DOWN
-
-/datum/keybinding/client/toggle_frills_over_floors/down(client/user)
-	. = ..()
-	if(. || !user)
-		return
-	user.frills_over_floors = !user.frills_over_floors
-	if(length(user?.screen))
-		var/atom/movable/screen/plane_master/frill/frill = locate(/atom/movable/screen/plane_master/frill) in user.screen
-		frill.show_to(user.mob)
-	return TRUE

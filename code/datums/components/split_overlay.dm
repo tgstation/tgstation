@@ -1,11 +1,15 @@
 /// Applies and maintains overlays for /datum/element/split_visibility'd atoms
 /// This allows us to apply conditions, nick nacks, and animations to splitvis'd walls without massively bloating their DMIs (and thus leading to client performance issues)
+/// Want to draw a cute animation on your wall but only if the SOUTH wall is exposed? this is how you do it (see also: hilbert doors)
 /// Accepts an overlay to use, and a list of the directions to apply it in (see the icon_smoothing.dm defines for this list, which allow for angles to be specified seperately)
 /// If the direction is blocked, the overlay won't draw. it'll also use as a dir the direction it's being drawn in
 /// If the overlay has no plane/layer of its own, we'll give it ones that will at the least draw above wall splits, ensuring it actually renders
 /datum/component/split_overlay
+	/// We draw this normally, in the splitvis form
 	var/mutable_appearance/standard
+	/// This is drawn hidden (IE: onto a separate plane and onto the wall itself to avoid seeing it through the void with mesons)
 	var/mutable_appearance/hidden
+	/// And then this one just exists to make sure we render right at z borders, drawing to ourselves if there is nothing around us
 	var/mutable_appearance/non_offset_standard
 	var/list/dirs_to_apply
 
@@ -90,15 +94,15 @@
 			// Otherwise we'll draw to them, offset slightly
 			else
 				below.add_overlay(standard)
-		else
-			// Remove our overlay from the turf below, to ensure it gets properly cleared out
-			if(below)
-				below.cut_overlay(standard)
-			// Clear from us too, just to be safe
-			apply_to.cut_overlay(hidden)
-			// If there's nothing below us, clear the non offset version too
-			if(!below)
-				apply_to.cut_overlay(non_offset_standard)
+			continue
+		// Remove our overlay from the turf below, to ensure it gets properly cleared out
+		if(below)
+			below.cut_overlay(standard)
+		// Clear from us too, just to be safe
+		apply_to.cut_overlay(hidden)
+		// If there's nothing below us, clear the non offset version too
+		if(!below)
+			apply_to.cut_overlay(non_offset_standard)
 
 /datum/component/split_overlay/proc/on_turf_junction_change(turf/source, new_junction)
 	SIGNAL_HANDLER

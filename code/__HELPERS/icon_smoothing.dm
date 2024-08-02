@@ -339,35 +339,6 @@ xxx xxx xxx
 
 	return NO_ADJ_FOUND
 
-/proc/bitmask_smoothing_decompiled(atom/source, direction, direction_flag, junction = NONE)
-	// cache for sanic speed
-	var/canSmoothWith = source.canSmoothWith
-	var/smoothing_flags = source.smoothing_flags
-
-	var/smooth_border = (smoothing_flags & SMOOTH_BORDER)
-	var/smooth_obj = (smoothing_flags & SMOOTH_OBJ)
-	var/turf/neighbor = get_step(source, direction)
-	if(neighbor && (!(neighbor.smoothing_flags & SMOOTH_BORDER_OBJECT) || CAN_DIAGONAL_SMOOTH(neighbor, source, REVERSE_DIR(direction))))
-		var/neighbor_smoothing_groups = neighbor.smoothing_groups
-		if(neighbor_smoothing_groups)
-			for(var/target in canSmoothWith)
-				if(canSmoothWith[target] & neighbor_smoothing_groups[target])
-					return junction | direction_flag
-
-		if(smooth_obj)
-			for(var/atom/movable/thing as anything in neighbor)
-				var/thing_smoothing_groups = thing.smoothing_groups
-				if(!thing.anchored || isnull(thing_smoothing_groups) || !(!(thing.smoothing_flags & SMOOTH_BORDER_OBJECT) || CAN_DIAGONAL_SMOOTH(thing, source, REVERSE_DIR(direction))))
-					continue
-
-				for(var/target in canSmoothWith)
-					if(canSmoothWith[target] & thing_smoothing_groups[target])
-						return junction | direction_flag
-
-	else if (smooth_border)
-		return junction | direction_flag
-	return junction
-
 /**
  * Basic smoothing proc. The atom checks for adjacent directions to smooth with and changes the icon_state based on that.
  *
@@ -436,7 +407,7 @@ xxx xxx xxx
 
 	// We're building 2 different types of smoothing searches here
 	// One for standard bitmask smoothing (We provide a label so our macro can eary exit, as it wants to do)
-	#define SET_ADJ_IN_DIR(direction, direction_flag) new_junction = bitmask_smoothing_decompiled(src, direction, direction_flag, new_junction)//do { set_adj_in_dir: { SEARCH_ADJ_IN_DIR(direction, direction_flag, BITMASK_FOUND, BITMASK_FOUND, BITMASK_ON_BORDER_CHECK) }} while(FALSE)
+	#define SET_ADJ_IN_DIR(direction, direction_flag) do { set_adj_in_dir: { SEARCH_ADJ_IN_DIR(direction, direction_flag, BITMASK_FOUND, BITMASK_FOUND, BITMASK_ON_BORDER_CHECK) }} while(FALSE)
 	// and another for border object work (Doesn't early exit because we can hit more then one direction by checking the same turf)
 	#define SET_BORDER_ADJ_IN_DIR(direction) SEARCH_ADJ_IN_DIR(direction, direction, BORDER_FOUND, WORLD_BORDER_FOUND, BORDER_ON_BORDER_CHECK)
 

@@ -12,7 +12,6 @@
 	opacity = FALSE
 	density = TRUE
 	rad_insulation = null
-	frill_icon = null // we dont have a frill, our window does
 	armor_type = /datum/armor/window_frame
 	max_integrity = 50
 	anchored = TRUE
@@ -105,7 +104,7 @@
 	if(!isliving(AM))
 		return
 	var/mob/living/potential_victim = AM
-	if(potential_victim.movement_type & (FLOATING|FLYING))
+	if(potential_victim.movement_type & MOVETYPES_NOT_TOUCHING_GROUND)
 		return
 	try_shock(potential_victim, 100)
 
@@ -164,12 +163,12 @@
 	if(!tool.tool_start_check(user, amount = 0))
 		return
 
-	to_chat(user, span_notice("You begin repairing [src]..."))
+	balloon_alert(user, "Repairing...")
 	if(!tool.use_tool(src, user, 40, volume = 50))
-		return
+		return ITEM_INTERACT_BLOCKING
 
 	atom_integrity = max_integrity
-	to_chat(user, span_notice("You repair [src]."))
+	balloon_alert(user, "Repaired!")
 	update_appearance()
 	return ITEM_INTERACT_SUCCESS
 
@@ -350,7 +349,7 @@
 
 /obj/structure/window_frame/reinforced/damaged/Initialize(mapload)
 	. = ..()
-	var/obj/structure/window/our_window = locate(/obj/structure/window) in get_turf(src)
+	var/obj/structure/window/our_window = locate() in get_turf(src)
 	if(!our_window)
 		return
 

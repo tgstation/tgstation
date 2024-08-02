@@ -47,7 +47,6 @@ GLOBAL_LIST_INIT(available_ui_styles, list(
 	var/list/atom/movable/screen/hotkeybuttons = list() //the buttons that can be used via hotkeys
 	var/list/infodisplay = list() //the screen objects that display mob info (health, alien plasma, etc...)
 	/// Screen objects that never exit view.
-	/// Wallening todo: unused, remove on final merge if it continues to be unused (fikou is using it for his lua thing, bully fikou)
 	var/list/always_visible_inventory = list()
 	var/list/inv_slots[SLOTS_AMT] // /atom/movable/screen/inventory objects, ordered by their slot ID.
 	var/list/hand_slots // /atom/movable/screen/inventory/hand objects, assoc list of "[held_index]" = object
