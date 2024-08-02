@@ -1028,7 +1028,7 @@ GLOBAL_LIST_INIT(lower_priority_connectables, typecacheof(list(
 		if(turf_to_check.density) //Dense turfs are connectable
 			dirs_usable -= dir_to_check
 			continue
-		for(var/atom/movable/thing_to_check in turf_to_check)
+		for(var/atom/movable/thing_to_check as anything in turf_to_check)
 			if(is_type_in_typecache(thing_to_check, connectables_typecache))
 				dirs_usable -= dir_to_check //So are things in the default typecache
 				break
@@ -1037,11 +1037,11 @@ GLOBAL_LIST_INIT(lower_priority_connectables, typecacheof(list(
 
 	var/dirs_avalible = length(dirs_usable)
 	//Only continue if we've got ourself either a corner or a side piece. Only side pieces really work well here, since corners aren't really something we can fudge handling for
-	if(dirs_avalible <= 2 && dirs_avalible != 0)
+	if(dirs_avalible && dirs_avalible <= 2)
 		setDir(dirs_usable[1]) //Just take the first dir avalible
 		return
 	dirs_usable &= dirs_secondary_priority //Only consider dirs we both share
 	dirs_avalible = length(dirs_usable)
-	if(dirs_avalible <= 2 && dirs_avalible != 0)
-		setDir(dirs_usable[1]) //Just take the first dir avalible
+	if(dirs_avalible && dirs_avalible <= 2)
+		setDir(dirs_usable[1])
 		return

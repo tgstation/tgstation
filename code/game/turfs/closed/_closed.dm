@@ -20,7 +20,7 @@
 			AddElement(/datum/element/split_visibility, icon)
 	else
 		// We draw a copy to the wall plane so we can use it to mask byond darkness, that's all
-		add_overlay(mutable_appearance('wall_blackness.dmi', "wall_background", UNDER_WALL_LAYER, src, WALL_PLANE))
+		add_overlay(mutable_appearance('icons/turf/walls/wall_blackness.dmi', "wall_background", UNDER_WALL_LAYER, src, WALL_PLANE))
 
 
 /turf/closed/AfterChange()
