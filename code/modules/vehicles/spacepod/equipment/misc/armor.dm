@@ -1,5 +1,5 @@
 /obj/item/pod_equipment/armor
-	name = "Light Pod Armor Plating"
+	name = "light pod armor plating"
 	desc = "Some armor for a pod. Makes your pod slightly sturdier and heavier. Not to be confused with hull kits."
 	icon_state = "lgtplating"
 	slot = POD_SLOT_MISC

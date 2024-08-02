@@ -1,7 +1,7 @@
 // no parent type of its own, just set slot to misc
 /obj/item/pod_equipment/warp_drive
 	slot = POD_SLOT_MISC
-	name = "Bluespace Warp Drive"
+	name = "bluespace warp drive"
 	desc = "Warp drive for space pods, used to warp to a Bluespace Navigation Gigabeacon, assuming it is functional and in space."
 	interface_id = "WarpDrive"
 	/// percentage of power needed to warp

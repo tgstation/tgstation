@@ -86,6 +86,15 @@ GLOBAL_LIST_INIT(turfs_pass_meteor, typecacheof(list(
 
 #define ispassmeteorturf(A) (is_type_in_typecache(A, GLOB.turfs_pass_meteor))
 
+GLOBAL_LIST_INIT(turfs_pass_pod, typecacheof(list(
+	/turf/open/misc/asteroid,
+	/turf/open/openspace,
+	/turf/open/space,
+	/turf/open/floor/engine,
+)))
+
+#define ispodpassable(A) (is_type_in_typecache(A, GLOB.turfs_pass_pod))
+
 //Mobs
 #define isliving(A) (istype(A, /mob/living))
 

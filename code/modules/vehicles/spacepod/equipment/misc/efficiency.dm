@@ -1,5 +1,5 @@
 /obj/item/pod_equipment/efficiency
-	name = "Pod Thrust Capacitator"
+	name = "pod thrust capacitator"
 	desc = "Makes your pod use slightly less power to thrust it forward."
 	icon_state = "efficiency"
 	slot = POD_SLOT_MISC

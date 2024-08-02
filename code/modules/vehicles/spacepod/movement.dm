@@ -22,10 +22,14 @@
 	return FALSE //this proc only exists so movement is better
 
 /obj/vehicle/sealed/space_pod/Move(turf/newloc, direct, glide_size_override)
-	if(!isturf(newloc))
+	if(!isturf(newloc) || newloc.density || ispodpassable(newloc))
 		return ..()
-	if(isasteroidturf(newloc) || is_space_or_openspace(newloc) || istype(newloc, /turf/open/floor/engine))
-		return ..()
+	if(newloc.is_blocked_turf()) //weird silly hack to allow us to ram objects on inaccessible turfs
+		var/atom/target
+		for(var/atom/movable/thing as anything in newloc.contents)
+			if(isnull(target) || ((thing.layer > target.layer || thing.flags_1 & ON_BORDER_1) && !(target.flags_1 & ON_BORDER_1)))
+				target = thing
+		Bump(target)
 
 /obj/vehicle/sealed/space_pod/vehicle_move(direction)
 	. = ..()
@@ -54,11 +58,12 @@
 
 /obj/vehicle/sealed/space_pod/Bump(atom/bumped)
 	. = ..()
-	if(isnull(drift_handler))
+	if(isnull(drift_handler) || SEND_SIGNAL(src, COMSIG_POD_PRE_RAM, bumped))
 		return
 	if(drift_handler.drift_force < 6 NEWTONS) // need to be moving at a decent speed for anything to happen
 		return
 
+	var/saved_force = drift_handler.drift_force
 	var/strength = 1 + (drift_handler.drift_force - 6 NEWTONS) * 0.2 // strength of the impact
 
 	playsound(src, 'sound/effects/meteorimpact.ogg', min(40 * strength, 100), TRUE)
@@ -81,6 +86,8 @@
 		var/obj/bumped_atom = bumped
 		take_damage(min(strength * 70, bumped_atom.get_integrity()), BRUTE)
 		bumped_atom.take_damage(strength * 50, BRUTE, attack_dir = REVERSE_DIR(dir))
+		//tiny delay for dramatics
+		bumped_atom.newtonian_move(angle2dir(dir), instant=TRUE, start_delay=0.2 SECONDS, drift_force = saved_force)
 	else if(isliving(bumped))
 		var/mob/living/poor_sap = bumped
 		take_damage(strength * 40, BRUTE)

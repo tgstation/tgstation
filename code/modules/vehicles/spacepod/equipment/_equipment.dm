@@ -27,8 +27,8 @@
 
 /obj/item/pod_equipment/Destroy(force)
 	. = ..()
-	on_detach()
-	pod = null
+	if(!isnull(pod))
+		INVOKE_ASYNC(pod, TYPE_PROC_REF(/obj/vehicle/sealed/space_pod, unequip_item), src)
 
 /// Optional, return an actual overlay or an icon state name to show when attached.
 /obj/item/pod_equipment/proc/get_overlay()

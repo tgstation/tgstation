@@ -41,7 +41,7 @@
 	/// the comms array we emit from
 	var/obj/item/pod_equipment/comms/comms
 
-/datum/action/cooldown/pod_comms_ping/Trigger(trigger_flags, atom/target)
+/datum/action/cooldown/pod_comms_ping/Activate(atom/target)
 	. = ..()
 	if(QDELETED(pod) || QDELETED(comms))
 		qdel(src)

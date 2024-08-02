@@ -1,5 +1,5 @@
 /obj/item/pod_equipment/comms
-	name = "NT Comms Array"
+	name = "NT comms array"
 	desc = "Standard suite of communication equipment for crew pods."
 	slot = POD_SLOT_COMMS
 	// im not sure whether this is a good idea

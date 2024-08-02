@@ -73,7 +73,7 @@
 	equip_item(new /obj/item/pod_equipment/comms)
 	equip_item(new /obj/item/pod_equipment/thrusters/default)
 	equip_item(new /obj/item/pod_equipment/engine/default)
-	equip_item(new /obj/item/pod_equipment/primary/drill)
+	equip_item(new /obj/item/pod_equipment/primary/drill/impact)
 	equip_item(new /obj/item/pod_equipment/orestorage)
 	equip_item(new /obj/item/pod_equipment/warp_drive)
 	equip_item(new /obj/item/pod_equipment/lock/pin)
@@ -164,6 +164,22 @@
 			audible_message(span_hear("You hear welding."))
 		else
 			break
+
+/obj/vehicle/sealed/space_pod/vv_get_dropdown()
+	. = ..()
+	VV_DROPDOWN_OPTION("", "---------")
+	VV_DROPDOWN_OPTION(VV_HK_PODPANEL, "Pod Debug Panel")
+
+/obj/vehicle/sealed/space_pod/vv_do_topic(list/href_list)
+	. = ..()
+
+	if(!.)
+		return
+
+	if(href_list[VV_HK_PODPANEL])
+		if(!check_rights(R_ADMIN))
+			return
+		SSadmin_verbs.dynamic_invoke_verb(usr, /datum/admin_verb/pod_debug_panel, src)
 
 // atmos
 /obj/vehicle/sealed/space_pod/proc/cycle_tank_air(to_tank = FALSE)
