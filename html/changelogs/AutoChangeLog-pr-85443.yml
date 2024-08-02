@@ -1,5 +1,0 @@
-author: "SmArtKar"
-delete-after: True
-changes:
-  - bugfix: "Bamboo staves can now be wielded"
-  - bugfix: "Bostaff no longer disappears forever when wielded"
