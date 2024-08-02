@@ -324,6 +324,6 @@
 
 /datum/supply_pack/goody/Experimental_Medication
 	name = "Experimental medication Single-Pack"
-	desc = "A single bottle of interdyne brand experimental medication, used for treating people suffering from hereditary manifold disease"
+	desc = "A single bottle of Interdyne brand experimental medication, used for treating people suffering from hereditary manifold disease."
 	cost = PAYCHECK_CREW * 6.5
 	contains = list(/obj/item/storage/pill_bottle/sansufentanyl)
