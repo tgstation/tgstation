@@ -197,7 +197,6 @@
 	QUEUE_SMOOTH_NEIGHBORS(src)
 	QUEUE_SMOOTH(src)
 
-#warn pain
 // Wallening todo: we need intact sprites
 /*
 // We don't react to smoothing changing here because this else exists only to "revert" intact changes
