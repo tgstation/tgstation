@@ -310,11 +310,26 @@
 	.["fluid_type"] = fluid_type
 	.["temperature"] = fluid_temp
 	.["allow_breeding"] = allow_breeding
+	.["fish_data"] = list()
 	.["feeding_interval"] = feeding_interval / (1 MINUTES)
-	var/list/content_data = list()
-	for(var/atom/movable/fish in contents)
-		content_data += list(list("name"=fish.name,"ref"=ref(fish)))
-	.["contents"] = content_data
+	.["props_data"] = list()
+	for(var/atom/movable/item in contents)
+		if(isfish(item))
+			var/obj/item/fish/fish = item
+			.["fish_data"] += list(list(
+				"fish_ref" = REF(fish),
+				"fish_name" = fish.name,
+				"fish_happiness" = fish.get_happiness_value(),
+				"fish_icon" = fish::icon,
+				"fish_icon_state" = fish::icon_state,
+				"fish_health" = fish.health,
+			))
+			return
+		.["props_data"] += list(list(
+			"prop_name" = item.name,
+			"prop_icon" = item::icon,
+			"prop_icon_state" = item::icon_state,
+		))
 
 /obj/structure/aquarium/ui_static_data(mob/user)
 	. = ..()
@@ -322,6 +337,8 @@
 	.["minTemperature"] = min_fluid_temp
 	.["maxTemperature"] = max_fluid_temp
 	.["fluidTypes"] = fluid_types
+	.["heart_icon"] = /obj/effect/overlay/happiness_overlay::icon
+	.["heart_icon_state"] = /obj/effect/overlay/happiness_overlay::icon_state
 
 /obj/structure/aquarium/ui_act(action, params)
 	. = ..()
