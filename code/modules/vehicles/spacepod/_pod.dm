@@ -16,7 +16,6 @@
 	layer = ABOVE_MOB_LAYER
 	move_force = MOVE_FORCE_VERY_STRONG
 	move_resist = MOVE_FORCE_EXTREMELY_STRONG
-	anchored = TRUE
 	resistance_flags = FIRE_PROOF | ACID_PROOF
 	icon = 'icons/mob/rideables/spacepod/pod_small.dmi'
 	icon_state = "cockpit_pod"
@@ -54,8 +53,6 @@
 	/// mob = list(action)
 	var/list/list/equipment_actions = list()
 
-	var/datum/move_loop/pod_move/movement
-
 
 /obj/vehicle/sealed/space_pod/Initialize(mapload, dont_equip)
 	. = ..()
@@ -88,7 +85,6 @@
 	QDEL_NULL(trail)
 	QDEL_NULL(cabin_air_tank)
 	QDEL_LIST_ASSOC_VAL(equipment_actions)
-	QDEL_NULL(movement)
 	equipped = null // equipment gets deleted already because its in our contents
 
 /obj/vehicle/sealed/space_pod/generate_actions()
