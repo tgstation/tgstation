@@ -26,11 +26,11 @@
 
 /obj/item/pod_equipment/primary/drill/on_attach(mob/user)
 	. = ..()
-	RegisterSignal(pod, COMSIG_POD_PRE_RAM, PROC_REF(on_bump))
+	RegisterSignal(pod, COMSIG_MOVABLE_BUMP, PROC_REF(on_bump))
 
 /obj/item/pod_equipment/primary/drill/on_detach(mob/user)
 	. = ..()
-	UnregisterSignal(pod, COMSIG_POD_PRE_RAM)
+	UnregisterSignal(pod, COMSIG_MOVABLE_BUMP)
 
 /obj/item/pod_equipment/primary/drill/proc/on_bump(datum/source, atom/bumped)
 	SIGNAL_HANDLER
@@ -46,9 +46,10 @@
 		if(pod.drift_handler)
 			if(!force_mult)
 				qdel(pod.drift_handler)
-			else // OK SO if the moveloop fails to move it qdels itself which is exactly what breaks this, idk how to fix
-				pod.newtonian_move(dir2angle(REVERSE_DIR(pod.dir)), drift_force = force_needed)
-		return COMSIG_POD_STOP_RAM
+			else
+				var/force_needed = abs(pod.drift_handler.drift_force - pod.drift_handler.drift_force * force_mult)
+				pod.newtonian_move(dir2angle(REVERSE_DIR(pod.dir)), instant = TRUE, drift_force = force_needed)
+		return COMPONENT_INTERCEPT_BUMPED // OK SO if the moveloop fails to move it qdels itself which is exactly what breaks this, idk how to fix
 
 /obj/item/pod_equipment/primary/drill/action(mob/user)
 	if(!pod.use_power(power_used))
