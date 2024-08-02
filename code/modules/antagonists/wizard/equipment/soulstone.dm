@@ -224,19 +224,19 @@
 			shade_datum.release_time = world.time
 		on_release_spirits()
 
-/obj/item/soulstone/pre_attack(atom/A, mob/living/user, params)
-	var/mob/living/basic/shade/occupant = (locate() in src)
-	var/obj/item/storage/toolbox/mechanical/target_toolbox = A
-	if(!occupant || !istype(target_toolbox) || target_toolbox.has_soul)
-		return ..()
+/obj/item/soulstone/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
+	var/mob/living/basic/shade/occupant = locate() in src
+	var/obj/item/storage/toolbox/mechanical/target_toolbox = interacting_with
+	if(isnull(occupant) || !istype(target_toolbox) || target_toolbox.has_soul)
+		return NONE
 
 	if(theme == THEME_HOLY && IS_CULTIST(user))
 		hot_potato(user)
-		return
+		return ITEM_INTERACT_BLOCKING
 	if(!role_check(user))
 		user.Unconscious(10 SECONDS)
 		to_chat(user, span_userdanger("Your body is wracked with debilitating pain!"))
-		return
+		return ITEM_INTERACT_BLOCKING
 
 	user.visible_message("<span class='notice'>[user] holds [src] above [user.p_their()] head and forces it into [target_toolbox] with a flash of light!", \
 		span_notice("You hold [src] above your head briefly, then force it into [target_toolbox], transferring the [occupant]'s soul!"), ignored_mobs = occupant)
@@ -253,6 +253,7 @@
 	target_toolbox.icon_state = "toolbox_blue_old"
 	target_toolbox.has_soul = TRUE
 	target_toolbox.has_latches = FALSE
+	return ITEM_INTERACT_SUCCESS
 
 ///////////////////////////Transferring to constructs/////////////////////////////////////////////////////
 /obj/structure/constructshell
