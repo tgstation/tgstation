@@ -98,7 +98,7 @@
 		return FALSE //For now, we're going to keep the component off of shuttles to avoid the turf changing issue. We'll hit that later really;
 	var/turf/attachable_wall
 	if(directional)
-		attachable_wall = get_step(src, turn(dir,180))
+		attachable_wall = get_step(src, REVERSE_DIR(dir))
 	else
 		attachable_wall = loc ///Pull from the curent object loc
 	if(!iswallturf(attachable_wall))

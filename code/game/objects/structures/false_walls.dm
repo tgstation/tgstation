@@ -25,7 +25,7 @@ GLOBAL_LIST_INIT(falsewall_alpha_icons, generate_transparent_falsewalls())
 	vis_flags = VIS_INHERIT_ID
 	appearance_flags = parent_type::appearance_flags | KEEP_TOGETHER | RESET_TRANSFORM
 
-/obj/effect/falsewall_mask/New()
+/obj/effect/falsewall_mask/init_air_alarm_modes()
 	. = ..()
 	render_target = "*falsewall_mask"
 
@@ -129,6 +129,10 @@ GLOBAL_LIST_INIT(falsewall_alpha_icons, generate_transparent_falsewalls())
 	set_opacity(TRUE) // walls cannot be transparent fuck u materials
 	air_update_turf(TRUE, TRUE)
 
+/obj/structure/falsewall/Destroy(force)
+	QDEL_NULL(visuals)
+	return ..()
+	
 /obj/structure/falsewall/set_smoothed_icon_state(new_junction)
 	. = ..()
 	visuals.set_smoothed_icon_state(new_junction)

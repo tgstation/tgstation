@@ -180,23 +180,24 @@ GLOBAL_LIST_INIT(diagonal_junctions, generate_splitvis_lookup())
 		if(!operating_turf)
 			continue
 
-		if(add_to_turfs)
-			var/mutable_appearance/split_vis/vis
-			// If we're trying to draw to something with splitvis, just draw to yourself, and use the hidden wall plane
-			// Wallening todo: Frills should block emissives
-			if(HAS_TRAIT(operating_turf, TRAIT_CONTAINS_SPLITVIS))
-				vis = get_splitvis_object(offset, icon_path, "innercorner", direction, color, 0, 0, HIDDEN_WALL_PLANE, ABOVE_WALL_LAYER)
-				target_turf.overlays += vis
-			else
-				vis = get_splitvis_object(offset, icon_path, "innercorner", direction, color, -DIR_TO_PIXEL_X(direction), -DIR_TO_PIXEL_Y(direction), layer = ABOVE_WALL_LAYER)
-				operating_turf.overlays += vis
-		else
+		if(!add_to_turfs)
 			// I HATE the code duping, but we need to try both to ensure it's properly cleared
 			var/mutable_appearance/split_vis/vis
 			vis = get_splitvis_object(offset, icon_path, "innercorner", direction, color, 0, 0, HIDDEN_WALL_PLANE, ABOVE_WALL_LAYER)
 			target_turf.overlays -= vis
 			vis = get_splitvis_object(offset, icon_path, "innercorner", direction, color, -DIR_TO_PIXEL_X(direction), -DIR_TO_PIXEL_Y(direction), layer = ABOVE_WALL_LAYER)
 			operating_turf.overlays -= vis
+			continue
+		var/mutable_appearance/split_vis/vis
+		// If we're trying to draw to something with splitvis, just draw to yourself, and use the hidden wall plane
+		// Wallening todo: Frills should block emissives
+		if(HAS_TRAIT(operating_turf, TRAIT_CONTAINS_SPLITVIS))
+			vis = get_splitvis_object(offset, icon_path, "innercorner", direction, color, 0, 0, HIDDEN_WALL_PLANE, ABOVE_WALL_LAYER)
+			target_turf.overlays += vis
+		else
+			vis = get_splitvis_object(offset, icon_path, "innercorner", direction, color, -DIR_TO_PIXEL_X(direction), -DIR_TO_PIXEL_Y(direction), layer = ABOVE_WALL_LAYER)
+			operating_turf.overlays += vis
+
 
 /datum/element/split_visibility/Detach(atom/target)
 	target.cut_overlay(mutable_appearance('icons/turf/walls/wall_blackness.dmi', "wall_background", UNDER_WALL_LAYER, target, GAME_PLANE))
