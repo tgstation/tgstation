@@ -25,7 +25,7 @@ GLOBAL_LIST_INIT(falsewall_alpha_icons, generate_transparent_falsewalls())
 	vis_flags = VIS_INHERIT_ID
 	appearance_flags = parent_type::appearance_flags | KEEP_TOGETHER | RESET_TRANSFORM
 
-/obj/effect/falsewall_mask/New()
+/obj/effect/falsewall_mask/Initialize(mapload)
 	. = ..()
 	render_target = "*falsewall_mask"
 
