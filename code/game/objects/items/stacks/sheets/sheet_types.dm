@@ -912,6 +912,23 @@ new /datum/stack_recipe("paper frame door", /obj/structure/mineral_door/paperfra
 /obj/item/stack/sheet/pizza/five
 	amount = 5
 
+/obj/item/stack/sheet/cheese
+	name = "cheese rectangles"
+	desc = "Man reinvents the wheel once more. The cheese wheel."
+	name = "cheese rectangle"
+	icon_state = "sheet-cheese"
+	mats_per_unit = list(/datum/material/cheese = SHEET_MATERIAL_AMOUNT)
+	merge_type = /obj/item/stack/sheet/cheese
+	material_type = /datum/material/cheese
+	material_modifier = 1
+
+/obj/item/stack/sheet/pizza/fifty
+	amount = 50
+/obj/item/stack/sheet/pizza/twenty
+	amount = 20
+/obj/item/stack/sheet/pizza/five
+	amount = 5
+
 /obj/item/stack/sheet/sandblock
 	name = "blocks of sand"
 	desc = "You're too old to be playing with sandcastles. Now you build... sandstations."

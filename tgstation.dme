@@ -1617,6 +1617,7 @@
 #include "code\datums\materials\_material.dm"
 #include "code\datums\materials\alloys.dm"
 #include "code\datums\materials\basemats.dm"
+#include "code\datums\materials\cheese.dm"
 #include "code\datums\materials\hauntium.dm"
 #include "code\datums\materials\meat.dm"
 #include "code\datums\materials\pizza.dm"
