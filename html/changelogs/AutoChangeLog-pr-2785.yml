@@ -1,4 +1,0 @@
-author: "Absolucy"
-delete-after: True
-changes:
-  - bugfix: "Organ regeneration/healing stuff no longer deletes your wings, if you obtained any."

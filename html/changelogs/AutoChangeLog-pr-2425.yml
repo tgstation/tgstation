@@ -1,5 +1,0 @@
-author: "Absolucy"
-delete-after: True
-changes:
-  - bugfix: "Fixed missing pipes in Xenobiology disposals on DeltaStation and BoxStation."
-  - bugfix: "Xenobiology trash on MetaStation should now properly be ejected into space, rather than 2 tiles away from the window."

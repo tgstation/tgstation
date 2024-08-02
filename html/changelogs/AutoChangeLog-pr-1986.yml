@@ -1,4 +1,0 @@
-author: "Absolucy"
-delete-after: True
-changes:
-  - qol: "Roundstart station lockers are now anchored by default. Crates and such are unaffected."

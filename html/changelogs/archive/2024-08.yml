@@ -2,3 +2,31 @@
   Absolucy:
   - bugfix: Harvesting plants will always properly drop on the floor in edge-case
       scenarios, i.e mechcomp interactors.
+2024-08-02:
+  Absolucy:
+  - balance: RCD, RPD, RTD, and relevant upgrades are now printable by science.
+  - balance: The ATMOS holofan projector is now printable by science.
+  - balance: 'Surgical drapes, laser scalpel, mechanical pinches, searing tool are
+      nowprintable from the Robotics mechfab.
+
+      balance Alien surgical tools are now printable from robotics mechfab.'
+  - bugfix: DNA Infusions now transfer skillchips.
+  - qol: Roundstart station lockers are now anchored by default. Crates and such are
+      unaffected.
+  - bugfix: Organ regeneration/healing stuff no longer deletes your wings, if you
+      obtained any.
+  - bugfix: Fix bloodsucker abilities not working properly for Venture favorite vassals.
+  - bugfix: Abductors using sign language now have typing indicators like anyone else
+      would.
+  - bugfix: Fixed missing pipes in Xenobiology disposals on DeltaStation and BoxStation.
+  - bugfix: Xenobiology trash on MetaStation should now properly be ejected into space,
+      rather than 2 tiles away from the window.
+  - sound: Got rid of the sound effect that overlapped the moon heretic ascension
+      song when becoming a Lunatic.
+  - balance: Proto-kinetic shockwaves now have an unremovable explorer firing pin,
+      preventing them from being fired on the station.
+  Melbert:
+  - bugfix: Fix timestop being 1 tile too small again, and fixes a lot of other field
+      effects from being 1-small as well
+  flleeppyy:
+  - admin: '"Select Equipment" now has an option to do "Holy Effect"'
