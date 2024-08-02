@@ -1,10 +1,9 @@
 import { BooleanLike } from 'common/react';
 import { createSearch } from 'common/string';
 import { useState } from 'react';
-import { DmIcon, Icon } from 'tgui-core/components';
 
 import { useBackend } from '../backend';
-import { Button, Input, NoticeBox, Section, ImageButton } from '../components';
+import { Button, ImageButton, Input, NoticeBox, Section } from '../components';
 import { Window } from '../layouts';
 
 type Item = {
@@ -31,9 +30,6 @@ export const SmartVend = (props) => {
       ? Object.values(data.contents).filter(search)
       : Object.values(data.contents);
 
-  const fallback = (
-    <Icon name="spinner" lineHeight="64px" size={3} spin color="gray" />
-  );
   return (
     <Window width={431} height={570}>
       <Window.Content>
@@ -79,7 +75,6 @@ export const SmartVend = (props) => {
                   key={item.path}
                   dmIcon={item.icon}
                   dmIconState={item.icon_state}
-                  dmFallback={fallback}
                   tooltip={item.name}
                   tooltipPosition="bottom"
                   disabled={item.amount < 1}

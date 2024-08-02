@@ -6,20 +6,14 @@
 
 import { Placement } from '@popperjs/core';
 import { BooleanLike, classes } from 'common/react';
-import {
-  ChangeEvent,
-  createRef,
-  MouseEvent,
-  ReactNode,
-  useEffect,
-  useRef,
-  useState,
-} from 'react';
+import { ReactNode } from 'react';
 
 import { resolveAsset } from '../assets';
-import { Box, BoxProps, computeBoxClassName, computeBoxProps } from './Box';
-import { Image } from './Image';
+import { BoxProps, computeBoxProps } from './Box';
 import { DmIcon } from './DmIcon';
+import { Icon } from './Icon';
+import { Image } from './Image';
+import { Stack } from './Stack';
 import { Tooltip } from './Tooltip';
 
 type Props = Required<{}> &
@@ -66,6 +60,19 @@ export const ImageButton = (props: Props) => {
     ...rest
   } = props;
 
+  const getFallback = (iconName, iconSpin) => (
+    <Stack height={`${imageSize}px`} width={`${imageSize}px`}>
+      <Stack.Item grow textAlign="center" align="center">
+        <Icon
+          spin={iconSpin}
+          name={iconName}
+          color="gray"
+          style={{ fontSize: `calc(${imageSize}px * 0.75)` }}
+        />
+      </Stack.Item>
+    </Stack>
+  );
+
   let buttonContent = (
     <div
       className={classes([
@@ -103,17 +110,16 @@ export const ImageButton = (props: Props) => {
             height={`${imageSize}px`}
             width={`${imageSize}px`}
           />
+        ) : dmIcon && dmIconState ? (
+          <DmIcon
+            icon={dmIcon}
+            icon_state={dmIconState}
+            fallback={dmFallback ? dmFallback : getFallback('spinner', true)}
+            height={`${imageSize}px`}
+            width={`${imageSize}px`}
+          />
         ) : (
-          dmIcon &&
-          dmIconState && (
-            <DmIcon
-              icon={dmIcon}
-              icon_state={dmIconState}
-              fallback={dmIcon && dmIconState && dmFallback}
-              height={`${imageSize}px`}
-              width={`${imageSize}px`}
-            />
-          )
+          getFallback('question', false)
         )}
       </div>
       <span

@@ -96,12 +96,12 @@ $bg-map: colors.$bg-map !default;
 }
 
 .ImageButton {
-  display: inline-flex;
+  display: inline-block;
   position: relative;
   margin: 0.25em;
 
   &__container {
-    display: inline-flex;
+    display: flex;
     flex-direction: column;
   }
 
