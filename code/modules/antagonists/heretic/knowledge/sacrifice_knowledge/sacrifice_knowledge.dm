@@ -68,13 +68,20 @@
 		atoms += user
 		return TRUE
 
+
+	// monkestation edit: allow stamcrit targets to be sacrificed (bc they're incapable of putting up resistance)
+	// in addition, if you need to sac a head of staff, any of them will do.
+	var/datum/objective/major_sacrifice/sac_head = locate() in heretic_datum.objectives
 	// If we have targets, we can check to see if we can do a sacrifice
 	// Let's remove any humans in our atoms list that aren't a sac target
 	for(var/mob/living/carbon/human/sacrifice in atoms)
-		// If the mob's not in soft crit or worse, or isn't one of the sacrifices, remove it from the list
-		// monke edit: allow stamcrit targets to be sacrificed (bc they're incapable of putting up resistance)
-		if(!(sacrifice in heretic_datum.sac_targets) || (sacrifice.stat < SOFT_CRIT && !HAS_TRAIT_FROM(sacrifice, TRAIT_INCAPACITATED, STAMINA)))
+		var/is_target = (sacrifice in heretic_datum.sac_targets)
+		var/sac_department_flag = (sacrifice.mind?.assigned_role?.departments_bitflags | sacrifice.last_mind?.assigned_role?.departments_bitflags)
+		var/is_needed_command = (sac_head && !sac_head.check_completion() && (sac_department_flag & DEPARTMENT_BITFLAG_COMMAND))
+		var/is_valid_state = (sacrifice.stat < SOFT_CRIT && !HAS_TRAIT_FROM(sacrifice, TRAIT_INCAPACITATED, STAMINA))
+		if(!(is_target || is_needed_command) || !is_valid_state)
 			atoms -= sacrifice
+	// monkestation end
 
 	// Finally, return TRUE if we have a target in the list
 	if(locate(/mob/living/carbon/human) in atoms)
