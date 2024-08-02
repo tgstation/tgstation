@@ -24,6 +24,9 @@ GLOBAL_PROTECT(lua_state_stack)
 	/// Whether the timer.lua script has been included into this lua context state.
 	var/timer_enabled = FALSE
 
+	/// Whether to supress logging BYOND runtimes for this state.
+	var/supress_runtimes = FALSE
+
 	/// Callbacks that need to be ran on next tick
 	var/list/functions_to_execute = list()
 
