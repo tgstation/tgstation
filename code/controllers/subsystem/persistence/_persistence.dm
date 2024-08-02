@@ -20,7 +20,7 @@ SUBSYSTEM_DEF(persistence)
 	var/list/blocked_maps = list()
 	var/list/saved_trophies = list()
 	var/list/picture_logging_information = list()
-	///List of all stored circuit designs
+	///Associated list of all saved circuits, ckey -> list of designs
 	var/list/circuit_designs = list()
 
 	/// A json_database linking to data/photo_frames.json.
@@ -64,7 +64,6 @@ SUBSYSTEM_DEF(persistence)
 	load_delamination_counter()
 	load_tram_counter()
 	load_adventures()
-	load_circuits()
 	return SS_INIT_SUCCESS
 
 ///Collects all data to persist.

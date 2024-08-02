@@ -408,12 +408,16 @@
 
 	switch (action)
 		if ("print")
+
 			var/design_id = text2num(params["designId"])
+			var/list/all_designs = scanned_designs
+			if (!isnull(SSpersistence.circuit_designs[ui.user.client?.ckey]))
+				all_designs = scanned_designs | SSpersistence.circuit_designs[ui.user.client?.ckey]
 
-			if (design_id < 1 || design_id > length(SSpersistence.circuit_designs))
+			var/list/design = all_designs[design_id]
+
+			if (design_id < 1 || design_id > length(all_designs))
 				return TRUE
-
-			var/list/design = SSpersistence.circuit_designs[design_id]
 
 			if (design["author_ckey"] != ui.user.client?.ckey && !(design in scanned_designs)) // Get away from here, cheater
 				return TRUE
@@ -460,7 +464,8 @@
 			if(tgui_alert(ui.user, "Are you sure you want to delete [design["name"]]?", "Module Duplicator", list("Yes","No")) != "Yes")
 				return TRUE
 
-			SSpersistence.circuit_designs -= list(design)
+			if (!isnull(SSpersistence.circuit_designs[design["author_ckey"]]))
+				SSpersistence.circuit_designs[design["author_ckey"]] -= list(design)
 			scanned_designs -= list(design)
 			update_static_data_for_all_viewers()
 
@@ -507,6 +512,7 @@
 		data["name"] = module.display_name
 		data["desc"] = "A module that has been loaded in by [user]."
 		data["materials"] = list(GET_MATERIAL_REF(/datum/material/glass) = module.circuit_size * cost_per_component)
+		data["author_ckey"] = user.client?.ckey
 	else if(istype(weapon, /obj/item/integrated_circuit))
 		var/obj/item/integrated_circuit/integrated_circuit = weapon
 		if(HAS_TRAIT(integrated_circuit, TRAIT_CIRCUIT_UNDUPABLE))
@@ -533,7 +539,13 @@
 		balloon_alert(user, "it needs a name!")
 		return ..()
 
-	for(var/list/component_data as anything in SSpersistence.circuit_designs)
+	var/list/all_designs = scanned_designs
+	if (!isnull(user.client?.ckey))
+		if (isnull(SSpersistence.circuit_designs[user.client?.ckey]))
+			SSpersistence.load_circuits_by_ckey(user.client?.ckey)
+		all_designs = scanned_designs | SSpersistence.circuit_designs[user.client?.ckey]
+
+	for(var/list/component_data as anything in all_designs)
 		if (component_data["author_ckey"] != user.client?.ckey && !(component_data in scanned_designs))
 			continue
 
@@ -545,8 +557,12 @@
 	addtimer(CALLBACK(src, PROC_REF(finish_module_scan), user, data), 1.4 SECONDS)
 
 /obj/machinery/module_duplicator/proc/finish_module_scan(mob/user, data)
-	SSpersistence.circuit_designs += list(data)
 	scanned_designs += list(data)
+
+	if (!isnull(user.client?.ckey))
+		if (isnull(SSpersistence.circuit_designs[user.client?.ckey]))
+			SSpersistence.load_circuits_by_ckey(user.client?.ckey)
+		SSpersistence.circuit_designs[user.client?.ckey] += list(data)
 
 	balloon_alert(user, "module has been saved.")
 	playsound(src, 'sound/machines/ping.ogg', 50)
@@ -562,12 +578,14 @@
 	var/list/data = materials.mat_container.ui_static_data()
 
 	var/list/designs = list()
+	var/list/all_designs = scanned_designs
+	if (!isnull(user.client?.ckey))
+		if (isnull(SSpersistence.circuit_designs[user.client?.ckey]))
+			SSpersistence.load_circuits_by_ckey(user.client?.ckey)
+		all_designs = scanned_designs | SSpersistence.circuit_designs[user.client?.ckey]
 
 	var/index = 1
-	for (var/list/design as anything in SSpersistence.circuit_designs)
-		if (design["author_ckey"] != user.client?.ckey && !(design in scanned_designs))
-			continue
-
+	for (var/list/design as anything in all_designs)
 		var/list/cost = list()
 		var/list/materials = design["materials"]
 		for(var/datum/material/mat in materials)
