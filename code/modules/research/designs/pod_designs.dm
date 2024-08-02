@@ -225,7 +225,7 @@
 		RND_CATEGORY_MECHFAB_SPACEPOD + RND_SUBCATEGORY_MECHFAB_POD_SECONDARY
 	)
 
-/datum/design/pod_equipment/dnalock
+/datum/design/pod_equipment/orehold
 	name = /obj/item/pod_equipment/orestorage::name
 	id = "podorehold"
 	build_path = /obj/item/pod_equipment/orestorage
