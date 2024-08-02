@@ -35,8 +35,8 @@
 	icon_state = "defaced"
 
 /obj/structure/shipping_container/deforest
-	name = "\improper DeForest Medical Corp. shipping container"
-	desc = "A standard-measure shipping container for bulk transport of goods. This one is from DeForest, and so is probably carrying medical supplies."
+	name = "\improper Nanotrasen-DeForest shipping container"
+	desc = "A standard-measure shipping container for bulk transport of goods. This one is from Nanotrasen-DeForest, and so is probably carrying medical supplies."
 	icon_state = "deforest"
 
 /obj/structure/shipping_container/great_northern
@@ -49,7 +49,7 @@
 
 /obj/structure/shipping_container/kahraman
 	name = "\improper Kahraman Heavy Industry shipping container"
-	desc = "A standard-measure shipping container for bulk transport of goods. This one is from Kahraman, and is reinforced for carrying ore."
+	desc = "A standard-measure shipping container for bulk transport of goods. This one is from Kahraman, and is reinforced for carrying mining equipment."
 	icon_state = "kahraman"
 
 /obj/structure/shipping_container/kahraman/alt
@@ -190,8 +190,8 @@
 	icon_state = "blank_reefer"
 
 /obj/structure/shipping_container/reefer/deforest
-	name = "\improper DeForest Medical Corp. reefer shipping container"
-	desc = "A standard-measure reefer shipping container for bulk transport of refrigerated goods. This one is from DeForest, and is probably carrying temperature sensitive biological material."
+	name = "\improper Nanotrasen-DeForest reefer shipping container"
+	desc = "A standard-measure reefer shipping container for bulk transport of refrigerated goods. This one is from Nanotrasen-DeForest, and is probably carrying temperature sensitive biological material."
 	icon_state = "deforest_reefer"
 
 /obj/structure/shipping_container/reefer/biosustain
@@ -212,7 +212,7 @@
 
 /obj/structure/shipping_container/gas/apda
 	name = "\improper APdA S.p.A. bulk helium tank"
-	desc = "A standard-measure gas tank for bulk transport of gases. This one is from Associato Petrochimico dell'Adriatico, containing one of their two biggest products: helium-3 for fuel use."
+	desc = "A standard-measure gas tank for bulk transport of gases. This one is from Associato Petrochimico dell'Adriatico, containing their second most important export: helium-3 for fuel use."
 	icon_state = "apda_gas_helium"
 
 /obj/structure/shipping_container/gas/apda/hydrogen
