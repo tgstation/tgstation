@@ -205,7 +205,7 @@
 	priority_announce(
 		text = "[generate_heretic_text()] The nobleman of void [user.real_name] has arrived, stepping along the Waltz that ends worlds! [generate_heretic_text()]",
 		title = "[generate_heretic_text()]",
-		sound = 'monkestation/sound/ambience/antag/heretic/ascend_void.ogg',
+		sound = 'sound/ambience/antag/heretic/ascend_void.ogg',
 		color_override = "pink",
 	)
 	user.client?.give_award(/datum/award/achievement/misc/void_ascension, user)
