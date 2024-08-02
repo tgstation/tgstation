@@ -964,8 +964,8 @@
 
 // Snowflake movement handler for our pods, basically smooth_move
 // Not useful unless youre planning to directly modify certain vars
-/datum/move_manager/proc/pod_move(moving, delay, timeout, subsystem, priority, flags, datum/extra_info)
-	return add_to_loop(moving, subsystem, /datum/move_loop/pod_move, priority, flags, extra_info, delay, timeout)
+/datum/move_manager/proc/pod_move(moving, direction, delay, timeout, subsystem, priority, flags, datum/extra_info)
+	return add_to_loop(moving, subsystem, /datum/move_loop/pod_move, priority, flags, extra_info, delay, timeout, direction)
 
 /datum/move_loop/pod_move
 	var/velocity_max = 0
@@ -979,16 +979,16 @@
 	. = ..()
 
 /datum/move_loop/pod_move/move()
-	var/velocity_magnitude = sqrt(velocity_x * velocity_x + velocity_y * velocity_y) // the magnitude of a velocity vector is also known as speed
-
+	var/velocity_magnitude = sqrt(velocity_x*velocity_x + velocity_y*velocity_y)
 	if (velocity_magnitude > velocity_max)
 		velocity_x /= velocity_magnitude
 		velocity_y /= velocity_magnitude
 		velocity_x *= velocity_max
 		velocity_y *= velocity_max
-		velocity_magnitude = velocity_max // normalizing a vector and then multiplying it by a value sets its magnitude to that value, so we can skip the calculation
 
 	var/velocity_dir = angle2dir(arctan(velocity_y, velocity_x))
+	if (!velocity_magnitude)
+		velocity_magnitude = sqrt(velocity_x*velocity_x + velocity_y*velocity_y)
 
 	var/saved_delay = velocity_magnitude ? 10/velocity_magnitude : 0
 	if (velocity_dir & (velocity_dir-1))
@@ -999,8 +999,9 @@
 
 	if (saved_delay)
 		var/turf/target = get_step(moving, velocity_dir)
-		moving.Move(target, get_dir(moving, target), FALSE, !(flags & MOVEMENT_LOOP_NO_DIR_UPDATE))
+		moving.Move(target, get_dir(moving, target), FALSE , !(flags & MOVEMENT_LOOP_NO_DIR_UPDATE))
 		if (moving.loc != target) // we cant move, we hit something or are immobilized. ABORT ABORT
+			to_chat
 			velocity_x = 0
 			velocity_y = 0
 			velocity_magnitude = 0
