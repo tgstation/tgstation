@@ -122,7 +122,7 @@
 	return bleed_amt
 
 /datum/wound/slash/flesh/get_bleed_rate_of_change()
-	//basically if a species doesn't bleed, the wound is stagnant and will not heal on it's own (nor get worse)
+	//basically if a species doesn't bleed, the wound is stagnant and will not heal on its own (nor get worse)
 	if(!limb.can_bleed())
 		return BLOOD_FLOW_STEADY
 	if(HAS_TRAIT(victim, TRAIT_BLOODY_MESS))
@@ -137,7 +137,7 @@
 	if (!victim || HAS_TRAIT(victim, TRAIT_STASIS))
 		return
 
-	// in case the victim has the NOBLOOD trait, the wound will simply not clot on it's own
+	// in case the victim has the NOBLOOD trait, the wound will simply not clot on its own
 	if(limb.can_bleed())
 		set_blood_flow(min(blood_flow, WOUND_SLASH_MAX_BLOODFLOW))
 

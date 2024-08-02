@@ -88,6 +88,7 @@
 		"comm_monitor",
 		"comm_server",
 		"message_monitor",
+		"ntnet_relay",
 		"s_hub",
 		"s_messaging",
 		"s_server",
@@ -103,7 +104,6 @@
 		"s_filter",
 		"s_transmitter",
 		"s_treatment",
-		"gigabeacon",
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_5_POINTS)
 
@@ -142,16 +142,6 @@
 		"wirecutters",
 		"light_bulb",
 		"light_tube",
-		"intercom_frame",
-		"newscaster_frame",
-		"status_display_frame",
-		"circuit",
-		"circuitgreen",
-		"circuitred",
-		"tram_floor_dark",
-		"tram_floor_light",
-		"tram_controller",
-		"tram_display",
 		"crossing_signal",
 		"guideway_sensor",
 	)

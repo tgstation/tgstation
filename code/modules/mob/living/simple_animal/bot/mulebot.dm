@@ -48,9 +48,8 @@
 	///Number of times retried a blocked path
 	var/blockcount = 0
 
-	var/auto_return = TRUE /// true if auto return to home beacon after unload
-	var/auto_pickup = TRUE /// true if auto-pickup at beacon
-	var/report_delivery = TRUE /// true if bot will announce an arrival to a location.
+	///flags of mulebot mode
+	var/mulebot_delivery_flags = MULEBOT_RETURN_MODE | MULEBOT_AUTO_PICKUP_MODE | MULEBOT_REPORT_DELIVERY_MODE
 
 	var/obj/item/stock_parts/power_store/cell /// Internal Powercell
 	var/cell_move_power_usage = 1///How much power we use when we move.
@@ -113,7 +112,6 @@
 /mob/living/simple_animal/bot/mulebot/Destroy()
 	UnregisterSignal(src, list(COMSIG_MOB_BOT_PRE_STEP, COMSIG_MOB_CLIENT_PRE_MOVE, COMSIG_MOB_BOT_STEP, COMSIG_MOB_CLIENT_MOVED))
 	unload(0)
-	QDEL_NULL(wires)
 	QDEL_NULL(cell)
 	return ..()
 
@@ -262,7 +260,7 @@
 
 /mob/living/simple_animal/bot/mulebot/ui_data(mob/user)
 	var/list/data = list()
-	data["on"] = bot_mode_flags & BOT_MODE_ON
+	data["powerStatus"] = bot_mode_flags & BOT_MODE_ON
 	data["locked"] = bot_cover_flags & BOT_COVER_LOCKED
 	data["siliconUser"] = HAS_SILICON_ACCESS(user)
 	data["mode"] = mode ? "[mode]" : "Ready"
@@ -275,18 +273,17 @@
 		if(BOT_NO_ROUTE)
 			data["modeStatus"] = "bad"
 	data["load"] = get_load_name()
-	data["destination"] = destination ? destination : null
-	data["home"] = home_destination
-	data["destinations"] = GLOB.deliverybeacontags
-	data["cell"] = cell ? TRUE : FALSE
-	data["cellPercent"] = cell ? cell.percent() : null
-	data["autoReturn"] = auto_return
-	data["autoPickup"] = auto_pickup
-	data["reportDelivery"] = report_delivery
-	data["id"] = id
-	data["allow_possession"] = bot_mode_flags & BOT_MODE_CAN_BE_SAPIENT
-	data["possession_enabled"] = can_be_possessed
-	data["pai_inserted"] = !!paicard
+	data["destination"] = destination
+	data["homeDestination"] = home_destination
+	data["destinationsList"] = GLOB.deliverybeacontags
+	data["cellPercent"] = cell?.percent()
+	data["autoReturn"] = mulebot_delivery_flags & MULEBOT_RETURN_MODE
+	data["autoPickup"] = mulebot_delivery_flags & MULEBOT_AUTO_PICKUP_MODE
+	data["reportDelivery"] = mulebot_delivery_flags & MULEBOT_REPORT_DELIVERY_MODE
+	data["botId"] = id
+	data["allowPossession"] = bot_mode_flags & BOT_MODE_CAN_BE_SAPIENT
+	data["possessionEnabled"] = can_be_possessed
+	data["paiInserted"] = !!paicard
 	return data
 
 /mob/living/simple_animal/bot/mulebot/ui_act(action, params)
@@ -352,11 +349,11 @@
 				else
 					unload(0)
 		if("autoret")
-			auto_return = !auto_return
+			mulebot_delivery_flags ^= MULEBOT_RETURN_MODE
 		if("autopick")
-			auto_pickup = !auto_pickup
+			mulebot_delivery_flags ^= MULEBOT_AUTO_PICKUP_MODE
 		if("report")
-			report_delivery = !report_delivery
+			mulebot_delivery_flags ^= MULEBOT_REPORT_DELIVERY_MODE
 
 /mob/living/simple_animal/bot/mulebot/proc/buzz(type)
 	switch(type)
@@ -433,8 +430,8 @@
 		return TRUE
 
 /mob/living/simple_animal/bot/mulebot/post_unbuckle_mob(mob/living/M)
-		load = null
-		return ..()
+	load = null
+	return ..()
 
 // called to unload the bot
 // argument is optional direction to unload
@@ -637,12 +634,12 @@
 				radio_channel = RADIO_CHANNEL_AI_PRIVATE //Report on AI Private instead if the AI is controlling us.
 
 		if(load) // if loaded, unload at target
-			if(report_delivery)
+			if(mulebot_delivery_flags & MULEBOT_REPORT_DELIVERY_MODE)
 				speak("Destination [RUNECHAT_BOLD("[destination]")] reached. Unloading [load].",radio_channel)
 			unload(loaddir)
 		else
 			// not loaded
-			if(auto_pickup) // find a crate
+			if(mulebot_delivery_flags & MULEBOT_AUTO_PICKUP_MODE) // find a crate
 				var/atom/movable/AM
 				if(wires.is_cut(WIRE_LOADCHECK)) // if hacked, load first unanchored thing we find
 					for(var/atom/movable/A in get_step(loc, loaddir))
@@ -653,11 +650,11 @@
 					AM = locate(/obj/structure/closet/crate) in get_step(loc,loaddir)
 				if(AM?.Adjacent(src))
 					load(AM)
-					if(report_delivery)
+					if(mulebot_delivery_flags & MULEBOT_REPORT_DELIVERY_MODE)
 						speak("Now loading [load] at [RUNECHAT_BOLD("[get_area_name(src)]")].", radio_channel)
 		// whatever happened, check to see if we return home
 
-		if(auto_return && home_destination && destination != home_destination)
+		if((mulebot_delivery_flags & MULEBOT_RETURN_MODE) && home_destination && destination != home_destination)
 			// auto return set and not at home already
 			start_home()
 			mode = BOT_BLOCKED
@@ -757,7 +754,6 @@
 	new /obj/item/stack/cable_coil/cut(Tsec)
 	if(cell)
 		cell.forceMove(Tsec)
-		cell.update_appearance()
 		cell = null
 
 	new /obj/effect/decal/cleanable/oil(loc)

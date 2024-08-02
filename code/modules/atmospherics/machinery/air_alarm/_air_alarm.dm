@@ -137,7 +137,6 @@ GLOBAL_LIST_EMPTY_TYPED(air_alarms, /obj/machinery/airalarm)
 /obj/machinery/airalarm/Destroy()
 	if(my_area)
 		my_area = null
-	QDEL_NULL(wires)
 	QDEL_NULL(alarm_manager)
 	GLOB.air_alarms -= src
 	return ..()
@@ -145,6 +144,8 @@ GLOBAL_LIST_EMPTY_TYPED(air_alarms, /obj/machinery/airalarm)
 /obj/machinery/airalarm/proc/check_enviroment()
 	var/turf/our_turf = connected_sensor ? get_turf(connected_sensor) : get_turf(src)
 	var/datum/gas_mixture/environment = our_turf.return_air()
+	if(isnull(environment))
+		return
 	check_danger(our_turf, environment, environment.temperature)
 
 /obj/machinery/airalarm/proc/get_enviroment()
@@ -552,6 +553,9 @@ GLOBAL_LIST_EMPTY_TYPED(air_alarms, /obj/machinery/airalarm)
 /obj/machinery/airalarm/proc/check_danger(turf/location, datum/gas_mixture/environment, exposed_temperature)
 	SIGNAL_HANDLER
 	if((machine_stat & (NOPOWER|BROKEN)) || shorted)
+		return
+
+	if(!environment)
 		return
 
 	var/old_danger = danger_level

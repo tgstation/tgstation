@@ -537,7 +537,7 @@
 	n2o_euphoria = EUPHORIA_INACTIVE
 	breather.clear_alert(ALERT_TOO_MUCH_N2O)
 
-// Breath in nitrium. It's helpful, but has nasty side effects
+// Breathe in nitrium. It's helpful, but has nasty side effects
 /obj/item/organ/internal/lungs/proc/too_much_nitrium(mob/living/carbon/breather, datum/gas_mixture/breath, nitrium_pp, old_nitrium_pp)
 	breathe_gas_volume(breath, /datum/gas/nitrium)
 

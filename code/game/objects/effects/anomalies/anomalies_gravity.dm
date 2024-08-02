@@ -61,7 +61,7 @@
 			if(target && !target.stat)
 				O.throw_at(target, 5, 10)
 
-	//anomaly quickly contracts then slowly expands it's ring
+	//anomaly quickly contracts then slowly expands its ring
 	animate(warp, time = seconds_per_tick*3, transform = matrix().Scale(0.5,0.5))
 	animate(time = seconds_per_tick*7, transform = matrix())
 

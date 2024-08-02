@@ -247,11 +247,6 @@
 /obj/machinery/chem_master/attack_ai_secondary(mob/user, list/modifiers)
 	return attack_hand_secondary(user, modifiers)
 
-/obj/machinery/chem_master/ui_assets(mob/user)
-	return list(
-		get_asset_datum(/datum/asset/spritesheet/chemmaster)
-	)
-
 /obj/machinery/chem_master/ui_interact(mob/user, datum/tgui/ui)
 	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
@@ -273,9 +268,10 @@
 		//add containers to this category
 		for(var/obj/item/reagent_containers/container as anything in printable_containers[category])
 			category_list["containers"] += list(list(
-				"icon" = sanitize_css_class_name("[container]"),
 				"ref" = REF(container),
 				"name" = initial(container.name),
+				"icon" = initial(container.icon),
+				"icon_state" = initial(container.icon_state),
 				"volume" = initial(container.volume),
 			))
 
@@ -365,32 +361,18 @@
  * Transfers a single reagent between buffer & beaker
  * Arguments
  *
- * * mob/user - the player who is attempting the transfer
  * * datum/reagents/source - the holder we are transferring from
  * * datum/reagents/target - the holder we are transferring to
  * * datum/reagent/path - the reagent typepath we are transfering
- * * amount - volume to transfer -1 means custom amount
+ * * amount - volume to transfer
  * * do_transfer - transfer the reagents else destroy them
  */
-/obj/machinery/chem_master/proc/transfer_reagent(mob/user, datum/reagents/source, datum/reagents/target, datum/reagent/path, amount, do_transfer)
+/obj/machinery/chem_master/proc/transfer_reagent(datum/reagents/source, datum/reagents/target, datum/reagent/path, amount, do_transfer)
 	PRIVATE_PROC(TRUE)
 
 	//sanity checks for transfer amount
-	if(isnull(amount))
+	if(isnull(amount) || amount <= 0)
 		return FALSE
-	amount = text2num(amount)
-	if(isnull(amount))
-		return FALSE
-	if(amount == -1)
-		var/target_amount = tgui_input_number(user, "Enter amount to transfer", "Transfer amount")
-		if(!target_amount)
-			return FALSE
-		amount = text2num(target_amount)
-		if(isnull(amount))
-			return FALSE
-	if(amount <= 0)
-		return FALSE
-
 	//sanity checks for reagent path
 	var/datum/reagent/reagent = text2path(path)
 	if (!reagent)
@@ -425,18 +407,34 @@
 
 		if("transfer")
 			if(is_printing)
-				say("buffer locked while printing!")
+				say("The buffer is locked while printing.")
 				return
 
 			var/reagent_ref = params["reagentRef"]
 			var/amount = params["amount"]
 			var/target = params["target"]
 
+			if(amount == -1) // Set custom amount
+				var/mob/user = ui.user //Hold a reference of the user if the UI is closed
+				amount = tgui_input_number(user, "Enter amount to transfer", "Transfer amount")
+				if(!amount || !user.can_perform_action(src))
+					return FALSE
+
+			var/should_transfer = is_transfering || (target == "buffer") // we should always transfer if target is the buffer
+			if(should_transfer && isnull(beaker)) // if there's no beaker, we cannot transfer
+				say("No reagent container is inserted.")
+				return FALSE
+
+			var/reagents_from
+			var/reagents_to = null
 			if(target == "buffer")
-				return transfer_reagent(ui.user, beaker.reagents, reagents, reagent_ref, amount, TRUE)
+				reagents_from = beaker.reagents
+				reagents_to = reagents // buffer
 			else if(target == "beaker")
-				return transfer_reagent(ui.user, reagents, beaker.reagents, reagent_ref, amount, is_transfering)
-			return FALSE
+				reagents_from = reagents // buffer
+				if(should_transfer)
+					reagents_to = beaker.reagents
+			return transfer_reagent(reagents_from, reagents_to, reagent_ref, amount, should_transfer)
 
 		if("toggleTransferMode")
 			is_transfering = !is_transfering

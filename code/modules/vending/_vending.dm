@@ -283,7 +283,6 @@ GLOBAL_LIST_EMPTY(vending_machines_to_restock)
 	register_context()
 
 /obj/machinery/vending/Destroy()
-	QDEL_NULL(wires)
 	QDEL_NULL(coin)
 	QDEL_NULL(bill)
 	QDEL_NULL(sec_radio)
@@ -397,7 +396,7 @@ GLOBAL_LIST_EMPTY(vending_machines_to_restock)
 				return
 
 /**
- * Build the inventory of the vending machine from it's product and record lists
+ * Build the inventory of the vending machine from its product and record lists
  *
  * This builds up a full set of /datum/data/vending_products from the product list of the vending machine type
  * Arguments:
@@ -833,7 +832,7 @@ GLOBAL_LIST_EMPTY(vending_machines_to_restock)
  * * turf/target: The turf to fall onto. Cannot be null.
  * * damage: The raw numerical damage to do by default.
  * * chance_to_crit: The percent chance of a critical hit occuring. Default: 0
- * * forced_crit_case: If given a value from crushing.dm, [target] and it's contents will always be hit with that specific critical hit. Default: null
+ * * forced_crit_case: If given a value from crushing.dm, [target] and its contents will always be hit with that specific critical hit. Default: null
  * * paralyze_time: The time, in deciseconds, a given mob/living will be paralyzed for if crushed.
  * * crush_dir: The direction the crush is coming from. Default: dir of src to [target].
  * * damage_type: The type of damage to do. Default: BRUTE
@@ -1074,11 +1073,9 @@ GLOBAL_LIST_EMPTY(vending_machines_to_restock)
 			var/mob/living/carbon/carbon_target = atom_target
 			for(var/i in 1 to num_shards)
 				var/obj/item/shard/shard = new /obj/item/shard(get_turf(carbon_target))
-				shard.embedding = list(embed_chance = 100, ignore_throwspeed_threshold = TRUE, impact_pain_mult = 1, pain_chance = 5)
-				shard.updateEmbedding()
+				shard.set_embed(/datum/embed_data/glass_candy)
 				carbon_target.hitby(shard, skipcatch = TRUE, hitpush = FALSE)
-				shard.embedding = list()
-				shard.updateEmbedding()
+				shard.set_embed(initial(shard.embed_type))
 			return TRUE
 		if (VENDOR_CRUSH_CRIT_PIN) // pin them beneath the machine until someone untilts it
 			if (!isliving(atom_target))
@@ -1258,6 +1255,15 @@ GLOBAL_LIST_EMPTY(vending_machines_to_restock)
 			max_amount = record.max_amount,
 			ref = REF(record),
 		)
+
+		var/atom/printed = record.product_path
+		// If it's not GAGS and has no innate colors we have to care about, we use DMIcon
+		if(ispath(printed, /atom) \
+			&& (!initial(printed.greyscale_config) || !initial(printed.greyscale_colors)) \
+			&& !initial(printed.color) \
+		)
+			static_record["icon"] = initial(printed.icon)
+			static_record["icon_state"] = initial(printed.icon_state)
 
 		var/list/category = record.category || default_category
 		if (!isnull(category))
@@ -1447,6 +1453,8 @@ GLOBAL_LIST_EMPTY(vending_machines_to_restock)
 	var/obj/item/vended_item
 	if(!LAZYLEN(item_record.returned_products)) //always give out free returned stuff first, e.g. to avoid walling a traitor objective in a bag behind paid items
 		vended_item = new item_record.product_path(get_turf(src))
+		if(vended_item.type in contraband)
+			ADD_TRAIT(vended_item, TRAIT_CONTRABAND, INNATE_TRAIT)
 		on_dispense(vended_item)
 	else
 		vended_item = LAZYACCESS(item_record.returned_products, LAZYLEN(item_record.returned_products)) //first in, last out

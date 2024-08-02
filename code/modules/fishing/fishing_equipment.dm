@@ -304,5 +304,12 @@
 	new /obj/item/fishing_line/reinforced(src)
 	new /obj/item/fishing_line/cloaked(src)
 
+/obj/item/storage/box/fish_debug
+	name = "box full of fish"
+
+/obj/item/storage/box/fish_debug/PopulateContents()
+	for(var/fish_type in subtypesof(/obj/item/fish))
+		new fish_type(src)
+
 #undef MAGNET_HOOK_BONUS_MULTIPLIER
 #undef RESCUE_HOOK_FISH_MULTIPLIER

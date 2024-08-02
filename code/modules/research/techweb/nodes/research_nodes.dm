@@ -13,7 +13,6 @@
 		"destructive_analyzer",
 		"destructive_scanner",
 		"experi_scanner",
-		"ntnet_relay",
 		"laptop",
 		"portadrive_basic",
 		"portadrive_advanced",
@@ -46,6 +45,7 @@
 		"blutrash",
 		"light_replacer_blue",
 		"bluespacebodybag",
+		"gigabeacon",
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_2_POINTS)
 	required_experiments = list(/datum/experiment/scanning/points/bluespace_crystal)
@@ -92,4 +92,5 @@
 		"gravitygun",
 		"polymorph_belt"
 	)
-	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_4_POINTS)
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_5_POINTS)
+	discount_experiments = list(/datum/experiment/scanning/points/anomalies = TECHWEB_TIER_5_POINTS)

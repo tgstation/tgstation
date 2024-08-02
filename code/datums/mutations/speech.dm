@@ -40,24 +40,13 @@
 
 	speech_args[SPEECH_SPANS] |= SPAN_SANS
 
-// Lower rust floor probability
-// Make it only happen on open turf
-// Add early return to wall hitting
-// Fix throw at on cult sac
-// Reduce tochat prob on rust floor
-// add trait rusty to windows
-// aim assist on rc doesnt work
-// also in general
-// give master seek to rusted harvester
-
 /datum/mutation/human/heckacious
 	name = "heckacious larincks"
 	desc = "duge what is WISH your words man..........."
 	quality = MINOR_NEGATIVE
-	text_gain_indication = span_sans(span_red("aw SHIT man. your throat feels like FUCKASS."))
+	text_gain_indication = span_sans("aw SHIT man. your throat feels like FUCKASS.")
 	text_lose_indication = span_notice("The demonic entity possessing your larynx has finally released its grasp.")
 	locked = TRUE
-	conflicts = list(/datum/mutation/human/trichromatic) // they both modify with the same spans. also would be way too annoying
 
 /datum/mutation/human/heckacious/on_acquiring(mob/living/carbon/human/owner)
 	if(..())
@@ -111,11 +100,15 @@
 
 		// Random caps
 		if(prob(10))
-			editing_word = uppertext(editing_word)
+			editing_word = prob(85) ? uppertext(editing_word) : LOWER_TEXT(editing_word)
 		// some times....... we add DOTS...
 		if(prob(10))
 			for(var/dotnum in 1 to rand(2, 8))
 				editing_word += "."
+		// change for bold/italics/underline as well!
+		if(prob(10))
+			var/extra_emphasis = pick("+", "_", "|")
+			editing_word = extra_emphasis + editing_word + extra_emphasis
 
 		// If no replacement we do it manually
 		if(!word_edited)
@@ -133,9 +126,6 @@
 				patchword += replacetext(editing_word[letter], "", editing_word[letter] + editing_word[letter])
 			editing_word = patchword
 
-		// Some words are randomly recolored and resized so they get a few of these
-		editing_word = span_class_handler(editing_word)
-
 		LAZYADD(edited_message_words, editing_word)
 
 	var/edited_message = jointext(edited_message_words, " ")
@@ -143,74 +133,6 @@
 	message = trim(edited_message)
 
 	speech_args[SPEECH_MESSAGE] = message
-
-/datum/mutation/human/heckacious/proc/span_class_handler(message, looped = FALSE)
-	// Sadly combining span colors will not combine the colors of the message
-	if(prob(15))
-		switch(rand(1,3))
-			if(1)
-				message = span_red(message)
-			if(2)
-				message = span_blue(message)
-			if(3)
-				message = span_green(message)
-	if(prob(15))
-		switch(rand(1,2))
-			if(1)
-				message = span_big(message)
-			if(2)
-				message = span_small(message)
-	// do it AGAIN
-	if(prob(40))
-		span_class_handler(message, looped = TRUE)
-	return message
-
-/datum/mutation/human/trichromatic
-	name = "Trichromatic Larynx"
-	desc = "A strange mutation originating from Clown Planet which alters the color of the patient's vocal chords."
-	quality = MINOR_NEGATIVE
-	text_gain_indication = span_red("You") + span_blue(" feel ") + span_green("Weird.")
-	text_lose_indication = span_notice("Your colors feel normal again.")
-	conflicts = list(/datum/mutation/human/heckacious)
-
-/datum/mutation/human/trichromatic/on_acquiring(mob/living/carbon/human/owner)
-	if(..())
-		return
-	RegisterSignal(owner, COMSIG_MOB_SAY, PROC_REF(handle_speech))
-
-/datum/mutation/human/trichromatic/on_losing(mob/living/carbon/human/owner)
-	if(..())
-		return
-	UnregisterSignal(owner, COMSIG_MOB_SAY)
-
-/datum/mutation/human/trichromatic/proc/handle_speech(datum/source, list/speech_args)
-	SIGNAL_HANDLER
-
-	var/message = speech_args[SPEECH_MESSAGE]
-
-	var/list/message_words = splittext(message, " ")
-	var/list/static/span_combo_list = list("green", "red", "blue")
-	var/words_key = 1
-	for(var/i in message_words)
-		message_words[words_key] = span_class_handler(message_words[words_key])
-		words_key++
-
-	var/edited_message = jointext(message_words, " ")
-
-	message = trim(edited_message)
-
-	speech_args[SPEECH_MESSAGE] = message
-
-/datum/mutation/human/trichromatic/proc/span_class_handler(message)
-	// Sadly combining span colors will not combine the colors of the message
-	switch(rand(1,3))
-		if(1)
-			message = span_red(message)
-		if(2)
-			message = span_blue(message)
-		if(3)
-			message = span_green(message)
-	return message
 
 /datum/mutation/human/mute
 	name = "Mute"
@@ -255,30 +177,11 @@
 	quality = MINOR_NEGATIVE
 	text_gain_indication = span_notice("You feel Swedish, however that works.")
 	text_lose_indication = span_notice("The feeling of Swedishness passes.")
+	var/static/list/language_mutilation = list("w" = "v", "j" = "y", "bo" = "bjo", "a" = list("å","ä","æ","a"), "o" = list("ö","ø","o"))
 
-/datum/mutation/human/swedish/on_acquiring(mob/living/carbon/human/owner)
-	if(..())
-		return
-	RegisterSignal(owner, COMSIG_MOB_SAY, PROC_REF(handle_speech))
-
-/datum/mutation/human/swedish/on_losing(mob/living/carbon/human/owner)
-	if(..())
-		return
-	UnregisterSignal(owner, COMSIG_MOB_SAY)
-
-/datum/mutation/human/swedish/proc/handle_speech(datum/source, list/speech_args)
-	SIGNAL_HANDLER
-
-	var/message = speech_args[SPEECH_MESSAGE]
-	if(message)
-		message = replacetext(message,"w","v")
-		message = replacetext(message,"j","y")
-		message = replacetext(message,"a",pick("å","ä","æ","a"))
-		message = replacetext(message,"bo","bjo")
-		message = replacetext(message,"o",pick("ö","ø","o"))
-		if(prob(30))
-			message += " Bork[pick("",", bork",", bork, bork")]!"
-		speech_args[SPEECH_MESSAGE] = trim(message)
+/datum/mutation/human/swedish/New(class, timer, datum/mutation/human/copymut)
+	. = ..()
+	AddComponent(/datum/component/speechmod, replacements = language_mutilation, end_string = list("",", bork",", bork, bork"), end_string_chance = 30)
 
 /datum/mutation/human/chav
 	name = "Chav"
@@ -288,35 +191,9 @@
 	text_gain_indication = span_notice("Ye feel like a reet prat like, innit?")
 	text_lose_indication = span_notice("You no longer feel like being rude and sassy.")
 
-/datum/mutation/human/chav/on_acquiring(mob/living/carbon/human/owner)
-	if(..())
-		return
-	RegisterSignal(owner, COMSIG_MOB_SAY, PROC_REF(handle_speech))
-
-/datum/mutation/human/chav/on_losing(mob/living/carbon/human/owner)
-	if(..())
-		return
-	UnregisterSignal(owner, COMSIG_MOB_SAY)
-
-/datum/mutation/human/chav/proc/handle_speech(datum/source, list/speech_args)
-	SIGNAL_HANDLER
-
-	var/message = speech_args[SPEECH_MESSAGE]
-	if(message[1] != "*")
-		message = " [message]"
-		var/list/chav_words = strings("chav_replacement.json", "chav")
-
-		for(var/key in chav_words)
-			var/value = chav_words[key]
-			if(islist(value))
-				value = pick(value)
-
-			message = replacetextEx(message, " [uppertext(key)]", " [uppertext(value)]")
-			message = replacetextEx(message, " [capitalize(key)]", " [capitalize(value)]")
-			message = replacetextEx(message, " [key]", " [value]")
-		if(prob(30))
-			message += ", mate"
-		speech_args[SPEECH_MESSAGE] = trim(message)
+/datum/mutation/human/chav/New(class, timer, datum/mutation/human/copymut)
+	. = ..()
+	AddComponent(/datum/component/speechmod, replacements = strings("chav_replacement.json", "chav"), end_string = ", mate", end_string_chance = 30)
 
 /datum/mutation/human/elvis
 	name = "Elvis"
@@ -325,6 +202,10 @@
 	quality = MINOR_NEGATIVE
 	text_gain_indication = span_notice("You feel pretty good, honeydoll.")
 	text_lose_indication = span_notice("You feel a little less conversation would be great.")
+
+/datum/mutation/human/chav/New(class, timer, datum/mutation/human/copymut)
+	. = ..()
+	AddComponent(/datum/component/speechmod, replacements = strings("elvis_replacement.json", "elvis"))
 
 /datum/mutation/human/elvis/on_life(seconds_per_tick, times_fired)
 	switch(pick(1,2))
@@ -337,39 +218,10 @@
 			if(SPT_PROB(7.5, seconds_per_tick))
 				owner.visible_message("<b>[owner]</b> [pick("jiggles their hips", "rotates their hips", "gyrates their hips", "taps their foot", "dances to an imaginary song", "jiggles their legs", "snaps their fingers")]!")
 
-/datum/mutation/human/elvis/on_acquiring(mob/living/carbon/human/owner)
-	if(..())
-		return
-	RegisterSignal(owner, COMSIG_MOB_SAY, PROC_REF(handle_speech))
-
-/datum/mutation/human/elvis/on_losing(mob/living/carbon/human/owner)
-	if(..())
-		return
-	UnregisterSignal(owner, COMSIG_MOB_SAY)
-
-/datum/mutation/human/elvis/proc/handle_speech(datum/source, list/speech_args)
-	SIGNAL_HANDLER
-
-	var/message = speech_args[SPEECH_MESSAGE]
-	if(message)
-		message = " [message] "
-		message = replacetext(message," i'm not "," I ain't ")
-		message = replacetext(message," girl ",pick(" honey "," baby "," baby doll "))
-		message = replacetext(message," man ",pick(" son "," buddy "," brother"," pal "," friendo "))
-		message = replacetext(message," out of "," outta ")
-		message = replacetext(message," thank you "," thank you, thank you very much ")
-		message = replacetext(message," thanks "," thank you, thank you very much ")
-		message = replacetext(message," what are you "," whatcha ")
-		message = replacetext(message," yes ",pick(" sure", "yea "))
-		message = replacetext(message," muh valids "," my kicks ")
-		speech_args[SPEECH_MESSAGE] = trim(message)
-
-
 /datum/mutation/human/stoner
 	name = "Stoner"
 	desc = "A common mutation that severely decreases intelligence."
 	quality = NEGATIVE
-	locked = TRUE
 	text_gain_indication = span_notice("You feel...totally chill, man!")
 	text_lose_indication = span_notice("You feel like you have a better sense of time.")
 

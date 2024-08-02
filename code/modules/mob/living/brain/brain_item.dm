@@ -40,6 +40,10 @@
 
 	/// Size modifier for the sprite
 	var/brain_size = 1
+	/// Can this brain become smooth after it gets washed
+	var/can_smoothen_out = TRUE
+	/// We got smooth from being washed
+	var/smooth_brain = FALSE
 
 /obj/item/organ/internal/brain/Initialize(mapload)
 	. = ..()
@@ -48,6 +52,8 @@
 
 /obj/item/organ/internal/brain/examine()
 	. = ..()
+	if (smooth_brain)
+		. += span_notice("All the pesky wrinkles are gone. Now it just needs a good drying...")
 	if(brain_size < 1)
 		. += span_notice("It is a bit on the smaller side...")
 	if(brain_size > 1)
@@ -113,10 +119,10 @@
 	if(!QDELETED(organ_owner) && length(skillchips))
 		if(!special)
 			to_chat(organ_owner, span_notice("You feel your skillchips enable emergency power saving mode, deactivating as your brain leaves your body..."))
-		for(var/chip in skillchips)
-			var/obj/item/skillchip/skillchip = chip
-			// Run the try_ proc with force = TRUE.
-			skillchip.try_deactivate_skillchip(silent = special, force = TRUE)
+			for(var/chip in skillchips)
+				var/obj/item/skillchip/skillchip = chip
+				// Run the try_ proc with force = TRUE.
+				skillchip.try_deactivate_skillchip(silent = special, force = TRUE)
 
 	. = ..()
 
@@ -130,6 +136,10 @@
 	if(!special)
 		organ_owner.update_body_parts()
 		organ_owner.clear_mood_event("brain_damage")
+
+/obj/item/organ/internal/brain/update_icon_state()
+	icon_state = "[initial(icon_state)][smooth_brain ? "-smooth_brain" : ""]"
+	return ..()
 
 /obj/item/organ/internal/brain/proc/transfer_identity(mob/living/L)
 	name = "[L.name]'s [initial(name)]"
@@ -373,6 +383,10 @@
 
 /obj/item/organ/internal/brain/machine_wash(obj/machinery/washing_machine/brainwasher)
 	. = ..()
+	if (can_smoothen_out && !smooth_brain)
+		smooth_brain = TRUE
+		update_appearance()
+
 	if(HAS_TRAIT(brainwasher, TRAIT_BRAINWASHING))
 		set_organ_damage(0)
 		cure_all_traumas(TRAUMA_RESILIENCE_LOBOTOMY)
@@ -408,6 +422,7 @@
 	name = "crystalline matrix"
 	desc = "This collection of sparkling gems somehow allows a golem to think."
 	icon_state = "adamantine_resonator"
+	can_smoothen_out = FALSE
 	color = COLOR_GOLEM_GRAY
 	organ_flags = ORGAN_MINERAL
 	organ_traits = list(TRAIT_ADVANCEDTOOLUSER, TRAIT_LITERATE, TRAIT_CAN_STRIP, TRAIT_ROCK_METAMORPHIC)
@@ -416,6 +431,7 @@
 	name = "lustrous brain"
 	desc = "This is your brain on bluespace dust. Not even once."
 	icon_state = "random_fly_4"
+	can_smoothen_out = FALSE
 	organ_traits = list(TRAIT_ADVANCEDTOOLUSER, TRAIT_LITERATE, TRAIT_CAN_STRIP)
 
 /obj/item/organ/internal/brain/lustrous/on_mob_remove(mob/living/carbon/organ_owner, special)
@@ -492,6 +508,11 @@
 	if(args.len > 2)
 		arguments = args.Copy(3)
 	. = brain_gain_trauma(trauma, resilience, arguments)
+
+/obj/item/organ/internal/brain/vv_edit_var(var_name, var_value)
+	. = ..()
+	if(var_name == NAMEOF(src, smooth_brain))
+		update_appearance()
 
 //Direct trauma gaining proc. Necessary to assign a trauma to its brain. Avoid using directly.
 /obj/item/organ/internal/brain/proc/brain_gain_trauma(datum/brain_trauma/trauma, resilience, list/arguments)

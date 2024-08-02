@@ -9,6 +9,9 @@
 /obj/item/ammo_box/magazine/internal/boltaction/surplus
 	ammo_type = /obj/item/ammo_casing/strilka310/surplus
 
+/obj/item/ammo_box/magazine/internal/boltaction/phasic
+	ammo_type = /obj/item/ammo_casing/strilka310/phasic
+
 /obj/item/ammo_box/magazine/internal/boltaction/pipegun
 	name = "pipegun internal magazine"
 	caliber = CALIBER_JUNK
@@ -38,6 +41,9 @@
 	max_ammo = 1
 	caliber = CALIBER_HARPOON
 	ammo_type = /obj/item/ammo_casing/harpoon
+
+/obj/item/ammo_box/magazine/internal/boltaction/jezail
+	max_ammo = 4
 
 /obj/item/ammo_box/magazine/internal/boltaction/rebarxbow/normal
 	name = "single round magazine"

@@ -89,6 +89,13 @@
 	worn_icon_state = "soapsyndie"
 	cleanspeed = 0.5 SECONDS //faster than mops so it's useful for traitors who want to clean crime scenes
 
+/obj/item/soap/drone
+	name = "\improper integrated soap module"
+	inhand_icon_state = "soapnt"
+	worn_icon_state = "soapnt"
+	cleanspeed = 0.5 SECONDS //can be changed if someone isn't happy
+	uses = INFINITY
+
 /obj/item/soap/omega
 	name = "\improper Omega soap"
 	desc = "The most advanced soap known to mankind. The beginning of the end for germs."
@@ -206,6 +213,15 @@
 	icon_state = "air_horn"
 	worn_icon_state = "horn_air"
 	sound_file = 'sound/items/airhorn2.ogg'
+
+/datum/crafting_recipe/airhorn
+	name = "Air Horn"
+	result = /obj/item/bikehorn/airhorn
+	reqs = list(
+		/obj/item/bikehorn = 1,
+		/obj/item/toy/crayon/spraycan = 1,
+	)
+	category = CAT_ENTERTAINMENT
 
 //golden bikehorn
 /obj/item/bikehorn/golden

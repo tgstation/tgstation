@@ -155,7 +155,7 @@
 ///Mob is trying to open the wires of a target [/atom], from /datum/wires/interactable(): (atom/target)
 #define COMSIG_TRY_WIRES_INTERACT "try_wires_interact"
 	#define COMPONENT_CANT_INTERACT_WIRES (1<<0)
-///Mob is trying to emote, from /datum/emote/proc/run_emote(): (key, params, type_override, intentional)
+///Mob is trying to emote, from /datum/emote/proc/run_emote(): (key, params, type_override, intentional, emote)
 #define COMSIG_MOB_PRE_EMOTED "mob_pre_emoted"
 	#define COMPONENT_CANT_EMOTE (1<<0)
 #define COMSIG_MOB_EMOTED(emote_key) "mob_emoted_[emote_key]"
@@ -205,7 +205,7 @@
 ///Sent by pilot of mech in /obj/vehicle/sealed/mecha/on_mouseclick when using mech equipment : (/obj/vehicle/sealed/mecha/mech)
 #define COMSIG_MOB_USED_MECH_EQUIPMENT "mob_used_mech_equipment"
 ///Sent by pilot of mech in /obj/vehicle/sealed/mecha/on_mouseclick when triggering mech punch : (/obj/vehicle/sealed/mecha/mech)
-#define COMSIG_MOB_USED_MECH_MELEE "mob_used_mech_melee"
+#define COMSIG_MOB_USED_CLICK_MECH_MELEE "mob_used_click_mech_melee"
 
 ///from living/flash_act(), when a mob is successfully flashed.
 #define COMSIG_MOB_FLASHED "mob_flashed"
@@ -242,6 +242,9 @@
 
 /// from /mob/proc/slip(): (knockdown_amonut, obj/slipped_on, lube_flags [mobs.dm], paralyze, force_drop)
 #define COMSIG_MOB_SLIPPED "mob_slipped"
+
+/// From the base of /datum/component/callouts/proc/callout_picker(mob/user, atom/clicked_atom): (datum/callout_option/callout, atom/target)
+#define COMSIG_MOB_CREATED_CALLOUT "mob_created_callout"
 
 /// from /mob/proc/key_down(): (key, client/client, full_key)
 #define COMSIG_MOB_KEYDOWN "mob_key_down"

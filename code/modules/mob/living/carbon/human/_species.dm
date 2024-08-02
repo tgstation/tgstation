@@ -744,7 +744,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
 			sample_overlay = new overlay_path()
 			organs_to_randomize[overlay_path] = sample_overlay
 
-		new_features["[sample_overlay.feature_key]"] = pick(sample_overlay.get_global_feature_list())
+		new_features["[sample_overlay.feature_key]"] = sample_overlay.get_random_appearance().name
 
 	return new_features
 
@@ -1195,9 +1195,10 @@ GLOBAL_LIST_EMPTY(features_by_species)
 
 	// Get the insulation value based on the area's temp
 	var/thermal_protection = humi.get_insulation_protection(area_temp)
+	var/original_bodytemp = humi.bodytemperature
 
 	// Changes to the skin temperature based on the area
-	var/area_skin_diff = area_temp - humi.bodytemperature
+	var/area_skin_diff = area_temp - original_bodytemp
 	if(!humi.on_fire || area_skin_diff > 0)
 		// change rate of 0.05 as area temp has large impact on the surface
 		var/area_skin_change = get_temp_change_amount(area_skin_diff, 0.05 * seconds_per_tick)
@@ -1217,7 +1218,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
 	// Core to skin temp transfer, when not on fire
 	if(!humi.on_fire)
 		// Get the changes to the skin from the core temp
-		var/core_skin_diff = humi.coretemperature - humi.bodytemperature
+		var/core_skin_diff = humi.coretemperature - original_bodytemp
 		// change rate of 0.045 to reflect temp back to the skin at the slight higher rate then core to skin
 		var/core_skin_change = (1 + thermal_protection) * get_temp_change_amount(core_skin_diff, 0.045 * seconds_per_tick)
 
@@ -1512,6 +1513,14 @@ GLOBAL_LIST_EMPTY(features_by_species)
 
 /// Returns the species' cry sound.
 /datum/species/proc/get_cry_sound(mob/living/carbon/human/human)
+	return
+
+/// Returns the species' sigh sound.
+/datum/species/proc/get_sigh_sound(mob/living/carbon/human/human)
+	return
+
+/// Returns the species' sniff sound.
+/datum/species/proc/get_sniff_sound(mob/living/carbon/human/human)
 	return
 
 /// Returns the species' cough sound.

@@ -645,7 +645,7 @@ SUBSYSTEM_DEF(timer)
 				hash_timer.hash = null // but keep it from accidentally deleting us
 			else
 				if (flags & TIMER_OVERRIDE)
-					hash_timer.hash = null // no need having it delete it's hash if we are going to replace it
+					hash_timer.hash = null // no need having it delete its hash if we are going to replace it
 					qdel(hash_timer)
 				else
 					if (hash_timer.flags & TIMER_STOPPABLE)

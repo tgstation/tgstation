@@ -487,7 +487,7 @@
 /**
  * A plant trait that causes the plant's capacity to double.
  *
- * When harvested, the plant's individual capacity is set to double it's default.
+ * When harvested, the plant's individual capacity is set to double its default.
  * However, the plant's maximum yield is also halved, only up to 5.
  */
 /datum/plant_gene/trait/maxchem
@@ -763,7 +763,7 @@
 /**
  * A plant trait that causes the plant's food reagents to ferment instead.
  *
- * In practice, it replaces the plant's nutriment and vitamins with half as much of it's fermented reagent.
+ * In practice, it replaces the plant's nutriment and vitamins with half as much of its fermented reagent.
  * This exception is executed in seeds.dm under 'prepare_result'.
  *
  * Incompatible with auto-juicing composition.
@@ -859,12 +859,15 @@
 		return
 
 	var/obj/item/seeds/our_seed = our_plant.get_plant_seed()
-	if(our_seed.get_gene(/datum/plant_gene/trait/stinging))
-		our_plant.embedding = EMBED_POINTY
-	else
-		our_plant.embedding = EMBED_HARMLESS
-	our_plant.updateEmbedding()
 	our_plant.throwforce = (our_seed.potency/20)
+	if (!our_plant.get_embed())
+		return
+
+	if(our_seed.get_gene(/datum/plant_gene/trait/stinging))
+		our_plant.set_embed(our_plant.get_embed().generate_with_values(ignore_throwspeed_threshold = TRUE))
+		return
+
+	our_plant.set_embed(our_plant.get_embed().generate_with_values(ignore_throwspeed_threshold = TRUE, pain_mult = 0, jostle_pain_mult = 0))
 
 /**
  * This trait automatically heats up the plant's chemical contents when harvested.

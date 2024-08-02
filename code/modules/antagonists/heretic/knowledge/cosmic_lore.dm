@@ -38,6 +38,8 @@
 	)
 	result_atoms = list(/obj/item/melee/sickly_blade/cosmic)
 	route = PATH_COSMIC
+	research_tree_icon_path = 'icons/obj/weapons/khopesh.dmi'
+	research_tree_icon_state = "cosmic_blade"
 
 /datum/heretic_knowledge/cosmic_grasp
 	name = "Grasp of Cosmos"
@@ -48,6 +50,9 @@
 	next_knowledge = list(/datum/heretic_knowledge/spell/cosmic_runes)
 	cost = 1
 	route = PATH_COSMIC
+	depth = 3
+	research_tree_icon_path = 'icons/ui_icons/antags/heretic/knowledge.dmi'
+	research_tree_icon_state = "grasp_cosmos"
 
 /datum/heretic_knowledge/cosmic_grasp/on_gain(mob/user, datum/antagonist/heretic/our_heretic)
 	RegisterSignal(user, COMSIG_HERETIC_MANSUS_GRASP_ATTACK, PROC_REF(on_mansus_grasp))
@@ -78,6 +83,7 @@
 	spell_to_add = /datum/action/cooldown/spell/cosmic_rune
 	cost = 1
 	route = PATH_COSMIC
+	depth = 4
 
 /datum/heretic_knowledge/mark/cosmic_mark
 	name = "Mark of Cosmos"
@@ -107,6 +113,7 @@
 	spell_to_add = /datum/action/cooldown/spell/touch/star_touch
 	cost = 1
 	route = PATH_COSMIC
+	depth = 7
 
 /datum/heretic_knowledge/spell/star_blast
 	name = "Star Blast"
@@ -123,6 +130,7 @@
 	spell_to_add = /datum/action/cooldown/spell/pointed/projectile/star_blast
 	cost = 1
 	route = PATH_COSMIC
+	depth = 8
 
 /datum/heretic_knowledge/blade_upgrade/cosmic
 	name = "Cosmic Blade"
@@ -135,6 +143,8 @@
 		The blades now glistened with fragmented power. I fell to the ground and wept at the beast's feet."
 	next_knowledge = list(/datum/heretic_knowledge/spell/cosmic_expansion)
 	route = PATH_COSMIC
+	research_tree_icon_path = 'icons/ui_icons/antags/heretic/knowledge.dmi'
+	research_tree_icon_state = "blade_upgrade_cosmos"
 	/// Storage for the second target.
 	var/datum/weakref/second_target
 	/// Storage for the third target.
@@ -233,6 +243,7 @@
 	spell_to_add = /datum/action/cooldown/spell/conjure/cosmic_expansion
 	cost = 1
 	route = PATH_COSMIC
+	depth = 10
 
 /datum/heretic_knowledge/ultimate/cosmic_final
 	name = "Creators's Gift"
@@ -250,6 +261,7 @@
 		I closed my eyes with my head laid against their form. I was safe. \
 		WITNESS MY ASCENSION!"
 	route = PATH_COSMIC
+	ascension_achievement = /datum/award/achievement/misc/cosmic_ascension
 	/// A static list of command we can use with our mob.
 	var/static/list/star_gazer_commands = list(
 		/datum/pet_command/idle,
@@ -296,5 +308,3 @@
 
 	var/datum/action/cooldown/spell/conjure/cosmic_expansion/cosmic_expansion_spell = locate() in user.actions
 	cosmic_expansion_spell?.ascended = TRUE
-
-	user.client?.give_award(/datum/award/achievement/misc/cosmic_ascension, user)

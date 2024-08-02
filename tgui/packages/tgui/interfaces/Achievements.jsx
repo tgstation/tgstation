@@ -1,7 +1,7 @@
 import { useState } from 'react';
+import { Box, Flex, Icon, Table, Tabs, Tooltip } from 'tgui-core/components';
 
 import { useBackend } from '../backend';
-import { Box, Flex, Icon, Table, Tabs, Tooltip } from '../components';
 import { Window } from '../layouts';
 
 export const Achievements = (props) => {

@@ -48,6 +48,7 @@
 									Allows you to behead targets for empowered strikes. \
 									Harms you if you dismiss the scythe without first causing harm to a creature. \
 									The shard also causes you to become Morbid, shifting your interests towards the macabre."
+		rods[/obj/item/melee/skateboard/holyboard] = "A skateboard that grants you flight and anti-magic abilities while ridden. Fits in your bag."
 		AddComponent(/datum/component/subtype_picker, rods, CALLBACK(src, PROC_REF(on_holy_weapon_picked)))
 
 /obj/item/nullrod/proc/on_holy_weapon_picked(obj/item/nullrod/holy_weapon_type)
@@ -563,7 +564,7 @@
 /obj/item/nullrod/bostaff
 	name = "monk's staff"
 	desc = "A long, tall staff made of polished wood. Traditionally used in ancient old-Earth martial arts, it is now used to harass the clown."
-	force = 15
+	force = 14
 	block_chance = 40
 	block_sound = 'sound/weapons/genhit.ogg'
 	slot_flags = ITEM_SLOT_BACK
@@ -573,11 +574,25 @@
 	attack_verb_simple = list("smash", "slam", "whack", "thwack")
 	icon = 'icons/obj/weapons/staff.dmi'
 	icon_state = "bostaff0"
+	base_icon_state = "bostaff"
 	inhand_icon_state = "bostaff0"
 	worn_icon_state = "bostaff0"
 	lefthand_file = 'icons/mob/inhands/weapons/staves_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/staves_righthand.dmi'
-	menu_description = "A staff which provides a medium-low chance of blocking incoming melee attacks and deals a little less damage. Can be worn on the back."
+	menu_description = "A staff which provides a medium-low chance of blocking incoming melee attacks and deals less damage, unless dual-wielded. Can be worn on the back."
+
+/obj/item/nullrod/bostaff/Initialize(mapload)
+	. = ..()
+	AddComponent(/datum/component/two_handed, \
+		force_unwielded = 14, \
+		force_wielded = 18, \
+		icon_wielded = "[base_icon_state]1", \
+	)
+
+/obj/item/nullrod/bostaff/update_icon_state()
+	icon_state = "[base_icon_state]0"
+	return ..()
+
 
 // Arrhythmic Knife - Lets your walk without rhythm by varying your walk speed. Can't be put away.
 

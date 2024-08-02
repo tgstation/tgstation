@@ -6,12 +6,14 @@
 	var/list/shipping
 
 	// Automatic vars, do not touch these.
-	/// Items available from this market, populated by SSblackmarket on initialization. Automatically assigned, so don't manually adjust.
+	/// Items available from this market, populated by SSmarket on initialization. Automatically assigned, so don't manually adjust.
 	var/list/available_items = list()
 	/// Item categories available from this market, only items which are in these categories can be gotten from this market. Automatically assigned, so don't manually adjust.
 	var/list/categories = list()
+	/// Are the items from this market legal or illegal? If illegal, apply a contrband trait to the bought object.
+	var/legal_status = TRUE
 
-/// Adds item to the available items and add it's category if it is not in categories yet.
+/// Adds item to the available items and add its category if it is not in categories yet.
 /datum/market/proc/add_item(datum/market_item/item)
 	if(ispath(item, /datum/market_item))
 		item = new item()
@@ -30,7 +32,15 @@
 	if(!length(available_items[item.category]))
 		available_items -= item.category
 
-/// Handles buying the item, this is mainly for future use and moving the code away from the uplink.
+/**
+ * Handles buying the item for a market.
+ *
+ * @param identifier The identifier of the item to buy.
+ * @param category The category of the item to buy.
+ * @param method The shipping method to use to get the item on the station.
+ * @param uplink The uplink object that is buying the item.
+ * @param user The mob that is buying the item.
+ */
 /datum/market/proc/purchase(identifier, category, method, obj/item/market_uplink/uplink, user)
 	var/datum/market_item/item = available_items[category][identifier]
 	if(isnull(item))
@@ -54,7 +64,7 @@
 		to_chat(user, span_warning("You don't have enough credits in [uplink] for [item] with [method] shipping."))
 		return FALSE
 
-	if(item.buy(uplink, user, method))
+	if(item.buy(uplink, user, method, legal_status))
 		uplink.current_user.adjust_money(-price, "Other: Third Party Transaction")
 		if(ismob(user))
 			var/mob/m_user = user
@@ -63,6 +73,20 @@
 
 	return FALSE
 
+/**
+ * A proc that restocks only the EXISTING items of this market.
+ * If you want to selectively restock markets, call SSmarket.restock(market_or_list_of_markets) instead.
+ */
+/datum/market/proc/restock(list/existing_items)
+	for(var/category in available_items)
+		var/category_list = available_items[category]
+		for(var/identifier in category_list)
+			var/datum/market_item/item = category_list[identifier]
+			existing_items |= item.type
+			if(!item.restockable || item.stock >= item.stock_max || !prob(item.availability_prob))
+				continue
+			item.stock += rand(1, item.stock_max - item.stock)
+
 /datum/market/blackmarket
 	name = "Black Market"
 	shipping = list(
@@ -70,3 +94,4 @@
 		SHIPPING_METHOD_LAUNCH = 10,
 		SHIPPING_METHOD_TELEPORT= 75,
 	)
+	legal_status = FALSE
