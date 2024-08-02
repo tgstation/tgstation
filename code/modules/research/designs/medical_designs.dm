@@ -253,7 +253,7 @@
 /datum/design/surgical_drapes
 	name = "Surgical Drapes"
 	id = "surgical_drapes"
-	build_type = PROTOLATHE | AWAY_LATHE | COLONY_FABRICATOR
+	build_type = PROTOLATHE | AWAY_LATHE | MECHFAB | COLONY_FABRICATOR // monkestation edit: allow robotics and colony fab to print
 	materials = list(/datum/material/plastic =SHEET_MATERIAL_AMOUNT)
 	build_path = /obj/item/surgical_drapes
 	category = list(
