@@ -21,7 +21,8 @@
 	for (var/user in circuit_designs)
 		var/json_file = file("[CIRCUITS_DATA_FILEPATH][user].json")
 		var/file_data = list()
-		var/designs_to_store = circuit_designs[user].Copy()
+		var/list/user_designs = circuit_designs[user]
+		var/list/designs_to_store = user_designs.Copy()
 
 		for (var/list/design in designs_to_store)
 			var/list/new_materials = list()
