@@ -1,5 +1,3 @@
-import { decodeHtmlEntities } from 'common/string';
-
 import { useBackend } from '../backend';
 import {
   Button,
@@ -12,8 +10,17 @@ import {
 } from '../components';
 import { Window } from '../layouts';
 
+type Data = {
+  name: string;
+  price: number;
+  min_price: number;
+  max_price: number;
+  loaded_icon: string;
+  desc: string;
+};
+
 export const LTSRBT = (props) => {
-  const { act, data } = useBackend();
+  const { act, data } = useBackend<Data>();
   const { name, price, min_price, max_price, loaded_icon, desc } = data;
 
   return (
@@ -22,7 +29,6 @@ export const LTSRBT = (props) => {
         <Stack vertical fill>
           <Stack.Item>
             <Input
-              inline
               width="80%"
               value={name}
               placeholder="Insert a name"
@@ -33,7 +39,7 @@ export const LTSRBT = (props) => {
               }
             />
             <NumberInput
-              inline
+              step={1}
               width="20%"
               value={price}
               minValue={min_price}
