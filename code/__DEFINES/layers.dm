@@ -61,6 +61,7 @@
 #define O_LIGHTING_VISUAL_RENDER_TARGET "O_LIGHT_VISUAL_PLANE"
 
 #define DARKNESS_MASK_PLANE 12
+#define DARKNESS_MASK_RENDER_TARGET "DARKNESS_MASK_PLANE"
 
 #define EMISSIVE_PLANE 13
 /// This plane masks out lighting to create an "emissive" effect, ie for glowing lights in otherwise dark areas.

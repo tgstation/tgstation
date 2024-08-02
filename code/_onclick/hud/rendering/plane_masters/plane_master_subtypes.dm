@@ -396,6 +396,7 @@
 	name = "Darkness Mask"
 	documentation = "Masks out bits of the world that would otherwise be lit up, but should be hidden due to say, being on the other side of an airlock."
 	plane = DARKNESS_MASK_PLANE
+	render_target = DARKNESS_MASK_RENDER_TARGET
 	appearance_flags = PLANE_MASTER|NO_CLIENT_COLOR
 	render_relay_planes = list(RENDER_PLANE_GAME)
 	critical = PLANE_CRITICAL_DISPLAY
