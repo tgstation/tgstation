@@ -134,7 +134,25 @@
 		return FALSE
 	// Valid organ successfully picked.
 	new_organ = new new_organ()
+	// monkestation start: ensure skillchips don't get nuked
+	var/list/skillchips
+	if(ispath(new_organ, /obj/item/organ/internal/brain))
+		skillchips = target.clone_skillchip_list()
+		target.destroy_all_skillchips(silent = TRUE)
+	// monkestation end
 	new_organ.replace_into(target)
+	// monkestation start: ensure skillchips don't get nuked
+	if(skillchips)
+		for(var/chip in skillchips)
+			var/chip_type = chip["type"]
+			if(!ispath(chip_type, /obj/item/skillchip))
+				continue
+			var/obj/item/skillchip/skillchip = new chip_type(target)
+			if(target.implant_skillchip(skillchip, force = TRUE))
+				qdel(skillchip)
+				continue
+			skillchip.set_metadata(chip)
+	// monkestation end
 	check_tier_progression(target)
 
 /// Picks a random mutated organ from the infuser entry which is also compatible with the target mob.
