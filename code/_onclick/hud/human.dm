@@ -306,16 +306,28 @@
 /datum/hud/human/update_locked_slots()
 	if(!mymob)
 		return
-	var/mob/living/carbon/human/H = mymob
-	if(!istype(H) || !H.dna.species)
-		return
-	var/datum/species/S = H.dna.species
+	// NON-MODULE CHANGE
+	var/blocked_slots = NONE
+
+	var/mob/living/carbon/human/human_mob = mymob
+	if(istype(human_mob))
+		blocked_slots |= human_mob.dna?.species?.no_equip_flags
+		if(!human_mob.w_uniform && !HAS_TRAIT(human_mob, TRAIT_NO_JUMPSUIT))
+			blocked_slots |= ITEM_SLOT_POCKETS|ITEM_SLOT_ID|ITEM_SLOT_BELT
+		if(!human_mob.wear_suit)
+			blocked_slots |= ITEM_SLOT_SUITSTORE
+		if(human_mob.num_hands < 2)
+			blocked_slots |= ITEM_SLOT_GLOVES
+		if(human_mob.num_legs < 2)
+			blocked_slots |= ITEM_SLOT_FEET
+		var/obj/item/bodypart/head/head = human_mob.get_bodypart(BODY_ZONE_HEAD)
+		if(isnull(head))
+			blocked_slots |= ITEM_SLOT_HEAD|ITEM_SLOT_EARS|ITEM_SLOT_EYES|ITEM_SLOT_MASK
+
 	for(var/atom/movable/screen/inventory/inv in (static_inventory + toggleable_inventory))
-		if(inv.slot_id)
-			if(S.no_equip_flags & inv.slot_id)
-				inv.alpha = 128
-			else
-				inv.alpha = initial(inv.alpha)
+		if(!inv.slot_id)
+			continue
+		inv.alpha = (blocked_slots & inv.slot_id) ? 128 : initial(inv.alpha)
 
 /datum/hud/human/hidden_inventory_update(mob/viewer)
 	if(!mymob)
