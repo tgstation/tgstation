@@ -93,7 +93,14 @@ GLOBAL_LIST_INIT(turfs_pass_pod, typecacheof(list(
 	/turf/open/floor/engine,
 )))
 
+// additionally to the one above
+GLOBAL_LIST_INIT(turfs_pass_pod_nograv, typecacheof(list(
+	/turf/open/floor/iron/solarpanel,
+	/turf/open/floor/plating,
+)))
+
 #define ispodpassable(A) (is_type_in_typecache(A, GLOB.turfs_pass_pod))
+#define ispodpassable_nograv(A) (is_type_in_typecache(A, GLOB.turfs_pass_pod_nograv))
 
 //Mobs
 #define isliving(A) (istype(A, /mob/living))

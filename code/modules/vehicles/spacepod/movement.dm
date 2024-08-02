@@ -22,7 +22,7 @@
 	return FALSE //this proc only exists so movement is better
 
 /obj/vehicle/sealed/space_pod/Move(turf/newloc, direct, glide_size_override)
-	if(!isturf(newloc) || newloc.density || ispodpassable(newloc))
+	if(!isturf(newloc) || newloc.density || ispodpassable(newloc) || (!newloc.has_gravity() && ispodpassable_nograv(newloc)))
 		return ..()
 	if(newloc.is_blocked_turf()) //weird silly hack to allow us to ram objects on inaccessible turfs
 		var/atom/target
