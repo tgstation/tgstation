@@ -138,7 +138,8 @@
 /obj/machinery/computer/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	SHOULD_CALL_PARENT(TRUE)
 	. = ..()
-	playsound(src, SFX_KEYBOARD_CLICKS, 10, TRUE, FALSE)
+	if(!ui.user.is_silicon)
+		playsound(src, SFX_KEYBOARD_CLICKS, 10, TRUE, FALSE)
 
 /obj/machinery/computer/ui_close(mob/user)
 	SHOULD_CALL_PARENT(TRUE)
