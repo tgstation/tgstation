@@ -269,9 +269,6 @@ GLOBAL_LIST_INIT(bibleitemstates, list(
 	playsound(target_mob, SFX_PUNCH, 25, TRUE, -1)
 	log_combat(user, target_mob, "attacked", src)
 
-/obj/item/book/bible/storage_insert_on_interaction(datum/storage, atom/storage_holder, mob/user)
-	return !istype(storage_holder, /obj/item/book/bible)
-
 /obj/item/book/bible/interact_with_atom(atom/bible_smacked, mob/living/user, list/modifiers)
 	if(SEND_SIGNAL(bible_smacked, COMSIG_BIBLE_SMACKED, user) & COMSIG_END_BIBLE_CHAIN)
 		return ITEM_INTERACT_SUCCESS

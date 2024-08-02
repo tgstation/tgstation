@@ -224,24 +224,14 @@
 		deconstruct(TRUE)
 	return ITEM_INTERACT_SUCCESS
 
-/obj/structure/table/item_interaction_secondary(mob/living/user, obj/item/tool, list/modifiers)
-	if(istype(tool, /obj/item/construction/rcd))
-		return NONE
+// This extends base item interaction because tables default to blocking 99% of interactions
+/obj/structure/table/base_item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	. = ..()
+	if(.)
+		return .
 
-	var/deck_act_value = NONE
-	if(istype(tool, /obj/item/toy/cards/deck))
-		deck_act_value = deck_act(user, tool, modifiers, TRUE)
-	// Continue to placing if we don't do anything else
-	if(deck_act_value != NONE)
-		return deck_act_value
-
-	if(!user.combat_mode)
-		return table_place_act(user, tool, modifiers)
-
-	return NONE
-
-/obj/structure/table/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
-	. = NONE
+	if(istype(tool, /obj/item/toy/cards/deck) && LAZYACCESS(modifiers, RIGHT_CLICK))
+		. = deck_act(user, tool, modifiers, TRUE)
 	if(istype(tool, /obj/item/storage/bag/tray))
 		. = tray_act(user, tool)
 	else if(istype(tool, /obj/item/toy/cards/deck))
@@ -250,7 +240,7 @@
 		. = riding_offhand_act(user, tool)
 
 	// Continue to placing if we don't do anything else
-	if(. != NONE)
+	if(.)
 		return .
 
 	if(!user.combat_mode)
@@ -889,7 +879,10 @@
 	deconstruct(TRUE)
 	return ITEM_INTERACT_SUCCESS
 
-/obj/structure/rack/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+/obj/structure/rack/base_item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	. = ..()
+	if(.)
+		return .
 	if((tool.item_flags & ABSTRACT) || user.combat_mode)
 		return NONE
 	if(user.transferItemToLoc(tool, drop_location(), silent = FALSE))

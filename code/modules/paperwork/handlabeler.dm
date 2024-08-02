@@ -116,9 +116,6 @@
 	labels_left = initial(labels_left) //Yes, it's capped at its initial value
 	return ITEM_INTERACT_SUCCESS
 
-/obj/item/hand_labeler/storage_insert_on_interaction(datum/storage, atom/storage_holder, mob/user)
-	return !mode
-
 /obj/item/hand_labeler/borg
 	name = "cyborg-hand labeler"
 

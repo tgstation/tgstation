@@ -62,6 +62,9 @@
 /datum/component/cleaner/proc/on_interaction(datum/source, mob/living/user, atom/target, list/modifiers)
 	SIGNAL_HANDLER
 
+	if(isitem(source) && (target.atom_storage && user.combat_mode))
+		return NONE
+
 	// By default, give XP
 	var/give_xp = TRUE
 	if(pre_clean_callback)
