@@ -19,19 +19,19 @@ import { Tooltip } from './Tooltip';
 type Props = Required<{}> &
   Partial<{
     asset: string;
+    assetResolve: string;
     base64: string;
     buttons: ReactNode;
     children: ReactNode;
     className: string;
     color: string;
     disabled: BooleanLike;
+    dmFallback: ReactNode;
     dmIcon: string;
     dmIconState: string;
-    dmFallback: ReactNode;
     imageSize: number;
     onClick: (e: any) => void;
     onRightClick: (e: any) => void;
-    assetResolve: string;
     selected: BooleanLike;
     tooltip: ReactNode;
     tooltipPosition: Placement;
@@ -41,19 +41,19 @@ type Props = Required<{}> &
 export const ImageButton = (props: Props) => {
   const {
     asset,
+    assetResolve,
     base64,
     buttons,
     children,
     className,
     color,
     disabled,
+    dmFallback,
     dmIcon,
     dmIconState,
-    dmFallback,
     imageSize = 64,
     onClick,
     onRightClick,
-    assetResolve,
     selected,
     tooltip,
     tooltipPosition,

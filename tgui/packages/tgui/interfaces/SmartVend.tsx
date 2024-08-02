@@ -31,7 +31,7 @@ export const SmartVend = (props) => {
       : Object.values(data.contents);
 
   return (
-    <Window width={431} height={570}>
+    <Window width={431} height={580}>
       <Window.Content>
         <Section
           fill
@@ -41,21 +41,34 @@ export const SmartVend = (props) => {
           }}
           title="Storage"
           buttons={
-            data.isdryer ? (
+            <>
+              {data.isdryer ? (
+                <Button
+                  icon={data.drying ? 'stop' : 'tint'}
+                  onClick={() => act('Dry')}
+                >
+                  {data.drying ? 'Stop drying' : 'Dry'}
+                </Button>
+              ) : (
+                <Input
+                  autoFocus
+                  placeholder={'Search...'}
+                  value={searchText}
+                  onInput={(e, value) => setSearchText(value)}
+                />
+              )}
               <Button
-                icon={data.drying ? 'stop' : 'tint'}
-                onClick={() => act('Dry')}
-              >
-                {data.drying ? 'Stop drying' : 'Dry'}
-              </Button>
-            ) : (
-              <Input
-                autoFocus
-                placeholder={'Search...'}
-                value={searchText}
-                onInput={(e, value) => setSearchText(value)}
+                icon="question"
+                tooltip={
+                  <span>
+                    LMB - Vend 1 product
+                    <br />
+                    RMB - Vend custom amount
+                  </span>
+                }
+                tooltipPosition="bottom-end"
               />
-            )
+            </>
           }
         >
           {!contents.length ? (
@@ -88,11 +101,8 @@ export const SmartVend = (props) => {
                   buttons={
                     item.amount > 1 && (
                       <Button
-                        compact
                         color="transparent"
                         fontWeight="bold"
-                        tooltip="Pick up custom amount"
-                        tooltipPosition="top"
                         onClick={customAmount}
                       >
                         {item.amount}
