@@ -655,6 +655,7 @@
 		happiness_value++
 	if(ISINRANGE(aquarium.fluid_temp, required_temperature_min, required_temperature_max))
 		happiness_value++
+	return happiness_value
 
 /obj/item/fish/proc/pet_fish(mob/living/user)
 	if(recently_petted)

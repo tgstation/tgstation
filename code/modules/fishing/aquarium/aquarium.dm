@@ -312,7 +312,7 @@
 	.["allow_breeding"] = allow_breeding
 	.["fish_data"] = list()
 	.["feeding_interval"] = feeding_interval / (1 MINUTES)
-	.["props_data"] = list()
+	.["prop_data"] = list()
 	for(var/atom/movable/item in contents)
 		if(isfish(item))
 			var/obj/item/fish/fish = item
@@ -324,8 +324,9 @@
 				"fish_icon_state" = fish::icon_state,
 				"fish_health" = fish.health,
 			))
-			return
-		.["props_data"] += list(list(
+			continue
+		.["prop_data"] += list(list(
+			"prop_ref" = REF(item),
 			"prop_name" = item.name,
 			"prop_icon" = item::icon,
 			"prop_icon_state" = item::icon_state,
@@ -337,8 +338,7 @@
 	.["minTemperature"] = min_fluid_temp
 	.["maxTemperature"] = max_fluid_temp
 	.["fluidTypes"] = fluid_types
-	.["heart_icon"] = /obj/effect/overlay/happiness_overlay::icon
-	.["heart_icon_state"] = /obj/effect/overlay/happiness_overlay::icon_state
+	.["heart_icon"] = 'icons/effects/effects.dmi'
 
 /obj/structure/aquarium/ui_act(action, params)
 	. = ..()
@@ -370,6 +370,9 @@
 				else
 					inside.forceMove(get_turf(src))
 				to_chat(user,span_notice("You take out [inside] from [src]."))
+		if("pet_fish")
+			var/obj/item/fish/fish = locate(params["fish_reference"]) in contents
+			fish?.pet_fish(user)
 
 /obj/structure/aquarium/ui_interact(mob/user, datum/tgui/ui)
 	. = ..()
