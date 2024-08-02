@@ -920,16 +920,6 @@
 				return
 	return ..()
 
-/obj/machinery/door/firedoor/attackby_secondary(obj/item/weapon, mob/user, params)
-	. = ..()
-	if(!isliving(user))
-		return
-	var/mob/living/living_user = user
-	if(!(living_user.combat_mode || istype(weapon, /obj/item/crowbar)))
-		return
-	try_to_crowbar_secondary(weapon, living_user)
-	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
-
 /obj/structure/firelock_frame/rcd_vals(mob/user, obj/item/construction/rcd/the_rcd)
 	if(the_rcd.mode == RCD_DECONSTRUCT)
 		return list("delay" = 5 SECONDS, "cost" = 16)
