@@ -1,0 +1,6 @@
+author: "Absolucy"
+delete-after: True
+changes:
+  - balance: "RCD, RPD, RTD, and relevant upgrades are now printable by science."
+  - balance: "The ATMOS holofan projector is now printable by science."
+  - balance: "Surgical drapes, laser scalpel, mechanical pinches, searing tool are nowprintable from the Robotics mechfab.\nbalance Alien surgical tools are now printable from robotics mechfab."
