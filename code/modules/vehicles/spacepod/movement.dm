@@ -21,6 +21,9 @@
 /obj/vehicle/sealed/space_pod/has_gravity(turf/gravity_turf)
 	return FALSE //this proc only exists so movement is better
 
+/obj/vehicle/sealed/space_pod/newtonian_move(inertia_angle, instant = FALSE, start_delay = 0, drift_force = 1 NEWTONS, controlled_cap = null)
+	return FALSE //no
+
 /obj/vehicle/sealed/space_pod/Move(turf/newloc, direct, glide_size_override)
 	if(!isturf(newloc))
 		return ..()
@@ -37,9 +40,23 @@
 	if(!use_power(power_used))
 		return
 	setDir(direction)
-	if(isnull(drift_handler))
-		new /datum/drift_handler(src, drift_force = 0)
-	drift_handler.stabilize_drift(dir2angle(direction), target_force = max_speed, stabilization_force = force_per_move / (1 SECONDS))
+	if(isnull(movement))
+		movement = GLOB.move_manager.pod_move(src, subsystem = SSnewtonian_movement, flags = MOVEMENT_LOOP_NO_DIR_UPDATE|MOVEMENT_LOOP_IGNORE_GLIDE)
+	var/list/coords = dir2offset(direction)
+	var/mag = sqrt(coords[1]*coords[1] + coords[2]*coords[2])
+	if(mag)
+		coords[1] /= mag
+		coords[2] /= mag
+	movement.x_in = coords[1]
+	movement.y_in = coords[2]
+	var/acceleration = force_per_move / (1 SECONDS)
+	movement.velocity_x	+= coords[1] * acceleration
+	movement.velocity_y += coords[2] * acceleration
+	movement.velocity_max = max_speed
+
+
+
+
 	COOLDOWN_START(src, cooldown_vehicle_move, 1 DECISECONDS)
 	trail.generate_effect()
 	after_move(direction)

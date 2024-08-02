@@ -961,3 +961,49 @@
 	y_rate = abs(y_rate)
 	x_ticker = 0
 	y_ticker = 0
+
+// Snowflake movement handler for our pods, basically smooth_move
+// Not useful unless youre planning to directly modify certain vars
+/datum/move_manager/proc/pod_move(moving, direction, delay, timeout, subsystem, priority, flags, datum/extra_info)
+	return add_to_loop(moving, subsystem, /datum/move_loop/pod_move, priority, flags, extra_info, delay, timeout, direction)
+
+/datum/move_loop/pod_move
+	var/velocity_max = 0
+	var/velocity_x = 0
+	var/velocity_y = 0
+	var/y_in = 0
+	var/x_in = 0
+
+/datum/move_loop/pod_move/set_delay(new_delay)
+	new_delay = round(new_delay, world.tick_lag)
+	. = ..()
+
+/datum/move_loop/pod_move/move()
+	var/velocity_magnitude = sqrt(velocity_x*velocity_x + velocity_y*velocity_y)
+	if (velocity_magnitude > velocity_max)
+		velocity_x /= velocity_magnitude
+		velocity_y /= velocity_magnitude
+		velocity_x *= velocity_max
+		velocity_y *= velocity_max
+
+	var/velocity_dir = angle2dir(arctan(velocity_y, velocity_x))
+	if (!velocity_magnitude)
+		velocity_magnitude = sqrt(velocity_x*velocity_x + velocity_y*velocity_y)
+
+	var/saved_delay = velocity_magnitude ? 10/velocity_magnitude : 0
+	if (velocity_dir & (velocity_dir-1))
+		saved_delay *= 1.4
+	saved_delay = min(saved_delay, 1.4 SECONDS)
+	set_delay(saved_delay)
+	moving.set_glide_size(DELAY_TO_GLIDE_SIZE(saved_delay))
+
+	if (saved_delay)
+		var/turf/target = get_step(moving, velocity_dir)
+		moving.Move(target, get_dir(moving, target), FALSE , !(flags & MOVEMENT_LOOP_NO_DIR_UPDATE))
+		if (moving.loc != target) // we cant move, we hit something or are immobilized. ABORT ABORT
+			to_chat
+			velocity_x = 0
+			velocity_y = 0
+			velocity_magnitude = 0
+		return MOVELOOP_FAILURE
+	return MOVELOOP_SUCCESS
