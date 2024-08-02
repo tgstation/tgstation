@@ -99,3 +99,46 @@
   - rscadd: 'durathread robes can now store botany gear
 
       :cl:'
+2024-08-02:
+  FlufflesTheDog:
+  - bugfix: Existing gas flow meters have been recalled and replaced due to a faulty
+      screen connection, and once again convey pressure and temperature
+  Ghommie:
+  - qol: Skills are passed down to bitrunning avatars and then back to the original
+      body.
+  - bugfix: Stop clientless lobstrosities from fishing other lobstrosities, which
+      in turn can fish other lobstrosities and so on.
+  - balance: Stop clientless lobstrosities from fishing the lavaland fishing spot
+      chest.
+  Jacquerel:
+  - admin: Adds some missing traits to the mob trait list in VV
+  MTandi:
+  - qol: new uplink UI
+  - qol: made it possible to buy a custom amount of TC, instead of bundles with fixed
+      amounts
+  Majkl-J:
+  - bugfix: Flashdarks now broduce darkness upon toggling
+  SmArtKar:
+  - bugfix: Bamboo staves can now be wielded
+  - bugfix: Bostaff no longer disappears forever when wielded
+  - bugfix: Rice hat no longer disappears upon being toggled and can be raised back
+      up. Toggling sprites is now done by alt-clicking
+  - qol: Callouts and MODsuit quick module pickers now track user
+  - qol: Cable coil and welding tool healing now loops similarly to sutures/meshes
+  - bugfix: Fixed cable coil/welding tool heal message not displaying when healing
+      someone else
+  - bugfix: Putting people you're fireman carrying into contractor pods no longer
+      sends both of you to zelda's shadow realm
+  Tattle:
+  - qol: dead cyborgs now blink yellow lights
+  - qol: damaged cyborgs have smoke particles when they've taken brute damage, and
+      sparks for burn
+  Y0SH1M4S73R:
+  - admin: The layout of the lua editor has been tweaked slightly.
+  - admin: In the lua editor, you can now toggle whether to log runtimes the viewed
+      state is involved in.
+  carlarctg:
+  - rscadd: Adds a bronze dimensional theme
+  necromanceranne:
+  - bugfix: Shoving someone onto a table now causes them to become vulnerable to being
+      stunned.
