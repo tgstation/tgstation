@@ -1,0 +1,3 @@
+#include "_medical.dm"
+
+#include "code/surgery/vocal_cords.dm"
