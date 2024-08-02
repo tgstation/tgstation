@@ -69,7 +69,7 @@ export const ImageButton = (props: Props) => {
   let buttonContent = (
     <div
       className={classes([
-        'ImageButton',
+        'ImageButton__container',
         selected && 'ImageButton--selected',
         disabled && 'ImageButton--disabled',
         color && typeof color === 'string'
@@ -115,9 +115,6 @@ export const ImageButton = (props: Props) => {
             />
           )
         )}
-        {buttons && (
-          <div className={classes(['ImageButton__buttons'])}>{buttons}</div>
-        )}
       </div>
       <span
         className={classes([
@@ -142,5 +139,12 @@ export const ImageButton = (props: Props) => {
     );
   }
 
-  return buttonContent;
+  return (
+    <div className={classes(['ImageButton'])}>
+      {buttonContent}
+      {buttons && (
+        <div className={classes(['ImageButton__buttons'])}>{buttons}</div>
+      )}
+    </div>
+  );
 };

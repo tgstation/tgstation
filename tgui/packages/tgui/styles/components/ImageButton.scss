@@ -97,8 +97,13 @@ $bg-map: colors.$bg-map !default;
 
 .ImageButton {
   display: inline-flex;
-  flex-direction: column;
+  position: relative;
   margin: 0.25em;
+
+  &__container {
+    display: inline-flex;
+    flex-direction: column;
+  }
 
   &__image {
     position: relative;
@@ -111,9 +116,9 @@ $bg-map: colors.$bg-map !default;
     display: flex;
     position: absolute;
     overflow: hidden;
-    left: 0;
-    bottom: 0;
-    width: 100%;
+    left: 0.1em;
+    bottom: 1.6em;
+    max-width: 100%;
 
     & > * {
       border-radius: 0 !important;
@@ -128,5 +133,6 @@ $bg-map: colors.$bg-map !default;
     text-align: center;
     white-space: nowrap;
     padding: 0.15em 0.25em;
+    margin: 0 -1px;
   }
 }
