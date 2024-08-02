@@ -13,8 +13,6 @@
 	initial_gas_mix = AIRLESS_ATMOS
 	opacity = TRUE
 	density = TRUE
-	// Wallening todo: why isn't this on the wall plane again
-	plane = GAME_PLANE
 	layer = EDGED_TURF_LAYER
 
 	temperature = TCMB
@@ -35,21 +33,6 @@
 	var/tool_mine_speed = 4 SECONDS
 	/// How long it takes to mine this turf without tools, if it's weak.
 	var/hand_mine_speed = 15 SECONDS
-
-
-/turf/closed/mineral/Initialize(mapload)
-	. = ..()
-	// Mineral turfs are big, so they need to be on the game plane at a high layer
-	// But they're also turfs, so we need to cut them out from the light mask plane
-	// So we draw them as if they were on the game plane, and then overlay a copy onto
-	// The wall plane (so emissives/light masks behave)
-	// I am so sorry
-
-	// Wallening todo: Mineral walls used to be offset down and left 4 pixels, so they looked right with the squish stuff basalt tiles do
-	// We need to figure out if this is behavior that needs to be retained (it doesn't remove it)
-	var/static/mutable_appearance/wall_overlay = mutable_appearance('icons/turf/mining.dmi', "rock", appearance_flags = RESET_TRANSFORM)
-	wall_overlay.plane = MUTATE_PLANE(WALL_PLANE, src)
-	overlays += wall_overlay
 
 // Inlined version of the bump click element. way faster this way, the element's nice but it's too much overhead
 /turf/closed/mineral/Bumped(atom/movable/bumped_atom)

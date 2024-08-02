@@ -79,7 +79,7 @@ GLOBAL_LIST_INIT(falsewall_alpha_icons, generate_transparent_falsewalls())
 	. = ..()
 	// If we smooth north then as we open there's gonna be a weird hole left by the lack of blackness from above. this should help? compensate for that.
 	if(smoothing_junction & NORTH_JUNCTION && opaque_darkness)
-		var/mutable_appearance/black_backdrop = mutable_appearance('wall_blackness.dmi', "wall_background")
+		var/mutable_appearance/black_backdrop = mutable_appearance('icons/turf/walls/wall_blackness.dmi', "wall_background")
 		black_backdrop.pixel_z = 16
 		. += black_backdrop
 
@@ -128,6 +128,10 @@ GLOBAL_LIST_INIT(falsewall_alpha_icons, generate_transparent_falsewalls())
 	qdel(initialized_mineral)
 	set_opacity(TRUE) // walls cannot be transparent fuck u materials
 	air_update_turf(TRUE, TRUE)
+
+/obj/structure/falsewall/Destroy(force)
+	QDEL_NULL(visuals)
+	return ..()
 
 /obj/structure/falsewall/set_smoothed_icon_state(new_junction)
 	. = ..()
@@ -266,7 +270,6 @@ GLOBAL_LIST_INIT(falsewall_alpha_icons, generate_transparent_falsewalls())
 	walltype = /turf/closed/wall/r_wall
 	mineral = /obj/item/stack/sheet/plasteel
 	smoothing_flags = SMOOTH_BITMASK
-	frill_icon = 'icons/effects/frills/wall_reinforced_frill.dmi'
 
 /obj/structure/falsewall/reinforced/examine_status(mob/user)
 	to_chat(user, span_notice("The outer <b>grille</b> is fully intact."))

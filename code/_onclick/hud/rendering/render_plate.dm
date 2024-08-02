@@ -199,13 +199,14 @@
 
 /atom/movable/screen/plane_master/rendering_plate/frill/show_to(mob/mymob)
 	. = ..()
-	remove_filter(FRILL_FLOOR_CUT)
 	remove_filter(FRILL_GAME_CUT)
 	remove_filter(FRILL_MOB_MASK)
-	if(!mymob.client)
+	if(!mymob?.client)
 		return
-	if(!mymob.client.frills_over_floors)
-		add_filter(FRILL_FLOOR_CUT, 1, alpha_mask_filter(render_source = OFFSET_RENDER_TARGET(FLOOR_PLANE_RENDER_TARGET, offset), flags = MASK_INVERSE))
+	if(mymob.canon_client?.prefs?.read_preference(/datum/preference/toggle/frill_transparency))
+		alpha = 120
+	else
+		alpha = 255
 	//WALLENING TODO: decide what to do about this, ensure frills filter out emissives/maybe all lighting
 	//add_filter(FRILL_GAME_CUT, 1, alpha_mask_filter(render_source = OFFSET_RENDER_TARGET(EMISSIVE_BLOCKER_RENDER_TARGET, offset), flags = MASK_INVERSE))
 	add_filter(FRILL_MOB_MASK, 1, alpha_mask_filter(render_source = OFFSET_RENDER_TARGET(FRILL_MASK_RENDER_TARGET, offset), flags = MASK_INVERSE))
@@ -358,8 +359,6 @@
 	if(offset != 0)
 		add_relay_to(GET_NEW_PLANE(EMISSIVE_RENDER_PLATE, offset - 1), relay_layer = EMISSIVE_Z_BELOW_LAYER)
 
-// Wallening todo: the light mask plane needs to be rethought, it doesn't do everything you might want it to
-// And cuts off stuff created by split vis
 /atom/movable/screen/plane_master/rendering_plate/light_mask
 	name = "Light Mask"
 	documentation = "Any part of this plane that is transparent will be black below it on the game rendering plate.\
@@ -370,20 +369,23 @@
 	plane = LIGHT_MASK_PLANE
 	appearance_flags = PLANE_MASTER|NO_CLIENT_COLOR
 	// Fullwhite where there's anything, no color otherwise
-	// Wallening edit: makes this fullwhite all the time until the above todo is addressed
-	color = list(255,255,255,255, 255,255,255,255, 255,255,255,255, 255,255,255,255, 255,255,255,255)
+	color = list(255,255,255,255, 255,255,255,255, 255,255,255,255, 255,255,255,255, 0,0,0,0)
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 	render_target = LIGHT_MASK_RENDER_TARGET
 	// We blend against the game plane, so she's gotta multiply!
 	blend_mode = BLEND_MULTIPLY
 	render_relay_planes = list(RENDER_PLANE_GAME)
 
+/atom/movable/screen/plane_master/rendering_plate/light_mask/Initialize(mapload, datum/hud/hud_owner, datum/plane_master_group/home, offset)
+	. = ..()
+	add_filter("directional_opacity_mask", 1, alpha_mask_filter(render_source = OFFSET_RENDER_TARGET(DARKNESS_MASK_RENDER_TARGET, offset), flags = MASK_INVERSE))
+
 /atom/movable/screen/plane_master/rendering_plate/light_mask/show_to(mob/mymob)
 	. = ..()
 	if(!.)
 		return
 
-	RegisterSignal(mymob, COMSIG_MOB_SIGHT_CHANGE, PROC_REF(handle_sight))
+	RegisterSignal(mymob, COMSIG_MOB_SIGHT_CHANGE, PROC_REF(handle_sight), override = TRUE)
 	handle_sight(mymob, mymob.sight, NONE)
 
 /atom/movable/screen/plane_master/rendering_plate/light_mask/hide_from(mob/oldmob)
