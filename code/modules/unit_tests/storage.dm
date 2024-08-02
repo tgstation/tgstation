@@ -29,15 +29,15 @@
 	bag.atom_storage.max_slots = INFINITY
 	bag.atom_storage.max_total_storage = INFINITY
 
-	var/list/common_combat_insertion_items = list(
+	var/list/common_noncombat_insertion_items = list(
 		/obj/item/reagent_containers/cup/rag,
 		/obj/item/soap,
 		/obj/item/card/emag,
 		/obj/item/detective_scanner,
 	)
 
-	dummy.set_combat_mode(TRUE)
-	for(var/item_type in common_combat_insertion_items)
+	dummy.set_combat_mode(FALSE)
+	for(var/item_type in common_noncombat_insertion_items)
 		var/obj/item/item = allocate(item_type, run_loc_floor_bottom_left)
 		item.melee_attack_chain(dummy, bag)
-		TEST_ASSERT_EQUAL(item.loc, bag, "[item_type] was unable to be inserted into a backpack on click with combat mode")
+		TEST_ASSERT_EQUAL(item.loc, bag, "[item_type] was unable to be inserted into a backpack on click while off combat mode")
