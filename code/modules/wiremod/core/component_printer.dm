@@ -201,14 +201,13 @@
 	else if (istype(weapon, /obj/item/circuit_component/module))
 		var/obj/item/circuit_component/module/module = weapon
 		circuit = module.internal_circuit
+	if (isnull(circuit))
+		return ..()
 
-	if (!isnull(circuit))
-		circuit.linked_component_printer = WEAKREF(src)
-		circuit.update_static_data_for_all_viewers()
-		balloon_alert(user, "successfully linked to the integrated circuit")
-		return
+	circuit.linked_component_printer = WEAKREF(src)
+	circuit.update_static_data_for_all_viewers()
+	balloon_alert(user, "successfully linked to the integrated circuit")
 
-	return ..()
 
 /obj/machinery/component_printer/crowbar_act(mob/living/user, obj/item/tool)
 	if(..())
