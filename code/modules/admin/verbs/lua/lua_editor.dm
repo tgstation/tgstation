@@ -75,6 +75,7 @@
 		if(last_error)
 			data["lastError"] = last_error
 			last_error = null
+		data["supressRuntimes"] = current_state.supress_runtimes
 	data["states"] = list()
 	for(var/datum/lua_state/state as anything in SSlua.states)
 		data["states"] += state.display_name
@@ -228,7 +229,7 @@
 			if(result["status"] == "error")
 				last_error = result["message"]
 			arguments.Cut()
-			return TRUE
+			return
 		if("resumeTask")
 			var/task_index = params["index"]
 			SSlua.queue_resume(current_state, task_index, arguments)
@@ -260,6 +261,9 @@
 			return TRUE
 		if("toggleShowGlobalTable")
 			show_global_table = !show_global_table
+			return TRUE
+		if("toggleSupressRuntimes")
+			current_state.supress_runtimes = !current_state.supress_runtimes
 			return TRUE
 		if("nextPage")
 			page = min(page+1, CEILING(current_state.log.len/50, 1)-1)
