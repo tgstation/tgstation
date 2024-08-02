@@ -147,7 +147,6 @@
 	if(!cell || !cell_removable)
 		return FALSE
 
-	cell.update_appearance()
 	cell.forceMove(get_turf(src))
 	balloon_alert(user, "removed [cell]")
 	cell = null
