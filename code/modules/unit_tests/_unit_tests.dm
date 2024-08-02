@@ -212,6 +212,7 @@
 #include "spell_mindswap.dm"
 #include "spell_names.dm"
 #include "spell_shapeshift.dm"
+#include "spell_timestop.dm"
 #include "spritesheets.dm"
 #include "stack_singular_name.dm"
 #include "station_trait_tests.dm"
