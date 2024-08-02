@@ -41,7 +41,7 @@
 	if(!window_open || !client.typing_indicators)
 		return FALSE
 	/// Special exemptions
-	if(isabductor(client.mob))
+	if(isabductor(client.mob) && !HAS_TRAIT(client.mob, TRAIT_SIGN_LANG)) // monkestation edit: abductor signing
 		return FALSE
 	client.mob.thinking_IC = TRUE
 	client.mob.create_thinking_indicator()
