@@ -58,7 +58,6 @@
 		floridan.fully_replace_character_name(newname = "Tony Brony")
 
 /datum/antagonist/florida_man/antag_token(datum/mind/hosts_mind, mob/spender)
-	. = ..()
 	if(isobserver(spender))
 		var/mob/living/carbon/human/new_mob = spender.change_mob_type(/mob/living/carbon/human, delete_old_mob = TRUE)
 		new_mob.equipOutfit(/datum/outfit/florida_man_three)
