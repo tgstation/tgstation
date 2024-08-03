@@ -798,15 +798,7 @@
 			if(isnull(particles))
 				particles = new /particles/pollen()
 			if(myseed.instability >= 20 && prob(70) && length(T.myseed.reagents_add))
-				var/list/datum/plant_gene/reagent/possible_reagents = list()
-				for(var/datum/plant_gene/reagent/reag in T.myseed.genes)
-					possible_reagents += reag
-				var/datum/plant_gene/reagent/reagent_gene = pick(possible_reagents) //Let this serve as a lession to delete your WIP comments before merge.
-				if(reagent_gene.can_add(myseed))
-					if(!reagent_gene.try_upgrade_gene(myseed))
-						myseed.genes += reagent_gene.Copy()
-					myseed.reagents_from_genes()
-					continue
+				myseed.perform_reagent_pollination(T.myseed)
 	if(!any_adjacent)
 		particles = null
 
