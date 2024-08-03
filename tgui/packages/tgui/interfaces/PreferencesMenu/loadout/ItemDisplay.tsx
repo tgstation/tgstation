@@ -35,11 +35,7 @@ export const ItemIcon = (props: { item: LoadoutItem; scale?: number }) => {
   );
 };
 
-export const ItemDisplay = (props: {
-  active: boolean;
-  item: LoadoutItem;
-  scale?: number;
-}) => {
+export const ItemDisplay = (props: { active: boolean; item: LoadoutItem }) => {
   const { act } = useBackend();
   const { active, item } = props;
 
