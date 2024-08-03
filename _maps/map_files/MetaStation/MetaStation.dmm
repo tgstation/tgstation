@@ -27838,10 +27838,6 @@
 /turf/open/floor/iron,
 /area/station/cargo/storage)
 "jNZ" = (
-/obj/machinery/camera/directional/west{
-	c_tag = "Telecomms - Server Room - Aft-Port";
-	network = list("ss13","tcomms")
-	},
 /obj/machinery/airalarm/directional/west,
 /obj/effect/mapping_helpers/airalarm/tlv_no_checks,
 /turf/open/floor/iron/dark/telecomms,
@@ -40195,6 +40191,10 @@
 /area/station/maintenance/starboard/lesser)
 "oln" = (
 /obj/machinery/telecomms/server/presets/medical,
+/obj/machinery/camera/directional/east{
+	c_tag = "Telecomms - Server Room - Aft-Starboard";
+	network = list("ss13","tcomms")
+	},
 /turf/open/floor/circuit/telecomms/mainframe,
 /area/station/tcommsat/server)
 "olq" = (
@@ -59246,6 +59246,10 @@
 /area/station/security/office)
 "uRp" = (
 /obj/machinery/telecomms/server/presets/common,
+/obj/machinery/camera/directional/west{
+	c_tag = "Telecomms - Server Room - Aft-Port";
+	network = list("ss13","tcomms")
+	},
 /turf/open/floor/circuit/telecomms/mainframe,
 /area/station/tcommsat/server)
 "uRw" = (
@@ -66453,14 +66457,10 @@
 /turf/open/floor/engine/vacuum,
 /area/station/maintenance/disposal/incinerator)
 "xpZ" = (
-/obj/machinery/camera/directional/east{
-	c_tag = "Telecomms - Server Room - Aft-Starboard";
-	network = list("ss13","tcomms")
-	},
 /obj/structure/cable,
 /obj/machinery/power/apc/auto_name/directional/east,
 /turf/open/floor/iron/dark/telecomms,
-/area/station/tcommsat/server)
+/area)
 "xqc" = (
 /obj/machinery/atmospherics/components/trinary/filter/atmos/n2o{
 	dir = 4
