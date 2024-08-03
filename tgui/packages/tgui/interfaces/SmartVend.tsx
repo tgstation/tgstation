@@ -112,7 +112,7 @@ export const SmartVend = (props) => {
                   dmIconState={item.icon_state}
                   tooltip={displayMode === MODE.tile && item.name}
                   tooltipPosition="bottom"
-                  textAlign="left"
+                  textAlign={displayMode === MODE.list && 'left'}
                   disabled={item.amount < 1}
                   buttons={
                     displayMode === MODE.tile ? (
