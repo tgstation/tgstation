@@ -44,7 +44,7 @@
 		/obj/item/reagent_containers/cup/bowl = 1,
 		/obj/item/food/spaghetti/boiledspaghetti = 1,
 		/obj/item/food/meat/cutlet = 2,
-		/obj/item/food/grown/cabbage = 1
+		/obj/item/food/grown/cabbage = 1,
 	)
 	result = /obj/item/food/spaghetti/beefnoodle
 	category = CAT_SPAGHETTI
