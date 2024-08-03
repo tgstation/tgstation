@@ -7,7 +7,7 @@
 	semi_auto = TRUE
 	fire_sound = 'sound/weapons/gun/smg/smg_fire1.ogg'
 	fire_sound_volume = 90
-	rack_sound = 'sound/weapons/gun/smg/smgrack.ogg'
+	rack_sound = 'sound/weapons/gun/smg/smg_rack1.ogg'
 	suppressed_sound = 'sound/weapons/gun/pistol/pistol_fire_silenced1.ogg'
 	burst_fire_selection = TRUE
 
@@ -123,7 +123,7 @@
 	bolt_type = BOLT_TYPE_OPEN
 	show_bolt_icon = FALSE
 	mag_display = TRUE
-	rack_sound = 'sound/weapons/gun/pistol/slide_lock.ogg'
+	rack_sound = 'sound/weapons/gun/pistol/pistol_rack1.ogg'
 
 /**
  * Weak uzi for syndicate chimps. It comes in a 4 TC kit.
@@ -153,7 +153,7 @@
 	pin = /obj/item/firing_pin/implant/pindicate
 	mag_display = TRUE
 	empty_indicator = TRUE
-	fire_sound = 'sound/weapons/gun/smg/shot_alt.ogg'
+	fire_sound = 'sound/weapons/gun/smg/smg_fire1.ogg'
 
 /obj/item/gun/ballistic/automatic/m90/Initialize(mapload)
 	. = ..()

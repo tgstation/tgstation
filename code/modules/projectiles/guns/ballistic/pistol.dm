@@ -112,7 +112,7 @@
 	can_suppress = FALSE
 	fire_sound = 'sound/weapons/gun/pistol/pistol_fire1.ogg'
 	rack_sound = 'sound/weapons/gun/pistol/pistol_bolt2.ogg'
-	lock_back_sound = 'sound/weapons/gun/pistol/slide_lock.ogg'
+	lock_back_sound = 'sound/weapons/gun/pistol/pistol_bolt1.ogg'
 	bolt_drop_sound = 'sound/weapons/gun/pistol/pistol_bolt2.ogg'
 
 /**
@@ -138,10 +138,7 @@
 	accepted_magazine_type = /obj/item/ammo_box/magazine/m50
 	can_suppress = FALSE
 	mag_display = TRUE
-	fire_sound = 'sound/weapons/gun/rifle/shot.ogg'
-	rack_sound = 'sound/weapons/gun/pistol/rack.ogg'
-	lock_back_sound = 'sound/weapons/gun/pistol/slide_lock.ogg'
-	bolt_drop_sound = 'sound/weapons/gun/pistol/slide_drop.ogg'
+	fire_sound = 'sound/weapons/gun/pistol/pistol_fire4.ogg'
 
 /obj/item/gun/ballistic/automatic/pistol/deagle/contraband
 

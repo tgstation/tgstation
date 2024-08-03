@@ -222,7 +222,7 @@
 	cooldown_duration = 2 SECONDS
 	rate_of_fire = 2
 	firesound = 'sound/weapons/gun/hmg/hmg.ogg'
-	overheatsound = 'sound/weapons/gun/smg/smgrack.ogg'
+	overheatsound = 'sound/weapons/gun/smg/smg_rack1.ogg'
 	can_be_undeployed = TRUE
 	spawned_on_undeploy = /obj/item/deployable_turret_folded
 
