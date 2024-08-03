@@ -106,7 +106,7 @@
 		/obj/item/food/grown/bell_pepper = 1,
 		/obj/item/food/pineappleslice = 1,
 		/obj/item/food/onion_slice = 1,
-		/datum/reagent/consumable/soysauce = 5
+		/datum/reagent/consumable/soysauce = 5,
 		/obj/item/reagent_containers/cup/bowl = 1,
 	)
 	result = /obj/item/food/salad/hawaiian_fried_rice
