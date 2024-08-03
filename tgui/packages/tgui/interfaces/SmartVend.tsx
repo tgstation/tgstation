@@ -40,7 +40,7 @@ export const SmartVend = (props) => {
       : Object.values(data.contents);
 
   return (
-    <Window width={431} height={580}>
+    <Window width={431} height={565}>
       <Window.Content>
         <Section
           fill
@@ -134,7 +134,10 @@ export const SmartVend = (props) => {
                   }
                   onRightClick={vendAmount}
                 >
-                  <span>{item.name}</span> <span>{`x${item.amount}`}</span>
+                  <span>{item.name}</span>
+                  {displayMode === MODE.list && (
+                    <span>{`x${item.amount}`}</span>
+                  )}
                 </ImageButton>
               );
             })

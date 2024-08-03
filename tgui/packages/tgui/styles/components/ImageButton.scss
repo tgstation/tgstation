@@ -20,7 +20,8 @@ $bg-map: colors.$bg-map !default;
   $border-color: rgba(lighten($color, 50%), 0.2),
   $border-width: 1px 0 0 0,
   $opacity: 0.15,
-  $hoverable: true
+  $hoverable: true,
+  $transition-duration: 0.2s
 ) {
   $luminance: luminance($color);
   $text-color: if($luminance > 0.3, rgba(0, 0, 0, 1), rgba(255, 255, 255, 1));
@@ -30,8 +31,8 @@ $bg-map: colors.$bg-map !default;
   border: solid $border-color;
   border-width: $border-width;
   transition:
-    background-color 0.2s,
-    border-color 0.2s;
+    background-color $transition-duration,
+    border-color $transition-duration;
 
   @if $hoverable {
     &:hover {
@@ -104,7 +105,8 @@ $bg-map: colors.$bg-map !default;
     @include button-style(
       $color-value,
       $border-width: 1px 1px 1px 0,
-      $hoverable: false
+      $hoverable: false,
+      $transition-duration: 0
     );
   }
 }
@@ -113,12 +115,13 @@ $bg-map: colors.$bg-map !default;
   @include button-style(
     lighten($color-default, 85%),
     $border-width: 1px 1px 1px 0,
-    $hoverable: false
+    $hoverable: false,
+    $transition-duration: 0
   );
 }
 
 .ImageButton {
-  display: inline-flex;
+  display: inline-table;
   position: relative;
   text-align: center;
   margin: 0.25em;
@@ -156,8 +159,10 @@ $bg-map: colors.$bg-map !default;
     }
 
     & > * {
+      /* I know !important is bad, but here's no other way */
       margin: 0 !important;
       border-radius: 0 !important;
+      transition-duration: 0.2s !important;
     }
   }
 
@@ -167,7 +172,7 @@ $bg-map: colors.$bg-map !default;
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
-    padding: 0.15em 0.25em;
+    padding: 0.175em 0.25em;
     margin: -1px;
     border-radius: 0 0 0.33em 0.33em;
   }

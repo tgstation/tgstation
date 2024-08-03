@@ -552,6 +552,7 @@ A Robust button is specifically for sticking a picture in it.
 - `buttons: any` - Special section for any component, or, content.
   Quite a small area at the bottom of the image.
   Has a style overrides, best to use [Button](#button) inside.
+- `buttonsAlt: boolean` - Enables alternative buttons layout.
 - `children: any` - Content under image.
   With `fluid`, have `justify-content: space-betwen`
 - `className: string` - Applies a CSS class to the element.
