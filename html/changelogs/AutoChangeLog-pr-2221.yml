@@ -1,4 +1,0 @@
-author: "KnigTheThrasher"
-delete-after: True
-changes:
-  - rscadd: "Added \"redtext\" text emphasis, use \"-\", it works like this (example text before it, -your redtext here- ex.text after it), you gotta put \"-\" before your redtext and after it."
