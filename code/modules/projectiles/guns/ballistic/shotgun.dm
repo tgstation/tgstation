@@ -13,6 +13,8 @@
 	rack_sound = 'sound/weapons/gun/shotgun/shotgun_pump1.ogg'
 	load_sound = 'sound/weapons/gun/shotgun/shell_insert1.ogg'
 	dry_fire_sound = 'sound/weapons/gun/shotgun/shotgun_click1.ogg'
+	drop_sound = 'sound/weapons/gun/shotgun/shotgun_drop1.ogg'
+	pickup_sound = 'sound/weapons/gun/shotgun/shotgun_pick_up1.ogg'
 	w_class = WEIGHT_CLASS_BULKY
 	force = 10
 	obj_flags = CONDUCTS_ELECTRICITY

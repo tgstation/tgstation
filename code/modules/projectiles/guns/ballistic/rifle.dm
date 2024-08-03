@@ -13,6 +13,9 @@
 	fire_sound_volume = 90
 	rack_sound = 'sound/weapons/gun/rifle/rifle_rack1.ogg'
 	bolt_drop_sound = 'sound/weapons/gun/rifle/rifle_bolt1.ogg'
+	dry_fire_sound = 'sound/weapons/gun/rifle/rifle_dry_fire1.ogg'
+	pickup_sound = 'sound/weapons/gun/rifle/rifle_pick_up1.ogg'
+	drop_sound = 'sound/weapons/gun/rifle/rifle_drop1.ogg'
 	tac_reloads = FALSE
 
 /obj/item/gun/ballistic/rifle/rack(mob/user = null)

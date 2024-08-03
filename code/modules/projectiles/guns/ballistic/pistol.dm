@@ -9,7 +9,7 @@
 	fire_delay = 0
 	actions_types = list()
 	bolt_type = BOLT_TYPE_LOCKING
-	fire_sound = 'sound/weapons/gun/pistol/pistol_fire3.ogg'
+	fire_sound = 'sound/weapons/gun/pistol/pistol_fire1.ogg'
 	dry_fire_sound = 'sound/weapons/gun/pistol/pistol_dry_fire1.ogg'
 	suppressed_sound = 'sound/weapons/gun/pistol/pistol_fire_silenced1.ogg'
 	load_sound = 'sound/weapons/gun/pistol/pistol_mag_insert1.ogg'
@@ -19,6 +19,8 @@
 	rack_sound = 'sound/weapons/gun/pistol/pistol_rack1.ogg'
 	lock_back_sound = 'sound/weapons/gun/pistol/pistol_bolt1.ogg'
 	bolt_drop_sound = 'sound/weapons/gun/pistol/pistol_bolt2.ogg'
+	pickup_sound = 'sound/weapons/gun/pistol/pistol_pick_up1.ogg'
+	drop_sound = 'sound/weapons/gun/pistol/pistol_drop1.ogg'
 	fire_sound_volume = 90
 	bolt_wording = "slide"
 	suppressor_x_offset = 10
