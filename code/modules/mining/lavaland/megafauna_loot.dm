@@ -601,6 +601,11 @@
 	animate(src)
 	SpinAnimation(15)
 
+/obj/item/soulscythe/Destroy(force)
+	. = ..()
+	soul.ghostize()
+	QDEL_NULL(soul)
+
 /mob/living/simple_animal/soulscythe
 	name = "mysterious spirit"
 	maxHealth = 200
