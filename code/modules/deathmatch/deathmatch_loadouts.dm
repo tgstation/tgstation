@@ -554,7 +554,7 @@
 	glasses = /obj/item/clothing/glasses/sunglasses
 	shoes = /obj/item/clothing/shoes/combat
 	gloves = /obj/item/clothing/gloves/combat
-	back = /obj/item/storage/backpack
+	back = /obj/item/storage/backpack/fireproof
 	id = /obj/item/card/id/advanced/chameleon
 	l_hand = /obj/item/gun/ballistic/automatic/pistol
 	l_pocket = /obj/item/knife/combat
@@ -583,7 +583,7 @@
 	name = "Deathmatch: Gorlex Rent-A-Soldier"
 	display_name = "Gorlex Marauders"
 	desc = "The uniform worn by Gorlex's basic troopers."
-	uniform = /obj/item/clothing/under/syndicate/combat
+	uniform = /obj/item/clothing/under/syndicate/bloodred
 	glasses = /obj/item/clothing/glasses/night/colorless
 	mask = /obj/item/clothing/mask/gas/syndicate
 
