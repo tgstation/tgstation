@@ -148,7 +148,7 @@
 
 /mob/living/basic/trooper/syndicate/ranged/smg
 	casingtype = /obj/item/ammo_casing/c45
-	projectilesound = 'sound/weapons/gun/smg/shot.ogg'
+	projectilesound = 'sound/weapons/gun/smg/smg_fire1.ogg'
 	ai_controller = /datum/ai_controller/basic_controller/trooper/ranged/burst
 	burst_shots = 3
 	ranged_cooldown = 3 SECONDS

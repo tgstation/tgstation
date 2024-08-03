@@ -5,7 +5,7 @@
 	fire_delay = 2
 	actions_types = list(/datum/action/item_action/toggle_firemode)
 	semi_auto = TRUE
-	fire_sound = 'sound/weapons/gun/smg/shot.ogg'
+	fire_sound = 'sound/weapons/gun/smg/smg_fire1.ogg'
 	fire_sound_volume = 90
 	rack_sound = 'sound/weapons/gun/smg/smgrack.ogg'
 	suppressed_sound = 'sound/weapons/gun/smg/shot_suppressed.ogg'

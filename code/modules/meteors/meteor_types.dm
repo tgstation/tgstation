@@ -203,7 +203,7 @@
 	pass_flags = PASSTABLE | PASSGRILLE
 	hits = 1
 	hitpwr = EXPLODE_LIGHT
-	meteorsound = 'sound/weapons/gun/smg/shot.ogg'
+	meteorsound = 'sound/weapons/gun/smg/smg_fire1.ogg'
 	meteordrop = list(/obj/item/stack/ore/glass)
 	threat = 1
 

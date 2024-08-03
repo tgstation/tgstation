@@ -29,7 +29,7 @@
 	/// Sound to play at the end of a burst
 	var/overheatsound = 'sound/weapons/sear.ogg'
 	/// Sound to play when firing
-	var/firesound = 'sound/weapons/gun/smg/shot.ogg'
+	var/firesound = 'sound/weapons/gun/smg/smg_fire1.ogg'
 	/// If using a wrench on the turret will start undeploying it
 	var/can_be_undeployed = FALSE
 	/// What gets spawned if the object is undeployed
