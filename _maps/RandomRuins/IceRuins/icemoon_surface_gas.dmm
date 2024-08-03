@@ -147,7 +147,7 @@
 /turf/open/floor/plating/snowed/icemoon,
 /area/ruin/powered/lizard_gas)
 "ih" = (
-/turf/closed/mineral/random/snow,
+/turf/closed/mineral/snowmountain/icemoon,
 /area/template_noop)
 "iS" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/general,
