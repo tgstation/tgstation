@@ -32,6 +32,8 @@
 	var/welded_down = FALSE
 	/// The sound of item retrieval
 	var/vend_sound = 'sound/machines/machine_vend.ogg'
+	/// Whether the UI should be set to list view by default
+	var/default_list_view = FALSE
 
 /obj/machinery/smartfridge/Initialize(mapload)
 	. = ..()
@@ -369,7 +371,7 @@
 
 		var/atom/movable/atom = item
 		if (!QDELETED(atom))
-			var/key = "[atom.type]"
+			var/key = "[atom.type]-[atom.name]"
 			if (listofitems[key])
 				listofitems[key]["amount"]++
 			else
@@ -383,6 +385,7 @@
 	.["contents"] = sort_list(listofitems)
 	.["name"] = name
 	.["isdryer"] = FALSE
+	.["default_list_view"] = default_list_view
 
 /obj/machinery/smartfridge/Exited(atom/movable/gone, direction) // Update the UIs in case something inside is removed
 	. = ..()
@@ -400,6 +403,7 @@
 		if("Release")
 			var/amount = text2num(params["amount"])
 			var/desired = 1
+			var/dispensed_amount = 0
 
 			if(isAI(living_mob))
 				to_chat(living_mob, span_warning("[src] does not respect your authority!"))
@@ -413,18 +417,18 @@
 			for(var/obj/item/dispensed_item in src)
 				if(desired <= 0)
 					break
-				if(istype(dispensed_item, text2path(params["path"])))
+				if(params["path"] == "[dispensed_item.type]-[dispensed_item.name]")
 					if(dispensed_item in component_parts)
 						CRASH("Attempted removal of [dispensed_item] component_part from smartfridge via smartfridge interface.")
 					//dispense the item
 					if(!living_mob.put_in_hands(dispensed_item))
 						dispensed_item.forceMove(drop_location())
 						adjust_item_drop_location(dispensed_item)
-					if(vend_sound)
-						playsound(src, vend_sound, 50, TRUE, extrarange = -3)
 					use_energy(active_power_usage)
+					dispensed_amount++
 					desired--
-
+			if(dispensed_amount && vend_sound)
+				playsound(src, vend_sound, 50, TRUE, extrarange = -3)
 			if (visible_contents)
 				update_appearance()
 			return
@@ -727,6 +731,7 @@
 	desc = "A refrigerated storage unit for medicine storage."
 	base_build_path = /obj/machinery/smartfridge/chemistry
 	contents_overlay_icon = "chem"
+	default_list_view = TRUE
 
 /obj/machinery/smartfridge/chemistry/accept_check(obj/item/weapon)
 	// not an item or reagent container
@@ -777,6 +782,7 @@
 	desc = "A refrigerated storage unit for volatile sample storage."
 	base_build_path = /obj/machinery/smartfridge/chemistry/virology
 	contents_overlay_icon = "viro"
+	default_list_view = TRUE
 
 /obj/machinery/smartfridge/chemistry/virology/preloaded
 	initial_contents = list(
