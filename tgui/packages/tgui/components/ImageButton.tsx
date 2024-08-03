@@ -99,7 +99,6 @@ export const ImageButton = (props: Props) => {
           onRightClick(event);
         }
       }}
-      {...computeBoxProps(rest)}
       style={{ width: !fluid ? `calc(${imageSize}px + 0.5em + 2px)` : 'auto' }}
     >
       <div className={classes(['ImageButton__image'])}>
@@ -185,6 +184,7 @@ export const ImageButton = (props: Props) => {
         !fluid ? 'ImageButton' : 'ImageButton__fluid',
         className,
       ])}
+      {...computeBoxProps(rest)}
     >
       {buttonContent}
       {buttons && (

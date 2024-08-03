@@ -23,13 +23,15 @@ $bg-map: colors.$bg-map !default;
   $hoverable: true
 ) {
   $luminance: luminance($color);
-  $text-color: if($luminance > 0.4, rgba(0, 0, 0, 1), rgba(255, 255, 255, 1));
+  $text-color: if($luminance > 0.3, rgba(0, 0, 0, 1), rgba(255, 255, 255, 1));
 
   background-color: rgba($color, $opacity);
   color: $text-color;
   border: solid $border-color;
   border-width: $border-width;
-  transition: background-color 0.2s;
+  transition:
+    background-color 0.2s,
+    border-color 0.2s;
 
   @if $hoverable {
     &:hover {
@@ -169,10 +171,6 @@ $bg-map: colors.$bg-map !default;
     font-weight: bold;
     padding: 0.5em;
 
-    &:last-child {
-      padding: 0 0.5em;
-    }
-
     &--divider {
       border-bottom: Divider.$thickness solid Divider.$color;
     }
@@ -180,6 +178,7 @@ $bg-map: colors.$bg-map !default;
 
   &--content {
     padding: 0.5em;
+    color: white;
   }
 
   .ImageButton {
@@ -205,6 +204,8 @@ $bg-map: colors.$bg-map !default;
         flex-direction: column;
         justify-content: center;
         text-align: center;
+        white-space: pre-wrap;
+        line-height: base.em(14px);
         border-left: 1px solid rgba(255, 255, 255, 0.2);
         border-top: 1px solid rgba(255, 255, 255, 0.2);
 
