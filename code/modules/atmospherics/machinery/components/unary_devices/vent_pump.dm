@@ -5,7 +5,7 @@
 
 	name = "air vent"
 	desc = "Has a valve and pump attached to it."
-
+	construction_type = /obj/item/pipe/directional/vent
 	use_power = IDLE_POWER_USE
 	idle_power_usage = BASE_MACHINE_IDLE_CONSUMPTION * 0.15
 	can_unwrench = TRUE

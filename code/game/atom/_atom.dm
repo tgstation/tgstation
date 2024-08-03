@@ -186,6 +186,13 @@
 	if(smoothing_flags & SMOOTH_QUEUED)
 		SSicon_smooth.remove_from_queues(src)
 
+	// These lists cease existing when src does, so we need to clear any lua refs to them that exist.
+	if(!(datum_flags & DF_STATIC_OBJECT))
+		DREAMLUAU_CLEAR_REF_USERDATA(contents)
+		DREAMLUAU_CLEAR_REF_USERDATA(filters)
+		DREAMLUAU_CLEAR_REF_USERDATA(overlays)
+		DREAMLUAU_CLEAR_REF_USERDATA(underlays)
+
 	return ..()
 
 /atom/proc/handle_ricochet(obj/projectile/ricocheting_projectile)
