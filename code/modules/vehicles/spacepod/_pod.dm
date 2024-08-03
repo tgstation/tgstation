@@ -5,7 +5,7 @@
 // TODO:
 // ONCE EVERYTHING IS DONE, add hangar bays, must have 1-3 pods idk, maybe t1 megacells + oxygen tanks, and a manual?? not sure
 // sprites
-// fix bump (not possible without tinkering with drift_handler)
+// fix drill bump (not possible without tinkering with drift_handler)
 // research n designs
 // replace spawn_equip or add new subtype, but probably the former; to have a more reasonable roundstart loadout
 // ALSO DO NOT FORGET TO REMOVE THIS HUGE ASS COMMENT before finishing
@@ -59,6 +59,7 @@
 	. = ..()
 	if(!dont_equip)
 		spawn_equip()
+		generate_name()
 	trail = new
 	trail.auto_process = FALSE
 	trail.set_up(src)
@@ -68,13 +69,17 @@
 	RegisterSignal(src, COMSIG_ATOM_POST_DIR_CHANGE, PROC_REF(onSetDir))
 	ADD_TRAIT(src, TRAIT_CONSIDERED_ANCHORED_FOR_SPACEMOVEBACKUP, INNATE_TRAIT)
 
+/obj/vehicle/sealed/space_pod/proc/generate_name()
+	name = "[pick("pod", "vessel")] [istype(get_area(src), /area/station) ? "NT-" : ""][rand(0,9)][rand(0,9)][rand(0,9)]"
+
 /// This proc is responsible for outfitting the pod when spawned (admin or otherwise)
 /obj/vehicle/sealed/space_pod/proc/spawn_equip()
 	equip_item(new /obj/item/pod_equipment/sensors)
 	equip_item(new /obj/item/pod_equipment/comms)
 	equip_item(new /obj/item/pod_equipment/thrusters/default)
 	equip_item(new /obj/item/pod_equipment/engine/default)
-	equip_item(new /obj/item/pod_equipment/primary/projectile_weapon/energy/wildlife)
+	if(prob(45))
+		equip_item(new /obj/item/pod_equipment/primary/projectile_weapon/energy/wildlife)
 	equip_item(new /obj/item/pod_equipment/cargo_hold)
 	if(prob(40))
 		equip_item(new /obj/item/pod_equipment/lock/pin)
@@ -198,13 +203,13 @@
 					occupant.throw_alert(ALERT_CHARGE, /atom/movable/screen/alert/emptycell)
 		else
 			occupant.throw_alert(ALERT_CHARGE, /atom/movable/screen/alert/nocell)
-		var/integrity = atom_integrity/max_integrity*100
+		var/integrity = get_integrity_percentage() * 100
 		switch(integrity)
-			if(30 to 45)
+			if(40 to 60)
 				occupant.throw_alert(ALERT_MECH_DAMAGE, /atom/movable/screen/alert/pod_damage, 1)
-			if(15 to 35)
+			if(20 to 40)
 				occupant.throw_alert(ALERT_MECH_DAMAGE, /atom/movable/screen/alert/pod_damage, 2)
-			if(-INFINITY to 15)
+			if(-INFINITY to 20)
 				occupant.throw_alert(ALERT_MECH_DAMAGE, /atom/movable/screen/alert/pod_damage, 3)
 			else
 				occupant.clear_alert(ALERT_MECH_DAMAGE)

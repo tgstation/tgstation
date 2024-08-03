@@ -100,5 +100,5 @@
 		poor_sap.safe_throw_at(throwtarget, 3, max(1, strength*0.75), force = MOVE_FORCE_NORMAL*(strength/2))
 
 	if(saved_force > 23 NEWTONS && atom_integrity < 0)
-		for(var/mob/occupant as anything in occupancy)
+		for(var/mob/living/occupant as anything in occupancy)
 			occupant.gib()
