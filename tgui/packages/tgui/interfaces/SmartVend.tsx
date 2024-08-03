@@ -105,6 +105,7 @@ export const SmartVend = (props) => {
 
               return (
                 <ImageButton
+                  key={item.path}
                   fluid={displayMode === MODE.list}
                   imageSize={displayMode === MODE.list ? 32 : 64}
                   dmIcon={item.icon}
