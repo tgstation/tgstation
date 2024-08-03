@@ -77,8 +77,8 @@ $bg-map: colors.$bg-map !default;
 .ImageButton__content {
   &--color--default {
     @include button-style(
-      $color-content,
-      $border-color: lighten($color-content, 25%),
+      lighten($color-default, 80%),
+      $border-color: lighten($color-default, 100%),
       $opacity: 1,
       $hoverable: false
     );
@@ -97,6 +97,24 @@ $bg-map: colors.$bg-map !default;
       $hoverable: false
     );
   }
+}
+
+@each $color-name, $color-value in $bg-map {
+  .ImageButton__buttons--color--#{$color-name} {
+    @include button-style(
+      $color-value,
+      $border-width: 1px 1px 1px 0,
+      $hoverable: false
+    );
+  }
+}
+
+.ImageButton__buttons--color--default {
+  @include button-style(
+    lighten($color-default, 85%),
+    $border-width: 1px 1px 1px 0,
+    $hoverable: false
+  );
 }
 
 .ImageButton {
@@ -123,6 +141,13 @@ $bg-map: colors.$bg-map !default;
     left: 1px;
     bottom: 1.6em;
     max-width: 100%;
+
+    &--alt {
+      overflow: visible;
+      flex-direction: column;
+      top: 1px;
+      bottom: inherit;
+    }
 
     &--noContent {
       bottom: 1px;
@@ -192,25 +217,32 @@ $bg-map: colors.$bg-map !default;
     }
 
     &__buttons {
-      flex-direction: column;
-      right: 0;
+      position: relative;
       left: inherit;
       bottom: inherit;
-      height: 100%;
 
       & > * {
         display: inline-flex;
-        height: 100%;
         flex-direction: column;
         justify-content: center;
         text-align: center;
         white-space: pre-wrap;
         line-height: base.em(14px);
-        border-left: 1px solid rgba(255, 255, 255, 0.2);
-        border-top: 1px solid rgba(255, 255, 255, 0.2);
+        border-left: 1px solid rgba(255, 255, 255, 0.075);
+      }
 
-        &:first-child {
-          border-top: 0;
+      &--alt {
+        flex-direction: column;
+        top: inherit;
+
+        & > * {
+          height: 100%;
+          border-left: 1px solid rgba(255, 255, 255, 0.075);
+          border-top: 1px solid rgba(255, 255, 255, 0.075);
+
+          &:first-child {
+            border-top: 0;
+          }
         }
       }
     }

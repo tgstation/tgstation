@@ -1,13 +1,6 @@
 import { createSearch } from '../../../../common/string';
 import { useBackend } from '../../../backend';
-import {
-  Box,
-  Button,
-  DmIcon,
-  Flex,
-  Icon,
-  NoticeBox,
-} from '../../../components';
+import { Box, ImageButton, DmIcon, Icon, NoticeBox } from '../../../components';
 import { LoadoutCategory, LoadoutItem, LoadoutManagerData } from './base';
 
 export const ItemIcon = (props: { item: LoadoutItem; scale?: number }) => {
@@ -48,64 +41,53 @@ export const ItemDisplay = (props: {
   scale?: number;
 }) => {
   const { act } = useBackend();
-  const { active, item, scale = 3 } = props;
-
-  const boxSize = `${scale * 32}px`;
+  const { active, item } = props;
 
   return (
-    <Button
-      height={boxSize}
-      width={boxSize}
-      color={active ? 'green' : 'default'}
-      style={{ textTransform: 'capitalize', zIndex: '1' }}
+    <ImageButton
+      dmIcon={item.icon}
+      dmIconState={item.icon_state}
+      imageSize={86}
       tooltip={item.name}
-      tooltipPosition={'bottom'}
+      tooltipPosition="bottom"
+      selected={active}
       onClick={() =>
         act('select_item', {
           path: item.path,
           deselect: active,
         })
       }
+      buttonsAlt
+      buttons={
+        item.information.length > 0 &&
+        item.information.map((info) => (
+          <Box
+            key={info}
+            height="9px"
+            fontSize="9px"
+            textColor={'darkgray'}
+            bold
+          >
+            {info}
+          </Box>
+        ))
+      }
     >
-      <Flex vertical>
-        <Flex.Item>
-          <ItemIcon item={item} scale={scale} />
-        </Flex.Item>
-        {item.information.length > 0 && (
-          <Flex.Item ml={-5.5} style={{ zIndex: '3' }}>
-            {item.information.map((info) => (
-              <Box
-                height="9px"
-                key={info}
-                fontSize="9px"
-                textColor={'darkgray'}
-                bold
-              >
-                {info}
-              </Box>
-            ))}
-          </Flex.Item>
-        )}
-      </Flex>
-    </Button>
+      {item.name}
+    </ImageButton>
   );
 };
 
 const ItemListDisplay = (props: { items: LoadoutItem[] }) => {
   const { data } = useBackend<LoadoutManagerData>();
   const { loadout_list } = data.character_preferences.misc;
-  return (
-    <Flex wrap>
-      {props.items.map((item) => (
-        <Flex.Item key={item.name} mr={2} mb={2}>
-          <ItemDisplay
-            item={item}
-            active={loadout_list && loadout_list[item.path] !== undefined}
-          />
-        </Flex.Item>
-      ))}
-    </Flex>
-  );
+  return props.items.map((item) => (
+    <ItemDisplay
+      key={item.name}
+      item={item}
+      active={loadout_list && loadout_list[item.path] !== undefined}
+    />
+  ));
 };
 
 export const LoadoutTabDisplay = (props: {

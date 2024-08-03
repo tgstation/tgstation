@@ -22,13 +22,14 @@ type Props = Required<{}> &
     assetResolve: string;
     base64: string;
     buttons: ReactNode;
+    buttonsAlt: boolean;
     children: ReactNode;
     className: string;
     color: string;
     disabled: BooleanLike;
     dmFallback: ReactNode;
-    dmIcon: string;
-    dmIconState: string;
+    dmIcon: string | null;
+    dmIconState: string | null;
     fluid: boolean;
     imageSize: number;
     onClick: (e: any) => void;
@@ -46,6 +47,7 @@ export const ImageButton = (props: Props) => {
     assetResolve,
     base64,
     buttons,
+    buttonsAlt,
     children,
     className,
     color,
@@ -104,7 +106,7 @@ export const ImageButton = (props: Props) => {
       <div className={classes(['ImageButton__image'])}>
         {base64 || asset || assetResolve ? (
           <Image
-            className={classes([asset])}
+            className={classes([!base64 && !assetResolve && asset])}
             src={
               assetResolve
                 ? resolveAsset(assetResolve)
@@ -133,20 +135,12 @@ export const ImageButton = (props: Props) => {
                 'ImageButton__fluid--title',
                 children && 'ImageButton__fluid--title--divider',
               ])}
-              style={{
-                width: buttons ? `calc(100% - ${imageSize}px)` : '100%',
-              }}
             >
               {title}
             </span>
           )}
           {children && (
-            <span
-              className={classes(['ImageButton__fluid--content'])}
-              style={{
-                width: buttons ? `calc(100% - ${imageSize}px)` : '100%',
-              }}
-            >
+            <span className={classes(['ImageButton__fluid--content'])}>
               {children}
             </span>
           )}
@@ -191,10 +185,14 @@ export const ImageButton = (props: Props) => {
         <div
           className={classes([
             'ImageButton__buttons',
+            buttonsAlt && 'ImageButton__buttons--alt',
             !children && 'ImageButton__buttons--noContent',
+            fluid && color && typeof color === 'string'
+              ? 'ImageButton__buttons--color--' + color
+              : fluid && 'ImageButton__buttons--color--default',
           ])}
           style={{
-            width: fluid ? `${imageSize}px` : 'auto',
+            width: buttonsAlt ? `${imageSize}px` : 'auto',
           }}
         >
           {buttons}

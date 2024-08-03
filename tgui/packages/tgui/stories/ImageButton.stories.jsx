@@ -151,6 +151,7 @@ const Story = (props, context) => {
             tooltip={!fluid1 && content}
             disabled={disabled}
             selected={selected}
+            buttonsAlt
             buttons={
               <Button
                 fluid

@@ -1,10 +1,10 @@
-import { Fragment, useState } from 'react';
+import { useState } from 'react';
 
 import { useBackend } from '../../../backend';
 import {
   Box,
   Button,
-  Divider,
+  ImageButton,
   Icon,
   Input,
   NoticeBox,
@@ -21,7 +21,7 @@ import {
   LoadoutManagerData,
   typePath,
 } from './base';
-import { ItemIcon, LoadoutTabDisplay, SearchDisplay } from './ItemDisplay';
+import { LoadoutTabDisplay, SearchDisplay } from './ItemDisplay';
 import { LoadoutModifyDimmer } from './ModifyPanel';
 
 export const LoadoutPage = () => {
@@ -209,36 +209,36 @@ const LoadoutSelectedItem = (props: {
   }
 
   return (
-    <Stack align={'center'}>
-      <Stack.Item>
-        <ItemIcon item={item} scale={1} />
-      </Stack.Item>
-      <Stack.Item width="55%">{item.name}</Stack.Item>
-      {item.buttons.length ? (
-        <Stack.Item>
+    <ImageButton
+      fluid
+      imageSize={32}
+      dmIcon={item.icon}
+      dmIconState={item.icon_state}
+      buttons={
+        <>
+          {!!item.buttons.length && (
+            <Button
+              width="32px"
+              color="transparent"
+              icon="cogs"
+              iconColor="grey"
+              onClick={() => {
+                setModifyItemDimmer(item);
+              }}
+            />
+          )}
           <Button
-            color="none"
             width="32px"
-            onClick={() => {
-              setModifyItemDimmer(item);
-            }}
-          >
-            <Icon size={1.8} name="cogs" color="grey" />
-          </Button>
-        </Stack.Item>
-      ) : (
-        <Stack.Item width="32px" /> // empty space
-      )}
-      <Stack.Item>
-        <Button
-          color="none"
-          width="32px"
-          onClick={() => act('select_item', { path: path, deselect: true })}
-        >
-          <Icon size={2.4} name="times" color="red" />
-        </Button>
-      </Stack.Item>
-    </Stack>
+            color="transparent"
+            icon="times"
+            iconColor="red"
+            onClick={() => act('select_item', { path: path, deselect: true })}
+          />
+        </>
+      }
+    >
+      {item.name}
+    </ImageButton>
   );
 };
 
@@ -253,7 +253,7 @@ const LoadoutSelectedSection = (props: {
 
   return (
     <Section
-      title="&nbsp;"
+      title="Selected Items"
       scrollable
       fill
       buttons={
@@ -271,15 +271,13 @@ const LoadoutSelectedSection = (props: {
     >
       {loadout_list &&
         Object.entries(loadout_list).map(([path, item]) => (
-          <Fragment key={path}>
-            <LoadoutSelectedItem
-              path={path}
-              all_tabs={all_tabs}
-              modifyItemDimmer={modifyItemDimmer}
-              setModifyItemDimmer={setModifyItemDimmer}
-            />
-            <Divider />
-          </Fragment>
+          <LoadoutSelectedItem
+            key={path}
+            path={path}
+            all_tabs={all_tabs}
+            modifyItemDimmer={modifyItemDimmer}
+            setModifyItemDimmer={setModifyItemDimmer}
+          />
         ))}
     </Section>
   );
@@ -291,7 +289,7 @@ const LoadoutPreviewSection = () => {
   return (
     <Section
       fill
-      title="&nbsp;"
+      title="Preview"
       buttons={
         <Button.Checkbox
           align="center"
