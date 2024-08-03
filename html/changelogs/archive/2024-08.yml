@@ -142,3 +142,9 @@
   necromanceranne:
   - bugfix: Shoving someone onto a table now causes them to become vulnerable to being
       stunned.
+2024-08-03:
+  Watermelon914:
+  - bugfix: Fixed an infinite TC glitch dupe
+  Y0SH1M4S73R:
+  - admin: The "Suppress Runtime Logging" toggle in the lua editor actually does what
+      it says
