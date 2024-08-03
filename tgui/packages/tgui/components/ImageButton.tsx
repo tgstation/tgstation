@@ -122,18 +122,20 @@ export const ImageButton = (props: Props) => {
           getFallback('question', false)
         )}
       </div>
-      <span
-        className={classes([
-          'ImageButton__content',
-          selected && 'ImageButton__content--selected',
-          disabled && 'ImageButton__content--disabled',
-          color && typeof color === 'string'
-            ? 'ImageButton__content--color--' + color
-            : 'ImageButton__content--color--default',
-        ])}
-      >
-        {children}
-      </span>
+      {children && (
+        <span
+          className={classes([
+            'ImageButton__content',
+            selected && 'ImageButton__content--selected',
+            disabled && 'ImageButton__content--disabled',
+            color && typeof color === 'string'
+              ? 'ImageButton__content--color--' + color
+              : 'ImageButton__content--color--default',
+          ])}
+        >
+          {children}
+        </span>
+      )}
     </div>
   );
 
@@ -149,7 +151,14 @@ export const ImageButton = (props: Props) => {
     <div className={classes(['ImageButton'])}>
       {buttonContent}
       {buttons && (
-        <div className={classes(['ImageButton__buttons'])}>{buttons}</div>
+        <div
+          className={classes([
+            'ImageButton__buttons',
+            !children && 'ImageButton__buttons--noContent',
+          ])}
+        >
+          {buttons}
+        </div>
       )}
     </div>
   );

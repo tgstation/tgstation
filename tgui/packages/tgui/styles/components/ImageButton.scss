@@ -17,8 +17,8 @@ $bg-map: colors.$bg-map !default;
 @mixin button-style(
   $color,
   $border-color: rgba(lighten($color, 50%), 0.2),
-  $border-width: 1px 1px 0 1px,
-  $opacity: 0.25,
+  $border-width: 1px 0 0 0,
+  $opacity: 0.15,
   $hoverable: true
 ) {
   $luminance: luminance($color);
@@ -28,9 +28,7 @@ $bg-map: colors.$bg-map !default;
   color: $text-color;
   border: solid $border-color;
   border-width: $border-width;
-  transition:
-    color 0.2s,
-    background-color 0.2s;
+  transition: background-color 0.2s;
 
   @if $hoverable {
     &:hover {
@@ -41,14 +39,13 @@ $bg-map: colors.$bg-map !default;
 
 @each $color-name, $color-value in $bg-map {
   .ImageButton--color--#{$color-name} {
-    @include button-style($color-value);
+    @include button-style($color-value, $border-width: 1px);
   }
 
   .ImageButton__content--color--#{$color-name} {
     @include button-style(
       $color-value,
       $border-color: lighten($color-value, 25%),
-      $border-width: 1px 0 0 0,
       $opacity: 1,
       $hoverable: false
     );
@@ -57,7 +54,7 @@ $bg-map: colors.$bg-map !default;
 
 .ImageButton {
   &--color--default {
-    @include button-style(lighten($color-default, 85%));
+    @include button-style(lighten($color-default, 85%), $border-width: 1px);
   }
 
   &--disabled {
@@ -66,7 +63,11 @@ $bg-map: colors.$bg-map !default;
   }
 
   &--selected {
-    @include button-style($color-selected, $border-color: $color-selected);
+    @include button-style(
+      $color-selected,
+      $border-color: rgba($color-selected, 0.25),
+      $border-width: 1px
+    );
   }
 }
 
@@ -75,7 +76,6 @@ $bg-map: colors.$bg-map !default;
     @include button-style(
       $color-content,
       $border-color: lighten($color-content, 25%),
-      $border-width: 1px 0 0 0,
       $opacity: 1,
       $hoverable: false
     );
@@ -90,7 +90,6 @@ $bg-map: colors.$bg-map !default;
     @include button-style(
       $color-selected,
       $border-color: lighten($color-selected, 25%),
-      $border-width: 1px 0 0 0,
       $opacity: 1,
       $hoverable: false
     );
@@ -118,9 +117,13 @@ $bg-map: colors.$bg-map !default;
     display: flex;
     position: absolute;
     overflow: hidden;
-    left: 0.1em;
-    bottom: 1.65em;
+    left: 1px;
+    bottom: 1.6em;
     max-width: 100%;
+
+    &--noContent {
+      bottom: 1px;
+    }
 
     & > * {
       border-radius: 0 !important;
@@ -135,6 +138,6 @@ $bg-map: colors.$bg-map !default;
     text-align: center;
     white-space: nowrap;
     padding: 0.15em 0.25em;
-    margin: 0 -1px;
+    margin: -1px;
   }
 }
