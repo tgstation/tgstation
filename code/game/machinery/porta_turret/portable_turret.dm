@@ -749,8 +749,8 @@ DEFINE_BITFIELD(turret_flags, list(
 	mode = TURRET_LETHAL
 	stun_projectile = /obj/projectile/bullet
 	lethal_projectile = /obj/projectile/bullet
-	lethal_projectile_sound = 'sound/weapons/gun/pistol/shot.ogg'
-	stun_projectile_sound = 'sound/weapons/gun/pistol/shot.ogg'
+	lethal_projectile_sound = 'sound/weapons/gun/pistol/pistol_fire1.ogg'
+	stun_projectile_sound = 'sound/weapons/gun/pistol/pistol_fire1.ogg'
 	icon_state = "syndie_off"
 	base_icon_state = "syndie"
 	faction = list(ROLE_SYNDICATE)

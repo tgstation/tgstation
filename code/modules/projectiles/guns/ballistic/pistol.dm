@@ -110,10 +110,10 @@
 	w_class = WEIGHT_CLASS_NORMAL
 	accepted_magazine_type = /obj/item/ammo_box/magazine/m45
 	can_suppress = FALSE
-	fire_sound = 'sound/weapons/gun/pistol/shot_alt.ogg'
-	rack_sound = 'sound/weapons/gun/pistol/rack.ogg'
+	fire_sound = 'sound/weapons/gun/pistol/pistol_fire1.ogg'
+	rack_sound = 'sound/weapons/gun/pistol/pistol_bolt2.ogg'
 	lock_back_sound = 'sound/weapons/gun/pistol/slide_lock.ogg'
-	bolt_drop_sound = 'sound/weapons/gun/pistol/slide_drop.ogg'
+	bolt_drop_sound = 'sound/weapons/gun/pistol/pistol_bolt2.ogg'
 
 /**
  * Weak 1911 for syndicate chimps. It comes in a 4 TC kit.

@@ -8,7 +8,7 @@
 	fire_sound = 'sound/weapons/gun/smg/smg_fire1.ogg'
 	fire_sound_volume = 90
 	rack_sound = 'sound/weapons/gun/smg/smgrack.ogg'
-	suppressed_sound = 'sound/weapons/gun/smg/shot_suppressed.ogg'
+	suppressed_sound = 'sound/weapons/gun/pistol/pistol_fire_silenced1.ogg'
 	burst_fire_selection = TRUE
 
 /obj/item/gun/ballistic/automatic/proto

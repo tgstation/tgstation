@@ -11,7 +11,7 @@
 	/// The upper end to how many shots we'll fire.
 	var/shots_to_fire_upper_range = 6
 	/// The sound effect we play when we "fire" a shot.
-	var/fire_sound = 'sound/weapons/gun/shotgun/shot.ogg'
+	var/fire_sound = 'sound/weapons/gun/shotgun/shotgun_fire2.ogg'
 	/// The sound we make when our shot actually "hits" "someone".
 	var/hit_person_sound = 'sound/weapons/pierce.ogg'
 	/// The sound we make when our shot misses someone and "hits" a "wall".
