@@ -325,7 +325,7 @@ type AboutDialogProps = {
 const AboutDialog = (props: AboutDialogProps) => {
   const { close } = props;
   const { act, data } = useBackend<NTOSData>();
-  const { login } = data;
+  const { show_imprint, login } = data;
   const paragraphStyle = { padding: '.5rem 1rem 0 2rem' };
   return (
     <Dialog title="About Notepad" onClose={close} width={'500px'}>
@@ -353,7 +353,9 @@ const AboutDialog = (props: AboutDialogProps) => {
           >
             This product is licensed under the NT Corporation Terms to:
           </span>
-          <span style={{ padding: '0 1rem 0 4rem' }}>{login.IDName}</span>
+          <span style={{ padding: '0 1rem 0 4rem' }}>
+            {show_imprint ? login.IDName : 'Unknown'}
+          </span>
         </Box>
       </div>
       <div className="Dialog__footer">
