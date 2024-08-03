@@ -195,6 +195,9 @@ const StatusBar = (props: StatusBarProps) => {
   const { statuses } = props;
   return (
     <Box className="NtosNotepad__StatusBar">
+      <Box className="NtosNotepad__StatusBar__entry" minWidth="25rem">
+        Press shift-enter to insert new line
+      </Box>
       <Box className="NtosNotepad__StatusBar__entry" minWidth="15rem">
         Ln {statuses.line}, Col {statuses.column}
       </Box>
