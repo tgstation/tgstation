@@ -89,6 +89,7 @@ export type LuaEditorData = {
   pageCount: number;
   lastError?: string;
   showGlobalTable: boolean;
+  supressRuntimes: boolean;
   globals: LuaGlobals;
   tasks: LuaTasks;
   stateLog: LogEntry[];
