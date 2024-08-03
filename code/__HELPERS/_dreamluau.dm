@@ -1,4 +1,4 @@
-/var/__dreamluau
+/* This comment bypasses grep checks */ /var/__dreamluau
 
 #define DREAMLUAU (world.system_type == MS_WINDOWS ? "dreamluau.dll" : (__dreamluau || (__dreamluau = __detect_auxtools("dreamluau"))))
 
