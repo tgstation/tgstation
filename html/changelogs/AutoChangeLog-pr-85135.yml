@@ -1,4 +1,0 @@
-author: "Jackriip"
-delete-after: True
-changes:
-  - refactor: "moves the create_all_lighting_objects proc to the lighting subsystem"
