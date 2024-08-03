@@ -174,9 +174,6 @@
 	required_slots = list(ITEM_SLOT_BACK)
 
 /obj/item/mod/module/jump_jet/on_use()
-	. = ..()
-	if (!.)
-		return FALSE
 	if (DOING_INTERACTION(mod.wearer, mod.wearer))
 		balloon_alert(mod.wearer, "busy!")
 		return
@@ -289,7 +286,6 @@
 	icon_state = "apparatus"
 	complexity = 1
 	incompatible_modules = list(/obj/item/mod/module/mouthhole)
-	overlay_state_inactive = "module_apparatus"
 	required_slots = list(ITEM_SLOT_HEAD|ITEM_SLOT_MASK)
 	/// Former flags of the helmet.
 	var/former_helmet_flags = NONE
@@ -715,6 +711,7 @@
 		attached_hat = hat
 		var/obj/item/clothing/helmet = mod.get_part_from_slot(ITEM_SLOT_HEAD)
 		if(istype(helmet))
+			helmet.attach_clothing_traits(attached_hat.clothing_traits)
 			former_flags = helmet.flags_cover
 			former_visor_flags = helmet.visor_flags_cover
 			helmet.flags_cover |= attached_hat.flags_cover
@@ -737,11 +734,12 @@
 		balloon_alert(user, "hat removed")
 	else
 		balloon_alert_to_viewers("the hat falls to the floor!")
-	attached_hat = null
 	var/obj/item/clothing/helmet = mod.get_part_from_slot(ITEM_SLOT_HEAD)
 	if(istype(helmet))
+		helmet.detach_clothing_traits(attached_hat)
 		helmet.flags_cover = former_flags
 		helmet.visor_flags_cover = former_visor_flags
+	attached_hat = null
 	mod.wearer.update_clothing(mod.slot_flags)
 
 /obj/item/mod/module/hat_stabilizer/syndicate
@@ -863,16 +861,10 @@
 	return ..()
 
 /obj/item/mod/module/recycler/on_activation()
-	. = ..()
-	if(!.)
-		return
 	connector = AddComponent(/datum/component/connect_loc_behalf, mod.wearer, loc_connections)
 	RegisterSignal(mod.wearer, COMSIG_MOVABLE_MOVED, PROC_REF(on_wearer_moved))
 
 /obj/item/mod/module/recycler/on_deactivation(display_message, deleting = FALSE)
-	. = ..()
-	if(!.)
-		return
 	QDEL_NULL(connector)
 	UnregisterSignal(mod.wearer, COMSIG_MOVABLE_MOVED, PROC_REF(on_wearer_moved))
 

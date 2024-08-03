@@ -91,7 +91,6 @@
 
 /obj/item/reagent_containers/cup/maunamug/attack_hand(mob/living/user, list/modifiers)
 	if(cell && open)
-		cell.update_appearance()
 		user.put_in_hands(cell)
 		cell = null
 		to_chat(user, span_notice("You remove the power cell from [src]."))
