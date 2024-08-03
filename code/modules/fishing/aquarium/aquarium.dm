@@ -362,17 +362,17 @@
 		if("feeding_interval")
 			feeding_interval = params["feeding_interval"] MINUTES
 			. = TRUE
-		if("remove")
-			var/atom/movable/inside = locate(params["ref"]) in contents
-			if(inside)
-				if(isitem(inside))
-					user.put_in_hands(inside)
-				else
-					inside.forceMove(get_turf(src))
-				to_chat(user,span_notice("You take out [inside] from [src]."))
 		if("pet_fish")
 			var/obj/item/fish/fish = locate(params["fish_reference"]) in contents
 			fish?.pet_fish(user)
+		if("remove_item")
+			var/atom/movable/item = locate(params["item_reference"]) in contents
+			item?.forceMove(drop_location())
+			to_chat(user, span_notice("You take out [item] from [src]."))
+		if("rename_fish")
+			var/atom/movable/fish = locate(params["fish_reference"]) in contents
+			var/chosen_name = params["chosen_name"]
+			fish.name = chosen_name
 
 /obj/structure/aquarium/ui_interact(mob/user, datum/tgui/ui)
 	. = ..()

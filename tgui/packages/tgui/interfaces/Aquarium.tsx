@@ -2,6 +2,7 @@ import { capitalizeFirst } from 'common/string';
 import {
   Button,
   Flex,
+  Input,
   Knob,
   Icon,
   Box,
@@ -282,26 +283,32 @@ const FishInfo = (props) => {
             </Button>
           </Flex.Item>
           <Flex.Item width="50%">
-            <Button
+            <Button.Input
               textAlign="center"
               mt={1}
               ml={1}
               fluid
+              placeholder="Rename"
               color="transparent"
-              icon="keyboard"
+              onCommit={(e, value) => {
+                act('rename_fish', {
+                  fish_reference: fish.fish_ref,
+                  chosen_name: value,
+                });
+              }}
               style={{
                 padding: '3px',
                 borderRadius: '1em',
                 background: '#151326',
               }}
-              onClick={() =>
-                act('pet_fish', {
-                  fish_reference: fish.fish_ref,
-                })
-              }
             >
-              Rename
-            </Button>
+              <Flex>
+                <Flex.Item ml={3}>
+                  <Icon name="keyboard"></Icon>
+                </Flex.Item>
+                <Flex.Item ml={1}>Rename</Flex.Item>
+              </Flex>
+            </Button.Input>
           </Flex.Item>
         </Flex>
       </Stack.Item>
