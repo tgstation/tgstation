@@ -3,7 +3,7 @@ import { createSearch } from 'common/string';
 import { useState } from 'react';
 
 import { useBackend } from '../backend';
-import { Button, Input, NoticeBox, Section, ImageButton } from '../components';
+import { Button, ImageButton, Input, NoticeBox, Section } from '../components';
 import { Window } from '../layouts';
 
 type Item = {

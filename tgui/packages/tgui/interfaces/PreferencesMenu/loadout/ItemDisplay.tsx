@@ -1,6 +1,6 @@
 import { createSearch } from '../../../../common/string';
 import { useBackend } from '../../../backend';
-import { Box, ImageButton, DmIcon, Icon, NoticeBox } from '../../../components';
+import { Box, DmIcon, Icon, ImageButton, NoticeBox } from '../../../components';
 import { LoadoutCategory, LoadoutItem, LoadoutManagerData } from './base';
 
 export const ItemIcon = (props: { item: LoadoutItem; scale?: number }) => {
