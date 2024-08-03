@@ -148,7 +148,7 @@ export const ImageButton = (props: Props) => {
   }
 
   return (
-    <div className={classes(['ImageButton'])}>
+    <div className={classes(['ImageButton', className])}>
       {buttonContent}
       {buttons && (
         <div

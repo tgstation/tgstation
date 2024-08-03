@@ -8,51 +8,55 @@ This table of contents must be manually maintained.
 Make sure to add new items to this list if you document new components.
 -->
 
-- [General Concepts](#general-concepts)
-- [`tgui/components`](#tguicomponents)
-  - [`AnimatedNumber`](#animatednumber)
-  - [`BlockQuote`](#blockquote)
-  - [`Box`](#box)
-  - [`Button`](#button)
-  - [`Button.Checkbox`](#buttoncheckbox)
-  - [`Button.Confirm`](#buttonconfirm)
-  - [`Button.Input`](#buttoninput)
-  - [`ByondUi`](#byondui)
-  - [`Collapsible`](#collapsible)
-  - [`ColorBox`](#colorbox)
-  - [`Dimmer`](#dimmer)
-  - [`Divider`](#divider)
-  - [`Dropdown`](#dropdown)
-  - [`Flex`](#flex)
-  - [`Flex.Item`](#flexitem)
-  - [`Grid`](#grid)
-  - [`Grid.Column`](#gridcolumn)
-  - [`Icon`](#icon)
-  - [`Icon.Stack`](#iconstack)
-  - [`Input`](#input)
-  - [`Knob`](#knob)
-  - [`LabeledControls`](#labeledcontrols)
-  - [`LabeledControls.Item`](#labeledcontrolsitem)
-  - [`LabeledList`](#labeledlist)
-  - [`LabeledList.Item`](#labeledlistitem)
-  - [`LabeledList.Divider`](#labeledlistdivider)
-  - [`Modal`](#modal)
-  - [`NoticeBox`](#noticebox)
-  - [`NumberInput`](#numberinput)
-  - [`ProgressBar`](#progressbar)
-  - [`RoundGauge`](#roundgauge)
-  - [`Section`](#section)
-  - [`Slider`](#slider)
-  - [`Stack`](#stack)
-  - [`Table`](#table)
-  - [`Table.Row`](#tablerow)
-  - [`Table.Cell`](#tablecell)
-  - [`Tabs`](#tabs)
-  - [`Tabs.Tab`](#tabstab)
-  - [`Tooltip`](#tooltip)
-- [`tgui/layouts`](#tguilayouts)
-  - [`Window`](#window)
-  - [`Window.Content`](#windowcontent)
+- [Component Reference](#component-reference)
+  - [General Concepts](#general-concepts)
+  - [`tgui/components`](#tguicomponents)
+    - [`AnimatedNumber`](#animatednumber)
+    - [`BlockQuote`](#blockquote)
+    - [`Box`](#box)
+    - [`Button`](#button)
+    - [`Button.Checkbox`](#buttoncheckbox)
+    - [`Button.Confirm`](#buttonconfirm)
+    - [`Button.Input`](#buttoninput)
+    - [`ByondUi`](#byondui)
+    - [`Collapsible`](#collapsible)
+    - [`ColorBox`](#colorbox)
+    - [`Dimmer`](#dimmer)
+    - [`Divider`](#divider)
+    - [`Dropdown`](#dropdown)
+    - [`Flex`](#flex)
+    - [`Flex.Item`](#flexitem)
+    - [`Grid`](#grid)
+    - [`Grid.Column`](#gridcolumn)
+    - [`Icon`](#icon)
+    - [`Icon.Stack`](#iconstack)
+    - [`ImageButton`](#imagebutton)
+    - [`Input`](#input)
+    - [`Knob`](#knob)
+    - [`LabeledControls`](#labeledcontrols)
+    - [`LabeledControls.Item`](#labeledcontrolsitem)
+    - [`LabeledList`](#labeledlist)
+    - [`LabeledList.Item`](#labeledlistitem)
+    - [`LabeledList.Divider`](#labeledlistdivider)
+    - [`Modal`](#modal)
+    - [`NoticeBox`](#noticebox)
+    - [`NumberInput`](#numberinput)
+    - [`Popper`](#popper)
+    - [`ProgressBar`](#progressbar)
+    - [`RoundGauge`](#roundgauge)
+    - [`Section`](#section)
+    - [`Slider`](#slider)
+    - [`Stack`](#stack)
+    - [`Stack.Item`](#stackitem)
+    - [`Table`](#table)
+    - [`Table.Row`](#tablerow)
+    - [`Table.Cell`](#tablecell)
+    - [`Tabs`](#tabs)
+    - [`Tabs.Tab`](#tabstab)
+    - [`Tooltip`](#tooltip)
+  - [`tgui/layouts`](#tguilayouts)
+    - [`Window`](#window)
+    - [`Window.Content`](#windowcontent)
 
 ## General Concepts
 
@@ -534,6 +538,36 @@ Renders children icons on top of each other in order to make your own icon.
 
 - See inherited props: [Box](#box)
 - `children: Icon` - Icons to stack.
+
+### `ImageButton`
+
+A Robust button is specifically for sticking a picture in it.
+
+**Props:**
+
+- See inherited props: [Box](#box)
+- `asset: string` - Asset Cache images.
+- `assetResolve: string` - resolveAsset().
+- `base64: string` - Classic way to put images.
+- `buttons: any` - Special section for any component, or, content.
+  Quite a small area at the bottom of the image.
+- `children: any` - Content under image.
+- `className: string` - Applies a CSS class to the element.
+- `color: string` - Color of the button, but without `transparent`; see [Button](#button)
+- `disabled: boolean` - Makes button disabled and dark red if true.
+  Also disables onClick.
+- `selected: boolean` - Makes button selected and green if true.
+- `dmFallback: any` - Optional. Adds a "stub" when loading DmIcon.
+- `dmIcon: string` - Parameter `icon` of component `DmIcon`.
+- `dmIconState: string` Parameter `icon_state` of component `DmIcon`.
+  For proper work of `DmIcon` it is necessary that both parameters are filled in!
+- `imageSize: number` - Parameter responsible for the size of the image, component and standard "stubs".
+  Measured in pixels. `imageSize={64}` = 64px.
+- `onClick: (e) => void` - Called when button is clicked with LMB.
+- `onRightClick: (e) => void` - Called when button is clicked with RMB.
+- `tooltip: string` - A fancy, boxy tooltip, which appears when hovering
+over the button.
+- `tooltipPosition: string` - Position of the tooltip. See [`Popper`](#Popper) for valid options.
 
 ### `Input`
 
