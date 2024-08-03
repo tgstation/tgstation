@@ -361,7 +361,6 @@
 			if (state == STATE_BUYING_SHUTTLE && can_buy_shuttles(usr) != TRUE)
 				return
 			set_state(usr, params["state"])
-			playsound(src, SFX_TERMINAL_TYPE, 50, FALSE)
 		if ("setStatusMessage")
 			if (!authenticated(usr))
 				return
@@ -369,7 +368,6 @@
 			var/line_two = reject_bad_text(params["lowerText"] || "", MAX_STATUS_LINE_LENGTH)
 			post_status("message", line_one, line_two)
 			last_status_display = list(line_one, line_two)
-			playsound(src, SFX_TERMINAL_TYPE, 50, FALSE)
 		if ("setStatusPicture")
 			if (!authenticated(usr))
 				return
@@ -384,7 +382,6 @@
 				else
 					post_status("alert", picture)
 
-			playsound(src, SFX_TERMINAL_TYPE, 50, FALSE)
 		if ("toggleAuthentication")
 			// Log out if we're logged in
 			if (authorize_name)
