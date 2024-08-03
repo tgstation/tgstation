@@ -311,7 +311,7 @@
 
 /datum/supply_pack/goody/climbing_hook
 	name = "Climbing Hook Single-Pack"
-	desc = "A less cheap imported climbing hook. Absolutely no use outside of planetary stations."
+	desc = "A less cheap imported climbing hook. Absolutely no use outside of multi-floor stations."
 	cost = PAYCHECK_CREW * 5
 	contains = list(/obj/item/climbing_hook)
 

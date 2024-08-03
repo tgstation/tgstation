@@ -1,8 +1,13 @@
 import { Section, Stack } from 'tgui-core/components';
+import { BooleanLike } from 'tgui-core/react';
 
 import { useBackend } from '../backend';
 import { Window } from '../layouts';
-import { Objective, ObjectivePrintout } from './common/Objectives';
+import {
+  Objective,
+  ObjectivePrintout,
+  ReplaceObjectivesButton,
+} from './common/Objectives';
 
 const greenText = {
   fontWeight: 'italics',
@@ -18,13 +23,15 @@ type Data = {
   antag_name: string;
   uplink_location: string | null;
   objectives: Objective[];
+  can_change_objective: BooleanLike;
 };
 
 export const AntagInfoSpy = () => {
   const { data } = useBackend<Data>();
-  const { antag_name, uplink_location, objectives } = data;
+  const { antag_name, uplink_location, objectives, can_change_objective } =
+    data;
   return (
-    <Window width={380} height={420} theme="ntos_darkmode">
+    <Window width={380} height={450} theme="ntos_darkmode">
       <Window.Content
         style={{
           backgroundImage: 'none',
@@ -57,6 +64,16 @@ export const AntagInfoSpy = () => {
                 titleMessage={'Your mission, should you choose to accept it'}
                 objectives={objectives}
               />
+            </Stack.Item>
+            <Stack.Divider />
+            <Stack.Item textAlign="center">
+              {
+                <ReplaceObjectivesButton
+                  can_change_objective={can_change_objective}
+                  button_title={'Make Your Own Plan'}
+                  button_colour={'green'}
+                />
+              }
             </Stack.Item>
           </Stack>
         </Section>
