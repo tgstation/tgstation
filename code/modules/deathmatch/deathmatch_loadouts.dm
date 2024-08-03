@@ -544,6 +544,59 @@
 		/datum/action/cooldown/spell/conjure/simian,
 	)
 
+// Waffle Corp Parking Lot	//
+/datum/outfit/deathmatch_loadout/syndicate
+	name = "Deathmatch: Syndicate Agent"
+	display_name = "Spinward Syndicate"
+	desc = "A standard set of equipment for syndicate agents."
+
+	uniform = /obj/item/clothing/under/syndicate
+	glasses = /obj/item/clothing/glasses/sunglasses
+	shoes = /obj/item/clothing/shoes/combat
+	gloves = /obj/item/clothing/gloves/combat
+	back = /obj/item/storage/backpack
+	id = /obj/item/card/id/advanced/chameleon
+	l_hand = /obj/item/gun/ballistic/automatic/pistol
+	l_pocket = /obj/item/knife/combat
+	backpack_contents = list(/obj/item/ammo_box/magazine/m9mm = 5)
+
+/datum/outfit/deathmatch_loadout/syndicate/cybersun
+	name = "Deathmatch: Cybersun Troubleshooter"
+	display_name = "Cybersun Industries"
+	desc = "Cybersun pays you to find trouble, and shoot it. Equipped with an S-120 and a reusable flash-cell."
+	uniform = /obj/item/clothing/under/syndicate/combat
+	glasses = /obj/item/clothing/glasses/sunglasses/oval
+	back = /obj/item/storage/backpack/messenger
+	l_hand = /obj/item/gun/ballistic/automatic/pistol
+	l_pocket = /obj/item/pen/edagger
+
+/datum/outfit/deathmatch_loadout/syndicate/donk
+	name = "Deathmatch: Donk Co Employee"
+	display_name = "Donk Company"
+	desc = "Some people would kill to make minimum wage. This is one of those people. Equipped with a .38 revolver, grenades, and tactical rations."
+	uniform = /obj/item/clothing/under/syndicate/combat
+	suit = /obj/item/clothing/suit/hazardvest
+	back = /obj/item/storage/backpack/industrial
+	glasses =/obj/item/clothing/glasses/meson
+
+/datum/outfit/deathmatch_loadout/syndicate/gorlex
+	name = "Deathmatch: Gorlex Rent-A-Soldier"
+	display_name = "Gorlex Marauders"
+	desc = "The uniform worn by Gorlex's basic troopers."
+	uniform = /obj/item/clothing/under/syndicate/combat
+	glasses = /obj/item/clothing/glasses/night/colorless
+	mask = /obj/item/clothing/mask/gas/syndicate
+
+/datum/outfit/deathmatch_loadout/syndicate/waffle
+	name = "Deathmatch: Waffle Corporate Security"
+	display_name = "Waffle Corporation"
+	desc = "."
+	uniform = /obj/item/clothing/under/syndicate/camo/blue
+	head = /obj/item/clothing/head/helmet/blueshirt
+	glasses = /obj/item/clothing/glasses/welding/up
+
+
+//	Final Destination	//
 /datum/outfit/deathmatch_loadout/head_of_security
 	name = "Deathmatch: Head of Security"
 	display_name = "Head of Security"

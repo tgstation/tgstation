@@ -227,6 +227,13 @@ INITIALIZE_IMMEDIATE(/turf/closed/indestructible/splashscreen)
 	smoothing_groups = SMOOTH_GROUP_SHUTTLE_PARTS + SMOOTH_GROUP_WINDOW_FULLTILE_PLASTITANIUM
 	canSmoothWith = SMOOTH_GROUP_WINDOW_FULLTILE_PLASTITANIUM
 
+/turf/closed/indestructible/police_cordon
+	name = "cordon"
+	desc = "An incredibly high strength police holobarrier."
+	icon = 'icons/effects/holosigns.dmi'
+	icon_state = "holosign_sec"
+	opacity = FALSE
+
 /turf/closed/indestructible/opsglass/Initialize(mapload)
 	. = ..()
 	icon_state = null
