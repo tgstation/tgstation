@@ -869,6 +869,7 @@
 		/obj/item/food/fishmeat = 1,
 		/obj/item/food/boiledrice = 1,
 		/datum/reagent/consumable/nutriment/soup/dashi = 5,
+		/obj/item/reagent_containers/cup/bowl = 1,
 	)
 	result = /obj/item/food/salad/sprout_bowl
 	category = CAT_MARTIAN
