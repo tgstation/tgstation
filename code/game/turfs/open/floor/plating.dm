@@ -155,6 +155,7 @@
 	icon_state = "foam_plating"
 	upgradable = FALSE
 	attachment_holes = FALSE
+	smoothing_flags = NONE
 
 /turf/open/floor/plating/foam/burn_tile()
 	return //jetfuel can't melt steel foam
@@ -211,6 +212,7 @@
 	desc = "Thick, tough flooring created with multiple layers of metal."
 	icon = 'icons/turf/floors.dmi'
 	icon_state = "r_plate-0"
+	smoothing_flags = NONE
 
 	thermal_conductivity = 0.025
 	heat_capacity = INFINITY
