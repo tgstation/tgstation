@@ -126,6 +126,10 @@ $bg-map: colors.$bg-map !default;
   text-align: center;
   margin: 0.25em;
 
+  &--noAction {
+    pointer-events: none;
+  }
+
   &__container {
     display: flex;
     flex-direction: column;

@@ -84,6 +84,7 @@ export const ImageButton = (props: Props) => {
       className={classes([
         'ImageButton__container',
         buttons && 'ImageButton__container--hasButtons',
+        !onClick && !onRightClick && 'ImageButton--noAction',
         selected && 'ImageButton--selected',
         disabled && 'ImageButton--disabled',
         color && typeof color === 'string'
