@@ -209,6 +209,7 @@
 		return TRUE
 	else
 		return FALSE
+
 /datum/emote/living/bark
 	key = "bark"
 	key_third_person = "barks"

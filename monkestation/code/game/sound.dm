@@ -113,3 +113,9 @@
 			return "Mob Sounds"
 		if(CHANNEL_PRUDE)
 			return "Prude Sounds"
+		if(CHANNEL_SQUEAK)
+			return "Squeaks / Plushies"
+		if(CHANNEL_MOB_EMOTES)
+			return "Mob Emotes"
+		if(CHANNEL_SILICON_EMOTES)
+			return "Silicon Emotes"

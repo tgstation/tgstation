@@ -12,3 +12,7 @@
 // proc.
 /datum/emote/proc/should_vary(mob/living/user)
 	return vary
+
+/// Returns the mixer channel that sound emotes should use.
+/datum/emote/proc/get_mixer_channel(mob/user, params, type_override, intentional = FALSE)
+	return issilicon(user) ? CHANNEL_SILICON_EMOTES : CHANNEL_MOB_EMOTES
