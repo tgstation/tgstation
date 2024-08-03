@@ -5750,6 +5750,7 @@
 #include "code\modules\research\machinery\departmental_circuit_imprinter.dm"
 #include "code\modules\research\machinery\departmental_protolathe.dm"
 #include "code\modules\research\machinery\departmental_techfab.dm"
+#include "code\modules\research\machinery\podlathe.dm"
 #include "code\modules\research\machinery\protolathe.dm"
 #include "code\modules\research\machinery\techfab.dm"
 #include "code\modules\research\ordnance\_scipaper.dm"
