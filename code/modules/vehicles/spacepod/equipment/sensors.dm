@@ -1,6 +1,6 @@
 /obj/item/pod_equipment/sensors
 	slot = POD_SLOT_SENSORS
-	name = "NT sensor suite"
+	name = "sensor suite"
 	desc = "A sensor suite for space pods, containing some tech doodads and a built-in GPS. Manufacted by Nanotrasen, and has weird labels like \"Not for infowar\" or \"manufacted on Tau Ceti IV\"."
 	/// reference to our GPS component
 	var/datum/component/gps/item/gps

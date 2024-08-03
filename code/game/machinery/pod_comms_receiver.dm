@@ -1,7 +1,7 @@
 /obj/machinery/pod_comms_receiver
 	name = "pod comms receiver"
-	icon = 'icons/obj/machines/drone_dispenser.dmi'
-	icon_state = "on"
+	icon = 'icons/obj/structures.dmi'
+	icon_state = "podcommsreceiver" //sprite by ArcaneMusic
 	density = TRUE
 	// access of this machine affects what pods can use it
 	//todo circuit for this
