@@ -7,6 +7,7 @@
 @use '../base.scss';
 @use '../colors.scss';
 @use '../functions.scss' as *;
+@use './Divider.scss';
 
 $color-default: colors.bg(base.$color-bg-section) !default;
 $color-disabled: #631d1d !default;
@@ -108,9 +109,9 @@ $bg-map: colors.$bg-map !default;
 
   &__image {
     position: relative;
+    align-self: center;
     line-height: 0;
     padding: 0.25em;
-    align-self: center;
   }
 
   &__buttons {
@@ -126,6 +127,7 @@ $bg-map: colors.$bg-map !default;
     }
 
     & > * {
+      margin: 0 !important;
       border-radius: 0 !important;
     }
   }
@@ -139,5 +141,77 @@ $bg-map: colors.$bg-map !default;
     white-space: nowrap;
     padding: 0.15em 0.25em;
     margin: -1px;
+  }
+}
+
+.ImageButton__fluid {
+  display: flex;
+  flex-direction: row;
+  position: relative;
+  margin-bottom: 0.5em;
+
+  &:last-child {
+    margin-bottom: 0;
+  }
+
+  &--info {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    flex: 1;
+    -ms-user-select: none;
+    user-select: none;
+    text-align: center;
+    margin: 0 0.5em;
+  }
+
+  &--title {
+    font-weight: bold;
+    padding: 0.5em;
+
+    &:last-child {
+      padding: 0 0.5em;
+    }
+
+    &--divider {
+      border-bottom: Divider.$thickness solid Divider.$color;
+    }
+  }
+
+  &--content {
+    padding: 0.5em;
+  }
+
+  .ImageButton {
+    &__container {
+      flex-direction: row;
+      flex: 1;
+    }
+
+    &__image {
+      padding: 0;
+    }
+
+    &__buttons {
+      flex-direction: column;
+      right: 0;
+      left: inherit;
+      bottom: inherit;
+      height: 100%;
+
+      & > * {
+        display: inline-flex;
+        height: 100%;
+        flex-direction: column;
+        justify-content: center;
+        text-align: center;
+        border-left: 1px solid rgba(255, 255, 255, 0.2);
+        border-top: 1px solid rgba(255, 255, 255, 0.2);
+
+        &:first-child {
+          border-top: 0;
+        }
+      }
+    }
   }
 }

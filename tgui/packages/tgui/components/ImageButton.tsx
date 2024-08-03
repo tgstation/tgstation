@@ -29,10 +29,12 @@ type Props = Required<{}> &
     dmFallback: ReactNode;
     dmIcon: string;
     dmIconState: string;
+    fluid: boolean;
     imageSize: number;
     onClick: (e: any) => void;
     onRightClick: (e: any) => void;
     selected: BooleanLike;
+    title: string;
     tooltip: ReactNode;
     tooltipPosition: Placement;
   }> &
@@ -51,10 +53,12 @@ export const ImageButton = (props: Props) => {
     dmFallback,
     dmIcon,
     dmIconState,
+    fluid,
     imageSize = 64,
     onClick,
     onRightClick,
     selected,
+    title,
     tooltip,
     tooltipPosition,
     ...rest
@@ -96,7 +100,7 @@ export const ImageButton = (props: Props) => {
         }
       }}
       {...computeBoxProps(rest)}
-      style={{ width: `calc(${imageSize}px + 0.5em + 2px)` }}
+      style={{ width: !fluid ? `calc(${imageSize}px + 0.5em + 2px)` : 'auto' }}
     >
       <div className={classes(['ImageButton__image'])}>
         {base64 || asset || assetResolve ? (
@@ -122,19 +126,47 @@ export const ImageButton = (props: Props) => {
           getFallback('question', false)
         )}
       </div>
-      {children && (
-        <span
-          className={classes([
-            'ImageButton__content',
-            selected && 'ImageButton__content--selected',
-            disabled && 'ImageButton__content--disabled',
-            color && typeof color === 'string'
-              ? 'ImageButton__content--color--' + color
-              : 'ImageButton__content--color--default',
-          ])}
-        >
-          {children}
-        </span>
+      {fluid ? (
+        <div className={classes(['ImageButton__fluid--info'])}>
+          {title && (
+            <span
+              className={classes([
+                'ImageButton__fluid--title',
+                children && 'ImageButton__fluid--title--divider',
+              ])}
+              style={{
+                width: buttons ? `calc(100% - ${imageSize}px)` : '100%',
+              }}
+            >
+              {title}
+            </span>
+          )}
+          {children && (
+            <span
+              className={classes(['ImageButton__fluid--content'])}
+              style={{
+                width: buttons ? `calc(100% - ${imageSize}px)` : '100%',
+              }}
+            >
+              {children}
+            </span>
+          )}
+        </div>
+      ) : (
+        children && (
+          <span
+            className={classes([
+              'ImageButton__content',
+              selected && 'ImageButton__content--selected',
+              disabled && 'ImageButton__content--disabled',
+              color && typeof color === 'string'
+                ? 'ImageButton__content--color--' + color
+                : 'ImageButton__content--color--default',
+            ])}
+          >
+            {children}
+          </span>
+        )
       )}
     </div>
   );
@@ -148,7 +180,12 @@ export const ImageButton = (props: Props) => {
   }
 
   return (
-    <div className={classes(['ImageButton', className])}>
+    <div
+      className={classes([
+        !fluid ? 'ImageButton' : 'ImageButton__fluid',
+        className,
+      ])}
+    >
       {buttonContent}
       {buttons && (
         <div
@@ -156,6 +193,9 @@ export const ImageButton = (props: Props) => {
             'ImageButton__buttons',
             !children && 'ImageButton__buttons--noContent',
           ])}
+          style={{
+            width: fluid ? `${imageSize}px` : 'auto',
+          }}
         >
           {buttons}
         </div>
