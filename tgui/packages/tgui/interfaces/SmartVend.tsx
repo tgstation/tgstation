@@ -76,6 +76,17 @@ export const SmartVend = (props) => {
                     )
                   }
                 />
+                <Button
+                  icon="question"
+                  tooltip={
+                    <span>
+                      LMB - Vend 1 product
+                      <br />
+                      RMB - Vend custom amount
+                    </span>
+                  }
+                  tooltipPosition="bottom-end"
+                />
               </>
             )
           }
