@@ -1,10 +1,9 @@
 import { BooleanLike } from 'common/react';
 import { createSearch } from 'common/string';
 import { useState } from 'react';
-import { DmIcon, Icon } from 'tgui-core/components';
 
 import { useBackend } from '../backend';
-import { Box, Button, Input, NoticeBox, Section, Stack } from '../components';
+import { Button, Input, NoticeBox, Section, ImageButton } from '../components';
 import { Window } from '../layouts';
 
 type Item = {
@@ -39,8 +38,9 @@ export const SmartVend = (props) => {
     searchText.length > 0
       ? Object.values(data.contents).filter(search)
       : Object.values(data.contents);
+
   return (
-    <Window width={498} height={550}>
+    <Window width={431} height={580}>
       <Window.Content>
         <Section
           fill
@@ -83,183 +83,53 @@ export const SmartVend = (props) => {
           {!contents.length ? (
             <NoticeBox>Nothing found.</NoticeBox>
           ) : (
-            contents.map((item) =>
-              displayMode === MODE.tile ? (
-                <ItemTile key={item.path} item={item} />
-              ) : (
-                <ItemList key={item.path} item={item} />
-              ),
-            )
+            contents.map((item) => {
+              const vendAmount = (e) => {
+                act('Release', {
+                  path: item.path,
+                  amount: item.amount,
+                });
+                e.stopPropagation();
+              };
+
+              return (
+                <ImageButton
+                  fluid={displayMode === MODE.list}
+                  imageSize={displayMode === MODE.list ? 32 : 64}
+                  dmIcon={item.icon}
+                  dmIconState={item.icon_state}
+                  tooltip={displayMode === MODE.tile && item.name}
+                  tooltipPosition="bottom"
+                  textAlign="left"
+                  disabled={item.amount < 1}
+                  buttons={
+                    displayMode === MODE.tile ? (
+                      item.amount > 1 && (
+                        <Button bold color="transparent" onClick={vendAmount}>
+                          {item.amount}
+                        </Button>
+                      )
+                    ) : (
+                      <Button disabled={item.amount <= 1} onClick={vendAmount}>
+                        Amount
+                      </Button>
+                    )
+                  }
+                  onClick={() =>
+                    act('Release', {
+                      path: item.path,
+                      amount: 1,
+                    })
+                  }
+                  onRightClick={vendAmount}
+                >
+                  <span>{item.name}</span> <span>{`x${item.amount}`}</span>
+                </ImageButton>
+              );
+            })
           )}
         </Section>
       </Window.Content>
     </Window>
   );
-};
-
-const ItemTile = ({ item }) => {
-  const { act } = useBackend<Data>();
-  const fallback = (
-    <Icon name="spinner" lineHeight="64px" size={3} spin color="gray" />
-  );
-  return (
-    <Box m={1} p={0} inline width="64px">
-      <Button
-        p={0}
-        height="64px"
-        width="64px"
-        tooltip={item.name}
-        tooltipPosition="bottom"
-        textAlign="right"
-        disabled={item.amount < 1}
-        onClick={() =>
-          act('Release', {
-            path: item.path,
-            amount: 1,
-          })
-        }
-      >
-        <DmIcon
-          fallback={fallback}
-          icon={item.icon}
-          icon_state={item.icon_state}
-          height="64px"
-          width="64px"
-        />
-        {item.amount > 1 && (
-          <Button
-            color="transparent"
-            minWidth="24px"
-            height="24px"
-            lineHeight="24px"
-            textAlign="center"
-            position="absolute"
-            left="0"
-            bottom="0"
-            fontWeight="bold"
-            fontSize="14px"
-            onClick={(e) => {
-              act('Release', {
-                path: item.path,
-                amount: item.amount,
-              });
-              e.stopPropagation();
-            }}
-          >
-            {item.amount}
-          </Button>
-        )}
-      </Button>
-      <Box
-        style={{
-          overflow: 'hidden',
-          whiteSpace: 'nowrap',
-          textOverflow: 'ellipsis',
-          textAlign: 'center',
-        }}
-      >
-        {item.name}
-      </Box>
-    </Box>
-  ) as any;
-};
-
-const ItemList = ({ item }) => {
-  const { act } = useBackend<Data>();
-  const fallback = (
-    <Icon name="spinner" lineHeight="32px" size={3} spin color="gray" />
-  );
-  return (
-    <Stack>
-      <Stack.Item>
-        <Button
-          p={0}
-          m={0}
-          color="transparent"
-          width="32px"
-          height="32px"
-          onClick={() =>
-            act('Release', {
-              path: item.path,
-              amount: 1,
-            })
-          }
-        >
-          <DmIcon
-            fallback={fallback}
-            icon={item.icon}
-            icon_state={item.icon_state}
-          />
-        </Button>
-      </Stack.Item>
-      <Stack.Item
-        style={{
-          overflow: 'hidden',
-          whiteSpace: 'nowrap',
-          textOverflow: 'ellipsis',
-          lineHeight: '32px',
-        }}
-      >
-        {item.name}
-      </Stack.Item>
-      <Stack.Item
-        grow
-        style={{
-          overflow: 'hidden',
-          whiteSpace: 'nowrap',
-          textOverflow: 'ellipsis',
-          lineHeight: '32px',
-        }}
-      >
-        <Box
-          style={{
-            marginTop: '20px',
-            borderBottom: '1px dotted gray',
-          }}
-        />
-      </Stack.Item>
-      {item.amount > 1 && (
-        <Stack.Item
-          style={{
-            lineHeight: '32px',
-          }}
-        >
-          {`x${item.amount}`}
-        </Stack.Item>
-      )}
-      <Stack.Item>
-        <Button
-          py="4px"
-          mt="4px"
-          height="24px"
-          lineHeight="16px"
-          onClick={() =>
-            act('Release', {
-              path: item.path,
-              amount: 1,
-            })
-          }
-        >
-          Vend
-        </Button>
-      </Stack.Item>
-      <Stack.Item>
-        <Button
-          py="4px"
-          mt="4px"
-          height="24px"
-          lineHeight="16px"
-          disabled={item.amount <= 1}
-          onClick={(e) => {
-            act('Release', {
-              path: item.path,
-              amount: item.amount,
-            });
-          }}
-        >
-          Amount
-        </Button>
-      </Stack.Item>
-    </Stack>
-  ) as any;
 };

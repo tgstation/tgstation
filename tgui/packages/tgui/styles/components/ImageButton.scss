@@ -118,13 +118,15 @@ $bg-map: colors.$bg-map !default;
 }
 
 .ImageButton {
-  display: inline-block;
+  display: inline-flex;
   position: relative;
+  text-align: center;
   margin: 0.25em;
 
   &__container {
     display: flex;
     flex-direction: column;
+    border-radius: 0.33em;
   }
 
   &__image {
@@ -164,10 +166,10 @@ $bg-map: colors.$bg-map !default;
     user-select: none;
     overflow: hidden;
     text-overflow: ellipsis;
-    text-align: center;
     white-space: nowrap;
     padding: 0.15em 0.25em;
     margin: -1px;
+    border-radius: 0 0 0.33em 0.33em;
   }
 }
 
@@ -175,6 +177,7 @@ $bg-map: colors.$bg-map !default;
   display: flex;
   flex-direction: row;
   position: relative;
+  text-align: center;
   margin-bottom: 0.5em;
 
   &:last-child {
@@ -188,7 +191,6 @@ $bg-map: colors.$bg-map !default;
     flex: 1;
     -ms-user-select: none;
     user-select: none;
-    text-align: center;
     margin: 0 0.5em;
   }
 
@@ -202,6 +204,8 @@ $bg-map: colors.$bg-map !default;
   }
 
   &--content {
+    display: flex;
+    justify-content: space-between;
     padding: 0.5em;
     color: white;
   }
@@ -210,6 +214,10 @@ $bg-map: colors.$bg-map !default;
     &__container {
       flex-direction: row;
       flex: 1;
+
+      &--hasButtons {
+        border-radius: 0.33em 0 0 0.33em;
+      }
     }
 
     &__image {
@@ -220,6 +228,11 @@ $bg-map: colors.$bg-map !default;
       position: relative;
       left: inherit;
       bottom: inherit;
+      border-radius: 0 0.33em 0.33em 0;
+
+      &--alt {
+        overflow: hidden;
+      }
 
       & > * {
         display: inline-flex;

@@ -83,6 +83,7 @@ export const ImageButton = (props: Props) => {
     <div
       className={classes([
         'ImageButton__container',
+        buttons && 'ImageButton__container--hasButtons',
         selected && 'ImageButton--selected',
         disabled && 'ImageButton--disabled',
         color && typeof color === 'string'
