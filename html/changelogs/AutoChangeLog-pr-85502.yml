@@ -1,0 +1,4 @@
+author: "Y0SH1M4S73R"
+delete-after: True
+changes:
+  - admin: "The \"Suppress Runtime Logging\" toggle in the lua editor actually does what it says"
