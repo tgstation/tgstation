@@ -4,12 +4,14 @@
 	casing_path = /obj/item/ammo_casing/energy/plasma
 	fire_sound = /obj/item/ammo_casing/energy/plasma::fire_sound
 	cooldown_time = 2 SECONDS
+	power_used_to_fire = STANDARD_BATTERY_CHARGE / 50
 
 /obj/item/pod_equipment/primary/projectile_weapon/energy/kinetic_accelerator
 	name = "pod proto-kinetic accelerator"
 	projectile_path = /obj/item/ammo_casing/energy/kinetic::projectile_type
 	fire_sound = /obj/item/ammo_casing/energy/kinetic::fire_sound
 	cooldown_time = 1.75 SECONDS
+	power_used_to_fire = STANDARD_BATTERY_CHARGE / 60
 
 /obj/item/pod_equipment/primary/drill
 	name = "pod mining drill"
@@ -20,7 +22,7 @@
 	/// damage vs mobs
 	var/damage_mob = 20
 	/// power used to drill
-	var/power_used = STANDARD_BATTERY_CHARGE / 100
+	var/power_used = STANDARD_BATTERY_CHARGE / 80
 	/// force multiplier if we hit a rock to drill it
 	var/force_mult = 0
 
@@ -88,7 +90,7 @@
 	name = "improved pod impact drill"
 	desc = "Advanced variant of the pod drill, this one mines anything it bumps into. Improves on its previous version by slowing you down even less."
 	force_mult = 0.9
-	power_used = STANDARD_BATTERY_CHARGE / 50
+	power_used = STANDARD_BATTERY_CHARGE / 40
 
 /obj/item/pod_equipment/primary/metalfoam
 	name = "pod metal foam dispenser"

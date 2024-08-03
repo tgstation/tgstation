@@ -1,5 +1,6 @@
 // brakes, or autostabilize if not driven
 /obj/vehicle/sealed/space_pod/process()
+	process_huds()
 	if(isnull(drift_handler))
 		return
 
@@ -35,7 +36,7 @@
 	. = ..()
 	if(!max_speed || !force_per_move || !COOLDOWN_FINISHED(src, cooldown_vehicle_move))
 		return
-	var/power_used = (STANDARD_BATTERY_CHARGE / 1000 * 3) * (force_per_move / (1 SECONDS))
+	var/power_used = (STANDARD_BATTERY_CHARGE / 2000) * (force_per_move / (1 SECONDS))
 	for(var/obj/item/pod_equipment/equip as anything in get_all_parts())
 		power_used *= equip.movement_power_usage_mult
 	if(!use_power(power_used))
@@ -58,7 +59,7 @@
 
 /obj/vehicle/sealed/space_pod/Bump(atom/bumped)
 	. = ..()
-	if(isnull(drift_handler) || SEND_SIGNAL(src, COMSIG_POD_PRE_RAM, bumped))
+	if(isnull(drift_handler) || angle2dir(drift_handler.drifting_loop?.angle) != get_dir(src,bumped))
 		return
 	if(drift_handler.drift_force < 6 NEWTONS) // need to be moving at a decent speed for anything to happen
 		return
@@ -76,6 +77,8 @@
 		return
 
 	qdel(drift_handler)
+
+	var/list/occupancy = occupants.Copy()
 
 	if(isclosedturf(bumped))
 		var/turf/closed/bumped_turf = bumped
@@ -95,3 +98,7 @@
 		var/our_turf = get_turf(src)
 		var/throwtarget = get_edge_target_turf(our_turf, get_dir(our_turf, get_step_away(poor_sap, our_turf)))
 		poor_sap.safe_throw_at(throwtarget, 3, max(1, strength*0.75), force = MOVE_FORCE_NORMAL*(strength/2))
+
+	if(saved_force > 23 NEWTONS && atom_integrity < 0)
+		for(var/mob/occupant as anything in occupancy)
+			occupant.gib()

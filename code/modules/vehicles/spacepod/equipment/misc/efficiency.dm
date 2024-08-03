@@ -4,4 +4,4 @@
 	icon_state = "efficiency"
 	slot = POD_SLOT_MISC
 	allow_dupes = TRUE
-	movement_power_usage_mult = 0.9
+	movement_power_usage_mult = 0.8

@@ -14,7 +14,7 @@
 	if(!QDELETED(pod) && !isnull(user))
 		dump_contents()
 
-/obj/item/pod_equipment/cargo_hold/dump_contents()
+/obj/item/pod_equipment/orestorage/dump_contents()
 	var/turf/turf_ahead = get_step(pod, pod.dir)
 	var/turf/target = turf_ahead.is_blocked_turf_ignore_climbable() ? pod.drop_location() : turf_ahead
 	for(var/atom/movable/content as anything in contents)

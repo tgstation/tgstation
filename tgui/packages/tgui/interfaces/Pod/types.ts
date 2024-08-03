@@ -19,5 +19,7 @@ export type PodData = {
   cabinPressure: number;
   headlightsEnabled: BooleanLike;
   parts: Part[];
+  occupantcount: number;
+  occupantmax: number;
   partUIData: string[];
 };

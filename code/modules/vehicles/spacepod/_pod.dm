@@ -5,7 +5,7 @@
 // TODO:
 // ONCE EVERYTHING IS DONE, add hangar bays, must have 1-3 pods idk, maybe t1 megacells + oxygen tanks, and a manual?? not sure
 // sprites
-// fix bump
+// fix bump (not possible without tinkering with drift_handler)
 // research n designs
 // replace spawn_equip or add new subtype, but probably the former; to have a more reasonable roundstart loadout
 // ALSO DO NOT FORGET TO REMOVE THIS HUGE ASS COMMENT before finishing
@@ -25,6 +25,7 @@
 	light_power = 1.5
 	max_occupants = 2
 	max_integrity = 350
+	inertia_force_cap = INERTIA_FORCE_CAP * 4 // lol, lmao
 	/// Max count of a certain slot. If it is not defined here, it is assumed to be one (1). Use slot_max(slot) to access.
 	var/list/slot_max = list(
 		POD_SLOT_MISC = 3,
@@ -73,12 +74,12 @@
 	equip_item(new /obj/item/pod_equipment/comms)
 	equip_item(new /obj/item/pod_equipment/thrusters/default)
 	equip_item(new /obj/item/pod_equipment/engine/default)
-	equip_item(new /obj/item/pod_equipment/primary/drill/impact)
-	equip_item(new /obj/item/pod_equipment/orestorage)
-	equip_item(new /obj/item/pod_equipment/warp_drive)
-	equip_item(new /obj/item/pod_equipment/lock/pin)
+	equip_item(new /obj/item/pod_equipment/primary/projectile_weapon/energy/wildlife)
+	equip_item(new /obj/item/pod_equipment/cargo_hold)
+	if(prob(40))
+		equip_item(new /obj/item/pod_equipment/lock/pin)
 	cabin_air_tank = new /obj/item/tank/internals/oxygen(src)
-	cell = new /obj/item/stock_parts/power_store/battery/high(src)
+	cell = new /obj/item/stock_parts/power_store/battery(src)
 
 /obj/vehicle/sealed/space_pod/Destroy()
 	. = ..()
@@ -172,7 +173,6 @@
 
 /obj/vehicle/sealed/space_pod/vv_do_topic(list/href_list)
 	. = ..()
-
 	if(!.)
 		return
 
@@ -180,6 +180,34 @@
 		if(!check_rights(R_ADMIN))
 			return
 		SSadmin_verbs.dynamic_invoke_verb(usr, /datum/admin_verb/pod_debug_panel, src)
+
+/obj/vehicle/sealed/space_pod/proc/process_huds()
+	for(var/mob/living/occupant as anything in occupants)
+		if(cell?.maxcharge)
+			var/cellcharge = cell.charge/cell.maxcharge
+			switch(cellcharge)
+				if(0.75 to INFINITY)
+					occupant.clear_alert(ALERT_CHARGE)
+				if(0.5 to 0.75)
+					occupant.throw_alert(ALERT_CHARGE, /atom/movable/screen/alert/lowcell, 1)
+				if(0.25 to 0.5)
+					occupant.throw_alert(ALERT_CHARGE, /atom/movable/screen/alert/lowcell, 2)
+				if(0.01 to 0.25)
+					occupant.throw_alert(ALERT_CHARGE, /atom/movable/screen/alert/lowcell, 3)
+				else
+					occupant.throw_alert(ALERT_CHARGE, /atom/movable/screen/alert/emptycell)
+		else
+			occupant.throw_alert(ALERT_CHARGE, /atom/movable/screen/alert/nocell)
+		var/integrity = atom_integrity/max_integrity*100
+		switch(integrity)
+			if(30 to 45)
+				occupant.throw_alert(ALERT_MECH_DAMAGE, /atom/movable/screen/alert/pod_damage, 1)
+			if(15 to 35)
+				occupant.throw_alert(ALERT_MECH_DAMAGE, /atom/movable/screen/alert/pod_damage, 2)
+			if(-INFINITY to 15)
+				occupant.throw_alert(ALERT_MECH_DAMAGE, /atom/movable/screen/alert/pod_damage, 3)
+			else
+				occupant.clear_alert(ALERT_MECH_DAMAGE)
 
 // atmos
 /obj/vehicle/sealed/space_pod/proc/cycle_tank_air(to_tank = FALSE)

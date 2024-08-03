@@ -41,3 +41,12 @@
 
 /obj/item/pod_equipment/primary/projectile_weapon/energy/prefire_checks(mob/living/user)
 	return pod.use_power(power_used_to_fire)
+
+/obj/item/pod_equipment/primary/projectile_weapon/energy/wildlife
+	name = "wildlife dissuasion laser gun"
+	desc = "A laser gun for pods, tuned to specifically hurt those of not human physiology. Due to that, cannot pass windows."
+	projectile_path = /obj/projectile/beam/wildlife_dissuasion
+	fire_sound = 'sound/weapons/laser.ogg'
+	fire_force = 0 //brrrrrrrr
+	cooldown_time = 0.75 SECONDS
+	power_used_to_fire = STANDARD_BATTERY_CHARGE / 45

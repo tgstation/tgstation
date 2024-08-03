@@ -34,7 +34,7 @@ export default function PartsDisplay(_props: any): JSX.Element {
         />
       }
     >
-      {part ? (
+      {part && parts.some((found) => found == part) ? (
         <>
           <Box className="PartDescription">{part.desc}</Box>
           {!!PartTag && (
