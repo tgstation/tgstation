@@ -98,6 +98,10 @@
 	var/toggled = FALSE
 	/// The B tube
 	var/obj/item/ammo_box/magazine/internal/shot/alternate_magazine
+	eject_sound = 'sound/weapons/gun/rifle/rifle_magazine_unload1.ogg'
+	eject_empty_sound = 'sound/weapons/gun/rifle/rifle_magazine_unload1.ogg'
+	load_sound = 'sound/weapons/gun/rifle/rifle_magazine_insert1.ogg'
+	load_empty_sound = 'sound/weapons/gun/rifle/rifle_magazine_insert1.ogg'
 
 /obj/item/gun/ballistic/shotgun/automatic/dual_tube/bounty
 	name = "bounty cycler shotgun"
@@ -166,6 +170,10 @@
 	fire_sound = 'sound/weapons/gun/shotgun/shotgun_fire2.ogg'
 	rack_sound = 'sound/weapons/gun/shotgun/shotgun_pump2.ogg'
 	load_sound = 'sound/weapons/gun/shotgun/shell_insert2.ogg'
+	eject_sound = 'sound/weapons/gun/rifle/rifle_magazine_unload1.ogg'
+	eject_empty_sound = 'sound/weapons/gun/rifle/rifle_magazine_unload1.ogg'
+	load_sound = 'sound/weapons/gun/rifle/rifle_magazine_insert1.ogg'
+	load_empty_sound = 'sound/weapons/gun/rifle/rifle_magazine_insert1.ogg'
 	pin = /obj/item/firing_pin/implant/pindicate
 	actions_types = list(/datum/action/item_action/toggle_firemode)
 	mag_display = TRUE

@@ -216,6 +216,10 @@
 	ammo_band_image.appearance_flags = RESET_COLOR|KEEP_APART
 	return ammo_band_image
 
+/obj/item/ammo_box/magazine
+	drop_sound = ''
+	pickup_sound = 'sound/weapons/gun/general/magazine_pick_up1.ogg'
+
 ///Count of number of bullets in the magazine
 /obj/item/ammo_box/magazine/proc/ammo_count(countempties = TRUE)
 	var/boolets = 0

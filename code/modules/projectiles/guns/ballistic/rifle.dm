@@ -9,13 +9,17 @@
 	bolt_type = BOLT_TYPE_LOCKING
 	semi_auto = FALSE
 	internal_magazine = TRUE
-	fire_sound = 'sound/weapons/gun/rifle/rifle_fire2.ogg'
+	fire_sound = 'sound/weapons/gun/rifle/rifle_fire1.ogg'
 	fire_sound_volume = 90
 	rack_sound = 'sound/weapons/gun/rifle/rifle_rack1.ogg'
 	bolt_drop_sound = 'sound/weapons/gun/rifle/rifle_bolt1.ogg'
 	dry_fire_sound = 'sound/weapons/gun/rifle/rifle_dry_fire1.ogg'
 	pickup_sound = 'sound/weapons/gun/rifle/rifle_pick_up1.ogg'
 	drop_sound = 'sound/weapons/gun/rifle/rifle_drop1.ogg'
+	eject_sound = 'sound/weapons/gun/rifle/rifle_magazine_unload1.ogg'
+	eject_empty_sound = 'sound/weapons/gun/rifle/rifle_magazine_unload1.ogg'
+	load_sound = 'sound/weapons/gun/rifle/rifle_magazine_insert1.ogg'
+	load_empty_sound = 'sound/weapons/gun/rifle/rifle_magazine_insert1.ogg'
 	tac_reloads = FALSE
 
 /obj/item/gun/ballistic/rifle/rack(mob/user = null)
