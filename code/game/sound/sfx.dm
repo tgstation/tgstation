@@ -1,5 +1,32 @@
+GLOBAL_LIST_INIT(sfx_by_id, init_sfx())
+
+/// Used to convert a SFX define into a .ogg so we can add some variance to sounds.
+/// If soundin is already a .ogg, we simply return it
+/proc/get_sfx(soundin)
+	if(!istext(soundin))
+		return soundin
+
+	var/datum/sfx/sfx = GLOB.sfx_by_id[soundin]
+	return sfx?.get_random_sound() || soundin
+
+/proc/init_sfx()
+	var/list/sfx_by_id = list()
+	for(var/sfx_subtype in subtypesof(/datum/sfx))
+		var/datum/sfx/sfx = new sfx_subtype()
+		if(isnull(sfx.id))
+			stack_trace("SFX category [sfx_subtype]` has no `id` defined")
+			continue
+
+		if(length(sfx.sound_files) == 0)
+			stack_trace("SFX category [sfx_subtype] has no `sound_files` associated")
+			continue
+
+		sfx_by_id[sfx.id] = sfx
+
+	return sfx_by_id
+
 /datum/sfx
-	/// Id used to get sfx from static list in `/proc/get_sfx`. Should not be null
+	/// Used as key in `GLOB.sfx_by_id` list. Should not be null
 	var/id
 	/// List of available sound files for this sfx datum. Should not be null or empty
 	var/list/sound_files = list()

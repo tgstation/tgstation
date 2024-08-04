@@ -199,26 +199,3 @@
 
 /proc/get_rand_frequency()
 	return rand(32000, 55000) //Frequency stuff only works with 45kbps oggs.
-
-///Used to convert a SFX define into a .ogg so we can add some variance to sounds. If soundin is already a .ogg, we simply return it
-/proc/get_sfx(soundin)
-	if(!istext(soundin))
-		return soundin
-
-	var/static/list/sfx_by_id
-	if(isnull(sfx_by_id))
-		sfx_by_id = list()
-		for(var/sfx_subtype in subtypesof(/datum/sfx))
-			var/datum/sfx/sfx = new sfx_subtype()
-			if(isnull(sfx.id))
-				stack_trace("SFX category [sfx_subtype]` has no `id` defined")
-				continue
-
-			if(length(sfx.sound_files) == 0)
-				stack_trace("SFX category [sfx_subtype] has no sound files associated")
-				continue
-
-			sfx_by_id[sfx.id] = sfx
-
-	var/datum/sfx/sfx = sfx_by_id[soundin]
-	return sfx?.get_random_sound() || soundin
