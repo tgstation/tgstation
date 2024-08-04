@@ -204,6 +204,7 @@
 	icon_state = "knife_cyborg"
 	worn_icon_state = "knife_cyborg" //error sprite - this shouldn't have been dropped
 	desc = "A cyborg-mounted plasteel knife. Extremely sharp and durable."
+	slot_flags = NONE //you can't put this in your mouth
 
 /obj/item/knife/shiv
 	name = "glass shiv"
