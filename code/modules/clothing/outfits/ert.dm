@@ -563,3 +563,41 @@
 	head = /obj/item/clothing/head/beret/militia
 	l_hand = /obj/item/megaphone
 	suit_store = /obj/item/gun/energy/laser/musket/prime
+
+/datum/outfit/centcom/ert/medical_commander
+	name = "Chief EMT"
+	id = /obj/item/card/id/advanced/centcom/ert/medical
+	suit = /obj/item/clothing/suit/toggle/labcoat/cmo
+	uniform = /obj/item/clothing/under/rank/medical/chief_medical_officer
+	back = /obj/item/storage/backpack/ert/medical
+	l_pocket = /obj/item/healthanalyzer/advanced
+	head = /obj/item/clothing/head/utility/head_mirror
+	shoes = /obj/item/clothing/shoes/sneakers/white
+	backpack_contents = list(
+		/obj/item/reagent_containers/hypospray/combat = 1,
+		/obj/item/storage/medkit/regular = 1,
+		/obj/item/storage/medkit/advanced = 1,
+		/obj/item/melee/baton/telescopic = 1,
+		/obj/item/gun/energy/pulse/pistol/loyalpin = 1,
+	)
+	belt = /obj/item/storage/belt/medical/ert
+	glasses = /obj/item/clothing/glasses/hud/health/sunglasses
+	additional_radio = /obj/item/encryptionkey/heads/cmo
+
+/datum/outfit/centcom/ert/medical_technician
+	name = "EMT Paramedic"
+	id = /obj/item/card/id/advanced/centcom/ert/medical
+	suit = /obj/item/clothing/suit/apron/surgical
+	uniform = /obj/item/clothing/under/rank/medical/scrubs/blue
+	back = /obj/item/storage/backpack/ert/medical
+	l_pocket = /obj/item/healthanalyzer
+	head = /obj/item/clothing/head/utility/surgerycap
+	backpack_contents = list(
+		/obj/item/reagent_containers/hypospray/combat = 1,
+		/obj/item/storage/medkit/regular = 1,
+	)
+	mask = /obj/item/clothing/mask/surgical
+	belt = /obj/item/storage/belt/medical/ert
+	glasses = /obj/item/clothing/glasses/hud/health
+	additional_radio = /obj/item/encryptionkey/heads/cmo
+	shoes = /obj/item/clothing/shoes/sneakers/blue

@@ -126,3 +126,14 @@
 	mission = "Having heard the station's request for aid, assist the crew in defending themselves."
 	polldesc = "an independent station defense militia"
 	random_names = TRUE
+
+/datum/ert/medical
+	opendoors = FALSE
+	teamsize = 4
+	leader_role = /datum/antagonist/ert/medical_commander
+	enforce_human = FALSE //All the best doctors I know are moths and cats
+	roles = list(/datum/antagonist/ert/medical_technician)
+	rename_team = "EMT Squad"
+	code = "Violet"
+	mission = "Provide emergency medical services to the crew."
+	polldesc = "an emergency medical response team"
