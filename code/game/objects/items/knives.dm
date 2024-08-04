@@ -190,7 +190,6 @@
 	desc = "A sharpened bone. The bare minimum in survival."
 	embed_type = /datum/embed_data/combat_knife/weak
 	obj_flags = parent_type::obj_flags & ~CONDUCTS_ELECTRICITY
-	slot_flags = NONE
 	force = 15
 	throwforce = 15
 	custom_materials = null
