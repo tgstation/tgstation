@@ -2,7 +2,6 @@ import { Component } from 'react';
 
 import { BooleanLike } from '../../../common/react';
 import { Box, Button, Flex, Stack } from '../../components';
-import { noop } from './constants';
 import { DataEvidence } from './DataTypes';
 import { Pin } from './Pin';
 
@@ -111,7 +110,7 @@ export class Evidence extends Component<EvidenceProps, EvidenceState> {
   }
 
   render() {
-    const { evidence, case_ref, act = noop, ...rest } = this.props;
+    const { evidence, case_ref, act = () => {}, ...rest } = this.props;
     const { startPos, dragPos } = this.state;
     let [x_pos, y_pos] = [evidence.x, evidence.y];
     if (dragPos && startPos && startPos.x === x_pos && startPos.y === y_pos) {
