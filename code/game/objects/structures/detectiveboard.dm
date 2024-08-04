@@ -10,11 +10,10 @@
 	max_integrity = 150
 	req_access = ACCESS_DETECTIVE
 
-	var/attaching_evidence = FALSE
-	var/list/case_colors = list("red", "orange", "yellow", "green", "blue", "violet")
-	var/list/datum/case/cases = list()
-	var/current_case = 1
-	var/data_test
+	var/attaching_evidence = FALSE /// When player attaching evidence to board this will become TRUE
+	var/list/case_colors = list("red", "orange", "yellow", "green", "blue", "violet") /// Colors for case color
+	var/list/datum/case/cases = list() /// List of board cases
+	var/current_case = 1 /// Index of viewing case in cases array
 
 MAPPING_DIRECTIONAL_HELPERS(/obj/structure/detectiveboard, 32)
 
@@ -30,11 +29,11 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/detectiveboard, 32)
 
 /// Attaching evidences: photo and papers
 
-/obj/structure/detectiveboard/attackby(obj/item/O, mob/user, params)
+/obj/structure/detectiveboard/attackby(obj/item/item, mob/user, params)
 	if(!cases.len)
 		to_chat(user, "There are no cases!")
 		return
-	if(istype(O, /obj/item/paper) || istype(O, /obj/item/photo))
+	if(istype(item, /obj/item/paper) || istype(item, /obj/item/photo))
 		if(attaching_evidence)
 			to_chat(user, "You already attaching evidence!")
 			return
@@ -51,17 +50,17 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/detectiveboard, 32)
 			attaching_evidence = FALSE
 			return
 
-		if(!user.transferItemToLoc(O, src))
+		if(!user.transferItemToLoc(item, src))
 			attaching_evidence = FALSE
 			return
 		cases[current_case].notices++
-		var/datum/evidence/evidence = new (name, desc, O)
+		var/datum/evidence/evidence = new (name, desc, item)
 		cases[current_case].evidences += evidence
-		to_chat(user, span_notice("You pin the [O] to the detective board."))
+		to_chat(user, span_notice("You pin the [item] to the detective board."))
 		attaching_evidence = FALSE
 		update_appearance(UPDATE_ICON)
-	else
-		return ..()
+		return
+	return ..()
 
 /obj/structure/detectiveboard/ui_state(mob/user)
 	return GLOB.physical_state
@@ -100,10 +99,9 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/detectiveboard, 32)
 		data_cases += list(data_case)
 	data["cases"] = data_cases
 	data["current_case"] = current_case
-	data_test = data
 	return data
 
-/obj/structure/detectiveboard/ui_act(action, params)
+/obj/structure/detectiveboard/ui_act(action, params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if(.)
 		return
