@@ -2832,7 +2832,7 @@ GLOBAL_LIST_EMPTY(fire_appearances)
 	ADD_TRAIT(src, TRAIT_BLOCKING_PROJECTILES, BLOCKING_TRAIT)
 	var/icon/selected_overlay = pick(blocking_overlay)
 	add_overlay(selected_overlay)
-	playsound(src, 'sound/effects/fwoosh.ogg', 90, FALSE, frequency = 0.7)
+	playsound(src, 'sound/weapons/fwoosh.ogg', 90, FALSE, frequency = 0.7)
 	update_transform(1.25)
 	addtimer(CALLBACK(src, PROC_REF(end_block_effects), selected_overlay), TAUNT_EMOTE_DURATION)
 
