@@ -119,24 +119,24 @@
 	if(!up)
 		. += visor_icon
 	if(smile)
-		var/mutable_appearance/slimey = mutable_appearance(icon, smile_state)
-		slimey.color = smile_color
-		. += slimey
+		var/mutable_appearance/smiley = mutable_appearance(icon, smile_state)
+		smiley.color = smile_color
+		. += smiley
 
 /obj/item/clothing/head/helmet/space/plasmaman/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
 	if(istype(tool, /obj/item/toy/crayon))
 		if(smile)
-			to_chat(user, span_warning("Seems like someone already drew something on this helmet's visor!"))
+			to_chat(user, span_warning("Seems like someone already drew something on [src]'s visor!"))
 			return ITEM_INTERACT_BLOCKING
 
 		var/obj/item/toy/crayon/crayon = tool
-		to_chat(user, span_notice("You start drawing a smiley face on the helmet's visor..."))
+		to_chat(user, span_notice("You start drawing a smiley face on [src]'s visor..."))
 		if(!do_after(user, 2.5 SECONDS, target = src))
 			return ITEM_INTERACT_BLOCKING
 
 		smile = TRUE
 		smile_color = crayon.paint_color
-		to_chat(user, "You draw a smiley on the helmet visor.")
+		to_chat(user, "You draw a smiley on [src] visor.")
 		update_appearance()
 		return ITEM_INTERACT_SUCCESS
 
@@ -145,15 +145,15 @@
 
 	var/obj/item/clothing/hitting_clothing = tool
 	if(hitting_clothing.clothing_flags & STACKABLE_HELMET_EXEMPT)
-		to_chat(user, span_notice("You cannot place [hitting_clothing.name] on helmet!"))
+		to_chat(user, span_notice("You cannot place [hitting_clothing.name] on [src]!"))
 		return ITEM_INTERACT_BLOCKING
 
 	if(attached_hat)
-		to_chat(user, span_notice("There's already something placed on helmet!"))
+		to_chat(user, span_notice("There's already something placed on [src]!"))
 		return ITEM_INTERACT_BLOCKING
 
 	attached_hat = hitting_clothing
-	to_chat(user, span_notice("You placed [hitting_clothing.name] on helmet!"))
+	to_chat(user, span_notice("You placed [hitting_clothing.name] on [src]!"))
 	hitting_clothing.forceMove(src)
 	update_appearance()
 	return ITEM_INTERACT_SUCCESS
