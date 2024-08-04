@@ -31,6 +31,10 @@
 	dir = 4
 	},
 /obj/effect/decal/remains/human,
+/obj/item/paper/crumpled/bloody/fluff/stations/lavaland/mailroom/waiting{
+	pixel_x = 8;
+	pixel_y = -5
+	},
 /turf/open/floor/iron/white,
 /area/ruin/powered/mailroom)
 "cM" = (
@@ -231,10 +235,12 @@
 /area/ruin/powered/mailroom)
 "yb" = (
 /obj/item/screwdriver{
-	pixel_x = -6;
+	pixel_x = -8;
 	pixel_y = 6
 	},
-/obj/structure/flora/rock/icy/style_random,
+/obj/structure/flora/rock/icy/style_random{
+	layer = 2.90
+	},
 /turf/open/misc/asteroid/snow/icemoon,
 /area/icemoon/underground/explored)
 "zr" = (
@@ -267,14 +273,13 @@
 /area/icemoon/underground/explored)
 "DY" = (
 /obj/structure/table/reinforced,
-/obj/machinery/door/window/left/directional/north,
-/obj/structure/window/spawner/directional/east,
 /obj/item/toy/figure/cargotech{
 	pixel_x = -6;
-	pixel_y = 11
+	pixel_y = 12
 	},
-/obj/item/paper/crumpled/bloody/fluff/stations/lavaland/mailroom/waiting,
-/obj/machinery/door/window/left/directional/south,
+/obj/machinery/door/window/half{
+	pixel_y = 12
+	},
 /turf/open/floor/noslip,
 /area/ruin/powered/mailroom)
 "FC" = (
@@ -369,7 +374,7 @@
 /obj/machinery/light/cold/directional/north,
 /obj/structure/sign/warning/no_smoking/circle/directional/north{
 	pixel_x = -5;
-	pixel_y = 33
+	pixel_y = 27
 	},
 /turf/open/floor/iron/textured,
 /area/ruin/powered/mailroom)
@@ -389,7 +394,10 @@
 /turf/open/floor/carpet/green,
 /area/ruin/powered/mailroom)
 "Pk" = (
-/obj/item/multitool,
+/obj/item/multitool{
+	pixel_x = -15;
+	pixel_y = -8
+	},
 /obj/structure/ice_stasis,
 /turf/open/misc/asteroid/snow/icemoon,
 /area/icemoon/underground/explored)
@@ -490,7 +498,6 @@
 /turf/open/floor/plating/snowed/smoothed/icemoon,
 /area/ruin/powered/mailroom)
 "Wj" = (
-/obj/machinery/status_display/evac/directional/west,
 /obj/structure/chair/plastic{
 	dir = 4
 	},
@@ -498,10 +505,7 @@
 	pixel_x = 4;
 	pixel_y = 3
 	},
-/obj/structure/sign/warning/secure_area/directional/north{
-	pixel_y = 41;
-	pixel_x = 1
-	},
+/obj/machinery/status_display/evac/directional/north,
 /turf/open/floor/iron/white,
 /area/ruin/powered/mailroom)
 "Wr" = (
