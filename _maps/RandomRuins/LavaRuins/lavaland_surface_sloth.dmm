@@ -17,7 +17,9 @@
 	},
 /area/ruin/unpowered)
 "e" = (
-/obj/machinery/door/airlock/wood,
+/obj/machinery/door/airlock/wood{
+	dir = 4
+	},
 /turf/open/floor/sepia{
 	slowdown = 10
 	},
