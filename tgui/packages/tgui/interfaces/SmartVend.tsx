@@ -40,7 +40,7 @@ export const SmartVend = (props) => {
       : Object.values(data.contents);
 
   return (
-    <Window width={431} height={565}>
+    <Window width={431} height={575}>
       <Window.Content>
         <Section
           fill
