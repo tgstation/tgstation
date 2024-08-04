@@ -8,7 +8,6 @@
 	icon = 'icons/obj/machines/firealarm.dmi'
 	icon_state = "fire_bitem"
 	result_path = /obj/machinery/firealarm
-	pixel_shift = 26
 
 /obj/machinery/firealarm
 	name = "fire alarm"
@@ -273,7 +272,7 @@
 	soundloop.stop()
 	SEND_SIGNAL(src, COMSIG_FIREALARM_ON_RESET)
 	update_use_power(IDLE_POWER_USE)
-	update_appearance() 
+	update_appearance()
 
 /obj/machinery/firealarm/attack_hand(mob/user, list/modifiers)
 	if(buildstage != FIRE_ALARM_BUILD_SECURED)

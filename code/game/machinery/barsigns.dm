@@ -552,7 +552,6 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/barsign/all_access, 32)
 	custom_materials = list(
 		/datum/material/iron = SHEET_MATERIAL_AMOUNT,
 	)
-	pixel_shift = 32
 
 /obj/item/wallframe/barsign/Initialize(mapload)
 	. = ..()

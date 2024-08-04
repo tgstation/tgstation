@@ -195,7 +195,6 @@
 	icon = 'icons/obj/machines/intercom.dmi'
 	icon_state = "intercom"
 	result_path = /obj/item/radio/intercom/unscrewed
-	pixel_shift = 26
 	custom_materials = list(/datum/material/iron = SMALL_MATERIAL_AMOUNT * 0.75, /datum/material/glass = SMALL_MATERIAL_AMOUNT * 0.25)
 
 WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/item/radio/intercom)

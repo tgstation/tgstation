@@ -217,7 +217,6 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/fireaxecabinet/empty, 32)
 	icon = 'icons/obj/extinguisher.dmi'
 	icon_state = "fireaxe"
 	result_path = /obj/structure/fireaxecabinet/empty
-	pixel_shift = 32
 
 /obj/structure/fireaxecabinet/mechremoval
 	name = "mech removal tool cabinet"

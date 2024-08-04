@@ -20,7 +20,6 @@
 	icon = 'icons/obj/machines/telescreens.dmi'
 	icon_state = "telescreen"
 	result_path = /obj/machinery/computer/security/telescreen
-	pixel_shift = 32
 
 WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/machinery/computer/security/telescreen)
 

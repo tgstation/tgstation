@@ -185,7 +185,7 @@
 
 /obj/machinery/LateInitialize(mapload)
 	SHOULD_NOT_OVERRIDE(TRUE)
-	post_machine_initialize(mapload)
+	post_machine_initialize(/* mapload = */ mapload)
 
 /obj/machinery/Destroy(force)
 	SSmachines.unregister_machine(src)

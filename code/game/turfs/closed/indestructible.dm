@@ -187,7 +187,9 @@ INITIALIZE_IMMEDIATE(/turf/closed/indestructible/splashscreen)
 /turf/closed/indestructible/fakeglass
 	name = "window"
 	icon = MAP_SWITCH('icons/obj/smooth_structures/windows/reinforced_window.dmi', 'icons/obj/smooth_structures/structure_variations.dmi')
-	MAP_SWITCH(, icon_state = "fake_window")
+#ifdef MAP_EDITOR
+	icon_state = "fake_window"
+#endif
 	layer = ABOVE_OBJ_LAYER
 	opacity = FALSE
 	use_splitvis = FALSE
@@ -212,7 +214,9 @@ INITIALIZE_IMMEDIATE(/turf/closed/indestructible/splashscreen)
 /turf/closed/indestructible/opsglass
 	name = "window"
 	icon = MAP_SWITCH('icons/obj/smooth_structures/windows/reinforced_window.dmi', 'icons/obj/smooth_structures/structure_variations.dmi')
-	MAP_SWITCH(, icon_state = "fake_window")
+#ifdef MAP_EDITOR
+	icon_state = "fake_window"
+#endif
 	layer = ABOVE_OBJ_LAYER
 	opacity = FALSE
 	use_splitvis = FALSE
@@ -264,7 +268,9 @@ INITIALIZE_IMMEDIATE(/turf/closed/indestructible/splashscreen)
 	name = "mountainside"
 	desc = "An extremely densely-packed rock, sheeted over with centuries worth of ice and snow."
 	icon = MAP_SWITCH('icons/turf/walls/mountain_wall.dmi', 'icons/turf/mining.dmi')
-	MAP_SWITCH(,icon_state = "mountainrock")
+#ifdef MAP_EDITOR
+	icon_state = "mountainrock"
+#endif
 	bullet_sizzle = TRUE
 	bullet_bounce_sound = null
 

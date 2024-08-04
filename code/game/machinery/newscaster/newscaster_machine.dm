@@ -808,6 +808,5 @@ WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/machinery/newscaster)
 	icon_state = "newscaster_assembly"
 	custom_materials = list(/datum/material/iron= SHEET_MATERIAL_AMOUNT * 7, /datum/material/glass= SHEET_MATERIAL_AMOUNT * 4)
 	result_path = /obj/machinery/newscaster
-	pixel_shift = 30
 
 #undef ALERT_DELAY

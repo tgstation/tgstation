@@ -167,8 +167,8 @@
 		return
 
 	if(old_hitbox_directions)
-		RemoveElement(/datum/element/render_over_keep_hitbox, BELOW_OBJ_LAYER, TRUE, old_hitbox_directions)
-	AddElement(/datum/element/render_over_keep_hitbox, BELOW_OBJ_LAYER, TRUE, hitbox_up_directions)
+		RemoveElement(/datum/element/render_over_keep_hitbox, BELOW_OBJ_LAYER, /* use_position_layering = */ TRUE, old_hitbox_directions)
+	AddElement(/datum/element/render_over_keep_hitbox, BELOW_OBJ_LAYER, /* use_position_layering = */ TRUE, hitbox_up_directions)
 
 /obj/machinery/door/window/proc/open_and_close()
 	if(!open())

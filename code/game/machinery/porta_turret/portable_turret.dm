@@ -25,7 +25,7 @@ DEFINE_BITFIELD(turret_flags, list(
 ))
 
 /obj/machinery/porta_turret
-	SET_BASE_VISUAL_PIXEL(0, WALLENING_OFFSET)
+	SET_BASE_VISUAL_PIXEL(0, DEPTH_OFFSET)
 	name = "turret"
 	icon = 'icons/obj/weapons/turrets.dmi'
 	icon_state = "turretCover"
@@ -1113,7 +1113,6 @@ WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/machinery/turretid)
 	icon_state = "control_frame"
 	result_path = /obj/machinery/turretid
 	custom_materials = list(/datum/material/iron= SHEET_MATERIAL_AMOUNT)
-	pixel_shift = 29
 
 /obj/item/gun/proc/get_turret_properties()
 	. = list()

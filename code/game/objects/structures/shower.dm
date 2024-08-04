@@ -56,7 +56,7 @@ GLOBAL_LIST_INIT(shower_mode_descriptions, list(
 	///The cooldown for SHOWER_MODE_TIMED mode.
 	COOLDOWN_DECLARE(timed_cooldown)
 
-WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/machinery/shower)
+SHOWER_DIRECTIONAL_HELPERS(/obj/machinery/shower)
 
 /obj/machinery/shower/Initialize(mapload, ndir = 0, has_water_reclaimer = null)
 	. = ..()
@@ -92,14 +92,14 @@ WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/machinery/shower)
 	pixel_y = 0
 	switch(direction)
 		if(NORTH)
-			pixel_z = -4
-		if(SOUTH)
 			pixel_z = 32
+		if(SOUTH)
+			pixel_z = -4
 		if(EAST)
-			pixel_x = -16
+			pixel_x = 16
 			pixel_z = 12
 		if(WEST)
-			pixel_x = 16
+			pixel_x = -16
 			pixel_z = 12
 
 /obj/machinery/shower/Destroy()

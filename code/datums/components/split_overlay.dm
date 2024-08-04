@@ -31,7 +31,7 @@
 		overlay.layer = ON_WALL_LAYER
 
 	// We do this to ensure the MAs, when overlayed onto turfs, retain the direction they're set to, rather then inheriting from the turf
-	standard = make_ma_directional(overlay)
+	standard = make_mutable_appearance_directional(overlay)
 	// Build a hidden overlay, for drawing to ourselves (if we're butted up against another splitvis smoothed wall)
 	var/mutable_appearance/hidden = new(standard)
 	SET_PLANE_EXPLICIT(hidden, HIDDEN_WALL_PLANE, parent_atom)

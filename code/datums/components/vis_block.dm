@@ -1,3 +1,7 @@
+/// Abstract object that gets smoothed,
+/// used to allow code to get smoothing junctions for more then one "class of thing" at a time
+/// (while not breaking our existing system)
+/// Bit of a hack but that's life atm
 /obj/effect/abstract/finder
 	// To make smoothin work
 	anchored = TRUE
@@ -43,11 +47,11 @@
 	/// Are we actively blocking sight right now or not
 	var/actively_blocking = FALSE
 	/// What directions in which we do not fully cover our darkness with masks
-	var/dir_mask
+	var/dir_mask = NONE
 	/// Similar to the above but used for cases where walls are adjacent
-	var/edge_dir_mask
+	var/edge_dir_mask = NONE
 	/// Allows for full directional visibility
-	/// Icon state prefix to use for masks from airlock_mask.dmi
+	/// Icon state prefix to use for masks from vis_mask.dmi
 	var/inner_transparent_dirs = NONE
 	/// Directions in which there is a wall
 	var/wall_junction = NONE
@@ -178,7 +182,7 @@
 	var/turf/home = atom_parent.loc
 
 	/// This is the darkness everything else will be masking out
-	var/mutable_appearance/darkness_base = mutable_appearance('icons/obj/doors/airlocks/tall/airlock_darkness.dmi', "[wall_junction]", offset_spokesman = atom_parent, plane = DARKNESS_MASK_PLANE)
+	var/mutable_appearance/darkness_base = mutable_appearance('icons/effects/vis_darkness.dmi', "[wall_junction]", offset_spokesman = atom_parent, plane = DARKNESS_MASK_PLANE)
 	darkness_base.pixel_w = -5
 	partial_darkness = FALSE
 	for(var/check_dir in GLOB.cardinals)
@@ -190,15 +194,15 @@
 			if(inner_transparent_dirs == NONE)
 				continue
 			// Then we draw a mask on ourselves, on our OWN turf, to allow say the turf below some vertical headroom
-			darkness_base.add_overlay(mutable_appearance('icons/obj/doors/airlock_mask.dmi', "[edge_dir_mask]_dark_edge_[dir2text(check_dir)]", HIGHEST_GAME_LAYER, offset_spokesman = atom_parent, plane = DARKNESS_MASK_PLANE))
+			darkness_base.add_overlay(mutable_appearance('icons/effects/vis_mask.dmi', "[edge_dir_mask]_dark_edge_[dir2text(check_dir)]", HIGHEST_GAME_LAYER, offset_spokesman = atom_parent, plane = DARKNESS_MASK_PLANE))
 			continue
 		var/turf/in_direction = get_step(home, check_dir)
 		if(!in_direction)
 			continue
 
 		// Base mask applied to darkness, masks out only the side we can see (since we overlay it on the turf facing said side)
-		var/mutable_appearance/mask = mutable_appearance('icons/obj/doors/airlock_mask.dmi', dir_mask, HIGHEST_GAME_LAYER, offset_spokesman = atom_parent, plane = DARKNESS_MASK_PLANE)
-		mask = make_ma_directional(mask)
+		var/mutable_appearance/mask = mutable_appearance('icons/effects/vis_mask.dmi', dir_mask, HIGHEST_GAME_LAYER, offset_spokesman = atom_parent, plane = DARKNESS_MASK_PLANE)
+		mask = make_mutable_appearance_directional(mask)
 		mask.dir = check_dir
 		mask.pixel_w = -5
 		switch(check_dir)
@@ -229,7 +233,7 @@
 			partial_darkness = TRUE
 			if(!HAS_TRAIT(home, TRAIT_INNER_DARKNESS) || HAS_TRAIT_FROM(home, TRAIT_INNER_DARKNESS, WEAKREF(src)))
 				ADD_TRAIT(home, TRAIT_INNER_DARKNESS, WEAKREF(src))
-				var/mutable_appearance/half_darken = mutable_appearance('icons/obj/doors/airlocks/tall/airlock_darkness.dmi', "[wall_junction]", alpha = 130)
+				var/mutable_appearance/half_darken = mutable_appearance('icons/effects/vis_darkness.dmi', "[wall_junction]", alpha = 130)
 				half_darken.blend_mode = BLEND_SUBTRACT
 				mask.add_overlay(half_darken)
 

@@ -3,7 +3,7 @@
  *
  * Makes atoms render over mobs, but still allow you to attack the mob's hitbox!
  * Used in plastic flaps, and directional windows!
- * If you want to use position layering, you can toggle that with an arg. It's reccomended for directional objects (thindows)
+ * If you want to use position layering, you can toggle that with an arg. It's recomended for directional objects (thindows)
  * We accept an optional bitfield of directions to consider "high" (Stuff that renders on the top end of a turf)
  * Also accept the layer our clickcatching object should use. Anything below this won't be clickable through
  */

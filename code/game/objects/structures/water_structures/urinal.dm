@@ -95,7 +95,6 @@ WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/structure/urinal)
 	icon = 'icons/obj/watercloset.dmi'
 	icon_state = "urinal"
 	result_path = /obj/structure/urinal
-	pixel_shift = 32
 
 /obj/item/food/urinalcake
 	name = "urinal cake"

@@ -133,7 +133,6 @@ WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/structure/noticeboard)
 	)
 	resistance_flags = FLAMMABLE
 	result_path = /obj/structure/noticeboard
-	pixel_shift = 32
 
 // Notice boards for the heads of staff (plus the qm)
 

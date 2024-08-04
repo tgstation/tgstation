@@ -17,7 +17,6 @@
 	icon = 'icons/obj/digital_clock.dmi'
 	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 7, /datum/material/glass = SHEET_MATERIAL_AMOUNT * 4)
 	result_path = /obj/machinery/digital_clock
-	pixel_shift = 28
 
 /obj/machinery/digital_clock/wrench_act_secondary(mob/living/user, obj/item/tool)
 	. = ..()

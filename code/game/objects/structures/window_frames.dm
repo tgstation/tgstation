@@ -59,7 +59,7 @@
 	AddElement(/datum/element/climbable, on_try_climb_procpath = TYPE_PROC_REF(/obj/structure/window_frame/, on_try_climb))
 
 	if(mapload && start_with_window)
-		create_structure_window(window_type, TRUE)
+		create_structure_window(window_type)
 
 	var/static/list/loc_connections = list(
 		COMSIG_ATOM_ENTERED = PROC_REF(on_entered),
@@ -148,7 +148,7 @@
 	if(!tool.use_tool(src, user, 0, volume = 50))
 		return
 	tool.play_tool_sound(src, 100)
-	to_chat(user, "<span class='notice'>You cut the grille on [src].</span>")
+	balloon_alert(user, "Grille Cut!")
 	has_grille = FALSE
 	update_appearance()
 	return ITEM_INTERACT_SUCCESS
@@ -173,7 +173,7 @@
 	return ITEM_INTERACT_SUCCESS
 
 ///creates a window from the typepath given from window_type, which is either a glass sheet typepath or a /obj/structure/window subtype
-/obj/structure/window_frame/proc/create_structure_window(window_material_type, start_anchored = TRUE)
+/obj/structure/window_frame/proc/create_structure_window(window_material_type)
 	var/obj/structure/window/our_window
 
 	if(ispath(window_material_type, /obj/structure/window))
@@ -203,11 +203,8 @@
 	if(ispath(window_material_type, /obj/item/stack/sheet/paperframes))
 		our_window = new /obj/structure/window/paperframe(loc)
 
-	if(!start_anchored)
-		our_window.set_anchored(FALSE)
-		our_window.state = WINDOW_OUT_OF_FRAME
-
 	our_window.update_appearance()
+	return our_window
 
 /obj/structure/window_frame/attackby(obj/item/attacking_item, mob/living/user, params)
 	add_fingerprint(user)
@@ -221,7 +218,9 @@
 				return
 
 			to_chat(user, "<span class='notice'>You add [stack_name] to [src].")
-			create_structure_window(adding_stack.type, FALSE)
+			var/obj/structure/window/our_window = create_structure_window(adding_stack.type)
+			our_window.state = WINDOW_OUT_OF_FRAME
+			our_window.set_anchored(FALSE)
 
 		else if(istype(adding_stack, /obj/item/stack/rods) && !has_grille && adding_stack.use(sheet_amount))
 			has_grille = TRUE
@@ -253,7 +252,9 @@
 
 /obj/structure/window_frame/rcd_act(mob/user, obj/item/construction/rcd/the_rcd)
 	if(the_rcd.mode == RCD_DECONSTRUCT)
-		to_chat(user, "<span class='notice'>You deconstruct the window frame.</span>")
+		var/turf/home = get_turf(src)
+		// No thing to display on if we get deleted
+		home.balloon_alert(user, "Deconstructed!")
 		qdel(src)
 		return TRUE
 	return FALSE

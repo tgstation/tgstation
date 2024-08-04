@@ -208,7 +208,6 @@ WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/machinery/defibrillator_mount)
 	custom_materials = list(/datum/material/iron = SMALL_MATERIAL_AMOUNT * 3, /datum/material/glass = SMALL_MATERIAL_AMOUNT)
 	w_class = WEIGHT_CLASS_BULKY
 	result_path = /obj/machinery/defibrillator_mount
-	pixel_shift = 28
 
 /obj/item/wallframe/defib_mount/charging
 	name = "unhooked PENLITE defibrillator mount"

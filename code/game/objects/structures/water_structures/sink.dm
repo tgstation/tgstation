@@ -19,7 +19,7 @@
 	///Units of water to reclaim per second
 	var/reclaim_rate = 0.5
 
-WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/structure/sink)
+SINK_DIRECTIONAL_HELPERS(/obj/structure/sink)
 
 /obj/structure/sink/Initialize(mapload, ndir = 0, has_water_reclaimer = null)
 	. = ..()
@@ -51,16 +51,16 @@ WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/structure/sink)
 	pixel_y = 0
 	switch(direction)
 		if(NORTH)
+			pixel_z = 16
+		if(SOUTH)
 			pixel_z = 24
 			// shift down so we layer correctly
 			pixel_y = -32
-		if(SOUTH)
-			pixel_z = 16
 		if(EAST)
-			pixel_x = -16
+			pixel_x = 16
 			pixel_z = 12
 		if(WEST)
-			pixel_x = 16
+			pixel_x = -16
 			pixel_z = 12
 
 /obj/structure/sink/attack_hand(mob/living/user, list/modifiers)
@@ -253,7 +253,7 @@ WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/structure/sink)
 	icon_state = "sink_alt"
 	pixel_z = 4
 
-WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/structure/sink/kitchen)
+SINK_DIRECTIONAL_HELPERS(/obj/structure/sink/kitchen)
 
 /obj/structure/sink/gasstation
 	name = "plasma fuel station"

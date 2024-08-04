@@ -281,7 +281,7 @@
 #define ACTIVE_SETUPFIELDS 1
 #define ACTIVE_HASFIELDS 2
 /obj/machinery/power/shieldwallgen
-	SET_BASE_VISUAL_PIXEL(0, WALLENING_OFFSET)
+	SET_BASE_VISUAL_PIXEL(0, DEPTH_OFFSET)
 	name = "shield wall generator"
 	desc = "A shield generator."
 	icon = 'icons/obj/machines/shield_generator.dmi'
@@ -577,7 +577,7 @@
 	layer = SHIELD_WALL_LAYER
 	// Phsyically shift down to get the "over everything above us" effect we want
 	SET_BASE_PIXEL_NOMAP(0, -16)
-	SET_BASE_VISUAL_PIXEL(0, WALLENING_OFFSET + 16)
+	SET_BASE_VISUAL_PIXEL(0, DEPTH_OFFSET + 16)
 
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
 	smoothing_flags = SMOOTH_BITMASK
