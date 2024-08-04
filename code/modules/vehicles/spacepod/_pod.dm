@@ -3,7 +3,7 @@
 //
 
 // TODO:
-// ONCE EVERYTHING IS DONE, add hangar bays, must have 1-3 pods idk, maybe t1 megacells + oxygen tanks, and a manual?? not sure
+// todo ingame manual item so i can self insert >:)
 // sprites
 // fix drill bump (not possible without tinkering with drift_handler)
 // research n designs
