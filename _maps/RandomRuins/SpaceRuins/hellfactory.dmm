@@ -334,6 +334,11 @@
 /obj/structure/cable,
 /turf/open/floor/iron/grimy,
 /area/ruin/space/has_grav/hellfactoryoffice)
+"aY" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/mapping_helpers/broken_floor,
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/hellfactory)
 "aZ" = (
 /obj/machinery/light/directional/east,
 /turf/open/floor/iron/checker,
@@ -513,15 +518,6 @@
 /obj/structure/window/reinforced/spawner/directional/east,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/hellfactory)
-"bK" = (
-/obj/structure/rack,
-/obj/item/book/manual/random{
-	pixel_x = 5;
-	pixel_y = 6
-	},
-/obj/item/poster/random_contraband,
-/turf/open/floor/iron,
-/area/ruin/space/has_grav/hellfactory)
 "bL" = (
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron,
@@ -583,10 +579,6 @@
 /obj/structure/window/reinforced/spawner/directional/east,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/hellfactory)
-"bZ" = (
-/obj/machinery/door/puzzle/keycard/stockroom,
-/turf/open/floor/iron/dark,
-/area/ruin/space/has_grav/hellfactory)
 "ca" = (
 /obj/machinery/door/airlock,
 /turf/open/floor/iron,
@@ -624,6 +616,18 @@
 	dispensable_reagents = list(/datum/reagent/blood);
 	reagent_id = /datum/reagent/blood
 	},
+/turf/open/floor/iron,
+/area/ruin/space/has_grav/hellfactory)
+"cg" = (
+/obj/effect/spawner/random/food_or_drink/donkpockets{
+	pixel_x = -6;
+	pixel_y = 13
+	},
+/obj/item/stack/package_wrap{
+	pixel_y = 4
+	},
+/obj/item/stack/wrapping_paper,
+/obj/structure/rack,
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/hellfactory)
 "ch" = (
@@ -677,6 +681,7 @@
 /area/ruin/space/has_grav/hellfactory)
 "cr" = (
 /obj/structure/closet/crate/trashcart,
+/obj/item/storage/toolbox/emergency/old,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/hellfactory)
 "cs" = (
@@ -685,38 +690,38 @@
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/hellfactory)
 "cu" = (
-/obj/effect/turf_decal{
+/obj/effect/mapping_helpers/broken_floor,
+/obj/effect/turf_decal/stripes/line{
 	dir = 9
 	},
-/obj/effect/mapping_helpers/broken_floor,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/hellfactory)
 "cv" = (
-/obj/effect/turf_decal{
+/obj/effect/turf_decal/caution/stand_clear/white,
+/obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
-/obj/effect/turf_decal/caution/stand_clear/white,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/hellfactory)
 "cw" = (
-/obj/effect/turf_decal{
+/obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/hellfactory)
 "cx" = (
-/obj/effect/turf_decal{
-	dir = 1
-	},
 /obj/effect/turf_decal/caution/stand_clear/white,
 /obj/effect/mapping_helpers/broken_floor,
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
+	},
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/hellfactory)
 "cy" = (
-/obj/effect/turf_decal{
+/obj/item/stack/tile/iron/base,
+/obj/effect/turf_decal/stripes/line{
 	dir = 5
 	},
-/obj/item/stack/tile/iron/base,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/hellfactory)
 "cz" = (
@@ -726,6 +731,15 @@
 /area/ruin/space/has_grav/hellfactory)
 "cA" = (
 /obj/item/trash/raisins,
+/obj/item/crowbar/large/emergency{
+	pixel_x = -6;
+	pixel_y = 6
+	},
+/obj/effect/decal/cleanable/shreds{
+	pixel_x = -11;
+	pixel_y = 9
+	},
+/obj/effect/mapping_helpers/burnt_floor,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/hellfactory)
 "cB" = (
@@ -763,17 +777,7 @@
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/hellfactory)
 "cL" = (
-/obj/item/bedsheet/brown{
-	dir = 4
-	},
-/obj/structure/bed{
-	dir = 4
-	},
-/turf/open/floor/plating,
-/area/ruin/space/has_grav/hellfactory)
-"cM" = (
-/obj/item/storage/toolbox/emergency/old,
-/obj/effect/decal/cleanable/dirt,
+/obj/effect/mapping_helpers/broken_floor,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/hellfactory)
 "cN" = (
@@ -821,7 +825,8 @@
 /area/ruin/space/has_grav/hellfactory)
 "hk" = (
 /obj/machinery/atmospherics/components/tank/water_vapor{
-	dir = 8
+	dir = 8;
+	pixel_y = 12
 	},
 /obj/machinery/light/small/directional/north,
 /turf/open/floor/iron/grimy,
@@ -830,11 +835,22 @@
 /obj/effect/decal/cleanable/blood/old,
 /turf/open/floor/plastic,
 /area/ruin/space/has_grav/hellfactory)
+"ih" = (
+/mob/living/basic/mouse,
+/turf/open/floor/iron,
+/area/ruin/space/has_grav/hellfactory)
 "iE" = (
 /obj/structure/closet/crate,
 /obj/item/stack/sheet/glass,
 /obj/item/reagent_containers/cup/glass/flask,
 /turf/open/floor/iron,
+/area/ruin/space/has_grav/hellfactory)
+"jl" = (
+/obj/machinery/door/puzzle/keycard/stockroom{
+	dir = 4
+	},
+/obj/effect/turf_decal/stripes/box,
+/turf/open/floor/plating,
 /area/ruin/space/has_grav/hellfactory)
 "lP" = (
 /obj/item/chair/plastic{
@@ -938,22 +954,28 @@
 	},
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/hellfactory)
+"AA" = (
+/obj/item/weldingtool/empty{
+	pixel_y = 10;
+	pixel_x = -7
+	},
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/hellfactory)
 "BA" = (
 /obj/machinery/light/directional/north,
+/obj/item/book/manual/random{
+	pixel_x = 5;
+	pixel_y = 6
+	},
+/obj/structure/rack,
+/obj/item/poster/random_contraband,
+/obj/machinery/door/window/half/left/directional/west,
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/hellfactory)
 "BC" = (
 /obj/machinery/light/floor,
 /obj/effect/turf_decal/bot_white/left,
 /turf/open/floor/iron/dark,
-/area/ruin/space/has_grav/hellfactory)
-"Fs" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/structure/table,
-/obj/machinery/microwave{
-	pixel_y = 11
-	},
-/turf/open/floor/iron,
 /area/ruin/space/has_grav/hellfactory)
 "FL" = (
 /obj/effect/decal/cleanable/dirt,
@@ -1003,6 +1025,10 @@
 "NU" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/sign/poster/random/directional/north,
+/obj/item/reagent_containers/cup/glass/bottle/hooch{
+	pixel_x = -6;
+	pixel_y = 5
+	},
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/hellfactory)
 "OJ" = (
@@ -1017,17 +1043,23 @@
 /obj/machinery/light/small/directional/north,
 /turf/open/floor/iron/checker,
 /area/ruin/space/has_grav/hellfactory)
-"QS" = (
-/obj/structure/rack,
-/obj/item/stack/wrapping_paper,
-/obj/item/stack/package_wrap{
-	pixel_y = 8
-	},
-/obj/effect/spawner/random/food_or_drink/donkpockets,
-/turf/open/floor/iron,
-/area/ruin/space/has_grav/hellfactory)
 "RX" = (
 /obj/structure/sign/warning/chem_diamond/directional/north,
+/turf/open/floor/iron,
+/area/ruin/space/has_grav/hellfactory)
+"Sg" = (
+/obj/item/bedsheet/brown{
+	dir = 4
+	},
+/obj/structure/bed/maint,
+/mob/living/basic/mouse,
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/hellfactory)
+"Sw" = (
+/obj/machinery/microwave{
+	pixel_y = 11
+	},
+/obj/structure/table,
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/hellfactory)
 "Sz" = (
@@ -1273,7 +1305,7 @@ ah
 ac
 zr
 aA
-aA
+ih
 by
 by
 by
@@ -1437,7 +1469,7 @@ aW
 ac
 BA
 aA
-bK
+aA
 aL
 ca
 aL
@@ -1462,9 +1494,9 @@ ah
 aA
 bn
 aW
-aA
+Sw
 bL
-Fs
+bL
 aL
 cb
 aL
@@ -1488,17 +1520,17 @@ ao
 ah
 aB
 bL
-bZ
+ac
+cg
 aA
 aA
-QS
 aL
 cc
 aL
 xK
 ac
 ac
-aW
+jl
 ac
 aW
 aa
@@ -1526,7 +1558,7 @@ aW
 ac
 Zh
 cA
-by
+AA
 ab
 aa
 aa
@@ -1577,10 +1609,10 @@ ab
 OX
 iE
 qK
-by
+cL
 Sz
 by
-cM
+Wh
 cN
 aa
 aa
@@ -1606,7 +1638,7 @@ aL
 ab
 ab
 NU
-Wh
+aY
 by
 ab
 mh
@@ -1634,7 +1666,7 @@ aA
 by
 Wh
 cO
-by
+cL
 ab
 aa
 aa
@@ -1659,7 +1691,7 @@ aB
 ab
 as
 aL
-by
+Sg
 cl
 by
 ab
