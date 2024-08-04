@@ -14,7 +14,7 @@
 	eject_empty_sound = 'sound/weapons/gun/pistol/pistol_mag_unload1.ogg'
 	rack_sound = 'sound/weapons/gun/pistol/pistol_rack1.ogg'
 	lock_back_sound = 'sound/weapons/gun/pistol/pistol_rack1.ogg'
-	bolt_drop_sound = 'sound/weapons/gun/pistol/pistol_bolt2.ogg'
+	bolt_drop_sound = 'sound/weapons/gun/pistol/pistol_bolt1.ogg'
 	pickup_sound = 'sound/weapons/gun/pistol/pistol_pick_up1.ogg'
 	drop_sound = 'sound/weapons/gun/pistol/pistol_drop1.ogg'
 	fire_sound_volume = 90
@@ -108,9 +108,8 @@
 	w_class = WEIGHT_CLASS_NORMAL
 	accepted_magazine_type = /obj/item/ammo_box/magazine/m45
 	can_suppress = FALSE
-	fire_sound = 'sound/weapons/gun/pistol/pistol_fire1.ogg'
+	fire_sound = 'sound/weapons/gun/pistol/pistol_fire3.ogg'
 	rack_sound = 'sound/weapons/gun/pistol/pistol_bolt2.ogg'
-	lock_back_sound = 'sound/weapons/gun/pistol/pistol_bolt1.ogg'
 	bolt_drop_sound = 'sound/weapons/gun/pistol/pistol_bolt2.ogg'
 
 /**
@@ -136,7 +135,7 @@
 	accepted_magazine_type = /obj/item/ammo_box/magazine/m50
 	can_suppress = FALSE
 	mag_display = TRUE
-	fire_sound = 'sound/weapons/gun/pistol/pistol_fire4.ogg'
+	fire_sound = 'sound/weapons/gun/pistol/pistol_fire1.ogg'
 
 /obj/item/gun/ballistic/automatic/pistol/deagle/contraband
 
