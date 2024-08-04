@@ -8,7 +8,7 @@
 	key = "taunt"
 	key_third_person = "taunts"
 	message = "taunts!"
-	cooldown = 1 SECONDS
+	cooldown = 1.5 SECONDS
 
 /datum/emote/living/taunt/run_emote(mob/living/user, params, type_override, intentional)
 	. = ..()
