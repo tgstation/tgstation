@@ -44,6 +44,10 @@ LINEN BINS
 		dying_key = DYE_REGISTRY_DOUBLE_BEDSHEET
 	register_context()
 	register_item_context()
+	for(var/stuff as anything in loc)
+		if(istype(stuff, /obj/structure/bed))
+			pixel_y = WALLENING_OFFSET
+			return
 
 /obj/item/bedsheet/add_context(atom/source, list/context, obj/item/held_item, mob/living/user)
 	if(istype(held_item) && (held_item.tool_behaviour == TOOL_WIRECUTTER || held_item.get_sharpness()))
