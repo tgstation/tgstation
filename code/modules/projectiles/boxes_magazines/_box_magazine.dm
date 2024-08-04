@@ -217,7 +217,7 @@
 	return ammo_band_image
 
 /obj/item/ammo_box/magazine
-	drop_sound = ''
+	drop_sound = 'sound/weapons/gun/general/magazine_drop1.ogg'
 	pickup_sound = 'sound/weapons/gun/general/magazine_pick_up1.ogg'
 
 ///Count of number of bullets in the magazine
