@@ -59,10 +59,12 @@ export const ItemDisplay = (props: { active: boolean; item: LoadoutItem }) => {
         item.information.map((info) => (
           <Box
             key={info}
-            height="9px"
-            fontSize="9px"
-            textColor={'darkgray'}
             bold
+            p={0.5}
+            height="12px"
+            fontSize="9px"
+            textAlign="left"
+            textColor="darkgray"
           >
             {info}
           </Box>
