@@ -14,7 +14,7 @@
 
 /obj/structure/table
 	// Shift tables down to avoid layering headaches
-	SET_BASE_PIXEL(0, -8)
+	SET_BASE_PIXEL_NOMAP(0, -8)
 	SET_BASE_VISUAL_PIXEL(0, 8)
 	name = "table"
 	desc = "A square piece of iron standing on four metal legs. It can not move."
