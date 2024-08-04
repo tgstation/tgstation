@@ -18,6 +18,7 @@
 		/obj/item/organ/external/tail/lizard = "Smooth",
 	)
 	mutanttongue = /obj/item/organ/internal/tongue/lizard
+	bodytemp_homeostasis = 0.7 // Lizards regulate body temperature weaker
 	coldmod = 1.5
 	heatmod = 0.67
 	payday_modifier = 1.0
@@ -43,10 +44,6 @@
 		BODY_ZONE_L_LEG = /obj/item/bodypart/leg/left/lizard,
 		BODY_ZONE_R_LEG = /obj/item/bodypart/leg/right/lizard,
 	)
-
-/// Lizards are cold blooded and do not stabilize body temperature naturally
-/datum/species/lizard/body_temperature_core(mob/living/carbon/human/humi, seconds_per_tick, times_fired)
-	return
 
 /datum/species/lizard/randomize_features()
 	var/list/features = ..()

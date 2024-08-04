@@ -133,6 +133,8 @@ GLOBAL_LIST_EMPTY(features_by_species)
 
 	/// The natural temperature for a body
 	var/bodytemp_normal = BODYTEMP_NORMAL
+	/// Multiplier for amount of kelvin moved toward normal body temperature per tick.
+	var/bodytemp_homeostasis = 1
 	/// Minimum amount of kelvin moved toward normal body temperature per tick.
 	var/bodytemp_autorecovery_min = BODYTEMP_AUTORECOVERY_MINIMUM
 	/// The body temperature limit the body can take before it starts taking damage from heat.
@@ -1164,7 +1166,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
  */
 /datum/species/proc/body_temperature_core(mob/living/carbon/human/humi, seconds_per_tick, times_fired)
 	var/natural_change = get_temp_change_amount(humi.get_body_temp_normal() - humi.coretemperature, 0.06 * seconds_per_tick)
-	humi.adjust_coretemperature(humi.metabolism_efficiency * natural_change)
+	humi.adjust_coretemperature(humi.metabolism_efficiency * bodytemp_homeostasis * natural_change)
 
 /**
  * Used to normalize the skin temperature on living mobs
