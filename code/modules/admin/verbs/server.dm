@@ -17,7 +17,7 @@ ADMIN_VERB(toggle_hub, R_SERVER, "Toggle Hub", "Toggles the server's visilibilit
 	SSblackbox.record_feedback("nested tally", "admin_toggle", 1, list("Toggled Hub Visibility", "[GLOB.hub_visibility ? "Enabled" : "Disabled"]")) // If you are copy-pasting this, ensure the 4th parameter is unique to the new proc!
 
 ADMIN_VERB(restart, R_SERVER, "Reboot World", "Restarts the world immediately.", ADMIN_CATEGORY_SERVER)
-	var/list/options = list("Regular Restart", "Regular Restart (with delay)", "Hard Restart (No Delay/Feeback Reason)", "Hardest Restart (No actions, just reboot)")
+	var/list/options = list("Regular Restart", "Regular Restart (with delay)", "Hard Restart (No Delay/Feedback Reason)", "Hardest Restart (No actions, just reboot)")
 	if(world.TgsAvailable())
 		options += "Server Restart (Kill and restart DD)";
 
@@ -45,7 +45,7 @@ ADMIN_VERB(restart, R_SERVER, "Reboot World", "Restarts the world immediately.",
 				if(alert(user,"Are you sure you want to restart the server?","This server is live", "Restart", "Cancel") != "Restart")
 					return FALSE
 			SSticker.Reboot(init_by, "admin reboot - by [user.key] [user.holder.fakekey ? "(stealth)" : ""]", delay * 10)
-		if("Hard Restart (No Delay, No Feeback Reason)")
+		if("Hard Restart (No Delay/Feedback Reason)")
 			to_chat(world, "World reboot - [init_by]")
 			world.Reboot()
 		if("Hardest Restart (No actions, just reboot)")
