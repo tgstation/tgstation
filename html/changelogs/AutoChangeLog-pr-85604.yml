@@ -1,0 +1,4 @@
+author: "SmArtKar"
+delete-after: True
+changes:
+  - bugfix: "Lizards no longer die from cold on icebox despite wearing insulation"
