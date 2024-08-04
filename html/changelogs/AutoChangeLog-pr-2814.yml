@@ -1,4 +1,0 @@
-author: "Absolucy"
-delete-after: True
-changes:
-  - bugfix: "Antag tokening for Florida Man as ghost no longer spawns a duplicate random human."

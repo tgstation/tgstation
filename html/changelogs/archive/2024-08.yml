@@ -45,3 +45,11 @@
   - rscadd: Resprited Long and Messy Hair
   flleeppyy:
   - sound: added some more space ambience
+2024-08-04:
+  Absolucy:
+  - sound: 'Added 3 new volume mixer channels: squeaking/plushies, mob emotes, and
+      silicon emotes.'
+  - bugfix: Antag tokening for Florida Man as ghost no longer spawns a duplicate random
+      human.
+  KittyNoodle:
+  - balance: Changelings can now store up to 60 different dna strands!
