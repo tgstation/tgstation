@@ -1,0 +1,83 @@
+ADMIN_VERB(pod_debug_panel, R_ADMIN, "Show Pod Equipment Panel", ADMIN_VERB_NO_DESCRIPTION, ADMIN_CATEGORY_HIDDEN, obj/vehicle/sealed/space_pod/pod)
+	var/datum/podpanel/podpanel = new(user.mob, pod)
+	podpanel.ui_interact(user.mob)
+
+/datum/podpanel
+	var/obj/vehicle/sealed/space_pod/pod
+	var/user
+
+/datum/podpanel/New(to_user, obj/vehicle/sealed/space_pod/target)
+	if(!istype(target))
+		qdel(src)
+		CRASH("that is not a pod stop that")
+	user = CLIENT_FROM_VAR(to_user)
+	src.pod = target
+
+/datum/podpanel/ui_state(mob/user)
+	return GLOB.admin_state
+
+/datum/podpanel/ui_interact(mob/user, datum/tgui/ui)
+	ui = SStgui.try_update_ui(user, src, ui)
+	if(!ui)
+		ui = new(user, src, "PodDebugPanel")
+		ui.open()
+
+/datum/podpanel/ui_data(mob/user)
+	. = list()
+	var/obj/item/stock_parts/power_store/cell = pod.get_cell()
+	.["pod"] = list(
+		"ref" = REF(pod),
+		"name" = pod.name,
+		"has_cell" = !isnull(cell),
+		"charge" = cell?.charge,
+		"maxcharge" = cell?.maxcharge,
+	)
+	.["parts"] = list()
+	for(var/obj/item/pod_equipment/equipment as anything in pod.get_all_parts())
+		var/data = list()
+		data["slot"] = equipment.slot
+		data["name"] = equipment.name
+		data["ref"] = REF(equipment)
+		.["parts"] += list(data)
+
+/datum/podpanel/ui_act(action, params)
+	. = ..()
+	if(.)
+		return
+	. = TRUE
+	switch(action)
+		if("rename") //idk this is for VV does this already
+			var/wanted_name = tgui_input_text(usr, "Name", "Name", pod.name)
+			if(!wanted_name)
+				return
+			pod.name = wanted_name
+		if("set_charge")
+			if(isnull(pod.cell))
+				return
+			var/new_charge = tgui_input_number(usr, "Charge", "Charge", pod.cell.charge, pod.cell.maxcharge)
+			pod.cell.charge = new_charge
+		if("remove_cell")
+			QDEL_NULL(pod.cell)
+			pod.update_appearance()
+		if("change_cell")
+			var/wanted_type = tgui_input_list(usr, "What cell", "What cell", subtypesof(/obj/item/stock_parts/power_store/battery))
+			if(!wanted_type)
+				return
+			QDEL_NULL(pod.cell)
+			pod.cell = new wanted_type(pod)
+			pod.update_appearance()
+		if("add_part")
+			var/wanted_type = tgui_input_list(usr, "What part", "What part (Warning, no checks)", subtypesof(/obj/item/pod_equipment))
+			if(!wanted_type)
+				return
+			pod.equip_item(new wanted_type)
+		if("delete_part")
+			var/part = locate(params["partRef"])
+			if(isnull(part))
+				return
+			qdel(part)
+		if("detach_part")
+			var/part = locate(params["partRef"])
+			if(isnull(part))
+				return
+			pod.unequip_item(part)

@@ -1,7 +1,8 @@
-//todo weights and sprites
+//todo: sprites
 /obj/vehicle/sealed/space_pod/titanium
 	max_integrity = 250
 	inertia_force_weight = 0.5
+	icon_state = "titanium"
 	slot_max = list(
 		POD_SLOT_MISC = 2,
 	)

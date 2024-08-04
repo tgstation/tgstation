@@ -1,5 +1,5 @@
 /obj/item/pod_equipment/cargo_hold
-	name = "Cargo Hold"
+	name = "cargo hold"
 	desc = "Advanced spatial management tech in the form of a trunk. Wow."
 	interface_id = "CargoHold"
 	slot = POD_SLOT_SECONDARY

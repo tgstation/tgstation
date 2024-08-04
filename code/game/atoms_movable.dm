@@ -37,6 +37,8 @@
 	var/inertia_move_multiplier = 1
 	///Object "weight", higher weight reduces acceleration applied to the object
 	var/inertia_force_weight = 1
+	///Max inertia accell applied to object
+	var/inertia_force_cap = INERTIA_FORCE_CAP
 	///The last time we pushed off something
 	///This is a hack to get around dumb him him me scenarios
 	var/last_pushoff

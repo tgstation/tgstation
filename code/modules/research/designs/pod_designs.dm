@@ -6,12 +6,12 @@
 	category = list(
 		RND_CATEGORY_SPACE_POD
 	)
-	departmental_flags = DEPARTMENT_BITFLAG_SCIENCE
+	departmental_flags = DEPARTMENT_BITFLAG_SCIENCE | DEPARTMENT_BITFLAG_ENGINEERING
 
 /datum/design/pod_runner
 	name = "Pod Frame Runner"
 	id = "podrunner"
-	build_type = MECHFAB
+	build_type = PODLATHE|MECHFAB
 	build_path = /obj/item/pod_runner
 	materials = list(
 		/datum/material/iron=SHEET_MATERIAL_AMOUNT*10,
@@ -25,7 +25,7 @@
 
 /datum/design/pod_equipment
 	id = DESIGN_ID_IGNORE
-	build_type = MECHFAB
+	build_type = PODLATHE|MECHFAB
 	construction_time = 5
 
 
@@ -46,7 +46,6 @@
 /datum/design/pod_equipment/thrusters
 	name = "Pod Ion Thruster Array"
 	id = "podthruster1"
-	build_type = MECHFAB
 	build_path = /obj/item/pod_equipment/thrusters/default
 	materials = list(
 		/datum/material/iron=SHEET_MATERIAL_AMOUNT*4,

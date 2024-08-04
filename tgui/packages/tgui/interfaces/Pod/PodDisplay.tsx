@@ -22,6 +22,8 @@ export default function PodDisplay(_props: any): JSX.Element {
     forcePerMove,
     cabinPressure,
     headlightsEnabled,
+    occupantcount,
+    occupantmax,
   } = data;
 
   const [editing, setEditing] = useState<boolean>(false);
@@ -78,6 +80,9 @@ export default function PodDisplay(_props: any): JSX.Element {
             <LabeledList.Divider />
             <LabeledList.Item label="Cabin Pressure">
               {cabinPressure}
+            </LabeledList.Item>
+            <LabeledList.Item label="Occupants">
+              {occupantcount} / {occupantmax}
             </LabeledList.Item>
             <LabeledList.Item label="Acceleration">
               {acceleration} / {maxAcceleration} ({forcePerMove}N/s)

@@ -22,6 +22,8 @@
 	.["forcePerMove"] = force_per_move
 	.["headlightsEnabled"] = light_on
 	.["cabinPressure"] = !isnull(cabin_air_tank) ? "[round(cabin_air.return_pressure(), 0.1)]kPa" : "No air tank"
+	.["occupantcount"] = length(occupants)
+	.["occupantmax"] = max_occupants
 	.["partUIData"] = list()
 	for(var/obj/item/pod_equipment/equipment as anything in get_all_parts())
 		if(!equipment.interface_id)

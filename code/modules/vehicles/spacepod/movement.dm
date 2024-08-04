@@ -1,5 +1,6 @@
 // brakes, or autostabilize if not driven
 /obj/vehicle/sealed/space_pod/process()
+	process_huds()
 	if(isnull(drift_handler))
 		return
 
@@ -22,20 +23,26 @@
 	return FALSE //this proc only exists so movement is better
 
 /obj/vehicle/sealed/space_pod/Move(turf/newloc, direct, glide_size_override)
-	if(!isturf(newloc))
+	if(!isturf(newloc) || newloc.density || ispodpassable(newloc) || (!newloc.has_gravity() && ispodpassable_nograv(newloc)))
 		return ..()
-	if(isasteroidturf(newloc) || is_space_or_openspace(newloc) || istype(newloc, /turf/open/floor/engine))
-		return ..()
+	if(newloc.is_blocked_turf()) //weird silly hack to allow us to ram objects on inaccessible turfs
+		var/atom/target
+		for(var/atom/movable/thing as anything in newloc.contents)
+			if(isnull(target) || ((thing.layer > target.layer || thing.flags_1 & ON_BORDER_1) && !(target.flags_1 & ON_BORDER_1)))
+				target = thing
+		Bump(target)
 
 /obj/vehicle/sealed/space_pod/vehicle_move(direction)
 	. = ..()
 	if(!max_speed || !force_per_move || !COOLDOWN_FINISHED(src, cooldown_vehicle_move))
 		return
-	var/power_used = (STANDARD_BATTERY_CHARGE / 1000 * 3) * (force_per_move / (1 SECONDS))
+	var/power_used = (STANDARD_BATTERY_CHARGE / 2000) * (force_per_move / (1 SECONDS))
 	for(var/obj/item/pod_equipment/equip as anything in get_all_parts())
 		power_used *= equip.movement_power_usage_mult
 	if(!use_power(power_used))
 		return
+	if(direction == UP || direction == DOWN)
+		return try_step_multiz(direction)
 	setDir(direction)
 	if(isnull(drift_handler))
 		new /datum/drift_handler(src, drift_force = 0)
@@ -54,12 +61,13 @@
 
 /obj/vehicle/sealed/space_pod/Bump(atom/bumped)
 	. = ..()
-	if(isnull(drift_handler))
+	if(isnull(drift_handler) || angle2dir(drift_handler.drifting_loop?.angle) != get_dir(src,bumped))
 		return
-	if(drift_handler.drift_force < 6 NEWTONS) // need to be moving at a decent speed for anything to happen
+	if(drift_handler.drift_force < 8 NEWTONS) // need to be moving at a decent speed for anything to happen
 		return
 
-	var/strength = 1 + (drift_handler.drift_force - 6 NEWTONS) * 0.2 // strength of the impact
+	var/saved_force = drift_handler.drift_force
+	var/strength = 1 + (drift_handler.drift_force - 8 NEWTONS) * 0.3 // strength of the impact
 
 	playsound(src, 'sound/effects/meteorimpact.ogg', min(40 * strength, 100), TRUE)
 
@@ -72,6 +80,8 @@
 
 	qdel(drift_handler)
 
+	var/list/occupancy = occupants.Copy()
+
 	if(isclosedturf(bumped))
 		var/turf/closed/bumped_turf = bumped
 		take_damage(strength * 50, BRUTE)
@@ -81,6 +91,8 @@
 		var/obj/bumped_atom = bumped
 		take_damage(min(strength * 70, bumped_atom.get_integrity()), BRUTE)
 		bumped_atom.take_damage(strength * 50, BRUTE, attack_dir = REVERSE_DIR(dir))
+		//tiny delay for dramatics
+		bumped_atom.newtonian_move(angle2dir(dir), instant=TRUE, start_delay=0.2 SECONDS, drift_force = saved_force)
 	else if(isliving(bumped))
 		var/mob/living/poor_sap = bumped
 		take_damage(strength * 40, BRUTE)
@@ -88,3 +100,7 @@
 		var/our_turf = get_turf(src)
 		var/throwtarget = get_edge_target_turf(our_turf, get_dir(our_turf, get_step_away(poor_sap, our_turf)))
 		poor_sap.safe_throw_at(throwtarget, 3, max(1, strength*0.75), force = MOVE_FORCE_NORMAL*(strength/2))
+
+	if(saved_force > 23 NEWTONS && atom_integrity < 0)
+		for(var/mob/living/occupant as anything in occupancy)
+			occupant.gib()

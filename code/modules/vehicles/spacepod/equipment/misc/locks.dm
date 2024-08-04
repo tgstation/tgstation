@@ -7,9 +7,10 @@
 	return TRUE
 
 /obj/item/pod_equipment/lock/pin
-	name = "Pod PIN lock"
+	name = "pod PIN lock"
 	desc = "Allows you to set a pin lock for a pod."
 	interface_id = "PINPart"
+	icon_state = "pinlock"
 	/// our actual PIN
 	var/pin
 	/// holds the entered pin in the UI
@@ -61,9 +62,10 @@
 	return TRUE
 
 /obj/item/pod_equipment/lock/dna
-	name = "Pod DNA lock"
+	name = "pod DNA lock"
 	desc = "This device will make the pod only allow your DNA to enter. Use the pod controls to add your DNA, and use it again to remove the lock."
 	interface_id = "DNAPart"
+	icon_state = "dnalock"
 	/// the unique enzymes of whoever we belong to
 	var/unique_enzymes
 
