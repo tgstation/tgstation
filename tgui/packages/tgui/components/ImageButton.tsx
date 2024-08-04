@@ -194,7 +194,7 @@ export const ImageButton = (props: Props) => {
               : fluid && 'ImageButton__buttons--color--default',
           ])}
           style={{
-            width: buttonsAlt ? `${imageSize}px` : 'auto',
+            width: buttonsAlt ? `calc(${imageSize}px + 0.5em)` : 'auto',
           }}
         >
           {buttons}

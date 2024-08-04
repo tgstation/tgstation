@@ -68,9 +68,7 @@ export const ItemDisplay = (props: { active: boolean; item: LoadoutItem }) => {
           </Box>
         ))
       }
-    >
-      {item.name}
-    </ImageButton>
+    />
   );
 };
 

@@ -19,7 +19,7 @@ $bg-map: colors.$bg-map !default;
   $color,
   $border-color: rgba(lighten($color, 50%), 0.2),
   $border-width: 1px 0 0 0,
-  $opacity: 0.15,
+  $opacity: 0.2,
   $hoverable: true,
   $transition-duration: 0.2s
 ) {
@@ -148,14 +148,15 @@ $bg-map: colors.$bg-map !default;
     position: absolute;
     overflow: hidden;
     left: 1px;
-    bottom: 1.6em;
+    bottom: 1.8em;
     max-width: 100%;
 
     &--alt {
       overflow: visible;
       flex-direction: column;
+      pointer-events: none;
       top: 1px;
-      bottom: inherit;
+      bottom: inherit !important;
     }
 
     &--noContent {
