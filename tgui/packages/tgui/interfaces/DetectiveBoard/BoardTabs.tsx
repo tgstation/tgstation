@@ -1,6 +1,12 @@
 import { classes } from '../../../common/react';
 import { useBackend } from '../../backend';
 import { Box, Button } from '../../components';
+import { Case } from './DataTypes';
+
+type BoardTabsData = {
+  cases: Case[];
+  current_case: number;
+};
 
 const BoardTab = (props) => {
   const { color, selected, onClick = () => {}, children } = props;
@@ -19,7 +25,7 @@ const BoardTab = (props) => {
 };
 
 export const BoardTabs = (props, context) => {
-  const { act, data } = useBackend(context);
+  const { act, data } = useBackend<BoardTabsData>(context);
   const { cases, current_case } = data;
   return (
     <Box className="BoardTabs">
