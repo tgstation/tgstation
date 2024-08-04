@@ -71,29 +71,21 @@
 		"cultivator",
 		"secateurs",
 		"hatchet",
-	)
-
-/datum/techweb_node/hydroponics
-	id = TECHWEB_NODE_HYDROPONICS
-	display_name = "Hydroponics"
-	description = "Research into advanced hydroponic systems for efficient and sustainable plant cultivation."
-	prereq_ids = list(TECHWEB_NODE_BOTANY_EQUIP, TECHWEB_NODE_CHEM_SYNTHESIS)
-	design_ids = list(
 		"biogenerator",
 		"hydro_tray",
 		"portaseeder",
 	)
-	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_2_POINTS)
 
 /datum/techweb_node/selection
 	id = TECHWEB_NODE_SELECTION
 	display_name = "Artificial Selection"
 	description = "Advancement in plant cultivation techniques through artificial selection, enabling precise manipulation of plant DNA."
-	prereq_ids = list(TECHWEB_NODE_HYDROPONICS)
+	prereq_ids = list(TECHWEB_NODE_BOTANY_EQUIP)
 	design_ids = list(
 		"flora_gun",
 		"gene_shears",
+		"adv_watering_can",
 	)
-	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_3_POINTS)
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_5_POINTS)
 	required_experiments = list(/datum/experiment/scanning/random/plants/wild)
 	discount_experiments = list(/datum/experiment/scanning/random/plants/traits = TECHWEB_TIER_3_POINTS)

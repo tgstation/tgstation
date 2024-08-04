@@ -39,7 +39,6 @@
 		"minerbag_holding",
 		"plumbing_receiver",
 		"bluespacebeaker",
-		"adv_watering_can",
 		"bluespace_coffeepot",
 		"bluespacesyringe",
 		"blutrash",
