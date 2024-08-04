@@ -2001,15 +2001,11 @@
 	name = "glass airlock"
 	opacity = FALSE
 	glass = TRUE
-	greyscale_config = /datum/greyscale_config/airlocks/window
-	greyscale_colors = "#a5a7ac#a5a7ac#969696#969696#5ea52c#6d6565"
-
 
 /obj/machinery/door/airlock/glass/incinerator
 	autoclose = FALSE
 	heat_proof = TRUE
 	req_access = list(ACCESS_SYNDICATE)
-	greyscale_colors = "#a5a7ac#a5a7ac#969696#969696#5ea52c#6d6565"
 
 /obj/machinery/door/airlock/glass/incinerator/syndicatelava_interior
 	name = "Turbine Interior Airlock"
@@ -2024,13 +2020,11 @@
 	opacity = FALSE
 	glass = TRUE
 	normal_integrity = 400
-	greyscale_config = /datum/greyscale_config/airlocks/window
 
 /obj/machinery/door/airlock/engineering/glass
 	name = "engineering glass airlock"
 	opacity = FALSE
 	glass = TRUE
-	greyscale_config = /datum/greyscale_config/airlocks/window
 
 /obj/machinery/door/airlock/engineering/glass/critical
 	critical_machine = TRUE //stops greytide virus from opening & bolting doors in critical positions, such as the SM chamber.
@@ -2040,25 +2034,21 @@
 	opacity = FALSE
 	glass = TRUE
 	normal_integrity = 400
-	greyscale_config = /datum/greyscale_config/airlocks/window
 
 /obj/machinery/door/airlock/medical/glass
 	name = "medical glass airlock"
 	opacity = FALSE
 	glass = TRUE
-	greyscale_config = /datum/greyscale_config/airlocks/window
 
 /obj/machinery/door/airlock/hydroponics/glass //Uses same icon as medical/glass, maybe update it with its own unique icon one day?
 	name = "hydroponics glass airlock"
 	opacity = FALSE
 	glass = TRUE
-	greyscale_config = /datum/greyscale_config/airlocks/window
 
 /obj/machinery/door/airlock/research/glass
 	name = "research glass airlock"
 	opacity = FALSE
 	glass = TRUE
-	greyscale_config = /datum/greyscale_config/airlocks/window
 
 /obj/machinery/door/airlock/research/glass/incinerator
 	autoclose = FALSE
@@ -2076,13 +2066,11 @@
 	name = "mining glass airlock"
 	opacity = FALSE
 	glass = TRUE
-	greyscale_config = /datum/greyscale_config/airlocks/window
 
 /obj/machinery/door/airlock/atmos/glass
 	name = "atmospheric glass airlock"
 	opacity = FALSE
 	glass = TRUE
-	greyscale_config = /datum/greyscale_config/airlocks/window
 
 /obj/machinery/door/airlock/atmos/glass/critical
 	critical_machine = TRUE //stops greytide virus from opening & bolting doors in critical positions, such as the SM chamber.
@@ -2091,19 +2079,16 @@
 	name = "science glass airlock"
 	opacity = FALSE
 	glass = TRUE
-	greyscale_config = /datum/greyscale_config/airlocks/window
 
 /obj/machinery/door/airlock/virology/glass
 	name = "virology glass airlock"
 	opacity = FALSE
 	glass = TRUE
-	greyscale_config = /datum/greyscale_config/airlocks/window
 
 /obj/machinery/door/airlock/maintenance/glass
 	name = "maintainence glass airlock"
 	opacity = FALSE
 	glass = TRUE
-	greyscale_config = /datum/greyscale_config/airlocks/window
 
 /obj/machinery/door/airlock/maintenance/external/glass
 	name = "maintainence external glass airlock"
@@ -2215,14 +2200,12 @@
 /obj/machinery/door/airlock/uranium/glass
 	opacity = FALSE
 	glass = TRUE
-	greyscale_config = /datum/greyscale_config/airlocks/window
 
 /obj/machinery/door/airlock/uranium/safe
 	actually_radioactive = FALSE
 
 /obj/machinery/door/airlock/uranium/glass/safe
 	actually_radioactive = FALSE
-	greyscale_config = /datum/greyscale_config/airlocks/window
 
 /obj/machinery/door/airlock/plasma
 	name = "plasma airlock"
@@ -2243,7 +2226,6 @@
 /obj/machinery/door/airlock/plasma/glass
 	opacity = FALSE
 	glass = TRUE
-	greyscale_config = /datum/greyscale_config/airlocks/window
 
 /obj/machinery/door/airlock/bananium
 	name = "bananium airlock"
@@ -2256,7 +2238,6 @@
 /obj/machinery/door/airlock/bananium/glass
 	opacity = FALSE
 	glass = TRUE
-	greyscale_config = /datum/greyscale_config/airlocks/window
 
 /obj/machinery/door/airlock/sandstone
 	name = "sandstone airlock"
@@ -2267,7 +2248,6 @@
 /obj/machinery/door/airlock/sandstone/glass
 	opacity = FALSE
 	glass = TRUE
-	greyscale_config = /datum/greyscale_config/airlocks/window
 
 /obj/machinery/door/airlock/wood
 	name = "wooden airlock"
