@@ -391,7 +391,7 @@
 	var/remains = pick(/obj/item/stack/rods, /obj/item/stack/sheet/iron)
 	new remains(loc)
 
-/obj/structure/girder/update_icon()
+/obj/structure/girder/update_icon_state()
 	. = ..()
 	switch(state)
 		if(GIRDER_NORMAL)

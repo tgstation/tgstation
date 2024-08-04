@@ -73,7 +73,6 @@ GLOBAL_DATUM_INIT(status_font, /datum/font, new /datum/font/tiny_unicode/size_12
 	icon_state = "unanchoredstatusdisplay"
 	custom_materials = list(/datum/material/iron= SHEET_MATERIAL_AMOUNT * 7, /datum/material/glass= SHEET_MATERIAL_AMOUNT * 4)
 	result_path = /obj/machinery/status_display/evac
-	pixel_shift = 32
 
 //makes it go on the wall when built
 /obj/machinery/status_display/Initialize(mapload, ndir, building)

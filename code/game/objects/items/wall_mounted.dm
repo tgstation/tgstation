@@ -10,10 +10,8 @@
 	var/result_path
 	/// For frames that are external to the wall they are placed on, like light fixtures and cameras.
 	var/wall_external = FALSE
-	/// The amount of pixels
-	var/pixel_shift
 	/// Do we used inverse directionals?
-	var/inverse_dir = FALSE
+	var/inverse_dir = TRUE
 	/// Can we only hang this on walls North of us? Preferably don't enable unless you absolutely have to
 	var/north_only = FALSE
 
@@ -50,32 +48,13 @@
 		user.visible_message(span_notice("[user.name] attaches [src] to the wall."),
 			span_notice("You attach [src] to the wall."),
 			span_hear("You hear clicking."))
-		var/floor_to_wall = get_dir(user, on_wall)
+		var/facing_dir = get_dir(user, on_wall)
 
-		var/set_to = floor_to_wall
-		if(inverse_dir == TRUE) // I'm sorry about this switch, O.turn wouldn't work for whatever reason.
-			switch(floor_to_wall)
-				if(NORTH)
-					set_to = SOUTH
-				if(SOUTH)
-					set_to = NORTH
-				if(EAST)
-					set_to = WEST
-				if(WEST)
-					set_to = EAST
-		var/obj/hanging_object = new result_path(get_turf(user), set_to, TRUE)
-		hanging_object.setDir(set_to)
+		if(inverse_dir) // I'm sorry about this switch, O.turn wouldn't work for whatever reason.
+			facing_dir = REVERSE_DIR(facing_dir)
+		var/obj/hanging_object = new result_path(get_turf(user), facing_dir, TRUE)
+		hanging_object.setDir(facing_dir)
 
-		if(pixel_shift)
-			switch(floor_to_wall)
-				if(NORTH)
-					hanging_object.pixel_y = pixel_shift
-				if(SOUTH)
-					hanging_object.pixel_y = -pixel_shift
-				if(EAST)
-					hanging_object.pixel_x = pixel_shift
-				if(WEST)
-					hanging_object.pixel_x = -pixel_shift
 		after_attach(hanging_object)
 
 	qdel(src)

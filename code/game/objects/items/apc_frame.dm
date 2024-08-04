@@ -5,7 +5,6 @@
 	icon = 'icons/obj/APC.dmi'
 	icon_state = "frame"
 	result_path = /obj/machinery/power/apc/auto_name
-	inverse_dir = TRUE
 
 /obj/item/wallframe/apc/try_build(turf/on_wall, user)
 	if(!..())

@@ -49,24 +49,35 @@
 }
 
 /// Directional helpers for things that use the wall_mount element
-#define WALL_MOUNT_DIRECTIONAL_HELPERS(path) \
+#define WALL_MOUNT_DIRECTIONAL_HELPERS(path) _WALL_MOUNT_DIRECTIONAL_HELPERS(path, 35, -8, 11, -11, 16)
+
+#define SHOWER_DIRECTIONAL_HELPERS(path) _WALL_MOUNT_DIRECTIONAL_HELPERS(path, 32, -4, 16, -16, 12)
+
+// Sinks need to be shifted down so they layer correctly when north due to their unique status
+#define SINK_DIRECTIONAL_HELPERS(path) \
+_WALL_MOUNT_DIRECTIONAL_HELPERS(path, 16, 24, 16, -16, 12) \
+##path/directional/north {\
+	pixel_y = -32; \
+}
+
+#define _WALL_MOUNT_DIRECTIONAL_HELPERS(path, north_offset, south_offset, east_offset, west_offset, horizontal_up_offset) \
 ##path/directional/north {\
 	dir = SOUTH; \
-	MAP_SWITCH(pixel_z, pixel_y) = 35; \
+	MAP_SWITCH(pixel_z, pixel_y) = north_offset; \
 } \
 ##path/directional/south {\
 	dir = NORTH; \
-	MAP_SWITCH(pixel_z, pixel_y) = -8; \
+	MAP_SWITCH(pixel_z, pixel_y) = south_offset; \
 } \
 ##path/directional/east {\
 	dir = WEST; \
-	pixel_x = 11; \
-	MAP_SWITCH(pixel_z, pixel_y) = 16; \
+	pixel_x = east_offset; \
+	MAP_SWITCH(pixel_z, pixel_y) = horizontal_up_offset; \
 } \
 ##path/directional/west {\
 	dir = EAST; \
-	pixel_x = -11; \
-	MAP_SWITCH(pixel_z, pixel_y) = 16; \
+	pixel_x = west_offset; \
+	MAP_SWITCH(pixel_z, pixel_y) = horizontal_up_offset; \
 }
 
 /// Directional helpers for cameras (cameras are really annoying)

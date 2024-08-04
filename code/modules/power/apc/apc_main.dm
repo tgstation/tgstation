@@ -218,7 +218,7 @@
 		opened = APC_COVER_OPENED
 		operating = FALSE
 		set_machine_stat(machine_stat | MAINT)
-		dir = turn(ndir, 180)
+		setDir(REVERSE_DIR(ndir))
 
 	//Make the apc visually interactive
 	register_context()

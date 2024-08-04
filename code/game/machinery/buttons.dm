@@ -12,7 +12,7 @@
 	/// Mutable appearance that holds our current emissive state
 	var/mutable_appearance/glow
 	/// Timer id of the current animation that's running, if any exists
-	var/anim_timer
+	var/animation_timer
 	light_power = 0.5 // Minimums, we want the button to glow if it has a mask, not light an area
 	light_range = 1.5
 	light_color = LIGHT_COLOR_VIVID_GREEN
@@ -144,13 +144,13 @@ BUTTON_DIRECTIONAL_HELPERS(/obj/machinery/button/indestructible)
 
 /obj/machinery/button/proc/start_animation(delay)
 	halt_animation()
-	anim_timer = addtimer(CALLBACK(src, PROC_REF(halt_animation)), delay, TIMER_CLIENT_TIME|TIMER_STOPPABLE|TIMER_UNIQUE)
+	animation_timer = addtimer(CALLBACK(src, PROC_REF(halt_animation)), delay, TIMER_CLIENT_TIME|TIMER_STOPPABLE|TIMER_UNIQUE)
 
 /obj/machinery/button/proc/halt_animation()
-	if(!anim_timer)
+	if(!animation_timer)
 		return
-	deltimer(anim_timer)
-	anim_timer = null
+	deltimer(animation_timer)
+	animation_timer = null
 	icon_state = base_icon_state
 	update_glow()
 	update_appearance()
@@ -601,4 +601,3 @@ BUTTON_DIRECTIONAL_HELPERS(/obj/machinery/button/crematorium/indestructible)
 	icon_state = "button"
 	result_path = /obj/machinery/button
 	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT)
-	pixel_shift = 24

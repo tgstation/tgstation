@@ -11,7 +11,7 @@
  * Filing Cabinets
  */
 /obj/structure/filingcabinet
-	SET_BASE_VISUAL_PIXEL(0, WALLENING_OFFSET)
+	SET_BASE_VISUAL_PIXEL(0, DEPTH_OFFSET)
 	name = "filing cabinet"
 	desc = "A large cabinet with drawers."
 	icon = 'icons/obj/service/bureaucracy.dmi'

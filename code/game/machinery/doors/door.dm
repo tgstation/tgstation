@@ -68,7 +68,7 @@
 	var/elevator_status
 	/// What specific lift ID do we link with?
 	var/transport_linked_id
-	/// Icon state prefix to use for masks from airlock_mask.dmi
+	/// Icon state prefix to use for masks from vis_mask.dmi
 	var/dir_mask = "standard"
 	/// Similar to the above but used for cases where walls are adjacent
 	var/edge_dir_mask = "standard"

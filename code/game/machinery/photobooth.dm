@@ -5,7 +5,7 @@
  * Links to buttons for remote control.
  */
 /obj/machinery/photobooth
-	SET_BASE_VISUAL_PIXEL(0, WALLENING_OFFSET)
+	SET_BASE_VISUAL_PIXEL(0, DEPTH_OFFSET)
 	name = "photobooth"
 	desc = "A machine with some drapes and a camera, used to update security record photos. Requires Law Office access to use."
 	icon = 'icons/obj/machines/photobooth.dmi'

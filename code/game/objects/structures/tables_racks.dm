@@ -406,7 +406,7 @@
 ///Table on wheels
 /obj/structure/table/rolling
 	SET_BASE_PIXEL(0, 0)
-	SET_BASE_VISUAL_PIXEL(0, WALLENING_OFFSET)
+	SET_BASE_VISUAL_PIXEL(0, DEPTH_OFFSET)
 	name = "Rolling table"
 	desc = "An NT brand \"Rolly poly\" rolling table. It can and will move."
 	anchored = FALSE

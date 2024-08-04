@@ -32,8 +32,7 @@ GLOBAL_LIST_INIT(diagonal_junctions, generate_splitvis_lookup())
 
 	vis = new /mutable_appearance/split_vis()
 	vis.icon = icon_path
-	var/junc = junction ? junction : "0"
-	vis.icon_state = "[junc]-[dir]"
+	vis.icon_state = "[junction || "0"]-[dir]"
 	vis.color = color
 	vis.pixel_x = pixel_x
 	vis.pixel_y = pixel_y

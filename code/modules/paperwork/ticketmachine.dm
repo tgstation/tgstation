@@ -71,7 +71,6 @@ WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/machinery/ticket_machine)
 	icon = 'icons/obj/service/bureaucracy.dmi'
 	icon_state = "ticketmachine_off"
 	result_path = /obj/machinery/ticket_machine
-	pixel_shift = 32
 
 ///Increments the counter by one, if there is a ticket after the current one we are serving.
 ///If we have a current ticket, remove it from the top of our tickets list and replace it with the next one if applicable
@@ -168,16 +167,16 @@ BUTTON_DIRECTIONAL_HELPERS(/obj/machinery/button/ticket_machine)
 		return
 
 	var/number_string = "[current_number]"
-	var/textLen = length(number_string)
-	var/startX = 12 - (2*textLen)
+	var/text_len = length(number_string)
+	var/start_x = 12 - (2*text_len)
 
-	for(var/i=1; i <= textLen, i++)
+	for(var/i=1; i <= text_len, i++)
 		var/mutable_appearance/number_overlay = mutable_appearance('icons/testing/Font_Minimal.dmi', number_string[i])
 		number_overlay.blend_mode = BLEND_SUBTRACT
-		number_overlay.pixel_x = startX
+		number_overlay.pixel_x = start_x
 		number_overlay.pixel_y = -14
 		. += number_overlay
-		startX = startX + 4
+		start_x = start_x + 4
 
 /obj/machinery/ticket_machine/attackby(obj/item/I, mob/user, params)
 	..()

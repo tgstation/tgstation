@@ -368,4 +368,5 @@
 /// If you modify this, you'll need to modify the tsx file too
 #define MAX_EXPECTED_Z_DEPTH 3
 
-#define WALLENING_OFFSET 12
+/// Shifts "flat" sprites up on their tile, to give the illusion of depth
+#define DEPTH_OFFSET 12

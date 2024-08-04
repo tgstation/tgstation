@@ -312,7 +312,6 @@ WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/structure/mirror/broken)
 		/datum/material/silver = SHEET_MATERIAL_AMOUNT,
 	)
 	result_path = /obj/structure/mirror
-	pixel_shift = 28
 
 /obj/structure/mirror/magic
 	name = "magic mirror"

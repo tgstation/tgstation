@@ -561,18 +561,12 @@ WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/machinery/airalarm)
 		. += mutable_appearance(icon, "light-out", layer, src, plane)
 		return ..()
 
-	var/light_to_use
+	var/alert_level = danger_level
 	var/area/our_area = get_area(src)
-	switch(max(danger_level, !!our_area.active_alarms[ALARM_ATMOS]))
-		if(0)
-			light_to_use = "light-0"
-		if(1)
-			light_to_use = "light-2" //yes, light 2 is yellow alarm
-		if(2)
-			light_to_use = "light-1"
-
-	. += mutable_appearance(icon, light_to_use)
-	. += emissive_appearance(icon, light_to_use, src, alpha)
+	if(our_area.active_alarms[ALARM_ATMOS])
+		alert_level = 2
+	. += mutable_appearance(icon, "light-[alert_level]")
+	. += emissive_appearance(icon, "light-[alert_level]", src, alpha)
 
 /// Check the current air and update our danger level.
 /// [/obj/machinery/airalarm/var/danger_level]

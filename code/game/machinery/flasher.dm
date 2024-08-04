@@ -211,7 +211,6 @@ WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/machinery/flasher)
 	icon_state = "mflash_frame"
 	result_path = /obj/machinery/flasher
 	var/id = null
-	pixel_shift = 28
 
 /obj/item/wallframe/flasher/examine(mob/user)
 	. = ..()

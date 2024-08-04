@@ -534,8 +534,6 @@
 	flags_1 = NONE
 	icon_state = "frame-empty"
 	result_path = /obj/structure/sign/painting
-	pixel_shift = -3
-	inverse_dir = TRUE
 	north_only = TRUE
 
 /obj/structure/sign/painting
@@ -755,7 +753,6 @@
 	icon_state = "frame-empty"
 	base_pixel_x = -17
 	result_path = /obj/structure/sign/painting/large
-	pixel_shift = 0 //See [/obj/structure/sign/painting/large/proc/finalize_size]
 	custom_price = PAYCHECK_CREW * 1.25
 
 /obj/item/wallframe/painting/large/try_build(turf/on_wall, mob/user)

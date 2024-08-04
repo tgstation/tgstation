@@ -37,7 +37,8 @@
 			hotspot_around |= direction
 
 	active_hotspot = new_lad
-	active_hotspot.set_smoothed_icon_state(hotspot_around)
+	if(active_hotspot)
+		active_hotspot.set_smoothed_icon_state(hotspot_around)
 
 /**
  * Handles the creation of hotspots and initial activation of turfs.
@@ -101,6 +102,8 @@
 	light_power = 1
 	light_color = LIGHT_COLOR_FIRE
 
+	/// base sprite used for our icon states when smoothing
+	/// BAAAASICALY the same as icon_state but is helpful to avoid duplicated work
 	var/fire_stage = ""
 	/**
 	 * Volume is the representation of how big and healthy a fire is.
@@ -341,13 +344,7 @@
 	if(fire_stage == stage)
 		return
 	fire_stage = stage
-	switch(stage)
-		if("heavy")
-			icon_state = "3"
-		if("medium")
-			icon_state = "2"
-		if("light")
-			icon_state = "1"
+	icon_state = stage
 	dir = pick(GLOB.cardinals)
 	update_color()
 

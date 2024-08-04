@@ -5,26 +5,7 @@
 /obj/machinery/power/apc/auto_name
 	auto_name = TRUE
 
-#define APC_DIRECTIONAL_HELPERS(path)\
-##path/directional/north {\
-	dir = SOUTH; \
-	MAP_SWITCH(pixel_z, pixel_y) = -APC_PIXEL_OFFSET; \
-} \
-##path/directional/south {\
-	dir = NORTH; \
-	MAP_SWITCH(pixel_z, pixel_y) = APC_PIXEL_OFFSET; \
-} \
-##path/directional/east {\
-	dir = WEST; \
-	pixel_x = -APC_PIXEL_OFFSET; \
-	MAP_SWITCH(pixel_z, pixel_y) = 16; \
-} \
-##path/directional/west {\
-	dir = EAST; \
-	pixel_x = APC_PIXEL_OFFSET; \
-	MAP_SWITCH(pixel_z, pixel_y) = 16; \
-}
-
+#define APC_DIRECTIONAL_HELPERS(path) _WALL_MOUNT_DIRECTIONAL_HELPERS(path, -APC_PIXEL_OFFSET, APC_PIXEL_OFFSET, -APC_PIXEL_OFFSET, APC_PIXEL_OFFSET, 16)
 
 APC_DIRECTIONAL_HELPERS(/obj/machinery/power/apc/worn_out)
 APC_DIRECTIONAL_HELPERS(/obj/machinery/power/apc/auto_name)

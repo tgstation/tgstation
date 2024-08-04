@@ -120,7 +120,6 @@ WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/machinery/light_switch)
 	icon_state = "light-nopower"
 	result_path = /obj/machinery/light_switch
 	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT)
-	pixel_shift = 26
 
 /obj/item/circuit_component/light_switch
 	display_name = "Light Switch"

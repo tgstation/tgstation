@@ -5,7 +5,6 @@
 	icon_state = "wall_safe"
 	base_icon_state = "wall_safe"
 	result_path = /obj/structure/secure_safe
-	pixel_shift = 32
 
 /obj/item/wallframe/secure_safe/Initialize(mapload)
 	. = ..()

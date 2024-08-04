@@ -7,7 +7,7 @@
  * Has a lot of the creature game world logic, such as health etc
  */
 /mob
-	SET_BASE_VISUAL_PIXEL(0, WALLENING_OFFSET)
+	SET_BASE_VISUAL_PIXEL(0, DEPTH_OFFSET)
 	density = TRUE
 	layer = MOB_LAYER
 	animate_movement = SLIDE_STEPS

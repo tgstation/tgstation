@@ -281,6 +281,7 @@
 	plane = OVER_FRILL_PLANE
 	render_relay_planes = list(RENDER_PLANE_GAME_WORLD)
 
+/// Wallening todo: this doesn't like, work
 /atom/movable/screen/plane_master/seethrough
 	name = "Seethrough"
 	documentation = "Holds the seethrough versions (done using image overrides) of large objects. Mouse transparent, so you can click through them."

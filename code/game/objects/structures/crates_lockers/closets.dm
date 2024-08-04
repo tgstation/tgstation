@@ -5,7 +5,7 @@ GLOBAL_LIST_EMPTY(roundstart_station_closets)
 
 
 /obj/structure/closet
-	SET_BASE_VISUAL_PIXEL(0, WALLENING_OFFSET)
+	SET_BASE_VISUAL_PIXEL(0, DEPTH_OFFSET)
 	name = "closet"
 	desc = "It's a basic storage unit."
 	icon = 'icons/obj/storage/closet.dmi'

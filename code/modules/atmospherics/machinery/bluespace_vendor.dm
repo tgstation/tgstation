@@ -4,7 +4,6 @@
 	icon = 'icons/obj/machines/atmospherics/bluespace_gas_vendor.dmi'
 	icon_state = "bluespace_vendor_open"
 	result_path = /obj/machinery/bluespace_vendor/built
-	pixel_shift = 30
 
 ///Defines for the mode of the vendor
 #define BS_MODE_OFF 1

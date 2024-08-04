@@ -1543,7 +1543,7 @@
 		open()
 		safe = TRUE
 
-/// I hate movement code.
+/// Returns true if a directional move is valid, false otherwise
 /obj/machinery/door/airlock/proc/allow_movement_for(atom/movable/passing_through, direction)
 	if(passing_through.movement_type & PHASING)
 		return TRUE

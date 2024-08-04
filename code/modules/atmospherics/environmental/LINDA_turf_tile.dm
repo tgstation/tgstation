@@ -171,39 +171,44 @@
 			src.atmos_overlay_types = null
 		return
 
+	// Cache for sonic speed
 	var/offset = GET_Z_PLANE_OFFSET(z) + 1
 	var/list/new_overlay_types = list()
+	// This is an extracted version of GAS_OVERLAYS() with logic build to handle gas smoothing
+	// The two should be kept up to date (I'm sorry for the code debt)
+	var/list/non_overlaying_gases = GLOB.nonoverlaying_gases
 	var/list/gases = air.gases
-	for(var/_ID in gases)
-		if(GLOB.nonoverlaying_gases[_ID])
+	for(var/gas_id in gases)
+		if(non_overlaying_gases[gas_id])
 			continue
-		var/_GAS = gases[_ID]
-		var/_GAS_META = _GAS[GAS_META]
-		if(_GAS[MOLES] <= _GAS_META[META_GAS_MOLES_VISIBLE])
+		var/list/gas_list = gases[gas_id]
+		var/list/gas_metadata = gas_list[GAS_META]
+		if(gas_list[MOLES] <= gas_metadata[META_GAS_MOLES_VISIBLE])
 			continue
-		var/_GAS_OVERLAY = _GAS_META[META_GAS_OVERLAY][offset]
+		var/list/gas_overlays = gas_metadata[META_GAS_OVERLAY][offset]
+
 		var/gas_junction = NONE
-		var/obj/effect/overlay/gas/existing_overlay = atmos_overlay_types?[_ID]
+		var/obj/effect/overlay/gas/existing_overlay = atmos_overlay_types?[gas_id]
 		if(existing_overlay)
 			vis_contents -= existing_overlay
 			gas_junction = existing_overlay.smoothing_junction
-		else
+		else // cold path so it's ok that it kinda fuckin sucks
 			// Alright if we're just being added, we need to poll our neighbors to update them
 			for(var/direction_to in GLOB.cardinals)
 				var/turf/neighbor = get_step(src, direction_to)
-				var/obj/effect/overlay/gas/their_overlay = neighbor.atmos_overlay_types?[_ID]
+				var/obj/effect/overlay/gas/their_overlay = neighbor.atmos_overlay_types?[gas_id]
 				if(!their_overlay)
 					continue
 				gas_junction |= dir_to_junction(direction_to)
 				var/updated_junction = their_overlay.smoothing_junction | dir_to_junction(REVERSE_DIR(direction_to))
 				var/obj/effect/overlay/gas/new_overlay = their_overlay.get_smoothed_overlay(updated_junction)
-				neighbor.atmos_overlay_types[_ID] = new_overlay
+				neighbor.atmos_overlay_types[gas_id] = new_overlay
 				neighbor.vis_contents -= their_overlay
 				neighbor.vis_contents += new_overlay
 
-		var/obj/effect/overlay/gas/new_overlay = _GAS_OVERLAY[min(TOTAL_VISIBLE_STATES, CEILING(_GAS[MOLES] / MOLES_GAS_VISIBLE_STEP, 1))][gas_junction + 1]
+		var/obj/effect/overlay/gas/new_overlay = gas_overlays[min(TOTAL_VISIBLE_STATES, CEILING(gas_list[MOLES] / MOLES_GAS_VISIBLE_STEP, 1))][gas_junction + 1]
 		vis_contents += new_overlay
-		new_overlay_types[_ID] = new_overlay
+		new_overlay_types[gas_id] = new_overlay
 
 	if (atmos_overlay_types)
 		// If we don't have an id anymore, remove it from our vis_contents and
@@ -225,7 +230,10 @@
 	UNSETEMPTY(new_overlay_types)
 	src.atmos_overlay_types = new_overlay_types
 
-/turf/proc/rebuild_visuals()
+/// Fully recalculates the smoothing of our atmos overlays
+/// Call when their inputs outside of the system (like, what adjacent turfs we have) change
+/turf/proc/rebuild_atmos_smoothing()
+	PRIVATE_PROC(TRUE)
 	var/list/atmos_overlay_types = src.atmos_overlay_types
 	for(var/direction in GLOB.cardinals)
 		var/turf/paired_turf = get_step(src, direction)

@@ -1,7 +1,7 @@
 #define REAGENT_SPILL_DIVISOR 200
 
 /obj/structure/reagent_dispensers
-	SET_BASE_VISUAL_PIXEL(0, WALLENING_OFFSET)
+	SET_BASE_VISUAL_PIXEL(0, DEPTH_OFFSET)
 	name = "Dispenser"
 	desc = "..."
 	icon = 'icons/obj/medical/chemical_tanks.dmi'

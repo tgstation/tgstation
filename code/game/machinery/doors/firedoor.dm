@@ -771,7 +771,7 @@
 	// Needed because render targets seem to shift larger then 32x32 icons down constantly. This is a known side effect that should? be changed by 516
 	pixel_y = 0
 	pixel_z = 12
-	AddElement(/datum/element/render_over_keep_hitbox, 0, TRUE, NORTH|WEST|EAST)
+	AddElement(/datum/element/render_over_keep_hitbox, 0, /* use_position_layering = */ TRUE, NORTH|WEST|EAST)
 	AddElement(/datum/element/connect_loc, loc_connections)
 
 /obj/machinery/door/firedoor/border_only/animation_length(animation)

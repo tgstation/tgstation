@@ -17,7 +17,7 @@
 
 /obj/machinery/door/poddoor/shutters/proc/get_working_state()
 	if(animation)
-		return "[animation]"
+		return animation
 	return density ? "closed" : "open"
 
 /obj/machinery/door/poddoor/shutters/update_icon_state()

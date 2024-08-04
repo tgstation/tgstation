@@ -1,4 +1,4 @@
-/// Component that manages a list of plane masters that are dependant on weather
+/// Component that manages a list of plane masters that are dependent on weather
 /// Force hides/shows them depending on the weather activity of their z stack
 /// Applied to the plane master group that owns them
 /datum/component/hide_weather_planes
