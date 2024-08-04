@@ -92,6 +92,16 @@
 
 	RegisterSignal(src, COMSIG_MACHINERY_POWER_RESTORED, PROC_REF(on_power_restore))
 	RegisterSignal(src, COMSIG_MACHINERY_POWER_LOST, PROC_REF(on_power_loss))
+	AddComponent(/datum/component/conditionally_transparent, \
+		transparent_signals = list(COSMIG_DOOR_OPENING), \
+		opaque_signals = list(COSMIG_DOOR_CLOSING), \
+ 		start_transparent = !density, \
+		transparency_delay = 0 SECONDS, \
+ 		in_midpoint_alpha = 215, \
+		transparent_alpha = 64, \
+		opacity_delay = 0 SECONDS, \
+		out_midpoint_alpha = 104, \
+	)
 	return INITIALIZE_HINT_LATELOAD
 
 /obj/machinery/door/firedoor/setDir(new_dir)

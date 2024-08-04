@@ -540,6 +540,19 @@ MAPPING_DIRECTIONAL_HELPERS_EMPTY(/obj/machinery/door/window/right)
 	icon_state = "right"
 	base_state = "right"
 
+
+MAPPING_DIRECTIONAL_HELPERS_EMPTY(/obj/machinery/door/window/half/left)
+MAPPING_DIRECTIONAL_HELPERS_EMPTY(/obj/machinery/door/window/half/right)
+
+/obj/machinery/door/window/half
+	can_atmos_pass = ATMOS_PASS_YES
+	icon = 'icons/obj/doors/windoor_half.dmi'
+
+/obj/machinery/door/window/half/right
+	icon_state = "right"
+	base_state = "right"
+
+
 MAPPING_DIRECTIONAL_HELPERS_EMPTY(/obj/machinery/door/window/brigdoor/left)
 MAPPING_DIRECTIONAL_HELPERS_EMPTY(/obj/machinery/door/window/brigdoor/right)
 

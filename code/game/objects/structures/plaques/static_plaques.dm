@@ -32,6 +32,8 @@
 	icon_state = "commission_tram"
 	custom_materials = list(/datum/material/titanium = SHEET_MATERIAL_AMOUNT)
 	layer = SIGN_LAYER
+	pixel_y = -29
+	pixel_z = 29
 
 /obj/structure/plaque/static_plaque/tram/Initialize(mapload)
 	. = ..()

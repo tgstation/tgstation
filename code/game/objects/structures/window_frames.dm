@@ -159,9 +159,9 @@
 	add_fingerprint(user)
 	if(atom_integrity >= max_integrity)
 		to_chat(user, span_warning("[src] is already in good condition!"))
-		return
+		return ITEM_INTERACT_BLOCKING
 	if(!tool.tool_start_check(user, amount = 0))
-		return
+		return ITEM_INTERACT_BLOCKING
 
 	balloon_alert(user, "Repairing...")
 	if(!tool.use_tool(src, user, 40, volume = 50))
