@@ -489,6 +489,7 @@
 	if(operating)
 		return FALSE
 	operating = TRUE
+	SEND_SIGNAL(src, COSMIG_DOOR_OPENING)
 	use_energy(active_power_usage)
 	run_animation(DOOR_OPENING_ANIMATION)
 	set_opacity(0)
@@ -528,6 +529,7 @@
 				return FALSE
 
 	operating = TRUE
+	SEND_SIGNAL(src, COSMIG_DOOR_CLOSING)
 
 	run_animation(DOOR_CLOSING_ANIMATION)
 	layer = closingLayer

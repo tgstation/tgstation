@@ -255,8 +255,8 @@
 	wall_icon = 'icons/turf/walls/shuttle_wall.dmi'
 	mineral = /obj/item/stack/sheet/mineral/titanium
 	tram_wall_type = /obj/structure/tram/alt/titanium
-	smoothing_groups = SMOOTH_GROUP_TITANIUM_WALLS + SMOOTH_GROUP_WALLS
-	canSmoothWith = SMOOTH_GROUP_SHUTTLE_PARTS + SMOOTH_GROUP_AIRLOCK + SMOOTH_GROUP_TITANIUM_WALLS
+	smoothing_groups = SMOOTH_GROUP_TITANIUM_WALLS
+	canSmoothWith = SMOOTH_GROUP_TITANIUM_WALLS
 
 /obj/structure/tram/alt/plastitanium
 	name = "reinforced tram"
@@ -264,8 +264,8 @@
 	wall_icon = 'icons/turf/walls/plastitanium_wall.dmi'
 	mineral = /obj/item/stack/sheet/mineral/plastitanium
 	tram_wall_type = /obj/structure/tram/alt/plastitanium
-	smoothing_groups = SMOOTH_GROUP_PLASTITANIUM_WALLS + SMOOTH_GROUP_WALLS
-	canSmoothWith = SMOOTH_GROUP_SHUTTLE_PARTS + SMOOTH_GROUP_AIRLOCK + SMOOTH_GROUP_PLASTITANIUM_WALLS
+	smoothing_groups = SMOOTH_GROUP_PLASTITANIUM_WALLS
+	canSmoothWith = SMOOTH_GROUP_PLASTITANIUM_WALLS
 
 /obj/structure/tram/alt/gold
 	name = "gold tram"
