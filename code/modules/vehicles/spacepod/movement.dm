@@ -41,6 +41,8 @@
 		power_used *= equip.movement_power_usage_mult
 	if(!use_power(power_used))
 		return
+	if(direction == UP || direction == DOWN)
+		return try_step_multiz(direction)
 	setDir(direction)
 	if(isnull(drift_handler))
 		new /datum/drift_handler(src, drift_force = 0)
@@ -61,11 +63,11 @@
 	. = ..()
 	if(isnull(drift_handler) || angle2dir(drift_handler.drifting_loop?.angle) != get_dir(src,bumped))
 		return
-	if(drift_handler.drift_force < 6 NEWTONS) // need to be moving at a decent speed for anything to happen
+	if(drift_handler.drift_force < 8 NEWTONS) // need to be moving at a decent speed for anything to happen
 		return
 
 	var/saved_force = drift_handler.drift_force
-	var/strength = 1 + (drift_handler.drift_force - 6 NEWTONS) * 0.2 // strength of the impact
+	var/strength = 1 + (drift_handler.drift_force - 8 NEWTONS) * 0.3 // strength of the impact
 
 	playsound(src, 'sound/effects/meteorimpact.ogg', min(40 * strength, 100), TRUE)
 

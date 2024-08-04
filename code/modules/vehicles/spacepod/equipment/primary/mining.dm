@@ -103,8 +103,10 @@
 	if(target_turf.is_blocked_turf_ignore_climbable())
 		var/obj/structure/foamedmetal/foam = locate() in target_turf
 		if(!isnull(foam))
+			playsound(pod.loc, 'sound/weapons/drill.ogg', 35 , TRUE)
+			pod.visible_message(span_warning("[pod] clears [foam]."))
 			foam.take_damage(foam.max_integrity, BRUTE)
 		return
 	var/datum/effect_system/fluid_spread/foam/foam = new /datum/effect_system/fluid_spread/foam/metal()
-	foam.set_up(range = 1, holder = src, location = target_turf)
+	foam.set_up(range = 1, amount = 1, holder = src, location = target_turf)
 	foam.start()

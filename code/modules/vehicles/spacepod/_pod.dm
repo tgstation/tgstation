@@ -7,12 +7,12 @@
 // sprites
 // fix drill bump (not possible without tinkering with drift_handler)
 // research n designs
-// replace spawn_equip or add new subtype, but probably the former; to have a more reasonable roundstart loadout
 // ALSO DO NOT FORGET TO REMOVE THIS HUGE ASS COMMENT before finishing
 
 // this is the iron variant
 /obj/vehicle/sealed/space_pod
 	name = "space pod"
+	desc = "A small, highly modular space exploration vessel. These were developed by Nanotrasen for private personnel to evaluate local space fauna and structures, and potentially other uses, like repair."
 	layer = ABOVE_MOB_LAYER
 	move_force = MOVE_FORCE_VERY_STRONG
 	move_resist = MOVE_FORCE_EXTREMELY_STRONG

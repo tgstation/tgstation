@@ -2,6 +2,7 @@
 	slot = POD_SLOT_SENSORS
 	name = "sensor suite"
 	desc = "A sensor suite for space pods, containing some tech doodads and a built-in GPS. Manufacted by Nanotrasen, and has weird labels like \"Not for infowar\" or \"manufacted on Tau Ceti IV\"."
+	icon_state = "sensors"
 	/// reference to our GPS component
 	var/datum/component/gps/item/gps
 	/// traits given to all passengers
@@ -67,9 +68,11 @@
 /obj/item/pod_equipment/sensors/mesons
 	name = "construction sensor suite"
 	desc = "A pod sensor suite with built-in GPS and meson vision."
+	icon_state = "sensorsmeson"
 	traits_given = list(TRAIT_MESON_VISION)
 
 /obj/item/pod_equipment/sensors/nightvision
 	name = "NV sensor suite"
 	desc = "A pod sensor suite with built-in GPS and night vision."
+	icon_state = "sensorsnv"
 	traits_given = list(TRAIT_TRUE_NIGHT_VISION)

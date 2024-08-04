@@ -3,6 +3,7 @@
 	slot = POD_SLOT_MISC
 	name = "bluespace warp drive"
 	desc = "Warp drive for space pods, used to warp to a Bluespace Navigation Gigabeacon, assuming it is functional and in space."
+	icon_state = "warpdrive"
 	interface_id = "WarpDrive"
 	/// percentage of power needed to warp
 	var/power_percentage_used = 50
@@ -84,11 +85,22 @@
 		cancel_effects()
 		return
 	cancel_effects()
+	var/list/good_locs = list()
+	for(var/turf/potential_target as anything in get_teleport_turfs(selected_beacon, precision = 1))
+		if(potential_target.is_blocked_turf_ignore_climbable())
+			continue
+		if(!ispodpassable(potential_target) || (potential_target.has_gravity() && !ispodpassable_nograv(potential_target)))
+			continue
+		good_locs += potential_target
+	if(!length(good_locs))
+		pod.balloon_alert(user, "target blocked!")
+		return
 	if(!pod.use_power(necessary_power))
 		return
 	playsound(pod.loc, SFX_PORTAL_ENTER, 80, TRUE)
-	playsound(selected_beacon, SFX_PORTAL_ENTER, 80, TRUE)
-	do_teleport(pod, selected_beacon, precision=1)
+	var/target = pick(good_locs)
+	playsound(target, SFX_PORTAL_ENTER, 80, TRUE)
+	do_teleport(pod, target)
 
 /obj/item/pod_equipment/warp_drive/proc/disrupted(atom/source, obj/item/item, mob/living/user, params)
 	SIGNAL_HANDLER
