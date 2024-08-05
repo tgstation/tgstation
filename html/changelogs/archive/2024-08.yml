@@ -142,3 +142,20 @@
   necromanceranne:
   - bugfix: Shoving someone onto a table now causes them to become vulnerable to being
       stunned.
+2024-08-03:
+  Watermelon914:
+  - bugfix: Fixed an infinite TC glitch dupe
+  Y0SH1M4S73R:
+  - admin: The "Suppress Runtime Logging" toggle in the lua editor actually does what
+      it says
+2024-08-05:
+  Ben10Omintrix:
+  - bugfix: juvenile lobstrosities will now look for food
+  OrionTheFox:
+  - image: added and updated belt/suit/mask storage sprites for several knives missing
+      them
+  SmArtKar:
+  - bugfix: Lizards no longer die from cold on icebox despite wearing insulation
+  - bugfix: Fixed handyman assistants spawning without a PDA
+  Y0SH1M4S73R:
+  - bugfix: lua scripting now works on linux
