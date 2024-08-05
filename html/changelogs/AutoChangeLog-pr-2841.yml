@@ -1,0 +1,4 @@
+author: "FlufflesTheDog, Absolucy"
+delete-after: True
+changes:
+  - bugfix: "Anomalies shouldn't spawn with frequencies that can't be selected on signalers anymore."
