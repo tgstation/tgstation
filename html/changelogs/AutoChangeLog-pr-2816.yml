@@ -1,0 +1,4 @@
+author: "Absolucy, AnturK"
+delete-after: True
+changes:
+  - bugfix: "Fixes void cloak not making suit store slot items unstrippable."
