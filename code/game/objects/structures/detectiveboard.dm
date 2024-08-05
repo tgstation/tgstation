@@ -8,12 +8,15 @@
 	density = FALSE
 	anchored = TRUE
 	max_integrity = 150
-	req_access = ACCESS_DETECTIVE
 
-	var/attaching_evidence = FALSE /// When player attaching evidence to board this will become TRUE
-	var/list/case_colors = list("red", "orange", "yellow", "green", "blue", "violet") /// Colors for case color
-	var/list/datum/case/cases = list() /// List of board cases
-	var/current_case = 1 /// Index of viewing case in cases array
+	/// When player attaching evidence to board this will become TRUE
+	var/attaching_evidence = FALSE
+	/// Colors for case color
+	var/list/case_colors = list("red", "orange", "yellow", "green", "blue", "violet")
+	/// List of board cases
+	var/list/datum/case/cases = list()
+	/// Index of viewing case in cases array
+	var/current_case = 1
 
 MAPPING_DIRECTIONAL_HELPERS(/obj/structure/detectiveboard, 32)
 
@@ -37,15 +40,12 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/detectiveboard, 32)
 		if(attaching_evidence)
 			to_chat(user, "You already attaching evidence!")
 			return
-		if(!allowed(user))
-			to_chat(user, span_warning("You are not authorized to add notices!"))
-			return
 		attaching_evidence = TRUE
-		var/name = tgui_input_text(usr, "Please enter the evidence name", "Detective's Board")
+		var/name = tgui_input_text(user, "Please enter the evidence name", "Detective's Board")
 		if(!name || name == "")
 			attaching_evidence = FALSE
 			return
-		var/desc = tgui_input_text(usr, "Please enter the evidence description", "Detective's Board")
+		var/desc = tgui_input_text(user, "Please enter the evidence description", "Detective's Board")
 		if(!desc || desc == "")
 			attaching_evidence = FALSE
 			return
@@ -105,13 +105,13 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/detectiveboard, 32)
 	. = ..()
 	if(.)
 		return
-
+	var/mob/user = ui.user
 	switch(action)
 		if("add_case")
-			var/new_case = tgui_input_text(usr, "Please enter the case name", "Detective's Board")
+			var/new_case = tgui_input_text(user, "Please enter the case name", "Detective's Board")
 			if(!new_case || new_case == "")
 				return
-			var/case_color = tgui_input_list(usr, "Please choose case color", "Detective's Board", case_colors)
+			var/case_color = tgui_input_list(user, "Please choose case color", "Detective's Board", case_colors)
 			if(!case_color || case_color == "")
 				return
 
@@ -127,13 +127,13 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/detectiveboard, 32)
 		if("remove_case")
 			var/datum/case/case = locate(params["case_ref"]) in cases
 			for(var/datum/evidence/evidence in case.evidences)
-				remove_item(evidence.item, usr)
+				remove_item(evidence.item, user)
 			cases.Remove(case)
 			current_case = cases.len
 			update_appearance(UPDATE_ICON)
 			return TRUE
 		if("rename_case")
-			var/new_name = tgui_input_text(usr, "Please ender the case new name",  "Detective's Board")
+			var/new_name = tgui_input_text(user, "Please ender the case new name",  "Detective's Board")
 			if(new_name && new_name != "")
 				var/datum/case/case = locate(params["case_ref"]) in cases
 				case.name = new_name
@@ -143,18 +143,18 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/detectiveboard, 32)
 			var/datum/evidence/evidence = locate(params["evidence_ref"]) in case.evidences
 			if(evidence.evidence_type == "photo")
 				var/obj/item/photo/item = evidence.item
-				item.show(usr)
+				item.show(user)
 				return
 
 			var/obj/item/paper/paper = evidence.item
 			var/paper_text = ""
 			for(var/datum/paper_input/text_input as anything in paper.raw_text_inputs)
 				paper_text += text_input.raw_text
-			usr << browse("<html><head><meta http-equiv='Content-Type' content='text/html; charset=UTF-8'><title>[paper.name]</title></head>" \
+			user << browse("<html><head><meta http-equiv='Content-Type' content='text/html; charset=UTF-8'><title>[paper.name]</title></head>" \
 			+ "<body style='overflow:hidden;padding:5px'>" \
 			+ "[paper_text]" \
 			+ "</body></html>", "window=photo_showing;size=480x608")
-			onclose(usr, "[name]")
+			onclose(user, "[name]")
 		if("remove_evidence")
 			var/datum/case/case = locate(params["case_ref"]) in cases
 			var/datum/evidence/evidence = locate(params["evidence_ref"]) in case.evidences
@@ -162,9 +162,9 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/detectiveboard, 32)
 			if(!istype(item) || item.loc != src)
 				return
 
-			if(!allowed(usr))
+			if(!allowed(user))
 				return
-			remove_item(item, usr)
+			remove_item(item, user)
 			case.evidences.Remove(evidence)
 			update_appearance(UPDATE_ICON)
 			return TRUE
@@ -176,7 +176,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/detectiveboard, 32)
 					evidence.x = params["rel_x"]
 					evidence.y = params["rel_y"]
 		if("to_chat") // Debug logs
-			to_chat(usr, params["message"])
+			to_chat(user, params["message"])
 
 	return FALSE
 
