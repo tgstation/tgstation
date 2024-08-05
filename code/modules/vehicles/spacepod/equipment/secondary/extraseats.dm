@@ -19,6 +19,9 @@
 	for(var/mob/living/occupant as anything in pod_occupants)
 		pod.mob_exit(occupant, randomstep = TRUE)
 
+/obj/item/pod_equipment/extra_seats/get_overlay()
+	return "top_cover" //no unique overlay yet
+
 /obj/item/pod_equipment/extra_seats/badmin
 	name = "pod bluespace passenger wormhole kit"
 	desc = "This pod grants infinite seats in a pod. Bad idea."

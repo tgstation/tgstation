@@ -18,7 +18,7 @@
 	move_resist = MOVE_FORCE_EXTREMELY_STRONG
 	resistance_flags = FIRE_PROOF | ACID_PROOF
 	icon = 'icons/mob/rideables/spacepod/pod_small.dmi'
-	icon_state = "cockpit_pod"
+	icon_state = "cockpit"
 	light_system = OVERLAY_LIGHT_DIRECTIONAL
 	light_on = FALSE
 	light_range = 5
@@ -103,6 +103,10 @@
 	. += "window"
 	if(panel_open)
 		. += "panel_open[!isnull(cabin_air_tank) ? "_t" : ""]"
+	if(light_on)
+		. += "headlights_on" //this is a fixed overlay which might be bad for unique pods but why wouldnt one have headlights
+		. += emissive_appearance(icon, "headlights_on", src, alpha = src.alpha)
+
 	for(var/obj/item/pod_equipment/equipment as anything in get_all_parts())
 		var/overlay = equipment.get_overlay()
 		if(isnull(overlay))

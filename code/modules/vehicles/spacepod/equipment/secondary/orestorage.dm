@@ -14,6 +14,9 @@
 	if(!QDELETED(pod) && !isnull(user))
 		dump_contents()
 
+/obj/item/pod_equipment/orestorage/get_overlay()
+	return "top_cover" //no unique overlay yet
+
 /obj/item/pod_equipment/orestorage/dump_contents()
 	var/turf/turf_ahead = get_step(pod, pod.dir)
 	var/turf/target = turf_ahead.is_blocked_turf_ignore_climbable() ? pod.drop_location() : turf_ahead

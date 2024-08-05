@@ -28,6 +28,9 @@
 	if(!QDELING(src))
 		dump_contents()
 
+/obj/item/pod_equipment/cargo_hold/get_overlay()
+	return "top_cover" //no unique overlay yet
+
 /obj/item/pod_equipment/cargo_hold/dump_contents()
 	for(var/atom/movable/content as anything in contents)
 		content.forceMove(pod.drop_location())
