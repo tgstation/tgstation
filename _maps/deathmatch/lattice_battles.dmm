@@ -15,7 +15,6 @@
 "cB" = (
 /obj/structure/lattice/catwalk,
 /obj/effect/decal/cleanable/dirt/dust,
-/obj/effect/decal/cleanable/dirt/dust,
 /turf/open/chasm,
 /area/deathmatch/fullbright)
 "cN" = (
@@ -244,12 +243,10 @@
 /area/deathmatch/fullbright)
 "NY" = (
 /obj/effect/playeronly_barrier,
-/obj/effect/playeronly_barrier,
 /obj/structure/railing/unbreakable,
 /turf/open/misc/asteroid/moon,
 /area/deathmatch/fullbright)
 "Od" = (
-/obj/structure/lattice/catwalk,
 /obj/structure/lattice/catwalk,
 /turf/open/chasm,
 /area/deathmatch/fullbright)
