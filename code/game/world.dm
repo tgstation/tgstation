@@ -6,6 +6,9 @@
 #define NO_INIT_PARAMETER "no-init"
 
 GLOBAL_VAR(restart_counter)
+#ifdef USE_BYOND_TRACY
+GLOBAL_VAR(tracy_log)
+#endif
 
 /**
  * WORLD INITIALIZATION
@@ -67,7 +70,9 @@ GLOBAL_VAR(restart_counter)
 #ifdef USE_BYOND_TRACY
 #warn USE_BYOND_TRACY is enabled
 	if(!tracy_initialized)
-		init_byond_tracy()
+		GLOB.tracy_log = init_byond_tracy()
+		if(GLOB.tracy_log)
+			SEND_TEXT(world.log, "Tracy profile log located at [GLOB.tracy_log]")
 		Genesis(tracy_initialized = TRUE)
 		return
 #endif
@@ -216,6 +221,11 @@ GLOBAL_VAR(restart_counter)
 		GLOB.picture_log_directory = "data/picture_logs/[override_dir]"
 
 	logger.init_logging()
+
+#ifdef USE_BYOND_TRACY
+	if(GLOB.tracy_log)
+		rustg_file_write("[GLOB.tracy_log]", "[GLOB.log_directory]/tracy.loc")
+#endif
 
 	var/latest_changelog = file("[global.config.directory]/../html/changelogs/archive/" + time2text(world.timeofday, "YYYY-MM") + ".yml")
 	GLOB.changelog_hash = fexists(latest_changelog) ? md5(latest_changelog) : 0 //for telling if the changelog has changed recently
@@ -485,7 +495,9 @@ GLOBAL_VAR(restart_counter)
 			CRASH("Unsupported platform: [system_type]")
 
 	var/init_result = call_ext(library, "init")("block")
-	if (init_result != "0")
+	if(length(init_result) != 0 && init_result[1] == ".") // if first character is ., then it returned the output filename
+		return init_result
+	else if(init_result != "0")
 		CRASH("Error initializing byond-tracy: [init_result]")
 
 /world/proc/init_debugger()
