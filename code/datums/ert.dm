@@ -1,5 +1,5 @@
 /datum/ert
-	var/mobtype
+	var/mobtype = /mob/living/carbon/human
 	///Antag datum team for this type of ERT.
 	var/team = /datum/team/ert
 	var/opendoors = TRUE
