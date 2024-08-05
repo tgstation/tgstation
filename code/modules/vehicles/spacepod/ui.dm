@@ -34,8 +34,9 @@
 		.["partUIData"][part_ref]["ref"] = part_ref
 
 /obj/vehicle/sealed/space_pod/ui_static_data(mob/user)
-	. = list()
-	.["parts"] = list()
+	. = list(
+		"parts" = list(),
+	)
 	for(var/obj/item/pod_equipment/equipment as anything in get_all_parts())
 		var/list/info = list()
 		info["name"] = equipment.name

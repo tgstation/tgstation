@@ -122,32 +122,3 @@
 
 /obj/vehicle/sealed/space_pod/get_cell()
 	return cell
-
-// handles giving equipment actions + some other stuff
-/obj/vehicle/sealed/space_pod/after_add_occupant(mob/occupant)
-	. = ..()
-	if(length(occupants) == 1) //first occupant only
-		panel_open = FALSE //automatic screws,,,, waow....
-		cycle_tank_air()
-	for(var/obj/item/pod_equipment/equipment as anything in get_all_parts())
-		var/datum/action/action = equipment.create_occupant_actions(occupant, occupants[occupant])
-		if(isnull(action))
-			continue
-		if(islist(action))
-			var/list/as_list = action
-			for(var/datum/action/actual_action as anything in as_list)
-				actual_action.Grant(occupant)
-		else
-			action.Grant(occupant)
-		equipment_actions[occupant] += islist(action) ? action : list(action)
-
-//removes equipment actions
-/obj/vehicle/sealed/space_pod/after_remove_occupant(mob/former)
-	. = ..()
-	former.clear_alert(ALERT_CHARGE)
-	former.clear_alert(ALERT_MECH_DAMAGE)
-	if(!length(occupants)) //when everyone exits
-		cycle_tank_air(to_tank = TRUE)
-	if(equipment_actions[former])
-		QDEL_LIST(equipment_actions[former])
-		equipment_actions -= former
