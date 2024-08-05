@@ -33,9 +33,3 @@
 /datum/loadout_item/pocket_items/plush/hampter_sec
 	name = "Хамптер офицер"
 	item_path = /obj/item/toy/plush/hampter/security
-
-/datum/loadout_item/pocket_items/plush/ratvar
-	donator_level = 3
-
-/datum/loadout_item/pocket_items/plush/narsie
-	donator_level = 3
