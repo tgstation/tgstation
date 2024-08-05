@@ -30,17 +30,22 @@
 
 /obj/item/pod_runner/wirecutter_act(mob/living/user, obj/item/tool)
 	. = NONE
+	var/turf/our_turf = get_turf(src)
+	if(!ispodpassable(our_turf) || our_turf.is_blocked_turf_ignore_climbable())
+		balloon_alert(user, "it wont fit here!")
+		return ITEM_INTERACT_FAILURE
 	tool.play_tool_sound(src)
 	if(!do_after(user, 5 SECONDS, src))
 		return ITEM_INTERACT_FAILURE
 	tool.play_tool_sound(src)
-	new build_path(get_turf(src))
+	new build_path(our_turf)
 	qdel(src)
 	return ITEM_INTERACT_SUCCESS
 
 /obj/structure/pod_construction
 	name = "in-progress pod"
 	density = TRUE
+	anchored = TRUE
 	base_icon_state = ""
 	icon_state = ""
 
@@ -82,16 +87,16 @@
 			"key" = /obj/item/circuitboard/pod,
 			"action" = ITEM_DELETE,
 			"back_key" = TOOL_SCREWDRIVER,
-			"desc" = "The wiring is adjusted, and the <b>control module</b> can be added.",
-			"forward_message" = "added control module",
+			"desc" = "The wiring is adjusted, and the <b>control board</b> can be added.",
+			"forward_message" = "added control board",
 			"backward_message" = "disconnected wiring"
 		),
 		list(
 			"key" = TOOL_SCREWDRIVER,
 			"back_key" = TOOL_CROWBAR,
-			"desc" = "The control module is installed, and can be <b>screwed</b> into place.",
-			"forward_message" = "secured control module",
-			"backward_message" = "removed control module"
+			"desc" = "The control board is installed, and can be <b>screwed</b> into place.",
+			"forward_message" = "secured control board",
+			"backward_message" = "removed control board"
 		),
 		list(
 			"key" = /obj/item/stack/sheet/iron,
@@ -99,7 +104,7 @@
 			"back_key" = TOOL_SCREWDRIVER,
 			"desc" = "15 sheets of iron can be used as inner plating.",
 			"forward_message" = "installed internal armor layer",
-			"backward_message" = "unsecured control module"
+			"backward_message" = "unsecured control board"
 		),
 		list(
 			"key" = TOOL_WRENCH,

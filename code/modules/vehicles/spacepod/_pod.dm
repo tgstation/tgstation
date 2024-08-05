@@ -12,7 +12,7 @@
 // this is the iron variant
 /obj/vehicle/sealed/space_pod
 	name = "space pod"
-	desc = "A small, highly modular space exploration vessel. These were developed by Nanotrasen for private personnel to evaluate local space fauna and structures, and potentially other uses, like repair."
+	desc = "A small, highly modular space exploration vessel. These were developed by Nanotrasen for private personnel (and eventually sold with marked up prices) to evaluate local space fauna and structures, and potentially other uses, like repair."
 	layer = ABOVE_MOB_LAYER
 	move_force = MOVE_FORCE_VERY_STRONG
 	move_resist = MOVE_FORCE_EXTREMELY_STRONG
