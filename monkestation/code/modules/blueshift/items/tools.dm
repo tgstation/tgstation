@@ -93,7 +93,7 @@
 		return FALSE
 	return TRUE
 
-// Just a completely normal crowbar except its normal sized and can force doors like jaws of life can
+// Just a completely normal crowbar except it's bulky sized and can force doors like jaws of life can.
 
 /obj/item/crowbar/large/doorforcer
 	name = "prybar"
@@ -102,6 +102,7 @@
 	icon = 'monkestation/code/modules/blueshift/icons/tools.dmi'
 	icon_state = "prybar"
 	toolspeed = 1.3
+	w_class = WEIGHT_CLASS_BULKY
 	force_opens = TRUE
 	custom_materials = list(
 		/datum/material/iron = SHEET_MATERIAL_AMOUNT * 1.75,
