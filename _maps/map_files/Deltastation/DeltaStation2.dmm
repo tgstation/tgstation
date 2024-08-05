@@ -57372,6 +57372,10 @@
 	},
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/effect/decal/cleanable/dirt,
+/obj/item/book/manual/podconstruction{
+	pixel_x = 15;
+	pixel_y = -2
+	},
 /turf/open/floor/iron,
 /area/station/hallway/secondary/exit/hangar)
 "opl" = (

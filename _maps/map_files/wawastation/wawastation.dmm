@@ -53937,7 +53937,14 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/power/apc/auto_name/directional/west,
 /obj/structure/cable,
-/obj/item/pod_equipment/warp_drive,
+/obj/item/pod_equipment/warp_drive{
+	pixel_x = -6;
+	pixel_y = -10
+	},
+/obj/item/book/manual/podconstruction{
+	pixel_x = 8;
+	pixel_y = -5
+	},
 /turf/open/floor/iron/white/corner{
 	dir = 8
 	},

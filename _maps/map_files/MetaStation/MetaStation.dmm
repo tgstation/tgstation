@@ -19131,6 +19131,10 @@
 	},
 /obj/machinery/firealarm/directional/west,
 /obj/effect/decal/cleanable/dirt/dust,
+/obj/item/book/manual/podconstruction{
+	pixel_x = -7;
+	pixel_y = -6
+	},
 /turf/open/floor/iron,
 /area/station/hallway/secondary/exit/hangar)
 "gOS" = (

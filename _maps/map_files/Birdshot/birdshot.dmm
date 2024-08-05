@@ -24373,9 +24373,9 @@
 /obj/structure/table/reinforced,
 /obj/effect/turf_decal/tile/yellow/opposingcorners,
 /obj/item/cigarette/rollie/mindbreaker,
-/obj/item/trash/chips{
-	pixel_x = 5;
-	pixel_y = 17
+/obj/item/book/manual/podconstruction{
+	pixel_x = 6;
+	pixel_y = 11
 	},
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/iron/cafeteria{
