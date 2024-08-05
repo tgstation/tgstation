@@ -31,7 +31,7 @@
 	icon = 'icons/effects/effects.dmi'
 	icon_state = "void_conduit"
 	anchored = TRUE
-	max_integrity = 200
+	density = TRUE
 	/////Counter for each process goes up by 1, when it's high enough our conduit will pulse
 	//var/conduit_pulse_counter
 
@@ -90,11 +90,11 @@
 		else
 			affected_mob.apply_status_effect(/datum/status_effect/void_chill, 1)
 	for(var/obj/machinery/door/affected_door in turfs)
-		affected_door.take_damage(37.5)
+		affected_door.take_damage(rand(30, 50))
 	for(var/obj/structure/door_assembly/affected_assembly in turfs)
-		affected_assembly.take_damage(37.5)
+		affected_assembly.take_damage(rand(30, 50))
 	for(var/obj/structure/window/affected_window in turfs)
-		affected_window.take_damage(15)
+		affected_window.take_damage(rand(10, 20))
 
 	for(var/turf/affected_turf in turfs)
 		var/datum/gas_mixture/environment = affected_turf.return_air()

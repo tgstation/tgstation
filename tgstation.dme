@@ -1688,6 +1688,7 @@
 #include "code\datums\proximity_monitor\fields\gravity.dm"
 #include "code\datums\proximity_monitor\fields\projectile_dampener.dm"
 #include "code\datums\proximity_monitor\fields\timestop.dm"
+#include "code\datums\proximity_monitor\fields\void_storm.dm"
 #include "code\datums\quirks\_quirk.dm"
 #include "code\datums\quirks\_quirk_constant_data.dm"
 #include "code\datums\quirks\negative_quirks\addict.dm"
