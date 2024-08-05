@@ -1,4 +1,7 @@
 /datum/ert
+	///What is the base mob for this ERT.
+	var/mobtype
+	///Antag datum team for this type of ERT.
 	var/team = /datum/team/ert
 	var/opendoors = TRUE
 	///Alternate antag datum given to the leader of the squad.

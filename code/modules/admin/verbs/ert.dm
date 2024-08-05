@@ -222,7 +222,7 @@
 				continue
 
 			//Spawn the body
-			var/mob/living/carbon/human/ert_operative = new /mob/living/carbon/human(spawnloc)
+			var/mob/living/carbon/human/ert_operative = new mobtype(spawnloc)
 			chosen_candidate.client.prefs.safe_transfer_prefs_to(ert_operative, is_antag = TRUE)
 			ert_operative.key = chosen_candidate.key
 
