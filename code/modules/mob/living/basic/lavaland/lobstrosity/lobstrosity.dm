@@ -41,8 +41,6 @@
 
 /mob/living/basic/mining/lobstrosity/Initialize(mapload)
 	. = ..()
-	var/static/list/food_types = list(/obj/item/fish/lavaloop)
-	ai_controller.set_blackboard_key(BB_BASIC_FOODS, typecacheof(food_types))
 	AddComponent(/datum/component/profound_fisher)
 	AddElement(/datum/element/mob_grabber)
 	AddElement(/datum/element/footstep, FOOTSTEP_MOB_CLAW)

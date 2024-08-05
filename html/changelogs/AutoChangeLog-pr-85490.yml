@@ -1,0 +1,4 @@
+author: "Gaxeer"
+delete-after: True
+changes:
+  - rscdel: "Remove narsie and ratvar plushies from loadout"
