@@ -579,6 +579,7 @@
 		/obj/item/storage/medkit/advanced = 1,
 		/obj/item/melee/baton/telescopic = 1,
 		/obj/item/gun/energy/pulse/pistol/loyalpin = 1,
+		/obj/item/stack/medical/poultice = 1, //These stacks contain 15 by default. Great for getting corpses to defib range without surgery.
 	)
 	belt = /obj/item/storage/belt/medical/ert
 	glasses = /obj/item/clothing/glasses/hud/health/sunglasses
@@ -595,6 +596,10 @@
 	backpack_contents = list(
 		/obj/item/reagent_containers/hypospray/combat = 1,
 		/obj/item/storage/medkit/regular = 1,
+		/obj/item/reagent_containers/syringe = 1,
+		/obj/item/reagent_containers/cup/bottle/formaldehyde = 1,
+		/obj/item/reagent_containers/medigel/sterilizine = 1,
+		/obj/item/bodybag = 2,
 	)
 	mask = /obj/item/clothing/mask/surgical
 	belt = /obj/item/storage/belt/medical/ert
