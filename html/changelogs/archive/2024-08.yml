@@ -53,3 +53,7 @@
       human.
   KittyNoodle:
   - balance: Changelings can now store up to 60 different dna strands!
+2024-08-05:
+  flleeppyy:
+  - bugfix: silicons with the anime trait and no cat ears/tail cannot scream like
+      a cat.
