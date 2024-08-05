@@ -1,4 +1,4 @@
-export type Case = {
+export type DataCase = {
   ref: string;
   name: string;
   color: string;

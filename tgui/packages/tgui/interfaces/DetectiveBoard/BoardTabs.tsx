@@ -1,10 +1,10 @@
 import { classes } from '../../../common/react';
 import { useBackend } from '../../backend';
 import { Box, Button } from '../../components';
-import { Case } from './DataTypes';
+import { DataCase } from './DataTypes';
 
 type BoardTabsData = {
-  cases: Case[];
+  cases: DataCase[];
   current_case: number;
 };
 
@@ -24,8 +24,8 @@ const BoardTab = (props) => {
   );
 };
 
-export const BoardTabs = (props, context) => {
-  const { act, data } = useBackend<BoardTabsData>(context);
+export const BoardTabs = (props) => {
+  const { act, data } = useBackend<BoardTabsData>();
   const { cases, current_case } = data;
   return (
     <Box className="BoardTabs">
