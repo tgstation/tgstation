@@ -1,14 +1,21 @@
 /datum/ert
-	var/mobtype = /mob/living/carbon/human
 	var/team = /datum/team/ert
 	var/opendoors = TRUE
+	///Alternate antag datum given to the leader of the squad.
 	var/leader_role = /datum/antagonist/ert/commander
+	///Do we humanize all spawned players or keep them the species in their current character prefs?
 	var/enforce_human = TRUE
-	var/roles = list(/datum/antagonist/ert/security, /datum/antagonist/ert/medic, /datum/antagonist/ert/engineer) //List of possible roles to be assigned to ERT members.
+	///A list of roles distributed to the selected candidates that are not the leader.
+	var/roles = list(/datum/antagonist/ert/security, /datum/antagonist/ert/medic, /datum/antagonist/ert/engineer)
+	///The custom name assigned to this team, for their antag datum/roundend reporting.
 	var/rename_team
+	///Defines the color/alert code of the response team. Unused if a polldesc is defined.
 	var/code
+	///The mission given to this ERT type in their flavor text.
 	var/mission = "Assist the station."
+	///The number of players for consideration.
 	var/teamsize = 5
+	///The "would you like to play as XXX" message used when polling for players.
 	var/polldesc
 	/// If TRUE, gives the team members "[role] [random last name]" style names
 	var/random_names = TRUE
