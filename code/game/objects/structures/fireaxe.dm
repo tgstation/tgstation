@@ -209,7 +209,7 @@ WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/structure/fireaxecabinet)
 /obj/structure/fireaxecabinet/empty
 	populate_contents = FALSE
 
-MAPPING_DIRECTIONAL_HELPERS(/obj/structure/fireaxecabinet/empty, 32)
+WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/structure/fireaxecabinet/empty)
 
 /obj/item/wallframe/fireaxecabinet
 	name = "fire axe cabinet"
@@ -235,7 +235,7 @@ WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/structure/fireaxecabinet/mechremoval)
 /obj/structure/fireaxecabinet/mechremoval/empty
 	populate_contents = FALSE
 
-MAPPING_DIRECTIONAL_HELPERS(/obj/structure/fireaxecabinet/mechremoval/empty, 32)
+WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/structure/fireaxecabinet/mechremoval/empty)
 
 /obj/item/wallframe/fireaxecabinet/mechremoval
 	name = "mech removal tool cabinet"

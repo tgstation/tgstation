@@ -55,7 +55,7 @@
 	opacity = TRUE
 	anchored = TRUE
 	smoothing_flags = SMOOTH_BITMASK
-	smoothing_groups = SMOOTH_GROUP_ALIEN_WALLS
+	smoothing_groups = SMOOTH_GROUP_TALL_WALL + SMOOTH_GROUP_ALIEN_WALLS
 	canSmoothWith = SMOOTH_GROUP_ALIEN_WALLS
 	max_integrity = 200
 	var/resintype = null

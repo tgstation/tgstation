@@ -274,7 +274,7 @@
 	mineral = /obj/item/stack/sheet/mineral/gold
 	tram_wall_type = /obj/structure/tram/alt/gold
 	explosion_block = 0 //gold is a soft metal you dingus.
-	smoothing_groups = SMOOTH_GROUP_GOLD_WALLS + SMOOTH_GROUP_WALLS + SMOOTH_GROUP_CLOSED_TURFS
+	smoothing_groups = SMOOTH_GROUP_GOLD_WALLS + SMOOTH_GROUP_TALL_WALL + SMOOTH_GROUP_WALLS + SMOOTH_GROUP_CLOSED_TURFS
 	canSmoothWith = SMOOTH_GROUP_GOLD_WALLS
 	custom_materials = list(/datum/material/gold = SHEET_MATERIAL_AMOUNT * 2)
 
@@ -284,7 +284,7 @@
 	wall_icon = 'icons/turf/walls/silver_wall.dmi'
 	mineral = /obj/item/stack/sheet/mineral/silver
 	tram_wall_type = /obj/structure/tram/alt/silver
-	smoothing_groups = SMOOTH_GROUP_SILVER_WALLS + SMOOTH_GROUP_WALLS + SMOOTH_GROUP_CLOSED_TURFS
+	smoothing_groups = SMOOTH_GROUP_SILVER_WALLS + SMOOTH_GROUP_TALL_WALL + SMOOTH_GROUP_WALLS + SMOOTH_GROUP_CLOSED_TURFS
 	canSmoothWith = SMOOTH_GROUP_SILVER_WALLS
 	custom_materials = list(/datum/material/silver = SHEET_MATERIAL_AMOUNT * 2)
 
@@ -296,7 +296,7 @@
 	tram_wall_type = /obj/structure/tram/alt/diamond //diamond wall takes twice as much time to slice
 	max_integrity = 800
 	explosion_block = 3
-	smoothing_groups = SMOOTH_GROUP_DIAMOND_WALLS + SMOOTH_GROUP_WALLS + SMOOTH_GROUP_CLOSED_TURFS
+	smoothing_groups = SMOOTH_GROUP_DIAMOND_WALLS + SMOOTH_GROUP_TALL_WALL + SMOOTH_GROUP_WALLS + SMOOTH_GROUP_CLOSED_TURFS
 	canSmoothWith = SMOOTH_GROUP_DIAMOND_WALLS
 	custom_materials = list(/datum/material/diamond = SHEET_MATERIAL_AMOUNT * 2)
 
@@ -306,7 +306,7 @@
 	wall_icon = 'icons/turf/walls/bananium_wall.dmi'
 	mineral = /obj/item/stack/sheet/mineral/bananium
 	tram_wall_type = /obj/structure/tram/alt/bananium
-	smoothing_groups = SMOOTH_GROUP_BANANIUM_WALLS + SMOOTH_GROUP_WALLS + SMOOTH_GROUP_CLOSED_TURFS
+	smoothing_groups = SMOOTH_GROUP_BANANIUM_WALLS + SMOOTH_GROUP_TALL_WALL + SMOOTH_GROUP_WALLS + SMOOTH_GROUP_CLOSED_TURFS
 	canSmoothWith = SMOOTH_GROUP_BANANIUM_WALLS
 	custom_materials = list(/datum/material/bananium = SHEET_MATERIAL_AMOUNT*2)
 
@@ -317,7 +317,7 @@
 	mineral = /obj/item/stack/sheet/mineral/sandstone
 	tram_wall_type = /obj/structure/tram/alt/sandstone
 	explosion_block = 0
-	smoothing_groups = SMOOTH_GROUP_SANDSTONE_WALLS + SMOOTH_GROUP_WALLS + SMOOTH_GROUP_CLOSED_TURFS
+	smoothing_groups = SMOOTH_GROUP_SANDSTONE_WALLS + SMOOTH_GROUP_TALL_WALL + SMOOTH_GROUP_WALLS + SMOOTH_GROUP_CLOSED_TURFS
 	canSmoothWith = SMOOTH_GROUP_SANDSTONE_WALLS
 	custom_materials = list(/datum/material/sandstone = SHEET_MATERIAL_AMOUNT*2)
 
@@ -328,7 +328,7 @@
 	wall_icon = 'icons/turf/walls/uranium_wall.dmi'
 	mineral = /obj/item/stack/sheet/mineral/uranium
 	tram_wall_type = /obj/structure/tram/alt/uranium
-	smoothing_groups = SMOOTH_GROUP_URANIUM_WALLS + SMOOTH_GROUP_WALLS + SMOOTH_GROUP_CLOSED_TURFS
+	smoothing_groups = SMOOTH_GROUP_URANIUM_WALLS + SMOOTH_GROUP_TALL_WALL + SMOOTH_GROUP_WALLS + SMOOTH_GROUP_CLOSED_TURFS
 	canSmoothWith = SMOOTH_GROUP_URANIUM_WALLS
 	custom_materials = list(/datum/material/uranium = SHEET_MATERIAL_AMOUNT*2)
 
@@ -370,7 +370,7 @@
 	wall_icon = 'icons/turf/walls/plasma_wall.dmi'
 	mineral = /obj/item/stack/sheet/mineral/plasma
 	tram_wall_type = /obj/structure/tram/alt/plasma
-	smoothing_groups = SMOOTH_GROUP_PLASMA_WALLS + SMOOTH_GROUP_WALLS + SMOOTH_GROUP_CLOSED_TURFS
+	smoothing_groups = SMOOTH_GROUP_PLASMA_WALLS + SMOOTH_GROUP_TALL_WALL + SMOOTH_GROUP_WALLS + SMOOTH_GROUP_CLOSED_TURFS
 	canSmoothWith = SMOOTH_GROUP_PLASMA_WALLS
 	custom_materials = list(/datum/material/plasma = SHEET_MATERIAL_AMOUNT*2)
 
@@ -381,7 +381,7 @@
 	mineral = /obj/item/stack/sheet/mineral/wood
 	tram_wall_type = /obj/structure/tram/alt/wood
 	explosion_block = 0
-	smoothing_groups = SMOOTH_GROUP_WOOD_WALLS + SMOOTH_GROUP_WALLS + SMOOTH_GROUP_CLOSED_TURFS
+	smoothing_groups = SMOOTH_GROUP_WOOD_WALLS + SMOOTH_GROUP_TALL_WALL + SMOOTH_GROUP_WALLS + SMOOTH_GROUP_CLOSED_TURFS
 	canSmoothWith = SMOOTH_GROUP_WOOD_WALLS
 	custom_materials = list(/datum/material/wood = SHEET_MATERIAL_AMOUNT*2)
 
@@ -399,7 +399,7 @@
 	name = "bamboo tram"
 	desc = "A tram with a bamboo framing."
 	wall_icon = 'icons/turf/walls/bamboo_wall.dmi'
-	smoothing_groups = SMOOTH_GROUP_WALLS + SMOOTH_GROUP_BAMBOO_WALLS + SMOOTH_GROUP_CLOSED_TURFS
+	smoothing_groups = SMOOTH_GROUP_TALL_WALL + SMOOTH_GROUP_WALLS + SMOOTH_GROUP_BAMBOO_WALLS + SMOOTH_GROUP_CLOSED_TURFS
 	canSmoothWith = SMOOTH_GROUP_BAMBOO_WALLS
 	mineral = /obj/item/stack/sheet/mineral/bamboo
 	tram_wall_type = /obj/structure/tram/alt/bamboo
@@ -411,7 +411,7 @@
 	mineral = /obj/item/stack/rods
 	mineral_amount = 5
 	tram_wall_type = /obj/structure/tram/alt/iron
-	smoothing_groups = SMOOTH_GROUP_IRON_WALLS + SMOOTH_GROUP_WALLS + SMOOTH_GROUP_CLOSED_TURFS
+	smoothing_groups = SMOOTH_GROUP_IRON_WALLS + SMOOTH_GROUP_TALL_WALL + SMOOTH_GROUP_WALLS + SMOOTH_GROUP_CLOSED_TURFS
 	canSmoothWith = SMOOTH_GROUP_IRON_WALLS
 	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 2.5)
 
@@ -422,7 +422,7 @@
 	mineral = /obj/item/stack/sheet/mineral/abductor
 	tram_wall_type = /obj/structure/tram/alt/abductor
 	explosion_block = 3
-	smoothing_groups = SMOOTH_GROUP_ABDUCTOR_WALLS + SMOOTH_GROUP_WALLS + SMOOTH_GROUP_CLOSED_TURFS
+	smoothing_groups = SMOOTH_GROUP_ABDUCTOR_WALLS + SMOOTH_GROUP_TALL_WALL + SMOOTH_GROUP_WALLS + SMOOTH_GROUP_CLOSED_TURFS
 	canSmoothWith = SMOOTH_GROUP_ABDUCTOR_WALLS
 	custom_materials = list(/datum/material/alloy/alien = SHEET_MATERIAL_AMOUNT*2)
 
