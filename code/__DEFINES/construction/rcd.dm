@@ -16,6 +16,9 @@
 /// The typepath of the structure the rcd is trying to build
 #define RCD_DESIGN_PATH "rcd_design_path"
 
+/// The direction of the structure we will build
+#define RCD_BUILD_DIRECTION "rcd_build_direction"
+
 /// Time taken for an rcd hologram to disappear
 #define RCD_HOLOGRAM_FADE_TIME (15 SECONDS)
 
