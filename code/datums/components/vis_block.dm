@@ -1,3 +1,4 @@
+#define VIS_BLOCK_FLAGS (RESET_COLOR|RESET_ALPHA|RESET_TRANSFORM|NO_CLIENT_COLOR|KEEP_TOGETHER)
 /// Abstract object that gets smoothed,
 /// used to allow code to get smoothing junctions for more then one "class of thing" at a time
 /// (while not breaking our existing system)
@@ -9,7 +10,7 @@
 	smoothing_flags = SMOOTH_BITMASK
 
 /obj/effect/abstract/finder/wall
-	canSmoothWith = SMOOTH_GROUP_WALLS
+	canSmoothWith = SMOOTH_GROUP_TALL_WALL
 
 /obj/effect/abstract/finder/vis_block
 	smoothing_groups = SMOOTH_GROUP_VIS_BLOCK
@@ -53,18 +54,22 @@
 	/// Allows for full directional visibility
 	/// Icon state prefix to use for masks from vis_mask.dmi
 	var/inner_transparent_dirs = NONE
+	/// Hack to get around the offset we use to hack an issue with vis_contents and large objects
+	/// Shifts overlays (ON OUR PARENT)'s z position by this amount
+	var/parent_z_shift = 0
 	/// Directions in which there is a wall
 	var/wall_junction = NONE
 	/// Directions in which there is another active source of vis_block
 	var/us_junction = NONE
 
-/datum/component/vis_block/Initialize(dir_mask, edge_dir_mask, inner_transparent_dirs = NONE)
+/datum/component/vis_block/Initialize(dir_mask, edge_dir_mask, inner_transparent_dirs = NONE, parent_z_shift = 0)
 	if(!isatom(parent))
 		return COMPONENT_INCOMPATIBLE
 	var/atom/atom_parent = parent
 	src.dir_mask = dir_mask
 	src.edge_dir_mask = edge_dir_mask
 	src.inner_transparent_dirs = inner_transparent_dirs
+	src.parent_z_shift = parent_z_shift
 	RegisterSignal(atom_parent, COMSIG_ATOM_DIR_CHANGE, PROC_REF(dir_changing))
 	RegisterSignal(atom_parent, COMSIG_ATOM_SET_OPACITY, PROC_REF(opacity_changing))
 	RegisterSignal(atom_parent, COMSIG_MOVABLE_MOVED, PROC_REF(parent_moved))
@@ -182,8 +187,9 @@
 	var/turf/home = atom_parent.loc
 
 	/// This is the darkness everything else will be masking out
-	var/mutable_appearance/darkness_base = mutable_appearance('icons/effects/vis_darkness.dmi', "[wall_junction]", offset_spokesman = atom_parent, plane = DARKNESS_MASK_PLANE)
+	var/mutable_appearance/darkness_base = mutable_appearance('icons/effects/vis_darkness.dmi', "[wall_junction]", offset_spokesman = atom_parent, plane = DARKNESS_MASK_PLANE, appearance_flags = VIS_BLOCK_FLAGS|KEEP_APART)
 	darkness_base.pixel_w = -5
+	darkness_base.pixel_z = parent_z_shift
 	partial_darkness = FALSE
 	for(var/check_dir in GLOB.cardinals)
 		if(!(check_dir & (dir | REVERSE_DIR(dir))))
@@ -194,14 +200,14 @@
 			if(inner_transparent_dirs == NONE)
 				continue
 			// Then we draw a mask on ourselves, on our OWN turf, to allow say the turf below some vertical headroom
-			darkness_base.add_overlay(mutable_appearance('icons/effects/vis_mask.dmi', "[edge_dir_mask]_dark_edge_[dir2text(check_dir)]", HIGHEST_GAME_LAYER, offset_spokesman = atom_parent, plane = DARKNESS_MASK_PLANE))
+			darkness_base.add_overlay(mutable_appearance('icons/effects/vis_mask.dmi', "[edge_dir_mask]_dark_edge_[dir2text(check_dir)]", HIGHEST_GAME_LAYER, offset_spokesman = atom_parent, plane = DARKNESS_MASK_PLANE, appearance_flags = VIS_BLOCK_FLAGS))
 			continue
 		var/turf/in_direction = get_step(home, check_dir)
 		if(!in_direction)
 			continue
 
 		// Base mask applied to darkness, masks out only the side we can see (since we overlay it on the turf facing said side)
-		var/mutable_appearance/mask = mutable_appearance('icons/effects/vis_mask.dmi', dir_mask, HIGHEST_GAME_LAYER, offset_spokesman = atom_parent, plane = DARKNESS_MASK_PLANE)
+		var/mutable_appearance/mask = mutable_appearance('icons/effects/vis_mask.dmi', dir_mask, HIGHEST_GAME_LAYER, offset_spokesman = atom_parent, plane = DARKNESS_MASK_PLANE, appearance_flags = VIS_BLOCK_FLAGS|KEEP_APART)
 		mask = make_mutable_appearance_directional(mask)
 		mask.dir = check_dir
 		mask.pixel_w = -5
@@ -218,13 +224,13 @@
 		// These handle connecting edges with walls
 		// (since they have different bounds and I want to show walls say, going in slightly in some cases without doing the same to connected blockers)
 		if(wall_junction & NORTH)
-			mask.add_overlay(mutable_appearance(mask.icon, "[edge_dir_mask]_edge_north"))
+			mask.add_overlay(mutable_appearance(mask.icon, "[edge_dir_mask]_edge_north", appearance_flags = VIS_BLOCK_FLAGS))
 		if(wall_junction & SOUTH)
-			mask.add_overlay(mutable_appearance(mask.icon, "[edge_dir_mask]_edge_south"))
+			mask.add_overlay(mutable_appearance(mask.icon, "[edge_dir_mask]_edge_south", appearance_flags = VIS_BLOCK_FLAGS))
 		if(wall_junction & EAST)
-			mask.add_overlay(mutable_appearance(mask.icon, "[edge_dir_mask]_edge_east"))
+			mask.add_overlay(mutable_appearance(mask.icon, "[edge_dir_mask]_edge_east", appearance_flags = VIS_BLOCK_FLAGS))
 		if(wall_junction & WEST)
-			mask.add_overlay(mutable_appearance(mask.icon, "[edge_dir_mask]_edge_west"))
+			mask.add_overlay(mutable_appearance(mask.icon, "[edge_dir_mask]_edge_west", appearance_flags = VIS_BLOCK_FLAGS))
 		// If our inside is transparent in this case, draw the standard darkness
 		// Using a half alpha and BLEND_SUBTRACT
 		// This way if both stack we'll get darkness and opacity, and if they don't nothing will happen
@@ -233,7 +239,7 @@
 			partial_darkness = TRUE
 			if(!HAS_TRAIT(home, TRAIT_INNER_DARKNESS) || HAS_TRAIT_FROM(home, TRAIT_INNER_DARKNESS, WEAKREF(src)))
 				ADD_TRAIT(home, TRAIT_INNER_DARKNESS, WEAKREF(src))
-				var/mutable_appearance/half_darken = mutable_appearance('icons/effects/vis_darkness.dmi', "[wall_junction]", alpha = 130)
+				var/mutable_appearance/half_darken = mutable_appearance('icons/effects/vis_darkness.dmi', "[wall_junction]", alpha = 130, appearance_flags = VIS_BLOCK_FLAGS)
 				half_darken.blend_mode = BLEND_SUBTRACT
 				mask.add_overlay(half_darken)
 

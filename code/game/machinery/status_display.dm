@@ -722,7 +722,7 @@ WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/machinery/status_display/ai)
 		message2 = firstline_to_secondline[message1]
 	return ..() // status displays call update appearance on init so i suppose we should set the messages before calling parent as to not call it twice
 
-MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/status_display/random_message, 32)
+WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/machinery/status_display/random_message)
 
 #undef MAX_STATIC_WIDTH
 #undef FONT_STYLE

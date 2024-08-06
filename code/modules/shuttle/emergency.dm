@@ -775,11 +775,15 @@
 	icon_state = "wall_safe_locked"
 	var/unlocked = FALSE
 
+/obj/item/storage/pod/Initialize(mapload)
+	. = ..()
+	find_and_hang_on_wall()
+
 /obj/item/storage/pod/update_icon_state()
 	. = ..()
 	icon_state = "wall_safe[unlocked ? "" : "_locked"]"
 
-MAPPING_DIRECTIONAL_HELPERS(/obj/item/storage/pod, 32)
+WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/item/storage/pod)
 
 /obj/item/storage/pod/PopulateContents()
 	new /obj/item/clothing/head/helmet/space/orange(src)

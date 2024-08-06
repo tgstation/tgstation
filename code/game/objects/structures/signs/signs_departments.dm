@@ -57,7 +57,7 @@ WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/structure/sign/departments/chemistry)
 	sign_change_name = "Department - Medbay: Chemistry Alt"
 	icon_state = "chemistry2"
 
-MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sign/departments/chemistry/alt, 32)
+WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/structure/sign/departments/chemistry/alt)
 
 /obj/structure/sign/departments/chemistry/pharmacy
 	name = "\improper Pharmacy sign"
@@ -163,19 +163,19 @@ WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/structure/sign/departments/botany)
 	sign_change_name = "Department - Botany (Tray)"
 	icon_state = "hydro2"
 
-MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sign/departments/botany/alt1, 32)
+WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/structure/sign/departments/botany/alt1)
 
 /obj/structure/sign/departments/botany/alt2
 	sign_change_name = "Department - Botany (Watering Can)"
 	icon_state = "hydro3"
 
-MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sign/departments/botany/alt2, 32)
+WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/structure/sign/departments/botany/alt2)
 
 /obj/structure/sign/departments/botany/botany/alt3
 	sign_change_name = "Department - Botany (Tray) Alt"
 	icon_state = "botany"
 
-MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sign/departments/botany/alt3, 32)
+WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/structure/sign/departments/botany/alt3)
 
 /obj/structure/sign/departments/custodian
 	name = "\improper Janitor sign"
@@ -199,7 +199,7 @@ WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/structure/sign/departments/holy)
 	desc = "A sign labelling a religious area."
 	icon_state = "chapel"
 
-MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sign/departments/holy, 32)
+WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/structure/sign/departments/holy)
 
 /obj/structure/sign/departments/lawyer
 	name = "\improper Legal Department sign"

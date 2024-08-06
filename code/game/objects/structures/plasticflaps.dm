@@ -27,7 +27,8 @@
 	// Render targeting big icons shifts em down, lets counteract
 	pixel_z = 16
 	AddElement(/datum/element/render_over_keep_hitbox)
-	AddComponent(/datum/component/vis_block, "standard", "standard")
+	// We need to shift overlays drawn to use down to counteract the counteraction. I hate byond
+	AddComponent(/datum/component/vis_block, "standard", "standard", parent_z_shift = -16)
 	air_update_turf(TRUE, TRUE)
 	if(mapload)
 		return INITIALIZE_HINT_LATELOAD
