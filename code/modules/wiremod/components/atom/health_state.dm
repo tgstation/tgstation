@@ -37,7 +37,7 @@
 	var/mob/living/organism = input_port.value
 	var/turf/current_turf = get_location()
 	var/turf/target_location = get_turf(organism)
-	if(!istype(organism) || current_turf.z != target_location.z || get_dist(current_turf, target_location)s > max_range)
+	if(!istype(organism) || current_turf.z != target_location.z || get_dist(current_turf, target_location) > max_range)
 		return FALSE
 
 	var/current_option = state_option.value
