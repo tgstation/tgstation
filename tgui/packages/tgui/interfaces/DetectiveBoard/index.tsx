@@ -47,6 +47,23 @@ export function DetectiveBoard(props) {
     setConnectingEvidence(null);
   }
 
+  function handleEvidenceRemoved(evidence: DataEvidence) {
+    const pinPosition = getPinPosition(evidence);
+    let new_connections: Connection[] = [];
+    for (let old_connection of connections) {
+      if (
+        (old_connection.to.x === pinPosition.x &&
+          old_connection.to.y === pinPosition.y) ||
+        (old_connection.from.x === pinPosition.x &&
+          old_connection.from.y === pinPosition.y)
+      ) {
+        continue;
+      }
+      new_connections.push(old_connection);
+    }
+    setConnections(new_connections);
+  }
+
   useEffect(() => {
     if (!connectingEvidence) {
       return () => window.removeEventListener('mousemove', handleMouseMove);
@@ -88,23 +105,19 @@ export function DetectiveBoard(props) {
       setConnection(null);
       setConnectingEvidence(null);
     }
+    // act('to_chat', { message: 'index rendered' });
   }
 
   return (
     <Window width={1200} height={800}>
       <Window.Content>
+        <Connections lineWidth={5} connections={connections} zLayer={99} />
         {cases.length > 0 ? (
           <>
-            {connection ? (
+            {connection && (
               <Connections
                 lineWidth={5}
-                connections={[...connections, connection]}
-                zLayer={99}
-              />
-            ) : (
-              <Connections
-                lineWidth={5}
-                connections={connections}
+                connections={[connection]}
                 zLayer={99}
               />
             )}
@@ -122,6 +135,7 @@ export function DetectiveBoard(props) {
                         onPinStartConnecting={handlePinStartConnecting}
                         onPinConnected={handlePinConnected}
                         onPinMouseUp={handleMouseUpOnPin}
+                        onEvidenceRemoved={handleEvidenceRemoved}
                       />
                     ))}
                   </Box>

@@ -11,6 +11,7 @@ type EvidenceProps = {
   onPinStartConnecting: Function;
   onPinConnected: Function;
   onPinMouseUp: Function;
+  onEvidenceRemoved: Function;
 };
 
 type Position = {
@@ -126,12 +127,13 @@ export function Evidence(props: EvidenceProps) {
                   iconColor="red"
                   icon="trash"
                   color="white"
-                  onClick={() =>
+                  onClick={() => {
                     act('remove_evidence', {
                       case_ref: case_ref,
                       evidence_ref: evidence.ref,
-                    })
-                  }
+                    });
+                    props.onEvidenceRemoved(evidence);
+                  }}
                 />
               </Flex.Item>
             </Flex>
