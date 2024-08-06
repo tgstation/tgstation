@@ -1,0 +1,4 @@
+author: "Odairu"
+delete-after: True
+changes:
+  - balance: "removes hivemind from NIFs it has no place in this realm"
