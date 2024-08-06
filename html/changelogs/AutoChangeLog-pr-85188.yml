@@ -1,5 +1,0 @@
-author: "necromanceranne"
-delete-after: True
-changes:
-  - balance: "Quality cybernetic hearts combat bleeds and restore blood, rather than inject you with epinephrine when you enter crit. This can result in mild toxin buildup, however."
-  - balance: "Upgraded cybernetic hearts give an extremely brief amount of action when you enter softcrit (but not hardcrit)."

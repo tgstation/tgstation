@@ -1,6 +1,0 @@
-author: "necromanceranne"
-delete-after: True
-changes:
-  - balance: "Strong-arm implants go on cooldown when activated, but deal more overall lethal damage on a single blow."
-  - balance: "The strong-arm implant does additional damage to fauna and some other dangerous mobs."
-  - qol: "You can pair toolset arm implants with the strong-arm implants."

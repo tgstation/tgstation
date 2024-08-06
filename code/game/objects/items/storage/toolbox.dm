@@ -348,6 +348,11 @@
 	weapon_to_spawn = /obj/item/gun/ballistic/automatic/c20r
 	extra_to_spawn = /obj/item/ammo_box/magazine/smgm45
 
+/obj/item/storage/toolbox/guncase/smartgun
+	name = "adielle smartgun case"
+	weapon_to_spawn = /obj/item/gun/ballistic/automatic/smartgun
+	extra_to_spawn = /obj/item/ammo_box/magazine/smartgun
+
 /obj/item/storage/toolbox/guncase/clandestine
 	name = "clandestine gun case"
 	weapon_to_spawn = /obj/item/gun/ballistic/automatic/pistol/clandestine
@@ -441,12 +446,6 @@
 	inhand_icon_state = "sakhno_case"
 	weapon_to_spawn = /obj/effect/spawner/random/sakhno
 	extra_to_spawn = /obj/effect/spawner/random/sakhno/ammo
-
-/obj/item/storage/toolbox/guncase/soviet/plastikov
-	name = "ancient surplus gun case"
-	desc = "A gun case. Has the symbol of the Third Soviet Union stamped on the side."
-	weapon_to_spawn = /obj/item/gun/ballistic/automatic/plastikov
-	extra_to_spawn = /obj/item/food/rationpack //sorry comrade, cannot get you more ammo, here, have lunch
 
 /obj/item/storage/toolbox/guncase/monkeycase
 	name = "monkey gun case"
