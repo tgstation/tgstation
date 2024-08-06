@@ -14,15 +14,27 @@ type Data = {
   data_connections: Connection[];
 };
 
+type TypedConnection = {
+  type: string;
+  connection: Connection;
+};
+
 const PIN_Y_OFFSET = -30;
 
 export function DetectiveBoard(props) {
   const { act, data } = useBackend<Data>();
+
   const { cases, current_case, data_connections } = data;
 
   const [connectingEvidence, setConnectingEvidence] =
     useState<DataEvidence | null>(null);
+
+  const [movingEvidenceConnections, setMovingEvidenceConnections] = useState<
+    TypedConnection[] | null
+  >(null);
+
   const [connection, setConnection] = useState<Connection | null>(null);
+
   const [connections, setConnections] =
     useState<Connection[]>(data_connections);
 
@@ -38,8 +50,12 @@ export function DetectiveBoard(props) {
     });
   }
 
-  function getPinPosition(evidence: DataEvidence) {
+  function getPinPositionByPosition(evidence: Position) {
     return { x: evidence.x + 15, y: evidence.y + 45 };
+  }
+
+  function getPinPosition(evidence: DataEvidence) {
+    return getPinPositionByPosition({ x: evidence.x, y: evidence.y });
   }
 
   function handlePinConnected(evidence: DataEvidence) {
@@ -108,12 +124,82 @@ export function DetectiveBoard(props) {
     // act('to_chat', { message: 'index rendered' });
   }
 
+  function handleEvidenceStartMoving(evidence: DataEvidence) {
+    let moving_connections: TypedConnection[] = [];
+    let pinPosition = getPinPosition(evidence);
+    let new_connections: Connection[] = [];
+    for (let con of connections) {
+      if (con.from.x === pinPosition.x && con.from.y === pinPosition.y) {
+        moving_connections.push({ type: 'from', connection: con });
+      } else if (con.to.x === pinPosition.x && con.to.y === pinPosition.y) {
+        moving_connections.push({ type: 'to', connection: con });
+      } else {
+        new_connections.push(con);
+      }
+    }
+    setMovingEvidenceConnections(moving_connections);
+    setConnections(new_connections);
+  }
+
+  function handleEvidenceMoving(evidence: DataEvidence, position: Position) {
+    if (movingEvidenceConnections) {
+      let new_connections: TypedConnection[] = [];
+      for (let con of movingEvidenceConnections) {
+        if (con.type === 'from') {
+          new_connections.push({
+            type: con.type,
+            connection: {
+              color: con.connection.color,
+              from: getPinPositionByPosition({ x: position.x, y: position.y }),
+              to: con.connection.to,
+            },
+          });
+        } else {
+          new_connections.push({
+            type: con.type,
+            connection: {
+              color: con.connection.color,
+              from: con.connection.from,
+              to: getPinPositionByPosition({ x: position.x, y: position.y }),
+            },
+          });
+        }
+      }
+      setMovingEvidenceConnections(new_connections);
+    }
+  }
+
+  function handleEvidenceStopMoving(evidence: DataEvidence) {
+    if (movingEvidenceConnections) {
+      setConnections([
+        ...connections,
+        ...retrieveConnections(movingEvidenceConnections),
+      ]);
+      setMovingEvidenceConnections(null);
+    }
+  }
+
+  function retrieveConnections(typedConnections: TypedConnection[]) {
+    let result: Connection[] = [];
+    for (let con of typedConnections) {
+      result.push(con.connection);
+    }
+    return result;
+  }
+
   return (
     <Window width={1200} height={800}>
       <Window.Content>
-        <Connections lineWidth={5} connections={connections} zLayer={99} />
         {cases.length > 0 ? (
           <>
+            <Connections lineWidth={5} connections={connections} zLayer={99} />
+            {movingEvidenceConnections && (
+              <Connections
+                lineWidth={5}
+                connections={retrieveConnections(movingEvidenceConnections)}
+                zLayer={99}
+              />
+            )}
             {connection && (
               <Connections
                 lineWidth={5}
@@ -136,6 +222,9 @@ export function DetectiveBoard(props) {
                         onPinConnected={handlePinConnected}
                         onPinMouseUp={handleMouseUpOnPin}
                         onEvidenceRemoved={handleEvidenceRemoved}
+                        onStartMoving={handleEvidenceStartMoving}
+                        onMoving={handleEvidenceMoving}
+                        onStopMoving={handleEvidenceStopMoving}
                       />
                     ))}
                   </Box>

@@ -203,12 +203,6 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/detectiveboard, 32)
 			from_evidence.connections.Add(to_evidence)
 			to_evidence.connections.Add(from_evidence)
 			return TRUE
-		if("remove_connections")
-			var/datum/evidence/evidence = locate(params["evidence_ref"]) in cases[current_case].evidences
-			for(var/datum/evidence/connection in evidence.connections)
-				connection.connections.Remove(evidence)
-			evidence.connections.RemoveAll()
-			return TRUE
 		if("to_chat") // Debug logs
 			to_chat(user, params["message"])
 

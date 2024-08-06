@@ -31,7 +31,7 @@ export function Pin(props: PinProps) {
     const handleMouseUp = (args: MouseEvent) => {
       setCreatingRope(false);
       onConnected(evidence, {
-        evidence_ref: 'test4',
+        evidence_ref: 'not used',
         position: {
           x: args.clientX,
           y: args.clientY + Y_OFFSET,

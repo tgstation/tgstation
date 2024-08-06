@@ -12,6 +12,9 @@ type EvidenceProps = {
   onPinConnected: Function;
   onPinMouseUp: Function;
   onEvidenceRemoved: Function;
+  onStartMoving: Function;
+  onStopMoving: Function;
+  onMoving: Function;
 };
 
 type Position = {
@@ -37,6 +40,7 @@ export function Evidence(props: EvidenceProps) {
 
   function handleMouseDown(args) {
     setDragging(true);
+    props.onStartMoving(evidence);
     setLastMousePosition({ x: args.screenX, y: args.screenY });
   }
 
@@ -45,13 +49,14 @@ export function Evidence(props: EvidenceProps) {
       return;
     }
     const handleMouseUp = (args: MouseEvent) => {
-      if (dragPosition) {
+      if (canDrag && dragPosition) {
         act('set_evidence_cords', {
           evidence_ref: evidence.ref,
           case_ref: case_ref,
           rel_x: dragPosition.x,
           rel_y: dragPosition.y,
         });
+        props.onStopMoving(evidence);
       }
       setDragging(false);
       setLastMousePosition(null);
@@ -71,6 +76,10 @@ export function Evidence(props: EvidenceProps) {
       if (canDrag) {
         if (lastMousePosition) {
           setDragPosition({
+            x: dragPosition.x - (lastMousePosition.x - args.screenX),
+            y: dragPosition.y - (lastMousePosition.y - args.screenY),
+          });
+          props.onMoving(evidence, {
             x: dragPosition.x - (lastMousePosition.x - args.screenX),
             y: dragPosition.y - (lastMousePosition.y - args.screenY),
           });
