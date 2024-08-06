@@ -838,7 +838,7 @@
 	id = "captain_privacy";
 	name = "Privacy Shutters"
 	},
-/obj/machinery/keycard_auth/directional/east,
+/obj/machinery/keycard_auth/wall_mounted/directional/east,
 /obj/structure/table/wood,
 /obj/item/book/manual/wiki/security_space_law,
 /obj/item/hand_tele,
@@ -18356,6 +18356,18 @@
 /obj/machinery/duct,
 /turf/open/floor/iron/dark,
 /area/station/hallway/floor3/fore)
+"eJy" = (
+/obj/effect/turf_decal/weather/dirt{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/dark_blue,
+/obj/effect/turf_decal/weather/dirt{
+	dir = 1
+	},
+/turf/open/floor/iron/dark/side{
+	dir = 8
+	},
+/area/station/security/prison/garden)
 "eJF" = (
 /obj/machinery/airalarm/directional/south,
 /obj/item/kirbyplants/random,
@@ -29629,7 +29641,7 @@
 /obj/structure/railing{
 	dir = 4
 	},
-/obj/machinery/keycard_auth/directional/south,
+/obj/machinery/keycard_auth/wall_mounted/directional/south,
 /obj/item/kirbyplants/random,
 /turf/open/floor/wood/large,
 /area/station/command/heads_quarters/hop)
@@ -30243,7 +30255,7 @@
 	name = "Privacy Shutters Control";
 	pixel_y = 6
 	},
-/obj/machinery/keycard_auth/directional/west{
+/obj/machinery/keycard_auth/wall_mounted/directional/west{
 	pixel_y = -8
 	},
 /turf/open/floor/wood,
@@ -42277,7 +42289,7 @@
 /turf/open/floor/carpet,
 /area/station/command/heads_quarters/captain)
 "kWD" = (
-/obj/machinery/keycard_auth/directional/north{
+/obj/machinery/keycard_auth/wall_mounted/directional/north{
 	pixel_x = -22
 	},
 /obj/effect/turf_decal/tile/blue/fourcorners,
@@ -45077,7 +45089,7 @@
 /obj/effect/turf_decal/tile/neutral/opposingcorners{
 	dir = 8
 	},
-/obj/machinery/keycard_auth/directional/east{
+/obj/machinery/keycard_auth/wall_mounted/directional/east{
 	pixel_x = 25;
 	pixel_y = 16
 	},
@@ -54107,7 +54119,9 @@
 /area/station/maintenance/floor1/starboard)
 "nSz" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/sink/kitchen/directional/south,
+/obj/effect/turf_decal/weather/dirt{
+	dir = 8
+	},
 /turf/open/floor/iron/dark/side{
 	dir = 5
 	},
@@ -59391,6 +59405,10 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/pod/light,
 /area/station/maintenance/floor1/starboard/aft)
+"ppf" = (
+/obj/effect/turf_decal/weather/sand/light,
+/turf/closed/wall/r_wall,
+/area/station/security/execution/education)
 "ppi" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/table,
@@ -63318,7 +63336,7 @@
 /obj/structure/chair/wood{
 	dir = 4
 	},
-/obj/machinery/keycard_auth/directional/north,
+/obj/machinery/keycard_auth/wall_mounted/directional/north,
 /turf/open/floor/carpet,
 /area/station/command/heads_quarters/captain)
 "qoJ" = (
@@ -64263,15 +64281,9 @@
 /turf/open/floor/iron/dark,
 /area/station/command/teleporter)
 "qzQ" = (
-/obj/effect/turf_decal/weather/dirt{
-	dir = 8
-	},
-/obj/item/reagent_containers/cup/watering_can,
-/obj/effect/turf_decal/tile/dark_blue,
 /obj/machinery/newscaster/directional/north,
-/turf/open/floor/iron/dark/side{
-	dir = 9
-	},
+/obj/structure/water_source/puddle,
+/turf/open/misc/dirt/jungle,
 /area/station/security/prison/garden)
 "qzX" = (
 /obj/effect/mapping_helpers/airlock/cyclelink_helper,
@@ -64977,7 +64989,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/structure/cable,
-/obj/machinery/keycard_auth/directional/south{
+/obj/machinery/keycard_auth/wall_mounted/directional/south{
 	pixel_x = 6
 	},
 /obj/effect/landmark/start/chief_engineer,
@@ -68264,6 +68276,7 @@
 /obj/effect/mapping_helpers/broken_floor,
 /obj/effect/turf_decal/tile/dark_blue/opposingcorners,
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4,
+/obj/item/reagent_containers/cup/watering_can,
 /turf/open/floor/iron/dark/corner{
 	dir = 4
 	},
@@ -75266,7 +75279,7 @@
 /obj/machinery/computer/security/qm{
 	dir = 8
 	},
-/obj/machinery/keycard_auth/directional/north,
+/obj/machinery/keycard_auth/wall_mounted/directional/north,
 /turf/open/floor/wood/large,
 /area/station/command/heads_quarters/qm)
 "tun" = (
@@ -91848,7 +91861,7 @@
 /turf/open/floor/iron/smooth,
 /area/station/cargo/sorting)
 "xEv" = (
-/obj/machinery/keycard_auth/directional/north{
+/obj/machinery/keycard_auth/wall_mounted/directional/north{
 	pixel_x = 9
 	},
 /obj/machinery/button/door/directional/north{
@@ -329837,7 +329850,7 @@ oyh
 oyh
 oyh
 fkA
-fkA
+ppf
 wmD
 fkA
 kUZ
@@ -331381,7 +331394,7 @@ oyh
 wMF
 wMF
 qzQ
-pfL
+eJy
 pfL
 pfL
 yfr
