@@ -584,6 +584,8 @@
 	belt = /obj/item/storage/belt/medical/ert
 	glasses = /obj/item/clothing/glasses/hud/health/sunglasses
 	additional_radio = /obj/item/encryptionkey/heads/cmo
+	mask = /obj/item/clothing/mask/surgical
+	gloves = /obj/item/clothing/gloves/latex
 
 /datum/outfit/centcom/ert/medical_technician
 	name = "EMT Paramedic"
@@ -606,3 +608,4 @@
 	glasses = /obj/item/clothing/glasses/hud/health
 	additional_radio = /obj/item/encryptionkey/heads/cmo
 	shoes = /obj/item/clothing/shoes/sneakers/blue
+	gloves = /obj/item/clothing/gloves/latex
