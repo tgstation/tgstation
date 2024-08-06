@@ -1614,3 +1614,8 @@
 	SIGNAL_HANDLER
 	var/datum/atom_hud/datahud = GLOB.huds[GLOB.trait_to_hud[new_trait]]
 	datahud.hide_from(src)
+
+/// Sets the turf click type this client should use for its next attempted click
+/// See [TURF_CLICK_FLAT]
+/mob/proc/set_turf_click_type(click_type)
+	turf_click_type = click_type

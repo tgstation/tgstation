@@ -188,6 +188,9 @@
 	/// A mock client, provided by tests and friends
 	var/datum/client_interface/mock_client
 
+	///Decides how to handle clicks on turfs
+	var/turf_click_type = TURF_CLICK_FLAT
+	
 	var/interaction_range = 0 //how far a mob has to be to interact with something without caring about obsctruction, defaulted to 0 tiles
 
 	///the icon currently used for the typing indicator's bubble
