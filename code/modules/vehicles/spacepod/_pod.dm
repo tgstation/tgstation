@@ -3,10 +3,8 @@
 //
 
 // TODO:
-// todo ingame manual item so i can self insert >:)
 // sprites
 // fix drill bump (not possible without tinkering with drift_handler)
-// research n designs
 // ALSO DO NOT FORGET TO REMOVE THIS HUGE ASS COMMENT before finishing
 
 // this is the iron variant
@@ -97,6 +95,15 @@
 	initialize_passenger_action_type(/datum/action/vehicle/sealed/kick_out)
 	initialize_controller_action_type(/datum/action/vehicle/sealed/pod_status, VEHICLE_CONTROL_DRIVE)
 	initialize_passenger_action_type(/datum/action/vehicle/sealed/climb_out/pod)
+
+/obj/vehicle/sealed/space_pod/examine(mob/user)
+	. = ..()
+	. += span_notice("You can notice..")
+	for(var/obj/item/pod_equipment/equipment as anything in get_all_parts())
+		var/overlay = equipment.get_overlay()
+		if(isnull(overlay)) //essentially no-overlay parts are hidden
+			continue
+		. += span_notice("[icon2html(equipment, user)] [equipment]")
 
 /obj/vehicle/sealed/space_pod/update_overlays()
 	. = ..()

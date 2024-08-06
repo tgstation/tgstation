@@ -323,3 +323,16 @@
 	category = list(
 		RND_CATEGORY_MECHFAB_SPACEPOD + RND_SUBCATEGORY_MECHFAB_POD_PRIMARY
 	)
+
+/datum/design/pod_equipment/wildlifegun
+	name = /obj/item/pod_equipment/primary/projectile_weapon/energy/wildlife::name
+	id = "podwildlifegun"
+	build_path = /obj/item/pod_equipment/primary/projectile_weapon/energy/wildlife
+	materials = list(
+		/datum/material/iron=SHEET_MATERIAL_AMOUNT*8,
+		/datum/material/glass=SHEET_MATERIAL_AMOUNT,
+		/datum/material/plasma=SHEET_MATERIAL_AMOUNT*2,
+	)
+	category = list(
+		RND_CATEGORY_MECHFAB_SPACEPOD + RND_SUBCATEGORY_MECHFAB_POD_PRIMARY
+	)

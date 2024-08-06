@@ -68,14 +68,18 @@
 	for(var/atom/movable/potential_target as anything in target_turf.contents)
 		if(!potential_target.density)
 			continue
-		playsound(pod.loc, 'sound/weapons/drill.ogg', 50 , TRUE)
-		potential_target.visible_message(span_danger("[potential_target] is drilled by the [pod]!"))
-		if(ismob(potential_target))
+		if(isliving(potential_target))
 			var/mob/living/target = potential_target
+			if(HAS_TRAIT(user, TRAIT_PACIFISM))
+				return FALSE
+			playsound(pod.loc, 'sound/weapons/drill.ogg', 50 , TRUE)
+			potential_target.visible_message(span_danger("[potential_target] is drilled by the [pod]!"))
 			target.apply_damage(damage_mob, BRUTE)
 			if(iscarbon(target) && prob(35)) // no
 				target.Knockdown(1 SECONDS)
 		else
+			playsound(pod.loc, 'sound/weapons/drill.ogg', 50 , TRUE)
+			potential_target.visible_message(span_danger("[potential_target] is drilled by the [pod]!"))
 			potential_target.take_damage(damage_obj, BRUTE, attack_dir = REVERSE_DIR(pod.dir))
 		return TRUE
 	return FALSE
