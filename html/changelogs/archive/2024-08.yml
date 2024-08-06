@@ -148,3 +148,29 @@
   Y0SH1M4S73R:
   - admin: The "Suppress Runtime Logging" toggle in the lua editor actually does what
       it says
+2024-08-05:
+  Ben10Omintrix:
+  - bugfix: juvenile lobstrosities will now look for food
+  OrionTheFox:
+  - image: added and updated belt/suit/mask storage sprites for several knives missing
+      them
+  SmArtKar:
+  - bugfix: Lizards no longer die from cold on icebox despite wearing insulation
+  - bugfix: Fixed handyman assistants spawning without a PDA
+  Y0SH1M4S73R:
+  - bugfix: lua scripting now works on linux
+2024-08-06:
+  Ben10Omintrix:
+  - refactor: refactors pet collars and cultist pets into elements
+  EnterTheJake:
+  - image: Ash Blade has received a new sprite.
+  Gaxeer:
+  - rscdel: Remove narsie and ratvar plushies from loadout
+  SmArtKar:
+  - bugfix: Plasmamen helmets now display their smiles + can be painted with spraycans
+  - bugfix: Elevator music no longer restarts when you take a step
+  - image: Resprited teleporter beacons
+  - code_imp: Removed multiple cases of unnecessary updatehealth
+  - bugfix: Bitrunning crate capture zones can no longer be destroyed
+  mc-oofert:
+  - admin: fix hard restart option
