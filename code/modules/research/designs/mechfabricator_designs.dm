@@ -1987,6 +1987,17 @@
 	var/datum/mod_theme/theme = GLOB.mod_themes[initial(armor_type.theme)]
 	desc = "External plating for a MODsuit. [theme.desc]"
 
+/datum/design/mod_plating/civilian
+	name = "MOD Civilian Plating"
+	id = "mod_plating_civilian"
+	build_path = /obj/item/mod/construction/plating/civilian
+	materials = list(
+		/datum/material/iron =SHEET_MATERIAL_AMOUNT*3,
+		/datum/material/glass =SHEET_MATERIAL_AMOUNT*1.5,
+		/datum/material/plasma =HALF_SHEET_MATERIAL_AMOUNT,
+	)
+	research_icon_state = "civilian-plating"
+
 /datum/design/mod_plating/engineering
 	name = "MOD Engineering Plating"
 	id = "mod_plating_engineering"
@@ -2606,6 +2617,18 @@
 		/datum/material/bluespace =HALF_SHEET_MATERIAL_AMOUNT,
 	)
 	build_path = /obj/item/mod/module/criminalcapture
+	category = list(
+		RND_CATEGORY_MODSUIT_MODULES + RND_SUBCATEGORY_MODSUIT_MODULES_SECURITY
+	)
+
+/datum/design/module/mirage
+	name = "Mirage Grenade Dispenser Module"
+	id = "mod_mirage_grenade"
+	materials = list(
+		/datum/material/iron =HALF_SHEET_MATERIAL_AMOUNT,
+		/datum/material/bluespace =HALF_SHEET_MATERIAL_AMOUNT,
+	)
+	build_path = /obj/item/mod/module/dispenser/mirage
 	category = list(
 		RND_CATEGORY_MODSUIT_MODULES + RND_SUBCATEGORY_MODSUIT_MODULES_SECURITY
 	)

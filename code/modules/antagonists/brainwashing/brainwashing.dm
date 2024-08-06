@@ -30,6 +30,7 @@
 /datum/antagonist/brainwashed
 	name = "\improper Brainwashed Victim"
 	job_rank = ROLE_BRAINWASHED
+	stinger_sound = 'sound/ambience/antag/brainwashed.ogg'
 	roundend_category = "brainwashed victims"
 	show_in_antagpanel = TRUE
 	antag_hud_name = "brainwashed"

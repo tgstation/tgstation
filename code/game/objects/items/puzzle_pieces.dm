@@ -86,6 +86,18 @@
 	puzzle_id = null //honestly these cant be closed anyway and im not fucking around with door code anymore
 	INVOKE_ASYNC(src, PROC_REF(try_puzzle_open), null)
 
+/obj/machinery/door/puzzle/animation_length(animation)
+	switch(animation)
+		if(DOOR_OPENING_ANIMATION)
+			return 1.0 SECONDS
+
+/obj/machinery/door/puzzle/animation_segment_delay(animation)
+	switch(animation)
+		if(DOOR_OPENING_PASSABLE)
+			return 0.8 SECONDS
+		if(DOOR_OPENING_FINISHED)
+			return 1.0 SECONDS
+
 /obj/machinery/door/puzzle/Bumped(atom/movable/AM)
 	return !density && ..()
 
@@ -157,7 +169,7 @@
 	trigger_item = TRUE
 	specific_item = /obj/structure/holobox
 	removable_signaller = FALSE //Being a pressure plate subtype, this can also use signals.
-	roundstart_signaller_freq = FREQ_HOLOGRID_SOLUTION //Frequency is kept on it's own default channel however.
+	roundstart_signaller_freq = FREQ_HOLOGRID_SOLUTION //Frequency is kept on its own default channel however.
 	active = TRUE
 	trigger_delay = 10
 	protected = TRUE

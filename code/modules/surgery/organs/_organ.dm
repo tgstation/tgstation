@@ -322,6 +322,9 @@ INITIALIZE_IMMEDIATE(/obj/item/organ)
 	if(advanced && (organ_flags & ORGAN_PROMINENT))
 		return "<font color='#cc3333'>Harmful Foreign Body</font>"
 
+	if(organ_flags & ORGAN_EMP)
+		return "<font color='#cc3333'>EMP-Derived Failure Cascade in Progress</font>"
+
 	if(owner.has_reagent(/datum/reagent/inverse/technetium))
 		return "<font color='#E42426'>[round((damage/maxHealth)*100, 1)]% damaged.</font>"
 

@@ -1,4 +1,4 @@
-///It's gross, gets the name of it's owner, and is all kinds of fucked up
+///It's gross, gets the name of its owner, and is all kinds of fucked up
 /datum/material/meat
 	name = "meat"
 	desc = "Meat"

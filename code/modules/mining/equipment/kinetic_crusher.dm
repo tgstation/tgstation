@@ -105,15 +105,9 @@
 		crusher_trophy.on_melee_hit(target, user)
 	if(QDELETED(target))
 		return
-	// Clear existing marks
-	var/valid_crusher_attack = FALSE
-	for(var/datum/status_effect/crusher_mark/crusher_mark_effect as anything in target.get_all_status_effect_of_id(/datum/status_effect/crusher_mark))
-		//this will erase ALL crusher marks, not only ones by you.
-		if(crusher_mark_effect.hammer_synced != src || !target.remove_status_effect(/datum/status_effect/crusher_mark, src))
-			continue
-		valid_crusher_attack = TRUE
-		break
-	if(!valid_crusher_attack)
+	var/datum/status_effect/crusher_mark/mark = target.has_status_effect(/datum/status_effect/crusher_mark)
+	var/boosted_mark = mark?.boosted
+	if(!target.remove_status_effect(mark))
 		return
 	// Detonation effect
 	var/datum/status_effect/crusher_damage/crusher_damage_effect = target.has_status_effect(/datum/status_effect/crusher_damage) || target.apply_status_effect(/datum/status_effect/crusher_damage)
@@ -130,7 +124,7 @@
 	var/backstab_dir = get_dir(user, target)
 	var/def_check = target.getarmor(type = BOMB)
 	// Backstab bonus
-	if((user.dir & backstab_dir) && (target.dir & backstab_dir))
+	if((user.dir & backstab_dir) && (target.dir & backstab_dir) || boosted_mark)
 		backstabbed = TRUE
 		combined_damage += backstab_bonus
 		playsound(user, 'sound/weapons/kinetic_accel.ogg', 100, TRUE) //Seriously who spelled it wrong
@@ -164,7 +158,6 @@
 		attached_trophy.on_projectile_fire(destabilizer, user)
 	destabilizer.preparePixelProjectile(target, user, modifiers)
 	destabilizer.firer = user
-	destabilizer.hammer_synced = src
 	playsound(user, 'sound/weapons/plasma_cutter.ogg', 100, TRUE)
 	destabilizer.fire()
 	charged = FALSE
@@ -211,24 +204,24 @@
 	armor_flag = BOMB
 	range = 6
 	log_override = TRUE
-	///The crusher that's firing this projectile.
-	var/obj/item/kinetic_crusher/hammer_synced
+	/// Has this projectile been boosted
+	var/boosted = FALSE
 
-/obj/projectile/destabilizer/Destroy()
-	hammer_synced = null
-	return ..()
+/obj/projectile/destabilizer/Initialize(mapload)
+	. = ..()
+	AddComponent(/datum/component/parriable_projectile, parry_callback = CALLBACK(src, PROC_REF(on_parry)))
+
+/obj/projectile/destabilizer/proc/on_parry(mob/user)
+	SIGNAL_HANDLER
+	boosted = TRUE
+	// Get a bit of a damage/range boost after being parried
+	damage = 10
+	range = 9
 
 /obj/projectile/destabilizer/on_hit(atom/target, blocked = 0, pierce_hit)
 	if(isliving(target))
 		var/mob/living/living_target = target
-		var/has_mark_from_this_crusher = FALSE
-		for(var/datum/status_effect/crusher_mark/crusher_mark_effect as anything in living_target.get_all_status_effect_of_id(/datum/status_effect/crusher_mark))
-			if(crusher_mark_effect.hammer_synced != hammer_synced)
-				continue
-			has_mark_from_this_crusher = TRUE
-			break
-		if(!has_mark_from_this_crusher)
-			living_target.apply_status_effect(/datum/status_effect/crusher_mark, hammer_synced)
+		living_target.apply_status_effect(/datum/status_effect/crusher_mark, boosted)
 	var/target_turf = get_turf(target)
 	if(ismineralturf(target_turf))
 		var/turf/closed/mineral/hit_mineral = target_turf

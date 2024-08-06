@@ -38,7 +38,7 @@ Now then, into the breach.
  The air controller is, at its core, quite simple, yet it is absolutely fundamental to the atmospheric system. The air controller is the clock which triggers all continuous actions within the atmos system, such as vents distributing air or gas moving between tiles. The actions taken by the air controller are quite simple, and will be enumerated here. Much of the substance of the air ticker is due to the game's master controller, whose intricacies I will not delve into for this document. I will however go into more detail about how SSAir in particular works in Chapter 6. In any case, this is a simplified list of the air controller's actions in a single tick:
 1. Rebuild Pipenets
     - Runs each time SSAir processes, sometimes out of order. It ensures that no pipeline sit unresolved or unbuilt
-    - Processes the `rebuild_queue` list into the `expansion_queue` list, and then builds a full pipeline piecemeal. We do a ton of fenagling here to reduce overrun 
+    - Processes the `rebuild_queue` list into the `expansion_queue` list, and then builds a full pipeline piecemeal. We do a ton of fenagling here to reduce overrun
 2. Pipenets
     - Updates the internal gasmixes of attached pipe machinery, and reacts the gases in a pipeline
 	- Calls `process()` on each `/datum/pipenet` in the `networks` list
@@ -180,7 +180,7 @@ You may notice something like this in `process_cell()`. It's not quite the same 
 
 Back in the old FEA days, neighbor count was hardcoded to 4 (Likely because this is what cell sharing on an infinite grid would look like). This means that turf A -> turf B is the same as turf B -> turf A, because they're each portioning up the gas in the same way.
 
-But when we moved to LINDA, we started using the length of our atmos_adjacent_turfs list (or an analog). 
+But when we moved to LINDA, we started using the length of our atmos_adjacent_turfs list (or an analog).
 We need this so things like multiz can work, and so tiles in a corner share in a way that makes sense.
 
 Because of this, turf A -> turf B was no longer the same as turf B -> turf A, assuming one of those turfs had a different neighbor count, from I DON'T KNOW WALLS?
@@ -269,7 +269,7 @@ I've been talking kinda abstractly about turfs sleeping. That's because turfs on
 
 ### A brief romp to talk about excited groups and LAST_SHARE_CHECK
 
-Excited groups can tell the amount of diff being shared by hooking into a value `share()` sets on gasmixes, the absolute amount of gas shared by each tile. The issue is this isn't pressure, it's molar count. So heat being shared in a sealed room causes excited groups to break down, then reform from sources. This isn't a major issue due to how breakdown evens things out, but it's worth knowing.
+Excited groups can tell the amount of diff being shared by hooking into a value `share()` sets on gasmixes, the absolute amount of gas shared by each tile. The issue is this isn't pressure, its molar count. So heat being shared in a sealed room causes excited groups to break down, then reform from sources. This isn't a major issue due to how breakdown evens things out, but it's worth knowing.
 
 ### Back to the main thread
 

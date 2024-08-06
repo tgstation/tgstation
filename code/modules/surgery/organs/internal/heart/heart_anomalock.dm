@@ -7,6 +7,8 @@
 	name = "Voltaic Combat Cyberheart"
 	desc = "A cutting-edge cyberheart, originally designed for Nanotrasen killsquad usage but later declassified for normal research. Voltaic technology allows the heart to keep the body upright in dire circumstances, alongside redirecting anomalous flux energy to fully shield the user from shocks and electro-magnetic pulses. Requires a refined Flux core as a power source."
 	icon_state = "anomalock_heart"
+	bleed_prevention = TRUE
+	toxification_probability = 0
 
 	COOLDOWN_DECLARE(survival_cooldown)
 	///Cooldown for the activation of the organ

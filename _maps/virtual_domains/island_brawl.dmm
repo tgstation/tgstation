@@ -442,6 +442,10 @@
 /obj/machinery/food_cart,
 /turf/open/floor/plating,
 /area/virtual_domain)
+"eZ" = (
+/obj/effect/baseturf_helper/virtual_domain,
+/turf/open/water/beach,
+/area/virtual_domain/fullbright)
 "fe" = (
 /obj/effect/turf_decal/siding/wood{
 	dir = 8
@@ -1145,10 +1149,6 @@
 	},
 /turf/open/floor/wood/large,
 /area/virtual_domain)
-"oX" = (
-/obj/effect/baseturf_helper/virtual_domain,
-/turf/closed/indestructible/binary,
-/area/virtual_domain/fullbright)
 "oZ" = (
 /obj/effect/turf_decal/sand,
 /obj/effect/turf_decal/siding/wood{
@@ -2540,7 +2540,7 @@
 /area/virtual_domain)
 "GD" = (
 /obj/effect/landmark/bitrunning/permanent_exit,
-/turf/open/floor/bitrunning_transport,
+/turf/open/indestructible/bitrunning_transport,
 /area/virtual_domain/protected_space/fullbright)
 "GI" = (
 /turf/open/floor/iron/dark/textured_large,
@@ -3466,12 +3466,7 @@
 /area/virtual_domain/fullbright)
 "Rk" = (
 /obj/structure/table/glass,
-/obj/machinery/fax{
-	fax_name = "Beach Hotel Fax";
-	name = "Beach Hotel's Fax Machine";
-	pixel_y = 8;
-	visible_to_network = 0
-	},
+/obj/item/storage/box/donkpockets,
 /turf/open/floor/iron/dark/diagonal,
 /area/virtual_domain)
 "Rs" = (
@@ -5695,7 +5690,7 @@ SR
 SR
 SR
 SR
-oX
+SR
 "}
 (19,1,1) = {"
 SR
@@ -5776,7 +5771,7 @@ cO
 cO
 cO
 cO
-cO
+eZ
 SR
 "}
 (20,1,1) = {"

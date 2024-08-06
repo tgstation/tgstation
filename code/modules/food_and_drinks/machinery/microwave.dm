@@ -112,7 +112,6 @@
 
 /obj/machinery/microwave/Destroy()
 	QDEL_LIST(ingredients)
-	QDEL_NULL(wires)
 	QDEL_NULL(soundloop)
 	QDEL_NULL(particles)
 	if(!isnull(cell))
@@ -380,6 +379,9 @@
 
 /obj/machinery/microwave/item_interaction(mob/living/user, obj/item/item, list/modifiers)
 	if(operating)
+		return NONE
+
+	if (item.item_flags & ABSTRACT)
 		return NONE
 
 	if(broken > NOT_BROKEN)

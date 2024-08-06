@@ -12,7 +12,7 @@
 	throwforce = 20
 	throw_speed = 4
 	demolition_mod = 0.75
-	embedding = list("impact_pain_mult" = 2, "remove_pain_mult" = 4, "jostle_chance" = 2.5)
+	embed_type = /datum/embed_data/spear
 	armour_penetration = 10
 	custom_materials = list(/datum/material/iron = HALF_SHEET_MATERIAL_AMOUNT, /datum/material/glass= HALF_SHEET_MATERIAL_AMOUNT * 2)
 	hitsound = 'sound/weapons/bladeslice.ogg'
@@ -31,6 +31,11 @@
 	var/force_unwielded = 10
 	/// How much damage to do wielded
 	var/force_wielded = 18
+
+/datum/embed_data/spear
+	impact_pain_mult = 2
+	remove_pain_mult = 4
+	jostle_chance = 2.5
 
 /datum/armor/item_spear
 	fire = 50
@@ -216,7 +221,7 @@
 	icon_state = "military_spear0"
 	base_icon_state = "military_spear0"
 	icon_prefix = "military_spear"
-	name = "military Javelin"
+	name = "military javelin"
 	desc = "A stick with a seemingly blunt spearhead on its end. Looks like it might break bones easily."
 	attack_verb_continuous = list("attacks", "pokes", "jabs")
 	attack_verb_simple = list("attack", "poke", "jab")

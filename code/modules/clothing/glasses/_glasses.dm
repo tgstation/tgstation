@@ -92,8 +92,14 @@
 	inhand_icon_state = "nvgmeson"
 	flash_protect = FLASH_PROTECTION_SENSITIVE
 	// Night vision mesons get the same but more intense
-	color_cutoffs = list(10, 30, 10)
-	glass_colour_type = /datum/client_colour/glass_colour/green
+	color_cutoffs = list(10, 35, 10)
+	glass_colour_type = /datum/client_colour/glass_colour/lightgreen
+	actions_types = list(/datum/action/item_action/toggle_nv)
+	forced_glass_color = TRUE
+
+/obj/item/clothing/glasses/meson/night/update_icon_state()
+	. = ..()
+	icon_state = length(color_cutoffs) ? initial(icon_state) : "nvgmeson_off"
 
 /obj/item/clothing/glasses/meson/gar
 	name = "gar mesons"
@@ -138,8 +144,14 @@
 	icon_state = "scihudnight"
 	flash_protect = FLASH_PROTECTION_SENSITIVE
 	// Real vivid purple
-	color_cutoffs = list(50, 10, 30)
-	glass_colour_type = /datum/client_colour/glass_colour/green
+	color_cutoffs = list(30, 5, 15)
+	glass_colour_type = /datum/client_colour/glass_colour/lightpurple
+	actions_types = list(/datum/action/item_action/toggle_nv)
+	forced_glass_color = TRUE
+
+/obj/item/clothing/glasses/science/night/update_icon_state()
+	. = ..()
+	icon_state = length(color_cutoffs) ? initial(icon_state) : "night_off"
 
 /obj/item/clothing/glasses/night
 	name = "night vision goggles"
@@ -149,8 +161,18 @@
 	flags_cover = GLASSESCOVERSEYES
 	flash_protect = FLASH_PROTECTION_SENSITIVE
 	// Dark green
-	color_cutoffs = list(10, 30, 10)
-	glass_colour_type = /datum/client_colour/glass_colour/green
+	color_cutoffs = list(10, 25, 10)
+	glass_colour_type = /datum/client_colour/glass_colour/lightgreen
+	actions_types = list(/datum/action/item_action/toggle_nv)
+	forced_glass_color = TRUE
+
+/obj/item/clothing/glasses/night/update_icon_state()
+	. = ..()
+	icon_state = length(color_cutoffs) ? initial(icon_state) : "night_off"
+
+/obj/item/clothing/glasses/night/colorless
+	desc = parent_type::desc + " Now with 50% less green!"
+	forced_glass_color = FALSE
 
 /obj/item/clothing/glasses/eyepatch
 	name = "eyepatch"
@@ -589,7 +611,7 @@
 	glass_colour_type = FALSE
 	vision_flags = SEE_TURFS
 	clothing_traits = list(TRAIT_REAGENT_SCANNER, TRAIT_MADNESS_IMMUNE)
-	var/list/hudlist = list(DATA_HUD_MEDICAL_ADVANCED, DATA_HUD_DIAGNOSTIC_ADVANCED, DATA_HUD_SECURITY_ADVANCED)
+	var/list/hudlist = list(DATA_HUD_MEDICAL_ADVANCED, DATA_HUD_DIAGNOSTIC, DATA_HUD_SECURITY_ADVANCED, DATA_HUD_BOT_PATH)
 	var/xray = FALSE
 
 /obj/item/clothing/glasses/debug/equipped(mob/user, slot)

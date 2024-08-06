@@ -2,7 +2,7 @@
 	name ="explosive bolt"
 	icon_state= "bolter"
 	damage = 50
-	embedding = null
+	embed_type = null
 	shrapnel_type = null
 
 /obj/projectile/bullet/gyro/on_hit(atom/target, blocked = 0, pierce_hit)
@@ -17,7 +17,7 @@
 	icon_state= "missile"
 	damage = 50
 	sharpness = NONE
-	embedding = null
+	embed_type = null
 	shrapnel_type = null
 	ricochets_max = 0
 	/// Whether we do extra damage when hitting a mech or silicon
