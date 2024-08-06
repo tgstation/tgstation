@@ -121,7 +121,8 @@
 
 /obj/structure/holosign/barrier/cyborg/cybersun_ai_shield/Initialize(mapload)
 	. = ..()
-	SSqueuelinks.add_to_queue(src, SELFDESTRUCT_QUEUE)
+	if(mapload) //shouldnt queue when we arent even part of a ruin, probably admin shitspawned
+		SSqueuelinks.add_to_queue(src, SELFDESTRUCT_QUEUE)
 
 //smes that produces power, until the boss dies then it self destructs and you gotta make your own power
 /obj/machinery/power/smes/magical/cybersun
