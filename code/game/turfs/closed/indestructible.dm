@@ -322,7 +322,7 @@ INITIALIZE_IMMEDIATE(/turf/closed/indestructible/splashscreen)
 	desc = "A thick, seemingly indestructible stone wall."
 	icon = 'icons/turf/walls/boss_wall.dmi'
 	smoothing_groups = SMOOTH_GROUP_CLOSED_TURFS + SMOOTH_GROUP_BOSS_WALLS
-	canSmoothWith = SMOOTH_GROUP_BOSS_WALLS
+	canSmoothWith = SMOOTH_GROUP_WALLS + SMOOTH_GROUP_BOSS_WALLS
 	explosive_resistance = 50
 	baseturfs = /turf/closed/indestructible/riveted/boss
 
