@@ -157,7 +157,7 @@ GLOBAL_DATUM_INIT(keycard_events, /datum/events, new)
 
 /// Subtype which is stuck to a wall
 /obj/machinery/keycard_auth/wall_mounted
-	icon = 'icons/obj/machines/wallmounts.dmi'
+	icon = 'icons/obj/machines/keycard.dmi'
 
 MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/keycard_auth/wall_mounted, 26)
 
@@ -196,7 +196,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/keycard_auth/wall_mounted, 26)
 		if(WEST)
 			pixel_x = 12
 			pixel_y = 0
-			
+
 GLOBAL_VAR_INIT(emergency_access, FALSE)
 /proc/make_maint_all_access()
 	for(var/area/station/maintenance/area in GLOB.areas)
