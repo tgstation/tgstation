@@ -78,7 +78,7 @@
 		var/is_target = (sacrifice in heretic_datum.sac_targets)
 		var/sac_department_flag = (sacrifice.mind?.assigned_role?.departments_bitflags | sacrifice.last_mind?.assigned_role?.departments_bitflags)
 		var/is_needed_command = (sac_head && !sac_head.check_completion() && (sac_department_flag & DEPARTMENT_BITFLAG_COMMAND))
-		var/is_valid_state = (sacrifice.stat < SOFT_CRIT && !HAS_TRAIT_FROM(sacrifice, TRAIT_INCAPACITATED, STAMINA))
+		var/is_valid_state = (sacrifice.stat != CONSCIOUS || HAS_TRAIT_FROM(sacrifice, TRAIT_INCAPACITATED, STAMINA))
 		if(!(is_target || is_needed_command) || !is_valid_state)
 			atoms -= sacrifice
 	// monkestation end
