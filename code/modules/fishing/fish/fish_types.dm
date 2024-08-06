@@ -113,7 +113,7 @@
 	RegisterSignal(src, COMSIG_FISH_BEFORE_GROWING, PROC_REF(growth_checks))
 	RegisterSignal(src, COMSIG_FISH_FINISH_GROWING, PROC_REF(on_growth))
 
-/obj/item/fish/tadpole/set_status(new_status)
+/obj/item/fish/tadpole/set_status(new_status, silent = FALSE)
 	. = ..()
 	if(status == FISH_DEAD)
 		del_timerid = QDEL_IN_STOPPABLE(src, 12 SECONDS)
