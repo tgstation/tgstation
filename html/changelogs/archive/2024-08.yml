@@ -57,3 +57,11 @@
   flleeppyy:
   - bugfix: silicons with the anime trait and no cat ears/tail cannot scream like
       a cat.
+2024-08-06:
+  Absolucy, AnturK:
+  - bugfix: Fixes void cloak not making suit store slot items unstrippable.
+  FlufflesTheDog, Absolucy:
+  - bugfix: Anomalies shouldn't spawn with frequencies that can't be selected on signalers
+      anymore.
+  Uristthedorf:
+  - balance: Prybar is now bulky.
