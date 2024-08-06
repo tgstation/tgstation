@@ -669,7 +669,10 @@
 		return
 
 	if(!arrived.throwing && can_merge(arrived))
-		INVOKE_ASYNC(src, PROC_REF(merge), arrived)
+		if (istype(arrived, /obj/item/stack))
+			INVOKE_ASYNC(arrived, TYPE_PROC_REF(/obj/item/stack, merge), src)
+		else
+			INVOKE_ASYNC(src, PROC_REF(merge), arrived)
 
 /obj/item/stack/hitby(atom/movable/hitting, skipcatch, hitpush, blocked, datum/thrownthing/throwingdatum)
 	if(can_merge(hitting, inhand = TRUE))
