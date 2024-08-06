@@ -1,0 +1,4 @@
+author: "MrMelbert, SmArtKar"
+delete-after: True
+changes:
+  - bugfix: "Holding someone at gunpoint no longer makes all shots count as point blank"
