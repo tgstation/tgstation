@@ -46,7 +46,7 @@ LINEN BINS
 	register_item_context()
 	for(var/stuff as anything in loc)
 		if(istype(stuff, /obj/structure/bed))
-			pixel_y = WALLENING_OFFSET
+			pixel_y = DEPTH_OFFSET
 			return
 
 /obj/item/bedsheet/add_context(atom/source, list/context, obj/item/held_item, mob/living/user)
