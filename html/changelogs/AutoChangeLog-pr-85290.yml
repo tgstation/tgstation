@@ -1,4 +1,0 @@
-author: "Ben10Omintrix"
-delete-after: True
-changes:
-  - refactor: "refactors pet collars and cultist pets into elements"
