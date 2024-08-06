@@ -1,5 +1,4 @@
 GLOBAL_LIST_INIT(purchasable_nifsofts, list(
-	/datum/nifsoft/hivemind,
 	/datum/nifsoft/soul_poem,
 	/datum/nifsoft/soulcatcher,
 ))

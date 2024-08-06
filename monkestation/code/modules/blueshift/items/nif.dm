@@ -515,7 +515,6 @@
 
 /obj/item/storage/box/nif_ghost_box/ghost_role/PopulateContents()
 	. = ..()
-	new /obj/item/disk/nifsoft_uploader/hivemind(src)
 
 #undef NIF_CALIBRATION_STAGE_1
 #undef NIF_CALIBRATION_STAGE_1_END
