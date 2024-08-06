@@ -41,6 +41,7 @@ Possible to do for anyone motivated enough:
 	base_icon_state = "holopad"
 	layer = MAP_SWITCH(ABOVE_OPEN_TURF_LAYER, LOW_OBJ_LAYER)
 	plane = MAP_SWITCH(FLOOR_PLANE, GAME_PLANE)
+	req_access = list(ACCESS_KEYCARD_AUTH) //Used to allow for forced connecting to other (not secure) holopads. Anyone can make a call, though.
 	max_integrity = 300
 	armor_type = /datum/armor/machinery_holopad
 	circuit = /obj/item/circuitboard/machine/holopad
