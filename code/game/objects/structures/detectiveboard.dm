@@ -81,7 +81,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/detectiveboard, 32)
 			var/list/data_evidence = list("ref" = REF(evidence), "name" = evidence.name, "type" = evidence.evidence_type, "description" = evidence.description, "x"=evidence.x, "y"=evidence.y)
 			var/list/data_connections = list()
 			for(var/datum/evidence/connection in evidence.connections)
-				data_connections += list(list("ref" = REF(connection))) // TODO: create array of strings
+				data_connections.Add(REF(connection)) // TODO: create array of strings
 			data_evidence["connections"] = data_connections
 			switch(evidence.evidence_type)
 				if("photo")
@@ -97,9 +97,28 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/detectiveboard, 32)
 			data_evidences += list(data_evidence)
 		data_case["evidences"] = data_evidences
 		data_cases += list(data_case)
+
+	data["data_connections"] = list()
+	if(cases.len > 0)
+		var/list/connections = list()
+		for(var/datum/evidence/evidence in cases[current_case].evidences)
+			for(var/datum/evidence/connection in evidence.connections)
+				var/list/from_pos = get_pin_position(evidence)
+				var/list/to_pos = get_pin_position(connection)
+				var/found_in_connections = FALSE
+				for(var/list/con in connections)
+					if(con["from"]["x"] == to_pos["x"] && con["from"]["y"] == to_pos["y"] && con["to"]["x"] == from_pos["x"] && con["to"]["y"] == from_pos["y"] )
+						found_in_connections = TRUE
+				if(!found_in_connections)
+					var/list/data_connection = list("color" = "red", "from" = from_pos, "to" = to_pos)
+					connections += list(data_connection)
+		data["data_connections"] = connections
 	data["cases"] = data_cases
 	data["current_case"] = current_case
 	return data
+
+/obj/structure/detectiveboard/proc/get_pin_position(datum/evidence/evidence)
+	return list("x" =  evidence.x + 15, "y" =  evidence.y + 45)
 
 /obj/structure/detectiveboard/ui_act(action, params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
@@ -165,6 +184,8 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/detectiveboard, 32)
 			if(!allowed(user))
 				return
 			remove_item(item, user)
+			for(var/datum/evidence/connection in evidence.connections)
+				connection.connections.Remove(evidence)
 			case.evidences.Remove(evidence)
 			update_appearance(UPDATE_ICON)
 			return TRUE
@@ -175,8 +196,22 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/detectiveboard, 32)
 				if(evidence)
 					evidence.x = params["rel_x"]
 					evidence.y = params["rel_y"]
+			return TRUE
+		if("add_connection")
+			var/datum/evidence/from_evidence = locate(params["from_ref"]) in cases[current_case].evidences
+			var/datum/evidence/to_evidence = locate(params["to_ref"]) in cases[current_case].evidences
+			from_evidence.connections.Add(to_evidence)
+			to_evidence.connections.Add(from_evidence)
+			return TRUE
+		if("remove_connections")
+			var/datum/evidence/evidence = locate(params["evidence_ref"]) in cases[current_case].evidences
+			for(var/datum/evidence/connection in evidence.connections)
+				connection.connections.Remove(evidence)
+			evidence.connections.RemoveAll()
+			return TRUE
 		if("to_chat") // Debug logs
 			to_chat(user, params["message"])
+
 
 	return FALSE
 

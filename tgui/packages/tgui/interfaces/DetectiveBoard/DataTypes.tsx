@@ -14,5 +14,5 @@ export type DataEvidence = {
   y: number;
   photo_url: string;
   text: string;
-  connections: { ref: string }[];
+  connections: string[];
 };

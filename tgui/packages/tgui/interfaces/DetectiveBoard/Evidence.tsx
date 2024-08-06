@@ -8,6 +8,9 @@ type EvidenceProps = {
   case_ref: string;
   evidence: DataEvidence;
   act: Function;
+  onPinStartConnecting: Function;
+  onPinConnected: Function;
+  onPinMouseUp: Function;
 };
 
 type Position = {
@@ -19,6 +22,8 @@ export function Evidence(props: EvidenceProps) {
   const { evidence, case_ref, act } = props;
 
   const [dragging, setDragging] = useState(false);
+
+  const [canDrag, setCanDrag] = useState(true);
 
   const [dragPosition, setDragPosition] = useState<Position>({
     x: evidence.x,
@@ -62,14 +67,16 @@ export function Evidence(props: EvidenceProps) {
     }
 
     const onMouseMove = (args: MouseEvent) => {
-      if (lastMousePosition) {
-        setDragPosition({
-          x: dragPosition.x - (lastMousePosition.x - args.screenX),
-          y: dragPosition.y - (lastMousePosition.y - args.screenY),
-        });
-      }
+      if (canDrag) {
+        if (lastMousePosition) {
+          setDragPosition({
+            x: dragPosition.x - (lastMousePosition.x - args.screenX),
+            y: dragPosition.y - (lastMousePosition.y - args.screenY),
+          });
+        }
 
-      setLastMousePosition({ x: args.screenX, y: args.screenY });
+        setLastMousePosition({ x: args.screenX, y: args.screenY });
+      }
     };
 
     window.addEventListener('mousemove', onMouseMove);
@@ -89,13 +96,30 @@ export function Evidence(props: EvidenceProps) {
         <Stack.Item>
           <Box className="Evidence__Box">
             <Flex justify="space-between" align="center">
+              <Flex.Item align="left">
+                <Pin
+                  evidence={evidence}
+                  onStartConnecting={(
+                    evidence: DataEvidence,
+                    mousePos: Position,
+                  ) => {
+                    props.onPinStartConnecting(evidence, mousePos);
+                    setCanDrag(false);
+                  }}
+                  onConnected={(evidence: DataEvidence) => {
+                    props.onPinConnected(evidence);
+                    setCanDrag(true);
+                  }}
+                  onMouseUp={(evidence: DataEvidence, args) => {
+                    props.onPinMouseUp(evidence, args);
+                    setCanDrag(true);
+                  }}
+                />
+              </Flex.Item>
               <Flex.Item align="center">
                 <Box className="Evidence__Box__TextBox title">
                   <b>{evidence.name}</b>
                 </Box>
-              </Flex.Item>
-              <Flex.Item align="center">
-                <Pin />
               </Flex.Item>
               <Flex.Item align="right">
                 <Button
