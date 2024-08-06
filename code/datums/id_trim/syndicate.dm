@@ -43,6 +43,10 @@
 	trim_state = "trim_quartermaster"
 	sechud_icon_state = SECHUD_QUARTERMASTER
 
+// Trim for Gorlex Marauder dogtags
+/datum/id_trim/syndicom/gorlex
+	assignment = "Gorlex Marauder"
+
 /// Trim for Syndicate mobs, outfits and corpses.
 /datum/id_trim/syndicom/captain
 	assignment = "Syndicate Ship Captain"
@@ -89,3 +93,4 @@
 /datum/id_trim/chameleon/operative/clown_leader
 	assignment = "Syndicate Entertainment Operative Leader"
 	access = list(ACCESS_MAINT_TUNNELS, ACCESS_SYNDICATE, ACCESS_SYNDICATE_LEADER)
+

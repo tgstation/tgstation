@@ -188,7 +188,7 @@
 /datum/lazy_template/deathmatch/waffle_corp
 	name = "Waffle Corp Parking Lot"
 	desc = "You're not a real Syndicate agent until you've killed a rival on this infamous battlefield."
-	max_players = 8
+	max_players = 12
 	allowed_loadouts = list(
 		/datum/outfit/deathmatch_loadout/syndicate,
 		/datum/outfit/deathmatch_loadout/syndicate/cybersun,
@@ -198,6 +198,7 @@
 		)
 	map_name = "waffle_corp"
 	key = "waffle_corp"
+	turf_reservation_type = /datum/turf_reservation/indestructible_plating
 
 /datum/lazy_template/deathmatch/finaldestination
 	name = "Final Destination"
