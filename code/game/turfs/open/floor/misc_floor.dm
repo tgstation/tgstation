@@ -335,7 +335,12 @@
 
 /turf/open/floor/asphalt
 	name = "asphalt"
-	desc = "Melted down oil can, in some cases, be used to pave road surfaces."
+	desc = "Hydrocarbons that have been melted down, poured out, and left to resolidify. A common material for paving road surfaces."
+	icon_state = "asphalt"
+
+/turf/open/indestructible/asphalt
+	name = "asphalt"
+	desc = "Hydrocarbons that have been melted down, poured out, and left to resolidify. A common material for paving road surfaces."
 	icon_state = "asphalt"
 
 /turf/open/floor/asphalt/lavaland

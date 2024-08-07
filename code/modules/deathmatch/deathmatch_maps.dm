@@ -198,7 +198,6 @@
 		)
 	map_name = "waffle_corp"
 	key = "waffle_corp"
-	turf_reservation_type = /datum/turf_reservation/indestructible_plating
 
 /datum/lazy_template/deathmatch/finaldestination
 	name = "Final Destination"

@@ -235,6 +235,11 @@
 	heat_protection = CHEST|GROIN|LEGS|ARMS
 	dog_fashion = null
 
+/obj/item/clothing/suit/armor/vest/leather/cyberpunk
+	name = "armored jacket"
+	desc = "A faux-leather trenchcoat with concealed armor plating. The jacket of choice for a shadowrunner."
+	icon_state = "leathercoat-cyberpunk"
+
 /obj/item/clothing/suit/armor/vest/capcarapace
 	name = "captain's carapace"
 	desc = "A fireproof armored chestpiece reinforced with ceramic plates and plasteel pauldrons to provide additional protection whilst still offering maximum mobility and flexibility. Issued only to the station's finest, although it does chafe your nipples."
