@@ -18,6 +18,9 @@
 	righthand_file = 'icons/mob/inhands/equipment/medical_righthand.dmi'
 	throw_speed = 3
 	throw_range = 7
+	drop_sound = 'sound/items/medkit_drop.ogg'
+	pickup_sound = 'sound/items/medkit_pick_up.ogg'
+	sound_vary = TRUE
 	var/empty = FALSE
 	/// Defines damage type of the medkit. General ones stay null. Used for medibot healing bonuses
 	var/damagetype_healed
@@ -79,6 +82,8 @@
 /obj/item/storage/medkit/Initialize(mapload)
 	. = ..()
 	atom_storage.max_specific_storage = WEIGHT_CLASS_SMALL
+	atom_storage.open_sound = 'sound/items/medkit_open.ogg'
+	atom_storage.open_sound_vary = TRUE
 
 /obj/item/storage/medkit/regular
 	icon_state = "medkit"
@@ -454,6 +459,8 @@
 	lefthand_file = 'icons/mob/inhands/equipment/medical_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/medical_righthand.dmi'
 	w_class = WEIGHT_CLASS_SMALL
+	pickup_sound = 'sound/items/handling/pill_bottle_pickup.ogg'
+	drop_sound = 'sound/items/handling/pill_bottle_place.ogg'
 
 /obj/item/storage/pill_bottle/Initialize(mapload)
 	. = ..()
@@ -462,6 +469,8 @@
 		/obj/item/reagent_containers/pill,
 		/obj/item/food/bait/natural,
 	))
+	atom_storage.open_sound = 'sound/items/handling/pill_bottle_open.ogg'
+	atom_storage.open_sound_vary = FALSE
 
 /obj/item/storage/pill_bottle/suicide_act(mob/living/user)
 	user.visible_message(span_suicide("[user] is trying to get the cap off [src]! It looks like [user.p_theyre()] trying to commit suicide!"))

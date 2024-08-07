@@ -499,7 +499,7 @@
 		return ..()
 	var/turf/local_turf = get_turf(holder.my_atom)
 	playsound(local_turf, 'sound/magic/ethereal_exit.ogg', 50, 1)
-	local_turf.visible_message("The reaction frosts over, releasing it's chilly contents!")
+	local_turf.visible_message("The reaction frosts over, releasing its chilly contents!")
 	freeze_radius(holder, null, holder.chem_temp*2, clamp(cryostylane.volume/30, 2, 6), 120 SECONDS, 2)
 	clear_reactants(holder, 15)
 	holder.chem_temp += 100

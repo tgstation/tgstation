@@ -22,8 +22,6 @@
 /obj/item/organ/internal/cyberimp/brain
 	name = "cybernetic brain implant"
 	desc = "Injectors of extra sub-routines for the brain."
-	icon_state = "brain_implant"
-	implant_overlay = "brain_implant_overlay"
 	zone = BODY_ZONE_HEAD
 	w_class = WEIGHT_CLASS_TINY
 
@@ -39,9 +37,9 @@
 /obj/item/organ/internal/cyberimp/brain/anti_drop
 	name = "anti-drop implant"
 	desc = "This cybernetic brain implant will allow you to force your hand muscles to contract, preventing item dropping. Twitch ear to toggle."
+	icon_state = "brain_implant_antidrop"
 	var/active = FALSE
 	var/list/stored_items = list()
-	implant_color = "#DE7E00"
 	slot = ORGAN_SLOT_BRAIN_ANTIDROP
 	actions_types = list(/datum/action/item_action/organ_action/toggle)
 
@@ -99,9 +97,9 @@
 	stored_items -= source
 
 /obj/item/organ/internal/cyberimp/brain/anti_stun
-	name = "CNS Rebooter implant"
+	name = "CNS rebooter implant"
 	desc = "This implant will automatically give you back control over your central nervous system, reducing downtime when stunned."
-	implant_color = COLOR_YELLOW
+	icon_state = "brain_implant_rebooter"
 	slot = ORGAN_SLOT_BRAIN_ANTISTUN
 
 	var/static/list/signalCache = list(
@@ -120,6 +118,7 @@
 	. = ..()
 	UnregisterSignal(implant_owner, signalCache)
 	UnregisterSignal(implant_owner, COMSIG_LIVING_ENTER_STAMCRIT)
+	remove_stun_buffs(implant_owner)
 
 /obj/item/organ/internal/cyberimp/brain/anti_stun/on_mob_insert(mob/living/carbon/receiver)
 	. = ..()
@@ -151,10 +150,8 @@
 	sparks.set_up(5, 1, src)
 	sparks.start()
 
-	owner.add_traits(list(TRAIT_IGNOREDAMAGESLOWDOWN, TRAIT_BATON_RESISTANCE, TRAIT_STUNIMMUNE), REF(src))
-	addtimer(TRAIT_CALLBACK_REMOVE(owner, TRAIT_IGNOREDAMAGESLOWDOWN, REF(src)), stun_resistance_time)
-	addtimer(TRAIT_CALLBACK_REMOVE(owner, TRAIT_BATON_RESISTANCE, REF(src)), stun_resistance_time)
-	addtimer(TRAIT_CALLBACK_REMOVE(owner, TRAIT_STUNIMMUNE, REF(src)), stun_resistance_time)
+	give_stun_buffs(owner)
+	addtimer(CALLBACK(src, PROC_REF(remove_stun_buffs), owner), stun_resistance_time)
 
 	COOLDOWN_START(src, implant_cooldown, 60 SECONDS)
 	addtimer(CALLBACK(src, PROC_REF(implant_ready)),60 SECONDS)
@@ -162,6 +159,14 @@
 /obj/item/organ/internal/cyberimp/brain/anti_stun/proc/implant_ready()
 	if(owner)
 		to_chat(owner, span_purple("Your rebooter implant is ready."))
+
+/obj/item/organ/internal/cyberimp/brain/anti_stun/proc/give_stun_buffs(mob/living/give_to = owner)
+	give_to.add_traits(list(TRAIT_STUNIMMUNE, TRAIT_BATON_RESISTANCE), REF(src))
+	give_to.add_movespeed_mod_immunities(REF(src), /datum/movespeed_modifier/damage_slowdown)
+
+/obj/item/organ/internal/cyberimp/brain/anti_stun/proc/remove_stun_buffs(mob/living/remove_from = owner)
+	remove_from.remove_traits(list(TRAIT_STUNIMMUNE, TRAIT_BATON_RESISTANCE), REF(src))
+	remove_from.remove_movespeed_mod_immunities(REF(src), /datum/movespeed_modifier/damage_slowdown)
 
 /obj/item/organ/internal/cyberimp/brain/anti_stun/emp_act(severity)
 	. = ..()

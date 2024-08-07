@@ -9,6 +9,19 @@
 		/datum/surgery_step/close,
 	)
 
+/datum/surgery/lipoplasty/mechanic
+	name = "Nutrient Reserve Expulsion"
+	requires_bodypart_type = BODYTYPE_ROBOTIC
+	steps = list(
+		/datum/surgery_step/mechanic_open,
+		/datum/surgery_step/open_hatch,
+		/datum/surgery_step/mechanic_unwrench,
+		/datum/surgery_step/cut_fat/mechanic,
+		/datum/surgery_step/remove_fat/mechanic,
+		/datum/surgery_step/mechanic_wrench,
+		/datum/surgery_step/mechanic_close,
+	)
+
 /datum/surgery/lipoplasty/can_start(mob/user, mob/living/carbon/target)
 	if(!HAS_TRAIT_FROM(target, TRAIT_FAT, OBESITY) || target.nutrition < NUTRITION_LEVEL_WELL_FED)
 		return FALSE
@@ -22,13 +35,27 @@
 		TOOL_SAW = 100,
 		/obj/item/shovel/serrated = 75,
 		/obj/item/hatchet = 35,
-		/obj/item/knife/butcher = 25)
+		/obj/item/knife/butcher = 25,
+	)
 	time = 64
 	surgery_effects_mood = TRUE
 	preop_sound = list(
 		/obj/item/circular_saw = 'sound/surgery/saw.ogg',
 		/obj/item = 'sound/surgery/scalpel1.ogg',
 	)
+
+/datum/surgery_step/cut_fat/mechanic
+	name = "open fat containers (wrench or crowbar)"
+	implements = list(
+		TOOL_WRENCH = 95,
+		TOOL_CROWBAR = 95,
+		TOOL_SAW = 65,
+		/obj/item/melee/energy/sword = 65,
+		/obj/item/knife = 45,
+		/obj/item/shard = 35,
+	)
+	preop_sound = 'sound/items/ratchet.ogg'
+	success_sound = 'sound/machines/doorclick.ogg'
 
 /datum/surgery_step/cut_fat/preop(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
 	user.visible_message(span_notice("[user] begins to cut away [target]'s excess fat."), span_notice("You begin to cut away [target]'s excess fat..."))
@@ -58,10 +85,22 @@
 	implements = list(
 		TOOL_RETRACTOR = 100,
 		TOOL_SCREWDRIVER = 45,
-		TOOL_WIRECUTTER = 35)
+		TOOL_WIRECUTTER = 35,
+	)
 	time = 32
 	preop_sound = 'sound/surgery/retractor1.ogg'
 	success_sound = 'sound/surgery/retractor2.ogg'
+
+/datum/surgery_step/remove_fat/mechanic
+	name = "engage expulsion valve (screwdriver or wrench)" //gross
+	implements = list(
+		TOOL_SCREWDRIVER = 100,
+		TOOL_WRENCH = 100,
+		TOOL_WIRECUTTER = 35,
+		TOOL_RETRACTOR = 35,
+	)
+	preop_sound = 'sound/items/ratchet.ogg'
+	success_sound = 'sound/surgery/organ2.ogg'
 
 /datum/surgery_step/remove_fat/preop(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
 	display_results(

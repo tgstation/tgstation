@@ -21,6 +21,8 @@
 	family_heirlooms = list(/obj/item/toy/cattoy)
 	/// When false, this is a felinid created by mass-purrbation
 	var/original_felinid = TRUE
+	/// Yummy!
+	species_cookie = /obj/item/food/nugget
 
 // Prevents felinids from taking toxin damage from carpotoxin
 /datum/species/human/felinid/handle_chemical(datum/reagent/chem, mob/living/carbon/human/affected, seconds_per_tick, times_fired)
@@ -96,6 +98,17 @@
 	if(felinid.physique == FEMALE)
 		return 'sound/voice/human/female_sneeze1.ogg'
 	return 'sound/voice/human/male_sneeze1.ogg'
+
+/datum/species/human/felinid/get_sigh_sound(mob/living/carbon/human/felinid)
+	if(felinid.physique == FEMALE)
+		return 'sound/voice/human/female_sigh.ogg'
+	return 'sound/voice/human/male_sigh.ogg'
+
+/datum/species/human/felinid/get_sniff_sound(mob/living/carbon/human/felinid)
+	if(felinid.physique == FEMALE)
+		return 'sound/voice/human/female_sniff.ogg'
+	return 'sound/voice/human/male_sniff.ogg'
+
 
 
 /proc/mass_purrbation()

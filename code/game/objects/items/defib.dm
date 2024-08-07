@@ -147,7 +147,6 @@
 	if(!cell || !cell_removable)
 		return FALSE
 
-	cell.update_appearance()
 	cell.forceMove(get_turf(src))
 	balloon_alert(user, "removed [cell]")
 	cell = null
@@ -252,7 +251,7 @@
 	update_power()
 
 /obj/item/defibrillator/proc/cooldowncheck()
-		addtimer(CALLBACK(src, PROC_REF(finish_charging)), cooldown_duration)
+	addtimer(CALLBACK(src, PROC_REF(finish_charging)), cooldown_duration)
 
 /obj/item/defibrillator/proc/finish_charging()
 	if(cell)

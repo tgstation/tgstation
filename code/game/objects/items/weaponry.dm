@@ -162,7 +162,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 
 /obj/item/claymore/carrot
 	name = "carrot sword"
-	desc = "A full-sized carrot sword. Definitely \not\ good for the eyes, not anymore."
+	desc = "A full-sized carrot sword. Definitely <b>not</b> good for the eyes, not anymore."
 	icon_state = "carrot_sword"
 	inhand_icon_state = "carrot_sword"
 	worn_icon_state = "carrot_sword"
@@ -504,6 +504,37 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	else
 		user.visible_message(span_suicide("[user] is strangling [user.p_them()]self with [src]'s cord! It looks like [user.p_theyre()] trying to commit suicide!"))
 	return OXYLOSS
+
+/obj/item/bambostaff
+	name = "Bamboo Staff"
+	desc = "A long bamboo-made staff with steel-capped ends. It is rumoured that initiates of Spider Clan train with such before getting to learn how to use a katana."
+	force = 10
+	block_chance = 45
+	block_sound = 'sound/weapons/genhit.ogg'
+	slot_flags = ITEM_SLOT_BACK
+	w_class = WEIGHT_CLASS_BULKY
+	hitsound = SFX_SWING_HIT
+	attack_verb_continuous = list("smashes", "slams", "whacks", "thwacks")
+	attack_verb_simple = list("smash", "slam", "whack", "thwack")
+	icon = 'icons/obj/weapons/staff.dmi'
+	icon_state = "bambostaff0"
+	base_icon_state = "bambostaff"
+	inhand_icon_state = "bambostaff0"
+	worn_icon_state = "bambostaff0"
+	lefthand_file = 'icons/mob/inhands/weapons/staves_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/weapons/staves_righthand.dmi'
+
+/obj/item/bambostaff/Initialize(mapload)
+	. = ..()
+	AddComponent(/datum/component/two_handed, \
+		force_unwielded = 10, \
+		force_wielded = 14, \
+		icon_wielded = "[base_icon_state]1", \
+	)
+
+/obj/item/bambostaff/update_icon_state()
+	icon_state = "[base_icon_state]0"
+	return ..()
 
 /obj/item/cane
 	name = "cane"

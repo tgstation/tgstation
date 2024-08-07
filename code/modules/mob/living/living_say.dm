@@ -251,7 +251,7 @@ GLOBAL_LIST_INIT(message_modes_stat_limits, list(
 	if(pressure < SOUND_MINIMUM_PRESSURE && !HAS_TRAIT(src, TRAIT_SIGN_LANG))
 		message_range = 1
 
-	if(pressure < ONE_ATMOSPHERE*0.4) //Thin air, let's italicise the message
+	if(pressure < ONE_ATMOSPHERE * (HAS_TRAIT(src, TRAIT_SPEECH_BOOSTER) ? 0.1 : 0.4)) //Thin air, let's italicise the message unless we have a loud low pressure speech trait and not in vacuum
 		spans |= SPAN_ITALICS
 
 	send_speech(message, message_range, src, bubble_type, spans, language, message_mods, tts_message = tts_message, tts_filter = tts_filter)//roughly 58% of living/say()'s total cost
@@ -401,27 +401,13 @@ GLOBAL_LIST_INIT(message_modes_stat_limits, list(
 
 		var/list/filter = list()
 		var/list/special_filter = list()
-		var/voice_to_use = voice
-		var/use_radio = FALSE
 		if(length(voice_filter) > 0)
 			filter += voice_filter
 
 		if(length(tts_filter) > 0)
 			filter += tts_filter.Join(",")
-		if(ishuman(src))
-			var/mob/living/carbon/human/human_speaker = src
-			if(istype(human_speaker.wear_mask, /obj/item/clothing/mask))
-				var/obj/item/clothing/mask/worn_mask = human_speaker.wear_mask
-				if(!worn_mask.up)
-					if(worn_mask.voice_override)
-						voice_to_use = worn_mask.voice_override
-					if(worn_mask.voice_filter)
-						filter += worn_mask.voice_filter
-					use_radio = worn_mask.use_radio_beeps_tts
-		if(use_radio)
-			special_filter += TTS_FILTER_RADIO
-		if(issilicon(src))
-			special_filter += TTS_FILTER_SILICON
+
+		var/voice_to_use = get_tts_voice(filter, special_filter)
 
 		INVOKE_ASYNC(SStts, TYPE_PROC_REF(/datum/controller/subsystem/tts, queue_tts_message), src, html_decode(tts_message_to_use), message_language, voice_to_use, filter.Join(","), listened, message_range = message_range, pitch = pitch, special_filters = special_filter.Join("|"))
 
@@ -431,6 +417,22 @@ GLOBAL_LIST_INIT(message_modes_stat_limits, list(
 	INVOKE_ASYNC(GLOBAL_PROC, GLOBAL_PROC_REF(flick_overlay_global), say_popup, speech_bubble_recipients, 3 SECONDS)
 	LAZYADD(update_on_z, say_popup)
 	addtimer(CALLBACK(src, PROC_REF(clear_saypopup), say_popup), 3.5 SECONDS)
+
+/mob/living/proc/get_tts_voice(list/filter, list/special_filter)
+	. = voice
+	var/obj/item/clothing/mask/mask = get_item_by_slot(ITEM_SLOT_MASK)
+	if(!istype(mask) || mask.up)
+		return
+	if(mask.voice_override)
+		. = mask.voice_override
+	if(mask.voice_filter)
+		filter += mask.voice_filter
+	if(mask.use_radio_beeps_tts)
+		special_filter |= TTS_FILTER_RADIO
+
+/mob/living/silicon/get_tts_voice(list/filter, list/special_filter)
+	. = ..()
+	special_filter |= TTS_FILTER_SILICON
 
 /mob/living/proc/clear_saypopup(image/say_popup)
 	LAZYREMOVE(update_on_z, say_popup)

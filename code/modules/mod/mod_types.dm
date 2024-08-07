@@ -46,6 +46,14 @@
 		/obj/item/mod/module/flashlight,
 	)
 
+/obj/item/mod/control/pre_equipped/civilian
+	theme = /datum/mod_theme/civilian
+	applied_modules = list(
+		/obj/item/mod/module/storage,
+		/obj/item/mod/module/welding,
+		/obj/item/mod/module/flashlight,
+	)
+
 /obj/item/mod/control/pre_equipped/engineering
 	theme = /datum/mod_theme/engineering
 	applied_modules = list(
@@ -115,7 +123,7 @@
 	theme = /datum/mod_theme/mining
 	applied_core = /obj/item/mod/core/plasma
 	applied_modules = list(
-		/obj/item/mod/module/storage,
+		/obj/item/mod/module/storage/large_capacity,
 		/obj/item/mod/module/gps,
 		/obj/item/mod/module/orebag,
 		/obj/item/mod/module/clamp,
@@ -170,6 +178,9 @@
 		/obj/item/mod/module/criminalcapture,
 		/obj/item/mod/module/quick_cuff,
 		/obj/item/mod/module/headprotector,
+	)
+	default_pins = list(
+		/obj/item/mod/module/jetpack,
 	)
 
 /obj/item/mod/control/pre_equipped/safeguard
