@@ -24,6 +24,8 @@
 
 /obj/item/inducer_cell/proc/inductive_charge(mob/user)
 	burntout = TRUE
+	if(src.loc != user.loc)
+		return
 	icon_state = "inducer_cell"
 	do_sparks(number = 2, source = src)
 	src.Shake(2, 1, cycle_time)

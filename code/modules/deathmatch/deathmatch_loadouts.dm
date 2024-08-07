@@ -551,6 +551,7 @@
 	desc = "The typical loadout for agents employed in the Spinward Periphery. Equipped with a pistol, a knife, and plenty of ammo."
 	ears = /obj/item/radio/headset/syndicate/alt
 	uniform = /obj/item/clothing/under/syndicate
+	suit = /obj/item/clothing/suit/armor/vest
 	glasses = /obj/item/clothing/glasses/sunglasses
 	shoes = /obj/item/clothing/shoes/combat
 	gloves = /obj/item/clothing/gloves/combat
