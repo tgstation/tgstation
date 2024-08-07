@@ -174,3 +174,14 @@
   - bugfix: Bitrunning crate capture zones can no longer be destroyed
   mc-oofert:
   - admin: fix hard restart option
+2024-08-07:
+  Absolucy:
+  - bugfix: Fixed a runtime error after draining a heretic influence.
+  LT3:
+  - bugfix: Fixed players being incorrectly immune to certain virus severities
+  MrMelbert, SmArtKar:
+  - bugfix: Holding someone at gunpoint no longer makes all shots count as point blank
+  SmArtKar:
+  - image: Updated clipboard sprite, adds white and black clipboard skins for med/sci
+      and security
+  - bugfix: Tinacusiate no longer changes hearing spans for every single person in-game
