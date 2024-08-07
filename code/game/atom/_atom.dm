@@ -143,6 +143,10 @@
 	/// Flags to check for in can_perform_action for mouse drag & drop checks. To bypass checks see interaction_flags_atom mouse drop flags
 	var/interaction_flags_mouse_drop = NONE
 
+	/// if truthy, rcd spritesheets will use this as the key to this atom's cached icon
+	/// instead of its name.
+	var/rcd_spritesheet_override = ""
+
 /**
  * Top level of the destroy chain for most atoms
  *

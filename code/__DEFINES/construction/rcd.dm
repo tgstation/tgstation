@@ -54,3 +54,6 @@
 #define RCD_MEMORY_COST_BUFF 8
 /// If set to TRUE in rcd_vals, will bypass the cooldown on slowing down frequent use
 #define RCD_RESULT_BYPASS_FREQUENT_USE_COOLDOWN "bypass_frequent_use_cooldown"
+
+/// gets the cached icon key for this atom based on its name or if it exists its override key
+#define RCD_SPRITESHEET_PATH_KEY(atom_path_or_instance) (initial(atom_path_or_instance.rcd_spritesheet_override) || initial(atom_path_or_instance.name))

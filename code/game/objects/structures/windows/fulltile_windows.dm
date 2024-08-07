@@ -9,6 +9,7 @@
 	smoothing_groups = SMOOTH_GROUP_WINDOW_FULLTILE
 	canSmoothWith = SMOOTH_GROUP_WINDOW_FULLTILE
 	glass_amount = 2
+	rcd_spritesheet_override = "full tile window"
 
 /obj/structure/window/fulltile/unanchored
 	anchored = FALSE
@@ -57,6 +58,7 @@
 	smoothing_groups = SMOOTH_GROUP_WINDOW_FULLTILE
 	canSmoothWith = SMOOTH_GROUP_WINDOW_FULLTILE
 	glass_amount = 2
+	rcd_spritesheet_override = "reinforced full tile window"
 
 /obj/structure/window/reinforced/fulltile/unanchored
 	anchored = FALSE
