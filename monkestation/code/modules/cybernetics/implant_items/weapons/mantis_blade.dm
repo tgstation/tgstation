@@ -14,6 +14,7 @@
 	attack_verb_continuous = list("attacks", "slashes", "stabs", "slices", "tears", "lacerates", "rips", "dices", "cuts")
 	attack_verb_simple = list("attack", "slash", "stab", "slice", "tear", "lacerate", "rip", "dice", "cut")
 	sharpness = SHARP_EDGED
+	tool_behaviour = TOOL_KNIFE
 	max_integrity = 200
 
 /obj/item/mantis_blade/equipped(mob/user, slot, initial)
@@ -43,6 +44,17 @@
 
 /obj/item/mantis_blade/chromata
 	tool_behaviour = TOOL_CROWBAR
+
+/obj/item/mantis_blade/chromata/attack_self(mob/user)
+	switch(tool_behaviour)
+		if(TOOL_CROWBAR)
+			tool_behaviour = TOOL_KNIFE
+			balloon_alert(user, "cutting mode activated")
+
+		if(TOOL_KNIFE)
+			tool_behaviour = TOOL_CROWBAR
+			balloon_alert(user, "prying mode activated")
+
 
 /obj/item/mantis_blade/chromata/proc/check_can_crowbar(mob/user)
 	var/obj/item/some_item = user.get_inactive_held_item()
