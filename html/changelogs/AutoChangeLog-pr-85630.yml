@@ -1,0 +1,4 @@
+author: "Rhials"
+delete-after: True
+changes:
+  - sound: "Zipties no longer make handcuff noises when picked up or dropped."
