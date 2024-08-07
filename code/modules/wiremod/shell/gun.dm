@@ -9,7 +9,7 @@
 	icon = 'icons/obj/science/circuits.dmi'
 	icon_state = "setup_gun"
 	ammo_type = list(/obj/item/ammo_casing/energy/wiremod_gun)
-	cell_type = /obj/item/stock_parts/cell/emproof/wiremod_gun
+	cell_type = /obj/item/stock_parts/power_store/cell/emproof/wiremod_gun
 	item_flags = NONE
 	light_system = OVERLAY_LIGHT_DIRECTIONAL
 	light_on = FALSE
@@ -29,7 +29,7 @@
 	damage = 0
 	range = 7
 
-/obj/item/stock_parts/cell/emproof/wiremod_gun
+/obj/item/stock_parts/power_store/cell/emproof/wiremod_gun
 	maxcharge = 0.1 * STANDARD_CELL_CHARGE
 
 /obj/item/gun/energy/wiremod_gun/Initialize(mapload)

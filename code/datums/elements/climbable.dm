@@ -35,6 +35,8 @@
 	examine_texts += span_notice("[source] looks climbable.")
 
 /datum/element/climbable/proc/can_climb(atom/source, mob/user)
+	if (!user.CanReach(source))
+		return FALSE
 	var/dir_step = get_dir(user, source.loc)
 	//To jump over a railing you have to be standing next to it, not far behind it.
 	if(source.flags_1 & ON_BORDER_1 && user.loc != source.loc && (dir_step & source.dir) == source.dir)
@@ -69,7 +71,7 @@
 	if(HAS_TRAIT(user, TRAIT_FREERUNNING)) //do you have any idea how fast I am???
 		adjusted_climb_time *= 0.8
 		adjusted_climb_stun *= 0.8
-	if(HAS_TRAIT(user, TRAIT_SETTLER)) //hold on, gimme a moment, my tiny legs can't get over the goshdamn table
+	if(HAS_TRAIT(user, TRAIT_STUBBY_BODY)) //hold on, gimme a moment, my tiny legs can't get over the goshdamn table
 		adjusted_climb_time *= 1.5
 		adjusted_climb_stun *= 1.5
 	LAZYADDASSOCLIST(current_climbers, climbed_thing, user)

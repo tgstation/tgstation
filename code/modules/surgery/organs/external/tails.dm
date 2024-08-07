@@ -23,10 +23,11 @@
 /obj/item/organ/external/tail/Insert(mob/living/carbon/receiver, special, movement_flags)
 	. = ..()
 	if(.)
-		original_owner ||= WEAKREF(receiver)
-
 		receiver.clear_mood_event("tail_lost")
 		receiver.clear_mood_event("tail_balance_lost")
+
+	if(!special) // if some admin wants to give someone tail moodles for tail shenanigans, they can spawn it and do it by hand
+		original_owner ||= WEAKREF(receiver)
 
 		// If it's your tail, an infinite debuff is replaced with a timed one
 		// If it's not your tail but of same species, I guess it works, but we are more sad
@@ -174,7 +175,7 @@
 
 	bodypart_overlay = /datum/bodypart_overlay/mutant/tail/monkey
 
-	dna_block = DNA_MONKEY_TAIL_BLOCK
+	dna_block = null
 
 ///Monkey tail bodypart overlay
 /datum/bodypart_overlay/mutant/tail/monkey

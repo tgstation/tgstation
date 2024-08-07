@@ -48,6 +48,8 @@
 	breakouttime = 1 MINUTES
 	armor_type = /datum/armor/restraints_handcuffs
 	custom_price = PAYCHECK_COMMAND * 0.35
+	pickup_sound = 'sound/items/handcuffs_pick_up.ogg'
+	drop_sound = 'sound/items/handcuffs_drop.ogg'
 
 	///How long it takes to handcuff someone
 	var/handcuff_time = 4 SECONDS
@@ -55,6 +57,8 @@
 	var/handcuff_time_mod = 1
 	///Sound that plays when starting to put handcuffs on someone
 	var/cuffsound = 'sound/weapons/handcuffs.ogg'
+	///Sound that plays when restrain is successful
+	var/cuffsuccesssound = 'sound/items/handcuff_finish.ogg'
 	///If set, handcuffs will be destroyed on application and leave behind whatever this is set to.
 	var/trashtype = null
 	/// How strong the cuffs are. Weak cuffs can be broken with wirecutters or boxcutters.
@@ -120,6 +124,7 @@
 		return
 
 	apply_cuffs(victim, user, dispense = iscyborg(user))
+	playsound(loc, cuffsuccesssound, 30, TRUE, -2)
 
 	victim.visible_message(
 		span_notice("[user] handcuffs [victim]."),
@@ -195,6 +200,8 @@
 	custom_materials = list(/datum/material/iron= SMALL_MATERIAL_AMOUNT * 1.5, /datum/material/glass= SMALL_MATERIAL_AMOUNT * 0.75)
 	breakouttime = 30 SECONDS
 	cuffsound = 'sound/weapons/cablecuff.ogg'
+	pickup_sound = null
+	drop_sound = null
 	restraint_strength = HANDCUFFS_TYPE_WEAK
 
 /obj/item/restraints/handcuffs/cable/Initialize(mapload, new_color)
@@ -214,8 +221,8 @@
 
 	var/static/list/slapcraft_recipe_list = list(/datum/crafting_recipe/bola, /datum/crafting_recipe/gonbola)
 
-	AddComponent(
-		/datum/component/slapcrafting,\
+	AddElement(
+		/datum/element/slapcrafting,\
 		slapcraft_recipes = slapcraft_recipe_list,\
 	)
 
@@ -537,6 +544,8 @@
 	gender = NEUTER
 	///Amount of time to knock the target down for once it's hit in deciseconds.
 	var/knockdown = 0
+	///Reference of the mob we will attempt to snare
+	var/datum/weakref/ensnare_mob_ref
 
 /obj/item/restraints/legcuffs/bola/throw_at(atom/target, range, speed, mob/thrower, spin=1, diagonals_first = 0, datum/callback/callback, gentle = FALSE, quickstart = TRUE)
 	if(!..())
@@ -546,21 +555,32 @@
 /obj/item/restraints/legcuffs/bola/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
 	if(..() || !iscarbon(hit_atom))//if it gets caught or the target can't be cuffed,
 		return//abort
-	ensnare(hit_atom)
+	//The mob has been hit, save the reference for ensnaring
+	ensnare_mob_ref = WEAKREF(hit_atom)
+
+/obj/item/restraints/legcuffs/bola/after_throw(datum/callback/callback)
+	. = ..()
+	if (isnull(ensnare_mob_ref))
+		return
+	var/atom/ensnare_mob = ensnare_mob_ref.resolve()
+	if (!isnull(ensnare_mob))
+		ensnare(ensnare_mob)
+	ensnare_mob_ref = null
 
 /**
  * Attempts to legcuff someone with the bola
  *
  * Arguments:
- * * C - the carbon that we will try to ensnare
+ * * snared_mob - the carbon that we will try to ensnare
  */
-/obj/item/restraints/legcuffs/bola/proc/ensnare(mob/living/carbon/C)
-	if(!C.legcuffed && C.num_legs >= 2)
-		visible_message(span_danger("\The [src] ensnares [C]!"), span_userdanger("\The [src] ensnares you!"))
-		C.equip_to_slot(src, ITEM_SLOT_LEGCUFFED)
-		SSblackbox.record_feedback("tally", "handcuffs", 1, type)
-		C.Knockdown(knockdown)
-		playsound(src, 'sound/effects/snap.ogg', 50, TRUE)
+/obj/item/restraints/legcuffs/bola/proc/ensnare(mob/living/carbon/snared_mob)
+	if(snared_mob.legcuffed || snared_mob.num_legs < 2)
+		return
+	visible_message(span_danger("\The [src] ensnares [snared_mob]!"), span_userdanger("\The [src] ensnares you!"))
+	snared_mob.equip_to_slot(src, ITEM_SLOT_LEGCUFFED)
+	SSblackbox.record_feedback("tally", "handcuffs", 1, type)
+	snared_mob.Knockdown(knockdown)
+	playsound(src, 'sound/effects/snap.ogg', 50, TRUE)
 
 /**
  * A traitor variant of the bola.

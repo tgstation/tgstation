@@ -54,10 +54,10 @@
  * Mobs & borgs invoke this through a callback to recharge their cells
  * Arguments
  *
- * * obj/item/stock_parts/cell/target - the cell to charge, optional if provided else will draw power used directly
+ * * obj/item/stock_parts/power_store/cell/target - the cell to charge, optional if provided else will draw power used directly
  * * seconds_per_tick - supplied from process()
  */
-/obj/machinery/recharge_station/proc/charge_target_cell(obj/item/stock_parts/cell/target, seconds_per_tick)
+/obj/machinery/recharge_station/proc/charge_target_cell(obj/item/stock_parts/power_store/cell/target, seconds_per_tick)
 	PRIVATE_PROC(TRUE)
 
 	//charge the cell, account for heat loss from work done
@@ -75,7 +75,7 @@
 		recharge_speed += 5e-3 * capacitor.tier
 	for(var/datum/stock_part/servo/servo in component_parts)
 		repairs += servo.tier - 1
-	for(var/obj/item/stock_parts/cell/cell in component_parts)
+	for(var/obj/item/stock_parts/power_store/cell in component_parts)
 		recharge_speed *= cell.maxcharge
 
 /obj/machinery/recharge_station/examine(mob/user)

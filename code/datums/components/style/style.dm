@@ -37,8 +37,6 @@
 	var/timerid
 	/// Highest score attained by this component, to avoid as much overhead when considering to award a high score to the client
 	var/high_score = 0
-	/// Weakref to the added projectile parry component
-	var/datum/weakref/projectile_parry
 	/// What rank, minimum, the user needs to be to hotswap items
 	var/hotswap_rank = STYLE_BRUTAL
 	/// If this is multitooled, making it make funny noises on the user's rank going up
@@ -110,20 +108,7 @@
 	RegisterSignal(parent, COMSIG_LIVING_DEFUSED_GIBTONITE, PROC_REF(on_gibtonite_defuse))
 	RegisterSignal(parent, COMSIG_LIVING_CRUSHER_DETONATE, PROC_REF(on_crusher_detonate))
 	RegisterSignal(parent, COMSIG_LIVING_DISCOVERED_GEYSER, PROC_REF(on_geyser_discover))
-
-	projectile_parry = WEAKREF(parent.AddComponent(\
-		/datum/component/projectile_parry,\
-		list(\
-			/obj/projectile/colossus,\
-			/obj/projectile/temp/watcher,\
-			/obj/projectile/kinetic,\
-			/obj/projectile/bileworm_acid,\
-			/obj/projectile/herald,\
-			/obj/projectile/kiss,\
-			)\
-		)
-	)
-
+	ADD_TRAIT(parent, TRAIT_MINING_PARRYING, STYLE_TRAIT)
 
 /datum/component/style/UnregisterFromParent()
 	UnregisterSignal(parent, COMSIG_USER_ITEM_INTERACTION)
@@ -137,10 +122,7 @@
 	UnregisterSignal(parent, COMSIG_LIVING_DEFUSED_GIBTONITE)
 	UnregisterSignal(parent, COMSIG_LIVING_CRUSHER_DETONATE)
 	UnregisterSignal(parent, COMSIG_LIVING_DISCOVERED_GEYSER)
-
-	if(projectile_parry)
-		qdel(projectile_parry.resolve())
-
+	REMOVE_TRAIT(parent, TRAIT_MINING_PARRYING, STYLE_TRAIT)
 
 /datum/component/style/Destroy(force)
 	STOP_PROCESSING(SSdcs, src)
@@ -150,13 +132,10 @@
 		mob_parent.hud_used.show_hud(mob_parent.hud_used.hud_version)
 	return ..()
 
-
 /datum/component/style/process(seconds_per_tick)
 	point_multiplier = round(max(point_multiplier - 0.2 * seconds_per_tick, 1), 0.1)
 	change_points(-5 * seconds_per_tick * ROUND_UP((style_points + 1) / 200), use_multiplier = FALSE)
 	update_screen()
-
-
 
 /datum/component/style/proc/add_action(action, amount)
 	if(length(actions) > 9)
@@ -219,7 +198,7 @@
 
 			rank = rank_changed
 	meter.maptext = "[format_rank_string(rank)][generate_multiplier()][generate_actions()]"
-	meter.maptext_y = 100 - 9 * length(actions)
+	meter.maptext_y = 94 - 12 * length(actions)
 	update_meter(point_to_rank(), go_back)
 
 /datum/component/style/proc/update_meter(new_rank, go_back)
@@ -270,19 +249,15 @@
 			return "SPACED!"
 
 /datum/component/style/proc/format_rank_string(new_rank)
-	var/rank_string = rank_to_string(new_rank)
-	var/final_string = ""
-	final_string += "<span class='maptext' style='font-size: 8px'><font color='[rank_to_color(new_rank)]'><b>[rank_string[1]]</b>"
-	final_string += "<span style='font-size: 7px'>[copytext(rank_string, 2)]</span></font></span>"
-	return final_string
+	return MAPTEXT_PIXELLARI("<font color='[rank_to_color(new_rank)]'>[rank_to_string(new_rank)]</font>")
 
 /datum/component/style/proc/generate_multiplier()
-	return "<br><span class='maptext' style='font-size: 7px'>MULTIPLIER: [point_multiplier]X</span>"
+	return "<br>" + MAPTEXT_GRAND9K("MULTIPLIER: [point_multiplier]X")
 
 /datum/component/style/proc/generate_actions()
 	var/action_string = ""
 	for(var/action in actions)
-		action_string += "<br><span class='maptext'>+ <font color='[action_to_color(actions[action])]'>[actions[action]]</font></span>"
+		action_string += "<br>" + MAPTEXT_GRAND9K("+ <font color='[action_to_color(actions[action])]'>[actions[action]]</font>")
 	return action_string
 
 /datum/component/style/proc/action_to_color(action)

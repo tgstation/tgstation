@@ -1,0 +1,5 @@
+# replaces redundant flat_white catwalk tiles with iron_white
+
+/turf/open/floor/catwalk_floor/flat_white : /turf/open/floor/catwalk_floor/iron_white{@OLD}
+/turf/open/floor/catwalk_floor/flat_white/@SUBTYPES : /turf/open/floor/catwalk_floor/iron_white/@SUBTYPES{@OLD}
+/obj/item/stack/tile/catwalk_tile/flat_white : /obj/item/stack/tile/catwalk_tile/iron_white{@OLD}

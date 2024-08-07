@@ -57,7 +57,7 @@
 	cast_on.add_atom_colour(COLOR_VIBRANT_LIME, TEMPORARY_COLOUR_PRIORITY)
 
 /datum/action/cooldown/spell/apply_mutations/mutate/remove_mutations(mob/living/carbon/human/cast_on)
-	if(QDELETED(cast_on) || !is_valid_target(cast_on))
+	if(QDELETED(cast_on) || !is_valid_target(cast_on)) // Not 100% sure if this check is still needed, leaving it just in case
 		return
-
+	..()
 	cast_on.remove_atom_colour(TEMPORARY_COLOUR_PRIORITY)

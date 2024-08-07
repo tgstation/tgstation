@@ -2,6 +2,7 @@
 #define ELDRITCH_WHETSTONE "Eldritch Whetstone"
 #define CONSTRUCT_SHELL "Construct Shell"
 #define UNHOLY_WATER "Flask of Unholy Water"
+#define PROTEON_ORB "Portal Summoning Orb"
 
 // Cult altar. Gives out consumable items.
 /obj/structure/destructible/cult/item_dispenser/altar
@@ -10,6 +11,7 @@
 	cult_examine_tip = "Can be used to create eldritch whetstones, construct shells, and flasks of unholy water."
 	icon_state = "talismanaltar"
 	break_message = "<span class='warning'>The altar shatters, leaving only the wailing of the damned!</span>"
+	mansus_conversion_path = /obj/effect/heretic_rune
 
 /obj/structure/destructible/cult/item_dispenser/altar/setup_options()
 	var/static/list/altar_items = list(
@@ -27,7 +29,20 @@
 			),
 	)
 
+	var/extra_item = extra_options()
+
 	options = altar_items
+	if(!isnull(extra_item))
+		options += extra_item
+
+/obj/structure/destructible/cult/item_dispenser/altar/extra_options()
+	if(!cult_team?.unlocked_heretic_items[PROTEON_ORB_UNLOCKED])
+		return
+	return list(PROTEON_ORB = list(
+			PREVIEW_IMAGE = image(icon = 'icons/obj/antags/cult/items.dmi', icon_state = "summoning_orb"),
+			OUTPUT_ITEMS = list(/obj/item/proteon_orb),
+			),
+	)
 
 /obj/structure/destructible/cult/item_dispenser/altar/succcess_message(mob/living/user, obj/item/spawned_item)
 	to_chat(user, span_cult_italic("You kneel before [src] and your faith is rewarded with [spawned_item]!"))
@@ -35,3 +50,4 @@
 #undef ELDRITCH_WHETSTONE
 #undef CONSTRUCT_SHELL
 #undef UNHOLY_WATER
+#undef PROTEON_ORB

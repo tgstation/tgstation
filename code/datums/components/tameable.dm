@@ -42,7 +42,7 @@
 	var/inform_tamer = FALSE
 	atom_parent.balloon_alert(attacker, "fed")
 	var/modified_tame_chance = current_tame_chance
-	if(HAS_TRAIT(attacker, TRAIT_SETTLER))
+	if(HAS_TRAIT(attacker, TRAIT_BEAST_EMPATHY))
 		modified_tame_chance += 50
 		inform_tamer = TRUE
 	if(unique || !already_friends(attacker))
@@ -71,7 +71,7 @@
 		if(inform_tamer)
 			source.balloon_alert(tamer, "tamed")
 
-	if(HAS_TRAIT(tamer, TRAIT_SETTLER))
+	if(HAS_TRAIT(tamer, TRAIT_BEAST_EMPATHY))
 		INVOKE_ASYNC(src, PROC_REF(rename_pet), source, tamer)
 	if(unique)
 		qdel(src)

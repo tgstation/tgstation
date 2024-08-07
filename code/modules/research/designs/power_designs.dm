@@ -4,12 +4,12 @@
 
 /datum/design/basic_cell
 	name = "Basic Power Cell"
-	desc = "A basic power cell that holds 1 MJ of energy."
+	desc = "A basic power cell that holds 10 KW of energy."
 	id = "basic_cell"
 	build_type = PROTOLATHE | AWAY_LATHE | AUTOLATHE |MECHFAB
 	materials = list(/datum/material/iron = SMALL_MATERIAL_AMOUNT * 7, /datum/material/glass =SMALL_MATERIAL_AMOUNT * 0.5)
 	construction_time = 10 SECONDS
-	build_path = /obj/item/stock_parts/cell/empty
+	build_path = /obj/item/stock_parts/power_store/cell/empty
 	category = list(
 		RND_CATEGORY_STOCK_PARTS + RND_SUBCATEGORY_STOCK_PARTS_1
 	)
@@ -17,12 +17,12 @@
 
 /datum/design/high_cell
 	name = "High-Capacity Power Cell"
-	desc = "A power cell that holds 10 MJ of energy."
+	desc = "A power cell that holds 100 KW of energy."
 	id = "high_cell"
 	build_type = PROTOLATHE | AWAY_LATHE | AUTOLATHE | MECHFAB
 	materials = list(/datum/material/iron = SMALL_MATERIAL_AMOUNT * 7, /datum/material/glass = SMALL_MATERIAL_AMOUNT * 0.6)
 	construction_time = 10 SECONDS
-	build_path = /obj/item/stock_parts/cell/high/empty
+	build_path = /obj/item/stock_parts/power_store/cell/high/empty
 	category = list(
 		RND_CATEGORY_STOCK_PARTS + RND_SUBCATEGORY_STOCK_PARTS_1
 	)
@@ -30,12 +30,12 @@
 
 /datum/design/super_cell
 	name = "Super-Capacity Power Cell"
-	desc = "A power cell that holds 20 MJ of energy."
+	desc = "A power cell that holds 200 KW of energy."
 	id = "super_cell"
 	build_type = PROTOLATHE | AWAY_LATHE | MECHFAB
 	materials = list(/datum/material/iron = SMALL_MATERIAL_AMOUNT * 7, /datum/material/glass = SMALL_MATERIAL_AMOUNT * 0.7)
 	construction_time = 10 SECONDS
-	build_path = /obj/item/stock_parts/cell/super/empty
+	build_path = /obj/item/stock_parts/power_store/cell/super/empty
 	category = list(
 		RND_CATEGORY_STOCK_PARTS + RND_SUBCATEGORY_STOCK_PARTS_2
 	)
@@ -43,12 +43,12 @@
 
 /datum/design/hyper_cell
 	name = "Hyper-Capacity Power Cell"
-	desc = "A power cell that holds 30 MJ of energy."
+	desc = "A power cell that holds 300 KW of energy."
 	id = "hyper_cell"
 	build_type = PROTOLATHE | AWAY_LATHE | MECHFAB
 	materials = list(/datum/material/iron = SMALL_MATERIAL_AMOUNT * 7, /datum/material/gold = SMALL_MATERIAL_AMOUNT * 1.5, /datum/material/silver = SMALL_MATERIAL_AMOUNT * 1.5, /datum/material/glass = SMALL_MATERIAL_AMOUNT * 0.8)
 	construction_time = 10 SECONDS
-	build_path = /obj/item/stock_parts/cell/hyper/empty
+	build_path = /obj/item/stock_parts/power_store/cell/hyper/empty
 	category = list(
 		RND_CATEGORY_STOCK_PARTS + RND_SUBCATEGORY_STOCK_PARTS_3
 	)
@@ -56,16 +56,82 @@
 
 /datum/design/bluespace_cell
 	name = "Bluespace Power Cell"
-	desc = "A power cell that holds 40 MJ of energy."
+	desc = "A power cell that holds 400 KW of energy."
 	id = "bluespace_cell"
 	build_type = PROTOLATHE | AWAY_LATHE | MECHFAB
 	materials = list(/datum/material/iron = SMALL_MATERIAL_AMOUNT * 8, /datum/material/gold = SMALL_MATERIAL_AMOUNT * 1.2, /datum/material/glass = SMALL_MATERIAL_AMOUNT * 1.6, /datum/material/diamond = SMALL_MATERIAL_AMOUNT * 1.6, /datum/material/titanium =SMALL_MATERIAL_AMOUNT * 3, /datum/material/bluespace =SMALL_MATERIAL_AMOUNT)
 	construction_time = 10 SECONDS
-	build_path = /obj/item/stock_parts/cell/bluespace/empty
+	build_path = /obj/item/stock_parts/power_store/cell/bluespace/empty
 	category = list(
 		RND_CATEGORY_STOCK_PARTS + RND_SUBCATEGORY_STOCK_PARTS_4
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_SCIENCE | DEPARTMENT_BITFLAG_ENGINEERING
+
+/datum/design/basic_battery
+	name = "Basic Megacell"
+	desc = "A basic megacell that holds 1 MJ of energy."
+	id = "basic_battery"
+	build_type = PROTOLATHE | AWAY_LATHE | AUTOLATHE |MECHFAB
+	materials = list(/datum/material/iron = SMALL_MATERIAL_AMOUNT * 12, /datum/material/glass =SMALL_MATERIAL_AMOUNT * 2)
+	construction_time = 10 SECONDS
+	build_path = /obj/item/stock_parts/power_store/battery/empty
+	category = list(
+		RND_CATEGORY_STOCK_PARTS + RND_SUBCATEGORY_STOCK_PARTS_1
+	)
+	departmental_flags = DEPARTMENT_BITFLAG_SCIENCE | DEPARTMENT_BITFLAG_ENGINEERING
+
+/datum/design/high_battery
+	name = "High-Capacity Megacell"
+	desc = "A megacell that holds 10 MJ of energy."
+	id = "high_battery"
+	build_type = PROTOLATHE | AWAY_LATHE | AUTOLATHE | MECHFAB
+	materials = list(/datum/material/iron = SMALL_MATERIAL_AMOUNT * 12, /datum/material/glass = SMALL_MATERIAL_AMOUNT * 3)
+	construction_time = 10 SECONDS
+	build_path = /obj/item/stock_parts/power_store/battery/high/empty
+	category = list(
+		RND_CATEGORY_STOCK_PARTS + RND_SUBCATEGORY_STOCK_PARTS_2
+	)
+	departmental_flags = DEPARTMENT_BITFLAG_SCIENCE | DEPARTMENT_BITFLAG_ENGINEERING
+
+/datum/design/super_battery
+	name = "Super-Capacity Megacell"
+	desc = "A megacell that holds 20 MJ of energy."
+	id = "super_battery"
+	build_type = PROTOLATHE | AWAY_LATHE | MECHFAB
+	materials = list(/datum/material/iron = SMALL_MATERIAL_AMOUNT * 12, /datum/material/glass = SMALL_MATERIAL_AMOUNT * 4)
+	construction_time = 10 SECONDS
+	build_path = /obj/item/stock_parts/power_store/battery/super/empty
+	category = list(
+		RND_CATEGORY_STOCK_PARTS + RND_SUBCATEGORY_STOCK_PARTS_3
+	)
+	departmental_flags = DEPARTMENT_BITFLAG_SCIENCE | DEPARTMENT_BITFLAG_ENGINEERING
+
+/datum/design/hyper_battery
+	name = "Hyper-Capacity Megacell"
+	desc = "A megacell that holds 30 MJ of energy."
+	id = "hyper_battery"
+	build_type = PROTOLATHE | AWAY_LATHE | MECHFAB
+	materials = list(/datum/material/iron = SMALL_MATERIAL_AMOUNT * 12, /datum/material/gold = SMALL_MATERIAL_AMOUNT * 1.5, /datum/material/silver = SMALL_MATERIAL_AMOUNT * 1.5, /datum/material/glass = SMALL_MATERIAL_AMOUNT * 5)
+	construction_time = 10 SECONDS
+	build_path = /obj/item/stock_parts/power_store/battery/hyper/empty
+	category = list(
+		RND_CATEGORY_STOCK_PARTS + RND_SUBCATEGORY_STOCK_PARTS_3
+	)
+	departmental_flags = DEPARTMENT_BITFLAG_SCIENCE | DEPARTMENT_BITFLAG_ENGINEERING
+
+/datum/design/bluespace_battery
+	name = "Bluespace Megacell"
+	desc = "A megacell that holds 40 MJ of energy."
+	id = "bluespace_battery"
+	build_type = PROTOLATHE | AWAY_LATHE | MECHFAB
+	materials = list(/datum/material/iron = SMALL_MATERIAL_AMOUNT * 12, /datum/material/gold = SMALL_MATERIAL_AMOUNT * 1.2, /datum/material/glass = SMALL_MATERIAL_AMOUNT * 6, /datum/material/diamond = SMALL_MATERIAL_AMOUNT * 1.6, /datum/material/titanium =SMALL_MATERIAL_AMOUNT * 3, /datum/material/bluespace =SMALL_MATERIAL_AMOUNT)
+	construction_time = 10 SECONDS
+	build_path = /obj/item/stock_parts/power_store/battery/bluespace/empty
+	category = list(
+		RND_CATEGORY_STOCK_PARTS + RND_SUBCATEGORY_STOCK_PARTS_4
+	)
+	departmental_flags = DEPARTMENT_BITFLAG_SCIENCE | DEPARTMENT_BITFLAG_ENGINEERING
+
 
 /datum/design/inducer
 	name = "Inducer"

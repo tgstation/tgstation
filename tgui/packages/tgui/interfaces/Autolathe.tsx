@@ -1,7 +1,3 @@
-import { BooleanLike, classes } from 'common/react';
-import { capitalize } from 'common/string';
-
-import { useBackend } from '../backend';
 import {
   Box,
   Button,
@@ -12,7 +8,11 @@ import {
   Section,
   Stack,
   Tooltip,
-} from '../components';
+} from 'tgui-core/components';
+import { BooleanLike, classes } from 'tgui-core/react';
+import { capitalize } from 'tgui-core/string';
+
+import { useBackend } from '../backend';
 import { Window } from '../layouts';
 import { DesignBrowser } from './Fabrication/DesignBrowser';
 import { MaterialCostSequence } from './Fabrication/MaterialCostSequence';

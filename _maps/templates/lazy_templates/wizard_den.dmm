@@ -46,7 +46,7 @@
 /area/centcom/wizard_station)
 "dr" = (
 /obj/structure/table/wood,
-/obj/item/clothing/mask/cigarette/cigar{
+/obj/item/cigarette/cigar{
 	pixel_y = -9;
 	pixel_x = -5
 	},
@@ -328,11 +328,8 @@
 /turf/open/floor/iron,
 /area/centcom/wizard_station)
 "qg" = (
+/obj/structure/railing,
 /obj/structure/railing{
-	layer = 3.1
-	},
-/obj/structure/railing{
-	layer = 3.1;
 	dir = 1
 	},
 /turf/open/floor/engine/cult,
@@ -511,9 +508,7 @@
 /turf/open/floor/plastic,
 /area/centcom/wizard_station)
 "yX" = (
-/obj/structure/railing{
-	layer = 3.1
-	},
+/obj/structure/railing,
 /obj/structure/railing/corner{
 	dir = 4
 	},

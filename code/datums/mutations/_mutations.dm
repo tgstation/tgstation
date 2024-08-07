@@ -96,6 +96,8 @@
 	var/energy_coeff = -1
 	/// List of strings of valid chromosomes this mutation can accept.
 	var/list/valid_chrom_list = list()
+	/// List of traits that are added or removed by the mutation with GENETIC_TRAIT source.
+	var/list/mutation_traits
 
 /datum/mutation/human/New(class = MUT_OTHER, timer, datum/mutation/human/copymut)
 	. = ..()
@@ -130,6 +132,7 @@
 	owner = acquirer
 	dna = acquirer.dna
 	dna.mutations += src
+	SEND_SIGNAL(src, COMSIG_MUTATION_GAINED, acquirer)
 	if(text_gain_indication)
 		to_chat(owner, text_gain_indication)
 	if(visual_indicators.len)
@@ -141,6 +144,8 @@
 		owner.overlays_standing[layer_used] = mut_overlay
 		owner.apply_overlay(layer_used)
 	grant_power() //we do checks here so nothing about hulk getting magic
+	if(mutation_traits)
+		owner.add_traits(mutation_traits, GENETIC_MUTATION)
 	if(!modified)
 		addtimer(CALLBACK(src, PROC_REF(modify), 0.5 SECONDS)) //gonna want children calling ..() to run first
 
@@ -154,6 +159,7 @@
 	if(!istype(owner) || !(owner.dna.mutations.Remove(src)))
 		return TRUE
 	. = FALSE
+	SEND_SIGNAL(src, COMSIG_MUTATION_LOST, owner)
 	if(text_lose_indication && owner.stat != DEAD)
 		to_chat(owner, text_lose_indication)
 	if(visual_indicators.len)
@@ -164,6 +170,9 @@
 		mut_overlay.Remove(get_visual_indicator())
 		owner.overlays_standing[layer_used] = mut_overlay
 		owner.apply_overlay(layer_used)
+
+	if(mutation_traits)
+		owner.remove_traits(mutation_traits, GENETIC_MUTATION)
 
 /mob/living/carbon/proc/update_mutations_overlay()
 	return

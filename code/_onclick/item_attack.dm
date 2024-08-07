@@ -8,6 +8,11 @@
  * * [/obj/item/proc/afterattack]. The return value does not matter.
  */
 /obj/item/proc/melee_attack_chain(mob/user, atom/target, params)
+	//Proxy replaces src cause it returns an atom that will attack the target on our behalf
+	var/obj/item/source_atom = get_proxy_attacker_for(target, user)
+	if(source_atom != src) //if we are someone else then call that attack chain else we can proceed with the usual stuff
+		return source_atom.melee_attack_chain(user, target, params)
+
 	var/list/modifiers = params2list(params)
 	var/is_right_clicking = LAZYACCESS(modifiers, RIGHT_CLICK)
 
@@ -195,13 +200,11 @@
  * * params - Click params of this attack
  */
 /obj/item/proc/attack(mob/living/target_mob, mob/living/user, params)
-	var/signal_return = SEND_SIGNAL(src, COMSIG_ITEM_ATTACK, target_mob, user, params)
+	var/signal_return = SEND_SIGNAL(src, COMSIG_ITEM_ATTACK, target_mob, user, params) || SEND_SIGNAL(user, COMSIG_MOB_ITEM_ATTACK, target_mob, user, params)
 	if(signal_return & COMPONENT_CANCEL_ATTACK_CHAIN)
 		return TRUE
 	if(signal_return & COMPONENT_SKIP_ATTACK)
 		return FALSE
-
-	SEND_SIGNAL(user, COMSIG_MOB_ITEM_ATTACK, target_mob, user, params)
 
 	if(item_flags & NOBLUDGEON)
 		return FALSE
@@ -248,7 +251,7 @@
 
 /// The equivalent of the standard version of [/obj/item/proc/attack] but for non mob targets.
 /obj/item/proc/attack_atom(atom/attacked_atom, mob/living/user, params)
-	var/signal_return = SEND_SIGNAL(src, COMSIG_ITEM_ATTACK_ATOM, attacked_atom, user)
+	var/signal_return = SEND_SIGNAL(src, COMSIG_ITEM_ATTACK_ATOM, attacked_atom, user) | SEND_SIGNAL(user, COMSIG_LIVING_ATTACK_ATOM, attacked_atom)
 	if(signal_return & COMPONENT_SKIP_ATTACK)
 		return TRUE
 	if(signal_return & COMPONENT_CANCEL_ATTACK_CHAIN)
@@ -458,9 +461,8 @@
 		return
 	var/message_verb_continuous = length(I.attack_verb_continuous) ? "[pick(I.attack_verb_continuous)]" : "attacks"
 	var/message_verb_simple = length(I.attack_verb_simple) ? "[pick(I.attack_verb_simple)]" : "attack"
-	var/message_hit_area = ""
-	if(hit_area)
-		message_hit_area = " in the [hit_area]"
+	var/message_hit_area = get_hit_area_message(hit_area)
+
 	var/attack_message_spectator = "[src] [message_verb_continuous][message_hit_area] with [I]!"
 	var/attack_message_victim = "Something [message_verb_continuous] you[message_hit_area] with [I]!"
 	var/attack_message_attacker = "You [message_verb_simple] [src][message_hit_area] with [I]!"
@@ -475,3 +477,11 @@
 		to_chat(src, span_danger("Someone hits you[message_hit_area]!"))
 	to_chat(user, span_danger("[attack_message_attacker]"))
 	return 1
+
+/// Overridable proc so subtypes can have unique targetted strike zone messages, return a string.
+/mob/living/proc/get_hit_area_message(input_area)
+	if(input_area)
+		return " in the [input_area]"
+
+	return ""
+

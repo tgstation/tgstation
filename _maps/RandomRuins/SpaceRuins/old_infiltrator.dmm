@@ -676,11 +676,11 @@
 "Ux" = (
 /obj/structure/extinguisher_cabinet/directional/west,
 /obj/structure/table,
-/obj/item/stock_parts/cell/high/empty{
+/obj/item/stock_parts/power_store/cell/high/empty{
 	pixel_y = 4;
 	pixel_x = 5
 	},
-/obj/item/stock_parts/cell/emproof/empty,
+/obj/item/stock_parts/power_store/cell/emproof/empty,
 /turf/open/floor/mineral/plastitanium/red/airless,
 /area/ruin/space/unpowered)
 "UN" = (

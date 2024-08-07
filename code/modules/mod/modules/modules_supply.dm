@@ -499,6 +499,7 @@
 	mod.wearer.add_traits(user_traits, MOD_TRAIT)
 	mod.wearer.RemoveElement(/datum/element/footstep, FOOTSTEP_MOB_HUMAN, 1, -6)
 	mod.wearer.AddElement(/datum/element/footstep, FOOTSTEP_OBJ_ROBOT, 1, -6, sound_vary = TRUE)
+	mod.wearer.add_movespeed_mod_immunities(MOD_TRAIT, /datum/movespeed_modifier/damage_slowdown)
 	mod.wearer.add_movespeed_modifier(/datum/movespeed_modifier/sphere)
 	RegisterSignal(mod.wearer, COMSIG_MOB_STATCHANGE, PROC_REF(on_statchange))
 
@@ -559,7 +560,8 @@
 	light_range = 1
 	light_power = 1
 	light_color = COLOR_LIGHT_ORANGE
-	embedding = null
+	embed_type = null
+	can_hit_turfs = TRUE
 
 /obj/projectile/bullet/mining_bomb/Initialize(mapload)
 	. = ..()

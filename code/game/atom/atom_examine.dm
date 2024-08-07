@@ -5,7 +5,7 @@
 /**
  * Called when a mob examines (shift click or verb) this atom
  *
- * Default behaviour is to get the name and icon of the object and it's reagents where
+ * Default behaviour is to get the name and icon of the object and its reagents where
  * the [TRANSPARENT] flag is set on the reagents holder
  *
  * Produces a signal [COMSIG_ATOM_EXAMINE]
@@ -105,5 +105,6 @@
 	return name_chaser
 
 /// Used by mobs to determine the name for someone wearing a mask, or with a disfigured or missing face. By default just returns the atom's name. add_id_name will control whether or not we append "(as [id_name])".
-/atom/proc/get_visible_name(add_id_name)
+/// force_real_name will always return real_name and add (as face_name/id_name) if it doesn't match their appearance
+/atom/proc/get_visible_name(add_id_name, force_real_name)
 	return name

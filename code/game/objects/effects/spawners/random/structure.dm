@@ -2,6 +2,15 @@
 	name = "structure spawner"
 	desc = "Now you see me, now you don't..."
 
+///12% chance to spawn a ouija board, or a potted plant. Btw, Wawastation has a guaranteed board.
+/obj/effect/spawner/random/structure/twelve_percent_spirit_board
+	name = "12% spirit board"
+	icon_state = "spirit_board"
+	loot = list(
+		/obj/structure/spirit_board = 3,
+		/obj/item/kirbyplants/random = 22,
+	)
+
 /obj/effect/spawner/random/structure/crate
 	name = "crate spawner"
 	icon_state = "crate_secure"
@@ -123,7 +132,7 @@
 
 /obj/effect/spawner/random/structure/closet_empty/crate/with_loot/make_item(spawn_loc, type_path_to_make)
 	var/obj/structure/closet/closet_to_fill = ..()
-	closet_to_fill.RegisterSignal(closet_to_fill, COMSIG_CLOSET_POPULATE_CONTENTS, TYPE_PROC_REF(/obj/structure/closet/, populate_with_random_maint_loot))
+	closet_to_fill.RegisterSignal(closet_to_fill, COMSIG_CLOSET_CONTENTS_INITIALIZED, TYPE_PROC_REF(/obj/structure/closet/, populate_with_random_maint_loot))
 
 	return closet_to_fill
 

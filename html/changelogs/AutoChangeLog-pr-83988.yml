@@ -1,8 +1,0 @@
-author: "mc-oofert"
-delete-after: True
-changes:
-  - bugfix: "wawa centcom interns may actually leave the stationside dock"
-  - bugfix: "wawa hop office and cap office get keycard auths"
-  - bugfix: "wawa disposals blast doors work properly"
-  - bugfix: "wawa med elevator controls on the bottom floor are accessible"
-  - bugfix: "sci entrance actually has access restrictions"

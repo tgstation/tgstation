@@ -1,5 +1,9 @@
+///Main proc for primary alt click
+/mob/proc/AltClickOn(atom/target)
+	base_click_alt(target)
+
 /**
- * ### Base proc for alt click interaction left click.
+ * ### Base proc for alt click interaction left click. Returns if the click was intercepted & handled
  *
  * If you wish to add custom `click_alt` behavior for a single type, use that proc.
  */
@@ -8,43 +12,36 @@
 
 	// Check if they've hooked in to prevent src from alt clicking anything
 	if(SEND_SIGNAL(src, COMSIG_MOB_ALTCLICKON, target) & COMSIG_MOB_CANCEL_CLICKON)
-		return
+		return TRUE
 
-	// Is it visible (and we're not wearing it (our clothes are invisible))?
-	if(!CAN_I_SEE(target))
-		return
+	// If it has a signal handler that returns a click action, done.
+	if(SEND_SIGNAL(target, COMSIG_CLICK_ALT, src) & CLICK_ACTION_ANY)
+		return TRUE
 
-	if(is_blind() && !IN_GIVEN_RANGE(src, target, 1))
-		return
-
-	var/turf/tile = get_turf(target)
-
-	// Ghosties just see loot
-	if(isobserver(src) || isrevenant(src))
-		client.loot_panel.open(tile)
-		return
-
+	// If it has a custom click_alt that returns success/block, done.
 	if(can_perform_action(target, (target.interaction_flags_click | SILENT_ADJACENCY)))
-		// If it has a signal handler that returns a click action, done.
-		if(SEND_SIGNAL(target, COMSIG_CLICK_ALT, src) & CLICK_ACTION_ANY)
-			return
+		return target.click_alt(src) & CLICK_ACTION_ANY
 
-		// If it has a custom click_alt that returns success/block, done.
-		if(target.click_alt(src) & CLICK_ACTION_ANY)
-			return
+	return FALSE
+
+/mob/living/base_click_alt(atom/target)
+	SHOULD_NOT_OVERRIDE(TRUE)
+
+	. = ..()
+	if(. || !CAN_I_SEE(target) || (is_blind() && !IN_GIVEN_RANGE(src, target, 1)))
+		return
 
 	// No alt clicking to view turf from beneath
 	if(HAS_TRAIT(src, TRAIT_MOVE_VENTCRAWLING))
 		return
 
 	/// No loot panel if it's on our person
-	if(isobj(target) && isliving(src))
-		var/mob/living/user = src
-		if(target in user.get_all_gear())
-			to_chat(user, span_warning("You can't search for this item, it's already in your inventory! Take it off first."))
-			return
+	if(isobj(target) && (target in get_all_gear()))
+		to_chat(src, span_warning("You can't search for this item, it's already in your inventory! Take it off first."))
+		return
 
-	client.loot_panel.open(tile)
+	client.loot_panel.open(get_turf(target))
+	return TRUE
 
 /**
  * ## Custom alt click interaction
@@ -78,6 +75,10 @@
 	return NONE
 
 
+///Main proc for secondary alt click
+/mob/proc/AltClickSecondaryOn(atom/target)
+	base_click_alt_secondary(target)
+
 /**
  * ### Base proc for alt click interaction right click.
  *
@@ -90,17 +91,13 @@
 	if(SEND_SIGNAL(src, COMSIG_MOB_ALTCLICKON_SECONDARY, target) & COMSIG_MOB_CANCEL_CLICKON)
 		return
 
-	if(!can_perform_action(target, target.interaction_flags_click | SILENT_ADJACENCY))
-		return
-
 	//Hook on the atom to intercept the click
 	if(SEND_SIGNAL(target, COMSIG_CLICK_ALT_SECONDARY, src) & COMPONENT_CANCEL_CLICK_ALT_SECONDARY)
 		return
 
-	if(isobserver(src) && client && check_rights_for(client, R_DEBUG))
-		client.toggle_tag_datum(src)
-		return
-	target.click_alt_secondary(src)
+	// If it has a custom click_alt_secondary then do that
+	if(can_perform_action(target, target.interaction_flags_click | SILENT_ADJACENCY))
+		target.click_alt_secondary(src)
 
 /**
  * ## Custom alt click secondary interaction

@@ -47,7 +47,6 @@
 	if(can_hack_open)
 		RegisterSignal(parent, COMSIG_ATOM_TOOL_ACT(TOOL_SCREWDRIVER), PROC_REF(on_screwdriver_act))
 		RegisterSignal(parent, COMSIG_ATOM_TOOL_ACT(TOOL_MULTITOOL), PROC_REF(on_multitool_act))
-		RegisterSignal(parent, COMSIG_ATOM_STORAGE_ITEM_INTERACT_INSERT, PROC_REF(block_insert))
 
 	RegisterSignal(parent, COMSIG_ATOM_EXAMINE, PROC_REF(on_examine))
 	RegisterSignal(parent, COMSIG_ATOM_REQUESTING_CONTEXT_FROM_ITEM, PROC_REF(on_requesting_context_from_item))
@@ -117,6 +116,7 @@
 		return NONE
 
 	panel_open = !panel_open
+	tool.play_tool_sound(source)
 	source.balloon_alert(user, "panel [panel_open ? "opened" : "closed"]")
 	return ITEM_INTERACT_SUCCESS
 
@@ -137,19 +137,10 @@
 
 ///Does a do_after to hack the storage open, takes a long time cause idk.
 /datum/component/lockable_storage/proc/hack_open(atom/source, mob/user, obj/item/tool)
-	if(!tool.use_tool(parent, user, 40 SECONDS))
+	if(!tool.use_tool(parent, user, 40 SECONDS, volume = 50))
 		return
 	source.balloon_alert(user, "hacked")
 	lock_code = null
-
-/// Stops you from shoving your tools into the storage if you're trying to hack it
-/datum/component/lockable_storage/proc/block_insert(atom/source, obj/item/inserting, mob/living/user)
-	SIGNAL_HANDLER
-	if(!can_hack_open || !source.atom_storage.locked)
-		return NONE // allow insert
-	if(inserting.tool_behaviour == TOOL_MULTITOOL || inserting.tool_behaviour == TOOL_SCREWDRIVER)
-		return BLOCK_STORAGE_INSERT // block insert
-	return NONE
 
 ///Updates the icon state depending on if we're locked or not.
 /datum/component/lockable_storage/proc/on_update_icon_state(obj/source)

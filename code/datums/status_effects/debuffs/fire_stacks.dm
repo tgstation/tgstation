@@ -136,6 +136,18 @@
 	/// Type of mob light emitter we use when on fire
 	var/moblight_type = /obj/effect/dummy/lighting_obj/moblight/fire
 
+/datum/status_effect/fire_handler/fire_stacks/proc/owner_touched_sparks()
+	SIGNAL_HANDLER
+
+	ignite()
+
+/datum/status_effect/fire_handler/fire_stacks/on_creation(mob/living/new_owner, new_stacks, forced = FALSE)
+	. = ..()
+	RegisterSignal(owner, COMSIG_ATOM_TOUCHED_SPARKS, PROC_REF(owner_touched_sparks))
+
+/datum/status_effect/fire_handler/fire_stacks/on_remove()
+	UnregisterSignal(owner, COMSIG_ATOM_TOUCHED_SPARKS)
+
 /datum/status_effect/fire_handler/fire_stacks/tick(seconds_between_ticks)
 	if(stacks <= 0)
 		qdel(src)
