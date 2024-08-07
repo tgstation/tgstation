@@ -41,8 +41,6 @@
 
 /mob/living/basic/mining/lobstrosity/Initialize(mapload)
 	. = ..()
-	var/static/list/food_types = list(/obj/item/fish/lavaloop)
-	ai_controller.set_blackboard_key(BB_BASIC_FOODS, typecacheof(food_types))
 	AddComponent(/datum/component/profound_fisher)
 	AddElement(/datum/element/mob_grabber)
 	AddElement(/datum/element/footstep, FOOTSTEP_MOB_CLAW)
@@ -160,7 +158,7 @@
 
 /mob/living/basic/mining/lobstrosity/juvenile/Initialize(mapload)
 	. = ..()
-	var/growth_step = 1000/(8 MINUTES) //It should take 8 minutes if you keep the happiness above 40% and at most 14
+	var/growth_step = 1000/(7 MINUTES) //It should take 7-ish minutes if you keep the happiness above 40% and at most 12
 	AddComponent(\
 		/datum/component/growth_and_differentiation,\
 		growth_path = grow_type,\

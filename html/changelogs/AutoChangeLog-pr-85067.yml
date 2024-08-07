@@ -1,9 +1,0 @@
-author: "SmArtKar"
-delete-after: True
-changes:
-  - balance: "Mechs now take armor into consideration when calculating punch damage"
-  - bugfix: "Mechs no longer deal direct limb damage"
-  - bugfix: "Drills automatically pick up ore on non-ripley mechs now without having to move"
-  - bugfix: "Drills no longer dismember people immune to melee damage"
-  - bugfix: "Drills now take armor from correct bodyparts when attacking"
-  - code_imp: "Cleaned up one-letter variables in mech drill code"
