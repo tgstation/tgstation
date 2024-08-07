@@ -29,6 +29,7 @@
 	SIGNAL_HANDLER
 
 	custom_spawns -= source
+	UnregisterSignal(source, COMSIG_QDELETING)
 
 
 /// Someone has spawned in, so we check for their death
