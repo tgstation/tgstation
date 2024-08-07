@@ -50,6 +50,7 @@
 	resistance_flags = NONE
 	armor_type = /datum/armor/shoes_jackboots
 	can_be_tied = FALSE
+	body_parts_covered = FEET|LEGS
 
 /datum/armor/shoes_jackboots
 	bio = 90

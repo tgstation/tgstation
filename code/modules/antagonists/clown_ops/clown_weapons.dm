@@ -50,6 +50,7 @@
 	strip_delay = 70
 	resistance_flags = NONE
 	always_noslip = TRUE
+	body_parts_covered = FEET|LEGS
 
 /datum/armor/banana_shoes_combat
 	melee = 25
