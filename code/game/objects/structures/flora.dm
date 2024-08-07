@@ -2,7 +2,7 @@
 	name = "flora"
 	desc = "Some sort of plant."
 	resistance_flags = FLAMMABLE
-	max_integrity = 150
+	max_integrity = 25
 	anchored = TRUE
 	drag_slowdown = 1.3
 
