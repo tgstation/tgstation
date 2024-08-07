@@ -367,6 +367,7 @@
 //
 
 /obj/machinery/power/solar_control
+	SET_BASE_VISUAL_PIXEL(0, DEPTH_OFFSET)
 	name = "solar panel control"
 	desc = "A controller for solar panel arrays."
 	icon = 'icons/obj/machines/computer.dmi'

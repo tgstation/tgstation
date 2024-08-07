@@ -784,6 +784,7 @@
  */
 
 /obj/structure/table/optable
+	SET_BASE_VISUAL_PIXEL(0, DEPTH_OFFSET)
 	name = "operating table"
 	desc = "Used for advanced medical procedures."
 	icon = 'icons/obj/medical/surgery_table.dmi'

@@ -2,6 +2,7 @@
 #define SKILLCHIP_REMOVAL_TIME (15 SECONDS)
 
 /obj/machinery/skill_station
+	SET_BASE_VISUAL_PIXEL(0, DEPTH_OFFSET)
 	name = "\improper Skillsoft station"
 	desc = "Learn skills with only minimal chance for brain damage."
 

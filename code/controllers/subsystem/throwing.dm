@@ -92,8 +92,7 @@ SUBSYSTEM_DEF(throwing)
 
 /datum/thrownthing/New(atom/movable/thrownthing, target, init_dir, maxrange, speed, thrower, diagonals_first, force, gentle, callback, target_zone)
 	. = ..()
-	if(thrownthing.pixel_z < DEPTH_OFFSET)
-		thrownthing.pixel_z += DEPTH_OFFSET
+	thrownthing.pixel_z = thrownthing.base_pixel_z + DEPTH_OFFSET
 	src.thrownthing = thrownthing
 	RegisterSignal(thrownthing, COMSIG_QDELETING, PROC_REF(on_thrownthing_qdel))
 	src.starting_turf = get_turf(thrownthing)
@@ -238,7 +237,7 @@ SUBSYSTEM_DEF(throwing)
 		if(landed_turf)
 			SEND_SIGNAL(landed_turf, COMSIG_TURF_MOVABLE_THROW_LANDED, thrownthing)
 		if(thrownthing.pixel_z >= DEPTH_OFFSET)
-			animate(thrownthing, pixel_z = thrownthing.pixel_z - DEPTH_OFFSET, easing = BACK_EASING|EASE_IN, time = 0.2 SECONDS)
+			animate(thrownthing, pixel_z = thrownthing.base_pixel_z, easing = BACK_EASING|EASE_IN, time = 0.2 SECONDS)
 
 	qdel(src)
 
