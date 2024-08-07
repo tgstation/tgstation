@@ -226,6 +226,7 @@
 	greyscale_config_worn = null
 	can_adjust = FALSE
 	flags_1 = NONE
+	resistance_flags = FIRE_PROOF
 
 /obj/item/clothing/under/color/jumpskirt/rainbow
 	name = "rainbow jumpskirt"
