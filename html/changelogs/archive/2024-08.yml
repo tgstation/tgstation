@@ -65,3 +65,8 @@
       anymore.
   Uristthedorf:
   - balance: Prybar is now bulky.
+2024-08-07:
+  Absolucy:
+  - bugfix: Heretic sacrifices properly work again.
+  Odairu:
+  - balance: removes hivemind from NIFs it has no place in this realm
