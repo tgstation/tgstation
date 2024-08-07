@@ -160,8 +160,7 @@
 		secure_radio_connections[channel_name] = add_radio(src, GLOB.radiochannels[channel_name])
 
 	if(!listening)
-		set_listening(TRUE)
-		set_listening(FALSE)
+		remove_radio_all(src)
 
 // Used for cyborg override
 /obj/item/radio/proc/resetChannels()
