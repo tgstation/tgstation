@@ -17,6 +17,7 @@
 	name = "pod mining drill"
 	desc = "A rig for pods that drills rocks infront of it."
 	cooldown_time = 1 SECONDS
+	icon_state = "drill"
 	/// damage vs objects
 	var/damage_obj = 10
 	/// damage vs mobs
