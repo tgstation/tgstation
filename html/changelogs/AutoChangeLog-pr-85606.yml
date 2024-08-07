@@ -1,4 +1,0 @@
-author: "SmArtKar"
-delete-after: True
-changes:
-  - bugfix: "Tinacusiate no longer changes hearing spans for every single person in-game"
