@@ -17,7 +17,8 @@ import {
 import { FONTS_DISABLED } from './constants';
 import { selectSettings } from './selectors';
 
-let setStatFontTimer: NodeJS.Timeout;
+let statFontTimer: NodeJS.Timeout;
+let statTabsTimer: NodeJS.Timeout;
 let overrideRule: HTMLStyleElement;
 let overrideFontFamily: string | undefined;
 let overrideFontSize: string;
@@ -53,11 +54,11 @@ function setGlobalFontSize(
   overrideFontSize = `${fontSize}px`;
 
   // Used solution from theme.ts
-  clearInterval(setStatFontTimer);
+  clearInterval(statFontTimer);
   Byond.command(
     `.output statbrowser:set_font_size ${statLinked ? fontSize : statFontSize}px`,
   );
-  setStatFontTimer = setTimeout(() => {
+  statFontTimer = setTimeout(() => {
     Byond.command(
       `.output statbrowser:set_font_size ${statLinked ? fontSize : statFontSize}px`,
     );
@@ -66,6 +67,14 @@ function setGlobalFontSize(
 
 function setGlobalFontFamily(fontFamily: string) {
   overrideFontFamily = fontFamily === FONTS_DISABLED ? undefined : fontFamily;
+}
+
+function setStatTabsStyle(style: string) {
+  clearInterval(statTabsTimer);
+  Byond.command(`.output statbrowser:set_tabs_style ${style}`);
+  statTabsTimer = setTimeout(() => {
+    Byond.command(`.output statbrowser:set_tabs_style ${style}`);
+  }, 1500);
 }
 
 export function settingsMiddleware(store) {
@@ -100,6 +109,9 @@ export function settingsMiddleware(store) {
     next(action);
 
     const settings = selectSettings(store.getState());
+
+    // Update stat panel settings
+    setStatTabsStyle(settings.statTabsStyle);
 
     // Update global UI font size
     setGlobalFontSize(
