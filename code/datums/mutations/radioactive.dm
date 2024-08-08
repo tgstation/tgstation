@@ -17,8 +17,10 @@
 /datum/mutation/human/radioactive/get_visual_indicator()
 	return visual_indicators[type][1]
 
-/datum/mutation/human/radioactive/on_acquiring(mob/living/carbon/human/acquirer)
+/datum/mutation/human/radioactive/on_acquiring(mob/living/carbon/human/acquirer, forced = FALSE)
 	. = ..()
+	if(.)
+		return
 	var/datum/component/radioactive_emitter/radioactivity_source = make_radioactive(acquirer)
 	radioactivity_source_ref = WEAKREF(radioactivity_source)
 
@@ -39,5 +41,7 @@
 	)
 
 /datum/mutation/human/radioactive/on_losing(mob/living/carbon/human/owner)
+	. = ..()
+	if(.)
+		return
 	QDEL_NULL(radioactivity_source_ref)
-	return ..()

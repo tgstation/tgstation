@@ -4,13 +4,17 @@
 	quality = POSITIVE
 	instability = POSITIVE_INSTABILITY_MINI
 
-/datum/mutation/human/biotechcompat/on_acquiring(mob/living/carbon/human/owner)
+/datum/mutation/human/biotechcompat/on_acquiring(mob/living/carbon/human/owner, forced = FALSE)
 	. = ..()
+	if(.)
+		return
 	owner.adjust_skillchip_complexity_modifier(1)
 
 /datum/mutation/human/biotechcompat/on_losing(mob/living/carbon/human/owner)
+	. = ..()
+	if(.)
+		return
 	owner.adjust_skillchip_complexity_modifier(-1)
-	return ..()
 
 /datum/mutation/human/clever
 	name = "Clever"
@@ -20,12 +24,14 @@
 	text_gain_indication = span_danger("You feel a little bit smarter.")
 	text_lose_indication = span_danger("Your mind feels a little bit foggy.")
 
-/datum/mutation/human/clever/on_acquiring(mob/living/carbon/human/owner)
-	if(..())
+/datum/mutation/human/clever/on_acquiring(mob/living/carbon/human/owner, forced = FALSE)
+	. = ..()
+	if(.)
 		return
 	owner.add_traits(list(TRAIT_ADVANCEDTOOLUSER, TRAIT_LITERATE), GENETIC_MUTATION)
 
 /datum/mutation/human/clever/on_losing(mob/living/carbon/human/owner)
-	if(..())
+	. = ..()
+	if(.)
 		return
 	owner.remove_traits(list(TRAIT_ADVANCEDTOOLUSER, TRAIT_LITERATE), GENETIC_MUTATION)

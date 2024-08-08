@@ -25,13 +25,15 @@
 	text_gain_indication = span_sans(span_notice("You feel an off sensation in your voicebox."))
 	text_lose_indication = span_notice("The off sensation passes.")
 
-/datum/mutation/human/wacky/on_acquiring(mob/living/carbon/human/owner)
-	if(..())
+/datum/mutation/human/wacky/on_acquiring(mob/living/carbon/human/owner, forced = FALSE)
+	. = ..()
+	if(.)
 		return
 	RegisterSignal(owner, COMSIG_MOB_SAY, PROC_REF(handle_speech))
 
 /datum/mutation/human/wacky/on_losing(mob/living/carbon/human/owner)
-	if(..())
+	. = ..()
+	if(.)
 		return
 	UnregisterSignal(owner, COMSIG_MOB_SAY)
 
@@ -48,14 +50,16 @@
 	text_lose_indication = span_notice("The demonic entity possessing your larynx has finally released its grasp.")
 	locked = TRUE
 
-/datum/mutation/human/heckacious/on_acquiring(mob/living/carbon/human/owner)
-	if(..())
+/datum/mutation/human/heckacious/on_acquiring(mob/living/carbon/human/owner, forced = FALSE)
+	. = ..()
+	if(.)
 		return
 	RegisterSignal(owner, COMSIG_LIVING_TREAT_MESSAGE, PROC_REF(handle_caps))
 	RegisterSignal(owner, COMSIG_MOB_SAY, PROC_REF(handle_speech))
 
 /datum/mutation/human/heckacious/on_losing(mob/living/carbon/human/owner)
-	if(..())
+	. = ..()
+	if(.)
 		return
 	UnregisterSignal(owner, list(COMSIG_LIVING_TREAT_MESSAGE, COMSIG_MOB_SAY))
 
@@ -142,13 +146,15 @@
 	text_gain_indication = span_danger("You feel unable to express yourself at all.")
 	text_lose_indication = span_danger("You feel able to speak freely again.")
 
-/datum/mutation/human/mute/on_acquiring(mob/living/carbon/human/owner)
-	if(..())
+/datum/mutation/human/mute/on_acquiring(mob/living/carbon/human/owner, forced = FALSE)
+	. = ..()
+	if(.)
 		return
 	ADD_TRAIT(owner, TRAIT_MUTE, GENETIC_MUTATION)
 
 /datum/mutation/human/mute/on_losing(mob/living/carbon/human/owner)
-	if(..())
+	. = ..()
+	if(.)
 		return
 	REMOVE_TRAIT(owner, TRAIT_MUTE, GENETIC_MUTATION)
 
@@ -160,13 +166,15 @@
 	text_gain_indication = span_danger("You can't seem to form any coherent thoughts!")
 	text_lose_indication = span_danger("Your mind feels more clear.")
 
-/datum/mutation/human/unintelligible/on_acquiring(mob/living/carbon/human/owner)
-	if(..())
+/datum/mutation/human/unintelligible/on_acquiring(mob/living/carbon/human/owner, forced = FALSE)
+	. = ..()
+	if(.)
 		return
 	ADD_TRAIT(owner, TRAIT_UNINTELLIGIBLE_SPEECH, GENETIC_MUTATION)
 
 /datum/mutation/human/unintelligible/on_losing(mob/living/carbon/human/owner)
-	if(..())
+	. = ..()
+	if(.)
 		return
 	REMOVE_TRAIT(owner, TRAIT_UNINTELLIGIBLE_SPEECH, GENETIC_MUTATION)
 
@@ -225,13 +233,17 @@
 	text_gain_indication = span_notice("You feel...totally chill, man!")
 	text_lose_indication = span_notice("You feel like you have a better sense of time.")
 
-/datum/mutation/human/stoner/on_acquiring(mob/living/carbon/human/owner)
-	..()
+/datum/mutation/human/stoner/on_acquiring(mob/living/carbon/human/owner, forced = FALSE)
+	. = ..()
+	if(.)
+		return
 	owner.grant_language(/datum/language/beachbum, source = LANGUAGE_STONER)
 	owner.add_blocked_language(subtypesof(/datum/language) - /datum/language/beachbum, LANGUAGE_STONER)
 
 /datum/mutation/human/stoner/on_losing(mob/living/carbon/human/owner)
-	..()
+	. = ..()
+	if(.)
+		return
 	owner.remove_language(/datum/language/beachbum, source = LANGUAGE_STONER)
 	owner.remove_blocked_language(subtypesof(/datum/language) - /datum/language/beachbum, LANGUAGE_STONER)
 
@@ -243,13 +255,15 @@
 	text_gain_indication = span_notice("You feel like seeking the holy grail!")
 	text_lose_indication = span_notice("You no longer feel like seeking anything.")
 
-/datum/mutation/human/medieval/on_acquiring(mob/living/carbon/human/owner)
-	if(..())
+/datum/mutation/human/medieval/on_acquiring(mob/living/carbon/human/owner, forced = FALSE)
+	. = ..()
+	if(.)
 		return
 	RegisterSignal(owner, COMSIG_MOB_SAY, PROC_REF(handle_speech))
 
 /datum/mutation/human/medieval/on_losing(mob/living/carbon/human/owner)
-	if(..())
+	. = ..()
+	if(.)
 		return
 	UnregisterSignal(owner, COMSIG_MOB_SAY)
 
@@ -284,13 +298,15 @@
 	text_gain_indication = span_notice("Omethingsay eelsfay offyay.")
 	text_lose_indication = span_notice("The off sensation passes.")
 
-/datum/mutation/human/piglatin/on_acquiring(mob/living/carbon/human/owner)
-	if(..())
+/datum/mutation/human/piglatin/on_acquiring(mob/living/carbon/human/owner, forced = FALSE)
+	. = ..()
+	if(.)
 		return
 	RegisterSignal(owner, COMSIG_MOB_SAY, PROC_REF(handle_speech))
 
 /datum/mutation/human/piglatin/on_losing(mob/living/carbon/human/owner)
-	if(..())
+	. = ..()
+	if(.)
 		return
 	UnregisterSignal(owner, COMSIG_MOB_SAY)
 

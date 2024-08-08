@@ -15,7 +15,7 @@
 	if(!(type in visual_indicators))
 		visual_indicators[type] = list(mutable_appearance('icons/mob/effects/genetics.dmi', "telekinesishead", -MUTATIONS_LAYER))
 
-/datum/mutation/human/telekinesis/on_acquiring(mob/living/carbon/human/homan)
+/datum/mutation/human/telekinesis/on_acquiring(mob/living/carbon/human/homan, forced = FALSE)
 	. = ..()
 	if(.)
 		return
@@ -49,7 +49,7 @@
 	difficulty = 32
 	mutation_traits = list(TRAIT_CHUNKYFINGERS, TRAIT_NO_TWOHANDING)
 
-/datum/mutation/human/elastic_arms/on_acquiring(mob/living/carbon/human/homan)
+/datum/mutation/human/elastic_arms/on_acquiring(mob/living/carbon/human/homan, forced = FALSE)
 	. = ..()
 	if(.)
 		return

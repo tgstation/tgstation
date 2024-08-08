@@ -7,12 +7,16 @@
 	locked = TRUE
 	mutadone_proof = TRUE
 
-/datum/mutation/human/breathless/on_acquiring(mob/living/carbon/human/acquirer)
+/datum/mutation/human/breathless/on_acquiring(mob/living/carbon/human/acquirer, forced = FALSE)
 	. = ..()
+	if(.)
+		return
 	ADD_TRAIT(acquirer, TRAIT_NOBREATH, GENETIC_MUTATION)
 
 /datum/mutation/human/breathless/on_losing(mob/living/carbon/human/owner)//this shouldnt happen under normal condition but just to be sure
 	. = ..()
+	if(.)
+		return
 	REMOVE_TRAIT(owner, TRAIT_NOBREATH, GENETIC_MUTATION)
 
 /datum/mutation/human/quick
@@ -23,12 +27,16 @@
 	locked = TRUE
 	mutadone_proof = TRUE
 
-/datum/mutation/human/quick/on_acquiring(mob/living/carbon/human/acquirer)
+/datum/mutation/human/quick/on_acquiring(mob/living/carbon/human/acquirer, forced = FALSE)
 	. = ..()
+	if(.)
+		return
 	acquirer.add_movespeed_modifier(/datum/movespeed_modifier/dna_vault_speedup)
 
 /datum/mutation/human/quick/on_losing(mob/living/carbon/human/owner)
 	. = ..()
+	if(.)
+		return
 	owner.remove_movespeed_modifier(/datum/movespeed_modifier/dna_vault_speedup)
 
 /datum/mutation/human/tough
@@ -39,13 +47,17 @@
 	locked = TRUE
 	mutadone_proof = TRUE
 
-/datum/mutation/human/tough/on_acquiring(mob/living/carbon/human/acquirer)
+/datum/mutation/human/tough/on_acquiring(mob/living/carbon/human/acquirer, forced = FALSE)
 	. = ..()
+	if(.)
+		return
 	acquirer.physiology.brute_mod *= 0.7
 	ADD_TRAIT(acquirer, TRAIT_PIERCEIMMUNE, GENETIC_MUTATION)
 
 /datum/mutation/human/tough/on_losing(mob/living/carbon/human/owner)
 	. = ..()
+	if(.)
+		return
 	owner.physiology.brute_mod /= 0.7
 	REMOVE_TRAIT(owner, TRAIT_PIERCEIMMUNE, GENETIC_MUTATION)
 
@@ -57,12 +69,16 @@
 	locked = TRUE
 	mutadone_proof = TRUE
 
-/datum/mutation/human/dextrous/on_acquiring(mob/living/carbon/human/acquirer)
+/datum/mutation/human/dextrous/on_acquiring(mob/living/carbon/human/acquirer, forced = FALSE)
 	. = ..()
+	if(.)
+		return
 	acquirer.next_move_modifier *= 0.5
 
 /datum/mutation/human/dextrous/on_losing(mob/living/carbon/human/owner)
 	. = ..()
+	if(.)
+		return
 	owner.next_move_modifier /= 0.5
 
 /datum/mutation/human/fire_immunity
@@ -73,13 +89,17 @@
 	locked = TRUE
 	mutadone_proof = TRUE
 
-/datum/mutation/human/fire_immunity/on_acquiring(mob/living/carbon/human/acquirer)
+/datum/mutation/human/fire_immunity/on_acquiring(mob/living/carbon/human/acquirer, forced = FALSE)
 	. = ..()
+	if(.)
+		return
 	acquirer.physiology.burn_mod *= 0.5
 	acquirer.add_traits(list(TRAIT_RESISTHEAT, TRAIT_NOFIRE), GENETIC_MUTATION)
 
 /datum/mutation/human/fire_immunity/on_losing(mob/living/carbon/human/owner)
 	. = ..()
+	if(.)
+		return
 	owner.physiology.burn_mod /= 0.5
 	owner.remove_traits(list(TRAIT_RESISTHEAT, TRAIT_NOFIRE), GENETIC_MUTATION)
 
@@ -91,12 +111,16 @@
 	locked = TRUE
 	mutadone_proof = TRUE
 
-/datum/mutation/human/quick_recovery/on_acquiring(mob/living/carbon/human/acquirer)
+/datum/mutation/human/quick_recovery/on_acquiring(mob/living/carbon/human/acquirer, forced = FALSE)
 	. = ..()
+	if(.)
+		return
 	acquirer.physiology.stun_mod *= 0.5
 
 /datum/mutation/human/quick_recovery/on_losing(mob/living/carbon/human/owner)
 	. = ..()
+	if(.)
+		return
 	owner.physiology.stun_mod /= 0.5
 
 /datum/mutation/human/plasmocile
@@ -107,8 +131,10 @@
 	locked = TRUE
 	mutadone_proof = TRUE
 
-/datum/mutation/human/plasmocile/on_acquiring(mob/living/carbon/human/acquirer)
+/datum/mutation/human/plasmocile/on_acquiring(mob/living/carbon/human/acquirer, forced = FALSE)
 	. = ..()
+	if(.)
+		return
 	var/obj/item/organ/internal/lungs/improved_lungs = acquirer.get_organ_slot(ORGAN_SLOT_LUNGS)
 	ADD_TRAIT(owner, TRAIT_VIRUSIMMUNE, GENETIC_MUTATION)
 	if(improved_lungs)
@@ -118,6 +144,8 @@
 
 /datum/mutation/human/plasmocile/on_losing(mob/living/carbon/human/owner)
 	. = ..()
+	if(.)
+		return
 	var/obj/item/organ/internal/lungs/improved_lungs = owner.get_organ_slot(ORGAN_SLOT_LUNGS)
 	REMOVE_TRAIT(owner, TRAIT_VIRUSIMMUNE, GENETIC_MUTATION)
 	UnregisterSignal(owner, COMSIG_CARBON_LOSE_ORGAN)

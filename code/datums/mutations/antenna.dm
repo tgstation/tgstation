@@ -18,15 +18,17 @@
 	. = ..()
 	radio.name = "internal antenna"
 
-/datum/mutation/human/antenna/on_acquiring(mob/living/carbon/human/owner)
-	if(..())
+/datum/mutation/human/antenna/on_acquiring(mob/living/carbon/human/owner, forced = FALSE)
+	. = ..()
+	if(.)
 		return
 	var/obj/item/implant/radio/antenna/linked_radio = new(owner)
 	linked_radio.implant(owner, null, TRUE, TRUE)
 	radio_weakref = WEAKREF(linked_radio)
 
 /datum/mutation/human/antenna/on_losing(mob/living/carbon/human/owner)
-	if(..())
+	. = ..()
+	if(.)
 		return
 	var/obj/item/implant/radio/antenna/linked_radio = radio_weakref.resolve()
 	if(linked_radio)
