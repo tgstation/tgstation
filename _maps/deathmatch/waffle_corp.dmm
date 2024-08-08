@@ -46,7 +46,6 @@
 /obj/effect/mapping_helpers/damaged_window,
 /obj/machinery/door/poddoor/shutters/window/indestructible/preopen{
 	dir = 4;
-	name = "jammed shutters";
 	desc = "A shutter with a thick see-through polycarbonate window. Its motor is no longer functional, leaving it stuck open."
 	},
 /turf/open/indestructible/plating,
@@ -2524,7 +2523,6 @@
 	},
 /obj/machinery/door/poddoor/shutters/window/indestructible/preopen{
 	dir = 4;
-	name = "jammed shutters";
 	desc = "A shutter with a thick see-through polycarbonate window. Its motor is no longer functional, leaving it stuck open."
 	},
 /turf/open/indestructible/dark,
@@ -2937,7 +2935,6 @@
 /obj/effect/spawner/structure/window/reinforced,
 /obj/machinery/door/poddoor/shutters/window/indestructible/preopen{
 	dir = 4;
-	name = "jammed shutters";
 	desc = "A shutter with a thick see-through polycarbonate window. Its motor is no longer functional, leaving it stuck open."
 	},
 /turf/open/indestructible/plating,
