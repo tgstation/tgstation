@@ -39,11 +39,84 @@
 	var/bottle_knockdown_duration = BOTTLE_KNOCKDOWN_DEFAULT_DURATION
 	tool_behaviour = TOOL_ROLLINGPIN // Used to knock out the Chef.
 	toolspeed = 1.3 //it's a little awkward to use, but it's a cylinder alright.
+	var/obj/item/message_in_a_bottle
 
 /obj/item/reagent_containers/cup/glass/bottle/Initialize(mapload, vol)
 	. = ..()
 	var/static/list/recipes =  list(/datum/crafting_recipe/molotov)
 	AddElement(/datum/element/slapcrafting, recipes)
+
+/obj/item/reagent_containers/cup/glass/bottle/Exited(atom/movable/gone)
+	if(gone == message_in_a_bottle)
+		message_in_a_bottle = null
+		update_icon(UPDATE_OVERLAYS)
+	return ..()
+
+/obj/item/reagent_containers/cup/glass/bottle/CheckParts(list/parts_list)
+	. = ..()
+	var/obj/item/reagent_containers/cup/glass/bottle/bottle = locate() in contents
+	if(bottle.message_in_a_bottle)
+		message_in_a_bottle = bottle.message_in_a_bottle
+		bottle.message_in_a_bottle.forceMove(src)
+
+/obj/item/reagent_containers/cup/glass/bottle/examine(mob/user)
+	. = ..()
+	if(message_in_a_bottle)
+		. += span_info("there's \a [message_in_a_bottle] inside it. You can [EXAMINE_HINT("right-click")] it with an [EXAMINE_HINT("empty hand")] to remove it.")
+	else if(isGlass)
+		. += span_tinynoticeital("you could place a paper, photo or space cash inside it...")
+
+/obj/item/reagent_containers/cup/glass/bottle/update_overlays()
+	. = ..()
+	if(message_in_a_bottle)
+		var/overlay = add_message_overlay()
+		if(overlay)
+			. += overlay
+
+/obj/item/reagent_containers/cup/glass/bottle/interact_with_atom_secondary(atom/target, mob/living/user, list/modifiers)
+	. = ..()
+	if(. != NONE || !message_in_a_bottle)
+		return
+	if(HAS_TRAIT(target, TRAIT_MESSAGE_IN_A_BOTTLE_LOCATION))
+		user.visible_message(span_notice("[user] tosses [src] in [target]"), span_notice("You toss [src] in [target]"), span_notice("you hear a splash."))
+		SSpersistence.save_message_bottle(message_in_a_bottle, type)
+		playsound(target, 'sound/effects/bigsplash.ogg', 70)
+		qdel(src)
+
+/obj/item/reagent_containers/cup/glass/bottle/item_interaction(mob/living/user, obj/item/item, list/modifiers)
+	if(!isGlass)
+		return NONE
+	if(!istype(item, /obj/item/paper) && !istype(item, /obj/item/stack/spacecash) && !istype(item, /obj/item/photo))
+		return NONE
+	if(message_in_a_bottle)
+		balloon_alert(user, "item already loaded!")
+		return
+	if(!user.transferItemToLoc(item))
+		balloon_alert(user, "item stuck to hands!")
+		return
+	balloon_alert(user, "item inserted")
+	message_in_a_bottle = item
+	update_icon(UPDATE_OVERLAYS)
+
+/obj/item/reagent_containers/cup/glass/bottle/attack_hand_secondary(mob/user, list/modifiers)
+	. = ..()
+	if(. == SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN || !message_in_a_bottle)
+		return
+	if(DOING_INTERACTION_WITH_TARGET(user, src))
+		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+	balloon_alert(user, "extracting item")
+	if(do_after(user, src, 5 SECONDS))
+		balloon_alert(user, "item extracted")
+		user.put_in_hands(message_in_a_bottle)
+	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+
+/obj/item/reagent_containers/cup/glass/bottle/proc/add_message_overlay()
+	if(istype(message_in_a_bottle, /obj/item/paper))
+		return "paper_in_bottle"
+	if(istype(message_in_a_bottle, /obj/item/photo))
+		return "photo_in_bottle"
+	if(istype(message_in_a_bottle, /obj/item/stack/spacecash))
+		return "cash_in_bottle"
 
 /obj/item/reagent_containers/cup/glass/bottle/small
 	name = "small glass bottle"
@@ -56,14 +129,16 @@
 	if(bartender_check(target) && ranged)
 		return
 	SplashReagents(target, ranged, override_spillable = TRUE)
-	var/obj/item/broken_bottle/B = new(drop_location())
+	var/obj/item/broken_bottle/broken = new(drop_location())
 	if(!ranged && thrower)
-		thrower.put_in_hands(B)
-	B.mimic_broken(src, target, break_top)
-	B.inhand_icon_state = broken_inhand_icon_state
+		thrower.put_in_hands(broken)
+	broken.mimic_broken(src, target, break_top)
+	broken.inhand_icon_state = broken_inhand_icon_state
+	if(message_in_a_bottle)
+		message_in_a_bottle.forceMove(drop_location())
 
 	qdel(src)
-	target.Bumped(B)
+	target.Bumped(broken)
 
 /obj/item/reagent_containers/cup/glass/bottle/try_splash(mob/living/user, atom/target)
 
@@ -333,6 +408,9 @@
 	list_reagents = list(/datum/reagent/water/holywater = 100)
 	drink_type = NONE
 
+/obj/item/reagent_containers/cup/glass/bottle/holywater/add_message_overlay()
+	return //looks too weird...
+
 /obj/item/reagent_containers/cup/glass/bottle/holywater/hell
 	desc = "A flask of holy water...it's been sitting in the Necropolis a while though."
 	icon_state = "unholyflask"
@@ -495,7 +573,6 @@
 	list_reagents = list(/datum/reagent/consumable/ethanol/sake = 100)
 
 /obj/item/reagent_containers/cup/glass/bottle/sake/Initialize(mapload)
-	. = ..()
 	if(prob(10))
 		name = "Fluffy Tail Sake"
 		desc += " On the bottle is a picture of a kitsune with nine touchable tails."
@@ -504,6 +581,12 @@
 		name = "Inubashiri's Home Brew"
 		desc += " Awoo."
 		icon_state = "sakebottle_i"
+	return ..()
+
+/obj/item/reagent_containers/cup/glass/bottle/sake/add_message_overlay()
+	if(icon_state == "sakebottle_k") //doesn't fit the sprite
+		return
+	return ..()
 
 /obj/item/reagent_containers/cup/glass/bottle/fernet
 	name = "Fernet Bronca"
@@ -523,6 +606,9 @@
 	desc = "Still produced on the island of Curaçao, after all these years."
 	icon_state = "curacao_bottle"
 	list_reagents = list(/datum/reagent/consumable/ethanol/curacao = 100)
+
+/obj/item/reagent_containers/cup/glass/bottle/curacao/add_message_overlay()
+	return //doesn't fit the sprite
 
 /obj/item/reagent_containers/cup/glass/bottle/navy_rum
 	name = "Pride of the Union Navy-Strength Rum"
@@ -567,6 +653,9 @@
 	var/sabrage_success_percentile = 5
 	///Whether this bottle was a victim of a successful sabrage attempt
 	var/sabraged = FALSE
+
+/obj/item/reagent_containers/cup/glass/bottle/champagne/add_message_overlay()
+	return //doesn't stylistically fit the sprite
 
 /obj/item/reagent_containers/cup/glass/bottle/champagne/cursed
 	sabrage_success_percentile = 0 //force of the sharp item used to sabrage will not increase success chance
@@ -727,11 +816,17 @@
 	icon_state = "hoochbottle"
 	list_reagents = list(/datum/reagent/consumable/ethanol/hooch = 100)
 
+/obj/item/reagent_containers/cup/glass/bottle/hooch/add_message_overlay()
+	return //doesn't fit the sprite
+
 /obj/item/reagent_containers/cup/glass/bottle/moonshine
 	name = "moonshine jug"
 	desc = "It is said that the ancient Applalacians used these stoneware jugs to capture lightning in a bottle."
 	icon_state = "moonshinebottle"
 	list_reagents = list(/datum/reagent/consumable/ethanol/moonshine = 100)
+
+/obj/item/reagent_containers/cup/glass/bottle/moonshine/add_message_overlay()
+	return //doesn't fit the sprite
 
 /obj/item/reagent_containers/cup/glass/bottle/mushi_kombucha
 	name = "Solzara Brewing Company Mushi Kombucha"
@@ -784,15 +879,15 @@
 	)
 
 /obj/item/reagent_containers/cup/glass/bottle/molotov/CheckParts(list/parts_list)
-	..()
-	var/obj/item/reagent_containers/cup/glass/bottle/B = locate() in contents
-	if(B)
-		icon_state = B.icon_state
-		B.reagents.copy_to(src, 100)
-		if(istype(B, /obj/item/reagent_containers/cup/glass/bottle/juice))
-			desc += " You're not sure if making this out of a carton was the brightest idea."
-			isGlass = FALSE
-	return
+	. = ..()
+	var/obj/item/reagent_containers/cup/glass/bottle/bottle = locate() in contents
+	if(!bottle)
+		return
+	icon_state = bottle.icon_state
+	bottle.reagents.copy_to(src, 100)
+	if(istype(bottle, /obj/item/reagent_containers/cup/glass/bottle/juice))
+		desc += " You're not sure if making this out of a carton was the brightest idea."
+		isGlass = FALSE
 
 /obj/item/reagent_containers/cup/glass/bottle/molotov/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum, do_splash = FALSE)
 	..(hit_atom, throwingdatum, do_splash = FALSE)

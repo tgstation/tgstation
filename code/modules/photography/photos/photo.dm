@@ -15,6 +15,12 @@
 
 /obj/item/photo/Initialize(mapload, datum/picture/P, datum_name = TRUE, datum_desc = TRUE)
 	set_picture(P, datum_name, datum_desc, TRUE)
+	if(!mapload && prob(MESSAGE_BOTTLE_CHANCE) && picture?.id)
+		LAZYADD(SSpersistence.queued_message_bottles, src)
+	return ..()
+
+/obj/item/photo/Destroy()
+	LAZYREMOVE(SSpersistence.queued_message_bottles, src)
 	return ..()
 
 /obj/item/photo/proc/set_picture(datum/picture/P, setname, setdesc, name_override = FALSE)
