@@ -332,7 +332,7 @@
 /datum/supply_pack/engineering/portagrav
 	name = "Portable Gravity Unit Crate"
 	desc = "Contains a portable gravity unit, to make the clown float into the ceiling."
-	cost = CARGO_CRATE_VALUE * 6
+	cost = CARGO_CRATE_VALUE * 4
 	access_view = ACCESS_ENGINEERING
 	contains = list(/obj/machinery/power/portagrav = 1)
 	crate_name = "portable gravity unit crate"
