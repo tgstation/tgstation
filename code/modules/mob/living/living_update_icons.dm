@@ -64,3 +64,6 @@
 	animate(src, transform = ntransform, time = is_opposite_angle ? 0 : UPDATE_TRANSFORM_ANIMATION_TIME, pixel_y = final_pixel_y, dir = final_dir, easing = (EASE_IN|EASE_OUT))
 
 	SEND_SIGNAL(src, COMSIG_LIVING_POST_UPDATE_TRANSFORM, resize, lying_angle, is_opposite_angle)
+
+	shadow.pixel_y = -DEPTH_OFFSET - final_pixel_y + ((lying_angle != 0) ? 4 : 0) + shadow_offset
+	update_appearance(UPDATE_OVERLAYS)

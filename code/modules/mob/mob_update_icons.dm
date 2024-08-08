@@ -143,3 +143,8 @@
 ///Updates the headset overlay & HUD element.
 /mob/proc/update_worn_ears(update_obscured = FALSE)
 	return
+
+/mob/update_overlays()
+	. = ..()
+	if (!isnull(shadow))
+		. += shadow

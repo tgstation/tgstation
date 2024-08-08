@@ -988,3 +988,8 @@ GLOBAL_LIST_INIT(layers_to_offset, list(
 #define BUTT_SPRITE_PLASMA "plasma"
 #define BUTT_SPRITE_FUZZY "fuzzy"
 #define BUTT_SPRITE_SLIME "slime"
+
+#define SHADOW_NONE ""
+#define SHADOW_SMALL "small"
+#define SHADOW_MEDIUM "medium"
+#define SHADOW_LARGE "large"
