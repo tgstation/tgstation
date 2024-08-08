@@ -7,7 +7,9 @@
 	icon_state = "lpad-idle"
 	active_power_usage = BASE_MACHINE_ACTIVE_CONSUMPTION * 2.5
 	hud_possible = list(DIAG_LAUNCHPAD_HUD)
+	interaction_flags_mouse_drop = NEED_DEXTERITY | NEED_HANDS
 	circuit = /obj/item/circuitboard/machine/launchpad
+
 	/// The beam icon
 	var/icon_teleport = "lpad-beam"
 	/// To prevent briefcase pad deconstruction and such
@@ -64,6 +66,15 @@
 	if(in_range(user, src) || isobserver(user))
 		. += span_notice("The status display reads: Maximum range: <b>[range]</b> units.")
 
+/obj/machinery/launchpad/multitool_act(mob/living/user, obj/item/multitool/multi)
+	. = NONE
+	if(!panel_open)
+		return
+
+	multi.set_buffer(src)
+	balloon_alert(user, "saved to buffer")
+	return ITEM_INTERACT_SUCCESS
+
 /obj/machinery/launchpad/attackby(obj/item/weapon, mob/user, params)
 	if(!stationary)
 		return ..()
@@ -71,14 +82,6 @@
 	if(default_deconstruction_screwdriver(user, "lpad-idle-open", "lpad-idle", weapon))
 		update_indicator()
 		return
-
-	if(panel_open && weapon.tool_behaviour == TOOL_MULTITOOL)
-		if(!multitool_check_buffer(user, weapon))
-			return
-		var/obj/item/multitool/multi = weapon
-		multi.set_buffer(src)
-		balloon_alert(user, "saved to buffer")
-		return TRUE
 
 	if(default_deconstruction_crowbar(weapon))
 		return
@@ -95,7 +98,7 @@
 /// Updates diagnostic huds
 /obj/machinery/launchpad/proc/update_hud()
 	var/image/holder = hud_list[DIAG_LAUNCHPAD_HUD]
-	var/mutable_appearance/target = mutable_appearance('icons/effects/effects.dmi', "launchpad_target", ABOVE_OPEN_TURF_LAYER, src, GAME_PLANE)
+	var/mutable_appearance/target = mutable_appearance('icons/effects/effects.dmi', "launchpad_target", ABOVE_NORMAL_TURF_LAYER, src, GAME_PLANE)
 	holder.appearance = target
 
 	update_indicator()
@@ -298,14 +301,13 @@
 		return FALSE
 	return TRUE
 
-/obj/machinery/launchpad/briefcase/MouseDrop(over_object, src_location, over_location)
-	. = ..()
-	if(over_object == usr)
-		if(!briefcase || !usr.can_perform_action(src, NEED_DEXTERITY|NEED_HANDS))
+/obj/machinery/launchpad/briefcase/mouse_drop_dragged(atom/over_object, mob/user, src_location, over_location, params)
+	if(over_object == user)
+		if(!briefcase)
 			return
-		usr.visible_message(span_notice("[usr] starts closing [src]..."), span_notice("You start closing [src]..."))
-		if(do_after(usr, 3 SECONDS, target = usr))
-			usr.put_in_hands(briefcase)
+		user.visible_message(span_notice("[usr] starts closing [src]..."), span_notice("You start closing [src]..."))
+		if(do_after(user, 3 SECONDS, target = user))
+			user.put_in_hands(briefcase)
 			moveToNullspace() //hides it from suitcase contents
 			closed = TRUE
 			update_indicator()
@@ -350,15 +352,15 @@
 		user.transferItemToLoc(src, pad, TRUE)
 		atom_storage.close_all()
 
-/obj/item/storage/briefcase/launchpad/attackby(obj/item/I, mob/user, params)
-	if(istype(I, /obj/item/launchpad_remote))
-		var/obj/item/launchpad_remote/L = I
-		if(L.pad == WEAKREF(src.pad)) //do not attempt to link when already linked
-			return ..()
-		L.pad = WEAKREF(src.pad)
-		to_chat(user, span_notice("You link [pad] to [L]."))
-	else
+/obj/item/storage/briefcase/launchpad/tool_act(mob/living/user, obj/item/tool, list/modifiers)
+	if(!istype(tool, /obj/item/launchpad_remote))
 		return ..()
+	var/obj/item/launchpad_remote/remote = tool
+	if(remote.pad == WEAKREF(src.pad))
+		return ..()
+	remote.pad = WEAKREF(src.pad)
+	to_chat(user, span_notice("You link [pad] to [remote]."))
+	return ITEM_INTERACT_BLOCKING
 
 /obj/item/launchpad_remote
 	name = "folder"

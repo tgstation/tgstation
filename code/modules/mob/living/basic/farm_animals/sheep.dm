@@ -59,7 +59,7 @@
 	if(cult_converted)
 		for(var/mob/living/cultist as anything in invokers)
 			to_chat(cultist, span_cult_italic("[src] has already been sacrificed!"))
-		return STOP_SACRIFICE
+		return STOP_SACRIFICE|SILENCE_SACRIFICE_MESSAGE
 
 	for(var/mob/living/cultist as anything in invokers)
 		to_chat(cultist, span_cult_italic("This feels a bit too cliché, don't you think?"))

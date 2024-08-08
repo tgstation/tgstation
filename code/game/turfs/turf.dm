@@ -3,6 +3,7 @@ GLOBAL_LIST_EMPTY(station_turfs)
 /// Any floor or wall. What makes up the station and the rest of the map.
 /turf
 	icon = 'icons/turf/floors.dmi'
+	datum_flags = DF_STATIC_OBJECT
 	vis_flags = VIS_INHERIT_ID // Important for interaction with and visualization of openspace.
 	luminosity = 1
 	light_height = LIGHTING_HEIGHT_FLOOR
@@ -153,7 +154,7 @@ GLOBAL_LIST_EMPTY(station_turfs)
 
 	SETUP_SMOOTHING()
 
-	if (smoothing_flags & (SMOOTH_CORNERS|SMOOTH_BITMASK))
+	if (smoothing_flags & USES_SMOOTHING)
 		QUEUE_SMOOTH(src)
 
 	for(var/atom/movable/content as anything in src)
@@ -567,7 +568,6 @@ GLOBAL_LIST_EMPTY(station_turfs)
 				SSexplosions.med_mov_atom += movable_thing
 			if(EXPLODE_LIGHT)
 				SSexplosions.low_mov_atom += movable_thing
-
 
 /turf/narsie_act(force, ignore_mobs, probability = 20)
 	. = (prob(probability) || force)

@@ -133,33 +133,55 @@
 		qdel(morsel)
 		return
 
-	var/list/to_eat = (issilicon(morsel) ? list(morsel) : morsel.get_all_contents()) //eating borg contents leads to many bad things
+	var/list/atom/to_eat = list(morsel)
 
 	var/living_detected = FALSE //technically includes silicons as well but eh
 	var/list/nom = list()
 	var/list/crunchy_nom = list() //Mobs have to be handled differently so they get a different list instead of checking them multiple times.
+	var/not_eaten = 0
 
-	for(var/thing in to_eat)
-		var/obj/as_object = thing
-		if(istype(as_object))
-			if(as_object.resistance_flags & INDESTRUCTIBLE)
-				if(!isturf(as_object.loc) && !isliving(as_object.loc))
-					as_object.forceMove(loc) // so you still cant shove it in a locker
-				continue
-			var/obj/item/bodypart/head/as_head = thing
-			var/obj/item/mmi/as_mmi = thing
-			if(istype(thing, /obj/item/organ/internal/brain) || (istype(as_head) && locate(/obj/item/organ/internal/brain) in as_head) || (istype(as_mmi) && as_mmi.brain) || istype(thing, /obj/item/dullahan_relay))
-				living_detected = TRUE
-			if(isitem(as_object))
-				var/obj/item/as_item = as_object
-				if(as_item.item_flags & ABSTRACT) //also catches organs and bodyparts *stares*
-					continue
-			nom += thing
-		else if(isliving(thing))
+	while (to_eat.len)
+		var/atom/movable/thing = to_eat[1]
+		to_eat -= thing
+
+		if (thing.flags_1 & HOLOGRAM_1)
+			qdel(thing)
+			continue
+
+		if (thing.resistance_flags & INDESTRUCTIBLE)
+			if (!isturf(thing.loc) && !isliving(thing.loc))
+				thing.forceMove(loc)
+			not_eaten += 1
+			continue
+
+		if (isliving(thing))
 			living_detected = TRUE
 			crunchy_nom += thing
+			if (!issilicon(thing))
+				to_eat |= thing.contents
+			continue
 
-	var/not_eaten = to_eat.len - nom.len - crunchy_nom.len
+		if (!isobj(thing))
+			not_eaten += 1
+			continue
+
+		if (isitem(thing))
+			var/obj/item/as_item = thing
+			if (as_item.item_flags & ABSTRACT)
+				not_eaten += 1
+				continue
+
+		if (istype(thing, /obj/item/organ/internal/brain) || istype(thing, /obj/item/dullahan_relay))
+			living_detected = TRUE
+
+		if (istype(thing, /obj/item/mmi))
+			var/obj/item/mmi/mmi = thing
+			if (!isnull(mmi.brain))
+				living_detected = TRUE
+
+		nom += thing
+		to_eat |= thing.contents
+
 	if(living_detected) // First, check if we have any living beings detected.
 		if(obj_flags & EMAGGED)
 			for(var/CRUNCH in crunchy_nom) // Eat them and keep going because we don't care about safety.
@@ -174,7 +196,7 @@
 
 	/**
 	 * we process the list in reverse so that atoms without parents/contents are deleted first & their parents are deleted next & so on.
-	 * this is the reverse order in which get_all_contents() returns it's list
+	 * this is the reverse order in which get_all_contents() returns its list
 	 * if we delete an atom containing stuff then all its stuff are deleted with it as well so we will end recycling deleted items down the list and gain nothing from them
 	 */
 	for(var/i = length(nom); i >= 1; i--)

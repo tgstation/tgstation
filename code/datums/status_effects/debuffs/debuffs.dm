@@ -18,10 +18,12 @@
 /datum/status_effect/incapacitating/on_creation(mob/living/new_owner, set_duration)
 	if(isnum(set_duration))
 		duration = set_duration
-	. = ..()
-	if(. && (needs_update_stat || issilicon(owner)))
-		owner.update_stat()
+	return ..()
 
+/datum/status_effect/incapacitating/on_apply()
+	if(needs_update_stat || issilicon(owner))
+		owner.update_stat()
+	return TRUE
 
 /datum/status_effect/incapacitating/on_remove()
 	if(needs_update_stat || issilicon(owner)) //silicons need stat updates in addition to normal canmove updates
@@ -343,20 +345,18 @@
 /datum/status_effect/crusher_mark
 	id = "crusher_mark"
 	duration = 300 //if you leave for 30 seconds you lose the mark, deal with it
-	status_type = STATUS_EFFECT_MULTIPLE
+	status_type = STATUS_EFFECT_REFRESH
 	alert_type = null
 	var/mutable_appearance/marked_underlay
-	var/obj/item/kinetic_crusher/hammer_synced
+	var/boosted = FALSE
 
-
-/datum/status_effect/crusher_mark/on_creation(mob/living/new_owner, obj/item/kinetic_crusher/new_hammer_synced)
+/datum/status_effect/crusher_mark/on_creation(mob/living/new_owner, was_boosted)
 	. = ..()
-	if(.)
-		hammer_synced = new_hammer_synced
+	boosted = was_boosted
 
 /datum/status_effect/crusher_mark/on_apply()
 	if(owner.mob_size >= MOB_SIZE_LARGE)
-		marked_underlay = mutable_appearance('icons/effects/effects.dmi', "shield2")
+		marked_underlay = mutable_appearance('icons/effects/effects.dmi', boosted ? "shield" : "shield2")
 		marked_underlay.pixel_x = -owner.pixel_x
 		marked_underlay.pixel_y = -owner.pixel_y
 		owner.underlays += marked_underlay
@@ -364,15 +364,10 @@
 	return FALSE
 
 /datum/status_effect/crusher_mark/Destroy()
-	hammer_synced = null
 	if(owner)
 		owner.underlays -= marked_underlay
 	QDEL_NULL(marked_underlay)
 	return ..()
-
-//we will only clear ourselves if the crusher is the one that owns us.
-/datum/status_effect/crusher_mark/before_remove(obj/item/kinetic_crusher/attacking_hammer)
-	return (attacking_hammer == hammer_synced)
 
 /datum/status_effect/stacking/saw_bleed
 	id = "saw_bleed"
@@ -775,7 +770,10 @@
 					span_userdanger(pick("Your lungs hurt!", "It hurts to breathe!")),
 					span_warning(pick("You feel nauseated.", "You feel like you're going to throw up!")))
 				else
-					fake_emote = pick("cough", "sniff", "sneeze")
+					if(prob(40))
+						fake_emote = "cough"
+					else
+						owner.sneeze()
 
 	if(fake_emote)
 		owner.emote(fake_emote)

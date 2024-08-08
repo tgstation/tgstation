@@ -605,7 +605,6 @@
 /area/shuttle/escape/brig)
 "zc" = (
 /obj/structure/tank_dispenser/oxygen{
-	layer = 2.7;
 	pixel_x = -1;
 	pixel_y = 2
 	},

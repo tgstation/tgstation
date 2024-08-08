@@ -9,6 +9,7 @@
 	suicide_cry = "FOR MY BROTHER!!"
 	antag_moodlet = /datum/mood_event/focused
 	hardcore_random_bonus = TRUE
+	stinger_sound = 'sound/ambience/antag/tatoralert.ogg'
 	VAR_PRIVATE
 		datum/team/brother_team/team
 
@@ -74,9 +75,14 @@
 		flashed.balloon_alert(source, "unconscious!")
 		return
 
+#ifdef TESTING
+	if (isnull(flashed.mind))
+		flashed.mind_initialize()
+#else
 	if (isnull(flashed.mind) || !GET_CLIENT(flashed))
 		flashed.balloon_alert(source, "[flashed.p_their()] mind is vacant!")
 		return
+#endif
 
 	for(var/datum/objective/brother_objective as anything in source.mind.get_all_objectives())
 		// If the objective has a target, are we flashing them?
@@ -88,7 +94,7 @@
 		flashed.balloon_alert(source, "[flashed.p_theyre()] loyal to someone else!")
 		return
 
-	if (HAS_TRAIT(flashed, TRAIT_MINDSHIELD) || flashed.mind.assigned_role?.departments_bitflags & DEPARTMENT_BITFLAG_SECURITY)
+	if (HAS_TRAIT(flashed, TRAIT_MINDSHIELD))
 		flashed.balloon_alert(source, "[flashed.p_they()] resist!")
 		return
 
@@ -172,7 +178,7 @@
 	owner.announce_objectives()
 
 /datum/antagonist/brother/proc/finalize_brother()
-	owner.current.playsound_local(get_turf(owner.current), 'sound/ambience/antag/tatoralert.ogg', 100, FALSE, pressure_affected = FALSE, use_reverb = FALSE)
+	play_stinger()
 	team.update_name()
 
 /datum/antagonist/brother/admin_add(datum/mind/new_owner,mob/admin)
@@ -181,6 +187,11 @@
 	new_owner.add_antag_datum(/datum/antagonist/brother, team)
 	message_admins("[key_name_admin(admin)] made [key_name_admin(new_owner)] into a blood brother.")
 	log_admin("[key_name(admin)] made [key_name(new_owner)] into a blood brother.")
+
+/datum/antagonist/brother/apply_innate_effects(mob/living/mob_override)
+	. = ..()
+	var/mob/living/the_mob = owner.current || mob_override
+	add_team_hud(the_mob)
 
 /datum/antagonist/brother/ui_static_data(mob/user)
 	var/list/data = list()
@@ -218,8 +229,13 @@
 
 /// Adds a new brother to the team
 /datum/team/brother_team/proc/add_brother(mob/living/new_brother, source)
+#ifndef TESTING
 	if (isnull(new_brother) || isnull(new_brother.mind) || !GET_CLIENT(new_brother) || new_brother.mind.has_antag_datum(/datum/antagonist/brother))
 		return FALSE
+#else
+	if (isnull(new_brother) || new_brother.mind.has_antag_datum(/datum/antagonist/brother))
+		return FALSE
+#endif
 
 	set_brothers_left(brothers_left - 1)
 	for (var/datum/mind/brother_mind as anything in members)

@@ -10,16 +10,19 @@
 #define MOVE_INTENT_WALK "walk"
 #define MOVE_INTENT_RUN "run"
 
+/// Amount of oxyloss that KOs a human
+#define OXYLOSS_PASSOUT_THRESHOLD 50
 //Blood levels
 #define BLOOD_VOLUME_MAX_LETHAL 2150
 #define BLOOD_VOLUME_EXCESS 2100
 #define BLOOD_VOLUME_MAXIMUM 2000
 #define BLOOD_VOLUME_SLIME_SPLIT 1120
 #define BLOOD_VOLUME_NORMAL 560
-#define BLOOD_VOLUME_SAFE 475
-#define BLOOD_VOLUME_OKAY 336
-#define BLOOD_VOLUME_BAD 224
-#define BLOOD_VOLUME_SURVIVE 122
+#define BLOOD_VOLUME_SAFE (BLOOD_VOLUME_NORMAL * (1 - 0.15)) // Latter number is percentage of blood lost, for readability!
+#define BLOOD_VOLUME_OKAY (BLOOD_VOLUME_NORMAL * (1 - 0.30))
+#define BLOOD_VOLUME_RISKY (BLOOD_VOLUME_NORMAL * (1 - 0.45))
+#define BLOOD_VOLUME_BAD (BLOOD_VOLUME_NORMAL * (1 - 0.60))
+#define BLOOD_VOLUME_SURVIVE (BLOOD_VOLUME_NORMAL * (1 - 0.80))
 
 /// How efficiently humans regenerate blood.
 #define BLOOD_REGEN_FACTOR 0.25
@@ -84,6 +87,8 @@
 #define BODYTYPE_ALIEN (1<<3)
 ///The limb is from a golem
 #define BODYTYPE_GOLEM (1<<4)
+//The limb is a peg limb
+#define BODYTYPE_PEG (1<<5)
 
 // Bodyshape defines for how things can be worn, i.e., what "shape" the mob sprite is
 ///The limb fits the human mold. This is not meant to be literal, if the sprite "fits" on a human, it is "humanoid", regardless of origin.
@@ -95,7 +100,7 @@
 ///The limb is snouted.
 #define BODYSHAPE_SNOUTED (1<<3)
 
-#define BODYTYPE_BIOSCRAMBLE_INCOMPATIBLE (BODYTYPE_ROBOTIC | BODYTYPE_LARVA_PLACEHOLDER | BODYTYPE_GOLEM)
+#define BODYTYPE_BIOSCRAMBLE_INCOMPATIBLE (BODYTYPE_ROBOTIC | BODYTYPE_LARVA_PLACEHOLDER | BODYTYPE_GOLEM | BODYTYPE_PEG)
 #define BODYTYPE_CAN_BE_BIOSCRAMBLED(bodytype) (!(bodytype & BODYTYPE_BIOSCRAMBLE_INCOMPATIBLE))
 
 // Defines for Species IDs. Used to refer to the name of a species, for things like bodypart names or species preferences.
@@ -127,6 +132,7 @@
 #define SPECIES_ZOMBIE "zombie"
 #define SPECIES_ZOMBIE_INFECTIOUS "memezombie"
 #define SPECIES_ZOMBIE_KROKODIL "krokodil_zombie"
+#define SPECIES_VOIDWALKER "voidwalker"
 
 // Like species IDs, but not specifically attached a species.
 #define BODYPART_ID_ALIEN "alien"
@@ -135,6 +141,8 @@
 #define BODYPART_ID_LARVA "larva"
 #define BODYPART_ID_PSYKER "psyker"
 #define BODYPART_ID_MEAT "meat"
+#define BODYPART_ID_PEG "peg"
+
 
 //See: datum/species/var/digitigrade_customization
 ///The species does not have digitigrade legs in generation.
@@ -160,8 +168,6 @@
 
 #define HUMAN_MAX_OXYLOSS 3
 #define HUMAN_CRIT_MAX_OXYLOSS (SSMOBS_DT/3)
-
-#define STAMINA_REGEN_BLOCK_TIME (10 SECONDS)
 
 #define HEAT_DAMAGE_LEVEL_1 1 //Amount of damage applied when your body temperature just passes the 360.15k safety point
 #define HEAT_DAMAGE_LEVEL_2 1.5 //Amount of damage applied when your body temperature passes the 400K point
@@ -307,7 +313,7 @@
 #define SLIME_EVOLUTION_THRESHOLD 10
 
 //Slime evolution cost in nutrition
-#define SLIME_EVOLUTION_COST 200
+#define SLIME_EVOLUTION_COST 100
 
 //Slime extract crossing. Controls how many extracts is required to feed to a slime to core-cross.
 #define SLIME_EXTRACT_CROSSING_REQUIRED 10
@@ -441,11 +447,14 @@
 #define REM REAGENTS_EFFECT_MULTIPLIER //! Shorthand for the above define for ease of use in equations and the like
 
 // Eye protection
+// THese values are additive to determine your overall flash protection.
 #define FLASH_PROTECTION_HYPER_SENSITIVE -2
 #define FLASH_PROTECTION_SENSITIVE -1
 #define FLASH_PROTECTION_NONE 0
 #define FLASH_PROTECTION_FLASH 1
 #define FLASH_PROTECTION_WELDER 2
+#define FLASH_PROTECTION_WELDER_SENSITIVE 3
+#define FLASH_PROTECTION_WELDER_HYPER_SENSITIVE 4
 
 // AI Toggles
 #define AI_CAMERA_LUMINOSITY 5
@@ -459,6 +468,9 @@
 
 #define ROBOTIC_BRUTE_EXAMINE_TEXT "denting"
 #define ROBOTIC_BURN_EXAMINE_TEXT "charring"
+
+#define GLASSY_BRUTE_EXAMINE_TEXT "cracking"
+#define GLASSY_BURN_EXAMINE_TEXT "deformation"
 
 #define GRAB_PIXEL_SHIFT_PASSIVE 6
 #define GRAB_PIXEL_SHIFT_AGGRESSIVE 12
@@ -633,6 +645,7 @@
 // Otherwise they are completely arbitrary
 #define MONKEY_HEIGHT_DWARF 2
 #define MONKEY_HEIGHT_MEDIUM 4
+#define MONKEY_HEIGHT_TALL HUMAN_HEIGHT_DWARF
 #define HUMAN_HEIGHT_DWARF 6
 #define HUMAN_HEIGHT_SHORTEST 8
 #define HUMAN_HEIGHT_SHORT 10
@@ -829,8 +842,12 @@ GLOBAL_LIST_INIT(layers_to_offset, list(
 #define ALLOW_RESTING (1<<7)
 /// If this is accessible to creatures with ventcrawl capabilities
 #define NEED_VENTCRAWL (1<<8)
+/// Skips adjacency checks
+#define BYPASS_ADJACENCY (1<<9)
+/// Skips reccursive loc checks
+#define NOT_INSIDE_TARGET (1<<10)
 /// Checks for base adjacency, but silences the error
-#define SILENT_ADJACENCY (1<<9)
+#define SILENT_ADJACENCY (1<<11)
 
 /// The default mob sprite size (used for shrinking or enlarging the mob sprite to regular size)
 #define RESIZE_DEFAULT_SIZE 1
@@ -857,7 +874,7 @@ GLOBAL_LIST_INIT(layers_to_offset, list(
 /// The vomit you've all come to know and love, but with a little extra "spice" (blood)
 #define VOMIT_CATEGORY_BLOOD (VOMIT_CATEGORY_DEFAULT | MOB_VOMIT_BLOOD)
 /// Another vomit variant that causes you to get knocked down instead of just only getting a stun. Standard otherwise.
-#define VOMIT_CATEGORY_KNOCKDOWN (VOMIT_CATEGORY_DEFAULT | MOB_VOMIT_KNOCKDOWN)
+#define VOMIT_CATEGORY_KNOCKDOWN (MOB_VOMIT_MESSAGE | MOB_VOMIT_HARM | MOB_VOMIT_KNOCKDOWN)
 
 /// Possible value of [/atom/movable/buckle_lying]. If set to a different (positive-or-zero) value than this, the buckling thing will force a lying angle on the buckled.
 #define NO_BUCKLE_LYING -1

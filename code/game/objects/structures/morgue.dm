@@ -425,6 +425,10 @@ GLOBAL_LIST_EMPTY(crematoriums)
 
 /obj/structure/bodycontainer/crematorium/Initialize(mapload)
 	. = ..()
+	if(mapload && check_holidays(ICE_CREAM_DAY) && !istype(src, /obj/structure/bodycontainer/crematorium/creamatorium))
+		var/obj/structure/bodycontainer/crematorium/creamatorium/creamy = new(loc)
+		creamy.id = id
+		return INITIALIZE_HINT_QDEL
 	GLOB.crematoriums += src
 
 /obj/structure/bodycontainer/crematorium/Destroy()
@@ -518,6 +522,7 @@ GLOBAL_LIST_EMPTY(crematoriums)
 	density = TRUE
 	anchored = TRUE
 	pass_flags_self = PASSTABLE | LETPASSTHROW
+
 	max_integrity = 350
 
 	///The bodycontainer we are a tray to.
@@ -558,10 +563,10 @@ GLOBAL_LIST_EMPTY(crematoriums)
 	if(carried_mob == user) //Piggyback user.
 		return
 	user.unbuckle_mob(carried_mob)
-	MouseDrop_T(carried_mob, user)
+	mouse_drop_receive(carried_mob, user)
 
-/obj/structure/tray/MouseDrop_T(atom/movable/O as mob|obj, mob/user)
-	if(!ismovable(O) || O.anchored || !Adjacent(user) || !user.Adjacent(O) || O.loc == user)
+/obj/structure/tray/mouse_drop_receive(atom/movable/O as mob|obj, mob/user, params)
+	if(!ismovable(O) || O.anchored || O.loc == user)
 		return
 	if(!ismob(O))
 		if(!istype(O, /obj/structure/closet/body_bag))
@@ -570,16 +575,9 @@ GLOBAL_LIST_EMPTY(crematoriums)
 		var/mob/M = O
 		if(M.buckled)
 			return
-	if(!ismob(user) || user.incapacitated())
-		return
-	if(isliving(user))
-		var/mob/living/L = user
-		if(L.body_position == LYING_DOWN)
-			return
 	O.forceMove(src.loc)
 	if (user != O)
 		visible_message(span_warning("[user] stuffs [O] into [src]."))
-	return
 
 /*
  * Crematorium tray

@@ -62,6 +62,12 @@
 	. = SEND_SIGNAL(src, COMSIG_LIVING_Z_IMPACT, levels, impacted_turf)
 	if(. & ZIMPACT_CANCEL_DAMAGE)
 		return .
+	// multiplier for the damage taken from falling
+	var/damage_softening_multiplier = 1
+
+	var/obj/item/organ/internal/cyberimp/chest/spine/potential_spine = get_organ_slot(ORGAN_SLOT_SPINE)
+	if(istype(potential_spine))
+		damage_softening_multiplier *= potential_spine.athletics_boost_multiplier
 
 	// If you are incapped, you probably can't brace yourself
 	var/can_help_themselves = !incapacitated(IGNORE_RESTRAINTS)
@@ -108,7 +114,7 @@
 		new /obj/effect/temp_visual/mook_dust(impacted_turf)
 
 	if(body_position == STANDING_UP)
-		var/damage_for_each_leg = round(incoming_damage / 2)
+		var/damage_for_each_leg = round((incoming_damage / 2) * damage_softening_multiplier)
 		apply_damage(damage_for_each_leg, BRUTE, BODY_ZONE_L_LEG, wound_bonus = -2.5 * levels)
 		apply_damage(damage_for_each_leg, BRUTE, BODY_ZONE_R_LEG, wound_bonus = -2.5 * levels)
 	else
@@ -163,13 +169,8 @@
 	if(now_pushing)
 		return TRUE
 
-	var/they_can_move = TRUE
-	var/their_combat_mode = FALSE
-
 	if(isliving(M))
 		var/mob/living/L = M
-		their_combat_mode = L.combat_mode
-		they_can_move = L.mobility_flags & MOBILITY_MOVE
 		//Also spread diseases
 		for(var/thing in diseases)
 			var/datum/disease/D = thing
@@ -199,22 +200,7 @@
 		return TRUE
 
 	if(!M.buckled && !M.has_buckled_mobs())
-		var/mob_swap = FALSE
-		var/too_strong = (M.move_resist > move_force) //can't swap with immovable objects unless they help us
-		if(!they_can_move) //we have to physically move them
-			if(!too_strong)
-				mob_swap = TRUE
-		else
-			//You can swap with the person you are dragging on grab intent, and restrained people in most cases
-			if(M.pulledby == src && !too_strong)
-				mob_swap = TRUE
-			else if(
-				!(HAS_TRAIT(M, TRAIT_NOMOBSWAP) || HAS_TRAIT(src, TRAIT_NOMOBSWAP)) &&\
-				((HAS_TRAIT(M, TRAIT_RESTRAINED) && !too_strong) || !their_combat_mode) &&\
-				(HAS_TRAIT(src, TRAIT_RESTRAINED) || !combat_mode)
-			)
-				mob_swap = TRUE
-		if(mob_swap)
+		if(can_mobswap_with(M))
 			//switch our position with M
 			if(loc && !loc.Adjacent(M.loc))
 				return TRUE
@@ -266,6 +252,46 @@
 		if(!isclothing(M))
 			if(prob(I.block_chance*2))
 				return
+
+/mob/living/proc/can_mobswap_with(mob/other)
+	if (HAS_TRAIT(other, TRAIT_NOMOBSWAP) || HAS_TRAIT(src, TRAIT_NOMOBSWAP))
+		return FALSE
+
+	var/they_can_move = TRUE
+	var/their_combat_mode = FALSE
+
+	if(isliving(other))
+		var/mob/living/other_living = other
+		their_combat_mode = other_living.combat_mode
+		they_can_move = other_living.mobility_flags & MOBILITY_MOVE
+
+	var/too_strong = other.move_resist > move_force
+
+	// They cannot move, see if we can push through them
+	if (!they_can_move)
+		return !too_strong
+
+	// We are pulling them and can move through
+	if (other.pulledby == src && !too_strong)
+		return TRUE
+
+	// If we're in combat mode and not restrained we don't try to pass through people
+	if (combat_mode && !HAS_TRAIT(src, TRAIT_RESTRAINED))
+		return FALSE
+
+	// Nor can we pass through non-restrained people in combat mode (or if they're restrained but still too strong for us)
+	if (their_combat_mode && (!HAS_TRAIT(other, TRAIT_RESTRAINED) || too_strong))
+		return FALSE
+
+	if (isnull(other.client) || isnull(client))
+		return TRUE
+
+	// If both of us are trying to move in the same direction, let the fastest one through first
+	if (client.intended_direction == other.client.intended_direction)
+		return cached_multiplicative_slowdown < other.cached_multiplicative_slowdown
+
+	// Else, sure, let us pass
+	return TRUE
 
 /mob/living/get_photo_description(obj/item/camera/camera)
 	var/list/holding = list()
@@ -678,6 +704,13 @@
 
 /mob/living/proc/get_up(instant = FALSE)
 	set waitfor = FALSE
+
+	var/get_up_time = 1 SECONDS
+
+	var/obj/item/organ/internal/cyberimp/chest/spine/potential_spine = get_organ_slot(ORGAN_SLOT_SPINE)
+	if(istype(potential_spine))
+		get_up_time *= potential_spine.athletics_boost_multiplier
+
 	if(!instant && !do_after(src, 1 SECONDS, src, timed_action_flags = (IGNORE_USER_LOC_CHANGE|IGNORE_TARGET_LOC_CHANGE|IGNORE_HELD_ITEM), extra_checks = CALLBACK(src, TYPE_PROC_REF(/mob/living, rest_checks_callback)), interaction_key = DOAFTER_SOURCE_GETTING_UP, hidden = TRUE))
 		return
 	if(resting || body_position == STANDING_UP || HAS_TRAIT(src, TRAIT_FLOORED))
@@ -1310,24 +1343,42 @@
 /mob/living/can_hold_items(obj/item/I)
 	return ..() && HAS_TRAIT(src, TRAIT_CAN_HOLD_ITEMS) && usable_hands
 
-/mob/living/can_perform_action(atom/movable/target, action_bitflags)
+/mob/living/can_perform_action(atom/target, action_bitflags)
 	if(!istype(target))
 		CRASH("Missing target arg for can_perform_action")
+
+	if(stat != CONSCIOUS)
+		to_chat(src, span_warning("You are not conscious enough for this action!"))
+		return FALSE
+
+	if(!(interaction_flags_atom & INTERACT_ATOM_IGNORE_INCAPACITATED))
+		var/ignore_flags = NONE
+		if(interaction_flags_atom & INTERACT_ATOM_IGNORE_RESTRAINED)
+			ignore_flags |= IGNORE_RESTRAINTS
+		if(!(interaction_flags_atom & INTERACT_ATOM_CHECK_GRAB))
+			ignore_flags |= IGNORE_GRAB
+
+		if(incapacitated(ignore_flags))
+			to_chat(src, span_warning("You are incapacitated at the moment!"))
+			return FALSE
 
 	// If the MOBILITY_UI bitflag is not set it indicates the mob's hands are cutoff, blocked, or handcuffed
 	// Note - AI's and borgs have the MOBILITY_UI bitflag set even though they don't have hands
 	// Also if it is not set, the mob could be incapcitated, knocked out, unconscious, asleep, EMP'd, etc.
 	if(!(mobility_flags & MOBILITY_UI) && !(action_bitflags & ALLOW_RESTING))
-		to_chat(src, span_warning("You can't do that right now!"))
+		to_chat(src, span_warning("You don't have the mobility for this!"))
 		return FALSE
 
 	// NEED_HANDS is already checked by MOBILITY_UI for humans so this is for silicons
 	if((action_bitflags & NEED_HANDS))
+		if(HAS_TRAIT(src, TRAIT_HANDS_BLOCKED))
+			to_chat(src, span_warning("You hands are blocked for this action!"))
+			return FALSE
 		if(!can_hold_items(isitem(target) ? target : null)) // almost redundant if it weren't for mobs
-			to_chat(src, span_warning("You don't have the physical ability to do this!"))
+			to_chat(src, span_warning("You don't have the hands for this action!"))
 			return FALSE
 
-	if(!Adjacent(target) && (target.loc != src) && !recursive_loc_check(src, target))
+	if(!(action_bitflags & BYPASS_ADJACENCY) && ((action_bitflags & NOT_INSIDE_TARGET) || !recursive_loc_check(src, target)) && !CanReach(target))
 		if(HAS_SILICON_ACCESS(src) && !ispAI(src))
 			if(!(action_bitflags & ALLOW_SILICON_REACH)) // silicons can ignore range checks (except pAIs)
 				if(!(action_bitflags & SILENT_ADJACENCY))
@@ -1335,7 +1386,8 @@
 				return FALSE
 		else // just a normal carbon mob
 			if((action_bitflags & FORBID_TELEKINESIS_REACH))
-				to_chat(src, span_warning("You are too far away!"))
+				if(!(action_bitflags & SILENT_ADJACENCY))
+					to_chat(src, span_warning("You are too far away!"))
 				return FALSE
 
 			var/datum/dna/mob_DNA = has_dna()
@@ -1376,7 +1428,7 @@
 	return TRUE
 
 /mob/living/proc/update_stamina()
-	return
+	update_stamina_hud()
 
 /mob/living/carbon/alien/update_stamina()
 	return
@@ -1812,7 +1864,7 @@ GLOBAL_LIST_EMPTY(fire_appearances)
 	..()
 	update_z(new_turf?.z)
 
-/mob/living/MouseDrop_T(atom/dropping, atom/user)
+/mob/living/mouse_drop_receive(atom/dropping, atom/user, params)
 	var/mob/living/U = user
 	if(isliving(dropping))
 		var/mob/living/M = dropping
@@ -2258,6 +2310,10 @@ GLOBAL_LIST_EMPTY(fire_appearances)
 			REMOVE_TRAIT(src, TRAIT_CRITICAL_CONDITION, STAT_TRAIT)
 			remove_from_alive_mob_list()
 			add_to_dead_mob_list()
+	if(!can_hear())
+		stop_sound_channel(CHANNEL_AMBIENCE)
+	refresh_looping_ambience()
+
 
 
 ///Reports the event of the change in value of the buckled variable.
@@ -2627,7 +2683,7 @@ GLOBAL_LIST_EMPTY(fire_appearances)
 
 	///The price should be high enough that the contractor can't just buy 'em back with their cut alone.
 	var/datum/market_item/hostage/market_item = new(src, black_market_price || ransom_price)
-	SSblackmarket.markets[/datum/market/blackmarket].add_item(market_item)
+	SSmarket.markets[/datum/market/blackmarket].add_item(market_item)
 
 	if(mind)
 		ADD_TRAIT(mind, TRAIT_HAS_BEEN_KIDNAPPED, TRAIT_GENERIC)

@@ -246,13 +246,13 @@
 		inhand_icon_state = "lantern-blue"
 		wisp.orbit(user, 20)
 		SSblackbox.record_feedback("tally", "wisp_lantern", 1, "Freed")
+		return
 
-	else
-		to_chat(user, span_notice("You return the wisp to the lantern."))
-		icon_state = "lantern-blue-on"
-		inhand_icon_state = "lantern-blue-on"
-		wisp.forceMove(src)
-		SSblackbox.record_feedback("tally", "wisp_lantern", 1, "Returned")
+	to_chat(user, span_notice("You return the wisp to the lantern."))
+	icon_state = "lantern-blue-on"
+	inhand_icon_state = "lantern-blue-on"
+	wisp.forceMove(src)
+	SSblackbox.record_feedback("tally", "wisp_lantern", 1, "Returned")
 
 /obj/item/wisp_lantern/Initialize(mapload)
 	. = ..()
@@ -278,26 +278,30 @@
 	light_flags = LIGHT_ATTACHED
 	layer = ABOVE_ALL_MOB_LAYER
 	plane = ABOVE_GAME_PLANE
-	var/sight_flags = SEE_MOBS
 	var/list/color_cutoffs = list(10, 25, 25)
 
 /obj/effect/wisp/orbit(atom/thing, radius, clockwise, rotation_speed, rotation_segments, pre_rotation, lockinorbit)
 	. = ..()
-	if(ismob(thing))
-		RegisterSignal(thing, COMSIG_MOB_UPDATE_SIGHT, PROC_REF(update_user_sight))
-		var/mob/being = thing
-		being.update_sight()
-		to_chat(thing, span_notice("The wisp enhances your vision."))
+	if(!ismob(thing))
+		return
+	var/mob/being = thing
+	RegisterSignal(being, COMSIG_MOB_UPDATE_SIGHT, PROC_REF(update_user_sight))
+	to_chat(being, span_notice("The wisp enhances your vision."))
+	ADD_TRAIT(being, TRAIT_THERMAL_VISION, REF(src))
+	being.update_sight()
 
 /obj/effect/wisp/stop_orbit(datum/component/orbiter/orbits)
-	. = ..()
-	if(ismob(orbits.parent))
-		UnregisterSignal(orbits.parent, COMSIG_MOB_UPDATE_SIGHT)
-		to_chat(orbits.parent, span_notice("Your vision returns to normal."))
+	if(!ismob(orbit_target))
+		return ..()
+	var/mob/being = orbit_target
+	UnregisterSignal(being, COMSIG_MOB_UPDATE_SIGHT)
+	to_chat(being, span_notice("Your vision returns to normal."))
+	REMOVE_TRAIT(being, TRAIT_THERMAL_VISION, REF(src))
+	being.update_sight()
+	return ..()
 
 /obj/effect/wisp/proc/update_user_sight(mob/user)
 	SIGNAL_HANDLER
-	user.add_sight(sight_flags)
 	if(!isnull(color_cutoffs))
 		user.lighting_color_cutoffs = blend_cutoff_colors(user.lighting_color_cutoffs, color_cutoffs)
 
@@ -661,8 +665,8 @@
 	name = "berserker armor"
 	desc = "This hulking armor seems to possess some kind of dark force within; howling in rage, hungry for carnage. \
 		The self-sealing stem bolts that allowed this suit to be spaceworthy have long since corroded. However, the entity \
-		sealed within the suit seems to hunger for the fleeting lifeforce found in the remains left within drake armor. \
-		Feeding it seems to empower a suit piece, though turns the drake armor back to lifeless ash."
+		sealed within the suit seems to hunger for the fleeting lifeforce found in the remains left in the remains of drakes. \
+		Feeding it drake remains seems to empower a suit piece, though turns the remains back to lifeless ash."
 	icon_state = "berserker"
 	icon = 'icons/obj/clothing/suits/armor.dmi'
 	worn_icon = 'icons/mob/clothing/suits/armor.dmi'
@@ -697,7 +701,7 @@
 /obj/item/clothing/suit/hooded/berserker/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/anti_magic, ALL, inventory_flags = ITEM_SLOT_OCLOTHING)
-	AddComponent(/datum/component/armor_plate, maxamount = 1, upgrade_item = /obj/item/clothing/suit/hooded/cloak/drake, armor_mod = /datum/armor/drake_empowerment, upgrade_prefix = "empowered")
+	AddComponent(/datum/component/armor_plate, maxamount = 1, upgrade_item = /obj/item/drake_remains, armor_mod = /datum/armor/drake_empowerment, upgrade_prefix = "empowered")
 	allowed = GLOB.mining_suit_allowed
 
 #define MAX_BERSERK_CHARGE 100
@@ -710,8 +714,8 @@
 	name = "berserker helmet"
 	desc = "This burdensome helmet seems to possess some kind of dark force within; howling in rage, hungry for carnage. \
 		The self-sealing stem bolts that allowed this helmet to be spaceworthy have long since corroded. However, the entity \
-		sealed within the suit seems to hunger for the fleeting lifeforce found in the remains left within drake armor. \
-		Feeding it seems to empower a suit piece, though turns the drake armor back to lifeless ash."
+		sealed within the suit seems to hunger for the fleeting lifeforce found in the remains left in the remains of drakes. \
+		Feeding it drake remains seems to empower a suit piece, though turns the remains back to lifeless ash."
 	icon_state = "berserker"
 	icon = 'icons/obj/clothing/head/helmet.dmi'
 	worn_icon = 'icons/mob/clothing/head/helmet.dmi'
@@ -732,7 +736,7 @@
 /obj/item/clothing/head/hooded/berserker/Initialize(mapload)
 	. = ..()
 	ADD_TRAIT(src, TRAIT_NODROP, LOCKED_HELMET_TRAIT)
-	AddComponent(/datum/component/armor_plate, maxamount = 1, upgrade_item = /obj/item/clothing/suit/hooded/cloak/drake, armor_mod = /datum/armor/drake_empowerment, upgrade_prefix = "empowered")
+	AddComponent(/datum/component/armor_plate, maxamount = 1, upgrade_item = /obj/item/drake_remains, armor_mod = /datum/armor/drake_empowerment, upgrade_prefix = "empowered")
 
 /obj/item/clothing/head/hooded/berserker/examine()
 	. = ..()
@@ -772,7 +776,7 @@
 	user.physiology.brute_mod *= 0.5
 	user.next_move_modifier *= BERSERK_ATTACK_SPEED_MODIFIER
 	user.add_atom_colour(COLOR_BUBBLEGUM_RED, TEMPORARY_COLOUR_PRIORITY)
-	ADD_TRAIT(user, TRAIT_NOGUNS, BERSERK_TRAIT)
+	user.add_traits(list(TRAIT_NOGUNS, TRAIT_TOSS_GUN_HARD), BERSERK_TRAIT)
 	ADD_TRAIT(src, TRAIT_NODROP, BERSERK_TRAIT)
 	berserk_active = TRUE
 	START_PROCESSING(SSobj, src)
@@ -790,7 +794,7 @@
 	user.physiology.brute_mod *= 2
 	user.next_move_modifier /= BERSERK_ATTACK_SPEED_MODIFIER
 	user.remove_atom_colour(TEMPORARY_COLOUR_PRIORITY, COLOR_BUBBLEGUM_RED)
-	REMOVE_TRAIT(user, TRAIT_NOGUNS, BERSERK_TRAIT)
+	user.remove_traits(list(TRAIT_NOGUNS, TRAIT_TOSS_GUN_HARD), BERSERK_TRAIT)
 	REMOVE_TRAIT(src, TRAIT_NODROP, BERSERK_TRAIT)
 	STOP_PROCESSING(SSobj, src)
 
@@ -799,6 +803,16 @@
 #undef DAMAGE_TO_CHARGE_SCALE
 #undef CHARGE_DRAINED_PER_SECOND
 #undef BERSERK_ATTACK_SPEED_MODIFIER
+
+/obj/item/drake_remains
+	name = "drake remains"
+	desc = "The gathered remains of a drake. It still crackles with heat, and smells distinctly of brimstone."
+	icon = 'icons/obj/clothing/head/helmet.dmi'
+	icon_state = "dragon"
+
+/obj/item/drake_remains/Initialize(mapload)
+	. = ..()
+	particles = new /particles/bonfire()
 
 /obj/item/clothing/glasses/godeye
 	name = "eye of god"

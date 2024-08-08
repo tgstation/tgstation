@@ -36,6 +36,12 @@
 		return
 	if(!is_station_level(z))
 		return
+	INVOKE_ASYNC(src, PROC_REF(malfshunt), malf)
+
+/obj/machinery/power/apc/proc/malfshunt(mob/living/silicon/ai/malf)
+	var/confirm = tgui_alert(malf, "Are you sure that you want to shunt? This will take you out of your core!", "Shunt to [name]?", list("Yes", "No"))
+	if(confirm != "Yes")
+		return
 	malf.ShutOffDoomsdayDevice()
 	occupier = malf
 	if (isturf(malf.loc)) // create a deactivated AI core if the AI isn't coming from an emergency mech shunt

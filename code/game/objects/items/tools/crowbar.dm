@@ -7,6 +7,7 @@
 	lefthand_file = 'icons/mob/inhands/equipment/tools_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/tools_righthand.dmi'
 	usesound = 'sound/items/crowbar.ogg'
+	operating_sound = 'sound/items/crowbar_prying.ogg'
 	obj_flags = CONDUCTS_ELECTRICITY
 	slot_flags = ITEM_SLOT_BELT
 	force = 5
@@ -159,8 +160,8 @@
 	return COMPONENT_NO_DEFAULT_MESSAGE
 
 /obj/item/crowbar/power/syndicate
-	name = "Syndicate jaws of life"
-	desc = "A pocket sized re-engineered copy of Nanotrasen's standard jaws of life. Can be used to force open airlocks in its crowbar configuration."
+	name = "jaws of death"
+	desc = "An improved, faster, and smaller copy of Nanotrasen's standard jaws of life. Can be used to force open airlocks in its crowbar configuration."
 	icon_state = "jaws_syndie"
 	w_class = WEIGHT_CLASS_SMALL
 	toolspeed = 0.5
@@ -190,7 +191,7 @@
 	desc = "A hydraulic prying tool, simple but powerful."
 	icon = 'icons/obj/items_cyborg.dmi'
 	icon_state = "toolkit_engiborg_crowbar"
-	worn_icon_state = "crowbar"
+	worn_icon_state = "toolkit_engiborg_crowbar" //error sprite - this shouldn't have been dropped
 	usesound = 'sound/items/jaws_pry.ogg'
 	force = 10
 	toolspeed = 0.5

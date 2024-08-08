@@ -7,7 +7,7 @@
 /datum/uplink_item/weapon_kits
 	category = /datum/uplink_category/weapon_kits
 	surplus = 40
-	purchasable_from = UPLINK_NUKE_OPS
+	purchasable_from = UPLINK_SERIOUS_OPS
 
 // ~~ Ammunition Categories ~~
 
@@ -18,7 +18,7 @@
 /datum/uplink_item/ammo_nuclear
 	category = /datum/uplink_category/ammo_nuclear
 	surplus = 40
-	purchasable_from = UPLINK_NUKE_OPS
+	purchasable_from = UPLINK_SERIOUS_OPS
 
 // Basic: Run of the mill ammunition for various firearms
 /datum/uplink_item/ammo_nuclear/basic
@@ -55,14 +55,14 @@
 	cost = 22 //freedom 5, doormag 3, c-4 1, stimpack 5, shield modsuit module 8
 	limited_stock = 1
 	cant_discount = TRUE
-	purchasable_from = UPLINK_NUKE_OPS
+	purchasable_from = UPLINK_SERIOUS_OPS
 
 //Low-cost firearms: Around 8 TC each. Meant for easy squad weapon purchases
 
 /datum/uplink_item/weapon_kits/low_cost
 	cost = 8
 	surplus = 40
-	purchasable_from = UPLINK_NUKE_OPS
+	purchasable_from = UPLINK_SERIOUS_OPS
 
 // ~~ Bulldog Shotgun ~~
 
@@ -139,7 +139,7 @@
 /datum/uplink_item/weapon_kits/medium_cost
 	cost = 14
 	surplus = 20
-	purchasable_from = UPLINK_NUKE_OPS
+	purchasable_from = UPLINK_SERIOUS_OPS
 
 // ~~ C-20r Submachine Gun ~~
 
@@ -172,7 +172,7 @@
 		Loaded with incendiary rounds which inflict little damage, but ignite the target."
 	item = /obj/item/ammo_box/magazine/smgm45/incen
 	cost = 4
-	purchasable_from = UPLINK_NUKE_OPS
+	purchasable_from = UPLINK_SERIOUS_OPS
 
 // ~~ Energy Sword and Shield & CQC ~~
 
@@ -186,7 +186,7 @@
 	name = "CQC Equipment Case (Very Hard)"
 	desc = "Contains a manual that instructs you in the ways of CQC, or Close Quarters Combat. Comes with a stealth implant, a pack of smokes and a snazzy bandana (use it with the hat stabilizers in your MODsuit)."
 	item = /obj/item/storage/toolbox/guncase/cqc
-	purchasable_from = UPLINK_NUKE_OPS | UPLINK_CLOWN_OPS
+	purchasable_from = UPLINK_ALL_SYNDIE_OPS
 	surplus = 0
 
 // ~~ Syndicate Revolver ~~
@@ -247,7 +247,7 @@
 /datum/uplink_item/weapon_kits/high_cost
 	cost = 18
 	surplus = 10
-	purchasable_from = UPLINK_NUKE_OPS
+	purchasable_from = UPLINK_SERIOUS_OPS
 
 // ~~ L6 SAW Machine Gun ~~
 
@@ -373,19 +373,21 @@
 //Meme weapons: Literally just weapons used as a joke, shouldn't be particularly expensive.
 
 /datum/uplink_item/weapon_kits/surplus_smg
-	name = "Surplus SMG Case (Flukie)"
-	desc = "A horribly outdated automatic weapon. Why would you want to use this? Comes with...rations."
-	item = /obj/item/gun/ballistic/automatic/plastikov
+	name = "Surplus Smart-SMG (Flukie)"
+	desc = "An outdated smart-SMG with limited stopping power, however it's bullets will gradually track towards whatever \
+		the gun was shot at. This does require you to actually aim at the person you are shooting at before firing, but \
+		surely a highly trained operative such as yourself can manage that."
+	item = /obj/item/gun/ballistic/automatic/smartgun
 	cost = 2
-	purchasable_from = UPLINK_NUKE_OPS
+	purchasable_from = UPLINK_SERIOUS_OPS
 
 /datum/uplink_item/ammo_nuclear/surplus_smg
-	name = "Surplus SMG Magazine (Surplus)"
-	desc = "A cylindrical magazine designed for the PP-95 SMG."
-	item = /obj/item/ammo_box/magazine/plastikov9mm
+	name = "Surplus Smart-SMG Magazine (Smartgun)"
+	desc = "A large box magazine made for use in the Abielle smart-SMG."
+	item = /obj/item/ammo_box/magazine/smartgun
 	cost = 1
-	purchasable_from = UPLINK_NUKE_OPS
-	illegal_tech = FALSE
+	purchasable_from = UPLINK_SERIOUS_OPS
+	uplink_item_flags = SYNDIE_TRIPS_CONTRABAND
 
 // Explosives and Grenades
 // ~~ Grenades ~~
@@ -393,7 +395,7 @@
 /datum/uplink_item/explosives/grenades
 	cost = 15
 	surplus = 35
-	purchasable_from = UPLINK_NUKE_OPS | UPLINK_CLOWN_OPS
+	purchasable_from = UPLINK_ALL_SYNDIE_OPS
 
 /datum/uplink_item/explosives/grenades/buzzkill
 	name = "Buzzkill Grenade Box"
@@ -421,7 +423,7 @@
 	name = "Grenadier's Belt and Grenade Launcher Kit (Hard)"
 	desc = "A belt containing 26 lethally dangerous and destructive grenades, along with a grenade launcher to fire them. Comes with an extra multitool and screwdriver."
 	item = /obj/item/storage/box/syndie_kit/demoman
-	purchasable_from = UPLINK_NUKE_OPS
+	purchasable_from = UPLINK_SERIOUS_OPS
 
 // ~~ Detonator: In case you lose the old one ~~
 
@@ -433,7 +435,7 @@
 		the blast radius before using the detonator."
 	item = /obj/item/syndicatedetonator
 	cost = 1
-	purchasable_from = UPLINK_NUKE_OPS | UPLINK_CLOWN_OPS
+	purchasable_from = UPLINK_ALL_SYNDIE_OPS
 
 // Support (Borgs and Reinforcements)
 
@@ -445,7 +447,7 @@
 	category = /datum/uplink_category/reinforcements
 	surplus = 0
 	cost = 35
-	purchasable_from = UPLINK_NUKE_OPS
+	purchasable_from = UPLINK_SERIOUS_OPS
 	restricted = TRUE
 	refundable = TRUE
 
@@ -482,6 +484,7 @@
 		If you're a meathead who's just here to kill people and don't care about strategising or intel, you'll still have someone to bear witness to your murder-spree!"
 	item = /obj/item/antag_spawner/nuke_ops/overwatch
 	cost = 12
+	purchasable_from = UPLINK_FIREBASE_OPS
 
 // ~~ Disposable Sentry Gun ~~
 // Technically not a spawn but it is a kind of reinforcement...I guess.
@@ -501,7 +504,7 @@
 	desc = "A box containing x-ray eyes, a CNS Rebooter and Reviver implant. Comes with an autosurgeon for each."
 	item = /obj/item/storage/box/cyber_implants
 	cost = 20 //worth 24 TC
-	purchasable_from = UPLINK_NUKE_OPS
+	purchasable_from = UPLINK_SERIOUS_OPS
 
 /datum/uplink_item/bundles_tc/medical
 	name = "Medical bundle"
@@ -509,7 +512,7 @@
 		a Donksoft LMG, a box of riot darts and a magboot MODsuit module to rescue your friends in no-gravity environments."
 	item = /obj/item/storage/backpack/duffelbag/syndie/med/medicalbundle
 	cost = 25 // normally 31
-	purchasable_from = UPLINK_NUKE_OPS
+	purchasable_from = UPLINK_SERIOUS_OPS
 
 /datum/uplink_item/bundles_tc/firestarter
 	name = "Spetsnaz Pyro bundle"
@@ -518,7 +521,7 @@
 		Order NOW and comrade Boris will throw in an extra tracksuit."
 	item = /obj/item/storage/backpack/duffelbag/syndie/firestarter
 	cost = 30
-	purchasable_from = UPLINK_NUKE_OPS
+	purchasable_from = UPLINK_SERIOUS_OPS
 
 /datum/uplink_item/bundles_tc/induction_kit
 	name = "Syndicate Induction Kit"
@@ -538,7 +541,7 @@
 	A lighter is also included, though you must supply your own smokes."
 	item = /obj/item/storage/box/syndie_kit/cowboy
 	cost = 18
-	purchasable_from = UPLINK_NUKE_OPS
+	purchasable_from = UPLINK_SERIOUS_OPS
 
 // Mech related gear
 
@@ -549,7 +552,7 @@
 /datum/uplink_item/mech
 	category = /datum/uplink_category/mech
 	surplus = 0
-	purchasable_from = UPLINK_NUKE_OPS
+	purchasable_from = UPLINK_SERIOUS_OPS
 	restricted = TRUE
 
 // ~~ Mechs ~~
@@ -575,21 +578,21 @@
 	desc = "A duffel bag containing ammo for four full reloads of the scattershotm which is equipped on standard Dark Gygax and Mauler exosuits. Also comes with some support equipment for maintaining the mech, including tools and an inducer."
 	item = /obj/item/storage/backpack/duffelbag/syndie/ammo/mech
 	cost = 4
-	purchasable_from = UPLINK_NUKE_OPS
+	purchasable_from = UPLINK_SERIOUS_OPS
 
 /datum/uplink_item/mech/support_bag/mauler
 	name = "Mauler Ammo Bag"
 	desc = "A duffel bag containing ammo for three full reloads of the LMG, scattershot carbine, and SRM-8 missile laucher that are equipped on a standard Mauler exosuit."
 	item = /obj/item/storage/backpack/duffelbag/syndie/ammo/mauler
 	cost = 6
-	purchasable_from = UPLINK_NUKE_OPS
+	purchasable_from = UPLINK_SERIOUS_OPS
 
 // Stealthy Tools
 
 /datum/uplink_item/stealthy_tools/syndigaloshes/nuke
 	item = /obj/item/clothing/shoes/chameleon/noslip
 	cost = 4
-	purchasable_from = UPLINK_NUKE_OPS
+	purchasable_from = UPLINK_SERIOUS_OPS
 
 /datum/uplink_item/stealthy_weapons/romerol_kit
 	name = "Romerol"
@@ -598,7 +601,7 @@
 		along with slurred speech, aggression, and the ability to infect others with this agent."
 	item = /obj/item/storage/box/syndie_kit/romerol
 	cost = 25
-	purchasable_from = UPLINK_CLOWN_OPS|UPLINK_NUKE_OPS
+	purchasable_from = UPLINK_ALL_SYNDIE_OPS
 	cant_discount = TRUE
 
 // Modsuits
@@ -608,7 +611,7 @@
 	desc = "An upgraded, elite version of the Syndicate MODsuit. It features fireproofing, and also \
 		provides the user with superior armor and mobility compared to the standard Syndicate MODsuit."
 	item = /obj/item/mod/control/pre_equipped/elite
-	purchasable_from = UPLINK_NUKE_OPS | UPLINK_CLOWN_OPS | UPLINK_SPY
+	purchasable_from = (UPLINK_ALL_SYNDIE_OPS | UPLINK_SPY)
 
 /datum/uplink_item/suits/energy_shield
 	name = "MODsuit Energy Shield Module"
@@ -616,28 +619,28 @@
 		before needing to recharge. Used wisely, this module will keep you alive for a lot longer."
 	item = /obj/item/mod/module/energy_shield
 	cost = 8
-	purchasable_from = UPLINK_NUKE_OPS | UPLINK_CLOWN_OPS | UPLINK_SPY
+	purchasable_from = (UPLINK_ALL_SYNDIE_OPS | UPLINK_SPY)
 
 /datum/uplink_item/suits/emp_shield
 	name = "MODsuit Advanced EMP Shield Module"
 	desc = "An advanced EMP shield module for a MODsuit. It protects your entire body from electromagnetic pulses."
 	item = /obj/item/mod/module/emp_shield/advanced
 	cost = 5
-	purchasable_from = UPLINK_NUKE_OPS | UPLINK_CLOWN_OPS | UPLINK_SPY
+	purchasable_from = (UPLINK_ALL_SYNDIE_OPS | UPLINK_SPY)
 
 /datum/uplink_item/suits/injector
 	name = "MODsuit Injector Module"
 	desc = "An injector module for a MODsuit. It is an extendable piercing injector with 30u capacity."
 	item = /obj/item/mod/module/injector
 	cost = 2
-	purchasable_from = UPLINK_NUKE_OPS | UPLINK_CLOWN_OPS | UPLINK_SPY
+	purchasable_from = (UPLINK_ALL_SYNDIE_OPS | UPLINK_SPY)
 
 /datum/uplink_item/suits/holster
 	name = "MODsuit Holster Module"
 	desc = "A holster module for a MODsuit. It can stealthily store any not too heavy gun inside it."
 	item = /obj/item/mod/module/holster
 	cost = 2
-	purchasable_from = UPLINK_NUKE_OPS | UPLINK_CLOWN_OPS | UPLINK_SPY
+	purchasable_from = (UPLINK_ALL_SYNDIE_OPS | UPLINK_SPY)
 
 /datum/uplink_item/device_tools/medgun_mod
 	name = "Medbeam Gun Module"
@@ -645,7 +648,7 @@
 		operatives in the fight, even while under fire. Don't cross the streams!"
 	item = /obj/item/mod/module/medbeam
 	cost = 15
-	purchasable_from = UPLINK_NUKE_OPS | UPLINK_CLOWN_OPS
+	purchasable_from = UPLINK_ALL_SYNDIE_OPS
 
 /datum/uplink_item/suits/syndi_intellicard
 	name = "Pre-Loaded Syndicate Intellicard"
@@ -653,7 +656,7 @@
 			However, due to failsafes activated during the extraction process, the AI is unable to interact with electronics from anywhere but direct proximity..."
 	item = /obj/item/aicard/syndie/loaded
 	cost = 12
-	purchasable_from = UPLINK_NUKE_OPS | UPLINK_CLOWN_OPS
+	purchasable_from = UPLINK_ALL_SYNDIE_OPS
 	refundable = TRUE
 
 /datum/uplink_item/suits/synd_ai_upgrade
@@ -661,7 +664,7 @@
 	desc = "...unless you buy the Syndicate Upgrade! This data chip allows the captured AI to increase its interaction range by two tiles per application. The Syndicate recommends three or four purchases at most, for a total of seven or infinite meters of range."
 	item = /obj/item/computer_disk/syndie_ai_upgrade
 	cost = 4
-	purchasable_from = UPLINK_NUKE_OPS | UPLINK_CLOWN_OPS
+	purchasable_from = UPLINK_ALL_SYNDIE_OPS
 	cant_discount = TRUE
 	refundable = TRUE
 
@@ -675,6 +678,7 @@
 	surplus = 0
 	purchasable_from = UPLINK_NUKE_OPS | UPLINK_CLOWN_OPS
 	restricted = TRUE
+	purchasable_from = UPLINK_FIREBASE_OPS
 
 /datum/uplink_item/device_tools/syndie_jaws_of_life
 	name = "Syndicate Jaws of Life"
@@ -682,7 +686,7 @@
 		In its crowbar configuration, it can be used to force open airlocks. Very useful for entering the station or its departments."
 	item = /obj/item/crowbar/power/syndicate
 	cost = 4
-	purchasable_from = UPLINK_NUKE_OPS | UPLINK_CLOWN_OPS | UPLINK_SPY
+	purchasable_from = UPLINK_SERIOUS_OPS | UPLINK_SPY
 
 /datum/uplink_item/device_tools/medkit
 	name = "Syndicate Combat Medic Kit"
@@ -691,7 +695,7 @@
 		for faster healing on the field. Also comes with basic medical tools and sterlizer."
 	item = /obj/item/storage/medkit/tactical
 	cost = 4
-	purchasable_from = UPLINK_NUKE_OPS | UPLINK_CLOWN_OPS
+	purchasable_from = UPLINK_SERIOUS_OPS
 
 /datum/uplink_item/device_tools/medkit/premium
 	name = "Syndicate Combat Medical Suite"
@@ -701,7 +705,7 @@
 		and some helpful MODsuit modules for for field medical use and operative physiopharmaceutical augmentation."
 	item = /obj/item/storage/medkit/tactical/premium
 	cost = 15
-	purchasable_from = UPLINK_NUKE_OPS | UPLINK_CLOWN_OPS
+	purchasable_from = UPLINK_SERIOUS_OPS
 
 /datum/uplink_item/device_tools/potion
 	name = "Syndicate Sentience Potion"
@@ -709,7 +713,7 @@
 	desc = "A potion recovered at great risk by undercover Syndicate operatives and then subsequently modified with Syndicate technology. \
 		Using it will make any animal sentient, and bound to serve you, as well as implanting an internal radio for communication and an internal ID card for opening doors."
 	cost = 4
-	purchasable_from = UPLINK_NUKE_OPS | UPLINK_CLOWN_OPS | UPLINK_SPY
+	purchasable_from = UPLINK_SERIOUS_OPS | UPLINK_SPY
 	restricted = TRUE
 
 // Implants
@@ -734,7 +738,7 @@
 		This will permanently destroy your body, however."
 	item = /obj/item/storage/box/syndie_kit/imp_microbomb
 	cost = 2
-	purchasable_from = UPLINK_NUKE_OPS | UPLINK_SPY
+	purchasable_from = UPLINK_SERIOUS_OPS | UPLINK_SPY
 
 /datum/uplink_item/implants/nuclear/macrobomb
 	name = "Macrobomb Implant"
@@ -750,7 +754,7 @@
 			Prevents collapsing from critical condition, but explodes after a while."
 	item = /obj/item/storage/box/syndie_kit/imp_deniability
 	cost = 6
-	purchasable_from = UPLINK_NUKE_OPS | UPLINK_SPY
+	purchasable_from = UPLINK_SERIOUS_OPS | UPLINK_SPY
 
 /datum/uplink_item/implants/nuclear/reviver
 	name = "Reviver Implant"
@@ -780,7 +784,7 @@
 
 /datum/uplink_item/badass/costumes
 	surplus = 0
-	purchasable_from = UPLINK_NUKE_OPS | UPLINK_CLOWN_OPS
+	purchasable_from = UPLINK_SERIOUS_OPS
 	cost = 4
 	cant_discount = TRUE
 
@@ -803,7 +807,6 @@
 		you can blow those corpo suits away with your very own home-made explosive devices. Made in your local firebase's \
 		very own Ordnance Laboratory! *The Syndicate is not responsible for injuries or deaths sustained while utilizing the lab."
 	item = /obj/item/keycard/syndicate_bomb
-	purchasable_from = UPLINK_NUKE_OPS
 
 /datum/uplink_item/base_keys/bio_key
 	name = "Syndicate Bio-Weapon Laboratory Access Card"
@@ -840,4 +843,4 @@
 	desc = "Hat crate! Contains hats! HATS!!!"
 	item = /obj/structure/closet/crate/large/hats
 	cost = 5
-	purchasable_from = UPLINK_CLOWN_OPS | UPLINK_NUKE_OPS
+	purchasable_from = UPLINK_ALL_SYNDIE_OPS

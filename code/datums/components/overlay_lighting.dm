@@ -62,7 +62,7 @@
 	var/directional = FALSE
 	///Whether we're a beam light
 	var/beam = FALSE
-	///A cone overlay for directional light, it's alpha and color are dependant on the light
+	///A cone overlay for directional light, its alpha and color are dependant on the light
 	var/image/cone
 	///Current tracked direction for the directional cast behaviour
 	var/current_direction

@@ -5,6 +5,7 @@
 /obj/item/modular_computer/pda/heads
 	greyscale_config = /datum/greyscale_config/tablet/head
 	greyscale_colors = "#67A364#a92323"
+	max_capacity = parent_type::max_capacity * 2
 	starting_programs = list(
 		/datum/computer_file/program/crew_manifest,
 		/datum/computer_file/program/status,
@@ -97,6 +98,7 @@
 		/datum/computer_file/program/crew_manifest,
 		/datum/computer_file/program/robocontrol,
 		/datum/computer_file/program/science,
+		/datum/computer_file/program/scipaper_program,
 		/datum/computer_file/program/status,
 		/datum/computer_file/program/signal_commander,
 	)
@@ -187,6 +189,7 @@
 	starting_programs = list(
 		/datum/computer_file/program/atmosscan,
 		/datum/computer_file/program/science,
+		/datum/computer_file/program/scipaper_program,
 		/datum/computer_file/program/signal_commander,
 	)
 

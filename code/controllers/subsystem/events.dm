@@ -66,7 +66,7 @@ SUBSYSTEM_DEF(events)
 	scheduled = world.time + rand(frequency_lower, max(frequency_lower,frequency_upper))
 
 /**
- * Selects a random event based on whether it can occur and it's 'weight'(probability)
+ * Selects a random event based on whether it can occur and its 'weight'(probability)
  *
  * Arguments:
  * * excluded_event - The event path we will be foregoing, if present.

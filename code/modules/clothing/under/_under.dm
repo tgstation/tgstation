@@ -6,6 +6,7 @@
 	righthand_file = 'icons/mob/inhands/clothing/suits_righthand.dmi'
 	body_parts_covered = CHEST|GROIN|LEGS|ARMS
 	slot_flags = ITEM_SLOT_ICLOTHING
+	interaction_flags_click = NEED_DEXTERITY
 	armor_type = /datum/armor/clothing_under
 	equip_sound = 'sound/items/equip/jumpsuit_equip.ogg'
 	drop_sound = 'sound/items/handling/cloth_drop.ogg'
@@ -338,15 +339,13 @@
 		if(H.w_uniform == src)
 			H.update_suit_sensors()
 
-/obj/item/clothing/under/CtrlClick(mob/user)
-	. = ..()
-	if(.)
-		return
+/obj/item/clothing/under/item_ctrl_click(mob/user)
 	if(!can_toggle_sensors(user))
-		return
+		return CLICK_ACTION_BLOCKING
 
 	sensor_mode = SENSOR_COORDS
 	balloon_alert(user, "set to tracking")
+	return CLICK_ACTION_SUCCESS
 
 /// Checks if the toggler is allowed to toggle suit sensors currently
 /obj/item/clothing/under/proc/can_toggle_sensors(mob/toggler)
@@ -378,17 +377,10 @@
 	rolldown()
 	return CLICK_ACTION_SUCCESS
 
-/obj/item/clothing/under/alt_click_secondary(mob/user)
-	. = ..()
-	if(.)
-		return
-
+/obj/item/clothing/under/click_alt_secondary(mob/user)
 	if(!LAZYLEN(attached_accessories))
 		balloon_alert(user, "no accessories to remove!")
 		return
-	if(!user.can_perform_action(src, NEED_DEXTERITY))
-		return
-
 	pop_accessory(user)
 
 /obj/item/clothing/under/verb/jumpsuit_adjust()

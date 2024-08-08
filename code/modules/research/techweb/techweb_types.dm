@@ -18,7 +18,7 @@
 
 /datum/techweb/oldstation/New()
 	. = ..()
-	research_node_id("oldstation_surgery", TRUE, TRUE, FALSE)
+	research_node_id(TECHWEB_NODE_OLDSTATION_SURGERY, TRUE, TRUE, FALSE)
 
 /**
  * Admin techweb that has everything unlocked by default

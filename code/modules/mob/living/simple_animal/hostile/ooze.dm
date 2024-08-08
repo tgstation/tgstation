@@ -375,7 +375,7 @@
 	name = "mending globule"
 	icon_state = "glob_projectile"
 	shrapnel_type = /obj/item/mending_globule
-	embedding = list("embed_chance" = 100, ignore_throwspeed_threshold = TRUE, "pain_mult" = 0, "jostle_pain_mult" = 0, "fall_chance" = 0.5)
+	embed_type = /datum/embed_data/mending_globule
 	damage = 0
 
 ///This item is what is embedded into the mob, and actually handles healing of mending globules
@@ -384,9 +384,16 @@
 	desc = "It somehow heals those who touch it."
 	icon = 'icons/obj/science/vatgrowing.dmi'
 	icon_state = "globule"
-	embedding = list("embed_chance" = 100, ignore_throwspeed_threshold = TRUE, "pain_mult" = 0, "jostle_pain_mult" = 0, "fall_chance" = 0.5)
+	embed_type = /datum/embed_data/mending_globule
 	var/obj/item/bodypart/bodypart
 	var/heals_left = 35
+
+/datum/embed_data/mending_globule
+	embed_chance = 100
+	ignore_throwspeed_threshold = TRUE
+	pain_mult = 0
+	jostle_pain_mult = 0
+	fall_chance = 0.5
 
 /obj/item/mending_globule/Destroy()
 	. = ..()

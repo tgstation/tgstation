@@ -5,6 +5,7 @@
 	icon_state = "implantchair"
 	density = TRUE
 	opacity = FALSE
+	interaction_flags_mouse_drop = NEED_DEXTERITY
 
 	var/ready = TRUE
 	var/replenishing = FALSE
@@ -142,16 +143,10 @@
 		message_cooldown = world.time + 50
 		to_chat(user, span_warning("[src]'s door won't budge!"))
 
-
-/obj/machinery/implantchair/MouseDrop_T(mob/target, mob/user)
-	if(user.stat || !Adjacent(user) || !user.Adjacent(target) || !isliving(target) || !ISADVANCEDTOOLUSER(user))
+/obj/machinery/implantchair/mouse_drop_receive(mob/target, mob/user, params)
+	if(!isliving(target))
 		return
-	if(isliving(user))
-		var/mob/living/L = user
-		if(L.body_position == LYING_DOWN)
-			return
 	close_machine(target)
-
 
 /obj/machinery/implantchair/close_machine(mob/living/user, density_to_set = TRUE)
 	if((isnull(user) || istype(user)) && state_open)

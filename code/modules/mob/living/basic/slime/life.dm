@@ -36,10 +36,10 @@
 ///Handles the consumption of nutrition, and growth
 /mob/living/basic/slime/proc/handle_nutrition(seconds_per_tick = SSMOBS_DT)
 	if(hunger_disabled) //God as my witness, I will never go hungry again
-		set_nutrition(700)
+		set_nutrition(100)
 		return
 
-	if(SPT_PROB(7.5, seconds_per_tick))
+	if(SPT_PROB(1.25, seconds_per_tick))
 		adjust_nutrition((life_stage == SLIME_LIFE_STAGE_ADULT ? -1 : -0.5) * seconds_per_tick)
 
 	if(nutrition < SLIME_STARVE_NUTRITION)
@@ -63,7 +63,7 @@
 	if (SLIME_GROW_NUTRITION <= nutrition)
 
 		if(amount_grown < SLIME_EVOLUTION_THRESHOLD)
-			adjust_nutrition(-10 * seconds_per_tick)
+			adjust_nutrition(-2.5 * seconds_per_tick)
 			amount_grown++
 
 		if(powerlevel < SLIME_MAX_POWER && SPT_PROB(30-powerlevel*2, seconds_per_tick))

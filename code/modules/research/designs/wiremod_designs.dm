@@ -467,6 +467,11 @@
 	id = "comp_assoc_list_pick"
 	build_path = /obj/item/circuit_component/list_pick/assoc
 
+/datum/design/component/bci/bci_camera
+	name = "BCI Camera"
+	id = "comp_camera_bci"
+	build_path = /obj/item/circuit_component/remotecam/bci
+
 /datum/design/compact_remote_shell
 	name = "Compact Remote Shell"
 	desc = "A handheld shell with one big button."

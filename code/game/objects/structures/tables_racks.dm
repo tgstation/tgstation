@@ -92,7 +92,7 @@
 
 /obj/structure/table/update_icon(updates=ALL)
 	. = ..()
-	if((updates & UPDATE_SMOOTHING) && (smoothing_flags & (SMOOTH_CORNERS|SMOOTH_BITMASK)))
+	if((updates & UPDATE_SMOOTHING) && (smoothing_flags & USES_SMOOTHING))
 		QUEUE_SMOOTH(src)
 		QUEUE_SMOOTH_NEIGHBORS(src)
 
@@ -208,7 +208,7 @@
 
 /obj/structure/table/screwdriver_act_secondary(mob/living/user, obj/item/tool)
 	if(!deconstruction_ready)
-		return FALSE
+		return NONE
 	to_chat(user, span_notice("You start disassembling [src]..."))
 	if(tool.use_tool(src, user, 2 SECONDS, volume=50))
 		deconstruct(TRUE)
@@ -216,7 +216,7 @@
 
 /obj/structure/table/wrench_act_secondary(mob/living/user, obj/item/tool)
 	if(!deconstruction_ready)
-		return FALSE
+		return NONE
 	to_chat(user, span_notice("You start deconstructing [src]..."))
 	if(tool.use_tool(src, user, 4 SECONDS, volume=50))
 		playsound(loc, 'sound/items/deconstruct.ogg', 50, TRUE)
@@ -224,76 +224,105 @@
 		deconstruct(TRUE)
 	return ITEM_INTERACT_SUCCESS
 
-/obj/structure/table/attackby(obj/item/I, mob/living/user, params)
-	var/list/modifiers = params2list(params)
+/obj/structure/table/item_interaction_secondary(mob/living/user, obj/item/tool, list/modifiers)
+	if(istype(tool, /obj/item/construction/rcd))
+		return NONE
 
-	if(istype(I, /obj/item/storage/bag/tray))
-		var/obj/item/storage/bag/tray/T = I
-		if(T.contents.len > 0) // If the tray isn't empty
-			for(var/x in T.contents)
-				var/obj/item/item = x
-				AfterPutItemOnTable(item, user)
-			I.atom_storage.remove_all(drop_location())
-			user.visible_message(span_notice("[user] empties [I] on [src]."))
-			return
-		// If the tray IS empty, continue on (tray will be placed on the table like other items)
+	var/deck_act_value = NONE
+	if(istype(tool, /obj/item/toy/cards/deck))
+		deck_act_value = deck_act(user, tool, modifiers, TRUE)
+	// Continue to placing if we don't do anything else
+	if(deck_act_value != NONE)
+		return deck_act_value
 
-	if(istype(I, /obj/item/toy/cards/deck))
-		var/obj/item/toy/cards/deck/dealer_deck = I
-		if(HAS_TRAIT(dealer_deck, TRAIT_WIELDED)) // deal a card facedown on the table
-			var/obj/item/toy/singlecard/card = dealer_deck.draw(user)
-			if(card)
-				attackby(card, user, params)
-			return
+	if(!user.combat_mode)
+		return table_place_act(user, tool, modifiers)
 
-	if(istype(I, /obj/item/riding_offhand))
-		var/obj/item/riding_offhand/riding_item = I
-		var/mob/living/carried_mob = riding_item.rider
-		if(carried_mob == user) //Piggyback user.
-			return
-		if(user.combat_mode)
-			user.unbuckle_mob(carried_mob)
-			tablelimbsmash(user, carried_mob)
-		else
-			var/tableplace_delay = 3.5 SECONDS
-			var/skills_space = ""
-			if(HAS_TRAIT(user, TRAIT_QUICKER_CARRY))
-				tableplace_delay = 2 SECONDS
-				skills_space = " expertly"
-			else if(HAS_TRAIT(user, TRAIT_QUICK_CARRY))
-				tableplace_delay = 2.75 SECONDS
-				skills_space = " quickly"
-			carried_mob.visible_message(span_notice("[user] begins to[skills_space] place [carried_mob] onto [src]..."),
-				span_userdanger("[user] begins to[skills_space] place [carried_mob] onto [src]..."))
-			if(do_after(user, tableplace_delay, target = carried_mob))
-				user.unbuckle_mob(carried_mob)
-				tableplace(user, carried_mob)
-		return TRUE
+	return NONE
 
-	if(!user.combat_mode && !(I.item_flags & ABSTRACT))
-		if(user.transferItemToLoc(I, drop_location(), silent = FALSE))
-			//Center the icon where the user clicked.
-			if(!LAZYACCESS(modifiers, ICON_X) || !LAZYACCESS(modifiers, ICON_Y))
-				return
-			//Clamp it so that the icon never moves more than 16 pixels in either direction (thus leaving the table turf)
-			I.pixel_x = clamp(text2num(LAZYACCESS(modifiers, ICON_X)) - 16, -(world.icon_size/2), world.icon_size/2)
-			I.pixel_y = clamp(text2num(LAZYACCESS(modifiers, ICON_Y)) - 16, -(world.icon_size/2), world.icon_size/2)
-			AfterPutItemOnTable(I, user)
-			return TRUE
-	else
-		return ..()
+/obj/structure/table/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	. = NONE
+	if(istype(tool, /obj/item/storage/bag/tray))
+		. = tray_act(user, tool)
+	else if(istype(tool, /obj/item/toy/cards/deck))
+		. = deck_act(user, tool, modifiers, FALSE)
+	else if(istype(tool, /obj/item/riding_offhand))
+		. = riding_offhand_act(user, tool)
 
-/obj/structure/table/attackby_secondary(obj/item/weapon, mob/user, params)
-	if(istype(weapon, /obj/item/toy/cards/deck))
-		var/obj/item/toy/cards/deck/dealer_deck = weapon
-		if(HAS_TRAIT(dealer_deck, TRAIT_WIELDED)) // deal a card faceup on the table
-			var/obj/item/toy/singlecard/card = dealer_deck.draw(user)
-			if(card)
-				card.Flip()
-				attackby(card, user, params)
-			return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
-	..()
-	return SECONDARY_ATTACK_CONTINUE_CHAIN
+	// Continue to placing if we don't do anything else
+	if(. != NONE)
+		return .
+
+	if(!user.combat_mode)
+		return table_place_act(user, tool, modifiers)
+
+	return NONE
+
+/obj/structure/table/proc/tray_act(mob/living/user, obj/item/storage/bag/tray/used_tray)
+	if(used_tray.contents.len <= 0)
+		return NONE // If the tray IS empty, continue on (tray will be placed on the table like other items)
+
+	for(var/obj/item/thing in used_tray.contents)
+		AfterPutItemOnTable(thing, user)
+	used_tray.atom_storage.remove_all(drop_location())
+	user.visible_message(span_notice("[user] empties [used_tray] on [src]."))
+	return ITEM_INTERACT_SUCCESS
+
+/obj/structure/table/proc/deck_act(mob/living/user, obj/item/toy/cards/deck/dealer_deck, list/modifiers, flip)
+	if(!HAS_TRAIT(dealer_deck, TRAIT_WIELDED))
+		return NONE
+
+	var/obj/item/toy/singlecard/card = dealer_deck.draw(user)
+	if(isnull(card))
+		return ITEM_INTERACT_BLOCKING
+	if(flip)
+		card.Flip()
+	return table_place_act(user, card, modifiers)
+
+/obj/structure/table/proc/riding_offhand_act(mob/living/user, obj/item/riding_offhand/riding_item)
+	var/mob/living/carried_mob = riding_item.rider
+	if(carried_mob == user) //Piggyback user.
+		return NONE
+
+	if(user.combat_mode)
+		user.unbuckle_mob(carried_mob)
+		tablelimbsmash(user, carried_mob)
+		return ITEM_INTERACT_SUCCESS
+
+	var/tableplace_delay = 3.5 SECONDS
+	var/skills_space = ""
+	if(HAS_TRAIT(user, TRAIT_QUICKER_CARRY))
+		tableplace_delay = 2 SECONDS
+		skills_space = " expertly"
+	else if(HAS_TRAIT(user, TRAIT_QUICK_CARRY))
+		tableplace_delay = 2.75 SECONDS
+		skills_space = " quickly"
+
+	var/obj/item/organ/internal/cyberimp/chest/spine/potential_spine = user.get_organ_slot(ORGAN_SLOT_SPINE)
+	if(istype(potential_spine))
+		tableplace_delay *= potential_spine.athletics_boost_multiplier
+
+	carried_mob.visible_message(span_notice("[user] begins to[skills_space] place [carried_mob] onto [src]..."),
+		span_userdanger("[user] begins to[skills_space] place [carried_mob] onto [src]..."))
+	if(!do_after(user, tableplace_delay, target = carried_mob))
+		return ITEM_INTERACT_BLOCKING
+	user.unbuckle_mob(carried_mob)
+	tableplace(user, carried_mob)
+	return ITEM_INTERACT_SUCCESS
+
+// Where putting things on tables is handled.
+/obj/structure/table/proc/table_place_act(mob/living/user, obj/item/tool, list/modifiers)
+	if(tool.item_flags & ABSTRACT)
+		return NONE
+	if(!user.transferItemToLoc(tool, drop_location(), silent = FALSE))
+		return ITEM_INTERACT_BLOCKING
+	// Items are centered by default, but we move them if click ICON_X and ICON_Y are available
+	if(LAZYACCESS(modifiers, ICON_X) && LAZYACCESS(modifiers, ICON_Y))
+		// Clamp it so that the icon never moves more than 16 pixels in either direction (thus leaving the table turf)
+		tool.pixel_x = clamp(text2num(LAZYACCESS(modifiers, ICON_X)) - 16, -(world.icon_size*0.5), world.icon_size*0.5)
+		tool.pixel_y = clamp(text2num(LAZYACCESS(modifiers, ICON_Y)) - 16, -(world.icon_size*0.5), world.icon_size*0.5)
+	AfterPutItemOnTable(tool, user)
+	return ITEM_INTERACT_SUCCESS
 
 /obj/structure/table/proc/AfterPutItemOnTable(obj/item/thing, mob/living/user)
 	return
@@ -327,6 +356,7 @@
 	if((shove_flags & SHOVE_KNOCKDOWN_BLOCKED) || !(shove_flags & SHOVE_BLOCKED))
 		return
 	target.Knockdown(SHOVE_KNOCKDOWN_TABLE)
+	target.apply_status_effect(/datum/status_effect/next_shove_stuns)
 	target.visible_message(span_danger("[shover.name] shoves [target.name] onto \the [src]!"),
 		span_userdanger("You're shoved onto \the [src] by [shover.name]!"), span_hear("You hear aggressive shuffling followed by a loud thud!"), COMBAT_MESSAGE_RANGE, shover)
 	to_chat(shover, span_danger("You shove [target.name] onto \the [src]!"))
@@ -642,23 +672,27 @@
 	else
 		return span_notice("The top cover is firmly <b>welded</b> on.")
 
-/obj/structure/table/reinforced/attackby_secondary(obj/item/weapon, mob/user, params)
-	if(weapon.tool_behaviour == TOOL_WELDER)
-		if(weapon.tool_start_check(user, amount = 0))
-			if(deconstruction_ready)
-				to_chat(user, span_notice("You start strengthening the reinforced table..."))
-				if (weapon.use_tool(src, user, 50, volume = 50))
-					to_chat(user, span_notice("You strengthen the table."))
-					deconstruction_ready = FALSE
-			else
-				to_chat(user, span_notice("You start weakening the reinforced table..."))
-				if (weapon.use_tool(src, user, 50, volume = 50))
-					to_chat(user, span_notice("You weaken the table."))
-					deconstruction_ready = TRUE
-		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+/obj/structure/table/reinforced/welder_act_secondary(mob/living/user, obj/item/tool)
+	if(tool.tool_start_check(user, amount = 0))
+		if(deconstruction_ready)
+			to_chat(user, span_notice("You start strengthening the reinforced table..."))
+			if (tool.use_tool(src, user, 50, volume = 50))
+				to_chat(user, span_notice("You strengthen the table."))
+				deconstruction_ready = FALSE
+				return ITEM_INTERACT_SUCCESS
+		else
+			to_chat(user, span_notice("You start weakening the reinforced table..."))
+			if (tool.use_tool(src, user, 50, volume = 50))
+				to_chat(user, span_notice("You weaken the table."))
+				deconstruction_ready = TRUE
+				return ITEM_INTERACT_SUCCESS
+	return ITEM_INTERACT_BLOCKING
 
-	else
-		. = ..()
+/obj/structure/table/reinforced/item_interaction_secondary(mob/living/user, obj/item/tool, list/modifiers)
+	if(tool.tool_behaviour == TOOL_WELDER)
+		return NONE
+
+	return ..()
 
 /obj/structure/table/bronze
 	name = "bronze table"
@@ -817,7 +851,7 @@
 	layer = TABLE_LAYER
 	density = TRUE
 	anchored = TRUE
-	pass_flags_self = LETPASSTHROW //You can throw objects over this, despite it's density.
+	pass_flags_self = LETPASSTHROW //You can throw objects over this, despite its density.
 	max_integrity = 20
 
 /obj/structure/rack/skeletal

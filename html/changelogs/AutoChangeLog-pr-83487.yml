@@ -1,7 +1,0 @@
-author: "Rhials"
-delete-after: True
-changes:
-  - balance: "cultist shades can no longer contribute to rune invocation until they've been out of their soulstone for a minute. Put them in a shell for God's sake!"
-  - code_imp: "sweeps up cultist antag datum code into its own subfolder."
-  - code_imp: "cult shades now have their own antag datum."
-  - bugfix: "constructs now properly clear the cultist antag datum and transfer the mind slightly earlier."

@@ -136,7 +136,7 @@
 
 /obj/effect/fun_balloon/scatter/effect()
 	for(var/mob/living/M in range(effect_range, get_turf(src)))
-		var/turf/T = find_safe_turf()
+		var/turf/T = find_safe_turf(zlevel = src.z)
 		new /obj/effect/temp_visual/gravpush(get_turf(M))
 		M.forceMove(T)
 		to_chat(M, span_notice("Pop!"), confidential = TRUE)

@@ -8,9 +8,9 @@
 	var/mob/owner
 	/// Client view size of the scoping mob.
 	var/list/view_list
-	/// Pixel x we send to the scope component.
+	/// Pixel x relative to the hovered tile we send to the scope component.
 	var/given_x
-	/// Pixel y we send to the scope component.
+	/// Pixel y relative to the hovered tile we send to the scope component.
 	var/given_y
 	/// The turf we send to the scope component.
 	var/turf/given_turf

@@ -9,6 +9,13 @@
 		BB_MINEBOT_AUTO_DEFEND = TRUE,
 		BB_BLACKLIST_MINERAL_TURFS = list(/turf/closed/mineral/gibtonite),
 		BB_AUTOMATED_MINING = FALSE,
+		BB_OWNER_SELF_HARM_RESPONSES = list(
+			"Please stop hurting yourself.",
+			"There is no need to do that.",
+			"Your actions are illogical.",
+			"Please make better choices.",
+			"Remember, you have beaten your worst days before."
+		)
 	)
 
 	ai_movement = /datum/ai_movement/basic_avoidance
@@ -277,6 +284,10 @@
 	radial_icon = 'icons/obj/mining.dmi'
 	radial_icon_state = "pickaxe"
 	speech_commands = list("mine")
+	callout_type = /datum/callout_option/mine
+
+/datum/pet_command/automate_mining/valid_callout_target(mob/living/caller, datum/callout_option/callout, atom/target)
+	return ismineralturf(target)
 
 /datum/pet_command/automate_mining/execute_action(datum/ai_controller/controller)
 	controller.set_blackboard_key(BB_AUTOMATED_MINING, TRUE)

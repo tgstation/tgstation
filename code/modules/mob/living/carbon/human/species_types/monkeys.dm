@@ -1,7 +1,7 @@
 #define MONKEY_SPEC_ATTACK_BITE_MISS_CHANCE 25
 
 /datum/species/monkey
-	name = "Monkey"
+	name = "\improper Monkey"
 	id = SPECIES_MONKEY
 	external_organs = list(
 		/obj/item/organ/external/tail/monkey = "Monkey",
@@ -22,6 +22,7 @@
 	)
 	no_equip_flags = ITEM_SLOT_OCLOTHING | ITEM_SLOT_GLOVES | ITEM_SLOT_FEET | ITEM_SLOT_SUITSTORE
 	changesource_flags = MIRROR_BADMIN | WABBAJACK | MIRROR_PRIDE | MIRROR_MAGIC | ERT_SPAWN | SLIME_EXTRACT
+	species_cookie = /obj/item/food/grown/banana
 	inherent_factions = list(FACTION_MONKEY)
 	sexes = FALSE
 	species_language_holder = /datum/language_holder/monkey
@@ -62,15 +63,7 @@
 	return ..()
 
 /datum/species/monkey/get_scream_sound(mob/living/carbon/human/monkey)
-	return pick(
-		'sound/creatures/monkey/monkey_screech_1.ogg',
-		'sound/creatures/monkey/monkey_screech_2.ogg',
-		'sound/creatures/monkey/monkey_screech_3.ogg',
-		'sound/creatures/monkey/monkey_screech_4.ogg',
-		'sound/creatures/monkey/monkey_screech_5.ogg',
-		'sound/creatures/monkey/monkey_screech_6.ogg',
-		'sound/creatures/monkey/monkey_screech_7.ogg',
-	)
+	return get_sfx(SFX_SCREECH)
 
 /datum/species/monkey/get_physical_attributes()
 	return "Monkeys are slippery, can crawl into vents, and are more dextrous than humans.. but only when stealing things. \

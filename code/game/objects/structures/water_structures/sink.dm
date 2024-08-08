@@ -14,7 +14,7 @@
 	var/buildstacktype = /obj/item/stack/sheet/iron
 	///Number of sheets of material to drop when broken or deconstructed.
 	var/buildstackamount = 1
-	///Does the sink have a water recycler to recollect it's water supply?
+	///Does the sink have a water recycler to recollect its water supply?
 	var/has_water_reclaimer = TRUE
 	///Units of water to reclaim per second
 	var/reclaim_rate = 0.5
@@ -249,6 +249,13 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sink, (-14))
 	pixel_shift = 16
 
 MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sink/kitchen, (-16))
+
+/obj/structure/sink/gasstation
+	name = "plasma fuel station"
+	desc = "A place to refuel vehicles with liquid plasma. It can also dispense into a container."
+	icon_state = "sink_gasstation"
+	dispensedreagent = /datum/reagent/toxin/plasma
+	has_water_reclaimer = FALSE
 
 /obj/structure/sink/greyscale
 	icon_state = "sink_greyscale"

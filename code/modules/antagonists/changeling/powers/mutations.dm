@@ -218,17 +218,13 @@
 	effectiveness = 80, \
 	)
 
-/obj/item/melee/arm_blade/afterattack(atom/target, mob/user, proximity)
-	. = ..()
-	if(!proximity)
-		return
+/obj/item/melee/arm_blade/afterattack(atom/target, mob/user, click_parameters)
 	if(istype(target, /obj/structure/table))
-		var/obj/structure/table/T = target
-		T.deconstruct(FALSE)
+		var/obj/smash = target
+		smash.deconstruct(FALSE)
 
 	else if(istype(target, /obj/machinery/computer))
-		var/obj/machinery/computer/C = target
-		C.attack_alien(user) //muh copypasta
+		target.attack_alien(user) //muh copypasta
 
 	else if(istype(target, /obj/machinery/door/airlock))
 		var/obj/machinery/door/airlock/opening = target
@@ -345,7 +341,7 @@
 	damage = 0
 	damage_type = BRUTE
 	range = 8
-	hitsound = 'sound/weapons/thudswoosh.ogg'
+	hitsound = 'sound/weapons/shove.ogg'
 	var/chain
 	var/obj/item/ammo_casing/magic/tentacle/source //the item that shot it
 	///Click params that were used to fire the tentacle shot

@@ -320,21 +320,23 @@
 	icon = 'icons/obj/mining_zones/artefacts.dmi'
 	icon_state = "prison_cube"
 
-/obj/item/prisoncube/afterattack(atom/target, mob/user, proximity_flag, click_parameters)
-	. = ..()
-	if(!proximity_flag || !isliving(target))
-		return
-	var/mob/living/victim = target
-	var/mob/living/carbon/carbon_victim = victim
+/obj/item/prisoncube/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
+	if(!isliving(interacting_with))
+		return NONE
+
+	var/mob/living/carbon/carbon_victim = interacting_with
 	//Handcuffed or unconscious
-	if(istype(carbon_victim) && carbon_victim.handcuffed || victim.stat != CONSCIOUS)
-		if(!puzzle_imprison(target))
-			to_chat(user,span_warning("[src] does nothing."))
-			return
-		to_chat(user,span_warning("You trap [victim] in the prison cube!"))
+	if(istype(carbon_victim) && (carbon_victim.handcuffed || carbon_victim.stat != CONSCIOUS))
+		user.do_attack_animation(carbon_victim)
+		if(!puzzle_imprison(carbon_victim))
+			to_chat(user, span_warning("[src] does nothing."))
+			return ITEM_INTERACT_BLOCKING
+		to_chat(user, span_warning("You trap [carbon_victim] in the prison cube!"))
 		qdel(src)
-	else
-		to_chat(user,span_notice("[src] only accepts restrained or unconscious prisoners."))
+		return ITEM_INTERACT_SUCCESS
+
+	to_chat(user, span_notice("[src] only accepts restrained or unconscious prisoners."))
+	return ITEM_INTERACT_BLOCKING
 
 /proc/puzzle_imprison(mob/living/prisoner)
 	var/turf/T = get_turf(prisoner)

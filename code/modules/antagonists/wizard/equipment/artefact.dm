@@ -378,7 +378,7 @@
 	addtimer(CALLBACK(src, PROC_REF(send_away)), 2 SECONDS)
 
 /obj/effect/temp_visual/teleporting_tornado/proc/send_away()
-	var/turf/ending_turfs = find_safe_turf()
+	var/turf/ending_turfs = get_safe_random_station_turf()
 	for(var/mob/stored_mobs as anything in pickedup_mobs)
 		do_teleport(stored_mobs, ending_turfs, channel = TELEPORT_CHANNEL_MAGIC)
 		animate(stored_mobs, pixel_y = null, time = 1 SECONDS)
@@ -431,43 +431,45 @@
 		COMSIG_ITEM_MAGICALLY_CHARGED = PROC_REF(on_magic_charge),
 	)
 
-/obj/item/runic_vendor_scepter/afterattack(atom/target, mob/user, proximity_flag, click_parameters)
+/obj/item/runic_vendor_scepter/ranged_interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
+	return interact_with_atom(interacting_with, user, modifiers)
+
+/obj/item/runic_vendor_scepter/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
 	if(scepter_is_busy_recharging)
 		user.balloon_alert(user, "busy!")
-		return
-	if(!check_allowed_items(target, not_inside = TRUE))
-		return
-	. |= AFTERATTACK_PROCESSED_ITEM
-	var/turf/afterattack_turf = get_turf(target)
-	if(istype(target, /obj/machinery/vending/runic_vendor))
-		var/obj/machinery/vending/runic_vendor/runic_explosion_target = target
+		return ITEM_INTERACT_BLOCKING
+	if(!check_allowed_items(interacting_with, not_inside = TRUE))
+		return NONE
+	if(istype(interacting_with, /obj/machinery/vending/runic_vendor))
+		var/obj/machinery/vending/runic_vendor/runic_explosion_target = interacting_with
 		runic_explosion_target.runic_explosion()
-		return
+		return ITEM_INTERACT_SUCCESS
+	var/turf/afterattack_turf = get_turf(interacting_with)
 	var/obj/machinery/vending/runic_vendor/vendor_on_turf = locate() in afterattack_turf
 	if(vendor_on_turf)
 		vendor_on_turf.runic_explosion()
-		return
+		return  ITEM_INTERACT_SUCCESS
 	if(!summon_vendor_charges)
 		user.balloon_alert(user, "no charges!")
-		return
+		return ITEM_INTERACT_BLOCKING
 	if(get_dist(afterattack_turf,src) > max_summon_range)
 		user.balloon_alert(user, "too far!")
-		return
+		return ITEM_INTERACT_BLOCKING
 	if(get_turf(src) == afterattack_turf)
 		user.balloon_alert(user, "too close!")
-		return
+		return ITEM_INTERACT_BLOCKING
 	if(scepter_is_busy_summoning)
 		user.balloon_alert(user, "already summoning!")
-		return
+		return ITEM_INTERACT_BLOCKING
 	if(afterattack_turf.is_blocked_turf(TRUE))
 		user.balloon_alert(user, "blocked!")
-		return
+		return ITEM_INTERACT_BLOCKING
 	if(summoning_time)
 		scepter_is_busy_summoning = TRUE
 		user.balloon_alert(user, "summoning...")
-		if(!do_after(user, summoning_time, target = target))
+		if(!do_after(user, summoning_time, target = interacting_with))
 			scepter_is_busy_summoning = FALSE
-			return
+			return ITEM_INTERACT_BLOCKING
 		scepter_is_busy_summoning = FALSE
 	if(summon_vendor_charges)
 		playsound(src,'sound/weapons/resonator_fire.ogg',50,TRUE)
@@ -475,8 +477,8 @@
 		new /obj/machinery/vending/runic_vendor(afterattack_turf)
 		summon_vendor_charges--
 		user.changeNext_move(CLICK_CD_MELEE)
-		return
-	return ..()
+		return ITEM_INTERACT_SUCCESS
+	return NONE
 
 /obj/item/runic_vendor_scepter/attack_self(mob/user, modifiers)
 	. = ..()
@@ -489,17 +491,20 @@
 	scepter_is_busy_recharging = FALSE
 	summon_vendor_charges = RUNIC_SCEPTER_MAX_CHARGES
 
-/obj/item/runic_vendor_scepter/afterattack_secondary(atom/target, mob/user, proximity_flag, click_parameters)
-	var/turf/afterattack_secondary_turf = get_turf(target)
+/obj/item/runic_vendor_scepter/ranged_interact_with_atom_secondary(atom/interacting_with, mob/living/user, list/modifiers)
+	return interact_with_atom_secondary(interacting_with, user, modifiers)
+
+/obj/item/runic_vendor_scepter/interact_with_atom_secondary(atom/interacting_with, mob/living/user, list/modifiers)
+	var/turf/afterattack_secondary_turf = get_turf(interacting_with)
 	var/obj/machinery/vending/runic_vendor/vendor_on_turf = locate() in afterattack_secondary_turf
-	if(istype(target, /obj/machinery/vending/runic_vendor))
-		var/obj/machinery/vending/runic_vendor/vendor_being_throw = target
-		vendor_being_throw.throw_at(get_edge_target_turf(target, get_cardinal_dir(src, target)), 4, 20, user)
-		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+	if(istype(interacting_with, /obj/machinery/vending/runic_vendor))
+		var/obj/machinery/vending/runic_vendor/vendor_being_throw = interacting_with
+		vendor_being_throw.throw_at(get_edge_target_turf(interacting_with, get_cardinal_dir(src, interacting_with)), 4, 20, user)
+		return ITEM_INTERACT_SUCCESS
 	if(vendor_on_turf)
-		vendor_on_turf.throw_at(get_edge_target_turf(target, get_cardinal_dir(src, target)), 4, 20, user)
-		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
-	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+		vendor_on_turf.throw_at(get_edge_target_turf(interacting_with, get_cardinal_dir(src, interacting_with)), 4, 20, user)
+		return ITEM_INTERACT_SUCCESS
+	return ITEM_INTERACT_BLOCKING
 
 /obj/item/runic_vendor_scepter/proc/on_magic_charge(datum/source, datum/action/cooldown/spell/charge/spell, mob/living/caster)
 	SIGNAL_HANDLER

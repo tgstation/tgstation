@@ -17,7 +17,7 @@
 	///Reference for light object
 	var/obj/machinery/light/new_light = null
 	///Reference for the internal cell
-	var/obj/item/stock_parts/cell/cell
+	var/obj/item/stock_parts/power_store/cell
 	///Can we support a cell?
 	var/cell_connectors = TRUE
 
@@ -45,16 +45,16 @@
 	. = ..()
 	switch(stage)
 		if(LIGHT_CONSTRUCT_EMPTY)
-			. += "It's an empty frame."
+			. += span_notice("It's an empty frame with no wires.")
 		if(LIGHT_CONSTRUCT_WIRED)
-			. += "It's wired."
+			. += span_notice("It is wired, but the bolts are not screwed in.")
 		if(LIGHT_CONSTRUCT_CLOSED)
-			. += "The casing is closed."
+			. += span_notice("The casing is closed.")
 	if(cell_connectors)
 		if(cell)
-			. += "You see [cell] inside the casing."
+			. += span_notice("You see [cell] inside the casing.")
 		else
-			. += "The casing has no power cell for backup power."
+			. += span_notice("The casing has no power cell for backup power.")
 	else
 		. += span_danger("This casing doesn't support power cells for backup power.")
 
@@ -63,7 +63,6 @@
 		return
 	user.visible_message(span_notice("[user] removes [cell] from [src]!"), span_notice("You remove [cell]."))
 	user.put_in_hands(cell)
-	cell.update_appearance()
 	cell = null
 	add_fingerprint(user)
 
@@ -71,14 +70,14 @@
 	if(!cell)
 		return
 	to_chat(user, span_notice("You telekinetically remove [cell]."))
-	var/obj/item/stock_parts/cell/cell_reference = cell
+	var/obj/item/stock_parts/power_store/cell_reference = cell
 	cell = null
 	cell_reference.forceMove(drop_location())
 	return cell_reference.attack_tk(user)
 
 /obj/structure/light_construct/attackby(obj/item/tool, mob/user, params)
 	add_fingerprint(user)
-	if(istype(tool, /obj/item/stock_parts/cell))
+	if(istype(tool, /obj/item/stock_parts/power_store/cell))
 		if(!cell_connectors)
 			to_chat(user, span_warning("This [name] can't support a power cell!"))
 			return

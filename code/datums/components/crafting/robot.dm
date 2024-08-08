@@ -75,21 +75,7 @@
 	var/obj/item/storage/medkit/medkit = bot.contents[3]
 	bot.medkit_type = medkit
 	bot.health_analyzer = bot.contents[4]
-
-	///if you add a new one don't forget to update /obj/item/storage/medkit/attackby()
-	if (istype(medkit, /obj/item/storage/medkit/fire))
-		bot.skin = "ointment"
-	else if (istype(medkit, /obj/item/storage/medkit/toxin))
-		bot.skin = "tox"
-	else if (istype(medkit, /obj/item/storage/medkit/o2))
-		bot.skin = "o2"
-	else if (istype(medkit, /obj/item/storage/medkit/brute))
-		bot.skin = "brute"
-	else if (istype(medkit, /obj/item/storage/medkit/advanced))
-		bot.skin = "advanced"
-	else if (istype(src, /obj/item/storage/medkit/tactical))
-		bot.skin = "bezerk"
-
+	bot.skin = medkit.get_medbot_skin()
 	bot.damage_type_healer = initial(medkit.damagetype_healed) ? initial(medkit.damagetype_healed) : BRUTE
 	bot.update_appearance()
 
@@ -107,7 +93,7 @@
 
 /datum/crafting_recipe/firebot
 	name = "Firebot"
-	result = /mob/living/simple_animal/bot/firebot
+	result = /mob/living/basic/bot/firebot
 	reqs = list(
 		/obj/item/extinguisher = 1,
 		/obj/item/bodypart/arm/right/robot = 1,
@@ -119,7 +105,7 @@
 
 /datum/crafting_recipe/vibebot
 	name = "Vibebot"
-	result = /mob/living/simple_animal/bot/vibebot
+	result = /mob/living/basic/bot/vibebot
 	reqs = list(
 		/obj/item/light/bulb = 2,
 		/obj/item/bodypart/head/robot = 1,

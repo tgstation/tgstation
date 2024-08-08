@@ -15,7 +15,7 @@ type ContentSection = {
 
 /**
  * The primary content display for points of interest.
- * Renders a scrollable section replete collapsibles for each
+ * Renders a scrollable section replete with collapsibles for each
  * observable group.
  */
 export function OrbitContent(props) {
