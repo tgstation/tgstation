@@ -64,7 +64,7 @@
 	var/mob/living/carbon/human/human_occupant = occupant
 	if(!istype(human_occupant))
 		return
-	if(!human_occupant.dropItemToGround(human_occupant.back))
+	if(!isnull(human_occupant.back) && !human_occupant.dropItemToGround(human_occupant.back))
 		return
 	if(!human_occupant.equip_to_slot_if_possible(mod_unit, mod_unit.slot_flags, qdel_on_fail = FALSE, disable_warning = TRUE))
 		return
