@@ -43,7 +43,8 @@
 
 	var/mob/living/organism = input_port.value
 	var/turf/current_turf = get_location()
-	if(!istype(organism) || get_dist(current_turf, organism) > max_range || current_turf.z != organism.z)
+	var/turf/target_location = get_turf(organism)
+	if(!istype(organism) || get_dist(current_turf, target_location) > max_range || current_turf.z != target_location.z)
 		brute.set_output(null)
 		burn.set_output(null)
 		toxin.set_output(null)
