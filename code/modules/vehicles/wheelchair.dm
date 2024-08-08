@@ -4,7 +4,7 @@
 	icon = 'icons/obj/vehicles.dmi'
 	icon_state = "wheelchair"
 	layer = OBJ_LAYER
-	max_integrity = 100
+	max_integrity = 50 //MONKESTATION EDIT
 	armor_type = /datum/armor/ridden_wheelchair
 	density = FALSE //Thought I couldn't fix this one easily, phew
 	/// Run speed delay is multiplied with this for vehicle move delay.
@@ -87,7 +87,7 @@
 	desc = "Damn, must've been through a lot."
 	icon_state = "gold_wheelchair"
 	overlay_icon = "gold_wheelchair_overlay"
-	max_integrity = 200
+	max_integrity = 90 //MONKESTATION EDIT
 	armor_type = /datum/armor/wheelchair_gold
 	custom_materials = list(/datum/material/gold = SHEET_MATERIAL_AMOUNT*5)
 	foldabletype = /obj/item/wheelchair/gold
