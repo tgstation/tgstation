@@ -2,7 +2,7 @@
 	name = "flora"
 	desc = "Some sort of plant."
 	resistance_flags = FLAMMABLE
-	max_integrity = 25
+	max_integrity = 100
 	anchored = TRUE
 	drag_slowdown = 1.3
 
@@ -278,6 +278,7 @@
 	name = "tree"
 	desc = "A large tree."
 	density = TRUE
+	max_integrity = 150
 	pixel_x = -16
 	layer = FLY_LAYER
 	plane = ABOVE_GAME_PLANE
