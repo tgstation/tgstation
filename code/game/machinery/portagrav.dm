@@ -169,7 +169,7 @@
 		if(!isnull(user))
 			balloon_alert(user, "not anchored!")
 		return FALSE
-	if((!wire_mode && cell?.charge <= 0) || (wire_mode && surplus() < draw_per_range * range))
+	if((!wire_mode && cell?.charge < draw_per_range * range) || (wire_mode && surplus() < draw_per_range * range))
 		if(!isnull(user))
 			balloon_alert(user, "not enough power!")
 		return FALSE
@@ -237,7 +237,7 @@
 			var/bonus = (obj_flags & EMAGGED) ? 0 : 2
 			// REPLACE 0 with NEGATIVE_GRAVITY ONCE NEGATIVE GRAVITY IS SOMETHING ACTUALLY FUNCTIONAL
 			var/result = clamp(grav_strength + adjustment, 0, GRAVITY_DAMAGE_THRESHOLD - 1 + bonus)
-			if(result == grav_strength || result < 0 || result > GRAVITY_DAMAGE_THRESHOLD)
+			if(result == grav_strength)
 				return
 			grav_strength = result
 			update_field()
