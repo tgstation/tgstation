@@ -56,9 +56,9 @@
 	var/head_covered = NONE
 	for(var/obj/item/clothing/equipped in get_equipped_items())
 		if(equipped.body_parts_covered & CHEST)
-			chest_covered |= (equipped.clothing_flags & STOPS_HIGH_PRESSURE_DAMAGE|STOPS_LOW_PRESSURE_DAMAGE)
+			chest_covered |= (equipped.clothing_flags & (STOPS_HIGH_PRESSURE_DAMAGE|STOPS_LOW_PRESSURE_DAMAGE))
 		if(equipped.body_parts_covered & HEAD)
-			head_covered |= (equipped.clothing_flags & STOPS_HIGH_PRESSURE_DAMAGE|STOPS_LOW_PRESSURE_DAMAGE)
+			head_covered |= (equipped.clothing_flags & (STOPS_HIGH_PRESSURE_DAMAGE|STOPS_LOW_PRESSURE_DAMAGE))
 
 	if(pressure > ONE_ATMOSPHERE)
 		if((chest_covered & STOPS_HIGH_PRESSURE_DAMAGE) && (head_covered & STOPS_HIGH_PRESSURE_DAMAGE))
