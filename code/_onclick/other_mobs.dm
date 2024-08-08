@@ -9,6 +9,10 @@
 	else if (secondary_result != SECONDARY_ATTACK_CALL_NORMAL)
 		CRASH("resolve_right_click_attack (probably attack_hand_secondary) did not return a SECONDARY_ATTACK_* define.")
 
+//Checks if mob doesnt have hands blocked, for future TG PR port (see https://github.com/tgstation/tgstation/pull/78991)
+/mob/living/proc/can_unarmed_attack()
+	return !HAS_TRAIT(src, TRAIT_HANDS_BLOCKED)
+
 /*
 	Humans:
 	Adds an exception for gloves, to allow special glove types like the ninja ones.
@@ -127,13 +131,27 @@
 #define LIVING_UNARMED_ATTACK_BLOCKED(target_atom) (HAS_TRAIT(src, TRAIT_HANDS_BLOCKED) \
 	|| SEND_SIGNAL(src, COMSIG_LIVING_UNARMED_ATTACK, target_atom, proximity_flag) & COMPONENT_CANCEL_ATTACK_CHAIN)
 
-/mob/living/UnarmedAttack(atom/attack_target, proximity_flag)
-	if(LIVING_UNARMED_ATTACK_BLOCKED(attack_target))
+//Partial port of https://github.com/tgstation/tgstation/pull/78991 to fix some immenent bugs with cleanbots
+//This will eventually be entirely ported
+/mob/living/UnarmedAttack(atom/attack_target, proximity_flag, list/modifiers)
+	var/sigreturn = SEND_SIGNAL(src, COMSIG_LIVING_EARLY_UNARMED_ATTACK, attack_target, proximity_flag, modifiers)
+	if(sigreturn & COMPONENT_CANCEL_ATTACK_CHAIN)
+		return TRUE
+	if(sigreturn & COMPONENT_SKIP_ATTACK)
 		return FALSE
-	if(!right_click_attack_chain(attack_target))
-		resolve_unarmed_attack(attack_target)
-	return TRUE
 
+	if(!can_unarmed_attack())
+		return FALSE
+
+	sigreturn = SEND_SIGNAL(src, COMSIG_LIVING_UNARMED_ATTACK, attack_target, proximity_flag, modifiers)
+	if(sigreturn & COMPONENT_CANCEL_ATTACK_CHAIN)
+		return TRUE
+	if(sigreturn & COMPONENT_SKIP_ATTACK)
+		return FALSE
+
+	if(!right_click_attack_chain(attack_target, modifiers))
+		resolve_unarmed_attack(attack_target, modifiers)
+	return TRUE
 /**
  * Called when the unarmed attack hasn't been stopped by the LIVING_UNARMED_ATTACK_BLOCKED macro or the right_click_attack_chain proc.
  * This will call an attack proc that can vary from mob type to mob type on the target.

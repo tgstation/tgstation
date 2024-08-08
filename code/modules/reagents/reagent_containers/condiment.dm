@@ -207,14 +207,19 @@
 	. = ..()
 	var/datum/chemical_reaction/recipe_dough = GLOB.chemical_reactions_list[/datum/chemical_reaction/food/dough]
 	var/datum/chemical_reaction/recipe_cakebatter = GLOB.chemical_reactions_list[/datum/chemical_reaction/food/cakebatter]
+	var/datum/chemical_reaction/recipe_cakebatter_vegan = GLOB.chemical_reactions_list[/datum/chemical_reaction/food/cakebatter/vegan]
 	var/dough_flour_required = recipe_dough.required_reagents[/datum/reagent/consumable/flour]
 	var/dough_water_required = recipe_dough.required_reagents[/datum/reagent/water]
 	var/cakebatter_flour_required = recipe_cakebatter.required_reagents[/datum/reagent/consumable/flour]
 	var/cakebatter_eggyolk_required = recipe_cakebatter.required_reagents[/datum/reagent/consumable/eggyolk]
+	var/cakebatter_eggwhite_required = recipe_cakebatter.required_reagents[/datum/reagent/consumable/eggwhite]
 	var/cakebatter_sugar_required = recipe_cakebatter.required_reagents[/datum/reagent/consumable/sugar]
+	var/cakebatter_soy_required = recipe_cakebatter_vegan.required_reagents[/datum/reagent/consumable/soymilk]
 	. += "<b><i>You retreat inward and recall the teachings of... Making Dough...</i></b>"
 	. += span_notice("[dough_flour_required] flour, [dough_water_required] water makes normal dough. You can make flat dough from it.")
-	. += span_notice("[cakebatter_flour_required] flour, [cakebatter_eggyolk_required] egg yolk (or soy milk), [cakebatter_sugar_required] sugar makes cake dough. You can make pie dough from it.")
+	. += span_notice("[cakebatter_flour_required] flour, [cakebatter_eggyolk_required] egg yolk, [cakebatter_eggwhite_required] egg white, and [cakebatter_sugar_required] sugar makes cake dough.")
+	. += span_notice("Alternatively, a vegan cake is made with: [cakebatter_flour_required] flour, [cakebatter_soy_required] soy milk, and [cakebatter_sugar_required] sugar.")
+	. += span_notice("It can be flattened into pie dough and then cut into pastry base. Once baked, pastry base can be combined with sugar for donuts!")
 
 /obj/item/reagent_containers/condiment/soymilk
 	name = "soy milk"

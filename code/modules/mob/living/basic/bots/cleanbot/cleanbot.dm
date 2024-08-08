@@ -159,7 +159,7 @@
 	)
 
 	grant_actions_by_list(innate_actions)
-	RegisterSignal(src, COMSIG_HOSTILE_PRE_ATTACKINGTARGET, PROC_REF(pre_attack))
+	RegisterSignal(src, COMSIG_LIVING_EARLY_UNARMED_ATTACK, PROC_REF(pre_attack))
 	RegisterSignal(src, COMSIG_ATOM_ATTACKBY, PROC_REF(on_attack_by))
 	update_appearance(UPDATE_ICON)
 
@@ -323,20 +323,29 @@
 	INVOKE_ASYNC(weapon, TYPE_PROC_REF(/obj/item, attack), stabbed_carbon, src)
 	stabbed_carbon.Knockdown(2 SECONDS)
 
-/mob/living/basic/bot/cleanbot/proc/pre_attack(mob/living/source, atom/target)
+/mob/living/basic/bot/cleanbot/proc/pre_attack(mob/living/source, atom/target, proximity, modifiers)
 	SIGNAL_HANDLER
+
+	if(!proximity || !can_unarmed_attack())
+		return NONE
 
 	if(is_type_in_typecache(target, huntable_pests) && !isnull(our_mop))
 		INVOKE_ASYNC(our_mop, TYPE_PROC_REF(/obj/item, melee_attack_chain), src, target)
 		return COMPONENT_CANCEL_ATTACK_CHAIN
 
-	if(!iscarbon(target) && !is_type_in_typecache(target, huntable_trash))
-		return
+	if(!(iscarbon(target) && (bot_access_flags & BOT_COVER_EMAGGED)) && !is_type_in_typecache(target, huntable_trash))
+		return NONE
 
 	visible_message(span_danger("[src] sprays hydrofluoric acid at [target]!"))
 	playsound(src, 'sound/effects/spray2.ogg', 50, TRUE, -6)
-	target.acid_act(75, 10)
-	return COMPONENT_CANCEL_ATTACK_CHAIN
+	//START: Monkestation edit (this lets it burn trash a tiny bit faster)
+	if(is_type_in_typecache(target, huntable_trash))
+		target.acid_act(75, 20)
+		return COMPONENT_CANCEL_ATTACK_CHAIN
+	//END: Monkestation edit
+	else
+		target.acid_act(75, 10)
+		return COMPONENT_CANCEL_ATTACK_CHAIN
 
 /mob/living/basic/bot/cleanbot/proc/generate_ai_keys()
 	ai_controller.set_blackboard_key(BB_CLEANABLE_DECALS, cleanable_decals)
