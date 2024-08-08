@@ -73,9 +73,9 @@
 	var/atmos_sealed = TRUE
 	if(HAS_TRAIT(H, TRAIT_NOFIRE))
 		atmos_sealed = FALSE
-	else if(!isclothing(H.wear_suit) || !(H.wear_suit.clothing_flags & STOPSPRESSUREDAMAGE))
+	else if(!isclothing(H.wear_suit) || !(H.wear_suit.clothing_flags & (STOPS_HIGH_PRESSURE_DAMAGE|STOPS_LOW_PRESSURE_DAMAGE)))
 		atmos_sealed = FALSE
-	else if(!HAS_TRAIT(H, TRAIT_NOSELFIGNITION_HEAD_ONLY) && (!isclothing(H.head) || !(H.head.clothing_flags & STOPSPRESSUREDAMAGE)))
+	else if(!HAS_TRAIT(H, TRAIT_NOSELFIGNITION_HEAD_ONLY) && (!isclothing(H.head) || !(H.head.clothing_flags & (STOPS_HIGH_PRESSURE_DAMAGE|STOPS_LOW_PRESSURE_DAMAGE))))
 		atmos_sealed = FALSE
 
 	var/flammable_limb = FALSE

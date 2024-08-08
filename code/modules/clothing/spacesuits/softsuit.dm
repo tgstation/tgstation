@@ -89,7 +89,7 @@
 /obj/item/clothing/suit/space/fragile/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK, damage_type = BRUTE)
 	if(!torn && prob(50))
 		to_chat(owner, span_warning("[src] tears from the damage, breaking the air-tight seal!"))
-		clothing_flags &= ~STOPSPRESSUREDAMAGE
+		clothing_flags &= ~(STOPS_HIGH_PRESSURE_DAMAGE|STOPS_LOW_PRESSURE_DAMAGE)
 		name = "torn [src]."
 		desc = "A bulky suit meant to protect the user during emergency situations, at least until someone tore a hole in the suit."
 		torn = TRUE

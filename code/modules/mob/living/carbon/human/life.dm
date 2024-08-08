@@ -52,16 +52,20 @@
 
 
 /mob/living/carbon/human/calculate_affecting_pressure(pressure)
-	var/chest_covered = FALSE
-	var/head_covered = FALSE
+	var/chest_covered = NONE
+	var/head_covered = NONE
 	for(var/obj/item/clothing/equipped in get_equipped_items())
-		if((equipped.body_parts_covered & CHEST) && (equipped.clothing_flags & STOPSPRESSUREDAMAGE))
-			chest_covered = TRUE
-		if((equipped.body_parts_covered & HEAD) && (equipped.clothing_flags & STOPSPRESSUREDAMAGE))
-			head_covered = TRUE
+		if(equipped.body_parts_covered & CHEST)
+			chest_covered |= (equipped.clothing_flags & STOPS_HIGH_PRESSURE_DAMAGE|STOPS_LOW_PRESSURE_DAMAGE)
+		if(equipped.body_parts_covered & HEAD)
+			head_covered |= (equipped.clothing_flags & STOPS_HIGH_PRESSURE_DAMAGE|STOPS_LOW_PRESSURE_DAMAGE)
 
-	if(chest_covered && head_covered)
-		return ONE_ATMOSPHERE
+	if(pressure > ONE_ATMOSPHERE)
+		if((chest_covered & STOPS_HIGH_PRESSURE_DAMAGE) && (head_covered & STOPS_HIGH_PRESSURE_DAMAGE))
+			return ONE_ATMOSPHERE
+	else if(pressure < ONE_ATMOSPHERE)
+		if((chest_covered & STOPS_LOW_PRESSURE_DAMAGE) && (head_covered & STOPS_LOW_PRESSURE_DAMAGE))
+			return ONE_ATMOSPHERE
 	if(ismovable(loc))
 		/// If we're in a space with 0.5 content pressure protection, it averages the values, for example.
 		var/atom/movable/occupied_space = loc

@@ -23,7 +23,7 @@
 		if(istype(worn_item, /obj/item/clothing/suit/space))
 			to_chat(user, span_warning("The [worn_item] is already pressure-resistant!"))
 			return ITEM_INTERACT_BLOCKING
-		if(worn_item.min_cold_protection_temperature == SPACE_SUIT_MIN_TEMP_PROTECT && worn_item.clothing_flags & STOPSPRESSUREDAMAGE)
+		if(worn_item.min_cold_protection_temperature == SPACE_SUIT_MIN_TEMP_PROTECT && worn_item.clothing_flags & (STOPS_HIGH_PRESSURE_DAMAGE|STOPS_LOW_PRESSURE_DAMAGE))
 			to_chat(user, span_warning("[worn_item] is already pressure-resistant!"))
 			return ITEM_INTERACT_BLOCKING
 		to_chat(user, span_notice("You see how the [worn_item] changes color, it's now pressure proof."))
@@ -32,7 +32,7 @@
 		worn_item.add_atom_colour("#00fff7", FIXED_COLOUR_PRIORITY)
 		worn_item.min_cold_protection_temperature = SPACE_SUIT_MIN_TEMP_PROTECT
 		worn_item.cold_protection = worn_item.body_parts_covered
-		worn_item.clothing_flags |= STOPSPRESSUREDAMAGE
+		worn_item.clothing_flags |= STOPS_HIGH_PRESSURE_DAMAGE|STOPS_LOW_PRESSURE_DAMAGE
 
 	uses--
 	if(uses <= 0)

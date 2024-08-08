@@ -52,41 +52,44 @@
 /// SUIT and HEAD items which stop lava from hurting the wearer
 #define LAVAPROTECT (1<<0)
 /// SUIT and HEAD items which stop pressure damage.
-/// To stop you taking all pressure damage you must have both a suit and head item with this flag.
-#define STOPSPRESSUREDAMAGE (1<<1)
+/// To stop you taking all high pressure damage, you must have both a suit and head item with this flag.
+#define STOPS_HIGH_PRESSURE_DAMAGE (1<<1)
+/// SUIT and HEAD items which stop high pressure damage.
+/// To stop you taking all low pressure damage, you must have both a suit and head item with this flag.
+#define STOPS_LOW_PRESSURE_DAMAGE (1<<2)
 /// blocks the effect that chemical clouds would have on a mob --glasses, mask and helmets ONLY!
-#define BLOCK_GAS_SMOKE_EFFECT (1<<2)
+#define BLOCK_GAS_SMOKE_EFFECT (1<<3)
 /// mask allows internals
-#define MASKINTERNALS (1<<3)
+#define MASKINTERNALS (1<<4)
 /// mask filters toxins and other harmful gases
-#define GAS_FILTERING (1<<4)
+#define GAS_FILTERING (1<<5)
 /// prevents syringes, parapens and hypos if the external suit or helmet (if targeting head) has this flag.
 /// Example: space suits, biosuit, bombsuits, thick suits that cover your body.
-#define THICKMATERIAL (1<<5)
+#define THICKMATERIAL (1<<6)
 /// The voicebox in this clothing can be toggled.
-#define VOICEBOX_TOGGLABLE (1<<6)
+#define VOICEBOX_TOGGLABLE (1<<7)
 /// The voicebox is currently turned off.
-#define VOICEBOX_DISABLED (1<<7)
+#define VOICEBOX_DISABLED (1<<8)
 /// Prevents knock-off from things like hat-throwing.
-#define SNUG_FIT (1<<8)
+#define SNUG_FIT (1<<9)
 /// Hats with negative effects when worn (i.e the tinfoil hat).
-#define ANTI_TINFOIL_MANEUVER (1<<9)
+#define ANTI_TINFOIL_MANEUVER (1<<10)
 /// Clothes that cause a larger notification when placed on a person.
-#define DANGEROUS_OBJECT (1<<10)
+#define DANGEROUS_OBJECT (1<<11)
 /// Clothes that use large icons, for applying the proper overlays like blood
-#define LARGE_WORN_ICON (1<<11)
+#define LARGE_WORN_ICON (1<<12)
 /// prevents from placing on plasmaman helmet or modsuit hat holder
-#define STACKABLE_HELMET_EXEMPT (1<<12)
+#define STACKABLE_HELMET_EXEMPT (1<<13)
 /// Prevents plasmamen from igniting when wearing this
-#define PLASMAMAN_PREVENT_IGNITION (1<<13)
+#define PLASMAMAN_PREVENT_IGNITION (1<<14)
 /// Usable as casting clothes by wizards (matters for suits, glasses and headwear)
-#define CASTING_CLOTHES (1<<14)
+#define CASTING_CLOTHES (1<<15)
 ///Moths can't eat the clothing that has this flag.
-#define INEDIBLE_CLOTHING (1<<15)
+#define INEDIBLE_CLOTHING (1<<16)
 /// Headgear/helmet allows internals
-#define HEADINTERNALS (1<<16)
+#define HEADINTERNALS (1<<17)
 /// Prevents masks from getting adjusted from enabling internals
-#define INTERNALS_ADJUST_EXEMPT (1<<17)
+#define INTERNALS_ADJUST_EXEMPT (1<<18)
 
 /// Integrity defines for clothing (not flags but close enough)
 #define CLOTHING_PRISTINE 0 // We have no damage on the clothing

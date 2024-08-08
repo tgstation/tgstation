@@ -262,7 +262,7 @@
 	icon_state = "godslayer"
 	desc = "A suit of armour fashioned from the remnants of a knight's armor, and parts of a wendigo."
 	armor_type = /datum/armor/cloak_godslayer
-	clothing_flags = STOPSPRESSUREDAMAGE | THICKMATERIAL
+	clothing_flags = STOPS_HIGH_PRESSURE_DAMAGE | STOPS_LOW_PRESSURE_DAMAGE | THICKMATERIAL
 	hoodtype = /obj/item/clothing/head/hooded/cloakhood/godslayer
 	cold_protection = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
 	min_cold_protection_temperature = FIRE_SUIT_MIN_TEMP_PROTECT
@@ -301,7 +301,7 @@
 	icon_state = "godslayer"
 	desc = "The horns and skull of a wendigo, held together by the remaining icey energy of a demonic miner."
 	armor_type = /datum/armor/cloak_godslayer
-	clothing_flags = STOPSPRESSUREDAMAGE | THICKMATERIAL | SNUG_FIT
+	clothing_flags = STOPS_HIGH_PRESSURE_DAMAGE | STOPS_LOW_PRESSURE_DAMAGE | THICKMATERIAL | SNUG_FIT
 	cold_protection = HEAD
 	min_cold_protection_temperature = FIRE_HELM_MIN_TEMP_PROTECT
 	heat_protection = HEAD

@@ -353,7 +353,7 @@
 		how_cool_are_your_threads += "</span>"
 		. += how_cool_are_your_threads.Join()
 
-	if(get_armor().has_any_armor() || (flags_cover & (HEADCOVERSMOUTH|PEPPERPROOF)) || (clothing_flags & STOPSPRESSUREDAMAGE) || (visor_flags & STOPSPRESSUREDAMAGE))
+	if(get_armor().has_any_armor() || (flags_cover & (HEADCOVERSMOUTH|PEPPERPROOF)) || (clothing_flags & (STOPS_LOW_PRESSURE_DAMAGE)) || (visor_flags & (STOPS_LOW_PRESSURE_DAMAGE)))
 		. += span_notice("It has a <a href='?src=[REF(src)];list_armor=1'>tag</a> listing its protection classes.")
 
 /obj/item/clothing/Topic(href, href_list)
@@ -393,10 +393,10 @@
 				readout += "<b><u>COVERAGE</u></b>"
 				readout += "It will block [english_list(things_blocked)]."
 
-		if(clothing_flags & STOPSPRESSUREDAMAGE || visor_flags & STOPSPRESSUREDAMAGE)
+		if(clothing_flags & STOPS_LOW_PRESSURE_DAMAGE || visor_flags & STOPS_LOW_PRESSURE_DAMAGE)
 			var/list/parts_covered = list()
 			var/output_string = "It"
-			if(!(clothing_flags & STOPSPRESSUREDAMAGE))
+			if(!(clothing_flags & STOPS_LOW_PRESSURE_DAMAGE))
 				output_string = "When sealed, it"
 			if(body_parts_covered & HEAD)
 				parts_covered += "head"

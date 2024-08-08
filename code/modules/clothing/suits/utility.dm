@@ -30,7 +30,7 @@
 	slowdown = 1
 	armor_type = /datum/armor/utility_fire
 	flags_inv = HIDEGLOVES|HIDESHOES|HIDEJUMPSUIT
-	clothing_flags = STOPSPRESSUREDAMAGE | THICKMATERIAL
+	clothing_flags = STOPS_HIGH_PRESSURE_DAMAGE | THICKMATERIAL
 	heat_protection = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
 	max_heat_protection_temperature = FIRE_SUIT_MAX_TEMP_PROTECT
 	cold_protection = CHEST|GROIN|LEGS|FEET|ARMS|HANDS

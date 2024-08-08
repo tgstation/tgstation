@@ -477,7 +477,7 @@ Striking a noncultist, however, will tear their flesh."}
 	allowed = list(/obj/item/tome, /obj/item/melee/cultblade, /obj/item/tank/internals)
 	armor_type = /datum/armor/cultrobes_hardened
 	hoodtype = /obj/item/clothing/head/hooded/cult_hoodie/hardened
-	clothing_flags = STOPSPRESSUREDAMAGE | THICKMATERIAL
+	clothing_flags = STOPS_HIGH_PRESSURE_DAMAGE | STOPS_LOW_PRESSURE_DAMAGE | THICKMATERIAL
 	flags_inv = HIDEGLOVES | HIDEJUMPSUIT
 	min_cold_protection_temperature = SPACE_SUIT_MIN_TEMP_PROTECT
 	max_heat_protection_temperature = SPACE_SUIT_MAX_TEMP_PROTECT
@@ -499,7 +499,7 @@ Striking a noncultist, however, will tear their flesh."}
 	icon_state = "cult_helmet"
 	inhand_icon_state = null
 	armor_type = /datum/armor/cult_hoodie_hardened
-	clothing_flags = STOPSPRESSUREDAMAGE | THICKMATERIAL | SNUG_FIT | STACKABLE_HELMET_EXEMPT | HEADINTERNALS
+	clothing_flags = STOPS_HIGH_PRESSURE_DAMAGE | STOPS_LOW_PRESSURE_DAMAGE | THICKMATERIAL | SNUG_FIT | STACKABLE_HELMET_EXEMPT | HEADINTERNALS
 	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE|HIDEHAIR|HIDEFACIALHAIR|HIDESNOUT
 	min_cold_protection_temperature = SPACE_HELM_MIN_TEMP_PROTECT
 	max_heat_protection_temperature = SPACE_HELM_MAX_TEMP_PROTECT
