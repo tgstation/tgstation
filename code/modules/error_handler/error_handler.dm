@@ -135,7 +135,14 @@ GLOBAL_VAR_INIT(total_runtimes_skipped, 0)
 
 
 	// This writes the regular format (unwrapping newlines and inserting timestamps as needed).
-	log_runtime("runtime error: [E.name]\n[E.desc]")
+	// monkestation start: structured runtime logging
+	log_runtime("runtime error: [E.name]\n[E.desc]", list(
+		"file" = "[E.file || "unknown"]",
+		"line" = E.line,
+		"name" = "[E.name]",
+		"desc" = "[E.desc]"
+	))
+	// monkestation end
 #endif
 
 #undef ERROR_USEFUL_LEN
