@@ -83,7 +83,7 @@
 	var/new_range = 4
 	for(var/datum/stock_part/capacitor/capacitor in component_parts)
 		new_range += capacitor.tier
-	nax_range = new_range
+	max_range = new_range
 	update_field()
 
 /obj/machinery/power/portagrav/screwdriver_act(mob/living/user, obj/item/tool)

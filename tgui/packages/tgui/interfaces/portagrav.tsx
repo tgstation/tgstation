@@ -1,9 +1,9 @@
-import { toTitleCase } from 'common/string';
+
+import { BooleanLike } from 'common/react';
 
 import { useBackend } from '../backend';
 import { Box, Button, Icon, Section, Stack } from '../components';
 import { Window } from '../layouts';
-import { BooleanLike } from 'common/react';
 
 type Data = {
   percentage: number;
