@@ -48,7 +48,7 @@
 
 	var/mob/living/owner = bci.owner
 
-	if(!owner || !istype(owner) || !owner.client || (owner.stat >= UNCONSCIOUS))
+	if(!owner || !istype(owner) || !owner.client || (owner.stat >= SOFT_CRIT))
 		failure.set_output(COMPONENT_SIGNAL)
 		return
 
@@ -57,6 +57,8 @@
 
 /obj/item/circuit_component/thought_listener/proc/thought_listen(mob/living/owner)
 	var/message = tgui_input_text(owner, input_desc.value ? input_desc.value : "", input_name.value ? input_name.value : "Thought Listener", "")
+	if(QDELETED(owner) || owner.stat >= SOFT_CRIT)
+		return
 	output.set_output(message)
 	trigger_output.set_output(COMPONENT_SIGNAL)
 	ready = TRUE
