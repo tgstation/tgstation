@@ -72,16 +72,17 @@
 	owner.mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 	SLEEP_CHECK_DEATH(7, owner)
 
-	while(target && owner.loc != get_turf(target))
-		owner.forceMove(get_step(owner, get_dir(owner, target)))
+	var/turf/target_turf = get_turf(target)
+	while(target && owner.loc != target_turf && owner.z == target_turf.z)
+		owner.forceMove(get_step(owner, get_dir(owner, target_turf)))
 		SLEEP_CHECK_DEATH(0.5, owner)
+		target_turf = get_turf(target)
 
 	// Ash drake flies onto its target and rains fire down upon them
 	var/descentTime = 10
 	var/lava_success = TRUE
 	if(lava_arena)
 		lava_success = lava_arena(target)
-
 
 	//ensure swoop direction continuity.
 	if(negative)
@@ -134,7 +135,8 @@
 		SLEEP_CHECK_DEATH(delay, owner)
 
 /datum/action/cooldown/mob_cooldown/lava_swoop/proc/lava_arena(atom/target)
-	if(!target || !isliving(target))
+	var/turf/target_turf = get_turf(target)
+	if(!target || !isliving(target) || target_turf.z != owner.z)
 		return
 	target.visible_message(span_boldwarning("[owner] encases you in an arena of fire!"))
 	var/amount = 3
@@ -147,9 +149,7 @@
 	for(var/turf/T in RANGE_TURFS(2, center))
 		if(isindestructiblefloor(T))
 			continue
-		if(!isindestructiblewall(T))
-			T.TerraformTurf(/turf/open/misc/asteroid/basalt/lava_land_surface, flags = CHANGETURF_INHERIT_AIR)
-		else
+		if(isindestructiblewall(T))
 			indestructible_turfs += T
 	SLEEP_CHECK_DEATH(1 SECONDS, owner) // give them a bit of time to realize what attack is actually happening
 
