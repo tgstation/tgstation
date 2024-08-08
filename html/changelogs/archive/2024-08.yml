@@ -185,3 +185,8 @@
   - image: Updated clipboard sprite, adds white and black clipboard skins for med/sci
       and security
   - bugfix: Tinacusiate no longer changes hearing spans for every single person in-game
+2024-08-08:
+  MTandi:
+  - bugfix: Smartfridges properly dispense `\Improper` items
+  Rhials:
+  - sound: Zipties no longer make handcuff noises when picked up or dropped.
