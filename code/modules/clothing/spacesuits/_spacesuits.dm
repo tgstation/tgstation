@@ -25,6 +25,10 @@
 	resistance_flags = NONE
 	dog_fashion = null
 
+/obj/item/clothing/head/helmet/space/Initialize(mapload)
+	. = ..()
+	AddComponent(/datum/component/clothing_fov_visor, FOV_90_DEGREES)
+
 /datum/armor/helmet_space
 	bio = 100
 	fire = 80
