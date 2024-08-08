@@ -29,14 +29,16 @@ export function Pin(props: PinProps) {
       return;
     }
     const handleMouseUp = (args: MouseEvent) => {
-      setCreatingRope(false);
-      onConnected(evidence, {
-        evidence_ref: 'not used',
-        position: {
-          x: args.clientX,
-          y: args.clientY + Y_OFFSET,
-        },
-      });
+      if (creatingRope) {
+        setCreatingRope(false);
+        onConnected(evidence, {
+          evidence_ref: 'not used',
+          position: {
+            x: args.clientX,
+            y: args.clientY + Y_OFFSET,
+          },
+        });
+      }
     };
     window.addEventListener('mouseup', handleMouseUp);
     return () => {

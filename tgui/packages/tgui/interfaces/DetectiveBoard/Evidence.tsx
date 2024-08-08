@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
 import { Box, Button, Flex, Stack } from '../../components';
 import { DataEvidence } from './DataTypes';
@@ -29,6 +29,8 @@ export function Evidence(props: EvidenceProps) {
 
   const [canDrag, setCanDrag] = useState(true);
 
+  const reference = useRef(null);
+
   const [dragPosition, setDragPosition] = useState<Position>({
     x: evidence.x,
     y: evidence.y,
@@ -39,9 +41,11 @@ export function Evidence(props: EvidenceProps) {
   );
 
   function handleMouseDown(args) {
-    setDragging(true);
-    props.onStartMoving(evidence);
-    setLastMousePosition({ x: args.screenX, y: args.screenY });
+    if (canDrag) {
+      setDragging(true);
+      props.onStartMoving(evidence);
+      setLastMousePosition({ x: args.screenX, y: args.screenY });
+    }
   }
 
   useEffect(() => {
@@ -49,14 +53,18 @@ export function Evidence(props: EvidenceProps) {
       return;
     }
     const handleMouseUp = (args: MouseEvent) => {
-      if (canDrag && dragPosition) {
+      if (canDrag && dragPosition && dragging && lastMousePosition) {
         act('set_evidence_cords', {
           evidence_ref: evidence.ref,
           case_ref: case_ref,
-          rel_x: dragPosition.x,
-          rel_y: dragPosition.y,
+          rel_x: dragPosition.x - (lastMousePosition.x - args.screenX),
+          rel_y: dragPosition.y - (lastMousePosition.y - args.screenY),
         });
-        props.onStopMoving(evidence);
+        props.onStopMoving({
+          ...evidence,
+          y: dragPosition.y - (lastMousePosition.y - args.screenY),
+          x: dragPosition.x - (lastMousePosition.x - args.screenX),
+        });
       }
       setDragging(false);
       setLastMousePosition(null);
@@ -113,16 +121,16 @@ export function Evidence(props: EvidenceProps) {
                     evidence: DataEvidence,
                     mousePos: Position,
                   ) => {
-                    props.onPinStartConnecting(evidence, mousePos);
                     setCanDrag(false);
+                    props.onPinStartConnecting(evidence, mousePos);
                   }}
                   onConnected={(evidence: DataEvidence) => {
-                    props.onPinConnected(evidence);
                     setCanDrag(true);
+                    props.onPinConnected(evidence);
                   }}
                   onMouseUp={(evidence: DataEvidence, args) => {
-                    props.onPinMouseUp(evidence, args);
                     setCanDrag(true);
+                    props.onPinMouseUp(evidence, args);
                   }}
                 />
               </Flex.Item>
@@ -161,8 +169,6 @@ export function Evidence(props: EvidenceProps) {
                 <div dangerouslySetInnerHTML={{ __html: evidence.text }} />
               )}
             </Box>
-
-            <Box className="Evidence__Box__TextBox">{evidence.description}</Box>
           </Box>
         </Stack.Item>
       </Stack>

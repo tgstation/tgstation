@@ -82,7 +82,10 @@ export function DetectiveBoard(props) {
 
   useEffect(() => {
     if (!connectingEvidence) {
-      return () => window.removeEventListener('mousemove', handleMouseMove);
+      return () => {
+        window.removeEventListener('mousemove', handleMouseMove);
+        window.removeEventListener('mouseup', handleMouseUp);
+      };
     }
 
     function handleMouseMove(args: MouseEvent) {
@@ -96,8 +99,35 @@ export function DetectiveBoard(props) {
     }
 
     window.addEventListener('mousemove', handleMouseMove);
-    return () => window.removeEventListener('mousemove', handleMouseMove);
+    window.addEventListener('mouseup', handleMouseUp);
+    return () => {
+      window.removeEventListener('mousemove', handleMouseMove);
+      window.removeEventListener('mouseup', handleMouseUp);
+    };
   }, [connectingEvidence]);
+
+  function handleMouseUp(args: MouseEvent) {
+    if (movingEvidenceConnections && connectingEvidence) {
+      let new_connections: Connection[] = [];
+      for (let con of movingEvidenceConnections) {
+        if (con.type === 'from') {
+          new_connections.push({
+            color: con.connection.color,
+            from: getPinPosition(connectingEvidence),
+            to: con.connection.to,
+          });
+        } else {
+          new_connections.push({
+            color: con.connection.color,
+            from: con.connection.from,
+            to: getPinPosition(connectingEvidence),
+          });
+        }
+      }
+      setConnections([...connections, ...new_connections]);
+      setMovingEvidenceConnections(null);
+    }
+  }
 
   function handleMouseUpOnPin(evidence: DataEvidence, args) {
     if (
@@ -106,8 +136,27 @@ export function DetectiveBoard(props) {
       !connectingEvidence.connections.includes(evidence.ref) &&
       !evidence.connections.includes(connectingEvidence.ref)
     ) {
+      let new_connections: Connection[] = [];
+      if (movingEvidenceConnections) {
+        for (let con of movingEvidenceConnections) {
+          if (con.type === 'from') {
+            new_connections.push({
+              color: con.connection.color,
+              from: getPinPosition(connectingEvidence),
+              to: con.connection.to,
+            });
+          } else {
+            new_connections.push({
+              color: con.connection.color,
+              from: con.connection.from,
+              to: getPinPosition(connectingEvidence),
+            });
+          }
+        }
+      }
       setConnections([
         ...connections,
+        ...new_connections,
         {
           color: 'red',
           from: getPinPosition(connectingEvidence),
@@ -120,8 +169,8 @@ export function DetectiveBoard(props) {
       });
       setConnection(null);
       setConnectingEvidence(null);
+      setMovingEvidenceConnections(null);
     }
-    // act('to_chat', { message: 'index rendered' });
   }
 
   function handleEvidenceStartMoving(evidence: DataEvidence) {
@@ -171,10 +220,23 @@ export function DetectiveBoard(props) {
 
   function handleEvidenceStopMoving(evidence: DataEvidence) {
     if (movingEvidenceConnections) {
-      setConnections([
-        ...connections,
-        ...retrieveConnections(movingEvidenceConnections),
-      ]);
+      let new_connections: Connection[] = [];
+      for (let con of movingEvidenceConnections) {
+        if (con.type === 'from') {
+          new_connections.push({
+            color: con.connection.color,
+            from: getPinPosition(evidence),
+            to: con.connection.to,
+          });
+        } else {
+          new_connections.push({
+            color: con.connection.color,
+            from: con.connection.from,
+            to: getPinPosition(evidence),
+          });
+        }
+      }
+      setConnections([...connections, ...new_connections]);
       setMovingEvidenceConnections(null);
     }
   }
@@ -208,6 +270,7 @@ export function DetectiveBoard(props) {
               />
             )}
             <BoardTabs />
+
             {cases?.map(
               (item, i) =>
                 current_case - 1 === i && (
