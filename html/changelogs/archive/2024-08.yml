@@ -70,3 +70,6 @@
   - bugfix: Heretic sacrifices properly work again.
   Odairu:
   - balance: removes hivemind from NIFs it has no place in this realm
+2024-08-08:
+  Odairu:
+  - rscadd: mantisblade has 2 settings now, crowbar and knife
