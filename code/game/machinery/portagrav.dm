@@ -8,12 +8,13 @@
 	name = "Portable Gravity Unit"
 	desc = "Generates gravity around itself. Powered by wire or cell. Must be anchored before use."
 	max_integrity = 250
+	circuit = /obj/item/circuitboard/machine/portagrav
 	armor_type = /datum/armor/portable_gravity
 	interaction_flags_click = ALLOW_SILICON_REACH
 	//We don't use area power
 	use_power = NO_POWER_USE
 	///The cell we spawn with
-	var/obj/item/stock_parts/cell/cell = /obj/item/stock_parts/cell
+	var/obj/item/stock_parts/power_store/cell/cell = /obj/item/stock_parts/power_store/cell/high
 	///Is the machine on?
 	var/on = FALSE
 	/// do we use power from wire instead
@@ -53,25 +54,61 @@
 	)
 	AddElement(/datum/element/contextual_screentip_tools, tool_behaviors)
 
+/obj/machinery/power/portagrav/Destroy()
+	. = ..()
+	cell = null
+
 /obj/machinery/power/portagrav/update_overlays()
 	. = ..()
 	if(anchored)
 		. += "portagrav_anchors"
 	if(on)
 		. += "portagrav_o"
-		if((!wire_mode && cell?.charge <= 0) || (wire_mode && surplus() < draw_per_range * range))
-			. += "activated"
+		. += "activated"
 
 /obj/machinery/power/portagrav/examine(mob/user)
 	. = ..()
 	. += "It is [on ? "on" : "off"]."
 	. += "The charge meter reads: [!isnull(cell) ? "[round(cell.percent(), 1)]%" : "NO CELL"]."
-	. += "It is [anchored ? "" : "not"] anchored."
+	. += "It is[anchored ? "" : " not"] anchored."
 	if(in_range(user, src) || isobserver(user))
 		. += span_notice("<b>Right-click</b> to toggle [on ? "off" : "on"].")
 
 /obj/machinery/power/portagrav/RefreshParts()
 	. = ..()
+	var/power_usage = initial(draw_per_range)
+	for(var/datum/stock_part/micro_laser/laser in component_parts)
+		power_usage -= BASE_MACHINE_ACTIVE_CONSUMPTION / 10 * (laser.tier - 1)
+	draw_per_range = power_usage
+	var/new_range = 4
+	for(var/datum/stock_part/capacitor/capacitor in component_parts)
+		new_range += capacitor.tier
+	nax_range = new_range
+	update_field()
+
+/obj/machinery/power/portagrav/screwdriver_act(mob/living/user, obj/item/tool)
+	. = NONE
+	if(default_deconstruction_screwdriver(user, "[base_icon_state]_o", base_icon_state, tool))
+		return ITEM_INTERACT_SUCCESS
+
+/obj/machinery/power/portagrav/crowbar_act(mob/living/user, obj/item/tool)
+	. = NONE
+	if(default_deconstruction_crowbar(tool))
+		return ITEM_INTERACT_SUCCESS
+
+/obj/machinery/power/portagrav/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	. = NONE
+	if(istype(tool, /obj/item/stock_parts/power_store/cell))
+		if(!panel_open)
+			balloon_alert(user, "must open panel!")
+			return ITEM_INTERACT_BLOCKING
+		if(cell)
+			balloon_alert(user, "already has a cell!")
+			return ITEM_INTERACT_BLOCKING
+		if(!user.transferItemToLoc(tool, src))
+			return ITEM_INTERACT_FAILURE
+		cell = tool
+		return ITEM_INTERACT_SUCCESS
 
 /obj/machinery/power/portagrav/should_have_node()
 	return anchored
@@ -97,11 +134,29 @@
 /obj/machinery/power/portagrav/get_cell()
 	return cell
 
+/obj/machinery/power/portagrav/attack_hand(mob/living/carbon/user, list/modifiers)
+	. = ..()
+	if(!panel_open || isnull(cell) || !istype(user) || user.combat_mode)
+		return
+	if(user.put_in_hands(cell))
+		cell = null
+
 /obj/machinery/power/portagrav/attack_hand_secondary(mob/user, list/modifiers)
 	if(!can_interact(user))
 		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 	toggle_on(user)
 	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+
+/obj/machinery/power/portagrav/emag_act(mob/user, obj/item/card/emag/emag_card)
+	if(obj_flags & EMAGGED)
+		return FALSE
+	obj_flags |= EMAGGED
+	visible_message(span_warning("Sparks fly out of [src]!"))
+	if(user)
+		balloon_alert(user, "unsafe gravity unlocked")
+		user.log_message("emagged [src].", LOG_ATTACK)
+	playsound(src, SFX_SPARKS, 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
+	return TRUE
 
 /obj/machinery/power/portagrav/proc/toggle_on(mob/user)
 	if(on)
@@ -145,6 +200,13 @@
 		if(!cell?.use(draw_per_range * range))
 			turn_off()
 
+/obj/machinery/power/portagrav/proc/update_field()
+	if(isnull(gravity_field))
+		return
+	gravity_field.set_range(range)
+	gravity_field.gravity_value = grav_strength
+	gravity_field.recalculate_field(full_recalc = TRUE)
+
 /obj/machinery/power/portagrav/ui_interact(mob/user, datum/tgui/ui)
 	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
@@ -172,12 +234,13 @@
 			var/adjustment = text2num(params["adjustment"])
 			if(isnull(adjustment))
 				return
-			var/result = clamp(grav_strength + adjustment, NEGATIVE_GRAVITY, GRAVITY_DAMAGE_THRESHOLD - 1 + (obj_flags & EMAGGED))
-			if(result == grav_strength || result < NEGATIVE_GRAVITY || result > GRAVITY_DAMAGE_THRESHOLD)
+			var/bonus = (obj_flags & EMAGGED) ? 0 : 2
+			// REPLACE 0 with NEGATIVE_GRAVITY ONCE NEGATIVE GRAVITY IS SOMETHING ACTUALLY FUNCTIONAL
+			var/result = clamp(grav_strength + adjustment, 0, GRAVITY_DAMAGE_THRESHOLD - 1 + bonus)
+			if(result == grav_strength || result < 0 || result > GRAVITY_DAMAGE_THRESHOLD)
 				return
 			grav_strength = result
-			gravity_field?.gravity_value = grav_strength
-			gravity_field?.recalculate_field(full_recalc = TRUE)
+			update_field()
 			return TRUE
 		if("toggle_power")
 			toggle_on(usr)
@@ -193,39 +256,9 @@
 			var/adjustment = text2num(params["adjustment"])
 			if(isnull(adjustment))
 				return
-			var/result = clamp(range + adjustment, 1, max_range)
+			var/result = clamp(range + adjustment, 0, max_range)
 			if(result == range)
 				return
 			range = result
-			gravity_field?.set_range(range)
+			update_field()
 			return TRUE
-
-/*
-
-/obj/machinery/space_heater/attackby(obj/item/I, mob/user, params)
-	add_fingerprint(user)
-
-	if(default_deconstruction_screwdriver(user, icon_state, icon_state, I))
-		user.visible_message(span_notice("\The [user] [panel_open ? "opens" : "closes"] the hatch on \the [src]."), span_notice("You [panel_open ? "open" : "close"] the hatch on \the [src]."))
-		update_appearance()
-		return TRUE
-
-	if(default_deconstruction_crowbar(I))
-		return TRUE
-
-	if(istype(I, /obj/item/stock_parts/cell))
-		if(!panel_open)
-			to_chat(user, span_warning("The hatch must be open to insert a power cell!"))
-			return
-		if(cell)
-			to_chat(user, span_warning("There is already a power cell inside!"))
-			return
-		if(!user.transferItemToLoc(I, src))
-			return
-		cell = I
-		I.add_fingerprint(usr)
-		user.visible_message(span_notice("\The [user] inserts a power cell into \the [src]."), span_notice("You insert the power cell into \the [src]."))
-		SStgui.update_uis(src)
-		return TRUE
-	return ..()
-*/
