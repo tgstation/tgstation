@@ -154,7 +154,7 @@
 	data["sensitivity"] = sensitivity
 	return data
 
-/obj/item/assembly/prox_sensor/ui_act(action, params)
+/obj/item/assembly/prox_sensor/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if(.)
 		return

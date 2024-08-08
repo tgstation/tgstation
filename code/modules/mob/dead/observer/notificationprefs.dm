@@ -38,7 +38,7 @@
 			"desc" = GLOB.poll_ignore_desc[key]
 		))
 
-/datum/notificationpanel/ui_act(action, params)
+/datum/notificationpanel/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if(.)
 		return

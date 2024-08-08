@@ -94,7 +94,7 @@
 /obj/machinery/mineral/processing_unit_console/ui_data(mob/user)
 	return processing_machine.ui_data()
 
-/obj/machinery/mineral/processing_unit_console/ui_act(action, list/params)
+/obj/machinery/mineral/processing_unit_console/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if(.)
 		return

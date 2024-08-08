@@ -97,7 +97,7 @@
 		icon_screen = initial(icon_screen)
 	. = ..()
 
-/obj/machinery/computer/exodrone_control_console/ui_act(action, list/params)
+/obj/machinery/computer/exodrone_control_console/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if(.)
 		return

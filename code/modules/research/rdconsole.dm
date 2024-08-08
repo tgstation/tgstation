@@ -319,7 +319,7 @@ Nothing else in the console has ID requirements.
 		"id_cache" = flat_id_cache,
 	)
 
-/obj/machinery/computer/rdconsole/ui_act(action, list/params)
+/obj/machinery/computer/rdconsole/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if (.)
 		return

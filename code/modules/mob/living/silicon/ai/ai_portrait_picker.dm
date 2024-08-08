@@ -47,7 +47,7 @@
 	data["search_mode"] = search_mode == PAINTINGS_FILTER_SEARCH_TITLE ? "Title" : "Author"
 	return data
 
-/datum/portrait_picker/ui_act(action, params)
+/datum/portrait_picker/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if(.)
 		return
