@@ -16,7 +16,6 @@
 		/obj/item/organ/external/spines = "None",
 		/obj/item/organ/external/tail/lizard = "Smooth",
 	)
-	mutantbrain = /obj/item/organ/internal/brain/felinid
 	mutanttongue = /obj/item/organ/internal/tongue/lizard
 	coldmod = 1.5
 	heatmod = 0.67
