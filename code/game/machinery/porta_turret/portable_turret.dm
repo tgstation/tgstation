@@ -575,7 +575,7 @@ DEFINE_BITFIELD(turret_flags, list(
 
 	// If we aren't shooting heads then return a threatcount of 0
 	if (!(turret_flags & TURRET_FLAG_SHOOT_HEADS))
-		var/datum/job/apparent_job = SSjob.GetJob(perp.get_assignment())
+		var/datum/job/apparent_job = SSjob.get_job(perp.get_assignment())
 		if(apparent_job?.job_flags & JOB_HEAD_OF_STAFF)
 			return 0
 

@@ -120,7 +120,7 @@
 /obj/item/card/id/Initialize(mapload)
 	. = ..()
 
-	var/datum/bank_account/blank_bank_account = new("Unassigned", SSjob.GetJobType(/datum/job/unassigned), player_account = FALSE)
+	var/datum/bank_account/blank_bank_account = new("Unassigned", SSjob.get_job_type(/datum/job/unassigned), player_account = FALSE)
 	registered_account = blank_bank_account
 	registered_account.replaceable = TRUE
 
@@ -1261,7 +1261,7 @@
 	. = ..()
 	registered_account = new(player_account = FALSE)
 	registered_account.account_id = ADMIN_ACCOUNT_ID // this is so bank_card_talk() can work.
-	registered_account.account_job = SSjob.GetJobType(/datum/job/admin)
+	registered_account.account_job = SSjob.get_job_type(/datum/job/admin)
 	registered_account.account_balance += 999999 // MONEY! We add more money to the account every time we spawn because it's a debug item and infinite money whoopie
 
 /obj/item/card/id/advanced/debug/alt_click_can_use_id(mob/living/user)

@@ -203,7 +203,7 @@ DEFINE_BITFIELD(departments_bitflags, list(
 #define JOB_ANNOUNCE_ARRIVAL (1<<0)
 /// Whether the mob is added to the crew manifest.
 #define JOB_CREW_MANIFEST (1<<1)
-/// Whether the mob is equipped through SSjob.EquipRank() on spawn.
+/// Whether the mob is equipped through SSjob.equip_rank() on spawn.
 #define JOB_EQUIP_RANK (1<<2)
 /// Whether the job is considered a regular crew member of the station. Equipment such as AI and cyborgs not included.
 #define JOB_CREW_MEMBER (1<<3)

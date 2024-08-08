@@ -62,7 +62,7 @@ GLOBAL_VAR_INIT(time_last_changed_position, 0)
 	switch(action)
 		if("PRG_open_job")
 			var/edit_job_target = params["target"]
-			var/datum/job/j = SSjob.GetJob(edit_job_target)
+			var/datum/job/j = SSjob.get_job(edit_job_target)
 			if(!can_edit_job(j) || !can_open_job(j))
 				return TRUE
 			if(opened_positions[edit_job_target] >= 0)
@@ -74,7 +74,7 @@ GLOBAL_VAR_INIT(time_last_changed_position, 0)
 			return TRUE
 		if("PRG_close_job")
 			var/edit_job_target = params["target"]
-			var/datum/job/j = SSjob.GetJob(edit_job_target)
+			var/datum/job/j = SSjob.get_job(edit_job_target)
 			if(!can_edit_job(j) || !can_close_job(j))
 				return TRUE
 			//Allow instant closing without cooldown if a position has been opened before
@@ -87,7 +87,7 @@ GLOBAL_VAR_INIT(time_last_changed_position, 0)
 			return TRUE
 		if("PRG_priority")
 			var/priority_target = params["target"]
-			var/datum/job/j = SSjob.GetJob(priority_target)
+			var/datum/job/j = SSjob.get_job(priority_target)
 			if(!can_edit_job(j))
 				return TRUE
 			if(j.total_positions <= j.current_positions)

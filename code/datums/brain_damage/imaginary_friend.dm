@@ -156,11 +156,11 @@
 	for(var/job in appearance_from_prefs.job_preferences)
 		var/this_pref = appearance_from_prefs.job_preferences[job]
 		if(this_pref > highest_pref)
-			appearance_job = SSjob.GetJob(job)
+			appearance_job = SSjob.get_job(job)
 			highest_pref = this_pref
 
 	if(!appearance_job)
-		appearance_job = SSjob.GetJob(JOB_ASSISTANT)
+		appearance_job = SSjob.get_job(JOB_ASSISTANT)
 
 	if(istype(appearance_job, /datum/job/ai))
 		human_image = icon('icons/mob/silicon/ai.dmi', icon_state = resolve_ai_icon(appearance_from_prefs.read_preference(/datum/preference/choiced/ai_core_display)), dir = SOUTH)

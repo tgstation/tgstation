@@ -31,7 +31,7 @@ GLOBAL_DATUM_INIT(manifest, /datum/manifest, new)
 		var/name = target.name
 		var/rank = target.rank // user-visible job
 		var/trim = target.trim // internal jobs by trim type
-		var/datum/job/job = SSjob.GetJob(trim)
+		var/datum/job/job = SSjob.get_job(trim)
 		if(!job || !(job.job_flags & JOB_CREW_MANIFEST) || !LAZYLEN(job.departments_list)) // In case an unlawful custom rank is added.
 			var/list/misc_list = manifest_out[DEPARTMENT_UNASSIGNED]
 			misc_list[++misc_list.len] = list(

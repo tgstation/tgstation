@@ -66,7 +66,7 @@
 	if(isnull(antag_type) || mind.has_antag_datum(antag_type))
 		return // we weren't built for this proc to run
 
-	mind.set_assigned_role(SSjob.GetJobType(/datum/job/slaughter_demon))
+	mind.set_assigned_role(SSjob.get_job_type(/datum/job/slaughter_demon))
 	mind.special_role = ROLE_SLAUGHTER_DEMON
 	mind.add_antag_datum(antag_type)
 

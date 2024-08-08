@@ -381,10 +381,10 @@
 	if(visualsOnly)
 		return
 
-	var/datum/job/equipped_job = SSjob.GetJobType(jobtype)
+	var/datum/job/equipped_job = SSjob.get_job_type(jobtype)
 
 	if(!equipped_job)
-		equipped_job = SSjob.GetJob(equipped.job)
+		equipped_job = SSjob.get_job(equipped.job)
 
 	var/obj/item/card/id/card = equipped.wear_id
 
