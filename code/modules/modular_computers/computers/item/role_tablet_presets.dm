@@ -6,13 +6,19 @@
 	greyscale_config = /datum/greyscale_config/tablet/head
 	greyscale_colors = "#67A364#a92323"
 	max_capacity = parent_type::max_capacity * 2
-	starting_programs = list(
+	var/static/list/datum/computer_file/head_programs = list(
 		/datum/computer_file/program/crew_manifest,
 		/datum/computer_file/program/status,
 		/datum/computer_file/program/science,
 		/datum/computer_file/program/robocontrol,
 		/datum/computer_file/program/budgetorders,
 	)
+
+/obj/item/modular_computer/pda/heads/Initialize(mapload)
+	. = ..()
+	for(var/programs in head_programs)
+		var/datum/computer_file/program/program_type = new programs
+		store_file(program_type)
 
 /obj/item/modular_computer/pda/heads/captain
 	name = "captain PDA"
@@ -35,11 +41,6 @@
 	greyscale_config = /datum/greyscale_config/tablet/stripe_thick/head
 	greyscale_colors = "#374f7e#a52f29#a52f29"
 	starting_programs = list(
-		/datum/computer_file/program/crew_manifest,
-		/datum/computer_file/program/status,
-		/datum/computer_file/program/science,
-		/datum/computer_file/program/robocontrol,
-		/datum/computer_file/program/budgetorders,
 		/datum/computer_file/program/records/security,
 		/datum/computer_file/program/job_management,
 	)
@@ -50,11 +51,6 @@
 	greyscale_colors = "#EA3232#0000CC"
 	inserted_item = /obj/item/pen/red/security
 	starting_programs = list(
-		/datum/computer_file/program/crew_manifest,
-		/datum/computer_file/program/status,
-		/datum/computer_file/program/science,
-		/datum/computer_file/program/robocontrol,
-		/datum/computer_file/program/budgetorders,
 		/datum/computer_file/program/records/security,
 	)
 
@@ -63,11 +59,6 @@
 	greyscale_config = /datum/greyscale_config/tablet/stripe_thick/head
 	greyscale_colors = "#D99A2E#69DBF3#FAFAFA"
 	starting_programs = list(
-		/datum/computer_file/program/crew_manifest,
-		/datum/computer_file/program/status,
-		/datum/computer_file/program/science,
-		/datum/computer_file/program/robocontrol,
-		/datum/computer_file/program/budgetorders,
 		/datum/computer_file/program/atmosscan,
 		/datum/computer_file/program/alarm_monitor,
 		/datum/computer_file/program/supermatter_monitor,
@@ -78,11 +69,6 @@
 	greyscale_config = /datum/greyscale_config/tablet/stripe_thick/head
 	greyscale_colors = "#FAFAFA#000099#3F96CC"
 	starting_programs = list(
-		/datum/computer_file/program/crew_manifest,
-		/datum/computer_file/program/status,
-		/datum/computer_file/program/science,
-		/datum/computer_file/program/robocontrol,
-		/datum/computer_file/program/budgetorders,
 		/datum/computer_file/program/maintenance/phys_scanner,
 		/datum/computer_file/program/records/medical,
 	)
@@ -94,12 +80,7 @@
 	inserted_item = /obj/item/pen/fountain
 	starting_programs = list(
 		/datum/computer_file/program/borg_monitor,
-		/datum/computer_file/program/budgetorders,
-		/datum/computer_file/program/crew_manifest,
-		/datum/computer_file/program/robocontrol,
-		/datum/computer_file/program/science,
 		/datum/computer_file/program/scipaper_program,
-		/datum/computer_file/program/status,
 		/datum/computer_file/program/signal_commander,
 	)
 
@@ -110,11 +91,6 @@
 	inserted_item = /obj/item/pen/survival
 	stored_paper = 20
 	starting_programs = list(
-		/datum/computer_file/program/crew_manifest,
-		/datum/computer_file/program/status,
-		/datum/computer_file/program/science,
-		/datum/computer_file/program/robocontrol,
-		/datum/computer_file/program/budgetorders,
 		/datum/computer_file/program/shipping,
 		/datum/computer_file/program/restock_tracker,
 	)
