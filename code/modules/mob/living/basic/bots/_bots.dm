@@ -88,7 +88,7 @@ GLOBAL_LIST_INIT(command_strings, list(
 	var/list/current_pathed_turfs = list()
 
 	///The type of data HUD the bot uses. Diagnostic by default.
-	var/data_hud_type = DATA_HUD_DIAGNOSTIC_BASIC
+	var/data_hud_type = DATA_HUD_DIAGNOSTIC
 	/// If true we will allow ghosts to control this mob
 	var/can_be_possessed = FALSE
 	/// Message to display upon possession
@@ -113,7 +113,7 @@ GLOBAL_LIST_INIT(command_strings, list(
 	RegisterSignal(src, COMSIG_MOVABLE_MOVED, PROC_REF(handle_loop_movement))
 	RegisterSignal(src, COMSIG_ATOM_WAS_ATTACKED, PROC_REF(after_attacked))
 	RegisterSignal(src, COMSIG_MOB_TRIED_ACCESS, PROC_REF(attempt_access))
-	ADD_TRAIT(src, TRAIT_NO_GLIDE, INNATE_TRAIT)
+	add_traits(list(TRAIT_NO_GLIDE, TRAIT_SILICON_EMOTES_ALLOWED), INNATE_TRAIT)
 	GLOB.bots_list += src
 
 	// Give bots a fancy new ID card that can hold any access.
@@ -517,7 +517,6 @@ GLOBAL_LIST_INIT(command_strings, list(
 	if(istype(item_to_drop, /obj/item/stock_parts/power_store/cell))
 		var/obj/item/stock_parts/power_store/cell/dropped_cell = item_to_drop
 		dropped_cell.charge = 0
-		dropped_cell.update_appearance()
 		return
 
 	if(istype(item_to_drop, /obj/item/storage))

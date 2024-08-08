@@ -212,15 +212,20 @@
 				continue
 			succeed = TRUE
 			break
-	if(succeed)
-		var/list/organs_to_boot_out = organ_receiver.get_organ_slot(organ.slot)
-		for(var/obj/item/organ/organ_evacced as anything in organs_to_boot_out)
-			if(organ_evacced.organ_flags & ORGAN_UNREMOVABLE)
-				continue
-			organ_evacced.Remove(target)
-			organ_evacced.forceMove(get_turf(target))
-		organ.Insert(target)
-	else
+
+	if(!succeed)
+		organ.forceMove(drop_location())
+		organ = null
+		return
+
+	var/list/organs_to_boot_out = organ_receiver.get_organ_slot(organ.slot)
+	for(var/obj/item/organ/organ_evacced as anything in organs_to_boot_out)
+		if(organ_evacced.organ_flags & ORGAN_UNREMOVABLE)
+			continue
+		organ_evacced.Remove(target, special = TRUE)
+		organ_evacced.forceMove(get_turf(target))
+
+	if (!organ.Insert(target))
 		organ.forceMove(drop_location())
 	organ = null
 
@@ -406,12 +411,21 @@
 		/datum/surgery/advanced/pacify,
 		/datum/surgery/healing/combo/upgraded/femto,
 		/datum/surgery/advanced/brainwashing,
+		/datum/surgery/advanced/brainwashing/mechanic,
 		/datum/surgery/advanced/bioware/nerve_splicing,
+		/datum/surgery/advanced/bioware/nerve_splicing/mechanic,
 		/datum/surgery/advanced/bioware/nerve_grounding,
+		/datum/surgery/advanced/bioware/nerve_grounding/mechanic,
 		/datum/surgery/advanced/bioware/vein_threading,
+		/datum/surgery/advanced/bioware/vein_threading/mechanic,
 		/datum/surgery/advanced/bioware/muscled_veins,
+		/datum/surgery/advanced/bioware/muscled_veins/mechanic,
 		/datum/surgery/advanced/bioware/ligament_hook,
+		/datum/surgery/advanced/bioware/ligament_hook/mechanic,
 		/datum/surgery/advanced/bioware/ligament_reinforcement,
+		/datum/surgery/advanced/bioware/ligament_reinforcement/mechanic,
 		/datum/surgery/advanced/bioware/cortex_imprint,
+		/datum/surgery/advanced/bioware/cortex_imprint/mechanic,
 		/datum/surgery/advanced/bioware/cortex_folding,
+		/datum/surgery/advanced/bioware/cortex_folding/mechanic,
 	)

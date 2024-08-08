@@ -187,6 +187,6 @@
 	name = "Strong-Arm Implant Set"
 	desc = "A crate containing two implants, which can be surgically implanted to empower the strength of human arms. Warranty void if exposed to electromagnetic pulses."
 	cost = CARGO_CRATE_VALUE * 6
-	contains = list(/obj/item/organ/internal/cyberimp/arm/muscle = 2)
+	contains = list(/obj/item/organ/internal/cyberimp/arm/strongarm = 2)
 	crate_name = "Strong-Arm implant crate"
 	discountable = SUPPLY_PACK_RARE_DISCOUNTABLE

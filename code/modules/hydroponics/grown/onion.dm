@@ -1,5 +1,5 @@
 /obj/item/seeds/onion
-	name = "pack of onion seeds"
+	name = "onion seed pack"
 	desc = "These seeds grow into onions."
 	icon_state = "seed-onion"
 	species = "onion"
@@ -29,7 +29,7 @@
 	AddElement(/datum/element/processable, TOOL_KNIFE, /obj/item/food/onion_slice, 2, 15, screentip_verb = "Cut")
 
 /obj/item/seeds/onion/red
-	name = "pack of red onion seeds"
+	name = "red onion seed pack"
 	desc = "For growing exceptionally potent onions."
 	icon_state = "seed-onionred"
 	species = "onion_red"

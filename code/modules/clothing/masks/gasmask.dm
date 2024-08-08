@@ -250,12 +250,12 @@ GLOBAL_LIST_INIT(clown_mask_options, list(
 //Plague Dr suit can be found in clothing/suits/bio.dm
 /obj/item/clothing/mask/gas/plaguedoctor
 	name = "plague doctor mask"
-	desc = "A modernised version of the classic design, this mask will not only filter out toxins but it can also be connected to an air supply."
+	desc = "A modernised version of the classic design, this mask will not only protect you from exposure to the Pestilence but it can also be connected to an air supply."
 	icon_state = "plaguedoctor"
 	flags_inv = HIDEEARS|HIDEEYES|HIDEFACE|HIDEFACIALHAIR|HIDESNOUT|HIDEHAIR
 	inhand_icon_state = "gas_mask"
 	has_fov = FALSE
-	flags_cover = MASKCOVERSEYES
+	clothing_flags = BLOCK_GAS_SMOKE_EFFECT|MASKINTERNALS
 
 /obj/item/clothing/mask/gas/syndicate
 	name = "syndicate mask"

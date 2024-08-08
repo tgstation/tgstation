@@ -21,7 +21,8 @@ export function OrbitBlade(props) {
   const { data } = useBackend<OrbitData>();
   const { orbiting } = data;
 
-  const { setBladeOpen } = useContext(OrbitContext);
+  const { setBladeOpen, realNameDisplay, setRealNameDisplay } =
+    useContext(OrbitContext);
 
   return (
     <Stack vertical width="244px">
@@ -43,6 +44,24 @@ export function OrbitBlade(props) {
       </Stack.Item>
       <Stack.Item>
         <ViewModeSelector />
+      </Stack.Item>
+      <Stack.Item>
+        <Section
+          buttons={
+            <Button
+              color="transparent"
+              icon="passport"
+              selected={realNameDisplay}
+              onClick={() => setRealNameDisplay(!realNameDisplay)}
+            />
+          }
+          color="label"
+          title="Real Name Display"
+        >
+          Real Name mode will display actual character names and their
+          roundstart jobs insteas of being based on their worn ID. If the person
+          lacks a roundstart job, it will still display their ID job icon.
+        </Section>
       </Stack.Item>
       {!!orbiting && (
         <Stack.Item>
@@ -115,7 +134,7 @@ function OrbitInfo(props) {
           <Stack.Item>
             <Stack>
               <Stack.Item>
-                <JobIcon item={orbiting} />
+                <JobIcon item={orbiting} realNameDisplay={false} />
               </Stack.Item>
               <Stack.Item color="label" grow>
                 {job}
