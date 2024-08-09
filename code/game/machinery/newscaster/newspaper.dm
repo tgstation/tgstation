@@ -133,11 +133,11 @@
 /obj/item/newspaper/proc/holder_checked_name(mob/living/carbon/human/source, list/identity)
 	SIGNAL_HANDLER
 
-        var/newspaper_obscurity_priority = 100 // how powerful obscuring your appearance with a newspaper is
+	var/newspaper_obscurity_priority = 100 // how powerful obscuring your appearance with a newspaper is
 	if(identity[VISIBLE_NAME_FORCED])
 		if(identity[VISIBLE_NAME_FORCED] > newspaper_obscurity_priority) // the other set forced name is forcier than breaking news
 			return
-		elseif(identity[VISIBLE_NAME_FORCED] == newspaper_obscurity_priority)
+		else if(identity[VISIBLE_NAME_FORCED] == newspaper_obscurity_priority)
 			stack_trace("A name-setting signal operation ([identity[VISIBLE_NAME_FACE]]) has a priority collision with [src].")
 		else
 			identity[VISIBLE_NAME_FORCED] = newspaper_obscurity_priority
