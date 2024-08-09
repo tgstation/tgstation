@@ -145,6 +145,8 @@ DEFINE_BITFIELD(bot_cover_flags, list(
 #define HYGIENE_BOT "Hygienebot"
 /// Vibe bots
 #define VIBE_BOT "Vibebot"
+/// Repairbots
+#define REPAIR_BOT "Repairbot"
 
 // General Bot modes //
 /// Idle
