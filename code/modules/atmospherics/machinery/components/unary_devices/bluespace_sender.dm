@@ -1,5 +1,5 @@
 /obj/machinery/atmospherics/components/unary/bluespace_sender
-	icon = 'icons/obj/machines/atmospherics/bluespace_gas_selling.dmi'
+	icon = 'icons/obj/machines/atmospherics/bluespace_gas_vendor.dmi'
 	icon_state = "bluespace_sender_off"
 	base_icon_state = "bluespace_sender"
 	name = "Bluespace Gas Sender"

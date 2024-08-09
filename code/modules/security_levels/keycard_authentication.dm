@@ -20,7 +20,6 @@ GLOBAL_DATUM_INIT(keycard_events, /datum/events, new)
 	var/obj/machinery/keycard_auth/event_source
 	var/mob/triggerer = null
 	var/waiting = FALSE
-
 	COOLDOWN_DECLARE(access_grant_cooldown)
 
 /obj/machinery/keycard_auth/Initialize(mapload)
@@ -158,13 +157,28 @@ GLOBAL_DATUM_INIT(keycard_events, /datum/events, new)
 
 /// Subtype which is stuck to a wall
 /obj/machinery/keycard_auth/wall_mounted
-	icon = 'icons/obj/machines/wallmounts.dmi'
+	icon = 'icons/obj/machines/keycard.dmi'
 
-MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/keycard_auth/wall_mounted, 26)
+_WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/machinery/keycard_auth/wall_mounted, 34, 2, 12, -14, 16)
 
 /obj/machinery/keycard_auth/wall_mounted/Initialize(mapload)
 	. = ..()
 	find_and_hang_on_wall()
+
+/obj/machinery/keycard_auth/wall_mounted/wall_mount_offset(newdir)
+	pixel_x = 0
+	pixel_z = 0
+	switch(newdir)
+		if(NORTH)
+			pixel_z = 2
+		if(SOUTH)
+			pixel_z = 34
+		if(EAST)
+			pixel_x = -14
+			pixel_z = 16
+		if(WEST)
+			pixel_x = 12
+			pixel_z = 16
 
 GLOBAL_VAR_INIT(emergency_access, FALSE)
 /proc/make_maint_all_access()

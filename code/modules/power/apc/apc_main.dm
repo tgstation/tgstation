@@ -17,8 +17,9 @@
 /obj/machinery/power/apc
 	name = "area power controller"
 	desc = "A control terminal for the area's electrical systems."
-	icon = 'icons/obj/machines/wallmounts.dmi'
-	icon_state = "apc0"
+
+	icon = 'icons/obj/APC.dmi'
+	icon_state = "frame"
 	use_power = NO_POWER_USE
 	req_access = null
 	max_integrity = 200
@@ -42,6 +43,7 @@
 	///Type of cell we start with
 	var/cell_type = /obj/item/stock_parts/power_store/battery/upgraded //Base cell has 2500 capacity. Enter the path of a different cell you want to use. cell determines charge rates, max capacity, ect. These can also be changed with other APC vars, but isn't recommended to minimize the risk of accidental usage of dirty editted APCs
 	///State of the cover (closed, opened, removed)
+	///Opens the upper hatch, exposes the cell, and the first part of the terminal
 	var/opened = APC_COVER_CLOSED
 	///Is the APC shorted and not working?
 	var/shorted = FALSE
@@ -112,8 +114,6 @@
 	var/low_power_nightshift_lights = FALSE
 	///Time when the nightshift where turned on last, to prevent spamming
 	var/last_nightshift_switch = 0
-	///Stores the flags for the icon state
-	var/update_state = -1
 	///Stores the flag for the overlays
 	var/update_overlay = -1
 	///Used to stop process from updating the icons too much
@@ -162,11 +162,11 @@
 	dir = ndir
 	switch(dir)
 		if(NORTH)
-			offset_old = pixel_y
-			pixel_y = APC_PIXEL_OFFSET
+			offset_old = pixel_z
+			pixel_z = APC_PIXEL_OFFSET
 		if(SOUTH)
-			offset_old = pixel_y
-			pixel_y = -APC_PIXEL_OFFSET
+			offset_old = pixel_z
+			pixel_z = -APC_PIXEL_OFFSET
 		if(EAST)
 			offset_old = pixel_x
 			pixel_x = APC_PIXEL_OFFSET
@@ -212,12 +212,13 @@
 		make_terminal()
 		///This is how we test to ensure that mappers use the directional subtypes of APCs, rather than use the parent and pixel-shift it themselves.
 		if(abs(offset_old) != APC_PIXEL_OFFSET)
-			log_mapping("APC: ([src]) at [AREACOORD(src)] with dir ([dir] | [uppertext(dir2text(dir))]) has pixel_[dir & (WEST|EAST) ? "x" : "y"] value [offset_old] - should be [dir & (SOUTH|EAST) ? "-" : ""][APC_PIXEL_OFFSET]. Use the directional/ helpers!")
+			log_mapping("APC: ([src]) at [AREACOORD(src)] with dir ([dir] | [uppertext(dir2text(dir))]) has pixel_[dir & (WEST|EAST) ? "x" : "z"] value [offset_old] - should be [dir & (SOUTH|EAST) ? "-" : ""][APC_PIXEL_OFFSET]. Use the directional/ helpers!")
 	// For apcs created during the round players need to configure them from scratch
 	else
 		opened = APC_COVER_OPENED
 		operating = FALSE
 		set_machine_stat(machine_stat | MAINT)
+		setDir(REVERSE_DIR(ndir))
 
 	//Make the apc visually interactive
 	register_context()

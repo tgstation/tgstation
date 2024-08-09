@@ -1,4 +1,5 @@
 /obj/machinery/chem_heater
+	SET_BASE_VISUAL_PIXEL(0, DEPTH_OFFSET)
 	name = "reaction chamber" //Maybe this name is more accurate?
 	density = TRUE
 	pass_flags_self = PASSMACHINE | LETPASSTHROW

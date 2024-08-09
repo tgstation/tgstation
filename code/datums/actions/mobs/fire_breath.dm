@@ -90,7 +90,7 @@
 /// Shoot fire in a whole bunch of directions
 /datum/action/cooldown/mob_cooldown/fire_breath/mass_fire
 	name = "Mass Fire"
-	button_icon = 'icons/effects/fire.dmi'
+	button_icon = 'icons/effects/atmos/fire.dmi'
 	button_icon_state = "1"
 	desc = "Breathe flames in all directions."
 	cooldown_time = 10.5 SECONDS

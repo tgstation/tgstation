@@ -1,6 +1,6 @@
 /datum/element/decal/blood
 
-/datum/element/decal/blood/Attach(datum/target, _icon, _icon_state, _dir, _plane, _layer, _alpha, _color, _smoothing, _cleanable=CLEAN_TYPE_BLOOD, _description, mutable_appearance/_pic)
+/datum/element/decal/blood/Attach(datum/target, _icon, _icon_state, _dir, _plane, _layer, _alpha, _color,_pixel_w, _pixel_z, _smoothing, _cleanable=CLEAN_TYPE_BLOOD, _description, mutable_appearance/_pic)
 	if(!isitem(target))
 		return ELEMENT_INCOMPATIBLE
 
@@ -14,7 +14,7 @@
 		REMOVE_KEEP_TOGETHER(source_item, type)
 	return ..()
 
-/datum/element/decal/blood/generate_appearance(_icon, _icon_state, _dir, _plane, _layer, _color, _alpha, _smoothing, source)
+/datum/element/decal/blood/generate_appearance(_icon, _icon_state, _dir, _plane, _layer, _color, _alpha, _pixel_w, _pixel_z, _smoothing, source)
 	var/obj/item/I = source
 	ADD_KEEP_TOGETHER(I, type)
 	var/icon = I.icon
@@ -30,6 +30,8 @@
 	blood_splatter.transform = blood_splatter.transform.Scale(scale_factor_x, scale_factor_y)
 	blood_splatter.blend_mode = BLEND_INSET_OVERLAY
 	blood_splatter.color = _color
+	blood_splatter.pixel_w = _pixel_w
+	blood_splatter.pixel_z = _pixel_z
 	pic = blood_splatter
 	return TRUE
 

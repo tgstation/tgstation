@@ -10,7 +10,7 @@
 	/// What's in the urinal
 	var/obj/item/hidden_item
 
-MAPPING_DIRECTIONAL_HELPERS(/obj/structure/urinal, 32)
+WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/structure/urinal)
 
 /obj/structure/urinal/Initialize(mapload)
 	. = ..()
@@ -95,7 +95,6 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/urinal, 32)
 	icon = 'icons/obj/watercloset.dmi'
 	icon_state = "urinal"
 	result_path = /obj/structure/urinal
-	pixel_shift = 32
 
 /obj/item/food/urinalcake
 	name = "urinal cake"

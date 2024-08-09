@@ -47,7 +47,10 @@
 /turf/open/floor/pod/dark,
 /area/ruin/powered)
 "l" = (
-/obj/item/pickaxe,
+/obj/item/pickaxe{
+	pixel_y = -6;
+	pixel_x = -3
+	},
 /obj/effect/decal/cleanable/blood,
 /turf/open/floor/pod/dark,
 /area/ruin/powered)
@@ -69,7 +72,9 @@
 /area/lavaland/surface/outdoors)
 "p" = (
 /obj/structure/table/survival_pod,
-/obj/item/knife/combat/survival,
+/obj/item/knife/combat/survival{
+	pixel_y = 8
+	},
 /turf/open/floor/pod/dark,
 /area/ruin/powered)
 "q" = (
@@ -86,7 +91,10 @@
 /area/ruin/powered)
 "r" = (
 /obj/structure/tubes,
-/obj/item/crowbar,
+/obj/item/crowbar{
+	pixel_x = -4;
+	pixel_y = 4
+	},
 /obj/effect/decal/cleanable/blood/drip,
 /turf/open/floor/pod/dark,
 /area/ruin/powered)

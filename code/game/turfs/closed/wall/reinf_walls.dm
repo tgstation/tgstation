@@ -2,8 +2,6 @@
 	name = "reinforced wall"
 	desc = "A huge chunk of reinforced metal used to separate rooms."
 	icon = 'icons/turf/walls/reinforced_wall.dmi'
-	icon_state = "reinforced_wall-0"
-	base_icon_state = "reinforced_wall"
 	opacity = TRUE
 	density = TRUE
 	turf_flags = IS_SOLID
@@ -45,7 +43,7 @@
 /turf/closed/wall/r_wall/hulk_recoil(obj/item/bodypart/arm, mob/living/carbon/human/hulkman, damage = 41)
 	return ..()
 
-/turf/closed/wall/r_wall/try_decon(obj/item/W, mob/user, turf/T)
+/turf/closed/wall/r_wall/try_decon(obj/item/W, mob/user)
 	//DECONSTRUCTION
 	switch(d_state)
 		if(INTACT)
@@ -199,6 +197,8 @@
 	QUEUE_SMOOTH_NEIGHBORS(src)
 	QUEUE_SMOOTH(src)
 
+// Wallening todo: we need intact sprites
+/*
 // We don't react to smoothing changing here because this else exists only to "revert" intact changes
 /turf/closed/wall/r_wall/update_icon_state()
 	if(d_state != INTACT)
@@ -208,6 +208,7 @@
 		icon = 'icons/turf/walls/reinforced_wall.dmi'
 		icon_state = "[base_icon_state]-[smoothing_junction]"
 	return ..()
+*/
 
 /turf/closed/wall/r_wall/wall_singularity_pull(current_size)
 	if(current_size >= STAGE_FIVE)
@@ -220,7 +221,7 @@
 
 
 /turf/closed/wall/r_wall/rcd_act(mob/user, obj/item/construction/rcd/the_rcd, list/rcd_data)
-	if(the_rcd.canRturf || rcd_data["[RCD_DESIGN_MODE]"] == RCD_WALLFRAME)
+	if(the_rcd.canRturf || rcd_data[RCD_DESIGN_MODE] == RCD_WALLFRAME)
 		return ..()
 
 /turf/closed/wall/r_wall/rust_turf()
@@ -229,31 +230,28 @@
 		return
 	return ..()
 
+
 /turf/closed/wall/r_wall/syndicate
 	name = "hull"
 	desc = "The armored hull of an ominous looking ship."
 	icon = 'icons/turf/walls/plastitanium_wall.dmi'
-	icon_state = "plastitanium_wall-0"
-	base_icon_state = "plastitanium_wall"
 	explosive_resistance = 20
 	sheet_type = /obj/item/stack/sheet/mineral/plastitanium
 	hardness = 25 //plastitanium
 	turf_flags = IS_SOLID
 	smoothing_flags = SMOOTH_BITMASK | SMOOTH_DIAGONAL_CORNERS
-	smoothing_groups = SMOOTH_GROUP_WALLS + SMOOTH_GROUP_CLOSED_TURFS + SMOOTH_GROUP_SYNDICATE_WALLS
-	canSmoothWith = SMOOTH_GROUP_SHUTTLE_PARTS + SMOOTH_GROUP_AIRLOCK + SMOOTH_GROUP_PLASTITANIUM_WALLS + SMOOTH_GROUP_SYNDICATE_WALLS
+	smoothing_groups = SMOOTH_GROUP_TALL_WALL + SMOOTH_GROUP_WALLS + SMOOTH_GROUP_CLOSED_TURFS + SMOOTH_GROUP_PLASTITANIUM_WALLS + SMOOTH_GROUP_SYNDICATE_WALLS
+	canSmoothWith = SMOOTH_GROUP_PLASTITANIUM_WALLS + SMOOTH_GROUP_SYNDICATE_WALLS
 	rust_resistance = RUST_RESISTANCE_TITANIUM
+
 
 /turf/closed/wall/r_wall/syndicate/rcd_vals(mob/user, obj/item/construction/rcd/the_rcd)
 	return FALSE
 
 /turf/closed/wall/r_wall/syndicate/nodiagonal
 	icon = 'icons/turf/walls/plastitanium_wall.dmi'
-	icon_state = "map-shuttle_nd"
-	base_icon_state = "plastitanium_wall"
 	smoothing_flags = SMOOTH_BITMASK
 
 /turf/closed/wall/r_wall/syndicate/overspace
-	icon_state = "map-overspace"
 	smoothing_flags = SMOOTH_BITMASK | SMOOTH_DIAGONAL_CORNERS
 	fixed_underlay = list("space" = TRUE)

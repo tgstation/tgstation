@@ -1,4 +1,4 @@
-/// Sets the direction of the mecha and all of its occcupents, required for FOV. Alternatively one could make a recursive contents registration and register topmost direction changes in the fov component
+/// Sets the direction of the mecha and all of its occcupents
 /obj/vehicle/sealed/mecha/setDir(newdir)
 	. = ..()
 	for(var/mob/living/occupant as anything in occupants)

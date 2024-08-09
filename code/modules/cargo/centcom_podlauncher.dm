@@ -875,7 +875,6 @@ GLOBAL_DATUM_INIT(podlauncher, /datum/centcom_podlauncher, new)
 	image_state = "selector"
 	image_layer = FLY_LAYER
 	layer = FLY_LAYER
-	plane = ABOVE_GAME_PLANE
 	alpha = 150
 
 /obj/effect/client_image_holder/dropoff_location // Shows where revese pods lands
@@ -884,7 +883,6 @@ GLOBAL_DATUM_INIT(podlauncher, /datum/centcom_podlauncher, new)
 	image_state = "dropoff_indicator"
 	image_layer = FLY_LAYER
 	layer = FLY_LAYER
-	plane = ABOVE_GAME_PLANE
 	alpha = 0
 
 #undef LAUNCH_ALL

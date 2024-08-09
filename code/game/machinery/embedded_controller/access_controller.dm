@@ -31,7 +31,7 @@
 	return TRUE
 
 /obj/machinery/door_buttons/access_button
-	icon = 'icons/obj/machines/wallmounts.dmi'
+	icon = 'icons/obj/machines/airlock_machines.dmi'
 	icon_state = "access_button_standby"
 	base_icon_state = "access_button"
 	name = "access button"
@@ -40,6 +40,12 @@
 	var/obj/machinery/door/airlock/door
 	var/obj/machinery/door_buttons/airlock_controller/controller
 	var/busy
+
+WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/machinery/door_buttons/access_button)
+
+/obj/machinery/door_buttons/access_button/Initialize(mapload)
+	. = ..()
+	find_and_hang_on_wall()
 
 /obj/machinery/door_buttons/access_button/find_objects_by_tag()
 	for(var/obj/machinery/door_buttons/airlock_controller/A as anything in SSmachines.get_machines_by_type_and_subtypes(/obj/machinery/door_buttons/airlock_controller))
@@ -105,7 +111,7 @@
 /obj/machinery/door_buttons/airlock_controller
 	name = "access console"
 	desc = "A small console that can cycle opening between two airlocks."
-	icon = 'icons/obj/machines/wallmounts.dmi'
+	icon = 'icons/obj/machines/airlock_machines.dmi'
 	icon_state = "access_control_standby"
 	base_icon_state = "access_control"
 	interaction_flags_machine = INTERACT_MACHINE_WIRES_IF_OPEN|INTERACT_MACHINE_ALLOW_SILICON|INTERACT_MACHINE_OPEN_SILICON
@@ -119,6 +125,12 @@
 	var/obj/machinery/door/airlock/interior_airlock
 	///our exterior airlock
 	var/obj/machinery/door/airlock/exterior_airlock
+
+WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/machinery/door_buttons/airlock_controller)
+
+/obj/machinery/door_buttons/airlock_controller/Initialize(mapload)
+	. = ..()
+	find_and_hang_on_wall()
 
 ///set our doors to null upon deletion
 /obj/machinery/door_buttons/airlock_controller/proc/remove_door(datum/source)

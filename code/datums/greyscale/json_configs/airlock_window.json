@@ -1,0 +1,230 @@
+{
+	"closed": [
+		{
+			"type": "icon_state",
+			"icon_state": "left_door_panel",
+			"blend_mode": "overlay",
+			"color_ids": [ 1 ]
+		},
+		{
+			"type": "icon_state",
+			"icon_state": "right_door_panel",
+			"blend_mode": "overlay",
+			"color_ids": [ 2 ]
+		},
+		{
+			"type": "icon_state",
+			"icon_state": "top_left_rim",
+			"blend_mode": "overlay",
+			"color_ids": [ 3 ]
+		},
+		{
+			"type": "icon_state",
+			"icon_state": "top_right_rim",
+			"blend_mode": "overlay",
+			"color_ids": [ 4 ]
+		},
+		{
+			"type": "icon_state",
+			"icon_state": "left_band",
+			"blend_mode": "overlay",
+			"color_ids": [ 5 ]
+		},
+		{
+			"type": "icon_state",
+			"icon_state": "right_band",
+			"blend_mode": "overlay",
+			"color_ids": [ 6 ]
+		}
+	],
+	"opening": [
+		{
+			"type": "icon_state",
+			"icon_state": "left_door_panel_opening",
+			"blend_mode": "overlay",
+			"color_ids": [ 1 ]
+		},
+		{
+			"type": "icon_state",
+			"icon_state": "right_door_panel_opening",
+			"blend_mode": "overlay",
+			"color_ids": [ 2 ]
+		},
+		{
+			"type": "icon_state",
+			"icon_state": "top_right_rim_opening",
+			"blend_mode": "overlay",
+			"color_ids": [ 3 ]
+		},
+		{
+			"type": "icon_state",
+			"icon_state": "top_left_rim_opening",
+			"blend_mode": "overlay",
+			"color_ids": [ 4 ]
+		},
+		{
+			"type": "icon_state",
+			"icon_state": "left_band_opening",
+			"blend_mode": "overlay",
+			"color_ids": [ 5 ]
+		},
+		{
+			"type": "icon_state",
+			"icon_state": "right_band_opening",
+			"blend_mode": "overlay",
+			"color_ids": [ 6 ]
+		}
+	],
+	"open_top": [
+		{
+			"type": "icon_state",
+			"icon_state": "left_door_panel_open_top",
+			"blend_mode": "overlay",
+			"color_ids": [ 1 ]
+		},
+		{
+			"type": "icon_state",
+			"icon_state": "right_door_panel_open_top",
+			"blend_mode": "overlay",
+			"color_ids": [ 2 ]
+		},
+		{
+			"type": "icon_state",
+			"icon_state": "top_right_rim_open_top",
+			"blend_mode": "overlay",
+			"color_ids": [ 3 ]
+		},
+		{
+			"type": "icon_state",
+			"icon_state": "top_left_rim_open_top",
+			"blend_mode": "overlay",
+			"color_ids": [ 4 ]
+		},
+		{
+			"type": "icon_state",
+			"icon_state": "left_band_open",
+			"blend_mode": "overlay",
+			"color_ids": [ 5 ]
+		},
+		{
+			"type": "icon_state",
+			"icon_state": "right_band_open",
+			"blend_mode": "overlay",
+			"color_ids": [ 6 ]
+		}
+	],
+	"open_bottom": [
+		{
+			"type": "icon_state",
+			"icon_state": "left_door_panel_open_bottom",
+			"blend_mode": "overlay",
+			"color_ids": [ 1 ]
+		},
+		{
+			"type": "icon_state",
+			"icon_state": "right_door_panel_open_bottom",
+			"blend_mode": "overlay",
+			"color_ids": [ 2 ]
+		},
+		{
+			"type": "icon_state",
+			"icon_state": "top_right_rim_open_bottom",
+			"blend_mode": "overlay",
+			"color_ids": [ 3 ]
+		},
+		{
+			"type": "icon_state",
+			"icon_state": "top_left_rim_open_bottom",
+			"blend_mode": "overlay",
+			"color_ids": [ 4 ]
+		},
+		{
+			"type": "icon_state",
+			"icon_state": "left_band_open",
+			"blend_mode": "overlay",
+			"color_ids": [ 5 ]
+		},
+		{
+			"type": "icon_state",
+			"icon_state": "right_band_open",
+			"blend_mode": "overlay",
+			"color_ids": [ 6 ]
+		}
+	],
+	"closing": [
+		{
+			"type": "icon_state",
+			"icon_state": "left_door_panel_closing",
+			"blend_mode": "overlay",
+			"color_ids": [ 1 ]
+		},
+		{
+			"type": "icon_state",
+			"icon_state": "right_door_panel_closing",
+			"blend_mode": "overlay",
+			"color_ids": [ 2 ]
+		},
+		{
+			"type": "icon_state",
+			"icon_state": "top_right_rim_closing",
+			"blend_mode": "overlay",
+			"color_ids": [ 3 ]
+		},
+		{
+			"type": "icon_state",
+			"icon_state": "top_left_rim_closing",
+			"blend_mode": "overlay",
+			"color_ids": [ 4 ]
+		},
+		{
+			"type": "icon_state",
+			"icon_state": "left_band_closing",
+			"blend_mode": "overlay",
+			"color_ids": [ 5 ]
+		},
+		{
+			"type": "icon_state",
+			"icon_state": "right_band_closing",
+			"blend_mode": "overlay",
+			"color_ids": [ 6 ]
+		}
+	],
+	"construction": [
+		{
+			"type": "icon_state",
+			"icon_state": "left_door_panel_construction",
+			"blend_mode": "overlay",
+			"color_ids": [ 1 ]
+		},
+		{
+			"type": "icon_state",
+			"icon_state": "right_door_panel_construction",
+			"blend_mode": "overlay",
+			"color_ids": [ 2 ]
+		},
+		{
+			"type": "icon_state",
+			"icon_state": "top_right_rim_construction",
+			"blend_mode": "overlay",
+			"color_ids": [ 3 ]
+		},
+		{
+			"type": "icon_state",
+			"icon_state": "top_left_rim_construction",
+			"blend_mode": "overlay",
+			"color_ids": [ 4 ]
+		},
+		{
+			"type": "icon_state",
+			"icon_state": "left_band_construction",
+			"blend_mode": "overlay",
+			"color_ids": [ 5 ]
+		},
+		{
+			"type": "icon_state",
+			"icon_state": "right_band_construction",
+			"blend_mode": "overlay",
+			"color_ids": [ 6 ]
+		}
+	]
+}

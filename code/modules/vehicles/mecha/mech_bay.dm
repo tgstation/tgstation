@@ -1,4 +1,5 @@
 /obj/machinery/mech_bay_recharge_port
+	SET_BASE_VISUAL_PIXEL(0, DEPTH_OFFSET)
 	name = "mech bay power port"
 	desc = "This port recharges a mech's internal power cell."
 	icon = 'icons/obj/machines/mech_bay.dmi'

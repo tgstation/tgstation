@@ -17,6 +17,9 @@
 	anchored = TRUE
 	density = TRUE
 	layer = ABOVE_MOB_LAYER
+	//physically offset ourself so we render right as a big icon (I think? that's what's goin on here)
+	pixel_y = 16
+	pixel_z = -16
 	interaction_flags_click = NEED_DEXTERITY | NEED_HANDS | FORBID_TELEKINESIS_REACH
 	/// Keeps track of the total points scored
 	var/total_score = 0
@@ -53,7 +56,6 @@
 
 /obj/structure/hoop/update_overlays()
 	. = ..()
-
 	var/dir_offset_x = 0
 	var/dir_offset_y = 0
 
@@ -68,24 +70,24 @@
 			dir_offset_x = 32
 
 	var/mutable_appearance/scoreboard = mutable_appearance('icons/obj/signs.dmi', "basketball_scorecard")
-	scoreboard.pixel_x = dir_offset_x
-	scoreboard.pixel_y = dir_offset_y
+	scoreboard.pixel_w = dir_offset_x
+	scoreboard.pixel_z = dir_offset_y
 	. += scoreboard
 
 	var/ones = total_score % 10
 	var/mutable_appearance/ones_overlay = mutable_appearance('icons/obj/signs.dmi', "days_[ones]", layer + 0.01)
-	ones_overlay.pixel_x = 4
+	ones_overlay.pixel_w = 4
 	var/mutable_appearance/emissive_ones_overlay  = emissive_appearance('icons/obj/signs.dmi', "days_[ones]", src, alpha = src.alpha)
-	emissive_ones_overlay.pixel_x = 4
+	emissive_ones_overlay.pixel_w = 4
 	scoreboard.add_overlay(ones_overlay)
 	scoreboard.add_overlay(emissive_ones_overlay)
 
 	var/tens = (total_score / 10) % 10
 	var/mutable_appearance/tens_overlay = mutable_appearance('icons/obj/signs.dmi', "days_[tens]", layer + 0.01)
-	tens_overlay.pixel_x = -5
+	tens_overlay.pixel_w = -5
 
 	var/mutable_appearance/emissive_tens_overlay  = emissive_appearance('icons/obj/signs.dmi', "days_[tens]", src, alpha = src.alpha)
-	emissive_tens_overlay.pixel_x = -5
+	emissive_tens_overlay.pixel_w = -5
 	scoreboard.add_overlay(tens_overlay)
 	scoreboard.add_overlay(emissive_tens_overlay)
 

@@ -1,2 +1,7 @@
-output_name = "diamond_wall"
-template = "bitmask/diagonal_32x32.toml"
+template = "bitmask/walls"
+
+[slice_point]
+west = 8
+north = 16
+south = 17
+east = 24

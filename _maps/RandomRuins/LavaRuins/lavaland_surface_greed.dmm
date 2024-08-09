@@ -10,7 +10,12 @@
 /area/lavaland/surface/outdoors)
 "e" = (
 /obj/structure/table/wood/poker,
-/obj/item/gun/ballistic/revolver/russian/soul,
+/obj/item/gun/ballistic/revolver/russian/soul{
+	pixel_y = 8
+	},
+/obj/item/coin/diamond{
+	pixel_y = 8
+	},
 /turf/open/floor/carpet,
 /area/ruin/powered/greed)
 "f" = (
@@ -19,12 +24,17 @@
 /area/ruin/powered/greed)
 "g" = (
 /obj/structure/table/wood/poker,
-/obj/item/coin/mythril,
+/obj/item/coin/mythril{
+	pixel_y = 8
+	},
+/obj/item/coin/adamantine{
+	pixel_y = 3;
+	pixel_x = -2
+	},
 /turf/open/floor/carpet,
 /area/ruin/powered/greed)
 "h" = (
 /obj/structure/table/wood/poker,
-/obj/item/coin/diamond,
 /obj/machinery/light/small/directional/west,
 /turf/open/floor/carpet,
 /area/ruin/powered/greed)
@@ -33,7 +43,6 @@
 /area/ruin/powered/greed)
 "j" = (
 /obj/structure/table/wood/poker,
-/obj/item/coin/adamantine,
 /obj/machinery/light/small/directional/east,
 /turf/open/floor/carpet,
 /area/ruin/powered/greed)
@@ -54,7 +63,9 @@
 /area/ruin/powered/greed)
 "n" = (
 /obj/structure/table/wood/poker,
-/obj/item/stack/spacecash/c1000,
+/obj/item/stack/spacecash/c1000{
+	pixel_y = 8
+	},
 /turf/open/floor/engine/cult,
 /area/ruin/powered/greed)
 "o" = (
@@ -63,33 +74,53 @@
 /area/ruin/powered/greed)
 "p" = (
 /obj/structure/table/wood/poker,
-/obj/item/stack/ore/gold,
+/obj/item/stack/ore/gold{
+	pixel_y = 8
+	},
 /turf/open/floor/engine/cult,
 /area/ruin/powered/greed)
 "q" = (
 /obj/structure/table/wood/poker,
-/obj/item/stack/spacecash/c20,
-/obj/item/stack/spacecash/c50,
+/obj/item/stack/spacecash/c20{
+	pixel_y = 5
+	},
+/obj/item/stack/spacecash/c50{
+	pixel_y = 8
+	},
 /obj/machinery/light/small/directional/west,
 /turf/open/floor/engine/cult,
 /area/ruin/powered/greed)
 "r" = (
 /obj/structure/table/wood/poker,
-/obj/item/stack/spacecash/c500,
-/obj/item/stack/spacecash/c100,
-/obj/item/stack/spacecash/c1000,
+/obj/item/stack/spacecash/c500{
+	pixel_y = 3
+	},
+/obj/item/stack/spacecash/c100{
+	pixel_y = 6
+	},
+/obj/item/stack/spacecash/c1000{
+	pixel_y = 8
+	},
 /turf/open/floor/engine/cult,
 /area/ruin/powered/greed)
 "s" = (
 /obj/structure/table/wood/poker,
-/obj/item/stack/spacecash/c200,
+/obj/item/stack/spacecash/c200{
+	pixel_y = 8
+	},
 /turf/open/floor/engine/cult,
 /area/ruin/powered/greed)
 "u" = (
 /obj/structure/table/wood/poker,
-/obj/item/stack/spacecash/c500,
-/obj/item/stack/spacecash/c100,
-/obj/item/stack/spacecash/c1000,
+/obj/item/stack/spacecash/c500{
+	pixel_y = 3
+	},
+/obj/item/stack/spacecash/c100{
+	pixel_y = 5
+	},
+/obj/item/stack/spacecash/c1000{
+	pixel_y = 8
+	},
 /obj/machinery/light/small/directional/east,
 /turf/open/floor/engine/cult,
 /area/ruin/powered/greed)
@@ -100,6 +131,7 @@
 /area/ruin/powered/greed)
 "w" = (
 /obj/machinery/light/small/directional/east,
+/obj/item/coin/gold,
 /turf/open/floor/engine/cult,
 /area/ruin/powered/greed)
 "J" = (
@@ -302,7 +334,7 @@ m
 m
 v
 m
-l
+m
 W
 W
 a
@@ -324,7 +356,7 @@ m
 o
 m
 m
-m
+l
 m
 J
 a
@@ -345,8 +377,8 @@ m
 m
 l
 w
-l
 o
+m
 W
 W
 a

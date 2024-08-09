@@ -381,7 +381,7 @@
 		for (var/unused in 1 to BLOB_POWER_REROLL_CHOICES)
 			var/datum/blobstrain/strain = pick_n_take(new_strains)
 
-			var/image/strain_icon = image('icons/mob/nonhuman-player/blob.dmi', "blob_core")
+			var/image/strain_icon = image('icons/mob/nonhuman-player/blob_tall.dmi', "blob_core")
 			strain_icon.color = initial(strain.color)
 
 			var/info_text = span_boldnotice("[initial(strain.name)]")

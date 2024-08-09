@@ -1,3 +1,4 @@
+
 /datum/asset/spritesheet/rcd
 	name = "rcd-tgui"
 
@@ -14,20 +15,24 @@
 			var/sprite_name
 			var/icon/sprite_icon
 			for(var/list/design as anything in designs)
-				var/atom/movable/path = design[RCD_DESIGN_PATH]
+				var/atom/path = design[RCD_DESIGN_PATH]
 				if(!ispath(path))
 					continue
-				sprite_name = initial(path.name)
+				sprite_name = RCD_SPRITESHEET_PATH_KEY(path)
 
-				//icon for windows are blended with grills if required and loaded from radial menu
+				//icon for windows are blended with frames if required and loaded from radial menu
 				if(ispath(path, /obj/structure/window))
-					if(path == /obj/structure/window)
-						sprite_icon = icon(icon = 'icons/hud/radial.dmi', icon_state = "windowsize")
-					else if(path == /obj/structure/window/reinforced)
-						sprite_icon = icon(icon = 'icons/hud/radial.dmi', icon_state = "windowtype")
-					else if(path == /obj/structure/window/fulltile || path == /obj/structure/window/reinforced/fulltile)
+					var/obj/structure/window/window_path = path
+					if(initial(window_path.fulltile))
+						sprite_icon = icon(icon = 'icons/obj/smooth_structures/window_frames/window_frame_normal.dmi', icon_state = "window_frame_normal-0")
+
+						var/obj/structure/window_frame/frame_path = /obj/structure/window_frame
+
+						sprite_icon.Blend(icon(icon = initial(frame_path.grille_black_icon), icon_state = "[initial(frame_path.grille_icon_state)]_black-[0]"), ICON_OVERLAY)
+						sprite_icon.Blend(icon(icon = initial(frame_path.grille_icon), icon_state = "[initial(frame_path.grille_icon_state)]-[0]"), ICON_OVERLAY)
+						sprite_icon.Blend(icon(icon = initial(path.icon), icon_state = initial(path.icon_state)), ICON_OVERLAY)
+					else
 						sprite_icon = icon(icon = initial(path.icon), icon_state = initial(path.icon_state))
-						sprite_icon.Blend(icon(icon = 'icons/obj/structures.dmi', icon_state = "grille"), ICON_UNDERLAY)
 
 				//icons for solid airlocks have an added solid overlay on top of their glass icons
 				else if(ispath(path, /obj/machinery/door/airlock))

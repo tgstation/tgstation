@@ -536,7 +536,7 @@ GLOBAL_LIST_EMPTY(antagonists)
 /// Takes a location, returns an image drawing "on" it that matches this antag datum's hud icon
 /datum/antagonist/proc/hud_image_on(mob/hud_loc)
 	var/image/hud = image(hud_icon, hud_loc, antag_hud_name)
-	SET_PLANE_EXPLICIT(hud, ABOVE_GAME_PLANE, hud_loc)
+	SET_PLANE_EXPLICIT(hud, GAME_PLANE, hud_loc)
 	return hud
 
 ///generic helper to send objectives as data through tgui.

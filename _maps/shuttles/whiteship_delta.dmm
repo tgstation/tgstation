@@ -779,19 +779,6 @@
 /obj/structure/cable,
 /turf/open/floor/plating,
 /area/shuttle/abandoned/engine)
-"bR" = (
-/obj/machinery/turretid{
-	icon_state = "control_kill";
-	lethal = 1;
-	locked = 0;
-	pixel_x = -28;
-	req_access = null
-	},
-/obj/effect/decal/cleanable/dirt,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
-/obj/structure/cable,
-/turf/open/floor/iron/dark,
-/area/shuttle/abandoned/bridge)
 "bS" = (
 /obj/structure/table,
 /obj/item/folder/blue{
@@ -1160,18 +1147,6 @@
 /obj/effect/decal/cleanable/oil,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
 /obj/structure/cable,
-/turf/open/floor/plating,
-/area/shuttle/abandoned/engine)
-"cD" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/machinery/firealarm/directional/east,
-/obj/structure/table,
-/obj/machinery/cell_charger,
-/obj/item/stack/cable_coil,
-/obj/item/stock_parts/power_store/cell/high,
-/obj/item/multitool{
-	pixel_y = -13
-	},
 /turf/open/floor/plating,
 /area/shuttle/abandoned/engine)
 "cE" = (
@@ -1781,6 +1756,18 @@
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron/dark,
 /area/shuttle/abandoned/cargo)
+"ug" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/firealarm/directional/east,
+/obj/structure/table,
+/obj/machinery/cell_charger,
+/obj/item/stack/cable_coil,
+/obj/item/stock_parts/power_store/cell/high,
+/obj/item/multitool{
+	pixel_y = -13
+	},
+/turf/open/floor/plating,
+/area/shuttle/abandoned/engine)
 "vm" = (
 /turf/closed/wall/mineral/titanium/nodiagonal,
 /area/shuttle/abandoned/medbay)
@@ -1798,19 +1785,7 @@
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron/dark,
 /area/shuttle/abandoned/cargo)
-"zL" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/effect/turf_decal/box/white/corners,
-/obj/structure/closet/crate/medical,
-/obj/item/emergency_bed{
-	pixel_y = 4
-	},
-/obj/item/healthanalyzer,
-/obj/machinery/firealarm/directional/south,
-/obj/effect/turf_decal/tile/neutral/fourcorners,
-/turf/open/floor/iron/dark,
-/area/shuttle/abandoned/cargo)
-"Ch" = (
+"zx" = (
 /obj/effect/turf_decal/bot_white,
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/table,
@@ -1826,6 +1801,18 @@
 /obj/effect/decal/cleanable/cobweb,
 /turf/open/floor/iron/dark,
 /area/shuttle/abandoned/medbay)
+"zL" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/turf_decal/box/white/corners,
+/obj/structure/closet/crate/medical,
+/obj/item/emergency_bed{
+	pixel_y = 4
+	},
+/obj/item/healthanalyzer,
+/obj/machinery/firealarm/directional/south,
+/obj/effect/turf_decal/tile/neutral/fourcorners,
+/turf/open/floor/iron/dark,
+/area/shuttle/abandoned/cargo)
 "DZ" = (
 /obj/effect/turf_decal/delivery/white,
 /obj/effect/decal/cleanable/dirt,
@@ -1840,6 +1827,18 @@
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron/dark,
 /area/shuttle/abandoned/cargo)
+"ET" = (
+/obj/machinery/turretid/directional/south{
+	icon_state = "control_kill";
+	lethal = 1;
+	locked = 0;
+	req_access = null
+	},
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
+/obj/structure/cable,
+/turf/open/floor/iron/dark,
+/area/shuttle/abandoned/bridge)
 "IO" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/table,
@@ -2034,7 +2033,7 @@ bB
 bB
 bB
 bB
-cD
+ug
 cO
 dd
 dB
@@ -2067,7 +2066,7 @@ ac
 aQ
 bn
 bC
-bR
+ET
 bX
 cf
 cn
@@ -2225,7 +2224,7 @@ aa
 aa
 aa
 vm
-Ch
+zx
 dn
 vm
 dS

@@ -1243,6 +1243,15 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/dark,
 /area/ruin/syndicate_lava_base/bar)
+"kb" = (
+/obj/machinery/firealarm/directional/west,
+/obj/structure/table,
+/obj/machinery/cell_charger,
+/obj/item/stock_parts/power_store/cell/high,
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/iron,
+/area/ruin/syndicate_lava_base/engineering)
 "kl" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -1728,21 +1737,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/orange/visible,
 /turf/closed/wall/mineral/plastitanium/nodiagonal,
 /area/ruin/syndicate_lava_base/engineering)
-"nI" = (
-/obj/structure/table/wood,
-/obj/machinery/light/small/directional/east,
-/obj/structure/window/reinforced/spawner/directional/north{
-	pixel_y = 1
-	},
-/obj/item/book/manual/chef_recipes{
-	pixel_x = 2;
-	pixel_y = 6
-	},
-/obj/item/book/manual/wiki/barman_recipes,
-/obj/item/reagent_containers/cup/glass/shaker,
-/obj/machinery/computer/security/telescreen/entertainment/directional/east,
-/turf/open/floor/wood,
-/area/ruin/syndicate_lava_base/bar)
 "nK" = (
 /obj/machinery/door/airlock/public/glass{
 	name = "Bar"
@@ -1942,6 +1936,17 @@
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron/dark,
 /area/ruin/syndicate_lava_base/dormitories)
+"pO" = (
+/obj/machinery/turretid/directional/south{
+	ailock = 1;
+	control_area = "/area/ruin/syndicate_lava_base/main";
+	icon_state = "control_kill";
+	lethal = 1;
+	name = "Base turret controls";
+	req_access = list("syndicate")
+	},
+/turf/open/floor/circuit/red,
+/area/ruin/syndicate_lava_base/main)
 "pR" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/tile/red/anticorner/contrasted,
@@ -2381,19 +2386,6 @@
 	},
 /turf/open/floor/iron/dark,
 /area/ruin/syndicate_lava_base/cargo)
-"vV" = (
-/obj/machinery/turretid{
-	ailock = 1;
-	control_area = "/area/ruin/syndicate_lava_base/main";
-	dir = 1;
-	icon_state = "control_kill";
-	lethal = 1;
-	name = "Base turret controls";
-	pixel_y = 30;
-	req_access = list("syndicate")
-	},
-/turf/open/floor/circuit/red,
-/area/ruin/syndicate_lava_base/main)
 "wc" = (
 /obj/structure/chair/stool/bar/directional/south,
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
@@ -2423,6 +2415,21 @@
 /obj/effect/mapping_helpers/airlock/access/all/syndicate/general,
 /turf/open/floor/plating,
 /area/ruin/syndicate_lava_base/main)
+"wL" = (
+/obj/structure/table/wood,
+/obj/machinery/light/small/directional/east,
+/obj/structure/window/reinforced/spawner/directional/north{
+	pixel_y = 1
+	},
+/obj/item/book/manual/chef_recipes{
+	pixel_x = 2;
+	pixel_y = 6
+	},
+/obj/item/book/manual/wiki/barman_recipes,
+/obj/item/reagent_containers/cup/glass/shaker,
+/obj/machinery/computer/security/telescreen/entertainment/directional/east,
+/turf/open/floor/wood,
+/area/ruin/syndicate_lava_base/bar)
 "wV" = (
 /obj/structure/noticeboard/directional/north,
 /obj/item/paper{
@@ -3155,15 +3162,16 @@
 /obj/structure/table/reinforced,
 /turf/open/floor/iron/dark,
 /area/ruin/syndicate_lava_base/bar)
-"GI" = (
-/obj/machinery/firealarm/directional/west,
+"GJ" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
 /obj/structure/table,
 /obj/machinery/cell_charger,
 /obj/item/stock_parts/power_store/cell/high,
-/obj/effect/decal/cleanable/dirt,
-/obj/effect/decal/cleanable/dirt,
-/turf/open/floor/iron,
-/area/ruin/syndicate_lava_base/engineering)
+/obj/structure/cable,
+/turf/open/floor/mineral/plastitanium,
+/area/ruin/syndicate_lava_base/cargo)
 "GV" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/cable,
@@ -3812,16 +3820,6 @@
 	},
 /turf/open/floor/iron,
 /area/ruin/syndicate_lava_base/arrivals)
-"QG" = (
-/obj/effect/turf_decal/stripes/line{
-	dir = 8
-	},
-/obj/structure/table,
-/obj/machinery/cell_charger,
-/obj/item/stock_parts/power_store/cell/high,
-/obj/structure/cable,
-/turf/open/floor/mineral/plastitanium,
-/area/ruin/syndicate_lava_base/cargo)
 "QN" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
@@ -4370,6 +4368,34 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/closed/wall/mineral/plastitanium/nodiagonal,
 /area/ruin/syndicate_lava_base/main)
+"XZ" = (
+/obj/effect/turf_decal/bot,
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/turf_decal/tile/red/half/contrasted{
+	dir = 4
+	},
+/obj/item/turbine_parts/rotor{
+	current_tier = 3
+	},
+/obj/item/turbine_parts/stator{
+	current_tier = 2
+	},
+/obj/item/turbine_parts/compressor{
+	current_tier = 3
+	},
+/obj/item/pipe_dispenser,
+/obj/structure/closet/crate/engineering,
+/obj/item/stack/sheet/mineral/plastitanium{
+	amount = 30
+	},
+/obj/item/stack/sheet/plastitaniumglass{
+	amount = 15
+	},
+/obj/item/holosign_creator/atmos,
+/obj/item/circuitboard/machine/thermomachine,
+/obj/item/circuitboard/machine/thermomachine,
+/turf/open/floor/iron,
+/area/ruin/syndicate_lava_base/engineering)
 "Yd" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
@@ -4401,34 +4427,6 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/orange/visible,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/turf/open/floor/iron,
-/area/ruin/syndicate_lava_base/engineering)
-"YJ" = (
-/obj/effect/turf_decal/bot,
-/obj/effect/decal/cleanable/dirt,
-/obj/effect/turf_decal/tile/red/half/contrasted{
-	dir = 4
-	},
-/obj/item/turbine_parts/rotor{
-	current_tier = 3
-	},
-/obj/item/turbine_parts/stator{
-	current_tier = 2
-	},
-/obj/item/turbine_parts/compressor{
-	current_tier = 3
-	},
-/obj/item/pipe_dispenser,
-/obj/structure/closet/crate/engineering,
-/obj/item/stack/sheet/mineral/plastitanium{
-	amount = 30
-	},
-/obj/item/stack/sheet/plastitaniumglass{
-	amount = 15
-	},
-/obj/item/holosign_creator/atmos,
-/obj/item/circuitboard/machine/thermomachine,
-/obj/item/circuitboard/machine/thermomachine,
 /turf/open/floor/iron,
 /area/ruin/syndicate_lava_base/engineering)
 "YP" = (
@@ -5665,7 +5663,7 @@ jy
 ka
 ue
 kM
-nI
+wL
 lC
 To
 TN
@@ -6317,7 +6315,7 @@ Bu
 kV
 lp
 Dr
-GI
+kb
 mF
 Cj
 Lp
@@ -6355,7 +6353,7 @@ UF
 gQ
 hT
 ha
-vV
+pO
 Gm
 yv
 XV
@@ -6497,7 +6495,7 @@ ab
 dy
 dy
 eE
-QG
+GJ
 dy
 gd
 dy
@@ -6614,7 +6612,7 @@ ju
 ju
 TO
 JE
-YJ
+XZ
 ta
 vB
 LW

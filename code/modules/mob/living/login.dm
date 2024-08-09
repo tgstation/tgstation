@@ -17,5 +17,3 @@
 	notify_ventcrawler_on_login()
 
 	med_hud_set_status()
-
-	update_fov_client()

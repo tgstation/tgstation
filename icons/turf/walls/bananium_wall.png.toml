@@ -1,2 +1,1 @@
-output_name = "bananium_wall"
-template = "bitmask/diagonal_32x32.toml"
+template = "bitmask/walls"

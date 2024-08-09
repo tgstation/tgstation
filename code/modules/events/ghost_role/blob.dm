@@ -29,9 +29,9 @@
 /datum/round_event/ghost_role/blob/spawn_role()
 	if(!GLOB.blobstart.len)
 		return MAP_ERROR
-	var/icon/blob_icon = icon('icons/mob/nonhuman-player/blob.dmi', icon_state = "blob_core")
+	var/icon/blob_icon = icon('icons/mob/nonhuman-player/blob_tall.dmi', icon_state = "blob_core")
 	blob_icon.Blend("#9ACD32", ICON_MULTIPLY)
-	blob_icon.Blend(icon('icons/mob/nonhuman-player/blob.dmi', "blob_core_overlay"), ICON_OVERLAY)
+	blob_icon.Blend(icon('icons/mob/nonhuman-player/blob_tall.dmi', "blob_core_overlay"), ICON_OVERLAY)
 	var/image/blob_image = image(blob_icon)
 	var/mob/chosen_one = SSpolling.poll_ghost_candidates(check_jobban = ROLE_BLOB, role = ROLE_BLOB, alert_pic = blob_image, role_name_text = role_name, amount_to_pick = 1, chat_text_border_icon = blob_image)
 	if(isnull(chosen_one))

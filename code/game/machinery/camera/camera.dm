@@ -88,12 +88,12 @@
 	var/area/station/ai_monitored/area_motion = null
 	var/alarm_delay = 30 // Don't forget, there's another 3 seconds in queueAlarm()
 
-MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/camera, 0)
-MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/camera/autoname, 0)
-MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/camera/autoname/motion, 0)
-MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/camera/emp_proof, 0)
-MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/camera/motion, 0)
-MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/camera/xray, 0)
+CAMERA_DIRECTIONAL_HELPERS(/obj/machinery/camera)
+CAMERA_DIRECTIONAL_HELPERS(/obj/machinery/camera/autoname)
+CAMERA_DIRECTIONAL_HELPERS(/obj/machinery/camera/autoname/motion)
+CAMERA_DIRECTIONAL_HELPERS(/obj/machinery/camera/emp_proof)
+CAMERA_DIRECTIONAL_HELPERS(/obj/machinery/camera/motion)
+CAMERA_DIRECTIONAL_HELPERS(/obj/machinery/camera/xray)
 
 /datum/armor/machinery_camera
 	melee = 50
@@ -337,6 +337,28 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/camera/xray, 0)
 		return ..()
 	icon_state = "[xray_module][base_icon_state][in_use_lights ? "_in_use" : ""]"
 	return ..()
+
+/obj/machinery/camera/wall_mount_offset(direction)
+	// Fit the usual offsets except SOUTH is different, because cameras want to jut out from the wall
+	// Also cameras have weird offsets because lmao camera sprites dies
+	pixel_x = 0
+	pixel_z = 0
+	switch(direction)
+		if(NORTH, NORTHWEST)
+			pixel_z = 16
+		if(SOUTH, NORTHEAST)
+			pixel_z = 35
+		if(EAST, SOUTHEAST)
+			pixel_x = -11
+			pixel_z = 16
+		if(WEST, SOUTHWEST)
+			pixel_x = 11
+			pixel_z = 16
+
+/obj/machinery/camera/wall_mount_common_plane(direction)
+	if(direction == SOUTH || direction == NORTHEAST)
+		return TRUE
+	return FALSE
 
 /obj/machinery/camera/proc/toggle_cam(mob/user, displaymessage = TRUE)
 	camera_enabled = !camera_enabled

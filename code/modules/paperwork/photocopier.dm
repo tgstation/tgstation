@@ -58,6 +58,7 @@ GLOBAL_LIST_INIT(paper_blanks, init_paper_blanks())
 	return parsed_blanks
 
 /obj/machinery/photocopier
+	SET_BASE_VISUAL_PIXEL(0, DEPTH_OFFSET)
 	name = "photocopier"
 	desc = "Used to copy important documents and anatomy studies."
 	icon = 'icons/obj/service/library.dmi'

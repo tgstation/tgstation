@@ -3,7 +3,7 @@
 /obj/machinery/newscaster
 	name = "newscaster"
 	desc = "A standard Nanotrasen-licensed newsfeed handler for use in commercial space stations. All the news you absolutely have no use for, in one place!"
-	icon = 'icons/obj/machines/wallmounts.dmi'
+	icon = 'icons/obj/machines/newscaster.dmi'
 	icon_state = "newscaster_off"
 	base_icon_state = "newscaster"
 	verb_say = "beeps"
@@ -66,7 +66,7 @@
 /obj/machinery/newscaster/pai/ui_state(mob/user)
 	return GLOB.reverse_contained_state
 
-MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/newscaster, 30)
+WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/machinery/newscaster)
 
 /obj/machinery/newscaster/Initialize(mapload, ndir, building)
 	. = ..()
@@ -804,9 +804,9 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/newscaster, 30)
 /obj/item/wallframe/newscaster
 	name = "newscaster frame"
 	desc = "Used to build newscasters, just secure to the wall."
+	icon = 'icons/obj/machines/newscaster.dmi'
 	icon_state = "newscaster_assembly"
 	custom_materials = list(/datum/material/iron= SHEET_MATERIAL_AMOUNT * 7, /datum/material/glass= SHEET_MATERIAL_AMOUNT * 4)
 	result_path = /obj/machinery/newscaster
-	pixel_shift = 30
 
 #undef ALERT_DELAY

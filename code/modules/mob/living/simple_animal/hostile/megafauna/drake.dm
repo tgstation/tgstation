@@ -236,7 +236,7 @@
 /obj/effect/temp_visual/drakewall
 	desc = "An ash drakes true flame."
 	name = "Fire Barrier"
-	icon = 'icons/effects/fire.dmi'
+	icon = 'icons/effects/atmos/fire.dmi'
 	icon_state = "1"
 	anchored = TRUE
 	opacity = FALSE
@@ -258,7 +258,6 @@
 	name = "fireball"
 	desc = "Get out of the way!"
 	layer = FLY_LAYER
-	plane = ABOVE_GAME_PLANE
 	randomdir = FALSE
 	duration = 9
 	pixel_z = 270

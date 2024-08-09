@@ -1,4 +1,5 @@
 /obj/machinery/plate_press
+	SET_BASE_VISUAL_PIXEL(0, DEPTH_OFFSET)
 	name = "license plate press"
 	desc = "You know, we're making a lot of license plates for a station with literally no cars in it."
 	icon = 'icons/obj/machines/prison.dmi'

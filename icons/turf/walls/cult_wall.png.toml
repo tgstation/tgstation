@@ -1,2 +1,3 @@
-output_name = "cult_wall"
-template = "bitmask/diagonal_32x32.toml"
+template = "bitmask/walls"
+[cut_pos]
+y = 16

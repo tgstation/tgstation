@@ -3,6 +3,7 @@
 #define BOOKCASE_FINISHED 2
 
 /obj/structure/bookcase
+	SET_BASE_VISUAL_PIXEL(0, DEPTH_OFFSET)
 	name = "bookcase"
 	icon = 'icons/obj/service/library.dmi'
 	icon_state = "bookempty"

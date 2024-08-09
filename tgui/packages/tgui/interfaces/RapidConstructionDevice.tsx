@@ -3,7 +3,15 @@ import { capitalizeAll } from 'common/string';
 import { useState } from 'react';
 
 import { useBackend } from '../backend';
-import { Box, Button, LabeledList, Section, Stack, Tabs } from '../components';
+import {
+  Box,
+  Button,
+  Flex,
+  LabeledList,
+  Section,
+  Stack,
+  Tabs,
+} from '../components';
 import { Window } from '../layouts';
 import { AirLockMainSection } from './AirlockElectronics';
 
@@ -16,6 +24,7 @@ type Data = {
   categories: Category[];
   selected_category: string;
   selected_design: string;
+  selected_direction: string;
   display_tabs: BooleanLike;
 };
 
@@ -36,6 +45,71 @@ export const MatterItem = (props) => {
     <LabeledList.Item label="Units Left">
       &nbsp;{matterLeft} Units
     </LabeledList.Item>
+  );
+};
+
+export const DirectionsList = (props) => {
+  const { data, act } = useBackend<Data>();
+  const { matterLeft, selected_direction } = data;
+  return (
+    <Flex>
+      <Flex.Item mt={2}>
+        <Button
+          selected={selected_direction === 'west'}
+          color="transparent"
+          icon="arrow-left"
+          width="20px"
+          onClick={() =>
+            act('select_direction', {
+              selected_direction: 'west',
+            })
+          }
+        />
+      </Flex.Item>
+      <Flex.Item>
+        <Stack vertical>
+          <Stack.Item>
+            <Button
+              selected={selected_direction === 'north'}
+              color="transparent"
+              icon="arrow-up"
+              width="20px"
+              onClick={() =>
+                act('select_direction', {
+                  selected_direction: 'north',
+                })
+              }
+            />
+          </Stack.Item>
+          <Stack.Item>
+            <Button
+              selected={selected_direction === 'south'}
+              color="transparent"
+              width="20px"
+              icon="arrow-down"
+              onClick={() =>
+                act('select_direction', {
+                  selected_direction: 'south',
+                })
+              }
+            />
+          </Stack.Item>
+        </Stack>
+      </Flex.Item>
+      <Flex.Item mt={2}>
+        <Button
+          selected={selected_direction === 'east'}
+          color="transparent"
+          icon="arrow-right"
+          width="20px"
+          onClick={() =>
+            act('select_direction', {
+              selected_direction: 'east',
+            })
+          }
+        />
+      </Flex.Item>
+    </Flex>
   );
 };
 
@@ -78,11 +152,18 @@ export const InfoSection = (props) => {
 
   return (
     <Section>
-      <LabeledList>
-        <MatterItem />
-        {silo_upgraded ? <SiloItem /> : ''}
-        <CategoryItem />
-      </LabeledList>
+      <Flex>
+        <Flex.Item>
+          <LabeledList>
+            <MatterItem />
+            {silo_upgraded ? <SiloItem /> : ''}
+            <CategoryItem />
+          </LabeledList>
+        </Flex.Item>
+        <Flex.Item mt={-1}>
+          <DirectionsList />
+        </Flex.Item>
+      </Flex>
     </Section>
   );
 };
@@ -132,8 +213,6 @@ const DesignSection = (props) => {
             className={classes(['rcd-tgui32x32', design.icon])}
             style={{
               transform:
-                design.title === 'full tile window' ||
-                design.title === 'full tile reinforced window' ||
                 design.title === 'catwalk'
                   ? 'scale(0.7)'
                   : 'scale(1.0)',

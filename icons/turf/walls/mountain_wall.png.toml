@@ -1,14 +1,7 @@
-output_name = "mountain_wall"
-template = "bitmask/diagonal_32x32.toml"
+template = "bitmask/walls"
+[slice_point]
+west = 6
+north = 16
+south = 18
+east = 26
 
-[icon_size]
-x = 40
-y = 40
-
-[output_icon_size]
-x = 40
-y = 40
-
-[cut_pos]
-x = 20
-y = 20

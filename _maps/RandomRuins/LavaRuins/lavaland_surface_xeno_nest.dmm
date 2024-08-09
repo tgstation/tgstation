@@ -84,9 +84,15 @@
 /obj/structure/bed/nest,
 /obj/effect/decal/cleanable/blood/gibs,
 /obj/item/clothing/under/rank/security/officer,
-/obj/item/clothing/suit/armor/vest,
-/obj/item/melee/baton/security/loaded,
-/obj/item/clothing/head/helmet,
+/obj/item/clothing/suit/armor/vest{
+	pixel_y = 3
+	},
+/obj/item/melee/baton/security/loaded{
+	pixel_x = 6
+	},
+/obj/item/clothing/head/helmet{
+	pixel_y = 13
+	},
 /turf/open/misc/asteroid/basalt/lava_land_surface,
 /area/ruin/unpowered/xenonest)
 "B" = (
@@ -131,8 +137,14 @@
 /obj/structure/bed/nest,
 /obj/effect/decal/cleanable/blood/gibs,
 /obj/effect/decal/cleanable/blood,
-/obj/item/clothing/under/syndicate,
-/obj/item/clothing/glasses/night,
+/obj/item/clothing/under/syndicate{
+	pixel_y = 6;
+	pixel_x = -3
+	},
+/obj/item/clothing/glasses/night{
+	pixel_y = 12;
+	pixel_x = 4
+	},
 /turf/open/misc/asteroid/basalt/lava_land_surface,
 /area/ruin/unpowered/xenonest)
 "K" = (
@@ -151,10 +163,19 @@
 /obj/structure/alien/weeds,
 /obj/structure/bed/nest,
 /obj/effect/decal/cleanable/blood/gibs,
-/obj/item/tank/internals/oxygen,
-/obj/item/clothing/suit/space/syndicate/orange,
-/obj/item/clothing/mask/gas,
-/obj/item/clothing/head/helmet/space/syndicate/orange,
+/obj/item/tank/internals/oxygen{
+	pixel_y = 4;
+	pixel_x = -3
+	},
+/obj/item/clothing/suit/space/syndicate/orange{
+	pixel_y = 8
+	},
+/obj/item/clothing/mask/gas{
+	pixel_x = 7
+	},
+/obj/item/clothing/head/helmet/space/syndicate/orange{
+	pixel_y = 12
+	},
 /turf/open/misc/asteroid/basalt/lava_land_surface,
 /area/ruin/unpowered/xenonest)
 "Q" = (

@@ -578,18 +578,6 @@
 /obj/structure/sign/poster/random/directional/south,
 /turf/open/floor/iron/grimy,
 /area/ruin/space/has_grav/hotel/bar)
-"gv" = (
-/obj/effect/turf_decal/siding/wood{
-	dir = 1
-	},
-/obj/structure/sign/warning/fire{
-	desc = "A sign that states the labeled room's number.";
-	icon_state = "roomnum";
-	name = "Room Number 1";
-	pixel_y = -24
-	},
-/turf/open/floor/wood/tile,
-/area/ruin/space/has_grav/hotel)
 "gB" = (
 /obj/structure/sign/poster/contraband/random/directional/north,
 /turf/open/floor/carpet/black,
@@ -631,17 +619,6 @@
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/turf/open/floor/wood/tile,
-/area/ruin/space/has_grav/hotel)
-"hg" = (
-/obj/effect/turf_decal/siding/wood,
-/obj/structure/sign/warning/fire{
-	desc = "A sign that states the labeled room's number.";
-	dir = 10;
-	icon_state = "roomnum";
-	name = "Room Number 6";
-	pixel_y = 24
-	},
 /turf/open/floor/wood/tile,
 /area/ruin/space/has_grav/hotel)
 "hh" = (
@@ -840,18 +817,6 @@
 	dir = 1
 	},
 /turf/open/floor/wood,
-/area/ruin/space/has_grav/hotel/bar)
-"iy" = (
-/obj/structure/table/reinforced,
-/obj/machinery/reagentgrinder{
-	pixel_x = 6;
-	pixel_y = 6
-	},
-/obj/item/reagent_containers/condiment/enzyme,
-/obj/structure/cable,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/turf/open/floor/iron/cafeteria,
 /area/ruin/space/has_grav/hotel/bar)
 "iA" = (
 /obj/effect/turf_decal/siding/yellow{
@@ -1298,6 +1263,18 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/wood/tile,
 /area/ruin/space/has_grav/hotel)
+"mu" = (
+/obj/structure/table/reinforced,
+/obj/machinery/reagentgrinder{
+	pixel_x = 6;
+	pixel_y = 6
+	},
+/obj/item/reagent_containers/condiment/enzyme,
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/iron/cafeteria,
+/area/ruin/space/has_grav/hotel/bar)
 "mD" = (
 /obj/structure/table/wood/fancy/cyan,
 /obj/item/flashlight/lamp,
@@ -1710,6 +1687,17 @@
 "qU" = (
 /turf/open/floor/wood/parquet,
 /area/ruin/space/has_grav/hotel/guestroom/room_4)
+"qV" = (
+/obj/effect/turf_decal/siding/wood,
+/obj/structure/sign/warning/fire{
+	desc = "A sign that states the labeled room's number.";
+	dir = 8;
+	icon_state = "direction_roomnum";
+	name = "Room Number 4";
+	pixel_y = 24
+	},
+/turf/open/floor/wood/tile,
+/area/ruin/space/has_grav/hotel)
 "qY" = (
 /obj/structure/closet/secure_closet/freezer/fridge/open,
 /obj/item/food/grown/potato,
@@ -1915,6 +1903,19 @@
 /obj/structure/chair/comfy,
 /turf/open/floor/iron/dark,
 /area/ruin/space/has_grav/hotel)
+"tp" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 1
+	},
+/obj/structure/sign/warning/fire{
+	desc = "A sign that states the labeled room's number.";
+	dir = 4;
+	icon_state = "direction_roomnum";
+	name = "Room Number 3";
+	pixel_y = -24
+	},
+/turf/open/floor/wood/tile,
+/area/ruin/space/has_grav/hotel)
 "tq" = (
 /obj/effect/turf_decal/siding/wood{
 	dir = 1
@@ -1928,14 +1929,16 @@
 /obj/effect/turf_decal/siding/wood/corner,
 /turf/open/floor/carpet/blue,
 /area/ruin/space/has_grav/hotel)
-"tW" = (
-/obj/effect/turf_decal/siding/wood,
+"tI" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 1
+	},
 /obj/structure/sign/warning/fire{
 	desc = "A sign that states the labeled room's number.";
-	dir = 8;
-	icon_state = "roomnum";
-	name = "Room Number 4";
-	pixel_y = 24
+	dir = 6;
+	icon_state = "direction_roomnum";
+	name = "Room Number 5";
+	pixel_y = -24
 	},
 /turf/open/floor/wood/tile,
 /area/ruin/space/has_grav/hotel)
@@ -1969,6 +1972,17 @@
 "up" = (
 /obj/structure/sign/warning/vacuum,
 /turf/closed/wall,
+/area/ruin/space/has_grav/hotel)
+"uC" = (
+/obj/effect/turf_decal/siding/wood,
+/obj/structure/sign/warning/fire{
+	desc = "A sign that states the labeled room's number.";
+	dir = 10;
+	icon_state = "direction_roomnum";
+	name = "Room Number 6";
+	pixel_y = 24
+	},
+/turf/open/floor/wood/tile,
 /area/ruin/space/has_grav/hotel)
 "uG" = (
 /obj/structure/chair/comfy{
@@ -3805,6 +3819,18 @@
 /obj/machinery/airalarm/directional/east,
 /turf/open/floor/carpet/lone,
 /area/ruin/space/has_grav/hotel/guestroom/room_1)
+"RW" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 1
+	},
+/obj/structure/sign/warning/fire{
+	desc = "A sign that states the labeled room's number.";
+	icon_state = "direction_roomnum";
+	name = "Room Number 1";
+	pixel_y = -24
+	},
+/turf/open/floor/wood/tile,
+/area/ruin/space/has_grav/hotel)
 "RX" = (
 /obj/machinery/door/airlock/external/glass,
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
@@ -3834,6 +3860,17 @@
 	},
 /turf/open/floor/iron/dark/side,
 /area/ruin/space/has_grav/hotel/dock)
+"Sm" = (
+/obj/effect/turf_decal/siding/wood,
+/obj/structure/sign/warning/fire{
+	desc = "A sign that states the labeled room's number.";
+	dir = 1;
+	icon_state = "direction_roomnum";
+	name = "Room Number 2";
+	pixel_y = 24
+	},
+/turf/open/floor/wood/tile,
+/area/ruin/space/has_grav/hotel)
 "Sp" = (
 /obj/structure/lattice/catwalk,
 /obj/structure/railing{
@@ -3890,19 +3927,6 @@
 	},
 /turf/open/floor/iron/cafeteria,
 /area/ruin/space/has_grav/hotel/bar)
-"Tq" = (
-/obj/effect/turf_decal/siding/wood{
-	dir = 1
-	},
-/obj/structure/sign/warning/fire{
-	desc = "A sign that states the labeled room's number.";
-	dir = 6;
-	icon_state = "roomnum";
-	name = "Room Number 5";
-	pixel_y = -24
-	},
-/turf/open/floor/wood/tile,
-/area/ruin/space/has_grav/hotel)
 "Ts" = (
 /turf/open/floor/carpet/purple,
 /area/ruin/space/has_grav/hotel/guestroom/room_5)
@@ -3916,19 +3940,6 @@
 	dir = 9
 	},
 /turf/template_noop,
-/area/ruin/space/has_grav/hotel)
-"TG" = (
-/obj/effect/turf_decal/siding/wood{
-	dir = 1
-	},
-/obj/structure/sign/warning/fire{
-	desc = "A sign that states the labeled room's number.";
-	dir = 4;
-	icon_state = "roomnum";
-	name = "Room Number 3";
-	pixel_y = -24
-	},
-/turf/open/floor/wood/tile,
 /area/ruin/space/has_grav/hotel)
 "TH" = (
 /obj/structure/cable,
@@ -4367,17 +4378,6 @@
 	},
 /turf/open/floor/wood,
 /area/ruin/space/has_grav/hotel/bar)
-"Yf" = (
-/obj/effect/turf_decal/siding/wood,
-/obj/structure/sign/warning/fire{
-	desc = "A sign that states the labeled room's number.";
-	dir = 1;
-	icon_state = "roomnum";
-	name = "Room Number 2";
-	pixel_y = 24
-	},
-/turf/open/floor/wood/tile,
-/area/ruin/space/has_grav/hotel)
 "Yh" = (
 /obj/structure/table/wood/fancy/green,
 /turf/open/floor/carpet/purple,
@@ -5558,11 +5558,11 @@ Ka
 Xg
 XS
 xI
-hg
+uC
 Lj
 PF
 wr
-Tq
+tI
 LD
 bu
 lZ
@@ -5798,7 +5798,7 @@ Ki
 nE
 Ew
 if
-iy
+mu
 Ew
 iU
 qY
@@ -6580,11 +6580,11 @@ On
 eR
 Gg
 Hm
-tW
+qV
 cf
 PF
 cf
-TG
+tp
 vy
 vx
 Xx
@@ -7383,11 +7383,11 @@ Ml
 OS
 MY
 Ff
-Yf
+Sm
 cf
 PF
 cf
-gv
+RW
 BK
 Xw
 Bb

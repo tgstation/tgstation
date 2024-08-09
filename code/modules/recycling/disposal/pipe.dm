@@ -10,7 +10,7 @@
 	dir = NONE // dir will contain dominant direction for junction pipes
 	max_integrity = 200
 	armor_type = /datum/armor/structure_disposalpipe
-	plane = FLOOR_PLANE
+	plane = OVER_TILE_PLANE
 	layer = DISPOSAL_PIPE_LAYER // slightly lower than wires and other pipes
 	damage_deflection = 10
 	var/dpdir = NONE // bitmask of pipe directions

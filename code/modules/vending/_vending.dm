@@ -53,6 +53,7 @@ GLOBAL_LIST_EMPTY(vending_machines_to_restock)
  * Captalism in the year 2525, everything in a vending machine, even love
  */
 /obj/machinery/vending
+	SET_BASE_VISUAL_PIXEL(0, DEPTH_OFFSET)
 	name = "\improper Vendomat"
 	desc = "A generic vending machine."
 	icon = 'icons/obj/machines/vending.dmi'

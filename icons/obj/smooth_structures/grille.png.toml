@@ -1,0 +1,2 @@
+output_name = "grille"
+template = "bitmask/diagonal_32x48.toml"

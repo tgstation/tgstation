@@ -6,16 +6,17 @@
 	anchored = FALSE
 	density = TRUE
 	max_integrity = 200
+	greyscale_config = /datum/greyscale_config/airlocks/custom
 	/// Airlock's current construction state
 	var/state = AIRLOCK_ASSEMBLY_NEEDS_WIRES
-	var/base_name = "Airlock"
+	var/base_name = null
 	var/created_name = null
 	var/mineral = null
 	var/obj/item/electronics/airlock/electronics = null
 	/// Do we perform the extra checks required for multi-tile (large) airlocks
 	var/multi_tile = FALSE
 	/// The type path of the airlock once completed (solid version)
-	var/airlock_type = /obj/machinery/door/airlock
+	var/obj/machinery/door/airlock/airlock_type = /obj/machinery/door/airlock
 	/// The type path of the airlock once completed (glass version)
 	var/glass_type = /obj/machinery/door/airlock/glass
 	/// FALSE = glass can be installed. TRUE = glass is already installed.
@@ -35,9 +36,7 @@
 
 /obj/structure/door_assembly/multi_tile
 	name = "large airlock assembly"
-	icon = 'icons/obj/doors/airlocks/multi_tile/public/glass.dmi'
-	overlays_file = 'icons/obj/doors/airlocks/multi_tile/public/overlays.dmi'
-	base_name = "large airlock"
+	icon =  /obj/machinery/door/airlock/multi_tile/public/glass::icon
 	glass_type = /obj/machinery/door/airlock/multi_tile/public/glass
 	airlock_type = /obj/machinery/door/airlock/multi_tile/public/glass
 	dir = EAST
@@ -47,6 +46,8 @@
 	material_amt = 8
 
 /obj/structure/door_assembly/Initialize(mapload)
+	base_name = base_name || initial(airlock_type.name) || "Airlock"
+	overlays_file = initial(airlock_type.overlays_file)
 	. = ..()
 	update_appearance()
 	update_name()
@@ -325,14 +326,6 @@
 	qdel(src)
 	return door
 
-/obj/structure/door_assembly/update_overlays()
-	. = ..()
-	if(!glass)
-		. += get_airlock_overlay("fill_construction", icon, src, TRUE)
-	else
-		. += get_airlock_overlay("glass_construction", overlays_file, src, TRUE)
-	. += get_airlock_overlay("panel_c[state+1]", overlays_file, src, TRUE)
-
 /obj/structure/door_assembly/update_name()
 	name = ""
 	switch(state)
@@ -384,7 +377,7 @@
 	return FALSE
 
 /obj/structure/door_assembly/rcd_act(mob/user, obj/item/construction/rcd/the_rcd, list/rcd_data)
-	if(rcd_data["[RCD_DESIGN_MODE]"] == RCD_DECONSTRUCT)
+	if(rcd_data[RCD_DESIGN_MODE] == RCD_DECONSTRUCT)
 		qdel(src)
 		return TRUE
 	return FALSE

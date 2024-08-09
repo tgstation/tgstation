@@ -29,10 +29,6 @@
 /mob/living/basic/clown/clownhulk/destroyer,
 /turf/open/floor/engine,
 /area/ruin/space/has_grav/powered/clownplanet)
-"ai" = (
-/obj/structure/sign/warning,
-/turf/closed/wall/mineral/sandstone,
-/area/ruin/space/has_grav/powered/clownplanet)
 "aj" = (
 /turf/open/floor/grass{
 	color = "#1eff00"
@@ -43,10 +39,6 @@
 /turf/open/floor/grass{
 	color = "#1eff00"
 	},
-/area/ruin/space/has_grav/powered/clownplanet)
-"al" = (
-/obj/structure/sign/warning/xeno_mining,
-/turf/closed/wall/mineral/sandstone,
 /area/ruin/space/has_grav/powered/clownplanet)
 "am" = (
 /obj/effect/turf_decal/stripes/line{
@@ -195,6 +187,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 5
 	},
+/obj/structure/sign/warning/directional/north,
 /turf/open/floor/grass{
 	color = "#1eff00"
 	},
@@ -209,6 +202,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 9
 	},
+/obj/structure/sign/warning/directional/north,
 /turf/open/floor/grass{
 	color = "#1eff00"
 	},
@@ -232,6 +226,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
+/obj/structure/sign/warning/xeno_mining/directional/north,
 /turf/open/floor/grass{
 	color = "#1eff00"
 	},
@@ -374,6 +369,15 @@
 /obj/structure/barricade/wooden,
 /obj/structure/barricade/wooden/crude,
 /turf/open/misc/asteroid,
+/area/ruin/space/has_grav/powered/clownplanet)
+"VA" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
+	},
+/obj/structure/sign/warning/xeno_mining/directional/north,
+/turf/open/floor/grass{
+	color = "#1eff00"
+	},
 /area/ruin/space/has_grav/powered/clownplanet)
 
 (1,1,1) = {"
@@ -614,7 +618,7 @@ aa
 ae
 ae
 ac
-ai
+af
 aM
 aE
 ak
@@ -641,7 +645,7 @@ ae
 ac
 ad
 af
-al
+af
 aR
 aj
 aj
@@ -653,7 +657,7 @@ av
 av
 at
 aL
-az
+aj
 ab
 aD
 aD
@@ -705,7 +709,7 @@ av
 av
 at
 aL
-aj
+az
 aq
 ab
 aD
@@ -719,8 +723,8 @@ ae
 ad
 ac
 af
-al
-aL
+af
+VA
 au
 aj
 aU
@@ -744,7 +748,7 @@ ae
 ae
 ae
 ac
-ai
+af
 aO
 aP
 aj

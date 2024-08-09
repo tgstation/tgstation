@@ -1,0 +1,22 @@
+template = "bitmask/cardinal_32x32"
+[icon_size]
+x = 32
+y = 48
+
+[output_icon_pos]
+x = 0
+y = 0
+
+[output_icon_size]
+x = 32
+y = 48
+
+[positions]
+convex = 0
+horizontal = 1
+vertical = 2
+concave = 3
+
+[cut_pos]
+x = 16
+y = 24

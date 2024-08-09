@@ -4,7 +4,7 @@
 	icon = 'icons/obj/medical/chempuff.dmi'
 	pass_flags = PASSTABLE | PASSGRILLE
 	layer = FLY_LAYER
-	plane = ABOVE_GAME_PLANE
+	plane = GAME_PLANE
 	///The mob who sourced this puff, if one exists
 	var/mob/user
 	///The sprayer who fired this puff

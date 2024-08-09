@@ -1,4 +1,5 @@
 /obj/structure/displaycase
+	SET_BASE_VISUAL_PIXEL(0, DEPTH_OFFSET)
 	name = "display case"
 	icon = 'icons/obj/structures.dmi'
 	icon_state = "glassbox"

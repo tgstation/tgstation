@@ -23,7 +23,7 @@
 /datum/action/cooldown/mob_cooldown/fire_breath/ice/cross
 	name = "Fire all directions"
 	desc = "Unleash lines of cold fire in all directions"
-	button_icon = 'icons/effects/fire.dmi'
+	button_icon = 'icons/effects/atmos/fire.dmi'
 	button_icon_state = "1"
 	cooldown_time = 4 SECONDS
 	melee_cooldown_time = 0 SECONDS

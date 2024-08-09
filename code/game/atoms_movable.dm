@@ -265,8 +265,10 @@
 		if (blocks_emissive == EMISSIVE_BLOCK_UNIQUE)
 			if(em_block)
 				SET_PLANE(em_block, EMISSIVE_PLANE, src)
+				em_block.render_source = render_target
 			else if(!QDELETED(src))
-				render_target = ref(src)
+				if(!render_target)
+					render_target = ref(src)
 				em_block = new(null, src)
 			return em_block
 		// Implied else if (blocks_emissive == EMISSIVE_BLOCK_NONE) -> return
@@ -1727,3 +1729,30 @@
 	if(!("[REF(target)]" in faction_src))
 		faction_target -= "[REF(target)]" //same thing here.
 	return faction_check(faction_src, faction_target, TRUE)
+
+/// Offsets this movable based on dir (in context of wallmounts)
+/// Yes yes mothblocks I know this is not modular but I don't want to make the element bespoke
+/// Insert ranting about element key generation here
+/atom/movable/proc/wall_mount_offset(direction)
+	//These magic offsets are chosen for no particular reason
+	//The wall mount template is made to work with them
+	pixel_x = 0
+	pixel_z = 0
+	switch(direction)
+		if(NORTH)
+			pixel_z = -8
+		if(SOUTH)
+			pixel_z = 35
+		if(EAST)
+			pixel_x = -11
+			pixel_z = 16
+		if(WEST)
+			pixel_x = 11
+			pixel_z = 16
+
+/// Returns true if we should layer in common with the general game
+/// If false, render over the frill plane insted
+/atom/movable/proc/wall_mount_common_plane(direction)
+	if(direction == SOUTH)
+		return TRUE
+	return FALSE

@@ -389,9 +389,10 @@ While using this makes the system rely on OnFire, it still gives options for tim
 	qdel(src)
 	return ITEM_INTERACT_SUCCESS
 
+// wallening todo:	does this work?
 /obj/effect/temp_visual/elite_tumor_wall
 	name = "magic wall"
-	icon = 'icons/turf/walls/hierophant_wall_temp.dmi'
+	icon = 'icons/turf/walls/hierophant_wall.dmi'
 	icon_state = "hierophant_wall_temp-0"
 	base_icon_state = "hierophant_wall_temp"
 	smoothing_flags = SMOOTH_BITMASK
