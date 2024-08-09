@@ -839,6 +839,9 @@
 		return TRUE
 	if(isobj(target) && !(target.flags_1 & UNPAINTABLE_1))
 		return TRUE
+	if(is_capped && target.atom_storage)
+		// specifically don't try to use a capped spraycan on an atom storage (so it can be inserted in)
+		return FALSE
 	return ..()
 
 /obj/item/toy/crayon/spraycan/use_on(atom/target, mob/user, list/modifiers)
@@ -937,6 +940,10 @@
 
 /obj/item/toy/crayon/spraycan/interact_with_atom_secondary(atom/interacting_with, mob/living/user, list/modifiers)
 	if(is_capped)
+		if(!interacting_with.color)
+			// let's be generous and assume if they're trying to match something with no color, while capped,
+			// we shouldn't be blocking further interactions
+			return NONE
 		balloon_alert(user, "take the cap off first!")
 		return ITEM_INTERACT_BLOCKING
 	if(check_empty(user))
@@ -972,9 +979,6 @@
 	balloon_alert(user, is_capped ? "capped" : "cap removed")
 	update_appearance()
 	return CLICK_ACTION_SUCCESS
-
-/obj/item/toy/crayon/spraycan/storage_insert_on_interaction(datum/storage, atom/storage_holder, mob/user)
-	return is_capped
 
 /obj/item/toy/crayon/spraycan/update_icon_state()
 	icon_state = is_capped ? icon_capped : icon_uncapped

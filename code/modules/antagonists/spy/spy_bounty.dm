@@ -132,6 +132,14 @@
 /datum/spy_bounty/proc/clean_up_stolen_item(atom/movable/stealing, mob/living/spy)
 	do_sparks(3, FALSE, stealing)
 
+	if(isitem(stealing) && stealing.loc == spy)
+		// get it out of our inventory before we mess with it to prevent any weirdness.
+		// bypasses nodrop - if you want, add a bespoke check for that higher up the chain
+		spy.temporarilyRemoveItemFromInventory(stealing, force = TRUE)
+		// also check for DROPDEL
+		if(QDELETED(stealing))
+			return
+
 	// Don't mess with it while it's going away
 	var/had_attack_hand_interaction = stealing.interaction_flags_atom & INTERACT_ATOM_ATTACK_HAND
 	stealing.interaction_flags_atom &= ~INTERACT_ATOM_ATTACK_HAND

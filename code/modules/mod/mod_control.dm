@@ -303,22 +303,12 @@
 	playsound(src, 'sound/machines/scanbuzz.ogg', 25, TRUE, SILENCED_SOUND_EXTRARANGE)
 	return ITEM_INTERACT_BLOCKING
 
-/obj/item/mod/control/storage_insert_on_interacted_with(datum/storage, obj/item/inserted, mob/living/user)
-	// Hack. revisit later
-	if(istype(inserted, /obj/item/aicard))
-		var/obj/item/aicard/ai_card = inserted
-		if(ai_card.AI)
-			return FALSE // we want to get an AI assistant, try uploading instead of insertion
-		if(ai_assistant)
-			return FALSE // we already have an AI assistant, try withdrawing instead of insertion
-	return TRUE
-
 // Makes use of tool act to prevent shoving stuff into our internal storage
 /obj/item/mod/control/tool_act(mob/living/user, obj/item/tool, list/modifiers)
 	if(istype(tool, /obj/item/pai_card))
 		if(!open)
 			balloon_alert(user, "open the cover first!")
-			return ITEM_INTERACT_BLOCKING
+			return NONE // shoves the card in the storage anyways
 		insert_pai(user, tool)
 		return ITEM_INTERACT_SUCCESS
 	if(istype(tool, /obj/item/mod/paint))
