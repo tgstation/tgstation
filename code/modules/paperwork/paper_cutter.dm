@@ -202,7 +202,41 @@
 	default_raw_text = pick(GLOB.wisdoms)
 	return ..()
 
-/obj/item/paper/paperslip/corporate //More fancy and sturdy paper slip which is a "plastic card", used for things like spare ID safe code
+// Used by the Warrant (citation) Console and PDA app
+/obj/item/paper/paperslip/ticket
+	name = "citation ticket"
+	desc = "A citation given by Security."
+	color = COLOR_VERY_SOFT_YELLOW
+	throw_range = 5
+	throw_speed = 2
+	embed_type = /datum/embed_data/citation_ticket // Stick them into criminals face
+	attack_verb_continuous = list("prosecutes", "cites", "fines")
+	attack_verb_simple = list("prosecute", "cite", "fine")
+	hitsound = 'sound/weapons/slap.ogg'
+
+/obj/item/paper/paperslip/ticket/Initialize(mapload)
+	. = ..()
+	ADD_TRAIT(src, TRAIT_CUSTOM_TAP_SOUND, INNATE_TRAIT)
+
+/obj/item/paper/paperslip/ticket/examine(mob/user)
+	. = ..()
+	. += span_notice("You can hit someone with [src] to <b>stick</b> it to them.")
+
+/obj/item/paper/paperslip/ticket/attack(mob/M, mob/user)
+	. = ..()
+	src.forceMove(get_turf(user))
+	src.throw_at(M, throw_range, throw_speed, user)
+
+/datum/embed_data/citation_ticket
+	pain_mult = 0
+	jostle_pain_mult = 0
+	ignore_throwspeed_threshold = TRUE
+	embed_chance = 100
+	rip_time = 10
+	fall_chance = 5
+
+// More fancy and sturdy paper slip which is a "plastic card", used for things like spare ID safe code
+/obj/item/paper/paperslip/corporate
 	name = "corporate plastic card"
 	desc = "A plastic card for confidential corporate matters. Can be written on with pen somehow."
 	icon_state = "corppaperslip"

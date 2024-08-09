@@ -1,7 +1,7 @@
 #define MAX_TIMER (15 MINUTES)
-#define PRESET_SHORT (2 MINUTES)
-#define PRESET_MEDIUM (3 MINUTES)
-#define PRESET_LONG (5 MINUTES)
+#define PRESET_MISCHIEF (3 MINUTES)
+#define PRESET_MISDEMEANOR (5 MINUTES)
+#define PRESET_FELONY (8 MINUTES)
 
 /**
  * Brig Door control displays.
@@ -99,6 +99,8 @@
 /obj/machinery/status_display/door_timer/proc/timer_start()
 	if(machine_stat & (NOPOWER|BROKEN))
 		return 0
+
+	src.say("Your timed sentence has started. Please feel the weight of your crimes.")
 
 	activation_time = world.time
 	timing = TRUE
@@ -255,12 +257,12 @@
 			var/preset = params["preset"]
 			var/preset_time = time_left()
 			switch(preset)
-				if("short")
-					preset_time = PRESET_SHORT
-				if("medium")
-					preset_time = PRESET_MEDIUM
-				if("long")
-					preset_time = PRESET_LONG
+				if("mischief")
+					preset_time = PRESET_MISCHIEF
+				if("misdemeanor")
+					preset_time = PRESET_MISDEMEANOR
+				if("felony")
+					preset_time = PRESET_FELONY
 			. = set_timer(preset_time)
 			user.investigate_log("set cell [id]'s timer to [preset_time/10] seconds", INVESTIGATE_RECORDS)
 			user.log_message("set cell [id]'s timer to [preset_time/10] seconds", LOG_ATTACK)
@@ -280,7 +282,7 @@
 			continue
 		timer_end(forced = TRUE)
 
-#undef PRESET_SHORT
-#undef PRESET_MEDIUM
-#undef PRESET_LONG
+#undef PRESET_MISCHIEF
+#undef PRESET_MISDEMEANOR
+#undef PRESET_FELONY
 #undef MAX_TIMER

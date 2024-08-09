@@ -10800,6 +10800,7 @@
 /area/station/engineering/supermatter/room)
 "dPN" = (
 /obj/structure/chair,
+/obj/structure/sign/poster/official/crime_reference/directional/north,
 /turf/open/floor/glass/reinforced,
 /area/station/security/checkpoint/science)
 "dPO" = (
@@ -28034,6 +28035,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/light/small/directional/west,
 /obj/structure/cable,
+/obj/structure/sign/poster/official/crime_reference/directional/west,
 /turf/open/floor/iron,
 /area/station/security/brig)
 "jWc" = (
@@ -31818,6 +31820,7 @@
 "ljF" = (
 /obj/structure/weightmachine/weightlifter,
 /obj/machinery/camera/autoname/directional/east,
+/obj/structure/sign/poster/official/crime_reference/directional/east,
 /turf/open/floor/iron,
 /area/station/security/prison)
 "ljG" = (
@@ -37751,6 +37754,7 @@
 /obj/item/bedsheet,
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/light/small/directional/east,
+/obj/structure/sign/poster/official/crime_reference/directional/east,
 /turf/open/floor/iron,
 /area/station/security/brig)
 "noF" = (

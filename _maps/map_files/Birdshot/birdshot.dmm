@@ -17333,10 +17333,10 @@
 	id = "Cell 1";
 	name = "Cell 1 Locker"
 	},
-/obj/structure/sign/poster/official/random/directional/north,
 /obj/machinery/flasher/directional/west{
 	id = "Cell 1"
 	},
+/obj/structure/sign/poster/official/crime_reference/directional/north,
 /turf/open/floor/iron/small,
 /area/station/security/brig)
 "gxi" = (
@@ -36092,8 +36092,8 @@
 /obj/effect/turf_decal/siding/red{
 	dir = 9
 	},
-/obj/structure/sign/poster/official/random/directional/north,
 /obj/machinery/light/small/directional/west,
+/obj/structure/sign/poster/official/crime_reference/directional/north,
 /turf/open/floor/iron/small,
 /area/station/security/brig)
 "mql" = (
@@ -60597,9 +60597,9 @@
 /obj/effect/turf_decal/siding/red{
 	dir = 5
 	},
-/obj/structure/sign/poster/official/random/directional/north,
 /obj/machinery/light/small/directional/east,
 /obj/effect/decal/cleanable/dirt,
+/obj/structure/sign/poster/official/crime_reference/directional/north,
 /turf/open/floor/iron/small,
 /area/station/security/brig)
 "uGT" = (
@@ -64840,10 +64840,10 @@
 	id = "Cell 2";
 	name = "Cell 2 Locker"
 	},
-/obj/structure/sign/poster/official/random/directional/north,
 /obj/machinery/flasher/directional/east{
 	id = "Cell 2"
 	},
+/obj/structure/sign/poster/official/crime_reference/directional/north,
 /turf/open/floor/iron/small,
 /area/station/security/brig)
 "vVF" = (

@@ -34144,6 +34144,7 @@
 	name = "Cell 2 locker"
 	},
 /obj/structure/cable,
+/obj/structure/sign/poster/official/crime_reference/directional/south,
 /turf/open/floor/iron/smooth,
 /area/station/security/brig)
 "kkD" = (
@@ -56270,6 +56271,7 @@
 	name = "Cell 1 locker"
 	},
 /obj/structure/cable,
+/obj/structure/sign/poster/official/crime_reference/directional/south,
 /turf/open/floor/iron/smooth,
 /area/station/security/brig)
 "qLf" = (
@@ -63814,6 +63816,7 @@
 	name = "Cell 3 locker"
 	},
 /obj/structure/cable,
+/obj/structure/sign/poster/official/crime_reference/directional/south,
 /turf/open/floor/iron/smooth,
 /area/station/security/brig)
 "sSR" = (

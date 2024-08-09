@@ -270,28 +270,36 @@
 				if(href_list["add_citation"])
 					var/max_fine = CONFIG_GET(number/maxfine)
 					var/citation_name = tgui_input_text(human_user, "Citation crime", "Security HUD")
+					var/citation_details = tgui_input_text(human_user, "Citation details", "Security HUD")
 					var/fine = tgui_input_number(human_user, "Citation fine", "Security HUD", 50, max_fine, 5)
 					if(!fine || !target_record || !citation_name || !allowed_access || !isnum(fine) || fine > max_fine || fine <= 0 || !human_user.canUseHUD() || !HAS_TRAIT(human_user, TRAIT_SECURITY_HUD))
+						playsound(human_user, 'sound/machines/terminal_prompt_deny.ogg', 30, FALSE, -3)
 						return
 
-					var/datum/crime/citation/new_citation = new(name = citation_name, author = allowed_access, fine = fine)
+					var/datum/crime/citation/new_citation = new(name = citation_name, details = citation_details, author = allowed_access, fine = fine)
 
 					target_record.citations += new_citation
 					new_citation.alert_owner(usr, src, target_record.name, "You have been fined [fine] credits for '[citation_name]'. Fines may be paid at security.")
 					investigate_log("New Citation: <strong>[citation_name]</strong> Fine: [fine] | Added to [target_record.name] by [key_name(human_user)]", INVESTIGATE_RECORDS)
+					playsound(human_user, 'sound/machines/terminal_prompt_confirm.ogg', 30, FALSE, -3)
+					to_chat(human_user, span_notice("Successfully added a citation."))
+
 					SSblackbox.ReportCitation(REF(new_citation), human_user.ckey, human_user.real_name, target_record.name, citation_name, fine)
 
 					return
 
 				if(href_list["add_crime"])
 					var/crime_name = tgui_input_text(human_user, "Crime name", "Security HUD")
+					var/crime_details = tgui_input_text(human_user, "Crime details", "Security HUD")
 					if(!target_record || !crime_name || !allowed_access || !human_user.canUseHUD() || !HAS_TRAIT(human_user, TRAIT_SECURITY_HUD))
+						playsound(human_user, 'sound/machines/terminal_prompt_deny.ogg', 30, FALSE, -3)
 						return
 
-					var/datum/crime/new_crime = new(name = crime_name, author = allowed_access)
+					var/datum/crime/new_crime = new(name = crime_name, details = crime_details, author = allowed_access)
 
 					target_record.crimes += new_crime
 					investigate_log("New Crime: <strong>[crime_name]</strong> | Added to [target_record.name] by [key_name(human_user)]", INVESTIGATE_RECORDS)
+					playsound(human_user, 'sound/machines/terminal_prompt_confirm.ogg', 30, FALSE, -3)
 					to_chat(human_user, span_notice("Successfully added a crime."))
 
 					return
@@ -299,9 +307,13 @@
 				if(href_list["add_note"])
 					var/new_note = tgui_input_text(human_user, "Security note", "Security Records", multiline = TRUE)
 					if(!target_record || !new_note || !allowed_access || !human_user.canUseHUD() || !HAS_TRAIT(human_user, TRAIT_SECURITY_HUD))
+						playsound(human_user, 'sound/machines/terminal_prompt_deny.ogg', 30, FALSE, -3)
 						return
 
 					target_record.security_note = new_note
+					investigate_log("New Security Note: <strong>[new_note]</strong> | Added to [target_record.name] by [key_name(human_user)]", INVESTIGATE_RECORDS)
+					playsound(human_user, 'sound/machines/terminal_prompt_confirm.ogg', 30, FALSE, -3)
+					to_chat(human_user, span_notice("Successfully added a note."))
 
 					return
 

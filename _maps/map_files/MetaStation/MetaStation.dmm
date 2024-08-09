@@ -35386,6 +35386,7 @@
 	c_tag = "Brig - Hallway - Port"
 	},
 /obj/machinery/light/directional/north,
+/obj/structure/sign/poster/official/crime_reference/directional/north,
 /turf/open/floor/iron,
 /area/station/security/brig)
 "mCL" = (
@@ -62217,10 +62218,6 @@
 /obj/item/radio/intercom/directional/east,
 /turf/open/floor/wood,
 /area/station/service/theater)
-"vQI" = (
-/obj/structure/sign/warning/pods,
-/turf/closed/wall/r_wall,
-/area/station/security/brig)
 "vQO" = (
 /obj/structure/cable,
 /obj/effect/turf_decal/tile/red/half/contrasted{
@@ -94627,7 +94624,7 @@ xqI
 gWc
 oAN
 iKj
-vQI
+lAM
 mCJ
 lsP
 ekP

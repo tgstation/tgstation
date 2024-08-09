@@ -371,6 +371,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sign/poster/contraband/moffuchis_pizz
 	name = "DONK CO. BRAND MICROWAVEABLE FOOD"
 	desc = "DONK CO. BRAND MICROWAVABLE FOOD: MADE BY STARVING COLLEGE STUDENTS, FOR STARVING COLLEGE STUDENTS."
 	icon_state = "donk_co"
+	detailed = TRUE
 
 /obj/structure/sign/poster/contraband/donk_co/examine_more(mob/user)
 	. = ..()
@@ -456,6 +457,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sign/poster/contraband/blasto_deterge
 	name = "EisT: The New Revolution in Energy"
 	desc = "New from EisT, try EisT Energy, available in a kaleidoscope range of flavors. EisT: Precision German Engineering for your Thirst."
 	icon_state = "eistee"
+	detailed = TRUE
 
 /obj/structure/sign/poster/contraband/eistee/examine_more(mob/user)
 	. = ..()
@@ -471,6 +473,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sign/poster/contraband/eistee, 32)
 	name = "Little Fruits: Honey, I Shrunk the Fruitbowl"
 	desc = "Little Fruits are the galaxy's leading vitamin-enriched gummy candy product, packed with everything you need to stay healthy in one great tasting package. Get yourself a bag today!"
 	icon_state = "little_fruits"
+	detailed = TRUE
 
 /obj/structure/sign/poster/contraband/little_fruits/examine_more(mob/user)
 	. = ..()
@@ -508,6 +511,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sign/poster/contraband/triumphal_arch
 	name = "Mothic Ration Chart"
 	desc = "A poster showing a commissary menu from the Mothic fleet flagship, the Va Lümla. It lists various consumable items alongside prices in ration tickets."
 	icon_state = "mothic_rations"
+	detailed = TRUE
 
 /obj/structure/sign/poster/contraband/mothic_rations/examine_more(mob/user)
 	. = ..()
@@ -557,6 +561,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sign/poster/contraband/thunderdrome, 
 	name = "A New Life"
 	desc = "An old poster from around the time of the First Spinward Rush. It depicts a view of wide, unspoiled lands, ready for Humanity's Manifest Destiny."
 	icon_state = "rush_propaganda"
+	detailed = TRUE
 
 /obj/structure/sign/poster/contraband/rush_propaganda/examine_more(mob/user)
 	. = ..()
@@ -580,6 +585,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sign/poster/contraband/tipper_cream_s
 	name = "Movie Poster: Tea Over Tizira"
 	desc = "A poster for a thought-provoking arthouse movie about the Human-Lizard war, criticised by human supremacist groups for its morally-grey portrayal of the war."
 	icon_state = "tea_over_tizira"
+	detailed = TRUE
 
 /obj/structure/sign/poster/contraband/tea_over_tizira/examine_more(mob/user)
 	. = ..()
@@ -611,6 +617,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sign/poster/contraband/microwave, 32)
 	name = "Movie Poster: THE BLOOD GEOMETER"
 	desc = "A poster for a thrilling noir detective movie set aboard a state-of-the-art space station, following a detective who finds himself wrapped up in the activies of a dangerous cult, who worship an ancient deity: THE BLOOD GEOMETER."
 	icon_state = "blood_geometer"
+	detailed = TRUE
 
 /obj/structure/sign/poster/contraband/blood_geometer/examine_more(mob/user)
 	. = ..()

@@ -5320,6 +5320,7 @@
 #include "code\modules\modular_computers\file_system\programs\techweb.dm"
 #include "code\modules\modular_computers\file_system\programs\theme_selector.dm"
 #include "code\modules\modular_computers\file_system\programs\virtual_pet.dm"
+#include "code\modules\modular_computers\file_system\programs\warrant.dm"
 #include "code\modules\modular_computers\file_system\programs\wirecarp.dm"
 #include "code\modules\modular_computers\file_system\programs\antagonist\contractor_program.dm"
 #include "code\modules\modular_computers\file_system\programs\antagonist\dos.dm"

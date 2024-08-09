@@ -56,12 +56,14 @@
 
 	var/damage = weapon.throwforce
 	if(harmful)
-		victim.throw_alert(ALERT_EMBEDDED_OBJECT, /atom/movable/screen/alert/embeddedobject)
 		playsound(victim,'sound/weapons/bladeslice.ogg', 40)
 		if (limb.can_bleed())
 			weapon.add_mob_blood(victim)//it embedded itself in you, of course it's bloody!
 		damage += weapon.w_class * embed_data.impact_pain_mult
 		victim.add_mood_event("embedded", /datum/mood_event/embedded)
+		victim.throw_alert(ALERT_EMBEDDED_OBJECT, /atom/movable/screen/alert/embeddedobject)
+	else
+		victim.throw_alert(ALERT_EMBEDDED_OBJECT, /atom/movable/screen/alert/embeddedobject/sticky)
 
 	if(damage > 0)
 		var/armor = victim.run_armor_check(limb.body_zone, MELEE, "Your armor has protected your [limb.plaintext_zone].", "Your armor has softened a hit to your [limb.plaintext_zone].", weapon.armour_penetration, weak_against_armour = weapon.weak_against_armour)

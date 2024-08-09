@@ -174,6 +174,25 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sign/poster/official/safety_report, 3
 
 MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sign/poster/official/report_crimes, 32)
 
+/obj/structure/sign/poster/official/crime_reference
+	name = "Crime Reference"
+	desc = "This informational poster provides categories of crimes and sentences for them..."
+	icon_state = "crime_reference"
+	detailed = TRUE
+
+/obj/structure/sign/poster/official/crime_reference/examine_more(mob/user)
+	. = ..()
+	. += span_notice("<i>You browse some of the poster's information...</i>")
+	. += "\t[span_info("<b>Mischief:</b> Brig - 3 Minutes, Labor - 1 Point, Fine - 100 Credits")]"
+	. += "\t[span_info("<b>Misdemeanor:</b> Brig - 5 Minutes, Labor - 300-500 Points, Fine - 300 Credits")]"
+	. += "\t[span_info("<b>Felony:</b> Brig - 8 Minutes, Labor - 500-800 Points")]"
+	. += "\t[span_info("<b>Grand Felony:</b> Permabrig, Exile, Implantation")]"
+	. += "\t[span_info("<b>Capital Crime:</b> Permabrig, Exile, Implantation, Cyborgification, Re-Education")]"
+	. += "\t[span_warning("Information might be outdated. Reference local Space Law copies.")]"
+	return .
+
+MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sign/poster/official/crime_reference, 32)
+
 /obj/structure/sign/poster/official/ion_rifle
 	name = "Ion Rifle"
 	desc = "A poster displaying an Ion Rifle."
@@ -291,6 +310,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sign/poster/official/periodic_table, 
 	name = "Plasma and the Body"
 	desc = "This informational poster provides information on the effects of long-term plasma exposure on the brain."
 	icon_state = "plasma_effects"
+	detailed = TRUE
 
 /obj/structure/sign/poster/official/plasma_effects/examine_more(mob/user)
 	. = ..()
@@ -324,6 +344,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sign/poster/official/corporate_perks_
 	name = "Jim Norton's Québécois Coffee"
 	desc = "An advertisement for Jim Norton's, the Québécois coffee joint that's taken the galaxy by storm."
 	icon_state = "jim_nortons"
+	detailed = TRUE
 
 /obj/structure/sign/poster/official/jim_nortons/examine_more(mob/user)
 	. = ..()

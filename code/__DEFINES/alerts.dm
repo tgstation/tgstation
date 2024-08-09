@@ -22,6 +22,7 @@
 #define ALERT_WOUNDED "wound"
 #define ALERT_IRRADIATED "irradiated"
 #define ALERT_EMBEDDED_OBJECT "embeddedobject"
+#define ALERT_STICKED_OBJECT "stickedobject"
 #define ALERT_SHOES_KNOT "shoealert"
 #define ALERT_RADIOACTIVE_AREA "radioactive_area"
 #define ALERT_UNPOSSESS_OBJECT "unpossess_object"

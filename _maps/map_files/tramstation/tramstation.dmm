@@ -3325,6 +3325,7 @@
 	network = list("ss13","Security","prison");
 	c_tag = "Security - Prison Main North-West"
 	},
+/obj/structure/sign/poster/official/crime_reference/directional/west,
 /turf/open/floor/iron,
 /area/station/security/prison)
 "atX" = (
@@ -44414,6 +44415,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2,
 /obj/machinery/light/small/dim/directional/north,
+/obj/structure/sign/poster/official/crime_reference/directional/north,
 /turf/open/floor/iron,
 /area/station/security/courtroom/holding)
 "oKh" = (
@@ -59796,6 +59798,7 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
 	dir = 4
 	},
+/obj/structure/sign/poster/official/crime_reference/directional/west,
 /turf/open/floor/iron,
 /area/station/security/execution/transfer)
 "udP" = (
@@ -62506,6 +62509,7 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
 	dir = 4
 	},
+/obj/structure/sign/poster/official/crime_reference/directional/west,
 /turf/open/floor/iron,
 /area/station/security/execution/transfer)
 "uUE" = (
