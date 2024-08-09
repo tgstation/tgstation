@@ -1,7 +1,7 @@
 /datum/disease/chronic_illness
 	name = "Hereditary Manifold Sickness"
 	max_stages = 5
-	spread_text = "Unspread Illness"
+	spread_text = "Non-communicable disease"
 	spread_flags = DISEASE_SPREAD_NON_CONTAGIOUS
 	disease_flags = CHRONIC
 	infectable_biotypes = MOB_ORGANIC | MOB_MINERAL | MOB_ROBOTIC
