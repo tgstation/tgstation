@@ -175,7 +175,7 @@
 			new /obj/item/assembly/flash/hypnotic(src) // 7 TC
 			new /obj/item/storage/pill_bottle/lsd(src) // ~1 TC
 			new /obj/item/pen/sleepy(src) // 4 TC
-			new /obj/item/gun/ballistic/revolver/nagant(src) // 13 TC comparable to 357. revolvers
+			new /obj/item/gun/ballistic/revolver/sakhnomanni(src) // 13 TC comparable to 357. revolvers
 			new /obj/item/megaphone(src)
 			new /obj/item/bedsheet/rev(src)
 			new /obj/item/clothing/suit/armor/vest/russian_coat(src)

@@ -29,6 +29,7 @@
 
 /obj/item/ammo_casing/strilka310/lionhunter
 	projectile_type = /obj/projectile/bullet/strilka310/lionhunter
+	short_casing = null
 	/// Whether we're currently aiming this casing at something
 	var/currently_aiming = FALSE
 	/// How many seconds it takes to aim per tile of distance between the target

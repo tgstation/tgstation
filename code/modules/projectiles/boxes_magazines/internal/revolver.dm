@@ -4,11 +4,11 @@
 	caliber = CALIBER_38
 	max_ammo = 6
 
-/obj/item/ammo_box/magazine/internal/cylinder/rev762
-	name = "\improper Nagant revolver cylinder"
-	ammo_type = /obj/item/ammo_casing/n762
-	caliber = CALIBER_N762
-	max_ammo = 7
+/obj/item/ammo_box/magazine/internal/cylinder/short310
+	name = "\improper Sakhno-Manni revolver cylinder"
+	ammo_type = /obj/item/ammo_casing/short310
+	caliber = CALIBER_SHORT310
+	max_ammo = 6
 
 /obj/item/ammo_box/magazine/internal/cylinder/rus357
 	name = "\improper Russian revolver cylinder"

@@ -7,23 +7,51 @@
 	caliber = CALIBER_STRILKA310
 	projectile_type = /obj/projectile/bullet/strilka310
 
+	/// The corresponding .310 Short casing we can be cut down to. Cannot be cut down if null.
+	var/short_casing = /obj/item/ammo_casing/short310
+
 /obj/item/ammo_casing/strilka310/Initialize(mapload)
 	. = ..()
 
 	AddElement(/datum/element/caseless)
+	register_context()
+
+/obj/item/ammo_casing/strilka310/examine(mob/user)
+	. = ..()
+	if(short_casing)
+		. += span_notice("It can be <b>cut</b> to make a shortened casing.")
+
+/obj/item/ammo_casing/strilka310/add_context(atom/source, list/context, obj/item/held_item, mob/living/user)
+	if(istype(held_item) && short_casing && (held_item.tool_behaviour == TOOL_WIRECUTTER || held_item.get_sharpness()))
+		context[SCREENTIP_CONTEXT_LMB] = "Shorten casing"
+	return CONTEXTUAL_SCREENTIP_SET
+
+/obj/item/ammo_casing/strilka310/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if(!short_casing || !(tool.tool_behaviour == TOOL_WIRECUTTER || tool.get_sharpness()))
+		return NONE
+
+	var/obj/item/ammo_casing/new_casing = new short_casing(get_turf(src))
+	transfer_fingerprints_to(new_casing)
+	new_casing.add_fingerprint(user)
+	to_chat(user, span_notice("You cut some of the propellant off of [src]."))
+	qdel(src)
+	return ITEM_INTERACT_SUCCESS
 
 /obj/item/ammo_casing/strilka310/surplus
 	name = ".310 Strilka surplus bullet casing"
 	desc = "A surplus .310 Strilka bullet casing. Casing is a bit of a fib, there is no case, its just a block of red powder. Damp red powder at that."
 	projectile_type = /obj/projectile/bullet/strilka310/surplus
+	short_casing = /obj/item/ammo_casing/short310/surplus
 
 /obj/item/ammo_casing/strilka310/enchanted
 	projectile_type = /obj/projectile/bullet/strilka310/enchanted
+	short_casing = null
 
 /obj/item/ammo_casing/strilka310/phasic
 	name = ".310 Strilka phasic bullet casing"
 	desc = "A phasic .310 Strika bullet casing. "
 	projectile_type = /obj/projectile/bullet/strilka310/phasic
+	short_casing = null
 // .223 (M-90gl Carbine)
 
 /obj/item/ammo_casing/a223

@@ -1,3 +1,22 @@
+// .310 Short (Sakhno-Manni Revolver)
+
+/obj/item/ammo_casing/short310
+	name = ".310 Short bullet casing"
+	desc = "A .310 Short bullet casing. Casing is a bit of a fib, there is no case, its just a block of red powder that's been trimmed down."
+	icon_state = "310short-casing"
+	caliber = CALIBER_SHORT310
+	projectile_type = /obj/projectile/bullet/short310
+
+/obj/item/ammo_casing/short310/Initialize(mapload)
+	. = ..()
+
+	AddElement(/datum/element/caseless)
+
+/obj/item/ammo_casing/short310/surplus
+	name = ".310 Short surplus bullet casing"
+	desc = "A surplus .310 Short bullet casing. Casing is a bit of a fib, there is no case, its just a block of red powder that's been trimmed down. Damp red powder at that."
+	projectile_type = /obj/projectile/bullet/short310/surplus
+
 // .357 (Syndie Revolver)
 
 /obj/item/ammo_casing/a357
@@ -21,14 +40,6 @@
 /obj/item/ammo_casing/a357/heartseeker
 	name = ".357 heartseeker bullet casing"
 	projectile_type = /obj/projectile/bullet/a357/heartseeker
-
-// 7.62x38mmR (Nagant Revolver)
-
-/obj/item/ammo_casing/n762
-	name = "7.62x38mmR bullet casing"
-	desc = "A 7.62x38mmR bullet casing."
-	caliber = CALIBER_N762
-	projectile_type = /obj/projectile/bullet/n762
 
 // .38 (Detective's Gun)
 
