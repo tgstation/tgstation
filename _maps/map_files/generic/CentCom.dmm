@@ -2412,10 +2412,7 @@
 "lb" = (
 /obj/structure/table/wood,
 /obj/machinery/door/window/left/directional/south,
-/obj/item/radio/intercom{
-	desc = "Talk smack through this.";
-	syndie = 1
-	},
+/obj/item/radio/intercom/syndicate,
 /turf/open/floor/iron/grimy,
 /area/centcom/central_command_areas/courtroom)
 "lc" = (
@@ -2428,10 +2425,7 @@
 /area/centcom/central_command_areas/courtroom)
 "ld" = (
 /obj/structure/table/wood,
-/obj/item/radio/intercom{
-	desc = "Talk smack through this.";
-	syndie = 1
-	},
+/obj/item/radio/intercom/syndicate,
 /obj/machinery/door/window/brigdoor/right/directional/south{
 	name = "CentCom Stand";
 	req_access = list("cent_captain")
@@ -2600,10 +2594,8 @@
 /obj/structure/chair{
 	dir = 8
 	},
-/obj/item/radio/intercom{
-	desc = "Talk smack through this.";
+/obj/item/radio/intercom/syndicate{
 	pixel_x = -32;
-	syndie = 1
 	},
 /turf/open/floor/iron/grimy,
 /area/centcom/central_command_areas/courtroom)
@@ -2669,10 +2661,7 @@
 /area/centcom/central_command_areas/courtroom)
 "mn" = (
 /obj/structure/table/wood,
-/obj/item/radio/intercom{
-	desc = "Talk smack through this.";
-	syndie = 1
-	},
+/obj/item/radio/intercom/syndicate,
 /turf/open/floor/iron/grimy,
 /area/centcom/central_command_areas/courtroom)
 "mo" = (
@@ -10246,10 +10235,8 @@
 /obj/machinery/computer/station_alert{
 	dir = 8
 	},
-/obj/item/radio/intercom{
-	desc = "Talk smack through this.";
-	pixel_x = 28;
-	syndie = 1
+/obj/item/radio/intercom/syndicate{
+	pixel_x = 28
 	},
 /turf/open/floor/iron/dark,
 /area/centcom/central_command_areas/control)
