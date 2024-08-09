@@ -107,8 +107,19 @@
 		var/mob/living/caught_mob = reward
 		if(caught_mob.stat == DEAD)
 			return
-	else if(!isfish(reward))
-		return
+	else
+		if(!isfish(reward))
+			return
+		var/obj/item/fish/fish = reward
+		if(HAS_TRAIT(bait, TRAIT_POISONOUS_BAIT) && !HAS_TRAIT(fish, TRAIT_FISH_TOXIN_IMMUNE))
+			var/kill_fish = TRUE
+			for(var/bait_identifer in fish.favorite_bait)
+				if(is_matching_bait(bait, bait_identifer))
+					kill_fish = FALSE
+					break
+			if(kill_fish)
+				fish.set_status(FISH_DEAD, silent = TRUE)
+
 	QDEL_NULL(bait)
 	update_icon()
 
