@@ -38,9 +38,8 @@
 
 	// Finally, removes their legs if they have opted as such, deleting the shoes
 	var/amputee = GLOB.paraplegic_choice[client_source?.prefs?.read_preference(/datum/preference/choiced/paraplegic)]
-	var/mob/living/carbon/human/human_holder = quirk_holder
 	if(amputee)
-		delete_legs(human_holder)
+		delete_legs(quirk_holder)
 
 /datum/quirk/paraplegic/proc/delete_legs(victim)
 	var/mob/living/carbon/human/human_holder = victim
