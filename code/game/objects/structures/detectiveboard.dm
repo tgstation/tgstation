@@ -1,4 +1,6 @@
-#define MAX_ICON_NOTICES 4
+#define MAX_ICON_NOTICES 8
+#define MAX_EVIDENCE_Y 3500
+#define MAX_EVIDENCE_X 1180
 
 /obj/structure/detectiveboard
 	name = "detective notice board"
@@ -68,7 +70,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/detectiveboard, 32)
 /obj/structure/detectiveboard/ui_interact(mob/user, datum/tgui/ui)
 	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
-		ui = new(user, src, "DetectiveBoard", name)
+		ui = new(user, src, "DetectiveBoard", name, 1200, 800)
 		ui.open()
 
 /obj/structure/detectiveboard/ui_data(mob/user)
@@ -192,8 +194,8 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/detectiveboard, 32)
 			if(case)
 				var/datum/evidence/evidence = locate(params["evidence_ref"]) in case.evidences
 				if(evidence)
-					evidence.x = params["rel_x"]
-					evidence.y = params["rel_y"]
+					evidence.x = clamp(params["rel_x"], 0, MAX_EVIDENCE_X)
+					evidence.y = clamp(params["rel_y"], 0, MAX_EVIDENCE_Y)
 			return TRUE
 		if("add_connection")
 			var/datum/evidence/from_evidence = locate(params["from_ref"]) in cases[current_case].evidences
@@ -207,9 +209,10 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/detectiveboard, 32)
 
 /obj/structure/detectiveboard/update_overlays()
 	. = ..()
-	if(cases[current_case].notices && cases[current_case].notices < MAX_ICON_NOTICES)
+	if(cases[current_case].notices < MAX_ICON_NOTICES)
 		. += "notices_[cases[current_case].notices]"
-
+	else
+		. += "notices_[MAX_ICON_NOTICES]"
 /**
  * Removes an item from the notice board
  *
@@ -274,4 +277,6 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/detectiveboard, 32)
 	color = param_color
 
 
+#undef MAX_EVIDENCE_Y
+#undef MAX_EVIDENCE_X
 #undef MAX_ICON_NOTICES
