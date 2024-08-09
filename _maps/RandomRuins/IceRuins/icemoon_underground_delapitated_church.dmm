@@ -1,0 +1,922 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"aT" = (
+/obj/structure/chair/pew/left{
+	dir = 1
+	},
+/turf/open/floor/delapitated_church,
+/area/icemoon/surface/outdoors)
+"bE" = (
+/obj/structure/chair/pew{
+	dir = 1
+	},
+/obj/structure/chair/pew/right{
+	dir = 1
+	},
+/turf/open/floor/delapitated_church,
+/area/icemoon/surface/outdoors)
+"cO" = (
+/obj/structure/statue/bone/rib{
+	dir = 4
+	},
+/obj/effect/turf_decal/weather/snow/corner{
+	dir = 4
+	},
+/turf/open/floor/delapitated_church,
+/area/icemoon/surface/outdoors)
+"ds" = (
+/turf/closed/wall/mineral/wood,
+/area/icemoon/surface/outdoors)
+"eB" = (
+/obj/item/flashlight/lantern{
+	light_on = 1
+	},
+/turf/open/floor/delapitated_church,
+/area/icemoon/surface/outdoors)
+"eE" = (
+/obj/effect/turf_decal/weather/snow/corner,
+/turf/open/floor/delapitated_church,
+/area/icemoon/surface/outdoors)
+"fl" = (
+/obj/structure/statue/bone/rib{
+	dir = 4
+	},
+/obj/effect/turf_decal/weather/snow/corner,
+/turf/open/floor/delapitated_church,
+/area/icemoon/surface/outdoors)
+"hM" = (
+/obj/structure/statue/bone/rib{
+	dir = 1
+	},
+/turf/open/floor/delapitated_church,
+/area/icemoon/surface/outdoors)
+"hS" = (
+/turf/open/misc/asteroid/snow/icemoon,
+/area/icemoon/surface/outdoors)
+"iT" = (
+/obj/structure/statue/bone/rib{
+	dir = 1
+	},
+/obj/effect/turf_decal/weather/snow/corner,
+/turf/open/floor/delapitated_church,
+/area/icemoon/surface/outdoors)
+"jQ" = (
+/obj/structure/fake_stairs/directional/north,
+/obj/structure/railing{
+	dir = 4
+	},
+/turf/open/floor/delapitated_church,
+/area/icemoon/surface/outdoors)
+"kd" = (
+/obj/structure/flora/grass/brown/style_random,
+/turf/open/floor/delapitated_church,
+/area/icemoon/surface/outdoors)
+"kq" = (
+/obj/structure/fluff/divine/convertaltar,
+/obj/item/book/bible,
+/turf/open/floor/delapitated_church,
+/area/icemoon/surface/outdoors)
+"la" = (
+/obj/structure/bounty_post,
+/turf/open/floor/delapitated_church,
+/area/icemoon/surface/outdoors)
+"lH" = (
+/mob/living/basic/mining/deacon,
+/turf/open/floor/delapitated_church,
+/area/icemoon/surface/outdoors)
+"lR" = (
+/obj/effect/turf_decal/weather/snow/corner{
+	dir = 8
+	},
+/obj/effect/turf_decal/weather/snow,
+/turf/open/floor/delapitated_church,
+/area/icemoon/surface/outdoors)
+"mP" = (
+/obj/structure/fake_stairs/directional/north,
+/turf/open/floor/delapitated_church,
+/area/icemoon/surface/outdoors)
+"nt" = (
+/obj/structure/chair/pew{
+	dir = 1
+	},
+/turf/open/floor/delapitated_church,
+/area/icemoon/surface/outdoors)
+"nT" = (
+/obj/structure/table/wood,
+/obj/item/paper,
+/turf/open/floor/delapitated_church,
+/area/icemoon/surface/outdoors)
+"qS" = (
+/obj/item/chair/wood,
+/turf/open/floor/delapitated_church,
+/area/icemoon/surface/outdoors)
+"tW" = (
+/obj/structure/statue/bone/rib{
+	dir = 1
+	},
+/obj/effect/turf_decal/weather/snow/corner{
+	dir = 8
+	},
+/turf/open/floor/delapitated_church,
+/area/icemoon/surface/outdoors)
+"wg" = (
+/obj/structure/statue/bone/rib{
+	dir = 1
+	},
+/turf/open/misc/asteroid/snow/icemoon,
+/area/icemoon/surface/outdoors)
+"xS" = (
+/obj/structure/chair/wood{
+	dir = 1
+	},
+/turf/open/floor/delapitated_church,
+/area/icemoon/surface/outdoors)
+"yy" = (
+/obj/item/flashlight/lantern{
+	light_on = 1
+	},
+/turf/open/floor/carpet/delapitated_church,
+/area/icemoon/surface/outdoors)
+"yK" = (
+/obj/structure/fireplace{
+	fuel_added = 1000;
+	lit = 1
+	},
+/turf/open/floor/delapitated_church,
+/area/icemoon/surface/outdoors)
+"At" = (
+/obj/structure/fluff/divine/convertaltar,
+/turf/open/floor/delapitated_church,
+/area/icemoon/surface/outdoors)
+"DG" = (
+/obj/effect/turf_decal/weather/snow,
+/obj/structure/flora/grass/brown/style_random,
+/turf/open/floor/delapitated_church,
+/area/icemoon/surface/outdoors)
+"EH" = (
+/obj/effect/turf_decal/weather/snow,
+/turf/open/misc/asteroid/snow/icemoon,
+/area/icemoon/surface/outdoors)
+"GV" = (
+/obj/structure/table/wood,
+/obj/item/flashlight/flare/candle,
+/turf/open/floor/delapitated_church,
+/area/icemoon/surface/outdoors)
+"GY" = (
+/obj/structure/table/wood,
+/obj/item/book/bible,
+/turf/open/floor/delapitated_church,
+/area/icemoon/surface/outdoors)
+"HU" = (
+/obj/effect/decal/cleanable/blood/tracks{
+	dir = 4
+	},
+/turf/open/floor/delapitated_church,
+/area/icemoon/surface/outdoors)
+"KQ" = (
+/obj/effect/turf_decal/weather/snow/corner,
+/turf/open/misc/asteroid/snow/icemoon,
+/area/icemoon/surface/outdoors)
+"KT" = (
+/turf/open/floor/delapitated_church,
+/area/icemoon/surface/outdoors)
+"Oe" = (
+/obj/structure/chair/pew/right{
+	dir = 1
+	},
+/turf/open/floor/delapitated_church,
+/area/icemoon/surface/outdoors)
+"Ot" = (
+/obj/structure/fake_stairs/directional/north,
+/obj/structure/railing{
+	dir = 8
+	},
+/turf/open/floor/delapitated_church,
+/area/icemoon/surface/outdoors)
+"Py" = (
+/obj/effect/turf_decal/weather/snow/corner{
+	dir = 4
+	},
+/turf/open/floor/delapitated_church,
+/area/icemoon/surface/outdoors)
+"PS" = (
+/obj/effect/decal/cleanable/blood/tracks,
+/turf/open/floor/delapitated_church,
+/area/icemoon/surface/outdoors)
+"Sc" = (
+/turf/open/floor/carpet/delapitated_church,
+/area/icemoon/surface/outdoors)
+"SX" = (
+/obj/structure/table/wood,
+/turf/open/floor/delapitated_church,
+/area/icemoon/surface/outdoors)
+"TE" = (
+/obj/structure/statue/bone/rib{
+	dir = 4
+	},
+/turf/open/misc/asteroid/snow/icemoon,
+/area/icemoon/surface/outdoors)
+"TH" = (
+/obj/structure/statue/bone/rib{
+	dir = 4
+	},
+/turf/open/floor/delapitated_church,
+/area/icemoon/surface/outdoors)
+"Vg" = (
+/obj/structure/bookcase/random/religion,
+/turf/open/floor/delapitated_church,
+/area/icemoon/surface/outdoors)
+"Wr" = (
+/obj/effect/turf_decal/weather/snow,
+/turf/open/floor/delapitated_church,
+/area/icemoon/surface/outdoors)
+
+(1,1,1) = {"
+hS
+hS
+hS
+hS
+hS
+hS
+hS
+hS
+hS
+hS
+hS
+hS
+hS
+ds
+wg
+KQ
+wg
+ds
+hS
+hS
+hS
+hS
+hS
+hS
+hS
+hS
+hS
+hS
+"}
+(2,1,1) = {"
+hS
+hS
+hS
+hS
+hS
+hS
+hS
+hS
+hS
+hS
+hS
+hS
+hS
+ds
+hS
+lR
+hS
+ds
+hS
+hS
+hS
+hS
+hS
+hS
+hS
+hS
+hS
+hS
+"}
+(3,1,1) = {"
+hS
+hS
+hS
+hS
+hS
+hS
+hS
+hS
+hS
+hS
+hS
+hS
+hS
+ds
+tW
+KT
+tW
+ds
+ds
+ds
+ds
+ds
+ds
+ds
+ds
+ds
+hS
+hS
+"}
+(4,1,1) = {"
+hS
+hS
+hS
+hS
+hS
+hS
+hS
+hS
+hS
+hS
+hS
+hS
+hS
+ds
+KT
+KT
+KT
+ds
+GY
+KT
+KT
+KT
+KT
+KT
+KT
+ds
+hS
+hS
+"}
+(5,1,1) = {"
+hS
+hS
+hS
+hS
+hS
+hS
+hS
+hS
+ds
+ds
+ds
+ds
+ds
+ds
+hM
+Wr
+hM
+ds
+GV
+KT
+aT
+Sc
+aT
+Sc
+aT
+ds
+hS
+hS
+"}
+(6,1,1) = {"
+hS
+hS
+hS
+hS
+hS
+hS
+ds
+ds
+ds
+Vg
+Vg
+KT
+KT
+KT
+KT
+KT
+KT
+Ot
+Wr
+KT
+nt
+Sc
+nt
+Sc
+nt
+ds
+hS
+hS
+"}
+(7,1,1) = {"
+hS
+hS
+hS
+hS
+hS
+hS
+ds
+ds
+ds
+KT
+kd
+KT
+KT
+KT
+kd
+KT
+KT
+mP
+KT
+KT
+nt
+Sc
+nt
+Sc
+nt
+ds
+hS
+hS
+"}
+(8,1,1) = {"
+ds
+ds
+ds
+ds
+ds
+ds
+ds
+ds
+ds
+KT
+KT
+KT
+KT
+KT
+eB
+KT
+KT
+mP
+KT
+KT
+nt
+Sc
+nt
+Sc
+nt
+ds
+hS
+hS
+"}
+(9,1,1) = {"
+ds
+Vg
+Vg
+qS
+eB
+HU
+ds
+ds
+ds
+KT
+KT
+KT
+KT
+KT
+KT
+KT
+KT
+mP
+KT
+KT
+Oe
+Sc
+bE
+yy
+bE
+ds
+ds
+ds
+"}
+(10,1,1) = {"
+ds
+KT
+KT
+nT
+xS
+HU
+hM
+KT
+hM
+KT
+eB
+KT
+KT
+KT
+Sc
+KT
+KT
+mP
+KT
+KT
+KT
+Sc
+Sc
+Sc
+Sc
+iT
+hS
+wg
+"}
+(11,1,1) = {"
+ds
+KT
+KT
+SX
+xS
+KT
+PS
+PS
+KT
+KT
+At
+Sc
+Sc
+Sc
+Sc
+KT
+KT
+mP
+KT
+Sc
+Sc
+Sc
+Sc
+Sc
+Sc
+Sc
+eE
+hS
+"}
+(12,1,1) = {"
+ds
+la
+eB
+Sc
+Sc
+Sc
+Sc
+KT
+KT
+KT
+kq
+Sc
+Sc
+Sc
+Sc
+lH
+KT
+mP
+KT
+Sc
+Sc
+Sc
+Sc
+Sc
+Sc
+Sc
+eE
+hS
+"}
+(13,1,1) = {"
+ds
+KT
+KT
+SX
+xS
+KT
+KT
+KT
+KT
+KT
+At
+Sc
+Sc
+Sc
+Sc
+KT
+KT
+mP
+KT
+Sc
+Sc
+Sc
+Sc
+Sc
+Sc
+Sc
+eE
+hS
+"}
+(14,1,1) = {"
+ds
+KT
+KT
+GY
+xS
+KT
+TH
+KT
+TH
+KT
+eB
+KT
+KT
+KT
+Sc
+KT
+KT
+mP
+DG
+KT
+KT
+Sc
+Sc
+Sc
+Sc
+fl
+hS
+TE
+"}
+(15,1,1) = {"
+ds
+Vg
+Vg
+KT
+eB
+KT
+ds
+ds
+ds
+KT
+KT
+KT
+KT
+KT
+KT
+KT
+KT
+mP
+KT
+KT
+aT
+Sc
+aT
+yy
+aT
+ds
+ds
+ds
+"}
+(16,1,1) = {"
+ds
+ds
+ds
+ds
+ds
+ds
+ds
+ds
+ds
+KT
+KT
+KT
+KT
+KT
+eB
+KT
+KT
+mP
+KT
+KT
+nt
+Sc
+nt
+Sc
+nt
+ds
+hS
+hS
+"}
+(17,1,1) = {"
+hS
+hS
+hS
+hS
+hS
+hS
+ds
+ds
+ds
+KT
+KT
+DG
+KT
+KT
+KT
+KT
+KT
+mP
+KT
+KT
+nt
+Sc
+nt
+Sc
+nt
+ds
+hS
+hS
+"}
+(18,1,1) = {"
+hS
+hS
+hS
+hS
+hS
+hS
+ds
+ds
+ds
+Vg
+Vg
+KT
+KT
+KT
+KT
+kd
+KT
+jQ
+KT
+KT
+nt
+Sc
+nt
+Sc
+nt
+ds
+hS
+hS
+"}
+(19,1,1) = {"
+hS
+hS
+hS
+hS
+hS
+hS
+hS
+hS
+ds
+ds
+ds
+ds
+ds
+ds
+TH
+KT
+TH
+ds
+KT
+KT
+nt
+Sc
+nt
+Sc
+nt
+ds
+hS
+hS
+"}
+(20,1,1) = {"
+hS
+hS
+hS
+hS
+hS
+hS
+hS
+hS
+hS
+hS
+hS
+hS
+hS
+ds
+Wr
+KT
+Wr
+ds
+yK
+KT
+bE
+Sc
+bE
+Sc
+bE
+ds
+hS
+hS
+"}
+(21,1,1) = {"
+hS
+hS
+hS
+hS
+hS
+hS
+hS
+hS
+hS
+hS
+hS
+hS
+hS
+ds
+cO
+KT
+cO
+ds
+yK
+KT
+KT
+KT
+KT
+KT
+KT
+ds
+hS
+hS
+"}
+(22,1,1) = {"
+hS
+hS
+hS
+hS
+hS
+hS
+hS
+hS
+hS
+hS
+hS
+hS
+hS
+ds
+hS
+Py
+hS
+ds
+ds
+ds
+ds
+ds
+ds
+ds
+ds
+ds
+hS
+hS
+"}
+(23,1,1) = {"
+hS
+hS
+hS
+hS
+hS
+hS
+hS
+hS
+hS
+hS
+hS
+hS
+hS
+ds
+TE
+EH
+TE
+ds
+hS
+hS
+hS
+hS
+hS
+hS
+hS
+hS
+hS
+hS
+"}

@@ -106,3 +106,6 @@
 
 /// Global signal sent when a mob is spawned from a ghost in a dynamic ruleset (mob/spawned_mob)
 #define COMSIG_RULESET_BODY_GENERATED_FROM_GHOSTS "!ruleset_body_generated_from_ghosts"
+
+///Global signal sent when a bounty is complete from /datum/holy_bounty
+#define COMSIG_BOUNTY_COMPLETE "!bounty_complete"

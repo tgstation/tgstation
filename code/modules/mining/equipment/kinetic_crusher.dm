@@ -495,3 +495,68 @@
 
 /obj/item/crusher_trophy/wolf_ear/on_mark_detonation(mob/living/target, mob/living/user)
 	user.apply_status_effect(/datum/status_effect/speed_boost, 1 SECONDS)
+
+/obj/item/crusher_trophy/plasma_flame
+	name = "plasma flame"
+	desc = "A flame so concentrated in plasma, it's almost blinding. Imbue it with a crusher to harness its power"
+	icon_state = "celestial_flame"
+	denied_type = /obj/item/crusher_trophy/plasma_flame
+	///cooldown to summon demons upon the target
+	COOLDOWN_DECLARE(effect_apply)
+
+/obj/item/crusher_trophy/plasma_flame/effect_desc()
+	return "mark detonation to unleash a celestial explosion upon the target."
+
+/obj/item/crusher_trophy/plasma_flame/on_mark_detonation(mob/living/target, mob/living/user)
+	if(isnull(target) || !COOLDOWN_FINISHED(src, effect_apply))
+		return
+	var/obj/effect/overlay/celestial_overhead/overhead = new
+	target.vis_contents += overhead
+	var/list/icon_offsets = get_icon_dimensions(target.icon)
+	overhead.pixel_y = icon_offsets["height"]
+	addtimer(CALLBACK(src, PROC_REF(remove_effect), target, overhead), 4 SECONDS)
+	COOLDOWN_START(src, effect_apply, 30 SECONDS)
+
+/obj/item/crusher_trophy/plasma_flame/proc/remove_effect(mob/living/target, atom/movable/overhead)
+	animate(overhead, alpha = 0, 0.5 SECONDS)
+	playsound(src, 'sound/magic/magic_missile.ogg', 60, TRUE, pressure_affected = FALSE)
+	addtimer(CALLBACK(src, PROC_REF(apply_explosion), target, overhead), 0.5 SECONDS)
+
+/obj/item/crusher_trophy/plasma_flame/proc/apply_explosion(mob/living/target, atom/movable/overhead)
+	if(isnull(target))
+		return
+	target.vis_contents -= overhead
+	qdel(overhead)
+	for(var/turf/possible_turf in RANGE_TURFS(1, target))
+		if(isclosedturf(possible_turf))
+			continue
+		new /obj/effect/temp_visual/celestial_explosion(possible_turf)
+
+/obj/effect/overlay/celestial_overhead
+	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
+	anchored = TRUE
+	vis_flags = VIS_INHERIT_DIR | VIS_INHERIT_PLANE
+	icon_state = "celestial_crossing"
+	alpha = 0
+	plane = ABOVE_GAME_PLANE
+	layer = ABOVE_ALL_MOB_LAYER
+
+/obj/effect/overlay/celestial_overhead/Initialize(mapload)
+	. = ..()
+	animate(src, alpha = 255, 1 SECONDS)
+
+/obj/effect/temp_visual/celestial_explosion
+	icon_state = "celestial_explosion"
+	duration = 0.5 SECONDS
+	alpha = 175
+	///damage we should apply
+	var/damage_to_apply = 50
+	///mob sizes we target
+	var/target_mob_size = MOB_SIZE_LARGE
+
+/obj/effect/temp_visual/celestial_explosion/Initialize(mapload)
+	. = ..()
+	for(var/mob/living/living_victim in loc)
+		if(living_victim.mob_size < target_mob_size)
+			continue
+		living_victim.apply_damage(50)

@@ -1264,3 +1264,79 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 		balloon_alert(user, "you're too weak!")
 		return
 	return ..()
+
+/obj/item/divine_blade
+	name = "godslayer sword"
+	desc = "Holy blade used by hands of the church to pass divine judgement. Its blades look pretty dull, but you feel a feint aura of a spirit radiating from within."
+	icon = 'icons/obj/weapons/sword.dmi'
+	icon_state = "divine_blade"
+	inhand_icon_state = "divine_blade"
+	lefthand_file = 'icons/mob/inhands/weapons/swords_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/weapons/swords_righthand.dmi'
+	hitsound = 'sound/weapons/bladeslice.ogg'
+	force = 8
+	throwforce = 8
+	w_class = WEIGHT_CLASS_NORMAL
+	attack_verb_continuous = list("attacks", "slashes", "stabs", "slices", "tears", "lacerates", "rips", "dices", "cuts")
+	attack_verb_simple = list("attack", "slash", "stab", "slice", "tear", "lacerate", "rip", "dice", "cut")
+	block_chance = 10
+	block_sound = 'sound/weapons/parry.ogg'
+	sharpness = SHARP_EDGED
+	max_integrity = 200
+	armor_type = /datum/armor/item_claymore
+	resistance_flags = FIRE_PROOF
+	///our resident spirit
+	var/mob/living/basic/mining/spirit_deacon/resident_spirit
+	///time until our spirit will reside back into its sword
+	var/spirit_timer = 15 SECONDS
+	///cooldown till we can release our spirit again
+	COOLDOWN_DECLARE(summon_cooldown)
+
+/obj/item/divine_blade/Initialize(mapload)
+	. = ..()
+	resident_spirit = new(src)
+	RegisterSignal(resident_spirit, COMSIG_QDELETING, PROC_REF(on_resident_delete))
+	resident_spirit.RegisterSignal(src, COMSIG_ITEM_AFTERATTACK, TYPE_PROC_REF(/mob/living/basic/mining/spirit_deacon, respond_to_sword))
+
+/obj/item/divine_blade/attack_self(mob/user, modifiers)
+	. = ..()
+	if(.)
+		return
+	if(!COOLDOWN_FINISHED(src, summon_cooldown))
+		user.balloon_alert(user, "still on cooldown!")
+		return
+	if(isnull(resident_spirit) || resident_spirit.loc != src)
+		return
+	var/list/possible_turfs = RANGE_TURFS(3, user)
+	shuffle_inplace(possible_turfs)
+	var/turf/picked_turf
+	for(var/turf/possible_turf as anything in possible_turfs)
+		if(!possible_turf.is_blocked_turf() && can_see(user, possible_turf, 3))
+			picked_turf = possible_turf
+			break
+	if(isnull(picked_turf))
+		return
+	user.Beam(
+		BeamTarget = picked_turf,
+		icon = 'icons/effects/beam.dmi',
+		icon_state = "lightning3",
+		beam_color = COLOR_WHITE,
+		time = 0.5 SECONDS,
+		emissive = TRUE,
+	)
+
+	playsound(picked_turf, 'sound/magic/lightningbolt.ogg', 50, TRUE)
+	new /obj/effect/temp_visual/celestial_explosion(picked_turf)
+	resident_spirit.forceMove(picked_turf)
+	addtimer(CALLBACK(src, PROC_REF(retrieve_spirit)), spirit_timer)
+
+/obj/item/divine_blade/proc/retrieve_spirit()
+	if(isnull(resident_spirit))
+		return
+	COOLDOWN_START(src, summon_cooldown, 2 MINUTES)
+	new /obj/effect/temp_visual/guardian/phase(resident_spirit.loc)
+	resident_spirit.forceMove(src)
+
+/obj/item/divine_blade/proc/on_resident_delete()
+	SIGNAL_HANDLER
+	resident_spirit = null

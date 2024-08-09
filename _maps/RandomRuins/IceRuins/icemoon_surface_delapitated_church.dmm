@@ -1,0 +1,238 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"ak" = (
+/obj/effect/landmark/deacon_surface_boss,
+/turf/open/floor/delapitated_church,
+/area/ruin/unpowered)
+"dU" = (
+/obj/item/flashlight/lantern{
+	light_on = 1
+	},
+/obj/effect/landmark/deacon_surface_projectile_turfs_marker{
+	turfs_direction = "west";
+	projectiles_direction = "north"
+	},
+/turf/open/floor/delapitated_church,
+/area/ruin/unpowered)
+"fl" = (
+/turf/open/floor/delapitated_church,
+/area/ruin/unpowered)
+"kd" = (
+/obj/structure/flora/grass/brown/style_random,
+/turf/open/floor/delapitated_church,
+/area/ruin/unpowered)
+"qp" = (
+/obj/item/flashlight/lantern{
+	light_on = 1
+	},
+/obj/effect/landmark/deacon_surface_projectile_turfs_marker{
+	turfs_direction = "east";
+	projectiles_direction = "south"
+	},
+/turf/open/floor/delapitated_church,
+/area/ruin/unpowered)
+"uH" = (
+/obj/item/flashlight/lantern{
+	light_on = 1
+	},
+/obj/effect/landmark/deacon_surface_projectile_turfs_marker{
+	turfs_direction = "south";
+	projectiles_direction = "west"
+	},
+/turf/open/floor/delapitated_church,
+/area/ruin/unpowered)
+"uW" = (
+/obj/item/flashlight/lantern{
+	light_on = 1
+	},
+/obj/effect/landmark/deacon_surface_projectile_turfs_marker{
+	turfs_direction = "north";
+	projectiles_direction = "east"
+	},
+/turf/open/floor/delapitated_church,
+/area/ruin/unpowered)
+"Bp" = (
+/obj/effect/landmark/deacon_surface_plasma,
+/turf/open/floor/delapitated_church,
+/area/ruin/unpowered)
+"KT" = (
+/turf/closed/indestructible/rock/snow/ice/ore,
+/area/ruin/unpowered)
+"Te" = (
+/obj/item/flashlight/lantern{
+	light_on = 1
+	},
+/turf/open/floor/delapitated_church,
+/area/ruin/unpowered)
+"Za" = (
+/obj/effect/landmark/deacon_surface_player,
+/turf/open/floor/delapitated_church,
+/area/ruin/unpowered)
+
+(1,1,1) = {"
+KT
+KT
+KT
+KT
+KT
+KT
+KT
+KT
+KT
+KT
+KT
+KT
+"}
+(2,1,1) = {"
+KT
+qp
+fl
+fl
+fl
+fl
+fl
+fl
+kd
+fl
+uW
+KT
+"}
+(3,1,1) = {"
+KT
+fl
+fl
+fl
+fl
+fl
+fl
+fl
+fl
+fl
+fl
+KT
+"}
+(4,1,1) = {"
+KT
+fl
+fl
+fl
+fl
+fl
+fl
+fl
+fl
+fl
+fl
+KT
+"}
+(5,1,1) = {"
+KT
+fl
+fl
+fl
+fl
+fl
+fl
+fl
+fl
+fl
+fl
+KT
+"}
+(6,1,1) = {"
+KT
+fl
+fl
+ak
+fl
+Te
+Bp
+fl
+fl
+fl
+fl
+KT
+"}
+(7,1,1) = {"
+KT
+fl
+fl
+fl
+fl
+fl
+fl
+fl
+fl
+fl
+fl
+KT
+"}
+(8,1,1) = {"
+KT
+fl
+fl
+fl
+fl
+fl
+fl
+fl
+fl
+fl
+fl
+KT
+"}
+(9,1,1) = {"
+KT
+fl
+fl
+fl
+fl
+fl
+Za
+fl
+fl
+fl
+fl
+KT
+"}
+(10,1,1) = {"
+KT
+fl
+fl
+fl
+fl
+fl
+fl
+fl
+fl
+fl
+fl
+KT
+"}
+(11,1,1) = {"
+KT
+uH
+fl
+fl
+fl
+fl
+fl
+fl
+fl
+fl
+dU
+KT
+"}
+(12,1,1) = {"
+KT
+KT
+KT
+KT
+KT
+KT
+KT
+KT
+KT
+KT
+KT
+KT
+"}

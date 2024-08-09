@@ -1,0 +1,277 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"bw" = (
+/turf/open/misc/asteroid/snow/icemoon,
+/area/icemoon/underground/explored)
+"gj" = (
+/obj/effect/landmark/deacon_heaven_boss,
+/turf/open/misc/asteroid/snow/icemoon,
+/area/icemoon/underground/explored)
+"jR" = (
+/obj/effect/landmark/deacon_hell_player,
+/turf/open/misc/asteroid/basalt/lava_land_surface,
+/area/icemoon/underground/explored)
+"lL" = (
+/turf/open/misc/asteroid/basalt/lava_land_surface,
+/area/icemoon/underground/explored)
+"oi" = (
+/obj/item/stack/ore/iron,
+/turf/open/lava/smooth,
+/area/icemoon/underground/explored)
+"DP" = (
+/obj/effect/landmark/deacon_heaven_player,
+/turf/open/misc/asteroid/snow/icemoon,
+/area/icemoon/underground/explored)
+"Ih" = (
+/obj/effect/landmark/deacon_hell_boss,
+/turf/open/misc/asteroid/basalt/lava_land_surface,
+/area/icemoon/underground/explored)
+"SI" = (
+/turf/open/lava/plasma/ice_moon,
+/area/icemoon/underground/explored)
+"Ya" = (
+/turf/open/lava/smooth,
+/area/icemoon/underground/explored)
+"Zd" = (
+/turf/closed/indestructible/rock/snow/ice/ore,
+/area/icemoon/underground/explored)
+
+(1,1,1) = {"
+Zd
+Zd
+Zd
+Zd
+Zd
+Zd
+Zd
+Zd
+Zd
+Zd
+Zd
+Zd
+Zd
+Zd
+"}
+(2,1,1) = {"
+Zd
+SI
+SI
+SI
+bw
+bw
+bw
+SI
+SI
+Zd
+lL
+jR
+lL
+Zd
+"}
+(3,1,1) = {"
+Zd
+SI
+bw
+bw
+bw
+bw
+bw
+bw
+SI
+Zd
+lL
+lL
+lL
+Zd
+"}
+(4,1,1) = {"
+Zd
+SI
+bw
+bw
+bw
+bw
+bw
+bw
+bw
+Zd
+Ya
+lL
+Ya
+Zd
+"}
+(5,1,1) = {"
+Zd
+bw
+bw
+bw
+bw
+bw
+bw
+bw
+bw
+Zd
+Ya
+lL
+Ya
+Zd
+"}
+(6,1,1) = {"
+Zd
+bw
+bw
+bw
+bw
+bw
+bw
+bw
+bw
+Zd
+lL
+lL
+lL
+Zd
+"}
+(7,1,1) = {"
+Zd
+bw
+bw
+bw
+gj
+bw
+bw
+bw
+bw
+Zd
+Ya
+Ya
+lL
+Zd
+"}
+(8,1,1) = {"
+Zd
+bw
+bw
+bw
+bw
+bw
+bw
+bw
+DP
+Zd
+Ya
+lL
+lL
+Zd
+"}
+(9,1,1) = {"
+Zd
+bw
+bw
+bw
+bw
+bw
+bw
+bw
+bw
+Zd
+Ya
+lL
+Ya
+Zd
+"}
+(10,1,1) = {"
+Zd
+bw
+bw
+bw
+bw
+bw
+bw
+bw
+bw
+Zd
+Ya
+lL
+Ya
+Zd
+"}
+(11,1,1) = {"
+Zd
+bw
+bw
+bw
+bw
+bw
+bw
+bw
+bw
+Zd
+lL
+lL
+lL
+Zd
+"}
+(12,1,1) = {"
+Zd
+SI
+bw
+bw
+bw
+bw
+bw
+bw
+SI
+Zd
+Ya
+Ya
+oi
+Zd
+"}
+(13,1,1) = {"
+Zd
+SI
+SI
+SI
+bw
+bw
+bw
+SI
+SI
+Zd
+lL
+lL
+lL
+Zd
+"}
+(14,1,1) = {"
+Zd
+Zd
+Zd
+Zd
+Zd
+Zd
+Zd
+Zd
+Zd
+Zd
+lL
+Ih
+lL
+Zd
+"}
+(15,1,1) = {"
+Zd
+Zd
+Zd
+Zd
+Zd
+Zd
+Zd
+Zd
+Zd
+Zd
+Zd
+Zd
+Zd
+Zd
+"}

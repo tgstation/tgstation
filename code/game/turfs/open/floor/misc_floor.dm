@@ -227,6 +227,18 @@
 	custom_materials = list(/datum/material/plastic=SMALL_MATERIAL_AMOUNT*5)
 	floor_tile = /obj/item/stack/tile/plastic
 
+/turf/open/floor/delapitated_church
+	name = "church floor"
+	desc = "menacing and all worn-down"
+	initial_gas_mix = ICEMOON_DEFAULT_ATMOS
+	icon_state = "church_floor2"
+
+/turf/open/floor/carpet/delapitated_church
+	initial_gas_mix = ICEMOON_DEFAULT_ATMOS
+
+/turf/open/misc/grass/icemoon
+	initial_gas_mix = ICEMOON_DEFAULT_ATMOS
+
 /turf/open/floor/plastic/broken_states()
 	return list("plastic-damaged1","plastic-damaged2")
 

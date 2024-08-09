@@ -20,6 +20,7 @@ import './styles/themes/ntOS95.scss';
 import './styles/themes/ntos_synth.scss';
 import './styles/themes/ntos_terminal.scss';
 import './styles/themes/ntos_spooky.scss';
+import './styles/themes/oldpaper.scss';
 import './styles/themes/paper.scss';
 import './styles/themes/retro.scss';
 import './styles/themes/syndicate.scss';
