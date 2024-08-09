@@ -810,13 +810,13 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/item/storage/pod, 32)
 	atom_storage.max_specific_storage = WEIGHT_CLASS_BULKY
 	atom_storage.max_slots = 2
 	atom_storage.set_holdable(list(
-		/obj/item/clothing/head/helmet/space/orange,
-		/obj/item/clothing/suit/space/orange,
+		/obj/item/clothing/head/helmet/space/fragile,
+		/obj/item/clothing/suit/space/fragile,
 		))
 
 /obj/item/storage/box/emergency_spacesuit/PopulateContents()
-	new /obj/item/clothing/head/helmet/space/orange(src)
-	new /obj/item/clothing/suit/space/orange(src)
+	new /obj/item/clothing/head/helmet/space/fragile(src)
+	new /obj/item/clothing/suit/space/fragile(src)
 
 /obj/item/storage/pod/storage_insert_on_interacted_with(datum/storage, obj/item/inserted, mob/living/user)
 	return can_interact(user)
