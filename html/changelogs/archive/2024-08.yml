@@ -190,3 +190,9 @@
   - bugfix: Smartfridges properly dispense `\Improper` items
   Rhials:
   - sound: Zipties no longer make handcuff noises when picked up or dropped.
+2024-08-09:
+  SmArtKar:
+  - bugfix: Circuit UI scale no longer has weird rounding
+  - bugfix: Circuit UI no longer gets covered by components menu
+  - bugfix: Fixed Charlie MOD installer not installing MODsuit unless you have a backpack
+      to drop

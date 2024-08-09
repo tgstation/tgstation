@@ -1,5 +1,0 @@
-author: "SmArtKar"
-delete-after: True
-changes:
-  - bugfix: "Circuit UI scale no longer has weird rounding"
-  - bugfix: "Circuit UI no longer gets covered by components menu"
