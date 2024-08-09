@@ -8832,6 +8832,7 @@
 "diI" = (
 /obj/machinery/light/small/directional/north,
 /obj/machinery/computer/security,
+/obj/structure/detectiveboard/directional/north,
 /turf/open/floor/carpet,
 /area/station/security/detectives_office)
 "diM" = (

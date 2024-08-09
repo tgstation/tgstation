@@ -73744,6 +73744,7 @@
 	pixel_x = -5
 	},
 /obj/structure/cable,
+/obj/structure/detectiveboard/directional/west,
 /turf/open/floor/carpet,
 /area/station/security/detectives_office)
 "vZS" = (
