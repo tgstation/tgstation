@@ -604,6 +604,16 @@
 	result = /obj/item/food/cherrycupcake/blue
 	category = CAT_PASTRY
 
+/datum/crafting_recipe/food/jupitercupcake
+	name = "Jupiter-cup-cake"
+	reqs = list(
+		/obj/item/food/pastrybase = 1,
+		/obj/item/food/grown/mushroom/jupitercup = 1,
+		/datum/reagent/consumable/caramel = 3,
+	)
+	result = /obj/item/food/jupitercupcake
+	category = CAT_PASTRY
+
 /datum/crafting_recipe/food/honeybun
 	name = "Honey bun"
 	reqs = list(
