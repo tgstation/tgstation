@@ -1,0 +1,365 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
+	},
+/obj/effect/turf_decal/stripes/line,
+/obj/effect/turf_decal/tile/neutral/opposingcorners,
+/obj/effect/turf_decal/siding/thinplating_new/dark{
+	dir = 1
+	},
+/obj/effect/turf_decal/siding/thinplating_new/dark,
+/turf/open/floor/iron/dark/textured,
+/area/shuttle/transport)
+"b" = (
+/obj/effect/turf_decal/bot,
+/obj/structure/chair/comfy/shuttle{
+	dir = 1
+	},
+/turf/open/floor/iron/dark/small,
+/area/shuttle/transport)
+"c" = (
+/obj/effect/turf_decal/bot,
+/obj/structure/chair/comfy/shuttle,
+/obj/machinery/light/directional/north,
+/obj/structure/sign/poster/official/random/directional/north,
+/turf/open/floor/iron/dark/small,
+/area/shuttle/transport)
+"h" = (
+/obj/effect/turf_decal/bot,
+/obj/structure/chair/comfy/shuttle,
+/turf/open/floor/iron/dark/small,
+/area/shuttle/transport)
+"i" = (
+/turf/closed/wall/mineral/titanium,
+/area/shuttle/transport)
+"j" = (
+/obj/effect/spawner/structure/window/reinforced/shuttle,
+/turf/open/floor/plating,
+/area/shuttle/transport)
+"n" = (
+/obj/machinery/power/shuttle_engine/propulsion/left{
+	dir = 8
+	},
+/turf/open/floor/plating/airless,
+/area/shuttle/transport)
+"o" = (
+/obj/machinery/power/shuttle_engine/heater{
+	dir = 8
+	},
+/obj/structure/window/reinforced/survival_pod/spawner/directional/east,
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
+/turf/open/floor/plating/airless,
+/area/shuttle/transport)
+"q" = (
+/obj/machinery/door/airlock/shuttle{
+	name = "Ferry Shuttle Airlock"
+	},
+/obj/effect/turf_decal/stripes/line,
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
+	},
+/obj/structure/fans/tiny,
+/turf/open/floor/mineral/plastitanium,
+/area/shuttle/transport)
+"s" = (
+/turf/closed/wall/mineral/plastitanium,
+/area/shuttle/transport)
+"t" = (
+/obj/effect/turf_decal/bot,
+/obj/machinery/computer/shuttle/ferry/request{
+	dir = 4
+	},
+/turf/open/floor/iron/dark/textured,
+/area/shuttle/transport)
+"u" = (
+/obj/structure/hedge,
+/obj/structure/railing{
+	dir = 5
+	},
+/obj/structure/sign/flag/nanotrasen/directional/south,
+/turf/open/floor/iron/dark/textured,
+/area/shuttle/transport)
+"x" = (
+/obj/effect/turf_decal/stripes/corner,
+/obj/effect/turf_decal/stripes/corner{
+	dir = 1
+	},
+/obj/effect/turf_decal/stripes/corner{
+	dir = 4
+	},
+/obj/effect/turf_decal/stripes/corner{
+	dir = 8
+	},
+/obj/effect/turf_decal/siding/thinplating_new/dark/corner{
+	dir = 8
+	},
+/obj/effect/turf_decal/siding/thinplating_new/dark/corner{
+	dir = 1
+	},
+/obj/effect/turf_decal/siding/thinplating_new/dark/corner,
+/obj/effect/turf_decal/trimline/neutral,
+/obj/effect/turf_decal/siding/thinplating_new/dark/corner{
+	dir = 4
+	},
+/turf/open/floor/iron/dark/textured,
+/area/shuttle/transport)
+"y" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/neutral/opposingcorners,
+/obj/structure/table/reinforced,
+/obj/effect/turf_decal/siding/thinplating_new/dark{
+	dir = 4
+	},
+/obj/effect/turf_decal/siding/thinplating_new/dark{
+	dir = 8
+	},
+/obj/item/storage/fancy/coffee_condi_display{
+	pixel_y = 11
+	},
+/obj/item/reagent_containers/cup/glass/coffee{
+	pixel_y = 3;
+	pixel_x = -6
+	},
+/obj/item/reagent_containers/cup/glass/coffee{
+	pixel_y = 3;
+	pixel_x = 6
+	},
+/obj/structure/sign/calendar/directional/south,
+/turf/open/floor/iron/dark/textured,
+/area/shuttle/transport)
+"z" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
+	},
+/obj/effect/turf_decal/stripes/line,
+/obj/effect/turf_decal/siding/thinplating_new/dark{
+	dir = 1
+	},
+/obj/effect/turf_decal/siding/thinplating_new/dark,
+/obj/effect/turf_decal/trimline/neutral,
+/turf/open/floor/iron/dark/textured,
+/area/shuttle/transport)
+"E" = (
+/obj/effect/turf_decal/tile/neutral/opposingcorners,
+/obj/effect/turf_decal/stripes/corner{
+	dir = 4
+	},
+/obj/effect/turf_decal/stripes/corner{
+	dir = 8
+	},
+/obj/effect/turf_decal/stripes/corner{
+	dir = 1
+	},
+/obj/effect/turf_decal/stripes/corner,
+/obj/effect/turf_decal/siding/thinplating_new/dark/corner{
+	dir = 8
+	},
+/obj/effect/turf_decal/siding/thinplating_new/dark/corner{
+	dir = 1
+	},
+/obj/effect/turf_decal/siding/thinplating_new/dark/corner,
+/obj/effect/turf_decal/siding/thinplating_new/dark/corner{
+	dir = 4
+	},
+/turf/open/floor/iron/dark/textured,
+/area/shuttle/transport)
+"J" = (
+/obj/structure/window/reinforced/spawner/directional/north,
+/obj/structure/window/reinforced/spawner/directional/south,
+/obj/structure/window/reinforced/spawner/directional/west,
+/obj/structure/flora/bush/fullgrass/style_random,
+/obj/structure/flora/bush/grassy/style_random,
+/obj/structure/flora/grass/jungle/b/style_random,
+/obj/structure/flora/bush/lavendergrass/style_random,
+/obj/structure/flora/bush/leafy,
+/obj/structure/flora/bush/flowers_br/style_random,
+/obj/structure/window/reinforced/spawner/directional/east,
+/obj/structure/flora/bush/large/style_2{
+	pixel_y = 0
+	},
+/turf/open/floor/grass,
+/area/shuttle/transport)
+"K" = (
+/obj/effect/turf_decal/bot,
+/obj/structure/chair/comfy/shuttle{
+	dir = 1
+	},
+/obj/machinery/light/directional/south,
+/obj/structure/sign/poster/official/random/directional/south,
+/turf/open/floor/iron/dark/small,
+/area/shuttle/transport)
+"L" = (
+/turf/closed/wall/mineral/titanium/nodiagonal,
+/area/shuttle/transport)
+"M" = (
+/obj/structure/sign/nanotrasen,
+/turf/closed/wall/mineral/titanium,
+/area/shuttle/transport)
+"N" = (
+/obj/structure/hedge,
+/obj/structure/railing{
+	dir = 6
+	},
+/obj/structure/sign/flag/nanotrasen/directional/north,
+/turf/open/floor/iron/dark/textured,
+/area/shuttle/transport)
+"S" = (
+/turf/template_noop,
+/area/template_noop)
+"U" = (
+/obj/effect/turf_decal/trimline/neutral,
+/obj/effect/turf_decal/stripes/end{
+	dir = 8
+	},
+/obj/effect/turf_decal/siding/thinplating_new/dark/end{
+	dir = 8
+	},
+/turf/open/floor/iron/dark/textured,
+/area/shuttle/transport)
+"V" = (
+/obj/machinery/door/airlock/shuttle{
+	name = "Ferry Shuttle Airlock"
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/obj/structure/fans/tiny,
+/obj/docking_port/mobile{
+	dir = 8;
+	shuttle_id = "ferry";
+	name = "ferry shuttle";
+	preferred_direction = 4
+	},
+/turf/open/floor/mineral/plastitanium,
+/area/shuttle/transport)
+"W" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/neutral/opposingcorners,
+/obj/structure/table/reinforced,
+/obj/effect/turf_decal/siding/thinplating_new/dark{
+	dir = 4
+	},
+/obj/effect/turf_decal/siding/thinplating_new/dark{
+	dir = 8
+	},
+/obj/machinery/recharger{
+	pixel_x = 6;
+	pixel_y = 2
+	},
+/obj/machinery/recharger{
+	pixel_x = -6;
+	pixel_y = 2
+	},
+/obj/machinery/digital_clock/directional/north,
+/turf/open/floor/iron/dark/textured,
+/area/shuttle/transport)
+"Z" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/neutral/opposingcorners,
+/obj/effect/turf_decal/siding/thinplating_new/dark{
+	dir = 4
+	},
+/obj/effect/turf_decal/siding/thinplating_new/dark{
+	dir = 8
+	},
+/turf/open/floor/iron/dark/textured,
+/area/shuttle/transport)
+
+(1,1,1) = {"
+S
+n
+n
+n
+S
+"}
+(2,1,1) = {"
+s
+o
+o
+o
+s
+"}
+(3,1,1) = {"
+L
+N
+t
+u
+L
+"}
+(4,1,1) = {"
+j
+h
+U
+b
+j
+"}
+(5,1,1) = {"
+i
+c
+a
+b
+M
+"}
+(6,1,1) = {"
+q
+Z
+x
+Z
+q
+"}
+(7,1,1) = {"
+M
+h
+a
+K
+i
+"}
+(8,1,1) = {"
+j
+h
+z
+b
+j
+"}
+(9,1,1) = {"
+i
+W
+E
+y
+i
+"}
+(10,1,1) = {"
+i
+J
+z
+J
+i
+"}
+(11,1,1) = {"
+i
+j
+V
+j
+i
+"}

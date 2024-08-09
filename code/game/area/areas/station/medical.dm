@@ -19,6 +19,10 @@
 	name = "Medbay Central"
 	icon_state = "med_central"
 
+/area/station/medical/lower
+	name = "\improper Lower Medbay"
+	icon_state = "lower_med"
+
 /area/station/medical/medbay/lobby
 	name = "\improper Medbay Lobby"
 	icon_state = "med_lobby"
