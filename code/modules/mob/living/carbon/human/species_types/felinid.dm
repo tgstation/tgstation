@@ -3,11 +3,10 @@
 	name = "Felinid"
 	id = SPECIES_FELINE
 	examine_limb_id = SPECIES_HUMAN
-	mutant_bodyparts = list("ears" = "Cat", "wings" = "None")
 	mutantbrain = /obj/item/organ/internal/brain/felinid
 	mutanttongue = /obj/item/organ/internal/tongue/cat
 	mutantears = /obj/item/organ/internal/ears/cat
-	external_organs = list(
+	mutant_organs = list(
 		/obj/item/organ/external/tail/cat = "Cat",
 	)
 	inherent_traits = list(
@@ -151,7 +150,7 @@
 		// stored_feature_id is only set once (the first time an organ is inserted), so this should be safe.
 		var/obj/item/organ/internal/ears/cat/kitty_ears = new
 		kitty_ears.Insert(soon_to_be_felinid, special = TRUE, movement_flags = DELETE_IF_REPLACED)
-		if(should_external_organ_apply_to(/obj/item/organ/external/tail/cat, soon_to_be_felinid)) //only give them a tail if they actually have sprites for it / are a compatible subspecies.
+		if(should_visual_organ_apply_to(/obj/item/organ/external/tail/cat, soon_to_be_felinid)) //only give them a tail if they actually have sprites for it / are a compatible subspecies.
 			var/obj/item/organ/external/tail/cat/kitty_tail = new
 			kitty_tail.Insert(soon_to_be_felinid, special = TRUE, movement_flags = DELETE_IF_REPLACED)
 
@@ -174,8 +173,8 @@
 			old_tail.Remove(purrbated_human, special = TRUE)
 			qdel(old_tail)
 			// Locate does not work on assoc lists, so we do it by hand
-			for(var/external_organ in target_species.external_organs)
-				if(!should_external_organ_apply_to(external_organ, purrbated_human))
+			for(var/external_organ in target_species.mutant_organs)
+				if(!should_visual_organ_apply_to(external_organ, purrbated_human))
 					continue
 				if(ispath(external_organ, /obj/item/organ/external/tail))
 					var/obj/item/organ/external/tail/new_tail = new external_organ()
