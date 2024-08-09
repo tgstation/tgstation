@@ -160,6 +160,45 @@
 	new /obj/item/lighter(src)
 	new /obj/item/jammer(src)
 
+/obj/item/storage/box/clonearmy
+	name = "Syndicate clone army kit"
+	desc = "A box containing everything you need to make a clone army. The disk inside cunningly disguised as a DNA data disk is used to give all clones a directive they must follow."
+	icon_state = "syndiebox"
+
+/obj/item/storage/box/clonearmy/PopulateContents()
+	var/static/items_inside = list(
+		/obj/item/disk/clonearmy = 1,
+		/obj/item/stack/sheet/iron = 15,
+		/obj/item/stack/sheet/glass = 4,
+		/obj/item/stack/cable_coil = 1,
+		/obj/item/circuitboard/machine/clonepod/experimental = 1,
+		/obj/item/circuitboard/machine/clonescanner = 1,
+		/obj/item/circuitboard/computer/cloning = 1,
+		/obj/item/stock_parts/manipulator/femto = 2, // The syndicate is so cool they gave you tier four parts. RIP my joke about tier 2 parts.
+		/obj/item/stock_parts/scanning_module/triphasic = 3,
+		/obj/item/stock_parts/micro_laser/quadultra = 1,
+		/obj/item/stock_parts/matter_bin/bluespace = 1,
+		/obj/item/wrench = 1,
+		/obj/item/screwdriver/nuke = 1,
+		/obj/item/multitool = 1, // For those who want space between the cloning console and pod.
+		/obj/item/language_manual/codespeak_manual/unlimited = 1,
+		/obj/item/implanter/radio/syndicate = 1, // So you can communicate with your clones, instead of having random evil clones roaming the halls with no direction.
+		/obj/item/paper/clone_guide = 1,)
+	generate_items_inside(items_inside, src)
+
+/obj/item/paper/clone_guide
+	name = "Clone Army User Manual" // Start and end shamelessly copied from contractor guide. I am not a good writer. This is also ugly.
+	default_raw_text = {"Welcome agent, thank you for purchasing the clone army kit.<br>\
+			<ul>\
+			<li>The "DNA data disk" inside is actually a sophisticated device that can be used to hijack an experimental cloner, giving the clones a directive they must follow.</li>\
+			<li>In order to use this disk, use it in your hand, and input your desired directive, before hitting the cloner with the disk. You can input and upload a new objective to replace the old one if you ever feel like it, the disk is infinitely reusable.</li>\
+			<li>The clones will be given basic access, including syndicate, maintenance, genetics, and mineral storage. They will also be given an implanted syndicate radio and automatically taught codespeak. Syndicate turrets and the like will recognize the clones as a member of the syndicate.</li>\
+			<li>Be wary, the clones will have obviously evil red eyes, which will alert anyone who sees them with no eye covering that something is wrong with them. Also, don't try to use this on newer cloning models, Nanotrasen fixed the vulnerability that lets the disk work in their newer models.</li>\
+			<li>When hacked, a cloner will begin to operate slower, and anyone who examines it closely will be able to see that the cloner is malfunctioning.</li>\
+			<li>A tip, any activated mutations in the person being scanned, will be present in the clones produced, allowing you to give the clones some intrinsic powers. Make sure to use activators, not mutators.</li>\
+			</ul>
+			Good luck agent. You can burn this document."}
+
 #undef KIT_ITEM_CATEGORY_SUPPORT
 #undef KIT_ITEM_CATEGORY_WEAPONS
 #undef KIT_ITEM_CATEGORY_MISC

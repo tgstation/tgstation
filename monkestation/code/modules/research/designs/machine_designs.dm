@@ -7,7 +7,7 @@
 	category = list(
 		RND_CATEGORY_MACHINE + RND_SUBCATEGORY_MACHINE_MEDICAL
 	)
-	departmental_flags =  DEPARTMENT_BITFLAG_MEDICAL
+	departmental_flags =  DEPARTMENT_BITFLAG_MEDICAL | DEPARTMENT_BITFLAG_SCIENCE
 
 
 /datum/design/board/clonepod
@@ -18,7 +18,17 @@
 	category = list(
 		RND_CATEGORY_MACHINE + RND_SUBCATEGORY_MACHINE_MEDICAL
 	)
-	departmental_flags =  DEPARTMENT_BITFLAG_MEDICAL
+	departmental_flags =  DEPARTMENT_BITFLAG_MEDICAL | DEPARTMENT_BITFLAG_SCIENCE
+
+/datum/design/board/clonepod_experimental
+	name = "Machine Design (Experimental Clone Pod)"
+	desc = "Allows for the construction of circuit boards used to build an Experimental Cloning Pod."
+	id = "clonepod_experimental"
+	build_path = /obj/item/circuitboard/machine/clonepod/experimental
+	category = list(
+		RND_CATEGORY_MACHINE + RND_SUBCATEGORY_MACHINE_MEDICAL
+	)
+	departmental_flags =  DEPARTMENT_BITFLAG_SCIENCE
 
 
 /datum/design/board/clonescanner	//hippie end, re-add cloning
@@ -29,7 +39,7 @@
 	category = list(
 		RND_CATEGORY_MACHINE + RND_SUBCATEGORY_MACHINE_MEDICAL
 	)
-	departmental_flags =  DEPARTMENT_BITFLAG_MEDICAL
+	departmental_flags =  DEPARTMENT_BITFLAG_MEDICAL | DEPARTMENT_BITFLAG_SCIENCE
 
 /datum/design/board/nanite_chamber
 	name = "Machine Design (Nanite Chamber Board)"

@@ -7,12 +7,36 @@
 	req_access = null
 	circuit = /obj/item/circuitboard/machine/clonepod/experimental
 	internal_radio = FALSE
+	grab_ghost_when = CLONER_FRESH_CLONE // This helps with getting the objective for evil clones to display.
 	VAR_PRIVATE
 		static/list/image/cached_clone_images
+	/// Am I producing evil clones?
+	var/datum/objective/evil_clone/evil_objective = null
+	/// Can my objective be changed?
+	var/locked = FALSE
+	/// The custom objective given by the traitor item.
+	var/custom_objective = null
 
 /obj/machinery/clonepod/experimental/Destroy()
 	clear_human_dummy(REF(src))
 	return ..()
+
+/obj/machinery/clonepod/experimental/examine(mob/user)
+	. = ..()
+	if((evil_objective || custom_objective) && (in_range(user, src) || isobserver(user)))
+		if(!isnull(evil_objective) || !isnull(custom_objective))
+			. += span_warning("You notice an ominous, flashing red LED light.")
+			if(isobserver(user))
+				if(!isnull(custom_objective))
+					. += span_notice("Those cloned will have the objective: [custom_objective]") //This doesn't look the best I think.
+				else
+					. += span_notice("Those cloned will have the objective: [evil_objective.explanation_text]")
+
+/obj/machinery/clonepod/experimental/RefreshParts()
+	. = ..()
+	if(!isnull(evil_objective) || !isnull(custom_objective))
+		speed_coeff = round(speed_coeff / 2) // So better parts have half the speed increase.
+		speed_coeff += 1 // I still want basic parts to have base 100% speed.
 
 //Start growing a human clone in the pod!
 /obj/machinery/clonepod/experimental/growclone(clonename, ui, mutation_index, mindref, blood_type, datum/species/mrace, list/features, factions, list/quirks, datum/bank_account/insurance)
@@ -54,13 +78,25 @@
 	ADD_TRAIT(clonee, TRAIT_NOCRITDAMAGE, CLONING_POD_TRAIT)
 	clonee.Unconscious(80)
 
+	var/role_text
+	var/poll_text
+	if(!isnull(custom_objective))
+		role_text = "syndicate clone"
+		poll_text = "Do you want to play as [clonename]'s syndicate clone?"
+	else if(!isnull(evil_objective))
+		role_text = "evil clone"
+		poll_text = "Do you want to play as [clonename]'s evil clone?"
+	else
+		role_text = "defective clone"
+		poll_text = "Do you want to play as [clonename]'s defective clone?"
+
 	var/list/mob/dead/observer/candidates = SSpolling.poll_ghost_candidates_for_mob(
-		"Do you want to play as [clonename]'s defective clone?",
+		poll_text,
 		poll_time = 10 SECONDS,
 		target_mob = clonee,
 		ignore_category = POLL_IGNORE_DEFECTIVECLONE,
 		pic_source = get_clone_preview(clonee.dna) || clonee,
-		role_name_text = "defective clone"
+		role_name_text = role_text
 	)
 	if(LAZYLEN(candidates))
 		var/mob/dead/observer/candidate = pick(candidates)
@@ -85,6 +121,23 @@
 	if(!mob_occupant?.mind) //When experimental cloner fails to get a ghost, it won't spit out a body, so we don't get an army of brainless rejects.
 		qdel(mob_occupant)
 		return FALSE
+	else if(!isnull(custom_objective))
+		var/datum/antagonist/evil_clone/antag_object = new
+		var/datum/objective/evil_clone/custom = new
+		custom.explanation_text = custom_objective
+		antag_object.objectives += custom
+		mob_occupant.mind.add_antag_datum(antag_object)
+		mob_occupant.grant_language(/datum/language/codespeak) // So you don't have to remember to grant each and every identical clone codespeak with the manual.
+		mob_occupant.remove_blocked_language(/datum/language/codespeak, source=LANGUAGE_ALL) // All the effects the codespeak manual would have.
+		ADD_TRAIT(mob_occupant, TRAIT_TOWER_OF_BABEL, MAGIC_TRAIT)
+		var/obj/item/implant/radio/syndicate/imp = new(src)
+		imp.implant(mob_occupant)
+		mob_occupant.faction |= ROLE_SYNDICATE
+		mob_occupant.AddComponent(/datum/component/simple_access, list(ACCESS_SYNDICATE, ACCESS_MAINT_TUNNELS, ACCESS_GENETICS, ACCESS_MINERAL_STOREROOM)) //Basic/syndicate access, and genetics too because clones are genetics stuff.
+	else if(!isnull(evil_objective))
+		var/datum/antagonist/evil_clone/antag_object = new
+		antag_object.objectives += new evil_objective()
+		mob_occupant.mind.add_antag_datum(antag_object)
 	return TRUE
 
 /obj/machinery/clonepod/experimental/proc/get_clone_preview(datum/dna/clone_dna)
@@ -103,6 +156,25 @@
 	unset_busy_human_dummy(REF(src))
 	LAZYSET(cached_clone_images, key, preview)
 	return preview
+
+/obj/machinery/clonepod/experimental/emag_act(mob/user)
+	if(!locked)
+		evil_objective = /datum/objective/evil_clone/murder //Emags will give a nasty objective.
+		locked = TRUE
+		to_chat(user, span_warning("You corrupt the genetic compiler."))
+		add_fingerprint(user)
+		log_cloning("[key_name(user)] emagged [src] at [AREACOORD(src)], causing it to malfunction.")
+		RefreshParts()
+	else
+		to_chat(user, span_warning("The cloner is already malfunctioning."))
+
+/obj/machinery/clonepod/experimental/emp_act(severity)
+	. = ..()
+	if (!(. & EMP_PROTECT_SELF))
+		if(prob(100/severity) && !locked)
+			evil_objective = pick(subtypesof(/datum/objective/evil_clone) - /datum/objective/evil_clone/murder)
+			RefreshParts()
+			log_cloning("[src] at [AREACOORD(src)] corrupted due to EMP pulse.")
 
 //Prototype cloning console, much more rudimental and lacks modern functions such as saving records, autocloning, or safety checks.
 /obj/machinery/computer/prototype_cloning

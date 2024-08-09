@@ -36,6 +36,7 @@
 /obj/machinery/computer/cloning/Initialize()
 	. = ..()
 	updatemodules(TRUE)
+	AddElement(/datum/element/empprotection, EMP_PROTECT_SELF) // So when an experimental cloner gets emped, it's cloning console doesn't break nullifying the threat.
 
 /obj/machinery/computer/cloning/Destroy()
 	if(pods)
