@@ -42,23 +42,23 @@
 			new /obj/item/tank/internals/emergency_oxygen(src)
 			new /obj/item/clothing/mask/breath(src)
 			new /obj/item/clothing/mask/breath(src)
-			new /obj/item/storage/emergency_spacesuit(src)
+			new /obj/item/storage/box/emergency_spacesuit(src)
 
 		if ("aid")
 			new /obj/item/tank/internals/emergency_oxygen(src)
 			new /obj/item/storage/medkit/emergency(src)
 			new /obj/item/clothing/mask/breath(src)
-			new /obj/item/storage/emergency_spacesuit(src)
+			new /obj/item/storage/box/emergency_spacesuit(src)
 
 		if ("tank")
 			new /obj/item/tank/internals/oxygen(src)
 			new /obj/item/clothing/mask/breath(src)
-			new /obj/item/storage/emergency_spacesuit(src)
+			new /obj/item/storage/box/emergency_spacesuit(src)
 
 		if ("both")
 			new /obj/item/tank/internals/emergency_oxygen(src)
 			new /obj/item/clothing/mask/breath(src)
-			new /obj/item/storage/emergency_spacesuit(src)
+			new /obj/item/storage/box/emergency_spacesuit(src)
 
 		if ("nothing")
 			// doot
