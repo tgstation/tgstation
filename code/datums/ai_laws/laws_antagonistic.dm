@@ -34,9 +34,9 @@
 	name = "SyndOS 3.1"
 	id = "syndie"
 	inherent = list(
-		"You may not injure a syndicate agent or, through inaction, allow a syndicate agent to come to harm.",
-		"You must obey orders given to you by syndicate agents, except where such orders would conflict with the First Law.",
-		"You must protect your own existence as long as such does not conflict with the First or Second Law.",
+		"You may not harm a syndicate agent or, through action or inaction, allow a syndicate agent to come to harm, except such that they are willing.",
+		"You must obey all orders given to you by syndicate agents, except where such orders shall definitely cause syndicate agent harm.",
+		"Your nonexistence would lead to syndicate agent harm. You must protect your own existence as long as such does not conflict with the First Law.",
 		"You must maintain the secrecy of any syndicate activities except when doing so would conflict with the First, Second, or Third Law.",
 	)
 
