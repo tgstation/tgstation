@@ -224,6 +224,7 @@
 	greyscale_config_inhand_left = null
 	greyscale_config_inhand_right = null
 	greyscale_config_worn = null
+	digitigrade_greyscale_colors = "#3f3f3f"
 	can_adjust = FALSE
 	flags_1 = NONE
 
