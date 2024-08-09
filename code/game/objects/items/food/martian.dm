@@ -102,6 +102,7 @@
 	desc = "A spice paste from Indonesia, used widely in cooking throughout South East Asia."
 	icon = 'icons/obj/food/martian.dmi'
 	icon_state = "sambal"
+	trash_type = /obj/item/reagent_containers/cup/bowl
 	food_reagents = list(
 		/datum/reagent/consumable/nutriment/vitamin = 5,
 		/datum/reagent/consumable/capsaicin = 2
