@@ -563,3 +563,49 @@
 	head = /obj/item/clothing/head/beret/militia
 	l_hand = /obj/item/megaphone
 	suit_store = /obj/item/gun/energy/laser/musket/prime
+
+/datum/outfit/centcom/ert/medical_commander
+	name = "Chief EMT"
+	id = /obj/item/card/id/advanced/centcom/ert/medical
+	suit = /obj/item/clothing/suit/toggle/labcoat/cmo
+	uniform = /obj/item/clothing/under/rank/medical/chief_medical_officer
+	back = /obj/item/storage/backpack/ert/medical
+	l_pocket = /obj/item/healthanalyzer/advanced
+	head = /obj/item/clothing/head/utility/head_mirror
+	shoes = /obj/item/clothing/shoes/sneakers/white
+	backpack_contents = list(
+		/obj/item/reagent_containers/hypospray/combat = 1,
+		/obj/item/storage/medkit/regular = 1,
+		/obj/item/storage/medkit/advanced = 1,
+		/obj/item/melee/baton/telescopic = 1,
+		/obj/item/gun/energy/pulse/pistol/loyalpin = 1,
+		/obj/item/stack/medical/poultice = 1, //These stacks contain 15 by default. Great for getting corpses to defib range without surgery.
+	)
+	belt = /obj/item/storage/belt/medical/ert
+	glasses = /obj/item/clothing/glasses/hud/health/sunglasses
+	additional_radio = /obj/item/encryptionkey/heads/cmo
+	mask = /obj/item/clothing/mask/surgical
+	gloves = /obj/item/clothing/gloves/latex
+
+/datum/outfit/centcom/ert/medical_technician
+	name = "EMT Paramedic"
+	id = /obj/item/card/id/advanced/centcom/ert/medical
+	suit = /obj/item/clothing/suit/apron/surgical
+	uniform = /obj/item/clothing/under/rank/medical/scrubs/blue
+	back = /obj/item/storage/backpack/ert/medical
+	l_pocket = /obj/item/healthanalyzer
+	head = /obj/item/clothing/head/utility/surgerycap
+	backpack_contents = list(
+		/obj/item/reagent_containers/hypospray/combat = 1,
+		/obj/item/storage/medkit/regular = 1,
+		/obj/item/reagent_containers/syringe = 1,
+		/obj/item/reagent_containers/cup/bottle/formaldehyde = 1,
+		/obj/item/reagent_containers/medigel/sterilizine = 1,
+		/obj/item/bodybag = 2,
+	)
+	mask = /obj/item/clothing/mask/surgical
+	belt = /obj/item/storage/belt/medical/ert
+	glasses = /obj/item/clothing/glasses/hud/health
+	additional_radio = /obj/item/encryptionkey/heads/cmo
+	shoes = /obj/item/clothing/shoes/sneakers/blue
+	gloves = /obj/item/clothing/gloves/latex
