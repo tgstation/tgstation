@@ -308,6 +308,9 @@
 			return pack
 	return null
 
+/obj/item/paper/requisition
+	can_become_message_in_bottle = FALSE
+
 /obj/machinery/computer/cargo/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if(.)
@@ -329,7 +332,7 @@
 			else
 				//create the paper from the SSshuttle.shopping_list
 				if(length(SSshuttle.shopping_list))
-					var/obj/item/paper/requisition_paper = new(get_turf(src))
+					var/obj/item/paper/requisition/requisition_paper = new(get_turf(src))
 					requisition_paper.name = "requisition form - [station_time_timestamp()]"
 					var/requisition_text = "<h2>[station_name()] Supply Requisition</h2>"
 					requisition_text += "<hr/>"

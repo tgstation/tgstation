@@ -64,6 +64,9 @@
 	///If TRUE, staff can read paper everywhere, but usually from requests panel.
 	var/request_state = FALSE
 
+	///If this paper can be selected as a candidate for a future message in a bottle when spawned outside of mapload. Doesn't affect manually doing that.
+	var/can_become_message_in_bottle = TRUE
+
 /obj/item/paper/Initialize(mapload)
 	. = ..()
 	pixel_x = base_pixel_x + rand(-9, 9)
@@ -74,7 +77,7 @@
 
 	update_appearance()
 
-	if(!mapload && prob(MESSAGE_BOTTLE_CHANCE))
+	if(can_become_message_in_bottle && !mapload && prob(MESSAGE_BOTTLE_CHANCE))
 		LAZYADD(SSpersistence.queued_message_bottles, src)
 
 /obj/item/paper/Destroy()

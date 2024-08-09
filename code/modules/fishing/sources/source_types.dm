@@ -1,7 +1,7 @@
 /datum/fish_source/ocean
 	fish_table = list(
-		FISHING_DUD = 8,
-		/obj/effect/spawner/message_in_a_bottle = 7,
+		FISHING_DUD = 11,
+		/obj/effect/spawner/message_in_a_bottle = 4,
 		/obj/item/coin/gold = 5,
 		/obj/item/fish/clownfish = 15,
 		/obj/item/fish/pufferfish = 15,

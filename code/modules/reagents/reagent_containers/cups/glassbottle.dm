@@ -39,12 +39,32 @@
 	var/bottle_knockdown_duration = BOTTLE_KNOCKDOWN_DEFAULT_DURATION
 	tool_behaviour = TOOL_ROLLINGPIN // Used to knock out the Chef.
 	toolspeed = 1.3 //it's a little awkward to use, but it's a cylinder alright.
+	/// A contained piece of paper, a photo, or space cash, that we can use as a message or gift to future spessmen.
 	var/obj/item/message_in_a_bottle
 
 /obj/item/reagent_containers/cup/glass/bottle/Initialize(mapload, vol)
 	. = ..()
 	var/static/list/recipes =  list(/datum/crafting_recipe/molotov)
 	AddElement(/datum/element/slapcrafting, recipes)
+	register_context()
+	register_item_context()
+
+/obj/item/reagent_containers/cup/glass/bottle/add_context(atom/source, list/context, obj/item/held_item, mob/living/user)
+	if(message_in_a_bottle)
+		if(isnull(held_item))
+			context[SCREENTIP_CONTEXT_RMB] = "Remove message"
+			return CONTEXTUAL_SCREENTIP_SET
+		return NONE
+	if(istype(held_item, /obj/item/paper) || istype(held_item, /obj/item/stack/spacecash) || istype(held_item, /obj/item/photo))
+		context[SCREENTIP_CONTEXT_LMB] = "Insert message"
+		return CONTEXTUAL_SCREENTIP_SET
+	return NONE
+
+/obj/item/reagent_containers/cup/glass/bottle/add_item_context(obj/item/source, list/context, atom/target, mob/living/user)
+	if(message_in_a_bottle && HAS_TRAIT(target, TRAIT_MESSAGE_IN_A_BOTTLE_LOCATION))
+		context[SCREENTIP_CONTEXT_RMB] = "Toss message"
+		return CONTEXTUAL_SCREENTIP_SET
+	return NONE
 
 /obj/item/reagent_containers/cup/glass/bottle/Exited(atom/movable/gone)
 	if(gone == message_in_a_bottle)
@@ -62,7 +82,7 @@
 /obj/item/reagent_containers/cup/glass/bottle/examine(mob/user)
 	. = ..()
 	if(message_in_a_bottle)
-		. += span_info("there's \a [message_in_a_bottle] inside it. You can [EXAMINE_HINT("right-click")] it with an [EXAMINE_HINT("empty hand")] to remove it.")
+		. += span_info("there's \a [message_in_a_bottle] inside it. [EXAMINE_HINT("Right-click")] with an [EXAMINE_HINT("empty hand")] to remove it, or find a beach or ocean and toss it with [EXAMINE_HINT("right-click")].")
 	else if(isGlass)
 		. += span_tinynoticeital("you could place a paper, photo or space cash inside it...")
 
@@ -77,11 +97,16 @@
 	. = ..()
 	if(. != NONE || !message_in_a_bottle)
 		return
-	if(HAS_TRAIT(target, TRAIT_MESSAGE_IN_A_BOTTLE_LOCATION))
-		user.visible_message(span_notice("[user] tosses [src] in [target]"), span_notice("You toss [src] in [target]"), span_notice("you hear a splash."))
-		SSpersistence.save_message_bottle(message_in_a_bottle, type)
-		playsound(target, 'sound/effects/bigsplash.ogg', 70)
-		qdel(src)
+	if(!HAS_TRAIT(target, TRAIT_MESSAGE_IN_A_BOTTLE_LOCATION))
+		return NONE
+	if(!user.temporarilyRemoveItemFromInventory(src))
+		balloon_alert(user, "it's stuck to your hand!")
+		return ITEM_INTERACT_BLOCKING
+	user.visible_message(span_notice("[user] tosses [src] in [target]"), span_notice("You toss [src] in [target]"), span_notice("you hear a splash."))
+	SSpersistence.save_message_bottle(message_in_a_bottle, type)
+	playsound(target, 'sound/effects/bigsplash.ogg', 70)
+	qdel(src)
+	return ITEM_INTERACT_SUCCESS
 
 /obj/item/reagent_containers/cup/glass/bottle/item_interaction(mob/living/user, obj/item/item, list/modifiers)
 	if(!isGlass)
@@ -89,14 +114,15 @@
 	if(!istype(item, /obj/item/paper) && !istype(item, /obj/item/stack/spacecash) && !istype(item, /obj/item/photo))
 		return NONE
 	if(message_in_a_bottle)
-		balloon_alert(user, "item already loaded!")
-		return
+		balloon_alert(user, "has a message already!")
+		return ITEM_INTERACT_BLOCKING
 	if(!user.transferItemToLoc(item))
-		balloon_alert(user, "item stuck to hands!")
-		return
-	balloon_alert(user, "item inserted")
+		balloon_alert(user, "it's stuck to your hand!")
+		return ITEM_INTERACT_BLOCKING
+	balloon_alert(user, "message inserted")
 	message_in_a_bottle = item
 	update_icon(UPDATE_OVERLAYS)
+	return ITEM_INTERACT_SUCCESS
 
 /obj/item/reagent_containers/cup/glass/bottle/attack_hand_secondary(mob/user, list/modifiers)
 	. = ..()
@@ -104,9 +130,9 @@
 		return
 	if(DOING_INTERACTION_WITH_TARGET(user, src))
 		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
-	balloon_alert(user, "extracting item")
-	if(do_after(user, src, 5 SECONDS))
-		balloon_alert(user, "item extracted")
+	balloon_alert(user, "removing message...")
+	if(do_after(user, 5 SECONDS, src))
+		balloon_alert(user, "message removed...")
 		user.put_in_hands(message_in_a_bottle)
 	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 

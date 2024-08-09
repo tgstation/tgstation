@@ -64,6 +64,8 @@
 /// Picks the data of a random key and then removes that key from the database.
 /// Since the list is no longer inside the database, you can mutate and use it as you like.
 /datum/json_database/proc/pick_and_take_key()
+	if(!length(cached_data))
+		return null
 	. =  cached_data[pick(cached_data)]
 	cached_data -= .
 	queue_save()
