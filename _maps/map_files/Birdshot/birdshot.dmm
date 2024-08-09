@@ -53177,6 +53177,7 @@
 	name = "Detective Requests Console"
 	},
 /obj/machinery/light/small/directional/west,
+/obj/structure/detectiveboard/directional/west,
 /turf/open/floor/wood,
 /area/station/security/detectives_office)
 "smf" = (
