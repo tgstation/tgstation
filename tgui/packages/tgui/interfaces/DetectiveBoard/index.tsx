@@ -64,7 +64,7 @@ export function DetectiveBoard(props) {
   }
 
   function handleEvidenceRemoved(evidence: DataEvidence) {
-    const pinPosition = getPinPosition(evidence);
+    let pinPosition = getPinPosition(evidence);
     let new_connections: Connection[] = [];
     for (let old_connection of connections) {
       if (
@@ -78,6 +78,21 @@ export function DetectiveBoard(props) {
       new_connections.push(old_connection);
     }
     setConnections(new_connections);
+    if (movingEvidenceConnections) {
+      let new_mov_connections: TypedConnection[] = [];
+      for (let old_connection of movingEvidenceConnections) {
+        if (
+          (old_connection.connection.to.x === pinPosition.x &&
+            old_connection.connection.to.y === pinPosition.y) ||
+          (old_connection.connection.from.x === pinPosition.x &&
+            old_connection.connection.from.y === pinPosition.y)
+        ) {
+          continue;
+        }
+        new_mov_connections.push(old_connection);
+      }
+      setMovingEvidenceConnections(new_mov_connections);
+    }
   }
 
   useEffect(() => {
@@ -274,10 +289,10 @@ export function DetectiveBoard(props) {
             {cases?.map(
               (item, i) =>
                 current_case - 1 === i && (
-                  <Box key={'case' + i} className="Board__Content">
+                  <Box key={cases[i].ref} className="Board__Content">
                     {item?.evidences?.map((evidence, index) => (
                       <Evidence
-                        key={'evidence' + index}
+                        key={evidence.ref}
                         evidence={evidence}
                         case_ref={item.ref}
                         act={act}

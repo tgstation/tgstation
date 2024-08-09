@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import { Box, Button, Flex, Stack } from '../../components';
 import { DataEvidence } from './DataTypes';
@@ -29,8 +29,6 @@ export function Evidence(props: EvidenceProps) {
 
   const [canDrag, setCanDrag] = useState(true);
 
-  const reference = useRef(null);
-
   const [dragPosition, setDragPosition] = useState<Position>({
     x: evidence.x,
     y: evidence.y,
@@ -52,6 +50,7 @@ export function Evidence(props: EvidenceProps) {
     if (!dragging) {
       return;
     }
+
     const handleMouseUp = (args: MouseEvent) => {
       if (canDrag && dragPosition && dragging && lastMousePosition) {
         act('set_evidence_cords', {
@@ -73,8 +72,11 @@ export function Evidence(props: EvidenceProps) {
     return () => {
       window.removeEventListener('mouseup', handleMouseUp);
     };
-  }, [dragPosition, dragging]);
+  }, [dragging]);
 
+  function getPinPositionByPosition(evidence: Position) {
+    return { x: evidence.x + 15, y: evidence.y + 45 };
+  }
   useEffect(() => {
     if (!dragging) {
       return;
@@ -145,12 +147,12 @@ export function Evidence(props: EvidenceProps) {
                   icon="trash"
                   color="white"
                   onClick={() => {
+                    props.onEvidenceRemoved(evidence);
                     act('remove_evidence', {
-                      case_ref: case_ref,
                       evidence_ref: evidence.ref,
                     });
-                    props.onEvidenceRemoved(evidence);
                   }}
+                  onMouseDown={() => setCanDrag(false)}
                 />
               </Flex.Item>
             </Flex>
@@ -169,6 +171,8 @@ export function Evidence(props: EvidenceProps) {
                 <div dangerouslySetInnerHTML={{ __html: evidence.text }} />
               )}
             </Box>
+
+            <Box className="Evidence__Box__TextBox">{evidence.description}</Box>
           </Box>
         </Stack.Item>
       </Stack>

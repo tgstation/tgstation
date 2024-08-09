@@ -1,4 +1,4 @@
-#define MAX_ICON_NOTICES 5
+#define MAX_ICON_NOTICES 4
 
 /obj/structure/detectiveboard
 	name = "detective notice board"
@@ -163,7 +163,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/detectiveboard, 32)
 			if(evidence.evidence_type == "photo")
 				var/obj/item/photo/item = evidence.item
 				item.show(user)
-				return
+				return TRUE
 
 			var/obj/item/paper/paper = evidence.item
 			var/paper_text = ""
@@ -175,20 +175,18 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/detectiveboard, 32)
 			+ "</body></html>", "window=photo_showing;size=480x608")
 			onclose(user, "[name]")
 		if("remove_evidence")
-			var/datum/case/case = locate(params["case_ref"]) in cases
+			var/datum/case/case = cases[current_case]
 			var/datum/evidence/evidence = locate(params["evidence_ref"]) in case.evidences
-			var/obj/item/item = evidence.item
-			if(!istype(item) || item.loc != src)
-				return
-
-			if(!allowed(user))
-				return
-			remove_item(item, user)
-			for(var/datum/evidence/connection in evidence.connections)
-				connection.connections.Remove(evidence)
-			case.evidences.Remove(evidence)
-			update_appearance(UPDATE_ICON)
-			return TRUE
+			if(evidence)
+				var/obj/item/item = evidence.item
+				if(!istype(item) || item.loc != src)
+					return
+				remove_item(item, user)
+				for(var/datum/evidence/connection in evidence.connections)
+					connection.connections.Remove(evidence)
+				case.evidences.Remove(evidence)
+				update_appearance(UPDATE_ICON)
+				return TRUE
 		if("set_evidence_cords")
 			var/datum/case/case = locate(params["case_ref"]) in cases
 			if(case)
@@ -203,8 +201,6 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/detectiveboard, 32)
 			from_evidence.connections.Add(to_evidence)
 			to_evidence.connections.Add(from_evidence)
 			return TRUE
-		if("to_chat") // Debug logs
-			to_chat(user, params["message"])
 
 
 	return FALSE
