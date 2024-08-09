@@ -55,12 +55,15 @@ GLOBAL_LIST_INIT(strippable_alien_humanoid_items, create_strippable_list(list(
 	drop_all_held_items()
 	..()
 
-//For alien evolution/promotion/queen finder procs. Checks for an active alien of that type
-/proc/get_alien_type(alienpath)
+///For alien evolution/promotion/queen finder procs. Checks for an active alien of that type
+// If skip_infertile true, skip over infertile aliens
+/proc/get_alien_type(alienpath, skip_infertile = FALSE)
 	for(var/mob/living/carbon/alien/adult/A in GLOB.alive_mob_list)
 		if(!istype(A, alienpath))
 			continue
 		if(!A.key || A.stat == DEAD) //Only living aliens with a ckey are valid.
+			continue
+		if(skip_infertile == TRUE && A.infertile == TRUE)
 			continue
 		return A
 	return FALSE

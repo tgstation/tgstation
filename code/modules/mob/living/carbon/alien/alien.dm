@@ -22,6 +22,9 @@
 	gib_type = /obj/effect/decal/cleanable/xenoblood/xgibs
 	unique_name = TRUE
 
+	/// If true, the eggs the alien lays when its grown will contain sterile facehuggers
+	var/infertile = FALSE
+
 	var/static/regex/alien_name_regex = new("alien (larva|sentinel|drone|hunter|praetorian|queen)( \\(\\d+\\))?")
 
 /mob/living/carbon/alien/Initialize(mapload)
@@ -126,6 +129,9 @@ Des: Removes all infected images from the alien.
 
 	new_xeno.setDir(dir)
 	new_xeno.change_name(name, real_name, numba)
+
+	if (infertile == TRUE)
+		new_xeno.infertile = TRUE
 
 	if(mind)
 		mind.name = new_xeno.real_name

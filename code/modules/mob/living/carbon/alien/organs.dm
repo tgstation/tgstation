@@ -87,7 +87,7 @@
 	SIGNAL_HANDLER
 	items += "Plasma Stored: [stored_plasma]/[max_plasma]"
 
-#define QUEEN_DEATH_DEBUFF_DURATION 2400
+#define QUEEN_DEATH_DEBUFF_DURATION 4 MINUTES
 
 /obj/item/organ/internal/alien/hivenode
 	name = "hive node"
@@ -158,7 +158,37 @@
 	zone = BODY_ZONE_PRECISE_MOUTH
 	slot = ORGAN_SLOT_XENO_ACIDGLAND
 	actions_types = list(/datum/action/cooldown/alien/acid/corrosion)
+	/// How much acid this releases on the death of the holding mob
+	var/acid_release_on_death = 150
 
+/obj/item/organ/internal/alien/acid/on_mob_insert(mob/living/carbon/organ_owner, special, movement_flags)
+	. = ..()
+
+	RegisterSignal(organ_owner, COMSIG_LIVING_DEATH, PROC_REF(release_acid))
+
+/obj/item/organ/internal/alien/acid/on_mob_remove(mob/living/carbon/organ_owner, special)
+	. = ..()
+
+	UnregisterSignal(organ_owner, COMSIG_LIVING_DEATH)
+
+// Release acid on death and destroy all internal organs, except for the acid gland
+/obj/item/organ/internal/alien/acid/proc/release_acid()
+	if (!owner)
+		return
+
+	var/datum/reagents/releasing_acid = new(acid_release_on_death)
+	releasing_acid.add_reagent(/datum/reagent/toxin/acid, acid_release_on_death)
+	releasing_acid.my_atom = owner
+	releasing_acid.create_foam(/datum/effect_system/fluid_spread/foam, acid_release_on_death)
+
+	// Destroy all of the holders internal organs
+	for (var/obj/item/organ/internal/organ as anything in owner.organs)
+		if (organ == src)
+			continue
+		if (istype(organ, /obj/item/organ/internal/brain))
+			continue
+		organ.Remove(owner)
+		qdel(organ)
 
 /obj/item/organ/internal/alien/neurotoxin
 	name = "neurotoxin gland"
@@ -175,6 +205,12 @@
 	slot = ORGAN_SLOT_XENO_EGGSAC
 	w_class = WEIGHT_CLASS_BULKY
 	actions_types = list(/datum/action/cooldown/alien/make_structure/lay_egg)
+
+/// Eggs laid with this will contain sterile facehuggers
+/obj/item/organ/internal/alien/eggsac/sterile
+	name = "sterile egg sac"
+	actions_types = list(/datum/action/cooldown/alien/make_structure/lay_egg/sterile)
+
 
 /// The stomach that lets aliens eat people/things
 /obj/item/organ/internal/stomach/alien

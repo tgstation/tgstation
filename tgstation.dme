@@ -5718,6 +5718,7 @@
 #include "code\modules\research\designs\AI_module_designs.dm"
 #include "code\modules\research\designs\biogenerator_designs.dm"
 #include "code\modules\research\designs\bluespace_designs.dm"
+#include "code\modules\research\designs\cargo_designs.dm"
 #include "code\modules\research\designs\comp_board_designs.dm"
 #include "code\modules\research\designs\computer_part_designs.dm"
 #include "code\modules\research\designs\electronics_designs.dm"

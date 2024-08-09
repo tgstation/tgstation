@@ -84,6 +84,11 @@
 	. = ..()
 	owner.visible_message(span_alertalien("[owner] lays an egg!"))
 
+/datum/action/cooldown/alien/make_structure/lay_egg/sterile
+	name = "Lay Sterile Egg"
+	desc = "Lay an egg to produce huggers, though they wont be able to impregnate prey."
+	made_structure_type = /obj/structure/alien/egg/sterile
+
 //Button to let queen choose her praetorian.
 /datum/action/cooldown/alien/promote
 	name = "Create Royal Parasite"

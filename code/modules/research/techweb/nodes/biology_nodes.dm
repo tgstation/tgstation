@@ -42,9 +42,18 @@
 		"limbdesign_felinid",
 		"limbdesign_lizard",
 		"limbdesign_plasmaman",
+		"xeno_crate",
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_3_POINTS)
 	required_experiments = list(/datum/experiment/scanning/cytology/slime)
+	experiments_to_unlock = list(
+		/datum/experiment/scanning/points/xeno_eggs,
+	)
+
+// Researching xenobiology also unlocks the xenomorph crate in cargo
+/datum/techweb_node/xenobiology/on_station_research()
+	var/datum/supply_pack/science/xenomorph/xeno_pack = SSshuttle.supply_packs[/datum/supply_pack/science/xenomorph]
+	xeno_pack.special_enabled = TRUE
 
 /datum/techweb_node/gene_engineering
 	id = TECHWEB_NODE_GENE_ENGINEERING

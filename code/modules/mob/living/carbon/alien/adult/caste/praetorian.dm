@@ -38,8 +38,8 @@
 
 	if(!isturf(owner.loc))
 		return FALSE
-
-	if(get_alien_type(/mob/living/carbon/alien/adult/royal/queen))
+	//The crew can get infertile aliens, we dont want those going towards the queen cap
+	if(get_alien_type(/mob/living/carbon/alien/adult/royal/queen, skip_infertile = TRUE))
 		return FALSE
 
 	var/mob/living/carbon/alien/adult/royal/evolver = owner
@@ -52,5 +52,13 @@
 /datum/action/cooldown/alien/evolve_to_queen/Activate(atom/target)
 	var/mob/living/carbon/alien/adult/royal/evolver = owner
 	var/mob/living/carbon/alien/adult/royal/queen/new_queen = new(owner.loc)
+	// If we are infertile, replace the queens eggsac with an eggsac that lays sterile eggs
+	if (evolver.infertile == TRUE)
+		var/obj/item/organ/internal/alien/eggsac/eggsac = new_queen.get_organ_slot(ORGAN_SLOT_XENO_EGGSAC)
+		qdel(eggsac)
+		var/obj/item/organ/internal/alien/eggsac/sterile/new_eggsac = new()
+		new_queen.organs += new_eggsac
+		new_eggsac.Insert(new_queen)
+
 	evolver.alien_evolve(new_queen)
 	return TRUE

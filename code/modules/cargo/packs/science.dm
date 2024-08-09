@@ -190,3 +190,17 @@
 	contains = list(/obj/item/mod/core/standard = 3)
 	crate_name = "\improper MOD core crate"
 	crate_type = /obj/structure/closet/crate/secure/science/robo
+
+/datum/supply_pack/science/xenomorph
+	name = "Genetically Modified Xenomorph Crate"
+	desc = "A genetically modified xenomorph. Once this specimen grows to maturity, \
+		its offspring will be infertile."
+	dangerous = TRUE
+	special = TRUE //Enables when science researches the xenobiology node
+	cost = CARGO_CRATE_VALUE * 25
+	access = ACCESS_RD
+	access_view = ACCESS_RD
+	contains = list(/obj/item/clothing/mask/facehugger/genetically_modified)
+	crate_name = "genetically modified xenomorph egg crate"
+	crate_type = /obj/structure/closet/crate/secure/science
+	discountable = SUPPLY_PACK_RARE_DISCOUNTABLE

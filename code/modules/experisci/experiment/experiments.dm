@@ -519,3 +519,23 @@
 		/obj/machinery = 1
 	)
 	required_tier = 3
+
+/datum/experiment/scanning/points/xeno_eggs
+	name = "Alien Pre-larval Scan"
+	description = "Research on the early lifecycle of the xenomorph is pitifully lacking, though not from lack of... trying. Scanning some pre-larval specimen would surely be worth the risk in getting close, right?"
+	performance_hint = "Scanning xenomorph lifeforms after the larval stage wont give any points, and will probably kill you."
+	required_points = 13
+	required_atoms = list(
+		/obj/item/clothing/mask/facehugger = 1,
+		/obj/structure/alien/egg = 1,
+		/obj/item/organ/internal/body_egg/alien_embryo = 1,
+	)
+	points_reward = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_5_POINTS )
+
+/datum/experiment/scanning/points/xeno_eggs/final_contributing_index_checks(datum/component/experiment_handler/experiment_handler, atom/target, typepath)
+	// Check that its not a toy facehugger
+	if (istype(target, /obj/item/clothing/mask/facehugger))
+		var/obj/item/clothing/mask/facehugger/hugger = target
+		if (hugger.real == FALSE)
+			return FALSE
+	return ..()
