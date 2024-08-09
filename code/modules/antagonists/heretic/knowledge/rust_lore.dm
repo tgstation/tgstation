@@ -198,7 +198,7 @@
 
 /datum/heretic_knowledge/spell/entropic_plume/on_gain(mob/user)
 	. = ..()
-	var/datum/antagonist/heretic/our_heretic = IS_HERETIC(user)
+	var/datum/antagonist/heretic/our_heretic = GET_HERETIC(user)
 	our_heretic.increase_rust_strength(TRUE)
 
 /datum/heretic_knowledge/ultimate/rust_final

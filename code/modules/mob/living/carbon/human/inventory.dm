@@ -197,6 +197,9 @@
 				return
 			s_store = equipping
 			update_suit_storage()
+		if(ITEM_SLOT_BELTPACK)
+			if(!belt || !belt.atom_storage?.attempt_insert(equipping, src, override = TRUE, force = indirect_action ? STORAGE_SOFT_LOCKED : STORAGE_NOT_LOCKED))
+				not_handled = TRUE
 		else
 			to_chat(src, span_danger("You are trying to equip this item to an unsupported inventory slot. Report this to a coder!"))
 
