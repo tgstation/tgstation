@@ -282,7 +282,7 @@
 	has_tool_description = "Your drill will allow you to extract the deposit!"
 	action_text = "Mine"
 	delay_message = "Mining..."
-	var/static/list/possible_materials = list(/datum/material/silver,/datum/material/bananium,/datum/material/pizza) //only add materials with sheet type here
+	var/static/list/possible_materials = list(/datum/material/silver,/datum/material/bananium,/datum/material/pizza, /datum/material/cheese) //only add materials with sheet type here
 	var/loot_amount = 30
 	var/chosen_material_type
 
