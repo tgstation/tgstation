@@ -97,7 +97,7 @@
 	return teleportable
 
 /obj/item/swapper/proc/swap(mob/user)
-	if(QDELETED(linked_swapper) || world.time < linked_swapper.cooldown)
+	if(QDELETED(linked_swapper) || isnull(linked_swapper.loc) || world.time < linked_swapper.cooldown)
 		return
 
 	var/atom/movable/A = get_teleportable_container()
