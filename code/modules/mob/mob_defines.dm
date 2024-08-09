@@ -205,5 +205,3 @@
 	var/shadow_type = SHADOW_MEDIUM
 	/// Additional vertical offset to apply to shadow underlay
 	var/shadow_offset = 0
-	/// Our beautiful shadow
-	var/mutable_appearance/shadow

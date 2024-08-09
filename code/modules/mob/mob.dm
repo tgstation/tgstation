@@ -100,15 +100,10 @@
 	log_mob_tag("TAG: [tag] CREATED: [key_name(src)] \[[type]\]")
 
 	if (shadow_type != SHADOW_NONE)
-		shadow = mutable_appearance(
-			'icons/mob/mob_shadows.dmi',
-			shadow_type,
-			layer = BELOW_MOB_LAYER,
-			appearance_flags = KEEP_APART | RESET_TRANSFORM | RESET_COLOR
+		AddComponent(/datum/component/drop_shadow, \
+			icon_state = shadow_type, \
+			shadow_offset = shadow_offset, \
 		)
-		shadow.pixel_x = pixel_x
-		shadow.pixel_y = -DEPTH_OFFSET + shadow_offset
-		update_appearance(UPDATE_OVERLAYS)
 
 /**
  * Generate the tag for this mob
