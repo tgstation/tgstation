@@ -53,7 +53,7 @@
 
 	shadow.pixel_y = -DEPTH_OFFSET - lying_offset + shadow_offset + additional_offset
 	var/atom/atom_parent = parent
-	parent.update_appearance(UPDATE_OVERLAYS)
+	atom_parent.update_appearance(UPDATE_OVERLAYS)
 
 /// Handles actually displaying it
 /datum/component/drop_shadow/proc/on_update_overlays(atom/source, list/overlays)
@@ -72,7 +72,7 @@
 	SIGNAL_HANDLER
 	shadow.alpha = 255
 	var/atom/atom_parent = parent
-	parent.update_appearance(UPDATE_OVERLAYS)
+	atom_parent.update_appearance(UPDATE_OVERLAYS)
 	deltimer(unhide_shadow_timer)
 
 /// Make the shadow invisible
@@ -80,7 +80,7 @@
 	SIGNAL_HANDLER
 	shadow.alpha = 0
 	var/atom/atom_parent = parent
-	parent.update_appearance(UPDATE_OVERLAYS)
+	atom_parent.update_appearance(UPDATE_OVERLAYS)
 	deltimer(unhide_shadow_timer)
 
 /datum/component/drop_shadow/proc/temporarily_hide_shadow(show_in)
