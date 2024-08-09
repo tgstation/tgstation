@@ -11,7 +11,7 @@
 
 /datum/quirk_constant_data/paraplegic
 	associated_typepath = /datum/quirk/paraplegic
-	customization_options = list(/datum/preference/choiced/prosthetic)
+	customization_options = list(/datum/preference/choiced/paraplegic)
 
 /datum/quirk/paraplegic/add_unique(client/client_source)
 	if(quirk_holder.buckled) // Handle late joins being buckled to arrival shuttle chairs.
@@ -40,7 +40,13 @@
 	var/amputee = GLOB.paraplegic_choice[client_source?.prefs?.read_preference(/datum/preference/choiced/paraplegic)]
 	var/mob/living/carbon/human/human_holder = quirk_holder
 	if(amputee)
-		human_holder.del_and_replace_bodypart(null, human_holder)
+		delete_legs(human_holder)
+
+/datum/quirk/paraplegic/proc/delete_legs(victim)
+	var/mob/living/carbon/human/human_holder = victim
+	qdel(human_holder.get_item_by_slot(ITEM_SLOT_FEET))
+	qdel(human_holder.get_bodypart(BODY_ZONE_L_LEG))
+	qdel(human_holder.get_bodypart(BODY_ZONE_R_LEG))
 
 /datum/quirk/paraplegic/add(client/client_source)
 	var/mob/living/carbon/human/human_holder = quirk_holder
