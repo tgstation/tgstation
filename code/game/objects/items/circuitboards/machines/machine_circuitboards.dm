@@ -631,6 +631,7 @@
 		/obj/machinery/vending/coffee = "Solar's Best Hot Drinks",
 		/obj/machinery/vending/cola = "Robust Softdrinks",
 		/obj/machinery/vending/custom = "Custom Vendor",
+		/obj/machinery/vending/cytopro = "CytoPro",
 		/obj/machinery/vending/dinnerware = "Plasteel Chef's Dinnerware Vendor",
 		/obj/machinery/vending/drugs = "NanoDrug Plus",
 		/obj/machinery/vending/engineering = "Robco Tool Maker",
