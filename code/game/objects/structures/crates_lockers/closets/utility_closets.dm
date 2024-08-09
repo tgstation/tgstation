@@ -14,7 +14,7 @@
  */
 /obj/structure/closet/emcloset
 	name = "emergency closet"
-	desc = "It's a storage unit for emergency breath masks and O2 tanks."
+	desc = "It's a storage unit for emergency breath masks, O2 tanks and space suits"
 	icon_state = "emergency"
 
 /obj/structure/closet/emcloset/anchored
@@ -42,19 +42,23 @@
 			new /obj/item/tank/internals/emergency_oxygen(src)
 			new /obj/item/clothing/mask/breath(src)
 			new /obj/item/clothing/mask/breath(src)
+			new /obj/item/storage/box/emergency_spacesuit(src)
 
 		if ("aid")
 			new /obj/item/tank/internals/emergency_oxygen(src)
 			new /obj/item/storage/medkit/emergency(src)
 			new /obj/item/clothing/mask/breath(src)
+			new /obj/item/storage/box/emergency_spacesuit(src)
 
 		if ("tank")
 			new /obj/item/tank/internals/oxygen(src)
 			new /obj/item/clothing/mask/breath(src)
+			new /obj/item/storage/box/emergency_spacesuit(src)
 
 		if ("both")
 			new /obj/item/tank/internals/emergency_oxygen(src)
 			new /obj/item/clothing/mask/breath(src)
+			new /obj/item/storage/box/emergency_spacesuit(src)
 
 		if ("nothing")
 			// doot
