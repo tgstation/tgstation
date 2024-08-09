@@ -97,8 +97,7 @@
 		return
 
 	step(movable_parent, direction)
-	last_move_diagonal = ((direction & (direction - 1)) && (movable_parent.loc == next))
-	COOLDOWN_START(src, vehicle_move_cooldown, (last_move_diagonal? 2 : 1) * vehicle_move_delay)
+	COOLDOWN_START(src, vehicle_move_cooldown, vehicle_move_delay)
 
 	if(QDELETED(src))
 		return
