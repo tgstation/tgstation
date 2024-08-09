@@ -224,6 +224,8 @@
 	var/datum/looping_sound/void_loop/sound_loop
 	///Reference to the ongoing voidstrom that surrounds the heretic
 	var/datum/weather/void_storm/storm
+	///The storm where there are actual effects
+	var/datum/proximity_monitor/advanced/void_storm/heavy_storm
 
 /datum/heretic_knowledge/ultimate/void_final/recipe_snowflake_check(mob/living/user, list/atoms, list/selected_atoms, turf/loc)
 	if(!isopenturf(loc))
@@ -250,11 +252,14 @@
 	// Let's get this show on the road!
 	sound_loop = new(user, TRUE, TRUE)
 	RegisterSignal(user, COMSIG_LIVING_LIFE, PROC_REF(on_life))
-	RegisterSignal(user, COMSIG_LIVING_DEATH, PROC_REF(on_death))
+	RegisterSignal(user, COMSIG_ATOM_PRE_BULLET_ACT, PROC_REF(hit_by_projectile))
+	RegisterSignals(user, list(COMSIG_LIVING_DEATH, COMSIG_QDELETING), PROC_REF(on_death))
+	heavy_storm = new(user, 10)
 
 /datum/heretic_knowledge/ultimate/void_final/on_lose(mob/user, datum/antagonist/heretic/our_heretic)
 	on_death() // Losing is pretty much dying. I think
 	RegisterSignals(user, list(COMSIG_LIVING_LIFE, COMSIG_LIVING_DEATH))
+	QDEL_NULL(heavy_storm)
 
 /**
  * Signal proc for [COMSIG_LIVING_LIFE].
@@ -267,26 +272,28 @@
 /datum/heretic_knowledge/ultimate/void_final/proc/on_life(mob/living/source, seconds_per_tick, times_fired)
 	SIGNAL_HANDLER
 
-	for(var/mob/living/carbon/close_carbon in range(10, source))
-		if(IS_HERETIC_OR_MONSTER(close_carbon))
-			continue
-		close_carbon.adjust_silence_up_to(2 SECONDS, 20 SECONDS)
-
 	var/list/effective_range = range(10, source)
 
-	for(var/mob/living/affected_mob in effective_range)
-		if(IS_HERETIC(affected_mob))
-			affected_mob.apply_status_effect(/datum/status_effect/void_conduit)
-		else
-			affected_mob.apply_status_effect(/datum/status_effect/void_chill, 1)
+	for(var/mob/living/carbon/close_carbon in effective_range)
+		if(IS_HERETIC_OR_MONSTER(close_carbon))
+			close_carbon.apply_status_effect(/datum/status_effect/void_conduit)
+			continue
+		close_carbon.adjust_silence_up_to(2 SECONDS, 20 SECONDS)
+		close_carbon.apply_status_effect(/datum/status_effect/void_chill, 1)
+		close_carbon.adjustFireLoss(1, updating_health = FALSE)
+		close_carbon.adjustOxyLoss(rand(1, 3), updating_health = FALSE)
+		close_carbon.updatehealth()
+		close_carbon.adjust_eye_blur(rand(0 SECONDS, 2 SECONDS))
+		close_carbon.adjust_bodytemperature(-30 * TEMPERATURE_DAMAGE_COEFFICIENT)
+
 	for(var/obj/machinery/door/affected_door in effective_range)
-		affected_door.take_damage(75)
+		affected_door.take_damage(rand(60, 80))
 	for(var/obj/structure/door_assembly/affected_assembly in effective_range)
-		affected_assembly.take_damage(75)
+		affected_assembly.take_damage(rand(60, 80))
 	for(var/obj/structure/window/affected_window in effective_range)
-		affected_window.take_damage(30)
+		affected_window.take_damage(rand(20, 40))
 	for(var/obj/structure/grille/affected_grille in effective_range)
-		affected_grille.take_damage(30)
+		affected_grille.take_damage(rand(20, 40))
 
 	for(var/turf/affected_turf in effective_range)
 		var/datum/gas_mixture/environment = affected_turf.return_air()
@@ -297,14 +304,6 @@
 	if(!storm)
 		storm = new /datum/weather/void_storm(station_levels)
 		storm.telegraph()
-
-	// When the heretic enters a new area, intensify the storm in the new area,
-	// and lessen the intensity in the former area.
-	var/area/source_area = get_area(source)
-	if(!storm.impacted_areas[source_area])
-		storm.former_impacted_areas |= storm.impacted_areas
-		storm.impacted_areas = list(source_area)
-		storm.update_areas()
 
 /**
  * Signal proc for [COMSIG_LIVING_DEATH].
@@ -319,3 +318,33 @@
 	if(storm)
 		storm.end()
 		QDEL_NULL(storm)
+
+///Few checks to determine if we can deflect bullets
+/datum/heretic_knowledge/ultimate/void_final/proc/can_deflect(mob/living/ascended_heretic)
+	if(!ascended_heretic.combat_mode)
+		return FALSE
+	if(ascended_heretic.incapacitated(IGNORE_GRAB)) //NO STUN
+		return FALSE
+	if(!(ascended_heretic.mobility_flags & MOBILITY_USE)) //NO UNABLE TO USE
+		return FALSE
+	var/datum/dna/dna = ascended_heretic.has_dna()
+	if(dna?.check_mutation(/datum/mutation/human/hulk)) //NO HULK
+		return FALSE
+	if(!isturf(ascended_heretic.loc)) //NO MOTHERFLIPPIN MECHS!
+		return FALSE
+	return TRUE
+
+/datum/heretic_knowledge/ultimate/void_final/proc/hit_by_projectile(mob/living/ascended_heretic, obj/projectile/hitting_projectile, def_zone)
+	SIGNAL_HANDLER
+
+	if(!can_deflect(ascended_heretic))
+		return NONE
+
+	ascended_heretic.visible_message(
+		span_danger("[ascended_heretic] effortlessly swats [hitting_projectile] aside! [ascended_heretic.p_They()] can block bullets with [ascended_heretic.p_their()] bare hands!"),
+		span_userdanger("You deflect [hitting_projectile]!"),
+	)
+	playsound(ascended_heretic, pick('sound/weapons/bulletflyby.ogg', 'sound/weapons/bulletflyby2.ogg', 'sound/weapons/bulletflyby3.ogg'), 75, TRUE)
+	hitting_projectile.firer = ascended_heretic
+	hitting_projectile.set_angle(rand(0, 360))//SHING
+	return COMPONENT_BULLET_PIERCED

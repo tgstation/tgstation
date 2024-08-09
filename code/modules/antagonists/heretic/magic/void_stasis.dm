@@ -25,33 +25,41 @@
 /datum/status_effect/grouped/stasis/void_stasis
 	duration = 10 SECONDS
 	///The overlay that gets applied to whoever has this status active
-	var/mutable_appearance/stasis_overlay
+	var/obj/effect/abstract/voidball/stasis_overlay
 
 /datum/status_effect/grouped/stasis/void_stasis/on_creation(mob/living/new_owner, set_duration)
-	stasis_overlay = mutable_appearance('icons/mob/actions/actions_ecult.dmi', "voidball_effect", ABOVE_ALL_MOB_LAYER)
+	stasis_overlay = new /obj/effect/abstract/voidball(new_owner)
+	RegisterSignal(stasis_overlay, COMSIG_QDELETING, PROC_REF(clear_overlay))
+	new_owner.vis_contents += stasis_overlay
+	stasis_overlay.animate_opening()
 	return ..()
-
-/datum/status_effect/grouped/stasis/void_stasis/Destroy()
-	QDEL_NULL(stasis_overlay)
-	return ..()
-
-/datum/status_effect/grouped/stasis/void_stasis/on_apply()
-	. = ..()
-	RegisterSignal(owner, COMSIG_ATOM_UPDATE_OVERLAYS, PROC_REF(update_owner_overlay))
-	owner.update_icon(UPDATE_OVERLAYS)
-
-/**
- * Signal proc for [COMSIG_ATOM_UPDATE_OVERLAYS].
- *
- * Adds the generated effect overlay to the afflicted.
- */
-/datum/status_effect/grouped/stasis/void_stasis/proc/update_owner_overlay(atom/source, list/overlays)
-	SIGNAL_HANDLER
-	overlays += stasis_overlay
 
 /datum/status_effect/grouped/stasis/void_stasis/on_remove()
-	UnregisterSignal(owner, COMSIG_ATOM_UPDATE_OVERLAYS)
 	if(!IS_HERETIC(owner))
 		owner.apply_status_effect(/datum/status_effect/void_chill, 1)
-	owner.update_icon(UPDATE_OVERLAYS)
+	if(stasis_overlay)
+		stasis_overlay.animate_closing()
+		stasis_overlay.icon_state = "voidball_closed"
+		QDEL_IN(stasis_overlay, 11)
+		stasis_overlay = null
 	return ..()
+
+///Makes sure to clear the ref in case the voidball ever suddenly disappears
+/datum/status_effect/grouped/stasis/void_stasis/proc/clear_overlay()
+	SIGNAL_HANDLER
+	stasis_overlay = null
+
+//----Voidball effect
+/obj/effect/abstract/voidball
+	icon = 'icons/mob/actions/actions_ecult.dmi'
+	icon_state = "voidball_effect"
+	layer = ABOVE_ALL_MOB_LAYER
+	vis_flags = VIS_INHERIT_ID
+
+///Plays a opening animation
+/obj/effect/abstract/voidball/proc/animate_opening()
+	flick("voidball_opening", src)
+
+///Plays a closing animation
+/obj/effect/abstract/voidball/proc/animate_closing()
+	flick("voidball_closing", src)
