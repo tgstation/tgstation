@@ -105,7 +105,7 @@
 	/// Type of bullet we use
 	var/casingtype = /obj/item/ammo_casing/c9mm
 	/// Sound to play when firing weapon
-	var/projectilesound = 'sound/weapons/gun/pistol/shot.ogg'
+	var/projectilesound = 'sound/weapons/gun/pistol/pistol_fire1.ogg'
 	/// number of burst shots
 	var/burst_shots
 	/// Time between taking shots
@@ -124,7 +124,7 @@
 		AddComponent(/datum/component/ranged_mob_full_auto)
 
 /mob/living/basic/trooper/syndicate/ranged/infiltrator //shuttle loan event
-	projectilesound = 'sound/weapons/gun/smg/shot_suppressed.ogg'
+	projectilesound = 'sound/weapons/gun/pistol/pistol_fire_silenced1.ogg'
 	loot = list(/obj/effect/mob_spawn/corpse/human/syndicatesoldier)
 
 /mob/living/basic/trooper/syndicate/ranged/space
@@ -148,7 +148,7 @@
 
 /mob/living/basic/trooper/syndicate/ranged/smg
 	casingtype = /obj/item/ammo_casing/c45
-	projectilesound = 'sound/weapons/gun/smg/shot.ogg'
+	projectilesound = 'sound/weapons/gun/smg/smg_fire1.ogg'
 	ai_controller = /datum/ai_controller/basic_controller/trooper/ranged/burst
 	burst_shots = 3
 	ranged_cooldown = 3 SECONDS

@@ -337,8 +337,8 @@ GLOBAL_LIST_EMPTY(tripwire_suicide_pact)
 	base_icon_state = "donk"
 	stun_projectile = /obj/projectile/bullet/foam_dart/riot
 	lethal_projectile = /obj/projectile/bullet/c9mm/blunttip
-	lethal_projectile_sound = 'sound/weapons/gun/pistol/shot.ogg'
-	stun_projectile_sound = 'sound/weapons/gun/pistol/shot.ogg'
+	lethal_projectile_sound = 'sound/weapons/gun/pistol/pistol_fire1.ogg'
+	stun_projectile_sound = 'sound/weapons/gun/pistol/pistol_fire1.ogg'
 	desc = "A ballistic machine gun auto-turret with Donk Co. branding. It uses 9mm rounds."
 	armor_type = /datum/armor/donk_turret
 	scan_range = 6

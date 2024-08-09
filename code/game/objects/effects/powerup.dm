@@ -89,7 +89,7 @@
 	icon_state = "ammobox"
 	respawn_time = 30 SECONDS
 	pickup_message = "Ammunition reloaded!"
-	pickup_sound = 'sound/weapons/gun/shotgun/rack.ogg'
+	pickup_sound = 'sound/weapons/gun/shotgun/shotgun_pump2.ogg'
 
 /obj/effect/powerup/ammo/trigger(mob/living/target)
 	. = ..()

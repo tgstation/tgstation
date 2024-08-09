@@ -5,10 +5,20 @@
 	fire_delay = 2
 	actions_types = list(/datum/action/item_action/toggle_firemode)
 	semi_auto = TRUE
-	fire_sound = 'sound/weapons/gun/smg/shot.ogg'
+	fire_sound = 'sound/weapons/gun/smg/smg_fire1.ogg'
 	fire_sound_volume = 90
-	rack_sound = 'sound/weapons/gun/smg/smgrack.ogg'
-	suppressed_sound = 'sound/weapons/gun/smg/shot_suppressed.ogg'
+	rack_sound = 'sound/weapons/gun/smg/smg_rack1.ogg'
+	lock_back_sound = 'sound/weapons/gun/smg/smg_rack1.ogg'
+	bolt_drop_sound = 'sound/weapons/gun/pistol/pistol_bolt2.ogg'
+	dry_fire_sound = 'sound/weapons/gun/pistol/pistol_dry_fire1.ogg'
+	suppressed_sound = 'sound/weapons/gun/pistol/pistol_fire_silenced1.ogg'
+	load_empty_sound = 'sound/weapons/gun/pistol/pistol_mag_insert1.ogg'
+	load_sound = 'sound/weapons/gun/pistol/pistol_mag_insert1.ogg'
+	load_empty_sound = 'sound/weapons/gun/pistol/pistol_mag_insert1.ogg'
+	eject_sound = 'sound/weapons/gun/pistol/pistol_mag_unload1.ogg'
+	eject_empty_sound = 'sound/weapons/gun/pistol/pistol_mag_unload1.ogg'
+	pickup_sound = 'sound/weapons/gun/smg/smg_pick_up1.ogg'
+	drop_sound = 'sound/weapons/gun/smg/smg_drop1.ogg'
 	burst_fire_selection = TRUE
 
 /obj/item/gun/ballistic/automatic/proto
@@ -123,7 +133,7 @@
 	bolt_type = BOLT_TYPE_OPEN
 	show_bolt_icon = FALSE
 	mag_display = TRUE
-	rack_sound = 'sound/weapons/gun/pistol/slide_lock.ogg'
+	rack_sound = 'sound/weapons/gun/pistol/pistol_rack1.ogg'
 
 /**
  * Weak uzi for syndicate chimps. It comes in a 4 TC kit.
@@ -153,7 +163,7 @@
 	pin = /obj/item/firing_pin/implant/pindicate
 	mag_display = TRUE
 	empty_indicator = TRUE
-	fire_sound = 'sound/weapons/gun/smg/shot_alt.ogg'
+	fire_sound = 'sound/weapons/gun/smg/smg_fire1.ogg'
 
 /obj/item/gun/ballistic/automatic/m90/Initialize(mapload)
 	. = ..()

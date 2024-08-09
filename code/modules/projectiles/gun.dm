@@ -23,7 +23,7 @@
 	attack_verb_simple = list("strike", "hit", "bash")
 
 	var/gun_flags = NONE
-	var/fire_sound = 'sound/weapons/gun/pistol/shot.ogg'
+	var/fire_sound = 'sound/weapons/gun/pistol/pistol_fire1.ogg'
 	var/vary_fire_sound = TRUE
 	var/fire_sound_volume = 50
 	var/dry_fire_sound = 'sound/weapons/gun/general/dry_fire.ogg'

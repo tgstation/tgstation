@@ -58,7 +58,7 @@
 	ADD_TRAIT(src, TRAIT_NO_FLOATING_ANIM, INNATE_TRAIT)
 	AddComponent(/datum/component/ranged_attacks, \
 		casing_type = /obj/item/ammo_casing/c46x30mm, \
-		projectile_sound = 'sound/weapons/gun/smg/shot.ogg', \
+		projectile_sound = 'sound/weapons/gun/smg/smg_fire1.ogg', \
 		burst_shots = 6 \
 	)
 

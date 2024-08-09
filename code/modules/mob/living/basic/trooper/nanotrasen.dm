@@ -21,7 +21,7 @@
 	/// Type of bullet we use
 	var/casingtype = /obj/item/ammo_casing/c45
 	/// Sound to play when firing weapon
-	var/projectilesound = 'sound/weapons/gun/pistol/shot_alt.ogg'
+	var/projectilesound = 'sound/weapons/gun/pistol/pistol_fire1.ogg'
 	/// number of burst shots
 	var/burst_shots
 	/// Time between taking shots
@@ -42,7 +42,7 @@
 /mob/living/basic/trooper/nanotrasen/ranged/smg
 	ai_controller = /datum/ai_controller/basic_controller/trooper/ranged/burst
 	casingtype = /obj/item/ammo_casing/c46x30mm
-	projectilesound = 'sound/weapons/gun/smg/shot.ogg'
+	projectilesound = 'sound/weapons/gun/smg/smg_fire1.ogg'
 	r_hand = /obj/item/gun/ballistic/automatic/wt550
 	burst_shots = 3
 	ranged_cooldown = 3 SECONDS
@@ -54,7 +54,7 @@
 	casingtype = /obj/item/ammo_casing/a223/weak
 	burst_shots = 4
 	ranged_cooldown = 3 SECONDS
-	projectilesound = 'sound/weapons/gun/smg/shot.ogg'
+	projectilesound = 'sound/weapons/gun/smg/smg_fire1.ogg'
 	r_hand = /obj/item/gun/ballistic/automatic/ar
 	loot = list(/obj/effect/mob_spawn/corpse/human/nanotrasenassaultsoldier)
 	mob_spawner = /obj/effect/mob_spawn/corpse/human/nanotrasenassaultsoldier

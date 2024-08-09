@@ -10,7 +10,7 @@
 	e_cost = LASER_SHOTS(10, STANDARD_CELL_CHARGE)
 
 /obj/item/ammo_casing/energy/electrode/gun
-	fire_sound = 'sound/weapons/gun/pistol/shot.ogg'
+	fire_sound = 'sound/weapons/gun/pistol/pistol_fire1.ogg'
 	e_cost = LASER_SHOTS(10, STANDARD_CELL_CHARGE)
 
 /obj/item/ammo_casing/energy/electrode/old

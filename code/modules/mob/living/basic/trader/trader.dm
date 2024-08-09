@@ -33,7 +33,7 @@
 	///Casing used to shoot during retaliation
 	var/ranged_attack_casing = /obj/item/ammo_casing/shotgun/buckshot
 	///Sound to make while doing a retalitory attack
-	var/ranged_attack_sound = 'sound/weapons/gun/pistol/shot.ogg'
+	var/ranged_attack_sound = 'sound/weapons/gun/pistol/pistol_fire1.ogg'
 	///Weapon path, for visuals
 	var/held_weapon_visual = /obj/item/gun/ballistic/shotgun
 

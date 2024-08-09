@@ -8,10 +8,13 @@
 	inhand_icon_state = "shotgun"
 	inhand_x_dimension = 64
 	inhand_y_dimension = 64
-	fire_sound = 'sound/weapons/gun/shotgun/shot.ogg'
+	fire_sound = 'sound/weapons/gun/shotgun/shotgun_fire1.ogg'
 	fire_sound_volume = 90
-	rack_sound = 'sound/weapons/gun/shotgun/rack.ogg'
-	load_sound = 'sound/weapons/gun/shotgun/insert_shell.ogg'
+	rack_sound = 'sound/weapons/gun/shotgun/shotgun_pump1.ogg'
+	load_sound = 'sound/weapons/gun/shotgun/shell_insert1.ogg'
+	dry_fire_sound = 'sound/weapons/gun/shotgun/shotgun_click1.ogg'
+	drop_sound = 'sound/weapons/gun/shotgun/shotgun_drop1.ogg'
+	pickup_sound = 'sound/weapons/gun/shotgun/shotgun_pick_up1.ogg'
 	w_class = WEIGHT_CLASS_BULKY
 	force = 10
 	obj_flags = CONDUCTS_ELECTRICITY
@@ -62,6 +65,9 @@
 	fire_delay = 5
 	accepted_magazine_type = /obj/item/ammo_box/magazine/internal/shot/com
 	w_class = WEIGHT_CLASS_HUGE
+	fire_sound = 'sound/weapons/gun/shotgun/shotgun_fire2.ogg'
+	rack_sound = 'sound/weapons/gun/shotgun/shotgun_pump2.ogg'
+	load_sound = 'sound/weapons/gun/shotgun/shell_insert2.ogg'
 
 /obj/item/gun/ballistic/shotgun/automatic/combat/compact
 	name = "compact shotgun"
@@ -92,6 +98,10 @@
 	var/toggled = FALSE
 	/// The B tube
 	var/obj/item/ammo_box/magazine/internal/shot/alternate_magazine
+	eject_sound = 'sound/weapons/gun/rifle/rifle_magazine_unload1.ogg'
+	eject_empty_sound = 'sound/weapons/gun/rifle/rifle_magazine_unload1.ogg'
+	load_sound = 'sound/weapons/gun/rifle/rifle_magazine_insert1.ogg'
+	load_empty_sound = 'sound/weapons/gun/rifle/rifle_magazine_insert1.ogg'
 
 /obj/item/gun/ballistic/shotgun/automatic/dual_tube/bounty
 	name = "bounty cycler shotgun"
@@ -157,8 +167,14 @@
 	can_suppress = FALSE
 	burst_size = 2
 	fire_delay = 1
+	fire_sound = 'sound/weapons/gun/shotgun/shotgun_fire2.ogg'
+	rack_sound = 'sound/weapons/gun/shotgun/shotgun_pump2.ogg'
+	load_sound = 'sound/weapons/gun/shotgun/shell_insert2.ogg'
+	eject_sound = 'sound/weapons/gun/rifle/rifle_magazine_unload1.ogg'
+	eject_empty_sound = 'sound/weapons/gun/rifle/rifle_magazine_unload1.ogg'
+	load_sound = 'sound/weapons/gun/rifle/rifle_magazine_insert1.ogg'
+	load_empty_sound = 'sound/weapons/gun/rifle/rifle_magazine_insert1.ogg'
 	pin = /obj/item/firing_pin/implant/pindicate
-	fire_sound = 'sound/weapons/gun/shotgun/shot_alt.ogg'
 	actions_types = list(/datum/action/item_action/toggle_firemode)
 	mag_display = TRUE
 	empty_indicator = TRUE
