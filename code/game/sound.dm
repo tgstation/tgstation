@@ -472,4 +472,14 @@
 				'sound/creatures/monkey/monkey_screech_6.ogg',
 				'sound/creatures/monkey/monkey_screech_7.ogg',
 			)
+		if(SFX_KEYBOARD_CLICKS)
+			soundin = pick(
+				'sound/machines/computer/keyboard_clicks_1.ogg',
+				'sound/machines/computer/keyboard_clicks_2.ogg',
+				'sound/machines/computer/keyboard_clicks_3.ogg',
+				'sound/machines/computer/keyboard_clicks_4.ogg',
+				'sound/machines/computer/keyboard_clicks_5.ogg',
+				'sound/machines/computer/keyboard_clicks_6.ogg',
+				'sound/machines/computer/keyboard_clicks_7.ogg',
+			)
 	return soundin
