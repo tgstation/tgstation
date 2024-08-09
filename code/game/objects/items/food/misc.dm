@@ -292,6 +292,14 @@
 	foodtypes = FRUIT | ALCOHOL
 	crafting_complexity = FOOD_COMPLEXITY_2
 
+/obj/item/food/melonkeg/CheckParts(list/parts_list)
+	. = ..()
+	var/obj/item/reagent_containers/cup/glass/bottle/bottle = locate() in contents
+	if(!bottle)
+		return
+	if(bottle.message_in_a_bottle)
+		bottle.message_in_a_bottle.forceMove(drop_location())
+
 /obj/item/food/honeybar
 	name = "honey nut bar"
 	desc = "Oats and nuts compressed together into a bar, held together with a honey glaze."

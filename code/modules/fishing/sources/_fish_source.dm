@@ -75,8 +75,11 @@ GLOBAL_LIST_INIT(specific_fish_icons, zebra_typecacheof(list(
 	return ..()
 
 ///Called when src is set as the fish source of a fishing spot component
-/datum/fish_source/proc/on_fishing_spot_init(/datum/component/fishing_spot/spot)
+/datum/fish_source/proc/on_fishing_spot_init(datum/component/fishing_spot/spot)
 	return
+
+///Called whenever a fishing spot with this fish source attached is deleted
+/datum/fish_source/proc/on_fishing_spot_del(datum/component/fishing_spot/spot)
 
 /// Can we fish in this spot at all. Returns DENIAL_REASON or null if we're good to go
 /datum/fish_source/proc/reason_we_cant_fish(obj/item/fishing_rod/rod, mob/fisherman, atom/parent)
