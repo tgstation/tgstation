@@ -17,6 +17,8 @@
 #define COMSIG_FISH_EATEN_BY_OTHER_FISH "fish_eaten_by_other_fish"
 ///From /obj/item/fish/feed: (fed_reagents, fed_reagent_type)
 #define COMSIG_FISH_FED "fish_on_fed"
+///from /obj/item/fish/pet_fish
+#define COMSIG_FISH_PETTED "fish_petted"
 
 /// Fishing challenge completed
 #define COMSIG_FISHING_CHALLENGE_COMPLETED "fishing_completed"
