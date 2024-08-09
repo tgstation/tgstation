@@ -532,6 +532,12 @@
 	color = COLOR_BLACK
 	kiss_type = /obj/projectile/kiss/death
 
+/obj/item/hand_item/kisser/syndie
+	name = "syndie kiss"
+	desc = "oooooo you like syndicate ur a syndiekisser"
+	color = COLOR_SYNDIE_RED
+	kiss_type = /obj/projectile/kiss/syndie
+
 /obj/projectile/kiss
 	name = "kiss"
 	icon = 'icons/mob/simple/animal.dmi'
@@ -543,17 +549,21 @@
 	damage_type = BRUTE
 	damage = 0 // love can't actually hurt you
 	armour_penetration = 100 // but if it could, it would cut through even the thickest plate
+	var/silent_blown = FALSE
 
 /obj/projectile/kiss/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/parriable_projectile)
 
 /obj/projectile/kiss/fire(angle, atom/direct_target)
-	if(firer)
+	if(firer && !silent_blown)
 		name = "[name] blown by [firer]"
+
 	return ..()
 
 /obj/projectile/kiss/Impact(atom/A)
+	def_zone = BODY_ZONE_HEAD // let's keep it PG, people
+
 	if(damage > 0 || !isliving(A)) // if we do damage or we hit a nonliving thing, we don't have to worry about a harmless hit because we can't wrongly do damage anyway
 		return ..()
 
@@ -607,7 +617,6 @@
 	living_target.visible_message("<b>[living_target]</b> [other_msg]", span_userdanger("Whoa! [self_msg]"))
 
 /obj/projectile/kiss/on_hit(atom/target, blocked, pierce_hit)
-	def_zone = BODY_ZONE_HEAD // let's keep it PG, people
 	. = ..()
 	if(isliving(target))
 		var/mob/living/living_target = target
@@ -629,6 +638,18 @@
 	var/obj/item/organ/internal/heart/dont_go_breakin_my_heart = heartbreakee.get_organ_slot(ORGAN_SLOT_HEART)
 	dont_go_breakin_my_heart.apply_organ_damage(999)
 
+// Based on energy gun characteristics
+/obj/projectile/kiss/syndie
+	name = "syndie kiss"
+	color = COLOR_SYNDIE_RED
+	impact_effect_type = /obj/effect/temp_visual/impact_effect/red_laser
+	damage_type = BURN
+	armor_flag = LASER
+	armour_penetration = 0
+	damage = 25
+	wound_bonus = -20
+	bare_wound_bonus = 40
+	silent_blown = TRUE
 
 /obj/projectile/kiss/french
 	name = "french kiss (is that a hint of garlic?)"

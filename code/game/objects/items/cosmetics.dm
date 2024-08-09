@@ -34,8 +34,8 @@
 	. += "Alt-click to change the style."
 
 /obj/item/lipstick/update_icon_state()
-	icon_state = "lipstick[open ? "_uncap" : null]"
-	inhand_icon_state = "lipstick[open ? "open" : null]"
+	icon_state = "[initial(icon_state)][open ? "_uncap" : null]"
+	inhand_icon_state = "[initial(icon_state)][open ? "open" : null]"
 	return ..()
 
 /obj/item/lipstick/update_overlays()
@@ -104,6 +104,13 @@
 	name = "\improper Kiss of Death"
 	desc = "An incredibly potent tube of lipstick made from the venom of the dreaded Yellow Spotted Space Lizard, as deadly as it is chic. Try not to smear it!"
 	lipstick_trait = TRAIT_KISS_OF_DEATH
+
+/obj/item/lipstick/syndie
+	name = "syndie lipstick"
+	desc = "Syndicate branded lipstick with a killer dose of kisses. Observe safety regulations!"
+	icon_state = "slipstick"
+	lipstick_color = COLOR_SYNDIE_RED
+	lipstick_trait = TRAIT_SYNDIE_KISS
 
 /obj/item/lipstick/random
 	name = "lipstick"
