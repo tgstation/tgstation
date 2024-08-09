@@ -14,9 +14,10 @@
  *
  * Mark of Void
  * Ritual of Knowledge
- * Cone of Cold
+ * Void Conduit
  * Void Phase
  * > Sidepaths:
+ *   Void Stasis
  *   Carving Knife
  *   Blood Siphon
  *
@@ -138,8 +139,10 @@
 
 /datum/heretic_knowledge/spell/void_conduit
 	name = "Void Conduit"
-	desc = "Grants you Void Conduit, a spell which summons a rift in space, which freezes the area and destroys airlocks and windows."
-	gain_text = ":) :) :) :) :) :) :) :) :) :) :) :)" //XANTODO desc and gain text
+	desc = "Grants you Void Conduit, a spell which summons a gate to the void itself, which releases pulses that destroy airlocks and windows while freezing heathens."
+	gain_text = "The hum in the still, cold air turns to a cacophonous rattle. \
+		Over the noise, there is no distinction to the clattering of window panes and the yawning knowledge that ricochets through my skull. \
+		The doors won't close. I can't keep the cold out now."
 	next_knowledge = list(/datum/heretic_knowledge/spell/void_phase)
 	spell_to_add = /datum/action/cooldown/spell/conjure/void_conduit
 	cost = 1
@@ -156,7 +159,7 @@
 		/datum/heretic_knowledge/blade_upgrade/void,
 		/datum/heretic_knowledge/reroll_targets,
 		/datum/heretic_knowledge/spell/blood_siphon,
-		/datum/heretic_knowledge/spell/void_stasis,
+		/datum/heretic_knowledge/spell/void_prison,
 		/datum/heretic_knowledge/rune_carver,
 	)
 	spell_to_add = /datum/action/cooldown/spell/pointed/void_phase
@@ -280,9 +283,6 @@
 			continue
 		close_carbon.adjust_silence_up_to(2 SECONDS, 20 SECONDS)
 		close_carbon.apply_status_effect(/datum/status_effect/void_chill, 1)
-		close_carbon.adjustFireLoss(1, updating_health = FALSE)
-		close_carbon.adjustOxyLoss(rand(1, 3), updating_health = FALSE)
-		close_carbon.updatehealth()
 		close_carbon.adjust_eye_blur(rand(0 SECONDS, 2 SECONDS))
 		close_carbon.adjust_bodytemperature(-30 * TEMPERATURE_DAMAGE_COEFFICIENT)
 

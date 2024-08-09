@@ -1,5 +1,6 @@
 /*!
  * Contains the "Void Chill" status effect. Harmful debuff which freezes and slows down non-heretics
+ * Cannot affect silicons (How are you gonna freeze a robot?)
  */
 /datum/status_effect/void_chill
 	id = "void_chill"
@@ -17,6 +18,8 @@
 
 /datum/status_effect/void_chill/on_creation(mob/living/new_owner, new_stacks, ...)
 	. = ..()
+	if(issilicon(new_owner))
+		return FALSE
 	RegisterSignal(owner, COMSIG_ATOM_UPDATE_OVERLAYS, PROC_REF(update_stacks_overlay))
 	set_stacks(new_stacks)
 	owner.update_icon(UPDATE_OVERLAYS)
@@ -51,7 +54,8 @@
 	SIGNAL_HANDLER
 
 	if(stacks >= 5)
-		linked_alert.icon_state = "void_chill_major"
+		linked_alert.icon_state = "void_chill_oh_fuck"
+		linked_alert.desc = "You had your chance to run, now it's too late. You may never feel warmth again..."
 		linked_alert.update_appearance(UPDATE_ICON_STATE)
 
 	owner.remove_alt_appearance("heretic_status")
