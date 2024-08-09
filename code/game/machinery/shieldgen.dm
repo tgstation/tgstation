@@ -136,6 +136,7 @@
 		RemoveInvisibility(type)
 
 /obj/machinery/shieldgen
+	SET_BASE_VISUAL_PIXEL(0, DEPTH_OFFSET)
 	name = "anti-breach shielding projector"
 	desc = "Used to seal minor hull breaches."
 	icon = 'icons/obj/machines/shield_generator.dmi'

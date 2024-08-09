@@ -344,6 +344,7 @@ WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/structure/reagent_dispensers/wall/peppertank
 	find_and_hang_on_wall()
 
 /obj/structure/reagent_dispensers/water_cooler
+	SET_BASE_VISUAL_PIXEL(0, DEPTH_OFFSET)
 	name = "liquid cooler"
 	desc = "A machine that dispenses liquid to drink."
 	icon = 'icons/obj/machines/vending.dmi'

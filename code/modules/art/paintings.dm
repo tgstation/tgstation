@@ -5,6 +5,7 @@
 ///////////
 
 /obj/structure/easel
+	SET_BASE_VISUAL_PIXEL(0, DEPTH_OFFSET)
 	name = "easel"
 	desc = "Only for the finest of art!"
 	icon = 'icons/obj/art/artstuff.dmi'

@@ -290,6 +290,7 @@
 			if(tool.use_tool(src, user, 10 SECONDS, volume = 75, extra_checks = CALLBACK(src, PROC_REF(check_state_and_anchored), state, anchored)))
 				state = WINDOW_OUT_OF_FRAME
 				to_chat(user, span_notice("You pry the window out of the frame."))
+				set_anchored(FALSE)
 		if(WINDOW_OUT_OF_FRAME)
 			to_chat(user, span_notice("You begin to lever the window back into the frame..."))
 			if(tool.use_tool(src, user, 5 SECONDS, volume = 75, extra_checks = CALLBACK(src, PROC_REF(check_state_and_anchored), state, anchored)))

@@ -451,6 +451,7 @@
 #include "code\__HELPERS\nameof.dm"
 #include "code\__HELPERS\names.dm"
 #include "code\__HELPERS\piping_colors_lists.dm"
+#include "code\__HELPERS\pixel_offsets.dm"
 #include "code\__HELPERS\priority_announce.dm"
 #include "code\__HELPERS\pronouns.dm"
 #include "code\__HELPERS\qdel.dm"

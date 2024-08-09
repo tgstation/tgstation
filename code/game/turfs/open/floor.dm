@@ -290,11 +290,9 @@
 				WD.set_anchored(TRUE)
 				return TRUE
 
-			//build grills to deal with full tile windows
-			if(locate(/obj/structure/grille) in src)
+			if(locate(/obj/structure/window_frame) in src)
 				return FALSE
-			var/obj/structure/grille/new_grille = new(src)
-			new_grille.set_anchored(TRUE)
+			new /obj/structure/window_frame(src)
 			return TRUE
 		if(RCD_AIRLOCK)
 			var/obj/machinery/door/airlock_type = rcd_data[RCD_DESIGN_PATH]

@@ -155,6 +155,7 @@ WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/machinery/flasher)
 		new /obj/item/stack/sheet/iron (loc, 2)
 
 /obj/machinery/flasher/portable //Portable version of the flasher. Only flashes when anchored
+	SET_BASE_VISUAL_PIXEL(0, DEPTH_OFFSET)
 	name = "portable flasher"
 	desc = "A portable flashing device. Wrench to activate and deactivate. Cannot detect slow movements."
 	icon = 'icons/obj/machines/sec.dmi'
