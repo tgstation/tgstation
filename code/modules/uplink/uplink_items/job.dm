@@ -109,7 +109,7 @@
 
 /datum/uplink_item/role_restricted/ez_clean_bundle
 	name = "EZ Clean Grenade Bundle"
-	desc = "A box with three cleaner grenades using the trademark Waffle Co. formula. Serves as a cleaner and causes acid damage to anyone standing nearby. \
+	desc = "A box with three cleaner grenades using the trademark Waffle Corp. formula. Serves as a cleaner and causes acid damage to anyone standing nearby. \
 			The acid only affects carbon-based creatures."
 	item = /obj/item/storage/box/syndie_kit/ez_clean
 	cost = 6
@@ -164,7 +164,7 @@
 
 /datum/uplink_item/role_restricted/gorillacube
 	name = "Gorilla Cube"
-	desc = "A Waffle Co. brand gorilla cube. Eat big to get big. \
+	desc = "A Waffle Corp. brand gorilla cube. Eat big to get big. \
 			Caution: Product may rehydrate when exposed to water."
 	item = /obj/item/food/monkeycube/gorilla
 	cost = 6
