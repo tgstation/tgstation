@@ -111,7 +111,7 @@
 	if(HAS_TRAIT(src, TRAIT_UNKNOWN))
 		. = if_no_id //You get NOTHING, no id name, good day sir
 		var/list/identity = list(null, null, null)
-		SEND_SIGNAL(src, COMSIG_HUMAN_GET_VISIBLE_NAME, identity)
+		SEND_SIGNAL(src, COMSIG_HUMAN_GET_FORCED_NAME, identity)
 		if(identity[VISIBLE_NAME_FORCED])
 			. = identity[VISIBLE_NAME_FACE] // to return forced names when unknown, instead of ID
 			return
