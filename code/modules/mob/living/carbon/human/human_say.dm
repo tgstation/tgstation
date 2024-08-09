@@ -29,6 +29,19 @@
 		return "gurgles"
 	return  tongue.temp_say_mod || tongue.say_mod || ..()
 
+/* Uses signal listeners to check if something is listening to us to force our visible name in most applications
+ * to be something else. Currently only used by the tactical component, but created as a modular solution for
+ * extensibility. */
+/mob/living/carbon/proc/CheckForForcedName()
+	// Any signal listeners function off of a given logic
+	// Check the second list index; if it's null, we're good to set
+	// and if not-null, we see if our priority is higher.
+	// This avoids order of operations mess and multiple things trying
+	// to simultaneously force our name.
+	. = list("unforced", null) // first arg is "unforced" just for readability here
+	if(SEND_SIGNAL(src, COMSIG
+
+
 /mob/living/carbon/human/GetVoice()
 	if(HAS_TRAIT(src, TRAIT_UNKNOWN))
 		return ("Unknown")
