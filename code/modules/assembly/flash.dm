@@ -6,6 +6,7 @@
 	icon = 'icons/obj/devices/flash.dmi'
 	icon_state = "flash"
 	inhand_icon_state = "flashtool"
+	worn_icon_state = "nothing"
 	lefthand_file = 'icons/mob/inhands/equipment/security_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/security_righthand.dmi'
 	throwforce = 0

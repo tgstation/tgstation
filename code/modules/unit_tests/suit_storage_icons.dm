@@ -1,5 +1,8 @@
 /// Makes sure suit slot items aren't using CS:S fallbacks.
 /datum/unit_test/suit_storage_icons
+	///These types need to be done, but it's been years so lets just grandfather them in until we get sprites made.
+	var/list/explicit_types_to_ignore = list(
+	)
 
 /datum/unit_test/suit_storage_icons/Run()
 	var/list/wearable_item_paths = list()
@@ -18,10 +21,10 @@
 		mod_theme = GLOB.mod_themes[mod_theme]
 		wearable_item_paths |= mod_theme.allowed_suit_storage
 
-	var/list/already_warned_icons = list()
-	var/count = 1 //to be removed once the test goes live / into CI failure mode.
 	for(var/obj/item/item_path as anything in typecacheof(wearable_item_paths))
 		if(initial(item_path.item_flags) & ABSTRACT)
+			continue
+		if(item_path in explicit_types_to_ignore) //Temporarily disabled checking on these paths.
 			continue
 
 		var/worn_icon = initial(item_path.worn_icon) //override icon file. where our sprite is contained if set. (ie modularity stuff)
@@ -31,16 +34,12 @@
 
 		if(isnull(icon_state))
 			continue //no sprite for the item.
-		if(icon_state in already_warned_icons)
-			continue
 
 		if(worn_icon) //easiest to check since we override everything.
 			if(!(icon_state in icon_states(worn_icon)))
-				log_test("\t[count] - [item_path] using invalid [worn_icon_state ? "worn_icon_state" : "icon_state"], \"[icon_state]\" in worn_icon override file, '[worn_icon]'")
-				count++
+				TEST_FAIL("[item_path] using invalid [worn_icon_state ? "worn_icon_state" : "icon_state"], \"[icon_state]\" in worn_icon override file, '[worn_icon]'")
 			continue
 
 		if(!(icon_state in icon_states('icons/mob/clothing/belt_mirror.dmi')))
-			already_warned_icons += icon_state
-			log_test("\t[count] - [item_path] using invalid [worn_icon_state ? "worn_icon_state" : "icon_state"], \"[icon_state]\"")
-			count++
+			var/has_belt_icon = (icon_state in icon_states('icons/mob/clothing/belt.dmi'))
+			TEST_FAIL("[item_path] using a missing texture placeholder due to invalid [worn_icon_state ? "worn_icon_state" : "icon_state"], \"[icon_state]\"[has_belt_icon ? ". Has a valid normal belt icon." : null]")
