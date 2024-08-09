@@ -77,6 +77,7 @@
 	name = "emergency space suit"
 	desc = "A bulky, air-tight suit meant to protect the user during emergency situations. It doesn't look very durable."
 	var/torn = FALSE
+	cell = /obj/item/stock_parts/power_store/cell/upgraded // 137 seconds of uptime
 	icon_state = "syndicate-orange"
 	inhand_icon_state = "syndicate-orange"
 	slowdown = 2
