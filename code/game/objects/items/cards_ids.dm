@@ -1731,6 +1731,15 @@
 	desc = "An internal ID card used by the station's non-sentient bots. You should report this to a coder if you're holding it."
 	wildcard_slots = WILDCARD_LIMIT_ADMIN
 
+/obj/item/card/id/dogtag
+	name = "dogtag"
+	desc = "A thin metal tag, used as a cheap alternative to ID cards."
+	icon_state = "card_dogtag"
+	wildcard_slots = WILDCARD_LIMIT_PRISONER
+
+/obj/item/card/id/dogtag/gorlex
+	trim = /datum/id_trim/syndicom/gorlex
+
 /obj/item/card/id/red
 	name = "Red Team identification card"
 	desc = "A card used to identify members of the red team for CTF"

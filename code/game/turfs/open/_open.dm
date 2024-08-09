@@ -142,6 +142,12 @@
 /turf/open/indestructible/large
 	icon_state = "floor_large"
 
+/turf/open/indestructible/large/textured
+	icon_state = "textured_large"
+
+/turf/open/indestructible/large/textured_half
+	icon_state = "textured_half"
+
 /turf/open/indestructible/white
 	icon_state = "white"
 
@@ -287,6 +293,9 @@
 
 /turf/open/indestructible/plating/airless
 	initial_gas_mix = AIRLESS_ATMOS
+
+/turf/open/indestructible/plating/reinforced
+	icon_state = "r_plate-0"
 
 /turf/open/indestructible/kitchen
 	icon_state = /turf/open/floor/iron/kitchen::icon_state

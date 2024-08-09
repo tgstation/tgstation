@@ -110,6 +110,11 @@
 	can_adjust = FALSE
 	supports_variations_flags = NONE
 
+/obj/item/clothing/under/syndicate/camo/blue
+	desc = "A blue military camouflage uniform."
+	icon_state = "camoblue"
+	inhand_icon_state = "b_suit"
+
 /obj/item/clothing/under/syndicate/floortilecamo
 	name = "floortile camouflage fatigues"
 	desc = "The newest floortile camouflage fatigues used for hallway warfare. \

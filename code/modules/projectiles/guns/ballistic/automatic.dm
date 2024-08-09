@@ -86,6 +86,10 @@
 /obj/item/gun/ballistic/automatic/wt550/add_bayonet_point()
 	AddComponent(/datum/component/bayonet_attachable, offset_x = 25, offset_y = 12)
 
+/obj/item/gun/ballistic/automatic/wt550/waffle
+	name = "\improper C-570 Autorifle"
+	desc = "A lightweight, fully automatic carbine rifle based on a leaked Nanotrasen design. Uses 4.6x30mm rounds. It has 'Scarborough Arms' inscribed on its handle."
+
 /obj/item/gun/ballistic/automatic/smartgun
 	name = "\improper Abielle Smart-SMG"
 	desc = "An old experiment in smart-weapon technology that guides bullets towards the target the gun was aimed at when fired. \

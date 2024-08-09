@@ -177,6 +177,11 @@ again.
 	icon_state = "plastitaniumwindow_spawner"
 	spawn_list = list(/obj/structure/grille, /obj/structure/window/reinforced/plasma/plastitanium)
 
+/obj/effect/spawner/structure/window/reinforced/plasma/plastitanium/indestructible
+	name = "indestructible plastitanium window spawner"
+	icon_state = "plastitaniumwindow_spawner"
+	spawn_list = list(/obj/structure/grille/indestructible, /obj/structure/window/reinforced/plasma/plastitanium)
+
 
 //ice window
 
