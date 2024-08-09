@@ -43,8 +43,6 @@ SUBSYSTEM_DEF(persistence)
 	/// List of persistene ids which piggy banks.
 	var/list/queued_broken_piggy_ids
 
-	var/list/broken_piggy_banks
-
 	var/rounds_since_engine_exploded = 0
 	var/delam_highscore = 0
 	var/tram_hits_this_round = 0
