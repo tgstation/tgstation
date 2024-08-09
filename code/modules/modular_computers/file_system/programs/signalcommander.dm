@@ -7,7 +7,7 @@
 	size = 2
 	tgui_id = "NtosSignaler"
 	program_icon = "satellite-dish"
-	can_run_on_flags = PROGRAM_PDA | PROGRAM_LAPTOP
+	can_run_on_flags = PROGRAM_PDA | PROGRAM_LAPTOP | PROGRAM_SILICON
 	program_flags = /datum/computer_file/program::program_flags | PROGRAM_CIRCUITS_RUN_WHEN_CLOSED
 	circuit_comp_type = /obj/item/circuit_component/mod_program/signaler
 	///What is the saved signal frequency?

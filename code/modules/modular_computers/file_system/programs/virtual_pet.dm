@@ -21,7 +21,7 @@ GLOBAL_LIST_EMPTY(virtual_pets_list)
 	size = 3
 	tgui_id = "NtosVirtualPet"
 	program_icon = "paw"
-	can_run_on_flags = PROGRAM_PDA
+	can_run_on_flags = PROGRAM_PDA | PROGRAM_SILICON
 	detomatix_resistance = DETOMATIX_RESIST_MALUS
 	///how many steps have we walked
 	var/steps_counter = 0

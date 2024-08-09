@@ -314,6 +314,8 @@
 		/datum/computer_file/program/messenger,
 	)
 
+	hardware_flag = PROGRAM_AI
+
 	///Ref to the RoboTact app. Important enough to borgs to deserve a ref.
 	var/datum/computer_file/program/robotact/robotact
 	///IC log that borgs can view in their personal management app
@@ -322,6 +324,8 @@
 	var/mob/living/silicon/silicon_owner
 
 /obj/item/modular_computer/pda/silicon/cyborg
+	hardware_flag = PROGRAM_CYBORG
+
 	starting_programs = list(
 		/datum/computer_file/program/filemanager,
 		/datum/computer_file/program/robotact,

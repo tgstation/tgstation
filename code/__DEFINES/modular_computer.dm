@@ -12,6 +12,16 @@
 ///Can run on PDAs.
 #define PROGRAM_PDA (1<<2)
 
+// can run on cyborgs
+#define PROGRAM_CYBORG (1<<3)
+
+// can run on ai
+#define PROGRAM_AI (1<<4)
+
+// can run on any silicon
+#define PROGRAM_SILICON (PROGRAM_CYBORG|PROGRAM_AI)
+
+
 /**
  * program_flags
  * Used by programs to tell the ModPC any special functions it has.
