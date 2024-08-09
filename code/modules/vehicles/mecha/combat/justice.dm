@@ -70,7 +70,7 @@
 	else
 		movedelay = MOVEDELAY_ANGRY
 
-	playsound(src, 'sound/mecha/mech_blade_safty.ogg', 75, FALSE) //everyone need to hear this sound
+	playsound(src, 'sound/mecha/mech_blade_safty.ogg', 75, FALSE, TRUE, TRUE) //everyone need to hear this sound
 
 	update_appearance(UPDATE_ICON_STATE)
 
@@ -106,7 +106,7 @@
  */
 /obj/vehicle/sealed/mecha/justice/proc/finish_him(obj/vehicle/sealed/mecha/my_mech, mob/finisher, mob/living/him)
 	say(pick("Take my Justice-Slash!", "A falling leaf...", "Justice is quite a lonely path"), forced = "Justice Mech")
-	playsound(src, 'sound/mecha/mech_stealth_pre_attack.ogg', 75, FALSE)
+	playsound(src, 'sound/mecha/mech_stealth_pre_attack.ogg', 75, FALSE, TRUE, TRUE)
 	if(!do_after(finisher, 1 SECONDS, him))
 		return
 	if(QDELETED(finisher))
@@ -121,7 +121,7 @@
 	var/turf/for_line_turf = get_turf(my_mech)
 	var/obj/item/bodypart/in_your_head = him.get_bodypart(BODY_ZONE_HEAD)
 	in_your_head?.dismember(BRUTE)
-	playsound(src, brute_attack_sound, 75, FALSE)
+	playsound(src, brute_attack_sound, 75, FALSE, TRUE, TRUE)
 	for_line_turf.Beam(src, icon_state = "mech_charge", time = 8)
 	forceMove(finish_turf)
 
@@ -313,7 +313,7 @@
 	UnregisterSignal(chassis, COMSIG_MECHA_MELEE_CLICK)
 	new /obj/effect/temp_visual/mech_attack_aoe_charge(get_turf(chassis))
 	ADD_TRAIT(chassis, TRAIT_IMMOBILIZED, REF(src))
-	playsound(chassis, stealth_pre_attack_sound, 75, FALSE)
+	playsound(chassis, stealth_pre_attack_sound, 75, FALSE, TRUE, TRUE)
 	addtimer(CALLBACK(src, PROC_REF(attack_in_aoe), pilot), 1 SECONDS)
 	return TRUE
 
@@ -339,7 +339,7 @@
 			var/obj/item/bodypart/cut_bodypart = something_living.get_bodypart(pick(BODY_ZONE_R_ARM, BODY_ZONE_R_LEG, BODY_ZONE_L_ARM, BODY_ZONE_L_LEG))
 			cut_bodypart?.dismember(BRUTE)
 		something_living.apply_damage(35, BRUTE)
-	playsound(chassis, stealth_attack_sound, 75, FALSE)
+	playsound(chassis, stealth_attack_sound, 75, FALSE, TRUE, TRUE)
 	REMOVE_TRAIT(chassis, TRAIT_IMMOBILIZED, REF(src))
 	on = !on
 	charge = FALSE
@@ -493,7 +493,7 @@
 		return FALSE
 	chassis.forceMove(here_we_go)
 	start_charge_here.Beam(chassis, icon_state = "mech_charge", time = 8)
-	playsound(chassis, charge_attack_sound, 75, FALSE)
+	playsound(chassis, charge_attack_sound, 75, FALSE, TRUE, TRUE)
 	on = !on
 	chassis.use_energy(energy_cost)
 	UnregisterSignal(chassis, COMSIG_MECHA_MELEE_CLICK)

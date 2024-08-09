@@ -124,7 +124,7 @@
 	tool_behaviour = active ? TOOL_WRENCH : initial(tool_behaviour)
 	if(user)
 		balloon_alert(user, "[name] [active ? "active, woe!":"restrained"]")
-	playsound(src, active ? 'sound/weapons/saberon.ogg' : 'sound/weapons/saberoff.ogg', 5, TRUE)
+	playsound(src, active ? 'sound/weapons/saberon.ogg' : 'sound/weapons/saberoff.ogg', 5, TRUE, TRUE, TRUE)
 	return COMPONENT_NO_DEFAULT_MESSAGE
 
 /obj/item/wrench/bolter

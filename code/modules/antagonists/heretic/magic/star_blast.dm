@@ -46,7 +46,7 @@
 		nearby_mob.apply_status_effect(/datum/status_effect/star_mark, cast_on)
 
 /obj/projectile/magic/star_ball/Destroy()
-	playsound(get_turf(src), 'sound/magic/cosmic_energy.ogg', 50, FALSE)
+	playsound(get_turf(src), 'sound/magic/cosmic_energy.ogg', 50, FALSE, FALSE, TRUE)
 	for(var/turf/cast_turf as anything in get_turfs())
 		new /obj/effect/forcefield/cosmic_field(cast_turf)
 	return ..()

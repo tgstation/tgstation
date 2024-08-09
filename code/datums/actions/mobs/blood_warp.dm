@@ -51,9 +51,9 @@
 		found_bloodpool = pick(pools)
 	if(found_bloodpool)
 		owner.visible_message("<span class='danger'>[owner] sinks into the blood...</span>")
-		playsound(get_turf(owner), 'sound/magic/enter_blood.ogg', 100, TRUE, -1)
+		playsound(get_turf(owner), 'sound/magic/enter_blood.ogg', 100, TRUE, -1, TRUE, TRUE)
 		owner.forceMove(get_turf(found_bloodpool))
-		playsound(get_turf(owner), 'sound/magic/exit_blood.ogg', 100, TRUE, -1)
+		playsound(get_turf(owner), 'sound/magic/exit_blood.ogg', 100, TRUE, -1, TRUE, TRUE)
 		owner.visible_message("<span class='danger'>And springs back out!</span>")
 		SEND_SIGNAL(owner, COMSIG_BLOOD_WARP)
 		return TRUE

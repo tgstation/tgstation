@@ -137,7 +137,7 @@
 	if(!length(possible_turfs))
 		return FALSE
 
-	playsound(owner, 'sound/magic/fireball.ogg', 70, TRUE)
+	playsound(owner, 'sound/magic/fireball.ogg', 70, TRUE, TRUE, TRUE)
 	new /obj/effect/temp_visual/blood_drop_rising(get_turf(owner))
 	addtimer(CALLBACK(src, PROC_REF(fire_droplets), possible_turfs), 1.5 SECONDS)
 	StartCooldown()
@@ -210,7 +210,7 @@
 	return TRUE
 
 /datum/action/cooldown/mob_cooldown/belly_flop/proc/flop_on_turf(turf/target, original_pixel_y)
-	playsound(get_turf(owner), 'sound/effects/meteorimpact.ogg', 200, TRUE)
+	playsound(get_turf(owner), 'sound/effects/meteorimpact.ogg', 200, TRUE, TRUE, TRUE)
 	for(var/mob/living/victim in oview(1, owner))
 		if(victim in owner.buckled_mobs)
 			continue

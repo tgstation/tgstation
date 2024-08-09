@@ -471,7 +471,7 @@
 	face_atom(targeted_atom)
 	if(casingtype)
 		var/obj/item/ammo_casing/casing = new casingtype(startloc)
-		playsound(src, projectilesound, 100, TRUE)
+		playsound(src, projectilesound, 100, TRUE, TRUE, TRUE)
 		var/targeted_zone
 		if(ismob(targeted_atom))
 			var/mob/targeted_mob = targeted_atom

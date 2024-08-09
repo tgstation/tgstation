@@ -115,7 +115,7 @@
 	while(do_after_mecha(target, source, drill_delay))
 		if(isliving(target))
 			drill_mob(target, source)
-			playsound(src,'sound/weapons/drill.ogg',40,TRUE)
+			playsound(src,'sound/weapons/drill.ogg',40,TRUE, TRUE, TRUE)
 		else if(isobj(target))
 			var/obj/obj_target = target
 			if(istype(obj_target, /obj/item/boulder))
@@ -123,7 +123,7 @@
 				nu_boulder.manual_process(src, source)
 			else
 				obj_target.take_damage(15, BRUTE, 0, FALSE, get_dir(chassis, target))
-			playsound(src,'sound/weapons/drill.ogg', 40, TRUE)
+			playsound(src,'sound/weapons/drill.ogg', 40, TRUE, TRUE, TRUE)
 
 		// If we caused a qdel drilling the target, we can stop drilling them.
 		// Prevents starting a do_after on a qdeleted target.

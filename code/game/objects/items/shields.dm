@@ -343,7 +343,7 @@
 
 	if(user)
 		balloon_alert(user, active ? "activated" : "deactivated")
-	playsound(src, active ? 'sound/weapons/saberon.ogg' : 'sound/weapons/saberoff.ogg', 35, TRUE)
+	playsound(src, active ? 'sound/weapons/saberon.ogg' : 'sound/weapons/saberoff.ogg', 35, TRUE, TRUE, TRUE)
 	return COMPONENT_NO_DEFAULT_MESSAGE
 
 /obj/item/shield/energy/proc/can_disarm_attack(datum/source, mob/living/victim, mob/living/user, send_message = TRUE)

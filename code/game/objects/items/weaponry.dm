@@ -36,7 +36,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 		M.visible_message(span_danger("[user] are stroking the head of [M] with a bangammer."), span_userdanger("[user] are stroking your head with a bangammer."), span_hear("You hear a bangammer stroking a head.")) // see above comment
 	else
 		M.visible_message(span_danger("[M] has been banned FOR NO REISIN by [user]!"), span_userdanger("You have been banned FOR NO REISIN by [user]!"), span_hear("You hear a banhammer banning someone."))
-	playsound(loc, 'sound/effects/adminhelp.ogg', 15) //keep it at 15% volume so people don't jump out of their skin too much
+	playsound(loc, 'sound/effects/adminhelp.ogg', 15, FALSE, TRUE, TRUE) //keep it at 15% volume so people don't jump out of their skin too much
 	if(user.combat_mode)
 		return ..(M, user)
 

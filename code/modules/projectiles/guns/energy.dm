@@ -64,9 +64,9 @@
 	playing_sound.pitch = pitch_to_use
 
 	if(suppressed)
-		playsound(src, playing_sound, suppressed_volume, vary_fire_sound, ignore_walls = FALSE, extrarange = SILENCED_SOUND_EXTRARANGE, falloff_distance = 0)
+		playsound(src, playing_sound, suppressed_volume, vary_fire_sound, extrarange = SILENCED_SOUND_EXTRARANGE, falloff_distance = 0)
 	else
-		playsound(src, playing_sound, fire_sound_volume, vary_fire_sound)
+		playsound(src, playing_sound, fire_sound_volume, vary_fire_sound, TRUE, TRUE, TRUE)
 
 /obj/item/gun/energy/emp_act(severity)
 	. = ..()
@@ -283,7 +283,7 @@
 		sleep(2.5 SECONDS)
 		if(user.is_holding(src))
 			user.visible_message(span_suicide("[user] melts [user.p_their()] face off with [src]!"))
-			playsound(loc, fire_sound, 50, TRUE, -1)
+			playsound(loc, fire_sound, 50, TRUE, -1, TRUE, TRUE)
 			var/obj/item/ammo_casing/energy/shot = ammo_type[select]
 			cell.use(shot.e_cost)
 			update_appearance()
@@ -318,19 +318,19 @@
 		else if(loaded_projectile.damage <= 0 || loaded_projectile.damage_type == STAMINA)
 			user.visible_message(span_danger("[user] tries to light [A.loc == user ? "[user.p_their()] [A.name]" : A] with [src], but it doesn't do anything. Dumbass."))
 			playsound(user, E.fire_sound, 50, TRUE)
-			playsound(user, loaded_projectile.hitsound, 50, TRUE)
+			playsound(user, loaded_projectile.hitsound, 50, TRUE, TRUE, TRUE)
 			cell.use(E.e_cost)
 			. = ""
 		else if(loaded_projectile.damage_type != BURN)
 			user.visible_message(span_danger("[user] tries to light [A.loc == user ? "[user.p_their()] [A.name]" : A] with [src], but only succeeds in utterly destroying it. Dumbass."))
 			playsound(user, E.fire_sound, 50, TRUE)
-			playsound(user, loaded_projectile.hitsound, 50, TRUE)
+			playsound(user, loaded_projectile.hitsound, 50, TRUE, TRUE, TRUE)
 			cell.use(E.e_cost)
 			qdel(A)
 			. = ""
 		else
 			playsound(user, E.fire_sound, 50, TRUE)
-			playsound(user, loaded_projectile.hitsound, 50, TRUE)
+			playsound(user, loaded_projectile.hitsound, 50, TRUE, TRUE, TRUE)
 			cell.use(E.e_cost)
 			. = span_danger("[user] casually lights [A.loc == user ? "[user.p_their()] [A.name]" : A] with [src]. Damn.")
 

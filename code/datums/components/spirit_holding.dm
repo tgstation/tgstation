@@ -149,10 +149,10 @@
 		return // just in case
 	var/atom/movable/exorcised_movable = parent
 	to_chat(exorcist, span_notice("You begin to exorcise [parent]..."))
-	playsound(parent, 'sound/hallucinations/veryfar_noise.ogg',40,TRUE)
+	playsound(parent, 'sound/hallucinations/veryfar_noise.ogg',40,TRUE, TRUE, TRUE)
 	if(!do_after(exorcist, 4 SECONDS, target = exorcised_movable))
 		return
-	playsound(parent, 'sound/effects/pray_chaplain.ogg',60,TRUE)
+	playsound(parent, 'sound/effects/pray_chaplain.ogg',60,TRUE, TRUE, TRUE)
 	UnregisterSignal(exorcised_movable, list(COMSIG_ATOM_RELAYMOVE, COMSIG_BIBLE_SMACKED))
 	RegisterSignal(exorcised_movable, COMSIG_ITEM_ATTACK_SELF, PROC_REF(on_attack_self))
 	to_chat(bound_spirit, span_userdanger("You were exorcised!"))

@@ -88,7 +88,7 @@
 				volume = 10
 			else
 				volume = 5
-		playsound(loc, beepsound, volume, FALSE)
+		playsound(loc, beepsound, volume, FALSE, FALSE, TRUE)
 		next_beep = world.time + 10
 
 	if(active && ((detonation_timer <= world.time) || explode_now))
@@ -226,7 +226,7 @@
 	countdown.start()
 	next_beep = world.time + 10
 	detonation_timer = world.time + (timer_set * 10)
-	playsound(loc, 'sound/machines/click.ogg', 30, TRUE)
+	playsound(loc, 'sound/machines/click.ogg', 30, TRUE, FALSE, TRUE)
 	update_appearance()
 
 /obj/machinery/syndicatebomb/proc/settings(mob/user)
@@ -423,7 +423,7 @@
 	amt_summon = 50
 
 /obj/item/bombcore/badmin/summon/clown/defuse()
-	playsound(src, 'sound/misc/sadtrombone.ogg', 50)
+	playsound(src, 'sound/misc/sadtrombone.ogg', 50, FALSE, TRUE)
 	..()
 
 /obj/item/bombcore/large
@@ -669,7 +669,7 @@
 				B.detonation_timer = world.time + BUTTON_DELAY
 				detonated++
 			existent++
-		playsound(user, 'sound/machines/click.ogg', 20, TRUE)
+		playsound(user, 'sound/machines/click.ogg', 20, TRUE, FALSE, TRUE)
 		to_chat(user, span_notice("[existent] found, [detonated] triggered."))
 		if(detonated)
 			detonated--

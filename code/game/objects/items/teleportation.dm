@@ -428,9 +428,9 @@
 		new /obj/effect/temp_visual/teleport_abductor/syndi_teleporter(current_location)
 		new /obj/effect/temp_visual/teleport_abductor/syndi_teleporter(destination)
 		make_bloods(current_location, destination, user)
-		playsound(current_location, SFX_PORTAL_ENTER, 50, 1, SHORT_RANGE_SOUND_EXTRARANGE)
-		playsound(destination, 'sound/effects/phasein.ogg', 25, 1, SHORT_RANGE_SOUND_EXTRARANGE)
-		playsound(destination, SFX_PORTAL_ENTER, 50, 1, SHORT_RANGE_SOUND_EXTRARANGE)
+		playsound(current_location, SFX_PORTAL_ENTER, 50, 1, SHORT_RANGE_SOUND_EXTRARANGE, TRUE, TRUE)
+		playsound(destination, 'sound/effects/phasein.ogg', 25, 1, SHORT_RANGE_SOUND_EXTRARANGE, TRUE, TRUE)
+		playsound(destination, SFX_PORTAL_ENTER, 50, 1, SHORT_RANGE_SOUND_EXTRARANGE, TRUE, TRUE)
 
 /obj/item/syndicate_teleporter/proc/malfunctioning(mob/guy_teleporting, turf/current_location)
 	var/area/current_area = get_area(current_location)
@@ -465,9 +465,9 @@
 		balloon_alert(user, "emergency teleport triggered!")
 		if (!HAS_TRAIT(user, TRAIT_NOBLOOD))
 			make_bloods(mobloc, emergency_destination, user)
-		playsound(mobloc, SFX_PORTAL_ENTER, 50, 1, SHORT_RANGE_SOUND_EXTRARANGE)
-		playsound(emergency_destination, 'sound/effects/phasein.ogg', 25, 1, SHORT_RANGE_SOUND_EXTRARANGE)
-		playsound(emergency_destination, SFX_PORTAL_ENTER, 50, 1, SHORT_RANGE_SOUND_EXTRARANGE)
+		playsound(mobloc, SFX_PORTAL_ENTER, 50, 1, SHORT_RANGE_SOUND_EXTRARANGE, TRUE, TRUE)
+		playsound(emergency_destination, 'sound/effects/phasein.ogg', 25, 1, SHORT_RANGE_SOUND_EXTRARANGE, TRUE, TRUE)
+		playsound(emergency_destination, SFX_PORTAL_ENTER, 50, 1, SHORT_RANGE_SOUND_EXTRARANGE, TRUE, TRUE)
 	else //We tried to save. We failed. Death time.
 		get_fragged(user, destination)
 
@@ -477,9 +477,9 @@
 	victim.forceMove(destination)
 	new /obj/effect/temp_visual/teleport_abductor/syndi_teleporter(mobloc)
 	new /obj/effect/temp_visual/teleport_abductor/syndi_teleporter(destination)
-	playsound(mobloc, SFX_PORTAL_ENTER, 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
-	playsound(destination, SFX_PORTAL_ENTER, 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
-	playsound(destination, 'sound/magic/disintegrate.ogg', 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
+	playsound(mobloc, SFX_PORTAL_ENTER, 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE, TRUE, TRUE)
+	playsound(destination, SFX_PORTAL_ENTER, 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE, TRUE, TRUE)
+	playsound(destination, 'sound/magic/disintegrate.ogg', 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE, TRUE, TRUE)
 	if(!not_holding_tele)
 		to_chat(victim, span_userdanger("You teleport into [destination], [src] tries to save you, but..."))
 	else

@@ -368,14 +368,14 @@
 
 /obj/item/pen/edagger/proc/on_containing_dart_fired(obj/projectile/source)
 	SIGNAL_HANDLER
-	playsound(source, 'sound/weapons/saberon.ogg', 5, TRUE)
+	playsound(source, 'sound/weapons/saberon.ogg', 5, TRUE, TRUE, TRUE)
 	var/datum/component/transforming/transform_comp = GetComponent(/datum/component/transforming)
 	source.hitsound = transform_comp.hitsound_on
 	source.set_light(light_range, light_power, light_color, l_on = TRUE)
 
 /obj/item/pen/edagger/proc/on_containing_dart_drop(datum/source, obj/item/ammo_casing/new_casing)
 	SIGNAL_HANDLER
-	playsound(new_casing, 'sound/weapons/saberoff.ogg', 5, TRUE)
+	playsound(new_casing, 'sound/weapons/saberoff.ogg', 5, TRUE, TRUE, TRUE)
 
 /obj/item/pen/edagger/proc/on_containing_dart_embedded(datum/source, obj/item/ammo_casing/new_casing)
 	SIGNAL_HANDLER
@@ -384,12 +384,12 @@
 
 /obj/item/pen/edagger/proc/on_containing_dart_failed_embed(obj/item/ammo_casing/source)
 	SIGNAL_HANDLER
-	playsound(source, 'sound/weapons/saberoff.ogg', 5, TRUE)
+	playsound(source, 'sound/weapons/saberoff.ogg', 5, TRUE, TRUE, TRUE)
 	UnregisterSignal(source, list(COMSIG_ITEM_UNEMBEDDED, COMSIG_ITEM_FAILED_EMBED))
 
 /obj/item/pen/edagger/proc/on_embedded_removed(obj/item/ammo_casing/source, mob/living/carbon/victim)
 	SIGNAL_HANDLER
-	playsound(source, 'sound/weapons/saberoff.ogg', 5, TRUE)
+	playsound(source, 'sound/weapons/saberoff.ogg', 5, TRUE, TRUE, TRUE)
 	UnregisterSignal(source, list(COMSIG_ITEM_UNEMBEDDED, COMSIG_ITEM_FAILED_EMBED))
 	victim.visible_message(
 		message = span_warning("The blade of the [hidden_name] retracts as the [source.name] is removed from [victim]!"),
@@ -432,7 +432,7 @@
 
 	if(user)
 		balloon_alert(user, "[hidden_name] [active ? "active" : "concealed"]")
-	playsound(src, active ? 'sound/weapons/saberon.ogg' : 'sound/weapons/saberoff.ogg', 5, TRUE)
+	playsound(src, active ? 'sound/weapons/saberon.ogg' : 'sound/weapons/saberoff.ogg', 5, TRUE, TRUE, TRUE)
 	set_light_on(active)
 	return COMPONENT_NO_DEFAULT_MESSAGE
 

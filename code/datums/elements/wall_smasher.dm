@@ -62,10 +62,10 @@
 	var/turf/closed/wall/wall_turf = target
 
 	if (istype(wall_turf, /turf/closed/wall/r_wall) && strength_flag != ENVIRONMENT_SMASH_RWALLS)
-		playsound(wall_turf, 'sound/effects/bang.ogg', 50, vary = TRUE)
+		playsound(wall_turf, 'sound/effects/bang.ogg', 50, vary = TRUE, ignore_walls = TRUE)
 		wall_turf.balloon_alert(puncher, "too tough!")
 		return COMPONENT_HOSTILE_NO_ATTACK
 
 	wall_turf.dismantle_wall(devastated = TRUE)
-	playsound(wall_turf, 'sound/effects/meteorimpact.ogg', 100, vary = TRUE)
+	playsound(wall_turf, 'sound/effects/meteorimpact.ogg', 100, vary = TRUE, ignore_walls = TRUE)
 	return COMPONENT_HOSTILE_NO_ATTACK

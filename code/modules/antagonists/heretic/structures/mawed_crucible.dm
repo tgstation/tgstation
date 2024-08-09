@@ -70,7 +70,7 @@
 		return TRUE
 
 	if(istype(weapon, /obj/item/codex_cicatrix) || istype(weapon, /obj/item/melee/touch_attack/mansus_fist))
-		playsound(src, 'sound/items/deconstruct.ogg', 30, TRUE, ignore_walls = FALSE)
+		playsound(src, 'sound/items/deconstruct.ogg', 30, TRUE)
 		set_anchored(!anchored)
 		balloon_alert(user, "[anchored ? "":"un"]anchored")
 		return TRUE

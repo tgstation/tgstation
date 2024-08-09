@@ -606,7 +606,7 @@
 	if(user)
 		balloon_alert(user, "[active ? "flicked out":"pushed in"] [src]")
 
-	playsound(src, active ? 'sound/weapons/saberon.ogg' : 'sound/weapons/saberoff.ogg', 20, TRUE)
+	playsound(src, active ? 'sound/weapons/saberon.ogg' : 'sound/weapons/saberoff.ogg', 20, TRUE, TRUE, TRUE)
 	update_appearance(UPDATE_ICON)
 	return COMPONENT_NO_DEFAULT_MESSAGE
 

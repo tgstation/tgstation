@@ -129,7 +129,7 @@
 		if(viewer.client)
 			flash_color(viewer.client, "#C80000", 1)
 			shake_camera(viewer, 4, 3)
-	playsound(src, 'sound/magic/clockwork/narsie_attack.ogg', 200, TRUE)
+	playsound(src, 'sound/magic/clockwork/narsie_attack.ogg', 200, TRUE, TRUE, TRUE)
 
 /mob/living/simple_animal/hostile/megafauna/colossus/proc/start_attack(mob/living/owner, datum/action/cooldown/activated)
 	SIGNAL_HANDLER

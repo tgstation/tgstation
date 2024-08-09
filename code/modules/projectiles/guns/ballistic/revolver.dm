@@ -46,13 +46,13 @@
 	var/click_frequency_to_use = 1 - frequency_to_use * 0.75
 	var/play_click = sqrt(magazine?.max_ammo) > get_ammo(TRUE, FALSE)
 	if(suppressed)
-		playsound(src, suppressed_sound, suppressed_volume, vary_fire_sound, ignore_walls = FALSE, extrarange = SILENCED_SOUND_EXTRARANGE, falloff_distance = 0)
+		playsound(src, suppressed_sound, suppressed_volume, vary_fire_sound, extrarange = SILENCED_SOUND_EXTRARANGE, falloff_distance = 0)
 		if(play_click)
-			playsound(src, 'sound/weapons/gun/general/ballistic_click.ogg', suppressed_volume, vary_fire_sound, ignore_walls = FALSE, extrarange = SILENCED_SOUND_EXTRARANGE, falloff_distance = 0, frequency = click_frequency_to_use)
+			playsound(src, 'sound/weapons/gun/general/ballistic_click.ogg', suppressed_volume, vary_fire_sound, extrarange = SILENCED_SOUND_EXTRARANGE, falloff_distance = 0, frequency = click_frequency_to_use)
 	else
 		playsound(src, fire_sound, fire_sound_volume, vary_fire_sound)
 		if(play_click)
-			playsound(src, 'sound/weapons/gun/general/ballistic_click.ogg', fire_sound_volume, vary_fire_sound, frequency = click_frequency_to_use)
+			playsound(src, 'sound/weapons/gun/general/ballistic_click.ogg', fire_sound_volume, vary_fire_sound, frequency = click_frequency_to_use, ignore_walls = TRUE)
 
 
 /obj/item/gun/ballistic/revolver/verb/spin()
@@ -261,7 +261,7 @@
 		if(chambered)
 			var/obj/item/ammo_casing/AC = chambered
 			if(AC.fire_casing(user, user, params, distro = 0, quiet = 0, zone_override = null, spread = 0, fired_from = src))
-				playsound(user, fire_sound, fire_sound_volume, vary_fire_sound)
+				playsound(user, fire_sound, fire_sound_volume, vary_fire_sound, TRUE, TRUE)
 				if(is_target_face)
 					shoot_self(user, affecting)
 				else if(tk_controlled) // the consequence of you doing the telekinesis stuff

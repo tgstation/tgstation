@@ -80,7 +80,7 @@
 		if(!thing)
 			continue
 		affected_mob.put_in_hand(thing, index, forced = TRUE, ignore_anim = TRUE)
-		playsound(affected_mob, 'sound/effects/phasein.ogg', 20, TRUE)
+		playsound(affected_mob, 'sound/effects/phasein.ogg', 20, TRUE, TRUE, TRUE)
 /*
 * Freezes the player in a block of ice, 1s = 1u
 * Will be removed when the required reagent is removed too

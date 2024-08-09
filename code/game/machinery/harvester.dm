@@ -115,7 +115,7 @@
 	if(!harvesting || state_open || !powered() || !occupant || !iscarbon(occupant))
 		end_harvesting(success = FALSE)
 		return
-	playsound(src, 'sound/machines/juicer.ogg', 20, TRUE)
+	playsound(src, 'sound/machines/juicer.ogg', 20, TRUE, TRUE, TRUE)
 	var/mob/living/carbon/carbon_occupant = occupant
 	if(!LAZYLEN(operation_order)) //The list is empty, so we're done here
 		end_harvesting(success = TRUE)

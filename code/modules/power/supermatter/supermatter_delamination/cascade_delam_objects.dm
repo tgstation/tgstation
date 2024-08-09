@@ -27,7 +27,7 @@
 
 	sm_comp = AddComponent(/datum/component/supermatter_crystal, null, null)
 
-	playsound(src, 'sound/misc/cracking_crystal.ogg', 45, TRUE)
+	playsound(src, 'sound/misc/cracking_crystal.ogg', 45, TRUE, FALSE, TRUE)
 
 	available_dirs -= dir_to_remove
 
@@ -64,11 +64,11 @@
 				span_userdanger("The crystal mass lunges on you and hits you in the chest. As your vision is filled with a blinding light, you think to yourself \"Damn it.\""))
 		else if(istype(checked_atom, /obj/cascade_portal))
 			checked_atom.visible_message(span_userdanger("\The [checked_atom] screeches and closes away as it is hit by \a [src]! Too late!"))
-			playsound(get_turf(checked_atom), 'sound/magic/charge.ogg', 50, TRUE)
-			playsound(get_turf(checked_atom), 'sound/effects/supermatter.ogg', 50, TRUE)
+			playsound(get_turf(checked_atom), 'sound/magic/charge.ogg', 50, TRUE, FALSE, TRUE)
+			playsound(get_turf(checked_atom), 'sound/effects/supermatter.ogg', 50, TRUE, FALSE, TRUE)
 			qdel(checked_atom)
 		else if(isitem(checked_atom))
-			playsound(get_turf(checked_atom), 'sound/effects/supermatter.ogg', 50, TRUE)
+			playsound(get_turf(checked_atom), 'sound/effects/supermatter.ogg', 50, TRUE, FALSE, TRUE)
 			qdel(checked_atom)
 
 	new /obj/crystal_mass(next_turf, get_dir(next_turf, src))
@@ -82,7 +82,7 @@
 		span_hear("You hear a loud crack as you are washed with a wave of heat."),
 	)
 
-	playsound(src, 'sound/effects/supermatter.ogg', 50, TRUE)
+	playsound(src, 'sound/effects/supermatter.ogg', 50, TRUE, FALSE, TRUE)
 	qdel(hitting_projectile)
 	return COMPONENT_BULLET_BLOCKED
 
@@ -142,7 +142,7 @@
 /obj/cascade_portal/Bumped(atom/movable/hit_object)
 	consume(hit_object)
 	new /obj/effect/particle_effect/sparks(loc)
-	playsound(loc, SFX_SPARKS, 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
+	playsound(loc, SFX_SPARKS, 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE, FALSE, TRUE)
 
 /**
  * Proc to consume the objects colliding with the portal
@@ -172,7 +172,7 @@
 		consumed_mob.flash_act(1, TRUE, TRUE)
 
 		new /obj/effect/particle_effect/sparks(consumed_object)
-		playsound(consumed_object, SFX_SPARKS, 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
+		playsound(consumed_object, SFX_SPARKS, 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE, FALSE, TRUE)
 	else if(isitem(consumed_object))
 		consumed_object.visible_message(span_danger("\The [consumed_object] smacks into \the [src] and disappears out of sight."), null,
 			span_hear("You hear a loud crack as a small distortion passes through you."))

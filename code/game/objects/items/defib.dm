@@ -597,7 +597,7 @@
 			if(H.stat == DEAD)
 				H.visible_message(span_warning("[H]'s body convulses a bit."))
 				playsound(src, SFX_BODYFALL, 50, TRUE)
-				playsound(src, 'sound/machines/defib_zap.ogg', 75, TRUE, -1)
+				playsound(src, 'sound/machines/defib_zap.ogg', 75, TRUE, -1, TRUE, TRUE)
 				shock_pulling(30, H)
 
 				var/defib_result = H.can_defib()
@@ -663,7 +663,7 @@
 				user.visible_message(span_warning("[req_defib ? "[defib]" : "[src]"] buzzes: Patient's heart is missing. Operation aborted."))
 				playsound(src, 'sound/machines/defib_failed.ogg', 50, FALSE)
 			else if(H.undergoing_cardiac_arrest())
-				playsound(src, 'sound/machines/defib_zap.ogg', 50, TRUE, -1)
+				playsound(src, 'sound/machines/defib_zap.ogg', 50, TRUE, -1, TRUE, TRUE)
 				if(!(heart.organ_flags & ORGAN_FAILING))
 					H.set_heartattack(FALSE)
 					user.visible_message(span_notice("[req_defib ? "[defib]" : "[src]"] pings: Patient's heart is now beating again."))

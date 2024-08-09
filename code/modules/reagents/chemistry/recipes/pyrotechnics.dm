@@ -167,7 +167,7 @@
 		var/turf/T = get_turf(holder.my_atom)
 		///special size for anti cult effect
 		var/effective_size = round(created_volume/48)
-		playsound(T, 'sound/effects/pray.ogg', 80, FALSE, effective_size)
+		playsound(T, 'sound/effects/pray.ogg', 80, FALSE, effective_size, TRUE, TRUE)
 		for(var/mob/living/basic/revenant/ghostie in get_hearers_in_view(7,T))
 			var/deity
 			if(GLOB.deity)
@@ -413,7 +413,7 @@
 		return
 	holder.remove_reagent(/datum/reagent/sonic_powder, created_volume * 3)
 	var/location = get_turf(holder.my_atom)
-	playsound(location, 'sound/effects/bang.ogg', 25, TRUE)
+	playsound(location, 'sound/effects/bang.ogg', 25, TRUE, TRUE, TRUE)
 	for(var/mob/living/carbon/C in get_hearers_in_view(created_volume/3, location))
 		C.soundbang_act(1, 100, rand(0, 5))
 
@@ -424,7 +424,7 @@
 
 /datum/chemical_reaction/sonic_powder_deafen/on_reaction(datum/reagents/holder, datum/equilibrium/reaction, created_volume)
 	var/location = get_turf(holder.my_atom)
-	playsound(location, 'sound/effects/bang.ogg', 25, TRUE)
+	playsound(location, 'sound/effects/bang.ogg', 25, TRUE, TRUE, TRUE)
 	for(var/mob/living/carbon/C in get_hearers_in_view(created_volume/10, location))
 		C.soundbang_act(1, 100, rand(0, 5))
 
@@ -498,7 +498,7 @@
 	if(!cryostylane)
 		return ..()
 	var/turf/local_turf = get_turf(holder.my_atom)
-	playsound(local_turf, 'sound/magic/ethereal_exit.ogg', 50, 1)
+	playsound(local_turf, 'sound/magic/ethereal_exit.ogg', 50, 1, TRUE, TRUE)
 	local_turf.visible_message("The reaction frosts over, releasing its chilly contents!")
 	freeze_radius(holder, null, holder.chem_temp*2, clamp(cryostylane.volume/30, 2, 6), 120 SECONDS, 2)
 	clear_reactants(holder, 15)
@@ -508,7 +508,7 @@
 /datum/chemical_reaction/cryostylane/overly_impure(datum/reagents/holder, datum/equilibrium/equilibrium, vol_added)
 	var/datum/reagent/cryostylane/cryostylane = holder.has_reagent(/datum/reagent/cryostylane)
 	var/turf/local_turf = get_turf(holder.my_atom)
-	playsound(local_turf, 'sound/magic/ethereal_exit.ogg', 50, 1)
+	playsound(local_turf, 'sound/magic/ethereal_exit.ogg', 50, 1, TRUE, TRUE)
 	local_turf.visible_message("The reaction furiously freezes up as a snowman suddenly rises out of the [holder.my_atom.name]!")
 	freeze_radius(holder, equilibrium, holder.chem_temp, clamp(cryostylane.volume/15, 3, 10), 180 SECONDS, 5)
 	new /obj/structure/statue/snow/snowman(local_turf)
@@ -603,7 +603,7 @@
 	if(QDELETED(holder_atom))
 		return
 	tesla_zap(source = holder_atom, zap_range = 7, power = power, cutoff = 1 KILO JOULES, zap_flags = zap_flags)
-	playsound(holder_atom, 'sound/machines/defib_zap.ogg', 50, TRUE)
+	playsound(holder_atom, 'sound/machines/defib_zap.ogg', 50, TRUE, TRUE, TRUE)
 
 /datum/chemical_reaction/reagent_explosion/teslium_lightning/heat
 	required_temp = 474
