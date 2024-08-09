@@ -73,3 +73,18 @@
 2024-08-08:
   Odairu:
   - rscadd: mantisblade has 2 settings now, crowbar and knife
+2024-08-09:
+  Absolucy:
+  - bugfix: Fixed some conflicting sound channels on the volume mixer.
+  - server: Added structured logging to runtime errors.
+  CannibalHunter:
+  - balance: rebalanced the wheelchairs to be similar to as they were in monke 1.0!
+  ThePooba:
+  - bugfix: Krav Maga gloves now have a tooltip instead of the longest name in the
+      game for its abilities
+  - bugfix: Farting in blueshifts fridge now makes frozen farts (and every other maps
+      fridge)
+  - bugfix: Cleaner bots now clean trash and dead rats with acid (Make sure to turn
+      it on!)
+  - bugfix: Flour bag now displays correct recipes for dough and cake batter
+  - bugfix: Flushers no longer DELETE YOU if the trunk under it is broken

@@ -1,4 +1,0 @@
-author: "Absolucy"
-delete-after: True
-changes:
-  - server: "Added structured logging to runtime errors."
