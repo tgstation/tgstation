@@ -115,8 +115,8 @@
 
 /obj/structure/flora/run_atom_armor(damage_amount, damage_type, damage_flag = 0, attack_dir)
 	if(damage_flag == MELEE)
-			if(damage_type == BURN)
-				damage_amount *= 4
+		if(damage_type == BURN)
+			damage_amount *= 4
 	return ..()
 
 /obj/structure/flora/play_attack_sound(damage_amount, damage_type = BRUTE, damage_flag = 0)
