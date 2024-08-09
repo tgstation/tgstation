@@ -10,7 +10,7 @@
 	icon_state = "spaceold"
 	inhand_icon_state = "space_helmet"
 	desc = "A special helmet with solar UV shielding to protect your eyes from harmful rays."
-	clothing_flags = STOPSPRESSUREDAMAGE | THICKMATERIAL | SNUG_FIT | STACKABLE_HELMET_EXEMPT | HEADINTERNALS
+	clothing_flags = STOPS_HIGH_PRESSURE_DAMAGE | STOPS_LOW_PRESSURE_DAMAGE | THICKMATERIAL | SNUG_FIT | STACKABLE_HELMET_EXEMPT | HEADINTERNALS
 	armor_type = /datum/armor/helmet_space
 	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE|HIDEHAIR|HIDEFACIALHAIR|HIDESNOUT
 	interaction_flags_click = NEED_DEXTERITY
@@ -40,7 +40,7 @@
 	worn_icon = 'icons/mob/clothing/suits/spacesuit.dmi'
 	inhand_icon_state = "s_suit"
 	w_class = WEIGHT_CLASS_BULKY
-	clothing_flags = STOPSPRESSUREDAMAGE | THICKMATERIAL
+	clothing_flags = STOPS_HIGH_PRESSURE_DAMAGE | STOPS_LOW_PRESSURE_DAMAGE | THICKMATERIAL
 	body_parts_covered = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
 	allowed = list(
 		/obj/item/flashlight,

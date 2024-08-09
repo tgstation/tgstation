@@ -279,7 +279,7 @@
 	min_cold_protection_temperature = SPACE_SUIT_MIN_TEMP_PROTECT
 	heat_protection = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
 	max_heat_protection_temperature = SPACE_SUIT_MAX_TEMP_PROTECT
-	clothing_flags = STOPSPRESSUREDAMAGE|THICKMATERIAL
+	clothing_flags = STOPS_HIGH_PRESSURE_DAMAGE|STOPS_LOW_PRESSURE_DAMAGE|THICKMATERIAL
 	body_parts_covered = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
 	hoodtype = /obj/item/clothing/head/hooded/carp_hood/spaceproof
 	resistance_flags = NONE
@@ -299,7 +299,7 @@
 	min_cold_protection_temperature = SPACE_HELM_MIN_TEMP_PROTECT
 	heat_protection = HEAD
 	max_heat_protection_temperature = SPACE_HELM_MAX_TEMP_PROTECT
-	clothing_flags = STOPSPRESSUREDAMAGE|THICKMATERIAL|SNUG_FIT|STACKABLE_HELMET_EXEMPT
+	clothing_flags = STOPS_HIGH_PRESSURE_DAMAGE|STOPS_LOW_PRESSURE_DAMAGE|THICKMATERIAL|SNUG_FIT|STACKABLE_HELMET_EXEMPT
 	body_parts_covered = HEAD
 	resistance_flags = NONE
 	flash_protect = FLASH_PROTECTION_WELDER

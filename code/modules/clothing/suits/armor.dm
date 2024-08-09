@@ -64,7 +64,7 @@
 	desc = "A set of the finest mass produced, stamped plasteel armor plates, containing an environmental protection unit for all-condition door kicking."
 	icon_state = "marine_command"
 	inhand_icon_state = "armor"
-	clothing_flags = STOPSPRESSUREDAMAGE | THICKMATERIAL
+	clothing_flags = STOPS_HIGH_PRESSURE_DAMAGE | STOPS_LOW_PRESSURE_DAMAGE | THICKMATERIAL
 	body_parts_covered = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
 	armor_type = /datum/armor/vest_marine
 	cold_protection = CHEST | GROIN | LEGS | FEET | ARMS | HANDS

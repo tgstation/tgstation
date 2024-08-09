@@ -81,7 +81,7 @@
 	hat_type = "red"
 	dog_fashion = null
 	name = "firefighter helmet"
-	clothing_flags = STOPSPRESSUREDAMAGE | STACKABLE_HELMET_EXEMPT
+	clothing_flags = STOPS_HIGH_PRESSURE_DAMAGE | STACKABLE_HELMET_EXEMPT
 	heat_protection = HEAD
 	max_heat_protection_temperature = FIRE_HELM_MAX_TEMP_PROTECT
 	cold_protection = HEAD
@@ -101,7 +101,7 @@
 	icon_state = "hardhat0_white"
 	inhand_icon_state = null
 	hat_type = "white"
-	clothing_flags = STOPSPRESSUREDAMAGE | STACKABLE_HELMET_EXEMPT
+	clothing_flags = STOPS_HIGH_PRESSURE_DAMAGE | STACKABLE_HELMET_EXEMPT
 	heat_protection = HEAD
 	max_heat_protection_temperature = FIRE_HELM_MAX_TEMP_PROTECT
 	cold_protection = HEAD
@@ -177,7 +177,7 @@
 	inhand_icon_state = null
 	light_range = 4 //Boss always takes the best stuff
 	hat_type = "white"
-	clothing_flags = STOPSPRESSUREDAMAGE | STACKABLE_HELMET_EXEMPT
+	clothing_flags = STOPS_HIGH_PRESSURE_DAMAGE | STACKABLE_HELMET_EXEMPT
 	heat_protection = HEAD
 	max_heat_protection_temperature = FIRE_HELM_MAX_TEMP_PROTECT
 	cold_protection = HEAD
@@ -204,7 +204,7 @@
 	dog_fashion = null
 	name = "atmospheric firefighter helmet"
 	desc = "A firefighter's helmet, able to keep the user cool in any situation. Comes with a light and a welding visor."
-	clothing_flags = STOPSPRESSUREDAMAGE | THICKMATERIAL | BLOCK_GAS_SMOKE_EFFECT | STACKABLE_HELMET_EXEMPT | HEADINTERNALS
+	clothing_flags = STOPS_HIGH_PRESSURE_DAMAGE | THICKMATERIAL | BLOCK_GAS_SMOKE_EFFECT | STACKABLE_HELMET_EXEMPT | HEADINTERNALS
 	heat_protection = HEAD
 	max_heat_protection_temperature = FIRE_IMMUNITY_MAX_TEMP_PROTECT
 	cold_protection = HEAD

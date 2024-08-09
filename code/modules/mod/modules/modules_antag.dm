@@ -62,8 +62,8 @@
 		if(!remove_pressure_protection || !isclothing(part))
 			continue
 		var/obj/item/clothing/clothing_part = part
-		if(clothing_part.clothing_flags & STOPSPRESSUREDAMAGE)
-			clothing_part.clothing_flags &= ~STOPSPRESSUREDAMAGE
+		if(clothing_part.clothing_flags & (STOPS_HIGH_PRESSURE_DAMAGE|STOPS_LOW_PRESSURE_DAMAGE))
+			clothing_part.clothing_flags &= ~(STOPS_HIGH_PRESSURE_DAMAGE|STOPS_LOW_PRESSURE_DAMAGE)
 			spaceproofed[clothing_part] = TRUE
 
 /obj/item/mod/module/armor_booster/on_deactivation(display_message = TRUE, deleting = FALSE)
@@ -81,7 +81,7 @@
 			continue
 		var/obj/item/clothing/clothing_part = part
 		if(spaceproofed[clothing_part])
-			clothing_part.clothing_flags |= STOPSPRESSUREDAMAGE
+			clothing_part.clothing_flags |= (STOPS_HIGH_PRESSURE_DAMAGE|STOPS_LOW_PRESSURE_DAMAGE)
 	spaceproofed = list()
 
 /obj/item/mod/module/armor_booster/generate_worn_overlay(mutable_appearance/standing)

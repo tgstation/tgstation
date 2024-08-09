@@ -104,7 +104,7 @@
 	inhand_icon_state = "marine_helmet"
 	armor_type = /datum/armor/helmet_marine
 	min_cold_protection_temperature = SPACE_HELM_MIN_TEMP_PROTECT
-	clothing_flags = STOPSPRESSUREDAMAGE | STACKABLE_HELMET_EXEMPT
+	clothing_flags = STOPS_HIGH_PRESSURE_DAMAGE | STOPS_LOW_PRESSURE_DAMAGE | STACKABLE_HELMET_EXEMPT
 	resistance_flags = FIRE_PROOF | ACID_PROOF
 	dog_fashion = null
 
@@ -260,7 +260,7 @@
 	min_cold_protection_temperature = SPACE_HELM_MIN_TEMP_PROTECT
 	heat_protection = HEAD
 	max_heat_protection_temperature = SPACE_HELM_MAX_TEMP_PROTECT
-	clothing_flags = STOPSPRESSUREDAMAGE | STACKABLE_HELMET_EXEMPT
+	clothing_flags = STOPS_HIGH_PRESSURE_DAMAGE | STOPS_LOW_PRESSURE_DAMAGE | STACKABLE_HELMET_EXEMPT
 	strip_delay = 80
 	resistance_flags = FIRE_PROOF | ACID_PROOF
 	dog_fashion = null

@@ -119,7 +119,7 @@ Slimecrossing Potions
 	if(istype(clothing, /obj/item/clothing/suit/space))
 		to_chat(user, span_warning("The [interacting_with] is already pressure-resistant!"))
 		return ITEM_INTERACT_BLOCKING
-	if(clothing.min_cold_protection_temperature == SPACE_SUIT_MIN_TEMP_PROTECT && (clothing.clothing_flags & STOPSPRESSUREDAMAGE))
+	if(clothing.min_cold_protection_temperature == SPACE_SUIT_MIN_TEMP_PROTECT && (clothing.clothing_flags & (STOPS_HIGH_PRESSURE_DAMAGE|STOPS_LOW_PRESSURE_DAMAGE)))
 		to_chat(user, span_warning("The [interacting_with] is already pressure-resistant!"))
 		return ITEM_INTERACT_BLOCKING
 	to_chat(user, span_notice("You slather the blue gunk over the [clothing], making it airtight."))
@@ -128,7 +128,7 @@ Slimecrossing Potions
 	clothing.add_atom_colour(COLOR_NAVY, FIXED_COLOUR_PRIORITY)
 	clothing.min_cold_protection_temperature = SPACE_SUIT_MIN_TEMP_PROTECT
 	clothing.cold_protection = clothing.body_parts_covered
-	clothing.clothing_flags |= STOPSPRESSUREDAMAGE
+	clothing.clothing_flags |= STOPS_HIGH_PRESSURE_DAMAGE|STOPS_LOW_PRESSURE_DAMAGE
 	uses--
 	if(uses <= 0)
 		qdel(src)
