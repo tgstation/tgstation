@@ -4497,6 +4497,7 @@
 #include "code\modules\logging\categories\log_category_silo.dm"
 #include "code\modules\logging\categories\log_category_target_zone_switch.dm"
 #include "code\modules\logging\categories\log_category_uplink.dm"
+#include "code\modules\loot\loot.dm"
 #include "code\modules\lootpanel\_lootpanel.dm"
 #include "code\modules\lootpanel\contents.dm"
 #include "code\modules\lootpanel\handlers.dm"
