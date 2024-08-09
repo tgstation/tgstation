@@ -13,7 +13,7 @@
 	///Maximum of stacks that we could possibly get
 	var/stack_limit = MAX_FREEZE_STACKS
 	///icon for the overlay
-	var/mutable_appearance/stacks_overlay
+	var/image/stacks_overlay
 
 /datum/status_effect/void_chill/on_creation(mob/living/new_owner, new_stacks, ...)
 	. = ..()
@@ -31,8 +31,9 @@
 
 /datum/status_effect/void_chill/on_remove()
 	owner.update_icon(UPDATE_OVERLAYS)
-	//owner.remove_atom_colour(TEMPORARY_COLOUR_PRIORITY, COLOR_BLUE_LIGHT)
+	owner.remove_atom_colour(TEMPORARY_COLOUR_PRIORITY, COLOR_BLUE_LIGHT)
 	owner.remove_movespeed_modifier(/datum/movespeed_modifier/void_chill)
+	owner.remove_alt_appearance("heretic_status")
 
 /datum/status_effect/void_chill/tick(seconds_between_ticks)
 	owner.adjust_bodytemperature(-12 * stacks)
@@ -47,13 +48,17 @@
 
 ///Updates the overlay that gets applied on our victim
 /datum/status_effect/void_chill/proc/update_stacks_overlay(atom/parent_atom, list/overlays)
-	if(stacks >= 5)
-		stacks_overlay = mutable_appearance('icons/effects/effects.dmi', "void_chill_oh_fuck")
-		overlays += stacks_overlay
-		return
-	stacks_overlay = mutable_appearance('icons/effects/effects.dmi', "void_chill_partial")
-	overlays += stacks_overlay
+	SIGNAL_HANDLER
 
+	if(stacks >= 5)
+		linked_alert.icon_state = "void_chill_major"
+		linked_alert.update_appearance(UPDATE_ICON_STATE)
+
+	owner.remove_alt_appearance("heretic_status")
+	stacks_overlay = image('icons/effects/effects.dmi', owner, "void_chill_partial")
+	if(stacks >= 5)
+		stacks_overlay = image('icons/effects/effects.dmi', owner, "void_chill_oh_fuck")
+	owner.add_alt_appearance(/datum/atom_hud/alternate_appearance/basic/heretic, "heretic_status", stacks_overlay, NONE)
 
 /**
  * Setter and adjuster procs for stacks
@@ -89,5 +94,4 @@
 /atom/movable/screen/alert/status_effect/void_chill
 	name = "Void Chill"
 	desc = "There's something freezing you from within and without. You've never felt cold this oppressive before..."
-	icon_state = "void_chill"
-
+	icon_state = "void_chill_minor"

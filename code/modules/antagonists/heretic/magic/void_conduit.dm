@@ -34,13 +34,23 @@
 	density = TRUE
 	/////Counter for each process goes up by 1, when it's high enough our conduit will pulse
 	//var/conduit_pulse_counter
+	///Overlay to apply to the tiles in range of the conduit
+	var/static/mutable_appearance/void_overlay = mutable_appearance('icons/turf/overlays.dmi', "voidtile", ABOVE_OPEN_TURF_LAYER)
 
 /obj/structure/void_conduit/Initialize(mapload)
 	. = ..()
 	START_PROCESSING(SSobj, src)
+	for(var/turf/affected_turf in RANGE_TURFS(10, src))
+		if(!isopenturf(affected_turf))
+			continue
+		affected_turf.add_overlay(void_overlay)
+		void_overlay.mouse_opacity = MOUSE_OPACITY_TRANSPARENT
+		void_overlay.alpha = 180
 
 /obj/structure/void_conduit/Destroy(force)
 	STOP_PROCESSING(SSobj, src)
+	for(var/turf/affected_turf in RANGE_TURFS(10, src))
+		affected_turf.cut_overlay(void_overlay)
 	return ..()
 
 /obj/structure/void_conduit/process(seconds_per_tick)
@@ -95,47 +105,17 @@
 		affected_assembly.take_damage(rand(30, 50))
 	for(var/obj/structure/window/affected_window in turfs)
 		affected_window.take_damage(rand(10, 20))
+	for(var/obj/structure/grille/affected_grille in turfs)
+		affected_grille.take_damage(rand(10, 20))
 
 	for(var/turf/affected_turf in turfs)
 		var/datum/gas_mixture/environment = affected_turf.return_air()
 		environment.temperature *= 0.9
-		var/mutable_appearance/floor_overlay = mutable_appearance('icons/turf/overlays.dmi', "greyOverlay", ABOVE_OPEN_TURF_LAYER)
-		floor_overlay.color = COLOR_RED
-		floor_overlay.mouse_opacity = MOUSE_OPACITY_TRANSPARENT
-		floor_overlay.alpha = 200
-		affected_turf.flick_overlay_view(floor_overlay, 1 SECONDS)
-
-/*
-/obj/structure/void_conduit/proc/declare_effect_radius()
-	//var/list/affected_atom = list()
-	//for(var/atom/atom in range(10, loc))
-	//	var/mutable_appearance/floor_overlay = mutable_appearance('icons/turf/overlays.dmi', "greyOverlay", ABOVE_OPEN_TURF_LAYER)
-	//	floor_overlay.color = COLOR_RED
-	//	floor_overlay.mouse_opacity = MOUSE_OPACITY_TRANSPARENT
-	//	floor_overlay.alpha = 200
-	//	atom.flick_overlay_view(floor_overlay, 2 SECONDS)
-	//	affected_atom += atom
-
-	for(var/mob/living/affected_mob in affected_atom)
-		if(IS_HERETIC(affected_mob))
-			affected_mob.apply_status_effect(/datum/status_effect/void_conduit)
-		else
-			affected_mob.apply_status_effect(/datum/status_effect/void_chill, 1)
-	for(var/obj/machinery/door/affected_door in affected_atom)
-		affected_door.take_damage(75)
-	for(var/obj/structure/door_assembly/affected_assembly in affected_atom)
-		affected_assembly.take_damage(75)
-	for(var/obj/structure/window/affected_window in affected_atom)
-		affected_window.take_damage(30)
-
-
-//	for(var/atom/atom in view(10, loc))
-//		var/mutable_appearance/floor_overlay = mutable_appearance('icons/turf/overlays.dmi', "greyOverlay", ABOVE_OPEN_TURF_LAYER)
-//		floor_overlay.color = COLOR_RED
-//		floor_overlay.mouse_opacity = MOUSE_OPACITY_TRANSPARENT
-//		floor_overlay.alpha = 200
-//		atom.flick_overlay_view(floor_overlay, 2 SECONDS)
-*/
+		//var/mutable_appearance/floor_overlay = mutable_appearance('icons/turf/overlays.dmi', "greyOverlay", ABOVE_OPEN_TURF_LAYER)
+		//floor_overlay.color = COLOR_RED
+		//floor_overlay.mouse_opacity = MOUSE_OPACITY_TRANSPARENT
+		//floor_overlay.alpha = 200
+		//affected_turf.flick_overlay_view(floor_overlay, 1 SECONDS)
 
 /datum/status_effect/void_conduit
 	duration = 15 SECONDS
@@ -148,54 +128,3 @@
 
 /datum/status_effect/void_conduit/on_remove()
 	REMOVE_TRAIT(owner, TRAIT_RESISTLOWPRESSURE, "void_conduit")
-
-/*
-/proc/atmos_thermal(mob/viewer, range = 5, duration = 10)
-	if(!ismob(viewer) || !viewer.client)
-		return
-	for(var/turf/open in view(range, viewer))
-		if(open.blocks_air)
-			continue
-		var/datum/gas_mixture/environment = open.return_air()
-		var/temp = round(environment.return_temperature())
-		var/image/pic = image('icons/turf/overlays.dmi', open, "greyOverlay", ABOVE_ALL_MOB_LAYER)
-		// Lower than TEMP_SHADE_CYAN should be deep blue
-		switch(temp)
-			if(-INFINITY to TEMP_SHADE_CYAN)
-				pic.color = COLOR_STRONG_BLUE
-			// Between TEMP_SHADE_CYAN and TEMP_SHADE_GREEN
-			if(TEMP_SHADE_CYAN to TEMP_SHADE_GREEN)
-				pic.color = BlendRGB(COLOR_DARK_CYAN, COLOR_LIME, max(round((temp - TEMP_SHADE_CYAN)/(TEMP_SHADE_GREEN - TEMP_SHADE_CYAN), 0.01), 0))
-			// Between TEMP_SHADE_GREEN and TEMP_SHADE_YELLOW
-			if(TEMP_SHADE_GREEN to TEMP_SHADE_YELLOW)
-				pic.color = BlendRGB(COLOR_LIME, COLOR_YELLOW, clamp(round((temp-TEMP_SHADE_GREEN)/(TEMP_SHADE_YELLOW - TEMP_SHADE_GREEN), 0.01), 0, 1))
-			// Between TEMP_SHADE_YELLOW and TEMP_SHADE_RED
-			if(TEMP_SHADE_YELLOW to TEMP_SHADE_RED)
-				pic.color = BlendRGB(COLOR_YELLOW, COLOR_RED, clamp(round((temp-TEMP_SHADE_YELLOW)/(TEMP_SHADE_RED - TEMP_SHADE_YELLOW), 0.01), 0, 1))
-			// Over TEMP_SHADE_RED should be red
-			if(TEMP_SHADE_RED to INFINITY)
-				pic.color = COLOR_RED
-		pic.mouse_opacity = MOUSE_OPACITY_TRANSPARENT
-		pic.alpha = 200
-		flick_overlay_global(pic, list(viewer.client), duration)
-*/
-
-
-/*
-How many rifts can you have open at once:
-like 1
-
-how long do they last?
-Forever?
-
-New one replaces the old one
-
-Cooldown: 1 minute
-
-*/
-
-
-
-
-
-

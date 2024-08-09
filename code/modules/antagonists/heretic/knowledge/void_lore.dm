@@ -252,6 +252,7 @@
 	// Let's get this show on the road!
 	sound_loop = new(user, TRUE, TRUE)
 	RegisterSignal(user, COMSIG_LIVING_LIFE, PROC_REF(on_life))
+	RegisterSignal(user, COMSIG_ATOM_PRE_BULLET_ACT, PROC_REF(hit_by_projectile))
 	RegisterSignals(user, list(COMSIG_LIVING_DEATH, COMSIG_QDELETING), PROC_REF(on_death))
 	heavy_storm = new(user, 10)
 
@@ -279,6 +280,11 @@
 			continue
 		close_carbon.adjust_silence_up_to(2 SECONDS, 20 SECONDS)
 		close_carbon.apply_status_effect(/datum/status_effect/void_chill, 1)
+		close_carbon.adjustFireLoss(1, updating_health = FALSE)
+		close_carbon.adjustOxyLoss(rand(1, 3), updating_health = FALSE)
+		close_carbon.updatehealth()
+		close_carbon.adjust_eye_blur(rand(0 SECONDS, 2 SECONDS))
+		close_carbon.adjust_bodytemperature(-30 * TEMPERATURE_DAMAGE_COEFFICIENT)
 
 	for(var/obj/machinery/door/affected_door in effective_range)
 		affected_door.take_damage(rand(60, 80))
@@ -299,17 +305,6 @@
 		storm = new /datum/weather/void_storm(station_levels)
 		storm.telegraph()
 
-	//var/list/storm_effect = RANGE_TURFS(10, source)
-
-/*
-	// When the heretic enters a new area, intensify the storm in the new area,
-	// and lessen the intensity in the former area.
-	var/area/source_area = get_area(source)
-	if(!storm.impacted_areas[source_area])
-		storm.former_impacted_areas |= storm.impacted_areas
-		storm.impacted_areas = list(source_area)
-		storm.update_areas() */ //XANTODO Make some kind of visual aura around the heretic that has effects rather than the snowstorm
-
 /**
  * Signal proc for [COMSIG_LIVING_DEATH].
  *
@@ -323,3 +318,33 @@
 	if(storm)
 		storm.end()
 		QDEL_NULL(storm)
+
+///Few checks to determine if we can deflect bullets
+/datum/heretic_knowledge/ultimate/void_final/proc/can_deflect(mob/living/ascended_heretic)
+	if(!ascended_heretic.combat_mode)
+		return FALSE
+	if(ascended_heretic.incapacitated(IGNORE_GRAB)) //NO STUN
+		return FALSE
+	if(!(ascended_heretic.mobility_flags & MOBILITY_USE)) //NO UNABLE TO USE
+		return FALSE
+	var/datum/dna/dna = ascended_heretic.has_dna()
+	if(dna?.check_mutation(/datum/mutation/human/hulk)) //NO HULK
+		return FALSE
+	if(!isturf(ascended_heretic.loc)) //NO MOTHERFLIPPIN MECHS!
+		return FALSE
+	return TRUE
+
+/datum/heretic_knowledge/ultimate/void_final/proc/hit_by_projectile(mob/living/ascended_heretic, obj/projectile/hitting_projectile, def_zone)
+	SIGNAL_HANDLER
+
+	if(!can_deflect(ascended_heretic))
+		return NONE
+
+	ascended_heretic.visible_message(
+		span_danger("[ascended_heretic] effortlessly swats [hitting_projectile] aside! [ascended_heretic.p_They()] can block bullets with [ascended_heretic.p_their()] bare hands!"),
+		span_userdanger("You deflect [hitting_projectile]!"),
+	)
+	playsound(ascended_heretic, pick('sound/weapons/bulletflyby.ogg', 'sound/weapons/bulletflyby2.ogg', 'sound/weapons/bulletflyby3.ogg'), 75, TRUE)
+	hitting_projectile.firer = ascended_heretic
+	hitting_projectile.set_angle(rand(0, 360))//SHING
+	return COMPONENT_BULLET_PIERCED

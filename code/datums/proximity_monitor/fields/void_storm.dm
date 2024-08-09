@@ -27,6 +27,7 @@
 /datum/proximity_monitor/advanced/void_storm/setup_field_turf(turf/target)
 	. = ..()
 	var/obj/effect/abstract/effect = new(target) // Makes the field visible to players.
+	effect.alpha = 255 - get_dist(target, host.loc) * 23
 	effect.color = COLOR_BLACK
 	effect.icon = storm_overlay.icon
 	effect.icon_state = storm_overlay.icon_state
