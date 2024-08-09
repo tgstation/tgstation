@@ -1,4 +1,0 @@
-author: "SmArtKar"
-delete-after: True
-changes:
-  - bugfix: "Fixed Charlie MOD installer not installing MODsuit unless you have a backpack to drop"
