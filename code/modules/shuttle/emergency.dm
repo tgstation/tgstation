@@ -802,11 +802,11 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/item/storage/pod, 32)
 	desc =  "A small case containing an emergency space suit and helmet."
 	icon = 'icons/obj/storage/storage.dmi'
 	icon_state = "emergency_spacesuit_box"
+	w_class = WEIGHT_CLASS_BULKY
 	illustration = null
 
 /obj/item/storage/box/emergency_spacesuit/Initialize(mapload)
 	. = ..()
-	w_class = WEIGHT_CLASS_BULKY
 	atom_storage.max_specific_storage = WEIGHT_CLASS_BULKY
 	atom_storage.max_slots = 2
 	atom_storage.set_holdable(list(
