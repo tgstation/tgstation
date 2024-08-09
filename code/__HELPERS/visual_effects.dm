@@ -6,7 +6,6 @@
  * This is just so you can apply the animation to things which can be animated but are not movables (like images)
  */
 #define DO_FLOATING_ANIM(target) \
-	to_chat(world, "floating [target]"); \
 	animate(target, transform = target.transform.Translate(0, 2), time = 1 SECONDS, loop = -1, flags = ANIMATION_PARALLEL); \
 	animate(transform = target.transform.Translate(0, -2), time = 1 SECONDS);
 
