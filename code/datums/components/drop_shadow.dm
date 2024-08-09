@@ -26,19 +26,26 @@
 	)
 	shadow.pixel_x = movable_parent.pixel_x
 	update_shadow_position()
-	movable_parent.update_appearance(UPDATE_OVERLAYS)
 
 /datum/component/drop_shadow/RegisterWithParent()
 	RegisterSignal(parent, COMSIG_ATOM_UPDATE_OVERLAYS, PROC_REF(on_update_overlays))
-
+	RegisterSignals(parent, list(COMSIG_ATOM_FULTON_BEGAN, COMSIG_ATOM_BEGAN_ORBITING), PROC_REF(hide_shadow))
+	RegisterSignals(parent, list(COMSIG_ATOM_FULTON_LANDED, COMSIG_ATOM_STOPPED_ORBITING), PROC_REF(show_shadow))
 	if (isliving(parent))
 		RegisterSignal(parent, COMSIG_LIVING_POST_UPDATE_TRANSFORM, PROC_REF(on_transform_updated))
 		RegisterSignal(parent, COMSIG_MOB_BUCKLED, PROC_REF(hide_shadow))
 		RegisterSignal(parent, COMSIG_MOB_UNBUCKLED, PROC_REF(show_shadow))
 
+	var/atom/atom_parent = parent
+	atom_parent.update_appearance(UPDATE_OVERLAYS)
+
 /datum/component/drop_shadow/UnregisterFromParent()
 	UnregisterSignal(parent, list(
 		COMSIG_ATOM_UPDATE_OVERLAYS,
+		COMSIG_ATOM_FULTON_BEGAN,
+		COMSIG_ATOM_FULTON_LANDED,
+		COMSIG_ATOM_BEGAN_ORBITING,
+		COMSIG_ATOM_STOPPED_ORBITING,
 		COMSIG_MOB_BUCKLED,
 		COMSIG_MOB_UNBUCKLED,
 	))
@@ -49,7 +56,7 @@
 	var/lying_offset = 0
 	if (isliving(parent))
 		var/mob/living/living_parent = parent
-		lying_offset = (living_parent.rotate_on_lying && living_parent.resting) ? living_parent.body_position_pixel_y_offset - 4 : 0
+		lying_offset = (living_parent.rotate_on_lying && body_position != STANDING_UP) ? living_parent.body_position_pixel_y_offset - 4 : 0
 
 	shadow.pixel_y = -DEPTH_OFFSET - lying_offset + shadow_offset + additional_offset
 	var/atom/atom_parent = parent

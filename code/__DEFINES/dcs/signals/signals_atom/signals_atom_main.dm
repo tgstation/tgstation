@@ -88,9 +88,15 @@
 	#define COMPONENT_BLOCK_TELEPORT (1<<0)
 ///called when an atom is added to the hearers on get_hearers_in_view(): (list/processing_list, list/hearers)
 #define COMSIG_ATOM_HEARER_IN_VIEW "atom_hearer_in_view"
-///called when an atom starts orbiting another atom: (atom)
+
+/// fired by the orbiting atom when an atom starts orbiting another atom
+#define COMSIG_ATOM_BEGAN_ORBITING "atom_orbiting_began"
+/// fired by the orbiting atom when an atom stops orbiting another atom
+#define COMSIG_ATOM_STOPPED_ORBITING "atom_orbiting_stopped"
+
+/// fired by the orbited atom when an atom starts orbiting another atom: (atom)
 #define COMSIG_ATOM_ORBIT_BEGIN "atom_orbit_begin"
-///called when an atom stops orbiting another atom: (atom)
+/// fired by the orbited atom when an atom stops orbiting another atom: (atom)
 #define COMSIG_ATOM_ORBIT_STOP "atom_orbit_stop"
 ///from base of atom/set_opacity(): (new_opacity)
 #define COMSIG_ATOM_SET_OPACITY "atom_set_opacity"
