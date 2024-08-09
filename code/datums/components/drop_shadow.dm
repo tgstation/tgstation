@@ -56,7 +56,7 @@
 	var/lying_offset = 0
 	if (isliving(parent))
 		var/mob/living/living_parent = parent
-		lying_offset = (living_parent.rotate_on_lying && body_position != STANDING_UP) ? living_parent.body_position_pixel_y_offset - 4 : 0
+		lying_offset = (living_parent.rotate_on_lying && living_parent.body_position != STANDING_UP) ? living_parent.body_position_pixel_y_offset - 4 : 0
 
 	shadow.pixel_y = -DEPTH_OFFSET - lying_offset + shadow_offset + additional_offset
 	var/atom/atom_parent = parent
