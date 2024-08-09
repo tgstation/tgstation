@@ -11,11 +11,11 @@
 	temperature = 309
 
 /turf/open/floor/plating/icemoon
-	icon_state = "plating"
 	initial_gas_mix = ICEMOON_DEFAULT_ATMOS
 
 /turf/open/floor/plating/abductor
 	name = "alien floor"
+	icon = 'icons/turf/floors.dmi'
 	icon_state = "alienpod1"
 	base_icon_state = "alienpod1"
 	tiled_dirt = FALSE
@@ -30,6 +30,7 @@
 
 /turf/open/floor/plating/abductor2
 	name = "alien plating"
+	icon = 'icons/turf/floors.dmi'
 	icon_state = "alienplating"
 	base_icon_state = "alienplating"
 	tiled_dirt = FALSE
@@ -103,5 +104,6 @@
 
 /turf/open/floor/plating/elevatorshaft
 	name = "elevator shaft"
+	icon = 'icons/turf/floors.dmi'
 	icon_state = "elevatorshaft"
 	base_icon_state = "elevatorshaft"

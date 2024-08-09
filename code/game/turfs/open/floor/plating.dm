@@ -5,16 +5,22 @@
  */
 /turf/open/floor/plating
 	name = "plating"
-	icon_state = "plating"
+	icon = 'icons/turf/floors/plating.dmi'
+	icon_state = "plating-0"
 	base_icon_state = "plating"
 	overfloor_placed = FALSE
 	underfloor_accessibility = UNDERFLOOR_INTERACTABLE
 	baseturfs = /turf/baseturf_bottom
+	smoothing_flags = SMOOTH_BITMASK
+	smoothing_groups = SMOOTH_GROUP_TURF_OPEN + SMOOTH_GROUP_PLATING
+	canSmoothWith = SMOOTH_GROUP_PLATING
 	footstep = FOOTSTEP_PLATING
 	barefootstep = FOOTSTEP_HARD_BAREFOOT
 	clawfootstep = FOOTSTEP_HARD_CLAW
 	heavyfootstep = FOOTSTEP_GENERIC_HEAVY
 	rust_resistance = RUST_RESISTANCE_BASIC
+	smooth_broken = TRUE
+	smooth_burnt = TRUE
 
 	//Can this plating have reinforced floors placed ontop of it
 	var/attachment_holes = TRUE
@@ -46,6 +52,21 @@
 		. += span_notice("You could probably make this plating more resilient with some plasteel.")
 
 #define PLATE_REINFORCE_COST 2
+
+/turf/open/floor/plating/Initialize(mapload)
+	. = ..()
+	update_appearance()
+
+/turf/open/floor/plating/update_icon(updates=ALL)
+	. = ..()
+	if(!. || !(updates & UPDATE_SMOOTHING))
+		return
+	if(!broken && !burnt)
+		if(smoothing_flags & USES_SMOOTHING)
+			QUEUE_SMOOTH(src)
+	else
+		if(smoothing_flags & USES_SMOOTHING)
+			QUEUE_SMOOTH_NEIGHBORS(src)
 
 /turf/open/floor/plating/attackby(obj/item/C, mob/user, params)
 	if(..())
@@ -130,9 +151,11 @@
 /turf/open/floor/plating/foam
 	name = "metal foam plating"
 	desc = "Thin, fragile flooring created with metal foam. Designed to be easily replacable by tiling when applied to in a combat stance."
+	icon = 'icons/turf/floors.dmi'
 	icon_state = "foam_plating"
 	upgradable = FALSE
 	attachment_holes = FALSE
+	smoothing_flags = NONE
 
 /turf/open/floor/plating/foam/burn_tile()
 	return //jetfuel can't melt steel foam
@@ -187,7 +210,9 @@
 /turf/open/floor/plating/reinforced //RCD Proof plating designed to be used on Multi-Z maps to protect the rooms below
 	name = "reinforced plating"
 	desc = "Thick, tough flooring created with multiple layers of metal."
+	icon = 'icons/turf/floors.dmi'
 	icon_state = "r_plate-0"
+	smoothing_flags = NONE
 
 	thermal_conductivity = 0.025
 	heat_capacity = INFINITY

@@ -139,7 +139,9 @@ DEFINE_BITFIELD(smoothing_junction, list(
 #define SMOOTH_GROUP_SURVIVAL_TITANIUM_WALLS S_TURF(59) ///turf/closed/wall/mineral/titanium/survival
 #define SMOOTH_GROUP_TURF_OPEN_CLIFF S_TURF(60) ///turf/open/cliff
 
-#define MAX_S_TURF 60 //Always match this value with the one above it.
+#define SMOOTH_GROUP_PLATING S_TURF(61) ///turf/open/floor/plating
+
+#define MAX_S_TURF 61 //Always match this value with the one above it.
 
 #define S_OBJ(num) ("-" + #num + ",")
 /* /obj included */
