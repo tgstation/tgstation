@@ -22,7 +22,7 @@
 
 /obj/machinery/component_printer/Initialize(mapload)
 	. = ..()
-	materials = AddComponent(/datum/component/remote_materials, mapload)
+	materials = AddComponent(/datum/component/remote_materials, mapload, whitelist_typecache = typecacheof(/obj/item/circuit_component))
 
 /obj/machinery/component_printer/post_machine_initialize()
 	. = ..()
