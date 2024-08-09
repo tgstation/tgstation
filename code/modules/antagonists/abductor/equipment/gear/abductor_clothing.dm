@@ -103,6 +103,8 @@
 
 /obj/item/clothing/suit/armor/abductor/vest/proc/return_disguise_name(mob/living/carbon/human/source, list/identity)
 	SIGNAL_HANDLER
+	if(identity[VISIBLE_NAME_FORCED]) // name-forcing overrides disguise
+		return
 	identity[VISIBLE_NAME_FACE] = disguise.name
 	identity[VISIBLE_NAME_ID] = ""
 
