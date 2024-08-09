@@ -48,7 +48,7 @@
 	equip_delay_other = 50
 	resistance_flags = NONE
 	armor_type = /datum/armor/shoes_jackboots
-	can_be_tied = FALSE
+	lace_time = 10 SECONDS
 
 /datum/armor/shoes_jackboots
 	bio = 90
