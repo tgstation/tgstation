@@ -2,7 +2,7 @@
 	max_slots = 2
 	max_specific_storage = WEIGHT_CLASS_SMALL
 	max_total_storage = 50
-	rustle_sound = FALSE
+	do_rustle = FALSE
 
 /datum/storage/pockets/attempt_insert(obj/item/to_insert, mob/user, override, force, messages)
 	. = ..()
