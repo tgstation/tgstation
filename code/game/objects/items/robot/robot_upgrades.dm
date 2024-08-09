@@ -208,6 +208,16 @@
 
 	items_to_add = list(/obj/item/cautery/prt)
 
+/obj/item/borg/upgrade/plunger
+	name = "janitor cyborg plunging tool"
+	desc = "An integrated cyborg retractable plunger. It's meant for plunging things, duh."
+	icon_state = "module_janitor"
+	require_model = TRUE
+	model_type = list(/obj/item/robot_model/janitor)
+	model_flags = BORG_MODEL_JANITOR
+
+	items_to_add = list(/obj/item/plunger/cyborg)
+
 /obj/item/borg/upgrade/syndicate
 	name = "illegal equipment module"
 	desc = "Unlocks the hidden, deadlier functions of a cyborg."
