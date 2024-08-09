@@ -1,5 +1,4 @@
 /datum/ert
-	var/mobtype = /mob/living/carbon/human
 	var/team = /datum/team/ert
 	var/opendoors = TRUE
 	var/leader_role = /datum/antagonist/ert/commander
@@ -20,6 +19,8 @@
 	var/datum/map_template/ert_template
 	/// If we should actually _use_ the ert_template custom shuttle
 	var/use_custom_shuttle = TRUE
+	/// Used for spawning bodies for your ERT. Unless customized in the Summon-ERT verb settings, will be overridden and should not be defined at the datum level.
+	var/mob/living/carbon/human/mob_type
 
 /datum/ert/New()
 	if (!polldesc)
