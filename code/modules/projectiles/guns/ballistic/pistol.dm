@@ -71,6 +71,7 @@
 	can_suppress = FALSE
 	can_unsuppress = FALSE
 	var/obj/item/gun/energy/recharge/fisher/underbarrel
+	pin = /obj/item/firing_pin
 
 /obj/item/gun/ballistic/automatic/pistol/clandestine/fisher/examine_more(mob/user)
 	. = ..()
