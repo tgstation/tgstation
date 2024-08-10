@@ -17,6 +17,7 @@
 
 /obj/effect/spawner/message_in_a_bottle/proc/on_persistence_init(datum/source)
 	SIGNAL_HANDLER
+	UnregisterSignal(SSpersistence, COMSIG_SUBSYSTEM_POST_INITIALIZE)
 	SSpersistence.load_message_bottle(loc)
 	qdel(src)
 
