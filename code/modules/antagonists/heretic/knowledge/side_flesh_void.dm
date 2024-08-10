@@ -44,7 +44,7 @@
 	gain_text = "At first, I see myself, waltzing along a snow-laden street. \
 		I try to yell, grab hold of this fool and tell them to run. \
 		But the only welts made are on my own beating fist. \
-		My smiling face turns to face me, reflecting back in glassy eyes the empty path I have been lead down."
+		My smiling face turns to regard me, reflecting back in glassy eyes the empty path I have been lead down."
 	next_knowledge = list(
 		/datum/heretic_knowledge/spell/void_phase,
 		/datum/heretic_knowledge/summon/raw_prophet,
