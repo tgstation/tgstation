@@ -1,7 +1,5 @@
 /**
  * # The path of VOID.
- * Spell names are in this language: PALI
- * Both are related: Pali-Buddhism-Nothingness-Void
  *
  * Goes as follows:
  *
@@ -248,7 +246,7 @@
 		text = "[generate_heretic_text()] The nobleman of void [user.real_name] has arrived, stepping along the Waltz that ends worlds! [generate_heretic_text()]",
 		title = "[generate_heretic_text()]",
 		sound = 'sound/ambience/antag/heretic/ascend_void.ogg',
-		color_override = "blue",
+		color_override = "pink",
 	)
 	user.add_traits(list(TRAIT_RESISTLOWPRESSURE, TRAIT_NEGATES_GRAVITY, TRAIT_MOVE_FLYING, TRAIT_FREE_HYPERSPACE_MOVEMENT), MAGIC_TRAIT)
 

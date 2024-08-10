@@ -228,7 +228,7 @@
 
 /**
  * A knowledge subtype for knowledge that can only
- * have a limited amount of it's resulting atoms
+ * have a limited amount of its resulting atoms
  * created at once.
  */
 /datum/heretic_knowledge/limited_amount
@@ -640,7 +640,6 @@
 		/obj/item/restraints/handcuffs/cable/zipties,
 		/obj/item/circular_saw,
 		/obj/item/scalpel,
-		/obj/item/binoculars,
 		/obj/item/clothing/gloves/color/yellow,
 		/obj/item/melee/baton/security,
 		/obj/item/clothing/glasses/sunglasses,

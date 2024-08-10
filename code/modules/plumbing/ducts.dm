@@ -100,7 +100,7 @@ All the important duct code:
 
 		other.add_connects(opposite_dir)
 		other.update_appearance()
-		return TRUE //tell the current pipe to also update it's sprite
+		return TRUE //tell the current pipe to also update its sprite
 	if(!(other in neighbours)) //we cool
 		if((duct_color != other.duct_color) && !(ignore_colors || other.ignore_colors))
 			return
@@ -339,7 +339,7 @@ All the important duct code:
 
 /obj/item/stack/ducts/examine(mob/user)
 	. = ..()
-	. += span_notice("It's current color and layer are [duct_color] and [duct_layer]. Use in-hand to change.")
+	. += span_notice("Its current color and layer are [duct_color] and [duct_layer]. Use in-hand to change.")
 
 /obj/item/stack/ducts/attack_self(mob/user)
 	var/new_layer = tgui_input_list(user, "Select a layer", "Layer", GLOB.plumbing_layers, duct_layer)

@@ -96,6 +96,12 @@
 	cloner = new(src)
 	sterile = new(src)
 
+/obj/structure/aquarium/traits/Destroy()
+	crossbreeder = null
+	cloner = null
+	sterile = null
+	return ..()
+
 /obj/item/fish/testdummy/crossbreeder
 	fish_traits = list(/datum/fish_trait/crossbreeder)
 
@@ -114,6 +120,11 @@
 	. = ..()
 	evolve = new(src)
 	evolve_two = new(src)
+
+/obj/structure/aquarium/evolution/Destroy()
+	evolve = null
+	evolve_two = null
+	return ..()
 
 /obj/item/fish/testdummy/evolve
 	compatible_types = list(/obj/item/fish/testdummy/evolve_two)
@@ -209,6 +220,55 @@
 	QDEL_LIST(mobs_spawned)
 	run_loc_floor_bottom_left.ChangeTurf(original_turf_type, original_turf_baseturfs)
 	return ..()
+
+///Check that you can actually raise a chasm crab without errors.
+/datum/unit_test/raise_a_chasm_crab
+
+/datum/unit_test/raise_a_chasm_crab/Run()
+	var/obj/structure/aquarium/crab/aquarium = allocate(/obj/structure/aquarium/crab)
+	SEND_SIGNAL(aquarium.crabbie, COMSIG_FISH_LIFE, 1) //give the fish growth component a small push.
+	var/mob/living/basic/mining/lobstrosity/juvenile/lobster = locate() in aquarium.loc
+	TEST_ASSERT_EQUAL(lobster.loc, get_turf(aquarium), "The lobstrosity didn't spawn on the aquarium's turf")
+	TEST_ASSERT(QDELETED(aquarium.crabbie), "The test aquarium's chasm crab didn't delete itself.")
+	allocated |= lobster //make sure it's allocated and thus properly deleted when the test is over
+	//While ideally impossible to have all traits because of incompatible ones, I want to be sure they don't error out.
+	for(var/trait_type in GLOB.fish_traits)
+		var/datum/fish_trait/trait = GLOB.fish_traits[trait_type]
+		trait.apply_to_mob(lobster)
+
+/obj/structure/aquarium/crab
+	allow_breeding = TRUE //needed for growing up
+	///Our test subject
+	var/obj/item/fish/chasm_crab/instant_growth/crabbie
+
+/obj/structure/aquarium/crab/Initialize(mapload)
+	. = ..()
+	crabbie = new(src)
+
+/obj/structure/aquarium/crab/Exited(atom/movable/gone)
+	. = ..()
+	if(gone == crabbie) //the fish item is deleted once it grows up
+		crabbie = null
+
+/obj/item/fish/chasm_crab/instant_growth
+	growth_rate = 100
+	fish_traits = list() //We don't want to end up applying traits twice on the resulting lobstrosity
+
+/datum/unit_test/explosive_fishing
+
+/datum/unit_test/explosive_fishing/Run()
+	var/datum/fish_source/source = GLOB.preset_fish_sources[/datum/fish_source/unit_test]
+	source.spawn_reward_from_explosion(run_loc_floor_bottom_left, 1)
+	if(length(source.fish_table))
+		TEST_FAIL("The unit test item wasn't removed/spawned from fish_table during 'spawn_reward_from_explosion'.")
+
+/datum/fish_source/unit_test
+	fish_table = list(
+		/obj/item/wrench = 1,
+	)
+	fish_counts = list(
+		/obj/item/wrench = 1,
+	)
 
 #undef TRAIT_FISH_TESTING
 

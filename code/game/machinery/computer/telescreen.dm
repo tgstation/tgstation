@@ -185,10 +185,22 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/computer/security/telescreen/ce, 32)
 	frame_type = /obj/item/wallframe/telescreen/cmo
 
 /obj/item/wallframe/telescreen/cmo
-	name = "\improper Chief Engineer'stelescreen frame"
+	name = "\improper Chief Medical Officer's telescreen frame"
 	result_path = /obj/machinery/computer/security/telescreen/cmo
 
 MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/computer/security/telescreen/cmo, 32)
+
+/obj/machinery/computer/security/telescreen/med_sec
+	name = "\improper medical telescreen"
+	desc = "A telescreen with access to the medbay's camera network."
+	network = list(CAMERANET_NETWORK_MEDBAY)
+	frame_type = /obj/item/wallframe/telescreen/med_sec
+
+/obj/item/wallframe/telescreen/med_sec
+	name = "\improper medical telescreen frame"
+	result_path = /obj/machinery/computer/security/telescreen/med_sec
+
+MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/computer/security/telescreen/med_sec, 32)
 
 /obj/machinery/computer/security/telescreen/vault
 	name = "vault monitor"

@@ -24,6 +24,8 @@
 ///the list of interactions we can have with the owner
 #define BB_INTERACTIONS_WITH_OWNER "BB_interactions_with_owner"
 
+///The trait checked by ai_behavior/find_potential_targets/prioritize_trait to return a target with a trait over the rest.
+#define BB_TARGET_PRIORITY_TRAIT "target_priority_trait"
 
 /// Store a single or list of emotes at this key
 #define BB_EMOTE_KEY "BB_emotes"
@@ -91,7 +93,7 @@
 #define BB_TARGETLESS_TIME "BB_targetless_time"
 
 ///Tipped blackboards
-///Bool that means a basic mob will start reacting to being tipped in it's planning
+///Bool that means a basic mob will start reacting to being tipped in its planning
 #define BB_BASIC_MOB_TIP_REACTING "BB_basic_tip_reacting"
 ///the motherfucker who tipped us
 #define BB_BASIC_MOB_TIPPER "BB_basic_tip_tipper"
