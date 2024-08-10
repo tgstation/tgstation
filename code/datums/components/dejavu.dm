@@ -16,8 +16,8 @@
 	var/rewinds_remaining
 	/// How long to wait between each rewind
 	var/rewind_interval
-	/// How long to wait between starting to track each rewind
-	var/between_rewinds
+	/// Do we add a new component before teleporting the target to they teleport to the place where *we* teleported them from?
+	var/repeating_component
 
 	/// The starting value of toxin loss at the beginning of the effect
 	var/tox_loss = 0
@@ -36,24 +36,15 @@
 	/// A list of body parts saved at the beginning of the effect
 	var/list/datum/saved_bodypart/saved_bodyparts
 
-/datum/component/dejavu/Initialize(rewinds = 1, interval = 10 SECONDS, between = -1)
+/datum/component/dejavu/Initialize(rewinds = 1, interval = 10 SECONDS, add_component = FALSE)
 	if(!isatom(parent))
 		return COMPONENT_INCOMPATIBLE
 
+	starting_turf = get_turf(parent)
 	rewinds_remaining = rewinds
 	rewind_interval = interval
-	between_rewinds = between
-	save_values()
+	repeating_component = add_component
 
-	addtimer(CALLBACK(src, rewind_type), rewind_interval)
-
-/datum/component/dejavu/Destroy()
-	starting_turf = null
-	saved_bodyparts = null
-	return ..()
-
-/datum/component/dejavu/proc/save_values()
-	starting_turf = get_turf(parent)
 	if(isliving(parent))
 		var/mob/living/L = parent
 		tox_loss = L.getToxLoss()
@@ -77,6 +68,13 @@
 		integrity = O.get_integrity()
 		rewind_type = PROC_REF(rewind_obj)
 
+	addtimer(CALLBACK(src, rewind_type), rewind_interval)
+
+/datum/component/dejavu/Destroy()
+	starting_turf = null
+	saved_bodyparts = null
+	return ..()
+
 /datum/component/dejavu/proc/rewind()
 	to_chat(parent, span_notice(rewind_message))
 
@@ -89,23 +87,17 @@
 			var/atom/movable/master = parent
 			master.forceMove(starting_turf)
 
-	rewinds_remaining--
-	if(!rewinds_remaining)
+	rewinds_remaining --
+	if(rewinds_remaining || rewinds_remaining < 0)
+		addtimer(CALLBACK(src, rewind_type), rewind_interval)
+	else
 		to_chat(parent, span_notice(no_rewinds_message))
 		qdel(src)
-		return
-
-	if (between_rewinds > 0)
-		addtimer(CALLBACK(src, PROC_REF(save_rewind)), between_rewinds)
-		return
-
-	addtimer(CALLBACK(src, rewind_type), rewind_interval)
-
-/datum/component/dejavu/proc/save_rewind()
-	save_values()
-	addtimer(CALLBACK(src, rewind_type), rewind_interval)
 
 /datum/component/dejavu/proc/rewind_living()
+	if (rewinds_remaining == 1 && repeating_component && !iscarbon(parent) && !isanimal_or_basicmob(parent))
+		parent.AddComponent(type, 1, rewind_interval, TRUE)
+
 	var/mob/living/master = parent
 	master.setToxLoss(tox_loss)
 	master.setOxyLoss(oxy_loss)
@@ -114,18 +106,27 @@
 	rewind()
 
 /datum/component/dejavu/proc/rewind_carbon()
+	if (rewinds_remaining == 1 && repeating_component)
+		parent.AddComponent(type, 1, rewind_interval, TRUE)
+
 	if(saved_bodyparts)
 		var/mob/living/carbon/master = parent
 		master.apply_saved_bodyparts(saved_bodyparts)
 	rewind_living()
 
 /datum/component/dejavu/proc/rewind_animal()
+	if (rewinds_remaining == 1 && repeating_component)
+		parent.AddComponent(type, 1, rewind_interval, TRUE)
+
 	var/mob/living/master = parent
 	master.bruteloss = brute_loss
 	master.updatehealth()
 	rewind_living()
 
 /datum/component/dejavu/proc/rewind_obj()
+	if (rewinds_remaining == 1 && repeating_component)
+		parent.AddComponent(type, 1, rewind_interval, TRUE)
+
 	var/obj/master = parent
 	master.update_integrity(integrity)
 	rewind()

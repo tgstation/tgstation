@@ -44,7 +44,7 @@
 
 	if(istype(new_area, /area/centcom))
 		return
-	wizard.AddComponent(/datum/component/dejavu/wizard, -1, 60 SECONDS, 60 SECONDS)
+	wizard.AddComponent(/datum/component/dejavu/wizard, -1, 60 SECONDS, TRUE)
 	UnregisterSignal(wizard, COMSIG_ENTER_AREA)
 
 /datum/spellbook_entry/perks/spell_lottery
