@@ -27,6 +27,7 @@
 	hud_type = /datum/hud/living/blobbernaut
 	gold_core_spawnable = HOSTILE_SPAWN
 	ai_controller = /datum/ai_controller/basic_controller/blobbernaut
+	shadow_type = SHADOW_LARGE
 
 /mob/living/basic/blob_minion/blobbernaut/Initialize(mapload)
 	. = ..()

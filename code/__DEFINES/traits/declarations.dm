@@ -982,6 +982,9 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
  */
 #define TRAIT_UNIQUE_IMMERSE "unique_immerse"
 
+/// Don't render a drop shadow
+#define TRAIT_SHADOWLESS "shadowless"
+
 /// This item is currently under the control of telekinesis
 #define TRAIT_TELEKINESIS_CONTROLLED "telekinesis_controlled"
 

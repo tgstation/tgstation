@@ -34,6 +34,8 @@
 	RegisterSignal(parent, COMSIG_ATOM_UPDATE_OVERLAYS, PROC_REF(on_update_overlays))
 	RegisterSignals(parent, list(COMSIG_ATOM_FULTON_BEGAN, COMSIG_ATOM_BEGAN_ORBITING), PROC_REF(hide_shadow))
 	RegisterSignals(parent, list(COMSIG_ATOM_FULTON_LANDED, COMSIG_ATOM_STOPPED_ORBITING), PROC_REF(show_shadow))
+	RegisterSignals(parent, list(SIGNAL_ADDTRAIT(TRAIT_SHADOWLESS), SIGNAL_REMOVETRAIT(TRAIT_SHADOWLESS)), PROC_REF(shadowless_trait_updated))
+
 	if (isliving(parent))
 		RegisterSignal(parent, COMSIG_LIVING_POST_UPDATE_TRANSFORM, PROC_REF(on_transform_updated))
 		RegisterSignal(parent, COMSIG_MOB_BUCKLED, PROC_REF(hide_shadow))
@@ -52,6 +54,8 @@
 		COMSIG_LIVING_POST_UPDATE_TRANSFORM,
 		COMSIG_MOB_BUCKLED,
 		COMSIG_MOB_UNBUCKLED,
+		SIGNAL_ADDTRAIT(TRAIT_SHADOWLESS),
+		SIGNAL_REMOVETRAIT(TRAIT_SHADOWLESS),
 	))
 
 /// Repositions the shadow to try and stay under our mob should be at under current conditions
@@ -70,7 +74,14 @@
 /// Handles actually displaying it
 /datum/component/drop_shadow/proc/on_update_overlays(atom/source, list/overlays)
 	SIGNAL_HANDLER
-	overlays += shadow
+	if (!HAS_TRAIT(parent, TRAIT_SHADOWLESS))
+		overlays += shadow
+
+/// Called when we gain or lose the "shadowless" trait
+/datum/component/drop_shadow/proc/shadowless_trait_updated()
+	SIGNAL_HANDLER
+	var/atom/atom_parent = parent
+	atom_parent.update_appearance(UPDATE_OVERLAYS)
 
 /// Called when a mob is resized or rotated
 /datum/component/drop_shadow/proc/on_transform_updated(mob/living/source, previous_size, lying_angle, is_opposite_angle, final_pixel_y, animate_time)
@@ -96,6 +107,7 @@
 	atom_parent.update_appearance(UPDATE_OVERLAYS)
 	deltimer(unhide_shadow_timer)
 
+/// Hide shadow then display it again after a delay
 /datum/component/drop_shadow/proc/temporarily_hide_shadow(show_in)
 	if (!show_in)
 		return
