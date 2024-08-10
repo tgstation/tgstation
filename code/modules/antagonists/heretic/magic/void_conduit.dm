@@ -35,9 +35,12 @@
 	var/effect_range = 12
 	///id of the deletion timer
 	var/timerid
+	///Audio loop for the rift being alive
+	var/datum/looping_sound/void_conduit/soundloop
 
 /obj/structure/void_conduit/Initialize(mapload)
 	. = ..()
+	soundloop = new(src, start_immediately = TRUE)
 	timerid = QDEL_IN_STOPPABLE(src, 1 MINUTES)
 	START_PROCESSING(SSobj, src)
 	for(var/turf/affected_turf in RANGE_TURFS(effect_range, src))
@@ -48,6 +51,7 @@
 		void_overlay.alpha = 180
 
 /obj/structure/void_conduit/Destroy(force)
+	QDEL_NULL(soundloop)
 	deltimer(timerid)
 	STOP_PROCESSING(SSobj, src)
 	for(var/turf/affected_turf in RANGE_TURFS(effect_range, src))
@@ -90,6 +94,14 @@
 		affected_window.take_damage(rand(10, 20))
 	for(var/obj/structure/grille/affected_grille in turfs)
 		affected_grille.take_damage(rand(10, 20))
+
+/datum/looping_sound/void_conduit
+	mid_sounds = 'sound/ambience/ambiatm1.ogg'
+	mid_length = 1 SECONDS
+	extra_range = 10
+	volume = 40
+	falloff_distance = 5
+	falloff_exponent = 20
 
 /datum/status_effect/void_conduit
 	duration = 15 SECONDS
