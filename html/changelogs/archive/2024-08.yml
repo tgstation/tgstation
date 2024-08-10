@@ -196,3 +196,6 @@
   - bugfix: Circuit UI no longer gets covered by components menu
   - bugfix: Fixed Charlie MOD installer not installing MODsuit unless you have a backpack
       to drop
+2024-08-10:
+  FlufflesTheDog:
+  - bugfix: tadpoles can actually be scooped from ponds
