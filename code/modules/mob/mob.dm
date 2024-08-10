@@ -104,7 +104,8 @@
 	if (shadow_type != SHADOW_NONE)
 		AddComponent(/datum/component/drop_shadow, \
 			icon_state = shadow_type, \
-			shadow_offset = shadow_offset, \
+			shadow_offset_x = shadow_offset_x, \
+			shadow_offset_y = shadow_offset_y, \
 		)
 
 /**

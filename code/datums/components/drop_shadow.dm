@@ -12,12 +12,12 @@
 	/// Timer to make sure
 	var/unhide_shadow_timer
 
-/datum/component/drop_shadow/Initialize(icon = 'icons/mob/mob_shadows.dmi', icon_state = SHADOW_MEDIUM, shadow_offset = 0)
+/datum/component/drop_shadow/Initialize(icon = 'icons/mob/mob_shadows.dmi', icon_state = SHADOW_MEDIUM, shadow_offset_x = 0, shadow_offset_y = 0)
 	. = ..()
 	if (!ismovable(parent)) // Only being used for mobs at the moment but it seems reasonably likely that we'll want to put it on some effect some time
 		return COMPONENT_INCOMPATIBLE
 
-	src.shadow_offset = shadow_offset
+	src.shadow_offset = shadow_offset_y
 
 	var/atom/movable/movable_parent = parent
 
@@ -27,7 +27,7 @@
 		layer = BELOW_MOB_LAYER,
 		appearance_flags = KEEP_APART | RESET_TRANSFORM | RESET_COLOR
 	)
-	shadow.pixel_x = movable_parent.pixel_x
+	shadow.pixel_x = shadow_offset_x - movable_parent.pixel_x
 	update_shadow_position()
 
 /datum/component/drop_shadow/RegisterWithParent()
