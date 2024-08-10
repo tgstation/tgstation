@@ -31,6 +31,7 @@ GLOBAL_LIST_INIT(specific_fish_icons, zebra_typecacheof(list(
 	/obj/item/stack/sheet/mineral = FISH_ICON_GEM,
 	/obj/item/stack/ore = FISH_ICON_GEM,
 	/obj/structure/closet/crate = FISH_ICON_COIN,
+	/obj/effect/spawner/message_in_a_bottle = FISH_ICON_BOTTLE,
 )))
 
 /**

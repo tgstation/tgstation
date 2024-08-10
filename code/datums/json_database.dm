@@ -66,8 +66,9 @@
 /datum/json_database/proc/pick_and_take_key()
 	if(!length(cached_data))
 		return null
-	. =  cached_data[pick(cached_data)]
-	cached_data -= .
+	var/key = pick(cached_data)
+	. =  cached_data[key]
+	cached_data -= key
 	queue_save()
 
 /// Sets the data at the key to the value, and queues a save.

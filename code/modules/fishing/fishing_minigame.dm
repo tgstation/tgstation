@@ -74,7 +74,7 @@
 	/// Background icon state from fishing_hud.dmi
 	var/background = "background_default"
 	/// Fish icon state from fishing_hud.dmi
-	var/fish_icon = "fish"
+	var/fish_icon = FISH_ICON_DEF
 
 	/// Fishing line visual
 	var/datum/beam/fishing_line
@@ -196,7 +196,7 @@
 		completion -= MAX_FISH_COMPLETION_MALUS * (difficulty * 0.01)
 
 	if(HAS_MIND_TRAIT(user, TRAIT_REVEAL_FISH))
-		fish_icon = GLOB.specific_fish_icons[reward_path] || "fish"
+		fish_icon = GLOB.specific_fish_icons[reward_path] || FISH_ICON_DEF
 
 	/**
 	 * If the chances are higher than 1% (100% at maximum difficulty), they'll scale
@@ -369,6 +369,8 @@
 				send_alert("crustacean!!!")
 			if(FISH_ICON_BONE)
 				send_alert("bones!!!")
+			if(FISH_ICON_BOTTLE)
+				send_alert("bottle!!!")
 	else
 		send_alert("!!!")
 	animate(lure, pixel_y = 3, time = 5, loop = -1, flags = ANIMATION_RELATIVE)

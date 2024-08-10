@@ -89,6 +89,7 @@
 #define FISH_ICON_GEM "gem"
 #define FISH_ICON_CRAB "crab"
 #define FISH_ICON_JELLYFISH "jellyfish"
+#define FISH_ICON_BOTTLE "bottle"
 #define FISH_ICON_BONE "bone"
 
 #define AQUARIUM_ANIMATION_FISH_SWIM "fish"

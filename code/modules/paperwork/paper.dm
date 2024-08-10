@@ -548,36 +548,38 @@
 /obj/item/paper/proc/convert_to_data()
 	var/list/data = list()
 
-	data["raw_text_input"] = list()
+	data[LIST_PAPER_RAW_TEXT_INPUT] = list()
 	for(var/datum/paper_input/text_input as anything in raw_text_inputs)
-		data["raw_text_input"] += list(text_input.to_list())
+		data[LIST_PAPER_RAW_TEXT_INPUT] += list(text_input.to_list())
 
-	data["raw_field_input"] = list()
+	data[LIST_PAPER_RAW_FIELD_INPUT] = list()
 	for(var/datum/paper_field/field_input as anything in raw_field_input_data)
-		data["raw_field_input"] += list(field_input.to_list())
+		data[LIST_PAPER_RAW_FIELD_INPUT] += list(field_input.to_list())
 
-	data["raw_stamp_input"] = list()
+	data[LIST_PAPER_RAW_STAMP_INPUT] = list()
 	for(var/datum/paper_stamp/stamp_input as anything in raw_stamp_data)
-		data["raw_stamp_input"] += list(stamp_input.to_list())
+		data[LIST_PAPER_RAW_STAMP_INPUT] += list(stamp_input.to_list())
 
-	data["paper_color"] = color ? color : COLOR_WHITE
-	data["paper_name"] = name
+	data[LIST_PAPER_COLOR] = color ? color : COLOR_WHITE
+	data[LIST_PAPER_NAME] = name
 
 	return data
 
 /obj/item/paper/proc/write_from_data(list/data)
-	for(var/list/input as anything in data["raw_text_input"])
-		add_raw_text(input["raw_text"], input["colour"], input["bold"], input["advanced_html"])
+	for(var/list/input as anything in data[LIST_PAPER_RAW_TEXT_INPUT])
+		add_raw_text(input[LIST_PAPER_RAW_TEXT], input[LIST_PAPER_FONT], input[LIST_PAPER_FIELD_COLOR], input[LIST_PAPER_BOLD], input[LIST_PAPER_ADVANCED_HTML])
 
-	for(var/list/field as anything in data["raw_field_input"])
-		var/list/field_data = field["field_data"]
-		add_field_input(field["field_id"], field_data["text"], field_data["font"], field_data["color"], field_data["bold"], field["signature_name"])
+	for(var/list/field as anything in data[LIST_PAPER_RAW_FIELD_INPUT])
+		add_field_input(field[LIST_PAPER_FIELD_INDEX], input[LIST_PAPER_RAW_TEXT], input[LIST_PAPER_FONT], input[LIST_PAPER_FIELD_COLOR], input[LIST_PAPER_BOLD], field[LIST_PAPER_IS_SIGNATURE])
 
-	for(var/list/stamp as anything in data["raw_stamp_input"])
-		add_stamp(stamp["class"], stamp["x"], stamp["y"], stamp["rotation"])
+	for(var/list/stamp as anything in data[LIST_PAPER_RAW_STAMP_INPUT])
+		add_stamp(stamp[LIST_PAPER_CLASS], stamp[LIST_PAPER_STAMP_X], stamp[LIST_PAPER_STAMP_Y], stamp[LIST_PAPER_ROTATION])
 
-	color = data["paper_color"]
-	name = data["paper_name"]
+	var/new_color = data[LIST_PAPER_COLOR]
+	if(new_color != COLOR_WHITE)
+		add_atom_colour(new_color, FIXED_COLOUR_PRIORITY)
+
+	name = data[LIST_PAPER_NAME]
 
 /obj/item/paper/ui_data(mob/user)
 	var/list/data = list()
@@ -782,11 +784,11 @@
 
 /datum/paper_input/proc/to_list()
 	return list(
-		raw_text = raw_text,
-		font = font,
-		color = colour,
-		bold = bold,
-		advanced_html = advanced_html,
+		LIST_PAPER_RAW_TEXT = raw_text,
+		LIST_PAPER_FONT = font,
+		LIST_PAPER_FIELD_COLOR = colour,
+		LIST_PAPER_BOLD = bold,
+		LIST_PAPER_ADVANCED_HTML = advanced_html,
 	)
 
 /// Returns the raw contents of the input as html, with **ZERO SANITIZATION**
@@ -822,10 +824,10 @@
 
 /datum/paper_stamp/proc/to_list()
 	return list(
-		class = class,
-		x = stamp_x,
-		y = stamp_y,
-		rotation = rotation,
+		LIST_PAPER_CLASS = class,
+		LIST_PAPER_STAMP_X = stamp_x,
+		LIST_PAPER_STAMP_Y = stamp_y,
+		LIST_PAPER_ROTATION = rotation,
 	)
 
 /// A reference to some data that replaces a modifiable input field at some given index in paper raw input parsing.
@@ -847,9 +849,9 @@
 
 /datum/paper_field/proc/to_list()
 	return list(
-		field_index = field_index,
-		field_data = field_data.to_list(),
-		is_signature = is_signature,
+		LIST_PAPER_FIELD_INDEX = field_index,
+		LIST_PAPER_FIELD_DATA = field_data.to_list(),
+		LIST_PAPER_IS_SIGNATURE = is_signature,
 	)
 
 /obj/item/paper/construction

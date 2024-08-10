@@ -51,9 +51,6 @@
 
 /obj/item/reagent_containers/cup/glass/bottle/add_context(atom/source, list/context, obj/item/held_item, mob/living/user)
 	if(message_in_a_bottle)
-		if(isnull(held_item))
-			context[SCREENTIP_CONTEXT_RMB] = "Remove message"
-			return CONTEXTUAL_SCREENTIP_SET
 		return NONE
 	if(istype(held_item, /obj/item/paper) || istype(held_item, /obj/item/stack/spacecash) || istype(held_item, /obj/item/photo))
 		context[SCREENTIP_CONTEXT_LMB] = "Insert message"
@@ -66,10 +63,11 @@
 		return CONTEXTUAL_SCREENTIP_SET
 	return NONE
 
-/obj/item/reagent_containers/cup/glass/bottle/Exited(atom/movable/gone)
+/obj/item/reagent_containers/cup/glass/bottle/Exited(atom/movable/gone, atom/newloc)
 	if(gone == message_in_a_bottle)
 		message_in_a_bottle = null
-		update_icon(UPDATE_OVERLAYS)
+		if(!QDELETED(src))
+			update_icon(UPDATE_OVERLAYS)
 	return ..()
 
 /obj/item/reagent_containers/cup/glass/bottle/CheckParts(list/parts_list)
@@ -82,23 +80,20 @@
 /obj/item/reagent_containers/cup/glass/bottle/examine(mob/user)
 	. = ..()
 	if(message_in_a_bottle)
-		. += span_info("there's \a [message_in_a_bottle] inside it. [EXAMINE_HINT("Right-click")] with an [EXAMINE_HINT("empty hand")] to remove it, or find a beach or ocean and toss it with [EXAMINE_HINT("right-click")].")
+		. += span_info("there's \a [message_in_a_bottle] inside it. Break it to take it out, or find a beach or ocean and toss it with [EXAMINE_HINT("right-click")].")
 	else if(isGlass)
 		. += span_tinynoticeital("you could place a paper, photo or space cash inside it...")
 
 /obj/item/reagent_containers/cup/glass/bottle/update_overlays()
-	. = ..()
 	if(message_in_a_bottle)
 		var/overlay = add_message_overlay()
 		if(overlay)
 			. += overlay
+	return ..()
 
 /obj/item/reagent_containers/cup/glass/bottle/interact_with_atom_secondary(atom/target, mob/living/user, list/modifiers)
-	. = ..()
-	if(. != NONE || !message_in_a_bottle)
-		return
-	if(!HAS_TRAIT(target, TRAIT_MESSAGE_IN_A_BOTTLE_LOCATION))
-		return NONE
+	if(user.combat_mode || !HAS_TRAIT(target, TRAIT_MESSAGE_IN_A_BOTTLE_LOCATION))
+		return ..()
 	if(!user.temporarilyRemoveItemFromInventory(src))
 		balloon_alert(user, "it's stuck to your hand!")
 		return ITEM_INTERACT_BLOCKING
@@ -116,25 +111,13 @@
 	if(message_in_a_bottle)
 		balloon_alert(user, "has a message already!")
 		return ITEM_INTERACT_BLOCKING
-	if(!user.transferItemToLoc(item))
+	if(!user.transferItemToLoc(item, src))
 		balloon_alert(user, "it's stuck to your hand!")
 		return ITEM_INTERACT_BLOCKING
 	balloon_alert(user, "message inserted")
 	message_in_a_bottle = item
 	update_icon(UPDATE_OVERLAYS)
 	return ITEM_INTERACT_SUCCESS
-
-/obj/item/reagent_containers/cup/glass/bottle/attack_hand_secondary(mob/user, list/modifiers)
-	. = ..()
-	if(. == SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN || !message_in_a_bottle)
-		return
-	if(DOING_INTERACTION_WITH_TARGET(user, src))
-		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
-	balloon_alert(user, "removing message...")
-	if(do_after(user, 5 SECONDS, src))
-		balloon_alert(user, "message removed...")
-		user.put_in_hands(message_in_a_bottle)
-	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
 /obj/item/reagent_containers/cup/glass/bottle/proc/add_message_overlay()
 	if(istype(message_in_a_bottle, /obj/item/paper))

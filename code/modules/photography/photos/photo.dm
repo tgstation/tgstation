@@ -17,7 +17,7 @@
 
 /obj/item/photo/Initialize(mapload, datum/picture/P, datum_name = TRUE, datum_desc = TRUE)
 	set_picture(P, datum_name, datum_desc, TRUE)
-	if(!mapload && prob(MESSAGE_BOTTLE_CHANCE) && picture?.id)
+	if(!mapload && prob(MESSAGE_BOTTLE_CHANCE * 5) && picture?.id)
 		LAZYADD(SSpersistence.queued_message_bottles, src)
 	return ..()
 
