@@ -1,6 +1,3 @@
-/// Magic number to add to offset when lying down
-#define LYING_SHADOW_OFFSET 4
-
 /// Draws a shadow overlay under the attachee
 /datum/component/drop_shadow
 	/// The overlay we are using
@@ -64,7 +61,7 @@
 	if (isliving(parent))
 		var/mob/living/living_parent = parent
 		if (living_parent.rotate_on_lying && living_parent.body_position != STANDING_UP)
-			lying_offset = living_parent.body_position_pixel_y_offset - LYING_SHADOW_OFFSET
+			lying_offset = living_parent.body_position_pixel_y_offset
 		shadow.transform = matrix() * living_parent.current_size
 
 	shadow.pixel_y = -DEPTH_OFFSET - additional_offset - lying_offset + shadow_offset
@@ -113,5 +110,3 @@
 		return
 	hide_shadow()
 	unhide_shadow_timer = addtimer(CALLBACK(src, PROC_REF(show_shadow)), show_in, TIMER_STOPPABLE | TIMER_UNIQUE | TIMER_DELETE_ME)
-
-#undef LYING_SHADOW_OFFSET
