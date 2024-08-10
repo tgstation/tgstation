@@ -36,6 +36,7 @@ type Category = {
 type Design = {
   title: string;
   icon: string;
+  icon_id: string;
 };
 
 export const MatterItem = (props) => {
@@ -189,38 +190,36 @@ const DesignSection = (props) => {
           </Tabs.Tab>
         ))}
       </Tabs>
-      {shownCategory?.designs.map((design, i) => (
-        <Button
-          key={i + 1}
-          fluid
-          height="31px"
-          color="transparent"
-          selected={
-            design.title === selected_design &&
-            shownCategory.cat_name === selected_category
-          }
-          onClick={() =>
-            act('design', {
-              category: shownCategory.cat_name,
-              index: i + 1,
-            })
-          }
-        >
-          <Box
-            inline
-            verticalAlign="middle"
-            mr="10px"
-            className={classes(['rcd-tgui32x32', design.icon])}
-            style={{
-              transform:
-                design.title === 'catwalk'
-                  ? 'scale(0.7)'
-                  : 'scale(1.0)',
-            }}
-          />
-          <span>{capitalizeAll(design.title)}</span>
-        </Button>
-      ))}
+      <Stack vertical>
+        {shownCategory?.designs.map((design, i) => (
+          <Stack.Item key={i}>
+            <Button
+              fluid
+              height="64px"
+              color="transparent"
+              selected={
+                design.title === selected_design &&
+                shownCategory.cat_name === selected_category
+              }
+              onClick={() =>
+                act('design', {
+                  category: shownCategory.cat_name,
+                  index: i + 1,
+                })
+              }
+            >
+              <Box
+                mt={design.icon_id.includes('32x32') ? 3 : 0}
+                inline
+                verticalAlign="middle"
+                mr="10px"
+                className={classes([design.icon_id, design.icon])}
+              />
+              <span>{capitalizeAll(design.title)}</span>
+            </Button>
+          </Stack.Item>
+        ))}
+      </Stack>
     </Section>
   );
 };
