@@ -2,6 +2,7 @@
  * A component to reset the parent to its previous state after some time passes
  */
 /datum/component/dejavu
+	dupe_mode = COMPONENT_DUPE_ALLOWED
 
 	///message sent when dejavu rewinds
 	var/rewind_message = "You remember a time not so long ago..."
