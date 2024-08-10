@@ -1,5 +1,5 @@
 /mob/living/basic/mining/bileworm
-	SET_BASE_VISUAL_PIXEL(0, DEPTH_OFFSET / 2) // It's recessed into the ground
+	SET_BASE_VISUAL_PIXEL(0, 6) // It's recessed into the ground
 	name = "bileworm"
 	desc = "Bileworms are dangerous detritivores that attack with the highly acidic bile they produce from consuming detritus."
 	icon = 'icons/mob/simple/lavaland/bileworm.dmi'

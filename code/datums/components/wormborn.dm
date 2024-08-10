@@ -28,7 +28,7 @@
 	source.forceMove(worm)
 
 /mob/living/basic/wizard_worm
-	SET_BASE_VISUAL_PIXEL(0, DEPTH_OFFSET / 2)
+	SET_BASE_VISUAL_PIXEL(0, 6)
 	name = "Magic Worm"
 	desc = "Large blue worm. What happens if you put your hand in his mouth?."
 	icon = 'icons/mob/simple/mob.dmi'
