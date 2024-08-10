@@ -37,16 +37,19 @@
 	route = PATH_SIDE
 	depth = 8
 
-/datum/heretic_knowledge/spell/void_stasis
-	name = "Void Stasis"
-	//XANTODO desc + gain_text
-	desc = "Debug"
-	gain_text = "Void Stasis DEBUG GAINED"
+/datum/heretic_knowledge/spell/void_prison
+	name = "Void Prison"
+	desc = "Grants you Void Prison, a spell that places your victim into ball, making them unable to do anything or speak. \
+		Applies void chill afterwards"
+	gain_text = "At first, I see myself, waltzing along a snow-laden street. \
+		I try to yell, grab hold of this fool and tell them to run. \
+		But the only welts made are on my own beating fist. \
+		My smiling face turns to face me, reflecting back in glassy eyes the empty path I have been lead down."
 	next_knowledge = list(
 		/datum/heretic_knowledge/spell/void_phase,
 		/datum/heretic_knowledge/summon/raw_prophet,
 	)
-	spell_to_add = /datum/action/cooldown/spell/pointed/void_stasis
+	spell_to_add = /datum/action/cooldown/spell/pointed/void_prison
 	cost = 1
 	route = PATH_SIDE
 	depth = 8

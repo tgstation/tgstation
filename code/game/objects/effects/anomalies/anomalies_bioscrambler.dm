@@ -107,5 +107,5 @@
 
 /obj/effect/temp_visual/circle_wave/void_conduit
 	color = COLOR_FULL_TONER_BLACK
-	duration = 9 SECONDS
-	amount_to_scale = 9
+	duration = 12 SECONDS
+	amount_to_scale = 12
