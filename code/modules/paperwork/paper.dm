@@ -570,6 +570,7 @@
 		add_raw_text(input[LIST_PAPER_RAW_TEXT], input[LIST_PAPER_FONT], input[LIST_PAPER_FIELD_COLOR], input[LIST_PAPER_BOLD], input[LIST_PAPER_ADVANCED_HTML])
 
 	for(var/list/field as anything in data[LIST_PAPER_RAW_FIELD_INPUT])
+		var/list/input = field[LIST_PAPER_FIELD_DATA]
 		add_field_input(field[LIST_PAPER_FIELD_INDEX], input[LIST_PAPER_RAW_TEXT], input[LIST_PAPER_FONT], input[LIST_PAPER_FIELD_COLOR], input[LIST_PAPER_BOLD], field[LIST_PAPER_IS_SIGNATURE])
 
 	for(var/list/stamp as anything in data[LIST_PAPER_RAW_STAMP_INPUT])
