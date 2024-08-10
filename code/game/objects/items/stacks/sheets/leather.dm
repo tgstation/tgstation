@@ -5,6 +5,8 @@
 	inhand_icon_state = null
 	novariants = TRUE
 	merge_type = /obj/item/stack/sheet/animalhide
+	pickup_sound = 'sound/items/skin_pick_up.ogg'
+	drop_sound = 'sound/items/skin_drop.ogg'
 
 /obj/item/stack/sheet/animalhide/human
 	name = "human skin"
@@ -191,6 +193,8 @@ GLOBAL_LIST_INIT(carp_recipes, list ( \
 	icon_state = "sheet-leather"
 	inhand_icon_state = null
 	merge_type = /obj/item/stack/sheet/leather
+	pickup_sound = 'sound/items/skin_pick_up.ogg'
+	drop_sound = 'sound/items/skin_drop.ogg'
 
 GLOBAL_LIST_INIT(leather_recipes, list ( \
 	new/datum/stack_recipe("wallet", /obj/item/storage/wallet, 1, crafting_flags = NONE, category = CAT_CONTAINERS), \

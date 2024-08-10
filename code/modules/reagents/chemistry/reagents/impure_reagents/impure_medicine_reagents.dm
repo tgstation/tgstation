@@ -227,7 +227,7 @@ Basically, we fill the time between now and 2s from now with hands based off the
 	///Prevents message spam
 	var/spammer = 0
 
-//Just the removed itching mechanism - omage to it's origins.
+//Just the removed itching mechanism - omage to its origins.
 /datum/reagent/inverse/ichiyuri/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
 	. = ..()
 	if(prob(resetting_probability) && !(HAS_TRAIT(affected_mob, TRAIT_RESTRAINED) || affected_mob.incapacitated()))
@@ -783,7 +783,10 @@ Basically, we fill the time between now and 2s from now with hands based off the
 	if(!isnull(speaker) && HAS_TRAIT(speaker, TRAIT_SIGN_LANG))
 		return
 
-	hearing_args[HEARING_SPANS] |= random_span
+	var/list/spans = hearing_args[HEARING_SPANS]
+	var/list/copied_spans = spans.Copy()
+	copied_spans |= random_span
+	hearing_args[HEARING_SPANS] = copied_spans
 
 /datum/reagent/inverse/sal_acid
 	name = "Benzoic Acid"

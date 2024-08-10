@@ -89,7 +89,7 @@
 	if(!drop_atom)
 		return //not a valid atom.
 	var/turf/drop_turf = get_step(drop_atom, 0) //resolve where the thing is.
-	if(!drop_turf) //incase it's inside a valid drop container, inside another container. ie if a mech picked up a closet and has it inside it's internal storage.
+	if(!drop_turf) //incase it's inside a valid drop container, inside another container. ie if a mech picked up a closet and has it inside its internal storage.
 		var/atom/last_try = drop_atom.loc?.drop_location() //one last try, otherwise fuck it.
 		if(last_try)
 			drop_turf = get_step(last_try, 0)

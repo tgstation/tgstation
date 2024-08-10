@@ -206,6 +206,12 @@ SUBSYSTEM_DEF(polling)
 		return
 	for(var/mob/dead/observer/ghost_player in GLOB.player_list)
 		candidates += ghost_player
+
+#ifdef TESTING
+	for(var/mob/dude in GLOB.player_list)
+		candidates |= dude
+#endif
+
 	return poll_candidates(question, role, check_jobban, poll_time, ignore_category, flashwindow, candidates, alert_pic, jump_target, role_name_text, custom_response_messages, start_signed_up, amount_to_pick, chat_text_border_icon, announce_chosen)
 
 /datum/controller/subsystem/polling/proc/poll_ghosts_for_target(

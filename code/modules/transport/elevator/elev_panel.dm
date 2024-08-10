@@ -276,7 +276,7 @@
 	var/datum/transport_controller/linear/lift = lift_weakref?.resolve()
 	if(lift)
 		data["lift_exists"] = TRUE
-		data["currently_moving"] = lift.controls_locked == LIFT_PLATFORM_LOCKED
+		data["currently_moving"] = lift.controller_status & CONTROLS_LOCKED
 		data["currently_moving_to_floor"] = last_move_target
 		data["current_floor"] = lift.transport_modules[1].z
 
@@ -319,7 +319,7 @@
 				return TRUE // Something is inaccurate, update UI
 
 			var/datum/transport_controller/linear/lift = lift_weakref?.resolve()
-			if(!lift || lift.controls_locked == LIFT_PLATFORM_LOCKED)
+			if(!lift || lift.controller_status & CONTROLS_LOCKED)
 				return TRUE // We shouldn't be moving anything, update UI
 
 			INVOKE_ASYNC(lift, TYPE_PROC_REF(/datum/transport_controller/linear, move_to_zlevel), desired_z, CALLBACK(src, PROC_REF(check_panel)), usr)

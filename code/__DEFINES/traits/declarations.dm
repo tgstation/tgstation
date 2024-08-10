@@ -225,6 +225,8 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_REVEAL_FISH "reveal_fish"
 ///This trait gets you a list of fishes that can be caught when examining a fishing spot.
 #define TRAIT_EXAMINE_FISHING_SPOT "examine_fishing_spot"
+///lobstrosities and carps will prioritize/flee from those that have this trait (given by the skill-locked hat)
+#define TRAIT_SCARY_FISHERMAN "scary_fisherman"
 ///Trait given to turfs or objects that can be fished from
 #define TRAIT_FISHING_SPOT "fishing_spot"
 ///Trait given to mobs that can fish without a rod
@@ -701,6 +703,8 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_HONKSPAMMING "trait_honkspamming"
 /// Required by the waddling element since there are multiple sources of it.
 #define TRAIT_WADDLING "trait_waddling"
+/// Required by the on_hit_effect element, which is in turn added by other elements.
+#define TRAIT_ON_HIT_EFFECT "trait_on_hit_effect"
 
 ///Used for managing KEEP_TOGETHER in [/atom/var/appearance_flags]
 #define TRAIT_KEEP_TOGETHER "keep-together"
@@ -744,6 +748,8 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_GREAT_QUALITY_BAIT "great_quality_bait"
 /// Baits with this trait will ignore bait preferences and related fish traits.
 #define TRAIT_OMNI_BAIT "omni_bait"
+/// The bait won't be consumed when used
+#define TRAIT_BAIT_UNCONSUMABLE "bait_unconsumabe"
 /// Plants that were mutated as a result of passive instability, not a mutation threshold.
 #define TRAIT_PLANT_WILDMUTATE "wildmutation"
 /// If you hit an APC with exposed internals with this item it will try to shock you
@@ -770,7 +776,7 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_DANGEROUS_OBJECT "dangerous_object"
 /// determines whether or not objects are haunted and teleport/attack randomly
 #define TRAIT_HAUNTED "haunted"
-/// An item that, if it has contents, will ignore it's contents when scanning for contraband.
+/// An item that, if it has contents, will ignore its contents when scanning for contraband.
 #define TRAIT_CONTRABAND_BLOCKER "contraband_blocker"
 
 //quirk traits
@@ -1120,6 +1126,9 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 ///Trait given to limb by /mob/living/basic/living_limb_flesh
 #define TRAIT_IGNORED_BY_LIVING_FLESH "livingflesh_ignored"
 
+///Trait given to organs that have been inside a living being previously
+#define TRAIT_USED_ORGAN "used_organ"
+
 /// Trait given while using /datum/action/cooldown/mob_cooldown/wing_buffet
 #define TRAIT_WING_BUFFET "wing_buffet"
 /// Trait given while tired after using /datum/action/cooldown/mob_cooldown/wing_buffet
@@ -1127,8 +1136,8 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 /// Trait given to a dragon who fails to defend their rifts
 #define TRAIT_RIFT_FAILURE "fail_dragon_loser"
 
-///this mob is able to relay happiness, given by /datum/component/happiness
-#define TRAIT_MOB_RELAY_HAPPINESS "mob_relay_happiness"
+///this trait hides most visible fluff and interactions of happiness, likely temporarily.
+#define TRAIT_MOB_HIDE_HAPPINESS "mob_hide_happiness"
 ///trait determines if this mob can breed given by /datum/component/breeding
 #define TRAIT_MOB_BREEDER "mob_breeder"
 ///trait given to mobs that are hatched
@@ -1211,11 +1220,13 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 ///Trait given to a turf that should not be allowed to be terraformed, such as turfs holding ore vents.
 #define TRAIT_NO_TERRAFORM "no_terraform"
 
+///Mobs with these trait do not get italicized/quiet speech when speaking in low pressure
+#define TRAIT_SPEECH_BOOSTER "speech_booster"
+
 /// Given to a mob that can throw to make them not able to throw
 #define TRAIT_NO_THROWING "no_throwing"
 
 ///Trait which allows mobs to parry mining mob projectiles
 #define TRAIT_MINING_PARRYING "mining_parrying"
-
 
 // END TRAIT DEFINES

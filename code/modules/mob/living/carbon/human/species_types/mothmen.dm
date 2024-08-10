@@ -98,6 +98,16 @@
 /datum/species/moth/get_laugh_sound(mob/living/carbon/human/moth)
 	return 'sound/voice/moth/moth_laugh1.ogg'
 
+/datum/species/moth/get_sigh_sound(mob/living/carbon/human/moth)
+	if(moth.physique == FEMALE)
+		return 'sound/voice/human/female_sigh.ogg'
+	return 'sound/voice/human/male_sigh.ogg'
+
+/datum/species/moth/get_sniff_sound(mob/living/carbon/human/moth)
+	if(moth.physique == FEMALE)
+		return 'sound/voice/human/female_sniff.ogg'
+	return 'sound/voice/human/male_sniff.ogg'
+
 /datum/species/moth/get_physical_attributes()
 	return "Moths have large and fluffy wings, which help them navigate the station if gravity is offline by pushing the air around them. \
 		Due to that, it isn't of much use out in space. Their eyes are very sensitive."

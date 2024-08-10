@@ -32,14 +32,50 @@ GLOBAL_LIST_INIT(potentialConfigRandomZlevels, generate_map_list_from_directory(
 			current = D
 	if(!current)
 		current = new
+		current.name = name
 		current.id = id
 		if(delay)
-			current.wait = CONFIG_GET(number/gateway_delay)
+			var/list/waits_by_id = CONFIG_GET(keyed_list/gateway_delays_by_id)
+			var/wait_to_use = !isnull(waits_by_id[id]) ? waits_by_id[id] : CONFIG_GET(number/gateway_delay)
+			current.wait = wait_to_use
 		GLOB.gateway_destinations += current
 	current.target_turfs += get_turf(src)
+	return INITIALIZE_HINT_QDEL
 
 /obj/effect/landmark/awaystart/nodelay
 	delay = FALSE
+
+/obj/effect/landmark/awaystart/beach
+	name = "beach away spawn"
+	id = AWAYSTART_BEACH
+
+/obj/effect/landmark/awaystart/museum
+	name = "buseum away spawn"
+	id = AWAYSTART_MUSEUM
+
+/obj/effect/landmark/awaystart/research
+	name = "research outpost away spawn"
+	id = AWAYSTART_RESEARCH
+
+/obj/effect/landmark/awaystart/caves
+	name = "caves away spawn"
+	id = AWAYSTART_CAVES
+
+/obj/effect/landmark/awaystart/moonoutpost
+	name = "Moon Outpost 19 away spawn"
+	id = AWAYSTART_MOONOUTPOST
+
+/obj/effect/landmark/awaystart/snowcabin
+	name = "snow cabin away spawn"
+	id = AWAYSTART_SNOWCABIN
+
+/obj/effect/landmark/awaystart/snowdin
+	name = "Snowdin away spawn"
+	id = AWAYSTART_SNOWDIN
+
+/obj/effect/landmark/awaystart/underground
+	name = "Underground Outpost 45 away spawn"
+	id = AWAYSTART_UNDERGROUND
 
 /proc/generateMapList(filename)
 	. = list()
