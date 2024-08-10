@@ -331,7 +331,7 @@
 /obj/machinery/power/smes/proc/adjust_charge(charge_adjust)
 	charge += charge_adjust
 
-/// Sets the charge in this SMES, used instead of directly adjusting hte charge value. Mainly for the benefit of the power connector/portable SMES system.
+/// Sets the charge in this SMES, used instead of directly adjusting the charge value. Mainly for the benefit of the power connector/portable SMES system.
 /obj/machinery/power/smes/proc/set_charge(charge_set)
 	charge = charge_set
 

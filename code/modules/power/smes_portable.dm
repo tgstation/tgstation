@@ -92,6 +92,11 @@
 	. = ..()
 	connected_smes?.charge += charge_adjust
 
+// same as above - if we have to set charge, affect the connected SMES bank as well
+/obj/machinery/power/smes/connector/set_charge(charge_set)
+	. = ..()
+	connected_smes?.charge = charge_set
+
 /obj/machinery/power/smes/connector/Destroy()
 	connected_smes?.disconnect_port() // in the unlikely but possible case a SMES is connected and this explodes
 	. = ..()
@@ -234,3 +239,20 @@
 /obj/machinery/power/smesbank/Destroy()
 	disconnect_port()
 	. = ..()
+
+/// Adjusts the charge of the portable SMES. See SMES code.
+/obj/machinery/power/smesbank/proc/adjust_charge(charge_adjust)
+	charge += charge_adjust
+
+/// Sets the charge of the portable SMES. See SMES code.
+/obj/machinery/power/smesbank/proc/set_charge(charge_set)
+	charge = charge_set
+
+/obj/machinery/power/smesbank/emp_act(severity)
+	. = ..()
+	if(. & EMP_PROTECT_SELF)
+		return
+	adjust_charge(-STANDARD_BATTERY_CHARGE/severity) // EMP'd banks double-dip on draining if connected. too bad, i guess
+	if (charge < 0)
+		set_charge(0)
+	update_appearance()
