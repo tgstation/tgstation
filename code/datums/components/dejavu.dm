@@ -16,6 +16,8 @@
 	var/rewinds_remaining
 	/// How long to wait between each rewind
 	var/rewind_interval
+	/// How long to wait between starting to track each rewind
+	var/between_rewinds
 
 	/// The starting value of toxin loss at the beginning of the effect
 	var/tox_loss = 0
@@ -34,14 +36,24 @@
 	/// A list of body parts saved at the beginning of the effect
 	var/list/datum/saved_bodypart/saved_bodyparts
 
-/datum/component/dejavu/Initialize(rewinds = 1, interval = 10 SECONDS)
+/datum/component/dejavu/Initialize(rewinds = 1, interval = 10 SECONDS, between = -1)
 	if(!isatom(parent))
 		return COMPONENT_INCOMPATIBLE
 
-	starting_turf = get_turf(parent)
 	rewinds_remaining = rewinds
 	rewind_interval = interval
+	between_rewinds = between
+	save_values()
 
+	addtimer(CALLBACK(src, rewind_type), rewind_interval)
+
+/datum/component/dejavu/Destroy()
+	starting_turf = null
+	saved_bodyparts = null
+	return ..()
+
+/datum/component/dejavu/proc/save_values()
+	starting_turf = get_turf(parent)
 	if(isliving(parent))
 		var/mob/living/L = parent
 		tox_loss = L.getToxLoss()
@@ -65,13 +77,6 @@
 		integrity = O.get_integrity()
 		rewind_type = PROC_REF(rewind_obj)
 
-	addtimer(CALLBACK(src, rewind_type), rewind_interval)
-
-/datum/component/dejavu/Destroy()
-	starting_turf = null
-	saved_bodyparts = null
-	return ..()
-
 /datum/component/dejavu/proc/rewind()
 	to_chat(parent, span_notice(rewind_message))
 
@@ -84,12 +89,21 @@
 			var/atom/movable/master = parent
 			master.forceMove(starting_turf)
 
-	rewinds_remaining --
-	if(rewinds_remaining || rewinds_remaining < 0)
-		addtimer(CALLBACK(src, rewind_type), rewind_interval)
-	else
+	rewinds_remaining--
+	if(!rewinds_remaining)
 		to_chat(parent, span_notice(no_rewinds_message))
 		qdel(src)
+		return
+
+	if (between_rewinds > 0)
+		addtimer(CALLBACK(src, PROC_REF(save_rewind)), between_rewinds)
+		return
+
+	addtimer(CALLBACK(src, rewind_type), rewind_interval)
+
+/datum/component/dejavu/proc/save_rewind()
+	save_values()
+	addtimer(CALLBACK(src, rewind_type), rewind_interval)
 
 /datum/component/dejavu/proc/rewind_living()
 	var/mob/living/master = parent
@@ -122,5 +136,12 @@
 	no_rewinds_message = "\"Rewind complete. You have arrived at: 10 seconds ago.\""
 
 /datum/component/dejavu/timeline/rewind()
+	playsound(get_turf(parent), 'sound/items/modsuit/rewinder.ogg')
+	. = ..()
+
+/datum/component/dejavu/wizard
+	rewind_message = "Your temporal ward activated, pulling you through spacetime!"
+
+/datum/component/dejavu/wizard/rewind()
 	playsound(get_turf(parent), 'sound/items/modsuit/rewinder.ogg')
 	. = ..()
