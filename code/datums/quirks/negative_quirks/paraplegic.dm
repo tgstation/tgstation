@@ -41,7 +41,7 @@
 	if(amputee)
 		delete_legs(quirk_holder)
 
-/datum/quirk/paraplegic/proc/delete_legs(var/mob/living/carbon/human/human_holder)
+/datum/quirk/paraplegic/proc/delete_legs(mob/living/carbon/human/human_holder)
 	qdel(human_holder.get_item_by_slot(ITEM_SLOT_FEET))
 	qdel(human_holder.get_bodypart(BODY_ZONE_L_LEG))
 	qdel(human_holder.get_bodypart(BODY_ZONE_R_LEG))
