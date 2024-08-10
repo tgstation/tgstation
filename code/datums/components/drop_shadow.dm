@@ -1,5 +1,6 @@
 /// Draws a shadow overlay under the attachee
 /datum/component/drop_shadow
+	dupe_mode = COMPONENT_DUPE_UNIQUE_PASSARGS
 	/// The overlay we are using
 	var/mutable_appearance/shadow
 	/// Extra offset to apply to the shadow
@@ -14,7 +15,7 @@
 	if (!ismovable(parent)) // Only being used for mobs at the moment but it seems reasonably likely that we'll want to put it on some effect some time
 		return COMPONENT_INCOMPATIBLE
 
-	src.shadow_offset = shadow_offset_y
+	shadow_offset = shadow_offset_y
 
 	var/atom/movable/movable_parent = parent
 
@@ -26,6 +27,30 @@
 	)
 	shadow.pixel_x = shadow_offset_x - movable_parent.pixel_x
 	update_shadow_position()
+
+/datum/component/drop_shadow/InheritComponent(icon = 'icons/mob/mob_shadows.dmi', icon_state = SHADOW_MEDIUM, shadow_offset_x = 0, shadow_offset_y = 0)
+	var/changed_appearance = FALSE
+
+	if (shadow.pixel_x != shadow_offset_x)
+		shadow.pixel_x = shadow_offset_x
+		changed_appearance = TRUE
+
+	if (shadow.icon != icon)
+		shadow.icon = icon
+		changed_appearance = TRUE
+
+	if (shadow.icon_state != icon_state)
+		shadow.icon_state = icon_state
+		changed_appearance = TRUE
+
+	if (shadow_offset_y != shadow_offset)
+		shadow_offset = shadow_offset_y
+		update_shadow_position() // Calling this will also update the overlays so we can return here and safely apply any of the above changes too
+		return
+
+	if (changed_appearance && !HAS_TRAIT(parent, TRAIT_SHADOWLESS)) // If we changed position this will get called anyway so don't do it twice
+		var/atom/atom_parent = parent
+		atom_parent.update_appearance(UPDATE_OVERLAYS)
 
 /datum/component/drop_shadow/RegisterWithParent()
 	RegisterSignal(parent, COMSIG_ATOM_UPDATE_OVERLAYS, PROC_REF(on_update_overlays))

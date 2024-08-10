@@ -101,12 +101,15 @@
 	log_mob_tag("TAG: [tag] CREATED: [key_name(src)] \[[type]\]")
 
 /mob/proc/create_shadow()
-	if (shadow_type != SHADOW_NONE)
-		AddComponent(/datum/component/drop_shadow, \
-			icon_state = shadow_type, \
-			shadow_offset_x = shadow_offset_x, \
-			shadow_offset_y = shadow_offset_y, \
-		)
+	if (shadow_type == SHADOW_NONE)
+		qdel(GetComponent(/datum/component/drop_shadow))
+		return
+
+	AddComponent(/datum/component/drop_shadow, \
+		icon_state = shadow_type, \
+		shadow_offset_x = shadow_offset_x, \
+		shadow_offset_y = shadow_offset_y, \
+	)
 
 /**
  * Generate the tag for this mob
