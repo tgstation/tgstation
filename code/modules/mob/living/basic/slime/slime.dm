@@ -201,7 +201,7 @@
 	if (stat == DEAD)
 		return
 	if (current_mood && current_mood != SLIME_MOOD_NONE)
-		add_overlay("aslime-[current_mood]")
+		. += "aslime-[current_mood]"
 
 /mob/living/basic/slime/get_status_tab_items()
 	. = ..()

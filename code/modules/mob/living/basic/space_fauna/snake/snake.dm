@@ -1,6 +1,5 @@
 
 /mob/living/basic/snake
-
 	SET_BASE_VISUAL_PIXEL(0, 7)
 	name = "snake"
 	desc = "A slithery snake. These legless reptiles are the bane of mice and adventurers alike."
