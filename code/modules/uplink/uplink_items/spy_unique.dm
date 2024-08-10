@@ -87,7 +87,7 @@
 /datum/uplink_item/spy_unique/ansem_pistol
 	name = "Ansem Pistol"
 	desc = "A pistol that's really good at making people sleep."
-	item = /obj/item/gun/ballistic/automatic/pistol/clandestine
+	item = /obj/item/gun/ballistic/automatic/pistol/clandestine/unrestricted
 	cost = SPY_UPPER_COST_THRESHOLD
 	uplink_item_flags = SYNDIE_ILLEGAL_TECH | SYNDIE_TRIPS_CONTRABAND
 
