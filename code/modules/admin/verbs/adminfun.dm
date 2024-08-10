@@ -153,7 +153,7 @@ ADMIN_VERB(polymorph_all, R_ADMIN, "Polymorph All", "Applies the effects of the 
 
 	message_admins("Mass polymorph started by [who_did_it] is complete.")
 
-ADMIN_VERB_AND_CONTEXT_MENU(admin_smite, R_ADMIN|R_FUN, "Smite", "Smite a player with divine power.", ADMIN_CATEGORY_FUN)
+ADMIN_VERB(admin_smite, R_ADMIN|R_FUN, "Smite", "Smite a player with divine power.", ADMIN_CATEGORY_FUN)
 	var/list/victims = list()
 	for (var/mob/living/victim in world)
 		victims += victim
