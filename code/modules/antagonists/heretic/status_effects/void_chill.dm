@@ -18,14 +18,14 @@
 
 /datum/status_effect/void_chill/on_creation(mob/living/new_owner, new_stacks, ...)
 	. = ..()
-	if(issilicon(new_owner))
-		return FALSE
 	RegisterSignal(owner, COMSIG_ATOM_UPDATE_OVERLAYS, PROC_REF(update_stacks_overlay))
 	set_stacks(new_stacks)
+	owner.add_atom_colour(COLOR_BLUE_LIGHT, TEMPORARY_COLOUR_PRIORITY)
 	owner.update_icon(UPDATE_OVERLAYS)
 
 /datum/status_effect/void_chill/on_apply()
-	owner.add_atom_colour(COLOR_BLUE_LIGHT, TEMPORARY_COLOUR_PRIORITY)
+	if(issilicon(owner))
+		return FALSE
 	return TRUE
 
 /datum/status_effect/void_chill/Destroy()

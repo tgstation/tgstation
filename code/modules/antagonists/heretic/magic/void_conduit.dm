@@ -1,8 +1,7 @@
 /datum/action/cooldown/spell/conjure/void_conduit
 	name = "Void Conduit"
-	desc = "Opens a gate to the Void; it quickly lowers the temperature and pressure of the room while siphoning all gasses. \
-		The gate releases an intermittent pulse that damages windows and airlocks, \
-		applies a stack of void chill to non heretics, \
+	desc = "Opens a gate to the Void; it releases an intermittent pulse that damages windows and airlocks, \
+		while afflicting Heathens with  void chill. \
 		Heretics receive are granted the cold resistance and low pressure resistance."
 	background_icon_state = "bg_heretic"
 	overlay_icon_state = "bg_heretic_border"
@@ -87,9 +86,9 @@
 		else
 			affected_mob.apply_status_effect(/datum/status_effect/void_chill, 1)
 	for(var/obj/machinery/door/affected_door in turfs)
-		affected_door.take_damage(rand(30, 50))
+		affected_door.take_damage(rand(15, 30))
 	for(var/obj/structure/door_assembly/affected_assembly in turfs)
-		affected_assembly.take_damage(rand(30, 50))
+		affected_assembly.take_damage(rand(15, 30))
 	for(var/obj/structure/window/affected_window in turfs)
 		affected_window.take_damage(rand(10, 20))
 	for(var/obj/structure/grille/affected_grille in turfs)
