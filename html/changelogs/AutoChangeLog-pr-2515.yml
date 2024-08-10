@@ -1,7 +1,0 @@
-author: "Uristthedorf"
-delete-after: True
-changes:
-  - rscadd: "Experimental cloner can become corrupted due to emag, event or EMP, causing it to produce evil clones that have a randomized objective."
-  - rscadd: "Science circuit imprinter can make clonepods now."
-  - rscadd: "New geneticist traitor kit to start a clone army."
-  - rscadd: "Experimental cloners and other cloning equipment can be printed from science. (So a geneticist with experimental cloner doesn't blare alarm bells when no one remembers cargo ordering a cloner crate.)"

@@ -1,6 +1,0 @@
-author: "ven1883"
-delete-after: True
-changes:
-  - rscadd: "Ports Tribal Claw, a lizard exclusive martial arts,"
-  - bugfix: "Fixes a bug in species.dm preventing species exclusive traitor items from appearing,"
-  - code_imp: "Adds a Martial Arts module for coders."

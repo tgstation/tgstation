@@ -88,3 +88,17 @@
       it on!)
   - bugfix: Flour bag now displays correct recipes for dough and cake batter
   - bugfix: Flushers no longer DELETE YOU if the trunk under it is broken
+2024-08-10:
+  Uristthedorf:
+  - rscadd: Experimental cloner can become corrupted due to emag, event or EMP, causing
+      it to produce evil clones that have a randomized objective.
+  - rscadd: Science circuit imprinter can make clonepods now.
+  - rscadd: New geneticist traitor kit to start a clone army.
+  - rscadd: Experimental cloners and other cloning equipment can be printed from science.
+      (So a geneticist with experimental cloner doesn't blare alarm bells when no
+      one remembers cargo ordering a cloner crate.)
+  ven1883:
+  - rscadd: Ports Tribal Claw, a lizard exclusive martial arts,
+  - bugfix: Fixes a bug in species.dm preventing species exclusive traitor items from
+      appearing,
+  - code_imp: Adds a Martial Arts module for coders.
