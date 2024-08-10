@@ -503,19 +503,19 @@
 	deactivate_message = span_notice("You feel your food-based mind palace crumbling...")
 
 /obj/item/skillchip/musical
-	name = "\improper Old Copy of Space Station 13: The Musical"
-	desc = "An old copy of Space Station 13: The Musical, \
+	name = "\improper Old Copy of \"Space Station 13: The Musical\""
+	desc = "An old copy of \"Space Station 13: The Musical\", \
 		ran on the station's 100th anniversary...Or maybe it was the 200th?"
 	skill_name = "Memory of a Musical"
-	skill_description = "Allows you to hit that high note."
+	skill_description = "Allows you to hit that high note, like those that came a century before us."
 	skill_icon = FA_ICON_MUSIC
 	activate_message = span_notice("You feel like you could \u2669 sing a soooong! \u266B")
 	deactivate_message = span_notice("The musical fades from your mind, leaving you with a sense of nostalgia.")
-	custom_price = PAYCHECK_CREW * 4
+	custom_premium_price = PAYCHECK_CREW * 4
 
 /obj/item/skillchip/musical/Initialize(mapload, is_removable)
 	. = ..()
-	name = replacetext(name, "Old", round(CURRENT_STATION_YEAR - 100, 5))
+	name = replacetext(name, "Old", round(CURRENT_STATION_YEAR - pick(50, 100, 150, 200, 250), 5))
 
 /obj/item/skillchip/musical/on_activate(mob/living/carbon/user, silent = FALSE)
 	. = ..()
@@ -579,16 +579,17 @@
 /obj/item/skillchip/musical/examine_more(mob/user)
 	. = ..()
 	var/list/songs = list()
+	songs += "&bull; \"The Ballad of Space Station 13\""
+	songs += "&bull; \"The Captain's Call\""
+	songs += "&bull; \"A Mime's Lament\""
 	songs += "&bull; \"Banned from Cargo\""
 	songs += "&bull; \"Botany Blues\""
-	songs += "&bull; \"Clown Song\" and \"A Mime's Lament\""
+	songs += "&bull; \"Clown Song\""
 	songs += "&bull; \"Elegy to an Engineer\""
 	songs += "&bull; \"Medical Malpractitioner\""
 	songs += "&bull; \"Security Strike\""
 	songs += "&bull; \"Send for the Shuttle\""
-	songs += "&bull; \"The Ballad of Space Station 13\""
-	songs += "&bull; \"The Captain's Call\""
-	songs += "&bull;  And one scratched out..."
+	songs += "&bull;  And one song scratched out..."
 
 	. += span_notice("<i>On the back of the chip, you see a list of songs:</i>")
 	. += span_smallnotice("<i>[jointext(songs, "<br>")]</i>")
