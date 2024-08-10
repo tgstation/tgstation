@@ -1,3 +1,6 @@
+/// Magic number to add to offset when lying down
+#define LYING_SHADOW_OFFSET 4
+
 /// Draws a shadow overlay under the attachee
 /datum/component/drop_shadow
 	/// The overlay we are using
@@ -5,7 +8,7 @@
 	/// Extra offset to apply to the shadow
 	var/shadow_offset
 	/// Any temporary extra offsets we are tracking
-	var/additional_offset
+	var/additional_offset = 0
 	/// Timer to make sure
 	var/unhide_shadow_timer
 
@@ -46,19 +49,21 @@
 		COMSIG_ATOM_FULTON_LANDED,
 		COMSIG_ATOM_BEGAN_ORBITING,
 		COMSIG_ATOM_STOPPED_ORBITING,
+		COMSIG_LIVING_POST_UPDATE_TRANSFORM,
 		COMSIG_MOB_BUCKLED,
 		COMSIG_MOB_UNBUCKLED,
 	))
 
 /// Repositions the shadow to try and stay under our mob should be at under current conditions
 /datum/component/drop_shadow/proc/update_shadow_position()
-
 	var/lying_offset = 0
 	if (isliving(parent))
 		var/mob/living/living_parent = parent
-		lying_offset = (living_parent.rotate_on_lying && living_parent.body_position != STANDING_UP) ? living_parent.body_position_pixel_y_offset - 4 : 0
+		if (living_parent.rotate_on_lying && living_parent.body_position != STANDING_UP)
+			lying_offset = living_parent.body_position_pixel_y_offset - LYING_SHADOW_OFFSET
+		shadow.transform = matrix() * living_parent.current_size
 
-	shadow.pixel_y = -DEPTH_OFFSET - lying_offset + shadow_offset + additional_offset
+	shadow.pixel_y = -DEPTH_OFFSET - additional_offset - lying_offset + shadow_offset
 	var/atom/atom_parent = parent
 	atom_parent.update_appearance(UPDATE_OVERLAYS)
 
@@ -68,8 +73,9 @@
 	overlays += shadow
 
 /// Called when a mob is resized or rotated
-/datum/component/drop_shadow/proc/on_transform_updated(mob/living/source, previous_size, lying_angle, is_opposite_angle, animate_time)
+/datum/component/drop_shadow/proc/on_transform_updated(mob/living/source, previous_size, lying_angle, is_opposite_angle, final_pixel_y, animate_time)
 	SIGNAL_HANDLER
+	additional_offset = final_pixel_y
 	update_shadow_position()
 	if (animate_time > 0)
 		temporarily_hide_shadow(animate_time)
@@ -95,3 +101,5 @@
 		return
 	hide_shadow()
 	unhide_shadow_timer = addtimer(CALLBACK(src, PROC_REF(show_shadow)), show_in, TIMER_STOPPABLE | TIMER_UNIQUE | TIMER_DELETE_ME)
+
+#undef LYING_SHADOW_OFFSET

@@ -64,4 +64,4 @@
 	var/animate_time = is_opposite_angle ? 0 : UPDATE_TRANSFORM_ANIMATION_TIME
 	animate(src, transform = ntransform, time = animate_time, pixel_y = final_pixel_y, dir = final_dir, easing = (EASE_IN|EASE_OUT))
 
-	SEND_SIGNAL(src, COMSIG_LIVING_POST_UPDATE_TRANSFORM, resize, lying_angle, is_opposite_angle, animate_time)
+	SEND_SIGNAL(src, COMSIG_LIVING_POST_UPDATE_TRANSFORM, resize, lying_angle, is_opposite_angle, final_pixel_y, animate_time)
