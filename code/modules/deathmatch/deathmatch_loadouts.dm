@@ -609,7 +609,7 @@
 	uniform = /obj/item/clothing/under/syndicate/tacticool
 	back = /obj/item/mod/control/pre_equipped/nuclear
 	r_hand = /obj/item/gun/ballistic/shotgun/bulldog/unrestricted
-	belt = /obj/item/gun/ballistic/automatic/pistol/clandestine
+	belt = /obj/item/gun/ballistic/automatic/pistol/clandestine/unrestricted
 	r_pocket = /obj/item/reagent_containers/hypospray/medipen/stimulants
 	l_pocket = /obj/item/grenade/syndieminibomb
 	implants = list(/obj/item/implant/explosive)
