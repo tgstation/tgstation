@@ -94,7 +94,7 @@
 	anchored = TRUE
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 	icon = 'icons/effects/atmos/fire.dmi'
-	icon_state = "1"
+	icon_state = "light"
 	layer = GASFIRE_LAYER
 	blend_mode = BLEND_ADD
 	light_system = OVERLAY_LIGHT
@@ -212,7 +212,7 @@
 	cut_overlays()
 
 	if(!(smoothing_junction & NORTH))
-		var/mutable_appearance/frill = mutable_appearance('icons/effects/atmos/fire.dmi', "[icon_state]_frill")
+		var/mutable_appearance/frill = mutable_appearance('icons/effects/atmos/fire.dmi', "[fire_stage]_frill")
 		frill.pixel_z = 32
 		add_overlay(frill)
 	var/heat_r = heat2colour_r(temperature)
@@ -344,9 +344,8 @@
 	if(fire_stage == stage)
 		return
 	fire_stage = stage
-	icon_state = stage
+	icon_state = "[stage]-[smoothing_junction]"
 	dir = pick(GLOB.cardinals)
-	update_color()
 
 /obj/effect/hotspot/Destroy()
 	SSair.hotspots -= src

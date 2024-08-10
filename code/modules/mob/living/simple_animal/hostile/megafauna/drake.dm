@@ -237,7 +237,7 @@
 	desc = "An ash drakes true flame."
 	name = "Fire Barrier"
 	icon = 'icons/effects/atmos/fire.dmi'
-	icon_state = "1"
+	icon_state = "light"
 	anchored = TRUE
 	opacity = FALSE
 	density = TRUE

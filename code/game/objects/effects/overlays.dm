@@ -28,7 +28,7 @@
 	name = "thermite"
 	desc = "Looks hot."
 	icon = 'icons/effects/atmos/fire.dmi'
-	icon_state = "2"
+	icon_state = "medium"
 	anchored = TRUE
 	layer = FLY_LAYER
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
