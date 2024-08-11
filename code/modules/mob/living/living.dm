@@ -1260,7 +1260,7 @@
 				var/matrix/flipped_matrix = transform
 				flipped_matrix.b = -flipped_matrix.b
 				flipped_matrix.e = -flipped_matrix.e
-				animate(src, transform = flipped_matrix, pixel_y = pixel_y+4, time = 0.5 SECONDS, easing = EASE_OUT)
+				animate(src, transform = flipped_matrix, pixel_y = pixel_y+4, time = 0.5 SECONDS, easing = EASE_OUT, flags = ANIMATION_PARALLEL)
 				base_pixel_y += 4
 		if(NEGATIVE_GRAVITY + 0.01 to 0)
 			if(!istype(gravity_alert, /atom/movable/screen/alert/weightless))
@@ -1285,7 +1285,7 @@
 		var/matrix/flipped_matrix = transform
 		flipped_matrix.b = -flipped_matrix.b
 		flipped_matrix.e = -flipped_matrix.e
-		animate(src, transform = flipped_matrix, pixel_y = pixel_y-4, time = 0.5 SECONDS, easing = EASE_OUT)
+		animate(src, transform = flipped_matrix, pixel_y = pixel_y-4, time = 0.5 SECONDS, easing = EASE_OUT, flags = ANIMATION_PARALLEL)
 		base_pixel_y -= 4
 
 /mob/living/singularity_pull(S, current_size)
@@ -1973,7 +1973,8 @@ GLOBAL_LIST_EMPTY(fire_appearances)
 			updatehealth()
 		if(NAMEOF(src, lighting_cutoff))
 			sync_lighting_plane_cutoff()
-
+		if(NAMEOF(src, shadow_type), NAMEOF(src, shadow_offset_x), NAMEOF(src, shadow_offset_y))
+			create_shadow()
 
 /mob/living/vv_get_header()
 	. = ..()

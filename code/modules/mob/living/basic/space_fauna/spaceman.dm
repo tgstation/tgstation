@@ -27,6 +27,7 @@
 	obj_damage = 0
 	environment_smash = ENVIRONMENT_SMASH_NONE
 	ai_controller = /datum/ai_controller/basic_controller/spaceman
+	shadow_type = SHADOW_NONE
 
 /mob/living/basic/spaceman/Initialize(mapload)
 	. = ..()
