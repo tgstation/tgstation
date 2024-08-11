@@ -680,6 +680,8 @@ GLOBAL_LIST_INIT(cardboard_recipes, list ( \
 	merge_type = /obj/item/stack/sheet/cardboard
 	grind_results = list(/datum/reagent/cellulose = 10)
 	material_type = /datum/material/cardboard
+	pickup_sound = 'sound/items/cardboard_pick_up.ogg'
+	drop_sound = 'sound/items/cardboard_drop.ogg'
 
 /obj/item/stack/sheet/cardboard/Initialize(mapload, new_amount, merge, list/mat_override, mat_amt)
 	. = ..()
@@ -938,6 +940,8 @@ new /datum/stack_recipe("paper frame door", /obj/structure/mineral_door/paperfra
 	merge_type = /obj/item/stack/sheet/sandblock
 	material_type = /datum/material/sand
 	material_modifier = 1
+	drop_sound = SFX_STONE_DROP
+	pickup_sound = SFX_STONE_PICKUP
 
 /obj/item/stack/sheet/sandblock/fifty
 	amount = 50

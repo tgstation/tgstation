@@ -45,6 +45,7 @@
 	catalog_description = "Beach dimension (Fishing portal generator)"
 	radial_name = "Beach"
 	radial_state = "palm_beach"
+	overlay_state = "portal_beach"
 
 /datum/fish_source/portal/chasm
 	background = "background_lavaland"
@@ -172,15 +173,10 @@
 			weighted_traits[trait.type] = round(trait.inheritability**2/100)
 
 	var/obj/item/fish/caught_fish = new reward_path(spawn_location, FALSE)
-	var/list/fixed_traits = list()
-	for(var/trait_type in caught_fish.fish_traits)
-		var/datum/fish_trait/trait = GLOB.fish_traits[trait_type]
-		if(caught_fish.type in trait.guaranteed_inheritance_types)
-			fixed_traits += trait_type
 	var/list/new_traits = list()
 	for(var/iteration in rand(1, 4))
 		new_traits |= pick_weight(weighted_traits)
-	caught_fish.inherit_traits(new_traits, fixed_traits = fixed_traits)
+	caught_fish.inherit_traits(new_traits)
 	caught_fish.randomize_size_and_weight(deviation = 0.3)
 	caught_fish.progenitors = full_capitalize(caught_fish.name)
 	return caught_fish
@@ -244,14 +240,15 @@
 	catalog_description = "Liquid plasma vents"
 	fish_table = list(
 		FISHING_DUD = 5,
-		/obj/item/fish/chasm_crab/ice = 15,
-		/obj/item/fish/lavaloop/plasma_river = 15,
-		/obj/item/coin/plasma = 3,
-		/obj/item/stack/ore/plasma = 3,
+		/obj/item/fish/chasm_crab/ice = 30,
+		/obj/item/fish/lavaloop/plasma_river = 30,
+		/obj/item/coin/plasma = 6,
+		/obj/item/stack/ore/plasma = 6,
+		/obj/effect/decal/remains/plasma = 2,
+		/obj/item/stack/sheet/mineral/runite = 2,
+		/obj/item/stack/sheet/mineral/adamantine = 2,
 		/mob/living/basic/mining/lobstrosity = 1,
-		/obj/effect/decal/remains/plasma = 1,
-		/obj/item/stack/sheet/mineral/runite = 1,
-		/obj/item/stack/sheet/mineral/adamantine = 1,
+		/mob/living/basic/mining/lobstrosity/juvenile = 1,
 	)
 	fish_counts = list(
 		/obj/item/stack/sheet/mineral/adamantine = 3,
