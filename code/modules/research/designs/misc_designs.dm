@@ -473,7 +473,7 @@
 
 /datum/design/plasticducky
 	name = "Rubber Ducky"
-	desc = "The classic Nanotrasen design for competitively priced bath based duck toys. No need for fancy Waffle co. rubber, buy Plastic Ducks today!"
+	desc = "The classic Nanotrasen design for competitively priced bath based duck toys. No need for fancy Waffle Corp. rubber, buy Plastic Ducks today!"
 	id = "plasticducky"
 	build_type = PROTOLATHE | AWAY_LATHE
 	materials = list(/datum/material/plastic =HALF_SHEET_MATERIAL_AMOUNT)
