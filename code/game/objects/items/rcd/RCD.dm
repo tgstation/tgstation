@@ -306,6 +306,8 @@
 		data["root_categories"] += category
 	data["selected_root"] = root_category
 
+	var/datum/asset/spritesheet/rcd/rcd_sheet = get_asset_datum(/datum/asset/spritesheet/rcd)
+
 	data["categories"] = list()
 	for(var/sub_category as anything in GLOB.rcd_designs[root_category])
 		var/list/target_category =  GLOB.rcd_designs[root_category][sub_category]
@@ -323,8 +325,8 @@
 			var/atom/movable/design_path = design[RCD_DESIGN_PATH]
 
 			var/design_name = RCD_SPRITESHEET_PATH_KEY(design_path)
-
-			designs += list(list("title" = design_name, "icon" = sanitize_css_class_name(design_name)))
+			var/icon_id = rcd_sheet.icon_size_id(sanitize_css_class_name(design_name))
+			designs += list(list("title" = design_name, "icon" = sanitize_css_class_name(design_name), "icon_id" = icon_id))
 		data["categories"] += list(list("cat_name" = sub_category, "designs" = designs))
 
 	return data

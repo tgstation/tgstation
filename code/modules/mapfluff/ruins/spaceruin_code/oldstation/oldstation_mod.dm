@@ -1,4 +1,5 @@
 /obj/machinery/mod_installer
+	SET_BASE_VISUAL_PIXEL(0, DEPTH_OFFSET)
 	name = "modular outerwear device installator"
 	desc = "An ancient machine that mounts a MOD unit onto the occupant."
 	icon = 'icons/obj/machines/mod_installer.dmi'

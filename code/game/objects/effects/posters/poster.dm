@@ -118,6 +118,7 @@
 		desc = "A large piece of space-resistant printed paper. [desc]"
 
 	AddElement(/datum/element/beauty, 300)
+	AddComponent(/datum/component/examine_balloon, pixel_y_offset = 40, pixel_y_offset_arrow = 12)
 
 /// Adds contextual screentips
 /obj/structure/sign/poster/add_context(atom/source, list/context, obj/item/held_item, mob/user)

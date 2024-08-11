@@ -74,6 +74,7 @@ WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/machinery/newscaster)
 	GLOB.allbountyboards += src
 	update_appearance()
 	find_and_hang_on_wall()
+	AddComponent(/datum/component/examine_balloon, pixel_y_offset = 42)
 
 /obj/machinery/newscaster/Destroy()
 	GLOB.allCasters -= src

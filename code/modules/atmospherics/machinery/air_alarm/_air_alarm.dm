@@ -88,6 +88,7 @@ WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/machinery/airalarm)
 /obj/machinery/airalarm/Initialize(mapload, ndir, nbuild)
 	. = ..()
 	set_wires(new /datum/wires/airalarm(src))
+
 	if(ndir)
 		setDir(ndir)
 
@@ -123,6 +124,7 @@ WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/machinery/airalarm)
 		/obj/item/circuit_component/air_alarm_scrubbers,
 		/obj/item/circuit_component/air_alarm_vents
 	))
+	AddComponent(/datum/component/examine_balloon)
 
 	GLOB.air_alarms += src
 	update_appearance()

@@ -60,7 +60,7 @@
 		balloon_alert(user, "cell already installed!")
 		return ITEM_INTERACT_BLOCKING
 	if(machine_stat & MAINT)
-		balloon_alert(user, "no connector for a cell!")
+		balloon_alert(user, "no connector for a cell!") //We are stuck here
 		return ITEM_INTERACT_BLOCKING
 	if(!user.transferItemToLoc(new_cell, src))
 		return ITEM_INTERACT_BLOCKING
@@ -304,7 +304,7 @@
 	. = TRUE
 
 	//You can only touch the electronics if the panel and tray are open, and the terminal is yoten
-	if(!opened || !panel_open || terminal)
+	if((!opened || !panel_open || terminal) && !(machine_stat & MAINT))
 		if(obj_flags & EMAGGED)
 			balloon_alert(user, "interface is broken!")
 			return
