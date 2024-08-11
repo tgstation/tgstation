@@ -51,11 +51,12 @@
 
 ///Clean up on the mobs seat etc when its deleted (Either by murder or because it left)
 /mob/living/basic/robot_customer/Destroy()
-	var/datum/venue/attending_venue = ai_controller.blackboard[BB_CUSTOMER_ATTENDING_VENUE]
-	var/obj/structure/holosign/robot_seat/our_seat = ai_controller.blackboard[BB_CUSTOMER_MY_SEAT]
-	attending_venue.current_visitors -= src
-	if(attending_venue.linked_seats[our_seat])
-		attending_venue.linked_seats[our_seat] = null
+	var/datum/venue/attending_venue = ai_controller?.blackboard[BB_CUSTOMER_ATTENDING_VENUE]
+	var/obj/structure/holosign/robot_seat/our_seat = ai_controller?.blackboard[BB_CUSTOMER_MY_SEAT]
+	if (!isnull(attending_venue))
+		attending_venue.current_visitors -= src
+		if(attending_venue.linked_seats[our_seat])
+			attending_venue.linked_seats[our_seat] = null
 	QDEL_NULL(hud_to_show_on_hover)
 	return ..()
 
