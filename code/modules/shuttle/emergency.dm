@@ -812,7 +812,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/item/storage/pod, 32)
 	atom_storage.set_holdable(list(
 		/obj/item/clothing/head/helmet/space/fragile,
 		/obj/item/clothing/suit/space/fragile,
-		))
+	))
 
 /obj/item/storage/box/emergency_spacesuit/PopulateContents()
 	new /obj/item/clothing/head/helmet/space/fragile(src)
