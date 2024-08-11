@@ -182,8 +182,6 @@
 			blueprint = design
 			blueprint_changed = TRUE
 
-			playsound(src, 'sound/effects/pop.ogg', 50, vary = FALSE)
-
 	return TRUE
 
 
