@@ -33,15 +33,14 @@
 )
 	var/datum/customer_data/customer_info = SSrestaurant.all_customers[customer_data]
 	ai_controller = customer_info.ai_controller_used
+	ai_controller.set_blackboard_key(BB_CUSTOMER_CUSTOMERINFO, customer_info)
+	ai_controller.set_blackboard_key(BB_CUSTOMER_ATTENDING_VENUE, attending_venue)
+	ai_controller.set_blackboard_key(BB_CUSTOMER_PATIENCE, customer_info.total_patience)
 
 	. = ..()
 
 	add_traits(list(TRAIT_NOMOBSWAP, TRAIT_NO_TELEPORT, TRAIT_STRONG_GRABBER), INNATE_TRAIT) // never suffer a bitch to fuck with you
 	AddElement(/datum/element/footstep, FOOTSTEP_OBJ_ROBOT, 1, -6, sound_vary = TRUE)
-
-	ai_controller.set_blackboard_key(BB_CUSTOMER_CUSTOMERINFO, customer_info)
-	ai_controller.set_blackboard_key(BB_CUSTOMER_ATTENDING_VENUE, attending_venue)
-	ai_controller.set_blackboard_key(BB_CUSTOMER_PATIENCE, customer_info.total_patience)
 
 	icon = customer_info.base_icon
 	icon_state = customer_info.base_icon_state
@@ -76,6 +75,8 @@
 	. = ..()
 
 	var/datum/customer_data/customer_info = ai_controller.blackboard[BB_CUSTOMER_CUSTOMERINFO]
+	if (isnull(customer_info))
+		return
 
 	var/new_underlays = customer_info.get_underlays(src)
 	if (new_underlays)
