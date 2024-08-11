@@ -190,7 +190,7 @@
 
 	///Decides how to handle clicks on turfs
 	var/turf_click_type = TURF_CLICK_FLAT
-	
+
 	var/interaction_range = 0 //how far a mob has to be to interact with something without caring about obsctruction, defaulted to 0 tiles
 
 	///the icon currently used for the typing indicator's bubble
@@ -200,3 +200,10 @@
 
 	/// A ref of the area we're taking our ambient loop from.
 	var/area/ambience_tracked_area
+
+	/// What kind of underlay shadow do we use?
+	var/shadow_type = SHADOW_MEDIUM
+	/// Additional horizontal offset to apply to shadow underlay
+	var/shadow_offset_x = 0
+	/// Additional vertical offset to apply to shadow underlay
+	var/shadow_offset_y = 0

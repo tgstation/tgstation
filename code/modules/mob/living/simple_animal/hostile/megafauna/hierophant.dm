@@ -72,6 +72,7 @@ Difficulty: Hard
 							   /datum/action/innate/megafauna_attack/cross_blasts,
 							   /datum/action/innate/megafauna_attack/blink_spam)
 
+	shadow_type = SHADOW_MEDIUM
 	var/burst_range = 3 //range on burst aoe
 	var/beam_range = 5 //range on cross blast beams
 	var/chaser_speed = 3 //how fast chasers are currently
