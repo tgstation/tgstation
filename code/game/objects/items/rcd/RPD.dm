@@ -362,6 +362,7 @@ GLOBAL_LIST_INIT(transit_tube_recipes, list(
 
 /obj/item/pipe_dispenser/ui_act(action, params)
 	. = ..()
+	playsound(src, SFX_TOOL_SWITCH, 30, TRUE)
 	if(.)
 		return
 
