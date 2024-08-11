@@ -63,8 +63,9 @@
 		RegisterSignal(parent, COMSIG_MOB_BUCKLED, PROC_REF(hide_shadow))
 		RegisterSignal(parent, COMSIG_MOB_UNBUCKLED, PROC_REF(show_shadow))
 
-	var/atom/atom_parent = parent
-	atom_parent.update_appearance(UPDATE_OVERLAYS)
+	if (!HAS_TRAIT(parent, TRAIT_SHADOWLESS))
+		var/atom/atom_parent = parent
+		atom_parent.update_appearance(UPDATE_OVERLAYS)
 
 /datum/component/drop_shadow/UnregisterFromParent()
 	UnregisterSignal(parent, list(
@@ -90,8 +91,10 @@
 		shadow.transform = matrix() * living_parent.current_size
 
 	shadow.pixel_y = -DEPTH_OFFSET - additional_offset - lying_offset + shadow_offset
-	var/atom/atom_parent = parent
-	atom_parent.update_appearance(UPDATE_OVERLAYS)
+
+	if (!HAS_TRAIT(parent, TRAIT_SHADOWLESS))
+		var/atom/atom_parent = parent
+		atom_parent.update_appearance(UPDATE_OVERLAYS)
 
 /// Handles actually displaying it
 /datum/component/drop_shadow/proc/on_update_overlays(atom/source, list/overlays)
@@ -117,17 +120,19 @@
 /datum/component/drop_shadow/proc/show_shadow()
 	SIGNAL_HANDLER
 	shadow.alpha = 255
-	var/atom/atom_parent = parent
-	atom_parent.update_appearance(UPDATE_OVERLAYS)
 	deltimer(unhide_shadow_timer)
+	if (!HAS_TRAIT(parent, TRAIT_SHADOWLESS))
+		var/atom/atom_parent = parent
+		atom_parent.update_appearance(UPDATE_OVERLAYS)
 
 /// Make the shadow invisible
 /datum/component/drop_shadow/proc/hide_shadow()
 	SIGNAL_HANDLER
 	shadow.alpha = 0
-	var/atom/atom_parent = parent
-	atom_parent.update_appearance(UPDATE_OVERLAYS)
 	deltimer(unhide_shadow_timer)
+	if (!HAS_TRAIT(parent, TRAIT_SHADOWLESS))
+		var/atom/atom_parent = parent
+		atom_parent.update_appearance(UPDATE_OVERLAYS)
 
 /// Hide shadow then display it again after a delay
 /datum/component/drop_shadow/proc/temporarily_hide_shadow(show_in)
