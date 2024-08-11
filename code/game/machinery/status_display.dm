@@ -79,6 +79,7 @@ GLOBAL_DATUM_INIT(status_font, /datum/font, new /datum/font/tiny_unicode/size_12
 	. = ..()
 	find_and_hang_on_wall()
 	update_appearance()
+	AddComponent(/datum/component/examine_balloon, pixel_y_offset = 40)
 
 /obj/machinery/status_display/setDir(newdir)
 	. = ..()

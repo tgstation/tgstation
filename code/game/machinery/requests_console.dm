@@ -128,6 +128,7 @@ GLOBAL_LIST_EMPTY(req_console_ckey_departments)
 	radio = new /obj/item/radio(src)
 	radio.set_listening(FALSE)
 	find_and_hang_on_wall()
+	AddComponent(/datum/component/examine_balloon)
 
 /obj/machinery/requests_console/Destroy()
 	QDEL_NULL(radio)

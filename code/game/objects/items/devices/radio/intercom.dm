@@ -42,6 +42,7 @@
 	if(!unscrewed)
 		find_and_hang_on_wall(directional = TRUE, \
 			custom_drop_callback = CALLBACK(src, PROC_REF(knock_down)))
+		AddComponent(/datum/component/examine_balloon, pixel_y_offset = 36)
 
 /obj/item/radio/intercom/Destroy()
 	. = ..()

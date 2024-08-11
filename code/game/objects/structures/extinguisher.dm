@@ -21,6 +21,7 @@ WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/structure/extinguisher_cabinet)
 	update_appearance(UPDATE_ICON)
 	register_context()
 	find_and_hang_on_wall()
+	AddComponent(/datum/component/examine_balloon, pixel_y_offset = 36)
 
 /obj/structure/extinguisher_cabinet/add_context(atom/source, list/context, obj/item/held_item, mob/user)
 	. = ..()
