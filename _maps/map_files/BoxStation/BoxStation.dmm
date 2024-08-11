@@ -4102,7 +4102,7 @@
 /area/station/maintenance/department/engine/atmos)
 "bsx" = (
 /obj/effect/turf_decal/tile/brown/fourcorners,
-/obj/structure/window/reinforced/tinted,
+/obj/structure/window/reinforced/tinted/spawner/directional/south,
 /obj/structure/toilet{
 	dir = 8
 	},
@@ -5870,12 +5870,8 @@
 /turf/open/floor/grass,
 /area/station/command/bridge)
 "bXc" = (
-/obj/structure/window/reinforced{
-	dir = 8
-	},
-/obj/structure/window/reinforced{
-	dir = 4
-	},
+/obj/structure/window/reinforced/spawner/directional/west,
+/obj/structure/window/reinforced/spawner/directional/east,
 /obj/structure/flora/bush/leafy,
 /obj/structure/flora/bush/fullgrass/style_random,
 /obj/structure/flora/bush/flowers_br/style_random,
@@ -7608,10 +7604,10 @@
 /obj/effect/turf_decal/siding/thinplating/dark/corner{
 	dir = 8
 	},
-/obj/item/roller{
+/obj/item/emergency_bed{
 	pixel_x = -1
 	},
-/obj/item/roller{
+/obj/item/emergency_bed{
 	pixel_x = 4
 	},
 /obj/item/storage/medkit/regular{
@@ -16124,7 +16120,7 @@
 /obj/effect/turf_decal/trimline/blue/line{
 	dir = 1
 	},
-/obj/structure/bed/roller,
+/obj/structure/bed/medical/emergency,
 /turf/open/floor/iron/white,
 /area/station/medical/medbay/aft)
 "ftk" = (
@@ -21247,12 +21243,8 @@
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/aft)
 "hbj" = (
-/obj/structure/window/reinforced{
-	dir = 8
-	},
-/obj/structure/window/reinforced{
-	dir = 4
-	},
+/obj/structure/window/reinforced/spawner/directional/west,
+/obj/structure/window/reinforced/spawner/directional/east,
 /obj/structure/flora/bush/leafy,
 /obj/structure/flora/bush/fullgrass/style_random,
 /obj/structure/flora/grass/jungle/b/style_random,
@@ -21403,7 +21395,7 @@
 /area/station/cargo/sorting)
 "hee" = (
 /obj/effect/turf_decal/tile/red/fourcorners,
-/obj/structure/window/reinforced/tinted,
+/obj/structure/window/reinforced/tinted/spawner/directional/south,
 /obj/structure/toilet{
 	dir = 4
 	},
@@ -25068,13 +25060,13 @@
 	dir = 8
 	},
 /obj/structure/table/glass,
-/obj/item/roller{
+/obj/item/emergency_bed{
 	pixel_y = 6
 	},
-/obj/item/roller{
+/obj/item/emergency_bed{
 	pixel_y = 11
 	},
-/obj/item/roller{
+/obj/item/emergency_bed{
 	pixel_y = 13
 	},
 /turf/open/floor/iron/dark/side{
@@ -26976,9 +26968,7 @@
 /obj/machinery/power/terminal{
 	dir = 8
 	},
-/obj/structure/sign/poster/contraband/missing_gloves{
-	pixel_x = 32
-	},
+/obj/structure/sign/poster/contraband/missing_gloves/directional/east,
 /obj/machinery/light/directional/south,
 /obj/structure/cable,
 /turf/open/floor/plating,
@@ -28897,10 +28887,10 @@
 "jFb" = (
 /obj/effect/turf_decal/tile/blue/fourcorners,
 /obj/structure/table/glass,
-/obj/item/roller{
+/obj/item/emergency_bed{
 	pixel_y = 6
 	},
-/obj/item/roller{
+/obj/item/emergency_bed{
 	pixel_y = 12
 	},
 /obj/machinery/button/door/directional/east{
@@ -29151,7 +29141,7 @@
 /area/station/service/chapel/funeral)
 "jIr" = (
 /obj/effect/turf_decal/tile/blue/fourcorners,
-/obj/structure/window/reinforced/tinted,
+/obj/structure/window/reinforced/tinted/spawner/directional/south,
 /obj/structure/toilet{
 	dir = 4
 	},
@@ -31484,7 +31474,7 @@
 /area/station/security/prison/garden)
 "kxC" = (
 /obj/effect/turf_decal/tile/orange/fourcorners,
-/obj/structure/window/reinforced/tinted,
+/obj/structure/window/reinforced/tinted/spawner/directional/south,
 /obj/structure/toilet{
 	dir = 4
 	},
@@ -31588,9 +31578,7 @@
 /turf/open/floor/iron,
 /area/station/cargo/storage)
 "kzf" = (
-/obj/structure/window/reinforced/tinted{
-	dir = 1
-	},
+/obj/structure/window/reinforced/tinted/spawner/directional/north,
 /obj/machinery/computer/rdconsole,
 /obj/item/radio/intercom/directional/west,
 /turf/open/floor/carpet/purple,
@@ -34842,7 +34830,7 @@
 	dir = 4
 	},
 /obj/machinery/light/directional/south,
-/obj/structure/bed/roller,
+/obj/structure/bed/medical/emergency,
 /turf/open/floor/iron/white,
 /area/station/medical/medbay/aft)
 "lCu" = (
@@ -35193,10 +35181,10 @@
 	pixel_x = 8
 	},
 /obj/structure/table/glass,
-/obj/item/roller{
+/obj/item/emergency_bed{
 	pixel_y = 6
 	},
-/obj/item/roller{
+/obj/item/emergency_bed{
 	pixel_y = 12
 	},
 /turf/open/floor/iron/white,
@@ -36632,7 +36620,7 @@
 /area/station/maintenance/starboard/aft)
 "miL" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/bed/roller,
+/obj/structure/bed/medical/emergency,
 /turf/open/floor/plating,
 /area/station/maintenance/department/medical)
 "miM" = (
@@ -36713,9 +36701,7 @@
 /turf/open/floor/iron,
 /area/station/science/robotics/lab)
 "mkl" = (
-/obj/structure/window/reinforced/tinted{
-	dir = 1
-	},
+/obj/structure/window/reinforced/tinted/spawner/directional/north,
 /obj/machinery/computer/mecha,
 /turf/open/floor/carpet/purple,
 /area/station/command/heads_quarters/rd)
@@ -37848,9 +37834,7 @@
 /turf/closed/wall/r_wall,
 /area/station/maintenance/department/engine)
 "mDz" = (
-/obj/structure/window/reinforced/tinted{
-	dir = 4
-	},
+/obj/structure/window/reinforced/tinted/spawner/directional/east,
 /obj/item/kirbyplants/random/dead,
 /turf/open/floor/iron/vaporwave,
 /area/station/command/heads_quarters/rd)
@@ -40999,13 +40983,13 @@
 	dir = 4
 	},
 /obj/structure/table/glass,
-/obj/item/roller{
+/obj/item/emergency_bed{
 	pixel_y = 6
 	},
-/obj/item/roller{
+/obj/item/emergency_bed{
 	pixel_y = 11
 	},
-/obj/item/roller{
+/obj/item/emergency_bed{
 	pixel_y = 13
 	},
 /turf/open/floor/iron/dark/side{
@@ -43081,7 +43065,7 @@
 /turf/open/floor/iron/dark,
 /area/station/security/prison/workout)
 "ooS" = (
-/obj/structure/window/reinforced/tinted,
+/obj/structure/window/reinforced/tinted/spawner/directional/south,
 /obj/structure/toilet{
 	dir = 4
 	},
@@ -45658,7 +45642,7 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
 	dir = 1
 	},
-/obj/structure/bed/roller,
+/obj/structure/bed/medical/emergency,
 /turf/open/floor/iron/white,
 /area/station/medical/medbay/aft)
 "piD" = (
@@ -47541,10 +47525,10 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/duct,
 /obj/structure/table/glass,
-/obj/item/roller{
+/obj/item/emergency_bed{
 	pixel_y = 6
 	},
-/obj/item/roller{
+/obj/item/emergency_bed{
 	pixel_y = 12
 	},
 /turf/open/floor/iron/dark,
@@ -49305,9 +49289,7 @@
 /turf/open/floor/iron/dark,
 /area/station/hallway/primary/central)
 "qvC" = (
-/obj/structure/window/reinforced/tinted{
-	dir = 4
-	},
+/obj/structure/window/reinforced/tinted/spawner/directional/east,
 /obj/structure/table,
 /obj/item/taperecorder{
 	pixel_x = -3
@@ -51994,7 +51976,7 @@
 	pixel_y = 2
 	},
 /obj/item/pen,
-/obj/item/roller,
+/obj/item/emergency_bed,
 /turf/open/floor/iron/white,
 /area/station/security/medical)
 "rrv" = (
@@ -53763,9 +53745,7 @@
 /obj/effect/turf_decal/trimline/dark_blue/warning{
 	dir = 1
 	},
-/obj/structure/sign/poster/official/safety_internals{
-	pixel_x = 32
-	},
+/obj/structure/sign/poster/official/safety_internals/directional/east,
 /obj/structure/table,
 /obj/item/storage/box/smart_metal_foam{
 	pixel_x = 4;
@@ -54300,15 +54280,9 @@
 /turf/open/floor/iron/dark,
 /area/station/ai_monitored/command/nuke_storage)
 "sep" = (
-/obj/structure/window/reinforced{
-	dir = 8
-	},
-/obj/structure/window/reinforced{
-	dir = 4
-	},
-/obj/structure/window/reinforced{
-	dir = 1
-	},
+/obj/structure/window/reinforced/spawner/directional/west,
+/obj/structure/window/reinforced/spawner/directional/east,
+/obj/structure/window/reinforced/spawner/directional/north,
 /obj/structure/flora/grass/jungle/b/style_random,
 /obj/structure/flora/bush/grassy/style_random,
 /obj/machinery/door/poddoor/shutters/preopen{
@@ -58452,13 +58426,13 @@
 /obj/effect/turf_decal/trimline/blue/filled/line,
 /obj/machinery/airalarm/directional/south,
 /obj/structure/table/glass,
-/obj/item/roller{
+/obj/item/emergency_bed{
 	pixel_y = 6
 	},
-/obj/item/roller{
+/obj/item/emergency_bed{
 	pixel_y = 11
 	},
-/obj/item/roller{
+/obj/item/emergency_bed{
 	pixel_y = 13
 	},
 /turf/open/floor/iron/white,
@@ -63166,12 +63140,8 @@
 /turf/open/floor/iron/dark,
 /area/station/command/bridge)
 "vcI" = (
-/obj/structure/window/reinforced{
-	dir = 8
-	},
-/obj/structure/window/reinforced{
-	dir = 4
-	},
+/obj/structure/window/reinforced/spawner/directional/west,
+/obj/structure/window/reinforced/spawner/directional/east,
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
@@ -65148,7 +65118,7 @@
 /area/station/maintenance/starboard/fore)
 "vMB" = (
 /obj/effect/turf_decal/tile/purple/fourcorners,
-/obj/structure/window/reinforced/tinted,
+/obj/structure/window/reinforced/tinted/spawner/directional/south,
 /obj/structure/toilet{
 	dir = 4
 	},
@@ -65243,9 +65213,7 @@
 /turf/open/floor/iron/dark,
 /area/station/security/brig/entrance)
 "vOB" = (
-/obj/structure/window/reinforced/tinted{
-	dir = 1
-	},
+/obj/structure/window/reinforced/tinted/spawner/directional/north,
 /obj/machinery/computer/robotics,
 /turf/open/floor/carpet/purple,
 /area/station/command/heads_quarters/rd)
@@ -71101,9 +71069,7 @@
 /turf/open/floor/iron/dark,
 /area/station/hallway/primary/central)
 "xNS" = (
-/obj/structure/window/reinforced{
-	dir = 8
-	},
+/obj/structure/window/reinforced/spawner/directional/west,
 /obj/effect/turf_decal/bot,
 /obj/machinery/power/shieldwallgen,
 /turf/open/floor/iron/dark,

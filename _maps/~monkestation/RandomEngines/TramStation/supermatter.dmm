@@ -113,9 +113,7 @@
 /turf/closed/wall/r_wall,
 /area/station/engineering/supermatter/room)
 "fL" = (
-/obj/structure/window/reinforced/plasma{
-	dir = 4
-	},
+/obj/structure/window/reinforced/plasma/spawner/directional/east,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/general/visible,
 /obj/machinery/power/energy_accumulator/grounding_rod/anchored,
 /obj/effect/turf_decal/trimline/yellow/corner{
@@ -215,9 +213,7 @@
 /turf/open/floor/iron/dark,
 /area/station/engineering/supermatter/room)
 "iM" = (
-/obj/structure/window/reinforced/plasma{
-	dir = 8
-	},
+/obj/structure/window/reinforced/plasma/spawner/directional/west,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/general/visible,
 /obj/machinery/power/energy_accumulator/tesla_coil/anchored,
 /obj/effect/turf_decal/trimline/yellow/line{
@@ -830,9 +826,7 @@
 /turf/open/floor/iron/dark,
 /area/station/engineering/supermatter/room)
 "GF" = (
-/obj/structure/window/reinforced/plasma{
-	dir = 4
-	},
+/obj/structure/window/reinforced/plasma/spawner/directional/east,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/general/visible,
 /obj/machinery/power/energy_accumulator/tesla_coil/anchored,
 /obj/effect/turf_decal/trimline/yellow/line{
@@ -1250,9 +1244,7 @@
 /turf/open/space/basic,
 /area/space/nearstation)
 "Zk" = (
-/obj/structure/window/reinforced/plasma{
-	dir = 8
-	},
+/obj/structure/window/reinforced/plasma/spawner/directional/west,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/general/visible,
 /obj/machinery/power/energy_accumulator/grounding_rod/anchored,
 /obj/effect/turf_decal/trimline/yellow/corner{

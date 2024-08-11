@@ -642,9 +642,7 @@
 /obj/effect/turf_decal/trimline/green/filled/line{
 	dir = 6
 	},
-/obj/structure/sign/poster/official/pda_ad{
-	pixel_y = -32
-	},
+/obj/structure/sign/poster/official/pda_ad/directional/south,
 /turf/open/floor/iron/white,
 /area/shuttle/escape)
 "zf" = (
@@ -940,9 +938,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
-/obj/structure/sign/poster/contraband/tools{
-	pixel_y = 32
-	},
+/obj/structure/sign/poster/contraband/tools/directional/north,
 /turf/open/floor/plating,
 /area/shuttle/escape)
 "Kx" = (
@@ -1063,9 +1059,7 @@
 	dir = 1
 	},
 /obj/structure/chair,
-/obj/structure/sign/poster/contraband/busty_backdoor_xeno_babes_6{
-	pixel_x = 30
-	},
+/obj/structure/sign/poster/contraband/busty_backdoor_xeno_babes_6/directional/east,
 /turf/open/floor/iron{
 	dir = 1
 	},

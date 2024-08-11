@@ -339,9 +339,7 @@
 /turf/open/misc/asteroid/snow/icemoon,
 /area/icemoon/underground/explored)
 "fc" = (
-/obj/structure/window/reinforced/unanchored{
-	dir = 1
-	},
+/obj/structure/window/reinforced/unanchored/spawner/directional/north,
 /turf/open/misc/asteroid/snow/icemoon,
 /area/icemoon/underground/explored)
 "fx" = (
@@ -576,7 +574,7 @@
 /turf/open/floor/stone,
 /area/ruin/plasma_facility/commons)
 "im" = (
-/obj/structure/window/reinforced/spawner,
+/obj/structure/window/reinforced/spawner/directional/south,
 /obj/effect/decal/cleanable/glass,
 /obj/item/shard,
 /obj/effect/decal/cleanable/dirt,
@@ -628,7 +626,7 @@
 	},
 /area/ruin/plasma_facility/operations)
 "jI" = (
-/obj/structure/window/reinforced/spawner,
+/obj/structure/window/reinforced/spawner/directional/south,
 /obj/effect/decal/cleanable/glass,
 /obj/item/shard{
 	pixel_x = 11;
@@ -803,7 +801,7 @@
 /area/ruin/plasma_facility/operations)
 "ng" = (
 /obj/structure/grille/broken,
-/obj/structure/window/reinforced/spawner,
+/obj/structure/window/reinforced/spawner/directional/south,
 /obj/effect/decal/cleanable/glass,
 /turf/open/floor/plating/icemoon,
 /area/ruin/plasma_facility/operations)
@@ -1406,7 +1404,7 @@
 	dir = 8
 	},
 /obj/effect/decal/cleanable/glass,
-/obj/structure/window/reinforced/spawner,
+/obj/structure/window/reinforced/spawner/directional/south,
 /turf/open/floor/plating/icemoon,
 /area/ruin/plasma_facility/operations)
 "yL" = (
@@ -1777,7 +1775,7 @@
 "Hn" = (
 /obj/structure/grille,
 /obj/structure/window/reinforced/spawner/directional/east,
-/obj/structure/window/reinforced/spawner,
+/obj/structure/window/reinforced/spawner/directional/south,
 /obj/item/shard,
 /obj/effect/decal/cleanable/glass,
 /turf/open/floor/plating/icemoon,
@@ -1994,7 +1992,7 @@
 /area/icemoon/underground/explored)
 "Ku" = (
 /obj/structure/window/reinforced/spawner/directional/north,
-/obj/structure/window/reinforced/spawner,
+/obj/structure/window/reinforced/spawner/directional/south,
 /obj/structure/window/reinforced/spawner/directional/east,
 /obj/structure/grille,
 /turf/open/floor/plating/icemoon,
@@ -2278,7 +2276,7 @@
 /turf/open/floor/plating/snowed/icemoon,
 /area/icemoon/underground/explored)
 "OB" = (
-/obj/structure/window/reinforced/spawner,
+/obj/structure/window/reinforced/spawner/directional/south,
 /obj/structure/grille,
 /turf/open/floor/plating/icemoon,
 /area/ruin/plasma_facility/operations)
@@ -2468,7 +2466,7 @@
 /area/icemoon/underground/explored)
 "QH" = (
 /obj/structure/grille,
-/obj/structure/window/reinforced/spawner,
+/obj/structure/window/reinforced/spawner/directional/south,
 /obj/structure/window/reinforced/spawner/directional/east,
 /turf/open/floor/plating/icemoon,
 /area/ruin/plasma_facility/commons)
@@ -2803,7 +2801,7 @@
 /turf/open/floor/iron/textured_large,
 /area/ruin/plasma_facility/commons)
 "Yk" = (
-/obj/structure/window/reinforced/spawner,
+/obj/structure/window/reinforced/spawner/directional/south,
 /obj/structure/frame/computer{
 	anchored = 1;
 	dir = 4

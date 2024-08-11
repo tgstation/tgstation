@@ -33,8 +33,8 @@
 	qdel(target.GetComponent(/datum/component/on_hit_effect))
 	return ..()
 
-/datum/element/bane/proc/check_bane(bane_applier, target, bane_weapon)
-	if(!check_biotype_path(bane_applier, target))
+/datum/element/bane/proc/check_bane(mob/living/bane_applier, atom/target, bane_weapon)
+	if(!isliving(target))
 		return
 	var/atom/movable/atom_owner = bane_weapon
 	if(SEND_SIGNAL(atom_owner, COMSIG_OBJECT_PRE_BANING, target) & COMPONENT_CANCEL_BANING)

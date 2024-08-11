@@ -77,6 +77,7 @@
 		/obj/item/t_scanner/adv_mining_scanner,
 		/obj/item/t_scanner/adv_mining_scanner/lesser,
 		/obj/item/knife,
+		/obj/item/spess_knife,
 		/obj/item/switchblade,
 		/obj/item/boxcutter,
 		/obj/item/pen,
@@ -114,6 +115,7 @@
 	. = ..()
 	set_holdable(list(
 		/obj/item/knife,
+		/obj/item/spess_knife,
 		/obj/item/switchblade,
 		/obj/item/pen,
 		/obj/item/scalpel,

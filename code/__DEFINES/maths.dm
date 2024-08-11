@@ -255,3 +255,6 @@
 
 /// The number of cells in a taxicab circle (rasterized diamond) of radius X.
 #define DIAMOND_AREA(X) (1 + 2*(X)*((X)+1))
+
+/// Returns a random decimal between x and y.
+#define RANDOM_DECIMAL(x, y) LERP((x), (y), rand())

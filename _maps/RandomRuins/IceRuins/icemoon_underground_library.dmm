@@ -62,14 +62,14 @@
 /turf/open/misc/asteroid/snow/icemoon,
 /area/ruin/unpowered/buried_library)
 "ao" = (
-/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/decal/cleanable/dirt,
 /turf/open/floor/wood{
 	initial_gas_mix = "ICEMOON_ATMOS"
 	},
 /area/ruin/unpowered/buried_library)
 "ap" = (
 /obj/item/stack/sheet/mineral/wood,
-/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/decal/cleanable/dirt,
 /turf/open/floor/wood{
 	initial_gas_mix = "ICEMOON_ATMOS"
 	},
@@ -112,7 +112,7 @@
 	},
 /area/ruin/unpowered/buried_library)
 "aA" = (
-/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating/icemoon,
 /area/ruin/unpowered/buried_library)
 "aC" = (
@@ -151,16 +151,16 @@
 /turf/open/floor/cult,
 /area/ruin/unpowered/buried_library)
 "aJ" = (
-/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/decal/cleanable/dirt,
 /turf/open/floor/cult,
 /area/ruin/unpowered/buried_library)
 "aK" = (
 /obj/item/feather,
-/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/decal/cleanable/dirt,
 /turf/open/floor/cult,
 /area/ruin/unpowered/buried_library)
 "aL" = (
-/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/decal/cleanable/dirt,
 /obj/structure/fluff/paper/stack,
 /turf/open/floor/wood{
 	initial_gas_mix = "ICEMOON_ATMOS"
@@ -188,7 +188,7 @@
 /turf/closed/mineral/random/snow,
 /area/ruin/unpowered/buried_library)
 "aQ" = (
-/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/decal/cleanable/dirt,
 /obj/item/paper/fluff/awaymissions/moonoutpost19/research/larva_autopsy,
 /turf/open/floor/wood{
 	initial_gas_mix = "ICEMOON_ATMOS"
@@ -202,7 +202,7 @@
 /area/ruin/unpowered/buried_library)
 "aS" = (
 /obj/structure/table/wood/fancy/black,
-/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/decal/cleanable/dirt,
 /obj/item/paper/secretrecipe,
 /obj/item/flashlight/lantern/jade{
 	on = 1
@@ -210,7 +210,7 @@
 /turf/open/floor/cult,
 /area/ruin/unpowered/buried_library)
 "aT" = (
-/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/decal/cleanable/dirt,
 /obj/structure/fluff/paper,
 /turf/open/floor/wood{
 	initial_gas_mix = "ICEMOON_ATMOS"
@@ -266,7 +266,7 @@
 	},
 /area/ruin/unpowered/buried_library)
 "bd" = (
-/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/decal/cleanable/dirt,
 /obj/structure/fluff/paper{
 	dir = 1
 	},
@@ -284,7 +284,7 @@
 	},
 /area/ruin/unpowered/buried_library)
 "bf" = (
-/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/decal/cleanable/dirt,
 /obj/structure/fluff/paper{
 	dir = 4
 	},
@@ -297,7 +297,7 @@
 /turf/open/misc/asteroid/snow/icemoon,
 /area/ruin/unpowered/buried_library)
 "bh" = (
-/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/decal/cleanable/dirt,
 /mob/living/basic/pet/fox,
 /turf/open/floor/wood{
 	initial_gas_mix = "ICEMOON_ATMOS"
@@ -344,7 +344,7 @@
 /turf/open/misc/asteroid/snow/icemoon,
 /area/ruin/unpowered/buried_library)
 "bt" = (
-/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/decal/cleanable/dirt,
 /turf/template_noop,
 /area/template_noop)
 "bu" = (
@@ -380,25 +380,24 @@
 	},
 /area/ruin/unpowered/buried_library)
 "bC" = (
-/obj/effect/decal/cleanable/dirt/dust,
 /obj/structure/fluff/paper{
 	dir = 1
 	},
-/obj/effect/decal/cleanable/dirt,
 /mob/living/basic/pet/fox,
+/obj/effect/decal/cleanable/dirt,
 /turf/open/floor/wood{
 	initial_gas_mix = "ICEMOON_ATMOS"
 	},
 /area/ruin/unpowered/buried_library)
 "bE" = (
-/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/decal/cleanable/dirt,
 /obj/effect/mapping_helpers/broken_floor,
 /turf/open/floor/wood{
 	initial_gas_mix = "ICEMOON_ATMOS"
 	},
 /area/ruin/unpowered/buried_library)
 "bH" = (
-/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/decal/cleanable/dirt,
 /obj/structure/fluff/paper,
 /obj/effect/mapping_helpers/broken_floor,
 /turf/open/floor/wood{

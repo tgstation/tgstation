@@ -624,9 +624,6 @@
 /obj/structure/table/wood,
 /obj/item/food/grown/tea/astra,
 /obj/item/food/grown/soybeans,
-/obj/structure/sign/poster/traitor/random{
-	pixel_y = -28
-	},
 /obj/machinery/button{
 	pixel_x = 8;
 	pixel_y = 9;
@@ -636,6 +633,7 @@
 	pixel_y = -4;
 	pixel_x = 6
 	},
+/obj/structure/sign/poster/official/ue_no/directional/south,
 /turf/open/floor/carpet/black,
 /area/station/service/bar)
 "Sl" = (

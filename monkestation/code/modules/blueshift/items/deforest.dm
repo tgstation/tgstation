@@ -916,7 +916,7 @@
 		/obj/item/cautery = 1,
 		/obj/item/surgical_drapes = 1,
 		/obj/item/blood_filter = 1,
-		/obj/item/roller = 1,
+		/obj/item/emergency_bed = 1,
 		/obj/item/stack/medical/gauze = 1,
 		/obj/item/stack/medical/gauze/sterilized = 1,
 		/obj/item/reagent_containers/medigel/sterilizine = 1,
@@ -983,7 +983,7 @@
 		/obj/item/tank/internals/emergency_oxygen,
 		/obj/item/handheld_soulcatcher,
 		/obj/item/wrench/medical,
-		/obj/item/roller,
+		/obj/item/emergency_bed,
 		/obj/item/bodybag,
 	))
 

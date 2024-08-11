@@ -50,9 +50,7 @@
 /turf/open/floor/engine,
 /area/station/engineering/supermatter/room)
 "dq" = (
-/obj/structure/sign/poster/contraband/missing_gloves{
-	pixel_x = 32
-	},
+/obj/structure/sign/poster/contraband/missing_gloves/directional/east,
 /obj/machinery/power/smes/engineering,
 /obj/structure/cable,
 /turf/open/floor/circuit/red,

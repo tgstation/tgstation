@@ -269,9 +269,7 @@
 /turf/open/floor/iron,
 /area/station/engineering/supermatter/room)
 "mS" = (
-/obj/structure/sign/poster/contraband/missing_gloves{
-	pixel_x = 32
-	},
+/obj/structure/sign/poster/contraband/missing_gloves/directional/east,
 /obj/machinery/power/smes/engineering,
 /obj/effect/turf_decal/stripes/line{
 	dir = 8

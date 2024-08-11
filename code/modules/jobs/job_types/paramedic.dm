@@ -48,7 +48,7 @@
 	suit = /obj/item/clothing/suit/toggle/labcoat/paramedic
 	suit_store = /obj/item/flashlight/pen/paramedic
 	backpack_contents = list(
-		/obj/item/roller = 1,
+		/obj/item/emergency_bed = 1,
 		)
 	belt = /obj/item/storage/belt/medical/paramedic
 	ears = /obj/item/radio/headset/headset_med

@@ -578,9 +578,7 @@
 /turf/open/floor/wood,
 /area/awaymission/beach)
 "bV" = (
-/obj/structure/sign/poster/ripped{
-	pixel_x = 32
-	},
+/obj/structure/sign/poster/ripped/directional/east,
 /turf/open/misc/beach/sand,
 /area/awaymission/beach)
 "bW" = (
@@ -621,9 +619,7 @@
 /turf/open/floor/wood,
 /area/awaymission/beach)
 "cb" = (
-/obj/structure/sign/poster/contraband/syndicate_recruitment{
-	pixel_x = -28
-	},
+/obj/structure/sign/poster/contraband/syndicate_recruitment/directional/west,
 /turf/open/misc/beach/sand,
 /area/awaymission/beach)
 "cc" = (
@@ -1020,9 +1016,7 @@
 /area/awaymission/beach)
 "sG" = (
 /obj/effect/turf_decal/sand,
-/obj/structure/sign/poster/contraband/smoke{
-	pixel_y = -32
-	},
+/obj/structure/sign/poster/contraband/smoke/directional/south,
 /obj/machinery/vending/cigarette/beach,
 /turf/open/misc/beach/sand,
 /area/awaymission/beach)

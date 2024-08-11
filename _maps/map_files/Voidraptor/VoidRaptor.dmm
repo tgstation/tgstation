@@ -5231,7 +5231,7 @@
 /obj/effect/turf_decal/trimline/red/filled/line{
 	dir = 5
 	},
-/obj/structure/bed/roller{
+/obj/structure/bed/medical/emergency{
 	dir = 4
 	},
 /obj/item/clothing/suit/jacket/straight_jacket,
@@ -5998,7 +5998,7 @@
 /turf/open/floor/iron/textured_edge,
 /area/station/cargo/storage)
 "bNs" = (
-/obj/structure/bed/roller{
+/obj/structure/bed/medical/emergency{
 	dir = 4
 	},
 /obj/machinery/iv_drip,
@@ -6720,7 +6720,7 @@
 /turf/open/floor/carpet/royalblue,
 /area/station/command/heads_quarters/captain/private)
 "cad" = (
-/obj/structure/bed/roller,
+/obj/structure/bed/medical/emergency,
 /obj/machinery/iv_drip,
 /obj/effect/turf_decal/trimline/blue/filled/line{
 	dir = 8
@@ -7101,7 +7101,7 @@
 /turf/open/floor/iron/dark/textured,
 /area/station/security/execution/education)
 "cfH" = (
-/obj/structure/bed/roller,
+/obj/structure/bed/medical/emergency,
 /obj/machinery/iv_drip,
 /obj/effect/turf_decal/trimline/blue/filled/line{
 	dir = 8
@@ -12191,7 +12191,7 @@
 /area/station/maintenance/port/fore)
 "dDR" = (
 /obj/effect/turf_decal/tile/blue/fourcorners,
-/obj/structure/bed/roller{
+/obj/structure/bed/medical/emergency{
 	dir = 4
 	},
 /obj/machinery/newscaster/directional/east,
@@ -13149,7 +13149,7 @@
 /turf/open/floor/plating,
 /area/station/maintenance/port/fore)
 "dQr" = (
-/obj/structure/bed/roller{
+/obj/structure/bed/medical/emergency{
 	dir = 4
 	},
 /obj/item/bedsheet/medical,
@@ -14442,7 +14442,7 @@
 /turf/open/floor/wood/parquet,
 /area/station/common/night_club)
 "ehl" = (
-/obj/structure/bed/roller,
+/obj/structure/bed/medical/emergency,
 /obj/effect/turf_decal/bot,
 /obj/machinery/vending/wallmed/directional/east,
 /obj/effect/turf_decal/trimline/blue/filled/line{
@@ -21132,7 +21132,7 @@
 /area/station/hallway/secondary/exit/departure_lounge)
 "giB" = (
 /obj/effect/turf_decal/tile/blue/fourcorners,
-/obj/structure/bed/roller{
+/obj/structure/bed/medical/emergency{
 	dir = 8
 	},
 /obj/machinery/newscaster/directional/west,
@@ -23530,7 +23530,7 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
-/obj/structure/bed/roller,
+/obj/structure/bed/medical/emergency,
 /obj/machinery/iv_drip,
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -24247,7 +24247,7 @@
 /turf/open/floor/engine,
 /area/station/engineering/supermatter)
 "haq" = (
-/obj/structure/bed/roller,
+/obj/structure/bed/medical/emergency,
 /obj/machinery/iv_drip,
 /obj/effect/landmark/event_spawn,
 /turf/open/floor/iron/white/textured_large,
@@ -34204,7 +34204,7 @@
 /area/station/commons/vacant_room/office)
 "jLi" = (
 /obj/effect/turf_decal/trimline/yellow/filled/line,
-/obj/structure/bed/roller,
+/obj/structure/bed/medical/emergency,
 /turf/open/floor/iron/white/textured_edge{
 	dir = 1
 	},
@@ -51658,7 +51658,7 @@
 	},
 /area/station/hallway/primary/aft)
 "oDz" = (
-/obj/structure/bed/roller,
+/obj/structure/bed/medical/emergency,
 /obj/machinery/iv_drip,
 /obj/effect/turf_decal/trimline/blue/filled/line{
 	dir = 8
@@ -52230,7 +52230,7 @@
 /turf/open/floor/catwalk_floor/iron_smooth,
 /area/station/maintenance/department/science/ordnance_maint)
 "oLN" = (
-/obj/structure/bed/roller{
+/obj/structure/bed/medical/emergency{
 	dir = 4
 	},
 /obj/machinery/iv_drip,
@@ -56624,7 +56624,7 @@
 /turf/closed/wall,
 /area/station/maintenance/aft/upper)
 "pUJ" = (
-/obj/structure/bed/roller,
+/obj/structure/bed/medical/emergency,
 /obj/machinery/iv_drip,
 /turf/open/floor/iron/white/textured_large,
 /area/station/medical/medbay/lobby)
@@ -74924,7 +74924,7 @@
 /turf/open/floor/wood/large,
 /area/station/service/theater)
 "uPL" = (
-/obj/structure/bed/roller{
+/obj/structure/bed/medical/emergency{
 	dir = 4
 	},
 /obj/item/bedsheet/medical,
@@ -75439,7 +75439,7 @@
 /turf/open/floor/iron/dark/textured_large,
 /area/station/medical/morgue)
 "uXb" = (
-/obj/structure/bed/roller{
+/obj/structure/bed/medical/emergency{
 	dir = 4
 	},
 /obj/item/clothing/glasses/blindfold,

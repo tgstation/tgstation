@@ -538,7 +538,7 @@
 /obj/item/pen/charcoal{
 	pixel_x = 6
 	},
-/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/decal/cleanable/dirt,
 /turf/open/floor/wood/lavaland,
 /area/ruin/unpowered/ash_walkers)
 "jW" = (
@@ -1068,7 +1068,7 @@
 /area/ruin/unpowered/ash_walkers)
 "ty" = (
 /obj/item/chair/stool/bamboo,
-/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/decal/cleanable/dirt,
 /turf/open/floor/wood/lavaland,
 /area/ruin/unpowered/ash_walkers)
 "tB" = (
@@ -1504,7 +1504,7 @@
 /obj/effect/turf_decal/siding/wood{
 	dir = 2
 	},
-/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/decal/cleanable/dirt,
 /turf/open/floor/wood/lavaland,
 /area/ruin/unpowered/ash_walkers)
 "zg" = (
@@ -2253,7 +2253,7 @@
 /obj/effect/turf_decal/siding/wood{
 	dir = 10
 	},
-/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/decal/cleanable/dirt,
 /turf/open/floor/wood/lavaland,
 /area/ruin/unpowered/ash_walkers)
 "Ob" = (
@@ -2721,7 +2721,7 @@
 /area/ruin/unpowered/ash_walkers)
 "VT" = (
 /obj/structure/wall_torch/spawns_lit/directional/north,
-/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/decal/cleanable/dirt,
 /turf/open/floor/wood/lavaland,
 /area/ruin/unpowered/ash_walkers)
 "VX" = (
@@ -2841,7 +2841,7 @@
 /area/ruin/unpowered/ash_walkers)
 "XM" = (
 /obj/structure/bed/maint,
-/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/decal/cleanable/dirt,
 /turf/open/floor/wood/lavaland,
 /area/ruin/unpowered/ash_walkers)
 "XT" = (

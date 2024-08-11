@@ -140,6 +140,7 @@
 
 				/obj/item/clothing/suit/costume/ianshirt = 1,
 				/obj/item/clothing/suit/hooded/dinojammies = 3,
+				/obj/item/clothing/suit/costume/irs = 20,
 				/obj/item/clothing/head/costume/irs = 20,
 				/obj/item/clothing/head/costume/tmc = 20,
 				/obj/item/clothing/head/costume/deckers = 20,

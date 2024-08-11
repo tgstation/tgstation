@@ -1,9 +1,6 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "ai" = (
-/obj/structure/fluff/broken_flooring{
-	dir = 8;
-	icon_state = "pile"
-	},
+/obj/structure/broken_flooring/pile/directional/west,
 /turf/template_noop,
 /area/template_noop)
 "ar" = (
@@ -385,9 +382,7 @@
 /turf/open/floor/iron/dark,
 /area/ruin/space/has_grav/waystation/dorms)
 "gE" = (
-/obj/structure/sign/poster/contraband/missing_gloves{
-	pixel_y = 32
-	},
+/obj/structure/sign/poster/contraband/missing_gloves/directional/north,
 /obj/machinery/power/smes{
 	charge = 5e+006
 	},
@@ -1119,10 +1114,7 @@
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/waystation/cargobay)
 "sm" = (
-/obj/structure/fluff/broken_flooring{
-	dir = 4;
-	icon_state = "pile"
-	},
+/obj/structure/broken_flooring/pile/directional/east,
 /turf/template_noop,
 /area/template_noop)
 "su" = (
@@ -1150,10 +1142,7 @@
 /turf/closed/wall/mineral/plastitanium,
 /area/ruin/space/has_grav/powered/waystation/assaultpod)
 "tf" = (
-/obj/structure/fluff/broken_flooring{
-	dir = 1;
-	icon_state = "pile"
-	},
+/obj/structure/broken_flooring/pile/directional/north,
 /turf/template_noop,
 /area/template_noop)
 "tg" = (
@@ -1527,10 +1516,7 @@
 /turf/open/floor/iron/grimy,
 /area/ruin/space/has_grav/waystation/qm)
 "zV" = (
-/obj/structure/fluff/broken_flooring{
-	dir = 8;
-	icon_state = "pile"
-	},
+/obj/structure/broken_flooring/pile/directional/west,
 /turf/closed/mineral/random/low_chance,
 /area/ruin/space)
 "zZ" = (

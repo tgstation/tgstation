@@ -106,7 +106,7 @@
 /area/station/maintenance/starboard/greater)
 "Z" = (
 /obj/structure/table,
-/obj/structure/window/reinforced/spawner,
+/obj/structure/window/reinforced/spawner/directional/south,
 /obj/machinery/door/window/left/directional/east,
 /obj/machinery/door/poddoor/shutters/preopen{
 	name = "Privacy Shutter";

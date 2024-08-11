@@ -233,7 +233,7 @@
 /turf/open/floor/iron/checker,
 /area/shuttle/escape)
 "iy" = (
-/obj/structure/bed/roller,
+/obj/structure/bed/medical/emergency,
 /obj/machinery/iv_drip,
 /obj/machinery/light/directional/west,
 /turf/open/floor/iron/dark/textured,
@@ -346,7 +346,7 @@
 	},
 /area/shuttle/escape/brig)
 "kN" = (
-/obj/structure/bed/roller,
+/obj/structure/bed/medical/emergency,
 /obj/machinery/iv_drip,
 /obj/structure/extinguisher_cabinet/directional/west,
 /obj/effect/mapping_helpers/broken_floor,
@@ -704,8 +704,9 @@
 /area/shuttle/escape)
 "xc" = (
 /obj/machinery/iv_drip,
-/obj/structure/bed/roller,
+/obj/structure/bed/medical/emergency,
 /obj/effect/turf_decal/tile/dark_blue/half/contrasted,
+/obj/machinery/light/directional/north,
 /turf/open/floor/iron/dark/side{
 	dir = 1
 	},
@@ -719,7 +720,7 @@
 /turf/open/floor/plating,
 /area/shuttle/escape)
 "xR" = (
-/obj/structure/bed/roller,
+/obj/structure/bed/medical/emergency,
 /obj/machinery/iv_drip,
 /obj/machinery/light/directional/east,
 /turf/open/floor/iron/dark/textured,
@@ -852,7 +853,7 @@
 /turf/open/floor/iron/dark,
 /area/shuttle/escape)
 "Dd" = (
-/obj/structure/window/reinforced/survival_pod/spawner,
+/obj/structure/window/reinforced/survival_pod/spawner/directional/south,
 /turf/open/floor/mineral/plastitanium/red,
 /area/shuttle/escape/brig)
 "Dg" = (
@@ -907,7 +908,7 @@
 	},
 /area/shuttle/escape)
 "FA" = (
-/obj/structure/window/reinforced/survival_pod/spawner,
+/obj/structure/window/reinforced/survival_pod/spawner/directional/south,
 /obj/structure/chair/comfy/shuttle{
 	dir = 8
 	},
@@ -987,7 +988,7 @@
 /obj/machinery/power/shuttle_engine/heater{
 	dir = 1
 	},
-/obj/structure/window/reinforced/survival_pod/spawner,
+/obj/structure/window/reinforced/survival_pod/spawner/directional/south,
 /turf/open/floor/plating/airless,
 /area/shuttle/escape)
 "Hq" = (
@@ -1193,7 +1194,7 @@
 "MC" = (
 /obj/structure/extinguisher_cabinet/directional/north,
 /obj/machinery/iv_drip,
-/obj/structure/bed/roller,
+/obj/structure/bed/medical/emergency,
 /obj/effect/turf_decal/tile/dark_blue/half/contrasted,
 /turf/open/floor/iron/dark/side{
 	dir = 1
@@ -1233,7 +1234,7 @@
 /area/shuttle/escape)
 "NW" = (
 /obj/structure/chair/comfy/shuttle,
-/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/dark/textured,
 /area/shuttle/escape)
 "Of" = (
@@ -1405,13 +1406,6 @@
 	dir = 4
 	},
 /turf/open/floor/iron/dark/textured,
-/area/shuttle/escape)
-"Su" = (
-/obj/effect/decal/cleanable/dirt/dust,
-/obj/effect/turf_decal/tile/dark_blue/opposingcorners{
-	dir = 1
-	},
-/turf/open/floor/iron/checker,
 /area/shuttle/escape)
 "Sy" = (
 /obj/structure/sign/warning/vacuum/external/directional/south,
@@ -1609,7 +1603,7 @@
 	pixel_y = -3
 	},
 /obj/structure/window/reinforced/survival_pod/spawner/directional/north,
-/obj/structure/window/reinforced/survival_pod/spawner,
+/obj/structure/window/reinforced/survival_pod/spawner/directional/south,
 /obj/machinery/door/window/survival_pod{
 	dir = 4;
 	name = "Emergency Weapons";
@@ -1975,7 +1969,7 @@ CR
 WQ
 WQ
 NW
-Su
+JN
 Hu
 WQ
 sn

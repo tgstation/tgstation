@@ -83,9 +83,7 @@
 	},
 /area/ruin/space/has_grav/powered/virtual_domain)
 "ll" = (
-/obj/structure/sign/poster/contraband/clown{
-	pixel_y = 34
-	},
+/obj/structure/sign/poster/contraband/clown/directional/north,
 /turf/open/floor/iron/vaporwave,
 /area/ruin/space/has_grav/powered/virtual_domain)
 "lu" = (

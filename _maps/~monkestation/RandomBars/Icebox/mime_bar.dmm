@@ -3,8 +3,7 @@
 /obj/effect/turf_decal/siding/wood{
 	dir = 1
 	},
-/obj/structure/window/reinforced/plasma{
-	dir = 1;
+/obj/structure/window/reinforced/plasma/spawner/directional/north{
 	alpha = 0
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -19,11 +18,10 @@
 /obj/effect/turf_decal/siding/thinplating/dark{
 	dir = 4
 	},
-/obj/structure/window/reinforced/plasma{
+/obj/structure/window/reinforced/plasma/spawner/directional/south{
 	alpha = 0
 	},
-/obj/structure/window/reinforced/plasma{
-	dir = 1;
+/obj/structure/window/reinforced/plasma/spawner/directional/north{
 	alpha = 0
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -39,24 +37,20 @@
 /turf/open/floor/iron,
 /area/station/service/bar/backroom)
 "ay" = (
-/obj/structure/window/reinforced/plasma{
-	dir = 4;
+/obj/structure/window/reinforced/plasma/spawner/directional/east{
 	alpha = 0
 	},
-/obj/structure/window/reinforced/plasma{
-	dir = 1;
+/obj/structure/window/reinforced/plasma/spawner/directional/north{
 	alpha = 0
 	},
 /obj/item/kirbyplants/random,
 /turf/open/floor/iron/dark/textured_half,
 /area/station/maintenance/starboard/lesser)
 "aJ" = (
-/obj/structure/window/reinforced/plasma{
-	dir = 1;
+/obj/structure/window/reinforced/plasma/spawner/directional/north{
 	alpha = 0
 	},
-/obj/structure/window/reinforced/plasma{
-	dir = 8;
+/obj/structure/window/reinforced/plasma/spawner/directional/west{
 	alpha = 0
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -70,12 +64,10 @@
 /turf/open/floor/carpet,
 /area/station/service/theater)
 "aO" = (
-/obj/structure/window/reinforced/plasma{
-	dir = 4;
+/obj/structure/window/reinforced/plasma/spawner/directional/east{
 	alpha = 0
 	},
-/obj/structure/window/reinforced/plasma{
-	dir = 1;
+/obj/structure/window/reinforced/plasma/spawner/directional/north{
 	alpha = 0
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -89,8 +81,7 @@
 /obj/structure/closet/secure_closet/bar,
 /obj/machinery/firealarm/directional/north,
 /obj/effect/turf_decal/tile/bar/opposingcorners,
-/obj/structure/window/reinforced/plasma{
-	dir = 4;
+/obj/structure/window/reinforced/plasma/spawner/directional/east{
 	alpha = 0
 	},
 /turf/open/floor/iron,
@@ -100,11 +91,10 @@
 	dir = 8
 	},
 /obj/structure/chair/stool/bar/directional/east,
-/obj/structure/window/reinforced/plasma{
-	dir = 8;
+/obj/structure/window/reinforced/plasma/spawner/directional/west{
 	alpha = 0
 	},
-/obj/structure/window/reinforced/plasma{
+/obj/structure/window/reinforced/plasma/spawner/directional/south{
 	alpha = 0
 	},
 /obj/effect/decal/cleanable/blood/gibs/up,
@@ -115,8 +105,7 @@
 	dir = 8
 	},
 /obj/structure/chair/stool/bar/directional/east,
-/obj/structure/window/reinforced/plasma{
-	dir = 8;
+/obj/structure/window/reinforced/plasma/spawner/directional/west{
 	alpha = 0
 	},
 /obj/effect/decal/cleanable/blood/tracks,
@@ -143,21 +132,19 @@
 /area/station/service/bar)
 "bT" = (
 /obj/machinery/computer/security/telescreen/entertainment/directional/west,
-/obj/structure/window/reinforced/plasma{
-	dir = 8;
+/obj/structure/window/reinforced/plasma/spawner/directional/west{
 	alpha = 0
 	},
-/obj/structure/window/reinforced/plasma{
+/obj/structure/window/reinforced/plasma/spawner/directional/south{
 	alpha = 0
 	},
 /turf/open/floor/wood/parquet,
 /area/station/commons/lounge)
 "dn" = (
-/obj/structure/window/reinforced/plasma{
+/obj/structure/window/reinforced/plasma/spawner/directional/south{
 	alpha = 0
 	},
-/obj/structure/window/reinforced/plasma{
-	dir = 4;
+/obj/structure/window/reinforced/plasma/spawner/directional/east{
 	alpha = 0
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -172,28 +159,23 @@
 /area/station/commons/lounge)
 "dr" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/structure/window/reinforced/plasma{
-	dir = 8;
+/obj/structure/window/reinforced/plasma/spawner/directional/west{
 	alpha = 0
 	},
-/obj/structure/window/reinforced/plasma{
-	dir = 4;
+/obj/structure/window/reinforced/plasma/spawner/directional/east{
 	alpha = 0
 	},
 /turf/open/floor/wood/parquet,
 /area/station/commons/lounge)
 "ec" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/structure/window/reinforced/plasma{
-	dir = 8;
+/obj/structure/window/reinforced/plasma/spawner/directional/west{
 	alpha = 0
 	},
-/obj/structure/window/reinforced/plasma{
-	dir = 1;
+/obj/structure/window/reinforced/plasma/spawner/directional/north{
 	alpha = 0
 	},
-/obj/structure/window/reinforced/plasma{
-	dir = 4;
+/obj/structure/window/reinforced/plasma/spawner/directional/east{
 	alpha = 0
 	},
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2,
@@ -208,8 +190,7 @@
 	dir = 4
 	},
 /obj/effect/turf_decal/tile/bar/opposingcorners,
-/obj/structure/window/reinforced/plasma{
-	dir = 4;
+/obj/structure/window/reinforced/plasma/spawner/directional/east{
 	alpha = 0
 	},
 /turf/open/floor/iron,
@@ -217,18 +198,16 @@
 "fj" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/structure/window/reinforced/plasma{
-	dir = 1;
+/obj/structure/window/reinforced/plasma/spawner/directional/north{
 	alpha = 0
 	},
-/obj/structure/window/reinforced/plasma{
-	dir = 4;
+/obj/structure/window/reinforced/plasma/spawner/directional/east{
 	alpha = 0
 	},
 /turf/open/floor/wood/parquet,
 /area/station/commons/lounge)
 "fn" = (
-/obj/structure/window/reinforced/plasma{
+/obj/structure/window/reinforced/plasma/spawner/directional/south{
 	alpha = 0
 	},
 /turf/open/floor/iron/dark/textured_half,
@@ -238,7 +217,7 @@
 	dir = 8
 	},
 /obj/effect/turf_decal/tile/bar/opposingcorners,
-/obj/structure/window/reinforced/plasma{
+/obj/structure/window/reinforced/plasma/spawner/directional/south{
 	alpha = 0
 	},
 /obj/structure/disposalpipe/segment{
@@ -248,9 +227,8 @@
 /area/station/service/bar)
 "gb" = (
 /obj/machinery/airalarm/directional/east,
-/obj/effect/decal/cleanable/dirt/dust,
-/obj/structure/window/reinforced/plasma{
-	dir = 4;
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/window/reinforced/plasma/spawner/directional/east{
 	alpha = 0
 	},
 /turf/open/floor/wood/parquet,
@@ -263,8 +241,7 @@
 	},
 /obj/machinery/requests_console/auto_name/directional/east,
 /obj/effect/turf_decal/tile/bar/opposingcorners,
-/obj/structure/window/reinforced/plasma{
-	dir = 4;
+/obj/structure/window/reinforced/plasma/spawner/directional/east{
 	alpha = 0
 	},
 /turf/open/floor/iron,
@@ -277,12 +254,10 @@
 /obj/effect/turf_decal/siding/wood{
 	dir = 1
 	},
-/obj/structure/window/reinforced/plasma{
-	dir = 8;
+/obj/structure/window/reinforced/plasma/spawner/directional/west{
 	alpha = 0
 	},
-/obj/structure/window/reinforced/plasma{
-	dir = 1;
+/obj/structure/window/reinforced/plasma/spawner/directional/north{
 	alpha = 0
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -294,11 +269,10 @@
 /turf/open/floor/stone,
 /area/station/commons/lounge)
 "gB" = (
-/obj/structure/window/reinforced/plasma{
-	dir = 8;
+/obj/structure/window/reinforced/plasma/spawner/directional/west{
 	alpha = 0
 	},
-/obj/structure/window/reinforced/plasma{
+/obj/structure/window/reinforced/plasma/spawner/directional/south{
 	alpha = 0
 	},
 /turf/open/floor/iron/dark/textured_half{
@@ -321,11 +295,10 @@
 "il" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/structure/window/reinforced/plasma{
-	dir = 1;
+/obj/structure/window/reinforced/plasma/spawner/directional/north{
 	alpha = 0
 	},
-/obj/structure/window/reinforced/plasma{
+/obj/structure/window/reinforced/plasma/spawner/directional/south{
 	alpha = 0
 	},
 /turf/open/floor/wood/parquet,
@@ -344,12 +317,10 @@
 /turf/open/floor/stone,
 /area/station/service/bar)
 "iG" = (
-/obj/structure/window/reinforced/plasma{
-	dir = 8;
+/obj/structure/window/reinforced/plasma/spawner/directional/west{
 	alpha = 0
 	},
-/obj/structure/window/reinforced/plasma{
-	dir = 4;
+/obj/structure/window/reinforced/plasma/spawner/directional/east{
 	alpha = 0
 	},
 /obj/effect/landmark/start/hangover,
@@ -366,15 +337,13 @@
 /obj/structure/disposalpipe/trunk{
 	dir = 1
 	},
-/obj/structure/window/reinforced/plasma{
-	dir = 1;
+/obj/structure/window/reinforced/plasma/spawner/directional/north{
 	alpha = 0
 	},
-/obj/structure/window/reinforced/plasma{
+/obj/structure/window/reinforced/plasma/spawner/directional/south{
 	alpha = 0
 	},
-/obj/structure/window/reinforced/plasma{
-	dir = 4;
+/obj/structure/window/reinforced/plasma/spawner/directional/east{
 	alpha = 0
 	},
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
@@ -394,27 +363,23 @@
 	dir = 9
 	},
 /obj/machinery/status_display/evac/directional/west,
-/obj/structure/window/reinforced/plasma{
-	dir = 8;
+/obj/structure/window/reinforced/plasma/spawner/directional/west{
 	alpha = 0
 	},
-/obj/structure/window/reinforced/plasma{
-	dir = 1;
+/obj/structure/window/reinforced/plasma/spawner/directional/north{
 	alpha = 0
 	},
-/obj/structure/window/reinforced/plasma{
+/obj/structure/window/reinforced/plasma/spawner/directional/south{
 	alpha = 0
 	},
 /obj/structure/bookcase/random/fiction,
 /turf/open/floor/iron/grimy,
 /area/station/commons/lounge)
 "ju" = (
-/obj/structure/window/reinforced/plasma{
-	dir = 4;
+/obj/structure/window/reinforced/plasma/spawner/directional/east{
 	alpha = 0
 	},
-/obj/structure/window/reinforced/plasma{
-	dir = 1;
+/obj/structure/window/reinforced/plasma/spawner/directional/north{
 	alpha = 0
 	},
 /turf/open/floor/iron/dark/textured_half,
@@ -424,8 +389,7 @@
 /obj/item/radio/intercom/directional/west{
 	pixel_y = -9
 	},
-/obj/structure/window/reinforced/plasma{
-	dir = 8;
+/obj/structure/window/reinforced/plasma/spawner/directional/west{
 	alpha = 0
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -437,23 +401,20 @@
 /turf/open/floor/stone,
 /area/station/commons/lounge)
 "jY" = (
-/obj/structure/window/reinforced/plasma{
-	dir = 8;
+/obj/structure/window/reinforced/plasma/spawner/directional/west{
 	alpha = 0
 	},
-/obj/structure/window/reinforced/plasma{
-	dir = 4;
+/obj/structure/window/reinforced/plasma/spawner/directional/east{
 	alpha = 0
 	},
 /obj/structure/disposalpipe/segment,
 /turf/open/floor/wood/parquet,
 /area/station/commons/lounge)
 "kY" = (
-/obj/structure/window/reinforced/plasma{
-	dir = 8;
+/obj/structure/window/reinforced/plasma/spawner/directional/west{
 	alpha = 0
 	},
-/obj/structure/window/reinforced/plasma{
+/obj/structure/window/reinforced/plasma/spawner/directional/south{
 	alpha = 0
 	},
 /obj/structure/disposalpipe/segment{
@@ -462,12 +423,10 @@
 /turf/open/floor/wood/parquet,
 /area/station/commons/lounge)
 "lh" = (
-/obj/structure/window/reinforced/plasma{
-	dir = 4;
+/obj/structure/window/reinforced/plasma/spawner/directional/east{
 	alpha = 0
 	},
-/obj/structure/window/reinforced/plasma{
-	dir = 1;
+/obj/structure/window/reinforced/plasma/spawner/directional/north{
 	alpha = 0
 	},
 /obj/structure/disposalpipe/segment{
@@ -479,8 +438,7 @@
 /obj/effect/turf_decal/siding/wood/corner{
 	dir = 1
 	},
-/obj/structure/window/reinforced/plasma{
-	dir = 1;
+/obj/structure/window/reinforced/plasma/spawner/directional/north{
 	alpha = 0
 	},
 /obj/structure/table/wood,
@@ -490,16 +448,14 @@
 /turf/open/floor/stone,
 /area/station/service/bar)
 "lS" = (
-/obj/effect/decal/cleanable/dirt/dust,
-/obj/structure/window/reinforced/plasma{
-	dir = 8;
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/window/reinforced/plasma/spawner/directional/west{
 	alpha = 0
 	},
-/obj/structure/window/reinforced/plasma{
+/obj/structure/window/reinforced/plasma/spawner/directional/south{
 	alpha = 0
 	},
-/obj/structure/window/reinforced/plasma{
-	dir = 1;
+/obj/structure/window/reinforced/plasma/spawner/directional/north{
 	alpha = 0
 	},
 /obj/item/kirbyplants/random,
@@ -507,11 +463,10 @@
 /turf/open/floor/wood/parquet,
 /area/station/commons/lounge)
 "lT" = (
-/obj/structure/window/reinforced/plasma{
-	dir = 8;
+/obj/structure/window/reinforced/plasma/spawner/directional/west{
 	alpha = 0
 	},
-/obj/structure/window/reinforced/plasma{
+/obj/structure/window/reinforced/plasma/spawner/directional/south{
 	alpha = 0
 	},
 /turf/open/floor/wood/parquet,
@@ -521,7 +476,7 @@
 	dir = 1
 	},
 /obj/machinery/light/directional/south,
-/obj/structure/window/reinforced/plasma{
+/obj/structure/window/reinforced/plasma/spawner/directional/south{
 	alpha = 0
 	},
 /obj/structure/chair/sofa/middle/brown{
@@ -536,14 +491,13 @@
 	pixel_y = 3
 	},
 /obj/effect/turf_decal/tile/bar/opposingcorners,
-/obj/structure/window/reinforced/plasma{
+/obj/structure/window/reinforced/plasma/spawner/directional/south{
 	alpha = 0
 	},
 /turf/open/floor/iron,
 /area/station/service/bar/backroom)
 "ny" = (
-/obj/structure/window/reinforced/plasma{
-	dir = 4;
+/obj/structure/window/reinforced/plasma/spawner/directional/east{
 	alpha = 0
 	},
 /turf/open/floor/iron/dark/textured_half{
@@ -563,12 +517,10 @@
 /obj/effect/turf_decal/siding/thinplating/dark{
 	dir = 10
 	},
-/obj/structure/window/reinforced/plasma{
-	dir = 8;
+/obj/structure/window/reinforced/plasma/spawner/directional/west{
 	alpha = 0
 	},
-/obj/structure/window/reinforced/plasma{
-	dir = 1;
+/obj/structure/window/reinforced/plasma/spawner/directional/north{
 	alpha = 0
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -582,12 +534,10 @@
 /turf/open/floor/carpet,
 /area/station/service/theater)
 "ox" = (
-/obj/structure/window/reinforced/plasma{
-	dir = 1;
+/obj/structure/window/reinforced/plasma/spawner/directional/north{
 	alpha = 0
 	},
-/obj/structure/window/reinforced/plasma{
-	dir = 4;
+/obj/structure/window/reinforced/plasma/spawner/directional/east{
 	alpha = 0
 	},
 /obj/structure/disposalpipe/segment{
@@ -599,11 +549,10 @@
 /obj/machinery/light/small/directional/west{
 	dir = 2
 	},
-/obj/structure/window/reinforced/plasma{
+/obj/structure/window/reinforced/plasma/spawner/directional/south{
 	alpha = 0
 	},
-/obj/structure/window/reinforced/plasma{
-	dir = 4;
+/obj/structure/window/reinforced/plasma/spawner/directional/east{
 	alpha = 0
 	},
 /turf/open/floor/wood/parquet,
@@ -620,12 +569,10 @@
 /area/station/service/bar)
 "ps" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/structure/window/reinforced/plasma{
-	dir = 1;
+/obj/structure/window/reinforced/plasma/spawner/directional/north{
 	alpha = 0
 	},
-/obj/structure/window/reinforced/plasma{
-	dir = 4;
+/obj/structure/window/reinforced/plasma/spawner/directional/east{
 	alpha = 0
 	},
 /obj/machinery/light/small/directional/east{
@@ -644,11 +591,10 @@
 /obj/effect/turf_decal/siding/wood{
 	dir = 8
 	},
-/obj/structure/window/reinforced/plasma{
-	dir = 4;
+/obj/structure/window/reinforced/plasma/spawner/directional/east{
 	alpha = 0
 	},
-/obj/structure/window/reinforced/plasma{
+/obj/structure/window/reinforced/plasma/spawner/directional/south{
 	alpha = 0
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -660,15 +606,13 @@
 /turf/open/floor/wood/parquet,
 /area/station/commons/lounge)
 "qi" = (
-/obj/structure/window/reinforced/plasma{
-	dir = 8;
+/obj/structure/window/reinforced/plasma/spawner/directional/west{
 	alpha = 0
 	},
-/obj/structure/window/reinforced/plasma{
-	dir = 1;
+/obj/structure/window/reinforced/plasma/spawner/directional/north{
 	alpha = 0
 	},
-/obj/structure/window/reinforced/plasma{
+/obj/structure/window/reinforced/plasma/spawner/directional/south{
 	alpha = 0
 	},
 /obj/machinery/computer/slot_machine,
@@ -680,11 +624,10 @@
 	},
 /obj/machinery/computer/security/telescreen/entertainment/directional/south,
 /obj/machinery/airalarm/directional/east,
-/obj/structure/window/reinforced/plasma{
+/obj/structure/window/reinforced/plasma/spawner/directional/south{
 	alpha = 0
 	},
-/obj/structure/window/reinforced/plasma{
-	dir = 4;
+/obj/structure/window/reinforced/plasma/spawner/directional/east{
 	alpha = 0
 	},
 /obj/structure/chair/sofa/right/brown{
@@ -693,11 +636,10 @@
 /turf/open/floor/iron/grimy,
 /area/station/commons/lounge)
 "qG" = (
-/obj/structure/window/reinforced/plasma{
+/obj/structure/window/reinforced/plasma/spawner/directional/south{
 	alpha = 0
 	},
-/obj/structure/window/reinforced/plasma{
-	dir = 4;
+/obj/structure/window/reinforced/plasma/spawner/directional/east{
 	alpha = 0
 	},
 /obj/structure/disposalpipe/segment{
@@ -707,15 +649,13 @@
 /area/station/service/theater)
 "qU" = (
 /obj/machinery/barsign/all_access/directional/south,
-/obj/structure/window/reinforced/plasma{
+/obj/structure/window/reinforced/plasma/spawner/directional/south{
 	alpha = 0
 	},
-/obj/structure/window/reinforced/plasma{
-	dir = 4;
+/obj/structure/window/reinforced/plasma/spawner/directional/east{
 	alpha = 0
 	},
-/obj/structure/window/reinforced/plasma{
-	dir = 1;
+/obj/structure/window/reinforced/plasma/spawner/directional/north{
 	alpha = 0
 	},
 /obj/machinery/vending/coffee,
@@ -725,23 +665,20 @@
 /obj/effect/turf_decal/siding/wood{
 	dir = 9
 	},
-/obj/structure/window/reinforced/plasma{
+/obj/structure/window/reinforced/plasma/spawner/directional/south{
 	alpha = 0
 	},
-/obj/structure/window/reinforced/plasma{
-	dir = 1;
+/obj/structure/window/reinforced/plasma/spawner/directional/north{
 	alpha = 0
 	},
 /turf/open/floor/stone,
 /area/station/commons/lounge)
 "rB" = (
-/obj/effect/decal/cleanable/dirt/dust,
-/obj/structure/window/reinforced/plasma{
-	dir = 8;
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/window/reinforced/plasma/spawner/directional/west{
 	alpha = 0
 	},
-/obj/structure/window/reinforced/plasma{
-	dir = 4;
+/obj/structure/window/reinforced/plasma/spawner/directional/east{
 	alpha = 0
 	},
 /turf/open/floor/wood/parquet,
@@ -762,23 +699,19 @@
 /area/station/service/bar)
 "tF" = (
 /obj/machinery/barsign/all_access/directional/north,
-/obj/structure/window/reinforced/plasma{
-	dir = 1;
+/obj/structure/window/reinforced/plasma/spawner/directional/north{
 	alpha = 0
 	},
-/obj/structure/window/reinforced/plasma{
-	dir = 4;
+/obj/structure/window/reinforced/plasma/spawner/directional/east{
 	alpha = 0
 	},
 /turf/open/floor/wood/parquet,
 /area/station/commons/lounge)
 "tL" = (
-/obj/structure/window/reinforced/plasma{
-	dir = 4;
+/obj/structure/window/reinforced/plasma/spawner/directional/east{
 	alpha = 0
 	},
-/obj/structure/window/reinforced/plasma{
-	dir = 1;
+/obj/structure/window/reinforced/plasma/spawner/directional/north{
 	alpha = 0
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -797,19 +730,17 @@
 /obj/structure/table/wood,
 /obj/machinery/airalarm/directional/east,
 /obj/effect/turf_decal/tile/bar/opposingcorners,
-/obj/structure/window/reinforced/plasma{
-	dir = 4;
+/obj/structure/window/reinforced/plasma/spawner/directional/east{
 	alpha = 0
 	},
 /turf/open/floor/iron,
 /area/station/service/bar/backroom)
 "uF" = (
 /obj/machinery/holopad,
-/obj/structure/window/reinforced/plasma{
-	dir = 8;
+/obj/structure/window/reinforced/plasma/spawner/directional/west{
 	alpha = 0
 	},
-/obj/structure/window/reinforced/plasma{
+/obj/structure/window/reinforced/plasma/spawner/directional/south{
 	alpha = 0
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -824,24 +755,20 @@
 /area/station/commons/lounge)
 "uI" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2,
-/obj/effect/decal/cleanable/dirt/dust,
-/obj/structure/window/reinforced/plasma{
-	dir = 8;
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/window/reinforced/plasma/spawner/directional/west{
 	alpha = 0
 	},
-/obj/structure/window/reinforced/plasma{
-	dir = 4;
+/obj/structure/window/reinforced/plasma/spawner/directional/east{
 	alpha = 0
 	},
 /turf/open/floor/wood/parquet,
 /area/station/commons/lounge)
 "uO" = (
-/obj/structure/window/reinforced/plasma{
-	dir = 8;
+/obj/structure/window/reinforced/plasma/spawner/directional/west{
 	alpha = 0
 	},
-/obj/structure/window/reinforced/plasma{
-	dir = 1;
+/obj/structure/window/reinforced/plasma/spawner/directional/north{
 	alpha = 0
 	},
 /turf/open/floor/iron/dark/textured_half{
@@ -852,11 +779,10 @@
 /obj/effect/turf_decal/siding/thinplating/dark{
 	dir = 4
 	},
-/obj/structure/window/reinforced/plasma{
+/obj/structure/window/reinforced/plasma/spawner/directional/south{
 	alpha = 0
 	},
-/obj/structure/window/reinforced/plasma{
-	dir = 1;
+/obj/structure/window/reinforced/plasma/spawner/directional/north{
 	alpha = 0
 	},
 /turf/open/floor/carpet,
@@ -879,13 +805,11 @@
 /area/station/service/bar/backroom)
 "vy" = (
 /obj/machinery/newscaster/directional/north,
-/obj/effect/decal/cleanable/dirt/dust,
-/obj/structure/window/reinforced/plasma{
-	dir = 1;
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/window/reinforced/plasma/spawner/directional/north{
 	alpha = 0
 	},
-/obj/structure/window/reinforced/plasma{
-	dir = 4;
+/obj/structure/window/reinforced/plasma/spawner/directional/east{
 	alpha = 0
 	},
 /turf/open/floor/wood/parquet,
@@ -896,7 +820,7 @@
 	},
 /obj/effect/turf_decal/siding/white,
 /obj/effect/turf_decal/tile/bar/opposingcorners,
-/obj/structure/window/reinforced/plasma{
+/obj/structure/window/reinforced/plasma/spawner/directional/south{
 	alpha = 0
 	},
 /turf/open/floor/iron,
@@ -907,12 +831,10 @@
 	dir = 1
 	},
 /obj/machinery/light/small/directional/east,
-/obj/structure/window/reinforced/plasma{
-	dir = 1;
+/obj/structure/window/reinforced/plasma/spawner/directional/north{
 	alpha = 0
 	},
-/obj/structure/window/reinforced/plasma{
-	dir = 4;
+/obj/structure/window/reinforced/plasma/spawner/directional/east{
 	alpha = 0
 	},
 /turf/open/floor/stone,
@@ -925,11 +847,10 @@
 /turf/open/floor/iron,
 /area/station/service/bar)
 "wW" = (
-/obj/structure/window/reinforced/plasma{
+/obj/structure/window/reinforced/plasma/spawner/directional/south{
 	alpha = 0
 	},
-/obj/structure/window/reinforced/plasma{
-	dir = 1;
+/obj/structure/window/reinforced/plasma/spawner/directional/north{
 	alpha = 0
 	},
 /obj/effect/landmark/start/hangover,
@@ -943,11 +864,10 @@
 /obj/machinery/vending/wardrobe/bar_wardrobe,
 /obj/item/radio/intercom/directional/east,
 /obj/effect/turf_decal/tile/bar/opposingcorners,
-/obj/structure/window/reinforced/plasma{
-	dir = 4;
+/obj/structure/window/reinforced/plasma/spawner/directional/east{
 	alpha = 0
 	},
-/obj/structure/window/reinforced/plasma{
+/obj/structure/window/reinforced/plasma/spawner/directional/south{
 	alpha = 0
 	},
 /turf/open/floor/iron,
@@ -962,11 +882,10 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
-/obj/structure/window/reinforced/plasma{
-	dir = 1;
+/obj/structure/window/reinforced/plasma/spawner/directional/north{
 	alpha = 0
 	},
-/obj/structure/window/reinforced/plasma{
+/obj/structure/window/reinforced/plasma/spawner/directional/south{
 	alpha = 0
 	},
 /turf/open/floor/wood/parquet,
@@ -984,7 +903,7 @@
 /area/station/service/bar)
 "xY" = (
 /obj/structure/extinguisher_cabinet/directional/east,
-/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/siding/white{
 	dir = 4
 	},
@@ -1004,12 +923,10 @@
 /turf/open/floor/iron,
 /area/station/service/bar/backroom)
 "zA" = (
-/obj/structure/window/reinforced/plasma{
-	dir = 8;
+/obj/structure/window/reinforced/plasma/spawner/directional/west{
 	alpha = 0
 	},
-/obj/structure/window/reinforced/plasma{
-	dir = 1;
+/obj/structure/window/reinforced/plasma/spawner/directional/north{
 	alpha = 0
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -1037,19 +954,17 @@
 /turf/open/floor/iron/dark/textured_half,
 /area/station/service/bar/backroom)
 "Am" = (
-/obj/structure/window/reinforced/plasma{
-	dir = 8;
+/obj/structure/window/reinforced/plasma/spawner/directional/west{
 	alpha = 0
 	},
-/obj/structure/window/reinforced/plasma{
+/obj/structure/window/reinforced/plasma/spawner/directional/south{
 	alpha = 0
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/wood/parquet,
 /area/station/commons/lounge)
 "Ao" = (
-/obj/structure/window/reinforced/plasma{
-	dir = 8;
+/obj/structure/window/reinforced/plasma/spawner/directional/west{
 	alpha = 0
 	},
 /turf/open/floor/iron/dark/textured_half{
@@ -1064,11 +979,10 @@
 /turf/open/floor/stone,
 /area/station/commons/lounge)
 "AH" = (
-/obj/structure/window/reinforced/plasma{
+/obj/structure/window/reinforced/plasma/spawner/directional/south{
 	alpha = 0
 	},
-/obj/structure/window/reinforced/plasma{
-	dir = 1;
+/obj/structure/window/reinforced/plasma/spawner/directional/north{
 	alpha = 0
 	},
 /obj/structure/disposalpipe/segment{
@@ -1081,16 +995,13 @@
 	dir = 10
 	},
 /obj/effect/turf_decal/tile/bar/opposingcorners,
-/obj/structure/window/reinforced/plasma{
-	dir = 8;
+/obj/structure/window/reinforced/plasma/spawner/directional/west{
 	alpha = 0
 	},
-/obj/structure/window/reinforced/plasma{
-	dir = 4;
+/obj/structure/window/reinforced/plasma/spawner/directional/east{
 	alpha = 0
 	},
-/obj/structure/window/reinforced/plasma{
-	dir = 1;
+/obj/structure/window/reinforced/plasma/spawner/directional/north{
 	alpha = 0
 	},
 /mob/living/carbon/human/species/monkey/punpun,
@@ -1117,15 +1028,13 @@
 "Bc" = (
 /obj/machinery/light/directional/north,
 /obj/machinery/firealarm/directional/north,
-/obj/structure/window/reinforced/plasma{
-	dir = 1;
+/obj/structure/window/reinforced/plasma/spawner/directional/north{
 	alpha = 0
 	},
-/obj/structure/window/reinforced/plasma{
-	dir = 8;
+/obj/structure/window/reinforced/plasma/spawner/directional/west{
 	alpha = 0
 	},
-/obj/structure/window/reinforced/plasma{
+/obj/structure/window/reinforced/plasma/spawner/directional/south{
 	alpha = 0
 	},
 /obj/structure/table/wood,
@@ -1135,28 +1044,24 @@
 /area/station/commons/lounge)
 "Bg" = (
 /obj/machinery/light/directional/north,
-/obj/structure/window/reinforced/plasma{
-	dir = 1;
+/obj/structure/window/reinforced/plasma/spawner/directional/north{
 	alpha = 0
 	},
-/obj/structure/window/reinforced/plasma{
-	dir = 8;
+/obj/structure/window/reinforced/plasma/spawner/directional/west{
 	alpha = 0
 	},
 /obj/effect/landmark/event_spawn,
 /turf/open/floor/carpet,
 /area/station/service/theater)
 "Bm" = (
-/obj/structure/window/reinforced/plasma{
-	dir = 4;
+/obj/structure/window/reinforced/plasma/spawner/directional/east{
 	alpha = 0
 	},
 /turf/open/floor/wood/parquet,
 /area/station/commons/lounge)
 "Bz" = (
 /obj/structure/sign/poster/random/directional/north,
-/obj/structure/window/reinforced/plasma{
-	dir = 1;
+/obj/structure/window/reinforced/plasma/spawner/directional/north{
 	alpha = 0
 	},
 /obj/structure/disposalpipe/segment{
@@ -1168,15 +1073,13 @@
 /obj/effect/turf_decal/siding/thinplating/dark{
 	dir = 4
 	},
-/obj/structure/window/reinforced/plasma{
+/obj/structure/window/reinforced/plasma/spawner/directional/south{
 	alpha = 0
 	},
-/obj/structure/window/reinforced/plasma{
-	dir = 4;
+/obj/structure/window/reinforced/plasma/spawner/directional/east{
 	alpha = 0
 	},
-/obj/structure/window/reinforced/plasma{
-	dir = 1;
+/obj/structure/window/reinforced/plasma/spawner/directional/north{
 	alpha = 0
 	},
 /obj/machinery/vending/cigarette,
@@ -1189,12 +1092,10 @@
 /obj/effect/turf_decal/siding/thinplating/dark{
 	dir = 8
 	},
-/obj/structure/window/reinforced/plasma{
-	dir = 1;
+/obj/structure/window/reinforced/plasma/spawner/directional/north{
 	alpha = 0
 	},
-/obj/structure/window/reinforced/plasma{
-	dir = 8;
+/obj/structure/window/reinforced/plasma/spawner/directional/west{
 	alpha = 0
 	},
 /obj/structure/disposalpipe/segment{
@@ -1213,22 +1114,20 @@
 	name = "The Regular's Bell";
 	pixel_x = -6
 	},
-/obj/structure/window/reinforced/plasma{
+/obj/structure/window/reinforced/plasma/spawner/directional/south{
 	alpha = 0
 	},
 /turf/open/floor/iron,
 /area/station/service/bar)
 "CT" = (
 /obj/item/radio/intercom/directional/west,
-/obj/structure/window/reinforced/plasma{
-	dir = 8;
+/obj/structure/window/reinforced/plasma/spawner/directional/west{
 	alpha = 0
 	},
-/obj/structure/window/reinforced/plasma{
+/obj/structure/window/reinforced/plasma/spawner/directional/south{
 	alpha = 0
 	},
-/obj/structure/window/reinforced/plasma{
-	dir = 4;
+/obj/structure/window/reinforced/plasma/spawner/directional/east{
 	alpha = 0
 	},
 /obj/structure/table/wood,
@@ -1236,11 +1135,10 @@
 /turf/open/floor/carpet,
 /area/station/service/theater)
 "Dm" = (
-/obj/structure/window/reinforced/plasma{
+/obj/structure/window/reinforced/plasma/spawner/directional/south{
 	alpha = 0
 	},
-/obj/structure/window/reinforced/plasma{
-	dir = 8;
+/obj/structure/window/reinforced/plasma/spawner/directional/west{
 	alpha = 0
 	},
 /obj/structure/disposalpipe/segment{
@@ -1256,31 +1154,27 @@
 "Dx" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/effect/decal/cleanable/dirt/dust,
-/obj/structure/window/reinforced/plasma{
-	dir = 4;
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/window/reinforced/plasma/spawner/directional/east{
 	alpha = 0
 	},
 /turf/open/floor/wood/parquet,
 /area/station/commons/lounge)
 "DP" = (
 /obj/item/radio/intercom/directional/north,
-/obj/structure/window/reinforced/plasma{
-	dir = 1;
+/obj/structure/window/reinforced/plasma/spawner/directional/north{
 	alpha = 0
 	},
-/obj/structure/window/reinforced/plasma{
-	dir = 4;
+/obj/structure/window/reinforced/plasma/spawner/directional/east{
 	alpha = 0
 	},
 /turf/open/floor/wood/parquet,
 /area/station/commons/lounge)
 "DQ" = (
-/obj/structure/window/reinforced/plasma{
+/obj/structure/window/reinforced/plasma/spawner/directional/south{
 	alpha = 0
 	},
-/obj/structure/window/reinforced/plasma{
-	dir = 4;
+/obj/structure/window/reinforced/plasma/spawner/directional/east{
 	alpha = 0
 	},
 /turf/open/floor/wood/parquet,
@@ -1311,8 +1205,7 @@
 /area/template_noop)
 "EQ" = (
 /obj/machinery/vending/boozeomat,
-/obj/structure/window/reinforced/plasma{
-	dir = 1;
+/obj/structure/window/reinforced/plasma/spawner/directional/north{
 	alpha = 0
 	},
 /turf/open/floor/iron/dark/textured_half,
@@ -1329,23 +1222,20 @@
 /turf/open/floor/iron,
 /area/station/service/bar)
 "Gw" = (
-/obj/structure/window/reinforced/plasma{
-	dir = 8;
+/obj/structure/window/reinforced/plasma/spawner/directional/west{
 	alpha = 0
 	},
-/obj/structure/window/reinforced/plasma{
-	dir = 4;
+/obj/structure/window/reinforced/plasma/spawner/directional/east{
 	alpha = 0
 	},
 /turf/open/floor/wood/tile,
 /area/station/service/theater)
 "GH" = (
 /obj/effect/turf_decal/siding/thinplating/dark,
-/obj/structure/window/reinforced/plasma{
+/obj/structure/window/reinforced/plasma/spawner/directional/south{
 	alpha = 0
 	},
-/obj/structure/window/reinforced/plasma{
-	dir = 4;
+/obj/structure/window/reinforced/plasma/spawner/directional/east{
 	alpha = 0
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -1369,12 +1259,10 @@
 "GW" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/structure/window/reinforced/plasma{
-	dir = 8;
+/obj/structure/window/reinforced/plasma/spawner/directional/west{
 	alpha = 0
 	},
-/obj/structure/window/reinforced/plasma{
-	dir = 4;
+/obj/structure/window/reinforced/plasma/spawner/directional/east{
 	alpha = 0
 	},
 /turf/open/floor/wood/parquet,
@@ -1383,8 +1271,7 @@
 /obj/effect/turf_decal/siding/wood{
 	dir = 9
 	},
-/obj/structure/window/reinforced/plasma{
-	dir = 1;
+/obj/structure/window/reinforced/plasma/spawner/directional/north{
 	alpha = 0
 	},
 /obj/effect/decal/cleanable/blood/tracks{
@@ -1403,29 +1290,24 @@
 /turf/open/floor/iron,
 /area/station/service/bar/backroom)
 "Ia" = (
-/obj/effect/decal/cleanable/dirt/dust,
-/obj/structure/window/reinforced/plasma{
-	dir = 8;
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/window/reinforced/plasma/spawner/directional/west{
 	alpha = 0
 	},
-/obj/structure/window/reinforced/plasma{
-	dir = 1;
+/obj/structure/window/reinforced/plasma/spawner/directional/north{
 	alpha = 0
 	},
-/obj/structure/window/reinforced/plasma{
-	dir = 4;
+/obj/structure/window/reinforced/plasma/spawner/directional/east{
 	alpha = 0
 	},
 /obj/machinery/restaurant_portal/bar,
 /turf/open/floor/wood/parquet,
 /area/station/commons/lounge)
 "Ig" = (
-/obj/structure/window/reinforced/plasma{
-	dir = 1;
+/obj/structure/window/reinforced/plasma/spawner/directional/north{
 	alpha = 0
 	},
-/obj/structure/window/reinforced/plasma{
-	dir = 4;
+/obj/structure/window/reinforced/plasma/spawner/directional/east{
 	alpha = 0
 	},
 /turf/open/floor/wood/parquet,
@@ -1444,12 +1326,10 @@
 /area/station/service/bar)
 "IU" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4,
-/obj/structure/window/reinforced/plasma{
-	dir = 8;
+/obj/structure/window/reinforced/plasma/spawner/directional/west{
 	alpha = 0
 	},
-/obj/structure/window/reinforced/plasma{
-	dir = 4;
+/obj/structure/window/reinforced/plasma/spawner/directional/east{
 	alpha = 0
 	},
 /turf/open/floor/wood/parquet,
@@ -1473,8 +1353,7 @@
 /turf/open/floor/iron,
 /area/station/service/bar)
 "JI" = (
-/obj/structure/window/reinforced/plasma{
-	dir = 1;
+/obj/structure/window/reinforced/plasma/spawner/directional/north{
 	alpha = 0
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -1486,11 +1365,10 @@
 /turf/open/floor/wood/parquet,
 /area/station/commons/lounge)
 "Kw" = (
-/obj/structure/window/reinforced/plasma{
+/obj/structure/window/reinforced/plasma/spawner/directional/south{
 	alpha = 0
 	},
-/obj/structure/window/reinforced/plasma{
-	dir = 4;
+/obj/structure/window/reinforced/plasma/spawner/directional/east{
 	alpha = 0
 	},
 /turf/open/floor/carpet,
@@ -1499,16 +1377,15 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
 	dir = 1
 	},
-/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/tile/bar/opposingcorners,
 /turf/open/floor/iron,
 /area/station/service/bar)
 "Lh" = (
-/obj/structure/window/reinforced/plasma{
+/obj/structure/window/reinforced/plasma/spawner/directional/south{
 	alpha = 0
 	},
-/obj/structure/window/reinforced/plasma{
-	dir = 1;
+/obj/structure/window/reinforced/plasma/spawner/directional/north{
 	alpha = 0
 	},
 /turf/open/floor/carpet,
@@ -1517,16 +1394,13 @@
 /obj/machinery/light/small/directional/east,
 /obj/machinery/computer/security/telescreen/entertainment/directional/north,
 /obj/structure/sign/poster/random/directional/east,
-/obj/structure/window/reinforced/plasma{
-	dir = 1;
+/obj/structure/window/reinforced/plasma/spawner/directional/north{
 	alpha = 0
 	},
-/obj/structure/window/reinforced/plasma{
-	dir = 8;
+/obj/structure/window/reinforced/plasma/spawner/directional/west{
 	alpha = 0
 	},
-/obj/structure/window/reinforced/plasma{
-	dir = 4;
+/obj/structure/window/reinforced/plasma/spawner/directional/east{
 	alpha = 0
 	},
 /obj/effect/landmark/start/hangover,
@@ -1537,8 +1411,7 @@
 	dir = 8
 	},
 /obj/effect/turf_decal/tile/bar/opposingcorners,
-/obj/structure/window/reinforced/plasma{
-	dir = 8;
+/obj/structure/window/reinforced/plasma/spawner/directional/west{
 	alpha = 0
 	},
 /turf/open/floor/iron,
@@ -1548,11 +1421,10 @@
 	dir = 8
 	},
 /obj/structure/sign/poster/random/directional/north,
-/obj/structure/window/reinforced/plasma{
-	dir = 1;
+/obj/structure/window/reinforced/plasma/spawner/directional/north{
 	alpha = 0
 	},
-/obj/structure/window/reinforced/plasma{
+/obj/structure/window/reinforced/plasma/spawner/directional/south{
 	alpha = 0
 	},
 /turf/open/floor/carpet,
@@ -1572,7 +1444,7 @@
 	},
 /area/station/commons/lounge)
 "LL" = (
-/obj/structure/window/reinforced/plasma{
+/obj/structure/window/reinforced/plasma/spawner/directional/south{
 	alpha = 0
 	},
 /turf/open/floor/iron/dark/textured_half,
@@ -1582,8 +1454,7 @@
 /obj/effect/turf_decal/siding/wood{
 	dir = 1
 	},
-/obj/structure/window/reinforced/plasma{
-	dir = 1;
+/obj/structure/window/reinforced/plasma/spawner/directional/north{
 	alpha = 0
 	},
 /turf/open/floor/stone,
@@ -1594,18 +1465,17 @@
 	dir = 6
 	},
 /obj/effect/turf_decal/tile/bar/opposingcorners,
-/obj/structure/window/reinforced/plasma{
+/obj/structure/window/reinforced/plasma/spawner/directional/south{
 	alpha = 0
 	},
 /turf/open/floor/iron,
 /area/station/service/bar)
 "Ma" = (
 /obj/effect/turf_decal/siding/wood/end,
-/obj/structure/window/reinforced/plasma{
-	dir = 4;
+/obj/structure/window/reinforced/plasma/spawner/directional/east{
 	alpha = 0
 	},
-/obj/structure/window/reinforced/plasma{
+/obj/structure/window/reinforced/plasma/spawner/directional/south{
 	alpha = 0
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -1629,8 +1499,7 @@
 	},
 /obj/structure/table/wood,
 /obj/effect/turf_decal/tile/bar/opposingcorners,
-/obj/structure/window/reinforced/plasma{
-	dir = 4;
+/obj/structure/window/reinforced/plasma/spawner/directional/east{
 	alpha = 0
 	},
 /obj/effect/spawner/random/entertainment/gambling,
@@ -1643,8 +1512,7 @@
 	c_tag = "Service Theater";
 	dir = 9
 	},
-/obj/structure/window/reinforced/plasma{
-	dir = 1;
+/obj/structure/window/reinforced/plasma/spawner/directional/north{
 	alpha = 0
 	},
 /obj/structure/disposalpipe/segment{
@@ -1660,11 +1528,10 @@
 /turf/open/floor/iron,
 /area/station/service/bar)
 "MX" = (
-/obj/structure/window/reinforced/plasma{
-	dir = 1;
+/obj/structure/window/reinforced/plasma/spawner/directional/north{
 	alpha = 0
 	},
-/obj/structure/window/reinforced/plasma{
+/obj/structure/window/reinforced/plasma/spawner/directional/south{
 	alpha = 0
 	},
 /turf/open/floor/wood/parquet,
@@ -1678,22 +1545,19 @@
 /turf/open/floor/iron,
 /area/station/service/bar)
 "Na" = (
-/obj/structure/window/reinforced/plasma{
-	dir = 8;
+/obj/structure/window/reinforced/plasma/spawner/directional/west{
 	alpha = 0
 	},
 /turf/open/floor/wood/parquet,
 /area/station/commons/lounge)
 "ND" = (
-/obj/structure/window/reinforced/plasma{
-	dir = 8;
+/obj/structure/window/reinforced/plasma/spawner/directional/west{
 	alpha = 0
 	},
-/obj/structure/window/reinforced/plasma{
+/obj/structure/window/reinforced/plasma/spawner/directional/south{
 	alpha = 0
 	},
-/obj/structure/window/reinforced/plasma{
-	dir = 1;
+/obj/structure/window/reinforced/plasma/spawner/directional/north{
 	alpha = 0
 	},
 /obj/effect/spawner/random/structure/musician/piano/random_piano,
@@ -1701,12 +1565,10 @@
 /turf/open/floor/wood/parquet,
 /area/station/commons/lounge)
 "NF" = (
-/obj/structure/window/reinforced/plasma{
-	dir = 1;
+/obj/structure/window/reinforced/plasma/spawner/directional/north{
 	alpha = 0
 	},
-/obj/structure/window/reinforced/plasma{
-	dir = 8;
+/obj/structure/window/reinforced/plasma/spawner/directional/west{
 	alpha = 0
 	},
 /turf/open/floor/iron/dark/textured_half{
@@ -1717,8 +1579,7 @@
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/structure/window/reinforced/plasma{
-	dir = 4;
+/obj/structure/window/reinforced/plasma/spawner/directional/east{
 	alpha = 0
 	},
 /obj/structure/disposalpipe/segment{
@@ -1735,16 +1596,14 @@
 /turf/open/floor/iron,
 /area/station/service/bar/backroom)
 "Pa" = (
-/obj/effect/decal/cleanable/dirt/dust,
-/obj/structure/window/reinforced/plasma{
-	dir = 8;
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/window/reinforced/plasma/spawner/directional/west{
 	alpha = 0
 	},
-/obj/structure/window/reinforced/plasma{
+/obj/structure/window/reinforced/plasma/spawner/directional/south{
 	alpha = 0
 	},
-/obj/structure/window/reinforced/plasma{
-	dir = 4;
+/obj/structure/window/reinforced/plasma/spawner/directional/east{
 	alpha = 0
 	},
 /obj/item/instrument/harmonica,
@@ -1765,12 +1624,10 @@
 /turf/open/floor/iron,
 /area/station/service/bar)
 "Pn" = (
-/obj/structure/window/reinforced/plasma{
-	dir = 8;
+/obj/structure/window/reinforced/plasma/spawner/directional/west{
 	alpha = 0
 	},
-/obj/structure/window/reinforced/plasma{
-	dir = 1;
+/obj/structure/window/reinforced/plasma/spawner/directional/north{
 	alpha = 0
 	},
 /turf/open/floor/wood/parquet,
@@ -1790,11 +1647,10 @@
 /turf/open/floor/iron,
 /area/station/service/bar/backroom)
 "Pz" = (
-/obj/structure/window/reinforced/plasma{
-	dir = 8;
+/obj/structure/window/reinforced/plasma/spawner/directional/west{
 	alpha = 0
 	},
-/obj/structure/window/reinforced/plasma{
+/obj/structure/window/reinforced/plasma/spawner/directional/south{
 	alpha = 0
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -1805,11 +1661,10 @@
 	},
 /area/station/commons/lounge)
 "PA" = (
-/obj/structure/window/reinforced/plasma{
-	dir = 1;
+/obj/structure/window/reinforced/plasma/spawner/directional/north{
 	alpha = 0
 	},
-/obj/structure/window/reinforced/plasma{
+/obj/structure/window/reinforced/plasma/spawner/directional/south{
 	alpha = 0
 	},
 /turf/open/floor/carpet,
@@ -1818,12 +1673,10 @@
 /obj/effect/turf_decal/siding/wood{
 	dir = 8
 	},
-/obj/structure/window/reinforced/plasma{
-	dir = 1;
+/obj/structure/window/reinforced/plasma/spawner/directional/north{
 	alpha = 0
 	},
-/obj/structure/window/reinforced/plasma{
-	dir = 4;
+/obj/structure/window/reinforced/plasma/spawner/directional/east{
 	alpha = 0
 	},
 /obj/structure/disposalpipe/segment{
@@ -1832,11 +1685,10 @@
 /turf/open/floor/stone,
 /area/station/commons/lounge)
 "Qh" = (
-/obj/structure/window/reinforced/plasma{
+/obj/structure/window/reinforced/plasma/spawner/directional/south{
 	alpha = 0
 	},
-/obj/structure/window/reinforced/plasma{
-	dir = 4;
+/obj/structure/window/reinforced/plasma/spawner/directional/east{
 	alpha = 0
 	},
 /obj/item/kirbyplants/random,
@@ -1848,8 +1700,7 @@
 /obj/effect/turf_decal/siding/wood{
 	dir = 8
 	},
-/obj/structure/window/reinforced/plasma{
-	dir = 1;
+/obj/structure/window/reinforced/plasma/spawner/directional/north{
 	alpha = 0
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -1874,23 +1725,19 @@
 /turf/open/floor/stone,
 /area/station/service/bar)
 "QO" = (
-/obj/structure/window/reinforced/plasma{
-	dir = 1;
+/obj/structure/window/reinforced/plasma/spawner/directional/north{
 	alpha = 0
 	},
-/obj/structure/window/reinforced/plasma{
-	dir = 8;
+/obj/structure/window/reinforced/plasma/spawner/directional/west{
 	alpha = 0
 	},
 /turf/open/floor/carpet,
 /area/station/service/theater)
 "QT" = (
-/obj/structure/window/reinforced/plasma{
-	dir = 8;
+/obj/structure/window/reinforced/plasma/spawner/directional/west{
 	alpha = 0
 	},
-/obj/structure/window/reinforced/plasma{
-	dir = 4;
+/obj/structure/window/reinforced/plasma/spawner/directional/east{
 	alpha = 0
 	},
 /turf/open/floor/wood/parquet,
@@ -1898,11 +1745,10 @@
 "Rr" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/structure/window/reinforced/plasma{
+/obj/structure/window/reinforced/plasma/spawner/directional/south{
 	alpha = 0
 	},
-/obj/structure/window/reinforced/plasma{
-	dir = 8;
+/obj/structure/window/reinforced/plasma/spawner/directional/west{
 	alpha = 0
 	},
 /obj/effect/decal/cleanable/blood/tracks{
@@ -1940,12 +1786,10 @@
 	c_tag = "Service Bar North";
 	dir = 9
 	},
-/obj/structure/window/reinforced/plasma{
-	dir = 1;
+/obj/structure/window/reinforced/plasma/spawner/directional/north{
 	alpha = 0
 	},
-/obj/structure/window/reinforced/plasma{
-	dir = 8;
+/obj/structure/window/reinforced/plasma/spawner/directional/west{
 	alpha = 0
 	},
 /turf/open/floor/wood/parquet,
@@ -1963,17 +1807,16 @@
 /area/station/service/bar)
 "Tm" = (
 /obj/machinery/atm/directional/north,
-/obj/structure/window/reinforced/plasma{
-	dir = 1;
+/obj/structure/window/reinforced/plasma/spawner/directional/north{
 	alpha = 0
 	},
-/obj/structure/window/reinforced/plasma{
+/obj/structure/window/reinforced/plasma/spawner/directional/south{
 	alpha = 0
 	},
 /turf/open/floor/wood/parquet,
 /area/station/commons/lounge)
 "Uq" = (
-/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/decal/cleanable/dirt,
 /obj/machinery/airalarm/directional/south,
 /obj/effect/turf_decal/siding/white,
 /obj/machinery/camera/directional/south{
@@ -1995,11 +1838,10 @@
 /obj/effect/turf_decal/siding/wood{
 	dir = 8
 	},
-/obj/structure/window/reinforced/plasma{
+/obj/structure/window/reinforced/plasma/spawner/directional/south{
 	alpha = 0
 	},
-/obj/structure/window/reinforced/plasma{
-	dir = 8;
+/obj/structure/window/reinforced/plasma/spawner/directional/west{
 	alpha = 0
 	},
 /obj/effect/landmark/start/hangover,
@@ -2010,11 +1852,10 @@
 /area/station/commons/lounge)
 "UC" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/structure/window/reinforced/plasma{
+/obj/structure/window/reinforced/plasma/spawner/directional/south{
 	alpha = 0
 	},
-/obj/structure/window/reinforced/plasma{
-	dir = 8;
+/obj/structure/window/reinforced/plasma/spawner/directional/west{
 	alpha = 0
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -2031,11 +1872,10 @@
 	dir = 4
 	},
 /obj/machinery/computer/security/telescreen/entertainment/directional/south,
-/obj/structure/window/reinforced/plasma{
+/obj/structure/window/reinforced/plasma/spawner/directional/south{
 	alpha = 0
 	},
-/obj/structure/window/reinforced/plasma{
-	dir = 1;
+/obj/structure/window/reinforced/plasma/spawner/directional/north{
 	alpha = 0
 	},
 /obj/effect/landmark/event_spawn,
@@ -2045,11 +1885,10 @@
 /turf/open/floor/stone,
 /area/station/commons/lounge)
 "UP" = (
-/obj/structure/window/reinforced/plasma{
+/obj/structure/window/reinforced/plasma/spawner/directional/south{
 	alpha = 0
 	},
-/obj/structure/window/reinforced/plasma{
-	dir = 8;
+/obj/structure/window/reinforced/plasma/spawner/directional/west{
 	alpha = 0
 	},
 /turf/open/floor/wood/parquet,
@@ -2058,11 +1897,10 @@
 /obj/effect/spawner/random/entertainment/gambling,
 /obj/machinery/newscaster/directional/south,
 /obj/machinery/status_display/evac/directional/west,
-/obj/structure/window/reinforced/plasma{
-	dir = 8;
+/obj/structure/window/reinforced/plasma/spawner/directional/west{
 	alpha = 0
 	},
-/obj/structure/window/reinforced/plasma{
+/obj/structure/window/reinforced/plasma/spawner/directional/south{
 	alpha = 0
 	},
 /obj/structure/chair/sofa/left/brown{
@@ -2071,7 +1909,7 @@
 /turf/open/floor/iron/grimy,
 /area/station/commons/lounge)
 "Vz" = (
-/obj/structure/window/reinforced/plasma{
+/obj/structure/window/reinforced/plasma/spawner/directional/south{
 	alpha = 0
 	},
 /obj/machinery/door/airlock{
@@ -2087,7 +1925,7 @@
 /obj/effect/turf_decal/siding/white/corner,
 /obj/machinery/firealarm/directional/south,
 /obj/effect/turf_decal/tile/bar/opposingcorners,
-/obj/structure/window/reinforced/plasma{
+/obj/structure/window/reinforced/plasma/spawner/directional/south{
 	alpha = 0
 	},
 /obj/structure/disposalpipe/segment{
@@ -2099,8 +1937,7 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
-/obj/structure/window/reinforced/plasma{
-	dir = 1;
+/obj/structure/window/reinforced/plasma/spawner/directional/north{
 	alpha = 0
 	},
 /turf/open/floor/wood/tile,
@@ -2114,12 +1951,10 @@
 /turf/open/floor/iron,
 /area/station/service/bar)
 "Wr" = (
-/obj/structure/window/reinforced/plasma{
-	dir = 1;
+/obj/structure/window/reinforced/plasma/spawner/directional/north{
 	alpha = 0
 	},
-/obj/structure/window/reinforced/plasma{
-	dir = 8;
+/obj/structure/window/reinforced/plasma/spawner/directional/west{
 	alpha = 0
 	},
 /turf/open/floor/wood/parquet,
@@ -2128,12 +1963,10 @@
 /obj/effect/turf_decal/siding/thinplating/dark{
 	dir = 6
 	},
-/obj/structure/window/reinforced/plasma{
-	dir = 8;
+/obj/structure/window/reinforced/plasma/spawner/directional/west{
 	alpha = 0
 	},
-/obj/structure/window/reinforced/plasma{
-	dir = 1;
+/obj/structure/window/reinforced/plasma/spawner/directional/north{
 	alpha = 0
 	},
 /obj/structure/disposalpipe/segment{
@@ -2144,23 +1977,20 @@
 "Yg" = (
 /obj/machinery/airalarm/directional/north,
 /obj/machinery/firealarm/directional/west,
-/obj/structure/window/reinforced/plasma{
-	dir = 1;
+/obj/structure/window/reinforced/plasma/spawner/directional/north{
 	alpha = 0
 	},
-/obj/structure/window/reinforced/plasma{
-	dir = 8;
+/obj/structure/window/reinforced/plasma/spawner/directional/west{
 	alpha = 0
 	},
-/obj/structure/window/reinforced/plasma{
+/obj/structure/window/reinforced/plasma/spawner/directional/south{
 	alpha = 0
 	},
 /obj/effect/landmark/start/hangover,
 /turf/open/floor/wood/tile,
 /area/station/service/theater)
 "YC" = (
-/obj/structure/window/reinforced/plasma{
-	dir = 8;
+/obj/structure/window/reinforced/plasma/spawner/directional/west{
 	alpha = 0
 	},
 /obj/structure/disposalpipe/segment{
@@ -2182,12 +2012,10 @@
 /turf/open/floor/iron,
 /area/station/service/bar)
 "Zz" = (
-/obj/structure/window/reinforced/plasma{
-	dir = 4;
+/obj/structure/window/reinforced/plasma/spawner/directional/east{
 	alpha = 0
 	},
-/obj/structure/window/reinforced/plasma{
-	dir = 8;
+/obj/structure/window/reinforced/plasma/spawner/directional/west{
 	alpha = 0
 	},
 /obj/structure/disposalpipe/segment,
@@ -2197,11 +2025,10 @@
 /obj/effect/turf_decal/siding/thinplating/dark{
 	dir = 8
 	},
-/obj/structure/window/reinforced/plasma{
+/obj/structure/window/reinforced/plasma/spawner/directional/south{
 	alpha = 0
 	},
-/obj/structure/window/reinforced/plasma{
-	dir = 4;
+/obj/structure/window/reinforced/plasma/spawner/directional/east{
 	alpha = 0
 	},
 /obj/structure/disposalpipe/segment{
@@ -2213,16 +2040,13 @@
 /obj/effect/landmark/start/mime{
 	pixel_x = -10
 	},
-/obj/structure/window/reinforced/plasma{
-	dir = 4;
+/obj/structure/window/reinforced/plasma/spawner/directional/east{
 	alpha = 0
 	},
-/obj/structure/window/reinforced/plasma{
-	dir = 1;
+/obj/structure/window/reinforced/plasma/spawner/directional/north{
 	alpha = 0
 	},
-/obj/structure/window/reinforced/plasma{
-	dir = 8;
+/obj/structure/window/reinforced/plasma/spawner/directional/west{
 	alpha = 0
 	},
 /obj/effect/landmark/start/clown{
@@ -2235,19 +2059,17 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
 	dir = 1
 	},
-/obj/structure/window/reinforced/plasma{
-	dir = 8;
+/obj/structure/window/reinforced/plasma/spawner/directional/west{
 	alpha = 0
 	},
-/obj/structure/window/reinforced/plasma{
-	dir = 4;
+/obj/structure/window/reinforced/plasma/spawner/directional/east{
 	alpha = 0
 	},
 /turf/open/floor/wood/parquet,
 /area/station/commons/lounge)
 "ZY" = (
-/obj/effect/decal/cleanable/dirt/dust,
-/obj/structure/window/reinforced/plasma{
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/window/reinforced/plasma/spawner/directional/south{
 	alpha = 0
 	},
 /turf/open/floor/wood/parquet,

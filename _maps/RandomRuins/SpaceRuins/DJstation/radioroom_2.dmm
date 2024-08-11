@@ -3,9 +3,7 @@
 /turf/closed/wall,
 /area/ruin/space/djstation)
 "b" = (
-/obj/structure/window/reinforced/tinted{
-	dir = 1
-	},
+/obj/structure/window/reinforced/tinted/spawner/directional/north,
 /obj/effect/turf_decal/tile/green/anticorner/contrasted{
 	dir = 1
 	},
@@ -40,9 +38,7 @@
 /turf/open/floor/iron/dark,
 /area/ruin/space/djstation)
 "f" = (
-/obj/structure/window/reinforced/tinted{
-	dir = 1
-	},
+/obj/structure/window/reinforced/tinted/spawner/directional/north,
 /obj/effect/turf_decal/tile/green/half/contrasted{
 	dir = 1
 	},

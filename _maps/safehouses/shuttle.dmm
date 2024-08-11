@@ -144,15 +144,6 @@
 /obj/effect/turf_decal/sand/volcanic,
 /turf/open/floor/iron,
 /area/virtual_domain/safehouse)
-"M" = (
-/obj/effect/turf_decal/tile/neutral/half/contrasted,
-/obj/effect/turf_decal/stripes/line{
-	dir = 1
-	},
-/obj/machinery/light/small/directional/north,
-/obj/effect/decal/cleanable/dirt/dust,
-/turf/open/floor/iron,
-/area/virtual_domain/safehouse)
 "T" = (
 /obj/effect/turf_decal/tile/neutral/half/contrasted{
 	dir = 1
@@ -204,7 +195,7 @@ a
 "}
 (5,1,1) = {"
 a
-M
+x
 X
 H
 T

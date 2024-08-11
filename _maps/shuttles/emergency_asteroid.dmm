@@ -135,7 +135,7 @@
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/escape)
 "aN" = (
-/obj/structure/bed/roller,
+/obj/structure/bed/medical/emergency,
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/escape)
 "aP" = (

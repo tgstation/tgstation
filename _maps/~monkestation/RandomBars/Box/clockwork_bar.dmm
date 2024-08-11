@@ -192,11 +192,9 @@
 /obj/machinery/door/firedoor/border_only{
 	dir = 1
 	},
-/obj/structure/window/bronze{
-	dir = 1
-	},
 /obj/structure/table/bronze,
 /obj/item/instrument/violin,
+/obj/structure/window/bronze/spawner/directional/north,
 /turf/open/floor/bronze/flat,
 /area/station/service/theater)
 "Ef" = (
@@ -303,9 +301,7 @@
 /obj/machinery/door/firedoor/border_only{
 	dir = 1
 	},
-/obj/structure/window/bronze{
-	dir = 1
-	},
+/obj/structure/window/bronze/spawner/directional/north,
 /turf/open/floor/bronze/flat,
 /area/station/service/theater)
 "RG" = (

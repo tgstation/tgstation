@@ -15,10 +15,7 @@
 /turf/template_noop,
 /area/template_noop)
 "ae" = (
-/obj/structure/fluff/broken_flooring{
-	dir = 4;
-	icon_state = "plating"
-	},
+/obj/structure/broken_flooring/plating/directional/east,
 /turf/template_noop,
 /area/template_noop)
 "af" = (
@@ -40,9 +37,7 @@
 /area/template_noop)
 "ai" = (
 /obj/structure/lattice,
-/obj/structure/fluff/broken_flooring{
-	icon_state = "plating"
-	},
+/obj/structure/broken_flooring/plating/directional/south,
 /turf/template_noop,
 /area/template_noop)
 "aj" = (
@@ -59,10 +54,7 @@
 /area/template_noop)
 "an" = (
 /obj/structure/lattice,
-/obj/structure/fluff/broken_flooring{
-	dir = 4;
-	icon_state = "plating"
-	},
+/obj/structure/broken_flooring/plating/directional/east,
 /turf/template_noop,
 /area/template_noop)
 "ao" = (
@@ -71,17 +63,11 @@
 /area/template_noop)
 "ap" = (
 /obj/structure/lattice,
-/obj/structure/fluff/broken_flooring{
-	dir = 8;
-	icon_state = "pile"
-	},
+/obj/structure/broken_flooring/pile/directional/west,
 /turf/template_noop,
 /area/template_noop)
 "as" = (
-/obj/structure/fluff/broken_flooring{
-	dir = 4;
-	icon_state = "singular"
-	},
+/obj/structure/broken_flooring/singular/directional/east,
 /turf/template_noop,
 /area/template_noop)
 "aD" = (
@@ -89,16 +75,11 @@
 /turf/template_noop,
 /area/template_noop)
 "aE" = (
-/obj/structure/fluff/broken_flooring{
-	dir = 4;
-	icon_state = "pile"
-	},
+/obj/structure/broken_flooring/pile/directional/east,
 /turf/template_noop,
 /area/template_noop)
 "aT" = (
-/obj/structure/fluff/broken_flooring{
-	icon_state = "singular"
-	},
+/obj/structure/broken_flooring/singular/directional/south,
 /turf/template_noop,
 /area/template_noop)
 "bl" = (
@@ -668,9 +649,7 @@
 "yk" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/fluff/broken_flooring{
-	icon_state = "singular"
-	},
+/obj/structure/broken_flooring/singular/directional/south,
 /obj/effect/decal/cleanable/blood,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating/airless,
@@ -1136,9 +1115,7 @@
 /area/ruin/space/has_grav)
 "XE" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/fluff/broken_flooring{
-	icon_state = "pile"
-	},
+/obj/structure/broken_flooring/pile/directional/south,
 /obj/effect/mapping_helpers/broken_floor,
 /turf/open/floor/plating/airless,
 /area/shuttle/ruin/caravan/freighter2)

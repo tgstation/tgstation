@@ -329,12 +329,10 @@
 /turf/open/floor/carpet/lone,
 /area/station/commons/lounge)
 "rv" = (
-/obj/structure/window/bronze{
-	dir = 4
-	},
 /obj/machinery/door/firedoor/border_only{
 	dir = 4
 	},
+/obj/structure/window/bronze/spawner/directional/east,
 /turf/open/floor/carpet/lone,
 /area/station/service/theater)
 "ss" = (
@@ -729,14 +727,12 @@
 /turf/open/floor/carpet/lone,
 /area/station/service/theater)
 "Pw" = (
-/obj/structure/window/bronze,
-/obj/structure/window/bronze{
-	dir = 4
-	},
 /obj/machinery/door/firedoor/border_only,
 /obj/machinery/door/firedoor/border_only{
 	dir = 4
 	},
+/obj/structure/window/bronze/spawner/directional/east,
+/obj/structure/window/bronze/spawner/directional/south,
 /turf/open/floor/carpet/lone,
 /area/station/service/theater)
 "Pz" = (
@@ -811,14 +807,12 @@
 /turf/open/floor/bronze,
 /area/station/commons/lounge)
 "Ts" = (
-/obj/structure/window/bronze{
-	dir = 4
-	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/visible/layer2,
 /obj/machinery/door/firedoor/border_only{
 	dir = 4
 	},
+/obj/structure/window/bronze/spawner/directional/east,
 /turf/open/floor/carpet/lone,
 /area/station/service/theater)
 "TP" = (
@@ -859,8 +853,8 @@
 /turf/open/floor/bronze/filled,
 /area/station/service/bar/backroom)
 "Xo" = (
-/obj/structure/window/bronze,
 /obj/machinery/door/firedoor/border_only,
+/obj/structure/window/bronze/spawner/directional/south,
 /turf/open/floor/carpet/lone,
 /area/station/service/theater)
 "Xp" = (

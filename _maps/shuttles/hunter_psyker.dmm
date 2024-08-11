@@ -1,0 +1,1711 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"ax" = (
+/obj/structure/rack,
+/obj/item/storage/toolbox/mechanical,
+/obj/item/storage/belt/utility,
+/turf/open/floor/plating,
+/area/shuttle/hunter)
+"aO" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/generic,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
+/turf/open/floor/iron,
+/area/shuttle/hunter)
+"bt" = (
+/obj/structure/table/wood/fancy/blue,
+/obj/machinery/button/curtain{
+	id = "fortune_tell";
+	name = "Fortune Telling Curtains";
+	pixel_y = 3
+	},
+/turf/open/floor/glass,
+/area/shuttle/hunter)
+"ce" = (
+/obj/effect/mapping_helpers/broken_floor,
+/obj/item/storage/pill_bottle,
+/turf/open/floor/plating,
+/area/shuttle/hunter)
+"cB" = (
+/obj/effect/turf_decal/box/white,
+/obj/machinery/fugitive_capture/psyker,
+/turf/open/floor/iron/dark/textured,
+/area/shuttle/hunter)
+"di" = (
+/obj/machinery/button/door/directional/west{
+	id = "psyker_bridge";
+	name = "Blast Door Control"
+	},
+/turf/open/floor/iron/kitchen/small,
+/area/shuttle/hunter)
+"ds" = (
+/obj/effect/turf_decal/tile/dark_blue/diagonal_edge,
+/obj/structure/table/reinforced/plasmarglass,
+/obj/item/gun/ballistic/revolver/c38{
+	pixel_y = 3
+	},
+/obj/item/gun/ballistic/revolver/c38,
+/turf/open/floor/iron/white/diagonal,
+/area/shuttle/hunter)
+"dR" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/item/reagent_containers/syringe/contraband,
+/obj/machinery/light/broken/directional/east,
+/turf/open/floor/iron,
+/area/shuttle/hunter)
+"ep" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
+/obj/machinery/computer/slot_machine,
+/obj/effect/decal/cleanable/wrapping,
+/turf/open/floor/iron/grimy,
+/area/shuttle/hunter)
+"er" = (
+/obj/machinery/washing_machine,
+/obj/effect/turf_decal/box/white,
+/turf/open/floor/iron/dark/textured,
+/area/shuttle/hunter)
+"ey" = (
+/obj/effect/mapping_helpers/broken_floor,
+/turf/open/floor/iron,
+/area/shuttle/hunter)
+"eT" = (
+/obj/effect/mapping_helpers/broken_floor,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
+/turf/open/floor/plating,
+/area/shuttle/hunter)
+"fh" = (
+/obj/structure/rack,
+/obj/item/paper/crumpled/fluff/fortune_teller,
+/turf/open/floor/carpet/black,
+/area/shuttle/hunter)
+"fi" = (
+/obj/effect/turf_decal/tile/dark_blue/diagonal_centre,
+/turf/open/floor/iron/white/diagonal,
+/area/shuttle/hunter)
+"fC" = (
+/turf/closed/wall/space,
+/area/shuttle/hunter)
+"fG" = (
+/obj/structure/table/wood/fancy/blue,
+/obj/item/book/codex_gigas{
+	pixel_y = 2
+	},
+/turf/open/floor/glass,
+/area/shuttle/hunter)
+"fT" = (
+/obj/machinery/suit_storage_unit/pirate,
+/obj/effect/turf_decal/box/white,
+/obj/structure/sign/warning/vacuum/external/directional/east,
+/turf/open/floor/iron/dark/textured,
+/area/shuttle/hunter)
+"gi" = (
+/obj/structure/fans/tiny,
+/obj/structure/curtain/cloth/fancy/mechanical/start_closed{
+	icon_state = "bounty-closed";
+	icon_type = "bounty";
+	id = "fortune_tell"
+	},
+/turf/open/floor/carpet/black,
+/area/shuttle/hunter)
+"ha" = (
+/obj/structure/rack,
+/obj/item/storage/toolbox/electrical,
+/obj/item/multitool,
+/turf/open/floor/plating,
+/area/shuttle/hunter)
+"hy" = (
+/obj/machinery/door/airlock/grunge{
+	name = "Fortune Telling"
+	},
+/obj/effect/mapping_helpers/airlock/cutaiwire,
+/obj/machinery/button/curtain{
+	id = "fortune_tell";
+	name = "Fortune Telling Curtains";
+	pixel_x = -24
+	},
+/turf/open/floor/carpet/black,
+/area/shuttle/hunter)
+"hA" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/cobweb,
+/obj/effect/decal/cleanable/garbage,
+/turf/open/floor/plating,
+/area/shuttle/hunter)
+"ib" = (
+/turf/closed/wall,
+/area/shuttle/hunter)
+"im" = (
+/obj/effect/turf_decal/tile/dark_blue/diagonal_edge,
+/obj/structure/table/reinforced/plasmarglass,
+/obj/item/ammo_box/c38/match{
+	pixel_x = -5;
+	pixel_y = 4
+	},
+/obj/item/ammo_box/c38/match{
+	pixel_x = -1;
+	pixel_y = 4
+	},
+/obj/item/ammo_box/c38/match{
+	pixel_x = 3;
+	pixel_y = 4
+	},
+/obj/item/ammo_box/c38/match{
+	pixel_x = -8
+	},
+/obj/item/ammo_box/c38/match{
+	pixel_x = -4
+	},
+/obj/item/ammo_box/c38/match,
+/turf/open/floor/iron/white/diagonal,
+/area/shuttle/hunter)
+"iD" = (
+/turf/open/floor/carpet/black,
+/area/shuttle/hunter)
+"iI" = (
+/obj/effect/decal/cleanable/food/egg_smudge,
+/turf/open/floor/plating,
+/area/shuttle/hunter)
+"iK" = (
+/obj/machinery/atmospherics/components/tank/air{
+	dir = 1
+	},
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating,
+/area/shuttle/hunter)
+"iO" = (
+/obj/structure/tank_dispenser/oxygen,
+/obj/machinery/light/small/directional/north,
+/turf/open/floor/plating,
+/area/shuttle/hunter)
+"iZ" = (
+/turf/open/floor/catwalk_floor,
+/area/shuttle/hunter)
+"jS" = (
+/obj/machinery/door/airlock/grunge{
+	name = "Gear Storage"
+	},
+/obj/effect/mapping_helpers/airlock/cutaiwire,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
+/turf/open/floor/iron/grimy,
+/area/shuttle/hunter)
+"jZ" = (
+/obj/structure/rack,
+/obj/item/stack/spacecash/c10,
+/obj/item/stack/spacecash/c10,
+/obj/item/stack/spacecash/c1,
+/obj/item/stack/spacecash/c1,
+/obj/item/stack/spacecash/c1,
+/obj/item/stack/spacecash/c20,
+/obj/item/stack/spacecash/c20,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/carpet/black,
+/area/shuttle/hunter)
+"kQ" = (
+/obj/structure/rack,
+/obj/effect/decal/cleanable/dirt,
+/obj/item/reagent_containers/cup/glass/bottle/hooch{
+	pixel_x = -1;
+	pixel_y = 11
+	},
+/obj/item/reagent_containers/cup/glass/ice/prison{
+	pixel_x = 7;
+	pixel_y = 2
+	},
+/obj/structure/sign/departments/security/directional/south,
+/obj/item/reagent_containers/cup/glass/bottle/vodka/badminka{
+	pixel_x = -3;
+	pixel_y = 6
+	},
+/obj/item/reagent_containers/cup/glass/shaker{
+	pixel_x = 9;
+	pixel_y = 1
+	},
+/turf/open/floor/plating,
+/area/shuttle/hunter)
+"mw" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
+/turf/open/floor/iron/stairs{
+	dir = 8
+	},
+/area/shuttle/hunter)
+"nV" = (
+/obj/machinery/button/door/directional/east{
+	id = "psykerexternal";
+	name = "External Bolt Control";
+	normaldoorcontrol = 1;
+	specialfunctions = 4
+	},
+/obj/effect/decal/cleanable/generic,
+/turf/open/floor/iron/grimy,
+/area/shuttle/hunter)
+"nX" = (
+/obj/machinery/computer/monitor{
+	dir = 1
+	},
+/obj/effect/turf_decal/box/white,
+/turf/open/floor/iron/dark/textured,
+/area/shuttle/hunter)
+"nY" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/light/small/directional/north,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
+/turf/open/floor/plating,
+/area/shuttle/hunter)
+"oa" = (
+/obj/machinery/power/apc/auto_name/directional/west,
+/obj/structure/cable,
+/obj/machinery/space_heater,
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/cobweb,
+/obj/effect/mapping_helpers/apc/cut_AI_wire,
+/turf/open/floor/plating,
+/area/shuttle/hunter)
+"oe" = (
+/obj/machinery/power/shuttle_engine/propulsion/right{
+	dir = 4
+	},
+/turf/open/floor/plating/airless,
+/area/shuttle/hunter)
+"ox" = (
+/obj/structure/rack,
+/obj/item/megaphone,
+/obj/item/storage/box/bodybags,
+/obj/item/stack/package_wrap,
+/obj/effect/turf_decal/box/white,
+/obj/machinery/light/directional/east,
+/turf/open/floor/iron/dark/textured,
+/area/shuttle/hunter)
+"oK" = (
+/obj/machinery/power/smes/engineering{
+	charge = 1e+006
+	},
+/obj/structure/cable,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating,
+/area/shuttle/hunter)
+"oU" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
+/turf/open/floor/iron/kitchen/small,
+/area/shuttle/hunter)
+"pg" = (
+/obj/effect/turf_decal/box/white,
+/obj/machinery/computer/shuttle/hunter{
+	dir = 4
+	},
+/turf/open/floor/iron/dark/textured,
+/area/shuttle/hunter)
+"pk" = (
+/obj/structure/flora/bush/fullgrass/style_random,
+/turf/open/floor/grass,
+/area/shuttle/hunter)
+"pn" = (
+/obj/effect/turf_decal/siding/thinplating_new/dark{
+	dir = 1
+	},
+/turf/open/floor/grass,
+/area/shuttle/hunter)
+"qm" = (
+/obj/structure/table/wood/fancy/blue,
+/obj/item/trash/candle{
+	pixel_y = 7
+	},
+/turf/open/floor/glass,
+/area/shuttle/hunter)
+"qo" = (
+/obj/machinery/door/airlock/external/glass/ruin{
+	id_tag = "psykerexternal"
+	},
+/obj/effect/mapping_helpers/airlock/cutaiwire,
+/obj/effect/mapping_helpers/airlock/locked,
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 4
+	},
+/obj/structure/fans/tiny,
+/turf/open/floor/plating,
+/area/shuttle/hunter)
+"qp" = (
+/obj/effect/decal/cleanable/vomit/old,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
+/turf/open/floor/iron/grimy,
+/area/shuttle/hunter)
+"rs" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/vomit/old,
+/obj/structure/sign/departments/restroom/directional/west,
+/turf/open/floor/plating,
+/area/shuttle/hunter)
+"rt" = (
+/obj/machinery/atmospherics/components/unary/vent_pump/on{
+	dir = 4
+	},
+/turf/open/floor/iron/freezer,
+/area/shuttle/hunter)
+"rx" = (
+/turf/open/floor/iron/stairs/right,
+/area/shuttle/hunter)
+"sg" = (
+/obj/effect/turf_decal/arrows{
+	dir = 4;
+	pixel_y = -4
+	},
+/obj/effect/turf_decal/arrows{
+	dir = 4;
+	pixel_y = 4
+	},
+/turf/open/floor/iron/dark/textured,
+/area/shuttle/hunter)
+"sC" = (
+/obj/effect/turf_decal/tile/dark_blue/diagonal_edge,
+/turf/open/floor/iron/white/diagonal,
+/area/shuttle/hunter)
+"sD" = (
+/obj/structure/curtain/cloth/fancy/mechanical{
+	icon_state = "bounty-open";
+	icon_type = "bounty";
+	id = "fortune_tell"
+	},
+/turf/open/floor/glass,
+/area/shuttle/hunter)
+"sH" = (
+/obj/structure/bouncy_castle{
+	name = "Mark"
+	},
+/obj/effect/gibspawner/human,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/iron/freezer,
+/area/shuttle/hunter)
+"sK" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
+/turf/open/floor/iron/stairs/left,
+/area/shuttle/hunter)
+"tr" = (
+/obj/effect/mob_spawn/ghost_role/human/fugitive/psykers,
+/obj/machinery/light/floor,
+/obj/structure/curtain/bounty,
+/turf/open/floor/engine,
+/area/shuttle/hunter)
+"uk" = (
+/obj/effect/turf_decal/tile/dark_blue/diagonal_centre,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
+/turf/open/floor/iron/white/diagonal,
+/area/shuttle/hunter)
+"va" = (
+/obj/effect/mapping_helpers/broken_floor,
+/turf/open/floor/iron/freezer,
+/area/shuttle/hunter)
+"vp" = (
+/obj/structure/displaycase/noalert{
+	start_showpiece_type = /obj/item/food/drug/moon_rock
+	},
+/turf/open/floor/iron/kitchen/small,
+/area/shuttle/hunter)
+"wa" = (
+/obj/machinery/power/shuttle_engine/propulsion{
+	dir = 4
+	},
+/turf/open/floor/plating/airless,
+/area/shuttle/hunter)
+"wi" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/glass,
+/turf/open/floor/plating,
+/area/shuttle/hunter)
+"wm" = (
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/iron/grimy,
+/area/shuttle/hunter)
+"wC" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/item/reagent_containers/syringe/contraband,
+/turf/open/floor/iron,
+/area/shuttle/hunter)
+"wI" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
+/turf/open/floor/iron/stairs{
+	dir = 4
+	},
+/area/shuttle/hunter)
+"xl" = (
+/turf/open/floor/iron/stairs{
+	dir = 4
+	},
+/area/shuttle/hunter)
+"xG" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/light/directional/east,
+/obj/structure/sign/warning/vacuum/external/directional/east,
+/turf/open/floor/iron/grimy,
+/area/shuttle/hunter)
+"xL" = (
+/obj/item/stack/sheet/mineral/plasma/thirty,
+/obj/effect/mapping_helpers/burnt_floor,
+/turf/open/floor/plating,
+/area/shuttle/hunter)
+"yb" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/etherealball,
+/turf/open/floor/engine,
+/area/shuttle/hunter)
+"yd" = (
+/turf/template_noop,
+/area/template_noop)
+"yr" = (
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/carpet/black,
+/area/shuttle/hunter)
+"yN" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
+/obj/structure/cable,
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/oil,
+/turf/open/floor/plating,
+/area/shuttle/hunter)
+"zb" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
+/turf/open/floor/iron/grimy,
+/area/shuttle/hunter)
+"zd" = (
+/obj/machinery/atmospherics/components/unary/vent_pump/on,
+/turf/open/floor/iron/grimy,
+/area/shuttle/hunter)
+"Ah" = (
+/obj/machinery/suit_storage_unit/pirate,
+/obj/effect/turf_decal/box/white,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/iron/dark/textured,
+/area/shuttle/hunter)
+"Aw" = (
+/obj/effect/spawner/structure/window/reinforced/plasma,
+/obj/machinery/door/poddoor/preopen{
+	id = "psyker_bridge";
+	name = "External Blast Door"
+	},
+/turf/open/floor/plating,
+/area/shuttle/hunter)
+"AB" = (
+/obj/effect/decal/cleanable/glass,
+/turf/open/floor/engine,
+/area/shuttle/hunter)
+"AM" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
+/turf/open/floor/iron/grimy,
+/area/shuttle/hunter)
+"AP" = (
+/obj/structure/chair/comfy/carp,
+/turf/open/floor/glass,
+/area/shuttle/hunter)
+"Bj" = (
+/obj/structure/flora/bush/flowers_br/style_random,
+/turf/open/floor/grass,
+/area/shuttle/hunter)
+"BU" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/rack,
+/obj/structure/bedsheetbin,
+/obj/machinery/light/dim/directional/south,
+/turf/open/floor/iron/grimy,
+/area/shuttle/hunter)
+"BX" = (
+/obj/structure/curtain/bounty,
+/turf/open/floor/grass,
+/area/shuttle/hunter)
+"Ch" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/carpet/black,
+/area/shuttle/hunter)
+"Cl" = (
+/obj/machinery/computer/camera_advanced/shuttle_docker/syndicate/hunter/psyker{
+	dir = 4
+	},
+/obj/effect/turf_decal/box/white,
+/turf/open/floor/iron/dark/textured,
+/area/shuttle/hunter)
+"CY" = (
+/obj/structure/curtain/cloth/fancy/mechanical/start_closed{
+	icon_state = "bounty-closed";
+	icon_type = "bounty";
+	id = "fortune_tell"
+	},
+/obj/structure/fans/tiny,
+/turf/open/floor/carpet/black,
+/area/shuttle/hunter)
+"DJ" = (
+/obj/structure/closet/secure_closet/freezer/meat/open,
+/obj/effect/decal/cleanable/dirt,
+/obj/item/reagent_containers/hypospray/medipen/gore,
+/obj/item/reagent_containers/hypospray/medipen/gore,
+/turf/open/floor/iron/freezer,
+/area/shuttle/hunter)
+"Ej" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/generic,
+/obj/machinery/light/small/directional/east,
+/turf/open/floor/engine,
+/area/shuttle/hunter)
+"Em" = (
+/obj/machinery/door/airlock/grunge{
+	name = "Sanctuary In The Garden Of Mind"
+	},
+/obj/effect/mapping_helpers/airlock/cutaiwire,
+/turf/open/floor/plating,
+/area/shuttle/hunter)
+"Es" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/door/airlock/maintenance_hatch{
+	name = "Maintenance"
+	},
+/obj/effect/mapping_helpers/airlock/cutaiwire,
+/turf/open/floor/plating,
+/area/shuttle/hunter)
+"ES" = (
+/obj/structure/chair/comfy/black{
+	dir = 1
+	},
+/turf/open/floor/glass,
+/area/shuttle/hunter)
+"Fy" = (
+/obj/machinery/power/shuttle_engine/propulsion/left{
+	dir = 4
+	},
+/turf/open/floor/plating/airless,
+/area/shuttle/hunter)
+"FC" = (
+/obj/effect/forcefield/psychic{
+	initial_duration = 0
+	},
+/obj/structure/lattice,
+/turf/template_noop,
+/area/shuttle/hunter)
+"FJ" = (
+/obj/effect/mapping_helpers/airlock/cutaiwire,
+/obj/machinery/door/airlock/grunge{
+	name = "Bridge"
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
+/turf/open/floor/iron,
+/area/shuttle/hunter)
+"FY" = (
+/obj/effect/mapping_helpers/broken_floor,
+/obj/structure/bed/maint,
+/turf/open/floor/iron,
+/area/shuttle/hunter)
+"Gf" = (
+/obj/structure/curtain/bounty,
+/obj/effect/mob_spawn/ghost_role/human/fugitive/psykers/captain,
+/obj/machinery/light/floor,
+/turf/open/floor/engine,
+/area/shuttle/hunter)
+"Gr" = (
+/obj/structure/lattice,
+/obj/effect/forcefield/psychic{
+	initial_duration = 0
+	},
+/turf/template_noop,
+/area/shuttle/hunter)
+"Gs" = (
+/obj/structure/curtain/bounty,
+/obj/effect/mob_spawn/ghost_role/human/fugitive/psykers,
+/obj/machinery/light/floor,
+/turf/open/floor/engine,
+/area/shuttle/hunter)
+"GF" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/door/airlock/grunge{
+	name = "Office"
+	},
+/turf/open/floor/iron/grimy,
+/area/shuttle/hunter)
+"GM" = (
+/obj/structure/chair/office/light,
+/turf/open/floor/iron/kitchen/small,
+/area/shuttle/hunter)
+"Hw" = (
+/obj/effect/turf_decal/tile/dark_blue/diagonal_edge,
+/obj/structure/table/reinforced/plasmarglass,
+/obj/item/binoculars{
+	pixel_x = -1
+	},
+/obj/item/knife/hunting{
+	pixel_y = 3
+	},
+/obj/item/megaphone,
+/obj/item/clothing/glasses/thermal/monocle{
+	pixel_y = 2
+	},
+/turf/open/floor/iron/white/diagonal,
+/area/shuttle/hunter)
+"If" = (
+/obj/effect/decal/cleanable/vomit/old,
+/obj/item/stack/spacecash/c1{
+	pixel_x = 5;
+	pixel_y = -4
+	},
+/turf/open/floor/plating,
+/area/shuttle/hunter)
+"Ii" = (
+/obj/effect/turf_decal/tile/dark_blue/diagonal_edge,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
+/turf/open/floor/iron/white/diagonal,
+/area/shuttle/hunter)
+"Jc" = (
+/turf/open/floor/iron/kitchen/small,
+/area/shuttle/hunter)
+"Jr" = (
+/obj/structure/closet/crate/cardboard,
+/turf/open/floor/iron/kitchen/small,
+/area/shuttle/hunter)
+"Kb" = (
+/obj/effect/turf_decal/siding/thinplating_new/dark{
+	dir = 1
+	},
+/obj/structure/flora/bush/flowers_pp/style_random,
+/turf/open/floor/grass,
+/area/shuttle/hunter)
+"Ku" = (
+/obj/structure/lattice,
+/turf/template_noop,
+/area/shuttle/hunter)
+"KJ" = (
+/obj/effect/turf_decal/tile/dark_blue/diagonal_centre,
+/obj/machinery/light/cold/directional/south,
+/obj/item/statuebust,
+/turf/open/floor/iron/white/diagonal,
+/area/shuttle/hunter)
+"Li" = (
+/obj/machinery/door/airlock/grunge{
+	name = "Intelligence Training Room"
+	},
+/obj/effect/mapping_helpers/airlock/cutaiwire,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
+/turf/open/floor/plating,
+/area/shuttle/hunter)
+"Lt" = (
+/obj/machinery/light/floor/has_bulb,
+/turf/open/floor/catwalk_floor,
+/area/shuttle/hunter)
+"MC" = (
+/obj/item/reagent_containers/blood,
+/obj/machinery/light/directional/north,
+/turf/open/floor/engine,
+/area/shuttle/hunter)
+"ME" = (
+/obj/machinery/door/airlock/external/glass/ruin{
+	id_tag = "psykerexternal"
+	},
+/obj/effect/mapping_helpers/airlock/cutaiwire,
+/obj/effect/mapping_helpers/airlock/locked,
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 8
+	},
+/turf/open/floor/plating,
+/area/shuttle/hunter)
+"MT" = (
+/obj/machinery/light/cold/directional/east,
+/turf/open/floor/carpet/black,
+/area/shuttle/hunter)
+"Nj" = (
+/obj/effect/turf_decal/tile/dark_blue/diagonal_centre,
+/obj/machinery/atmospherics/components/unary/vent_pump/on{
+	dir = 1
+	},
+/turf/open/floor/iron/white/diagonal,
+/area/shuttle/hunter)
+"Nk" = (
+/obj/machinery/power/shuttle_engine/heater{
+	dir = 4
+	},
+/obj/structure/window/reinforced/plasma/spawner/directional/west,
+/turf/open/floor/plating/airless,
+/area/shuttle/hunter)
+"Nw" = (
+/obj/structure/chair/office/light{
+	dir = 8
+	},
+/turf/open/floor/iron/kitchen/small,
+/area/shuttle/hunter)
+"Nx" = (
+/turf/open/floor/glass,
+/area/shuttle/hunter)
+"NH" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/light/small/directional/north,
+/obj/item/reagent_containers/syringe/contraband,
+/turf/open/floor/plating,
+/area/shuttle/hunter)
+"NP" = (
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating,
+/area/shuttle/hunter)
+"Oo" = (
+/obj/effect/turf_decal/tile/dark_blue/diagonal_centre,
+/obj/item/statuebust,
+/turf/open/floor/iron/white/diagonal,
+/area/shuttle/hunter)
+"Ox" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
+/obj/machinery/airalarm/directional/west,
+/obj/effect/mapping_helpers/airalarm/all_access,
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/robot_debris/up,
+/turf/open/floor/plating,
+/area/shuttle/hunter)
+"OE" = (
+/obj/effect/turf_decal/tile/dark_blue/diagonal_edge,
+/obj/structure/table/reinforced/plasmarglass,
+/obj/item/storage/box/lethalshot{
+	pixel_x = -2;
+	pixel_y = 4
+	},
+/obj/item/storage/box/lethalshot{
+	pixel_y = 2
+	},
+/obj/item/storage/box/lethalshot{
+	pixel_x = 2
+	},
+/obj/item/gun/ballistic/shotgun/lethal{
+	pixel_y = 4
+	},
+/turf/open/floor/iron/white/diagonal,
+/area/shuttle/hunter)
+"OL" = (
+/obj/effect/turf_decal/siding/thinplating_new/dark{
+	dir = 1
+	},
+/obj/structure/flora/bush/flowers_yw/style_random,
+/turf/open/floor/grass,
+/area/shuttle/hunter)
+"OT" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/blood/old,
+/obj/machinery/iv_drip,
+/turf/open/floor/iron,
+/area/shuttle/hunter)
+"PO" = (
+/obj/machinery/light/small/directional/north,
+/obj/machinery/atmospherics/components/unary/vent_pump/on{
+	dir = 4
+	},
+/turf/open/floor/carpet/black,
+/area/shuttle/hunter)
+"PR" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/item/broken_bottle,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
+/turf/open/floor/iron,
+/area/shuttle/hunter)
+"PX" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/oil,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
+/turf/open/floor/plating,
+/area/shuttle/hunter)
+"Qe" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
+/obj/machinery/door/airlock/maintenance_hatch{
+	name = "Maintenance"
+	},
+/obj/effect/mapping_helpers/airlock/cutaiwire,
+/turf/open/floor/plating,
+/area/shuttle/hunter)
+"Qk" = (
+/turf/closed/wall/r_wall,
+/area/shuttle/hunter)
+"Qp" = (
+/obj/effect/mob_spawn/ghost_role/human/fugitive/bounty/psyker/seer{
+	dir = 8
+	},
+/turf/open/floor/engine,
+/area/shuttle/hunter)
+"Rh" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/light/small/directional/south,
+/turf/open/floor/iron/freezer,
+/area/shuttle/hunter)
+"Ri" = (
+/obj/structure/table/wood/fancy/blue,
+/obj/structure/tank_holder{
+	anchored = 1;
+	desc = "A metallic frame that can hold crystal balls. Comes with lights!";
+	light_color = "#0074FF";
+	light_power = 2;
+	light_outer_range = 3;
+	name = "ball holder";
+	pixel_y = 12
+	},
+/obj/item/food/gumball{
+	alpha = 175;
+	desc = "A colorful, sugary crystal ball.";
+	name = "crystal ball";
+	pixel_y = 8
+	},
+/turf/open/floor/glass,
+/area/shuttle/hunter)
+"Sl" = (
+/obj/structure/cable,
+/obj/effect/decal/cleanable/fuel_pool,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
+/turf/open/floor/plating,
+/area/shuttle/hunter)
+"Sp" = (
+/turf/open/floor/grass,
+/area/shuttle/hunter)
+"Sx" = (
+/obj/machinery/light/directional/south,
+/turf/open/floor/iron/dark/textured,
+/area/shuttle/hunter)
+"Th" = (
+/obj/structure/toiletbong{
+	dir = 4
+	},
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/vomit/old,
+/turf/open/floor/iron/freezer,
+/area/shuttle/hunter)
+"Tt" = (
+/obj/machinery/door/airlock/grunge{
+	name = "Gear Storage"
+	},
+/obj/effect/mapping_helpers/airlock/cutaiwire,
+/turf/open/floor/iron/grimy,
+/area/shuttle/hunter)
+"Tu" = (
+/obj/machinery/atmospherics/components/unary/vent_pump/on,
+/turf/open/floor/iron/kitchen/small,
+/area/shuttle/hunter)
+"TA" = (
+/obj/structure/rack,
+/obj/item/clothing/shoes/laceup{
+	pixel_x = -2
+	},
+/obj/item/clothing/suit/jacket/oversized{
+	pixel_x = 4;
+	pixel_y = 4
+	},
+/obj/item/clothing/under/suit/carpskin{
+	pixel_y = 1
+	},
+/obj/item/cane,
+/turf/open/floor/carpet/black,
+/area/shuttle/hunter)
+"TN" = (
+/obj/effect/mapping_helpers/broken_floor,
+/turf/open/floor/plating,
+/area/shuttle/hunter)
+"TQ" = (
+/obj/structure/railing{
+	dir = 5
+	},
+/obj/effect/decal/cleanable/dirt,
+/obj/item/kirbyplants/fern,
+/turf/open/floor/plating,
+/area/shuttle/hunter)
+"Uu" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/generic,
+/obj/structure/closet/crate/bin,
+/obj/item/reagent_containers/syringe/contraband,
+/obj/item/reagent_containers/syringe/contraband,
+/obj/item/reagent_containers/syringe/contraband,
+/obj/item/reagent_containers/syringe/contraband,
+/obj/item/reagent_containers/syringe/contraband,
+/obj/item/reagent_containers/syringe/contraband,
+/obj/item/reagent_containers/syringe/contraband,
+/obj/item/reagent_containers/syringe/contraband,
+/obj/item/reagent_containers/syringe/contraband,
+/obj/item/reagent_containers/syringe/contraband,
+/obj/item/reagent_containers/syringe/contraband,
+/obj/item/reagent_containers/syringe/contraband,
+/obj/item/reagent_containers/syringe/contraband,
+/obj/item/reagent_containers/syringe/contraband,
+/obj/item/reagent_containers/syringe/contraband,
+/obj/item/reagent_containers/syringe/contraband,
+/obj/item/reagent_containers/syringe/contraband,
+/obj/item/reagent_containers/syringe/contraband,
+/turf/open/floor/iron,
+/area/shuttle/hunter)
+"UE" = (
+/obj/item/stack/spacecash/c1,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
+/turf/open/floor/plating,
+/area/shuttle/hunter)
+"UK" = (
+/obj/machinery/door/airlock/grunge{
+	name = "Freezer"
+	},
+/obj/effect/mapping_helpers/airlock/cutaiwire,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
+/turf/open/floor/iron/freezer,
+/area/shuttle/hunter)
+"UL" = (
+/obj/machinery/door/airlock/grunge{
+	name = "Fortune Telling"
+	},
+/obj/effect/mapping_helpers/airlock/cutaiwire,
+/turf/open/floor/carpet/black,
+/area/shuttle/hunter)
+"Vh" = (
+/obj/item/storage/pill_bottle,
+/obj/structure/closet/crate/bin,
+/obj/effect/decal/cleanable/plastic,
+/turf/open/floor/iron/grimy,
+/area/shuttle/hunter)
+"Vj" = (
+/obj/machinery/suit_storage_unit/pirate,
+/obj/effect/turf_decal/box/white,
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/sign/departments/engineering/directional/south,
+/turf/open/floor/iron/dark/textured,
+/area/shuttle/hunter)
+"Vm" = (
+/obj/structure/cable,
+/obj/machinery/power/terminal{
+	dir = 8
+	},
+/obj/machinery/power/port_gen/pacman{
+	anchored = 1
+	},
+/turf/open/floor/plating,
+/area/shuttle/hunter)
+"VA" = (
+/obj/structure/billboard/fortune_telling{
+	pixel_y = 16
+	},
+/turf/open/floor/catwalk_floor,
+/area/shuttle/hunter)
+"VK" = (
+/obj/structure/table/wood/fancy/blue,
+/obj/item/toy/cards/deck/tarot{
+	pixel_y = 6
+	},
+/turf/open/floor/glass,
+/area/shuttle/hunter)
+"VP" = (
+/obj/effect/mapping_helpers/broken_floor,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
+/turf/open/floor/iron,
+/area/shuttle/hunter)
+"VQ" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/item/reagent_containers/syringe/contraband,
+/obj/machinery/atmospherics/components/unary/vent_pump/on{
+	dir = 4
+	},
+/turf/open/floor/iron,
+/area/shuttle/hunter)
+"Wd" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/iron/grimy,
+/area/shuttle/hunter)
+"Wf" = (
+/obj/docking_port/stationary{
+	dwidth = 11;
+	height = 16;
+	name = "Deep Space";
+	shuttle_id = "pirate_home";
+	width = 17
+	},
+/obj/docking_port/mobile{
+	movement_force = list("KNOCKDOWN" = 0, "THROW" = 0);
+	name = "hunter shuttle";
+	rechargeTime = 1800;
+	shuttle_id = "huntership"
+	},
+/turf/open/floor/catwalk_floor,
+/area/shuttle/hunter)
+"WM" = (
+/obj/machinery/light/cold/directional/west,
+/turf/open/floor/carpet/black,
+/area/shuttle/hunter)
+"Xy" = (
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/engine,
+/area/shuttle/hunter)
+"Yj" = (
+/obj/effect/decal/cleanable/blood/old,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
+/turf/open/floor/engine,
+/area/shuttle/hunter)
+"YX" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/blood/old,
+/turf/open/floor/plating,
+/area/shuttle/hunter)
+
+(1,1,1) = {"
+yd
+yd
+yd
+yd
+yd
+Gr
+Gr
+Gr
+Gr
+Gr
+Gr
+Gr
+Gr
+yd
+yd
+yd
+yd
+yd
+yd
+yd
+yd
+yd
+yd
+yd
+yd
+"}
+(2,1,1) = {"
+yd
+yd
+yd
+yd
+yd
+Gr
+Qk
+Aw
+Aw
+Aw
+Aw
+Qk
+Gr
+yd
+yd
+yd
+yd
+yd
+yd
+yd
+yd
+yd
+yd
+yd
+yd
+"}
+(3,1,1) = {"
+yd
+Gr
+Gr
+Gr
+Gr
+Gr
+Qk
+pg
+Cl
+Jr
+vp
+Qk
+Gr
+yd
+yd
+yd
+yd
+yd
+yd
+yd
+yd
+yd
+yd
+yd
+yd
+"}
+(4,1,1) = {"
+yd
+Gr
+yd
+Qk
+Aw
+Aw
+Qk
+Nw
+Jc
+GM
+Sx
+Qk
+Gr
+Gr
+Gr
+Gr
+Gr
+Gr
+Gr
+Gr
+yd
+yd
+yd
+yd
+yd
+"}
+(5,1,1) = {"
+yd
+Gr
+yd
+Qk
+sg
+Jc
+di
+Tu
+oU
+GM
+nX
+Qk
+yd
+Ku
+yd
+yd
+Ku
+yd
+yd
+Gr
+yd
+yd
+yd
+yd
+yd
+"}
+(6,1,1) = {"
+yd
+Gr
+Ku
+Qk
+cB
+Jc
+Jc
+ox
+oU
+Qk
+Qk
+Qk
+Qk
+Qk
+Qk
+Qk
+Qk
+Qk
+yd
+Gr
+yd
+yd
+yd
+yd
+yd
+"}
+(7,1,1) = {"
+yd
+Gr
+yd
+Qk
+Qk
+Qk
+Qk
+Qk
+FJ
+Qk
+DJ
+sH
+Th
+Qk
+Hw
+Oo
+OE
+Qk
+Ku
+FC
+yd
+yd
+yd
+yd
+yd
+"}
+(8,1,1) = {"
+yd
+Gr
+yd
+Qk
+hA
+Xy
+Uu
+ce
+aO
+ib
+rt
+va
+Rh
+Qk
+fi
+sC
+KJ
+Qk
+yd
+FC
+yd
+yd
+yd
+yd
+yd
+"}
+(9,1,1) = {"
+yd
+Gr
+Ku
+Qk
+MC
+ey
+If
+VQ
+PX
+ib
+UK
+ib
+Qk
+Qk
+Ii
+Nj
+ds
+Qk
+yd
+FC
+yd
+yd
+yd
+yd
+yd
+"}
+(10,1,1) = {"
+yd
+Gr
+yd
+Qk
+OT
+wi
+yb
+Yj
+UE
+rs
+eT
+PR
+jS
+sK
+uk
+sC
+KJ
+Qk
+Ku
+FC
+FC
+yd
+yd
+yd
+yd
+"}
+(11,1,1) = {"
+Gr
+Gr
+yd
+Qk
+FY
+YX
+dR
+iI
+VP
+Ej
+wC
+AB
+Tt
+rx
+sC
+fi
+im
+Qk
+yd
+yd
+FC
+yd
+yd
+yd
+yd
+"}
+(12,1,1) = {"
+Gr
+Qk
+Qk
+Qk
+ib
+ib
+ib
+ib
+Li
+ib
+Qp
+kQ
+Qk
+Qk
+Qk
+Qk
+Qk
+Qk
+Qk
+yd
+FC
+FC
+FC
+yd
+yd
+"}
+(13,1,1) = {"
+Gr
+Qk
+fC
+fC
+fC
+fC
+fC
+ib
+wI
+ib
+ib
+ib
+ib
+fC
+fC
+fC
+fC
+fC
+Qk
+Qk
+Qk
+Qk
+Gr
+Gr
+Ku
+"}
+(14,1,1) = {"
+Gr
+Qk
+fC
+Gs
+Kb
+pk
+fC
+ib
+wI
+ib
+jZ
+fh
+ib
+fC
+bt
+fG
+Nx
+fC
+ib
+iD
+WM
+gi
+iZ
+iZ
+iZ
+"}
+(15,1,1) = {"
+Gr
+Qk
+fC
+Gf
+pn
+Bj
+fC
+ib
+nY
+ib
+PO
+yr
+hy
+sD
+AP
+Ri
+ES
+sD
+UL
+iD
+iD
+CY
+iZ
+iZ
+Wf
+"}
+(16,1,1) = {"
+Gr
+Qk
+fC
+tr
+OL
+Sp
+fC
+ib
+mw
+ib
+Ch
+TA
+ib
+fC
+qm
+VK
+Nx
+fC
+ib
+iD
+MT
+CY
+iZ
+iZ
+iZ
+"}
+(17,1,1) = {"
+Gr
+Qk
+fC
+fC
+fC
+BX
+fC
+ib
+mw
+ib
+GF
+ib
+ib
+fC
+fC
+fC
+fC
+fC
+Qk
+Qk
+Qk
+Qk
+Gr
+Gr
+Ku
+"}
+(18,1,1) = {"
+Gr
+Qk
+Qk
+Qk
+Qk
+Em
+ib
+ib
+AM
+er
+zb
+BU
+ib
+ib
+ib
+ib
+ib
+ib
+Qk
+yd
+Gr
+Gr
+Gr
+yd
+yd
+"}
+(19,1,1) = {"
+Gr
+Gr
+Gr
+yd
+Qk
+xl
+TQ
+ib
+qp
+AM
+Wd
+wm
+Ah
+Vj
+ib
+oa
+Ox
+iK
+Qk
+VA
+Gr
+yd
+yd
+yd
+yd
+"}
+(20,1,1) = {"
+yd
+yd
+Gr
+yd
+Qk
+NH
+TN
+Es
+wm
+zd
+ep
+zb
+zb
+Wd
+Qe
+yN
+Sl
+oK
+Qk
+Lt
+Gr
+yd
+yd
+yd
+yd
+"}
+(21,1,1) = {"
+yd
+yd
+Gr
+Ku
+Qk
+ax
+ha
+ib
+Vh
+xG
+wm
+nV
+wm
+fT
+ib
+iO
+xL
+Vm
+Qk
+iZ
+Gr
+yd
+yd
+yd
+yd
+"}
+(22,1,1) = {"
+yd
+yd
+Gr
+yd
+Qk
+Nk
+Nk
+Qk
+Qk
+Qk
+qo
+Qk
+qo
+Qk
+Qk
+Nk
+Nk
+Nk
+Qk
+yd
+Gr
+yd
+yd
+yd
+yd
+"}
+(23,1,1) = {"
+yd
+yd
+Gr
+Gr
+Gr
+oe
+wa
+Gr
+Gr
+Qk
+NP
+Qk
+NP
+Qk
+Gr
+oe
+wa
+Fy
+Gr
+Gr
+Gr
+yd
+yd
+yd
+yd
+"}
+(24,1,1) = {"
+yd
+yd
+yd
+yd
+yd
+yd
+yd
+yd
+Gr
+Qk
+ME
+Qk
+ME
+Qk
+Gr
+yd
+yd
+yd
+yd
+yd
+yd
+yd
+yd
+yd
+yd
+"}
+(25,1,1) = {"
+yd
+yd
+yd
+yd
+yd
+yd
+yd
+yd
+Gr
+Gr
+iZ
+iZ
+iZ
+Gr
+Gr
+yd
+yd
+yd
+yd
+yd
+yd
+yd
+yd
+yd
+yd
+"}

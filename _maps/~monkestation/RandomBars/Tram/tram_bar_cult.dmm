@@ -919,7 +919,7 @@
 /area/station/service/kitchen)
 "vP" = (
 /obj/structure/sign/clock/directional/north,
-/obj/structure/window,
+/obj/structure/window/spawner/directional/south,
 /obj/effect/turf_decal/trimline/yellow/warning,
 /turf/open/floor/cult,
 /area/station/service/kitchen)
@@ -937,9 +937,7 @@
 /turf/open/floor/cult,
 /area/station/commons/lounge)
 "wx" = (
-/obj/structure/sign/poster/contraband/blood_geometer{
-	pixel_y = -32
-	},
+/obj/structure/sign/poster/contraband/blood_geometer/directional/south,
 /turf/open/floor/cult,
 /area/station/commons/lounge)
 "wO" = (
@@ -1052,9 +1050,7 @@
 "zD" = (
 /obj/machinery/oven,
 /obj/effect/turf_decal/tile/red/opposingcorners,
-/obj/structure/sign/poster/contraband/blood_geometer{
-	pixel_y = 32
-	},
+/obj/structure/sign/poster/contraband/blood_geometer/directional/north,
 /obj/machinery/light/warm/directional/north,
 /turf/open/floor/cult,
 /area/station/commons/lounge)
@@ -1175,7 +1171,7 @@
 /area/station/service/kitchen)
 "BK" = (
 /obj/structure/ladder,
-/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/decal/cleanable/dirt,
 /turf/open/floor/cult,
 /area/station/service/kitchen)
 "BN" = (
@@ -1374,9 +1370,7 @@
 /obj/effect/turf_decal/trimline/yellow/warning{
 	dir = 4
 	},
-/obj/structure/window{
-	dir = 4
-	},
+/obj/structure/window/spawner/directional/east,
 /obj/structure/disposalpipe/segment{
 	dir = 10
 	},
@@ -1544,9 +1538,7 @@
 /turf/open/floor/cult,
 /area/station/service/theater)
 "Jm" = (
-/obj/structure/sign/poster/official/do_not_question{
-	pixel_x = 32
-	},
+/obj/structure/sign/poster/official/do_not_question/directional/east,
 /turf/open/floor/cult,
 /area/station/service/theater)
 "JH" = (
@@ -1568,9 +1560,7 @@
 /obj/effect/turf_decal/trimline/yellow/warning{
 	dir = 8
 	},
-/obj/structure/window{
-	dir = 8
-	},
+/obj/structure/window/spawner/directional/west,
 /turf/open/floor/cult,
 /area/station/service/kitchen)
 "JR" = (
@@ -1674,9 +1664,7 @@
 /turf/open/floor/cult,
 /area/station/service/bar)
 "Md" = (
-/obj/structure/sign/poster/contraband/blood_geometer{
-	pixel_y = -32
-	},
+/obj/structure/sign/poster/contraband/blood_geometer/directional/south,
 /turf/closed/wall/mineral/cult/artificer,
 /area/station/maintenance/department/cargo)
 "MH" = (
@@ -2106,7 +2094,7 @@
 /turf/open/floor/cult,
 /area/station/commons/lounge)
 "XA" = (
-/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/decal/cleanable/dirt,
 /turf/open/floor/cult,
 /area/station/service/kitchen)
 "XG" = (

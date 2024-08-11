@@ -16,7 +16,7 @@
 	description = "Nanotrasen's standard issue emergency shuttle."
 	prefix = "_maps/shuttles/nova/"
 	suffix = "nova"
-
+	occupancy_limit = "65"
 
 /datum/map_template/shuttle/arrival/nova
 	name = "Blueshift Arrival"

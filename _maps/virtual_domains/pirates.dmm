@@ -30,7 +30,7 @@
 "ct" = (
 /obj/structure/closet/cabinet,
 /obj/item/clothing/head/costume/pirate/armored,
-/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/decal/cleanable/dirt,
 /turf/open/floor/wood/parquet,
 /area/virtual_domain/powered)
 "cx" = (
@@ -45,7 +45,7 @@
 	pixel_x = 9;
 	pixel_y = 9
 	},
-/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/decal/cleanable/dirt,
 /turf/open/floor/wood,
 /area/virtual_domain/powered)
 "cQ" = (
@@ -91,12 +91,12 @@
 /turf/open/misc/beach/sand,
 /area/virtual_domain/powered)
 "gk" = (
-/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/decal/cleanable/dirt,
 /obj/effect/landmark/bitrunning/cache_spawn,
 /turf/open/floor/carpet/blue,
 /area/virtual_domain/powered)
 "gw" = (
-/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/decal/cleanable/dirt,
 /turf/open/floor/wood{
 	icon_state = "wood_large"
 	},
@@ -144,14 +144,14 @@
 /obj/structure/chair/comfy/carp{
 	dir = 1
 	},
-/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/decal/cleanable/dirt,
 /turf/open/floor/carpet/blue,
 /area/virtual_domain/powered)
 "iM" = (
 /obj/effect/turf_decal/siding/wood{
 	dir = 8
 	},
-/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/decal/cleanable/dirt,
 /mob/living/simple_animal/hostile/pirate/ranged/space,
 /turf/open/floor/carpet/blue,
 /area/virtual_domain/powered)
@@ -281,7 +281,7 @@
 /turf/open/misc/dirt/jungle,
 /area/virtual_domain/powered)
 "nX" = (
-/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/decal/cleanable/dirt,
 /mob/living/simple_animal/hostile/pirate/melee/space,
 /turf/open/floor/wood/parquet,
 /area/virtual_domain/powered)
@@ -290,7 +290,7 @@
 /turf/open/misc/beach/sand,
 /area/virtual_domain/powered)
 "pq" = (
-/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/decal/cleanable/dirt,
 /turf/open/floor/wood,
 /area/virtual_domain/powered)
 "px" = (
@@ -314,7 +314,7 @@
 	pixel_x = -10
 	},
 /obj/item/gun/energy/laser/retro,
-/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/decal/cleanable/dirt,
 /turf/open/floor/wood,
 /area/virtual_domain/powered)
 "qx" = (
@@ -322,7 +322,7 @@
 	dir = 8
 	},
 /obj/effect/mapping_helpers/burnt_floor,
-/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/decal/cleanable/dirt,
 /mob/living/simple_animal/hostile/pirate/ranged,
 /turf/open/floor/wood,
 /area/virtual_domain/powered)
@@ -354,7 +354,7 @@
 /obj/effect/turf_decal/siding/wood{
 	dir = 8
 	},
-/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/decal/cleanable/dirt,
 /turf/open/floor/carpet/blue,
 /area/virtual_domain/powered)
 "th" = (
@@ -490,7 +490,7 @@
 /area/virtual_domain/powered)
 "BC" = (
 /obj/effect/turf_decal/siding/wood,
-/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/decal/cleanable/dirt,
 /turf/open/floor/wood,
 /area/virtual_domain/powered)
 "BO" = (
@@ -503,7 +503,7 @@
 /turf/open/misc/beach/sand,
 /area/virtual_domain/powered)
 "Dm" = (
-/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/decal/cleanable/dirt,
 /obj/structure/table/wood,
 /obj/item/flashlight/flare/torch{
 	pixel_y = 10
@@ -548,7 +548,7 @@
 	},
 /area/virtual_domain/powered)
 "FG" = (
-/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/decal/cleanable/dirt,
 /obj/item/claymore/cutlass,
 /obj/item/clothing/head/costume/pirate/bandana/armored{
 	pixel_x = -9;
@@ -594,7 +594,7 @@
 /turf/open/misc/grass,
 /area/virtual_domain/powered)
 "Iz" = (
-/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/decal/cleanable/dirt,
 /obj/structure/bed/maint,
 /turf/open/floor/wood,
 /area/virtual_domain/powered)
@@ -693,7 +693,7 @@
 /obj/effect/turf_decal/siding/wood{
 	dir = 8
 	},
-/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/oil,
 /turf/open/floor/wood,
 /area/virtual_domain/powered)
@@ -743,7 +743,7 @@
 	dir = 8
 	},
 /obj/effect/mapping_helpers/burnt_floor,
-/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/decal/cleanable/dirt,
 /obj/structure/bed/maint{
 	pixel_x = 2;
 	pixel_y = 13
@@ -828,7 +828,7 @@
 /area/virtual_domain/powered)
 "TQ" = (
 /obj/effect/mapping_helpers/broken_floor,
-/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/decal/cleanable/dirt,
 /obj/structure/bed/maint{
 	pixel_x = 2;
 	pixel_y = 1
@@ -896,7 +896,7 @@
 	pixel_x = -4;
 	pixel_y = 17
 	},
-/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/decal/cleanable/dirt,
 /turf/open/floor/wood,
 /area/virtual_domain/powered)
 "Yj" = (
@@ -904,7 +904,7 @@
 /turf/open/misc/beach/sand,
 /area/virtual_domain/powered)
 "Yk" = (
-/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/decal/cleanable/dirt,
 /turf/open/floor/wood/parquet,
 /area/virtual_domain/powered)
 "Yq" = (

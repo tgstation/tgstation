@@ -7,7 +7,7 @@
 	pixel_x = -8;
 	pixel_y = 8
 	},
-/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/decal/cleanable/dirt,
 /turf/open/misc/dirt/jungle/dark{
 	planetary_atmos = 0;
 	slowdown = 0
@@ -42,7 +42,7 @@
 /area/centcom/heretic_sacrifice/rust)
 "fL" = (
 /obj/effect/decal/cleanable/blood/old,
-/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/decal/cleanable/dirt,
 /turf/open/indestructible/plating,
 /area/centcom/heretic_sacrifice/knock)
 "fO" = (
@@ -56,7 +56,7 @@
 	},
 /area/centcom/heretic_sacrifice/ash)
 "hE" = (
-/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/decal/cleanable/dirt,
 /obj/item/storage/toolbox/mechanical/old,
 /turf/open/indestructible/plating,
 /area/centcom/heretic_sacrifice/knock)
@@ -77,7 +77,7 @@
 /turf/open/misc/asteroid,
 /area/centcom/heretic_sacrifice/void)
 "lz" = (
-/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/decal/cleanable/dirt,
 /turf/open/misc/ashplanet/wateryrock{
 	initial_gas_mix = "o2=22;n2=82;TEMP=293.15";
 	planetary_atmos = 0;
@@ -102,7 +102,7 @@
 /turf/open/floor/plating,
 /area/centcom/heretic_sacrifice/rust)
 "mW" = (
-/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/decal/cleanable/dirt,
 /obj/item/spear,
 /turf/open/indestructible/plating,
 /area/centcom/heretic_sacrifice/knock)
@@ -173,7 +173,7 @@
 /area/centcom/heretic_sacrifice/void)
 "qo" = (
 /obj/effect/decal/cleanable/blood/old,
-/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/decal/cleanable/dirt,
 /obj/item/storage/toolbox/mechanical/old,
 /turf/open/indestructible/plating,
 /area/centcom/heretic_sacrifice/knock)
@@ -187,7 +187,7 @@
 /area/centcom/heretic_sacrifice/ash)
 "qM" = (
 /obj/structure/stone_tile/block/cracked,
-/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/weather/dirt{
 	dir = 5
 	},
@@ -231,7 +231,7 @@
 /area/centcom/heretic_sacrifice/rust)
 "uM" = (
 /obj/effect/decal/cleanable/blood/old,
-/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/decal/cleanable/dirt,
 /obj/item/clothing/under/color/grey/ancient,
 /turf/open/indestructible/plating,
 /area/centcom/heretic_sacrifice/knock)
@@ -277,7 +277,7 @@
 	},
 /area/centcom/heretic_sacrifice/ash)
 "wP" = (
-/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/decal/cleanable/dirt,
 /obj/item/flashlight/flare{
 	fuel = 1e+031;
 	randomize_fuel = 0;
@@ -309,7 +309,7 @@
 /area/centcom/heretic_sacrifice/rust)
 "zb" = (
 /obj/structure/stone_tile/slab,
-/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/decal/cleanable/dirt,
 /turf/open/misc/ashplanet/wateryrock{
 	initial_gas_mix = "o2=22;n2=82;TEMP=293.15";
 	planetary_atmos = 0;
@@ -323,7 +323,7 @@
 /turf/open/floor/plating/rust,
 /area/centcom/heretic_sacrifice/rust)
 "Aw" = (
-/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/decal/cleanable/dirt,
 /obj/item/clothing/mask/gas,
 /turf/open/indestructible/plating,
 /area/centcom/heretic_sacrifice/knock)
@@ -342,12 +342,12 @@
 /turf/open/floor/fakespace,
 /area/centcom/heretic_sacrifice/void)
 "AW" = (
-/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/decal/cleanable/dirt,
 /obj/item/clothing/mask/gas/tiki_mask/yalp_elor,
 /turf/open/indestructible/plating,
 /area/centcom/heretic_sacrifice/knock)
 "AY" = (
-/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/decal/cleanable/dirt,
 /turf/open/indestructible/plating,
 /area/centcom/heretic_sacrifice/knock)
 "Bv" = (
@@ -491,7 +491,7 @@
 	},
 /area/centcom/heretic_sacrifice/ash)
 "Kz" = (
-/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/decal/cleanable/dirt,
 /turf/open/misc/dirt/jungle/dark{
 	planetary_atmos = 0;
 	slowdown = 0
@@ -523,7 +523,7 @@
 /area/centcom/heretic_sacrifice/rust)
 "Mf" = (
 /obj/effect/decal/cleanable/ash/large,
-/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/decal/cleanable/dirt,
 /turf/open/misc/dirt/jungle/wasteland{
 	planetary_atmos = 0;
 	slowdown = 0
@@ -535,7 +535,7 @@
 /area/centcom/heretic_sacrifice/void)
 "MZ" = (
 /obj/effect/decal/cleanable/blood/old,
-/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/decal/cleanable/dirt,
 /obj/item/flashlight/flare{
 	fuel = 1e+031;
 	randomize_fuel = 0;
@@ -586,7 +586,7 @@
 	},
 /area/centcom/heretic_sacrifice/ash)
 "OW" = (
-/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/decal/cleanable/dirt,
 /obj/item/clothing/under/color/grey/ancient,
 /turf/open/indestructible/plating,
 /area/centcom/heretic_sacrifice/knock)
@@ -612,7 +612,7 @@
 	pixel_x = -2;
 	pixel_y = -8
 	},
-/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/decal/cleanable/dirt,
 /turf/open/misc/dirt/jungle/dark{
 	planetary_atmos = 0;
 	slowdown = 0
@@ -680,7 +680,7 @@
 	pixel_x = 4;
 	pixel_y = 4
 	},
-/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/decal/cleanable/dirt,
 /turf/open/misc/dirt/jungle/dark{
 	planetary_atmos = 0;
 	slowdown = 0
@@ -711,7 +711,7 @@
 /area/centcom/heretic_sacrifice/flesh)
 "Zw" = (
 /obj/effect/decal/cleanable/blood/old,
-/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/decal/cleanable/dirt,
 /obj/effect/landmark/heretic/knock,
 /turf/open/indestructible/plating,
 /area/centcom/heretic_sacrifice/knock)

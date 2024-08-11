@@ -89,3 +89,8 @@
 		var/mob/living/carbon/human/potato_oc = owner
 		var/datum/species/ethereal/eth_holder = potato_oc.dna.species
 		species_color = eth_holder.current_color
+
+/obj/item/bodypart/head/ethereal/lustrous
+	icon_state = "lustrous_head"
+	limb_id = SPECIES_ETHEREAL_LUSTROUS
+//	head_flags = NONE //monkestation temp removal

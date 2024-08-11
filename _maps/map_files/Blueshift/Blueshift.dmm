@@ -2066,7 +2066,7 @@
 /area/station/service/bar/backroom)
 "avy" = (
 /obj/effect/turf_decal/bot,
-/obj/structure/bed/roller,
+/obj/structure/bed/medical/emergency,
 /obj/effect/turf_decal/trimline/blue/filled/line{
 	dir = 8
 	},
@@ -6674,7 +6674,7 @@
 /area/station/engineering/storage/tcomms)
 "bpj" = (
 /obj/machinery/iv_drip,
-/obj/structure/bed/roller{
+/obj/structure/bed/medical/emergency{
 	dir = 1
 	},
 /obj/machinery/defibrillator_mount/directional/south,
@@ -15564,7 +15564,7 @@
 /turf/open/floor/iron,
 /area/station/cargo/office)
 "cUY" = (
-/obj/structure/bed/roller{
+/obj/structure/bed/medical/emergency{
 	dir = 1
 	},
 /turf/open/floor/mineral/titanium/tiled/white{
@@ -17133,7 +17133,7 @@
 /turf/open/floor/iron,
 /area/station/engineering/storage/tech)
 "dlc" = (
-/obj/structure/bed/roller{
+/obj/structure/bed/medical/emergency{
 	dir = 1
 	},
 /obj/machinery/iv_drip,
@@ -18999,7 +18999,7 @@
 /turf/open/floor/iron,
 /area/station/medical/break_room)
 "dFL" = (
-/obj/structure/bed/roller{
+/obj/structure/bed/medical/emergency{
 	dir = 1
 	},
 /obj/machinery/iv_drip,
@@ -20165,7 +20165,7 @@
 	pixel_x = -5;
 	pixel_y = 2
 	},
-/obj/item/roller,
+/obj/item/emergency_bed,
 /obj/item/clothing/neck/stethoscope,
 /turf/open/floor/iron/white/side{
 	dir = 4
@@ -21099,7 +21099,7 @@
 /area/station/science/xenobiology)
 "eaD" = (
 /obj/effect/turf_decal/bot,
-/obj/structure/bed/roller,
+/obj/structure/bed/medical/emergency,
 /obj/effect/turf_decal/trimline/blue/filled/line{
 	dir = 9
 	},
@@ -36006,7 +36006,7 @@
 /turf/open/floor/plating,
 /area/station/maintenance/aft/upper)
 "gVz" = (
-/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/blood/gibs/old,
 /obj/effect/decal/cleanable/blood/old,
 /turf/open/floor/plating,
@@ -45526,7 +45526,7 @@
 /area/station/medical/medbay/lobby)
 "iRZ" = (
 /obj/machinery/iv_drip,
-/obj/structure/bed/roller{
+/obj/structure/bed/medical/emergency{
 	dir = 1
 	},
 /obj/machinery/defibrillator_mount/directional/north,
@@ -47695,7 +47695,7 @@
 "jnG" = (
 /obj/structure/window/reinforced/spawner/directional/south,
 /obj/machinery/iv_drip,
-/obj/structure/bed/roller,
+/obj/structure/bed/medical/emergency,
 /obj/effect/turf_decal/bot_white,
 /turf/open/floor/iron/dark,
 /area/station/medical/morgue)
@@ -49431,7 +49431,7 @@
 /turf/open/floor/wood,
 /area/station/service/kitchen/diner)
 "jEJ" = (
-/obj/structure/bed/roller{
+/obj/structure/bed/medical/emergency{
 	dir = 1
 	},
 /obj/machinery/iv_drip,
@@ -58258,7 +58258,7 @@
 /turf/open/floor/iron/dark,
 /area/station/security/warden)
 "lnD" = (
-/obj/structure/bed/roller{
+/obj/structure/bed/medical/emergency{
 	dir = 1
 	},
 /obj/item/bedsheet/medical,
@@ -74077,7 +74077,7 @@
 /turf/open/floor/mineral/plastitanium,
 /area/station/maintenance/cult_chapel_maint)
 "otH" = (
-/obj/structure/bed/roller{
+/obj/structure/bed/medical/emergency{
 	dir = 1
 	},
 /obj/item/bedsheet/medical,
@@ -86218,7 +86218,7 @@
 /obj/effect/turf_decal/siding/wood{
 	dir = 8
 	},
-/obj/structure/bed/roller{
+/obj/structure/bed/medical/emergency{
 	dir = 1
 	},
 /obj/structure/sign/clock/directional/south,
@@ -87022,7 +87022,7 @@
 	},
 /area/station/command/heads_quarters/nt_rep)
 "qUO" = (
-/obj/structure/bed/roller,
+/obj/structure/bed/medical/emergency,
 /obj/effect/turf_decal/bot,
 /obj/structure/window/spawner/directional/north,
 /obj/machinery/iv_drip,
@@ -91644,7 +91644,7 @@
 /area/station/hallway/primary/port)
 "rNG" = (
 /obj/item/radio/intercom/directional/east,
-/obj/structure/bed/roller{
+/obj/structure/bed/medical/emergency{
 	dir = 1
 	},
 /obj/effect/turf_decal/tile/blue/fourcorners,
@@ -92420,7 +92420,7 @@
 /turf/open/floor/circuit,
 /area/station/ai_monitored/turret_protected/ai)
 "rXe" = (
-/obj/structure/bed/roller,
+/obj/structure/bed/medical/emergency,
 /obj/machinery/iv_drip,
 /obj/effect/turf_decal/bot,
 /obj/machinery/light/small/directional/east,
@@ -93763,7 +93763,7 @@
 /turf/open/floor/plating,
 /area/station/maintenance/department/science/upper)
 "skJ" = (
-/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/decal/cleanable/dirt,
 /obj/effect/spawner/random/trash/mess,
 /turf/open/floor/plating,
 /area/station/maintenance/department/medical/central)
@@ -98834,7 +98834,7 @@
 /obj/effect/spawner/random/structure/table_or_rack,
 /obj/effect/spawner/random/maintenance,
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/fluff/broken_flooring,
+/obj/structure/broken_flooring/corner/directional/south,
 /turf/open/floor/plating,
 /area/station/science/tele_sci)
 "thq" = (
@@ -99406,7 +99406,7 @@
 /turf/closed/wall,
 /area/station/security/prison/shower)
 "tnz" = (
-/obj/structure/bed/roller,
+/obj/structure/bed/medical/emergency,
 /obj/machinery/iv_drip,
 /obj/effect/turf_decal/bot,
 /obj/machinery/anesthetic_machine,
@@ -104687,7 +104687,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/fluff/broken_flooring,
+/obj/structure/broken_flooring/corner/directional/south,
 /turf/open/floor/plating,
 /area/station/science/tele_sci)
 "umz" = (
@@ -105904,7 +105904,7 @@
 /turf/open/floor/iron,
 /area/station/commons/vacant_room/commissary)
 "uzm" = (
-/obj/structure/bed/roller{
+/obj/structure/bed/medical/emergency{
 	dir = 1
 	},
 /obj/effect/turf_decal/tile/blue/fourcorners,
@@ -107972,7 +107972,7 @@
 	},
 /area/station/service/theater)
 "uUl" = (
-/obj/structure/bed/roller,
+/obj/structure/bed/medical/emergency,
 /obj/effect/turf_decal/bot,
 /obj/machinery/iv_drip,
 /turf/open/floor/iron/dark,
@@ -111089,7 +111089,7 @@
 /turf/open/floor/iron/cafeteria,
 /area/station/service/kitchen)
 "vyF" = (
-/obj/structure/bed/roller{
+/obj/structure/bed/medical/emergency{
 	dir = 1
 	},
 /obj/machinery/iv_drip,
@@ -112808,7 +112808,7 @@
 /turf/open/floor/iron,
 /area/station/commons/fitness)
 "vOB" = (
-/obj/structure/bed/roller{
+/obj/structure/bed/medical/emergency{
 	dir = 8
 	},
 /obj/effect/turf_decal/tile/blue/fourcorners,
@@ -116783,7 +116783,7 @@
 /obj/effect/spawner/random/trash,
 /obj/effect/spawner/random/trash/mess,
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/fluff/broken_flooring,
+/obj/structure/broken_flooring/corner/directional/south,
 /turf/open/floor/plating,
 /area/station/science/tele_sci)
 "wAY" = (
@@ -124985,7 +124985,7 @@
 /area/station/command/heads_quarters/hos)
 "ygG" = (
 /obj/effect/turf_decal/bot,
-/obj/structure/bed/roller,
+/obj/structure/bed/medical/emergency,
 /obj/effect/turf_decal/trimline/blue/filled/line,
 /obj/item/radio/intercom/directional/south,
 /obj/machinery/camera/directional/south,

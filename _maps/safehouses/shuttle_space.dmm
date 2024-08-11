@@ -8,15 +8,6 @@
 /obj/effect/turf_decal/stripes/line,
 /turf/open/floor/iron,
 /area/virtual_domain/safehouse)
-"c" = (
-/obj/effect/turf_decal/tile/neutral/half/contrasted,
-/obj/effect/turf_decal/stripes/line{
-	dir = 1
-	},
-/obj/machinery/light/small/directional/north,
-/obj/effect/decal/cleanable/dirt/dust,
-/turf/open/floor/iron,
-/area/virtual_domain/safehouse)
 "i" = (
 /turf/closed/wall/mineral/titanium/overspace,
 /area/virtual_domain/safehouse)
@@ -207,7 +198,7 @@ G
 "}
 (5,1,1) = {"
 G
-c
+I
 O
 b
 l

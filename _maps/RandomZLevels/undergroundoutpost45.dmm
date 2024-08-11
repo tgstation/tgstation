@@ -189,9 +189,7 @@
 	},
 /area/awaymission/undergroundoutpost45/central)
 "aH" = (
-/obj/structure/sign/poster/official/nanotrasen_logo{
-	pixel_y = 32
-	},
+/obj/structure/sign/poster/official/nanotrasen_logo/directional/north,
 /turf/open/floor/iron{
 	heat_capacity = 1e+006
 	},
@@ -212,9 +210,7 @@
 "aK" = (
 /obj/structure/closet/emcloset,
 /obj/item/clothing/mask/breath,
-/obj/structure/sign/poster/official/safety_internals{
-	pixel_x = -32
-	},
+/obj/structure/sign/poster/official/safety_internals/directional/west,
 /turf/open/floor/iron/dark{
 	heat_capacity = 1e+006
 	},
@@ -614,9 +610,7 @@
 	},
 /area/awaymission/undergroundoutpost45/central)
 "bK" = (
-/obj/structure/sign/poster/official/nanotrasen_logo{
-	pixel_y = -32
-	},
+/obj/structure/sign/poster/official/nanotrasen_logo/directional/south,
 /turf/open/floor/iron{
 	heat_capacity = 1e+006
 	},
@@ -635,9 +629,7 @@
 /area/awaymission/undergroundoutpost45/central)
 "bN" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/sign/poster/official/nanotrasen_logo{
-	pixel_y = -32
-	},
+/obj/structure/sign/poster/official/nanotrasen_logo/directional/south,
 /turf/open/floor/iron{
 	heat_capacity = 1e+006
 	},
@@ -1837,9 +1829,7 @@
 /obj/item/screwdriver{
 	pixel_y = 10
 	},
-/obj/structure/sign/poster/official/safety_report{
-	pixel_y = -32
-	},
+/obj/structure/sign/poster/official/safety_report/directional/south,
 /obj/effect/turf_decal/tile/red/half/contrasted,
 /turf/open/floor/iron{
 	heat_capacity = 1e+006
@@ -2124,9 +2114,7 @@
 	dir = 10
 	},
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/sign/poster/contraband/eat{
-	pixel_x = 32
-	},
+/obj/structure/sign/poster/contraband/eat/directional/east,
 /obj/effect/turf_decal/tile/green{
 	dir = 4
 	},
@@ -3675,9 +3663,7 @@
 "jR" = (
 /obj/structure/closet/emcloset,
 /obj/item/clothing/mask/breath,
-/obj/structure/sign/poster/official/safety_internals{
-	pixel_y = 32
-	},
+/obj/structure/sign/poster/official/safety_internals/directional/north,
 /obj/effect/mapping_helpers/burnt_floor,
 /turf/open/floor/iron{
 	dir = 8;
@@ -5394,9 +5380,7 @@
 /area/awaymission/undergroundoutpost45/crew_quarters)
 "nz" = (
 /obj/machinery/vending/cigarette,
-/obj/structure/sign/poster/contraband/smoke{
-	pixel_y = 32
-	},
+/obj/structure/sign/poster/contraband/smoke/directional/north,
 /turf/open/floor/iron/dark{
 	heat_capacity = 1e+006
 	},
@@ -9246,9 +9230,7 @@
 	dir = 4
 	},
 /obj/machinery/vending/tool,
-/obj/structure/sign/poster/official/build{
-	pixel_y = -32
-	},
+/obj/structure/sign/poster/official/build/directional/south,
 /obj/effect/mapping_helpers/burnt_floor,
 /turf/open/floor/iron{
 	dir = 8;

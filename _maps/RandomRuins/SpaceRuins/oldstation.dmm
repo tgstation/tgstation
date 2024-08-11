@@ -515,6 +515,12 @@
 /obj/structure/sign/departments/science,
 /turf/closed/wall/rust,
 /area/ruin/space/ancientstation/charlie/hall)
+"bY" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/light/small/directional/west,
+/obj/structure/broken_flooring/corner/directional/north,
+/turf/open/floor/iron,
+/area/ruin/space/ancientstation/charlie/hall)
 "bZ" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
@@ -732,7 +738,7 @@
 /area/ruin/space/ancientstation/delta/proto)
 "cF" = (
 /obj/structure/window/reinforced/spawner/directional/west,
-/obj/structure/window/reinforced/spawner,
+/obj/structure/window/reinforced/spawner/directional/south,
 /obj/structure/alien/weeds,
 /turf/open/floor/iron/dark,
 /area/ruin/space/ancientstation/delta/ai)
@@ -983,7 +989,7 @@
 /area/ruin/space/ancientstation/delta/hall)
 "dD" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/item/roller,
+/obj/item/emergency_bed,
 /obj/structure/cable,
 /obj/effect/turf_decal/tile/blue/half/contrasted{
 	dir = 4
@@ -1708,6 +1714,12 @@
 	},
 /turf/open/floor/iron,
 /area/ruin/space/ancientstation/beta/mining)
+"fT" = (
+/obj/item/stack/rods,
+/obj/effect/mapping_helpers/broken_floor,
+/obj/structure/broken_flooring/singular/directional/east,
+/turf/open/floor/plating/airless,
+/area/ruin/space/ancientstation/beta/hall)
 "fX" = (
 /turf/open/floor/plating,
 /area/ruin/space/ancientstation/beta/mining)
@@ -1900,6 +1912,8 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4{
 	dir = 4
 	},
+/obj/structure/broken_flooring/side/directional/north,
+/obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating/airless,
 /area/ruin/space/ancientstation/beta/hall)
 "gP" = (
@@ -2846,6 +2860,13 @@
 /obj/machinery/atmospherics/components/binary/pump/layer2{
 	dir = 1
 	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2{
+	dir = 10
+	},
+/obj/effect/decal/cleanable/glass,
+/obj/item/shard,
+/obj/effect/mapping_helpers/broken_floor,
+/obj/structure/broken_flooring/singular/directional/east,
 /turf/open/floor/iron/airless,
 /area/ruin/space/ancientstation/beta/hall)
 "ko" = (
@@ -3813,12 +3834,29 @@
 /area/ruin/space/ancientstation/beta/atmos)
 "nw" = (
 /obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2{
+	dir = 8
+	},
+/obj/structure/broken_flooring/side/directional/east,
+/obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating/airless,
 /area/ruin/space/ancientstation/beta/hall)
 "nx" = (
-/obj/structure/cable,
 /obj/item/shard,
 /obj/machinery/atmospherics/components/binary/pump/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4{
+	dir = 4
+	},
+/obj/effect/decal/cleanable/glass,
+/obj/effect/mapping_helpers/broken_floor,
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2{
+	dir = 10
+	},
+/obj/structure/broken_flooring/singular/directional/west,
 /turf/open/floor/plating/airless,
 /area/ruin/space/ancientstation/beta/hall)
 "ny" = (
@@ -3920,6 +3958,18 @@
 /mob/living/simple_animal/hostile/alien/drone,
 /turf/open/floor/iron/white,
 /area/ruin/space/ancientstation/delta/rnd)
+"nO" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4{
+	dir = 6
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2{
+	dir = 10
+	},
+/obj/structure/cable,
+/obj/structure/broken_flooring/pile/directional/north,
+/turf/open/floor/iron,
+/area/ruin/space/ancientstation/charlie/hall)
 "nP" = (
 /obj/machinery/door/firedoor,
 /obj/effect/decal/cleanable/dirt,
@@ -3927,8 +3977,10 @@
 /turf/open/floor/iron,
 /area/ruin/space/ancientstation/delta/hall)
 "nQ" = (
-/obj/item/stack/rods,
 /obj/effect/mapping_helpers/broken_floor,
+/obj/item/stack/rods,
+/obj/structure/broken_flooring/pile/directional/south,
+/obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating/airless,
 /area/ruin/space/ancientstation/beta/hall)
 "nS" = (
@@ -4207,6 +4259,8 @@
 "oJ" = (
 /obj/structure/closet/crate/bin,
 /obj/effect/spawner/random/maintenance,
+/obj/effect/spawner/random/trash/garbage,
+/obj/structure/broken_flooring/corner/directional/west,
 /turf/open/floor/plating/airless,
 /area/ruin/space/ancientstation/beta/medbay)
 "oK" = (
@@ -4244,6 +4298,7 @@
 /obj/item/shard{
 	icon_state = "medium"
 	},
+/obj/structure/broken_flooring/side/directional/south,
 /turf/open/floor/plating/airless,
 /area/ruin/space/ancientstation/beta/hall)
 "oQ" = (
@@ -4266,6 +4321,7 @@
 "oT" = (
 /obj/item/stack/rods,
 /obj/effect/decal/cleanable/glass,
+/obj/structure/broken_flooring/side/directional/south,
 /turf/open/floor/plating/airless,
 /area/ruin/space/ancientstation/beta/hall)
 "oU" = (
@@ -4291,6 +4347,7 @@
 "pa" = (
 /obj/item/stack/rods,
 /obj/machinery/door/firedoor,
+/obj/structure/broken_flooring/singular/directional/east,
 /turf/open/floor/plating/airless,
 /area/ruin/space/ancientstation/beta/hall)
 "pc" = (
@@ -4310,6 +4367,9 @@
 	dir = 1
 	},
 /obj/effect/turf_decal/tile/blue/half/contrasted,
+/obj/machinery/atmospherics/components/binary/pump/layer4,
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/broken_flooring/corner/directional/north,
 /turf/open/floor/iron/airless,
 /area/ruin/space/ancientstation/beta/hall)
 "ph" = (
@@ -4350,6 +4410,7 @@
 	icon_state = "medium"
 	},
 /obj/effect/decal/cleanable/glass,
+/obj/structure/broken_flooring/side/directional/west,
 /turf/open/floor/iron,
 /area/ruin/space/ancientstation/charlie/dorms)
 "pm" = (
@@ -4358,6 +4419,7 @@
 /obj/item/shard,
 /obj/item/stack/rods,
 /obj/effect/decal/cleanable/glass,
+/obj/structure/broken_flooring/corner/directional/east,
 /turf/open/floor/iron,
 /area/ruin/space/ancientstation/charlie/dorms)
 "pn" = (
@@ -4484,20 +4546,13 @@
 /turf/open/floor/iron,
 /area/ruin/space/ancientstation/charlie/bridge)
 "qA" = (
-/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/structure/cable,
+/obj/structure/broken_flooring/singular/directional/east,
+/obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating/airless,
 /area/ruin/space/ancientstation/beta/hall)
-"qB" = (
-/obj/effect/decal/cleanable/dirt/dust,
-/obj/effect/turf_decal/tile/purple/half/contrasted{
-	dir = 4
-	},
-/turf/open/floor/iron/white/textured_edge{
-	dir = 8
-	},
-/area/ruin/space/ancientstation/delta/biolab)
 "qF" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/visible/layer2{
 	dir = 4
@@ -4943,9 +4998,11 @@
 /area/ruin/space/ancientstation/delta/hall)
 "uP" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/cable,
+/obj/structure/broken_flooring/corner/directional/east,
 /turf/open/floor/plating/airless,
 /area/ruin/space/ancientstation/beta/hall)
 "uR" = (
@@ -5328,6 +5385,12 @@
 	},
 /turf/open/floor/plating,
 /area/ruin/space/ancientstation/charlie/sec)
+"xD" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/item/stack/rods,
+/obj/structure/broken_flooring/pile/directional/south,
+/turf/open/floor/iron,
+/area/ruin/space/ancientstation/charlie/dorms)
 "xH" = (
 /obj/effect/decal/cleanable/generic,
 /obj/structure/cable,
@@ -5427,7 +5490,7 @@
 /area/ruin/space/ancientstation/beta/mining)
 "yQ" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/window/plasma/spawner,
+/obj/structure/window/plasma/spawner/directional/south,
 /turf/open/floor/engine/airless,
 /area/ruin/space/ancientstation/beta/supermatter)
 "yS" = (
@@ -6386,12 +6449,13 @@
 /turf/open/floor/iron,
 /area/ruin/space/ancientstation/delta/hall)
 "Hi" = (
+/obj/effect/decal/cleanable/glass,
+/obj/machinery/airalarm/directional/east,
+/obj/effect/mapping_helpers/airalarm/all_access,
 /obj/item/shard{
 	icon_state = "medium"
 	},
 /obj/effect/decal/cleanable/glass,
-/obj/machinery/airalarm/directional/east,
-/obj/effect/mapping_helpers/airalarm/all_access,
 /obj/effect/mapping_helpers/broken_floor,
 /turf/open/floor/plating/airless,
 /area/ruin/space/ancientstation/beta/hall)
@@ -6451,7 +6515,7 @@
 /turf/open/floor/plating,
 /area/ruin/space/ancientstation/beta/hall)
 "HJ" = (
-/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/decal/cleanable/dirt,
 /obj/structure/curtain,
 /obj/effect/turf_decal/tile/purple/half/contrasted{
 	dir = 4
@@ -6513,6 +6577,11 @@
 	dir = 4
 	},
 /area/ruin/space/ancientstation/delta/biolab)
+"HZ" = (
+/obj/structure/broken_flooring/pile/directional/south,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating/airless,
+/area/ruin/space/ancientstation/beta/hall)
 "Ia" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/closet/l3closet/scientist,
@@ -6695,7 +6764,7 @@
 	pixel_y = -8;
 	pixel_x = 13
 	},
-/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/white/textured_large,
 /area/ruin/space/ancientstation/delta/biolab)
 "Jx" = (
@@ -6822,12 +6891,10 @@
 	pixel_x = -6
 	},
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/sign/poster/official/periodic_table{
-	pixel_y = 30
-	},
 /obj/effect/turf_decal/tile/yellow/half/contrasted{
 	dir = 1
 	},
+/obj/structure/sign/poster/official/periodic_table/directional/north,
 /turf/open/floor/iron,
 /area/ruin/space/ancientstation/delta/rnd)
 "Ke" = (
@@ -7328,6 +7395,11 @@
 /obj/structure/girder,
 /turf/open/floor/plating/airless,
 /area/ruin/space/ancientstation/beta/medbay)
+"OR" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/broken_flooring/side/directional/north,
+/turf/open/floor/iron,
+/area/ruin/space/ancientstation/charlie/hall)
 "OS" = (
 /obj/machinery/air_sensor/nitrogen_tank{
 	chamber_id = "beta-n2"
@@ -7670,9 +7742,7 @@
 /area/ruin/space/ancientstation/charlie/bridge)
 "Rt" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/sign/poster/official/safety_internals{
-	pixel_y = 32
-	},
+/obj/structure/sign/poster/official/safety_internals/directional/north,
 /turf/open/floor/plating,
 /area/ruin/space/ancientstation/delta/hall)
 "RA" = (
@@ -8225,6 +8295,8 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/structure/sign/warning/engine_safety/directional/west,
+/obj/structure/broken_flooring/pile/directional/west,
+/obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating/airless,
 /area/ruin/space/ancientstation/beta/hall)
 "Xt" = (
@@ -8362,9 +8434,7 @@
 "Yk" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/light/small/directional/north,
-/obj/structure/sign/poster/official/cleanliness{
-	pixel_y = 32
-	},
+/obj/structure/sign/poster/official/cleanliness/directional/north,
 /turf/open/floor/iron/cafeteria,
 /area/ruin/space/ancientstation/charlie/kitchen)
 "Yl" = (
@@ -9891,7 +9961,7 @@ UP
 UP
 UP
 Uj
-nQ
+fT
 gO
 AK
 ow
@@ -10232,7 +10302,7 @@ Cj
 Cj
 fY
 oO
-Bz
+HZ
 Kw
 oT
 Hi
@@ -12425,7 +12495,7 @@ Aa
 kP
 bT
 kp
-pj
+xD
 mc
 UP
 Uu
@@ -12994,8 +13064,8 @@ aa
 Al
 cK
 cK
-KM
-cW
+nO
+bY
 eJ
 dS
 et
@@ -13061,7 +13131,7 @@ Al
 cK
 cK
 cs
-FV
+OR
 eJ
 XX
 eu
@@ -15308,14 +15378,14 @@ aa
 aa
 vA
 PZ
-qB
-qB
+Ob
+Ob
 EH
-qB
+Ob
 HN
 HJ
 NA
-qB
+Ob
 Ob
 Ay
 vA

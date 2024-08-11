@@ -1080,9 +1080,7 @@
 	desc = "Looks like a knock-off chem-master. Perhaps useful for separating liquids when mixing drinks precisely. Also dispenses condiments.";
 	name = "HoochMaster Deluxe"
 	},
-/obj/structure/sign/poster/contraband/energy_swords{
-	pixel_y = 32
-	},
+/obj/structure/sign/poster/contraband/energy_swords/directional/north,
 /turf/open/floor/iron/dark,
 /area/station/service/bar)
 "Yx" = (

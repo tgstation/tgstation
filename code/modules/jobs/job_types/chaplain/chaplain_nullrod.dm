@@ -41,10 +41,13 @@
 			if(!initial(nullrod_type.chaplain_spawnable))
 				continue
 			rods[nullrod_type] = initial(nullrod_type.menu_description)
+		//special non-nullrod subtyped shit
+		rods[/obj/item/gun/ballistic/bow/divine/with_quiver] = "A divine bow and 10 quivered holy arrows."
 		AddComponent(/datum/component/subtype_picker, rods, CALLBACK(src, PROC_REF(on_holy_weapon_picked)))
 
 /obj/item/nullrod/proc/on_holy_weapon_picked(obj/item/nullrod/holy_weapon_type)
 	GLOB.holy_weapon_type = holy_weapon_type
+	SEND_GLOBAL_SIGNAL(COMSIG_GLOB_NULLROD_PICKED)
 	SSblackbox.record_feedback("tally", "chaplain_weapon", 1, "[initial(holy_weapon_type.name)]")
 
 /obj/item/nullrod/proc/on_cult_rune_removed(obj/effect/target, mob/living/user)
@@ -412,7 +415,7 @@
 /obj/item/nullrod/clown/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/slippery, 140) //Same as maximum potency banana peel.
-	
+
 /obj/item/nullrod/clown/afterattack(atom/target, mob/living/user)
 	. = ..()
 	if(!isliving(target))

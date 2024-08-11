@@ -399,7 +399,7 @@
 /turf/open/floor/iron/dark/smooth_large,
 /area/shuttle/escape)
 "gY" = (
-/obj/structure/bed/roller,
+/obj/structure/bed/medical/emergency,
 /obj/item/bedsheet/patriot,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/cyan/visible,
 /obj/item/toy/plush/lizard_plushie{
@@ -507,11 +507,9 @@
 "ju" = (
 /obj/machinery/coffeemaker,
 /obj/effect/turf_decal/tile/neutral/opposingcorners,
-/obj/structure/sign/poster/contraband/clown{
-	pixel_y = 35
-	},
 /obj/structure/table/reinforced/plastitaniumglass,
 /obj/machinery/light/directional/north,
+/obj/structure/sign/poster/contraband/clown/directional/north,
 /turf/open/floor/wood/tile,
 /area/shuttle/escape)
 "jw" = (
@@ -578,10 +576,8 @@
 /turf/open/floor/iron/dark/textured,
 /area/shuttle/escape/brig)
 "jX" = (
-/obj/structure/sign/poster/contraband/clown{
-	pixel_y = 35
-	},
 /obj/effect/spawner/random/entertainment/arcade,
+/obj/structure/sign/poster/contraband/clown/directional/north,
 /turf/open/floor/plastic,
 /area/shuttle/escape/luxury)
 "kc" = (
@@ -775,7 +771,7 @@
 /turf/closed/wall/mineral/plastitanium,
 /area/shuttle/escape)
 "nE" = (
-/obj/structure/window/reinforced/survival_pod,
+/obj/structure/window/reinforced/survival_pod/spawner/directional/south,
 /turf/open/floor/iron/dark/textured_large,
 /area/shuttle/escape)
 "nN" = (
@@ -911,12 +907,10 @@
 "re" = (
 /obj/effect/turf_decal/tile/red/opposingcorners,
 /obj/machinery/vending/liberationstation,
-/obj/structure/sign/poster/contraband/clown{
-	pixel_y = 35
-	},
 /obj/structure/window/reinforced/survival_pod/spawner/directional/west{
 	damage_deflection = 21
 	},
+/obj/structure/sign/poster/contraband/clown/directional/north,
 /turf/open/floor/iron/dark/textured,
 /area/shuttle/escape/brig)
 "ri" = (
@@ -1384,10 +1378,7 @@
 /turf/open/floor/noslip,
 /area/shuttle/escape)
 "Aq" = (
-/obj/structure/sign/poster/party_game{
-	pixel_x = 32;
-	pixel_y = 3
-	},
+/obj/structure/sign/poster/party_game/directional/east,
 /turf/open/floor/plastic,
 /area/shuttle/escape/luxury)
 "AA" = (
@@ -1910,9 +1901,7 @@
 /turf/closed/wall/mineral/plastitanium,
 /area/shuttle/escape)
 "IX" = (
-/obj/structure/sign/poster/contraband/donut_corp{
-	pixel_y = 32
-	},
+/obj/structure/sign/poster/contraband/donut_corp/directional/north,
 /obj/structure/disposalpipe/segment,
 /obj/structure/table/reinforced/plastitaniumglass,
 /obj/item/ammo_box/c35/rubber,
@@ -1966,7 +1955,7 @@
 /obj/structure/chair/comfy/teal{
 	dir = 1
 	},
-/obj/structure/window/reinforced/survival_pod,
+/obj/structure/window/reinforced/survival_pod/spawner/directional/south,
 /turf/open/floor/iron/dark/textured_large,
 /area/shuttle/escape)
 "Kd" = (
@@ -1979,13 +1968,11 @@
 /obj/effect/turf_decal/trimline/red/corner{
 	dir = 4
 	},
-/obj/structure/sign/poster/contraband/clown{
-	pixel_y = -30
-	},
 /obj/effect/turf_decal/trimline/yellow/line,
 /obj/effect/turf_decal/trimline/yellow/corner{
 	dir = 4
 	},
+/obj/structure/sign/poster/contraband/clown/directional/south,
 /turf/open/floor/iron/dark/textured,
 /area/shuttle/escape/brig)
 "Ki" = (
@@ -2018,13 +2005,11 @@
 /turf/open/floor/iron/dark/textured_large,
 /area/shuttle/escape)
 "KZ" = (
-/obj/structure/sign/poster/contraband/clown{
-	pixel_y = -29
-	},
 /obj/effect/turf_decal/trimline/yellow/line{
 	dir = 8
 	},
 /obj/machinery/vending/toyliberationstation,
+/obj/structure/sign/poster/contraband/clown/directional/south,
 /turf/open/floor/iron/showroomfloor,
 /area/shuttle/escape)
 "Lf" = (
@@ -2288,7 +2273,7 @@
 /turf/open/floor/plating,
 /area/shuttle/escape)
 "Qu" = (
-/obj/structure/bed/roller,
+/obj/structure/bed/medical/emergency,
 /obj/item/bedsheet/patriot,
 /turf/open/floor/plastic,
 /area/shuttle/escape)
@@ -2546,9 +2531,7 @@
 /area/shuttle/escape)
 "Vk" = (
 /obj/structure/table,
-/obj/structure/sign/poster/contraband/moffuchis_pizza{
-	pixel_y = 32
-	},
+/obj/structure/sign/poster/contraband/moffuchis_pizza/directional/north,
 /obj/item/plate,
 /obj/item/plate{
 	pixel_y = 2

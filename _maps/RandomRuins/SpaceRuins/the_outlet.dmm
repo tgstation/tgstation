@@ -31,9 +31,7 @@
 /turf/open/floor/cult,
 /area/ruin/space/has_grav/the_outlet/cultinfluence)
 "aX" = (
-/obj/structure/fluff/broken_flooring{
-	icon_state = "plating"
-	},
+/obj/structure/broken_flooring/plating/directional/south,
 /turf/open/floor/iron/grimy,
 /area/ruin/space/has_grav/the_outlet/employeesection)
 "bk" = (
@@ -58,10 +56,7 @@
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/the_outlet/employeesection)
 "bJ" = (
-/obj/structure/fluff/broken_flooring{
-	dir = 4;
-	icon_state = "pile"
-	},
+/obj/structure/broken_flooring/pile/directional/east,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/the_outlet/employeesection)
 "bS" = (
@@ -71,13 +66,8 @@
 /turf/open/floor/iron/grimy,
 /area/ruin/space/has_grav/the_outlet/employeesection)
 "bW" = (
-/obj/structure/fluff/broken_flooring{
-	dir = 4;
-	icon_state = "singular"
-	},
-/obj/structure/fluff/broken_flooring{
-	icon_state = "singular"
-	},
+/obj/structure/broken_flooring/singular/directional/east,
+/obj/structure/broken_flooring/singular/directional/south,
 /turf/open/floor/plating/rust,
 /area/ruin/space/has_grav/the_outlet/employeesection)
 "ci" = (
@@ -180,10 +170,7 @@
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/the_outlet/employeesection)
 "es" = (
-/obj/structure/fluff/broken_flooring{
-	dir = 4;
-	icon_state = "pile"
-	},
+/obj/structure/broken_flooring/pile/directional/east,
 /turf/open/floor/plating/rust,
 /area/ruin/space/has_grav/the_outlet/employeesection)
 "eN" = (
@@ -375,10 +362,7 @@
 /turf/open/floor/iron/white,
 /area/ruin/space/has_grav/the_outlet/researchrooms)
 "jv" = (
-/obj/structure/fluff/broken_flooring{
-	dir = 4;
-	icon_state = "pile"
-	},
+/obj/structure/broken_flooring/pile/directional/east,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/the_outlet/storefront)
 "jw" = (
@@ -517,10 +501,7 @@
 /turf/open/floor/iron/white,
 /area/ruin/space/has_grav/the_outlet/researchrooms)
 "mX" = (
-/obj/structure/fluff/broken_flooring{
-	icon_state = "plating";
-	dir = 8
-	},
+/obj/structure/broken_flooring/plating/directional/west,
 /turf/open/floor/iron/grimy,
 /area/ruin/space/has_grav/the_outlet/employeesection)
 "nq" = (
@@ -600,9 +581,7 @@
 /turf/open/floor/cult,
 /area/ruin/space/has_grav/the_outlet/cultinfluence)
 "pC" = (
-/obj/structure/fluff/broken_flooring{
-	icon_state = "side"
-	},
+/obj/structure/broken_flooring/side/directional/south,
 /turf/open/floor/plating/rust,
 /area/ruin/space/has_grav/the_outlet/employeesection)
 "pG" = (
@@ -771,10 +750,7 @@
 /turf/open/floor/iron/grimy,
 /area/ruin/space/has_grav/the_outlet/storefront)
 "ss" = (
-/obj/structure/fluff/broken_flooring{
-	dir = 4;
-	icon_state = "singular"
-	},
+/obj/structure/broken_flooring/singular/directional/east,
 /obj/structure/cable,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/the_outlet/employeesection)
@@ -794,7 +770,7 @@
 /turf/open/floor/iron/grimy,
 /area/ruin/space/has_grav/the_outlet/employeesection)
 "sR" = (
-/obj/structure/fluff/broken_flooring,
+/obj/structure/broken_flooring/corner/directional/south,
 /turf/open/floor/plating/rust,
 /area/ruin/space/has_grav/the_outlet/employeesection)
 "sS" = (
@@ -1073,13 +1049,8 @@
 /turf/open/floor/iron/white,
 /area/ruin/space/has_grav/the_outlet/researchrooms)
 "zA" = (
-/obj/structure/fluff/broken_flooring{
-	icon_state = "plating"
-	},
-/obj/structure/fluff/broken_flooring{
-	icon_state = "plating";
-	dir = 8
-	},
+/obj/structure/broken_flooring/plating/directional/south,
+/obj/structure/broken_flooring/plating/directional/west,
 /turf/open/floor/iron/grimy,
 /area/ruin/space/has_grav/the_outlet/employeesection)
 "zB" = (
@@ -1517,7 +1488,7 @@
 /turf/template_noop,
 /area/template_noop)
 "Kq" = (
-/obj/structure/fluff/broken_flooring,
+/obj/structure/broken_flooring/corner/directional/south,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/the_outlet/storefront)
 "Kv" = (
@@ -1621,10 +1592,7 @@
 /turf/open/floor/iron/grimy,
 /area/ruin/space/has_grav/the_outlet/storefront)
 "MA" = (
-/obj/structure/fluff/broken_flooring{
-	dir = 4;
-	icon_state = "singular"
-	},
+/obj/structure/broken_flooring/singular/directional/east,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/the_outlet/storefront)
 "MF" = (
@@ -1824,14 +1792,8 @@
 /turf/open/floor/iron/freezer,
 /area/ruin/space/has_grav/the_outlet/researchrooms)
 "Rj" = (
-/obj/structure/fluff/broken_flooring{
-	icon_state = "plating";
-	dir = 4
-	},
-/obj/structure/fluff/broken_flooring{
-	icon_state = "plating";
-	dir = 1
-	},
+/obj/structure/broken_flooring/plating/directional/east,
+/obj/structure/broken_flooring/plating/directional/north,
 /turf/open/floor/iron/grimy,
 /area/ruin/space/has_grav/the_outlet/employeesection)
 "Rs" = (
@@ -1937,7 +1899,7 @@
 /turf/open/floor/iron/white,
 /area/ruin/space/has_grav/the_outlet/researchrooms)
 "Ub" = (
-/obj/structure/fluff/broken_flooring,
+/obj/structure/broken_flooring/corner/directional/south,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/the_outlet/employeesection)
 "Ui" = (

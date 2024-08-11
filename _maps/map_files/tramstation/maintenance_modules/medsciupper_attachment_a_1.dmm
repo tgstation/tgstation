@@ -145,9 +145,7 @@
 	pixel_x = -6;
 	pixel_y = 2
 	},
-/obj/structure/sign/poster/official/build{
-	pixel_y = 32
-	},
+/obj/structure/sign/poster/official/build/directional/north,
 /turf/open/floor/iron/dark,
 /area/station/maintenance/department/science)
 "X" = (

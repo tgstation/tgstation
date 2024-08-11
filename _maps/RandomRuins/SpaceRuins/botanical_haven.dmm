@@ -197,7 +197,7 @@
 /area/ruin/space/has_grav/powered/botanical_haven)
 "U" = (
 /obj/effect/turf_decal/stripes/asteroid/corner,
-/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/decal/cleanable/dirt,
 /obj/machinery/light/red/dim/directional/south,
 /obj/item/kirbyplants/fern,
 /turf/open/floor/plating/airless,

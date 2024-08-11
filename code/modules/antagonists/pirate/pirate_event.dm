@@ -1,31 +1,52 @@
+#define NO_ANSWER 0
+#define POSITIVE_ANSWER 1
+#define NEGATIVE_ANSWER 2
+
 /datum/round_event_control/pirates
 	name = "Space Pirates"
 	typepath = /datum/round_event/pirates
 	weight = 10
-	max_occurrences = 1
+	max_occurrences = 3 //monkestation edit: from 1 to 3 because pirates fighting over the station sounds funny
 	min_players = 20
 	//dynamic_should_hijack = TRUE
 	category = EVENT_CATEGORY_INVASION
 	description = "The crew will either pay up, or face a pirate assault."
 	admin_setup = list(/datum/event_admin_setup/listed_options/pirates)
 	map_flags = EVENT_SPACE_ONLY
-	track = EVENT_TRACK_ROLESET
+//monkestation edit start
+	track = EVENT_TRACK_MAJOR
 	tags = list(TAG_COMBAT, TAG_COMMUNAL)
 	checks_antag_cap = TRUE
+//monkestation edit end
 
+/datum/round_event_control/pirates/preRunEvent()
+	if(!(length(GLOB.light_pirate_gangs) + length(GLOB.heavy_pirate_gangs))) //monkestation edit: adds the pirate gangs check, as well as a redundant planetary check
+		return EVENT_CANT_RUN
+	return ..()
+
+//monkestation edit note: this list was out dated due to TG not using it so I put all the pirate types in it
 /datum/round_event/pirates
 	///admin chosen pirate team
-	var/list/datum/pirate_gang/gang_list = list(
-		new /datum/pirate_gang/psykers,
-		new /datum/pirate_gang/skeletons,
-		new /datum/pirate_gang/rogues
-	)
+	var/list/datum/pirate_gang/gang_list
+
+//monkestation edit start
+/datum/round_event/pirates/setup()
+	. = ..()
+	if(gang_list)
+		return
+
+	gang_list = list()
+	for(var/datum/pirate_gang/gang in GLOB.light_pirate_gangs + GLOB.heavy_pirate_gangs)
+		if(gang.paid_off)
+			continue
+		gang_list += gang
+//monkestation edit end
 
 /datum/round_event/pirates/start()
 	send_pirate_threat(gang_list)
 
 /proc/send_pirate_threat(list/pirate_selection)
-	var/datum/pirate_gang/chosen_gang = pick_n_take(pirate_selection)
+	var/datum/pirate_gang/chosen_gang = pick(pirate_selection) //monkestation edit: changed from pick_n_take()
 	///If there was nothing to pull from our requested list, stop here.
 	if(!chosen_gang)
 		message_admins("Error attempting to run the space pirate event, as the given pirate gangs list was empty.")
@@ -47,6 +68,9 @@
 		priority_announce(chosen_gang.response_too_late, sender_override = chosen_gang.ship_name, color_override = chosen_gang.announcement_color)
 		return
 	if(!threat?.answered)
+		return
+	if(threat.answered == NEGATIVE_ANSWER)
+		priority_announce(chosen_gang.response_rejected, sender_override = chosen_gang.ship_name, color_override = chosen_gang.announcement_color)
 		return
 
 	var/datum/bank_account/plundered_account = SSeconomy.get_dep_account(ACCOUNT_CAR)
@@ -110,3 +134,7 @@
 		event.gang_list = GLOB.light_pirate_gangs + GLOB.heavy_pirate_gangs
 	else
 		event.gang_list = list(new chosen)
+
+#undef NO_ANSWER
+#undef POSITIVE_ANSWER
+#undef NEGATIVE_ANSWER

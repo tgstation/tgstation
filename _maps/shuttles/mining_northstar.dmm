@@ -163,9 +163,7 @@
 	},
 /obj/effect/turf_decal/trimline/brown/end,
 /obj/machinery/light/directional/south,
-/obj/structure/sign/poster/official/work_for_a_future{
-	pixel_y = -28
-	},
+/obj/structure/sign/poster/official/work_for_a_future/directional/south,
 /turf/open/floor/pod/light,
 /area/shuttle/mining)
 "F" = (

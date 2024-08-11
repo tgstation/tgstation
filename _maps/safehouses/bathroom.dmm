@@ -1,13 +1,4 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
-"a" = (
-/obj/effect/decal/cleanable/dirt/dust,
-/turf/open/floor/iron/freezer,
-/area/virtual_domain/safehouse)
-"c" = (
-/obj/effect/decal/cleanable/dirt/dust,
-/obj/structure/extinguisher_cabinet/directional/north,
-/turf/open/floor/iron/freezer,
-/area/virtual_domain/safehouse)
 "e" = (
 /obj/effect/spawner/structure/window,
 /obj/effect/decal/cleanable/blood/splatter/over_window,
@@ -92,7 +83,7 @@
 /turf/open/floor/iron/freezer,
 /area/virtual_domain/safehouse)
 "Z" = (
-/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/decal/cleanable/dirt,
 /obj/machinery/light/small/blacklight/directional/west,
 /turf/open/floor/iron/freezer,
 /area/virtual_domain/safehouse)
@@ -115,15 +106,15 @@ G
 "}
 (3,1,1) = {"
 G
-c
+V
 D
-a
+N
 T
 G
 "}
 (4,1,1) = {"
 X
-a
+N
 D
 D
 T

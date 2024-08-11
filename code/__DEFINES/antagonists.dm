@@ -334,6 +334,11 @@ GLOBAL_LIST_INIT(human_invader_antagonists, list(
 #define ANTAG_GROUP_WIZARDS "Wizard Federation"
 #define ANTAG_GROUP_XENOS "Xenomorph Infestation"
 
+#define HUNTER_PACK_COPS "cop_hunters"
+#define HUNTER_PACK_RUSSIAN "russian_hunters"
+#define HUNTER_PACK_BOUNTY "bounty_hunters"
+#define HUNTER_PACK_PSYKER "psyker_hunters"
+
 // This flag disables certain checks that presume antagonist datums mean 'baddie'.
 #define FLAG_FAKE_ANTAG (1 << 0)
 

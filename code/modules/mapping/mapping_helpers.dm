@@ -57,6 +57,10 @@
 	name = "asteroid snow baseturf editor"
 	baseturf = /turf/open/misc/asteroid/snow
 
+/obj/effect/baseturf_helper/asteroid/moon
+	name = "lunar sand baseturf editor"
+	baseturf = /turf/open/misc/asteroid/moon
+
 /obj/effect/baseturf_helper/beach/sand
 	name = "beach sand baseturf editor"
 	baseturf = /turf/open/misc/beach/sand

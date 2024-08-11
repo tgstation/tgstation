@@ -34,7 +34,7 @@
 /turf/open/floor/engine,
 /area/station/engineering/supermatter/room/icebox_bar)
 "br" = (
-/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/cyan/visible,
 /turf/open/floor/pod/dark,
 /area/station/commons/lounge)
@@ -267,7 +267,7 @@
 /turf/open/floor/pod/dark,
 /area/station/commons/lounge)
 "kC" = (
-/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/decal/cleanable/dirt,
 /obj/structure/cable,
 /turf/open/floor/pod/dark,
 /area/station/commons/lounge)
@@ -528,9 +528,7 @@
 "tI" = (
 /obj/structure/cable,
 /obj/structure/closet/radiation,
-/obj/structure/window{
-	dir = 1
-	},
+/obj/structure/window/spawner/directional/north,
 /turf/open/floor/iron/showroomfloor,
 /area/station/commons/lounge)
 "tS" = (
@@ -594,7 +592,7 @@
 /area/station/service/bar)
 "uy" = (
 /obj/machinery/airalarm/directional/east,
-/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/decal/cleanable/dirt,
 /obj/machinery/restaurant_portal/bar,
 /obj/effect/turf_decal/trimline/yellow/filled/line{
 	dir = 4
@@ -895,7 +893,7 @@
 /area/template_noop)
 "Fk" = (
 /obj/machinery/newscaster/directional/north,
-/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/trimline/yellow/filled/line{
 	dir = 1
 	},
@@ -955,9 +953,7 @@
 /obj/effect/turf_decal/trimline/yellow/corner{
 	dir = 8
 	},
-/obj/structure/sign/poster/contraband/clown{
-	pixel_x = 32
-	},
+/obj/structure/sign/poster/contraband/clown/directional/east,
 /turf/open/floor/pod/dark,
 /area/station/commons/lounge)
 "Gh" = (
@@ -1032,7 +1028,7 @@
 /turf/open/floor/engine,
 /area/station/engineering/supermatter/icebox_bar)
 "Ie" = (
-/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/decal/cleanable/dirt,
 /turf/open/floor/pod/dark,
 /area/station/commons/lounge)
 "Ii" = (
@@ -1163,7 +1159,7 @@
 /turf/open/floor/pod/light,
 /area/station/service/bar)
 "KL" = (
-/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/components/binary/volume_pump{
 	dir = 8
 	},
@@ -1215,9 +1211,7 @@
 /turf/open/floor/pod/dark,
 /area/station/commons/lounge)
 "ND" = (
-/obj/structure/window{
-	dir = 1
-	},
+/obj/structure/window/spawner/directional/north,
 /obj/structure/drain,
 /obj/machinery/shower/directional/west,
 /turf/open/floor/iron/showroomfloor,
@@ -1473,9 +1467,7 @@
 /obj/effect/turf_decal/trimline/yellow/line{
 	dir = 4
 	},
-/obj/structure/sign/poster/contraband/clown{
-	pixel_x = -32
-	},
+/obj/structure/sign/poster/contraband/clown/directional/west,
 /turf/open/floor/pod/dark,
 /area/station/commons/lounge)
 "YV" = (

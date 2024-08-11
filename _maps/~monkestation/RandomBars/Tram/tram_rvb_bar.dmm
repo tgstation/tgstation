@@ -1096,7 +1096,7 @@
 /turf/open/floor/iron,
 /area/station/commons/lounge)
 "ql" = (
-/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/decal/cleanable/dirt,
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/structure/disposalpipe/segment,
@@ -1154,9 +1154,7 @@
 	dir = 4
 	},
 /obj/machinery/light/dim/directional/west,
-/obj/structure/sign/poster/official/enlist{
-	pixel_x = -32
-	},
+/obj/structure/sign/poster/official/enlist/directional/west,
 /turf/open/floor/iron,
 /area/station/commons/lounge)
 "ru" = (
@@ -1729,10 +1727,7 @@
 	pixel_y = -32
 	},
 /obj/machinery/light/dim/directional/west,
-/obj/structure/sign/poster/official/work_for_a_future{
-	pixel_x = -31;
-	pixel_y = 4
-	},
+/obj/structure/sign/poster/official/work_for_a_future/directional/west,
 /turf/open/floor/iron/white/corner{
 	dir = 4
 	},
@@ -2163,9 +2158,7 @@
 	dir = 1
 	},
 /obj/machinery/light/dim/directional/east,
-/obj/structure/sign/poster/official/enlist{
-	pixel_x = 32
-	},
+/obj/structure/sign/poster/official/enlist/directional/east,
 /turf/open/floor/iron,
 /area/station/commons/lounge)
 "HZ" = (
@@ -3153,7 +3146,7 @@
 	},
 /area/station/service/bar)
 "VL" = (
-/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron/kitchen/small,
 /area/station/service/kitchen)
