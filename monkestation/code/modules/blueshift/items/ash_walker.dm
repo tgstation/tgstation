@@ -340,6 +340,16 @@
 	)
 	category = CAT_WEAPON_MELEE
 
+/datum/crafting_recipe/ash_recipe/seedmesh
+	name = "Seed mesh"
+	result = /obj/item/seed_mesh
+	reqs = list(
+		/obj/item/stack/sheet/sinew = 2,
+		/obj/item/stack/sheet/cloth = 2,
+		/obj/item/stack/ore/glass = 1
+	)
+	category = CAT_MISC
+
 /obj/item/kinetic_crusher/cursed
 	name = "cursed ash carver"
 	desc = "A horrible, alive-looking weapon that pulses every so often. The tendril created this monstrosity to mimic and compete with those who invade the land."
