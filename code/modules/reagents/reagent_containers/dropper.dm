@@ -47,6 +47,7 @@
 											span_userdanger("[user] tries to squirt something into your eyes, but fails!"))
 
 					to_chat(user, span_notice("You transfer [trans] unit\s of the solution."))
+					after_pour(trans, safe_thing, user) // monkestation addition: pouring sounds
 					update_appearance()
 					return
 			else if(isalien(target)) //hiss-hiss has no eyes!
@@ -67,6 +68,8 @@
 
 		trans = src.reagents.trans_to(target, amount_per_transfer_from_this, transfered_by = user)
 		to_chat(user, span_notice("You transfer [trans] unit\s of the solution."))
+		after_pour(trans, target, user) // monkestation addition: pouring sounds
+
 		update_appearance()
 		target.update_appearance()
 

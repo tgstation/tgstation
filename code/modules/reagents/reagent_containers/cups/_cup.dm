@@ -87,7 +87,8 @@
 		contained_bladder.consume_act(reagents, gulp_size * 0.2)
 	reagents.trans_to(target_mob, gulp_size, transfered_by = user, methods = INGEST)
 	checkLiked(fraction, target_mob)
-	playsound(target_mob.loc,'sound/items/drink.ogg', rand(10,50), TRUE)
+	////playsound(target_mob.loc,'sound/items/drink.ogg', rand(10,50), TRUE) // monkestation edit original
+	playsound(target_mob.loc,get_drink_sound(target_mob), rand(10,50), TRUE) // monkestation edit: synthesized drink sounds
 	if(!iscarbon(target_mob))
 		return
 	var/mob/living/carbon/carbon_drinker = target_mob
@@ -134,7 +135,7 @@
 			contained_bladder.consume_act(reagents, gulp_size * 0.2)
 		reagents.trans_to(chugger, gulp_size, transfered_by = chugger, methods = INGEST)
 		checkLiked(fraction, chugger)
-		playsound(chugger.loc,'sound/items/drink.ogg', rand(10,50), TRUE)
+		playsound(chugger.loc,get_drink_sound(chugger), rand(10,50), TRUE)
 		if(!iscarbon(chugger))
 			continue
 		var/mob/living/carbon/carbon_drinker = chugger
@@ -177,6 +178,7 @@
 		var/trans = reagents.trans_to(target, amount_per_transfer_from_this, transfered_by = user)
 		if(trans)
 			to_chat(user, span_notice("You transfer [trans] unit\s of the solution to [target]."))
+			after_pour(trans, target, user) // monkestation addition: pouring sounds
 
 	else if(target.is_drainable()) //A dispenser. Transfer FROM it TO us.
 		if(!target.reagents.total_volume)

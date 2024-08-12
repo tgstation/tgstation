@@ -74,7 +74,8 @@
 
 /datum/element/basic_eating/proc/finish_eating(mob/living/eater, atom/target)
 	if(drinking)
-		playsound(eater.loc,'sound/items/drink.ogg', rand(10,50), TRUE)
+		////playsound(eater.loc,'sound/items/drink.ogg', rand(10,50), TRUE) // monkestation edit original
+		playsound(eater.loc,get_drink_sound(eater), rand(10,50), TRUE) // monkestation edit: synthesized drink sounds
 	else
 		playsound(eater.loc,'sound/items/eatfood.ogg', rand(10,50), TRUE)
 	SEND_SIGNAL(eater, COMSIG_LIVING_ATE, target)
