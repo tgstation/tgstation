@@ -159,20 +159,7 @@
 		SSmachines.processing_apcs += src
 
 	//Pixel offset its appearance based on its direction
-	dir = ndir
-	switch(dir)
-		if(NORTH)
-			offset_old = pixel_z
-			pixel_z = APC_PIXEL_OFFSET
-		if(SOUTH)
-			offset_old = pixel_z
-			pixel_z = -APC_PIXEL_OFFSET
-		if(EAST)
-			offset_old = pixel_x
-			pixel_x = APC_PIXEL_OFFSET
-		if(WEST)
-			offset_old = pixel_x
-			pixel_x = -APC_PIXEL_OFFSET
+	setDir(ndir)
 
 	hud_list = list(
 		MALF_APC_HUD = image(icon = 'icons/mob/huds/hud.dmi', icon_state = "apc_hacked", pixel_x = src.pixel_x, pixel_y = src.pixel_y)
@@ -271,6 +258,7 @@
 	. = ..()
 	if(auto_name)
 		name = "\improper [get_area_name(area, TRUE)] APC"
+
 
 /obj/machinery/power/apc/proc/assign_to_area(area/target_area = get_area(src))
 	if(area == target_area)

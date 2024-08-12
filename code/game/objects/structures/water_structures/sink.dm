@@ -45,24 +45,6 @@ SINK_DIRECTIONAL_HELPERS(/obj/structure/sink)
 /obj/structure/sink/wall_mount_common_plane(direction)
 	return TRUE
 
-/obj/structure/sink/wall_mount_offset(direction)
-	pixel_x = 0
-	pixel_z = 0
-	pixel_y = 0
-	switch(direction)
-		if(NORTH)
-			pixel_z = 16
-		if(SOUTH)
-			pixel_z = 24
-			// shift down so we layer correctly
-			pixel_y = -32
-		if(EAST)
-			pixel_x = 16
-			pixel_z = 12
-		if(WEST)
-			pixel_x = -16
-			pixel_z = 12
-
 /obj/structure/sink/attack_hand(mob/living/user, list/modifiers)
 	. = ..()
 	if(.)

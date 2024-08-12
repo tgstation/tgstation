@@ -544,6 +544,8 @@ WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/machinery/status_display/evac)
 	text_color = COLOR_DISPLAY_ORANGE
 	header_text_color = COLOR_DISPLAY_YELLOW
 
+WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/machinery/status_display/supply)
+
 /obj/machinery/status_display/supply/process()
 	if(machine_stat & NOPOWER)
 		// No power, no processing.
@@ -578,6 +580,8 @@ WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/machinery/status_display/evac)
 
 	text_color = COLOR_DISPLAY_GREEN
 	header_text_color = COLOR_DISPLAY_CYAN
+
+WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/machinery/status_display/shuttle)
 
 /obj/machinery/status_display/shuttle/process()
 	if(!shuttle_id || (machine_stat & NOPOWER))

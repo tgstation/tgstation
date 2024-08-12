@@ -338,23 +338,6 @@ CAMERA_DIRECTIONAL_HELPERS(/obj/machinery/camera/xray)
 	icon_state = "[xray_module][base_icon_state][in_use_lights ? "_in_use" : ""]"
 	return ..()
 
-/obj/machinery/camera/wall_mount_offset(direction)
-	// Fit the usual offsets except SOUTH is different, because cameras want to jut out from the wall
-	// Also cameras have weird offsets because lmao camera sprites dies
-	pixel_x = 0
-	pixel_z = 0
-	switch(direction)
-		if(NORTH, NORTHWEST)
-			pixel_z = 16
-		if(SOUTH, NORTHEAST)
-			pixel_z = 35
-		if(EAST, SOUTHEAST)
-			pixel_x = -11
-			pixel_z = 16
-		if(WEST, SOUTHWEST)
-			pixel_x = 11
-			pixel_z = 16
-
 /obj/machinery/camera/wall_mount_common_plane(direction)
 	if(direction == SOUTH || direction == NORTHEAST)
 		return TRUE
