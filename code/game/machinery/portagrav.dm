@@ -210,7 +210,7 @@
 /obj/machinery/power/portagrav/ui_interact(mob/user, datum/tgui/ui)
 	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
-		ui = new(user, src, "portagrav", name)
+		ui = new(user, src, "Portagrav", name)
 		ui.open()
 
 /obj/machinery/power/portagrav/ui_data(mob/user)

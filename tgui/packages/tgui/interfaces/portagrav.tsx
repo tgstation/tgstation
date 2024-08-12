@@ -14,7 +14,7 @@ type Data = {
   draw: number;
 };
 
-export const portagrav = (props) => {
+export const Portagrav = (props) => {
   const { act, data } = useBackend<Data>();
   const { percentage, on, range, gravity, wiremode, maxrange, draw } = data;
 
