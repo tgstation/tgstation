@@ -503,10 +503,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/green/visible,
 /turf/open/floor/engine,
 /area/station/engineering/supermatter/room)
-"sY" = (
-/obj/effect/turf_decal/loading_area,
-/turf/open/floor/iron/dark,
-/area/station/engineering/supermatter/room)
 "th" = (
 /obj/machinery/camera/directional/east{
 	c_tag = "Supermatter Waste Line";
@@ -1448,11 +1444,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/iron/dark,
 /area/station/engineering/supermatter/room)
-"Wo" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/effect/turf_decal/box,
-/turf/open/floor/iron/dark,
-/area/station/engineering/supermatter/room)
 "WU" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 9
@@ -1492,7 +1483,6 @@
 /turf/closed/wall/r_wall,
 /area/station/engineering/supermatter)
 "Yu" = (
-/obj/effect/turf_decal/box,
 /turf/open/floor/iron/dark,
 /area/station/engineering/supermatter/room)
 "YC" = (
@@ -1751,7 +1741,7 @@ aK
 fN
 BL
 sG
-sY
+Yu
 Yu
 pk
 FB
@@ -1774,8 +1764,8 @@ aK
 BM
 Qj
 sz
-sY
-Wo
+Yu
+Yu
 ZC
 wk
 EA

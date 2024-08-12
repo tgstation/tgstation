@@ -253,7 +253,6 @@
 /area/station/engineering/main)
 "hr" = (
 /obj/effect/turf_decal/delivery,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/visible,
 /turf/open/floor/iron/dark,
 /area/station/engineering/supermatter/room)
 "hA" = (
@@ -643,12 +642,6 @@
 	dir = 5
 	},
 /turf/open/floor/engine,
-/area/station/engineering/supermatter/room)
-"wc" = (
-/obj/effect/turf_decal/delivery,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/visible,
-/obj/machinery/meter,
-/turf/open/floor/iron/dark,
 /area/station/engineering/supermatter/room)
 "wE" = (
 /obj/item/radio/intercom/directional/east,
@@ -1052,10 +1045,8 @@
 /turf/open/floor/engine,
 /area/station/engineering/supermatter/room)
 "IC" = (
-/obj/machinery/atmospherics/components/trinary/filter/flipped/critical{
-	dir = 4
-	},
 /obj/effect/turf_decal/stripes/line,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/green/visible,
 /turf/open/floor/engine,
 /area/station/engineering/supermatter/room)
 "IK" = (
@@ -1512,10 +1503,6 @@
 /area/station/engineering/supermatter)
 "YW" = (
 /obj/effect/turf_decal/bot,
-/obj/machinery/atmospherics/components/unary/portables_connector/visible{
-	dir = 1
-	},
-/obj/machinery/portable_atmospherics/canister,
 /turf/open/floor/iron/dark,
 /area/station/engineering/supermatter/room)
 "YZ" = (
@@ -1935,7 +1922,7 @@ BL
 Qi
 TL
 IC
-wc
+hr
 YW
 HS
 ze
