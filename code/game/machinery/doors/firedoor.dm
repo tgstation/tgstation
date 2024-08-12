@@ -7,7 +7,7 @@
 	name = "firelock"
 	desc = "Apply crowbar."
 	icon = 'icons/obj/doors/doorfireglass.dmi'
-	icon_state = "door_open"
+	icon_state = "door_open_map"
 	dir_mask = "firelock_mask"
 	edge_dir_mask = "shutter"
 	inner_transparent_dirs = EAST|WEST
@@ -27,6 +27,8 @@
 
 	COOLDOWN_DECLARE(activation_cooldown)
 
+	///If we split up our sprite into top and bottom parts or not
+	var/use_split_sprites = TRUE
 	///X offset for the overlay lights, so that they line up with the thin border firelocks
 	var/light_xoffset = 0
 	///Y offset for the overlay lights, so that they line up with the thin border firelocks
@@ -639,20 +641,25 @@
 	if(active)
 		addtimer(CALLBACK(src, PROC_REF(correct_state)), 2 SECONDS, TIMER_UNIQUE)
 
+/// Returns the base icon state we're currently using
+/obj/machinery/door/firedoor/proc/get_base_state()
+	if(animation)
+		return "[base_icon_state]_[animation]"
+	return "[base_icon_state]_[density ? "closed" : "open"]"
+
 /obj/machinery/door/firedoor/update_icon_state()
 	. = ..()
-	if(animation)
-		icon_state = "[base_icon_state]_[animation]_top"
+	if(use_split_sprites)
+		icon_state = "[get_base_state()]_top"
 	else
-		icon_state = "[base_icon_state]_[density ? "closed" : "open"]_top"
+		icon_state = get_base_state()
 
 /obj/machinery/door/firedoor/update_overlays()
 	. = ..()
-	var/working_icon_state
-	if(animation)
-		working_icon_state = "[base_icon_state]_[animation]_bottom"
-	else
-		working_icon_state = "[base_icon_state]_[density ? "closed" : "open"]_bottom"
+	if(!use_split_sprites)
+		return
+
+	var/working_icon_state = "[get_base_state()]_bottom"
 	. += mutable_appearance(icon, working_icon_state, ABOVE_MOB_LAYER, appearance_flags = KEEP_APART)
 	. += emissive_blocker(icon, working_icon_state, src, ABOVE_MOB_LAYER)
 
@@ -661,7 +668,7 @@
 		if(DOOR_OPENING_ANIMATION)
 			return 0.9 SECONDS
 		if(DOOR_CLOSING_ANIMATION)
-			return 1 SECONDS
+			return 1.1 SECONDS
 		if(DOOR_DENY_ANIMATION)
 			return 0.3 SECONDS
 
@@ -674,7 +681,7 @@
 		if(DOOR_CLOSING_UNPASSABLE)
 			return 0.2 SECONDS
 		if(DOOR_CLOSING_FINISHED)
-			return 1 SECONDS
+			return 1.1 SECONDS
 
 /obj/machinery/door/firedoor/update_overlays()
 	. = ..()
@@ -744,18 +751,20 @@
 	register_adjacent_turfs()
 
 /obj/machinery/door/firedoor/closed
-	icon_state = "door_closed"
+	icon_state = "door_closed_map"
 	density = TRUE
 	alarm_type = FIRELOCK_ALARM_TYPE_GENERIC
 
 /obj/machinery/door/firedoor/border_only
 	icon = 'icons/obj/doors/edge_Doorfire.dmi'
+	icon_state = "door_open"
 	// Disable directional opacity please (we are always transparent)
 	dir_mask = ""
 	edge_dir_mask = ""
 	can_crush = FALSE
 	flags_1 = ON_BORDER_1
 	can_atmos_pass = ATMOS_PASS_PROC
+	use_split_sprites = FALSE
 
 /obj/machinery/door/firedoor/border_only/closed
 	icon_state = "door_closed"
@@ -837,7 +846,7 @@
 	name = "firelock frame"
 	desc = "A partially completed firelock."
 	icon = 'icons/obj/doors/Doorfire.dmi'
-	icon_state = "frame1"
+	icon_state = "frame1_map"
 	base_icon_state = "frame"
 	anchored = FALSE
 	density = TRUE
@@ -855,8 +864,14 @@
 			. += span_notice("There are no <i>firelock electronics</i> in the frame. The frame could be <b>welded</b> apart .")
 
 /obj/structure/firelock_frame/update_icon_state()
-	icon_state = "[base_icon_state][constructionStep]"
+	icon_state = "[base_icon_state][constructionStep]_top"
 	return ..()
+
+/obj/structure/firelock_frame/update_overlays()
+	. = ..()
+	var/working_icon_state = "[base_icon_state][constructionStep]_bottom"
+	. += mutable_appearance(icon, working_icon_state, ABOVE_MOB_LAYER, appearance_flags = KEEP_APART)
+	. += emissive_blocker(icon, working_icon_state, src, ABOVE_MOB_LAYER)
 
 /obj/structure/firelock_frame/attackby(obj/item/attacking_object, mob/user)
 	switch(constructionStep)
