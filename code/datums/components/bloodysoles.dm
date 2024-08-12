@@ -84,6 +84,9 @@
  * Run to equally share the blood between us and a decal
  */
 /datum/component/bloodysoles/proc/share_blood(obj/effect/decal/cleanable/pool)
+	if(HAS_TRAIT(parent_atom, TRAIT_LIGHT_STEP)) //the character is agile enough to don't mess their clothing and hands just from one blood splatter at floor
+		return TRUE
+
 	// Share the blood between our boots and the blood pool
 	var/total_bloodiness = pool.bloodiness + bloody_shoes[pool.blood_state]
 
@@ -92,9 +95,6 @@
 
 	set_bloody_shoes(pool.blood_state, new_our_bloodiness)
 	pool.bloodiness = total_bloodiness - new_our_bloodiness // Give the pool the remaining blood incase we were limited
-
-	if(HAS_TRAIT(parent_atom, TRAIT_LIGHT_STEP)) //the character is agile enough to don't mess their clothing and hands just from one blood splatter at floor
-		return TRUE
 
 	parent_atom.add_blood_DNA(GET_ATOM_BLOOD_DNA(pool))
 	update_icon()
