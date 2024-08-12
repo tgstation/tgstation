@@ -38,7 +38,7 @@
 	base_icon_state = "stickyweb"
 	icon_state = "stickyweb-0"
 	smoothing_flags = SMOOTH_BITMASK
-	smoothing_groups = SMOOTH_GROUP_TALL_WALL + SMOOTH_GROUP_SPIDER_WEB
+	smoothing_groups = SMOOTH_GROUP_SPIDER_WEB
 	canSmoothWith = SMOOTH_GROUP_SPIDER_WEB + SMOOTH_GROUP_WALLS
 	///Whether or not the web is from the genetics power
 	var/genetic = FALSE

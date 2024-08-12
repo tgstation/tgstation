@@ -10,7 +10,7 @@
 	smoothing_flags = SMOOTH_BITMASK
 
 /obj/effect/abstract/finder/wall
-	canSmoothWith = SMOOTH_GROUP_TALL_WALL
+	canSmoothWith = SMOOTH_GROUP_TALL_WALLS
 
 /obj/effect/abstract/finder/vis_block
 	smoothing_groups = SMOOTH_GROUP_VIS_BLOCK

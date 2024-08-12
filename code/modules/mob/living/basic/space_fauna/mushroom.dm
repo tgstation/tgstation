@@ -35,10 +35,6 @@
 	var/bruised = FALSE
 	///If we hit three, another mushroom's gonna eat us
 	var/faint_ticker = 0
-	///Where we store our cap icons so we dont generate them constantly to update our icon
-	var/static/mutable_appearance/cap_living
-	///Where we store our cap icons so we dont generate them constantly to update our icon
-	var/static/mutable_appearance/cap_dead
 	///Cooldown that tracks how long its been since revival
 	COOLDOWN_DECLARE(recovery_cooldown)
 
@@ -47,8 +43,6 @@
 	melee_damage_lower = rand(3, 5)
 	melee_damage_upper = rand(10,20)
 	maxHealth = rand(50,70)
-	cap_living = cap_living || mutable_appearance(icon, "mushroom_cap")
-	cap_dead = cap_dead || mutable_appearance(icon, "mushroom_cap_dead")
 	cap_color = rgb(rand(0, 255), rand(0, 255), rand(0, 255))
 	health = maxHealth
 	AddElement(/datum/element/swabable, CELL_LINE_TABLE_WALKING_MUSHROOM, CELL_VIRUS_TABLE_GENERIC_MOB, 1, 5)
@@ -101,9 +95,10 @@
 
 /mob/living/basic/mushroom/update_overlays()
 	. = ..()
-	cap_living.color = cap_color
-	cap_dead.color = cap_color
-	. += (stat == DEAD) ? cap_dead : cap_living
+	var/cap_state = (stat == DEAD) ? "mushroom_cap" : "mushroom_cap_dead"
+	var/mutable_appearance/little_hat = mutable_appearance(icon, cap_state)
+	little_hat.color = cap_color
+	. += little_hat
 
 /mob/living/basic/mushroom/proc/recover(obj/item/mush_meal)
 	visible_message(span_notice("[src] eats [mush_meal]!"))

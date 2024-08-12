@@ -146,6 +146,8 @@
 	refresh_hitbox_rendering()
 
 /obj/machinery/door/window/proc/refresh_hitbox_rendering()
+	if(QDELETED(src))
+		return
 	if(!use_hitbox_render)
 		return
 	var/old_hitbox_directions = hitbox_up_directions

@@ -4,7 +4,6 @@
 	icon = 'icons/obj/smooth_structures/window_frames/window_frame_normal.dmi'
 	icon_state = "window_frame_normal-0"
 	base_icon_state = "window_frame_normal"
-	plane = OVER_TILE_PLANE //otherwise they will mask windows
 	smoothing_flags = SMOOTH_BITMASK|SMOOTH_OBJ
 	smoothing_groups = SMOOTH_GROUP_WINDOW_FRAMES
 	canSmoothWith = SMOOTH_GROUP_WINDOW_FRAMES
@@ -356,14 +355,14 @@
 	if(!has_grille || !return_list)
 		return
 
-	return_list += mutable_appearance(grille_icon, "[grille_icon_state]-[smoothing_junction]", plane = GAME_PLANE, offset_spokesman = src)
 	return_list += mutable_appearance(grille_black_icon, "[grille_icon_state]_black-[smoothing_junction]")
+	return_list += mutable_appearance(grille_icon, "[grille_icon_state]-[smoothing_junction]")
 
 /// if this frame has a valid frame icon, creates it. this is what obscures the cable if it goes through the frame
 /obj/structure/window_frame/proc/create_frame_overlay(list/return_list)
 	if(!frame_icon || !return_list)
 		return
-	return_list += mutable_appearance(frame_icon, "[base_icon_state]-[smoothing_junction]", plane = GAME_PLANE, offset_spokesman = src, appearance_flags = KEEP_APART)
+	return_list += mutable_appearance(frame_icon, "[base_icon_state]-[smoothing_junction]", appearance_flags = KEEP_APART)
 
 /obj/structure/window_frame/update_overlays()
 	. = ..()

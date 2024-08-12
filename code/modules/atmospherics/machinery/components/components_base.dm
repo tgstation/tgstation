@@ -2,7 +2,6 @@
 // On top of that, now people can add component-speciic procs/vars if they want!
 
 /obj/machinery/atmospherics/components
-	plane = OVER_TILE_PLANE
 	hide = FALSE
 	layer = GAS_PUMP_LAYER
 	///Is the component welded?
