@@ -124,13 +124,26 @@
 				var/obj/structure/bed/B = locate() in host.loc
 				if (host.buckled == B)//fucking chairs n stuff
 					tally += 0.5
-				if (host.IsUnconscious())
+				if (host.IsUnconscious() || host.IsSleeping())
 					if (tally < 2.5)
 						tally += 1
 					else
 						tally += 2//if we're sleeping in a bed, we get up to 5.5
 			else if(istype(host.loc, /obj/machinery/atmospherics/components/unary/cryo_cell))
 				tally += 3.5
+
+			if(!HAS_TRAIT(host, TRAIT_NOHUNGER))
+				switch(host.nutrition)
+					if(NUTRITION_LEVEL_FAT to INFINITY)
+						tally -= 0.5
+					if(NUTRITION_LEVEL_WELL_FED to NUTRITION_LEVEL_FULL)
+						tally += 1.5
+					if(NUTRITION_LEVEL_FED to NUTRITION_LEVEL_WELL_FED)
+						tally += 1
+					if(0 to NUTRITION_LEVEL_STARVING)
+						tally = max(tally - 1.5, 0.5)
+					else
+						EMPTY_BLOCK_GUARD
 
 			if (antibodies[A] < 69)
 				antibodies[A] = min(antibodies[A] + tally * strength, 70)
