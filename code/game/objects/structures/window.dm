@@ -80,6 +80,7 @@
 
 /obj/structure/window/mouse_drop_receive(atom/dropping, mob/user, params)
 	. = ..()
+	/// For performance reasons and to cut down on init times we are "lazy-loading" the leaning component when someone drags their sprite onto us, and then calling dragging code again to trigger the component
 	AddComponent(/datum/component/leanable, 11, same_turf = (flags_1 & ON_BORDER_1), lean_check = CALLBACK(src, PROC_REF(lean_check)))
 	dropping.base_mouse_drop_handler(src, null, null, params)
 
