@@ -1,0 +1,7 @@
+author: "KnigTheThrasher"
+delete-after: True
+changes:
+  - rscadd: "Added Cloner to blueshift genetics"
+  - bugfix: "Fixed maints in perma"
+  - rscadd: "Ghost critter spawners"
+  - bugfix: "Fixed evac sign being flipped the wrong way"
