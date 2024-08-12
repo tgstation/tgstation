@@ -116,7 +116,7 @@
 	name = "paramedic toolset implant"
 	desc = "A set of rescue tools hidden behind a concealed panel on the user's arm."
 	items_to_create = list(
-		/obj/item/roller/robo,
+		/obj/item/emergency_bed/silicon,
 		/obj/item/sensor_device,
 		/obj/item/gun/medbeam
 	)
