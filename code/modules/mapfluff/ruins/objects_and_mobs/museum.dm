@@ -38,7 +38,6 @@
 	new_replica.pixel_x = pixel_x
 
 	qdel(appearance_object)
-	qdel(src)
 	return INITIALIZE_HINT_QDEL
 
 /obj/structure/fluff/dnamod

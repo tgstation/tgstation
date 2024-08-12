@@ -744,3 +744,26 @@
 		/obj/item/knife/butcher,
 		/obj/item/sharpener,
 	)
+
+/datum/outfit/deathmatch_loadout/prisoner
+	name = "Deathmatch: Prisoner"
+	display_name = "Prisoner"
+	desc = "For freedom."
+	uniform = /obj/item/clothing/under/rank/prisoner
+	shoes = /obj/item/clothing/shoes/sneakers/orange
+	r_pocket = /obj/item/knife/shiv
+
+/datum/outfit/deathmatch_loadout/prisonguard
+	name = "Deathmatch: Prison Guard"
+	display_name = "Prison Guard"
+	desc = "You had enough of everyone, your coworkers included. Kill them all."
+	uniform = /obj/item/clothing/under/rank/security/officer
+	suit = /obj/item/clothing/suit/armor/vest
+	shoes = /obj/item/clothing/shoes/combat
+	gloves = /obj/item/clothing/gloves/combat
+	mask = /obj/item/clothing/mask/gas/sechailer/swat
+	head = /obj/item/clothing/head/helmet/swat/nanotrasen
+	back = /obj/item/storage/backpack/security
+	id = /obj/item/card/id/advanced
+	id_trim = /datum/id_trim/centcom/corpse/private_security
+	belt = /obj/item/melee/baton/security // intentionally empty FUCK stuns

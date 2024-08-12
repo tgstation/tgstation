@@ -206,3 +206,15 @@
 
 /datum/turf_reservation/indestructible_plating
 	turf_type = /turf/open/indestructible/plating //a little hacky but i guess it has to be done
+
+/datum/lazy_template/deathmatch/prison
+	name = "NT Permaprison"
+	desc = "Where dumb jerks go to rot forever. Also coincidentally where a riot is happening right now."
+	max_players = 24
+	allowed_loadouts = list(
+		/datum/outfit/deathmatch_loadout/prisoner,
+		/datum/outfit/deathmatch_loadout/prisonguard
+	)
+	map_name = "perma_jail"
+	key = "perma_jail"
+	turf_reservation_type = /datum/turf_reservation/indestructible_plating

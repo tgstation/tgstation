@@ -22,6 +22,8 @@
 	var/total_score = 0
 	/// The chance to score a ball into the hoop based on distance
 	var/static/list/throw_range_success = list(95, 80, 65, 50, 35, 20)
+	/// do we have a scoreboard
+	var/has_scoreboard = TRUE
 
 /obj/structure/hoop/Initialize(mapload)
 	. = ..()
@@ -53,6 +55,8 @@
 
 /obj/structure/hoop/update_overlays()
 	. = ..()
+	if(!has_scoreboard)
+		return
 
 	var/dir_offset_x = 0
 	var/dir_offset_y = 0
@@ -135,6 +139,8 @@
 	baller.stop_pulling()
 
 /obj/structure/hoop/click_ctrl(mob/user)
+	if(!has_scoreboard)
+		return
 	user.balloon_alert_to_viewers("resetting score...")
 	playsound(src, 'sound/machines/locktoggle.ogg', 50, TRUE)
 	if(do_after(user, 5 SECONDS, target = src))

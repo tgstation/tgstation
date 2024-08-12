@@ -1489,3 +1489,19 @@ INITIALIZE_IMMEDIATE(/obj/effect/mapping_helpers/no_atoms_ontop)
 	name = "Basic mob immune to getting wet flag helper"
 	icon_state = "basic_mob_immune_to_getting_wet"
 	flag_to_give = IMMUNE_TO_GETTING_WET
+
+/obj/effect/mapping_helpers/slippery_floor
+	name = "Turf Slip-ifier"
+	desc = "Used to apply wetness to turfs."
+	late = TRUE
+
+	/// wetness we apply, see defines
+	var/wetness = TURF_WET_WATER
+	/// should the overlay be visible
+	var/overlay_visible = TRUE
+
+/obj/effect/mapping_helpers/slippery_floor/Initialize(mapload)
+	. = ..()
+	var/turf/us = get_turf(src)
+	us.AddComponent(/datum/component/wet_floor, wetness, INFINITY, 0, INFINITY, TRUE, overlay_visible)
+	return INITIALIZE_HINT_QDEL

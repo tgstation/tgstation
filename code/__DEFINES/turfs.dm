@@ -52,17 +52,17 @@
 
 //Wet floor type flags. Stronger ones should be higher in number.
 /// Turf is dry and mobs won't slip
-#define TURF_DRY (0)
+#define TURF_DRY (0) // 0
 /// Turf has water on the floor and mobs will slip unless walking or using galoshes
-#define TURF_WET_WATER (1<<0)
+#define TURF_WET_WATER (1<<0) // 1
 /// Turf has a thick layer of ice on the floor and mobs will slip in the direction until they bump into something
-#define TURF_WET_PERMAFROST (1<<1)
+#define TURF_WET_PERMAFROST (1<<1) // 2
 /// Turf has a thin layer of ice on the floor and mobs will slip
-#define TURF_WET_ICE (1<<2)
+#define TURF_WET_ICE (1<<2) // 4
 /// Turf has lube on the floor and mobs will slip
-#define TURF_WET_LUBE (1<<3)
+#define TURF_WET_LUBE (1<<3) // 8
 /// Turf has superlube on the floor and mobs will slip even if they are crawling
-#define TURF_WET_SUPERLUBE (1<<4)
+#define TURF_WET_SUPERLUBE (1<<4) // 16
 
 /// Maximum amount of time, (in deciseconds) a tile can be wet for.
 #define MAXIMUM_WET_TIME (5 MINUTES)

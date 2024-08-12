@@ -74,3 +74,7 @@ ADMIN_VERB(map_template_upload, R_DEBUG, "Map Template - Upload", "Upload a map 
 	SSmapping.map_templates[M.name] = M
 	message_admins(span_adminnotice("[key_name_admin(user)] has uploaded a map template '[map]' ([M.width]x[M.height])[report_link]."))
 	to_chat(user, span_notice("Map template '[map]' ready to place ([M.width]x[M.height])"), confidential = TRUE)
+
+ADMIN_VERB(clear_cached_maps, R_DEBUG, "Clear Cached Maps", "Clears cached parsed maps.", ADMIN_CATEGORY_DEBUG)
+	QDEL_LIST(GLOB.cached_maps)
+	to_chat(user, "Cleared cached maps")

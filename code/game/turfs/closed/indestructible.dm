@@ -236,7 +236,11 @@ INITIALIZE_IMMEDIATE(/turf/closed/indestructible/splashscreen)
 /turf/closed/indestructible/fakedoor
 	name = "airlock"
 	icon = 'icons/obj/doors/airlocks/centcom/centcom.dmi'
-	icon_state = "fake_door"
+	icon_state = MAP_SWITCH("closed", "fake_door")
+
+/turf/closed/indestructible/fakedoor/Initialize(mapload)
+	. = ..()
+	add_overlay(get_airlock_overlay("lights_bolts", /obj/machinery/door/airlock::overlays_file, src, em_block = FALSE))
 
 /turf/closed/indestructible/fakedoor/maintenance
 	icon = 'icons/obj/doors/airlocks/hatch/maintenance.dmi'
