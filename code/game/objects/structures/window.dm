@@ -70,6 +70,7 @@
 	RegisterSignal(src, COMSIG_OBJ_PAINTED, PROC_REF(on_painted))
 	AddElement(/datum/element/atmos_sensitive, mapload)
 	AddComponent(/datum/component/simple_rotation, ROTATION_NEEDS_ROOM, post_rotation = CALLBACK(src, PROC_REF(post_rotation)))
+	AddComponent(/datum/component/leanable, 11, same_turf = (flags_1 & ON_BORDER_1), lean_check = CALLBACK(src, PROC_REF(lean_check)))
 
 	var/static/list/loc_connections = list(
 		COMSIG_ATOM_EXIT = PROC_REF(on_exit),
@@ -77,6 +78,15 @@
 
 	if (flags_1 & ON_BORDER_1)
 		AddElement(/datum/element/connect_loc, loc_connections)
+
+/obj/structure/window/proc/lean_check(mob/living/leaner, list/modifiers)
+	if (!(flags_1 & ON_BORDER_1))
+		return TRUE
+
+	if (leaner.loc == loc)
+		return dir == REVERSE_DIR(leaner.dir)
+
+	return get_dir(src, leaner) == dir && leaner.dir == dir
 
 /obj/structure/window/examine(mob/user)
 	. = ..()
