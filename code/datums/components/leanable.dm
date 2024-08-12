@@ -66,8 +66,8 @@
 		COMSIG_LIVING_DISARM_HIT,
 		COMSIG_LIVING_GET_PULLED,
 		COMSIG_MOVABLE_TELEPORTING,
-		COMSIG_ATOM_DIR_CHANGE,
 	), PROC_REF(stop_leaning))
+	RegisterSignal(src, COMSIG_ATOM_POST_DIR_CHANGE, PROC_REF(lean_dir_changed))
 	update_fov()
 
 /mob/living/proc/stop_leaning()
@@ -77,8 +77,13 @@
 		COMSIG_LIVING_DISARM_HIT,
 		COMSIG_LIVING_GET_PULLED,
 		COMSIG_MOVABLE_TELEPORTING,
-		COMSIG_ATOM_DIR_CHANGE,
+		COMSIG_ATOM_POST_DIR_CHANGE,
 	))
 	animate(src, 0.2 SECONDS, pixel_x = base_pixel_x, pixel_y = base_pixel_y)
 	remove_traits(list(TRAIT_UNDENSE, TRAIT_EXPANDED_FOV), LEANING_TRAIT)
 	update_fov()
+
+/mob/living/proc/lean_dir_changed(atom/source, old_dir, new_dir)
+	SIGNAL_HANDLER
+	if (old_dir != new_dir)
+		INVOKE_ASYNC(src, PROC_REF(stop_leaning))

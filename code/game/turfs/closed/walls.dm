@@ -34,7 +34,6 @@
 
 /turf/closed/wall/Initialize(mapload)
 	. = ..()
-	AddComponent(/datum/component/leanable, 11)
 	if(!can_engrave)
 		ADD_TRAIT(src, TRAIT_NOT_ENGRAVABLE, INNATE_TRAIT)
 	if(is_station_level(z))
@@ -48,6 +47,11 @@
 			underlay_appearance.icon_state = fixed_underlay["icon_state"]
 		fixed_underlay = string_assoc_list(fixed_underlay)
 		underlays += underlay_appearance
+
+/turf/closed/wall/mouse_drop_receive(atom/dropping, mob/user, params)
+	. = ..()
+	AddComponent(/datum/component/leanable, 11)
+	dropping.base_mouse_drop_handler(src, null, null, params)
 
 /turf/closed/wall/atom_destruction(damage_flag)
 	. = ..()
