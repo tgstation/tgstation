@@ -1,0 +1,4 @@
+author: "Absolucy"
+delete-after: True
+changes:
+  - rscadd: "The Quartermaster's locker now spawns with a single handheld cargo teleporter at roundstart."
