@@ -17,10 +17,12 @@
 	start_when = 21
 	end_when = 80
 
-/datum/round_event/aurora_caelus/announce()
+/datum/round_event/aurora_caelus/announce(fake)
 	priority_announce("[station_name()]: A harmless cloud of ions is approaching your station, and will exhaust their energy battering the hull. Nanotrasen has approved a short break for all employees to relax and observe this very rare event. During this time, starlight will be bright but gentle, shifting between quiet green and blue colors. Any staff who would like to view these lights for themselves may proceed to the area nearest to them with viewing ports to open space. We hope you enjoy the lights.",
 	sound = 'sound/misc/notice2.ogg',
 	sender_override = "Nanotrasen Meteorology Division")
+	if (fake)
+		return
 	for(var/V in GLOB.player_list)
 		var/mob/M = V
 		if((M.client.prefs.read_preference(/datum/preference/toggle/sound_midi)) && is_station_level(M.z))
@@ -40,10 +42,10 @@
 			message_admins("Aurora Caelus event caused an oven to ignite at [ADMIN_VERBOSEJMP(ruined_roast)].")
 			log_game("Aurora Caelus event caused an oven to ignite at [loc_name(ruined_roast)].")
 			announce_to_ghosts(roast_ruiner)
-		for(var/mob/living/carbon/human/seymour as anything in GLOB.human_list)
-			if(seymour.mind && istype(seymour.mind.assigned_role, /datum/job/cook))
-				seymour.say("My roast is ruined!!!", forced = "ruined roast")
-				seymour.emote("scream")
+	for(var/mob/living/carbon/human/seymour as anything in GLOB.human_list)
+		if(seymour.mind && istype(seymour.mind.assigned_role, /datum/job/cook))
+			seymour.say("My roast is ruined!!!", forced = "ruined roast")
+			seymour.emote("scream")
 
 /datum/round_event/aurora_caelus/tick()
 	if(activeFor % 8 != 0)
