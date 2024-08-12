@@ -82,6 +82,7 @@ GLOBAL_LIST_INIT(color_list_ethereal, list(
 	"White" = "#f2f2f2",
 	"Fuschia" = "#FF0066", //Monkestation Addition
 	"Dark Purple" = "#502A77", //Monkestation Addition
+	"Gray" = "#505050", //Monkestation Addition
 ))
 
 GLOBAL_LIST_INIT(color_list_lustrous, list(
