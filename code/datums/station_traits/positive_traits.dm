@@ -215,7 +215,7 @@
 		/datum/job/captain = /obj/item/organ/internal/heart/cybernetic/tier3,
 		/datum/job/cargo_technician = /obj/item/organ/internal/stomach/cybernetic/tier2,
 		/datum/job/chaplain = /obj/item/organ/internal/cyberimp/brain/anti_drop,
-		/datum/job/chemist = /obj/item/organ/internal/cyberimp/arm/item_set/chemical, // monkestation edit: cybernetics overhaul (useful job stuff)
+		/datum/job/chemist = /obj/item/organ/internal/liver/cybernetic/tier3,
 		/datum/job/chief_engineer = /obj/item/organ/internal/cyberimp/chest/thrusters,
 		/datum/job/chief_medical_officer = /obj/item/organ/internal/cyberimp/brain/linked_surgery/perfect/nt, // monkestation edit: cybernetics overhaul (couldn't think of anything else that was good for cmo)
 		/datum/job/clown = /obj/item/organ/internal/cyberimp/chest/knockout, // monkestation edit: cybernetics overhaul (honk!!! it's the clown mech fist shrunken down after all)
@@ -229,7 +229,7 @@
 		/datum/job/janitor = /obj/item/organ/internal/cyberimp/arm/item_set/janitor, // monkestation edit: cybernetics overhaul (useful job stuff)
 		/datum/job/lawyer = /obj/item/organ/internal/heart/cybernetic/tier2,
 		/datum/job/mime = /obj/item/organ/internal/tongue/robot, //...
-		/datum/job/paramedic = /obj/item/organ/internal/cyberimp/arm/item_set/medibeam, // monkestation edit: cybernetics overhaul (on-site healing / assistance)
+		/datum/job/paramedic = /obj/item/organ/internal/cyberimp/arm/item_set/paramedic, // monkestation edit: cybernetics overhaul (on-site healing / assistance)
 		/datum/job/prisoner = /obj/item/organ/internal/eyes/robotic/shield,
 		/datum/job/psychologist = /obj/item/organ/internal/ears/cybernetic/upgraded,
 		/datum/job/quartermaster = /obj/item/organ/internal/stomach/cybernetic/tier3,

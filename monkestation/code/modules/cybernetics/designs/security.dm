@@ -12,7 +12,7 @@
 	departmental_flags = DEPARTMENT_BITFLAG_SECURITY
 
 /datum/design/security_itemset
-	name = "combat cybernetics implant"
+	name = "Officer Arm Implant"
 	desc =  "A powerful cybernetic implant that contains combat modules built into the user's arm."
 	id = "ci-set-combat"
 	build_type = PROTOLATHE

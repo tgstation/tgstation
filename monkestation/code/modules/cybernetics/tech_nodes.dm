@@ -24,7 +24,7 @@
 		"ci-set-cook",
 		"ci-set-janitor",
 		"ci-set-detective",
-		"ci-set-chemical",
+		"ci-set-paramedic",
 		"ci-set-atmospherics",
 		"ci-set-connector",
 		"ci-set-botany",

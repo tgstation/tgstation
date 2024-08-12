@@ -112,16 +112,15 @@
 		if(located)
 			located.forceMove(drop_location())
 
-/obj/item/organ/internal/cyberimp/arm/item_set/chemical
-	name = "chemical toolset implant"
-	desc = "A set of chemical tools hidden behind a concealed panel on the user's arm."
+/obj/item/organ/internal/cyberimp/arm/item_set/paramedic
+	name = "paramedic toolset implant"
+	desc = "A set of rescue tools hidden behind a concealed panel on the user's arm."
 	items_to_create = list(
-		/obj/item/reagent_containers/cup/beaker,
-		/obj/item/reagent_containers/cup/beaker,
-		/obj/item/reagent_containers/cup/beaker,
-		/obj/item/reagent_containers/dropper
+		/obj/item/roller/robo,
+		/obj/item/sensor_device,
+		/obj/item/gun/medbeam
 	)
-	encode_info = AUGMENT_NT_LOWLEVEL
+	encode_info = AUGMENT_NT_HIGHLEVEL
 
 /obj/item/organ/internal/cyberimp/arm/item_set/atmospherics
 	name = "atmospherics toolset implant"
@@ -135,11 +134,11 @@
 	encode_info = AUGMENT_NT_LOWLEVEL
 
 /obj/item/organ/internal/cyberimp/arm/item_set/combat
-	name = "combat cybernetics implant"
+	name = "officer toolset implant"
 	desc = "A powerful cybernetic implant that contains combat modules built into the user's arm."
 	items_to_create = list(
-		/obj/item/gun/medbeam,
-		/obj/item/borg/stun,
+		/obj/item/reagent_containers/spray/pepper,
+		/obj/item/melee/baton,
 		/obj/item/assembly/flash/armimplant,
 	)
 	encode_info = AUGMENT_TG_LEVEL
