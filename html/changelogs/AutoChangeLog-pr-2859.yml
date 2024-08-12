@@ -1,0 +1,4 @@
+author: "Absolucy"
+delete-after: True
+changes:
+  - qol: "The \"Dental Implant\" surgery no longer forces itself to restart after implanting one pill. Now implanting pills in the surgery has another step to either search the patient's mouth for another tooth to implant, or cauterization to end the surgery."
