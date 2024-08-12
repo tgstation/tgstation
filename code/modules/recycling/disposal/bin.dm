@@ -627,6 +627,7 @@
 	var/cur_density = density
 	density = FALSE
 	if (!target.Move(get_turf(src), get_dir(target, src)))
+		density = cur_density
 		return
 	density = cur_density
 	target.Knockdown(SHOVE_KNOCKDOWN_SOLID)
