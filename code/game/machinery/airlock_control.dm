@@ -61,6 +61,8 @@
 	id_tag = INCINERATOR_SYNDICATELAVA_AIRLOCK_SENSOR
 	master_tag = INCINERATOR_SYNDICATELAVA_AIRLOCK_CONTROLLER
 
+WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/machinery/airlock_sensor/incinerator_syndicatelava)
+
 /obj/machinery/airlock_sensor/update_icon_state()
 	if(!on)
 		icon_state = "[base_icon_state]_off"

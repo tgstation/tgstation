@@ -95,9 +95,9 @@
 	AddComponent(/datum/component/conditionally_transparent, \
 		transparent_signals = list(COSMIG_DOOR_OPENING), \
 		opaque_signals = list(COSMIG_DOOR_CLOSING), \
- 		start_transparent = !density, \
+		start_transparent = !density, \
 		transparency_delay = 0 SECONDS, \
- 		in_midpoint_alpha = 215, \
+		in_midpoint_alpha = 215, \
 		transparent_alpha = 64, \
 		opacity_delay = 0 SECONDS, \
 		out_midpoint_alpha = 104, \

@@ -117,11 +117,11 @@ INITIALIZE_IMMEDIATE(/turf/closed/indestructible/splashscreen)
 	name = "reinforced titanium imitation wall"
 	desc = "A huge chunk of reinforced metal used to separate rooms. Naturally, to cut down on costs, this is just a really good paint job to resemble titanium. Effectively impervious to conventional methods of destruction."
 	icon = 'icons/turf/walls/shuttle_wall.dmi'
-	icon_state = "shuttle_wall-0"
+	icon_state = "0-2"
 	base_icon_state = "shuttle_wall"
 
 /turf/closed/indestructible/reinforced/titanium/nodiagonal
-	icon_state = "shuttle_wall-15"
+	icon_state = "12-2"
 	smoothing_flags = SMOOTH_BITMASK
 
 /turf/closed/indestructible/riveted
@@ -163,7 +163,7 @@ INITIALIZE_IMMEDIATE(/turf/closed/indestructible/splashscreen)
 	canSmoothWith = SMOOTH_GROUP_ABDUCTOR_WALLS
 
 /turf/closed/indestructible/alien/nodiagonal
-	icon_state = "abductor_wall-15"
+	icon_state = "12-2"
 	smoothing_flags = SMOOTH_BITMASK
 
 /turf/closed/indestructible/cult

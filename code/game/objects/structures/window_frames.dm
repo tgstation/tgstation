@@ -148,7 +148,7 @@
 	if(!tool.use_tool(src, user, 0, volume = 50))
 		return
 	tool.play_tool_sound(src, 100)
-	balloon_alert(user, "Grille Cut!")
+	balloon_alert(user, "grille cut!")
 	has_grille = FALSE
 	update_appearance()
 	return ITEM_INTERACT_SUCCESS
@@ -161,11 +161,11 @@
 
 	if(!tool.tool_start_check(user, amount = 0))
 		return ITEM_INTERACT_BLOCKING
-	balloon_alert(user, "Cutting...")
+	balloon_alert(user, "cutting...")
 	if(!tool.use_tool(src, user, 70, volume = 50))
 		return ITEM_INTERACT_BLOCKING
 
-	balloon_alert(user, "Deconstructed")
+	balloon_alert(user, "deconstructed")
 	deconstruct(TRUE)
 
 	return ITEM_INTERACT_SUCCESS
@@ -180,12 +180,12 @@
 	if(!tool.tool_start_check(user, amount = 0))
 		return ITEM_INTERACT_BLOCKING
 
-	balloon_alert(user, "Repairing...")
+	balloon_alert(user, "repairing...")
 	if(!tool.use_tool(src, user, 40, volume = 50))
 		return ITEM_INTERACT_BLOCKING
 
 	atom_integrity = max_integrity
-	balloon_alert(user, "Repaired!")
+	balloon_alert(user, "repaired!")
 	update_appearance()
 	return ITEM_INTERACT_SUCCESS
 
@@ -307,7 +307,7 @@
 		if(RCD_DECONSTRUCT)
 			var/turf/home = get_turf(src)
 			// No thing to display on if we get deleted
-			home.balloon_alert(user, "Deconstructed!")
+			home.balloon_alert(user, "deconstructed!")
 			qdel(src)
 			return TRUE
 		if(RCD_WINDOWGRILLE)

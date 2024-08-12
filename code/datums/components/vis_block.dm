@@ -248,3 +248,5 @@
 		RegisterSignal(in_direction, COMSIG_TURF_CHANGE, PROC_REF(overlay_home_changing))
 	direction_to_mask["0"] = darkness_base
 	atom_parent.add_overlay(darkness_base)
+
+#undef VIS_BLOCK_FLAGS
