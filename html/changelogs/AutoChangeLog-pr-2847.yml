@@ -1,0 +1,4 @@
+author: "Absolucy"
+delete-after: True
+changes:
+  - qol: "When \"hear all messages\" is on as a ghost, messages from within your view range will be bolded."
