@@ -95,7 +95,7 @@
 
 /datum/addiction/maintenance_drugs/withdrawal_enters_stage_1(mob/living/carbon/affected_carbon)
 	. = ..()
-	affected_carbon.apply_status_effect(/datum/status_effect/grouped/screwy_hud/fake_healthy, type)
+//	affected_carbon.apply_status_effect(/datum/status_effect/grouped/screwy_hud/fake_healthy, type) // Monke disable, this has nothing to do with maintenance.
 
 /datum/addiction/maintenance_drugs/withdrawal_stage_1_process(mob/living/carbon/affected_carbon, seconds_per_tick)
 	. = ..()
@@ -113,8 +113,8 @@
 		affected_human.update_body_parts()
 	//Only like gross food
 	affected_human.dna?.species.liked_food = GROSS
-	affected_human.dna?.species.disliked_food = NONE
-	affected_human.dna?.species.toxic_food = ~GROSS
+	affected_human.dna?.species.disliked_food = TOXIC // Toxic food won't kill you, but it doesn't taste good still.
+	affected_human.dna?.species.toxic_food = ~(GROSS | RAW | GORE | MEAT | BUGS | TOXIC | ALCOHOL) // Monke, you can eat raw rats and whatnot.
 
 /datum/addiction/maintenance_drugs/withdrawal_enters_stage_3(mob/living/carbon/affected_carbon)
 	. = ..()
