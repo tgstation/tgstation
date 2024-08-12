@@ -1,0 +1,7 @@
+author: "Meowosers"
+delete-after: True
+changes:
+  - rscadd: "Adds a Paramedic Arm Implant with rescue tools"
+  - rscdel: "Removes the Chemical Arm Implant due to lack of function and use"
+  - qol: "The Combat Cybernetics Implant has been renamed to the Officer Arm Implant. You're welcome RND"
+  - balance: "The Officer Arm Implant is now less healing focused, and should be better suited for combat"
