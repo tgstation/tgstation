@@ -134,3 +134,19 @@ DEFINE_BITFIELD(honkbot_flags, list(
 #define BB_VIBEBOT_PARTY_TARGET "party_target"
 ///key that holds our instrument
 #define BB_VIBEBOT_INSTRUMENT "instrument"
+
+//repairbots
+///key that holds the floor we should tile over
+#define BB_TILELESS_FLOOR "tileless_floor"
+///key that holds the turf we should place a girder over
+#define BB_GIRDER_TARGET "girder_target"
+///key that holds the girder we should place a wall over
+#define BB_GIRDER_TO_WALL_TARGET "girder_to_wall"
+///key that holds the grille we must fix
+#define BB_GRILLE_TARGET "grille_target"
+///key that holds the machinery we repair with a welder
+#define BB_WELDER_TARGET "welder_target"
+///our wall girder ability
+#define BB_GIRDER_BUILD_ABILITY "girder_build_ability"
+///key that holds breached floors we should repair
+#define BB_BREACHED_FLOOR "breached_floor"

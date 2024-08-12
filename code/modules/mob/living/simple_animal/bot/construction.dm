@@ -190,29 +190,33 @@
 					to_chat(user, span_notice("You complete the ED-209."))
 					qdel(src)
 
-//Floorbot assemblies
-/obj/item/bot_assembly/floorbot
+//Repairbot assemblies
+/obj/item/bot_assembly/repairbot
 	desc = "It's a toolbox with tiles sticking out the top."
 	name = "tiles and toolbox"
-	icon_state = "toolbox_tiles"
+	icon_state = "repairbot_base"
 	throwforce = 10
-	created_name = "Floorbot"
+	created_name = "Repairbot"
 	var/toolbox = /obj/item/storage/toolbox/mechanical
 	var/toolbox_color = "" //Blank for blue, r for red, y for yellow, etc.
 
-/obj/item/bot_assembly/floorbot/Initialize(mapload)
+/obj/item/bot_assembly/repairbot/Initialize(mapload)
 	. = ..()
 	update_appearance()
 
-/obj/item/bot_assembly/floorbot/update_name()
+/obj/item/bot_assembly/repairbot/proc/set_color(new_color)
+	add_atom_colour(new_color, FIXED_COLOUR_PRIORITY)
+	toolbox_color = new_color
+
+/obj/item/bot_assembly/repairbot/update_name()
 	. = ..()
 	switch(build_step)
 		if(ASSEMBLY_SECOND_STEP)
-			name = "incomplete floorbot assembly"
+			name = "incomplete repairbot assembly"
 		else
 			name = initial(name)
 
-/obj/item/bot_assembly/floorbot/update_desc()
+/obj/item/bot_assembly/repairbot/update_desc()
 	. = ..()
 	switch(build_step)
 		if(ASSEMBLY_SECOND_STEP)
@@ -220,15 +224,14 @@
 		else
 			desc = initial(desc)
 
-/obj/item/bot_assembly/floorbot/update_icon_state()
+/obj/item/bot_assembly/repairbot/update_overlays()
 	. = ..()
-	switch(build_step)
-		if(ASSEMBLY_FIRST_STEP)
-			icon_state = "[toolbox_color]toolbox_tiles"
-		if(ASSEMBLY_SECOND_STEP)
-			icon_state = "[toolbox_color]toolbox_tiles_sensor"
+	if(build_step >= ASSEMBLY_FIRST_STEP)
+		. += mutable_appearance(icon, "repairbot_tile_overlay", appearance_flags = RESET_COLOR)
+	if(build_step >= ASSEMBLY_SECOND_STEP)
+		. += mutable_appearance(icon, "repairbot_base_sensor", appearance_flags = RESET_COLOR)
 
-/obj/item/bot_assembly/floorbot/attackby(obj/item/W, mob/user, params)
+/obj/item/bot_assembly/repairbot/attackby(obj/item/W, mob/user, params)
 	..()
 	switch(build_step)
 		if(ASSEMBLY_FIRST_STEP)
@@ -244,10 +247,11 @@
 			if(istype(W, /obj/item/bodypart/arm/left/robot) || istype(W, /obj/item/bodypart/arm/right/robot))
 				if(!can_finish_build(W, user))
 					return
-				var/mob/living/simple_animal/bot/floorbot/A = new(drop_location(), toolbox_color)
-				A.name = created_name
-				A.robot_arm = W.type
-				A.toolbox = toolbox
+				var/mob/living/basic/bot/repairbot/repair = new(drop_location())
+				repair.name = created_name
+				repair.robot_arm = W.type
+				repair.toolbox = toolbox
+				repair.set_color(toolbox_color)
 				to_chat(user, span_notice("You add [W] to [src]. Boop beep!"))
 				qdel(W)
 				qdel(src)

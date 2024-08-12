@@ -4738,6 +4738,8 @@
 #include "code\modules\mob\living\basic\bots\medbot\medbot.dm"
 #include "code\modules\mob\living\basic\bots\medbot\medbot_ai.dm"
 #include "code\modules\mob\living\basic\bots\repairbot\repairbot.dm"
+#include "code\modules\mob\living\basic\bots\repairbot\repairbot_abilities.dm"
+#include "code\modules\mob\living\basic\bots\repairbot\repairbot_ai.dm"
 #include "code\modules\mob\living\basic\bots\vibebot\vibebot.dm"
 #include "code\modules\mob\living\basic\bots\vibebot\vibebot_abilities.dm"
 #include "code\modules\mob\living\basic\bots\vibebot\vibebot_ai.dm"

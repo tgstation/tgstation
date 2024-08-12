@@ -1230,4 +1230,7 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 ///Trait which allows mobs to parry mining mob projectiles
 #define TRAIT_MINING_PARRYING "mining_parrying"
 
+///Mob that can merge stacks in its contents
+#define TRAIT_MOB_MERGE_STACKS "mob_merge_stacks"
+
 // END TRAIT DEFINES

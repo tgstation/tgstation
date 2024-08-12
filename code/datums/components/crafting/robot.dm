@@ -42,9 +42,9 @@
 	time = 4 SECONDS
 	category = CAT_ROBOT
 
-/datum/crafting_recipe/floorbot
-	name = "Floorbot"
-	result = /mob/living/simple_animal/bot/floorbot
+/datum/crafting_recipe/repairbot
+	name = "Repairbot"
+	result = /mob/living/basic/bot/repairbot
 	reqs = list(
 		/obj/item/storage/toolbox = 1,
 		/obj/item/stack/tile/iron = 10,

@@ -16,10 +16,6 @@ GLOBAL_LIST_INIT(command_strings, list(
 	basic_mob_flags = DEL_ON_DEATH
 	density = FALSE
 
-	icon = 'icons/mob/silicon/aibots.dmi'
-	icon_state = "medibot0"
-	base_icon_state = "medibot"
-
 	damage_coeff = list(BRUTE = 1, BURN = 1, TOX = 0, STAMINA = 0, OXY = 0)
 	habitable_atmos = null
 	hud_possible = list(DIAG_STAT_HUD, DIAG_BOT_HUD, DIAG_HUD, DIAG_BATT_HUD, DIAG_PATH_HUD = HUD_LIST_LIST)
