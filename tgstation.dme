@@ -5933,6 +5933,7 @@
 #include "monkestation\code\modules\admin\smites\dagothkillsmite.dm"
 #include "monkestation\code\modules\admin\smites\dagothstripsmite.dm"
 #include "monkestation\code\modules\admin\smites\phobia_christian_minecraft.dm"
+#include "monkestation\code\modules\admin\smites\rattle_he_bones.dm"
 #include "monkestation\code\modules\admin\smites\where_are_your_fingers.dm"
 #include "monkestation\code\modules\admin\verbs\getlogs.dm"
 #include "monkestation\code\modules\admin\verbs\kick_player_by_ckey.dm"
