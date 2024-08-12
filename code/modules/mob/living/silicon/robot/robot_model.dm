@@ -805,6 +805,7 @@
 		/obj/item/reagent_containers/cup/beaker/large, //I know a shaker is more appropiate but this is for ease of identification
 		/obj/item/reagent_containers/condiment/enzyme,
 		/obj/item/pen,
+		/obj/item/reagent_containers/cup/rag,
 		/obj/item/toy/crayon/spraycan/borg,
 		/obj/item/extinguisher/mini,
 		/obj/item/hand_labeler/borg,
