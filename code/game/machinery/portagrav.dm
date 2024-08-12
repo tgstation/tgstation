@@ -20,7 +20,7 @@
 	/// do we use power from wire instead
 	var/wire_mode = FALSE
 	/// our gravity field
-	var/datum/proximity_monitor/advanced/gravity/gravity_field
+	var/datum/proximity_monitor/advanced/gravity/subtle_effect/gravity_field
 	/// strength of our gravity
 	var/grav_strength = STANDARD_GRAVITY
 	/// gravity range

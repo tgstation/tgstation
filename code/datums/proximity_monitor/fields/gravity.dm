@@ -63,3 +63,29 @@
 
 /datum/proximity_monitor/advanced/gravity/warns_on_entrance/proc/clear_recent_warning(mob_ref_key)
 	LAZYREMOVE(recently_warned, mob_ref_key)
+
+// Subtype which adds a subtle overlay to all turfs
+/datum/proximity_monitor/advanced/gravity/subtle_effect
+	/// applied overlay
+	var/mutable_appearance/effect
+
+/datum/proximity_monitor/advanced/gravity/subtle_effect/New(atom/_host, range, _ignore_if_not_on_turf = TRUE, gravity, mutable_appearance/effect)
+	if(effect)
+		src.effect = effect
+	else
+		src.effect = mutable_appearance('icons/effects/effects.dmi', "electricity3", alpha=35)
+	return ..()
+
+/datum/proximity_monitor/advanced/gravity/subtle_effect/Destroy()
+	. = ..()
+	QDEL_NULL(effect)
+
+/datum/proximity_monitor/advanced/gravity/subtle_effect/setup_field_turf(turf/target)
+	. = ..()
+	if(!isopenturf(target))
+		return
+	target.add_overlay(effect)
+
+/datum/proximity_monitor/advanced/gravity/subtle_effect/cleanup_field_turf(turf/target)
+	. = ..()
+	target.cut_overlay(effect)
