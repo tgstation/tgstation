@@ -309,6 +309,8 @@ WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/machinery/airlock_controller)
 	sanitize_external = TRUE
 	sensor_tag = INCINERATOR_SYNDICATELAVA_AIRLOCK_SENSOR
 
+WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/machinery/airlock_controller/incinerator_syndicatelava)
+
 /obj/machinery/airlock_controller/update_icon_state()
 	icon_state = "[base_icon_state]_[processing ? "process" : "standby"]"
 	return ..()
