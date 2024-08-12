@@ -53,6 +53,7 @@
 	icon_living = "cirno-happy"
 	icon_dead = "cirno-happy"
 	icon_gib = null
+	gender = FEMALE
 	gold_core_spawnable = NO_SPAWN
 	ai_controller = /datum/ai_controller/basic_controller/
 	basic_mob_flags = FLIP_ON_DEATH
