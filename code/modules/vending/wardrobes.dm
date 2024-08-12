@@ -466,6 +466,7 @@
 		/obj/item/clothing/suit/chaplainsuit/monkrobeeast = 1,
 		/obj/item/clothing/head/rasta = 1,
 		/obj/item/clothing/suit/chaplainsuit/shrinehand = 1,
+		/obj/item/clothing/suit/chaplainsuit/technotao = 1,
 		/obj/item/radio/headset/headset_srv = 2,
 	)
 	contraband = list(
