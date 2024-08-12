@@ -192,8 +192,13 @@ const SlimeData = (_) => {
 
 const StoreViewer = (_) => {
   const { data, act } = useBackend();
-  const { buyable_upgrades, corral_upgrades, reagent_data, reagent_amount } =
-    data;
+  const {
+    buyable_upgrades,
+    corral_upgrades,
+    reagent_data,
+    reagent_amount,
+    capacity,
+  } = data;
 
   return (
     <Table>
@@ -229,7 +234,7 @@ const StoreViewer = (_) => {
         ))}
       </Collapsible>
       <Section textAlign="center" fontSize="18px">
-        Corral Data
+        Corral Data - {capacity}
       </Section>
       <Collapsible title="Active Corral Upgrades">
         {corral_upgrades.map((item) => (

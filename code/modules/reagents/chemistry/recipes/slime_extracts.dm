@@ -261,7 +261,7 @@
 	required_reagents = list(/datum/reagent/toxin/plasma = 1)
 	required_container = /obj/item/slime_extract/yellow
 
-/datum/chemical_reaction/slime/slimecell/on_reaction(datum/reagents/holder, created_volume)
+/datum/chemical_reaction/slime/slimecell/on_reaction(datum/reagents/holder, datum/equilibrium/reaction, created_volume)
 	new /obj/item/stock_parts/cell/emproof/slime(get_turf(holder.my_atom))
 	..()
 

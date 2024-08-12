@@ -150,7 +150,7 @@
 	seed.harvest(user)
 	if(repeated_harvest)
 		growth_cycle = 0
-		repeated_harvest_value += (seed.lifespan * 0.1) //20% of lifespan is added to the value so that it won't start dying right away
+		repeated_harvest_value += (seed.lifespan * 0.05) //5% of lifespan is added to the value so that it won't start dying right away
 		update_plant_visuals()
 		SEND_SIGNAL(planter, COMSIG_GROWER_SET_HARVESTABLE, FALSE)
 		return

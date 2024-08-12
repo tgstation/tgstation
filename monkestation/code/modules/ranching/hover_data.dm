@@ -1,6 +1,10 @@
 /datum/hover_data/chicken_info
 	var/obj/effect/overlay/hover/chicken_egg
 
+/datum/hover_data/chicken_info/Destroy(force, ...)
+	. = ..()
+	qdel(chicken_egg)
+
 /datum/hover_data/chicken_info/New(datum/component/hovering_information, mob/living/basic/chicken/parent)
 	. = ..()
 	chicken_egg = new(null)

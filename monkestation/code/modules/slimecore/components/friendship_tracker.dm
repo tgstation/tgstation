@@ -17,6 +17,12 @@
 	src.befriend_level = befriend_level
 
 
+/datum/component/friendship_container/Destroy(force, silent)
+	. = ..()
+	befriended_refs = null
+	weakrefed_friends = null
+	friendship_levels = null
+
 /datum/component/friendship_container/RegisterWithParent()
 	RegisterSignal(parent, COMSIG_FRIENDSHIP_CHECK_LEVEL, PROC_REF(check_friendship_level))
 	RegisterSignal(parent, COMSIG_FRIENDSHIP_CHANGE, PROC_REF(change_friendship))

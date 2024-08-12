@@ -38,6 +38,15 @@
 /datum/hover_data
 	var/list/images_per_client = list()
 
+/datum/hover_data/Destroy(force, ...)
+	. = ..()
+	if(length(images_per_client))
+		for(var/key in images_per_client)
+			for(var/client/client in GLOB.clients)
+				if(client.ckey != key)
+					continue
+				remove_client_images(client)
+
 /datum/hover_data/New(datum/component/hovering_information, atom/parent)
 
 /datum/hover_data/proc/setup_data(atom/source, mob/enterer)

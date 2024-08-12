@@ -24,7 +24,7 @@
 	create_mutations()
 
 /mob/living/basic/proc/create_mutations()
-	for(var/datum/mutation/ranching/mutation as anything in mutation_list )
+	for(var/datum/mutation/ranching/mutation as anything in mutation_list)
 		var/datum/mutation/ranching/new_mut = new mutation
 		if(!istype(new_mut))
 			continue
