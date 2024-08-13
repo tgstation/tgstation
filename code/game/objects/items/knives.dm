@@ -190,7 +190,6 @@
 	desc = "A sharpened bone. The bare minimum in survival."
 	embed_type = /datum/embed_data/combat_knife/weak
 	obj_flags = parent_type::obj_flags & ~CONDUCTS_ELECTRICITY
-	slot_flags = NONE
 	force = 15
 	throwforce = 15
 	custom_materials = null
@@ -202,7 +201,9 @@
 	name = "cyborg knife"
 	icon = 'icons/obj/items_cyborg.dmi'
 	icon_state = "knife_cyborg"
+	worn_icon_state = "knife_cyborg" //error sprite - this shouldn't have been dropped
 	desc = "A cyborg-mounted plasteel knife. Extremely sharp and durable."
+	slot_flags = NONE //you can't put this in your mouth
 
 /obj/item/knife/shiv
 	name = "glass shiv"

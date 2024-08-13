@@ -74,7 +74,7 @@
 /obj/item/soap/nanotrasen/cyborg
 
 /obj/item/soap/deluxe
-	desc = "A deluxe Waffle Co. brand bar of soap. Smells of high-class luxury."
+	desc = "A deluxe Waffle Corporation brand bar of soap. Smells of high-class luxury."
 	grind_results = list(/datum/reagent/consumable/aloejuice = 10, /datum/reagent/lye = 10)
 	icon_state = "soapdeluxe"
 	inhand_icon_state = "soapdeluxe"

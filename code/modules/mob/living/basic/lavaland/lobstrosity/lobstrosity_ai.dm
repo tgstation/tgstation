@@ -34,6 +34,14 @@
 		/datum/ai_planning_subtree/find_and_hunt_target/lobster_fishing,
 		/datum/ai_planning_subtree/find_fingers,
 	)
+
+/datum/ai_controller/basic_controller/lobstrosity/TryPossessPawn(atom/new_pawn)
+	. = ..()
+	if(. & AI_CONTROLLER_INCOMPATIBLE)
+		return
+	var/static/list/food_types = typecacheof(list(/obj/item/fish/lavaloop))
+	set_blackboard_key(BB_BASIC_FOODS, food_types)
+
 ///Ensure that juveline lobstrosities witll charge at things they can reach.
 /datum/ai_controller/basic_controller/lobstrosity/juvenile
 	blackboard = list(
