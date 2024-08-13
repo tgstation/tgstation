@@ -541,7 +541,7 @@
 /turf/open/floor/iron/textured_edge{
 	dir = 1
 	},
-/area/station/science/auxlab)
+/area/station/science/ordnance/testlab)
 "ahv" = (
 /obj/structure/chair{
 	name = "Prosecution"
@@ -4389,11 +4389,10 @@
 /obj/effect/turf_decal/trimline/purple/filled/line{
 	dir = 9
 	},
-/obj/machinery/power/apc/auto_name/directional/north,
 /obj/structure/cable,
 /obj/machinery/suit_storage_unit/standard_unit,
 /turf/open/floor/iron/textured,
-/area/station/science/auxlab)
+/area/station/science/ordnance/testlab)
 "bmN" = (
 /obj/structure/cable,
 /obj/effect/turf_decal/trimline/green/filled/warning{
@@ -22101,7 +22100,7 @@
 /turf/open/floor/iron/textured_edge{
 	dir = 1
 	},
-/area/station/science/auxlab)
+/area/station/science/ordnance/testlab)
 "gvl" = (
 /obj/machinery/atmospherics/components/unary/passive_vent{
 	name = "server vent"
@@ -28451,7 +28450,7 @@
 	Auto_pinging = 1
 	},
 /turf/open/floor/iron/textured,
-/area/station/science/auxlab)
+/area/station/science/ordnance/testlab)
 "ilm" = (
 /obj/machinery/atmospherics/pipe/smart/manifold/purple/visible,
 /obj/machinery/meter,
@@ -30693,7 +30692,7 @@
 /turf/open/floor/iron/textured_edge{
 	dir = 1
 	},
-/area/station/science/auxlab)
+/area/station/science/ordnance/testlab)
 "iPZ" = (
 /turf/closed/wall,
 /area/station/maintenance/department/electrical)
@@ -43153,7 +43152,7 @@
 /turf/open/floor/iron/textured_edge{
 	dir = 1
 	},
-/area/station/science/auxlab)
+/area/station/science/ordnance/testlab)
 "miR" = (
 /obj/machinery/airalarm/directional/north,
 /obj/effect/mapping_helpers/airalarm/unlocked,
@@ -46431,10 +46430,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/catwalk_floor/iron_smooth,
 /area/station/cargo/miningdock)
-"nfj" = (
-/obj/effect/spawner/structure/window/reinforced,
-/turf/open/floor/plating,
-/area/station/science/auxlab)
 "nfr" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -47445,7 +47440,7 @@
 /obj/structure/cable,
 /obj/structure/tank_dispenser,
 /turf/open/floor/iron/textured,
-/area/station/science/auxlab)
+/area/station/science/ordnance/testlab)
 "ntM" = (
 /obj/effect/turf_decal/delivery,
 /obj/structure/plasticflaps/opaque{
@@ -65621,11 +65616,6 @@
 /obj/effect/landmark/navigate_destination/research,
 /turf/open/floor/iron/white/textured_large,
 /area/station/science/research)
-"ssw" = (
-/obj/structure/lattice,
-/obj/structure/lattice,
-/turf/open/space/basic,
-/area/space/nearstation)
 "ssL" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
@@ -101671,7 +101661,7 @@ xMq
 xMq
 iLQ
 iLQ
-ssw
+xMq
 xMq
 xMq
 xMq
@@ -104235,11 +104225,11 @@ ttw
 ttw
 odJ
 ttw
-bsI
-bsI
-nfj
-nfj
-nfj
+tdv
+tdv
+kHU
+kHU
+kHU
 odJ
 xMq
 xMq
@@ -104492,11 +104482,11 @@ dtt
 odJ
 odJ
 ttw
-bsI
+tdv
 bmG
 ntK
 gvk
-nfj
+kHU
 odJ
 xMq
 ttw
@@ -104749,11 +104739,11 @@ tdv
 kHU
 kHU
 keO
-bsI
+tdv
 ahq
 miA
 ilj
-nfj
+kHU
 odJ
 xMq
 ttw
@@ -105006,11 +104996,11 @@ tdv
 lff
 xhb
 mJV
-bsI
-bsI
+tdv
+tdv
 iPL
-bsI
-bsI
+tdv
+tdv
 odJ
 xMq
 ttw

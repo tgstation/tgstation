@@ -278,6 +278,5 @@
 	name = "techno taoist robe"
 	desc = "A yellow robe said to bring ones spirit closer to the Tao. Does not come with a talisman."
 	icon_state = "technotao"
-	inhand_icon_state = "null"
 	body_parts_covered = CHEST|GROIN|LEGS|ARMS
 	flags_inv = HIDEJUMPSUIT
