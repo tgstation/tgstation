@@ -1,4 +1,0 @@
-author: "Majkl-J"
-delete-after: True
-changes:
-  - bugfix: "Felinids no longer phase through diagonal gaps upon seeing a laser"
