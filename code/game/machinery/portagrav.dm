@@ -234,7 +234,7 @@
 			var/adjustment = text2num(params["adjustment"])
 			if(isnull(adjustment))
 				return
-			var/bonus = (obj_flags & EMAGGED) ? 0 : 2
+			var/bonus = (obj_flags & EMAGGED) ? 2 : 0
 			// REPLACE 0 with NEGATIVE_GRAVITY ONCE NEGATIVE GRAVITY IS SOMETHING ACTUALLY FUNCTIONAL
 			var/result = clamp(grav_strength + adjustment, 0, GRAVITY_DAMAGE_THRESHOLD - 1 + bonus)
 			if(result == grav_strength)
@@ -262,3 +262,6 @@
 			range = result
 			update_field()
 			return TRUE
+
+/obj/machinery/power/portagrav/anchored
+	anchored = TRUE
