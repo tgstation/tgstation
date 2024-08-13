@@ -238,6 +238,40 @@ export const DmTarget = new Juke.Target({
   },
 });
 
+export const JustDmTarget = new Juke.Target({
+  parameters: [DefineParameter, DmVersionParameter, WarningParameter, NoWarningParameter],
+  dependsOn: ({ get }) => [
+    get(DefineParameter).includes('ALL_MAPS') && DmMapsIncludeTarget,
+  ],
+  inputs: [
+    '_maps/map_files/generic/**',
+    'maps/**/*.dm',
+    'code/**',
+    'html/**',
+    'icons/**',
+    'interface/**',
+    `${DME_NAME}.dme`,
+    NamedVersionFile,
+  ],
+  outputs: ({ get }) => {
+    if (get(DmVersionParameter)) {
+      return []; // Always rebuild when dm version is provided
+    }
+    return [
+      `${DME_NAME}.dmb`,
+      `${DME_NAME}.rsc`,
+    ]
+  },
+  executes: async ({ get }) => {
+    await DreamMaker(`${DME_NAME}.dme`, {
+      defines: ['CBT', ...get(DefineParameter)],
+      warningsAsErrors: get(WarningParameter).includes('error'),
+      ignoreWarningCodes: get(NoWarningParameter),
+      namedDmVersion: get(DmVersionParameter),
+    });
+  },
+});
+
 export const DmTestTarget = new Juke.Target({
   parameters: [DefineParameter, DmVersionParameter, WarningParameter, NoWarningParameter],
   dependsOn: ({ get }) => [
