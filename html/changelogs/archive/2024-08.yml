@@ -102,3 +102,96 @@
   - bugfix: Fixes a bug in species.dm preventing species exclusive traitor items from
       appearing,
   - code_imp: Adds a Martial Arts module for coders.
+2024-08-13:
+  Absolucy:
+  - bugfix: Frogs now use the "squeak" mixer channel.
+  - bugfix: Immune system buildup now properly counts normal sleeping as, well, sleeping.
+  - balance: Being well fed will also increase immune system antigen development,
+      while starving or being overweight will reduce it.
+  - rscadd: The Quartermaster's locker now spawns with a single handheld cargo teleporter
+      at roundstart.
+  - qol: The "Dental Implant" surgery no longer forces itself to restart after implanting
+      one pill. Now implanting pills in the surgery has another step to either search
+      the patient's mouth for another tooth to implant, or cauterization to end the
+      surgery.
+  - qol: When "hear all messages" is on as a ghost, messages from within your view
+      range will be bolded.
+  - qol: Light Step now avoids messying up your shoes.
+  - bugfix: Cirno is now more accurate to the source material.
+  Absolucy, Aylong:
+  - qol: Chat notifications are now at the top.
+  BanementI:
+  - bugfix: If you place a headset on a non-Poly Parrot, you should be able to remove
+      it from the parrot as-expected now rather than having the parrot send it to
+      the shadow realm.
+  Bisar:
+  - rscadd: Ashwalkers are now able to craft seed meshes.
+  DragonLee66:
+  - rscadd: Asteroid Magnet and supplies to use it.
+  - rscadd: Material Analyzer and Artifact stickers
+  - rscadd: Asteroid Magnet and Blacksmith
+  - rscadd: An artifact sticker box that was missing
+  Flleeppyy, Punny:
+  - rscadd: the cyborg shaker in service borgs now have the ability to open the reaction
+      search menu
+  Gboster-0:
+  - qol: Delta SM is less complicated
+  KittyNoodle:
+  - rscadd: Adds one new color option for ethereals.
+  KnigTheThrasher:
+  - bugfix: Fixed Kilo perma
+  - bugfix: Fixed brig disposals (idk actually lol)
+  - rscadd: Added more stuff from nova to kilo
+  - rscadd: You can play buckshot roulette in a certain room now
+  - rscadd: Spent buckshot rounds and ammo boxes
+  - rscadd: Expanded kilo xenobio with more cages
+  - rscadd: Blueshield office
+  - rscadd: Added Cloner to blueshift genetics
+  - bugfix: Fixed maints in perma
+  - rscadd: Ghost critter spawners
+  - bugfix: Fixed evac sign being flipped the wrong way
+  Marabout2:
+  - rscadd: 'Added a blueshield office on Tramstation
+
+      :cl:'
+  - rscadd: 'Added a Blueshield office on boxstation
+
+      :cl:'
+  - rscadd: 'Added a blueshield office in Delta
+
+      ![image](https://github.com/user-attachments/assets/288e25bc-fd40-4f65-b732-ee2092d21d1b)
+
+      Ingame (lights shouldn''t be broken tho)
+
+      ![image](https://github.com/user-attachments/assets/2808a103-82ea-47cd-ab16-34b07b9eb6e9)
+
+      :cl:'
+  Meowosers:
+  - rscadd: Adds a Paramedic Arm Implant with rescue tools
+  - rscdel: Removes the Chemical Arm Implant due to lack of function and use
+  - qol: The Combat Cybernetics Implant has been renamed to the Officer Arm Implant.
+      You're welcome RND
+  - balance: The Officer Arm Implant is now less healing focused, and should be better
+      suited for combat
+  TheBronJameOffical:
+  - rscadd: Added the Techno Taoist Robe for the Chaplain for more drip.
+  ThePooba:
+  - rscadd: Added skeleton smite for admin
+  - admin: New "rattle me bones" smite (harmless)
+  Uristthedorf:
+  - rscadd: Added three new rituals to the maintenance sect.
+  - rscdel: Removes adapted eyes ritual from maintenance sect. (Replaced by shadow
+      person ascension.)
+  - balance: Maintenance Sect is now better.
+  - balance: Maintenance drugs addiction less punishing.
+  Xahtrin:
+  - rscadd: New ghost kitchens have opened their doors in the sector! The Burger Combo
+      and Fiesta crates are now available for delivery to the station.
+  ancient-engineer:
+  - rscadd: Added a blueshield office to IceBoxStation and Metastation
+  - balance: Ethereals can not crystallize when they are a bloodsucker and Sol has
+      risen
+  flleeppyy:
+  - sound: Pouring things makes sounds now
+  - sound: IPCs/Silicons drinking will now have a 1/15 chance of getting a rush of
+      enhanced flavor.

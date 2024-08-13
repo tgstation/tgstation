@@ -1,5 +1,0 @@
-author: "ThePooba"
-delete-after: True
-changes:
-  - rscadd: "Added skeleton smite for admin"
-  - admin: "New \"rattle me bones\" smite (harmless)"

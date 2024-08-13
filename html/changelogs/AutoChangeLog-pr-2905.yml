@@ -1,5 +1,0 @@
-author: "Absolucy"
-delete-after: True
-changes:
-  - bugfix: "Immune system buildup now properly counts normal sleeping as, well, sleeping."
-  - balance: "Being well fed will also increase immune system antigen development, while starving or being overweight will reduce it."

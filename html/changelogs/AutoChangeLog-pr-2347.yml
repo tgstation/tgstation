@@ -1,7 +1,0 @@
-author: "Uristthedorf"
-delete-after: True
-changes:
-  - rscadd: "Added three new rituals to the maintenance sect."
-  - rscdel: "Removes adapted eyes ritual from maintenance sect. (Replaced by shadow person ascension.)"
-  - balance: "Maintenance Sect is now better."
-  - balance: "Maintenance drugs addiction less punishing."
