@@ -33,6 +33,8 @@
 /datum/round_event/aurora_caelus/start()
 	if(!prob(1) && !check_holidays(APRIL_FOOLS))
 		return
+
+	var/list/human_blacklist = list()
 	for(var/area/station/service/kitchen/affected_area in GLOB.areas)
 		var/obj/machinery/oven/roast_ruiner = locate() in affected_area
 		if(roast_ruiner)
@@ -42,10 +44,13 @@
 			message_admins("Aurora Caelus event caused an oven to ignite at [ADMIN_VERBOSEJMP(ruined_roast)].")
 			log_game("Aurora Caelus event caused an oven to ignite at [loc_name(ruined_roast)].")
 			announce_to_ghosts(roast_ruiner)
-	for(var/mob/living/carbon/human/seymour as anything in GLOB.human_list)
-		if(seymour.mind && istype(seymour.mind.assigned_role, /datum/job/cook))
-			seymour.say("My roast is ruined!!!", forced = "ruined roast")
-			seymour.emote("scream")
+			for(var/mob/living/carbon/human/seymour in viewers(roast_ruiner, 7))
+				if (seymour in human_blacklist)
+					continue
+				human_blacklist += seymour
+				if(seymour.mind && istype(seymour.mind.assigned_role, /datum/job/cook))
+					seymour.say("My roast is ruined!!!", forced = "ruined roast")
+					seymour.emote("scream")
 
 /datum/round_event/aurora_caelus/tick()
 	if(activeFor % 8 != 0)
