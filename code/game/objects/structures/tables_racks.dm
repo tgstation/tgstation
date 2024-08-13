@@ -65,6 +65,7 @@
 ///Adds the element used to make the object climbable, and also the one that shift the mob buckled to it up.
 /obj/structure/table/proc/make_climbable()
 	AddElement(/datum/element/climbable)
+	AddComponent(/datum/component/climb_walkable)
 	AddElement(/datum/element/elevation, pixel_shift = 12)
 
 /obj/structure/table/add_context(atom/source, list/context, obj/item/held_item, mob/living/user)
@@ -148,15 +149,6 @@
 
 /obj/structure/table/attack_tk(mob/user)
 	return
-
-/obj/structure/table/CanAllowThrough(atom/movable/mover, border_dir)
-	. = ..()
-	if(.)
-		return
-	if(mover.throwing)
-		return TRUE
-	if(locate(/obj/structure/table) in get_turf(mover))
-		return TRUE
 
 /obj/structure/table/CanAStarPass(to_dir, datum/can_pass_info/pass_info)
 	if(!density)

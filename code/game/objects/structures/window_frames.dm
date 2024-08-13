@@ -55,7 +55,8 @@
 	. = ..()
 
 	update_appearance()
-	AddElement(/datum/element/climbable, on_try_climb_procpath = TYPE_PROC_REF(/obj/structure/window_frame/, on_try_climb))
+	AddComponent(/datum/component/climb_walkable)
+	AddElement(/datum/element/climbable, on_try_climb_procpath = TYPE_PROC_REF(/obj/structure/window_frame, on_try_climb))
 
 	if(mapload && start_with_window)
 		create_structure_window(window_type)
