@@ -3,7 +3,7 @@
 	desc = "A cold metal wall engraved with indecipherable symbols. Studying them causes your head to pound."
 	icon = 'icons/turf/walls/cult_wall.dmi'
 	turf_flags = IS_SOLID
-	smoothing_groups = SMOOTH_GROUP_BOSS_WALLS + SMOOTH_GROUP_TALL_WALL + SMOOTH_GROUP_WALLS + SMOOTH_GROUP_CLOSED_TURFS
+	smoothing_groups = SMOOTH_GROUP_WALLS + SMOOTH_GROUP_TALL_WALLS + SMOOTH_GROUP_CLOSED_TURFS + SMOOTH_GROUP_BOSS_WALLS
 	canSmoothWith = SMOOTH_GROUP_WALLS + SMOOTH_GROUP_BOSS_WALLS
 	sheet_type = /obj/item/stack/sheet/runed_metal
 	sheet_amount = 1
@@ -71,7 +71,7 @@
 	sheet_type = /obj/item/stack/sheet/bronze
 	sheet_amount = 2
 	girder_type = /obj/structure/girder/bronze
-	smoothing_groups = SMOOTH_GROUP_TALL_WALL + SMOOTH_GROUP_WALLS + SMOOTH_GROUP_CLOCK_WALLS + SMOOTH_GROUP_CLOSED_TURFS
+	smoothing_groups = SMOOTH_GROUP_CLOCK_WALLS + SMOOTH_GROUP_WALLS + SMOOTH_GROUP_TALL_WALLS + SMOOTH_GROUP_CLOSED_TURFS
 	canSmoothWith = SMOOTH_GROUP_CLOCK_WALLS
 
 /turf/closed/wall/rock
@@ -98,6 +98,7 @@
 	smoothing_flags = NONE
 	canSmoothWith = null
 	smoothing_groups = null
+	use_splitvis = FALSE
 
 /turf/closed/wall/material/meat
 	name = "living wall"

@@ -1733,22 +1733,9 @@
 /// Offsets this movable based on dir (in context of wallmounts)
 /// Yes yes mothblocks I know this is not modular but I don't want to make the element bespoke
 /// Insert ranting about element key generation here
+/// This proc is filled in by the directional macros, should not need to manually touch it unless something is wrong
 /atom/movable/proc/wall_mount_offset(direction)
-	//These magic offsets are chosen for no particular reason
-	//The wall mount template is made to work with them
-	pixel_x = 0
-	pixel_z = 0
-	switch(direction)
-		if(NORTH)
-			pixel_z = -8
-		if(SOUTH)
-			pixel_z = 35
-		if(EAST)
-			pixel_x = -11
-			pixel_z = 16
-		if(WEST)
-			pixel_x = 11
-			pixel_z = 16
+	return
 
 /// Returns true if we should layer in common with the general game
 /// If false, render over the frill plane insted

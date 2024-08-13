@@ -46,15 +46,6 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/barsign, 32)
 /obj/machinery/barsign/wall_mount_common_plane(direction)
 	return TRUE
 
-/obj/machinery/barsign/wall_mount_offset(direction)
-	pixel_x = 0
-	pixel_z = 0
-	switch(direction)
-		if(NORTH)
-			pixel_z = 32
-		if(SOUTH)
-			pixel_z = -32
-
 /obj/machinery/barsign/update_icon_state()
 	if(!(machine_stat & BROKEN) && (!(machine_stat & NOPOWER) || machine_stat & EMPED) && chosen_sign && chosen_sign.icon_state)
 		icon_state = chosen_sign.icon_state

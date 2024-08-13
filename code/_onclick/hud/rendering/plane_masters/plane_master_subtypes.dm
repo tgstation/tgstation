@@ -203,12 +203,6 @@
 	. = ..()
 	add_relay_to(GET_NEW_PLANE(EMISSIVE_RENDER_PLATE, offset), relay_layer = EMISSIVE_WALL_LAYER, relay_color = GLOB.em_block_color)
 
-/atom/movable/screen/plane_master/over_tile
-	name = "Over Tile"
-	documentation = "Holds anything on tiles, but not large enough to be on the game plane. I don't want to z fight with a disposals tube "
-	plane = OVER_TILE_PLANE
-	render_relay_planes = list(RENDER_PLANE_GAME_WORLD)
-
 /atom/movable/screen/plane_master/game_misc
 	name = "Game Misc"
 	documentation = "Exists to hold anything we want to be a part of the \"game world\" that isn't held by other plane masters that point at the world rendering plate.\

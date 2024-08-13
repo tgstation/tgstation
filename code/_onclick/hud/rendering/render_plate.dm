@@ -221,6 +221,8 @@
 
 /atom/movable/screen/plane_master/rendering_plate/wall_weather_mask/Initialize(mapload, datum/hud/hud_owner, datum/plane_master_group/home, offset)
 	. = ..()
+	if(!home)
+		return
 	home.AddComponent(/datum/component/hide_weather_planes, src)
 	// mask with the weather mask plane BUT drop the bottom 16 pixels. this will let us mask WEATHER with the walls at its bottom
 	add_filter("weather_mask", 1, alpha_mask_filter(y = 16, render_source = OFFSET_RENDER_TARGET(WEATHER_MASK_RENDER_TARGET, offset), flags = MASK_INVERSE))

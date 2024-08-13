@@ -86,22 +86,6 @@ SHOWER_DIRECTIONAL_HELPERS(/obj/machinery/shower)
 	. += span_notice("The auto shut-off is programmed to [GLOB.shower_mode_descriptions["[mode]"]].")
 	. += span_notice("[reagents.total_volume]/[reagents.maximum_volume] liquids remaining.")
 
-/obj/machinery/shower/wall_mount_offset(direction)
-	pixel_x = 0
-	pixel_z = 0
-	pixel_y = 0
-	switch(direction)
-		if(NORTH)
-			pixel_z = 32
-		if(SOUTH)
-			pixel_z = -4
-		if(EAST)
-			pixel_x = 16
-			pixel_z = 12
-		if(WEST)
-			pixel_x = -16
-			pixel_z = 12
-
 /obj/machinery/shower/Destroy()
 	QDEL_NULL(soundloop)
 	QDEL_NULL(reagents)
