@@ -567,11 +567,8 @@
 /datum/outfit/centcom/ert/medical_commander
 	name = "Chief EMT"
 	id = /obj/item/card/id/advanced/centcom/ert/medical
-	suit = /obj/item/clothing/suit/toggle/labcoat/cmo
 	uniform = /obj/item/clothing/under/rank/medical/chief_medical_officer
-	back = /obj/item/storage/backpack/ert/medical
 	l_pocket = /obj/item/healthanalyzer/advanced
-	head = /obj/item/clothing/head/utility/head_mirror
 	shoes = /obj/item/clothing/shoes/sneakers/white
 	backpack_contents = list(
 		/obj/item/reagent_containers/hypospray/combat = 1,
@@ -585,16 +582,17 @@
 	glasses = /obj/item/clothing/glasses/hud/health/sunglasses
 	additional_radio = /obj/item/encryptionkey/heads/cmo
 	mask = /obj/item/clothing/mask/surgical
-	gloves = /obj/item/clothing/gloves/latex
+	back = /obj/item/mod/control/pre_equipped/medical/corpsman
+	gloves = null
+	suit = null
+	head = null
+	suit_store = /obj/item/tank/internals/oxygen
 
 /datum/outfit/centcom/ert/medical_technician
 	name = "EMT Paramedic"
 	id = /obj/item/card/id/advanced/centcom/ert/medical
-	suit = /obj/item/clothing/suit/apron/surgical
 	uniform = /obj/item/clothing/under/rank/medical/scrubs/blue
-	back = /obj/item/storage/backpack/ert/medical
 	l_pocket = /obj/item/healthanalyzer
-	head = /obj/item/clothing/head/utility/surgerycap
 	backpack_contents = list(
 		/obj/item/reagent_containers/hypospray/combat = 1,
 		/obj/item/storage/medkit/regular = 1,
@@ -608,4 +606,15 @@
 	glasses = /obj/item/clothing/glasses/hud/health
 	additional_radio = /obj/item/encryptionkey/heads/cmo
 	shoes = /obj/item/clothing/shoes/sneakers/blue
-	gloves = /obj/item/clothing/gloves/latex
+	back = /obj/item/mod/control/pre_equipped/medical
+	gloves = null
+	suit = null
+	head = null
+	suit_store = /obj/item/tank/internals/oxygen
+
+/obj/item/mod/control/pre_equipped/medical/corpsman
+	theme = /datum/mod_theme/medical/corpsman
+
+///Identical to medical MODsuit, but uses the alternate skin by default.
+/datum/mod_theme/medical/corpsman
+	default_skin = "corpsman"
