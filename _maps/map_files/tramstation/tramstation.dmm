@@ -8327,6 +8327,16 @@
 	},
 /turf/open/floor/iron,
 /area/station/construction/mining/aux_base)
+"bOB" = (
+/obj/effect/turf_decal/trimline/red/filled/line{
+	dir = 9
+	},
+/obj/machinery/button/door/directional/north{
+	id = "secmechbay";
+	name = "Security Mech Garage Door Controls"
+	},
+/turf/open/floor/iron,
+/area/station/security/brig)
 "bOV" = (
 /obj/effect/spawner/random/engineering/tracking_beacon,
 /turf/open/floor/engine,
@@ -55630,11 +55640,6 @@
 "sub" = (
 /obj/effect/turf_decal/trimline/red/filled/line{
 	dir = 10
-	},
-/obj/machinery/button/door/directional/south{
-	name = "Security Mech Garage Door Controls";
-	id = "secmechbay";
-	req_access = list("security")
 	},
 /turf/open/floor/iron,
 /area/station/security/brig)
@@ -151895,7 +151900,7 @@ aaa
 aaa
 aaa
 yji
-wOb
+bOB
 mJQ
 sub
 yji
