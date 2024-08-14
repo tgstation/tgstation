@@ -16,7 +16,6 @@ LINEN BINS
 	pickup_sound = 'sound/items/handling/cloth_pickup.ogg'
 	slot_flags = ITEM_SLOT_NECK
 	layer = BELOW_MOB_LAYER
-	base_pixel_z = 12
 	throwforce = 0
 	throw_speed = 1
 	throw_range = 2
