@@ -43,7 +43,6 @@
 	RegisterSignal(parent, COMSIG_ATOM_UPDATED_ICON, PROC_REF(on_icon_update))
 	RegisterSignal(parent, COMSIG_MOVABLE_MOVED, PROC_REF(on_moved))
 	RegisterSignal(user, COMSIG_HUMAN_GET_VISIBLE_NAME, PROC_REF(on_name_inquiry))
-	ADD_TRAIT(user, TRAIT_UNKNOWN, ref(src))
 
 	current_slot = slot
 
@@ -71,15 +70,12 @@
 	var/tactical_disguise_power = INFINITY // it's a flawless plan: they'll never look behind this unassuming potted plant
 	if(identity[VISIBLE_NAME_FORCED])
 		if(identity[VISIBLE_NAME_FORCED] >= tactical_disguise_power) // my disguise is too powerful for you, traveler! but seriously this is bad
-			stack_trace("A name forcing signal ([identity[VISIBLE_NAME_FACE]]) has a priority collision with [src].")
+			stack_trace("A name forcing signal ([identity[VISIBLE_NAME_FACE]]) has a priority collision with [src]."
 		else
 			identity[VISIBLE_NAME_FORCED] = tactical_disguise_power
-	else
-		identity[VISIBLE_NAME_FORCED] = tactical_disguise_power
 
-	var/obj/item/flawless_disguise = parent
-	identity[VISIBLE_NAME_FACE] = flawless_disguise.name
-	identity[VISIBLE_NAME_ID] = flawless_disguise.name // for Unknown (as 'potted plant') says
+       identity[VISIBLE_NAME_FACE] = parent.name
+       identity[VISIBLE_NAME_ID] = ""
 
 
 /datum/component/tactical/proc/unmodify(obj/item/source, mob/user)
@@ -100,7 +96,6 @@
 	))
 	current_slot = null
 	user.remove_alt_appearance("sneaking_mission[REF(src)]")
-	REMOVE_TRAIT(user, TRAIT_UNKNOWN, ref(src))
 
 ///Checks if a mob is holding us, and if so we will modify our appearance to properly match w/ the mob.
 /datum/component/tactical/proc/tactical_update(obj/item/source)

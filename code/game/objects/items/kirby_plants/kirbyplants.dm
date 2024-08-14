@@ -48,6 +48,14 @@
 	. = ..()
 	icon_state = dead ? "plant-25" : base_icon_state
 
+/obj/item/kirbyplants/pickup(mob/user)
+	. = ..()
+	ADD_TRAIT(user, TRAIT_UNKNOWN, REF(src))
+
+/obj/item/kirbyplants/dropped(mob/user, silent = FALSE)
+	. = ..()
+	REMOVE_TRAIT(user, TRAIT_UNKNOWN, REF(src))
+
 /obj/item/kirbyplants/attackby(obj/item/I, mob/living/user, params)
 	. = ..()
 	if(!dead && trimmable && HAS_TRAIT(user,TRAIT_BONSAI) && isturf(loc) && I.get_sharpness())
