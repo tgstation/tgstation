@@ -222,7 +222,7 @@ WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/structure/plaque)
 		return ITEM_INTERACT_BLOCKING
 
 	if(locate(/obj/structure/plaque) in (place_on_wall ? user_turf : interacting_with))
-		balloon_alert("already has plaque!")
+		balloon_alert(user, "already has plaque!")
 		return ITEM_INTERACT_BLOCKING
 
 	var/turf/target_turf = interacting_with
@@ -244,7 +244,6 @@ WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/structure/plaque)
 		placed_plaque.find_and_hang_on_wall()
 	else
 		SET_PLANE_EXPLICIT(placed_plaque, FLOOR_PLANE, interacting_with)
-		placed_plaque.AddComponent(/datum/component/turf_mounted, loc, CALLBACK(src, PROC_REF(drop_plaque))) //changing the tile will drop the plaque.
-		placed_plaque.layer = BELOW_OPEN_DOOR_LAYER
+		placed_plaque.AddComponent(/datum/component/turf_mounted, loc, CALLBACK(placed_plaque, TYPE_PROC_REF(/obj/structure/plaque, drop_plaque)))
 	qdel(src)
 	return ITEM_INTERACT_SUCCESS
