@@ -1344,7 +1344,7 @@
 /turf/open/floor/iron/white,
 /area/station/medical/storage)
 "aAI" = (
-/obj/structure/sign/plaques/kiddie/perfect_man{
+/obj/structure/plaque/static_plaque/kiddie/perfect_man{
 	pixel_y = 32
 	},
 /obj/effect/spawner/random/decoration/showcase,
@@ -18153,7 +18153,7 @@
 /turf/open/floor/iron,
 /area/station/security/brig)
 "gEX" = (
-/obj/structure/sign/plaques/kiddie/badger{
+/obj/structure/plaque/static_plaque/kiddie/badger{
 	pixel_y = 32
 	},
 /obj/item/food/grown/poppy{
@@ -45288,7 +45288,7 @@
 /turf/open/floor/iron/white,
 /area/station/command/heads_quarters/cmo)
 "pYn" = (
-/obj/structure/sign/plaques/kiddie/library{
+/obj/structure/plaque/static_plaque/kiddie/library{
 	pixel_y = -32
 	},
 /obj/effect/turf_decal/tile/neutral{
@@ -53956,7 +53956,7 @@
 /turf/open/floor/plating,
 /area/station/maintenance/port/aft)
 "sYh" = (
-/obj/structure/sign/plaques/kiddie/perfect_drone{
+/obj/structure/plaque/static_plaque/kiddie/perfect_drone{
 	pixel_y = 32
 	},
 /obj/structure/table/wood,

@@ -41953,7 +41953,7 @@
 /turf/open/floor/iron/smooth,
 /area/station/security/brig/upper)
 "mFR" = (
-/obj/structure/sign/plaques/kiddie/badger{
+/obj/structure/plaque/static_plaque/kiddie/badger{
 	pixel_y = 32
 	},
 /turf/open/misc/dirt{
@@ -57892,7 +57892,7 @@
 /obj/effect/spawner/random/trash/cigbutt,
 /obj/effect/spawner/random/trash/cigbutt,
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/sign/plaques/kiddie/perfect_drone{
+/obj/structure/plaque/static_plaque/kiddie/perfect_drone{
 	pixel_x = 32
 	},
 /turf/open/floor/iron/checker,
@@ -59237,7 +59237,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 9
 	},
-/obj/structure/sign/plaques/kiddie/gameoflife{
+/obj/structure/plaque/static_plaque/kiddie/gameoflife{
 	pixel_x = -32
 	},
 /turf/open/floor/iron/smooth_corner,
@@ -60617,7 +60617,7 @@
 /turf/open/floor/iron/dark,
 /area/station/science/ordnance)
 "sbf" = (
-/obj/structure/sign/plaques/kiddie/devils_tooth{
+/obj/structure/plaque/static_plaque/kiddie/devils_tooth{
 	pixel_y = 32
 	},
 /turf/open/misc/asteroid/snow/icemoon,

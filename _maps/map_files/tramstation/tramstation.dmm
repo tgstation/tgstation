@@ -2198,7 +2198,7 @@
 /turf/open/floor/plating/icemoon,
 /area/station/engineering/atmos)
 "ahG" = (
-/obj/structure/sign/plaques/kiddie/perfect_man,
+/obj/structure/plaque/static_plaque/kiddie/perfect_man,
 /turf/open/floor/carpet,
 /area/station/command/meeting_room)
 "ahR" = (
@@ -52901,7 +52901,7 @@
 /turf/open/floor/iron,
 /area/station/command/bridge)
 "ruy" = (
-/obj/structure/sign/plaques/kiddie/perfect_drone,
+/obj/structure/plaque/static_plaque/kiddie/perfect_drone,
 /turf/open/floor/carpet,
 /area/station/command/meeting_room)
 "ruA" = (

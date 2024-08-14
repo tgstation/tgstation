@@ -30306,7 +30306,7 @@
 	},
 /obj/machinery/door/firedoor,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
-/obj/structure/sign/plaques/kiddie/library,
+/obj/structure/plaque/static_plaque/kiddie/library,
 /turf/open/floor/iron/dark,
 /area/station/service/library)
 "hCh" = (
@@ -41268,7 +41268,7 @@
 /turf/open/floor/iron,
 /area/station/hallway/primary/central/aft)
 "klm" = (
-/obj/structure/sign/plaques/kiddie/badger{
+/obj/structure/plaque/static_plaque/kiddie/badger{
 	pixel_y = 32
 	},
 /obj/structure/table/wood,
@@ -53647,7 +53647,7 @@
 	dir = 4
 	},
 /obj/effect/turf_decal/tile/neutral/fourcorners,
-/obj/structure/sign/plaques/kiddie/library,
+/obj/structure/plaque/static_plaque/kiddie/library,
 /turf/open/floor/iron/dark,
 /area/station/service/library)
 "nyE" = (
@@ -89111,7 +89111,7 @@
 /area/station/science/research)
 "wtU" = (
 /obj/structure/cable,
-/obj/structure/sign/plaques/kiddie/library,
+/obj/structure/plaque/static_plaque/kiddie/library,
 /turf/open/floor/wood/tile,
 /area/station/service/library/artgallery)
 "wtV" = (
@@ -95699,7 +95699,7 @@
 /turf/closed/wall/r_wall,
 /area/station/maintenance/department/eva/abandoned)
 "yeh" = (
-/obj/structure/sign/plaques/kiddie/library,
+/obj/structure/plaque/static_plaque/kiddie/library,
 /turf/open/floor/wood/tile,
 /area/station/service/library/artgallery)
 "yei" = (
