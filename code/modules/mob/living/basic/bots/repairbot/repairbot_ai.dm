@@ -25,6 +25,8 @@
 
 ///subtree to replace iron platings
 /datum/ai_planning_subtree/replace_floors
+	///flag we check before executing
+	var/required_flag = REPAIRBOT_REPLACE_TILES
 	///key of our floor target
 	var/floor_key = BB_TILELESS_FLOOR
 	///type of tile we need to replace floors
@@ -39,7 +41,9 @@
 	type_of_turf = typecacheof(type_of_turf)
 
 /datum/ai_planning_subtree/replace_floors/SelectBehaviors(datum/ai_controller/basic_controller/bot/controller, seconds_per_tick)
-	var/mob/living/basic/bot/bot_pawn = controller.pawn
+	var/mob/living/basic/bot/repairbot/bot_pawn = controller.pawn
+	if(!(bot_pawn.repairbot_flags & required_flag))
+		return
 	if(!locate(needed_tile_type) in bot_pawn)
 		return
 	if(controller.blackboard_key_exists(floor_key))
@@ -66,6 +70,7 @@
 	floor_key = BB_BREACHED_FLOOR
 	needed_tile_type = /obj/item/stack/tile/iron
 	type_of_turf = list(/turf/open/space)
+	required_flag = REPAIRBOT_FIX_BREACHES
 	search_behavior = /datum/ai_behavior/bot_search/valid_plateless_turf/breached
 
 ///exists as to not conflict with the base turf searching behavior cause of how the queue system works...
@@ -75,7 +80,9 @@
 /datum/ai_planning_subtree/build_girder
 
 /datum/ai_planning_subtree/build_girder/SelectBehaviors(datum/ai_controller/basic_controller/bot/controller, seconds_per_tick)
-	var/mob/living/basic/bot/bot_pawn = controller.pawn
+	var/mob/living/basic/bot/repairbot/bot_pawn = controller.pawn
+	if(!(bot_pawn.repairbot_flags & REPAIRBOT_BUILD_GIRDERS))
+		return
 	var/obj/item/stack/rods/my_rods = locate() in bot_pawn
 	if(isnull(my_rods) || my_rods.amount < 2)
 		return
@@ -95,6 +102,15 @@
 /datum/ai_behavior/bot_search/valid_wall_target/valid_target(datum/ai_controller/basic_controller/bot/controller, turf/my_target)
 	if(istype(get_area(my_target), /area/space) || isgroundlessturf(my_target) || my_target.is_blocked_turf())
 		return FALSE
+	var/static/list/blacklist_objects = list(
+		/obj/machinery/door,
+		/obj/structure/grille,
+	)
+
+	for(var/atom/contents in my_target)
+		if(is_type_in_typecache(contents, blacklist_objects))
+			return FALSE
+
 	var/turf/adjacent_turfs = get_adjacent_open_turfs(my_target)
 	for(var/turf/possible_spaced_turf as anything in adjacent_turfs)
 		if(isspaceturf(possible_spaced_turf) && istype(get_area(possible_spaced_turf), /area/space))
@@ -123,7 +139,9 @@
 /datum/ai_planning_subtree/fix_grille
 
 /datum/ai_planning_subtree/fix_grille/SelectBehaviors(datum/ai_controller/controller, seconds_per_tick)
-	var/mob/living/living_pawn = controller.pawn
+	var/mob/living/bot/repairbot/living_pawn = controller.pawn
+	if(!(bot_pawn.repairbot_flags & REPAIRBOT_FIX_GRILLES))
+		return
 	if(!locate(/obj/item/stack/sheet/glass) in living_pawn)
 		return
 	if(controller.blackboard_key_exists(BB_GRILLE_TARGET))
@@ -142,7 +160,9 @@
 /datum/ai_planning_subtree/wall_girder
 
 /datum/ai_planning_subtree/wall_girder/SelectBehaviors(datum/ai_controller/controller, seconds_per_tick)
-	var/mob/living/living_pawn = controller.pawn
+	var/mob/living/bot/repairbot/living_pawn = controller.pawn
+	if(!(bot_pawn.repairbot_flags & REPAIRBOT_FIX_GIRDERS))
+		return
 	var/obj/item/stack/sheet/iron/my_iron = locate() in living_pawn
 	if(isnull(my_iron) || my_iron.amount < 2)
 		return

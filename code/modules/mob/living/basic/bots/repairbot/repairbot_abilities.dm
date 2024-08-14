@@ -28,11 +28,8 @@
 		return TRUE
 	var/obj/effect/constructing_effect/effect = new(turf_target, 3 SECONDS)
 
-	if(!do_after(owner, 3 SECONDS, target = turf_target, interaction_key = BUILDING_WALL_ABILITY))
+	if(!do_after(owner, 3 SECONDS, target = turf_target, interaction_key = BUILDING_WALL_ABILITY) || isnull(turf_target) || turf_target.is_blocked_turf())
 		qdel(effect)
-		return TRUE
-
-	if(isnull(turf_target) || turf_target.is_blocked_turf()) //turf got blocked
 		return TRUE
 
 	playsound(turf_target, 'sound/machines/click.ogg', 50, TRUE)
@@ -42,8 +39,5 @@
 	StartCooldown()
 	qdel(effect)
 	return TRUE
-
-
-
 
 #undef BUILDING_WALL_ABILITY

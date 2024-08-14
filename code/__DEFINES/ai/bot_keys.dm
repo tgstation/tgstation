@@ -16,6 +16,24 @@ DEFINE_BITFIELD(honkbot_flags, list(
 	"CAN_FAKE_CUFF" = HONKBOT_HANDCUFF_TARGET,
 ))
 
+///can we fix breaches
+#define REPAIRBOT_FIX_BREACHES (1<<0)
+///can we fix grilles
+#define REPAIRBOT_FIX_GRILLES (1<<1)
+///can we replace tiles
+#define REPAIRBOT_REPLACE_TILES (1<<2)
+///can we fix girders
+#define REPAIRBOT_FIX_GIRDERS (1<<3)
+///can we build girders
+#define REPAIRBOT_BUILD_GIRDERS (1<<4)
+
+DEFINE_BITFIELD(repairbot_flags, list(
+	"FIX_BREACHES" = REPAIRBOT_FIX_BREACHES,
+	"FIX_GRILLES" = REPAIRBOT_FIX_GRILLES,
+	"REPLACE_TILES" = REPAIRBOT_REPLACE_TILES,
+	"FIX_GIRDERS" = REPAIRBOT_FIX_GIRDERS,
+	"BUILD_GIRDERS" = REPAIRBOT_BUILD_GIRDERS,
+))
 
 // bot keys
 ///The first beacon we find

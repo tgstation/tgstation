@@ -131,8 +131,6 @@ DEFINE_BITFIELD(bot_cover_flags, list(
 #define ADVANCED_SEC_BOT "ED-209"
 /// MULEbots
 #define MULE_BOT "MULEbot"
-/// Floorbots
-#define FLOOR_BOT "Floorbot"
 /// Cleanbots
 #define CLEAN_BOT "Cleanbot"
 /// Medibots
@@ -173,8 +171,6 @@ DEFINE_BITFIELD(bot_cover_flags, list(
 #define BOT_CLEANING "Cleaning"
 /// Hygienebot - Cleaning unhygienic humans
 #define BOT_SHOWERSTANCE "Chasing filth"
-/// Floorbots - Repairing hull breaches
-#define BOT_REPAIRING "Repairing"
 /// Medibots - Healing people
 #define BOT_HEALING "Healing"
 /// MULEbot - Moving to deliver
