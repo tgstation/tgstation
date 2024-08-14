@@ -9,7 +9,6 @@
 	density = TRUE
 	icon = 'icons/effects/96x96.dmi'
 	icon_state = "boh_tear"
-	plane = MASSIVE_OBJ_PLANE
 	plane = ABOVE_LIGHTING_PLANE
 	light_range = 6
 	move_resist = INFINITY

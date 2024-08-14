@@ -1,0 +1,2 @@
+output_name = "grille_damaged"
+template = "bitmask/diagonal_32x48.toml"

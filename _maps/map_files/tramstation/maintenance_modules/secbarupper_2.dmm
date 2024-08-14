@@ -4,6 +4,9 @@
 /obj/machinery/plumbing/synthesizer{
 	reagent_id = /datum/reagent/water
 	},
+/obj/effect/decal/cleanable/cobweb{
+	pixel_y = 24
+	},
 /turf/open/floor/catwalk_floor,
 /area/station/maintenance/department/security)
 "dz" = (
@@ -32,10 +35,11 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/structure/sign/warning/secure_area{
 	desc = "A warning sign which reads 'MULE CROSSING - LOOK BOTH WAYS";
-	name = "MULE CROSSING - LOOK BOTH WAYS";
-	pixel_y = 32
+	name = "MULE CROSSING - LOOK BOTH WAYS"
 	},
-/obj/effect/decal/cleanable/cobweb/cobweb2,
+/obj/effect/decal/cleanable/cobweb/cobweb2{
+	pixel_y = 24
+	},
 /turf/open/floor/catwalk_floor,
 /area/station/maintenance/department/security)
 "dX" = (
@@ -104,7 +108,7 @@
 "lW" = (
 /obj/structure/ladder,
 /obj/effect/decal/cleanable/dirt,
-/obj/effect/decal/cleanable/cobweb/cobweb2,
+/obj/structure/sign/poster/official/nanotrasen_logo,
 /turf/open/floor/iron/smooth,
 /area/station/maintenance/department/security)
 "mz" = (
@@ -133,7 +137,6 @@
 /obj/machinery/light/small/directional/north,
 /obj/structure/table,
 /obj/item/reagent_containers/cup/bucket,
-/obj/structure/sign/poster/official/nanotrasen_logo/directional/north,
 /turf/open/floor/iron/smooth,
 /area/station/maintenance/department/security)
 "rN" = (
@@ -412,8 +415,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/structure/sign/warning/secure_area{
 	desc = "A warning sign which reads 'MULE CROSSING - LOOK BOTH WAYS";
-	name = "MULE CROSSING - LOOK BOTH WAYS";
-	pixel_y = 32
+	name = "MULE CROSSING - LOOK BOTH WAYS"
 	},
 /obj/machinery/duct,
 /turf/open/floor/catwalk_floor,

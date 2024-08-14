@@ -82,7 +82,7 @@
 	// We can walk infront of the bottom cliff turf, so check that here
 	if(!iscliffturf(get_step(src, fall_direction)) && !(get_dir(arrived, src) & fall_direction))
 		return FALSE
-	
+
 	// gravity
 	// marked in UNLINT due to a spacemandmm bug: https://github.com/SpaceManiac/SpacemanDMM/issues/382 (REMOVE ONCE FIXED!)
 	if(UNLINT(!arrived.has_gravity(src)))
@@ -125,15 +125,7 @@
 	smoothing_groups = SMOOTH_GROUP_TURF_OPEN_CLIFF
 	canSmoothWith = SMOOTH_GROUP_TURF_OPEN_CLIFF
 	layer = EDGED_TURF_LAYER
-	plane = WALL_PLANE
-
-	// This is static
-	// Done like this to avoid needing to make it dynamic and save cpu time
-	// 4 to the left, 4 down
-	transform = MAP_SWITCH(TRANSLATE_MATRIX(-4, -4), matrix())
-
-	undertile_pixel_x = 4
-	undertile_pixel_y = 4
+	plane = GAME_PLANE
 
 	initial_gas_mix = ICEMOON_DEFAULT_ATMOS
 	planetary_atmos = TRUE
