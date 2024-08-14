@@ -70,7 +70,7 @@
 	return victim
 
 /datum/unit_test/transformation_sting/proc/setup_ling()
-	var/mob/living/carbon/human/totate/ling = allocate(/mob/living/carbon/human/consistent)
+	var/mob/living/carbon/human/rotate/ling = allocate(/mob/living/carbon/human/consistent)
 	// Because we use two consistent humans, we need to change some of the features to know they're actually updating to new values.
 	// The more DNA features and random things we change, the more likely we are to catch something not updating correctly.
 	// Yeah guess who/what this is, I dare you.
