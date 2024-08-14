@@ -28,6 +28,8 @@
 	var/girder_type = /obj/structure/girder
 	/// A turf that will replace this turf when this turf is destroyed
 	var/decon_type
+	/// If we added a leaning component to ourselves
+	var/added_leaning = FALSE
 
 	var/list/dent_decals
 
@@ -49,8 +51,11 @@
 
 /turf/closed/wall/mouse_drop_receive(atom/dropping, mob/user, params)
 	. = ..()
+	if (added_leaning)
+		return
 	/// For performance reasons and to cut down on init times we are "lazy-loading" the leaning component when someone drags their sprite onto us, and then calling dragging code again to trigger the component
 	AddComponent(/datum/component/leanable, 11)
+	added_leaning = TRUE
 	dropping.base_mouse_drop_handler(src, null, null, params)
 
 /turf/closed/wall/atom_destruction(damage_flag)
