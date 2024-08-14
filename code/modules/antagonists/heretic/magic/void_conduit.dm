@@ -29,7 +29,7 @@
 	anchored = TRUE
 	density = TRUE
 	///Overlay to apply to the tiles in range of the conduit
-	var/static/mutable_appearance/void_overlay = mutable_appearance('icons/turf/overlays.dmi', "voidtile", ABOVE_OPEN_TURF_LAYER)
+	var/static/image/void_overlay = image(icon = 'icons/turf/overlays.dmi', icon_state = "voidtile")
 	///How many tiles far our effect is
 	var/effect_range = 12
 	///id of the deletion timer
