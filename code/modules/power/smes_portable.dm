@@ -117,10 +117,17 @@
 	var/charge = 0
 	/// The port this is connected to.
 	var/obj/machinery/power/smes/connector/connected_port
+	/// Was this portable power storage unit pre-mapped?
+	var/mapped = FALSE
 
 /obj/machinery/power/smesbank/on_construction(mob/user)
 	. = ..()
 	anchored = FALSE
+
+/obj/machinery/power/smesbank/Initialize(mapload)
+	. = ..()
+	if(mapped)
+		mapped_setup()
 
 /obj/machinery/power/smesbank/interact(mob/user)
 	. = ..()
@@ -256,3 +263,25 @@
 	if (charge < 0)
 		set_charge(0)
 	update_appearance()
+
+/// Attempt to locate, connect to, and activate a portable connector, for pre-mapped portable SMESes.
+/obj/machinery/power/smesbank/proc/mapped_setup()
+	var/obj/machinery/power/smes/connector/possible_connector = locate(/obj/machinery/power/smes/connector) in loc
+	if(!possible_connector)
+		return
+	if(!connect_port(possible_connector))
+		return
+	possible_connector.input_attempt = TRUE
+	possible_connector.output_attempt = TRUE
+
+/obj/machinery/power/smesbank/super
+	name = "super capacity power storage unit"
+	desc = "A portable, super-capacity, superconducting magnetic energy storage (SMES) unit. Relatively rare, and typically installed in long-range outposts where minimal maintenance is expected."
+	circuit = /obj/item/circuitboard/machine/smesbank/super
+	capacity = 100 * STANDARD_BATTERY_CHARGE
+
+/obj/machinery/power/smesbank/super/full
+	charge = 100 * STANDARD_BATTERY_CHARGE
+
+/obj/machinery/power/smesbank/super/full/mapped
+	mapped = TRUE
