@@ -1142,8 +1142,8 @@ GLOBAL_LIST_INIT(binary, list("0","1"))
 		return word
 	var/first_letter = copytext(word, 1, 2)
 	var/first_two_letters = copytext(word, 1, 3)
-	var/first_word_is_vowel = (first_letter in list("a", "e", "i", "o", "u"))
-	var/second_word_is_vowel = (copytext(word, 2, 3) in list("a", "e", "i", "o", "u"))
+	var/first_word_is_vowel = (first_letter in VOWELS)
+	var/second_word_is_vowel = (copytext(word, 2, 3) in VOWELS)
 	//If a word starts with a vowel add the word "way" at the end of the word.
 	if(first_word_is_vowel)
 		return word + pick("yay", "way", "hay") //in cultures around the world it's different, so heck lets have fun and make it random. should still be readable

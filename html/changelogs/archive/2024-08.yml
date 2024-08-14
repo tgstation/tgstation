@@ -142,3 +142,74 @@
   necromanceranne:
   - bugfix: Shoving someone onto a table now causes them to become vulnerable to being
       stunned.
+2024-08-03:
+  Watermelon914:
+  - bugfix: Fixed an infinite TC glitch dupe
+  Y0SH1M4S73R:
+  - admin: The "Suppress Runtime Logging" toggle in the lua editor actually does what
+      it says
+2024-08-05:
+  Ben10Omintrix:
+  - bugfix: juvenile lobstrosities will now look for food
+  OrionTheFox:
+  - image: added and updated belt/suit/mask storage sprites for several knives missing
+      them
+  SmArtKar:
+  - bugfix: Lizards no longer die from cold on icebox despite wearing insulation
+  - bugfix: Fixed handyman assistants spawning without a PDA
+  Y0SH1M4S73R:
+  - bugfix: lua scripting now works on linux
+2024-08-06:
+  Ben10Omintrix:
+  - refactor: refactors pet collars and cultist pets into elements
+  EnterTheJake:
+  - image: Ash Blade has received a new sprite.
+  Gaxeer:
+  - rscdel: Remove narsie and ratvar plushies from loadout
+  SmArtKar:
+  - bugfix: Plasmamen helmets now display their smiles + can be painted with spraycans
+  - bugfix: Elevator music no longer restarts when you take a step
+  - image: Resprited teleporter beacons
+  - code_imp: Removed multiple cases of unnecessary updatehealth
+  - bugfix: Bitrunning crate capture zones can no longer be destroyed
+  mc-oofert:
+  - admin: fix hard restart option
+2024-08-07:
+  Absolucy:
+  - bugfix: Fixed a runtime error after draining a heretic influence.
+  LT3:
+  - bugfix: Fixed players being incorrectly immune to certain virus severities
+  MrMelbert, SmArtKar:
+  - bugfix: Holding someone at gunpoint no longer makes all shots count as point blank
+  SmArtKar:
+  - image: Updated clipboard sprite, adds white and black clipboard skins for med/sci
+      and security
+  - bugfix: Tinacusiate no longer changes hearing spans for every single person in-game
+2024-08-08:
+  MTandi:
+  - bugfix: Smartfridges properly dispense `\Improper` items
+  Rhials:
+  - sound: Zipties no longer make handcuff noises when picked up or dropped.
+2024-08-09:
+  SmArtKar:
+  - bugfix: Circuit UI scale no longer has weird rounding
+  - bugfix: Circuit UI no longer gets covered by components menu
+  - bugfix: Fixed Charlie MOD installer not installing MODsuit unless you have a backpack
+      to drop
+2024-08-10:
+  FlufflesTheDog:
+  - bugfix: tadpoles can actually be scooped from ponds
+2024-08-11:
+  DaCoolBoss:
+  - spellcheck: fixed many incorrect spellings of Waffle Corp and Donk Co.
+2024-08-12:
+  SmArtKar:
+  - bugfix: You no longer kill yourself in cockroach form if you attempt to unposess
+      it
+  grungussuss:
+  - sound: ore and sandstone blocks have their own sound
+  grungussuss and kayozz:
+  - sound: white noise from some ambience sounds has been pruned
+2024-08-13:
+  Majkl-J:
+  - bugfix: Felinids no longer phase through diagonal gaps upon seeing a laser

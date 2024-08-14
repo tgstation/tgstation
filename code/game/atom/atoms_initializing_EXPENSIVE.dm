@@ -30,7 +30,7 @@
 			if(arguments[1]) //mapload
 				late_loaders += A
 			else
-				A.LateInitialize()
+				A.LateInitialize(/* mapload = */ FALSE)
 		if(INITIALIZE_HINT_QDEL)
 			qdel(A)
 			qdeleted = TRUE
@@ -159,8 +159,11 @@
  * useful for doing things like finding other machines on GLOB.machines because you can guarantee
  * that all atoms will actually exist in the "WORLD" at this time and that all their Intialization
  * code has been run
+ *
+ * mapload: This parameter behaves the same as what you may have seen in [/atom/proc/Initialize]
+ * It's true if the object is loading in from a map file, and false otherwise
  */
-/atom/proc/LateInitialize()
+/atom/proc/LateInitialize(mapload)
 	set waitfor = FALSE
 	SHOULD_CALL_PARENT(FALSE)
 	stack_trace("[src] ([type]) called LateInitialize but has nothing on it!")

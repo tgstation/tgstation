@@ -1,4 +1,5 @@
 /obj/machinery/gibber
+	SET_BASE_VISUAL_PIXEL(0, DEPTH_OFFSET)
 	name = "gibber"
 	desc = "The name isn't descriptive enough?"
 	icon = 'icons/obj/machines/kitchen.dmi'

@@ -15,7 +15,6 @@
 	density = TRUE //Can't pass through.
 	anchored = TRUE //Can't drag/grab the net.
 	layer = ABOVE_ALL_MOB_LAYER
-	plane = ABOVE_GAME_PLANE
 	max_integrity = 60 //How much health it has.
 	can_buckle = TRUE
 	buckle_lying = 0

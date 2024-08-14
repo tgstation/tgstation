@@ -1,0 +1,4 @@
+author: "Dmeto"
+delete-after: True
+changes:
+  - bugfix: "Wawastation Science is connected to distro,Floor Electrical Relay cable fixed"
