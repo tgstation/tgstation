@@ -9,18 +9,34 @@
 /area/template_noop)
 "h" = (
 /obj/structure/table,
-/obj/item/clothing/head/helmet/thunderdome/holosuit,
-/obj/item/clothing/suit/armor/tdome/holosuit/green,
-/obj/item/clothing/under/color/green,
-/obj/item/melee/energy/sword/holographic/green,
+/obj/item/clothing/head/helmet/thunderdome/holosuit{
+	pixel_y = 8
+	},
+/obj/item/clothing/suit/armor/tdome/holosuit/green{
+	pixel_y = 8
+	},
+/obj/item/clothing/under/color/green{
+	pixel_y = 8
+	},
+/obj/item/melee/energy/sword/holographic/green{
+	pixel_y = 8
+	},
 /turf/open/floor/holofloor/basalt,
 /area/template_noop)
 "q" = (
 /obj/structure/table,
-/obj/item/clothing/head/helmet/thunderdome/holosuit,
-/obj/item/clothing/suit/armor/tdome/holosuit/red,
-/obj/item/clothing/under/color/red,
-/obj/item/melee/energy/sword/holographic/red,
+/obj/item/clothing/head/helmet/thunderdome/holosuit{
+	pixel_y = 8
+	},
+/obj/item/clothing/suit/armor/tdome/holosuit/red{
+	pixel_y = 8
+	},
+/obj/item/clothing/under/color/red{
+	pixel_y = 8
+	},
+/obj/item/melee/energy/sword/holographic/red{
+	pixel_y = 8
+	},
 /turf/open/floor/holofloor/basalt,
 /area/template_noop)
 "x" = (

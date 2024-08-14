@@ -17,6 +17,7 @@
 	desc = "advanced clown shoes that protect the wearer and render them nearly immune to slipping on their own peels. They also squeak at 100% capacity."
 	clothing_traits = list(TRAIT_NO_SLIP_WATER)
 	slowdown = SHOES_SLOWDOWN
+	body_parts_covered = FEET|LEGS
 	armor_type = /datum/armor/clown_shoes_combat
 	strip_delay = 70
 	resistance_flags = NONE
@@ -49,6 +50,7 @@
 	strip_delay = 70
 	resistance_flags = NONE
 	always_noslip = TRUE
+	body_parts_covered = FEET|LEGS
 
 /datum/armor/banana_shoes_combat
 	melee = 25
