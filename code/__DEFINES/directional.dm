@@ -239,11 +239,11 @@ WALL_MOUNT_DIRECTIONAL_HELPERS(path)
 ##path/southwest_arrow {\
 	sign_arrow_direction = SIGN_DIR_SOUTHWEST; \
 } \
-WALL_MOUNT_DIRECTIONAL_HELPERS(path/north_arrow)\
-WALL_MOUNT_DIRECTIONAL_HELPERS(path/south_arrow)\
-WALL_MOUNT_DIRECTIONAL_HELPERS(path/east_arrow)\
-WALL_MOUNT_DIRECTIONAL_HELPERS(##path/west_arrow)\
-WALL_MOUNT_DIRECTIONAL_HELPERS(##path/northeast_arrow)\
-WALL_MOUNT_DIRECTIONAL_HELPERS(##path/northwest_arrow)\
-WALL_MOUNT_DIRECTIONAL_HELPERS(##path/southeast_arrow)\
-WALL_MOUNT_DIRECTIONAL_HELPERS(##path/southwest_arrow)
+_WALL_MOUNT_DIRECTIONAL_HELPERS(path/north_arrow, 35, 0, 0, 0, 0, 16)\
+_WALL_MOUNT_DIRECTIONAL_HELPERS(path/south_arrow, 35, 0, 0, 0, 0, 16)\
+_WALL_MOUNT_DIRECTIONAL_HELPERS(path/east_arrow, 35, 0, 0, 0, 0, 16)\
+_WALL_MOUNT_DIRECTIONAL_HELPERS(##path/west_arrow, 35, 0, 0, 0, 0, 16)\
+_WALL_MOUNT_DIRECTIONAL_HELPERS(##path/northeast_arrow, 35, 0, 0, 0, 0, 16)\
+_WALL_MOUNT_DIRECTIONAL_HELPERS(##path/northwest_arrow, 35, 0, 0, 0, 0, 16)\
+_WALL_MOUNT_DIRECTIONAL_HELPERS(##path/southeast_arrow, 35, 0, 0, 0, 0, 16)\
+_WALL_MOUNT_DIRECTIONAL_HELPERS(##path/southwest_arrow, 35, 0, 0, 0, 0, 16)
