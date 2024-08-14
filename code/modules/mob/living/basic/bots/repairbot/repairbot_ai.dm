@@ -97,7 +97,7 @@
 	controller.queue_behavior(/datum/ai_behavior/bot_search/valid_wall_target, BB_GIRDER_TARGET, searchable_turfs, 5, 10, FALSE, TRUE)
 
 /datum/ai_behavior/bot_search/valid_wall_target
-	action_cooldown = 15 SECONDS
+	action_cooldown = 5 SECONDS
 
 /datum/ai_behavior/bot_search/valid_wall_target/valid_target(datum/ai_controller/basic_controller/bot/controller, turf/my_target)
 	if(istype(get_area(my_target), /area/space) || isgroundlessturf(my_target) || my_target.is_blocked_turf())
@@ -188,5 +188,5 @@
 /datum/ai_behavior/bot_search/valid_window_fix
 
 /datum/ai_behavior/bot_search/valid_window_fix/valid_target(datum/ai_controller/basic_controller/bot/controller, obj/my_target)
-	return (my_target.get_integrity() >= my_target.max_integrity || !my_target.anchored)
+	return (my_target.get_integrity() < my_target.max_integrity || !my_target.anchored)
 
