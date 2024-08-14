@@ -1,4 +1,0 @@
-author: "Melbert"
-delete-after: True
-changes:
-  - refactor: "Refactored how vending machine icons are displayed, please report if you see any broken icons. Also if all the icons look like missing file icons for you, you gotta update byond man, you're like a year out of date."

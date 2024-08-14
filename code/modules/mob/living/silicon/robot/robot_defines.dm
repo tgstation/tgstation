@@ -57,6 +57,8 @@
 
 	// Overlay for borg eye lights
 	var/mutable_appearance/eye_lights
+	///Holds a reference to the timer taking care of blinking lights on dead cyborgs
+	var/eye_flash_timer = null
 	// Overlay for borg hat
 	var/mutable_appearance/hat_overlay
 
@@ -115,6 +117,10 @@
 	var/low_power_mode = FALSE
 	///So they can initialize sparks whenever/N
 	var/datum/effect_system/spark_spread/spark_system
+	///Smoke particle holder for brute damage
+	var/obj/effect/abstract/particle_holder/smoke_particles = null
+	///Spark particle holder for burn damage
+	var/obj/effect/abstract/particle_holder/spark_particles = null
 
 	///Jetpack-like effect.
 	var/ionpulse = FALSE

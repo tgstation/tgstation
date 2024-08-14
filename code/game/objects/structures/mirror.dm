@@ -45,6 +45,8 @@
 	for(var/i in mirror_options)
 		mirror_options[i] = icon('icons/hud/radial.dmi', i)
 
+WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/structure/mirror)
+
 /obj/structure/mirror/Initialize(mapload)
 	. = ..()
 	var/static/list/reflection_filter = alpha_mask_filter(icon = icon('icons/obj/watercloset.dmi', "mirror_mask"))
@@ -61,9 +63,7 @@
 		return FALSE
 	return TRUE
 
-MAPPING_DIRECTIONAL_HELPERS(/obj/structure/mirror, 28)
-
-/obj/structure/mirror/Initialize(mapload)
+/obj/structure/mirrr/Initialize(mapload)
 	. = ..()
 	find_and_hang_on_wall()
 
@@ -74,7 +74,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/mirror, 28)
 	. = ..()
 	atom_break(null, mapload)
 
-MAPPING_DIRECTIONAL_HELPERS(/obj/structure/mirror/broken, 28)
+WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/structure/mirror/broken)
 
 /obj/structure/mirror/attack_hand(mob/living/carbon/human/user)
 	. = ..()
@@ -312,13 +312,14 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/mirror/broken, 28)
 		/datum/material/silver = SHEET_MATERIAL_AMOUNT,
 	)
 	result_path = /obj/structure/mirror
-	pixel_shift = 28
 
 /obj/structure/mirror/magic
 	name = "magic mirror"
 	desc = "Turn and face the strange... face."
 	icon_state = "magic_mirror"
 	mirror_options = MAGIC_MIRROR_OPTIONS
+
+WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/structure/mirror/magic)
 
 /obj/structure/mirror/magic/Initialize(mapload)
 	. = ..()
