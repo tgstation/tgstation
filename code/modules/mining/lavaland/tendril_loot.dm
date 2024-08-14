@@ -226,7 +226,7 @@
 /obj/item/wisp_lantern
 	name = "spooky lantern"
 	desc = "This lantern gives off no light, but is home to a friendly wisp."
-	icon = 'icons/obj/lighting.dmi'
+	icon = 'icons/obj/mining_zones/artefacts.dmi'
 	icon_state = "lantern-blue-on"
 	inhand_icon_state = "lantern-blue-on"
 	lefthand_file = 'icons/mob/inhands/equipment/mining_lefthand.dmi'
@@ -269,7 +269,7 @@
 /obj/effect/wisp
 	name = "friendly wisp"
 	desc = "Happy to light your way."
-	icon = 'icons/obj/lighting.dmi'
+	icon = 'icons/obj/mining_zones/artefacts.dmi'
 	icon_state = "orb"
 	light_system = OVERLAY_LIGHT
 	light_range = 6

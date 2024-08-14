@@ -400,8 +400,8 @@
 
 /datum/dimension_theme/disco
 	name = "Disco"
-	icon = 'icons/obj/lighting.dmi'
-	icon_state = "lbulb"
+	icon = 'icons/obj/service/janitor.dmi'
+	icon_state = "bulb"
 	material = /datum/material/glass
 	replace_floors = list(/turf/open/floor/light = 1)
 
