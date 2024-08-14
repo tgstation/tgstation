@@ -230,12 +230,10 @@
 	if(.)
 		return .
 
-	if(istype(tool, /obj/item/toy/cards/deck) && LAZYACCESS(modifiers, RIGHT_CLICK))
-		. = deck_act(user, tool, modifiers, TRUE)
+	if(istype(tool, /obj/item/toy/cards/deck))
+		. = deck_act(user, tool, modifiers, !!LAZYACCESS(modifiers, RIGHT_CLICK))
 	if(istype(tool, /obj/item/storage/bag/tray))
 		. = tray_act(user, tool)
-	else if(istype(tool, /obj/item/toy/cards/deck))
-		. = deck_act(user, tool, modifiers, FALSE)
 	else if(istype(tool, /obj/item/riding_offhand))
 		. = riding_offhand_act(user, tool)
 
