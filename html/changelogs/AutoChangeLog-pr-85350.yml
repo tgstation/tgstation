@@ -1,0 +1,4 @@
+author: "Bisar"
+delete-after: True
+changes:
+  - qol: "The preserved terrarium vault now has tier 4 hydroponics trays, making volume based tray chemistry take less time."
