@@ -76,7 +76,9 @@
 "y" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/table,
-/obj/effect/decal/cleanable/cobweb/cobweb2,
+/obj/effect/decal/cleanable/cobweb/cobweb2{
+	pixel_y = 24
+	},
 /turf/open/floor/iron/smooth,
 /area/station/maintenance/department/crew_quarters/dorms)
 "z" = (

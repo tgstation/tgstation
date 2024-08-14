@@ -5,8 +5,12 @@
 "c" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/table,
-/obj/effect/spawner/random/bureaucracy/folder,
-/obj/effect/spawner/random/bureaucracy/pen,
+/obj/effect/spawner/random/bureaucracy/folder{
+	pixel_y = 13
+	},
+/obj/effect/spawner/random/bureaucracy/pen{
+	pixel_y = 15
+	},
 /turf/open/floor/iron/smooth,
 /area/station/maintenance/starboard/greater)
 "e" = (
@@ -58,7 +62,9 @@
 /area/station/maintenance/starboard/greater)
 "t" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/effect/decal/cleanable/cobweb,
+/obj/effect/decal/cleanable/cobweb{
+	pixel_y = 24
+	},
 /obj/effect/spawner/random/engineering/tank,
 /turf/open/floor/iron/smooth,
 /area/station/maintenance/starboard/greater)
@@ -87,7 +93,9 @@
 /area/station/maintenance/starboard/greater)
 "C" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/effect/decal/cleanable/cobweb,
+/obj/effect/decal/cleanable/cobweb{
+	pixel_y = 24
+	},
 /obj/structure/closet/crate,
 /obj/effect/spawner/random/maintenance/three,
 /obj/effect/spawner/random/engineering/tool,

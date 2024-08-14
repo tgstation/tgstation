@@ -5,6 +5,8 @@
 	name = "projectile gun"
 	icon_state = "debug"
 	w_class = WEIGHT_CLASS_NORMAL
+	pickup_sound = 'sound/items/gun_pick_up.ogg'
+	drop_sound = 'sound/items/gun_drop.ogg'
 
 	///sound when inserting magazine
 	var/load_sound = 'sound/weapons/gun/general/magazine_insert_full.ogg'

@@ -744,7 +744,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
 			sample_overlay = new overlay_path()
 			organs_to_randomize[overlay_path] = sample_overlay
 
-		new_features["[sample_overlay.feature_key]"] = pick(sample_overlay.get_global_feature_list())
+		new_features["[sample_overlay.feature_key]"] = sample_overlay.get_random_appearance().name
 
 	return new_features
 
@@ -1512,6 +1512,14 @@ GLOBAL_LIST_EMPTY(features_by_species)
 
 /// Returns the species' cry sound.
 /datum/species/proc/get_cry_sound(mob/living/carbon/human/human)
+	return
+
+/// Returns the species' sigh sound.
+/datum/species/proc/get_sigh_sound(mob/living/carbon/human/human)
+	return
+
+/// Returns the species' sniff sound.
+/datum/species/proc/get_sniff_sound(mob/living/carbon/human/human)
 	return
 
 /// Returns the species' cough sound.

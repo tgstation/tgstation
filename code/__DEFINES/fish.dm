@@ -161,3 +161,6 @@
 #define FISH_BEAUTY_GOOD 450
 #define FISH_BEAUTY_GREAT 600
 #define FISH_BEAUTY_EXCELLENT 700
+
+//Fish breeding stops if fish count exceeds this.
+#define AQUARIUM_MAX_BREEDING_POPULATION 20

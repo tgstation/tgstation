@@ -1,12 +1,12 @@
 
 /obj/machinery/hydroponics
+	SET_BASE_VISUAL_PIXEL(0, DEPTH_OFFSET)
 	name = "hydroponics tray"
 	desc = "A basin used to grow plants in."
 	icon = 'icons/obj/service/hydroponics/equipment.dmi'
 	icon_state = "hydrotray"
 	density = TRUE
 	pass_flags_self = PASSMACHINE | LETPASSTHROW
-	pixel_z = 8
 	obj_flags = CAN_BE_HIT | UNIQUE_RENAME
 	circuit = /obj/item/circuitboard/machine/hydroponics
 	interaction_flags_click = FORBID_TELEKINESIS_REACH
@@ -156,6 +156,11 @@
 	name = "hydroponics tray"
 	icon = 'icons/obj/service/hydroponics/equipment.dmi'
 	icon_state = "hydrotray3"
+
+/obj/machinery/hydroponics/constructable/fullupgrade
+	name = "deluxe hydroponics tray"
+	desc = "A basin used to grown plants in, packed full of cutting-edge technology."
+	circuit = /obj/item/circuitboard/machine/hydroponics/fullupgrade
 
 /obj/machinery/hydroponics/constructable/Initialize(mapload)
 	. = ..()
@@ -798,15 +803,7 @@
 			if(isnull(particles))
 				particles = new /particles/pollen()
 			if(myseed.instability >= 20 && prob(70) && length(T.myseed.reagents_add))
-				var/list/datum/plant_gene/reagent/possible_reagents = list()
-				for(var/datum/plant_gene/reagent/reag in T.myseed.genes)
-					possible_reagents += reag
-				var/datum/plant_gene/reagent/reagent_gene = pick(possible_reagents) //Let this serve as a lession to delete your WIP comments before merge.
-				if(reagent_gene.can_add(myseed))
-					if(!reagent_gene.try_upgrade_gene(myseed))
-						myseed.genes += reagent_gene.Copy()
-					myseed.reagents_from_genes()
-					continue
+				myseed.perform_reagent_pollination(T.myseed)
 	if(!any_adjacent)
 		particles = null
 

@@ -13,7 +13,7 @@
 	name = "aquarium"
 	desc = "A vivarium in which aquatic fauna and flora are usually kept and displayed."
 	density = TRUE
-	anchored = TRUE
+	anchored = FALSE
 
 	icon = 'icons/obj/aquarium/tanks.dmi'
 	icon_state = "aquarium_map"
@@ -35,17 +35,17 @@
 	var/last_feeding
 
 	/// Can fish reproduce in this quarium.
-	var/allow_breeding = FALSE
+	var/allow_breeding = TRUE
 
 	//This is the area where fish can swim
 	var/aquarium_zone_min_px = 2
 	var/aquarium_zone_max_px = 31
 	var/aquarium_zone_min_py = 10
-	var/aquarium_zone_max_py = 24
+	var/aquarium_zone_max_py = 28
 
 	var/list/fluid_types = list(AQUARIUM_FLUID_SALTWATER, AQUARIUM_FLUID_FRESHWATER, AQUARIUM_FLUID_SULPHWATEVER, AQUARIUM_FLUID_AIR)
 
-	var/panel_open = TRUE
+	var/panel_open = FALSE
 
 	///Current layers in use by aquarium contents
 	var/list/used_layers = list()
@@ -64,7 +64,7 @@
 	RegisterSignal(src, COMSIG_ATOM_WAS_ATTACKED, PROC_REF(on_attacked))
 	create_reagents(6, SEALED_CONTAINER)
 	RegisterSignal(reagents, COMSIG_REAGENTS_NEW_REAGENT, PROC_REF(start_autofeed))
-	AddComponent(/datum/component/plumbing/aquarium)
+	AddComponent(/datum/component/plumbing/aquarium, start = anchored)
 	if(current_beauty)
 		AddElement(/datum/element/beauty, current_beauty)
 	ADD_KEEP_TOGETHER(src, INNATE_TRAIT)
@@ -390,6 +390,9 @@
 #undef AQUARIUM_BORDERS_LAYER
 #undef AQUARIUM_BELOW_GLASS_LAYER
 
+/obj/structure/aquarium/lawyer
+	anchored = TRUE
+
 /obj/structure/aquarium/lawyer/Initialize(mapload)
 	. = ..()
 
@@ -399,6 +402,9 @@
 	new /obj/item/fish/goldfish/gill(src)
 
 	reagents.add_reagent(/datum/reagent/consumable/nutriment, 2)
+
+/obj/structure/aquarium/prefilled
+	anchored = TRUE
 
 /obj/structure/aquarium/prefilled/Initialize(mapload)
 	. = ..()

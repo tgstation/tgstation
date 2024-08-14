@@ -1,0 +1,4 @@
+author: "FlufflesTheDog"
+delete-after: True
+changes:
+  - bugfix: "pre-upgraded soda dispensers are actually pre-upgraded again"

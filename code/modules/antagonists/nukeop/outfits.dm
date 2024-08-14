@@ -102,8 +102,8 @@
 	name = "Syndicate Operative - Reinforcement"
 	tc = 0
 	backpack_contents = list(
-		/obj/item/gun/ballistic/automatic/plastikov = 1,
-		/obj/item/ammo_box/magazine/plastikov9mm = 2,
+		/obj/item/gun/ballistic/automatic/smartgun = 1,
+		/obj/item/ammo_box/magazine/smartgun = 2,
 	)
 	var/faction = "The Syndicate"
 
@@ -152,7 +152,7 @@
 	head = /obj/item/clothing/head/utility/hardhat/orange
 	shoes = /obj/item/clothing/shoes/workboots
 	glasses = /obj/item/clothing/glasses/meson
-	faction = "the Donk Corporation"
+	faction = "Donk Company"
 
 /datum/outfit/syndicate/reinforcement/waffle
 	name = "Syndicate Operative - Waffle Reinforcement"
