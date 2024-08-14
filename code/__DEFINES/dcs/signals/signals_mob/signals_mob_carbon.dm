@@ -133,8 +133,6 @@
 	#define VISIBLE_NAME_FACE 1
 	//Index for the name of the id
 	#define VISIBLE_NAME_ID 2
-	//Index for whether their name is being overriden instead of obsfuscated
-	#define VISIBLE_NAME_FORCED 3
 
 // Mob transformation signals
 ///Called when a human turns into a monkey, from /mob/living/carbon/proc/finish_monkeyize()
