@@ -29,10 +29,11 @@ WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/structure/plaque)
 /obj/structure/plaque/find_and_hang_on_wall(directional = TRUE, custom_drop_callback)
 	if(iswallturf(loc))
 		SET_PLANE_EXPLICIT(src, OVER_FRILL_PLANE, loc)
-		AddComponent(/datum/component/wall_mounted, loc, custom_drop_callback)
+		AddComponent(/datum/component/turf_mounted, loc, custom_drop_callback)
 		return //A mapped-in plaque embedded into the wall turf, visible from both sides of it.
 	if(!iswallturf(get_step(src, REVERSE_DIR(dir))))
 		SET_PLANE_EXPLICIT(src, FLOOR_PLANE, loc)
+		AddComponent(/datum/component/turf_mounted, loc, custom_drop_callback) //changing the tile will drop the plaque.
 		layer = BELOW_OPEN_DOOR_LAYER
 		return //floor plaques are a thing, messieur.
 	return ..()
@@ -207,14 +208,17 @@ WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/structure/plaque)
 	return ..()
 
 /obj/item/plaque/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
-	var/place_on_wall = FALSE
 	if(!isturf(interacting_with))
 		return NONE
+	var/place_on_wall = FALSE
 	if(iswallturf(interacting_with))
 		if(user.loc != interacting_with && !(get_dir(user, interacting_with) in GLOB.cardinals))
 			balloon_alert(user, "cannot place diagonally!")
 			return ITEM_INTERACT_BLOCKING
 		place_on_wall = TRUE
+	else if(!isfloorturf(interacting_with) || isplatingturf(interacting_with))
+		balloon_alert(user, "cannot place here!")
+		return ITEM_INTERACT_BLOCKING
 	var/turf/target_turf = interacting_with
 	var/turf/user_turf = get_turf(user)
 	var/obj/structure/plaque/placed_plaque = new (user_turf) //We place the plaque on the turf the user is standing, and pixel shift it to the target wall, as below.

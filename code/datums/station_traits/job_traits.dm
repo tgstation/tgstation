@@ -154,7 +154,7 @@
 		for(var/obj/thing_on_table in picked_turf) //if there's paper bins or other shit on the table, get that off
 			if(thing_on_table == picked_table)
 				continue
-			if(HAS_TRAIT(thing_on_table, TRAIT_WALLMOUNTED) || (thing_on_table.flags_1 & ON_BORDER_1) || thing_on_table.layer < TABLE_LAYER)
+			if(HAS_TRAIT(thing_on_table, TRAIT_TURFMOUNTED) || (thing_on_table.flags_1 & ON_BORDER_1) || thing_on_table.layer < TABLE_LAYER)
 				continue
 			if(thing_on_table.invisibility || !thing_on_table.alpha || !thing_on_table.mouse_opacity)
 				continue
