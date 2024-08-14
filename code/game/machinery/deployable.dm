@@ -137,7 +137,7 @@
 /obj/structure/barricade/security
 	name = "security barrier"
 	desc = "A deployable barrier. Provides good cover in fire fights."
-	icon = 'icons/obj/structures/tall/structures.dmi'
+	icon = 'icons/obj/structures/tall.dmi'
 	icon_state = "barrier0"
 	density = FALSE
 	anchored = FALSE

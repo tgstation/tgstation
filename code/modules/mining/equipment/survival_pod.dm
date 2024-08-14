@@ -13,7 +13,7 @@
 	name = "bluespace shelter capsule"
 	desc = "An emergency shelter stored within a pocket of bluespace."
 	icon_state = "capsule"
-	icon = 'icons/mining_zones/equipment.dmi'
+	icon = 'icons/obj/mining_zones/equipment.dmi'
 	w_class = WEIGHT_CLASS_TINY
 	var/template_id = "shelter_alpha"
 	var/datum/map_template/shelter/template

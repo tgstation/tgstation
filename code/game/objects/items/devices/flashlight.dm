@@ -297,7 +297,7 @@
 	name = "penlight"
 	desc = "A pen-sized light, used by medical staff. It can also be used to create a hologram to alert people of incoming medical assistance."
 	dir = EAST
-	icon = 'icons/obj/devices/bureaucracy.dmi'
+	icon = 'icons/obj/service/bureaucracy.dmi'
 	icon_state = "penlight"
 	inhand_icon_state = ""
 	worn_icon_state = "pen"
@@ -774,7 +774,7 @@
 	light_power = 2
 	light_system = OVERLAY_LIGHT
 	color = LIGHT_COLOR_GREEN
-	icon = 'icons/obj/toy/toys.dmi'
+	icon = 'icons/obj/toys/toy.dmi'
 	icon_state = "glowstick"
 	base_icon_state = "glowstick"
 	inhand_icon_state = null
