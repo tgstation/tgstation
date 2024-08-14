@@ -4,6 +4,7 @@
 #define SLIME_SHOCK_PERCENTAGE_PER_LEVEL 7
 
 /mob/living/basic/slime
+	SET_BASE_VISUAL_PIXEL(0, 4)
 	name = "grey baby slime (123)"
 	icon = 'icons/mob/simple/slimes.dmi'
 	icon_state = "grey-baby"
@@ -13,6 +14,7 @@
 
 	icon_living = "grey-baby"
 	icon_dead = "grey-baby-dead"
+	shadow_offset_y = 8
 
 	attack_sound = 'sound/weapons/bite.ogg'
 
@@ -186,20 +188,20 @@
 	return ..()
 
 /mob/living/basic/slime/regenerate_icons()
-	cut_overlays()
 	if(slime_type.transparent)
 		alpha = SLIME_TRANSPARENCY_ALPHA
 
 	icon_dead = !cores ? "[slime_type.colour]-cut" : "[slime_type.colour]-[life_stage]-dead"
-
-	if(stat != DEAD)
-		icon_state = "[slime_type.colour]-[life_stage]"
-		if(current_mood && current_mood != SLIME_MOOD_NONE && !stat)
-			add_overlay("aslime-[current_mood]")
-	else
-		icon_state = icon_dead
+	icon_state = (stat == DEAD) ? icon_dead : "[slime_type.colour]-[life_stage]"
 
 	return ..()
+
+/mob/living/basic/slime/update_overlays()
+	. = ..()
+	if (stat == DEAD)
+		return
+	if (current_mood && current_mood != SLIME_MOOD_NONE)
+		. += "aslime-[current_mood]"
 
 /mob/living/basic/slime/get_status_tab_items()
 	. = ..()
