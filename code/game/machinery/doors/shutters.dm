@@ -3,7 +3,7 @@
 	name = "shutters"
 	desc = "Heavy duty mechanical shutters with an atmospheric seal that keeps them airtight once closed."
 	icon = 'icons/obj/doors/shutters.dmi'
-	icon_state = "closed_bottom"
+	icon_state = "closed_map"
 	layer = SHUTTER_LAYER
 	closingLayer = SHUTTER_LAYER
 	dir_mask = "shutter"
@@ -80,7 +80,6 @@
 	name = "radiation shutters"
 	desc = "Lead-lined shutters with a radiation hazard symbol. Whilst this won't stop you getting irradiated, especially by a supermatter crystal, it will stop radiation travelling as far."
 	icon = 'icons/obj/doors/shutters_radiation.dmi'
-	icon_state = "closed"
 	rad_insulation = RAD_EXTREME_INSULATION
 
 /obj/machinery/door/poddoor/shutters/radiation/animation_length(animation)
@@ -128,7 +127,6 @@
 	name = "windowed shutters"
 	desc = "A shutter with a thick see-through polycarbonate window."
 	icon = 'icons/obj/doors/shutters_window.dmi'
-	icon_state = "closed"
 	opacity = FALSE
 	glass = TRUE
 
@@ -159,6 +157,6 @@
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
 
 /obj/machinery/door/poddoor/shutters/window/indestructible/preopen
-	icon_state = "open"
+	icon_state = "open_bottom"
 	density = FALSE
 	opacity = FALSE

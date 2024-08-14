@@ -4,6 +4,8 @@
 	name = "tram door"
 	icon = 'icons/obj/doors/airlocks/tram/tram.dmi'
 	overlays_file = 'icons/obj/doors/airlocks/tram/tram-overlays.dmi'
+	// YET TO BE UPDATED TO 3/4ths
+	short_rendering = TRUE
 	multi_tile = TRUE
 	opacity = FALSE
 	assemblytype = /obj/structure/door_assembly/multi_tile/door_assembly_tram

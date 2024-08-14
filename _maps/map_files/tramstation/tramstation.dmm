@@ -12199,6 +12199,7 @@
 /turf/open/floor/carpet,
 /area/station/service/library)
 "ddn" = (
+/obj/effect/landmark/start/coroner,
 /turf/open/floor/iron/dark,
 /area/station/medical/morgue)
 "dds" = (
@@ -18825,11 +18826,11 @@
 /turf/open/floor/iron,
 /area/station/hallway/secondary/exit)
 "fyF" = (
-/obj/effect/landmark/event_spawn,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/effect/turf_decal/tile/blue{
 	dir = 8
 	},
+/obj/effect/landmark/start/mime,
 /turf/open/floor/iron,
 /area/station/service/theater)
 "fyH" = (
@@ -20761,7 +20762,6 @@
 /turf/open/floor/iron,
 /area/station/engineering/atmos)
 "gjL" = (
-/obj/structure/cable,
 /obj/structure/disposalpipe/segment,
 /obj/machinery/door/airlock/grunge{
 	name = "Lounge"
@@ -25448,6 +25448,12 @@
 /obj/machinery/transport/power_rectifier,
 /turf/open/floor/iron,
 /area/station/hallway/primary/tram/right)
+"hXZ" = (
+/obj/effect/landmark/event_spawn,
+/turf/open/floor/iron/white/side{
+	dir = 4
+	},
+/area/station/service/theater)
 "hYd" = (
 /obj/structure/lattice/catwalk,
 /obj/machinery/atmospherics/pipe/smart/simple/green/visible,
@@ -26664,11 +26670,12 @@
 /turf/open/floor/iron,
 /area/station/engineering/atmos)
 "ivn" = (
-/obj/effect/mapping_helpers/airlock/access/all/service/bar,
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/machinery/door/window/elevator/left/directional/west,
+/obj/machinery/door/window/elevator/left/directional/west{
+	req_access = list("bar")
+	},
 /turf/open/floor/iron/dark,
 /area/station/service/bar)
 "ivt" = (
@@ -51219,9 +51226,7 @@
 /area/station/commons/dorms)
 "qSE" = (
 /obj/structure/table,
-/obj/machinery/computer/security/telescreen/interrogation{
-	pixel_y = 10
-	},
+/obj/machinery/computer/security/telescreen/interrogation/table,
 /turf/open/floor/iron/dark,
 /area/station/security/interrogation)
 "qSQ" = (
@@ -59166,7 +59171,6 @@
 /area/station/commons/fitness/recreation)
 "tEa" = (
 /obj/machinery/light/dim/directional/south,
-/obj/structure/table/reinforced,
 /obj/structure/table/reinforced,
 /obj/item/table_clock{
 	pixel_y = 8
@@ -173428,7 +173432,7 @@ aaa
 abM
 abM
 lZW
-atr
+hXZ
 fdW
 euS
 dME

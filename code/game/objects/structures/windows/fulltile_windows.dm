@@ -251,6 +251,8 @@
 	icon_state = "clockwork_window-single"
 	glass_type = /obj/item/stack/sheet/bronze
 
+MAPPING_DIRECTIONAL_HELPERS_EMPTY(/obj/structure/window/bronze/spawner)
+
 /obj/structure/window/bronze/unanchored
 	anchored = FALSE
 
@@ -270,3 +272,4 @@
 
 /obj/structure/window/bronze/fulltile/unanchored
 	anchored = FALSE
+

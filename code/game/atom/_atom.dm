@@ -1015,11 +1015,9 @@ GLOBAL_LIST_INIT(lower_priority_connectables, typecacheof(list(
 	/obj/structure/girder,
 )))
 
-// Wallening todo:
-// Rip this out. It's useful, but it also needs to be done manually in most places
-// Also we need to figure out construction for doors
-///Ok so this whole proc is about finding tiles that we could in theory be connected to, and blocking off that direction right?
-///It's not perfect, and it can make mistakes, but it does a pretty good job predicting a mapper's intentions
+/// Ok so this whole proc is about finding tiles that we could in theory be connected to, and blocking off that direction right?
+/// It's not perfect, and it can make mistakes, but it does a pretty good job predicting a mapper's intentions
+/// Maybe someday every door will have its dir set properly, but we'll keep this until then
 /atom/proc/auto_align(connectables_typecache, lower_priority_typecache)
 	if(manual_align)
 		return

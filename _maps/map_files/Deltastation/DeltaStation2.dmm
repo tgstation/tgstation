@@ -22569,7 +22569,6 @@
 	},
 /obj/effect/turf_decal/delivery,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
-/obj/effect/mapping_helpers/airalarm/unlocked,
 /obj/structure/sign/warning/no_smoking/directional/north,
 /turf/open/floor/iron/dark,
 /area/station/maintenance/disposal/incinerator)
@@ -32712,7 +32711,7 @@
 "igZ" = (
 /obj/structure/sign/warning/docking/directional/north,
 /turf/open/space/basic,
-/area/space)
+/area/space/nearstation)
 "iho" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
@@ -43350,10 +43349,6 @@
 /obj/effect/turf_decal/bot,
 /turf/open/floor/iron,
 /area/station/science/xenobiology)
-"kPH" = (
-/obj/structure/sign/warning/secure_area/directional/north,
-/turf/open/space/basic,
-/area/space)
 "kPI" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -56151,6 +56146,7 @@
 	},
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /obj/machinery/airalarm/directional/north,
+/obj/effect/mapping_helpers/airalarm/unlocked,
 /turf/open/floor/iron/dark,
 /area/station/maintenance/disposal/incinerator)
 "ofx" = (
@@ -76354,7 +76350,7 @@
 "tjk" = (
 /obj/structure/sign/nanotrasen,
 /turf/open/space/basic,
-/area/space)
+/area/space/nearstation)
 "tjl" = (
 /obj/structure/disposalpipe/segment{
 	dir = 5
@@ -77524,10 +77520,6 @@
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron,
 /area/station/hallway/primary/port)
-"tAi" = (
-/obj/structure/sign/warning/electric_shock/directional/north,
-/turf/open/space/basic,
-/area/space)
 "tAj" = (
 /obj/machinery/newscaster/directional/east,
 /obj/machinery/photocopier,
@@ -115200,7 +115192,7 @@ mFq
 nCi
 nCi
 nCi
-kPH
+eOH
 aaa
 qYo
 aaa
@@ -130398,7 +130390,7 @@ tgT
 hMI
 tgT
 tgT
-kPH
+eOH
 aaa
 gqm
 gqm
@@ -153692,7 +153684,7 @@ nSR
 nSR
 kOA
 hNe
-tAi
+vIz
 efQ
 aaa
 efQ

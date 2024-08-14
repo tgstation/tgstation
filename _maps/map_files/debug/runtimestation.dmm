@@ -426,7 +426,7 @@
 "cw" = (
 /obj/structure/sign/departments/evac/aft/directional/north,
 /turf/open/space/basic,
-/area/space)
+/area/space/nearstation)
 "cy" = (
 /obj/machinery/door/airlock,
 /turf/open/floor/iron,
@@ -1270,7 +1270,7 @@
 "oj" = (
 /obj/structure/sign/warning/docking/directional/north,
 /turf/open/space/basic,
-/area/space)
+/area/space/nearstation)
 "os" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -1359,7 +1359,6 @@
 /obj/structure/cable,
 /obj/machinery/airalarm/directional/north,
 /obj/effect/mapping_helpers/airalarm/unlocked,
-/obj/machinery/power/apc/auto_name/directional/west,
 /turf/open/floor/iron,
 /area/station/commons/storage/primary)
 "qH" = (
@@ -1756,10 +1755,8 @@
 /turf/open/floor/iron,
 /area/station/command/bridge)
 "BJ" = (
-/obj/machinery/power/apc/auto_name/directional/east{
-	pixel_x = 11
-	},
 /obj/structure/cable,
+/obj/machinery/power/apc/auto_name/directional/east,
 /turf/open/floor/iron,
 /area/station/hallway/secondary/entry)
 "BM" = (
@@ -1818,10 +1815,6 @@
 /obj/structure/rack,
 /turf/open/floor/iron/dark,
 /area/station/science/explab)
-"Du" = (
-/obj/machinery/status_display/supply/directional/north,
-/turf/open/space/basic,
-/area/station/cargo/storage)
 "DC" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/effect/turf_decal/stripes/corner,
@@ -9144,7 +9137,7 @@ et
 le
 rE
 et
-Du
+aa
 aa
 aa
 aa

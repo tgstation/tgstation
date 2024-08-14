@@ -187,9 +187,7 @@ INITIALIZE_IMMEDIATE(/turf/closed/indestructible/splashscreen)
 /turf/closed/indestructible/fakeglass
 	name = "window"
 	icon = MAP_SWITCH('icons/obj/smooth_structures/windows/reinforced_window.dmi', 'icons/obj/smooth_structures/structure_variations.dmi')
-#ifdef MAP_EDITOR
-	icon_state = "fake_window"
-#endif
+	icon_state = MAP_SWITCH("0-lower", "plastitanium_window-0")
 	layer = ABOVE_OBJ_LAYER
 	opacity = FALSE
 	use_splitvis = FALSE
@@ -214,9 +212,7 @@ INITIALIZE_IMMEDIATE(/turf/closed/indestructible/splashscreen)
 /turf/closed/indestructible/opsglass
 	name = "window"
 	icon = MAP_SWITCH('icons/obj/smooth_structures/windows/plastitanium_window.dmi', 'icons/obj/smooth_structures/plastitanium_window.dmi')
-#ifdef MAP_EDITOR
-	icon_state = "plastitanium_window-0"
-#endif
+	icon_state = MAP_SWITCH("0-lower", "plastitanium_window-0")
 	layer = ABOVE_OBJ_LAYER
 	opacity = FALSE
 	use_splitvis = FALSE
@@ -251,7 +247,7 @@ INITIALIZE_IMMEDIATE(/turf/closed/indestructible/splashscreen)
 
 /turf/closed/indestructible/fakedoor/Initialize(mapload)
 	. = ..()
-	underlays += mutable_appearance(floor_to_copy.icon, floor_to_copy.icon_state, offset_spokesman = src, plane = FLOOR_PLANE)
+	underlays += mutable_appearance(initial(floor_to_copy.icon), initial(floor_to_copy.icon_state), initial(floor_to_copy.layer), offset_spokesman = src, plane = FLOOR_PLANE)
 
 /turf/closed/indestructible/fakedoor/maintenance
 	icon = 'icons/obj/doors/airlocks/tall/hatch/maintenance.dmi'

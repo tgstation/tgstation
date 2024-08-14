@@ -199,7 +199,6 @@
 
 /atom/movable/screen/plane_master/rendering_plate/frill/show_to(mob/mymob)
 	. = ..()
-	remove_filter(FRILL_GAME_CUT)
 	remove_filter(FRILL_MOB_MASK)
 	if(!mymob?.client)
 		return
@@ -207,8 +206,6 @@
 		alpha = 120
 	else
 		alpha = 255
-	//WALLENING TODO: decide what to do about this, ensure frills filter out emissives/maybe all lighting
-	//add_filter(FRILL_GAME_CUT, 1, alpha_mask_filter(render_source = OFFSET_RENDER_TARGET(EMISSIVE_BLOCKER_RENDER_TARGET, offset), flags = MASK_INVERSE))
 	add_filter(FRILL_MOB_MASK, 1, alpha_mask_filter(render_source = OFFSET_RENDER_TARGET(FRILL_MASK_RENDER_TARGET, offset), flags = MASK_INVERSE))
 
 /atom/movable/screen/plane_master/rendering_plate/wall_weather_mask

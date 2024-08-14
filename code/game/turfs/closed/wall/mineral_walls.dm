@@ -242,6 +242,18 @@
 	canSmoothWith = SMOOTH_GROUP_MEAT_WALLS
 	custom_materials = list(/datum/material/meat = 4000)
 
+/turf/closed/wall/mineral/pizza
+	name = "pepperoni wallzza"
+	desc = "It's a delicious pepperoni wallzza!"
+	icon = 'icons/turf/walls/pizza_wall.dmi'
+	sheet_type = /obj/item/stack/sheet/pizza
+	hardness = 70 // idk what you were expecting
+	explosive_resistance = 0
+	smoothing_groups = SMOOTH_GROUP_PIZZA_WALLS + SMOOTH_GROUP_WALLS + SMOOTH_GROUP_TALL_WALLS + SMOOTH_GROUP_CLOSED_TURFS
+	canSmoothWith = SMOOTH_GROUP_PIZZA_WALLS
+	custom_materials = list(/datum/material/pizza = SHEET_MATERIAL_AMOUNT*2)
+	rust_resistance = RUST_RESISTANCE_ORGANIC
+
 /////////////////////Titanium walls/////////////////////
 
 /turf/closed/wall/mineral/titanium //has to use this path due to how building walls works

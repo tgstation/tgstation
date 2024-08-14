@@ -1,14 +1,3 @@
-#define SIGN_DIR_NORTH "n"
-#define SIGN_DIR_SOUTH "s"
-#define SIGN_DIR_EAST "e"
-#define SIGN_DIR_WEST "w"
-#define SIGN_DIR_NORTHEAST "ne"
-#define SIGN_DIR_NORTHWEST "nw"
-#define SIGN_DIR_SOUTHEAST "se"
-#define SIGN_DIR_SOUTHWEST "sw"
-#define SUPPORT_LEFT "left"
-#define SUPPORT_RIGHT "right"
-
 // //map and direction signs
 
 /obj/structure/sign/map
@@ -52,17 +41,24 @@ WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/structure/sign/map/right/metastation)
 
 /obj/structure/sign/directions
 	icon = 'icons/obj/directional_signs.dmi'
-	/// Temp variable, are we using arrows and support overlays to build the image as opposed to using a static directions sign.
-	var/build_overlays = TRUE
 	/// What direction is the arrow on the sign pointing?
 	var/sign_arrow_direction = null
 	/// If this sign has a support on the left or right, which side? null if niether
 	var/support_side = null
 
+/obj/structure/sign/directions/Initialize(mapload)
+	. = ..()
+	update_appearance()
+
+/obj/structure/sign/directions/update_icon_state()
+	. = ..()
+	if(support_side)
+		icon_state = "[initial(icon_state)]_[support_side]"
+	else
+		icon_state = "[initial(icon_state)]"
+
 /obj/structure/sign/directions/update_overlays()
 	. = ..()
-	if(!build_overlays)
-		return
 	if(sign_arrow_direction)
 		. += "arrow_[sign_arrow_direction]"
 

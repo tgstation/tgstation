@@ -458,10 +458,18 @@
 
 	if(fulltile)
 		var/ratio = atom_integrity / max_integrity
-		ratio = CEILING(ratio*4, 1) * 25
-		if(ratio > 75)
-			return
-		. += mutable_appearance('icons/obj/structures.dmi', "damage[ratio]", -(layer+0.1))
+		ratio = CEILING(ratio*4, 1)
+		var/broken_icon = null
+		switch(ratio)
+			if(3)
+				broken_icon = 'icons/obj/smooth_structures/windows/window_broken_light.dmi'
+			if(2)
+				broken_icon = 'icons/obj/smooth_structures/windows/window_broken_medium.dmi'
+			if(1)
+				broken_icon = 'icons/obj/smooth_structures/windows/window_broken_heavy.dmi'
+
+		if(broken_icon)
+			. += mutable_appearance(broken_icon, "[smoothing_junction]", -(layer+0.1))
 		return .
 
 	var/list/states_to_apply = list()
@@ -921,6 +929,11 @@ MAPPING_DIRECTIONAL_HELPERS_EMPTY(/obj/structure/window/reinforced/plasma/spawne
 /obj/structure/window/reinforced/tinted
 	name = "tinted window"
 	icon = 'icons/obj/smooth_structures/windows/tinted_thindow.dmi'
+
+/obj/structure/window/reinforced/tinted/Initialize(mapload, direct)
+	. = ..()
+	if(fulltile)
+		set_opacity(TRUE)
 
 MAPPING_DIRECTIONAL_HELPERS_EMPTY(/obj/structure/window/reinforced/tinted/spawner)
 

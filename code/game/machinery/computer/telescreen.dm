@@ -21,7 +21,7 @@
 	icon_state = "telescreen"
 	result_path = /obj/machinery/computer/security/telescreen
 
-WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/machinery/computer/security/telescreen)
+TELESCREEN_DIRECTIONAL_HELPERS(/obj/machinery/computer/security/telescreen)
 
 /obj/machinery/computer/security/telescreen/Initialize(mapload)
 	. = ..()
@@ -54,7 +54,7 @@ WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/machinery/computer/security/telescreen)
 	icon_state = "telescreen"
 	result_path = /obj/machinery/computer/security/telescreen/entertainment
 
-WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/machinery/computer/security/telescreen/entertainment) // Wallening todo: Depending on the comment on icon_state, adjust offset. Keep wall_mount element in mind.
+TELESCREEN_DIRECTIONAL_HELPERS(/obj/machinery/computer/security/telescreen/entertainment) // Wallening todo: Depending on the comment on icon_state, adjust offset. Keep wall_mount element in mind.
 
 /obj/machinery/computer/security/telescreen/entertainment/Initialize(mapload)
 	. = ..()
@@ -165,7 +165,7 @@ WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/machinery/computer/security/telescreen/enter
 	name = "\improper Research Director's telescreen frame"
 	result_path = /obj/machinery/computer/security/telescreen/rd
 
-WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/machinery/computer/security/telescreen/rd)
+TELESCREEN_DIRECTIONAL_HELPERS(/obj/machinery/computer/security/telescreen/rd)
 
 /obj/machinery/computer/security/telescreen/research
 	name = "research telescreen"
@@ -177,7 +177,7 @@ WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/machinery/computer/security/telescreen/rd)
 	name = "research telescreen frame"
 	result_path = /obj/machinery/computer/security/telescreen/research
 
-WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/machinery/computer/security/telescreen/research)
+TELESCREEN_DIRECTIONAL_HELPERS(/obj/machinery/computer/security/telescreen/research)
 
 /obj/machinery/computer/security/telescreen/ce
 	name = "\improper Chief Engineer's telescreen"
@@ -189,7 +189,7 @@ WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/machinery/computer/security/telescreen/resea
 	name = "\improper Chief Engineer's telescreen frame"
 	result_path = /obj/machinery/computer/security/telescreen/ce
 
-WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/machinery/computer/security/telescreen/ce)
+TELESCREEN_DIRECTIONAL_HELPERS(/obj/machinery/computer/security/telescreen/ce)
 
 /obj/machinery/computer/security/telescreen/cmo
 	name = "\improper Chief Medical Officer's telescreen"
@@ -201,7 +201,7 @@ WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/machinery/computer/security/telescreen/ce)
 	name = "\improper Chief Medical Officer's telescreen frame"
 	result_path = /obj/machinery/computer/security/telescreen/cmo
 
-WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/machinery/computer/security/telescreen/cmo)
+TELESCREEN_DIRECTIONAL_HELPERS(/obj/machinery/computer/security/telescreen/cmo)
 
 /obj/machinery/computer/security/telescreen/med_sec
 	name = "\improper medical telescreen"
@@ -213,7 +213,7 @@ WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/machinery/computer/security/telescreen/cmo)
 	name = "\improper medical telescreen frame"
 	result_path = /obj/machinery/computer/security/telescreen/med_sec
 
-WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/machinery/computer/security/telescreen/med_sec)
+TELESCREEN_DIRECTIONAL_HELPERS(/obj/machinery/computer/security/telescreen/med_sec)
 
 /obj/machinery/computer/security/telescreen/vault
 	name = "vault monitor"
@@ -225,7 +225,7 @@ WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/machinery/computer/security/telescreen/med_s
 	name = "vault telescreen frame"
 	result_path = /obj/machinery/computer/security/telescreen/vault
 
-WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/machinery/computer/security/telescreen/vault)
+TELESCREEN_DIRECTIONAL_HELPERS(/obj/machinery/computer/security/telescreen/vault)
 
 /obj/machinery/computer/security/telescreen/ordnance
 	name = "bomb test site monitor"
@@ -237,7 +237,7 @@ WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/machinery/computer/security/telescreen/vault
 	name = "bomb test site telescreen frame"
 	result_path = /obj/machinery/computer/security/telescreen/ordnance
 
-WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/machinery/computer/security/telescreen/ordnance)
+TELESCREEN_DIRECTIONAL_HELPERS(/obj/machinery/computer/security/telescreen/ordnance)
 
 /obj/machinery/computer/security/telescreen/engine
 	name = "engine monitor"
@@ -249,7 +249,7 @@ WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/machinery/computer/security/telescreen/ordna
 	name = "engine telescreen frame"
 	result_path = /obj/machinery/computer/security/telescreen/engine
 
-WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/machinery/computer/security/telescreen/engine)
+TELESCREEN_DIRECTIONAL_HELPERS(/obj/machinery/computer/security/telescreen/engine)
 
 /obj/machinery/computer/security/telescreen/turbine
 	name = "turbine monitor"
@@ -261,7 +261,7 @@ WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/machinery/computer/security/telescreen/engin
 	name = "turbine telescreen frame"
 	result_path = /obj/machinery/computer/security/telescreen/turbine
 
-WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/machinery/computer/security/telescreen/turbine)
+TELESCREEN_DIRECTIONAL_HELPERS(/obj/machinery/computer/security/telescreen/turbine)
 
 /obj/machinery/computer/security/telescreen/interrogation
 	name = "interrogation room monitor"
@@ -273,7 +273,7 @@ WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/machinery/computer/security/telescreen/turbi
 	name = "interrogation telescreen frame"
 	result_path = /obj/machinery/computer/security/telescreen/interrogation
 
-WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/machinery/computer/security/telescreen/interrogation)
+TELESCREEN_DIRECTIONAL_HELPERS(/obj/machinery/computer/security/telescreen/interrogation)
 
 /obj/machinery/computer/security/telescreen/prison
 	name = "prison monitor"
@@ -285,7 +285,7 @@ WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/machinery/computer/security/telescreen/inter
 	name = "prison telescreen frame"
 	result_path = /obj/machinery/computer/security/telescreen/prison
 
-WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/machinery/computer/security/telescreen/prison)
+TELESCREEN_DIRECTIONAL_HELPERS(/obj/machinery/computer/security/telescreen/prison)
 
 /obj/machinery/computer/security/telescreen/auxbase
 	name = "auxiliary base monitor"
@@ -297,7 +297,7 @@ WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/machinery/computer/security/telescreen/priso
 	name = "auxiliary base telescreen frame"
 	result_path = /obj/machinery/computer/security/telescreen/auxbase
 
-WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/machinery/computer/security/telescreen/auxbase)
+TELESCREEN_DIRECTIONAL_HELPERS(/obj/machinery/computer/security/telescreen/auxbase)
 
 /obj/machinery/computer/security/telescreen/minisat
 	name = "minisat monitor"
@@ -309,7 +309,7 @@ WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/machinery/computer/security/telescreen/auxba
 	name = "minisat telescreen frame"
 	result_path = /obj/machinery/computer/security/telescreen/minisat
 
-WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/machinery/computer/security/telescreen/minisat)
+TELESCREEN_DIRECTIONAL_HELPERS(/obj/machinery/computer/security/telescreen/minisat)
 
 /obj/machinery/computer/security/telescreen/aiupload
 	name = "\improper AI upload monitor"
@@ -321,7 +321,7 @@ WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/machinery/computer/security/telescreen/minis
 	name = "\improper AI upload telescreen frame"
 	result_path = /obj/machinery/computer/security/telescreen/aiupload
 
-WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/machinery/computer/security/telescreen/aiupload)
+TELESCREEN_DIRECTIONAL_HELPERS(/obj/machinery/computer/security/telescreen/aiupload)
 
 /obj/machinery/computer/security/telescreen/bar
 	name = "bar monitor"
@@ -333,7 +333,7 @@ WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/machinery/computer/security/telescreen/aiupl
 	name = "bar telescreen frame"
 	result_path = /obj/machinery/computer/security/telescreen/bar
 
-WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/machinery/computer/security/telescreen/bar)
+TELESCREEN_DIRECTIONAL_HELPERS(/obj/machinery/computer/security/telescreen/bar)
 
 /obj/machinery/computer/security/telescreen/isolation
 	name = "isolation cell monitor"
@@ -345,7 +345,7 @@ WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/machinery/computer/security/telescreen/bar)
 	name = "isolation telescreen frame"
 	result_path = /obj/machinery/computer/security/telescreen/isolation
 
-WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/machinery/computer/security/telescreen/isolation)
+TELESCREEN_DIRECTIONAL_HELPERS(/obj/machinery/computer/security/telescreen/isolation)
 
 /obj/machinery/computer/security/telescreen/normal
 	name = "security camera monitor"
@@ -357,7 +357,7 @@ WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/machinery/computer/security/telescreen/isola
 	name = "security camera telescreen frame"
 	result_path = /obj/machinery/computer/security/telescreen/normal
 
-WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/machinery/computer/security/telescreen/normal)
+TELESCREEN_DIRECTIONAL_HELPERS(/obj/machinery/computer/security/telescreen/normal)
 
 /obj/machinery/computer/security/telescreen/tcomms
 	name = "tcomms camera monitor"
@@ -369,7 +369,7 @@ WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/machinery/computer/security/telescreen/norma
 	name = "tcomms camera telescreen frame"
 	result_path = /obj/machinery/computer/security/telescreen/tcomms
 
-WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/machinery/computer/security/telescreen/tcomms)
+TELESCREEN_DIRECTIONAL_HELPERS(/obj/machinery/computer/security/telescreen/tcomms)
 
 /obj/machinery/computer/security/telescreen/test_chamber
 	name = "xenobiology test chamber camera monitor"
@@ -381,7 +381,7 @@ WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/machinery/computer/security/telescreen/tcomm
 	name = "xenobiology test chamber camera telescreen frame"
 	result_path = /obj/machinery/computer/security/telescreen/test_chamber
 
-WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/machinery/computer/security/telescreen/test_chamber)
+TELESCREEN_DIRECTIONAL_HELPERS(/obj/machinery/computer/security/telescreen/test_chamber)
 
 /obj/machinery/computer/security/telescreen/engine_waste
 	name = "\improper Engine Waste Monitor"
@@ -393,7 +393,7 @@ WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/machinery/computer/security/telescreen/test_
 	name = "\improper Engine Waste telescreen frame"
 	result_path = /obj/machinery/computer/security/telescreen/engine_waste
 
-WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/machinery/computer/security/telescreen/engine_waste)
+TELESCREEN_DIRECTIONAL_HELPERS(/obj/machinery/computer/security/telescreen/engine_waste)
 
 /obj/machinery/computer/security/telescreen/cargo_sec
 	name = "cargo camera monitor"
@@ -407,7 +407,7 @@ WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/machinery/computer/security/telescreen/engin
 	name = "cargo telescreen frame"
 	result_path = /obj/machinery/computer/security/telescreen/cargo_sec
 
-WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/machinery/computer/security/telescreen/cargo_sec)
+TELESCREEN_DIRECTIONAL_HELPERS(/obj/machinery/computer/security/telescreen/cargo_sec)
 
 // This is used in moonoutpost19.dmm
 /obj/machinery/computer/security/telescreen/moon_outpost
@@ -419,14 +419,14 @@ WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/machinery/computer/security/telescreen/cargo
 					CAMERANET_NETWORK_MOON19_XENO,
 					)
 
-WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/machinery/computer/security/telescreen/moon_outpost/research)
+TELESCREEN_DIRECTIONAL_HELPERS(/obj/machinery/computer/security/telescreen/moon_outpost/research)
 
 /obj/machinery/computer/security/telescreen/moon_outpost/xenobio
 	name = "xenobiology monitor"
 	desc = "Used for watching the contents of the xenobiology containment pen."
 	network = list(CAMERANET_NETWORK_MOON19_XENO)
 
-WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/machinery/computer/security/telescreen/moon_outpost/xenobio)
+TELESCREEN_DIRECTIONAL_HELPERS(/obj/machinery/computer/security/telescreen/moon_outpost/xenobio)
 
 // This is used in undergroundoutpost45.dmm
 /obj/machinery/computer/security/telescreen/underground_outpost
@@ -436,7 +436,7 @@ WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/machinery/computer/security/telescreen/moon_
 	desc = "Used for monitoring the research division and the labs within."
 	network = list(CAMERANET_NETWORK_UGO45_RESEARCH)
 
-WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/machinery/computer/security/telescreen/underground_outpost/research)
+TELESCREEN_DIRECTIONAL_HELPERS(/obj/machinery/computer/security/telescreen/underground_outpost/research)
 
 // This is used in forgottenship.dmm
 /obj/machinery/computer/security/telescreen/forgotten_ship
@@ -446,7 +446,7 @@ WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/machinery/computer/security/telescreen/under
 	network = list(CAMERANET_NETWORK_FSCI)
 	req_access = list("syndicate")
 
-WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/machinery/computer/security/telescreen/forgotten_ship/sci)
+TELESCREEN_DIRECTIONAL_HELPERS(/obj/machinery/computer/security/telescreen/forgotten_ship/sci)
 
 // This is used in deepstorage.dmm
 /obj/machinery/computer/security/telescreen/deep_storage
@@ -455,7 +455,7 @@ WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/machinery/computer/security/telescreen/forgo
 	name = "Bunker Entrance monitor"
 	network = list(CAMERA_NETWORK_BUNKER)
 
-WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/machinery/computer/security/telescreen/deep_storage/bunker)
+TELESCREEN_DIRECTIONAL_HELPERS(/obj/machinery/computer/security/telescreen/deep_storage/bunker)
 
 /// A button that adds a camera network to the entertainment monitors
 /obj/machinery/button/showtime

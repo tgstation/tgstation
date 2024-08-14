@@ -55,8 +55,6 @@
 #define _INVERTED_WALL_MOUNT_OFFSET(path, north_offset, physical_north_offset, south_offset, east_offset, west_offset, horizontal_up_offset) \
 _WALL_MOUNT_OFFSET(path, south_offset, north_offset, physical_north_offset, west_offset, east_offset, horizontal_up_offset)
 
-// Wallening todo: temporary helper, until we finish fleshing things out and can convert the main one
-// Why are we not just changing the sprites agian?
 #define INVERT_MAPPING_DIRECTIONAL_HELPERS(path, offset) \
 ##path/directional/north {\
 	dir = SOUTH; \
@@ -78,6 +76,16 @@ _INVERTED_WALL_MOUNT_OFFSET(path, offset, 0, -offset, offset, -offset, 0)
 
 /// Directional helpers for things that use the wall_mount element
 #define WALL_MOUNT_DIRECTIONAL_HELPERS(path) _WALL_MOUNT_DIRECTIONAL_HELPERS(path, 35, 0, -8, 11, -11, 16)
+
+#define TELESCREEN_DIRECTIONAL_HELPERS(path) _WALL_MOUNT_DIRECTIONAL_HELPERS(path, 35, 0, -8, 11, -11, 16) \
+##path/table {\
+	dir = SOUTH; \
+	base_pixel_z = 10; \
+	pixel_z = 10; \
+} \
+##path/table/wall_mount_offset(direction) { \
+	return; \
+}
 
 #define SHOWER_DIRECTIONAL_HELPERS(path) _WALL_MOUNT_DIRECTIONAL_HELPERS(path, -2, 0, 18, -16, 16, 12)
 
@@ -212,6 +220,16 @@ _WALL_MOUNT_OFFSET(path, 0, 0, 0, 0, 0, 0)
 } \
 WALL_MOUNT_DIRECTIONAL_HELPERS(path)
 
+#define SIGN_DIR_NORTH "n"
+#define SIGN_DIR_SOUTH "s"
+#define SIGN_DIR_EAST "e"
+#define SIGN_DIR_WEST "w"
+#define SIGN_DIR_NORTHEAST "ne"
+#define SIGN_DIR_NORTHWEST "nw"
+#define SIGN_DIR_SOUTHEAST "se"
+#define SIGN_DIR_SOUTHWEST "sw"
+#define SUPPORT_LEFT "left"
+#define SUPPORT_RIGHT "right"
 
 /// Directional helpers that generate all arrow directions as well as subdivide sign directions.
 #define DIRECTIONAL_SIGNS_DIRECTIONAL_HELPERS(path) \

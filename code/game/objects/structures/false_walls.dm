@@ -91,7 +91,7 @@ GLOBAL_LIST_INIT(falsewall_alpha_icons, generate_transparent_falsewalls())
 	desc = "A huge chunk of metal used to separate rooms."
 	anchored = TRUE
 	icon = 'icons/turf/walls/false_walls.dmi'
-	icon_state = "wall-open"
+	icon_state = "wall"
 	base_icon_state = "wall"
 	layer = LOW_OBJ_LAYER
 	density = TRUE
@@ -265,7 +265,7 @@ GLOBAL_LIST_INIT(falsewall_alpha_icons, generate_transparent_falsewalls())
 	name = "reinforced wall"
 	desc = "A huge chunk of reinforced metal used to separate rooms."
 	fake_icon = 'icons/turf/walls/reinforced_wall.dmi'
-	icon_state = "reinforced_wall-open"
+	icon_state = "reinforced_wall"
 	base_icon_state = "reinforced_wall"
 	walltype = /turf/closed/wall/r_wall
 	mineral = /obj/item/stack/sheet/plasteel
@@ -288,7 +288,7 @@ GLOBAL_LIST_INIT(falsewall_alpha_icons, generate_transparent_falsewalls())
 	name = "uranium wall"
 	desc = "A wall with uranium plating. This is probably a bad idea."
 	fake_icon = 'icons/turf/walls/uranium_wall.dmi'
-	icon_state = "uranium_wall-open"
+	icon_state = "uranium_wall"
 	base_icon_state = "uranium_wall"
 	mineral = /obj/item/stack/sheet/mineral/uranium
 	walltype = /turf/closed/wall/mineral/uranium
@@ -339,7 +339,7 @@ GLOBAL_LIST_INIT(falsewall_alpha_icons, generate_transparent_falsewalls())
 	name = "gold wall"
 	desc = "A wall with gold plating. Swag!"
 	fake_icon = 'icons/turf/walls/gold_wall.dmi'
-	icon_state = "gold_wall-open"
+	icon_state = "gold_wall"
 	base_icon_state = "gold_wall"
 	mineral = /obj/item/stack/sheet/mineral/gold
 	walltype = /turf/closed/wall/mineral/gold
@@ -351,7 +351,7 @@ GLOBAL_LIST_INIT(falsewall_alpha_icons, generate_transparent_falsewalls())
 	name = "silver wall"
 	desc = "A wall with silver plating. Shiny."
 	fake_icon = 'icons/turf/walls/silver_wall.dmi'
-	icon_state = "silver_wall-open"
+	icon_state = "silver_wall"
 	base_icon_state = "silver_wall"
 	mineral = /obj/item/stack/sheet/mineral/silver
 	walltype = /turf/closed/wall/mineral/silver
@@ -363,7 +363,7 @@ GLOBAL_LIST_INIT(falsewall_alpha_icons, generate_transparent_falsewalls())
 	name = "diamond wall"
 	desc = "A wall with diamond plating. You monster."
 	fake_icon = 'icons/turf/walls/diamond_wall.dmi'
-	icon_state = "diamond_wall-open"
+	icon_state = "diamond_wall"
 	base_icon_state = "diamond_wall"
 	mineral = /obj/item/stack/sheet/mineral/diamond
 	walltype = /turf/closed/wall/mineral/diamond
@@ -376,7 +376,7 @@ GLOBAL_LIST_INIT(falsewall_alpha_icons, generate_transparent_falsewalls())
 	name = "plasma wall"
 	desc = "A wall with plasma plating. This is definitely a bad idea."
 	fake_icon = 'icons/turf/walls/plasma_wall.dmi'
-	icon_state = "plasma_wall-open"
+	icon_state = "plasma_wall"
 	base_icon_state = "plasma_wall"
 	mineral = /obj/item/stack/sheet/mineral/plasma
 	walltype = /turf/closed/wall/mineral/plasma
@@ -388,7 +388,7 @@ GLOBAL_LIST_INIT(falsewall_alpha_icons, generate_transparent_falsewalls())
 	name = "bananium wall"
 	desc = "A wall with bananium plating. Honk!"
 	fake_icon = 'icons/turf/walls/bananium_wall.dmi'
-	icon_state = "bananium_wall-open"
+	icon_state = "bananium_wall"
 	base_icon_state = "bananium_wall"
 	mineral = /obj/item/stack/sheet/mineral/bananium
 	walltype = /turf/closed/wall/mineral/bananium
@@ -401,7 +401,7 @@ GLOBAL_LIST_INIT(falsewall_alpha_icons, generate_transparent_falsewalls())
 	name = "sandstone wall"
 	desc = "A wall with sandstone plating. Rough."
 	fake_icon = 'icons/turf/walls/sandstone_wall.dmi'
-	icon_state = "sandstone_wall-open"
+	icon_state = "sandstone_wall"
 	base_icon_state = "sandstone_wall"
 	mineral = /obj/item/stack/sheet/mineral/sandstone
 	walltype = /turf/closed/wall/mineral/sandstone
@@ -413,7 +413,7 @@ GLOBAL_LIST_INIT(falsewall_alpha_icons, generate_transparent_falsewalls())
 	name = "wooden wall"
 	desc = "A wall with wooden plating. Stiff."
 	fake_icon = 'icons/turf/walls/wood_wall.dmi'
-	icon_state = "wood_wall-open"
+	icon_state = "wood_wall"
 	base_icon_state = "wood_wall"
 	mineral = /obj/item/stack/sheet/mineral/wood
 	walltype = /turf/closed/wall/mineral/wood
@@ -425,7 +425,7 @@ GLOBAL_LIST_INIT(falsewall_alpha_icons, generate_transparent_falsewalls())
 	name = "bamboo wall"
 	desc = "A wall with bamboo finish. Zen."
 	fake_icon = 'icons/turf/walls/bamboo_wall.dmi'
-	icon_state = "bamboo_wall-open"
+	icon_state = "bamboo_wall"
 	base_icon_state = "bamboo_wall"
 	mineral = /obj/item/stack/sheet/mineral/bamboo
 	walltype = /turf/closed/wall/mineral/bamboo
@@ -437,7 +437,7 @@ GLOBAL_LIST_INIT(falsewall_alpha_icons, generate_transparent_falsewalls())
 	name = "meat wall"
 	desc = "A wall of somone's compacted meat."
 	fake_icon = 'icons/turf/walls/meat_wall.dmi'
-	icon_state = "meat_wall-open"
+	icon_state = "meat_wall"
 	base_icon_state = "meat_wall"
 	mineral = /obj/item/stack/sheet/meat
 	walltype = /turf/closed/wall/mineral/meat
@@ -445,11 +445,23 @@ GLOBAL_LIST_INIT(falsewall_alpha_icons, generate_transparent_falsewalls())
 	smoothing_groups = SMOOTH_GROUP_MEAT_WALLS + SMOOTH_GROUP_WALLS + SMOOTH_GROUP_TALL_WALLS + SMOOTH_GROUP_CLOSED_TURFS
 	canSmoothWith = SMOOTH_GROUP_MEAT_WALLS
 
+/obj/structure/falsewall/pizza
+	name = "pepperoni wallzza"
+	desc = "It's a delicious pepperoni wallzza!"
+	fake_icon = 'icons/turf/walls/pizza_wall.dmi'
+	icon_state = "pizza_wall"
+	base_icon_state = "pizza_wall"
+	mineral = /obj/item/stack/sheet/pizza
+	walltype = /turf/closed/wall/mineral/pizza
+	smoothing_flags = SMOOTH_BITMASK
+	smoothing_groups = SMOOTH_GROUP_PIZZA_WALLS + SMOOTH_GROUP_WALLS + SMOOTH_GROUP_TALL_WALLS + SMOOTH_GROUP_CLOSED_TURFS
+	canSmoothWith = SMOOTH_GROUP_PIZZA_WALLS
+
 /obj/structure/falsewall/iron
 	name = "rough iron wall"
 	desc = "A wall with rough metal plating."
 	fake_icon = 'icons/turf/walls/iron_wall.dmi'
-	icon_state = "iron_wall-open"
+	icon_state = "iron_wall"
 	base_icon_state = "iron_wall"
 	mineral = /obj/item/stack/rods
 	mineral_amount = 5
@@ -463,7 +475,7 @@ GLOBAL_LIST_INIT(falsewall_alpha_icons, generate_transparent_falsewalls())
 	name = "alien wall"
 	desc = "A wall with alien alloy plating."
 	fake_icon = 'icons/turf/walls/abductor_wall.dmi'
-	icon_state = "abductor_wall-open"
+	icon_state = "abductor_wall"
 	base_icon_state = "abductor_wall"
 	mineral = /obj/item/stack/sheet/mineral/abductor
 	walltype = /turf/closed/wall/mineral/abductor
@@ -475,7 +487,7 @@ GLOBAL_LIST_INIT(falsewall_alpha_icons, generate_transparent_falsewalls())
 	name = "wall"
 	desc = "A light-weight titanium wall used in shuttles."
 	fake_icon = 'icons/turf/walls/shuttle_wall.dmi'
-	icon_state = "shuttle_wall-open"
+	icon_state = "shuttle_wall"
 	base_icon_state = "shuttle_wall"
 	mineral = /obj/item/stack/sheet/mineral/titanium
 	walltype = /turf/closed/wall/mineral/titanium
@@ -487,7 +499,7 @@ GLOBAL_LIST_INIT(falsewall_alpha_icons, generate_transparent_falsewalls())
 	name = "wall"
 	desc = "An evil wall of plasma and titanium."
 	fake_icon = 'icons/turf/walls/plastitanium_wall.dmi'
-	icon_state = "plastitanium_wall-open"
+	icon_state = "plastitanium_wall"
 	base_icon_state = "plastitanium_wall"
 	mineral = /obj/item/stack/sheet/mineral/plastitanium
 	walltype = /turf/closed/wall/mineral/plastitanium
@@ -499,7 +511,7 @@ GLOBAL_LIST_INIT(falsewall_alpha_icons, generate_transparent_falsewalls())
 	name = "wall"
 	desc = "A huge chunk of material used to separate rooms."
 	fake_icon = 'icons/turf/walls/material_wall.dmi'
-	icon_state = "material_wall-open"
+	icon_state = "material_wall"
 	base_icon_state = "material_wall"
 	walltype = /turf/closed/wall/material
 	smoothing_flags = SMOOTH_BITMASK
