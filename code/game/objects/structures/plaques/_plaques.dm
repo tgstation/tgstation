@@ -244,7 +244,7 @@ WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/structure/plaque)
 		placed_plaque.find_and_hang_on_wall()
 	else
 		SET_PLANE_EXPLICIT(placed_plaque, FLOOR_PLANE, interacting_with)
-		placed_plaque.AddComponent(/datum/component/turf_mounted, loc, custom_drop_callback) //changing the tile will drop the plaque.
+		placed_plaque.AddComponent(/datum/component/turf_mounted, loc, CALLBACK(src, PROC_REF(drop_plaque))) //changing the tile will drop the plaque.
 		placed_plaque.layer = BELOW_OPEN_DOOR_LAYER
 	qdel(src)
 	return ITEM_INTERACT_SUCCESS
