@@ -307,9 +307,7 @@
 "mo" = (
 /obj/effect/turf_decal/tile/yellow/full,
 /obj/structure/table/reinforced,
-/obj/machinery/door/window{
-	dir = 8
-	},
+/obj/machinery/door/window/right/directional/west,
 /turf/open/indestructible/large,
 /area/deathmatch)
 "mK" = (
@@ -1128,9 +1126,7 @@
 /obj/effect/turf_decal/tile/purple/full,
 /obj/effect/turf_decal/tile/purple/full,
 /obj/structure/table/reinforced/plasmarglass,
-/obj/machinery/door/window{
-	dir = 1
-	},
+/obj/machinery/door/window/right/directional/north,
 /turf/open/indestructible/white/smooth_large,
 /area/deathmatch)
 "Nr" = (

@@ -12,11 +12,6 @@
 /obj/effect/playeronly_barrier,
 /turf/open/misc/asteroid/moon,
 /area/deathmatch/fullbright)
-"cB" = (
-/obj/structure/lattice/catwalk,
-/obj/effect/decal/cleanable/dirt/dust,
-/turf/open/chasm,
-/area/deathmatch/fullbright)
 "cN" = (
 /obj/structure/railing/unbreakable{
 	dir = 8
@@ -82,10 +77,6 @@
 /obj/structure/flora/lunar_plant/style_3,
 /obj/effect/playeronly_barrier,
 /turf/open/misc/asteroid/moon,
-/area/deathmatch/fullbright)
-"nR" = (
-/obj/structure/lattice/catwalk,
-/turf/closed/mineral/random,
 /area/deathmatch/fullbright)
 "rE" = (
 /obj/structure/flora/rock/pile/style_random,
@@ -245,10 +236,6 @@
 /obj/effect/playeronly_barrier,
 /obj/structure/railing/unbreakable,
 /turf/open/misc/asteroid/moon,
-/area/deathmatch/fullbright)
-"Od" = (
-/obj/structure/lattice/catwalk,
-/turf/open/chasm,
 /area/deathmatch/fullbright)
 "OF" = (
 /obj/machinery/power/port_gen/pacman/pre_loaded,
@@ -451,13 +438,13 @@ MF
 MF
 MF
 gN
-nR
-nR
-nR
-nR
-nR
-nR
-nR
+gN
+gN
+gN
+gN
+gN
+gN
+gN
 MF
 gN
 gN
@@ -479,7 +466,7 @@ MF
 MF
 MF
 vk
-cB
+df
 vk
 df
 vk
@@ -646,7 +633,7 @@ vk
 vk
 vk
 vk
-cB
+df
 NG
 gN
 gN
@@ -701,7 +688,7 @@ NI
 vk
 vk
 vk
-nR
+gN
 gN
 gN
 gN
@@ -714,7 +701,7 @@ gN
 gN
 gN
 gN
-nR
+gN
 bm
 df
 vk
@@ -728,7 +715,7 @@ vk
 MF
 MF
 vk
-nR
+gN
 gN
 gN
 gN
@@ -741,8 +728,8 @@ gN
 gN
 gN
 gN
-nR
-nR
+gN
+gN
 MF
 MF
 vk
@@ -755,7 +742,7 @@ df
 MF
 vk
 vk
-nR
+gN
 gN
 gN
 gN
@@ -768,7 +755,7 @@ gN
 gN
 gN
 gN
-nR
+gN
 MF
 MF
 vk
@@ -782,7 +769,7 @@ CP
 vk
 vk
 vk
-nR
+gN
 gN
 gN
 gN
@@ -826,14 +813,14 @@ dM
 MF
 Nf
 vk
-Od
+vk
 vk
 MF
 Nf
 MF
 MF
 vk
-Od
+vk
 IT
 vk
 uO
@@ -861,7 +848,7 @@ MF
 MF
 MF
 vk
-Od
+vk
 MF
 MF
 UU
@@ -880,13 +867,13 @@ dM
 dM
 dM
 uO
-nR
-nR
-nR
-nR
-nR
-nR
-nR
+gN
+gN
+gN
+gN
+gN
+gN
+gN
 vk
 MF
 dM
