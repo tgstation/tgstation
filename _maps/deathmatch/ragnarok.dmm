@@ -328,7 +328,7 @@
 /turf/open/floor/plating/heretic_rust,
 /area/deathmatch/teleport)
 "oB" = (
-/turf/closed/wall/mineral/wood,
+/turf/closed/wall/mineral/wood/nonmetal,
 /area/deathmatch/teleport)
 "oC" = (
 /obj/structure/flora/grass/jungle/b/style_random,
@@ -460,7 +460,13 @@
 /turf/open/floor/cult,
 /area/deathmatch/teleport)
 "sJ" = (
-/turf/closed/wall,
+/obj/effect/turf_decal/weather/dirt{
+	dir = 8
+	},
+/obj/effect/turf_decal/weather/dirt{
+	dir = 4
+	},
+/turf/open/floor/cult,
 /area/deathmatch/teleport)
 "tl" = (
 /obj/effect/decal/cleanable/dirt/dust,
@@ -752,6 +758,9 @@
 /obj/effect/turf_decal/weather/dirt{
 	dir = 4
 	},
+/obj/effect/turf_decal/weather/dirt{
+	dir = 6
+	},
 /turf/open/floor/cult,
 /area/deathmatch/teleport)
 "GO" = (
@@ -799,6 +808,13 @@
 /obj/structure/flora/bush/jungle/b/style_random,
 /mob/living/carbon/human/species/monkey,
 /turf/open/misc/grass/jungle,
+/area/deathmatch/teleport)
+"IM" = (
+/obj/effect/decal/cleanable/blood/footprints,
+/obj/effect/turf_decal/weather/dirt{
+	dir = 1
+	},
+/turf/open/floor/cult,
 /area/deathmatch/teleport)
 "Jf" = (
 /turf/open/misc/dirt/jungle/dark,
@@ -1382,7 +1398,7 @@ hw
 qa
 Sw
 oC
-Qf
+SC
 sE
 UY
 Be
@@ -1480,7 +1496,7 @@ eU
 UY
 UY
 UY
-sJ
+SC
 kc
 Ga
 PH
@@ -1809,7 +1825,7 @@ Ig
 Ig
 CI
 Rj
-Jf
+XT
 YY
 Sh
 ye
@@ -1840,8 +1856,8 @@ Ig
 Ig
 XT
 KL
-cH
-KL
+sJ
+AE
 KL
 cr
 KL
@@ -1872,8 +1888,8 @@ Ig
 XT
 GE
 ij
-Nf
-sF
+Jf
+IM
 sF
 qk
 Nf
@@ -1902,7 +1918,7 @@ Ig
 Ig
 CI
 Wp
-XT
+Nf
 UI
 KL
 Ba

@@ -235,8 +235,8 @@
 /turf/open/indestructible/white,
 /area/deathmatch)
 "iV" = (
-/obj/effect/decal/cleanable/ash,
 /obj/item/card/id/advanced/engioutpost,
+/obj/effect/decal/remains/human/smokey,
 /turf/open/indestructible,
 /area/deathmatch)
 "jm" = (
@@ -339,6 +339,7 @@
 	},
 /obj/structure/table/glass,
 /obj/item/reagent_containers/cup/glass/bottle/champagne/cursed,
+/obj/item/food/donut/trumpet,
 /turf/open/indestructible/dark,
 /area/deathmatch)
 "nQ" = (
@@ -390,7 +391,6 @@
 /obj/structure/cable,
 /obj/structure/table/reinforced,
 /obj/item/fireaxe/metal_h2_axe,
-/obj/item/stack/ammonia_crystals,
 /turf/open/indestructible,
 /area/deathmatch)
 "pJ" = (
@@ -786,6 +786,8 @@
 	dir = 4
 	},
 /obj/structure/closet/secure_closet/engineering_electrical,
+/obj/item/clothing/suit/armor/elder_atmosian,
+/obj/item/clothing/head/helmet/elder_atmosian,
 /turf/open/indestructible,
 /area/deathmatch)
 "Bh" = (
