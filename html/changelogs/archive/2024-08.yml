@@ -210,3 +210,6 @@
   - sound: ore and sandstone blocks have their own sound
   grungussuss and kayozz:
   - sound: white noise from some ambience sounds has been pruned
+2024-08-13:
+  Majkl-J:
+  - bugfix: Felinids no longer phase through diagonal gaps upon seeing a laser
