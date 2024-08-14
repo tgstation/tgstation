@@ -2379,6 +2379,10 @@
 /obj/structure/table,
 /turf/open/floor/carpet/executive,
 /area/awaymission/museum)
+"to" = (
+/obj/structure/plaque/static_plaque/golden/commission/kilo,
+/turf/open/floor/mineral/silver,
+/area/awaymission/museum)
 "tq" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
@@ -3998,6 +4002,14 @@
 "Gn" = (
 /turf/open/floor/iron/white/small,
 /area/awaymission/museum)
+"Gt" = (
+/obj/effect/turf_decal/tile/neutral/opposingcorners,
+/obj/effect/turf_decal/siding/dark_blue{
+	dir = 1
+	},
+/obj/structure/plaque/static_plaque/golden/commission/kilo,
+/turf/open/floor/iron/dark,
+/area/awaymission/museum)
 "Gv" = (
 /obj/effect/decal/cleanable/crayon/l{
 	pixel_x = -10
@@ -5152,6 +5164,10 @@
 /obj/machinery/door/airlock/public/glass,
 /turf/open/floor/iron,
 /area/awaymission/museum)
+"QS" = (
+/obj/structure/plaque/static_plaque/golden/commission/wawa,
+/turf/open/floor/mineral/silver,
+/area/awaymission/museum)
 "QU" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/structure/broken_flooring/side/always_floorplane{
@@ -5354,7 +5370,6 @@
 /turf/open/floor/iron/white/small,
 /area/awaymission/museum)
 "Tr" = (
-/obj/structure/plaque/static_plaque/golden/commission/kilo,
 /obj/machinery/light/floor,
 /turf/open/floor/mineral/gold,
 /area/awaymission/museum)
@@ -37222,7 +37237,7 @@ xF
 ud
 lb
 TM
-tD
+Gt
 ud
 wA
 ty
@@ -38759,7 +38774,7 @@ Uo
 tD
 sq
 Lw
-Lw
+to
 Lw
 qP
 lb
@@ -39273,7 +39288,7 @@ uY
 tD
 Zf
 Lw
-Lw
+QS
 Lw
 Mg
 lb

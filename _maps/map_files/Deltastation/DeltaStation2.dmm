@@ -82689,7 +82689,7 @@
 "uNh" = (
 /obj/item/kirbyplants/random,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
-/obj/structure/sign/plaques/kiddie,
+/obj/structure/plaque/static_plaque/kiddie,
 /turf/open/floor/iron/dark,
 /area/station/ai_monitored/turret_protected/aisat_interior)
 "uNq" = (

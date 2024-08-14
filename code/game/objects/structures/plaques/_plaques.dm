@@ -22,8 +22,19 @@ WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/structure/plaque)
 
 /obj/structure/plaque/Initialize(mapload)
 	. = ..()
-	find_and_hang_on_wall()
+	if(mapload)
+		find_and_hang_on_wall(custom_drop_callback = CALLBACK(src, PROC_REF(drop_plaque)))
 	register_context()
+
+/obj/structure/plaque/find_and_hang_on_wall(directional = TRUE, custom_drop_callback)
+	if(iswallturf(loc))
+		SET_PLANE_EXPLICIT(src, OVER_FRILL_PLANE, loc)
+		AddComponent(/datum/component/wall_mounted, loc, custom_drop_callback)
+		return //A mapped-in plaque embedded into the wall turf, visible from both sides of it.
+	if(!iswallturf(get_step(src, REVERSE_DIR(dir))))
+		SET_PLANE_EXPLICIT(src, FLOOR_PLANE, loc)
+		return //floor plaques are a thing, messieur.
+	return ..()
 
 /obj/structure/plaque/add_context(atom/source, list/context, obj/item/held_item, mob/user)
 	. = ..()
@@ -54,16 +65,23 @@ WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/structure/plaque)
 	playsound(src, 'sound/items/deconstruct.ogg', 50, TRUE)
 	user.visible_message(span_notice("[user] unfastens [src]."), \
 		span_notice("You unfasten [src]."))
-	var/obj/item/plaque/unwrenched_plaque = new (get_turf(user))
+	var/obj/item/plaque/unwrenched_plaque = drop_plaque()
+	unwrenched_plaque.forceMove(get_turf(user))
+	return TRUE
+
+/obj/structure/plaque/proc/drop_plaque()
+	var/obj/item/plaque/unwrenched_plaque = new(drop_location())
 	if(engraved) //If it's still just a basic unengraved plaque, we can (and should) skip some of the below variable transfers.
 		unwrenched_plaque.name = name //Copy over the plaque structure variables to the plaque item we're creating when we unwrench it.
 		unwrenched_plaque.desc = desc
 		unwrenched_plaque.engraved = engraved
 	unwrenched_plaque.icon_state = icon_state
 	unwrenched_plaque.update_integrity(get_integrity())
+	unwrenched_plaque.set_custom_materials(custom_materials)
+	unwrenched_plaque.set_armor(armor_type)
 	unwrenched_plaque.setDir(dir)
 	qdel(src) //The plaque structure on the wall goes poof and only the plaque item from unwrenching remains.
-	return TRUE
+	return unwrenched_plaque
 
 /obj/structure/plaque/welder_act(mob/living/user, obj/item/I)
 	. = ..()
@@ -128,8 +146,6 @@ WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/structure/plaque)
 	custom_materials = list(/datum/material/gold =SHEET_MATERIAL_AMOUNT)
 	max_integrity = 200
 	armor_type = /datum/armor/item_plaque
-	///This points the item to make the proper structure when placed on a wall.
-	var/plaque_path = /obj/structure/plaque
 	///Custom plaque structures and items both start "unengraved", once engraved with a fountain pen their text can't be altered again.
 	var/engraved = FALSE
 
@@ -190,13 +206,17 @@ WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/structure/plaque)
 	return ..()
 
 /obj/item/plaque/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
-	if(!iswallturf(interacting_with))
+	var/place_on_wall = FALSE
+	if(!isturf(interacting_with))
 		return NONE
+	if(iswallturf(interacting_with))
+		if(user.loc != interacting_with && !(get_dir(user, interacting_with) in GLOB.cardinals))
+			balloon_alert(user, "cannot place diagonally!")
+			return ITEM_INTERACT_BLOCKING
+		place_on_wall = TRUE
 	var/turf/target_turf = interacting_with
 	var/turf/user_turf = get_turf(user)
-	var/obj/structure/plaque/placed_plaque = new plaque_path(user_turf) //We place the plaque on the turf the user is standing, and pixel shift it to the target wall, as below.
-	//This is to mimic how signs and other wall objects are usually placed by mappers, and so they're only visible from one side of a wall.
-	var/dir = get_dir(user_turf, target_turf)
+	var/obj/structure/plaque/placed_plaque = new (user_turf) //We place the plaque on the turf the user is standing, and pixel shift it to the target wall, as below.
 	user.visible_message(span_notice("[user] fastens [src] to [target_turf]."), \
 		span_notice("You attach [src] to [target_turf]."))
 	playsound(target_turf, 'sound/items/deconstruct.ogg', 50, TRUE)
@@ -206,6 +226,13 @@ WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/structure/plaque)
 		placed_plaque.engraved = engraved
 	placed_plaque.icon_state = icon_state
 	placed_plaque.update_integrity(get_integrity())
-	placed_plaque.setDir(dir)
+	placed_plaque.set_custom_materials(custom_materials)
+	placed_plaque.set_armor(armor_type)
+	if(place_on_wall)
+		var/dir = get_dir(target_turf, user_turf)
+		placed_plaque.setDir(dir)
+		placed_plaque.find_and_hang_on_wall()
+	else
+		SET_PLANE_EXPLICIT(placed_plaque, FLOOR_PLANE, interacting_with)
 	qdel(src)
 	return ITEM_INTERACT_SUCCESS

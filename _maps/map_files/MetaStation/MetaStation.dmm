@@ -10832,7 +10832,7 @@
 /turf/open/floor/iron,
 /area/station/hallway/secondary/exit/departure_lounge)
 "dWf" = (
-/obj/structure/sign/plaques/kiddie{
+/obj/structure/plaque/static_plaque/kiddie{
 	pixel_y = 32
 	},
 /obj/machinery/camera/directional/north{

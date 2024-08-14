@@ -71573,7 +71573,7 @@
 "xUB" = (
 /obj/structure/cable,
 /obj/structure/window/reinforced/spawner/directional/north,
-/obj/structure/sign/plaques/kiddie{
+/obj/structure/plaque/static_plaque/kiddie{
 	pixel_y = -4
 	},
 /turf/open/floor/iron/dark,

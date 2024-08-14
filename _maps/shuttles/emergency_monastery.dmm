@@ -33,7 +33,7 @@
 /turf/open/space/basic,
 /area/shuttle/escape)
 "aO" = (
-/obj/structure/sign/plaques/kiddie{
+/obj/structure/plaque/static_plaque/kiddie{
 	desc = "It reads: PRIVATE EXHIBIT -  Please inquire with library staff for guided tours.";
 	name = "\improper Private Section Notice";
 	pixel_y = 32

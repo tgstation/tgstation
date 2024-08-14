@@ -48100,7 +48100,7 @@
 /turf/open/floor/iron,
 /area/station/hallway/secondary/exit)
 "pMi" = (
-/obj/structure/sign/plaques/kiddie,
+/obj/structure/plaque/static_plaque/kiddie,
 /turf/open/floor/circuit/red,
 /area/station/ai_monitored/turret_protected/ai_upload)
 "pMk" = (

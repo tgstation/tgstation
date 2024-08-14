@@ -1,0 +1,1 @@
+/obj/structure/sign/plaques/kiddie : /obj/structure/plaque/static_plaque/kiddie/@SUBTYPES{@OLD}

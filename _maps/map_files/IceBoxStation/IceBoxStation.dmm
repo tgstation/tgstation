@@ -9020,7 +9020,7 @@
 /area/station/security/courtroom)
 "cBU" = (
 /obj/structure/table,
-/obj/structure/sign/plaques/kiddie{
+/obj/structure/plaque/static_plaque/kiddie{
 	pixel_x = 32
 	},
 /obj/machinery/camera/motion/directional/east{
