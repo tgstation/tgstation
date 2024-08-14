@@ -46,7 +46,7 @@
 	// Test fake_flood hallucination for if its fake plasmaflood icon exists
 	var/datum/hallucination/fake_flood/flood_hallucination = /datum/hallucination/fake_flood
 	var/flood_hallucination_icon = initial(flood_hallucination.image_icon)
-	var/flood_hallucination_icon_state = initial(flood_hallucination.image_state)
+	var/flood_hallucination_icon_state = "[initial(flood_hallucination.base_image_state)]-0"
 	check_hallucination_icon(flood_hallucination, flood_hallucination_icon, flood_hallucination_icon_state)
 
 	// Test hallucination client_image_holders that are used for various hallucinations (bubblegum, xeno attack)

@@ -99,6 +99,7 @@
 	obj_damage = 0
 	density = FALSE
 	ai_controller = /datum/ai_controller/basic_controller/simple_hostile
+	shadow_type = SHADOW_SMALL
 
 /mob/living/basic/hivelord_brood/Initialize(mapload)
 	. = ..()

@@ -199,3 +199,17 @@
 2024-08-10:
   FlufflesTheDog:
   - bugfix: tadpoles can actually be scooped from ponds
+2024-08-11:
+  DaCoolBoss:
+  - spellcheck: fixed many incorrect spellings of Waffle Corp and Donk Co.
+2024-08-12:
+  SmArtKar:
+  - bugfix: You no longer kill yourself in cockroach form if you attempt to unposess
+      it
+  grungussuss:
+  - sound: ore and sandstone blocks have their own sound
+  grungussuss and kayozz:
+  - sound: white noise from some ambience sounds has been pruned
+2024-08-13:
+  Majkl-J:
+  - bugfix: Felinids no longer phase through diagonal gaps upon seeing a laser

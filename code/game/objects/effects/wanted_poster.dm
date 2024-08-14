@@ -81,17 +81,17 @@
 	color: This set the text color: #ff00ff
 */
 /obj/structure/sign/poster/wanted/proc/print_across_top(icon/poster_icon, text, color)
-	var/textLen = min(length(text), 7)
-	var/startX = 16 - (2*textLen)
+	var/text_len = min(length(text), 7)
+	var/start_x = 16 - (2*text_len)
 	var/i
-	for(i=1; i <= textLen, i++)
+	for(i=1; i <= text_len, i++)
 		var/letter = uppertext(text[i])
 		var/icon/letter_icon = icon("icon" = 'icons/testing/Font_Minimal.dmi', "icon_state" = letter)
-		letter_icon.Shift(EAST, startX) //16 - (2*n)
+		letter_icon.Shift(EAST, start_x) //16 - (2*n)
 		letter_icon.Shift(SOUTH, 2)
 		letter_icon.SwapColor(rgb(255,255,255), color)
 		poster_icon.Blend(letter_icon, ICON_OVERLAY)
-		startX = startX + 4
+		start_x = start_x + 4
 
 /obj/structure/sign/poster/wanted/roll_and_drop(atom/location, mob/user)
 	pixel_x = 0
