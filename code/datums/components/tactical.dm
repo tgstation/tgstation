@@ -79,14 +79,7 @@
 		COMSIG_ITEM_DROPPED,
 		COMSIG_MOVABLE_MOVED,
 		COMSIG_ATOM_UPDATED_ICON,
-<<<<<<< HEAD
-=======
 		COMSIG_HUMAN_GET_VISIBLE_NAME,
-<<<<<<< HEAD
-=======
-		COMSIG_HUMAN_GET_FORCED_NAME,
->>>>>>> 1202be835cf29219c67cafcd5a4c811b41729ac2
->>>>>>> 56fbcf6cc1936c35d0916cc0eb2ba3c41459683c
 	))
 	current_slot = null
 	user.remove_alt_appearance("sneaking_mission[REF(src)]")
