@@ -141,14 +141,15 @@
 /area/virtual_domain/fullbright)
 "F" = (
 /obj/structure/table/greyscale,
-/obj/item/gun/energy/xray,
+/obj/item/gun/energy/xray{
+	pixel_y = 7
+	},
 /obj/item/gun/energy/laser{
-	pixel_x = 4;
-	pixel_y = -6
+	pixel_x = 4
 	},
 /obj/item/gun/energy/laser{
 	pixel_x = -8;
-	pixel_y = 6
+	pixel_y = 15
 	},
 /turf/template_noop,
 /area/virtual_domain/safehouse)
@@ -161,11 +162,11 @@
 /obj/structure/table/greyscale,
 /obj/machinery/recharger{
 	pixel_x = 8;
-	pixel_y = 4
+	pixel_y = 8
 	},
 /obj/machinery/recharger{
 	pixel_x = -8;
-	pixel_y = 4
+	pixel_y = 8
 	},
 /turf/template_noop,
 /area/virtual_domain/safehouse)
@@ -179,7 +180,6 @@
 /mob/living/basic/alien/queen/large{
 	desc = "A gigantic alien who is in charge of the hive and all of its loyal servants.";
 	name = "alien queen";
-	pixel_x = -16;
 	can_plant_weeds = 0
 	},
 /turf/open/misc/asteroid/basalt/lava_land_surface,

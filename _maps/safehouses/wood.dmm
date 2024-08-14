@@ -24,7 +24,9 @@
 "v" = (
 /obj/machinery/light/small/directional/east,
 /obj/structure/table/wood,
-/obj/item/newspaper,
+/obj/item/newspaper{
+	pixel_y = 8
+	},
 /turf/open/indestructible/hotelwood,
 /area/virtual_domain/safehouse)
 "w" = (
@@ -36,10 +38,6 @@
 	dir = 4
 	},
 /turf/open/floor/carpet/green,
-/area/virtual_domain/safehouse)
-"z" = (
-/obj/structure/sign/poster/random/directional/east,
-/turf/open/indestructible/hotelwood,
 /area/virtual_domain/safehouse)
 "G" = (
 /turf/closed/wall/mineral/wood,
@@ -110,7 +108,7 @@ G
 i
 s
 J
-z
+a
 v
 i
 "}
