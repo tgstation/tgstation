@@ -31,7 +31,7 @@
 	var/race_flags = MIRROR_MAGIC
 	///List of all Races that can be chosen, decided by its Initialize.
 	var/list/selectable_races = list()
-		///Per-dir reflection filters
+	///Per-dir reflection filters
 	var/static/list/list/reflection_filters
 
 /obj/structure/mirror/Initialize(mapload)
