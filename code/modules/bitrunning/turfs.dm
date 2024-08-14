@@ -7,6 +7,7 @@
 	name = "tear in the fabric of reality"
 	icon = 'icons/turf/floors.dmi'
 	icon_state = "binary"
+	smoothing_flags = NONE
 
 /obj/effect/baseturf_helper/virtual_domain
 	name = "virtual domain baseturf editor"
