@@ -138,12 +138,12 @@
 		return
 	// First, get rid of the old overlay
 	var/mutable_appearance/old_low_bubble = mutable_appearance('icons/effects/effects.dmi', "bubbles", FLOOR_CLEAN_LAYER, old_turf, GAME_PLANE)
-	var/mutable_appearance/old_high_bubble = mutable_appearance('icons/effects/effects.dmi', "bubbles", FLOOR_CLEAN_LAYER, old_turf, ABOVE_GAME_PLANE)
+	var/mutable_appearance/old_high_bubble = mutable_appearance('icons/effects/effects.dmi', "bubbles", HIGH_BUBBLE_LAYER, old_turf, GAME_PLANE)
 	source.cut_overlay(old_low_bubble)
 	source.cut_overlay(old_high_bubble)
 
 	// Now, add the new one
 	var/mutable_appearance/new_low_bubble = mutable_appearance('icons/effects/effects.dmi', "bubbles", FLOOR_CLEAN_LAYER, new_turf, GAME_PLANE)
-	var/mutable_appearance/new_high_bubble = mutable_appearance('icons/effects/effects.dmi', "bubbles", FLOOR_CLEAN_LAYER, new_turf, ABOVE_GAME_PLANE)
+	var/mutable_appearance/new_high_bubble = mutable_appearance('icons/effects/effects.dmi', "bubbles", HIGH_BUBBLE_LAYER, new_turf, GAME_PLANE)
 	source.add_overlay(new_low_bubble)
 	source.add_overlay(new_high_bubble)

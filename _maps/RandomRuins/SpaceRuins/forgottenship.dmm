@@ -277,14 +277,6 @@
 	},
 /turf/open/floor/mineral/plastitanium,
 /area/ruin/space/has_grav/syndicate_forgotten_cargopod)
-"bn" = (
-/obj/structure/table/reinforced,
-/obj/item/paper,
-/obj/item/pen,
-/obj/machinery/light/directional/south,
-/obj/machinery/computer/security/telescreen/forgotten_ship/sci/directional/south,
-/turf/open/floor/carpet/royalblack,
-/area/ruin/space/has_grav/syndicate_forgotten_ship)
 "bp" = (
 /obj/structure/closet/crate/secure/gear{
 	req_access = list("syndicate")
@@ -987,6 +979,17 @@
 /obj/machinery/light/directional/east,
 /turf/open/floor/mineral/plastitanium,
 /area/ruin/space/has_grav/syndicate_forgotten_ship)
+"ez" = (
+/obj/machinery/turretid/directional/south{
+	control_area = "/area/ruin/space/has_grav/syndicate_forgotten_ship";
+	enabled = 0;
+	icon_state = "control_kill";
+	lethal = 1;
+	name = "Ship turret control panel";
+	req_access = list("syndicate")
+	},
+/turf/open/floor/mineral/plastitanium/red,
+/area/ruin/space/has_grav/syndicate_forgotten_ship)
 "gz" = (
 /obj/machinery/light/small/directional/south,
 /turf/open/floor/mineral/plastitanium/red,
@@ -1046,17 +1049,13 @@
 /obj/machinery/light/small/directional/west,
 /turf/open/floor/mineral/plastitanium/red,
 /area/ruin/space/has_grav/syndicate_forgotten_ship)
-"qK" = (
-/obj/machinery/turretid{
-	control_area = "/area/ruin/space/has_grav/syndicate_forgotten_ship";
-	enabled = 0;
-	icon_state = "control_kill";
-	lethal = 1;
-	name = "Ship turret control panel";
-	pixel_y = 32;
-	req_access = list("syndicate")
-	},
-/turf/open/floor/mineral/plastitanium/red,
+"of" = (
+/obj/structure/table/reinforced,
+/obj/item/paper,
+/obj/item/pen,
+/obj/machinery/light/directional/south,
+/obj/machinery/computer/security/telescreen/forgotten_ship/sci/directional/south,
+/turf/open/floor/carpet/royalblack,
 /area/ruin/space/has_grav/syndicate_forgotten_ship)
 "rz" = (
 /obj/machinery/airalarm/directional/north,
@@ -2011,7 +2010,7 @@ vR
 aw
 bZ
 aB
-bn
+of
 bZ
 tv
 cE
@@ -2759,7 +2758,7 @@ aa
 aa
 aa
 bZ
-qK
+ez
 aw
 bZ
 br
