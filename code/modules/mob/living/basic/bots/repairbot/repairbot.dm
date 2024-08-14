@@ -29,20 +29,22 @@
 	var/obj/item/weldingtool/repairbot/our_welder
 	///our crowbar
 	var/obj/item/crowbar/our_crowbar
+	///our screwdriver
+	var/obj/item/screwdriver/our_screwdriver
 	///our iron rods
 	var/obj/item/stack/rods/our_rods
 	///possible interactions
 	var/static/list/possible_stack_interactions = list(
 		/obj/item/stack/sheet/iron = typecacheof(list(/obj/structure/girder)),
 		/obj/item/stack/tile = typecacheof(list(/turf/open/space, /turf/open/floor/plating)),
-		/obj/item/stack/sheet/glass = typecacheof(list(/obj/structure/grille)),
+		/obj/item/stack/sheet/glass = typecacheof(list(/obj/structure/grille, /obj/structure/window_frame)),
 	)
 	var/static/list/possible_tool_interactions = list(
 		/obj/item/weldingtool/repairbot = typecacheof(list(/obj/machinery, /obj/structure/window)),
 		/obj/item/crowbar = typecacheof(list(/turf/open/floor)),
 	)
 	///our flags
-	var/repairbot_flags = REPAIRBOT_FIX_BREACHES | REPAIRBOT_FIX_GIRDERS | REPAIRBOT_FIX_GRILLES | REPAIRBOT_REPLACE_TILES | REPAIRBOT_BUILD_GIRDERS
+	var/repairbot_flags = REPAIRBOT_FIX_BREACHES | REPAIRBOT_FIX_GIRDERS | REPAIRBOT_REPLACE_WINDOWS | REPAIRBOT_REPLACE_TILES | REPAIRBOT_BUILD_GIRDERS
 	///our color
 	var/toolbox_color = "#445eb3"
 	///toolbox type we drop on death
@@ -54,10 +56,11 @@
 		/datum/action/cooldown/mob_cooldown/bot/build_girder = BB_GIRDER_BUILD_ABILITY,
 	)
 	grant_actions_by_list(abilities)
-	add_traits(list(TRAIT_SPACEWALK, TRAIT_NEGATES_GRAVITY, TRAIT_MOB_MERGE_STACKS, TRAIT_FIREDOOR_OPENNER), INNATE_TRAIT)
+	add_traits(list(TRAIT_SPACEWALK, TRAIT_NEGATES_GRAVITY, TRAIT_MOB_MERGE_STACKS, TRAIT_FIREDOOR_OPENER), INNATE_TRAIT)
 	our_welder = new(src)
 	our_welder.switched_on(src)
 	our_crowbar = new(src)
+	our_screwdriver = new(src)
 	our_rods = new(src, our_rods::max_amount)
 	//testing purposes
 	our_iron = new(src, our_iron::max_amount)
@@ -122,6 +125,11 @@
 		var/turf/open/open_target = target
 		if(open_target.broken || open_target.burnt)
 			our_welder?.melee_attack_chain(src, open_target)
+
+	if(istype(target, /obj/structure/window))
+		var/obj/structure/window/target_window = target
+		if(!target_window.anchored)
+			our_screwdriver?.melee_attack_chain(src, target_window)
 
 	//stack interactions
 	for(var/type in possible_stack_interactions)
@@ -188,33 +196,30 @@
 	. = ..()
 	icon_state = base_icon_state
 
-/mob/living/basic/bot/proc/attempt_access(mob/bot, obj/door_attempt)
-	SIGNAL_HANDLER
-
+/mob/living/basic/bot/repairbot/attempt_access(mob/bot, obj/door_attempt)
 	. = ..()
 	if(istype(door_attempt, /obj/machinery/door/firedoor) && door_attempt.density)
-		our_crowbar?.melee_attack_chain(src, door_attempt)
-
+		INVOKE_ASYNC(our_crowbar, TYPE_PROC_REF(/obj/item, melee_attack_chain), src, door_attempt)
 
 /mob/living/basic/bot/repairbot/ui_data(mob/user)
 	var/list/data = ..()
 	if(!(bot_access_flags & BOT_COVER_LOCKED) || issilicon(user) || isAdminGhostAI(user))
 		data["custom_controls"]["fix_breaches"] = repairbot_flags & REPAIRBOT_FIX_BREACHES
-		data["custom_controls"]["fix_grilles"] = repairbot_flags & REPAIRBOT_FIX_GRILLES
+		data["custom_controls"]["replace_windows"] = repairbot_flags & REPAIRBOT_REPLACE_WINDOWS
 		data["custom_controls"]["replace_tiles"] = repairbot_flags & REPAIRBOT_REPLACE_TILES
 		data["custom_controls"]["fix_girders"] = repairbot_flags & REPAIRBOT_FIX_GIRDERS
 		data["custom_controls"]["build_girders"] = repairbot_flags & REPAIRBOT_BUILD_GIRDERS
 	return data
 
-/mob/living/basic/bot/honkbot/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
+/mob/living/basic/bot/repairbot/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if(. || !isliving(ui.user) || (bot_access_flags & BOT_COVER_LOCKED) && !(ui.user.has_unlimited_silicon_privilege))
 		return
 	switch(action)
 		if("fix_breaches")
 			repairbot_flags ^= REPAIRBOT_FIX_BREACHES
-		if("fix_grilles")
-			repairbot_flags ^= REPAIRBOT_FIX_GRILLES
+		if("replace_windows")
+			repairbot_flags ^= REPAIRBOT_REPLACE_WINDOWS
 		if("replace_tiles")
 			repairbot_flags ^= REPAIRBOT_REPLACE_TILES
 		if("fix_girders")

@@ -1249,4 +1249,7 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 ///Mob that can merge stacks in its contents
 #define TRAIT_MOB_MERGE_STACKS "mob_merge_stacks"
 
+//things that can pass through airlocks
+#define TRAIT_FIREDOOR_OPENER "firedoor_opener"
+
 // END TRAIT DEFINES

@@ -19,7 +19,7 @@ DEFINE_BITFIELD(honkbot_flags, list(
 ///can we fix breaches
 #define REPAIRBOT_FIX_BREACHES (1<<0)
 ///can we fix grilles
-#define REPAIRBOT_FIX_GRILLES (1<<1)
+#define REPAIRBOT_REPLACE_WINDOWS (1<<1)
 ///can we replace tiles
 #define REPAIRBOT_REPLACE_TILES (1<<2)
 ///can we fix girders
@@ -29,7 +29,7 @@ DEFINE_BITFIELD(honkbot_flags, list(
 
 DEFINE_BITFIELD(repairbot_flags, list(
 	"FIX_BREACHES" = REPAIRBOT_FIX_BREACHES,
-	"FIX_GRILLES" = REPAIRBOT_FIX_GRILLES,
+	"REPLACE_WINDOWS" = REPAIRBOT_REPLACE_WINDOWS,
 	"REPLACE_TILES" = REPAIRBOT_REPLACE_TILES,
 	"FIX_GIRDERS" = REPAIRBOT_FIX_GIRDERS,
 	"BUILD_GIRDERS" = REPAIRBOT_BUILD_GIRDERS,
@@ -161,7 +161,7 @@ DEFINE_BITFIELD(repairbot_flags, list(
 ///key that holds the girder we should place a wall over
 #define BB_GIRDER_TO_WALL_TARGET "girder_to_wall"
 ///key that holds the grille we must fix
-#define BB_GRILLE_TARGET "grille_target"
+#define BB_WINDOW_FRAMETARGET "grille_target"
 ///key that holds the machinery we repair with a welder
 #define BB_WELDER_TARGET "welder_target"
 ///our wall girder ability

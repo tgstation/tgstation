@@ -5,7 +5,7 @@
 		/datum/ai_planning_subtree/replace_floors/breaches,
 		/datum/ai_planning_subtree/wall_girder,
 		/datum/ai_planning_subtree/build_girder,
-		/datum/ai_planning_subtree/fix_grille,
+		/datum/ai_planning_subtree/replace_window,
 		/datum/ai_planning_subtree/replace_floors,
 		/datum/ai_planning_subtree/welder_structures,
 		/datum/ai_planning_subtree/salute_authority,
@@ -18,7 +18,7 @@
 		BB_BEACON_TARGET,
 		BB_PREVIOUS_BEACON_TARGET,
 		BB_WELDER_TARGET,
-		BB_GRILLE_TARGET,
+		BB_WINDOW_FRAMETARGET,
 	)
 	ai_traits = PAUSE_DURING_DO_AFTER
 
@@ -136,19 +136,19 @@
 
 
 ///subtree to place glass on windows
-/datum/ai_planning_subtree/fix_grille
+/datum/ai_planning_subtree/replace_window
 
-/datum/ai_planning_subtree/fix_grille/SelectBehaviors(datum/ai_controller/controller, seconds_per_tick)
-	var/mob/living/bot/repairbot/living_pawn = controller.pawn
-	if(!(bot_pawn.repairbot_flags & REPAIRBOT_FIX_GRILLES))
+/datum/ai_planning_subtree/replace_window/SelectBehaviors(datum/ai_controller/controller, seconds_per_tick)
+	var/mob/living/basic/bot/repairbot/living_pawn = controller.pawn
+	if(!(living_pawn.repairbot_flags & REPAIRBOT_REPLACE_WINDOWS))
 		return
 	if(!locate(/obj/item/stack/sheet/glass) in living_pawn)
 		return
-	if(controller.blackboard_key_exists(BB_GRILLE_TARGET))
-		controller.queue_behavior(/datum/ai_behavior/bot_interact, BB_GRILLE_TARGET)
+	if(controller.blackboard_key_exists(BB_WINDOW_FRAMETARGET))
+		controller.queue_behavior(/datum/ai_behavior/bot_interact, BB_WINDOW_FRAMETARGET)
 		return SUBTREE_RETURN_FINISH_PLANNING
-	var/static/list/searchable_grilles = typecacheof(list(/obj/structure/grille))
-	controller.queue_behavior(/datum/ai_behavior/bot_search/valid_grille_target, BB_GRILLE_TARGET, searchable_grilles)
+	var/static/list/searchable_grilles = typecacheof(list(/obj/structure/grille, /obj/structure/window_frame))
+	controller.queue_behavior(/datum/ai_behavior/bot_search/valid_grille_target, BB_WINDOW_FRAMETARGET, searchable_grilles)
 
 /datum/ai_behavior/bot_search/valid_grille_target/valid_target(datum/ai_controller/basic_controller/bot/controller, obj/structure/my_target)
 	if(locate(/obj/structure/window) in get_turf(my_target))
@@ -160,8 +160,8 @@
 /datum/ai_planning_subtree/wall_girder
 
 /datum/ai_planning_subtree/wall_girder/SelectBehaviors(datum/ai_controller/controller, seconds_per_tick)
-	var/mob/living/bot/repairbot/living_pawn = controller.pawn
-	if(!(bot_pawn.repairbot_flags & REPAIRBOT_FIX_GIRDERS))
+	var/mob/living/basic/bot/repairbot/living_pawn = controller.pawn
+	if(!(living_pawn.repairbot_flags & REPAIRBOT_FIX_GIRDERS))
 		return
 	var/obj/item/stack/sheet/iron/my_iron = locate() in living_pawn
 	if(isnull(my_iron) || my_iron.amount < 2)
@@ -182,18 +182,11 @@
 	if(controller.blackboard_key_exists(BB_WELDER_TARGET))
 		controller.queue_behavior(/datum/ai_behavior/bot_interact, BB_WELDER_TARGET)
 		return SUBTREE_RETURN_FINISH_PLANNING
-	var/static/list/searchable_objects = typecacheof(list(/obj/structure, /obj/machinery))
+	var/static/list/searchable_objects = typecacheof(list(/obj/structure/window))
 	controller.queue_behavior(/datum/ai_behavior/bot_search/valid_welder_target, BB_WELDER_TARGET, searchable_objects)
 
 /datum/ai_behavior/bot_search/valid_welder_target
 
 /datum/ai_behavior/bot_search/valid_welder_target/valid_target(datum/ai_controller/basic_controller/bot/controller, obj/my_target)
-	if(my_target.get_integrity() >= my_target.max_integrity)
-		return FALSE
-	var/static/list/blacklist = typecacheof(list(
-		/obj/machinery/camera,
-		/obj/machinery/door,
-		/obj/structure/grille,
-	))
-	return (!is_type_in_typecache(my_target, blacklist))
+	return (my_target.get_integrity() >= my_target.max_integrity || !my_target.anchored)
 
