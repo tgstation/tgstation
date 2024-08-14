@@ -99,7 +99,7 @@ WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/structure/urinal)
 /obj/item/food/urinalcake
 	name = "urinal cake"
 	desc = "The noble urinal cake, protecting the station's pipes from the station's pee. Do not eat."
-	icon = 'icons/obj/structures/watercloset.dmi'
+	icon = 'icons/obj/maintenmaintenance_loot.dmi'
 	icon_state = "urinalcake"
 	w_class = WEIGHT_CLASS_TINY
 	food_reagents = list(
