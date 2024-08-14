@@ -7,7 +7,7 @@
 		/datum/ai_planning_subtree/build_girder,
 		/datum/ai_planning_subtree/replace_window,
 		/datum/ai_planning_subtree/replace_floors,
-		/datum/ai_planning_subtree/welder_structures,
+		/datum/ai_planning_subtree/fix_window,
 		/datum/ai_planning_subtree/salute_authority,
 		/datum/ai_planning_subtree/find_patrol_beacon,
 	)
@@ -176,17 +176,17 @@
 	return isfloorturf(my_target.loc)
 
 ///subtree to repair machines with welders
-/datum/ai_planning_subtree/welder_structures
+/datum/ai_planning_subtree/fix_window
 
-/datum/ai_planning_subtree/welder_structures/SelectBehaviors(datum/ai_controller/controller, seconds_per_tick)
+/datum/ai_planning_subtree/fix_window/SelectBehaviors(datum/ai_controller/controller, seconds_per_tick)
 	if(controller.blackboard_key_exists(BB_WELDER_TARGET))
 		controller.queue_behavior(/datum/ai_behavior/bot_interact, BB_WELDER_TARGET)
 		return SUBTREE_RETURN_FINISH_PLANNING
 	var/static/list/searchable_objects = typecacheof(list(/obj/structure/window))
-	controller.queue_behavior(/datum/ai_behavior/bot_search/valid_welder_target, BB_WELDER_TARGET, searchable_objects)
+	controller.queue_behavior(/datum/ai_behavior/bot_search/valid_window_fix, BB_WELDER_TARGET, searchable_objects)
 
-/datum/ai_behavior/bot_search/valid_welder_target
+/datum/ai_behavior/bot_search/valid_window_fix
 
-/datum/ai_behavior/bot_search/valid_welder_target/valid_target(datum/ai_controller/basic_controller/bot/controller, obj/my_target)
+/datum/ai_behavior/bot_search/valid_window_fix/valid_target(datum/ai_controller/basic_controller/bot/controller, obj/my_target)
 	return (my_target.get_integrity() >= my_target.max_integrity || !my_target.anchored)
 
