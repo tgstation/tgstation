@@ -54,7 +54,7 @@
 /datum/component/turf_mounted/proc/on_turf_changing(datum/source, path, new_baseturfs, flags, post_change_callbacks)
 	SIGNAL_HANDLER
 	if (ispath(path, /turf/open))
-		drop_turfmount()
+		drop_mount()
 
 
 /**
