@@ -16,6 +16,7 @@ LINEN BINS
 	pickup_sound = 'sound/items/handling/cloth_pickup.ogg'
 	slot_flags = ITEM_SLOT_NECK
 	layer = BELOW_MOB_LAYER
+	base_pixel_z = 12
 	throwforce = 0
 	throw_speed = 1
 	throw_range = 2
@@ -136,7 +137,7 @@ LINEN BINS
 	UnregisterSignal(sleeper, COMSIG_QDELETING)
 	balloon_alert(sleeper, "smoothed sheets")
 	layer = initial(layer)
-	pixel_z = 0
+	pixel_z = base_pixel_z
 	signal_sleeper = null
 
 // We need to do this in case someone picks up a bedsheet while a mob is covered up
@@ -150,7 +151,7 @@ LINEN BINS
 	UnregisterSignal(sleeper, COMSIG_MOVABLE_MOVED)
 	UnregisterSignal(sleeper, COMSIG_LIVING_SET_BODY_POSITION)
 	UnregisterSignal(sleeper, COMSIG_QDELETING)
-	pixel_z = 0
+	pixel_z = base_pixel_z
 	signal_sleeper = null
 
 /obj/item/bedsheet/blue
