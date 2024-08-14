@@ -4,7 +4,7 @@
 /obj/machinery/asteroid_magnet
 	name = "asteroid magnet computer"
 	desc = "Control panel for the asteroid magnet."
-	icon_state = "blackbox"
+	icon_state = "asteroid_magnet"
 	resistance_flags = INDESTRUCTIBLE
 	use_power = NO_POWER_USE
 
