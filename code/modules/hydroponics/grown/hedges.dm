@@ -34,7 +34,7 @@
 /obj/structure/hedge
 	name = "hedge"
 	desc = "A large bushy hedge."
-	icon = 'icons/obj/smooth_structures/hedge.dmi'
+	icon = 'icons/obj/structures/smooth/hedge.dmi'
 	icon_state = "hedge-0"
 	base_icon_state = "hedge"
 	smoothing_flags = SMOOTH_BITMASK

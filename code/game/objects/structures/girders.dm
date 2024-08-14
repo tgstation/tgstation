@@ -1,6 +1,6 @@
 /obj/structure/girder
 	name = "girder"
-	icon = 'icons/obj/structures_tall.dmi'
+	icon = 'icons/obj/structures/tall.dmi'
 	icon_state = "girder"
 	desc = "A large structural assembly made out of metal; It requires a layer of iron before it can be considered a wall."
 	anchored = TRUE
