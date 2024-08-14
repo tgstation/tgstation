@@ -314,6 +314,15 @@ rough example of the "cone" made by the 3 dirs checked
 		loc = loc.loc
 	return null
 
+///Returns the last atom type in the specified loc
+/proc/get_highest_loc(atom/loc, type)
+	var/atom/last_found = null
+	while(loc)
+		if(istype(loc, type))
+			last_found = loc
+		loc = loc.loc
+	return last_found
+
 ///Returns true if the src countain the atom target
 /atom/proc/contains(atom/target)
 	if(!target)
