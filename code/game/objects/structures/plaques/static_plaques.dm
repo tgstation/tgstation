@@ -257,9 +257,7 @@ WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/structure/plaque/static_plaque/golden/commis
 
 WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/structure/plaque/static_plaque/golden/commission/ks13)
 
-//These are plaques that aren't made of metal, so we'll just consider them signs. Those are made of plastic (default) or wood, not gold.
-//See: code>game>objects>structures>signs>_signs.dm
-
+/// These are plaques that aren't made of metal.
 /obj/structure/plaque/static_plaque/kiddie
 	name = "\improper AI developers plaque"
 	desc = "Next to the extremely long list of names and job titles, there is a drawing of a little child. The child appears to be disabled. Beneath the image, someone has scratched the word \"PACKETS\"."
