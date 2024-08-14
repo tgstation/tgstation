@@ -153,7 +153,7 @@ WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/structure/plaque/static_plaque/golden/commis
 
 // Wawastation: added add date here
 /obj/structure/plaque/static_plaque/golden/commission/wawa
-	desc = "Spinward Sector Station SS-13\n'Wawa' Class Outpost\nCommissioned 11/03/add here\n'Forever Vertical'"
+	desc = "Spinward Sector Station SS-13\n'Wawa' Class Outpost\nCommissioned 11/03/2564\n'Forever Vertical'"
 
 WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/structure/plaque/static_plaque/golden/commission/wawa)
 
