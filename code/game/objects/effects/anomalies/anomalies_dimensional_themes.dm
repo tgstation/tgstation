@@ -252,7 +252,7 @@
 
 /datum/dimension_theme/radioactive
 	name = "Radioactive"
-	icon = 'icons/obj/ore.dmi'
+	icon = 'icons/obj/mining_zones/ore.dmi'
 	icon_state = "uranium"
 	material = /datum/material/uranium
 	sound = 'sound/items/welder.ogg'
