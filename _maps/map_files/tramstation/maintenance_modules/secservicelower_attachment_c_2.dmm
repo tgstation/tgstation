@@ -18,9 +18,15 @@
 "g" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/table,
-/obj/effect/spawner/random/entertainment/cigarette_pack,
-/obj/effect/spawner/random/entertainment/dice,
-/obj/effect/spawner/random/entertainment/money_small,
+/obj/effect/spawner/random/entertainment/cigarette_pack{
+	pixel_y = 7
+	},
+/obj/effect/spawner/random/entertainment/dice{
+	pixel_y = 10
+	},
+/obj/effect/spawner/random/entertainment/money_small{
+	pixel_y = 9
+	},
 /turf/open/floor/iron/smooth,
 /area/station/maintenance/port/central)
 "l" = (
