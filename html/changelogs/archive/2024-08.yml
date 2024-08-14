@@ -185,3 +185,31 @@
   - image: Updated clipboard sprite, adds white and black clipboard skins for med/sci
       and security
   - bugfix: Tinacusiate no longer changes hearing spans for every single person in-game
+2024-08-08:
+  MTandi:
+  - bugfix: Smartfridges properly dispense `\Improper` items
+  Rhials:
+  - sound: Zipties no longer make handcuff noises when picked up or dropped.
+2024-08-09:
+  SmArtKar:
+  - bugfix: Circuit UI scale no longer has weird rounding
+  - bugfix: Circuit UI no longer gets covered by components menu
+  - bugfix: Fixed Charlie MOD installer not installing MODsuit unless you have a backpack
+      to drop
+2024-08-10:
+  FlufflesTheDog:
+  - bugfix: tadpoles can actually be scooped from ponds
+2024-08-11:
+  DaCoolBoss:
+  - spellcheck: fixed many incorrect spellings of Waffle Corp and Donk Co.
+2024-08-12:
+  SmArtKar:
+  - bugfix: You no longer kill yourself in cockroach form if you attempt to unposess
+      it
+  grungussuss:
+  - sound: ore and sandstone blocks have their own sound
+  grungussuss and kayozz:
+  - sound: white noise from some ambience sounds has been pruned
+2024-08-13:
+  Majkl-J:
+  - bugfix: Felinids no longer phase through diagonal gaps upon seeing a laser

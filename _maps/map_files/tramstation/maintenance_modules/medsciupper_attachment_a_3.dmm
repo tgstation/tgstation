@@ -57,11 +57,6 @@
 	},
 /obj/effect/decal/cleanable/dirt,
 /obj/item/storage/box/syringes,
-/obj/structure/sign/warning/secure_area{
-	pixel_x = 32;
-	name = "TESTING RANGE sign";
-	desc = "A warning sign which reads 'TESTING RANGE'."
-	},
 /obj/effect/turf_decal/trimline/purple/filled/line{
 	dir = 6
 	},
@@ -185,7 +180,6 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/item/target/clown,
 /obj/structure/sign/warning/secure_area{
-	pixel_x = 32;
 	name = "TESTING RANGE sign";
 	desc = "A warning sign which reads 'TESTING RANGE'."
 	},
