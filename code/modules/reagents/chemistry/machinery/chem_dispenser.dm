@@ -1,4 +1,5 @@
 /obj/machinery/chem_dispenser
+	SET_BASE_VISUAL_PIXEL(0, DEPTH_OFFSET)
 	name = "chem dispenser"
 	desc = "Creates and dispenses chemicals."
 	density = TRUE

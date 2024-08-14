@@ -2,7 +2,7 @@
 
 // Yes, i'm talking about cabbage, baby! No, just kidding, but cabbages are the precursor to replica pods, so they are here as well.
 /obj/item/seeds/cabbage
-	name = "pack of cabbage seeds"
+	name = "cabbage seed pack"
 	desc = "These seeds grow into cabbages."
 	icon_state = "seed-cabbage"
 	species = "cabbage"
@@ -31,7 +31,7 @@
 
 ///The actual replica pods themselves!
 /obj/item/seeds/replicapod
-	name = "pack of replica pod seeds"
+	name = "replica pod seed pack"
 	desc = "These seeds grow into replica pods. They say these are used to harvest humans."
 	icon_state = "seed-replicapod"
 	plant_icon_offset = 2

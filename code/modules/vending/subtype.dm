@@ -10,6 +10,7 @@
 	circuit = null
 	product_slogans = "Spawn \" too annoying? Too lazy to open game panel? This one's for you!;Subtype vendor, for all your debugging woes!"
 	default_price = 0
+	onstation = FALSE
 	/// Spawns coders by default
 	var/type_to_vend = /obj/item/food/grown/citrus
 

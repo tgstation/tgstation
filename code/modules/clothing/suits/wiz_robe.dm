@@ -222,6 +222,21 @@
 	icon_state = "durathread-fake"
 	inhand_icon_state = null
 	armor_type = /datum/armor/robe_durathread
+	allowed = list(
+		/obj/item/cultivator,
+		/obj/item/geneshears,
+		/obj/item/graft,
+		/obj/item/hatchet,
+		/obj/item/plant_analyzer,
+		/obj/item/reagent_containers/cup/beaker,
+		/obj/item/reagent_containers/cup/bottle,
+		/obj/item/reagent_containers/cup/tube,
+		/obj/item/reagent_containers/spray/pestspray,
+		/obj/item/reagent_containers/spray/plantbgone,
+		/obj/item/secateurs,
+		/obj/item/seeds,
+		/obj/item/storage/bag/plants,
+	)
 
 /datum/armor/robe_durathread
 	melee = 15
