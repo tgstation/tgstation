@@ -6,8 +6,8 @@
 	var/icon/final_icon
 
 /datum/unit_test/transformation_sting/Run()
-	var/mob/living/carbon/human/rotate/ling = setup_ling()
-	var/mob/living/carbon/human/rotate/victim = setup_victim()
+	var/mob/living/carbon/human/ling = setup_ling()
+	var/mob/living/carbon/human/victim = setup_victim()
 	var/datum/antagonist/changeling/ling_datum = IS_CHANGELING(ling)
 
 	// Get the ability we're testing
@@ -70,7 +70,7 @@
 	return victim
 
 /datum/unit_test/transformation_sting/proc/setup_ling()
-	var/mob/living/carbon/human/rotate/ling = allocate(/mob/living/carbon/human/consistent)
+	var/mob/living/carbon/human/ling = allocate(/mob/living/carbon/human/consistent/rotate)
 	// Because we use two consistent humans, we need to change some of the features to know they're actually updating to new values.
 	// The more DNA features and random things we change, the more likely we are to catch something not updating correctly.
 	// Yeah guess who/what this is, I dare you.
@@ -98,8 +98,8 @@
 
 	return ling
 
-/mob/living/carbon/human/rotate
+/mob/living/carbon/human/consistent/rotate
 
-/mob/living/carbon/human/rotate/setDir(newdir)
+/mob/living/carbon/human/consistent/rotate/setDir(newdir)
 	. = ..()
 	stack_trace("WHAT HOW WHO WOULD DO THIS TO ME ON THE EVENING OF MY SON'S WEDDING")
