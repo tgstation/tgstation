@@ -67,12 +67,13 @@
 3438179 = 4 # KoJIT2009
 3503632 = 3 # BebeYoshi
 3589655 = 71 # Ryll-Ryll
-3625094 = 183 # MTandi
+3625094 = 180 # MTandi
 3681297 = 14 # monster860
 3789327 = 23 # iprice
 3805405 = 7 # vpellen
 3839620 = 14 # QualityVan
 3855300 = 7 # Kraseo
+3855802 = 6 # amylizzle
 3886584 = 5 # ChangelingRain
 3888532 = 19 # ACCount12
 3894717 = -4 # Higgin
@@ -101,7 +102,7 @@
 5092199 = 3 # EliteCreature
 5105765 = -6 # Jakksergal
 5133785 = 13 # pigeonsk
-5150427 = 15 # Roryl-c
+5150427 = 18 # Runi-c
 5155917 = 12 # Iatots
 5169683 = -5 # Niknakflak
 5194834 = 196 # actioninja
@@ -154,7 +155,7 @@
 6917698 = 7 # KubeRoot
 6952402 = -2 # Avunia
 6972764 = 16 # coldud13
-7019927 = -8 # TheVekter
+7019927 = -13 # TheVekter
 7061232 = 4 # JJtheGerman
 7063681 = 3 # dalmationer
 7069733 = 422 # MrStonedOne
@@ -258,9 +259,9 @@
 13106907 = 7 # Rinoka
 13247917 = 4 # Qbopper
 13302055 = -5 # Superlagg
-13316533 = 5 # ShadowLarkens
+13316533 = 11 # ShadowLarkens
 13362609 = 22 # TetraK1
-13398309 = 551 # vinylspiders
+13398309 = 554 # vinylspiders
 13591098 = 5 # Lexorion
 13609775 = 10 # SeigaSeiga
 13697285 = 6 # CRITAWAKETS
@@ -330,7 +331,7 @@
 18459142 = 7 # Citinited
 18462134 = 4 # Jimmius
 18471896 = 7 # FantasticFwoosh
-18516373 = 1 # imedial
+18516373 = 4 # imedial
 18584493 = 4 # WondaMegapon
 18611020 = 100 # XDTM
 18622740 = 10 # intrnlerr
@@ -363,7 +364,7 @@
 20996272 = 5 # factoryman942
 21011228 = 6 # xmikey555
 21224958 = 3 # Xsdew
-21979502 = 81 # GPeckman
+21979502 = 79 # GPeckman
 22010639 = 11 # tortellinitony
 22015544 = 3 # milktao
 22053757 = 8 # BeeSting12
@@ -462,7 +463,7 @@
 28731893 = 7 # Dionant
 28809925 = 22 # GLACoding
 28861083 = 10 # Ketrai
-28870487 = 146 # Rhials
+28870487 = 149 # Rhials
 29008542 = 53 # MrDoomBringer
 29074600 = 10 # InterroLouis
 29100832 = -7 # MetalClone
@@ -500,7 +501,7 @@
 31856346 = -6 # Sebbe9123
 31931237 = 25 # larentoun
 31995558 = 4 # Michiyamenotehifunana
-32263167 = 17 # raffclar
+32263167 = 23 # raffclar
 32270644 = 6 # Artemchik542
 32343405 = 6 # ActualRory
 32391752 = 246 # 81Denton
@@ -569,7 +570,7 @@
 37200424 = 4 # SkippuSetsuna
 37246588 = 18 # wesoda25
 37266586 = -3 # RazorManager89
-37270891 = 314 # Watermelon914
+37270891 = 317 # Watermelon914
 37456678 = 22 # Archanial
 37497534 = 6 # zxaber
 37563222 = 4 # BunnyBot5000
@@ -663,7 +664,7 @@
 44099098 = 5 # Arachnidnexus
 44104681 = 38 # VladinXXV
 44147031 = 13 # Farquaar
-44149906 = 7 # DATA-xPUNGED
+44149906 = 3 # DATA-xPUNGED
 44277885 = 7 # gy1ta23
 44288975 = 0 # Sibg
 44334376 = 24 # Gaxeer
@@ -672,7 +673,7 @@
 44510065 = 10 # k-k-karma
 44647111 = 6 # Boopideedoo
 44654353 = 6 # malton33
-44720187 = 469 # SmArtKar
+44720187 = 506 # SmArtKar
 44807268 = 4 # MadoFrog
 44811257 = 44 # Shadow-Quill
 44842426 = 1 # Swiftkor
@@ -716,6 +717,7 @@
 47338680 = 52 # BlueMemesauce
 47342933 = 3 # yeeyeh
 47435736 = 4 # emptyexpression
+47579821 = 3 # loganuk
 47710522 = 70 # distributivgesetz
 47812760 = 6 # KwinOriginal
 47932666 = -1 # Mouseofthecake
@@ -799,7 +801,7 @@
 55374212 = 7 # GuillaumePrata
 55415991 = 18 # spessbandit
 55540334 = 3 # PolishUser
-55666666 = 152 # itseasytosee
+55666666 = 155 # itseasytosee
 55758339 = 3 # Nebulacrity
 55806451 = 3 # L0pz
 55851108 = 8 # Vanadiom
@@ -855,7 +857,7 @@
 60656530 = 49 # Ewwmewgewd
 60776130 = 3 # vorpal-void
 60786233 = 5 # Vladdicktorpedo
-60922927 = -6 # hack-wrench
+60922927 = -9 # hack-wrench
 61211748 = 9 # Jackal-boop
 61233275 = 7 # nauticalfellow
 61243846 = 10 # githubuser4141
@@ -944,7 +946,7 @@
 69182855 = 0 # Elli-Skala
 69210247 = 5 # Bampotio
 69338705 = 25 # Horatio22
-69348667 = 10 # Treachce
+69348667 = 14 # Treachce
 69398298 = 4 # KingkumaArt
 69724863 = 8 # TJatPBnJ
 69762909 = 11 # AyIong
@@ -989,7 +991,7 @@
 75863639 = 222 # Sealed101
 75865592 = 4 # RunKittenzRComing
 75904284 = 10 # kinneb
-75919495 = 29 # Dmeto
+75919495 = 30 # Dmeto
 76002401 = 1 # dawsonkeyes
 76065506 = 9 # Axidyuwu
 76170211 = 29 # castawaynont
@@ -1040,7 +1042,7 @@
 82284709 = 1 # CMDR-Gungnir
 82303819 = -5 # Kangarad
 82319489 = 1 # AnCopper
-82386923 = 42 # Paxilmaniac
+82386923 = 43 # Paxilmaniac
 82665345 = 1 # UnokiAs
 82850673 = 105 # ChungusGamer666
 83368538 = 26 # SpaceDragon00
@@ -1100,7 +1102,7 @@
 95765134 = 19 # Ebb-Real
 96220088 = -6 # Acantharctia
 96358436 = -2 # SylvetteSylph
-96586172 = 123 # Sadboysuss
+96586172 = 113 # Sadboysuss
 97582790 = 12 # Jackriip
 97645027 = 3 # MGOOOOOO
 97811257 = 4 # winterboekje
@@ -1116,7 +1118,7 @@
 99609912 = 6 # Voudez
 99915170 = -3 # Oricana-16
 99981766 = 0 # projectkepler-ru
-101240878 = -3 # Astrogem2
+101240878 = 0 # Astrogem2
 101573582 = 1 # Simplehorror
 101627558 = 19 # Pandarsenic
 102194057 = 12 # Thlumyn
@@ -1167,7 +1169,7 @@
 110836368 = 3 # NPC1314
 111551669 = -5 # AIUNBOLT
 112458553 = 10 # dopamiin0
-112967882 = 10 # Kocma-san
+112967882 = 4 # Kocma-san
 113535457 = 26 # cnleth
 114047053 = 2 # uaioy
 114319169 = 3 # SargesC
@@ -1208,7 +1210,7 @@
 136390975 = 9 # vvvv-vvvv
 137328283 = 62 # intercepti0n
 138069572 = 3 # siliconOpossum
-138636438 = 225 # Ben10Omintrix
+138636438 = 231 # Ben10Omintrix
 139035652 = 3 # Blockaboo
 139372157 = -1 # starrm4nn
 139387950 = -5 # generalthrax
