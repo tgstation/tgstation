@@ -238,7 +238,7 @@ GLOBAL_VAR_INIT(hhMysteryRoomNumber, rand(1, 999999))
 	name = "Hilbert's Hotel Room"
 	mappath = "_maps/templates/hilbertshotel.dmm"
 	var/landingZoneRelativeX = 2
-	var/landingZoneRelativeY = 8
+	var/landingZoneRelativeY = 12
 
 /datum/map_template/hilbertshotel/empty
 	name = "Empty Hilbert's Hotel Room"

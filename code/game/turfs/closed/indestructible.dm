@@ -2,6 +2,7 @@
 	name = "wall"
 	desc = "Effectively impervious to conventional methods of destruction."
 	icon = 'icons/turf/walls/metal_wall.dmi'
+	icon_state = "0-2"
 	explosive_resistance = 50
 	smoothing_flags = SMOOTH_BITMASK
 	smoothing_groups = SMOOTH_GROUP_WALLS + SMOOTH_GROUP_TALL_WALLS + SMOOTH_GROUP_CLOSED_TURFS
@@ -117,7 +118,6 @@ INITIALIZE_IMMEDIATE(/turf/closed/indestructible/splashscreen)
 	name = "reinforced titanium imitation wall"
 	desc = "A huge chunk of reinforced metal used to separate rooms. Naturally, to cut down on costs, this is just a really good paint job to resemble titanium. Effectively impervious to conventional methods of destruction."
 	icon = 'icons/turf/walls/shuttle_wall.dmi'
-	icon_state = "0-2"
 	base_icon_state = "shuttle_wall"
 
 /turf/closed/indestructible/reinforced/titanium/nodiagonal
@@ -213,9 +213,9 @@ INITIALIZE_IMMEDIATE(/turf/closed/indestructible/splashscreen)
 
 /turf/closed/indestructible/opsglass
 	name = "window"
-	icon = MAP_SWITCH('icons/obj/smooth_structures/windows/reinforced_window.dmi', 'icons/obj/smooth_structures/structure_variations.dmi')
+	icon = MAP_SWITCH('icons/obj/smooth_structures/windows/plastitanium_window.dmi', 'icons/obj/smooth_structures/plastitanium_window.dmi')
 #ifdef MAP_EDITOR
-	icon_state = "fake_window"
+	icon_state = "plastitanium_window-0"
 #endif
 	layer = ABOVE_OBJ_LAYER
 	opacity = FALSE
@@ -236,7 +236,7 @@ INITIALIZE_IMMEDIATE(/turf/closed/indestructible/splashscreen)
 	. = ..()
 	. += mutable_appearance('icons/obj/smooth_structures/window_grille_black.dmi', "window_grille_black-[smoothing_junction]", BELOW_OBJ_LAYER)
 	. += mutable_appearance('icons/obj/smooth_structures/window_grille.dmi', "window_grille-[smoothing_junction]", BELOW_OBJ_LAYER)
-	. += mutable_appearance('icons/obj/smooth_structures/window_frames/frame_faces/window_frame_normal.dmi', "window_frame_normal-[smoothing_junction]", BELOW_OBJ_LAYER, appearance_flags = KEEP_APART)
+	. += mutable_appearance('icons/obj/smooth_structures/window_frames/frame_faces/window_frame_plastitanium.dmi', "window_frame_plastitanium-[smoothing_junction]", BELOW_OBJ_LAYER, appearance_flags = KEEP_APART)
 
 /turf/closed/indestructible/fakedoor
 	name = "airlock"
@@ -246,16 +246,26 @@ INITIALIZE_IMMEDIATE(/turf/closed/indestructible/splashscreen)
 	smoothing_flags = NONE
 	canSmoothWith = null
 	smoothing_groups = null
+	/// What kind of turf should be visually represented under this door?
+	var/turf/floor_to_copy = /turf/open/floor/plating
+
+/turf/closed/indestructible/fakedoor/Initialize(mapload)
+	. = ..()
+	underlays += mutable_appearance(floor_to_copy.icon, floor_to_copy.icon_state, offset_spokesman = src, plane = FLOOR_PLANE)
 
 /turf/closed/indestructible/fakedoor/maintenance
 	icon = 'icons/obj/doors/airlocks/tall/hatch/maintenance.dmi'
+	icon_state = "closed" // Should probably be given it's own fake_door state too
 
 /turf/closed/indestructible/fakedoor/glass_airlock
 	icon = 'icons/obj/doors/airlocks/tall/external/external.dmi'
+	icon_state = "closed" // Ditto
 	opacity = FALSE
 
+/// WALLENING TODO: Needs additional work; the base airlock it's meant to mimic is a GAGS-Generated sprite.
 /turf/closed/indestructible/fakedoor/engineering
 	icon = 'icons/obj/doors/airlocks/station/engineering.dmi'
+	icon_state = "closed"
 
 /turf/closed/indestructible/rock
 	name = "dense rock"
@@ -326,6 +336,7 @@ INITIALIZE_IMMEDIATE(/turf/closed/indestructible/splashscreen)
 	explosive_resistance = 50
 	baseturfs = /turf/closed/indestructible/riveted/boss
 
+/// To avoid confusion; this is used as a bombable tile. It's justified; I checked.
 /turf/closed/indestructible/riveted/boss/wasteland
 	baseturfs = /turf/open/misc/asteroid/basalt/wasteland
 

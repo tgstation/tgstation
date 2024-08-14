@@ -16,11 +16,39 @@
 	desc = "A navigational chart of the station."
 	max_integrity = 500
 
+/// Cerestation Map
+/obj/structure/sign/map/cerestation
+	icon_state = "map-CS"
+
+WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/structure/sign/map/cerestation)
+
+/// Pubbystation Map
+/obj/structure/sign/map/Pubbystation
+	icon_state = "map-pubby"
+
+WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/structure/sign/map/Pubbystation)
+
+/// Boxstation Map
 /obj/structure/sign/map/left
 	icon_state = "map-left"
 
+WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/structure/sign/map/left)
+
 /obj/structure/sign/map/right
 	icon_state = "map-right"
+
+WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/structure/sign/map/right)
+
+/// Metastation Map
+/obj/structure/sign/map/left/metastation
+	icon_state = "map-left-MS"
+
+WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/structure/sign/map/left/metastation)
+
+/obj/structure/sign/map/right/metastation
+	icon_state = "map-right-MS"
+
+WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/structure/sign/map/right/metastation)
 
 /obj/structure/sign/directions
 	icon = 'icons/obj/directional_signs.dmi'

@@ -13,6 +13,8 @@
 	///Custom plaque structures and items both start "unengraved", once engraved with a fountain pen their text can't be altered again. Static plaques are already engraved.
 	var/engraved = FALSE
 
+WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/structure/plaque)
+
 /datum/armor/structure_plaque
 	melee = 50
 	fire = 50
@@ -20,6 +22,7 @@
 
 /obj/structure/plaque/Initialize(mapload)
 	. = ..()
+	find_and_hang_on_wall()
 	register_context()
 
 /obj/structure/plaque/add_context(atom/source, list/context, obj/item/held_item, mob/user)
@@ -34,10 +37,6 @@
 	if(istype(held_item, /obj/item/pen/fountain) && !engraved)
 		context[SCREENTIP_CONTEXT_LMB] = "Engrave"
 		return CONTEXTUAL_SCREENTIP_SET
-
-/obj/structure/plaque/Initialize(mapload)
-	. = ..()
-	find_and_hang_on_wall()
 
 /obj/structure/plaque/attack_hand(mob/user, list/modifiers)
 	. = ..()

@@ -29,6 +29,8 @@
 	max_integrity = 100
 	integrity_failure = 0.5
 
+	/// Does this camera try to attach to the wall?
+	var/should_wallmount = TRUE
 	///An analyzer in the camera being used for x-ray upgrade.
 	var/obj/item/analyzer/xray_module
 	///used to keep from revealing malf AI upgrades for user facing isXRay() checks when they use Upgrade Camera Network ability
@@ -130,8 +132,9 @@ CAMERA_DIRECTIONAL_HELPERS(/obj/machinery/camera/xray)
 #endif
 
 	alarm_manager = new(src)
-	find_and_hang_on_wall(directional = TRUE, \
-		custom_drop_callback = CALLBACK(src, PROC_REF(deconstruct), FALSE))
+	if(should_wallmount)
+		find_and_hang_on_wall(directional = TRUE, \
+			custom_drop_callback = CALLBACK(src, PROC_REF(deconstruct), FALSE))
 
 	RegisterSignal(src, COMSIG_HIT_BY_SABOTEUR, PROC_REF(on_saboteur))
 
