@@ -185,9 +185,7 @@
 /turf/open/misc/asteroid/basalt/lava_land_surface,
 /area/ruin/unpowered)
 "xz" = (
-/obj/machinery/computer{
-	layer = 3.6
-	},
+/obj/machinery/computer,
 /turf/open/misc/asteroid/basalt/lava_land_surface,
 /area/ruin/unpowered)
 "yZ" = (

@@ -33,7 +33,7 @@ SINK_DIRECTIONAL_HELPERS(/obj/structure/sink)
 	create_reagents(100, NO_REACT)
 	if(src.has_water_reclaimer)
 		reagents.add_reagent(dispensedreagent, 100)
-	AddComponent(/datum/component/plumbing/simple_demand, extend_pipe_to_edge = TRUE)
+	AddComponent(/datum/component/plumbing/inverted_simple_demand, extend_pipe_to_edge = TRUE, invert_demand = TRUE)
 	find_and_hang_on_wall()
 
 /obj/structure/sink/examine(mob/user)

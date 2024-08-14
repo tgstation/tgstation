@@ -1046,6 +1046,7 @@
 /obj/effect/turf_decal/tile/red/half/contrasted{
 	dir = 1
 	},
+/obj/structure/sign/poster/contraband/donut_corp/directional/north,
 /turf/open/floor/iron,
 /area/ruin/space/ancientstation/charlie/sec)
 "ex" = (
@@ -1206,10 +1207,6 @@
 	},
 /turf/open/floor/iron,
 /area/ruin/space/ancientstation/charlie/engie)
-"fd" = (
-/obj/structure/sign/poster/contraband/donut_corp,
-/turf/closed/wall,
-/area/ruin/space/ancientstation/charlie/sec)
 "fe" = (
 /obj/machinery/power/smes/engineering{
 	charge = 0
@@ -2497,10 +2494,6 @@
 	},
 /turf/open/floor/iron,
 /area/ruin/space/ancientstation/beta/atmos)
-"kM" = (
-/obj/structure/sign/poster/official/work_for_a_future,
-/turf/closed/wall/rust,
-/area/ruin/space/ancientstation/charlie/dorms)
 "kN" = (
 /obj/structure/table,
 /obj/item/crowbar{
@@ -2832,10 +2825,6 @@
 "mc" = (
 /turf/closed/mineral/plasma,
 /area/ruin/space/ancientstation/charlie/dorms)
-"md" = (
-/obj/structure/sign/warning/secure_area,
-/turf/closed/wall/r_wall,
-/area/ruin/space/ancientstation/delta/biolab)
 "me" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4{
 	dir = 4
@@ -4578,6 +4567,7 @@
 /obj/effect/turf_decal/tile/purple/half/contrasted{
 	dir = 1
 	},
+/obj/structure/sign/poster/contraband/lamarr/directional/north,
 /turf/open/floor/iron/white/textured_edge,
 /area/ruin/space/ancientstation/delta/biolab)
 "wL" = (
@@ -4711,6 +4701,7 @@
 /obj/machinery/door/window/half/right/directional/east{
 	req_access = list("away_general")
 	},
+/obj/structure/sign/warning/secure_area/directional/north,
 /turf/open/floor/engine,
 /area/ruin/space/ancientstation/delta/biolab)
 "xT" = (
@@ -4760,10 +4751,6 @@
 /obj/item/stack/sheet/iron,
 /turf/template_noop,
 /area/space/nearstation)
-"yr" = (
-/obj/structure/sign/warning/biohazard,
-/turf/closed/wall/rust,
-/area/ruin/space/ancientstation/delta/biolab)
 "yu" = (
 /obj/machinery/door/airlock/engineering/glass,
 /obj/machinery/door/poddoor{
@@ -5660,7 +5647,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4{
 	dir = 8
 	},
-/obj/structure/sign/departments/medbay/directional/west,
 /turf/open/floor/iron,
 /area/ruin/space/ancientstation/beta/hall)
 "EX" = (
@@ -6662,7 +6648,6 @@
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/structure/sign/warning/engine_safety/directional/west,
 /obj/structure/broken_flooring/pile/directional/west,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating/airless,
@@ -8068,7 +8053,7 @@
 /turf/open/floor/plating/airless,
 /area/ruin/space/ancientstation/beta/medbay)
 "Uq" = (
-/obj/machinery/shower/directional/north,
+/obj/machinery/shower/directional/south,
 /obj/item/soap/nanotrasen,
 /turf/open/floor/iron/white,
 /area/ruin/space/ancientstation/charlie/hall)
@@ -8494,11 +8479,6 @@
 /obj/machinery/airalarm/directional/east,
 /turf/open/floor/iron,
 /area/ruin/space/ancientstation/delta/hall)
-"XN" = (
-/obj/structure/sign/poster/contraband/space_cola,
-/obj/structure/sign/poster/contraband/space_cola,
-/turf/closed/wall,
-/area/ruin/space/ancientstation/charlie/sec)
 "XO" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -8772,10 +8752,6 @@
 	},
 /turf/open/floor/plating,
 /area/ruin/space/ancientstation/beta/atmos)
-"Zj" = (
-/obj/structure/sign/poster/contraband/lamarr,
-/turf/closed/wall,
-/area/ruin/space/ancientstation/delta/biolab)
 "Zl" = (
 /obj/effect/spawner/structure/window/reinforced,
 /obj/structure/cable,
@@ -12426,7 +12402,7 @@ aG
 nk
 nk
 nk
-kM
+aG
 nk
 nk
 nk
@@ -13529,7 +13505,7 @@ Al
 FM
 aa
 eJ
-fd
+eJ
 ew
 Dm
 IM
@@ -13539,7 +13515,7 @@ uY
 RP
 OV
 il
-XN
+eJ
 eJ
 aa
 HQ
@@ -15315,7 +15291,7 @@ NG
 NG
 GX
 GX
-yr
+GX
 zj
 rp
 rp
@@ -15442,7 +15418,7 @@ bE
 Vb
 rQ
 Fi
-Zj
+NG
 wK
 UH
 ae
@@ -15515,7 +15491,7 @@ uo
 GX
 NG
 Lo
-md
+rp
 xM
 Go
 Yl

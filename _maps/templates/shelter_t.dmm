@@ -2,10 +2,6 @@
 "a" = (
 /turf/closed/wall/mineral/titanium/survival/pod,
 /area/misc/survivalpod)
-"e" = (
-/obj/structure/sign/warning/biohazard,
-/turf/closed/wall/mineral/titanium/survival/pod,
-/area/misc/survivalpod)
 "C" = (
 /obj/machinery/door/airlock/survival_pod/glass,
 /obj/machinery/door/poddoor/shutters/preopen{
@@ -31,7 +27,7 @@
 
 (1,1,1) = {"
 a
-e
+a
 a
 "}
 (2,1,1) = {"

@@ -560,6 +560,8 @@
 		/obj/item/canvas/twentyfour_twentyfour,
 	)
 
+WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/structure/sign/painting)
+
 /obj/structure/sign/painting/Initialize(mapload, dir, building)
 	. = ..()
 	SSpersistent_paintings.painting_frames += src
@@ -856,11 +858,15 @@
 	desc_with_canvas = "A piece of art (or \"art\"). Anyone could've hung it."
 	persistence_id = "library"
 
+WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/structure/sign/painting/library)
+
 /obj/structure/sign/painting/library_secure
 	name = "\improper Curated Painting Exhibit mounting"
 	desc = "For masterpieces hand-picked by the curator."
 	desc_with_canvas = "A masterpiece hand-picked by the curator, supposedly."
 	persistence_id = "library_secure"
+
+WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/structure/sign/painting/library_secure)
 
 /obj/structure/sign/painting/library_private // keep your smut away from prying eyes, or non-librarians at least
 	name = "\improper Private Painting Exhibit mounting"
@@ -868,17 +874,23 @@
 	desc_with_canvas = "A painting hung away from lesser minds."
 	persistence_id = "library_private"
 
+WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/structure/sign/painting/library_private)
+
 /obj/structure/sign/painting/large/library
 	name = "\improper Large Painting Exhibit mounting"
 	desc = "For the bulkier art pieces, hand-picked by the curator."
 	desc_with_canvas = "A curated, large piece of art (or \"art\"). Hopefully the price of the canvas was worth it."
 	persistence_id = "library_large"
 
+WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/structure/sign/painting/large/library)
+
 /obj/structure/sign/painting/large/library_private
 	name = "\improper Private Painting Exhibit mounting"
 	desc = "For the privier and less tasteful compositions that oughtn't to be shown in a parlor nor to the masses."
 	desc_with_canvas = "A painting that oughn't to be shown to the less open-minded commoners."
 	persistence_id = "library_large_private"
+
+WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/structure/sign/painting/large/library_private)
 
 
 #define AVAILABLE_PALETTE_SPACE 14 // Enough to fill two radial menu pages

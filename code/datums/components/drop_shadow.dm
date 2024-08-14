@@ -90,7 +90,7 @@
 			lying_offset = living_parent.body_position_pixel_y_offset
 		shadow.transform = matrix() * living_parent.current_size
 
-	shadow.pixel_y = -DEPTH_OFFSET - additional_offset - lying_offset + shadow_offset
+	shadow.pixel_z = -DEPTH_OFFSET - additional_offset - lying_offset + shadow_offset
 
 	if (!HAS_TRAIT(parent, TRAIT_SHADOWLESS))
 		var/atom/atom_parent = parent

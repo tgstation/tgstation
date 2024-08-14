@@ -11,6 +11,8 @@
 	///Icon of the current screen status
 	var/screen_icon = "gulag_on"
 
+WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/machinery/gulag_item_reclaimer)
+
 /obj/machinery/gulag_item_reclaimer/Exited(atom/movable/gone, direction)
 	. = ..()
 	for(var/person in stored_items)

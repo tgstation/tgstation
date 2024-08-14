@@ -9,6 +9,8 @@
 	max_integrity = 250
 	integrity_failure = 0.4
 	damage_deflection = 10
+	/// Does this flasher try to attach to the wall?
+	var/should_wallmount = TRUE
 	///The contained flash. Mostly just handles the bulb burning out & needing placement.
 	var/obj/item/assembly/flash/handheld/bulb
 	var/id = null
@@ -23,11 +25,18 @@
 
 WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/machinery/flasher)
 
+// Variant of the flasher that's used in the thunderdome.
+/obj/machinery/flasher/thunderdome
+	should_wallmount = FALSE
+	id = "tdomeflash"
+	name = "Thunderdome Flash"
+
 /obj/machinery/flasher/Initialize(mapload, ndir = 0, built = 0)
 	. = ..() // ..() is EXTREMELY IMPORTANT, never forget to add it
 	if(!built)
 		bulb = new(src)
-	find_and_hang_on_wall()
+	if(should_wallmount)
+		find_and_hang_on_wall()
 
 /obj/machinery/flasher/vv_edit_var(vname, vval)
 	. = ..()

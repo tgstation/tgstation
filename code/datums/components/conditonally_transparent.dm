@@ -44,13 +44,18 @@
 /datum/component/conditionally_transparent/proc/make_transparent(datum/source)
 	SIGNAL_HANDLER
 	var/atom/atom_parent = parent
+// Current CI version of spaceman doesn't support delay and bumping it makes tgs mad so we're gonna do this till ci matches 1.9
+#ifndef SPACEMAN_DMM
 	animate(atom_parent, alpha = in_midpoint_alpha, easing = QUAD_EASING, time = 0.7 SECONDS, delay = transparency_delay)
 	animate(alpha = transparent_alpha, easing = QUAD_EASING, time = 0.3 SECONDS)
+#endif
 	addtimer(VARSET_CALLBACK(atom_parent, mouse_opacity, MOUSE_OPACITY_TRANSPARENT), transparency_delay + (1 SECONDS))
 
 /datum/component/conditionally_transparent/proc/make_opaque(datum/source)
 	SIGNAL_HANDLER
 	var/atom/atom_parent = parent
+#ifndef SPACEMAN_DMM
 	animate(atom_parent, alpha = out_midpoint_alpha, easing = QUAD_EASING, time = 0.7 SECONDS, delay = opacity_delay)
 	animate(alpha = 255, easing = QUAD_EASING, time = 0.3 SECONDS)
+#endif
 	addtimer(VARSET_CALLBACK(atom_parent, mouse_opacity, initial(atom_parent.mouse_opacity)), opacity_delay + (1 SECONDS))

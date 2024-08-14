@@ -71,7 +71,7 @@ SHOWER_DIRECTIONAL_HELPERS(/obj/machinery/shower)
 	if(src.has_water_reclaimer)
 		reagents.add_reagent(reagent_id, reagent_capacity)
 	soundloop = new(src, FALSE)
-	AddComponent(/datum/component/plumbing/simple_demand, extend_pipe_to_edge = TRUE)
+	AddComponent(/datum/component/plumbing/inverted_simple_demand, extend_pipe_to_edge = TRUE, invert_demand = TRUE)
 	var/static/list/loc_connections = list(
 		COMSIG_ATOM_ENTERED = PROC_REF(on_entered),
 	)

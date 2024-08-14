@@ -145,22 +145,6 @@ WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/machinery/airalarm)
 	GLOB.air_alarms -= src
 	return ..()
 
-/obj/machinery/airalarm/setDir(newdir)
-	. = ..()
-	switch(newdir)
-		if(NORTH)
-			pixel_x = 0
-			pixel_y = 0
-		if(SOUTH)
-			pixel_x = 0
-			pixel_y = 29
-		if(EAST)
-			pixel_x = -2
-			pixel_y = 0
-		if(WEST)
-			pixel_x = 2
-			pixel_y = 0
-
 /obj/machinery/airalarm/proc/check_enviroment()
 	var/turf/our_turf = connected_sensor ? get_turf(connected_sensor) : get_turf(src)
 	var/datum/gas_mixture/environment = our_turf.return_air()

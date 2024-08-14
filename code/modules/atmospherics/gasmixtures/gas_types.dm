@@ -309,6 +309,8 @@
 	primary_color = COLOR_MAROON
 
 /obj/effect/overlay/gas
+	// Default to make tests happy
+	icon = 'icons/effects/atmos/plasma.dmi'
 	icon_state = "-0"
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 	anchored = TRUE  // should only appear in vis_contents, but to be safe

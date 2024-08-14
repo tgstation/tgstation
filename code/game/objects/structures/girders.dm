@@ -425,6 +425,7 @@
 /obj/structure/girder/tram
 	name = "tram girder"
 	desc = "Titanium framework to construct tram walls. Can be plated with <b>titanium glass</b> or other wall materials."
+	icon = 'icons/obj/structures.dmi' // Not 3/4ths, tram pain
 	icon_state = "tram"
 	state = GIRDER_TRAM
 	obj_flags = CAN_BE_HIT | BLOCK_Z_OUT_DOWN

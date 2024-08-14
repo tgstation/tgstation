@@ -139,6 +139,10 @@
 	var/overlays_file = 'icons/obj/doors/airlocks/tall/overlays.dmi'
 	/// Used for papers and photos pinned to the airlock
 	var/note_overlay_file = 'icons/obj/doors/airlocks/tall/overlays.dmi'
+	/// Do we use the old style of airlock rendering
+	/// This exists as legacy to allow "small" airlocks to render properly until they are resprited
+	/// This style is deprecated and support will be removed once all existing users are fixed
+	var/short_rendering = FALSE
 
 	/// Airlock pump that overrides airlock controlls when set up for cycling
 	var/obj/machinery/atmospherics/components/unary/airlock_pump/cycle_pump
@@ -531,7 +535,7 @@
 	. = ..()
 	switch(airlock_state)
 		if(AIRLOCK_OPEN)
-			icon_state = "open_top"
+			icon_state = short_rendering ? "open" : "open_top"
 		if(AIRLOCK_CLOSED, AIRLOCK_DENY, AIRLOCK_EMAG)
 			icon_state = "closed"
 		if(AIRLOCK_OPENING)
@@ -566,8 +570,9 @@
 		if(AIRLOCK_OPEN)
 			frame_state = AIRLOCK_FRAME_OPEN
 			// If we're open we layer the bit below us "above" any mobs so they can walk through
-			. += mutable_appearance(icon, "open_bottom", ABOVE_MOB_LAYER, appearance_flags = KEEP_APART)
-			. += emissive_blocker(icon, "open_bottom", src, ABOVE_MOB_LAYER)
+			if(!short_rendering)
+				. += mutable_appearance(icon, "open_bottom", ABOVE_MOB_LAYER, appearance_flags = KEEP_APART)
+				. += emissive_blocker(icon, "open_bottom", src, ABOVE_MOB_LAYER)
 			if(!greyscale_config)
 				. += get_airlock_overlay("[airlock_material]_open", icon , src)
 		if(AIRLOCK_OPENING)
@@ -2625,6 +2630,8 @@
 	desc = "With humanity's current technological level, it could take years to hack this advanced airlock... or maybe we should give a screwdriver a try?"
 	icon = 'icons/obj/doors/airlocks/abductor/abductor_airlock.dmi'
 	overlays_file = 'icons/obj/doors/airlocks/abductor/overlays.dmi'
+	// YET TO BE UPDATED TO 3/4ths
+	short_rendering = TRUE
 	assemblytype = /obj/structure/door_assembly/door_assembly_abductor
 	note_overlay_file = 'icons/obj/doors/airlocks/external/overlays.dmi'
 	damage_deflection = 30
@@ -2824,6 +2831,8 @@
 /obj/machinery/door/airlock/multi_tile
 	icon = 'icons/obj/doors/airlocks/multi_tile/public/glass.dmi'
 	overlays_file = 'icons/obj/doors/airlocks/multi_tile/public/overlays.dmi'
+	// YET TO BE UPDATED TO 3/4ths
+	short_rendering = TRUE
 	assemblytype = /obj/structure/door_assembly/multi_tile/door_assembly_public
 	multi_tile = TRUE
 	opacity = FALSE

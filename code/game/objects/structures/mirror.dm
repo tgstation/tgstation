@@ -319,6 +319,8 @@ WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/structure/mirror/broken)
 	icon_state = "magic_mirror"
 	mirror_options = MAGIC_MIRROR_OPTIONS
 
+WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/structure/mirror/magic)
+
 /obj/structure/mirror/magic/Initialize(mapload)
 	. = ..()
 

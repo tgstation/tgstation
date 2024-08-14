@@ -55,8 +55,6 @@
 #define _INVERTED_WALL_MOUNT_OFFSET(path, north_offset, physical_north_offset, south_offset, east_offset, west_offset, horizontal_up_offset) \
 _WALL_MOUNT_OFFSET(path, south_offset, north_offset, physical_north_offset, west_offset, east_offset, horizontal_up_offset)
 
-// Wallening todo: temporary helper, until we finish fleshing things out and can convert the main one
-// Why are we not just changing the sprites agian?
 #define INVERT_MAPPING_DIRECTIONAL_HELPERS(path, offset) \
 ##path/directional/north {\
 	dir = SOUTH; \
@@ -79,10 +77,20 @@ _INVERTED_WALL_MOUNT_OFFSET(path, offset, 0, -offset, offset, -offset, 0)
 /// Directional helpers for things that use the wall_mount element
 #define WALL_MOUNT_DIRECTIONAL_HELPERS(path) _WALL_MOUNT_DIRECTIONAL_HELPERS(path, 35, 0, -8, 11, -11, 16)
 
-#define SHOWER_DIRECTIONAL_HELPERS(path) _WALL_MOUNT_DIRECTIONAL_HELPERS(path, 32, 0, -4, 16, -16, 12)
+#define TELESCREEN_DIRECTIONAL_HELPERS(path) _WALL_MOUNT_DIRECTIONAL_HELPERS(path, 35, 0, -8, 11, -11, 16) \
+##path/table {\
+	dir = SOUTH; \
+	base_pixel_z = 10; \
+	pixel_z = 10; \
+} \
+##path/table/wall_mount_offset(direction) { \
+	return; \
+}
+
+#define SHOWER_DIRECTIONAL_HELPERS(path) _WALL_MOUNT_DIRECTIONAL_HELPERS(path, -2, 0, 18, -16, 16, 12)
 
 // Sinks need to be shifted down so they layer correctly when north due to their unique status
-#define SINK_DIRECTIONAL_HELPERS(path) _WALL_MOUNT_DIRECTIONAL_HELPERS(path, 24, -32, 24, 16, -16, 12)
+#define SINK_DIRECTIONAL_HELPERS(path) _WALL_MOUNT_DIRECTIONAL_HELPERS(path, -10, 0, 18, -16, 16, 12)
 
 #define _WALL_MOUNT_DIRECTIONAL_HELPERS(path, north_offset, physical_north_offset, south_offset, east_offset, west_offset, horizontal_up_offset) \
 ##path/directional/north {\
@@ -211,3 +219,49 @@ _WALL_MOUNT_OFFSET(path, 0, 0, 0, 0, 0, 0)
 	base_icon_state = parent_type::icon_state + "_table"; \
 } \
 WALL_MOUNT_DIRECTIONAL_HELPERS(path)
+
+#define SIGN_DIR_NORTH "n"
+#define SIGN_DIR_SOUTH "s"
+#define SIGN_DIR_EAST "e"
+#define SIGN_DIR_WEST "w"
+#define SIGN_DIR_NORTHEAST "ne"
+#define SIGN_DIR_NORTHWEST "nw"
+#define SIGN_DIR_SOUTHEAST "se"
+#define SIGN_DIR_SOUTHWEST "sw"
+#define SUPPORT_LEFT "left"
+#define SUPPORT_RIGHT "right"
+
+/// Directional helpers that generate all arrow directions as well as subdivide sign directions.
+#define DIRECTIONAL_SIGNS_DIRECTIONAL_HELPERS(path) \
+##path/north_arrow {\
+	sign_arrow_direction = SIGN_DIR_NORTH; \
+} \
+##path/south_arrow {\
+	sign_arrow_direction = SIGN_DIR_SOUTH; \
+} \
+##path/east_arrow {\
+	sign_arrow_direction = SIGN_DIR_EAST; \
+} \
+##path/west_arrow {\
+	sign_arrow_direction = SIGN_DIR_WEST; \
+} \
+##path/northeast_arrow {\
+	sign_arrow_direction = SIGN_DIR_NORTHEAST; \
+} \
+##path/northwest_arrow {\
+	sign_arrow_direction = SIGN_DIR_NORTHWEST; \
+} \
+##path/southeast_arrow {\
+	sign_arrow_direction = SIGN_DIR_SOUTHEAST; \
+} \
+##path/southwest_arrow {\
+	sign_arrow_direction = SIGN_DIR_SOUTHWEST; \
+} \
+_WALL_MOUNT_DIRECTIONAL_HELPERS(path/north_arrow, 35, 0, 0, 0, 0, 16)\
+_WALL_MOUNT_DIRECTIONAL_HELPERS(path/south_arrow, 35, 0, 0, 0, 0, 16)\
+_WALL_MOUNT_DIRECTIONAL_HELPERS(path/east_arrow, 35, 0, 0, 0, 0, 16)\
+_WALL_MOUNT_DIRECTIONAL_HELPERS(##path/west_arrow, 35, 0, 0, 0, 0, 16)\
+_WALL_MOUNT_DIRECTIONAL_HELPERS(##path/northeast_arrow, 35, 0, 0, 0, 0, 16)\
+_WALL_MOUNT_DIRECTIONAL_HELPERS(##path/northwest_arrow, 35, 0, 0, 0, 0, 16)\
+_WALL_MOUNT_DIRECTIONAL_HELPERS(##path/southeast_arrow, 35, 0, 0, 0, 0, 16)\
+_WALL_MOUNT_DIRECTIONAL_HELPERS(##path/southwest_arrow, 35, 0, 0, 0, 0, 16)

@@ -238,9 +238,7 @@
 	pixel_x = -8;
 	pixel_y = 6
 	},
-/obj/structure/flora/rock/icy/style_random{
-	layer = 2.90
-	},
+/obj/structure/flora/rock/icy/style_random,
 /turf/open/misc/asteroid/snow/icemoon,
 /area/icemoon/underground/explored)
 "zr" = (

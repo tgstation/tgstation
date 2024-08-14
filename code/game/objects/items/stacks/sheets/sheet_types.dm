@@ -925,6 +925,7 @@ new /datum/stack_recipe("paper frame door", /obj/structure/mineral_door/paperfra
 	merge_type = /obj/item/stack/sheet/pizza
 	material_type = /datum/material/pizza
 	material_modifier = 1
+	walltype = /turf/closed/wall/mineral/pizza
 
 /obj/item/stack/sheet/pizza/fifty
 	amount = 50

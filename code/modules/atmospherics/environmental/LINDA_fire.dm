@@ -344,8 +344,9 @@
 	if(fire_stage == stage)
 		return
 	fire_stage = stage
-	icon_state = "[stage]-[smoothing_junction]"
+	icon_state = stage
 	dir = pick(GLOB.cardinals)
+	update_color()
 
 /obj/effect/hotspot/Destroy()
 	SSair.hotspots -= src

@@ -16,8 +16,15 @@
 	heat_capacity = 312500 //a little over 5 cm thick , 312500 for 1 m by 2.5 m by 0.25 m plasteel wall. also indicates the temperature at wich the wall will melt (currently only able to melt with H/E pipes)
 	///Dismantled state, related to deconstruction.
 	var/d_state = INTACT
-	///Base icon state to use for deconstruction
-	var/base_decon_state = "r_wall"
+	///List of icons for deconstruction steps, indexed by d_state
+	var/static/list/decon_icons = list(
+		SUPPORT_LINES = 'icons/turf/walls/reinforced_wall_decon1.dmi',
+		COVER = 'icons/turf/walls/reinforced_wall_decon2.dmi',
+		CUT_COVER = 'icons/turf/walls/reinforced_wall_decon3.dmi',
+		ANCHOR_BOLTS = 'icons/turf/walls/reinforced_wall_decon4.dmi',
+		SUPPORT_RODS = 'icons/turf/walls/reinforced_wall_decon5.dmi',
+		SHEATH = 'icons/turf/walls/reinforced_wall_decon6.dmi',
+		)
 
 /turf/closed/wall/r_wall/deconstruction_hints(mob/user)
 	switch(d_state)
@@ -49,8 +56,7 @@
 		if(INTACT)
 			if(W.tool_behaviour == TOOL_WIRECUTTER)
 				W.play_tool_sound(src, 100)
-				d_state = SUPPORT_LINES
-				update_appearance()
+				decon_change(SUPPORT_LINES)
 				to_chat(user, span_notice("You cut the outer grille."))
 				return TRUE
 
@@ -60,15 +66,13 @@
 				if(W.use_tool(src, user, 40, volume=100))
 					if(!istype(src, /turf/closed/wall/r_wall) || d_state != SUPPORT_LINES)
 						return TRUE
-					d_state = COVER
-					update_appearance()
+					decon_change(COVER)
 					to_chat(user, span_notice("You unsecure the support lines."))
 				return TRUE
 
 			else if(W.tool_behaviour == TOOL_WIRECUTTER)
 				W.play_tool_sound(src, 100)
-				d_state = INTACT
-				update_appearance()
+				decon_change(INTACT)
 				to_chat(user, span_notice("You repair the outer grille."))
 				return TRUE
 
@@ -80,8 +84,7 @@
 				if(W.use_tool(src, user, 60, volume=100))
 					if(!istype(src, /turf/closed/wall/r_wall) || d_state != COVER)
 						return TRUE
-					d_state = CUT_COVER
-					update_appearance()
+					decon_change(CUT_COVER)
 					to_chat(user, span_notice("You press firmly on the cover, dislodging it."))
 				return TRUE
 
@@ -90,8 +93,7 @@
 				if(W.use_tool(src, user, 40, volume=100))
 					if(!istype(src, /turf/closed/wall/r_wall) || d_state != COVER)
 						return TRUE
-					d_state = SUPPORT_LINES
-					update_appearance()
+					decon_change(SUPPORT_LINES)
 					to_chat(user, span_notice("The support lines have been secured."))
 				return TRUE
 
@@ -101,8 +103,7 @@
 				if(W.use_tool(src, user, 100, volume=100))
 					if(!istype(src, /turf/closed/wall/r_wall) || d_state != CUT_COVER)
 						return TRUE
-					d_state = ANCHOR_BOLTS
-					update_appearance()
+					decon_change(ANCHOR_BOLTS)
 					to_chat(user, span_notice("You pry off the cover."))
 				return TRUE
 
@@ -113,8 +114,7 @@
 				if(W.use_tool(src, user, 60, volume=100))
 					if(!istype(src, /turf/closed/wall/r_wall) || d_state != CUT_COVER)
 						return TRUE
-					d_state = COVER
-					update_appearance()
+					decon_change(COVER)
 					to_chat(user, span_notice("The metal cover has been welded securely to the frame."))
 				return TRUE
 
@@ -124,8 +124,7 @@
 				if(W.use_tool(src, user, 40, volume=100))
 					if(!istype(src, /turf/closed/wall/r_wall) || d_state != ANCHOR_BOLTS)
 						return TRUE
-					d_state = SUPPORT_RODS
-					update_appearance()
+					decon_change(SUPPORT_RODS)
 					to_chat(user, span_notice("You remove the bolts anchoring the support rods."))
 				return TRUE
 
@@ -134,8 +133,7 @@
 				if(W.use_tool(src, user, 20, volume=100))
 					if(!istype(src, /turf/closed/wall/r_wall) || d_state != ANCHOR_BOLTS)
 						return TRUE
-					d_state = CUT_COVER
-					update_appearance()
+					decon_change(CUT_COVER)
 					to_chat(user, span_notice("The metal cover has been pried back into place."))
 				return TRUE
 
@@ -147,8 +145,7 @@
 				if(W.use_tool(src, user, 100, volume=100))
 					if(!istype(src, /turf/closed/wall/r_wall) || d_state != SUPPORT_RODS)
 						return TRUE
-					d_state = SHEATH
-					update_appearance()
+					decon_change(SHEATH)
 					to_chat(user, span_notice("You slice through the support rods."))
 				return TRUE
 
@@ -158,8 +155,7 @@
 				if(W.use_tool(src, user, 40))
 					if(!istype(src, /turf/closed/wall/r_wall) || d_state != SUPPORT_RODS)
 						return TRUE
-					d_state = ANCHOR_BOLTS
-					update_appearance()
+					decon_change(ANCHOR_BOLTS)
 					to_chat(user, span_notice("You tighten the bolts anchoring the support rods."))
 				return TRUE
 
@@ -180,35 +176,24 @@
 				if(W.use_tool(src, user, 100, volume=100))
 					if(!istype(src, /turf/closed/wall/r_wall) || d_state != SHEATH)
 						return TRUE
-					d_state = SUPPORT_RODS
-					update_appearance()
+					decon_change(SUPPORT_RODS)
 					to_chat(user, span_notice("You weld the support rods back together."))
 				return TRUE
 	return FALSE
 
-/turf/closed/wall/r_wall/update_icon(updates=ALL)
-	. = ..()
-	if(d_state != INTACT)
-		smoothing_flags = NONE
+/turf/closed/wall/r_wall/proc/decon_change(new_state)
+	if (d_state == new_state)
 		return
-	if (!(updates & UPDATE_SMOOTHING))
-		return
-	smoothing_flags = SMOOTH_BITMASK
-	QUEUE_SMOOTH_NEIGHBORS(src)
-	QUEUE_SMOOTH(src)
-
-// Wallening todo: we need intact sprites
-/*
-// We don't react to smoothing changing here because this else exists only to "revert" intact changes
-/turf/closed/wall/r_wall/update_icon_state()
-	if(d_state != INTACT)
-		icon = 'icons/turf/walls/reinforced_states.dmi'
-		icon_state = "[base_decon_state]-[d_state]"
+	if(color)
+		RemoveElement(/datum/element/split_visibility, icon, color)
 	else
-		icon = 'icons/turf/walls/reinforced_wall.dmi'
-		icon_state = "[base_icon_state]-[smoothing_junction]"
-	return ..()
-*/
+		RemoveElement(/datum/element/split_visibility, icon)
+	d_state = new_state
+	icon = (d_state != INTACT ? decon_icons[d_state] : initial(icon))
+	if(color)
+		AddElement(/datum/element/split_visibility, icon, color)
+	else
+		AddElement(/datum/element/split_visibility, icon)
 
 /turf/closed/wall/r_wall/wall_singularity_pull(current_size)
 	if(current_size >= STAGE_FIVE)

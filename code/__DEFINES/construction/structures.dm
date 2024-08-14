@@ -17,13 +17,13 @@
 #define GIRDER_TRAM 5
 
 //rwall construction states
-#define INTACT 0
-#define SUPPORT_LINES 1
-#define COVER 2
-#define CUT_COVER 3
-#define ANCHOR_BOLTS 4
-#define SUPPORT_RODS 5
-#define SHEATH 6
+#define INTACT "intact"
+#define SUPPORT_LINES "support_lines"
+#define COVER "cover"
+#define CUT_COVER "cut_cover"
+#define ANCHOR_BOLTS "anchor_bolts"
+#define SUPPORT_RODS "support_rods"
+#define SHEATH "sheath"
 
 //window construction states
 #define WINDOW_OUT_OF_FRAME 0
