@@ -99,8 +99,8 @@
 /obj/structure/barricade/wooden/crude
 	name = "crude plank barricade"
 	desc = "This space is blocked off by a crude assortment of planks."
-	icon = 'icons/obj/structures.dmi'
-	icon_state = "plankbarricade"
+	icon = 'icons/obj/structures/tall.dmi'
+	icon_state = "woodenbarricade"
 	drop_amount = 1
 	max_integrity = 50
 	proj_pass_rate = 65
@@ -108,8 +108,8 @@
 
 /obj/structure/barricade/wooden/crude/snow
 	desc = "This space is blocked off by a crude assortment of planks. It seems to be covered in a layer of snow."
-	icon = 'icons/obj/structures.dmi'
-	icon_state = "plankbarricade_snow"
+	icon = 'icons/obj/structures/tall.dmi'
+	icon_state = "woodenbarricade_snow"
 	max_integrity = 75
 
 /obj/structure/barricade/wooden/make_debris()
@@ -137,7 +137,7 @@
 /obj/structure/barricade/security
 	name = "security barrier"
 	desc = "A deployable barrier. Provides good cover in fire fights."
-	icon = 'icons/obj/structures.dmi'
+	icon = 'icons/obj/structures/tall/structures.dmi'
 	icon_state = "barrier0"
 	density = FALSE
 	anchored = FALSE

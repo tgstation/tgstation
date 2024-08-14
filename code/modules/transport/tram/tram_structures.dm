@@ -109,7 +109,7 @@
 	if(ratio > 75)
 		return
 
-	damage_overlay = mutable_appearance('icons/obj/structures.dmi', "damage[ratio]", -(layer + 0.1))
+	damage_overlay = mutable_appearance('icons/turf/damaged.dmi', "damage[ratio]", -(layer + 0.1))
 	. += damage_overlay
 
 /obj/structure/tram/attack_hand(mob/living/user, list/modifiers)

@@ -581,7 +581,7 @@
 /obj/structure/table/wood/fancy
 	name = "fancy table"
 	desc = "A standard metal table frame covered with an amazingly fancy, patterned cloth."
-	icon = 'icons/obj/structures.dmi'
+	icon = 'icons/obj/structures/smooth/table_singles.dmi'
 	icon_state = "fancy_table"
 	base_icon_state = "fancy_table"
 	frame = /obj/structure/table_frame
@@ -870,7 +870,7 @@
 /obj/structure/rack
 	name = "rack"
 	desc = "Different from the Middle Ages version."
-	icon = 'icons/obj/structures.dmi'
+	icon = 'icons/obj/fluff/general.dmi'
 	icon_state = "rack"
 	layer = TABLE_LAYER
 	density = TRUE
@@ -964,7 +964,7 @@
 /obj/item/rack_parts
 	name = "rack parts"
 	desc = "Parts of a rack."
-	icon = 'icons/obj/structures.dmi'
+	icon = 'icons/obj/fluff/general.dmi'
 	icon_state = "rack_parts"
 	inhand_icon_state = "rack_parts"
 	obj_flags = CONDUCTS_ELECTRICITY
