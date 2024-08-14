@@ -67,6 +67,9 @@
 	if(!timing)
 		return
 	time -= seconds_per_tick
+	if (time ==	9 || time == 19 || time == 29)
+		update_appearance()
+
 	if(time <= 0)
 		timing = FALSE
 		timer_end()
@@ -79,9 +82,14 @@
 /obj/item/assembly/timer/update_overlays()
 	. = ..()
 	attached_overlays = list()
-	if(timing)
-		. += "timer_timing"
-		attached_overlays += "timer_timing"
+	if(!timing)
+		return
+
+	attached_overlays += "timer_timing"
+	for (var/i in 1 to clamp(ceil(time / 10), 1, 3))
+		var/mutable_appearance/timer_light = mutable_appearance(icon, "timer_light", layer, src)
+		timer_light.pixel_x = (i - 1) * 2
+		. += timer_light
 
 /obj/item/assembly/timer/ui_status(mob/user, datum/ui_state/state)
 	if(is_secured(user))

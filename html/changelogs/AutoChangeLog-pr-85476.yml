@@ -1,0 +1,4 @@
+author: "SmArtKar"
+delete-after: True
+changes:
+  - code_imp: "Cult magic item paths are no longer strings"
