@@ -173,7 +173,7 @@
 		if(VORTEX_ANOMALY)
 			new /obj/effect/anomaly/bhole(local_turf, 20, FALSE)
 		if(BIOSCRAMBLER_ANOMALY)
-			new /obj/effect/anomaly/bioscrambler(local_turf, null, FALSE)
+			new /obj/effect/anomaly/bioscrambler/docile(local_turf, null, FALSE)
 
 #undef CHANCE_EQUATION_SLOPE
 #undef INTEGRITY_EXPONENTIAL_DEGREE
