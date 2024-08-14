@@ -149,8 +149,6 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_MUTANT_COLORS "mutcolors"
 /// Species with this trait have mutant colors that cannot be chosen by the player, nor altered ingame by external means
 #define TRAIT_FIXED_MUTANT_COLORS "fixed_mutcolors"
-/// Species with this trait have a haircolor that cannot be chosen by the player, nor altered ingame by external means
-#define TRAIT_FIXED_HAIRCOLOR "fixed_haircolor"
 /// Humans with this trait won't get bloody hands, nor bloody feet
 #define TRAIT_NO_BLOOD_OVERLAY "no_blood_overlay"
 /// Humans with this trait cannot have underwear
@@ -263,7 +261,10 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_NODEATH "nodeath"
 #define TRAIT_NOHARDCRIT "nohardcrit"
 #define TRAIT_NOSOFTCRIT "nosoftcrit"
+/// Makes someone show up as mindshielded on sechuds. Does NOT actually make them unconvertable - See TRAIT_UNCONVERTABLE for that
 #define TRAIT_MINDSHIELD "mindshield"
+/// Makes it impossible for someone to be converted by cult/revs/etc.
+#define TRAIT_UNCONVERTABLE "unconvertable"
 #define TRAIT_DISSECTED "dissected"
 #define TRAIT_SURGICALLY_ANALYZED "surgically_analyzed"
 /// Lets the user succumb even if they got NODEATH
@@ -1096,13 +1097,13 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 /// Currently fishing
 #define TRAIT_GONE_FISHING "fishing"
 
-/// Makes a species be better/worse at tackling depending on their wing's status
+/// Makes a character be better/worse at tackling depending on their wing's status
 #define TRAIT_TACKLING_WINGED_ATTACKER "tacking_winged_attacker"
 
-/// Makes a species be frail and more likely to roll bad results if they hit a wall
+/// Makes a character be frail and more likely to roll bad results if they hit a wall
 #define TRAIT_TACKLING_FRAIL_ATTACKER "tackling_frail_attacker"
 
-/// Makes a species be better/worse at defending against tackling depending on their tail's status
+/// Makes a character be better/worse at defending against tackling depending on their tail's status
 #define TRAIT_TACKLING_TAILED_DEFENDER "tackling_tailed_defender"
 
 /// Is runechat for this atom/movable currently disabled, regardless of prefs or anything?
