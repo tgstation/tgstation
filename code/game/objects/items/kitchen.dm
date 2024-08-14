@@ -104,7 +104,7 @@
 
 /obj/item/knife/kitchen/silicon
 	name = "Kitchen Toolset"
-	icon = 'icons/obj/items_cyborg.dmi'
+	icon = 'icons/mob/silicon/robot_items.dmi'
 	icon_state = "sili_knife"
 	desc = "A breakthrough in synthetic engineering, this tool is a knife programmed to dull when not used for cooking purposes, and can exchange the blade for a rolling pin"
 	force = 0
