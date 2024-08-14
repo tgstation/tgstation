@@ -1,18 +1,4 @@
-/datum/uplink_item/bundles_tc/bulldog
-	name = "Bulldog bundle"
-	desc = "Lean and mean: Optimized for people that want to get up close and personal. Contains the popular \
-			Bulldog shotgun, two 12g buckshot drums, and a pair of Thermal imaging goggles."
-	item = /obj/item/storage/backpack/duffelbag/syndie/bulldogbundle
-	cost = 13 // normally 16
-	purchasable_from = UPLINK_NUKE_OPS
-
-/datum/uplink_item/bundles_tc/c20r
-	name = "C-20r bundle"
-	desc = "Old Faithful: The classic C-20r, bundled with two magazines and a suppressor at discount price."
-	item = /obj/item/storage/backpack/duffelbag/syndie/c20rbundle
-	cost = 14 // normally 16
-	purchasable_from = UPLINK_NUKE_OPS
-
+//Monkestation edit: Bulldog and c20r moved to uplink kits
 /datum/uplink_item/bundles_tc/cyber_implants
 	name = "Cybernetic Implants Bundle"
 	desc = "A random selection of cybernetic implants. Guaranteed 5 high quality implants. Comes with an autosurgeon."

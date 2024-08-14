@@ -61,6 +61,8 @@
 		return is_species(living_target, target_type)
 
 /datum/element/bane/proc/do_bane(datum/element_owner, mob/living/bane_applier, mob/living/baned_target, hit_zone)
+	if(!check_biotype_path(bane_applier, baned_target)) // monkestation edit: added check that is present on tg master but wasnt here
+		return
 	var/force_boosted
 	var/applied_dam_type
 

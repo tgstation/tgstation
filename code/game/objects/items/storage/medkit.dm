@@ -375,6 +375,7 @@
 		/obj/item/storage/box/evilmeds = 1,
 		/obj/item/reagent_containers/medigel/sterilizine = 1,
 		/obj/item/clothing/glasses/hud/health/night/science = 1,
+		/obj/item/organ/internal/cyberimp/cyberlink/nt_high = 1, //Monkestation edti: unable to use the hacked surgery toolset without this
 	)
 	generate_items_inside(items_inside,src)
 
