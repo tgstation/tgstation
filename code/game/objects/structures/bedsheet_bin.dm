@@ -136,7 +136,7 @@ LINEN BINS
 	UnregisterSignal(sleeper, COMSIG_QDELETING)
 	balloon_alert(sleeper, "smoothed sheets")
 	layer = initial(layer)
-	pixel_z = base_pixel_z
+	pixel_z = 0
 	signal_sleeper = null
 
 // We need to do this in case someone picks up a bedsheet while a mob is covered up
@@ -150,7 +150,7 @@ LINEN BINS
 	UnregisterSignal(sleeper, COMSIG_MOVABLE_MOVED)
 	UnregisterSignal(sleeper, COMSIG_LIVING_SET_BODY_POSITION)
 	UnregisterSignal(sleeper, COMSIG_QDELETING)
-	pixel_z = base_pixel_z
+	pixel_z = 0
 	signal_sleeper = null
 
 /obj/item/bedsheet/blue
