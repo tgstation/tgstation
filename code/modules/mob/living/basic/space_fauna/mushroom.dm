@@ -48,7 +48,7 @@
 	AddElement(/datum/element/swabable, CELL_LINE_TABLE_WALKING_MUSHROOM, CELL_VIRUS_TABLE_GENERIC_MOB, 1, 5)
 	ADD_TRAIT(src, TRAIT_VENTCRAWLER_ALWAYS, INNATE_TRAIT)
 	RegisterSignal(src, COMSIG_HOSTILE_POST_ATTACKINGTARGET, PROC_REF(on_attacked_target))
-	update_appearance(UPDATE_OVERLAYS)
+	update_appearance()
 
 /mob/living/basic/mushroom/UnarmedAttack(atom/attack_target, proximity_flag, list/modifiers)
 	. = ..()
@@ -91,7 +91,7 @@
 		return
 
 	icon_state = "mushroom_color"
-	update_appearance(UPDATE_OVERLAYS)
+	update_appearance()
 
 /mob/living/basic/mushroom/update_overlays()
 	. = ..()
@@ -102,7 +102,7 @@
 
 /mob/living/basic/mushroom/proc/recover(obj/item/mush_meal)
 	visible_message(span_notice("[src] eats [mush_meal]!"))
-	update_appearance(UPDATE_OVERLAYS)
+	update_appearance()
 	qdel(mush_meal)
 	if(!COOLDOWN_FINISHED(src, recovery_cooldown))
 		return
