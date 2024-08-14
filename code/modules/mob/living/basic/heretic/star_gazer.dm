@@ -26,6 +26,7 @@
 	speak_emote = list("growls")
 	damage_coeff = list(BRUTE = 1, BURN = 0.5, TOX = 0, STAMINA = 0, OXY = 0)
 	death_sound = 'sound/magic/cosmic_expansion.ogg'
+	shadow_type = SHADOW_LARGE
 
 	slowed_by_drag = FALSE
 	move_force = MOVE_FORCE_OVERPOWERING

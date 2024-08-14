@@ -19,6 +19,8 @@
 	. = ..()
 	atom_storage.max_specific_storage = WEIGHT_CLASS_SMALL
 	update_appearance()
+	atom_storage.open_sound = 'sound/items/cardboard_box_open.ogg'
+	atom_storage.rustle_sound = 'sound/items/cardboard_box_rustle.ogg'
 
 /obj/item/storage/box/suicide_act(mob/living/carbon/user)
 	var/obj/item/bodypart/head/myhead = user.get_bodypart(BODY_ZONE_HEAD)

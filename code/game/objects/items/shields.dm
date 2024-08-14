@@ -149,6 +149,8 @@
 	shield_break_sound = 'sound/effects/glassbr3.ogg'
 	shield_break_leftover = /obj/item/shard
 	armor_type = /datum/armor/item_shield/riot
+	pickup_sound = 'sound/items/plastic_shield_pick_up.ogg'
+	drop_sound = 'sound/items/plastic_shield_drop.ogg'
 
 /obj/item/shield/riot/Initialize(mapload)
 	. = ..()

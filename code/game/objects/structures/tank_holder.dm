@@ -1,5 +1,6 @@
 ///?
 /obj/structure/tank_holder
+	SET_BASE_VISUAL_PIXEL(0, DEPTH_OFFSET)
 	name = "tank holder"
 	desc = "A metallic frame that can hold tanks and extinguishers."
 	icon = 'icons/obj/canisters.dmi'
