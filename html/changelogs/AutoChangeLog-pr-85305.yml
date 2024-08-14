@@ -1,5 +1,0 @@
-author: "Time-Green"
-delete-after: True
-changes:
-  - bugfix: "Fixes void eater not refreshing"
-  - bugfix: "Fixes planetary gravity not killing voidwalkers and voideds"

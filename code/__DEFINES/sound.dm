@@ -177,3 +177,5 @@ GLOBAL_LIST_INIT(announcer_keys, list(
 #define SFX_PORTAL_CREATED "portal_created"
 #define SFX_SCREECH "screech"
 #define SFX_KEYBOARD_CLICKS "keyboard_clicks"
+#define SFX_STONE_DROP "stone_drop"
+#define SFX_STONE_PICKUP "stone_pickup"

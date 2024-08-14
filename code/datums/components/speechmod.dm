@@ -34,6 +34,12 @@
 
 	var/atom/owner = parent
 
+	if (istype(parent, /datum/status_effect))
+		var/datum/status_effect/effect = parent
+		targeted = effect.owner
+		RegisterSignal(targeted, COMSIG_MOB_SAY, PROC_REF(handle_speech))
+		return
+
 	if (ismob(parent))
 		targeted = parent
 		RegisterSignal(targeted, COMSIG_MOB_SAY, PROC_REF(handle_speech))

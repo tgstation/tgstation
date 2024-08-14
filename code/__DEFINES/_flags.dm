@@ -11,6 +11,8 @@ GLOBAL_LIST_INIT(bitflags, list(1, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024, 204
 #define DF_USE_TAG (1<<0)
 #define DF_VAR_EDITED (1<<1)
 #define DF_ISPROCESSING (1<<2)
+/// Placed on datums that have a static, constant reference. Primarily only used for turfs.
+#define DF_STATIC_OBJECT (1<<3)
 
 //FLAGS BITMASK
 // scroll down before changing the numbers on these
@@ -136,6 +138,8 @@ GLOBAL_LIST_INIT(bitflags, list(1, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024, 204
 #define VIRTUAL_SAFE_AREA (1<<16)
 /// This area does not allow the Binary channel
 #define BINARY_JAMMING (1<<17)
+/// This area prevents Bag of Holding rifts from being opened.
+#define NO_BOH (1<<18)
 
 /*
 	These defines are used specifically with the atom/pass_flags bitmask

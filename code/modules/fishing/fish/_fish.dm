@@ -627,6 +627,14 @@
 		fish_zap_flags |= (ZAP_GENERATES_POWER | ZAP_MOB_STUN)
 	tesla_zap(source = get_turf(src), zap_range = fish_zap_range, power = fish_zap_power, cutoff = 1 MEGA JOULES, zap_flags = fish_zap_flags)
 
+///Returns the price of this fish, for the fish export.
+/obj/item/fish/proc/get_export_price(price, percent)
+	var/size_weight_exponentation = (size * weight * 0.01)^0.85
+	var/calculated_price = price + size_weight_exponentation * percent
+	if(HAS_TRAIT(src, TRAIT_FISH_FROM_CASE)) //Avoid printing money by simply ordering fish and sending it back.
+		calculated_price *= 0.05
+	return round(calculated_price)
+
 /// Returns random fish, using random_case_rarity probabilities.
 /proc/random_fish_type(required_fluid)
 	var/static/probability_table
