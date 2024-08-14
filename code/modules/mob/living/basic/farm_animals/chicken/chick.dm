@@ -29,7 +29,6 @@
 	mob_size = MOB_SIZE_TINY
 	gold_core_spawnable = FRIENDLY_SPAWN
 	ai_controller = /datum/ai_controller/basic_controller/chick
-	shadow_type = SHADOW_SMALL
 
 	/// What we grow into.
 	var/grow_as = /mob/living/basic/chicken

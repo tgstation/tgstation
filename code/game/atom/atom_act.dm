@@ -224,7 +224,7 @@
  * Default behaviour is to send [COMSIG_ATOM_RCD_ACT] and return FALSE
  */
 /atom/proc/rcd_act(mob/user, obj/item/construction/rcd/the_rcd, list/rcd_data)
-	SEND_SIGNAL(src, COMSIG_ATOM_RCD_ACT, user, the_rcd, rcd_data[RCD_DESIGN_MODE])
+	SEND_SIGNAL(src, COMSIG_ATOM_RCD_ACT, user, the_rcd, rcd_data["[RCD_DESIGN_MODE]"])
 	return FALSE
 
 ///Return the values you get when an RCD eats you?

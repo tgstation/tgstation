@@ -56,39 +56,27 @@
 /area/ruin/space)
 "o" = (
 /obj/structure/table/wood/fancy,
-/obj/item/reagent_containers/cup/glass/bottle/holywater{
-	pixel_y = 12
-	},
+/obj/item/reagent_containers/cup/glass/bottle/holywater,
 /turf/open/floor/carpet/airless,
 /area/ruin/space)
 "p" = (
 /obj/structure/table/wood/fancy,
-/obj/item/melee/cleric_mace{
-	pixel_y = 8
-	},
+/obj/item/melee/cleric_mace,
 /turf/open/floor/carpet/airless,
 /area/ruin/space)
 "q" = (
-/obj/effect/decal/cleanable/shreds{
-	pixel_x = 5;
-	pixel_y = -3
-	},
+/obj/effect/decal/cleanable/shreds,
 /turf/open/floor/carpet/airless,
 /area/ruin/space)
 "r" = (
 /obj/effect/decal/cleanable/shreds,
 /obj/effect/decal/remains/human,
-/obj/item/disk/design_disk/cleric_mace{
-	pixel_x = -4;
-	pixel_y = 9
-	},
+/obj/item/disk/design_disk/cleric_mace,
 /obj/structure/trap/cult,
 /turf/open/floor/carpet/airless,
 /area/ruin/space)
 "s" = (
-/obj/effect/decal/cleanable/shreds{
-	pixel_y = -4
-	},
+/obj/effect/decal/cleanable/shreds,
 /turf/open/floor/carpet/royalblack/airless,
 /area/ruin/space)
 "t" = (
@@ -100,10 +88,7 @@
 "v" = (
 /obj/effect/decal/cleanable/blood/splatter,
 /obj/effect/decal/cleanable/blood/footprints,
-/obj/effect/decal/cleanable/shreds{
-	pixel_y = 6;
-	pixel_x = -1
-	},
+/obj/effect/decal/cleanable/shreds,
 /turf/open/floor/carpet/airless,
 /area/ruin/space)
 "w" = (
@@ -120,7 +105,6 @@
 /area/ruin/space)
 "z" = (
 /obj/item/paper/fluff/ruins/clericsden/contact,
-/obj/effect/mapping_helpers/broken_floor,
 /turf/open/floor/plating/airless,
 /area/ruin/space)
 "A" = (
@@ -148,6 +132,10 @@
 /mob/living/basic/construct/proteon/hostile,
 /turf/open/floor/carpet/airless,
 /area/ruin/space)
+"F" = (
+/obj/item/flashlight/flare/torch,
+/turf/open/floor/plating/airless,
+/area/ruin/space)
 "G" = (
 /obj/effect/decal/cleanable/blood/tracks,
 /obj/structure/trap/cult,
@@ -164,10 +152,7 @@
 "J" = (
 /obj/structure/rack,
 /obj/item/tank/internals/emergency_oxygen,
-/obj/item/clothing/mask/breath{
-	pixel_y = 6;
-	pixel_x = 6
-	},
+/obj/item/clothing/mask/breath,
 /turf/open/floor/iron/dark/airless,
 /area/ruin/space)
 "K" = (
@@ -176,7 +161,6 @@
 /area/ruin/space)
 "L" = (
 /obj/machinery/door/airlock/wood,
-/obj/effect/mapping_helpers/broken_floor,
 /turf/open/floor/plating/airless,
 /area/ruin/space)
 "M" = (
@@ -193,10 +177,6 @@
 /obj/structure/barricade/wooden/crude,
 /turf/open/floor/plating/airless,
 /area/ruin/space)
-"P" = (
-/obj/effect/mapping_helpers/burnt_floor,
-/turf/open/floor/plating/airless,
-/area/ruin/space)
 "Q" = (
 /obj/item/book/bible,
 /obj/effect/decal/cleanable/blood,
@@ -211,21 +191,10 @@
 /obj/effect/decal/cleanable/blood/drip,
 /turf/open/misc/asteroid/airless,
 /area/ruin/space)
-"T" = (
-/obj/structure/table/wood,
-/obj/item/flashlight/flare/torch{
-	pixel_y = 14
-	},
-/turf/open/floor/carpet/royalblack/airless,
-/area/ruin/space)
 "U" = (
 /obj/effect/decal/remains/human,
 /obj/item/paper/fluff/ruins/clericsden/warning,
 /turf/open/misc/asteroid/airless,
-/area/ruin/space)
-"Y" = (
-/obj/effect/mapping_helpers/broken_floor,
-/turf/open/floor/plating/airless,
 /area/ruin/space)
 
 (1,1,1) = {"
@@ -336,10 +305,10 @@ i
 R
 e
 x
-Y
+m
 e
 x
-Y
+m
 e
 m
 J
@@ -372,7 +341,7 @@ a
 a
 f
 h
-Y
+m
 o
 q
 u
@@ -412,7 +381,7 @@ S
 a
 b
 d
-P
+m
 n
 s
 t
@@ -420,7 +389,7 @@ n
 A
 C
 n
-T
+A
 C
 n
 H
@@ -439,9 +408,9 @@ x
 z
 e
 x
-m
+F
 e
-Y
+m
 J
 e
 d

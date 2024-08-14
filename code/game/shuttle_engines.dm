@@ -7,8 +7,9 @@
 /obj/machinery/power/shuttle_engine
 	name = "engine"
 	desc = "A bluespace engine used to make shuttles move."
-	icon = 'icons/turf/engines.dmi'
+	icon = 'icons/turf/shuttle.dmi'
 	resistance_flags = LAVA_PROOF | FIRE_PROOF | ACID_PROOF
+	smoothing_groups = SMOOTH_GROUP_SHUTTLE_PARTS
 	armor_type = /datum/armor/power_shuttle_engine
 	can_atmos_pass = ATMOS_PASS_DENSITY
 	max_integrity = 500
@@ -149,7 +150,6 @@
 /obj/machinery/power/shuttle_engine/heater
 	name = "engine heater"
 	desc = "Directs energy into compressed particles in order to power engines."
-	icon = 'icons/turf/shuttle.dmi'
 	icon_state = "heater"
 	circuit = /obj/item/circuitboard/machine/engine/heater
 	engine_power = 0 // todo make these into 2x1 parts

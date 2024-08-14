@@ -3,7 +3,6 @@
 
 
 /obj/machinery/rnd
-	SET_BASE_VISUAL_PIXEL(0, DEPTH_OFFSET)
 	name = "R&D Device"
 	icon = 'icons/obj/machines/research.dmi'
 	density = TRUE

@@ -28,17 +28,15 @@
 		if(skip_to_next_turf)
 			continue
 
-		var/mutable_appearance/hologram_appearance
+		var/hologram_icon
 		switch(rcd_memory)
 			if(RCD_MEMORY_WALL)
-				hologram_appearance = GLOB.holographic_wall
+				hologram_icon = GLOB.icon_holographic_wall
 			if(RCD_MEMORY_WINDOWGRILLE)
-				hologram_appearance = GLOB.holographic_window
+				hologram_icon = GLOB.icon_holographic_window
 
 		var/obj/effect/rcd_hologram/hologram = new(surrounding_turf)
-		hologram.icon = hologram_appearance.icon
-		hologram.icon_state = hologram_appearance.icon_state
-		hologram.overlays = hologram_appearance.overlays
+		hologram.icon = hologram_icon
 		hologram.makeHologram()
 		animate(hologram, alpha = 0, time = fade_time, easing = CIRCULAR_EASING | EASE_IN)
 

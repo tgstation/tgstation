@@ -2192,10 +2192,10 @@
 /turf/open/misc/beach/sand,
 /area/virtual_domain/fullbright)
 "BV" = (
-/obj/structure/sign/directions/dorms/north_arrow{
+/obj/structure/sign/directions/dorms/directional/north{
 	pixel_y = 35
 	},
-/obj/structure/sign/directions/medical/north_arrow{
+/obj/structure/sign/directions/medical/directional/north{
 	pixel_y = 29
 	},
 /obj/machinery/computer/slot_machine,

@@ -4,7 +4,6 @@
  * Player-controlled slugs that arise from a changeling ability in order to live on in an extremely limited capacity until they can find a suitable corpse to inhabit.
  */
 /mob/living/basic/headslug
-	SET_BASE_VISUAL_PIXEL(0, 10)
 	name = "headslug"
 	desc = "A small, slug-like creature with a large, gaping maw. It's covered in a thick, slimy mucus."
 	icon_state = "headslug"
@@ -24,8 +23,6 @@
 	obj_damage = 0
 	environment_smash = ENVIRONMENT_SMASH_NONE
 	speak_emote = list("squeaks")
-	shadow_type = SHADOW_SMALL
-	shadow_offset_y = 2
 
 	ai_controller = /datum/ai_controller/basic_controller/headslug
 

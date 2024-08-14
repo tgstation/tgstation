@@ -15,7 +15,6 @@
 #define COIN 2
 
 /obj/machinery/computer/slot_machine
-	SET_BASE_VISUAL_PIXEL(0, DEPTH_OFFSET)
 	name = "slot machine"
 	desc = "Gambling for the antisocial."
 	icon = 'icons/obj/machines/computer.dmi'

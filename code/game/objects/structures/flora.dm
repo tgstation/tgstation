@@ -287,6 +287,7 @@
 	max_integrity = 150
 	pixel_x = -16
 	layer = FLY_LAYER
+	plane = ABOVE_GAME_PLANE
 	drag_slowdown = 1.5
 	product_types = list(/obj/item/grown/log/tree = 1)
 	harvest_amount_low = 6
@@ -954,6 +955,7 @@
 	pixel_x = -16
 	pixel_y = -12
 	layer = ABOVE_ALL_MOB_LAYER
+	plane = ABOVE_GAME_PLANE
 
 /obj/structure/flora/bush/large/style_2
 	icon_state = "bush2"

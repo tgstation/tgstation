@@ -65,9 +65,7 @@
 /turf/open/floor/catwalk_floor,
 /area/station/maintenance/department/security)
 "eW" = (
-/obj/effect/decal/cleanable/cobweb{
-	pixel_y = 24
-	},
+/obj/effect/decal/cleanable/cobweb,
 /turf/open/openspace,
 /area/station/maintenance/department/security)
 "fV" = (
@@ -85,9 +83,7 @@
 	},
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/spawner/random/engineering/atmospherics_portable,
-/obj/effect/decal/cleanable/cobweb/cobweb2{
-	pixel_y = 24
-	},
+/obj/effect/decal/cleanable/cobweb/cobweb2,
 /turf/open/floor/iron/smooth,
 /area/station/maintenance/department/security)
 "ip" = (
@@ -317,15 +313,12 @@
 /obj/machinery/plumbing/synthesizer{
 	reagent_id = /datum/reagent/water
 	},
-/obj/effect/decal/cleanable/cobweb{
-	pixel_y = 24
-	},
+/obj/effect/decal/cleanable/cobweb,
 /turf/open/floor/catwalk_floor,
 /area/station/maintenance/department/security)
 "DS" = (
 /obj/structure/ladder,
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/sign/poster/official/nanotrasen_logo,
 /turf/open/floor/iron/smooth,
 /area/station/maintenance/department/security)
 "EH" = (
@@ -507,6 +500,7 @@
 /obj/machinery/light/small/directional/north,
 /obj/structure/table,
 /obj/item/reagent_containers/cup/bucket,
+/obj/structure/sign/poster/official/nanotrasen_logo/directional/north,
 /turf/open/floor/iron/smooth,
 /area/station/maintenance/department/security)
 "Yg" = (

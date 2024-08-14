@@ -2,7 +2,6 @@
 #define FESTIVUS_RECHARGE_VALUE (0.075 * STANDARD_CELL_CHARGE)
 
 /mob/living/basic/festivus
-	SET_BASE_VISUAL_PIXEL(0, 0) // It's an object mimic
 	name = "festivus pole"
 	desc = "Serenity now... SERENITY NOW!"
 	icon = 'icons/obj/fluff/flora/pinetrees.dmi'

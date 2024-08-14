@@ -11,16 +11,14 @@
 "c" = (
 /obj/structure/table/reinforced,
 /obj/item/storage/toolbox/syndicate{
-	pixel_y = 15
+	pixel_y = 7
 	},
-/obj/item/storage/box/monkeycubes/syndicate{
-	pixel_y = 8
-	},
+/obj/item/storage/box/monkeycubes/syndicate,
 /obj/item/paper/crumpled{
 	default_raw_text = "Explosive testing on site is STRICTLY forbidden, as this outpost's walls are lined with explosives intended for intentional self-destruct purposes that may be set off prematurely through careless experiments.";
 	name = "Explosives Testing Warning";
 	pixel_x = -6;
-	pixel_y = 5
+	pixel_y = -3
 	},
 /obj/machinery/airalarm/directional/north,
 /obj/effect/mapping_helpers/airalarm/syndicate_access,
@@ -33,16 +31,22 @@
 /turf/closed/wall/mineral/plastitanium/nodiagonal,
 /area/ruin/syndicate_lava_base/main)
 "i" = (
-/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4,
 /turf/open/floor/iron/dark,
+/area/ruin/syndicate_lava_base/testlab)
+"n" = (
+/obj/structure/sign/warning/secure_area,
+/turf/closed/wall/mineral/plastitanium/nodiagonal,
 /area/ruin/syndicate_lava_base/testlab)
 "w" = (
 /obj/structure/closet/emcloset,
-/obj/structure/sign/warning/explosives/alt/directional/north,
 /turf/open/floor/iron/dark,
 /area/ruin/syndicate_lava_base/testlab)
 "A" = (
+/obj/structure/sign/warning/explosives/alt/directional/east,
 /obj/structure/closet/firecloset,
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
+	dir = 8
+	},
 /turf/open/floor/iron/dark,
 /area/ruin/syndicate_lava_base/testlab)
 "B" = (
@@ -50,7 +54,7 @@
 /area/ruin/syndicate_lava_base/testlab)
 "F" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron/dark,
 /area/ruin/syndicate_lava_base/testlab)
 "K" = (
@@ -89,11 +93,10 @@
 /area/ruin/syndicate_lava_base/testlab)
 "Q" = (
 /obj/structure/table/reinforced,
-/obj/item/restraints/handcuffs{
-	pixel_y = 8
-	},
-/obj/item/taperecorder{
-	pixel_y = 8
+/obj/item/restraints/handcuffs,
+/obj/item/taperecorder,
+/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
+	dir = 4
 	},
 /obj/machinery/light/small/directional/west,
 /turf/open/floor/iron/dark,
@@ -125,7 +128,7 @@ N
 "}
 (4,1,1) = {"
 d
-B
+n
 w
 A
 a

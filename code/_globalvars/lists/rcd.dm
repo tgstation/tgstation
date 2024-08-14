@@ -44,7 +44,6 @@ GLOBAL_LIST_INIT(rcd_designs, list(
 		//Window Doors[airlock_glass = TRUE is implied]
 		"Windoors" = list(
 			list(RCD_DESIGN_MODE = RCD_AIRLOCK, RCD_DESIGN_PATH = /obj/machinery/door/window),
-			list(RCD_DESIGN_MODE = RCD_AIRLOCK, RCD_DESIGN_PATH = /obj/machinery/door/window/half),
 			list(RCD_DESIGN_MODE = RCD_AIRLOCK, RCD_DESIGN_PATH = /obj/machinery/door/window/brigdoor),
 		),
 

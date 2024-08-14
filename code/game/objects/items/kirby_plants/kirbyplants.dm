@@ -1,5 +1,4 @@
 /obj/item/kirbyplants
-	SET_BASE_VISUAL_PIXEL(0, DEPTH_OFFSET)
 	name = "potted plant"
 	icon = 'icons/obj/fluff/flora/plants.dmi'
 	icon_state = "plant-01"

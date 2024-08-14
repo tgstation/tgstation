@@ -53,6 +53,7 @@
 	desc = "A resonating field that significantly damages anything inside of it when the field eventually ruptures. More damaging in low pressure environments."
 	icon_state = "shield1"
 	layer = ABOVE_ALL_MOB_LAYER
+	plane = ABOVE_GAME_PLANE
 	duration = 60 SECONDS
 	/// the amount of damage living beings will take whilst inside the field during its burst
 	var/resonance_damage = 20
@@ -146,6 +147,7 @@
 /obj/effect/temp_visual/resonance_crush
 	icon_state = "shield1"
 	layer = ABOVE_ALL_MOB_LAYER
+	plane = ABOVE_GAME_PLANE
 	duration = 4
 
 /obj/effect/temp_visual/resonance_crush/Initialize(mapload)

@@ -5,7 +5,6 @@ GLOBAL_LIST_EMPTY(roundstart_station_closets)
 
 
 /obj/structure/closet
-	SET_BASE_VISUAL_PIXEL(0, DEPTH_OFFSET)
 	name = "closet"
 	desc = "It's a basic storage unit."
 	icon = 'icons/obj/storage/closet.dmi'
@@ -458,8 +457,6 @@ GLOBAL_LIST_EMPTY(roundstart_station_closets)
 	var/atom/L = drop_location()
 	for(var/atom/movable/AM in src)
 		AM.forceMove(L)
-		AM.pixel_w = pixel_w
-		AM.pixel_z = pixel_z
 		if(throwing) // you keep some momentum when getting out of a thrown closet
 			step(AM, dir)
 	if(throwing)

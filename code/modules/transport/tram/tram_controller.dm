@@ -1192,3 +1192,4 @@
 	icon_state = "tram-controller"
 	custom_materials = list(/datum/material/titanium = SHEET_MATERIAL_AMOUNT * 4, /datum/material/iron = SHEET_MATERIAL_AMOUNT * 2, /datum/material/glass = SHEET_MATERIAL_AMOUNT * 2)
 	result_path = /obj/machinery/transport/tram_controller
+	pixel_shift = 32

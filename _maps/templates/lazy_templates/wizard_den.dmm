@@ -28,13 +28,14 @@
 /area/centcom/wizard_station)
 "cF" = (
 /obj/structure/table/wood,
+/obj/item/radio/intercom,
 /turf/open/floor/carpet/red,
 /area/centcom/wizard_station)
 "dk" = (
 /obj/machinery/power/shuttle_engine/heater{
 	resistance_flags = 3
 	},
-/obj/structure/window/reinforced/half/directional/north{
+/obj/structure/window/reinforced/spawner/directional/north{
 	resistance_flags = 3
 	},
 /turf/open/lava,
@@ -92,10 +93,10 @@
 /obj/structure/table,
 /obj/item/extinguisher{
 	pixel_x = 7;
-	pixel_y = 8
+	pixel_y = -6
 	},
 /obj/item/clothing/suit/wizrobe/red{
-	pixel_y = 11;
+	pixel_y = 3;
 	pixel_x = -6
 	},
 /turf/open/floor/engine/cult,
@@ -174,7 +175,9 @@
 /area/centcom/wizard_station)
 "kh" = (
 /obj/structure/sink/directional/south,
-/obj/structure/mirror/magic/directional/north,
+/obj/structure/mirror/magic{
+	pixel_y = 36
+	},
 /turf/open/floor/plastic,
 /area/centcom/wizard_station)
 "ko" = (
@@ -196,7 +199,7 @@
 	},
 /obj/item/clothing/head/wizard/red{
 	pixel_x = 6;
-	pixel_y = 2
+	pixel_y = -10
 	},
 /obj/machinery/light/small/directional/east,
 /turf/open/floor/engine/cult,
@@ -291,6 +294,34 @@
 /obj/structure/bookcase/random/reference/wizard,
 /turf/open/floor/iron,
 /area/centcom/wizard_station)
+"pt" = (
+/obj/item/kirbyplants/organic/plant10{
+	pixel_y = 21;
+	pixel_x = 6
+	},
+/turf/open/floor/engine/cult,
+/area/centcom/wizard_station)
+"pw" = (
+/obj/item/kirbyplants/organic/plant10{
+	pixel_y = 1;
+	pixel_x = -6
+	},
+/turf/open/floor/carpet/purple,
+/area/centcom/wizard_station)
+"pA" = (
+/obj/item/kirbyplants/organic/plant10{
+	pixel_y = 21;
+	pixel_x = 6
+	},
+/turf/open/floor/carpet/red,
+/area/centcom/wizard_station)
+"pI" = (
+/obj/item/kirbyplants/organic/plant10{
+	pixel_y = 2;
+	pixel_x = 5
+	},
+/turf/open/floor/engine/cult,
+/area/centcom/wizard_station)
 "qe" = (
 /obj/effect/turf_decal/tile/bar/opposingcorners,
 /obj/machinery/griddle,
@@ -317,8 +348,7 @@
 	desc = "Everything you need to know to be a wizard."
 	},
 /obj/item/stack/medical/bruise_pack{
-	pixel_x = -12;
-	pixel_y = 12
+	pixel_x = -12
 	},
 /obj/item/reagent_containers/cup/glass/mug/coco{
 	pixel_x = -11;
@@ -348,10 +378,6 @@
 	pixel_x = 6
 	},
 /turf/open/floor/engine/cult,
-/area/centcom/wizard_station)
-"rD" = (
-/obj/item/radio/intercom/directional/west,
-/turf/open/floor/carpet/red,
 /area/centcom/wizard_station)
 "sx" = (
 /obj/structure/flora/bush/flowers_pp/style_random,
@@ -398,17 +424,16 @@
 "vG" = (
 /obj/structure/table/reinforced,
 /obj/effect/spawner/random/bureaucracy/paper{
-	pixel_y = 15;
+	pixel_y = 4;
 	pixel_x = 4
 	},
 /obj/item/pen{
-	pixel_x = -5;
-	pixel_y = 8
+	pixel_x = -5
 	},
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/item/coin/antagtoken{
 	pixel_x = -9;
-	pixel_y = 16
+	pixel_y = 5
 	},
 /turf/open/floor/engine/cult,
 /area/centcom/wizard_station)
@@ -417,7 +442,9 @@
 /turf/open/floor/grass,
 /area/centcom/wizard_station)
 "wQ" = (
-/obj/structure/mirror/magic/directional/north,
+/obj/structure/mirror/magic{
+	pixel_x = 32
+	},
 /turf/open/floor/engine/cult,
 /area/centcom/wizard_station)
 "wY" = (
@@ -545,7 +572,7 @@
 /turf/open/floor/engine/cult,
 /area/centcom/wizard_station)
 "Dy" = (
-/obj/structure/window/reinforced/half/directional/east,
+/obj/machinery/door/window/right/directional/east,
 /turf/open/floor/engine/cult,
 /area/centcom/wizard_station)
 "DX" = (
@@ -564,16 +591,14 @@
 /obj/machinery/power/shuttle_engine/heater{
 	resistance_flags = 3
 	},
-/obj/structure/window/reinforced/half/directional/north{
+/obj/structure/window/reinforced/spawner/directional/north{
 	resistance_flags = 3
 	},
 /turf/open/floor/engine/cult,
 /area/centcom/wizard_station)
 "HD" = (
 /obj/structure/table/wood,
-/obj/item/storage/photo_album{
-	pixel_y = 8
-	},
+/obj/item/storage/photo_album,
 /turf/open/floor/engine/cult,
 /area/centcom/wizard_station)
 "HX" = (
@@ -636,7 +661,7 @@
 /turf/open/floor/iron,
 /area/centcom/wizard_station)
 "JW" = (
-/obj/machinery/door/window/half/left/directional/east,
+/obj/machinery/door/window/left/directional/east,
 /turf/open/floor/engine/cult,
 /area/centcom/wizard_station)
 "KL" = (
@@ -648,6 +673,13 @@
 	},
 /obj/structure/railing{
 	dir = 4
+	},
+/turf/open/floor/engine/cult,
+/area/centcom/wizard_station)
+"Lt" = (
+/obj/item/kirbyplants/organic/plant10{
+	pixel_y = 1;
+	pixel_x = -6
 	},
 /turf/open/floor/engine/cult,
 /area/centcom/wizard_station)
@@ -708,7 +740,7 @@
 "RR" = (
 /obj/structure/table/wood,
 /obj/item/toy/figure/wizard{
-	pixel_y = 10;
+	pixel_y = 2;
 	pixel_x = -5
 	},
 /turf/open/floor/engine/cult,
@@ -728,6 +760,7 @@
 	pixel_x = -8;
 	pixel_y = 8
 	},
+/obj/effect/decal/cleanable/cobweb,
 /turf/open/floor/engine/cult,
 /area/centcom/wizard_station)
 "Sg" = (
@@ -735,7 +768,10 @@
 /turf/open/floor/engine/cult,
 /area/centcom/wizard_station)
 "Si" = (
-/obj/item/kirbyplants/organic/plant10,
+/obj/item/kirbyplants/organic/plant10{
+	pixel_y = 21;
+	pixel_x = -7
+	},
 /turf/open/floor/engine/cult,
 /area/centcom/wizard_station)
 "St" = (
@@ -757,7 +793,10 @@
 /turf/open/floor/engine/cult,
 /area/centcom/wizard_station)
 "Tl" = (
-/obj/item/kirbyplants/organic/plant10,
+/obj/item/kirbyplants/organic/plant10{
+	pixel_y = 2;
+	pixel_x = 5
+	},
 /turf/open/floor/carpet/purple,
 /area/centcom/wizard_station)
 "TG" = (
@@ -853,7 +892,10 @@
 /turf/open/floor/engine/cult,
 /area/centcom/wizard_station)
 "Xt" = (
-/obj/item/kirbyplants/organic/plant10,
+/obj/item/kirbyplants/organic/plant10{
+	pixel_y = 21;
+	pixel_x = -7
+	},
 /turf/open/floor/carpet/red,
 /area/centcom/wizard_station)
 "XJ" = (
@@ -917,7 +959,10 @@
 /turf/open/floor/iron,
 /area/centcom/wizard_station)
 "ZR" = (
-/obj/item/kirbyplants/organic/plant10,
+/obj/item/kirbyplants/organic/plant10{
+	pixel_y = 1;
+	pixel_x = -6
+	},
 /obj/machinery/light/small/directional/south,
 /turf/open/floor/engine/cult,
 /area/centcom/wizard_station)
@@ -1262,7 +1307,7 @@ II
 RT
 kZ
 kZ
-Si
+pI
 VB
 MW
 ft
@@ -1356,7 +1401,7 @@ kZ
 VB
 VB
 hj
-Tl
+pw
 VB
 VB
 eW
@@ -1369,7 +1414,7 @@ qo
 kZ
 kZ
 kZ
-Si
+pI
 VB
 op
 op
@@ -1403,12 +1448,12 @@ VB
 UX
 tz
 tz
-Si
+Lt
 VB
 kZ
 Ej
 kZ
-Si
+Lt
 uy
 VB
 VB
@@ -1490,7 +1535,7 @@ ZR
 VB
 VB
 wQ
-Si
+pI
 VB
 uy
 tz
@@ -1500,7 +1545,7 @@ VB
 VB
 VB
 VB
-Si
+pt
 kZ
 kZ
 uy
@@ -1529,7 +1574,7 @@ op
 op
 op
 op
-VB
+TG
 Ol
 kZ
 kZ
@@ -1580,7 +1625,7 @@ cF
 LU
 LU
 LU
-rD
+LU
 LU
 LU
 Pb
@@ -1593,7 +1638,7 @@ sx
 Cm
 hT
 VB
-Xt
+pA
 LU
 cy
 VB
@@ -1713,7 +1758,7 @@ op
 op
 op
 op
-VB
+TG
 Ol
 kZ
 kZ
@@ -1762,7 +1807,7 @@ op
 TG
 Sg
 jD
-Si
+pI
 VB
 VB
 om
@@ -1863,12 +1908,12 @@ VB
 xc
 tz
 tz
-Si
+pI
 VB
 kZ
 kZ
 kZ
-Si
+pI
 uy
 VB
 VB
@@ -1998,7 +2043,7 @@ iG
 kZ
 kZ
 WQ
-Si
+Lt
 VB
 JQ
 Ar
@@ -2090,7 +2135,7 @@ VB
 VB
 kZ
 xF
-Si
+pI
 VB
 VB
 VB

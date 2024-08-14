@@ -53,7 +53,7 @@
 ///Clean up on the mobs seat etc when its deleted (Either by murder or because it left)
 /mob/living/basic/robot_customer/Destroy()
 	var/datum/venue/attending_venue = ai_controller.blackboard[BB_CUSTOMER_ATTENDING_VENUE]
-	var/obj/structure/holosign/robot_seat/our_seat = ai_controller?.blackboard[BB_CUSTOMER_MY_SEAT]
+	var/obj/structure/holosign/robot_seat/our_seat = ai_controller.blackboard[BB_CUSTOMER_MY_SEAT]
 	attending_venue.current_visitors -= src
 	if(attending_venue.linked_seats[our_seat])
 		attending_venue.linked_seats[our_seat] = null
@@ -76,8 +76,6 @@
 	. = ..()
 
 	var/datum/customer_data/customer_info = ai_controller.blackboard[BB_CUSTOMER_CUSTOMERINFO]
-	if (isnull(customer_info))
-		return
 
 	var/new_underlays = customer_info.get_underlays(src)
 	if (new_underlays)

@@ -125,8 +125,6 @@ GLOBAL_LIST_EMPTY(total_extraction_beacons)
 	holder_obj.add_overlay(balloon)
 	playsound(holder_obj.loc, 'sound/items/fultext_deploy.ogg', vol = 50, vary = TRUE, extrarange = -3)
 
-	SEND_SIGNAL(thing, COMSIG_ATOM_FULTON_BEGAN)
-
 	animate(holder_obj, pixel_z = 10, time = 2 SECONDS, flags = ANIMATION_RELATIVE)
 	animate(pixel_z = 5, time = 1 SECONDS, flags = ANIMATION_RELATIVE)
 	animate(pixel_z = -5, time = 1 SECONDS, flags = ANIMATION_RELATIVE)
@@ -180,7 +178,6 @@ GLOBAL_LIST_EMPTY(total_extraction_beacons)
 	sleep(0.5 SECONDS)
 	thing.forceMove(holder_obj.loc)
 	qdel(holder_obj)
-	SEND_SIGNAL(thing, COMSIG_ATOM_FULTON_LANDED)
 	if(uses_left <= 0)
 		qdel(src)
 

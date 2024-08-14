@@ -1,5 +1,4 @@
 /obj/machinery/autolathe
-	SET_BASE_VISUAL_PIXEL(0, DEPTH_OFFSET)
 	name = "autolathe"
 	desc = "It produces items using iron, glass, plastic and maybe some more."
 	icon = 'icons/obj/machines/lathes.dmi'

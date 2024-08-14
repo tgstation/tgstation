@@ -151,7 +151,6 @@
 	butcher_results = list(/obj/item/organ/internal/ears/penguin = 1, /obj/item/food/meat/slab/penguin = 1)
 	ai_controller = /datum/ai_controller/basic_controller/penguin/baby
 	can_lay_eggs = FALSE
-	shadow_type = SHADOW_SMALL
 	///will it grow up?
 	var/can_grow_up = TRUE
 

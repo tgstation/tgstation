@@ -14,8 +14,8 @@
 	desc = "A remote control for a door."
 	current_mode = SD_MESSAGE
 	req_access = list(ACCESS_SECURITY)
-	text_color = "#FF4444"
-	header_text_color = "#FF8888"
+	text_color = "#F44"
+	header_text_color = "#F88"
 
 	/// ID of linked machinery/lockers.
 	var/id = null
@@ -33,8 +33,6 @@
 	var/list/closets = list()
 	///needed to send messages to sec radio
 	var/obj/item/radio/sec_radio
-
-WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/machinery/status_display/door_timer)
 
 /obj/machinery/status_display/door_timer/Initialize(mapload)
 	. = ..()

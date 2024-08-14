@@ -5,7 +5,6 @@
  * Links to buttons for remote control.
  */
 /obj/machinery/photobooth
-	SET_BASE_VISUAL_PIXEL(0, DEPTH_OFFSET)
 	name = "photobooth"
 	desc = "A machine with some drapes and a camera, used to update security record photos. Requires Law Office access to use."
 	icon = 'icons/obj/machines/photobooth.dmi'
@@ -195,8 +194,6 @@
 	id = null
 	controller.id = null
 	balloon_alert(user, "linked to [tool.buffer]")
-
-BUTTON_DIRECTIONAL_HELPERS(/obj/machinery/button/photobooth)
 
 /obj/item/assembly/control/photobooth_control
 	name = "photobooth controller"

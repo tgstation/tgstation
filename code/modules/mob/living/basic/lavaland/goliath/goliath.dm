@@ -183,7 +183,6 @@
 	icon_dead = "ancient_goliath_dead"
 	tentacle_warning_state = "ancient_goliath_preattack"
 	tameable = FALSE
-	shadow_type = SHADOW_LARGE
 
 /// Rare Goliath variant which occasionally replaces the normal mining mob, releases shitloads of tentacles
 /mob/living/basic/mining/goliath/ancient/immortal

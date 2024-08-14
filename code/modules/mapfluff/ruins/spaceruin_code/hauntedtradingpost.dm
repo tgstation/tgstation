@@ -210,6 +210,8 @@ GLOBAL_LIST_EMPTY(tripwire_suicide_pact)
 
 //door button that destroys itself when it is pressed
 /obj/machinery/button/door/selfdestructs
+	icon_state= "button-warning"
+	skin = "-warning"
 
 /obj/machinery/button/door/selfdestructs/attempt_press(mob/user)
 	. = ..()

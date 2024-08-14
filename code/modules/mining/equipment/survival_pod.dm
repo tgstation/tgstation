@@ -137,16 +137,19 @@
 //Window
 /obj/structure/window/reinforced/shuttle/survival_pod
 	name = "pod window"
-	icon = 'icons/obj/smooth_structures/windows/pod_window.dmi'
+	icon = 'icons/obj/smooth_structures/pod_window.dmi'
+	icon_state = "pod_window-0"
+	base_icon_state = "pod_window"
 	smoothing_flags = SMOOTH_BITMASK
-	smoothing_groups = SMOOTH_GROUP_SURVIVAL_TITANIUM_POD
+	smoothing_groups = SMOOTH_GROUP_SHUTTLE_PARTS + SMOOTH_GROUP_SURVIVAL_TITANIUM_POD
 	canSmoothWith = SMOOTH_GROUP_SURVIVAL_TITANIUM_POD
 
 /obj/structure/window/reinforced/survival_pod
 	name = "pod window"
-	icon = 'icons/obj/smooth_structures/windows/pod_thindow.dmi'
+	icon = 'icons/obj/mining_zones/survival_pod.dmi'
+	icon_state = "pwindow"
 
-MAPPING_DIRECTIONAL_HELPERS_EMPTY(/obj/structure/window/reinforced/survival_pod/spawner)
+MAPPING_DIRECTIONAL_HELPERS(/obj/structure/window/reinforced/survival_pod/spawner, 0)
 
 //Door
 /obj/machinery/door/airlock/survival_pod
@@ -154,26 +157,25 @@ MAPPING_DIRECTIONAL_HELPERS_EMPTY(/obj/structure/window/reinforced/survival_pod/
 	icon = 'icons/obj/doors/airlocks/survival/survival.dmi'
 	overlays_file = 'icons/obj/doors/airlocks/survival/survival_overlays.dmi'
 	assemblytype = /obj/structure/door_assembly/door_assembly_pod
-	smoothing_groups = SMOOTH_GROUP_SURVIVAL_TITANIUM_POD
-	greyscale_colors = "#a5a7ac#a5a7ac#969696#969696#5ea52c#6d6565#777777"
+	smoothing_groups = SMOOTH_GROUP_AIRLOCK + SMOOTH_GROUP_SURVIVAL_TITANIUM_POD
 
 /obj/machinery/door/airlock/survival_pod/glass
 	opacity = FALSE
 	glass = TRUE
-	greyscale_config = /datum/greyscale_config/airlocks/window
-	greyscale_colors = "#a5a7ac#a5a7ac#969696#969696#5ea52c#6d6565"
 
 /obj/structure/door_assembly/door_assembly_pod
 	name = "pod airlock assembly"
-	icon =  /obj/machinery/door/airlock/survival_pod::icon
+	icon = 'icons/obj/doors/airlocks/survival/survival.dmi'
+	base_name = "pod airlock"
+	overlays_file = 'icons/obj/doors/airlocks/survival/survival_overlays.dmi'
 	airlock_type = /obj/machinery/door/airlock/survival_pod
 	glass_type = /obj/machinery/door/airlock/survival_pod/glass
 
 //Windoor
 /obj/machinery/door/window/survival_pod
-	icon = 'icons/obj/doors/windoor.dmi'
-	icon_state = "survival"
-	base_state = "survival"
+	icon = 'icons/obj/mining_zones/survival_pod.dmi'
+	icon_state = "windoor"
+	base_state = "windoor"
 
 MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/door/window/survival_pod/left, 0)
 

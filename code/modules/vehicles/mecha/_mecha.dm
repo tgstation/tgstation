@@ -19,7 +19,6 @@
  * Cooldown for melee is on mech_melee_attack also because exploits
  */
 /obj/vehicle/sealed/mecha
-	SET_BASE_VISUAL_PIXEL(0, DEPTH_OFFSET)
 	name = "exosuit"
 	desc = "Exosuit"
 	icon = 'icons/mob/rideables/mecha.dmi'

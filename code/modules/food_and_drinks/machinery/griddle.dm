@@ -1,5 +1,4 @@
 /obj/machinery/griddle
-	SET_BASE_VISUAL_PIXEL(0, DEPTH_OFFSET)
 	name = "griddle"
 	desc = "Because using pans is for pansies."
 	icon = 'icons/obj/machines/kitchen.dmi'

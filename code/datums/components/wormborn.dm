@@ -28,7 +28,6 @@
 	source.forceMove(worm)
 
 /mob/living/basic/wizard_worm
-	SET_BASE_VISUAL_PIXEL(0, 6)
 	name = "Magic Worm"
 	desc = "Large blue worm. What happens if you put your hand in his mouth?."
 	icon = 'icons/mob/simple/mob.dmi'
@@ -47,8 +46,6 @@
 	mob_size = MOB_SIZE_HUGE
 	sentience_type = SENTIENCE_BOSS
 	mob_biotypes = MOB_ORGANIC|MOB_SPECIAL
-	shadow_offset_y = 4
-	shadow_type = SHADOW_LARGE
 
 /mob/living/basic/wizard_worm/has_gravity(turf/gravity_turf)
 	return TRUE

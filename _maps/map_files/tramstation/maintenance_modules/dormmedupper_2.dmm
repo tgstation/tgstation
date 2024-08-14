@@ -110,9 +110,7 @@
 /obj/effect/spawner/random/engineering/material_cheap,
 /obj/effect/spawner/random/medical/minor_healing,
 /obj/effect/spawner/random/medical/supplies,
-/obj/effect/decal/cleanable/cobweb/cobweb2{
-	pixel_y = 24
-	},
+/obj/effect/decal/cleanable/cobweb/cobweb2,
 /turf/open/floor/iron/smooth,
 /area/station/maintenance/department/crew_quarters/dorms)
 "nW" = (
@@ -207,9 +205,7 @@
 /obj/effect/turf_decal/trimline/yellow/warning{
 	dir = 5
 	},
-/obj/effect/decal/cleanable/cobweb/cobweb2{
-	pixel_y = 24
-	},
+/obj/effect/decal/cleanable/cobweb/cobweb2,
 /turf/open/floor/iron/smooth,
 /area/station/maintenance/department/crew_quarters/dorms)
 "zX" = (
@@ -319,7 +315,8 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/structure/sign/warning/secure_area{
 	desc = "A warning sign which reads 'MULE CROSSING - LOOK BOTH WAYS";
-	name = "MULE CROSSING - LOOK BOTH WAYS"
+	name = "MULE CROSSING - LOOK BOTH WAYS";
+	pixel_y = -32
 	},
 /turf/open/floor/catwalk_floor,
 /area/station/maintenance/department/crew_quarters/dorms)
@@ -357,8 +354,8 @@
 "Oe" = (
 /obj/effect/turf_decal/stripes/end,
 /obj/structure/cable/multilayer/multiz,
+/obj/structure/sign/warning/electric_shock/directional/north,
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/sign/warning/electric_shock,
 /turf/open/floor/plating,
 /area/station/maintenance/department/crew_quarters/dorms)
 "Oi" = (
@@ -419,9 +416,7 @@
 	},
 /obj/effect/turf_decal/trimline/yellow/corner,
 /obj/effect/decal/cleanable/dirt,
-/obj/effect/decal/cleanable/cobweb{
-	pixel_y = 24
-	},
+/obj/effect/decal/cleanable/cobweb,
 /turf/open/floor/iron/smooth,
 /area/station/maintenance/department/crew_quarters/dorms)
 "Wu" = (
@@ -1430,7 +1425,7 @@ BZ
 BZ
 BZ
 qB
-Uk
+Jn
 CH
 CH
 CH

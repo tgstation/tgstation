@@ -2,13 +2,13 @@
 "a" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/item/kirbyplants/random,
-/obj/structure/sign/poster/contraband/ambrosia_vulgaris,
+/obj/structure/sign/poster/contraband/kudzu/directional/west,
 /turf/open/floor/iron/smooth,
 /area/station/maintenance/starboard/central)
 "b" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/item/kirbyplants/random,
-/obj/structure/sign/poster/contraband/kudzu,
+/obj/structure/sign/poster/contraband/ambrosia_vulgaris/directional/east,
 /turf/open/floor/iron/smooth,
 /area/station/maintenance/starboard/central)
 "e" = (
@@ -160,7 +160,7 @@ o
 "}
 (9,1,1) = {"
 s
-b
+h
 s
 s
 s
@@ -171,15 +171,15 @@ o
 s
 h
 h
-h
+a
 s
 V
 o
 "}
 (11,1,1) = {"
 s
-a
 h
+b
 h
 s
 V

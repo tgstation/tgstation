@@ -122,7 +122,7 @@
 	anchored = TRUE
 	density = TRUE
 	smoothing_flags = SMOOTH_BITMASK
-	smoothing_groups = SMOOTH_GROUP_WALLS + SMOOTH_GROUP_TALL_WALLS + SMOOTH_GROUP_CLOSED_TURFS
+	smoothing_groups = SMOOTH_GROUP_WALLS + SMOOTH_GROUP_CLOSED_TURFS
 
 /obj/item/paper/fluff/museum/noend
 	name = "scrambled note"

@@ -15,6 +15,7 @@
 	pixel_y = 3
 	base_pixel_y = 3
 	layer = ABOVE_MOB_LAYER
+	plane = ABOVE_GAME_PLANE
 	/// Which body type we use, male or female?
 	var/body_type
 	/// Material we're used of, wood or plastic?

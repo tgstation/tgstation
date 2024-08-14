@@ -8,7 +8,6 @@
 
 /// Beds
 /obj/structure/bed
-	SET_BASE_VISUAL_PIXEL(0, DEPTH_OFFSET)
 	name = "bed"
 	desc = "This is used to lie in, sleep in or strap on."
 	icon_state = "bed"

@@ -52,7 +52,7 @@
 /obj/machinery/power/tracker/proc/add_panel_overlay(icon_state, z_offset)
 	var/obj/effect/overlay/tracker/overlay = new(src)
 	overlay.icon_state = icon_state
-	SET_PLANE_EXPLICIT(overlay, GAME_PLANE, src)
+	SET_PLANE_EXPLICIT(overlay, ABOVE_GAME_PLANE, src)
 	overlay.pixel_z = z_offset
 	vis_contents += overlay
 	return overlay

@@ -228,7 +228,6 @@
 		BB_EMOTE_SEE = list("sweats"),
 		BB_SPEAK_CHANCE = 5,
 	)
-	shadow_type = SHADOW_LARGE
 
 /mob/living/basic/clown/clownhulk/chlown
 	name = "Chlown"

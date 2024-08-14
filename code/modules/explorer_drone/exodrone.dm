@@ -342,7 +342,6 @@ GLOBAL_LIST_EMPTY(exodrone_launchers)
 
 /// Exploration drone launcher
 /obj/machinery/exodrone_launcher
-	SET_BASE_VISUAL_PIXEL(0, DEPTH_OFFSET)
 	name = "exploration drone launcher"
 	desc = "A launch pad designed to send exploration drones into the great beyond."
 	icon = 'icons/obj/exploration.dmi'

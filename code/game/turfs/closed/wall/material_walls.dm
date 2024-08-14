@@ -2,8 +2,10 @@
 	name = "wall"
 	desc = "A huge chunk of material used to separate rooms."
 	icon = 'icons/turf/walls/material_wall.dmi'
+	icon_state = "material_wall-0"
+	base_icon_state = "material_wall"
 	smoothing_flags = SMOOTH_BITMASK
-	smoothing_groups = SMOOTH_GROUP_WALLS + SMOOTH_GROUP_TALL_WALLS + SMOOTH_GROUP_CLOSED_TURFS + SMOOTH_GROUP_MATERIAL_WALLS
+	smoothing_groups = SMOOTH_GROUP_WALLS + SMOOTH_GROUP_CLOSED_TURFS + SMOOTH_GROUP_MATERIAL_WALLS
 	canSmoothWith = SMOOTH_GROUP_MATERIAL_WALLS
 	rcd_memory = null
 	material_flags = MATERIAL_EFFECTS | MATERIAL_ADD_PREFIX | MATERIAL_COLOR | MATERIAL_AFFECT_STATISTICS

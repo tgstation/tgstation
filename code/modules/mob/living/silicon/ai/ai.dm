@@ -1,7 +1,6 @@
 #define CALL_BOT_COOLDOWN 900
 
 /mob/living/silicon/ai
-	SET_BASE_VISUAL_PIXEL(0, 0) // Needs a new sprite
 	name = "AI"
 	real_name = "AI"
 	icon = 'icons/mob/silicon/ai.dmi'
@@ -16,7 +15,6 @@
 	mob_size = MOB_SIZE_LARGE
 	radio = /obj/item/radio/headset/silicon/ai
 	can_buckle_to = FALSE
-	shadow_type = SHADOW_NONE
 	var/battery = 200 //emergency power if the AI's APC is off
 	var/list/network = list(CAMERANET_NETWORK_SS13)
 	var/obj/machinery/camera/current

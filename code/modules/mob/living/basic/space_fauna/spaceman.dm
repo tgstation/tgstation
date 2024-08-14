@@ -1,6 +1,4 @@
 /mob/living/basic/spaceman
-	// Sovl
-	SET_BASE_VISUAL_PIXEL(0, 0)
 	name = "Spaceman"
 	desc = "What in the actual hell..?"
 	icon = 'icons/mob/simple/animal.dmi'
@@ -27,7 +25,6 @@
 	obj_damage = 0
 	environment_smash = ENVIRONMENT_SMASH_NONE
 	ai_controller = /datum/ai_controller/basic_controller/spaceman
-	shadow_type = SHADOW_NONE
 
 /mob/living/basic/spaceman/Initialize(mapload)
 	. = ..()

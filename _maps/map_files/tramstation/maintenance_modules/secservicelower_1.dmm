@@ -39,14 +39,6 @@
 /obj/structure/table,
 /turf/open/floor/iron/smooth,
 /area/station/maintenance/central/greater)
-"dI" = (
-/obj/machinery/door_buttons/access_button/directional/west{
-	pixel_y = -9;
-	idDoor = "servicemaintleft_external";
-	idSelf = "servicemaintleft_airlock_control"
-	},
-/turf/open/misc/asteroid/airless,
-/area/station/asteroid)
 "ek" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -56,6 +48,12 @@
 	frequency = 1449;
 	id_tag = "servicemaintleft_internal";
 	name = "External Access"
+	},
+/obj/machinery/door_buttons/access_button{
+	idDoor = "servicemaintleft_internal";
+	idSelf = "servicemaintleft_airlock_control";
+	name = "External Access Button";
+	pixel_x = -24
 	},
 /turf/open/floor/catwalk_floor,
 /area/station/maintenance/port/central)
@@ -101,9 +99,7 @@
 	},
 /obj/structure/table,
 /obj/effect/decal/cleanable/dirt,
-/obj/item/storage/toolbox/mechanical{
-	pixel_y = 15
-	},
+/obj/item/storage/toolbox/mechanical,
 /turf/open/floor/iron/smooth,
 /area/station/maintenance/central/greater)
 "is" = (
@@ -114,7 +110,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/structure/cable,
-/obj/structure/sign/warning/vacuum/external,
+/obj/structure/sign/warning/vacuum/external/directional/north,
 /turf/open/floor/catwalk_floor,
 /area/station/maintenance/port/central)
 "iV" = (
@@ -182,30 +178,13 @@
 /obj/modular_map_connector,
 /turf/open/floor/catwalk_floor,
 /area/station/maintenance/port/central)
-"lV" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/structure/disposalpipe/segment{
-	dir = 4
-	},
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/structure/cable,
-/obj/machinery/door_buttons/access_button/directional/north{
-	idDoor = "servicemaintleft_internal";
-	idSelf = "servicemaintleft_airlock_control";
-	pixel_x = 8
-	},
-/turf/open/floor/catwalk_floor,
-/area/station/maintenance/port/central)
 "mj" = (
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
 /area/station/maintenance/port/central)
 "mM" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/effect/decal/cleanable/cobweb{
-	pixel_y = 24
-	},
+/obj/effect/decal/cleanable/cobweb,
 /turf/open/floor/iron/smooth,
 /area/station/maintenance/central/greater)
 "nk" = (
@@ -254,15 +233,18 @@
 	id_tag = "servicemaintleft_external";
 	name = "External Access"
 	},
+/obj/machinery/door_buttons/access_button{
+	idDoor = "servicemaintleft_external";
+	idSelf = "servicemaintleft_airlock_control";
+	name = "External Access Button";
+	pixel_y = 24
+	},
 /turf/open/floor/catwalk_floor,
 /area/station/maintenance/port/central)
 "os" = (
 /obj/structure/table,
 /obj/effect/decal/cleanable/dirt,
-/obj/item/stack/cable_coil{
-	pixel_y = 8
-	},
-/obj/structure/sign/warning/electric_shock,
+/obj/item/stack/cable_coil,
 /turf/open/floor/iron/smooth,
 /area/station/maintenance/central/greater)
 "pc" = (
@@ -431,23 +413,9 @@
 	},
 /turf/open/floor/iron/smooth,
 /area/station/maintenance/central/greater)
-"Aj" = (
-/obj/structure/cable,
-/obj/effect/decal/cleanable/dirt,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/structure/sign/warning/vacuum/external,
-/turf/open/floor/catwalk_floor,
-/area/station/maintenance/central/greater)
 "Bz" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/light/small/directional/north,
-/obj/machinery/door_buttons/airlock_controller/directional/north{
-	idExterior = "servicemaintleft_external";
-	idInterior = "servicemaintleft_internal";
-	idSelf = "servicemaintleft_airlock_control";
-	pixel_x = 8
-	},
 /turf/open/floor/iron/smooth,
 /area/station/maintenance/port/central)
 "BC" = (
@@ -476,6 +444,7 @@
 	dir = 4
 	},
 /obj/structure/cable/multilayer/multiz,
+/obj/structure/sign/warning/electric_shock/directional/west,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating,
 /area/station/maintenance/central/greater)
@@ -631,6 +600,7 @@
 /area/station/maintenance/central/greater)
 "No" = (
 /obj/effect/decal/cleanable/dirt,
+/obj/structure/sign/warning/vacuum/external/directional/east,
 /obj/effect/landmark/blobstart,
 /turf/open/floor/iron/smooth,
 /area/station/maintenance/central/greater)
@@ -668,9 +638,7 @@
 "PB" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/spawner/random/engineering/atmospherics_portable,
-/obj/effect/decal/cleanable/cobweb{
-	pixel_y = 24
-	},
+/obj/effect/decal/cleanable/cobweb,
 /turf/open/floor/iron/smooth,
 /area/station/maintenance/port/central)
 "PM" = (
@@ -791,9 +759,14 @@
 /area/station/maintenance/central/greater)
 "Xt" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/effect/decal/cleanable/cobweb/cobweb2{
+/obj/machinery/door_buttons/airlock_controller{
+	idExterior = "servicemaintleft_external";
+	idInterior = "servicemaintleft_internal";
+	idSelf = "servicemaintleft_airlock_control";
+	name = "External Access Console";
 	pixel_y = 24
 	},
+/obj/effect/decal/cleanable/cobweb/cobweb2,
 /turf/open/floor/iron/smooth,
 /area/station/maintenance/port/central)
 "YH" = (
@@ -1978,7 +1951,7 @@ Ve
 Ve
 Ve
 Ve
-lV
+rz
 nk
 nk
 nk
@@ -2225,7 +2198,7 @@ EK
 EK
 EK
 EK
-dI
+aN
 qr
 Ve
 YH
@@ -2651,7 +2624,7 @@ TQ
 TQ
 TQ
 TQ
-Aj
+vR
 Ip
 VO
 kD

@@ -28,7 +28,7 @@
 	if(movable_target.movement_type & (FLOATING|FLYING) && !HAS_TRAIT(movable_target, TRAIT_NO_FLOATING_ANIM))
 		DO_FLOATING_ANIM(movable_target)
 
-/datum/element/movetype_handler/Detach(atom/movable/source)
+/datum/element/movetype_handler/Detach(datum/source)
 	var/list/signals_to_remove = list(
 		SIGNAL_ADDTRAIT(TRAIT_NO_FLOATING_ANIM),
 		SIGNAL_REMOVETRAIT(TRAIT_NO_FLOATING_ANIM),

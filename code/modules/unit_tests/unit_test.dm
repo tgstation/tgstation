@@ -222,10 +222,6 @@ GLOBAL_VAR_INIT(focused_tests, focused_tests())
 	var/list/returnable_list = list()
 	// The following are just generic, singular types.
 	returnable_list = list(
-		// Branch types, should never be created
-		/turf/closed,
-		/turf/open,
-		/turf,
 		//Never meant to be created, errors out the ass for mobcode reasons
 		/mob/living/carbon,
 		//And another

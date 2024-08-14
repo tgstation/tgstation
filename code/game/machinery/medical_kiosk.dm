@@ -13,7 +13,6 @@
 
 
 /obj/machinery/medical_kiosk
-	SET_BASE_VISUAL_PIXEL(0, DEPTH_OFFSET)
 	name = "medical kiosk"
 	desc = "A freestanding medical kiosk, which can provide a wide range of medical analysis for diagnosis."
 	icon = 'icons/obj/machines/medical_kiosk.dmi'

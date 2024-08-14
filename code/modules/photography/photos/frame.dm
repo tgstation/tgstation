@@ -10,6 +10,7 @@
 	icon_state = "frame-overlay"
 	result_path = /obj/structure/sign/picture_frame
 	var/obj/item/photo/displayed
+	pixel_shift = 30
 
 /obj/item/wallframe/picture/attackby(obj/item/I, mob/user)
 	if(istype(I, /obj/item/photo))

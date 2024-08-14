@@ -67,7 +67,6 @@
 	add_overlay(body_overlay)
 	add_overlay(eyes_overlay)
 	add_overlay(moustache_overlay)
-	update_appearance(UPDATE_OVERLAYS)
 
 /datum/ai_controller/basic_controller/gondola
 	blackboard = list(

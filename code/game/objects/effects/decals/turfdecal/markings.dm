@@ -13,9 +13,6 @@
 /obj/effect/turf_decal/stripes/full
 	icon_state = "warn_full"
 
-/obj/effect/turf_decal/stripes/threshold
-	icon_state = "warningline_threshold"
-
 /obj/effect/turf_decal/stripes/asteroid/line
 	icon_state = "ast_warn"
 
@@ -551,8 +548,4 @@
 
 /obj/effect/turf_decal/board_letter/h
 	icon_state = "board_h"
-
-//Decals for door thresholds
-/obj/effect/turf_decal/door_threshold
-	icon_state = "threshold"
 

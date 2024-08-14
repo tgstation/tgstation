@@ -37,6 +37,4 @@
 	)
 	mob_size = MOB_SIZE_LARGE
 	gold_core_spawnable = NO_SPAWN
-	pixel_x = -16
-	base_pixel_x = -16
-	shadow_type = SHADOW_LARGE
+

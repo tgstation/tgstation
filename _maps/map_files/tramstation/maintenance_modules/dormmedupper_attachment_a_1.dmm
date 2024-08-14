@@ -18,9 +18,7 @@
 /area/template_noop)
 "v" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/effect/decal/cleanable/cobweb{
-	pixel_y = 24
-	},
+/obj/effect/decal/cleanable/cobweb,
 /obj/structure/rack,
 /obj/effect/spawner/random/maintenance/three,
 /obj/effect/spawner/random/engineering/material_cheap,

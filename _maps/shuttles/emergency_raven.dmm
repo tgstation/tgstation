@@ -1463,6 +1463,20 @@
 	},
 /turf/open/floor/plating,
 /area/shuttle/escape)
+"ep" = (
+/obj/machinery/turretid{
+	desc = "Used to the Raven's automated defenses.";
+	icon_state = "control_kill";
+	lethal = 1;
+	pixel_x = 5;
+	pixel_y = 32;
+	req_access = list("command")
+	},
+/obj/effect/turf_decal/tile/blue/half/contrasted{
+	dir = 1
+	},
+/turf/open/floor/iron/dark,
+/area/shuttle/escape)
 "fc" = (
 /obj/structure/window/reinforced/spawner/directional/south,
 /obj/effect/turf_decal/bot,
@@ -1505,7 +1519,7 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/dark,
 /area/shuttle/escape)
-"sk" = (
+"qC" = (
 /obj/structure/window/reinforced/spawner/directional/south,
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/bot,
@@ -1612,18 +1626,6 @@
 	dir = 4
 	},
 /obj/effect/turf_decal/bot_white,
-/turf/open/floor/iron/dark,
-/area/shuttle/escape)
-"RL" = (
-/obj/machinery/turretid/directional/south{
-	desc = "Used to the Raven's automated defenses.";
-	icon_state = "control_kill";
-	lethal = 1;
-	req_access = list("command")
-	},
-/obj/effect/turf_decal/tile/blue/half/contrasted{
-	dir = 1
-	},
 /turf/open/floor/iron/dark,
 /area/shuttle/escape)
 "SA" = (
@@ -2031,7 +2033,7 @@ aa
 (12,1,1) = {"
 ab
 ag
-RL
+ep
 au
 aD
 aL
@@ -2227,7 +2229,7 @@ dy
 ax
 dQ
 dT
-sk
+qC
 ax
 el
 el

@@ -10,16 +10,6 @@
 /obj/structure/sign/poster/official/random/directional/north,
 /turf/open/floor/iron/cafeteria,
 /area/shuttle/abandoned/bar)
-"aM" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/machinery/turretid/directional/south{
-	icon_state = "control_kill";
-	lethal = 1;
-	locked = 0;
-	req_access = null
-	},
-/turf/open/floor/iron/dark/small,
-/area/shuttle/abandoned/bridge)
 "aX" = (
 /obj/effect/turf_decal/tile/red/half/contrasted{
 	dir = 8
@@ -60,14 +50,6 @@
 	},
 /turf/open/floor/plating,
 /area/shuttle/abandoned/cargo)
-"bD" = (
-/obj/machinery/computer/camera_advanced/shuttle_docker/whiteship{
-	dir = 1;
-	x_offset = 4
-	},
-/obj/effect/decal/cleanable/dirt,
-/turf/open/floor/iron/dark/small,
-/area/shuttle/abandoned/bridge)
 "bH" = (
 /obj/effect/turf_decal/siding/thinplating/dark{
 	dir = 1
@@ -192,6 +174,20 @@
 	},
 /turf/open/floor/iron,
 /area/shuttle/abandoned/bar)
+"fW" = (
+/obj/machinery/porta_turret/centcom_shuttle/weak{
+	dir = 4
+	},
+/turf/closed/wall/mineral/titanium,
+/area/shuttle/abandoned/crew)
+"gj" = (
+/obj/machinery/computer/camera_advanced/shuttle_docker/whiteship{
+	dir = 1;
+	x_offset = 4
+	},
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/iron/dark/small,
+/area/shuttle/abandoned/bridge)
 "gs" = (
 /obj/machinery/power/terminal{
 	dir = 4
@@ -363,6 +359,33 @@
 /obj/structure/cable,
 /turf/open/floor/catwalk_floor,
 /area/shuttle/abandoned/crew)
+"nz" = (
+/obj/structure/closet/secure_closet/freezer/fridge/open,
+/obj/item/reagent_containers/condiment/enzyme,
+/obj/item/food/meat/slab/synthmeat{
+	pixel_x = -3;
+	pixel_y = 3
+	},
+/obj/item/food/meat/slab/synthmeat{
+	pixel_x = -3;
+	pixel_y = 3
+	},
+/obj/item/food/meat/slab/synthmeat{
+	pixel_x = -3;
+	pixel_y = 3
+	},
+/obj/item/reagent_containers/condiment/flour{
+	pixel_x = -3;
+	pixel_y = 3
+	},
+/obj/item/reagent_containers/condiment/flour{
+	pixel_x = -3;
+	pixel_y = 3
+	},
+/obj/item/reagent_containers/condiment/milk,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/iron/cafeteria,
+/area/shuttle/abandoned/bar)
 "nL" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 8
@@ -507,17 +530,14 @@
 	},
 /turf/open/floor/iron/small,
 /area/shuttle/abandoned/medbay)
+"ry" = (
+/turf/closed/wall/mineral/titanium,
+/area/shuttle/abandoned/bar)
 "rO" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/components/unary/vent_pump/on,
 /turf/open/floor/iron/freezer,
 /area/shuttle/abandoned/medbay)
-"rU" = (
-/obj/machinery/porta_turret/centcom_shuttle/weak{
-	dir = 4
-	},
-/turf/closed/wall/mineral/titanium,
-/area/shuttle/abandoned/bridge)
 "rZ" = (
 /obj/structure/chair/stool/bar/directional/east,
 /obj/effect/decal/cleanable/dirt,
@@ -531,33 +551,6 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/dark/textured_large,
 /area/shuttle/abandoned/cargo)
-"sM" = (
-/obj/structure/closet/secure_closet/freezer/fridge/open,
-/obj/item/reagent_containers/condiment/enzyme,
-/obj/item/food/meat/slab/synthmeat{
-	pixel_x = -3;
-	pixel_y = 3
-	},
-/obj/item/food/meat/slab/synthmeat{
-	pixel_x = -3;
-	pixel_y = 3
-	},
-/obj/item/food/meat/slab/synthmeat{
-	pixel_x = -3;
-	pixel_y = 3
-	},
-/obj/item/reagent_containers/condiment/flour{
-	pixel_x = -3;
-	pixel_y = 3
-	},
-/obj/item/reagent_containers/condiment/flour{
-	pixel_x = -3;
-	pixel_y = 3
-	},
-/obj/item/reagent_containers/condiment/milk,
-/obj/effect/decal/cleanable/dirt,
-/turf/open/floor/iron/cafeteria,
-/area/shuttle/abandoned/bar)
 "tg" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
@@ -593,9 +586,6 @@
 	},
 /turf/open/floor/iron/small,
 /area/shuttle/abandoned/crew)
-"ud" = (
-/turf/closed/wall/mineral/titanium,
-/area/shuttle/abandoned/bar)
 "uj" = (
 /obj/structure/closet/emcloset/anchored,
 /obj/structure/sign/poster/official/random/directional/north,
@@ -661,12 +651,6 @@
 /obj/structure/cable,
 /turf/open/floor/iron/textured,
 /area/shuttle/abandoned/cargo)
-"wk" = (
-/obj/machinery/porta_turret/centcom_shuttle/weak{
-	dir = 4
-	},
-/turf/closed/wall/mineral/titanium,
-/area/shuttle/abandoned/pod)
 "wo" = (
 /obj/structure/cable,
 /obj/machinery/light/small/broken/directional/east,
@@ -1029,6 +1013,27 @@
 	},
 /turf/open/floor/iron/cafeteria,
 /area/shuttle/abandoned/bar)
+"Hk" = (
+/obj/structure/table/greyscale,
+/obj/machinery/recharger{
+	pixel_x = -13;
+	pixel_y = 11
+	},
+/obj/machinery/cell_charger{
+	pixel_x = 4;
+	pixel_y = 11
+	},
+/obj/item/stock_parts/power_store/cell/high{
+	pixel_x = 4;
+	pixel_y = 11
+	},
+/obj/item/storage/toolbox/emergency{
+	pixel_y = 2
+	},
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/computer/security/telescreen/entertainment/directional/north,
+/turf/open/floor/iron/dark/small,
+/area/shuttle/abandoned/bridge)
 "Ht" = (
 /obj/structure/rack,
 /obj/item/tank/internals/anesthetic{
@@ -1151,6 +1156,12 @@
 	},
 /turf/open/floor/iron,
 /area/shuttle/abandoned/bar)
+"Lj" = (
+/obj/machinery/porta_turret/centcom_shuttle/weak{
+	dir = 4
+	},
+/turf/closed/wall/mineral/titanium,
+/area/shuttle/abandoned/pod)
 "Ll" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
@@ -1173,6 +1184,21 @@
 	},
 /turf/open/floor/catwalk_floor,
 /area/shuttle/abandoned/crew)
+"Nl" = (
+/obj/structure/table,
+/obj/machinery/cell_charger{
+	pixel_y = 11
+	},
+/obj/item/stock_parts/power_store/cell/high{
+	pixel_y = 11
+	},
+/obj/item/stack/cable_coil{
+	pixel_y = -1
+	},
+/obj/item/multitool,
+/obj/machinery/light/small/directional/north,
+/turf/open/floor/catwalk_floor,
+/area/shuttle/abandoned/engine)
 "NK" = (
 /turf/closed/wall/mineral/titanium/nodiagonal,
 /area/shuttle/abandoned/crew)
@@ -1220,21 +1246,6 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/on,
 /turf/open/floor/iron/smooth,
 /area/shuttle/abandoned/crew)
-"OY" = (
-/obj/structure/table,
-/obj/machinery/cell_charger{
-	pixel_y = 11
-	},
-/obj/item/stock_parts/power_store/cell/high{
-	pixel_y = 11
-	},
-/obj/item/stack/cable_coil{
-	pixel_y = -1
-	},
-/obj/item/multitool,
-/obj/machinery/light/small/directional/north,
-/turf/open/floor/catwalk_floor,
-/area/shuttle/abandoned/engine)
 "PC" = (
 /obj/effect/spawner/structure/window/reinforced/shuttle,
 /obj/machinery/door/poddoor{
@@ -1252,6 +1263,12 @@
 	},
 /turf/open/floor/iron/grimy,
 /area/shuttle/abandoned/crew)
+"Qf" = (
+/obj/machinery/porta_turret/centcom_shuttle/weak{
+	dir = 4
+	},
+/turf/closed/wall/mineral/titanium,
+/area/shuttle/abandoned/bridge)
 "Ql" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/sign/poster/official/random/directional/north,
@@ -1366,6 +1383,17 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/dark/small,
 /area/shuttle/abandoned/bridge)
+"UK" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/turretid{
+	icon_state = "control_kill";
+	lethal = 1;
+	locked = 0;
+	pixel_y = 28;
+	req_access = null
+	},
+/turf/open/floor/iron/dark/small,
+/area/shuttle/abandoned/bridge)
 "Vp" = (
 /obj/structure/window/reinforced/spawner/directional/east,
 /obj/machinery/power/shuttle_engine/heater{
@@ -1373,27 +1401,6 @@
 	},
 /turf/open/floor/plating/airless,
 /area/shuttle/abandoned/crew)
-"VK" = (
-/obj/structure/table/greyscale,
-/obj/machinery/recharger{
-	pixel_x = -13;
-	pixel_y = 11
-	},
-/obj/machinery/cell_charger{
-	pixel_x = 4;
-	pixel_y = 11
-	},
-/obj/item/stock_parts/power_store/cell/high{
-	pixel_x = 4;
-	pixel_y = 11
-	},
-/obj/item/storage/toolbox/emergency{
-	pixel_y = 2
-	},
-/obj/effect/decal/cleanable/dirt,
-/obj/machinery/computer/security/telescreen/entertainment/directional/north,
-/turf/open/floor/iron/dark/small,
-/area/shuttle/abandoned/bridge)
 "VL" = (
 /obj/machinery/shower/directional/south,
 /obj/item/soap,
@@ -1474,12 +1481,6 @@
 /obj/structure/tank_dispenser,
 /obj/machinery/light/small/directional/west,
 /turf/open/floor/iron/smooth,
-/area/shuttle/abandoned/crew)
-"Yx" = (
-/obj/machinery/porta_turret/centcom_shuttle/weak{
-	dir = 4
-	},
-/turf/closed/wall/mineral/titanium,
 /area/shuttle/abandoned/crew)
 "YJ" = (
 /obj/effect/spawner/structure/window/reinforced/shuttle,
@@ -1606,7 +1607,7 @@ lt
 lt
 lt
 Gi
-OY
+Nl
 Zn
 Jt
 gs
@@ -1821,7 +1822,7 @@ wd
 Tg
 "}
 (14,1,1) = {"
-Yx
+fW
 NK
 NK
 NK
@@ -1841,7 +1842,7 @@ Zy
 NK
 NK
 NK
-Yx
+fW
 "}
 (15,1,1) = {"
 lt
@@ -1949,7 +1950,7 @@ fU
 Gg
 GS
 wY
-sM
+nz
 JP
 Kf
 jv
@@ -1997,9 +1998,9 @@ DT
 PC
 JP
 JP
-aM
+UK
 Uu
-bD
+gj
 XB
 lt
 lt
@@ -2012,7 +2013,7 @@ pv
 xr
 qO
 pv
-ud
+ry
 lt
 lt
 lt
@@ -2020,7 +2021,7 @@ lt
 lt
 XB
 JP
-VK
+Hk
 Bs
 JP
 XB
@@ -2034,7 +2035,7 @@ lt
 PN
 BZ
 BZ
-wk
+Lj
 lt
 lt
 lt
@@ -2042,7 +2043,7 @@ lt
 lt
 lt
 lt
-rU
+Qf
 YJ
 YJ
 XB

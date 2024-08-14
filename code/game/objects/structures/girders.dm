@@ -1,6 +1,5 @@
 /obj/structure/girder
 	name = "girder"
-	icon = 'icons/obj/structures_tall.dmi'
 	icon_state = "girder"
 	desc = "A large structural assembly made out of metal; It requires a layer of iron before it can be considered a wall."
 	anchored = TRUE
@@ -331,7 +330,6 @@
 			if(state != GIRDER_REINF)
 				return
 			state = GIRDER_REINF_STRUTS
-			update_icon()
 		return TRUE
 
 	else if(state == GIRDER_REINF_STRUTS)
@@ -340,7 +338,6 @@
 			if(state != GIRDER_REINF_STRUTS)
 				return
 			state = GIRDER_REINF
-			update_icon()
 		return TRUE
 
 // Wirecutter behavior for girders
@@ -391,18 +388,6 @@
 	var/remains = pick(/obj/item/stack/rods, /obj/item/stack/sheet/iron)
 	new remains(loc)
 
-/obj/structure/girder/update_icon_state()
-	. = ..()
-	switch(state)
-		if(GIRDER_NORMAL)
-			icon_state = "girder"
-		if(GIRDER_DISPLACED)
-			icon_state = "displaced"
-		if(GIRDER_REINF)
-			icon_state = "reinforced"
-		if(GIRDER_REINF_STRUTS)
-			icon_state = "reinforced_struts"
-
 /obj/structure/girder/narsie_act()
 	new /obj/structure/girder/cult(loc)
 	qdel(src)
@@ -425,7 +410,6 @@
 /obj/structure/girder/tram
 	name = "tram girder"
 	desc = "Titanium framework to construct tram walls. Can be plated with <b>titanium glass</b> or other wall materials."
-	icon = 'icons/obj/structures.dmi' // Not 3/4ths, tram pain
 	icon_state = "tram"
 	state = GIRDER_TRAM
 	obj_flags = CAN_BE_HIT | BLOCK_Z_OUT_DOWN
@@ -438,7 +422,8 @@
 /obj/structure/girder/cult
 	name = "runed girder"
 	desc = "Framework made of a strange and shockingly cold metal. It doesn't seem to have any bolts."
-	icon_state = "cultgirder"
+	icon = 'icons/obj/antags/cult/structures.dmi'
+	icon_state= "cultgirder"
 	can_displace = FALSE
 
 /obj/structure/girder/cult/attackby(obj/item/W, mob/user, params)
@@ -492,7 +477,7 @@
 	return FALSE
 
 /obj/structure/girder/rcd_act(mob/user, obj/item/construction/rcd/the_rcd, list/rcd_data)
-	switch(rcd_data[RCD_DESIGN_MODE])
+	switch(rcd_data["[RCD_DESIGN_MODE]"])
 		if(RCD_TURF)
 			if(the_rcd.rcd_design_path != /turf/open/floor/plating/rcd)
 				return FALSE

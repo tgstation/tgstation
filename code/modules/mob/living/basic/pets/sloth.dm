@@ -1,7 +1,6 @@
 GLOBAL_DATUM(cargo_sloth, /mob/living/basic/sloth)
 
 /mob/living/basic/sloth
-	SET_BASE_VISUAL_PIXEL(0, 10)
 	name = "sloth"
 	desc = "An adorable, sleepy creature."
 	icon = 'icons/mob/simple/pets.dmi'
@@ -35,7 +34,6 @@ GLOBAL_DATUM(cargo_sloth, /mob/living/basic/sloth)
 	maxHealth = 50
 	speed = 10 // speed is fucking weird man. they aren't fast though don't worry
 	butcher_results = list(/obj/item/food/meat/slab = 3)
-	shadow_offset_y = 2
 
 	ai_controller = /datum/ai_controller/basic_controller/sloth
 

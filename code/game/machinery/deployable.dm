@@ -56,7 +56,7 @@
 /obj/structure/barricade/wooden
 	name = "wooden barricade"
 	desc = "This space is blocked off by a wooden barricade."
-	icon = 'icons/obj/structures_tall.dmi'
+	icon = 'icons/obj/structures.dmi'
 	icon_state = "woodenbarricade"
 	resistance_flags = FLAMMABLE
 	bar_material = WOOD
@@ -99,7 +99,6 @@
 /obj/structure/barricade/wooden/crude
 	name = "crude plank barricade"
 	desc = "This space is blocked off by a crude assortment of planks."
-	icon = 'icons/obj/structures.dmi'
 	icon_state = "plankbarricade"
 	drop_amount = 1
 	max_integrity = 50
@@ -108,7 +107,6 @@
 
 /obj/structure/barricade/wooden/crude/snow
 	desc = "This space is blocked off by a crude assortment of planks. It seems to be covered in a layer of snow."
-	icon = 'icons/obj/structures.dmi'
 	icon_state = "plankbarricade_snow"
 	max_integrity = 75
 

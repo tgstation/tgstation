@@ -67,8 +67,8 @@
 	return FALSE
 
 /obj/structure/lattice/rcd_act(mob/user, obj/item/construction/rcd/the_rcd, list/rcd_data)
-	if(rcd_data[RCD_DESIGN_MODE] == RCD_TURF)
-		var/design_structure = rcd_data[RCD_DESIGN_PATH]
+	if(rcd_data["[RCD_DESIGN_MODE]"] == RCD_TURF)
+		var/design_structure = rcd_data["[RCD_DESIGN_PATH]"]
 		if(design_structure == /turf/open/floor/plating)
 			var/turf/T = src.loc
 			if(isgroundlessturf(T))

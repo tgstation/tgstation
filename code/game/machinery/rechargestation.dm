@@ -1,5 +1,4 @@
 /obj/machinery/recharge_station
-	SET_BASE_VISUAL_PIXEL(0, DEPTH_OFFSET)
 	name = "recharging station"
 	desc = "This device recharges energy dependent lifeforms, like cyborgs, ethereals and MODsuit users."
 	icon = 'icons/obj/machines/borg_charger.dmi'

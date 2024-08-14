@@ -21,7 +21,6 @@
 	mob_size = MOB_SIZE_HUGE
 	sentience_type = SENTIENCE_BOSS
 	mob_biotypes = MOB_ORGANIC|MOB_SPECIAL
-	shadow_type = SHADOW_LARGE
 	///Previous segment in the chain, we hold onto this purely to keep track of how long we currently are and to attach new growth to the back
 	var/mob/living/basic/heretic_summon/armsy/back
 	///How many arms do we have to eat to expand?

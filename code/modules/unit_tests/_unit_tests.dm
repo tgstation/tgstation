@@ -88,7 +88,6 @@
 #include "abductor_baton_spell.dm"
 #include "ablative_hud.dm"
 #include "achievements.dm"
-#include "airlock_icon_states.dm"
 #include "anchored_mobs.dm"
 #include "anonymous_themes.dm"
 #include "antag_conversion.dm"

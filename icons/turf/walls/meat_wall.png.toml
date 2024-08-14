@@ -1,8 +1,2 @@
-
-template = "bitmask/walls"
-
-[slice_point]
-west = 6
-north = 16
-south = 18
-east = 26
+output_name = "meat_wall"
+template = "bitmask/diagonal_32x32.toml"

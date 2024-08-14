@@ -1,1 +1,2 @@
-template = "bitmask/walls"
+output_name = "sandstone_wall"
+template = "bitmask/diagonal_32x32.toml"
