@@ -4002,14 +4002,6 @@
 "Gn" = (
 /turf/open/floor/iron/white/small,
 /area/awaymission/museum)
-"Gt" = (
-/obj/effect/turf_decal/tile/neutral/opposingcorners,
-/obj/effect/turf_decal/siding/dark_blue{
-	dir = 1
-	},
-/obj/structure/plaque/static_plaque/golden/commission/kilo,
-/turf/open/floor/iron/dark,
-/area/awaymission/museum)
 "Gv" = (
 /obj/effect/decal/cleanable/crayon/l{
 	pixel_x = -10
@@ -37237,7 +37229,7 @@ xF
 ud
 lb
 TM
-Gt
+tD
 ud
 wA
 ty
