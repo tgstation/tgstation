@@ -2201,11 +2201,11 @@
 /obj/structure/disposalpipe/trunk{
 	dir = 2
 	},
-/obj/structure/sign/directions/dorms/directional/north,
-/obj/structure/sign/directions/security/directional/north{
+/obj/structure/sign/directions/dorms/north_arrow,
+/obj/structure/sign/directions/security/north_arrow{
 	pixel_y = 24
 	},
-/obj/structure/sign/directions/supply/directional/north{
+/obj/structure/sign/directions/supply/north_arrow{
 	pixel_y = 40
 	},
 /obj/effect/turf_decal/trimline/blue/filled/line{
@@ -4333,8 +4333,8 @@
 /obj/structure/railing{
 	dir = 4
 	},
-/obj/structure/sign/directions/dorms/directional/north,
-/obj/structure/sign/directions/supply/directional/north{
+/obj/structure/sign/directions/dorms/north_arrow,
+/obj/structure/sign/directions/supply/north_arrow{
 	pixel_y = 24
 	},
 /obj/effect/turf_decal/sand/plating/volcanic,
@@ -4719,7 +4719,7 @@
 /turf/open/floor/iron,
 /area/mine/lounge)
 "zH" = (
-/obj/structure/sign/directions/arrival/directional/south{
+/obj/structure/sign/directions/arrival/south_arrow{
 	pixel_y = -40
 	},
 /obj/structure/closet/emcloset,
@@ -5128,7 +5128,7 @@
 /turf/open/floor/iron/dark,
 /area/mine/mechbay)
 "CI" = (
-/obj/structure/sign/directions/supply/directional/east{
+/obj/structure/sign/directions/supply/east_arrow{
 	pixel_x = null;
 	pixel_y = -24
 	},
@@ -6178,7 +6178,7 @@
 /area/lavaland/surface/outdoors)
 "JA" = (
 /obj/machinery/computer/shuttle/mining/common,
-/obj/structure/sign/directions/evac/directional/east{
+/obj/structure/sign/directions/evac/east_arrow{
 	pixel_x = 0;
 	pixel_y = 24
 	},
@@ -6865,11 +6865,11 @@
 /obj/structure/railing/corner{
 	dir = 4
 	},
-/obj/structure/sign/directions/security/directional/west{
+/obj/structure/sign/directions/security/west_arrow{
 	pixel_x = 32;
 	pixel_y = -8
 	},
-/obj/structure/sign/directions/lavaland/directional/north{
+/obj/structure/sign/directions/lavaland/north_arrow{
 	pixel_x = 32;
 	pixel_y = 8
 	},
@@ -7702,11 +7702,11 @@
 /obj/structure/railing/corner{
 	dir = 1
 	},
-/obj/structure/sign/directions/security/directional/west{
+/obj/structure/sign/directions/security/west_arrow{
 	pixel_x = 0;
 	pixel_y = 24
 	},
-/obj/structure/sign/directions/lavaland/directional/west{
+/obj/structure/sign/directions/lavaland/west_arrow{
 	pixel_x = 0;
 	pixel_y = 32
 	},
@@ -8782,7 +8782,7 @@
 /turf/open/floor/iron/dark,
 /area/mine/laborcamp)
 "XM" = (
-/obj/structure/sign/directions/evac/directional/south{
+/obj/structure/sign/directions/evac/south_arrow{
 	pixel_x = -32;
 	pixel_y = 0
 	},
@@ -9070,7 +9070,7 @@
 /turf/open/floor/iron/freezer,
 /area/mine/living_quarters)
 "Zx" = (
-/obj/structure/sign/directions/dorms/directional/west{
+/obj/structure/sign/directions/dorms/west_arrow{
 	pixel_x = 0;
 	pixel_y = 24
 	},
@@ -9129,7 +9129,7 @@
 /turf/open/floor/iron/smooth,
 /area/mine/laborcamp/production)
 "ZP" = (
-/obj/structure/sign/directions/engineering/directional/north{
+/obj/structure/sign/directions/engineering/north_arrow{
 	pixel_y = 24
 	},
 /obj/effect/decal/cleanable/dirt,

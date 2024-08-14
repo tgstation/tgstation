@@ -1,4 +1,15 @@
-//map and direction signs
+#define SIGN_DIR_NORTH "n"
+#define SIGN_DIR_SOUTH "s"
+#define SIGN_DIR_EAST "e"
+#define SIGN_DIR_WEST "w"
+#define SIGN_DIR_NORTHEAST "ne"
+#define SIGN_DIR_NORTHWEST "nw"
+#define SIGN_DIR_SOUTHEAST "se"
+#define SIGN_DIR_SOUTHWEST "sw"
+#define SUPPORT_LEFT "left"
+#define SUPPORT_RIGHT "right"
+
+// //map and direction signs
 
 /obj/structure/sign/map
 	name = "station map"
@@ -11,210 +22,226 @@
 /obj/structure/sign/map/right
 	icon_state = "map-right"
 
+/obj/structure/sign/directions
+	icon = 'icons/obj/directional_signs.dmi'
+	/// Temp variable, are we using arrows and support overlays to build the image as opposed to using a static directions sign.
+	var/build_overlays = TRUE
+	/// What direction is the arrow on the sign pointing?
+	var/sign_arrow_direction = null
+	/// If this sign has a support on the left or right, which side? null if niether
+	var/support_side = null
+
+/obj/structure/sign/directions/update_overlays()
+	. = ..()
+	if(!build_overlays)
+		return
+	if(sign_arrow_direction)
+		. += "arrow_[sign_arrow_direction]"
+
 /obj/structure/sign/directions/science
 	name = "science department sign"
 	desc = "A direction sign, pointing out which way the Science department is."
 	icon_state = "direction_sci"
 
-WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/structure/sign/directions/science)
+DIRECTIONAL_SIGNS_DIRECTIONAL_HELPERS(/obj/structure/sign/directions/science)
 
 /obj/structure/sign/directions/science/right
-	icon_state = "direction_sci_right"
+	support_side = SUPPORT_RIGHT
 
-WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/structure/sign/directions/science/right)
+DIRECTIONAL_SIGNS_DIRECTIONAL_HELPERS(/obj/structure/sign/directions/science/right)
 /obj/structure/sign/directions/science/left
-	icon_state = "direction_sci_left"
+	support_side = SUPPORT_LEFT
 
-WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/structure/sign/directions/science/left)
+DIRECTIONAL_SIGNS_DIRECTIONAL_HELPERS(/obj/structure/sign/directions/science/left)
 
 /obj/structure/sign/directions/engineering
 	name = "engineering department sign"
 	desc = "A direction sign, pointing out which way the Engineering department is."
 	icon_state = "direction_eng"
 
-WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/structure/sign/directions/engineering)
+DIRECTIONAL_SIGNS_DIRECTIONAL_HELPERS(/obj/structure/sign/directions/engineering)
 
 /obj/structure/sign/directions/engineering/right
-	icon_state = "direction_eng_right"
+	support_side = SUPPORT_RIGHT
 
-WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/structure/sign/directions/engineering/right)
+DIRECTIONAL_SIGNS_DIRECTIONAL_HELPERS(/obj/structure/sign/directions/engineering/right)
 /obj/structure/sign/directions/engineering/left
-	icon_state = "direction_eng_left"
+	support_side = SUPPORT_LEFT
 
-WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/structure/sign/directions/engineering/left)
+DIRECTIONAL_SIGNS_DIRECTIONAL_HELPERS(/obj/structure/sign/directions/engineering/left)
 
 /obj/structure/sign/directions/security
 	name = "security department sign"
 	desc = "A direction sign, pointing out which way the Security department is."
 	icon_state = "direction_sec"
 
-WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/structure/sign/directions/security)
+DIRECTIONAL_SIGNS_DIRECTIONAL_HELPERS(/obj/structure/sign/directions/security)
 
 /obj/structure/sign/directions/security/right
-	icon_state = "direction_sec_right"
+	support_side = SUPPORT_RIGHT
 
-WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/structure/sign/directions/security/right)
+DIRECTIONAL_SIGNS_DIRECTIONAL_HELPERS(/obj/structure/sign/directions/security/right)
 /obj/structure/sign/directions/security/left
-	icon_state = "direction_sec_left"
+	support_side = SUPPORT_LEFT
 
-WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/structure/sign/directions/security/left)
+DIRECTIONAL_SIGNS_DIRECTIONAL_HELPERS(/obj/structure/sign/directions/security/left)
 
 /obj/structure/sign/directions/medical
 	name = "medbay sign"
 	desc = "A direction sign, pointing out which way the Medbay is."
 	icon_state = "direction_med"
 
-WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/structure/sign/directions/medical)
+DIRECTIONAL_SIGNS_DIRECTIONAL_HELPERS(/obj/structure/sign/directions/medical)
 
 /obj/structure/sign/directions/medical/right
-	icon_state = "direction_med_right"
+	support_side = SUPPORT_RIGHT
 
-WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/structure/sign/directions/medical/right)
+DIRECTIONAL_SIGNS_DIRECTIONAL_HELPERS(/obj/structure/sign/directions/medical/right)
 /obj/structure/sign/directions/medical/left
-	icon_state = "direction_med_left"
+	support_side = SUPPORT_LEFT
 
-WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/structure/sign/directions/medical/left)
+DIRECTIONAL_SIGNS_DIRECTIONAL_HELPERS(/obj/structure/sign/directions/medical/left)
 
 /obj/structure/sign/directions/evac
 	name = "evacuation sign"
 	desc = "A direction sign, pointing out which way the escape shuttle dock is."
 	icon_state = "direction_evac"
 
-WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/structure/sign/directions/evac)
+DIRECTIONAL_SIGNS_DIRECTIONAL_HELPERS(/obj/structure/sign/directions/evac)
 
 /obj/structure/sign/directions/evac/right
-	icon_state = "direction_evac_right"
+	support_side = SUPPORT_RIGHT
 
-WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/structure/sign/directions/evac/right)
+DIRECTIONAL_SIGNS_DIRECTIONAL_HELPERS(/obj/structure/sign/directions/evac/right)
 /obj/structure/sign/directions/evac/left
-	icon_state = "direction_evac_left"
+	support_side = SUPPORT_LEFT
 
-WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/structure/sign/directions/evac/left)
+DIRECTIONAL_SIGNS_DIRECTIONAL_HELPERS(/obj/structure/sign/directions/evac/left)
 
 /obj/structure/sign/directions/supply
 	name = "cargo sign"
 	desc = "A direction sign, pointing out which way the Cargo Bay is."
 	icon_state = "direction_supply"
 
-WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/structure/sign/directions/supply)
+DIRECTIONAL_SIGNS_DIRECTIONAL_HELPERS(/obj/structure/sign/directions/supply)
 
 /obj/structure/sign/directions/supply/right
-	icon_state = "direction_supply_right"
+	support_side = SUPPORT_RIGHT
 
-WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/structure/sign/directions/supply/right)
+DIRECTIONAL_SIGNS_DIRECTIONAL_HELPERS(/obj/structure/sign/directions/supply/right)
 /obj/structure/sign/directions/supply/left
-	icon_state = "direction_supply_left"
+	support_side = SUPPORT_LEFT
 
-WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/structure/sign/directions/supply/left)
+DIRECTIONAL_SIGNS_DIRECTIONAL_HELPERS(/obj/structure/sign/directions/supply/left)
 
 /obj/structure/sign/directions/command
 	name = "command department sign"
 	desc = "A direction sign, pointing out which way the Command department is."
 	icon_state = "direction_bridge"
 
-WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/structure/sign/directions/command)
+DIRECTIONAL_SIGNS_DIRECTIONAL_HELPERS(/obj/structure/sign/directions/command)
 
 /obj/structure/sign/directions/command/right
-	icon_state = "direction_bridge_right"
+	support_side = SUPPORT_RIGHT
 
-WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/structure/sign/directions/command/right)
+DIRECTIONAL_SIGNS_DIRECTIONAL_HELPERS(/obj/structure/sign/directions/command/right)
 /obj/structure/sign/directions/command/left
-	icon_state = "direction_bridge_left"
+	support_side = SUPPORT_LEFT
 
-WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/structure/sign/directions/command/left)
+DIRECTIONAL_SIGNS_DIRECTIONAL_HELPERS(/obj/structure/sign/directions/command/left)
 
 /obj/structure/sign/directions/vault
 	name = "vault sign"
 	desc = "A direction sign, pointing out which way the station's Vault is."
 	icon_state = "direction_vault"
 
-WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/structure/sign/directions/vault)
+DIRECTIONAL_SIGNS_DIRECTIONAL_HELPERS(/obj/structure/sign/directions/vault)
 
 /obj/structure/sign/directions/vault/right
-	icon_state = "direction_vault_right"
+	support_side = SUPPORT_RIGHT
 
-WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/structure/sign/directions/vault/right)
+DIRECTIONAL_SIGNS_DIRECTIONAL_HELPERS(/obj/structure/sign/directions/vault/right)
 /obj/structure/sign/directions/vault/left
-	icon_state = "direction_vault_left"
+	support_side = SUPPORT_LEFT
 
-WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/structure/sign/directions/vault/left)
+DIRECTIONAL_SIGNS_DIRECTIONAL_HELPERS(/obj/structure/sign/directions/vault/left)
 
 /obj/structure/sign/directions/upload
 	name = "upload sign"
 	desc = "A direction sign, pointing out which way the station's AI Upload is."
 	icon_state = "direction_upload"
 
-WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/structure/sign/directions/upload)
+DIRECTIONAL_SIGNS_DIRECTIONAL_HELPERS(/obj/structure/sign/directions/upload)
 
 /obj/structure/sign/directions/upload/right
-	icon_state = "direction_upload_right"
+	support_side = SUPPORT_RIGHT
 
-WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/structure/sign/directions/upload/right)
+DIRECTIONAL_SIGNS_DIRECTIONAL_HELPERS(/obj/structure/sign/directions/upload/right)
 /obj/structure/sign/directions/upload/left
-	icon_state = "direction_upload_left"
+	support_side = SUPPORT_LEFT
 
-WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/structure/sign/directions/upload/left)
+DIRECTIONAL_SIGNS_DIRECTIONAL_HELPERS(/obj/structure/sign/directions/upload/left)
 
 /obj/structure/sign/directions/dorms
 	name = "dormitories sign"
 	desc = "A direction sign, pointing out which way the dormitories are."
 	icon_state = "direction_dorms"
 
-WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/structure/sign/directions/dorms)
+DIRECTIONAL_SIGNS_DIRECTIONAL_HELPERS(/obj/structure/sign/directions/dorms)
 
 /obj/structure/sign/directions/dorms/right
-	icon_state = "direction_mdorms_right"
+	support_side = SUPPORT_RIGHT
 
-WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/structure/sign/directions/dorms/right)
+DIRECTIONAL_SIGNS_DIRECTIONAL_HELPERS(/obj/structure/sign/directions/dorms/right)
 /obj/structure/sign/directions/dorms/left
-	icon_state = "direction_dorms_left"
+	support_side = SUPPORT_LEFT
 
-WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/structure/sign/directions/dorms/left)
+DIRECTIONAL_SIGNS_DIRECTIONAL_HELPERS(/obj/structure/sign/directions/dorms/left)
 
 /obj/structure/sign/directions/lavaland
 	name = "lava sign"
 	desc = "A direction sign, pointing out which way the hot stuff is."
 	icon_state = "direction_lavaland"
 
-WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/structure/sign/directions/lavaland)
+DIRECTIONAL_SIGNS_DIRECTIONAL_HELPERS(/obj/structure/sign/directions/lavaland)
 
 /obj/structure/sign/directions/lavaland/right
-	icon_state = "direction_lavaland_right"
+	support_side = SUPPORT_RIGHT
 
-WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/structure/sign/directions/lavaland/right)
+DIRECTIONAL_SIGNS_DIRECTIONAL_HELPERS(/obj/structure/sign/directions/lavaland/right)
 /obj/structure/sign/directions/lavaland/left
-	icon_state = "direction_lavaland_left"
+	support_side = SUPPORT_LEFT
 
-WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/structure/sign/directions/lavaland/left)
+DIRECTIONAL_SIGNS_DIRECTIONAL_HELPERS(/obj/structure/sign/directions/lavaland/left)
 
 /obj/structure/sign/directions/arrival
 	name = "arrivals sign"
 	desc = "A direction sign, pointing out which way the arrivals shuttle dock is."
 	icon_state = "direction_arrival"
 
-WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/structure/sign/directions/arrival)
+DIRECTIONAL_SIGNS_DIRECTIONAL_HELPERS(/obj/structure/sign/directions/arrival)
 
 /obj/structure/sign/directions/arrival/right
-	icon_state = "direction_arrival_right"
+	support_side = SUPPORT_RIGHT
 
-WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/structure/sign/directions/arrival/right)
+DIRECTIONAL_SIGNS_DIRECTIONAL_HELPERS(/obj/structure/sign/directions/arrival/right)
 /obj/structure/sign/directions/arrival/left
-	icon_state = "direction_arrival_left"
+	support_side = SUPPORT_LEFT
 
-WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/structure/sign/directions/arrival/left)
+DIRECTIONAL_SIGNS_DIRECTIONAL_HELPERS(/obj/structure/sign/directions/arrival/left)
 
 /obj/structure/sign/directions/doornum
 	name = "room number sign"
 	desc = "A sign that states the labeled room's number."
 	icon_state = "direction_doornum"
 
-WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/structure/sign/directions/doornum)
+DIRECTIONAL_SIGNS_DIRECTIONAL_HELPERS(/obj/structure/sign/directions/doornum)
 
 /obj/structure/sign/directions/doornum/right
 	icon_state = "direction_doornum_right"
 
-WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/structure/sign/directions/doornum/right)
+DIRECTIONAL_SIGNS_DIRECTIONAL_HELPERS(/obj/structure/sign/directions/doornum/right)
 /obj/structure/sign/directions/doornum/left
 	icon_state = "direction_doornum_left"
 
-WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/structure/sign/directions/doornum/left)
+DIRECTIONAL_SIGNS_DIRECTIONAL_HELPERS(/obj/structure/sign/directions/doornum/left)

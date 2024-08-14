@@ -9467,26 +9467,26 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 4
 	},
-/obj/structure/sign/directions/evac/directional/east{
+/obj/structure/sign/directions/evac/east_arrow{
 	dir = 8
 	},
-/obj/structure/sign/directions/medical/directional/east{
+/obj/structure/sign/directions/medical/east_arrow{
 	pixel_y = 8;
 	dir = 8
 	},
-/obj/structure/sign/directions/science/directional/east{
+/obj/structure/sign/directions/science/east_arrow{
 	pixel_y = -8;
 	dir = 1
 	},
-/obj/structure/sign/directions/supply/directional/east{
+/obj/structure/sign/directions/supply/east_arrow{
 	dir = 1;
 	pixel_y = 0
 	},
-/obj/structure/sign/directions/security/directional/east{
+/obj/structure/sign/directions/security/east_arrow{
 	pixel_y = -16;
 	dir = 1
 	},
-/obj/structure/sign/directions/engineering/directional/south{
+/obj/structure/sign/directions/engineering/south_arrow{
 	pixel_x = 11;
 	pixel_y = -24
 	},
@@ -9543,14 +9543,14 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 4
 	},
-/obj/structure/sign/directions/medical/directional/east{
+/obj/structure/sign/directions/medical/east_arrow{
 	pixel_y = 8;
 	dir = 8
 	},
-/obj/structure/sign/directions/evac/directional/east{
+/obj/structure/sign/directions/evac/east_arrow{
 	pixel_y = -8
 	},
-/obj/structure/sign/directions/engineering/directional/east,
+/obj/structure/sign/directions/engineering/east_arrow,
 /turf/open/floor/iron,
 /area/station/hallway/primary/central)
 "dvC" = (
@@ -13182,13 +13182,13 @@
 	},
 /obj/machinery/disposal/bin,
 /obj/structure/disposalpipe/trunk,
-/obj/structure/sign/directions/security/directional/north{
+/obj/structure/sign/directions/security/north_arrow{
 	pixel_y = 40
 	},
-/obj/structure/sign/directions/medical/directional/north{
+/obj/structure/sign/directions/medical/north_arrow{
 	dir = 2
 	},
-/obj/structure/sign/directions/evac/directional/north{
+/obj/structure/sign/directions/evac/north_arrow{
 	pixel_y = 24;
 	dir = 2
 	},
@@ -17573,7 +17573,7 @@
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/structure/sign/directions/dorms/directional/west,
+/obj/structure/sign/directions/dorms/west_arrow,
 /turf/open/floor/iron,
 /area/station/hallway/primary/central)
 "glL" = (
@@ -20667,14 +20667,14 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
-/obj/structure/sign/directions/security/directional/west{
+/obj/structure/sign/directions/security/west_arrow{
 	dir = 1
 	},
-/obj/structure/sign/directions/supply/directional/west{
+/obj/structure/sign/directions/supply/west_arrow{
 	pixel_y = 8;
 	dir = 1
 	},
-/obj/structure/sign/directions/science/directional/west{
+/obj/structure/sign/directions/science/west_arrow{
 	pixel_y = -8;
 	dir = 1
 	},
@@ -25216,12 +25216,12 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
-/obj/structure/sign/directions/command/directional/north,
-/obj/structure/sign/directions/engineering/directional/north{
+/obj/structure/sign/directions/command/north_arrow,
+/obj/structure/sign/directions/engineering/north_arrow{
 	pixel_y = 40;
 	dir = 4
 	},
-/obj/structure/sign/directions/security/directional/north{
+/obj/structure/sign/directions/security/north_arrow{
 	pixel_y = 24;
 	dir = 8
 	},
@@ -38371,12 +38371,12 @@
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/structure/sign/directions/evac/directional/south,
-/obj/structure/sign/directions/medical/directional/south{
+/obj/structure/sign/directions/evac/south_arrow,
+/obj/structure/sign/directions/medical/south_arrow{
 	pixel_y = -24;
 	dir = 8
 	},
-/obj/structure/sign/directions/science/directional/south{
+/obj/structure/sign/directions/science/south_arrow{
 	pixel_y = -40;
 	dir = 4
 	},
@@ -39738,14 +39738,14 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
-/obj/structure/sign/directions/science/directional/north{
+/obj/structure/sign/directions/science/north_arrow{
 	dir = 4
 	},
-/obj/structure/sign/directions/engineering/directional/north{
+/obj/structure/sign/directions/engineering/north_arrow{
 	pixel_y = 40;
 	dir = 4
 	},
-/obj/structure/sign/directions/command/directional/north{
+/obj/structure/sign/directions/command/north_arrow{
 	pixel_y = 24;
 	dir = 4
 	},
@@ -45214,14 +45214,14 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
-/obj/structure/sign/directions/science/directional/north{
+/obj/structure/sign/directions/science/north_arrow{
 	dir = 4
 	},
-/obj/structure/sign/directions/command/directional/north{
+/obj/structure/sign/directions/command/north_arrow{
 	pixel_y = 40;
 	dir = 8
 	},
-/obj/structure/sign/directions/evac/directional/north{
+/obj/structure/sign/directions/evac/north_arrow{
 	pixel_y = 24;
 	dir = 2
 	},
@@ -46108,7 +46108,7 @@
 /area/station/security/brig/entrance)
 "qqL" = (
 /obj/item/kirbyplants/random,
-/obj/structure/sign/directions/vault/directional/west,
+/obj/structure/sign/directions/vault/west_arrow,
 /turf/open/floor/carpet/red,
 /area/station/command/heads_quarters/qm)
 "qqQ" = (
@@ -46546,14 +46546,14 @@
 /obj/effect/turf_decal/tile/neutral,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/structure/sign/directions/security/directional/south{
+/obj/structure/sign/directions/security/south_arrow{
 	pixel_y = -24;
 	dir = 8
 	},
-/obj/structure/sign/directions/supply/directional/south{
+/obj/structure/sign/directions/supply/south_arrow{
 	dir = 8
 	},
-/obj/structure/sign/directions/engineering/directional/south{
+/obj/structure/sign/directions/engineering/south_arrow{
 	pixel_y = -40
 	},
 /turf/open/floor/iron,
@@ -50729,7 +50729,7 @@
 /area/station/commons/vacant_room/commissary)
 "rVD" = (
 /obj/effect/turf_decal/tile/neutral,
-/obj/structure/sign/directions/supply/directional/east{
+/obj/structure/sign/directions/supply/east_arrow{
 	dir = 8
 	},
 /turf/open/floor/iron,
@@ -52338,14 +52338,14 @@
 /obj/effect/turf_decal/tile/neutral,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/structure/sign/directions/supply/directional/south{
+/obj/structure/sign/directions/supply/south_arrow{
 	dir = 8
 	},
-/obj/structure/sign/directions/engineering/directional/south{
+/obj/structure/sign/directions/engineering/south_arrow{
 	pixel_y = -40;
 	dir = 4
 	},
-/obj/structure/sign/directions/security/directional/south{
+/obj/structure/sign/directions/security/south_arrow{
 	pixel_y = -24;
 	dir = 8
 	},
@@ -57575,7 +57575,7 @@
 /obj/structure/railing{
 	dir = 8
 	},
-/obj/structure/sign/directions/arrival/directional/west{
+/obj/structure/sign/directions/arrival/west_arrow{
 	dir = 10
 	},
 /turf/open/floor/iron,

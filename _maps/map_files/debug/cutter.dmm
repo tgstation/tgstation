@@ -1591,7 +1591,7 @@
 /turf/open/floor/iron,
 /area/misc/testroom)
 "rJ" = (
-/obj/structure/sign/directions/arrival/directional/east,
+/obj/structure/sign/directions/arrival/east_arrow,
 /turf/open/floor/iron,
 /area/misc/testroom)
 "rM" = (
@@ -2984,7 +2984,7 @@
 /turf/open/floor/iron,
 /area/misc/testroom)
 "GP" = (
-/obj/structure/sign/directions/arrival/directional/west,
+/obj/structure/sign/directions/arrival/west_arrow,
 /turf/open/floor/iron,
 /area/misc/testroom)
 "GY" = (
@@ -3961,7 +3961,7 @@
 /turf/open/floor/carpet,
 /area/misc/testroom)
 "QB" = (
-/obj/structure/sign/directions/arrival/directional/north,
+/obj/structure/sign/directions/arrival/north_arrow,
 /turf/open/floor/iron,
 /area/misc/testroom)
 "QE" = (
@@ -4343,7 +4343,7 @@
 /turf/open/floor/wood,
 /area/misc/testroom)
 "Us" = (
-/obj/structure/sign/directions/arrival/directional/south,
+/obj/structure/sign/directions/arrival/south_arrow,
 /turf/open/floor/iron,
 /area/misc/testroom)
 "Ut" = (

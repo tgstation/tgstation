@@ -3531,7 +3531,7 @@
 /area/station/medical/surgery/aft)
 "aWa" = (
 /obj/item/kirbyplants/random,
-/obj/structure/sign/directions/evac/directional/east,
+/obj/structure/sign/directions/evac/east_arrow,
 /turf/open/floor/iron,
 /area/station/hallway/floor3/aft)
 "aWc" = (
@@ -6297,7 +6297,7 @@
 /area/station/maintenance/floor3/port/aft)
 "bAf" = (
 /obj/machinery/camera/autoname/directional/east,
-/obj/structure/sign/directions/evac/directional/east{
+/obj/structure/sign/directions/evac/east_arrow{
 	dir = 2
 	},
 /turf/open/floor/iron/dark/side{
@@ -11271,7 +11271,6 @@
 	},
 /obj/merge_conflict_marker{
 	name = "---Merge Conflict Marker---";
-	
 	desc = "A best-effort merge was performed. You must resolve this conflict yourself (manually) and remove this object once complete."
 	},
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4,
@@ -25050,14 +25049,14 @@
 /area/station/service/bar/atrium)
 "gzc" = (
 /obj/machinery/camera/autoname/directional/west,
-/obj/structure/sign/directions/security/directional/west{
+/obj/structure/sign/directions/security/west_arrow{
 	dir = 2
 	},
-/obj/structure/sign/directions/command/directional/west{
+/obj/structure/sign/directions/command/west_arrow{
 	dir = 2;
 	pixel_y = -8
 	},
-/obj/structure/sign/directions/vault/directional/west{
+/obj/structure/sign/directions/vault/west_arrow{
 	dir = 2;
 	pixel_y = 8
 	},
@@ -30520,7 +30519,7 @@
 	},
 /area/station/hallway/floor1/fore)
 "hVG" = (
-/obj/structure/sign/directions/engineering/directional/east,
+/obj/structure/sign/directions/engineering/east_arrow,
 /turf/open/floor/iron/dark/side{
 	dir = 1
 	},
@@ -31035,7 +31034,7 @@
 /turf/open/floor/plating,
 /area/station/maintenance/floor3/starboard/fore)
 "idn" = (
-/obj/structure/sign/directions/science/directional/west,
+/obj/structure/sign/directions/science/west_arrow,
 /turf/open/floor/iron/dark/side{
 	dir = 1
 	},
@@ -31169,7 +31168,7 @@
 /turf/open/floor/iron,
 /area/station/hallway/floor3/aft)
 "ifk" = (
-/obj/structure/sign/directions/dorms/directional/north{
+/obj/structure/sign/directions/dorms/north_arrow{
 	dir = 2
 	},
 /obj/structure/closet/emcloset/anchored,
@@ -33656,8 +33655,8 @@
 /turf/open/floor/iron/white,
 /area/station/medical/medbay/central)
 "iNz" = (
-/obj/structure/sign/directions/upload/directional/east,
-/obj/structure/sign/directions/medical/directional/east{
+/obj/structure/sign/directions/upload/east_arrow,
+/obj/structure/sign/directions/medical/east_arrow{
 	pixel_y = 8
 	},
 /turf/open/floor/iron/dark/side{
@@ -34645,6 +34644,10 @@
 	dir = 8
 	},
 /area/station/security/prison)
+"iZT" = (
+/obj/structure/sign/departments/evac/port/directional/north,
+/turf/open/floor/iron/dark,
+/area/station/hallway/floor1/fore)
 "iZU" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -35369,6 +35372,12 @@
 /obj/structure/lattice,
 /turf/open/space/basic,
 /area/space/nearstation)
+"jkP" = (
+/obj/structure/sign/departments/evac/port/directional/north,
+/turf/open/floor/iron/dark/side{
+	dir = 1
+	},
+/area/station/hallway/floor1/fore)
 "jlr" = (
 /obj/effect/turf_decal/tile/brown{
 	dir = 4
@@ -36422,11 +36431,11 @@
 /area/station/hallway/floor2/aft)
 "jyL" = (
 /obj/structure/sign/poster/official/random/directional/east,
-/obj/structure/sign/directions/dorms/directional/north,
-/obj/structure/sign/directions/security/directional/north{
+/obj/structure/sign/directions/dorms/north_arrow,
+/obj/structure/sign/directions/security/north_arrow{
 	pixel_y = 40
 	},
-/obj/structure/sign/directions/command/directional/north{
+/obj/structure/sign/directions/command/north_arrow{
 	pixel_y = 24
 	},
 /obj/structure/rack,
@@ -47155,11 +47164,11 @@
 /turf/open/floor/pod/light,
 /area/station/maintenance/floor1/port)
 "mgl" = (
-/obj/structure/sign/directions/evac/directional/west,
-/obj/structure/sign/directions/supply/directional/west{
+/obj/structure/sign/directions/evac/west_arrow,
+/obj/structure/sign/directions/supply/west_arrow{
 	pixel_y = 8
 	},
-/obj/structure/sign/directions/arrival/directional/west{
+/obj/structure/sign/directions/arrival/west_arrow{
 	pixel_y = -8
 	},
 /turf/open/floor/iron/dark/side{
@@ -53477,8 +53486,8 @@
 /turf/open/floor/iron/checker,
 /area/station/cargo/miningdock)
 "nKn" = (
-/obj/structure/sign/directions/dorms/directional/east,
-/obj/structure/sign/directions/evac/directional/east{
+/obj/structure/sign/directions/dorms/east_arrow,
+/obj/structure/sign/directions/evac/east_arrow{
 	pixel_y = -8
 	},
 /turf/open/floor/iron/dark/side{
@@ -55838,14 +55847,14 @@
 /turf/open/floor/wood/tile,
 /area/station/service/library)
 "oqk" = (
-/obj/structure/sign/directions/medical/directional/north{
+/obj/structure/sign/directions/medical/north_arrow{
 	dir = 2
 	},
-/obj/structure/sign/directions/science/directional/north{
+/obj/structure/sign/directions/science/north_arrow{
 	dir = 2;
 	pixel_y = 24
 	},
-/obj/structure/sign/directions/upload/directional/north{
+/obj/structure/sign/directions/upload/north_arrow{
 	dir = 2;
 	pixel_y = 40
 	},
@@ -72232,11 +72241,11 @@
 /turf/open/floor/iron/dark,
 /area/station/engineering/supermatter)
 "sHN" = (
-/obj/structure/sign/directions/medical/directional/north,
-/obj/structure/sign/directions/science/directional/north{
+/obj/structure/sign/directions/medical/north_arrow,
+/obj/structure/sign/directions/science/north_arrow{
 	pixel_y = 24
 	},
-/obj/structure/sign/directions/upload/directional/north{
+/obj/structure/sign/directions/upload/north_arrow{
 	pixel_y = 40
 	},
 /obj/structure/ladder,
@@ -72815,13 +72824,13 @@
 /turf/open/floor/iron/dark/textured_large,
 /area/station/engineering/atmos/office)
 "sOO" = (
-/obj/structure/sign/directions/security/directional/north{
+/obj/structure/sign/directions/security/north_arrow{
 	pixel_y = 40
 	},
-/obj/structure/sign/directions/command/directional/north{
+/obj/structure/sign/directions/command/north_arrow{
 	pixel_y = 24
 	},
-/obj/structure/sign/directions/vault/directional/north,
+/obj/structure/sign/directions/vault/north_arrow,
 /obj/structure/chair/comfy/beige,
 /obj/effect/turf_decal/siding/wood{
 	dir = 4
@@ -72963,7 +72972,7 @@
 /obj/effect/turf_decal/trimline/brown/filled/line{
 	dir = 8
 	},
-/obj/structure/sign/directions/evac/directional/west,
+/obj/structure/sign/directions/evac/west_arrow,
 /turf/open/floor/iron,
 /area/station/hallway/floor3/aft)
 "sQH" = (
@@ -76309,14 +76318,14 @@
 /turf/open/floor/carpet/blue,
 /area/station/command/meeting_room)
 "tIe" = (
-/obj/structure/sign/directions/evac/directional/north{
+/obj/structure/sign/directions/evac/north_arrow{
 	dir = 2;
 	pixel_y = 40
 	},
-/obj/structure/sign/directions/engineering/directional/north{
+/obj/structure/sign/directions/engineering/north_arrow{
 	dir = 2
 	},
-/obj/structure/sign/directions/supply/directional/north{
+/obj/structure/sign/directions/supply/north_arrow{
 	dir = 2;
 	pixel_y = 24
 	},
@@ -82559,11 +82568,6 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/pod/light,
 /area/station/maintenance/floor1/port)
-"voj" = (
-/obj/item/kirbyplants/random,
-/obj/structure/sign/departments/evac/directional/west,
-/turf/open/floor/iron/dark,
-/area/station/hallway/floor1/fore)
 "vok" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/spawner/random/trash/garbage{
@@ -85465,7 +85469,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/structure/cable,
-/obj/structure/sign/directions/evac/directional/south,
+/obj/structure/sign/directions/evac/south_arrow,
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
@@ -111655,7 +111659,7 @@ snI
 hDy
 lEy
 hpI
-voj
+rLs
 axe
 qxz
 fvr
@@ -111663,7 +111667,7 @@ sZI
 nVw
 vZC
 tKe
-voj
+rLs
 sPJ
 xtY
 oWA
@@ -112426,7 +112430,7 @@ kyR
 mFD
 kyR
 kyR
-gVw
+iZT
 rpj
 nWO
 fXD
@@ -117569,7 +117573,7 @@ dny
 txP
 nqX
 rPi
-rpj
+jkP
 gqU
 lXX
 hJy
