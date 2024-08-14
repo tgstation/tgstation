@@ -76,6 +76,8 @@
 /datum/component/hide_weather_planes/proc/z_changed(datum/source, new_z)
 	SIGNAL_HANDLER
 	active_weather = list()
+	if(!SSmapping.initialized)
+		return
 	var/list/connected_levels = SSmapping.get_connected_levels(new_z)
 	for(var/datum/weather/active as anything in SSweather.processing)
 		if(length(connected_levels & active.impacted_z_levels))

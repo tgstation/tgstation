@@ -656,12 +656,25 @@
 
 /obj/machinery/door/firedoor/update_overlays()
 	. = ..()
-	if(!use_split_sprites)
-		return
 
-	var/working_icon_state = "[get_base_state()]_bottom"
-	. += mutable_appearance(icon, working_icon_state, ABOVE_MOB_LAYER, appearance_flags = KEEP_APART)
-	. += emissive_blocker(icon, working_icon_state, src, ABOVE_MOB_LAYER)
+	if(use_split_sprites)
+		var/working_icon_state = "[get_base_state()]_bottom"
+		. += mutable_appearance(icon, working_icon_state, ABOVE_MOB_LAYER, appearance_flags = KEEP_APART)
+		. += emissive_blocker(icon, working_icon_state, src, ABOVE_MOB_LAYER)
+
+	if(welded)
+		. += mutable_appearance(icon, density ? "welded_bottom" : "welded_top")
+
+	if(alarm_type && powered() && !ignore_alarms)
+		var/mutable_appearance/hazards
+		hazards = mutable_appearance(icon, "[(obj_flags & EMAGGED) ? "firelock_alarm_type_emag" : alarm_type]")
+		hazards.pixel_x = light_xoffset
+		hazards.pixel_y = light_yoffset
+		. += hazards
+		hazards = emissive_appearance(icon, "[(obj_flags & EMAGGED) ? "firelock_alarm_type_emag" : alarm_type]", src, alpha = src.alpha)
+		hazards.pixel_x = light_xoffset
+		hazards.pixel_y = light_yoffset
+		. += hazards
 
 /obj/machinery/door/firedoor/animation_length(animation)
 	switch(animation)
@@ -682,21 +695,6 @@
 			return 0.2 SECONDS
 		if(DOOR_CLOSING_FINISHED)
 			return 1.1 SECONDS
-
-/obj/machinery/door/firedoor/update_overlays()
-	. = ..()
-	if(welded)
-		. += welded
-	if(alarm_type && powered() && !ignore_alarms)
-		var/mutable_appearance/hazards
-		hazards = mutable_appearance(icon, "[(obj_flags & EMAGGED) ? "firelock_alarm_type_emag" : alarm_type]")
-		hazards.pixel_x = light_xoffset
-		hazards.pixel_y = light_yoffset
-		. += hazards
-		hazards = emissive_appearance(icon, "[(obj_flags & EMAGGED) ? "firelock_alarm_type_emag" : alarm_type]", src, alpha = src.alpha)
-		hazards.pixel_x = light_xoffset
-		hazards.pixel_y = light_yoffset
-		. += hazards
 
 /**
  * Corrects the current state of the door, based on its activity.
