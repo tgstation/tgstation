@@ -1225,6 +1225,9 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 /// This trait lets you attach limbs to any player without surgery.
 #define TRAIT_EASY_ATTACH "easy_attach"
 
+///Attached to objects currently on window frames, tables and such, allowing them to walk on other objects without the climbing delay
+#define TRAIT_ON_CLIMBABLE "on_climbable"
+
 ///Trait given to the birthday boy
 #define TRAIT_BIRTHDAY_BOY "birthday_boy"
 

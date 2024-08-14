@@ -161,6 +161,7 @@ MAPPING_DIRECTIONAL_HELPERS_EMPTY(/obj/structure/window/reinforced/survival_pod/
 	opacity = FALSE
 	glass = TRUE
 	greyscale_config = /datum/greyscale_config/airlocks/window
+	greyscale_colors = "#a5a7ac#a5a7ac#969696#969696#5ea52c#6d6565"
 
 /obj/structure/door_assembly/door_assembly_pod
 	name = "pod airlock assembly"
