@@ -66036,7 +66036,6 @@
 /obj/machinery/door/airlock/vault{
 	name = "Vault Door"
 	},
-/obj/structure/sign/warning/secure_area/directional/north,
 /obj/effect/landmark/navigate_destination,
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
@@ -67677,6 +67676,11 @@
 	dir = 8
 	},
 /area/station/commons/fitness/recreation)
+"rag" = (
+/obj/effect/turf_decal/tile/neutral/fourcorners,
+/obj/structure/sign/warning/secure_area/directional/north,
+/turf/open/floor/iron/dark,
+/area/station/ai_monitored/command/nuke_storage)
 "ram" = (
 /obj/structure/window/reinforced/spawner/directional/north,
 /obj/structure/window/reinforced/spawner/directional/east,
@@ -95490,6 +95494,7 @@
 "yah" = (
 /obj/machinery/computer/bank_machine,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
+/obj/structure/sign/warning/secure_area/directional/north,
 /turf/open/floor/iron/dark,
 /area/station/ai_monitored/command/nuke_storage)
 "yaj" = (
@@ -96210,10 +96215,8 @@
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/structure/sign/departments/vault/directional/east{
-	pixel_y = -32
-	},
 /obj/effect/turf_decal/tile/neutral/fourcorners,
+/obj/structure/sign/departments/vault/directional/north,
 /turf/open/floor/iron/dark,
 /area/station/ai_monitored/command/nuke_storage)
 "ykm" = (
@@ -141166,7 +141169,7 @@ uoz
 tpZ
 aad
 lhY
-vZE
+rag
 ldU
 tcG
 vZE
@@ -142200,7 +142203,7 @@ xrd
 vZE
 aSm
 lhY
-aad
+vzw
 mjz
 wus
 mJD
