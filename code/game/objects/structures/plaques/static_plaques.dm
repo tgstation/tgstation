@@ -41,7 +41,6 @@ WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/structure/plaque/static_plaque/golden/captai
 	name = "\improper tram information plate"
 	icon_state = "commission_tram"
 	custom_materials = list(/datum/material/titanium = SHEET_MATERIAL_AMOUNT)
-	layer = SIGN_LAYER
 	pixel_y = -29
 	pixel_z = 29
 
@@ -121,7 +120,6 @@ WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/structure/plaque/static_plaque/tram)
 	name = "Commission Plaque"
 	desc = "Spinward Sector Station SS-13\n'Runtime' Class Outpost\nCommissioned 03/11/2556\n'Dedicated to the Pioneers'"
 	icon_state = "commission_nt"
-	layer = BELOW_OPEN_DOOR_LAYER
 
 WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/structure/plaque/static_plaque/golden/commission)
 

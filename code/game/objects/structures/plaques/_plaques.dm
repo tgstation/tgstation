@@ -33,6 +33,7 @@ WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/structure/plaque)
 		return //A mapped-in plaque embedded into the wall turf, visible from both sides of it.
 	if(!iswallturf(get_step(src, REVERSE_DIR(dir))))
 		SET_PLANE_EXPLICIT(src, FLOOR_PLANE, loc)
+		layer = BELOW_OPEN_DOOR_LAYER
 		return //floor plaques are a thing, messieur.
 	return ..()
 
