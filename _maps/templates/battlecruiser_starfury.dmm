@@ -726,7 +726,7 @@
 /turf/open/floor/iron/dark,
 /area/shuttle/sbc_starfury)
 "cM" = (
-/obj/machinery/shower/directional/east,
+/obj/machinery/shower/directional/west,
 /turf/open/floor/iron,
 /area/shuttle/sbc_starfury)
 "cO" = (
@@ -941,7 +941,7 @@
 /turf/open/floor/iron/dark,
 /area/shuttle/sbc_starfury)
 "dD" = (
-/obj/machinery/shower/directional/east,
+/obj/machinery/shower/directional/west,
 /turf/open/floor/iron/dark/corner{
 	dir = 8
 	},
@@ -5360,7 +5360,6 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
 	},
-/obj/structure/sign/warning/no_smoking/directional/east,
 /obj/structure/disposalpipe/segment,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,

@@ -2460,7 +2460,6 @@
 /area/ruin/space/ks13/command/bridge_hall)
 "wh" = (
 /obj/machinery/light/small/directional/east,
-/obj/structure/sign/departments/science/alt/directional/east,
 /obj/effect/mapping_helpers/broken_floor,
 /turf/open/floor/iron/airless,
 /area/ruin/space/ks13/hallway/central)
@@ -2703,7 +2702,6 @@
 /area/ruin/space/ks13/command/bridge_hall)
 "xq" = (
 /obj/item/stack/cable_coil/cut,
-/obj/structure/sign/departments/exam_room/directional/west,
 /obj/effect/mapping_helpers/burnt_floor,
 /turf/open/floor/iron/white/airless,
 /area/ruin/space/ks13/medical/medbay)
@@ -5188,11 +5186,6 @@
 /obj/item/stack/rods,
 /turf/open/floor/plating/airless,
 /area/ruin/space/ks13/ai/corridor)
-"KE" = (
-/obj/structure/sign/departments/science/alt/directional/east,
-/obj/effect/mapping_helpers/broken_floor,
-/turf/open/floor/iron/airless,
-/area/ruin/space/ks13/hallway/central)
 "KG" = (
 /obj/structure/cable,
 /obj/effect/decal/cleanable/dirt,
@@ -7883,9 +7876,7 @@
 /turf/open/floor/circuit/red/off,
 /area/ruin/space/ks13/ai/corridor)
 "YE" = (
-/obj/structure/plaque/static_plaque/golden/commission/ks13,
-/obj/effect/decal/cleanable/dirt,
-/obj/effect/decal/cleanable/dirt,
+/obj/structure/plaque/static_plaque/golden/commission/ks13/directional/north,
 /turf/open/floor/iron/airless,
 /area/ruin/space/ks13/hallway/central)
 "YF" = (
@@ -12220,8 +12211,8 @@ RD
 Fw
 LA
 Xr
-DM
 YE
+yR
 yR
 Qz
 tY
@@ -13915,7 +13906,7 @@ Ew
 Ew
 wh
 pT
-KE
+Hk
 DM
 WL
 xG
