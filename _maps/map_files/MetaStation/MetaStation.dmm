@@ -1795,7 +1795,6 @@
 /obj/effect/turf_decal/bot,
 /obj/effect/landmark/event_spawn,
 /obj/effect/landmark/start/hangover,
-/obj/machinery/light/small/directional/north,
 /turf/open/floor/iron,
 /area/station/hallway/secondary/command)
 "aHW" = (
@@ -2951,7 +2950,7 @@
 	control_area = "/area/station/ai_monitored/turret_protected/ai_upload";
 	icon_state = "control_stun";
 	name = "AI Upload Turret Control";
-	pixel_y = 28
+	pixel_y = -7
 	},
 /obj/item/radio/intercom/directional/north{
 	broadcasting = 1;
@@ -4867,6 +4866,10 @@
 	pixel_x = -7;
 	name = "Privacy Shutters Control";
 	req_access = "hop"
+	},
+/obj/machinery/button/flasher{
+	id = "hopflash";
+	dir = 8
 	},
 /turf/open/floor/wood,
 /area/station/command/heads_quarters/hop)
@@ -23189,12 +23192,6 @@
 	},
 /turf/open/floor/wood,
 /area/station/service/library)
-"ilD" = (
-/obj/machinery/button/flasher{
-	id = "hopflash"
-	},
-/turf/closed/wall/r_wall,
-/area/station/command/heads_quarters/hop)
 "ilJ" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/effect/turf_decal/tile/yellow/half/contrasted{
@@ -23702,6 +23699,12 @@
 /obj/structure/cable,
 /turf/open/floor/iron/white,
 /area/station/science/research)
+"itV" = (
+/obj/effect/turf_decal/bot,
+/obj/effect/landmark/start/hangover,
+/obj/machinery/light/small/directional/north,
+/turf/open/floor/iron,
+/area/station/hallway/secondary/command)
 "itW" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/cable,
@@ -61431,9 +61434,6 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
-/obj/machinery/digital_clock/directional/north{
-	pixel_y = 0
-	},
 /turf/open/floor/iron,
 /area/station/hallway/primary/central)
 "vxJ" = (
@@ -93689,7 +93689,7 @@ iiE
 rGj
 rJr
 jTg
-wMx
+itV
 qRI
 urA
 nIR
@@ -94716,7 +94716,7 @@ lJn
 eRC
 htG
 bIq
-ilD
+pJR
 mQq
 ndS
 urA
