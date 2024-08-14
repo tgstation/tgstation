@@ -1,0 +1,5 @@
+author: "hack-wrench"
+delete-after: True
+changes:
+  - rscadd: "add syndicate branded lipstick to uplink (6 TC), after applying lipstick *kiss deals damage equal to energy gun"
+  - bugfix: "fix wallhit sound for projectile"

@@ -38,12 +38,9 @@
 /turf/open/floor/circuit/green,
 /area/template_noop)
 "ag" = (
-/obj/machinery/camera/directional/north{
-	c_tag = "Red Team";
-	network = list("thunder");
+/obj/machinery/camera/motion/thunderdome/red_team{
 	pixel_x = 11;
-	pixel_y = -9;
-	resistance_flags = 64
+	pixel_y = -9
 	},
 /obj/effect/landmark/thunderdome/two,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
@@ -324,12 +321,9 @@
 /turf/open/floor/iron,
 /area/template_noop)
 "aU" = (
-/obj/machinery/camera/directional/north{
-	c_tag = "Green Team";
-	network = list("thunder");
-	pixel_x = 12;
-	pixel_y = -10;
-	resistance_flags = 64
+/obj/machinery/camera/motion/thunderdome/green_team{
+	pixel_x = 11;
+	pixel_y = -9
 	},
 /obj/effect/landmark/thunderdome/one,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
@@ -353,10 +347,7 @@
 /turf/open/floor/iron,
 /area/template_noop)
 "aX" = (
-/obj/machinery/flasher{
-	id = "tdomeflash";
-	name = "Thunderdome Flash"
-	},
+/obj/machinery/flasher/thunderdome,
 /turf/open/floor/circuit/green,
 /area/template_noop)
 "aY" = (

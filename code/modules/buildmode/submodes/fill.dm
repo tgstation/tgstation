@@ -66,7 +66,7 @@
 					T = T.ChangeTurf(objholder)
 					T.setDir(BM.build_dir)
 				else if(ispath(objholder, /obj/effect/turf_decal))
-					T.AddElement(/datum/element/decal, initial(objholder.icon), initial(objholder.icon_state), BM.build_dir, null, null, initial(objholder.alpha), initial(objholder.color), null, FALSE, null)
+					T.AddElement(/datum/element/decal, initial(objholder.icon), initial(objholder.icon_state), BM.build_dir, null, null, initial(objholder.alpha), initial(objholder.color), null, null, null, FALSE, null)
 				else
 					var/obj/A = new objholder(T)
 					A.setDir(BM.build_dir)

@@ -37,10 +37,18 @@
 /area/station/maintenance/department/security)
 "r" = (
 /obj/structure/table,
-/obj/effect/spawner/random/food_or_drink/booze,
-/obj/effect/spawner/random/entertainment/cigarette_pack,
+/obj/effect/spawner/random/food_or_drink/booze{
+	pixel_y = 7;
+	pixel_x = 9
+	},
+/obj/effect/spawner/random/entertainment/cigarette_pack{
+	pixel_y = 8;
+	pixel_x = -5
+	},
 /obj/effect/turf_decal/sand/plating,
-/obj/effect/spawner/random/entertainment/deck,
+/obj/effect/spawner/random/entertainment/deck{
+	pixel_y = 9
+	},
 /turf/open/floor/plating,
 /area/station/asteroid)
 "v" = (
@@ -54,8 +62,12 @@
 "z" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/table,
-/obj/effect/spawner/random/engineering/flashlight,
-/obj/effect/decal/cleanable/cobweb/cobweb2,
+/obj/effect/spawner/random/engineering/flashlight{
+	pixel_y = 12
+	},
+/obj/effect/decal/cleanable/cobweb/cobweb2{
+	pixel_y = 24
+	},
 /turf/open/floor/iron/smooth,
 /area/station/maintenance/department/security)
 "E" = (
