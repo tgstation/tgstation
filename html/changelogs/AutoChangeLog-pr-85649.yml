@@ -1,0 +1,4 @@
+author: "SmArtKar"
+delete-after: True
+changes:
+  - bugfix: "Circuit health analyzer/state components now work on targets inside lockers"
