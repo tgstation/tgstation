@@ -1130,44 +1130,44 @@ GLOBAL_LIST_EMPTY(features_by_species)
 	switch(roll_them_bones)
 		if (-INFINITY to 0) //Mostly a gimmie, this one just keeps them staggered briefly
 			target.adjust_staggered_up_to(1 SECONDS, 10 SECONDS)
-			target.visible_message(span_danger("[user]'s [atk_verb] briefly winds [target]!"), \
-				span_danger("You are briefly winded by [user]'s [atk_verb]!"), span_hear("You hear a thud!"), COMBAT_MESSAGE_RANGE, user)
+			target.visible_message(span_warning("[user]'s [atk_verb] briefly winds [target]!"), \
+				span_warning("You are briefly winded by [user]'s [atk_verb]!"), span_hear("You hear a thud!"), COMBAT_MESSAGE_RANGE, user)
 			to_chat(user, span_warning("Your [atk_verb] briefly winds [target]!"))
 
 		if (1 to 10)
 			target.adjust_eye_blur_up_to(5 SECONDS, 10 SECONDS)
-			target.visible_message(span_danger("[user]'s [atk_verb] hits [target] so hard, their eyes water! Ouch!"), \
-				span_danger("You are hit viciously by [user]'s [atk_verb], and your eyes begin to water!"), span_hear("You hear a thud!"), COMBAT_MESSAGE_RANGE, user)
+			target.visible_message(span_warning("[user]'s [atk_verb] hits [target] so hard, their eyes water! Ouch!"), \
+				span_warning("You are hit viciously by [user]'s [atk_verb], and your eyes begin to water!"), span_hear("You hear a thud!"), COMBAT_MESSAGE_RANGE, user)
 			to_chat(user, span_warning("Your [atk_verb] causes [target] to tear up!"))
 
 		if (11 to 30)
 			target.adjust_dizzy_up_to(5 SECONDS, 10 SECONDS)
 			target.adjust_eye_blur_up_to(5 SECONDS, 10 SECONDS)
 			target.adjust_confusion_up_to(5 SECONDS, 10 SECONDS)
-			target.visible_message(span_danger("[user]'s [atk_verb] hits [target] so hard, they are sent reeling in agony! Damn!"), \
-				span_danger("You are hit viciously by [user]'s [atk_verb], and everything becomes a dizzying blur!"), span_hear("You hear a thud!"), COMBAT_MESSAGE_RANGE, user)
+			target.visible_message(span_warning("[user]'s [atk_verb] hits [target] so hard, they are sent reeling in agony! Damn!"), \
+				span_warning("You are hit viciously by [user]'s [atk_verb], and everything becomes a dizzying blur!"), span_hear("You hear a thud!"), COMBAT_MESSAGE_RANGE, user)
 			to_chat(user, span_warning("Your [atk_verb] causes [target] to go stumbling about in a confuzed daze!"))
 
 		if(31 to 40)
 			target.adjust_dizzy_up_to(5 SECONDS, 10 SECONDS)
 			target.adjust_confusion_up_to(5 SECONDS, 10 SECONDS)
 			target.adjust_temp_blindness_up_to(5 SECONDS, 10 SECONDS)
-			target.visible_message(span_danger("[user]'s [atk_verb] hits [target] so hard, they are sent reeling blindly in agony! Goddamn!"), \
-				span_danger("You are hit viciously by [user]'s [atk_verb], and everything becomes a dizzying, blinding blur!"), span_hear("You hear a thud!"), COMBAT_MESSAGE_RANGE, user)
+			target.visible_message(span_warning("[user]'s [atk_verb] hits [target] so hard, they are sent reeling blindly in agony! Goddamn!"), \
+				span_warning("You are hit viciously by [user]'s [atk_verb], and everything becomes a dizzying, blinding blur!"), span_hear("You hear a thud!"), COMBAT_MESSAGE_RANGE, user)
 			to_chat(user, span_warning("Your [atk_verb] causes [target] to go stumbling about in a confuzed, blind daze!"))
 
 		if (41 to 45)
 			target.apply_effect(4 SECONDS, EFFECT_KNOCKDOWN, armor_block)
-			target.visible_message(span_danger("[user]'s [atk_verb] hits [target] so hard, you knock them off their feet! Holy shit!"), \
-				span_danger("You are hit viciously by [user]'s [atk_verb] and sent toppling head over heels!"), span_hear("You hear a sickening thud!"), COMBAT_MESSAGE_RANGE, user)
+			target.visible_message(span_warning("[user]'s [atk_verb] hits [target] so hard, you knock them off their feet! Holy shit!"), \
+				span_warning("You are hit viciously by [user]'s [atk_verb] and sent toppling head over heels!"), span_hear("You hear a sickening thud!"), COMBAT_MESSAGE_RANGE, user)
 			to_chat(user, span_warning("Your [atk_verb] lands, and you send [target] sailing off their feet!"))
 
 		if (46 to INFINITY)
 			target.apply_effect(4 SECONDS, EFFECT_KNOCKDOWN, armor_block)
 			var/obj/item/bodypart/affecting = target.get_bodypart(target.get_random_valid_zone(user.zone_selected))
 			target.apply_damage(5, BRUTE, affecting, armor_block, wound_bonus = limb_accuracy * 2) //Mostly for the crunchy wounding effect than actually doing damage
-			target.visible_message(span_danger("[user]'s [atk_verb] hits [target] so hard, you hit them off their feet with a loud crunch! Fucking hell!"), \
-				span_danger("You are hit viciously by [user]'s [atk_verb], and suddenly feel an overwhelming pain as you topple head over heels!"), span_hear("You hear a sickening crack and a loud thud!"), COMBAT_MESSAGE_RANGE, user)
+			target.visible_message(span_warning("[user]'s [atk_verb] hits [target] so hard, you hit them off their feet with a loud crunch! Fucking hell!"), \
+				span_warning("You are hit viciously by [user]'s [atk_verb], and suddenly feel an overwhelming pain as you topple head over heels!"), span_hear("You hear a sickening crack and a loud thud!"), COMBAT_MESSAGE_RANGE, user)
 			to_chat(user, span_warning("Your [atk_verb] lands, and [target] is sent crashing to the floor with the immense force! Good god!"))
 
 
