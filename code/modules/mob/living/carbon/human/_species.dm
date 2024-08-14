@@ -1056,7 +1056,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
 
 	var/miss_chance = 100//calculate the odds that a punch misses entirely. considers stamina and brute damage of the puncher. punches miss by default to prevent weird cases
 	if(attacking_bodypart.unarmed_damage_low)
-		if((target.body_position == LYING_DOWN) || HAS_TRAIT(user, TRAIT_PERFECT_ATTACKER) || staggered || user_drunkenness && HAS_TRAIT(user, TRAIT_DRUNKEN_BRAWLER)) //kicks and attacks against staggered targets never miss (provided your species deals more than 0 damage) //drunken brawlers while drunk also don't miss
+		if((target.body_position == LYING_DOWN) || HAS_TRAIT(user, TRAIT_PERFECT_ATTACKER) || staggered || user_drunkenness && HAS_TRAIT(user, TRAIT_DRUNKEN_BRAWLER)) //kicks and attacks against staggered targets never miss (provided your species deals more than 0 damage). Drunken brawlers while drunk also don't miss
 			miss_chance = 0
 		else
 			miss_chance = clamp(UNARMED_MISS_CHANCE_BASE - limb_accuracy + (user.getFireLoss()*0.5 + user.getBruteLoss()*0.5), 0, UNARMED_MISS_CHANCE_MAX) //Limb miss chance + various damage. capped at 80 so there is at least a chance to land a hit.
@@ -1115,7 +1115,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
 	// If our target is staggered and has sustained enough damage, we can apply a randomly determined status effect to inflict when we punch them.
 	// The effects are based on the punching effectiveness of our attacker. Some effects are not reachable by the average human, and require augmentation to reach or being a species with a heavy punch effectiveness.
 	// Or they're just drunk enough.
-	if(HAS_TRAIT(src, TRAIT_BRAWLING_KNOCKDOWN_BLOCKED) && target.stat == DEAD) //If our target is dead or has specailized armor, there is no way to inflict these effects.
+	if(HAS_TRAIT(target, TRAIT_BRAWLING_KNOCKDOWN_BLOCKED) || target.stat == DEAD) //If our target is dead or has specailized armor, there is no way to inflict these effects.
 		return
 
 	// If our target is staggered, the target's armor, minus our limb effectiveness sets the minimum necessary amount of damage sustained to cause an effect. Minimum 40, max 200 for sanity reasons
