@@ -19,6 +19,7 @@ jobs:
         run: |
           git config --local user.email "action@github.com"
           git config --local user.name "SS220Manager"
+          git config --local merge.conflictStyle zdiff3
       - name: Try merging
         continue-on-error: true
         run: |
@@ -28,10 +29,12 @@ jobs:
           {
             echo "MERGE_CONFLICTS<<EOF"
             git diff --name-only --diff-filter=U | while read file; do
-              echo "- $file"
+              echo "<details>"
+              echo "<summary>$file</summary>"
               echo -e "\n\`\`\`diff"
               git diff --diff-filter=U "$file" | sed -n '/<<<<<<</,/>>>>>>>/p'
               echo -e "\n\`\`\`"
+              echo "</details>"
             done
             echo EOF
           } >> $GITHUB_ENV
@@ -39,15 +42,42 @@ jobs:
         uses: actions/github-script@v7
         with:
           script: |
-            const { MERGE_CONFLICTS } = process.env
+                  const { MERGE_CONFLICTS } = process.env;
 
-            if(!MERGE_CONFLICTS) {
-              return
-            }
+                  const conflict_message_header = "This PR causes following conflicts on translate branch:\n";
+                  const issue_body = `${conflict_message_header}${MERGE_CONFLICTS}`;
 
-            await github.rest.issues.createComment({
-              issue_number: context.issue.number,
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              body: `This pr causes following conflicts on translate branch:\n ${MERGE_CONFLICTS} `
-            })
+                  const comments = await github.rest.issues.listComments({
+                    owner: context.repo.owner,
+                    repo: context.repo.repo,
+                    issue_number: context.issue.number,
+                  });
+
+                  const action_comment = comments.data.find(comment => comment.body.startsWith(conflict_message_header) && comment.user.login === "github-actions[bot]");
+
+                  if (action_comment) {
+                    const comment_id = action_comment.id;
+
+                    if (!MERGE_CONFLICTS) {
+                      await github.rest.issues.deleteComment({
+                        owner: context.repo.owner,
+                        repo: context.repo.repo,
+                        comment_id: comment_id,
+                      });
+                      return;
+                    }
+
+                    await github.rest.issues.updateComment({
+                      owner: context.repo.owner,
+                      repo: context.repo.repo,
+                      comment_id: comment_id,
+                      body: issue_body,
+                    });
+                  } else if (MERGE_CONFLICTS) {
+                    await github.rest.issues.createComment({
+                      owner: context.repo.owner,
+                      repo: context.repo.repo,
+                      issue_number: context.issue.number,
+                      body: issue_body,
+                    });
+                  }
