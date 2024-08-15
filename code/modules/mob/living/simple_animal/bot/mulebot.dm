@@ -33,6 +33,7 @@
 	bot_type = MULE_BOT
 	path_image_color = "#7F5200"
 	possessed_message = "You are a MULEbot! Do your best to make sure that packages get to their destination!"
+	shadow_type = SHADOW_LARGE
 
 	/// unique identifier in case there are multiple mulebots.
 	var/id

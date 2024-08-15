@@ -56,7 +56,9 @@
 	dir = 4
 	},
 /obj/effect/decal/cleanable/dirt,
-/obj/effect/decal/cleanable/cobweb,
+/obj/effect/decal/cleanable/cobweb{
+	pixel_y = 24
+	},
 /turf/open/floor/iron,
 /area/station/maintenance/starboard/central)
 "X" = (

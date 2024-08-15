@@ -1,2 +1,0 @@
-output_name = "resin_wall"
-template = "bitmask/diagonal_32x32.toml"

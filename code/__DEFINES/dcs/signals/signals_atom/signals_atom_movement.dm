@@ -68,3 +68,6 @@
 	#define COMSIG_ATOM_BLOCKS_PRESSURE (1<<0)
 ///From base of /datum/move_loop/process() after attempting to move a movable: (datum/move_loop/loop, old_dir)
 #define COMSIG_MOVABLE_MOVED_FROM_LOOP "movable_moved_from_loop"
+///From base of /atom/proc/CanAllowThrough(atom/movable/mover, border_dir): (atom/movable/mover, border_dir)
+#define COMSIG_ATOM_CAN_ALLOW_THROUGH "atom_can_allow_through"
+	#define COMSIG_FORCE_ALLOW_THROUGH (1<<0)

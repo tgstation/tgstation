@@ -17,7 +17,9 @@
 /area/template_noop)
 "x" = (
 /obj/structure/table,
-/obj/item/camera,
+/obj/item/camera{
+	pixel_y = 10
+	},
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/smooth,
 /area/station/maintenance/department/crew_quarters/dorms)
@@ -64,13 +66,16 @@
 /area/station/maintenance/department/crew_quarters/dorms)
 "R" = (
 /obj/structure/table,
-/obj/item/camera_film,
 /obj/item/camera_film{
-	pixel_x = -4;
-	pixel_y = 4
+	pixel_y = 7
 	},
 /obj/item/camera_film{
-	pixel_x = 6
+	pixel_x = -4;
+	pixel_y = 13
+	},
+/obj/item/camera_film{
+	pixel_x = 6;
+	pixel_y = 13
 	},
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/smooth,

@@ -1,5 +1,6 @@
 ///Oozes are slime-esque creatures, they are highly gluttonous creatures primarily intended for player controll.
 /mob/living/simple_animal/hostile/ooze
+	SET_BASE_VISUAL_PIXEL(0, 10)
 	name = "Ooze"
 	icon = 'icons/mob/vatgrowing.dmi'
 	icon_state = "gelatinous"
@@ -27,6 +28,7 @@
 	mob_size = MOB_SIZE_LARGE
 	initial_language_holder = /datum/language_holder/slime
 	footstep_type = FOOTSTEP_MOB_SLIME
+	shadow_offset_y = 2
 	///Oozes have their own nutrition. Changes based on them eating
 	var/ooze_nutrition = 50
 	var/ooze_nutrition_loss = -0.15

@@ -403,6 +403,11 @@
 	slowdown = 0
 	},
 /area/centcom/heretic_sacrifice/ash)
+"Ee" = (
+/turf/closed/indestructible/fakedoor/maintenance{
+	dir = 4
+	},
+/area/centcom/heretic_sacrifice/lock)
 "En" = (
 /turf/closed/indestructible/fakedoor/maintenance,
 /area/centcom/heretic_sacrifice/lock)
@@ -813,8 +818,8 @@ jt
 wo
 wo
 jt
-En
-En
+Ee
+Ee
 jt
 wo
 wo
@@ -1286,8 +1291,8 @@ jt
 wo
 wo
 jt
-En
-En
+Ee
+Ee
 jt
 wo
 wo
