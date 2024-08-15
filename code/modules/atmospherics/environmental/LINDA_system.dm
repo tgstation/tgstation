@@ -193,7 +193,7 @@
 	if(!SSair.initialized) // I'm sorry for polutting user code, I'll do 10 hail giacom's
 		return
 #ifdef UNIT_TESTS //Air shouldn't be processing in the test room whatsoever.
-	if(istype(get_area(T), /area/misc/testroom))
+	if(istype(loc, /area/misc/testroom))
 		return
 #endif
 	if(update)
