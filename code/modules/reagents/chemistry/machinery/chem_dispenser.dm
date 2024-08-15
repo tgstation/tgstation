@@ -573,6 +573,7 @@
 /obj/machinery/chem_dispenser/drinks/fullupgrade //fully ugpraded stock parts, emagged
 	desc = "Contains a large reservoir of soft drinks. This model has had its safeties shorted out."
 	obj_flags = CAN_BE_HIT | EMAGGED
+	circuit = /obj/item/circuitboard/machine/chem_dispenser/drinks/fullupgrade
 
 /obj/machinery/chem_dispenser/drinks/fullupgrade/Initialize(mapload)
 	. = ..()
