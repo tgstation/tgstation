@@ -123,12 +123,6 @@
 	AddElement(/datum/element/can_barricade)
 	make_dir_opaque()
 
-/obj/machinery/door/air_update_turf(update = TRUE, remove = FALSE)
-#ifdef UNIT_TESTS
-	remove = FALSE
-#endif
-	return ..()
-
 /obj/machinery/door/proc/make_dir_opaque()
 	if(!dir_mask || !edge_dir_mask)
 		return
