@@ -24,37 +24,6 @@
 	var/datum/weakref/transport_ref
 	/// The ID of the tram we're controlling
 	var/specific_transport_id = TRAMSTATION_LINE_1
-	/// If the sign is adjusted for split type tram windows
-	var/split_mode = FALSE
-
-/obj/machinery/computer/tram_controls/split
-	circuit = /obj/item/circuitboard/computer/tram_controls/split
-	split_mode = TRUE
-
-/obj/machinery/computer/tram_controls/split/directional/north
-	dir = SOUTH
-	pixel_x = -8
-	pixel_y = 32
-	pixel_z = 0
-
-/obj/machinery/computer/tram_controls/split/directional/south
-	dir = NORTH
-	pixel_x = 8
-	pixel_y = -32
-	pixel_z = 0
-
-/obj/machinery/computer/tram_controls/split/directional/east
-	dir = WEST
-	pixel_x = 32
-
-/obj/machinery/computer/tram_controls/split/directional/west
-	dir = EAST
-	pixel_x = -32
-
-/obj/machinery/computer/tram_controls/Initialize(mapload)
-	. = ..()
-	var/obj/item/circuitboard/computer/tram_controls/my_circuit = circuit
-	split_mode = my_circuit.split_mode
 
 /obj/machinery/computer/tram_controls/post_machine_initialize()
 	. = ..()
@@ -185,42 +154,29 @@
 
 	update_appearance()
 
-/obj/machinery/computer/tram_controls/on_construction(mob/user)
+/obj/machinery/computer/update_overlays()
 	. = ..()
-	var/obj/item/circuitboard/computer/tram_controls/my_circuit = circuit
-	split_mode = my_circuit.split_mode
-	if(split_mode)
-		switch(dir)
-			if(NORTH)
-				pixel_x = 8
-				pixel_y = -32
-			if(SOUTH)
-				pixel_x = -8
-				pixel_y = 32
-			if(EAST)
-				pixel_x = -32
-				pixel_y = -8
-			if(WEST)
-				pixel_x = 32
-				pixel_y = 8
-	else
-		switch(dir)
-			if(NORTH)
-				pixel_y = -32
-			if(SOUTH)
-				pixel_y = 32
-			if(EAST)
-				pixel_x = -32
-			if(WEST)
-				pixel_x = 32
+	if(machine_stat & BROKEN)
+		icon_screen = "[base_icon_state]_broken"
 
-/obj/machinery/computer/tram_controls/update_overlays()
-	. = ..()
-
-	if(isnull(icon_screen))
+	if(machine_stat & NOPOWER) // Your screen can't be on if you've got no damn charge
 		return
 
-	. += emissive_appearance(icon, icon_screen, src, alpha = src.alpha)
+	if(icon_screen)
+		. += mutable_appearance(icon, icon_screen)
+		. += emissive_appearance(icon, icon_screen, src, alpha = 144)
+
+/obj/machinery/computer/tram_controls/on_construction(mob/user)
+	. = ..()
+	switch(dir)
+		if(NORTH)
+			pixel_y = -32
+		if(SOUTH)
+			pixel_y = 32
+		if(EAST)
+			pixel_x = -32
+		if(WEST)
+			pixel_x = 32
 
 /obj/machinery/computer/tram_controls/power_change()
 	..()
@@ -248,7 +204,7 @@
 				if(INVALID_PLATFORM)
 					say("Configuration error. Please contact the nearest engineer.")
 				if(INTERNAL_ERROR)
-					say("Tram controller error. Please contact the nearest engineer or crew member with telecommunications access to reset the controller.")
+					say("Tram controller error. Please contact the nearest engineer to reset the controller.")
 				else
 					return
 
