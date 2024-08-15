@@ -99,15 +99,9 @@
 	smoothing_groups = null
 	use_splitvis = FALSE
 
-/turf/closed/wall/material/meat
-	name = "living wall"
-	baseturfs = /turf/open/floor/material/meat
-	girder_type = null
-	material_flags = MATERIAL_EFFECTS | MATERIAL_COLOR | MATERIAL_AFFECT_STATISTICS
-
-/turf/closed/wall/material/meat/Initialize(mapload)
-	. = ..()
-	set_custom_materials(list(GET_MATERIAL_REF(/datum/material/meat) = SHEET_MATERIAL_AMOUNT))
-
-/turf/closed/wall/material/meat/airless
-	baseturfs = /turf/open/floor/material/meat/airless
+/turf/closed/wall/fake_hierophant
+	name = "vibrant wall"
+	desc = "A wall made out of a strange metal. The squares on it pulse in a predictable pattern."
+	icon = 'icons/turf/walls/hierophant_wall.dmi'
+	smoothing_groups = SMOOTH_GROUP_HIERO_WALL + SMOOTH_GROUP_TALL_WALLS
+	canSmoothWith = SMOOTH_GROUP_HIERO_WALL
