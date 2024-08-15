@@ -43,3 +43,11 @@
 #define MOUSE_OPACITY_ICON 1
 /// Objects will be always be clicked on regardless of pixel transparency or other objects at that location (used in space vines, megafauna, storage containers)
 #define MOUSE_OPACITY_OPAQUE 2
+
+// Turf click styles
+/// Click on turfs as if they were a flat sheet on the ground
+#define TURF_CLICK_FLAT "click_flat"
+/// Click on turfs as if they were a 32 + DEPTH_OFFSET tall cube
+#define TURF_CLICK_CUBE "click_cube"
+/// Click on turfs as if they were a 32 + DEPTH_OFFSET tall cube, but maintain click params as if you were using TURF_CLICK_FLAT
+#define TURF_CLICK_CUBE_KEEP_PARAMS "click_cube_keep_params"

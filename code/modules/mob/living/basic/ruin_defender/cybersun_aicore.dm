@@ -25,6 +25,7 @@
 	light_range = 2
 	light_power = 0.6
 	light_color = "#eb1809"
+	shadow_type = SHADOW_NONE
 	/// Ability which fires da lightning bolt
 	var/datum/action/cooldown/mob_cooldown/lightning_strike
 	/// Ability which fires da big laser
