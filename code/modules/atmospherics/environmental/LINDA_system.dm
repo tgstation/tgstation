@@ -192,6 +192,10 @@
 /turf/air_update_turf(update = FALSE, remove = FALSE)
 	if(!SSair.initialized) // I'm sorry for polutting user code, I'll do 10 hail giacom's
 		return
+#ifdef UNIT_TESTS //Air shouldn't be processing in the test room whatsoever.
+	if(istype(loc, /area/misc/testroom))
+		return
+#endif
 	if(update)
 		immediate_calculate_adjacent_turfs()
 	if(remove)
