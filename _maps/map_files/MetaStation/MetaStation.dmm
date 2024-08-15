@@ -1420,10 +1420,6 @@
 	},
 /turf/open/floor/plating,
 /area/station/maintenance/aft/greater)
-"aBW" = (
-/obj/machinery/button/ignition/incinerator/atmos,
-/turf/closed/wall/r_wall,
-/area/station/maintenance/disposal/incinerator)
 "aBX" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/structure/cable,
@@ -24232,10 +24228,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/dark/visible,
 /obj/effect/mapping_helpers/airlock/locked,
 /obj/effect/mapping_helpers/airlock/cyclelink_helper,
-/obj/machinery/airlock_controller/incinerator_atmos{
-	pixel_x = 40;
-	pixel_y = 8
-	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/visible/layer2,
 /obj/machinery/door/airlock/public/glass/incinerator/atmos_interior,
 /turf/open/floor/engine,
@@ -25558,6 +25550,13 @@
 	chamber_id = "ordnanceburn"
 	},
 /obj/effect/mapping_helpers/airalarm/tlv_no_checks,
+/obj/structure/table,
+/obj/machinery/button/ignition/incinerator/ordmix/table{
+	pixel_y = 3
+	},
+/obj/machinery/button/door/incinerator_vent_ordmix/table{
+	pixel_y = 16
+	},
 /turf/open/floor/iron/dark,
 /area/station/science/ordnance)
 "iYG" = (
@@ -26999,6 +26998,9 @@
 	},
 /obj/structure/cable,
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4,
+/obj/machinery/power/apc/auto_name/directional/east{
+	areastring = "/area/station/science/ordnance/burnchamber"
+	},
 /turf/open/floor/iron/dark,
 /area/station/science/ordnance)
 "jwp" = (
@@ -29764,10 +29766,10 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
 	dir = 1
 	},
-/obj/machinery/power/apc/auto_name/directional/east{
-	areastring = "/area/station/science/ordnance/burnchamber"
-	},
 /obj/structure/cable,
+/obj/machinery/airlock_controller/incinerator_ordmix{
+	dir = 8
+	},
 /turf/open/floor/iron/dark,
 /area/station/science/ordnance)
 "kqm" = (
@@ -35806,6 +35808,34 @@
 /obj/machinery/keycard_auth/wall_mounted/directional/north{
 	pixel_x = -5
 	},
+/obj/merge_conflict_marker{
+	name = "---Merge Conflict Marker---";
+	desc = "A best-effort merge was performed. You must resolve this conflict yourself (manually) and remove this object once complete."
+	},
+/obj/structure/cable,
+/obj/structure/table/wood/fancy/black,
+/obj/item/storage/fancy/cigarettes/cigars/cohiba{
+	pixel_x = 3;
+	pixel_y = 22
+	},
+/obj/item/reagent_containers/cup/glass/bottle/champagne{
+	pixel_x = -7;
+	pixel_y = 16
+	},
+/obj/item/cigarette/cigar{
+	pixel_x = 4;
+	pixel_y = 11
+	},
+/obj/item/cigarette/cigar{
+	pixel_x = 8;
+	pixel_y = 8
+	},
+/obj/effect/turf_decal/siding/wood{
+	dir = 9
+	},
+/obj/machinery/keycard_auth/wall_mounted/directional/north{
+	pixel_y = 0
+	},
 /turf/open/floor/wood/large,
 /area/station/command/heads_quarters/qm)
 "mCj" = (
@@ -39987,17 +40017,6 @@
 "nWe" = (
 /obj/machinery/door/airlock/research/glass/incinerator/ordmix_interior,
 /obj/effect/mapping_helpers/airlock/locked,
-/obj/machinery/airlock_controller/incinerator_ordmix{
-	pixel_x = -24
-	},
-/obj/machinery/button/ignition/incinerator/ordmix{
-	pixel_x = 24;
-	pixel_y = -6
-	},
-/obj/machinery/button/door/incinerator_vent_ordmix{
-	pixel_x = 24;
-	pixel_y = 8
-	},
 /obj/effect/mapping_helpers/airlock/access/all/science/ordnance,
 /turf/open/floor/engine,
 /area/station/science/ordnance/burnchamber)
@@ -48807,7 +48826,6 @@
 /area/station/science/ordnance)
 "rbF" = (
 /obj/machinery/mass_driver/chapelgun,
-/obj/structure/sign/warning/vacuum/external/directional/north,
 /obj/machinery/light/small/directional/north,
 /obj/item/gps,
 /obj/effect/turf_decal/stripes/line{
@@ -52643,7 +52661,6 @@
 /obj/machinery/atmospherics/pipe/smart/simple/dark/visible{
 	dir = 6
 	},
-/obj/structure/sign/warning/fire/directional/east,
 /turf/open/floor/iron,
 /area/station/maintenance/disposal/incinerator)
 "svQ" = (
@@ -56443,14 +56460,6 @@
 "tLg" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/dark/visible,
 /obj/effect/decal/cleanable/dirt,
-/obj/machinery/button/door/incinerator_vent_atmos_aux{
-	pixel_x = -8;
-	pixel_y = -24
-	},
-/obj/machinery/button/door/incinerator_vent_atmos_main{
-	pixel_x = -8;
-	pixel_y = -36
-	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/visible/layer2,
 /turf/open/floor/iron,
 /area/station/maintenance/disposal/incinerator)
@@ -62410,8 +62419,22 @@
 /obj/effect/turf_decal/delivery,
 /obj/machinery/airalarm/directional/west,
 /obj/effect/mapping_helpers/airalarm/all_access,
-/obj/machinery/electrolyzer,
 /obj/machinery/atmospherics/components/binary/pump/on/supply/hidden/layer4,
+/obj/machinery/airlock_controller/incinerator_atmos{
+	dir = 4
+	},
+/obj/structure/table,
+/obj/machinery/button/ignition/incinerator/atmos/table{
+	pixel_y = 8;
+	pixel_x = 8
+	},
+/obj/machinery/button/door/incinerator_vent_atmos_aux/table{
+	pixel_y = 16
+	},
+/obj/machinery/button/door/incinerator_vent_atmos_main/table,
+/obj/item/pipe_dispenser{
+	pixel_y = 8
+	},
 /turf/open/floor/iron,
 /area/station/maintenance/disposal/incinerator)
 "vPy" = (
@@ -65046,6 +65069,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/dark/visible,
 /obj/structure/cable,
 /obj/machinery/computer/security/telescreen/turbine/directional/east,
+/obj/machinery/electrolyzer,
 /turf/open/floor/iron,
 /area/station/maintenance/disposal/incinerator)
 "wHd" = (
@@ -109390,7 +109414,7 @@ nmR
 dQO
 fIZ
 ydj
-aBW
+pnH
 vQh
 pnH
 lZk
