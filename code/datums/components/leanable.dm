@@ -8,6 +8,8 @@
 	var/datum/callback/lean_check = null
 	/// Whenever this object can be leaned on from the same turf as its' own. Do not use without a custom lean_check!
 	var/same_turf = FALSE
+	/// List of mobs currently leaning on our parent
+	var/list/leaning_mobs = list()
 
 /datum/component/leanable/Initialize(leaning_offset = 11, list/click_mods = null, datum/callback/lean_check = null, same_turf = FALSE)
 	. = ..()
@@ -18,6 +20,18 @@
 
 /datum/component/leanable/RegisterWithParent()
 	RegisterSignal(parent, COMSIG_MOUSEDROPPED_ONTO, PROC_REF(mousedrop_receive))
+	RegisterSignal(parent, COMSIG_MOVABLE_MOVED, PROC_REF(on_moved))
+
+/datum/component/leanable/Destroy(force)
+	for (var/mob/living/leaner as anything in leaning_mobs)
+		leaner.stop_leaning()
+	leaning_mobs = null
+	return ..()
+
+/datum/component/leanable/proc/on_moved(datum/source)
+	SIGNAL_HANDLER
+	for (var/mob/living/leaner as anything in leaning_mobs)
+		leaner.stop_leaning()
 
 /datum/component/leanable/proc/mousedrop_receive(atom/source, atom/movable/dropped, mob/user, params)
 	if (dropped != user)
@@ -40,7 +54,14 @@
 	if (!isnull(lean_check) && !lean_check.Invoke(dropped, params))
 		return
 	leaner.start_leaning(source, leaning_offset)
+	leaning_mobs += leaner
+	RegisterSignals(leaner, list(COMSIG_LIVING_STOPPED_LEANING, COMSIG_QDELETING), PROC_REF(stopped_leaning))
 	return COMPONENT_CANCEL_MOUSEDROPPED_ONTO
+
+/datum/component/leanable/proc/stopped_leaning(datum/source)
+	SIGNAL_HANDLER
+	leaning_mobs -= source
+	UnregisterSignal(source, list(COMSIG_LIVING_STOPPED_LEANING, COMSIG_QDELETING))
 
 /mob/living/proc/start_leaning(atom/lean_target, leaning_offset)
 	var/new_y = base_pixel_y + pixel_y
@@ -81,6 +102,7 @@
 	))
 	animate(src, 0.2 SECONDS, pixel_x = base_pixel_x, pixel_y = base_pixel_y)
 	remove_traits(list(TRAIT_UNDENSE, TRAIT_EXPANDED_FOV), LEANING_TRAIT)
+	SEND_SIGNAL(src, COMSIG_LIVING_STOPPED_LEANING)
 	update_fov()
 
 /mob/living/proc/lean_dir_changed(atom/source, old_dir, new_dir)
