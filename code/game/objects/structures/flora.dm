@@ -309,7 +309,7 @@
 
 /obj/structure/flora/tree/proc/add_shadow()
 	if(shadow_icon_state)
-		AddComponent(/datum/component/drop_shadow, icon, shadow_icon_state, pixel_x, DEPTH_OFFSET + pixel_y + shadow_offset_y)
+		AddComponent(/datum/component/drop_shadow, icon, shadow_icon_state, pixel_x, DEPTH_OFFSET + pixel_y + shadow_offset_y, BELOW_OBJ_LAYER)
 
 ///Return a see_through_map, examples in seethrough.dm
 /obj/structure/flora/tree/proc/get_seethrough_map()
@@ -516,7 +516,7 @@
 	add_shadow()
 
 /obj/structure/festivus/proc/add_shadow()
-	AddComponent(/datum/component/drop_shadow, 'icons/mob/mob_shadows.dmi', SHADOW_MEDIUM, 1, DEPTH_OFFSET)
+	AddComponent(/datum/component/drop_shadow, 'icons/mob/mob_shadows.dmi', SHADOW_MEDIUM, 1, DEPTH_OFFSET, BELOW_OBJ_LAYER)
 
 /obj/structure/festivus/anchored
 	name = "suplexed rod"
@@ -525,7 +525,7 @@
 	anchored = TRUE
 
 /obj/structure/festivus/anchored/add_shadow()
-	AddComponent(/datum/component/drop_shadow, icon, "anchored_rod_shadow", shadow_offset_y = DEPTH_OFFSET)
+	AddComponent(/datum/component/drop_shadow, icon, "anchored_rod_shadow", 0, DEPTH_OFFSET, BELOW_OBJ_LAYER)
 
 /**************
  * Palm Trees *
@@ -987,7 +987,7 @@
 /obj/structure/flora/bush/large/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/seethrough, SEE_THROUGH_MAP_DEFAULT)
-	AddComponent(/datum/component/drop_shadow, icon, "[icon_state]_shadow", pixel_x, DEPTH_OFFSET + pixel_y)
+	AddComponent(/datum/component/drop_shadow, icon, "[icon_state]_shadow", pixel_x, DEPTH_OFFSET + pixel_y, BELOW_OBJ_LAYER)
 
 /obj/structure/flora/bush/large/style_2
 	icon_state = "bush2"

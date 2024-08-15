@@ -9,20 +9,23 @@
 	var/additional_offset = 0
 	/// Timer to make sure
 	var/unhide_shadow_timer
+	/// An override to the default layer(s) used by the shadow appearance
+	var/layer_override
 
-/datum/component/drop_shadow/Initialize(icon = 'icons/mob/mob_shadows.dmi', icon_state = SHADOW_MEDIUM, shadow_offset_x = 0, shadow_offset_y = 0)
+/datum/component/drop_shadow/Initialize(icon = 'icons/mob/mob_shadows.dmi', icon_state = SHADOW_MEDIUM, shadow_offset_x = 0, shadow_offset_y = 0, layer_override)
 	. = ..()
 	if (!ismovable(parent)) // Only being used for mobs at the moment but it seems reasonably likely that we'll want to put it on some effect some time
 		return COMPONENT_INCOMPATIBLE
 
 	shadow_offset = shadow_offset_y
+	src.layer_override = layer_override
 
 	var/atom/movable/movable_parent = parent
 
 	shadow = mutable_appearance(
 		icon,
 		icon_state,
-		layer = BELOW_MOB_LAYER,
+		layer = layer_override || BELOW_MOB_LAYER,
 		appearance_flags = KEEP_APART | RESET_TRANSFORM | RESET_COLOR
 	)
 	shadow.pixel_x = shadow_offset_x - movable_parent.pixel_x
@@ -55,8 +58,9 @@
 /datum/component/drop_shadow/RegisterWithParent()
 
 	shadow.loc = parent
-	var/atom/movable/movable_parent = parent
-	shadow.layer = movable_parent.layer > BELOW_MOB_LAYER ? BELOW_MOB_LAYER : LOW_ITEM_LAYER
+	if(!layer_override)
+		var/atom/movable/movable_parent = parent
+		shadow.layer = movable_parent.layer > BELOW_MOB_LAYER ? BELOW_MOB_LAYER : LOW_ITEM_LAYER
 
 	RegisterSignal(parent, COMSIG_ATOM_UPDATE_OVERLAYS, PROC_REF(on_update_overlays))
 	RegisterSignals(parent, list(COMSIG_ATOM_FULTON_BEGAN, COMSIG_ATOM_BEGAN_ORBITING), PROC_REF(hide_shadow))
