@@ -62,16 +62,18 @@
 		var/atom/movable/movable_parent = parent
 		shadow.layer = movable_parent.layer > BELOW_MOB_LAYER ? BELOW_MOB_LAYER : LOW_ITEM_LAYER
 
-	RegisterSignal(parent, COMSIG_ATOM_UPDATE_OVERLAYS, PROC_REF(on_update_overlays))
+	var/self_shadow = HAS_TRAIT(parent, TRAIT_SELF_SHADOW)
+
+	if(!self_shadow)
+		RegisterSignal(parent, COMSIG_ATOM_UPDATE_OVERLAYS, PROC_REF(on_update_overlays))
 	RegisterSignals(parent, list(COMSIG_ATOM_FULTON_BEGAN, COMSIG_ATOM_BEGAN_ORBITING), PROC_REF(hide_shadow))
 	RegisterSignals(parent, list(COMSIG_ATOM_FULTON_LANDED, COMSIG_ATOM_STOPPED_ORBITING), PROC_REF(show_shadow))
 	RegisterSignals(parent, list(SIGNAL_ADDTRAIT(TRAIT_SHADOWLESS), SIGNAL_REMOVETRAIT(TRAIT_SHADOWLESS)), PROC_REF(shadowless_trait_updated))
 
 	if (ismob(parent))
 		RegisterSignal(parent, list(SIGNAL_ADDTRAIT(TRAIT_SELF_SHADOW), SIGNAL_REMOVETRAIT(TRAIT_SELF_SHADOW)), PROC_REF(on_self_shadow_updated))
-		if(HAS_TRAIT(parent, TRAIT_SELF_SHADOW))
-			RegisterSignal(parent, COMSIG_MOB_LOGIN)
-			UnregisterSignal(parent, COMSIG_ATOM_UPDATE_OVERLAYS)
+		if(self_shadow)
+			RegisterSignal(parent, COMSIG_MOB_LOGIN, PROC_REF(on_mob_login))
 		if(isliving(parent))
 			var/mob/living/living_parent = parent
 			RegisterSignal(parent, COMSIG_LIVING_POST_UPDATE_TRANSFORM, PROC_REF(on_transform_updated))
@@ -159,16 +161,18 @@
 /// Called when we gain or lose the "self-shadow" trait
 /datum/component/drop_shadow/proc/on_self_shadow_updated()
 	SIGNAL_HANDLER
+	var/mob/mob_parent = parent
 	if(HAS_TRAIT(parent, TRAIT_SELF_SHADOW))
 		RegisterSignal(parent, COMSIG_MOB_LOGIN, PROC_REF(on_mob_login))
-		add_to_client_images()
-	else
-		var/mob/mob_parent = parent
-		UnregisterSignal(parent, COMSIG_MOB_LOGIN)
-		if(mob_parent.client)
-			mob_parent.client -= shadow
-		RegisterSignal(parent, COMSIG_ATOM_UPDATE_OVERLAYS, PROC_REF(on_update_overlays))
+		UnregisterSignal(parent, COMSIG_ATOM_UPDATE_OVERLAYS)
 		mob_parent.update_appearance(UPDATE_OVERLAYS)
+		add_to_client_images()
+		return
+	UnregisterSignal(parent, COMSIG_MOB_LOGIN)
+	RegisterSignal(parent, COMSIG_ATOM_UPDATE_OVERLAYS, PROC_REF(on_update_overlays))
+	if(mob_parent.client)
+		mob_parent.client -= shadow
+	mob_parent.update_appearance(UPDATE_OVERLAYS)
 
 /// Handles actually displaying it
 /datum/component/drop_shadow/proc/on_update_overlays(atom/source, list/overlays)
