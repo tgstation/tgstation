@@ -1,0 +1,5 @@
+author: "Absolucy"
+delete-after: True
+changes:
+  - bugfix: "Fixed various runtime errors."
+  - bugfix: "Broken cameras can no longer somehow report you pissing on the floor."
