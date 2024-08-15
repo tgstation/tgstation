@@ -1,0 +1,4 @@
+author: "tmyqlfpir"
+delete-after: True
+changes:
+  - balance: "Reduced pathfinding circuit component cooldown from 30 seconds to 5 seconds"

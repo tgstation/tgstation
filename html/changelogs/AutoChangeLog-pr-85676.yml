@@ -1,0 +1,4 @@
+author: "imedial"
+delete-after: True
+changes:
+  - bugfix: "fixed nested radios with encryption keys giving free comms"

@@ -1,4 +1,5 @@
 /obj/machinery/computer/arcade
+	SET_BASE_VISUAL_PIXEL(0, DEPTH_OFFSET)
 	name = "\proper the arcade cabinet which shouldn't exist"
 	desc = "This arcade cabinet has no games installed, and in fact, should not exist. \
 		Report the location of this machine to your local diety."
