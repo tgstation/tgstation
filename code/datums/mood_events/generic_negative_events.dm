@@ -346,6 +346,16 @@
 	mood_change = -4
 	timeout = 60 SECONDS
 
+/datum/mood_event/willie
+	description = "Ewwww, My ear is all wet!"
+	mood_change = -2
+	timeout = 60 SECONDS
+
+/datum/mood_event/willie_cat
+	description = "EWWWW, MY EAR IS ALL WET!"
+	mood_change = -4
+	timeout = 60 SECONDS
+
 /datum/mood_event/aquarium_negative
 	description = "All the fish are dead..."
 	mood_change = -3
