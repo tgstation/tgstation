@@ -42,7 +42,7 @@
 	if (isnull(reflection_filters))
 		reflection_filters = list()
 		for (var/car_dir in GLOB.cardinals)
-			reflection_filters["[car_dir]"] = alpha_mask_filter(icon = icon('icons/obj/watercloset.dmi', "mirror_mask", dir = car_dir))
+			reflection_filters["[car_dir]"] = alpha_mask_filter(icon = icon('icons/obj/structures/watercloset.dmi', "mirror_mask", dir = car_dir))
 	AddComponent(/datum/component/reflection, reflection_filter = reflection_filters["[dir]"], reflection_matrix = reflection_matrix, can_reflect = can_reflect, update_signals = update_signals)
 	AddComponent(/datum/component/examine_balloon)
 
