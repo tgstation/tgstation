@@ -95,9 +95,11 @@ SUBSYSTEM_DEF(market)
 				qdel(purchase)
 
 			if(SHIPPING_METHOD_SUPPLYPOD)
-				var/obj/structure/closet/supplypod/back_to_station/pod = new()
-				purchase.entry.spawn_item(pod, purchase)
-				new /obj/effect/pod_landingzone(get_turf(purchase.uplink), pod)
+				var/obj/structure/closet/supplypod/spawned_pod = podspawn(list(
+					"target" = get_turf(purchase.uplink),
+					"path" = /obj/structure/closet/supplypod/back_to_station,
+				))
+				purchase.entry.spawn_item(spawned_pod, purchase)
 
 				to_chat(buyer, span_notice("[purchase.uplink] flashes a message noting the order is being launched at your location. Right here, right now!"))
 				qdel(purchase)

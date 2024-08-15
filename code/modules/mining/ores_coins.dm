@@ -22,6 +22,9 @@
 	var/list/stack_overlays
 	var/scan_state = "" //Used by mineral turfs for their scan overlay.
 	var/spreadChance = 0 //Also used by mineral turfs for spreading veins
+	drop_sound = SFX_STONE_DROP
+	pickup_sound = SFX_STONE_PICKUP
+	sound_vary = TRUE
 
 /obj/item/stack/ore/update_overlays()
 	. = ..()

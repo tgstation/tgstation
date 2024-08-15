@@ -63,13 +63,13 @@
 /obj/structure/broken_flooring/plating/always_floorplane
 	always_floorplane = TRUE
 
-MAPPING_DIRECTIONAL_HELPERS(/obj/structure/broken_flooring/singular, 0)
-MAPPING_DIRECTIONAL_HELPERS(/obj/structure/broken_flooring/pile, 0)
-MAPPING_DIRECTIONAL_HELPERS(/obj/structure/broken_flooring/side, 0)
-MAPPING_DIRECTIONAL_HELPERS(/obj/structure/broken_flooring/corner, 0)
-MAPPING_DIRECTIONAL_HELPERS(/obj/structure/broken_flooring/plating, 0)
-MAPPING_DIRECTIONAL_HELPERS(/obj/structure/broken_flooring/singular/always_floorplane, 0)
-MAPPING_DIRECTIONAL_HELPERS(/obj/structure/broken_flooring/pile/always_floorplane, 0)
-MAPPING_DIRECTIONAL_HELPERS(/obj/structure/broken_flooring/side/always_floorplane, 0)
-MAPPING_DIRECTIONAL_HELPERS(/obj/structure/broken_flooring/corner/always_floorplane, 0)
-MAPPING_DIRECTIONAL_HELPERS(/obj/structure/broken_flooring/plating/always_floorplane, 0)
+MAPPING_DIRECTIONAL_HELPERS_EMPTY(/obj/structure/broken_flooring/singular)
+MAPPING_DIRECTIONAL_HELPERS_EMPTY(/obj/structure/broken_flooring/pile)
+MAPPING_DIRECTIONAL_HELPERS_EMPTY(/obj/structure/broken_flooring/side)
+MAPPING_DIRECTIONAL_HELPERS_EMPTY(/obj/structure/broken_flooring/corner)
+MAPPING_DIRECTIONAL_HELPERS_EMPTY(/obj/structure/broken_flooring/plating)
+MAPPING_DIRECTIONAL_HELPERS_EMPTY(/obj/structure/broken_flooring/singular/always_floorplane)
+MAPPING_DIRECTIONAL_HELPERS_EMPTY(/obj/structure/broken_flooring/pile/always_floorplane)
+MAPPING_DIRECTIONAL_HELPERS_EMPTY(/obj/structure/broken_flooring/side/always_floorplane)
+MAPPING_DIRECTIONAL_HELPERS_EMPTY(/obj/structure/broken_flooring/corner/always_floorplane)
+MAPPING_DIRECTIONAL_HELPERS_EMPTY(/obj/structure/broken_flooring/plating/always_floorplane)

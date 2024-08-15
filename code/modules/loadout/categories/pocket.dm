@@ -106,10 +106,6 @@
 	name = "Plush (Moth)"
 	item_path = /obj/item/toy/plush/moth
 
-/datum/loadout_item/pocket_items/plush/narsie
-	name = "Plush (Nar'sie)"
-	item_path = /obj/item/toy/plush/narplush
-
 /datum/loadout_item/pocket_items/plush/nukie
 	name = "Plush (Nukie)"
 	item_path = /obj/item/toy/plush/nukeplushie
@@ -121,10 +117,6 @@
 /datum/loadout_item/pocket_items/plush/plasmaman
 	name = "Plush (Plasmaman)"
 	item_path = /obj/item/toy/plush/plasmamanplushie
-
-/datum/loadout_item/pocket_items/plush/ratvar
-	name = "Plush (Ratvar)"
-	item_path = /obj/item/toy/plush/ratplush
 
 /datum/loadout_item/pocket_items/plush/rouny
 	name = "Plush (Rouny)"
