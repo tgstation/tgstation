@@ -23,6 +23,8 @@
 	mob_size = MOB_SIZE_LARGE
 	pixel_x = -16
 	base_pixel_x = -16
+	shadow_offset_x = 1
+	shadow_offset_y = DEPTH_OFFSET
 
 	speed = 1
 	maxHealth = 200

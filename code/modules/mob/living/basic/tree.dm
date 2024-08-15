@@ -44,7 +44,10 @@
 	death_message = "is hacked into pieces!"
 
 	ai_controller = /datum/ai_controller/basic_controller/tree
-	shadow_type = SHADOW_NONE
+	shadow_icon = 'icons/obj/fluff/flora/pinetrees.dmi'
+	shadow_type = "pine_1_shadow"
+	shadow_offset_x = 16
+	shadow_offset_y = DEPTH_OFFSET
 
 	///items that make us angry
 	var/list/infuriating_objects = list(/obj/item/chainsaw, /obj/item/hatchet, /obj/item/stack/sheet/mineral/wood)

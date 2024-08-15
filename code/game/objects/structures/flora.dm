@@ -298,10 +298,18 @@
 	harvest_verb_suffix = "s down"
 	delete_on_harvest = TRUE
 	flora_flags = FLORA_HERBAL | FLORA_WOODEN
+	///If set, we will give this tree a shadow with a lower layer so that it doesn't block potentially block clicks.
+	var/shadow_icon_state
+	var/shadow_offset_y = 0
 
 /obj/structure/flora/tree/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/seethrough, get_seethrough_map())
+	add_shadow()
+
+/obj/structure/flora/tree/proc/add_shadow()
+	if(shadow_icon_state)
+		AddComponent(/datum/component/drop_shadow, icon, shadow_icon_state, pixel_x, DEPTH_OFFSET + pixel_y + shadow_offset_y)
 
 ///Return a see_through_map, examples in seethrough.dm
 /obj/structure/flora/tree/proc/get_seethrough_map()
@@ -325,6 +333,7 @@
 	icon_state = "tree_stump"
 	density = FALSE
 	delete_on_harvest = TRUE
+	shadow_icon_state = "pine_1_shadow"
 
 /obj/structure/flora/tree/stump/harvest(mob/living/user, product_amount_multiplier)
 	to_chat(user, span_notice("You manage to remove [src]."))
@@ -343,6 +352,10 @@
 	harvest_amount_high = 6
 	flora_flags = FLORA_WOODEN
 
+/obj/structure/flora/tree/dead/add_shadow()
+	if(!shadow_icon_state)
+		shadow_icon_state = "[icon_state]_shadow"
+
 /obj/structure/flora/tree/dead/style_2
 	icon_state = "tree_2"
 
@@ -359,9 +372,8 @@
 	icon_state = "tree_6"
 
 /obj/structure/flora/tree/dead/style_random/Initialize(mapload)
-	. = ..()
 	icon_state = "tree_[rand(1, 6)]"
-	update_appearance()
+	return ..()
 
 /obj/structure/flora/tree/jungle
 	desc = "It's seriously hampering your view of the jungle."
@@ -369,6 +381,10 @@
 	icon_state = "tree1"
 	pixel_x = -48
 	pixel_y = -20
+
+/obj/structure/flora/tree/jungle/add_shadow()
+	shadow_icon_state = "[icon_state]_shadow"
+	return ..()
 
 /obj/structure/flora/tree/jungle/get_seethrough_map()
 	return SEE_THROUGH_MAP_THREE_X_THREE
@@ -389,9 +405,8 @@
 	icon_state = "tree6"
 
 /obj/structure/flora/tree/jungle/style_random/Initialize(mapload)
-	. = ..()
 	icon_state = "tree[rand(1, 6)]"
-	update_appearance()
+	return ..()
 
 /obj/structure/flora/tree/jungle/small
 	pixel_y = 0
@@ -418,9 +433,8 @@
 	icon_state = "tree6"
 
 /obj/structure/flora/tree/jungle/small/style_random/Initialize(mapload)
-	. = ..()
 	icon_state = "tree[rand(1, 6)]"
-	update_appearance()
+	return ..()
 
 /**************
  * Pine Trees *
@@ -431,15 +445,18 @@
 	desc = "A coniferous pine tree."
 	icon = 'icons/obj/fluff/flora/pinetrees.dmi'
 	icon_state = "pine_1"
+	shadow_icon_state = "pine_1_shadow"
 
 /obj/structure/flora/tree/pine/get_seethrough_map()
 	return SEE_THROUGH_MAP_DEFAULT_TWO_TALL
 
 /obj/structure/flora/tree/pine/style_2
 	icon_state = "pine_2"
+	shadow_icon_state = "pine_2_shadow"
 
 /obj/structure/flora/tree/pine/style_3
 	icon_state = "pine_3"
+	shadow_icon_state = "pine_3_shadow"
 
 /obj/structure/flora/tree/pine/style_random/Initialize(mapload)
 	. = ..()
@@ -450,6 +467,8 @@
 	name = "xmas tree"
 	desc = "A wondrous decorated Christmas tree."
 	icon_state = "pine_c"
+	shadow_icon_state = "pine_1_shadow"
+	shadow_offset_y = -1
 
 /obj/structure/flora/tree/pine/xmas/presents
 	icon_state = "pinepresents"
@@ -492,11 +511,21 @@
 	icon = 'icons/obj/fluff/flora/pinetrees.dmi'
 	icon_state = "festivus_pole"
 
+/obj/structure/festivus/Initialize(mapload)
+	. = ..()
+	add_shadow()
+
+/obj/structure/festivus/proc/add_shadow()
+	AddComponent(/datum/component/drop_shadow, 'icons/mob/mob_shadows.dmi', SHADOW_MEDIUM, 1, DEPTH_OFFSET)
+
 /obj/structure/festivus/anchored
 	name = "suplexed rod"
 	desc = "A true feat of strength, almost as good as last year."
 	icon_state = "anchored_rod"
 	anchored = TRUE
+
+/obj/structure/festivus/anchored/add_shadow()
+	AddComponent(/datum/component/drop_shadow, icon, "anchored_rod_shadow", shadow_offset_y = DEPTH_OFFSET)
 
 /**************
  * Palm Trees *
@@ -955,6 +984,11 @@
 	pixel_y = -12
 	layer = ABOVE_ALL_MOB_LAYER
 
+/obj/structure/flora/bush/large/Initialize(mapload)
+	. = ..()
+	AddComponent(/datum/component/seethrough, SEE_THROUGH_MAP_DEFAULT)
+	AddComponent(/datum/component/drop_shadow, icon, "[icon_state]_shadow", pixel_x, DEPTH_OFFSET + pixel_y)
+
 /obj/structure/flora/bush/large/style_2
 	icon_state = "bush2"
 
@@ -962,9 +996,8 @@
 	icon_state = "bush3"
 
 /obj/structure/flora/bush/large/style_random/Initialize(mapload)
-	. = ..()
 	icon_state = "bush[rand(1, 3)]"
-	update_appearance()
+	return ..()
 
 /obj/structure/flora/lunar_plant
 	name = "lunar plant"
