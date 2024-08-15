@@ -1,0 +1,4 @@
+author: "Absolucy"
+delete-after: True
+changes:
+  - bugfix: "Empty blood brother teams will now be cleaned up, instead of clogging up the roundend report."
