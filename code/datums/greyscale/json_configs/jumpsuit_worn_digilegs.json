@@ -1,0 +1,10 @@
+{
+	"": [
+		{
+			"type": "icon_state",
+			"icon_state": "jumpsuit",
+			"blend_mode": "overlay",
+			"color_ids": [ 1 ]
+		}
+	]
+}
