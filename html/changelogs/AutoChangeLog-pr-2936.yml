@@ -1,0 +1,5 @@
+author: "Absolucy"
+delete-after: True
+changes:
+  - bugfix: "Heretic mobs will not be summoned with AI enabled, and won't turn into small animals instead of summoning a flesh stalker."
+  - bugfix: "If a mob you are shapeshifted into attempts to grow up into a different kind of mob then you will stop being shapeshifted."
