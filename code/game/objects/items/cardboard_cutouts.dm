@@ -207,7 +207,10 @@
 	if(direct_icon)
 		preview_appearance = mutable_appearance(direct_icon, direct_icon_state)
 	else
-		preview_appearance = get_dynamic_human_appearance(outfit, species, mob_spawner, l_hand, r_hand, animated = FALSE)
+		preview_appearance = get_dynamic_human_appearance(outfit, species, mob_spawner, l_hand, r_hand, animated = FALSE, dummy_callback = CALLBACK(src, PROC_REF(hide_shadow)))
+
+/datum/cardboard_cutout/proc/hide_shadow(mob/living/carbon/human/consistent/dummy)
+	ADD_TRAIT(dummy, TRAIT_SHADOWLESS, TRAIT_GENERIC) //The shadow is added to the cardboard, the dummy doesn't need one.
 
 /// This proc returns the name that the cardboard cutout item will use.
 /datum/cardboard_cutout/proc/get_name()
