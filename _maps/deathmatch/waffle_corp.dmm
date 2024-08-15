@@ -21,7 +21,7 @@
 	pixel_x = 6;
 	pixel_y = 2
 	},
-/turf/open/indestructible/asphalt,
+/turf/open/indestructible/asphalt/outdoors,
 /area/deathmatch)
 "at" = (
 /obj/item/bodybag,
@@ -73,7 +73,7 @@
 "aC" = (
 /obj/structure/table/reinforced/ctf,
 /obj/machinery/computer/pod/old/syndicate,
-/turf/open/floor/iron/smooth,
+/turf/open/indestructible/vault,
 /area/deathmatch)
 "aF" = (
 /obj/effect/turf_decal/bot,
@@ -92,7 +92,7 @@
 /obj/item/food/badrecipe/moldy{
 	pixel_x = 4
 	},
-/turf/open/indestructible/asphalt,
+/turf/open/indestructible/asphalt/outdoors,
 /area/deathmatch)
 "aG" = (
 /obj/structure/flora/bush/leafy,
@@ -153,7 +153,7 @@
 /obj/effect/turf_decal/siding/wideplating_new/dark{
 	dir = 4
 	},
-/turf/open/indestructible/asphalt,
+/turf/open/indestructible/asphalt/outdoors,
 /area/deathmatch)
 "bR" = (
 /obj/item/trash/waffles{
@@ -187,7 +187,7 @@
 /area/deathmatch)
 "cg" = (
 /obj/effect/turf_decal/siding/wideplating_new/dark,
-/turf/open/indestructible/asphalt,
+/turf/open/indestructible/asphalt/outdoors,
 /area/deathmatch)
 "cv" = (
 /obj/structure/flora/bush/pale/style_3{
@@ -230,7 +230,7 @@
 /obj/effect/turf_decal/siding/wideplating_new/dark{
 	dir = 1
 	},
-/turf/open/indestructible/asphalt,
+/turf/open/indestructible/asphalt/outdoors,
 /area/deathmatch)
 "cU" = (
 /obj/effect/turf_decal/stripes/line{
@@ -261,7 +261,7 @@
 /area/deathmatch)
 "dL" = (
 /obj/effect/turf_decal/caution/stand_clear,
-/turf/open/indestructible/asphalt,
+/turf/open/indestructible/asphalt/outdoors,
 /area/deathmatch)
 "dS" = (
 /obj/structure/closet/crate/secure/gear,
@@ -278,7 +278,7 @@
 /area/deathmatch)
 "dX" = (
 /obj/effect/decal/cleanable/rubble,
-/turf/open/indestructible/asphalt,
+/turf/open/indestructible/asphalt/outdoors,
 /area/deathmatch)
 "dZ" = (
 /obj/effect/decal/cleanable/food/egg_smudge{
@@ -311,18 +311,18 @@
 /obj/effect/turf_decal/siding/wideplating_new/dark{
 	dir = 8
 	},
-/turf/open/indestructible/asphalt,
+/turf/open/indestructible/asphalt/outdoors,
 /area/deathmatch)
 "ex" = (
 /obj/machinery/light/no_nightlight/directional/west,
-/turf/open/floor/iron/smooth,
+/turf/open/indestructible/vault,
 /area/deathmatch)
 "eE" = (
 /obj/effect/turf_decal/box/corners{
 	dir = 8
 	},
 /obj/effect/turf_decal/siding/wideplating_new/dark,
-/turf/open/indestructible/asphalt,
+/turf/open/indestructible/asphalt/outdoors,
 /area/deathmatch)
 "eM" = (
 /obj/structure/disposaloutlet{
@@ -341,7 +341,7 @@
 "eP" = (
 /obj/effect/turf_decal/box/corners,
 /obj/effect/turf_decal/siding/wideplating_new/dark,
-/turf/open/indestructible/asphalt,
+/turf/open/indestructible/asphalt/outdoors,
 /area/deathmatch)
 "fd" = (
 /obj/structure/table/reinforced/ctf,
@@ -352,7 +352,7 @@
 /obj/item/pen/blue{
 	pixel_x = 3
 	},
-/turf/open/floor/iron/smooth,
+/turf/open/indestructible/vault,
 /area/deathmatch)
 "fg" = (
 /obj/machinery/door/poddoor/shutters/window/indestructible/preopen{
@@ -394,7 +394,7 @@
 	},
 /obj/structure/mystery_box/guns,
 /obj/effect/light_emitter/fake_outdoors,
-/turf/open/indestructible/asphalt,
+/turf/open/indestructible/asphalt/outdoors,
 /area/deathmatch)
 "fD" = (
 /obj/effect/turf_decal/box/corners{
@@ -407,7 +407,19 @@
 	pixel_x = 1;
 	pixel_y = 8
 	},
-/turf/open/indestructible/asphalt,
+/turf/open/indestructible/asphalt/outdoors,
+/area/deathmatch)
+"fE" = (
+/obj/machinery/conveyor/auto,
+/obj/machinery/light/small/red/directional/east,
+/obj/machinery/button/door/invisible_tripwire{
+	suicide_pact_id = "waffle_gun_factory";
+	suicide_pact = 1;
+	uses_remaining = 1;
+	sync_doors = 0;
+	id = "waffle_gun_factory"
+	},
+/turf/open/floor/plating,
 /area/deathmatch)
 "fG" = (
 /obj/structure/closet/crate/preopen,
@@ -438,7 +450,7 @@
 	desc = "The cops have stopped you going any further.";
 	proj_pass_rate = 60
 	},
-/turf/open/indestructible/asphalt,
+/turf/open/indestructible/asphalt/outdoors,
 /area/deathmatch)
 "fV" = (
 /obj/effect/turf_decal/tile/dark_blue/opposingcorners,
@@ -456,7 +468,7 @@
 /obj/effect/decal/cleanable/rubble{
 	pixel_x = 5
 	},
-/turf/open/indestructible/asphalt,
+/turf/open/indestructible/asphalt/outdoors,
 /area/deathmatch)
 "gc" = (
 /obj/effect/decal/cleanable/rubble,
@@ -499,7 +511,7 @@
 /area/deathmatch)
 "gQ" = (
 /obj/effect/light_emitter/fake_outdoors,
-/turf/open/indestructible/asphalt,
+/turf/open/indestructible/asphalt/outdoors,
 /area/deathmatch)
 "ha" = (
 /obj/structure/shipping_container/gorlex,
@@ -523,7 +535,7 @@
 	dir = 4
 	},
 /obj/effect/decal/cleanable/dirt,
-/turf/open/indestructible/asphalt,
+/turf/open/indestructible/asphalt/outdoors,
 /area/deathmatch)
 "hB" = (
 /obj/effect/turf_decal/tile/dark_blue/opposingcorners,
@@ -574,7 +586,7 @@
 /obj/effect/turf_decal/siding/wideplating_new/dark{
 	dir = 1
 	},
-/turf/open/indestructible/asphalt,
+/turf/open/indestructible/asphalt/outdoors,
 /area/deathmatch)
 "iL" = (
 /obj/item/trash/can{
@@ -600,7 +612,7 @@
 	},
 /obj/effect/landmark/deathmatch_player_spawn,
 /obj/effect/mapping_helpers/broken_floor,
-/turf/open/indestructible/asphalt,
+/turf/open/indestructible/asphalt/outdoors,
 /area/deathmatch)
 "iZ" = (
 /obj/effect/turf_decal/arrows/red{
@@ -649,7 +661,7 @@
 	dir = 4
 	},
 /obj/effect/light_emitter/fake_outdoors,
-/turf/open/indestructible/asphalt,
+/turf/open/indestructible/asphalt/outdoors,
 /area/deathmatch)
 "jw" = (
 /obj/effect/turf_decal/tile/dark_blue/opposingcorners,
@@ -663,7 +675,7 @@
 	dir = 4
 	},
 /obj/item/trash/cnds,
-/turf/open/indestructible/asphalt,
+/turf/open/indestructible/asphalt/outdoors,
 /area/deathmatch)
 "jG" = (
 /obj/structure/table/reinforced/ctf,
@@ -687,16 +699,16 @@
 "jZ" = (
 /obj/effect/turf_decal/delivery,
 /obj/effect/turf_decal/siding/wideplating_new/dark,
-/turf/open/indestructible/asphalt,
+/turf/open/indestructible/asphalt/outdoors,
 /area/deathmatch)
 "ka" = (
-/turf/open/floor/iron/smooth,
+/turf/open/indestructible/vault,
 /area/deathmatch)
 "kb" = (
 /obj/effect/turf_decal/siding/wideplating_new/dark{
 	dir = 4
 	},
-/turf/open/indestructible/asphalt,
+/turf/open/indestructible/asphalt/outdoors,
 /area/deathmatch)
 "kf" = (
 /obj/structure/table_frame/wood,
@@ -708,7 +720,7 @@
 /area/deathmatch)
 "kp" = (
 /obj/effect/decal/cleanable/dirt,
-/turf/open/indestructible/asphalt,
+/turf/open/indestructible/asphalt/outdoors,
 /area/deathmatch)
 "ku" = (
 /obj/structure/grille/broken,
@@ -781,7 +793,7 @@
 /obj/structure/sign/poster/official/corporate_perks_vacation/directional/north,
 /obj/item/folder,
 /obj/item/pen,
-/turf/open/floor/iron/smooth,
+/turf/open/indestructible/vault,
 /area/deathmatch)
 "kY" = (
 /obj/effect/spawner/structure/window/reinforced/plasma/plastitanium/indestructible,
@@ -824,7 +836,7 @@
 	dir = 4
 	},
 /obj/effect/mapping_helpers/burnt_floor,
-/turf/open/indestructible/asphalt,
+/turf/open/indestructible/asphalt/outdoors,
 /area/deathmatch)
 "lp" = (
 /obj/machinery/door/poddoor/shutters/indestructible{
@@ -836,7 +848,7 @@
 /obj/effect/turf_decal/caution/stand_clear{
 	dir = 1
 	},
-/turf/open/indestructible/asphalt,
+/turf/open/indestructible/asphalt/outdoors,
 /area/deathmatch)
 "lL" = (
 /obj/structure/fence,
@@ -855,7 +867,7 @@
 /obj/effect/turf_decal/box/corners{
 	dir = 1
 	},
-/turf/open/indestructible/asphalt,
+/turf/open/indestructible/asphalt/outdoors,
 /area/deathmatch)
 "lX" = (
 /turf/open/indestructible/plating,
@@ -884,7 +896,7 @@
 /area/deathmatch)
 "mt" = (
 /obj/effect/decal/cleanable/oil/streak,
-/turf/open/indestructible/asphalt,
+/turf/open/indestructible/asphalt/outdoors,
 /area/deathmatch)
 "my" = (
 /obj/structure/flora/bush/fullgrass/style_3,
@@ -919,26 +931,16 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
 	},
-/obj/structure/railing{
-	dir = 4
-	},
 /obj/effect/turf_decal/bot_white,
 /obj/structure/closet/crate/secure,
 /obj/item/gun/ballistic/shotgun/bulldog/unrestricted,
-/obj/machinery/button/door/invisible_tripwire{
-	suicide_pact_id = "waffle_gun_factory";
-	suicide_pact = 1;
-	uses_remaining = 1;
-	sync_doors = 0;
-	id = "waffle_gun_factory"
-	},
 /turf/open/indestructible/dark,
 /area/deathmatch)
 "nw" = (
 /obj/structure/chair/office{
 	dir = 4
 	},
-/turf/open/floor/iron/smooth,
+/turf/open/indestructible/vault,
 /area/deathmatch)
 "nx" = (
 /obj/structure/flora/bush/leavy{
@@ -959,7 +961,7 @@
 	dir = 4
 	},
 /obj/effect/light_emitter/fake_outdoors,
-/turf/open/indestructible/asphalt,
+/turf/open/indestructible/asphalt/outdoors,
 /area/deathmatch)
 "nP" = (
 /obj/effect/turf_decal/tile/brown/half/contrasted{
@@ -989,7 +991,7 @@
 	dir = 1
 	},
 /obj/effect/light_emitter/fake_outdoors,
-/turf/open/indestructible/asphalt,
+/turf/open/indestructible/asphalt/outdoors,
 /area/deathmatch)
 "ob" = (
 /obj/machinery/conveyor/auto,
@@ -1060,7 +1062,7 @@
 "oK" = (
 /obj/structure/closet/crate/bin,
 /obj/structure/fluff/fake_camera,
-/turf/open/floor/iron/smooth,
+/turf/open/indestructible/vault,
 /area/deathmatch)
 "oL" = (
 /obj/effect/turf_decal/stripes/line{
@@ -1115,7 +1117,7 @@
 /obj/effect/turf_decal/siding/wideplating_new/dark/corner{
 	dir = 1
 	},
-/turf/open/indestructible/asphalt,
+/turf/open/indestructible/asphalt/outdoors,
 /area/deathmatch)
 "py" = (
 /obj/structure/closet/crate/secure/weapon,
@@ -1146,7 +1148,7 @@
 /obj/effect/decal/cleanable/plastic,
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt/dust,
-/turf/open/indestructible/asphalt,
+/turf/open/indestructible/asphalt/outdoors,
 /area/deathmatch)
 "pK" = (
 /obj/effect/mapping_helpers/burnt_floor,
@@ -1164,7 +1166,7 @@
 /obj/item/trash/syndi_cakes{
 	pixel_x = 16
 	},
-/turf/open/indestructible/asphalt,
+/turf/open/indestructible/asphalt/outdoors,
 /area/deathmatch)
 "pW" = (
 /obj/effect/turf_decal/box/corners,
@@ -1172,7 +1174,7 @@
 /obj/effect/turf_decal/siding/wideplating_new/dark{
 	dir = 6
 	},
-/turf/open/indestructible/asphalt,
+/turf/open/indestructible/asphalt/outdoors,
 /area/deathmatch)
 "qc" = (
 /obj/effect/turf_decal/tile/dark_blue{
@@ -1214,16 +1216,16 @@
 /obj/effect/turf_decal/siding/wideplating_new/dark{
 	dir = 9
 	},
-/turf/open/indestructible/asphalt,
+/turf/open/indestructible/asphalt/outdoors,
 /area/deathmatch)
 "qt" = (
 /obj/effect/turf_decal/box/corners,
-/turf/open/indestructible/asphalt,
+/turf/open/indestructible/asphalt/outdoors,
 /area/deathmatch)
 "qF" = (
 /obj/structure/table/reinforced/ctf,
 /obj/item/paperwork,
-/turf/open/floor/iron/smooth,
+/turf/open/indestructible/vault,
 /area/deathmatch)
 "qL" = (
 /obj/structure/flora/bush/leavy/style_3{
@@ -1260,7 +1262,7 @@
 	pixel_y = 1
 	},
 /obj/effect/mapping_helpers/burnt_floor,
-/turf/open/indestructible/asphalt,
+/turf/open/indestructible/asphalt/outdoors,
 /area/deathmatch)
 "rn" = (
 /obj/machinery/conveyor/auto,
@@ -1283,13 +1285,13 @@
 	pixel_x = 5
 	},
 /obj/effect/turf_decal/delivery,
-/turf/open/indestructible/asphalt,
+/turf/open/indestructible/asphalt/outdoors,
 /area/deathmatch)
 "rv" = (
 /obj/structure/chair/office{
 	dir = 1
 	},
-/turf/open/floor/iron/smooth,
+/turf/open/indestructible/vault,
 /area/deathmatch)
 "rx" = (
 /obj/effect/decal/cleanable/glass{
@@ -1309,7 +1311,7 @@
 	pixel_x = 1;
 	pixel_y = 8
 	},
-/turf/open/indestructible/asphalt,
+/turf/open/indestructible/asphalt/outdoors,
 /area/deathmatch)
 "rQ" = (
 /obj/structure/flora/bush/flowers_br,
@@ -1334,11 +1336,11 @@
 	pixel_x = -4;
 	pixel_y = -4
 	},
-/turf/open/indestructible/asphalt,
+/turf/open/indestructible/asphalt/outdoors,
 /area/deathmatch)
 "sd" = (
 /obj/effect/turf_decal/delivery,
-/turf/open/indestructible/asphalt,
+/turf/open/indestructible/asphalt/outdoors,
 /area/deathmatch)
 "se" = (
 /obj/structure/disposalpipe/junction/flip{
@@ -1380,7 +1382,7 @@
 	dir = 9
 	},
 /obj/item/gun/ballistic/revolver/syndicate,
-/turf/open/indestructible/asphalt,
+/turf/open/indestructible/asphalt/outdoors,
 /area/deathmatch)
 "sN" = (
 /obj/effect/turf_decal/box/corners{
@@ -1389,7 +1391,7 @@
 /obj/effect/turf_decal/siding/wideplating_new/dark{
 	dir = 1
 	},
-/turf/open/indestructible/asphalt,
+/turf/open/indestructible/asphalt/outdoors,
 /area/deathmatch)
 "sO" = (
 /obj/effect/turf_decal/tile/dark_blue/fourcorners,
@@ -1463,7 +1465,7 @@
 	},
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/structure/closet/crate/trashcart,
-/turf/open/indestructible/asphalt,
+/turf/open/indestructible/asphalt/outdoors,
 /area/deathmatch)
 "tu" = (
 /obj/effect/turf_decal/stripes/line{
@@ -1472,7 +1474,7 @@
 /obj/effect/turf_decal/siding/wideplating_new/dark{
 	dir = 8
 	},
-/turf/open/indestructible/asphalt,
+/turf/open/indestructible/asphalt/outdoors,
 /area/deathmatch)
 "tx" = (
 /obj/effect/turf_decal/box/corners{
@@ -1481,7 +1483,7 @@
 /obj/effect/turf_decal/siding/wideplating_new/dark{
 	dir = 4
 	},
-/turf/open/indestructible/asphalt,
+/turf/open/indestructible/asphalt/outdoors,
 /area/deathmatch)
 "tC" = (
 /obj/item/trash/waffles,
@@ -1510,7 +1512,7 @@
 	desc = "The cops have stopped you going any further.";
 	proj_pass_rate = 60
 	},
-/turf/open/indestructible/asphalt,
+/turf/open/indestructible/asphalt/outdoors,
 /area/deathmatch)
 "tW" = (
 /obj/structure/shipping_container/gorlex/red,
@@ -1520,19 +1522,19 @@
 /obj/effect/turf_decal/siding/wideplating_new/dark{
 	dir = 8
 	},
-/turf/open/indestructible/asphalt,
+/turf/open/indestructible/asphalt/outdoors,
 /area/deathmatch)
 "tX" = (
 /obj/effect/turf_decal/box/corners{
 	dir = 8
 	},
 /obj/effect/mapping_helpers/broken_floor,
-/turf/open/indestructible/asphalt,
+/turf/open/indestructible/asphalt/outdoors,
 /area/deathmatch)
 "ul" = (
 /obj/effect/mapping_helpers/broken_floor,
 /obj/effect/turf_decal/siding/wideplating_new/dark,
-/turf/open/indestructible/asphalt,
+/turf/open/indestructible/asphalt/outdoors,
 /area/deathmatch)
 "uo" = (
 /obj/structure/fence/cut/large,
@@ -1585,7 +1587,7 @@
 /obj/effect/turf_decal/siding/wideplating_new/dark{
 	dir = 6
 	},
-/turf/open/indestructible/asphalt,
+/turf/open/indestructible/asphalt/outdoors,
 /area/deathmatch)
 "va" = (
 /obj/structure/billboard/waffle_corp,
@@ -1593,7 +1595,7 @@
 /area/deathmatch)
 "vc" = (
 /obj/effect/mapping_helpers/broken_floor,
-/turf/open/indestructible/asphalt,
+/turf/open/indestructible/asphalt/outdoors,
 /area/deathmatch)
 "vh" = (
 /obj/item/food/badrecipe/moldy{
@@ -1654,7 +1656,7 @@
 	},
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/structure/closet/crate/trashcart,
-/turf/open/indestructible/asphalt,
+/turf/open/indestructible/asphalt/outdoors,
 /area/deathmatch)
 "vH" = (
 /obj/effect/decal/cleanable/dirt/dust,
@@ -1663,7 +1665,8 @@
 	desc = "A garbage truck's dusty old control console.";
 	name = "dashboard";
 	upperinfo = "Controls locked.";
-	dir = 1
+	dir = 1;
+	tguitheme = "neutral"
 	},
 /obj/structure/table/reinforced,
 /turf/open/indestructible/large/textured,
@@ -1683,7 +1686,7 @@
 	dir = 4
 	},
 /obj/effect/light_emitter/fake_outdoors,
-/turf/open/indestructible/asphalt,
+/turf/open/indestructible/asphalt/outdoors,
 /area/deathmatch)
 "wH" = (
 /obj/effect/turf_decal/box/corners{
@@ -1691,7 +1694,7 @@
 	},
 /obj/effect/decal/cleanable/oil,
 /obj/effect/turf_decal/siding/wideplating_new/dark,
-/turf/open/indestructible/asphalt,
+/turf/open/indestructible/asphalt/outdoors,
 /area/deathmatch)
 "wT" = (
 /obj/effect/turf_decal/caution/stand_clear{
@@ -1700,7 +1703,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
-/turf/open/indestructible/asphalt,
+/turf/open/indestructible/asphalt/outdoors,
 /area/deathmatch)
 "xD" = (
 /obj/structure/flora/bush/sparsegrass{
@@ -1716,7 +1719,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
-/turf/open/indestructible/asphalt,
+/turf/open/indestructible/asphalt/outdoors,
 /area/deathmatch)
 "yc" = (
 /obj/structure/table/wood/fancy/red,
@@ -1734,7 +1737,7 @@
 /obj/effect/turf_decal/siding/wideplating_new/dark{
 	dir = 8
 	},
-/turf/open/indestructible/asphalt,
+/turf/open/indestructible/asphalt/outdoors,
 /area/deathmatch)
 "ym" = (
 /obj/effect/decal/cleanable/plastic,
@@ -1811,13 +1814,13 @@
 /obj/item/trash/waffles,
 /obj/effect/turf_decal/siding/wideplating_new/dark,
 /obj/effect/decal/cleanable/dirt,
-/turf/open/indestructible/asphalt,
+/turf/open/indestructible/asphalt/outdoors,
 /area/deathmatch)
 "zM" = (
 /obj/effect/turf_decal/siding/wideplating_new/dark{
 	dir = 1
 	},
-/turf/open/indestructible/asphalt,
+/turf/open/indestructible/asphalt/outdoors,
 /area/deathmatch)
 "zO" = (
 /obj/effect/turf_decal/stripes/line{
@@ -1826,18 +1829,8 @@
 /obj/effect/decal/cleanable/robot_debris/old{
 	pixel_x = -6
 	},
-/obj/structure/railing{
-	dir = 4
-	},
 /obj/item/gun/ballistic/automatic/pistol/suppressed,
 /obj/effect/turf_decal/bot_white,
-/obj/machinery/button/door/invisible_tripwire{
-	suicide_pact_id = "waffle_gun_factory";
-	suicide_pact = 1;
-	uses_remaining = 1;
-	sync_doors = 0;
-	id = "waffle_gun_factory"
-	},
 /turf/open/indestructible/dark,
 /area/deathmatch)
 "zW" = (
@@ -1873,14 +1866,14 @@
 	dir = 1
 	},
 /obj/effect/mapping_helpers/broken_floor,
-/turf/open/indestructible/asphalt,
+/turf/open/indestructible/asphalt/outdoors,
 /area/deathmatch)
 "AG" = (
 /obj/effect/turf_decal/box/corners,
 /obj/effect/turf_decal/siding/wideplating_new/dark{
 	dir = 4
 	},
-/turf/open/indestructible/asphalt,
+/turf/open/indestructible/asphalt/outdoors,
 /area/deathmatch)
 "AH" = (
 /obj/structure/fence,
@@ -1909,7 +1902,7 @@
 /obj/effect/turf_decal/siding/wideplating_new/dark{
 	dir = 8
 	},
-/turf/open/indestructible/asphalt,
+/turf/open/indestructible/asphalt/outdoors,
 /area/deathmatch)
 "AU" = (
 /obj/effect/turf_decal/tile/dark_blue{
@@ -1935,7 +1928,7 @@
 "Bf" = (
 /obj/effect/turf_decal/box/corners,
 /obj/effect/decal/cleanable/dirt/dust,
-/turf/open/indestructible/asphalt,
+/turf/open/indestructible/asphalt/outdoors,
 /area/deathmatch)
 "Bl" = (
 /obj/structure/flora/bush/grassy/style_3{
@@ -1961,14 +1954,14 @@
 /area/deathmatch)
 "BE" = (
 /obj/effect/decal/cleanable/dirt/dust,
-/turf/open/indestructible/asphalt,
+/turf/open/indestructible/asphalt/outdoors,
 /area/deathmatch)
 "BI" = (
 /obj/effect/turf_decal/box/corners{
 	dir = 4
 	},
 /obj/effect/decal/cleanable/dirt,
-/turf/open/indestructible/asphalt,
+/turf/open/indestructible/asphalt/outdoors,
 /area/deathmatch)
 "BL" = (
 /obj/structure/flora/bush/flowers_br/style_2{
@@ -1994,7 +1987,7 @@
 	desc = "The cops have stopped you going any further.";
 	proj_pass_rate = 60
 	},
-/turf/open/indestructible/asphalt,
+/turf/open/indestructible/asphalt/outdoors,
 /area/deathmatch)
 "Cv" = (
 /obj/structure/mystery_box/guns,
@@ -2033,7 +2026,7 @@
 	pixel_x = -6;
 	pixel_y = 2
 	},
-/turf/open/indestructible/asphalt,
+/turf/open/indestructible/asphalt/outdoors,
 /area/deathmatch)
 "CU" = (
 /obj/effect/turf_decal/tile/dark_blue/fourcorners,
@@ -2085,7 +2078,7 @@
 	name = "dashboard";
 	upperinfo = "LOCKED";
 	dir = 8;
-	tguitheme = "retro"
+	tguitheme = "ntOS95"
 	},
 /obj/structure/table/wood,
 /turf/open/indestructible/hotelwood,
@@ -2130,7 +2123,7 @@
 	pixel_y = -8
 	},
 /obj/effect/decal/cleanable/dirt,
-/turf/open/indestructible/asphalt,
+/turf/open/indestructible/asphalt/outdoors,
 /area/deathmatch)
 "Eh" = (
 /obj/structure/flora/bush/fullgrass,
@@ -2157,7 +2150,7 @@
 	pixel_y = -5
 	},
 /obj/item/broken_bottle,
-/turf/open/indestructible/asphalt,
+/turf/open/indestructible/asphalt/outdoors,
 /area/deathmatch)
 "ET" = (
 /obj/structure/rack,
@@ -2224,7 +2217,7 @@
 	dir = 1
 	},
 /obj/effect/light_emitter/fake_outdoors,
-/turf/open/indestructible/asphalt,
+/turf/open/indestructible/asphalt/outdoors,
 /area/deathmatch)
 "Fs" = (
 /obj/machinery/vending/hotdog,
@@ -2276,7 +2269,7 @@
 "FS" = (
 /obj/item/cigbutt,
 /obj/effect/decal/cleanable/dirt,
-/turf/open/indestructible/asphalt,
+/turf/open/indestructible/asphalt/outdoors,
 /area/deathmatch)
 "FW" = (
 /obj/structure/barricade/security/indestructible{
@@ -2305,7 +2298,7 @@
 /obj/effect/turf_decal/siding/wideplating_new/dark{
 	dir = 4
 	},
-/turf/open/indestructible/asphalt,
+/turf/open/indestructible/asphalt/outdoors,
 /area/deathmatch)
 "Gd" = (
 /obj/structure/hedge/opaque,
@@ -2322,7 +2315,7 @@
 	pixel_x = -6;
 	pixel_y = -6
 	},
-/turf/open/indestructible/asphalt,
+/turf/open/indestructible/asphalt/outdoors,
 /area/deathmatch)
 "Gp" = (
 /obj/structure/flora/bush/sparsegrass/style_3,
@@ -2356,7 +2349,7 @@
 	dir = 8
 	},
 /obj/effect/light_emitter/fake_outdoors,
-/turf/open/indestructible/asphalt,
+/turf/open/indestructible/asphalt/outdoors,
 /area/deathmatch)
 "GJ" = (
 /obj/structure/closet/body_bag,
@@ -2394,7 +2387,7 @@
 	dir = 8
 	},
 /obj/effect/decal/cleanable/dirt,
-/turf/open/indestructible/asphalt,
+/turf/open/indestructible/asphalt/outdoors,
 /area/deathmatch)
 "GX" = (
 /obj/item/broken_bottle{
@@ -2407,7 +2400,7 @@
 /obj/effect/turf_decal/box/corners,
 /obj/effect/turf_decal/siding/wideplating_new/dark,
 /obj/effect/decal/cleanable/dirt/dust,
-/turf/open/indestructible/asphalt,
+/turf/open/indestructible/asphalt/outdoors,
 /area/deathmatch)
 "Hb" = (
 /obj/effect/turf_decal/siding/wideplating_new/dark{
@@ -2416,7 +2409,7 @@
 /obj/effect/mapping_helpers/broken_floor,
 /obj/effect/mapping_helpers/burnt_floor,
 /obj/effect/light_emitter/fake_outdoors,
-/turf/open/indestructible/asphalt,
+/turf/open/indestructible/asphalt/outdoors,
 /area/deathmatch)
 "Hc" = (
 /obj/structure/flora/bush/sparsegrass/style_2,
@@ -2486,7 +2479,7 @@
 /area/deathmatch)
 "Id" = (
 /obj/effect/turf_decal/siding/wideplating_new/dark/corner,
-/turf/open/indestructible/asphalt,
+/turf/open/indestructible/asphalt/outdoors,
 /area/deathmatch)
 "In" = (
 /obj/structure/fence,
@@ -2637,9 +2630,6 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
 	},
-/obj/structure/railing{
-	dir = 4
-	},
 /obj/structure/closet/crate/secure/gear,
 /obj/item/gun/ballistic/automatic/m90/unrestricted,
 /obj/machinery/button/door/invisible_tripwire{
@@ -2665,7 +2655,7 @@
 	},
 /obj/effect/turf_decal/siding/wideplating_new/dark,
 /obj/effect/mapping_helpers/burnt_floor,
-/turf/open/indestructible/asphalt,
+/turf/open/indestructible/asphalt/outdoors,
 /area/deathmatch)
 "KA" = (
 /obj/machinery/vending/donksnack,
@@ -2677,7 +2667,7 @@
 /obj/effect/turf_decal/box/corners{
 	dir = 8
 	},
-/turf/open/indestructible/asphalt,
+/turf/open/indestructible/asphalt/outdoors,
 /area/deathmatch)
 "KP" = (
 /obj/effect/turf_decal/bot,
@@ -2700,7 +2690,7 @@
 	pixel_x = -3
 	},
 /obj/structure/closet/crate/trashcart,
-/turf/open/indestructible/asphalt,
+/turf/open/indestructible/asphalt/outdoors,
 /area/deathmatch)
 "KR" = (
 /obj/structure/flora/bush{
@@ -2731,7 +2721,7 @@
 	pixel_x = 15;
 	pixel_y = 2
 	},
-/turf/open/floor/iron/smooth,
+/turf/open/indestructible/vault,
 /area/deathmatch)
 "Lz" = (
 /obj/machinery/light/no_nightlight/directional/east,
@@ -2739,9 +2729,6 @@
 /area/deathmatch)
 "LD" = (
 /obj/effect/turf_decal/stripes/line{
-	dir = 4
-	},
-/obj/structure/railing{
 	dir = 4
 	},
 /obj/machinery/button/door/invisible_tripwire{
@@ -2794,7 +2781,7 @@
 	pixel_x = 10;
 	pixel_y = 6
 	},
-/turf/open/indestructible/asphalt,
+/turf/open/indestructible/asphalt/outdoors,
 /area/deathmatch)
 "LW" = (
 /obj/structure/flora/bush/grassy/style_2{
@@ -2813,7 +2800,7 @@
 	pixel_x = 5
 	},
 /obj/effect/mapping_helpers/broken_floor,
-/turf/open/indestructible/asphalt,
+/turf/open/indestructible/asphalt/outdoors,
 /area/deathmatch)
 "Ml" = (
 /obj/structure/flora/bush/fullgrass/style_2{
@@ -2834,7 +2821,7 @@
 "Mp" = (
 /obj/effect/turf_decal/box/corners,
 /obj/effect/decal/cleanable/dirt,
-/turf/open/indestructible/asphalt,
+/turf/open/indestructible/asphalt/outdoors,
 /area/deathmatch)
 "My" = (
 /obj/machinery/conveyor/auto,
@@ -2851,7 +2838,7 @@
 	dir = 1
 	},
 /obj/effect/decal/cleanable/dirt,
-/turf/open/indestructible/asphalt,
+/turf/open/indestructible/asphalt/outdoors,
 /area/deathmatch)
 "MU" = (
 /obj/effect/turf_decal/box/corners{
@@ -2860,7 +2847,7 @@
 /obj/effect/turf_decal/siding/wideplating_new/dark{
 	dir = 1
 	},
-/turf/open/indestructible/asphalt,
+/turf/open/indestructible/asphalt/outdoors,
 /area/deathmatch)
 "MZ" = (
 /obj/machinery/light/no_nightlight/directional/east,
@@ -2869,7 +2856,7 @@
 "Nc" = (
 /obj/effect/decal/cleanable/rubble,
 /obj/effect/turf_decal/siding/wideplating_new/dark,
-/turf/open/indestructible/asphalt,
+/turf/open/indestructible/asphalt/outdoors,
 /area/deathmatch)
 "Nh" = (
 /obj/structure/fluff/fake_camera{
@@ -2886,7 +2873,7 @@
 /obj/machinery/computer/pod/old/syndicate{
 	dir = 8
 	},
-/turf/open/floor/iron/smooth,
+/turf/open/indestructible/vault,
 /area/deathmatch)
 "Nm" = (
 /obj/effect/decal/cleanable/dirt,
@@ -2908,7 +2895,7 @@
 /obj/effect/turf_decal/siding/wideplating_new/dark{
 	dir = 8
 	},
-/turf/open/indestructible/asphalt,
+/turf/open/indestructible/asphalt/outdoors,
 /area/deathmatch)
 "NH" = (
 /obj/machinery/door/airlock/maintenance_hatch{
@@ -2956,7 +2943,7 @@
 /area/deathmatch)
 "Ob" = (
 /obj/effect/decal/cleanable/oil,
-/turf/open/indestructible/asphalt,
+/turf/open/indestructible/asphalt/outdoors,
 /area/deathmatch)
 "Oh" = (
 /obj/structure/rack,
@@ -3016,7 +3003,7 @@
 	desc = "The cops have stopped you going any further.";
 	proj_pass_rate = 60
 	},
-/turf/open/indestructible/asphalt,
+/turf/open/indestructible/asphalt/outdoors,
 /area/deathmatch)
 "Or" = (
 /obj/effect/decal/cleanable/rubble{
@@ -3026,7 +3013,7 @@
 	dir = 8
 	},
 /obj/effect/mapping_helpers/broken_floor,
-/turf/open/indestructible/asphalt,
+/turf/open/indestructible/asphalt/outdoors,
 /area/deathmatch)
 "Os" = (
 /obj/structure/hedge/opaque,
@@ -3042,7 +3029,7 @@
 	dir = 8
 	},
 /obj/effect/turf_decal/siding/wideplating_new/dark,
-/turf/open/indestructible/asphalt,
+/turf/open/indestructible/asphalt/outdoors,
 /area/deathmatch)
 "OC" = (
 /obj/structure/closet/crate/large,
@@ -3090,7 +3077,7 @@
 /turf/open/floor/grass,
 /area/deathmatch)
 "OY" = (
-/turf/open/indestructible/asphalt,
+/turf/open/indestructible/asphalt/outdoors,
 /area/deathmatch)
 "Pg" = (
 /obj/effect/decal/cleanable/dirt/dust,
@@ -3116,7 +3103,7 @@
 /obj/effect/turf_decal/siding/wideplating_new/dark{
 	dir = 8
 	},
-/turf/open/indestructible/asphalt,
+/turf/open/indestructible/asphalt/outdoors,
 /area/deathmatch)
 "Po" = (
 /obj/effect/turf_decal/tile/dark_blue/opposingcorners,
@@ -3218,7 +3205,7 @@
 	dir = 5
 	},
 /obj/effect/light_emitter/fake_outdoors,
-/turf/open/indestructible/asphalt,
+/turf/open/indestructible/asphalt/outdoors,
 /area/deathmatch)
 "RA" = (
 /obj/structure/flora/bush/grassy/style_3,
@@ -3242,7 +3229,7 @@
 	dir = 8
 	},
 /obj/effect/light_emitter/fake_outdoors,
-/turf/open/indestructible/asphalt,
+/turf/open/indestructible/asphalt/outdoors,
 /area/deathmatch)
 "RO" = (
 /turf/closed/indestructible/fakedoor/maintenance{
@@ -3286,7 +3273,7 @@
 	dir = 8
 	},
 /obj/item/cigbutt,
-/turf/open/indestructible/asphalt,
+/turf/open/indestructible/asphalt/outdoors,
 /area/deathmatch)
 "Sl" = (
 /obj/effect/decal/cleanable/wrapping,
@@ -3332,7 +3319,7 @@
 /obj/effect/turf_decal/siding/wideplating_new/dark{
 	dir = 5
 	},
-/turf/open/indestructible/asphalt,
+/turf/open/indestructible/asphalt/outdoors,
 /area/deathmatch)
 "ST" = (
 /obj/effect/turf_decal/tile/dark_blue/fourcorners,
@@ -3347,7 +3334,7 @@
 /obj/effect/turf_decal/siding/wideplating_new/dark/corner{
 	dir = 4
 	},
-/turf/open/indestructible/asphalt,
+/turf/open/indestructible/asphalt/outdoors,
 /area/deathmatch)
 "SY" = (
 /obj/structure/flora/bush/fullgrass/style_2,
@@ -3406,7 +3393,7 @@
 	desc = "The cops have stopped you going any further.";
 	proj_pass_rate = 60
 	},
-/turf/open/indestructible/asphalt,
+/turf/open/indestructible/asphalt/outdoors,
 /area/deathmatch)
 "TQ" = (
 /obj/effect/turf_decal/box/corners{
@@ -3416,7 +3403,7 @@
 	dir = 1
 	},
 /obj/effect/light_emitter/fake_outdoors,
-/turf/open/indestructible/asphalt,
+/turf/open/indestructible/asphalt/outdoors,
 /area/deathmatch)
 "Ua" = (
 /obj/item/trash/waffles,
@@ -3429,7 +3416,7 @@
 	pixel_x = 4;
 	pixel_y = -15
 	},
-/turf/open/indestructible/asphalt,
+/turf/open/indestructible/asphalt/outdoors,
 /area/deathmatch)
 "Uo" = (
 /turf/closed/indestructible/fakedoor/maintenance{
@@ -3469,19 +3456,19 @@
 	dir = 4
 	},
 /obj/effect/mapping_helpers/broken_floor,
-/turf/open/indestructible/asphalt,
+/turf/open/indestructible/asphalt/outdoors,
 /area/deathmatch)
 "US" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/siding/wideplating_new/dark/corner{
 	dir = 4
 	},
-/turf/open/indestructible/asphalt,
+/turf/open/indestructible/asphalt/outdoors,
 /area/deathmatch)
 "UU" = (
 /obj/effect/turf_decal/box/corners,
 /obj/structure/sign/warning/secure_area/directional/south,
-/turf/open/indestructible/asphalt,
+/turf/open/indestructible/asphalt/outdoors,
 /area/deathmatch)
 "Va" = (
 /obj/structure/fence,
@@ -3530,7 +3517,7 @@
 /obj/effect/turf_decal/siding/wideplating_new/dark/corner{
 	dir = 8
 	},
-/turf/open/indestructible/asphalt,
+/turf/open/indestructible/asphalt/outdoors,
 /area/deathmatch)
 "Vr" = (
 /obj/effect/turf_decal/box/corners{
@@ -3538,7 +3525,7 @@
 	},
 /obj/effect/turf_decal/siding/wideplating_new/dark,
 /obj/effect/decal/cleanable/dirt/dust,
-/turf/open/indestructible/asphalt,
+/turf/open/indestructible/asphalt/outdoors,
 /area/deathmatch)
 "VG" = (
 /obj/machinery/light/no_nightlight/directional/south,
@@ -3590,7 +3577,7 @@
 /obj/effect/turf_decal/box/corners{
 	dir = 4
 	},
-/turf/open/indestructible/asphalt,
+/turf/open/indestructible/asphalt/outdoors,
 /area/deathmatch)
 "WN" = (
 /obj/machinery/puzzle/button/directional/east,
@@ -3678,7 +3665,7 @@
 	pixel_x = 1;
 	pixel_y = 8
 	},
-/turf/open/indestructible/asphalt,
+/turf/open/indestructible/asphalt/outdoors,
 /area/deathmatch)
 "XB" = (
 /obj/structure/flora/bush/lavendergrass/style_4{
@@ -3699,13 +3686,13 @@
 /area/deathmatch)
 "XM" = (
 /obj/effect/decal/cleanable/plastic,
-/turf/open/indestructible/asphalt,
+/turf/open/indestructible/asphalt/outdoors,
 /area/deathmatch)
 "XP" = (
 /obj/effect/turf_decal/box/corners,
 /obj/effect/turf_decal/siding/wideplating_new/dark,
 /obj/effect/decal/cleanable/dirt,
-/turf/open/indestructible/asphalt,
+/turf/open/indestructible/asphalt/outdoors,
 /area/deathmatch)
 "XR" = (
 /obj/structure/bookcase/random/fiction,
@@ -3753,7 +3740,7 @@
 	pixel_x = -5
 	},
 /obj/structure/closet/crate/secure/trashcart,
-/turf/open/indestructible/asphalt,
+/turf/open/indestructible/asphalt/outdoors,
 /area/deathmatch)
 "YJ" = (
 /obj/effect/turf_decal/trimline/brown/end{
@@ -3800,7 +3787,7 @@
 /obj/effect/turf_decal/siding/wideplating_new/dark{
 	dir = 1
 	},
-/turf/open/indestructible/asphalt,
+/turf/open/indestructible/asphalt/outdoors,
 /area/deathmatch)
 "Zp" = (
 /obj/machinery/conveyor/auto{
@@ -3836,7 +3823,7 @@
 /obj/item/food/bubblegum{
 	pixel_x = -5
 	},
-/turf/open/indestructible/asphalt,
+/turf/open/indestructible/asphalt/outdoors,
 /area/deathmatch)
 "Zu" = (
 /obj/structure/fence/corner{
@@ -3882,11 +3869,11 @@
 /area/deathmatch)
 "ZS" = (
 /obj/structure/mystery_box/guns,
-/turf/open/indestructible/asphalt,
+/turf/open/indestructible/asphalt/outdoors,
 /area/deathmatch)
 "ZX" = (
 /obj/effect/landmark/deathmatch_player_spawn,
-/turf/open/indestructible/asphalt,
+/turf/open/indestructible/asphalt/outdoors,
 /area/deathmatch)
 "ZY" = (
 /obj/structure/table/reinforced/ctf,
@@ -6982,7 +6969,7 @@ oy
 ob
 oy
 ob
-oy
+fE
 ob
 Zp
 iP

@@ -138,6 +138,11 @@
 	icon_state = "noirdet"
 	inhand_icon_state = null
 
+/obj/item/clothing/suit/jacket/det_suit/dark/cyberpunk
+	name = "armored jacket"
+	desc = "A faux-leather trenchcoat with concealed armor plating. The jacket of choice for a shadowrunner."
+	armor_type = /datum/armor/armor_secjacket
+
 /obj/item/clothing/suit/jacket/det_suit/noir
 	name = "noir suit coat"
 	desc = "A dapper private investigator's dark suit coat."

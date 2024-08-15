@@ -566,7 +566,7 @@
 	display_name = "Cybersun Industries"
 	desc = "The loadout used by Cybersun's infamous Troubleshooter Division. Equipped with an S-120, and energy dagger, and inducer cells."
 	uniform = /obj/item/clothing/under/syndicate/combat
-	suit = /obj/item/clothing/suit/armor/vest/leather/cyberpunk
+	suit = /obj/item/clothing/suit/jacket/det_suit/dark/cyberpunk
 	glasses = /obj/item/clothing/glasses/sunglasses/oval
 	back = /obj/item/storage/backpack/messenger
 	belt = /obj/item/gun/energy/laser/carbine/cybersun/unrestricted
