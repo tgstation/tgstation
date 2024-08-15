@@ -25,7 +25,7 @@ export PYTHON_VERSION=3.9.0
 export DREAMLUAU_REPO="tgstation/dreamluau"
 
 #dreamluau git tag
-export DREAMLUAU_VERSION=69cd825305ad9e418f3cf5226625026c3f457463
+export DREAMLUAU_VERSION=0.1.1
 
 #hypnagogic repo
 export CUTTER_REPO=spacestation13/hypnagogic
