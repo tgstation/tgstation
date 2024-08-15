@@ -102,8 +102,9 @@ const CrimeDisplay = ({ item }: { item: Crime }) => {
   const { crew_ref } = foundRecord;
   const { act, data } = useBackend<SecurityRecordsData>();
   const { current_user, higher_access } = data;
-  const { author, crime_ref, details, fine, name, paid, time, valid } = item;
-  const showFine = !!fine && fine > 0 ? `: ${fine} cr` : '';
+  const { author, crime_ref, details, fine, name, paid, time, valid, voider } =
+    item;
+  const showFine = !!fine && fine > 0 ? `: ${fine} cr` : ': PAID OFF';
 
   let collapsibleColor = '';
   if (!valid) {
@@ -113,7 +114,7 @@ const CrimeDisplay = ({ item }: { item: Crime }) => {
   }
 
   let displayTitle = name;
-  if (fine && fine > 0) {
+  if (fine !== undefined) {
     displayTitle = name.slice(0, 18) + showFine;
   }
 
@@ -128,7 +129,15 @@ const CrimeDisplay = ({ item }: { item: Crime }) => {
           <LabeledList.Item color={!valid ? 'bad' : 'good'} label="Status">
             {!valid ? 'Void' : 'Active'}
           </LabeledList.Item>
-          {fine && (
+          {!valid && (
+            <LabeledList.Item
+              color={voider ? 'gold' : 'good'}
+              label="Voided by"
+            >
+              {!voider ? 'Automation' : voider}
+            </LabeledList.Item>
+          )}
+          {!!fine && fine > 0 && (
             <>
               <LabeledList.Item color="bad" label="Fine">
                 {fine}cr <Icon color="gold" name="coins" />
@@ -155,7 +164,7 @@ const CrimeDisplay = ({ item }: { item: Crime }) => {
             </Button>
             <Button.Confirm
               content="Invalidate"
-              disabled={!higher_access || !valid}
+              disabled={!valid || (!higher_access && author !== current_user)}
               icon="ban"
               onClick={() =>
                 act('invalidate_crime', {

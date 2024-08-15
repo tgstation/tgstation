@@ -27,5 +27,7 @@ GLOBAL_LIST_EMPTY(string_lists)
 /turf/closed/indestructible/baseturfs_ded
 	name = "Report this"
 	desc = "It looks like base turfs went to the fucking moon, TELL YOUR LOCAL CODER TODAY"
-	icon = 'icons/turf/debug.dmi'
-	icon_state = "fucked_baseturfs"
+	icon = 'icons/turf/walls/baseturfs_fuck.dmi'
+	smoothing_flags = SMOOTH_BITMASK
+	smoothing_groups = SMOOTH_GROUP_WALLS + SMOOTH_GROUP_TALL_WALLS + SMOOTH_GROUP_CLOSED_TURFS
+	canSmoothWith = SMOOTH_GROUP_WALLS + SMOOTH_GROUP_CLOSED_TURFS

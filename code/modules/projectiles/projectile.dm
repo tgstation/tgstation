@@ -85,7 +85,8 @@
 	/// `speed` a modest value like 1 and set this to a low value like 0.2.
 	var/pixel_speed_multiplier = 1
 
-	var/Angle = 0
+	/// The current angle of the projectile. Initially null, so if the arg is missing from [/fire()], we can calculate it from firer and target as fallback.
+	var/Angle
 	var/original_angle = 0 //Angle at firing
 	var/nondirectional_sprite = FALSE //Set TRUE to prevent projectiles from having their sprites rotated based on firing angle
 	var/spread = 0 //amount (in degrees) of projectile spread
@@ -295,6 +296,12 @@
 		hitx = target.pixel_x + rand(-8, 8)
 		hity = target.pixel_y + rand(-8, 8)
 
+	if(isturf(target_turf) && hitsound_wall)
+		var/volume = clamp(vol_by_damage() + 20, 0, 100)
+		if(suppressed)
+			volume = 5
+		playsound(loc, hitsound_wall, volume, TRUE, -1)
+
 	if(damage > 0 && (damage_type == BRUTE || damage_type == BURN) && iswallturf(target_turf) && prob(75))
 		var/turf/closed/wall/target_wall = target_turf
 		if(impact_effect_type && !hitscan)
@@ -307,11 +314,7 @@
 	if(!isliving(target))
 		if(impact_effect_type && !hitscan)
 			new impact_effect_type(target_turf, hitx, hity)
-		if(isturf(target) && hitsound_wall)
-			var/volume = clamp(vol_by_damage() + 20, 0, 100)
-			if(suppressed)
-				volume = 5
-			playsound(loc, hitsound_wall, volume, TRUE, -1)
+
 		return BULLET_ACT_HIT
 
 	var/mob/living/living_target = target
@@ -761,21 +764,19 @@
 		process_hit(get_turf(direct_target), direct_target)
 		if(QDELETED(src))
 			return
+	var/turf/starting = get_turf(src)
 	if(isnum(angle))
 		set_angle(angle)
-	if(spread)
-		set_angle(Angle + ((rand() - 0.5) * spread))
-	var/turf/starting = get_turf(src)
-	if(isnull(Angle)) //Try to resolve through offsets if there's no angle set.
+	else if(isnull(Angle)) //Try to resolve through offsets if there's no angle set.
 		if(isnull(xo) || isnull(yo))
 			stack_trace("WARNING: Projectile [type] deleted due to being unable to resolve a target after angle was null!")
 			qdel(src)
 			return
 		var/turf/target = locate(clamp(starting + xo, 1, world.maxx), clamp(starting + yo, 1, world.maxy), starting.z)
 		set_angle(get_angle(src, target))
+	if(spread)
+		set_angle(Angle + (rand() - 0.5) * spread)
 	original_angle = Angle
-	if(!nondirectional_sprite)
-		transform = transform.Turn(Angle)
 	trajectory_ignore_forcemove = TRUE
 	forceMove(starting)
 	trajectory_ignore_forcemove = FALSE
@@ -981,11 +982,15 @@
 	trajectory_ignore_forcemove = FALSE
 
 	starting = source_loc
-	pixel_x = source.pixel_x
-	pixel_y = source.pixel_y
+	// Find the last atom movable in our loc chain, or if we're a turf use us
+	var/atom/source_position = get_highest_loc(source, /atom/movable) || source
+	pixel_x = source_position.pixel_x
+	pixel_y = source_position.pixel_y
+	pixel_w = source_position.pixel_w
+	pixel_z = source_position.pixel_z
 	original = target
 	if(length(modifiers))
-		var/list/calculated = calculate_projectile_angle_and_pixel_offsets(source, target_loc && target, modifiers)
+		var/list/calculated = calculate_projectile_angle_and_pixel_offsets(source_position, target_loc && target, modifiers)
 
 		p_x = calculated[2]
 		p_y = calculated[3]
@@ -1020,8 +1025,7 @@
 		var/turf/source_loc = get_turf(source)
 		var/turf/target_loc = get_turf(target)
 		var/dx = ((target_loc.x - source_loc.x) * world.icon_size) + (target.pixel_x - source.pixel_x) + (p_x - (world.icon_size / 2))
-		var/dy = ((target_loc.y - source_loc.y) * world.icon_size) + (target.pixel_y - source.pixel_y) + (p_y - (world.icon_size / 2))
-
+		var/dy = ((target_loc.y - source_loc.y) * world.icon_size) + (target.pixel_y - source.pixel_y) + (target.pixel_z - source.pixel_z) + (p_y - (world.icon_size / 2))
 		angle = ATAN2(dy, dx)
 		return list(angle, p_x, p_y)
 
@@ -1040,13 +1044,15 @@
 	var/list/screen_loc_Y = splittext(screen_loc_params[2],":")
 
 	var/tx = (text2num(screen_loc_X[1]) - 1) * world.icon_size + text2num(screen_loc_X[2])
-	var/ty = (text2num(screen_loc_Y[1]) - 1) * world.icon_size + text2num(screen_loc_Y[2])
+	// We are here trying to lower our target location by the firing source's visual offset
+	// So visually things make a nice straight line while properly accounting for actual physical position 
+	var/ty = (text2num(screen_loc_Y[1]) - 1) * world.icon_size + text2num(screen_loc_Y[2]) - source.pixel_z
 
 	//Calculate the "resolution" of screen based on client's view and world's icon size. This will work if the user can view more tiles than average.
 	var/list/screenview = view_to_pixels(user.client.view)
 
 	var/ox = round(screenview[1] / 2) - user.client.pixel_x //"origin" x
-	var/oy = round(screenview[2] / 2) - user.client.pixel_y //"origin" y
+	var/oy = round(screenview[2] / 2) - user.client.pixel_y - source.pixel_z //"origin" y
 	angle = ATAN2(tx - oy, ty - ox)
 	return list(angle, p_x, p_y)
 

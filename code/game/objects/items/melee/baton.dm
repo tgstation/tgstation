@@ -318,6 +318,8 @@
 	bare_wound_bonus = 5
 	clumsy_knockdown_time = 15 SECONDS
 	active = FALSE
+	pickup_sound = 'sound/items/stun_baton_pick_up.ogg'
+	drop_sound = 'sound/items/stun_baton_drop.ogg'
 
 	/// The sound effecte played when our baton is extended.
 	var/on_sound = 'sound/weapons/batonextend.ogg'
@@ -436,6 +438,8 @@
 	light_on = FALSE
 	light_color = LIGHT_COLOR_ORANGE
 	light_power = 0.5
+	pickup_sound = 'sound/items/stun_baton_pick_up.ogg'
+	drop_sound = 'sound/items/stun_baton_drop.ogg'
 
 
 	var/throw_stun_chance = 35
@@ -504,7 +508,6 @@
 /obj/item/melee/baton/security/Exited(atom/movable/mov_content)
 	. = ..()
 	if(mov_content == cell)
-		cell.update_appearance()
 		cell = null
 		active = FALSE
 		update_appearance()
