@@ -489,6 +489,11 @@ SUBSYSTEM_DEF(air)
 
 ///Adds a turf to active processing, handles duplicates. Call this with blockchanges == TRUE if you want to nuke the assoc excited group
 /datum/controller/subsystem/air/proc/add_to_active(turf/open/T, blockchanges = FALSE)
+	#ifdef UNIT_TESTS
+	var/area/turf_area = get_area(T)
+	if(turf_area && istype(turf_area, /area/misc/testroom))
+		stack_trace("Active turf generated in testing room! ")
+	#endif
 	if(istype(T) && T.air)
 		T.significant_share_ticker = 0
 		if(blockchanges && T.excited_group) //This is used almost exclusivly for shuttles, so the excited group doesn't stay behind
