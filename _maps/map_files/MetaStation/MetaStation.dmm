@@ -2935,13 +2935,6 @@
 /turf/open/floor/iron,
 /area/station/hallway/primary/central)
 "bac" = (
-/obj/machinery/computer/security/telescreen{
-	desc = "Used for watching the ai_upload.";
-	dir = 4;
-	name = "AI Upload Monitor";
-	network = list("aiupload");
-	pixel_x = -29
-	},
 /obj/machinery/turretid{
 	control_area = "/area/station/ai_monitored/turret_protected/ai_upload";
 	icon_state = "control_stun";
@@ -24291,12 +24284,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/plating,
 /area/station/maintenance/port/aft)
-"iDe" = (
-/obj/structure/sign/warning/secure_area/directional/north{
-	pixel_y = 32
-	},
-/turf/open/space/basic,
-/area/space)
 "iDq" = (
 /obj/effect/turf_decal/box,
 /obj/structure/cable,
@@ -104327,7 +104314,7 @@ qRS
 pnk
 kJi
 cxz
-iDe
+aaa
 aaa
 aaa
 aaa
@@ -105355,7 +105342,7 @@ cDb
 xOI
 kJi
 cxz
-iDe
+aaa
 aaa
 aaa
 aaa
@@ -110947,7 +110934,7 @@ cvO
 uNO
 hUd
 wmL
-iDe
+aaa
 aaa
 aaa
 aaa
