@@ -109,12 +109,17 @@
 	stored_piss -= per_piss_usage
 
 
-	var/obj/machinery/camera/located_camera = locate() in range(7, owner)
+	var/obj/machinery/camera/located_camera
+	for(var/obj/machinery/camera/camera in view(7, owner))
+		if(camera.can_use() && get_dist(owner, camera) <= camera.view_range)
+			located_camera = camera
+			break
 	if(located_camera)
-		var/datum/record/crew/records = find_record(owner.name)
-		var/datum/crime/new_crime = new(name = "Public Urination", details = "This person has been caught on video camera pissing in the [owner_turf.loc]", author = "Automated Criminal Detection Service")
-		records.crimes += new_crime
-		records.wanted_status = WANTED_ARREST
+		var/datum/record/crew/record = find_record(owner.name)
+		if(record)
+			var/datum/crime/new_crime = new(name = "Public Urination", details = "This person has been caught on video camera pissing in \the [owner_turf.loc]", author = "Automated Criminal Detection Service")
+			record.crimes += new_crime
+			record.wanted_status = WANTED_ARREST
 
 	var/obj/effect/decal/cleanable/piss_stain/stain = locate() in owner_turf
 	if(!(stain in owner_turf.contents) && !owner_turf.liquids)

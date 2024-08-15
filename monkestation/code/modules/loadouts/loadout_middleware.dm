@@ -141,13 +141,15 @@
 	preferences.character_preview_view?.update_body()
 
 /datum/preference_middleware/proc/list_to_data(list_of_datums)
-	if(!LAZYLEN(list_of_datums))
+	if(!LAZYLEN(list_of_datums) || QDELETED(preferences)|| QDELETED(preferences.parent))
 		return
 
 	var/list/formatted_list = new(length(list_of_datums))
 
 	var/array_index = 1
 	for(var/datum/loadout_item/item as anything in list_of_datums)
+		if(QDELETED(preferences) || QDELETED(preferences.parent))
+			return
 		if(!isnull(item.ckeywhitelist)) //These checks are also performed in the backend.
 			if(!(preferences.parent.ckey in item.ckeywhitelist) && !is_admin(preferences.parent))
 				formatted_list.len--

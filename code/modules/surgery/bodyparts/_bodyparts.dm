@@ -1271,9 +1271,9 @@
 
 /obj/item/bodypart/emp_act(severity)
 	. = ..()
-	if(. & EMP_PROTECT_WIRES || !IS_ROBOTIC_LIMB(src))
+	if((. & EMP_PROTECT_WIRES) || !IS_ROBOTIC_LIMB(src))
 		return FALSE
-	owner.visible_message(span_danger("[owner]'s [src.name] seems to malfunction!"))
+	owner?.visible_message(span_danger("[owner]'s [src.name] seems to malfunction!"))
 
 	// with defines at the time of writing, this is 3 brute and 2 burn
 	// 3 + 2 = 5, with 6 limbs thats 30, on a heavy 60
@@ -1289,7 +1289,7 @@
 	receive_damage(brute_damage, burn_damage)
 	do_sparks(number = 1, cardinal_only = FALSE, source = owner)
 	ADD_TRAIT(src, TRAIT_PARALYSIS, EMP_TRAIT)
-	addtimer(CALLBACK(src, PROC_REF(un_paralyze)), time_needed)
+	addtimer(CALLBACK(src, PROC_REF(un_paralyze)), time_needed, TIMER_DELETE_ME)
 	return TRUE
 
 /obj/item/bodypart/proc/un_paralyze()

@@ -149,7 +149,7 @@
 	return FALSE
 
 /turf/open/openspace/CanAStarPass(to_dir, datum/can_pass_info/pass_info)
-	var/atom/movable/our_movable = pass_info.caller_ref.resolve()
+	var/atom/movable/our_movable = pass_info.caller_ref?.resolve()
 	if(our_movable && !our_movable.can_z_move(DOWN, src, null, ZMOVE_FALL_FLAGS)) //If we can't fall here (flying/lattice), it's fine to path through
 		return TRUE
 	return FALSE

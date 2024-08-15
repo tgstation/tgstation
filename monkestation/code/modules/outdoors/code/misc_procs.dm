@@ -1,5 +1,7 @@
 /mob/living/carbon/proc/handle_weather(delta_time = 1)
 	var/turf/turf = get_turf(src)
+	if(QDELETED(turf))
+		return
 	if(SSmapping.level_has_all_traits(turf.z, list(ZTRAIT_ECLIPSE)) && SSparticle_weather.running_eclipse_weather)
 		if(!SSparticle_weather.running_eclipse_weather || !(turf.turf_flags & TURF_WEATHER))
 			current_weather_effect_type = null

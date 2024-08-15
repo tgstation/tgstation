@@ -119,7 +119,7 @@
 
 /datum/component/jetpack/proc/pre_move_react(mob/user)
 	SIGNAL_HANDLER
-	trail.oldposition = get_turf(user)
+	trail?.oldposition = get_turf(user)
 
 /datum/component/jetpack/proc/spacemove_react(mob/user, movement_dir, continuous_move)
 	SIGNAL_HANDLER

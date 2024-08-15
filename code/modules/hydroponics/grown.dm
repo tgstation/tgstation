@@ -38,7 +38,7 @@
 	var/wine_power = 10
 	/// Color of the grown object, for use in coloring greyscale splats.
 	var/filling_color
-	/// If the grown food has an alternaitve icon state to use in places.
+	/// If the grown food has an alternative icon state to use in places.
 	var/alt_icon
 	/// Should we pixel offset ourselves at init? for mapping
 	var/offset_at_init = TRUE
@@ -127,7 +127,7 @@
 		else
 			var/data = list()
 			data["names"] = list("[initial(name)]" = 1)
-			data["color"] = filling_color
+			data["color"] = filling_color || reagent.color // filling_color is not guaranteed to be set for every plant. try to use it if we have it, otherwise use the reagent's color var
 			data["boozepwr"] = round(wine_power * purity)
 			data["quality"] = quality
 			if(wine_flavor)
