@@ -85,6 +85,8 @@
 /obj/item/clothing/suit/space/equipped(mob/living/user, slot)
 	. = ..()
 	if(slot & ITEM_SLOT_OCLOTHING) // Check that the slot is valid
+		if(isplasmaman(user))
+			slowdown = 1
 		START_PROCESSING(SSobj, src)
 		update_hud_icon(user) // update the hud
 		RegisterSignal(user, COMSIG_MOB_GET_STATUS_TAB_ITEMS, PROC_REF(get_status_tab_item))
@@ -97,6 +99,8 @@
 	var/mob/living/carbon/carbon_user = user
 	if(istype(carbon_user))
 		carbon_user.update_spacesuit_hud_icon("0")
+	if(isplasmaman(user))
+		slowdown = 0.5
 
 /obj/item/clothing/suit/space/proc/get_status_tab_item(mob/living/source, list/items)
 	SIGNAL_HANDLER
