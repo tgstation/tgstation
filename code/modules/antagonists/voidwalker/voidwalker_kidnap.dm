@@ -99,7 +99,7 @@ GLOBAL_LIST_EMPTY(voidwalker_void)
 /// Loop us around, maybe, if we're going to bump into a wall
 /obj/effect/wisp_mobile/proc/maybe_loop_us(movement_dir)
 	var/turf/check_turf = get_step(get_turf(src), movement_dir)
-	if(!check_turf.density) //we're not facing a wall, so dont do anything
+	if(!check_turf?.density) //we're not facing a wall, so dont do anything
 		return
 
 	// Loop us to the other side
