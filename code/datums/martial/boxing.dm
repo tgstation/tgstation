@@ -344,7 +344,7 @@
 		human_attacker.say("[first_word_strike][second_word_strike]!!!", forced = "hunter boxing enthusiastic battlecry")
 	defender.apply_status_effect(/datum/status_effect/rebuked)
 	defender.apply_damage(damage * 2, default_damage_type, BODY_ZONE_CHEST, armor_block) //deals double our damage AGAIN
-	attacker.reagents.add_reagent(/datum/reagent/medicine/omnizine/godblood, 2) //Get a little healing in return for a successful crit
+	attacker.reagents.add_reagent(/datum/reagent/medicine/omnizine/godblood, 3) //Get a little healing in return for a successful crit
 	log_combat(attacker, defender, "hunter crit punched (boxing)")
 
 // Our hunter boxer speeds up their attacks when completing a combo against a valid target, and does a sizable amount of extra damage.
