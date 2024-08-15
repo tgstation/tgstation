@@ -94,7 +94,9 @@
 		set_filler()
 		update_overlays()
 	update_freelook_sight()
+#ifndef UNIT_TESTS //we cannot allow active air flow inside the unit test room.
 	air_update_turf(TRUE, TRUE)
+#endif
 	register_context()
 	if(elevator_mode)
 		if(transport_linked_id)
