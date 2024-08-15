@@ -53,14 +53,20 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/rack,
 /obj/effect/spawner/random/maintenance/eight,
-/obj/effect/decal/cleanable/cobweb/cobweb2,
+/obj/effect/decal/cleanable/cobweb/cobweb2{
+	pixel_y = 24
+	},
 /turf/open/floor/plating,
 /area/station/maintenance/department/security)
 "I" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/table,
-/obj/effect/decal/cleanable/cobweb,
-/obj/effect/spawner/random/engineering/toolbox,
+/obj/effect/decal/cleanable/cobweb{
+	pixel_y = 24
+	},
+/obj/effect/spawner/random/engineering/toolbox{
+	pixel_y = 12
+	},
 /turf/open/floor/iron/smooth,
 /area/station/maintenance/department/security)
 "J" = (
@@ -84,7 +90,9 @@
 "Z" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/spawner/random/engineering/tank,
-/obj/effect/decal/cleanable/cobweb/cobweb2,
+/obj/effect/decal/cleanable/cobweb/cobweb2{
+	pixel_y = 24
+	},
 /turf/open/floor/plating,
 /area/station/maintenance/department/security)
 
