@@ -16,7 +16,7 @@
 	anchored = TRUE
 
 	///whether we currently have a grille
-	var/has_grille = FALSE
+	var/obj/item/stack/rods/grille = FALSE
 	///whether we spawn a window structure with us on mapload
 	var/start_with_window = FALSE
 	///Icon used by grilles for this window frame
@@ -54,9 +54,24 @@
 /obj/structure/window_frame/Initialize(mapload)
 	. = ..()
 
+	if(grille)
+		grille = new grille(src, sheet_amount)
+
 	update_appearance()
 	AddComponent(/datum/component/climb_walkable)
 	AddElement(/datum/element/climbable, on_try_climb_procpath = TYPE_PROC_REF(/obj/structure/window_frame, on_try_climb))
+
+	var/static/list/tool_tips = list(
+		TOOL_WELDING = list(
+			SCREENTIP_CONTEXT_LMB = "Repair",
+			SCREENTIP_CONTEXT_RMB = "Deconstruct",
+		),
+		TOOL_WIRECUTTER = list(
+			SCREENTIP_CONTEXT_LMB = "Remove grille",
+		),
+
+	)
+	AddElement(/datum/element/contextual_screentip_tools, tool_tips)
 
 	if(mapload && start_with_window)
 		create_structure_window(window_type)
@@ -65,6 +80,21 @@
 		COMSIG_ATOM_ENTERED = PROC_REF(on_entered),
 	)
 	AddElement(/datum/element/connect_loc, loc_connections)
+	register_context()
+
+
+/obj/structure/window_frame/add_context(atom/source, list/context, obj/item/held_item, mob/living/user)
+	if(isnull(held_item))
+		return NONE
+	if(isstack(held_item))
+		if(is_glass_sheet(held_item))
+			if(!has_window())
+				context[SCREENTIP_CONTEXT_LMB] = "Add window"
+			return CONTEXTUAL_SCREENTIP_SET
+		else if(istype(held_item, /obj/item/stack/rods) && isnull(grille))
+			context[SCREENTIP_CONTEXT_LMB] = "Add grille"
+			return CONTEXTUAL_SCREENTIP_SET
+		return NONE
 
 ///helper proc to check if we already have a window
 /obj/structure/window_frame/proc/has_window()
@@ -84,7 +114,7 @@
 /obj/structure/window_frame/proc/try_shock(mob/user, shock_chance)
 	var/turf/my_turf = get_turf(src)
 	var/obj/structure/cable/underlaying_cable = my_turf.get_cable_node()
-	if(!has_grille) // no grille? dont shock.
+	if(!grille) // no grille? dont shock.
 		return FALSE
 	if(!underlaying_cable)
 		return FALSE
@@ -143,14 +173,17 @@
 	add_fingerprint(user)
 	if(try_shock(user, 100))
 		return
-	if(!has_grille)
+	if(!grille)
+		balloon_alert(user, "no grille!")
+		return
+	if(has_window())
+		balloon_alert(user, "remove the window!")
 		return
 	if(!tool.use_tool(src, user, 0, volume = 50))
 		return
 	tool.play_tool_sound(src, 100)
-	balloon_alert(user, "grille cut!")
-	has_grille = FALSE
-	update_appearance()
+	balloon_alert(user, "grille cut")
+	forceMove(grille, drop_location())
 	return ITEM_INTERACT_SUCCESS
 
 
@@ -158,6 +191,10 @@
 	. = ..()
 
 	add_fingerprint(user)
+
+	if(has_window())
+		balloon_alert(user, "remove the window!")
+		return ITEM_INTERACT_BLOCKING
 
 	if(!tool.tool_start_check(user, amount = 0))
 		return ITEM_INTERACT_BLOCKING
@@ -169,6 +206,13 @@
 	deconstruct(TRUE)
 
 	return ITEM_INTERACT_SUCCESS
+
+/obj/structure/window_frame/handle_deconstruct(disassembled)
+	if(!disassembled)
+		grille?.use(round(sheet_amount * 0.5))
+	grille?.forceMove(drop_location())
+
+	new sheet_type(drop_location(), disassembled ? 2 : 1)
 
 /obj/structure/window_frame/welder_act(mob/living/user, obj/item/tool)
 	. = ..()
@@ -225,28 +269,52 @@
 
 /obj/structure/window_frame/attackby(obj/item/attacking_item, mob/living/user, params)
 	add_fingerprint(user)
-	if(isstack(attacking_item))
-		var/obj/item/stack/adding_stack = attacking_item
-		var/stack_name = "[adding_stack]" // in case the stack gets deleted after use()
 
-		if(is_glass_sheet(adding_stack) && !(has_window()) && adding_stack.use(sheet_amount))
-			to_chat(user, "<span class='notice'>You start to add [stack_name] to [src].")
-			if(!do_after(user, 2 SECONDS, src))
-				return
+	if(!isstack(attacking_item))
+		if((attacking_item.obj_flags & CONDUCTS_ELECTRICITY) && try_shock(user, 70))
+			return
+	return ..()
 
-			to_chat(user, "<span class='notice'>You add [stack_name] to [src].")
-			var/obj/structure/window/our_window = create_structure_window(adding_stack.type)
-			our_window.state = WINDOW_OUT_OF_FRAME
-			our_window.set_anchored(FALSE)
+	var/obj/item/stack/adding_stack = attacking_item
 
-		else if(istype(adding_stack, /obj/item/stack/rods) && !has_grille && adding_stack.use(sheet_amount))
-			has_grille = TRUE
-			to_chat(user, "<span class='notice'>You add [stack_name] to [src]")
-			update_appearance()
+	if(is_glass_sheet(adding_stack))
+		if(has_window())
+			balloon_alert(user, "window already installed!")
+			return
+		if(!adding_stack.use(sheet_amount))
+			balloon_alert(user, "needs [sheet_amount] sheets!")
+			return
+		balloon_alert(user, "adding window...")
+		if(!do_after(user, 2 SECONDS, src))
+			return
+		if(has_window())
+			return
 
-	else if((attacking_item.obj_flags & CONDUCTS_ELECTRICITY) && try_shock(user, 70))
+		balloon_alert(user, "window added")
+		var/obj/structure/window/our_window = create_structure_window(adding_stack.type)
+		our_window.state = WINDOW_OUT_OF_FRAME
+		our_window.set_anchored(FALSE)
 		return
 
+	if(!istype(adding_stack, /obj/item/stack/rods))
+		return
+	if(grille)
+		balloon_alert(user, "grille already installed!")
+		return
+	var/obj/item/stack/rods/rods = adding_stack.split_stack(user, sheet_amount)
+	if(!rods)
+		balloon_alert(user, "needs [sheet_amount] rods!")
+		return
+	rods.forceMove(src)
+	grille = rods
+	balloon_alert(user, "grille added")
+	update_appearance()
+
+/obj/structure/window_frame/Exited(atom/movable/gone)
+	if(gone == grille)
+		grille = null
+		if(!QDELETED(src))
+			update_appearance(UPDATE_OVERLAYS)
 	return ..()
 
 /obj/structure/window_frame/play_attack_sound(damage_amount, damage_type = BRUTE, damage_flag = NONE)
@@ -270,7 +338,7 @@
 			var/cost = 0
 			var/delay = 0
 
-			if(!has_grille)
+			if(!grille)
 				return rcd_result_with_memory(
 					list("delay" = 2 SECONDS, "cost" = 2),
 					get_turf(src), RCD_MEMORY_WINDOWGRILLE
@@ -314,9 +382,9 @@
 			if(!isturf(loc))
 				return FALSE
 
-			if(!has_grille)
+			if(!grille)
 				balloon_alert(user, "grill added!")
-				has_grille = TRUE
+				grille = new (src, sheet_amount)
 				update_appearance()
 				return TRUE
 
@@ -337,14 +405,15 @@
 
 /obj/structure/window_frame/examine(mob/user)
 	. = ..()
-	if(has_window() && has_grille)
-		. += "<span class='notice'>The window is fully constructed.</span>"
+	if(has_window() && grille)
+		. += span_notice("The window is fully constructed.")
 	else if(has_window())
-		. += "<span class='notice'>The window set into the frame has no reinforcement.</span>"
-	else if(has_grille)
-		. += "<span class='notice'>The window frame only has a grille set into it.</span>"
+		. += span_notice("The window set into the frame has no reinforcement.")
+	else if(grille)
+		. += span_notice("The window frame only has a grille set into it. You can use a [EXAMINE_HINT("wirecutter")] to remove it.")
 	else
-		. += "<span class='notice'>The window frame is empty</span>"
+		. += span_notice("The window frame is empty")
+	. += span_notice("It can be repaired or deconstructed with a [EXAMINE_HINT("welder")].")
 
 ///delightfully devilous seymour
 /obj/structure/window_frame/set_smoothed_icon_state(new_junction)
@@ -353,7 +422,7 @@
 
 /// if this frame has a grill, creates both the overlay for the grill (that goes over cables) and the black overlay beneath it (goes over us, but not cables)
 /obj/structure/window_frame/proc/create_grill_overlays(list/return_list)
-	if(!has_grille || !return_list)
+	if(!grille || !return_list)
 		return
 
 	return_list += mutable_appearance(grille_black_icon, "[grille_icon_state]_black-[smoothing_junction]")
@@ -396,10 +465,10 @@
 	return !!powernet.get_electrocute_damage()
 
 /obj/structure/window_frame/grille
-	has_grille = TRUE
+	grille = /obj/item/stack/rods
 
 /obj/structure/window_frame/grille_and_window
-	has_grille = TRUE
+	grille = /obj/item/stack/rods
 	start_with_window = TRUE
 
 /obj/structure/window_frame/reinforced
@@ -417,7 +486,7 @@
 	acid = 100
 
 /obj/structure/window_frame/reinforced/grille_and_window
-	has_grille = TRUE
+	grille = /obj/item/stack/rods
 	start_with_window = TRUE
 
 /obj/structure/window_frame/reinforced/damaged
@@ -433,7 +502,7 @@
 	our_window.update_integrity(rand(max_integrity * integrity_min_factor, max_integrity * integrity_max_factor))
 
 /obj/structure/window_frame/reinforced/damaged/grille_and_window
-	has_grille = TRUE
+	grille = /obj/item/stack/rods
 	start_with_window = TRUE
 
 /obj/structure/window_frame/titanium
@@ -447,11 +516,11 @@
 	custom_materials = list(/datum/material/titanium = WINDOW_FRAME_BASE_MATERIAL_AMOUNT)
 
 /obj/structure/window_frame/titanium/grille_and_window
-	has_grille = TRUE
+	grille = /obj/item/stack/rods
 	start_with_window = TRUE
 
 /obj/structure/window_frame/titanium/grille
-	has_grille = TRUE
+	grille = /obj/item/stack/rods
 
 /obj/structure/window_frame/plastitanium
 	name = "plastitanium window frame"
@@ -464,7 +533,7 @@
 	custom_materials = list(/datum/material/alloy/plastitanium = WINDOW_FRAME_BASE_MATERIAL_AMOUNT)
 
 /obj/structure/window_frame/plastitanium/grille_and_window
-	has_grille = TRUE
+	grille = /obj/item/stack/rods
 	start_with_window = TRUE
 
 /obj/structure/window_frame/wood
@@ -585,5 +654,5 @@
 	custom_materials = list(/datum/material/paper = WINDOW_FRAME_BASE_MATERIAL_AMOUNT)
 
 /obj/structure/window_frame/paperframe/grille_and_window
-	has_grille = TRUE
+	grille = /obj/item/stack/rods
 	start_with_window = TRUE
