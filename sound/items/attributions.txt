@@ -56,3 +56,11 @@ gas_tank_drop.ogg
 gas_tank_pick_up.ogg
 } - https://freesound.org/people/Globofonia/sounds/698346/ , License CC0
 edited by grungussuss
+
+{
+cardboad_box_open.ogg - made by sadboysuss
+cardboad_box_rustle.ogg - made by sadboysuss
+toolbox_open.ogg - made by sadboysuss
+toolbox_rustle.ogg - made by sadboysuss
+medkit_rustle.ogg - made by sadboysuss
+} - license: CC-by-SA
