@@ -2956,13 +2956,13 @@
 	},
 /obj/effect/landmark/start/cyborg,
 /obj/machinery/light/small/directional/west,
-/obj/machinery/computer/security/telescreen/aiupload/directional/west,
 /obj/structure/cable,
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
 	dir = 4
 	},
 /obj/machinery/power/apc/auto_name/directional/south,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
+/obj/machinery/computer/security/telescreen/aiupload/directional/west,
 /turf/open/floor/iron/dark,
 /area/station/ai_monitored/turret_protected/ai_upload_foyer)
 "bah" = (
@@ -10886,6 +10886,13 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron/white,
 /area/station/medical/chemistry)
+"dVQ" = (
+/obj/effect/spawner/structure/window/reinforced,
+/obj/machinery/door/poddoor/preopen{
+	id = "qmroom"
+	},
+/turf/open/floor/plating,
+/area/station/command/heads_quarters/qm)
 "dVT" = (
 /obj/machinery/atmospherics/components/binary/pump{
 	dir = 8;
@@ -18087,6 +18094,7 @@
 "gAx" = (
 /obj/structure/closet/secure_closet/hydroponics,
 /obj/effect/turf_decal/stripes/line,
+/obj/structure/sign/poster/official/cleanliness/directional/north,
 /turf/open/floor/iron,
 /area/station/service/hydroponics)
 "gAB" = (
@@ -31987,12 +31995,6 @@
 /obj/structure/disposalpipe/trunk,
 /turf/open/floor/iron/dark,
 /area/station/engineering/atmos)
-"lgR" = (
-/obj/structure/sign/poster/official/moth_piping/directional/north{
-	pixel_y = 8
-	},
-/turf/closed/wall/r_wall,
-/area/station/science/ordnance)
 "lgS" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
@@ -35784,34 +35786,6 @@
 /turf/open/floor/iron/dark,
 /area/station/service/chapel)
 "mCg" = (
-/obj/structure/cable,
-/obj/structure/table/wood/fancy/black,
-/obj/item/storage/fancy/cigarettes/cigars/cohiba{
-	pixel_x = 3;
-	pixel_y = 22
-	},
-/obj/item/reagent_containers/cup/glass/bottle/champagne{
-	pixel_x = -7;
-	pixel_y = 16
-	},
-/obj/item/cigarette/cigar{
-	pixel_x = 4;
-	pixel_y = 11
-	},
-/obj/item/cigarette/cigar{
-	pixel_x = 8;
-	pixel_y = 8
-	},
-/obj/effect/turf_decal/siding/wood{
-	dir = 9
-	},
-/obj/machinery/keycard_auth/wall_mounted/directional/north{
-	pixel_x = -5
-	},
-/obj/merge_conflict_marker{
-	name = "---Merge Conflict Marker---";
-	desc = "A best-effort merge was performed. You must resolve this conflict yourself (manually) and remove this object once complete."
-	},
 /obj/structure/cable,
 /obj/structure/table/wood/fancy/black,
 /obj/item/storage/fancy/cigarettes/cigars/cohiba{
@@ -41516,12 +41490,6 @@
 /obj/structure/flora/bush/fullgrass,
 /turf/open/floor/grass,
 /area/station/service/hydroponics/garden)
-"ozl" = (
-/obj/structure/sign/poster/official/cleanliness/directional/north{
-	pixel_y = 0
-	},
-/turf/closed/wall,
-/area/station/hallway/secondary/service)
 "ozm" = (
 /obj/effect/turf_decal/siding/purple{
 	dir = 1
@@ -48822,6 +48790,7 @@
 /obj/structure/disposalpipe/trunk{
 	dir = 8
 	},
+/obj/structure/sign/poster/official/moth_piping/directional/north,
 /turf/open/floor/iron/dark,
 /area/station/science/ordnance)
 "rbF" = (
@@ -89578,7 +89547,7 @@ ufm
 qtu
 tcY
 oAt
-ixt
+dVQ
 ixt
 oAt
 kQP
@@ -101728,7 +101697,7 @@ jTN
 vAH
 kIY
 iaF
-lgR
+gyQ
 rbD
 jwj
 ujk
@@ -107090,7 +107059,7 @@ wPU
 gKS
 huG
 olP
-ozl
+wYB
 gAx
 siz
 hxz
