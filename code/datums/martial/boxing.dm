@@ -353,7 +353,6 @@
 	if(defender.mob_biotypes & MOB_HUMANOID && !istype(defender, /mob/living/simple_animal/hostile/megafauna))
 		return // Does not apply to humans (who aren't megafauna)
 
-	var/atom/throw_target = get_edge_target_turf(defender, attacker.dir)
 	defender.changeNext_move(CLICK_CD_RAPID)
 	defender.apply_damage(rand(15,20), default_damage_type, BODY_ZONE_CHEST)
 
