@@ -432,7 +432,7 @@
 		return
 
 	var/mob/living/holder = loc
-	if(!holder.client?.prefs.read_preference(/datum/preference/toggle/radio_noise) && !HAS_TRAIT(talking_living, TRAIT_DEAF))
+	if(!holder.client?.prefs.read_preference(/datum/preference/toggle/radio_noise) && !HAS_TRAIT(holder, TRAIT_DEAF))
 		return
 
 	var/list/spans = data["spans"]
