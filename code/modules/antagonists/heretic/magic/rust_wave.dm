@@ -13,8 +13,8 @@
 	school = SCHOOL_FORBIDDEN
 	cooldown_time = 30 SECONDS
 
-	invocation = "Entro'pichniy-plim!"
-	invocation_type = INVOCATION_SHOUT
+	invocation = "'NTR'P'C PL'M'"
+	invocation_type = INVOCATION_WHISPER
 	spell_requirements = NONE
 
 	cone_levels = 5
@@ -78,8 +78,8 @@
 	school = SCHOOL_FORBIDDEN
 	cooldown_time = 35 SECONDS
 
-	invocation = "Diffunde' verbum!"
-	invocation_type = INVOCATION_SHOUT
+	invocation = "SPR'D TH' WO'D"
+	invocation_type = INVOCATION_WHISPER
 	spell_requirements = NONE
 
 	projectile_type = /obj/projectile/magic/aoe/rust_wave

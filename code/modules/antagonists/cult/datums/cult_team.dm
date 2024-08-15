@@ -22,7 +22,7 @@
 	/// List that keeps track of which items have been unlocked after a heretic was sacked.
 	var/list/unlocked_heretic_items = list(
 		CURSED_BLADE_UNLOCKED = FALSE,
-		CRIMSON_FOCUS_UNLOCKED = FALSE,
+		CRIMSON_MEDALLION_UNLOCKED = FALSE,
 		PROTEON_ORB_UNLOCKED = FALSE,
 	)
 

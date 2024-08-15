@@ -1,4 +1,5 @@
 /obj/machinery/computer
+	SET_BASE_VISUAL_PIXEL(0, DEPTH_OFFSET)
 	name = "computer"
 	icon = 'icons/obj/machines/computer.dmi'
 	icon_state = "computer"
@@ -93,7 +94,7 @@
 		return
 	for(var/obj/item/circuitboard/computer/board in src.contents)
 		if(!contents || board.GetComponent(/datum/component/gps))
-			return
+			CRASH("[src] Called imprint_gps without setting gps_tag")
 		board.AddComponent(/datum/component/gps, "[tracker]")
 		balloon_alert_to_viewers("board tracker enabled", vision_distance = 1)
 

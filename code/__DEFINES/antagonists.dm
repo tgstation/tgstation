@@ -314,6 +314,11 @@ GLOBAL_LIST_INIT(human_invader_antagonists, list(
 #define UPLINK_SHARED_STOCK_KITS "uplink_shared_stock_kits"
 #define UPLINK_SHARED_STOCK_SURPLUS "uplink_shared_stock_surplus"
 
+/// Does this item provide illegal tech?
+#define SYNDIE_ILLEGAL_TECH (1 << 0)
+/// Does this item go off when scanned by a contraband scanner?
+#define SYNDIE_TRIPS_CONTRABAND (1 << 1)
+
 // Used for traitor objectives
 /// If the objective hasn't been taken yet
 #define OBJECTIVE_STATE_INACTIVE 1

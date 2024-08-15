@@ -277,11 +277,11 @@
 		/datum/component/blood_walk,\
 		blood_type = /obj/effect/decal/cleanable/blood,\
 		blood_spawn_chance = 15,\
-		max_blood = 300,\
+		max_blood = custom_materials[custom_materials[1]] / SHEET_MATERIAL_AMOUNT,\
 	)
 	AddComponent(
 		/datum/component/bloody_spreader,\
-		blood_left = INFINITY,\
+		blood_left = custom_materials[custom_materials[1]] / SHEET_MATERIAL_AMOUNT,\
 		blood_dna = list("MEAT DNA" = "MT+"),\
 		diseases = null,\
 	)
@@ -377,7 +377,7 @@
 
 /obj/item/storage/backpack/satchel/flat
 	name = "smuggler's satchel"
-	desc = "A very slim satchel that can easily fit into tight spaces."
+	desc = "A very slim satchel that can easily fit into tight spaces. Its contents cannot be detected by contraband scanners."
 	icon_state = "satchel-flat"
 	inhand_icon_state = "satchel-flat"
 	w_class = WEIGHT_CLASS_NORMAL //Can fit in backpacks itself.
@@ -387,6 +387,7 @@
 	AddElement(/datum/element/undertile, TRAIT_T_RAY_VISIBLE, INVISIBILITY_OBSERVER, use_anchor = TRUE)
 	atom_storage.max_total_storage = 15
 	atom_storage.set_holdable(cant_hold_list = /obj/item/storage/backpack/satchel/flat) //muh recursive backpacks
+	ADD_TRAIT(src, TRAIT_CONTRABAND_BLOCKER, INNATE_TRAIT)
 
 /obj/item/storage/backpack/satchel/flat/PopulateContents()
 	for(var/items in 1 to 4)

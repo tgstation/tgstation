@@ -43,10 +43,18 @@
 /area/station/maintenance/department/cargo)
 "l" = (
 /obj/structure/table,
-/obj/item/stack/package_wrap,
-/obj/item/hand_labeler,
+/obj/item/stack/package_wrap{
+	pixel_y = 11
+	},
+/obj/item/hand_labeler{
+	pixel_y = 1;
+	pixel_x = 5
+	},
 /obj/effect/decal/cleanable/dirt,
-/obj/item/knife/kitchen,
+/obj/item/knife/kitchen{
+	pixel_y = 11;
+	pixel_x = -7
+	},
 /turf/open/floor/iron/cafeteria,
 /area/station/maintenance/department/cargo)
 "m" = (

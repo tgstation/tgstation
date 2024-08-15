@@ -2,6 +2,7 @@
 // Simple power generator that would replace "magic SMES" on various derelicts.
 
 /obj/machinery/power/rtg
+	SET_BASE_VISUAL_PIXEL(0, DEPTH_OFFSET)
 	name = "radioisotope thermoelectric generator"
 	desc = "A simple nuclear power generator, used in small outposts to reliably provide power for decades."
 	icon = 'icons/obj/machines/engine/other.dmi'

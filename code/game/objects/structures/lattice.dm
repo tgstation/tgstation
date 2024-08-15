@@ -23,6 +23,7 @@
 	if(length(give_turf_traits))
 		give_turf_traits = string_list(give_turf_traits)
 		AddElement(/datum/element/give_turf_traits, give_turf_traits)
+	AddElement(/datum/element/footstep_override, footstep = FOOTSTEP_CATWALK)
 
 /datum/armor/structure_lattice
 	melee = 50
@@ -66,8 +67,8 @@
 	return FALSE
 
 /obj/structure/lattice/rcd_act(mob/user, obj/item/construction/rcd/the_rcd, list/rcd_data)
-	if(rcd_data["[RCD_DESIGN_MODE]"] == RCD_TURF)
-		var/design_structure = rcd_data["[RCD_DESIGN_PATH]"]
+	if(rcd_data[RCD_DESIGN_MODE] == RCD_TURF)
+		var/design_structure = rcd_data[RCD_DESIGN_PATH]
 		if(design_structure == /turf/open/floor/plating)
 			var/turf/T = src.loc
 			if(isgroundlessturf(T))
@@ -97,10 +98,6 @@
 	canSmoothWith = SMOOTH_GROUP_CATWALK
 	obj_flags = CAN_BE_HIT | BLOCK_Z_OUT_DOWN | BLOCK_Z_IN_UP
 	give_turf_traits = list(TRAIT_TURF_IGNORE_SLOWDOWN, TRAIT_LAVA_STOPPED, TRAIT_CHASM_STOPPED, TRAIT_IMMERSE_STOPPED, TRAIT_HYPERSPACE_STOPPED)
-
-/obj/structure/lattice/catwalk/Initialize(mapload)
-	. = ..()
-	AddElement(/datum/element/footstep_override, footstep = FOOTSTEP_CATWALK)
 
 /obj/structure/lattice/catwalk/deconstruction_hints(mob/user)
 	return span_notice("The supporting rods look like they could be <b>cut</b>.")

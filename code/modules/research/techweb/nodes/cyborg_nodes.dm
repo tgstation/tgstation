@@ -11,6 +11,7 @@
 		"borg_l_leg",
 		"borg_r_arm",
 		"borg_r_leg",
+		"borg_suit",
 		"cybernetic_eyes",
 		"cybernetic_eyes_moth",
 		"cybernetic_ears",
@@ -32,7 +33,6 @@
 		"robocontrol",
 		"borgupload",
 		"cyborgrecharger",
-		"borg_suit",
 		"mmi_posi",
 		"mmi",
 		"mmi_m",
@@ -90,7 +90,7 @@
 
 /datum/techweb_node/borg_utility
 	id = TECHWEB_NODE_BORG_UTILITY
-	display_name = "Untility Cyborg Upgrades"
+	display_name = "Utility Cyborg Upgrades"
 	description = "Let them wipe our floors for us."
 	prereq_ids = list(TECHWEB_NODE_BORG_SERVICES, TECHWEB_NODE_SANITATION)
 	design_ids = list(
@@ -98,6 +98,7 @@
 		"borg_upgrade_broomer",
 		"borg_upgrade_expand",
 		"borg_upgrade_prt",
+		"borg_upgrade_plunger",
 		"borg_upgrade_selfrepair",
 		"borg_upgrade_thrusters",
 		"borg_upgrade_trashofholding",
@@ -152,6 +153,7 @@
 		"ci-breather",
 		"ci-nutriment",
 		"ci-thrusters",
+		"ci-herculean",
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_3_POINTS)
 

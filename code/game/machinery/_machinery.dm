@@ -177,15 +177,15 @@
 		flags_1 |= PREVENT_CONTENTS_EXPLOSION_1
 	}
 
-	if(HAS_TRAIT(SSstation, STATION_TRAIT_BOTS_GLITCHED))
+	if(HAS_TRAIT(SSstation, STATION_TRAIT_MACHINES_GLITCHED) && mapload)
 		randomize_language_if_on_station()
 	SEND_GLOBAL_SIGNAL(COMSIG_GLOB_NEW_MACHINE, src)
 
 	return INITIALIZE_HINT_LATELOAD
 
-/obj/machinery/LateInitialize()
+/obj/machinery/LateInitialize(mapload)
 	SHOULD_NOT_OVERRIDE(TRUE)
-	post_machine_initialize()
+	post_machine_initialize(/* mapload = */ mapload)
 
 /obj/machinery/Destroy(force)
 	SSmachines.unregister_machine(src)
@@ -202,7 +202,7 @@
  * ensuring power works on all machines unless exempted with NO_POWER_USE.
  * This is the proc to override if you want to do anything in LateInitialize.
  */
-/obj/machinery/proc/post_machine_initialize()
+/obj/machinery/proc/post_machine_initialize(mapload)
 	SHOULD_CALL_PARENT(TRUE)
 	power_change()
 	if(use_power == NO_POWER_USE)
@@ -284,10 +284,21 @@
 /obj/machinery/proc/locate_machinery()
 	return
 
+///Early process for machines added to SSmachines.processing_early to prioritize power draw
+/obj/machinery/proc/process_early()
+	set waitfor = FALSE
+	return PROCESS_KILL
+
 /obj/machinery/process()//If you dont use process or power why are you here
 	return PROCESS_KILL
 
+///Late process for machines added to SSmachines.processing_late to gather accurate recordings
+/obj/machinery/proc/process_late()
+	set waitfor = FALSE
+	return PROCESS_KILL
+
 /obj/machinery/proc/process_atmos()//If you dont use process why are you here
+	set waitfor = FALSE
 	return PROCESS_KILL
 
 ///Called when we want to change the value of the machine_stat variable. Holds bitflags.
@@ -405,6 +416,10 @@
 /obj/machinery/proc/close_machine(atom/movable/target, density_to_set = TRUE)
 	state_open = FALSE
 	set_density(density_to_set)
+	if (!density)
+		update_appearance()
+		return
+
 	if(!target)
 		for(var/atom in loc)
 			if (!(can_be_occupant(atom)))

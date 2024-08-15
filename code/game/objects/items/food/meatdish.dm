@@ -34,6 +34,7 @@
 	foodtypes = SEAFOOD
 	eatverbs = list("bite", "chew", "gnaw", "swallow", "chomp")
 	w_class = WEIGHT_CLASS_SMALL
+	starting_reagent_purity = 1.0
 
 /obj/item/food/fishmeat/carp
 	name = "carp fillet"
@@ -88,6 +89,7 @@
 	name = "donkfillet"
 	desc = "The dreaded donkfish fillet. No sane spaceman would eat this, and it does not get better when cooked."
 	icon_state = "donkfillet"
+	starting_reagent_purity = 0.3
 
 /obj/item/food/fishmeat/octopus
 	name = "octopus tentacle"
@@ -896,6 +898,7 @@
 	desc = "A russian dish that consists of beef and sauce. Really popular in japan, or at least that's what my animes would allude to."
 	icon = 'icons/obj/food/meat.dmi'
 	icon_state = "beefstroganoff"
+	trash_type = /obj/item/reagent_containers/cup/bowl
 	food_reagents = list(
 		/datum/reagent/consumable/nutriment/protein = 16,
 		/datum/reagent/consumable/nutriment/vitamin = 4,

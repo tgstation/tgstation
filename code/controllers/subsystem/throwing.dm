@@ -53,7 +53,7 @@ SUBSYSTEM_DEF(throwing)
 	var/target_zone
 	///The initial direction of the thrower of the thrownthing for building the trajectory of the throw.
 	var/init_dir
-	///The maximum number of turfs that the thrownthing will travel to reach it's target.
+	///The maximum number of turfs that the thrownthing will travel to reach its target.
 	var/maxrange
 	///Turfs to travel per tick
 	var/speed
@@ -90,8 +90,9 @@ SUBSYSTEM_DEF(throwing)
 	///The last world.time value stored when the thrownthing was moving.
 	var/last_move = 0
 
-/datum/thrownthing/New(thrownthing, target, init_dir, maxrange, speed, thrower, diagonals_first, force, gentle, callback, target_zone)
+/datum/thrownthing/New(atom/movable/thrownthing, target, init_dir, maxrange, speed, thrower, diagonals_first, force, gentle, callback, target_zone)
 	. = ..()
+	thrownthing.pixel_z = thrownthing.base_pixel_z + DEPTH_OFFSET
 	src.thrownthing = thrownthing
 	RegisterSignal(thrownthing, COMSIG_QDELETING, PROC_REF(on_thrownthing_qdel))
 	src.starting_turf = get_turf(thrownthing)
@@ -235,6 +236,8 @@ SUBSYSTEM_DEF(throwing)
 		var/turf/landed_turf = get_turf(thrownthing)
 		if(landed_turf)
 			SEND_SIGNAL(landed_turf, COMSIG_TURF_MOVABLE_THROW_LANDED, thrownthing)
+		if(thrownthing.pixel_z >= DEPTH_OFFSET)
+			animate(thrownthing, pixel_z = thrownthing.base_pixel_z, easing = BACK_EASING|EASE_IN, time = 0.2 SECONDS)
 
 	qdel(src)
 

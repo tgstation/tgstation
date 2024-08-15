@@ -22,6 +22,9 @@
 	var/list/stack_overlays
 	var/scan_state = "" //Used by mineral turfs for their scan overlay.
 	var/spreadChance = 0 //Also used by mineral turfs for spreading veins
+	drop_sound = SFX_STONE_DROP
+	pickup_sound = SFX_STONE_PICKUP
+	sound_vary = TRUE
 
 /obj/item/stack/ore/update_overlays()
 	. = ..()
@@ -406,7 +409,7 @@ GLOBAL_LIST_INIT(sand_recipes, list(\
 
 /*****************************Coin********************************/
 
-// The coin's value is a value of it's materials.
+// The coin's value is a value of its materials.
 // Yes, the gold standard makes a come-back!
 // This is the only way to make coins that are possible to produce on station actually worth anything.
 /obj/item/coin

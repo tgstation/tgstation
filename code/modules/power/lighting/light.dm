@@ -12,6 +12,7 @@
 	power_channel = AREA_USAGE_LIGHT //Lights are calc'd via area so they dont need to be in the machine list
 	always_area_sensitive = TRUE
 	light_angle = 170
+	light_flags = LIGHT_IGNORE_OFFSET
 	///What overlay the light should use
 	var/overlay_icon = 'icons/obj/lighting_overlay.dmi'
 	///base description and icon_state
@@ -113,11 +114,11 @@
 	if(is_station_level(z))
 		RegisterSignal(SSdcs, COMSIG_GLOB_GREY_TIDE_LIGHT, PROC_REF(grey_tide)) //Only put the signal on station lights
 
-	// Light projects out backwards from the dir of the light
-	set_light(l_dir = REVERSE_DIR(dir))
+	set_light(l_dir = dir)
 	RegisterSignal(src, COMSIG_LIGHT_EATER_ACT, PROC_REF(on_light_eater))
 	RegisterSignal(src, COMSIG_HIT_BY_SABOTEUR, PROC_REF(on_saboteur))
 	AddElement(/datum/element/atmos_sensitive, mapload)
+	AddElement(/datum/element/contextual_screentip_bare_hands, rmb_text = "Remove bulb")
 	if(break_if_moved)
 		find_and_hang_on_wall(custom_drop_callback = CALLBACK(src, PROC_REF(knock_down)))
 
@@ -143,16 +144,19 @@
 
 /obj/machinery/light/setDir(newdir)
 	. = ..()
-	set_light(l_dir = REVERSE_DIR(dir))
+	set_light(l_dir = dir)
 
 // If we're adjacent to the source, we make this sorta indentation for our light to ensure it stays lit (and to make distances look right)
 // By shifting the light position we use forward a bit, towards something that isn't off by 0.5 from being in angle
 // Because angle calculation is kinda harsh it's hard to find a happy point between fulldark and fullbright for the corners behind the light. this is good enough tho
 /obj/machinery/light/get_light_offset()
 	var/list/hand_back = ..()
-	var/list/dir_offset = dir2offset(REVERSE_DIR(dir))
-	hand_back[1] += dir_offset[1] * 0.5
-	hand_back[2] += dir_offset[2] * 0.5
+	if(dir & SOUTH)
+		hand_back[2] -= 1
+	if(dir & EAST)
+		hand_back[1] += 0.5
+	if(dir & WEST)
+		hand_back[1] -= 0.5
 	return hand_back
 
 /obj/machinery/light/update_icon_state()
@@ -331,15 +335,15 @@
 	. = ..()
 	switch(status)
 		if(LIGHT_OK)
-			. += "It is turned [on? "on" : "off"]."
+			. += span_notice("It is turned [on? "on" : "off"].")
 		if(LIGHT_EMPTY)
-			. += "The [fitting] has been removed."
+			. +=  span_notice("The [fitting] has been removed.")
 		if(LIGHT_BURNED)
-			. += "The [fitting] is burnt out."
+			. +=  span_danger("The [fitting] is burnt out.")
 		if(LIGHT_BROKEN)
-			. += "The [fitting] has been smashed."
+			. += span_danger("The [fitting] has been smashed.")
 	if(cell || has_mock_cell)
-		. += "Its backup power charge meter reads [has_mock_cell ? 100 : round((cell.charge / cell.maxcharge) * 100, 0.1)]%."
+		. +=  span_notice("Its backup power charge meter reads [has_mock_cell ? 100 : round((cell.charge / cell.maxcharge) * 100, 0.1)]%.")
 
 
 
@@ -527,9 +531,9 @@
 // attack with hand - remove tube/bulb
 // if hands aren't protected and the light is on, burn the player
 
-/obj/machinery/light/attack_hand(mob/living/carbon/human/user, list/modifiers)
+/obj/machinery/light/attack_hand_secondary(mob/living/carbon/human/user, list/modifiers)
 	. = ..()
-	if(.)
+	if(. == SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN)
 		return
 	user.changeNext_move(CLICK_CD_MELEE)
 	add_fingerprint(user)
@@ -704,7 +708,10 @@
  * All the effects that occur when a light falls off a wall that it was hung onto.
  */
 /obj/machinery/light/proc/knock_down()
-	new /obj/item/wallframe/light_fixture(drop_location())
+	if (fitting == "bulb")
+		new /obj/item/wallframe/light_fixture/small(drop_location())
+	else
+		new /obj/item/wallframe/light_fixture(drop_location())
 	new /obj/item/stack/cable_coil(drop_location(), 1, "red")
 	if(status != LIGHT_BROKEN)
 		break_light_tube(FALSE)
@@ -728,6 +735,10 @@
 	fitting = "bulb"
 	nightshift_brightness = 3
 	fire_brightness = 4.5
+
+// No hanging for us brother
+/obj/machinery/light/floor/find_and_hang_on_wall(directional, custom_drop_callback)
+	return
 
 /obj/machinery/light/floor/get_light_offset()
 	return list(0, 0)

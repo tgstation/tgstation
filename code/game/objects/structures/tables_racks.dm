@@ -13,6 +13,9 @@
  */
 
 /obj/structure/table
+	// Shift tables down to avoid layering headaches
+	SET_BASE_PIXEL_NOMAP(0, -8)
+	SET_BASE_VISUAL_PIXEL(0, 8)
 	name = "table"
 	desc = "A square piece of iron standing on four metal legs. It can not move."
 	icon = 'icons/obj/smooth_structures/table.dmi'
@@ -37,6 +40,10 @@
 	var/buildstackamount = 1
 	var/framestackamount = 2
 	var/deconstruction_ready = TRUE
+	var/bottom_placable_y = 9
+	var/top_placable_y = 37
+	var/bottom_placable_x = 4
+	var/top_placable_x = 28
 
 /obj/structure/table/Initialize(mapload, _buildstack)
 	. = ..()
@@ -58,6 +65,7 @@
 ///Adds the element used to make the object climbable, and also the one that shift the mob buckled to it up.
 /obj/structure/table/proc/make_climbable()
 	AddElement(/datum/element/climbable)
+	AddComponent(/datum/component/climb_walkable)
 	AddElement(/datum/element/elevation, pixel_shift = 12)
 
 /obj/structure/table/add_context(atom/source, list/context, obj/item/held_item, mob/living/user)
@@ -142,15 +150,6 @@
 /obj/structure/table/attack_tk(mob/user)
 	return
 
-/obj/structure/table/CanAllowThrough(atom/movable/mover, border_dir)
-	. = ..()
-	if(.)
-		return
-	if(mover.throwing)
-		return TRUE
-	if(locate(/obj/structure/table) in get_turf(mover))
-		return TRUE
-
 /obj/structure/table/CanAStarPass(to_dir, datum/can_pass_info/pass_info)
 	if(!density)
 		return TRUE
@@ -228,69 +227,102 @@
 	if(istype(tool, /obj/item/construction/rcd))
 		return NONE
 
+	var/deck_act_value = NONE
 	if(istype(tool, /obj/item/toy/cards/deck))
-		var/obj/item/toy/cards/deck/dealer_deck = tool
-		if(HAS_TRAIT(dealer_deck, TRAIT_WIELDED)) // deal a card faceup on the table
-			var/obj/item/toy/singlecard/card = dealer_deck.draw(user)
-			if(card)
-				card.Flip()
-				attackby(card, user, list2params(modifiers))
-			return ITEM_INTERACT_SUCCESS
+		deck_act_value = deck_act(user, tool, modifiers, TRUE)
+	// Continue to placing if we don't do anything else
+	if(deck_act_value != NONE)
+		return deck_act_value
 
-	return item_interaction(user, tool, modifiers)
-
-/obj/structure/table/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
-	if(istype(tool, /obj/item/storage/bag/tray))
-		var/obj/item/storage/bag/tray/tray = tool
-		if(tray.contents.len > 0) // If the tray isn't empty
-			for(var/obj/item/thing in tray.contents)
-				AfterPutItemOnTable(thing, user)
-			tool.atom_storage.remove_all(drop_location())
-			user.visible_message(span_notice("[user] empties [tool] on [src]."))
-			return ITEM_INTERACT_SUCCESS
-		// If the tray IS empty, continue on (tray will be placed on the table like other items)
-
-	if(istype(tool, /obj/item/toy/cards/deck))
-		var/obj/item/toy/cards/deck/dealer_deck = tool
-		if(HAS_TRAIT(dealer_deck, TRAIT_WIELDED)) // deal a card facedown on the table
-			var/obj/item/toy/singlecard/card = dealer_deck.draw(user)
-			if(card)
-				attackby(card, user, list2params(modifiers))
-			return ITEM_INTERACT_SUCCESS
-
-	if(istype(tool, /obj/item/riding_offhand))
-		var/obj/item/riding_offhand/riding_item = tool
-		var/mob/living/carried_mob = riding_item.rider
-		if(carried_mob == user) //Piggyback user.
-			return NONE
-		if(user.combat_mode)
-			user.unbuckle_mob(carried_mob)
-			tablelimbsmash(user, carried_mob)
-		else
-			var/tableplace_delay = 3.5 SECONDS
-			var/skills_space = ""
-			if(HAS_TRAIT(user, TRAIT_QUICKER_CARRY))
-				tableplace_delay = 2 SECONDS
-				skills_space = " expertly"
-			else if(HAS_TRAIT(user, TRAIT_QUICK_CARRY))
-				tableplace_delay = 2.75 SECONDS
-				skills_space = " quickly"
-			carried_mob.visible_message(span_notice("[user] begins to[skills_space] place [carried_mob] onto [src]..."),
-				span_userdanger("[user] begins to[skills_space] place [carried_mob] onto [src]..."))
-			if(do_after(user, tableplace_delay, target = carried_mob))
-				user.unbuckle_mob(carried_mob)
-				tableplace(user, carried_mob)
-		return ITEM_INTERACT_SUCCESS
-
-	// Where putting things on tables is handled.
-	if(!user.combat_mode && !(tool.item_flags & ABSTRACT) && user.transferItemToLoc(tool, drop_location(), silent = FALSE))
-		//Clamp it so that the icon never moves more than 16 pixels in either direction (thus leaving the table turf)
-		tool.pixel_x = clamp(text2num(LAZYACCESS(modifiers, ICON_X)) - 16, -(world.icon_size/2), world.icon_size/2)
-		tool.pixel_y = clamp(text2num(LAZYACCESS(modifiers, ICON_Y)) - 16, -(world.icon_size/2), world.icon_size/2)
-		AfterPutItemOnTable(tool, user)
-		return ITEM_INTERACT_SUCCESS
+	if(!user.combat_mode)
+		return table_place_act(user, tool, modifiers)
 
 	return NONE
+
+/obj/structure/table/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	. = NONE
+	if(istype(tool, /obj/item/storage/bag/tray))
+		. = tray_act(user, tool)
+	else if(istype(tool, /obj/item/toy/cards/deck))
+		. = deck_act(user, tool, modifiers, FALSE)
+	else if(istype(tool, /obj/item/riding_offhand))
+		. = riding_offhand_act(user, tool)
+
+	// Continue to placing if we don't do anything else
+	if(. != NONE)
+		return .
+
+	if(!user.combat_mode)
+		return table_place_act(user, tool, modifiers)
+
+	return NONE
+
+/obj/structure/table/proc/tray_act(mob/living/user, obj/item/storage/bag/tray/used_tray)
+	if(used_tray.contents.len <= 0)
+		return NONE // If the tray IS empty, continue on (tray will be placed on the table like other items)
+
+	for(var/obj/item/thing in used_tray.contents)
+		AfterPutItemOnTable(thing, user)
+	used_tray.atom_storage.remove_all(drop_location())
+	user.visible_message(span_notice("[user] empties [used_tray] on [src]."))
+	return ITEM_INTERACT_SUCCESS
+
+/obj/structure/table/proc/deck_act(mob/living/user, obj/item/toy/cards/deck/dealer_deck, list/modifiers, flip)
+	if(!HAS_TRAIT(dealer_deck, TRAIT_WIELDED))
+		return NONE
+
+	var/obj/item/toy/singlecard/card = dealer_deck.draw(user)
+	if(isnull(card))
+		return ITEM_INTERACT_BLOCKING
+	if(flip)
+		card.Flip()
+	return table_place_act(user, card, modifiers)
+
+/obj/structure/table/proc/riding_offhand_act(mob/living/user, obj/item/riding_offhand/riding_item)
+	var/mob/living/carried_mob = riding_item.rider
+	if(carried_mob == user) //Piggyback user.
+		return NONE
+
+	if(user.combat_mode)
+		user.unbuckle_mob(carried_mob)
+		tablelimbsmash(user, carried_mob)
+		return ITEM_INTERACT_SUCCESS
+
+	var/tableplace_delay = 3.5 SECONDS
+	var/skills_space = ""
+	if(HAS_TRAIT(user, TRAIT_QUICKER_CARRY))
+		tableplace_delay = 2 SECONDS
+		skills_space = " expertly"
+	else if(HAS_TRAIT(user, TRAIT_QUICK_CARRY))
+		tableplace_delay = 2.75 SECONDS
+		skills_space = " quickly"
+
+	var/obj/item/organ/internal/cyberimp/chest/spine/potential_spine = user.get_organ_slot(ORGAN_SLOT_SPINE)
+	if(istype(potential_spine))
+		tableplace_delay *= potential_spine.athletics_boost_multiplier
+
+	carried_mob.visible_message(span_notice("[user] begins to[skills_space] place [carried_mob] onto [src]..."),
+		span_userdanger("[user] begins to[skills_space] place [carried_mob] onto [src]..."))
+	if(!do_after(user, tableplace_delay, target = carried_mob))
+		return ITEM_INTERACT_BLOCKING
+	user.unbuckle_mob(carried_mob)
+	tableplace(user, carried_mob)
+	return ITEM_INTERACT_SUCCESS
+
+// Where putting things on tables is handled.
+/obj/structure/table/proc/table_place_act(mob/living/user, obj/item/tool, list/modifiers)
+	if(tool.item_flags & ABSTRACT)
+		return NONE
+	if(!user.transferItemToLoc(tool, drop_location(), silent = FALSE))
+		return ITEM_INTERACT_BLOCKING
+	// Items are centered by default, but we move them if click ICON_X and ICON_Y are available
+	if(LAZYACCESS(modifiers, ICON_X) && LAZYACCESS(modifiers, ICON_Y))
+		//Clamp it so that the icon never moves more than 16 pixels in either direction (thus leaving the table turf)
+		// +- 8 to bound it to a typical item hitbox (16x16) instead of the assumed max of 32x32
+		tool.pixel_x = clamp(text2num(LAZYACCESS(modifiers, ICON_X)) - 16, bottom_placable_x - 8, top_placable_x + 8)
+		tool.pixel_y = clamp(text2num(LAZYACCESS(modifiers, ICON_Y)) - 16, bottom_placable_y - 8, top_placable_y + 8)
+	AfterPutItemOnTable(tool, user)
+	return ITEM_INTERACT_SUCCESS
 
 /obj/structure/table/proc/AfterPutItemOnTable(obj/item/thing, mob/living/user)
 	return
@@ -314,16 +346,33 @@
 	return FALSE
 
 /obj/structure/table/rcd_act(mob/user, obj/item/construction/rcd/the_rcd, list/rcd_data)
-	if(rcd_data["[RCD_DESIGN_MODE]"] == RCD_DECONSTRUCT)
+	if(rcd_data[RCD_DESIGN_MODE] == RCD_DECONSTRUCT)
 		qdel(src)
 		return TRUE
 	return FALSE
+
+/obj/structure/table/set_smoothed_icon_state(new_junction)
+	. = ..()
+	bottom_placable_x = initial(bottom_placable_x)
+	bottom_placable_y = initial(bottom_placable_y)
+	top_placable_x = initial(top_placable_x)
+	top_placable_y = initial(top_placable_y)
+	// Allow free movement if we smooth in a direction, while handling bounding
+	if(new_junction & NORTH)
+		top_placable_y = 32 + 8
+	if(new_junction & SOUTH)
+		bottom_placable_y = 0 - 8
+	if(new_junction & EAST)
+		top_placable_x = 32 + 8
+	if(new_junction & WEST)
+		bottom_placable_x = 0 - 8
 
 /obj/structure/table/proc/table_living(datum/source, mob/living/shover, mob/living/target, shove_flags, obj/item/weapon)
 	SIGNAL_HANDLER
 	if((shove_flags & SHOVE_KNOCKDOWN_BLOCKED) || !(shove_flags & SHOVE_BLOCKED))
 		return
 	target.Knockdown(SHOVE_KNOCKDOWN_TABLE)
+	target.apply_status_effect(/datum/status_effect/next_shove_stuns)
 	target.visible_message(span_danger("[shover.name] shoves [target.name] onto \the [src]!"),
 		span_userdanger("You're shoved onto \the [src] by [shover.name]!"), span_hear("You hear aggressive shuffling followed by a loud thud!"), COMBAT_MESSAGE_RANGE, shover)
 	to_chat(shover, span_danger("You shove [target.name] onto \the [src]!"))
@@ -348,6 +397,8 @@
 
 ///Table on wheels
 /obj/structure/table/rolling
+	SET_BASE_PIXEL(0, 0)
+	SET_BASE_VISUAL_PIXEL(0, DEPTH_OFFSET)
 	name = "Rolling table"
 	desc = "An NT brand \"Rolly poly\" rolling table. It can and will move."
 	anchored = FALSE
@@ -356,6 +407,11 @@
 	canSmoothWith = null
 	icon = 'icons/obj/smooth_structures/rollingtable.dmi'
 	icon_state = "rollingtable"
+	// this one's 32x32 so it uses different clickable bounds
+	bottom_placable_y = 12
+	top_placable_y = 29
+	bottom_placable_x = 4
+	top_placable_x = 28
 	/// Lazylist of the items that we have on our surface.
 	var/list/attached_items = null
 
@@ -720,6 +776,7 @@
  */
 
 /obj/structure/table/optable
+	SET_BASE_VISUAL_PIXEL(0, DEPTH_OFFSET)
 	name = "operating table"
 	desc = "Used for advanced medical procedures."
 	icon = 'icons/obj/medical/surgery_table.dmi'
@@ -818,7 +875,7 @@
 	layer = TABLE_LAYER
 	density = TRUE
 	anchored = TRUE
-	pass_flags_self = LETPASSTHROW //You can throw objects over this, despite it's density.
+	pass_flags_self = LETPASSTHROW //You can throw objects over this, despite its density.
 	max_integrity = 20
 
 /obj/structure/rack/skeletal

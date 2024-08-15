@@ -1,6 +1,6 @@
 // Soybeans
 /obj/item/seeds/soya
-	name = "pack of soybean seeds"
+	name = "soybean seed pack"
 	desc = "These seeds grow into soybean plants."
 	icon_state = "seed-soybean"
 	species = "soybean"
@@ -30,7 +30,7 @@
 
 // Koibean
 /obj/item/seeds/soya/koi
-	name = "pack of koibean seeds"
+	name = "koibean seed pack"
 	desc = "These seeds grow into koibean plants."
 	icon_state = "seed-koibean"
 	species = "koibean"
@@ -44,16 +44,26 @@
 /obj/item/food/grown/koibeans
 	seed = /obj/item/seeds/soya/koi
 	name = "koibean"
-	desc = "Something about these seems fishy."
+	desc = "Something about these seems fishy, they seem really soft, almost squeezable!"
 	icon_state = "koibeans"
 	foodtypes = VEGETABLES
 	tastes = list("koi" = 1)
 	wine_power = 40
 
+//Now squeezable for imitation carpmeat
+/obj/item/food/grown/koibeans/attack_self(mob/living/user)
+	user.visible_message(span_notice("[user] crushes [src] into a slab of carplike meat."), span_notice("You crush [src] into something that resembles a slab of carplike meat."))
+	playsound(user, 'sound/effects/blobattack.ogg', 50, TRUE)
+	var/obj/item/food/fishmeat/carp/imitation/fishie = new(null)
+	fishie.reagents.set_all_reagents_purity(seed.get_reagent_purity())
+	qdel(src)
+	user.put_in_hands(fishie)
+	return TRUE
+
 //Butterbeans, the beans wid da butta!
 // Butterbeans! - Squeeze for a single butter slice!
 /obj/item/seeds/soya/butter
-	name = "pack of butterbean seeds"
+	name = "butterbean seed pack"
 	desc = "These seeds grow into butterbean plants."
 	icon_state = "seed-butterbean"
 	species = "butterbean"
@@ -84,7 +94,7 @@
 
 // Green Beans
 /obj/item/seeds/greenbean
-	name = "pack of green bean seeds"
+	name = "green bean seed pack"
 	desc = "These seeds grow into green bean plants."
 	icon_state = "seed-greenbean"
 	species = "greenbean"
@@ -113,7 +123,7 @@
 
 // Jumping Bean
 /obj/item/seeds/greenbean/jump
-	name = "pack of jumping bean seeds"
+	name = "jumping bean seed pack"
 	desc = "These seeds grow into jumping bean plants."
 	icon_state = "seed-jumpingbean"
 	species = "jumpingbean"

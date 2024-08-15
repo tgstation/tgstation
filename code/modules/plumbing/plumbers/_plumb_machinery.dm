@@ -109,6 +109,17 @@
  */
 /datum/reagents/plumbing
 
+/**
+ * Same as the parent trans_to except only a few arguments have impact here & the rest of the arguments are discarded.
+ * Arguments
+ *
+ * * atom/target - the target we are transfering to
+ * * amount - amount to transfer
+ * * datum/reagent/target_id - the reagent id we want to transfer. if null everything gets transfered
+ * * methods - this is key for deciding between round-robin or proportional transfer. It does not mean the same as the
+ * parent proc. LINEAR for round robin(in this technique reagents are missing/lost/not preserved when there isn't enough space to hold them)
+ * NONE means everything is transfered regardless of how much space is available in the receiver in proportions
+ */
 /datum/reagents/plumbing/trans_to(
 	atom/target,
 	amount = 1,
@@ -118,7 +129,7 @@
 	no_react = FALSE, //unused for plumbing we always want reactions
 	mob/transferred_by, //unused for plumbing logging is not important inside plumbing machines
 	remove_blacklisted = FALSE, //unused for plumbing, we don't care what reagents are inside us
-	methods = NONE, //unused for plumbing
+	methods = LINEAR, //default round robin technique for transferring reagents
 	show_message = TRUE, //unused for plumbing, used for logging only
 	ignore_stomach = FALSE //unused for plumbing, reagents flow only between machines & is not injected to mobs at any point in time
 )
@@ -139,8 +150,6 @@
 	else
 		target_holder = target.reagents
 
-	var/cached_amount = amount
-
 	// Prevents small amount problems, as well as zero and below zero amounts.
 	amount = round(min(amount, total_volume, target_holder.maximum_volume - target_holder.total_volume), CHEMICAL_QUANTISATION_LEVEL)
 	if(amount <= 0)
@@ -153,32 +162,45 @@
 	var/list/reagents_to_remove = list()
 	var/transfer_amount
 	var/transfered_amount
-	var/to_transfer = amount
 	var/total_transfered_amount = 0
+
+	var/round_robin = methods & LINEAR
+	var/part
+	var/to_transfer
+	if(round_robin)
+		to_transfer = amount
+	else
+		part = amount / total_volume
 
 	//first add reagents to target
 	for(var/datum/reagent/reagent as anything in cached_reagents)
-		if(!to_transfer)
+		if(round_robin && !to_transfer)
 			break
 
 		if(!isnull(target_id))
 			if(reagent.type == target_id)
 				force_stop_reagent_reacting(reagent)
-				transfer_amount = min(to_transfer, reagent.volume)
+				transfer_amount = min(amount, reagent.volume)
 			else
 				continue
 		else
-			transfer_amount = min(to_transfer, reagent.volume)
+			if(round_robin)
+				transfer_amount = min(to_transfer, reagent.volume)
+			else
+				transfer_amount = reagent.volume * part
 
-		if(reagent.intercept_reagents_transfer(target_holder, cached_amount))
+		if(reagent.intercept_reagents_transfer(target_holder, amount))
+			update_total()
+			target_holder.update_total()
 			continue
 
-		transfered_amount = target_holder.add_reagent(reagent.type, transfer_amount * multiplier, copy_data(reagent), chem_temp, reagent.purity, reagent.ph, no_react = TRUE, ignore_splitting = reagent.chemical_flags & REAGENT_DONOTSPLIT) //we only handle reaction after every reagent has been transferred.
+		transfered_amount = target_holder.add_reagent(reagent.type, transfer_amount, copy_data(reagent), chem_temp, reagent.purity, reagent.ph, no_react = TRUE, ignore_splitting = reagent.chemical_flags & REAGENT_DONOTSPLIT) //we only handle reaction after every reagent has been transferred.
 		if(!transfered_amount)
 			continue
 		reagents_to_remove += list(list("R" = reagent, "T" = transfer_amount))
 		total_transfered_amount += transfered_amount
-		to_transfer -= transfered_amount
+		if(round_robin)
+			to_transfer -= transfered_amount
 
 		if(!isnull(target_id))
 			break

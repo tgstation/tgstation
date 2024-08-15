@@ -257,6 +257,11 @@ ADMIN_VERB(secrets, R_NONE, "Secrets", "Abuse harder than you ever have before w
 				return
 			holder.anon_names()
 			SSblackbox.record_feedback("nested tally", "admin_secrets_fun_used", 1, list("Anonymous Names"))
+		if("tripleAI")
+			if(!is_funmin)
+				return
+			holder.triple_ai()
+			SSblackbox.record_feedback("nested tally", "admin_secrets_fun_used", 1, list("Triple AI"))
 		if("onlyone")
 			if(!is_funmin)
 				return
@@ -414,7 +419,7 @@ ADMIN_VERB(secrets, R_NONE, "Secrets", "Abuse harder than you ever have before w
 				var/list/storm_appearances = list()
 				for(var/offset in 0 to SSmapping.max_plane_offset)
 					var/mutable_appearance/storm = mutable_appearance('icons/obj/machines/engine/energy_ball.dmi', "energy_ball_fast", FLY_LAYER)
-					SET_PLANE_W_SCALAR(storm, ABOVE_GAME_PLANE, offset)
+					SET_PLANE_W_SCALAR(storm, GAME_PLANE, offset)
 					storm.color = prefs["color"]["value"]
 					storm_appearances += storm
 

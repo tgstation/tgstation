@@ -57,15 +57,30 @@
 	return if_no_id
 
 //repurposed proc. Now it combines get_id_name() and get_face_name() to determine a mob's name variable. Made into a separate proc as it'll be useful elsewhere
-/mob/living/carbon/human/get_visible_name(add_id_name = TRUE)
-	if(HAS_TRAIT(src, TRAIT_UNKNOWN))
-		return "Unknown"
-	var/list/identity = list(null, null)
+/mob/living/carbon/human/get_visible_name(add_id_name = TRUE, force_real_name = FALSE)
+	var/list/identity = list(null, null, null)
 	SEND_SIGNAL(src, COMSIG_HUMAN_GET_VISIBLE_NAME, identity)
 	var/signal_face = LAZYACCESS(identity, VISIBLE_NAME_FACE)
 	var/signal_id = LAZYACCESS(identity, VISIBLE_NAME_ID)
+	var/force_set = LAZYACCESS(identity, VISIBLE_NAME_FORCED)
+	if(force_set) // our name is overriden by something
+		return signal_face // no need to null-check, because force_set will always set a signal_face
 	var/face_name = !isnull(signal_face) ? signal_face : get_face_name("")
 	var/id_name = !isnull(signal_id) ? signal_id : get_id_name("")
+	if (force_real_name)
+		var/fake_name
+		if (face_name && face_name != real_name)
+			fake_name = face_name
+		if(add_id_name && id_name && id_name != real_name)
+			if (!isnull(fake_name) && id_name != face_name)
+				fake_name = "[fake_name]/[id_name]"
+			else
+				fake_name = id_name
+		if (HAS_TRAIT(src, TRAIT_UNKNOWN) || (!face_name && !id_name))
+			fake_name = "Unknown"
+		return "[real_name][fake_name ? " (as [fake_name])" : ""]"
+	if(HAS_TRAIT(src, TRAIT_UNKNOWN))
+		return "Unknown"
 	if(face_name)
 		if(add_id_name && id_name && (id_name != face_name))
 			return "[face_name] (as [id_name])"
@@ -95,6 +110,11 @@
 	var/obj/item/card/id/id = wear_id
 	if(HAS_TRAIT(src, TRAIT_UNKNOWN))
 		. = if_no_id //You get NOTHING, no id name, good day sir
+		var/list/identity = list(null, null, null)
+		SEND_SIGNAL(src, COMSIG_HUMAN_GET_FORCED_NAME, identity)
+		if(identity[VISIBLE_NAME_FORCED])
+			. = identity[VISIBLE_NAME_FACE] // to return forced names when unknown, instead of ID
+			return
 	if(istype(wallet))
 		id = wallet.front_id
 	if(istype(id))

@@ -250,6 +250,18 @@
 	icon_state = "mixer_on-0_f"
 	flipped = TRUE
 
+/obj/machinery/atmospherics/components/trinary/mixer/airmix/flipped/layer1
+	piping_layer = 1
+
+/obj/machinery/atmospherics/components/trinary/mixer/airmix/flipped/layer2
+	piping_layer = 2
+
+/obj/machinery/atmospherics/components/trinary/mixer/airmix/flipped/layer4
+	piping_layer = 4
+
+/obj/machinery/atmospherics/components/trinary/mixer/airmix/flipped/layer5
+	piping_layer = 5
+
 /obj/machinery/atmospherics/components/trinary/mixer/airmix/flipped/inverse
 	node1_concentration = O2STANDARD
 	node2_concentration = N2STANDARD

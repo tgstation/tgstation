@@ -81,6 +81,55 @@
 	required_temperature_max = MIN_AQUARIUM_TEMP+30
 	beauty = FISH_BEAUTY_GOOD
 
+/obj/item/fish/tadpole
+	name = "tadpole"
+	desc = "The larval spawn of an amphibian. A very minuscle, round creature with a long tail it uses to swim around."
+	icon_state = "tadpole"
+	dedicated_in_aquarium_icon_state = "tadpole small"
+	average_size = 3
+	average_weight = 10
+	sprite_width = 3
+	sprite_height = 1
+	health = 50
+	feeding_frequency = 1.5 MINUTES
+	required_temperature_min = MIN_AQUARIUM_TEMP+15
+	required_temperature_max = MIN_AQUARIUM_TEMP+20
+	fillet_type = null
+	fish_traits = list(/datum/fish_trait/no_mating) //They grow into frogs and that's it.
+	beauty = FISH_BEAUTY_NULL
+	random_case_rarity = FISH_RARITY_NOPE //Why would you want generic frog tadpoles you get from ponds inside fish cases?
+	/// Once dead, tadpoles disappear after a dozen seconds, since you can get infinite tadpoles.
+	var/del_timerid
+
+/obj/item/fish/tadpole/Initialize(mapload, apply_qualities = TRUE)
+	. = ..()
+	AddComponent(/datum/component/fish_growth, /mob/living/basic/frog, 100 / rand(2.5, 3 MINUTES) * 10)
+	RegisterSignal(src, COMSIG_FISH_BEFORE_GROWING, PROC_REF(growth_checks))
+	RegisterSignal(src, COMSIG_FISH_FINISH_GROWING, PROC_REF(on_growth))
+
+/obj/item/fish/tadpole/set_status(new_status)
+	. = ..()
+	if(status == FISH_DEAD)
+		del_timerid = QDEL_IN_STOPPABLE(src, 12 SECONDS)
+	else
+		deltimer(del_timerid)
+
+/obj/item/fish/tadpole/proc/growth_checks(datum/source, seconds_per_tick)
+	SIGNAL_HANDLER
+	var/hunger = CLAMP01((world.time - last_feeding) / feeding_frequency)
+	if(hunger >= 0.7) //too hungry to grow
+		return COMPONENT_DONT_GROW
+	var/obj/structure/aquarium/aquarium = loc
+	if(!aquarium.allow_breeding) //the aquarium has breeding disabled
+		return COMPONENT_DONT_GROW
+
+/obj/item/fish/tadpole/proc/on_growth(datum/source, mob/living/basic/frog/result)
+	SIGNAL_HANDLER
+	playsound(result, result.attack_sound, 50, TRUE) // reeeeeeeeeeeeeee...
+
+/obj/item/fish/tadpole/get_export_price(price, percent)
+	return 2 //two credits. Tadpoles aren't really that valueable.
+
 // Saltwater fish below
 
 /obj/item/fish/clownfish
@@ -243,7 +292,7 @@
 	required_temperature_min = MIN_AQUARIUM_TEMP+10
 	required_temperature_max = MIN_AQUARIUM_TEMP+32
 
-//Chasm fish
+/// Commonly found on the mining fishing spots. Can be grown into lobstrosities
 /obj/item/fish/chasm_crab
 	name = "chasm chrab"
 	desc = "The young of the lobstrosity mature in pools below the earth, eating what falls in until large enough to clamber out. Those found near the station are well-fed."
@@ -252,7 +301,7 @@
 	sprite_height = 9
 	sprite_width = 8
 	stable_population = 4
-	feeding_frequency = 15 MINUTES
+	feeding_frequency = 10 MINUTES
 	random_case_rarity = FISH_RARITY_RARE
 	fillet_type = /obj/item/food/meat/slab/rawcrab
 	required_temperature_min = MIN_AQUARIUM_TEMP+9
@@ -270,17 +319,84 @@
 	evolution_types = list(/datum/fish_evolution/ice_chrab)
 	compatible_types = list(/obj/item/fish/chasm_crab/ice)
 	beauty = FISH_BEAUTY_GOOD
+	///This value represents how much the crab needs aren't being met. Higher values translate to a more likely hostile lobstrosity.
+	var/anger = 0
+	///The lobstrosity type this matures into
+	var/lob_type = /mob/living/basic/mining/lobstrosity/juvenile/lava
+	///at which rate the crab gains maturation
+	var/growth_rate = 100 / (10 MINUTES) * 10
+
+/obj/item/fish/chasm_crab/Initialize(mapload, apply_qualities = TRUE)
+	. = ..()
+	RegisterSignal(src, COMSIG_FISH_BEFORE_GROWING, PROC_REF(growth_checks))
+	RegisterSignal(src, COMSIG_FISH_FINISH_GROWING, PROC_REF(on_growth))
+
+///A chasm crab growth speed is determined by its initial weight and size, ergo bigger crabs for faster lobstrosities
+/obj/item/fish/chasm_crab/update_size_and_weight(new_size = average_size, new_weight = average_weight)
+	. = ..()
+	var/multiplier = 1
+	switch(size)
+		if(0 to FISH_SIZE_TINY_MAX)
+			multiplier -= 0.2
+		if(FISH_SIZE_SMALL_MAX to FISH_SIZE_NORMAL_MAX)
+			multiplier += 0.2
+		if(FISH_SIZE_NORMAL_MAX to FISH_SIZE_BULKY_MAX)
+			multiplier += 0.5
+		if(FISH_SIZE_BULKY_MAX to INFINITY)
+			multiplier += 0.8
+
+	if(weight <= 800)
+		multiplier -= 0.1 * round((1000 - weight) / 200)
+	else if(weight >= 1500)
+		multiplier += min(0.1 * round((weight - 1000) / 500), 2)
+
+	AddComponent(/datum/component/fish_growth, lob_type, initial(growth_rate) * multiplier)
+
+/obj/item/fish/chasm_crab/proc/growth_checks(datum/source, seconds_per_tick)
+	SIGNAL_HANDLER
+	var/hunger = CLAMP01((world.time - last_feeding) / feeding_frequency)
+	if(health <= initial(health) * 0.6 || hunger >= 0.6) //if too hurt or hungry, don't grow.
+		anger += growth_rate * 2 * seconds_per_tick
+		return COMPONENT_DONT_GROW
+
+	if(hunger >= 0.4) //I'm hungry and angry
+		anger += growth_rate * 0.6 * seconds_per_tick
+
+	if(!isaquarium(loc))
+		return
+
+	var/obj/structure/aquarium/aquarium = loc
+	if(!aquarium.allow_breeding) //the aquarium has breeding disabled
+		return COMPONENT_DONT_GROW
+	if(!locate(/obj/item/aquarium_prop) in aquarium) //the aquarium deco is quite barren
+		anger += growth_rate * 0.25 * seconds_per_tick
+	var/fish_count = length(aquarium.get_fishes())
+	if(!ISINRANGE(fish_count, 3, AQUARIUM_MAX_BREEDING_POPULATION * 0.5)) //too lonely or overcrowded
+		anger += growth_rate * 0.3 * seconds_per_tick
+	if(fish_count > AQUARIUM_MAX_BREEDING_POPULATION * 0.5) //check if there's enough room to maturate.
+		return COMPONENT_DONT_GROW
+
+/obj/item/fish/chasm_crab/proc/on_growth(datum/source, mob/living/basic/mining/lobstrosity/juvenile/result)
+	SIGNAL_HANDLER
+	if(!prob(anger))
+		result.AddElement(/datum/element/ai_retaliate)
+		qdel(result.ai_controller)
+		result.ai_controller = new /datum/ai_controller/basic_controller/lobstrosity/juvenile/calm(result)
+	else if(anger < 30) //not really that mad, just a bit unstable.
+		qdel(result.ai_controller)
+		result.ai_controller = new /datum/ai_controller/basic_controller/lobstrosity/juvenile/capricious(result)
 
 /obj/item/fish/chasm_crab/ice
 	name = "arctic chrab"
 	desc = "A subspecies of chasm chrabs that has adapted to the cold climate and lack of abysmal holes of the icemoon."
 	icon_state = "arctic_chrab"
-	dedicated_in_aquarium_icon_state = "ice_chrab_small"
+	dedicated_in_aquarium_icon_state = "arctic_chrab_small"
 	required_temperature_min = ICEBOX_MIN_TEMPERATURE-20
 	required_temperature_max = MIN_AQUARIUM_TEMP+15
 	evolution_types = list(/datum/fish_evolution/chasm_chrab)
 	compatible_types = list(/obj/item/fish/chasm_crab)
 	beauty = FISH_BEAUTY_GREAT
+	lob_type = /mob/living/basic/mining/lobstrosity/juvenile
 
 /obj/item/fish/donkfish
 	name = "donk co. company patent donkfish"
@@ -317,7 +433,7 @@
 	sprite_height = 5
 	stable_population = 12
 	average_size = 110
-	average_weight = 10000
+	average_weight = 6000
 	random_case_rarity = FISH_RARITY_GOOD_LUCK_FINDING_THIS
 	required_temperature_min = MIN_AQUARIUM_TEMP+10
 	required_temperature_max = MIN_AQUARIUM_TEMP+30
@@ -349,7 +465,7 @@
 	)
 	beauty = FISH_BEAUTY_DISGUSTING
 
-/obj/item/fish/ratfish/Initialize(mapload)
+/obj/item/fish/ratfish/Initialize(mapload, apply_qualities = TRUE)
 	. = ..()
 	//stable pop reflects the config for how many mice migrate. powerful...
 	stable_population = CONFIG_GET(number/mice_roundstart)
@@ -366,7 +482,7 @@
 	average_size = 20
 	average_weight = 400
 	health = 50
-	breeding_timeout = 5 MINUTES
+	breeding_timeout = 2.5 MINUTES
 	fish_traits = list(/datum/fish_trait/parthenogenesis, /datum/fish_trait/no_mating)
 	required_temperature_min = MIN_AQUARIUM_TEMP+10
 	required_temperature_max = MIN_AQUARIUM_TEMP+40
@@ -424,7 +540,7 @@
 	min_pressure = HAZARD_LOW_PRESSURE
 	health = 150
 	stable_population = 3
-	grind_results = list(/datum/reagent/bone_dust = 20)
+	grind_results = list(/datum/reagent/bone_dust = 10)
 	fillet_type = /obj/item/stack/sheet/bone
 	num_fillets = 2
 	fish_traits = list(/datum/fish_trait/revival, /datum/fish_trait/carnivore)
@@ -452,7 +568,7 @@
 	min_pressure = HAZARD_LOW_PRESSURE
 	health = 300
 	stable_population = 2 //This means they can only crossbreed.
-	grind_results = list(/datum/reagent/bone_dust = 15, /datum/reagent/consumable/liquidgibs = 5)
+	grind_results = list(/datum/reagent/bone_dust = 5, /datum/reagent/consumable/liquidgibs = 5)
 	fillet_type = /obj/item/stack/sheet/bone
 	num_fillets = 2
 	feeding_frequency = 2 MINUTES
@@ -481,7 +597,7 @@
 	fish_traits = list(/datum/fish_trait/no_mating) //just to be sure, these shouldn't reproduce
 	experisci_scannable = FALSE
 
-/obj/item/fish/holo/Initialize(mapload)
+/obj/item/fish/holo/Initialize(mapload, apply_qualities = TRUE)
 	. = ..()
 	var/area/station/holodeck/holo_area = get_area(src)
 	if(!istype(holo_area))
@@ -565,12 +681,12 @@
 	safe_air_limits = null
 	min_pressure = 0
 	max_pressure = INFINITY
-	grind_results = list(/datum/reagent/bluespace = 10, /datum/reagent/consumable/liquidgibs = 5)
+	grind_results = list(/datum/reagent/bluespace = 10)
 	fillet_type = null
 	fish_traits = list(/datum/fish_trait/antigrav, /datum/fish_trait/mixotroph)
 	beauty = FISH_BEAUTY_GREAT
 
-/obj/item/fish/starfish/Initialize(mapload)
+/obj/item/fish/starfish/Initialize(mapload, apply_qualities = TRUE)
 	. = ..()
 	update_appearance(UPDATE_OVERLAYS)
 
@@ -608,7 +724,7 @@
 	///maximum bonus damage when winded up
 	var/maximum_bonus = 25
 
-/obj/item/fish/lavaloop/Initialize(mapload)
+/obj/item/fish/lavaloop/Initialize(mapload, apply_qualities = TRUE)
 	. = ..()
 	ADD_TRAIT(src, TRAIT_BYPASS_RANGED_ARMOR, INNATE_TRAIT)
 	AddComponent(/datum/component/boomerang, throw_range, TRUE)

@@ -5,7 +5,7 @@
 	/// The MOD core we apply to the suit.
 	var/applied_core = /obj/item/mod/core/standard
 	/// The cell we apply to the core. Only applies to standard core suits.
-	var/applied_cell = /obj/item/stock_parts/power_store/cell/high
+	var/applied_cell = /obj/item/stock_parts/power_store/cell/super
 	/// List of modules we spawn with.
 	var/list/applied_modules = list()
 	/// Modules that we pin when the suit is installed for the first time, for convenience, can be applied or theme inbuilt modules.
@@ -40,6 +40,14 @@
 		default_pins -= old_module
 
 /obj/item/mod/control/pre_equipped/standard
+	applied_modules = list(
+		/obj/item/mod/module/storage,
+		/obj/item/mod/module/welding,
+		/obj/item/mod/module/flashlight,
+	)
+
+/obj/item/mod/control/pre_equipped/civilian
+	theme = /datum/mod_theme/civilian
 	applied_modules = list(
 		/obj/item/mod/module/storage,
 		/obj/item/mod/module/welding,
@@ -115,7 +123,7 @@
 	theme = /datum/mod_theme/mining
 	applied_core = /obj/item/mod/core/plasma
 	applied_modules = list(
-		/obj/item/mod/module/storage,
+		/obj/item/mod/module/storage/large_capacity,
 		/obj/item/mod/module/gps,
 		/obj/item/mod/module/orebag,
 		/obj/item/mod/module/clamp,
@@ -165,11 +173,14 @@
 		/obj/item/mod/module/storage,
 		/obj/item/mod/module/magnetic_harness,
 		/obj/item/mod/module/flashlight,
+		/obj/item/mod/module/jetpack,
 		/obj/item/mod/module/pepper_shoulders,
 		/obj/item/mod/module/criminalcapture,
-		/obj/item/mod/module/dispenser/mirage,
 		/obj/item/mod/module/quick_cuff,
 		/obj/item/mod/module/headprotector,
+	)
+	default_pins = list(
+		/obj/item/mod/module/jetpack,
 	)
 
 /obj/item/mod/control/pre_equipped/safeguard
@@ -351,6 +362,9 @@
 		/obj/item/mod/module/quick_cuff,
 	)
 
+/obj/item/mod/control/pre_equipped/infiltrator/Initialize(mapload, new_theme, new_skin, new_core)
+	. = ..()
+	ADD_TRAIT(src, TRAIT_CONTRABAND_BLOCKER, INNATE_TRAIT)
 
 /obj/item/mod/control/pre_equipped/interdyne
 	theme = /datum/mod_theme/interdyne
@@ -479,7 +493,7 @@
 
 /obj/item/mod/control/pre_equipped/responsory/janitor
 	insignia_type = /obj/item/mod/module/insignia/janitor
-	additional_module = /obj/item/mod/module/clamp
+	additional_module = /obj/item/mod/module/noslip
 
 /obj/item/mod/control/pre_equipped/responsory/clown
 	insignia_type = /obj/item/mod/module/insignia/clown

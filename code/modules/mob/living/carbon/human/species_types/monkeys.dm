@@ -1,7 +1,7 @@
 #define MONKEY_SPEC_ATTACK_BITE_MISS_CHANCE 25
 
 /datum/species/monkey
-	name = "Monkey"
+	name = "\improper Monkey"
 	id = SPECIES_MONKEY
 	external_organs = list(
 		/obj/item/organ/external/tail/monkey = "Monkey",
@@ -12,7 +12,6 @@
 	meat = /obj/item/food/meat/slab/monkey
 	knife_butcher_results = list(/obj/item/food/meat/slab/monkey = 5, /obj/item/stack/sheet/animalhide/monkey = 1)
 	inherent_traits = list(
-		TRAIT_GUN_NATURAL,
 		TRAIT_NO_AUGMENTS,
 		TRAIT_NO_BLOOD_OVERLAY,
 		TRAIT_NO_DNA_COPY,
@@ -22,6 +21,7 @@
 	)
 	no_equip_flags = ITEM_SLOT_OCLOTHING | ITEM_SLOT_GLOVES | ITEM_SLOT_FEET | ITEM_SLOT_SUITSTORE
 	changesource_flags = MIRROR_BADMIN | WABBAJACK | MIRROR_PRIDE | MIRROR_MAGIC | ERT_SPAWN | SLIME_EXTRACT
+	species_cookie = /obj/item/food/grown/banana
 	inherent_factions = list(FACTION_MONKEY)
 	sexes = FALSE
 	species_language_holder = /datum/language_holder/monkey
@@ -127,7 +127,7 @@
 /obj/item/organ/internal/brain/primate //Ook Ook
 	name = "Primate Brain"
 	desc = "This wad of meat is small, but has enlaged occipital lobes for spotting bananas."
-	organ_traits = list(TRAIT_CAN_STRIP, TRAIT_PRIMITIVE) // No literacy or advanced tool usage.
+	organ_traits = list(TRAIT_CAN_STRIP, TRAIT_PRIMITIVE, TRAIT_GUN_NATURAL) // No literacy or advanced tool usage.
 	actions_types = list(/datum/action/item_action/organ_action/toggle_trip)
 	/// Will this monkey stumble if they are crossed by a simple mob or a carbon in combat mode? Toggable by monkeys with clients, and is messed automatically set to true by monkey AI.
 	var/tripping = TRUE

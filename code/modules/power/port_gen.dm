@@ -1,5 +1,6 @@
-//Baseline portable generator. Has all the default handling. Not intended to be used on it's own (since it generates unlimited power).
+//Baseline portable generator. Has all the default handling. Not intended to be used on its own (since it generates unlimited power).
 /obj/machinery/power/port_gen
+	SET_BASE_VISUAL_PIXEL(0, DEPTH_OFFSET)
 	name = "portable generator"
 	desc = "A portable generator for emergency backup power."
 	icon = 'icons/obj/machines/engine/other.dmi'
