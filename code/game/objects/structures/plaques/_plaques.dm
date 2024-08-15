@@ -34,7 +34,7 @@ WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/structure/plaque)
 	if(!iswallturf(get_step(src, REVERSE_DIR(dir))))
 		SET_PLANE_EXPLICIT(src, FLOOR_PLANE, loc)
 		AddComponent(/datum/component/turf_mounted, loc, custom_drop_callback) //changing the tile will drop the plaque.
-		layer = BELOW_OPEN_DOOR_LAYER
+		layer = ABOVE_CATWALK_LAYER
 		return //floor plaques are a thing, messieur.
 	return ..()
 

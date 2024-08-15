@@ -172,6 +172,7 @@
 #define ABOVE_OPEN_TURF_LAYER (12 + TOPDOWN_LAYER)
 ///catwalk overlay of /turf/open/floor/plating/catwalk_floor
 #define CATWALK_LAYER (13 + TOPDOWN_LAYER)
+#define ABOVE_CATWALK_LAYER (14 + TOPDOWN_LAYER)
 
 //GAME_PLANE layers
 #define BELOW_CLOSED_TURF_LAYER 2.053
