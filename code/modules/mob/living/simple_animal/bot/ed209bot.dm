@@ -1,7 +1,10 @@
 /mob/living/simple_animal/bot/secbot/ed209
+	SET_BASE_VISUAL_PIXEL(0, 9)
 	name = "\improper ED-209 Security Robot"
 	desc = "A security robot. He looks less than thrilled."
 	icon_state = "ed209"
+	shadow_type = SHADOW_LARGE
+	shadow_offset_y = 1
 	light_color = "#f84e4e"
 	density = TRUE
 	health = 100
