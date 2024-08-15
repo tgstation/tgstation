@@ -398,7 +398,6 @@
 "ci" = (
 /obj/structure/cannon{
 	dir = 8;
-	icon = 'icons/obj/weapons/cannons.dmi'
 	icon_state = "falconet_patina"
 	},
 /turf/open/floor/sepia,
