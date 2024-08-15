@@ -31,6 +31,7 @@
 	icon_state = "ghost_spawn"
 
 	density = FALSE
+	anchored = TRUE
 	resistance_flags = INDESTRUCTIBLE
 
 	plane = GHOST_PLANE
