@@ -53,6 +53,7 @@
 		atom_parent.update_appearance(UPDATE_OVERLAYS)
 
 /datum/component/drop_shadow/RegisterWithParent()
+	RegisterSignal(parent, COMSIG_MOVABLE_MOVED, PROC_REF(on_moved))
 	RegisterSignal(parent, COMSIG_ATOM_UPDATE_OVERLAYS, PROC_REF(on_update_overlays))
 	RegisterSignals(parent, list(COMSIG_ATOM_FULTON_BEGAN, COMSIG_ATOM_BEGAN_ORBITING), PROC_REF(hide_shadow))
 	RegisterSignals(parent, list(COMSIG_ATOM_FULTON_LANDED, COMSIG_ATOM_STOPPED_ORBITING), PROC_REF(show_shadow))
@@ -77,6 +78,7 @@
 		COMSIG_LIVING_POST_UPDATE_TRANSFORM,
 		COMSIG_MOB_BUCKLED,
 		COMSIG_MOB_UNBUCKLED,
+		COMSIG_MOVABLE_MOVED
 		SIGNAL_ADDTRAIT(TRAIT_SHADOWLESS),
 		SIGNAL_REMOVETRAIT(TRAIT_SHADOWLESS),
 	))
@@ -95,6 +97,13 @@
 	if (!HAS_TRAIT(parent, TRAIT_SHADOWLESS))
 		var/atom/atom_parent = parent
 		atom_parent.update_appearance(UPDATE_OVERLAYS)
+
+/datum/component/drop_shadow/proc/on_moved(atom/movable/mover, turf/old_loc)
+	SIGNAL_HANDLER
+	if(isgroundlessturf(mover.loc))
+		ADD_TRAIT(mover, TRAIT_SHADOWLESS, REF(src))
+	else
+		REMOVE_TRAIT(mover, TRAIT_SHADOWLESS, REF(src))
 
 /// Handles actually displaying it
 /datum/component/drop_shadow/proc/on_update_overlays(atom/source, list/overlays)
