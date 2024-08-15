@@ -1,9 +1,0 @@
-author: "ThePooba"
-delete-after: True
-changes:
-  - bugfix: "Nullrod no longer banes for 270 damage on EVERYTHING"
-  - bugfix: "Premium combat medical kit now comes with a Cyberlink for your hacked surgery tool (nukeops)"
-  - bugfix: "the m-90GL now uses 5.56 instead of .223 which was not purchaseable (nukeops)"
-  - bugfix: "the bandana that was in the CQC kit was lost to time and has been replaced with a skull bandana, an thermal eyepatch, and snake plushie (+2 tc cost increase) (nukeops)"
-  - bugfix: "some bundles moved into weapon kits (nukeops)"
-  - rscadd: "Energy sword and Board kit enabled in weapon kits (nukeops, 20tc)"

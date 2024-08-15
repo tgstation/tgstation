@@ -195,3 +195,16 @@
   - sound: Pouring things makes sounds now
   - sound: IPCs/Silicons drinking will now have a 1/15 chance of getting a rush of
       enhanced flavor.
+2024-08-15:
+  ThePooba:
+  - bugfix: Nullrod no longer banes for 270 damage on EVERYTHING
+  - bugfix: Premium combat medical kit now comes with a Cyberlink for your hacked
+      surgery tool (nukeops)
+  - bugfix: the m-90GL now uses 5.56 instead of .223 which was not purchaseable (nukeops)
+  - bugfix: the bandana that was in the CQC kit was lost to time and has been replaced
+      with a skull bandana, an thermal eyepatch, and snake plushie (+2 tc cost increase)
+      (nukeops)
+  - bugfix: some bundles moved into weapon kits (nukeops)
+  - rscadd: Energy sword and Board kit enabled in weapon kits (nukeops, 20tc)
+  flleeppyy:
+  - sound: change artist title for some tracks by "Chronoquest" -> "T-87 Sulfurhead"
