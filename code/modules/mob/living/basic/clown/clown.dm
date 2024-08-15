@@ -195,6 +195,7 @@
 	)
 	shadow_icon = /mob/living/basic/clown::icon
 	shadow_type = "long_face_shadow"
+	shadow_offset_x = -16
 
 /mob/living/basic/clown/clownhulk
 	name = "Honk Hulk"
