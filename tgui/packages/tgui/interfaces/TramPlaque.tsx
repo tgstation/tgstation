@@ -26,7 +26,7 @@ export const TramPlaque = (props) => {
       theme="dark"
     >
       <Window.Content>
-        <NoticeBox info>SkyyTram Mk VI by Nakamura Engineering</NoticeBox>
+        <NoticeBox info>SkyyTram Mk. VII by Nakamura Engineering</NoticeBox>
         <Section
           title={
             currentTram.map((serialNumber) => serialNumber.serialNumber) +
