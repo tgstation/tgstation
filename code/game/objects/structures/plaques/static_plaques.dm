@@ -38,7 +38,7 @@ WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/structure/plaque/static_plaque/golden/captai
 	var/datum/weakref/transport_ref
 	/// Serial number of the tram
 	var/tram_serial
-	name = "\improper tram information plate"
+	name = "tram information plate"
 	icon_state = "commission_tram"
 	custom_materials = list(/datum/material/titanium = SHEET_MATERIAL_AMOUNT)
 	layer = SIGN_LAYER
@@ -73,7 +73,7 @@ WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/structure/plaque/static_plaque/tram)
 		return
 
 	tram_serial = tram.tram_registration.serial_number
-	desc = "A plate showing details from the manufacturer about this Nakamura Engineering SkyyTram Mk VI, serial number [tram_serial].<br><br>We are not responsible for any injuries or fatalities caused by usage of the tram. \
+	desc = "A plate showing details from the manufacturer about this Nakamura Engineering SkyyTram Mk. VII, serial number [tram_serial].<br><br>We are not responsible for any injuries or fatalities caused by usage of the tram. \
 	Using the tram carries inherent risks, and we cannot guarantee the safety of all passengers. By using the tram, you assume, acknowledge, and accept all the risks and responsibilities. <br><br>\
 	Please be aware that riding the tram can cause a variety of injuries, including but not limited to: slips, trips, and falls; collisions with other passengers or objects; strains, sprains, and other musculoskeletal injuries; \
 	cuts, bruises, and lacerations; and more severe injuries such as head trauma, spinal cord injuries, and even death. These injuries can be caused by a variety of factors, including the movements of the tram, the behaviour \
