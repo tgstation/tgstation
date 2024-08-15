@@ -94,9 +94,7 @@
 		set_filler()
 		update_overlays()
 	update_freelook_sight()
-#ifndef UNIT_TESTS //we cannot allow active air flow inside the unit test room.
 	air_update_turf(TRUE, TRUE)
-#endif
 	register_context()
 	if(elevator_mode)
 		if(transport_linked_id)
@@ -124,6 +122,12 @@
 	AddElement(/datum/element/connect_loc, loc_connections)
 	AddElement(/datum/element/can_barricade)
 	make_dir_opaque()
+
+/obj/machinery/door/air_update_turf(update = TRUE, remove = FALSE)
+#ifdef UNIT_TESTS
+	remove = FALSE
+#endif
+	return ..()
 
 /obj/machinery/door/proc/make_dir_opaque()
 	if(!dir_mask || !edge_dir_mask)
