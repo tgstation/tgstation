@@ -1,6 +1,0 @@
-author: "grungussuss"
-delete-after: True
-changes:
-  - sound: "added rustle sounds for: toolbox, medkit, box"
-  - sound: "added open sounds for: toolbox, box"
-  - code_imp: "added support for giving container items rustle sounds"
