@@ -105,3 +105,16 @@
 	icon = 'icons/turf/walls/hierophant_wall.dmi'
 	smoothing_groups = SMOOTH_GROUP_HIERO_WALL + SMOOTH_GROUP_TALL_WALLS
 	canSmoothWith = SMOOTH_GROUP_HIERO_WALL
+
+/turf/closed/wall/material/meat
+	name = "living wall"
+	baseturfs = /turf/open/floor/material/meat
+	girder_type = null
+	material_flags = MATERIAL_EFFECTS | MATERIAL_COLOR | MATERIAL_AFFECT_STATISTICS
+
+/turf/closed/wall/material/meat/Initialize(mapload)
+	. = ..()
+	set_custom_materials(list(GET_MATERIAL_REF(/datum/material/meat) = SHEET_MATERIAL_AMOUNT))
+
+/turf/closed/wall/material/meat/airless
+	baseturfs = /turf/open/floor/material/meat/airless
