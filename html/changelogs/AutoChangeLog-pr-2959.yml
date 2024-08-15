@@ -1,0 +1,4 @@
+author: "Wisemonster"
+delete-after: True
+changes:
+  - bugfix: "Ghost critter spawn points are now anchored."
