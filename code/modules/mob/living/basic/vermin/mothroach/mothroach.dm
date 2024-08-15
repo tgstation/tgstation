@@ -29,6 +29,7 @@
 	response_harm_simple = "hit"
 	response_help_continuous = "pats"
 	response_help_simple = "pat"
+	shadow_type = SHADOW_SMALL
 
 	faction = list(FACTION_NEUTRAL)
 

@@ -31,6 +31,7 @@
 	unsuitable_atmos_damage = 0
 	minimum_survivable_temperature = 270
 	maximum_survivable_temperature = INFINITY
+	shadow_type = SHADOW_SMALL
 
 	ai_controller = /datum/ai_controller/basic_controller/cockroach
 

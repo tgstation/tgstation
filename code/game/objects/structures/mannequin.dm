@@ -4,6 +4,7 @@
 
 /// A mannequin! A structure that can display clothing on itself.
 /obj/structure/mannequin
+	SET_BASE_VISUAL_PIXEL(0, DEPTH_OFFSET)
 	name = "mannequin"
 	desc = "Oh, so this is a dress-up game now."
 	icon = 'icons/mob/human/mannequin.dmi'
@@ -12,8 +13,6 @@
 	resistance_flags = FLAMMABLE
 	appearance_flags = KEEP_TOGETHER|TILE_BOUND|PIXEL_SCALE|LONG_GLIDE
 	mouse_drag_pointer = MOUSE_ACTIVE_POINTER
-	pixel_y = 3
-	base_pixel_y = 3
 	layer = ABOVE_MOB_LAYER
 	/// Which body type we use, male or female?
 	var/body_type
@@ -92,7 +91,8 @@
 /obj/structure/mannequin/update_overlays()
 	. = ..()
 	var/mutable_appearance/pedestal = mutable_appearance(icon, "pedestal_[material]")
-	pedestal.pixel_y = -3
+	pedestal.layer = -BODY_BEHIND_LAYER
+	pedestal.pixel_z = -4
 	. += pedestal
 	var/datum/sprite_accessory/underwear/underwear = SSaccessories.underwear_list[underwear_name]
 	if(underwear)

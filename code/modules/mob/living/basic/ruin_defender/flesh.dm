@@ -13,6 +13,7 @@
 	)
 
 /mob/living/basic/living_limb_flesh
+	SET_BASE_VISUAL_PIXEL(0, 0)
 	name = "living flesh"
 	desc = "A vaguely leg or arm shaped flesh abomination. It pulses, like a heart."
 	icon = 'icons/mob/simple/animal.dmi'
@@ -30,6 +31,8 @@
 	attack_verb_continuous = "tries desperately to attach to"
 	attack_verb_simple = "try to attach to"
 	mob_biotypes = MOB_ORGANIC | MOB_SPECIAL
+	shadow_type = SHADOW_SMALL_WIDE_WEST_EAST
+	shadow_offset_y = DEPTH_OFFSET
 	ai_controller = /datum/ai_controller/basic_controller/living_limb_flesh
 	/// the meat bodypart we are currently inside, used to like drain nutrition and dismember and shit
 	var/obj/item/bodypart/current_bodypart

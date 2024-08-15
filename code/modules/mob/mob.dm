@@ -106,6 +106,7 @@
 		return
 
 	AddComponent(/datum/component/drop_shadow, \
+		icon = shadow_icon, \
 		icon_state = shadow_type, \
 		shadow_offset_x = shadow_offset_x, \
 		shadow_offset_y = shadow_offset_y, \

@@ -70,7 +70,7 @@
 	orbiter_list[orbiter] = TRUE
 	orbiter.orbiting = src
 
-	ADD_TRAIT(orbiter, TRAIT_NO_FLOATING_ANIM, ORBITING_TRAIT)
+	orbiter.add_traits(list(TRAIT_SHADOWLESS, TRAIT_NO_FLOATING_ANIM), ORBITING_TRAIT)
 	RegisterSignal(orbiter, COMSIG_MOVABLE_MOVED, PROC_REF(orbiter_move_react))
 
 	SEND_SIGNAL(parent, COMSIG_ATOM_ORBIT_BEGIN, orbiter)
@@ -126,7 +126,7 @@
 			var/mob/dead/observer/ghostie = orbiter
 			ghostie.orbiting_ref = null
 
-	REMOVE_TRAIT(orbiter, TRAIT_NO_FLOATING_ANIM, ORBITING_TRAIT)
+	orbiter.remove_traits(list(TRAIT_SHADOWLESS, TRAIT_NO_FLOATING_ANIM), ORBITING_TRAIT)
 
 	if(!refreshing && !length(orbiter_list) && !QDELING(src))
 		qdel(src)

@@ -202,7 +202,7 @@
 /mob/living/basic/parrot/poly/ghost/Initialize(mapload)
 	// block anything and everything that could possibly happen with writing memory for ghosts
 	memory_saved = TRUE
-	ADD_TRAIT(src, TRAIT_DONT_WRITE_MEMORY, INNATE_TRAIT)
+	add_traits(list(TRAIT_FAINT_SHADOW, TRAIT_DONT_WRITE_MEMORY), INNATE_TRAIT)
 	RegisterSignal(src, COMSIG_MOVABLE_MOVED, PROC_REF(on_moved))
 	return ..()
 

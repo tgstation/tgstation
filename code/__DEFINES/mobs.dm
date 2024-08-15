@@ -995,3 +995,5 @@ GLOBAL_LIST_INIT(layers_to_offset, list(
 #define SHADOW_SMALL "small"
 #define SHADOW_MEDIUM "medium"
 #define SHADOW_LARGE "large"
+#define SHADOW_SMALL_WIDE_WEST_EAST "small_wide_we"
+#define SHADOW_WIDE_WEST_EAST "wide_we"

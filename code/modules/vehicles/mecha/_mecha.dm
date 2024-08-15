@@ -276,6 +276,7 @@
 
 	AddElement(/datum/element/falling_hazard, damage = 80, wound_bonus = 10, hardhat_safety = FALSE, crushes = TRUE)
 	AddElement(/datum/element/hostile_machine)
+	AddComponent(/datum/component/drop_shadow, icon_state = SHADOW_LARGE)
 
 /obj/vehicle/sealed/mecha/Destroy()
 	/// If the former occupants get polymorphed, mutated, chestburstered,

@@ -27,6 +27,9 @@
 	lighting_cutoff_green = 20
 	lighting_cutoff_blue = 25
 	mob_size = MOB_SIZE_LARGE
+	shadow_icon = 'icons/mob/simple/jungle/arachnid.dmi'
+	shadow_type = "arachnid_shadow"
+	shadow_offset_x = -16
 
 	speak_emote = list("chitters")
 	attack_sound = 'sound/weapons/bladeslice.ogg'
@@ -53,3 +56,14 @@
 		return FALSE
 
 	animate(src, alpha = 255, time = 2 SECONDS) //make them visible
+
+/mob/living/basic/mega_arachnid/death(gibbed)
+	. = ..()
+	if(!gibbed)
+		ADD_TRAIT(src, TRAIT_SHADOWLESS, INNATE_TRAIT) //the shadow doesn't fit the dead sprite
+		SET_BASE_VISUAL_PIXEL(0, 0)
+
+/mob/living/basic/mega_arachnid/revive(full_heal_flags = NONE, excess_healing = 0, force_grab_ghost = FALSE)
+	. = ..()
+	REMOVE_TRAIT(src, TRAIT_SHADOWLESS, INNATE_TRAIT)
+	SET_BASE_VISUAL_PIXEL(0, DEPTH_OFFSET)

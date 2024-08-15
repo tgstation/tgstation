@@ -32,6 +32,7 @@
 	datum/venue/attending_venue = SSrestaurant.all_venues[/datum/venue/restaurant],
 )
 	var/datum/customer_data/customer_info = SSrestaurant.all_customers[customer_data]
+	shadow_type = customer_info.shadow_type
 	ai_controller = customer_info.ai_controller_used
 
 	. = ..()

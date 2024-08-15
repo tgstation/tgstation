@@ -15,6 +15,8 @@
 		TRAIT_NOHUNGER,
 		TRAIT_USES_SKINTONES,
 		TRAIT_NO_MIRROR_REFLECTION,
+		TRAIT_SELF_SHADOW, //Vampires are shadowless, however, we still need to provide the player with an indicator of where they're standing...
+		TRAIT_FAINT_SHADOW,
 	)
 	inherent_biotypes = MOB_UNDEAD|MOB_HUMANOID
 	mutant_bodyparts = list("wings" = "None")

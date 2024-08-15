@@ -55,6 +55,7 @@
 
 /// Assumes the appearance of a desired movable and applies it to our mob. Target is the movable in question.
 /datum/action/cooldown/mob_cooldown/assume_form/proc/assume_appearances(atom/movable/target_atom)
+	ADD_TRAIT(owner, TRAIT_SHADOWLESS, ACTION_TRAIT)
 	owner.appearance = target_atom.appearance
 	owner.copy_overlays(target_atom)
 	owner.alpha = max(target_atom.alpha, 150) //fucking chameleons
@@ -85,4 +86,4 @@
 	owner.cut_overlays()
 
 	// important: do this very end because we might have SIGNAL_REMOVETRAIT for this on the mob that's dependent on the above logic
-	REMOVE_TRAIT(owner, TRAIT_DISGUISED, ACTION_TRAIT)
+	owner.remove_traits(list(TRAIT_SHADOWLESS, TRAIT_DISGUISED), ACTION_TRAIT)

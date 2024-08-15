@@ -13,6 +13,7 @@
 	gold_core_spawnable = FRIENDLY_SPAWN
 	collar_icon_state = "pug"
 	held_state = "pug"
+	shadow_type = SHADOW_SMALL
 
 /mob/living/basic/pet/dog/pug/Initialize(mapload)
 	. = ..()
@@ -97,6 +98,7 @@
 	response_harm_simple = "take a bite out of"
 	attacked_sound = 'sound/items/eatfood.ogg'
 	held_state = "breaddog"
+	shadow_type = SHADOW_SMALL_WIDE_WEST_EAST
 	worn_slot_flags = ITEM_SLOT_HEAD
 
 /mob/living/basic/pet/dog/breaddog/CheckParts(list/parts)

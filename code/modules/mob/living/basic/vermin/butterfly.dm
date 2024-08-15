@@ -23,6 +23,7 @@
 	mob_size = MOB_SIZE_TINY
 	mob_biotypes = MOB_ORGANIC | MOB_BUG
 	gold_core_spawnable = FRIENDLY_SPAWN
+	shadow_type = SHADOW_SMALL
 
 	ai_controller = /datum/ai_controller/basic_controller/butterfly
 

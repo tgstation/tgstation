@@ -28,6 +28,7 @@
 	held_rh = 'icons/mob/inhands/animal_item_righthand.dmi'
 	worn_slot_flags = ITEM_SLOT_HEAD
 	head_icon = 'icons/mob/clothing/head/pets_head.dmi'
+	shadow_type = SHADOW_SMALL
 
 	ai_controller = /datum/ai_controller/basic_controller/axolotl
 

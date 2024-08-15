@@ -28,6 +28,7 @@
 	pull_force = MOVE_FORCE_VERY_STRONG
 
 	ai_controller = /datum/ai_controller/basic_controller/goliath
+	shadow_type = SHADOW_LARGE
 
 	crusher_loot = /obj/item/crusher_trophy/goliath_tentacle
 	butcher_results = list(/obj/item/food/meat/slab/goliath = 2, /obj/item/stack/sheet/bone = 2)
@@ -183,7 +184,6 @@
 	icon_dead = "ancient_goliath_dead"
 	tentacle_warning_state = "ancient_goliath_preattack"
 	tameable = FALSE
-	shadow_type = SHADOW_LARGE
 
 /// Rare Goliath variant which occasionally replaces the normal mining mob, releases shitloads of tentacles
 /mob/living/basic/mining/goliath/ancient/immortal

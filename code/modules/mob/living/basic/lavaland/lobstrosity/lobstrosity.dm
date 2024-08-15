@@ -26,6 +26,7 @@
 	)
 	crusher_loot = /obj/item/crusher_trophy/lobster_claw
 	ai_controller = /datum/ai_controller/basic_controller/lobstrosity
+	shadow_type = SHADOW_LARGE
 	/// Charging ability
 	var/datum/action/cooldown/mob_cooldown/charge/basic_charge/lobster/charge
 	/// The type of charging ability we give this mob
@@ -147,6 +148,7 @@
 	)
 	crusher_loot = null
 	ai_controller = /datum/ai_controller/basic_controller/lobstrosity/juvenile
+	shadow_type = SHADOW_MEDIUM
 	snip_speed = 6.5 SECONDS
 	charge_type = /datum/action/cooldown/mob_cooldown/charge/basic_charge/lobster/shrimp
 	charge_command = /datum/pet_command/point_targeting/use_ability/lob_charge/shrimp

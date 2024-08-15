@@ -207,3 +207,5 @@
 	var/shadow_offset_x = 0
 	/// Additional vertical offset to apply to shadow underlay
 	var/shadow_offset_y = 0
+	/// The icon file of the shadow we use
+	var/shadow_icon = 'icons/mob/mob_shadows.dmi'

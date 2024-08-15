@@ -39,7 +39,7 @@
 		return
 	// stop swooped target movement
 	swooping = TRUE
-	ADD_TRAIT(owner, TRAIT_UNDENSE, SWOOPING_TRAIT)
+	owner.add_traits(list(TRAIT_SHADOWLESS, TRAIT_UNDENSE), SWOOPING_TRAIT)
 	owner.visible_message(span_boldwarning("[owner] swoops up high!"))
 
 	var/negative
@@ -112,7 +112,7 @@
 	for(var/mob/observer in range(7, owner))
 		shake_camera(observer, 15, 1)
 
-	REMOVE_TRAIT(owner, TRAIT_UNDENSE, SWOOPING_TRAIT)
+	owner.remove_traits(list(TRAIT_SHADOWLESS, TRAIT_UNDENSE), SWOOPING_TRAIT)
 	SLEEP_CHECK_DEATH(1, owner)
 	swooping = FALSE
 	if(!lava_success)

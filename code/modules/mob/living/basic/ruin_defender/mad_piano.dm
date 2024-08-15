@@ -2,6 +2,7 @@
 //looks like a regular piano, then if you get close it wakes up and bites you
 
 /mob/living/basic/mad_piano
+	SET_BASE_VISUAL_PIXEL(0, 0) //Make sure this matches the piano offsets.
 	name = "space piano"
 	desc = "This is a space piano, like a regular piano, but always in tune! Even if the musician isn't."
 	icon = 'icons/mob/simple/mad_piano.dmi'

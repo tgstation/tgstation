@@ -40,7 +40,8 @@
 	var/base_icon_state = "amerifat"
 	///Sound to use when this robot type speaks
 	var/speech_sound = 'sound/creatures/tourist/tourist_talk.ogg'
-
+	/// The shadow type of the mob with this data
+	var/shadow_type = SHADOW_MEDIUM
 	/// Is this unique once per venue?
 	var/is_unique = FALSE
 
@@ -72,6 +73,7 @@
 	first_warning_line = "Don't tread on me!"
 	second_warning_line = "Last chance buddy! Don't tread on me!"
 	self_defense_line = "CASTLE DOCTRINE ACTIVATED!"
+	shadow_type = SHADOW_LARGE //he's just big-boned
 
 	orderable_objects = list(
 		VENUE_RESTAURANT = list(

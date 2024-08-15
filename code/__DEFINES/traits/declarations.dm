@@ -987,6 +987,10 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 
 /// Don't render a drop shadow
 #define TRAIT_SHADOWLESS "shadowless"
+/// Halves the value of the alpha channel (125 vs 255) when enabled.
+#define TRAIT_FAINT_SHADOW "faint_shadow"
+/// Render a drop shadow, but only for the client of the mob with it attached.
+#define TRAIT_SELF_SHADOW "self_shadow"
 
 /// This item is currently under the control of telekinesis
 #define TRAIT_TELEKINESIS_CONTROLLED "telekinesis_controlled"

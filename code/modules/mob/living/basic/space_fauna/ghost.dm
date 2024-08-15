@@ -48,6 +48,7 @@
 	AddElement(/datum/element/death_drops, death_loot)
 	AddElement(/datum/element/simple_flying)
 	AddElement(/datum/element/ai_retaliate)
+	ADD_TRAIT(src, TRAIT_FAINT_SHADOW, INNATE_TRAIT)
 
 	give_identity()
 

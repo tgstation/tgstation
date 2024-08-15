@@ -39,7 +39,7 @@
 /mob/living/basic/shade/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/simple_flying)
-	add_traits(list(TRAIT_HEALS_FROM_CULT_PYLONS, TRAIT_SPACEWALK, TRAIT_VENTCRAWLER_ALWAYS), INNATE_TRAIT)
+	add_traits(list(TRAIT_FAINT_SHADOW, TRAIT_HEALS_FROM_CULT_PYLONS, TRAIT_SPACEWALK, TRAIT_VENTCRAWLER_ALWAYS), INNATE_TRAIT)
 	if(isnull(theme))
 		return
 	icon_state = "shade_[theme]"

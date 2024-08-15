@@ -107,7 +107,7 @@
 	user.visible_message(span_warning("[user] aims [src] at the ground! It looks like [user.p_theyre()] performing a sick rocket jump!"), \
 		span_userdanger("You aim [src] at the ground to perform a bisnasty rocket jump..."))
 	if(can_shoot())
-		ADD_TRAIT(user, TRAIT_NO_TRANSFORM, REF(src))
+		add_traits(user, list(TRAIT_NO_TRANSFORM, TRAIT_SHADOWLESS), REF(src))
 		playsound(src, 'sound/vehicles/rocketlaunch.ogg', 80, TRUE, 5)
 		animate(user, pixel_z = 300, time = 30, flags = ANIMATION_RELATIVE, easing = LINEAR_EASING)
 		sleep(7 SECONDS)

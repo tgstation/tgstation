@@ -26,6 +26,8 @@
 	status_flags = CANPUSH
 	gold_core_spawnable = HOSTILE_SPAWN
 	ai_controller = /datum/ai_controller/basic_controller/goldgrub
+	shadow_type = SHADOW_LARGE
+	shadow_offset_x = -1
 	///can this mob lay eggs
 	var/can_lay_eggs = TRUE
 	///can we tame this mob

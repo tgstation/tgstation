@@ -36,6 +36,7 @@
 	unsuitable_cold_damage = 0.5 // Cold damage is 0.5 here to account for low health on the rabbit.
 	unsuitable_heat_damage = 0.5 // Heat damage is 0.5 here to account for low health on the rabbit.
 	ai_controller = /datum/ai_controller/basic_controller/rabbit
+	shadow_type = SHADOW_SMALL
 	/// passed to animal_varity as the prefix icon.
 	var/icon_prefix = "rabbit"
 

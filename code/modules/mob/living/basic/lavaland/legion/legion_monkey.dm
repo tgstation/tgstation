@@ -16,6 +16,7 @@
 	speak_emote = list("chimpers")
 	corpse_type = /obj/effect/mob_spawn/corpse/human/monkey
 	ai_controller = /datum/ai_controller/basic_controller/legion_monkey
+	shadow_type = SHADOW_SMALL
 
 /mob/living/basic/mining/legion/monkey/Initialize(mapload)
 	. = ..()

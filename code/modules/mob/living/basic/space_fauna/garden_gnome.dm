@@ -30,6 +30,7 @@
 	gold_core_spawnable = HOSTILE_SPAWN
 	greyscale_config = /datum/greyscale_config/garden_gnome
 	ai_controller = /datum/ai_controller/basic_controller/garden_gnome
+	shadow_type = SHADOW_SMALL
 	/// The damage resistence when sinked into the ground
 	var/resistance_when_sinked = list(BRUTE = 0.5, BURN = 0.5, TOX = 1, STAMINA = 0, OXY = 1)
 	/// Realistically weighted list of usual gnome hat colours

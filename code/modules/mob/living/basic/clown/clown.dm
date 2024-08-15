@@ -106,6 +106,7 @@
 		/obj/item/soap,
 		/obj/item/seeds/banana/bluespace,
 	)
+	shadow_type = SHADOW_LARGE
 
 /mob/living/basic/clown/honkling/Initialize(mapload)
 	. = ..()
@@ -192,6 +193,8 @@
 		BB_EMOTE_HEAR = list("honks", "squeaks"),
 		BB_SPEAK_CHANCE = 60,
 	)
+	shadow_icon = /mob/living/basic/clown::icon
+	shadow_type = "long_face_shadow"
 
 /mob/living/basic/clown/clownhulk
 	name = "Honk Hulk"

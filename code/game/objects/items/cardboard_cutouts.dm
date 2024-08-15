@@ -1,5 +1,6 @@
 //Cardboard cutouts! They're man-shaped and can be colored with a crayon to look like a human in a certain outfit, although it's limited, discolored, and obvious to more than a cursory glance.
 /obj/item/cardboard_cutout
+	SET_BASE_VISUAL_PIXEL(0, DEPTH_OFFSET)
 	name = "cardboard cutout"
 	desc = "A vaguely humanoid cardboard cutout. It's completely blank."
 	icon = 'icons/obj/art/cardboard_cutout.dmi'
@@ -42,6 +43,7 @@
 
 	cutout.apply(src)
 	if(!pushed_over)
+		AddComponent(/datum/component/drop_shadow, icon_state = SHADOW_MEDIUM)
 		tacticool = AddComponent(/datum/component/tactical)
 
 //ATTACK HAND IGNORING PARENT RETURN VALUE
@@ -68,6 +70,7 @@
 	remove_atom_colour(FIXED_COLOUR_PRIORITY)
 	pushed_over = TRUE
 	QDEL_NULL(tacticool)
+	qdel(GetComponent(/datum/component/drop_shadow))
 
 /obj/item/cardboard_cutout/attack_self(mob/living/user)
 	if(!pushed_over)
@@ -77,6 +80,7 @@
 	icon = initial(icon)
 	icon_state = initial(icon_state) //This resets a cutout to its blank state - this is intentional to allow for resetting
 	pushed_over = FALSE
+	AddComponent(/datum/component/drop_shadow, icon_state = SHADOW_MEDIUM)
 	tacticool = AddComponent(/datum/component/tactical)
 
 /obj/item/cardboard_cutout/attackby(obj/item/I, mob/living/user, params)

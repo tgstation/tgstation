@@ -17,6 +17,7 @@
 	attack_sound = 'sound/weapons/punch3.ogg'
 	status_flags = NONE
 	mob_size = MOB_SIZE_LARGE
+	shadow_type = SHADOW_LARGE
 	construct_spells = list(
 		/datum/action/cooldown/spell/basic_projectile/juggernaut,
 		/datum/action/cooldown/spell/forcewall/cult,

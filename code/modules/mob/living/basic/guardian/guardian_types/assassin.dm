@@ -27,6 +27,7 @@
 	. = ..()
 	show_can_stealth()
 	RegisterSignal(src, COMSIG_GUARDIAN_ASSASSIN_REVEALED, PROC_REF(on_forced_unstealth))
+	ADD_TRAIT(src, TRAIT_FAINT_SHADOW, INNATE_TRAIT)
 
 // Toggle stealth
 /mob/living/basic/guardian/assassin/toggle_modes()

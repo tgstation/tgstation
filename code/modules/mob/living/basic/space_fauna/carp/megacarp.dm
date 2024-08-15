@@ -19,6 +19,7 @@
 	pixel_x = -16
 	base_pixel_x = -16
 	mob_size = MOB_SIZE_LARGE
+	shadow_type = SHADOW_LARGE
 	obj_damage = 80
 	cell_line = CELL_LINE_TABLE_MEGACARP
 	ridable_data = /datum/component/riding/creature/megacarp

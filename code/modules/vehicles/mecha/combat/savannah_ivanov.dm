@@ -147,6 +147,7 @@
 	chassis.movedelay = 1
 	chassis.density = FALSE
 	chassis.layer = ABOVE_ALL_MOB_LAYER
+	ADD_TRAIT(src, TRAIT_SHADOWLESS, ACTION_TRAIT)
 	animate(chassis, alpha = 0, time = 8, easing = QUAD_EASING|EASE_IN, flags = ANIMATION_PARALLEL)
 	animate(chassis, pixel_z = 400, time = 10, easing = QUAD_EASING|EASE_IN, flags = ANIMATION_PARALLEL) //Animate our rising mech (just like pods hehe)
 	addtimer(CALLBACK(src, PROC_REF(begin_landing)), 2 SECONDS)
@@ -169,6 +170,7 @@
  * it's just the animations of the mecha coming down + another timer for the final landing effect
  */
 /datum/action/vehicle/sealed/mecha/skyfall/proc/land()
+	REMOVE_TRAIT(src, TRAIT_SHADOWLESS, ACTION_TRAIT)
 	var/turf/landed_on = get_turf(chassis)
 	chassis.visible_message(span_danger("[chassis] lands from above!"))
 	playsound(chassis, 'sound/effects/explosion1.ogg', 50, 1)

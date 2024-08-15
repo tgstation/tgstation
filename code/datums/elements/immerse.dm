@@ -125,7 +125,7 @@
 	try_immerse(movable, buckled)
 	RegisterSignal(movable, COMSIG_QDELETING, PROC_REF(on_movable_qdel))
 	LAZYADD(attached_turfs_and_movables[source], movable)
-	ADD_TRAIT(movable, TRAIT_IMMERSED, ELEMENT_TRAIT(src))
+	movable.add_traits(list(TRAIT_IMMERSED, TRAIT_FAINT_SHADOW), ELEMENT_TRAIT(src))
 
 /datum/element/immerse/proc/on_movable_qdel(atom/movable/source)
 	SIGNAL_HANDLER
@@ -311,7 +311,7 @@
 
 	LAZYREMOVE(attached_turfs_and_movables[source], movable)
 	UnregisterSignal(movable, list(COMSIG_LIVING_SET_BUCKLED, COMSIG_QDELETING))
-	REMOVE_TRAIT(movable, TRAIT_IMMERSED, ELEMENT_TRAIT(src))
+	movable.remove_traits(list(TRAIT_IMMERSED, TRAIT_FAINT_SHADOW), ELEMENT_TRAIT(src))
 
 /// A band-aid to keep the (unique) visual overlay from scaling and rotating along with its owner. I'm sorry.
 /datum/element/immerse/proc/on_update_transform(mob/living/source, resize, new_lying_angle, is_opposite_angle)

@@ -28,6 +28,8 @@
 
 	ai_controller = /datum/ai_controller/basic_controller/mouse
 
+	shadow_type = SHADOW_SMALL
+
 	/// Whether this rat is friendly to players
 	var/tame = FALSE
 	/// What color our mouse is. Brown, gray and white - leave blank for random.

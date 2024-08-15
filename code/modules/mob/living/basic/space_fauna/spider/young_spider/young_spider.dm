@@ -22,6 +22,7 @@
 	ai_controller = /datum/ai_controller/basic_controller/young_spider
 	player_speed_modifier = -1
 	shadow_offset_y = 8
+	shadow_type = SHADOW_MEDIUM
 
 /mob/living/basic/spider/growing/young/Initialize(mapload)
 	. = ..()

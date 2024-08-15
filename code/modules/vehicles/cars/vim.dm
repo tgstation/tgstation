@@ -5,6 +5,7 @@
  * For the critters that cannot be understood, there is a sound creator in the mecha. It also has headlights.
  */
 /obj/vehicle/sealed/car/vim
+	SET_BASE_VISUAL_PIXEL(0, DEPTH_OFFSET)
 	name = "\improper Vim"
 	desc = "An minature exosuit from Nanotrasen, developed to let the irreplacable station pets live a little longer."
 	icon_state = "vim"
@@ -38,6 +39,8 @@
 		unremovable_circuit_components = list(new /obj/item/circuit_component/vim), \
 		capacity = SHELL_CAPACITY_SMALL, \
 	)
+
+	AddComponent(/datum/component/drop_shadow, icon_state = SHADOW_SMALL)
 
 /obj/vehicle/sealed/car/vim/examine(mob/user)
 	. = ..()

@@ -18,6 +18,7 @@
 	faction = list(FACTION_ILLUSION)
 	del_on_death = TRUE
 	death_message = "vanishes into thin air! It was a fake!"
+	shadow_type = SHADOW_NONE
 	/// Weakref to what we're copying
 	var/datum/weakref/parent_mob_ref
 	/// Prob of getting a clone on attack

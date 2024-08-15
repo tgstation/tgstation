@@ -53,19 +53,37 @@
 		atom_parent.update_appearance(UPDATE_OVERLAYS)
 
 /datum/component/drop_shadow/RegisterWithParent()
+
+	shadow.loc = parent
+	var/atom/movable/movable_parent = parent
+	shadow.layer = movable_parent.layer > BELOW_MOB_LAYER ? BELOW_MOB_LAYER : LOW_ITEM_LAYER
+
 	RegisterSignal(parent, COMSIG_ATOM_UPDATE_OVERLAYS, PROC_REF(on_update_overlays))
 	RegisterSignals(parent, list(COMSIG_ATOM_FULTON_BEGAN, COMSIG_ATOM_BEGAN_ORBITING), PROC_REF(hide_shadow))
 	RegisterSignals(parent, list(COMSIG_ATOM_FULTON_LANDED, COMSIG_ATOM_STOPPED_ORBITING), PROC_REF(show_shadow))
 	RegisterSignals(parent, list(SIGNAL_ADDTRAIT(TRAIT_SHADOWLESS), SIGNAL_REMOVETRAIT(TRAIT_SHADOWLESS)), PROC_REF(shadowless_trait_updated))
 
-	if (isliving(parent))
-		RegisterSignal(parent, COMSIG_LIVING_POST_UPDATE_TRANSFORM, PROC_REF(on_transform_updated))
-		RegisterSignal(parent, COMSIG_MOB_BUCKLED, PROC_REF(hide_shadow))
-		RegisterSignal(parent, COMSIG_MOB_UNBUCKLED, PROC_REF(show_shadow))
+	if (ismob(parent))
+		RegisterSignal(parent, list(SIGNAL_ADDTRAIT(TRAIT_SELF_SHADOW), SIGNAL_REMOVETRAIT(TRAIT_SELF_SHADOW)), PROC_REF(on_self_shadow_updated))
+		if(HAS_TRAIT(parent, TRAIT_SELF_SHADOW))
+			RegisterSignal(parent, COMSIG_MOB_LOGIN)
+			UnregisterSignal(parent, COMSIG_ATOM_UPDATE_OVERLAYS)
+		if(isliving(parent))
+			var/mob/living/living_parent = parent
+			RegisterSignal(parent, COMSIG_LIVING_POST_UPDATE_TRANSFORM, PROC_REF(on_transform_updated))
+			RegisterSignal(parent, COMSIG_MOB_BUCKLED, PROC_REF(hide_shadow))
+			RegisterSignal(parent, COMSIG_MOB_UNBUCKLED, PROC_REF(show_shadow))
+			if(!living_parent.buckled)
+				RegisterSignals(parent, list(SIGNAL_ADDTRAIT(TRAIT_FAINT_SHADOW), SIGNAL_REMOVETRAIT(TRAIT_FAINT_SHADOW)), PROC_REF(faint_shadow_trait_updated))
+				shadow.alpha = HAS_TRAIT(parent, TRAIT_FAINT_SHADOW) ? 125 : 255
+			else
+				shadow.alpha = 0
+
+	else
+		RegisterSignals(parent, list(SIGNAL_ADDTRAIT(TRAIT_FAINT_SHADOW), SIGNAL_REMOVETRAIT(TRAIT_FAINT_SHADOW)), PROC_REF(faint_shadow_trait_updated))
 
 	if (!HAS_TRAIT(parent, TRAIT_SHADOWLESS))
-		var/atom/atom_parent = parent
-		atom_parent.update_appearance(UPDATE_OVERLAYS)
+		add_shadow()
 
 /datum/component/drop_shadow/UnregisterFromParent()
 	UnregisterSignal(parent, list(
@@ -79,7 +97,25 @@
 		COMSIG_MOB_UNBUCKLED,
 		SIGNAL_ADDTRAIT(TRAIT_SHADOWLESS),
 		SIGNAL_REMOVETRAIT(TRAIT_SHADOWLESS),
+		SIGNAL_ADDTRAIT(TRAIT_FAINT_SHADOW),
+		SIGNAL_REMOVETRAIT(TRAIT_FAINT_SHADOW),
+		SIGNAL_ADDTRAIT(TRAIT_SELF_SHADOW),
+		SIGNAL_REMOVETRAIT(TRAIT_SELF_SHADOW),
+		COMSIG_MOB_LOGIN,
 	))
+
+	shadow.loc = null
+
+	if(HAS_TRAIT(parent, TRAIT_SHADOWLESS))
+		return
+	if(HAS_TRAIT(parent, TRAIT_SELF_SHADOW))
+		var/mob/mob_parent = parent
+		if(mob_parent.client)
+			mob_parent?.client -= shadow
+		return
+	if(!QDELETED(parent))
+		var/atom/atom_parent = parent
+		atom_parent.update_appearance(UPDATE_OVERLAYS)
 
 /// Repositions the shadow to try and stay under our mob should be at under current conditions
 /datum/component/drop_shadow/proc/update_shadow_position()
@@ -93,8 +129,42 @@
 	shadow.pixel_z = -DEPTH_OFFSET - additional_offset - lying_offset + shadow_offset
 
 	if (!HAS_TRAIT(parent, TRAIT_SHADOWLESS))
+		add_shadow()
+
+/// Called by RegisterWithParent and update_shadow_position, for adding the shadow to the mob.
+/datum/component/drop_shadow/proc/add_shadow()
+	if(!HAS_TRAIT(parent, TRAIT_SELF_SHADOW))
 		var/atom/atom_parent = parent
 		atom_parent.update_appearance(UPDATE_OVERLAYS)
+	else
+		add_to_client_images()
+
+/// Called when the mob gains a client
+/datum/component/drop_shadow/proc/on_mob_login()
+	SIGNAL_HANDLER
+	if(!HAS_TRAIT(parent, TRAIT_SHADOWLESS))
+		add_to_client_images()
+
+/// Add the shadow to the images shown to the client
+/datum/component/drop_shadow/proc/add_to_client_images()
+	var/mob/mob_parent = parent
+	if(!mob_parent.client)
+		return
+	mob_parent.client.images |= shadow
+
+/// Called when we gain or lose the "self-shadow" trait
+/datum/component/drop_shadow/proc/on_self_shadow_updated()
+	SIGNAL_HANDLER
+	if(HAS_TRAIT(parent, TRAIT_SELF_SHADOW))
+		RegisterSignal(parent, COMSIG_MOB_LOGIN, PROC_REF(on_mob_login))
+		add_to_client_images()
+	else
+		var/mob/mob_parent = parent
+		UnregisterSignal(parent, COMSIG_MOB_LOGIN)
+		if(mob_parent.client)
+			mob_parent.client -= shadow
+		RegisterSignal(parent, COMSIG_ATOM_UPDATE_OVERLAYS, PROC_REF(on_update_overlays))
+		mob_parent.update_appearance(UPDATE_OVERLAYS)
 
 /// Handles actually displaying it
 /datum/component/drop_shadow/proc/on_update_overlays(atom/source, list/overlays)
@@ -105,6 +175,25 @@
 /// Called when we gain or lose the "shadowless" trait
 /datum/component/drop_shadow/proc/shadowless_trait_updated()
 	SIGNAL_HANDLER
+	if(!HAS_TRAIT(parent, TRAIT_SELF_SHADOW))
+		var/atom/atom_parent = parent
+		atom_parent.update_appearance(UPDATE_OVERLAYS)
+		return
+
+	var/mob/mob_parent = parent
+	if(!mob_parent.client)
+		return
+	if(HAS_TRAIT(parent, TRAIT_SHADOWLESS))
+		mob_parent.client.images -= shadow
+	else
+		mob_parent.client.images |= shadow
+
+/// Called when we gain or lose the "shadowless" trait
+/datum/component/drop_shadow/proc/faint_shadow_trait_updated()
+	SIGNAL_HANDLER
+	shadow.alpha = HAS_TRAIT(parent, TRAIT_FAINT_SHADOW) ? 125 : 255
+	if(HAS_TRAIT(parent, TRAIT_SHADOWLESS) || HAS_TRAIT(parent, TRAIT_SELF_SHADOW))
+		return
 	var/atom/atom_parent = parent
 	atom_parent.update_appearance(UPDATE_OVERLAYS)
 
@@ -119,20 +208,24 @@
 /// Make the shadow visible
 /datum/component/drop_shadow/proc/show_shadow()
 	SIGNAL_HANDLER
-	shadow.alpha = 255
+	shadow.alpha = HAS_TRAIT(parent, TRAIT_FAINT_SHADOW) ? 125 : 255
+	RegisterSignals(parent, list(SIGNAL_ADDTRAIT(TRAIT_FAINT_SHADOW), SIGNAL_REMOVETRAIT(TRAIT_FAINT_SHADOW)), PROC_REF(faint_shadow_trait_updated))
 	deltimer(unhide_shadow_timer)
-	if (!HAS_TRAIT(parent, TRAIT_SHADOWLESS))
-		var/atom/atom_parent = parent
-		atom_parent.update_appearance(UPDATE_OVERLAYS)
+	if(HAS_TRAIT(parent, TRAIT_SHADOWLESS) || HAS_TRAIT(parent, TRAIT_SELF_SHADOW))
+		return
+	var/atom/atom_parent = parent
+	atom_parent.update_appearance(UPDATE_OVERLAYS)
 
 /// Make the shadow invisible
 /datum/component/drop_shadow/proc/hide_shadow()
 	SIGNAL_HANDLER
 	shadow.alpha = 0
+	UnregisterSignal(parent, list(SIGNAL_ADDTRAIT(TRAIT_FAINT_SHADOW), SIGNAL_REMOVETRAIT(TRAIT_FAINT_SHADOW)))
 	deltimer(unhide_shadow_timer)
-	if (!HAS_TRAIT(parent, TRAIT_SHADOWLESS))
-		var/atom/atom_parent = parent
-		atom_parent.update_appearance(UPDATE_OVERLAYS)
+	if(HAS_TRAIT(parent, TRAIT_SHADOWLESS) || HAS_TRAIT(parent, TRAIT_SELF_SHADOW))
+		return
+	var/atom/atom_parent = parent
+	atom_parent.update_appearance(UPDATE_OVERLAYS)
 
 /// Hide shadow then display it again after a delay
 /datum/component/drop_shadow/proc/temporarily_hide_shadow(show_in)

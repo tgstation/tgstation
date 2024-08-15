@@ -134,6 +134,7 @@
 	icon_living = "penguin_shamebrero"
 	gold_core_spawnable = NO_SPAWN
 	unique_pet = TRUE
+	shadow_type = SHADOW_LARGE
 
 /mob/living/basic/pet/penguin/emperor/shamebrero/neuter
 	can_lay_eggs = FALSE

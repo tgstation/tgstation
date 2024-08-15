@@ -30,6 +30,7 @@
 	mob_size = MOB_SIZE_TINY
 	obj_damage = 0
 	unsuitable_atmos_damage = 0
+	shadow_type = SHADOW_SMALL
 
 	ai_controller = /datum/ai_controller/basic_controller/space_bat
 

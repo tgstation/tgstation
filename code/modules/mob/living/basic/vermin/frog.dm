@@ -40,6 +40,8 @@
 
 	ai_controller = /datum/ai_controller/basic_controller/frog
 
+	shadow_type = SHADOW_SMALL
+
 	var/stepped_sound = 'sound/effects/huuu.ogg'
 	///How much of a reagent the mob injects on attack
 	var/poison_per_bite = 3
