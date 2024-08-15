@@ -24,6 +24,7 @@
 	attack_verb_continuous = "bites"
 	attack_verb_simple = "bite"
 	ai_controller = /datum/ai_controller/basic_controller/mad_piano
+	shadow_type = SHADOW_NONE
 	//alternate variables used when aggro
 	var/name_aggro = "mad piano"
 	var/icon_aggro = "aggressive"
