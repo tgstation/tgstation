@@ -71,7 +71,7 @@
 	RegisterSignals(parent, list(SIGNAL_ADDTRAIT(TRAIT_SHADOWLESS), SIGNAL_REMOVETRAIT(TRAIT_SHADOWLESS)), PROC_REF(shadowless_trait_updated))
 
 	if (ismob(parent))
-		RegisterSignal(parent, list(SIGNAL_ADDTRAIT(TRAIT_SELF_SHADOW), SIGNAL_REMOVETRAIT(TRAIT_SELF_SHADOW)), PROC_REF(on_self_shadow_updated))
+		RegisterSignals(parent, list(SIGNAL_ADDTRAIT(TRAIT_SELF_SHADOW), SIGNAL_REMOVETRAIT(TRAIT_SELF_SHADOW)), PROC_REF(on_self_shadow_updated))
 		if(self_shadow)
 			RegisterSignal(parent, COMSIG_MOB_LOGIN, PROC_REF(on_mob_login))
 		if(isliving(parent))
