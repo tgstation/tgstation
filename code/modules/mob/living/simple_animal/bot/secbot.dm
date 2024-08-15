@@ -1,10 +1,12 @@
 /mob/living/simple_animal/bot/secbot
+	SET_BASE_VISUAL_PIXEL(0, 9)
 	name = "\improper Securitron"
 	desc = "A little security robot. He looks less than thrilled."
 	icon = 'icons/mob/silicon/aibots.dmi'
 	icon_state = "secbot"
 	light_color = "#f56275"
 	light_power = 0.8
+	shadow_offset_y = 3
 	density = FALSE
 	anchored = FALSE
 	health = 25
