@@ -60,6 +60,14 @@
 			stack_item.amount -= 2
 			return TRUE
 
+	if(istype(attacking_item, /obj/item/stack/rods))
+		if(stack_item.amount < 2)
+			return FALSE
+		if(do_after(user, 2 SECONDS, src))
+			new /obj/structure/grille/window_sill(get_turf(src))
+			stack_item.amount -= 2
+			return TRUE
+
 //merges adjacent full-tile windows into one
 /obj/structure/window_sill/update_overlays(updates=ALL)
 	. = ..()

@@ -44,7 +44,9 @@
 	glass_color_blend_to_ratio = 0.5
 	smooth_adapters = SMOOTH_ADAPTERS_WALLS
 
-/obj/structure/grille
+/obj/structure/grille/window_sill
+	name = "window grille"
+	desc = "A flimsy framework of iron rods. This one fits a window!"
 	icon = 'monkestation/icons/obj/structures/window/grille.dmi'
 	icon_state = "grille-0"
 	layer = ABOVE_OBJ_LAYER - 0.01
