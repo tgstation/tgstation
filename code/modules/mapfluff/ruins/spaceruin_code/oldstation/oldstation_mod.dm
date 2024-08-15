@@ -1,4 +1,5 @@
 /obj/machinery/mod_installer
+	SET_BASE_VISUAL_PIXEL(0, DEPTH_OFFSET)
 	name = "modular outerwear device installator"
 	desc = "An ancient machine that mounts a MOD unit onto the occupant."
 	icon = 'icons/obj/machines/mod_installer.dmi'
@@ -64,7 +65,7 @@
 	var/mob/living/carbon/human/human_occupant = occupant
 	if(!istype(human_occupant))
 		return
-	if(!human_occupant.dropItemToGround(human_occupant.back))
+	if(!isnull(human_occupant.back) && !human_occupant.dropItemToGround(human_occupant.back))
 		return
 	if(!human_occupant.equip_to_slot_if_possible(mod_unit, mod_unit.slot_flags, qdel_on_fail = FALSE, disable_warning = TRUE))
 		return

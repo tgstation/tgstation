@@ -1,2 +1,3 @@
-output_name = "boss_wall"
-template = "bitmask/diagonal_32x32.toml"
+template = "bitmask/walls"
+[prefabs]
+0 = 5

@@ -127,6 +127,8 @@
 
 	///AI controller that controls this atom. type on init, then turned into an instance during runtime
 	var/datum/ai_controller/ai_controller
+	///Should we ignore any attempts to auto align? Mappers should edit this
+	var/manual_align = FALSE
 
 	/// forensics datum, contains fingerprints, fibres, blood_dna and hiddenprints on this atom
 	var/datum/forensics/forensics
@@ -140,6 +142,10 @@
 	var/interaction_flags_click = NONE
 	/// Flags to check for in can_perform_action for mouse drag & drop checks. To bypass checks see interaction_flags_atom mouse drop flags
 	var/interaction_flags_mouse_drop = NONE
+
+	/// if truthy, rcd spritesheets will use this as the key to this atom's cached icon
+	/// instead of its name.
+	var/rcd_spritesheet_override = ""
 
 /**
  * Top level of the destroy chain for most atoms
@@ -187,10 +193,11 @@
 		SSicon_smooth.remove_from_queues(src)
 
 	// These lists cease existing when src does, so we need to clear any lua refs to them that exist.
-	DREAMLUAU_CLEAR_REF_USERDATA(contents)
-	DREAMLUAU_CLEAR_REF_USERDATA(filters)
-	DREAMLUAU_CLEAR_REF_USERDATA(overlays)
-	DREAMLUAU_CLEAR_REF_USERDATA(underlays)
+	if(!(datum_flags & DF_STATIC_OBJECT))
+		DREAMLUAU_CLEAR_REF_USERDATA(contents)
+		DREAMLUAU_CLEAR_REF_USERDATA(filters)
+		DREAMLUAU_CLEAR_REF_USERDATA(overlays)
+		DREAMLUAU_CLEAR_REF_USERDATA(underlays)
 
 	return ..()
 
@@ -229,6 +236,8 @@
 	if(mover.pass_flags & pass_flags_self)
 		return TRUE
 	if(mover.throwing && (pass_flags_self & LETPASSTHROW))
+		return TRUE
+	if(SEND_SIGNAL(src, COMSIG_ATOM_CAN_ALLOW_THROUGH, mover, border_dir) & COMSIG_FORCE_ALLOW_THROUGH)
 		return TRUE
 	return !density
 
@@ -978,3 +987,66 @@
 	if(pass_info.pass_flags & pass_flags_self)
 		return TRUE
 	. = !density
+
+/*
+Some details about how to use these lists
+We're essentially trying to predict how doors/doorlike things will be placed/surounded, and use that to set their direction
+It's a little finiky, and you may need to override the lists or worst case senario manually edit something's dir
+But it should behave like you expect
+*/
+
+///What to connect with by default. Used by /atom/proc/auto_align(). This can be overriden
+GLOBAL_LIST_INIT(default_connectables, typecacheof(list(
+	/obj/machinery/door/airlock,
+	/obj/machinery/door/poddoor,
+	/obj/machinery/smartfridge,
+	/obj/structure/girder/reinforced,
+	/obj/structure/plasticflaps,
+	/obj/machinery/power/shieldwallgen,
+	/obj/structure/door_assembly,
+)))
+
+///What to connect with at a lower priority by default. Used for stuff that we want to consider, but only if we don't find anything else
+GLOBAL_LIST_INIT(lower_priority_connectables, typecacheof(list(
+	/obj/machinery/door/firedoor,
+	/obj/machinery/door/window,
+	/obj/structure/table,
+	/obj/structure/window,
+	/obj/structure/girder,
+)))
+
+/// Ok so this whole proc is about finding tiles that we could in theory be connected to, and blocking off that direction right?
+/// It's not perfect, and it can make mistakes, but it does a pretty good job predicting a mapper's intentions
+/// Maybe someday every door will have its dir set properly, but we'll keep this until then
+/atom/proc/auto_align(connectables_typecache, lower_priority_typecache)
+	if(manual_align)
+		return
+	if(!connectables_typecache)
+		connectables_typecache = GLOB.default_connectables
+	if(!lower_priority_typecache)
+		lower_priority_typecache = GLOB.lower_priority_connectables
+
+	var/list/dirs_usable = GLOB.cardinals.Copy()
+	var/list/dirs_secondary_priority = GLOB.cardinals.Copy()
+	for(var/dir_to_check in GLOB.cardinals)
+		var/turf/turf_to_check = get_step(src, dir_to_check)
+		if(turf_to_check.density) //Dense turfs are connectable
+			dirs_usable -= dir_to_check
+			continue
+		for(var/atom/movable/thing_to_check as anything in turf_to_check)
+			if(is_type_in_typecache(thing_to_check, connectables_typecache))
+				dirs_usable -= dir_to_check //So are things in the default typecache
+				break
+			if(is_type_in_typecache(thing_to_check, lower_priority_typecache))
+				dirs_secondary_priority -= dir_to_check //Assuming we find nothing else, note down the secondary priority stuff
+
+	var/dirs_avalible = length(dirs_usable)
+	//Only continue if we've got ourself either a corner or a side piece. Only side pieces really work well here, since corners aren't really something we can fudge handling for
+	if(dirs_avalible && dirs_avalible <= 2)
+		setDir(dirs_usable[1]) //Just take the first dir avalible
+		return
+	dirs_usable &= dirs_secondary_priority //Only consider dirs we both share
+	dirs_avalible = length(dirs_usable)
+	if(dirs_avalible && dirs_avalible <= 2)
+		setDir(dirs_usable[1])
+		return
