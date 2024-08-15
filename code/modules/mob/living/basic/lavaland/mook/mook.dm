@@ -24,6 +24,7 @@
 	base_pixel_x = -16
 	pixel_y = -16
 	base_pixel_y = -16
+	shadow_offset_y = 10
 
 	///the state of combat we are in
 	var/attack_state = MOOK_ATTACK_NEUTRAL

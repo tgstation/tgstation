@@ -29,6 +29,9 @@
 		if(M.status_flags & GODMODE)
 			return FALSE
 
+	if (vision_range && get_dist(living_mob, the_target) > vision_range)
+		return FALSE
+
 	if(!ignore_sight && !can_see(living_mob, the_target, vision_range)) //Target has moved behind cover and we have lost line of sight to it
 		return FALSE
 
