@@ -51,6 +51,7 @@
 	icon_greyscale = 'icons/mob/human/species/lizard/bodyparts.dmi'
 	limb_id = BODYPART_ID_DIGITIGRADE
 	bodyshape = BODYSHAPE_HUMANOID | BODYSHAPE_DIGITIGRADE
+	footprint_sprite = FOOTPRINT_SPRITE_CLAWS
 
 /obj/item/bodypart/leg/left/digitigrade/update_limb(dropping_limb = FALSE, is_creating = FALSE)
 	. = ..()
@@ -77,6 +78,7 @@
 	icon_greyscale = 'icons/mob/human/species/lizard/bodyparts.dmi'
 	limb_id = BODYPART_ID_DIGITIGRADE
 	bodyshape = BODYSHAPE_HUMANOID | BODYSHAPE_DIGITIGRADE
+	footprint_sprite = FOOTPRINT_SPRITE_CLAWS
 
 /obj/item/bodypart/leg/right/digitigrade/update_limb(dropping_limb = FALSE, is_creating = FALSE)
 	. = ..()
