@@ -406,13 +406,13 @@
 
 			for(var/mob/living/victim_living in dest_turf.contents)
 				var/damage_multiplier = victim_living.maxHealth * 0.01
-				var/extra_ouch = FALSE // if emagged you're gonna have a really bad time
+				var/extra_ouch = FALSE
 				if(speed_limiter == 0.5) // slow trams don't cause extra damage
-					for(var/obj/structure/tram/spoiler/my_spoiler in transport_contents)
-						if(get_dist(my_spoiler, victim_living) != 1)
+					for(var/obj/structure/tram/my_tile in transport_contents)
+						if(get_dist(my_tile, victim_living) != 1)
 							continue
 
-						if(my_spoiler.deployed)
+						if(prob(7))
 							extra_ouch = TRUE
 							break
 
