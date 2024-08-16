@@ -6452,9 +6452,7 @@
 /turf/open/floor/iron/dark,
 /area/station/ai_monitored/turret_protected/aisat/foyer)
 "cov" = (
-/obj/structure/sign/poster/official/cleanliness/directional/north{
-	pixel_y = 0
-	},
+/obj/structure/sign/poster/official/cleanliness/directional/north,
 /turf/closed/wall/r_wall,
 /area/station/medical/virology)
 "coE" = (
