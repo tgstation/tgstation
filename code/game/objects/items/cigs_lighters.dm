@@ -229,7 +229,7 @@ GLOBAL_LIST_EMPTY(cigarette_eaters) // Need to keep track of up to 500 cigarette
 
 /obj/item/cigarette/examine(mob/user)
 	. = ..()
-	if(!is_species(user, /datum/species/human))
+	if(!ishumanbasic(user))
 		. += span_boldwarning("You are curious to taste it")
 
 /obj/item/cigarette/equipped(mob/equipee, slot)
