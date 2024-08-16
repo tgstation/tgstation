@@ -18474,7 +18474,6 @@
 /obj/structure/bookcase{
 	name = "Forbidden Knowledge"
 	},
-/obj/machinery/digital_clock/directional/north,
 /turf/open/floor/iron/dark,
 /area/station/service/library/private)
 "dAr" = (
@@ -120445,7 +120444,8 @@
 	dir = 2
 	},
 /obj/structure/sign/painting/large/library_private{
-	pixel_y = 28
+	pixel_y = null;
+	dir = 1
 	},
 /turf/open/floor/iron/dark,
 /area/station/service/library/private)
