@@ -546,8 +546,9 @@
  * Returns an associative list of the logs of a certain amount of lines spoken recently by this mob
  * copy_amount - number of lines to return
  * line_chance - chance to return a line, if you don't want just the most recent x lines
+ * line_chance_affect_amount - if FALSE, we add 1 to copy_amount to ensure the amount of returned messages is kept the same
  */
-/mob/proc/copy_recent_speech(copy_amount = LING_ABSORB_RECENT_SPEECH, line_chance = 100)
+/mob/proc/copy_recent_speech(copy_amount = LING_ABSORB_RECENT_SPEECH, line_chance = 100, line_chance_affect_amount = TRUE)
 	var/list/recent_speech = list()
 	var/list/say_log = list()
 	var/log_source = logging
@@ -563,6 +564,8 @@
 		if(recent_speech.len >= copy_amount)
 			break
 		if(!prob(line_chance))
+			if(!line_chance_affect_amount)
+				copy_amount += 1
 			continue
 		recent_speech[spoken_memory] = splittext(say_log[spoken_memory], "\"", 1, 0, TRUE)[3]
 

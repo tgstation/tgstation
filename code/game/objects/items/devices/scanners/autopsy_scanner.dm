@@ -1,3 +1,5 @@
+#define AUTOPSY_RECENT_SPEECH 5
+
 /obj/item/autopsy_scanner
 	name = "autopsy scanner"
 	desc = "Used in surgery to extract information from a cadaver. Can also scan the health of cadavers like an advanced health analyzer!"
@@ -108,6 +110,24 @@
 		for(var/datum/symptom/symptom as anything in advanced_disease.symptoms)
 			autopsy_information += "[symptom.name] - [symptom.desc]<br>"
 
+	var/cannot_reason
+	var/obj/item/organ/internal/brain/brain = scanned.get_organ_slot(ORGAN_SLOT_BRAIN)
+	if(!brain)
+		cannot_reason = "brain missing!"
+	else if(brain.organ_flags & ORGAN_FAILING)
+		cannot_reason = "brain too damaged!"
+
+	if(cannot_reason)
+		autopsy_information += "<b>Last Words:</b> ERROR: [cannot_reason]<br>"
+	else
+		var/list/last_words = scanned.copy_recent_speech(AUTOPSY_RECENT_SPEECH, line_chance = 95, line_chance_affect_amount = FALSE)
+		if(length(last_words))
+			autopsy_information += "<b>Last Words:</b><br>"
+			var/scramble_prob = 1
+			for(var/message in last_words)
+				autopsy_information += "[scramble_message_replace_chars(message, scramble_prob)]<br>"
+				scramble_prob += 3
+
 	var/obj/item/paper/autopsy_report = new(user.loc)
 	autopsy_report.name = "Autopsy Report ([scanned.name])"
 	autopsy_report.add_raw_text(autopsy_information.Join("\n"))
@@ -115,3 +135,5 @@
 	user.put_in_hands(autopsy_report)
 	user.balloon_alert(user, "report printed")
 	return TRUE
+
+#undef AUTOPSY_RECENT_SPEECH
