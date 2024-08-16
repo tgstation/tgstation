@@ -7367,7 +7367,6 @@
 	},
 /obj/structure/sign/poster/contraband/random,
 /obj/effect/landmark/transport/transport_id/tramstation/line_1,
-/obj/machinery/airalarm/directional/north,
 /turf/open/floor/iron,
 /area/station/hallway/primary/tram/center)
 "bAT" = (
@@ -27447,6 +27446,7 @@
 	dir = 1
 	},
 /obj/effect/landmark/event_spawn,
+/obj/machinery/airalarm/directional/north,
 /turf/open/floor/iron,
 /area/station/hallway/primary/tram/center)
 "iNB" = (
@@ -51302,10 +51302,7 @@
 /area/station/service/chapel/office)
 "qXX" = (
 /obj/structure/transport/linear/tram,
-/obj/machinery/transport/tram_controller{
-	pixel_y = -5;
-	alpha = 0
-	},
+/obj/machinery/transport/tram_controller,
 /obj/structure/tram,
 /turf/open/openspace,
 /area/station/hallway/primary/tram/center)
@@ -71991,7 +71988,6 @@
 /obj/effect/turf_decal/trimline/tram/filled/warning{
 	dir = 1
 	},
-/obj/machinery/button/transport/tram/directional/south,
 /obj/machinery/transport/destination_sign/indicator/directional/north,
 /obj/machinery/button/transport/tram/directional/north{
 	id = 2
