@@ -2,7 +2,7 @@
 /obj/item/fish
 	name = "generic looking aquarium fish"
 	desc = "very bland"
-	icon = 'icons/obj/aquarium/fish.dmi'
+	icon = 'icons/obj/structures/aquarium/fish.dmi'
 	icon_state = "bugfish"
 	lefthand_file = 'icons/mob/inhands/fish_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/fish_righthand.dmi'
@@ -389,6 +389,20 @@
 				visible_message(message)
 	update_appearance()
 	SEND_SIGNAL(src, COMSIG_FISH_STATUS_CHANGED)
+
+/obj/item/fish/expose_reagents(list/reagents, datum/reagents/source, methods = TOUCH, volume_modifier = 1, show_message = TRUE)
+	. = ..()
+	if(. & COMPONENT_NO_EXPOSE_REAGENTS || status != FISH_DEAD)
+		return
+	var/datum/reagent/medicine/strange_reagent/revival = locate() in reagents
+	if(!revival)
+		return
+	if(reagents[revival] >= 2 * w_class)
+		set_status(FISH_ALIVE)
+	else
+		balloon_alert_to_viewers("twitches for a moment!")
+		animate(src, pixel_x = 1, time = 0.1 SECONDS, loop = 2, flags = ANIMATION_RELATIVE|ANIMATION_PARALLEL)
+		animate(pixel_x = -1, flags = ANIMATION_RELATIVE)
 
 /obj/item/fish/proc/use_lazarus(datum/source, obj/item/lazarus_injector/injector, mob/user)
 	SIGNAL_HANDLER

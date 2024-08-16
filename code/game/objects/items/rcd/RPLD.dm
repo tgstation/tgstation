@@ -152,6 +152,10 @@
 
 	return data
 
+/obj/item/construction/plumbing/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
+	. = ..()
+	playsound(src, SFX_TOOL_SWITCH, 20, TRUE)
+
 /obj/item/construction/plumbing/handle_ui_act(action, params, datum/tgui/ui, datum/ui_state/state)
 	switch(action)
 		if("color")
@@ -177,8 +181,6 @@
 				return FALSE
 			blueprint = design
 			blueprint_changed = TRUE
-
-			playsound(src, 'sound/effects/pop.ogg', 50, vary = FALSE)
 
 	return TRUE
 

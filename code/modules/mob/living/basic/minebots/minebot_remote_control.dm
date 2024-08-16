@@ -2,7 +2,7 @@
 /obj/item/minebot_remote_control
 	name = "Remote Control"
 	desc = "Requesting stratagem!"
-	icon = 'icons/obj/mining.dmi'
+	icon = 'icons/obj/mining_zones/equipment.dmi'
 	icon_state = "minebot_bomb_control"
 	item_flags = NOBLUDGEON
 	///are we currently primed to drop a bomb?

@@ -1,4 +1,0 @@
-author: "Ben10Omintrix"
-delete-after: True
-changes:
-  - bugfix: "wolf AI will no longer get stuck"

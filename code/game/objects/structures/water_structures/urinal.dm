@@ -1,7 +1,7 @@
 /obj/structure/urinal
 	name = "urinal"
 	desc = "The HU-452, an experimental urinal. Comes complete with experimental urinal cake."
-	icon = 'icons/obj/watercloset.dmi'
+	icon = 'icons/obj/structures/watercloset.dmi'
 	icon_state = "urinal"
 	density = FALSE
 	anchored = TRUE
@@ -92,14 +92,14 @@ WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/structure/urinal)
 /obj/item/wallframe/urinal
 	name = "urinal frame"
 	desc = "An unmounted urinal. Attach it to a wall to use."
-	icon = 'icons/obj/watercloset.dmi'
+	icon = 'icons/obj/structures/watercloset.dmi'
 	icon_state = "urinal"
 	result_path = /obj/structure/urinal
 
 /obj/item/food/urinalcake
 	name = "urinal cake"
 	desc = "The noble urinal cake, protecting the station's pipes from the station's pee. Do not eat."
-	icon = 'icons/obj/watercloset.dmi'
+	icon = 'icons/obj/maintenance_loot.dmi'
 	icon_state = "urinalcake"
 	w_class = WEIGHT_CLASS_TINY
 	food_reagents = list(
