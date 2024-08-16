@@ -1,5 +1,0 @@
-author: "Y0SH1M4S73R"
-delete-after: True
-changes:
-  - admin: "The layout of the lua editor has been tweaked slightly."
-  - admin: "In the lua editor, you can now toggle whether to log runtimes the viewed state is involved in."

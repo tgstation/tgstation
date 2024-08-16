@@ -134,7 +134,8 @@ GLOBAL_LIST_INIT(gaslist_cache, init_gaslist_cache())
 /// Gets the gas visuals for everything in this mixture
 /datum/gas_mixture/proc/return_visuals(turf/z_context)
 	var/list/output
-	GAS_OVERLAYS(gases, output, z_context)
+	// We almost always want a normal gas tile, so let's give em a normal gas tile
+	GAS_OVERLAYS(gases, output, z_context, NONE)
 	return output
 
 /// Calculate thermal energy in joules

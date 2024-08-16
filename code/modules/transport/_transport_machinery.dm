@@ -179,21 +179,11 @@
 		user.visible_message(span_notice("[user.name] installs [src] on the tram."),
 			span_notice("You install [src] on the tram."),
 			span_hear("You hear clicking."))
-		var/floor_to_tram = get_dir(user, on_tram)
-
-		var/obj/cabinet = new result_path(get_turf(user), floor_to_tram, TRUE)
-		cabinet.setDir(floor_to_tram)
-
-		if(pixel_shift)
-			switch(floor_to_tram)
-				if(NORTH)
-					cabinet.pixel_y = pixel_shift
-				if(SOUTH)
-					cabinet.pixel_y = -pixel_shift
-				if(EAST)
-					cabinet.pixel_x = pixel_shift
-				if(WEST)
-					cabinet.pixel_x = -pixel_shift
+		var/facing_dir = get_dir(user, on_tram)
+		if(inverse_dir) // I'm sorry about this switch, O.turn wouldn't work for whatever reason.
+			facing_dir = REVERSE_DIR(facing_dir)
+		var/obj/cabinet = new result_path(get_turf(user), facing_dir, TRUE)
+		cabinet.setDir(facing_dir)
 		after_attach(cabinet)
 
 	qdel(src)

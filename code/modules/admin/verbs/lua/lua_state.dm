@@ -55,6 +55,8 @@ GLOBAL_PROTECT(lua_state_stack)
 	var/status = result["status"]
 	if(!verbose && status != "error" && status != "panic" && status != "runtime" && !(result["name"] == "input" && (status == "finished" || length(result["return_values"]))))
 		return
+	if(status == "runtime" && supress_runtimes)
+		return
 	var/append_to_log = TRUE
 	var/index_of_log
 	if(log.len)

@@ -53,6 +53,8 @@ GLOBAL_LIST_EMPTY(station_turfs)
 
 	var/tiled_dirt = FALSE // use smooth tiled dirt decal
 
+	/// The prefix to use (from lighting_object.dmi) as our lighting underlay
+	var/lighting_state = "lighting"
 	///Icon-smoothing variable to map a diagonal wall corner with a fixed underlay.
 	var/list/fixed_underlay = null
 
@@ -769,6 +771,12 @@ GLOBAL_LIST_EMPTY(station_turfs)
 	explosive_resistance -= get_explosive_block()
 	inherent_explosive_resistance = explosion_block
 	explosive_resistance += get_explosive_block()
+
+/turf/proc/set_lighting_state(new_state)
+	lighting_state = new_state
+	if (lighting_object && !lighting_object.needs_update)
+		lighting_object.needs_update = TRUE
+		SSlighting.objects_queue += lighting_object
 
 /// Returns whether it is safe for an atom to move across this turf
 /turf/proc/can_cross_safely(atom/movable/crossing)

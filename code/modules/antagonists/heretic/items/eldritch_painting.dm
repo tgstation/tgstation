@@ -7,7 +7,6 @@
 	flags_1 = NONE
 	icon_state = "eldritch_painting_debug"
 	result_path = /obj/structure/sign/painting/eldritch
-	pixel_shift = 30
 
 /obj/structure/sign/painting/eldritch
 	name = "The Blank Canvas: A Study in Default Subtypes"

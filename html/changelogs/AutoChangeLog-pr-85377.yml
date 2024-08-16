@@ -1,5 +1,0 @@
-author: "SmArtKar"
-delete-after: True
-changes:
-  - qol: "Cable coil and welding tool healing now loops similarly to sutures/meshes"
-  - bugfix: "Fixed cable coil/welding tool heal message not displaying when healing someone else"

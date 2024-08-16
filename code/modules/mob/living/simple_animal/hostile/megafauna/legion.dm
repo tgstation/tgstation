@@ -106,6 +106,7 @@
 	pixel_y = 0
 	maxHealth = 200
 	size = LEGION_SMALL
+	shadow_type = SHADOW_MEDIUM
 
 /mob/living/simple_animal/hostile/megafauna/legion/OpenFire(the_target)
 	if(client)

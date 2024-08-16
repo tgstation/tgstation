@@ -164,7 +164,9 @@
 /obj/structure/disposalpipe/segment{
 	dir = 6
 	},
-/obj/effect/decal/cleanable/cobweb,
+/obj/effect/decal/cleanable/cobweb{
+	pixel_y = 24
+	},
 /turf/open/floor/catwalk_floor,
 /area/station/maintenance/starboard/central)
 "wH" = (
@@ -181,12 +183,16 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/structure/cable,
-/obj/effect/decal/cleanable/cobweb/cobweb2,
+/obj/effect/decal/cleanable/cobweb/cobweb2{
+	pixel_y = 24
+	},
 /turf/open/floor/catwalk_floor,
 /area/station/maintenance/starboard/central)
 "xG" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/effect/decal/cleanable/cobweb/cobweb2,
+/obj/effect/decal/cleanable/cobweb/cobweb2{
+	pixel_y = 24
+	},
 /turf/open/floor/iron/smooth,
 /area/station/maintenance/starboard/central)
 "xJ" = (
@@ -294,14 +300,15 @@
 "Fe" = (
 /obj/machinery/light/small/directional/east,
 /obj/effect/decal/cleanable/dirt,
-/obj/machinery/camera{
-	c_tag = "Maintenance - Escape Pod";
-	dir = 9
-	},
 /obj/effect/turf_decal/trimline/neutral/filled/corner{
 	dir = 8
 	},
-/obj/effect/decal/cleanable/cobweb,
+/obj/effect/decal/cleanable/cobweb{
+	pixel_y = 24
+	},
+/obj/machinery/camera/directional/west{
+	c_tag = "Maintenance - Escape Pod Dock"
+	},
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/central)
 "HT" = (
@@ -392,7 +399,9 @@
 	pixel_x = 10;
 	pixel_y = -6
 	},
-/obj/effect/decal/cleanable/cobweb/cobweb2,
+/obj/effect/decal/cleanable/cobweb/cobweb2{
+	pixel_y = 24
+	},
 /turf/open/floor/iron/smooth,
 /area/station/maintenance/starboard/central)
 "RF" = (

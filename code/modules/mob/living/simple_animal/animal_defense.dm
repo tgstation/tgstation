@@ -27,7 +27,6 @@
 		playsound(loc, attacked_sound, 25, TRUE, -1)
 		apply_damage(harm_intent_damage)
 		log_combat(user, src, "attacked")
-		updatehealth()
 		return TRUE
 
 /mob/living/simple_animal/get_shoving_message(mob/living/shover, obj/item/weapon, shove_flags)

@@ -572,7 +572,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
 			var/mutable_appearance/underwear_overlay
 			if(underwear)
 				if(species_human.dna.species.sexes && species_human.physique == FEMALE && (underwear.gender == MALE))
-					underwear_overlay = wear_female_version(underwear.icon_state, underwear.icon, BODY_LAYER, FEMALE_UNIFORM_FULL)
+					underwear_overlay = mutable_appearance(wear_female_version(underwear.icon_state, underwear.icon, FEMALE_UNIFORM_FULL), layer = -BODY_LAYER)
 				else
 					underwear_overlay = mutable_appearance(underwear.icon, underwear.icon_state, -BODY_LAYER)
 				if(!underwear.use_static)
@@ -584,9 +584,9 @@ GLOBAL_LIST_EMPTY(features_by_species)
 			if(undershirt)
 				var/mutable_appearance/working_shirt
 				if(species_human.dna.species.sexes && species_human.physique == FEMALE)
-					working_shirt = wear_female_version(undershirt.icon_state, undershirt.icon, BODY_LAYER)
+					working_shirt = mutable_appearance(wear_female_version(undershirt.icon_state, undershirt.icon), layer = -BODY_LAYER)
 				else
-					working_shirt = mutable_appearance(undershirt.icon, undershirt.icon_state, -BODY_LAYER)
+					working_shirt = mutable_appearance(undershirt.icon, undershirt.icon_state, layer = -BODY_LAYER)
 				standing += working_shirt
 
 		if(species_human.socks && species_human.num_legs >= 2 && !(species_human.bodyshape & BODYSHAPE_DIGITIGRADE))
@@ -800,7 +800,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
 			if(H.num_legs < 2)
 				return FALSE
 			if((H.bodyshape & BODYSHAPE_DIGITIGRADE) && !(I.item_flags & IGNORE_DIGITIGRADE))
-				if(!(I.supports_variations_flags & (CLOTHING_DIGITIGRADE_VARIATION|CLOTHING_DIGITIGRADE_VARIATION_NO_NEW_ICON)))
+				if(!(I.supports_variations_flags & DIGITIGRADE_VARIATIONS))
 					if(!disable_warning)
 						to_chat(H, span_warning("The footwear around here isn't compatible with your feet!"))
 					return FALSE
@@ -1195,10 +1195,9 @@ GLOBAL_LIST_EMPTY(features_by_species)
 
 	// Get the insulation value based on the area's temp
 	var/thermal_protection = humi.get_insulation_protection(area_temp)
-	var/original_bodytemp = humi.bodytemperature
 
 	// Changes to the skin temperature based on the area
-	var/area_skin_diff = area_temp - original_bodytemp
+	var/area_skin_diff = area_temp - humi.bodytemperature
 	if(!humi.on_fire || area_skin_diff > 0)
 		// change rate of 0.05 as area temp has large impact on the surface
 		var/area_skin_change = get_temp_change_amount(area_skin_diff, 0.05 * seconds_per_tick)
@@ -1218,7 +1217,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
 	// Core to skin temp transfer, when not on fire
 	if(!humi.on_fire)
 		// Get the changes to the skin from the core temp
-		var/core_skin_diff = humi.coretemperature - original_bodytemp
+		var/core_skin_diff = humi.coretemperature - humi.bodytemperature
 		// change rate of 0.045 to reflect temp back to the skin at the slight higher rate then core to skin
 		var/core_skin_change = (1 + thermal_protection) * get_temp_change_amount(core_skin_diff, 0.045 * seconds_per_tick)
 

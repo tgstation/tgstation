@@ -1,5 +1,0 @@
-author: "MTandi"
-delete-after: True
-changes:
-  - qol: "new uplink UI"
-  - qol: "made it possible to buy a custom amount of TC, instead of bundles with fixed amounts"
