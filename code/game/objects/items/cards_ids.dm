@@ -154,7 +154,7 @@
 
 /obj/item/card/id/proc/on_pointed(mob/living/user, atom/pointed, obj/effect/temp_visual/point/point)
 	SIGNAL_HANDLER
-	if(point.icon_state != obj/effect/temp_visual/point::icon_state) //it differs from the original icon_state already.
+	if(point.icon_state != /obj/effect/temp_visual/point::icon_state) //it differs from the original icon_state already.
 		return
 	point.icon_state = "arrow_large"
 
