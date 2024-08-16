@@ -8,6 +8,7 @@
 	desc = "A generic brand of lipstick."
 	icon = 'icons/obj/cosmetic.dmi'
 	icon_state = "lipstick"
+	base_icon_state = "lipstick"
 	inhand_icon_state = "lipstick"
 	w_class = WEIGHT_CLASS_TINY
 	interaction_flags_click = NEED_DEXTERITY|NEED_HANDS|ALLOW_RESTING
@@ -34,8 +35,8 @@
 	. += "Alt-click to change the style."
 
 /obj/item/lipstick/update_icon_state()
-	icon_state = "[initial(icon_state)][open ? "_uncap" : null]"
-	inhand_icon_state = "[initial(icon_state)][open ? "open" : null]"
+	icon_state = "[base_icon_state][open ? "_uncap" : null]"
+	inhand_icon_state = "[base_icon_state][open ? "open" : null]"
 	return ..()
 
 /obj/item/lipstick/update_overlays()
@@ -109,6 +110,7 @@
 	name = "syndie lipstick"
 	desc = "Syndicate branded lipstick with a killer dose of kisses. Observe safety regulations!"
 	icon_state = "slipstick"
+	base_icon_state = "slipstick"
 	lipstick_color = COLOR_SYNDIE_RED
 	lipstick_trait = TRAIT_SYNDIE_KISS
 
