@@ -112,7 +112,7 @@
 /datum/heretic_knowledge/cold_snap/proc/check_environment(mob/living/user)
 	SIGNAL_HANDLER
 
-	var/datum/gas_mixture/environment = user.loc.return_air()
+	var/datum/gas_mixture/environment = user.loc?.return_air()
 	if(!isnull(environment))
 		var/affected_temperature = environment.return_temperature()
 		var/affected_pressure = environment.return_pressure()
@@ -168,7 +168,7 @@
 
 /datum/heretic_knowledge/blade_upgrade/void
 	name = "Seeking Blade"
-	desc = "You can now attack distant marked targets with your Void Blade, teleporting directly next to them. Your blade even freezes your enemies"
+	desc = "Your blade now freezes enemies. Additionally, you can now attack distant marked targets with your Void Blade, teleporting directly next to them."
 	gain_text = "Fleeting memories, fleeting feet. I mark my way with frozen blood upon the snow. Covered and forgotten."
 	next_knowledge = list(/datum/heretic_knowledge/spell/void_pull)
 	route = PATH_VOID
@@ -321,14 +321,12 @@
 /datum/heretic_knowledge/ultimate/void_final/proc/can_deflect(mob/living/ascended_heretic)
 	if(!ascended_heretic.combat_mode)
 		return FALSE
-	if(ascended_heretic.incapacitated(IGNORE_GRAB)) //NO STUN
+	if(ascended_heretic.incapacitated(IGNORE_GRAB))
 		return FALSE
-	if(!(ascended_heretic.mobility_flags & MOBILITY_USE)) //NO UNABLE TO USE
+	if(!(ascended_heretic.mobility_flags & MOBILITY_USE))
 		return FALSE
 	var/datum/dna/dna = ascended_heretic.has_dna()
-	if(dna?.check_mutation(/datum/mutation/human/hulk)) //NO HULK
-		return FALSE
-	if(!isturf(ascended_heretic.loc)) //NO MOTHERFLIPPIN MECHS!
+	if(!isturf(ascended_heretic.loc))
 		return FALSE
 	return TRUE
 

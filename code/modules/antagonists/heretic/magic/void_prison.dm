@@ -11,6 +11,7 @@
 	sound = 'sound/magic/voidblink.ogg'
 
 	cooldown_time = 1 MINUTES
+	cast_range = 3
 
 	sound = null
 	school = SCHOOL_FORBIDDEN
@@ -54,7 +55,7 @@
 		//Animate closing the ball
 		stasis_overlay.animate_closing()
 		stasis_overlay.icon_state = "voidball_closed"
-		QDEL_IN(stasis_overlay, 11)
+		QDEL_IN(stasis_overlay, 1.1 SECONDS)
 		stasis_overlay = null
 	return ..()
 
@@ -62,7 +63,7 @@
 /datum/status_effect/void_prison/proc/enter_prison(mob/living/prisoner)
 	stasis_overlay.forceMove(prisoner.loc)
 	prisoner.forceMove(stasis_overlay)
-	prisoner.adjust_silence_up_to(9 SECONDS, 9 SECONDS)
+	prisoner.set_silence_if_lower(9 SECONDS)
 	ADD_TRAIT(prisoner, TRAIT_NO_TRANSFORM, REF(src))
 	prisoner.status_flags |= GODMODE
 

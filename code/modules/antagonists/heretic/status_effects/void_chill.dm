@@ -12,7 +12,7 @@
 	///Current amount of stacks we have
 	var/stacks
 	///Maximum of stacks that we could possibly get
-	var/stack_limit = MAX_FREEZE_STACKS
+	var/stack_limit = 5
 	///icon for the overlay
 	var/image/stacks_overlay
 
@@ -28,15 +28,12 @@
 		return FALSE
 	return TRUE
 
-/datum/status_effect/void_chill/Destroy()
-	UnregisterSignal(owner, COMSIG_ATOM_UPDATE_OVERLAYS)
-	return ..()
-
 /datum/status_effect/void_chill/on_remove()
 	owner.update_icon(UPDATE_OVERLAYS)
 	owner.remove_atom_colour(TEMPORARY_COLOUR_PRIORITY, COLOR_BLUE_LIGHT)
 	owner.remove_movespeed_modifier(/datum/movespeed_modifier/void_chill)
 	owner.remove_alt_appearance("heretic_status")
+	UnregisterSignal(owner, COMSIG_ATOM_UPDATE_OVERLAYS)
 
 /datum/status_effect/void_chill/tick(seconds_between_ticks)
 	owner.adjust_bodytemperature(-12 * stacks)

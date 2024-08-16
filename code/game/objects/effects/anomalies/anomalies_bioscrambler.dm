@@ -89,6 +89,7 @@
 	duration = 0.5 SECONDS
 	color = COLOR_LIME
 	var/max_alpha = 255
+	///How far the effect would scale in size
 	var/amount_to_scale = 2
 
 /obj/effect/temp_visual/circle_wave/Initialize(mapload)
