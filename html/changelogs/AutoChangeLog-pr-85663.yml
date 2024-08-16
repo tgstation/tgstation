@@ -1,4 +1,0 @@
-author: "SmArtKar"
-delete-after: True
-changes:
-  - bugfix: "Fixed chanterelles runtiming upon being hollowed out with a spoon and not spawning a hat"
