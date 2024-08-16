@@ -1,4 +1,0 @@
-author: "Bisar"
-delete-after: True
-changes:
-  - bugfix: "Potted plants no longer permanently mark you as one of their own."
