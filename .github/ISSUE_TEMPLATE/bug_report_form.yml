@@ -11,9 +11,9 @@ body:
   - type: input
     id: reporting-version
     attributes:
-      label: Reporting Version
+      label: Client Version
       description: |
-        The BYOND version you are using to report this issue. You can find this information in the bottom right corner of the BYOND client.
+        The BYOND version you are using to report this issue. You can find this information in the bottom left corner of the "About BYOND" window in the BYOND client.
       placeholder: "515.1642"
   - type: textarea
     id: issue-summary

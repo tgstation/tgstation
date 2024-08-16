@@ -72,6 +72,9 @@
 		var/base_link = githuburl + "/issues/new?template=bug_report_form.yml"
 		var/list/concatable = list(base_link)
 
+		var/client_version = "[byond_version].[byond_build]"
+		concatable += ("&reporting-version=" + client_version)
+
 		// the way it works is that we use the ID's that are baked into the template YML and replace them with values that we can collect in game.
 		if(GLOB.round_id)
 			concatable += ("&round-id=" + GLOB.round_id)
@@ -82,12 +85,12 @@
 			for(var/entry in GLOB.revdata.testmerge)
 				var/datum/tgs_revision_information/test_merge/tm = entry
 				all_tms += "- \[[tm.title]\]([githuburl]/pull/[tm.number])"
-			var/all_tms_joined = all_tms.Join("\n") // for some reason this can't go in the []
+			var/all_tms_joined = jointext(all_tms, "\n") // for some reason this can't go in the []
 
 			concatable += ("&test-merges=" + all_tms_joined)
 
-		var/url_params = "Reporting client version: [byond_version].[byond_build]\n\n[local_template]"
-		DIRECT_OUTPUT(src, link("[githuburl]/issues/new?template=bug_report_form.yml]"))
+		var/final_link = link(jointext(concatable, ""))
+		DIRECT_OUTPUT(src, final_link)
 	else
 		to_chat(src, span_danger("The Github URL is not set in the server configuration."))
 	return
