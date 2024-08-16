@@ -15246,7 +15246,7 @@
 "ejH" = (
 /obj/effect/turf_decal/tile/neutral/tram,
 /obj/structure/transport/linear/tram,
-/obj/effect/spawner/structure/window/reinforced/shuttle,
+/obj/effect/spawner/structure/window/reinforced/tram,
 /turf/open/indestructible/tram/plate,
 /area/station/hallway/primary/tram/center)
 "ejK" = (
@@ -15792,7 +15792,7 @@
 	dir = 1
 	},
 /obj/structure/transport/linear/tram,
-/obj/effect/spawner/structure/window/reinforced/shuttle,
+/obj/effect/spawner/structure/window/reinforced/tram,
 /turf/open/openspace,
 /area/station/hallway/primary/tram/center)
 "euW" = (
@@ -42226,7 +42226,7 @@
 "nIU" = (
 /obj/structure/fluff/tram_rail/electric,
 /obj/structure/transport/linear/tram,
-/obj/effect/spawner/structure/window/reinforced/shuttle,
+/obj/effect/spawner/structure/window/reinforced/tram,
 /turf/open/openspace,
 /area/station/hallway/primary/tram/center)
 "nJd" = (
