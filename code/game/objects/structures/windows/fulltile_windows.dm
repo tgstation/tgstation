@@ -1,5 +1,5 @@
 /obj/structure/window/fulltile
-	icon = 'icons/obj/smooth_structures/windows/normal_window.dmi'
+	icon = 'icons/obj/structures/smooth/windows/normal_window.dmi'
 	icon_state = "0-lower"
 	pixel_y = WINDOW_OFF_FRAME_Y_OFFSET
 	max_integrity = 50
@@ -15,7 +15,7 @@
 	anchored = FALSE
 
 /obj/structure/window/plasma/fulltile
-	icon = 'icons/obj/smooth_structures/windows/plasma_window.dmi'
+	icon = 'icons/obj/structures/smooth/windows/plasma_window.dmi'
 	icon_state = "0-lower"
 	pixel_y = WINDOW_OFF_FRAME_Y_OFFSET
 	max_integrity = 300
@@ -30,7 +30,7 @@
 	anchored = FALSE
 
 /obj/structure/window/reinforced/plasma/fulltile
-	icon = 'icons/obj/smooth_structures/windows/plasma_reinforced_window.dmi'
+	icon = 'icons/obj/structures/smooth/windows/plasma_reinforced_window.dmi'
 	icon_state = "0-lower"
 	pixel_y = WINDOW_OFF_FRAME_Y_OFFSET
 	state = RWINDOW_SECURE
@@ -47,7 +47,7 @@
 	state = WINDOW_OUT_OF_FRAME
 
 /obj/structure/window/reinforced/fulltile
-	icon = 'icons/obj/smooth_structures/windows/reinforced_window.dmi'
+	icon = 'icons/obj/structures/smooth/windows/reinforced_window.dmi'
 	icon_state = "0-lower"
 	pixel_y = WINDOW_OFF_FRAME_Y_OFFSET
 	max_integrity = 150
@@ -73,7 +73,7 @@
 	atom_integrity = rand(max_integrity * integrity_min_factor, max_integrity * integrity_max_factor)
 
 /obj/structure/window/reinforced/tinted/fulltile
-	icon = 'icons/obj/smooth_structures/windows/tinted_window.dmi'
+	icon = 'icons/obj/structures/smooth/windows/tinted_window.dmi'
 	icon_state = "0-lower"
 	pixel_y = WINDOW_OFF_FRAME_Y_OFFSET
 	fulltile = TRUE
@@ -84,7 +84,7 @@
 	glass_amount = 2
 
 /obj/structure/window/reinforced/fulltile/ice
-	icon = 'icons/obj/smooth_structures/windows/frosted_window.dmi'
+	icon = 'icons/obj/structures/smooth/windows/frosted_window.dmi'
 	max_integrity = 150
 	glass_amount = 2
 
@@ -92,7 +92,7 @@
 /obj/structure/window/reinforced/shuttle//this is called reinforced because it is reinforced w/titanium
 	name = "shuttle window"
 	desc = "A reinforced, air-locked pod window."
-	icon = 'icons/obj/smooth_structures/windows/titanium_window.dmi'
+	icon = 'icons/obj/structures/smooth/windows/titanium_window.dmi'
 	icon_state = "0-lower"
 	pixel_y = WINDOW_OFF_FRAME_Y_OFFSET
 	max_integrity = 150
@@ -137,7 +137,7 @@
 /obj/structure/window/reinforced/plasma/plastitanium
 	name = "plastitanium window"
 	desc = "A durable looking window made of an alloy of of plasma and titanium."
-	icon = 'icons/obj/smooth_structures/windows/plastitanium_window.dmi'
+	icon = 'icons/obj/structures/smooth/windows/plastitanium_window.dmi'
 	icon_state = "0-lower"
 	pixel_y = WINDOW_OFF_FRAME_Y_OFFSET
 	max_integrity = 1200
@@ -168,7 +168,7 @@
 /obj/structure/window/paperframe
 	name = "paper frame"
 	desc = "A fragile separator made of thin wood and paper."
-	icon = 'icons/obj/smooth_structures/windows/paper_window.dmi'
+	icon = 'icons/obj/structures/smooth/windows/paper_window.dmi'
 	icon_state = null
 	opacity = TRUE
 	max_integrity = 15
@@ -218,9 +218,9 @@
 
 /obj/structure/window/paperframe/update_icon(updates=ALL)
 	if(atom_integrity >= max_integrity)
-		icon = 'icons/obj/smooth_structures/windows/paper_window.dmi'
+		icon = 'icons/obj/structures/smooth/windows/paper_window.dmi'
 	else
-		icon = 'icons/obj/smooth_structures/windows/paper_window_torn.dmi'
+		icon = 'icons/obj/structures/smooth/windows/paper_window_torn.dmi'
 	. = ..()
 	if((updates & UPDATE_SMOOTHING) && (smoothing_flags & USES_SMOOTHING))
 		QUEUE_SMOOTH(src)
@@ -247,7 +247,7 @@
 /obj/structure/window/bronze
 	name = "brass window"
 	desc = "A paper-thin pane of translucent yet reinforced brass. Nevermind, this is just weak bronze!"
-	icon = 'icons/obj/smooth_structures/structure_variations.dmi'
+	icon = 'icons/obj/structures/smooth/structure_variations.dmi'
 	icon_state = "clockwork_window-single"
 	glass_type = /obj/item/stack/sheet/bronze
 
@@ -257,7 +257,7 @@ MAPPING_DIRECTIONAL_HELPERS_EMPTY(/obj/structure/window/bronze/spawner)
 	anchored = FALSE
 
 /obj/structure/window/bronze/fulltile
-	icon = 'icons/obj/smooth_structures/clockwork_window.dmi'
+	icon = 'icons/obj/structures/smooth/clockwork_window.dmi'
 	pixel_y = WINDOW_OFF_FRAME_Y_OFFSET
 	icon_state = "clockwork_window-0"
 	base_icon_state = "clockwork_window"

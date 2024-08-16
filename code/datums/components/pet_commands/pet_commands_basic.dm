@@ -7,7 +7,7 @@
 /datum/pet_command/idle
 	command_name = "Stay"
 	command_desc = "Command your pet to stay idle in this location."
-	radial_icon = 'icons/obj/bed.dmi'
+	radial_icon = 'icons/obj/structures/bed.dmi'
 	radial_icon_state = "dogbed"
 	speech_commands = list("sit", "stay", "stop")
 	command_feedback = "sits"
@@ -281,7 +281,7 @@
 /datum/pet_command/point_targeting/fish
 	command_name = "Fish"
 	command_desc = "Command your pet to try fishing at a nearby fishing spot."
-	radial_icon = 'icons/obj/aquarium/fish.dmi'
+	radial_icon = 'icons/obj/structures/aquarium/fish.dmi'
 	radial_icon_state = "goldfish"
 	speech_commands = list("fish")
 

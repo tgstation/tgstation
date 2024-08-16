@@ -39,7 +39,7 @@
 /obj/structure/ore_container/food_trough/gutlunch_trough
 	name = "gutlunch trough"
 	desc = "The gutlunches will eat out of it!"
-	icon = 'icons/obj/structures.dmi'
+	icon = 'icons/obj/fluff/general.dmi'
 	icon_state = "gutlunch_trough"
 	x_offsets = list(-5, 8)
 	y_offsets = list(-2, -7)
