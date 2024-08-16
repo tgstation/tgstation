@@ -7,7 +7,7 @@
 /obj/item/gibtonite_hand
 	name = "stabilised gibtonite fist"
 	desc = "You had better launch this at something before it comes out the other end of your body."
-	icon = 'icons/obj/ore.dmi'
+	icon = 'icons/obj/mining_zones/ore.dmi'
 	icon_state = "Gibtonite ore"
 	lefthand_file = 'icons/mob/inhands/golem_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/golem_righthand.dmi'

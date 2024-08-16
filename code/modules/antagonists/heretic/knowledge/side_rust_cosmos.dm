@@ -67,7 +67,7 @@
 	curse_color = "#c1ffc9"
 	cost = 1
 	route = PATH_SIDE
-	research_tree_icon_path = 'icons/ui_icons/antags/heretic/knowledge.dmi'
+	research_tree_icon_path = 'icons/ui/antags/heretic/knowledge.dmi'
 	research_tree_icon_state = "curse_corrosion"
 	depth = 8
 

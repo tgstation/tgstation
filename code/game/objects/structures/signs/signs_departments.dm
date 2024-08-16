@@ -2,7 +2,7 @@
 //departmental signs
 
 /obj/structure/sign/departments
-	icon = 'icons/obj/departmental_signs.dmi'
+	icon = 'icons/obj/structures/departmental_signs.dmi'
 	is_editable = TRUE
 
 ///////MEDBAY
