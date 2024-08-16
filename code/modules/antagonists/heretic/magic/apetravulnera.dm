@@ -10,8 +10,8 @@
 	school = SCHOOL_FORBIDDEN
 	cooldown_time = 45 SECONDS
 
-	invocation = "Shea' shen-eh!"
-	invocation_type = INVOCATION_SHOUT
+	invocation = "AP'TRA VULN'RA!"
+	invocation_type = INVOCATION_WHISPER
 	spell_requirements = NONE
 
 	cast_range = 4

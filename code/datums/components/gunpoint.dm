@@ -48,7 +48,7 @@
 	RegisterSignals(targ, list(COMSIG_LIVING_DISARM_HIT, COMSIG_LIVING_GET_PULLED), PROC_REF(cancel))
 	RegisterSignals(weapon, list(COMSIG_ITEM_DROPPED, COMSIG_ITEM_EQUIPPED), PROC_REF(cancel))
 
-	var/distance = min(get_dist(shooter, target), 1) // treat 0 distance as adjacent
+	var/distance = max(get_dist(shooter, target), 1) // treat 0 distance as adjacent
 	var/distance_description = (distance <= 1 ? "point blank " : "")
 
 	shooter.visible_message(span_danger("[shooter] aims [weapon] [distance_description]at [target]!"),

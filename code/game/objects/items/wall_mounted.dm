@@ -6,9 +6,14 @@
 	lefthand_file = 'icons/mob/inhands/equipment/medical_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/medical_righthand.dmi'
 	w_class = WEIGHT_CLASS_SMALL
+	/// What do we create?
 	var/result_path
-	var/wall_external = FALSE // For frames that are external to the wall they are placed on, like light fixtures and cameras.
-	var/pixel_shift //The amount of pixels
+	/// For frames that are external to the wall they are placed on, like light fixtures and cameras.
+	var/wall_external = FALSE
+	/// Do we used inverse directionals?
+	var/inverse_dir = TRUE
+	/// Can we only hang this on walls North of us? Preferably don't enable unless you absolutely have to
+	var/north_only = FALSE
 
 /obj/item/wallframe/proc/try_build(turf/on_wall, mob/user)
 	if(get_dist(on_wall,user) > 1)
@@ -18,6 +23,11 @@
 	if(!(floor_to_wall in GLOB.cardinals))
 		balloon_alert(user, "stand in line with wall!")
 		return
+
+	if (north_only && floor_to_wall != NORTH)
+		balloon_alert(user, "cannot place here!")
+		return
+
 	var/turf/T = get_turf(user)
 	var/area/A = get_area(T)
 	if(!isfloorturf(T))
@@ -38,20 +48,13 @@
 		user.visible_message(span_notice("[user.name] attaches [src] to the wall."),
 			span_notice("You attach [src] to the wall."),
 			span_hear("You hear clicking."))
-		var/floor_to_wall = get_dir(user, on_wall)
+		var/facing_dir = get_dir(user, on_wall)
 
-		var/obj/hanging_object = new result_path(get_turf(user), floor_to_wall, TRUE)
-		hanging_object.setDir(floor_to_wall)
-		if(pixel_shift)
-			switch(floor_to_wall)
-				if(NORTH)
-					hanging_object.pixel_y = pixel_shift
-				if(SOUTH)
-					hanging_object.pixel_y = -pixel_shift
-				if(EAST)
-					hanging_object.pixel_x = pixel_shift
-				if(WEST)
-					hanging_object.pixel_x = -pixel_shift
+		if(inverse_dir) // I'm sorry about this switch, O.turn wouldn't work for whatever reason.
+			facing_dir = REVERSE_DIR(facing_dir)
+		var/obj/hanging_object = new result_path(get_turf(user), facing_dir, TRUE)
+		hanging_object.setDir(facing_dir)
+
 		after_attach(hanging_object)
 
 	qdel(src)

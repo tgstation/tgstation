@@ -120,8 +120,8 @@ export const Log = (props: LogProps) => {
                 }`
               : ''}
             .
-            <Box color="default">
-              {return_values.length ? (
+            {return_values.length ? (
+              <Box color="default">
                 <ListMapper
                   list={return_values}
                   variants={variants}
@@ -135,10 +135,10 @@ export const Log = (props: LogProps) => {
                     })
                   }
                 />
-              ) : (
-                <br />
-              )}
-            </Box>
+              </Box>
+            ) : (
+              <br />
+            )}
           </>
         );
         messageColor = 'green';
@@ -187,7 +187,7 @@ export const Log = (props: LogProps) => {
     if (chunk) {
       output = (
         <>
-          {output}
+          <Box>{output}</Box>
           <Button
             onClick={() => {
               setViewedChunk(chunk);

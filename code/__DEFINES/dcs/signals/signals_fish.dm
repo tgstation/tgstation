@@ -46,3 +46,9 @@
 
 /// From /obj/item/fish_analyzer/proc/analyze_status: (fish, user)
 #define COMSIG_FISH_ANALYZER_ANALYZE_STATUS "fish_analyzer_analyze_status"
+
+/// From /datum/component/fish_growth/on_fish_life: (seconds_per_tick)
+#define COMSIG_FISH_BEFORE_GROWING "fish_before_growing"
+	#define COMPONENT_DONT_GROW (1 << 0)
+/// From /datum/component/fish_growth/finish_growing: (result)
+#define COMSIG_FISH_FINISH_GROWING "fish_finish_growing"

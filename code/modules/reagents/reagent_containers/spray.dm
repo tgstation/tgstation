@@ -229,6 +229,8 @@
 	stream_range = 4
 	amount_per_transfer_from_this = 5
 	list_reagents = list(/datum/reagent/consumable/condensedcapsaicin = 50)
+	pickup_sound = 'sound/items/pepper_spray_pick_up.ogg'
+	drop_sound = 'sound/items/pepper_spray_drop.ogg'
 
 /obj/item/reagent_containers/spray/pepper/empty //for protolathe printing
 	list_reagents = null

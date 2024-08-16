@@ -159,6 +159,9 @@
 	for(var/channel_name in channels)
 		secure_radio_connections[channel_name] = add_radio(src, GLOB.radiochannels[channel_name])
 
+	if(!listening)
+		remove_radio_all(src)
+
 // Used for cyborg override
 /obj/item/radio/proc/resetChannels()
 	channels = list()
@@ -352,10 +355,10 @@
 		return
 
 
-	if(iscarbon(talking_movable))
-		var/mob/living/carbon/talking_carbon = talking_movable
-		if(talking_carbon.client?.prefs.read_preference(/datum/preference/toggle/radio_noise))
-			SEND_SOUND(talking_carbon, 'sound/misc/radio_talk.ogg')
+	if(isliving(talking_movable))
+		var/mob/living/talking_living = talking_movable
+		if(talking_living.client?.prefs.read_preference(/datum/preference/toggle/radio_noise) && !HAS_TRAIT(talking_living, TRAIT_DEAF))
+			SEND_SOUND(talking_living, 'sound/misc/radio_talk.ogg')
 
 	// All radios make an attempt to use the subspace system first
 	signal.send_to_receivers()
@@ -428,15 +431,17 @@
 	SEND_SIGNAL(src, COMSIG_RADIO_RECEIVE_MESSAGE, data)
 	flick_overlay_view(overlay_speaker_active, 5 SECONDS)
 
-	if(iscarbon(loc))
-		var/mob/living/carbon/holder = loc
-		if(!holder.client?.prefs.read_preference(/datum/preference/toggle/radio_noise))
-			return
+	if(!isliving(loc))
+		return
 
-		var/list/spans = data["spans"]
-		SEND_SOUND(holder, 'sound/misc/radio_receive.ogg')
-		if(SPAN_COMMAND in spans)
-			SEND_SOUND(holder, 'sound/misc/radio_important.ogg')
+	var/mob/living/holder = loc
+	if(!holder.client?.prefs.read_preference(/datum/preference/toggle/radio_noise) && !HAS_TRAIT(holder, TRAIT_DEAF))
+		return
+
+	var/list/spans = data["spans"]
+	SEND_SOUND(holder, 'sound/misc/radio_receive.ogg')
+	if(SPAN_COMMAND in spans)
+		SEND_SOUND(holder, 'sound/misc/radio_important.ogg')
 
 /obj/item/radio/ui_state(mob/user)
 	return GLOB.inventory_state
@@ -513,10 +518,6 @@
 				else
 					recalculateChannels()
 				. = TRUE
-
-/obj/item/radio/suicide_act(mob/living/user)
-	user.visible_message(span_suicide("[user] starts bouncing [src] off [user.p_their()] head! It looks like [user.p_theyre()] trying to commit suicide!"))
-	return BRUTELOSS
 
 /obj/item/radio/examine(mob/user)
 	. = ..()

@@ -1,6 +1,7 @@
 #define PORTABLE_ATMOS_IGNORE_ATMOS_LIMIT 0
 
 /obj/machinery/portable_atmospherics
+	SET_BASE_VISUAL_PIXEL(0, DEPTH_OFFSET)
 	name = "portable_atmospherics"
 	icon = 'icons/obj/pipes_n_cables/atmos.dmi'
 	use_power = NO_POWER_USE
@@ -50,6 +51,11 @@
 	AddElement(/datum/element/climbable, climb_time = 3 SECONDS, climb_stun = 3 SECONDS)
 	AddElement(/datum/element/elevation, pixel_shift = 8)
 	register_context()
+	update_position()
+
+/obj/machinery/portable_atmospherics/on_construction(mob/user)
+	. = ..()
+	set_anchored(FALSE)
 
 /obj/machinery/portable_atmospherics/on_deconstruction(disassembled)
 	if(nob_crystal_inserted)
@@ -189,6 +195,20 @@
 	SSair.start_processing_machine(src)
 	update_appearance()
 	return TRUE
+
+/obj/machinery/portable_atmospherics/set_anchored(anchorvalue)
+	. = ..()
+	update_position()
+
+/obj/machinery/portable_atmospherics/proc/update_position()
+	var/new_base = base_pixel_z
+	if(anchored)
+		new_base = 6 // Lands em all perfectly on pipe connectors
+	else
+		new_base = DEPTH_OFFSET
+
+	animate(src, pixel_z = pixel_z + new_base - base_pixel_z, time = 0.1 SECONDS)
+	base_pixel_z = new_base
 
 /obj/machinery/portable_atmospherics/click_alt(mob/living/user)
 	if(!holding)

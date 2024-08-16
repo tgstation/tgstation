@@ -149,8 +149,6 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_MUTANT_COLORS "mutcolors"
 /// Species with this trait have mutant colors that cannot be chosen by the player, nor altered ingame by external means
 #define TRAIT_FIXED_MUTANT_COLORS "fixed_mutcolors"
-/// Species with this trait have a haircolor that cannot be chosen by the player, nor altered ingame by external means
-#define TRAIT_FIXED_HAIRCOLOR "fixed_haircolor"
 /// Humans with this trait won't get bloody hands, nor bloody feet
 #define TRAIT_NO_BLOOD_OVERLAY "no_blood_overlay"
 /// Humans with this trait cannot have underwear
@@ -225,6 +223,8 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_REVEAL_FISH "reveal_fish"
 ///This trait gets you a list of fishes that can be caught when examining a fishing spot.
 #define TRAIT_EXAMINE_FISHING_SPOT "examine_fishing_spot"
+///lobstrosities and carps will prioritize/flee from those that have this trait (given by the skill-locked hat)
+#define TRAIT_SCARY_FISHERMAN "scary_fisherman"
 ///Trait given to turfs or objects that can be fished from
 #define TRAIT_FISHING_SPOT "fishing_spot"
 ///Trait given to mobs that can fish without a rod
@@ -261,7 +261,10 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_NODEATH "nodeath"
 #define TRAIT_NOHARDCRIT "nohardcrit"
 #define TRAIT_NOSOFTCRIT "nosoftcrit"
+/// Makes someone show up as mindshielded on sechuds. Does NOT actually make them unconvertable - See TRAIT_UNCONVERTABLE for that
 #define TRAIT_MINDSHIELD "mindshield"
+/// Makes it impossible for someone to be converted by cult/revs/etc.
+#define TRAIT_UNCONVERTABLE "unconvertable"
 #define TRAIT_DISSECTED "dissected"
 #define TRAIT_SURGICALLY_ANALYZED "surgically_analyzed"
 /// Lets the user succumb even if they got NODEATH
@@ -417,6 +420,8 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_ANTENNAE "antennae"
 /// Blowing kisses actually does damage to the victim
 #define TRAIT_KISS_OF_DEATH "kiss_of_death"
+/// Syndie kisses can apply burn damage
+#define TRAIT_SYNDIE_KISS "syndie_kiss"
 /// Used to activate french kissing
 #define TRAIT_GARLIC_BREATH "kiss_of_garlic_death"
 /// Addictions don't tick down, basically they're permanently addicted
@@ -665,6 +670,9 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 /// This movable atom has the explosive block element
 #define TRAIT_BLOCKING_EXPLOSIVES "blocking_explosives"
 
+/// This turf contains something using split visiblity
+#define TRAIT_CONTAINS_SPLITVIS "contains_splitvis"
+
 ///Lava will be safe to cross while it has this trait.
 #define TRAIT_LAVA_STOPPED "lava_stopped"
 ///Chasms will be safe to cross while they've this trait.
@@ -865,6 +873,10 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 /// Trait applied when the MMI component is added to an [/obj/item/integrated_circuit]
 #define TRAIT_COMPONENT_MMI "component_mmi"
 
+/// Trait applied when the turf is being masked by the [/datum/component/vis_block] component
+/// Without cutting out ALL of the center, requiring extra trickery to make seeing both sides reveal the inside
+#define TRAIT_INNER_DARKNESS "inner_darkness"
+
 /// Trait applied when an integrated circuit/module becomes undupable
 #define TRAIT_CIRCUIT_UNDUPABLE "circuit_undupable"
 
@@ -972,6 +984,9 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
  * instead of one that's also shared with other movables, thus making editing its appearance possible.
  */
 #define TRAIT_UNIQUE_IMMERSE "unique_immerse"
+
+/// Don't render a drop shadow
+#define TRAIT_SHADOWLESS "shadowless"
 
 /// This item is currently under the control of telekinesis
 #define TRAIT_TELEKINESIS_CONTROLLED "telekinesis_controlled"
@@ -1085,13 +1100,13 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 /// Currently fishing, and it's the active minigame phase
 #define TRAIT_ACTIVELY_FISHING "actively_fishing"
 
-/// Makes a species be better/worse at tackling depending on their wing's status
+/// Makes a character be better/worse at tackling depending on their wing's status
 #define TRAIT_TACKLING_WINGED_ATTACKER "tacking_winged_attacker"
 
-/// Makes a species be frail and more likely to roll bad results if they hit a wall
+/// Makes a character be frail and more likely to roll bad results if they hit a wall
 #define TRAIT_TACKLING_FRAIL_ATTACKER "tackling_frail_attacker"
 
-/// Makes a species be better/worse at defending against tackling depending on their tail's status
+/// Makes a character be better/worse at defending against tackling depending on their tail's status
 #define TRAIT_TACKLING_TAILED_DEFENDER "tackling_tailed_defender"
 
 /// Is runechat for this atom/movable currently disabled, regardless of prefs or anything?
@@ -1126,6 +1141,9 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 
 ///Trait given to limb by /mob/living/basic/living_limb_flesh
 #define TRAIT_IGNORED_BY_LIVING_FLESH "livingflesh_ignored"
+
+///Trait given to organs that have been inside a living being previously
+#define TRAIT_USED_ORGAN "used_organ"
 
 /// Trait given while using /datum/action/cooldown/mob_cooldown/wing_buffet
 #define TRAIT_WING_BUFFET "wing_buffet"
@@ -1211,6 +1229,9 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_ITEM_OBJECTIVE_BLOCKED "item_objective_blocked"
 /// This trait lets you attach limbs to any player without surgery.
 #define TRAIT_EASY_ATTACH "easy_attach"
+
+///Attached to objects currently on window frames, tables and such, allowing them to walk on other objects without the climbing delay
+#define TRAIT_ON_CLIMBABLE "on_climbable"
 
 ///Trait given to the birthday boy
 #define TRAIT_BIRTHDAY_BOY "birthday_boy"

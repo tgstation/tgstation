@@ -373,6 +373,9 @@
 		/obj/item/restraints/handcuffs,
 		/obj/item/restraints/legcuffs/bola,
 	))
+	atom_storage.open_sound = 'sound/items/holster.ogg'
+	atom_storage.open_sound_vary = TRUE
+	atom_storage.rustle_sound = FALSE
 
 /obj/item/storage/belt/security/full/PopulateContents()
 	new /obj/item/reagent_containers/spray/pepper(src)
@@ -529,7 +532,7 @@
 
 /obj/item/storage/belt/military/snack/Initialize(mapload)
 	. = ..()
-	var/sponsor = pick("Donk Co.", "Waffle Co.", "Roffle Co.", "Gorlax Marauders", "Tiger Cooperative")
+	var/sponsor = pick("Donk Co.", "Waffle Corp.", "Roffle Co.", "Gorlex Marauders", "Tiger Cooperative")
 	desc = "A set of snack-tical webbing worn by athletes of the [sponsor] VR sports division."
 	atom_storage.max_slots = 6
 	atom_storage.max_specific_storage = WEIGHT_CLASS_SMALL
@@ -821,7 +824,7 @@
 	AddElement(/datum/element/update_icon_updates_onmob)
 
 	atom_storage.max_slots = 1
-	atom_storage.rustle_sound = FALSE
+	atom_storage.do_rustle = FALSE
 	atom_storage.max_specific_storage = WEIGHT_CLASS_BULKY
 	atom_storage.set_holdable(/obj/item/melee/sabre)
 	atom_storage.click_alt_open = FALSE
@@ -869,7 +872,7 @@
 	AddElement(/datum/element/update_icon_updates_onmob)
 
 	atom_storage.max_slots = 1
-	atom_storage.rustle_sound = FALSE
+	atom_storage.do_rustle = FALSE
 	atom_storage.max_specific_storage = WEIGHT_CLASS_BULKY
 	atom_storage.set_holdable(/obj/item/melee/parsnip_sabre)
 	atom_storage.click_alt_open = FALSE

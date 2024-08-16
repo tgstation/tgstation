@@ -1,7 +1,7 @@
 /obj/structure/light_construct
 	name = "light fixture frame"
 	desc = "A light fixture under construction."
-	icon = 'icons/obj/lighting.dmi'
+	icon = 'icons/obj/machines/lighting.dmi'
 	icon_state = "tube-construct-stage1"
 	anchored = TRUE
 	layer = WALL_OBJ_LAYER
@@ -38,6 +38,22 @@
 	QDEL_NULL(cell)
 	return ..()
 
+/obj/structure/light_construct/setDir(newdir)
+	. = ..()
+	switch(dir)
+		if(NORTH)
+			pixel_x = 0
+			pixel_y = 24
+		if(SOUTH)
+			pixel_x = 0
+			pixel_y = 16
+		if(EAST)
+			pixel_x = 0
+			pixel_y = 0
+		if(WEST)
+			pixel_x = 0
+			pixel_y = 0
+
 /obj/structure/light_construct/get_cell()
 	return cell
 
@@ -63,7 +79,6 @@
 		return
 	user.visible_message(span_notice("[user] removes [cell] from [src]!"), span_notice("You remove [cell]."))
 	user.put_in_hands(cell)
-	cell.update_appearance()
 	cell = null
 	add_fingerprint(user)
 

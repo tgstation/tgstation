@@ -1,5 +1,0 @@
-author: "Gaxeer"
-delete-after: True
-changes:
-  - refactor: "replace some copypaste code for pod spawn to use `podspawn` proc instead"
-  - code_imp: "modify  `podspawn` proc to accept amount of item type to spawn in `spawn` specification"

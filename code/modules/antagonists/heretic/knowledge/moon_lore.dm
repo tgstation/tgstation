@@ -1,7 +1,5 @@
 /**
  * # The path of Moon.
- * Spell names are in this language: ANCIENT HEBREW
- * Both are related: Ancient Hebrew-Moon Mysticism-Moon
  *
  * Goes as follows:
  *
@@ -56,7 +54,7 @@
 	cost = 1
 	route = PATH_MOON
 	depth = 3
-	research_tree_icon_path = 'icons/ui_icons/antags/heretic/knowledge.dmi'
+	research_tree_icon_path = 'icons/ui/antags/heretic/knowledge.dmi'
 	research_tree_icon_state = "grasp_moon"
 
 /datum/heretic_knowledge/moon_grasp/on_gain(mob/user, datum/antagonist/heretic/our_heretic)
@@ -150,7 +148,7 @@
 	gain_text = "His wit was sharp as a blade, cutting through the lie to bring us joy."
 	next_knowledge = list(/datum/heretic_knowledge/spell/moon_ringleader)
 	route = PATH_MOON
-	research_tree_icon_path = 'icons/ui_icons/antags/heretic/knowledge.dmi'
+	research_tree_icon_path = 'icons/ui/antags/heretic/knowledge.dmi'
 	research_tree_icon_state = "blade_upgrade_moon"
 
 /datum/heretic_knowledge/blade_upgrade/moon/do_melee_effects(mob/living/source, mob/living/target, obj/item/melee/sickly_blade/blade)
@@ -211,7 +209,7 @@
 				The truth shall finally devour the lie! [generate_heretic_text()]",
 		title = "[generate_heretic_text()]",
 		sound = 'sound/ambience/antag/heretic/ascend_moon.ogg',
-		color_override = "blue",
+		color_override = "pink",
 	)
 
 	ADD_TRAIT(user, TRAIT_MADNESS_IMMUNE, REF(src))
@@ -236,7 +234,7 @@
 			to_chat(crewmate, span_boldwarning("[user]'s rise is influencing those who are weak willed. Their minds shall rend." ))
 			continue
 		// Mindshielded and anti-magic folks are immune against this effect because this is a magical mind effect
-		if(HAS_TRAIT(crewmate, TRAIT_MINDSHIELD) || crewmate.can_block_magic(MAGIC_RESISTANCE))
+		if(HAS_MIND_TRAIT(crewmate, TRAIT_UNCONVERTABLE) || crewmate.can_block_magic(MAGIC_RESISTANCE))
 			to_chat(crewmate, span_boldwarning("You feel shielded from something." ))
 			continue
 		if(amount_of_lunatics > length(GLOB.human_list) * 0.2)

@@ -12,7 +12,7 @@
 	/// Icon to use as a 32x32 preview in crafting menus and such
 	var/icon_preview
 	var/icon_state_preview
-	/// The vertical pixel offset applied when the object is anchored on a tile with table
+	/// The vertical pixel_z offset applied when the object is anchored on a tile with table
 	/// Ignored when set to 0 - to avoid shifting directional wall-mounted objects above tables
 	var/anchored_tabletop_offset = 0
 
@@ -278,7 +278,14 @@ GLOBAL_LIST_EMPTY(objects_by_id_tag)
 		return FALSE
 	return TRUE
 
-/// Adjusts the vertical pixel offset when the object is anchored on a tile with table
+/// Adjusts the vertical pixel_z offset when the object is anchored on a tile with table
 /obj/proc/check_on_table()
-	if(anchored_tabletop_offset != 0 && !istype(src, /obj/structure/table) && locate(/obj/structure/table) in loc)
-		pixel_y = anchored ? anchored_tabletop_offset : initial(pixel_y)
+	if(anchored_tabletop_offset == 0)
+		return
+	if(istype(src, /obj/structure/table))
+		return
+
+	if(anchored && locate(/obj/structure/table) in loc)
+		pixel_z = anchored_tabletop_offset
+	else
+		pixel_z = initial(pixel_z)

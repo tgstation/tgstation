@@ -40,7 +40,7 @@
 		"uplink": "You have been supplied the tools for the job in the form of a standard syndicate uplink."
 	},
 	"Donk Corporation": {
-		"allies": "Members of Waffle Co. are to be killed on sight; they are not allowed to be on the station while we're around.",
+		"allies": "Members of Waffle Corp. are to be killed on sight; they are not allowed to be on the station while we're around.",
 		"goal": "We do not approve of mindless killing of innocent workers; \"get in, get done, get out\" is our motto.",
 		"introduction": "You are the Donk Co. Traitor.",
 		"roundend_report": "was an employee from Donk Corporation.",
@@ -98,8 +98,8 @@
 	},
 	"Waffle Corporation": {
 		"allies": "Members of Donk Co. are to be killed on sight; they are not allowed to be on the station while we're around. Do not trust fellow members of the Waffle.co (but try not to rat them out), as they might have been assigned opposing objectives.",
-		"goal": "You are not here for a station-wide demonstration. Again, other Waffle Co. Traitors may be, so watch out. Your job is to only accomplish your objectives.",
-		"introduction": "You are the Waffle Co. Traitor.",
+		"goal": "You are not here for a station-wide demonstration. Again, other Waffle Corp. Traitors may be, so watch out. Your job is to only accomplish your objectives.",
+		"introduction": "You are the Waffle Corp. Traitor.",
 		"roundend_report": "was an employee from Waffle Corporation.",
 		"ui_theme": "syndicate",
 		"uplink": "You have been provided with a standard uplink to accomplish your task."

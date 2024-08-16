@@ -6,7 +6,7 @@
 	desc = "Very useful for filtering gasses."
 
 	can_unwrench = TRUE
-	construction_type = /obj/item/pipe/trinary/flippable
+	construction_type = /obj/item/pipe/trinary/flippable/filter
 	pipe_state = "filter"
 
 	///Rate of transfer of the gases to the outputs

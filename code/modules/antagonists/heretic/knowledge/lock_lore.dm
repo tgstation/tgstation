@@ -1,7 +1,5 @@
 /**
  * # The path of Lock.
- * Spell names are in this language: EGYPTIAN
- * Both are related: Egyptian-Mysteries-Secrets-Lock
  *
  * Goes as follows:
  *
@@ -54,7 +52,7 @@
 	cost = 1
 	route = PATH_LOCK
 	depth = 3
-	research_tree_icon_path = 'icons/ui_icons/antags/heretic/knowledge.dmi'
+	research_tree_icon_path = 'icons/ui/antags/heretic/knowledge.dmi'
 	research_tree_icon_state = "grasp_lock"
 
 /datum/heretic_knowledge/lock_grasp/on_gain(mob/user, datum/antagonist/heretic/our_heretic)
@@ -178,7 +176,7 @@
 	next_knowledge = list(/datum/heretic_knowledge/spell/caretaker_refuge)
 	route = PATH_LOCK
 	wound_type = /datum/wound/slash/flesh/critical
-	research_tree_icon_path = 'icons/ui_icons/antags/heretic/knowledge.dmi'
+	research_tree_icon_path = 'icons/ui/antags/heretic/knowledge.dmi'
 	research_tree_icon_state = "blade_upgrade_lock"
 	var/chance = 35
 
@@ -243,7 +241,7 @@
 		text = "Delta-class dimensional anomaly detec[generate_heretic_text()] Reality rended, torn. Gates open, doors open, [user.real_name] has ascended! Fear the tide! [generate_heretic_text()]",
 		title = "[generate_heretic_text()]",
 		sound = 'sound/ambience/antag/heretic/ascend_knock.ogg',
-		color_override = "yellow",
+		color_override = "pink",
 	)
 
 	// buffs

@@ -1,5 +1,0 @@
-author: "rroqc"
-delete-after: True
-changes:
-  - bugfix: "plants no longer select reagent genes they already have while cross pollinating"
-  - code_imp: "improves reagent cross pollination code\n:cl:"

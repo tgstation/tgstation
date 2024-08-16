@@ -130,7 +130,11 @@
 "Z" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/table/wood,
-/obj/structure/mirror/directional/east,
+/obj/item/shard,
+/obj/structure/mirror/broken{
+	pixel_y = 6;
+	pixel_x = 4
+	},
 /turf/open/floor/iron/smooth,
 /area/station/maintenance/department/cargo)
 
