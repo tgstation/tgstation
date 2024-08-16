@@ -589,7 +589,7 @@ WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/structure/sign/painting)
 		drop_turf = drop_location()
 	current_canvas?.forceMove(drop_turf)
 	var/obj/item/wallframe/frame = new wallframe_type(drop_turf)
-	unwrenched_sign.update_integrity(get_integrity()) //Transfer how damaged it is.
+	frame.update_integrity(get_integrity()) //Transfer how damaged it is.
 
 /obj/structure/sign/painting/examine(mob/user)
 	. = ..()
