@@ -28,7 +28,7 @@
 /obj/item/skillchip/big_pointer/on_deactivate(mob/living/carbon/user, silent=FALSE)
 	UnregisterSignal(user, COMSIG_MOVABLE_POINTED)
 	action?.arrow_color = null
-	action?.arrow_overlay
+	action?.arrow_overlay = null
 	action?.Remove(user)
 	return ..()
 
