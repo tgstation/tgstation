@@ -1185,7 +1185,7 @@
 /area/centcom/central_command_areas/ferry)
 "fy" = (
 /obj/structure/signpost/salvation{
-	icon = 'icons/obj/structures.dmi';
+	icon = 'icons/obj/fluff/general.dmi';
 	icon_state = "ladder10";
 	invisibility = 100
 	},

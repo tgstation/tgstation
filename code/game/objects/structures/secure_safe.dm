@@ -96,7 +96,7 @@ WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/structure/secure_safe/hos)
 		It is made out of the same material as the station's Black Box and is designed to resist all conventional weaponry. \
 		There appears to be a small amount of surface corrosion. It doesn't look like it could withstand much of an explosion.\
 		Due to the expensive material, it was made incredibly small to cut corners, leaving only enough room to fit something as slim as an ID card."
-	icon = 'icons/obj/structures.dmi'
+	icon = 'icons/obj/storage/storage.dmi'
 	icon_state = "spare_safe"
 	base_icon_state = "spare_safe"
 	armor_type = /datum/armor/safe_caps_spare

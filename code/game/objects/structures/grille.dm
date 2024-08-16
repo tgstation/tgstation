@@ -4,7 +4,7 @@
 /obj/structure/grille
 	desc = "A flimsy framework of iron rods."
 	name = "grille"
-	icon = 'icons/obj/smooth_structures/grille.dmi'
+	icon = 'icons/obj/structures/smooth/grille.dmi'
 	icon_state = "grille-0"
 	base_icon_state = "grille"
 	density = TRUE
@@ -47,10 +47,10 @@
 	var/old_base_state = base_icon_state
 	var/ratio = atom_integrity / max_integrity
 	if(ratio <= 0.7)
-		icon = 'icons/obj/smooth_structures/grille_damaged.dmi'
+		icon = 'icons/obj/structures/smooth/grille_damaged.dmi'
 		base_icon_state = "grille_damaged"
 	else
-		icon = 'icons/obj/smooth_structures/grille.dmi'
+		icon = 'icons/obj/structures/smooth/grille.dmi'
 		base_icon_state = "grille"
 
 	if(old_base_state != base_icon_state)
@@ -58,7 +58,7 @@
 
 	var/old_smoothing_flags = smoothing_flags
 	if(broken)
-		icon = 'icons/obj/smooth_structures/tall_structure_variations.dmi'
+		icon = 'icons/obj/structures/smooth/tall_structure_variations.dmi'
 		icon_state = "grille-broken"
 		base_icon_state = "grille-broken"
 		smoothing_flags = NONE
@@ -397,7 +397,7 @@
 	return null
 
 /obj/structure/grille/broken // Pre-broken grilles for map placement
-	icon = 'icons/obj/smooth_structures/tall_structure_variations.dmi'
+	icon = 'icons/obj/structures/smooth/tall_structure_variations.dmi'
 	icon_state = "grille-broken"
 	density = FALSE
 	broken = TRUE
