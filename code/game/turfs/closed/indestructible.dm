@@ -110,9 +110,7 @@ INITIALIZE_IMMEDIATE(/turf/closed/indestructible/splashscreen)
 /turf/closed/indestructible/reinforced
 	name = "reinforced wall"
 	desc = "A huge chunk of reinforced metal used to separate rooms. Effectively impervious to conventional methods of destruction."
-	icon = 'icons/turf/walls/riveted_wall.dmi'
-	smoothing_groups = SMOOTH_GROUP_WALLS + SMOOTH_GROUP_TALL_WALLS + SMOOTH_GROUP_CLOSED_TURFS
-	canSmoothWith = SMOOTH_GROUP_WALLS
+	icon = 'icons/turf/walls/reinforced_wall.dmi'
 
 /turf/closed/indestructible/reinforced/titanium
 	name = "reinforced titanium imitation wall"
