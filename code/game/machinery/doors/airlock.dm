@@ -571,8 +571,12 @@
 			frame_state = AIRLOCK_FRAME_OPEN
 			// If we're open we layer the bit below us "above" any mobs so they can walk through
 			if(!short_rendering)
-				. += mutable_appearance(icon, "open_bottom", ABOVE_MOB_LAYER, appearance_flags = KEEP_APART)
-				. += emissive_blocker(icon, "open_bottom", src, ABOVE_MOB_LAYER)
+				var/mutable_appearance/bottom = mutable_appearance(icon, "open_bottom", ABOVE_MOB_LAYER, appearance_flags = KEEP_APART)
+				bottom.alpha = 185
+				. += bottom
+				bottom = emissive_blocker(icon, "open_bottom", src, ABOVE_MOB_LAYER)
+				bottom.alpha = 185
+				. += bottom
 			if(!greyscale_config)
 				. += get_airlock_overlay("[airlock_material]_open", icon , src)
 		if(AIRLOCK_OPENING)

@@ -249,8 +249,12 @@
 		return
 	var/list/hand_back = list()
 	// If we're open we layer the bit below us "above" any mobs so they can walk through
-	hand_back += mutable_appearance(icon, "open_bottom", ABOVE_MOB_LAYER, appearance_flags = KEEP_APART)
-	hand_back += emissive_blocker(icon, "open_bottom", src, ABOVE_MOB_LAYER)
+	var/mutable_appearance/bottom = mutable_appearance(icon, "open_bottom", ABOVE_MOB_LAYER, appearance_flags = KEEP_APART)
+	bottom.alpha = 185
+	hand_back += bottom
+	bottom = emissive_blocker(icon, "open_bottom", src, ABOVE_MOB_LAYER)
+	bottom.alpha = 185
+	hand_back += bottom
 	return hand_back
 
 /obj/machinery/door/poddoor/animation_length(animation)
