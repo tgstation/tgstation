@@ -2,8 +2,8 @@
 
 /obj/machinery/door/airlock/tram
 	name = "tram door"
-	icon = 'icons/obj/doors/airlocks/tram/tram.dmi'
-	overlays_file = 'icons/obj/doors/airlocks/tram/tram-overlays.dmi'
+	icon = 'icons/obj/doors/airlocks/tall/tram/tram.dmi'
+	overlays_file = 'icons/obj/doors/airlocks/tall/tram/overlays.dmi'
 	// YET TO BE UPDATED TO 3/4ths
 	short_rendering = TRUE
 	multi_tile = TRUE
@@ -32,24 +32,24 @@
 /obj/machinery/door/airlock/tram/animation_length(animation)
 	switch(animation)
 		if(DOOR_OPENING_ANIMATION)
-			return 1.3 SECONDS
+			return 2.3 SECONDS
 		if(DOOR_CLOSING_ANIMATION)
-			return 2 SECONDS
+			return 2.6 SECONDS
 
 /obj/machinery/door/airlock/tram/animation_segment_delay(animation)
 	switch(animation)
 		if(AIRLOCK_OPENING_TRANSPARENT)
-			return 0.6 SECONDS
+			return 0.4 SECONDS
 		if(AIRLOCK_OPENING_PASSABLE)
-			return 0.9 SECONDS
-		if(AIRLOCK_OPENING_FINISHED)
-			return 0.9 SECONDS
-		if(AIRLOCK_CLOSING_UNPASSABLE)
-			return 0.9 SECONDS
-		if(AIRLOCK_CLOSING_OPAQUE)
 			return 0.7 SECONDS
+		if(AIRLOCK_OPENING_FINISHED)
+			return 1.6 SECONDS
+		if(AIRLOCK_CLOSING_UNPASSABLE)
+			return 1.9 SECONDS
+		if(AIRLOCK_CLOSING_OPAQUE)
+			return 0.6 SECONDS
 		if(AIRLOCK_CLOSING_FINISHED)
-			return 0.9 SECONDS
+			return 0.2 SECONDS
 
 /obj/machinery/door/airlock/tram/open(forced = DEFAULT_DOOR_CHECKS)
 	if(operating || welded || locked || seal)
