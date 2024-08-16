@@ -1,0 +1,5 @@
+author: "Ghommie"
+delete-after: True
+changes:
+  - rscadd: "You can sell items on the blackmarket with the LTSRBT now."
+  - bugfix: "Added some checks to prevent the swapper device and bluespace anomalies from theorically being able to send things and people to nullspace."
