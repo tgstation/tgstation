@@ -182,7 +182,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	/// How long the current mob has been smoking this cigarette
 	VAR_FINAL/how_long_have_we_been_smokin = 0 SECONDS
 	/// Which people ate cigarettes and how many
-	var/static/list/cigarette_eaters
+	var/static/list/cigarette_eaters = list()
 
 /obj/item/cigarette/Initialize(mapload)
 	. = ..()
