@@ -117,7 +117,7 @@
 /obj/item/plunger
 	name = "plunger"
 	desc = "It's a plunger for plunging."
-	icon = 'icons/obj/watercloset.dmi'
+	icon = 'icons/obj/tools.dmi'
 	icon_state = "plunger"
 	worn_icon_state = "plunger"
 
@@ -185,3 +185,7 @@
 	layer_mode_sprite = "reinforced_plunger_layer"
 
 	custom_premium_price = PAYCHECK_CREW * 8
+
+/obj/item/plunger/cyborg/Initialize(mapload)
+	. = ..()
+	ADD_TRAIT(src, TRAIT_NODROP, CYBORG_ITEM_TRAIT)

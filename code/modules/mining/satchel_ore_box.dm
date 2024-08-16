@@ -2,7 +2,7 @@
 /**********************Ore box**************************/
 
 /obj/structure/ore_box
-	icon = 'icons/obj/mining.dmi'
+	icon = 'icons/obj/mining_zones/equipment.dmi'
 	icon_state = "orebox"
 	name = "ore box"
 	desc = "A heavy wooden box, which can be filled with a lot of ores or boulders"

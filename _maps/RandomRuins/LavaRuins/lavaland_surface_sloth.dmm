@@ -17,14 +17,18 @@
 	},
 /area/ruin/unpowered)
 "e" = (
-/obj/machinery/door/airlock/wood,
+/obj/machinery/door/airlock/wood{
+	dir = 4
+	},
 /turf/open/floor/sepia{
 	slowdown = 10
 	},
 /area/ruin/unpowered)
 "f" = (
 /obj/structure/table/wood,
-/obj/item/food/grown/citrus/orange,
+/obj/item/food/grown/citrus/orange{
+	pixel_y = 12
+	},
 /turf/open/floor/sepia{
 	slowdown = 10
 	},

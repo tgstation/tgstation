@@ -10,9 +10,10 @@
  */
 
 /mob/living/basic/node_drone
+	SET_BASE_VISUAL_PIXEL(0, 6)
 	name = "NODE drone"
 	desc = "Standard in-atmosphere drone, used by Nanotrasen to operate and excavate valuable ore vents."
-	icon = 'icons/obj/mining.dmi'
+	icon = 'icons/obj/mining_zones/equipment.dmi'
 	icon_state = "mining_node_active"
 	icon_living = "mining_node_active"
 	icon_dead = "mining_node_active"
@@ -36,6 +37,7 @@
 	response_disarm_simple = "gently push aside"
 	response_harm_continuous = "clangs"
 	response_harm_simple = "clang against"
+	shadow_offset_y = 6
 
 	ai_controller = /datum/ai_controller/basic_controller/node_drone
 

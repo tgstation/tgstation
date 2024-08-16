@@ -3,7 +3,7 @@
 /obj/structure/noticeboard
 	name = "notice board"
 	desc = "A board for pinning important notices upon. It is made of the finest Spanish cork."
-	icon = 'icons/obj/wallmounts.dmi'
+	icon = 'icons/obj/structures/wallmounts.dmi'
 	icon_state = "noticeboard"
 	density = FALSE
 	anchored = TRUE
@@ -11,7 +11,7 @@
 	/// Current number of a pinned notices
 	var/notices = 0
 
-MAPPING_DIRECTIONAL_HELPERS(/obj/structure/noticeboard, 32)
+WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/structure/noticeboard)
 
 /obj/structure/noticeboard/Initialize(mapload)
 	. = ..()
@@ -118,17 +118,21 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/noticeboard, 32)
 	for(var/obj/item/content in contents)
 		remove_item(content)
 
+/obj/structure/noticeboard/update_overlays()
+	. = ..()
+	if(notices)
+		. += "notices_[notices]"
+
 /obj/item/wallframe/noticeboard
 	name = "notice board"
 	desc = "Right now it's more of a clipboard. Attach to a wall to use."
-	icon = 'icons/obj/wallmounts.dmi'
+	icon = 'icons/obj/structures/wallmounts.dmi'
 	icon_state = "noticeboard"
 	custom_materials = list(
 		/datum/material/wood = SHEET_MATERIAL_AMOUNT,
 	)
 	resistance_flags = FLAMMABLE
 	result_path = /obj/structure/noticeboard
-	pixel_shift = 32
 
 // Notice boards for the heads of staff (plus the qm)
 

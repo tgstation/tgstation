@@ -13,9 +13,12 @@
  */
 
 /obj/structure/table
+	// Shift tables down to avoid layering headaches
+	SET_BASE_PIXEL_NOMAP(0, -8)
+	SET_BASE_VISUAL_PIXEL(0, 8)
 	name = "table"
 	desc = "A square piece of iron standing on four metal legs. It can not move."
-	icon = 'icons/obj/smooth_structures/table.dmi'
+	icon = 'icons/obj/structures/smooth/table.dmi'
 	icon_state = "table-0"
 	base_icon_state = "table"
 	density = TRUE
@@ -37,6 +40,10 @@
 	var/buildstackamount = 1
 	var/framestackamount = 2
 	var/deconstruction_ready = TRUE
+	var/bottom_placable_y = 9
+	var/top_placable_y = 37
+	var/bottom_placable_x = 4
+	var/top_placable_x = 28
 
 /obj/structure/table/Initialize(mapload, _buildstack)
 	. = ..()
@@ -58,6 +65,7 @@
 ///Adds the element used to make the object climbable, and also the one that shift the mob buckled to it up.
 /obj/structure/table/proc/make_climbable()
 	AddElement(/datum/element/climbable)
+	AddComponent(/datum/component/climb_walkable)
 	AddElement(/datum/element/elevation, pixel_shift = 12)
 
 /obj/structure/table/add_context(atom/source, list/context, obj/item/held_item, mob/living/user)
@@ -141,15 +149,6 @@
 
 /obj/structure/table/attack_tk(mob/user)
 	return
-
-/obj/structure/table/CanAllowThrough(atom/movable/mover, border_dir)
-	. = ..()
-	if(.)
-		return
-	if(mover.throwing)
-		return TRUE
-	if(locate(/obj/structure/table) in get_turf(mover))
-		return TRUE
 
 /obj/structure/table/CanAStarPass(to_dir, datum/can_pass_info/pass_info)
 	if(!density)
@@ -318,9 +317,10 @@
 		return ITEM_INTERACT_BLOCKING
 	// Items are centered by default, but we move them if click ICON_X and ICON_Y are available
 	if(LAZYACCESS(modifiers, ICON_X) && LAZYACCESS(modifiers, ICON_Y))
-		// Clamp it so that the icon never moves more than 16 pixels in either direction (thus leaving the table turf)
-		tool.pixel_x = clamp(text2num(LAZYACCESS(modifiers, ICON_X)) - 16, -(world.icon_size*0.5), world.icon_size*0.5)
-		tool.pixel_y = clamp(text2num(LAZYACCESS(modifiers, ICON_Y)) - 16, -(world.icon_size*0.5), world.icon_size*0.5)
+		//Clamp it so that the icon never moves more than 16 pixels in either direction (thus leaving the table turf)
+		// +- 8 to bound it to a typical item hitbox (16x16) instead of the assumed max of 32x32
+		tool.pixel_x = clamp(text2num(LAZYACCESS(modifiers, ICON_X)) - 16, bottom_placable_x - 8, top_placable_x + 8)
+		tool.pixel_y = clamp(text2num(LAZYACCESS(modifiers, ICON_Y)) - 16, bottom_placable_y - 8, top_placable_y + 8)
 	AfterPutItemOnTable(tool, user)
 	return ITEM_INTERACT_SUCCESS
 
@@ -346,10 +346,26 @@
 	return FALSE
 
 /obj/structure/table/rcd_act(mob/user, obj/item/construction/rcd/the_rcd, list/rcd_data)
-	if(rcd_data["[RCD_DESIGN_MODE]"] == RCD_DECONSTRUCT)
+	if(rcd_data[RCD_DESIGN_MODE] == RCD_DECONSTRUCT)
 		qdel(src)
 		return TRUE
 	return FALSE
+
+/obj/structure/table/set_smoothed_icon_state(new_junction)
+	. = ..()
+	bottom_placable_x = initial(bottom_placable_x)
+	bottom_placable_y = initial(bottom_placable_y)
+	top_placable_x = initial(top_placable_x)
+	top_placable_y = initial(top_placable_y)
+	// Allow free movement if we smooth in a direction, while handling bounding
+	if(new_junction & NORTH)
+		top_placable_y = 32 + 8
+	if(new_junction & SOUTH)
+		bottom_placable_y = 0 - 8
+	if(new_junction & EAST)
+		top_placable_x = 32 + 8
+	if(new_junction & WEST)
+		bottom_placable_x = 0 - 8
 
 /obj/structure/table/proc/table_living(datum/source, mob/living/shover, mob/living/target, shove_flags, obj/item/weapon)
 	SIGNAL_HANDLER
@@ -365,7 +381,7 @@
 	return COMSIG_LIVING_SHOVE_HANDLED
 
 /obj/structure/table/greyscale
-	icon = 'icons/obj/smooth_structures/table_greyscale.dmi'
+	icon = 'icons/obj/structures/smooth/table_greyscale.dmi'
 	icon_state = "table_greyscale-0"
 	base_icon_state = "table_greyscale"
 	material_flags = MATERIAL_EFFECTS | MATERIAL_ADD_PREFIX | MATERIAL_COLOR | MATERIAL_AFFECT_STATISTICS
@@ -381,14 +397,21 @@
 
 ///Table on wheels
 /obj/structure/table/rolling
+	SET_BASE_PIXEL(0, 0)
+	SET_BASE_VISUAL_PIXEL(0, DEPTH_OFFSET)
 	name = "Rolling table"
 	desc = "An NT brand \"Rolly poly\" rolling table. It can and will move."
 	anchored = FALSE
 	smoothing_flags = NONE
 	smoothing_groups = null
 	canSmoothWith = null
-	icon = 'icons/obj/smooth_structures/rollingtable.dmi'
+	icon = 'icons/obj/structures/smooth/rollingtable.dmi'
 	icon_state = "rollingtable"
+	// this one's 32x32 so it uses different clickable bounds
+	bottom_placable_y = 12
+	top_placable_y = 29
+	bottom_placable_x = 4
+	top_placable_x = 28
 	/// Lazylist of the items that we have on our surface.
 	var/list/attached_items = null
 
@@ -442,7 +465,7 @@
 /obj/structure/table/glass
 	name = "glass table"
 	desc = "What did I say about leaning on the glass tables? Now you need surgery."
-	icon = 'icons/obj/smooth_structures/glass_table.dmi'
+	icon = 'icons/obj/structures/smooth/glass_table.dmi'
 	icon_state = "glass_table-0"
 	base_icon_state = "glass_table"
 	custom_materials = list(/datum/material/glass =SHEET_MATERIAL_AMOUNT)
@@ -514,7 +537,7 @@
 /obj/structure/table/glass/plasmaglass
 	name = "plasma glass table"
 	desc = "Someone thought this was a good idea."
-	icon = 'icons/obj/smooth_structures/plasmaglass_table.dmi'
+	icon = 'icons/obj/structures/smooth/plasmaglass_table.dmi'
 	icon_state = "plasmaglass_table-0"
 	base_icon_state = "plasmaglass_table"
 	custom_materials = list(/datum/material/alloy/plasmaglass =SHEET_MATERIAL_AMOUNT)
@@ -529,7 +552,7 @@
 /obj/structure/table/wood
 	name = "wooden table"
 	desc = "Do not apply fire to this. Rumour says it burns easily."
-	icon = 'icons/obj/smooth_structures/wood_table.dmi'
+	icon = 'icons/obj/structures/smooth/wood_table.dmi'
 	icon_state = "wood_table-0"
 	base_icon_state = "wood_table"
 	frame = /obj/structure/table_frame/wood
@@ -547,7 +570,7 @@
 /obj/structure/table/wood/poker //No specialties, Just a mapping object.
 	name = "gambling table"
 	desc = "A seedy table for seedy dealings in seedy places."
-	icon = 'icons/obj/smooth_structures/poker_table.dmi'
+	icon = 'icons/obj/structures/smooth/poker_table.dmi'
 	icon_state = "poker_table-0"
 	base_icon_state = "poker_table"
 	buildstack = /obj/item/stack/tile/carpet
@@ -558,7 +581,7 @@
 /obj/structure/table/wood/fancy
 	name = "fancy table"
 	desc = "A standard metal table frame covered with an amazingly fancy, patterned cloth."
-	icon = 'icons/obj/structures.dmi'
+	icon = 'icons/obj/structures/smooth/table_singles.dmi'
 	icon_state = "fancy_table"
 	base_icon_state = "fancy_table"
 	frame = /obj/structure/table_frame
@@ -566,7 +589,7 @@
 	buildstack = /obj/item/stack/tile/carpet
 	smoothing_groups = SMOOTH_GROUP_FANCY_WOOD_TABLES //Don't smooth with SMOOTH_GROUP_TABLES or SMOOTH_GROUP_WOOD_TABLES
 	canSmoothWith = SMOOTH_GROUP_FANCY_WOOD_TABLES
-	var/smooth_icon = 'icons/obj/smooth_structures/fancy_table.dmi' // see Initialize()
+	var/smooth_icon = 'icons/obj/structures/smooth/fancy_table.dmi' // see Initialize()
 
 /obj/structure/table/wood/fancy/Initialize(mapload)
 	. = ..()
@@ -580,55 +603,55 @@
 	icon_state = "fancy_table_black"
 	base_icon_state = "fancy_table_black"
 	buildstack = /obj/item/stack/tile/carpet/black
-	smooth_icon = 'icons/obj/smooth_structures/fancy_table_black.dmi'
+	smooth_icon = 'icons/obj/structures/smooth/fancy_table_black.dmi'
 
 /obj/structure/table/wood/fancy/blue
 	icon_state = "fancy_table_blue"
 	base_icon_state = "fancy_table_blue"
 	buildstack = /obj/item/stack/tile/carpet/blue
-	smooth_icon = 'icons/obj/smooth_structures/fancy_table_blue.dmi'
+	smooth_icon = 'icons/obj/structures/smooth/fancy_table_blue.dmi'
 
 /obj/structure/table/wood/fancy/cyan
 	icon_state = "fancy_table_cyan"
 	base_icon_state = "fancy_table_cyan"
 	buildstack = /obj/item/stack/tile/carpet/cyan
-	smooth_icon = 'icons/obj/smooth_structures/fancy_table_cyan.dmi'
+	smooth_icon = 'icons/obj/structures/smooth/fancy_table_cyan.dmi'
 
 /obj/structure/table/wood/fancy/green
 	icon_state = "fancy_table_green"
 	base_icon_state = "fancy_table_green"
 	buildstack = /obj/item/stack/tile/carpet/green
-	smooth_icon = 'icons/obj/smooth_structures/fancy_table_green.dmi'
+	smooth_icon = 'icons/obj/structures/smooth/fancy_table_green.dmi'
 
 /obj/structure/table/wood/fancy/orange
 	icon_state = "fancy_table_orange"
 	base_icon_state = "fancy_table_orange"
 	buildstack = /obj/item/stack/tile/carpet/orange
-	smooth_icon = 'icons/obj/smooth_structures/fancy_table_orange.dmi'
+	smooth_icon = 'icons/obj/structures/smooth/fancy_table_orange.dmi'
 
 /obj/structure/table/wood/fancy/purple
 	icon_state = "fancy_table_purple"
 	base_icon_state = "fancy_table_purple"
 	buildstack = /obj/item/stack/tile/carpet/purple
-	smooth_icon = 'icons/obj/smooth_structures/fancy_table_purple.dmi'
+	smooth_icon = 'icons/obj/structures/smooth/fancy_table_purple.dmi'
 
 /obj/structure/table/wood/fancy/red
 	icon_state = "fancy_table_red"
 	base_icon_state = "fancy_table_red"
 	buildstack = /obj/item/stack/tile/carpet/red
-	smooth_icon = 'icons/obj/smooth_structures/fancy_table_red.dmi'
+	smooth_icon = 'icons/obj/structures/smooth/fancy_table_red.dmi'
 
 /obj/structure/table/wood/fancy/royalblack
 	icon_state = "fancy_table_royalblack"
 	base_icon_state = "fancy_table_royalblack"
 	buildstack = /obj/item/stack/tile/carpet/royalblack
-	smooth_icon = 'icons/obj/smooth_structures/fancy_table_royalblack.dmi'
+	smooth_icon = 'icons/obj/structures/smooth/fancy_table_royalblack.dmi'
 
 /obj/structure/table/wood/fancy/royalblue
 	icon_state = "fancy_table_royalblue"
 	base_icon_state = "fancy_table_royalblue"
 	buildstack = /obj/item/stack/tile/carpet/royalblue
-	smooth_icon = 'icons/obj/smooth_structures/fancy_table_royalblue.dmi'
+	smooth_icon = 'icons/obj/structures/smooth/fancy_table_royalblue.dmi'
 
 /*
  * Reinforced tables
@@ -636,7 +659,7 @@
 /obj/structure/table/reinforced
 	name = "reinforced table"
 	desc = "A reinforced version of the four legged table."
-	icon = 'icons/obj/smooth_structures/reinforced_table.dmi'
+	icon = 'icons/obj/structures/smooth/reinforced_table.dmi'
 	icon_state = "reinforced_table-0"
 	base_icon_state = "reinforced_table"
 	deconstruction_ready = FALSE
@@ -697,7 +720,7 @@
 /obj/structure/table/bronze
 	name = "bronze table"
 	desc = "A solid table made out of bronze."
-	icon = 'icons/obj/smooth_structures/brass_table.dmi'
+	icon = 'icons/obj/structures/smooth/brass_table.dmi'
 	icon_state = "brass_table-0"
 	base_icon_state = "brass_table"
 	resistance_flags = FIRE_PROOF | ACID_PROOF
@@ -712,7 +735,7 @@
 /obj/structure/table/reinforced/rglass
 	name = "reinforced glass table"
 	desc = "A reinforced version of the glass table."
-	icon = 'icons/obj/smooth_structures/rglass_table.dmi'
+	icon = 'icons/obj/structures/smooth/rglass_table.dmi'
 	icon_state = "rglass_table-0"
 	base_icon_state = "rglass_table"
 	custom_materials = list(/datum/material/glass =SHEET_MATERIAL_AMOUNT, /datum/material/iron =SHEET_MATERIAL_AMOUNT)
@@ -722,7 +745,7 @@
 /obj/structure/table/reinforced/plasmarglass
 	name = "reinforced plasma glass table"
 	desc = "A reinforced version of the plasma glass table."
-	icon = 'icons/obj/smooth_structures/rplasmaglass_table.dmi'
+	icon = 'icons/obj/structures/smooth/rplasmaglass_table.dmi'
 	icon_state = "rplasmaglass_table-0"
 	base_icon_state = "rplasmaglass_table"
 	custom_materials = list(/datum/material/alloy/plasmaglass =SHEET_MATERIAL_AMOUNT, /datum/material/iron =SHEET_MATERIAL_AMOUNT)
@@ -731,7 +754,7 @@
 /obj/structure/table/reinforced/titaniumglass
 	name = "titanium glass table"
 	desc = "A titanium reinforced glass table, with a fresh coat of NT white paint."
-	icon = 'icons/obj/smooth_structures/titaniumglass_table.dmi'
+	icon = 'icons/obj/structures/smooth/titaniumglass_table.dmi'
 	icon_state = "titaniumglass_table-0"
 	base_icon_state = "titaniumglass_table"
 	custom_materials = list(/datum/material/alloy/titaniumglass =SHEET_MATERIAL_AMOUNT)
@@ -741,7 +764,7 @@
 /obj/structure/table/reinforced/plastitaniumglass
 	name = "plastitanium glass table"
 	desc = "A table made of titanium reinforced silica-plasma composite. About as durable as it sounds."
-	icon = 'icons/obj/smooth_structures/plastitaniumglass_table.dmi'
+	icon = 'icons/obj/structures/smooth/plastitaniumglass_table.dmi'
 	icon_state = "plastitaniumglass_table-0"
 	base_icon_state = "plastitaniumglass_table"
 	custom_materials = list(/datum/material/alloy/plastitaniumglass =SHEET_MATERIAL_AMOUNT)
@@ -753,6 +776,7 @@
  */
 
 /obj/structure/table/optable
+	SET_BASE_VISUAL_PIXEL(0, DEPTH_OFFSET)
 	name = "operating table"
 	desc = "Used for advanced medical procedures."
 	icon = 'icons/obj/medical/surgery_table.dmi'
@@ -793,16 +817,6 @@
 	pushed_mob.forceMove(loc)
 	pushed_mob.set_resting(TRUE, TRUE)
 	visible_message(span_notice("[user] lays [pushed_mob] on [src]."))
-
-///Align the mob with the table when buckled.
-/obj/structure/table/optable/post_buckle_mob(mob/living/buckled)
-	. = ..()
-	buckled.pixel_y += 6
-
-///Disalign the mob with the table when unbuckled.
-/obj/structure/table/optable/post_unbuckle_mob(mob/living/buckled)
-	. = ..()
-	buckled.pixel_y -= 6
 
 /// Any mob that enters our tile will be marked as a potential patient. They will be turned into a patient if they lie down.
 /obj/structure/table/optable/proc/mark_patient(datum/source, mob/living/carbon/potential_patient)
@@ -846,7 +860,7 @@
 /obj/structure/rack
 	name = "rack"
 	desc = "Different from the Middle Ages version."
-	icon = 'icons/obj/structures.dmi'
+	icon = 'icons/obj/fluff/general.dmi'
 	icon_state = "rack"
 	layer = TABLE_LAYER
 	density = TRUE
@@ -940,7 +954,7 @@
 /obj/item/rack_parts
 	name = "rack parts"
 	desc = "Parts of a rack."
-	icon = 'icons/obj/structures.dmi'
+	icon = 'icons/obj/fluff/general.dmi'
 	icon_state = "rack_parts"
 	inhand_icon_state = "rack_parts"
 	obj_flags = CONDUCTS_ELECTRICITY

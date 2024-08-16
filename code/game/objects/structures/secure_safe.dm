@@ -5,7 +5,6 @@
 	icon_state = "wall_safe"
 	base_icon_state = "wall_safe"
 	result_path = /obj/structure/secure_safe
-	pixel_shift = 32
 
 /obj/item/wallframe/secure_safe/Initialize(mapload)
 	. = ..()
@@ -34,7 +33,7 @@
 	anchored = TRUE
 	density = FALSE
 
-MAPPING_DIRECTIONAL_HELPERS(/obj/structure/secure_safe, 32)
+WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/structure/secure_safe)
 
 /obj/structure/secure_safe/Initialize(mapload)
 	. = ..()
@@ -55,8 +54,32 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/secure_safe, 32)
 	new /obj/item/paper(src)
 	new /obj/item/pen(src)
 
+/obj/structure/secure_safe/update_icon()
+	..()
+	if(!atom_storage)
+		return
+	if(atom_storage.locked)
+		icon_state = "[initial(icon_state)]_locked"
+	else
+		icon_state = "[initial(icon_state)]_open"
+
+/obj/structure/secure_safe/update_overlays()
+	. = ..()
+	if(!atom_storage)
+		return
+	if(atom_storage.locked) //No door if we're locked.
+		return
+	var/mutable_appearance/door_overlay = mutable_appearance(icon, "[initial(icon_state)]_door") // Wallening todo: This needs attention for wall safes.
+	if(dir == SOUTH)
+		door_overlay.pixel_y = -1
+	else if(dir == WEST)
+		door_overlay.pixel_y = -6
+	. += door_overlay
+
 /obj/structure/secure_safe/hos
 	name = "head of security's safe"
+
+WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/structure/secure_safe/hos)
 
 /**
  * This safe is meant to be damn robust. To break in, you're supposed to get creative, or use acid or an explosion.
@@ -73,7 +96,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/secure_safe, 32)
 		It is made out of the same material as the station's Black Box and is designed to resist all conventional weaponry. \
 		There appears to be a small amount of surface corrosion. It doesn't look like it could withstand much of an explosion.\
 		Due to the expensive material, it was made incredibly small to cut corners, leaving only enough room to fit something as slim as an ID card."
-	icon = 'icons/obj/structures.dmi'
+	icon = 'icons/obj/storage/storage.dmi'
 	icon_state = "spare_safe"
 	base_icon_state = "spare_safe"
 	armor_type = /datum/armor/safe_caps_spare
@@ -83,6 +106,8 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/secure_safe, 32)
 	anchored_tabletop_offset = 6
 	custom_materials = list(/datum/material/gold = SMALL_MATERIAL_AMOUNT)
 	material_flags = MATERIAL_EFFECTS
+
+WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/structure/secure_safe/caps_spare)
 
 /datum/armor/safe_caps_spare
 	melee = 100
