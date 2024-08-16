@@ -9,12 +9,8 @@
  * the tram took a third of the tick per movement when its just carrying its default mapped in objects
  */
 
-/obj/structure/grille/tram/Initialize(mapload)
-	. = ..()
-	RemoveElement(/datum/element/atmos_sensitive, mapload)
-	//atmos_sensitive applies connect_loc which 1. reacts to movement in order to 2. unregister and register signals to
-	//the old and new locs. we dont want that, pretend these grilles and windows are plastic or something idk
-
+//atmos_sensitive applies connect_loc which 1. reacts to movement in order to 2. unregister and register signals to
+//the old and new locs. we dont want that, pretend these grilles and windows are plastic or something idk
 /obj/structure/tram/Initialize(mapload, direct)
 	. = ..()
 	RemoveElement(/datum/element/atmos_sensitive, mapload)
@@ -23,8 +19,8 @@
 	name = "tram wall"
 	desc = "A lightweight titanium composite structure with titanium silicate panels."
 	icon = 'icons/obj/tram/tram_structure.dmi'
-	icon_state = "tram-part-0"
-	base_icon_state = "tram-part"
+	icon_state = "tram-inner-0"
+	base_icon_state = "tram-inner"
 	max_integrity = 150
 	layer = TRAM_WALL_LAYER
 	density = TRUE
@@ -59,8 +55,11 @@
 	/// Sound when hit with combat mode
 	var/bash_sound = 'sound/effects/glassbash.ogg'
 
-/obj/structure/tram/split
-	base_icon_state = "tram-split"
+/obj/structure/tram/outer
+	base_icon_state = "tram-outer"
+
+/obj/structure/tram/edge
+	base_icon_state = "tram-edge"
 
 /datum/armor/tram_structure
 	melee = 40
