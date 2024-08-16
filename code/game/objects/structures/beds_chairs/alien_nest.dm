@@ -3,7 +3,7 @@
 /obj/structure/bed/nest
 	name = "alien nest"
 	desc = "It's a gruesome pile of thick, sticky resin shaped like a nest."
-	icon = 'icons/obj/smooth_structures/alien/nest.dmi'
+	icon = 'icons/obj/structures/smooth/alien/nest.dmi'
 	icon_state = "nest-0"
 	base_icon_state = "nest"
 	max_integrity = 120

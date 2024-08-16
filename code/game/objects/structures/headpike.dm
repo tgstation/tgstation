@@ -1,7 +1,7 @@
 /obj/structure/headpike
 	name = "spooky head on a spear"
 	desc = "When you really want to send a message."
-	icon = 'icons/obj/structures.dmi'
+	icon = 'icons/obj/weapons/spear.dmi'
 	icon_state = "headpike"
 	density = FALSE
 	anchored = TRUE

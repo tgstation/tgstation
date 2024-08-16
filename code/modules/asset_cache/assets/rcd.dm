@@ -23,7 +23,7 @@
 				if(ispath(path, /obj/structure/window))
 					var/obj/structure/window/window_path = path
 					if(initial(window_path.fulltile))
-						sprite_icon = icon(icon = 'icons/obj/smooth_structures/window_frames/window_frame_normal.dmi', icon_state = "window_frame_normal-0", dir = SOUTH)
+						sprite_icon = icon(icon = 'icons/obj/structures/smooth/window_frames/window_frame_normal.dmi', icon_state = "window_frame_normal-0", dir = SOUTH)
 
 						var/obj/structure/window_frame/frame_path = /obj/structure/window_frame
 
