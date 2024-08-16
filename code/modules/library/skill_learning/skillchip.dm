@@ -509,7 +509,7 @@
 	skill_description = "When intoxicated, you gain increased unarmed effectiveness."
 	skill_icon = "wine-bottle"
 	activate_message = span_notice("You honestly could do with a drink. Never know when someone might try and jump you around here.")
-	deactivate_message = span_notice("You suddenly feel a lot safer going around the station sober...")
+	deactivate_message = span_notice("You suddenly feel a lot safer going around the station sober... ")
 
 /obj/item/skillchip/musical
 	name = "\improper Old Copy of \"Space Station 13: The Musical\""
