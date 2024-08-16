@@ -1,6 +1,6 @@
 /obj/structure/tall_stairs
 	name = "stairs"
-	icon = 'icons/obj/structures_tall.dmi'
+	icon = 'icons/obj/structures/tall.dmi'
 	icon_state = "stairs_start"
 	anchored = TRUE
 	move_resist = INFINITY
@@ -88,7 +88,7 @@
 		leaving.Bump(src)
 		return COMPONENT_ATOM_BLOCK_EXIT
 
-	if (!isliving(leaving) || (!isnull(paired) && get_turf(paired) == get_step(src, direction)))
+	if (!isliving(leaving) || (locate(/obj/structure/tall_stairs) in get_step(src, direction)))
 		return
 
 	var/mob/living/loser = leaving
@@ -130,7 +130,7 @@
 		paired.paired = src
 
 /obj/structure/tall_stairs/end/CanAllowThrough(atom/movable/mover, border_dir)
-	if (isnull(paired) || get_turf(mover) != get_turf(paired))
+	if (isnull(locate(/obj/structure/tall_stairs) in get_turf(mover)))
 		return FALSE
 	return ..()
 

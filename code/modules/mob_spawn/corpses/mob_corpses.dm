@@ -162,6 +162,16 @@
 	head = /obj/item/clothing/head/helmet/space/pirate
 	back = /obj/item/tank/jetpack/carbondioxide
 
+/obj/effect/mob_spawn/corpse/human/old_pirate_captain
+	name = "Pirate Captain Skeleton"
+	outfit = /datum/outfit/piratecorpse/captain
+	mob_species = /datum/species/skeleton
+
+/datum/outfit/piratecorpse/captain
+	glasses = /obj/item/clothing/glasses/eyepatch
+	head = /obj/item/clothing/head/costume/pirate
+	suit = /obj/item/clothing/suit/costume/pirate
+
 /obj/effect/mob_spawn/corpse/human/russian
 	name = "Russian"
 	outfit = /datum/outfit/russiancorpse
