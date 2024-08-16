@@ -78,7 +78,7 @@
 		COMSIG_LIVING_POST_UPDATE_TRANSFORM,
 		COMSIG_MOB_BUCKLED,
 		COMSIG_MOB_UNBUCKLED,
-		COMSIG_MOVABLE_MOVED
+		COMSIG_MOVABLE_MOVED,
 		SIGNAL_ADDTRAIT(TRAIT_SHADOWLESS),
 		SIGNAL_REMOVETRAIT(TRAIT_SHADOWLESS),
 	))
@@ -100,7 +100,7 @@
 
 /datum/component/drop_shadow/proc/on_moved(atom/movable/mover, turf/old_loc)
 	SIGNAL_HANDLER
-	if(isgroundlessturf(mover.loc))
+	if(isshadowlessturf(mover.loc))
 		ADD_TRAIT(mover, TRAIT_SHADOWLESS, REF(src))
 	else
 		REMOVE_TRAIT(mover, TRAIT_SHADOWLESS, REF(src))
