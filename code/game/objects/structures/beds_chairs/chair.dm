@@ -2,7 +2,7 @@
 	SET_BASE_VISUAL_PIXEL(0, DEPTH_OFFSET)
 	name = "chair"
 	desc = "You sit in this. Either by will or force."
-	icon = 'icons/obj/chairs.dmi'
+	icon = 'icons/obj/structures/chairs.dmi'
 	icon_state = "chair"
 	anchored = TRUE
 	can_buckle = TRUE
@@ -67,7 +67,7 @@
 	if(!user.temporarilyRemoveItemFromInventory(input_shock_kit))
 		return
 	if(!overlays_from_child_procs || overlays_from_child_procs.len == 0)
-		var/image/echair_over_overlay = image('icons/obj/chairs.dmi', loc, "echair_over")
+		var/image/echair_over_overlay = image('icons/obj/structures/chairs.dmi', loc, "echair_over")
 		AddComponent(/datum/component/electrified_buckle, (SHOCK_REQUIREMENT_ITEM | SHOCK_REQUIREMENT_LIVE_CABLE | SHOCK_REQUIREMENT_SIGNAL_RECEIVED_TOGGLE), input_shock_kit, list(echair_over_overlay), FALSE)
 	else
 		AddComponent(/datum/component/electrified_buckle, (SHOCK_REQUIREMENT_ITEM | SHOCK_REQUIREMENT_LIVE_CABLE | SHOCK_REQUIREMENT_SIGNAL_RECEIVED_TOGGLE), input_shock_kit, overlays_from_child_procs, FALSE)
@@ -208,7 +208,7 @@
 
 /obj/structure/chair/comfy/shuttle/electrify_self(obj/item/assembly/shock_kit/input_shock_kit, mob/user, list/overlays_from_child_procs)
 	if(!overlays_from_child_procs)
-		overlays_from_child_procs = list(image('icons/obj/chairs.dmi', loc, "echair_over", pixel_x = -1))
+		overlays_from_child_procs = list(image('icons/obj/structures/chairs.dmi', loc, "echair_over", pixel_x = -1))
 	. = ..()
 
 /obj/structure/chair/comfy/shuttle/tactical
@@ -232,7 +232,7 @@
 
 /obj/structure/chair/office/electrify_self(obj/item/assembly/shock_kit/input_shock_kit, mob/user, list/overlays_from_child_procs)
 	if(!overlays_from_child_procs)
-		overlays_from_child_procs = list(image('icons/obj/chairs.dmi', loc, "echair_over", pixel_x = -1))
+		overlays_from_child_procs = list(image('icons/obj/structures/chairs.dmi', loc, "echair_over", pixel_x = -1))
 	. = ..()
 
 /obj/structure/chair/office/tactical
@@ -299,7 +299,7 @@ MAPPING_DIRECTIONAL_HELPERS_EMPTY(/obj/structure/chair/stool/bar)
 /obj/item/chair
 	name = "chair"
 	desc = "Bar brawl essential."
-	icon = 'icons/obj/chairs.dmi'
+	icon = 'icons/obj/structures/chairs.dmi'
 	icon_state = "chair_toppled"
 	inhand_icon_state = "chair"
 	lefthand_file = 'icons/mob/inhands/items/chairs_lefthand.dmi'
@@ -520,7 +520,7 @@ MAPPING_DIRECTIONAL_HELPERS_EMPTY(/obj/structure/chair/stool/bar)
 /obj/item/chair/plastic
 	name = "folding plastic chair"
 	desc = "Somehow, you can always find one under the wrestling ring."
-	icon = 'icons/obj/chairs.dmi'
+	icon = 'icons/obj/structures/chairs.dmi'
 	icon_state = "folded_chair"
 	inhand_icon_state = "folded_chair"
 	lefthand_file = 'icons/mob/inhands/items/chairs_lefthand.dmi'

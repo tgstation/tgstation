@@ -1,7 +1,7 @@
 /obj/structure/fermenting_barrel
 	name = "wooden barrel"
 	desc = "A large wooden barrel. You can ferment fruits and such inside it, or just use it to hold reagents."
-	icon = 'icons/obj/structures.dmi'
+	icon = 'icons/obj/service/hydroponics/equipment.dmi'
 	icon_state = "barrel"
 	base_icon_state = "barrel"
 	resistance_flags = FLAMMABLE
