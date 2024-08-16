@@ -202,7 +202,7 @@
 	else
 		qdel(tool)
 		if(creds_value != restock_cost)
-			var/obj/item/holochip/change = new(creds_value - restock_cost)
+			var/obj/item/holochip/change = new(loc, creds_value - restock_cost)
 			user.put_in_hands(change)
 
 	SSmarket.restock()

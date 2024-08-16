@@ -17,7 +17,7 @@
 /datum/market_item/local_good/buy(obj/item/market_uplink/uplink, mob/buyer, shipping_method, legal_status)
 	. = ..()
 	if(. && seller)
-		seller.adjust_money(price * (1 - MARKET_WITHHOLDING_TAX), "Market: Item Sold")
+		seller.adjust_money(round(price * (1 - MARKET_WITHHOLDING_TAX)), "Market: Item Sold")
 	QDEL_IN(src, 10 MINUTES) //This category cannot hold more than 40 items at a time, so we need to clear sold items.
 
 /datum/market_item/local_good/proc/delete_reference(datum/source)
