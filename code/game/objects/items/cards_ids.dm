@@ -104,6 +104,9 @@
 	/// Boolean value. If TRUE, the [Intern] tag gets prepended to this ID card when the label is updated.
 	var/is_intern = FALSE
 
+	///If true, the wearer will have bigger arrow when pointing at things. Passed down by trims.
+	var/big_pointer = FALSE
+
 /datum/armor/card_id
 	fire = 100
 	acid = 100
@@ -142,6 +145,21 @@
 		registered_account.bank_cards -= src
 	if (my_store)
 		QDEL_NULL(my_store)
+	return ..()
+
+/obj/item/card/id/equipped(mob/user, slot)
+	. = ..()
+	if(slot == ITEM_SLOT_ID)
+		RegisterSignal(user, COMSIG_MOVABLE_POINTED, PROC_REF(on_pointed))
+
+/obj/item/card/id/proc/on_pointed(mob/living/user, atom/pointed, obj/effect/temp_visual/point/point)
+	SIGNAL_HANDLER
+	if(point.icon_state != obj/effect/temp_visual/point::icon_state) //it differs from the original icon_state already.
+		return
+	point.icon_state = "arrow_large"
+
+/obj/item/card/id/dropped(mob/user)
+	UnregisterSignal(user, COMSIG_MOVABLE_POINTED)
 	return ..()
 
 /obj/item/card/id/get_id_examine_strings(mob/user)

@@ -160,6 +160,8 @@
 	l_pocket = /obj/item/uplink/nuclear
 	r_pocket = /obj/item/modular_computer/pda/nukeops
 
+	skillchips = list(/obj/item/skillchip/disk_verifier)
+
 /obj/effect/mob_spawn/ghost_role/human/syndicate/battlecruiser/captain
 	name = "Syndicate Battlecruiser Captain"
 	you_are_text = "You are the captain aboard the syndicate flagship: the SBC Starfury."
@@ -184,3 +186,8 @@
 	mask = /obj/item/cigarette/cigar/havana
 	l_pocket = /obj/item/melee/energy/sword/saber/red
 	r_pocket = /obj/item/melee/baton/telescopic
+
+	skillchips = list(
+		/obj/item/skillchip/disk_verifier,
+		/obj/item/skillchip/big_pointer,
+	)

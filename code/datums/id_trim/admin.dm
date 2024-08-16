@@ -5,6 +5,7 @@
 	department_color = COLOR_CENTCOM_BLUE
 	subdepartment_color = COLOR_SERVICE_LIME
 	threat_modifier = -INFINITY
+	big_pointer_trim = TRUE
 
 /datum/id_trim/admin/New()
 	. = ..()
