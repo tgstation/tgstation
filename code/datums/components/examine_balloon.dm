@@ -76,6 +76,8 @@
 
 /obj/effect/abstract/balloon_hologram/Initialize(mapload, atom/to_copy, arrow_y)
 	. = ..()
+	if (isnull(to_copy))
+		return
 	original = to_copy
 	name = original.name
 	desc = original.desc
