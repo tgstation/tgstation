@@ -1,0 +1,4 @@
+author: "unit0016"
+delete-after: True
+changes:
+  - bugfix: "Every bitrunner domain's been patched up for the new perspective shift."

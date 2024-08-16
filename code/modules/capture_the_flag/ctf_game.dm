@@ -442,7 +442,7 @@
 /obj/effect/ctf/dead_barricade
 	name = "dead barrier"
 	desc = "It provided cover in fire fights. And now it's gone."
-	icon = 'icons/obj/structures.dmi'
+	icon = 'icons/obj/structures/tall.dmi'
 	icon_state = "barrier0"
 	var/game_id = CTF_GHOST_CTF_GAME_ID
 	var/datum/ctf_controller/ctf_game
