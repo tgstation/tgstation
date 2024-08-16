@@ -281,7 +281,7 @@
 /datum/pet_command/automate_mining
 	command_name = "Automate mining"
 	command_desc = "Make your minebot automatically mine!"
-	radial_icon = 'icons/obj/mining.dmi'
+	radial_icon = 'icons/obj/mining_zones/equipment.dmi'
 	radial_icon_state = "pickaxe"
 	speech_commands = list("mine")
 	callout_type = /datum/callout_option/mine

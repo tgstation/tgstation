@@ -553,9 +553,9 @@
 /obj/item/fish/mastodon
 	name = "unmarine mastodon"
 	desc = "A monster of exposed muscles and innards, wrapped in a fish-like skeleton. You don't remember ever seeing it on the catalog."
-	icon = 'icons/obj/aquarium/wide.dmi'
+	icon = 'icons/obj/structures/aquarium/wide.dmi'
 	icon_state = "mastodon"
-	dedicated_in_aquarium_icon = 'icons/obj/aquarium/fish.dmi'
+	dedicated_in_aquarium_icon = 'icons/obj/structures/aquarium/fish.dmi'
 	dedicated_in_aquarium_icon_state = "mastodon_small"
 	base_pixel_x = -16
 	pixel_x = -16

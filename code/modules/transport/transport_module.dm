@@ -5,7 +5,7 @@
 /obj/structure/transport/linear
 	name = "linear transport module"
 	desc = "A lightweight lift platform. It moves."
-	icon = 'icons/obj/smooth_structures/catwalk.dmi'
+	icon = 'icons/obj/structures/smooth/catwalk.dmi'
 	icon_state = "catwalk-0"
 	base_icon_state = "catwalk"
 	density = FALSE
@@ -854,7 +854,7 @@
 /obj/structure/transport/linear/tram
 	name = "tram subfloor"
 	desc = "The subfloor lattice of the tram. You can build a tram wall frame by using <b>titanium sheets,</b> or place down <b>thermoplastic tram floor tiles.</b>"
-	icon = 'icons/obj/tram/tram_structure.dmi'
+	icon = 'icons/obj/structures/tram/tram_structure.dmi'
 	icon_state = "subfloor"
 	base_icon_state = null
 	density = FALSE

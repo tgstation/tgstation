@@ -3,7 +3,7 @@
 
 	anchored = TRUE
 	desc = "An abstract representation of the means to disconnect from the virtual domain."
-	icon = 'icons/obj/structures.dmi'
+	icon = 'icons/obj/fluff/general.dmi'
 	icon_state = "ladder11"
 	obj_flags = BLOCK_Z_OUT_DOWN
 	/// Time req to disconnect properly

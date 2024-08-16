@@ -97,15 +97,15 @@
 	var/datum/sprite_accessory/underwear/underwear = SSaccessories.underwear_list[underwear_name]
 	if(underwear)
 		if(body_type == FEMALE && underwear.gender == MALE)
-			. += wear_female_version(underwear.icon_state, underwear.icon, BODY_LAYER, FEMALE_UNIFORM_FULL)
+			. += mutable_appearance(wear_female_version(underwear.icon_state, underwear.icon, FEMALE_UNIFORM_FULL), layer = -BODY_LAYER)
 		else
-			. += mutable_appearance(underwear.icon, underwear.icon_state, -BODY_LAYER)
+			. += mutable_appearance(underwear.icon, underwear.icon_state, layer = -BODY_LAYER)
 	var/datum/sprite_accessory/undershirt/undershirt = SSaccessories.undershirt_list[undershirt_name]
 	if(undershirt)
 		if(body_type == FEMALE)
-			. += wear_female_version(undershirt.icon_state, undershirt.icon, BODY_LAYER)
+			. += mutable_appearance(wear_female_version(undershirt.icon_state, undershirt.icon), layer = -BODY_LAYER)
 		else
-			. += mutable_appearance(undershirt.icon, undershirt.icon_state, -BODY_LAYER)
+			. += mutable_appearance(undershirt.icon, undershirt.icon_state, layer = -BODY_LAYER)
 	var/datum/sprite_accessory/socks/socks = SSaccessories.socks_list[socks_name]
 	if(socks)
 		. += mutable_appearance(socks.icon, socks.icon_state, -BODY_LAYER)
