@@ -294,7 +294,7 @@
     Jacquerel, Justice12354, Kryson, KylerAce, LemonInTheDark, Meyhazah, Mothblocks,
     MTandi, Ninjanomnom, oranges, Rohesie, Runi-c, san7890, Senefi, SimplyLogan, SomeAngryMiner,
     SpaceSmithers, Tattle, Thunder12345, Time-Green, Twaticus, unit0016, Viro, Waltermeldon,
-    ZephyrTFA with thanks to the Mojave Sun team!
+    WatlerJe, ZephyrTFA with thanks to the Mojave Sun team!
   : - rscadd: Resprites or offsets almost all "tall" objects in the game to match
         a 3/4ths perspective
     - rscadd: Bunch of rendering mumbo jumbo to make said 3/4ths perspective work
@@ -401,3 +401,57 @@
       for the first time
   tmyqlfpir:
   - balance: Reduced pathfinding circuit component cooldown from 30 seconds to 5 seconds
+2024-08-16:
+  Absolucy:
+  - bugfix: Empty blood brother teams will now be cleaned up, instead of clogging
+      up the roundend report.
+  Ben10Omintrix:
+  - bugfix: fixes surgery table buckle offsets
+  - bugfix: fixes rcds accounting for player dir only before construction
+  - bugfix: fixes pickup animation not matching player offset
+  Bisar:
+  - bugfix: Potted plants no longer permanently mark you as one of their own.
+  DATA-xPUNGED:
+  - qol: Paraplegics can now opt into appearing on the shift without their legs.
+  Ghommie:
+  - image: Resprited more types of fillets, and moonfish eggs
+  - rscadd: Crabs and lobstrosities (as well as the lobster foam helmet and the fishing
+      hat) now pack a boatload of fish puns.
+  Jacquerel:
+  - bugfix: corrects offset of cobweb fluff object
+  - bugfix: Dimensional anomalies should once again create cool walls, not boring
+      grey ones
+  - bugfix: Mobs shown in ghost alerts shouldn't be offset out of the box
+  - image: Several midround dynamic alert icons should be more demonstrative of what
+      is spawning
+  Melbert:
+  - bugfix: Less floating things on Delta
+  - rscadd: Auto-generated digitigrade clothing sprites for most jumpsuits
+  Metekillot:
+  - bugfix: Raptors properly respect their own factions now.
+  Sadboysuss:
+  - qol: atmos meters can now be attached to layer 1 and 5
+  - sound: generic ship ambience volume has been reduced
+  Shadow-Quill:
+  - bugfix: You can no longer hear radio sounds if you're deaf.
+  SmArtKar:
+  - image: Mirrors have been successfully wallened
+  - bugfix: You can now move horizontally on tall stairs and they no longer have a
+      hole in them when facing south
+  - bugfix: Fixed improvised shield crafting recipe being overriden by moonflowers
+  - image: Floor lights no longer use outdated textures
+  - balance: Deja Vu perk now teleports you to where you were before the last teleport,
+      instead of where you arrived on the station
+  - bugfix: Deja Vu can no longer be used to return to the wizard ship
+  - bugfix: Blade heretic ascension now gives you floating blades once again
+  deathrobotpunch:
+  - rscadd: big pharma now supplies a single pack of experimental medication as an
+      easy to access (albeit expensive) cargo goodie!
+  - balance: price for the cargo crate with 2 pill bottles of experimental medication
+      has been increased to 600 to better reflect the goodie case price.
+  grungussuss:
+  - sound: some sheets that shouldn't be making metal sounds no longer make those
+      sounds
+  - sound: added new sounds for RCD, RPD and Plumbing Constructor.
+  tralezab:
+  - bugfix: bedsheets are laid on beds properly now

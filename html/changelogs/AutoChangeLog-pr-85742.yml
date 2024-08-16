@@ -1,5 +1,0 @@
-author: "SmArtKar"
-delete-after: True
-changes:
-  - balance: "Deja Vu perk now teleports you to where you were before the last teleport, instead of where you arrived on the station"
-  - bugfix: "Deja Vu can no longer be used to return to the wizard ship"
