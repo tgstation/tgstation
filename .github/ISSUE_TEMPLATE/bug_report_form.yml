@@ -3,7 +3,6 @@ description: Create a report to help reproduce and fix the issue.
 body:
   - type: markdown
     attributes:
-      label: Issue Reporting Guidelines
       value: |
         **Please read the following guidelines and follow all guidelines or else your issue is subject to closure.**
         If you are reporting an issue found in another branch or codebase, you MUST link the branch or codebase repo in your issue report or it will be closed.
@@ -26,7 +25,7 @@ body:
       description: |
         If you discovered this issue from playing tgstation hosted servers, the Round ID can be found in the Status panel or retrieved from https://sb.atlantaned.space/rounds
         The Round ID lets us look up valuable information and logs for the round the bug happened. Leave this blank if there is no round ID.
-      placeholder: 123456
+      placeholder: "123456"
     validations:
       required: false
   - type: textarea
