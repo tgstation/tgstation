@@ -22,7 +22,7 @@
 /// Someone, for the love of god, profile this.  Is there a reason to cache mutable_appearance
 /// if so, why are we JUST doing the airlocks when we can put this in mutable_appearance.dm for
 /// everything
-/proc/get_airlock_overlay(icon_state, icon_file, atom/offset_spokesman, em_block, set_dir = 1)
+/proc/get_airlock_overlay(icon_state, icon_file, atom/offset_spokesman, em_block)
 	var/static/list/airlock_overlays = list()
 
 	var/base_icon_key = "[icon_state][REF(icon_file)]"
@@ -38,7 +38,6 @@
 	if(!em_blocker)
 		em_blocker = airlock_overlays[em_block_key] = mutable_appearance(icon_file, icon_state, offset_spokesman = offset_spokesman, plane = EMISSIVE_PLANE, appearance_flags = EMISSIVE_APPEARANCE_FLAGS)
 		em_blocker.color = em_block ? GLOB.em_block_color : GLOB.emissive_color
-		em_blocker.dir = set_dir
 
 	return list(., em_blocker)
 
@@ -596,7 +595,8 @@
 			for(var/heading in list(dir,turn(dir, 180))) //Only check the door's dir and the flip
 				if(!(unres_sides & heading))
 					continue
-				. += get_airlock_overlay("lights_unres", overlays_file, src, em_block = FALSE, set_dir = heading)
+				for(var/mutable_appearance/bluelight in get_airlock_overlay("lights_unres", overlays_file, src, em_block = FALSE))
+					. += make_mutable_appearance_directional(bluelight, heading)
 
 		if(lights) //bolt lights
 			. += get_airlock_overlay("lights_[light_state]", overlays_file, src, em_block = FALSE)
