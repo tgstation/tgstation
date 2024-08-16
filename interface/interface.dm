@@ -57,7 +57,7 @@
 	set name = "report-issue"
 	set desc = "Report an issue"
 	set hidden = TRUE
-	var/githuburl = "https://github.com/san7890/bruhstation" //san7890 fix me
+	var/githuburl = CONFIG_GET(string/githuburl)
 	if(!githuburl)
 		to_chat(src, span_danger("The Github URL is not set in the server configuration."))
 		return
