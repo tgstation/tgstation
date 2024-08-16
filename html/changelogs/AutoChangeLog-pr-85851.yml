@@ -1,4 +1,0 @@
-author: "Jacquerel"
-delete-after: True
-changes:
-  - bugfix: "Dimensional anomalies should once again create cool walls, not boring grey ones"
