@@ -58,42 +58,42 @@
 	set desc = "Report an issue"
 	set hidden = TRUE
 	var/githuburl = "https://github.com/san7890/bruhstation" //san7890 fix me
-	if(githuburl)
-		var/message = "This will open the Github issue reporter in your browser. Are you sure?"
-		if(GLOB.revdata.testmerge.len)
-			message += "<br>The following experimental changes are active and are probably the cause of any new or sudden issues you may experience. If possible, please try to find a specific thread for your issue instead of posting to the general issue tracker:<br>"
-			message += GLOB.revdata.GetTestMergeInfo(FALSE)
-
-		// We still use tgalert here because some people were concerned that if someone wanted to report that tgui wasn't working
-		// then the report issue button being tgui-based would be problematic.
-		if(tgalert(src, message, "Report Issue","Yes","No") != "Yes")
-			return
-
-		var/base_link = githuburl + "/issues/new?template=bug_report_form.yml"
-		var/list/concatable = list(base_link)
-
-		var/client_version = "[byond_version].[byond_build]"
-		concatable += ("&reporting-version=" + client_version)
-
-		// the way it works is that we use the ID's that are baked into the template YML and replace them with values that we can collect in game.
-		if(GLOB.round_id)
-			concatable += ("&round-id=" + GLOB.round_id)
-
-		// Insert testmerges
-		if(GLOB.revdata.testmerge.len)
-			var/list/all_tms = list()
-			for(var/entry in GLOB.revdata.testmerge)
-				var/datum/tgs_revision_information/test_merge/tm = entry
-				all_tms += "- \[[tm.title]\]([githuburl]/pull/[tm.number])"
-			var/all_tms_joined = jointext(all_tms, "\n") // for some reason this can't go in the []
-
-			concatable += ("&test-merges=" + all_tms_joined)
-
-		var/final_link = link(jointext(concatable, ""))
-		DIRECT_OUTPUT(src, final_link)
-	else
+	if(!githuburl)
 		to_chat(src, span_danger("The Github URL is not set in the server configuration."))
-	return
+		return
+
+	var/message = "This will open the Github issue reporter in your browser. Are you sure?"
+	if(GLOB.revdata.testmerge.len)
+		message += "<br>The following experimental changes are active and are probably the cause of any new or sudden issues you may experience. If possible, please try to find a specific thread for your issue instead of posting to the general issue tracker:<br>"
+		message += GLOB.revdata.GetTestMergeInfo(FALSE)
+
+	// We still use tgalert here because some people were concerned that if someone wanted to report that tgui wasn't working
+	// then the report issue button being tgui-based would be problematic.
+	if(tgalert(src, message, "Report Issue","Yes","No") != "Yes")
+		return
+
+	var/base_link = githuburl + "/issues/new?template=bug_report_form.yml"
+	var/list/concatable = list(base_link)
+
+	var/client_version = "[byond_version].[byond_build]"
+	concatable += ("&reporting-version=" + client_version)
+
+	// the way it works is that we use the ID's that are baked into the template YML and replace them with values that we can collect in game.
+	if(GLOB.round_id)
+		concatable += ("&round-id=" + GLOB.round_id)
+
+	// Insert testmerges
+	if(GLOB.revdata.testmerge.len)
+		var/list/all_tms = list()
+		for(var/entry in GLOB.revdata.testmerge)
+			var/datum/tgs_revision_information/test_merge/tm = entry
+			all_tms += "- \[[tm.title]\]([githuburl]/pull/[tm.number])"
+		var/all_tms_joined = jointext(all_tms, "\n") // for some reason this can't go in the []
+
+		concatable += ("&test-merges=" + all_tms_joined)
+
+	DIRECT_OUTPUT(src, link(jointext(concatable, "")))
+
 
 /client/verb/changelog()
 	set name = "Changelog"
