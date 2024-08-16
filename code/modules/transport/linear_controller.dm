@@ -14,6 +14,7 @@
 		/obj/structure/holosign,
 		/obj/machinery/field,
 		/obj/structure/fluff/tram_rail,
+		/obj/machinery/transport/power_rectifier,
 	)
 
 	///whether the lift handled by this transport_controller datum is multitile as opposed to nxm platforms per z level
