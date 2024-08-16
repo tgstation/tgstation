@@ -233,7 +233,7 @@
 	name = "tram door assembly"
 	icon =  /obj/machinery/door/airlock/tram::icon
 	base_name = "tram door"
-	overlays_file = 'icons/obj/doors/airlocks/tram/tram-overlays.dmi'
+	overlays_file = /obj/machinery/door/airlock/tram::overlays_file
 	glass_type = /obj/machinery/door/airlock/tram
 	airlock_type = /obj/machinery/door/airlock/tram
 	glass = FALSE
