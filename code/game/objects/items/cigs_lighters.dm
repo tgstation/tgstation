@@ -129,6 +129,9 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 //////////////////
 //FINE SMOKABLES//
 //////////////////
+
+GLOBAL_LIST_EMPTY(cigarette_eaters) // Need to keep track of up to 500 cigarettes
+
 /obj/item/cigarette
 	name = "cigarette"
 	desc = "A roll of tobacco and nicotine."
@@ -194,11 +197,40 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	icon_state = icon_off
 	inhand_icon_state = inhand_icon_off
 
+	// "It is called a cigarette"
+	AddComponent(/datum/component/edible,\
+		initial_reagents = list_reagents,\
+		food_flags = null,\
+		foodtypes = JUNKFOOD,\
+		volume = 50,\
+		eat_time = 0 SECONDS,\
+		tastes = list("A never before experienced flavour.", "Finally sitting down after standing your entire life"),\
+		eatverbs = list("Chomps"),\
+		bite_consumption = 50,\
+		junkiness = 0,\
+		reagent_purity = null,\
+		on_consume = CALLBACK(src, PROC_REF(on_consume)),\
+	)
+
 /obj/item/cigarette/Destroy()
 	STOP_PROCESSING(SSobj, src)
 	QDEL_NULL(mob_smoke)
 	QDEL_NULL(cig_smoke)
 	return ..()
+
+/obj/item/cigarette/proc/on_consume(mob/living/eater, mob/living/feeder)
+	if(isnull(eater.client))
+		return
+	var/ckey = eater.client.ckey
+	// We must have more!
+	GLOB.cigarette_eaters[eater.client.ckey]++
+	if(GLOB.cigarette_eaters[eater.client.ckey] >= 500)
+		eater.client.give_award(/datum/award/achievement/misc/cigarettes)
+
+/obj/item/cigarette/examine(mob/user)
+	. = ..()
+	if(!is_species(user, /datum/species/human))
+		. += span_boldwarning("You are curious to taste it")
 
 /obj/item/cigarette/equipped(mob/equipee, slot)
 	. = ..()
