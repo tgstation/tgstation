@@ -9089,6 +9089,9 @@
 "cAz" = (
 /obj/structure/table/wood,
 /obj/item/book/manual/wiki/security_space_law,
+/obj/effect/turf_decal/siding/wood/corner{
+	dir = 1
+	},
 /turf/open/floor/wood,
 /area/station/security/courtroom)
 "cAB" = (
@@ -15923,6 +15926,9 @@
 /obj/item/radio/intercom/directional/north,
 /obj/structure/chair{
 	name = "Defense"
+	},
+/obj/effect/turf_decal/siding/wood{
+	dir = 8
 	},
 /turf/open/floor/wood,
 /area/station/security/courtroom)
@@ -28019,6 +28025,9 @@
 /area/station/service/chapel)
 "ile" = (
 /obj/structure/table/wood,
+/obj/effect/turf_decal/siding/wood{
+	dir = 9
+	},
 /turf/open/floor/wood,
 /area/station/security/courtroom)
 "iln" = (
@@ -36037,7 +36046,6 @@
 /obj/effect/turf_decal/stripes/end{
 	dir = 4
 	},
-/obj/machinery/light/small/dim/directional/north,
 /obj/machinery/light/small/dim/directional/north,
 /turf/open/floor/iron/dark/textured_large,
 /area/station/medical/morgue)
@@ -44470,6 +44478,9 @@
 	dir = 1;
 	name = "Prosecution"
 	},
+/obj/effect/turf_decal/siding/wood{
+	dir = 8
+	},
 /turf/open/floor/wood,
 /area/station/security/courtroom)
 "neE" = (
@@ -50764,6 +50775,9 @@
 /area/station/ai_monitored/command/storage/eva)
 "oQN" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/effect/turf_decal/siding/wood{
+	dir = 1
+	},
 /turf/open/floor/wood,
 /area/station/security/courtroom)
 "oQY" = (
@@ -50933,6 +50947,9 @@
 	},
 /obj/item/gavelblock{
 	pixel_x = 5
+	},
+/obj/effect/turf_decal/siding/wood{
+	dir = 8
 	},
 /turf/open/floor/wood,
 /area/station/security/courtroom)
@@ -66562,6 +66579,7 @@
 "tpK" = (
 /obj/structure/table/wood,
 /obj/item/folder/blue,
+/obj/effect/turf_decal/siding/wood,
 /turf/open/floor/wood,
 /area/station/security/courtroom)
 "tpO" = (
@@ -71966,6 +71984,13 @@
 /obj/machinery/airalarm/directional/north,
 /turf/open/floor/plating,
 /area/station/ai_monitored/turret_protected/aisat/service)
+"uZO" = (
+/obj/structure/table/wood,
+/obj/effect/turf_decal/siding/wood/corner{
+	dir = 8
+	},
+/turf/open/floor/wood,
+/area/station/security/courtroom)
 "uZT" = (
 /obj/effect/turf_decal/tile/blue{
 	dir = 4
@@ -78521,6 +78546,13 @@
 	},
 /turf/open/floor/iron,
 /area/station/hallway/primary/starboard)
+"wVY" = (
+/obj/structure/table/wood,
+/obj/effect/turf_decal/siding/wood{
+	dir = 10
+	},
+/turf/open/floor/wood,
+/area/station/security/courtroom)
 "wWa" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
@@ -80793,6 +80825,9 @@
 /obj/structure/table/wood,
 /obj/item/folder/red,
 /obj/structure/cable,
+/obj/effect/turf_decal/siding/wood{
+	dir = 1
+	},
 /turf/open/floor/wood,
 /area/station/security/courtroom)
 "xCl" = (
@@ -81949,6 +81984,7 @@
 /area/station/engineering/engine_smes)
 "xUR" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/effect/turf_decal/siding/wood,
 /turf/open/floor/wood,
 /area/station/security/courtroom)
 "xUS" = (
@@ -174660,7 +174696,7 @@ gjq
 gjq
 ncR
 eBU
-ile
+wVY
 dyf
 ile
 neC
@@ -175431,7 +175467,7 @@ gjq
 gjq
 onJ
 mvv
-ile
+uZO
 oTe
 cAz
 dEv
