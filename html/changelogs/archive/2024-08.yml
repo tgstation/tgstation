@@ -208,3 +208,17 @@
   - rscadd: Energy sword and Board kit enabled in weapon kits (nukeops, 20tc)
   flleeppyy:
   - sound: change artist title for some tracks by "Chronoquest" -> "T-87 Sulfurhead"
+2024-08-16:
+  Absolucy:
+  - bugfix: Heretic mobs will not be summoned with AI enabled, and won't turn into
+      small animals instead of summoning a flesh stalker.
+  - bugfix: If a mob you are shapeshifted into attempts to grow up into a different
+      kind of mob then you will stop being shapeshifted.
+  - bugfix: Fixed various runtime errors.
+  - bugfix: Broken cameras can no longer somehow report you pissing on the floor.
+  CannibalHunter:
+  - refactor: turned grilles into to types, window grilles and non-window grilles.
+  Kitsunemitsu:
+  - rscadd: Added Blueshield
+  Wisemonster:
+  - bugfix: Ghost critter spawn points are now anchored.
