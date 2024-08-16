@@ -15,7 +15,8 @@ body:
       description: |
         Briefly explain your issue in a few plain sentences. You may copy and paste the issue title here if it is suitable.
       placeholder: |
-        When I do X, Y happens instead of Z.
+        "When I do X, Y happens instead of Z."
+        "X on Y map has Z issue."
     validations:
       required: true
   - type: input
