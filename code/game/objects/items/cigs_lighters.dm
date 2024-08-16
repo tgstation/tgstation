@@ -227,11 +227,6 @@ GLOBAL_LIST_EMPTY(cigarette_eaters) // Need to keep track of up to 500 cigarette
 	if(GLOB.cigarette_eaters[ckey] >= 500)
 		eater.client.give_award(/datum/award/achievement/misc/cigarettes)
 
-/obj/item/cigarette/examine(mob/user)
-	. = ..()
-	if(!ishumanbasic(user))
-		. += span_boldwarning("You are curious to taste it...")
-
 /obj/item/cigarette/equipped(mob/equipee, slot)
 	. = ..()
 	if(!(slot & ITEM_SLOT_MASK))
