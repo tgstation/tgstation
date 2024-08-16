@@ -2883,7 +2883,7 @@
 	pixel_y = 12;
 	id = "outerbrig";
 	name = "Brig Exterior Door Control";
-	req_access = s;
+	req_access = list("security");
 	normaldoorcontrol = 1
 	},
 /obj/machinery/button/door/table{
