@@ -120,7 +120,6 @@
 /obj/item/lipstick/random
 	name = "lipstick"
 	icon_state = "random_lipstick"
-	random_spawn = FALSE
 
 /obj/item/lipstick/random/Initialize(mapload)
 	. = ..()
