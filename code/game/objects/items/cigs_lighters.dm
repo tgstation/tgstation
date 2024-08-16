@@ -223,8 +223,8 @@ GLOBAL_LIST_EMPTY(cigarette_eaters) // Need to keep track of up to 500 cigarette
 		return
 	var/ckey = eater.client.ckey
 	// We must have more!
-	GLOB.cigarette_eaters[eater.client.ckey]++
-	if(GLOB.cigarette_eaters[eater.client.ckey] >= 500)
+	GLOB.cigarette_eaters[ckey]++
+	if(GLOB.cigarette_eaters[ckey] >= 500)
 		eater.client.give_award(/datum/award/achievement/misc/cigarettes)
 
 /obj/item/cigarette/examine(mob/user)
