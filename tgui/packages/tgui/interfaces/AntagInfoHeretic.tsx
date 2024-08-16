@@ -278,7 +278,7 @@ const KnowledgeTree = (props) => {
                         }}
                       >
                         <DmIcon
-                          icon="icons/ui_icons/antags/heretic/knowledge.dmi"
+                          icon="icons/ui/antags/heretic/knowledge.dmi"
                           icon_state={
                             node.disabled
                               ? 'node_locked'

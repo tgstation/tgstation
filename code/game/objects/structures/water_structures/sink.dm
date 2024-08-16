@@ -1,6 +1,6 @@
 /obj/structure/sink
 	name = "sink"
-	icon = 'icons/obj/watercloset.dmi'
+	icon = 'icons/obj/structures/watercloset.dmi'
 	icon_state = "sink"
 	desc = "A sink used for washing one's hands and face. Passively reclaims water over time."
 	anchored = TRUE
@@ -248,7 +248,7 @@ SINK_DIRECTIONAL_HELPERS(/obj/structure/sink/kitchen)
 
 /obj/structure/sinkframe
 	name = "sink frame"
-	icon = 'icons/obj/watercloset.dmi'
+	icon = 'icons/obj/structures/watercloset.dmi'
 	icon_state = "sink_frame"
 	desc = "A sink frame, that needs a water recycler to finish construction."
 	anchored = FALSE

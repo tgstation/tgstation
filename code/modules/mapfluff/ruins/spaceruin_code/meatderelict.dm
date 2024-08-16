@@ -89,7 +89,7 @@
 /obj/structure/puzzle_blockade/meat
 	name = "mass of meat and teeth"
 	desc = "A horrible mass of meat and teeth. Can it see you? You hope not. Virtually indestructible, must be a way around."
-	icon = 'icons/obj/structures.dmi'
+	icon = 'icons/obj/structures/tall.dmi'
 	icon_state = "meatblockade"
 	opacity = TRUE
 
