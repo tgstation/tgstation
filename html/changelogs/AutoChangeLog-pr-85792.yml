@@ -1,4 +1,0 @@
-author: "Metekillot"
-delete-after: True
-changes:
-  - bugfix: "Raptors properly respect their own factions now."
