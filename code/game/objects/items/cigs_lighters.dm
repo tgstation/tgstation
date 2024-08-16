@@ -132,7 +132,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 
 /obj/item/cigarette
 	name = "cigarette"
-	desc = "A roll of tobacco and nicotine. It is not food"
+	desc = "A roll of tobacco and nicotine. It is not food."
 	icon = 'icons/obj/cigarettes.dmi'
 	icon_state = "cigoff"
 	inhand_icon_state = "cigon" //gets overriden during intialize(), just have it for unit test sanity.
