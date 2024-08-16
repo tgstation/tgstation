@@ -204,7 +204,7 @@ GLOBAL_LIST_EMPTY(cigarette_eaters) // Need to keep track of up to 500 cigarette
 		foodtypes = JUNKFOOD,\
 		volume = 50,\
 		eat_time = 0 SECONDS,\
-		tastes = list("A never before experienced flavour.", "Finally sitting down after standing your entire life"),\
+		tastes = list("a never before experienced flavour.", "finally sitting down after standing your entire life"),\
 		eatverbs = list("chomps"),\
 		bite_consumption = 50,\
 		junkiness = 0,\
