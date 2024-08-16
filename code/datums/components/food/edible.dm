@@ -28,6 +28,8 @@ Behavior that's still missing from this component that original food items had t
 	var/junkiness = 0
 	///Message to send when eating
 	var/list/eatverbs
+	///Callback to be ran to see if the food can be eaten. Specifically used for carbon handling.
+	var/datum/callback/check_edible
 	///Callback to be ran for when you take a bite of something
 	var/datum/callback/after_eat
 	///Callback to be ran for when you finish eating something
@@ -40,6 +42,8 @@ Behavior that's still missing from this component that original food items had t
 	var/volume = 50
 	///The flavortext for taste (haha get it flavor text)
 	var/list/tastes
+	///Whether to tell the examiner that this is edible or not.
+	var/show_examine = TRUE
 
 /datum/component/edible/Initialize(
 	list/initial_reagents,
@@ -51,10 +55,12 @@ Behavior that's still missing from this component that original food items had t
 	list/eatverbs = list("bite", "chew", "nibble", "gnaw", "gobble", "chomp"),
 	bite_consumption = 2,
 	junkiness,
+	datum/callback/check_edible,
 	datum/callback/after_eat,
 	datum/callback/on_consume,
 	datum/callback/check_liked,
 	reagent_purity = 0.5,
+	show_examine = TRUE,
 )
 	if(!isatom(parent))
 		return COMPONENT_INCOMPATIBLE
@@ -66,16 +72,18 @@ Behavior that's still missing from this component that original food items had t
 	src.eat_time = eat_time
 	src.eatverbs = string_list(eatverbs)
 	src.junkiness = junkiness
+	src.check_edible = check_edible
 	src.after_eat = after_eat
 	src.on_consume = on_consume
 	src.tastes = string_assoc_list(tastes)
 	src.check_liked = check_liked
+	src.show_examine = show_examine
 
 	setup_initial_reagents(initial_reagents, reagent_purity)
 
 /datum/component/edible/RegisterWithParent()
 	RegisterSignal(parent, COMSIG_ATOM_EXAMINE, PROC_REF(examine))
-	RegisterSignals(parent, COMSIG_ATOM_ATTACK_ANIMAL, PROC_REF(UseByAnimal))
+	RegisterSignal(parent, COMSIG_ATOM_ATTACK_ANIMAL, PROC_REF(UseByAnimal))
 	RegisterSignal(parent, COMSIG_ATOM_CHECKPARTS, PROC_REF(OnCraft))
 	RegisterSignal(parent, COMSIG_ATOM_CREATEDBY_PROCESSING, PROC_REF(OnProcessed))
 	RegisterSignal(parent, COMSIG_FOOD_INGREDIENT_ADDED, PROC_REF(edible_ingredient_added))
@@ -212,7 +220,10 @@ Behavior that's still missing from this component that original food items had t
 	SIGNAL_HANDLER
 
 	var/atom/owner = parent
-
+	if(!show_examine)
+		return
+	if(!isnull(check_edible) && !check_edible.Invoke(user))
+		return
 	if(foodtypes)
 		var/list/types = bitfield_to_list(foodtypes, FOOD_FLAGS)
 		examine_list += span_notice("It is [LOWER_TEXT(english_list(types))].")
@@ -499,6 +510,8 @@ Behavior that's still missing from this component that original food items had t
 ///Checks whether or not the eater can actually consume the food
 /datum/component/edible/proc/CanConsume(mob/living/carbon/eater, mob/living/feeder)
 	if(!iscarbon(eater))
+		return FALSE
+	if(!isnull(check_edible) && !check_edible.Invoke(eater))
 		return FALSE
 	if(eater.is_mouth_covered())
 		eater.balloon_alert(feeder, "mouth is covered!")

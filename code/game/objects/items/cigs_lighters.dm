@@ -130,11 +130,9 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 //FINE SMOKABLES//
 //////////////////
 
-GLOBAL_LIST_EMPTY(cigarette_eaters) // Need to keep track of up to 500 cigarettes
-
 /obj/item/cigarette
 	name = "cigarette"
-	desc = "A roll of tobacco and nicotine."
+	desc = "A roll of tobacco and nicotine. It is not food"
 	icon = 'icons/obj/cigarettes.dmi'
 	icon_state = "cigoff"
 	inhand_icon_state = "cigon" //gets overriden during intialize(), just have it for unit test sanity.
@@ -183,6 +181,8 @@ GLOBAL_LIST_EMPTY(cigarette_eaters) // Need to keep track of up to 500 cigarette
 	VAR_PRIVATE/obj/effect/abstract/particle_holder/mob_smoke
 	/// How long the current mob has been smoking this cigarette
 	VAR_FINAL/how_long_have_we_been_smokin = 0 SECONDS
+	/// Which people ate cigarettes and how many
+	var/static/list/cigarette_eaters
 
 /obj/item/cigarette/Initialize(mapload)
 	. = ..()
@@ -205,11 +205,12 @@ GLOBAL_LIST_EMPTY(cigarette_eaters) // Need to keep track of up to 500 cigarette
 		volume = 50,\
 		eat_time = 0 SECONDS,\
 		tastes = list("a never before experienced flavour.", "finally sitting down after standing your entire life"),\
-		eatverbs = list("chomps"),\
+		eatverbs = list("taste"),\
 		bite_consumption = 50,\
 		junkiness = 0,\
 		reagent_purity = null,\
 		on_consume = CALLBACK(src, PROC_REF(on_consume)),\
+		show_examine = FALSE, \
 	)
 
 /obj/item/cigarette/Destroy()
@@ -223,8 +224,8 @@ GLOBAL_LIST_EMPTY(cigarette_eaters) // Need to keep track of up to 500 cigarette
 		return
 	var/ckey = eater.client.ckey
 	// We must have more!
-	GLOB.cigarette_eaters[ckey]++
-	if(GLOB.cigarette_eaters[ckey] >= 500)
+	cigarette_eaters[ckey]++
+	if(cigarette_eaters[ckey] >= 500)
 		eater.client.give_award(/datum/award/achievement/misc/cigarettes)
 
 /obj/item/cigarette/equipped(mob/equipee, slot)
