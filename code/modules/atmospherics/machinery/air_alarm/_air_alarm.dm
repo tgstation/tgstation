@@ -128,7 +128,7 @@ WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/machinery/airalarm)
 
 	GLOB.air_alarms += src
 	update_appearance()
-	find_and_hang_on_wall(wall_layer = HIGH_ON_WALL_LAYER)
+	find_and_hang_on_wall()
 	register_context()
 
 /obj/machinery/airalarm/process()
