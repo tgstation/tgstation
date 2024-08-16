@@ -63,7 +63,7 @@
 		return
 
 	// We already register context in Initialize.
-	RegisterSignal(src, COMSIG_CLICK_ALT, PROC_REF(on_click_alt_reskin))
+	RegisterSignal(src, COMSIG_CLICK_CTRL_SHIFT, PROC_REF(on_click_ctrl_shift_reskin))
 
 /obj/item/clothing/under/add_context(atom/source, list/context, obj/item/held_item, mob/living/user)
 	. = ..()
