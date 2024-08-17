@@ -17,12 +17,6 @@
 	var/sign_face
 	var/sign_color = COLOR_DISPLAY_BLUE
 
-/obj/machinery/transport/destination_sign/split/north
-	pixel_x = -8
-
-/obj/machinery/transport/destination_sign/split/south
-	pixel_x = 8
-
 /obj/machinery/transport/destination_sign/indicator
 	icon = 'icons/obj/structures/tram/tram_indicator.dmi'
 	icon_state = "indi_blank"

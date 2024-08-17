@@ -19,8 +19,8 @@
 	name = "tram wall"
 	desc = "A lightweight titanium composite structure with titanium silicate panels."
 	icon = 'icons/obj/structures/tram/tram_structure.dmi'
-	icon_state = "tram-part-0"
-	base_icon_state = "tram-part"
+	icon_state = "tram-inner-0"
+	base_icon_state = "tram-inner"
 	max_integrity = 150
 	layer = TRAM_WALL_LAYER
 	density = TRUE
