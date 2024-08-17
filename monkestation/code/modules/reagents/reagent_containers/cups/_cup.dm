@@ -53,4 +53,4 @@
 	else if(trans >= 10)
 		pour_amount = "10_25"
 
-	return prob(1) ? rare_pouring_sound[pour_amount] : pouring_sounds_categorized[pour_amount]
+	return prob(1) ? rare_pouring_sound[pour_amount] : pick(pouring_sounds_categorized[pour_amount])
