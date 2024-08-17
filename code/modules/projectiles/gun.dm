@@ -228,7 +228,7 @@
 		return ..()
 	var/mob/living/holder = loc
 	if(holder.is_holding(src) && holder.owner.stat < UNCONSCIOUS)
-		to_chat(holder, span_boldwarning("[src] breaks down!")
+		to_chat(holder, span_boldwarning("[src] breaks down!"))
 		holder.playsound_local(get_turf(src), 'sound/weapons/smash.ogg', 50, TRUE)
 	return ..()
 
