@@ -63427,6 +63427,12 @@
 	dir = 1
 	},
 /area/station/medical/chemistry)
+"sLI" = (
+/obj/machinery/vending/cytopro,
+/turf/open/floor/iron/cafeteria{
+	dir = 8
+	},
+/area/station/science/research)
 "sLR" = (
 /obj/machinery/conveyor{
 	dir = 1;
@@ -259325,7 +259331,7 @@ oHK
 goq
 goq
 rDH
-usP
+sLI
 wLl
 nsZ
 uoC
