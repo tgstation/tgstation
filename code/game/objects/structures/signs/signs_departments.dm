@@ -6,9 +6,24 @@
 	is_editable = TRUE
 	var/emissive_type
 
+/obj/structure/sign/departments/Initialize(mapload)
+	. = ..()
+	if (!emissive_type)
+		return
+	var/area/cur_area = get_area(src)
+	if (!isnull(cur_area))
+		RegisterSignal(cur_area, COMSIG_AREA_POWER_CHANGE, PROC_REF(power_check))
+
+/obj/structure/sign/departments/proc/power_check()
+	SIGNAL_HANDLER
+	update_appearance()
+
 /obj/structure/sign/departments/update_overlays()
 	. = ..()
-	if (emissive_type)
+	if (!emissive_type)
+		return
+	var/area/cur_area = get_area(src)
+	if (!isnull(cur_area) && cur_area.power_light)
 		. += emissive_appearance(icon, emissive_type, src)
 
 ///////MEDBAY
