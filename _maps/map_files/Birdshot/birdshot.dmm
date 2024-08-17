@@ -2742,14 +2742,9 @@
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/requests_console/directional/north{
-	department = "Chief Engineer's Desk";
-	name = "Chief Engineer's Requests Console";
-	pixel_y = -32;
-	pixel_x = 2
-	},
 /obj/effect/mapping_helpers/requests_console/announcement,
 /obj/effect/mapping_helpers/requests_console/information,
+/obj/machinery/requests_console/directional/south,
 /turf/open/floor/iron/stairs/old{
 	dir = 4
 	},
@@ -4378,7 +4373,8 @@
 /area/station/tcommsat/server)
 "bFR" = (
 /obj/machinery/door/airlock/maintenance{
-	name = "Maintenance"
+	name = "Maintenance";
+	dir = 4
 	},
 /obj/effect/mapping_helpers/airlock/access/all/engineering/maintenance,
 /obj/effect/mapping_helpers/airlock/unres{
@@ -18620,7 +18616,8 @@
 /area/station/command/corporate_suite)
 "gLZ" = (
 /obj/machinery/door/airlock/maintenance{
-	name = "Bridge Closet"
+	name = "Bridge Closet";
+	dir = 4
 	},
 /obj/effect/mapping_helpers/airlock/abandoned,
 /obj/effect/mapping_helpers/airlock/access/any/command/maintenance,
@@ -29162,16 +29159,6 @@
 /obj/effect/spawner/random/structure/grille,
 /turf/open/floor/plating,
 /area/station/maintenance/fore/lesser)
-"kjw" = (
-/obj/effect/turf_decal/tile/blue,
-/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
-	dir = 1
-	},
-/obj/structure/sign/directions/lavaland/south_arrow,
-/turf/open/floor/iron/white/corner{
-	dir = 8
-	},
-/area/station/hallway/secondary/dock)
 "kjH" = (
 /obj/effect/mapping_helpers/airlock/access/any/service/maintenance,
 /obj/structure/cable,
@@ -33607,7 +33594,8 @@
 	dir = 8
 	},
 /obj/machinery/door/airlock/silver{
-	name = "Bathroom"
+	name = "Bathroom";
+	dir = 4
 	},
 /obj/effect/mapping_helpers/airlock/access/all/command/captain,
 /turf/open/floor/iron/dark/textured_half{
@@ -40473,7 +40461,9 @@
 "nXt" = (
 /obj/effect/turf_decal/tile/yellow/full,
 /obj/structure/table/reinforced,
-/obj/machinery/door/firedoor,
+/obj/machinery/door/firedoor{
+	dir = 4
+	},
 /obj/machinery/door/window/right/directional/east{
 	name = "Pharmacy Desk";
 	req_access = list("pharmacy")
@@ -58383,7 +58373,8 @@
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/door/airlock/public/glass{
-	name = "Research Wing"
+	name = "Research Wing";
+	dir = 4
 	},
 /obj/effect/mapping_helpers/airlock/cyclelink_helper_multi{
 	cycle_id = "sci-entrance"
@@ -60701,7 +60692,8 @@
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/door/airlock/public/glass{
-	name = "Research Wing"
+	name = "Research Wing";
+	dir = 4
 	},
 /obj/effect/mapping_helpers/airlock/cyclelink_helper_multi{
 	cycle_id = "sci-entrance"
@@ -61364,7 +61356,9 @@
 /area/station/science/ordnance/storage)
 "uQc" = (
 /obj/machinery/smartfridge/chemistry/preloaded,
-/obj/machinery/door/firedoor,
+/obj/machinery/door/firedoor{
+	dir = 8
+	},
 /turf/open/floor/iron/dark,
 /area/station/medical/pharmacy)
 "uQf" = (
@@ -66862,7 +66856,9 @@
 /turf/open/floor/iron/white/small,
 /area/station/science/lab)
 "wxW" = (
-/obj/machinery/door/airlock/external/glass,
+/obj/machinery/door/airlock/external/glass{
+	dir = 4
+	},
 /obj/effect/mapping_helpers/airlock/access/all/engineering/general,
 /turf/open/floor/plating,
 /area/station/maintenance/port/fore)
@@ -66921,7 +66917,8 @@
 /area/station/security/office)
 "wyH" = (
 /obj/machinery/door/airlock/maintenance{
-	name = "Maintenance"
+	name = "Maintenance";
+	dir = 4
 	},
 /obj/effect/mapping_helpers/airlock/access/all/engineering/maintenance,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -70593,15 +70590,6 @@
 	dir = 8
 	},
 /turf/open/floor/iron/small,
-/area/station/hallway/secondary/exit/departure_lounge)
-"xzo" = (
-/obj/machinery/door/airlock/external{
-	name = "Departure Lounge Airlock"
-	},
-/obj/effect/mapping_helpers/airlock/cyclelink_helper_multi{
-	cycle_id = "sci-entrance"
-	},
-/turf/open/floor/catwalk_floor/iron_smooth,
 /area/station/hallway/secondary/exit/departure_lounge)
 "xzv" = (
 /obj/machinery/door/window/right/directional/north{
@@ -82262,7 +82250,7 @@ sxv
 rCv
 gQF
 rCv
-xzo
+gQF
 rCv
 vdg
 wdB
@@ -83290,7 +83278,7 @@ tfy
 rCv
 gQF
 rCv
-xzo
+gQF
 rCv
 fyv
 vFD
@@ -114173,7 +114161,7 @@ kOV
 rIY
 rIY
 ahr
-kjw
+ajL
 svs
 grm
 grm
