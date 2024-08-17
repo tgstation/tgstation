@@ -1,6 +1,0 @@
-author: "SmArtKar"
-delete-after: True
-changes:
-  - qol: "Dumping things into microwave en-masse is done via RMB (drag'n'drop support coming soon!)"
-  - bugfix: "RPEDs can now upgrade microwaves"
-  - bugfix: "Spies can finally steal microwaves (Use RMB!)"

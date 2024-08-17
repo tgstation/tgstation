@@ -1,4 +1,0 @@
-author: "zxaber"
-delete-after: True
-changes:
-  - image: "Airlocks have a better sprite for indicating which directions (if any) you can pass through without ID access."
