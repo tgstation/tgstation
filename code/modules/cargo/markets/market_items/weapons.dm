@@ -31,8 +31,8 @@
 	stock_max = 3
 	availability_prob = 35
 	item = /obj/item/storage/box/lethalshot/old
-	price_min = CARGO_CRATE_VALUE * 3.375
-	price_max = CARGO_CRATE_VALUE * 5.25
+	price_min = CARGO_CRATE_VALUE * 3
+	price_max = CARGO_CRATE_VALUE * 4.5
 
 /datum/market_item/weapon/bone_spear
 	name = "Bone Spear"

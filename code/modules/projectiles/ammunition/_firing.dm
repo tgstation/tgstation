@@ -52,12 +52,19 @@
 	loaded_projectile.suppressed = quiet
 
 	if(isgun(fired_from))
-		var/obj/item/gun/G = fired_from
-		loaded_projectile.damage *= G.projectile_damage_multiplier
-		loaded_projectile.stamina *= G.projectile_damage_multiplier
+		var/obj/item/gun/gun = fired_from
 
-		loaded_projectile.wound_bonus += G.projectile_wound_bonus
-		loaded_projectile.bare_wound_bonus += G.projectile_wound_bonus
+		var/integrity_mult = 1 - (gun.atom_integrity/gun.max_integrity) * 0.5
+		if(integrity_mult >= 0.95) //Guns that are only mildly smudged don't debuff projectiles.
+			integrity_mult = 1
+
+		loaded_projectile.damage *= gun.projectile_damage_multiplier * integrity_mult
+		loaded_projectile.stamina *= gun.projectile_damage_multiplier * integrity_mult
+
+		loaded_projectile.wound_bonus += gun.projectile_wound_bonus
+		loaded_projectile.wound_bonus *= loaded_projectile.wound_bonus >= 0 ? 1 : 2 - integrity_mult
+		loaded_projectile.bare_wound_bonus += gun.projectile_wound_bonus
+		loaded_projectile.bare_wound_bonus *= loaded_projectile.bare_wound_bonus >= 0 ? 1 : 2 - integrity_mult
 
 	if(tk_firing(user, fired_from))
 		loaded_projectile.ignore_source_check = TRUE
