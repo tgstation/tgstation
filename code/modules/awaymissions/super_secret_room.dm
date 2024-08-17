@@ -2,7 +2,7 @@
 	name = "strange tile"
 	desc = "A weird tile that beckons you towards it. Maybe it can help you get out of this mess..."
 	verb_say = "intones"
-	icon = 'icons/obj/structures.dmi'
+	icon = 'icons/obj/fluff/general.dmi'
 	icon_state = "speaking_tile"
 	layer = FLY_LAYER
 	resistance_flags = INDESTRUCTIBLE
