@@ -7214,34 +7214,6 @@
 /obj/effect/decal/cleanable/blood/gibs/old,
 /turf/open/misc/asteroid,
 /area/station/asteroid)
-"cGo" = (
-/obj/structure/table/reinforced,
-/obj/effect/turf_decal/trimline/yellow/filled/line{
-	dir = 4
-	},
-/obj/effect/turf_decal/trimline/yellow/filled/mid_joiner{
-	dir = 4
-	},
-/obj/item/hand_labeler{
-	pixel_x = 3;
-	pixel_y = 5
-	},
-/obj/item/storage/pill_bottle/epinephrine{
-	pixel_x = -9;
-	pixel_y = 1
-	},
-/obj/item/stack/sheet/mineral/plasma{
-	pixel_y = 14;
-	pixel_x = 3
-	},
-/obj/item/hand_labeler_refill{
-	pixel_x = 10;
-	pixel_y = -2
-	},
-/turf/open/floor/iron/white/smooth_edge{
-	dir = 4
-	},
-/area/station/medical/pharmacy)
 "cGr" = (
 /obj/structure/chair/office,
 /obj/effect/landmark/start/chemist,
@@ -8003,11 +7975,6 @@
 	},
 /turf/open/floor/catwalk_floor/iron_white,
 /area/station/science/xenobiology)
-"cUg" = (
-/obj/machinery/camera/autoname/directional/west,
-/obj/structure/water_source/puddle,
-/turf/open/floor/grass,
-/area/station/service/hydroponics/garden)
 "cUk" = (
 /obj/structure/disposalpipe/segment,
 /turf/open/floor/iron/white,
@@ -9878,10 +9845,6 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron,
 /area/station/hallway/secondary/exit/departure_lounge)
-"dzW" = (
-/obj/structure/water_source/puddle,
-/turf/open/floor/grass,
-/area/station/security/prison/garden)
 "dzX" = (
 /obj/effect/spawner/structure/window/reinforced,
 /obj/structure/sign/warning/biohazard,
@@ -12171,6 +12134,34 @@
 	},
 /turf/open/floor/iron,
 /area/station/engineering/atmos/pumproom)
+"epf" = (
+/obj/structure/table/reinforced,
+/obj/effect/turf_decal/trimline/yellow/filled/line{
+	dir = 4
+	},
+/obj/effect/turf_decal/trimline/yellow/filled/mid_joiner{
+	dir = 4
+	},
+/obj/item/hand_labeler{
+	pixel_x = 3;
+	pixel_y = 5
+	},
+/obj/item/storage/pill_bottle/epinephrine{
+	pixel_x = -9;
+	pixel_y = 1
+	},
+/obj/item/stack/sheet/mineral/plasma{
+	pixel_y = 14;
+	pixel_x = 3
+	},
+/obj/item/hand_labeler_refill{
+	pixel_x = 10;
+	pixel_y = -2
+	},
+/turf/open/floor/iron/white/smooth_edge{
+	dir = 4
+	},
+/area/station/medical/pharmacy)
 "eph" = (
 /obj/effect/spawner/structure/window/reinforced,
 /obj/structure/cable,
@@ -35625,6 +35616,10 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/iron/kitchen,
 /area/station/service/kitchen)
+"mCJ" = (
+/obj/structure/water_source/puddle,
+/turf/open/floor/grass,
+/area/station/security/prison/garden)
 "mCN" = (
 /obj/effect/spawner/structure/window/reinforced,
 /obj/structure/cable,
@@ -49450,10 +49445,6 @@
 	},
 /turf/open/floor/plating/elevatorshaft,
 /area/station/cargo/storage)
-"rzk" = (
-/obj/machinery/vending/cytopro,
-/turf/open/floor/iron/white,
-/area/station/science/research)
 "rzB" = (
 /turf/open/floor/iron/white/smooth_half{
 	dir = 8
@@ -66810,6 +66801,11 @@
 /obj/machinery/light/directional/west,
 /turf/open/floor/iron/textured,
 /area/station/hallway/primary/central)
+"xBA" = (
+/obj/machinery/camera/autoname/directional/west,
+/obj/structure/water_source/puddle,
+/turf/open/floor/grass,
+/area/station/service/hydroponics/garden)
 "xBI" = (
 /obj/effect/spawner/random/vending/colavend,
 /turf/open/floor/iron/textured,
@@ -82470,7 +82466,7 @@ iUF
 dUc
 xrb
 xrb
-dzW
+mCJ
 dEG
 iqf
 cKn
@@ -87424,7 +87420,7 @@ xlw
 qfB
 vyO
 hjW
-cGo
+epf
 rdP
 qfB
 rgx
@@ -88963,7 +88959,7 @@ tIH
 tIH
 tIH
 iuv
-cUg
+xBA
 tIH
 tIH
 kAg
@@ -170913,7 +170909,7 @@ nmj
 wPX
 dfM
 xtZ
-rzk
+dfM
 mzB
 dVp
 vqN

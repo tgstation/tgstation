@@ -17468,13 +17468,6 @@
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron,
 /area/station/maintenance/port/central)
-"fej" = (
-/obj/effect/turf_decal/trimline/neutral/filled/line{
-	dir = 5
-	},
-/obj/structure/reagent_dispensers/watertank,
-/turf/open/floor/iron,
-/area/station/service/hydroponics/garden)
 "fez" = (
 /obj/structure/chair{
 	dir = 8
@@ -24652,6 +24645,10 @@
 /obj/machinery/light/floor,
 /turf/open/floor/iron,
 /area/station/security/prison)
+"hPc" = (
+/obj/structure/water_source/puddle,
+/turf/open/misc/asteroid,
+/area/station/security/prison/workout)
 "hPi" = (
 /obj/effect/turf_decal/trimline/neutral/filled/line,
 /obj/machinery/camera/directional/south{
@@ -25745,15 +25742,6 @@
 /obj/effect/turf_decal/tile/bar/opposingcorners,
 /turf/open/floor/iron,
 /area/station/cargo/miningdock/cafeteria)
-"ikm" = (
-/obj/machinery/airalarm/directional/east,
-/obj/effect/turf_decal/trimline/neutral/line,
-/obj/effect/turf_decal/trimline/neutral/filled/line{
-	dir = 4
-	},
-/obj/structure/water_source/puddle,
-/turf/open/floor/grass,
-/area/station/service/hydroponics/garden)
 "iko" = (
 /obj/effect/turf_decal/trimline/red/filled/line{
 	dir = 1
@@ -29438,6 +29426,13 @@
 /obj/effect/mapping_helpers/airlock/access/all/supply/general,
 /turf/open/floor/plating,
 /area/station/cargo/storage)
+"jxD" = (
+/obj/effect/turf_decal/trimline/neutral/filled/line{
+	dir = 5
+	},
+/obj/structure/reagent_dispensers/watertank,
+/turf/open/floor/iron,
+/area/station/service/hydroponics/garden)
 "jxK" = (
 /obj/effect/turf_decal/trimline/purple/filled/line{
 	dir = 10
@@ -32349,15 +32344,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/iron,
 /area/station/security/prison/workout)
-"kvj" = (
-/obj/effect/turf_decal/bot,
-/obj/machinery/power/apc/auto_name/directional/east,
-/obj/effect/turf_decal/trimline/neutral/filled/line{
-	dir = 4
-	},
-/obj/structure/cable,
-/turf/open/floor/iron,
-/area/station/service/hydroponics/garden)
 "kvt" = (
 /turf/closed/wall,
 /area/station/science/genetics)
@@ -36310,13 +36296,6 @@
 	},
 /turf/open/floor/iron/white,
 /area/station/science/ordnance/office)
-"lMf" = (
-/obj/effect/turf_decal/trimline/purple/filled/line{
-	dir = 4
-	},
-/obj/machinery/vending/cytopro,
-/turf/open/floor/iron/white,
-/area/station/science/xenobiology)
 "lMg" = (
 /obj/effect/turf_decal/trimline/neutral/filled/line{
 	dir = 4
@@ -47300,6 +47279,15 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/wood,
 /area/station/commons/dorms)
+"pJd" = (
+/obj/effect/turf_decal/bot,
+/obj/machinery/power/apc/auto_name/directional/east,
+/obj/effect/turf_decal/trimline/neutral/filled/line{
+	dir = 4
+	},
+/obj/structure/cable,
+/turf/open/floor/iron,
+/area/station/service/hydroponics/garden)
 "pJE" = (
 /obj/structure/chair/comfy/beige{
 	dir = 1
@@ -50694,6 +50682,15 @@
 	},
 /turf/open/floor/engine/co2,
 /area/station/engineering/atmos)
+"qUe" = (
+/obj/machinery/airalarm/directional/east,
+/obj/effect/turf_decal/trimline/neutral/line,
+/obj/effect/turf_decal/trimline/neutral/filled/line{
+	dir = 4
+	},
+/obj/structure/water_source/puddle,
+/turf/open/floor/grass,
+/area/station/service/hydroponics/garden)
 "qUg" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt,
@@ -61539,10 +61536,6 @@
 /obj/structure/disposalpipe/segment,
 /turf/open/floor/iron,
 /area/station/hallway/secondary/service)
-"uEu" = (
-/obj/structure/water_source/puddle,
-/turf/open/misc/asteroid,
-/area/station/security/prison/workout)
 "uEw" = (
 /obj/machinery/button/door/directional/east{
 	name = "Door Bolt Control";
@@ -65498,6 +65491,12 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating,
 /area/station/service/lawoffice)
+"vVH" = (
+/obj/effect/turf_decal/trimline/purple/filled/line{
+	dir = 4
+	},
+/turf/open/floor/iron/white,
+/area/station/science/xenobiology)
 "vWk" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/door/window/left/directional/east{
@@ -88129,7 +88128,7 @@ abM
 aal
 lPV
 kPC
-uEu
+hPc
 lFk
 lFk
 mAB
@@ -150896,9 +150895,9 @@ bhY
 emO
 rWt
 ckM
-fej
-kvj
-ikm
+jxD
+pJd
+qUe
 mpw
 ckM
 kwo
@@ -183826,7 +183825,7 @@ qVr
 qVr
 kvO
 cZH
-lMf
+vVH
 uMu
 mLO
 qVr
