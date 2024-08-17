@@ -511,7 +511,14 @@
 	name = "bronze suit"
 	desc = "A big and clanky suit made of bronze that offers no protection and looks very unfashionable. Nice."
 	icon_state = "clockwork_cuirass_old"
-	allowed = /obj/item/clothing/suit/costume::allowed + list(/obj/item/toy/clockwork_watch)
+	allowed = list(
+		/obj/item/tank/internals/emergency_oxygen,
+		/obj/item/tank/internals/plasmaman,
+		/obj/item/tank/jetpack/oxygen/captain,
+		/obj/item/storage/belt/holster,
+		//new
+		/obj/item/toy/clockwork_watch,
+		)
 	armor_type = /datum/armor/costume_bronze
 
 /obj/item/clothing/suit/hooded/mysticrobe
