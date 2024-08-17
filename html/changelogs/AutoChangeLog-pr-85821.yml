@@ -1,0 +1,4 @@
+author: "Zytolg"
+delete-after: True
+changes:
+  - bugfix: "Updates much of Birdshot for the Wallening"
