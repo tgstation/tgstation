@@ -220,14 +220,13 @@
 		)
 
 	if(chambered.integrity_damage)
-		var/gun_name = name
-		fired_from.take_damage(integrity_damage, sound_effect = FALSE)
+		take_damage(chambered.integrity_damage, sound_effect = FALSE)
 
 /obj/item/gun/atom_destruction(damage_flag)
 	if(!isliving(loc))
 		return ..()
 	var/mob/living/holder = loc
-	if(holder.is_holding(src) && holder.owner.stat < UNCONSCIOUS)
+	if(holder.is_holding(src) && holder.stat < UNCONSCIOUS)
 		to_chat(holder, span_boldwarning("[src] breaks down!"))
 		holder.playsound_local(get_turf(src), 'sound/weapons/smash.ogg', 50, TRUE)
 	return ..()
