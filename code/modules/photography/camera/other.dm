@@ -34,4 +34,4 @@
 
 /obj/item/camera/detective/after_picture(mob/user, datum/picture/picture)
 	. = ..()
-	user.playsound_local(src, pick('sound/items/polaroid1.ogg', 'sound/items/polaroid2.ogg'), 35, TRUE)
+	user.playsound_local(get_turf(src), pick('sound/items/polaroid1.ogg', 'sound/items/polaroid2.ogg'), 35, TRUE)

@@ -1437,12 +1437,12 @@
 		. += span_smallnotice("flip it to switch to the plainclothes identity.")
 
 /obj/item/card/id/advanced/plainclothes/attack_self(mob/user)
-	var/popup_input = tgui_input_list(user, "Choose Action", "Two-Sides ID", list("Show", "Flip"))
+	var/popup_input = tgui_input_list(user, "Choose Action", "Two-Sided ID", list("Show", "Flip"))
 	if(!popup_input || !after_input_check(user))
 		return TRUE
 	if(popup_input == "Show")
 		return ..()
-	balloon_alert(user, UNLINT("ID flipped"))
+	balloon_alert(user, "flipped")
 	if(trim_assignment_override)
 		SSid_access.remove_trim_from_chameleon_card(src)
 	else
