@@ -1,0 +1,4 @@
+author: "Absolucy"
+delete-after: True
+changes:
+  - bugfix: "Bloodsucker ethereals, alongside heretics with rust healing, will no longer overcharge."
