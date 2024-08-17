@@ -1,7 +1,7 @@
 /obj/item/gun/energy/e_gun/advtaser/mounted
 	name = "mounted taser"
 	desc = "An arm mounted dual-mode weapon that fires electrodes and disabler shots."
-	icon = 'icons/obj/items_cyborg.dmi'
+	icon = 'icons/mob/silicon/robot_items.dmi'
 	icon_state = "taser"
 	inhand_icon_state = "armcannonstun4"
 	display_empty = FALSE
@@ -15,7 +15,7 @@
 /obj/item/gun/energy/laser/mounted
 	name = "mounted laser"
 	desc = "An arm mounted cannon that fires lethal lasers."
-	icon = 'icons/obj/items_cyborg.dmi'
+	icon = 'icons/mob/silicon/robot_items.dmi'
 	icon_state = "laser_cyborg"
 	inhand_icon_state = "armcannonlase"
 	force = 5

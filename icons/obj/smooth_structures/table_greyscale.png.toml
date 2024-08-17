@@ -1,2 +1,0 @@
-output_name = "table_greyscale"
-template = "bitmask/diagonal_32x32.toml"

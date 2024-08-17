@@ -107,28 +107,14 @@
 	var/turf/last_turf = final_turfs[length(final_turfs)]
 	buffer_turf = get_step(last_turf, dir)
 
-	var/beam_target_x = pixel_x
-	var/beam_target_y = pixel_y
-	// The beam by default will go to middle of turf (because items are in the middle of turfs)
-	// So we need to offset it
-	if(dir & NORTH)
-		beam_target_y += 16
-	else if(dir & SOUTH)
-		beam_target_y -= 16
-	if(dir & WEST)
-		beam_target_x -= 16
-	else if(dir & EAST)
-		beam_target_x += 16
-
 	active_beam = start_loc.Beam(
 		BeamTarget = last_turf,
 		beam_type = /obj/effect/ebeam/reacting/infrared,
 		icon = 'icons/effects/beam.dmi',
-		icon_state = "1-full",
-		beam_color = COLOR_RED,
+		icon_state = "infrared",
 		emissive = TRUE,
-		override_target_pixel_x = beam_target_x,
-		override_target_pixel_y = beam_target_y,
+		override_target_pixel_x = pixel_x,
+		override_target_pixel_y = pixel_y,
 	)
 	RegisterSignal(active_beam, COMSIG_BEAM_ENTERED, PROC_REF(beam_entered))
 	RegisterSignal(active_beam, COMSIG_BEAM_TURFS_CHANGED, PROC_REF(beam_turfs_changed))
