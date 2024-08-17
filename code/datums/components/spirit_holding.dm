@@ -7,9 +7,9 @@
 	///bool on if this component is currently polling for observers to inhabit the item
 	var/attempting_awakening = FALSE
 	/// Allows renaming the bound item
-	var/allow_renaming
+	var/allow_renaming = TRUE
 	/// Allows channeling
-	var/allow_channeling
+	var/allow_channeling = TRUE
 	/// Allows exorcism
 	var/allow_exorcism
 	///mob contained in the item.
@@ -92,7 +92,7 @@
 		to_chat(ghost, span_userdanger("The new vessel for your spirit has been destroyed! You remain an unbound ghost."))
 		return
 
-	bind_the_soule(ghost, awakener)
+	bind_the_soule(ghost.mind, awakener)
 
 	attempting_awakening = FALSE
 
@@ -119,11 +119,13 @@
  * Arguments:
  * * awakener: user who interacted with the blade
  */
-/datum/component/spirit_holding/proc/custom_name(mob/awakener)
+/datum/component/spirit_holding/proc/custom_name(mob/awakener, iteration = 1)
+	if(iteration > 5)
+		return "indecision" // The spirit of indecision
 	var/chosen_name = sanitize_name(tgui_input_text(bound_spirit, "What are you named?", "Spectral Nomenclature", max_length = MAX_NAME_LEN))
 	if(!chosen_name) // with the way that sanitize_name works, it'll actually send the error message to the awakener as well.
-		to_chat(awakener, span_warning("Your blade did not select a valid name! Please wait as they try again.")) // more verbose than what sanitize_name might pass in its error message
-		return custom_name(awakener)
+		to_chat(awakener, span_warning("Your blade did not select a valid name! Please wait as they try again.")) // more verbose than what sanitize_name might pass in it's error message
+		return custom_name(awakener, iteration++)
 	return chosen_name
 
 ///signal fired from a mob moving inside the parent

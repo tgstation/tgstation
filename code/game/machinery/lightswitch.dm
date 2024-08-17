@@ -1,7 +1,7 @@
 /// The light switch. Can have multiple per area.
 /obj/machinery/light_switch
 	name = "light switch"
-	icon = 'icons/obj/machines/wallmounts.dmi'
+	icon = 'icons/obj/machines/lightswitch.dmi'
 	icon_state = "light-nopower"
 	base_icon_state = "light"
 	desc = "Make dark."
@@ -15,7 +15,7 @@
 	/// Should this lightswitch automatically rename itself to match the area it's in?
 	var/autoname = TRUE
 
-MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/light_switch, 26)
+WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/machinery/light_switch)
 
 /obj/machinery/light_switch/Initialize(mapload)
 	. = ..()
@@ -36,6 +36,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/light_switch, 26)
 	find_and_hang_on_wall(custom_drop_callback = CALLBACK(src, PROC_REF(deconstruct), TRUE))
 	register_context()
 	update_appearance()
+	AddComponent(/datum/component/examine_balloon, pixel_y_offset = 24, pixel_y_offset_arrow = 8)
 
 /obj/machinery/light_switch/add_context(atom/source, list/context, obj/item/held_item, mob/user)
 	. = ..()
@@ -57,14 +58,14 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/light_switch, 26)
 	if(machine_stat & NOPOWER)
 		icon_state += "-nopower"
 		return ..()
-	icon_state += "[area.lightswitch ? "-on" : "-off"]"
+	icon_state += area.lightswitch ? "-on" : "-off"
 	return ..()
 
 /obj/machinery/light_switch/update_overlays()
 	. = ..()
 	if(machine_stat & NOPOWER)
 		return ..()
-	. += emissive_appearance(icon, "[base_icon_state]-emissive[area.lightswitch ? "-on" : "-off"]", src, alpha = src.alpha)
+	. += emissive_appearance(icon, "[base_icon_state]-glow", src, alpha = src.alpha)
 
 /obj/machinery/light_switch/examine(mob/user)
 	. = ..()
@@ -116,10 +117,10 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/light_switch, 26)
 /obj/item/wallframe/light_switch
 	name = "light switch"
 	desc = "An unmounted light switch. Attach it to a wall to use."
-	icon = 'icons/obj/machines/wallmounts.dmi'
+	icon = 'icons/obj/machines/lightswitch.dmi'
 	icon_state = "light-nopower"
 	result_path = /obj/machinery/light_switch
-	pixel_shift = 26
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT)
 
 /obj/item/circuit_component/light_switch
 	display_name = "Light Switch"

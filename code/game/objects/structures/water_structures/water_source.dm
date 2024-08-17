@@ -1,7 +1,7 @@
 //Water source, use the type water_source for unlimited water sources like classic sinks.
 /obj/structure/water_source
 	name = "Water Source"
-	icon = 'icons/obj/watercloset.dmi'
+	icon = 'icons/obj/structures/watercloset.dmi'
 	icon_state = "sink"
 	desc = "A sink used for washing one's hands and face. This one seems to be infinite!"
 	anchored = TRUE
@@ -133,9 +133,19 @@
 /obj/structure/water_source/puddle //splishy splashy ^_^
 	name = "puddle"
 	desc = "A puddle used for washing one's hands and face."
+	icon = 'icons/obj/mining_zones/terrain.dmi'
 	icon_state = "puddle"
 	base_icon_state = "puddle"
 	resistance_flags = UNACIDABLE
+
+/obj/structure/water_source/puddle/Initialize(mapload)
+	. = ..()
+	register_context()
+
+/obj/structure/water_source/puddle/add_context(atom/source, list/context, obj/item/held_item, mob/user)
+	. = ..()
+	if(isnull(held_item))
+		context[SCREENTIP_CONTEXT_RMB] = "Scoop Tadpoles"
 
 //ATTACK HAND IGNORING PARENT RETURN VALUE
 /obj/structure/water_source/puddle/attack_hand(mob/user, list/modifiers)
@@ -147,3 +157,20 @@
 	icon_state = "[base_icon_state]-splash"
 	. = ..()
 	icon_state = base_icon_state
+
+/obj/structure/water_source/puddle/attack_hand_secondary(mob/living/carbon/human/user, list/modifiers)
+	. = ..()
+	if(. == SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN)
+		return
+	if(DOING_INTERACTION_WITH_TARGET(user, src))
+		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+	icon_state = "[base_icon_state]-splash"
+	balloon_alert(user, "scooping tadpoles...")
+	if(do_after(user, 5 SECONDS, src))
+		playsound(loc, 'sound/effects/slosh.ogg', 15, TRUE)
+		balloon_alert(user, "got a tadpole")
+		var/obj/item/fish/tadpole/tadpole = new(loc)
+		tadpole.randomize_size_and_weight()
+		user.put_in_hands(tadpole)
+	icon_state = base_icon_state
+	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN

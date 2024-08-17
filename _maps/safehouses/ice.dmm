@@ -25,11 +25,6 @@
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/plating/snowed,
 /area/virtual_domain/safehouse)
-"g" = (
-/obj/effect/spawner/structure/window/ice,
-/obj/structure/barricade/wooden/crude/snow,
-/turf/open/floor/plating/snowed,
-/area/virtual_domain/safehouse)
 "i" = (
 /turf/closed/wall/ice,
 /area/virtual_domain/safehouse)
@@ -60,7 +55,7 @@
 /obj/effect/turf_decal/loading_area{
 	dir = 4
 	},
-/turf/open/floor/bitrunning_transport,
+/turf/open/indestructible/bitrunning_transport,
 /area/virtual_domain/safehouse)
 "p" = (
 /obj/structure/railing,
@@ -69,7 +64,7 @@
 /obj/effect/turf_decal/loading_area{
 	dir = 4
 	},
-/turf/open/floor/bitrunning_transport,
+/turf/open/indestructible/bitrunning_transport,
 /area/virtual_domain/safehouse)
 "u" = (
 /obj/effect/decal/cleanable/dirt/dust,
@@ -203,7 +198,7 @@
 (1,1,1) = {"
 i
 i
-g
+a
 a
 i
 e
@@ -251,8 +246,8 @@ i
 (7,1,1) = {"
 i
 i
-g
-g
+a
+a
 i
 i
 "}

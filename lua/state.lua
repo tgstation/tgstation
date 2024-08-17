@@ -1,7 +1,7 @@
-local SSlua = dm.global_vars:get_var("SSlua")
+local SSlua = dm.global_vars.SSlua
 
-for _, state in SSlua:get_var("states") do
-	if state:get_var("internal_id") == dm.state_id then
+for _, state in SSlua.states do
+	if state.internal_id == _state_id then
 		return { state = state }
 	end
 end

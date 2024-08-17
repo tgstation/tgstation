@@ -6,7 +6,8 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/table,
 /obj/item/pen{
-	pixel_x = -4
+	pixel_x = -4;
+	pixel_y = 11
 	},
 /turf/open/floor/iron/smooth,
 /area/station/maintenance/central/greater)
@@ -70,7 +71,7 @@
 	pixel_x = -3;
 	pixel_y = 10
 	},
-/obj/structure/sign/poster/official/do_not_question/directional/north,
+/obj/structure/sign/poster/official/do_not_question,
 /turf/open/floor/plating,
 /area/station/maintenance/central/greater)
 "D" = (

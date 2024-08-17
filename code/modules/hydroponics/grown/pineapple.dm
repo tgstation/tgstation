@@ -1,6 +1,6 @@
 // Pineapple!
 /obj/item/seeds/pineapple
-	name = "pack of pineapple seeds"
+	name = "pineapple seed pack"
 	desc = "Oooooooooooooh!"
 	icon_state = "seed-pineapple"
 	species = "pineapple"

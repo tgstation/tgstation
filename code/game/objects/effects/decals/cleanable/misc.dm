@@ -141,6 +141,7 @@
 	)
 
 /obj/effect/decal/cleanable/cobweb
+	SET_BASE_PIXEL(0, 24)
 	name = "cobweb"
 	desc = "Somebody should remove that."
 	gender = NEUTER
@@ -272,22 +273,54 @@
 /obj/effect/decal/cleanable/glitter
 	name = "generic glitter pile"
 	desc = "The herpes of arts and crafts."
-	icon = 'icons/effects/atmospherics.dmi'
+	icon = 'icons/effects/atmos/atmospherics.dmi'
 	icon_state = "plasma_old"
 	gender = NEUTER
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 
+/obj/effect/decal/cleanable/glitter/Initialize(mapload, list/datum/disease/diseases)
+	. = ..()
+	if(smoothing_flags & USES_SMOOTHING)
+		QUEUE_SMOOTH(src)
+		QUEUE_SMOOTH_NEIGHBORS(src)
+
+/obj/effect/decal/cleanable/glitter/set_smoothed_icon_state(new_junction)
+	// we always want to smooth as if we were connected to the north, to give the impression of being "flat" on the floor
+	new_junction |= NORTH_JUNCTION
+	. = ..()
+	// If we have a connection down offset physically down so we render correctly
+	if(new_junction & SOUTH)
+		// this ensures things physically below us but visually overlapping us render how we would want
+		pixel_y = -16
+		pixel_z = 16
+	// Otherwise render normally, to avoid weird layering
+	else
+		pixel_y = 0
+		pixel_z = 0
+
 /obj/effect/decal/cleanable/glitter/pink
 	name = "pink glitter"
-	icon_state = "plasma"
+	icon = 'icons/effects/atmos/plasma.dmi'
+	icon_state = "-0"
+	smoothing_flags = SMOOTH_BITMASK_CARDINALS
+	smoothing_groups = SMOOTH_GROUP_GLITTER_PINK
+	canSmoothWith = SMOOTH_GROUP_GLITTER_PINK
 
 /obj/effect/decal/cleanable/glitter/white
 	name = "white glitter"
-	icon_state = "nitrous_oxide"
+	icon = 'icons/effects/atmos/nitrous_oxide.dmi'
+	icon_state = "-0"
+	smoothing_flags = SMOOTH_BITMASK_CARDINALS
+	smoothing_groups = SMOOTH_GROUP_GLITTER_WHITE
+	canSmoothWith = SMOOTH_GROUP_GLITTER_WHITE
 
 /obj/effect/decal/cleanable/glitter/blue
 	name = "blue glitter"
-	icon_state = "freon"
+	icon = 'icons/effects/atmos/freon.dmi'
+	icon_state = "-0"
+	smoothing_flags = SMOOTH_BITMASK_CARDINALS
+	smoothing_groups = SMOOTH_GROUP_GLITTER_BLUE
+	canSmoothWith = SMOOTH_GROUP_GLITTER_BLUE
 
 /obj/effect/decal/cleanable/plasma
 	name = "stabilized plasma"

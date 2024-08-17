@@ -34,7 +34,12 @@
   // Components
   @include meta.load-css(
     '~tgui/styles/components/Tabs.scss',
-    $with: ('text-color': rgba(0, 0, 0, 0.5), 'color-default': rgba(0, 0, 0, 1))
+    $with: (
+      'text-color': rgba(0, 0, 0, 0.5),
+      'color-default': rgba(0, 0, 0, 1),
+      'tab-color-selected': rgba(0, 0, 0, 0.125),
+      'tab-color-hovered': rgba(0, 0, 0, 0.075)
+    )
   );
   @include meta.load-css('~tgui/styles/components/Section.scss');
   @include meta.load-css(
@@ -52,7 +57,7 @@
     '~tgui/styles/components/Input.scss',
     $with: (
       'border-color': colors.fg(colors.$label),
-      'background-color': #ffffff
+      'background-color': #e6e6e6
     )
   );
   @include meta.load-css('~tgui/styles/components/NumberInput.scss');

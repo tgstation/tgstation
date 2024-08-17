@@ -47,8 +47,12 @@
 "p" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/table,
-/obj/item/clothing/gloves/cargo_gauntlet,
-/obj/item/clothing/gloves/cargo_gauntlet,
+/obj/item/clothing/gloves/cargo_gauntlet{
+	pixel_y = 9
+	},
+/obj/item/clothing/gloves/cargo_gauntlet{
+	pixel_y = 13
+	},
 /obj/machinery/light/small/directional/south,
 /turf/open/floor/iron/smooth,
 /area/station/maintenance/starboard/lesser)
@@ -71,15 +75,6 @@
 "u" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/table,
-/obj/structure/noticeboard/directional/south,
-/obj/item/paper{
-	default_raw_text = "Please make sure all heavy equipment and tools are stored properly between sessions to prevent on-site accidents! All current workers comp filings will have a minimal delay of 3 months to be reviewed from date of entry. If you are unable to work during those months, we will NOT be paying compensation until legally required. This isn't a threat.";
-	name = "Storage Units"
-	},
-/obj/item/paper{
-	default_raw_text = "Mark this room off as long-term storage, isn't worth trying to retrieve the containers before closing off the halls.";
-	name = "Equipment Notice"
-	},
 /turf/open/floor/iron/smooth,
 /area/station/maintenance/starboard/lesser)
 "v" = (
@@ -98,9 +93,20 @@
 /area/station/maintenance/starboard/lesser)
 "x" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/effect/decal/cleanable/cobweb/cobweb2,
-/obj/machinery/light/small/directional/east,
-/turf/open/floor/catwalk_floor,
+/obj/effect/turf_decal/stripes/white/line{
+	dir = 4
+	},
+/obj/effect/spawner/random/engineering/atmospherics_portable,
+/obj/structure/noticeboard/directional/north,
+/obj/item/paper{
+	default_raw_text = "Mark this room off as long-term storage, isn't worth trying to retrieve the containers before closing off the halls.";
+	name = "Equipment Notice"
+	},
+/obj/item/paper{
+	default_raw_text = "Please make sure all heavy equipment and tools are stored properly between sessions to prevent on-site accidents! All current workers comp filings will have a minimal delay of 3 months to be reviewed from date of entry. If you are unable to work during those months, we will NOT be paying compensation until legally required. This isn't a threat.";
+	name = "Storage Units"
+	},
+/turf/open/floor/iron/smooth,
 /area/station/maintenance/starboard/lesser)
 "y" = (
 /obj/effect/decal/cleanable/dirt,
@@ -110,7 +116,9 @@
 /area/station/maintenance/starboard/lesser)
 "A" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/effect/decal/cleanable/cobweb,
+/obj/effect/decal/cleanable/cobweb{
+	pixel_y = 24
+	},
 /turf/open/floor/iron/smooth,
 /area/station/maintenance/starboard/lesser)
 "C" = (
@@ -265,7 +273,7 @@ c
 "}
 (5,1,1) = {"
 J
-t
+x
 t
 q
 w
@@ -361,7 +369,7 @@ Y
 U
 Y
 Y
-x
+U
 Y
 Y
 J

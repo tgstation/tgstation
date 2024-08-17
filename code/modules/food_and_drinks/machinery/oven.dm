@@ -9,6 +9,7 @@
 #define OVEN_TRAY_X_OFFSET -2
 
 /obj/machinery/oven
+	SET_BASE_VISUAL_PIXEL(0, DEPTH_OFFSET)
 	name = "oven"
 	desc = "Why do they call it oven when you of in the cold food of out hot eat the food?"
 	icon = 'icons/obj/machines/kitchen.dmi'
