@@ -1,0 +1,4 @@
+author: "thegrb93"
+delete-after: True
+changes:
+  - bugfix: "Air alarms stuck in warning state despite area completely fine"
