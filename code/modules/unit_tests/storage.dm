@@ -36,7 +36,7 @@
 		/obj/item/detective_scanner,
 	)
 
-	dummy.set_combat_mode(FALSE)
+	dummy.set_combat_mode(TRUE)
 	for(var/item_type in common_noncombat_insertion_items)
 		var/obj/item/item = allocate(item_type, run_loc_floor_bottom_left)
 		item.melee_attack_chain(dummy, bag)
