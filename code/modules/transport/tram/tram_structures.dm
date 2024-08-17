@@ -603,7 +603,7 @@
 /obj/structure/window/reinforced/tram
 	name = "tram window"
 	desc = "Stops you from flying out the front of the tram. That could never happen, right?"
-	icon = 'icons/obj/smooth_structures/windows/tinted_window.dmi'
+	icon = 'icons/obj/structures/smooth/windows/tinted_window.dmi'
 	icon_state = "0-lower"
 	pixel_y = WINDOW_OFF_FRAME_Y_OFFSET
 	max_integrity = 150
@@ -633,10 +633,10 @@
 
 /obj/structure/window_frame/tram
 	name = "tram window frame"
-	icon = 'icons/obj/smooth_structures/window_frames/window_frame_plastitanium.dmi'
+	icon = 'icons/obj/structures/smooth/window_frames/window_frame_plastitanium.dmi'
 	icon_state = "window_frame_plastitanium-0"
 	base_icon_state = "window_frame_plastitanium"
-	frame_icon = 'icons/obj/smooth_structures/window_frames/frame_faces/window_frame_plastitanium.dmi'
+	frame_icon = 'icons/obj/structures/smooth/window_frames/frame_faces/window_frame_plastitanium.dmi'
 	sheet_type = /obj/item/stack/sheet/titaniumglass
 	window_type = /obj/structure/window/reinforced/tram
 	custom_materials = list(/datum/material/alloy/titaniumglass = WINDOW_FRAME_BASE_MATERIAL_AMOUNT)
