@@ -63,10 +63,10 @@
 		return
 
 	var/testmerge_data = GLOB.revdata.testmerge
-	var/has_testmege_data = length(testmerge_data)
+	var/has_testmerge_data = (length(testmerge_data) != 0)
 
 	var/message = "This will open the Github issue reporter in your browser. Are you sure?"
-	if(has_testmege_data)
+	if(has_testmerge_data)
 		message += "<br>The following experimental changes are active and are probably the cause of any new or sudden issues you may experience. If possible, please try to find a specific thread for your issue instead of posting to the general issue tracker:<br>"
 		message += GLOB.revdata.GetTestMergeInfo(FALSE)
 
@@ -86,7 +86,7 @@
 		concatable += ("&round-id=" + GLOB.round_id)
 
 	// Insert testmerges
-	if(has_testmege_data)
+	if(has_testmerge_data)
 		var/list/all_tms = list()
 		for(var/entry in testmerge_data)
 			var/datum/tgs_revision_information/test_merge/tm = entry
