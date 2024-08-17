@@ -95,6 +95,15 @@
 				to_chat(user, span_warning("[src] already has \a [our_cell] installed!"))
 				return
 
+	if (istype(used_item, /obj/item/stack/sheet/mineral/plasma))
+		if(cell.charge == cell.maxcharge)
+			balloon_alert(user, "already fully charged!")
+			return
+		used_item.use(1)
+		cell.give(0.5 * STANDARD_CELL_CHARGE)
+		balloon_alert(user, "cell recharged")
+		return
+
 	if(cantbeused(user))
 		return
 
