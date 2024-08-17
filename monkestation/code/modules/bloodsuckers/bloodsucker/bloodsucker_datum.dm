@@ -98,7 +98,8 @@
 		TRAIT_VIRUSIMMUNE,
 		TRAIT_TOXIMMUNE,
 		TRAIT_HARDLY_WOUNDED,
-		TRAIT_NO_MIRROR_REFLECTION
+		TRAIT_NO_MIRROR_REFLECTION,
+		TRAIT_ETHEREAL_NO_OVERCHARGE,
 	)
 	/// Traits applied during Torpor.
 	var/static/list/torpor_traits = list(

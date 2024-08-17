@@ -6146,6 +6146,7 @@
 #include "monkestation\code\modules\antagonists\heretic\items\forbidden_book.dm"
 #include "monkestation\code\modules\antagonists\heretic\items\heretic_armor.dm"
 #include "monkestation\code\modules\antagonists\heretic\knowledge\ash_lore.dm"
+#include "monkestation\code\modules\antagonists\heretic\knowledge\rust_lore.dm"
 #include "monkestation\code\modules\antagonists\heretic\knowledge\sacrifice_knowledge\sacrifice_buff.dm"
 #include "monkestation\code\modules\antagonists\nukeop\nukeop.dm"
 #include "monkestation\code\modules\antagonists\nukeop\equipment\nuclear_bomb\bee_nuke.dm"

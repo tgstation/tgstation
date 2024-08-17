@@ -134,7 +134,10 @@
 /datum/species/ethereal/proc/handle_charge(mob/living/carbon/human/ethereal, seconds_per_tick, times_fired)
 	brutemod = 1.15
 	var/word = pick("like you can't breathe","your lungs locking up","extremely lethargic")
-	switch(ethereal.blood_volume)
+	var/blood_volume = ethereal.blood_volume
+	if(HAS_TRAIT(ethereal, TRAIT_ETHEREAL_NO_OVERCHARGE))
+		blood_volume = min(blood_volume, ETHEREAL_BLOOD_CHARGE_FULL)
+	switch(blood_volume)
 		if(-INFINITY to ETHEREAL_BLOOD_CHARGE_LOWEST_PASSIVE)
 			ethereal.add_mood_event("charge", /datum/mood_event/decharged)
 			ethereal.clear_alert("ethereal_overcharge")
