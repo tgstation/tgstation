@@ -4,6 +4,7 @@
  */
 /datum/status_effect/void_chill
 	id = "void_chill"
+	duration = 30 SECONDS
 	alert_type = /atom/movable/screen/alert/status_effect/void_chill
 	status_type = STATUS_EFFECT_REFRESH //Custom code
 	on_remove_on_mob_delete = TRUE
