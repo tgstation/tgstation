@@ -309,7 +309,7 @@ GLOBAL_LIST_EMPTY(conveyors_by_id)
 		belt_item.use(1)
 		new /obj/machinery/conveyor(target_turf, forwards, id)
 
-	else if(!user.combat_mode)
+	else if(!user.combat_mode || (attacking_item.item_flags & NOBLUDGEON))
 		user.transferItemToLoc(attacking_item, drop_location())
 	else
 		return ..()

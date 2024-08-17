@@ -129,7 +129,7 @@
 				deconstruct()
 			return
 
-	if(!user.combat_mode)
+	if(!user.combat_mode || (I.item_flags & NOBLUDGEON))
 		if((I.item_flags & ABSTRACT) || !user.temporarilyRemoveItemFromInventory(I))
 			return
 		place_item_in_disposal(I, user)
