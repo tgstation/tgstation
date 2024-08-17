@@ -347,7 +347,7 @@
 		return NONE
 
 	ascended_heretic.visible_message(
-		span_danger("The void storm surrounding [ascended_heretic] deflects [hitting_projectile].")
+		span_danger("The void storm surrounding [ascended_heretic] deflects [hitting_projectile]."),
 		span_userdanger("The void storm protects you from [hitting_projectile]!"),
 	)
 	playsound(ascended_heretic, pick('sound/weapons/bulletflyby.ogg', 'sound/weapons/bulletflyby2.ogg', 'sound/weapons/bulletflyby3.ogg'), 75, TRUE)
