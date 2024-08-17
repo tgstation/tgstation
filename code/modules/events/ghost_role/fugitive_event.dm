@@ -72,7 +72,7 @@
 	player_mind.active = TRUE
 	var/mob/living/carbon/human/S = new(landing_turf)
 	player_mind.transfer_to(S)
-	player_mind.set_assigned_role(SSjob.get_job_type(/datum/job/fugitive))
+	player_mind.set_assigned_role(SSjob.GetJobType(/datum/job/fugitive))
 	player_mind.special_role = ROLE_FUGITIVE
 	player_mind.add_antag_datum(/datum/antagonist/fugitive)
 	var/datum/antagonist/fugitive/fugitiveantag = player_mind.has_antag_datum(/datum/antagonist/fugitive)
