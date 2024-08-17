@@ -16,10 +16,7 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen/map_view)
 
 /atom/movable/screen/map_view/Destroy()
 	for(var/datum/weakref/client_ref in viewers_to_huds)
-		var/client/our_client = client_ref.resolve()
-		if(!our_client)
-			continue
-		hide_from_client(our_client)
+		hide_from_client(client_ref.resolve())
 
 	return ..()
 
@@ -55,11 +52,7 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen/map_view)
 	return pop_planes
 
 /atom/movable/screen/map_view/proc/hide_from(mob/hide_from)
-	var/client/target = hide_from?.canon_client
-	if(!target)
-		return
-
-	hide_from_client(target)
+	hide_from_client(hide_from?.canon_client)
 
 /atom/movable/screen/map_view/proc/hide_from_client(client/hide_from)
 	if(!hide_from)
@@ -68,10 +61,12 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen/map_view)
 
 	var/datum/weakref/client_ref = WEAKREF(hide_from)
 	// Make sure we clear the *right* hud
-	var/datum/hud/clear_from = viewers_to_huds[client_ref]?.resolve()
+	var/datum/weakref/hud_ref = viewers_to_huds[client_ref]
+	viewers_to_huds -= client_ref
+
+	var/datum/hud/clear_from = hud_ref?.resolve()
 	if(!clear_from)
 		return
 
-	viewers_to_huds -= client_ref
 	var/datum/plane_master_group/popup/pop_planes = clear_from.get_plane_group(PLANE_GROUP_POPUP_WINDOW(src))
 	qdel(pop_planes)
