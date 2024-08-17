@@ -4,7 +4,13 @@ import { ControllerData } from './types';
 
 export function OverviewSection(props) {
   const { act, data } = useBackend<ControllerData>();
-  const { fast_update, rolling_length, map_cpu, subsystems = [], world_time } = data;
+  const {
+    fast_update,
+    rolling_length,
+    map_cpu,
+    subsystems = [],
+    world_time,
+  } = data;
 
   let avgUsage = 0;
   let overallOverrun = 0;
@@ -56,10 +62,10 @@ export function OverviewSection(props) {
         <Stack.Item grow>
           <LabeledList>
             <LabeledList.Item label="Overall Avg Usage">
-              {(avgUsage).toFixed(2)}%
+              {avgUsage.toFixed(2)}%
             </LabeledList.Item>
             <LabeledList.Item label="Overall Overrun">
-              {(overallOverrun).toFixed(2)}%
+              {overallOverrun.toFixed(2)}%
             </LabeledList.Item>
           </LabeledList>
         </Stack.Item>

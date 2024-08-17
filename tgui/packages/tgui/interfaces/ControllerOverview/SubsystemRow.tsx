@@ -55,7 +55,7 @@ export function SubsystemRow(props: Props) {
         bad: [125, Infinity],
       };
     } else {
-      valueDisplay = (value).toFixed(2) + '%';
+      valueDisplay = value.toFixed(2) + '%';
       rangeDisplay = {
         average: [10, 24.99],
         bad: [25, Infinity],
