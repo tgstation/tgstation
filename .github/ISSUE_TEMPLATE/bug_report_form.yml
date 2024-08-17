@@ -12,7 +12,7 @@ body:
   - type: input
     id: reporting-version
     attributes:
-      label: Client Version
+      label: "Client Version:"
       description: |
         The BYOND version you are using to report this issue. You can find this information in the bottom left corner of the "About BYOND" window in the BYOND client.
         It is strongly recommended that you include this, especially for concerns on the visual aspects of the game.
@@ -22,7 +22,7 @@ body:
   - type: textarea
     id: issue-summary
     attributes:
-      label: Issue Summary
+      label: "Issue Summary:"
       description: |
         Briefly explain your issue in a few plain sentences. You may copy and paste the issue title here if it is suitable.
       placeholder: |
@@ -35,7 +35,7 @@ body:
     attributes:
       label: "Round ID:"
       description: |
-        If you discovered this issue from playing tgstation hosted servers, the Round ID can be found in the Status panel or retrieved from https://sb.atlantaned.space/rounds
+        If you discovered this issue from playing tgstation hosted servers, the Round ID can be found in the Status panel or retrieved from https://statbus.space/
         The Round ID lets us look up valuable information and logs for the round the bug happened. Leave this blank if there is no round ID.
       placeholder: "XXXXXX"
     validations:
@@ -43,7 +43,7 @@ body:
   - type: textarea
     id: test-merges
     attributes:
-      label: Test Merges
+      label: "Test Merge Information:"
       description: |
         If you're certain the issue is to be caused by a test merge [OOC Tab -> Show Server Revision], report it in the pull request's comment section rather than on the tracker.
         If you're unsure you can refer to the issue number by prefixing said number with #. The issue number can be found beside the title after submission of this form.
@@ -52,7 +52,7 @@ body:
   - type: textarea
     id: reproduction
     attributes:
-      label: Reproduction steps
+      label: "Reproduction Steps:"
       description: |
         Describe the steps to reproduce the issue in detail. Include any relevant information, such as the map, round type, and any other factors that may be relevant.
         If it is a runtime-related error, please include the runtime here as that is pertient information. Issues are not for oddities introduced by admin varedits, ensure these occur in normal circumstances.
