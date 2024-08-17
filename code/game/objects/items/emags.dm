@@ -138,14 +138,15 @@
 	type_blacklist = list(typesof(/obj/machinery/door/airlock) + typesof(/obj/machinery/door/window/) +  typesof(/obj/machinery/door/firedoor) - typesof(/obj/machinery/door/airlock/tram)) //list of all typepaths that require a specialized emag to hack.
 
 /obj/item/card/emag/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
-	if(interacting_with.atom_storage && !user.combat_mode)
+	if(SHOULD_SKIP_INTERACTION(interacting_with, src, user))
 		return NONE // lets us put things in bags without trying to emag them
 	if(!can_emag(interacting_with, user))
 		return ITEM_INTERACT_BLOCKING
 	log_combat(user, interacting_with, "attempted to emag")
 	if(interacting_with.emag_act(user, src))
 		SSblackbox.record_feedback("tally", "atom_emagged", 1, interacting_with.type)
-	return ITEM_INTERACT_SUCCESS
+		return ITEM_INTERACT_SUCCESS
+	return NONE // In a perfect world this would be blocking, but this is not a perfect world
 
 /obj/item/card/emag/ranged_interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
 	return prox_check ? NONE : interact_with_atom(interacting_with, user)

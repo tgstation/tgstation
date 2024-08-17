@@ -7,9 +7,10 @@
 	icon_state = "evidenceobj"
 	inhand_icon_state = ""
 	w_class = WEIGHT_CLASS_TINY
+	item_flags = NOBLUDGEON
 
 /obj/item/evidencebag/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
-	if(interacting_with == loc || !isitem(interacting_with) || (interacting_with.atom_storage && !user.combat_mode))
+	if(interacting_with == loc || !isitem(interacting_with) || SHOULD_SKIP_INTERACTION(interacting_with, src, user))
 		return NONE
 	if(evidencebagEquip(interacting_with, user))
 		return ITEM_INTERACT_SUCCESS

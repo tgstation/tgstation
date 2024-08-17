@@ -22,10 +22,8 @@
 		 * This is intentionally using `||` instead of `|` to short-circuit the signal calls
 		 * This is because we want to return early if ANY of these signals return a value
 		 *
-		 * This puts priority on the atom's signals, then the tool's signals, then the user's signals
-		 * So stuff like storage can be handled before stuff the item wants to do like cleaner component
-		 *
-		 * Future idea: Being on combat mode could change/reverse the priority of these signals
+		 * This puts priority on the atom's signals, then the tool's signals, then the user's signals,
+		 * so we can avoid doing two interactions at once
 		 */
 		early_sig_return = SEND_SIGNAL(src, COMSIG_ATOM_ITEM_INTERACTION, user, tool, modifiers) \
 			|| SEND_SIGNAL(tool, COMSIG_ITEM_INTERACTING_WITH_ATOM, user, src, modifiers) \

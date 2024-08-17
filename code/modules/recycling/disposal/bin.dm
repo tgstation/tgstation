@@ -66,6 +66,7 @@
 		COMSIG_TURF_RECEIVE_SWEEPED_ITEMS = PROC_REF(ready_for_trash),
 	)
 	AddElement(/datum/element/connect_loc, loc_connections)
+	ADD_TRAIT(src, TRAIT_COMBAT_MODE_SKIP_INTERACTION, INNATE_TRAIT)
 	return INITIALIZE_HINT_LATELOAD //we need turfs to have air
 
 /// Checks if there a connecting trunk diposal pipe under the disposal

@@ -67,7 +67,7 @@
 		return NONE
 	if(!IS_SPY(user))
 		return NONE
-	if(target.atom_storage && !user.combat_mode)
+	if(SHOULD_SKIP_INTERACTION(target, source, user))
 		return NONE
 	if(!try_steal(target, user))
 		return NONE

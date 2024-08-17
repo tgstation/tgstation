@@ -111,7 +111,7 @@
 	if(isitem(interacting_with))
 		var/obj/item/item = interacting_with
 		if(!item.can_be_package_wrapped())
-			if(interacting_with.atom_storage && !user.combat_mode)
+			if(SHOULD_SKIP_INTERACTION(interacting_with, src, user))
 				return NONE // put it in the bag instead of yelling
 			balloon_alert(user, "can't be wrapped!")
 			return ITEM_INTERACT_BLOCKING

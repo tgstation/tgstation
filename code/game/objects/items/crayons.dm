@@ -835,13 +835,13 @@
 /obj/item/toy/crayon/spraycan/can_use_on(atom/target, mob/user, list/modifiers)
 	if(iscarbon(target))
 		return TRUE
-	if(ismob(target) && (HAS_TRAIT(target, TRAIT_SPRAY_PAINTABLE)))
+	if(is_capped && HAS_TRAIT(target, TRAIT_COMBAT_MODE_SKIP_INTERACTION))
+		// specifically don't try to use a capped spraycan on stuff like bags and tables, just place it
+		return FALSE
+	if(ismob(target) && HAS_TRAIT(target, TRAIT_SPRAY_PAINTABLE))
 		return TRUE
 	if(isobj(target) && !(target.flags_1 & UNPAINTABLE_1))
 		return TRUE
-	if(is_capped && target.atom_storage)
-		// specifically don't try to use a capped spraycan on an atom storage (so it can be inserted in)
-		return FALSE
 	return ..()
 
 /obj/item/toy/crayon/spraycan/use_on(atom/target, mob/user, list/modifiers)

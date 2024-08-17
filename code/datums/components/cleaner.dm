@@ -62,7 +62,7 @@
 /datum/component/cleaner/proc/on_interaction(datum/source, mob/living/user, atom/target, list/modifiers)
 	SIGNAL_HANDLER
 
-	if(isitem(source) && target.atom_storage && !user.combat_mode)
+	if(isitem(source) && SHOULD_SKIP_INTERACTION(target, source, user))
 		return NONE
 
 	// By default, give XP

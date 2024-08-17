@@ -37,7 +37,7 @@
 		to_chat(user, span_warning("You can't use [src] while inside something!"))
 
 /obj/item/chameleon/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
-	if(!can_copy(interacting_with) || (interacting_with.atom_storage && !user.combat_mode))
+	if(!can_copy(interacting_with) || SHOULD_SKIP_INTERACTION(interacting_with, src, user))
 		return NONE
 	make_copy(interacting_with, user)
 	return ITEM_INTERACT_SUCCESS

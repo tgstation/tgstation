@@ -255,7 +255,7 @@ GLOBAL_DATUM_INIT(steal_item_handler, /datum/objective_item_handler, new())
 /obj/item/traitor_bug
 	name = "suspicious device"
 	desc = "It looks dangerous."
-	item_flags = EXAMINE_SKIP
+	item_flags = EXAMINE_SKIP|NOBLUDGEON
 
 	icon = 'icons/obj/antags/syndicate_tools.dmi'
 	icon_state = "bug"
@@ -280,7 +280,7 @@ GLOBAL_DATUM_INIT(steal_item_handler, /datum/objective_item_handler, new())
 /obj/item/traitor_bug/interact_with_atom(atom/movable/target, mob/living/user, list/modifiers)
 	if(!target_object_type || !ismovable(target))
 		return NONE
-	if(target.atom_storage && user.combat_mode)
+	if(SHOULD_SKIP_INTERACTION(target, src, user))
 		return NONE
 	var/result = SEND_SIGNAL(src, COMSIG_TRAITOR_BUG_PRE_PLANTED_OBJECT, target)
 	if(!(result & COMPONENT_FORCE_PLACEMENT))

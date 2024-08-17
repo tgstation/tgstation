@@ -62,6 +62,8 @@
 	AddElement(/datum/element/give_turf_traits, give_turf_traits)
 	register_context()
 
+	ADD_TRAIT(src, TRAIT_COMBAT_MODE_SKIP_INTERACTION, INNATE_TRAIT)
+
 ///Adds the element used to make the object climbable, and also the one that shift the mob buckled to it up.
 /obj/structure/table/proc/make_climbable()
 	AddElement(/datum/element/climbable)
@@ -240,7 +242,7 @@
 	if(.)
 		return .
 
-	if(!user.combat_mode)
+	if(!user.combat_mode || (tool.item_flags & NOBLUDGEON))
 		return table_place_act(user, tool, modifiers)
 
 	return NONE
@@ -877,6 +879,7 @@
 	AddElement(/datum/element/climbable)
 	AddElement(/datum/element/elevation, pixel_shift = 12)
 	register_context()
+	ADD_TRAIT(src, TRAIT_COMBAT_MODE_SKIP_INTERACTION, INNATE_TRAIT)
 
 /obj/structure/rack/add_context(atom/source, list/context, obj/item/held_item, mob/living/user)
 	if(isnull(held_item))
@@ -908,7 +911,7 @@
 	. = ..()
 	if(.)
 		return .
-	if((tool.item_flags & ABSTRACT) || user.combat_mode)
+	if((tool.item_flags & ABSTRACT) || (user.combat_mode && !(tool.item_flags & NOBLUDGEON)))
 		return NONE
 	if(user.transferItemToLoc(tool, drop_location(), silent = FALSE))
 		return ITEM_INTERACT_SUCCESS
