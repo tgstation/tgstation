@@ -29,9 +29,9 @@
 	flags_1 = PREVENT_CLICK_UNDER_1
 	pass_flags_self = PASSWINDOW
 	armor_type = /datum/armor/tram_structure
-	smoothing_flags = SMOOTH_BITMASK | SMOOTH_OBJ
-	smoothing_groups = SMOOTH_GROUP_TRAM_STRUCTURE
-	canSmoothWith = SMOOTH_GROUP_TRAM_STRUCTURE
+	smoothing_flags = SMOOTH_BITMASK
+	smoothing_groups = SMOOTH_GROUP_WINDOW_FULLTILE_PLASTITANIUM
+	canSmoothWith = SMOOTH_GROUP_WINDOW_FULLTILE_PLASTITANIUM
 	can_be_unanchored = FALSE
 	can_atmos_pass = ATMOS_PASS_DENSITY
 	explosion_block = 3
@@ -58,18 +58,20 @@
 /obj/structure/tram/outer
 	icon_state = "tram-outer-0"
 	base_icon_state = "tram-outer"
+	smoothing_groups = SMOOTH_GROUP_TRAM_STRUCTURE
+	canSmoothWith = SMOOTH_GROUP_TRAM_STRUCTURE
 
 /obj/structure/tram/edge
 	icon_state = "tram-edge-0"
 	base_icon_state = "tram-edge"
-	smoothing_groups = SMOOTH_GROUP_WINDOW_FULLTILE_PLASTITANIUM
-	canSmoothWith = SMOOTH_GROUP_WINDOW_FULLTILE_PLASTITANIUM
+	smoothing_groups = SMOOTH_GROUP_TRAM_STRUCTURE
+	canSmoothWith = SMOOTH_GROUP_TRAM_STRUCTURE
 
 /obj/structure/tram/titanium
 	icon_state = "tram-titanium-0"
 	base_icon_state = "tram-titanium"
-	smoothing_groups = SMOOTH_GROUP_WINDOW_FULLTILE_PLASTITANIUM
-	canSmoothWith = SMOOTH_GROUP_WINDOW_FULLTILE_PLASTITANIUM
+	smoothing_groups = SMOOTH_GROUP_TRAM_STRUCTURE
+	canSmoothWith = SMOOTH_GROUP_TRAM_STRUCTURE
 
 /datum/armor/tram_structure
 	melee = 40
