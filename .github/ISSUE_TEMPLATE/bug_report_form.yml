@@ -5,10 +5,11 @@ body:
     attributes:
       value: |
         ## **Please read the following guidelines. Follow all instructions or else your issue is subject to closure.**
-        If you are reporting an issue found in another branch or codebase, you MUST link the branch or codebase repo in your issue report or it will be closed.
-        For branches, If you have not pushed your code up, you must either reproduce it on master or push your code up before making an issue report.
-        For other codebases, if you do not have a public code repo you will be refused help unless you can completely reproduce the issue on our code.
         Note: If you use the "Report Issue" button in the top-right corner of the game, it will automatically fill in some of the information below.
+
+        If you are reporting an issue found in another branch or codebase, you _must_ link the branch or codebase repo in your issue report or it will be closed.
+        For branches, If you have not pushed your code up, please either reproduce it on master or push your code up before making an issue report.
+        For other codebases, if you do not have a public code repository you will be refused help unless you can completely reproduce the issue on our master branch.
   - type: input
     id: reporting-version
     attributes:
