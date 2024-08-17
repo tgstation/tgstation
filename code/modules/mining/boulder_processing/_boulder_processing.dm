@@ -257,6 +257,8 @@
 		return ITEM_INTERACT_SUCCESS
 
 	if(istype(tool, /obj/item/card/id))
+		if(machine_stat & NOPOWER)
+			return ITEM_INTERACT_BLOCKING
 		if(points_held <= 0)
 			balloon_alert_to_viewers("no points to claim!")
 			if(!COOLDOWN_FINISHED(src, sound_cooldown))
