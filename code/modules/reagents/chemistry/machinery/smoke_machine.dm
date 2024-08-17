@@ -2,6 +2,7 @@
 #define REAGENTS_BASE_VOLUME 100
 
 /obj/machinery/smoke_machine
+	SET_BASE_VISUAL_PIXEL(0, DEPTH_OFFSET)
 	name = "smoke machine"
 	desc = "A machine with a centrifuge installed into it. It produces smoke with any reagents you put into the machine."
 	icon = 'icons/obj/medical/chemical.dmi'

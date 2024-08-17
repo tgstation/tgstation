@@ -1,5 +1,0 @@
-author: "Ghommie"
-delete-after: True
-changes:
-  - bugfix: "Stop clientless lobstrosities from fishing other lobstrosities, which in turn can fish other lobstrosities and so on."
-  - balance: "Stop clientless lobstrosities from fishing the lavaland fishing spot chest."

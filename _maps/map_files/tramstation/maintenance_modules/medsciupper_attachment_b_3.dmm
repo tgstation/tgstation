@@ -32,6 +32,12 @@
 /obj/effect/turf_decal/tile/blue/opposingcorners,
 /turf/open/floor/iron/white,
 /area/station/maintenance/department/medical)
+"v" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/turf_decal/tile/blue/opposingcorners,
+/obj/machinery/light/directional/north,
+/turf/open/floor/iron/white,
+/area/station/maintenance/department/medical)
 "H" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/door/airlock/maintenance_hatch{
@@ -62,7 +68,6 @@
 "U" = (
 /obj/item/kirbyplants/random,
 /obj/effect/decal/cleanable/dirt,
-/obj/machinery/light/directional/south,
 /obj/effect/turf_decal/tile/blue/fourcorners,
 /turf/open/floor/iron/white,
 /area/station/maintenance/department/medical)
@@ -85,7 +90,7 @@ a
 b
 "}
 (3,1,1) = {"
-a
+v
 U
 "}
 (4,1,1) = {"

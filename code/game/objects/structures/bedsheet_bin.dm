@@ -38,12 +38,16 @@ LINEN BINS
 /obj/item/bedsheet/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/surgery_initiator)
-	AddElement(/datum/element/bed_tuckable, mapload, 0, 0, 0)
+	AddElement(/datum/element/bed_tuckable, mapload, 0, 12, 0)
 	if(bedsheet_type == BEDSHEET_DOUBLE)
 		stack_amount *= 2
 		dying_key = DYE_REGISTRY_DOUBLE_BEDSHEET
 	register_context()
 	register_item_context()
+	for(var/stuff as anything in loc)
+		if(istype(stuff, /obj/structure/bed))
+			pixel_y = DEPTH_OFFSET
+			return
 
 /obj/item/bedsheet/add_context(atom/source, list/context, obj/item/held_item, mob/living/user)
 	if(istype(held_item) && (held_item.tool_behaviour == TOOL_WIRECUTTER || held_item.get_sharpness()))
@@ -69,6 +73,7 @@ LINEN BINS
 		return ITEM_INTERACT_BLOCKING
 
 	forceMove(get_turf(to_cover))
+	pixel_z = to_cover.pixel_z
 	balloon_alert(user, "covered")
 	coverup(to_cover)
 	add_fingerprint(user)
@@ -131,7 +136,6 @@ LINEN BINS
 	UnregisterSignal(sleeper, COMSIG_QDELETING)
 	balloon_alert(sleeper, "smoothed sheets")
 	layer = initial(layer)
-	SET_PLANE_IMPLICIT(src, initial(plane))
 	pixel_z = 0
 	signal_sleeper = null
 
@@ -574,7 +578,7 @@ LINEN BINS
 /obj/structure/bedsheetbin
 	name = "linen bin"
 	desc = "It looks rather cosy."
-	icon = 'icons/obj/structures.dmi'
+	icon = 'icons/obj/fluff/general.dmi'
 	icon_state = "linenbin-full"
 	base_icon_state = "linenbin"
 	anchored = TRUE

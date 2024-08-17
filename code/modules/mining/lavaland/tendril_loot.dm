@@ -226,7 +226,7 @@
 /obj/item/wisp_lantern
 	name = "spooky lantern"
 	desc = "This lantern gives off no light, but is home to a friendly wisp."
-	icon = 'icons/obj/lighting.dmi'
+	icon = 'icons/obj/mining_zones/artefacts.dmi'
 	icon_state = "lantern-blue-on"
 	inhand_icon_state = "lantern-blue-on"
 	lefthand_file = 'icons/mob/inhands/equipment/mining_lefthand.dmi'
@@ -269,7 +269,7 @@
 /obj/effect/wisp
 	name = "friendly wisp"
 	desc = "Happy to light your way."
-	icon = 'icons/obj/lighting.dmi'
+	icon = 'icons/obj/mining_zones/artefacts.dmi'
 	icon_state = "orb"
 	light_system = OVERLAY_LIGHT
 	light_range = 6
@@ -588,7 +588,7 @@
 /obj/item/jacobs_ladder
 	name = "jacob's ladder"
 	desc = "A celestial ladder that violates the laws of physics."
-	icon = 'icons/obj/structures.dmi'
+	icon = 'icons/obj/fluff/general.dmi'
 	icon_state = "ladder00"
 
 /obj/item/jacobs_ladder/attack_self(mob/user)
@@ -622,6 +622,7 @@
 	min_cold_protection_temperature = GLOVES_MIN_TEMP_PROTECT
 	heat_protection = HANDS
 	max_heat_protection_temperature = GLOVES_MAX_TEMP_PROTECT
+	body_parts_covered = HANDS|ARMS
 	resistance_flags = LAVA_PROOF | FIRE_PROOF //they are from lavaland after all
 	armor_type = /datum/armor/gloves_gauntlets
 

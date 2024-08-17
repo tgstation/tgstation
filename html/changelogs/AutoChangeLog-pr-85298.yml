@@ -1,5 +1,0 @@
-author: "Tattle"
-delete-after: True
-changes:
-  - qol: "dead cyborgs now blink yellow lights"
-  - qol: "damaged cyborgs have smoke particles when they've taken brute damage, and sparks for burn"
