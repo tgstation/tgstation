@@ -455,3 +455,36 @@
   - sound: added new sounds for RCD, RPD and Plumbing Constructor.
   tralezab:
   - bugfix: bedsheets are laid on beds properly now
+2024-08-17:
+  Ghommie:
+  - rscadd: Added a treasure chest you can rarely fish from the ocean/beach, with
+      loot being a mix of fishing and piratey stuff.
+  - rscadd: You can revive fish with strange reagent now.
+  - rscadd: You can sell items on the blackmarket with the LTSRBT now.
+  - bugfix: Added some checks to prevent the swapper device and bluespace anomalies
+      from theorically being able to send things and people to nullspace.
+  Jacquerel:
+  - bugfix: Beepsky and Mice have more appropriately positioned shadows.
+  Majkl-J:
+  - bugfix: Trying to repair someone's undamaged limb with a welder or wires no longer
+      has you smacking them
+  Shroopy:
+  - bugfix: Added a light switch to the science hallway in Metastation
+  SmArtKar:
+  - rscadd: You can now lean on windows the same way you can lean on walls
+  - bugfix: You no longer stop leaning on walls after clicking on anything
+  - qol: Dumping things into microwave en-masse is done via RMB (drag'n'drop support
+      coming soon!)
+  - bugfix: RPEDs can now upgrade microwaves
+  - bugfix: Spies can finally steal microwaves (Use RMB!)
+  TheVekter:
+  - bugfix: Updated Metastation for Wallening
+  Time-Green:
+  - qol: The Voidwalker wisp void now loops you
+  unit0016:
+  - bugfix: Indestructible reinforced walls now mimic their destructible counterparts
+      as intended.
+  - bugfix: Every bitrunner domain's been patched up for the new perspective shift.
+  zxaber:
+  - image: Airlocks have a better sprite for indicating which directions (if any)
+      you can pass through without ID access.
