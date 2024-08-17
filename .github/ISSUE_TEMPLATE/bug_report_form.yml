@@ -36,7 +36,7 @@ body:
       description: |
         If you discovered this issue from playing tgstation hosted servers, the Round ID can be found in the Status panel or retrieved from https://sb.atlantaned.space/rounds
         The Round ID lets us look up valuable information and logs for the round the bug happened. Leave this blank if there is no round ID.
-      placeholder: "123456"
+      placeholder: "XXXXXX"
     validations:
       required: false
   - type: textarea
