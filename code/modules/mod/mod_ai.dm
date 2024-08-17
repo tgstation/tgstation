@@ -165,7 +165,7 @@
 /obj/item/mod/ai_minicard
 	name = "AI mini-card"
 	desc = "A small card designed to eject dead AIs. You could use an intellicard to recover it."
-	icon = 'icons/obj/aicards.dmi'
+	icon = 'icons/obj/devices/aicards.dmi'
 	icon_state = "minicard"
 	var/datum/weakref/stored_ai
 

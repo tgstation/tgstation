@@ -1,0 +1,4 @@
+author: "unit0016"
+delete-after: True
+changes:
+  - bugfix: "Indestructible reinforced walls now mimic their destructible counterparts as intended."

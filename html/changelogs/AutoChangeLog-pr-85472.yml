@@ -1,4 +1,0 @@
-author: "raffclar"
-delete-after: True
-changes:
-  - bugfix: "Various fixes to TGUI notepad"
