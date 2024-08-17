@@ -34,6 +34,9 @@
 
 /obj/item/skillchip/big_pointer/proc/fancier_pointer(mob/living/user, atom/pointed, obj/effect/temp_visual/point/point)
 	SIGNAL_HANDLER
+	if(HAS_TRAIT(user, TRAIT_UNKNOWN))
+		return
+	point.cut_overlays()
 	if(!action.arrow_color)
 		point.icon_state = "arrow_large"
 		return

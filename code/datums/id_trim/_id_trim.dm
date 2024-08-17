@@ -25,7 +25,9 @@
 	var/list/wildcard_access = list()
 
 	///If true, IDs with this trim will grant wearers with bigger arrows when pointing
-	var/big_pointer_trim = FALSE
+	var/big_pointer = FALSE
+	///If set, IDs with this trim will give wearers arrows of different colors when pointing
+	var/pointer_color
 
 /// Returns the SecHUD job icon state for whatever this object's ID card is, if it has one.
 /obj/item/proc/get_sechud_job_icon_state()
