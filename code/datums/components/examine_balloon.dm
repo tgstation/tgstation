@@ -1,7 +1,5 @@
 /// Adds clickable balloons whenever someone holds the examine key (is it still shift in the future?)
 /datum/component/examine_balloon
-	/// Store the overlays applied in the previous turn and clean them up (because of how managed_overlays checks for changes we need to do this manually)
-	var/list/previous_overlays
 	/// Offset applied on the hologram
 	var/pixel_y_offset
 	/// Our x and y size is multiplied by this, for small sprites like buttons
@@ -13,6 +11,8 @@
 	var/hologram_alpha = 200
 	/// Add a hologram when we're in these directions
 	var/draw_in_dirs = NORTH | EAST | WEST
+	/// Balloon holo that is actually displayed to players
+	var/obj/effect/abstract/balloon_hologram/balloon
 
 /datum/component/examine_balloon/Initialize(pixel_y_offset = 28, pixel_y_offset_arrow = 16, size_upscaling = 1)
 	. = ..()
@@ -24,57 +24,71 @@
 	src.size_upscaling = size_upscaling
 	src.pixel_y_offset_arrow = pixel_y_offset_arrow
 
-	var/atom/atom_parent = parent
+	var/atom/movable/atom_parent = parent
+	balloon = new(atom_parent, atom_parent, pixel_y_offset_arrow - pixel_y_offset)
+	balloon.pixel_y = pixel_y_offset
+	atom_parent.vis_contents += balloon
 
 	// We use UPDATED_ICON specifically because we need to be last in the icon chain, even if UPDATE_OVERLAYS would otherwise be more apt
 	RegisterSignal(atom_parent, COMSIG_ATOM_UPDATED_ICON, PROC_REF(on_updated_icon))
+	atom_parent.update_appearance()
 
-	atom_parent.update_icon(UPDATE_OVERLAYS)
+/datum/component/examine_balloon/UnregisterFromParent()
+	var/atom/movable/atom_parent = parent
+	atom_parent.vis_contents -= balloon
+	qdel(balloon)
 
-/datum/component/examine_balloon/proc/on_updated_icon(atom/movable/parent, updates)
+/datum/component/examine_balloon/proc/on_updated_icon(atom/movable/source, updates)
 	SIGNAL_HANDLER
 
-	if(!(updates & UPDATE_OVERLAYS))
-		return
-
 	// Generally south facing directions are already obvious, so we dont add a hologram (south is the default exception dont shoot me)
-	if(!(parent.dir & draw_in_dirs))
+	if(!(source.dir & draw_in_dirs))
+		balloon.invisibility = INVISIBILITY_MAXIMUM
 		return
 
-	parent.cut_overlay(previous_overlays)
-
-	// Make a copy of the wallmount and force it south
-	var/mutable_appearance/hologram = make_mutable_appearance_directional(new /mutable_appearance(parent), SOUTH)
-	SET_PLANE_EXPLICIT(hologram, EXAMINE_BALLOONS_PLANE, parent)
-
-	hologram.pixel_w = 0
-	hologram.pixel_x = 0
-	hologram.pixel_y = pixel_y_offset
-	hologram.pixel_z = 0
+	balloon.invisibility = INVISIBILITY_NONE
+	balloon.icon = source.icon
+	balloon.icon_state = source.icon_state
+	balloon.pixel_y = pixel_y_offset
 
 	// We need to set all our overlay's planes to the wallmount balloons plane, or we get stuff like emissives sticking through the lighting plane
 	var/list/new_overlays = list()
-	for(var/mutable_appearance/immutable_appearance as anything in parent.overlays)
+	for(var/mutable_appearance/immutable_appearance as anything in source.overlays)
 		var/mutable_appearance/actually_mutable_appearance = new(immutable_appearance)
 		if(PLANE_TO_TRUE(actually_mutable_appearance.plane) != FLOAT_PLANE)
 			continue
 		new_overlays += actually_mutable_appearance
 
-	hologram.overlays = new_overlays
+	var/mutable_appearance/examine_arrow = mutable_appearance('icons/effects/effects.dmi', "examine_arrow")
+	examine_arrow.pixel_y = pixel_y_offset_arrow - balloon.pixel_y
+	new_overlays += examine_arrow
 
-	hologram.transform = hologram.transform.Scale(size_upscaling, size_upscaling)
-	hologram.alpha = hologram_alpha
+	balloon.overlays = new_overlays
+	balloon.transform = balloon.transform.Scale(size_upscaling, size_upscaling)
+	balloon.alpha = hologram_alpha
 
-	var/mutable_appearance/examine_arrow = mutable_appearance(
-		'icons/effects/effects.dmi',
-		"examine_arrow",
-	)
+/obj/effect/abstract/balloon_hologram
+	plane = EXAMINE_BALLOONS_PLANE
+	/// Atom that we're copying
+	var/atom/original
+	/// Y offset for our arrow
+	var/arrow_offset
 
-	examine_arrow.pixel_y = pixel_y_offset_arrow
+/obj/effect/abstract/balloon_hologram/Initialize(mapload, atom/to_copy, arrow_y)
+	. = ..()
+	if (isnull(to_copy))
+		return
+	original = to_copy
+	name = original.name
+	desc = original.desc
+	arrow_offset = arrow_y
+	update_appearance()
 
-	SET_PLANE_EXPLICIT(examine_arrow, EXAMINE_BALLOONS_PLANE, parent)
+/obj/effect/abstract/balloon_hologram/Destroy(force)
+	original = null
+	return ..()
 
-	previous_overlays = list(hologram, examine_arrow)
-
-	parent.add_overlay(previous_overlays)
-
+/obj/effect/abstract/balloon_hologram/Click(location, control, params)
+	var/list/modifiers = params2list(params)
+	LAZYREMOVE(modifiers, SHIFT_CLICK)
+	original.Click(location, control, list2params(modifiers))
