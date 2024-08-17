@@ -1,0 +1,4 @@
+author: "Absolucy"
+delete-after: True
+changes:
+  - bugfix: "Fixed pouring stuff into beakers trying to play a list as a sound. Hopefully this stops the crashes."
