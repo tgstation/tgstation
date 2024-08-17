@@ -15,7 +15,7 @@ body:
       description: |
         The BYOND version you are using to report this issue. You can find this information in the bottom left corner of the "About BYOND" window in the BYOND client.
         It is strongly recommended that you include this, especially for concerns on the visual aspects of the game.
-      placeholder: "515.1642"
+      placeholder: "xxx.xxxx"
     validations:
       required: false
   - type: textarea
