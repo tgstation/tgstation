@@ -54,7 +54,7 @@
 	if(isgun(fired_from))
 		var/obj/item/gun/gun = fired_from
 
-		var/integrity_mult = 1 - (gun.atom_integrity/gun.max_integrity) * 0.5
+		var/integrity_mult = 0.5 + gun.get_integrity_percentage() * 0.5
 		if(integrity_mult >= 0.95) //Guns that are only mildly smudged don't debuff projectiles.
 			integrity_mult = 1
 
