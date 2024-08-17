@@ -9029,6 +9029,18 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/plating,
 /area/station/maintenance/aft/greater)
+"cBD" = (
+/obj/effect/turf_decal/siding/wood/corner{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/neutral/half/contrasted{
+	dir = 4
+	},
+/obj/effect/turf_decal/siding/wood{
+	dir = 4
+	},
+/turf/open/floor/iron,
+/area/station/service/hydroponics/garden)
 "cBG" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -16376,10 +16388,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/stone,
 /area/station/commons/lounge)
-"eQb" = (
-/obj/structure/water_source/puddle,
-/turf/open/floor/grass,
-/area/station/security/prison/garden)
 "eQz" = (
 /obj/structure/grille,
 /turf/open/floor/plating,
@@ -19560,14 +19568,6 @@
 	},
 /turf/open/floor/iron,
 /area/station/engineering/atmos)
-"fQi" = (
-/obj/machinery/camera/directional/east{
-	c_tag = "Garden"
-	},
-/obj/machinery/status_display/ai/directional/east,
-/obj/structure/water_source/puddle,
-/turf/open/floor/grass,
-/area/station/service/hydroponics/garden)
 "fQk" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/chair/stool/directional/east,
@@ -23881,21 +23881,6 @@
 /obj/item/stack/cable_coil,
 /turf/open/floor/iron,
 /area/station/engineering/atmos/storage)
-"heS" = (
-/obj/machinery/turretid{
-	control_area = "/area/station/ai_monitored/turret_protected/ai_upload";
-	name = "AI Upload Turret Control";
-	pixel_y = -25
-	},
-/obj/machinery/camera/directional/south{
-	c_tag = "Bridge Center"
-	},
-/obj/structure/disposalpipe/segment{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/blue/half/contrasted,
-/turf/open/floor/iron,
-/area/station/command/bridge)
 "heX" = (
 /obj/structure/cable,
 /turf/open/floor/wood,
@@ -30121,6 +30106,20 @@
 	},
 /turf/open/floor/iron,
 /area/station/security/brig/upper)
+"jaL" = (
+/obj/machinery/turretid/directional/south{
+	control_area = "/area/station/ai_monitored/turret_protected/ai_upload";
+	name = "AI Upload Turret Control"
+	},
+/obj/machinery/camera/directional/south{
+	c_tag = "Bridge Center"
+	},
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/blue/half/contrasted,
+/turf/open/floor/iron,
+/area/station/command/bridge)
 "jaO" = (
 /obj/machinery/door/airlock/atmos/glass{
 	name = "Turbine Access"
@@ -37299,6 +37298,23 @@
 /obj/machinery/power/apc/auto_name/directional/west,
 /turf/open/floor/plating,
 /area/station/maintenance/aft/greater)
+"leK" = (
+/obj/machinery/camera/directional/west{
+	c_tag = "MiniSat Antechamber";
+	network = list("minisat");
+	start_active = 1
+	},
+/obj/machinery/turretid/directional/south{
+	control_area = "/area/station/ai_monitored/turret_protected/aisat/atmos";
+	name = "Atmospherics Turret Control";
+	req_access = list("minisat")
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 1
+	},
+/obj/machinery/light/small/directional/west,
+/turf/open/floor/iron/dark,
+/area/station/ai_monitored/turret_protected/aisat_interior)
 "leM" = (
 /obj/structure/railing{
 	dir = 8
@@ -39191,18 +39207,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/iron/dark,
 /area/station/security/mechbay)
-"lIg" = (
-/obj/effect/turf_decal/siding/wood/corner{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/neutral/half/contrasted{
-	dir = 4
-	},
-/obj/effect/turf_decal/siding/wood{
-	dir = 4
-	},
-/turf/open/floor/iron,
-/area/station/service/hydroponics/garden)
 "lIk" = (
 /obj/effect/spawner/structure/window,
 /turf/open/floor/plating,
@@ -39258,16 +39262,6 @@
 /obj/effect/mapping_helpers/airlock/access/any/command/general,
 /turf/open/floor/iron,
 /area/station/tcommsat/computer)
-"lIK" = (
-/obj/structure/window/reinforced/spawner/directional/north,
-/obj/structure/window/reinforced/spawner/directional/west,
-/obj/machinery/turretid{
-	name = "AI Chamber turret control";
-	pixel_x = 5;
-	pixel_y = -24
-	},
-/turf/open/floor/circuit,
-/area/station/ai_monitored/turret_protected/ai)
 "lIQ" = (
 /obj/item/restraints/legcuffs/beartrap,
 /obj/item/restraints/legcuffs/beartrap,
@@ -43801,6 +43795,13 @@
 /mob/living/carbon/human/species/monkey,
 /turf/open/floor/engine,
 /area/station/science/genetics)
+"nhS" = (
+/obj/structure/cable,
+/obj/machinery/power/apc/auto_name/directional/south,
+/obj/item/radio/intercom/directional/west,
+/obj/structure/reagent_dispensers/watertank,
+/turf/open/floor/iron,
+/area/station/service/hydroponics/garden)
 "nhT" = (
 /obj/machinery/door/airlock/external{
 	glass = 1;
@@ -45468,20 +45469,6 @@
 	dir = 5
 	},
 /area/station/maintenance/port/aft)
-"nDz" = (
-/obj/structure/cable,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/structure/cable/layer3,
-/obj/machinery/turretid{
-	control_area = "/area/station/ai_monitored/turret_protected/aisat/hallway";
-	name = "Chamber Hallway Turret Control";
-	pixel_x = 32;
-	pixel_y = -24;
-	req_access = list("minisat")
-	},
-/turf/open/floor/iron/dark,
-/area/station/ai_monitored/turret_protected/aisat_interior)
 "nDA" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -49557,6 +49544,10 @@
 /obj/effect/mapping_helpers/broken_floor,
 /turf/open/floor/wood,
 /area/station/maintenance/aft/lesser)
+"oNW" = (
+/obj/structure/water_source/puddle,
+/turf/open/floor/grass,
+/area/station/security/prison/garden)
 "oNX" = (
 /obj/machinery/airalarm/directional/west,
 /turf/open/floor/iron/dark,
@@ -49656,18 +49647,6 @@
 	},
 /turf/open/floor/iron/grimy,
 /area/station/service/bar/backroom)
-"oPv" = (
-/obj/machinery/turretid{
-	control_area = "/area/station/ai_monitored/turret_protected/aisat/service";
-	name = "Service Bay Turret Control";
-	pixel_x = 27;
-	req_access = list("minisat")
-	},
-/obj/effect/turf_decal/tile/blue{
-	dir = 4
-	},
-/turf/open/floor/iron/dark,
-/area/station/ai_monitored/turret_protected/aisat_interior)
 "oPw" = (
 /obj/structure/disposalpipe/segment,
 /obj/structure/cable,
@@ -50728,15 +50707,6 @@
 /obj/effect/turf_decal/box,
 /turf/open/floor/iron/dark/smooth_large,
 /area/station/cargo/bitrunning/den)
-"pgr" = (
-/obj/structure/disposalpipe/segment{
-	dir = 4
-	},
-/obj/effect/turf_decal/siding/wood{
-	dir = 1
-	},
-/turf/open/floor/iron/dark,
-/area/station/service/hydroponics/garden)
 "pgv" = (
 /obj/effect/turf_decal/tile/bar/opposingcorners,
 /obj/machinery/duct,
@@ -52433,6 +52403,15 @@
 	},
 /turf/open/floor/plating/snowed/icemoon,
 /area/icemoon/underground/explored)
+"pGy" = (
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/obj/effect/turf_decal/siding/wood{
+	dir = 1
+	},
+/turf/open/floor/iron/dark,
+/area/station/service/hydroponics/garden)
 "pGJ" = (
 /obj/structure/sign/poster/contraband/random/directional/north,
 /obj/effect/mapping_helpers/burnt_floor,
@@ -53411,6 +53390,18 @@
 "pVL" = (
 /turf/closed/wall/r_wall,
 /area/station/security/mechbay)
+"pVM" = (
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/cable/layer3,
+/obj/machinery/turretid/directional/south{
+	control_area = "/area/station/ai_monitored/turret_protected/aisat/hallway";
+	name = "Chamber Hallway Turret Control";
+	req_access = list("minisat")
+	},
+/turf/open/floor/iron/dark,
+/area/station/ai_monitored/turret_protected/aisat_interior)
 "pVN" = (
 /obj/structure/cable,
 /turf/open/floor/plating,
@@ -53910,13 +53901,6 @@
 	},
 /turf/open/floor/iron/dark/textured,
 /area/station/security/range)
-"qdp" = (
-/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4,
-/obj/effect/turf_decal/tile/green/half/contrasted{
-	dir = 1
-	},
-/turf/open/floor/iron,
-/area/station/security/prison/garden)
 "qdx" = (
 /obj/structure/stairs/north{
 	dir = 4
@@ -54298,6 +54282,13 @@
 	},
 /turf/open/floor/iron,
 /area/station/command/heads_quarters/qm)
+"qiT" = (
+/obj/effect/turf_decal/tile/green/anticorner/contrasted{
+	dir = 4
+	},
+/obj/item/kirbyplants/random,
+/turf/open/floor/iron/dark,
+/area/station/service/hydroponics/garden)
 "qjb" = (
 /obj/machinery/atmospherics/pipe/smart/simple/cyan/visible{
 	dir = 10
@@ -57984,24 +57975,6 @@
 /obj/structure/fluff/tram_rail,
 /turf/open/lava/plasma/ice_moon,
 /area/icemoon/underground/explored)
-"rjH" = (
-/obj/machinery/camera/directional/west{
-	c_tag = "MiniSat Antechamber";
-	network = list("minisat");
-	start_active = 1
-	},
-/obj/machinery/turretid{
-	control_area = "/area/station/ai_monitored/turret_protected/aisat/atmos";
-	name = "Atmospherics Turret Control";
-	pixel_x = -27;
-	req_access = list("minisat")
-	},
-/obj/effect/turf_decal/tile/blue{
-	dir = 1
-	},
-/obj/machinery/light/small/directional/west,
-/turf/open/floor/iron/dark,
-/area/station/ai_monitored/turret_protected/aisat_interior)
 "rjK" = (
 /obj/machinery/disposal/bin,
 /obj/structure/disposalpipe/trunk{
@@ -59942,6 +59915,17 @@
 	dir = 4
 	},
 /area/mine/living_quarters)
+"rNk" = (
+/obj/machinery/turretid/directional/south{
+	control_area = "/area/station/ai_monitored/turret_protected/aisat/service";
+	name = "Service Bay Turret Control";
+	req_access = list("minisat")
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 4
+	},
+/turf/open/floor/iron/dark,
+/area/station/ai_monitored/turret_protected/aisat_interior)
 "rNz" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -69878,20 +69862,6 @@
 "uOj" = (
 /turf/open/floor/iron,
 /area/station/command/gateway)
-"uOk" = (
-/obj/machinery/turretid{
-	control_area = "/area/station/ai_monitored/turret_protected/aisat_interior";
-	name = "Antechamber Turret Control";
-	pixel_y = -24;
-	req_access = list("minisat")
-	},
-/obj/machinery/light/small/directional/south,
-/obj/machinery/camera/motion/directional/south{
-	c_tag = "MiniSat Foyer";
-	network = list("minisat")
-	},
-/turf/open/floor/iron/dark,
-/area/station/ai_monitored/turret_protected/aisat_interior)
 "uOn" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
 	dir = 4
@@ -73920,6 +73890,13 @@
 /obj/effect/turf_decal/bot,
 /turf/open/floor/iron/large,
 /area/station/command/heads_quarters/ce)
+"wcz" = (
+/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4,
+/obj/effect/turf_decal/tile/green/half/contrasted{
+	dir = 1
+	},
+/turf/open/floor/iron,
+/area/station/security/prison/garden)
 "wcD" = (
 /obj/structure/chair/plastic{
 	dir = 4
@@ -76015,6 +75992,19 @@
 /obj/machinery/light/small/directional/south,
 /turf/open/floor/plating,
 /area/station/maintenance/fore)
+"wHR" = (
+/obj/machinery/turretid/directional/south{
+	control_area = "/area/station/ai_monitored/turret_protected/aisat_interior";
+	name = "Antechamber Turret Control";
+	req_access = list("minisat")
+	},
+/obj/machinery/light/small/directional/south,
+/obj/machinery/camera/motion/directional/south{
+	c_tag = "MiniSat Foyer";
+	network = list("minisat")
+	},
+/turf/open/floor/iron/dark,
+/area/station/ai_monitored/turret_protected/aisat_interior)
 "wIg" = (
 /obj/machinery/mech_bay_recharge_port{
 	dir = 2
@@ -77699,6 +77689,14 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/carpet/blue,
 /area/station/hallway/secondary/entry)
+"xhg" = (
+/obj/machinery/camera/directional/east{
+	c_tag = "Garden"
+	},
+/obj/machinery/status_display/ai/directional/east,
+/obj/structure/water_source/puddle,
+/turf/open/floor/grass,
+/area/station/service/hydroponics/garden)
 "xhk" = (
 /turf/open/floor/iron/dark,
 /area/station/commons/storage/primary)
@@ -77815,6 +77813,14 @@
 /obj/machinery/door/firedoor,
 /turf/open/floor/iron/large,
 /area/station/medical/medbay/lobby)
+"xjf" = (
+/obj/structure/window/reinforced/spawner/directional/north,
+/obj/structure/window/reinforced/spawner/directional/west,
+/obj/machinery/turretid/directional/south{
+	name = "AI Chamber turret control"
+	},
+/turf/open/floor/circuit,
+/area/station/ai_monitored/turret_protected/ai)
 "xjg" = (
 /obj/structure/sign/departments/medbay/alt,
 /turf/closed/wall,
@@ -78606,13 +78612,6 @@
 	},
 /turf/open/floor/iron,
 /area/station/security/brig/upper)
-"xwk" = (
-/obj/effect/turf_decal/tile/green/anticorner/contrasted{
-	dir = 4
-	},
-/obj/item/kirbyplants/random,
-/turf/open/floor/iron/dark,
-/area/station/service/hydroponics/garden)
 "xwm" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/effect/turf_decal/tile/green{
@@ -79195,13 +79194,6 @@
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron,
 /area/station/commons/locker)
-"xDi" = (
-/obj/structure/cable,
-/obj/machinery/power/apc/auto_name/directional/south,
-/obj/item/radio/intercom/directional/west,
-/obj/structure/reagent_dispensers/watertank,
-/turf/open/floor/iron,
-/area/station/service/hydroponics/garden)
 "xDw" = (
 /obj/structure/grille/broken,
 /obj/effect/decal/cleanable/dirt,
@@ -167768,7 +167760,7 @@ jlF
 jNf
 dpC
 cGQ
-eQb
+oNW
 nmr
 hVY
 gjq
@@ -169051,7 +169043,7 @@ bCp
 fYi
 tCL
 jNf
-qdp
+wcz
 hKI
 fWe
 ozX
@@ -227941,7 +227933,7 @@ esv
 lCb
 ddZ
 eUA
-xDi
+nhS
 oCO
 oCO
 oCO
@@ -228199,7 +228191,7 @@ eUi
 eBB
 tNd
 nor
-xwk
+qiT
 cgw
 mZu
 hjv
@@ -228711,7 +228703,7 @@ lJO
 wDf
 sAR
 sAR
-lIg
+cBD
 kPy
 dQI
 pPT
@@ -228968,8 +228960,8 @@ lJO
 mCT
 mut
 lGo
-fQi
-pgr
+xhg
+pGy
 wCL
 tTc
 wtr
@@ -241575,7 +241567,7 @@ axf
 kzD
 kJP
 lhv
-heS
+jaL
 ybv
 xwm
 vzT
@@ -250659,7 +250651,7 @@ fQu
 aiY
 pnR
 xfg
-rjH
+leK
 iAk
 aRD
 hHb
@@ -250678,7 +250670,7 @@ euc
 ujs
 mYh
 ogF
-lIK
+xjf
 uBi
 uBi
 lqz
@@ -250918,7 +250910,7 @@ frq
 rlS
 cfe
 mXi
-nDz
+pVM
 mRI
 bLz
 bLz
@@ -251170,10 +251162,10 @@ swF
 osm
 iqu
 fcu
-uOk
+wHR
 pnR
 oTS
-oPv
+rNk
 iAk
 mWw
 hHb

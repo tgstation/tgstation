@@ -327,6 +327,20 @@
 	tastes = list("cake" = 3, "blue cherry" = 1)
 	crafting_complexity = FOOD_COMPLEXITY_3
 
+/obj/item/food/jupitercupcake
+	name = "jupiter-cup-cake"
+	desc = "A static dessert."
+	icon_state = "jupitercupcake"
+	food_reagents = list(
+		/datum/reagent/consumable/nutriment = 6,
+		/datum/reagent/consumable/nutriment/vitamin = 2,
+		/datum/reagent/consumable/caramel = 3,
+		/datum/reagent/consumable/liquidelectricity/enriched = 3,
+	)
+	tastes = list("cake" = 3, "caramel" = 2, "zap" = 1)
+	crafting_complexity = FOOD_COMPLEXITY_3
+	crafted_food_buff = /datum/status_effect/food/trait/shockimmune
+
 /obj/item/food/honeybun
 	name = "honey bun"
 	desc = "A sticky pastry bun glazed with honey."

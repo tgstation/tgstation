@@ -1,0 +1,7 @@
+author: "necromanceranne"
+delete-after: True
+changes:
+  - rscadd: "Drunken fist fighting now has bonuses and penalties based on how intoxicated you are. Controlled liquor intake could make you a better brawler. Though you might vomit if you go too hard."
+  - rscadd: "Bartenders are now Drunken Brawlers. If they're drunk at all (no matter how drunk), they're stronger at fist fighting."
+  - rscadd: "Reintroduces the deterministic stagger combo. The effects of the combo are more varied, and based on attacker unarmed effectiveness and the defender's armor. Read the PR for more details. It's complicated."
+  - qol: "Unarmed effects that would utilize stamina values now use a split of half brute, half burn to determine outcomes or for meeting thresholds. This affects; punch accuracy, stagger combo thresholds and grab vulnerability thresholds."

@@ -24,10 +24,10 @@ GLOBAL_LIST_INIT(clown_mask_options, list(
 	var/list/gas_filters
 	///Type of filter that spawns on roundstart
 	var/starting_filter_type = /obj/item/gas_filter
-	///Does the mask have an FOV?
-	var/has_fov = TRUE
 	///Cigarette in the mask
 	var/obj/item/cigarette/cig
+	///Does the mask have an FOV?
+	var/has_fov = TRUE
 	voice_filter = "lowpass=f=750,volume=2"
 
 /datum/armor/mask_gas

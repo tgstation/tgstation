@@ -1,0 +1,14 @@
+output_name = "window_frame_bamboo"
+template = "bitmask/diagonal_32x32.toml"
+
+[icon_size]
+x = 32
+y = 33
+
+[output_icon_size]
+x = 32
+y = 33
+
+[cut_pos]
+x = 16
+y = 16

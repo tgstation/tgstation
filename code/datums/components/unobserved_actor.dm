@@ -6,16 +6,19 @@
 /datum/component/unobserved_actor
 	/// Dictates what behaviour you're blocked from while observed
 	var/unobserved_flags = NONE
+	/// List of action types which cannot be used while observed. Applies to all actions if not set, and does nothing if NO_OBSERVED_ACTIONS flag isnt present
+	var/list/affected_actions = null
 	/// Cooldown to prevent message spam when holding a move button
 	COOLDOWN_DECLARE(message_cooldown)
 
-/datum/component/unobserved_actor/Initialize(unobserved_flags = NONE)
+/datum/component/unobserved_actor/Initialize(unobserved_flags = NONE, list/affected_actions = null)
 	. = ..()
 	if (!isliving(parent))
 		return ELEMENT_INCOMPATIBLE
 	if (unobserved_flags == NONE)
 		CRASH("No behaviour flags provided to unobserved actor element")
 	src.unobserved_flags = unobserved_flags
+	src.affected_actions = affected_actions
 
 /datum/component/unobserved_actor/RegisterWithParent()
 	if (unobserved_flags & NO_OBSERVED_MOVEMENT)
@@ -52,16 +55,20 @@
 	return COMPONENT_ATOM_BLOCK_DIR_CHANGE
 
 /// Called when the mob tries to use an ability
-/datum/component/unobserved_actor/proc/on_tried_ability(mob/living/source)
+/datum/component/unobserved_actor/proc/on_tried_ability(mob/living/source, datum/action)
 	SIGNAL_HANDLER
 	if (!check_if_seen(source))
+		return
+	if (!isnull(affected_actions) && !(action.type in affected_actions))
 		return
 	return COMPONENT_BLOCK_ABILITY_START
 
 /// Called when the mob tries to cast a spell
-/datum/component/unobserved_actor/proc/on_tried_spell(mob/living/source)
+/datum/component/unobserved_actor/proc/on_tried_spell(mob/living/source, datum/action)
 	SIGNAL_HANDLER
 	if (!check_if_seen(source))
+		return
+	if (!isnull(affected_actions) && !(action.type in affected_actions))
 		return
 	return SPELL_CANCEL_CAST
 

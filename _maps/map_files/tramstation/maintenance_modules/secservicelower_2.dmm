@@ -9,7 +9,10 @@
 "ad" = (
 /obj/structure/table,
 /obj/effect/decal/cleanable/dirt,
-/obj/item/wrench,
+/obj/item/wrench{
+	pixel_y = 8
+	},
+/obj/structure/sign/warning/electric_shock,
 /turf/open/floor/iron/smooth,
 /area/station/maintenance/central/greater)
 "ar" = (
@@ -415,7 +418,6 @@
 	dir = 4
 	},
 /obj/structure/cable/multilayer/multiz,
-/obj/structure/sign/warning/electric_shock/directional/west,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating,
 /area/station/maintenance/central/greater)
@@ -532,7 +534,9 @@
 	},
 /obj/structure/table,
 /obj/effect/decal/cleanable/dirt,
-/obj/item/storage/toolbox/electrical,
+/obj/item/storage/toolbox/electrical{
+	pixel_y = 9
+	},
 /turf/open/floor/iron/smooth,
 /area/station/maintenance/central/greater)
 "Io" = (

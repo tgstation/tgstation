@@ -18,7 +18,7 @@ GLOBAL_LIST_INIT(marker_beacon_colors, sort_list(list(
 	name = "marker beacon"
 	singular_name = "marker beacon"
 	desc = "Prism-brand path illumination devices. Used by miners to mark paths and warn of danger."
-	icon = 'icons/obj/mining.dmi'
+	icon = 'icons/obj/mining_zones/equipment.dmi'
 	icon_state = "marker"
 	merge_type = /obj/item/stack/marker_beacon
 	max_amount = 100
@@ -72,7 +72,7 @@ GLOBAL_LIST_INIT(marker_beacon_colors, sort_list(list(
 /obj/structure/marker_beacon
 	name = "marker beacon"
 	desc = "A Prism-brand path illumination device. It is anchored in place and glowing steadily."
-	icon = 'icons/obj/mining.dmi'
+	icon = 'icons/obj/mining_zones/equipment.dmi'
 	icon_state = "marker"
 	layer = BELOW_OPEN_DOOR_LAYER
 	armor_type = /datum/armor/structure_marker_beacon
