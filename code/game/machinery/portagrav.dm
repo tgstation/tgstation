@@ -98,17 +98,18 @@
 
 /obj/machinery/power/portagrav/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
 	. = NONE
-	if(istype(tool, /obj/item/stock_parts/power_store/cell))
-		if(!panel_open)
-			balloon_alert(user, "must open panel!")
-			return ITEM_INTERACT_BLOCKING
-		if(cell)
-			balloon_alert(user, "already has a cell!")
-			return ITEM_INTERACT_BLOCKING
-		if(!user.transferItemToLoc(tool, src))
-			return ITEM_INTERACT_FAILURE
-		cell = tool
-		return ITEM_INTERACT_SUCCESS
+	if(!istype(tool, /obj/item/stock_parts/power_store/cell))
+		return
+	if(!panel_open)
+		balloon_alert(user, "must open panel!")
+		return ITEM_INTERACT_BLOCKING
+	if(cell)
+		balloon_alert(user, "already has a cell!")
+		return ITEM_INTERACT_BLOCKING
+	if(!user.transferItemToLoc(tool, src))
+		return ITEM_INTERACT_FAILURE
+	cell = tool
+	return ITEM_INTERACT_SUCCESS
 
 /obj/machinery/power/portagrav/should_have_node()
 	return anchored
