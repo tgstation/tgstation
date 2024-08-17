@@ -78,10 +78,13 @@
 	smoothing_groups = SMOOTH_GROUP_GRAV_FIELD
 	canSmoothWith = SMOOTH_GROUP_GRAV_FIELD
 	alpha = 200
+	/// our emissive appearance
 	var/mutable_appearance/emissive
 
 /obj/gravity_fluff_field/Initialize(mapload, strength)
 	. = ..()
+	if(isnull(strength))
+		return INITIALIZE_HINT_QDEL
 	QUEUE_SMOOTH(src)
 	QUEUE_SMOOTH_NEIGHBORS(src)
 	switch(strength)
@@ -110,7 +113,6 @@
 
 // Subtype which adds a subtle overlay to all turfs
 /datum/proximity_monitor/advanced/gravity/subtle_effect
-
 
 /datum/proximity_monitor/advanced/gravity/subtle_effect/setup_field_turf(turf/target)
 	. = ..()
