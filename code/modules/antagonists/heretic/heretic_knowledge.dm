@@ -540,7 +540,8 @@
 	var/mob/living/mob_to_summon
 
 /datum/heretic_knowledge/summon/on_finished_recipe(mob/living/user, list/selected_atoms, turf/loc)
-	summon_ritual_mob(user, loc, mob_to_summon)
+	. = summon_ritual_mob(user, loc, mob_to_summon)
+	return .
 
 /**
  * Creates the ritual mob and grabs a ghost for it
