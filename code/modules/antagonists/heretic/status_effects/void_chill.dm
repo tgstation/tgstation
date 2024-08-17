@@ -19,6 +19,7 @@
 /datum/status_effect/void_chill/on_creation(mob/living/new_owner, new_stacks, ...)
 	. = ..()
 	RegisterSignal(owner, COMSIG_ATOM_UPDATE_OVERLAYS, PROC_REF(update_stacks_overlay))
+	set_stacks(new_stacks)
 	owner.add_atom_colour(COLOR_BLUE_LIGHT, TEMPORARY_COLOUR_PRIORITY)
 	owner.update_icon(UPDATE_OVERLAYS)
 
@@ -95,7 +96,7 @@
 	desc = "There's something freezing you from within and without. You've never felt cold this oppressive before..."
 	icon_state = "void_chill_minor"
 
-/atom/movable/screen/alert/status_effect/void_chill/update_icon_state() //XANTODO Check if the icon actually updates
+/atom/movable/screen/alert/status_effect/void_chill/update_icon_state()
 	. = ..()
 	if(!istype(attached_effect, /datum/status_effect/void_chill))
 		return
@@ -103,7 +104,7 @@
 	if(chill_effect.stacks >= 5)
 		icon_state = "void_chill_oh_fuck"
 
-/atom/movable/screen/alert/status_effect/void_chill/update_desc(updates) //XANTODO Check if the desc actually updates
+/atom/movable/screen/alert/status_effect/void_chill/update_desc(updates)
 	. = ..()
 	if(!istype(attached_effect, /datum/status_effect/void_chill))
 		return
