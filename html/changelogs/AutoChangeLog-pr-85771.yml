@@ -1,5 +1,0 @@
-author: "SmArtKar"
-delete-after: True
-changes:
-  - rscadd: "You can now lean on windows the same way you can lean on walls"
-  - bugfix: "You no longer stop leaning on walls after clicking on anything"
