@@ -82,6 +82,3 @@
 	route = PATH_SIDE
 	poll_ignore_define = POLL_IGNORE_ASH_SPIRIT
 	depth = 10
-
-/datum/heretic_knowledge/summon/ashy/cleanup_atoms(list/selected_atoms)
-	return ..()

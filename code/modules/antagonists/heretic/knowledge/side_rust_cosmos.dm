@@ -104,5 +104,3 @@
 	poll_ignore_define = POLL_IGNORE_RUST_SPIRIT
 	depth = 8
 
-/datum/heretic_knowledge/summon/rusty/cleanup_atoms(list/selected_atoms)
-	return ..()
