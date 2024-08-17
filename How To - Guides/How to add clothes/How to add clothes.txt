@@ -1,0 +1,88 @@
+---------------------------------------------------------
+------------------- How to add clothes-------------------
+---------------------------------------------------------
+
+Before we get into it, let's quickly cover the structure of a clothing item.
+Clothing items consist of 2x parts.
+1) The icon (which shows in your hand or respective-clothing button on the GUI when held or equipped)
+2) The actual item itself (as it shows on your character, ingame. This is the item that your character wears, and everyone else can see)
+
+Because of this, we need to create 2x "icons" (Basically just images).
+One will be for the actual Icon itself, the other for the clothing itself.
+BOTH of these need to have the same names! This is super important!
+
+Another quick note, in DreamMaker, you might have the same issue as I do with the ".dmi" files, 
+Where I can't see the "state name" of the items. I'm not too sure how to fix this, but I do have an easy workaround.
+Simply hover over the item (near the bottom of it) until your mouse cursor turns from the regular arrow into an "I" shaped cursor, then double-click.
+You can also click on an item, then hit F2, and this should show the name as well.
+
+
+
+----------
+The Icons:
+----------
+
+Adding the Icon to the game
+---------------------------
+For my example, I'll just be adding a new jacket (called spacewar_parka_green - or "Space War Parka (green)", ingame)
+
+I start off by heading over to the following directory/folder:
+	SS13\code\modules\clothing\suits
+And I open up the "jacket.dm" file -> this should open in the DreamMaker app.
+
+Once I've got that open in DreamMaker, I can see a window that has some code on it.
+A quick inspection tells me that each of these blocks of code are for a few different types of jackets.
+
+I copy and paste the entire codeblock for the Bomber jacket (What I've chosen as a template) - from the line starting like this:
+	/obj/item/clothing/suit/jacket/bomber
+to the final closing bracket ")" of that codeblock.
+
+I then change it up to how I want -> renaming it, since this will be my new jacket, the Space War Parka (green).
+
+I leave most things the same, changing basically only the name, icon_state and description.
+Note: The name is the final part of the line that reads /obj/item/clothing/suit/jacket/bomber, so in this case, the name is "bomber"
+
+
+Changing how the Icon looks:
+----------------------------
+Once we've added the Icon, we now need to define what it looks like ingame, when someone wears it.
+
+We first head over to the following directory/folder:
+	SS13\icons\obj\clothing\suits
+And we open the "jacket.dmi" file.
+
+Once that's open in DreamMaker, we're greeted with a whole bunch of jacket icons.
+
+Simply double-click on the earliest empty space, to add a new one.
+Add your jacket Icon to the space, by designing it with the tools given, then exit out with the "back" option in the bottom-right of the window.
+
+Note: You can do the same thing here to change how an existing icon looks by simply double-clicking on the one you want to change, then just edit it and Save).
+
+----------------------------
+The Actual Items Themselves:
+----------------------------
+We head over to the following directory/folder:
+	SS13\icons\mob\clothing\suits
+And we open the "jacket.dmi" file.
+
+This will look almost identical to the file we worked with earlier, but it differs in that this file will contain side and back profiles of the clothing.
+This file contains the actual clothing worn by the player when it's equipped. 
+You can see these rotation profiles by double-clicking on any of the items in the list. You should see the rotation options just below the editor window.
+
+
+OK, here comes the tricky part..
+Right-click any of the existing items you'd like to use as a template, then hit Export. Save it to the same folder, but change the name (so as to not overwrite the existing files!). 
+I'm naming mine "spacewar_parka_green.dmi"
+
+Once saved, open that file in a new DreamMaker window, change up the jacket to look how you want,
+Then back in our DreamMaker editor - on the same window you Exported from - hit Import and select the file we created/edited/changed.
+
+When you import this item into the DreamMaker editor, you'll probably suddenly see some names pop up - this is your chance to rename your item. I renamed my "state name" to "spacewar_parka_green".
+Once the item has been reimported into "jacket.dmi" and saved, we need to delete the file we created when we exported (this is just to clean up the folder)
+In my case, I'll be deleting "spacewar_parka_green.dmi" in the folder.
+
+Now, we need to go back to our Icons file from before, and check that the Icon code we created, matches what we just added to the game!
+In my case, I'll be heading back to "jacket.dm" in the following folder:
+	SS13\code\modules\clothing\suits
+
+Icon state here, specifically, needs to match the state name we just saved our icon as (in my case, "m65_spacewar_parka_green")

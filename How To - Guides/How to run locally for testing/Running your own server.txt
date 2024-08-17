@@ -1,0 +1,26 @@
+----------------------------------------------------------
+------------------- How to Run Locally -------------------
+----------------------------------------------------------
+
+First step is to download/clone the TG Station Repo, or your fork of it.
+Clone the repository to a folder named "tgstation".
+Open the folder you've cloned the repository to, and run the "BUILD.cmd" file. This will build the application for running - and will also update the server if you've made any changes.
+Then run the "tgstation.dmb" file to actually open the game.
+
+Once the game has opened, look at the right-hand side of the screen.
+You'll see a bunch of options like "changelog, rules, wiki, forum", etc.
+
+Under those rules will be another ribbon of options, reading "status, mc, admin, Debug, ic, mapping", etc.
+On that same ribbon, look for the "Server" option and click that.
+
+Once the Server tab is open, click the "Start Now" option that appears. 
+Then, on the left-hand side of the screen (the game window), hit "Not Ready".
+This should change the button to say "Ready" - and lets you ready-up for the game.
+Once the server is done loading, you will automatically spawn into the game.
+
+
+Note:
+-----
+Some people don't have trouble with auto-updates from changes they've made, and can just run the "tgstation.dmb" file to run the game,
+But I've found that I continuously need to run "BUILD.cmd" whenever I've made changes, for them to take effect in the game.
+If you notice that your changes aren't showing in-game, run the "BUILD.cmd" file to "update the server", then run the game with the "tgstation.dmb" file.

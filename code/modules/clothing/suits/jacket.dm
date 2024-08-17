@@ -65,6 +65,22 @@
 		/obj/item/radio,
 	)
 
+/obj/item/clothing/suit/jacket/spacewar_parka_green
+	name = "Space War Parka"
+	desc = "A remnant of the space cold wars. How did it end up here?"
+	icon_state = "spacewar_parka_green"
+	inhand_icon_state = "greenjsuit"
+	allowed = list(
+		/obj/item/flashlight,
+		/obj/item/tank/internals/emergency_oxygen,
+		/obj/item/tank/internals/plasmaman,
+		/obj/item/toy,
+		/obj/item/storage/fancy/cigarettes,
+		/obj/item/lighter,
+		/obj/item/gun/ballistic/rifle/boltaction/pipegun,
+		/obj/item/radio,
+	)
+
 /obj/item/clothing/suit/jacket/leather
 	name = "leather jacket"
 	desc = "Pompadour not included."

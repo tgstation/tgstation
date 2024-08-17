@@ -1,0 +1,16 @@
+----------------------------------------------------
+------------------- How to Debug -------------------
+----------------------------------------------------
+Once you've opened and hosted the game locally,
+You should immediately spawn into the game.
+
+Once the game has opened, look at the right-hand side of the screen.
+You'll see a bunch of options like "changelog, rules, wiki, forum", etc.
+
+Under those rules will be another ribbon of options, reading "status, mc, admin, Debug, ic, mapping", etc.
+On that same ribbon, look for the "Debug" option and click that.
+
+Once you've hit that, you should see a variety of options at your disposal.
+
+There are a lot of options to cover, so I wont be covering all of them,
+but in most cases, where you need to type a name of something (usually to spawn an item or entity), make sure that the name is exactly the same.
