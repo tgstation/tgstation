@@ -56,10 +56,20 @@
 	var/bash_sound = 'sound/effects/glassbash.ogg'
 
 /obj/structure/tram/outer
+	icon_state = "tram-outer-0"
 	base_icon_state = "tram-outer"
 
 /obj/structure/tram/edge
+	icon_state = "tram-edge-0"
 	base_icon_state = "tram-edge"
+	smoothing_groups = SMOOTH_GROUP_WINDOW_FULLTILE_PLASTITANIUM
+	canSmoothWith = SMOOTH_GROUP_WINDOW_FULLTILE_PLASTITANIUM
+
+/obj/structure/tram/titanium
+	icon_state = "tram-titanium-0"
+	base_icon_state = "tram-titanium"
+	smoothing_groups = SMOOTH_GROUP_WINDOW_FULLTILE_PLASTITANIUM
+	canSmoothWith = SMOOTH_GROUP_WINDOW_FULLTILE_PLASTITANIUM
 
 /datum/armor/tram_structure
 	melee = 40
@@ -599,45 +609,3 @@
 /obj/structure/chair/sofa/bench/tram/solo
 	icon_state = "bench_solo"
 	greyscale_config = /datum/greyscale_config/bench_solo
-
-/obj/structure/window/reinforced/tram
-	name = "tram window"
-	desc = "Stops you from flying out the front of the tram. That could never happen, right?"
-	icon = 'icons/obj/structures/smooth/windows/tinted_window.dmi'
-	icon_state = "0-lower"
-	pixel_y = WINDOW_OFF_FRAME_Y_OFFSET
-	max_integrity = 150
-	reinf = TRUE
-	fulltile = TRUE
-	flags_1 = PREVENT_CLICK_UNDER_1
-	heat_resistance = 1600
-	armor_type = /datum/armor/tram_structure
-	smoothing_flags = SMOOTH_BITMASK
-	smoothing_groups = SMOOTH_GROUP_WINDOW_FULLTILE
-	canSmoothWith = SMOOTH_GROUP_WINDOW_FULLTILE
-	explosion_block = 3
-	glass_type = /obj/item/stack/sheet/titaniumglass
-	glass_amount = 2
-	receive_ricochet_chance_mod = 1.2
-
-/obj/structure/window/reinforced/tram/narsie_act()
-	add_atom_colour("#3C3434", FIXED_COLOUR_PRIORITY)
-
-/obj/structure/window/reinforced/tram/rcd_vals(mob/user, obj/item/construction/rcd/the_rcd)
-	return FALSE
-
-/obj/effect/spawner/structure/window/reinforced/tram
-	name = "tram window spawner"
-	icon_state = "twindow_spawner"
-	spawn_list = list(/obj/structure/window_frame/tram)
-
-/obj/structure/window_frame/tram
-	name = "tram window frame"
-	icon = 'icons/obj/structures/smooth/window_frames/window_frame_plastitanium.dmi'
-	icon_state = "window_frame_plastitanium-0"
-	base_icon_state = "window_frame_plastitanium"
-	frame_icon = 'icons/obj/structures/smooth/window_frames/frame_faces/window_frame_plastitanium.dmi'
-	sheet_type = /obj/item/stack/sheet/titaniumglass
-	window_type = /obj/structure/window/reinforced/tram
-	custom_materials = list(/datum/material/alloy/titaniumglass = WINDOW_FRAME_BASE_MATERIAL_AMOUNT)
-	start_with_window = TRUE
