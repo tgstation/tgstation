@@ -278,6 +278,9 @@ Congratulations! You are now trained for invasive xenobiology research!"}
 /obj/item/paper/guides/antag/abductor/click_alt()
 	return CLICK_ACTION_BLOCKING //otherwise it would fold into a paperplane.
 
+#define ABDUCTOR_SLEEP_COOLDOWN 1.5 MINUTES
+#define ABDUCTOR_CUFF_COOLDOWN 30 SECONDS
+
 /obj/item/melee/baton/abductor
 	name = "advanced baton"
 	desc = "A quad-mode baton used for incapacitation and restraining of specimens."
@@ -303,6 +306,8 @@ Congratulations! You are now trained for invasive xenobiology research!"}
 
 	var/sleep_time = 2 MINUTES
 	var/time_to_cuff = 3 SECONDS
+	COOLDOWN_DECLARE(sleep_cd)
+	COOLDOWN_DECLARE(cuff_cd)
 
 /obj/item/melee/baton/abductor/Initialize(mapload)
 	. = ..()
@@ -384,6 +389,10 @@ Congratulations! You are now trained for invasive xenobiology research!"}
 
 /obj/item/melee/baton/abductor/proc/SleepAttack(mob/living/target, mob/living/user)
 	playsound(src, on_stun_sound, 50, TRUE, -1)
+	if(COOLDOWN_FINISHED(src, sleep_cd))
+		var/timeleft = DisplayTimeText(COOLDOWN_TIMELEFT(src, sleep_cd))
+		to_chat(user, span_warning("The sleep inducement needs time to recharge! It will be ready again in [timeleft]."))
+		return
 	if(target.incapacitated(IGNORE_RESTRAINTS|IGNORE_GRAB))
 		if(target.can_block_magic(MAGIC_RESISTANCE_MIND))
 			to_chat(user, span_warning("The specimen has some kind of mental protection that is interfering with the sleep inducement! It seems you've been foiled."))
@@ -395,6 +404,7 @@ Congratulations! You are now trained for invasive xenobiology research!"}
 		span_userdanger("You suddenly feel very drowsy!"))
 		target.Sleeping(sleep_time)
 		log_combat(user, target, "put to sleep")
+		COOLDOWN_START(src, sleep_cd, ABDUCTOR_SLEEP_COOLDOWN)
 	else
 		if(target.can_block_magic(MAGIC_RESISTANCE_MIND, charge_cost = 0))
 			to_chat(user, span_warning("The specimen has some kind of mental protection that is completely blocking our sleep inducement methods! It seems you've been foiled."))
@@ -409,6 +419,10 @@ Congratulations! You are now trained for invasive xenobiology research!"}
 /obj/item/melee/baton/abductor/proc/CuffAttack(mob/living/victim, mob/living/user)
 	if(!iscarbon(victim))
 		return
+	if(COOLDOWN_FINISHED(src, cuff_cd))
+		var/timeleft = DisplayTimeText(COOLDOWN_TIMELEFT(src, cuff_cd))
+		to_chat(user, span_warning("The cuffing projector needs time to recharge! It will be ready again in [timeleft]."))
+		return
 	var/mob/living/carbon/carbon_victim = victim
 	if(!carbon_victim.handcuffed)
 		if(carbon_victim.canBeHandcuffed())
@@ -421,6 +435,7 @@ Congratulations! You are now trained for invasive xenobiology research!"}
 					carbon_victim.update_handcuffed()
 					to_chat(user, span_notice("You restrain [carbon_victim]."))
 					log_combat(user, carbon_victim, "handcuffed")
+					COOLDOWN_START(src, cuff_cd, ABDUCTOR_CUFF_COOLDOWN)
 			else
 				to_chat(user, span_warning("You fail to restrain [carbon_victim]."))
 		else
@@ -449,6 +464,9 @@ Congratulations! You are now trained for invasive xenobiology research!"}
 
 	to_chat(user, "[span_notice("Probing result:")][species]")
 	to_chat(user, "[helptext]")
+
+#undef ABDUCTOR_SLEEP_COOLDOWN
+#undef ABDUCTOR_CUFF_COOLDOWN
 
 /obj/item/restraints/handcuffs/energy
 	name = "hard-light energy field"
