@@ -12,10 +12,16 @@
 	viable_zones = list(BODY_ZONE_HEAD)
 
 /datum/wound_pregen_data/cranial_fissure/get_weight(obj/item/bodypart/limb, woundtype, damage, attack_direction, damage_source)
-	if (limb.owner?.stat < HARD_CRIT)
-		return 0
+	if (isnull(limb.owner))
+		return ..()
 
-	return ..()
+	if (HAS_TRAIT(limb.owner, TRAIT_CURSED) && (limb.get_mangled_state() & BODYPART_MANGLED_INTERIOR))
+		return ..()
+
+	if (limb.owner.stat >= HARD_CRIT)
+		return ..()
+
+	return 0
 
 /// A wound applied when receiving significant enough damage to the head.
 /// Will allow other players to take your eyes out of your head, and slipping
@@ -74,8 +80,11 @@
 		span_userdanger("Your brain spills right out of your head!"),
 	)
 
-/datum/wound/cranial_fissure/try_handling(mob/living/carbon/human/user)
-	if (user.zone_selected != BODY_ZONE_HEAD && user.zone_selected != BODY_ZONE_PRECISE_EYES)
+/datum/wound/cranial_fissure/try_handling(mob/living/user)
+	if (user.usable_hands <= 0 || user.combat_mode)
+		return FALSE
+
+	if(!isnull(user.hud_used?.zone_select) && (user.zone_selected != BODY_ZONE_HEAD && user.zone_selected != BODY_ZONE_PRECISE_EYES))
 		return FALSE
 
 	if (victim.body_position != LYING_DOWN)
@@ -86,7 +95,12 @@
 		victim.balloon_alert(user, "no eyes to take!")
 		return TRUE
 
+	playsound(victim, 'sound/surgery/organ2.ogg', 50, TRUE)
 	victim.balloon_alert(user, "pulling out eyes...")
+	user.visible_message(
+		span_boldwarning("[user] reaches inside [victim]'s skull..."),
+		ignored_mobs = user
+	)
 	victim.show_message(
 		span_userdanger("[victim] starts to pull out your eyes!"),
 		MSG_VISUAL,
@@ -101,9 +115,10 @@
 
 	log_combat(user, victim, "pulled out the eyes of")
 
+	playsound(victim, 'sound/surgery/organ1.ogg', 75, TRUE)
 	user.visible_message(
-		span_boldwarning("You rip out [victim]'s eyes!"),
 		span_boldwarning("[user] rips out [victim]'s eyes!"),
+		span_boldwarning("You rip out [victim]'s eyes!"),
 		ignored_mobs = victim,
 	)
 

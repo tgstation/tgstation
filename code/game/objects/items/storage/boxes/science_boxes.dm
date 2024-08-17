@@ -43,26 +43,26 @@
 /obj/item/storage/box/monkeycubes/Initialize(mapload)
 	. = ..()
 	atom_storage.max_slots = 7
-	atom_storage.set_holdable(list(/obj/item/food/monkeycube))
+	atom_storage.set_holdable(/obj/item/food/monkeycube)
 
 /obj/item/storage/box/monkeycubes/PopulateContents()
 	for(var/i in 1 to 5)
 		new cube_type(src)
 
 /obj/item/storage/box/monkeycubes/syndicate
-	desc = "Waffle Co. brand monkey cubes. Just add water and a dash of subterfuge!"
+	desc = "Waffle Corp. brand monkey cubes. Just add water and a dash of subterfuge!"
 	cube_type = /obj/item/food/monkeycube/syndicate
 
 /obj/item/storage/box/gorillacubes
 	name = "gorilla cube box"
-	desc = "Waffle Co. brand gorilla cubes. Do not taunt."
+	desc = "Waffle Corp. brand gorilla cubes. Do not taunt."
 	icon_state = "monkeycubebox"
 	illustration = null
 
 /obj/item/storage/box/gorillacubes/Initialize(mapload)
 	. = ..()
 	atom_storage.max_slots = 3
-	atom_storage.set_holdable(list(/obj/item/food/monkeycube))
+	atom_storage.set_holdable(/obj/item/food/monkeycube)
 
 /obj/item/storage/box/gorillacubes/PopulateContents()
 	for(var/i in 1 to 3)

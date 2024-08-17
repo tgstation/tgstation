@@ -126,6 +126,21 @@
 	on_update()
 	return TRUE
 
+/datum/uplink_handler/proc/purchase_raw_tc(mob/user, amount, atom/movable/source)
+	if(shop_locked)
+		return FALSE
+	if(telecrystals < amount)
+		return FALSE
+
+	telecrystals -= amount
+	var/tcs = new /obj/item/stack/telecrystal(get_turf(user), amount)
+	user.put_in_hands(tcs)
+
+	log_uplink("[key_name(user)] purchased [amount] raw telecrystals from [source]'s uplink")
+	on_update()
+	return TRUE
+
+
 /// Generates objectives for this uplink handler
 /datum/uplink_handler/proc/generate_objectives()
 	var/potential_objectives_left = maximum_potential_objectives - (length(potential_objectives) + length(active_objectives))
@@ -254,3 +269,12 @@
 		return
 
 	to_act_on.ui_perform_action(user, action)
+
+///Helper to add telecrystals to the uplink handler, calling set_telecrystals.
+/datum/uplink_handler/proc/add_telecrystals(amount)
+	set_telecrystals(telecrystals + amount)
+
+///Sets how many telecrystals the uplink handler has, then updates the UI for any players watching.
+/datum/uplink_handler/proc/set_telecrystals(amount)
+	telecrystals = amount
+	on_update()

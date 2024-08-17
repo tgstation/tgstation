@@ -35,11 +35,12 @@
 
 	var/list/new_latejoin = list()
 	for(var/area/shuttle/arrival/arrival_area in GLOB.areas)
-		for(var/turf/arrival_turf as anything in arrival_area.get_contained_turfs())
-			for(var/obj/structure/chair/shuttle_chair in arrival_turf)
-				new_latejoin += shuttle_chair
-			if(isnull(console))
-				console = locate() in arrival_turf
+		for (var/list/zlevel_turfs as anything in arrival_area.get_zlevel_turf_lists())
+			for(var/turf/arrival_turf as anything in zlevel_turfs)
+				for(var/obj/structure/chair/shuttle_chair in arrival_turf)
+					new_latejoin += shuttle_chair
+				if(isnull(console))
+					console = locate() in arrival_turf
 		areas += arrival_area
 
 	if(SSjob.latejoin_trackers.len)
@@ -111,14 +112,9 @@
 	return FALSE
 
 /obj/docking_port/mobile/arrivals/proc/PersonCheck()
-	for(var/V in GLOB.player_list)
-		var/mob/M = V
-		if((get_area(M) in areas) && M.stat != DEAD)
-			if(!iscameramob(M))
-				return TRUE
-			var/mob/camera/C = M
-			if(C.move_on_shuttle)
-				return TRUE
+	for(var/mob/player as anything in GLOB.player_list)
+		if((get_area(player) in areas) && (player.stat != DEAD) && !HAS_TRAIT(player, TRAIT_BLOCK_SHUTTLE_MOVEMENT))
+			return TRUE
 	return FALSE
 
 /obj/docking_port/mobile/arrivals/proc/NukeDiskCheck()

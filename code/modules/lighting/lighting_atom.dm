@@ -44,7 +44,7 @@
 /atom/proc/update_light()
 	SHOULD_NOT_SLEEP(TRUE)
 
-	if(light_system != STATIC_LIGHT)
+	if(light_system != COMPLEX_LIGHT)
 		CRASH("update_light() for [src] with following light_system value: [light_system]")
 
 	if (!light_power || !light_range || !light_on) // We won't emit light anyways, destroy the light source.
@@ -90,6 +90,8 @@
 	if(isnull(.))
 		return
 	recalculate_directional_opacity()
+	// Need this for split vis stuff
+	QUEUE_SMOOTH_NEIGHBORS(src)
 
 /atom/proc/flash_lighting_fx(range = FLASH_LIGHT_RANGE, power = FLASH_LIGHT_POWER, color = COLOR_WHITE, duration = FLASH_LIGHT_DURATION, light_type = /obj/effect/dummy/lighting_obj)
 	if(!duration)

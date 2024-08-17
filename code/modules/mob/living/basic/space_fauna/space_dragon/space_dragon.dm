@@ -1,10 +1,10 @@
 /// You can't make a dragon darker than this, it'd be hard to see
-#define REJECT_DARK_COLOUR_THRESHOLD 50
+#define REJECT_DARK_COLOUR_THRESHOLD 20
 /// Any interactions executed by the space dragon
 #define DOAFTER_SOURCE_SPACE_DRAGON_INTERACTION "space dragon interaction"
 
 /**
- * Advanced stage of the space carp life cycle, spawned as a midround antagonist or via traitor transformation.
+ * Advanced stage of the space carp life cycle, spawned as a midround antagonist
  * Can eat corpses to heal, blow people back with its wings, and obviously as a dragon it breathes fire. It can even tear through walls.
  * The midround even version also creates rifts which summon carp, and heals when near them.
  */
@@ -17,6 +17,7 @@
 	icon_dead = "spacedragon_dead"
 	health_doll_icon = "spacedragon"
 	faction = list(FACTION_CARP)
+	mob_biotypes = MOB_SPECIAL
 	flags_1 = PREVENT_CONTENTS_EXPLOSION_1
 	gender = NEUTER
 	maxHealth = 400
@@ -27,7 +28,6 @@
 	damage_coeff = list(BRUTE = 1, BURN = 1, TOX = 1, STAMINA = 0.5, OXY = 1)
 	combat_mode = TRUE
 	speed = 0
-	movement_type = FLYING
 	attack_verb_continuous = "chomps"
 	attack_verb_simple = "chomp"
 	attack_sound = 'sound/magic/demon_attack1.ogg'
@@ -46,6 +46,11 @@
 	death_sound = 'sound/creatures/space_dragon_roar.ogg'
 	death_message = "screeches in agony as it collapses to the floor, its life extinguished."
 	butcher_results = list(/obj/item/stack/ore/diamond = 5, /obj/item/stack/sheet/sinew = 5, /obj/item/stack/sheet/bone = 30)
+	can_buckle_to = FALSE
+	lighting_cutoff_red = 12
+	lighting_cutoff_green = 15
+	lighting_cutoff_blue = 34
+	shadow_type = SHADOW_LARGE
 
 	/// The colour of the space dragon
 	var/chosen_colour
@@ -76,6 +81,11 @@
 	buffet = new(src)
 	buffet.Grant(src)
 
+/mob/living/basic/space_dragon/Destroy()
+	fire_breath = null
+	buffet = null
+	return ..()
+
 /mob/living/basic/space_dragon/Login()
 	. = ..()
 	if(!isnull(chosen_colour))
@@ -100,8 +110,8 @@
 		to_chat(src, span_warning("Not a valid colour, please try again."))
 		select_colour()
 		return
-	var/temp_hsv = RGBtoHSV(chosen_colour)
-	if(ReadHSV(temp_hsv)[3] < REJECT_DARK_COLOUR_THRESHOLD)
+	var/list/skin_hsv = rgb2hsv(chosen_colour)
+	if(skin_hsv[3] < REJECT_DARK_COLOUR_THRESHOLD)
 		to_chat(src, span_danger("Invalid colour. Your colour is not bright enough."))
 		select_colour()
 		return

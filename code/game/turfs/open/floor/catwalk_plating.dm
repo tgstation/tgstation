@@ -16,16 +16,13 @@
 	footstep = FOOTSTEP_CATWALK
 	overfloor_placed = TRUE
 	underfloor_accessibility = UNDERFLOOR_VISIBLE
+	rust_resistance = RUST_RESISTANCE_BASIC
 	var/covered = TRUE
 	var/catwalk_type = "maint"
-	var/static/list/catwalk_underlays = list()
 
 /turf/open/floor/catwalk_floor/Initialize(mapload)
 	. = ..()
-	if(!catwalk_underlays[catwalk_type])
-		var/mutable_appearance/plating_underlay = mutable_appearance(icon, "[catwalk_type]_below", TURF_LAYER)
-		catwalk_underlays[catwalk_type] = plating_underlay
-	underlays += catwalk_underlays[catwalk_type]
+	underlays += mutable_appearance(icon, "[catwalk_type]_below", LOW_FLOOR_LAYER, src, FLOOR_PLANE)
 	update_appearance()
 
 /turf/open/floor/catwalk_floor/examine(mob/user)
@@ -42,7 +39,7 @@
 	covered = !covered
 	if(!covered)
 		underfloor_accessibility = UNDERFLOOR_INTERACTABLE
-		layer = TURF_LAYER
+		layer = LOW_FLOOR_LAYER
 		icon_state = "[catwalk_type]_below"
 	else
 		underfloor_accessibility = UNDERFLOOR_VISIBLE
@@ -79,18 +76,12 @@
 	floor_tile = /obj/item/stack/tile/catwalk_tile/iron_dark
 	catwalk_type = "darkiron"
 
-/turf/open/floor/catwalk_floor/flat_white
-	name = "white large plated catwalk floor"
-	icon_state = "flatwhite_above"
-	floor_tile = /obj/item/stack/tile/catwalk_tile/flat_white
-	catwalk_type = "flatwhite"
-
 /turf/open/floor/catwalk_floor/titanium
 	name = "titanium plated catwalk floor"
 	icon_state = "titanium_above"
 	floor_tile = /obj/item/stack/tile/catwalk_tile/titanium
 	catwalk_type = "titanium"
-
+	rust_resistance = RUST_RESISTANCE_TITANIUM
 
 /turf/open/floor/catwalk_floor/iron_smooth //the original green type
 	name = "smooth plated catwalk floor"
@@ -99,6 +90,9 @@
 	catwalk_type = "smoothiron"
 
 //Airless variants of the above
+/turf/open/floor/catwalk_floor/airless
+	initial_gas_mix = AIRLESS_ATMOS
+
 /turf/open/floor/catwalk_floor/iron/airless
 	initial_gas_mix = AIRLESS_ATMOS
 
@@ -108,8 +102,8 @@
 /turf/open/floor/catwalk_floor/iron_dark/airless
 	initial_gas_mix = AIRLESS_ATMOS
 
-/turf/open/floor/catwalk_floor/flat_white/airless
-	initial_gas_mix = AIRLESS_ATMOS
+/turf/open/floor/catwalk_floor/iron_dark/telecomms
+	initial_gas_mix = TCOMMS_ATMOS
 
 /turf/open/floor/catwalk_floor/titanium/Airless
 	initial_gas_mix = AIRLESS_ATMOS

@@ -1,8 +1,9 @@
 /// The heretic's rune, which they use to complete transmutation rituals.
 /obj/effect/heretic_rune
 	name = "transmutation rune"
-	desc = "A flowing circle of shapes and runes is etched into the floor, filled with a thick black tar-like fluid."
-	icon_state = ""
+	desc = "A flowing circle of shapes and runes is etched into the floor, filled with a thick black tar-like fluid. This one looks pretty small."
+	icon = 'icons/obj/antags/cult/rune.dmi'
+	icon_state = "main1"
 	anchored = TRUE
 	interaction_flags_atom = INTERACT_ATOM_ATTACK_HAND
 	resistance_flags = FIRE_PROOF | UNACIDABLE | ACID_PROOF
@@ -204,8 +205,9 @@
 /obj/effect/heretic_rune/big
 	icon = 'icons/effects/96x96.dmi'
 	icon_state = "transmutation_rune"
-	pixel_x = -33 //So the big ol' 96x96 sprite shows up right
-	pixel_y = -32
+	pixel_x = -30
+	pixel_y = 18
+	pixel_z = -48
 	greyscale_config = /datum/greyscale_config/heretic_rune
 
 /obj/effect/heretic_rune/big/Initialize(mapload, path_colour)
@@ -217,8 +219,9 @@
 	duration = 30 SECONDS
 	icon = 'icons/effects/96x96.dmi'
 	icon_state = "transmutation_rune"
-	pixel_x = -33
-	pixel_y = -32
+	pixel_x = -30
+	pixel_y = 18
+	pixel_z = -48
 	plane = GAME_PLANE
 	layer = SIGIL_LAYER
 	greyscale_config = /datum/greyscale_config/heretic_rune

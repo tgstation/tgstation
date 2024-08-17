@@ -273,7 +273,7 @@
 /obj/effect/mob_spawn/ghost_role/human/syndicatespace/special(mob/living/new_spawn)
 	. = ..()
 	new_spawn.grant_language(/datum/language/codespeak, source = LANGUAGE_MIND)
-	var/datum/job/spawn_job = SSjob.GetJobType(spawner_job_path)
+	var/datum/job/spawn_job = SSjob.get_job_type(spawner_job_path)
 	var/policy = get_policy(spawn_job.policy_index)
 	if(policy)
 		to_chat(new_spawn, span_bold("[policy]"))
@@ -308,7 +308,7 @@
 
 /datum/outfit/syndicatespace/syndicrew
 	name = "Syndicate Ship Crew Member"
-	glasses = /obj/item/clothing/glasses/night
+	glasses = /obj/item/clothing/glasses/night/colorless
 	mask = /obj/item/clothing/mask/gas/syndicate
 	l_pocket = /obj/item/gun/ballistic/automatic/pistol
 	r_pocket = /obj/item/knife/combat/survival

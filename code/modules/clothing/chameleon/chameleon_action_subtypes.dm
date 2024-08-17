@@ -64,6 +64,11 @@
 	. = ..()
 	chameleon_blacklist |= typecacheof(/obj/item/clothing/mask/changeling, only_root_path = TRUE)
 
+/datum/action/item_action/chameleon/change/mask/initialize_disguises()
+	. = ..()
+	add_chameleon_items(/obj/item/cigarette)
+	add_chameleon_items(/obj/item/vape)
+
 /datum/action/item_action/chameleon/change/hat
 	chameleon_type = /obj/item/clothing/head
 	chameleon_name = "Hat"
@@ -103,14 +108,14 @@
 	. = ..()
 	chameleon_blacklist |= typecacheof(list(/obj/item/clothing/suit/armor/abductor, /obj/item/clothing/suit/changeling), only_root_path = TRUE)
 
-/datum/action/item_action/chameleon/change/suit/apply_outfit(mob/user, datum/outfit/applying_from, list/all_items_to_apply)
+/datum/action/item_action/chameleon/change/suit/apply_outfit(datum/outfit/applying_from, list/all_items_to_apply)
 	. = ..()
 	if(!. || !ispath(applying_from.suit, /obj/item/clothing/suit/hooded))
 		return
 	// If we're appling a hooded suit, and wearing a cham hat, make it a hood
 	var/obj/item/clothing/suit/hooded/hooded = applying_from.suit
-	var/datum/action/item_action/chameleon/change/hat/hood_action = locate() in user.actions
-	hood_action?.update_look(user, initial(hooded.hoodtype))
+	var/datum/action/item_action/chameleon/change/hat/hood_action = locate() in owner?.actions
+	hood_action?.update_look(initial(hooded.hoodtype))
 
 /datum/action/item_action/chameleon/change/jumpsuit
 	chameleon_type = /obj/item/clothing/under
@@ -282,7 +287,6 @@
 		/obj/item/camera/siliconcam,
 		/obj/item/door_remote/omni,
 		/obj/item/flashlight/emp/debug,
-		/obj/item/flashlight/eyelight/adapted,
 		/obj/item/flashlight/flare,
 		/obj/item/flashlight/lamp,
 		/obj/item/healthanalyzer/rad_laser,

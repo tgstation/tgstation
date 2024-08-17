@@ -47,6 +47,10 @@
 /datum/customer_data/New()
 	. = ..()
 	name_prefixes = world.file2list(prefix_file)
+	if(check_holidays(ICE_CREAM_DAY)) ///customers are more likely to order ice cream on this holiday
+		var/list/orderable_restaurant = orderable_objects[VENUE_RESTAURANT]
+		if(orderable_restaurant?[/datum/custom_order/icecream])
+			orderable_restaurant[/datum/custom_order/icecream] *= 3
 
 /// Can this customer be chosen for this venue?
 /datum/customer_data/proc/can_use(datum/venue/venue)
@@ -306,7 +310,7 @@
 /datum/customer_data/moth/proc/get_wings(mob/living/basic/robot_customer/customer)
 	var/customer_ref = WEAKREF(customer)
 	if (!LAZYACCESS(wings_chosen, customer_ref))
-		LAZYSET(wings_chosen, customer_ref, GLOB.moth_wings_list[pick(GLOB.moth_wings_list)])
+		LAZYSET(wings_chosen, customer_ref, SSaccessories.moth_wings_list[pick(SSaccessories.moth_wings_list)])
 	return wings_chosen[customer_ref]
 
 /datum/customer_data/moth/get_underlays(mob/living/basic/robot_customer/customer)

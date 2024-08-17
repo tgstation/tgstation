@@ -481,6 +481,7 @@
 	foodtypes = GRAIN | DAIRY
 	w_class = WEIGHT_CLASS_SMALL
 	crafting_complexity = FOOD_COMPLEXITY_2
+	custom_price = PAYCHECK_CREW
 
 /obj/item/food/butterdog/Initialize(mapload)
 	. = ..()

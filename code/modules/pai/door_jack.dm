@@ -104,17 +104,17 @@
 /mob/living/silicon/pai/proc/hack_door()
 	if(!hacking_cable)
 		return FALSE
-	if(!hacking_cable.machine)
+	if(!hacking_cable.hacking_machine)
 		balloon_alert(src, "nothing connected")
 		return FALSE
 	playsound(src, 'sound/machines/airlock_alien_prying.ogg', 50, TRUE)
 	balloon_alert(src, "overriding...")
 	// Now begin hacking
-	if(!do_after(src, 15 SECONDS, hacking_cable.machine, timed_action_flags = NONE,	progress = TRUE))
+	if(!do_after(src, 15 SECONDS, hacking_cable.hacking_machine, timed_action_flags = NONE,	progress = TRUE))
 		balloon_alert(src, "failed! retracting...")
 		QDEL_NULL(hacking_cable)
 		return FALSE
-	var/obj/machinery/door/door = hacking_cable.machine
+	var/obj/machinery/door/door = hacking_cable.hacking_machine
 	balloon_alert(src, "success")
 	door.open()
 	QDEL_NULL(hacking_cable)

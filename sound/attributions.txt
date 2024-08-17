@@ -114,7 +114,98 @@ https://freesound.org/people/junggle/sounds/28917/
 https://freesound.org/people/inferno/sounds/18397/
 https://freesound.org/people/humanoide9000/sounds/330293/
 
+reel1.ogg, reel2.ogg, reel3.ogg, reel4.ogg and reel5.ogg adapted from pixabay. Free for use under the Pixabay Content License (https://pixabay.com/service/license-summary/):
+https://pixabay.com/sound-effects/reel-78063/
+
+rattle1.ogg, rattle2.ogg and rattle3.ogg adapted from pixabay. Free for use under the Pixabay Content License (https://pixabay.com/service/license-summary/):
+https://pixabay.com/sound-effects/chain-6073/
+
 throw.ogg, throwhard.ogg and throwsoft.ogg (Royalty-Free and Copyright-Free) are adapted from Jam FX, SmartSound FX and Epic Stock Media in :
 https://uppbeat.io/sfx/whoosh-swift-cut/7727/23617
 https://uppbeat.io/sfx/whoosh-air-punch/114/1168
 https://uppbeat.io/sfx/throwing-item-swing/9430/25267
+
+rock_break.ogg is taken from Bertsz's Rock Destroy from Freesound.org, CC0:
+https://freesound.org/people/Bertsz/sounds/524312/
+
+sonar-ping.ogg and radar-ping is taken and modified from SamsterBirdies' Sonar Ping from Freesound.org, CC0:
+https://freesound.org/people/SamsterBirdies/sounds/539957/
+
+manual_teleport.ogg is taken from Quetzakol's teleport from Freesound.org, CC0:
+https://freesound.org/people/Quetzakol/sounds/520743/
+
+auto_teleport.ogg is taken from Steaq's A teleportation from Freesound.org, CC0:
+https://freesound.org/people/steaq/sounds/560124/
+
+refinery.ogg, smelter.ogg, and wooping_teleport.ogg are all original works by ArcaneMusic,
+with smelter.ogg using samples from rock_break alongside original sound effects from a warrior electric drill,
+where refinery and wooping_teleport are modifications of that same electric drill recording.
+
+paper_flip.ogg is made by gynation from Freesound.org, CC0
+https://freesound.org/people/gynation/sounds/82378/
+
+nightmare_poof.ogg and nightmare_reappear.ogg are comprised of breath_01.wav by Nightflame (CC0) and slide-click.wav by Qat (CC0)
+https://freesound.org/people/Qat/sounds/108332/
+https://freesound.org/people/Nightflame/sounds/368615/
+
+modified by grungussuss:
+male_sneeze1.ogg: https://freesound.org/people/InspectorJ/sounds/352177/ , license: CC BY 4.0 DEED
+male_cry1.ogg: https://freesound.org/people/jacobmathiassen/sounds/254869/ , license: CC BY 4.0 DEED
+male_cry2.ogg: https://freesound.org/people/scottemoil/sounds/263776/ , license: CC0 1.0 DEED
+male_cry3.ogg: https://freesound.org/people/qubodup/sounds/200428/ , license: CC BY 4.0 DEED
+female_cry1.ogg: https://freesound.org/people/Luzanne0/sounds/445299/ , license: CC BY-NC 3.0 DEED
+female_cry2.ogg: https://freesound.org/people/Idalize/sounds/408211/ , license: CC BY-NC 4.0 DEED
+female_cough1.ogg: https://freesound.org/people/OwlStorm/sounds/151213/ , license: CC0 1.0 DEED
+female_cough2.ogg: https://freesound.org/people/thatkellytrna/sounds/425777/ , license: CC0 1.0 DEED
+female_cough3.ogg: https://freesound.org/people/Luzanne0/sounds/445293/ , license: CC BY-NC 3.0 DEED
+female_cough4.ogg: https://freesound.org/people/Luzanne0/sounds/445293/ , license: CC BY-NC 3.0 DEED
+female_cough5.ogg: https://freesound.org/people/DarkNightPrincess/sounds/625322/ , license: CC0 1.0 DEED
+female_cough6.ogg: https://freesound.org/people/drotzruhn/sounds/405206/ , license: CC BY 4.0 DEED
+male_cough1.ogg: https://freesound.org/people/Harris85/sounds/208761/ , license: CC0 1.0 DEED
+male_cough2.ogg: https://freesound.org/people/midwestdocumentary/sounds/722622/ , license: CC0 1.0 DEED
+male_cough3.ogg: https://freesound.org/people/hadescolossus/sounds/701162/ , license: CC0 1.0 DEED
+male_cough4.ogg: https://freesound.org/people/SoundDesignForYou/sounds/646652/ , license: CC0 1.0 DEED
+male_cough5.ogg: https://freesound.org/people/SoundDesignForYou/sounds/646654/ , license: CC0 1.0 DEED
+male_cough6.ogg: https://freesound.org/people/SoundDesignForYou/sounds/646656/ , license: CC0 1.0 DEED
+lizard_laugh1.ogg: https://youtu.be/I7CX0AS8RNI , License: CC-BY-3.0
+moth_laugh1.ogg: https://github.com/BeeStation/BeeStation-Hornet/blob/11ba3fa04105c93dd96a63ad4afaef4b20c02d0d/sound/emotes/ , license: CC-BY-SA-3.0
+whistle1.ogg: https://freesound.org/people/taure/sounds/411638/ , license: CC0 1.0 DEED
+
+portal_close, portal_open_1 , portal_open_2 , portal_open_3 , portal_travel made by @virgilcore (discord IGN)
+
+toilet-flush.ogg is made by shw489 (CC0):
+https://freesound.org/people/shw489/sounds/234389/
+
+soup_boil1.ogg through soup_boil5.ogg and soup_boil_end.ogg are taken from Boiling Soup from Freesoung.org (CC4) and converted to OGG / split apart (but is otherwise unchanged):
+https://freesound.org/people/jorickhoofd/sounds/632783/
+
+compressed_air1.ogg is taken from Freesound and converted to ogg:
+https://freesound.org/people/Geoff-Bremner-Audio/sounds/682952/
+compressed_air2.ogg is taken from Freesound and converted to ogg:
+https://freesound.org/people/Geoff-Bremner-Audio/sounds/682816/
+tank_insert_clunky.ogg was created by mixing compressed_air1 and clunk sound from Freesound:
+https://freesound.org/people/BinaryMonkFlint/sounds/333296/
+tank_remove_thunk.ogg was made by mixing two sound tracks from Freesound:
+https://freesound.org/people/lowdjinn/sounds/533885/ and;
+https://freesound.org/people/BMacZero/sounds/96137/
+
+valve_opening.ogg was made by mixing water flowing samples from:
+https://freesound.org/people/scriotxstudios/sounds/349111/?attribution=1 and squeaky scrape sound from:
+https://freesound.org/people/Department64/sounds/669028/ which was modified with lower pitch
+
+liquid_pour2.ogg and liquid_pour3.ogg were cut from
+https://freesound.org/people/MattRuthSound/sounds/561896/
+https://freesound.org/people/MattRuthSound/sounds/561895/
+
+ayylien.ogg was made by remixing:
+SCIRetro_Energy Swells Synth_Funky Audio_Sonics Spices by Funky_Audio under CC0 -- https://freesound.org/people/realtheremin/sounds/119011/
+scifi_scare_a.aiff by realtheremin under CC0 -- https://freesound.org/people/Funky_Audio/sounds/729392/
+
+solarflare.ogg was made by ArcaneMusic, using the following sources from Freesound.org.
+"Flashbang Explosion Designed 14m" by modusmogulus https://freesound.org/people/modusmogulus/sounds/734095/ under CC 0
+"Hammer and anvil" by Duasun -- https://freesound.org/people/Duasun/sounds/321889/ under CC 0
+
+beaker_pickup.ogg was made by lowering pitch:
+Bottle Tap.wav by alex_alexalex -- https://freesound.org/s/395492/ -- License: Attribution NonCommercial 3.0
+beaker_place.ogg was made by cutting and lowering pitch:
+place glass object.wav by milpower -- https://freesound.org/s/353105/ -- License: Creative Commons 0

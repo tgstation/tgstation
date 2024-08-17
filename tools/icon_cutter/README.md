@@ -2,7 +2,7 @@
 
 ## What is this?
 
-This folder holds a set of cached versions of hypnagogic, our icon cutter.
+This folder will hold a set of cached versions of hypnagogic, our icon cutter. We autodownload the tagged version from github on build.
 
 ## How is it used?
 

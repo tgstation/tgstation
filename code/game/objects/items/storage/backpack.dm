@@ -32,10 +32,6 @@
  * Backpack Types
  */
 
-/obj/item/storage/backpack/old/Initialize(mapload)
-	. = ..()
-	atom_storage.max_total_storage = 12
-
 /obj/item/bag_of_holding_inert
 	name = "inert bag of holding"
 	desc = "What is currently a just an unwieldly block of metal with a slot ready to accept a bluespace anomaly core."
@@ -51,9 +47,8 @@
 
 /obj/item/bag_of_holding_inert/Initialize(mapload)
 	. = ..()
-	AddComponent(/datum/component/slapcrafting,\
-		slapcraft_recipes = list(/datum/crafting_recipe/boh)\
-	)
+	var/static/list/recipes = list(/datum/crafting_recipe/boh)
+	AddElement(/datum/element/slapcrafting, recipes)
 
 /obj/item/storage/backpack/holding
 	name = "bag of holding"
@@ -193,6 +188,12 @@
 	icon_state = "backpack-virology"
 	inhand_icon_state = "viropack"
 
+/obj/item/storage/backpack/floortile
+	name = "floortile backpack"
+	desc = "It's a backpack especially designed for use in floortiles..."
+	icon_state = "floortile_backpack"
+	inhand_icon_state = "backpack"
+
 /obj/item/storage/backpack/ert
 	name = "emergency response team commander backpack"
 	desc = "A spacious backpack with lots of pockets, worn by the Commander of an Emergency Response Team."
@@ -276,11 +277,11 @@
 		/datum/component/blood_walk,\
 		blood_type = /obj/effect/decal/cleanable/blood,\
 		blood_spawn_chance = 15,\
-		max_blood = 300,\
+		max_blood = custom_materials[custom_materials[1]] / SHEET_MATERIAL_AMOUNT,\
 	)
 	AddComponent(
 		/datum/component/bloody_spreader,\
-		blood_left = INFINITY,\
+		blood_left = custom_materials[custom_materials[1]] / SHEET_MATERIAL_AMOUNT,\
 		blood_dna = list("MEAT DNA" = "MT+"),\
 		diseases = null,\
 	)
@@ -376,7 +377,7 @@
 
 /obj/item/storage/backpack/satchel/flat
 	name = "smuggler's satchel"
-	desc = "A very slim satchel that can easily fit into tight spaces."
+	desc = "A very slim satchel that can easily fit into tight spaces. Its contents cannot be detected by contraband scanners."
 	icon_state = "satchel-flat"
 	inhand_icon_state = "satchel-flat"
 	w_class = WEIGHT_CLASS_NORMAL //Can fit in backpacks itself.
@@ -385,7 +386,8 @@
 	. = ..()
 	AddElement(/datum/element/undertile, TRAIT_T_RAY_VISIBLE, INVISIBILITY_OBSERVER, use_anchor = TRUE)
 	atom_storage.max_total_storage = 15
-	atom_storage.set_holdable(cant_hold_list = list(/obj/item/storage/backpack/satchel/flat)) //muh recursive backpacks)
+	atom_storage.set_holdable(cant_hold_list = /obj/item/storage/backpack/satchel/flat) //muh recursive backpacks
+	ADD_TRAIT(src, TRAIT_CONTRABAND_BLOCKER, INNATE_TRAIT)
 
 /obj/item/storage/backpack/satchel/flat/PopulateContents()
 	for(var/items in 1 to 4)

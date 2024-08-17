@@ -1,6 +1,7 @@
-import { filterMap, sortBy } from 'common/collections';
+import { filter, map, sortBy } from 'common/collections';
 import { classes } from 'common/react';
-import { useState } from 'react';
+import { createSearch } from 'common/string';
+import { ReactNode, useState } from 'react';
 
 import { sendAct, useBackend } from '../../backend';
 import {
@@ -8,6 +9,7 @@ import {
   Box,
   Button,
   Flex,
+  Input,
   LabeledList,
   Popper,
   Stack,
@@ -19,6 +21,7 @@ import {
   RandomSetting,
   ServerData,
 } from './data';
+import { DeleteCharacterPopup } from './DeleteCharacterPopup';
 import { MultiNameInput, NameInput } from './names';
 import features from './preferences/features';
 import {
@@ -90,6 +93,7 @@ const ChoicedSelection = (props: {
   const { act } = useBackend<PreferencesMenuData>();
 
   const { catalog, supplementalFeature, supplementalValue } = props;
+  const [getSearchText, searchTextSet] = useState('');
 
   if (!catalog.icons) {
     return <Box color="red">Provided catalog had no icons!</Box>;
@@ -97,8 +101,8 @@ const ChoicedSelection = (props: {
 
   return (
     <Box
+      className="ChoicedSelection"
       style={{
-        background: 'white',
         padding: '5px',
 
         height: `${
@@ -145,45 +149,66 @@ const ChoicedSelection = (props: {
 
         <Stack.Item overflowX="hidden" overflowY="scroll">
           <Autofocus>
+            <Input
+              placeholder="Search..."
+              style={{
+                margin: '0px 5px',
+                width: '95%',
+              }}
+              onInput={(_, value) => searchTextSet(value)}
+            />
             <Flex wrap>
-              {Object.entries(catalog.icons).map(([name, image], index) => {
-                return (
-                  <Flex.Item
-                    key={index}
-                    basis={`${CLOTHING_SELECTION_CELL_SIZE}px`}
-                    style={{
-                      padding: '5px',
-                    }}
-                  >
-                    <Button
-                      onClick={() => {
-                        props.onSelect(name);
-                      }}
-                      selected={name === props.selected}
-                      tooltip={name}
-                      tooltipPosition="right"
+              {searchInCatalog(getSearchText, catalog.icons).map(
+                ([name, image], index) => {
+                  return (
+                    <Flex.Item
+                      key={index}
+                      basis={`${CLOTHING_SELECTION_CELL_SIZE}px`}
                       style={{
-                        height: `${CLOTHING_SELECTION_CELL_SIZE}px`,
-                        width: `${CLOTHING_SELECTION_CELL_SIZE}px`,
+                        padding: '5px',
                       }}
                     >
-                      <Box
-                        className={classes([
-                          'preferences32x32',
-                          image,
-                          'centered-image',
-                        ])}
-                      />
-                    </Button>
-                  </Flex.Item>
-                );
-              })}
+                      <Button
+                        onClick={() => {
+                          props.onSelect(name);
+                        }}
+                        selected={name === props.selected}
+                        tooltip={name}
+                        tooltipPosition="right"
+                        style={{
+                          height: `${CLOTHING_SELECTION_CELL_SIZE}px`,
+                          width: `${CLOTHING_SELECTION_CELL_SIZE}px`,
+                        }}
+                      >
+                        <Box
+                          className={classes([
+                            'preferences32x32',
+                            image,
+                            'centered-image',
+                          ])}
+                        />
+                      </Button>
+                    </Flex.Item>
+                  );
+                },
+              )}
             </Flex>
           </Autofocus>
         </Stack.Item>
       </Stack>
     </Box>
   );
+};
+
+const searchInCatalog = (searchText = '', catalog: Record<string, string>) => {
+  let items = Object.entries(catalog);
+  if (searchText) {
+    items = filter(
+      items,
+      createSearch(searchText, ([name, _icon]) => name),
+    );
+  }
+  return items;
 };
 
 const GenderButton = (props: {
@@ -195,8 +220,9 @@ const GenderButton = (props: {
   return (
     <Popper
       isOpen={genderMenuOpen}
+      onClickOutside={() => setGenderMenuOpen(false)}
       placement="right-end"
-      popperContent={
+      content={
         <Stack backgroundColor="white" ml={0.5} p={0.3}>
           {[Gender.Male, Gender.Female, Gender.Other, Gender.Other2].map(
             (gender) => {
@@ -264,9 +290,10 @@ const MainFeature = (props: {
   return (
     <Popper
       placement="bottom-start"
-      onClickOutside={() => handleClose()}
       isOpen={isOpen}
-      popperContent={
+      onClickOutside={handleClose}
+      baseZIndex={1} // Below the default popper at z 2
+      content={
         <ChoicedSelection
           name={catalog.name}
           catalog={catalog}
@@ -346,16 +373,18 @@ const createSetRandomization =
     });
   };
 
-const sortPreferences = sortBy<[string, unknown]>(([featureId, _]) => {
-  const feature = features[featureId];
-  return feature?.name;
-});
+const sortPreferences = (array: [string, unknown][]) =>
+  sortBy(array, ([featureId, _]) => {
+    const feature = features[featureId];
+    return feature?.name;
+  });
 
 export const PreferenceList = (props: {
   act: typeof sendAct;
   preferences: Record<string, unknown>;
   randomizations: Record<string, RandomSetting>;
   maxHeight: string;
+  children?: ReactNode;
 }) => {
   return (
     <Stack.Item
@@ -414,6 +443,8 @@ export const PreferenceList = (props: {
           },
         )}
       </LabeledList>
+
+      {props.children}
     </Stack.Item>
   );
 };
@@ -429,22 +460,20 @@ export const getRandomization = (
 
   const { data } = useBackend<PreferencesMenuData>();
 
+  if (!randomBodyEnabled) {
+    return {};
+  }
+
   return Object.fromEntries(
-    filterMap(Object.keys(preferences), (preferenceKey) => {
-      if (serverData.random.randomizable.indexOf(preferenceKey) === -1) {
-        return undefined;
-      }
-
-      if (!randomBodyEnabled) {
-        return undefined;
-      }
-
-      return [
-        preferenceKey,
-        data.character_preferences.randomization[preferenceKey] ||
-          RandomSetting.Disabled,
-      ];
-    }),
+    map(
+      filter(Object.keys(preferences), (key) =>
+        serverData.random.randomizable.includes(key),
+      ),
+      (key) => [
+        key,
+        data.character_preferences.randomization[key] || RandomSetting.Disabled,
+      ],
+    ),
   );
 };
 
@@ -453,6 +482,8 @@ export const MainPage = (props: { openSpecies: () => void }) => {
   const [currentClothingMenu, setCurrentClothingMenu] = useState<string | null>(
     null,
   );
+  const [deleteCharacterPopupOpen, setDeleteCharacterPopupOpen] =
+    useState(false);
   const [multiNameInputOpen, setMultiNameInputOpen] = useState(false);
   const [randomToggleEnabled] = useRandomToggleState();
 
@@ -521,6 +552,12 @@ export const MainPage = (props: { openSpecies: () => void }) => {
                   })
                 }
                 names={data.character_preferences.names}
+              />
+            )}
+
+            {deleteCharacterPopupOpen && (
+              <DeleteCharacterPopup
+                close={() => setDeleteCharacterPopupOpen(false)}
               />
             )}
 
@@ -623,7 +660,21 @@ export const MainPage = (props: { openSpecies: () => void }) => {
                     )}
                     preferences={nonContextualPreferences}
                     maxHeight="auto"
-                  />
+                  >
+                    <Box my={0.5}>
+                      <Button
+                        color="red"
+                        disabled={
+                          Object.values(data.character_profiles).filter(
+                            (name) => name,
+                          ).length < 2
+                        } // check if existing chars more than one
+                        onClick={() => setDeleteCharacterPopupOpen(true)}
+                      >
+                        Delete Character
+                      </Button>
+                    </Box>
+                  </PreferenceList>
                 </Stack>
               </Stack.Item>
             </Stack>

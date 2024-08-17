@@ -1,6 +1,6 @@
 // Wheat
 /obj/item/seeds/wheat
-	name = "pack of wheat seeds"
+	name = "wheat seed pack"
 	desc = "These may, or may not, grow into wheat."
 	icon_state = "seed-wheat"
 	species = "wheat"
@@ -25,10 +25,12 @@
 	grind_results = list(/datum/reagent/consumable/flour = 0)
 	tastes = list("wheat" = 1)
 	distill_reagent = /datum/reagent/consumable/ethanol/beer
+	slot_flags = ITEM_SLOT_MASK
+	worn_icon = 'icons/mob/clothing/head/hydroponics.dmi'
 
 // Oat
 /obj/item/seeds/wheat/oat
-	name = "pack of oat seeds"
+	name = "oat seed pack"
 	desc = "These may, or may not, grow into oat."
 	icon_state = "seed-oat"
 	species = "oat"
@@ -50,7 +52,7 @@
 
 // Rice
 /obj/item/seeds/wheat/rice
-	name = "pack of rice seeds"
+	name = "rice seed pack"
 	desc = "These may, or may not, grow into rice."
 	icon_state = "seed-rice"
 	species = "rice"
@@ -74,7 +76,7 @@
 
 //Meatwheat - grows into synthetic meat
 /obj/item/seeds/wheat/meat
-	name = "pack of meatwheat seeds"
+	name = "meatwheat seed pack"
 	desc = "If you ever wanted to drive a vegetarian to insanity, here's how."
 	icon_state = "seed-meatwheat"
 	species = "meatwheat"
@@ -89,10 +91,12 @@
 	gender = PLURAL
 	bite_consumption_mod = 0.5
 	seed = /obj/item/seeds/wheat/meat
-	foodtypes = MEAT | GRAIN
+	foodtypes = MEAT
 	grind_results = list(/datum/reagent/consumable/flour = 0, /datum/reagent/blood = 0)
 	tastes = list("meatwheat" = 1)
 	can_distill = FALSE
+	slot_flags = ITEM_SLOT_MASK
+	worn_icon = 'icons/mob/clothing/head/hydroponics.dmi'
 
 /obj/item/food/grown/meatwheat/attack_self(mob/living/user)
 	user.visible_message(span_notice("[user] crushes [src] into meat."), span_notice("You crush [src] into something that resembles meat."))

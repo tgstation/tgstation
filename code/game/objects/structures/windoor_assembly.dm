@@ -1,13 +1,3 @@
-/* Windoor (window door) assembly -Nodrak
- * Step 1: Create a windoor out of rglass
- * Step 2: Add r-glass to the assembly to make a secure windoor (Optional)
- * Step 3: Rotate or Flip the assembly to face and open the way you want
- * Step 4: Wrench the assembly in place
- * Step 5: Add cables to the assembly
- * Step 6: Set access for the door.
- * Step 7: Screwdriver the door to complete
- */
-
 
 /obj/structure/windoor_assembly
 	icon = 'icons/obj/doors/windoor.dmi'
@@ -20,15 +10,32 @@
 	dir = NORTH
 	obj_flags = CAN_BE_HIT | BLOCKS_CONSTRUCTION_DIR
 	set_dir_on_move = FALSE
+	can_atmos_pass = ATMOS_PASS_PROC
 
+	/// Reference to the airlock electronics inside for determining window access.
 	var/obj/item/electronics/airlock/electronics = null
+	/// Player generated name string from renaming.
 	var/created_name = null
 
 	//Vars to help with the icon's name
-	var/facing = "l" //Does the windoor open to the left or right?
-	var/secure = FALSE //Whether or not this creates a secure windoor
-	var/state = "01" //How far the door assembly has progressed
-	can_atmos_pass = ATMOS_PASS_PROC
+	///Does the windoor open to the left or right?
+	var/facing = "l"
+	/// Whether this can make a secure windoor at all
+	var/can_secure = TRUE
+	/// Whether or not this creates a secure windoor
+	var/secure = FALSE
+	/**
+	  * Windoor (window door) assembly -Nodrak
+	  * Step 1: Create a windoor out of rglass
+	  * Step 2: Add r-glass to the assembly to make a secure windoor (Optional)
+	  * Step 3: Rotate or Flip the assembly to face and open the way you want
+	  * Step 4: Wrench the assembly in place
+	  * Step 5: Add cables to the assembly
+	  * Step 6: Set access for the door.
+	  * Step 7: Crowbar the door to complete
+	 */
+	var/state = "01"
+
 
 /obj/structure/windoor_assembly/Initialize(mapload, set_dir)
 	. = ..()
@@ -155,7 +162,7 @@
 						name = "windoor assembly"
 
 			//Adding plasteel makes the assembly a secure windoor assembly. Step 2 (optional) complete.
-			else if(istype(W, /obj/item/stack/sheet/plasteel) && !secure)
+			else if(istype(W, /obj/item/stack/sheet/plasteel) && can_secure && !secure)
 				var/obj/item/stack/sheet/plasteel/P = W
 				if(P.get_amount() < 2)
 					to_chat(user, span_warning("You need more plasteel to do this!"))
@@ -178,7 +185,7 @@
 			else if(istype(W, /obj/item/stack/cable_coil) && anchored)
 				user.visible_message(span_notice("[user] wires the windoor assembly."), span_notice("You start to wire the windoor assembly..."))
 
-				if(do_after(user, 40, target = src))
+				if(do_after(user, 4 SECONDS, target = src))
 					if(!src || !anchored || src.state != "01")
 						return
 					var/obj/item/stack/cable_coil/CC = W
@@ -220,7 +227,7 @@
 				user.visible_message(span_notice("[user] installs the electronics into the airlock assembly."),
 					span_notice("You start to install electronics into the airlock assembly..."))
 
-				if(do_after(user, 40, target = src))
+				if(do_after(user, 4 SECONDS, target = src))
 					if(!src || electronics)
 						W.forceMove(drop_location())
 						return
@@ -246,7 +253,7 @@
 					electronics = null
 					ae.forceMove(drop_location())
 
-			else if(istype(W, /obj/item/pen))
+			else if(IS_WRITING_UTENSIL(W))
 				var/t = tgui_input_text(user, "Enter the name for the door", "Windoor Renaming", created_name, MAX_NAME_LEN)
 				if(!t)
 					return
@@ -279,24 +286,40 @@
 	//Update to reflect changes(if applicable)
 	update_appearance()
 
+/obj/structure/windoor_assembly/examine(mob/user)
+	. = ..()
+	if(!anchored)
+		. += span_notice("\The [src] can be [span_boldnotice("wrenched")] down.")
+		. += span_notice("\The [src] could also be [span_boldnotice("cut apart")] with a [span_boldnotice("welder")].")
+		return
+	switch(state)
+		if("01")
+			. += span_notice("\The [src] needs [span_boldnotice("wiring")], or could be [span_boldnotice("un-wrenched")] from the floor.")
+		if("02")
+			if(!electronics)
+				. += span_notice("\The [src] needs [span_boldnotice("airlock electronics")] to continue installation, or [span_boldnotice("wirecutters")] to take apart.")
+			else
+				. += span_notice("\The [src] is ready to be [span_boldnotice("levered")] into place with a [span_boldnotice("crowbar")].")
+
 /obj/structure/windoor_assembly/proc/finish_door()
 	var/obj/machinery/door/window/windoor
-	if(secure)
-		windoor = new /obj/machinery/door/window/brigdoor(loc)
-		if(facing == "l")
-			windoor.icon_state = "leftsecureopen"
-			windoor.base_state = "leftsecure"
-		else
-			windoor.icon_state = "rightsecureopen"
-			windoor.base_state = "rightsecure"
 
-	else
-		windoor = new /obj/machinery/door/window(loc)
+	var/created_type = get_created_type()
+	windoor = new created_type(loc)
+
+	if(secure)
 		if(facing == "l")
-			windoor.icon_state = "leftopen"
+			windoor.icon_state = "left_secure_open"
+			windoor.base_state = "left_secure"
+		else
+			windoor.icon_state = "right_secure_open"
+			windoor.base_state = "right_secure"
+	else
+		if(facing == "l")
+			windoor.icon_state = "left_open"
 			windoor.base_state = "left"
 		else
-			windoor.icon_state = "rightopen"
+			windoor.icon_state = "right_open"
 			windoor.base_state = "right"
 
 	windoor.setDir(dir)
@@ -327,8 +350,9 @@
 
 	qdel(src)
 
-/obj/structure/windoor_assembly/AltClick(mob/user)
-	return ..() // This hotkey is BLACKLISTED since it's used by /datum/component/simple_rotation
+/// Returns the typepath of windoor to make
+/obj/structure/windoor_assembly/proc/get_created_type()
+	return secure ? /obj/machinery/door/window/brigdoor : /obj/machinery/door/window
 
 //Flips the windoor assembly, determines whather the door opens to the left or the right
 /obj/structure/windoor_assembly/verb/flip()
@@ -352,3 +376,11 @@
 
 	update_appearance()
 	return
+
+/obj/structure/windoor_assembly/half
+	icon = 'icons/obj/doors/windoor_half.dmi'
+	name = "short windoor Assembly"
+	can_secure = FALSE
+
+/obj/structure/windoor_assembly/half/get_created_type()
+	return /obj/machinery/door/window/half

@@ -13,6 +13,13 @@
 	throw_range = 7
 	slot_flags = ITEM_SLOT_BELT
 	resistance_flags = FLAMMABLE
+
+	unique_reskin = list(
+		"Brown" = "clipboard",
+		"Black" = "clipboard_black",
+		"White" = "clipboard_white",
+	)
+
 	/// The stored pen
 	var/obj/item/pen/pen
 	/// Is the pen integrated?
@@ -71,13 +78,16 @@
 	pen = null
 	update_icon()
 
-/obj/item/clipboard/AltClick(mob/user)
-	..()
-	if(pen)
-		if(integrated_pen)
-			to_chat(user, span_warning("You can't seem to find a way to remove [src]'s [pen]."))
-		else
-			remove_pen(user)
+/obj/item/clipboard/click_alt(mob/user)
+	if(isnull(pen))
+		return CLICK_ACTION_BLOCKING
+
+	if(integrated_pen)
+		to_chat(user, span_warning("You can't seem to find a way to remove [src]'s [pen]."))
+		return CLICK_ACTION_BLOCKING
+
+	remove_pen(user)
+	return CLICK_ACTION_SUCCESS
 
 /obj/item/clipboard/update_overlays()
 	. = ..()

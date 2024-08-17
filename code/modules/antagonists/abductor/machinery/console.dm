@@ -71,7 +71,7 @@
 		if(do_after(user,100, target = src))
 			TeleporterSend()
 
-/obj/machinery/abductor/console/ui_status(mob/user)
+/obj/machinery/abductor/console/ui_status(mob/user, datum/ui_state/state)
 	if(!isabductor(user) && !isobserver(user))
 		return UI_CLOSE
 	return ..()
@@ -198,11 +198,8 @@
 		pad.teleport_target = location
 		to_chat(user, span_notice("Location marked as test subject release point."))
 
-/obj/machinery/abductor/console/Initialize(mapload)
-	..()
-	return INITIALIZE_HINT_LATELOAD
-
-/obj/machinery/abductor/console/LateInitialize()
+/obj/machinery/abductor/console/post_machine_initialize()
+	. = ..()
 	if(!team_number)
 		return
 

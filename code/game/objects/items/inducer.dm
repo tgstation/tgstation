@@ -1,46 +1,51 @@
 /obj/item/inducer
 	name = "inducer"
-	desc = "A tool for inductively charging internal power cells."
+	desc = "A tool for inductively charging internal power cells and batteries."
 	icon = 'icons/obj/tools.dmi'
 	icon_state = "inducer-engi"
 	inhand_icon_state = "inducer-engi"
 	lefthand_file = 'icons/mob/inhands/equipment/tools_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/tools_righthand.dmi'
 	force = 7
-	var/powertransfer = 1000
+	/// Multiplier that determines the speed at which this inducer works at.
+	var/power_transfer_multiplier = 1
 	var/opened = FALSE
-	var/cell_type = /obj/item/stock_parts/cell/high
-	var/obj/item/stock_parts/cell/cell
+	var/cell_type = /obj/item/stock_parts/power_store/battery/high
+	var/obj/item/stock_parts/power_store/powerdevice
 	var/recharging = FALSE
 
 /obj/item/inducer/Initialize(mapload)
 	. = ..()
-	if(!cell && cell_type)
-		cell = new cell_type
+	if(!powerdevice && cell_type)
+		powerdevice = new cell_type
 
-/obj/item/inducer/proc/induce(obj/item/stock_parts/cell/target, coefficient)
-	var/totransfer = min(cell.charge,(powertransfer * coefficient))
+/obj/item/inducer/proc/induce(obj/item/stock_parts/power_store/target, coefficient)
+	var/obj/item/stock_parts/power_store/our_cell = get_cell()
+	var/rating_base = target.rating_base
+	var/totransfer = min(our_cell.charge, (rating_base * coefficient * power_transfer_multiplier))
 	var/transferred = target.give(totransfer)
-	cell.use(transferred)
-	cell.update_appearance()
+
+	our_cell.use(transferred)
+	our_cell.update_appearance()
 	target.update_appearance()
 
 /obj/item/inducer/get_cell()
-	return cell
+	return powerdevice
 
 /obj/item/inducer/emp_act(severity)
 	. = ..()
-	if(cell && !(. & EMP_PROTECT_CONTENTS))
-		cell.emp_act(severity)
+	var/obj/item/stock_parts/power_store/our_cell = get_cell()
+	if(!isnull(our_cell) && !(. & EMP_PROTECT_CONTENTS))
+		our_cell.emp_act(severity)
 
-/obj/item/inducer/attack_atom(obj/O, mob/living/carbon/user, params)
+/obj/item/inducer/attack_atom(obj/target, mob/living/carbon/user, params)
 	if(user.combat_mode)
 		return ..()
 
 	if(cantbeused(user))
 		return
 
-	if(recharge(O, user))
+	if(recharge(target, user))
 		return
 
 	return ..()
@@ -50,11 +55,13 @@
 		to_chat(user, span_warning("You don't have the dexterity to use [src]!"))
 		return TRUE
 
-	if(!cell)
+	var/obj/item/stock_parts/power_store/our_cell = get_cell()
+
+	if(isnull(our_cell))
 		balloon_alert(user, "no cell installed!")
 		return TRUE
 
-	if(!cell.charge)
+	if(!our_cell.charge)
 		balloon_alert(user, "no charge!")
 		return TRUE
 	return FALSE
@@ -73,94 +80,97 @@
 		update_appearance()
 		return
 
-/obj/item/inducer/attackby(obj/item/W, mob/user)
-	if(istype(W, /obj/item/stock_parts/cell))
+/obj/item/inducer/attackby(obj/item/used_item, mob/user)
+	if(istype(used_item, /obj/item/stock_parts/power_store))
 		if(opened)
-			if(!cell)
-				if(!user.transferItemToLoc(W, src))
+			var/obj/item/stock_parts/power_store/our_cell = get_cell()
+			if(isnull(our_cell))
+				if(!user.transferItemToLoc(used_item, src))
 					return
-				to_chat(user, span_notice("You insert [W] into [src]."))
-				cell = W
+				to_chat(user, span_notice("You insert [used_item] into [src]."))
+				powerdevice = used_item
 				update_appearance()
 				return
 			else
-				to_chat(user, span_warning("[src] already has \a [cell] installed!"))
+				to_chat(user, span_warning("[src] already has \a [our_cell] installed!"))
 				return
 
 	if(cantbeused(user))
 		return
 
-	if(recharge(W, user))
+	if(recharge(used_item, user))
 		return
 
 	return ..()
 
-/obj/item/inducer/proc/recharge(atom/movable/A, mob/user)
-	if(!isturf(A) && user.loc == A)
+/obj/item/inducer/proc/recharge(atom/movable/target, mob/user)
+	if(!isturf(target) && user.loc == target)
 		return FALSE
 	if(recharging)
 		return TRUE
-	else
-		recharging = TRUE
-	var/obj/item/stock_parts/cell/C = A.get_cell()
-	var/obj/O
+
+	recharging = TRUE
+	var/obj/item/stock_parts/power_store/our_cell = get_cell()
+	var/obj/item/stock_parts/power_store/target_cell = target.get_cell()
+	var/obj/target_as_object = target
 	var/coefficient = 1
-	if(istype(A, /obj/item/gun/energy))
+
+	if(istype(target, /obj/item/gun/energy) || istype(target, /obj/item/clothing/suit/space))
 		to_chat(user, span_alert("Error: unable to interface with device."))
 		return FALSE
-	if(istype(A, /obj/item/clothing/suit/space))
-		to_chat(user, span_alert("Error: unable to interface with device."))
-		return FALSE
-	if(isobj(A))
-		O = A
-	if(C)
+
+	if(target_cell)
 		var/done_any = FALSE
-		if(C.charge >= C.maxcharge)
+		if(target_cell.charge >= target_cell.maxcharge)
 			balloon_alert(user, "it's fully charged!")
 			recharging = FALSE
 			return TRUE
-		user.visible_message(span_notice("[user] starts recharging [A] with [src]."), span_notice("You start recharging [A] with [src]."))
-		while(C.charge < C.maxcharge)
-			if(do_after(user, 10, target = user) && cell.charge)
+
+		user.visible_message(span_notice("[user] starts recharging [target] with [src]."), span_notice("You start recharging [target] with [src]."))
+
+		while(target_cell.charge < target_cell.maxcharge)
+			if(do_after(user, 1 SECONDS, target = user) && our_cell.charge)
 				done_any = TRUE
-				induce(C, coefficient)
-				do_sparks(1, FALSE, A)
-				if(O)
-					O.update_appearance()
+				induce(target_cell, coefficient)
+				do_sparks(1, FALSE, target)
+				if(istype(target_as_object))
+					target_as_object.update_appearance()
 			else
 				break
 		if(done_any) // Only show a message if we succeeded at least once
-			user.visible_message(span_notice("[user] recharged [A]!"), span_notice("You recharged [A]!"))
+			user.visible_message(span_notice("[user] recharged [target]!"), span_notice("You recharged [target]!"))
 		recharging = FALSE
 		return TRUE
 	recharging = FALSE
 
 
-/obj/item/inducer/attack(mob/M, mob/living/user)
+/obj/item/inducer/attack(mob/target, mob/living/user)
 	if(user.combat_mode)
 		return ..()
 
 	if(cantbeused(user))
 		return
 
-	if(recharge(M, user))
+	if(recharge(target, user))
 		return
+
 	return ..()
 
 
 /obj/item/inducer/attack_self(mob/user)
-	if(opened && cell)
-		user.visible_message(span_notice("[user] removes [cell] from [src]!"), span_notice("You remove [cell]."))
-		cell.update_appearance()
-		user.put_in_hands(cell)
-		cell = null
+	if(opened && powerdevice)
+		user.visible_message(span_notice("[user] removes [powerdevice] from [src]!"), span_notice("You remove [powerdevice]."))
+		powerdevice.update_appearance()
+		user.put_in_hands(powerdevice)
+		powerdevice = null
 		update_appearance()
 
 
-/obj/item/inducer/examine(mob/living/M)
+/obj/item/inducer/examine(mob/living/user)
 	. = ..()
-	if(cell)
-		. += span_notice("Its display shows: [display_energy(cell.charge)].")
+	var/obj/item/stock_parts/power_store/our_cell = get_cell()
+	if(!isnull(our_cell))
+		. += span_notice("Its display shows: [display_energy(our_cell.charge)].")
 	else
 		. += span_notice("Its display is dark.")
 	if(opened)
@@ -170,14 +180,14 @@
 	. = ..()
 	if(!opened)
 		return
-	. += "inducer-[cell ? "bat" : "nobat"]"
+	. += "inducer-[!isnull(get_cell()) ? "bat" : "nobat"]"
 
 /obj/item/inducer/empty
 	cell_type = null
 	opened = TRUE
 
 /obj/item/inducer/orderable
-	cell_type = /obj/item/stock_parts/cell/inducer_supply
+	cell_type = /obj/item/stock_parts/power_store/cell/inducer_supply
 	opened = FALSE
 
 /obj/item/inducer/sci
@@ -195,5 +205,5 @@
 	icon_state = "inducer-syndi"
 	inhand_icon_state = "inducer-syndi"
 	desc = "A tool for inductively charging internal power cells. This one has a suspicious colour scheme, and seems to be rigged to transfer charge at a much faster rate."
-	powertransfer = 2000
-	cell_type = /obj/item/stock_parts/cell/super
+	power_transfer_multiplier = 2 // 2x the base speed
+	cell_type = /obj/item/stock_parts/power_store/cell/super

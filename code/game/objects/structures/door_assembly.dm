@@ -6,16 +6,17 @@
 	anchored = FALSE
 	density = TRUE
 	max_integrity = 200
+	greyscale_config = /datum/greyscale_config/airlocks/custom
 	/// Airlock's current construction state
 	var/state = AIRLOCK_ASSEMBLY_NEEDS_WIRES
-	var/base_name = "Airlock"
+	var/base_name = null
 	var/created_name = null
 	var/mineral = null
 	var/obj/item/electronics/airlock/electronics = null
 	/// Do we perform the extra checks required for multi-tile (large) airlocks
 	var/multi_tile = FALSE
 	/// The type path of the airlock once completed (solid version)
-	var/airlock_type = /obj/machinery/door/airlock
+	var/obj/machinery/door/airlock/airlock_type = /obj/machinery/door/airlock
 	/// The type path of the airlock once completed (glass version)
 	var/glass_type = /obj/machinery/door/airlock/glass
 	/// FALSE = glass can be installed. TRUE = glass is already installed.
@@ -35,17 +36,18 @@
 
 /obj/structure/door_assembly/multi_tile
 	name = "large airlock assembly"
-	icon = 'icons/obj/doors/airlocks/multi_tile/public/glass.dmi'
-	overlays_file = 'icons/obj/doors/airlocks/multi_tile/public/overlays.dmi'
-	base_name = "large airlock"
+	icon =  /obj/machinery/door/airlock/multi_tile/public/glass::icon
 	glass_type = /obj/machinery/door/airlock/multi_tile/public/glass
 	airlock_type = /obj/machinery/door/airlock/multi_tile/public/glass
 	dir = EAST
 	multi_tile = TRUE
 	glass = TRUE
 	nomineral = TRUE
+	material_amt = 8
 
 /obj/structure/door_assembly/Initialize(mapload)
+	base_name = base_name || initial(airlock_type.name) || "Airlock"
+	overlays_file = initial(airlock_type.overlays_file)
 	. = ..()
 	update_appearance()
 	update_name()
@@ -61,9 +63,6 @@
 
 /obj/structure/door_assembly/examine(mob/user)
 	. = ..()
-	var/doorname = ""
-	if(created_name)
-		doorname = ", written on it is '[created_name]'"
 	switch(state)
 		if(AIRLOCK_ASSEMBLY_NEEDS_WIRES)
 			if(anchored)
@@ -80,11 +79,11 @@
 		. += span_notice("There are <i>empty</i> slots for mineral covers.")
 	else if(!glass && !noglass)
 		. += span_notice("There are <i>empty</i> slots for glass windows.")
-	if(doorname)
-		. += span_notice("There is a small <i>paper</i> placard on the assembly labelled \"[doorname]\".")
+	if(created_name)
+		. += span_notice("There is a small <i>paper</i> placard on the assembly, written on it is '[created_name]'.")
 
 /obj/structure/door_assembly/attackby(obj/item/W, mob/living/user, params)
-	if(istype(W, /obj/item/pen) && !user.combat_mode)
+	if(IS_WRITING_UTENSIL(W) && !user.combat_mode)
 		var/t = tgui_input_text(user, "Enter the name for the door", "Airlock Renaming", created_name, MAX_NAME_LEN)
 		if(!t)
 			return
@@ -184,7 +183,7 @@
 		W.play_tool_sound(src, 100)
 		user.visible_message(span_notice("[user] installs the electronics into the airlock assembly."), \
 							span_notice("You start to install electronics into the airlock assembly..."))
-		if(do_after(user, 40, target = src))
+		if(do_after(user, 4 SECONDS, target = src))
 			if( state != AIRLOCK_ASSEMBLY_NEEDS_ELECTRONICS )
 				return
 			if(!user.transferItemToLoc(W, src))
@@ -224,7 +223,7 @@
 							playsound(src, 'sound/items/crowbar.ogg', 100, TRUE)
 							user.visible_message(span_notice("[user] adds [G.name] to the airlock assembly."), \
 												span_notice("You start to install [G.name] into the airlock assembly..."))
-							if(do_after(user, 40, target = src))
+							if(do_after(user, 4 SECONDS, target = src))
 								if(G.get_amount() < 1 || glass)
 									return
 								if(G.type == /obj/item/stack/sheet/rglass)
@@ -247,7 +246,7 @@
 								playsound(src, 'sound/items/crowbar.ogg', 100, TRUE)
 								user.visible_message(span_notice("[user] adds [G.name] to the airlock assembly."), \
 									span_notice("You start to install [G.name] into the airlock assembly..."))
-								if(do_after(user, 40, target = src))
+								if(do_after(user, 4 SECONDS, target = src))
 									if(G.get_amount() < 2 || mineral)
 										return
 									to_chat(user, span_notice("You install [M] plating into the airlock assembly."))
@@ -325,14 +324,7 @@
 	door.update_appearance()
 
 	qdel(src)
-
-/obj/structure/door_assembly/update_overlays()
-	. = ..()
-	if(!glass)
-		. += get_airlock_overlay("fill_construction", icon, src, TRUE)
-	else
-		. += get_airlock_overlay("glass_construction", overlays_file, src, TRUE)
-	. += get_airlock_overlay("panel_c[state+1]", overlays_file, src, TRUE)
+	return door
 
 /obj/structure/door_assembly/update_name()
 	name = ""
@@ -362,25 +354,22 @@
 	target.update_name()
 	qdel(source)
 
-/obj/structure/door_assembly/deconstruct(disassembled = TRUE)
-	if(!(obj_flags & NO_DECONSTRUCTION))
-		var/turf/T = get_turf(src)
-		if(!disassembled)
-			material_amt = rand(2,4)
-		new material_type(T, material_amt)
-		if(glass)
-			if(disassembled)
-				if(heat_proof_finished)
-					new /obj/item/stack/sheet/rglass(T)
-				else
-					new /obj/item/stack/sheet/glass(T)
+/obj/structure/door_assembly/atom_deconstruct(disassembled = TRUE)
+	var/turf/target_turf = get_turf(src)
+	if(!disassembled)
+		material_amt = rand(2,4)
+	new material_type(target_turf, material_amt)
+	if(glass)
+		if(disassembled)
+			if(heat_proof_finished)
+				new /obj/item/stack/sheet/rglass(target_turf)
 			else
-				new /obj/item/shard(T)
-		if(mineral)
-			var/obj/item/stack/sheet/mineral/mineral_path = text2path("/obj/item/stack/sheet/mineral/[mineral]")
-			new mineral_path(T, 2)
-	qdel(src)
-
+				new /obj/item/stack/sheet/glass(target_turf)
+		else
+			new /obj/item/shard(target_turf)
+	if(mineral)
+		var/obj/item/stack/sheet/mineral/mineral_path = text2path("/obj/item/stack/sheet/mineral/[mineral]")
+		new mineral_path(target_turf, 2)
 
 /obj/structure/door_assembly/rcd_vals(mob/user, obj/item/construction/rcd/the_rcd)
 	if(the_rcd.mode == RCD_DECONSTRUCT)
@@ -388,7 +377,7 @@
 	return FALSE
 
 /obj/structure/door_assembly/rcd_act(mob/user, obj/item/construction/rcd/the_rcd, list/rcd_data)
-	if(rcd_data["[RCD_DESIGN_MODE]"] == RCD_DECONSTRUCT)
+	if(rcd_data[RCD_DESIGN_MODE] == RCD_DECONSTRUCT)
 		qdel(src)
 		return TRUE
 	return FALSE

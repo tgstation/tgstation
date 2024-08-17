@@ -23,13 +23,16 @@ handles linking back and forth.
 	var/mat_container_flags = NONE
 	///List of signals to hook onto the local container
 	var/list/mat_container_signals
+	///Typecache for items that the silo will accept through this remote no matter what
+	var/list/whitelist_typecache
 
 /datum/component/remote_materials/Initialize(
 	mapload,
 	allow_standalone = TRUE,
 	force_connect = FALSE,
 	mat_container_flags = NONE,
-	list/mat_container_signals = null
+	list/mat_container_signals = null,
+	list/whitelist_typecache = null
 )
 	if (!isatom(parent))
 		return COMPONENT_INCOMPATIBLE
@@ -37,6 +40,7 @@ handles linking back and forth.
 	src.allow_standalone = allow_standalone
 	src.mat_container_flags = mat_container_flags
 	src.mat_container_signals = mat_container_signals
+	src.whitelist_typecache = whitelist_typecache
 
 	RegisterSignal(parent, COMSIG_ATOM_TOOL_ACT(TOOL_MULTITOOL), PROC_REF(OnMultitool))
 
@@ -74,8 +78,8 @@ handles linking back and forth.
 	if (silo)
 		silo.ore_connected_machines -= src
 		silo.holds -= src
-		silo.updateUsrDialog()
 		silo = null
+		UnregisterSignal(parent, COMSIG_ATOM_ATTACKBY)
 	mat_container = null
 	return ..()
 
@@ -84,28 +88,17 @@ handles linking back and forth.
 
 	silo = null
 
-	var/static/list/allowed_mats = list(
-		/datum/material/iron,
-		/datum/material/glass,
-		/datum/material/silver,
-		/datum/material/gold,
-		/datum/material/diamond,
-		/datum/material/plasma,
-		/datum/material/uranium,
-		/datum/material/bananium,
-		/datum/material/titanium,
-		/datum/material/bluespace,
-		/datum/material/plastic,
-	)
-
 	mat_container = parent.AddComponent( \
 		/datum/component/material_container, \
-		allowed_mats, \
+		SSmaterials.materials_by_category[MAT_CATEGORY_SILO], \
 		local_size, \
 		mat_container_flags, \
 		container_signals = mat_container_signals, \
 		allowed_items = /obj/item/stack \
 	)
+
+	if (whitelist_typecache)
+		mat_container.allowed_item_typecache |= whitelist_typecache
 
 /datum/component/remote_materials/proc/toggle_holding(force_hold = FALSE)
 	if(isnull(silo))
@@ -118,6 +111,12 @@ handles linking back and forth.
 	else
 		silo.holds -= src
 
+/**
+ * Sets the storage size for local materials when not linked with silo
+ * Arguments
+ *
+ * * size - the new size for local storage. measured in SHEET_MATERIAL_SIZE units
+ */
 /datum/component/remote_materials/proc/set_local_size(size)
 	local_size = size
 	if (!silo && mat_container)
@@ -135,6 +134,7 @@ handles linking back and forth.
 	silo.ore_connected_machines -= src
 	silo = null
 	mat_container = null
+	UnregisterSignal(parent, COMSIG_ATOM_ATTACKBY)
 	if (allow_standalone)
 		_MakeLocal()
 
@@ -147,16 +147,14 @@ handles linking back and forth.
 		return
 
 	if(silo)
-		mat_container.user_insert(target, user, parent)
+		mat_container.user_insert(target, user, parent, (whitelist_typecache && is_type_in_typecache(target, whitelist_typecache)))
 
 	return COMPONENT_NO_AFTERATTACK
 
-/datum/component/remote_materials/proc/OnMultitool(datum/source, mob/user, obj/item/I)
+/datum/component/remote_materials/proc/OnMultitool(datum/source, mob/user, obj/item/multitool/M)
 	SIGNAL_HANDLER
 
-	if(!I.multitool_check_buffer(user, I))
-		return ITEM_INTERACT_BLOCKING
-	var/obj/item/multitool/M = I
+	. = NONE
 	if (!QDELETED(M.buffer) && istype(M.buffer, /obj/machinery/ore_silo))
 		if (silo == M.buffer)
 			to_chat(user, span_warning("[parent] is already connected to [silo]!"))
@@ -170,7 +168,6 @@ handles linking back and forth.
 		if (silo)
 			silo.ore_connected_machines -= src
 			silo.holds -= src
-			silo.updateUsrDialog()
 		else if (mat_container)
 			//transfer all mats to silo. whatever cannot be transfered is dumped out as sheets
 			if(mat_container.total_amount())
@@ -183,12 +180,11 @@ handles linking back and forth.
 			qdel(mat_container)
 		silo = new_silo
 		silo.ore_connected_machines += src
-		silo.updateUsrDialog()
 		mat_container = new_container
 		if(!(mat_container_flags & MATCONTAINER_NO_INSERT))
 			RegisterSignal(parent, COMSIG_ATOM_ATTACKBY, TYPE_PROC_REF(/datum/component/remote_materials, SiloAttackBy))
 		to_chat(user, span_notice("You connect [parent] to [silo] from the multitool's buffer."))
-		return ITEM_INTERACT_BLOCKING
+		return ITEM_INTERACT_SUCCESS
 
 /**
  * Checks if the param silo is in the same level as this components parent i.e. connected machine, rcd, etc
@@ -210,7 +206,7 @@ handles linking back and forth.
 	return check_z_level() ? silo.holds[src] : FALSE
 
 /**
- * Internal proc to check if this connection can use any materials from the silo
+ * Check if this connection can use any materials from the silo
  * Returns true only if
  * - The parent is of type movable atom
  * - A mat container is actually present
@@ -218,9 +214,7 @@ handles linking back and forth.
  * Arguments
  * * check_hold - should we check if the silo is on hold
  */
-/datum/component/remote_materials/proc/_can_use_resource(check_hold = TRUE)
-	PRIVATE_PROC(TRUE)
-
+/datum/component/remote_materials/proc/can_use_resource(check_hold = TRUE)
 	var/atom/movable/movable_parent = parent
 	if (!istype(movable_parent))
 		return FALSE
@@ -244,7 +238,7 @@ handles linking back and forth.
  * name- For logging only. the design you are trying to build e.g. matter bin, etc.
  */
 /datum/component/remote_materials/proc/use_materials(list/mats, coefficient = 1, multiplier = 1, action = "build", name = "design")
-	if(!_can_use_resource())
+	if(!can_use_resource())
 		return 0
 
 	var/amount_consumed = mat_container.use_materials(mats, coefficient, multiplier)
@@ -266,7 +260,7 @@ handles linking back and forth.
  * [drop_target][atom]- optional where to drop the sheets. null means it is dropped at this components parent location
  */
 /datum/component/remote_materials/proc/eject_sheets(datum/material/material_ref, eject_amount, atom/drop_target = null)
-	if(!_can_use_resource())
+	if(!can_use_resource())
 		return 0
 
 	var/atom/movable/movable_parent = parent
@@ -283,7 +277,7 @@ handles linking back and forth.
  * * multiplier - the multiplier applied on the materials consumed
  */
 /datum/component/remote_materials/proc/insert_item(obj/item/weapon, multiplier = 1)
-	if(!_can_use_resource(FALSE))
+	if(!can_use_resource(FALSE))
 		return MATERIAL_INSERT_ITEM_FAILURE
 
 	return mat_container.insert_item(weapon, multiplier, parent)

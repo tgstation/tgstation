@@ -205,4 +205,5 @@
 		"Radiation" = "Radiation gets released during this decomposition process.",
 		"Hallucinations" = "This reaction can cause various carbon based lifeforms in the vicinity to hallucinate.",
 		"Nuclear Particles" = "This reaction emits extremely high energy nuclear particles, up to [2 * PN_BZASE_NUCLEAR_PARTICLE_MAXIMUM] per second per unique gas mixture.",
+		"Temperature" = "Can only occur between [PN_BZASE_MIN_TEMP] - [PN_BZASE_MAX_TEMP] kelvin.",
 	)

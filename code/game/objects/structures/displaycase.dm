@@ -1,6 +1,7 @@
 /obj/structure/displaycase
+	SET_BASE_VISUAL_PIXEL(0, DEPTH_OFFSET)
 	name = "display case"
-	icon = 'icons/obj/structures.dmi'
+	icon = 'icons/obj/storage/storage.dmi'
 	icon_state = "glassbox"
 	desc = "A display case for prized possessions."
 	density = TRUE
@@ -81,17 +82,15 @@
 		if(BURN)
 			playsound(src, 'sound/items/welder.ogg', 100, TRUE)
 
-/obj/structure/displaycase/deconstruct(disassembled = TRUE)
-	if(!(obj_flags & NO_DECONSTRUCTION))
-		dump()
-		if(!disassembled)
-			new /obj/item/shard(drop_location())
-			trigger_alarm()
-	qdel(src)
+/obj/structure/displaycase/atom_deconstruct(disassembled = TRUE)
+	dump()
+	if(!disassembled)
+		new /obj/item/shard(drop_location())
+		trigger_alarm()
 
 /obj/structure/displaycase/atom_break(damage_flag)
 	. = ..()
-	if(!broken && !(obj_flags & NO_DECONSTRUCTION))
+	if(!broken)
 		set_density(FALSE)
 		broken = TRUE
 		new /obj/item/shard(drop_location())
@@ -168,7 +167,7 @@
 			to_chat(user, span_warning("You need two glass sheets to fix the case!"))
 			return
 		to_chat(user, span_notice("You start fixing [src]..."))
-		if(do_after(user, 20, target = src))
+		if(do_after(user, 2 SECONDS, target = src))
 			glass_sheet.use(2)
 			broken = FALSE
 			atom_integrity = max_integrity
@@ -224,7 +223,7 @@
 /obj/structure/displaycase_chassis
 	name = "display case chassis"
 	desc = "The wooden base of a display case."
-	icon = 'icons/obj/structures.dmi'
+	icon = 'icons/obj/storage/storage.dmi'
 	icon_state = "glassbox_chassis"
 	resistance_flags = FLAMMABLE
 	anchored = TRUE
@@ -453,8 +452,8 @@
 		ui.open()
 
 /obj/item/key/displaycase
-	name = "display case key"
-	desc = "The key to the curator's display cases."
+	name = "curator key"
+	desc = "The key to the curator's display cases and arcade cabinets."
 
 /obj/item/showpiece_dummy
 	name = "holographic replica"
@@ -630,7 +629,7 @@
 	. = ..()
 	if(atom_integrity <= (integrity_failure * max_integrity))
 		to_chat(user, span_notice("You start recalibrating [src]'s hover field..."))
-		if(do_after(user, 20, target = src))
+		if(do_after(user, 2 SECONDS, target = src))
 			broken = FALSE
 			atom_integrity = max_integrity
 			update_appearance()
@@ -673,7 +672,7 @@
 
 /obj/structure/displaycase/forsale/atom_break(damage_flag)
 	. = ..()
-	if(!broken && !(obj_flags & NO_DECONSTRUCTION))
+	if(!broken)
 		broken = TRUE
 		playsound(src, SFX_SHATTER, 70, TRUE)
 		update_appearance()

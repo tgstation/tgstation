@@ -9,9 +9,9 @@
 	armor_flag = LASER
 	eyeblur = 4 SECONDS
 	impact_effect_type = /obj/effect/temp_visual/impact_effect/red_laser
-	light_system = MOVABLE_LIGHT
+	light_system = OVERLAY_LIGHT
 	light_range = 1
-	light_power = 1
+	light_power = 1.4
 	light_color = COLOR_SOFT_RED
 	ricochets_max = 50 //Honk!
 	ricochet_chance = 80
@@ -37,6 +37,15 @@
 	name = "practice laser"
 	impact_effect_type = /obj/effect/temp_visual/impact_effect/yellow_laser
 	damage = 0
+
+/obj/projectile/beam/laser/carbine/cybersun
+	name = "red plasma beam"
+	icon_state = "lava"
+	light_color = COLOR_DARK_RED
+	impact_effect_type = /obj/effect/temp_visual/impact_effect/red_laser
+	damage = 9
+	wound_bonus = -40
+	speed = 1.1
 
 //overclocked laser, does a bit more damage but has much higher wound power (-0 vs -20)
 /obj/projectile/beam/laser/hellfire
@@ -249,23 +258,6 @@
 /obj/projectile/beam/lasertag/bluetag/hitscan
 	hitscan = TRUE
 
-//a shrink ray that shrinks stuff, which grows back after a short while.
-/obj/projectile/beam/shrink
-	name = "shrink ray"
-	icon_state = "blue_laser"
-	hitsound = 'sound/weapons/shrink_hit.ogg'
-	damage = 0
-	damage_type = STAMINA
-	armor_flag = ENERGY
-	impact_effect_type = /obj/effect/temp_visual/impact_effect/shrink
-	light_color = LIGHT_COLOR_BLUE
-	var/shrink_time = 90
-
-/obj/projectile/beam/shrink/on_hit(atom/target, blocked = 0, pierce_hit)
-	. = ..()
-	if(isopenturf(target) || isindestructiblewall(target))//shrunk floors wouldnt do anything except look weird, i-walls shouldn't be bypassable
-		return
-	target.AddComponent(/datum/component/shrink, shrink_time)
-
-/obj/projectile/beam/shrink/is_hostile_projectile()
-	return TRUE
+/obj/projectile/magic/shrink/alien
+	antimagic_flags = NONE
+	shrink_time = 9 SECONDS

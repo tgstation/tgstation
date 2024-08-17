@@ -7,8 +7,8 @@
  * # Goliath Broodmother
  *
  * A stronger, faster variation of the goliath.  Has the ability to spawn baby goliaths, which it can later detonate at will.
- * When it's health is below half, tendrils will spawn randomly around it.  When it is below a quarter of health, this effect is doubled.
- * It's attacks are as follows:
+ * When its health is below half, tendrils will spawn randomly around it.  When it is below a quarter of health, this effect is doubled.
+ * Its attacks are as follows:
  * - Spawns a 3x3/plus shape of tentacles on the target location
  * - Spawns 2 baby goliaths on its tile, up to a max of 8.  Children blow up when they die.
  * - The broodmother lets out a noise, and is able to move faster for 6.5 seconds.
@@ -44,6 +44,7 @@
 	mouse_opacity = MOUSE_OPACITY_ICON
 	death_message = "explodes into gore!"
 	loot_drop = /obj/item/crusher_trophy/broodmother_tongue
+	shadow_type = SHADOW_LARGE
 
 	attack_action_types = list(/datum/action/innate/elite_attack/tentacle_patch,
 								/datum/action/innate/elite_attack/spawn_children,
@@ -143,13 +144,13 @@
 	ranged_cooldown = world.time + 100
 	playsound(src,'sound/voice/insane_low_laugh.ogg', 200, 1)
 	visible_message(span_warning("[src] starts picking up speed!"))
-	color = "#FF0000"
+	color = COLOR_RED
 	set_varspeed(0)
 	move_to_delay = 3
-	addtimer(CALLBACK(src, PROC_REF(reset_rage)), 65)
+	addtimer(CALLBACK(src, PROC_REF(reset_rage)), 6.5 SECONDS)
 
 /mob/living/simple_animal/hostile/asteroid/elite/broodmother/proc/reset_rage()
-	color = "#FFFFFF"
+	color = COLOR_WHITE
 	set_varspeed(2)
 	move_to_delay = 5
 
@@ -167,7 +168,7 @@
 //The goliath's children.  Pretty weak, simple mobs which are able to put a single tentacle under their target when at range.
 /mob/living/simple_animal/hostile/asteroid/elite/broodmother_child
 	name = "baby goliath"
-	desc = "A young goliath recently born from it's mother.  While they hatch from eggs, said eggs are incubated in the mother until they are ready to be born."
+	desc = "A young goliath recently born from its mother.  While they hatch from eggs, said eggs are incubated in the mother until they are ready to be born."
 	icon = 'icons/mob/simple/lavaland/lavaland_monsters.dmi'
 	icon_state = "goliath_baby"
 	icon_living = "goliath_baby"

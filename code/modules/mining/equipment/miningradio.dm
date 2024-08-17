@@ -1,6 +1,6 @@
 /// Portable mining radio purchasable by miners
 /obj/item/radio/weather_monitor
-	icon = 'icons/obj/miningradio.dmi'
+	icon = 'icons/obj/devices/miningradio.dmi'
 	name = "mining weather radio"
 	icon_state = "miningradio"
 	desc = "A weather radio designed for use in inhospitable environments. Gives audible warnings when storms approach. Has access to cargo channel."

@@ -8,6 +8,7 @@
 	melee_damage_lower = 20 //Refers to unarmed damage, aliens do unarmed attacks.
 	melee_damage_upper = 20
 	max_grab = GRAB_AGGRESSIVE
+
 	var/caste = ""
 	var/alt_icon = 'icons/mob/nonhuman-player/alienleap.dmi' //used to switch between the two alien icon files.
 	var/leap_on_click = 0
@@ -69,17 +70,6 @@ GLOBAL_LIST_INIT(strippable_alien_humanoid_items, create_strippable_list(list(
 		playsound(get_turf(src), pick('sound/voice/lowHiss2.ogg', 'sound/voice/lowHiss3.ogg', 'sound/voice/lowHiss4.ogg'), 50, FALSE, -5)
 	return ..()
 
-/mob/living/carbon/alien/adult/set_name()
-	if(numba)
-		name = "[name] ([numba])"
-		real_name = name
-
-/mob/living/carbon/alien/adult/proc/grab(mob/living/carbon/human/target)
-	if(target.check_block(src, 0, "[target]'s grab"))
-		return FALSE
-	target.grabbedby(src)
-	return TRUE
-
 /mob/living/carbon/alien/adult/setGrabState(newstate)
 	if(newstate == grab_state)
 		return
@@ -102,7 +92,7 @@ GLOBAL_LIST_INIT(strippable_alien_humanoid_items, create_strippable_list(list(
 			if(. <= GRAB_AGGRESSIVE)
 				ADD_TRAIT(pulling, TRAIT_FLOORED, CHOKEHOLD_TRAIT)
 
-/mob/living/carbon/alien/adult/MouseDrop_T(atom/dropping, atom/user)
+/mob/living/carbon/alien/adult/mouse_drop_receive(atom/dropping, mob/user, params)
 	if(devour_lad(dropping))
 		return
 	return ..()
@@ -148,6 +138,9 @@ GLOBAL_LIST_INIT(strippable_alien_humanoid_items, create_strippable_list(list(
 	log_combat(src, lucky_winner, "devoured")
 	melting_pot.consume_thing(lucky_winner)
 	return TRUE
+
+/mob/living/carbon/alien/adult/get_butt_sprite()
+	return icon('icons/mob/butts.dmi', BUTT_SPRITE_XENOMORPH)
 
 // Aliens can touch acid
 /mob/living/carbon/alien/can_touch_acid(atom/acided_atom, acid_power, acid_volume)

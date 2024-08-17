@@ -1,6 +1,6 @@
 // [2] is the group index of the blocked term when it is not using word bounds.
 // This is sanity checked by unit tests.
-#define GET_MATCHED_GROUP(regex) (lowertext(regex.group[2] || regex.match))
+#define GET_MATCHED_GROUP(regex) (LOWER_TEXT(regex.group[2] || regex.match))
 
 /// Given a text, will return what word is on the IC filter, with the reason.
 /// Returns null if the message is OK.
@@ -84,6 +84,14 @@
 		)
 
 	return null
+
+///Given a pda message, will replace any match in the message with grawlixs.
+/proc/censor_ic_filter_for_pdas(message)
+	if(config.ic_outside_pda_filter_regex)
+		message = config.ic_outside_pda_filter_regex.Replace(message, GLOBAL_PROC_REF(grawlix))
+	if(config.soft_ic_outside_pda_filter_regex)
+		message = config.soft_ic_outside_pda_filter_regex.Replace(message, GLOBAL_PROC_REF(grawlix))
+	return message
 
 /// Logs to the filter log with the given message, match, and scope
 /proc/log_filter(scope, message, filter_result)

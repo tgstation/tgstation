@@ -88,6 +88,7 @@
 	strip_delay = 60
 	armor_type = /datum/armor/captain_gloves
 	resistance_flags = NONE
+	clothing_traits = list(TRAIT_FAST_CUFFING)
 
 /datum/armor/captain_gloves
 	bio = 90
@@ -102,7 +103,7 @@
 	greyscale_colors = null
 	siemens_coefficient = 0.3
 	armor_type = /datum/armor/latex_gloves
-	clothing_traits = list(TRAIT_QUICK_CARRY, TRAIT_FINGERPRINT_PASSTHROUGH)
+	clothing_traits = list(TRAIT_QUICK_CARRY)
 	resistance_flags = NONE
 
 /datum/armor/latex_gloves

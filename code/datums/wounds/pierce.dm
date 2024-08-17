@@ -55,7 +55,7 @@
 			victim.add_splatter_floor(get_step(victim.loc, victim.dir))
 
 /datum/wound/pierce/bleed/get_bleed_rate_of_change()
-	//basically if a species doesn't bleed, the wound is stagnant and will not heal on it's own (nor get worse)
+	//basically if a species doesn't bleed, the wound is stagnant and will not heal on its own (nor get worse)
 	if(!limb.can_bleed())
 		return BLOOD_FLOW_STEADY
 	if(HAS_TRAIT(victim, TRAIT_BLOODY_MESS))
@@ -74,7 +74,7 @@
 		if(victim.bodytemperature < (BODYTEMP_NORMAL - 10))
 			adjust_blood_flow(-0.1 * seconds_per_tick)
 			if(SPT_PROB(2.5, seconds_per_tick))
-				to_chat(victim, span_notice("You feel the [lowertext(name)] in your [limb.plaintext_zone] firming up from the cold!"))
+				to_chat(victim, span_notice("You feel the [LOWER_TEXT(name)] in your [limb.plaintext_zone] firming up from the cold!"))
 
 		if(HAS_TRAIT(victim, TRAIT_BLOODY_MESS))
 			adjust_blood_flow(0.25 * seconds_per_tick) // old heparin used to just add +2 bleed stacks per tick, this adds 0.5 bleed flow to all open cuts which is probably even stronger as long as you can cut them first

@@ -32,12 +32,14 @@ GLOBAL_LIST_INIT(animatable_blacklist, typecacheof(list(
 	speak_emote = list("creaks")
 	taunt_chance = 30
 
-	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_plas" = 0, "max_plas" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
+	atmos_requirements = null
 	minbodytemp = 0
 
 	faction = list(FACTION_MIMIC)
 	move_to_delay = 9
 	del_on_death = 1
+	shadow_type = SHADOW_NONE // crates dont have shadows
+
 	///A cap for items in the mimic. Prevents the mimic from eating enough stuff to cause lag when opened.
 	var/storage_capacity = 50
 	///A cap for mobs. Mobs count towards the item cap. Same purpose as above.

@@ -2,6 +2,7 @@
 // of basic interactions with the machines.
 
 /obj/machinery/telecomms
+	SET_BASE_VISUAL_PIXEL(0, DEPTH_OFFSET)
 	/// The current temporary frequency used to add new filtered frequencies
 	/// options.
 	var/tempfreq = FREQ_COMMON
@@ -88,7 +89,7 @@
 		return
 
 	var/mob/living/current_user = usr
-	if(!issilicon(current_user))
+	if(!HAS_SILICON_ACCESS(current_user))
 		if(!istype(current_user.get_active_held_item(), /obj/item/multitool))
 			return
 
@@ -246,19 +247,19 @@
 
 /// Returns a multitool from a user depending on their mobtype.
 /obj/machinery/telecomms/proc/get_multitool(mob/user)
-	var/obj/item/multitool/multitool = null
-	// Let's double check
-	if(!issilicon(user) && istype(user.get_active_held_item(), /obj/item/multitool))
-		multitool = user.get_active_held_item()
-	else if(isAI(user))
+	. = null
+	if(isAI(user))
 		var/mob/living/silicon/ai/U = user
-		multitool = U.aiMulti
-	else if(iscyborg(user) && in_range(user, src))
-		if(istype(user.get_active_held_item(), /obj/item/multitool))
-			multitool = user.get_active_held_item()
-	return multitool
+		return U.aiMulti
 
-/obj/machinery/telecomms/proc/canAccess(mob/user)
-	if(issilicon(user) || in_range(user, src))
-		return TRUE
-	return FALSE
+	var/obj/item/held_item = user.get_active_held_item()
+	if(QDELETED(held_item))
+		return
+	held_item = held_item.get_proxy_attacker_for(src, user) //for borgs omni tool
+	if(held_item.tool_behaviour != TOOL_MULTITOOL)
+		return
+
+	if(!HAS_SILICON_ACCESS(user))
+		return held_item
+	if(iscyborg(user) && in_range(user, src))
+		return held_item

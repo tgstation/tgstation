@@ -1,7 +1,7 @@
 /obj/machinery/transport/destination_sign
 	name = "destination sign"
 	desc = "A display to show you what direction the tram is travelling."
-	icon = 'icons/obj/tram/tram_display.dmi'
+	icon = 'icons/obj/structures/tram/tram_display.dmi'
 	icon_state = "desto_blank"
 	base_icon_state = "desto"
 	use_power = NO_POWER_USE
@@ -24,7 +24,7 @@
 	pixel_x = 8
 
 /obj/machinery/transport/destination_sign/indicator
-	icon = 'icons/obj/tram/tram_indicator.dmi'
+	icon = 'icons/obj/structures/tram/tram_indicator.dmi'
 	icon_state = "indi_blank"
 	base_icon_state = "indi"
 	use_power = IDLE_POWER_USE
@@ -38,10 +38,9 @@
 	name = "indicator display frame"
 	desc = "Used to build tram indicator displays, just secure to the wall."
 	icon_state = "indi_blank"
-	icon = 'icons/obj/tram/tram_indicator.dmi'
+	icon = 'icons/obj/structures/tram/tram_indicator.dmi'
 	custom_materials = list(/datum/material/titanium = SHEET_MATERIAL_AMOUNT * 4, /datum/material/iron = SHEET_MATERIAL_AMOUNT * 2, /datum/material/glass = SHEET_MATERIAL_AMOUNT * 2)
 	result_path = /obj/machinery/transport/destination_sign/indicator
-	pixel_shift = 32
 
 /obj/machinery/transport/destination_sign/Initialize(mapload)
 	. = ..()
@@ -51,7 +50,6 @@
 		TRAMSTATION_LINE_1,
 	)
 	set_light(l_dir = REVERSE_DIR(dir))
-	return INITIALIZE_HINT_LATELOAD
 
 /obj/machinery/transport/destination_sign/Destroy()
 	SStransport.displays -= src
@@ -61,7 +59,7 @@
 	. = ..()
 	set_light(l_dir = REVERSE_DIR(dir))
 
-/obj/machinery/transport/destination_sign/indicator/LateInitialize(mapload)
+/obj/machinery/transport/destination_sign/indicator/post_machine_initialize()
 	. = ..()
 	link_tram()
 
@@ -81,9 +79,7 @@
 	if(panel_open)
 		. += span_notice("It is secured to the tram wall with [EXAMINE_HINT("bolts.")]")
 
-/obj/machinery/transport/destination_sign/deconstruct(disassembled = TRUE)
-	if(obj_flags & NO_DECONSTRUCTION)
-		return
+/obj/machinery/transport/destination_sign/on_deconstruction(disassembled)
 	if(disassembled)
 		new /obj/item/wallframe/indicator_display(drop_location())
 	else
@@ -91,7 +87,6 @@
 		new /obj/item/stack/sheet/iron(drop_location(), 1)
 		new /obj/item/shard(drop_location())
 		new /obj/item/shard(drop_location())
-	qdel(src)
 
 /obj/machinery/transport/destination_sign/indicator/wrench_act_secondary(mob/living/user, obj/item/tool)
 	. = ..()

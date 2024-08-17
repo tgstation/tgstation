@@ -57,7 +57,7 @@
 #define COMSIG_GLOB_NEW_MACHINE "!new_machine"
 /// a client (re)connected, after all /client/New() checks have passed : (client/connected_client)
 #define COMSIG_GLOB_CLIENT_CONNECT "!client_connect"
-/// a weather event of some kind occured
+/// a weather event of some kind occured (all pass the datum/weather that changed state)
 #define COMSIG_WEATHER_TELEGRAPH(event_type) "!weather_telegraph [event_type]"
 #define COMSIG_WEATHER_START(event_type) "!weather_start [event_type]"
 #define COMSIG_WEATHER_WINDDOWN(event_type) "!weather_winddown [event_type]"
@@ -103,3 +103,6 @@
 
 /// Global signal sent when narsie summon count is updated: (new count)
 #define COMSIG_NARSIE_SUMMON_UPDATE "!narsie_summon_update"
+
+/// Global signal sent when a mob is spawned from a ghost in a dynamic ruleset (mob/spawned_mob)
+#define COMSIG_RULESET_BODY_GENERATED_FROM_GHOSTS "!ruleset_body_generated_from_ghosts"

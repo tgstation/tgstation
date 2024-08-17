@@ -22,7 +22,7 @@
 		gland_colors[i] = random_color()
 		amounts[i] = rand(1,5)
 
-/obj/machinery/abductor/gland_dispenser/ui_status(mob/user)
+/obj/machinery/abductor/gland_dispenser/ui_status(mob/user, datum/ui_state/state)
 	if(!isabductor(user) && !isobserver(user))
 		return UI_CLOSE
 	return ..()

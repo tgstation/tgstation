@@ -52,7 +52,7 @@
 	kill.update_explanation_text()
 	objectives += kill
 
-	owner.set_assigned_role(SSjob.GetJobType(/datum/job/paradox_clone))
+	owner.set_assigned_role(SSjob.get_job_type(/datum/job/paradox_clone))
 
 	//clone doesnt show up on message lists
 	var/obj/item/modular_computer/pda/messenger = locate() in owner.current
@@ -95,3 +95,9 @@
 		explanation_text = "Free Objective"
 		CRASH("WARNING! [ADMIN_LOOKUPFLW(owner)] paradox clone objectives forged without an original!")
 	explanation_text = "Murder and replace [target.name], the [!target_role_type ? target.assigned_role.title : target.special_role]. Remember, your mission is to blend in, do not kill anyone else unless you have to!"
+
+///Static bluespace stream used in its ghost poll icon.
+/obj/effect/bluespace_stream
+	name = "bluespace stream"
+	icon = 'icons/effects/effects.dmi'
+	icon_state = "bluestream"

@@ -13,6 +13,8 @@
 			span_notice("[owner] slowly peeks up from the ground..."),
 			span_noticealien("You stop hiding."),
 		)
+		ADD_TRAIT(owner, TRAIT_IGNORE_ELEVATION, ACTION_TRAIT)
+		REMOVE_TRAIT(owner, TRAIT_SHADOWLESS, ACTION_TRAIT)
 
 	else
 		owner.layer = hide_layer
@@ -20,6 +22,8 @@
 			span_name("[owner] scurries to the ground!"),
 			span_noticealien("You are now hiding."),
 		)
+		REMOVE_TRAIT(owner, TRAIT_IGNORE_ELEVATION, ACTION_TRAIT)
+		ADD_TRAIT(owner, TRAIT_SHADOWLESS, ACTION_TRAIT)
 
 	return TRUE
 

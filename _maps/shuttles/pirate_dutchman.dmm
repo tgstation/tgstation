@@ -464,15 +464,11 @@
 /obj/effect/turf_decal/siding/wood{
 	dir = 8
 	},
-/obj/structure/rack{
-	icon = 'icons/obj/fluff/general.dmi';
-	icon_state = "minibar";
-	name = "skeletal minibar"
-	},
 /obj/item/food/grown/sugarcane,
 /obj/item/food/grown/sugarcane,
 /obj/item/food/grown/sugarcane,
 /obj/item/reagent_containers/cup/bucket/wooden,
+/obj/structure/rack/skeletal,
 /turf/open/floor/wood/airless,
 /area/shuttle/pirate/flying_dutchman)
 "vT" = (
@@ -491,8 +487,9 @@
 "xA" = (
 /obj/machinery/computer/camera_advanced/shuttle_docker/syndicate/pirate{
 	dir = 1;
-	x_offset = -4;
-	y_offset = -8
+	x_offset = 7;
+	y_offset = -3;
+	view_range = 10
 	},
 /turf/open/floor/carpet/royalblack/airless,
 /area/shuttle/pirate/flying_dutchman)
@@ -550,17 +547,13 @@
 	dir = 10
 	},
 /obj/machinery/light/floor,
-/obj/structure/rack{
-	icon = 'icons/obj/fluff/general.dmi';
-	icon_state = "minibar";
-	name = "skeletal minibar"
-	},
 /obj/item/reagent_containers/condiment/milk{
 	pixel_x = -5
 	},
 /obj/item/reagent_containers/condiment/milk{
 	pixel_x = 5
 	},
+/obj/structure/rack/skeletal,
 /turf/open/floor/wood/airless,
 /area/shuttle/pirate/flying_dutchman)
 "zE" = (
@@ -626,7 +619,7 @@
 	pixel_x = -4;
 	pixel_y = 12
 	},
-/obj/item/clothing/mask/cigarette/cigar{
+/obj/item/cigarette/cigar{
 	pixel_x = 4
 	},
 /obj/item/reagent_containers/cup/glass/drinkingglass/shotglass{

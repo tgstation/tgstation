@@ -99,6 +99,7 @@
 	obj_damage = 0
 	density = FALSE
 	ai_controller = /datum/ai_controller/basic_controller/simple_hostile
+	shadow_type = SHADOW_SMALL
 
 /mob/living/basic/hivelord_brood/Initialize(mapload)
 	. = ..()
@@ -110,5 +111,5 @@
 
 /mob/living/basic/hivelord_brood/death(gibbed)
 	if (!gibbed)
-		new /obj/effect/temp_visual/hive_spawn_wither(get_turf(src), /* copy_from = */ src)
+		new /obj/effect/temp_visual/despawn_effect(get_turf(src), /* copy_from = */ src)
 	return ..()

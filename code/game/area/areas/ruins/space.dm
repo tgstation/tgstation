@@ -33,7 +33,7 @@
 // Ruins of "onehalf" ship
 
 /area/ruin/space/has_grav/onehalf/hallway
-	name = "\improper Hallway"
+	name = "\improper Half-Station Hallway"
 
 /area/ruin/space/has_grav/onehalf/drone_bay
 	name = "\improper Mining Drone Bay"
@@ -42,7 +42,7 @@
 	name = "\improper Crew Quarters"
 
 /area/ruin/space/has_grav/onehalf/bridge
-	name = "\improper Bridge"
+	name = "\improper Half-Station Bridge"
 
 /area/ruin/space/has_grav/powered/dinner_for_two
 	name = "Dinner for Two"
@@ -638,25 +638,25 @@
 	name = "Waystation Maintenance"
 
 /area/ruin/space/has_grav/waystation/qm
-	name = "Quartermaster Office"
+	name = "Waystation Quartermaster Office"
 
 /area/ruin/space/has_grav/waystation/dorms
-	name = "Living Space"
+	name = "Waystation Living Space"
 
 /area/ruin/space/has_grav/waystation/kitchen
-	name = "Kitchen"
+	name = "Waystation Kitchen"
 
 /area/ruin/space/has_grav/waystation/cargobay
-	name = "Cargo Bay"
+	name = "Waystation Cargo Bay"
 
 /area/ruin/space/has_grav/waystation/securestorage
-	name = "Secure Storage"
+	name = "Waystation Secure Storage"
 
 /area/ruin/space/has_grav/waystation/cargooffice
-	name = "Cargo Office"
+	name = "Waystation Cargo Office"
 
 /area/ruin/space/has_grav/powered/waystation/assaultpod
-	name = "Assault Pod"
+	name = "Waystation Assault Pod"
 
 /area/ruin/space/has_grav/waystation/power
 	name = "Waystation Electrical"
@@ -695,7 +695,71 @@
 	name = "Decommissioned Garbage Truck"
 	sound_environment = SOUND_AREA_SMALL_ENCLOSED
 	ambience_index = AMBIENCE_MAINT
+
 /area/ruin/space/has_grav/garbagetruck/foodwaste
+
 /area/ruin/space/has_grav/garbagetruck/medicalwaste
+
 /area/ruin/space/has_grav/garbagetruck/squat
+
 /area/ruin/space/has_grav/garbagetruck/toystore
+
+//Donk Co trading outpost
+/area/ruin/space/has_grav/hauntedtradingpost
+	name = "\improper Donk Co. Trading Outpost"
+	icon_state = "donk_public"
+	sound_environment = SOUND_AREA_STANDARD_STATION
+
+/area/ruin/space/has_grav/hauntedtradingpost/public
+	name = "\improper Donk Co. Trading Outpost Public Meeting Area And Cafeteria"
+
+/area/ruin/space/has_grav/hauntedtradingpost/public/corridor
+	name = "\improper Donk Co. Trading Outpost Public Docks And Corridors"
+	sound_environment = SOUND_AREA_LARGE_ENCLOSED
+
+/area/ruin/space/has_grav/hauntedtradingpost/employees
+	name = "\improper Donk Co. Trading Outpost Employees Lounge"
+	icon_state = "donk_employees"
+	airlock_wires = /datum/wires/airlock/engineering
+	sound_environment = SOUND_AREA_MEDIUM_SOFTFLOOR
+
+/area/ruin/space/has_grav/hauntedtradingpost/employees/workstation
+	name = "\improper Donk Co. Trading Outpost Engineering Station"
+
+/area/ruin/space/has_grav/hauntedtradingpost/employees/corridor
+	name = "\improper Donk Co. Trading Outpost Secure Corridor"
+	icon_state = "donk_command"
+
+/area/ruin/space/has_grav/hauntedtradingpost/employees/breakroom
+	name = "\improper Donk Co. Trading Outpost Break Room"
+
+/area/ruin/space/has_grav/hauntedtradingpost/maint
+	name = "\improper Donk Co. Trading Outpost Auxiliary Storage Room"
+	icon_state = "donk_maints"
+	airlock_wires = /datum/wires/airlock/maint
+	sound_environment = SOUND_AREA_TUNNEL_ENCLOSED
+	ambience_index = AMBIENCE_MAINT
+
+/area/ruin/space/has_grav/hauntedtradingpost/maint/toolstorage
+
+/area/ruin/space/has_grav/hauntedtradingpost/maint/toystorage
+
+/area/ruin/space/has_grav/hauntedtradingpost/maint/disposals
+	name = "\improper Donk Co. Trading Outpost Waste Management Station"
+	sound_environment = SOUND_AREA_SMALL_ENCLOSED
+
+/area/ruin/space/has_grav/hauntedtradingpost/office
+	name = "\improper Donk Co. Trading Outpost Captains Office"
+	icon_state = "donk_command"
+	airlock_wires = /datum/wires/airlock/cargo
+	sound_environment = SOUND_ENVIRONMENT_ROOM
+
+/area/ruin/space/has_grav/hauntedtradingpost/office/meetingroom
+	name = "\improper Donk Co. Trading Outpost Board Room"
+
+/area/ruin/space/has_grav/hauntedtradingpost/aicore
+	name = "\improper Cybersun AI Core"
+	icon_state = "donk_command"
+	airlock_wires = /datum/wires/airlock/security
+	sound_environment = SOUND_AREA_SMALL_ENCLOSED
+	ambience_index = AMBIENCE_DANGER

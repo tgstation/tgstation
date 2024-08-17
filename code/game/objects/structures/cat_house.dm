@@ -1,6 +1,7 @@
 /obj/structure/cat_house
+	SET_BASE_VISUAL_PIXEL(0, DEPTH_OFFSET)
 	name = "cat house"
-	desc = "cozy home for cats"
+	desc = "Cozy home for cats."
 	icon = 'icons/mob/simple/pets.dmi'
 	icon_state = "cat_house"
 	density = TRUE

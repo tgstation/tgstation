@@ -3,7 +3,7 @@ import { createSearch } from 'common/string';
 import { useState } from 'react';
 
 import { useBackend } from '../backend';
-import { Button, Image, Input, Section } from '../components';
+import { Button, Image, Input, Section, Tooltip } from '../components';
 import { NtosWindow } from '../layouts';
 
 type Data = {
@@ -44,15 +44,15 @@ export const NtosEmojipedia = (props) => {
           }
         >
           {filteredEmojis.map((emoji) => (
-            <Image
-              key={emoji.name}
-              m={0}
-              className={classes(['emojipedia16x16', emoji.name])}
-              tooltip={emoji.name}
-              onClick={() => {
-                copyText(emoji.name);
-              }}
-            />
+            <Tooltip key={emoji.name} content={emoji.name}>
+              <Image
+                m={0}
+                className={classes(['emojipedia16x16', emoji.name])}
+                onClick={() => {
+                  copyText(emoji.name);
+                }}
+              />
+            </Tooltip>
           ))}
         </Section>
       </NtosWindow.Content>

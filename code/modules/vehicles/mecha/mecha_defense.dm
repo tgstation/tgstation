@@ -171,7 +171,7 @@
 	if (. & EMP_PROTECT_SELF)
 		return
 	if(get_charge())
-		use_power((cell.charge/3)/(severity*2))
+		use_energy((cell.charge/3)/(severity*2))
 		take_damage(30 / severity, BURN, ENERGY, 1)
 	log_message("EMP detected", LOG_MECHA, color="red")
 
@@ -225,6 +225,10 @@
 		ammo_resupply(weapon, user)
 		return
 
+	if(istype(weapon, /obj/item/rcd_upgrade))
+		upgrade_rcd(weapon, user)
+		return
+
 	if(weapon.GetID())
 		if(!allowed(user))
 			if(mecha_flags & ID_LOCK_ON)
@@ -257,7 +261,7 @@
 		balloon_alert(user, "open the panel first!")
 		return
 
-	if(istype(weapon, /obj/item/stock_parts/cell))
+	if(istype(weapon, /obj/item/stock_parts/power_store/cell))
 		if(!cell)
 			if(!user.transferItemToLoc(weapon, src, silent = FALSE))
 				return
@@ -313,7 +317,7 @@
 	if(!attacking_item.force)
 		return
 
-	var/damage_taken = take_damage(attacking_item.force * attacking_item.demolition_mod, attacking_item.damtype, MELEE, 1)
+	var/damage_taken = take_damage(attacking_item.force * attacking_item.demolition_mod, attacking_item.damtype, MELEE, 1, get_dir(src, user))
 	try_damage_component(damage_taken, user.zone_selected)
 
 	var/hit_verb = length(attacking_item.attack_verb_simple) ? "[pick(attacking_item.attack_verb_simple)]" : "hit"
@@ -344,21 +348,9 @@
 	..()
 	. = TRUE
 
-	if(!(mecha_flags & PANEL_OPEN) && LAZYLEN(occupants))
-		for(var/mob/occupant as anything in occupants)
-			occupant.show_message(
-				span_userdanger("[user] is trying to open the maintenance panel of [src]!"), MSG_VISUAL,
-				span_userdanger("You hear someone trying to open the maintenance panel of [src]!"), MSG_AUDIBLE,
-			)
-		visible_message(span_danger("[user] is trying to open the maintenance panel of [src]!"))
-		if(!do_after(user, 5 SECONDS, src))
-			return
-		for(var/mob/occupant as anything in occupants)
-			occupant.show_message(
-				span_userdanger("[user] has opened the maintenance panel of [src]!"), MSG_VISUAL,
-				span_userdanger("You hear someone opening the maintenance panel of [src]!"), MSG_AUDIBLE,
-			)
-		visible_message(span_danger("[user] has opened the maintenance panel of [src]!"))
+	if(LAZYLEN(occupants))
+		balloon_alert(user, "panel blocked")
+		return
 
 	mecha_flags ^= PANEL_OPEN
 	balloon_alert(user, (mecha_flags & PANEL_OPEN) ? "panel open" : "panel closed")
@@ -522,3 +514,9 @@
 		else
 			balloon_alert(user, "can't use this ammo!")
 	return FALSE
+
+///Upgrades any attached RCD equipment.
+/obj/vehicle/sealed/mecha/proc/upgrade_rcd(obj/item/rcd_upgrade/rcd_upgrade, mob/user)
+	for(var/obj/item/mecha_parts/mecha_equipment/rcd/rcd_equip in flat_equipment)
+		if(rcd_equip.internal_rcd.install_upgrade(rcd_upgrade, user))
+			return

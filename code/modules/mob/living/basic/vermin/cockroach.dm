@@ -1,4 +1,5 @@
 /mob/living/basic/cockroach
+	SET_BASE_VISUAL_PIXEL(0, 0) // These guys are too small not to be tile-bound sorry
 	name = "cockroach"
 	desc = "This station is just crawling with bugs."
 	icon_state = "cockroach"
@@ -36,11 +37,17 @@
 	var/cockroach_cell_line = CELL_LINE_TABLE_COCKROACH
 
 /mob/living/basic/cockroach/Initialize(mapload)
+	var/turf/our_turf = get_turf(src)
+	if(SSmapping.level_trait(our_turf.z, ZTRAIT_SNOWSTORM) || SSmapping.level_trait(our_turf.z, ZTRAIT_ICE_RUINS) || SSmapping.level_trait(our_turf.z, ZTRAIT_ICE_RUINS_UNDERGROUND))
+		name = "ice-[name]"
+		real_name = name
+		desc += "<br>This one seems to have a blue tint and has adapted to the cold."
+		minimum_survivable_temperature = 140 // 40kelvin below icebox temp
+		add_atom_colour("#66ccff", FIXED_COLOUR_PRIORITY)
 	. = ..()
 	var/static/list/roach_drops = list(/obj/effect/decal/cleanable/insectguts)
 	AddElement(/datum/element/death_drops, roach_drops)
 	AddElement(/datum/element/swabable, cockroach_cell_line, CELL_VIRUS_TABLE_GENERIC_MOB, 1, 7)
-	AddElement(/datum/element/basic_body_temp_sensitive, 270, INFINITY)
 	AddComponent( \
 		/datum/component/squashable, \
 		squash_chance = 50, \
@@ -62,6 +69,10 @@
 	blackboard = list(
 		BB_TARGETING_STRATEGY = /datum/targeting_strategy/basic,
 		BB_PET_TARGETING_STRATEGY = /datum/targeting_strategy/basic/not_friends,
+		BB_OWNER_SELF_HARM_RESPONSES = list(
+			"*me waves its antennae in disapproval.",
+			"*me chitters sadly."
+		)
 	)
 
 	ai_traits = STOP_MOVING_WHEN_PULLED

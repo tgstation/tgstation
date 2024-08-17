@@ -121,7 +121,7 @@
 	if(isnull(user_input)) // User pressed cancel
 		return
 	if(no_trim)
-		return copytext(html_encode(user_input), 1, max_length)
+		return copytext_char(html_encode(user_input), 1, max_length)
 	else
 		return trim(html_encode(user_input), max_length) //trim is "outside" because html_encode can expand single symbols into multiple symbols (such as turning < into &lt;)
 
@@ -140,7 +140,7 @@
 	if(isnull(user_input)) // User pressed cancel
 		return
 	if(no_trim)
-		return copytext(html_encode(user_input), 1, max_length)
+		return copytext_char(html_encode(user_input), 1, max_length)
 	else
 		return trim(html_encode(user_input), max_length)
 
@@ -241,12 +241,7 @@
 	if(last_char_group == SPACES_DETECTED)
 		t_out = copytext_char(t_out, 1, -1) //removes the last character (in this case a space)
 
-	for(var/bad_name in list("space","floor","wall","r-wall","monkey","unknown","inactive ai")) //prevents these common metagamey names
-		if(cmptext(t_out,bad_name))
-			return //(not case sensitive)
-
-	// Protects against names containing IC chat prohibited words.
-	if(is_ic_filtered(t_out) || is_soft_ic_filtered(t_out))
+	if(!filter_name_ic(t_out))
 		return
 
 	return t_out
@@ -256,6 +251,39 @@
 #undef NUMBERS_DETECTED
 #undef LETTERS_DETECTED
 
+
+/// Much more permissive version of reject_bad_name().
+/// Returns a trimmed string or null if the name is invalid.
+/// Allows most characters except for IC chat prohibited words.
+/proc/permissive_sanitize_name(value)
+	if(!istext(value)) // Not a string
+		return
+
+	var/name_length = length(value)
+	if(name_length < 3) // Too short
+		return
+
+	if(name_length > 3 * MAX_NAME_LEN) // Bad input
+		return
+
+	var/trimmed = trim(value, MAX_NAME_LEN)
+	if(!filter_name_ic(trimmed)) // Contains IC chat prohibited words
+		return
+
+	return trim_reduced(trimmed)
+
+
+/// Helper proc to check if a name is valid for the IC filter
+/proc/filter_name_ic(name)
+	for(var/bad_name in list("space", "floor", "wall", "r-wall", "monkey", "unknown", "inactive ai")) //prevents these common metagamey names
+		if(cmptext(name, bad_name))
+			return FALSE //(not case sensitive)
+
+	// Protects against names containing IC chat prohibited words.
+	if(is_ic_filtered(name) || is_soft_ic_filtered(name))
+		return FALSE
+
+	return TRUE
 
 
 //html_encode helper proc that returns the smallest non null of two numbers
@@ -340,7 +368,7 @@
  */
 /proc/truncate(text, max_length)
 	if(length(text) > max_length)
-		return copytext(text, 1, max_length)
+		return copytext_char(text, 1, max_length)
 	return text
 
 //Returns a string with reserved characters and spaces before the first word and after the last word removed.
@@ -434,6 +462,9 @@ GLOBAL_LIST_INIT(binary, list("0","1"))
 
 /proc/random_color()
 	return random_string(6, GLOB.hex_characters)
+
+/proc/ready_random_color()
+	return "#" + random_string(6, GLOB.hex_characters)
 
 //merges non-null characters (3rd argument) from "from" into "into". Returns result
 //e.g. into = "Hello World"
@@ -785,7 +816,7 @@ GLOBAL_LIST_INIT(binary, list("0","1"))
 		return string
 
 	var/base = next_backslash == 1 ? "" : copytext(string, 1, next_backslash)
-	var/macro = lowertext(copytext(string, next_backslash + length(string[next_backslash]), next_space))
+	var/macro = LOWER_TEXT(copytext(string, next_backslash + length(string[next_backslash]), next_space))
 	var/rest = next_backslash > leng ? "" : copytext(string, next_space + length(string[next_space]))
 
 	//See https://secure.byond.com/docs/ref/info.html#/DM/text/macros
@@ -1082,7 +1113,7 @@ GLOBAL_LIST_INIT(binary, list("0","1"))
 	var/text_length = length(text)
 
 	//remove caps since words will be shuffled
-	text = lowertext(text)
+	text = LOWER_TEXT(text)
 	//remove punctuation for same reasons as above
 	var/punctuation = ""
 	var/punctuation_hit_list = list("!","?",".","-")
@@ -1111,8 +1142,8 @@ GLOBAL_LIST_INIT(binary, list("0","1"))
 		return word
 	var/first_letter = copytext(word, 1, 2)
 	var/first_two_letters = copytext(word, 1, 3)
-	var/first_word_is_vowel = (first_letter in list("a", "e", "i", "o", "u"))
-	var/second_word_is_vowel = (copytext(word, 2, 3) in list("a", "e", "i", "o", "u"))
+	var/first_word_is_vowel = (first_letter in VOWELS)
+	var/second_word_is_vowel = (copytext(word, 2, 3) in VOWELS)
 	//If a word starts with a vowel add the word "way" at the end of the word.
 	if(first_word_is_vowel)
 		return word + pick("yay", "way", "hay") //in cultures around the world it's different, so heck lets have fun and make it random. should still be readable
@@ -1196,3 +1227,17 @@ GLOBAL_LIST_INIT(binary, list("0","1"))
 /proc/endswith(input_text, ending)
 	var/input_length = LAZYLEN(ending)
 	return !!findtext(input_text, ending, -input_length)
+
+/// Returns TRUE if the input_text starts with any of the beginnings
+/proc/starts_with_any(input_text, list/beginnings)
+	for(var/beginning in beginnings)
+		if(!!findtext(input_text, beginning, 1, LAZYLEN(beginning)+1))
+			return TRUE
+	return FALSE
+
+/// Generate a grawlix string of length of the text argument.
+/proc/grawlix(text)
+	var/grawlix = ""
+	for(var/iteration in 1 to length_char(text))
+		grawlix += pick("@", "$", "?", "!", "#", "§", "*", "£", "%", "☠", "★", "☆", "¿", "⚡")
+	return grawlix

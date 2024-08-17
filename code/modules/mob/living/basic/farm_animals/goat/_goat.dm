@@ -100,7 +100,7 @@
 /// Handles automagically eating a plant when we move into a turf that has one.
 /mob/living/basic/goat/proc/on_move(datum/source, atom/entering_loc)
 	SIGNAL_HANDLER
-	if(!isturf(entering_loc))
+	if(!isturf(entering_loc) || stat == DEAD)
 		return
 
 	var/list/edible_plants = list()

@@ -12,7 +12,7 @@
 	icon = 'icons/effects/effects.dmi'
 	icon_state = "shield2"
 	density = FALSE
-	aSignal = /obj/item/assembly/signaler/anomaly/grav
+	anomaly_core = /obj/item/assembly/signaler/anomaly/grav
 	var/boing = 0
 	///Warp effect holder for displacement filter to "pulse" the anomaly
 	var/atom/movable/warp_effect/warp
@@ -61,7 +61,7 @@
 			if(target && !target.stat)
 				O.throw_at(target, 5, 10)
 
-	//anomaly quickly contracts then slowly expands it's ring
+	//anomaly quickly contracts then slowly expands its ring
 	animate(warp, time = seconds_per_tick*3, transform = matrix().Scale(0.5,0.5))
 	animate(time = seconds_per_tick*7, transform = matrix())
 
@@ -104,7 +104,7 @@
 ///Bigger, meaner, immortal gravity anomaly. although this is just the super grav anomaly but bigger and shattering move force
 /obj/effect/anomaly/grav/high/big
 	immortal = TRUE
-	aSignal = null
+	anomaly_core = null
 	move_force = MOVE_FORCE_OVERPOWERING
 
 /obj/effect/anomaly/grav/high/big/Initialize(mapload, new_lifespan, drops_core)

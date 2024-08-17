@@ -33,6 +33,18 @@
 		processing += checked_atom.contents
 		. += checked_atom
 
+///Returns the src and all recursive contents, but skipping going any deeper if an atom has a specific trait.
+/atom/proc/get_all_contents_skipping_traits(skipped_trait)
+	. = list(src)
+	if(!skipped_trait)
+		CRASH("get_all_contents_skipping_traits called without a skipped_trait")
+	var/i = 0
+	while(i < length(.))
+		var/atom/checked_atom = .[++i]
+		if(HAS_TRAIT(checked_atom, skipped_trait))
+			continue
+		. += checked_atom.contents
+
 ///Returns a list of all locations (except the area) the movable is within.
 /proc/get_nested_locs(atom/movable/atom_on_location, include_turf = FALSE)
 	. = list()
@@ -302,6 +314,15 @@ rough example of the "cone" made by the 3 dirs checked
 		loc = loc.loc
 	return null
 
+///Returns the last atom type in the specified loc
+/proc/get_highest_loc(atom/loc, type)
+	var/atom/last_found = null
+	while(loc)
+		if(istype(loc, type))
+			last_found = loc
+		loc = loc.loc
+	return last_found
+
 ///Returns true if the src countain the atom target
 /atom/proc/contains(atom/target)
 	if(!target)
@@ -313,16 +334,6 @@ rough example of the "cone" made by the 3 dirs checked
 ///A do nothing proc
 /proc/pass(...)
 	return
-
-///Returns a list of the parents of all storage components that contain the target item
-/proc/get_storage_locs(obj/item/target)
-	. = list()
-	if(!istype(target) || !(target.item_flags & IN_STORAGE))
-		return
-	var/datum/storage/storage_datum = target.loc.atom_storage
-	if(!storage_datum)
-		return
-	. += storage_datum.real_location?.resolve()
 
 /// Returns an x and y value require to reverse the transformations made to center an oversized icon
 /atom/proc/get_oversized_icon_offsets()

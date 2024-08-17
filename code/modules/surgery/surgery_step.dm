@@ -1,3 +1,8 @@
+#define SURGERY_STATE_STARTED "surgery_started"
+#define SURGERY_STATE_FAILURE "surgery_failed"
+#define SURGERY_STATE_SUCCESS "surgery_success"
+#define SURGERY_MOOD_CATEGORY "surgery"
+
 /datum/surgery_step
 	var/name
 	var/list/implements = list() //format is path = probability of success. alternatively
@@ -12,6 +17,15 @@
 	var/preop_sound //Sound played when the step is started
 	var/success_sound //Sound played if the step succeeded
 	var/failure_sound //Sound played if the step fails
+	///If the surgery causes mood changes if the patient is conscious.
+	var/surgery_effects_mood = FALSE
+	///Which mood event to give the patient when surgery is starting while they're conscious. This should be permanent/not have a timer until the surgery either succeeds or fails, as those states will immediately replace it. Mostly just flavor text.
+	var/datum/mood_event/surgery/surgery_started_mood_event = /datum/mood_event/surgery
+	///Which mood event to give the conscious patient when surgery succeeds. Lasts far shorter than if it failed.
+	var/datum/mood_event/surgery/surgery_success_mood_event = /datum/mood_event/surgery/success
+	///Which mood event to give the consious patient when surgery fails. Lasts muuuuuch longer.
+	var/datum/mood_event/surgery/surgery_failure_mood_event = /datum/mood_event/surgery/failure
+
 
 /datum/surgery_step/proc/try_op(mob/user, mob/living/target, target_zone, obj/item/tool, datum/surgery/surgery, try_to_fail = FALSE)
 	var/success = FALSE
@@ -23,7 +37,9 @@
 		if(!tool)
 			success = TRUE
 		if(iscyborg(user))
-			success = TRUE
+			var/mob/living/silicon/robot/borg = user
+			if(istype(borg.module_active, /obj/item/borg/cyborghug))
+				success = TRUE
 
 	if(accept_any_item)
 		if(tool && tool_check(user, tool))
@@ -49,7 +65,7 @@
 			if(get_location_accessible(target, target_zone) || (surgery.surgery_flags & SURGERY_IGNORE_CLOTHES))
 				initiate(user, target, target_zone, tool, surgery, try_to_fail)
 			else
-				to_chat(user, span_warning("You need to expose [target]'s [parse_zone(target_zone)] to perform surgery on it!"))
+				to_chat(user, span_warning("You need to expose [target]'s [target.parse_zone_with_bodypart(target_zone)] to perform surgery on it!"))
 			return TRUE //returns TRUE so we don't stab the guy in the dick or wherever.
 
 	if(repeatable)
@@ -63,11 +79,13 @@
 
 	return FALSE
 
-#define SURGERY_SLOWDOWN_CAP_MULTIPLIER 2 //increase to make surgery slower but fail less, and decrease to make surgery faster but fail more
+#define SURGERY_SLOWDOWN_CAP_MULTIPLIER 2.5 //increase to make surgery slower but fail less, and decrease to make surgery faster but fail more
 ///Modifier given to surgery speed for dissected bodies.
 #define SURGERY_SPEED_DISSECTION_MODIFIER 0.8
 ///Modifier given to users with TRAIT_MORBID on certain surgeries
 #define SURGERY_SPEED_MORBID_CURIOSITY 0.7
+///Modifier given to patients with TRAIT_ANALGESIA
+#define SURGERY_SPEED_TRAIT_ANALGESIA 0.8
 
 /datum/surgery_step/proc/initiate(mob/living/user, mob/living/target, target_zone, obj/item/tool, datum/surgery/surgery, try_to_fail = FALSE)
 	// Only followers of Asclepius have the ability to use Healing Touch and perform miracle feats of surgery.
@@ -78,10 +96,18 @@
 	var/fail_prob = 0//100 - fail_prob = success_prob
 	var/advance = FALSE
 
-	if(preop(user, target, target_zone, tool, surgery) == SURGERY_STEP_FAIL)
+	if(!chem_check(target))
+		user.balloon_alert(user, "missing [LOWER_TEXT(get_chem_list())]!")
+		to_chat(user, span_warning("[target] is missing the [LOWER_TEXT(get_chem_list())] required to perform this surgery step!"))
 		surgery.step_in_progress = FALSE
 		return FALSE
 
+	if(preop(user, target, target_zone, tool, surgery) == SURGERY_STEP_FAIL)
+		update_surgery_mood(target, SURGERY_STATE_FAILURE)
+		surgery.step_in_progress = FALSE
+		return FALSE
+
+	update_surgery_mood(target, SURGERY_STATE_STARTED)
 	play_preop_sound(user, target, target_zone, tool, surgery) // Here because most steps overwrite preop
 
 	if(tool)
@@ -92,6 +118,9 @@
 
 	if(check_morbid_curiosity(user, tool, surgery))
 		speed_mod *= SURGERY_SPEED_MORBID_CURIOSITY
+
+	if(HAS_TRAIT(target, TRAIT_ANALGESIA))
+		speed_mod *= SURGERY_SPEED_TRAIT_ANALGESIA
 
 	var/implement_speed_mod = 1
 	if(implement_type) //this means it isn't a require hand or any item step.
@@ -105,34 +134,63 @@
 	modded_time = min(modded_time, time * SURGERY_SLOWDOWN_CAP_MULTIPLIER)//also if that, then cap modded_time at time*modifier
 
 	if(iscyborg(user))//any immunities to surgery slowdown should go in this check.
-		modded_time = time
+		modded_time = time * tool.toolspeed
 
 	var/was_sleeping = (target.stat != DEAD && target.IsSleeping())
 
 	if(do_after(user, modded_time, target = target, interaction_key = user.has_status_effect(/datum/status_effect/hippocratic_oath) ? target : DOAFTER_SOURCE_SURGERY)) //If we have the hippocratic oath, we can perform one surgery on each target, otherwise we can only do one surgery in total.
 
-		var/chem_check_result = chem_check(target)
-		if((prob(100-fail_prob) || (iscyborg(user) && !silicons_obey_prob)) && chem_check_result && !try_to_fail)
-
+		if((prob(100-fail_prob) || (iscyborg(user) && !silicons_obey_prob)) && !try_to_fail)
 			if(success(user, target, target_zone, tool, surgery))
+				update_surgery_mood(target, SURGERY_STATE_SUCCESS)
 				play_success_sound(user, target, target_zone, tool, surgery)
 				advance = TRUE
 		else
 			if(failure(user, target, target_zone, tool, surgery, fail_prob))
 				play_failure_sound(user, target, target_zone, tool, surgery)
+				update_surgery_mood(target, SURGERY_STATE_FAILURE)
 				advance = TRUE
-			if(chem_check_result)
-				return .(user, target, target_zone, tool, surgery, try_to_fail) //automatically re-attempt if failed for reason other than lack of required chemical
 		if(advance && !repeatable)
 			surgery.status++
 			if(surgery.status > surgery.steps.len)
 				surgery.complete(user)
+
+	else if(!QDELETED(target))
+		update_surgery_mood(target, SURGERY_STATE_FAILURE)
 
 	if(target.stat == DEAD && was_sleeping && user.client)
 		user.client.give_award(/datum/award/achievement/jobs/sandman, user)
 
 	surgery.step_in_progress = FALSE
 	return advance
+
+/**
+ * Handles updating the mob's mood depending on the surgery states.
+ * * surgery_state = SURGERY_STATE_STARTED, SURGERY_STATE_FAILURE, SURGERY_STATE_SUCCESS
+ * * To prevent typos, the event category is defined as SURGERY_MOOD_CATEGORY ("surgery")
+*/
+/datum/surgery_step/proc/update_surgery_mood(mob/living/target, surgery_state)
+	if(!target)
+		CRASH("Not passed a target, how did we get here?")
+	if(!surgery_effects_mood)
+		return
+	if(HAS_TRAIT(target, TRAIT_ANALGESIA))
+		target.clear_mood_event(SURGERY_MOOD_CATEGORY) //incase they gained the trait mid-surgery. has the added side effect that if someone has a bad surgical memory/mood and gets drunk & goes back to surgery, they'll forget they hated it, which is kinda funny imo.
+		return
+	if(target.stat >= UNCONSCIOUS)
+		var/datum/mood_event/surgery/target_mood_event = target.mob_mood.mood_events[SURGERY_MOOD_CATEGORY]
+		if(!target_mood_event || target_mood_event.surgery_completed) //don't give sleeping mobs trauma. that said, if they fell asleep mid-surgery after already getting the bad mood, lets make sure they wake up to a (hopefully) happy memory.
+			return
+	switch(surgery_state)
+		if(SURGERY_STATE_STARTED)
+			target.add_mood_event(SURGERY_MOOD_CATEGORY, surgery_started_mood_event)
+		if(SURGERY_STATE_SUCCESS)
+			target.add_mood_event(SURGERY_MOOD_CATEGORY, surgery_success_mood_event)
+		if(SURGERY_STATE_FAILURE)
+			target.add_mood_event(SURGERY_MOOD_CATEGORY, surgery_failure_mood_event)
+		else
+			CRASH("passed invalid surgery_state, \"[surgery_state]\".")
+
 
 /datum/surgery_step/proc/preop(mob/user, mob/living/target, target_zone, obj/item/tool, datum/surgery/surgery)
 	display_results(
@@ -258,10 +316,22 @@
  */
 /datum/surgery_step/proc/display_pain(mob/living/target, pain_message, mechanical_surgery = FALSE)
 	if(target.stat < UNCONSCIOUS)
-		to_chat(target, span_userdanger(pain_message))
-		if(prob(30) && !mechanical_surgery)
-			target.emote("scream")
+		if(HAS_TRAIT(target, TRAIT_ANALGESIA))
+			if(!pain_message)
+				return
+			to_chat(target, span_notice("You feel a dull, numb sensation as your body is surgically operated on."))
+		else
+			if(!pain_message)
+				return
+			to_chat(target, span_userdanger(pain_message))
+			if(prob(30) && !mechanical_surgery)
+				target.emote("scream")
 
+#undef SURGERY_SPEED_TRAIT_ANALGESIA
 #undef SURGERY_SPEED_DISSECTION_MODIFIER
 #undef SURGERY_SPEED_MORBID_CURIOSITY
 #undef SURGERY_SLOWDOWN_CAP_MULTIPLIER
+#undef SURGERY_STATE_STARTED
+#undef SURGERY_STATE_FAILURE
+#undef SURGERY_STATE_SUCCESS
+#undef SURGERY_MOOD_CATEGORY

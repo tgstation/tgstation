@@ -63,8 +63,9 @@
 
 				if(cached_my_atom)
 					if(reaction.required_container)
-						if(reaction.required_container_accepts_subtypes && !istype(cached_my_atom, reaction.required_container))
-							continue
+						if(reaction.required_container_accepts_subtypes)
+							if(!istype(cached_my_atom, reaction.required_container))
+								continue
 						else if(cached_my_atom.type != reaction.required_container)
 							continue
 
@@ -96,8 +97,6 @@
 		if((selected_reaction.reaction_flags & REACTION_INSTANT) || (flags & REAGENT_HOLDER_INSTANT_REACT)) //If we have instant reactions, we process them here
 			instant_react(selected_reaction)
 			.++
-			update_total()
-			continue
 		else
 			var/exists = FALSE
 			for(var/datum/equilibrium/E_exist as anything in reaction_list)
@@ -300,36 +299,39 @@
 	var/list/cached_required_reagents = selected_reaction.required_reagents
 	var/list/cached_results = selected_reaction.results
 	var/datum/cached_my_atom = my_atom
+
+	//find how much ration of products to create
 	var/multiplier = INFINITY
-	for(var/reagent in cached_required_reagents)
-		multiplier = round(min(multiplier, get_reagent_amount(reagent) / cached_required_reagents[reagent]))
-
-	if(!multiplier)//Incase we're missing reagents - usually from on_reaction being called in an equlibrium when the results.len == 0 handlier catches a misflagged reaction
+	for(var/datum/reagent/requirement as anything in cached_required_reagents)
+		multiplier = min(multiplier, get_reagent_amount(requirement) / cached_required_reagents[requirement])
+	multiplier = round(multiplier, CHEMICAL_QUANTISATION_LEVEL)
+	if(!multiplier)//Incase we're missing reagents - usually from on_reaction being called in an equlibrium when the results.len == 0 handler catches a misflagged reaction
 		return FALSE
-	var/sum_purity = 0
-	for(var/_reagent in cached_required_reagents)//this is not an object
-		var/datum/reagent/reagent = has_reagent(_reagent)
-		if (!reagent)
-			continue
-		sum_purity += reagent.purity
-		remove_reagent(_reagent, (multiplier * cached_required_reagents[_reagent]))
-	sum_purity /= cached_required_reagents.len
 
-	for(var/product in selected_reaction.results)
-		multiplier = max(multiplier, 1) //this shouldn't happen ...
-		var/yield = (cached_results[product]*multiplier)*sum_purity
+	//average purity to be used in scaling the yield of products formed
+	var/average_purity = get_average_purity()
+
+	//remove the required reagents
+	for(var/datum/reagent/requirement as anything in cached_required_reagents)//this is not an object
+		remove_reagent(requirement, cached_required_reagents[requirement] * multiplier)
+
+	//add the result reagents whose yield depend on the average purity
+	var/yield
+	for(var/datum/reagent/product as anything in cached_results)
+		yield = cached_results[product] * multiplier * average_purity
 		SSblackbox.record_feedback("tally", "chemical_reaction", yield, product)
-		add_reagent(product, yield, null, chem_temp, sum_purity)
+		add_reagent(product, yield, null, chem_temp, average_purity)
 
+	//play sounds on the target atom
 	var/list/seen = viewers(4, get_turf(my_atom))
 	var/iconhtml = icon2html(cached_my_atom, seen)
 	if(cached_my_atom)
 		if(!ismob(cached_my_atom)) // No bubbling mobs
 			if(selected_reaction.mix_sound)
 				playsound(get_turf(cached_my_atom), selected_reaction.mix_sound, 80, TRUE)
-
 			my_atom.audible_message(span_notice("[iconhtml] [selected_reaction.mix_message]"))
 
+		//use slime extract
 		if(istype(cached_my_atom, /obj/item/slime_extract))
 			var/obj/item/slime_extract/extract = my_atom
 			extract.extract_uses--
@@ -337,5 +339,7 @@
 				my_atom.visible_message(span_notice("[iconhtml] \The [my_atom]'s power is consumed in the reaction."))
 				extract.name = "used slime extract"
 				extract.desc = "This extract has been used up."
+				extract.grind_results.Cut()
 
+	//finish the reaction
 	selected_reaction.on_reaction(src, null, multiplier)

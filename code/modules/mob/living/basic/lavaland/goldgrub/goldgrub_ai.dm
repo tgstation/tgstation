@@ -14,6 +14,8 @@
 		/datum/ai_planning_subtree/dig_away_from_danger,
 		/datum/ai_planning_subtree/flee_target,
 		/datum/ai_planning_subtree/find_and_hunt_target/hunt_ores,
+		/datum/ai_planning_subtree/find_and_hunt_target/break_boulders,
+		/datum/ai_planning_subtree/find_and_hunt_target/harvest_vents,
 		/datum/ai_planning_subtree/find_and_hunt_target/baby_egg,
 		/datum/ai_planning_subtree/mine_walls,
 	)
@@ -43,7 +45,7 @@
 	hunting_behavior = /datum/ai_behavior/hunt_target/unarmed_attack_target/hunt_ores
 	finding_behavior = /datum/ai_behavior/find_hunt_target/hunt_ores
 	hunt_targets = list(/obj/item/stack/ore)
-	hunt_chance = 75
+	hunt_chance = 90
 	hunt_range = 9
 
 /datum/ai_behavior/find_hunt_target/hunt_ores
@@ -65,6 +67,50 @@
 
 /datum/ai_behavior/hunt_target/unarmed_attack_target/hunt_ores
 	always_reset_target = TRUE
+
+///break boulders so that we can find more food!
+/datum/ai_planning_subtree/find_and_hunt_target/harvest_vents
+	target_key = BB_VENT_TARGET
+	hunting_behavior = /datum/ai_behavior/hunt_target/unarmed_attack_target //We call the ore vent's produce_boulder() proc here to produce a single boulder.
+	finding_behavior = /datum/ai_behavior/find_hunt_target/harvest_vents
+	hunt_targets = list(/obj/structure/ore_vent)
+	hunt_chance = 25
+	hunt_range = 15
+
+/datum/ai_behavior/find_hunt_target/harvest_vents
+
+/datum/ai_behavior/find_hunt_target/harvest_vents/valid_dinner(mob/living/basic/source, obj/structure/target, radius)
+	if(target in source)
+		return FALSE
+
+	var/turf/vent_turf = target.drop_location()
+	var/counter = 0
+	for(var/obj/item/boulder in vent_turf.contents)
+		counter++
+		if(counter > MAX_BOULDERS_PER_VENT) //Too many items currently on the vent
+			return FALSE
+
+	return can_see(source, target, radius)
+
+///break boulders so that we can find more food!
+/datum/ai_planning_subtree/find_and_hunt_target/break_boulders
+	target_key = BB_BOULDER_TARGET
+	hunting_behavior = /datum/ai_behavior/hunt_target/unarmed_attack_target //We process boulders once every tap, so we dont need to do anything special here
+	finding_behavior = /datum/ai_behavior/find_hunt_target/break_boulders
+	hunt_targets = list(/obj/item/boulder)
+	hunt_chance = 100 //If we can, we should always break boulders.
+	hunt_range = 9
+
+/datum/ai_behavior/find_hunt_target/break_boulders
+
+/datum/ai_behavior/find_hunt_target/break_boulders/valid_dinner(mob/living/basic/source, obj/item/boulder/target, radius)
+	if(target in source)
+		return FALSE
+
+	var/obj/item/pet_target = source.ai_controller.blackboard[BB_CURRENT_PET_TARGET]
+	if(target == pet_target) //we are currently fetching this ore for master, dont eat it!
+		return FALSE
+	return can_see(source, target, radius)
 
 ///find our child's egg and pull it!
 /datum/ai_planning_subtree/find_and_hunt_target/baby_egg

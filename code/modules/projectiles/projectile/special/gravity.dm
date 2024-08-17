@@ -5,7 +5,7 @@
 	hitsound = 'sound/weapons/wave.ogg'
 	damage = 0
 	damage_type = BRUTE
-	color = "#33CCFF"
+	color = COLOR_BLUE_LIGHT
 	var/turf/T
 	var/power = 4
 	var/list/thrown_items = list()
@@ -72,7 +72,7 @@
 	hitsound = 'sound/weapons/wave.ogg'
 	damage = 0
 	damage_type = BRUTE
-	color = "#101010"
+	color = COLOR_FULL_TONER_BLACK
 	var/turf/T
 	var/power = 4
 	var/list/thrown_items = list()

@@ -7,3 +7,4 @@
 	space_chance = 20
 	default_priority = 10
 	icon_state = "aphasia"
+	always_use_default_namelist = TRUE // Shouldn't generate names for this anyways

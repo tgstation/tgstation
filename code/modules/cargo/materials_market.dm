@@ -131,6 +131,7 @@
 	var/color_string
 	var/sheet_to_buy
 	var/requested_amount
+	var/minimum_value_threshold = 0
 	for(var/datum/material/traded_mat as anything in SSstock_market.materials_prices)
 		//convert trend into text
 		switch(SSstock_market.materials_trends[traded_mat])
@@ -162,10 +163,18 @@
 		if(!isnull(current_order))
 			requested_amount = current_order.pack.contains[sheet_to_buy]
 
+		var/min_value_override = initial(traded_mat.minimum_value_override)
+		if(min_value_override)
+			minimum_value_threshold = min_value_override
+		else
+			minimum_value_threshold = round(initial(traded_mat.value_per_unit) * SHEET_MATERIAL_AMOUNT * 0.5)
+
 		//send data
 		material_data += list(list(
 			"name" = initial(traded_mat.name),
 			"price" = SSstock_market.materials_prices[traded_mat],
+			"rarity" = initial(traded_mat.value_per_unit),
+			"threshold" = minimum_value_threshold,
 			"quantity" = SSstock_market.materials_quantity[traded_mat],
 			"trend" = trend_string,
 			"color" = color_string,
@@ -198,6 +207,7 @@
 	.["orderBalance"] = current_cost
 	.["orderingPrive"] = ordering_private
 	.["canOrderCargo"] = can_buy_via_budget
+	.["updateTime"] = SSstock_market.next_fire - world.time
 
 /obj/machinery/materials_market/ui_act(action, params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
@@ -222,7 +232,7 @@
 			var/material_str = params["material"]
 			var/quantity = text2num(params["quantity"])
 
-			//find material from it's name
+			//find material from its name
 			var/datum/material/material_bought
 			var/obj/item/stack/sheet/sheet_to_buy
 			for(var/datum/material/mat as anything in SSstock_market.materials_prices)
@@ -336,21 +346,21 @@
 	var/datum/material/export_mat
 	/// Quantity of export material
 	var/quantity = 0
-	/// Is this stock block currently updating it's value with the market (aka fluid)?
+	/// Is this stock block currently updating its value with the market (aka fluid)?
 	var/fluid = FALSE
 
 /obj/item/stock_block/Initialize(mapload)
 	. = ..()
-	addtimer(CALLBACK(src, PROC_REF(value_warning)), 2.5 MINUTES, TIMER_DELETE_ME)
-	addtimer(CALLBACK(src, PROC_REF(update_value)), 5 MINUTES, TIMER_DELETE_ME)
+	addtimer(CALLBACK(src, PROC_REF(value_warning)), 1.5 MINUTES, TIMER_DELETE_ME)
+	addtimer(CALLBACK(src, PROC_REF(update_value)), 3 MINUTES, TIMER_DELETE_ME)
 
 /obj/item/stock_block/examine(mob/user)
 	. = ..()
 	. += span_notice("\The [src] is worth [export_value] cr, from selling [quantity] sheets of [initial(export_mat?.name)].")
 	if(fluid)
-		. += span_warning("\The [src] is currently liquid! It's value is based on the market price.")
+		. += span_warning("\The [src] is currently liquid! Its value is based on the market price.")
 	else
-		. += span_notice("\The [src]'s value is still [span_boldnotice("locked in")]. [span_boldnotice("Sell it")] before it's value becomes liquid!")
+		. += span_notice("\The [src]'s value is still [span_boldnotice("locked in")]. [span_boldnotice("Sell it")] before its value becomes liquid!")
 
 /obj/item/stock_block/proc/value_warning()
 	visible_message(span_warning("\The [src] is starting to become liquid!"))

@@ -111,6 +111,7 @@
 			continue
 		var/obj/structure/mop_bucket/bucket = new /obj/structure/mop_bucket(turf)
 		equipped.start_pulling(bucket)
+		break
 
 /datum/outfit/job/assistant/gimmick/broomer
 	name = "Gimmick Assistant - Broomer"
@@ -166,6 +167,7 @@
 	belt = /obj/item/storage/belt/utility/full
 	head = /obj/item/clothing/head/utility/hardhat
 	uniform = /obj/item/clothing/under/color/yellow
+	l_pocket = /obj/item/modular_computer/pda/assistant
 
 	outfit_weight = 6
 

@@ -100,18 +100,7 @@ Basically, we fill the time between now and 2s from now with hands based off the
 /datum/reagent/inverse/helgrasp/proc/spawn_hands(mob/living/carbon/affected_mob)
 	if(!affected_mob && iscarbon(holder.my_atom))//Catch timer
 		affected_mob = holder.my_atom
-	//Adapted from the end of the curse - but lasts a short time
-	var/grab_dir = turn(affected_mob.dir, pick(-90, 90, 180, 180)) //grab them from a random direction other than the one faced, favoring grabbing from behind
-	var/turf/spawn_turf = get_ranged_target_turf(affected_mob, grab_dir, 8)//Larger range so you have more time to dodge
-	if(!spawn_turf)
-		return
-	new/obj/effect/temp_visual/dir_setting/curse/grasp_portal(spawn_turf, affected_mob.dir)
-	playsound(spawn_turf, 'sound/effects/curse2.ogg', 80, TRUE, -1)
-	var/obj/projectile/curse_hand/hel/hand = new (spawn_turf)
-	hand.preparePixelProjectile(affected_mob, spawn_turf)
-	if(QDELETED(hand)) //safety check if above fails - above has a stack trace if it does fail
-		return
-	hand.fire()
+	fire_curse_hand(affected_mob)
 
 //At the end, we clear up any loose hanging timers just in case and spawn any remaining lag_remaining hands all at once.
 /datum/reagent/inverse/helgrasp/on_mob_delete(mob/living/affected_mob)
@@ -238,7 +227,7 @@ Basically, we fill the time between now and 2s from now with hands based off the
 	///Prevents message spam
 	var/spammer = 0
 
-//Just the removed itching mechanism - omage to it's origins.
+//Just the removed itching mechanism - omage to its origins.
 /datum/reagent/inverse/ichiyuri/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
 	. = ..()
 	if(prob(resetting_probability) && !(HAS_TRAIT(affected_mob, TRAIT_RESTRAINED) || affected_mob.incapacitated()))
@@ -770,18 +759,18 @@ Basically, we fill the time between now and 2s from now with hands based off the
 	liver_damage = 0.1
 	metabolization_rate = 0.04 * REM
 	///The random span we start hearing in
-	var/randomSpan
+	var/random_span
 
 /datum/reagent/impurity/inacusiate/on_mob_metabolize(mob/living/affected_mob, seconds_per_tick, times_fired)
 	. = ..()
-	randomSpan = pick(list("clown", "small", "big", "hypnophrase", "alien", "cult", "alert", "danger", "emote", "yell", "brass", "sans", "papyrus", "robot", "his_grace", "phobia"))
+	random_span = pick("clown", "small", "big", "hypnophrase", "alien", "cult", "alert", "danger", "emote", "yell", "brass", "sans", "papyrus", "robot", "his_grace", "phobia")
 	RegisterSignal(affected_mob, COMSIG_MOVABLE_HEAR, PROC_REF(owner_hear))
-	to_chat(affected_mob, span_warning("Your hearing seems to be a bit off!"))
+	to_chat(affected_mob, span_warning("Your hearing seems to be a bit off[affected_mob.can_hear() ? "!" : " - wait, that's normal."]"))
 
 /datum/reagent/impurity/inacusiate/on_mob_end_metabolize(mob/living/affected_mob)
 	. = ..()
 	UnregisterSignal(affected_mob, COMSIG_MOVABLE_HEAR)
-	to_chat(affected_mob, span_notice("You start hearing things normally again."))
+	to_chat(affected_mob, span_notice("You start hearing things normally again[affected_mob.can_hear() ? "" : " - no, wait, no you don't"]."))
 
 /datum/reagent/impurity/inacusiate/proc/owner_hear(mob/living/owner, list/hearing_args)
 	SIGNAL_HANDLER
@@ -789,8 +778,15 @@ Basically, we fill the time between now and 2s from now with hands based off the
 	// don't skip messages that the owner says or can't understand (since they still make sounds)
 	if(!owner.can_hear())
 		return
+	// not technically hearing
+	var/atom/movable/speaker = hearing_args[HEARING_SPEAKER]
+	if(!isnull(speaker) && HAS_TRAIT(speaker, TRAIT_SIGN_LANG))
+		return
 
-	hearing_args[HEARING_RAW_MESSAGE] = "<span class='[randomSpan]'>[hearing_args[HEARING_RAW_MESSAGE]]</span>"
+	var/list/spans = hearing_args[HEARING_SPANS]
+	var/list/copied_spans = spans.Copy()
+	copied_spans |= random_span
+	hearing_args[HEARING_SPANS] = copied_spans
 
 /datum/reagent/inverse/sal_acid
 	name = "Benzoic Acid"
@@ -843,14 +839,7 @@ Basically, we fill the time between now and 2s from now with hands based off the
 	ph = 4.5
 	metabolization_rate = 0.08 * REM
 	tox_damage = 0
-
-/datum/reagent/inverse/salbutamol/on_mob_metabolize(mob/living/affected_mob)
-	. = ..()
-	ADD_TRAIT(affected_mob, TRAIT_EASYBLEED, type)
-
-/datum/reagent/inverse/salbutamol/on_mob_end_metabolize(mob/living/affected_mob)
-	. = ..()
-	REMOVE_TRAIT(affected_mob, TRAIT_EASYBLEED, type)
+	metabolized_traits = list(TRAIT_EASYBLEED)
 
 /datum/reagent/inverse/pen_acid
 	name = "Pendetide"

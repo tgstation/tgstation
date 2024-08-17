@@ -52,7 +52,7 @@
 /obj/machinery/power/tracker/proc/add_panel_overlay(icon_state, z_offset)
 	var/obj/effect/overlay/tracker/overlay = new(src)
 	overlay.icon_state = icon_state
-	SET_PLANE_EXPLICIT(overlay, ABOVE_GAME_PLANE, src)
+	SET_PLANE_EXPLICIT(overlay, GAME_PLANE, src)
 	overlay.pixel_z = z_offset
 	vis_contents += overlay
 	return overlay
@@ -137,18 +137,16 @@
 		playsound(loc, 'sound/effects/glassbr3.ogg', 100, TRUE)
 		unset_control()
 
-/obj/machinery/power/tracker/deconstruct(disassembled = TRUE)
-	if(!(obj_flags & NO_DECONSTRUCTION))
-		if(disassembled)
-			var/obj/item/solar_assembly/S = locate() in src
-			if(S)
-				S.forceMove(loc)
-				S.give_glass(machine_stat & BROKEN)
-		else
-			playsound(src, SFX_SHATTER, 70, TRUE)
-			new /obj/item/shard(src.loc)
-			new /obj/item/shard(src.loc)
-	qdel(src)
+/obj/machinery/power/tracker/on_deconstruction(disassembled)
+	if(disassembled)
+		var/obj/item/solar_assembly/S = locate() in src
+		if(S)
+			S.forceMove(loc)
+			S.give_glass(machine_stat & BROKEN)
+	else
+		playsound(src, SFX_SHATTER, 70, TRUE)
+		new /obj/item/shard(src.loc)
+		new /obj/item/shard(src.loc)
 
 // Tracker Electronic
 

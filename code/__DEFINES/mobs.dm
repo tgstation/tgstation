@@ -10,16 +10,19 @@
 #define MOVE_INTENT_WALK "walk"
 #define MOVE_INTENT_RUN "run"
 
+/// Amount of oxyloss that KOs a human
+#define OXYLOSS_PASSOUT_THRESHOLD 50
 //Blood levels
 #define BLOOD_VOLUME_MAX_LETHAL 2150
 #define BLOOD_VOLUME_EXCESS 2100
 #define BLOOD_VOLUME_MAXIMUM 2000
 #define BLOOD_VOLUME_SLIME_SPLIT 1120
 #define BLOOD_VOLUME_NORMAL 560
-#define BLOOD_VOLUME_SAFE 475
-#define BLOOD_VOLUME_OKAY 336
-#define BLOOD_VOLUME_BAD 224
-#define BLOOD_VOLUME_SURVIVE 122
+#define BLOOD_VOLUME_SAFE (BLOOD_VOLUME_NORMAL * (1 - 0.15)) // Latter number is percentage of blood lost, for readability!
+#define BLOOD_VOLUME_OKAY (BLOOD_VOLUME_NORMAL * (1 - 0.30))
+#define BLOOD_VOLUME_RISKY (BLOOD_VOLUME_NORMAL * (1 - 0.45))
+#define BLOOD_VOLUME_BAD (BLOOD_VOLUME_NORMAL * (1 - 0.60))
+#define BLOOD_VOLUME_SURVIVE (BLOOD_VOLUME_NORMAL * (1 - 0.80))
 
 /// How efficiently humans regenerate blood.
 #define BLOOD_REGEN_FACTOR 0.25
@@ -72,34 +75,33 @@
 #define RESPIRATION_N2 (1 << 1)
 #define RESPIRATION_PLASMA (1 << 2)
 #define DEFAULT_BODYPART_ICON_ORGANIC 'icons/mob/human/bodyparts_greyscale.dmi'
-#define DEFAULT_BODYPART_ICON_ROBOTIC 'icons/mob/augmentation/augments.dmi'
 
-#define MONKEY_BODYPART "monkey"
-#define ALIEN_BODYPART "alien"
-#define LARVA_BODYPART "larva"
-
-//Bodytype defines for how things can be worn, surgery, and other misc things.
+//Bodytype defines for surgery, and other misc things.
 ///The limb is organic.
 #define BODYTYPE_ORGANIC (1<<0)
 ///The limb is robotic.
 #define BODYTYPE_ROBOTIC (1<<1)
-///The limb fits the human mold. This is not meant to be literal, if the sprite "fits" on a human, it is "humanoid", regardless of origin.
-#define BODYTYPE_HUMANOID (1<<2)
-///The limb fits the monkey mold.
-#define BODYTYPE_MONKEY (1<<3)
-///The limb is digitigrade.
-#define BODYTYPE_DIGITIGRADE (1<<4)
-///The limb is snouted.
-#define BODYTYPE_SNOUTED (1<<5)
 ///A placeholder bodytype for xeno larva, so their limbs cannot be attached to anything.
-#define BODYTYPE_LARVA_PLACEHOLDER (1<<6)
+#define BODYTYPE_LARVA_PLACEHOLDER (1<<2)
 ///The limb is from a xenomorph.
-#define BODYTYPE_ALIEN (1<<7)
+#define BODYTYPE_ALIEN (1<<3)
 ///The limb is from a golem
-#define BODYTYPE_GOLEM (1<<8)
+#define BODYTYPE_GOLEM (1<<4)
+//The limb is a peg limb
+#define BODYTYPE_PEG (1<<5)
 
-#define BODYTYPE_BIOSCRAMBLE_COMPATIBLE (BODYTYPE_HUMANOID | BODYTYPE_MONKEY | BODYTYPE_ALIEN)
-#define BODYTYPE_CAN_BE_BIOSCRAMBLED(bodytype) (!(bodytype & BODYTYPE_ROBOTIC) && (bodytype & BODYTYPE_BIOSCRAMBLE_COMPATIBLE))
+// Bodyshape defines for how things can be worn, i.e., what "shape" the mob sprite is
+///The limb fits the human mold. This is not meant to be literal, if the sprite "fits" on a human, it is "humanoid", regardless of origin.
+#define BODYSHAPE_HUMANOID (1<<0)
+///The limb fits the monkey mold.
+#define BODYSHAPE_MONKEY (1<<1)
+///The limb is digitigrade.
+#define BODYSHAPE_DIGITIGRADE (1<<2)
+///The limb is snouted.
+#define BODYSHAPE_SNOUTED (1<<3)
+
+#define BODYTYPE_BIOSCRAMBLE_INCOMPATIBLE (BODYTYPE_ROBOTIC | BODYTYPE_LARVA_PLACEHOLDER | BODYTYPE_GOLEM | BODYTYPE_PEG)
+#define BODYTYPE_CAN_BE_BIOSCRAMBLED(bodytype) (!(bodytype & BODYTYPE_BIOSCRAMBLE_INCOMPATIBLE))
 
 // Defines for Species IDs. Used to refer to the name of a species, for things like bodypart names or species preferences.
 #define SPECIES_ABDUCTOR "abductor"
@@ -119,9 +121,6 @@
 #define SPECIES_LIZARD_SILVER "silverscale"
 #define SPECIES_NIGHTMARE "nightmare"
 #define SPECIES_MONKEY "monkey"
-#define SPECIES_MONKEY_FREAK "monkey_freak"
-#define SPECIES_MONKEY_HOLODECK "monkey_holodeck"
-#define SPECIES_MONKEY_HUMAN_LEGGED "monkey_human_legged"
 #define SPECIES_MOTH "moth"
 #define SPECIES_MUSHROOM "mush"
 #define SPECIES_PLASMAMAN "plasmaman"
@@ -129,11 +128,11 @@
 #define SPECIES_SHADOW "shadow"
 #define SPECIES_SKELETON "skeleton"
 #define SPECIES_SNAIL "snail"
-#define SPECIES_TALLBOY "tallboy"
 #define SPECIES_VAMPIRE "vampire"
 #define SPECIES_ZOMBIE "zombie"
 #define SPECIES_ZOMBIE_INFECTIOUS "memezombie"
 #define SPECIES_ZOMBIE_KROKODIL "krokodil_zombie"
+#define SPECIES_VOIDWALKER "voidwalker"
 
 // Like species IDs, but not specifically attached a species.
 #define BODYPART_ID_ALIEN "alien"
@@ -142,6 +141,8 @@
 #define BODYPART_ID_LARVA "larva"
 #define BODYPART_ID_PSYKER "psyker"
 #define BODYPART_ID_MEAT "meat"
+#define BODYPART_ID_PEG "peg"
+
 
 //See: datum/species/var/digitigrade_customization
 ///The species does not have digitigrade legs in generation.
@@ -167,8 +168,6 @@
 
 #define HUMAN_MAX_OXYLOSS 3
 #define HUMAN_CRIT_MAX_OXYLOSS (SSMOBS_DT/3)
-
-#define STAMINA_REGEN_BLOCK_TIME (10 SECONDS)
 
 #define HEAT_DAMAGE_LEVEL_1 1 //Amount of damage applied when your body temperature just passes the 360.15k safety point
 #define HEAT_DAMAGE_LEVEL_2 1.5 //Amount of damage applied when your body temperature passes the 400K point
@@ -214,26 +213,11 @@
 
 #define BRAIN_DAMAGE_INTEGRITY_MULTIPLIER 0.5
 
-//Surgery Defines
-#define BIOWARE_GENERIC "generic"
-#define BIOWARE_NERVES "nerves"
-#define BIOWARE_CIRCULATION "circulation"
-#define BIOWARE_LIGAMENTS "ligaments"
-#define BIOWARE_CORTEX "cortex"
-
 //Health hud screws for carbon mobs
 #define SCREWYHUD_NONE 0
 #define SCREWYHUD_CRIT 1
 #define SCREWYHUD_DEAD 2
 #define SCREWYHUD_HEALTHY 3
-
-//Health doll screws for human mobs
-#define SCREWYDOLL_HEAD /obj/item/bodypart/head
-#define SCREWYDOLL_CHEST /obj/item/bodypart/chest
-#define SCREWYDOLL_L_ARM /obj/item/bodypart/arm/left
-#define SCREWYDOLL_R_ARM /obj/item/bodypart/arm/right
-#define SCREWYDOLL_L_LEG /obj/item/bodypart/leg/left
-#define SCREWYDOLL_R_LEG /obj/item/bodypart/leg/right
 
 //Threshold levels for beauty for humans
 #define BEAUTY_LEVEL_HORRID -66
@@ -280,6 +264,8 @@
 #define SANITY_LEVEL_UNSTABLE 4
 #define SANITY_LEVEL_CRAZY 5
 #define SANITY_LEVEL_INSANE 6
+/// Equal to the highest sanity level
+#define SANITY_LEVEL_MAX SANITY_LEVEL_INSANE
 
 //Nutrition levels for humans
 #define NUTRITION_LEVEL_FAT 600
@@ -294,6 +280,7 @@
 
 //Disgust levels for humans
 #define DISGUST_LEVEL_MAXEDOUT 150
+#define DISGUST_LEVEL_VERYDISGUSTED 100
 #define DISGUST_LEVEL_DISGUSTED 75
 #define DISGUST_LEVEL_VERYGROSS 50
 #define DISGUST_LEVEL_GROSS 25
@@ -301,14 +288,14 @@
 //Used as an upper limit for species that continuously gain nutriment
 #define NUTRITION_LEVEL_ALMOST_FULL 535
 
-//Charge levels for Ethereals
+//Charge levels for Ethereals, in joules.
 #define ETHEREAL_CHARGE_NONE 0
-#define ETHEREAL_CHARGE_LOWPOWER 400
-#define ETHEREAL_CHARGE_NORMAL 1000
-#define ETHEREAL_CHARGE_ALMOSTFULL 1500
-#define ETHEREAL_CHARGE_FULL 2000
-#define ETHEREAL_CHARGE_OVERLOAD 2500
-#define ETHEREAL_CHARGE_DANGEROUS 3000
+#define ETHEREAL_CHARGE_LOWPOWER (0.4 * STANDARD_CELL_CHARGE)
+#define ETHEREAL_CHARGE_NORMAL (1 * STANDARD_CELL_CHARGE)
+#define ETHEREAL_CHARGE_ALMOSTFULL (1.5 * STANDARD_CELL_CHARGE)
+#define ETHEREAL_CHARGE_FULL (2 * STANDARD_CELL_CHARGE)
+#define ETHEREAL_CHARGE_OVERLOAD (2.5 * STANDARD_CELL_CHARGE)
+#define ETHEREAL_CHARGE_DANGEROUS (3 * STANDARD_CELL_CHARGE)
 
 
 #define CRYSTALIZE_COOLDOWN_LENGTH (120 SECONDS)
@@ -324,6 +311,9 @@
 
 //Slime evolution threshold. Controls how fast slimes can split/grow
 #define SLIME_EVOLUTION_THRESHOLD 10
+
+//Slime evolution cost in nutrition
+#define SLIME_EVOLUTION_COST 100
 
 //Slime extract crossing. Controls how many extracts is required to feed to a slime to core-cross.
 #define SLIME_EXTRACT_CROSSING_REQUIRED 10
@@ -355,7 +345,6 @@
 #define AI_ON 1
 #define AI_IDLE 2
 #define AI_OFF 3
-#define AI_Z_OFF 4
 
 //The range at which a mob should wake up if you spawn into the z level near it
 #define MAX_SIMPLEMOB_WAKEUP_RANGE 5
@@ -416,14 +405,6 @@
 #define COOLDOWN_UPDATE_ADD_RANGED "add_ranged"
 #define COOLDOWN_UPDATE_SET_ENRAGE "set_enrage"
 #define COOLDOWN_UPDATE_ADD_ENRAGE "add_enrage"
-#define COOLDOWN_UPDATE_SET_SPAWN "set_spawn"
-#define COOLDOWN_UPDATE_ADD_SPAWN "add_spawn"
-#define COOLDOWN_UPDATE_SET_HELP "set_help"
-#define COOLDOWN_UPDATE_ADD_HELP "add_help"
-#define COOLDOWN_UPDATE_SET_DASH "set_dash"
-#define COOLDOWN_UPDATE_ADD_DASH "add_dash"
-#define COOLDOWN_UPDATE_SET_TRANSFORM "set_transform"
-#define COOLDOWN_UPDATE_ADD_TRANSFORM "add_transform"
 #define COOLDOWN_UPDATE_SET_CHASER "set_chaser"
 #define COOLDOWN_UPDATE_ADD_CHASER "add_chaser"
 #define COOLDOWN_UPDATE_SET_ARENA "set_arena"
@@ -454,12 +435,11 @@
 #define WIZARD_AGE_MIN 30 //youngest a wizard can be
 #define APPRENTICE_AGE_MIN 29 //youngest an apprentice can be
 #define SHOES_SLOWDOWN 0 //How much shoes slow you down by default. Negative values speed you up
-#define SHOES_SPEED_SLIGHT SHOES_SLOWDOWN - 1 // slightest speed boost to movement
 #define POCKET_STRIP_DELAY (4 SECONDS) //time taken to search somebody's pockets
 #define DOOR_CRUSH_DAMAGE 15 //the amount of damage that airlocks deal when they crush you
 
 #define HUNGER_FACTOR 0.05 //factor at which mob nutrition decreases
-#define ETHEREAL_CHARGE_FACTOR 0.8 //factor at which ethereal's charge decreases per second
+#define ETHEREAL_DISCHARGE_RATE (8e-4 * STANDARD_CELL_CHARGE) // Rate at which ethereal stomach charge decreases
 /// How much nutrition eating clothes as moth gives and drains
 #define CLOTHING_NUTRITION_GAIN 15
 #define REAGENTS_METABOLISM 0.2 //How many units of reagent are consumed per second, by default.
@@ -467,15 +447,14 @@
 #define REM REAGENTS_EFFECT_MULTIPLIER //! Shorthand for the above define for ease of use in equations and the like
 
 // Eye protection
+// THese values are additive to determine your overall flash protection.
 #define FLASH_PROTECTION_HYPER_SENSITIVE -2
 #define FLASH_PROTECTION_SENSITIVE -1
 #define FLASH_PROTECTION_NONE 0
 #define FLASH_PROTECTION_FLASH 1
 #define FLASH_PROTECTION_WELDER 2
-
-// Roundstart trait system
-
-#define MAX_QUIRKS 6 //The maximum amount of quirks one character can have at roundstart
+#define FLASH_PROTECTION_WELDER_SENSITIVE 3
+#define FLASH_PROTECTION_WELDER_HYPER_SENSITIVE 4
 
 // AI Toggles
 #define AI_CAMERA_LUMINOSITY 5
@@ -490,8 +469,8 @@
 #define ROBOTIC_BRUTE_EXAMINE_TEXT "denting"
 #define ROBOTIC_BURN_EXAMINE_TEXT "charring"
 
-// If a mob has a higher threshold than this, the icon shown will be increased to the big fire icon.
-#define MOB_BIG_FIRE_STACK_THRESHOLD 3
+#define GLASSY_BRUTE_EXAMINE_TEXT "cracking"
+#define GLASSY_BURN_EXAMINE_TEXT "deformation"
 
 #define GRAB_PIXEL_SHIFT_PASSIVE 6
 #define GRAB_PIXEL_SHIFT_AGGRESSIVE 12
@@ -564,8 +543,6 @@
 #define RECENT_EXAMINE_MAX_WINDOW (2 SECONDS)
 /// If you examine the same atom twice in this timeframe, we call examine_more() instead of examine()
 #define EXAMINE_MORE_WINDOW (1 SECONDS)
-/// If you examine another mob who's successfully examined you during this duration of time, you two try to make eye contact. Cute!
-#define EYE_CONTACT_WINDOW (2 SECONDS)
 /// If you yawn while someone nearby has examined you within this time frame, it will force them to yawn as well. Tradecraft!
 #define YAWN_PROPAGATION_EXAMINE_WINDOW (2 SECONDS)
 
@@ -656,8 +633,6 @@
 //defines for grad_color and grad_styles list access keys
 #define GRADIENT_HAIR_KEY 1
 #define GRADIENT_FACIAL_HAIR_KEY 2
-//Keep up to date with the highest key value
-#define GRADIENTS_LEN 2
 
 // /datum/sprite_accessory/gradient defines
 #define GRADIENT_APPLIES_TO_HAIR (1<<0)
@@ -668,18 +643,23 @@
 // - They do not start at 0 for futureproofing
 // - They skip numbers for futureproofing as well
 // Otherwise they are completely arbitrary
-#define HUMAN_HEIGHT_DWARF 2
-#define HUMAN_HEIGHT_SHORTEST 4
-#define HUMAN_HEIGHT_SHORT 6
-#define HUMAN_HEIGHT_MEDIUM 8
-#define HUMAN_HEIGHT_TALL 10
-#define HUMAN_HEIGHT_TALLER 12
-#define HUMAN_HEIGHT_TALLEST 14
+#define MONKEY_HEIGHT_DWARF 2
+#define MONKEY_HEIGHT_MEDIUM 4
+#define MONKEY_HEIGHT_TALL HUMAN_HEIGHT_DWARF
+#define HUMAN_HEIGHT_DWARF 6
+#define HUMAN_HEIGHT_SHORTEST 8
+#define HUMAN_HEIGHT_SHORT 10
+#define HUMAN_HEIGHT_MEDIUM 12
+#define HUMAN_HEIGHT_TALL 14
+#define HUMAN_HEIGHT_TALLER 16
+#define HUMAN_HEIGHT_TALLEST 18
 
 /// Assoc list of all heights, cast to strings, to """"tuples"""""
 /// The first """tuple""" index is the upper body offset
 /// The second """tuple""" index is the lower body offset
 GLOBAL_LIST_INIT(human_heights_to_offsets, list(
+	"[MONKEY_HEIGHT_DWARF]" = list(-9, -3),
+	"[MONKEY_HEIGHT_MEDIUM]" = list(-7, -4),
 	"[HUMAN_HEIGHT_DWARF]" = list(-5, -4),
 	"[HUMAN_HEIGHT_SHORTEST]" = list(-2, -1),
 	"[HUMAN_HEIGHT_SHORT]" = list(-1, -1),
@@ -693,39 +673,41 @@ GLOBAL_LIST_INIT(human_heights_to_offsets, list(
 /// Total number of layers for mob overlays
 /// KEEP THIS UP-TO-DATE OR SHIT WILL BREAK
 /// Also consider updating layers_to_offset
-#define TOTAL_LAYERS 34
+#define TOTAL_LAYERS 35
 /// Mutations layer - Tk headglows, cold resistance glow, etc
-#define MUTATIONS_LAYER 34
+#define MUTATIONS_LAYER 35
 /// Mutantrace features (tail when looking south) that must appear behind the body parts
-#define BODY_BEHIND_LAYER 33
+#define BODY_BEHIND_LAYER 34
 /// Layer for bodyparts that should appear behind every other bodypart - Mostly, legs when facing WEST or EAST
-#define BODYPARTS_LOW_LAYER 32
+#define BODYPARTS_LOW_LAYER 33
 /// Layer for most bodyparts, appears above BODYPARTS_LOW_LAYER and below BODYPARTS_HIGH_LAYER
-#define BODYPARTS_LAYER 31
+#define BODYPARTS_LAYER 32
 /// Mutantrace features (snout, body markings) that must appear above the body parts
-#define BODY_ADJ_LAYER 30
+#define BODY_ADJ_LAYER 31
 /// Underwear, undershirts, socks, eyes, lips(makeup)
-#define BODY_LAYER 29
+#define BODY_LAYER 30
 /// Mutations that should appear above body, body_adj and bodyparts layer (e.g. laser eyes)
-#define FRONT_MUTATIONS_LAYER 28
+#define FRONT_MUTATIONS_LAYER 29
 /// Damage indicators (cuts and burns)
-#define DAMAGE_LAYER 27
+#define DAMAGE_LAYER 28
 /// Jumpsuit clothing layer
-#define UNIFORM_LAYER 26
+#define UNIFORM_LAYER 27
 /// ID card layer
-#define ID_LAYER 25
+#define ID_LAYER 26
 /// ID card layer (might be deprecated)
-#define ID_CARD_LAYER 24
+#define ID_CARD_LAYER 25
 /// Layer for bodyparts that should appear above every other bodypart - Currently only used for hands
-#define BODYPARTS_HIGH_LAYER 23
+#define BODYPARTS_HIGH_LAYER 24
 /// Gloves layer
-#define GLOVES_LAYER 22
+#define GLOVES_LAYER 23
 /// Shoes layer
-#define SHOES_LAYER 21
+#define SHOES_LAYER 22
 /// Layer for masks that are worn below ears and eyes (like Balaclavas) (layers below hair, use flagsinv=HIDEHAIR as needed)
-#define LOW_FACEMASK_LAYER 20
+#define LOW_FACEMASK_LAYER 21
 /// Ears layer (Spessmen have ears? Wow)
-#define EARS_LAYER 19
+#define EARS_LAYER 20
+/// Layer for neck apperal that should appear below the suit slot (like neckties)
+#define LOW_NECK_LAYER 19
 /// Suit layer (armor, coats, etc.)
 #define SUIT_LAYER 18
 /// Glasses layer
@@ -734,7 +716,7 @@ GLOBAL_LIST_INIT(human_heights_to_offsets, list(
 #define BELT_LAYER 16 //Possible make this an overlay of somethign required to wear a belt?
 /// Suit storage layer (tucking a gun or baton underneath your armor)
 #define SUIT_STORE_LAYER 15
-/// Neck layer (for wearing ties and bedsheets)
+/// Neck layer (for wearing capes and bedsheets)
 #define NECK_LAYER 14
 /// Back layer (for backpacks and equipment on your back)
 #define BACK_LAYER 13
@@ -760,8 +742,8 @@ GLOBAL_LIST_INIT(human_heights_to_offsets, list(
 #define WOUND_LAYER 3
 /// Blood cult ascended halo layer, because there's currently no better solution for adding/removing
 #define HALO_LAYER 2
-/// Fire layer when you're on fire
-#define FIRE_LAYER 1
+/// The highest most layer for mob overlays. Unused
+#define HIGHEST_LAYER 1
 
 #define UPPER_BODY "upper body"
 #define LOWER_BODY "lower body"
@@ -781,7 +763,9 @@ GLOBAL_LIST_INIT(layers_to_offset, list(
 	"[BELT_LAYER]" = LOWER_BODY,
 	// Everything below looks fine with or without a filter, so we can skip it and just offset
 	// (In practice they'd be fine if they got a filter but we can optimize a bit by not.)
+	"[NECK_LAYER]" = UPPER_BODY,
 	"[GLASSES_LAYER]" = UPPER_BODY,
+	"[LOW_NECK_LAYER]" = UPPER_BODY,
 	"[ABOVE_BODY_FRONT_GLASSES_LAYER]" = UPPER_BODY, // currently unused
 	"[ABOVE_BODY_FRONT_HEAD_LAYER]" = UPPER_BODY, // only used for head stuff
 	"[GLOVES_LAYER]" = LOWER_BODY,
@@ -798,11 +782,12 @@ GLOBAL_LIST_INIT(layers_to_offset, list(
 	// to show how many filters are added at a glance
 	// BACK_LAYER (backpacks are big)
 	// BODYPARTS_HIGH_LAYER (arms)
+	// BODY_LAYER (body markings (full body), underwear (full body), eyes)
 	// BODY_ADJ_LAYER (external organs like wings)
 	// BODY_BEHIND_LAYER (external organs like wings)
 	// BODY_FRONT_LAYER (external organs like wings)
 	// DAMAGE_LAYER (full body)
-	// FIRE_LAYER (full body)
+	// HIGHEST_LAYER (full body)
 	// UNIFORM_LAYER (full body)
 	// WOUND_LAYER (full body)
 ))
@@ -855,6 +840,14 @@ GLOBAL_LIST_INIT(layers_to_offset, list(
 #define ALLOW_SILICON_REACH (1<<6)
 /// If resting on the floor is allowed to perform action (pAIs can play music while resting)
 #define ALLOW_RESTING (1<<7)
+/// If this is accessible to creatures with ventcrawl capabilities
+#define NEED_VENTCRAWL (1<<8)
+/// Skips adjacency checks
+#define BYPASS_ADJACENCY (1<<9)
+/// Skips reccursive loc checks
+#define NOT_INSIDE_TARGET (1<<10)
+/// Checks for base adjacency, but silences the error
+#define SILENT_ADJACENCY (1<<11)
 
 /// The default mob sprite size (used for shrinking or enlarging the mob sprite to regular size)
 #define RESIZE_DEFAULT_SIZE 1
@@ -881,7 +874,7 @@ GLOBAL_LIST_INIT(layers_to_offset, list(
 /// The vomit you've all come to know and love, but with a little extra "spice" (blood)
 #define VOMIT_CATEGORY_BLOOD (VOMIT_CATEGORY_DEFAULT | MOB_VOMIT_BLOOD)
 /// Another vomit variant that causes you to get knocked down instead of just only getting a stun. Standard otherwise.
-#define VOMIT_CATEGORY_KNOCKDOWN (VOMIT_CATEGORY_DEFAULT | MOB_VOMIT_KNOCKDOWN)
+#define VOMIT_CATEGORY_KNOCKDOWN (MOB_VOMIT_MESSAGE | MOB_VOMIT_HARM | MOB_VOMIT_KNOCKDOWN)
 
 /// Possible value of [/atom/movable/buckle_lying]. If set to a different (positive-or-zero) value than this, the buckling thing will force a lying angle on the buckled.
 #define NO_BUCKLE_LYING -1
@@ -975,3 +968,30 @@ GLOBAL_LIST_INIT(layers_to_offset, list(
 
 /// Types of bullets that mining mobs take full damage from
 #define MINING_MOB_PROJECTILE_VULNERABILITY list(BRUTE)
+
+/// Helper macro that determines if the mob is at the threshold to start vomitting due to high toxin levels
+#define AT_TOXIN_VOMIT_THRESHOLD(mob) (mob.getToxLoss() > 45 && mob.nutrition > 20)
+
+/// The duration of the flip emote animation
+#define FLIP_EMOTE_DURATION 0.7 SECONDS
+
+// Sprites for photocopying butts
+#define BUTT_SPRITE_HUMAN_MALE "human_male"
+#define BUTT_SPRITE_HUMAN_FEMALE "human_female"
+#define BUTT_SPRITE_LIZARD "lizard"
+#define BUTT_SPRITE_QR_CODE "qr_code"
+#define BUTT_SPRITE_XENOMORPH "xeno"
+#define BUTT_SPRITE_DRONE "drone"
+#define BUTT_SPRITE_CAT "cat"
+#define BUTT_SPRITE_FLOWERPOT "flowerpot"
+#define BUTT_SPRITE_GREY "grey"
+#define BUTT_SPRITE_PLASMA "plasma"
+#define BUTT_SPRITE_FUZZY "fuzzy"
+#define BUTT_SPRITE_SLIME "slime"
+
+// Type of shadow used for drop shadows, really they're mostly just an icon state
+/// Don't bother applying the drop shadow component at all if this is provided as the shadow type
+#define SHADOW_NONE "none"
+#define SHADOW_SMALL "small"
+#define SHADOW_MEDIUM "medium"
+#define SHADOW_LARGE "large"

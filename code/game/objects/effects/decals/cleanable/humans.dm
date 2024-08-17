@@ -12,6 +12,7 @@
 	var/dryname = "dried blood" //when the blood lasts long enough, it becomes dry and gets a new name
 	var/drydesc = "Looks like it's been here a while. Eew." //as above
 	var/drytime = 0
+	var/footprint_sprite = null
 
 /obj/effect/decal/cleanable/blood/Initialize(mapload)
 	. = ..()
@@ -96,6 +97,15 @@
 /obj/effect/decal/cleanable/trail_holder/can_bloodcrawl_in()
 	return TRUE
 
+// normal version of the above trail holder object for use in less convoluted things
+/obj/effect/decal/cleanable/blood/trails
+	desc = "Looks like a corpse was smeared all over the floor like ketchup. Kinda makes you hungry."
+	random_icon_states = list("trails_1", "trails_2")
+	icon_state = "trails_1"
+	beauty = -50
+	dryname = "dried tracks"
+	drydesc = "Looks like a corpse was smeared all over the floor like ketchup, but it's all dried up and nasty now, ew. You lose some of your appetite."
+
 /obj/effect/decal/cleanable/blood/gibs
 	name = "gibs"
 	desc = "They look bloody and gruesome."
@@ -110,15 +120,13 @@
 	drydesc = "They look bloody and gruesome while some terrible smell fills the air."
 	decal_reagent = /datum/reagent/consumable/liquidgibs
 	reagent_amount = 5
-	///Information about the diseases our streaking spawns
-	var/list/streak_diseases
 
 /obj/effect/decal/cleanable/blood/gibs/Initialize(mapload, list/datum/disease/diseases)
 	. = ..()
+	AddElement(/datum/element/squish_sound)
 	RegisterSignal(src, COMSIG_MOVABLE_PIPE_EJECTING, PROC_REF(on_pipe_eject))
 
 /obj/effect/decal/cleanable/blood/gibs/Destroy()
-	LAZYNULL(streak_diseases)
 	return ..()
 
 /obj/effect/decal/cleanable/blood/gibs/replace_decal(obj/effect/decal/cleanable/C)
@@ -133,11 +141,6 @@
 /obj/effect/decal/cleanable/blood/gibs/ex_act(severity, target)
 	return FALSE
 
-/obj/effect/decal/cleanable/blood/gibs/on_entered(datum/source, atom/movable/L)
-	if(isliving(L) && has_gravity(loc))
-		playsound(loc, 'sound/effects/footstep/gib_step.ogg', HAS_TRAIT(L, TRAIT_LIGHT_STEP) ? 20 : 50, TRUE)
-	return ..()
-
 /obj/effect/decal/cleanable/blood/gibs/proc/on_pipe_eject(atom/source, direction)
 	SIGNAL_HANDLER
 
@@ -150,8 +153,7 @@
 	streak(dirs)
 
 /obj/effect/decal/cleanable/blood/gibs/proc/streak(list/directions, mapload=FALSE)
-	LAZYINITLIST(streak_diseases)
-	SEND_SIGNAL(src, COMSIG_GIBS_STREAK, directions, streak_diseases)
+	SEND_SIGNAL(src, COMSIG_GIBS_STREAK, directions)
 	var/direction = pick(directions)
 	var/delay = 2
 	var/range = pick(0, 200; 1, 150; 2, 50; 3, 17; 50) //the 3% chance of 50 steps is intentional and played for laughs.
@@ -166,14 +168,14 @@
 				break
 		return
 
-	var/datum/move_loop/loop = SSmove_manager.move_to(src, get_step(src, direction), delay = delay, timeout = range * delay, priority = MOVEMENT_ABOVE_SPACE_PRIORITY)
+	var/datum/move_loop/loop = GLOB.move_manager.move_to(src, get_step(src, direction), delay = delay, timeout = range * delay, priority = MOVEMENT_ABOVE_SPACE_PRIORITY)
 	RegisterSignal(loop, COMSIG_MOVELOOP_POSTPROCESS, PROC_REF(spread_movement_effects))
 
 /obj/effect/decal/cleanable/blood/gibs/proc/spread_movement_effects(datum/move_loop/has_target/source)
 	SIGNAL_HANDLER
 	if(NeverShouldHaveComeHere(loc))
 		return
-	new /obj/effect/decal/cleanable/blood/splatter(loc, streak_diseases)
+	new /obj/effect/decal/cleanable/blood/splatter(loc)
 
 /obj/effect/decal/cleanable/blood/gibs/up
 	icon_state = "gibup1"
@@ -234,7 +236,7 @@
 	name = "footprints"
 	desc = "WHOSE FOOTPRINTS ARE THESE?"
 	icon = 'icons/effects/footprints.dmi'
-	icon_state = "blood1"
+	icon_state = "blood_shoes_enter"
 	random_icon_states = null
 	blood_state = BLOOD_STATE_HUMAN //the icon state to load images from
 	var/entered_dirs = 0
@@ -249,12 +251,13 @@
 	dryname = "dried footprints"
 	drydesc = "HMM... SOMEONE WAS HERE!"
 
-/obj/effect/decal/cleanable/blood/footprints/Initialize(mapload)
+/obj/effect/decal/cleanable/blood/footprints/Initialize(mapload, footprint_sprite)
+	src.footprint_sprite = footprint_sprite
 	. = ..()
 	icon_state = "" //All of the footprint visuals come from overlays
 	if(mapload)
 		entered_dirs |= dir //Keep the same appearance as in the map editor
-		update_appearance()
+	update_appearance(mapload ? (ALL) : (UPDATE_NAME | UPDATE_DESC))
 
 //Rotate all of the footprint directions too
 /obj/effect/decal/cleanable/blood/footprints/setDir(newdir)
@@ -276,9 +279,24 @@
 	update_appearance()
 	return ..()
 
+/obj/effect/decal/cleanable/blood/footprints/update_name(updates)
+	switch(footprint_sprite)
+		if(FOOTPRINT_SPRITE_CLAWS)
+			name = "clawprints"
+		if(FOOTPRINT_SPRITE_SHOES)
+			name = "footprints"
+		if(FOOTPRINT_SPRITE_PAWS)
+			name = "pawprints"
+	dryname = "dried [name]"
+	return ..()
+
+/obj/effect/decal/cleanable/blood/footprints/update_desc(updates)
+	desc = "WHOSE [uppertext(name)] ARE THESE?"
+	return ..()
+
 /obj/effect/decal/cleanable/blood/footprints/update_icon()
 	. = ..()
-	alpha = min(BLOODY_FOOTPRINT_BASE_ALPHA + (255 - BLOODY_FOOTPRINT_BASE_ALPHA) * bloodiness / (BLOOD_ITEM_MAX / 2), 255)
+	alpha = max(BLOODY_FOOTPRINT_BASE_ALPHA, min(255 * (bloodiness / 15), 255))
 
 //Cache of bloody footprint images
 //Key:
@@ -290,22 +308,22 @@ GLOBAL_LIST_EMPTY(bloody_footprints_cache)
 	. = ..()
 	for(var/Ddir in GLOB.cardinals)
 		if(entered_dirs & Ddir)
-			var/image/bloodstep_overlay = GLOB.bloody_footprints_cache["entered-[blood_state]-[Ddir]"]
+			var/image/bloodstep_overlay = GLOB.bloody_footprints_cache["entered-[footprint_sprite]-[blood_state]-[Ddir]"]
 			if(!bloodstep_overlay)
-				GLOB.bloody_footprints_cache["entered-[blood_state]-[Ddir]"] = bloodstep_overlay = image(icon, "[blood_state]1", dir = Ddir)
+				GLOB.bloody_footprints_cache["entered-[footprint_sprite]-[blood_state]-[Ddir]"] = bloodstep_overlay = image(icon, "[blood_state]_[footprint_sprite]_enter", dir = Ddir)
 			. += bloodstep_overlay
 
 		if(exited_dirs & Ddir)
-			var/image/bloodstep_overlay = GLOB.bloody_footprints_cache["exited-[blood_state]-[Ddir]"]
+			var/image/bloodstep_overlay = GLOB.bloody_footprints_cache["exited-[footprint_sprite]-[blood_state]-[Ddir]"]
 			if(!bloodstep_overlay)
-				GLOB.bloody_footprints_cache["exited-[blood_state]-[Ddir]"] = bloodstep_overlay = image(icon, "[blood_state]2", dir = Ddir)
+				GLOB.bloody_footprints_cache["exited-[footprint_sprite]-[blood_state]-[Ddir]"] = bloodstep_overlay = image(icon, "[blood_state]_[footprint_sprite]_exit", dir = Ddir)
 			. += bloodstep_overlay
 
 
 /obj/effect/decal/cleanable/blood/footprints/examine(mob/user)
 	. = ..()
 	if((shoe_types.len + species_types.len) > 0)
-		. += "You recognise the footprints as belonging to:"
+		. += "You recognise the [name] as belonging to:"
 		for(var/sole in shoe_types)
 			var/obj/item/clothing/item = sole
 			var/article = initial(item.gender) == PLURAL ? "Some" : "A"
@@ -315,14 +333,14 @@ GLOBAL_LIST_EMPTY(bloody_footprints_cache)
 			if(species == "unknown")
 				. += "Some <B>feet</B>."
 			else if(species == SPECIES_MONKEY)
-				. += "[icon2html('icons/mob/human/human.dmi', user, "monkey")] Some <B>monkey feet</B>."
+				. += "[icon2html('icons/mob/human/human.dmi', user, "monkey")] Some <B>monkey paws</B>."
 			else if(species == SPECIES_HUMAN)
 				. += "[icon2html('icons/mob/human/bodyparts.dmi', user, "default_human_l_leg")] Some <B>human feet</B>."
 			else
 				. += "[icon2html('icons/mob/human/bodyparts.dmi', user, "[species]_l_leg")] Some <B>[species] feet</B>."
 
-/obj/effect/decal/cleanable/blood/footprints/replace_decal(obj/effect/decal/cleanable/C)
-	if(blood_state != C.blood_state) //We only replace footprints of the same type as us
+/obj/effect/decal/cleanable/blood/footprints/replace_decal(obj/effect/decal/cleanable/blood/blood_decal)
+	if(blood_state != blood_decal.blood_state || footprint_sprite != blood_decal.footprint_sprite) //We only replace footprints of the same type as us
 		return FALSE
 	return ..()
 
@@ -363,7 +381,7 @@ GLOBAL_LIST_EMPTY(bloody_footprints_cache)
 /// Set the splatter up to fly through the air until it rounds out of steam or hits something
 /obj/effect/decal/cleanable/blood/hitsplatter/proc/fly_towards(turf/target_turf, range)
 	var/delay = 2
-	var/datum/move_loop/loop = SSmove_manager.move_towards(src, target_turf, delay, timeout = delay * range, priority = MOVEMENT_ABOVE_SPACE_PRIORITY, flags = MOVEMENT_LOOP_START_FAST)
+	var/datum/move_loop/loop = GLOB.move_manager.move_towards(src, target_turf, delay, timeout = delay * range, priority = MOVEMENT_ABOVE_SPACE_PRIORITY, flags = MOVEMENT_LOOP_START_FAST)
 	RegisterSignal(loop, COMSIG_MOVELOOP_PREPROCESS_CHECK, PROC_REF(pre_move))
 	RegisterSignal(loop, COMSIG_MOVELOOP_POSTPROCESS, PROC_REF(post_move))
 	RegisterSignal(loop, COMSIG_QDELETING, PROC_REF(loop_done))

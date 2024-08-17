@@ -7,6 +7,11 @@
 	report_message = "Rumors has it that the clown planet has been sending support packages to clowns in this system."
 	trait_to_give = STATION_TRAIT_BANANIUM_SHIPMENTS
 
+/datum/station_trait/bananium_shipment/get_pulsar_message()
+	var/advisory_string = "Advisory Level: <b>Clown Planet</b></center><BR>"
+	advisory_string += "Your sector's advisory level is Clown Planet! Our bike horns have picked up on a large bananium stash. Clowns show a large influx of clowns on your station. We highly advise you to slip any threats to keep Honkotrasen assets within the Banana Sector. The Department of Intelligence advises defending chemistry from any clowns that are trying to make baldium or space lube."
+	return advisory_string
+
 /datum/station_trait/unnatural_atmosphere
 	name = "Unnatural atmospherical properties"
 	trait_type = STATION_TRAIT_NEUTRAL
@@ -29,6 +34,7 @@
 /datum/station_trait/unique_ai
 	name = "Unique AI"
 	trait_type = STATION_TRAIT_NEUTRAL
+	trait_flags = parent_type::trait_flags | STATION_TRAIT_REQUIRES_AI
 	weight = 5
 	show_in_report = TRUE
 	report_message = "For experimental purposes, this station AI might show divergence from default lawset. Do not meddle with this experiment, we've removed \
@@ -103,7 +109,7 @@
 /datum/station_trait/glitched_pdas
 	name = "PDA glitch"
 	trait_type = STATION_TRAIT_NEUTRAL
-	weight = 10
+	weight = 5
 	show_in_report = TRUE
 	cost = STATION_TRAIT_COST_MINIMAL
 	report_message = "Something seems to be wrong with the PDAs issued to you all this shift. Nothing too bad though."
@@ -120,6 +126,11 @@
 /datum/station_trait/announcement_intern/New()
 	. = ..()
 	SSstation.announcer = /datum/centcom_announcer/intern
+
+/datum/station_trait/announcement_intern/get_pulsar_message()
+	var/advisory_string = "Advisory Level: <b>(TITLE HERE)</b></center><BR>"
+	advisory_string += "(Copy/Paste the summary provided by the Threat Intelligence Office in this field. You shouldn't have any trouble with this just make sure to replace this message before hitting the send button. Also, make sure there's coffee ready for the meeting at 06:00 when you're done.)"
+	return advisory_string
 
 /datum/station_trait/announcement_medbot
 	name = "Announcement \"System\""
@@ -186,6 +197,7 @@
 		if(length(birthday_options))
 			birthday_person = pick(birthday_options)
 			birthday_person_name = birthday_person.real_name
+			ADD_TRAIT(birthday_person, TRAIT_BIRTHDAY_BOY, REF(src))
 	addtimer(CALLBACK(src, PROC_REF(announce_birthday)), 10 SECONDS)
 
 /datum/station_trait/birthday/proc/check_valid_override()
@@ -282,7 +294,7 @@
 /datum/station_trait/scarves
 	name = "Scarves"
 	trait_type = STATION_TRAIT_NEUTRAL
-	weight = 10
+	weight = 5
 	cost = STATION_TRAIT_COST_MINIMAL
 	show_in_report = TRUE
 	var/list/scarves
@@ -316,7 +328,7 @@
 	name = "Wallets!"
 	trait_type = STATION_TRAIT_NEUTRAL
 	show_in_report = TRUE
-	weight = 10
+	weight = 5
 	cost = STATION_TRAIT_COST_MINIMAL
 	report_message = "It has become temporarily fashionable to use a wallet, so everyone on the station has been issued one."
 
@@ -362,26 +374,169 @@
 	show_in_report = TRUE
 	report_message = "There sure are a lot of trees out there."
 
-/datum/station_trait/triple_ai
-	name = "AI Triumvirate"
+/datum/station_trait/linked_closets
+	name = "Closet Anomaly"
 	trait_type = STATION_TRAIT_NEUTRAL
 	show_in_report = TRUE
 	weight = 1
-	report_message = "Your station has been instated with three Nanotrasen Artificial Intelligence models."
+	report_message = "We've reports of high amount of trace eigenstasium on your station. Ensure that your closets are working correctly."
 
-/datum/station_trait/triple_ai/New()
+/datum/station_trait/linked_closets/on_round_start()
 	. = ..()
-	RegisterSignal(SSjob, COMSIG_OCCUPATIONS_DIVIDED, PROC_REF(on_occupations_divided))
+	var/list/roundstart_closets = GLOB.roundstart_station_closets.Copy()
 
-/datum/station_trait/triple_ai/revert()
-	UnregisterSignal(SSjob, COMSIG_OCCUPATIONS_DIVIDED)
+	/**
+	 * The number of links to perform. the chance of a closet being linked are about 1 in 10
+	 * There are more than 220 roundstart closets on meta, so, about 22 closets will be affected on average.
+	 */
+	var/number_of_links = round(length(roundstart_closets) * (rand(400, 430)*0.0001), 1)
+	for(var/repetition in 1 to number_of_links)
+		var/list/targets = list()
+		for(var/how_many in 1 to rand(2,3))
+			targets += pick_n_take(roundstart_closets)
+		GLOB.eigenstate_manager.create_new_link(targets)
+
+
+#define PRO_SKUB "pro-skub"
+#define ANTI_SKUB "anti-skub"
+#define SKUB_IDFC "i don't frikkin' care"
+#define RANDOM_SKUB null //This means that if you forgot to opt in/against/out, there's a 50/50 chance to be pro or anti
+
+/// A trait that lets players choose whether they want pro-skub or anti-skub (or neither), and receive the appropriate equipment.
+/datum/station_trait/skub
+	name = "The Great Skub Contention"
+	trait_type = STATION_TRAIT_NEUTRAL
+	show_in_report = FALSE
+	weight = 2
+	sign_up_button = TRUE
+	/// List of people signed up to be either pro_skub or anti_skub
+	var/list/skubbers = list()
+
+/datum/station_trait/skub/New()
+	. = ..()
+	RegisterSignal(SSdcs, COMSIG_GLOB_JOB_AFTER_SPAWN, PROC_REF(on_job_after_spawn))
+
+/datum/station_trait/skub/setup_lobby_button(atom/movable/screen/lobby/button/sign_up/lobby_button)
+	RegisterSignal(lobby_button, COMSIG_ATOM_UPDATE_OVERLAYS, PROC_REF(on_lobby_button_update_overlays))
+	lobby_button.desc = "Are you pro-skub or anti-skub? Click to cycle through pro-skub, anti-skub, random and neutral."
 	return ..()
 
-/datum/station_trait/triple_ai/proc/on_occupations_divided(datum/source, pure, allow_all)
+/// Let late-joiners jump on this gimmick too.
+/datum/station_trait/skub/can_display_lobby_button(client/player)
+	return sign_up_button
+
+/// We don't destroy buttons on round start for those who are still in the lobby.
+/datum/station_trait/skub/on_round_start()
+	return
+
+/datum/station_trait/skub/on_lobby_button_update_icon(atom/movable/screen/lobby/button/sign_up/lobby_button, location, control, params, mob/dead/new_player/user)
+	var/mob/player = lobby_button.get_mob()
+	var/skub_stance = skubbers[player.ckey]
+	switch(skub_stance)
+		if(PRO_SKUB)
+			lobby_button.base_icon_state = "signup_on"
+		if(ANTI_SKUB)
+			lobby_button.base_icon_state = "signup"
+		else
+			lobby_button.base_icon_state = "signup_neutral"
+
+/datum/station_trait/skub/on_lobby_button_click(atom/movable/screen/lobby/button/sign_up/lobby_button, updates)
+	var/mob/player = lobby_button.get_mob()
+	var/skub_stance = skubbers[player.ckey]
+	switch(skub_stance)
+		if(PRO_SKUB)
+			skubbers[player.ckey] = ANTI_SKUB
+			lobby_button.balloon_alert(player, "anti-skub")
+		if(ANTI_SKUB)
+			skubbers[player.ckey] = SKUB_IDFC
+			lobby_button.balloon_alert(player, "don't care")
+		if(SKUB_IDFC)
+			skubbers[player.ckey] = RANDOM_SKUB
+			lobby_button.balloon_alert(player, "on the best side")
+		if(RANDOM_SKUB)
+			skubbers[player.ckey] = PRO_SKUB
+			lobby_button.balloon_alert(player, "pro-skub")
+
+/datum/station_trait/skub/proc/on_lobby_button_update_overlays(atom/movable/screen/lobby/button/sign_up/lobby_button, list/overlays)
+	SIGNAL_HANDLER
+	var/mob/player = lobby_button.get_mob()
+	var/skub_stance = skubbers[player.ckey]
+	switch(skub_stance)
+		if(PRO_SKUB)
+			overlays += "pro_skub"
+		if(ANTI_SKUB)
+			overlays += "anti_skub"
+		if(SKUB_IDFC)
+			overlays += "neutral_skub"
+		if(RANDOM_SKUB)
+			overlays += "random_skub"
+
+/datum/station_trait/skub/proc/on_job_after_spawn(datum/source, datum/job/job, mob/living/spawned, client/player_client)
 	SIGNAL_HANDLER
 
-	for(var/datum/job/ai/ai_datum in SSjob.joinable_occupations)
-		ai_datum.spawn_positions = 3
-	if(!pure)
-		for(var/obj/effect/landmark/start/ai/secondary/secondary_ai_spawn in GLOB.start_landmarks_list)
-			secondary_ai_spawn.latejoin_active = TRUE
+	var/skub_stance = skubbers[player_client.ckey]
+	if(skub_stance == SKUB_IDFC)
+		return
+
+	if((skub_stance == RANDOM_SKUB && prob(50)) || skub_stance == PRO_SKUB)
+		var/obj/item/storage/box/skub/boxie = new(spawned.loc)
+		spawned.equip_to_slot_if_possible(boxie, ITEM_SLOT_BACKPACK, indirect_action = TRUE)
+		if(ishuman(spawned))
+			var/obj/item/clothing/suit/costume/wellworn_shirt/skub/shirt = new(spawned.loc)
+			if(!spawned.equip_to_slot_if_possible(shirt, ITEM_SLOT_OCLOTHING, indirect_action = TRUE))
+				shirt.forceMove(boxie)
+		return
+
+	var/obj/item/storage/box/stickers/anti_skub/boxie = new(spawned.loc)
+	spawned.equip_to_slot_if_possible(boxie, ITEM_SLOT_BACKPACK, indirect_action = TRUE)
+	if(!ishuman(spawned))
+		return
+	var/obj/item/clothing/suit/costume/wellworn_shirt/skub/anti/shirt = new(spawned.loc)
+	if(!spawned.equip_to_slot_if_possible(shirt, ITEM_SLOT_OCLOTHING, indirect_action = TRUE))
+		shirt.forceMove(boxie)
+
+/// A box containing a skub, for easier carry because skub is a bulky item.
+/obj/item/storage/box/skub
+	name = "skub box"
+	desc = "A box to store your skub and pro-skub shirt in. A label on the back reads: \"Skubtide, Stationwide\"."
+	icon_state = "hugbox"
+	illustration = "skub"
+
+/obj/item/storage/box/skub/Initialize(mapload)
+	. = ..()
+	atom_storage.exception_hold = typecacheof(list(/obj/item/skub, /obj/item/clothing/suit/costume/wellworn_shirt/skub))
+
+/obj/item/storage/box/skub/PopulateContents()
+	new /obj/item/skub(src)
+	new /obj/item/sticker/skub(src)
+	new /obj/item/sticker/skub(src)
+
+/obj/item/storage/box/stickers/anti_skub
+	name = "anti-skub stickers box"
+	desc = "The enemy may have been given a skub and a shirt, but I've more stickers! Plus the box can hold my anti-skub shirt."
+
+/obj/item/storage/box/stickers/anti_skub/Initialize(mapload)
+	. = ..()
+	atom_storage.exception_hold = typecacheof(list(/obj/item/clothing/suit/costume/wellworn_shirt/skub))
+
+/obj/item/storage/box/stickers/anti_skub/PopulateContents()
+	for(var/i in 1 to 4)
+		new /obj/item/sticker/anti_skub(src)
+
+#undef PRO_SKUB
+#undef ANTI_SKUB
+#undef SKUB_IDFC
+#undef RANDOM_SKUB
+
+/// Crew don't ever spawn as enemies of the station. Obsesseds, blob infection, space changelings etc can still happen though
+/datum/station_trait/background_checks
+	name = "Station-Wide Background Checks"
+	report_message = "We replaced the intern doing your crew's background checks with a trained screener for this shift! That said, our enemies may just find another way to infiltrate the station, so be careful."
+	trait_type = STATION_TRAIT_NEUTRAL
+	weight = 1
+	show_in_report = TRUE
+	can_revert = FALSE
+
+	dynamic_category = RULESET_CATEGORY_NO_WITTING_CREW_ANTAGONISTS
+	threat_reduction = 15
+	dynamic_threat_id = "Background Checks"

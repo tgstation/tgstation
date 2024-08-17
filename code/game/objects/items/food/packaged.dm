@@ -117,13 +117,11 @@
 		return ..()
 	apply_buff(user)
 
-/obj/item/food/canned/envirochow/afterattack(atom/target, mob/user, proximity_flag)
-	. = ..()
-	if(!proximity_flag)
-		return
-	if(!check_buffability(target))
-		return
-	apply_buff(target, user)
+/obj/item/food/canned/envirochow/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
+	if(!check_buffability(interacting_with))
+		return NONE
+	apply_buff(interacting_with, user)
+	return ITEM_INTERACT_SUCCESS
 
 ///This proc checks if the mob is able to receive the buff.
 /obj/item/food/canned/envirochow/proc/check_buffability(mob/living/hungry_pet)

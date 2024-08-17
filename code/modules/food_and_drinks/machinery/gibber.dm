@@ -1,10 +1,12 @@
 /obj/machinery/gibber
+	SET_BASE_VISUAL_PIXEL(0, DEPTH_OFFSET)
 	name = "gibber"
 	desc = "The name isn't descriptive enough?"
 	icon = 'icons/obj/machines/kitchen.dmi'
 	icon_state = "grinder"
 	density = TRUE
 	circuit = /obj/item/circuitboard/machine/gibber
+	anchored_tabletop_offset = 8
 
 	var/operating = FALSE //Is it on?
 	var/dirty = FALSE // Does it need cleaning?
@@ -15,13 +17,15 @@
 
 /obj/machinery/gibber/Initialize(mapload)
 	. = ..()
+	RegisterSignal(src, COMSIG_COMPONENT_CLEAN_ACT, PROC_REF(on_cleaned))
 	if(prob(5))
 		name = "meat grinder"
 		desc = "Okay, if I... if I chop you up in a meat grinder, and the only thing that comes out, that's left of you, is your eyeball, \
 			you'r- you're PROBABLY DEAD! You're probably going to - not you, I'm just sayin', like, if you- if somebody were to, like, \
 			push you into a meat grinder, and, like, your- one of your finger bones is still intact, they're not gonna pick it up and go, \
 			Well see, yeah it wasn't deadly, it wasn't an instant kill move! You still got, like, this part of your finger left!"
-	add_overlay("grjam")
+		dirty = TRUE
+		update_appearance(UPDATE_OVERLAYS)
 
 /obj/machinery/gibber/RefreshParts()
 	. = ..()
@@ -45,16 +49,23 @@
 /obj/machinery/gibber/update_overlays()
 	. = ..()
 	if(dirty)
-		. +="grbloody"
-	if(machine_stat & (NOPOWER|BROKEN))
+		. += "grinder_bloody"
+	if(machine_stat & (NOPOWER|BROKEN) || panel_open)
 		return
 	if(!occupant)
-		. += "grjam"
+		. += "grinder_empty"
+		. += emissive_appearance(icon, "grinder_empty", src, alpha = src.alpha)
 		return
 	if(operating)
-		. += "gruse"
+		. += "grinder_active"
+		. += emissive_appearance(icon, "grinder_active", src, alpha = src.alpha)
+		. += "grinder_jaws_active"
 		return
-	. += "gridle"
+	. += "grinder_loaded"
+	. += emissive_appearance(icon, "grinder_loaded", src, alpha = src.alpha)
+
+/obj/machinery/gibber/on_set_panel_open(old_value)
+	update_appearance(UPDATE_OVERLAYS)
 
 /obj/machinery/gibber/attack_paw(mob/user, list/modifiers)
 	return attack_hand(user, modifiers)
@@ -147,15 +158,20 @@
 	if(!occupant)
 		audible_message(span_hear("You hear a loud metallic grinding sound."))
 		return
+	if(occupant.flags_1 & HOLOGRAM_1)
+		audible_message(span_hear("You hear a very short metallic grinding sound."))
+		playsound(loc, 'sound/machines/hiss.ogg', 20, TRUE)
+		qdel(occupant)
+		set_occupant(null)
+		return
 
-	use_power(active_power_usage)
+	use_energy(active_power_usage)
 	audible_message(span_hear("You hear a loud squelchy grinding sound."))
 	playsound(loc, 'sound/machines/juicer.ogg', 50, TRUE)
 	operating = TRUE
 	update_appearance()
 
-	var/offset = prob(50) ? -2 : 2
-	animate(src, pixel_x = pixel_x + offset, time = 0.2, loop = 200) //start shaking
+	Shake(pixelshiftx = 1, pixelshifty = 0, duration = gibtime)
 	var/mob/living/mob_occupant = occupant
 	var/sourcename = mob_occupant.real_name
 	var/sourcejob
@@ -173,7 +189,9 @@
 
 	if(ishuman(occupant))
 		var/mob/living/carbon/human/gibee = occupant
-		if(gibee.dna && gibee.dna.species)
+		if(prob(40) && (sourcejob in list(JOB_SECURITY_OFFICER,JOB_WARDEN,JOB_HEAD_OF_SECURITY)))
+			typeofmeat = /obj/item/food/meat/slab/pig
+		else if(gibee.dna && gibee.dna.species)
 			typeofmeat = gibee.dna.species.meat
 			typeofskin = gibee.dna.species.skinned_type
 
@@ -215,6 +233,8 @@
 /obj/machinery/gibber/proc/make_meat(obj/item/stack/sheet/animalhide/skin, list/obj/item/food/meat/slab/allmeat, meat_produced, gibtype, list/datum/disease/diseases)
 	playsound(src.loc, 'sound/effects/splat.ogg', 50, TRUE)
 	operating = FALSE
+	if (!dirty && prob(50))
+		dirty = TRUE
 	var/turf/T = get_turf(src)
 	var/list/turf/nearby_turfs = RANGE_TURFS(3,T) - T
 	if(skin)
@@ -257,3 +277,7 @@
 		if(victim.loc == input)
 			victim.forceMove(src)
 			victim.gib(DROP_ALL_REMAINS)
+
+/obj/machinery/gibber/proc/on_cleaned(obj/source_component, obj/source)
+	dirty = FALSE
+	update_appearance(UPDATE_OVERLAYS)

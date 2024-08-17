@@ -60,7 +60,6 @@
 	UnregisterSignal(sparring, list(
 		COMSIG_MOB_FIRED_GUN,
 		COMSIG_MOB_GRENADE_ARMED,
-		COMSIG_MOB_ITEM_ATTACK,
 		COMSIG_MOVABLE_MOVED,
 		COMSIG_MOVABLE_POST_TELEPORT,
 		COMSIG_MOB_STATCHANGE,
@@ -301,4 +300,4 @@
 				return
 			to_chat(loser, span_userdanger("You've lost ownership over your soul to [winner]!"))
 			var/obj/item/soulstone/anybody/chaplain/sparring/shard = new(shard_turf)
-			shard.capture_soul(loser, winner, forced = TRUE)
+			INVOKE_ASYNC(shard, TYPE_PROC_REF(/obj/item/soulstone, capture_soul), loser, winner, forced = TRUE)

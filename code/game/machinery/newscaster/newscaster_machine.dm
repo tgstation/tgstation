@@ -3,7 +3,7 @@
 /obj/machinery/newscaster
 	name = "newscaster"
 	desc = "A standard Nanotrasen-licensed newsfeed handler for use in commercial space stations. All the news you absolutely have no use for, in one place!"
-	icon = 'icons/obj/machines/wallmounts.dmi'
+	icon = 'icons/obj/machines/newscaster.dmi'
 	icon_state = "newscaster_off"
 	base_icon_state = "newscaster"
 	verb_say = "beeps"
@@ -66,7 +66,7 @@
 /obj/machinery/newscaster/pai/ui_state(mob/user)
 	return GLOB.reverse_contained_state
 
-MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/newscaster, 30)
+WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/machinery/newscaster)
 
 /obj/machinery/newscaster/Initialize(mapload, ndir, building)
 	. = ..()
@@ -74,6 +74,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/newscaster, 30)
 	GLOB.allbountyboards += src
 	update_appearance()
 	find_and_hang_on_wall()
+	AddComponent(/datum/component/examine_balloon, pixel_y_offset = 42)
 
 /obj/machinery/newscaster/Destroy()
 	GLOB.allCasters -= src
@@ -176,14 +177,15 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/newscaster, 30)
 	data["crime_description"] = crime_description
 	var/list/wanted_info = list()
 	if(GLOB.news_network.wanted_issue)
-		if(GLOB.news_network.wanted_issue.img)
+		var/has_wanted_issue = !isnull(GLOB.news_network.wanted_issue.img)
+		if(has_wanted_issue)
 			user << browse_rsc(GLOB.news_network.wanted_issue.img, "wanted_photo.png")
 		wanted_info = list(list(
 			"active" = GLOB.news_network.wanted_issue.active,
 			"criminal" = GLOB.news_network.wanted_issue.criminal,
 			"crime" = GLOB.news_network.wanted_issue.body,
 			"author" = GLOB.news_network.wanted_issue.scanned_user,
-			"image" = "wanted_photo.png"
+			"image" = (has_wanted_issue ? "wanted_photo.png" : null)
 		))
 
 	//Code breaking down the channels that have been made on-station thus far. ha
@@ -431,7 +433,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/newscaster, 30)
 				return TRUE
 
 		if("printNewspaper")
-			print_paper()
+			print_paper(usr)
 			return TRUE
 
 		if("createBounty")
@@ -533,12 +535,10 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/newscaster, 30)
 			playsound(src.loc, 'sound/items/welder.ogg', 100, TRUE)
 
 
-/obj/machinery/newscaster/deconstruct(disassembled = TRUE)
-	if(!(obj_flags & NO_DECONSTRUCTION))
-		new /obj/item/stack/sheet/iron(loc, 2)
-		new /obj/item/shard(loc)
-		new /obj/item/shard(loc)
-	qdel(src)
+/obj/machinery/newscaster/on_deconstruction(disassembled)
+	new /obj/item/stack/sheet/iron(loc, 2)
+	new /obj/item/shard(loc)
+	new /obj/item/shard(loc)
 
 /obj/machinery/newscaster/atom_break(damage_flag)
 	. = ..()
@@ -600,22 +600,14 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/newscaster, 30)
  * This takes all current feed stories and messages, and prints them onto a newspaper, after checking that the newscaster has been loaded with paper.
  * The newscaster then prints the paper to the floor.
  */
-/obj/machinery/newscaster/proc/print_paper()
+/obj/machinery/newscaster/proc/print_paper(mob/user)
 	if(paper_remaining <= 0)
 		balloon_alert_to_viewers("out of paper!")
 		return TRUE
 	SSblackbox.record_feedback("amount", "newspapers_printed", 1)
-	var/obj/item/newspaper/new_newspaper = new /obj/item/newspaper
-	for(var/datum/feed_channel/iterated_feed_channel in GLOB.news_network.network_channels)
-		new_newspaper.news_content += iterated_feed_channel
-	if(GLOB.news_network.wanted_issue.active)
-		new_newspaper.wantedAuthor = GLOB.news_network.wanted_issue.scanned_user
-		new_newspaper.wantedCriminal = GLOB.news_network.wanted_issue.criminal
-		new_newspaper.wantedBody = GLOB.news_network.wanted_issue.body
-		if(GLOB.news_network.wanted_issue.img)
-			new_newspaper.wantedPhoto = GLOB.news_network.wanted_issue.img
-	new_newspaper.forceMove(drop_location())
-	new_newspaper.creation_time = GLOB.news_network.last_action
+	var/obj/item/newspaper/new_newspaper = new(loc)
+	playsound(loc, SFX_PAGE_TURN, 50, TRUE)
+	try_put_in_hand(new_newspaper, user)
 	paper_remaining--
 
 /**
@@ -677,6 +669,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/newscaster, 30)
 	new_feed_comment.author = newscaster_username
 	new_feed_comment.body = comment_text
 	new_feed_comment.time_stamp = station_time_timestamp()
+	GLOB.news_network.last_action ++
 	current_message.comments += new_feed_comment
 	usr.log_message("(as [newscaster_username]) commented on message [current_message.return_body(-1)] -- [current_message.body]", LOG_COMMENT)
 	creating_comment = FALSE
@@ -812,9 +805,9 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/newscaster, 30)
 /obj/item/wallframe/newscaster
 	name = "newscaster frame"
 	desc = "Used to build newscasters, just secure to the wall."
+	icon = 'icons/obj/machines/newscaster.dmi'
 	icon_state = "newscaster_assembly"
 	custom_materials = list(/datum/material/iron= SHEET_MATERIAL_AMOUNT * 7, /datum/material/glass= SHEET_MATERIAL_AMOUNT * 4)
 	result_path = /obj/machinery/newscaster
-	pixel_shift = 30
 
 #undef ALERT_DELAY

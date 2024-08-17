@@ -12,6 +12,7 @@
 	var/open = FALSE
 	var/icon_locked = "lockbox+l"
 	var/icon_closed = "lockbox"
+	var/icon_open = "lockbox"
 	var/icon_broken = "lockbox+b"
 
 /obj/item/storage/lockbox/Initialize(mapload)
@@ -19,47 +20,54 @@
 	atom_storage.max_specific_storage = WEIGHT_CLASS_NORMAL
 	atom_storage.max_total_storage = 14
 	atom_storage.max_slots = 4
-	atom_storage.locked = TRUE
+	atom_storage.locked = STORAGE_FULLY_LOCKED
 
 	register_context()
+	update_appearance()
 
-/obj/item/storage/lockbox/attackby(obj/item/W, mob/user, params)
-	var/locked = atom_storage.locked
-	if(W.GetID())
-		if(broken)
-			balloon_alert(user, "broken!")
-			return
-		if(allowed(user))
-			if(atom_storage.locked)
-				atom_storage.locked = STORAGE_NOT_LOCKED
-			else
-				atom_storage.locked = STORAGE_FULLY_LOCKED
-			locked = atom_storage.locked
-			if(locked)
-				icon_state = icon_locked
-				atom_storage.close_all()
-			else
-				icon_state = icon_closed
-
-			balloon_alert(user, locked ? "locked" : "unlocked")
-			return
-
-		else
-			balloon_alert(user, "access denied!")
-			return
-	if(!locked)
+/obj/item/storage/lockbox/tool_act(mob/living/user, obj/item/tool, list/modifiers)
+	var/obj/item/card/card = tool.GetID()
+	if(isnull(card))
 		return ..()
+
+	if(can_unlock(user, card))
+		if(atom_storage.locked)
+			atom_storage.locked = STORAGE_NOT_LOCKED
+		else
+			atom_storage.locked = STORAGE_FULLY_LOCKED
+			atom_storage.close_all()
+		balloon_alert(user, atom_storage.locked ? "locked" : "unlocked")
+		update_appearance()
+		return ITEM_INTERACT_SUCCESS
+
+	return ITEM_INTERACT_BLOCKING
+
+/obj/item/storage/lockbox/proc/can_unlock(mob/living/user, obj/item/card/id/id_card)
+	if(check_access(id_card))
+		return TRUE
+
+	balloon_alert(user, "access denied!")
+	return FALSE
+
+/obj/item/storage/lockbox/update_icon_state()
+	. = ..()
+	if(broken)
+		icon_state = icon_broken
+	else if(atom_storage?.locked)
+		icon_state = icon_locked
+	else if(open)
+		icon_state = icon_open
 	else
-		balloon_alert(user, "locked!")
+		icon_state = icon_closed
 
 /obj/item/storage/lockbox/emag_act(mob/user, obj/item/card/emag/emag_card)
 	if(!broken)
 		broken = TRUE
 		atom_storage.locked = STORAGE_NOT_LOCKED
-		icon_state = src.icon_broken
 		balloon_alert(user, "lock destroyed")
 		if (emag_card && user)
 			user.visible_message(span_warning("[user] swipes [emag_card] over [src], breaking it!"))
+		update_appearance()
 		return TRUE
 	return FALSE
 
@@ -107,26 +115,25 @@
 	icon_locked = "medalbox+l"
 	icon_closed = "medalbox"
 	icon_broken = "medalbox+b"
+	icon_open = "medalboxopen"
 
 /obj/item/storage/lockbox/medal/Initialize(mapload)
 	. = ..()
 	atom_storage.max_specific_storage = WEIGHT_CLASS_SMALL
 	atom_storage.max_slots = 10
 	atom_storage.max_total_storage = 20
-	atom_storage.set_holdable(list(/obj/item/clothing/accessory/medal))
+	atom_storage.set_holdable(/obj/item/clothing/accessory/medal)
 
 /obj/item/storage/lockbox/medal/examine(mob/user)
 	. = ..()
 	if(!atom_storage.locked)
 		. += span_notice("Alt-click to [open ? "close":"open"] it.")
 
-/obj/item/storage/lockbox/medal/AltClick(mob/user)
-	if(!user.can_perform_action(src))
-		return
+/obj/item/storage/lockbox/medal/click_alt(mob/user)
 	if(!atom_storage.locked)
-		open = (open ? FALSE : TRUE)
+		open = !open
 		update_appearance()
-	..()
+	return CLICK_ACTION_SUCCESS
 
 /obj/item/storage/lockbox/medal/PopulateContents()
 	new /obj/item/clothing/accessory/medal/gold/captain(src)
@@ -138,18 +145,6 @@
 	new /obj/item/clothing/accessory/medal/plasma/nobel_science(src)
 	for(var/i in 1 to 3)
 		new /obj/item/clothing/accessory/medal/conduct(src)
-
-/obj/item/storage/lockbox/medal/update_icon_state()
-	if(atom_storage?.locked)
-		icon_state = "medalbox+l"
-		return ..()
-
-	icon_state = "medalbox"
-	if(open)
-		icon_state += "open"
-	if(broken)
-		icon_state += "+b"
-	return ..()
 
 /obj/item/storage/lockbox/medal/update_overlays()
 	. = ..()
@@ -204,7 +199,7 @@
 	req_access = list(ACCESS_QM)
 
 /obj/item/storage/lockbox/medal/cargo/PopulateContents()
-		new /obj/item/clothing/accessory/medal/ribbon/cargo(src)
+	new /obj/item/clothing/accessory/medal/ribbon/cargo(src)
 
 /obj/item/storage/lockbox/medal/service
 	name = "service award box"
@@ -212,7 +207,7 @@
 	req_access = list(ACCESS_HOP)
 
 /obj/item/storage/lockbox/medal/service/PopulateContents()
-		new /obj/item/clothing/accessory/medal/silver/excellence(src)
+	new /obj/item/clothing/accessory/medal/silver/excellence(src)
 
 /obj/item/storage/lockbox/medal/sci
 	name = "science medal box"
@@ -237,13 +232,15 @@
 	name = "order lockbox"
 	desc = "A box used to secure small cargo orders from being looted by those who didn't order it. Yeah, cargo tech, that means you."
 	icon_state = "secure"
-	icon_broken = "secure+b"
+	icon_closed = "secure"
+	icon_locked = "secure_locked"
+	icon_broken = "secure_locked"
+	icon_open = "secure"
 	inhand_icon_state = "sec-case"
 	lefthand_file = 'icons/mob/inhands/equipment/briefcase_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/briefcase_righthand.dmi'
 	w_class = WEIGHT_CLASS_HUGE
 	var/datum/bank_account/buyer_account
-	var/privacy_lock = TRUE
 
 /obj/item/storage/lockbox/order/Initialize(mapload, datum/bank_account/_buyer_account)
 	. = ..()
@@ -251,25 +248,12 @@
 	ADD_TRAIT(src, TRAIT_NO_MISSING_ITEM_ERROR, TRAIT_GENERIC)
 	ADD_TRAIT(src, TRAIT_NO_MANIFEST_CONTENTS_ERROR, TRAIT_GENERIC)
 
-/obj/item/storage/lockbox/order/attackby(obj/item/W, mob/user, params)
-	var/obj/item/card/id/id_card = W.GetID()
-	if(!id_card)
-		return ..()
+/obj/item/storage/lockbox/order/can_unlock(mob/living/user, obj/item/card/id/id_card)
+	if(id_card.registered_account == buyer_account)
+		return TRUE
 
-	if(iscarbon(user))
-		add_fingerprint(user)
-
-	if(id_card.registered_account != buyer_account)
-		balloon_alert(user, "incorrect bank account!")
-		return
-
-	if(privacy_lock)
-		atom_storage.locked = STORAGE_NOT_LOCKED
-	else
-		atom_storage.locked = STORAGE_FULLY_LOCKED
-	privacy_lock = atom_storage.locked
-	user.visible_message(span_notice("[user] [privacy_lock ? "" : "un"]locks [src]'s privacy lock."),
-					span_notice("You [privacy_lock ? "" : "un"]lock [src]'s privacy lock."))
+	balloon_alert(user, "incorrect bank account!")
+	return FALSE
 
 ///screentips for lockboxes
 /obj/item/storage/lockbox/add_context(atom/source, list/context, obj/item/held_item, mob/user)

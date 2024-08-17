@@ -1,0 +1,3 @@
+/obj/structure/spider/solid : /obj/structure/spider/stickyweb/sealed/tough{@OLD}
+/obj/structure/spider/sticky : /obj/structure/spider/stickyweb/very_sticky{@OLD}
+/obj/structure/spider/reflector : /obj/structure/spider/stickyweb/sealed/reflector{@OLD}

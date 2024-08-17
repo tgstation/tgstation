@@ -2,7 +2,7 @@
 /obj/item/pillow
 	name = "pillow"
 	desc = "A soft and fluffy pillow. You can smack someone with this!"
-	icon = 'icons/obj/bed.dmi'
+	icon = 'icons/obj/structures/bed.dmi'
 	icon_state = "pillow_1_t"
 	inhand_icon_state = "pillow_t"
 	lefthand_file = 'icons/mob/inhands/items/pillow_lefthand.dmi'
@@ -31,13 +31,14 @@
 		force_unwielded = 5, \
 		force_wielded = 10, \
 	)
+	AddElement(/datum/element/disarm_attack)
 
 	var/static/list/slapcraft_recipe_list = list(\
 		/datum/crafting_recipe/pillow_suit, /datum/crafting_recipe/pillow_hood,\
 		)
 
-	AddComponent(
-		/datum/component/slapcrafting,\
+	AddElement(
+		/datum/element/slapcrafting,\
 		slapcraft_recipes = slapcraft_recipe_list,\
 	)
 
@@ -50,10 +51,10 @@
 	if(!iscarbon(target_mob))
 		return
 	if(bricked || HAS_TRAIT(src, TRAIT_WIELDED))
-		user.apply_damage(5, STAMINA) // when hitting with such force we should prolly be getting tired too
 		hit_sound = 'sound/items/pillow_hit2.ogg'
 	else
 		hit_sound = 'sound/items/pillow_hit.ogg'
+	user.apply_damage(5, STAMINA) //Had to be done so one person cannot keep multiple people stam critted
 	last_fighter = user
 	playsound(user, hit_sound, 80) //the basic 50 vol is barely audible
 
@@ -101,14 +102,15 @@
 	if(pillow_trophy)
 		. += span_notice("Alt-click to remove the tag!")
 
-/obj/item/pillow/AltClick(mob/user)
-	. = ..()
+/obj/item/pillow/click_alt(mob/user)
+	if(!user.can_hold_items(src))
+		return CLICK_ACTION_BLOCKING
 	if(!pillow_trophy)
 		balloon_alert(user, "no tag!")
-		return
+		return CLICK_ACTION_BLOCKING
 	balloon_alert(user, "removing tag...")
 	if(!do_after(user, 2 SECONDS, src))
-		return
+		return CLICK_ACTION_BLOCKING
 	if(last_fighter)
 		pillow_trophy.desc = "A pillow tag taken from [last_fighter] after a gruesome pillow fight."
 	user.put_in_hands(pillow_trophy)
@@ -116,6 +118,7 @@
 	balloon_alert(user, "tag removed")
 	playsound(user,'sound/items/poster_ripped.ogg', 50)
 	update_appearance()
+	return CLICK_ACTION_SUCCESS
 
 /obj/item/pillow/update_appearance(updates)
 	. = ..()
@@ -128,7 +131,7 @@
 		icon_state = "pillow_[variation]_t"
 		inhand_icon_state = "pillow_t"
 
-/// Puts a brick inside the pillow, increasing it's damage
+/// Puts a brick inside the pillow, increasing its damage
 /obj/item/pillow/proc/become_bricked()
 	bricked = TRUE
 	var/datum/component/two_handed/two_handed = GetComponent(/datum/component/two_handed)
@@ -163,7 +166,7 @@
 	body_parts_covered = CHEST|GROIN|ARMS|LEGS|FEET
 	cold_protection = CHEST|GROIN|ARMS|LEGS //a pillow suit must be hella warm
 	allowed = list(/obj/item/pillow) //moar pillow carnage
-	icon = 'icons/obj/bed.dmi'
+	icon = 'icons/obj/structures/bed.dmi'
 	worn_icon = 'icons/mob/clothing/suits/pillow.dmi'
 	icon_state = "pillow_suit"
 	armor_type = /datum/armor/suit_pillow_suit
@@ -186,7 +189,7 @@
 	name = "pillow hood"
 	desc = "The final piece of the pillow juggernaut"
 	body_parts_covered = HEAD
-	icon = 'icons/obj/bed.dmi'
+	icon = 'icons/obj/structures/bed.dmi'
 	worn_icon = 'icons/mob/clothing/suits/pillow.dmi'
 	icon_state = "pillowcase_hat"
 	body_parts_covered = HEAD
@@ -200,7 +203,7 @@
 /obj/item/clothing/neck/pillow_tag
 	name = "pillow tag"
 	desc = "A price tag for the pillow. It appears to have space to fill names in."
-	icon = 'icons/obj/bed.dmi'
+	icon = 'icons/obj/structures/bed.dmi'
 	icon_state = "pillow_tag"
 	worn_icon = 'icons/mob/clothing/neck.dmi'
 	worn_icon_state = "pillow_tag"

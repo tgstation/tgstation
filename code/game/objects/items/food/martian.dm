@@ -102,6 +102,7 @@
 	desc = "A spice paste from Indonesia, used widely in cooking throughout South East Asia."
 	icon = 'icons/obj/food/martian.dmi'
 	icon_state = "sambal"
+	trash_type = /obj/item/reagent_containers/cup/bowl
 	food_reagents = list(
 		/datum/reagent/consumable/nutriment/vitamin = 5,
 		/datum/reagent/consumable/capsaicin = 2
@@ -732,6 +733,7 @@
 	foodtypes = MEAT | VEGETABLES | FRUIT | PINEAPPLE
 	w_class = WEIGHT_CLASS_SMALL
 	crafting_complexity = FOOD_COMPLEXITY_4
+	custom_price = PAYCHECK_CREW * 1.2
 
 /obj/item/food/salt_chilli_fries
 	name = "salt n' chilli fries"
@@ -975,7 +977,7 @@
 		/datum/reagent/consumable/garlic = 1,
 	)
 	tastes = list("yoghurt" = 1, "garlic" = 1, "lemon" = 1, "egg" = 1, "chilli heat" = 1)
-	foodtypes = DAIRY | VEGETABLES | FRUIT | BREAKFAST
+	foodtypes = DAIRY | VEGETABLES | MEAT | BREAKFAST
 	w_class = WEIGHT_CLASS_SMALL
 	crafting_complexity = FOOD_COMPLEXITY_3
 
@@ -1210,6 +1212,7 @@
 	foodtypes = FRUIT | MEAT | PINEAPPLE | VEGETABLES | GRAIN
 	w_class = WEIGHT_CLASS_SMALL
 	crafting_complexity = FOOD_COMPLEXITY_4 //Uses Sambal
+	custom_price = PAYCHECK_CREW * 2
 
 /obj/item/food/frickles
 	name = "frickles"

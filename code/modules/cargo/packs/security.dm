@@ -169,6 +169,7 @@
 					/obj/item/clothing/mask/whistle,
 					/obj/item/conversion_kit,
 				)
+	crate_name = "traditional equipment crate"
 	discountable = SUPPLY_PACK_RARE_DISCOUNTABLE
 
 /// Armory packs
@@ -213,9 +214,12 @@
 /datum/supply_pack/security/armory/dragnet
 	name = "DRAGnet Crate"
 	desc = "Contains three \"Dynamic Rapid-Apprehension of the Guilty\" netting devices, \
-		a recent breakthrough in law enforcement prisoner management technology."
+		a recent breakthrough in law enforcement prisoner management technology. Includes a DRAGnet beacon."
 	cost = CARGO_CRATE_VALUE * 5
-	contains = list(/obj/item/gun/energy/e_gun/dragnet = 3)
+	contains = list(
+		/obj/item/gun/energy/e_gun/dragnet = 3,
+		/obj/item/dragnet_beacon = 1
+	)
 	crate_name = "\improper DRAGnet crate"
 
 /datum/supply_pack/security/armory/energy
@@ -330,8 +334,8 @@
 /datum/supply_pack/security/armory/thermal
 	name = "Thermal Pistol Crate"
 	desc = "Contains a pair of holsters each with two experimental thermal pistols, \
-		using nanites as the basis for their ammo."
-	cost = CARGO_CRATE_VALUE * 7
+		using nanites as the basis for their ammo. Can be shaken to reload."
+	cost = CARGO_CRATE_VALUE * 10
 	contains = list(/obj/item/storage/belt/holster/energy/thermal = 2)
 	crate_name = "thermal pistol crate"
 
@@ -342,17 +346,3 @@
 	access_view = ACCESS_SECURITY
 	contains = list(/obj/item/clothing/glasses/sunglasses = 1)
 	crate_name = "sunglasses crate"
-
-/datum/supply_pack/security/armory/beacon_imp
-	name = "Beacon Implants Crate"
-	desc = "Contains five Beacon implants."
-	cost = CARGO_CRATE_VALUE * 5.5
-	contains = list(/obj/item/storage/box/beaconimp)
-	crate_name = "beacon implant crate"
-
-/datum/supply_pack/security/armory/teleport_blocker_imp
-	name = "Bluespace Grounding Implants Crate"
-	desc = "Contains five Bluespace Grounding implants."
-	cost = CARGO_CRATE_VALUE * 7
-	contains = list(/obj/item/storage/box/teleport_blocker)
-	crate_name = "bluespace grounding implant crate"

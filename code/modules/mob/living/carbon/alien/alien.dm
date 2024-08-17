@@ -76,6 +76,7 @@
 		return pick (list("xltrails_1", "xltrails2"))
 	else
 		return pick (list("xttrails_1", "xttrails2"))
+
 /*----------------------------------------
 Proc: AddInfectionImages()
 Des: Gives the client of the alien an image on each infected mob.
@@ -122,17 +123,31 @@ Des: Removes all infected images from the alien.
 		span_alertalien("[src] begins to twist and contort!"),
 		span_noticealien("You begin to evolve!"),
 	)
+
 	new_xeno.setDir(dir)
-	if(numba && unique_name)
-		new_xeno.numba = numba
-		new_xeno.set_name()
-	if(!alien_name_regex.Find(name))
-		new_xeno.name = name
-		new_xeno.real_name = real_name
+	new_xeno.change_name(name, real_name, numba)
+
 	if(mind)
 		mind.name = new_xeno.real_name
 		mind.transfer_to(new_xeno)
+
 	qdel(src)
+
+/// Changes the name of the xeno we are evolving into in order to keep the same numerical identifier the old xeno had.
+/mob/living/carbon/alien/proc/change_name(old_name, old_real_name, old_number)
+	if(!alien_name_regex.Find(old_name)) // check to make sure there's no admins doing funny stuff with naming these aliens
+		name = old_name
+		real_name = old_real_name
+		return
+
+	if(!unique_name)
+		return
+
+	if(old_number != 0)
+		numba = old_number
+		name = initial(name) // prevent chicanery like two different numerical identifiers tied to the same mob
+
+	set_name()
 
 /mob/living/carbon/alien/can_hold_items(obj/item/I)
 	return (I && (I.item_flags & XENOMORPH_HOLDABLE || ISADVANCEDTOOLUSER(src)) && ..())
@@ -147,3 +162,6 @@ Des: Removes all infected images from the alien.
 
 /mob/living/carbon/alien/proc/update_alien_speed()
 	add_or_update_variable_movespeed_modifier(/datum/movespeed_modifier/alien_speed, multiplicative_slowdown = alien_speed)
+
+/mob/living/carbon/alien/get_footprint_sprite()
+	return FOOTPRINT_SPRITE_CLAWS

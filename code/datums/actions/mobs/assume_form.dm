@@ -29,9 +29,10 @@
 	return ..()
 
 /datum/action/cooldown/mob_cooldown/assume_form/Activate(atom/target_atom)
-	StartCooldown(360 SECONDS, 360 SECONDS)
+	disable_cooldown_actions()
 	determine_intent(target_atom)
 	StartCooldown()
+	enable_cooldown_actions()
 	return TRUE
 
 /// Rapid proc to test if we can assume the form of a given atom. Returns TRUE if we can, FALSE if we can't. Done like this so we can be nice and explicit.
@@ -63,7 +64,7 @@
 
 	// important: do this at the very end because we might have SIGNAL_ADDTRAIT for this on the mob that's dependent on the above logic
 	SEND_SIGNAL(owner, COMSIG_ACTION_DISGUISED_APPEARANCE, target_atom)
-	ADD_TRAIT(owner, TRAIT_DISGUISED, REF(src))
+	ADD_TRAIT(owner, TRAIT_DISGUISED, ACTION_TRAIT)
 
 /// Resets the appearances of the mob to the default.
 /datum/action/cooldown/mob_cooldown/assume_form/proc/reset_appearances()
@@ -84,4 +85,4 @@
 	owner.cut_overlays()
 
 	// important: do this very end because we might have SIGNAL_REMOVETRAIT for this on the mob that's dependent on the above logic
-	REMOVE_TRAIT(owner, TRAIT_DISGUISED, REF(src))
+	REMOVE_TRAIT(owner, TRAIT_DISGUISED, ACTION_TRAIT)

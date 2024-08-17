@@ -190,7 +190,7 @@
 	))
 	return ..()
 
-/obj/item/circuit_component/module/proc/handle_set_cell(datum/source, obj/item/stock_parts/cell/cell)
+/obj/item/circuit_component/module/proc/handle_set_cell(datum/source, obj/item/stock_parts/power_store/cell/cell)
 	SIGNAL_HANDLER
 	internal_circuit.set_cell(cell)
 

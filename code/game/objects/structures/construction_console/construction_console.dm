@@ -10,7 +10,7 @@
 /obj/machinery/computer/camera_advanced/base_construction
 	name = "generic base construction console"
 	desc = "An industrial computer integrated with a camera-assisted rapid construction drone."
-	networks = list("ss13")
+	networks = list(CAMERANET_NETWORK_SS13)
 	circuit = /obj/item/circuitboard/computer/base_construction
 	off_action = /datum/action/innate/camera_off/base_construction
 	jump_action = null
@@ -80,12 +80,12 @@
 /obj/machinery/computer/camera_advanced/base_construction/GrantActions(mob/living/user)
 	..()
 	//When the eye is in use, make it visible to players so they know when someone is building.
-	SetInvisibility(INVISIBILITY_NONE, id=type)
+	eyeobj.SetInvisibility(INVISIBILITY_NONE, id=type)
 
 /obj/machinery/computer/camera_advanced/base_construction/remove_eye_control(mob/living/user)
 	..()
 	//Set back to default invisibility when not in use.
-	RemoveInvisibility(type)
+	eyeobj.RemoveInvisibility(type)
 
 /**
  * A mob used by [/obj/machinery/computer/camera_advanced/base_construction] for building in specific areas.
@@ -99,7 +99,7 @@
 	name = "construction holo-drone"
 	//Allows any curious crew to watch the base after it leaves. (This is safe as the base cannot be modified once it leaves)
 	move_on_shuttle = TRUE
-	icon = 'icons/obj/mining.dmi'
+	icon = 'icons/obj/mining_zones/equipment.dmi'
 	icon_state = "construction_drone"
 	invisibility = INVISIBILITY_MAXIMUM
 	///Reference to the camera console controlling this drone
@@ -119,7 +119,7 @@
 		return ..()
 
 /mob/camera/ai_eye/remote/base_construction/relaymove(mob/living/user, direction)
-	//This camera eye is visible, and as such needs to keep it's dir updated
+	//This camera eye is visible, and as such needs to keep its dir updated
 	dir = direction
 	return ..()
 

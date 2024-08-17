@@ -480,15 +480,11 @@
 /turf/open/floor/plating,
 /area/awaymission/caves/research)
 "cR" = (
-/obj/effect/landmark/awaystart,
+/obj/effect/landmark/awaystart/caves,
 /turf/open/floor/plating,
 /area/awaymission/caves/research)
 "cS" = (
-/obj/machinery/door/window{
-	base_state = "right";
-	dir = 4;
-	icon_state = "right"
-	},
+/obj/machinery/door/window/right/directional/east,
 /turf/open/floor/plating,
 /area/awaymission/caves/research)
 "cV" = (
@@ -509,7 +505,7 @@
 "db" = (
 /obj/structure/table,
 /obj/machinery/cell_charger,
-/obj/item/stock_parts/cell/crap,
+/obj/item/stock_parts/power_store/cell/crap,
 /turf/open/floor/iron{
 	initial_gas_mix = "n2=23;o2=14;TEMP=2.7"
 	},
@@ -614,7 +610,7 @@
 "dw" = (
 /obj/structure/bed,
 /obj/item/bedsheet,
-/obj/effect/landmark/awaystart,
+/obj/effect/landmark/awaystart/caves,
 /turf/open/floor/iron,
 /area/awaymission/caves/bmp_asteroid/level_two)
 "dx" = (
@@ -657,7 +653,7 @@
 "dH" = (
 /obj/structure/bed,
 /obj/item/bedsheet,
-/obj/effect/landmark/awaystart,
+/obj/effect/landmark/awaystart/caves,
 /turf/open/floor/wood,
 /area/awaymission/caves/northblock)
 "dI" = (
@@ -709,7 +705,7 @@
 /obj/structure/bed,
 /obj/item/bedsheet,
 /obj/effect/decal/cleanable/cobweb/cobweb2,
-/obj/effect/landmark/awaystart,
+/obj/effect/landmark/awaystart/caves,
 /turf/open/floor/wood,
 /area/awaymission/caves/northblock)
 "ea" = (
@@ -718,7 +714,7 @@
 /area/awaymission/caves/northblock)
 "ed" = (
 /obj/structure/bed,
-/obj/effect/landmark/awaystart,
+/obj/effect/landmark/awaystart/caves,
 /turf/open/floor/wood,
 /area/awaymission/caves/northblock)
 "ee" = (
@@ -853,7 +849,7 @@
 /turf/open/floor/iron,
 /area/awaymission/caves/listeningpost)
 "eO" = (
-/obj/effect/landmark/awaystart,
+/obj/effect/landmark/awaystart/caves,
 /turf/open/floor/iron,
 /area/awaymission/caves/listeningpost)
 "eP" = (
@@ -1264,7 +1260,7 @@
 	},
 /area/awaymission/caves/bmp_asteroid/level_two)
 "kE" = (
-/mob/living/basic/spider/giant/hunter,
+/mob/living/basic/spider/giant/hunter/away_caves,
 /turf/open/floor/iron,
 /area/awaymission/caves/bmp_asteroid)
 "kL" = (
@@ -1336,18 +1332,14 @@
 /area/awaymission/caves/northblock)
 "pC" = (
 /obj/item/mjollnir,
-/mob/living/basic/spider/giant/nurse,
+/mob/living/basic/spider/giant/nurse/away_caves,
 /turf/open/misc/asteroid/basalt{
 	initial_gas_mix = "n2=23;o2=14;TEMP=2.7"
 	},
 /area/awaymission/caves/bmp_asteroid/level_three)
 "pL" = (
 /obj/structure/window/reinforced/spawner/directional/south,
-/obj/machinery/door/window{
-	base_state = "right";
-	dir = 4;
-	icon_state = "right"
-	},
+/obj/machinery/door/window/right/directional/east,
 /turf/open/floor/plating,
 /area/awaymission/caves/research)
 "qD" = (
@@ -1440,7 +1432,7 @@
 /obj/machinery/sleeper{
 	dir = 8
 	},
-/mob/living/basic/spider/giant/hunter,
+/mob/living/basic/spider/giant/hunter/away_caves,
 /turf/open/floor/iron,
 /area/awaymission/caves/bmp_asteroid)
 "uO" = (
@@ -1592,13 +1584,13 @@
 	},
 /area/awaymission/caves/bmp_asteroid/level_two)
 "Bs" = (
-/obj/effect/landmark/awaystart,
+/obj/effect/landmark/awaystart/caves,
 /turf/open/misc/asteroid/basalt{
 	initial_gas_mix = "n2=23;o2=14;TEMP=2.7"
 	},
 /area/awaymission/caves/bmp_asteroid/level_two)
 "Bz" = (
-/mob/living/basic/spider/giant/nurse,
+/mob/living/basic/spider/giant/nurse/away_caves,
 /turf/open/misc/asteroid/basalt{
 	initial_gas_mix = "n2=23;o2=14;TEMP=2.7"
 	},
@@ -1680,7 +1672,7 @@
 "FS" = (
 /obj/machinery/light/small/built/directional/north,
 /obj/structure/spider/stickyweb,
-/mob/living/basic/spider/giant/hunter,
+/mob/living/basic/spider/giant/hunter/away_caves,
 /turf/open/floor/iron,
 /area/awaymission/caves/bmp_asteroid)
 "FV" = (
@@ -1864,10 +1856,7 @@
 /turf/open/floor/iron,
 /area/awaymission/caves/listeningpost)
 "Qe" = (
-/mob/living/basic/bat{
-	desc = "A rare breed of bat which roosts deep in caves.";
-	name = "Cave Bat"
-	},
+/mob/living/basic/bat/away_caves,
 /turf/open/misc/asteroid/basalt{
 	initial_gas_mix = "n2=23;o2=14;TEMP=2.7"
 	},
@@ -1879,10 +1868,7 @@
 	},
 /area/awaymission/caves/bmp_asteroid/level_four)
 "Rt" = (
-/mob/living/basic/bat{
-	desc = "A rare breed of bat which roosts deep in caves.";
-	name = "Cave Bat"
-	},
+/mob/living/basic/bat/away_caves,
 /turf/open/misc/asteroid/basalt{
 	initial_gas_mix = "n2=23;o2=14;TEMP=2.7"
 	},
@@ -1959,14 +1945,11 @@
 /turf/open/floor/iron/recharge_floor,
 /area/awaymission/caves/bmp_asteroid)
 "Xa" = (
-/mob/living/basic/bat{
-	desc = "A rare breed of bat which roosts deep in caves.";
-	name = "Cave Bat"
-	},
+/mob/living/basic/bat/away_caves,
 /turf/open/floor/iron,
 /area/awaymission/caves/northblock)
 "Xs" = (
-/mob/living/basic/spider/giant/hunter,
+/mob/living/basic/spider/giant/hunter/away_caves,
 /turf/open/misc/asteroid/basalt{
 	initial_gas_mix = "n2=23;o2=14;TEMP=2.7"
 	},
@@ -1988,7 +1971,7 @@
 /area/awaymission/caves/bmp_asteroid/level_two)
 "XR" = (
 /obj/structure/spider/stickyweb,
-/mob/living/basic/spider/giant/hunter,
+/mob/living/basic/spider/giant/hunter/away_caves,
 /turf/open/misc/asteroid/basalt{
 	initial_gas_mix = "n2=23;o2=14;TEMP=2.7"
 	},

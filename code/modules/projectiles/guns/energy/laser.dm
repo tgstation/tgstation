@@ -16,8 +16,8 @@
 		return
 	var/static/list/slapcraft_recipe_list = list(/datum/crafting_recipe/xraylaser, /datum/crafting_recipe/hellgun, /datum/crafting_recipe/ioncarbine)
 
-	AddComponent(
-		/datum/component/slapcrafting,\
+	AddElement(
+		/datum/element/slapcrafting,\
 		slapcraft_recipes = slapcraft_recipe_list,\
 	)
 
@@ -44,6 +44,15 @@
 /obj/item/gun/energy/laser/carbine/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/automatic_fire, 0.15 SECONDS, allow_akimbo = FALSE)
+
+/obj/item/gun/energy/laser/carbine/cybersun
+	name = "\improper Cybersun S-120"
+	desc = "A laser gun primarily used by syndicate security guards. It fires a rapid spray of low-power plasma beams."
+	icon_state = "cybersun_s120"
+	inhand_icon_state = "s120"
+	ammo_type = list(/obj/item/ammo_casing/energy/lasergun/carbine/cybersun)
+	spread = 14
+	pin = /obj/item/firing_pin/implant/pindicate
 
 /obj/item/gun/energy/laser/carbine/practice
 	name = "practice laser carbine"
@@ -93,8 +102,9 @@
 	desc = "An energy-based laser gun that draws power from the cyborg's internal energy cell directly. So this is what freedom looks like?"
 	use_cyborg_cell = TRUE
 
-/obj/item/gun/energy/laser/cyborg/emp_act()
-	return
+/obj/item/gun/energy/laser/cyborg/Initialize(mapload)
+	. = ..()
+	AddElement(/datum/element/empprotection, EMP_PROTECT_ALL)
 
 /obj/item/gun/energy/laser/scatter
 	name = "scatter laser gun"
@@ -138,11 +148,14 @@
 	icon_state = "scatterlaser"
 	range = 255
 	damage = 6
+	var/size_per_tile = 0.1
+	var/max_scale = 4
 
 /obj/projectile/beam/laser/accelerator/Range()
 	..()
 	damage += 7
-	transform *= 1 + ((damage/7) * 0.2)//20% larger per tile
+	transform = 0
+	transform *= min(1 + (decayedRange - range) * size_per_tile, max_scale)
 
 ///X-ray gun
 
@@ -186,48 +199,6 @@
 
 /obj/item/gun/energy/laser/redtag/hitscan
 	ammo_type = list(/obj/item/ammo_casing/energy/laser/redtag/hitscan)
-
-//Inferno and Cryo Pistols
-
-/obj/item/gun/energy/laser/thermal //the common parent of these guns, it just shoots hard bullets, somoene might like that?
-	name = "nanite pistol"
-	desc = "A modified handcannon with a metamorphic reserve of decommissioned weaponized nanites. Spit globs of angry robots into the bad guys."
-	icon_state = "infernopistol"
-	inhand_icon_state = null
-	ammo_type = list(/obj/item/ammo_casing/energy/nanite)
-	shaded_charge = TRUE
-	ammo_x_offset = 1
-	obj_flags = UNIQUE_RENAME
-	can_bayonet = TRUE
-	knife_x_offset = 19
-	knife_y_offset = 13
-	w_class = WEIGHT_CLASS_NORMAL
-	dual_wield_spread = 10 //as intended by the coders
-
-/obj/item/gun/energy/laser/thermal/Initialize(mapload)
-	. = ..()
-	AddElement(/datum/element/empprotection, EMP_PROTECT_SELF|EMP_PROTECT_CONTENTS)
-
-/obj/item/gun/energy/laser/thermal/add_seclight_point()
-	AddComponent(/datum/component/seclite_attachable, \
-		light_overlay_icon = 'icons/obj/weapons/guns/flashlights.dmi', \
-		light_overlay = "flight", \
-		overlay_x = 15, \
-		overlay_y = 9)
-
-/obj/item/gun/energy/laser/thermal/inferno //the magma gun
-	name = "inferno pistol"
-	desc = "A modified handcannon with a metamorphic reserve of decommissioned weaponized nanites. Spit globs of molten angry robots into the bad guys. \
-		While it doesn't manipulate temperature in and of itself, it does cause an violent eruption in anyone who is severely cold."
-	icon_state = "infernopistol"
-	ammo_type = list(/obj/item/ammo_casing/energy/nanite/inferno)
-
-/obj/item/gun/energy/laser/thermal/cryo //the ice gun
-	name = "cryo pistol"
-	desc = "A modified handcannon with a metamorphic reserve of decommissioned weaponized nanites. Spit shards of frozen angry robots into the bad guys. \
-		While it doesn't manipulate temperature in and of itself, it does cause an internal explosion in anyone who is severely hot."
-	icon_state = "cryopistol"
-	ammo_type = list(/obj/item/ammo_casing/energy/nanite/cryo)
 
 // luxury shuttle funnies
 /obj/item/firing_pin/paywall/luxury

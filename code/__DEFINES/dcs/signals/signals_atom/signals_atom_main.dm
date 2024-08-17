@@ -12,14 +12,15 @@
 ///from base of atom/get_examine_name(): (/mob, list/overrides)
 #define COMSIG_ATOM_GET_EXAMINE_NAME "atom_examine_name"
 	//Positions for overrides list
-	#define EXAMINE_POSITION_ARTICLE (1<<0)
-	#define EXAMINE_POSITION_BEFORE (1<<1)
-	//End positions
-	#define COMPONENT_EXNAME_CHANGED (1<<0)
+	#define EXAMINE_POSITION_ARTICLE 1
+	#define EXAMINE_POSITION_BEFORE 2
+	#define EXAMINE_POSITION_NAME 3
 ///from base of atom/examine(): (/mob, list/examine_text, can_see_inside)
 #define COMSIG_ATOM_REAGENT_EXAMINE "atom_reagent_examine"
 	/// Stop the generic reagent examine text
 	#define STOP_GENERIC_REAGENT_EXAMINE (1<<0)
+	/// Allows the generic reaegent examine text regardless of whether the user can scan reagents.
+	#define ALLOW_GENERIC_REAGENT_EXAMINE (1<<1)
 ///from base of atom/examine_more(): (/mob, examine_list)
 #define COMSIG_ATOM_EXAMINE_MORE "atom_examine_more"
 /// from atom/examine_more(): (/atom/examining, examine_list)
@@ -50,6 +51,8 @@
 #define COMSIG_ATOM_UPDATE_OVERLAYS "atom_update_overlays"
 ///from base of [/atom/update_icon]: (signalOut, did_anything)
 #define COMSIG_ATOM_UPDATED_ICON "atom_updated_icon"
+///from base of atom/set_smoothed_icon_state(): (new_junction)
+#define COMSIG_ATOM_SET_SMOOTHED_ICON_STATE "set_smoothed_icon_state"
 ///from base of [/atom/proc/smooth_icon]: ()
 #define COMSIG_ATOM_SMOOTHED_ICON "atom_smoothed_icon"
 ///from [/datum/controller/subsystem/processing/dcs/proc/rotate_decals]: (list/datum/element/decal/rotating)
@@ -67,7 +70,7 @@
 #define COMSIG_ATOM_EXITED "atom_exited"
 ///from base of atom/movable/Moved(): (atom/movable/gone, direction)
 #define COMSIG_ATOM_ABSTRACT_EXITED "atom_abstract_exited"
-///from base of atom/Bumped(): (/atom/movable)
+///from base of atom/Bumped(): (/atom/movable) (the one that gets bumped)
 #define COMSIG_ATOM_BUMPED "atom_bumped"
 ///from base of atom/has_gravity(): (turf/location, list/forced_gravities)
 #define COMSIG_ATOM_HAS_GRAVITY "atom_has_gravity"
@@ -85,9 +88,15 @@
 	#define COMPONENT_BLOCK_TELEPORT (1<<0)
 ///called when an atom is added to the hearers on get_hearers_in_view(): (list/processing_list, list/hearers)
 #define COMSIG_ATOM_HEARER_IN_VIEW "atom_hearer_in_view"
-///called when an atom starts orbiting another atom: (atom)
+
+/// fired by the orbiting atom when an atom starts orbiting another atom
+#define COMSIG_ATOM_BEGAN_ORBITING "atom_orbiting_began"
+/// fired by the orbiting atom when an atom stops orbiting another atom
+#define COMSIG_ATOM_STOPPED_ORBITING "atom_orbiting_stopped"
+
+/// fired by the orbited atom when an atom starts orbiting another atom: (atom)
 #define COMSIG_ATOM_ORBIT_BEGIN "atom_orbit_begin"
-///called when an atom stops orbiting another atom: (atom)
+/// fired by the orbited atom when an atom stops orbiting another atom: (atom)
 #define COMSIG_ATOM_ORBIT_STOP "atom_orbit_stop"
 ///from base of atom/set_opacity(): (new_opacity)
 #define COMSIG_ATOM_SET_OPACITY "atom_set_opacity"
@@ -127,3 +136,18 @@
 #define COMSIG_ATOM_GERM_UNEXPOSED "atom_germ_unexposed"
 /// signal sent to puzzle pieces by activator
 #define COMSIG_PUZZLE_COMPLETED "puzzle_completed"
+
+/// From /datum/compomnent/cleaner/clean()
+#define COMSIG_ATOM_PRE_CLEAN "atom_pre_clean"
+	///cancel clean
+	#define COMSIG_ATOM_CANCEL_CLEAN (1<<0)
+
+/// From /obj/item/stack/make_item()
+#define COMSIG_ATOM_CONSTRUCTED "atom_constructed"
+
+/// From /obj/effect/particle_effect/sparks/proc/sparks_touched(datum/source, atom/movable/singed)
+#define COMSIG_ATOM_TOUCHED_SPARKS "atom_touched_sparks"
+#define COMSIG_ATOM_TOUCHED_HAZARDOUS_SPARKS "atom_touched_hazardous_sparks"
+
+/// From whoever has been revealed (atom/revealed)
+#define COMSIG_ATOM_REVEAL "atom_reveal"

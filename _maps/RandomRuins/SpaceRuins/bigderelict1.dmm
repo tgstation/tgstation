@@ -132,8 +132,8 @@
 "aI" = (
 /obj/structure/closet/crate/engineering/electrical,
 /obj/item/storage/toolbox/electrical,
-/obj/item/stock_parts/cell/hyper,
-/obj/item/stock_parts/cell/high,
+/obj/item/stock_parts/power_store/cell/hyper,
+/obj/item/stock_parts/power_store/cell/high,
 /turf/open/floor/mineral/titanium/yellow,
 /area/ruin/space/has_grav/derelictoutpost/dockedship)
 "aJ" = (
@@ -207,7 +207,7 @@
 "aW" = (
 /obj/structure/closet/crate/engineering/electrical,
 /obj/item/storage/toolbox/electrical,
-/obj/item/stock_parts/cell/hyper,
+/obj/item/stock_parts/power_store/cell/hyper,
 /turf/open/floor/mineral/titanium/yellow,
 /area/ruin/space/has_grav/derelictoutpost/dockedship)
 "aX" = (
@@ -233,7 +233,7 @@
 /area/ruin/space/has_grav/derelictoutpost/powerstorage)
 "bc" = (
 /obj/structure/table,
-/obj/item/stock_parts/cell/hyper,
+/obj/item/stock_parts/power_store/cell/hyper,
 /obj/structure/cable,
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/derelictoutpost/powerstorage)

@@ -44,3 +44,7 @@
 /datum/looping_sound/beesmoke
 	mid_sounds = list('sound/weapons/beesmoke.ogg' = 1)
 	volume = 5
+
+/datum/looping_sound/zipline
+	mid_sounds = list('sound/weapons/zipline_mid.ogg' = 1)
+	volume = 5

@@ -49,5 +49,5 @@
 
 /// Cold resistent and doesn't need to breathe
 /mob/living/basic/deer/ice
-	habitable_atmos = list("min_oxy" = 0, "max_oxy" = 0, "min_plas" = 0, "max_plas" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
+	habitable_atmos = null
 	minimum_survivable_temperature = 0

@@ -1,7 +1,7 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "ab" = (
 /obj/structure/alien/weeds,
-/mob/living/simple_animal/hostile/alien{
+/mob/living/basic/alien{
 	faction = list("syndicate","xenomorph")
 	},
 /turf/open/floor/mineral/plastitanium,
@@ -362,13 +362,12 @@
 /obj/structure/door_assembly/door_assembly_hatch{
 	anchored = 1;
 	name = "crew quarters";
-	desc = "People lived in this place.";
-	layer = 2.8
+	desc = "People lived in this place."
 	},
 /turf/template_noop,
 /area/ruin/space/has_grav/infested_frigate)
 "eE" = (
-/mob/living/simple_animal/hostile/alien{
+/mob/living/basic/alien{
 	faction = list("syndicate","xenomorph")
 	},
 /obj/structure/cable,
@@ -380,9 +379,7 @@
 	pixel_x = 6;
 	pixel_y = 6
 	},
-/obj/item/phone{
-	layer = 3.1
-	},
+/obj/item/phone,
 /obj/item/paper/crumpled/muddy/fluff/elephant_graveyard/rnd_notes{
 	default_raw_text = "<b>STERILIZATION ORDERS</b> <BR><BR><i>Detailed findings:</i><BR><BR>A biological research lab within the HD-10180 system has suffered from a complete containment failure. The SYN-C Brutus is to deliver a nuclear payload via strike team. Everything inside and outside the facility is to be killed on sight, including any research staff. Nuclear authentication codes have been sent via red phone, as have other detailed orders.<BR><BR><b>The rest of the documents are maps and mundane information regarding the crew's destination.</b>";
 	name = "STERILIZATION ORDERS";
@@ -430,7 +427,6 @@
 /obj/effect/turf_decal/tile/bar,
 /obj/structure/table/reinforced,
 /obj/structure/closet/mini_fridge/grimy{
-	anchored = 1;
 	pixel_y = 6
 	},
 /obj/effect/spawner/random/food_or_drink/refreshing_beverage,
@@ -566,7 +562,7 @@
 /obj/machinery/airalarm/directional/north,
 /obj/effect/mapping_helpers/airalarm/all_access,
 /obj/machinery/icecream_vat{
-	desc = "Waffle co. actually ordered these guys to steal one of these just to be sure."
+	desc = "Waffle Corp. actually ordered these guys to steal one of these just to be sure."
 	},
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/infested_frigate)
@@ -639,9 +635,7 @@
 /turf/open/floor/mineral/plastitanium/airless,
 /area/ruin/space/has_grav/infested_frigate)
 "jx" = (
-/obj/effect/decal/cleanable/glass{
-	layer = 3.1
-	},
+/obj/effect/decal/cleanable/glass,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
 /turf/open/floor/mineral/plastitanium/red,
 /area/ruin/space/has_grav/infested_frigate)
@@ -654,9 +648,7 @@
 	desc = "It would have been locked anyway.";
 	name = "syndicate navigation console"
 	},
-/obj/effect/decal/cleanable/glass{
-	layer = 3.1
-	},
+/obj/effect/decal/cleanable/glass,
 /turf/open/floor/pod/dark,
 /area/ruin/space/has_grav/infested_frigate)
 "kc" = (
@@ -844,7 +836,7 @@
 /turf/open/floor/pod/dark,
 /area/ruin/space/has_grav/infested_frigate)
 "nG" = (
-/mob/living/simple_animal/hostile/alien{
+/mob/living/basic/alien{
 	faction = list("syndicate","xenomorph")
 	},
 /turf/open/floor/mineral/plastitanium/red,
@@ -863,10 +855,8 @@
 /obj/effect/decal/cleanable/blood{
 	icon_state = "floor5-old"
 	},
-/obj/item/ammo_casing/spent{
-	layer = 3.1
-	},
-/obj/item/gun/ballistic/automatic/plastikov,
+/obj/item/ammo_casing/spent,
+/obj/item/gun/ballistic/automatic/smartgun,
 /obj/effect/mob_spawn/corpse/human/syndicatepilot,
 /turf/open/floor/mineral/plastitanium/red,
 /area/ruin/space/has_grav/infested_frigate)
@@ -982,8 +972,7 @@
 /obj/effect/decal/cleanable/glass,
 /obj/machinery/button/door/directional/north{
 	name = "prisoner isolation shutter";
-	id = "captivity";
-	layer = 3.4
+	id = "captivity"
 	},
 /turf/open/floor/pod/dark,
 /area/ruin/space/has_grav/infested_frigate)
@@ -1232,19 +1221,16 @@
 	icon_state = "warningline_red";
 	dir = 4
 	},
-/mob/living/simple_animal/hostile/alien{
+/mob/living/basic/alien{
 	faction = list("syndicate","xenomorph")
 	},
 /turf/open/floor/pod/dark,
 /area/ruin/space/has_grav/infested_frigate)
 "vj" = (
 /obj/machinery/door/poddoor{
-	id = "Brutusexterior";
-	closingLayer = 2.65
+	id = "Brutusexterior"
 	},
-/obj/effect/spawner/structure/window/reinforced/plasma/plastitanium{
-	layer = 2.9
-	},
+/obj/effect/spawner/structure/window/reinforced/plasma/plastitanium,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/infested_frigate)
 "vm" = (
@@ -1327,8 +1313,7 @@
 	},
 /obj/effect/mob_spawn/corpse/human/syndicatecommando/lessenedgear,
 /obj/structure/bed/nest,
-/mob/living/simple_animal/hostile/alien/drone{
-	del_on_death = 1;
+/mob/living/basic/alien/drone{
 	loot = list(/obj/effect/gibspawner/xeno);
 	faction = list("syndicate","xenomorph")
 	},
@@ -1387,7 +1372,7 @@
 	dir = 4
 	},
 /obj/structure/cable,
-/mob/living/simple_animal/hostile/alien{
+/mob/living/basic/alien{
 	faction = list("syndicate","xenomorph")
 	},
 /turf/open/floor/mineral/plastitanium,
@@ -1475,7 +1460,7 @@
 	icon_state = "gib1-old"
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
-/mob/living/simple_animal/hostile/alien{
+/mob/living/basic/alien{
 	faction = list("syndicate","xenomorph")
 	},
 /turf/open/floor/mineral/plastitanium/red,
@@ -1535,7 +1520,7 @@
 /obj/item/ammo_casing/spent,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
 /obj/structure/cable,
-/mob/living/simple_animal/hostile/alien{
+/mob/living/basic/alien{
 	faction = list("syndicate","xenomorph")
 	},
 /turf/open/floor/mineral/plastitanium/red,
@@ -1628,9 +1613,7 @@
 /turf/open/floor/mineral/plastitanium,
 /area/ruin/space/has_grav/infested_frigate)
 "yZ" = (
-/obj/effect/spawner/structure/window/reinforced/plasma/plastitanium{
-	layer = 2.9
-	},
+/obj/effect/spawner/structure/window/reinforced/plasma/plastitanium,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/infested_frigate)
 "zg" = (
@@ -1643,7 +1626,7 @@
 /obj/effect/mob_spawn/corpse/human/syndicatecommando/lessenedgear,
 /obj/item/ammo_casing/spent,
 /obj/item/ammo_casing/spent,
-/mob/living/simple_animal/hostile/alien{
+/mob/living/basic/alien{
 	faction = list("syndicate","xenomorph")
 	},
 /turf/open/floor/mineral/titanium/tiled/white,
@@ -1928,10 +1911,7 @@
 /obj/effect/decal/cleanable/blood/gibs{
 	icon_state = "gib1-old"
 	},
-/obj/machinery/door/window{
-	dir = 4;
-	layer = 3.2
-	},
+/obj/machinery/door/window/left/directional/east,
 /obj/machinery/door/poddoor/shutters/window/preopen{
 	id = "captivity"
 	},
@@ -1942,8 +1922,7 @@
 /area/ruin/space/has_grav/infested_frigate)
 "ER" = (
 /obj/structure/cable,
-/mob/living/simple_animal/hostile/alien/sentinel{
-	del_on_death = 1;
+/mob/living/basic/alien/sentinel{
 	loot = list(/obj/effect/gibspawner/xeno);
 	faction = list("syndicate","xenomorph")
 	},
@@ -1959,7 +1938,7 @@
 /obj/effect/decal/cleanable/glass,
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
-/mob/living/simple_animal/hostile/alien{
+/mob/living/basic/alien{
 	faction = list("syndicate","xenomorph")
 	},
 /turf/open/floor/mineral/plastitanium/red,
@@ -1984,7 +1963,7 @@
 /turf/open/floor/mineral/plastitanium,
 /area/ruin/space/has_grav/infested_frigate)
 "Fs" = (
-/mob/living/simple_animal/bot/firebot{
+/mob/living/basic/bot/firebot{
 	faction = list("syndicate","xenomorph");
 	name = "Mr. Squirtsky";
 	desc = "He seems much happier with the new management!"
@@ -2051,7 +2030,7 @@
 	},
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
-/mob/living/simple_animal/hostile/alien{
+/mob/living/basic/alien{
 	faction = list("syndicate","xenomorph")
 	},
 /turf/open/floor/mineral/plastitanium/red,
@@ -2078,7 +2057,7 @@
 	icon_state = "gib1-old"
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
-/mob/living/simple_animal/hostile/alien{
+/mob/living/basic/alien{
 	faction = list("syndicate","xenomorph")
 	},
 /turf/open/floor/mineral/plastitanium,
@@ -2099,7 +2078,7 @@
 	icon_state = "xgibhead";
 	dir = 4
 	},
-/mob/living/simple_animal/hostile/alien{
+/mob/living/basic/alien{
 	faction = list("syndicate","xenomorph")
 	},
 /turf/open/floor/mineral/plastitanium,
@@ -2202,7 +2181,7 @@
 /turf/open/floor/pod/dark,
 /area/ruin/space/has_grav/infested_frigate)
 "Jx" = (
-/mob/living/simple_animal/hostile/alien{
+/mob/living/basic/alien{
 	faction = list("syndicate","xenomorph")
 	},
 /turf/open/floor/mineral/plastitanium,
@@ -2810,9 +2789,8 @@
 /obj/item/shard{
 	icon_state = "plastitaniumtiny"
 	},
-/mob/living/simple_animal/hostile/alien/queen/large{
-	del_on_death = 1;
-	loot = list(/obj/effect/gibspawner/xeno,/obj/item/ammo_box/magazine/plastikov9mm,/obj/effect/mob_spawn/corpse/human/syndicatecommando/soft_suit);
+/mob/living/basic/alien/queen/large{
+	loot = list(/obj/effect/gibspawner/xeno,/obj/item/ammo_box/magazine/smartgun,/obj/effect/mob_spawn/corpse/human/syndicatecommando/soft_suit);
 	desc = "What you saw in your dreams last night.";
 	faction = list("syndicate","xenomorph")
 	},
@@ -3087,7 +3065,7 @@
 "Yd" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/alien/egg/burst,
-/mob/living/simple_animal/hostile/alien{
+/mob/living/basic/alien{
 	faction = list("syndicate","xenomorph")
 	},
 /turf/open/floor/mineral/plastitanium/red,

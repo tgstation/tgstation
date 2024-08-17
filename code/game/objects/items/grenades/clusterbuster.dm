@@ -95,6 +95,7 @@
 		var/obj/item/grenade/grenade = new type(loc)
 		if(istype(grenade))
 			grenade.active = TRUE
+			grenade.type_cluster = TRUE
 			addtimer(CALLBACK(grenade, TYPE_PROC_REF(/obj/item/grenade, detonate)), rand(RANDOM_DETONATE_MIN_TIME, RANDOM_DETONATE_MAX_TIME))
 		var/steps = rand(1, 4)
 		for(var/step in 1 to steps)

@@ -301,3 +301,490 @@
       pilot again.
   - bugfix: The various borg apparatuses can no longer pick up other internal borg
       tools.
+2024-01-11:
+  Thunder12345:
+  - bugfix: Pipeguns no longer have floating bayonets
+  vinylspiders:
+  - bugfix: if your voice changes (e.g. through a voice changer or changeling mimicry)
+      your runechat will now appear as the mob you are speaking in the voice of
+  - bugfix: when doing emotes with your face obscured, your runechat color will now
+      appear as either that of Unknown or the mob you are wearing the id of (if you
+      are wearing a mask with someone else's id)
+2024-01-12:
+  13spacemen:
+  - bugfix: Healing simplemobs with sutures and other stacks works again
+  - spellcheck: Healing mobs with medical stacks like suture and mesh give better
+      user feedback messages
+  - image: New liquid plasma sprites from SS14!
+  ArcaneMusic:
+  - admin: Added a new admin verb that ends all active weather within the weather
+      subsystem.
+  IndieanaJones:
+  - balance: Nightmare's Light Eater can now stun targets under certain conditions.
+  LT3:
+  - bugfix: Icebox kitchen has its light switch again
+  - bugfix: Icebox medbay hallway now has a fire alarm
+  Melbert:
+  - bugfix: Fix Ringleader's Rise not causing as many hallucinations as expected
+  - bugfix: Fixes some cult spells being unable to heal constructs (blood rites particularly)
+  - bugfix: Chameleon Suits will now automatically set your helmet into a hood if
+      using a hooded suit again
+  - bugfix: Blood Drunk Miner (Hunter version) should dash a bit more.
+  - bugfix: Ghost alert for buying a badass balloon should have a proper icon
+  TheVekter:
+  - admin: Made logging for BSA targeting and firing easier to find for admins.
+  Watermelon914:
+  - bugfix: Fixed being able to download the contractor program on the syndie store.
+  vinylspiders:
+  - code_imp: removed a dupe trait entry in the traits_by_type list
+2024-01-13:
+  ArcaneMusic:
+  - qol: ID cards now set their accounts with Alt-Right click.
+  - bugfix: ID cards now once again have contextual screen tips showing what buttons
+      do what actions.
+  LT3:
+  - bugfix: Tramstation east APC will no longer be destroyed when the tram crashes
+  - qol: Tramstation central power and disposals moved out of the wall
+  Majkl-J:
+  - code_imp: The check that prevents your stuff from dropping when you have robotic
+      parts is now more robust
+  Melbert:
+  - bugfix: Lunar Parade has the potential to break less.
+  Paxilmaniac:
+  - qol: The heat-proof catwalk made by heat-proof rods will go away when a tile is
+      placed on it, rather than sticking around and needing to be removed manually
+  - bugfix: The lighting will not irreparably break on tiles where plating was placed
+      on lava-proof catwalks
+  - code_imp: Some single letter variables and the structure of the code around placing
+      tiles on lava-proof catwalks has been improved
+  - bugfix: The deployable component will now actually stop rotating things when the
+      variable to not do that is set
+  - bugfix: The "required_container_accepts_subtypes" variable on chemical reactions
+      now actually works again
+  Rhials:
+  - bugfix: Specialty drinks crafted in the crafting menu will now create the intended
+      reagents, instead of containing the reagents used to craft it.
+  jlsnow301:
+  - bugfix: Dropdowns should be more performant
+2024-01-14:
+  IndieanaJones:
+  - bugfix: Changeling eggs laid by headslugs work again
+  - bugfix: Changeling egg incubation times should feel much more consistent, hatching
+      after 4 minutes
+  LemonInTheDark:
+  - admin: Confirming that you have read an admin message now uh, works. it's been
+      2 years bros
+  zxaber:
+  - bugfix: Borg tools that hold and use specific items now work correctly again.
+2024-01-15:
+  Ghommie:
+  - bugfix: Animals enlargened by the fugu gland are now visually aligned with the
+      turf they're standing on.
+  IndieanaJones:
+  - qol: The combat mode toggle button is now present on the HUD for simple and basic
+      mobs.
+  - bugfix: Rat King's abilities no longer require the user to click twice in order
+      to activate them.
+  LT3:
+  - bugfix: Fixed missing power cable outside Tramstation medbay
+  Melbert:
+  - bugfix: Anomalies spawned by grand ritual runes sound act more like anomalies
+  RikuTheKiller:
+  - bugfix: Fixed round event controller pirate spawns.
+  SyncIt21:
+  - bugfix: chem heater with empty buffers can be refilled again
+2024-01-16:
+  00-Steven:
+  - bugfix: Signers no longer use the wrong verb when speaking directly into a radio
+      for the first message after toggling sign language.
+  - refactor: Moved the updating of verb variables into a new method which is called
+      earlier in living's say, which should avoid this happening for other things
+      which updated their verbs the same way.
+  13spacemen:
+  - code_imp: Hub status shows if server is restarting, starting, time to start. The
+      "Time" is more accurate and based on roundstart now
+  Ben10Omintrix:
+  - bugfix: fix bileworm ai going insane after eating someone
+  Hatterhat:
+  - bugfix: Moodlets with parameters/effects e.g. limb reattachment moodlets should
+      probably disappear more appropriately.
+  JohnFulpWillard:
+  - qol: Using a Lawyer badge in your hand now shows a thought bubble with the badge,
+      rather than giving a lousy message in your chat.
+  Melbert:
+  - bugfix: Fixes some eldritch painting messages having no chat span
+  - bugfix: Fixes eldritch painting messages triggering before the examine, making
+      it hard to see
+  - bugfix: Fix beauty eldritch painting doing nothing to heretics who examine it
+  Time-Green:
+  - bugfix: Radiation shelters (wherever they are) will protect against nebula storms
+  Voudez:
+  - qol: Players are now able to see in chat when they are being hit by obj/machinery,
+      got crushed into dense turf or get hit by thrown non carbon mob.
+  - admin: Scenarios like mob hits dense turf, obj/machinery hits mob, item without
+      "living thrower" hitting mob, mob gets hit by thrown non carbon mob now appear
+      in logs.
+  ZephyrTFA:
+  - bugfix: Autolathes no longer allow you to duplicate materials at higher levels
+      of stock parts
+  - qol: Autolathes now show name instead of typepath when selecting a custom material
+  - qol: Autolathe now print out items one by one instead of waiting for all of them
+      to print at once
+  jlsnow301:
+  - bugfix: Sections will be more polite by not stealing focus from Input boxes in
+      TGUI
+  - bugfix: Poppers (like the prefs menu options) shouldn't be hidden beneath the
+      character preview anymore.
+2024-01-17:
+  SyncIt21:
+  - qol: adds more examines, screentips & balloon alerts for cryo actions, cryo can
+      be pried open with a crowbar when there is no power to free someone trapped
+      inside
+  - qol: cryo auto turns on immediately without a 2 second delay & without needing
+      auto eject mode on
+  - bugfix: ejecting beaker from cryotube will put it in the players hand & not drop
+      it on the floor
+  - bugfix: mobs & other stuff now render on top of cryo tubes and not bottom of it
+  - bugfix: cryo checks for if the mob is on the same turf as cryo is now fixed, i.e.
+      you can no longer close the machine on yourself
+  - code_imp: removed unused vars from cryo, autodocs vars, removed unused `transfer_amounts`
+      from some chem machinery ui
+  - refactor: removed unused icon states for cryo tube, cryo no longer processes round
+      start and it's UI is now typescript
+  Time-Green:
+  - code_imp: The mushroom cap is now an external organ (jungle station will never
+      happen)
+  - bugfix: Mushpeople caps are no longer solid black
+  mc-oofert:
+  - image: the plumbing chemical splitter no longer has a wrongly rotated direction
+  the-orange-cow:
+  - bugfix: Lock heretics may once again access 'the relentless heartbeat' after purchasing
+      'burglars fineness'.
+  vinylspiders:
+  - code_imp: removed the timeout_mod arg from add_mood_event, which was only used
+      for one thing and causes more issues than it's worth
+2024-01-18:
+  00-Steven:
+  - bugfix: Immobile shells no longer work regardless of anchor state if you put the
+      circuit in while it's unanchored.
+  - bugfix: Immobile shells properly propagate their on/off state after wrenching
+      to inner modules.
+  DATA-xPUNGED:
+  - bugfix: Bystanders will no longer think they've pulled out a victim's eyes after
+      seeing someone else do it.
+  - qol: They will also be able to tell when someone starts pulling out a victim's
+      eyes.
+  Ghommie:
+  - rscadd: Most fishing rods come with a hook and line preinstalled. Fishing toolboxes
+      come with separate reel and lines as usual.
+  - balance: Fishing hooks are now required to fish.
+  - balance: Without a reel line, the range of fishing rods is reduced by two tiles.
+      Conversely, having one installed gives a mild buff to the minigame completion
+      speed.
+  - balance: The craftable sinewy reel line can now be used to fish on lava or liquid
+      plasma, but it's a bit harder to use.
+  - balance: The rare-to-find-in-maintenance master fishing rod now comes with a flexible
+      line and weighted hook preinstalled, and has better range than other rods.
+  - balance: Fishing reel lines are now small enough to fit pockets.
+  - rscadd: The rescue and jawed hook can now snag and reel in mobs, not only items.
+      The jawed hook also slows down when applied, a la beartrap.
+  - qol: Fish bounties now accept filled (stasis) fish cases.
+  - qol: Several balloon alerts for fishing rod interactions.
+  - bugfix: Reeling in items (and mobs) now respects movement resistance and anchorage.
+  - bugfix: Fixed the fishing rod equipment UI being too small to fit its components.
+  - sound: Reeling in something now plays a sound.
+  - image: Resprited several fishes, and the aquarium.
+  - rscadd: Shields (and pillows) can be used to shove people around the same way
+      barehanded right-clicking does. Xenos and borgs can actually be moved this way.
+  - rscadd: Added a new MODsuit module, the bulwark module, which prevents knockdown
+      and staggering from shoving, and getting pushed away by thrown objects. Inbuilt
+      for the safeguard MODsuit, but one might also it in the black market.
+  - refactor: Disarming has been refactored. You can now shove simple critters onto
+      tables and into bins and closets
+  - balance: Shields now take their own armor values and the armor penetration of
+      the attack they blocked when damaged. This means shields are a bit sturdier
+      now.
+  - balance: Riot shields can tank a lot more damage against melee weapons, but less
+      against bullets.
+  - qol: strobe shields can now be used to bash people while combat mode is on.
+  JohnFulpWillard:
+  - refactor: Implant pads now use TGUI
+  - refactor: Ice cream vats now use a radial menu instead of an HTML one.
+  intercepti0n:
+  - refactor: Refactored Ore Silo Ui.
+  mc-oofert:
+  - code_imp: slightly cleans up dance machine code
+  - bugfix: disco dances are less comparable to having a seizure
+2024-01-19:
+  13spacemen:
+  - bugfix: Hub time should be correct again
+  Ben10Omintrix:
+  - bugfix: fix a runtime when loading ghosts to a mulebot
+2024-01-20:
+  Diamond-74:
+  - bugfix: Monkeys don't get stuck on obstacles as often.
+  Ghommie:
+  - image: The "One Lean, Mean, Cleaning Machine" achievement now has its own icon.
+  Momo8289, Pepsilawn, Sinsinins, JohnFulpWillard:
+  - bugfix: Clown ops now get a code set for their nuke.
+2024-01-21:
+  Ben10Omintrix:
+  - bugfix: fixes megafauna AI getting stuck attacking some corpses
+  Ghommie:
+  - rscadd: Modular Computers now support integrated circuits. What can be done with
+      them depends on the programs installed and whether they're running (open or
+      background).
+  - rscadd: Modular Consoles (the machinery) now have a small backup cell they draw
+      power from if the power goes out.
+  - image: The honkbot now looks up to date.
+  - bugfix: Fixes how the aquarium looks.
+  JohnFulpWillard:
+  - bugfix: Prototype emitters now work.
+  - bugfix: Prototype emitters don't go invisible if screwdriver'd open.
+  - bugfix: Emitters no longer show up as their panel being closed when it is open.
+  LemonInTheDark:
+  - bugfix: The map saving tool will no longer lock up and prevent all further action
+      at random
+  - bugfix: Map saving now takes on the order of seconds, not minutes
+  - bugfix: Fixes an issue with lists that caused strongdmm to report saved maps as
+      broken
+  Majkl-J:
+  - bugfix: Borgs now use the hug module to substitute for hands, allowing them to
+      finish previously unfinishable surgeries
+  Melbert:
+  - bugfix: Items and mobs no longer hide behind big runes (heretic, cult, wizard)
+  Rex9001:
+  - bugfix: Lunatics spawned from moon ascension now actually have an objective to
+      assist their ringleader
+  - bugfix: Lunatics now get a moonlight amulette on the ground if they have full
+      hands
+  Rhials:
+  - spellcheck: Modifies some existing Emergency Shuttle prerequisite messages, and
+      adds some missing ones.
+  YehnBeep:
+  - bugfix: Icebox perma's cytology lab is now useable without outside repairs.
+  Zergspower:
+  - bugfix: fixes whispering formatting
+  lizardqueenlexi:
+  - bugfix: Filled trash bags show up properly when worn.
+  mc-oofert:
+  - bugfix: cyborg inducer respects cell changes
+2024-01-22:
+  Absolucy:
+  - bugfix: Tool arm implant hotkeys will properly work even after you change your
+      arm/species now.
+  Ghommie:
+  - bugfix: fixed some visual artifacts from achievement icons.
+  carshalash:
+  - bugfix: Nanotrasen is now stocking proper french Cognac instead of discount Irish
+      Cognac. It will now taste Smooth and French
+  lizardqueenlexi:
+  - bugfix: Wagging tail spines now sync up properly with the tails they're attached
+      to.
+2024-01-23:
+  00-Steven:
+  - sound: APCs actually play the tool sound when exposing their wires.
+  A.C.M.O.:
+  - config: Added two new config flags for quirks, DISABLE_QUIRK_POINTS and MAX_POSITIVE_QUIRKS.
+  Ghommie:
+  - bugfix: Goldgrubs should no longer spit out things that aren't ore (e.g. stasised
+      mobs from the polymorph belt).
+  scriptis:
+  - spellcheck: iron sheets's what?
+2024-01-24:
+  JohnFulpWillard:
+  - bugfix: pAIs downloaded while in a PDA now gets the action button to control said
+      PDA.
+  - bugfix: pAI cards can now be ejected from a PDA when there is no pAI inhabiting
+      it.
+  - bugfix: Moved the curator's treasure hunter fedora up by a single pixel.
+  - bugfix: Contractor support units now don't have flavortext telling them they work
+      for someone else but their agent.
+  - bugfix: Contractor support units now comes in an antag spawner (like syndicate
+      monkey, nukie borgs/reinforcements).
+  - bugfix: Syndicate monkeys now get their monkey antag datum.
+  LT3:
+  - bugfix: Server announcements again no longer escape HTML by default
+  Melbert:
+  - bugfix: Replacing a limb fully claimed by an infested burn wound now properly
+      grants you control of the limb back
+  - bugfix: Losing control of a limb now sounds less weird in chat
+  SyncIt21:
+  - bugfix: reactions that create multiple reagents now terminate without looping
+      endlessly.
+  - bugfix: oatmeal reactions now terminate & produce the right quantity of results
+      but without milk.
+  vinylspiders:
+  - bugfix: fixes features not updating when changing character slots
+  - bugfix: fixes a spurious CI failure from do_charge() signal overrides
+2024-01-25:
+  ArcaneMusic:
+  - refactor: Stock market events are now their own objects, and are handled by the
+      stock market individually.
+  - bugfix: The smelter and refinery now properly hold mining points, only taking
+      a small amount out of net gained points.
+  FernandoJ8:
+  - bugfix: the blur effects for hallucinogenic withdrawal and psychic projection
+      are now properly centered on the screen
+  LT3:
+  - bugfix: You can no longer interact with medical beds while incapacitated
+  SyncIt21:
+  - bugfix: fixes runtime when mineral scanning, passes right argument for scanner
+      in golem eyes
+2024-01-26:
+  13spacemen:
+  - bugfix: The hub time should be accurate for servers with different timezones
+  Ben10Omintrix:
+  - refactor: airlock controllers now use tgui
+  Ghommie:
+  - bugfix: Fixed the messenger circuit not sending messages.
+  - bugfix: Added several ports to modpc circuits that were missing or needing them.
+  - bugfix: Fixes ever-expanding ports whenever circuits are re-inserted in a modular
+      computer.
+  Isratosh:
+  - bugfix: Kidnapping traitor objective now properly returns the victim to the station
+      with their items
+  - bugfix: Missing fire alarms added to several rooms on Birdshot
+  JohnFulpWillard:
+  - bugfix: The library console's category search box now displays the category being
+      searched.
+  - refactor: Newspapers now use TGUI.
+  - bugfix: Fixed the newscaster's wanted section showing a non-existent photo.
+  JohnFulpWillard, Unit2E teaching me the TEG:
+  - bugfix: The TEG now works again (still unobtainable by regular means though).
+  - bugfix: the TEG and its circulators can now be rotated counterclockwise again.
+  - refactor: The TEG now uses a TGUI interface rather than the old HTML one.
+  LT3:
+  - bugfix: Fixed alignment of RPG titles
+  LemonInTheDark:
+  - bugfix: Icebox will no longer spawn a fuck ton of plasma after gibonite blows.
+      YW besties
+  Melbert:
+  - bugfix: Click CD applies to looking up and down correctly.
+  - bugfix: Fixed AIs who shunt to APCs causing their laws to be deleted.
+  - bugfix: You can no longer neck snap anyone with martial arts assuming you've got
+      someone in a tight grip.
+  SyncIt21:
+  - bugfix: items that contain recursive contents inside them (like foam dart boxes
+      from autolathes) now have their custom materials set to match with its design
+      cost rather than being nullified, meaning they are now recyclable.
+  - code_imp: all custom materials are now integer values. Improved code for how materials
+      are used in techfab & auto lathe for printing
+  - qol: added more screen tips & examines for ore silo, made UI wider, attach location
+      name to each machine & grey out paused machines to make it more noticeable.
+  - code_imp: auto docs proc & vars for silo log entry. Fixed return values of all
+      tool acts
+  - bugfix: ore silo UI now functions correctly after removing an entry from the UI
+  - bugfix: no runtimes when connecting a machine to silo that was previously disconnected
+      via the ore silo UI
+  - refactor: chemical reaction tester in runtime station has been remastered from
+      ground up.
+  intercepti0n:
+  - refactor: Refactored Ore Processing Unit UI.
+  - bugfix: Ore Processing Unit UI no longer lags client.
+2024-01-27:
+  00-Steven:
+  - bugfix: Cats can be swabbed for feliform cells again.
+  - sound: Cats have had their mastery of silent walking revoked, and have their pitter-pattering
+      footsteps back again.
+  Melbert:
+  - bugfix: Rush Gland now triggers correctly on being grabbed by a Goliath
+  Whoneedspacee:
+  - refactor: Legions abilities have been changed into actions that can be added to
+      any mob.
+  vinylspiders:
+  - bugfix: fixes a hard del with decals
+2024-01-28:
+  00-Steven:
+  - spellcheck: You no longer fail to find "a anything" when swabbing something for
+      cytology that doesn't have swabbing results.
+  - bugfix: Removed kitten omniscience. (They stop pointing at you now.)
+  Ghommie:
+  - image: Added an icon to the "My Watchlist Status is Not Important" achievement.
+  LT3:
+  - bugfix: Emergency shuttle console now only works while on the emergency shuttle
+  SyncIt21:
+  - spellcheck: shortened description for the PCM and capitalized some text for its
+      examines.
+  - code_imp: adds sanity checks and removed deprecated `content` tag from PCM UI.
+      Stops hologram items from being inserted.
+  VladinXXV:
+  - bugfix: Oppenheimer, the nukie medbot, has been reprogrammed to use Airplane Mode
+      as a factory default. The station AI is no longer immediately aware of his presence!
+  intercepti0n:
+  - refactor: 'Refactored Telecommunications Monitoring Console UI: added search bar,
+      made UI more compact.'
+2024-01-29:
+  00-Steven:
+  - bugfix: Blobs sitting on APCs no longer break them when already broken, and so
+      no longer spam the power down noise.
+  - bugfix: Jerry Tramstation can get laid again! (Fixed cat breeding.)
+  13spacemen:
+  - refactor: Husk icons are now dynamically generated. See if you can identify what
+      species it was!
+  Ben10Omintrix:
+  - bugfix: fixes a runtime that sometimes happens in ai controllers
+  DaCoolBoss:
+  - spellcheck: typos fixed in the fireproof clothing religious rite
+  Krypandenej:
+  - bugfix: pesto pizza (cooked) is no longer raw, and cilbir is meat instead of fruit
+  LT3:
+  - bugfix: Tramstation external atmos ports are now properly connected
+  Melbert:
+  - bugfix: Wizarditis Timestop now has the desired effect.
+  - admin: Admins can now VV Timestop to make the caster not immune to their own Timestop.
+      If they really wanted.
+  SyncIt21:
+  - bugfix: sets minimum volume of reagent allowed to exist inside anything to 0.01
+      therefore allowing plumbing iv drip small transfer rates to occur without reagents
+      disappearing.
+  - bugfix: auto lathes don't hog local apc supply when printing items
+  rageguy505:
+  - bugfix: ' The buttons for flashers on birdshot/tramstation now work'
+2024-01-30:
+  00-Steven:
+  - bugfix: Rootbread soup now uses poached egg (egg reagents in soup pot) instead
+      of raw unpeeled egg (which would break into reagents upon coming into contact
+      with the soup pot) and is thus craftable again.
+  ArcaneMusic:
+  - rscdel: The lathe tax on printing items has been removed from the game for both
+      humans and silicons.
+  Ghommie:
+  - image: Resprited the goldfish and lanternfish as well.
+  Inari-Whitebear:
+  - bugfix: Bone daggers and shivs are now longer electrically conductive
+  Melbert:
+  - bugfix: You can build on some niche tables again, such as the Wabbajack Altar.
+  Profakos:
+  - bugfix: The construction console drone becomes visible again while its in use
+  Rhials:
+  - bugfix: The encrypted bitrunner cache is now impervious to most conventional means
+      of destruction.
+  distributivgesetz:
+  - bugfix: Ambient loops will now refresh when entering a mob.
+  jjpark-kb:
+  - code_imp: added the code that allows the image overlays to work for the circulator
+      (teg)
+  - image: changed circulator's (teg) fast/slow turbine sprite
+  - image: added an anchor, panel, and flow overlay for the circulator (teg)
+2024-01-31:
+  Jacquerel:
+  - bugfix: Cult pylons will no longer cover up "open space" (or water) with cult
+      floors
+  LT3:
+  - bugfix: ID card examine text shows how to set your linked bank account
+  - bugfix: ID card withdrawal from an unassigned account will ask if you want to
+      link an account
+  - bugfix: Tram power consumption will no longer will randomly drain APCs
+  - bugfix: Tram power moved to area based rectifiers
+  Melbert:
+  - bugfix: Fixed ore vent descriptions looking weird sometimes
+  - bugfix: Fixed being able to scan an ore vent multiple times at once
+  - bugfix: Fixed gaining scan points from scannning an ore vent without finishing
+      the scan
+  SapphicOverload:
+  - bugfix: Mk-II Ripley exosuits are spaceproof again.
+  - bugfix: Converted mechs now have their lights on if they did before the conversion.
+  distributivgesetz:
+  - bugfix: All Within Theoretical Limits should properly unlock now when the crystal
+      comes back from the countdown.

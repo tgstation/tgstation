@@ -32,6 +32,7 @@ export const JOB2ICON = {
   Geneticist: 'dna',
   'Head of Personnel': 'dog',
   'Head of Security': 'user-shield',
+  'Big Brother': 'eye',
   Janitor: 'soap',
   Lawyer: 'gavel',
   'Medical Doctor': 'staff-snake',
@@ -52,6 +53,6 @@ export const JOB2ICON = {
   'Shaft Miner': 'digging',
   'Station Engineer': 'gears',
   'Syndicate Operative': 'dragon',
-  Virologist: 'virus',
+  'Veteran Security Advisor': 'ribbon',
   Warden: 'handcuffs',
 } as const;

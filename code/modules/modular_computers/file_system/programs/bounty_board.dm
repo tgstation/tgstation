@@ -57,7 +57,8 @@
 	data["bountyText"] = bounty_text
 	return data
 
-/datum/computer_file/program/bounty_board/ui_act(action, list/params)
+/datum/computer_file/program/bounty_board/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
+	. = ..()
 	var/current_ref_num = params["request"]
 	var/current_app_num = params["applicant"]
 	var/datum/bank_account/request_target

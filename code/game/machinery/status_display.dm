@@ -8,7 +8,12 @@
 #define LINE1_Y -4
 #define LINE2_X 1
 #define LINE2_Y -11
-#define STATUS_DISPLAY_FONT_DATUM /datum/font/tiny_unicode/size_12pt
+GLOBAL_DATUM_INIT(status_font, /datum/font, new /datum/font/tiny_unicode/size_12pt())
+
+/// Alphas for "projection" mode
+#define PROJECTION_FLOOR_ALPHA 128
+#define PROJECTION_BEAM_ALPHA 32
+#define PROJECTION_TEXT_ALPHA 192
 
 /// Status display which can show images and scrolling text.
 /obj/machinery/status_display
@@ -22,8 +27,15 @@
 	density = FALSE
 	layer = ABOVE_WINDOW_LAYER
 
-	var/obj/effect/overlay/status_display_text/message1_overlay
-	var/obj/effect/overlay/status_display_text/message2_overlay
+	light_range = 1.7
+	light_power = 0.7
+	light_color = LIGHT_COLOR_BLUE
+
+	// We store overlays as keys, so multiple displays can use the same object safely
+	/// String key we use to index the first effect overlay displayed on us
+	var/message_key_1
+	/// String key we use to index the second effect overlay displayed on us
+	var/message_key_2
 	var/current_picture = ""
 	var/current_mode = SD_BLANK
 	var/message1 = ""
@@ -34,17 +46,46 @@
 	/// Color for headers, eg. "- ETA -"
 	var/header_text_color = COLOR_DISPLAY_PURPLE
 
+	/// Transforms for the projection effects
+	var/static/list/matrix/floor_projections = list(
+		TEXT_NORTH = matrix(1, 0, 0, 0, 1, 32), // translation. Realistically these should be mirrored but for readability they're not.
+		TEXT_EAST = matrix(0, 1, 18, -1, 0, -6), // 90 deg turn, 3/4 squish
+		TEXT_WEST = matrix(0, -1, -18, 1, 0, -6), // -90 deg turn, 3/4 squish
+	)
+
+	/// Transforms for the beam between the floor projection and the actual screen.
+	var/static/list/matrix/beam_projections = list(
+		TEXT_NORTH = matrix(1, 0, 0, 0, 1.3125, 30), // stretch towards display.
+		TEXT_EAST = matrix(0, 1.3125, 16, -1, -0.45, -5), // Tilted.
+		TEXT_WEST = matrix(0, -1.3125, -16, 1, -0.45, -5), // Tilted.
+	)
+
+	/// Where to place the emmissive mask for projection mode
+	var/static/list/list/projection_emissive_offsets = list(
+		TEXT_NORTH = list(0, 32),
+		TEXT_EAST = list(18, -4),
+		TEXT_WEST = list(-18, -4),
+	)
+
 /obj/item/wallframe/status_display
 	name = "status display frame"
 	desc = "Used to build status displays, just secure to the wall."
 	icon_state = "unanchoredstatusdisplay"
 	custom_materials = list(/datum/material/iron= SHEET_MATERIAL_AMOUNT * 7, /datum/material/glass= SHEET_MATERIAL_AMOUNT * 4)
 	result_path = /obj/machinery/status_display/evac
-	pixel_shift = 32
 
 //makes it go on the wall when built
 /obj/machinery/status_display/Initialize(mapload, ndir, building)
 	. = ..()
+	find_and_hang_on_wall()
+	update_appearance()
+	AddComponent(/datum/component/examine_balloon, pixel_y_offset = 40)
+
+/obj/machinery/status_display/setDir(newdir)
+	. = ..()
+
+	// Force cached visuals to update.
+	remove_messages()
 	update_appearance()
 
 /obj/machinery/status_display/wrench_act_secondary(mob/living/user, obj/item/tool)
@@ -72,21 +113,20 @@
 	update_appearance()
 	return TRUE
 
-/obj/machinery/status_display/deconstruct(disassembled = TRUE)
-	if(obj_flags & NO_DECONSTRUCTION)
-		return
+/obj/machinery/status_display/on_deconstruction(disassembled)
 	if(!disassembled)
 		new /obj/item/stack/sheet/iron(drop_location(), 2)
 		new /obj/item/shard(drop_location())
 		new /obj/item/shard(drop_location())
 	else
 		new /obj/item/wallframe/status_display(drop_location())
-	qdel(src)
 
 /// Immediately change the display to the given picture.
 /obj/machinery/status_display/proc/set_picture(state)
 	if(state != current_picture)
 		current_picture = state
+		message1 = ""
+		message2 = ""
 
 	update_appearance()
 
@@ -96,11 +136,11 @@
 	line2 = uppertext(line2)
 
 	var/message_changed = FALSE
-	if(line1 != message1)
+	if(line1 != message1 || !message_key_1)
 		message1 = line1
 		message_changed = TRUE
 
-	if(line2 != message2)
+	if(line2 != message2 || !message_key_2)
 		message2 = line2
 		message_changed = TRUE
 
@@ -112,35 +152,54 @@
  * Don't call this in subclasses.
  */
 /obj/machinery/status_display/proc/remove_messages()
-	if(message1_overlay)
-		QDEL_NULL(message1_overlay)
-	if(message2_overlay)
-		QDEL_NULL(message2_overlay)
+	var/obj/effect/overlay/status_display_text/overlay_1 = get_status_text(message_key_1)
+	message_key_1 = null
+	overlay_1?.disown(src)
+	var/obj/effect/overlay/status_display_text/overlay_2 = get_status_text(message_key_2)
+	message_key_2 = null
+	overlay_2?.disown(src)
+
+// List in the form key -> status display that shows said key
+GLOBAL_LIST_EMPTY(key_to_status_display)
+
+/proc/generate_status_text(line_y, message, x_offset, text_color, header_text_color, line_pair, alpha, matrix/transform)
+	var/key = "[line_y]-[message]-[x_offset]-[text_color]-[header_text_color]-[line_pair]-[alpha]-[json_encode(transform.tolist())]"
+	var/obj/effect/overlay/status_display_text/new_overlay = GLOB.key_to_status_display[key]
+	if(!new_overlay)
+		new_overlay = new(null, line_y, message, text_color, header_text_color, x_offset, line_pair, alpha, transform, key)
+		GLOB.key_to_status_display[key] = new_overlay
+	return new_overlay
+
+/proc/get_status_text(key)
+	return GLOB.key_to_status_display[key]
 
 /**
  * Create/update message overlay.
  * They must be handled as real objects for the animation to run.
  * Don't call this in subclasses.
  * Arguments:
- * * overlay - the current /obj/effect/overlay/status_display_text instance
+ * * current_key - key representing the current /obj/effect/overlay/status_display_text instance
  * * line_y - The Y offset to render the text.
  * * x_offset - Used to offset the text on the X coordinates, not usually needed.
  * * message - the new message text.
  * Returns new /obj/effect/overlay/status_display_text or null if unchanged.
  */
-/obj/machinery/status_display/proc/update_message(obj/effect/overlay/status_display_text/overlay, line_y, message, x_offset, line_pair)
-	if(overlay && message == overlay.message)
-		return null
+/obj/machinery/status_display/proc/update_message(current_key, line_y, message, x_offset, line_pair)
+	var/matrix/working_transform = matrix()
+	var/working_alpha = alpha
+	if(dir != SOUTH)
+		// Translate the text seperately, since they are vis_contents.
+		working_transform = floor_projections["[dir]"]
+		working_alpha = PROJECTION_TEXT_ALPHA
+	var/obj/effect/overlay/status_display_text/current_overlay = get_status_text(current_key)
+	var/obj/effect/overlay/status_display_text/new_overlay = generate_status_text(line_y, message, x_offset, text_color, header_text_color, line_pair, working_alpha, working_transform)
 
-	if(overlay)
-		qdel(overlay)
+	if(current_overlay == new_overlay)
+		return current_key
 
-	var/obj/effect/overlay/status_display_text/new_status_display_text = new(src, line_y, message, text_color, header_text_color, x_offset, line_pair)
-	// Draw our object visually "in front" of this display, taking advantage of sidemap
-	new_status_display_text.pixel_y = -32
-	new_status_display_text.pixel_z = 32
-	vis_contents += new_status_display_text
-	return new_status_display_text
+	current_overlay?.disown(src)
+	new_overlay.own(src)
+	return new_overlay.status_key
 
 /obj/machinery/status_display/update_appearance(updates=ALL)
 	. = ..()
@@ -149,48 +208,128 @@
 		(current_mode == SD_BLANK) || \
 		(current_mode != SD_PICTURE && message1 == "" && message2 == "") \
 	)
-		set_light(0)
+		set_light(l_on = FALSE)
 		return
-	set_light(1.5, 0.7, LIGHT_COLOR_FAINT_CYAN) // blue light
+
+	set_light(l_color = text_color, l_on = TRUE)
 
 /obj/machinery/status_display/update_overlays(updates)
 	. = ..()
 
+	// Facing south, we render traditionally.
+	if(dir == SOUTH)
+		add_screen_visuals(.)
+		return
+
+	// Otherwise, we render a projection on the floor.
+
+	// Get screen overlays and return if it's off.
+	var/list/projected_overlays = list()
+	var/anything_displayed = add_screen_visuals(projected_overlays, projection_only = TRUE)
+
+	if(!anything_displayed)
+		return
+
+	// Both of these are vis contents that will receive 1 or more overlays themselves.
+
+	// Matrices to transform the content given the direction
+	var/matrix/floor_matrix = floor_projections["[dir]"]
+	var/matrix/beam_matrix = beam_projections["[dir]"]
+
+	// Make the 2 vis overlays.
+	generate_projection_overlay(floor_matrix, projected_overlays, alpha = PROJECTION_FLOOR_ALPHA)
+	generate_projection_overlay(beam_matrix, projected_overlays, alpha = PROJECTION_BEAM_ALPHA)
+
+	// Impossible for this to look good as an actual emissive since the emissive plane crushes alpha to all or nothing.
+	// We don't really want anything blocking it anyway since the projection would shine over people.
+	var/mutable_appearance/projection_emissive = mutable_appearance(icon, "projection-mask", offset_spokesman = src, plane = LIGHTING_PLANE)
+	var/list/emissive_offsets = projection_emissive_offsets["[dir]"]
+	projection_emissive.pixel_x = emissive_offsets[1]
+	projection_emissive.pixel_y = emissive_offsets[2]
+	projection_emissive.blend_mode = BLEND_ADD
+	. += projection_emissive
+
+/**
+ * Generate a set of vis contents objects for the overlays.
+ *
+ * Needs to be vis contents so that they're mouse transparent.
+ *
+ * Arguments:
+ * * overlay_transform - The matrix transform to apply.
+ * * sub_overlays - The list of sub-overlays to apply.
+ * * alpha - the alpha for the mutable appearance.
+ */
+/obj/machinery/status_display/proc/generate_projection_overlay(matrix/overlay_transform, list/sub_overlays, alpha)
+	PRIVATE_PROC(TRUE)
+
+	var/obj/effect/overlay/new_overlay = SSvis_overlays.add_vis_overlay(
+		src,
+		layer = layer - 0.01, // make sure we're under the text vis objects
+		plane = plane,
+		alpha = alpha,
+		add_appearance_flags = KEEP_TOGETHER,
+		unique = TRUE
+	)
+
+	new_overlay.transform = overlay_transform
+	new_overlay.mouse_opacity = MOUSE_OPACITY_TRANSPARENT
+	new_overlay.add_overlay(sub_overlays)
+
+	return new_overlay
+
+/**
+ * Generate mutable_appearances for the screen. Has an optional offset to shift it around.
+ *
+ * Returns whether the the screen is conceptually on.
+ *
+ * Arguments:
+ * * screen_overlays - the overlays list to add to
+ * * projection_only - only add overlays that are transformed for the projection effect
+ */
+/obj/machinery/status_display/proc/add_screen_visuals(list/screen_overlays, projection_only = FALSE)
+	// Always have a base screen, or frame.
+	var/screen_icon_state = AI_DISPLAY_DONT_GLOW
+	// Is this screen emissive?
+	var/backlight_on = TRUE
+
 	if(machine_stat & (NOPOWER|BROKEN))
 		remove_messages()
-		return
+		backlight_on = FALSE
 
 	switch(current_mode)
 		if(SD_BLANK)
 			remove_messages()
-			// Turn off backlight.
-			return
+			backlight_on = FALSE
 		if(SD_PICTURE)
 			remove_messages()
-			. += mutable_appearance(icon, current_picture)
-			if(current_picture == AI_DISPLAY_DONT_GLOW) // If the thing's off, don't display the emissive yeah?
-				return .
+			screen_icon_state = current_picture
+			if(current_picture == AI_DISPLAY_DONT_GLOW)
+				backlight_on = FALSE
 		else
 			var/line1_metric
 			var/line2_metric
 			var/line_pair
-			var/datum/font/display_font = new STATUS_DISPLAY_FONT_DATUM()
-			line1_metric = display_font.get_metrics(message1)
-			line2_metric = display_font.get_metrics(message2)
+			line1_metric = GLOB.status_font.get_metrics(message1)
+			line2_metric = GLOB.status_font.get_metrics(message2)
 			line_pair = (line1_metric > line2_metric ? line1_metric : line2_metric)
 
-			var/overlay = update_message(message1_overlay, LINE1_Y, message1, LINE1_X, line_pair)
-			if(overlay)
-				message1_overlay = overlay
-			overlay = update_message(message2_overlay, LINE2_Y, message2, LINE2_X, line_pair)
-			if(overlay)
-				message2_overlay = overlay
+			message_key_1 = update_message(message_key_1, LINE1_Y, message1, LINE1_X, line_pair)
+			message_key_2 = update_message(message_key_2, LINE2_Y, message2, LINE2_X, line_pair)
 
 			// Turn off backlight if message is blank
 			if(message1 == "" && message2 == "")
-				return
+				backlight_on = FALSE
 
-	. += emissive_appearance(icon, "outline", src, alpha = src.alpha)
+	var/mutable_appearance/mutable_screen = mutable_appearance(icon, screen_icon_state)
+	screen_overlays += mutable_screen
+
+	if(!backlight_on || projection_only)
+		return backlight_on
+
+	var/mutable_appearance/emissive_screen = emissive_appearance(icon, AI_DISPLAY_DONT_GLOW, src)
+	screen_overlays += emissive_screen
+
+	return TRUE
 
 // Timed process - performs nothing in the base class
 /obj/machinery/status_display/process()
@@ -218,12 +357,14 @@
 
 /obj/machinery/status_display/examine(mob/user)
 	. = ..()
+	var/obj/effect/overlay/status_display_text/message1_overlay = get_status_text(message_key_1)
+	var/obj/effect/overlay/status_display_text/message2_overlay = get_status_text(message_key_2)
 	if (message1_overlay || message2_overlay)
 		. += "The display says:"
-		if (message1_overlay.message)
-			. += "\t<tt>[html_encode(message1_overlay.message)]</tt>"
-		if (message2_overlay.message)
-			. += "\t<tt>[html_encode(message2_overlay.message)]</tt>"
+		if (message1)
+			. += "\t<tt>[html_encode(message1)]</tt>"
+		if (message2)
+			. += "\t<tt>[html_encode(message2)]</tt>"
 
 // Helper procs for child display types.
 /obj/machinery/status_display/proc/display_shuttle_status(obj/docking_port/mobile/shuttle)
@@ -250,37 +391,46 @@
 /obj/effect/overlay/status_display_text
 	icon = 'icons/obj/machines/status_display.dmi'
 	vis_flags = VIS_INHERIT_LAYER | VIS_INHERIT_PLANE | VIS_INHERIT_ID
+	// physically shift down to render correctly
+	pixel_y = -32
+	pixel_z = 32
 
 	/// The message this overlay is displaying.
 	var/message
+	/// Amount of usage this overlay is getting
+	var/use_count = 0
+	/// The status key we represent
+	var/status_key
 
 	// If the line is short enough to not marquee, and it matches this, it's a header.
 	var/static/regex/header_regex = regex("^-.*-$")
 
-/obj/effect/overlay/status_display_text/Initialize(mapload, yoffset, line, text_color, header_text_color, xoffset = 0, line_pair)
+/obj/effect/overlay/status_display_text/Initialize(mapload, maptext_y, message, text_color, header_text_color, xoffset = 0, line_pair, alpha, matrix/transform, status_key)
 	. = ..()
 
-	maptext_y = yoffset
-	message = line
+	src.maptext_y = maptext_y
+	src.message = message
+	src.status_key = status_key
+	src.alpha = alpha
+	src.transform = transform
 
-	var/datum/font/display_font = new STATUS_DISPLAY_FONT_DATUM()
-	var/line_width = display_font.get_metrics(line)
+	var/line_width = GLOB.status_font.get_metrics(message)
 
 	if(line_width > MAX_STATIC_WIDTH)
 		// Marquee text
-		var/marquee_message = "[line]    [line]    [line]"
+		var/marquee_message = "[message]    [message]    [message]"
 
 		// Width of full content. Must of these is never revealed unless the user inputted a single character.
-		var/full_marquee_width = display_font.get_metrics("[marquee_message]    ")
+		var/full_marquee_width = GLOB.status_font.get_metrics("[marquee_message]    ")
 		// We loop after only this much has passed.
-		var/looping_marquee_width = (display_font.get_metrics("[line]    ]") - SCROLL_PADDING)
+		var/looping_marquee_width = (GLOB.status_font.get_metrics("[message]    ]") - SCROLL_PADDING)
 
 		maptext = generate_text(marquee_message, center = FALSE, text_color = text_color)
 		maptext_width = full_marquee_width
 		maptext_x = 0
 
 		// Mask off to fit in screen.
-		add_filter("mask", 1, alpha_mask_filter(icon = icon(icon, "outline")))
+		add_filter("mask", 1, alpha_mask_filter(icon = icon(icon, AI_DISPLAY_DONT_GLOW)))
 
 		// Scroll.
 		var/time = line_pair * SCROLL_RATE
@@ -288,9 +438,27 @@
 		animate(maptext_x = MAX_STATIC_WIDTH, time = 0)
 	else
 		// Centered text
-		var/color = header_regex.Find(line) ? header_text_color : text_color
-		maptext = generate_text(line, center = TRUE, text_color = color)
+		var/color = header_regex.Find(message) ? header_text_color : text_color
+		maptext = generate_text(message, center = TRUE, text_color = color)
 		maptext_x = xoffset //Defaults to 0, this would be centered unless overided
+
+/obj/effect/overlay/status_display_text/Destroy(force)
+	GLOB.key_to_status_display -= status_key
+	return ..()
+
+/// Status displays are static, shared by everyone who needs them
+/// This marks us as being used by one more guy
+/obj/effect/overlay/status_display_text/proc/own(atom/movable/owned_by)
+	owned_by.vis_contents += src
+	use_count += 1
+
+/// Status displays are static, shared by everyone who needs them
+/// This marks us as no longer being used by a guy
+/obj/effect/overlay/status_display_text/proc/disown(atom/movable/disowned_by)
+	disowned_by.vis_contents -= src
+	use_count -= 1
+	if(use_count <= 0)
+		qdel(src)
 
 /**
  * Generate the actual maptext.
@@ -309,7 +477,7 @@
 	var/friendc = FALSE      // track if Friend Computer mode
 	var/last_picture  // For when Friend Computer mode is undone
 
-MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/status_display/evac, 32)
+WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/machinery/status_display/evac)
 
 /obj/machinery/status_display/evac/Initialize(mapload)
 	. = ..()
@@ -319,7 +487,6 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/status_display/evac, 32)
 	AddComponent(/datum/component/usb_port, list(
 		/obj/item/circuit_component/status_display,
 	))
-	find_and_hang_on_wall()
 
 /obj/machinery/status_display/evac/Destroy()
 	SSradio.remove_object(src,frequency)
@@ -377,6 +544,8 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/status_display/evac, 32)
 	text_color = COLOR_DISPLAY_ORANGE
 	header_text_color = COLOR_DISPLAY_YELLOW
 
+WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/machinery/status_display/supply)
+
 /obj/machinery/status_display/supply/process()
 	if(machine_stat & NOPOWER)
 		// No power, no processing.
@@ -412,6 +581,8 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/status_display/evac, 32)
 	text_color = COLOR_DISPLAY_GREEN
 	header_text_color = COLOR_DISPLAY_CYAN
 
+WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/machinery/status_display/shuttle)
+
 /obj/machinery/status_display/shuttle/process()
 	if(!shuttle_id || (machine_stat & NOPOWER))
 		// No power, no processing.
@@ -441,7 +612,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/status_display/evac, 32)
 	current_mode = SD_PICTURE
 	var/emotion = AI_DISPLAY_DONT_GLOW
 
-MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/status_display/ai, 32)
+WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/machinery/status_display/ai)
 
 /obj/machinery/status_display/ai/attack_ai(mob/living/silicon/ai/user)
 	if(!isAI(user))
@@ -545,6 +716,19 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/status_display/ai, 32)
 
 	connected_display.receive_signal(status_signal)
 
+/obj/machinery/status_display/random_message
+	current_mode = SD_MESSAGE
+	/// list to pick the first line from
+	var/list/firstline_to_secondline = list()
+
+/obj/machinery/status_display/random_message/Initialize(mapload, ndir, building)
+	if(firstline_to_secondline?.len)
+		message1 = pick(firstline_to_secondline)
+		message2 = firstline_to_secondline[message1]
+	return ..() // status displays call update appearance on init so i suppose we should set the messages before calling parent as to not call it twice
+
+WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/machinery/status_display/random_message)
+
 #undef MAX_STATIC_WIDTH
 #undef FONT_STYLE
 #undef SCROLL_RATE
@@ -552,6 +736,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/status_display/ai, 32)
 #undef LINE1_Y
 #undef LINE2_X
 #undef LINE2_Y
-#undef STATUS_DISPLAY_FONT_DATUM
-
+#undef PROJECTION_TEXT_ALPHA
+#undef PROJECTION_FLOOR_ALPHA
+#undef PROJECTION_BEAM_ALPHA
 #undef SCROLL_PADDING

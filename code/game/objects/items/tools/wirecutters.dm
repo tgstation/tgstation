@@ -24,6 +24,7 @@
 	attack_verb_simple = list("pinch", "nip")
 	hitsound = 'sound/items/wirecutter.ogg'
 	usesound = 'sound/items/wirecutter.ogg'
+	operating_sound = 'sound/items/wirecutter_cut.ogg'
 	drop_sound = 'sound/items/handling/wirecutter_drop.ogg'
 	pickup_sound = 'sound/items/handling/wirecutter_pickup.ogg'
 	tool_behaviour = TOOL_WIRECUTTER
@@ -76,8 +77,8 @@
 /obj/item/wirecutters/cyborg
 	name = "powered wirecutters"
 	desc = "Cuts wires with the power of ELECTRICITY. Faster than normal wirecutters."
-	icon = 'icons/obj/items_cyborg.dmi'
-	icon_state = "wirecutters_cyborg"
+	icon = 'icons/mob/silicon/robot_items.dmi'
+	icon_state = "toolkit_engiborg_cutters"
 	worn_icon_state = "cutters"
 	toolspeed = 0.5
 	random_color = FALSE

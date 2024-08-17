@@ -1,5 +1,6 @@
 /// Basic machine used to paint PDAs and re-trim ID cards.
 /obj/machinery/pdapainter
+	SET_BASE_VISUAL_PIXEL(0, DEPTH_OFFSET)
 	name = "\improper Tablet & ID Painter"
 	desc = "A painting machine that can be used to paint PDAs and trim IDs. To use, simply insert the item and choose the desired preset."
 	icon = 'icons/obj/machines/pda.dmi'
@@ -67,7 +68,7 @@
 	QDEL_NULL(stored_id_card)
 	return ..()
 
-/obj/machinery/pdapainter/on_deconstruction()
+/obj/machinery/pdapainter/on_deconstruction(disassembled)
 	// Don't use ejection procs as we're gonna be destroyed anyway, so no need to update icons or anything.
 	if(stored_pda)
 		stored_pda.forceMove(loc)

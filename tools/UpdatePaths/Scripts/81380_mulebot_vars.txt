@@ -1,0 +1,3 @@
+# Removes hardcoded mulebot home destinations and suffixes
+
+/mob/living/simple_animal/bot/mulebot : /mob/living/simple_animal/bot/mulebot{@OLD;home_destination=@SKIP;suffix=@SKIP}

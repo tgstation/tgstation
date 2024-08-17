@@ -59,6 +59,16 @@
 	crate_name = "raw vortex anomaly"
 	crate_type = /obj/structure/closet/crate/secure/science
 
+/datum/supply_pack/science/raw_ectoplasm_anomaly
+	name = "Raw Ectoplasm Anomaly"
+	desc = "Contains the raw core of a ectoplasm anomaly, ready to be implosion-compressed into a powerful artifact."
+	cost = CARGO_CRATE_VALUE * 10
+	access = ACCESS_ORDNANCE
+	access_view = ACCESS_ORDNANCE
+	contains = list(/obj/item/raw_anomaly_core/ectoplasm)
+	crate_name = "raw ectoplasm anomaly"
+	crate_type = /obj/structure/closet/crate/secure/science
+
 /datum/supply_pack/science/raw_bluespace_anomaly
 	name = "Raw Bluespace Anomaly"
 	desc = "Contains the raw core of a bluespace anomaly, ready to be implosion-compressed into a powerful artifact."
@@ -104,20 +114,22 @@
 	name = "Robotics Assembly Crate"
 	desc = "The tools you need to replace those finicky humans with a loyal robot army! \
 		Contains four proximity sensors, two empty first aid kits, two health analyzers, \
-		two red hardhats, two mechanical toolboxes, and two cleanbot assemblies!"
+		two red hardhats, two toolboxes, and two cleanbot assemblies!"
 	cost = CARGO_CRATE_VALUE * 3
 	access = ACCESS_ROBOTICS
 	access_view = ACCESS_ROBOTICS
-	contains = list(/obj/item/assembly/prox_sensor = 5,
+	contains = list(/obj/item/assembly/prox_sensor = 4,
 					/obj/item/healthanalyzer = 2,
 					/obj/item/clothing/head/utility/hardhat/red = 2,
-					/obj/item/storage/medkit = 2)
+					/obj/item/storage/medkit = 2,
+					/obj/item/storage/toolbox = 2,
+					/obj/item/bot_assembly/cleanbot = 2)
 	crate_name = "robotics assembly crate"
 	crate_type = /obj/structure/closet/crate/secure/science/robo
 
 /datum/supply_pack/science/rped
 	name = "RPED crate"
-	desc = "Need to rebuild the ORM but science got annihialted after a bomb test? \
+	desc = "Need to rebuild the ORM but science got annihilated after a bomb test? \
 		Buy this for the most advanced parts NT can give you."
 	cost = CARGO_CRATE_VALUE * 3
 	contains = list(/obj/item/storage/part_replacer/cargo)
@@ -164,7 +176,8 @@
 					/obj/item/biopsy_tool,
 					/obj/item/storage/box/petridish = 2,
 					/obj/item/storage/box/swab,
-					/obj/item/construction/plumbing/research,
+					/obj/item/circuitboard/machine/vatgrower,
+					/obj/item/reagent_containers/condiment/protein,
 				)
 	crate_name = "cytology supplies crate"
 

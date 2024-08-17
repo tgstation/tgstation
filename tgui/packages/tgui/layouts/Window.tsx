@@ -13,6 +13,7 @@ import { globalStore } from '../backend';
 import { Icon } from '../components';
 import { BoxProps } from '../components/Box';
 import { UI_DISABLED, UI_INTERACTIVE, UI_UPDATE } from '../constants';
+import { useDebug } from '../debug';
 import { toggleKitchenSink } from '../debug/actions';
 import {
   dragStartHandler,
@@ -48,42 +49,37 @@ export const Window = (props: Props) => {
     height,
   } = props;
 
-  const { config, suspended, debug } = useBackend();
-  if (suspended) {
-    return null;
-  }
+  const { config, suspended } = useBackend();
+  const { debugLayout = false } = useDebug();
 
   useEffect(() => {
-    const updateGeometry = () => {
-      const options = {
-        ...config.window,
-        size: DEFAULT_SIZE,
+    if (!suspended) {
+      const updateGeometry = () => {
+        const options = {
+          ...config.window,
+          size: DEFAULT_SIZE,
+        };
+
+        if (width && height) {
+          options.size = [width, height];
+        }
+        if (config.window?.key) {
+          setWindowKey(config.window.key);
+        }
+        recallWindowGeometry(options);
       };
 
-      if (width && height) {
-        options.size = [width, height];
-      }
-      if (config.window?.key) {
-        setWindowKey(config.window.key);
-      }
-      recallWindowGeometry(options);
-    };
+      Byond.winset(Byond.windowId, {
+        'can-close': Boolean(canClose),
+      });
+      logger.log('mounting');
+      updateGeometry();
 
-    Byond.winset(Byond.windowId, {
-      'can-close': Boolean(canClose),
-    });
-    logger.log('mounting');
-    updateGeometry();
-
-    return () => {
-      logger.log('unmounting');
-    };
+      return () => {
+        logger.log('unmounting');
+      };
+    }
   }, [width, height]);
-
-  let debugLayout = false;
-  if (debug) {
-    debugLayout = debug.debugLayout;
-  }
 
   const dispatch = globalStore.dispatch;
   const fancy = config.window?.fancy;
@@ -95,11 +91,11 @@ export const Window = (props: Props) => {
       ? config.status < UI_DISABLED
       : config.status < UI_INTERACTIVE);
 
-  return (
+  return suspended ? null : (
     <Layout className="Window" theme={theme}>
       <TitleBar
         className="Window__titleBar"
-        title={!suspended && (title || decodeHtmlEntities(config.title))}
+        title={title || decodeHtmlEntities(config.title)}
         status={config.status}
         fancy={fancy}
         onDragStart={dragStartHandler}

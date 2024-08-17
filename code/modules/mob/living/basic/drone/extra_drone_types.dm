@@ -33,7 +33,7 @@
 /mob/living/basic/drone/syndrone/Initialize(mapload)
 	. = ..()
 	var/datum/component/uplink/hidden_uplink = internal_storage.GetComponent(/datum/component/uplink)
-	hidden_uplink.set_telecrystals(telecrystal_count)
+	hidden_uplink.uplink_handler.set_telecrystals(telecrystal_count)
 
 /obj/effect/mob_spawn/ghost_role/drone/syndrone
 	name = "syndrone shell"

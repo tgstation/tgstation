@@ -1,18 +1,7 @@
 #define CALL_BOT_COOLDOWN 900
 
-//Not sure why this is necessary...
-/proc/AutoUpdateAI(obj/subject)
-	var/is_in_use = 0
-	if (subject != null)
-		for(var/A in GLOB.ai_list)
-			var/mob/living/silicon/ai/M = A
-			if ((M.client && M.machine == subject))
-				is_in_use = 1
-				subject.attack_ai(M)
-	return is_in_use
-
-
 /mob/living/silicon/ai
+	SET_BASE_VISUAL_PIXEL(0, 0) // Needs a new sprite
 	name = "AI"
 	real_name = "AI"
 	icon = 'icons/mob/silicon/ai.dmi'
@@ -23,14 +12,13 @@
 	combat_mode = TRUE //so we always get pushed instead of trying to swap
 	sight = SEE_TURFS | SEE_MOBS | SEE_OBJS
 	hud_type = /datum/hud/ai
-	med_hud = DATA_HUD_MEDICAL_BASIC
-	sec_hud = DATA_HUD_SECURITY_BASIC
-	d_hud = DATA_HUD_DIAGNOSTIC_ADVANCED
+	silicon_huds = list(DATA_HUD_MEDICAL_BASIC, DATA_HUD_SECURITY_BASIC, DATA_HUD_DIAGNOSTIC, DATA_HUD_BOT_PATH)
 	mob_size = MOB_SIZE_LARGE
 	radio = /obj/item/radio/headset/silicon/ai
 	can_buckle_to = FALSE
+	shadow_type = SHADOW_NONE
 	var/battery = 200 //emergency power if the AI's APC is off
-	var/list/network = list("ss13")
+	var/list/network = list(CAMERANET_NETWORK_SS13)
 	var/obj/machinery/camera/current
 	var/list/connected_robots = list()
 	var/aiRestorePowerRoutine = POWER_RESTORATION_OFF
@@ -53,12 +41,13 @@
 	var/shunted = FALSE //1 if the AI is currently shunted. Used to differentiate between shunted and ghosted/braindead
 	var/obj/machinery/ai_voicechanger/ai_voicechanger = null // reference to machine that holds the voicechanger
 	var/malfhacking = FALSE // More or less a copy of the above var, so that malf AIs can hack and still get new cyborgs -- NeoFite
+	/// List of hacked APCs
+	var/list/hacked_apcs = list()
 	var/malf_cooldown = 0 //Cooldown var for malf modules, stores a worldtime + cooldown
 
 	var/obj/machinery/power/apc/malfhack
 	var/explosive = FALSE //does the AI explode when it dies?
 
-	var/mob/living/silicon/ai/parent
 	var/camera_light_on = FALSE
 	var/list/obj/machinery/camera/lit_cameras = list()
 
@@ -77,7 +66,7 @@
 
 	var/mob/camera/ai_eye/eyeobj
 	var/sprint = 10
-	var/cooldown = 0
+	var/last_moved = 0
 	var/acceleration = TRUE
 
 	var/obj/structure/ai_core/deactivated/linked_core //For exosuit control
@@ -188,10 +177,11 @@
 	GLOB.shuttle_caller_list += src
 
 	builtInCamera = new (src)
-	builtInCamera.network = list("ss13")
+	builtInCamera.network = list(CAMERANET_NETWORK_SS13)
 
 	ai_tracking_tool = new(src)
-	RegisterSignal(src, COMSIG_TRACKABLE_TRACKING_TARGET, PROC_REF(on_track_target))
+	RegisterSignal(ai_tracking_tool, COMSIG_TRACKABLE_TRACKING_TARGET, PROC_REF(on_track_target))
+	RegisterSignal(ai_tracking_tool, COMSIG_TRACKABLE_GLIDE_CHANGED, PROC_REF(tracked_glidesize_changed))
 
 	add_traits(list(TRAIT_PULL_BLOCKED, TRAIT_HANDS_BLOCKED), ROUNDSTART_TRAIT)
 
@@ -211,8 +201,7 @@
 	switch(_key)
 		if("`", "0")
 			if(cam_prev)
-				if(ai_tracking_tool.tracking)
-					ai_tracking_tool.set_tracking(FALSE)
+				ai_tracking_tool.reset_tracking()
 				eyeobj.setLoc(cam_prev)
 			return
 		if("1", "2", "3", "4", "5", "6", "7", "8", "9")
@@ -223,8 +212,7 @@
 				return
 			if(cam_hotkeys[_key]) //if this is false, no hotkey for this slot exists.
 				cam_prev = eyeobj.loc
-				if(ai_tracking_tool.tracking)
-					ai_tracking_tool.set_tracking(FALSE)
+				ai_tracking_tool.reset_tracking()
 				eyeobj.setLoc(cam_hotkeys[_key])
 				return
 	return ..()
@@ -250,7 +238,6 @@
 	if(ai_voicechanger)
 		ai_voicechanger.owner = null
 		ai_voicechanger = null
-	UnregisterSignal(src, COMSIG_TRACKABLE_TRACKING_TARGET)
 	return ..()
 
 /// Removes all malfunction-related abilities from the AI
@@ -346,7 +333,7 @@
 		else if(!connected_robot.cell || connected_robot.cell.charge <= 0)
 			robot_status = "DEPOWERED"
 		//Name, Health, Battery, Model, Area, and Status! Everything an AI wants to know about its borgies!
-		. += "[connected_robot.name] | S.Integrity: [connected_robot.health]% | Cell: [connected_robot.cell ? "[connected_robot.cell.charge]/[connected_robot.cell.maxcharge]" : "Empty"] | \
+		. += "[connected_robot.name] | S.Integrity: [connected_robot.health]% | Cell: [connected_robot.cell ? "[display_energy(connected_robot.cell.charge)]/[display_energy(connected_robot.cell.maxcharge)]" : "Empty"] | \
 		Model: [connected_robot.designation] | Loc: [get_area_name(connected_robot, TRUE)] | Status: [robot_status]"
 	. += "AI shell beacons detected: [LAZYLEN(GLOB.available_ai_shells)]" //Count of total AI shells
 
@@ -401,7 +388,7 @@
 	set name = "track"
 	set hidden = TRUE //Don't display it on the verb lists. This verb exists purely so you can type "track Oldman Robustin" and follow his ass
 
-	ai_tracking_tool.set_tracked_mob(src)
+	ai_tracking_tool.track_input(src)
 
 ///Called when an AI finds their tracking target.
 /mob/living/silicon/ai/proc/on_track_target(datum/trackable/source, mob/living/target)
@@ -410,6 +397,12 @@
 		eyeobj.setLoc(get_turf(target))
 	else
 		view_core()
+
+/// Keeps our rate of gliding in step with the mob we're following
+/mob/living/silicon/ai/proc/tracked_glidesize_changed(datum/trackable/source, mob/living/target, new_glide_size)
+	SIGNAL_HANDLER
+	if(eyeobj)
+		eyeobj.glide_size = new_glide_size
 
 /mob/living/silicon/ai/verb/toggle_anchor()
 	set category = "AI Commands"
@@ -446,6 +439,10 @@
 	if(make_mmi_drop_and_transfer(ai_core.core_mmi, the_core = ai_core))
 		qdel(src)
 	return ai_core
+
+/mob/living/silicon/ai/proc/break_core_link()
+	to_chat(src, span_danger("Your core has been destroyed!"))
+	linked_core = null
 
 /mob/living/silicon/ai/proc/make_mmi_drop_and_transfer(obj/item/mmi/the_mmi, the_core)
 	var/mmi_type
@@ -496,10 +493,6 @@
 	if(incapacitated())
 		return
 
-	if (href_list["mach_close"])
-		var/t1 = "window=[href_list["mach_close"]]"
-		unset_machine()
-		src << browse(null, t1)
 	if (href_list["switchcamera"])
 		switchCamera(locate(href_list["switchcamera"]) in GLOB.cameranet.cameras)
 	if (href_list["showalerts"])
@@ -528,7 +521,7 @@
 		else
 			to_chat(src, span_notice("Unable to project to the holopad."))
 	if(href_list["track"])
-		ai_tracking_tool.set_tracked_mob(src, href_list["track"])
+		ai_tracking_tool.track_name(src, href_list["track"])
 		return
 	if (href_list["ai_take_control"]) //Mech domination
 		var/obj/vehicle/sealed/mecha/M = locate(href_list["ai_take_control"]) in GLOB.mechas_list
@@ -571,8 +564,7 @@
 		view_core()
 		return
 
-	if(ai_tracking_tool.tracking)
-		ai_tracking_tool.set_tracking(FALSE)
+	ai_tracking_tool.reset_tracking()
 
 	// ok, we're alive, camera is good and in our network...
 	eyeobj.setLoc(get_turf(C))
@@ -645,9 +637,7 @@
 /mob/living/silicon/ai/proc/ai_network_change()
 	set category = "AI Commands"
 	set name = "Jump To Network"
-	unset_machine()
-	if(ai_tracking_tool.tracking)
-		ai_tracking_tool.set_tracking(FALSE)
+	ai_tracking_tool.reset_tracking()
 	var/cameralist[0]
 
 	if(incapacitated())
@@ -659,11 +649,11 @@
 		var/turf/camera_turf = get_turf(C) //get camera's turf in case it's built into something so we don't get z=0
 
 		var/list/tempnetwork = C.network
-		if(!camera_turf || !(is_station_level(camera_turf.z) || is_mining_level(camera_turf.z) || ("ss13" in tempnetwork)))
+		if(!camera_turf || !(is_station_level(camera_turf.z) || is_mining_level(camera_turf.z) || (CAMERANET_NETWORK_SS13 in tempnetwork)))
 			continue
 		if(!C.can_use())
 			continue
-		tempnetwork.Remove("rd", "ordnance", "prison")
+		tempnetwork.Remove(CAMERANET_NETWORK_RD, CAMERANET_NETWORK_ORDNANCE, CAMERANET_NETWORK_PRISON)
 		if(length(tempnetwork))
 			for(var/i in C.network)
 				cameralist[i] = i
@@ -701,7 +691,7 @@
 				if("Station Member")
 					var/list/personnel_list = list()
 
-					for(var/datum/record/crew/record in GLOB.manifest.locked)//Look in data core locked.
+					for(var/datum/record/locked/record in GLOB.manifest.locked)//Look in data core locked.
 						personnel_list["[record.name]: [record.rank]"] = record.character_appearance//Pull names, rank, and image.
 
 					if(!length(personnel_list))
@@ -885,7 +875,7 @@
 	to_chat(src, "You have been downloaded to a mobile storage device. Remote device connection severed.")
 	to_chat(user, "[span_boldnotice("Transfer successful")]: [name] ([rand(1000,9999)].exe) removed from host terminal and stored within local memory.")
 
-/mob/living/silicon/ai/can_perform_action(atom/movable/target, action_bitflags)
+/mob/living/silicon/ai/can_perform_action(atom/target, action_bitflags)
 	if(control_disabled)
 		to_chat(src, span_warning("You can't do that right now!"))
 		return FALSE
@@ -902,7 +892,7 @@
 	return get_dist(src, A) <= max(viewscale[1]*0.5,viewscale[2]*0.5)
 
 /mob/living/silicon/ai/proc/relay_speech(message, atom/movable/speaker, datum/language/message_language, raw_message, radio_freq, list/spans, list/message_mods = list())
-	var/raw_translation = translate_language(speaker, message_language, raw_message)
+	var/raw_translation = translate_language(speaker, message_language, raw_message, spans, message_mods)
 	var/atom/movable/source = speaker.GetSource() || speaker // is the speaker virtual/radio
 	var/treated_message = source.say_quote(raw_translation, spans, message_mods)
 
@@ -961,6 +951,9 @@
 	module_picker.ui_interact(owner)
 
 /mob/living/silicon/ai/proc/add_malf_picker()
+	if (malf_picker)
+		stack_trace("Attempted to give malf AI malf picker to \[[src]\], who already has a malf picker.")
+		return
 	to_chat(src, "In the top left corner of the screen you will find the Malfunction Modules button, where you can purchase various abilities, from upgraded surveillance to station ending doomsday devices.")
 	to_chat(src, "You are also capable of hacking APCs, which grants you more points to spend on your Malfunction powers. The drawback is that a hacked APC will give you away if spotted by the crew. Hacking an APC takes 60 seconds.")
 	view_core() //A BYOND bug requires you to be viewing your core before your verbs update
@@ -1038,13 +1031,16 @@
 			malf_ai_datum.update_static_data_for_all_viewers()
 		else //combat software AIs use a different UI
 			malf_picker.update_static_data_for_all_viewers()
-
-	apc.malfai = parent || src
+	if(apc.malfai) // another malf hacked this one; counter-hack!
+		to_chat(apc.malfai, span_warning("An adversarial subroutine has counter-hacked [apc]!"))
+		apc.malfai.hacked_apcs -= apc
+	apc.malfai = src
 	apc.malfhack = TRUE
 	apc.locked = TRUE
 	apc.coverlocked = TRUE
 	apc.flicker_hacked_icon()
 	apc.set_hacked_hud()
+	hacked_apcs += apc
 	playsound(get_turf(src), 'sound/machines/ding.ogg', 50, TRUE, ignore_walls = FALSE)
 	to_chat(src, "Hack complete. [apc] is now under your exclusive control.")
 
@@ -1178,7 +1174,7 @@
 /mob/living/silicon/ai/get_exp_list(minutes)
 	. = ..()
 
-	var/datum/job/ai/ai_job_ref = SSjob.GetJobType(/datum/job/ai)
+	var/datum/job/ai/ai_job_ref = SSjob.get_job_type(/datum/job/ai)
 
 	.[ai_job_ref.title] = minutes
 

@@ -8,7 +8,6 @@
 	light_color = LIGHT_COLOR_DIM_YELLOW
 	use_power = ACTIVE_POWER_USE
 	circuit = /obj/item/circuitboard/computer/powermonitor
-	tgui_id = "PowerMonitor"
 
 	var/datum/weakref/attached_wire_ref
 	var/datum/weakref/local_apc_ref
@@ -20,11 +19,13 @@
 
 /obj/machinery/computer/monitor/Initialize(mapload)
 	. = ..()
+	//Add to the late process queue to record the accurate power usage data
+	SSmachines.processing_late += src
 	search()
 	history["supply"] = list()
 	history["demand"] = list()
 
-/obj/machinery/computer/monitor/process()
+/obj/machinery/computer/monitor/process_late()
 	if(!get_powernet())
 		update_use_power(IDLE_POWER_USE)
 		search()
@@ -37,7 +38,7 @@
 	attached_wire_ref = WEAKREF(locate(/obj/structure/cable) in T)
 	if(attached_wire_ref)
 		return
-	var/area/A = get_area(src) //if the computer isn't directly connected to a wire, attempt to find the APC powering it to pull it's powernet instead
+	var/area/A = get_area(src) //if the computer isn't directly connected to a wire, attempt to find the APC powering it to pull its powernet instead
 	if(!A)
 		return
 	var/obj/machinery/power/apc/local_apc = A.apc
@@ -62,13 +63,13 @@
 
 		var/list/supply = history["supply"]
 		if(connected_powernet)
-			supply += connected_powernet.viewavail
+			supply += energy_to_power(connected_powernet.avail)
 		if(supply.len > record_size)
 			supply.Cut(1, 2)
 
 		var/list/demand = history["demand"]
 		if(connected_powernet)
-			demand += connected_powernet.viewload
+			demand += energy_to_power(connected_powernet.load)
 		if(demand.len > record_size)
 			demand.Cut(1, 2)
 
@@ -89,8 +90,8 @@
 	data["areas"] = list()
 
 	if(connected_powernet)
-		data["supply"] = display_power(connected_powernet.viewavail)
-		data["demand"] = display_power(connected_powernet.viewload)
+		data["supply"] = display_power(connected_powernet.avail)
+		data["demand"] = display_power(connected_powernet.load)
 		for(var/obj/machinery/power/terminal/term in connected_powernet.nodes)
 			var/obj/machinery/power/apc/A = term.master
 			if(istype(A))

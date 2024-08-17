@@ -16,9 +16,9 @@ GLOBAL_VAR_INIT(observer_default_invisibility, INVISIBILITY_OBSERVER)
 	invisibility = INVISIBILITY_OBSERVER
 	hud_type = /datum/hud/ghost
 	movement_type = GROUND | FLYING
-	light_system = MOVABLE_LIGHT
-	light_range = 1
-	light_power = 2
+	light_system = OVERLAY_LIGHT
+	light_range = 2.5
+	light_power = 0.6
 	light_on = FALSE
 	shift_to_open_context_menu = FALSE
 	var/can_reenter_corpse
@@ -36,7 +36,6 @@ GLOBAL_VAR_INIT(observer_default_invisibility, INVISIBILITY_OBSERVER)
 	var/health_scan = FALSE //Are health scans currently enabled?
 	var/chem_scan = FALSE //Are chem scans currently enabled?
 	var/gas_scan = FALSE //Are gas scans currently enabled?
-	var/list/datahuds = list(DATA_HUD_SECURITY_ADVANCED, DATA_HUD_MEDICAL_ADVANCED, DATA_HUD_DIAGNOSTIC_ADVANCED) //list of data HUDs shown to ghosts.
 	var/ghost_orbit = GHOST_ORBIT_CIRCLE
 
 	//These variables store hair data if the ghost originates from a species with head and/or facial hair.
@@ -59,6 +58,16 @@ GLOBAL_VAR_INIT(observer_default_invisibility, INVISIBILITY_OBSERVER)
 	var/deadchat_name
 	var/datum/spawners_menu/spawners_menu
 	var/datum/minigames_menu/minigames_menu
+
+	/// The POI we're orbiting (orbit menu)
+	var/orbiting_ref
+
+	var/static/list/observer_hud_traits = list(
+		TRAIT_SECURITY_HUD,
+		TRAIT_MEDICAL_HUD,
+		TRAIT_DIAGNOSTIC_HUD,
+		TRAIT_BOT_PATH_HUD
+	)
 
 /mob/dead/observer/Initialize(mapload)
 	set_invisibility(GLOB.observer_default_invisibility)
@@ -89,15 +98,10 @@ GLOBAL_VAR_INIT(observer_default_invisibility, INVISIBILITY_OBSERVER)
 
 		gender = body.gender
 		if(body.mind && body.mind.name)
-			if(body.mind.ghostname)
-				name = body.mind.ghostname
-			else
-				name = body.mind.name
+			name = body.mind.ghostname || body.mind.name
 		else
-			if(body.real_name)
-				name = body.real_name
-			else
-				name = random_unique_name(gender)
+			name = body.real_name || generate_random_mob_name(gender)
+
 
 		mind = body.mind //we don't transfer the mind but we keep a reference to it.
 
@@ -109,10 +113,10 @@ GLOBAL_VAR_INIT(observer_default_invisibility, INVISIBILITY_OBSERVER)
 			var/datum/species/human_species = body_human.dna.species
 			if(human_species.check_head_flags(HEAD_HAIR))
 				hairstyle = body_human.hairstyle
-				hair_color = brighten_color(body_human.hair_color)
+				hair_color = ghostify_color(body_human.hair_color)
 			if(human_species.check_head_flags(HEAD_FACIAL_HAIR))
 				facial_hairstyle = body_human.facial_hairstyle
-				facial_hair_color = brighten_color(body_human.facial_hair_color)
+				facial_hair_color = ghostify_color(body_human.facial_hair_color)
 
 	update_appearance()
 
@@ -125,8 +129,8 @@ GLOBAL_VAR_INIT(observer_default_invisibility, INVISIBILITY_OBSERVER)
 
 	abstract_move(T)
 
-	if(!name) //To prevent nameless ghosts
-		name = random_unique_name(gender)
+	//To prevent nameless ghosts
+	name ||= generate_random_mob_name(FALSE)
 	real_name = name
 
 	if(!fun_verbs)
@@ -143,12 +147,12 @@ GLOBAL_VAR_INIT(observer_default_invisibility, INVISIBILITY_OBSERVER)
 	. = ..()
 
 	grant_all_languages()
+	setup_hud_traits()
 	show_data_huds()
 	data_huds_on = 1
 
 	SSpoints_of_interest.make_point_of_interest(src)
 	ADD_TRAIT(src, TRAIT_HEAR_THROUGH_DARKNESS, ref(src))
-	ADD_TRAIT(src, TRAIT_SECURITY_HUD, ref(src))
 
 /mob/dead/observer/get_photo_description(obj/item/camera/camera)
 	if(!invisibility || camera.see_ghosts)
@@ -156,9 +160,9 @@ GLOBAL_VAR_INIT(observer_default_invisibility, INVISIBILITY_OBSERVER)
 
 /mob/dead/observer/narsie_act()
 	var/old_color = color
-	color = "#960000"
+	color = COLOR_CULT_RED
 	animate(src, color = old_color, time = 10, flags = ANIMATION_PARALLEL)
-	addtimer(CALLBACK(src, TYPE_PROC_REF(/atom, update_atom_colour)), 10)
+	addtimer(CALLBACK(src, TYPE_PROC_REF(/atom, update_atom_colour)), 1 SECONDS)
 
 /mob/dead/observer/Destroy()
 	if(data_huds_on)
@@ -218,7 +222,7 @@ GLOBAL_VAR_INIT(observer_default_invisibility, INVISIBILITY_OBSERVER)
 
 	if(ghost_accs == GHOST_ACCS_FULL && (icon_state in GLOB.ghost_forms_with_accessories_list)) //check if this form supports accessories and if the client wants to show them
 		if(facial_hairstyle)
-			var/datum/sprite_accessory/S = GLOB.facial_hairstyles_list[facial_hairstyle]
+			var/datum/sprite_accessory/S = SSaccessories.facial_hairstyles_list[facial_hairstyle]
 			if(S)
 				facial_hair_overlay = mutable_appearance(S.icon, "[S.icon_state]", -HAIR_LAYER)
 				if(facial_hair_color)
@@ -226,7 +230,7 @@ GLOBAL_VAR_INIT(observer_default_invisibility, INVISIBILITY_OBSERVER)
 				facial_hair_overlay.alpha = 200
 				add_overlay(facial_hair_overlay)
 		if(hairstyle)
-			var/datum/sprite_accessory/hair/S = GLOB.hairstyles_list[hairstyle]
+			var/datum/sprite_accessory/hair/S = SSaccessories.hairstyles_list[hairstyle]
 			if(S)
 				hair_overlay = mutable_appearance(S.icon, "[S.icon_state]", -HAIR_LAYER)
 				if(hair_color)
@@ -236,42 +240,23 @@ GLOBAL_VAR_INIT(observer_default_invisibility, INVISIBILITY_OBSERVER)
 				add_overlay(hair_overlay)
 
 /*
- * Increase the brightness of a color by calculating the average distance between the R, G and B values,
- * and maximum brightness, then adding 30% of that average to R, G and B.
- *
- * I'll make this proc global and move it to its own file in a future update. |- Ricotez - UPDATE: They never did :(
+ * Increase the brightness of a color and desaturates it slightly to make it suitable for ghosts
+ * We use HSL for this, makes life SOOO easy
  */
-/mob/proc/brighten_color(input_color)
-	if(input_color[1] == "#")
-		input_color = copytext(input_color, 2) // Removing the # at the beginning.
-	var/r_val
-	var/b_val
-	var/g_val
-	var/color_format = length(input_color)
-	if(color_format != length_char(input_color))
-		return 0
-	if(color_format == 3)
-		r_val = hex2num(copytext(input_color, 1, 2)) * 16
-		g_val = hex2num(copytext(input_color, 2, 3)) * 16
-		b_val = hex2num(copytext(input_color, 3, 4)) * 16
-	else if(color_format == 6)
-		r_val = hex2num(copytext(input_color, 1, 3))
-		g_val = hex2num(copytext(input_color, 3, 5))
-		b_val = hex2num(copytext(input_color, 5, 7))
-	else
-		return 0 //If the color format is not 3 or 6, you're using an unexpected way to represent a color.
+/proc/ghostify_color(input_color)
+	var/list/read_color = rgb2num(input_color, COLORSPACE_HSL)
+	var/sat = read_color[2]
+	var/lum = read_color[3]
 
-	r_val += (255 - r_val) * 0.4
-	if(r_val > 255)
-		r_val = 255
-	g_val += (255 - g_val) * 0.4
-	if(g_val > 255)
-		g_val = 255
-	b_val += (255 - b_val) * 0.4
-	if(b_val > 255)
-		b_val = 255
+	// Clamp so it still has color, can't get too bright/desaturated
+	sat -= 15
+	if(sat < 30)
+		sat = min(read_color[2], 30)
 
-	return "#" + copytext(rgb(r_val, g_val, b_val), 2)
+	lum += 15
+	if(lum > 80)
+		lum = max(read_color[3], 80)
+	return rgb(read_color[1], sat, lum, space = COLORSPACE_HSL)
 
 /*
 Transfer_mind is there to check if mob is being deleted/not going to have a body.
@@ -356,7 +341,6 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 		set_glide_size(glide_size_override)
 	if(NewLoc)
 		abstract_move(NewLoc)
-		update_parallax_contents()
 	else
 		var/turf/destination = get_turf(src)
 
@@ -377,6 +361,12 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 /mob/dead/observer/forceMove(atom/destination)
 	abstract_move(destination) // move like the wind
 	return TRUE
+
+/mob/dead/observer/Moved(atom/old_loc, movement_dir, forced, list/old_locs, momentum_change)
+	. = ..()
+	var/area/new_area = get_area(src)
+	if(new_area != ambience_tracked_area)
+		update_ambience_area(new_area)
 
 /mob/dead/observer/verb/reenter_corpse()
 	set category = "Ghost"
@@ -478,7 +468,6 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 		return
 
 	usr.abstract_move(pick(L))
-	update_parallax_contents()
 
 /mob/dead/observer/verb/follow()
 	set category = "Ghost"
@@ -520,6 +509,9 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	. = ..()
 	//restart our floating animation after orbit is done.
 	pixel_y = base_pixel_y
+	// if we were autoobserving, reset perspective
+	if (!isnull(client) && !isnull(client.eye))
+		reset_perspective(null)
 
 /mob/dead/observer/verb/jumptomob() //Moves the ghost instead of just changing the ghosts's eye -Nodrak
 	set category = "Ghost"
@@ -549,7 +541,6 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 
 	if(isturf(destination_turf))
 		source_mob.abstract_move(destination_turf)
-		source_mob.update_parallax_contents()
 	else
 		to_chat(source_mob, span_danger("This mob is not located in the game world."))
 
@@ -712,14 +703,9 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	GLOB.manifest.ui_interact(src)
 
 //this is called when a ghost is drag clicked to something.
-/mob/dead/observer/MouseDrop(atom/over)
-	if(!usr || !over)
-		return
-	if (isobserver(usr) && usr.client.holder && (isliving(over) || iscameramob(over)) )
-		if (usr.client.holder.cmd_ghost_drag(src,over))
-			return
-
-	return ..()
+/mob/dead/observer/mouse_drop_dragged(atom/over, mob/user)
+	if (isobserver(user) && user.client.holder && (isliving(over) || iscameramob(over)))
+		user.client.holder.cmd_ghost_drag(src, over)
 
 /mob/dead/observer/Topic(href, href_list)
 	..()
@@ -777,14 +763,10 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	return
 
 /mob/dead/observer/proc/show_data_huds()
-	for(var/hudtype in datahuds)
-		var/datum/atom_hud/data_hud = GLOB.huds[hudtype]
-		data_hud.show_to(src)
+	add_traits(observer_hud_traits, REF(src))
 
 /mob/dead/observer/proc/remove_data_huds()
-	for(var/hudtype in datahuds)
-		var/datum/atom_hud/data_hud = GLOB.huds[hudtype]
-		data_hud.hide_from(src)
+	remove_traits(observer_hud_traits, REF(src))
 
 /mob/dead/observer/verb/toggle_data_huds()
 	set name = "Toggle Sec/Med/Diag HUD"
@@ -857,16 +839,14 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	client.prefs.apply_character_randomization_prefs()
 
 	var/species_type = client.prefs.read_preference(/datum/preference/choiced/species)
-	var/datum/species/species = new species_type
+	var/datum/species/species = GLOB.species_prototypes[species_type]
 	if(species.check_head_flags(HEAD_HAIR))
 		hairstyle = client.prefs.read_preference(/datum/preference/choiced/hairstyle)
-		hair_color = brighten_color(client.prefs.read_preference(/datum/preference/color/hair_color))
+		hair_color = ghostify_color(client.prefs.read_preference(/datum/preference/color/hair_color))
 
 	if(species.check_head_flags(HEAD_FACIAL_HAIR))
 		facial_hairstyle = client.prefs.read_preference(/datum/preference/choiced/facial_hairstyle)
-		facial_hair_color = brighten_color(client.prefs.read_preference(/datum/preference/color/facial_hair_color))
-
-	qdel(species)
+		facial_hair_color = ghostify_color(client.prefs.read_preference(/datum/preference/color/facial_hair_color))
 
 	update_appearance()
 
@@ -1010,9 +990,18 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 		game = create_mafia_game()
 	game.ui_interact(usr)
 
-/mob/dead/observer/CtrlShiftClick(mob/user)
-	if(isobserver(user) && check_rights(R_SPAWN))
-		change_mob_type(/mob/living/carbon/human , null, null, TRUE) //always delmob, ghosts shouldn't be left lingering
+/mob/dead/observer/AltClickOn(atom/target)
+	client.loot_panel.open(get_turf(target))
+
+/mob/dead/observer/AltClickSecondaryOn(atom/target)
+	if(client && check_rights_for(client, R_DEBUG))
+		client.toggle_tag_datum(src)
+
+/mob/dead/observer/CtrlShiftClickOn(atom/target)
+	if(isobserver(target) && check_rights(R_SPAWN))
+		var/mob/dead/observer/target_ghost = target
+
+		target_ghost.change_mob_type(/mob/living/carbon/human , null, null, TRUE) //always delmob, ghosts shouldn't be left lingering
 
 /mob/dead/observer/examine(mob/user)
 	. = ..()
@@ -1103,3 +1092,10 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	if(!prefs || (client?.combo_hud_enabled && prefs.toggles & COMBOHUD_LIGHTING))
 		return ..()
 	return GLOB.ghost_lighting_options[prefs.read_preference(/datum/preference/choiced/ghost_lighting)]
+
+
+/// Called when we exit the orbiting state
+/mob/dead/observer/proc/on_deorbit(datum/source)
+	SIGNAL_HANDLER
+
+	orbiting_ref = null

@@ -11,6 +11,8 @@ GLOBAL_LIST_INIT(bitflags, list(1, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024, 204
 #define DF_USE_TAG (1<<0)
 #define DF_VAR_EDITED (1<<1)
 #define DF_ISPROCESSING (1<<2)
+/// Placed on datums that have a static, constant reference. Primarily only used for turfs.
+#define DF_STATIC_OBJECT (1<<3)
 
 //FLAGS BITMASK
 // scroll down before changing the numbers on these
@@ -54,6 +56,8 @@ GLOBAL_LIST_INIT(bitflags, list(1, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024, 204
 /// Flag as an optimization, don't make this a trait without profiling
 /// Yes I know this is a stupid flag, no you can't take him from me
 #define DECAL_INIT_UPDATE_EXPERIENCED_1 (1<<17)
+/// This atom always returns its turf in get_turf_pixel instead of the turf from its offsets
+#define IGNORE_TURF_PIXEL_OFFSET_1 (1<<18)
 
 // Update flags for [/atom/proc/update_appearance]
 /// Update the atom's name
@@ -93,6 +97,9 @@ GLOBAL_LIST_INIT(bitflags, list(1, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024, 204
 #define IS_SOLID (1<<6)
 /// This turf will never be cleared away by other objects on Initialize.
 #define NO_CLEARING (1<<7)
+/// This atom is a pseudo-floor that blocks map generation's checkPlaceAtom() from placing things like trees ontop of it.
+#define TURF_BLOCKS_POPULATE_TERRAIN_FLORAFEATURES (1<<8)
+
 
 ////////////////Area flags\\\\\\\\\\\\\\
 /// If it's a valid territory for cult summoning or the CRAB-17 phone to spawn
@@ -115,40 +122,60 @@ GLOBAL_LIST_INIT(bitflags, list(1, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024, 204
 #define UNIQUE_AREA (1<<8)
 /// If people are allowed to suicide in it. Mostly for OOC stuff like minigames
 #define BLOCK_SUICIDE (1<<9)
-/// Can the Xenobio management console transverse this area by default?
+/// If set, this area will be innately traversable by Xenobiology camera consoles.
 #define XENOBIOLOGY_COMPATIBLE (1<<10)
-/// If Abductors are unable to teleport in with their observation console
-#define ABDUCTOR_PROOF (1<<11)
 /// If blood cultists can draw runes or build structures on this AREA.
-#define CULT_PERMITTED (1<<12)
+#define CULT_PERMITTED (1<<11)
 /// If engravings are persistent in this area
-#define PERSISTENT_ENGRAVINGS (1<<13)
+#define PERSISTENT_ENGRAVINGS (1<<12)
 /// Mobs that die in this area don't produce a dead chat message
-#define NO_DEATH_MESSAGE (1<<14)
+#define NO_DEATH_MESSAGE (1<<13)
 /// This area should have extra shielding from certain event effects
-#define EVENT_PROTECTED (1<<15)
+#define EVENT_PROTECTED (1<<14)
+/// This Area Doesn't have Flood or Bomb Admin Messages, but will still log
+#define QUIET_LOGS (1<<15)
+/// This area does not allow virtual entities to enter.
+#define VIRTUAL_SAFE_AREA (1<<16)
+/// This area does not allow the Binary channel
+#define BINARY_JAMMING (1<<17)
+/// This area prevents Bag of Holding rifts from being opened.
+#define NO_BOH (1<<18)
 
 /*
 	These defines are used specifically with the atom/pass_flags bitmask
 	the atom/checkpass() proc uses them (tables will call movable atom checkpass(PASSTABLE) for example)
 */
 //flags for pass_flags
+/// Allows you to pass over tables.
 #define PASSTABLE (1<<0)
+/// Allows you to pass over glass(this generally includes anything see-through that's glass-adjacent, ie. windows, windoors, airlocks with glass, etc.)
 #define PASSGLASS (1<<1)
+/// Allows you to pass over grilles.
 #define PASSGRILLE (1<<2)
+/// Allows you to pass over blob tiles.
 #define PASSBLOB (1<<3)
+/// Allows you to pass over mobs.
 #define PASSMOB (1<<4)
+/// Allows you to pass over closed turfs, ie. walls.
 #define PASSCLOSEDTURF (1<<5)
 /// Let thrown things past us. **ONLY MEANINGFUL ON pass_flags_self!**
 #define LETPASSTHROW (1<<6)
+/// Allows you to pass over machinery, ie. vending machines, computers, protolathes, etc.
 #define PASSMACHINE (1<<7)
+/// Allows you to pass over structures, ie. racks, tables(if you don't already have PASSTABLE), etc.
 #define PASSSTRUCTURE (1<<8)
+/// Allows you to pass over plastic flaps, often found at cargo or MULE dropoffs.
 #define PASSFLAPS (1<<9)
+/// Allows you to pass over airlocks and mineral doors.
 #define PASSDOORS (1<<10)
+/// Allows you to pass over vehicles, ie. mecha, secways, the pimpin' ride, etc.
 #define PASSVEHICLE (1<<11)
+/// Allows you to pass over dense items.
 #define PASSITEM (1<<12)
 /// Do not intercept click attempts during Adjacent() checks. See [turf/proc/ClickCross]. **ONLY MEANINGFUL ON pass_flags_self!**
 #define LETPASSCLICKS (1<<13)
+/// Allows you to pass over windows and window-adjacent stuff, like windows and windoors. Does not include airlocks with glass in them.
+#define PASSWINDOW (1<<14)
 
 //Movement Types
 #define GROUND (1<<0)
@@ -179,6 +206,8 @@ GLOBAL_LIST_INIT(bitflags, list(1, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024, 204
 #define INDESTRUCTIBLE (1<<6)
 /// can't be frozen
 #define FREEZE_PROOF (1<<7)
+/// can't be shuttle crushed.
+#define SHUTTLE_CRUSH_PROOF (1<<8)
 
 //tesla_zap
 #define ZAP_MACHINE_EXPLOSIVE (1<<0)
@@ -194,10 +223,15 @@ GLOBAL_LIST_INIT(bitflags, list(1, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024, 204
 #define ZAP_FUSION_FLAGS ZAP_OBJ_DAMAGE | ZAP_MOB_DAMAGE | ZAP_MOB_STUN
 #define ZAP_SUPERMATTER_FLAGS ZAP_GENERATES_POWER
 
-//EMP protection
+///EMP will protect itself.
 #define EMP_PROTECT_SELF (1<<0)
+///EMP will protect the contents from also being EMPed.
 #define EMP_PROTECT_CONTENTS (1<<1)
+///EMP will protect the wires.
 #define EMP_PROTECT_WIRES (1<<2)
+
+///Protects against all EMP types.
+#define EMP_PROTECT_ALL (EMP_PROTECT_SELF | EMP_PROTECT_CONTENTS | EMP_PROTECT_WIRES)
 
 //Mob mobility var flags
 /// can move
@@ -289,3 +323,5 @@ GLOBAL_LIST_INIT(bitflags, list(1, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024, 204
 #define EMOTE_VISIBLE (1<<1)
 /// Is it an emote that should be shown regardless of blindness/deafness
 #define EMOTE_IMPORTANT (1<<2)
+/// Emote only prints to runechat, not to the chat window
+#define EMOTE_RUNECHAT (1<<3)

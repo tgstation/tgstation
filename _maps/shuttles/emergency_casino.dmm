@@ -677,7 +677,7 @@
 /turf/open/floor/iron/dark,
 /area/shuttle/escape)
 "vD" = (
-/obj/machinery/door/window,
+/obj/machinery/door/window/left/directional/south,
 /obj/effect/turf_decal/tile/bar/opposingcorners,
 /turf/open/floor/iron,
 /area/shuttle/escape)
@@ -753,7 +753,6 @@
 /area/shuttle/escape)
 "wv" = (
 /obj/structure/tank_dispenser/oxygen{
-	layer = 2.7;
 	pixel_x = -1;
 	pixel_y = 2
 	},
@@ -1186,7 +1185,7 @@
 /obj/item/storage/crayons,
 /obj/item/storage/crayons,
 /obj/item/storage/crayons,
-/mob/living/simple_animal/bot/secbot/honkbot,
+/mob/living/basic/bot/honkbot,
 /turf/open/floor/sepia,
 /area/shuttle/escape)
 "NN" = (

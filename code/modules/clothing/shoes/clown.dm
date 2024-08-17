@@ -20,28 +20,29 @@
 	. = ..()
 	if(slot & ITEM_SLOT_FEET)
 		if(enabled_waddle)
-			user.AddElement(/datum/element/waddling)
+			user.AddElementTrait(TRAIT_WADDLING, SHOES_TRAIT, /datum/element/waddling)
 		if(is_clown_job(user.mind?.assigned_role))
 			user.add_mood_event("clownshoes", /datum/mood_event/clownshoes)
 
 /obj/item/clothing/shoes/clown_shoes/dropped(mob/living/user)
 	. = ..()
-	user.RemoveElement(/datum/element/waddling)
+	REMOVE_TRAIT(user, TRAIT_WADDLING, SHOES_TRAIT)
 	if(is_clown_job(user.mind?.assigned_role))
 		user.clear_mood_event("clownshoes")
 
-/obj/item/clothing/shoes/clown_shoes/CtrlClick(mob/living/user)
+/obj/item/clothing/shoes/clown_shoes/item_ctrl_click(mob/user)
 	if(!isliving(user))
-		return
+		return CLICK_ACTION_BLOCKING
 	if(user.get_active_held_item() != src)
 		to_chat(user, span_warning("You must hold the [src] in your hand to do this!"))
-		return
+		return CLICK_ACTION_BLOCKING
 	if (!enabled_waddle)
 		to_chat(user, span_notice("You switch off the waddle dampeners!"))
 		enabled_waddle = TRUE
 	else
 		to_chat(user, span_notice("You switch on the waddle dampeners!"))
 		enabled_waddle = FALSE
+	return CLICK_ACTION_SUCCESS
 
 /obj/item/clothing/shoes/clown_shoes/jester
 	name = "jester shoes"
@@ -53,3 +54,9 @@
 	desc = "The adorable sound they make when you walk will mean making friends is more likely."
 	icon_state = "meown_shoes"
 	squeak_sound = list('sound/effects/footstep/meowstep1.ogg'=1) //mew mew mew mew
+
+/obj/item/clothing/shoes/clown_shoes/moffers
+	name = "moffers"
+	desc = "No moths were harmed in the making of these slippers."
+	icon_state = "moffers"
+	squeak_sound = list('sound/effects/footstep/moffstep01.ogg'=1) //like sweet music to my ears

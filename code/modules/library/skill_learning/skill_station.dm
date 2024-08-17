@@ -2,6 +2,7 @@
 #define SKILLCHIP_REMOVAL_TIME (15 SECONDS)
 
 /obj/machinery/skill_station
+	SET_BASE_VISUAL_PIXEL(0, DEPTH_OFFSET)
 	name = "\improper Skillsoft station"
 	desc = "Learn skills with only minimal chance for brain damage."
 
@@ -10,7 +11,7 @@
 	occupant_typecache = list(/mob/living/carbon) //todo make occupant_typecache per type
 	state_open = TRUE
 	// Only opens UI when inside; also, you can use the machine while lying down (for paraplegics and the like)
-	interaction_flags_atom = INTERACT_ATOM_ATTACK_HAND | INTERACT_ATOM_IGNORE_MOBILITY
+	interaction_flags_atom = parent_type::interaction_flags_atom | INTERACT_ATOM_IGNORE_MOBILITY
 	circuit = /obj/item/circuitboard/machine/skill_station
 	/// Currently implanting/removing
 	var/working = FALSE

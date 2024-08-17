@@ -49,6 +49,8 @@ GLOBAL_LIST_INIT(turfs_openspace, typecacheof(list(
 
 #define isspaceturf(A) (istype(A, /turf/open/space))
 
+#define is_space_or_openspace(A) (isopenspaceturf(A) || isspaceturf(A))
+
 #define isfloorturf(A) (istype(A, /turf/open/floor))
 
 #define ismiscturf(A) (istype(A, /turf/open/misc))
@@ -66,6 +68,8 @@ GLOBAL_LIST_INIT(turfs_openspace, typecacheof(list(
 #define ischasm(A) (istype(A, /turf/open/chasm))
 
 #define isplatingturf(A) (istype(A, /turf/open/floor/plating))
+
+#define iscatwalkturf(A) (istype(A, /turf/open/floor/catwalk_floor))
 
 #define isasteroidturf(A) (istype(A, /turf/open/misc/asteroid))
 
@@ -123,7 +127,7 @@ GLOBAL_LIST_INIT(turfs_pass_meteor, typecacheof(list(
 
 #define islarva(A) (istype(A, /mob/living/carbon/alien/larva))
 
-#define isalienadult(A) (istype(A, /mob/living/carbon/alien/adult) || istype(A, /mob/living/simple_animal/hostile/alien))
+#define isalienadult(A) (istype(A, /mob/living/carbon/alien/adult) || istype(A, /mob/living/basic/alien))
 
 #define isalienhunter(A) (istype(A, /mob/living/carbon/alien/adult/hunter))
 
@@ -135,12 +139,16 @@ GLOBAL_LIST_INIT(turfs_pass_meteor, typecacheof(list(
 
 //Silicon mobs
 #define issilicon(A) (istype(A, /mob/living/silicon))
-
-#define issiliconoradminghost(A) (istype(A, /mob/living/silicon) || isAdminGhostAI(A))
-
-#define iscyborg(A) (istype(A, /mob/living/silicon/robot))
+///Define on whether A has access to Silicon stuff either through being a silicon, admin ghost or is a non-silicon holding the Silicon remote.
+///This can only be used for instances where you are not specifically looking for silicon, but access.
+#define HAS_SILICON_ACCESS(A) (istype(A, /mob/living/silicon) || isAdminGhostAI(A) || A.has_unlimited_silicon_privilege || istype(A.get_active_held_item(), /obj/item/machine_remote))
 
 #define isAI(A) (istype(A, /mob/living/silicon/ai))
+///Define on whether A has access to AI stuff either through being a AI, admin ghost, or is a non-silicon holding the Silicon remote
+///This can only be used for instances where you are not specifically looking for silicon, but access.
+#define HAS_AI_ACCESS(A) (istype(A, /mob/living/silicon/ai) || isAdminGhostAI(A) || istype(A.get_active_held_item(), /obj/item/machine_remote))
+
+#define iscyborg(A) (istype(A, /mob/living/silicon/robot))
 
 #define ispAI(A) (istype(A, /mob/living/silicon/pai))
 
@@ -176,7 +184,7 @@ GLOBAL_LIST_INIT(turfs_pass_meteor, typecacheof(list(
 
 #define ismouse(A) (istype(A, /mob/living/basic/mouse))
 
-#define isslime(A) (istype(A, /mob/living/simple_animal/slime))
+#define isslime(A) (istype(A, /mob/living/basic/slime))
 
 #define isdrone(A) (istype(A, /mob/living/basic/drone))
 
@@ -226,6 +234,8 @@ GLOBAL_LIST_INIT(turfs_pass_meteor, typecacheof(list(
 #define isgrenade(A) (istype(A, /obj/item/grenade))
 
 #define islandmine(A) (istype(A, /obj/effect/mine))
+
+#define iscloset(A) (istype(A, /obj/structure/closet))
 
 #define issupplypod(A) (istype(A, /obj/structure/closet/supplypod))
 
@@ -314,6 +324,7 @@ GLOBAL_LIST_INIT(book_types, typecacheof(list(
 #define is_captain_job(job_type) (istype(job_type, /datum/job/captain))
 #define is_chaplain_job(job_type) (istype(job_type, /datum/job/chaplain))
 #define is_clown_job(job_type) (istype(job_type, /datum/job/clown))
+#define is_mime_job(job_type) (istype(job_type, /datum/job/mime))
 #define is_detective_job(job_type) (istype(job_type, /datum/job/detective))
 #define is_scientist_job(job_type) (istype(job_type, /datum/job/scientist))
 #define is_security_officer_job(job_type) (istype(job_type, /datum/job/security_officer))

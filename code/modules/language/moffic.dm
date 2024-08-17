@@ -13,4 +13,20 @@
 	icon_state = "moth"
 	default_priority = 90
 
+	default_name_syllable_min = 5
+	default_name_syllable_max = 10
+
+/datum/language/moffic/get_random_name(
+	gender = NEUTER,
+	name_count = default_name_count,
+	syllable_min = default_name_syllable_min,
+	syllable_max = default_name_syllable_max,
+	force_use_syllables = FALSE,
+)
+	if(force_use_syllables)
+		return ..()
+
+	return "[pick(GLOB.moth_first)] [pick(GLOB.moth_last)]"
+
+
 // Fuck guest accounts, and fuck language testing.

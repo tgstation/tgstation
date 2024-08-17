@@ -286,7 +286,7 @@
 			if (STAGE_ONE)
 				steps = 1
 			if (STAGE_TWO)
-				steps = 3//Yes this is right
+				steps = 2
 			if (STAGE_THREE)
 				steps = 3
 			if (STAGE_FOUR)
@@ -360,8 +360,9 @@
 			target = potentially_closer
 	//if we lost that target get a new one
 	if(!target || QDELETED(target))
-		target = find_new_target()
-		foreboding_nosebleed(target)
+		var/mob/living/new_target = find_new_target()
+		new_target?.ominous_nosebleed()
+		target = new_target
 	return ..()
 
 ///Searches the living list for the closest target, and begins chasing them down.
@@ -379,22 +380,6 @@
 			closest_distance = distance_from_target
 			closest_target = target
 	return closest_target
-
-/// gives a little fluff warning that someone is being hunted.
-/datum/component/singularity/bloodthirsty/proc/foreboding_nosebleed(mob/living/target)
-	if(!iscarbon(target))
-		to_chat(target, span_warning("You feel a bit nauseous for just a moment."))
-		return
-	var/mob/living/carbon/carbon_target = target
-	var/obj/item/bodypart/head = carbon_target.get_bodypart(BODY_ZONE_HEAD)
-	if(head)
-		if(HAS_TRAIT(carbon_target, TRAIT_NOBLOOD))
-			to_chat(carbon_target, span_notice("You get a headache."))
-			return
-		head.adjustBleedStacks(5)
-		carbon_target.visible_message(span_notice("[carbon_target] gets a nosebleed."), span_warning("You get a nosebleed."))
-		return
-	to_chat(target, span_warning("You feel a bit nauseous for just a moment."))
 
 #undef CHANCE_TO_MOVE_TO_TARGET
 #undef CHANCE_TO_MOVE_TO_TARGET_BLOODTHIRSTY

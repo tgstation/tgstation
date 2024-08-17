@@ -36,7 +36,7 @@
 	return ..()
 
 /obj/item/implantcase/attackby(obj/item/used_item, mob/living/user, params)
-	if(istype(used_item, /obj/item/pen))
+	if(IS_WRITING_UTENSIL(used_item))
 		if(!user.can_write(used_item))
 			return
 		var/new_name = tgui_input_text(user, "What would you like the label to be?", name, max_length = MAX_NAME_LEN)

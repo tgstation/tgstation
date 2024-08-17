@@ -68,8 +68,10 @@
 	icon_state = "demon_heart-on"
 	base_icon_state = "demon_heart"
 	visual = TRUE
-	color = "#1C1C1C"
+	color = COLOR_CRAYON_BLACK
 	decay_factor = 0
+	// No love is to be found in a heart so twisted.
+	food_reagents = list(/datum/reagent/consumable/nutriment = 5)
 	/// How many life ticks in the dark the owner has been dead for. Used for nightmare respawns.
 	var/respawn_progress = 0
 	/// The armblade granted to the host of this heart.

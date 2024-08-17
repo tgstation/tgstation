@@ -6,6 +6,7 @@
 #Ignore everything in datafolder and subdirectories
 /data/**/*
 /tmp/**/*
+/cache/**/*
 
 #Ignore byond config folder.
 /cfg/**/*
@@ -24,6 +25,8 @@
 # Ignore compiled linux libs in the root folder, e.g. librust_g.so
 /*.so
 
+#
+
 #Ignore compiled files and other files generated during compilation.
 *.mdme
 *.mdme.*
@@ -34,6 +37,16 @@
 *.lk
 *.int
 *.backup
+
+# Ignore tools ported over from SpacemanDMM for personal use
+.fingerprint
+build/
+deps/
+incremental/
+dmm-tools.exe
+dmm-tools.d
+git-diagnostics-2024-08-11-1513.zip
+
 ### https://raw.github.com/github/gitignore/cc542de017c606138a87ee4880e5f06b3a306def/Global/Linux.gitignore
 
 *~
@@ -191,6 +204,9 @@ Temporary Items
 /_maps/**/backup/
 /_maps/templates.dm
 
+#dmm palette file. You really should be using StrongDMM instead.
+*.dmm-pal
+
 #dmdoc default folder
 /dmdoc
 
@@ -210,7 +226,7 @@ Temporary Items
 # Built auxtools libraries and intermediate files
 aux*.dll
 libaux*.so
-aux*.pdb
+*.pdb
 
 # byond-tracy, we intentionally do not ship this and do not want to maintain it
 # https://github.com/mafemergency/byond-tracy/
@@ -237,3 +253,7 @@ define_sanity_output.txt
 # ezdb
 /db/
 /config/ezdb.txt
+
+# Running OpenDream locally
+tgstation.json
+.cargo-lock

@@ -2,6 +2,7 @@
  * The base object for the quantum server
  */
 /obj/machinery/quantum_server
+	SET_BASE_VISUAL_PIXEL(0, DEPTH_OFFSET)
 	name = "quantum server"
 
 	circuit = /obj/item/circuitboard/machine/quantum_server
@@ -19,9 +20,7 @@
 	/// Prevents multiple user actions. Handled by loading domains and cooldowns
 	var/is_ready = TRUE
 	/// Chance multipled by threat to spawn a glitch
-	var/glitch_chance = 0.05
-	/// List of available domains
-	var/list/available_domains = list()
+	var/glitch_chance = 0.2
 	/// Current plugged in users
 	var/list/datum/weakref/avatar_connection_refs = list()
 	/// Cached list of mutable mobs in zone for cybercops
@@ -39,20 +38,21 @@
 	/// Changes how much info is available on the domain
 	var/scanner_tier = 1
 	/// Length of time it takes for the server to cool down after resetting. Here to give runners downtime so their faces don't get stuck like that
-	var/server_cooldown_time = 3 MINUTES
+	var/server_cooldown_time = 2 MINUTES
 	/// Applies bonuses to rewards etc
 	var/servo_bonus = 0
 	/// Determines the glitches available to spawn, builds with completion
 	var/threat = 0
+	/// Maximum rate at which a glitch can spawn
+	var/threat_prob_max = 15
 	/// The turfs we can place a hololadder on.
 	var/turf/exit_turfs = list()
+	/// Determines if we broadcast to entertainment monitors or not
+	var/broadcasting = FALSE
+	/// Cooldown between being able to toggle broadcasting
+	COOLDOWN_DECLARE(broadcast_toggle_cd)
 
-/obj/machinery/quantum_server/Initialize(mapload)
-	. = ..()
-
-	return INITIALIZE_HINT_LATELOAD
-
-/obj/machinery/quantum_server/LateInitialize()
+/obj/machinery/quantum_server/post_machine_initialize()
 	. = ..()
 
 	radio = new(src)
@@ -63,13 +63,9 @@
 	RegisterSignals(src, list(COMSIG_MACHINERY_BROKEN, COMSIG_MACHINERY_POWER_LOST), PROC_REF(on_broken))
 	RegisterSignal(src, COMSIG_QDELETING, PROC_REF(on_delete))
 
-	// This further gets sorted in the client by cost so it's random and grouped
-	available_domains = shuffle(subtypesof(/datum/lazy_template/virtual_domain))
-
 /obj/machinery/quantum_server/Destroy(force)
 	. = ..()
 
-	available_domains.Cut()
 	mutation_candidate_refs.Cut()
 	avatar_connection_refs.Cut()
 	spawned_threat_refs.Cut()
@@ -82,24 +78,37 @@
 
 	. += span_infoplain("Can be resource intensive to run. Ensure adequate power supply.")
 
+	var/upgraded = FALSE
 	if(capacitor_coefficient < 1)
-		. += span_infoplain("Its coolant capacity reduces cooldown time by [(1 - capacitor_coefficient) * 100]%.")
+		. += span_infoplain("- Its coolant capacity reduces cooldown time by [(1 - capacitor_coefficient) * 100]%.")
+		upgraded = TRUE
 
 	if(servo_bonus > 0.2)
-		. += span_infoplain("Its manipulation potential is increasing rewards by [servo_bonus]x.")
-		. += span_infoplain("Injury from unsafe ejection reduced [servo_bonus * 100]%.")
+		. += span_infoplain("- Its manipulation potential is increasing rewards by [servo_bonus]x.")
+		. += span_infoplain("- Injury from unsafe ejection reduced [servo_bonus * 100]%.")
+		upgraded = TRUE
+
+	if(!upgraded)
+		. += span_notice("Its output is suboptimal. Improved components will grant domain information, reduce cooldowns and increase rewards.")
 
 	if(!is_ready)
 		. += span_notice("It is currently cooling down. Give it a few moments.")
 
+	if(isobserver(user) && (obj_flags & EMAGGED))
+		. += span_notice("Ominous warning lights are blinking red. This server has been tampered with.")
+
 /obj/machinery/quantum_server/emag_act(mob/user, obj/item/card/emag/emag_card)
 	. = ..()
 
+	if(obj_flags & EMAGGED)
+		return
+
 	obj_flags |= EMAGGED
-	glitch_chance = 0.09
+	glitch_chance *= 2
+	threat_prob_max *= 2
 
 	add_overlay(mutable_appearance('icons/obj/machines/bitrunning.dmi', "emag_overlay"))
-	balloon_alert(user, "bzzzt...")
+	balloon_alert(user, "system jailbroken...")
 	playsound(src, 'sound/effects/sparks1.ogg', 35, vary = TRUE)
 
 /obj/machinery/quantum_server/update_appearance(updates)
@@ -120,11 +129,14 @@
 
 /obj/machinery/quantum_server/attackby(obj/item/weapon, mob/user, params)
 	. = ..()
-	if(istype(weapon, /obj/item/bitrunning_debug))
-		obj_flags |= EMAGGED
-		glitch_chance = 0.5
-		capacitor_coefficient = 0.01
-		points = 100
+
+	if(!istype(weapon, /obj/item/bitrunning_debug))
+		return
+
+	obj_flags |= EMAGGED
+	glitch_chance = 0.5
+	capacitor_coefficient = 0.1
+	points = 100
 
 /obj/machinery/quantum_server/crowbar_act(mob/living/user, obj/item/crowbar)
 	. = ..()

@@ -68,7 +68,7 @@
 /turf/open/indestructible/dark,
 /area/ruin/space/has_grav/powered/biooutpost/vault)
 "bh" = (
-/obj/structure/sign/directions/science/directional/west,
+/obj/structure/sign/directions/science/west_arrow,
 /obj/effect/turf_decal/siding/purple{
 	dir = 8
 	},
@@ -733,7 +733,7 @@
 /turf/open/indestructible/white,
 /area/ruin/space/has_grav/powered/biooutpost)
 "oQ" = (
-/obj/machinery/puzzle_button/meatderelict{
+/obj/machinery/puzzle/button/meatderelict{
 	pixel_y = 32;
 	queue_size = 4
 	},
@@ -1669,7 +1669,7 @@
 "FI" = (
 /obj/item/instrument/piano_synth/headphones,
 /obj/structure/table,
-/obj/machinery/puzzle_button/directional/north{
+/obj/machinery/puzzle/button/directional/north{
 	used = 1
 	},
 /obj/effect/turf_decal/tile/neutral/opposingcorners,
@@ -1747,7 +1747,7 @@
 /obj/effect/turf_decal/siding/purple{
 	dir = 5
 	},
-/obj/structure/sign/directions/engineering/directional/east,
+/obj/structure/sign/directions/engineering/east_arrow,
 /turf/open/indestructible/white,
 /area/ruin/space/has_grav/powered/biooutpost)
 "Hh" = (
@@ -1820,7 +1820,7 @@
 /turf/open/floor/iron/dark/textured_large,
 /area/ruin/space/has_grav/powered/biooutpost/vault)
 "Jt" = (
-/obj/machinery/puzzle_button/directional/north{
+/obj/machinery/puzzle/button/directional/north{
 	id = "md_tosci";
 	name = "shield power panel"
 	},
@@ -1889,7 +1889,7 @@
 /turf/open/indestructible/white,
 /area/ruin/space/has_grav/powered/biooutpost)
 "KC" = (
-/obj/machinery/puzzle_button/directional/north{
+/obj/machinery/puzzle/button/directional/north{
 	id = "md_toeng";
 	queue_size = 4
 	},
@@ -2138,7 +2138,7 @@
 	id = "md_armory"
 	},
 /obj/effect/turf_decal/stripes/full,
-/obj/machinery/puzzle_keycardpad/directional/south{
+/obj/machinery/puzzle/keycardpad/directional/south{
 	id = "md_armory";
 	name = "armory authentication pad";
 	queue_size = 5
@@ -2195,7 +2195,7 @@
 /obj/effect/turf_decal/siding/purple{
 	dir = 6
 	},
-/obj/structure/sign/directions/engineering/directional/east,
+/obj/structure/sign/directions/engineering/east_arrow,
 /obj/effect/spawner/random/bureaucracy/pen,
 /obj/item/paper/crumpled/fluff/meatderelict/shieldgens,
 /turf/open/indestructible/white,
@@ -2528,7 +2528,7 @@
 /turf/open/indestructible/plating,
 /area/ruin/space/has_grav/powered/biooutpost)
 "XO" = (
-/obj/structure/sign/directions/security/directional/south{
+/obj/structure/sign/directions/security/south_arrow{
 	pixel_x = 32
 	},
 /obj/effect/turf_decal/tile/purple/opposingcorners,

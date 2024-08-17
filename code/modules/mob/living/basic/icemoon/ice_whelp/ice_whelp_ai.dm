@@ -38,8 +38,7 @@
 /datum/ai_behavior/hunt_target/unarmed_attack_target/dragon_cannibalise/perform(seconds_per_tick, datum/ai_controller/controller, target_key, attack_key)
 	var/mob/living/target = controller.blackboard[target_key]
 	if(QDELETED(target) || target.stat != DEAD || target.pulledby) //we were too slow
-		finish_action(controller, FALSE)
-		return
+		return AI_BEHAVIOR_INSTANT | AI_BEHAVIOR_FAILED
 	return ..()
 
 /datum/ai_behavior/cannibalize/finish_action(datum/ai_controller/controller, succeeded, target_key)
@@ -67,17 +66,14 @@
 	set_movement_target(controller, target)
 
 /datum/ai_behavior/sculpt_statue/perform(seconds_per_tick, datum/ai_controller/controller, target_key)
-	. = ..()
-
 	var/atom/target = controller.blackboard[target_key]
 	var/mob/living/basic/living_pawn = controller.pawn
 
 	if(QDELETED(target))
-		finish_action(controller, FALSE, target_key)
-		return
+		return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_FAILED
 
 	living_pawn.melee_attack(target)
-	finish_action(controller, TRUE, target_key)
+	return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_SUCCEEDED
 
 /datum/ai_behavior/sculpt_statue/finish_action(datum/ai_controller/controller, succeeded, target_key)
 	. = ..()
@@ -123,8 +119,6 @@
 /datum/ai_behavior/set_target_tree
 
 /datum/ai_behavior/set_target_tree/perform(seconds_per_tick, datum/ai_controller/controller, tree_key)
-	. = ..()
-
 	var/mob/living_pawn = controller.pawn
 	var/list/possible_trees = list()
 
@@ -134,11 +128,10 @@
 		possible_trees += possible_tree
 
 	if(!length(possible_trees))
-		finish_action(controller, FALSE)
-		return
+		return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_FAILED
 
 	controller.set_blackboard_key(tree_key, pick(possible_trees))
-	finish_action(controller, TRUE)
+	return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_SUCCEEDED
 
 /datum/ai_behavior/targeted_mob_ability/and_clear_target/burn_trees
 	behavior_flags = AI_BEHAVIOR_REQUIRE_MOVEMENT | AI_BEHAVIOR_CAN_PLAN_DURING_EXECUTION

@@ -23,7 +23,7 @@
 		qdel(src)
 		return
 	if(!friend.client && friend_initialized)
-		addtimer(CALLBACK(src, PROC_REF(reroll_friend)), 600)
+		addtimer(CALLBACK(src, PROC_REF(reroll_friend)), 1 MINUTES)
 
 /datum/brain_trauma/special/imaginary_friend/on_death()
 	..()
@@ -43,17 +43,20 @@
 	get_ghost()
 
 /datum/brain_trauma/special/imaginary_friend/proc/make_friend()
-	friend = new(get_turf(owner), owner)
+	friend = new(get_turf(owner))
 
-/// Tries an orbit poll for the imaginary friend
+/// Tries a poll for the imaginary friend
 /datum/brain_trauma/special/imaginary_friend/proc/get_ghost()
-	var/datum/callback/to_call = CALLBACK(src, PROC_REF(add_friend))
-	owner.AddComponent(/datum/component/orbit_poll, \
-		ignore_key = POLL_IGNORE_IMAGINARYFRIEND, \
-		job_bans = ROLE_PAI, \
-		title = "[owner.real_name]'s imaginary friend", \
-		to_call = to_call, \
+	var/mob/chosen_one = SSpolling.poll_ghosts_for_target(
+		question = "Do you want to play as [span_danger("[owner.real_name]'s")] [span_notice("imaginary friend")]?",
+		check_jobban = ROLE_PAI,
+		poll_time = 20 SECONDS,
+		checked_target = owner,
+		ignore_category = POLL_IGNORE_IMAGINARYFRIEND,
+		alert_pic = owner,
+		role_name_text = "imaginary friend",
 	)
+	add_friend(chosen_one)
 
 /// Yay more friends!
 /datum/brain_trauma/special/imaginary_friend/proc/add_friend(mob/dead/observer/ghost)
@@ -62,6 +65,8 @@
 		return
 
 	friend.key = ghost.key
+	friend.attach_to_owner(owner)
+	friend.setup_appearance()
 	friend_initialized = TRUE
 	friend.log_message("became [key_name(owner)]'s split personality.", LOG_GAME)
 	message_admins("[ADMIN_LOOKUPFLW(friend)] became [ADMIN_LOOKUPFLW(owner)]'s split personality.")
@@ -82,8 +87,6 @@
 	var/move_delay = 0
 	var/mob/living/owner
 	var/bubble_icon = "default"
-
-
 
 /mob/camera/imaginary_friend/Login()
 	. = ..()
@@ -126,8 +129,8 @@
 
 /// Randomise friend name and appearance
 /mob/camera/imaginary_friend/proc/setup_friend()
-	var/gender = pick(MALE, FEMALE)
-	real_name = random_unique_name(gender)
+	gender = pick(MALE, FEMALE)
+	real_name = generate_random_name_species_based(gender, FALSE, /datum/species/human)
 	name = real_name
 	human_image = get_flat_human_icon(null, pick(SSjob.joinable_occupations))
 	Show()
@@ -153,11 +156,11 @@
 	for(var/job in appearance_from_prefs.job_preferences)
 		var/this_pref = appearance_from_prefs.job_preferences[job]
 		if(this_pref > highest_pref)
-			appearance_job = SSjob.GetJob(job)
+			appearance_job = SSjob.get_job(job)
 			highest_pref = this_pref
 
 	if(!appearance_job)
-		appearance_job = SSjob.GetJob(JOB_ASSISTANT)
+		appearance_job = SSjob.get_job(JOB_ASSISTANT)
 
 	if(istype(appearance_job, /datum/job/ai))
 		human_image = icon('icons/mob/silicon/ai.dmi', icon_state = resolve_ai_icon(appearance_from_prefs.read_preference(/datum/preference/choiced/ai_core_display)), dir = SOUTH)
@@ -214,11 +217,11 @@
 	message = capitalize(message)
 
 	if(message_mods[RADIO_EXTENSION] == MODE_ADMIN)
-		client?.cmd_admin_say(message)
+		SSadmin_verbs.dynamic_invoke_verb(client, /datum/admin_verb/cmd_admin_say, message)
 		return
 
 	if(message_mods[RADIO_EXTENSION] == MODE_DEADMIN)
-		client?.dsay(message)
+		SSadmin_verbs.dynamic_invoke_verb(client, /datum/admin_verb/dsay, message)
 		return
 
 	if(check_emote(message, forced))
@@ -230,7 +233,6 @@
 		spans |= SPAN_SINGING
 
 	var/eavesdrop_range = 0
-	var/eavesdropped_message = ""
 
 	if (message_mods[MODE_CUSTOM_SAY_ERASE_INPUT])
 		message = message_mods[MODE_CUSTOM_SAY_EMOTE]
@@ -240,9 +242,7 @@
 			log_talk(message, LOG_WHISPER, tag="imaginary friend", forced_by = forced, custom_say_emote = message_mods[MODE_CUSTOM_SAY_EMOTE])
 			spans |= SPAN_ITALICS
 			eavesdrop_range = EAVESDROP_EXTRA_RANGE
-			// "This proc is dangerously laggy, avoid it or die"
-			// What other option do I have here? I guess I'll die
-			eavesdropped_message = stars(message)
+			range = WHISPER_RANGE
 		else
 			log_talk(message, LOG_SAY, tag="imaginary friend", forced_by = forced, custom_say_emote = message_mods[MODE_CUSTOM_SAY_EMOTE])
 
@@ -254,11 +254,7 @@
 	Hear(rendered, src, language, message, null, spans, message_mods) // We always hear what we say
 	var/group = owner.imaginary_group - src // The people in our group don't, so we have to exclude ourselves not to hear twice
 	for(var/mob/person in group)
-		if(eavesdrop_range && get_dist(src, person) > WHISPER_RANGE + eavesdrop_range && !HAS_TRAIT(person, TRAIT_GOOD_HEARING))
-			var/new_rendered = "[span_name("[name]")] [say_quote(say_emphasis(eavesdropped_message), spans, message_mods)]"
-			person.Hear(new_rendered, src, language, eavesdropped_message, null, spans, message_mods)
-		else
-			person.Hear(rendered, src, language, message, null, spans, message_mods)
+		person.Hear(null, src, language, message, null, spans, message_mods, range)
 
 	// Speech bubble, but only for those who have runechat off
 	var/list/speech_bubble_recipients = list()
@@ -267,7 +263,7 @@
 			speech_bubble_recipients.Add(user.client)
 
 	var/image/bubble = image('icons/mob/effects/talk.dmi', src, "[bubble_type][say_test(message)]", FLY_LAYER)
-	SET_PLANE_EXPLICIT(bubble, ABOVE_GAME_PLANE, src)
+	SET_PLANE_EXPLICIT(bubble, GAME_PLANE, src)
 	bubble.appearance_flags = APPEARANCE_UI_IGNORE_ALPHA
 	INVOKE_ASYNC(GLOBAL_PROC, GLOBAL_PROC_REF(flick_overlay_global), bubble, speech_bubble_recipients, 3 SECONDS)
 	LAZYADD(update_on_z, bubble)

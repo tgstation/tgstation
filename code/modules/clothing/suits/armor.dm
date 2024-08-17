@@ -107,7 +107,7 @@
 	body_parts_covered = CHEST|GROIN
 
 /obj/item/clothing/suit/armor/vest/marine/pmc
-	desc = "A set of the finest mass produced, stamped plasteel armor plates, for an all-around door-kicking and ass-smashing. Its stellar survivability making up is for it's lack of space worthiness"
+	desc = "A set of the finest mass produced, stamped plasteel armor plates, for an all-around door-kicking and ass-smashing. Its stellar survivability making up is for its lack of space worthiness"
 	min_cold_protection_temperature = HELMET_MIN_TEMP_PROTECT
 	max_heat_protection_temperature = HELMET_MAX_TEMP_PROTECT
 	clothing_flags = THICKMATERIAL
@@ -280,9 +280,9 @@
 	cold_protection = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
 	heat_protection = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
 	armor_type = /datum/armor/armor_riot
-	clothing_flags = BLOCKS_SHOVE_KNOCKDOWN
 	strip_delay = 80
 	equip_delay_other = 60
+	clothing_traits = list(TRAIT_BRAWLING_KNOCKDOWN_BLOCKED)
 
 /datum/armor/armor_riot
 	melee = 50
@@ -293,24 +293,39 @@
 	acid = 80
 	wound = 20
 
-/obj/item/clothing/suit/armor/bone
-	name = "bone armor"
-	desc = "A tribal armor plate, crafted from animal bone."
-	icon_state = "bonearmor"
-	inhand_icon_state = null
+/obj/item/clothing/suit/armor/balloon_vest
+	name = "balloon vest"
+	desc = "A vest made entirely from balloons, resistant to any evil forces a mime could throw at you, including electricity and fire. Just a strike with something sharp, though..."
+	icon_state = "balloon-vest"
+	inhand_icon_state = "balloon_armor"
 	blood_overlay_type = "armor"
-	armor_type = /datum/armor/armor_bone
-	body_parts_covered = CHEST|GROIN|LEGS|FEET|ARMS
+	armor_type = /datum/armor/balloon_vest
+	siemens_coefficient = 0
+	strip_delay = 70
+	equip_delay_other = 50
 
-/datum/armor/armor_bone
-	melee = 35
-	bullet = 25
-	laser = 25
-	energy = 35
-	bomb = 25
-	fire = 50
+/datum/armor/balloon_vest
+	melee = 10
+	laser = 10
+	energy = 10
+	fire = 60
 	acid = 50
-	wound = 10
+
+/obj/item/clothing/suit/armor/balloon_vest/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK, damage_type = BRUTE)
+	if(isitem(hitby))
+		var/obj/item/item_hit = hitby
+		if(item_hit.sharpness)
+			pop()
+
+	if(istype(hitby, /obj/projectile/bullet))
+		pop()
+
+	return ..()
+
+/obj/item/clothing/suit/armor/balloon_vest/proc/pop()
+	playsound(src, 'sound/effects/cartoon_pop.ogg', 50, vary = TRUE)
+	qdel(src)
+
 
 /obj/item/clothing/suit/armor/bulletproof
 	name = "bulletproof armor"
@@ -379,13 +394,15 @@
 	armor_type = /datum/armor/armor_swat
 	strip_delay = 120
 	resistance_flags = FIRE_PROOF | ACID_PROOF
-	clothing_flags = BLOCKS_SHOVE_KNOCKDOWN | THICKMATERIAL
+	clothing_flags = THICKMATERIAL
 	cold_protection = CHEST | GROIN | LEGS | FEET | ARMS | HANDS
 	min_cold_protection_temperature = SPACE_SUIT_MIN_TEMP_PROTECT_OFF
 	heat_protection = CHEST | GROIN | LEGS | FEET | ARMS | HANDS
 	max_heat_protection_temperature = SPACE_SUIT_MAX_TEMP_PROTECT
 	slowdown = 0.7
 	body_parts_covered = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
+	clothing_traits = list(TRAIT_BRAWLING_KNOCKDOWN_BLOCKED)
+
 
 //All of the armor below is mostly unused
 
@@ -505,6 +522,16 @@
 	material_flags = MATERIAL_EFFECTS | MATERIAL_ADD_PREFIX | MATERIAL_COLOR | MATERIAL_AFFECT_STATISTICS//Can change color and add prefix
 	armor_type = /datum/armor/knight_greyscale
 
+/datum/armor/knight_greyscale
+	melee = 35
+	bullet = 10
+	laser = 10
+	energy = 10
+	bomb = 10
+	bio = 10
+	fire = 40
+	acid = 40
+
 /obj/item/clothing/suit/armor/vest/durathread
 	name = "durathread vest"
 	desc = "A vest made of durathread with strips of leather acting as trauma plates."
@@ -570,7 +597,7 @@
 	desc = "A superb armor made with the toughest and rarest materials available to man."
 	icon_state = "h2armor"
 	inhand_icon_state = null
-	material_flags = MATERIAL_EFFECTS | MATERIAL_COLOR | MATERIAL_AFFECT_STATISTICS//Can change color and add prefix
+	material_flags = MATERIAL_EFFECTS | MATERIAL_COLOR | MATERIAL_AFFECT_STATISTICS //Can change color and add prefix
 	armor_type = /datum/armor/armor_elder_atmosian
 	body_parts_covered = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
 	cold_protection = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
@@ -625,7 +652,7 @@
 
 /obj/item/clothing/suit/armor/militia
 	name = "station defender's coat"
-	desc = "A well worn uniform used by militia across the frontier, it's thick padding useful for cushioning blows."
+	desc = "A well worn uniform used by militia across the frontier, its thick padding useful for cushioning blows."
 	icon_state = "militia"
 	inhand_icon_state = "b_suit"
 	body_parts_covered = CHEST|GROIN|ARMS
@@ -642,3 +669,158 @@
 	fire = 40
 	acid = 50
 	wound = 30
+
+/obj/item/clothing/suit/armor/vest/military
+	name = "Crude chestplate"
+	desc = "It may look rough, rusty and battered, but it's also made out of junk and uncomfortable to wear."
+	icon_state = "military"
+	inhand_icon_state = "armor"
+	dog_fashion = null
+	armor_type = /datum/armor/military
+	allowed = list(
+		/obj/item/banner,
+		/obj/item/claymore/shortsword,
+		/obj/item/nullrod,
+		/obj/item/spear,
+		/obj/item/gun/ballistic/bow
+	)
+
+/datum/armor/military
+	melee = 45
+	bullet = 25
+	laser = 25
+	energy = 25
+	bomb = 25
+	fire = 10
+	acid = 50
+	wound = 20
+
+/obj/item/clothing/suit/armor/riot/knight/warlord
+	name = "golden plate armor"
+	desc = "This bulky set of armor is coated with a shiny layer of gold. It seems to almost reflect all light sources."
+	icon_state = "warlord"
+	inhand_icon_state = null
+	armor_type = /datum/armor/armor_warlord
+	w_class = WEIGHT_CLASS_BULKY
+	clothing_flags = THICKMATERIAL
+	slowdown = 0.8
+
+/datum/armor/armor_warlord
+	melee = 70
+	bullet = 60
+	laser = 70
+	energy = 70
+	bomb = 40
+	fire = 50
+	acid = 50
+	wound = 30
+
+/obj/item/clothing/suit/armor/durability/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK, damage_type = BRUTE)
+	take_damage(1, BRUTE, 0, 0)
+
+/obj/item/clothing/suit/armor/durability/watermelon
+	name = "watermelon"
+	desc = "An armour, made from watermelons. Propably won't take too many hits, but at least it looks serious... As serious as worn watermelon can be."
+	icon_state = "watermelon"
+	inhand_icon_state = null
+	body_parts_covered = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
+	armor_type = /datum/armor/watermelon
+	strip_delay = 60
+	equip_delay_other = 40
+	clothing_traits = list(TRAIT_BRAWLING_KNOCKDOWN_BLOCKED)
+	max_integrity = 15
+
+/obj/item/clothing/suit/armor/durability/watermelon/fire_resist
+	resistance_flags = FIRE_PROOF
+	armor_type = /datum/armor/watermelon_fr
+
+/datum/armor/watermelon
+	melee = 15
+	bullet = 10
+	energy = 10
+	bomb = 10
+	fire = 0
+	acid = 25
+	wound = 5
+
+/datum/armor/watermelon_fr
+	melee = 15
+	bullet = 10
+	energy = 10
+	bomb = 10
+	fire = 15
+	acid = 30
+	wound = 5
+
+/obj/item/clothing/suit/armor/durability/holymelon
+	name = "holymelon"
+	desc = "An armour, made from holymelons. Inspires you to go on some sort of a crusade... Perhaps spreading spinach to children?"
+	icon_state = "holymelon"
+	inhand_icon_state = null
+	body_parts_covered = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
+	armor_type = /datum/armor/watermelon
+	strip_delay = 60
+	equip_delay_other = 40
+	clothing_traits = list(TRAIT_BRAWLING_KNOCKDOWN_BLOCKED)
+	max_integrity = 15
+	var/decayed = FALSE
+
+/obj/item/clothing/suit/armor/durability/holymelon/fire_resist
+	resistance_flags = FIRE_PROOF
+	armor_type = /datum/armor/watermelon_fr
+
+/obj/item/clothing/suit/armor/durability/holymelon/Initialize(mapload)
+	. = ..()
+	if(decayed)
+		decay()
+		return
+
+	AddComponent(
+		/datum/component/anti_magic, \
+		antimagic_flags = MAGIC_RESISTANCE_HOLY, \
+		inventory_flags = ITEM_SLOT_OCLOTHING, \
+		charges = 1, \
+		drain_antimagic = CALLBACK(src, PROC_REF(drain_antimagic)), \
+		expiration = CALLBACK(src, PROC_REF(decay)) \
+	)
+
+/obj/item/clothing/suit/armor/durability/holymelon/proc/drain_antimagic(mob/user)
+	to_chat(user, span_warning("[src] looses a bit of its shimmer and glossiness..."))
+
+/obj/item/clothing/suit/armor/durability/holymelon/proc/decay()
+	take_damage(8, BRUTE, 0, 0)
+
+
+/obj/item/clothing/suit/armor/durability/barrelmelon
+	name = "barrelmelon"
+	desc = "An armour, made from barrelmelons. Reeks of ale, inspiring to courageous deeds. Or, perhaps, a bar brawl."
+	icon_state = "barrelmelon"
+	inhand_icon_state = null
+	body_parts_covered = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
+	armor_type = /datum/armor/barrelmelon
+	strip_delay = 60
+	equip_delay_other = 40
+	clothing_traits = list(TRAIT_BRAWLING_KNOCKDOWN_BLOCKED)
+	max_integrity = 10
+
+/obj/item/clothing/suit/armor/durability/barrelmelon/fire_resist
+	resistance_flags = FIRE_PROOF
+	armor_type = /datum/armor/barrelmelon_fr
+
+/datum/armor/barrelmelon
+	melee = 25
+	bullet = 20
+	energy = 15
+	bomb = 10
+	fire = 0
+	acid = 35
+	wound = 10
+
+/datum/armor/barrelmelon_fr
+	melee = 25
+	bullet = 20
+	energy = 15
+	bomb = 10
+	fire = 20
+	acid = 40
+	wound = 10

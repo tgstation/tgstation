@@ -79,6 +79,10 @@
 	damage_type = BURN
 	pass_flags = PASSTABLE
 
+/obj/projectile/bileworm_acid/Initialize(mapload)
+	. = ..()
+	AddComponent(/datum/component/parriable_projectile)
+
 /datum/action/cooldown/mob_cooldown/devour
 	name = "Devour"
 	desc = "Burrow underground, and then move to your target to consume them. Short cooldown, but your target must be unconscious."

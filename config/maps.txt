@@ -47,6 +47,11 @@ map tramstation
 	votable
 endmap
 
+map wawastation
+	votable
+	minplayers 40
+endmap
+
 # Debug-only maps.
 
 map gateway_test

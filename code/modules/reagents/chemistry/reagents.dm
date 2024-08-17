@@ -24,12 +24,12 @@
 	var/ph = 7
 	///Purity of the reagent - for use with internal reaction mechanics only. Use below (creation_purity) if you're writing purity effects into a reagent's use mechanics.
 	var/purity = 1
-	///the purity of the reagent on creation (i.e. when it's added to a mob and it's purity split it into 2 chems; the purity of the resultant chems are kept as 1, this tracks what the purity was before that)
+	///the purity of the reagent on creation (i.e. when it's added to a mob and its purity split it into 2 chems; the purity of the resultant chems are kept as 1, this tracks what the purity was before that)
 	var/creation_purity = 1
 	///The molar mass of the reagent - if you're adding a reagent that doesn't have a recipe, just add a random number between 10 - 800. Higher numbers are "harder" but it's mostly arbitary.
 	var/mass
 	/// color it looks in containers etc
-	var/color = "#000000" // rgb: 0, 0, 0
+	var/color = COLOR_BLACK // rgb: 0, 0, 0
 	///how fast the reagent is metabolized by the mob
 	var/metabolization_rate = REAGENTS_METABOLISM
 	/// above this overdoses happen
@@ -74,6 +74,10 @@
 	/// The affected respiration type, if the reagent damages/heals oxygen damage of an affected mob.
 	/// See "Mob bio-types flags" in /code/_DEFINES/mobs.dm
 	var/affected_respiration_type = ALL
+	/// A list of traits to apply while the reagent is being metabolized.
+	var/list/metabolized_traits
+	/// A list of traits to apply while the reagent is in a mob.
+	var/list/added_traits
 
 	///The default reagent container for the reagent, used for icon generation
 	var/obj/item/reagent_containers/default_container = /obj/item/reagent_containers/cup/bottle
@@ -191,20 +195,24 @@ Primarily used in reagents/reaction_agents
 /// Called when this reagent is first added to a mob
 /datum/reagent/proc/on_mob_add(mob/living/affected_mob, amount)
 	overdose_threshold /= max(normalise_creation_purity(), 1) //Maybe??? Seems like it would help pure chems be even better but, if I normalised this to 1, then everything would take a 25% reduction
-	return
+	if(added_traits)
+		affected_mob.add_traits(added_traits, "base:[type]")
 
 /// Called when this reagent is removed while inside a mob
 /datum/reagent/proc/on_mob_delete(mob/living/affected_mob)
 	affected_mob.clear_mood_event("[type]_overdose")
-	return
+	REMOVE_TRAITS_IN(affected_mob, "base:[type]")
 
 /// Called when this reagent first starts being metabolized by a liver
 /datum/reagent/proc/on_mob_metabolize(mob/living/affected_mob)
-	return
+	SHOULD_CALL_PARENT(TRUE)
+	if(metabolized_traits)
+		affected_mob.add_traits(metabolized_traits, "metabolize:[type]")
 
 /// Called when this reagent stops being metabolized by a liver
 /datum/reagent/proc/on_mob_end_metabolize(mob/living/affected_mob)
-	return
+	SHOULD_CALL_PARENT(TRUE)
+	REMOVE_TRAITS_IN(affected_mob, "metabolize:[type]")
 
 /**
  * Called when a reagent is inside of a mob when they are dead if the reagent has the REAGENT_DEAD_PROCESS flag
@@ -242,7 +250,9 @@ Primarily used in reagents/reaction_agents
 
 /// Should return a associative list where keys are taste descriptions and values are strength ratios
 /datum/reagent/proc/get_taste_description(mob/living/taster)
-	return list("[taste_description]" = 1)
+	if(isnull(taster) || !HAS_TRAIT(taster, TRAIT_DETECTIVES_TASTE))
+		return list("[taste_description]" = 1)
+	return list("[LOWER_TEXT(name)]" = 1)
 
 /**
  * Used when you want the default reagents purity to be equal to the normal effects
@@ -260,7 +270,7 @@ Primarily used in reagents/reaction_agents
 	return creation_purity / normalise_num_to
 
 /**
- * Gets the inverse purity of this reagent. Mostly used when converting from a normal reagent to it's inverse one.
+ * Gets the inverse purity of this reagent. Mostly used when converting from a normal reagent to its inverse one.
  *
  * Arguments
  * * purity - Overrides the purity used for determining the inverse purity.

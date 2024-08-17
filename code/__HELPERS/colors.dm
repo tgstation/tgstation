@@ -19,13 +19,8 @@
 
 /// Given a color in the format of "#RRGGBB" or "#RRGGBBAA", gives back a 4 entry list with the number values of each
 /proc/split_color(color)
-	var/list/output = list()
-	output += hex2num(copytext(color, 2, 4))
-	output += hex2num(copytext(color, 4, 6))
-	output += hex2num(copytext(color, 6, 8))
-	if(length(color) == 9)
-		output += hex2num(copytext(color, 8, 10))
-	else
+	var/list/output = rgb2num(color)
+	if(length(output) == 3)
 		output += 255
 	return output
 
@@ -49,29 +44,27 @@
 		CRASH("Given non-HTML argument!")
 	else if(length_char(HTMLstring) != 7)
 		CRASH("Given non-hex symbols in argument!")
-	var/textr = copytext(HTMLstring, 2, 4)
-	var/textg = copytext(HTMLstring, 4, 6)
-	var/textb = copytext(HTMLstring, 6, 8)
-	return rgb(255 - hex2num(textr), 255 - hex2num(textg), 255 - hex2num(textb))
+	var/list/color = rgb2num(HTMLstring)
+	return rgb(255 - color[1], 255 - color[2], 255 - color[3])
 
-///Flash a color on the client
-/proc/flash_color(mob_or_client, flash_color="#960000", flash_time=20)
-	var/client/flashed_client
+///Flash a color on the passed mob
+/proc/flash_color(mob_or_client, flash_color=COLOR_CULT_RED, flash_time=20)
+	var/mob/flashed_mob
 	if(ismob(mob_or_client))
-		var/mob/client_mob = mob_or_client
-		if(client_mob.client)
-			flashed_client = client_mob.client
-		else
-			return
+		flashed_mob = mob_or_client
 	else if(istype(mob_or_client, /client))
-		flashed_client = mob_or_client
+		var/client/flashed_client = mob_or_client
+		flashed_mob = flashed_client.mob
 
-	if(!istype(flashed_client))
+	if(!istype(flashed_mob))
 		return
 
-	var/animate_color = flashed_client.color
-	flashed_client.color = flash_color
-	animate(flashed_client, color = animate_color, time = flash_time)
+	var/datum/client_colour/temp/temp_color = new(flashed_mob)
+	temp_color.colour = flash_color
+	temp_color.fade_in = flash_time * 0.25
+	temp_color.fade_out = flash_time * 0.25
+	QDEL_IN(temp_color, (flash_time * 0.5) + 1)
+	flashed_mob.add_client_colour(temp_color)
 
 /// Blends together two colors (passed as 3 or 4 length lists) using the screen blend mode
 /// Much like multiply, screen effects the brightness of the resulting color
@@ -108,6 +101,50 @@
 
 	return output
 
+/**
+ * Gets a color for a name, will return the same color for a given string consistently within a round.atom
+ *
+ * Note that this proc aims to produce pastel-ish colors using the HSL colorspace. These seem to be favorable for displaying on the map.
+ *
+ * Arguments:
+ * * name - The name to generate a color for
+ * * sat_shift - A value between 0 and 1 that will be multiplied against the saturation
+ * * lum_shift - A value between 0 and 1 that will be multiplied against the luminescence
+ */
+/proc/colorize_string(name, sat_shift = 1, lum_shift = 1)
+	// seed to help randomness
+	var/static/rseed = rand(1,26)
+
+	// get hsl using the selected 6 characters of the md5 hash
+	var/hash = copytext(md5(name + GLOB.round_id), rseed, rseed + 6)
+	var/h = hex2num(copytext(hash, 1, 3)) * (360 / 255)
+	var/s = (hex2num(copytext(hash, 3, 5)) >> 2) * ((CM_COLOR_SAT_MAX - CM_COLOR_SAT_MIN) / 63) + CM_COLOR_SAT_MIN
+	var/l = (hex2num(copytext(hash, 5, 7)) >> 2) * ((CM_COLOR_LUM_MAX - CM_COLOR_LUM_MIN) / 63) + CM_COLOR_LUM_MIN
+
+	// adjust for shifts
+	s = clamp(s * sat_shift, 0, 1)
+	l = clamp(l * lum_shift, 0, 1)
+
+	// convert to rgb
+	var/h_int = round(h/60) // mapping each section of H to 60 degree sections
+	var/c = (1 - abs(2 * l - 1)) * s
+	var/x = c * (1 - abs((h / 60) % 2 - 1))
+	var/m = l - c * 0.5
+	x = (x + m) * 255
+	c = (c + m) * 255
+	m *= 255
+	switch(h_int)
+		if(0)
+			return "#[num2hex(c, 2)][num2hex(x, 2)][num2hex(m, 2)]"
+		if(1)
+			return "#[num2hex(x, 2)][num2hex(c, 2)][num2hex(m, 2)]"
+		if(2)
+			return "#[num2hex(m, 2)][num2hex(c, 2)][num2hex(x, 2)]"
+		if(3)
+			return "#[num2hex(m, 2)][num2hex(x, 2)][num2hex(c, 2)]"
+		if(4)
+			return "#[num2hex(x, 2)][num2hex(m, 2)][num2hex(c, 2)]"
+		if(5)
+			return "#[num2hex(c, 2)][num2hex(m, 2)][num2hex(x, 2)]"
 
 #define RANDOM_COLOUR (rgb(rand(0,255),rand(0,255),rand(0,255)))
-

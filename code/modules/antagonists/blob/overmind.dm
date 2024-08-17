@@ -12,10 +12,9 @@ GLOBAL_LIST_EMPTY(blob_nodes)
 	icon = 'icons/mob/silicon/cameramob.dmi'
 	icon_state = "marker"
 	mouse_opacity = MOUSE_OPACITY_ICON
-	move_on_shuttle = 1
+	move_on_shuttle = TRUE
 	invisibility = INVISIBILITY_OBSERVER
 	layer = FLY_LAYER
-	plane = ABOVE_GAME_PLANE
 	see_invisible = SEE_INVISIBLE_LIVING
 	pass_flags = PASSBLOB
 	faction = list(ROLE_BLOB)
@@ -73,6 +72,10 @@ GLOBAL_LIST_EMPTY(blob_nodes)
 	. = ..()
 	START_PROCESSING(SSobj, src)
 	GLOB.blob_telepathy_mobs |= src
+	var/mutable_appearance/high_marker = mutable_appearance('icons/mob/silicon/cameramob.dmi', "marker", ABOVE_MOB_LAYER, src, ABOVE_GAME_PLANE)
+	high_marker.pixel_y -= 12
+	add_overlay(high_marker)
+	AddElement(/datum/element/elevation, pixel_shift = 10)
 
 /mob/camera/blob/proc/validate_location()
 	var/turf/T = get_turf(src)
@@ -87,7 +90,7 @@ GLOBAL_LIST_EMPTY(blob_nodes)
 				break
 	else // no blob starts so look for an alternate
 		for(var/i in 1 to 16)
-			var/turf/picked_safe = find_safe_turf()
+			var/turf/picked_safe = get_safe_random_station_turf()
 			if(is_valid_turf(picked_safe))
 				T = picked_safe
 				break
@@ -153,7 +156,7 @@ GLOBAL_LIST_EMPTY(blob_nodes)
 		SSsecurity_level.set_level(SEC_LEVEL_DELTA)
 		max_blob_points = INFINITY
 		blob_points = INFINITY
-		addtimer(CALLBACK(src, PROC_REF(victory)), 450)
+		addtimer(CALLBACK(src, PROC_REF(victory)), 45 SECONDS)
 	else if(!free_strain_rerolls && (last_reroll_time + BLOB_POWER_REROLL_FREE_TIME<world.time))
 		to_chat(src, span_boldnotice("You have gained another free strain re-roll."))
 		free_strain_rerolls = 1
@@ -206,7 +209,7 @@ GLOBAL_LIST_EMPTY(blob_nodes)
 			if(live_guy.stat != DEAD)
 				live_guy.investigate_log("has died from blob takeover.", INVESTIGATE_DEATHS)
 			live_guy.death()
-			create_spore(guy_turf)
+			create_spore(guy_turf, spore_type = /mob/living/basic/blob_minion/spore)
 		else
 			live_guy.fully_heal()
 
@@ -217,7 +220,7 @@ GLOBAL_LIST_EMPTY(blob_nodes)
 				continue
 			check_area.color = blobstrain.color
 			check_area.name = "blob"
-			check_area.icon = 'icons/mob/nonhuman-player/blob.dmi'
+			check_area.icon = 'icons/mob/nonhuman-player/blob_tall.dmi'
 			check_area.icon_state = "blob_shield"
 			check_area.layer = BELOW_MOB_LAYER
 			check_area.SetInvisibility(INVISIBILITY_NONE)
@@ -286,7 +289,19 @@ GLOBAL_LIST_EMPTY(blob_nodes)
 	blob_points = clamp(blob_points + points, 0, max_blob_points)
 	hud_used.blobpwrdisplay.maptext = MAPTEXT("<div align='center' valign='middle' style='position:relative; top:0px; left:6px'><font color='#e36600'>[round(blob_points)]</font></div>")
 
-/mob/camera/blob/say(message, bubble_type, list/spans = list(), sanitize = TRUE, datum/language/language = null, ignore_spam = FALSE, forced = null, filterproof = null, message_range = 7, datum/saymode/saymode = null)
+/mob/camera/blob/say(
+	message,
+	bubble_type,
+	list/spans = list(),
+	sanitize = TRUE,
+	datum/language/language,
+	ignore_spam = FALSE,
+	forced,
+	filterproof = FALSE,
+	message_range = 7,
+	datum/saymode/saymode,
+	list/message_mods = list(),
+)
 	if (!message)
 		return
 

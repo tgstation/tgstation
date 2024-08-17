@@ -2,10 +2,9 @@
 #define MAX_ITEMS_PER_RATING 10
 /// How many items are converted per cycle, per rating point of the manipulator used.
 #define PROCESSED_ITEMS_PER_RATING 5
-/// Starting purity of reagents made in biogenerator
-#define BIOGEN_REAGENT_PURITY 0.3
 
 /obj/machinery/biogenerator
+	SET_BASE_VISUAL_PIXEL(0, DEPTH_OFFSET)
 	name = "biogenerator"
 	desc = "Converts plants into biomass, which can be used to construct useful items."
 	icon = 'icons/obj/machines/biogenerator.dmi'
@@ -13,6 +12,7 @@
 	density = TRUE
 	circuit = /obj/item/circuitboard/machine/biogenerator
 	processing_flags = START_PROCESSING_MANUALLY
+	interaction_flags_click = FORBID_TELEKINESIS_REACH
 	/// Whether the biogenerator is currently processing biomass or not.
 	var/processing = FALSE
 	/// The reagent container that is currently inside of the biomass generator. Can be null.
@@ -272,10 +272,9 @@
 		to_chat(user, span_warning("You cannot put \the [attacking_item] in \the [src]!"))
 
 
-/obj/machinery/biogenerator/AltClick(mob/living/user)
-	. = ..()
-	if(user.can_perform_action(src, FORBID_TELEKINESIS_REACH) && can_interact(user))
-		eject_beaker(user)
+/obj/machinery/biogenerator/click_alt(mob/living/user)
+	eject_beaker(user)
+	return CLICK_ACTION_SUCCESS
 
 
 /// Activates biomass processing and converts all inserted food products into biomass
@@ -322,7 +321,7 @@
 
 		convert_to_biomass(food_to_convert)
 
-	use_power(active_power_usage * seconds_per_tick)
+	use_energy(active_power_usage * seconds_per_tick)
 
 	if(!current_item_count)
 		stop_process(FALSE)
@@ -458,7 +457,7 @@
 	update_appearance(UPDATE_ICON)
 
 
-/obj/machinery/biogenerator/ui_status(mob/user)
+/obj/machinery/biogenerator/ui_status(mob/user, datum/ui_state/state)
 	if(machine_stat & BROKEN || panel_open)
 		return UI_CLOSE
 
@@ -571,4 +570,3 @@
 
 #undef MAX_ITEMS_PER_RATING
 #undef PROCESSED_ITEMS_PER_RATING
-#undef BIOGEN_REAGENT_PURITY

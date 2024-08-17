@@ -12,7 +12,7 @@
 	if(custom_materials && material_flags & MATERIAL_EFFECTS) //Only runs if custom materials existed at first and affected src.
 		for(var/current_material in custom_materials)
 			var/datum/material/custom_material = GET_MATERIAL_REF(current_material)
-			custom_material.on_removed(src, custom_materials[current_material] * material_modifier, material_flags) //Remove the current materials
+			custom_material.on_removed(src, OPTIMAL_COST(custom_materials[current_material] * material_modifier), material_flags) //Remove the current materials
 
 	if(!length(materials))
 		custom_materials = null
@@ -21,7 +21,7 @@
 	if(material_flags & MATERIAL_EFFECTS)
 		for(var/current_material in materials)
 			var/datum/material/custom_material = GET_MATERIAL_REF(current_material)
-			custom_material.on_applied(src, materials[current_material] * multiplier * material_modifier, material_flags)
+			custom_material.on_applied(src, OPTIMAL_COST(materials[current_material] * multiplier * material_modifier), material_flags)
 
 	custom_materials = SSmaterials.FindOrCreateMaterialCombo(materials, multiplier)
 

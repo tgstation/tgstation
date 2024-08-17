@@ -11,6 +11,7 @@
  * Uses the standard ordnance/tank explosion scaling to compress raw anomaly cores into completed ones. The required explosion radius increases as more cores of that type are created.
  */
 /obj/machinery/research/anomaly_refinery
+	SET_BASE_VISUAL_PIXEL(0, DEPTH_OFFSET)
 	name = "anomaly refinery"
 	desc = "An advanced machine capable of implosion-compressing raw anomaly cores into finished artifacts. Also equipped with state of the art bomb prediction software."
 	circuit = /obj/item/circuitboard/machine/anomaly_refinery
@@ -60,10 +61,12 @@
  * * anomaly_type - anomaly type define
  */
 /obj/machinery/research/anomaly_refinery/proc/get_required_radius(anomaly_type)
+	if(!SSresearch.is_core_available(anomaly_type))
+		return //return null
+
 	var/already_made = SSresearch.created_anomaly_types[anomaly_type]
 	var/hard_limit = SSresearch.anomaly_hard_limit_by_type[anomaly_type]
-	if(already_made >= hard_limit)
-		return //return null
+
 	// my crappy autoscale formula
 	// linear scaling.
 	var/radius_span = MAX_RADIUS_REQUIRED - MIN_RADIUS_REQUIRED
@@ -295,7 +298,7 @@
 		return FALSE
 	tank_to_target = (tank_to_target == inserted_bomb.tank_one) ? inserted_bomb.tank_two : inserted_bomb.tank_one
 
-/obj/machinery/research/anomaly_refinery/on_deconstruction()
+/obj/machinery/research/anomaly_refinery/on_deconstruction(disassembled)
 	eject_bomb()
 	eject_core()
 	return ..()

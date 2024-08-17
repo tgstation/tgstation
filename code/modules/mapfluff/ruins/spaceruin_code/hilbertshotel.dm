@@ -4,7 +4,7 @@ GLOBAL_VAR_INIT(hhMysteryRoomNumber, rand(1, 999999))
 /obj/item/hilbertshotel
 	name = "Hilbert's Hotel"
 	desc = "A sphere of what appears to be an intricate network of bluespace. Observing it in detail seems to give you a headache as you try to comprehend the infinite amount of infinitesimally distinct points on its surface."
-	icon = 'icons/obj/structures.dmi'
+	icon = 'icons/obj/fluff/general.dmi'
 	icon_state = "hilbertshotel"
 	w_class = WEIGHT_CLASS_SMALL
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
@@ -238,7 +238,7 @@ GLOBAL_VAR_INIT(hhMysteryRoomNumber, rand(1, 999999))
 	name = "Hilbert's Hotel Room"
 	mappath = "_maps/templates/hilbertshotel.dmm"
 	var/landingZoneRelativeX = 2
-	var/landingZoneRelativeY = 8
+	var/landingZoneRelativeY = 12
 
 /datum/map_template/hilbertshotel/empty
 	name = "Empty Hilbert's Hotel Room"
@@ -256,8 +256,9 @@ GLOBAL_VAR_INIT(hhMysteryRoomNumber, rand(1, 999999))
 //Turfs and Areas
 /turf/closed/indestructible/hotelwall
 	name = "hotel wall"
+	icon = 'icons/turf/walls/hotel_wall.dmi'
 	desc = "A wall designed to protect the security of the hotel's guests."
-	icon_state = "hotelwall"
+	smoothing_flags = SMOOTH_BITMASK
 	smoothing_groups = SMOOTH_GROUP_CLOSED_TURFS + SMOOTH_GROUP_HOTEL_WALLS
 	canSmoothWith = SMOOTH_GROUP_HOTEL_WALLS
 	explosive_resistance = INFINITY
@@ -298,9 +299,26 @@ GLOBAL_VAR_INIT(hhMysteryRoomNumber, rand(1, 999999))
 
 /turf/closed/indestructible/hoteldoor
 	name = "Hotel Door"
-	icon_state = "hoteldoor"
+	icon = 'icons/turf/walls/hotel_door.dmi'
 	explosive_resistance = INFINITY
+	smoothing_flags = SMOOTH_BITMASK
+	smoothing_groups = SMOOTH_GROUP_CLOSED_TURFS + SMOOTH_GROUP_HOTEL_WALLS
+	canSmoothWith = SMOOTH_GROUP_HOTEL_WALLS
 	var/obj/item/hilbertshotel/parentSphere
+
+/turf/closed/indestructible/hoteldoor/Initialize(mapload)
+	. = ..()
+	register_context()
+	// Build the glow animation
+	var/mutable_appearance/glow_animation = mutable_appearance('icons/turf/walls/hotel_door_glow.dmi', "glow")
+	// Add emissive as a suboverlay, to make working with it easier
+	glow_animation.add_overlay(emissive_appearance('icons/turf/walls/hotel_door_glow.dmi', "glow", src))
+	AddComponent(/datum/component/split_overlay, glow_animation, list(SOUTH_JUNCTION))
+
+/turf/closed/indestructible/hoteldoor/add_context(atom/source, list/context, obj/item/held_item, mob/user)
+	. = ..()
+	context[SCREENTIP_CONTEXT_ALT_LMB] = "Peek through"
+	return CONTEXTUAL_SCREENTIP_SET
 
 /turf/closed/indestructible/hoteldoor/proc/promptExit(mob/living/user)
 	if(!isliving(user))
@@ -344,20 +362,25 @@ GLOBAL_VAR_INIT(hhMysteryRoomNumber, rand(1, 999999))
 	if(get_dist(get_turf(src), get_turf(user)) <= 1)
 		promptExit(user)
 
-/turf/closed/indestructible/hoteldoor/AltClick(mob/user)
-	. = ..()
-	if(get_dist(get_turf(src), get_turf(user)) <= 1)
-		to_chat(user, span_notice("You peak through the door's bluespace peephole..."))
-		user.reset_perspective(parentSphere)
-		var/datum/action/peephole_cancel/PHC = new
-		user.overlay_fullscreen("remote_view", /atom/movable/screen/fullscreen/impaired, 1)
-		PHC.Grant(user)
-		RegisterSignal(user, COMSIG_MOVABLE_MOVED, TYPE_PROC_REF(/atom/, check_eye), user)
+/turf/closed/indestructible/hoteldoor/click_alt(mob/user)
+	if(user.is_blind())
+		to_chat(user, span_warning("Drats! Your vision is too poor to use this!"))
+		return CLICK_ACTION_BLOCKING
 
-/turf/closed/indestructible/hoteldoor/check_eye(mob/user)
-	if(get_dist(get_turf(src), get_turf(user)) >= 2)
-		for(var/datum/action/peephole_cancel/PHC in user.actions)
-			INVOKE_ASYNC(PHC, TYPE_PROC_REF(/datum/action/peephole_cancel, Trigger))
+	to_chat(user, span_notice("You peak through the door's bluespace peephole..."))
+	user.reset_perspective(parentSphere)
+	var/datum/action/peephole_cancel/PHC = new
+	user.overlay_fullscreen("remote_view", /atom/movable/screen/fullscreen/impaired, 1)
+	PHC.Grant(user)
+	RegisterSignal(user, COMSIG_MOVABLE_MOVED, PROC_REF(check_eye))
+	return CLICK_ACTION_SUCCESS
+
+/turf/closed/indestructible/hoteldoor/proc/check_eye(mob/user, atom/oldloc, direction)
+	SIGNAL_HANDLER
+	if(get_dist(get_turf(src), get_turf(user)) < 2)
+		return
+	for(var/datum/action/peephole_cancel/PHC in user.actions)
+		INVOKE_ASYNC(PHC, TYPE_PROC_REF(/datum/action/peephole_cancel, Trigger))
 
 /datum/action/peephole_cancel
 	name = "Cancel View"
@@ -510,14 +533,12 @@ GLOBAL_VAR_INIT(hhMysteryRoomNumber, rand(1, 999999))
 	icon_state = "hilbertsanalyzer"
 	worn_icon_state = "analyzer"
 
-/obj/item/analyzer/hilbertsanalyzer/afterattack(atom/target, mob/user, proximity)
-	. = ..()
-	if(istype(target, /obj/item/hilbertshotel))
-		. |= AFTERATTACK_PROCESSED_ITEM
-		if(!proximity)
+/obj/item/analyzer/hilbertsanalyzer/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
+	if(istype(interacting_with, /obj/item/hilbertshotel))
+		if(!Adjacent(interacting_with))
 			to_chat(user, span_warning("It's to far away to scan!"))
-			return .
-		var/obj/item/hilbertshotel/sphere = target
+			return ITEM_INTERACT_BLOCKING
+		var/obj/item/hilbertshotel/sphere = interacting_with
 		if(sphere.activeRooms.len)
 			to_chat(user, "Currently Occupied Rooms:")
 			for(var/roomnumber in sphere.activeRooms)
@@ -530,7 +551,8 @@ GLOBAL_VAR_INIT(hhMysteryRoomNumber, rand(1, 999999))
 				to_chat(user, roomnumber)
 		else
 			to_chat(user, "No vacated rooms.")
-		return .
+		return ITEM_INTERACT_SUCCESS
+	return ..()
 
 /obj/effect/landmark/transport/transport_id/hilbert
 	specific_transport_id = HILBERT_LINE_1

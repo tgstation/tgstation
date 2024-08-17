@@ -7,7 +7,6 @@
 	anchored = TRUE
 	density = TRUE
 	move_resist = INFINITY
-	plane = MASSIVE_OBJ_PLANE
 	plane = ABOVE_LIGHTING_PLANE
 	light_range = 6
 	appearance_flags = LONG_GLIDE
@@ -43,6 +42,8 @@
 	var/move_self = TRUE
 	///If the singularity has eaten a supermatter shard and can go to stage six
 	var/consumed_supermatter = FALSE
+	/// Is the black hole collapsing into nothing
+	var/collapsing = FALSE
 	/// How long it's been since the singulo last acted, in seconds
 	var/time_since_act = 0
 	/// What the game tells ghosts when you make one
@@ -50,7 +51,7 @@
 
 	pass_flags = PASSTABLE | PASSGLASS | PASSGRILLE | PASSCLOSEDTURF | PASSMACHINE | PASSSTRUCTURE | PASSDOORS
 	flags_1 = SUPERMATTER_IGNORES_1
-	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF | FREEZE_PROOF
+	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF | FREEZE_PROOF | SHUTTLE_CRUSH_PROOF
 	obj_flags = CAN_BE_HIT | DANGEROUS_POSSESSION
 
 /obj/singularity/Initialize(mapload, starting_energy = 50)
@@ -309,6 +310,10 @@
 	return TRUE
 
 /obj/singularity/proc/consume(atom/thing)
+	if(istype(thing, /obj/item/storage/backpack/holding) && !consumed_supermatter && !collapsing)
+		consume_boh(thing)
+		return
+
 	var/gain = thing.singularity_act(current_size, src)
 	energy += gain
 	if(istype(thing, /obj/machinery/power/supermatter_crystal) && !consumed_supermatter)
@@ -319,6 +324,25 @@
 	desc = "[initial(desc)] It glows fiercely with inner fire."
 	consumed_supermatter = TRUE
 	set_light(10)
+
+/obj/singularity/proc/consume_boh(obj/boh)
+	collapsing = TRUE
+	name = "unstable [initial(name)]"
+	desc = "[initial(desc)] It seems to be collapsing in on itself."
+	visible_message(
+		message = span_danger("As [src] consumes [boh], it begins to collapse in on itself!"),
+		blind_message = span_hear("You hear aggressive crackling!"),
+		vision_distance = 15,
+	)
+	playsound(loc, 'sound/effects/clockcult_gateway_disrupted.ogg', 200, vary = TRUE, extrarange = 3, falloff_exponent = 1, frequency = -1, pressure_affected = FALSE, ignore_walls = TRUE, falloff_distance = 7)
+	addtimer(CALLBACK(src, PROC_REF(consume_boh_sfx)), 4 SECONDS)
+	animate(src, time = 4 SECONDS, transform = transform.Scale(0.25), flags = ANIMATION_PARALLEL, easing = ELASTIC_EASING)
+	animate(time = 0.5 SECONDS, alpha = 0)
+	QDEL_IN(src, 4.1 SECONDS)
+	qdel(boh)
+
+/obj/singularity/proc/consume_boh_sfx()
+	playsound(loc, 'sound/effects/supermatter.ogg', 200, vary = TRUE, extrarange = 3, falloff_exponent = 1, frequency = 0.5, pressure_affected = FALSE, ignore_walls = TRUE, falloff_distance = 7)
 
 /obj/singularity/proc/check_cardinals_range(steps, retry_with_move = FALSE)
 	. = length(GLOB.cardinals) //Should be 4.
@@ -340,7 +364,7 @@
 			if(STAGE_ONE)
 				steps = 1
 			if(STAGE_TWO)
-				steps = 3//Yes this is right
+				steps = 2
 			if(STAGE_THREE)
 				steps = 3
 			if(STAGE_FOUR)
@@ -386,16 +410,8 @@
 /obj/singularity/proc/can_move(turf/considered_turf)
 	if(!considered_turf)
 		return FALSE
-	if((locate(/obj/machinery/field/containment) in considered_turf) || (locate(/obj/machinery/shieldwall) in considered_turf))
+	if (HAS_TRAIT(considered_turf, TRAIT_CONTAINMENT_FIELD))
 		return FALSE
-	else if(locate(/obj/machinery/field/generator) in considered_turf)
-		var/obj/machinery/field/generator/check_generator = locate(/obj/machinery/field/generator) in considered_turf
-		if(check_generator?.active)
-			return FALSE
-	else if(locate(/obj/machinery/power/shieldwallgen) in considered_turf)
-		var/obj/machinery/power/shieldwallgen/check_shield = locate(/obj/machinery/power/shieldwallgen) in considered_turf
-		if(check_shield?.active)
-			return FALSE
 	return TRUE
 
 /obj/singularity/proc/event()
@@ -482,3 +498,16 @@
 /// Special singularity that spawns for shuttle events only
 /obj/singularity/shuttle_event
 	anchored = FALSE
+
+/// Special singularity spawned by being sucked into a black hole during emagged orion trail.
+/obj/singularity/orion
+	move_self = FALSE
+
+/obj/singularity/orion/Initialize(mapload)
+	. = ..()
+	var/datum/component/singularity/singularity = singularity_component.resolve()
+	singularity?.grav_pull = 1
+
+/obj/singularity/orion/process(seconds_per_tick)
+	if(SPT_PROB(0.5, seconds_per_tick))
+		mezzer()

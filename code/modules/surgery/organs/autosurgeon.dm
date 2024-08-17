@@ -149,6 +149,10 @@
 	surgery_speed = 0.75
 	loaded_overlay = "autosurgeon_syndicate_loaded_overlay"
 
+/obj/item/autosurgeon/syndicate/Initialize(mapload)
+	. = ..()
+	ADD_TRAIT(src, TRAIT_CONTRABAND, INNATE_TRAIT)
+
 /obj/item/autosurgeon/syndicate/laser_arm
 	desc = "A single use autosurgeon that contains a combat arms-up laser augment. A screwdriver can be used to remove it, but implants can't be placed back in."
 	uses = 1
@@ -157,14 +161,26 @@
 /obj/item/autosurgeon/syndicate/thermal_eyes
 	starting_organ = /obj/item/organ/internal/eyes/robotic/thermals
 
+/obj/item/autosurgeon/syndicate/thermal_eyes/single_use
+	uses = 1
+
 /obj/item/autosurgeon/syndicate/xray_eyes
 	starting_organ = /obj/item/organ/internal/eyes/robotic/xray
+
+/obj/item/autosurgeon/syndicate/xray_eyes/single_use
+	uses = 1
 
 /obj/item/autosurgeon/syndicate/anti_stun
 	starting_organ = /obj/item/organ/internal/cyberimp/brain/anti_stun
 
+/obj/item/autosurgeon/syndicate/anti_stun/single_use
+	uses = 1
+
 /obj/item/autosurgeon/syndicate/reviver
 	starting_organ = /obj/item/organ/internal/cyberimp/chest/reviver
+
+/obj/item/autosurgeon/syndicate/reviver/single_use
+	uses = 1
 
 /obj/item/autosurgeon/syndicate/commsagent
 	desc = "A device that automatically - painfully - inserts an implant. It seems someone's specially \
@@ -177,3 +193,11 @@
 
 /obj/item/autosurgeon/syndicate/emaggedsurgerytoolset
 	starting_organ = /obj/item/organ/internal/cyberimp/arm/surgery/emagged
+
+/obj/item/autosurgeon/syndicate/emaggedsurgerytoolset/single_use
+	uses = 1
+
+/obj/item/autosurgeon/syndicate/contraband_sechud
+	desc = "Contains a contraband SecHUD implant, undetectable by health scanners."
+	uses = 1
+	starting_organ = /obj/item/organ/internal/cyberimp/eyes/hud/security/syndicate

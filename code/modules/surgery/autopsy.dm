@@ -9,8 +9,19 @@
 		/datum/surgery_step/close,
 	)
 
+/datum/surgery/autopsy/mechanic
+	name = "System Failure Analysis"
+	requires_bodypart_type = BODYTYPE_ROBOTIC
+	steps = list(
+		/datum/surgery_step/mechanic_open,
+		/datum/surgery_step/open_hatch,
+		/datum/surgery_step/autopsy,
+		/datum/surgery_step/mechanic_close,
+	)
+
 /datum/surgery/autopsy/can_start(mob/user, mob/living/patient)
-	. = ..()
+	if(!..())
+		return FALSE
 	if(patient.stat != DEAD)
 		return FALSE
 	if(HAS_TRAIT_FROM(patient, TRAIT_DISSECTED, AUTOPSY_TRAIT))

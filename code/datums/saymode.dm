@@ -20,7 +20,7 @@
 	if(user.mind.has_antag_datum(/datum/antagonist/fallen_changeling))
 		to_chat(user, span_changeling("<b>We're cut off from the hivemind! We've lost everything! EVERYTHING!!</b>"))
 		return FALSE
-	var/datum/antagonist/changeling/ling_sender = user.mind.has_antag_datum(/datum/antagonist/changeling)
+	var/datum/antagonist/changeling/ling_sender = IS_CHANGELING(user)
 	if(!ling_sender)
 		return FALSE
 	if(HAS_TRAIT(user, TRAIT_CHANGELING_HIVEMIND_MUTE))

@@ -1,7 +1,7 @@
 /obj/item/aicard
 	name = "intelliCard"
 	desc = "A storage device for AIs. Patent pending."
-	icon = 'icons/obj/aicards.dmi'
+	icon = 'icons/obj/devices/aicards.dmi'
 	icon_state = "aicard" // aicard-full
 	base_icon_state = "aicard"
 	inhand_icon_state = "electronic"
@@ -16,6 +16,8 @@
 
 /obj/item/aicard/Initialize(mapload)
 	. = ..()
+	if(mapload && HAS_TRAIT(SSstation, STATION_TRAIT_HUMAN_AI))
+		return INITIALIZE_HINT_QDEL
 	ADD_TRAIT(src, TRAIT_CASTABLE_LOC, INNATE_TRAIT)
 
 /obj/item/aicard/Destroy(force)

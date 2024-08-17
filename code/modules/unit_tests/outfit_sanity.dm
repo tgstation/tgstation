@@ -5,7 +5,9 @@
 	if (!outfit_item) { \
 		TEST_FAIL("[outfit.name]'s [#outfit_key] is invalid! Could not equip a [outfit.##outfit_key] into that slot."); \
 	} \
-	outfit_item.on_outfit_equip(H, FALSE, ##slot_name); \
+	else { \
+		outfit_item.on_outfit_equip(H, FALSE, ##slot_name); \
+	} \
 }
 
 /// See #66313 and #60901. outfit_sanity used to runtime whenever you had two mergable sheets in either hand. Previously, this only had a 3% chance of occuring. Now 100%.
@@ -14,7 +16,7 @@
 
 	uniform = /obj/item/clothing/under/suit/tuxedo
 	glasses = /obj/item/clothing/glasses/sunglasses
-	mask = /obj/item/clothing/mask/cigarette/cigar/havana
+	mask = /obj/item/cigarette/cigar/havana
 	shoes = /obj/item/clothing/shoes/laceup
 	l_hand = /obj/item/stack/spacecash/c1000
 	r_hand = /obj/item/stack/spacecash/c1000
@@ -23,30 +25,31 @@
 /datum/outfit/duffel_user
 	name = "Mr. Runtime"
 	back = /obj/item/storage/backpack/duffelbag
-	backpack_contents = list(/obj/item/clothing/mask/cigarette/cigar/havana)
+	backpack_contents = list(/obj/item/cigarette/cigar/havana)
 
 /// Satchels too
 /datum/outfit/stachel_user
 	name = "Mr. Runtime"
 	back = /obj/item/storage/backpack/satchel
-	backpack_contents = list(/obj/item/clothing/mask/cigarette/cigar/havana)
+	backpack_contents = list(/obj/item/cigarette/cigar/havana)
 
 /// And just in case we'll check backpacks
 /datum/outfit/backpack_user
 	name = "Mr. Runtime"
 	back = /obj/item/storage/backpack
-	backpack_contents = list(/obj/item/clothing/mask/cigarette/cigar/havana)
-
-
+	backpack_contents = list(/obj/item/cigarette/cigar/havana)
 
 /datum/unit_test/outfit_sanity/Run()
 	var/datum/outfit/prototype_outfit = /datum/outfit
 	var/prototype_name = initial(prototype_outfit.name)
 	var/mob/living/carbon/human/H = allocate(/mob/living/carbon/human/consistent)
 
-	for (var/outfit_type in subtypesof(/datum/outfit))
+	var/list/outfits_to_check = subtypesof(/datum/outfit)
+	outfits_to_check -= typesof(/datum/outfit/deathmatch_loadout)
+
+	for (var/outfit_type in outfits_to_check)
 		// Only make one human and keep undressing it because it's much faster
-		for (var/obj/item/I in H.get_equipped_items(include_pockets = TRUE))
+		for (var/obj/item/I in H.get_equipped_items(INCLUDE_POCKETS))
 			qdel(I)
 
 		var/datum/outfit/outfit = new outfit_type

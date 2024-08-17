@@ -1,3 +1,6 @@
+#define ACTIVATION_COST (0.3 * STANDARD_CELL_CHARGE)
+#define ACTIVATION_UP_KEEP (0.025 * STANDARD_CELL_RATE)
+
 /obj/item/borg_chameleon
 	name = "cyborg chameleon projector"
 	icon = 'icons/obj/devices/syndie_gadget.dmi'
@@ -11,8 +14,6 @@
 	var/friendlyName
 	var/savedName
 	var/active = FALSE
-	var/activationCost = 300
-	var/activationUpkeep = 50
 	var/disguise = "engineer"
 	var/mob/listeningTo
 	var/static/list/signalCache = list( // list here all signals that should break the camouflage
@@ -44,13 +45,13 @@
 	disrupt(user)
 
 /obj/item/borg_chameleon/attack_self(mob/living/silicon/robot/user)
-	if (user && user.cell && user.cell.charge >  activationCost)
+	if (user && user.cell && user.cell.charge >  ACTIVATION_COST)
 		if (isturf(user.loc))
 			toggle(user)
 		else
 			to_chat(user, span_warning("You can't use [src] while inside something!"))
 	else
-		to_chat(user, span_warning("You need at least [activationCost] charge in your cell to use [src]!"))
+		to_chat(user, span_warning("You need at least [display_energy(ACTIVATION_COST)] of charge in your cell to use [src]!"))
 
 /obj/item/borg_chameleon/proc/toggle(mob/living/silicon/robot/user)
 	if(active)
@@ -65,7 +66,7 @@
 		to_chat(user, span_notice("You activate \the [src]."))
 		playsound(src, 'sound/effects/seedling_chargeup.ogg', 100, TRUE, -6)
 		apply_wibbly_filters(user)
-		if (do_after(user, 50, target=user) && user.cell.use(activationCost))
+		if (do_after(user, 5 SECONDS, target = user, hidden = TRUE) && user.cell.use(ACTIVATION_COST))
 			playsound(src, 'sound/effects/bamf.ogg', 100, TRUE, -6)
 			to_chat(user, span_notice("You are now disguised as the Nanotrasen engineering borg \"[friendlyName]\"."))
 			activate(user)
@@ -75,9 +76,9 @@
 		remove_wibbly_filters(user)
 		animation_playing = FALSE
 
-/obj/item/borg_chameleon/process()
+/obj/item/borg_chameleon/process(seconds_per_tick)
 	if (user)
-		if (!user.cell || !user.cell.use(activationUpkeep))
+		if (!user.cell || !user.cell.use(ACTIVATION_UP_KEEP * seconds_per_tick))
 			disrupt(user)
 	else
 		return PROCESS_KILL
@@ -119,3 +120,6 @@
 	if(active)
 		to_chat(user, span_danger("Your chameleon field deactivates."))
 		deactivate(user)
+
+#undef ACTIVATION_COST
+#undef ACTIVATION_UP_KEEP

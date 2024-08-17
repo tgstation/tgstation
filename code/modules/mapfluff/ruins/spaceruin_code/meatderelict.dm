@@ -76,12 +76,12 @@
 	SEND_SIGNAL(src, COMSIG_PUZZLE_COMPLETED)
 	qdel(src)
 
-/obj/machinery/puzzle_button/meatderelict
+/obj/machinery/puzzle/button/meatderelict
 	name = "lockdown panel"
 	desc = "A panel that controls the lockdown of this outpost."
 	id = "md_prevault"
 
-/obj/machinery/puzzle_button/meatderelict/open_doors()
+/obj/machinery/puzzle/button/meatderelict/on_puzzle_complete()
 	. = ..()
 	playsound(src, 'sound/effects/alert.ogg', 100, TRUE)
 	visible_message(span_warning("[src] lets out an alarm as the lockdown is lifted!"))
@@ -89,7 +89,7 @@
 /obj/structure/puzzle_blockade/meat
 	name = "mass of meat and teeth"
 	desc = "A horrible mass of meat and teeth. Can it see you? You hope not. Virtually indestructible, must be a way around."
-	icon = 'icons/obj/structures.dmi'
+	icon = 'icons/obj/structures/tall.dmi'
 	icon_state = "meatblockade"
 	opacity = TRUE
 
@@ -121,7 +121,7 @@
 
 /obj/lightning_thrower/Initialize(mapload)
 	. = ..()
-	START_PROCESSING(SSprocessing, src) 
+	START_PROCESSING(SSprocessing, src)
 
 /obj/lightning_thrower/Destroy()
 	. = ..()

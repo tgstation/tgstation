@@ -4,7 +4,7 @@
 /datum/supply_pack/vending/bartending
 	name = "Booze-o-mat and Coffee Supply Crate"
 	desc = "Bring on the booze and coffee vending machine refills."
-	cost = CARGO_CRATE_VALUE * 4
+	cost = CARGO_CRATE_VALUE * 2
 	contains = list(/obj/item/vending_refill/boozeomat,
 					/obj/item/vending_refill/coffee,
 				)
@@ -14,7 +14,7 @@
 	name = "Cigarette Supply Crate"
 	desc = "Don't believe the reports - smoke today! Contains a \
 		cigarette vending machine refill."
-	cost = CARGO_CRATE_VALUE * 3
+	cost = CARGO_CRATE_VALUE * 2
 	contains = list(/obj/item/vending_refill/cigarette)
 	crate_name = "cigarette supply crate"
 	crate_type = /obj/structure/closet/crate
@@ -62,7 +62,7 @@
 /datum/supply_pack/vending/imported
 	name = "Imported Vending Machines"
 	desc = "Vending machines famous in other parts of the galaxy."
-	cost = CARGO_CRATE_VALUE * 8
+	cost = CARGO_CRATE_VALUE * 5
 	contains = list(/obj/item/vending_refill/sustenance,
 					/obj/item/vending_refill/robotics,
 					/obj/item/vending_refill/sovietsoda,
@@ -74,7 +74,7 @@
 	name = "Medical Vending Crate"
 	desc = "Contains one NanoMed Plus refill, one NanoDrug Plus refill, \
 		and one wall-mounted NanoMed refill."
-	cost = CARGO_CRATE_VALUE * 5
+	cost = CARGO_CRATE_VALUE * 3.5
 	contains = list(/obj/item/vending_refill/medical,
 					/obj/item/vending_refill/drugs,
 					/obj/item/vending_refill/wallmed,
@@ -85,7 +85,7 @@
 	name = "PTech Supply Crate"
 	desc = "Not enough cartridges after half the crew lost their PDA \
 		to explosions? This may fix it."
-	cost = CARGO_CRATE_VALUE * 3
+	cost = CARGO_CRATE_VALUE * 2.5
 	contains = list(/obj/item/vending_refill/cart)
 	crate_name = "\improper PTech supply crate"
 
@@ -103,7 +103,7 @@
 	name = "Snack Supply Crate"
 	desc = "One vending machine refill of cavity-bringin' goodness! \
 		The number one dentist recommended order!"
-	cost = CARGO_CRATE_VALUE * 3
+	cost = CARGO_CRATE_VALUE * 2
 	contains = list(/obj/item/vending_refill/snack)
 	crate_name = "snacks supply crate"
 
@@ -111,14 +111,14 @@
 	name = "Softdrinks Supply Crate"
 	desc = "Got whacked by a toolbox, but you still have those pesky teeth? \
 		Get rid of those pearly whites with this soda machine refill, today!"
-	cost = CARGO_CRATE_VALUE * 3
+	cost = CARGO_CRATE_VALUE * 2
 	contains = list(/obj/item/vending_refill/cola)
 	crate_name = "soft drinks supply crate"
 
 /datum/supply_pack/vending/vendomat
 	name = "Part-Mart & YouTool Supply Crate"
 	desc = "More tools for your IED testing facility."
-	cost = CARGO_CRATE_VALUE * 2
+	cost = CARGO_CRATE_VALUE * 3
 	contains = list(/obj/item/vending_refill/assist,
 					/obj/item/vending_refill/youtool,
 				)
@@ -138,7 +138,7 @@
 	name = "Autodrobe Supply Crate"
 	desc = "Autodrobe missing your favorite dress? Solve that issue today \
 		with this autodrobe refill."
-	cost = CARGO_CRATE_VALUE * 3
+	cost = CARGO_CRATE_VALUE * 2
 	contains = list(/obj/item/vending_refill/autodrobe)
 	crate_name = "autodrobe supply crate"
 
@@ -200,7 +200,7 @@
 	name = "Science Wardrobe Supply Crate"
 	desc = "This crate contains refills for the SciDrobe, \
 		GeneDrobe, and RoboDrobe."
-	cost = CARGO_CRATE_VALUE * 3
+	cost = CARGO_CRATE_VALUE * 4.5
 	contains = list(/obj/item/vending_refill/wardrobe/robo_wardrobe,
 					/obj/item/vending_refill/wardrobe/gene_wardrobe,
 					/obj/item/vending_refill/wardrobe/science_wardrobe,

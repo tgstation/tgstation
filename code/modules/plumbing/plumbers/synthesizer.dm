@@ -4,7 +4,6 @@
 	desc = "Produces a single chemical at a given volume. Must be plumbed. Most effective when working in unison with other chemical synthesizers, heaters and filters."
 	icon_state = "synthesizer"
 	icon = 'icons/obj/pipes_n_cables/hydrochem/plumbers.dmi'
-	active_power_usage = BASE_MACHINE_ACTIVE_CONSUMPTION * 2
 
 	///Amount we produce for every process. Ideally keep under 5 since thats currently the standard duct capacity
 	var/amount = 1
@@ -49,7 +48,7 @@
 	dispensable_reagents = default_reagents
 
 /obj/machinery/plumbing/synthesizer/process(seconds_per_tick)
-	if(machine_stat & NOPOWER || !reagent_id || !amount)
+	if(!is_operational || !reagent_id || !amount)
 		return
 
 	//otherwise we get leftovers, and we need this to be precise
@@ -57,7 +56,7 @@
 		return
 	reagents.add_reagent(reagent_id, amount)
 
-	use_power(active_power_usage)
+	use_energy(active_power_usage * seconds_per_tick)
 
 /obj/machinery/plumbing/synthesizer/ui_interact(mob/user, datum/tgui/ui)
 	ui = SStgui.try_update_ui(user, src, ui)
@@ -114,7 +113,7 @@
 /obj/machinery/plumbing/synthesizer/update_overlays()
 	. = ..()
 	var/mutable_appearance/r_overlay = mutable_appearance(icon, "[icon_state]_overlay")
-	r_overlay.color = reagent_id ? initial(reagent_id.color) : "#FFFFFF"
+	r_overlay.color = reagent_id ? initial(reagent_id.color) : COLOR_WHITE
 	. += r_overlay
 
 /obj/machinery/plumbing/synthesizer/soda

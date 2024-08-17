@@ -1,6 +1,3 @@
-/// List of available station goals for the crew to be working on
-GLOBAL_LIST_EMPTY_TYPED(station_goals, /datum/station_goal)
-
 /datum/station_goal
 	var/name = "Generic Goal"
 	var/weight = 1 //In case of multiple goals later.
@@ -30,13 +27,8 @@ GLOBAL_LIST_EMPTY_TYPED(station_goals, /datum/station_goal)
 	else
 		return "<li>[name] : [span_redtext("Failed!")]</li>"
 
-/datum/station_goal/Destroy()
-	GLOB.station_goals -= src
-	return ..()
-
 /datum/station_goal/Topic(href, href_list)
 	..()
-
 	if(!check_rights(R_ADMIN) || !usr.client.holder.CheckAdminHref(href, href_list))
 		return
 
@@ -45,3 +37,15 @@ GLOBAL_LIST_EMPTY_TYPED(station_goals, /datum/station_goal)
 		send_report()
 	else if(href_list["remove"])
 		qdel(src)
+
+/datum/station_goal/New()
+	if(type in SSstation.goals_by_type)
+		stack_trace("Creating a new station_goal of type [type] when one already exists in SSstation.goals_by_type this is not supported anywhere. I trust you tho")
+	else
+		SSstation.goals_by_type[type] = src
+	return ..()
+
+/datum/station_goal/Destroy(force)
+	if(SSstation.goals_by_type[type] == src)
+		SSstation.goals_by_type -= type
+	return ..()

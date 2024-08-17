@@ -32,7 +32,6 @@ var turfname = "";
 var imageRetryDelay = 500;
 var imageRetryLimit = 50;
 var menu = document.getElementById('menu');
-var under_menu = document.getElementById('under_menu');
 var statcontentdiv = document.getElementById('statcontent');
 var storedimages = [];
 var split_admin_tabs = false;
@@ -58,23 +57,23 @@ function createStatusTab(name) {
 	if (!verb_tabs.includes(name) && !permanent_tabs.includes(name)) {
 		return;
 	}
-	var B = document.createElement("BUTTON");
-	B.onclick = function () {
+	var button = document.createElement("DIV");
+	button.onclick = function () {
 		tab_change(name);
 		this.blur();
+		statcontentdiv.focus();
 	};
-	B.id = name;
-	B.textContent = name;
-	B.className = "button";
+	button.id = name;
+	button.textContent = name;
+	button.className = "button";
 	//ORDERING ALPHABETICALLY
-	B.style.order = name.charCodeAt(0);
+	button.style.order = name.charCodeAt(0);
 	if (name == "Status" || name == "MC") {
-		B.style.order = name == "Status" ? 1 : 2;
+		button.style.order = name == "Status" ? 1 : 2;
 	}
 	//END ORDERING
-	menu.appendChild(B);
+	menu.appendChild(button);
 	SendTabToByond(name);
-	under_menu.style.height = menu.clientHeight + 'px';
 }
 
 function removeStatusTab(name) {
@@ -88,7 +87,6 @@ function removeStatusTab(name) {
 	}
 	menu.removeChild(document.getElementById(name));
 	TakeTabFromByond(name);
-	under_menu.style.height = menu.clientHeight + 'px';
 }
 
 function sortVerbs() {
@@ -102,10 +100,6 @@ function sortVerbs() {
 		}
 		return 0;
 	})
-}
-
-window.onresize = function () {
-	under_menu.style.height = menu.clientHeight + 'px';
 }
 
 function addPermanentTab(name) {
@@ -361,6 +355,7 @@ function draw_status() {
 		} else {
 			var div = document.createElement("div");
 			div.textContent = status_tab_parts[i];
+			div.className = "status-info";
 			document.getElementById("statcontent").appendChild(div);
 		}
 	}
@@ -715,6 +710,10 @@ function set_theme(which) {
 		document.body.className = "dark";
 		set_style_sheet("browserOutput");
 	}
+}
+
+function set_font_size(size) {
+	document.body.style.setProperty('font-size', size);
 }
 
 function set_style_sheet(sheet) {

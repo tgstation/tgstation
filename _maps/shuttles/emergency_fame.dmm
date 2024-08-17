@@ -605,7 +605,6 @@
 /area/shuttle/escape/brig)
 "zc" = (
 /obj/structure/tank_dispenser/oxygen{
-	layer = 2.7;
 	pixel_x = -1;
 	pixel_y = 2
 	},
@@ -989,8 +988,7 @@
 /turf/open/floor/iron/dark,
 /area/shuttle/escape)
 "Wp" = (
-/obj/machinery/door/window/left/directional/west{
-	dir = 4;
+/obj/machinery/door/window/left/directional/east{
 	name = "Infirmary"
 	},
 /turf/open/floor/mineral/titanium/white,

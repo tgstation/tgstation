@@ -39,9 +39,9 @@ GLOBAL_LIST_INIT(creamable, typecacheof(list(
 			qdel(src)
 			return
 		bodypart_overlay = new()
-		if(carbon_parent.bodytype & BODYTYPE_SNOUTED) //stupid, but external organ bodytypes are not stored on the limb
+		if(carbon_parent.bodyshape & BODYSHAPE_SNOUTED) //stupid, but external organ bodytypes are not stored on the limb
 			bodypart_overlay.icon_state = "creampie_lizard"
-		else if(my_head.bodytype & BODYTYPE_MONKEY)
+		else if(my_head.bodyshape & BODYSHAPE_MONKEY)
 			bodypart_overlay.icon_state = "creampie_monkey"
 		else
 			bodypart_overlay.icon_state = "creampie_human"
@@ -50,9 +50,9 @@ GLOBAL_LIST_INIT(creamable, typecacheof(list(
 		carbon_parent.add_mood_event("creampie", /datum/mood_event/creampie)
 		carbon_parent.update_body_parts()
 	else if(iscorgi(parent))
-		normal_overlay = mutable_appearance('icons/effects/creampie.dmi', "creampie_corgi")
+		normal_overlay = mutable_appearance('icons/mob/effects/creampie.dmi', "creampie_corgi")
 	else if(isAI(parent))
-		normal_overlay = mutable_appearance('icons/effects/creampie.dmi', "creampie_ai")
+		normal_overlay = mutable_appearance('icons/mob/effects/creampie.dmi', "creampie_ai")
 
 	RegisterSignals(parent, list(
 		COMSIG_COMPONENT_CLEAN_ACT,

@@ -88,7 +88,7 @@
 	. = list()
 	.["possible_types"] = GLOB.wiremod_fundamental_types
 
-/obj/item/circuit_component/proccall/ui_status(mob/user)
+/obj/item/circuit_component/proccall/ui_status(mob/user, datum/ui_state/state)
 	if(!check_rights_for(user.client, R_VAREDIT))
 		return UI_CLOSE
 	return UI_INTERACTIVE

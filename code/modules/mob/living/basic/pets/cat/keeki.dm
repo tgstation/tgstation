@@ -35,6 +35,9 @@
 	)
 	AddElement(/datum/element/consumable_mob, reagents_list = on_consume)
 
+/mob/living/basic/pet/cat/cak/add_cell_sample()
+	return
+
 /mob/living/basic/pet/cat/cak/CheckParts(list/parts)
 	. = ..()
 	var/obj/item/organ/internal/brain/candidate = locate(/obj/item/organ/internal/brain) in contents

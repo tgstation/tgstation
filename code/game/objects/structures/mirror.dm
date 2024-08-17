@@ -18,7 +18,7 @@
 /obj/structure/mirror
 	name = "mirror"
 	desc = "Mirror mirror on the wall, who's the most robust of them all?"
-	icon = 'icons/obj/watercloset.dmi'
+	icon = 'icons/obj/structures/watercloset.dmi'
 	icon_state = "mirror"
 	movement_type = FLOATING
 	density = FALSE
@@ -31,10 +31,20 @@
 	var/race_flags = MIRROR_MAGIC
 	///List of all Races that can be chosen, decided by its Initialize.
 	var/list/selectable_races = list()
+	///Per-dir reflection filters
+	var/static/list/list/reflection_filters
 
 /obj/structure/mirror/Initialize(mapload)
 	. = ..()
-	update_choices()
+	var/static/matrix/reflection_matrix = matrix(0.75, 0, 0, 0, 0.75, 0)
+	var/datum/callback/can_reflect = CALLBACK(src, PROC_REF(can_reflect))
+	var/list/update_signals = list(COMSIG_ATOM_BREAK)
+	if (isnull(reflection_filters))
+		reflection_filters = list()
+		for (var/car_dir in GLOB.cardinals)
+			reflection_filters["[car_dir]"] = alpha_mask_filter(icon = icon('icons/obj/structures/watercloset.dmi', "mirror_mask", dir = car_dir))
+	AddComponent(/datum/component/reflection, reflection_filter = reflection_filters["[dir]"], reflection_matrix = reflection_matrix, can_reflect = can_reflect, update_signals = update_signals)
+	AddComponent(/datum/component/examine_balloon)
 
 /obj/structure/mirror/Destroy()
 	mirror_options = null
@@ -45,9 +55,11 @@
 	for(var/i in mirror_options)
 		mirror_options[i] = icon('icons/hud/radial.dmi', i)
 
+WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/structure/mirror)
+
 /obj/structure/mirror/Initialize(mapload)
 	. = ..()
-	var/static/list/reflection_filter = alpha_mask_filter(icon = icon('icons/obj/watercloset.dmi', "mirror_mask"))
+	var/static/list/reflection_filter = alpha_mask_filter(icon = icon('icons/obj/structures/watercloset.dmi', "mirror_mask"))
 	var/static/matrix/reflection_matrix = matrix(0.75, 0, 0, 0, 0.75, 0)
 	var/datum/callback/can_reflect = CALLBACK(src, PROC_REF(can_reflect))
 	var/list/update_signals = list(COMSIG_ATOM_BREAK)
@@ -61,11 +73,9 @@
 		return FALSE
 	return TRUE
 
-MAPPING_DIRECTIONAL_HELPERS(/obj/structure/mirror, 28)
-
 /obj/structure/mirror/Initialize(mapload)
 	. = ..()
-	find_and_hang_on_wall()
+	find_and_hang_on_wall(wall_layer = FLAT_ON_WALL_LAYER)
 
 /obj/structure/mirror/broken
 	icon_state = "mirror_broke"
@@ -74,7 +84,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/mirror, 28)
 	. = ..()
 	atom_break(null, mapload)
 
-MAPPING_DIRECTIONAL_HELPERS(/obj/structure/mirror/broken, 28)
+WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/structure/mirror/broken)
 
 /obj/structure/mirror/attack_hand(mob/living/carbon/human/user)
 	. = ..()
@@ -118,7 +128,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/mirror/broken, 28)
 			beard_dresser.set_facial_hairstyle("Shaved", update = TRUE)
 		return TRUE
 
-	var/new_style = tgui_input_list(beard_dresser, "Select a facial hairstyle", "Grooming", GLOB.facial_hairstyles_list)
+	var/new_style = tgui_input_list(beard_dresser, "Select a facial hairstyle", "Grooming", SSaccessories.facial_hairstyles_list)
 
 	if(isnull(new_style))
 		return TRUE
@@ -131,7 +141,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/mirror/broken, 28)
 	beard_dresser.set_facial_hairstyle(new_style, update = TRUE)
 
 /obj/structure/mirror/proc/change_hair(mob/living/carbon/human/hairdresser)
-	var/new_style = tgui_input_list(hairdresser, "Select a hairstyle", "Grooming", GLOB.hairstyles_list)
+	var/new_style = tgui_input_list(hairdresser, "Select a hairstyle", "Grooming", SSaccessories.hairstyles_list)
 	if(isnull(new_style))
 		return TRUE
 	if(HAS_TRAIT(hairdresser, TRAIT_BALD))
@@ -180,12 +190,11 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/mirror/broken, 28)
 	else if(HAS_TRAIT(race_changer, TRAIT_MUTANT_COLORS) && !HAS_TRAIT(race_changer, TRAIT_FIXED_MUTANT_COLORS))
 		var/new_mutantcolor = input(race_changer, "Choose your skin color:", "Race change", race_changer.dna.features["mcolor"]) as color|null
 		if(new_mutantcolor)
-			var/temp_hsv = RGBtoHSV(new_mutantcolor)
+			var/list/mutant_hsv = rgb2hsv(new_mutantcolor)
 
-			if(ReadHSV(temp_hsv)[3] >= ReadHSV("#7F7F7F")[3]) // mutantcolors must be bright
+			if(mutant_hsv[3] >= 50) // mutantcolors must be bright
 				race_changer.dna.features["mcolor"] = sanitize_hexcolor(new_mutantcolor)
 				race_changer.dna.update_uf_block(DNA_MUTANT_COLOR_BLOCK)
-
 			else
 				to_chat(race_changer, span_notice("Invalid color. Your color is not bright enough."))
 				return TRUE
@@ -261,7 +270,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/mirror/broken, 28)
 
 /obj/structure/mirror/atom_break(damage_flag, mapload)
 	. = ..()
-	if(broken || (obj_flags & NO_DECONSTRUCTION))
+	if(broken)
 		return
 	icon_state = "mirror_broke"
 	if(!mapload)
@@ -270,13 +279,11 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/mirror/broken, 28)
 		desc = "Oh no, seven years of bad luck!"
 	broken = TRUE
 
-/obj/structure/mirror/deconstruct(disassembled = TRUE)
-	if(!(obj_flags & NO_DECONSTRUCTION))
-		if(!disassembled)
-			new /obj/item/shard(loc)
-		else
-			new /obj/item/wallframe/mirror(loc)
-	qdel(src)
+/obj/structure/mirror/atom_deconstruct(disassembled = TRUE)
+	if(!disassembled)
+		new /obj/item/shard(loc)
+	else
+		new /obj/item/wallframe/mirror(loc)
 
 /obj/structure/mirror/welder_act(mob/living/user, obj/item/I)
 	..()
@@ -308,20 +315,21 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/mirror/broken, 28)
 /obj/item/wallframe/mirror
 	name = "mirror"
 	desc = "An unmounted mirror. Attach it to a wall to use."
-	icon = 'icons/obj/watercloset.dmi'
+	icon = 'icons/obj/structures/watercloset.dmi'
 	icon_state = "mirror"
 	custom_materials = list(
 		/datum/material/glass = SHEET_MATERIAL_AMOUNT,
 		/datum/material/silver = SHEET_MATERIAL_AMOUNT,
 	)
 	result_path = /obj/structure/mirror
-	pixel_shift = 28
 
 /obj/structure/mirror/magic
 	name = "magic mirror"
 	desc = "Turn and face the strange... face."
 	icon_state = "magic_mirror"
 	mirror_options = MAGIC_MIRROR_OPTIONS
+
+WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/structure/mirror/magic)
 
 /obj/structure/mirror/magic/Initialize(mapload)
 	. = ..()
@@ -334,7 +342,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/mirror/broken, 28)
 	selectable_races = sort_list(selectable_races)
 
 /obj/structure/mirror/magic/change_beard(mob/living/carbon/human/beard_dresser) // magical mirrors do nothing but give you the damn beard
-	var/new_style = tgui_input_list(beard_dresser, "Select a facial hairstyle", "Grooming", GLOB.facial_hairstyles_list)
+	var/new_style = tgui_input_list(beard_dresser, "Select a facial hairstyle", "Grooming", SSaccessories.facial_hairstyles_list)
 	if(isnull(new_style))
 		return TRUE
 	beard_dresser.set_facial_hairstyle(new_style, update = TRUE)

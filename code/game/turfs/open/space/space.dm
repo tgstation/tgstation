@@ -48,6 +48,7 @@ GLOBAL_LIST_EMPTY(starlight)
 	name = "\proper space"
 	overfloor_placed = FALSE
 	underfloor_accessibility = UNDERFLOOR_INTERACTABLE
+	rust_resistance = RUST_RESISTANCE_ABSOLUTE
 
 	temperature = TCMB
 	thermal_conductivity = OPEN_HEAT_TRANSFER_COEFFICIENT
@@ -228,10 +229,10 @@ GLOBAL_LIST_EMPTY(starlight)
 
 /turf/open/space/rcd_act(mob/user, obj/item/construction/rcd/the_rcd, list/rcd_data)
 	if(the_rcd.mode == RCD_TURF)
-		if(rcd_data["[RCD_DESIGN_PATH]"] == /turf/open/floor/plating/rcd)
+		if(rcd_data[RCD_DESIGN_PATH] == /turf/open/floor/plating/rcd)
 			place_on_top(/turf/open/floor/plating, flags = CHANGETURF_INHERIT_AIR)
 			return TRUE
-		else if(rcd_data["[RCD_DESIGN_PATH]"] == /obj/structure/lattice/catwalk)
+		else if(rcd_data[RCD_DESIGN_PATH] == /obj/structure/lattice/catwalk)
 			var/obj/structure/lattice/lattice = locate(/obj/structure/lattice, src)
 			if(lattice)
 				qdel(lattice)
@@ -242,8 +243,6 @@ GLOBAL_LIST_EMPTY(starlight)
 
 	return FALSE
 
-/turf/open/space/rust_heretic_act()
-	return FALSE
 
 /turf/open/space/attempt_lattice_replacement()
 	var/dest_x = destination_x
@@ -273,7 +272,6 @@ GLOBAL_LIST_EMPTY(starlight)
 	return INITIALIZE_HINT_LATELOAD
 
 /turf/open/space/openspace/LateInitialize()
-	. = ..()
 	AddElement(/datum/element/turf_z_transparency)
 
 /turf/open/space/openspace/Destroy()

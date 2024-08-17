@@ -1,10 +1,13 @@
 /mob/living/basic/mouse
+	SET_BASE_VISUAL_PIXEL(0, 10)
 	name = "mouse"
 	desc = "This cute little guy just loves the taste of uninsulated electrical cables. Isn't he adorable?"
 	icon_state = "mouse_gray"
 	icon_living = "mouse_gray"
 	icon_dead = "mouse_gray_dead"
 	held_state = "mouse_gray"
+	shadow_type = SHADOW_SMALL
+	shadow_offset_y = 2
 
 	maxHealth = 5
 	health = 5
@@ -63,7 +66,7 @@
 	if (tame)
 		faction |= FACTION_NEUTRAL
 	else
-		AddComponent(/datum/component/tameable, food_types = list(/obj/item/food/cheese), tame_chance = 100, after_tame = CALLBACK(src, PROC_REF(tamed)))
+		AddComponent(/datum/component/tameable, food_types = list(/obj/item/food/cheese), tame_chance = 100)
 
 /mob/living/basic/mouse/Destroy()
 	SSmobs.cheeserats -= src
@@ -117,11 +120,19 @@
 	. = ..(TRUE)
 	// Now if we were't ACTUALLY gibbed, spawn the dead mouse
 	if(!gibbed)
-		var/obj/item/food/deadmouse/mouse = new(loc)
-		mouse.copy_corpse(src)
-		if(HAS_TRAIT(src, TRAIT_BEING_SHOCKED))
-			mouse.desc = "They're toast."
-			mouse.add_atom_colour("#3A3A3A", FIXED_COLOUR_PRIORITY)
+		var/make_a_corpse = TRUE
+		var/place_to_make_corpse = loc
+		if(istype(loc, /obj/item/clothing/head/mob_holder))//If our mouse is dying in place holder we want to put the dead mouse where the place holder was
+			var/obj/item/clothing/head/mob_holder/found_holder = loc
+			place_to_make_corpse = found_holder.loc
+			if(istype(found_holder.loc, /obj/machinery/microwave))//Microwaves gib things that die when cooked, so we don't need to make a dead body too
+				make_a_corpse = FALSE
+		if(make_a_corpse)
+			var/obj/item/food/deadmouse/mouse = new(place_to_make_corpse)
+			mouse.copy_corpse(src)
+			if(HAS_TRAIT(src, TRAIT_BEING_SHOCKED))
+				mouse.desc = "They're toast."
+				mouse.add_atom_colour("#3A3A3A", FIXED_COLOUR_PRIORITY)
 	qdel(src)
 
 /mob/living/basic/mouse/UnarmedAttack(atom/attack_target, proximity_flag, list/modifiers)
@@ -148,7 +159,7 @@
 		to_chat(entered, span_notice("[icon2html(src, entered)] Squeak!"))
 
 /// Called when a mouse is hand-fed some cheese, it will stop being afraid of humans
-/mob/living/basic/mouse/proc/tamed(mob/living/tamer, obj/item/food/cheese/cheese)
+/mob/living/basic/mouse/tamed(mob/living/tamer, obj/item/food/cheese/cheese)
 	new /obj/effect/temp_visual/heart(loc)
 	faction |= FACTION_NEUTRAL
 	tame = TRUE
@@ -352,18 +363,16 @@
 
 	return ..()
 
-/obj/item/food/deadmouse/afterattack(obj/target, mob/living/user, proximity_flag)
-	. = ..()
-	if(proximity_flag && reagents && target.is_open_container())
-		. |= AFTERATTACK_PROCESSED_ITEM
-		// is_open_container will not return truthy if target.reagents doesn't exist
-		var/datum/reagents/target_reagents = target.reagents
-		var/trans_amount = reagents.maximum_volume - reagents.total_volume * (4 / 3)
-		if(target_reagents.has_reagent(/datum/reagent/fuel) && target_reagents.trans_to(src, trans_amount))
-			to_chat(user, span_notice("You dip [src] into [target]."))
-		else
-			to_chat(user, span_warning("That's a terrible idea."))
-		return .
+/obj/item/food/deadmouse/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
+	if(isnull(reagents) || !interacting_with.is_open_container())
+		return NONE
+
+	// is_open_container will not return truthy if target.reagents doesn't exist
+	var/datum/reagents/target_reagents = interacting_with.reagents
+	var/trans_amount = reagents.maximum_volume - reagents.total_volume * (4 / 3)
+	if(target_reagents.has_reagent(/datum/reagent/fuel) && target_reagents.trans_to(src, trans_amount))
+		to_chat(user, span_notice("You dip [src] into [interacting_with]."))
+		return ITEM_INTERACT_SUCCESS
 
 /obj/item/food/deadmouse/moldy
 	name = "moldy dead mouse"
@@ -416,6 +425,11 @@
 		BB_BASIC_MOB_CURRENT_TARGET = null, // heathen
 		BB_CURRENT_HUNTING_TARGET = null, // cheese
 		BB_LOW_PRIORITY_HUNTING_TARGET = null, // cable
+		BB_OWNER_SELF_HARM_RESPONSES = list(
+			"*me cleans its whiskers in disapproval.",
+			"*me squeaks sadly.",
+			"*me sheds a single small tear."
+		)
 	)
 
 	ai_traits = STOP_MOVING_WHEN_PULLED

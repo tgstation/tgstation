@@ -19,6 +19,8 @@
 	cost = 1
 	route = PATH_SIDE
 	poll_ignore_define = POLL_IGNORE_FIRE_SHARK
+	depth = 4
+	research_tree_icon_dir = EAST
 
 /datum/heretic_knowledge/spell/space_phase
 	name = "Space Phase"
@@ -32,12 +34,15 @@
 	spell_to_add = /datum/action/cooldown/spell/jaunt/space_crawl
 	cost = 1
 	route = PATH_SIDE
+	depth = 8
+	research_tree_icon_frame = 6
 
 /datum/heretic_knowledge/eldritch_coin
 	name = "Eldritch Coin"
 	desc = "Allows you to transmute a sheet of plasma and a diamond to create an Eldritch Coin. \
-		The coin will open or close nearby doors when landing on heads and bolt or unbolt nearby doors \
-		when landing on tails. If the coin gets inserted into an airlock it emags the door destroying the coin."
+		The coin will open or close nearby doors when landing on heads and toggle their bolts \
+		when landing on tails. If you insert the coin into an airlock, it will be consumed \
+		to fry its electronics, opening the airlock permanently unless bolted. "
 	gain_text = "The Mansus is a place of all sorts of sins. But greed held a special role."
 	next_knowledge = list(
 		/datum/heretic_knowledge/spell/cosmic_expansion,
@@ -50,3 +55,6 @@
 	result_atoms = list(/obj/item/coin/eldritch)
 	cost = 1
 	route = PATH_SIDE
+	research_tree_icon_path = 'icons/obj/economy.dmi'
+	research_tree_icon_state = "coin_heretic"
+	depth = 10

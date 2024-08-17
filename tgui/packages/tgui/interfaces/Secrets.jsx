@@ -301,13 +301,13 @@ const FunTab = (props) => {
             />
           </Stack.Item>
           <Stack.Item>
-            <NoticeBox
-              mb={0.0}
+            <Button
+              icon="plus"
+              lineHeight={lineHeightNormal}
               width={buttonWidthNormal}
-              height={lineHeightNormal}
-            >
-              Your admin button here, coder!
-            </NoticeBox>
+              content="Mass Heal everyone"
+              onClick={() => act('mass_heal')}
+            />
           </Stack.Item>
         </Stack>
       </Stack.Item>
@@ -354,13 +354,13 @@ const FunTab = (props) => {
             />
           </Stack.Item>
           <Stack.Item>
-            <NoticeBox
-              mb={0.0}
+            <Button
+              icon="robot"
+              lineHeight={lineHeightNormal}
               width={buttonWidthNormal}
-              height={lineHeightNormal}
-            >
-              Your admin button here, coder!
-            </NoticeBox>
+              content="Triple AI mode"
+              onClick={() => act('tripleAI')}
+            />
           </Stack.Item>
           <Stack.Item>
             <Button
@@ -482,8 +482,8 @@ const FunForYouTab = (props) => {
                 color="red"
                 icon="user-secret"
                 fluid
-                content="Everyone is the traitor"
-                onClick={() => act('traitor_all')}
+                content="Everyone is the antag"
+                onClick={() => act('antag_all')}
               />
             </NoticeBox>
           </Stack.Item>

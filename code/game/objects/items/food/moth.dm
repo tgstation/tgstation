@@ -9,6 +9,7 @@
 		Herbs are one such addition, and are particularly beloved."
 	icon = 'icons/obj/food/moth.dmi'
 	icon_state = "herby_cheese"
+	trash_type = /obj/item/reagent_containers/cup/bowl
 	food_reagents = list(/datum/reagent/consumable/nutriment/protein = 6)
 	tastes = list("cheese" = 1, "herbs" = 1)
 	foodtypes = DAIRY | VEGETABLES
@@ -419,6 +420,7 @@
 		they do eventually go bad- prompting them to be sold as surplus by the fleet. This particular one is, like most artificially-flavoured moth food, mixed-herb flavoured."
 	icon = 'icons/obj/food/moth.dmi'
 	icon_state = "sustenance_bar"
+	trash_type = /obj/item/trash/fleet_ration
 	food_reagents = list(/datum/reagent/consumable/nutriment = 20)
 	tastes = list("herbs" = 1)
 	foodtypes = VEGETABLES | GRAIN
@@ -460,6 +462,7 @@
 		it's just sorta what it's always been called."
 	icon = 'icons/obj/food/moth.dmi'
 	icon_state = "hua_mulan_congee"
+	trash_type = /obj/item/reagent_containers/cup/bowl
 	food_reagents = list(
 		/datum/reagent/consumable/nutriment = 6,
 		/datum/reagent/consumable/nutriment/vitamin = 10,
@@ -475,6 +478,7 @@
 	desc = "Polenta loaded with cheese, served with a few discs of fried eggplant and some tomato sauce. Lække!"
 	icon = 'icons/obj/food/moth.dmi'
 	icon_state = "fried_eggplant_polenta"
+	trash_type = /obj/item/reagent_containers/cup/bowl
 	food_reagents = list(
 		/datum/reagent/consumable/nutriment/protein = 12,
 		/datum/reagent/consumable/nutriment/vitamin = 6,
@@ -756,7 +760,7 @@
 		/datum/reagent/consumable/nutriment/vitamin = 5,
 	)
 	tastes = list("crust" = 1, "pesto" = 1, "cheese" = 1)
-	foodtypes = GRAIN | VEGETABLES | DAIRY | NUTS | RAW
+	foodtypes = GRAIN | VEGETABLES | DAIRY | NUTS
 	slice_type = /obj/item/food/pizzaslice/mothic_pesto
 	boxtag = "Presto Pesto"
 	crafting_complexity = FOOD_COMPLEXITY_5

@@ -77,7 +77,7 @@
 			whatever spark it once held long extinguished."
 
 ///signal called whenever a soulstone is smacked by a bible
-/obj/item/soulstone/proc/on_bible_smacked(datum/source, mob/living/user, direction)
+/obj/item/soulstone/proc/on_bible_smacked(datum/source, mob/living/user, ...)
 	SIGNAL_HANDLER
 	INVOKE_ASYNC(src, PROC_REF(attempt_exorcism), user)
 
@@ -119,7 +119,7 @@
 	for(var/mob/shade_to_convert in contents)
 		if(IS_CULTIST(shade_to_convert))
 			continue
-		shade_to_convert.mind?.add_antag_datum(/datum/antagonist/cult)
+		shade_to_convert.mind?.add_antag_datum(/datum/antagonist/cult/shade)
 
 	RegisterSignal(src, COMSIG_BIBLE_SMACKED)
 	return TRUE
@@ -180,7 +180,7 @@
 	if(M == user)
 		return
 	if(IS_CULTIST(M) && IS_CULTIST(user))
-		to_chat(user, span_cultlarge("\"Come now, do not capture your bretheren's soul.\""))
+		to_chat(user, span_cult_large("\"Come now, do not capture your bretheren's soul.\""))
 		return
 	if(theme == THEME_HOLY && IS_CULTIST(user))
 		hot_potato(user)
@@ -219,7 +219,9 @@
 				to_chat(captured_shade, span_bold("You have been released from your prison, \
 					but you are still bound to [user.real_name]'s will. Help [user.p_them()] succeed in \
 					[user.p_their()] goals at all costs."))
-
+		var/datum/antagonist/cult/shade/shade_datum = captured_shade.mind?.has_antag_datum(/datum/antagonist/cult/shade)
+		if(shade_datum)
+			shade_datum.release_time = world.time
 		on_release_spirits()
 
 /obj/item/soulstone/pre_attack(atom/A, mob/living/user, params)
@@ -258,15 +260,16 @@
 	icon = 'icons/mob/shells.dmi'
 	icon_state = "construct_cult"
 	desc = "A wicked machine used by those skilled in magical arts. It is inactive."
-
-/obj/structure/constructshell/examine(mob/user)
-	. = ..()
-	if(IS_CULTIST(user) || HAS_MIND_TRAIT(user, TRAIT_MAGICALLY_GIFTED) || user.stat == DEAD)
-		. += {"<span class='cult'>A construct shell, used to house bound souls from a soulstone.\n
+	var/extra_desc = {"<span class='cult'>A construct shell, used to house bound souls from a soulstone.\n
 		Placing a soulstone with a soul into this shell allows you to produce your choice of the following:\n
 		An <b>Artificer</b>, which can produce <b>more shells and soulstones</b>, as well as fortifications.\n
 		A <b>Wraith</b>, which does high damage and can jaunt through walls, though it is quite fragile.\n
 		A <b>Juggernaut</b>, which is very hard to kill and can produce temporary walls, but is slow.</span>"}
+
+/obj/structure/constructshell/examine(mob/user)
+	. = ..()
+	if(IS_CULTIST(user) || HAS_MIND_TRAIT(user, TRAIT_MAGICALLY_GIFTED) || user.stat == DEAD)
+		. += extra_desc
 
 /obj/structure/constructshell/attackby(obj/item/O, mob/user, params)
 	if(istype(O, /obj/item/soulstone))
@@ -312,15 +315,17 @@
 		return TRUE
 
 	to_chat(user, "[span_userdanger("Capture failed!")]: The soul has already fled its mortal frame. You attempt to bring it back...")
-
-	var/datum/callback/to_call = CALLBACK(src, PROC_REF(on_poll_concluded), user, victim)
-	AddComponent(/datum/component/orbit_poll, \
-		ignore_key = POLL_IGNORE_SHADE, \
-		job_bans = ROLE_CULTIST, \
-		to_call = to_call, \
-		title = "A shade" \
+	var/mob/chosen_one = SSpolling.poll_ghosts_for_target(
+		check_jobban = ROLE_CULTIST,
+		poll_time = 20 SECONDS,
+		checked_target = src,
+		ignore_category = POLL_IGNORE_SHADE,
+		alert_pic = /mob/living/basic/shade,
+		jump_target = src,
+		role_name_text = "a shade",
+		chat_text_border_icon = /mob/living/basic/shade,
 	)
-
+	on_poll_concluded(user, victim, chosen_one)
 	return TRUE //it'll probably get someone ;)
 
 ///captures a shade that was previously released from a soulstone.
@@ -338,6 +343,10 @@
 	to_chat(shade, span_notice("Your soul has been captured by [src]. \
 		Its arcane energies are reknitting your ethereal form."))
 
+	var/datum/antagonist/cult/shade/shade_datum = shade.mind?.has_antag_datum(/datum/antagonist/cult/shade)
+	if(shade_datum)
+		shade_datum.release_time = null
+
 	if(user != shade)
 		to_chat(user, "[span_info("<b>Capture successful!</b>:")] [shade.real_name]'s soul \
 			has been captured and stored within [src].")
@@ -354,8 +363,8 @@
 	var/construct_class = show_radial_menu(user, src, GLOB.construct_radial_images, custom_check = CALLBACK(src, PROC_REF(check_menu), user, shell), require_near = TRUE, tooltips = TRUE)
 	if(QDELETED(shell) || !construct_class)
 		return FALSE
-	make_new_construct_from_class(construct_class, theme, shade, user, FALSE, shell.loc)
 	shade.mind?.remove_antag_datum(/datum/antagonist/cult)
+	make_new_construct_from_class(construct_class, theme, shade, user, FALSE, shell.loc)
 	qdel(shell)
 	qdel(src)
 	return TRUE
@@ -391,7 +400,8 @@
 	if(user)
 		soulstone_spirit.faction |= "[REF(user)]" //Add the master as a faction, allowing inter-mob cooperation
 		if(IS_CULTIST(user))
-			soulstone_spirit.mind.add_antag_datum(/datum/antagonist/cult)
+			soulstone_spirit.mind.add_antag_datum(/datum/antagonist/cult/shade)
+			SSblackbox.record_feedback("tally", "cult_shade_created", 1)
 
 	soulstone_spirit.cancel_camera()
 	update_appearance()
@@ -420,7 +430,7 @@
 	// Cult shades get cult datum
 	if (user.mind.has_antag_datum(/datum/antagonist/cult))
 		shade.mind.remove_antag_datum(/datum/antagonist/shade_minion)
-		shade.mind.add_antag_datum(/datum/antagonist/cult)
+		shade.mind.add_antag_datum(/datum/antagonist/cult/shade)
 		return
 
 	// Only blessed soulstones can de-cult shades
@@ -451,63 +461,75 @@
 	switch(construct_class)
 		if(CONSTRUCT_JUGGERNAUT)
 			if(IS_CULTIST(creator))
-				makeNewConstruct(/mob/living/basic/construct/juggernaut, target, creator, cultoverride, loc_override) // ignore themes, the actual giving of cult info is in the makeNewConstruct proc
+				make_new_construct(/mob/living/basic/construct/juggernaut, target, creator, cultoverride, loc_override) // ignore themes, the actual giving of cult info is in the make_new_construct proc
+				SSblackbox.record_feedback("tally", "cult_shade_to_jugger", 1)
 				return
 			switch(theme)
 				if(THEME_WIZARD)
-					makeNewConstruct(/mob/living/basic/construct/juggernaut/mystic, target, creator, cultoverride, loc_override)
+					make_new_construct(/mob/living/basic/construct/juggernaut/mystic, target, creator, cultoverride, loc_override)
 				if(THEME_HOLY)
-					makeNewConstruct(/mob/living/basic/construct/juggernaut/angelic, target, creator, cultoverride, loc_override)
+					make_new_construct(/mob/living/basic/construct/juggernaut/angelic, target, creator, cultoverride, loc_override)
 				if(THEME_CULT)
-					makeNewConstruct(/mob/living/basic/construct/juggernaut, target, creator, cultoverride, loc_override)
+					make_new_construct(/mob/living/basic/construct/juggernaut, target, creator, cultoverride, loc_override)
 		if(CONSTRUCT_WRAITH)
 			if(IS_CULTIST(creator))
-				makeNewConstruct(/mob/living/basic/construct/wraith, target, creator, cultoverride, loc_override) // ignore themes, the actual giving of cult info is in the makeNewConstruct proc
+				make_new_construct(/mob/living/basic/construct/wraith, target, creator, cultoverride, loc_override) // ignore themes, the actual giving of cult info is in the make_new_construct proc
+				SSblackbox.record_feedback("tally", "cult_shade_to_wraith", 1)
 				return
 			switch(theme)
 				if(THEME_WIZARD)
-					makeNewConstruct(/mob/living/basic/construct/wraith/mystic, target, creator, cultoverride, loc_override)
+					make_new_construct(/mob/living/basic/construct/wraith/mystic, target, creator, cultoverride, loc_override)
 				if(THEME_HOLY)
-					makeNewConstruct(/mob/living/basic/construct/wraith/angelic, target, creator, cultoverride, loc_override)
+					make_new_construct(/mob/living/basic/construct/wraith/angelic, target, creator, cultoverride, loc_override)
 				if(THEME_CULT)
-					makeNewConstruct(/mob/living/basic/construct/wraith, target, creator, cultoverride, loc_override)
+					make_new_construct(/mob/living/basic/construct/wraith, target, creator, cultoverride, loc_override)
 		if(CONSTRUCT_ARTIFICER)
 			if(IS_CULTIST(creator))
-				makeNewConstruct(/mob/living/basic/construct/artificer, target, creator, cultoverride, loc_override) // ignore themes, the actual giving of cult info is in the makeNewConstruct proc
+				make_new_construct(/mob/living/basic/construct/artificer, target, creator, cultoverride, loc_override) // ignore themes, the actual giving of cult info is in the make_new_construct proc
+				SSblackbox.record_feedback("tally", "cult_shade_to_arti", 1)
 				return
 			switch(theme)
 				if(THEME_WIZARD)
-					makeNewConstruct(/mob/living/basic/construct/artificer/mystic, target, creator, cultoverride, loc_override)
+					make_new_construct(/mob/living/basic/construct/artificer/mystic, target, creator, cultoverride, loc_override)
 				if(THEME_HOLY)
-					makeNewConstruct(/mob/living/basic/construct/artificer/angelic, target, creator, cultoverride, loc_override)
+					make_new_construct(/mob/living/basic/construct/artificer/angelic, target, creator, cultoverride, loc_override)
 				if(THEME_CULT)
-					makeNewConstruct(/mob/living/basic/construct/artificer/noncult, target, creator, cultoverride, loc_override)
+					make_new_construct(/mob/living/basic/construct/artificer/noncult, target, creator, cultoverride, loc_override)
+		if(CONSTRUCT_HARVESTER)
+			if(IS_HERETIC_OR_MONSTER(creator))
+				make_new_construct(/mob/living/basic/construct/harvester/heretic, target, creator, cultoverride, loc_override)
+			else
+				make_new_construct(/mob/living/basic/construct/harvester, target, creator, cultoverride, loc_override)
 
-/proc/makeNewConstruct(mob/living/basic/construct/ctype, mob/target, mob/stoner = null, cultoverride = FALSE, loc_override = null)
+/proc/make_new_construct(mob/living/basic/construct/ctype, mob/target, mob/stoner = null, cultoverride = FALSE, loc_override = null)
 	if(QDELETED(target))
 		return
-	var/mob/living/basic/construct/newstruct = new ctype((loc_override) ? (loc_override) : (get_turf(target)))
+	var/mob/living/basic/construct/newstruct = new ctype(loc_override || get_turf(target))
 	var/makeicon = newstruct.icon_state
 	var/theme = newstruct.theme
 	flick("make_[makeicon][theme]", newstruct)
 	playsound(newstruct, 'sound/effects/constructform.ogg', 50)
 	if(stoner)
 		newstruct.faction |= "[REF(stoner)]"
-		newstruct.master = stoner
-		var/datum/action/innate/seek_master/SM = new()
-		SM.Grant(newstruct)
-	newstruct.key = target.key
-	var/atom/movable/screen/alert/bloodsense/BS
-	if(newstruct.mind && ((stoner && IS_CULTIST(stoner)) || cultoverride) && SSticker.HasRoundStarted())
+		newstruct.construct_master = stoner
+		var/datum/action/innate/seek_master/seek_master = new
+		seek_master.Grant(newstruct)
+
+	if (isnull(target.mind))
+		newstruct.key = target.key
+	else
+		target.mind.transfer_to(newstruct, force_key_move = TRUE)
+	var/atom/movable/screen/alert/bloodsense/sense_alert
+	if(newstruct.mind && !IS_CULTIST(newstruct) && ((stoner && IS_CULTIST(stoner)) || cultoverride) && SSticker.HasRoundStarted())
 		newstruct.mind.add_antag_datum(/datum/antagonist/cult/construct)
 	if(IS_CULTIST(stoner) || cultoverride)
-		to_chat(newstruct, "<b>You are still bound to serve the cult[stoner ? " and [stoner]":""], follow [stoner ? stoner.p_their() : "their"] orders and help [stoner ? stoner.p_them() : "them"] complete [stoner ? stoner.p_their() : "their"] goals at all costs.</b>")
+		to_chat(newstruct, span_cult_bold("You are still bound to serve the cult[stoner ? " and [stoner]" : ""], follow [stoner?.p_their() || "their"] orders and help [stoner?.p_them() || "them"] complete [stoner?.p_their() || "their"] goals at all costs."))
 	else if(stoner)
-		to_chat(newstruct, "<b>You are still bound to serve your creator, [stoner], follow [stoner.p_their()] orders and help [stoner.p_them()] complete [stoner.p_their()] goals at all costs.</b>")
+		to_chat(newstruct, span_boldwarning("You are still bound to serve your creator, [stoner], follow [stoner.p_their()] orders and help [stoner.p_them()] complete [stoner.p_their()] goals at all costs."))
 	newstruct.clear_alert("bloodsense")
-	BS = newstruct.throw_alert("bloodsense", /atom/movable/screen/alert/bloodsense)
-	if(BS)
-		BS.Cviewer = newstruct
+	sense_alert = newstruct.throw_alert("bloodsense", /atom/movable/screen/alert/bloodsense)
+	if(sense_alert)
+		sense_alert.construct_owner = newstruct
 	newstruct.cancel_camera()
 
 /obj/item/soulstone/anybody

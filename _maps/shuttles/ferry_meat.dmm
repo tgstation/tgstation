@@ -4,7 +4,7 @@
 /area/template_noop)
 "b" = (
 /obj/machinery/power/shuttle_engine/propulsion{
-	dir = 4
+	dir = 8
 	},
 /turf/closed/wall/mineral/titanium,
 /area/shuttle/transport)
@@ -105,7 +105,7 @@
 	dir = 8;
 	shuttle_id = "ferry";
 	name = "ferry shuttle";
-	port_direction = 2
+	preferred_direction = 4
 	},
 /turf/open/floor/iron/freezer,
 /area/shuttle/transport)

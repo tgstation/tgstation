@@ -28,7 +28,7 @@
 		return
 	var/time_remaining_desc = ""
 	if (minimum_time >= world.time - SSticker.round_start_time)
-		time_remaining_desc = "<i>This ritual will be available to begin invoking in [DisplayTimeText(minimum_time - world.time - SSticker.round_start_time)]</i>"
+		time_remaining_desc = " <i>This ritual will be available to begin invoking in [DisplayTimeText(minimum_time - world.time - SSticker.round_start_time)]</i>"
 	var/datum/radial_menu_choice/choice = new()
 	choice.name = name
 	choice.image = image(icon = icon, icon_state = icon_state)

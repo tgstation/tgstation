@@ -1,5 +1,6 @@
 //Defines for atom layers and planes
 //KEEP THESE IN A NICE ACSCENDING ORDER, PLEASE
+//Reminder to everyone that planes override layers: things on the same plane will sort in order of layers
 
 //NEVER HAVE ANYTHING BELOW THIS PLANE ADJUST IF YOU NEED MORE SPACE
 #define LOWEST_EVER_PLANE -50
@@ -13,18 +14,25 @@
 #define PLANE_SPACE -21
 #define PLANE_SPACE_PARALLAX -20
 
-#define GRAVITY_PULSE_PLANE -12
+#define GRAVITY_PULSE_PLANE -19
 #define GRAVITY_PULSE_RENDER_TARGET "*GRAVPULSE_RENDER_TARGET"
 
-#define RENDER_PLANE_TRANSPARENT -11 //Transparent plane that shows openspace underneath the floor
+#define RENDER_PLANE_TRANSPARENT -18 //Transparent plane that shows openspace underneath the floor
+#define TRANSPARENT_FLOOR_PLANE -13
 
-#define TRANSPARENT_FLOOR_PLANE -10
-
-#define FLOOR_PLANE -6
-
-#define WALL_PLANE -5
-#define GAME_PLANE -4
-#define ABOVE_GAME_PLANE -3
+#define FLOOR_PLANE -12
+#define FLOOR_PLANE_RENDER_TARGET "*FLOOR_PLANE"
+#define WALL_PLANE -11
+#define GAME_PLANE -10
+#define ABOVE_GAME_PLANE -9
+#define HIDDEN_WALL_PLANE -8
+#define FRILL_PLANE -7
+#define RENDER_PLANE_WALL_WEATHER_MASK -6
+#define WALL_WEATHER_MASK_RENDER_TARGET "*RENDER_PLANE_WALL_WEATHER_MASK"
+#define FRILL_MASK_PLANE -5
+#define RENDER_PLANE_FRILL -4
+#define FRILL_MASK_RENDER_TARGET "*FRILL_MASK_PLANE"
+#define OVER_FRILL_PLANE -3
 ///Slightly above the game plane but does not catch mouse clicks. Useful for certain visuals that should be clicked through, like seethrough trees
 #define SEETHROUGH_PLANE -2
 
@@ -33,9 +41,15 @@
 #define DEFAULT_PLANE 0 //Marks out the default plane, even if we don't use it
 
 #define AREA_PLANE 2
-#define MASSIVE_OBJ_PLANE 3
-#define GHOST_PLANE 4
-#define POINT_PLANE 5
+#define WEATHER_MASK_PLANE 3
+#define WEATHER_MASK_RENDER_TARGET "*WEATHER_MASK_PLANE"
+#define WEATHER_PLANE 4
+#define WEATHER_FRILL_PLANE 5
+
+#define MASSIVE_OBJ_PLANE 6
+#define GHOST_PLANE 7
+#define POINT_PLANE 8
+
 
 //---------- LIGHTING -------------
 ///Normal 1 per turf dynamic lighting underlays
@@ -43,7 +57,10 @@
 
 ///Lighting objects that are "free floating"
 #define O_LIGHTING_VISUAL_PLANE 11
-#define O_LIGHTING_VISUAL_RENDER_TARGET "O_LIGHT_VISUAL_PLANE"
+#define O_LIGHTING_VISUAL_RENDER_TARGET "*O_LIGHT_VISUAL_PLANE"
+
+#define DARKNESS_MASK_PLANE 12
+#define DARKNESS_MASK_RENDER_TARGET "*DARKNESS_MASK_PLANE"
 
 #define EMISSIVE_PLANE 13
 /// This plane masks out lighting to create an "emissive" effect, ie for glowing lights in otherwise dark areas.
@@ -54,6 +71,9 @@
 #define EMISSIVE_FLOOR_LAYER 2
 #define EMISSIVE_SPACE_LAYER 3
 #define EMISSIVE_WALL_LAYER 4
+#define EMISSIVE_PLANE_LAYER 5
+#define EMISSIVE_FRILL_LAYER 6
+#define EMISSIVE_FRILL_PLANE_LAYER 7
 
 #define RENDER_PLANE_LIGHTING 15
 
@@ -64,6 +84,8 @@
 
 ///Things that should render ignoring lighting
 #define ABOVE_LIGHTING_PLANE 17
+#define WEATHER_GLOW_PLANE 18
+#define WEATHER_FRILL_GLOW_PLANE 19
 
 ///---------------- MISC -----------------------
 
@@ -84,6 +106,8 @@
 #define RUNECHAT_PLANE 30
 /// Plane for balloon text (text that fades up)
 #define BALLOON_CHAT_PLANE 31
+/// Plane for the wallmount balloons
+#define EXAMINE_BALLOONS_PLANE 32
 
 //-------------------- HUD ---------------------
 //HUD layer defines
@@ -122,25 +146,36 @@
 // PLANE_SPACE layer(s)
 #define SPACE_LAYER 1.8
 
-//#define TURF_LAYER 2 //For easy recordkeeping; this is a byond define. Most floors (FLOOR_PLANE) and walls (WALL_PLANE) use this.
+// placed here for documentation. Byond's default turf layer
+// We do not use it, as different turfs render on different planes
+// #define TURF_LAYER 2
+#define TURF_LAYER 2 #error TURF_LAYER is no longer supported, please be more specific
 
-//FLOOR_PLANE layers
-#define TURF_PLATING_DECAL_LAYER 2.001
-#define TURF_DECAL_LAYER 2.009 //Makes turf decals appear in DM how they will look inworld.
-#define CULT_OVERLAY_LAYER 2.01
-#define MID_TURF_LAYER 2.02
-#define HIGH_TURF_LAYER 2.03
-#define LATTICE_LAYER 2.04
-#define DISPOSAL_PIPE_LAYER 2.042
-#define WIRE_LAYER 2.044
-#define GLASS_FLOOR_LAYER 2.046
-#define TRAM_RAIL_LAYER 2.047
-#define ABOVE_OPEN_TURF_LAYER 2.049
+// FLOOR_PLANE layer(s)
+// We need to force this plane to render as if we were not using sidemap
+// this allows larger then bound floors to layer as we'd expect
+// ANYTHING on the floor plane needs TOPDOWN_LAYER, and nothing that isn't on the floor plane can have it
 
-//WALL_PLANE layers
-#define CLOSED_TURF_LAYER 2.05
+// NOTICE: we break from the pattern of increasing in steps of like 0.01 here
+// Because TOPDOWN_LAYER is 10000 and that's enough to floating point our modifications away
+#define LOW_FLOOR_LAYER (1 + TOPDOWN_LAYER)
+#define TURF_PLATING_DECAL_LAYER (2 + TOPDOWN_LAYER)
+#define TURF_DECAL_LAYER (3 + TOPDOWN_LAYER) //Makes turf decals appear in DM how they will look inworld.
+#define CULT_OVERLAY_LAYER (4 + TOPDOWN_LAYER)
+#define MID_TURF_LAYER (5 + TOPDOWN_LAYER)
+#define HIGH_TURF_LAYER (6 + TOPDOWN_LAYER)
+#define LATTICE_LAYER (7 + TOPDOWN_LAYER)
+#define DISPOSAL_PIPE_LAYER (8 + TOPDOWN_LAYER)
+#define WIRE_LAYER (9 + TOPDOWN_LAYER)
+#define GLASS_FLOOR_LAYER (10 + TOPDOWN_LAYER)
+#define TRAM_RAIL_LAYER (11 + TOPDOWN_LAYER)
+#define ABOVE_OPEN_TURF_LAYER (12 + TOPDOWN_LAYER)
+///catwalk overlay of /turf/open/floor/plating/catwalk_floor
+#define CATWALK_LAYER (13 + TOPDOWN_LAYER)
 
-// GAME_PLANE layers
+//GAME_PLANE layers
+#define BELOW_CLOSED_TURF_LAYER 2.053
+#define CLOSED_TURF_LAYER 2.058
 #define BULLET_HOLE_LAYER 2.06
 #define ABOVE_NORMAL_TURF_LAYER 2.08
 #define GAS_PIPE_HIDDEN_LAYER 2.35 //layer = initial(layer) + piping_layer / 1000 in atmospherics/update_icon() to determine order of pipe overlap
@@ -153,8 +188,6 @@
 #define PLUMBING_PIPE_VISIBILE_LAYER 2.495//layer = initial(layer) + ducting_layer / 3333 in atmospherics/handle_layer() to determine order of duct overlap
 #define BOT_PATH_LAYER 2.497
 #define LOW_OBJ_LAYER 2.5
-///catwalk overlay of /turf/open/floor/plating/catwalk_floor
-#define CATWALK_LAYER 2.51
 #define LOW_SIGIL_LAYER 2.52
 #define SIGIL_LAYER 2.53
 #define HIGH_PIPE_LAYER 2.54
@@ -165,40 +198,53 @@
 #define TRAM_FLOOR_LAYER 2.58
 #define TRAM_WALL_LAYER 2.59
 
-#define BELOW_OPEN_DOOR_LAYER 2.6
+//Walls draw below
+//We draw them to the game plane so we can take advantage of SIDE_MAP for em
+//Need to cover for the whole "things below us" with position offsetting with pixel_y/z rather just one or the other
+#define UNDER_WALL_LAYER 2.66
+#define WALL_LAYER 2.67
+#define ABOVE_WALL_LAYER 2.68
+#define WALL_CLICKCATCH_LAYER 2.69
+#define FLAT_ON_WALL_LAYER 2.70 // wall mounts that lie flat against the wall or are generally less important gameplay-wise (such as signs)
+#define ON_WALL_LAYER 2.71 // normal wall mounts
+#define HIGH_ON_WALL_LAYER 2.72 // wall mounts that hang high on the wall (light fixtures)
+
+#define BELOW_OPEN_DOOR_LAYER 2.74
 ///Anything below this layer is to be considered completely (visually) under water by the immerse layer.
-#define WATER_LEVEL_LAYER 2.61
-#define BLASTDOOR_LAYER 2.65
-#define OPEN_DOOR_LAYER 2.7
-#define DOOR_ACCESS_HELPER_LAYER 2.71 //keep this above OPEN_DOOR_LAYER, special layer used for /obj/effect/mapping_helpers/airlock/access
-#define DOOR_HELPER_LAYER 2.72 //keep this above DOOR_ACCESS_HELPER_LAYER and OPEN_DOOR_LAYER since the others tend to have tiny sprites that tend to be covered up.
-#define PROJECTILE_HIT_THRESHHOLD_LAYER 2.75 //projectiles won't hit objects at or below this layer if possible
-#define TABLE_LAYER 2.8
-#define GATEWAY_UNDERLAY_LAYER 2.85
-#define BELOW_OBJ_LAYER 2.9
-#define LOW_ITEM_LAYER 2.95
+#define WATER_LEVEL_LAYER 2.76
+#define BLASTDOOR_LAYER 2.78
+#define OPEN_DOOR_LAYER 2.8
+#define DOOR_ACCESS_HELPER_LAYER 2.83 //keep this above OPEN_DOOR_LAYER, special layer used for /obj/effect/mapping_helpers/airlock/access
+#define DOOR_HELPER_LAYER 2.85 //keep this above DOOR_ACCESS_HELPER_LAYER and OPEN_DOOR_LAYER since the others tend to have tiny sprites that tend to be covered up.
+#define PROJECTILE_HIT_THRESHHOLD_LAYER 2.88 //projectiles won't hit objects at or below this layer if possible
+#define TABLE_LAYER 2.9
+#define BELOW_OBJ_LAYER 2.95
+#define LOW_ITEM_LAYER 2.98
 //#define OBJ_LAYER 3 //For easy recordkeeping; this is a byond define
-#define CLOSED_DOOR_LAYER 3.1
-#define CLOSED_FIREDOOR_LAYER 3.11
-#define ABOVE_OBJ_LAYER 3.2
-#define CLOSED_BLASTDOOR_LAYER 3.3 // ABOVE WINDOWS AND DOORS
-#define SHUTTER_LAYER 3.3 // HERE BE DRAGONS
-#define ABOVE_WINDOW_LAYER 3.3
-#define SIGN_LAYER 3.4
-#define CORGI_ASS_PIN_LAYER 3.41
-#define NOT_HIGH_OBJ_LAYER 3.5
-#define HIGH_OBJ_LAYER 3.6
-#define BELOW_MOB_LAYER 3.7
-#define LOW_MOB_LAYER 3.75
-#define LYING_MOB_LAYER 3.8
+#define CLOSED_DOOR_LAYER 3.55
+#define CLOSED_FIREDOOR_LAYER 3.58
+#define ABOVE_OBJ_LAYER 3.6
+#define CLOSED_BLASTDOOR_LAYER 3.63 // ABOVE WINDOWS AND DOORS
+#define SHUTTER_LAYER 3.65 // HERE BE DRAGONS
+#define ABOVE_WINDOW_LAYER 3.68
+#define SIGN_LAYER 3.7
+#define CORGI_ASS_PIN_LAYER 3.73
+#define NOT_HIGH_OBJ_LAYER 3.75
+#define HIGH_OBJ_LAYER 3.78
+#define BELOW_MOB_LAYER 3.8
+
+#define LOW_MOB_LAYER 3.83
+#define LYING_MOB_LAYER 3.88
 #define VEHICLE_LAYER 3.9
 #define MOB_BELOW_PIGGYBACK_LAYER 3.94
 //#define MOB_LAYER 4 //For easy recordkeeping; this is a byond define
 #define MOB_SHIELD_LAYER 4.01
 #define MOB_ABOVE_PIGGYBACK_LAYER 4.06
 #define MOB_UPPER_LAYER 4.07
-#define HITSCAN_PROJECTILE_LAYER 4.09 //above all mob but still hidden by FoV
+#define HITSCAN_PROJECTILE_LAYER 4.09
 #define ABOVE_MOB_LAYER 4.1
+#define SHIELD_WALL_LAYER 4.2
+#define SHIELD_GENERATOR_LAYER 4.24
 #define WALL_OBJ_LAYER 4.25
 #define TRAM_SIGNAL_LAYER 4.26
 #define EDGED_TURF_LAYER 4.3
@@ -209,12 +255,13 @@
 
 // Intermediate layer used by both GAME_PLANE and ABOVE_GAME_PLANE
 #define ABOVE_ALL_MOB_LAYER 4.7
-
-// ABOVE_GAME_PLANE layers
 #define NAVIGATION_EYE_LAYER 4.9
 //#define FLY_LAYER 5 //For easy recordkeeping; this is a byond define
+#define ABOVE_TREE_LAYER 5.01
+#define HIGH_BUBBLE_LAYER 5.03
 #define GASFIRE_LAYER 5.05
 #define RIPPLE_LAYER 5.1
+#define HIGHEST_GAME_LAYER 5.2
 
 /**
  * The layer of the visual overlay used in the submerge element.
@@ -239,7 +286,6 @@
 #define LIGHTING_PRIMARY_LAYER 15
 /// Stuff that needs to draw above everything else on this plane
 #define LIGHTING_ABOVE_ALL 20
-
 
 //---------- EMISSIVES -------------
 //Layering order of these is not particularly meaningful.
@@ -280,12 +326,9 @@
 /// Layer for light overlays
 #define LIGHT_DEBUG_LAYER 6
 
-#define LOBBY_BACKGROUND_LAYER 3
-#define LOBBY_BUTTON_LAYER 4
-
 ///Layer for lobby menu collapse button
 #define LOBBY_BELOW_MENU_LAYER 2
-///Layer for lobby menu background image and main buttons (Join/Ready, Observe, Charater Prefs)
+///Layer for lobby menu background image and main buttons (Join/Ready, Observe, Character Prefs)
 #define LOBBY_MENU_LAYER 3
 ///Layer for lobby menu shutter, which covers up the menu to collapse/expand it
 #define LOBBY_SHUTTER_LAYER 4
@@ -312,9 +355,21 @@
 
 #define PLANE_CRITICAL_FUCKO_PARALLAX (PLANE_CRITICAL_DISPLAY|PLANE_CRITICAL_NO_RELAY|PLANE_CRITICAL_CUT_RENDER)
 
+//---------- Plane Master offsetting_flags -------------
+// Describes how different plane masters behave regarding being offset
+/// This plane master will not be offset itself, existing only once with an offset of 0
+/// Mostly used for planes that really don't need to be duplicated, like the hud planes
+#define BLOCKS_PLANE_OFFSETTING (1<<0)
+/// This plane master will have its relays offset to match the highest rendering plane that matches the target
+/// Required for making things like the blind fullscreen not render over runechat
+#define OFFSET_RELAYS_MATCH_HIGHEST (1<<1)
+
 /// A value of /datum/preference/numeric/multiz_performance that disables the option
 #define MULTIZ_PERFORMANCE_DISABLE -1
 /// We expect at most 3 layers of multiz
 /// Increment this define if you make a huge map. We unit test for it too just to make it easy for you
 /// If you modify this, you'll need to modify the tsx file too
 #define MAX_EXPECTED_Z_DEPTH 3
+
+/// Shifts "flat" sprites up on their tile, to give the illusion of depth
+#define DEPTH_OFFSET 12

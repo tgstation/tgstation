@@ -32,9 +32,9 @@
 	if(!user.client.prefs.read_preference(/datum/preference/toggle/tgui_input))
 		if(encode)
 			if(multiline)
-				return stripped_multiline_input(user, message, title, default, max_length)
+				return stripped_multiline_input(user, message, title, default, PREVENT_CHARACTER_TRIM_LOSS(max_length))
 			else
-				return stripped_input(user, message, title, default, max_length)
+				return stripped_input(user, message, title, default, PREVENT_CHARACTER_TRIM_LOSS(max_length))
 		else
 			if(multiline)
 				return input(user, message, title, default) as message|null
@@ -140,9 +140,9 @@
 	switch(action)
 		if("submit")
 			if(max_length)
-				if(length(params["entry"]) > max_length)
+				if(length_char(params["entry"]) > max_length)
 					CRASH("[usr] typed a text string longer than the max length")
-				if(encode && (length(html_encode(params["entry"])) > max_length))
+				if(encode && (length_char(html_encode(params["entry"])) > max_length))
 					to_chat(usr, span_notice("Your message was clipped due to special character usage."))
 			set_entry(params["entry"])
 			closed = TRUE
@@ -162,4 +162,4 @@
 /datum/tgui_input_text/proc/set_entry(entry)
 	if(!isnull(entry))
 		var/converted_entry = encode ? html_encode(entry) : entry
-		src.entry = trim(converted_entry, max_length)
+		src.entry = trim(converted_entry, PREVENT_CHARACTER_TRIM_LOSS(max_length))

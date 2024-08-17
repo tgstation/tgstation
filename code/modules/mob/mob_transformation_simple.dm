@@ -2,7 +2,7 @@
 //This proc is the most basic of the procs. All it does is make a new mob on the same tile and transfer over a few variables.
 //Returns the new mob
 //Note that this proc does NOT do MMI related stuff!
-/mob/proc/change_mob_type(new_type = null, turf/location = null, new_name = null as text, delete_old_mob = FALSE)
+/mob/proc/change_mob_type(new_type = null, turf/location = null, new_name = null as text|null, delete_old_mob = FALSE)
 
 	if(isnewplayer(src))
 		to_chat(usr, span_danger("Cannot convert players who have not entered yet."))
@@ -68,6 +68,15 @@
 		mind.transfer_to(desired_mob, 1) // second argument to force key move to new mob
 	else
 		desired_mob.key = key
+
+	if(desired_mob.base_pixel_x)
+		desired_mob.pixel_x = desired_mob.base_pixel_x
+	if(desired_mob.base_pixel_y)
+		desired_mob.pixel_y = desired_mob.base_pixel_y
+	if(desired_mob.base_pixel_x)
+		desired_mob.pixel_w = desired_mob.base_pixel_w
+	if(desired_mob.base_pixel_y)
+		desired_mob.pixel_z = desired_mob.base_pixel_z
 
 	SEND_SIGNAL(src, COMSIG_MOB_CHANGED_TYPE, desired_mob)
 	if(delete_old_mob)

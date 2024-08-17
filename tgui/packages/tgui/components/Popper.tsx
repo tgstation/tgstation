@@ -1,100 +1,99 @@
-import { createPopper, Placement } from '@popperjs/core';
-import { ArgumentsOf } from 'common/types';
+import { Placement } from '@popperjs/core';
 import {
   PropsWithChildren,
-  useCallback,
+  ReactNode,
   useEffect,
-  useMemo,
   useRef,
+  useState,
 } from 'react';
-import { CSSProperties, JSXElementConstructor, ReactElement } from 'react';
-import { createPortal } from 'react-dom';
+import { usePopper } from 'react-popper';
 
-type Props = {
+type RequiredProps = {
+  /** The content to display in the popper */
+  content: ReactNode;
+  /** Whether the popper is open */
   isOpen: boolean;
-  popperContent: ReactElement<any, string | JSXElementConstructor<any>> | null;
-} & Partial<{
-  additionalStyles: CSSProperties;
-  autoFocus: boolean;
+};
+
+type OptionalProps = Partial<{
+  /** Called when the user clicks outside the popper */
   onClickOutside: () => void;
-  options: ArgumentsOf<typeof createPopper>[2];
+  /** Where to place the popper relative to the reference element */
   placement: Placement;
-}> &
-  PropsWithChildren;
+  /** Base z-index of the popper div
+   * @default 5
+   */
+  baseZIndex: number;
+}>;
 
-export function Popper(props: Props) {
-  const {
-    additionalStyles,
-    autoFocus,
-    children,
-    isOpen,
-    placement,
-    popperContent,
-    options = {},
-    onClickOutside,
-  } = props;
+type Props = RequiredProps & OptionalProps;
 
-  const parentRef = useRef<HTMLDivElement | null>(null);
+/**
+ * ## Popper
+ *  Popper lets you position elements so that they don't go out of the bounds of the window.
+ * @url https://popper.js.org/react-popper/ for more information.
+ */
+export function Popper(props: PropsWithChildren<Props>) {
+  const { children, content, isOpen, onClickOutside, placement } = props;
+
+  const [referenceElement, setReferenceElement] =
+    useState<HTMLDivElement | null>(null);
+  const [popperElement, setPopperElement] = useState<HTMLDivElement | null>(
+    null,
+  );
+
+  // One would imagine we could just use useref here, but it's against react-popper documentation and causes a positioning bug
+  // We still need them to call focus and clickoutside events :(
   const popperRef = useRef<HTMLDivElement | null>(null);
+  const parentRef = useRef<HTMLDivElement | null>(null);
 
-  const handleClickOutside = useCallback((event: MouseEvent) => {
+  const { styles, attributes } = usePopper(referenceElement, popperElement, {
+    placement,
+  });
+
+  /** Close the popper when the user clicks outside */
+  function handleClickOutside(event: MouseEvent) {
     if (
-      !parentRef.current?.contains(event.target as Node) &&
-      !popperRef.current?.contains(event.target as Node)
+      !popperRef.current?.contains(event.target as Node) &&
+      !parentRef.current?.contains(event.target as Node)
     ) {
       onClickOutside?.();
     }
-  }, []);
+  }
 
-  /** Create the popper instance when the component mounts */
   useEffect(() => {
-    if (!parentRef.current || !popperRef.current) return;
-    if (placement) options.placement = placement;
-
-    const instance = createPopper(
-      parentRef.current,
-      popperRef.current,
-      options,
-    );
-
-    return () => {
-      instance.destroy();
-    };
-  }, [options]);
-
-  /** Focus when opened, adds click outside listener */
-  useEffect(() => {
-    if (!isOpen) return;
-
-    if (autoFocus) {
-      const focusable = popperRef.current?.firstChild as HTMLElement | null;
-      focusable?.focus();
+    if (isOpen) {
+      document.addEventListener('mousedown', handleClickOutside);
+    } else {
+      document.removeEventListener('mousedown', handleClickOutside);
     }
 
-    if (!onClickOutside) return;
-
-    document.addEventListener('mousedown', handleClickOutside);
     return () => {
       document.removeEventListener('mousedown', handleClickOutside);
     };
   }, [isOpen]);
 
-  const contentStyle = useMemo(() => {
-    return {
-      ...additionalStyles,
-      position: 'absolute',
-      zIndex: 1000,
-    } as CSSProperties;
-  }, [additionalStyles]);
-
   return (
     <>
-      <div ref={parentRef}>{children}</div>
-      {createPortal(
-        <div ref={popperRef} style={isOpen ? contentStyle : {}}>
-          {isOpen && popperContent}
-        </div>,
-        document.body,
+      <div
+        ref={(node) => {
+          setReferenceElement(node);
+          parentRef.current = node;
+        }}
+      >
+        {children}
+      </div>
+      {isOpen && (
+        <div
+          ref={(node) => {
+            setPopperElement(node);
+            popperRef.current = node;
+          }}
+          style={{ ...styles.popper, zIndex: props.baseZIndex ?? 5 }}
+          {...attributes.popper}
+        >
+          {content}
+        </div>
       )}
     </>
   );

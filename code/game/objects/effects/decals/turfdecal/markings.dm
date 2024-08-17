@@ -13,6 +13,9 @@
 /obj/effect/turf_decal/stripes/full
 	icon_state = "warn_full"
 
+/obj/effect/turf_decal/stripes/threshold
+	icon_state = "warningline_threshold"
+
 /obj/effect/turf_decal/stripes/asteroid/line
 	icon_state = "ast_warn"
 
@@ -354,7 +357,7 @@
 	icon_state = "siding_thinplating_end"
 
 /obj/effect/turf_decal/siding/thinplating/light
-	color = "#FFFFFF"
+	color = COLOR_WHITE
 
 /obj/effect/turf_decal/siding/thinplating/light/corner
 	icon_state = "siding_thinplating_corner"
@@ -393,7 +396,7 @@
 	icon_state = "siding_wideplating_end"
 
 /obj/effect/turf_decal/siding/wideplating/light
-	color = "#FFFFFF"
+	color = COLOR_WHITE
 
 /obj/effect/turf_decal/siding/wideplating/light/corner
 	icon_state = "siding_wideplating_corner"
@@ -548,4 +551,8 @@
 
 /obj/effect/turf_decal/board_letter/h
 	icon_state = "board_h"
+
+//Decals for door thresholds
+/obj/effect/turf_decal/door_threshold
+	icon_state = "threshold"
 

@@ -2,6 +2,11 @@
 	name = "Generic"
 	name_extension = "(Computer Board)"
 
+/obj/item/circuitboard/computer/examine()
+	. = ..()
+	if(GetComponent(/datum/component/gps))
+		. += span_info("there's a small, blinking light!")
+
 //Command
 
 /obj/item/circuitboard/computer/aiupload
@@ -594,28 +599,3 @@
 /obj/item/circuitboard/computer/exodrone_console
 	name = "Exploration Drone Control Console"
 	build_path = /obj/machinery/computer/exodrone_control_console
-
-/obj/item/circuitboard/computer/service_orders
-	name = "Service Order"
-	greyscale_colors = CIRCUIT_COLOR_SUPPLY
-	build_path = /obj/machinery/computer/department_orders/service
-
-/obj/item/circuitboard/computer/engineering_orders
-	name = "Engineering Order"
-	greyscale_colors = CIRCUIT_COLOR_SUPPLY
-	build_path = /obj/machinery/computer/department_orders/engineering
-
-/obj/item/circuitboard/computer/science_orders
-	name = "Science Order"
-	greyscale_colors = CIRCUIT_COLOR_SUPPLY
-	build_path = /obj/machinery/computer/department_orders/science
-
-/obj/item/circuitboard/computer/security_orders
-	name = "Security Order"
-	greyscale_colors = CIRCUIT_COLOR_SUPPLY
-	build_path = /obj/machinery/computer/department_orders/security
-
-/obj/item/circuitboard/computer/medical_orders
-	name = "Medical Order"
-	greyscale_colors = CIRCUIT_COLOR_SUPPLY
-	build_path = /obj/machinery/computer/department_orders/medical

@@ -90,6 +90,8 @@
 
 	RegisterSignal(parent, COMSIG_LIVING_UNARMED_ATTACK, PROC_REF(try_healing)) // Players
 	RegisterSignal(parent, COMSIG_HOSTILE_PRE_ATTACKINGTARGET, PROC_REF(try_healing)) // NPCs
+	var/mob/living/living_parent = parent
+	living_parent.ai_controller?.set_blackboard_key(BB_BASIC_MOB_HEALER, TRUE)
 
 // Let's populate this list as we actually use it, this thing has too many args
 /datum/component/healing_touch/InheritComponent(
@@ -100,6 +102,8 @@
 	src.heal_color = heal_color
 
 /datum/component/healing_touch/UnregisterFromParent()
+	var/mob/living/living_parent = parent
+	living_parent.ai_controller?.set_blackboard_key(BB_BASIC_MOB_HEALER, FALSE)
 	UnregisterSignal(parent, list(COMSIG_LIVING_UNARMED_ATTACK, COMSIG_HOSTILE_PRE_ATTACKINGTARGET))
 	return ..()
 

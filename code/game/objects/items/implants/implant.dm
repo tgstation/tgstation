@@ -119,7 +119,7 @@
  * Arguments:
  * * mob/living/source - What the implant is being removed from
  * * silent - unused here
- * * special - unused here
+ * * special - Set to true if removed by admin panel, should bypass any side effects
  */
 /obj/item/implant/proc/removed(mob/living/source, silent = FALSE, special = 0)
 	moveToNullspace()

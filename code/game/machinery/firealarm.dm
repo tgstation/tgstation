@@ -5,15 +5,14 @@
 /obj/item/wallframe/firealarm
 	name = "fire alarm frame"
 	desc = "Used for building fire alarms."
-	icon = 'icons/obj/machines/wallmounts.dmi'
+	icon = 'icons/obj/machines/firealarm.dmi'
 	icon_state = "fire_bitem"
 	result_path = /obj/machinery/firealarm
-	pixel_shift = 26
 
 /obj/machinery/firealarm
 	name = "fire alarm"
 	desc = "Pull this in case of emergency. Thus, keep pulling it forever."
-	icon = 'icons/obj/machines/wallmounts.dmi'
+	icon = 'icons/obj/machines/firealarm.dmi'
 	icon_state = "fire0"
 	max_integrity = 250
 	integrity_failure = 0.4
@@ -42,11 +41,12 @@
 
 /obj/machinery/firealarm/Initialize(mapload, dir, building)
 	. = ..()
+	id_tag = assign_random_name()
 	if(building)
 		buildstage = FIRE_ALARM_BUILD_NO_CIRCUIT
 		set_panel_open(TRUE)
 	if(name == initial(name))
-		name = "[get_area_name(src)] [initial(name)]"
+		update_name()
 	my_area = get_area(src)
 	LAZYADD(my_area.firealarms, src)
 
@@ -79,6 +79,7 @@
 	)
 	AddElement(/datum/element/contextual_screentip_mob_typechecks, hovering_mob_typechecks)
 	find_and_hang_on_wall()
+	AddComponent(/datum/component/examine_balloon)
 	update_appearance()
 
 
@@ -114,7 +115,7 @@
 
 /obj/machinery/firealarm/update_name(updates)
 	. = ..()
-	name = "[get_area_name(my_area)] [initial(name)]"
+	name = "[get_area_name(my_area)] [initial(name)] [id_tag]"
 
 /obj/machinery/firealarm/on_exit_area(datum/source, area/area_to_unregister)
 	//we cannot unregister from an area we never registered to in the first place
@@ -161,48 +162,34 @@
 
 /obj/machinery/firealarm/update_overlays()
 	. = ..()
-	if(machine_stat & NOPOWER)
-		return
-
-	if(panel_open)
+	if(machine_stat & NOPOWER || panel_open)
 		return
 
 	if(obj_flags & EMAGGED)
 		. += mutable_appearance(icon, "fire_emag")
-		. += emissive_appearance(icon, "fire_emag_e", src, alpha = src.alpha)
+		. += emissive_appearance(icon, "fire_emag", src, alpha = src.alpha)
 		set_light(l_color = LIGHT_COLOR_BLUE)
-
 	else if(!(my_area?.fire || LAZYLEN(my_area?.active_firelocks)))
-		if(my_area?.fire_detect) //If this is false, someone disabled it. Leave the light missing, a good hint to anyone paying attention.
+		if(my_area?.fire_detect) //If this is false, leave the green light missing. A good hint to anyone paying attention.
 			if(is_station_level(z))
 				var/current_level = SSsecurity_level.get_current_level_as_number()
 				. += mutable_appearance(icon, "fire_[current_level]")
-				. += emissive_appearance(icon, "fire_level_e", src, alpha = src.alpha)
-				switch(current_level)
-					if(SEC_LEVEL_GREEN)
-						set_light(l_color = LIGHT_COLOR_BLUEGREEN)
-					if(SEC_LEVEL_BLUE)
-						set_light(l_color = LIGHT_COLOR_ELECTRIC_CYAN)
-					if(SEC_LEVEL_RED)
-						set_light(l_color = LIGHT_COLOR_FLARE)
-					if(SEC_LEVEL_DELTA)
-						set_light(l_color = LIGHT_COLOR_INTENSE_RED)
+				. += emissive_appearance(icon, "fire_[current_level]", src, alpha = src.alpha)
+				set_light(l_color = SSsecurity_level?.current_security_level?.fire_alarm_light_color || LIGHT_COLOR_BLUEGREEN)
 			else
-				. += mutable_appearance(icon, "fire_offstation")
-				. += emissive_appearance(icon, "fire_level_e", src, alpha = src.alpha)
+				. += mutable_appearance(icon, "fire_0")
+				. += emissive_appearance(icon, "fire_0", src, alpha = src.alpha)
 				set_light(l_color = LIGHT_COLOR_FAINT_BLUE)
 		else
-			. += mutable_appearance(icon, "fire_disabled")
-			. += emissive_appearance(icon, "fire_level_e", src, alpha = src.alpha)
 			set_light(l_color = COLOR_WHITE)
 
-	else if(my_area?.fire_detect && my_area?.fire)
-		. += mutable_appearance(icon, "fire_alerting")
-		. += emissive_appearance(icon, "fire_alerting_e", src, alpha = src.alpha)
+	else if(my_area?.fire_detect && my_area?.fire) // If there's an actual fire
+		. += mutable_appearance(icon, "fire_actual")
+		. += emissive_appearance(icon, "fire_actual", src, alpha = src.alpha)
 		set_light(l_color = LIGHT_COLOR_INTENSE_RED)
-	else
-		. += mutable_appearance(icon, "fire_alerting")
-		. += emissive_appearance(icon, "fire_alerting_e", src, alpha = src.alpha)
+	else // Someone's just pulled the alarm
+		. += mutable_appearance(icon, "fire_pulled")
+		. += emissive_appearance(icon, "fire_pulled", src, alpha = src.alpha)
 		set_light(l_color = LIGHT_COLOR_INTENSE_RED)
 
 /obj/machinery/firealarm/emp_act(severity)
@@ -259,9 +246,12 @@
 	if(user)
 		balloon_alert(user, "triggered alarm!")
 		user.log_message("triggered a fire alarm.", LOG_GAME)
+	my_area.fault_status = AREA_FAULT_MANUAL
+	my_area.fault_location = name
 	soundloop.start() //Manually pulled fire alarms will make the sound, rather than the doors.
 	SEND_SIGNAL(src, COMSIG_FIREALARM_ON_TRIGGER)
 	update_use_power(ACTIVE_POWER_USE)
+	update_appearance()
 
 /**
  * Resets all firelocks in the area. Also tells the area to disable alarm lighting, if it was enabled.
@@ -283,6 +273,7 @@
 	soundloop.stop()
 	SEND_SIGNAL(src, COMSIG_FIREALARM_ON_RESET)
 	update_use_power(IDLE_POWER_USE)
+	update_appearance()
 
 /obj/machinery/firealarm/attack_hand(mob/user, list/modifiers)
 	if(buildstage != FIRE_ALARM_BUILD_SECURED)
@@ -391,7 +382,7 @@
 
 				else if(istype(tool, /obj/item/electroadaptive_pseudocircuit))
 					var/obj/item/electroadaptive_pseudocircuit/pseudoc = tool
-					if(!pseudoc.adapt_circuit(user, 15))
+					if(!pseudoc.adapt_circuit(user, circuit_cost = 0.015 * STANDARD_CELL_CHARGE))
 						return
 					user.visible_message(span_notice("[user] fabricates a circuit and places it into [src]."), \
 					span_notice("You adapt a fire alarm circuit and slot it into the assembly."))
@@ -415,7 +406,7 @@
 	return FALSE
 
 /obj/machinery/firealarm/rcd_act(mob/user, obj/item/construction/rcd/the_rcd, list/rcd_data)
-	switch(rcd_data["[RCD_DESIGN_MODE]"])
+	switch(rcd_data[RCD_DESIGN_MODE])
 		if(RCD_WALLFRAME)
 			balloon_alert(user, "circuit installed")
 			buildstage = FIRE_ALARM_BUILD_NO_WIRES
@@ -440,22 +431,21 @@
 		return
 	return ..()
 
-/obj/machinery/firealarm/deconstruct(disassembled = TRUE)
-	if(!(obj_flags & NO_DECONSTRUCTION))
-		new /obj/item/stack/sheet/iron(loc, 1)
-		if(buildstage > FIRE_ALARM_BUILD_NO_CIRCUIT)
-			var/obj/item/item = new /obj/item/electronics/firealarm(loc)
-			if(!disassembled)
-				item.update_integrity(item.max_integrity * 0.5)
-		if(buildstage > FIRE_ALARM_BUILD_NO_WIRES)
-			new /obj/item/stack/cable_coil(loc, 3)
-	qdel(src)
+/obj/machinery/firealarm/on_deconstruction(disassembled)
+	new /obj/item/stack/sheet/iron(loc, 1)
+	if(buildstage > FIRE_ALARM_BUILD_NO_CIRCUIT)
+		var/obj/item/item = new /obj/item/electronics/firealarm(loc)
+		if(!disassembled)
+			item.update_integrity(item.max_integrity * 0.5)
+	if(buildstage > FIRE_ALARM_BUILD_NO_WIRES)
+		new /obj/item/stack/cable_coil(loc, 3)
 
 // Allows users to examine the state of the thermal sensor
 /obj/machinery/firealarm/examine(mob/user)
 	. = ..()
 	if((my_area?.fire || LAZYLEN(my_area?.active_firelocks)))
 		. += "The local area hazard light is flashing."
+		. += "The fault location display is [my_area.fault_location] ([my_area.fault_status == AREA_FAULT_AUTOMATIC ? "Automatic Detection" : "Manual Trigger"])."
 		if(is_station_level(z))
 			. += "The station security alert level is [SSsecurity_level.get_current_level_as_text()]."
 		. += "<b>Left-Click</b> to activate all firelocks in this area."
@@ -483,11 +473,14 @@
 	my_area.fire_detect = !my_area.fire_detect
 	for(var/obj/machinery/firealarm/fire_panel in my_area.firealarms)
 		fire_panel.update_icon()
+	// Used to force all the firelocks to update, if the zone is not manually activated
+	if (my_area.fault_status != AREA_FAULT_MANUAL)
+		reset() // Don't send user to prevent double balloon_alert() and the action is already logged in this proc.
 	if (user)
 		balloon_alert(user, "thermal sensors [my_area.fire_detect ? "enabled" : "disabled"]")
 		user.log_message("[ my_area.fire_detect ? "enabled" : "disabled" ] firelock sensors using [src].", LOG_GAME)
 
-MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/firealarm, 26)
+WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/machinery/firealarm)
 
 /*
  * Return of Party button

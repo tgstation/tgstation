@@ -32,7 +32,6 @@
 //Mecha cooldowns
 #define COOLDOWN_MECHA_MESSAGE "mecha_message"
 #define COOLDOWN_MECHA_EQUIPMENT(type) ("mecha_equip_[type]")
-#define COOLDOWN_MECHA_ARMOR "mecha_armor"
 #define COOLDOWN_MECHA_MELEE_ATTACK "mecha_melee"
 #define COOLDOWN_MECHA_SMOKE "mecha_smoke"
 #define COOLDOWN_MECHA_SKYFALL "mecha_skyfall"
@@ -47,6 +46,7 @@
 
 // item cooldowns
 #define COOLDOWN_SIGNALLER_SEND "cooldown_signaller_send"
+#define COOLDOWN_TOOL_SOUND "cooldown_tool_sound"
 
 //circuit cooldowns
 #define COOLDOWN_CIRCUIT_SOUNDEMITTER "circuit_soundemitter"
@@ -66,6 +66,7 @@
 #define MOB_SHARED_COOLDOWN_1 (1<<0)
 #define MOB_SHARED_COOLDOWN_2 (1<<1)
 #define MOB_SHARED_COOLDOWN_3 (1<<2)
+#define MOB_SHARED_COOLDOWN_BOT_ANNOUNCMENT (1<<3)
 
 //TIMER COOLDOWN MACROS
 
@@ -108,7 +109,7 @@
 #define COOLDOWN_START(cd_source, cd_index, cd_time) (cd_source.cd_index = world.time + (cd_time))
 
 //Returns true if the cooldown has run its course, false otherwise
-#define COOLDOWN_FINISHED(cd_source, cd_index) (cd_source.cd_index < world.time)
+#define COOLDOWN_FINISHED(cd_source, cd_index) (cd_source.cd_index <= world.time)
 
 #define COOLDOWN_RESET(cd_source, cd_index) cd_source.cd_index = 0
 

@@ -43,6 +43,10 @@
 		stack_trace("Warning: something tried to forceMove() a qdeleted [src]([type]) to non-null destination [destination]([destination.type])!")
 	return ..()
 
+/// Override to define loot blacklist behavior
+/obj/effect/spawner/proc/can_spawn(atom/loot)
+	return TRUE
+
 /obj/effect/list_container
 	name = "list container"
 
@@ -67,7 +71,6 @@
 	anchored = TRUE
 	icon_state = "wave3"
 	layer = RIPPLE_LAYER
-	plane = ABOVE_GAME_PLANE
 
 /obj/effect/abstract/marker/Initialize(mapload)
 	. = ..()

@@ -13,9 +13,10 @@
 	clothing_flags = SNUG_FIT | STACKABLE_HELMET_EXEMPT
 	resistance_flags = FIRE_PROOF
 
-	light_system = MOVABLE_LIGHT_DIRECTIONAL
+	light_system = OVERLAY_LIGHT_DIRECTIONAL
 	light_range = 4
 	light_power = 0.8
+	light_color = "#ffcc99"
 	light_on = FALSE
 	dog_fashion = /datum/dog_fashion/head
 
@@ -23,7 +24,7 @@
 	var/hat_type = "yellow"
 	///Whether the headlamp is on or off.
 	var/on = FALSE
-
+	clothing_traits = list(TRAIT_HEAD_INJURY_BLOCKED)
 
 /datum/armor/utility_hardhat
 	melee = 15
@@ -39,9 +40,7 @@
 /obj/item/clothing/head/utility/hardhat/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/update_icon_updates_onmob)
-
-/obj/item/clothing/head/utility/hardhat/attack_self(mob/living/user)
-	toggle_helmet_light(user)
+	RegisterSignal(src, COMSIG_HIT_BY_SABOTEUR, PROC_REF(on_saboteur))
 
 /obj/item/clothing/head/utility/hardhat/proc/toggle_helmet_light(mob/living/user)
 	on = !on
@@ -60,6 +59,15 @@
 
 /obj/item/clothing/head/utility/hardhat/proc/turn_off(mob/user)
 	set_light_on(FALSE)
+
+/obj/item/clothing/head/utility/hardhat/proc/on_saboteur(datum/source, disrupt_duration)
+	SIGNAL_HANDLER
+	if(on)
+		toggle_helmet_light()
+		return COMSIG_SABOTEUR_SUCCESS
+
+/obj/item/clothing/head/utility/hardhat/attack_self(mob/living/user)
+	toggle_helmet_light(user)
 
 /obj/item/clothing/head/utility/hardhat/orange
 	icon_state = "hardhat0_orange"
@@ -115,32 +123,27 @@
 	flash_protect = FLASH_PROTECTION_WELDER
 	tint = 2
 	flags_inv = HIDEEYES | HIDEFACE | HIDESNOUT
-	flags_cover = HEADCOVERSEYES | HEADCOVERSMOUTH
+	flags_cover = HEADCOVERSEYES | HEADCOVERSMOUTH | PEPPERPROOF
 	visor_vars_to_toggle = VISOR_FLASHPROTECT | VISOR_TINT
 	visor_flags_inv = HIDEEYES | HIDEFACE | HIDESNOUT
 	visor_flags_cover = HEADCOVERSEYES | HEADCOVERSMOUTH | PEPPERPROOF
 	///Icon state of the welding visor.
 	var/visor_state = "weldvisor"
 
-/obj/item/clothing/head/utility/hardhat/welding/Initialize(mapload)
-	. = ..()
-	update_appearance()
-
 /obj/item/clothing/head/utility/hardhat/welding/attack_self_secondary(mob/user, modifiers)
-	toggle_welding_screen(user)
+	adjust_visor(user)
 	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
 /obj/item/clothing/head/utility/hardhat/welding/ui_action_click(mob/user, actiontype)
 	if(istype(actiontype, /datum/action/item_action/toggle_welding_screen))
-		toggle_welding_screen(user)
+		adjust_visor(user)
 		return
-
 	return ..()
 
-/obj/item/clothing/head/utility/hardhat/welding/proc/toggle_welding_screen(mob/living/user)
-	if(weldingvisortoggle(user))
-		playsound(src, 'sound/mecha/mechmove03.ogg', 50, TRUE) //Visors don't just come from nothing
-	update_appearance()
+/obj/item/clothing/head/utility/hardhat/welding/adjust_visor(mob/living/user)
+	. = ..()
+	if(.)
+		playsound(src, 'sound/mecha/mechmove03.ogg', 50, TRUE)
 
 /obj/item/clothing/head/utility/hardhat/welding/worn_overlays(mutable_appearance/standing, isinhands)
 	. = ..()
@@ -154,6 +157,14 @@
 	. = ..()
 	if(!up)
 		. += visor_state
+
+/obj/item/clothing/head/utility/hardhat/welding/up
+	up = TRUE // for calls to worn_overlays before init (prefs)
+
+/obj/item/clothing/head/utility/hardhat/welding/up/Initialize(mapload)
+	. = ..()
+	up = FALSE
+	visor_toggling()
 
 /obj/item/clothing/head/utility/hardhat/welding/orange
 	icon_state = "hardhat0_orange"
@@ -171,6 +182,15 @@
 	max_heat_protection_temperature = FIRE_HELM_MAX_TEMP_PROTECT
 	cold_protection = HEAD
 	min_cold_protection_temperature = FIRE_HELM_MIN_TEMP_PROTECT
+
+/obj/item/clothing/head/utility/hardhat/welding/white/up
+	up = TRUE // for calls to worn_overlays before init (prefs)
+
+/obj/item/clothing/head/utility/hardhat/welding/white/up/Initialize(mapload)
+	. = ..()
+	up = FALSE
+	visor_toggling()
+
 
 /obj/item/clothing/head/utility/hardhat/welding/dblue
 	icon_state = "hardhat0_dblue"
@@ -191,7 +211,8 @@
 	min_cold_protection_temperature = FIRE_HELM_MIN_TEMP_PROTECT
 	flags_cover = HEADCOVERSEYES | HEADCOVERSMOUTH | PEPPERPROOF
 	visor_flags_cover = NONE
-	flags_inv = HIDEEARS|HIDEFACE|HIDEHAIR|HIDEFACIALHAIR|HIDESNOUT
+	flags_inv = HIDEEARS|HIDEHAIR|HIDEFACE|HIDEFACIALHAIR|HIDESNOUT
+	transparent_protection = HIDEMASK|HIDEEYES
 	visor_flags_inv = NONE
 	visor_state = "weldvisor_atmos"
 
@@ -216,11 +237,16 @@
 	light_color = "#fff2bf"
 	worn_y_offset = 1
 	dog_fashion = /datum/dog_fashion/head/pumpkin/unlit
+	clothing_traits = list()
 
 /obj/item/clothing/head/utility/hardhat/pumpkinhead/set_light_on(new_value)
 	. = ..()
 	if(isnull(.))
 		return
+	if(new_value)
+		AddElement(/datum/element/wearable_client_colour, /datum/client_colour/halloween_helmet, ITEM_SLOT_HEAD, forced = TRUE)
+	else
+		RemoveElement(/datum/element/wearable_client_colour, /datum/client_colour/halloween_helmet, ITEM_SLOT_HEAD, forced = TRUE)
 	update_icon(UPDATE_OVERLAYS)
 
 /obj/item/clothing/head/utility/hardhat/pumpkinhead/update_overlays()
@@ -269,6 +295,6 @@
 	flags_inv = 0
 	armor_type = /datum/armor/none
 	light_range = 1 //luminosity when on
-
+	clothing_traits = list()
 
 	dog_fashion = /datum/dog_fashion/head/reindeer

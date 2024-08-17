@@ -20,6 +20,7 @@
 	can_buckle = TRUE
 	buckle_lying = 0
 	max_integrity = 200
+	interaction_flags_click = NEED_DEXTERITY|FORBID_TELEKINESIS_REACH|ALLOW_RESTING
 	///Is the machine moving? Setting this to FALSE will automatically call stop_moving()
 	var/moving = FALSE
 	///The distance the machine is allowed to roam from its starting point
@@ -174,21 +175,19 @@
 		attached_item.throw_at(destination, 4, 1)
 	on_attached_delete()
 
-/obj/structure/training_machine/AltClick(mob/user)
-	. = ..()
-	if(!user.can_perform_action(src, NEED_DEXTERITY|FORBID_TELEKINESIS_REACH|ALLOW_RESTING))
-		return
+/obj/structure/training_machine/click_alt(mob/user)
 	if(has_buckled_mobs())
 		user_unbuckle_mob(buckled_mobs[1], user)
-		return
+		return CLICK_ACTION_SUCCESS
 	if (!attached_item)
-		return
+		return NONE
 	if (obj_flags & EMAGGED)
 		to_chat(user, span_warning("The toolbox is somehow stuck on! It won't budge!"))
-		return
+		return CLICK_ACTION_BLOCKING
 	to_chat(user, span_notice("You remove \the [attached_item] from the training device."))
 	remove_attached_item(user)
 	playsound(src, SFX_RUSTLE, 50, TRUE)
+	return CLICK_ACTION_SUCCESS
 
 /**
  * Toggle the machine's movement
@@ -361,12 +360,17 @@
 	///Number of hits made since the Lap button (alt-click) was last pushed
 	var/lap_hits = 0
 
-/obj/item/training_toolbox/afterattack(atom/target, mob/living/user, proximity)
+/obj/item/training_toolbox/pre_attack(atom/A, mob/living/user, params)
 	. = ..()
-	if (!proximity || target == user || !user.combat_mode)
-		return
-	if (check_hit(target))
-		user.changeNext_move(CLICK_CD_MELEE)
+	if(.)
+		return .
+	if(A == user || !user.combat_mode)
+		return .
+	if(!check_hit(A))
+		return .
+	user.changeNext_move(CLICK_CD_MELEE)
+	user.do_attack_animation(A)
+	return TRUE
 
 /**
  * Check if we should increment the hit counter
@@ -396,12 +400,10 @@
 	if (!.)
 		check_hit(hit_atom)
 
-/obj/item/training_toolbox/AltClick(mob/user)
-	. = ..()
-	if(!can_interact(user))
-		return
+/obj/item/training_toolbox/click_alt(mob/user)
 	to_chat(user, span_notice("You push the 'Lap' button on the toolbox's display."))
 	lap_hits = initial(lap_hits)
+	return CLICK_ACTION_SUCCESS
 
 /obj/item/training_toolbox/examine(mob/user)
 	. = ..()

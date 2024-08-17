@@ -16,8 +16,14 @@
 /// The typepath of the structure the rcd is trying to build
 #define RCD_DESIGN_PATH "rcd_design_path"
 
+/// The direction of the structure we will build
+#define RCD_BUILD_DIRECTION "rcd_build_direction"
+
 /// Time taken for an rcd hologram to disappear
 #define RCD_HOLOGRAM_FADE_TIME (15 SECONDS)
+
+/// Delay before another rcd scan can be performed in the UI
+#define RCD_DESTRUCTIVE_SCAN_COOLDOWN (RCD_HOLOGRAM_FADE_TIME + 1 SECONDS)
 
 //All available upgrades
 /// Upgrade for building machines
@@ -48,3 +54,6 @@
 #define RCD_MEMORY_COST_BUFF 8
 /// If set to TRUE in rcd_vals, will bypass the cooldown on slowing down frequent use
 #define RCD_RESULT_BYPASS_FREQUENT_USE_COOLDOWN "bypass_frequent_use_cooldown"
+
+/// gets the cached icon key for this atom based on its name or if it exists its override key
+#define RCD_SPRITESHEET_PATH_KEY(atom_path_or_instance) (initial(atom_path_or_instance.rcd_spritesheet_override) || initial(atom_path_or_instance.name))

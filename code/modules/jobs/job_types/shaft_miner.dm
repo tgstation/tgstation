@@ -35,11 +35,13 @@
 
 	id_trim = /datum/id_trim/job/shaft_miner
 	uniform = /obj/item/clothing/under/rank/cargo/miner/lavaland
+	skillchips = list(/obj/item/skillchip/job/miner)
 	backpack_contents = list(
 		/obj/item/flashlight/seclite = 1,
 		/obj/item/knife/combat/survival = 1,
 		/obj/item/mining_voucher = 1,
 		/obj/item/stack/marker_beacon/ten = 1,
+		/obj/item/t_scanner/adv_mining_scanner/lesser = 1,
 	)
 	belt = /obj/item/modular_computer/pda/shaftminer
 	ears = /obj/item/radio/headset/headset_cargo/mining
@@ -89,6 +91,7 @@
 		/obj/item/gun/energy/recharge/kinetic_accelerator = 2,
 		/obj/item/kinetic_crusher/compact = 1,
 		/obj/item/resonator/upgraded = 1,
+		/obj/item/t_scanner/adv_mining_scanner/lesser = 1,
 	)
 	box = /obj/item/storage/box/survival/mining/bonus
 	l_pocket = /obj/item/modular_computer/pda/shaftminer
@@ -109,8 +112,8 @@
 			var/obj/item/stack/sheet/animalhide/goliath_hide/plating = new()
 			explorer_suit.hood.attackby(plating)
 	for(var/obj/item/gun/energy/recharge/kinetic_accelerator/accelerator in miner_contents)
-		var/obj/item/knife/combat/survival/knife = new(accelerator)
-		accelerator.bayonet = knife
+		var/datum/component/bayonet_attachable/bayonet = accelerator.GetComponent(/datum/component/bayonet_attachable)
+		bayonet.add_bayonet(new /obj/item/knife/combat/survival(accelerator))
 		var/obj/item/flashlight/seclite/flashlight = new()
 		var/datum/component/seclite_attachable/light_component = accelerator.GetComponent(/datum/component/seclite_attachable)
 		light_component.add_light(flashlight)

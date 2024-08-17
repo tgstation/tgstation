@@ -94,7 +94,7 @@
 /obj/structure/emergency_shield/cult/weak
 	name = "Invoker's Shield"
 	desc = "A weak shield summoned by cultists to protect them while they carry out delicate rituals."
-	color = "#FF0000"
+	color = COLOR_RED
 	max_integrity = 20
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 	layer = ABOVE_MOB_LAYER
@@ -136,6 +136,7 @@
 		RemoveInvisibility(type)
 
 /obj/machinery/shieldgen
+	SET_BASE_VISUAL_PIXEL(0, DEPTH_OFFSET)
 	name = "anti-breach shielding projector"
 	desc = "Used to seal minor hull breaches."
 	icon = 'icons/obj/machines/shield_generator.dmi'
@@ -187,7 +188,7 @@
 	. = ..()
 	if(.)
 		return
-	if(locked && !issilicon(user))
+	if(locked && !HAS_SILICON_ACCESS(user))
 		to_chat(user, span_warning("The machine is locked, you are unable to use it!"))
 		return
 	if(panel_open)
@@ -243,7 +244,7 @@
 			to_chat(user, span_warning("You need one length of cable to repair [src]!"))
 			return
 		to_chat(user, span_notice("You begin to replace the wires..."))
-		if(do_after(user, 30, target = src))
+		if(do_after(user, 3 SECONDS, target = src))
 			if(coil.get_amount() < 1)
 				return
 			coil.use(1)
@@ -281,11 +282,17 @@
 #define ACTIVE_SETUPFIELDS 1
 #define ACTIVE_HASFIELDS 2
 /obj/machinery/power/shieldwallgen
+	SET_BASE_VISUAL_PIXEL(0, DEPTH_OFFSET)
 	name = "shield wall generator"
 	desc = "A shield generator."
 	icon = 'icons/obj/machines/shield_generator.dmi'
 	icon_state = "shield_wall_gen"
 	base_icon_state = "shield_wall_gen"
+	layer = SHIELD_GENERATOR_LAYER
+	light_on = FALSE
+	light_range = 2.5
+	light_power = 2
+	light_color = LIGHT_COLOR_BLUE
 	anchored = FALSE
 	density = TRUE
 	req_access = list(ACCESS_TELEPORTER)
@@ -294,6 +301,8 @@
 	active_power_usage = 150
 	circuit = /obj/item/circuitboard/machine/shieldwallgen
 	max_integrity = 300
+	/// List of directions in which we have active walls
+	var/list/active_directions = list()
 	/// whether the shield generator is active, ACTIVE_SETUPFIELDS will make it search for generators on process, and if that is successful, is set to ACTIVE_HASFIELDS
 	var/active = FALSE
 	/// are we locked?
@@ -320,20 +329,46 @@
 
 /obj/machinery/power/shieldwallgen/Initialize(mapload)
 	. = ..()
+	//Add to the early process queue to prioritize power draw
+	SSmachines.processing_early += src
 	if(anchored)
 		connect_to_network()
 	RegisterSignal(src, COMSIG_ATOM_SINGULARITY_TRY_MOVE, PROC_REF(block_singularity_if_active))
 	set_wires(new /datum/wires/shieldwallgen(src))
 
+/obj/machinery/power/shieldwallgen/update_appearance(updates)
+	. = ..()
+	set_light(l_on = !!active)
+
 /obj/machinery/power/shieldwallgen/update_icon_state()
-	icon_state = "[base_icon_state][active ? "_on" : ""]"
+	if(anchored)
+		icon_state = "[base_icon_state]_anchored"
+	else
+		icon_state = "[base_icon_state]"
 	return ..()
 
 /obj/machinery/power/shieldwallgen/update_overlays()
 	. = ..()
-	if(!panel_open)
+	if(panel_open)
+		. += mutable_appearance(icon, "shieldgen_wires")
 		return
-	. += "shieldgen_wires"
+	if(active)
+		. += mutable_appearance(icon, "shield_wall_gen_on_overlay")
+		. += emissive_appearance(icon, "shield_wall_gen_on_overlay", src)
+
+	for(var/direction in active_directions)
+		// don't draw cause the gen would cut it off anyhow
+		if(direction == NORTH)
+			continue
+		// we draw an edge overlay with vis_contents (both to avoid expanding visual bounds and to make dirsetting easier)
+		var/obj/effect/overlay/vis/edge_overlay = SSvis_overlays.add_vis_overlay(src, 'icons/effects/effects.dmi', "shieldwall-edge", layer, plane, dir = direction, unique = TRUE)
+		edge_overlay.vis_flags = NONE
+		if(direction == SOUTH)
+			// Physically shift down to overlay over stuff below us
+			edge_overlay.pixel_y = -16
+			edge_overlay.pixel_z = 16
+		edge_overlay.add_overlay(emissive_appearance('icons/effects/effects.dmi', "shieldwall-edge", src, alpha = 200))
+		edge_overlay.add_overlay(mutable_appearance('icons/effects/effects.dmi', "shieldwall-edge", offset_spokesman = src, plane = FRILL_MASK_PLANE, appearance_flags = KEEP_APART))
 
 /obj/machinery/power/shieldwallgen/Destroy()
 	for(var/d in GLOB.cardinals)
@@ -348,7 +383,7 @@
 		return FALSE
 	. = ..()
 
-/obj/machinery/power/shieldwallgen/process()
+/obj/machinery/power/shieldwallgen/process_early()
 	if(active)
 		if(active == ACTIVE_SETUPFIELDS)
 			var/fields = 0
@@ -364,11 +399,8 @@
 			visible_message(span_danger("[src] shuts down due to lack of power!"), \
 				"If this message is ever seen, something is wrong.",
 				span_hear("You hear heavy droning fade out."))
-			active = FALSE
+			deactivate()
 			log_game("[src] deactivated due to lack of power at [AREACOORD(src)]")
-			for(var/d in GLOB.cardinals)
-				cleanup_field(d)
-			update_appearance()
 	else
 		update_appearance()
 		for(var/d in GLOB.cardinals)
@@ -380,45 +412,55 @@
 		return
 
 	var/turf/T = loc
-	var/obj/machinery/power/shieldwallgen/G
+	var/obj/machinery/power/shieldwallgen/paired
 	var/steps = 0
 	var/opposite_direction = REVERSE_DIR(direction)
 
 	for(var/i in 1 to shield_range) //checks out to 8 tiles away for another generator
 		T = get_step(T, direction)
-		G = locate(/obj/machinery/power/shieldwallgen) in T
-		if(G)
-			if(!G.active)
+		paired = locate(/obj/machinery/power/shieldwallgen) in T
+		if(paired)
+			if(!paired.active)
 				return
-			G.cleanup_field(opposite_direction)
+			paired.cleanup_field(opposite_direction)
 			break
 		else
 			steps++
 
-	if(!G || !steps) //no shield gen or no tiles between us and the gen
+	if(!paired || !steps) //no shield gen or no tiles between us and the gen
 		return
 
 	for(var/i in 1 to steps) //creates each field tile
 		T = get_step(T, opposite_direction)
-		new/obj/machinery/shieldwall(T, src, G)
+		new /obj/machinery/shieldwall(T, src, paired)
+
+	active_directions += direction
+	paired.active_directions += opposite_direction
+	update_appearance()
+	paired.update_appearance()
 	return TRUE
 
 /// cleans up fields in the specified direction if they belong to this generator
 /obj/machinery/power/shieldwallgen/proc/cleanup_field(direction)
 	var/obj/machinery/shieldwall/F
-	var/obj/machinery/power/shieldwallgen/G
+	var/obj/machinery/power/shieldwallgen/paired
 	var/turf/T = loc
 
 	for(var/i in 1 to shield_range)
 		T = get_step(T, direction)
 
-		G = (locate(/obj/machinery/power/shieldwallgen) in T)
-		if(G && !G.active)
+		paired = (locate(/obj/machinery/power/shieldwallgen) in T)
+		if(paired && !paired.active)
 			break
 
 		F = (locate(/obj/machinery/shieldwall) in T)
 		if(F && (F.gen_primary == src || F.gen_secondary == src)) //it's ours, kill it.
 			qdel(F)
+	active_directions -= direction
+	update_appearance()
+	if(paired)
+		paired.active_directions -= REVERSE_DIR(direction)
+		paired.update_appearance()
 
 /obj/machinery/power/shieldwallgen/proc/block_singularity_if_active()
 	SIGNAL_HANDLER
@@ -439,13 +481,14 @@
 	update_cable_icons_on_turf(get_turf(src))
 	if(unfasten_result == SUCCESSFUL_UNFASTEN && anchored)
 		connect_to_network()
+	update_appearance()
 	return ITEM_INTERACT_SUCCESS
 
 /obj/machinery/power/shieldwallgen/screwdriver_act(mob/user, obj/item/tool)
 	if(!panel_open && locked)
 		balloon_alert(user, "unlock first!")
 		return
-	update_appearance(UPDATE_OVERLAYS)
+	update_appearance()
 	return default_deconstruction_screwdriver(user, icon_state, icon_state, tool)
 
 /obj/machinery/power/shieldwallgen/crowbar_act(mob/user, obj/item/tool)
@@ -463,7 +506,6 @@
 			balloon_alert(user, "malfunctioning!")
 		else
 			balloon_alert(user, "no access!")
-
 		return
 
 	add_fingerprint(user)
@@ -479,7 +521,7 @@
 	if(!anchored)
 		balloon_alert(user, "not secured!")
 		return
-	if(locked && !issilicon(user))
+	if(locked && !HAS_SILICON_ACCESS(user))
 		balloon_alert(user, "locked!")
 		return
 	if(!powernet)
@@ -493,13 +535,13 @@
 		user.visible_message(span_notice("[user] turned \the [src] off."), \
 			span_notice("You turn off \the [src]."), \
 			span_hear("You hear heavy droning fade out."))
-		active = FALSE
+		deactivate()
 		user.log_message("deactivated [src].", LOG_GAME)
 	else
 		user.visible_message(span_notice("[user] turned \the [src] on."), \
 			span_notice("You turn on \the [src]."), \
 			span_hear("You hear heavy droning."))
-		active = ACTIVE_SETUPFIELDS
+		activate()
 		user.log_message("activated [src].", LOG_GAME)
 	add_fingerprint(user)
 
@@ -513,6 +555,19 @@
 	balloon_alert(user, "access controller shorted")
 	return TRUE
 
+/// Turn the machine on with side effects
+/obj/machinery/power/shieldwallgen/proc/activate()
+	active = ACTIVE_SETUPFIELDS
+	AddElement(/datum/element/give_turf_traits, string_list(list(TRAIT_CONTAINMENT_FIELD)))
+
+/// Turn the machine off with side effects
+/obj/machinery/power/shieldwallgen/proc/deactivate()
+	active = FALSE
+	for(var/d in GLOB.cardinals)
+		cleanup_field(d)
+	update_appearance()
+	RemoveElement(/datum/element/give_turf_traits, string_list(list(TRAIT_CONTAINMENT_FIELD)))
+
 //////////////Containment Field START
 /obj/machinery/shieldwall
 	name = "shield wall"
@@ -520,29 +575,78 @@
 	icon = 'icons/effects/effects.dmi'
 	icon_state = "shieldwall"
 	density = TRUE
+	layer = SHIELD_WALL_LAYER
+	// Phsyically shift down to get the "over everything above us" effect we want
+	SET_BASE_PIXEL_NOMAP(0, -16)
+	SET_BASE_VISUAL_PIXEL(0, DEPTH_OFFSET + 16)
+
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
-	light_range = 3
+	smoothing_flags = SMOOTH_BITMASK
+	smoothing_groups = SMOOTH_GROUP_SHIELD_GEN_WALL
+	canSmoothWith = SMOOTH_GROUP_SHIELD_GEN_WALL
+	light_range = 2.5
+	light_power = 0.7
+	light_color = LIGHT_COLOR_BLUE
+	var/primary_direction = NONE
 	var/needs_power = FALSE
 	var/obj/machinery/power/shieldwallgen/gen_primary
 	var/obj/machinery/power/shieldwallgen/gen_secondary
 
 /obj/machinery/shieldwall/Initialize(mapload, obj/machinery/power/shieldwallgen/first_gen, obj/machinery/power/shieldwallgen/second_gen)
+	primary_direction = dir
 	. = ..()
 	gen_primary = first_gen
 	gen_secondary = second_gen
 	if(gen_primary && gen_secondary)
 		needs_power = TRUE
-		setDir(get_dir(gen_primary, gen_secondary))
+		primary_direction = get_dir(gen_primary, gen_secondary)
+		setDir(primary_direction)
 	for(var/mob/living/L in get_turf(src))
 		visible_message(span_danger("\The [src] is suddenly occupying the same space as \the [L]!"))
 		L.investigate_log("has been gibbed by [src].", INVESTIGATE_DEATHS)
 		L.gib(DROP_ALL_REMAINS)
 	RegisterSignal(src, COMSIG_ATOM_SINGULARITY_TRY_MOVE, PROC_REF(block_singularity))
+	AddElement(/datum/element/give_turf_traits, string_list(list(TRAIT_CONTAINMENT_FIELD)))
+	AddElement(/datum/element/render_over_keep_hitbox)
+	if(smoothing_flags & (SMOOTH_BITMASK|SMOOTH_CORNERS|SMOOTH_BORDER_OBJECT))
+		QUEUE_SMOOTH(src)
+		QUEUE_SMOOTH_NEIGHBORS(src)
 
 /obj/machinery/shieldwall/Destroy()
 	gen_primary = null
 	gen_secondary = null
 	return ..()
+
+/obj/machinery/shieldwall/set_smoothed_icon_state(new_junction)
+	smoothing_junction = new_junction
+	icon_state = initial(icon_state)
+	var/default_junctions = dir_to_junction(primary_direction) | dir_to_junction(REVERSE_DIR(primary_direction))
+	// What edges were we expecting to fill but have not?
+	var/dropped_junction = default_junctions & ~new_junction
+
+	// Nothing missing? act like a line piece
+	if(!dropped_junction)
+		setDir(primary_direction)
+		update_appearance()
+		return
+
+	// If we are missing an edge we get to check for smoothing
+	// Only if we're facing EAST/WEST though, NORTH/SOUTH just goes with the flow
+	if(primary_direction & (EAST|WEST))
+		var/working_dir = NONE
+		// Goal here is to make a big ass circle you know?
+		if(new_junction & NORTH)
+			working_dir = dropped_junction|NORTH
+		else if(new_junction & SOUTH)
+			working_dir = dropped_junction|SOUTH
+		if(working_dir)
+			setDir(working_dir)
+			update_appearance()
+
+/obj/machinery/shieldwall/update_overlays()
+	. = ..()
+	. += emissive_appearance(icon, icon_state, src, alpha = 200)
+	. += mutable_appearance(icon, icon_state, offset_spokesman = src, plane = FRILL_MASK_PLANE)
 
 /obj/machinery/shieldwall/process()
 	if(needs_power)

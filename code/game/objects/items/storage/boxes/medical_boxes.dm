@@ -151,7 +151,7 @@
 		/obj/item/stack/medical/bandage,
 		/obj/item/reagent_containers/pill,
 		/obj/item/reagent_containers/pill/patch,
-		))
+	))
 
 /obj/item/storage/box/bandages/PopulateContents()
 	for(var/i in 1 to 5)

@@ -35,9 +35,14 @@
 
 /mob/living/basic/mining/legion/Initialize(mapload)
 	. = ..()
-	AddElement(/datum/element/death_drops, get_loot_list())
 	AddElement(/datum/element/content_barfer)
+	var/list/drops = get_loot_list()
+	if (length(drops))
+		AddElement(/datum/element/death_drops, string_list(drops))
+	assign_abilities()
 
+/// Give the Legion its spells
+/mob/living/basic/mining/legion/proc/assign_abilities()
 	var/datum/action/cooldown/mob_cooldown/skull_launcher/skull_launcher = new(src)
 	skull_launcher.Grant(src)
 	skull_launcher.spawn_type = brood_type
@@ -64,10 +69,11 @@
 	return ..()
 
 /// Put a corpse in this guy
-/mob/living/basic/mining/legion/proc/consume(mob/living/consumed)
+/mob/living/basic/mining/legion/proc/consume(mob/living/carbon/human/consumed)
 	new /obj/effect/gibspawner/generic(consumed.loc)
 	gender = consumed.gender
-	name = consumed.real_name
+	if (!ismonkey(consumed) || consumed == GLOB.the_one_and_only_punpun)
+		name = consumed.real_name
 	consumed.investigate_log("has been killed by hivelord infestation.", INVESTIGATE_DEATHS)
 	consumed.death()
 	consumed.extinguish_mob()

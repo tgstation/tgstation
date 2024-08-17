@@ -45,9 +45,7 @@
 	atom_storage.max_total_storage = 200
 	atom_storage.max_slots = 15
 	atom_storage.insert_preposition = "in"
-	atom_storage.set_holdable(list(
-		/obj/item/clothing,
-	))
+	atom_storage.set_holdable(/obj/item/clothing)
 
 /obj/item/storage/bag/garment/captain/PopulateContents()
 	new /obj/item/clothing/under/rank/captain(src)
@@ -123,6 +121,8 @@
 	new /obj/item/clothing/under/rank/medical/chief_medical_officer(src)
 	new /obj/item/clothing/under/rank/medical/chief_medical_officer/skirt(src)
 	new /obj/item/clothing/under/rank/medical/chief_medical_officer/scrubs(src)
+	new /obj/item/clothing/under/rank/medical/chief_medical_officer/turtleneck(src)
+	new /obj/item/clothing/under/rank/medical/chief_medical_officer/turtleneck/skirt(src)
 	new /obj/item/clothing/suit/hooded/wintercoat/medical/cmo(src)
 	new /obj/item/clothing/suit/toggle/labcoat/cmo(src)
 	new /obj/item/clothing/gloves/latex/nitrile(src)
@@ -134,6 +134,8 @@
 /obj/item/storage/bag/garment/engineering_chief/PopulateContents()
 	new /obj/item/clothing/under/rank/engineering/chief_engineer(src)
 	new /obj/item/clothing/under/rank/engineering/chief_engineer/skirt(src)
+	new /obj/item/clothing/under/rank/engineering/chief_engineer/turtleneck(src)
+	new /obj/item/clothing/under/rank/engineering/chief_engineer/turtleneck/skirt(src)
 	new /obj/item/clothing/suit/hooded/wintercoat/engineering/ce(src)
 	new /obj/item/clothing/glasses/meson/engine(src)
 	new /obj/item/clothing/gloves/chief_engineer(src)

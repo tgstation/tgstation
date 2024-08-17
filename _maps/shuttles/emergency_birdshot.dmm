@@ -9,9 +9,6 @@
 /obj/machinery/light/small/directional/west,
 /turf/open/floor/mineral/titanium/white,
 /area/shuttle/escape)
-"ax" = (
-/turf/closed/wall/mineral/titanium/overspace,
-/area/shuttle/escape)
 "aQ" = (
 /obj/effect/decal/cleanable/insectguts,
 /turf/open/floor/mineral/plastitanium/red,
@@ -99,7 +96,7 @@
 	pixel_x = 3;
 	pixel_y = 2
 	},
-/obj/item/clothing/mask/cigarette/dromedary{
+/obj/item/cigarette/dromedary{
 	pixel_x = 8;
 	pixel_y = 15
 	},
@@ -235,7 +232,8 @@
 	},
 /obj/docking_port/mobile/emergency{
 	dir = 8;
-	name = "birdshot emergency shuttle"
+	name = "birdshot emergency shuttle";
+	port_direction = 4
 	},
 /turf/open/floor/mineral/titanium,
 /area/shuttle/escape)
@@ -287,7 +285,7 @@
 "mU" = (
 /obj/structure/lattice,
 /turf/template_noop,
-/area/template_noop)
+/area/shuttle/escape)
 "no" = (
 /obj/item/trash/popcorn/caramel,
 /turf/open/floor/mineral/titanium,
@@ -552,7 +550,7 @@
 /obj/structure/lattice,
 /obj/item/stack/rods/two,
 /turf/template_noop,
-/area/template_noop)
+/area/shuttle/escape)
 "Ay" = (
 /obj/item/shard{
 	pixel_y = 19
@@ -697,7 +695,7 @@
 /obj/structure/window/reinforced/survival_pod/spawner/directional/north,
 /obj/structure/table,
 /obj/machinery/cell_charger,
-/obj/item/stock_parts/cell,
+/obj/item/stock_parts/power_store/cell,
 /turf/open/floor/glass/reinforced,
 /area/shuttle/escape)
 "Id" = (
@@ -1001,24 +999,24 @@ nQ
 nQ
 nQ
 nQ
-ax
-LX
-rZ
-LX
-ax
-nQ
-nQ
-nQ
-ax
-rZ
 LX
 LX
 rZ
 LX
 LX
+nQ
+nQ
+nQ
+LX
+rZ
 LX
 LX
-ax
+rZ
+LX
+LX
+LX
+LX
+LX
 nQ
 "}
 (2,1,1) = {"
@@ -1030,7 +1028,7 @@ nQ
 nQ
 nQ
 nQ
-ax
+LX
 LX
 LX
 ON
@@ -1058,7 +1056,7 @@ nQ
 nQ
 nQ
 nQ
-ax
+LX
 rZ
 rZ
 LX
@@ -1086,7 +1084,7 @@ vk
 (4,1,1) = {"
 nQ
 nQ
-ax
+LX
 LX
 LX
 LX
@@ -1185,13 +1183,13 @@ ye
 LX
 mU
 nQ
-ax
+LX
 LX
 LX
 hF
 LX
 LX
-ax
+LX
 nQ
 nQ
 mU
@@ -1200,9 +1198,9 @@ hF
 LX
 rZ
 LX
-ax
+LX
 nQ
-ax
+LX
 LX
 nQ
 nQ
@@ -1309,13 +1307,13 @@ eR
 LX
 mU
 nQ
-ax
+LX
 LX
 LX
 hF
 LX
 LX
-ax
+LX
 nQ
 nQ
 mU
@@ -1324,7 +1322,7 @@ hF
 LX
 rZ
 LX
-ax
+LX
 nQ
 bo
 mU
@@ -1396,7 +1394,7 @@ ST
 (14,1,1) = {"
 nQ
 nQ
-ax
+LX
 LX
 LX
 LX
@@ -1430,7 +1428,7 @@ nQ
 nQ
 nQ
 nQ
-ax
+LX
 rZ
 rZ
 LX
@@ -1464,7 +1462,7 @@ nQ
 nQ
 nQ
 nQ
-ax
+LX
 LX
 LX
 dv
@@ -1497,15 +1495,15 @@ nQ
 nQ
 nQ
 nQ
-ax
+LX
 Xy
 rZ
 Xy
-ax
+LX
 nQ
 nQ
 nQ
-ax
+LX
 ll
 LX
 lp
@@ -1514,6 +1512,6 @@ LX
 rZ
 rZ
 rZ
-ax
+LX
 nQ
 "}

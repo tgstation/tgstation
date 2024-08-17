@@ -67,12 +67,12 @@
 	forge_objectives()
 	rift_ability = new()
 	owner.special_role = ROLE_SPACE_DRAGON
-	owner.set_assigned_role(SSjob.GetJobType(/datum/job/space_dragon))
+	owner.set_assigned_role(SSjob.get_job_type(/datum/job/space_dragon))
 	return ..()
 
 /datum/antagonist/space_dragon/on_removal()
 	owner.special_role = null
-	owner.set_assigned_role(SSjob.GetJobType(/datum/job/unassigned))
+	owner.set_assigned_role(SSjob.get_job_type(/datum/job/unassigned))
 	return ..()
 
 /datum/antagonist/space_dragon/apply_innate_effects(mob/living/mob_override)
@@ -196,7 +196,7 @@
  */
 /datum/antagonist/space_dragon/proc/permanant_empower()
 	owner.current.fully_heal()
-	owner.current.add_filter("anger_glow", 3, list("type" = "outline", "color" = "#ff330030", "size" = 5))
+	owner.current.add_filter("anger_glow", 3, list("type" = "outline", "color" = COLOR_CARP_RIFT_RED, "size" = 5))
 	owner.current.add_movespeed_modifier(/datum/movespeed_modifier/dragon_rage)
 
 /**
@@ -207,7 +207,7 @@
  */
 /datum/antagonist/space_dragon/proc/rift_empower()
 	owner.current.fully_heal()
-	owner.current.add_filter("anger_glow", 3, list("type" = "outline", "color" = "#ff330030", "size" = 5))
+	owner.current.add_filter("anger_glow", 3, list("type" = "outline", "color" = COLOR_CARP_RIFT_RED, "size" = 5))
 	owner.current.add_movespeed_modifier(/datum/movespeed_modifier/dragon_rage)
 	addtimer(CALLBACK(src, PROC_REF(rift_depower)), 30 SECONDS)
 
@@ -263,7 +263,7 @@
 			players_to_carp_taken[carpy.key] += 1
 		var/list = ""
 		for(var/carp_user in players_to_carp_taken)
-			list += "<li><b>[carp_user]<b>, who played <b>[players_to_carp_taken[carp_user]]</b> space carps.</li>"
+			list += "<li><b>[carp_user]</b>, who played <b>[players_to_carp_taken[carp_user]]</b> space carps.</li>"
 		parts += list
 		parts += "</ul>"
 

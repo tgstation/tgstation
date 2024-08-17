@@ -12,7 +12,7 @@ If ever any of these procs are useful for non-shuttles, rename it to proc/rotate
 		setDir(angle2dir(rotation+dir2angle(dir)))
 
 	//resmooth if need be.
-	if(params & ROTATE_SMOOTH && smoothing_flags & (SMOOTH_CORNERS|SMOOTH_BITMASK))
+	if(params & ROTATE_SMOOTH && smoothing_flags & USES_SMOOTHING)
 		QUEUE_SMOOTH(src)
 
 	//rotate the pixel offsets too.

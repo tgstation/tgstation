@@ -99,6 +99,13 @@ GLOBAL_LIST_EMPTY(jam_on_wardec)
 	for(var/obj/machinery/computer/camera_advanced/shuttle_docker/dock as anything in GLOB.jam_on_wardec)
 		dock.jammed = TRUE
 
+	var/datum/techweb/station_techweb = locate(/datum/techweb/science) in SSresearch.techwebs
+	if(station_techweb)
+		var/obj/machinery/announcement_system/announcement_system = pick(GLOB.announcement_systems)
+		if (!isnull(announcement_system))
+			announcement_system.broadcast("Additional research data received from Nanotrasen R&D Division following the emergency protocol.", list(RADIO_CHANNEL_SCIENCE))
+		station_techweb.add_point_list(list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_5_POINTS * 3))
+
 	qdel(src)
 
 /obj/item/nuclear_challenge/proc/distribute_tc()
@@ -118,7 +125,7 @@ GLOBAL_LIST_EMPTY(jam_on_wardec)
 	var/tc_per_nukie = round(tc_to_distribute / (length(orphans)+length(uplinks)))
 
 	for (var/datum/component/uplink/uplink in uplinks)
-		uplink.add_telecrystals(tc_per_nukie)
+		uplink.uplink_handler.add_telecrystals(tc_per_nukie)
 		tc_to_distribute -= tc_per_nukie
 
 	for (var/mob/living/L in orphans)

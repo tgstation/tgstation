@@ -8,7 +8,7 @@
  * * sets lastKnownIP
  * * sets computer_id
  * * logs the login
- * * tells the world to update it's status (for player count)
+ * * tells the world to update its status (for player count)
  * * create mob huds for the mob if needed
  * * reset next_move to 1
  * * Set statobj to our mob
@@ -94,8 +94,20 @@
 	for(var/datum/atom_hud/alternate_appearance/alt_hud as anything in GLOB.active_alternate_appearances)
 		alt_hud.apply_to_new_mob(src)
 
+	frill_mask = image('icons/effects/frill_mask.dmi', src, "primary", pixel_x = -64, pixel_y = -44)
+	frill_mask.alpha = 200 // (to leave a bit of what's below for vision reasons)
+	SET_PLANE_EXPLICIT(frill_mask, FRILL_MASK_PLANE, src)
+	frill_mask.appearance_flags = RESET_TRANSFORM
+	LAZYADD(update_on_z, frill_mask)
+	client.images |= frill_mask
+
 	update_client_colour()
 	update_mouse_pointer()
+	update_ambience_area(get_area(src))
+
+	if(!can_hear())
+		stop_sound_channel(CHANNEL_AMBIENCE)
+
 	if(client)
 		if(client.view_size)
 			client.view_size.resetToDefault() // Resets the client.view in case it was changed.

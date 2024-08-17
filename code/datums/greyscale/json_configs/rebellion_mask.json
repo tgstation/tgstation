@@ -1,0 +1,10 @@
+{
+	"rebellion_mask": [
+		{
+			"type": "icon_state",
+			"icon_state": "rebellion_mask",
+			"blend_mode": "overlay",
+			"color_ids": [ 1 ]
+		}
+	]
+}

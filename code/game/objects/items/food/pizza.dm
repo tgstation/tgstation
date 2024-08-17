@@ -1,25 +1,28 @@
 // Pizza (Whole)
 /obj/item/food/pizza
+	name = "pizza"
 	icon = 'icons/obj/food/pizza.dmi'
 	w_class = WEIGHT_CLASS_NORMAL
 	max_volume = 80
+	icon_state = "pizzamargherita"
 	food_reagents = list(
 		/datum/reagent/consumable/nutriment = 28,
 		/datum/reagent/consumable/nutriment/protein = 3,
 		/datum/reagent/consumable/tomatojuice = 6,
 		/datum/reagent/consumable/nutriment/vitamin = 5,
 	)
-	tastes = list("crust" = 1, "tomato" = 1, "cheese" = 1)
-	foodtypes = GRAIN | DAIRY | VEGETABLES
+	tastes = list("crust" = 1, "tomato" = 1)
+	foodtypes = GRAIN
 	venue_value = FOOD_PRICE_CHEAP
 	crafting_complexity = FOOD_COMPLEXITY_2
 	/// type is spawned 6 at a time and replaces this pizza when processed by cutting tool
 	var/obj/item/food/pizzaslice/slice_type
+	slice_type = /obj/item/food/pizzaslice
 	///What label pizza boxes use if this pizza spawns in them.
 	var/boxtag = ""
 
 /obj/item/food/pizza/raw
-	foodtypes = GRAIN | DAIRY | VEGETABLES | RAW
+	foodtypes = GRAIN | RAW
 	slice_type = null
 	crafting_complexity = FOOD_COMPLEXITY_2
 
@@ -34,9 +37,11 @@
 
 // Pizza Slice
 /obj/item/food/pizzaslice
+	name = "pizza slice"
 	icon = 'icons/obj/food/pizza.dmi'
 	food_reagents = list(/datum/reagent/consumable/nutriment = 5)
-	foodtypes = GRAIN | DAIRY | VEGETABLES
+	icon_state = "pizzamargheritaslice"
+	foodtypes = GRAIN
 	w_class = WEIGHT_CLASS_SMALL
 	decomp_type = /obj/item/food/pizzaslice/moldy
 	crafting_complexity = FOOD_COMPLEXITY_2
@@ -121,6 +126,13 @@
 	tastes = list("crust" = 1, "tomato" = 1, "cheese" = 1, "meat" = 1)
 	foodtypes = GRAIN | VEGETABLES | DAIRY | MEAT
 	crafting_complexity = FOOD_COMPLEXITY_3
+
+/obj/item/food/pizzaslice/meat/pizzeria //Reward for pizzeria bitrunning domain
+	name = "pizzeria meatpizza slice"
+	desc = "An ostensibly nutritious slice of meatpizza from a long-closed pizzeria."
+	food_reagents = null
+	tastes = list("crust" = 1, "ketchup" = 1, "'cheese'" = 1, "mystery meat" = 1, "glue" = 1)
+	foodtypes = null
 
 /obj/item/food/pizza/mushroom
 	name = "mushroom pizza"

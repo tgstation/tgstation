@@ -2,7 +2,8 @@
 /datum/heretic_knowledge/spell/opening_blast
 	name = "Wave Of Desperation"
 	desc = "Grants you Wave Of Desparation, a spell which can only be cast while restrained. \
-		It removes your restraints, repels and knocks down adjacent people, and applies the Mansus Grasp to everything nearby."
+		It removes your restraints, repels and knocks down adjacent people, and applies the Mansus Grasp to everything nearby. \
+		However, you will fall unconscious a short time after casting this spell."
 	gain_text = "My shackles undone in dark fury, their feeble bindings crumble before my power."
 	next_knowledge = list(
 		/datum/heretic_knowledge/summon/raw_prophet,
@@ -11,6 +12,7 @@
 	spell_to_add = /datum/action/cooldown/spell/aoe/wave_of_desperation
 	cost = 1
 	route = PATH_SIDE
+	depth = 8
 
 /datum/heretic_knowledge/spell/apetra_vulnera
 	name = "Apetra Vulnera"
@@ -25,3 +27,4 @@
 	spell_to_add = /datum/action/cooldown/spell/pointed/apetra_vulnera
 	cost = 1
 	route = PATH_SIDE
+	depth = 10

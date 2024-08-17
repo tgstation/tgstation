@@ -14,8 +14,12 @@
 	premium = list()
 */
 
+/// List of vending machines that players can restock, so only vending machines that are on station or don't have a unique condition.
+GLOBAL_LIST_EMPTY(vending_machines_to_restock)
+
 /// Maximum amount of items in a storage bag that we're transferring items to the vendor from.
 #define MAX_VENDING_INPUT_AMOUNT 30
+#define CREDITS_DUMP_THRESHOLD 50
 /**
  * # vending record datum
  *
@@ -49,6 +53,7 @@
  * Captalism in the year 2525, everything in a vending machine, even love
  */
 /obj/machinery/vending
+	SET_BASE_VISUAL_PIXEL(0, DEPTH_OFFSET)
 	name = "\improper Vendomat"
 	desc = "A generic vending machine."
 	icon = 'icons/obj/machines/vending.dmi'
@@ -178,6 +183,8 @@
 	var/displayed_currency_name = " cr"
 	///Whether our age check is currently functional
 	var/age_restrictions = TRUE
+	/// How many credits does this vending machine have? 20% of all sales go to this pool, and are given freely when the machine is restocked, or successfully tilted. Lost on deconstruction.
+	var/credits_contained = 0
 	/**
 	  * Is this item on station or not
 	  *
@@ -236,6 +243,11 @@
 		voice = vendor_voice_by_type[type]
 
 	if(build_inv) //non-constructable vending machine
+		///Non-constructible vending machines do not have a refill canister to populate its products list from,
+		///Which apparently is still needed in the case we use product categories instead.
+		if(product_categories)
+			for(var/list/category as anything in product_categories)
+				products |= category["products"]
 		build_inventories()
 
 	slogan_list = splittext(product_slogans, ";")
@@ -251,6 +263,7 @@
 				onstation = FALSE
 			if(circuit)
 				circuit.onstation = onstation //sync up the circuit so the pricing schema is carried over if it's reconstructed.
+
 		else if(HAS_TRAIT(SSstation, STATION_TRAIT_VENDING_SHORTAGE))
 			for (var/datum/data/vending_product/product_record as anything in product_records + coin_records + hidden_records)
 				/**
@@ -259,20 +272,26 @@
 				 */
 				var/max_amount = rand(CEILING(product_record.amount * 0.5, 1), product_record.amount)
 				product_record.amount = rand(0, max_amount)
+				credits_contained += rand(1, 5) //randomly add a few credits to the machine to make it look like it's been used, proportional to the amount missing.
 			if(tiltable && prob(6)) // 1 in 17 chance to start tilted (as an additional hint to the station trait behind it)
 				INVOKE_ASYNC(src, PROC_REF(tilt), loc)
+				credits_contained = 0 // If it's tilted, it's been looted, so no credits for you.
 	else if(circuit && (circuit.onstation != onstation)) //check if they're not the same to minimize the amount of edited values.
 		onstation = circuit.onstation //if it was constructed outside mapload, sync the vendor up with the circuit's var so you can't bypass price requirements by moving / reconstructing it off station.
+	if(onstation && !onstation_override)
+		AddComponent(/datum/component/payment, 0, SSeconomy.get_dep_account(payment_department), PAYMENT_VENDING)
+		GLOB.vending_machines_to_restock += src //We need to keep track of the final onstation vending machines so we can keep them restocked.
+	register_context()
 
 /obj/machinery/vending/Destroy()
-	QDEL_NULL(wires)
 	QDEL_NULL(coin)
 	QDEL_NULL(bill)
 	QDEL_NULL(sec_radio)
+	GLOB.vending_machines_to_restock -= src
 	return ..()
 
-/obj/machinery/vending/can_speak()
-	return !shut_up
+/obj/machinery/vending/can_speak(allow_mimes)
+	return is_operational && !shut_up && ..()
 
 /obj/machinery/vending/emp_act(severity)
 	. = ..()
@@ -298,12 +317,10 @@
 	for(var/obj/item/vending_refill/installed_refill in component_parts)
 		restock(installed_refill)
 
-/obj/machinery/vending/deconstruct(disassembled = TRUE)
+/obj/machinery/vending/on_deconstruction(disassembled)
 	if(refill_canister)
 		return ..()
-	if(!(obj_flags & NO_DECONSTRUCTION)) //the non constructable vendors drop metal instead of a machine frame.
-		new /obj/item/stack/sheet/iron(loc, 3)
-	qdel(src)
+	new /obj/item/stack/sheet/iron(loc, 3)
 
 /obj/machinery/vending/update_appearance(updates=ALL)
 	. = ..()
@@ -325,6 +342,24 @@
 		. += panel_type
 	if(light_mask && !(machine_stat & BROKEN) && powered())
 		. += emissive_appearance(icon, light_mask, src)
+
+/obj/machinery/vending/examine(mob/user)
+	. = ..()
+	if(isnull(refill_canister))
+		return // you can add the comment here instead
+	if((total_loaded_stock() / total_max_stock()) < 1)
+		. += span_notice("\The [src] can be restocked with [span_boldnotice("\a [initial(refill_canister.machine_name)] [initial(refill_canister.name)]")] with the panel open.")
+	else
+		. += span_notice("\The [src] is fully stocked.")
+	if(credits_contained < CREDITS_DUMP_THRESHOLD && credits_contained > 0)
+		. += span_notice("It should have a handfull of credits stored based on the missing items.")
+	else if (credits_contained > PAYCHECK_CREW)
+		. += span_notice("It should have at least a full paycheck worth of credits inside!")
+		/**
+		 * Intentionally leaving out a case for zero credits as it should be covered by the vending machine's stock being full,
+		 * or covered by first case if items were returned.
+		 */
+
 
 /obj/machinery/vending/atom_break(damage_flag)
 	. = ..()
@@ -354,6 +389,7 @@
 				continue
 
 			var/obj/obj_to_dump = new dump_path(loc)
+			on_dispense(obj_to_dump)
 			step(obj_to_dump, pick(GLOB.alldirs))
 			found_anything = TRUE
 			dump_amount++
@@ -361,7 +397,7 @@
 				return
 
 /**
- * Build the inventory of the vending machine from it's product and record lists
+ * Build the inventory of the vending machine from its product and record lists
  *
  * This builds up a full set of /datum/data/vending_products from the product list of the vending machine type
  * Arguments:
@@ -513,6 +549,28 @@
 	return .
 
 /**
+ * After-effects of refilling a vending machine from a refill canister
+ *
+ * This takes the amount of products restocked and gives the user our contained credits if needed,
+ * sending the user a fitting message.
+ *
+ * Arguments:
+ * * user - the user restocking us
+ * * restocked - the amount of items we've been refilled with
+ */
+/obj/machinery/vending/proc/post_restock(mob/living/user, restocked)
+	if(!restocked)
+		to_chat(user, span_warning("There's nothing to restock!"))
+		return
+
+	to_chat(user, span_notice("You loaded [restocked] items in [src][credits_contained > 0 ? ", and are rewarded [credits_contained] credits." : "."]"))
+	var/datum/bank_account/cargo_account = SSeconomy.get_dep_account(ACCOUNT_CAR)
+	cargo_account.adjust_money(round(credits_contained * 0.5), "Vending: Restock")
+	var/obj/item/holochip/payday = new(src, credits_contained)
+	try_put_in_hand(payday, user)
+	credits_contained = 0
+
+/**
  * Refill our inventory from the passed in product list into the record list
  *
  * Arguments:
@@ -608,6 +666,24 @@
 		else //no category found - dump it into standard stock
 			products[record.product_path] = record.amount
 
+/**
+ * Returns the total amount of items in the vending machine based on the product records and premium records, but not contraband
+ */
+/obj/machinery/vending/proc/total_loaded_stock()
+	var/total = 0
+	for(var/datum/data/vending_product/record as anything in product_records + coin_records)
+		total += record.amount
+	return total
+
+/**
+ * Returns the total amount of items in the vending machine based on the product records and premium records, but not contraband
+ */
+/obj/machinery/vending/proc/total_max_stock()
+	var/total_max = 0
+	for(var/datum/data/vending_product/record as anything in product_records + coin_records)
+		total_max += record.max_amount
+	return total_max
+
 /obj/machinery/vending/crowbar_act(mob/living/user, obj/item/attack_item)
 	if(!component_parts)
 		return FALSE
@@ -650,11 +726,8 @@
 				to_chat(user, span_warning("[canister] is empty!"))
 			else
 				// instantiate canister if needed
-				var/transferred = restock(canister)
-				if(transferred)
-					to_chat(user, span_notice("You loaded [transferred] items in [src]."))
-				else
-					to_chat(user, span_warning("There's nothing to restock!"))
+				var/restocked = restock(canister)
+				post_restock(user, restocked)
 			return
 
 	if(compartmentLoadAccessCheck(user) && !user.combat_mode)
@@ -704,7 +777,7 @@
  * freebies - number of free items to vend
  */
 /obj/machinery/vending/proc/freebie(freebies)
-	visible_message(span_notice("[src] yields [freebies > 1 ? "several free goodies" : "a free goody"]!"))
+	visible_message(span_notice("[src] yields [freebies > 1 ? "several free goodies" : "a free goody"][credits_contained > 0 ? " and some credits" : ""]!"))
 
 	for(var/i in 1 to freebies)
 		playsound(src, 'sound/machines/machine_vend.ogg', 50, TRUE, extrarange = -3)
@@ -716,13 +789,15 @@
 			if(!dump_path)
 				continue
 			if(record.amount > LAZYLEN(record.returned_products)) //always give out new stuff that costs before free returned stuff, because of the risk getting gibbed involved
-				new dump_path(get_turf(src))
+				var/obj/item/free_stuff = new dump_path(get_turf(src))
+				on_dispense(free_stuff)
 			else
 				var/obj/returned_obj_to_dump = LAZYACCESS(record.returned_products, LAZYLEN(record.returned_products)) //first in, last out
 				LAZYREMOVE(record.returned_products, returned_obj_to_dump)
 				returned_obj_to_dump.forceMove(get_turf(src))
 			record.amount--
 			break
+	deploy_credits()
 
 /**
  * Tilts ontop of the atom supplied, if crit is true some extra shit can happen. See [fall_and_crush] for return values.
@@ -758,7 +833,7 @@
  * * turf/target: The turf to fall onto. Cannot be null.
  * * damage: The raw numerical damage to do by default.
  * * chance_to_crit: The percent chance of a critical hit occuring. Default: 0
- * * forced_crit_case: If given a value from crushing.dm, [target] and it's contents will always be hit with that specific critical hit. Default: null
+ * * forced_crit_case: If given a value from crushing.dm, [target] and its contents will always be hit with that specific critical hit. Default: null
  * * paralyze_time: The time, in deciseconds, a given mob/living will be paralyzed for if crushed.
  * * crush_dir: The direction the crush is coming from. Default: dir of src to [target].
  * * damage_type: The type of damage to do. Default: BRUTE
@@ -818,7 +893,7 @@
 				post_crush_living(living_target, was_alive)
 				flags_to_return |= (SUCCESSFULLY_CRUSHED_MOB|SUCCESSFULLY_CRUSHED_ATOM)
 
-			else if (atom_target.uses_integrity && !(atom_target.invisibility > SEE_INVISIBLE_LIVING) && !(is_type_in_typecache(atom_target, GLOB.WALLITEMS_INTERIOR) || is_type_in_typecache(atom_target, GLOB.WALLITEMS_EXTERIOR)))
+			else if(check_atom_crushable(atom_target))
 				atom_target.take_damage(adjusted_damage, damage_type, damage_flag, FALSE, crush_dir)
 				crushed = TRUE
 				flags_to_return |= SUCCESSFULLY_CRUSHED_ATOM
@@ -857,6 +932,21 @@
  */
 /atom/movable/proc/post_tilt()
 	return
+
+/proc/check_atom_crushable(atom/atom_target)
+	/// Contains structures and items that vendors shouldn't crush when we land on them.
+	var/static/list/vendor_uncrushable_objects = list(
+		/obj/structure/chair,
+		/obj/machinery/conveyor,
+	) + GLOB.WALLITEMS_INTERIOR + GLOB.WALLITEMS_EXTERIOR
+
+	if(is_type_in_list(atom_target, vendor_uncrushable_objects)) //make sure its not in the list of "uncrushable" stuff
+		return FALSE
+
+	if (atom_target.uses_integrity && !(atom_target.invisibility > SEE_INVISIBLE_LIVING)) //check if it has integrity + allow ninjas, etc to be crushed in cloak
+		return TRUE //SMUSH IT
+
+	return FALSE
 
 /obj/machinery/vending/post_crush_living(mob/living/crushed, was_alive)
 
@@ -984,11 +1074,9 @@
 			var/mob/living/carbon/carbon_target = atom_target
 			for(var/i in 1 to num_shards)
 				var/obj/item/shard/shard = new /obj/item/shard(get_turf(carbon_target))
-				shard.embedding = list(embed_chance = 100, ignore_throwspeed_threshold = TRUE, impact_pain_mult = 1, pain_chance = 5)
-				shard.updateEmbedding()
+				shard.set_embed(/datum/embed_data/glass_candy)
 				carbon_target.hitby(shard, skipcatch = TRUE, hitpush = FALSE)
-				shard.embedding = list()
-				shard.updateEmbedding()
+				shard.set_embed(initial(shard.embed_type))
 			return TRUE
 		if (VENDOR_CRUSH_CRIT_PIN) // pin them beneath the machine until someone untilts it
 			if (!isliving(atom_target))
@@ -1045,6 +1133,7 @@
 		vending_machine_input[inserted_item.type] = 1
 	loaded_items++
 
+
 /obj/machinery/vending/unbuckle_mob(mob/living/buckled_mob, force = FALSE, can_fall = TRUE)
 	if(!force)
 		return
@@ -1066,26 +1155,25 @@
 /obj/machinery/vending/exchange_parts(mob/user, obj/item/storage/part_replacer/replacer)
 	if(!istype(replacer))
 		return FALSE
-	if((obj_flags & NO_DECONSTRUCTION) && !replacer.works_from_distance)
-		return FALSE
 	if(!component_parts || !refill_canister)
 		return FALSE
 
-	var/moved = 0
-	if(panel_open || replacer.works_from_distance)
-		if(replacer.works_from_distance)
-			display_parts(user)
-		for(var/replacer_item in replacer)
-			if(istype(replacer, refill_canister))
-				moved += restock(replacer_item)
-	else
-		display_parts(user)
-	if(moved)
-		to_chat(user, span_notice("[moved] items restocked."))
+	if(!panel_open || replacer.works_from_distance)
+		to_chat(user, display_parts(user))
+
+	if(!panel_open && !replacer.works_from_distance)
+		return FALSE
+
+	var/restocked = 0
+	for(var/replacer_item in replacer)
+		if(istype(replacer_item, refill_canister))
+			restocked += restock(replacer_item)
+	post_restock(user, restocked)
+	if(restocked > 0)
 		replacer.play_rped_sound()
 	return TRUE
 
-/obj/machinery/vending/on_deconstruction()
+/obj/machinery/vending/on_deconstruction(disassembled)
 	update_canister()
 	. = ..()
 
@@ -1097,14 +1185,14 @@
 	return TRUE
 
 /obj/machinery/vending/interact(mob/user)
-	if (!isAI(user))
+	if (!HAS_AI_ACCESS(user))
 		if(seconds_electrified && !(machine_stat & NOPOWER))
 			if(shock(user, 100))
 				return
 
 		if(tilted && !user.buckled && !isAdminGhostAI(user))
 			to_chat(user, span_notice("You begin righting [src]."))
-			if(do_after(user, 50, target=src))
+			if(do_after(user, 5 SECONDS, target=src))
 				untilt(user)
 			return
 
@@ -1169,6 +1257,15 @@
 			ref = REF(record),
 		)
 
+		var/atom/printed = record.product_path
+		// If it's not GAGS and has no innate colors we have to care about, we use DMIcon
+		if(ispath(printed, /atom) \
+			&& (!initial(printed.greyscale_config) || !initial(printed.greyscale_colors)) \
+			&& !initial(printed.color) \
+		)
+			static_record["icon"] = initial(printed.icon)
+			static_record["icon_state"] = initial(printed.icon_state)
+
 		var/list/category = record.category || default_category
 		if (!isnull(category))
 			if (!(category["name"] in categories))
@@ -1188,19 +1285,25 @@
 /obj/machinery/vending/ui_data(mob/user)
 	. = list()
 	var/obj/item/card/id/card_used
+	var/held_cash = 0
 	if(isliving(user))
 		var/mob/living/living_user = user
 		card_used = living_user.get_idcard(TRUE)
+		held_cash = living_user.tally_physical_credits()
+
+	var/list/user_data = null
 	if(card_used?.registered_account)
-		.["user"] = list()
-		.["user"]["name"] = card_used.registered_account.account_holder
-		.["user"]["cash"] = fetch_balance_to_use(card_used)
+		user_data = list()
+		user_data["name"] = card_used.registered_account.account_holder
+		user_data["cash"] = fetch_balance_to_use(card_used) + held_cash
 		if(card_used.registered_account.account_job)
-			.["user"]["job"] = card_used.registered_account.account_job.title
-			.["user"]["department"] = card_used.registered_account.account_job.paycheck_department
+			user_data["job"] = card_used.registered_account.account_job.title
+			user_data["department"] = card_used.registered_account.account_job.paycheck_department
 		else
-			.["user"]["job"] = "No Job"
-			.["user"]["department"] = DEPARTMENT_UNASSIGNED
+			user_data["job"] = "No Job"
+			user_data["department"] = DEPARTMENT_UNASSIGNED
+	.["user"] = user_data
+
 	.["stock"] = list()
 
 	for (var/datum/data/vending_product/product_record as anything in product_records + coin_records + hidden_records)
@@ -1315,26 +1418,13 @@
 		vend_ready = TRUE
 		return
 	if(onstation)
+		// Here we do additional handing ahead of the payment component's logic, such as age restrictions and additional logging
 		var/obj/item/card/id/card_used
+		var/mob/living/living_user
 		if(isliving(usr))
-			var/mob/living/living_user = usr
+			living_user = usr
 			card_used = living_user.get_idcard(TRUE)
-		if(!card_used)
-			speak("No card found.")
-			flick(icon_deny,src)
-			vend_ready = TRUE
-			return
-		else if (!card_used.registered_account)
-			speak("No account found.")
-			flick(icon_deny,src)
-			vend_ready = TRUE
-			return
-		else if(!card_used.registered_account.account_job)
-			speak("Departmental accounts have been blacklisted from personal expenses due to embezzlement.")
-			flick(icon_deny, src)
-			vend_ready = TRUE
-			return
-		else if(age_restrictions && item_record.age_restricted && (!card_used.registered_age || card_used.registered_age < AGE_MINOR))
+		if(age_restrictions && item_record.age_restricted && (!card_used.registered_age || card_used.registered_age < AGE_MINOR))
 			speak("You are not of legal age to purchase [item_record.name].")
 			if(!(usr in GLOB.narcd_underages))
 				if (isnull(sec_radio))
@@ -1347,7 +1437,8 @@
 			vend_ready = TRUE
 			return
 
-		if(!proceed_payment(card_used, item_record, price_to_use))
+		if(!proceed_payment(card_used, living_user, item_record, price_to_use))
+			vend_ready = TRUE
 			return
 
 	if(last_shopper != REF(usr) || purchase_message_cooldown < world.time)
@@ -1356,13 +1447,16 @@
 		purchase_message_cooldown = world.time + 5 SECONDS
 		//This is not the best practice, but it's safe enough here since the chances of two people using a machine with the same ref in 5 seconds is fuck low
 		last_shopper = REF(usr)
-	use_power(active_power_usage)
+	use_energy(active_power_usage)
 	if(icon_vend) //Show the vending animation if needed
 		flick(icon_vend,src)
 	playsound(src, 'sound/machines/machine_vend.ogg', 50, TRUE, extrarange = -3)
 	var/obj/item/vended_item
 	if(!LAZYLEN(item_record.returned_products)) //always give out free returned stuff first, e.g. to avoid walling a traitor objective in a bag behind paid items
 		vended_item = new item_record.product_path(get_turf(src))
+		if(vended_item.type in contraband)
+			ADD_TRAIT(vended_item, TRAIT_CONTRABAND, INNATE_TRAIT)
+		on_dispense(vended_item)
 	else
 		vended_item = LAZYACCESS(item_record.returned_products, LAZYLEN(item_record.returned_products)) //first in, last out
 		LAZYREMOVE(item_record.returned_products, vended_item)
@@ -1373,9 +1467,13 @@
 	if(usr.CanReach(src) && usr.put_in_hands(vended_item))
 		to_chat(usr, span_notice("You take [item_record.name] out of the slot."))
 	else
-		to_chat(usr, span_warning("[capitalize(item_record.name)] falls onto the floor!"))
+		to_chat(usr, span_warning("[capitalize(format_text(item_record.name))] falls onto the floor!"))
 	SSblackbox.record_feedback("nested tally", "vending_machine_usage", 1, list("[type]", "[item_record.product_path]"))
 	vend_ready = TRUE
+
+///A proc meant to perform custom behavior on newly dispensed items.
+/obj/machinery/vending/proc/on_dispense(obj/item/vended_item)
+	return
 
 /**
  * Returns the balance that the vendor will use for proceeding payment. Most vendors would want to use the user's
@@ -1389,11 +1487,15 @@
 /**
  * Handles payment processing: discounts, logging, balance change etc.
  * arguments:
- * paying_id_card - the id card that will be billed for the product
- * product_to_vend - the product record of the item we're trying to vend
- * price_to_use - price of the item we're trying to vend
+ * paying_id_card - the id card that will be billed for the product.
+ * mob_paying - the mob that is trying to purchase the item.
+ * product_to_vend - the product record of the item we're trying to vend.
+ * price_to_use - price of the item we're trying to vend.
  */
-/obj/machinery/vending/proc/proceed_payment(obj/item/card/id/paying_id_card, datum/data/vending_product/product_to_vend, price_to_use)
+/obj/machinery/vending/proc/proceed_payment(obj/item/card/id/paying_id_card, mob/living/mob_paying, datum/data/vending_product/product_to_vend, price_to_use)
+	if(QDELETED(paying_id_card)) //not available(null) or somehow is getting destroyed
+		speak("You do not possess an ID to purchase [product_to_vend.name].")
+		return FALSE
 	var/datum/bank_account/account = paying_id_card.registered_account
 	if(account.account_job && account.account_job.paycheck_department == payment_department)
 		price_to_use = max(round(price_to_use * DEPARTMENT_DISCOUNT), 1) //No longer free, but signifigantly cheaper.
@@ -1401,7 +1503,7 @@
 		price_to_use = product_to_vend.custom_premium_price ? product_to_vend.custom_premium_price : extra_price
 	if(LAZYLEN(product_to_vend.returned_products))
 		price_to_use = 0 //returned items are free
-	if(price_to_use && !account.adjust_money(-price_to_use, "Vending: [product_to_vend.name]"))
+	if(price_to_use && (attempt_charge(src, mob_paying, price_to_use) & COMPONENT_OBJ_CANCEL_CHARGE))
 		speak("You do not possess the funds to purchase [product_to_vend.name].")
 		flick(icon_deny,src)
 		vend_ready = TRUE
@@ -1409,10 +1511,10 @@
 	//actual payment here
 	var/datum/bank_account/paying_id_account = SSeconomy.get_dep_account(payment_department)
 	if(paying_id_account)
-		paying_id_account.adjust_money(price_to_use)
 		SSblackbox.record_feedback("amount", "vending_spent", price_to_use)
 		SSeconomy.track_purchase(account, price_to_use, name)
 		log_econ("[price_to_use] credits were inserted into [src] by [account.account_holder] to buy [product_to_vend].")
+	credits_contained += round(price_to_use * 0.2)
 	return TRUE
 
 /obj/machinery/vending/process(seconds_per_tick)
@@ -1527,11 +1629,13 @@
  * Arguments:
  * * loaded_item - the item being loaded
  * * user - the user doing the loading
+ * * send_message - should we send a message to the user if the item can't be loaded? Either a to_chat or a speak depending on vending type.
  */
-/obj/machinery/vending/proc/canLoadItem(obj/item/loaded_item, mob/user)
+/obj/machinery/vending/proc/canLoadItem(obj/item/loaded_item, mob/user, send_message = TRUE)
 	if(!length(loaded_item.contents) && ((loaded_item.type in products) || (loaded_item.type in premium) || (loaded_item.type in contraband)))
 		return TRUE
-	to_chat(user, span_warning("[src] does not accept [loaded_item]!"))
+	if(send_message)
+		to_chat(user, span_warning("[src] does not accept [loaded_item]!"))
 	return FALSE
 
 /obj/machinery/vending/hitby(atom/movable/hitting_atom, skipcatch, hitpush, blocked, datum/thrownthing/throwingdatum)
@@ -1550,6 +1654,42 @@
 	if(isliving(hit_atom))
 		tilt(fatty=hit_atom)
 	return ..()
+
+/** Drop credits when the vendor is attacked.*/
+/obj/machinery/vending/proc/deploy_credits()
+	if(credits_contained <= 0)
+		return
+	var/credits_to_remove = min(CREDITS_DUMP_THRESHOLD, round(credits_contained))
+	var/obj/item/holochip/holochip = new(loc, credits_to_remove)
+	playsound(src, 'sound/effects/cashregister.ogg', 40, TRUE)
+	credits_contained = max(0, credits_contained - credits_to_remove)
+	SSblackbox.record_feedback("amount", "vending machine looted", holochip.credits)
+
+/obj/machinery/vending/add_context(atom/source, list/context, obj/item/held_item, mob/user)
+	if(tilted && !held_item)
+		context[SCREENTIP_CONTEXT_LMB] = "Right machine"
+		return CONTEXTUAL_SCREENTIP_SET
+
+	if(held_item?.tool_behaviour == TOOL_SCREWDRIVER)
+		context[SCREENTIP_CONTEXT_LMB] = panel_open ? "Close panel" : "Open panel"
+		return CONTEXTUAL_SCREENTIP_SET
+
+	if(panel_open && held_item?.tool_behaviour == TOOL_WRENCH)
+		context[SCREENTIP_CONTEXT_LMB] = anchored ? "Unsecure" : "Secure"
+		return CONTEXTUAL_SCREENTIP_SET
+
+	if(panel_open && held_item?.tool_behaviour == TOOL_CROWBAR)
+		context[SCREENTIP_CONTEXT_LMB] = "Deconstruct"
+		return CONTEXTUAL_SCREENTIP_SET
+
+	if(!isnull(held_item) && (vending_machine_input[held_item.type] || canLoadItem(held_item, user, send_message = FALSE)))
+		context[SCREENTIP_CONTEXT_LMB] = "Load item"
+		return CONTEXTUAL_SCREENTIP_SET
+
+	if(panel_open && istype(held_item, refill_canister))
+		context[SCREENTIP_CONTEXT_LMB] = "Restock vending machine[credits_contained ? " and collect credits" : null]"
+		return TRUE
+	return NONE
 
 /obj/machinery/vending/custom
 	name = "Custom Vendor"
@@ -1576,21 +1716,24 @@
 	if(id_card?.registered_account && id_card.registered_account == linked_account)
 		return TRUE
 
-/obj/machinery/vending/custom/canLoadItem(obj/item/loaded_item, mob/user)
+/obj/machinery/vending/custom/canLoadItem(obj/item/loaded_item, mob/user, send_message = TRUE)
 	. = FALSE
 	if(loaded_item.flags_1 & HOLOGRAM_1)
-		speak("This vendor cannot accept nonexistent items.")
+		if(send_message)
+			speak("This vendor cannot accept nonexistent items.")
 		return
 	if(loaded_items >= max_loaded_items)
-		speak("There are too many items in stock.")
+		if(send_message)
+			speak("There are too many items in stock.")
 		return
 	if(isstack(loaded_item))
-		speak("Loose items may cause problems, try to use it inside wrapping paper.")
+		if(send_message)
+			speak("Loose items may cause problems, try to use it inside wrapping paper.")
 		return
 	if(loaded_item.custom_price)
 		return TRUE
 
-/obj/machinery/vending/custom/ui_interact(mob/user)
+/obj/machinery/vending/custom/ui_interact(mob/user, datum/tgui/ui)
 	if(!linked_account)
 		balloon_alert(user, "no registered owner!")
 		return FALSE
@@ -1644,7 +1787,7 @@
 			speak("\The [src] has been linked to [card_used].")
 
 	if(compartmentLoadAccessCheck(user))
-		if(istype(attack_item, /obj/item/pen))
+		if(IS_WRITING_UTENSIL(attack_item))
 			name = tgui_input_text(user, "Set name", "Name", name, 20)
 			desc = tgui_input_text(user, "Set description", "Description", desc, 60)
 			slogan_list += tgui_input_text(user, "Set slogan", "Slogan", "Epic", 60)
@@ -1656,14 +1799,13 @@
 /obj/machinery/vending/custom/crowbar_act(mob/living/user, obj/item/attack_item)
 	return FALSE
 
-/obj/machinery/vending/custom/deconstruct(disassembled)
+/obj/machinery/vending/custom/on_deconstruction(disassembled)
 	unbuckle_all_mobs(TRUE)
 	var/turf/current_turf = get_turf(src)
 	if(current_turf)
 		for(var/obj/item/stored_item in contents)
 			stored_item.forceMove(current_turf)
 		explosion(src, devastation_range = -1, light_impact_range = 3)
-	return ..()
 
 /**
  * Vends an item to the user. Handles all the logic:
@@ -1709,12 +1851,12 @@
 			last_shopper = REF(usr)
 	/// Remove the item
 	loaded_items--
-	use_power(active_power_usage)
+	use_energy(active_power_usage)
 	vending_machine_input[choice] = max(vending_machine_input[choice] - 1, 0)
 	if(user.CanReach(src) && user.put_in_hands(dispensed_item))
 		to_chat(user, span_notice("You take [dispensed_item.name] out of the slot."))
 	else
-		to_chat(user, span_warning("[capitalize(dispensed_item.name)] falls onto the floor!"))
+		to_chat(user, span_warning("[capitalize(format_text(dispensed_item.name))] falls onto the floor!"))
 	return TRUE
 
 /obj/machinery/vending/custom/unbreakable

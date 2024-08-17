@@ -145,7 +145,6 @@
 /obj/effect/temp_visual/dir_setting/curse/grasp_portal
 	icon = 'icons/effects/64x64.dmi'
 	layer = ABOVE_ALL_MOB_LAYER
-	plane = ABOVE_GAME_PLANE
 	pixel_y = -16
 	pixel_x = -16
 	duration = 32
@@ -165,7 +164,6 @@
 	icon = 'icons/effects/beam_splash.dmi'
 	icon_state = "beam_splash_e"
 	layer = ABOVE_ALL_MOB_LAYER
-	plane = ABOVE_GAME_PLANE
 	pixel_y = -16
 	duration = 50
 
@@ -244,8 +242,8 @@
 	duration = 5
 
 /obj/effect/temp_visual/fire
-	icon = 'icons/effects/fire.dmi'
-	icon_state = "3"
+	icon = 'icons/effects/atmos/fire.dmi'
+	icon_state = "heavy"
 	light_range = LIGHT_RANGE_FIRE
 	light_color = LIGHT_COLOR_FIRE
 	duration = 10
@@ -329,7 +327,6 @@
 	icon = 'icons/obj/weapons/guns/projectiles.dmi'
 	icon_state = "kinetic_blast"
 	layer = ABOVE_ALL_MOB_LAYER
-	plane = ABOVE_GAME_PLANE
 	duration = 4
 
 /obj/effect/temp_visual/explosion
@@ -492,10 +489,9 @@
 	duration = 2 SECONDS
 
 /obj/effect/constructing_effect
-	icon = 'icons/effects/effects_rcd.dmi'
+	icon = 'icons/effects/rcd.dmi'
 	icon_state = ""
 	layer = ABOVE_ALL_MOB_LAYER
-	plane = ABOVE_GAME_PLANE
 	anchored = TRUE
 	obj_flags = CAN_BE_HIT
 	mouse_opacity = MOUSE_OPACITY_OPAQUE
@@ -555,7 +551,7 @@
 		mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 		obj_flags &= ~CAN_BE_HIT
 		icon_state = "rcd_end"
-		addtimer(CALLBACK(src, PROC_REF(end)), 15)
+		addtimer(CALLBACK(src, PROC_REF(end)), 1.5 SECONDS)
 
 /obj/effect/constructing_effect/proc/end()
 	qdel(src)
@@ -683,11 +679,11 @@
 	duration = 0.4 SECONDS
 
 /// Plays a dispersing animation on hivelord and legion minions so they don't just vanish
-/obj/effect/temp_visual/hive_spawn_wither
+/obj/effect/temp_visual/despawn_effect
 	name = "withering spawn"
 	duration = 1 SECONDS
 
-/obj/effect/temp_visual/hive_spawn_wither/Initialize(mapload, atom/copy_from)
+/obj/effect/temp_visual/despawn_effect/Initialize(mapload, atom/copy_from)
 	if (isnull(copy_from))
 		. = ..()
 		return INITIALIZE_HINT_QDEL
@@ -709,3 +705,29 @@
 		flags = ANIMATION_RELATIVE,
 	)
 	return ..()
+
+/obj/effect/temp_visual/mech_sparks
+	name = "mech sparks"
+	icon_state = "mech_sparks"
+	duration = 0.4 SECONDS
+
+/obj/effect/temp_visual/mech_sparks/Initialize(mapload, set_color)
+	. = ..()
+	pixel_x = rand(-16, 16)
+	pixel_y = rand(-8, 8)
+
+/obj/effect/temp_visual/mech_attack_aoe_charge
+	name = "mech attack aoe charge"
+	icon = 'icons/effects/96x96.dmi'
+	icon_state = "mech_attack_aoe_charge"
+	duration = 1 SECONDS
+	pixel_x = -32
+	pixel_y = -32
+
+/obj/effect/temp_visual/mech_attack_aoe_attack
+	name = "mech attack aoe attack"
+	icon = 'icons/effects/96x96.dmi'
+	icon_state = "mech_attack_aoe_attack"
+	duration = 0.5 SECONDS
+	pixel_x = -32
+	pixel_y = -32

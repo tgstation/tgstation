@@ -2,7 +2,7 @@
 	name = "\improper Space Ninja"
 	antagpanel_category = ANTAG_GROUP_NINJAS
 	job_rank = ROLE_NINJA
-	antag_hud_name = "space_ninja"
+	antag_hud_name = "ninja"
 	hijack_speed = 1
 	show_name_in_check_antagonists = TRUE
 	show_to_ghosts = TRUE
@@ -114,12 +114,12 @@
 	equip_space_ninja(owner.current)
 	owner.current.add_quirk(/datum/quirk/freerunning)
 	owner.current.add_quirk(/datum/quirk/light_step)
-	owner.current.mind.set_assigned_role(SSjob.GetJobType(/datum/job/space_ninja))
+	owner.current.mind.set_assigned_role(SSjob.get_job_type(/datum/job/space_ninja))
 	owner.current.mind.special_role = ROLE_NINJA
 	return ..()
 
 /datum/antagonist/ninja/admin_add(datum/mind/new_owner,mob/admin)
-	new_owner.set_assigned_role(SSjob.GetJobType(/datum/job/space_ninja))
+	new_owner.set_assigned_role(SSjob.get_job_type(/datum/job/space_ninja))
 	new_owner.special_role = ROLE_NINJA
 	new_owner.add_antag_datum(src)
 	message_admins("[key_name_admin(admin)] has ninja'ed [key_name_admin(new_owner)].")

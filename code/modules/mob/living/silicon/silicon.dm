@@ -38,9 +38,7 @@
 
 	///Are our siliconHUDs on? TRUE for yes, FALSE for no.
 	var/sensors_on = TRUE
-	var/med_hud = DATA_HUD_MEDICAL_ADVANCED //Determines the med hud to use
-	var/sec_hud = DATA_HUD_SECURITY_ADVANCED //Determines the sec hud to use
-	var/d_hud = DATA_HUD_DIAGNOSTIC_BASIC //Determines the diag hud to use
+	var/list/silicon_huds = list(DATA_HUD_MEDICAL_ADVANCED, DATA_HUD_SECURITY_ADVANCED, DATA_HUD_DIAGNOSTIC)
 
 	var/law_change_counter = 0
 	var/obj/machinery/camera/builtInCamera = null
@@ -75,9 +73,13 @@
 		TRAIT_MADNESS_IMMUNE,
 		TRAIT_MARTIAL_ARTS_IMMUNE,
 		TRAIT_NOFIRE_SPREAD,
+		TRAIT_BRAWLING_KNOCKDOWN_BLOCKED,
+		TRAIT_FENCE_CLIMBER,
 	)
 
 	add_traits(traits_to_apply, ROUNDSTART_TRAIT)
+	ADD_TRAIT(src, TRAIT_SILICON_EMOTES_ALLOWED, INNATE_TRAIT)
+	RegisterSignal(src, COMSIG_LIVING_ELECTROCUTE_ACT, PROC_REF(on_silicon_shocked))
 
 /mob/living/silicon/Destroy()
 	QDEL_NULL(radio)
@@ -88,6 +90,14 @@
 	QDEL_NULL(modularInterface)
 	GLOB.silicon_mobs -= src
 	return ..()
+
+/mob/living/silicon/proc/on_silicon_shocked(datum/source, shock_damage, shock_source, siemens_coeff, flags)
+	SIGNAL_HANDLER
+	for(var/mob/living/living_mob in buckled_mobs)
+		unbuckle_mob(living_mob)
+		living_mob.electrocute_act(shock_damage/100, shock_source, siemens_coeff, flags) //Hard metal shell conducts!
+
+	return COMPONENT_LIVING_BLOCK_SHOCK //So borgs don't die trying to fix wiring
 
 /mob/living/silicon/proc/create_modularInterface()
 	if(!modularInterface)
@@ -296,7 +306,7 @@
 ///Gives you a link-driven interface for deciding what laws the statelaws() proc will share with the crew.
 /mob/living/silicon/proc/checklaws()
 	laws_sanity_check()
-	var/list = "<b>Which laws do you want to include when stating them for the crew?</b><br><br>"
+	var/list = "<meta charset='UTF-8'><b>Which laws do you want to include when stating them for the crew?</b><br><br>"
 
 	var/law_display = "Yes"
 	if (laws.zeroth)
@@ -380,20 +390,14 @@
 	return -10
 
 /mob/living/silicon/proc/remove_sensors()
-	var/datum/atom_hud/secsensor = GLOB.huds[sec_hud]
-	var/datum/atom_hud/medsensor = GLOB.huds[med_hud]
-	var/datum/atom_hud/diagsensor = GLOB.huds[d_hud]
-	secsensor.hide_from(src)
-	medsensor.hide_from(src)
-	diagsensor.hide_from(src)
+	for (var/hud_type in silicon_huds)
+		var/datum/atom_hud/silicon_hud = GLOB.huds[hud_type]
+		silicon_hud.hide_from(src)
 
 /mob/living/silicon/proc/add_sensors()
-	var/datum/atom_hud/secsensor = GLOB.huds[sec_hud]
-	var/datum/atom_hud/medsensor = GLOB.huds[med_hud]
-	var/datum/atom_hud/diagsensor = GLOB.huds[d_hud]
-	secsensor.show_to(src)
-	medsensor.show_to(src)
-	diagsensor.show_to(src)
+	for (var/hud_type in silicon_huds)
+		var/datum/atom_hud/silicon_hud = GLOB.huds[hud_type]
+		silicon_hud.show_to(src)
 
 /mob/living/silicon/proc/toggle_sensors()
 	if(incapacitated())
@@ -431,6 +435,9 @@
 /mob/living/silicon/on_standing_up()
 	return // Silicons are always standing by default.
 
+/mob/living/silicon/get_butt_sprite()
+	return icon('icons/mob/butts.dmi', BUTT_SPRITE_QR_CODE)
+
 /**
  * Records an IC event log entry in the cyborg's internal tablet.
  *
@@ -467,3 +474,11 @@
 		stack_trace("Silicon [src] ( [type] ) was somehow missing their integrated tablet. Please make a bug report.")
 		create_modularInterface()
 	modularInterface.imprint_id(name = newname)
+
+/mob/living/silicon/can_track(mob/living/user)
+	//if their camera is online, it's safe to assume they are in cameranets
+	//since it takes a while for camera vis to update, this lets us bypass that so AIs can always see their borgs,
+	//without making cameras constantly update every time a borg moves.
+	if(builtInCamera && builtInCamera.can_use())
+		return TRUE
+	return ..()

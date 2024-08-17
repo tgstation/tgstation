@@ -14,7 +14,7 @@
 	else
 		current_color = COLOR_MATRIX_IDENTITY
 
-	var/mutable_appearance/view = image('icons/misc/colortest.dmi', "colors")
+	var/mutable_appearance/view = image('icons/testing/colortest.dmi', "colors")
 	if(_target)
 		target = WEAKREF(_target)
 		if(!(_target.appearance_flags & PLANE_MASTER))

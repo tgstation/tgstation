@@ -6,7 +6,7 @@
 #define COMSIG_ATOM_ATTACKBY "atom_attackby"
 /// From base of [atom/proc/attacby_secondary()]: (/obj/item/weapon, /mob/user, params)
 #define COMSIG_ATOM_ATTACKBY_SECONDARY "atom_attackby_secondary"
-///from [/item/afterattack()], sent by an atom which was just attacked by an item: (/obj/item/weapon, /mob/user, proximity_flag, click_parameters)
+/// From [/item/attack()], sent by an atom which was just attacked by an item: (/obj/item/weapon, /mob/user, proximity_flag, click_parameters)
 #define COMSIG_ATOM_AFTER_ATTACKEDBY "atom_after_attackby"
 /// From base of [/atom/proc/attack_hand_secondary]: (mob/user, list/modifiers) - Called when the atom receives a secondary unarmed attack.
 #define COMSIG_ATOM_ATTACK_HAND_SECONDARY "atom_attack_hand_secondary"
@@ -18,6 +18,7 @@
 #define COMSIG_ATOM_ATTACK_ANIMAL "attack_animal"
 //from base of atom/attack_basic_mob(): (/mob/user)
 #define COMSIG_ATOM_ATTACK_BASIC_MOB "attack_basic_mob"
+	#define COMSIG_BASIC_ATTACK_CANCEL_CHAIN (1<<0)
 /// from /atom/proc/atom_break: (damage_flag)
 #define COMSIG_ATOM_BREAK "atom_break"
 /// from base of [/atom/proc/atom_fix]: ()

@@ -18,6 +18,8 @@
 	/// A weakref of the last thing we hovered over
 	/// God I hate how dragging works
 	var/datum/weakref/last_hovored_ref
+	/// overlay for keybind maptext
+	var/mutable_appearance/keybind_maptext
 
 /atom/movable/screen/movable/action_button/Destroy()
 	if(our_hud)
@@ -48,6 +50,9 @@
 		return FALSE
 
 	var/list/modifiers = params2list(params)
+	if(LAZYACCESS(modifiers, ALT_CLICK))
+		begin_creating_bind(usr)
+		return TRUE
 	if(LAZYACCESS(modifiers, SHIFT_CLICK))
 		var/datum/hud/our_hud = usr.hud_used
 		our_hud.position_action(src, SCRN_OBJ_DEFAULT)
@@ -60,6 +65,14 @@
 		trigger_flags |= TRIGGER_SECONDARY_ACTION
 	linked_action.Trigger(trigger_flags = trigger_flags)
 	return TRUE
+
+/atom/movable/screen/movable/action_button/proc/begin_creating_bind(mob/user)
+	if(!isnull(linked_action.full_key))
+		linked_action.full_key = null
+		linked_action.update_button_status(src)
+		return
+	linked_action.full_key = tgui_input_keycombo(user, "Please bind a key for this action.")
+	linked_action.update_button_status(src)
 
 // Entered and Exited won't fire while you're dragging something, because you're still "holding" it
 // Very much byond logic, but I want nice behavior, so we fake it with drag
@@ -81,7 +94,7 @@
 		old_object.MouseExited(over_location, over_control, params)
 
 	last_hovored_ref = WEAKREF(over_object)
-	over_object.MouseEntered(over_location, over_control, params)
+	over_object?.MouseEntered(over_location, over_control, params)
 
 /atom/movable/screen/movable/action_button/MouseEntered(location, control, params)
 	. = ..()
@@ -92,7 +105,7 @@
 	closeToolTip(usr)
 	return ..()
 
-/atom/movable/screen/movable/action_button/MouseDrop(over_object)
+/atom/movable/screen/movable/action_button/mouse_drop_dragged(atom/over_object, mob/user, src_location, over_location, params)
 	last_hovored_ref = null
 	if(!can_use(usr))
 		return
@@ -117,7 +130,9 @@
 		our_hud.position_action_relative(src, button)
 		save_position()
 		return
+
 	. = ..()
+
 	our_hud.position_action(src, screen_loc)
 	save_position()
 
@@ -148,6 +163,15 @@
 	if(!user?.client)
 		return
 	user.client.prefs.action_buttons_screen_locs -= "[name]_[id]"
+
+/atom/movable/screen/movable/action_button/proc/update_keybind_maptext(key)
+	cut_overlay(keybind_maptext)
+	if(!key)
+		return
+	keybind_maptext = new
+	keybind_maptext.maptext = MAPTEXT("<span style='text-align: right'>[key]</span>")
+	keybind_maptext.transform = keybind_maptext.transform.Translate(-4, length(key) > 1 ? -6 : 2) //with modifiers, its placed lower so cooldown is visible
+	add_overlay(keybind_maptext)
 
 /**
  * This is a silly proc used in hud code code to determine what icon and icon state we should be using
@@ -208,7 +232,7 @@
 		return
 
 	for(var/datum/action/action as anything in take_from.actions)
-		if(!action.show_to_observers)
+		if(!action.show_to_observers || !action.owner_has_control)
 			continue
 		action.GiveAction(src)
 	RegisterSignal(take_from, COMSIG_MOB_GRANTED_ACTION, PROC_REF(on_observing_action_granted))
@@ -229,7 +253,7 @@
 /mob/proc/on_observing_action_granted(mob/living/source, datum/action/action)
 	SIGNAL_HANDLER
 
-	if(!action.show_to_observers)
+	if(!action.show_to_observers || !action.owner_has_control)
 		return
 	action.GiveAction(src)
 
@@ -241,7 +265,7 @@
 	action.HideFrom(src)
 
 /atom/movable/screen/button_palette
-	desc = "<b>Drag</b> buttons to move them<br><b>Shift-click</b> any button to reset it<br><b>Alt-click</b> this to reset all buttons"
+	desc = "<b>Drag</b> buttons to move them<br><b>Shift-click</b> any button to reset it<br><b>Alt-click any button</b> to begin binding it to a key<br><b>Alt-click this</b> to reset all buttons"
 	icon = 'icons/hud/64x16_actions.dmi'
 	icon_state = "screen_gen_palette"
 	screen_loc = ui_action_palette

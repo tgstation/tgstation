@@ -65,9 +65,10 @@ export const Tank = (props) => {
                 value={parseFloat(data.releasePressure)}
                 width="65px"
                 unit="kPa"
+                step={1}
                 minValue={data.minReleasePressure}
                 maxValue={data.maxReleasePressure}
-                onChange={(e, value) =>
+                onChange={(value) =>
                   act('pressure', {
                     pressure: value,
                   })

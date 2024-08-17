@@ -36,7 +36,7 @@
 	// Success state
 	leader.ClickOn(peasant)
 
-	TEST_ASSERT(peasant.IsParalyzed(), "Peasant was not paralyzed after being flashed by the leader.") // Flash paralyze
+	TEST_ASSERT((peasant.get_timed_status_effect_duration(/datum/status_effect/confusion) > 0), "Peasant was not confused after being flashed by the leader.") // Flash confuse
 	TEST_ASSERT(peasant.IsStun(), "Peasant was not stunned after being converted by the leader.") // Conversion stun
 	TEST_ASSERT(IS_REVOLUTIONARY(peasant), "Peasant did not gain revolution antag datum on conversion.")
 	TEST_ASSERT_EQUAL(length(revolution.members), 2, "Expected revolution to have 2 members after the leader flashes the peasant.")

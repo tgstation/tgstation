@@ -1,6 +1,6 @@
 /obj/item/modular_computer/pda
 	name = "pda"
-	icon = 'icons/obj/modular_pda.dmi'
+	icon = 'icons/obj/devices/modular_pda.dmi'
 	icon_state = "pda"
 	worn_icon_state = "nothing"
 	base_icon_state = "tablet"
@@ -13,7 +13,7 @@
 
 	steel_sheet_cost = 2
 	custom_materials = list(/datum/material/iron=SMALL_MATERIAL_AMOUNT * 3, /datum/material/glass=SMALL_MATERIAL_AMOUNT, /datum/material/plastic=SMALL_MATERIAL_AMOUNT)
-	interaction_flags_atom = INTERACT_ATOM_ALLOW_USER_LOCATION | INTERACT_ATOM_IGNORE_MOBILITY
+	interaction_flags_atom = parent_type::interaction_flags_atom | INTERACT_ATOM_ALLOW_USER_LOCATION | INTERACT_ATOM_IGNORE_MOBILITY
 
 	icon_state_menu = "menu"
 	max_capacity = 64
@@ -25,6 +25,8 @@
 	has_light = TRUE //LED flashlight!
 	comp_light_luminosity = 2.3 //this is what old PDAs were set to
 	looping_sound = FALSE
+
+	shell_capacity = SHELL_CAPACITY_SMALL
 
 	///The item currently inserted into the PDA, starts with a pen.
 	var/obj/item/inserted_item = /obj/item/pen
@@ -44,7 +46,7 @@
 		/obj/item/lipstick,
 		/obj/item/flashlight/pen,
 		/obj/item/reagent_containers/hypospray/medipen,
-		/obj/item/clothing/mask/cigarette,
+		/obj/item/cigarette,
 	)
 
 /obj/item/modular_computer/pda/Initialize(mapload)
@@ -138,36 +140,34 @@
 
 	return . || NONE
 
-/obj/item/modular_computer/pda/attackby(obj/item/attacking_item, mob/user, params)
-	. = ..()
+/obj/item/modular_computer/pda/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
+	if(iscash(interacting_with))
+		return money_act(user,interacting_with)
+	return NONE
 
-	if(!is_type_in_list(attacking_item, contained_item))
-		return
-	if(attacking_item.w_class >= WEIGHT_CLASS_SMALL) // Anything equal to or larger than small won't work
+/obj/item/modular_computer/pda/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	. = ..()
+	if(.)
+		return .
+	if(!is_type_in_list(tool, contained_item))
+		return NONE
+	if(tool.w_class >= WEIGHT_CLASS_SMALL) // Anything equal to or larger than small won't work
 		user.balloon_alert(user, "too big!")
-		return
+		return ITEM_INTERACT_BLOCKING
+	if(!user.transferItemToLoc(tool, src))
+		return ITEM_INTERACT_BLOCKING
 	if(inserted_item)
-		balloon_alert(user, "no room!")
-		return
-	if(!user.transferItemToLoc(attacking_item, src))
-		return
-	balloon_alert(user, "inserted [attacking_item]")
-	inserted_item = attacking_item
-	playsound(src, 'sound/machines/pda_button1.ogg', 50, TRUE)
+		swap_pen(user, tool)
+	else
+		balloon_alert(user, "inserted [tool]")
+		inserted_item = tool
+		playsound(src, 'sound/machines/pda_button1.ogg', 50, TRUE)
+	return ITEM_INTERACT_SUCCESS
 
-/obj/item/modular_computer/pda/AltClick(mob/user)
-	. = ..()
-	if(.)
-		return
 
+/obj/item/modular_computer/pda/item_ctrl_click(mob/user)
 	remove_pen(user)
-
-/obj/item/modular_computer/pda/CtrlClick(mob/user)
-	. = ..()
-	if(.)
-		return
-
-	remove_pen(user)
+	return CLICK_ACTION_SUCCESS
 
 ///Finds how hard it is to send a virus to this tablet, checking all programs downloaded.
 /obj/item/modular_computer/pda/proc/get_detomatix_difficulty()
@@ -189,6 +189,14 @@
 		inserted_item = null
 		update_appearance()
 		playsound(src, 'sound/machines/pda_button2.ogg', 50, TRUE)
+
+/obj/item/modular_computer/pda/proc/swap_pen(mob/user, obj/item/tool)
+	if(inserted_item)
+		balloon_alert(user, "swapped pens")
+		user.put_in_hands(inserted_item)
+		inserted_item = tool
+		update_appearance()
+		playsound(src, 'sound/machines/pda_button1.ogg', 50, TRUE)
 
 /obj/item/modular_computer/pda/proc/explode(mob/target, mob/bomber, from_message_menu = FALSE)
 	var/turf/current_turf = get_turf(src)
@@ -283,6 +291,7 @@
 
 	starting_programs = list(
 		/datum/computer_file/program/contract_uplink,
+		/datum/computer_file/program/secureye/syndicate,
 	)
 
 /**
@@ -331,6 +340,10 @@
 	silicon_owner = null
 	return ..()
 
+///Silicons don't have the tools (or hands) to make circuits setups with their own PDAs.
+/obj/item/modular_computer/pda/silicon/add_shell_component(capacity)
+	return
+
 /obj/item/modular_computer/pda/silicon/turn_on(mob/user, open_ui = FALSE)
 	if(silicon_owner?.stat != DEAD)
 		return ..()
@@ -375,7 +388,7 @@
 		return robotact
 	qdel(robotact)
 	robotact = null
-	CRASH("Cyborg [silicon_owner]'s tablet hard drive rejected recieving a new copy of the self-manage app. To fix, check the hard drive's space remaining. Please make a bug report about this.")
+	CRASH("Cyborg [silicon_owner]'s tablet hard drive rejected receiving a new copy of the self-manage app. To fix, check the hard drive's space remaining. Please make a bug report about this.")
 
 //Makes the light settings reflect the borg's headlamp settings
 /obj/item/modular_computer/pda/silicon/cyborg/ui_data(mob/user)

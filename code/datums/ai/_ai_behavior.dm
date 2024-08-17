@@ -5,7 +5,13 @@
 	///Flags for extra behavior
 	var/behavior_flags = NONE
 	///Cooldown between actions performances, defaults to the value of CLICK_CD_MELEE because that seemed like a nice standard for the speed of AI behavior
+	///Do not read directly or mutate, instead use get_cooldown()
 	var/action_cooldown = CLICK_CD_MELEE
+
+/// Returns the delay to use for this behavior in the moment
+/// Override to return a conditional delay
+/datum/ai_behavior/proc/get_cooldown(datum/ai_controller/cooldown_for)
+	return action_cooldown
 
 /// Called by the ai controller when first being added. Additional arguments depend on the behavior type.
 /// Return FALSE to cancel
@@ -13,8 +19,8 @@
 	return TRUE
 
 ///Called by the AI controller when this action is performed
+///Returns a set of flags defined in [code/__DEFINES/ai/ai.dm]
 /datum/ai_behavior/proc/perform(seconds_per_tick, datum/ai_controller/controller, ...)
-	controller.behavior_cooldowns[src] = world.time + action_cooldown
 	return
 
 ///Called when the action is finished. This needs the same args as perform besides the default ones

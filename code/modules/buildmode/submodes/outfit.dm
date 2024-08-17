@@ -32,11 +32,11 @@
 			to_chat(c, span_warning("Pick an outfit first."))
 			return
 
-		for (var/item in dollie.get_equipped_items(include_pockets = TRUE))
+		for (var/item in dollie.get_equipped_items(INCLUDE_POCKETS))
 			qdel(item)
 		if(dressuptime != "Naked")
 			dollie.equipOutfit(dressuptime)
 
 	if(LAZYACCESS(modifiers, RIGHT_CLICK))
-		for (var/item in dollie.get_equipped_items(include_pockets = TRUE))
+		for (var/item in dollie.get_equipped_items(INCLUDE_POCKETS))
 			qdel(item)

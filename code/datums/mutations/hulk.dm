@@ -5,33 +5,39 @@
 	quality = POSITIVE
 	locked = TRUE
 	difficulty = 16
-	text_gain_indication = "<span class='notice'>Your muscles hurt!</span>"
+	text_gain_indication = span_notice("Your muscles hurt!")
 	species_allowed = list(SPECIES_HUMAN) //no skeleton/lizard hulk
 	health_req = 25
-	instability = 40
+	instability = POSITIVE_INSTABILITY_MAJOR
+	conflicts = list(/datum/mutation/human/hulk/ork)
 	var/scream_delay = 50
 	var/last_scream = 0
+	var/bodypart_color = COLOR_DARK_LIME
 	/// List of traits to add/remove when someone gets this mutation.
-	var/list/mutation_traits = list(
+	mutation_traits = list(
 		TRAIT_CHUNKYFINGERS,
 		TRAIT_HULK,
-		TRAIT_IGNOREDAMAGESLOWDOWN,
 		TRAIT_PUSHIMMUNE,
 		TRAIT_STUNIMMUNE,
 	)
 
+/datum/mutation/human/hulk/New(class, timer, datum/mutation/human/copymut)
+	. = ..()
+	add_speechmod()
+
+/datum/mutation/human/hulk/proc/add_speechmod()
+	AddComponent(/datum/component/speechmod, replacements = list("." = "!"), end_string = "!!", uppercase = TRUE)
 
 /datum/mutation/human/hulk/on_acquiring(mob/living/carbon/human/owner)
 	if(..())
 		return
-	owner.add_traits(mutation_traits, GENETIC_MUTATION)
 	for(var/obj/item/bodypart/part as anything in owner.bodyparts)
-		part.variable_color = "#00aa00"
+		part.variable_color = bodypart_color
 	owner.update_body_parts()
 	owner.add_mood_event("hulk", /datum/mood_event/hulk)
 	RegisterSignal(owner, COMSIG_LIVING_EARLY_UNARMED_ATTACK, PROC_REF(on_attack_hand))
-	RegisterSignal(owner, COMSIG_MOB_SAY, PROC_REF(handle_speech))
 	RegisterSignal(owner, COMSIG_MOB_CLICKON, PROC_REF(check_swing))
+	owner.add_movespeed_mod_immunities("hulk", /datum/movespeed_modifier/damage_slowdown)
 
 /datum/mutation/human/hulk/proc/on_attack_hand(mob/living/carbon/human/source, atom/target, proximity, modifiers)
 	SIGNAL_HANDLER
@@ -87,26 +93,13 @@
 /datum/mutation/human/hulk/on_losing(mob/living/carbon/human/owner)
 	if(..())
 		return
-	owner.remove_traits(mutation_traits, GENETIC_MUTATION)
 	for(var/obj/item/bodypart/part as anything in owner.bodyparts)
 		part.variable_color = null
 	owner.update_body_parts()
 	owner.clear_mood_event("hulk")
 	UnregisterSignal(owner, COMSIG_LIVING_EARLY_UNARMED_ATTACK)
-	UnregisterSignal(owner, COMSIG_MOB_SAY)
 	UnregisterSignal(owner, COMSIG_MOB_CLICKON)
-
-/datum/mutation/human/hulk/proc/handle_speech(datum/source, list/speech_args)
-	SIGNAL_HANDLER
-
-	var/message = speech_args[SPEECH_MESSAGE]
-	if(message)
-		message = "[replacetext(message, ".", "!")]!!"
-	speech_args[SPEECH_MESSAGE] = message
-
-	// the reason we don't just uppertext(message) in this proc is so that our hulk speech
-	// can uppercase all other speech moidifiers after they are done (by returning COMPONENT_UPPERCASE_SPEECH)
-	return COMPONENT_UPPERCASE_SPEECH
+	owner.remove_movespeed_mod_immunities("hulk", /datum/movespeed_modifier/damage_slowdown)
 
 /// How many steps it takes to throw the mob
 #define HULK_TAILTHROW_STEPS 28
@@ -265,6 +258,7 @@
 	log_combat(the_hulk, yeeted_person, "has thrown by tail")
 
 /datum/mutation/human/hulk/wizardly
+	name = "Hulk (Magical)"
 	species_allowed = null //yes skeleton/lizard hulk - note that species that dont have skintone changing (like skellies) get custom handling
 	health_req = 0
 	instability = 0
@@ -272,9 +266,36 @@
 	/// List of traits to add/remove when someone gets this mutation.
 	mutation_traits = list(
 		TRAIT_HULK,
-		TRAIT_IGNOREDAMAGESLOWDOWN,
 		TRAIT_PUSHIMMUNE,
 		TRAIT_STUNIMMUNE,
 	) // no chunk
+
+/datum/mutation/human/hulk/superhuman
+	name = "Hulk (Super)"
+	health_req = 0
+	instability = 0
+	/// List of traits to add/remove when someone gets this mutation.
+	mutation_traits = list(
+		TRAIT_CHUNKYFINGERS,
+		TRAIT_HULK,
+		TRAIT_NOSOFTCRIT,
+		TRAIT_NOHARDCRIT,
+		TRAIT_PUSHIMMUNE,
+		TRAIT_STUNIMMUNE,
+		TRAIT_ANALGESIA,
+	) // fight till your last breath
+
+/datum/mutation/human/hulk/superhuman/on_life(seconds_per_tick, times_fired)
+	return
+
+/datum/mutation/human/hulk/ork
+	name = "Ork"
+	desc = "A mutation caused by a mixup of hulk genes which severely impacts speech centers in owners' brains."
+	text_gain_indication = span_notice("You feel significantly dumber!")
+	bodypart_color = COLOR_ASSISTANT_OLIVE
+	conflicts = list(/datum/mutation/human/hulk)
+
+/datum/mutation/human/hulk/ork/add_speechmod()
+	AddComponent(/datum/component/speechmod, replacements = strings("ork_replacement.json", "ork"), end_string = "!!", uppercase = TRUE)
 
 #undef HULK_TAILTHROW_STEPS

@@ -61,6 +61,8 @@ GLOBAL_LIST_EMPTY(antagonists)
 	var/default_custom_objective = "Cause chaos on the space station."
 	/// Whether we give a hardcore random bonus for greentexting as this antagonist while playing hardcore random
 	var/hardcore_random_bonus = FALSE
+	/// A path to the audio stinger that plays upon gaining this datum.
+	var/stinger_sound
 
 	//ANTAG UI
 
@@ -296,13 +298,15 @@ GLOBAL_LIST_EMPTY(antagonists)
 /datum/antagonist/proc/replace_banned_player()
 	set waitfor = FALSE
 
-	var/list/mob/dead/observer/candidates = SSpolling.poll_ghost_candidates_for_mob("Do you want to play as a [name]?", check_jobban = "[name]", role = job_rank, poll_time = 5 SECONDS, target_mob = owner.current, pic_source = owner.current, role_name_text = name)
-	if(LAZYLEN(candidates))
-		var/mob/dead/observer/C = pick(candidates)
+	var/mob/chosen_one = SSpolling.poll_ghosts_for_target(check_jobban = job_rank, role = job_rank, poll_time = 5 SECONDS, checked_target = owner.current, alert_pic = owner.current, role_name_text = name)
+	if(chosen_one)
 		to_chat(owner, "Your mob has been taken over by a ghost! Appeal your job ban if you want to avoid this in the future!")
-		message_admins("[key_name_admin(C)] has taken control of ([key_name_admin(owner)]) to replace a jobbanned player.")
+		message_admins("[key_name_admin(chosen_one)] has taken control of ([key_name_admin(owner)]) to replace antagonist banned player.")
+		log_game("[key_name(chosen_one)] has taken control of ([key_name(owner)]) to replace antagonist banned player.")
 		owner.current.ghostize(FALSE)
-		owner.current.key = C.key
+		owner.current.key = chosen_one.key
+	else
+		log_game("Couldn't find antagonist ban replacement for ([key_name(owner)]).")
 
 /**
  * Called by the remove_antag_datum() and remove_all_antag_datums() mind procs for the antag datum to handle its own removal and deletion.
@@ -343,6 +347,14 @@ GLOBAL_LIST_EMPTY(antagonists)
 /datum/antagonist/proc/greet()
 	if(!silent)
 		to_chat(owner.current, span_big("You are \the [src]."))
+		play_stinger()
+
+/// Plays the antag stinger sound, if we have one
+/datum/antagonist/proc/play_stinger()
+	if(isnull(stinger_sound))
+		return
+
+	owner.current.playsound_local(get_turf(owner.current), stinger_sound, 100, FALSE, pressure_affected = FALSE, use_reverb = FALSE)
 
 /**
  * Proc that sends fluff or instructional messages to the player when they lose this antag datum.
@@ -516,6 +528,7 @@ GLOBAL_LIST_EMPTY(antagonists)
 		"antag_team_hud_[REF(src)]",
 		hud_image_on(target),
 		antag_to_check || type,
+		get_team() && WEAKREF(get_team()),
 	))
 
 	// Add HUDs that they couldn't see before
@@ -525,7 +538,7 @@ GLOBAL_LIST_EMPTY(antagonists)
 /// Takes a location, returns an image drawing "on" it that matches this antag datum's hud icon
 /datum/antagonist/proc/hud_image_on(mob/hud_loc)
 	var/image/hud = image(hud_icon, hud_loc, antag_hud_name)
-	SET_PLANE_EXPLICIT(hud, ABOVE_GAME_PLANE, hud_loc)
+	SET_PLANE_EXPLICIT(hud, GAME_PLANE, hud_loc)
 	return hud
 
 ///generic helper to send objectives as data through tgui.

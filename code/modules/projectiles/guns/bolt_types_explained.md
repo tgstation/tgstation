@@ -1,7 +1,7 @@
 # Balistic gun icon states explained
 
 
-For a unknown period of time, `/obj/item/gun/ballistic` used the wrong icon state for it's `bolt_type` and so, if you tried to copy how it worked to make your own gun, you'd get a broken sprite.  This documentation is intended to explain in detail what some of the variables and functions do, and how to make your own gun subtypes that work properly.
+For a unknown period of time, `/obj/item/gun/ballistic` used the wrong icon state for its `bolt_type` and so, if you tried to copy how it worked to make your own gun, you'd get a broken sprite.  This documentation is intended to explain in detail what some of the variables and functions do, and how to make your own gun subtypes that work properly.
 
 ## Bolt Types
 The easiest thing to screw up.  For a long time, `/obj/item/gun/ballistic` had `bolt_type` set to `BOLT_TYPE_STANDARD` when the sprite was configured to use `BOLT_TYPE_LOCKING` sprites.  Nobody noticed, because it wasn't obtainable through normal gameplay, and the Mosin which was broken by it only has like 3 pixels missing.

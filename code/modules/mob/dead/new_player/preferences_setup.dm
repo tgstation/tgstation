@@ -25,7 +25,7 @@
 /datum/preferences/proc/hardcore_random_setup(mob/living/carbon/human/character)
 	var/next_hardcore_score = select_hardcore_quirks()
 	character.hardcore_survival_score = next_hardcore_score ** 1.2  //30 points would be about 60 score
-	log_admin("[character] started hardcore random with [english_list(all_quirks)], for a score of [next_hardcore_score].")
+	log_game("[character] started hardcore random with [english_list(all_quirks)], for a score of [next_hardcore_score].")
 
 	//Add a sixpack because honestly
 	var/obj/item/bodypart/chest/chest = character.get_bodypart(BODY_ZONE_CHEST)
@@ -88,13 +88,14 @@
 
 	for(var/job in job_preferences)
 		if(job_preferences[job] > highest_pref)
-			preview_job = SSjob.GetJob(job)
+			preview_job = SSjob.get_job(job)
 			highest_pref = job_preferences[job]
 
 	return preview_job
 
-/datum/preferences/proc/render_new_preview_appearance(mob/living/carbon/human/dummy/mannequin)
-	var/datum/job/preview_job = get_highest_priority_job()
+/datum/preferences/proc/render_new_preview_appearance(mob/living/carbon/human/dummy/mannequin, show_job_clothes = TRUE)
+	var/datum/job/no_job = SSjob.get_job_type(/datum/job/unassigned)
+	var/datum/job/preview_job = get_highest_priority_job() || no_job
 
 	if(preview_job)
 		// Silicons only need a very basic preview since there is no customization for them.
@@ -106,9 +107,13 @@
 	// Set up the dummy for its photoshoot
 	apply_prefs_to(mannequin, TRUE)
 
-	if(preview_job)
-		mannequin.job = preview_job.title
-		mannequin.dress_up_as_job(preview_job, TRUE)
+	mannequin.job = preview_job.title
+	mannequin.dress_up_as_job(
+		equipping = show_job_clothes ? preview_job : no_job,
+		visual_only = TRUE,
+		player_client = parent,
+		consistent = TRUE,
+	)
 
 	// Apply visual quirks
 	// Yes we do it every time because it needs to be done after job gear

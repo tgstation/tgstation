@@ -4,7 +4,7 @@
 #define SHOWER_NORMAL_TEMP 300
 #define SHOWER_BOILING "boiling"
 #define SHOWER_BOILING_TEMP 400
-/// The volume of it's internal reagents the shower applies to everything it sprays.
+/// The volume of its internal reagents the shower applies to everything it sprays.
 #define SHOWER_SPRAY_VOLUME 5
 /// How much the volume of the shower's spay reagents are amplified by when it sprays something.
 #define SHOWER_EXPOSURE_MULTIPLIER 2 // Showers effectively double exposed reagents
@@ -29,7 +29,7 @@ GLOBAL_LIST_INIT(shower_mode_descriptions, list(
 /obj/machinery/shower
 	name = "shower"
 	desc = "The HS-452. Installed in the 2550s by the Nanotrasen Hygiene Division, now with 2560 lead compliance! Passively replenishes itself with water when not in use."
-	icon = 'icons/obj/watercloset.dmi'
+	icon = 'icons/obj/structures/watercloset.dmi'
 	icon_state = "shower"
 	density = FALSE
 	layer = ABOVE_WINDOW_LAYER
@@ -49,16 +49,14 @@ GLOBAL_LIST_INIT(shower_mode_descriptions, list(
 	var/reagent_capacity = 200
 	///How many units the shower refills every second.
 	var/refill_rate = 0.5
-	///Does the shower have a water recycler to recollect it's water supply?
+	///Does the shower have a water recycler to recollect its water supply?
 	var/has_water_reclaimer = TRUE
 	///Which mode the shower is operating in.
 	var/mode = SHOWER_MODE_UNTIL_EMPTY
 	///The cooldown for SHOWER_MODE_TIMED mode.
 	COOLDOWN_DECLARE(timed_cooldown)
-	///How far to shift the sprite when placing.
-	var/pixel_shift = 16
 
-MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/shower, (-16))
+SHOWER_DIRECTIONAL_HELPERS(/obj/machinery/shower)
 
 /obj/machinery/shower/Initialize(mapload, ndir = 0, has_water_reclaimer = null)
 	. = ..()
@@ -69,29 +67,16 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/shower, (-16))
 	if(has_water_reclaimer != null)
 		src.has_water_reclaimer = has_water_reclaimer
 
-	switch(dir)
-		if(NORTH)
-			pixel_x = 0
-			pixel_y = -pixel_shift
-		if(SOUTH)
-			pixel_x = 0
-			pixel_y = pixel_shift
-		if(EAST)
-			pixel_x = -pixel_shift
-			pixel_y = 0
-		if(WEST)
-			pixel_x = pixel_shift
-			pixel_y = 0
-
 	create_reagents(reagent_capacity)
 	if(src.has_water_reclaimer)
 		reagents.add_reagent(reagent_id, reagent_capacity)
 	soundloop = new(src, FALSE)
-	AddComponent(/datum/component/plumbing/simple_demand, extend_pipe_to_edge = TRUE)
+	AddComponent(/datum/component/plumbing/inverted_simple_demand, extend_pipe_to_edge = TRUE, invert_demand = TRUE)
 	var/static/list/loc_connections = list(
 		COMSIG_ATOM_ENTERED = PROC_REF(on_entered),
 	)
 	AddElement(/datum/element/connect_loc, loc_connections)
+	find_and_hang_on_wall()
 
 /obj/machinery/shower/examine(mob/user)
 	. = ..()
@@ -184,28 +169,27 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/shower, (-16))
 
 /obj/machinery/shower/wrench_act(mob/living/user, obj/item/I)
 	. = ..()
-	if(obj_flags & NO_DECONSTRUCTION)
-		return
-
 	I.play_tool_sound(src)
 	deconstruct()
 	return TRUE
+
+/obj/machinery/shower/setDir(newdir)
+	. = ..()
+	update_appearance(UPDATE_OVERLAYS)
 
 /obj/machinery/shower/update_overlays()
 	. = ..()
 	if(!actually_on)
 		return
-	var/mutable_appearance/water_falling = mutable_appearance('icons/obj/watercloset.dmi', "water", ABOVE_MOB_LAYER)
+	var/mutable_appearance/water_falling = mutable_appearance('icons/obj/structures/watercloset.dmi', "water", ABOVE_MOB_LAYER)
 	water_falling.color = mix_color_from_reagents(reagents.reagent_list)
 	switch(dir)
-		if(NORTH)
-			water_falling.pixel_y += pixel_shift
 		if(SOUTH)
-			water_falling.pixel_y -= pixel_shift
+			water_falling.pixel_z -= 24
 		if(EAST)
-			water_falling.pixel_x += pixel_shift
+			water_falling.pixel_w += 16
 		if(WEST)
-			water_falling.pixel_x -= pixel_shift
+			water_falling.pixel_w -= 16
 	. += water_falling
 
 /obj/machinery/shower/on_changed_z_level(turf/old_turf, turf/new_turf, same_z_layer, notify_contents)
@@ -313,13 +297,12 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/shower, (-16))
 		if(!ismopable(movable_content)) // Mopables will be cleaned anyways by the turf wash above
 			wash_atom(movable_content) // Reagent exposure is handled in wash_atom
 
-	reagents.remove_any(SHOWER_SPRAY_VOLUME)
+	reagents.remove_all(SHOWER_SPRAY_VOLUME)
 
-/obj/machinery/shower/deconstruct(disassembled = TRUE)
+/obj/machinery/shower/on_deconstruction(disassembled = TRUE)
 	new /obj/item/stack/sheet/iron(drop_location(), 2)
 	if(has_water_reclaimer)
 		new /obj/item/stock_parts/water_recycler(drop_location())
-	qdel(src)
 
 /obj/machinery/shower/proc/check_heat(mob/living/L)
 	var/mob/living/carbon/C = L
@@ -337,7 +320,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/shower, (-16))
 
 /obj/structure/showerframe
 	name = "shower frame"
-	icon = 'icons/obj/watercloset.dmi'
+	icon = 'icons/obj/structures/watercloset.dmi'
 	icon_state = "shower_frame"
 	desc = "A shower frame, that needs a water recycler to finish construction."
 	anchored = FALSE
@@ -370,15 +353,12 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/shower, (-16))
 	deconstruct()
 	return TRUE
 
-/obj/structure/showerframe/AltClick(mob/user)
-	return ..() // This hotkey is BLACKLISTED since it's used by /datum/component/simple_rotation
 
 /obj/effect/mist
 	name = "mist"
-	icon = 'icons/obj/watercloset.dmi'
+	icon = 'icons/obj/structures/watercloset.dmi'
 	icon_state = "mist"
 	layer = FLY_LAYER
-	plane = ABOVE_GAME_PLANE
 	anchored = TRUE
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 

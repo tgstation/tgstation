@@ -33,8 +33,7 @@ GLOBAL_VAR_INIT(revolutionary_win, FALSE)
 
 /datum/dynamic_ruleset/roundstart/traitor/pre_execute(population)
 	. = ..()
-	var/num_traitors = get_antag_cap(population) * (scaled_times + 1)
-	for (var/i = 1 to num_traitors)
+	for (var/i in 1 to get_antag_cap_scaling_included(population))
 		if(candidates.len <= 0)
 			break
 		var/mob/M = pick_n_take(candidates)
@@ -64,7 +63,7 @@ GLOBAL_VAR_INIT(revolutionary_win, FALSE)
 	flags = HIGH_IMPACT_RULESET
 
 /datum/dynamic_ruleset/roundstart/malf_ai/ready(forced)
-	var/datum/job/ai_job = SSjob.GetJobType(/datum/job/ai)
+	var/datum/job/ai_job = SSjob.get_job_type(/datum/job/ai)
 
 	// If we're not forced, we're going to make sure we can actually have an AI in this shift,
 	if(!forced && min(ai_job.total_positions - ai_job.current_positions, ai_job.spawn_positions) <= 0)
@@ -76,7 +75,7 @@ GLOBAL_VAR_INIT(revolutionary_win, FALSE)
 /datum/dynamic_ruleset/roundstart/malf_ai/pre_execute(population)
 	. = ..()
 
-	var/datum/job/ai_job = SSjob.GetJobType(/datum/job/ai)
+	var/datum/job/ai_job = SSjob.get_job_type(/datum/job/ai)
 	// Maybe a bit too pedantic, but there should never be more malf AIs than there are available positions, spawn positions or antag cap allocations.
 	var/num_malf = min(get_antag_cap(population), min(ai_job.total_positions - ai_job.current_positions, ai_job.spawn_positions))
 	for (var/i in 1 to num_malf)
@@ -121,7 +120,7 @@ GLOBAL_VAR_INIT(revolutionary_win, FALSE)
 /datum/dynamic_ruleset/roundstart/traitorbro/pre_execute(population)
 	. = ..()
 
-	for (var/_ in 1 to get_antag_cap(population) * (scaled_times + 1))
+	for (var/i in 1 to get_antag_cap_scaling_included(population))
 		var/mob/candidate = pick_n_take(candidates)
 		if (isnull(candidate))
 			break
@@ -135,10 +134,7 @@ GLOBAL_VAR_INIT(revolutionary_win, FALSE)
 
 /datum/dynamic_ruleset/roundstart/traitorbro/execute()
 	for (var/datum/mind/mind in assigned)
-		var/datum/team/brother_team/team = new
-		team.add_member(mind)
-		team.forge_brother_objectives()
-		mind.add_antag_datum(/datum/antagonist/brother, team)
+		new /datum/team/brother_team(mind)
 		GLOB.pre_setup_antags -= mind
 
 	return TRUE
@@ -174,8 +170,7 @@ GLOBAL_VAR_INIT(revolutionary_win, FALSE)
 
 /datum/dynamic_ruleset/roundstart/changeling/pre_execute(population)
 	. = ..()
-	var/num_changelings = get_antag_cap(population) * (scaled_times + 1)
-	for (var/i = 1 to num_changelings)
+	for (var/i in 1 to get_antag_cap_scaling_included(population))
 		if(candidates.len <= 0)
 			break
 		var/mob/M = pick_n_take(candidates)
@@ -259,6 +254,7 @@ GLOBAL_VAR_INIT(revolutionary_win, FALSE)
 	name = "Wizard"
 	antag_flag = ROLE_WIZARD
 	antag_datum = /datum/antagonist/wizard
+	ruleset_category = parent_type::ruleset_category |  RULESET_CATEGORY_NO_WITTING_CREW_ANTAGONISTS
 	flags = HIGH_IMPACT_RULESET
 	minimum_required_age = 14
 	restricted_roles = list(
@@ -300,7 +296,7 @@ GLOBAL_VAR_INIT(revolutionary_win, FALSE)
 	var/mob/M = pick_n_take(candidates)
 	if (M)
 		assigned += M.mind
-		M.mind.set_assigned_role(SSjob.GetJobType(/datum/job/space_wizard))
+		M.mind.set_assigned_role(SSjob.get_job_type(/datum/job/space_wizard))
 		M.mind.special_role = ROLE_WIZARD
 
 	return TRUE
@@ -400,6 +396,7 @@ GLOBAL_VAR_INIT(revolutionary_win, FALSE)
 /datum/dynamic_ruleset/roundstart/nuclear
 	name = "Nuclear Emergency"
 	antag_flag = ROLE_OPERATIVE
+	ruleset_category = parent_type::ruleset_category |  RULESET_CATEGORY_NO_WITTING_CREW_ANTAGONISTS
 	antag_datum = /datum/antagonist/nukeop
 	var/datum/antagonist/antag_leader_datum = /datum/antagonist/nukeop/leader
 	minimum_required_age = 14
@@ -416,6 +413,8 @@ GLOBAL_VAR_INIT(revolutionary_win, FALSE)
 	ruleset_lazy_templates = list(LAZY_TEMPLATE_KEY_NUKIEBASE)
 	var/required_role = ROLE_NUCLEAR_OPERATIVE
 	var/datum/team/nuclear/nuke_team
+	///The job type to dress up our nuclear operative as.
+	var/datum/job/job_type = /datum/job/nuclear_operative
 
 /datum/dynamic_ruleset/roundstart/nuclear/ready(population, forced = FALSE)
 	required_candidates = get_antag_cap(population)
@@ -430,8 +429,8 @@ GLOBAL_VAR_INIT(revolutionary_win, FALSE)
 			break
 		var/mob/M = pick_n_take(candidates)
 		assigned += M.mind
-		M.mind.set_assigned_role(SSjob.GetJobType(/datum/job/nuclear_operative))
-		M.mind.special_role = ROLE_NUCLEAR_OPERATIVE
+		M.mind.set_assigned_role(SSjob.get_job_type(job_type))
+		M.mind.special_role = required_role
 	return TRUE
 
 /datum/dynamic_ruleset/roundstart/nuclear/execute()
@@ -575,7 +574,7 @@ GLOBAL_VAR_INIT(revolutionary_win, FALSE)
 /// Checks for revhead loss conditions and other antag datums.
 /datum/dynamic_ruleset/roundstart/revs/proc/check_eligible(datum/mind/M)
 	var/turf/T = get_turf(M.current)
-	if(!considered_afk(M) && considered_alive(M) && is_station_level(T.z) && !M.antag_datums?.len && !HAS_TRAIT(M, TRAIT_MINDSHIELD))
+	if(!considered_afk(M) && considered_alive(M) && is_station_level(T.z) && !M.antag_datums?.len && !HAS_MIND_TRAIT(M.current, TRAIT_UNCONVERTABLE))
 		return TRUE
 	return FALSE
 
@@ -621,9 +620,11 @@ GLOBAL_VAR_INIT(revolutionary_win, FALSE)
 	antag_datum = /datum/antagonist/nukeop/clownop
 	antag_flag = ROLE_CLOWN_OPERATIVE
 	antag_flag_override = ROLE_OPERATIVE
+	ruleset_category = parent_type::ruleset_category |  RULESET_CATEGORY_NO_WITTING_CREW_ANTAGONISTS
 	antag_leader_datum = /datum/antagonist/nukeop/leader/clownop
 	requirements = list(101,101,101,101,101,101,101,101,101,101)
 	required_role = ROLE_CLOWN_OPERATIVE
+	job_type = /datum/job/clown_operative
 
 /datum/dynamic_ruleset/roundstart/nuclear/clown_ops/pre_execute()
 	. = ..()
@@ -634,10 +635,6 @@ GLOBAL_VAR_INIT(revolutionary_win, FALSE)
 	for(var/obj/machinery/nuclearbomb/syndicate/nuke as anything in nukes)
 		new /obj/machinery/nuclearbomb/syndicate/bananium(nuke.loc)
 		qdel(nuke)
-
-	for(var/datum/mind/clowns in assigned)
-		clowns.set_assigned_role(SSjob.GetJobType(/datum/job/clown_operative))
-		clowns.special_role = ROLE_CLOWN_OPERATIVE
 
 //////////////////////////////////////////////
 //                                          //
@@ -699,3 +696,46 @@ GLOBAL_VAR_INIT(revolutionary_win, FALSE)
 		create_separatist_nation(department_type, announcement = FALSE, dangerous = FALSE, message_admins = FALSE)
 
 	GLOB.round_default_lawset = /datum/ai_laws/united_nations
+
+/datum/dynamic_ruleset/roundstart/spies
+	name = "Spies"
+	antag_flag = ROLE_SPY
+	antag_datum = /datum/antagonist/spy
+	minimum_required_age = 0
+	protected_roles = list(
+		JOB_CAPTAIN,
+		JOB_DETECTIVE,
+		JOB_HEAD_OF_PERSONNEL, // AA = bad
+		JOB_HEAD_OF_SECURITY,
+		JOB_PRISONER,
+		JOB_SECURITY_OFFICER,
+		JOB_WARDEN,
+	)
+	restricted_roles = list(
+		JOB_AI,
+		JOB_CYBORG,
+	)
+	required_candidates = 3 // lives or dies by there being a few spies
+	weight = 5
+	cost = 8
+	scaling_cost = 4
+	minimum_players = 10
+	antag_cap = list("denominator" = 20, "offset" = 1)
+	requirements = list(8, 8, 8, 8, 8, 8, 8, 8, 8, 8)
+	/// What fraction is added to the antag cap for each additional scale
+	var/fraction_per_scale = 0.2
+
+/datum/dynamic_ruleset/roundstart/spies/pre_execute(population)
+	for(var/i in 1 to get_antag_cap_scaling_included(population))
+		if(length(candidates) <= 0)
+			break
+		var/mob/picked_player = pick_n_take(candidates)
+		assigned += picked_player.mind
+		picked_player.mind.special_role = ROLE_SPY
+		picked_player.mind.restricted_roles = restricted_roles
+		GLOB.pre_setup_antags += picked_player.mind
+	return TRUE
+
+// Scaling adds a fraction of the amount of additional spies rather than the full amount.
+/datum/dynamic_ruleset/roundstart/spies/get_scaling_antag_cap(population)
+	return ceil(..() * fraction_per_scale)

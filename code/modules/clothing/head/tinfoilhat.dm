@@ -8,6 +8,7 @@
 	clothing_flags = ANTI_TINFOIL_MANEUVER
 	var/datum/brain_trauma/mild/phobia/conspiracies/paranoia
 	var/warped = FALSE
+	interaction_flags_mouse_drop = NEED_HANDS
 
 /datum/armor/costume_foilhat
 	laser = -5
@@ -42,10 +43,10 @@
 	user.gain_trauma(paranoia, TRAUMA_RESILIENCE_MAGIC)
 	to_chat(user, span_warning("As you don the foiled hat, an entire world of conspiracy theories and seemingly insane ideas suddenly rush into your mind. What you once thought unbelievable suddenly seems.. undeniable. Everything is connected and nothing happens just by accident. You know too much and now they're out to get you. "))
 
-/obj/item/clothing/head/costume/foilhat/MouseDrop(atom/over_object)
+/obj/item/clothing/head/costume/foilhat/mouse_drop_dragged(atom/over_object, mob/user)
 	//God Im sorry
-	if(!warped && iscarbon(usr))
-		var/mob/living/carbon/C = usr
+	if(!warped && iscarbon(user))
+		var/mob/living/carbon/C = user
 		if(src == C.head)
 			to_chat(C, span_userdanger("Why would you want to take this off? Do you want them to get into your mind?!"))
 			return

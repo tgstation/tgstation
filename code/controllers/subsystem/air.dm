@@ -898,7 +898,6 @@ GLOBAL_LIST_EMPTY(colored_images)
 			if(!target)
 				return
 			usr.forceMove(target)
-			usr.update_parallax_contents()
 		if("toggle-freeze")
 			can_fire = !can_fire
 			return TRUE

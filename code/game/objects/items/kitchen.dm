@@ -104,7 +104,7 @@
 
 /obj/item/knife/kitchen/silicon
 	name = "Kitchen Toolset"
-	icon = 'icons/obj/items_cyborg.dmi'
+	icon = 'icons/mob/silicon/robot_items.dmi'
 	icon_state = "sili_knife"
 	desc = "A breakthrough in synthetic engineering, this tool is a knife programmed to dull when not used for cooking purposes, and can exchange the blade for a rolling pin"
 	force = 0
@@ -234,6 +234,13 @@
 /obj/item/kitchen/spoon/attack(mob/living/target_mob, mob/living/user, params)
 	if(!target_mob.reagents || reagents.total_volume <= 0)
 		return  ..()
+
+	if(target_mob.is_mouth_covered(ITEM_SLOT_HEAD) || target_mob.is_mouth_covered(ITEM_SLOT_MASK))
+		if(target_mob == user)
+			target_mob.balloon_alert(user, "can't eat with mouth covered!")
+		else
+			target_mob.balloon_alert(user, "[target_mob.p_their()] mouth is covered!")
+		return TRUE
 
 	if(target_mob == user)
 		user.visible_message(

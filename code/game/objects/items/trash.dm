@@ -80,6 +80,11 @@
 	name = "energybar wrapper"
 	icon_state = "energybar"
 
+/obj/item/trash/fleet_ration
+	name = "surplus fleet wrapper"
+	desc = "In the Mothic Fleet every individual wrapper is carefully recycled and repurposed into fresh material. Over here they are more commonly dropped directly onto the floor."
+	icon_state = "moth_ration"
+
 /obj/item/trash/waffles
 	name = "waffles tray"
 	icon_state = "waffles"
@@ -108,7 +113,7 @@
 
 /obj/item/trash/flare
 	name = "burnt flare"
-	icon = 'icons/obj/lighting.dmi'
+	icon = 'icons/obj/devices/lighting.dmi'
 	icon_state = "flare-empty"
 
 /obj/item/trash/can

@@ -1,5 +1,6 @@
 ///Oozes are slime-esque creatures, they are highly gluttonous creatures primarily intended for player controll.
 /mob/living/simple_animal/hostile/ooze
+	SET_BASE_VISUAL_PIXEL(0, 10)
 	name = "Ooze"
 	icon = 'icons/mob/vatgrowing.dmi'
 	icon_state = "gelatinous"
@@ -10,7 +11,7 @@
 	gender = NEUTER
 	emote_see = list("jiggles", "bounces in place")
 	speak_emote = list("blorbles")
-	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_plas" = 0, "max_plas" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
+	atmos_requirements = null
 	hud_type = /datum/hud/ooze
 	minbodytemp = 250
 	maxbodytemp = INFINITY
@@ -27,6 +28,7 @@
 	mob_size = MOB_SIZE_LARGE
 	initial_language_holder = /datum/language_holder/slime
 	footstep_type = FOOTSTEP_MOB_SLIME
+	shadow_offset_y = 2
 	///Oozes have their own nutrition. Changes based on them eating
 	var/ooze_nutrition = 50
 	var/ooze_nutrition_loss = -0.15
@@ -223,7 +225,7 @@
 		to_chat(src, span_warning("You are already consuming another creature!"))
 		return FALSE
 	owner.visible_message(span_warning("[ooze] starts attempting to devour [target]!"), span_notice("You start attempting to devour [target]."))
-	if(!do_after(ooze, 15, target = ooze.pulling))
+	if(!do_after(ooze, 1.5 SECONDS, target = ooze.pulling))
 		return FALSE
 	var/mob/living/eat_target = ooze.pulling
 
@@ -375,7 +377,7 @@
 	name = "mending globule"
 	icon_state = "glob_projectile"
 	shrapnel_type = /obj/item/mending_globule
-	embedding = list("embed_chance" = 100, ignore_throwspeed_threshold = TRUE, "pain_mult" = 0, "jostle_pain_mult" = 0, "fall_chance" = 0.5)
+	embed_type = /datum/embed_data/mending_globule
 	damage = 0
 
 ///This item is what is embedded into the mob, and actually handles healing of mending globules
@@ -384,9 +386,16 @@
 	desc = "It somehow heals those who touch it."
 	icon = 'icons/obj/science/vatgrowing.dmi'
 	icon_state = "globule"
-	embedding = list("embed_chance" = 100, ignore_throwspeed_threshold = TRUE, "pain_mult" = 0, "jostle_pain_mult" = 0, "fall_chance" = 0.5)
+	embed_type = /datum/embed_data/mending_globule
 	var/obj/item/bodypart/bodypart
 	var/heals_left = 35
+
+/datum/embed_data/mending_globule
+	embed_chance = 100
+	ignore_throwspeed_threshold = TRUE
+	pain_mult = 0
+	jostle_pain_mult = 0
+	fall_chance = 0.5
 
 /obj/item/mending_globule/Destroy()
 	. = ..()

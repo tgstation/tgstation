@@ -1,21 +1,20 @@
 /obj/structure/railing
 	name = "railing"
 	desc = "Basic railing meant to protect idiots like you from falling."
-	icon = 'icons/obj/railings.dmi'
+	icon = 'icons/obj/structures/railings.dmi'
 	icon_state = "railing"
 	flags_1 = ON_BORDER_1
 	obj_flags = CAN_BE_HIT | BLOCKS_CONSTRUCTION_DIR
 	density = TRUE
 	anchored = TRUE
 	pass_flags_self = LETPASSTHROW|PASSSTRUCTURE
-	layer = ABOVE_MOB_LAYER
+	layer = ABOVE_TREE_LAYER
+	plane = ABOVE_GAME_PLANE
 	/// armor is a little bit less than a grille. max_integrity about half that of a grille.
 	armor_type = /datum/armor/structure_railing
 	max_integrity = 25
 
 	var/climbable = TRUE
-	///Initial direction of the railing.
-	var/ini_dir
 	///item released when deconstructed
 	var/item_deconstruct = /obj/item/stack/rods
 
@@ -39,7 +38,6 @@
 
 /obj/structure/railing/Initialize(mapload)
 	. = ..()
-	ini_dir = dir
 	if(climbable)
 		AddElement(/datum/element/climbable)
 
@@ -63,6 +61,11 @@
 	AddElement(/datum/element/contextual_screentip_tools, tool_behaviors)
 
 	AddComponent(/datum/component/simple_rotation, ROTATION_NEEDS_ROOM)
+	update_appearance()
+
+/obj/structure/railing/update_appearance(updates)
+	. = ..()
+	update_layering()
 
 /obj/structure/railing/examine(mob/user)
 	. = ..()
@@ -88,8 +91,6 @@
 			to_chat(user, span_warning("[src] is already in good condition!"))
 		return
 
-/obj/structure/railing/AltClick(mob/user)
-	return ..() // This hotkey is BLACKLISTED since it's used by /datum/component/simple_rotation
 
 /obj/structure/railing/wirecutter_act(mob/living/user, obj/item/I)
 	. = ..()
@@ -98,19 +99,14 @@
 	deconstruct()
 	return TRUE
 
-/obj/structure/railing/deconstruct(disassembled)
-	if((obj_flags & NO_DECONSTRUCTION))
-		return ..()
+/obj/structure/railing/atom_deconstruct(disassembled)
 	var/rods_to_make = istype(src,/obj/structure/railing/corner) ? 1 : 2
 	var/obj/rod = new item_deconstruct(drop_location(), rods_to_make)
 	transfer_fingerprints_to(rod)
-	return ..()
 
 ///Implements behaviour that makes it possible to unanchor the railing.
 /obj/structure/railing/wrench_act(mob/living/user, obj/item/I)
 	. = ..()
-	if(obj_flags & NO_DECONSTRUCTION)
-		return
 	to_chat(user, span_notice("You begin to [anchored ? "unfasten the railing from":"fasten the railing to"] the floor..."))
 	if(I.use_tool(src, user, volume = 75, extra_checks = CALLBACK(src, PROC_REF(check_anchored), anchored)))
 		set_anchored(!anchored)
@@ -127,6 +123,15 @@
 	if(!(to_dir & dir))
 		return TRUE
 	return ..()
+
+/obj/structure/railing/proc/update_layering()
+	// If we're on a north edge, render as if we were "higher" then we are
+	if(dir & NORTH)
+		pixel_y = 32
+		pixel_z = -32
+	else
+		pixel_y = 0
+		pixel_z = 0
 
 /obj/structure/railing/proc/on_exit(datum/source, atom/movable/leaving, direction)
 	SIGNAL_HANDLER
@@ -160,7 +165,7 @@
 /obj/structure/railing/wooden_fence
 	name = "wooden fence"
 	desc = "wooden fence meant to keep animals in."
-	icon = 'icons/obj/structures.dmi'
+	icon = 'icons/obj/structures/railings.dmi'
 	icon_state = "wooden_railing"
 	item_deconstruct = /obj/item/stack/sheet/mineral/wood
 	layer = ABOVE_MOB_LAYER
@@ -175,14 +180,14 @@
 	adjust_dir_layer(new_dir)
 
 /obj/structure/railing/wooden_fence/proc/adjust_dir_layer(direction)
-	var/new_layer = (direction & NORTH) ? MOB_LAYER : ABOVE_MOB_LAYER
-	layer = new_layer
+	layer = (direction & NORTH) ? MOB_LAYER : initial(layer)
+	plane = (direction & NORTH) ? GAME_PLANE : initial(plane)
 
 
 /obj/structure/railing/corner/end/wooden_fence
-	icon = 'icons/obj/structures.dmi'
+	icon = 'icons/obj/structures/railings.dmi'
 	icon_state = "wooden_railing_corner"
 
 /obj/structure/railing/corner/end/flip/wooden_fence
-	icon = 'icons/obj/structures.dmi'
+	icon = 'icons/obj/structures/railings.dmi'
 	icon_state = "wooden_railing_corner_flipped"

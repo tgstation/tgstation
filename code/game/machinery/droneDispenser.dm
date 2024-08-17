@@ -23,11 +23,11 @@
 	var/starting_amount = 0
 	var/iron_cost = HALF_SHEET_MATERIAL_AMOUNT
 	var/glass_cost = HALF_SHEET_MATERIAL_AMOUNT
-	var/power_used = 1000
+	var/energy_used = 1 KILO JOULES
 
 	var/mode = DRONE_READY
 	var/timer
-	var/cooldownTime = 1800 //3 minutes
+	var/cooldownTime = 3 MINUTES
 	var/production_time = 30
 	//The item the dispenser will create
 	var/dispense_type = /obj/effect/mob_spawn/ghost_role/drone
@@ -59,7 +59,8 @@
 		MATCONTAINER_EXAMINE, \
 		allowed_items = /obj/item/stack \
 	)
-	materials.insert_amount_mat(starting_amount)
+	materials.insert_amount_mat(starting_amount, /datum/material/iron)
+	materials.insert_amount_mat(starting_amount, /datum/material/glass)
 	materials.precise_insertion = TRUE
 	using_materials = list(/datum/material/iron = iron_cost, /datum/material/glass = glass_cost)
 	REGISTER_REQUIRED_MAP_ITEM(1, 1)
@@ -95,7 +96,7 @@
 	// Those holoprojectors aren't cheap
 	iron_cost = SHEET_MATERIAL_AMOUNT
 	glass_cost = SHEET_MATERIAL_AMOUNT
-	power_used = 2000
+	energy_used = 2 KILO JOULES
 	starting_amount = SHEET_MATERIAL_AMOUNT * 5
 
 // If the derelict gets lonely, make more friends.
@@ -128,13 +129,26 @@
 	icon_creating = "hivebot_fab_on"
 	iron_cost = 0
 	glass_cost = 0
-	power_used = 0
+	energy_used = 0
 	cooldownTime = 10 //Only 1 second - hivebots are extremely weak
 	dispense_type = /mob/living/basic/hivebot
 	begin_create_message = "closes and begins fabricating something within."
 	end_create_message = "slams open, revealing a hivebot!"
 	recharge_sound = null
 	recharge_message = null
+
+// A dispenser that produces binoculars, for the MediSim shuttle.
+/obj/machinery/drone_dispenser/binoculars
+	name = "binoculars fabricator"
+	desc = "A hefty machine that periodically creates a pair of binoculars. Really, Nanotrasen? We're getting this lazy?"
+	dispense_type = /obj/item/binoculars
+	starting_amount = SHEET_MATERIAL_AMOUNT * 2.5 //Redudant
+	maximum_idle = 1
+	cooldownTime = 5 SECONDS
+	iron_cost = 0
+	glass_cost = 0
+	energy_used = 0
+	end_create_message = "dispenses a pair of binoculars."
 
 /obj/machinery/drone_dispenser/examine(mob/user)
 	. = ..()
@@ -155,7 +169,7 @@
 	if((machine_stat & (NOPOWER|BROKEN)) || !anchored)
 		return
 
-	if(!materials.has_materials(using_materials))
+	if((glass_cost != 0 || iron_cost != 0) && !materials.has_materials(using_materials))
 		return // We require more minerals
 
 	// We are currently in the middle of something
@@ -177,8 +191,8 @@
 
 		if(DRONE_PRODUCTION)
 			materials.use_materials(using_materials)
-			if(power_used)
-				use_power(power_used)
+			if(energy_used)
+				use_energy(energy_used)
 
 			var/atom/A = new dispense_type(loc)
 			A.flags_1 |= (flags_1 & ADMIN_SPAWNED_1)
@@ -259,11 +273,6 @@
 		audible_message(span_warning("[src] [break_message]"))
 	if(break_sound)
 		playsound(src, break_sound, 50, TRUE)
-
-/obj/machinery/drone_dispenser/deconstruct(disassembled = TRUE)
-	if(!(obj_flags & NO_DECONSTRUCTION))
-		new /obj/item/stack/sheet/iron(loc, 5)
-	qdel(src)
 
 #undef DRONE_PRODUCTION
 #undef DRONE_RECHARGING

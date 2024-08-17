@@ -11,10 +11,9 @@ GLOBAL_DATUM_INIT(manifest, /datum/manifest, new)
 
 /// Builds the list of crew records for all crew members.
 /datum/manifest/proc/build()
-	for(var/i in GLOB.new_player_list)
-		var/mob/dead/new_player/readied_player = i
+	for(var/mob/dead/new_player/readied_player as anything in GLOB.new_player_list)
 		if(readied_player.new_character)
-			log_manifest(readied_player.ckey,readied_player.new_character.mind,readied_player.new_character)
+			log_manifest(readied_player.ckey, readied_player.new_character.mind, readied_player.new_character)
 		if(ishuman(readied_player.new_character))
 			inject(readied_player.new_character)
 		CHECK_TICK
@@ -32,12 +31,13 @@ GLOBAL_DATUM_INIT(manifest, /datum/manifest, new)
 		var/name = target.name
 		var/rank = target.rank // user-visible job
 		var/trim = target.trim // internal jobs by trim type
-		var/datum/job/job = SSjob.GetJob(trim)
+		var/datum/job/job = SSjob.get_job(trim)
 		if(!job || !(job.job_flags & JOB_CREW_MANIFEST) || !LAZYLEN(job.departments_list)) // In case an unlawful custom rank is added.
 			var/list/misc_list = manifest_out[DEPARTMENT_UNASSIGNED]
 			misc_list[++misc_list.len] = list(
 				"name" = name,
 				"rank" = rank,
+				"trim" = trim,
 				)
 			continue
 		for(var/department_type as anything in job.departments_list)
@@ -51,6 +51,7 @@ GLOBAL_DATUM_INIT(manifest, /datum/manifest, new)
 			var/list/entry = list(
 				"name" = name,
 				"rank" = rank,
+				"trim" = trim,
 				)
 			var/list/department_list = manifest_out[department.department_name]
 			if(istype(job, department.department_head))
@@ -102,14 +103,17 @@ GLOBAL_DATUM_INIT(manifest, /datum/manifest, new)
 	if(!(person.mind?.assigned_role.job_flags & JOB_CREW_MANIFEST))
 		return
 
-	var/assignment = person.mind.assigned_role.title
+	// Attempt to get assignment from ID, otherwise default to mind.
+	var/obj/item/card/id/id_card = person.get_idcard(hand_first = FALSE)
+	var/assignment = id_card?.get_trim_assignment() || person.mind.assigned_role.title
+
 	var/mutable_appearance/character_appearance = new(person.appearance)
 	var/person_gender = "Other"
 	if(person.gender == "male")
 		person_gender = "Male"
 	if(person.gender == "female")
 		person_gender = "Female"
-	var/datum/dna/record_dna = new()
+	var/datum/dna/stored/record_dna = new()
 	person.dna.copy_dna(record_dna)
 
 	var/datum/record/locked/lockfile = new(
@@ -150,8 +154,6 @@ GLOBAL_DATUM_INIT(manifest, /datum/manifest, new)
 		quirk_notes = person.get_quirk_string(TRUE, CAT_QUIRK_NOTES),
 	)
 
-	return
-
 /// Edits the rank and trim of the found record.
 /datum/manifest/proc/modify(name, assignment, trim)
 	var/datum/record/crew/target = find_record(name)
@@ -160,6 +162,22 @@ GLOBAL_DATUM_INIT(manifest, /datum/manifest, new)
 
 	target.rank = assignment
 	target.trim = trim
+
+/**
+ * Using the name to find the record, and person in reference to the body, we recreate photos for the manifest (and records).
+ * Args:
+ * - name - The name of the record we're looking for, which should be the name of the person.
+ * - person - The mob we're taking pictures of to update the records.
+ * - add_height_chart - If we should add a height chart to the background of the photo.
+ */
+/datum/manifest/proc/change_pictures(name, mob/living/person, add_height_chart = FALSE)
+	var/datum/record/crew/target = find_record(name)
+	if(!target)
+		return FALSE
+
+	target.character_appearance = new(person.appearance)
+	target.recreate_manifest_photos(add_height_chart)
+	return TRUE
 
 /datum/manifest/ui_state(mob/user)
 	return GLOB.always_state

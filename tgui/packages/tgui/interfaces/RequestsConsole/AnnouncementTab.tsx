@@ -1,11 +1,13 @@
-import { useBackend, useLocalState } from '../../backend';
+import { useState } from 'react';
+
+import { useBackend } from '../../backend';
 import { Button, NoticeBox, Section, TextArea } from '../../components';
 import { RequestsData } from './types';
 
 export const AnnouncementTab = (props) => {
   const { act, data } = useBackend<RequestsData>();
   const { authentication_data, is_admin_ghost_ai } = data;
-  const [messageText, setMessageText] = useLocalState('messageText', '');
+  const [messageText, setMessageText] = useState('');
   return (
     <Section>
       <TextArea

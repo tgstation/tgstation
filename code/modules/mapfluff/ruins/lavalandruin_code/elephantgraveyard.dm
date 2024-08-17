@@ -5,7 +5,6 @@
 	max_integrity = 120
 	impressiveness = 18 // Carved from the bones of a massive creature, it's going to be a specticle to say the least
 	layer = ABOVE_ALL_MOB_LAYER
-	plane = ABOVE_GAME_PLANE
 	custom_materials = list(/datum/material/bone=SHEET_MATERIAL_AMOUNT*5)
 	abstract_type = /obj/structure/statue/bone
 
@@ -72,8 +71,7 @@
 	turf_type = /turf/open/misc/asteroid/basalt/wasteland
 	baseturfs = /turf/open/misc/asteroid/basalt/wasteland
 	icon = 'icons/turf/walls/rock_wall.dmi'
-	base_icon_state = "rock_wall"
-	smoothing_flags = SMOOTH_BITMASK | SMOOTH_BORDER
+	smoothing_flags = SMOOTH_BITMASK
 
 /turf/closed/mineral/strong/wasteland/drop_ores()
 	if(prob(10))
@@ -87,13 +85,16 @@
 /obj/structure/sink/oil_well //You're not going to enjoy bathing in this...
 	name = "oil well"
 	desc = "A bubbling pool of oil. This would probably be valuable, had bluespace technology not destroyed the need for fossil fuels 200 years ago."
-	icon = 'icons/obj/watercloset.dmi'
+	icon = 'icons/obj/mining_zones/terrain.dmi'
 	icon_state = "puddle-oil"
 	dispensedreagent = /datum/reagent/fuel/oil
-	pixel_shift = 0
+
+// This is a hole
+/obj/structure/sink/oil_well/find_and_hang_on_wall(directional, custom_drop_callback, wall_layer)
+	return
 
 /obj/structure/sink/oil_well/Initialize(mapload)
-	.=..()
+	. = ..()
 	create_reagents(20)
 	reagents.add_reagent(dispensedreagent, 20)
 	//I'm pretty much aware that, because how oil wells and sinks work, attackby() won't work unless in combat mode.
@@ -107,7 +108,7 @@
 
 /obj/structure/sink/oil_well/attackby(obj/item/O, mob/living/user, params)
 	flick("puddle-oil-splash",src)
-	if(O.tool_behaviour == TOOL_SHOVEL && !(obj_flags & NO_DECONSTRUCTION)) //attempt to deconstruct the puddle with a shovel
+	if(O.tool_behaviour == TOOL_SHOVEL) //attempt to deconstruct the puddle with a shovel
 		to_chat(user, "You fill in the oil well with soil.")
 		O.play_tool_sound(src)
 		deconstruct()
@@ -160,6 +161,8 @@
 	var/first_open = FALSE
 	/// was a shovel used to close this grave
 	var/dug_closed = FALSE
+	/// do we have a mood effect tied to accessing this type of grave?
+	var/affect_mood = FALSE
 
 /obj/structure/closet/crate/grave/add_context(atom/source, list/context, obj/item/held_item, mob/user)
 	if(isnull(held_item))
@@ -179,6 +182,9 @@
 /obj/structure/closet/crate/grave/examine(mob/user)
 	. = ..()
 	. += span_notice("It can be [EXAMINE_HINT((opened ? "closed" : "dug open"))] with a shovel.")
+
+/obj/structure/closet/crate/grave/filled
+	affect_mood = TRUE
 
 /obj/structure/closet/crate/grave/filled/PopulateContents()  //GRAVEROBBING IS NOW A FEATURE
 	..()
@@ -203,8 +209,8 @@
 			new /obj/item/reagent_containers/cup/beaker(src)
 			new /obj/item/clothing/glasses/science(src)
 		if(7)
-			new /obj/item/clothing/glasses/sunglasses(src)
-			new /obj/item/clothing/mask/cigarette/rollie(src)
+			new /obj/item/clothing/glasses/sunglasses/big(src)
+			new /obj/item/cigarette/rollie(src)
 		else
 			//empty grave
 			return
@@ -252,7 +258,7 @@
 		if(opened)
 			dug_closed = TRUE
 			close(user)
-		else if(open(user, force = TRUE))
+		else if(open(user, force = TRUE) && affect_mood)
 			if(HAS_MIND_TRAIT(user, TRAIT_MORBID))
 				user.add_mood_event("morbid_graverobbing", /datum/mood_event/morbid_graverobbing)
 			else
@@ -284,7 +290,7 @@
 		deconstruct(TRUE)
 		return TRUE
 
-/obj/structure/closet/crate/grave/container_resist_act(mob/living/user)
+/obj/structure/closet/crate/grave/container_resist_act(mob/living/user, loc_required = TRUE)
 	if(opened)
 		return
 	// The player is trying to dig themselves out of an early grave
@@ -306,6 +312,14 @@
 	else
 		if(user.loc == src)
 			to_chat(user, span_warning("You fail to dig yourself out of [src]!"))
+
+/obj/structure/closet/crate/grave/fresh
+	name = "makeshift grave"
+	desc = "A hastily-dug grave. This is definitely not six feet deep, but it'll hold a body."
+	icon = 'icons/obj/storage/crates.dmi'
+	icon_state = "grave_fresh"
+	base_icon_state = "grave_fresh"
+	material_drop_amount = 0
 
 /obj/structure/closet/crate/grave/filled/lead_researcher
 	name = "ominous burial mound"

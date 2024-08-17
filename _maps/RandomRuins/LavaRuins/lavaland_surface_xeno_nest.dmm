@@ -33,7 +33,7 @@
 /area/ruin/unpowered/xenonest)
 "j" = (
 /obj/structure/alien/weeds,
-/mob/living/simple_animal/hostile/alien,
+/mob/living/basic/alien,
 /turf/open/misc/asteroid/basalt/lava_land_surface,
 /area/ruin/unpowered/xenonest)
 "l" = (
@@ -55,7 +55,7 @@
 /area/ruin/unpowered/xenonest)
 "t" = (
 /obj/structure/alien/weeds,
-/mob/living/simple_animal/hostile/alien/sentinel,
+/mob/living/basic/alien/sentinel,
 /turf/open/misc/asteroid/basalt/lava_land_surface,
 /area/ruin/unpowered/xenonest)
 "u" = (
@@ -84,9 +84,15 @@
 /obj/structure/bed/nest,
 /obj/effect/decal/cleanable/blood/gibs,
 /obj/item/clothing/under/rank/security/officer,
-/obj/item/clothing/suit/armor/vest,
-/obj/item/melee/baton/security/loaded,
-/obj/item/clothing/head/helmet,
+/obj/item/clothing/suit/armor/vest{
+	pixel_y = 3
+	},
+/obj/item/melee/baton/security/loaded{
+	pixel_x = 6
+	},
+/obj/item/clothing/head/helmet{
+	pixel_y = 13
+	},
 /turf/open/misc/asteroid/basalt/lava_land_surface,
 /area/ruin/unpowered/xenonest)
 "B" = (
@@ -103,18 +109,18 @@
 /area/ruin/unpowered/xenonest)
 "E" = (
 /obj/structure/alien/weeds,
-/mob/living/simple_animal/hostile/alien/drone{
-	plants_off = 1
+/mob/living/basic/alien/drone{
+	can_plant_weeds = 0
 	},
 /turf/open/misc/asteroid/basalt/lava_land_surface,
 /area/ruin/unpowered/xenonest)
 "F" = (
 /obj/structure/alien/weeds,
-/mob/living/simple_animal/hostile/alien/queen/large{
+/mob/living/basic/alien/queen/large{
 	desc = "A gigantic alien who is in charge of the hive and all of its loyal servants.";
 	name = "alien queen";
 	pixel_x = -16;
-	plants_off = 1
+	can_plant_weeds = 0
 	},
 /turf/open/misc/asteroid/basalt/lava_land_surface,
 /area/ruin/unpowered/xenonest)
@@ -131,19 +137,25 @@
 /obj/structure/bed/nest,
 /obj/effect/decal/cleanable/blood/gibs,
 /obj/effect/decal/cleanable/blood,
-/obj/item/clothing/under/syndicate,
-/obj/item/clothing/glasses/night,
+/obj/item/clothing/under/syndicate{
+	pixel_y = 6;
+	pixel_x = -3
+	},
+/obj/item/clothing/glasses/night{
+	pixel_y = 12;
+	pixel_x = 4
+	},
 /turf/open/misc/asteroid/basalt/lava_land_surface,
 /area/ruin/unpowered/xenonest)
 "K" = (
 /obj/structure/alien/weeds/node,
-/mob/living/simple_animal/hostile/alien,
+/mob/living/basic/alien,
 /turf/open/misc/asteroid/basalt/lava_land_surface,
 /area/ruin/unpowered/xenonest)
 "L" = (
 /obj/structure/alien/weeds/node,
-/mob/living/simple_animal/hostile/alien/drone{
-	plants_off = 1
+/mob/living/basic/alien/drone{
+	can_plant_weeds = 0
 	},
 /turf/open/misc/asteroid/basalt/lava_land_surface,
 /area/ruin/unpowered/xenonest)
@@ -151,17 +163,26 @@
 /obj/structure/alien/weeds,
 /obj/structure/bed/nest,
 /obj/effect/decal/cleanable/blood/gibs,
-/obj/item/tank/internals/oxygen,
-/obj/item/clothing/suit/space/syndicate/orange,
-/obj/item/clothing/mask/gas,
-/obj/item/clothing/head/helmet/space/syndicate/orange,
+/obj/item/tank/internals/oxygen{
+	pixel_y = 4;
+	pixel_x = -3
+	},
+/obj/item/clothing/suit/space/syndicate/orange{
+	pixel_y = 8
+	},
+/obj/item/clothing/mask/gas{
+	pixel_x = 7
+	},
+/obj/item/clothing/head/helmet/space/syndicate/orange{
+	pixel_y = 12
+	},
 /turf/open/misc/asteroid/basalt/lava_land_surface,
 /area/ruin/unpowered/xenonest)
 "Q" = (
 /obj/structure/alien/weeds,
 /obj/effect/decal/cleanable/blood,
-/mob/living/simple_animal/hostile/alien/drone{
-	plants_off = 1
+/mob/living/basic/alien/drone{
+	can_plant_weeds = 0
 	},
 /turf/open/misc/asteroid/basalt/lava_land_surface,
 /area/ruin/unpowered/xenonest)

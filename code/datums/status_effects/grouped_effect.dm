@@ -9,11 +9,15 @@
 	var/datum/status_effect/grouped/existing = new_owner.has_status_effect(type)
 	if(existing)
 		existing.sources |= source
+		merge_with_existing(existing, source)
 		qdel(src)
 		return FALSE
 
 	sources |= source
 	return ..()
+
+/datum/status_effect/grouped/proc/merge_with_existing(datum/status_effect/grouped/existing, source)
+	return
 
 /datum/status_effect/grouped/before_remove(source)
 	sources -= source

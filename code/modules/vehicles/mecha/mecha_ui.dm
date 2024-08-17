@@ -9,7 +9,7 @@
 		ui.open()
 		ui_view.display_to(user)
 
-/obj/vehicle/sealed/mecha/ui_status(mob/user)
+/obj/vehicle/sealed/mecha/ui_status(mob/user, datum/ui_state/state)
 	if(contains(user))
 		return UI_INTERACTIVE
 	return min(
@@ -111,16 +111,17 @@
 	var/module_index = 0
 	for(var/category in max_equip_by_category)
 		var/max_per_category = max_equip_by_category[category]
-		for(var/i = 1 to max_per_category)
-			var/equipment = equip_by_category[category]
-			var/is_slot_free = islist(equipment) ? i > length(equipment) : isnull(equipment)
-			if(is_slot_free)
-				data += list(list(
-					"slot" = category
-				))
-				if(ui_selected_module_index == module_index)
-					ui_selected_module_index = null
-			else
+		if(max_per_category)
+			for(var/i = 1 to max_per_category)
+				var/equipment = equip_by_category[category]
+				var/is_slot_free = islist(equipment) ? i > length(equipment) : isnull(equipment)
+				if(is_slot_free)
+					data += list(list(
+						"slot" = category
+					))
+					if(ui_selected_module_index == module_index)
+						ui_selected_module_index = null
+					continue
 				var/obj/item/mecha_parts/mecha_equipment/module = islist(equipment) ? equipment[i] : equipment
 				data += list(list(
 					"slot" = category,
@@ -140,7 +141,7 @@
 				))
 				if(isnull(ui_selected_module_index))
 					ui_selected_module_index = module_index
-			module_index++
+				module_index++
 	return data
 
 /obj/vehicle/sealed/mecha/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
@@ -190,7 +191,7 @@
 			if(userinput == format_text(name)) //default mecha names may have improper span artefacts in their name, so we format the name
 				to_chat(usr, span_notice("You rename [name] to... well, [userinput]."))
 				return
-			name = userinput
+			name = "\proper [userinput]"
 			chassis_camera?.update_c_tag(src)
 		if("toggle_safety")
 			set_safety(usr)

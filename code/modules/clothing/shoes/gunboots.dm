@@ -59,7 +59,7 @@
 	shot.original = target
 	shot.fired_from = src
 	shot.firer = wearer // don't hit ourself that would be really annoying
-	shot.impacted = list(wearer = TRUE)
+	shot.impacted = list(WEAKREF(wearer) = TRUE)
 	shot.def_zone = pick(BODY_ZONE_L_LEG, BODY_ZONE_R_LEG) // they're fired from boots after all
 	shot.preparePixelProjectile(target, wearer)
 	if(!shot.suppressed)

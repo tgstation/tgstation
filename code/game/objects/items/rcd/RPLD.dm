@@ -38,7 +38,6 @@
 			/obj/machinery/plumbing/synthesizer = 15,
 			/obj/machinery/plumbing/reaction_chamber/chem = 15,
 			/obj/machinery/plumbing/grinder_chemical = 30,
-			/obj/machinery/plumbing/growing_vat = 20,
 			/obj/machinery/plumbing/fermenter = 30,
 			/obj/machinery/plumbing/liquid_pump = 35, //extracting chemicals from ground is one way of creation
 			/obj/machinery/plumbing/disposer = 10,
@@ -153,6 +152,10 @@
 
 	return data
 
+/obj/item/construction/plumbing/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
+	. = ..()
+	playsound(src, SFX_TOOL_SWITCH, 20, TRUE)
+
 /obj/item/construction/plumbing/handle_ui_act(action, params, datum/tgui/ui, datum/ui_state/state)
 	switch(action)
 		if("color")
@@ -177,8 +180,7 @@
 			if(!design)
 				return FALSE
 			blueprint = design
-
-			playsound(src, 'sound/effects/pop.ogg', 50, vary = FALSE)
+			blueprint_changed = TRUE
 
 	return TRUE
 
@@ -202,7 +204,7 @@
 		if(!is_allowed)
 			balloon_alert(user, "turf is blocked!")
 		return FALSE
-	if(!do_after(user, cost, target = destination)) //"cost" is relative to delay at a rate of 10 matter/second  (1matter/decisecond) rather than playing with 2 different variables since everyone set it to this rate anyways.
+	if(!build_delay(user, cost, target = destination))
 		return FALSE
 	if(!checkResource(cost, user) || !(is_allowed = canPlace(destination)))
 		if(!is_allowed)
@@ -240,43 +242,48 @@
 			if(duct_machine.duct_layer & layer_id)
 				return FALSE
 
-/obj/item/construction/plumbing/pre_attack_secondary(obj/machinery/target, mob/user, params)
+/obj/item/construction/plumbing/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
+	. = ..()
+	if(. & ITEM_INTERACT_ANY_BLOCKER)
+		return .
+
+	for(var/category_name in plumbing_design_types)
+		var/list/designs = plumbing_design_types[category_name]
+
+		for(var/obj/machinery/recipe as anything in designs)
+			if(interacting_with.type != recipe)
+				continue
+
+			var/obj/machinery/machine_target = interacting_with
+			if(machine_target.anchored)
+				balloon_alert(user, "unanchor first!")
+				return ITEM_INTERACT_BLOCKING
+			if(do_after(user, 2 SECONDS, target = interacting_with))
+				machine_target.deconstruct() //Let's not substract matter
+				playsound(src, 'sound/machines/click.ogg', 50, TRUE) //this is just such a great sound effect
+			return ITEM_INTERACT_SUCCESS
+
+	if(!isopenturf(interacting_with))
+		return NONE
+	if(create_machine(interacting_with, user))
+		return ITEM_INTERACT_SUCCESS
+	return ITEM_INTERACT_BLOCKING
+
+/obj/item/construction/plumbing/interact_with_atom_secondary(atom/target, mob/living/user, list/modifiers)
 	if(!istype(target, /obj/machinery/duct))
-		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+		return NONE
 
 	var/obj/machinery/duct/duct = target
 	if(duct.duct_layer && duct.duct_color)
 		current_color = GLOB.pipe_color_name[duct.duct_color]
 		current_layer = GLOB.plumbing_layer_names["[duct.duct_layer]"]
 		balloon_alert(user, "using [current_color], layer [current_layer]")
+		return ITEM_INTERACT_SUCCESS
+	return ITEM_INTERACT_BLOCKING
 
-	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
-
-/obj/item/construction/plumbing/afterattack(atom/target, mob/user, proximity)
-	. = ..()
-	if(!proximity)
-		return
-
-	for(var/category_name in plumbing_design_types)
-		var/list/designs = plumbing_design_types[category_name]
-
-		for(var/obj/machinery/recipe as anything in designs)
-			if(target.type != recipe)
-				continue
-
-			var/obj/machinery/machine_target = target
-			if(machine_target.anchored)
-				balloon_alert(user, "unanchor first!")
-				return
-			if(do_after(user, 20, target = target))
-				machine_target.deconstruct() //Let's not substract matter
-				playsound(get_turf(src), 'sound/machines/click.ogg', 50, TRUE) //this is just such a great sound effect
-			return
-
-	create_machine(target, user)
-
-/obj/item/construction/plumbing/AltClick(mob/user)
+/obj/item/construction/plumbing/click_alt(mob/user)
 	ui_interact(user)
+	return CLICK_ACTION_SUCCESS
 
 /obj/item/construction/plumbing/proc/mouse_wheeled(mob/source, atom/A, delta_x, delta_y, params)
 	SIGNAL_HANDLER
@@ -296,44 +303,6 @@
 			current_loc = GLOB.plumbing_layers.len
 		current_layer = GLOB.plumbing_layers[current_loc]
 	to_chat(source, span_notice("You set the layer to [current_layer]."))
-
-/obj/item/construction/plumbing/research
-	name = "research plumbing constructor"
-	desc = "A type of plumbing constructor designed to rapidly deploy the machines needed to conduct cytological research."
-	icon_state = "plumberer_sci"
-	inhand_icon_state = "plumberer_sci"
-	lefthand_file = 'icons/mob/inhands/equipment/tools_lefthand.dmi'
-	righthand_file = 'icons/mob/inhands/equipment/tools_righthand.dmi'
-	///Design types for research plumbing constructor
-	var/list/static/research_design_types = list(
-		//Category 1 Synthesizers
-		"Synthesizers" = list(
-			/obj/machinery/plumbing/reaction_chamber = 15,
-			/obj/machinery/plumbing/grinder_chemical = 30,
-			/obj/machinery/plumbing/disposer = 10,
-			/obj/machinery/plumbing/growing_vat = 20,
-		),
-
-		//Category 2 Distributors
-		"Distributors" = list(
-			/obj/machinery/duct = 1,
-			/obj/machinery/plumbing/input = 5,
-			/obj/machinery/plumbing/filter = 5,
-			/obj/machinery/plumbing/splitter = 5,
-			/obj/machinery/plumbing/output = 5,
-		),
-
-		//Category 3 storage
-		"Storage" = list(
-			/obj/machinery/plumbing/tank = 20,
-			/obj/machinery/plumbing/acclimator = 10,
-		),
-	)
-
-/obj/item/construction/plumbing/research/Initialize(mapload)
-	plumbing_design_types = research_design_types
-
-	. = ..()
 
 /obj/item/construction/plumbing/service
 	name = "service plumbing constructor"
@@ -375,4 +344,3 @@
 	plumbing_design_types = service_design_types
 
 	. = ..()
-

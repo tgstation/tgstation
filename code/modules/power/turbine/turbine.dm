@@ -43,7 +43,7 @@
 	register_context()
 
 
-/obj/machinery/power/turbine/LateInitialize()
+/obj/machinery/power/turbine/post_machine_initialize()
 	. = ..()
 	activate_parts()
 
@@ -179,7 +179,7 @@
 	if(default_deconstruction_crowbar(tool))
 		return ITEM_INTERACT_SUCCESS
 
-/obj/machinery/power/turbine/on_deconstruction()
+/obj/machinery/power/turbine/on_deconstruction(disassembled)
 	installed_part?.forceMove(loc)
 	return ..()
 
@@ -292,7 +292,7 @@
 	input_turf = null
 
 /**
- * transfer's gases from it's input turf to it's internal gas mix
+ * transfers gases from its input turf to its internal gas mix
  * Returns temperature of the gas mix absorbed only if some work was done
  */
 /obj/machinery/power/turbine/inlet_compressor/proc/compress_gases()
@@ -430,11 +430,11 @@
 	if(!all_parts_connected)
 		. += span_warning("The parts need to be linked via a [EXAMINE_HINT("multitool")]")
 
-/obj/machinery/power/turbine/core_rotor/cable_layer_change_checks(mob/living/user, obj/item/tool)
+/obj/machinery/power/turbine/core_rotor/cable_layer_act(mob/living/user, obj/item/tool)
 	if(!panel_open)
 		balloon_alert(user, "open panel first!")
-		return FALSE
-	return TRUE
+		return ITEM_INTERACT_BLOCKING
+	return ..()
 
 /obj/machinery/power/turbine/core_rotor/multitool_act(mob/living/user, obj/item/tool)
 	//allow cable layer changing
@@ -547,7 +547,7 @@
 	disconnect_from_network()
 	SSair.stop_processing_machine(src)
 
-/obj/machinery/power/turbine/core_rotor/on_deconstruction()
+/obj/machinery/power/turbine/core_rotor/on_deconstruction(disassembled)
 	deactivate_parts()
 	return ..()
 

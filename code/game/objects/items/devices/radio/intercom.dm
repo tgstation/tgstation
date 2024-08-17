@@ -1,7 +1,7 @@
 /obj/item/radio/intercom
 	name = "station intercom"
 	desc = "A trusty station intercom, ready to spring into action even when the headsets go silent."
-	icon = 'icons/obj/machines/wallmounts.dmi'
+	icon = 'icons/obj/machines/intercom.dmi'
 	icon_state = "intercom"
 	anchored = TRUE
 	w_class = WEIGHT_CLASS_BULKY
@@ -11,7 +11,7 @@
 	item_flags = NO_BLOOD_ON_ITEM
 
 	overlay_speaker_idle = "intercom_s"
-	overlay_speaker_active = "intercom_recieve"
+	overlay_speaker_active = "intercom_receive"
 
 	overlay_mic_idle = "intercom_m"
 	overlay_mic_active = null
@@ -42,6 +42,7 @@
 	if(!unscrewed)
 		find_and_hang_on_wall(directional = TRUE, \
 			custom_drop_callback = CALLBACK(src, PROC_REF(knock_down)))
+		AddComponent(/datum/component/examine_balloon, pixel_y_offset = 36)
 
 /obj/item/radio/intercom/Destroy()
 	. = ..()
@@ -192,13 +193,12 @@
 /obj/item/wallframe/intercom
 	name = "intercom frame"
 	desc = "A ready-to-go intercom. Just slap it on a wall and screw it in!"
-	icon = 'icons/obj/machines/wallmounts.dmi'
+	icon = 'icons/obj/machines/intercom.dmi'
 	icon_state = "intercom"
 	result_path = /obj/item/radio/intercom/unscrewed
-	pixel_shift = 26
 	custom_materials = list(/datum/material/iron = SMALL_MATERIAL_AMOUNT * 0.75, /datum/material/glass = SMALL_MATERIAL_AMOUNT * 0.25)
 
-MAPPING_DIRECTIONAL_HELPERS(/obj/item/radio/intercom, 27)
+WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/item/radio/intercom)
 
 /obj/item/radio/intercom/chapel
 	name = "Confessional intercom"
@@ -219,6 +219,6 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/item/radio/intercom, 27)
 	command = TRUE
 	icon_off = "intercom_command-p"
 
-MAPPING_DIRECTIONAL_HELPERS(/obj/item/radio/intercom/prison, 27)
-MAPPING_DIRECTIONAL_HELPERS(/obj/item/radio/intercom/chapel, 27)
-MAPPING_DIRECTIONAL_HELPERS(/obj/item/radio/intercom/command, 27)
+WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/item/radio/intercom/prison)
+WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/item/radio/intercom/chapel)
+WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/item/radio/intercom/command)

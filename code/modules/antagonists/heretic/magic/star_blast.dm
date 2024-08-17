@@ -1,6 +1,6 @@
 /datum/action/cooldown/spell/pointed/projectile/star_blast
 	name = "Star Blast"
-	desc = "This spell fires a disk with cosmic energies at a target."
+	desc = "This spell fires a disk with cosmic energies at a target, spreading the star mark."
 	background_icon_state = "bg_heretic"
 	overlay_icon_state = "bg_heretic_border"
 	button_icon = 'icons/mob/actions/actions_ecult.dmi'
@@ -41,7 +41,7 @@
 	. = ..()
 	var/mob/living/cast_on = firer
 	for(var/mob/living/nearby_mob in range(star_mark_range, target))
-		if(cast_on == nearby_mob)
+		if(cast_on == nearby_mob || cast_on.buckled == nearby_mob)
 			continue
 		nearby_mob.apply_status_effect(/datum/status_effect/star_mark, cast_on)
 

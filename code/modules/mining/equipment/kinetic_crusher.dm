@@ -1,13 +1,21 @@
-/*********************Mining Hammer****************/
+/**
+ * Kinetic Crusher
+ *
+ * Lavaland's "Hard Mode" option for players, requiring melee attacks (backstabs even better),
+ * but allowing you to upgrade it with trophies gained from fighting lavaland monsters, making it
+ * a good tradeoff and a decent playstyle.
+ */
 /obj/item/kinetic_crusher
-	icon = 'icons/obj/mining.dmi'
+	icon = 'icons/obj/mining_zones/equipment.dmi'
 	icon_state = "crusher"
 	inhand_icon_state = "crusher0"
 	lefthand_file = 'icons/mob/inhands/weapons/hammers_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/hammers_righthand.dmi'
 	name = "proto-kinetic crusher"
-	desc = "An early design of the proto-kinetic accelerator, it is little more than a combination of various mining tools cobbled together, forming a high-tech club. \
-	While it is an effective mining tool, it did little to aid any but the most skilled and/or suicidal miners against local fauna."
+	desc = "An early design of the proto-kinetic accelerator, it is little more than a combination of various mining tools cobbled together, \
+		forming a high-tech club. While it is an effective mining tool, it did little to aid any but the most skilled and/or \
+		suicidal miners against local fauna."
+	resistance_flags = FIRE_PROOF
 	force = 0 //You can't hit stuff unless wielded
 	w_class = WEIGHT_CLASS_BULKY
 	slot_flags = ITEM_SLOT_BACK
@@ -21,12 +29,15 @@
 	sharpness = SHARP_EDGED
 	actions_types = list(/datum/action/item_action/toggle_light)
 	obj_flags = UNIQUE_RENAME
-	light_system = MOVABLE_LIGHT
+	light_system = OVERLAY_LIGHT
 	light_range = 5
+	light_power = 1.2
+	light_color = "#ffff66"
 	light_on = FALSE
-	var/list/trophies = list()
+	///List of all crusher trophies attached to this.
+	var/list/obj/item/crusher_trophy/trophies = list()
 	var/charged = TRUE
-	var/charge_time = 15
+	var/charge_time = 1.5 SECONDS
 	var/detonation_damage = 50
 	var/backstab_bonus = 30
 
@@ -52,94 +63,93 @@
 	. = ..()
 	. += span_notice("Mark a large creature with a destabilizing force with right-click, then hit them in melee to do <b>[force + detonation_damage]</b> damage.")
 	. += span_notice("Does <b>[force + detonation_damage + backstab_bonus]</b> damage if the target is backstabbed, instead of <b>[force + detonation_damage]</b>.")
-	for(var/t in trophies)
-		var/obj/item/crusher_trophy/T = t
-		. += span_notice("It has \a [T] attached, which causes [T.effect_desc()].")
+	for(var/obj/item/crusher_trophy/crusher_trophy as anything in trophies)
+		. += span_notice("It has \a [crusher_trophy] attached, which causes [crusher_trophy.effect_desc()].")
 
-/obj/item/kinetic_crusher/attackby(obj/item/I, mob/living/user)
-	if(I.tool_behaviour == TOOL_CROWBAR)
-		if(LAZYLEN(trophies))
-			to_chat(user, span_notice("You remove [src]'s trophies."))
-			I.play_tool_sound(src)
-			for(var/t in trophies)
-				var/obj/item/crusher_trophy/T = t
-				T.remove_from(src, user)
-		else
-			to_chat(user, span_warning("There are no trophies on [src]."))
-	else if(istype(I, /obj/item/crusher_trophy))
-		var/obj/item/crusher_trophy/T = I
-		T.add_to(src, user)
-	else
-		return ..()
+/obj/item/kinetic_crusher/attackby(obj/item/attacking_item, mob/user, params)
+	if(istype(attacking_item, /obj/item/crusher_trophy))
+		var/obj/item/crusher_trophy/crusher_trophy = attacking_item
+		crusher_trophy.add_to(src, user)
+		return
+	return ..()
+
+/obj/item/kinetic_crusher/crowbar_act(mob/living/user, obj/item/tool)
+	. = ..()
+	if(!LAZYLEN(trophies))
+		user.balloon_alert(user, "no trophies!")
+		return ITEM_INTERACT_BLOCKING
+	user.balloon_alert(user, "trophies removed")
+	tool.play_tool_sound(src)
+	for(var/obj/item/crusher_trophy/crusher_trophy as anything in trophies)
+		crusher_trophy.remove_from(src, user)
+	return ITEM_INTERACT_SUCCESS
+
+/obj/item/kinetic_crusher/pre_attack(atom/A, mob/living/user, params)
+	. = ..()
+	if(.)
+		return TRUE
+	if(!HAS_TRAIT(src, TRAIT_WIELDED))
+		user.balloon_alert(user, "must be wielded!")
+		return TRUE
+	return .
 
 /obj/item/kinetic_crusher/attack(mob/living/target, mob/living/carbon/user)
-	if(!HAS_TRAIT(src, TRAIT_WIELDED))
-		to_chat(user, span_warning("[src] is too heavy to use with one hand! You fumble and drop everything."))
-		user.drop_all_held_items()
+	target.apply_status_effect(/datum/status_effect/crusher_damage)
+	return ..()
+
+/obj/item/kinetic_crusher/afterattack(mob/living/target, mob/living/user, clickparams)
+	if(!isliving(target))
 		return
-	var/datum/status_effect/crusher_damage/C = target.has_status_effect(/datum/status_effect/crusher_damage)
-	if(!C)
-		C = target.apply_status_effect(/datum/status_effect/crusher_damage)
+	// Melee effect
+	for(var/obj/item/crusher_trophy/crusher_trophy as anything in trophies)
+		crusher_trophy.on_melee_hit(target, user)
+	if(QDELETED(target))
+		return
+	var/datum/status_effect/crusher_mark/mark = target.has_status_effect(/datum/status_effect/crusher_mark)
+	var/boosted_mark = mark?.boosted
+	if(!target.remove_status_effect(mark))
+		return
+	// Detonation effect
+	var/datum/status_effect/crusher_damage/crusher_damage_effect = target.has_status_effect(/datum/status_effect/crusher_damage) || target.apply_status_effect(/datum/status_effect/crusher_damage)
 	var/target_health = target.health
-	..()
-	for(var/t in trophies)
-		if(!QDELETED(target))
-			var/obj/item/crusher_trophy/T = t
-			T.on_melee_hit(target, user)
-	if(!QDELETED(C) && !QDELETED(target))
-		C.total_damage += target_health - target.health //we did some damage, but let's not assume how much we did
+	for(var/obj/item/crusher_trophy/crusher_trophy as anything in trophies)
+		crusher_trophy.on_mark_detonation(target, user)
+	if(QDELETED(target))
+		return
+	if(!QDELETED(crusher_damage_effect))
+		crusher_damage_effect.total_damage += target_health - target.health //we did some damage, but let's not assume how much we did
+	new /obj/effect/temp_visual/kinetic_blast(get_turf(target))
+	var/backstabbed = FALSE
+	var/combined_damage = detonation_damage
+	var/backstab_dir = get_dir(user, target)
+	var/def_check = target.getarmor(type = BOMB)
+	// Backstab bonus
+	if((user.dir & backstab_dir) && (target.dir & backstab_dir) || boosted_mark)
+		backstabbed = TRUE
+		combined_damage += backstab_bonus
+		playsound(user, 'sound/weapons/kinetic_accel.ogg', 100, TRUE) //Seriously who spelled it wrong
+	if(!QDELETED(crusher_damage_effect))
+		crusher_damage_effect.total_damage += combined_damage
+	SEND_SIGNAL(user, COMSIG_LIVING_CRUSHER_DETONATE, target, src, backstabbed)
+	target.apply_damage(combined_damage, BRUTE, blocked = def_check)
 
-/obj/item/kinetic_crusher/afterattack(atom/target, mob/living/user, proximity_flag, clickparams)
-	if(proximity_flag && isliving(target))
-		var/mob/living/L = target
-		var/datum/status_effect/crusher_mark/CM = L.has_status_effect(/datum/status_effect/crusher_mark)
-		if(!CM || CM.hammer_synced != src || !L.remove_status_effect(/datum/status_effect/crusher_mark))
-			return
-		var/datum/status_effect/crusher_damage/C = L.has_status_effect(/datum/status_effect/crusher_damage)
-		if(!C)
-			C = L.apply_status_effect(/datum/status_effect/crusher_damage)
-		var/target_health = L.health
-		for(var/t in trophies)
-			var/obj/item/crusher_trophy/T = t
-			T.on_mark_detonation(target, user)
-		if(!QDELETED(L))
-			if(!QDELETED(C))
-				C.total_damage += target_health - L.health //we did some damage, but let's not assume how much we did
-			new /obj/effect/temp_visual/kinetic_blast(get_turf(L))
-			var/backstabbed = FALSE
-			var/combined_damage = detonation_damage
-			var/backstab_dir = get_dir(user, L)
-			var/def_check = L.getarmor(type = BOMB)
-			if((user.dir & backstab_dir) && (L.dir & backstab_dir))
-				backstabbed = TRUE
-				combined_damage += backstab_bonus
-				playsound(user, 'sound/weapons/kinetic_accel.ogg', 100, TRUE) //Seriously who spelled it wrong
-
-			if(!QDELETED(C))
-				C.total_damage += combined_damage
-
-
-			SEND_SIGNAL(user, COMSIG_LIVING_CRUSHER_DETONATE, L, src, backstabbed)
-			L.apply_damage(combined_damage, BRUTE, blocked = def_check)
-
-/obj/item/kinetic_crusher/attack_secondary(atom/target, mob/living/user, clickparams)
-	return SECONDARY_ATTACK_CONTINUE_CHAIN
-
-/obj/item/kinetic_crusher/afterattack_secondary(atom/target, mob/living/user, proximity_flag, click_parameters)
+/obj/item/kinetic_crusher/interact_with_atom_secondary(atom/interacting_with, mob/living/user, list/modifiers)
 	if(!HAS_TRAIT(src, TRAIT_WIELDED))
 		balloon_alert(user, "wield it first!")
-		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
-	if(target == user)
+		return ITEM_INTERACT_BLOCKING
+	if(interacting_with == user)
 		balloon_alert(user, "can't aim at yourself!")
-		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
-	fire_kinetic_blast(target, user, click_parameters)
+		return ITEM_INTERACT_BLOCKING
+	fire_kinetic_blast(interacting_with, user, modifiers)
 	user.changeNext_move(CLICK_CD_MELEE)
-	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+	return ITEM_INTERACT_SUCCESS
 
-/obj/item/kinetic_crusher/proc/fire_kinetic_blast(atom/target, mob/living/user, click_parameters)
+/obj/item/kinetic_crusher/ranged_interact_with_atom_secondary(atom/interacting_with, mob/living/user, list/modifiers)
+	return interact_with_atom_secondary(interacting_with, user, modifiers)
+
+/obj/item/kinetic_crusher/proc/fire_kinetic_blast(atom/target, mob/living/user, list/modifiers)
 	if(!charged)
 		return
-	var/modifiers = params2list(click_parameters)
 	var/turf/proj_turf = user.loc
 	if(!isturf(proj_turf))
 		return
@@ -148,14 +158,13 @@
 		attached_trophy.on_projectile_fire(destabilizer, user)
 	destabilizer.preparePixelProjectile(target, user, modifiers)
 	destabilizer.firer = user
-	destabilizer.hammer_synced = src
 	playsound(user, 'sound/weapons/plasma_cutter.ogg', 100, TRUE)
 	destabilizer.fire()
 	charged = FALSE
 	update_appearance()
-	addtimer(CALLBACK(src, PROC_REF(Recharge)), charge_time)
+	addtimer(CALLBACK(src, PROC_REF(recharge_projectile)), charge_time)
 
-/obj/item/kinetic_crusher/proc/Recharge()
+/obj/item/kinetic_crusher/proc/recharge_projectile()
 	if(!charged)
 		charged = TRUE
 		update_appearance()
@@ -195,27 +204,30 @@
 	armor_flag = BOMB
 	range = 6
 	log_override = TRUE
-	var/obj/item/kinetic_crusher/hammer_synced
+	/// Has this projectile been boosted
+	var/boosted = FALSE
 
-/obj/projectile/destabilizer/Destroy()
-	hammer_synced = null
-	return ..()
+/obj/projectile/destabilizer/Initialize(mapload)
+	. = ..()
+	AddComponent(/datum/component/parriable_projectile, parry_callback = CALLBACK(src, PROC_REF(on_parry)))
+
+/obj/projectile/destabilizer/proc/on_parry(mob/user)
+	SIGNAL_HANDLER
+	boosted = TRUE
+	// Get a bit of a damage/range boost after being parried
+	damage = 10
+	range = 9
 
 /obj/projectile/destabilizer/on_hit(atom/target, blocked = 0, pierce_hit)
 	if(isliving(target))
-		var/mob/living/L = target
-		var/had_effect = (L.has_status_effect(/datum/status_effect/crusher_mark)) //used as a boolean
-		var/datum/status_effect/crusher_mark/CM = L.apply_status_effect(/datum/status_effect/crusher_mark, hammer_synced)
-		if(hammer_synced)
-			for(var/t in hammer_synced.trophies)
-				var/obj/item/crusher_trophy/T = t
-				T.on_mark_application(target, CM, had_effect)
+		var/mob/living/living_target = target
+		living_target.apply_status_effect(/datum/status_effect/crusher_mark, boosted)
 	var/target_turf = get_turf(target)
 	if(ismineralturf(target_turf))
-		var/turf/closed/mineral/M = target_turf
-		new /obj/effect/temp_visual/kinetic_blast(M)
-		M.gets_drilled(firer)
-	..()
+		var/turf/closed/mineral/hit_mineral = target_turf
+		new /obj/effect/temp_visual/kinetic_blast(hit_mineral)
+		hit_mineral.gets_drilled(firer)
+	return ..()
 
 //trophies
 /obj/item/crusher_trophy
@@ -256,7 +268,6 @@
 
 /obj/item/crusher_trophy/proc/on_melee_hit(mob/living/target, mob/living/user) //the target and the user
 /obj/item/crusher_trophy/proc/on_projectile_fire(obj/projectile/destabilizer/marker, mob/living/user) //the projectile fired and the user
-/obj/item/crusher_trophy/proc/on_mark_application(mob/living/target, datum/status_effect/crusher_mark/mark, had_mark) //the target, the mark applied, and if the target had a mark before
 /obj/item/crusher_trophy/proc/on_mark_detonation(mob/living/target, mob/living/user) //the target and the user
 
 //watcher
@@ -348,13 +359,13 @@
 	return "mark detonation to do <b>[bonus_value]</b> damage to nearby creatures and push them back"
 
 /obj/item/crusher_trophy/tail_spike/on_mark_detonation(mob/living/target, mob/living/user)
-	for(var/mob/living/L in oview(2, user))
-		if(L.stat == DEAD)
+	for(var/mob/living/living_target in oview(2, user))
+		if(user.faction_check_atom(living_target) || living_target.stat == DEAD)
 			continue
-		playsound(L, 'sound/magic/fireball.ogg', 20, TRUE)
-		new /obj/effect/temp_visual/fire(L.loc)
-		addtimer(CALLBACK(src, PROC_REF(pushback), L, user), 1) //no free backstabs, we push AFTER module stuff is done
-		L.adjustFireLoss(bonus_value, forced = TRUE)
+		playsound(living_target, 'sound/magic/fireball.ogg', 20, TRUE)
+		new /obj/effect/temp_visual/fire(living_target.loc)
+		addtimer(CALLBACK(src, PROC_REF(pushback), living_target, user), 1) //no free backstabs, we push AFTER module stuff is done
+		living_target.adjustFireLoss(bonus_value, forced = TRUE)
 
 /obj/item/crusher_trophy/tail_spike/proc/pushback(mob/living/target, mob/living/user)
 	if(!QDELETED(target) && !QDELETED(user) && (!target.anchored || ismegafauna(target))) //megafauna will always be pushed
@@ -470,3 +481,17 @@
 			continue
 		return possible_turf
 	return get_turf(user)
+
+//wolf trophy
+
+/obj/item/crusher_trophy/wolf_ear
+	name = "wolf ear"
+	desc = "It's a wolf ear."
+	icon_state = "wolf_ear"
+	denied_type = /obj/item/crusher_trophy/wolf_ear
+
+/obj/item/crusher_trophy/wolf_ear/effect_desc()
+	return "mark detonation to gain a slight speed boost temporarily"
+
+/obj/item/crusher_trophy/wolf_ear/on_mark_detonation(mob/living/target, mob/living/user)
+	user.apply_status_effect(/datum/status_effect/speed_boost, 1 SECONDS)

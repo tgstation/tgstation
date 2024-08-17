@@ -7,12 +7,12 @@
  * # Legionnaire
  *
  * A towering skeleton, embodying the power of Legion.
- * As it's health gets lower, the head does more damage.
- * It's attacks are as follows:
+ * As its health gets lower, the head does more damage.
+ * Its attacks are as follows:
  * - Charges at the target after a telegraph, throwing them across the arena should it connect.
- * - Legionnaire's head detaches, attacking as it's own entity.  Has abilities of it's own later into the fight.  Once dead, regenerates after a brief period.  If the skill is used while the head is off, it will be killed.
+ * - Legionnaire's head detaches, attacking as its own entity.  Has abilities of its own later into the fight.  Once dead, regenerates after a brief period.  If the skill is used while the head is off, it will be killed.
  * - Leaves a pile of bones at your location.  Upon using this skill again, you'll swap locations with the bone pile.
- * - Spews a cloud of smoke from it's maw, wherever said maw is.
+ * - Spews a cloud of smoke from its maw, wherever said maw is.
  * A unique fight incorporating the head mechanic of legion into a whole new beast.  Combatants will need to make sure the tag-team of head and body don't lure them into a deadly trap.
  */
 
@@ -123,7 +123,7 @@
 		T = get_step(T, dir_to_target)
 	playsound(src,'sound/magic/demon_attack1.ogg', 200, 1)
 	visible_message(span_boldwarning("[src] prepares to charge!"))
-	addtimer(CALLBACK(src, PROC_REF(legionnaire_charge_2), dir_to_target, 0), 4)
+	addtimer(CALLBACK(src, PROC_REF(legionnaire_charge_2), dir_to_target, 0), 0.4 SECONDS)
 
 /mob/living/simple_animal/hostile/asteroid/elite/legionnaire/proc/legionnaire_charge_2(move_dir, times_ran)
 	if(times_ran >= 6)
@@ -183,7 +183,7 @@
 
 /mob/living/simple_animal/hostile/asteroid/elite/legionnaire/proc/onHeadDeath()
 	myhead = null
-	addtimer(CALLBACK(src, PROC_REF(regain_head)), 50)
+	addtimer(CALLBACK(src, PROC_REF(regain_head)), 5 SECONDS)
 
 /mob/living/simple_animal/hostile/asteroid/elite/legionnaire/proc/regain_head()
 	has_head = TRUE

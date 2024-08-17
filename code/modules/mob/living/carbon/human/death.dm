@@ -6,6 +6,8 @@ GLOBAL_LIST_EMPTY(dead_players_during_shift)
 	new /obj/effect/temp_visual/dust_animation(loc, dna.species.dust_anim)
 
 /mob/living/carbon/human/spawn_gibs(drop_bitflags=NONE)
+	if(flags_1 & HOLOGRAM_1)
+		return
 	if(drop_bitflags & DROP_BODYPARTS)
 		new /obj/effect/gibspawner/human(drop_location(), src, get_static_viruses())
 	else
@@ -23,6 +25,7 @@ GLOBAL_LIST_EMPTY(dead_players_during_shift)
 	stop_sound_channel(CHANNEL_HEARTBEAT)
 	var/obj/item/organ/internal/heart/human_heart = get_organ_slot(ORGAN_SLOT_HEART)
 	human_heart?.beat = BEAT_NONE
+	human_heart?.Stop()
 
 	. = ..()
 

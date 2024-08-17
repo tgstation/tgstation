@@ -15,7 +15,7 @@
 	desc = "<i>\"In case of emergency, please use the stairs.\"</i> Thus, always use the stairs."
 	density = FALSE
 
-	icon = 'icons/obj/wallmounts.dmi'
+	icon = 'icons/obj/structures/wallmounts.dmi'
 	icon_state = "elevpanel0"
 	base_icon_state = "elevpanel"
 
@@ -60,19 +60,15 @@
 	AddElement(/datum/element/contextual_screentip_tools, tool_behaviors)
 	AddElement(/datum/element/contextual_screentip_bare_hands, lmb_text = "Send Elevator")
 
-	// Machinery returns lateload by default via parent,
-	// this is just here for redundancy's sake.
-	. = INITIALIZE_HINT_LATELOAD
-
 	maploaded = mapload
-	// Maploaded panels link in LateInitialize...
+	// Maploaded panels link in post_machine_initialize...
 	if(mapload)
 		return
 
 	// And non-mapload panels link in Initialize
 	link_with_lift(log_error = FALSE)
 
-/obj/machinery/elevator_control_panel/LateInitialize()
+/obj/machinery/elevator_control_panel/post_machine_initialize()
 	. = ..()
 	// If we weren't maploaded, we probably already linked (or tried to link) in Initialize().
 	if(!maploaded)
@@ -254,7 +250,7 @@
 		ui = new(user, src, "ElevatorPanel", name)
 		ui.open()
 
-/obj/machinery/elevator_control_panel/ui_status(mob/user)
+/obj/machinery/elevator_control_panel/ui_status(mob/user, datum/ui_state/state)
 	// We moved up a z-level, probably via the elevator itself, so don't preserve the UI.
 	if(user.z != z)
 		return UI_CLOSE
@@ -280,7 +276,7 @@
 	var/datum/transport_controller/linear/lift = lift_weakref?.resolve()
 	if(lift)
 		data["lift_exists"] = TRUE
-		data["currently_moving"] = lift.controls_locked == LIFT_PLATFORM_LOCKED
+		data["currently_moving"] = lift.controller_status & CONTROLS_LOCKED
 		data["currently_moving_to_floor"] = last_move_target
 		data["current_floor"] = lift.transport_modules[1].z
 
@@ -323,7 +319,7 @@
 				return TRUE // Something is inaccurate, update UI
 
 			var/datum/transport_controller/linear/lift = lift_weakref?.resolve()
-			if(!lift || lift.controls_locked == LIFT_PLATFORM_LOCKED)
+			if(!lift || lift.controller_status & CONTROLS_LOCKED)
 				return TRUE // We shouldn't be moving anything, update UI
 
 			INVOKE_ASYNC(lift, TYPE_PROC_REF(/datum/transport_controller/linear, move_to_zlevel), desired_z, CALLBACK(src, PROC_REF(check_panel)), usr)

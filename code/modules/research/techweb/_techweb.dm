@@ -70,6 +70,12 @@
 	  * Filled with nulls on init, populated only on publication.
 	*/
 	var/list/published_papers
+	/**
+	  * Assoc list of nodes queued for automatic research when there are enough points available
+	  * research_queue_nodes[node_id] = user_enqueued
+	*/
+	var/list/research_queue_nodes = list()
+
 
 /datum/techweb/New()
 	SSresearch.techwebs += src
@@ -107,8 +113,8 @@
 
 /datum/techweb/proc/add_point_list(list/pointlist)
 	for(var/i in pointlist)
-		if(SSresearch.point_types[i] && pointlist[i] > 0)
-			research_points[i] += pointlist[i]
+		if((i in SSresearch.point_types) && pointlist[i] > 0)
+			research_points[i] = FLOOR(research_points[i] + pointlist[i], 0.1)
 
 /datum/techweb/proc/add_points_all(amount)
 	var/list/l = SSresearch.point_types.Copy()
@@ -118,8 +124,8 @@
 
 /datum/techweb/proc/remove_point_list(list/pointlist)
 	for(var/i in pointlist)
-		if(SSresearch.point_types[i] && pointlist[i] > 0)
-			research_points[i] = max(0, research_points[i] - pointlist[i])
+		if((i in SSresearch.point_types) && pointlist[i] > 0)
+			research_points[i] = FLOOR(max(0, research_points[i] - pointlist[i]), 0.1)
 
 /datum/techweb/proc/remove_points_all(amount)
 	var/list/l = SSresearch.point_types.Copy()
@@ -129,8 +135,8 @@
 
 /datum/techweb/proc/modify_point_list(list/pointlist)
 	for(var/i in pointlist)
-		if(SSresearch.point_types[i] && pointlist[i] != 0)
-			research_points[i] = max(0, research_points[i] + pointlist[i])
+		if((i in SSresearch.point_types) && pointlist[i] != 0)
+			research_points[i] = FLOOR(max(0, research_points[i] + pointlist[i]), 0.1)
 
 /datum/techweb/proc/modify_points_all(amount)
 	var/list/l = SSresearch.point_types.Copy()
@@ -170,19 +176,19 @@
 	return researched_nodes - hidden_nodes
 
 /datum/techweb/proc/add_point_type(type, amount)
-	if(!SSresearch.point_types[type] || (amount <= 0))
+	if(!(type in SSresearch.point_types) || (amount <= 0))
 		return FALSE
 	research_points[type] += amount
 	return TRUE
 
 /datum/techweb/proc/modify_point_type(type, amount)
-	if(!SSresearch.point_types[type])
+	if(!(type in SSresearch.point_types))
 		return FALSE
 	research_points[type] = max(0, research_points[type] + amount)
 	return TRUE
 
 /datum/techweb/proc/remove_point_type(type, amount)
-	if(!SSresearch.point_types[type] || (amount <= 0))
+	if(!(type in SSresearch.point_types) || (amount <= 0))
 		return FALSE
 	research_points[type] = max(0, research_points[type] - amount)
 	return TRUE
@@ -325,6 +331,40 @@
 /datum/techweb/proc/printout_points()
 	return techweb_point_display_generic(research_points)
 
+/datum/techweb/proc/enqueue_node(id, mob/user)
+	var/queue_first = FALSE
+	if(istype(user, /mob/living/carbon/human))
+		var/mob/living/carbon/human/human_user = user
+		var/list/access = human_user.wear_id?.GetAccess()
+		if(ACCESS_RD in access)
+			queue_first = TRUE
+
+	if(id in research_queue_nodes)
+		if(queue_first)
+			research_queue_nodes.Remove(id) // Remove to be able to place first
+		else
+			return FALSE
+
+	for(var/node_id in research_queue_nodes)
+		if(research_queue_nodes[node_id] == user)
+			research_queue_nodes.Remove(node_id)
+
+	if (queue_first)
+		research_queue_nodes.Insert(1, id)
+	research_queue_nodes[id] = user
+
+	return TRUE
+
+/datum/techweb/proc/dequeue_node(id, mob/user)
+	if(!(id in research_queue_nodes))
+		return FALSE
+	if(research_queue_nodes[id] != user)
+		return FALSE
+
+	research_queue_nodes.Remove(id)
+
+	return TRUE
+
 /datum/techweb/proc/research_node_id(id, force, auto_update_points, get_that_dosh_id)
 	return research_node(SSresearch.techweb_node_by_id(id), force, auto_update_points, get_that_dosh_id)
 
@@ -376,6 +416,10 @@
 	// Avoid logging the same 300+ lines at the beginning of every round
 	if (MC_RUNNING())
 		log_research(log_message)
+
+	// Dequeue
+	if(node.id in research_queue_nodes)
+		research_queue_nodes.Remove(node.id)
 
 	return TRUE
 

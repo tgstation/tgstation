@@ -58,6 +58,7 @@ GLOBAL_LIST_INIT(paper_blanks, init_paper_blanks())
 	return parsed_blanks
 
 /obj/machinery/photocopier
+	SET_BASE_VISUAL_PIXEL(0, DEPTH_OFFSET)
 	name = "photocopier"
 	desc = "Used to copy important documents and anatomy studies."
 	icon = 'icons/obj/service/library.dmi'
@@ -66,6 +67,8 @@ GLOBAL_LIST_INIT(paper_blanks, init_paper_blanks())
 	power_channel = AREA_USAGE_EQUIP
 	max_integrity = 300
 	integrity_failure = 0.33
+	interaction_flags_mouse_drop = NEED_DEXTERITY | ALLOW_RESTING
+
 	/// A reference to a mob on top of the photocopier trying to copy their ass. Null if there is no mob.
 	var/mob/living/ass
 	/// A reference to the toner cartridge that's inserted into the copier. Null if there is no cartridge.
@@ -76,8 +79,6 @@ GLOBAL_LIST_INIT(paper_blanks, init_paper_blanks())
 	var/color_mode = PHOTO_COLOR
 	/// Indicates whether the printer is currently busy copying or not.
 	var/busy = FALSE
-	/// Variable needed to determine the selected category of forms on Photocopier.js
-	var/category
 	/// Variable that holds a reference to any object supported for photocopying inside the photocopier
 	var/obj/object_copy
 	/// Variable for the UI telling us how many copies are in the queue.
@@ -86,6 +87,7 @@ GLOBAL_LIST_INIT(paper_blanks, init_paper_blanks())
 	var/starting_paper = 30
 	/// A stack for all the empty paper we have newly inserted (LIFO)
 	var/list/paper_stack = list()
+
 
 /obj/machinery/photocopier/Initialize(mapload)
 	. = ..()
@@ -146,6 +148,8 @@ GLOBAL_LIST_INIT(paper_blanks, init_paper_blanks())
 
 	static_data["blanks"] = blank_infos
 	static_data["categories"] = category_names
+	static_data["max_paper_count"] = MAX_PAPER_CAPACITY
+	static_data["max_copies"] = MAX_COPIES_AT_ONCE
 
 	return static_data
 
@@ -153,15 +157,13 @@ GLOBAL_LIST_INIT(paper_blanks, init_paper_blanks())
 	var/list/data = list()
 	data["has_item"] = !copier_empty()
 	data["num_copies"] = num_copies
-
-	data["category"] = category
 	data["copies_left"] = copies_left
 
 	if(istype(object_copy, /obj/item/photo))
 		data["is_photo"] = TRUE
 		data["color_mode"] = color_mode
 
-	if(isAI(user))
+	if(HAS_AI_ACCESS(user))
 		data["isAI"] = TRUE
 		data["can_AI_print"] = toner_cartridge && (toner_cartridge.charges >= PHOTO_TONER_USE) && (get_paper_count() >= PHOTO_PAPER_USE)
 	else
@@ -199,7 +201,7 @@ GLOBAL_LIST_INIT(paper_blanks, init_paper_blanks())
 					else
 						to_chat(usr, span_notice("You feel kind of silly, copying [ass]\'s ass with [ass.p_their()] clothes on."))
 					return FALSE
-				do_copies(CALLBACK(src, PROC_REF(make_ass_copy), usr), usr, ASS_PAPER_USE, ASS_TONER_USE, num_copies)
+				do_copies(CALLBACK(src, PROC_REF(make_ass_copy)), usr, ASS_PAPER_USE, ASS_TONER_USE, num_copies)
 				return TRUE
 			else
 				// Basic paper
@@ -262,10 +264,6 @@ GLOBAL_LIST_INIT(paper_blanks, init_paper_blanks())
 		if("set_copies")
 			num_copies = clamp(text2num(params["num_copies"]), 1, MAX_COPIES_AT_ONCE)
 			return TRUE
-		// Changes the forms displayed on Photocopier.js when you switch categories
-		if("choose_category")
-			category = params["category"]
-			return TRUE
 		// Called when you press print blank
 		if("print_blank")
 			if(check_busy(usr))
@@ -273,7 +271,7 @@ GLOBAL_LIST_INIT(paper_blanks, init_paper_blanks())
 			if(!(params["code"] in GLOB.paper_blanks))
 				return FALSE
 			var/list/blank = GLOB.paper_blanks[params["code"]]
-			do_copies(CALLBACK(src, PROC_REF(make_blank_print), blank), usr, PAPER_PAPER_USE, PAPER_TONER_USE, 1)
+			do_copies(CALLBACK(src, PROC_REF(make_blank_print), blank), usr, PAPER_PAPER_USE, PAPER_TONER_USE, num_copies)
 			return TRUE
 
 /// Returns the color used for the printing operation. If the color is below TONER_LOW_PERCENTAGE, it returns a gray color.
@@ -489,24 +487,12 @@ GLOBAL_LIST_INIT(paper_blanks, init_paper_blanks())
  * Calls `check_ass()` first to make sure that `ass` exists, among other conditions. Since this proc is called from a timer, it's possible that it was removed.
  * Additionally checks that the mob has their clothes off.
  */
-/obj/machinery/photocopier/proc/make_ass_copy(mob/user)
+/obj/machinery/photocopier/proc/make_ass_copy()
 	if(!check_ass())
 		return null
-	var/icon/temp_img
-	if(ishuman(ass))
-		var/mob/living/carbon/human/H = ass
-		var/datum/species/spec = H.dna.species
-		if(spec.ass_image)
-			temp_img = icon(spec.ass_image)
-		else
-			temp_img = icon(ass.gender == FEMALE ? 'icons/ass/assfemale.png' : 'icons/ass/assmale.png')
-	else if(isalienadult(ass)) //Xenos have their own asses, thanks to Pybro.
-		temp_img = icon('icons/ass/assalien.png')
-	else if(issilicon(ass))
-		temp_img = icon('icons/ass/assmachine.png')
-	else if(isdrone(ass)) //Drones are hot
-		temp_img = icon('icons/ass/assdrone.png')
-
+	var/icon/temp_img = ass.get_butt_sprite()
+	if(isnull(temp_img))
+		return null
 	var/obj/item/photo/copied_ass = new /obj/item/photo(src)
 	var/datum/picture/toEmbed = new(name = "[ass]'s Ass", desc = "You see [ass]'s ass on the photo.", image = temp_img)
 	toEmbed.psize_x = 128
@@ -558,7 +544,7 @@ GLOBAL_LIST_INIT(paper_blanks, init_paper_blanks())
 		toner_cartridge = object
 		balloon_alert(user, "cartridge inserted")
 
-	else if(istype(object, /obj/item/areaeditor/blueprints))
+	else if(istype(object, /obj/item/blueprints))
 		to_chat(user, span_warning("\The [object] is too large to put into the copier. You need to find something else to record the document."))
 
 	else if(istype(object, /obj/item/paperwork))
@@ -597,9 +583,8 @@ GLOBAL_LIST_INIT(paper_blanks, init_paper_blanks())
 		new /obj/effect/decal/cleanable/oil(get_turf(src))
 		toner_cartridge.charges = 0
 
-/obj/machinery/photocopier/MouseDrop_T(mob/target, mob/user)
-	check_ass() //Just to make sure that you can re-drag somebody onto it after they moved off.
-	if(!istype(target) || target.anchored || target.buckled || !Adjacent(target) || !user.can_perform_action(src) || target == ass || copier_blocked())
+/obj/machinery/photocopier/mouse_drop_receive(mob/target, mob/user, params)
+	if(!istype(target) || target.anchored || target.buckled || target == ass || copier_blocked())
 		return
 	add_fingerprint(user)
 	if(target == user)
@@ -607,7 +592,7 @@ GLOBAL_LIST_INIT(paper_blanks, init_paper_blanks())
 	else
 		user.visible_message(span_warning("[user] starts putting [target] onto the photocopier!"), span_notice("You start putting [target] onto the photocopier..."))
 
-	if(do_after(user, 20, target = src))
+	if(do_after(user, 2 SECONDS, target = src))
 		if(!target || QDELETED(target) || QDELETED(src) || !Adjacent(target)) //check if the photocopier/target still exists.
 			return
 
@@ -630,7 +615,7 @@ GLOBAL_LIST_INIT(paper_blanks, init_paper_blanks())
  * Returns FALSE if `ass` doesn't exist or is not at the copier's location. Returns TRUE otherwise.
  */
 /obj/machinery/photocopier/proc/check_ass() //I'm not sure wether I made this proc because it's good form or because of the name.
-	if(!ass)
+	if(!isliving(ass))
 		return FALSE
 	if(ass.loc != loc)
 		ass = null
@@ -638,7 +623,7 @@ GLOBAL_LIST_INIT(paper_blanks, init_paper_blanks())
 	return TRUE
 
 /**
- * Checks if the copier is deleted, or has something dense at its location. Called in `MouseDrop_T()`
+ * Checks if the copier is deleted, or has something dense at its location. Called in `mouse_drop_receive()`
  */
 /obj/machinery/photocopier/proc/copier_blocked()
 	if(QDELETED(src))

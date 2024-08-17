@@ -117,7 +117,7 @@
 			return FALSE
 	return TRUE
 
-/atom/ui_status(mob/user)
+/atom/ui_status(mob/user, datum/ui_state/state)
 	. = ..()
 	//Check if both user and atom are at the same location
 	if(!can_interact(user))
@@ -187,7 +187,8 @@
 ///When a basic mob attacks something, either by AI or user.
 /atom/proc/attack_basic_mob(mob/user, list/modifiers)
 	SHOULD_CALL_PARENT(TRUE)
-	SEND_SIGNAL(src, COMSIG_ATOM_ATTACK_BASIC_MOB, user)
+	if(SEND_SIGNAL(src, COMSIG_ATOM_ATTACK_BASIC_MOB, user) & COMSIG_BASIC_ATTACK_CANCEL_CHAIN)
+		return
 	return handle_basic_attack(user, modifiers) //return value of attack animal, this is how much damage was dealt to the attacked thing
 
 ///This exists so stuff can override the default call of attack_animal for attack_basic_mob
@@ -199,7 +200,8 @@
 /atom/proc/attack_paw(mob/user, list/modifiers)
 	if(SEND_SIGNAL(src, COMSIG_ATOM_ATTACK_PAW, user, modifiers) & COMPONENT_CANCEL_ATTACK_CHAIN)
 		return TRUE
-	return FALSE
+	if(interaction_flags_atom & INTERACT_ATOM_ATTACK_PAW)
+		. = _try_interact(user)
 
 
 /*
@@ -228,6 +230,9 @@
 
 /mob/living/carbon/alien/larva/resolve_right_click_attack(atom/target, list/modifiers)
 	return target.attack_larva_secondary(src, modifiers)
+
+/mob/living/carbon/alien/larva/can_unarmed_attack() //We bite stuff, and our head is always free.
+	return TRUE
 
 /atom/proc/attack_larva(mob/user, list/modifiers)
 	return

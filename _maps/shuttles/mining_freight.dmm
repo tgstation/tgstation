@@ -106,7 +106,7 @@
 /obj/effect/spawner/structure/window/reinforced/shuttle,
 /obj/machinery/power/shuttle_engine/heater,
 /turf/open/floor/plating,
-/area/template_noop)
+/area/shuttle/mining)
 "q" = (
 /obj/structure/ore_box,
 /obj/effect/turf_decal/delivery,

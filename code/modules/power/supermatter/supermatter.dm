@@ -105,11 +105,11 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 	var/external_power_immediate = 0
 
 	/// External damage that are added to the sm on next [/obj/machinery/power/supermatter_crystal/process_atmos] call.
-	/// SM will not take damage if it's health is lower than emergency point.
+	/// SM will not take damage if its health is lower than emergency point.
 	var/external_damage_immediate = 0
 
 	///The cutoff for a bolt jumping, grows with heat, lowers with higher mol count,
-	var/zap_cutoff = 1.2e6
+	var/zap_cutoff = 1.2 MEGA JOULES
 	///How much the bullets damage should be multiplied by when it is added to the internal variables
 	var/bullet_energy = SUPERMATTER_DEFAULT_BULLET_ENERGY
 	///How much hallucination should we produce per unit of power?
@@ -153,7 +153,10 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 
 	///Stores the time of when the last zap occurred
 	var/last_power_zap = 0
-	var/last_high_energy_zap = 0
+	///Stores the tick of the machines subsystem of when the last zap occurred. Gives a passage of time in the perspective of SSmachines.
+	var/last_power_zap_perspective_machines = 0
+	///Same as [last_power_zap_perspective_machines], but based around the high energy zaps found in handle_high_power().
+	var/last_high_energy_zap_perspective_machines = 0
 	///Do we show this crystal in the CIMS modular program
 	var/include_in_cims = TRUE
 
@@ -294,23 +297,22 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 	// PART 3: POWER PROCESSING
 	internal_energy_factors = calculate_internal_energy()
 	zap_factors = calculate_zap_transmission_rate()
-	if(internal_energy && (last_power_zap + (4 - internal_energy * 0.001) SECONDS) < world.time)
+	var/delta_time = (SSmachines.times_fired - last_power_zap_perspective_machines) * SSmachines.wait / (1 SECONDS)
+	if(delta_time && internal_energy && (last_power_zap + (4 - internal_energy * 0.001) SECONDS) < world.time)
 		playsound(src, 'sound/weapons/emitter2.ogg', 70, TRUE)
 		hue_angle_shift = clamp(903 * log(10, (internal_energy + 8000)) - 3590, -50, 240)
 		var/zap_color = color_matrix_rotate_hue(hue_angle_shift)
-		//Scale the strength of the zap with the world's time elapsed between zaps in seconds.
-		//Capped at 16 seconds to prevent a crazy burst of energy if atmos was halted for a long time.
-		var/delta_time = min((world.time - last_power_zap) * 0.1, 16)
 		supermatter_zap(
 			zapstart = src,
 			range = 3,
 			zap_str = internal_energy * zap_transmission_rate * delta_time,
 			zap_flags = ZAP_SUPERMATTER_FLAGS,
-			zap_cutoff = 2.4e5 * delta_time,
+			zap_cutoff = 240 KILO WATTS * delta_time,
 			power_level = internal_energy,
 			color = zap_color,
 		)
 		last_power_zap = world.time
+		last_power_zap_perspective_machines = SSmachines.times_fired
 
 	// PART 4: DAMAGE PROCESSING
 	temp_limit_factors = calculate_temp_limit()
@@ -318,7 +320,7 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 	damage_factors = calculate_damage()
 	if(damage == 0) // Clear any in game forced delams if on full health.
 		set_delam(SM_DELAM_PRIO_IN_GAME, SM_DELAM_STRATEGY_PURGE)
-	else if(damage <= explosion_point)
+	else if(!final_countdown)
 		set_delam(SM_DELAM_PRIO_NONE, SM_DELAM_STRATEGY_PURGE) // This one cant clear any forced delams.
 	delamination_strategy.delam_progress(src)
 	if(damage > explosion_point && !final_countdown)
@@ -564,7 +566,6 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 		header = "Meltdown Incoming",
 	)
 
-	var/datum/sm_delam/last_delamination_strategy = delamination_strategy
 	var/list/count_down_messages = delamination_strategy.count_down_messages()
 
 	radio.talk_into(
@@ -587,10 +588,6 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 			)
 
 	for(var/i in delamination_countdown_time to 0 step -10)
-		if(last_delamination_strategy != delamination_strategy)
-			count_down_messages = delamination_strategy.count_down_messages()
-			last_delamination_strategy = delamination_strategy
-
 		var/message
 		var/healed = FALSE
 
@@ -719,6 +716,7 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 		activation_logged = TRUE // so we dont spam the log.
 	else if(!internal_energy)
 		last_power_zap = world.time
+		last_power_zap_perspective_machines = SSmachines.times_fired
 	return additive_power
 
 /** Log when the supermatter is activated for the first time.
@@ -895,7 +893,7 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 	delamination_strategy.on_select(src)
 	return TRUE
 
-/obj/machinery/proc/supermatter_zap(atom/zapstart = src, range = 5, zap_str = 3.2e6, zap_flags = ZAP_SUPERMATTER_FLAGS, list/targets_hit = list(), zap_cutoff = 1.2e6, power_level = 0, zap_icon = DEFAULT_ZAP_ICON_STATE, color = null)
+/obj/machinery/proc/supermatter_zap(atom/zapstart = src, range = 5, zap_str = 3.2 MEGA JOULES, zap_flags = ZAP_SUPERMATTER_FLAGS, list/targets_hit = list(), zap_cutoff = 1.2 MEGA JOULES, power_level = 0, zap_icon = DEFAULT_ZAP_ICON_STATE, color = null)
 	if(QDELETED(zapstart))
 		return
 	. = zapstart.dir

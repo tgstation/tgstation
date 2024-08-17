@@ -28,8 +28,7 @@
 		"Something feels very off.",
 		"A drowning sense of dread washes over you.",
 	)
-	for(var/mob/victim as anything in GLOB.player_list)
-		to_chat(victim, span_danger(pick(messages)))
+	dispatch_announcement_to_players(span_danger(pick(messages)), should_play_sound = FALSE)
 
 	return TRUE
 

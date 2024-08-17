@@ -1,4 +1,8 @@
+///how much charge we give off to cells around us when rubbed
+#define FESTIVUS_RECHARGE_VALUE (0.075 * STANDARD_CELL_CHARGE)
+
 /mob/living/basic/festivus
+	SET_BASE_VISUAL_PIXEL(0, 0) // It's an object mimic
 	name = "festivus pole"
 	desc = "Serenity now... SERENITY NOW!"
 	icon = 'icons/obj/fluff/flora/pinetrees.dmi'
@@ -37,10 +41,6 @@
 
 	ai_controller = /datum/ai_controller/basic_controller/festivus_pole
 
-	///how much charge we give off to cells around us when rubbed
-	var/recharge_value = 75
-
-
 /mob/living/basic/festivus/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/seethrough_mob)
@@ -69,18 +69,18 @@
 		return
 	visible_message(span_warning("[src] crackles with static electricity!"))
 	for(var/atom/affected in range(2, get_turf(src)))
-		if(istype(affected, /obj/item/stock_parts/cell))
-			var/obj/item/stock_parts/cell/cell = affected
-			cell.give(recharge_value)
+		if(istype(affected, /obj/item/stock_parts/power_store/cell))
+			var/obj/item/stock_parts/power_store/cell/cell = affected
+			cell.give(FESTIVUS_RECHARGE_VALUE)
 			cell.update_appearance()
 		if(istype(affected, /mob/living/silicon/robot))
 			var/mob/living/silicon/robot/robot = affected
 			if(robot.cell)
-				robot.cell.give(recharge_value)
+				robot.cell.give(FESTIVUS_RECHARGE_VALUE)
 		if(istype(affected, /obj/machinery/power/apc))
 			var/obj/machinery/power/apc/apc_target = affected
 			if(apc_target.cell)
-				apc_target.cell.give(recharge_value)
+				apc_target.cell.give(FESTIVUS_RECHARGE_VALUE)
 
 /datum/ai_planning_subtree/find_and_hunt_target/look_for_apcs
 	hunting_behavior = /datum/ai_behavior/hunt_target/apcs
@@ -113,8 +113,10 @@
 		var/obj/machinery/power/apc/apc_target = dinner
 		if(!apc_target.cell)
 			return FALSE
-		var/obj/item/stock_parts/cell/apc_cell = apc_target.cell
+		var/obj/item/stock_parts/power_store/cell/apc_cell = apc_target.cell
 		if(apc_cell.charge == apc_cell.maxcharge) //if its full charge we no longer feed it
 			return FALSE
 
 	return can_see(source, dinner, radius)
+
+#undef FESTIVUS_RECHARGE_VALUE

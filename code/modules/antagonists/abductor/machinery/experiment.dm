@@ -5,6 +5,8 @@
 	icon_state = "experiment-open"
 	density = FALSE
 	state_open = TRUE
+	interaction_flags_mouse_drop = NEED_DEXTERITY
+
 	var/points = 0
 	var/credits = 0
 	var/list/history
@@ -21,10 +23,8 @@
 		console = null
 	return ..()
 
-/obj/machinery/abductor/experiment/MouseDrop_T(mob/target, mob/user)
-	if(user.stat != CONSCIOUS || HAS_TRAIT(user, TRAIT_UI_BLOCKED) || !Adjacent(user) || !target.Adjacent(user) || !ishuman(target))
-		return
-	if(isabductor(target))
+/obj/machinery/abductor/experiment/mouse_drop_receive(mob/target, mob/user, params)
+	if(!ishuman(target) || isabductor(target))
 		return
 	close_machine(target)
 
@@ -59,7 +59,7 @@
 			span_notice("You successfully break out of [src]!"))
 		open_machine()
 
-/obj/machinery/abductor/experiment/ui_status(mob/user)
+/obj/machinery/abductor/experiment/ui_status(mob/user, datum/ui_state/state)
 	if(user == occupant)
 		return UI_CLOSE
 	return ..()
@@ -190,7 +190,7 @@
 		H.forceMove(console.pad.teleport_target)
 		return
 	//Area not chosen / It's not safe area - teleport to arrivals
-	SSjob.SendToLateJoin(H, FALSE)
+	SSjob.send_to_late_join(H, FALSE)
 	return
 
 /obj/machinery/abductor/experiment/update_icon_state()

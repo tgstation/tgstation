@@ -13,7 +13,7 @@
 	name = "bluespace shelter capsule"
 	desc = "An emergency shelter stored within a pocket of bluespace."
 	icon_state = "capsule"
-	icon = 'icons/obj/mining.dmi'
+	icon = 'icons/obj/mining_zones/equipment.dmi'
 	w_class = WEIGHT_CLASS_TINY
 	var/template_id = "shelter_alpha"
 	var/datum/map_template/shelter/template
@@ -37,35 +37,83 @@
 	. += "This capsule has the [template.name] stored."
 	. += template.description
 
-/obj/item/survivalcapsule/attack_self()
+/obj/item/survivalcapsule/interact(mob/user)
+	. = ..()
+	if(.)
+		return .
+
 	//Can't grab when capsule is New() because templates aren't loaded then
 	get_template()
-	if(!used)
-		loc.visible_message(span_warning("\The [src] begins to shake. Stand back!"))
-		used = TRUE
-		sleep(5 SECONDS)
-		var/turf/deploy_location = get_turf(src)
-		var/status = template.check_deploy(deploy_location)
-		switch(status)
-			if(SHELTER_DEPLOY_BAD_AREA)
-				src.loc.visible_message(span_warning("\The [src] will not function in this area."))
-			if(SHELTER_DEPLOY_BAD_TURFS, SHELTER_DEPLOY_ANCHORED_OBJECTS, SHELTER_DEPLOY_OUTSIDE_MAP)
-				var/width = template.width
-				var/height = template.height
-				src.loc.visible_message(span_warning("\The [src] doesn't have room to deploy! You need to clear a [width]x[height] area!"))
-		if(status != SHELTER_DEPLOY_ALLOWED)
-			used = FALSE
-			return
+	if(used)
+		return FALSE
 
-		template.load(deploy_location, centered = TRUE)
-		var/turf/T = deploy_location
-		if(!is_mining_level(T.z)) //only report capsules away from the mining/lavaland level
-			message_admins("[ADMIN_LOOKUPFLW(usr)] activated a bluespace capsule away from the mining level! [ADMIN_VERBOSEJMP(T)]")
-			log_admin("[key_name(usr)] activated a bluespace capsule away from the mining level at [AREACOORD(T)]")
+	loc.visible_message(span_warning("[src] begins to shake. Stand back!"))
+	used = TRUE
+	addtimer(CALLBACK(src, PROC_REF(expand), user), 5 SECONDS)
+	return TRUE
 
-		playsound(src, 'sound/effects/phasein.ogg', 100, TRUE)
-		new /obj/effect/particle_effect/fluid/smoke(get_turf(src))
-		qdel(src)
+/// Expands the capsule into a full shelter, placing the template at the item's location (NOT triggerer's location)
+/obj/item/survivalcapsule/proc/expand(mob/triggerer)
+	if(QDELETED(src))
+		return
+
+	var/turf/deploy_location = get_turf(src)
+	var/status = template.check_deploy(deploy_location)
+	switch(status)
+		if(SHELTER_DEPLOY_BAD_AREA)
+			loc.visible_message(span_warning("[src] will not function in this area."))
+		if(SHELTER_DEPLOY_BAD_TURFS, SHELTER_DEPLOY_ANCHORED_OBJECTS, SHELTER_DEPLOY_OUTSIDE_MAP)
+			loc.visible_message(span_warning("[src] doesn't have room to deploy! You need to clear a [template.width]x[template.height] area!"))
+
+	if(status != SHELTER_DEPLOY_ALLOWED)
+		used = FALSE
+		return
+
+	yote_nearby(deploy_location)
+	template.load(deploy_location, centered = TRUE)
+	trigger_admin_alert(triggerer, deploy_location)
+	playsound(src, 'sound/effects/phasein.ogg', 100, TRUE)
+	new /obj/effect/particle_effect/fluid/smoke(get_turf(src))
+	qdel(src)
+
+/// Throws any mobs near the deployed location away from the item / shelter
+/// Does some math to make closer mobs get thrown further
+/obj/item/survivalcapsule/proc/yote_nearby(turf/deploy_location)
+	var/width = template.width
+	var/height = template.height
+	var/base_x_throw_distance = ceil(width / 2)
+	var/base_y_throw_distance = ceil(height / 2)
+	for(var/mob/living/did_not_stand_back in range(loc, "[width]x[height]"))
+		var/dir_to_center = get_dir(deploy_location, did_not_stand_back) || pick(GLOB.alldirs)
+		// Aiming to throw the target just enough to get them out of the range of the shelter
+		// IE: Stronger if they're closer, weaker if they're further away
+		var/throw_dist = 0
+		var/x_component = abs(did_not_stand_back.x - deploy_location.x)
+		var/y_component = abs(did_not_stand_back.y - deploy_location.y)
+		if(ISDIAGONALDIR(dir_to_center))
+			throw_dist = ceil(sqrt(base_x_throw_distance ** 2 + base_y_throw_distance ** 2) - (sqrt(x_component ** 2 + y_component ** 2)))
+		else if(dir_to_center & (NORTH|SOUTH))
+			throw_dist = base_y_throw_distance - y_component + 1
+		else if(dir_to_center & (EAST|WEST))
+			throw_dist = base_x_throw_distance - x_component + 1
+
+		did_not_stand_back.Paralyze(3 SECONDS)
+		did_not_stand_back.Knockdown(6 SECONDS)
+		did_not_stand_back.throw_at(
+			target = get_edge_target_turf(did_not_stand_back, dir_to_center),
+			range = throw_dist,
+			speed = 3,
+			force = MOVE_FORCE_VERY_STRONG,
+		)
+
+/// Logs if the capsule was triggered, by default only if it happened on non-lavaland
+/obj/item/survivalcapsule/proc/trigger_admin_alert(mob/triggerer, turf/trigger_loc)
+	//only report capsules away from the mining/lavaland level
+	if(is_mining_level(trigger_loc.z))
+		return
+
+	message_admins("[ADMIN_LOOKUPFLW(triggerer)] activated a bluespace capsule away from the mining level! [ADMIN_VERBOSEJMP(trigger_loc)]")
+	log_admin("[key_name(triggerer)] activated a bluespace capsule away from the mining level at [AREACOORD(trigger_loc)]")
 
 //Non-default pods
 
@@ -89,19 +137,16 @@
 //Window
 /obj/structure/window/reinforced/shuttle/survival_pod
 	name = "pod window"
-	icon = 'icons/obj/smooth_structures/pod_window.dmi'
-	icon_state = "pod_window-0"
-	base_icon_state = "pod_window"
+	icon = 'icons/obj/structures/smooth/windows/pod_window.dmi'
 	smoothing_flags = SMOOTH_BITMASK
-	smoothing_groups = SMOOTH_GROUP_SHUTTLE_PARTS + SMOOTH_GROUP_SURVIVAL_TITANIUM_POD
+	smoothing_groups = SMOOTH_GROUP_SURVIVAL_TITANIUM_POD
 	canSmoothWith = SMOOTH_GROUP_SURVIVAL_TITANIUM_POD
 
 /obj/structure/window/reinforced/survival_pod
 	name = "pod window"
-	icon = 'icons/obj/mining_zones/survival_pod.dmi'
-	icon_state = "pwindow"
+	icon = 'icons/obj/structures/smooth/windows/pod_thindow.dmi'
 
-MAPPING_DIRECTIONAL_HELPERS(/obj/structure/window/reinforced/survival_pod/spawner, 0)
+MAPPING_DIRECTIONAL_HELPERS_EMPTY(/obj/structure/window/reinforced/survival_pod/spawner)
 
 //Door
 /obj/machinery/door/airlock/survival_pod
@@ -109,25 +154,28 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/window/reinforced/survival_pod/spawne
 	icon = 'icons/obj/doors/airlocks/survival/survival.dmi'
 	overlays_file = 'icons/obj/doors/airlocks/survival/survival_overlays.dmi'
 	assemblytype = /obj/structure/door_assembly/door_assembly_pod
-	smoothing_groups = SMOOTH_GROUP_AIRLOCK + SMOOTH_GROUP_SURVIVAL_TITANIUM_POD
+	smoothing_groups = SMOOTH_GROUP_SURVIVAL_TITANIUM_POD
+	greyscale_colors = "#a5a7ac#a5a7ac#969696#969696#5ea52c#6d6565#777777"
 
 /obj/machinery/door/airlock/survival_pod/glass
 	opacity = FALSE
 	glass = TRUE
+	greyscale_config = /datum/greyscale_config/airlocks/window
+	greyscale_colors = "#a5a7ac#a5a7ac#969696#969696#5ea52c#6d6565"
 
 /obj/structure/door_assembly/door_assembly_pod
 	name = "pod airlock assembly"
-	icon = 'icons/obj/doors/airlocks/survival/survival.dmi'
-	base_name = "pod airlock"
-	overlays_file = 'icons/obj/doors/airlocks/survival/survival_overlays.dmi'
+	icon =  /obj/machinery/door/airlock/survival_pod::icon
 	airlock_type = /obj/machinery/door/airlock/survival_pod
 	glass_type = /obj/machinery/door/airlock/survival_pod/glass
 
 //Windoor
 /obj/machinery/door/window/survival_pod
-	icon = 'icons/obj/mining_zones/survival_pod.dmi'
-	icon_state = "windoor"
-	base_state = "windoor"
+	icon = 'icons/obj/doors/windoor.dmi'
+	icon_state = "survival"
+	base_state = "survival"
+
+MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/door/window/survival_pod/left, 0)
 
 //Table
 /obj/structure/table/survival_pod
@@ -164,8 +212,6 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/window/reinforced/survival_pod/spawne
 
 /obj/item/gps/computer/wrench_act(mob/living/user, obj/item/I)
 	..()
-	if(obj_flags & NO_DECONSTRUCTION)
-		return TRUE
 
 	user.visible_message(span_warning("[user] disassembles [src]."),
 		span_notice("You start to disassemble [src]..."), span_hear("You hear clanking and banging noises."))
@@ -201,7 +247,18 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/window/reinforced/survival_pod/spawne
 	light_color = COLOR_VERY_PALE_LIME_GREEN
 	max_n_of_items = 10
 	pixel_y = -4
-	obj_flags = /obj::obj_flags | NO_DECONSTRUCTION
+
+/obj/machinery/smartfridge/survival_pod/welder_act(mob/living/user, obj/item/tool)
+	return NONE
+
+/obj/machinery/smartfridge/survival_pod/wrench_act(mob/living/user, obj/item/tool)
+	return NONE
+
+/obj/machinery/smartfridge/survival_pod/screwdriver_act(mob/living/user, obj/item/tool)
+	return NONE
+
+/obj/machinery/smartfridge/survival_pod/crowbar_act(mob/living/user, obj/item/tool)
+	return NONE
 
 /obj/machinery/smartfridge/survival_pod/Initialize(mapload)
 	AddElement(/datum/element/update_icon_blocker)

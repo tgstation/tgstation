@@ -84,31 +84,33 @@
 * Don't call this unless you know what you're doing, this is an internal proc
 */
 /datum/equilibrium/proc/check_inital_conditions()
+	PRIVATE_PROC(TRUE)
+
 	if(QDELETED(holder))
-		stack_trace("an equilibrium is missing it's holder.")
+		stack_trace("an equilibrium is missing its holder.")
 		return FALSE
 	if(QDELETED(reaction))
-		stack_trace("an equilibrium is missing it's reaction.")
+		stack_trace("an equilibrium is missing its reaction.")
 		return FALSE
 	if(!length(reaction.required_reagents))
 		stack_trace("an equilibrium is missing required reagents.")
 		return FALSE
 
 	//Make sure we have the right multipler for on_reaction()
-	for(var/single_reagent in reaction.required_reagents)
+	for(var/datum/reagent/single_reagent as anything in reaction.required_reagents)
 		multiplier = min(multiplier, holder.get_reagent_amount(single_reagent) / reaction.required_reagents[single_reagent])
 	multiplier = round(multiplier, CHEMICAL_QUANTISATION_LEVEL)
 	if(!multiplier) //we have no more or very little reagents left
 		return FALSE
 
 	//To prevent reactions outside of the pH window from starting.
-	if(!((holder.ph >= (reaction.optimal_ph_min - reaction.determin_ph_range)) && (holder.ph <= (reaction.optimal_ph_max + reaction.determin_ph_range))))
+	if(holder.ph < (reaction.optimal_ph_min - reaction.determin_ph_range) || holder.ph > (reaction.optimal_ph_max + reaction.determin_ph_range))
 		return FALSE
 
 	//All checks pass. cache the product ratio
 	if(length(reaction.results))
 		product_ratio = 0
-		for(var/product in reaction.results)
+		for(var/datum/reagent/product as anything in reaction.results)
 			product_ratio += reaction.results[product]
 	else
 		product_ratio = 1
@@ -123,6 +125,8 @@
  * otherwise, generally, don't call this directed except internally
  */
 /datum/equilibrium/proc/check_reagent_properties()
+	PRIVATE_PROC(TRUE)
+
 	//Have we exploded from on_reaction or did we run out of reagents?
 	if(QDELETED(holder.my_atom) || !holder.reagent_list.len)
 		return FALSE
@@ -150,8 +154,10 @@
 * Generally an internal proc
 */
 /datum/equilibrium/proc/calculate_yield()
+	PRIVATE_PROC(TRUE)
+
 	multiplier = INFINITY
-	for(var/reagent in reaction.required_reagents)
+	for(var/datum/reagent/reagent as anything in reaction.required_reagents)
 		multiplier = min(multiplier, holder.get_reagent_amount(reagent) / reaction.required_reagents[reagent])
 	multiplier = round(multiplier, CHEMICAL_QUANTISATION_LEVEL)
 	if(!multiplier) //we have no more or very little reagents left
@@ -160,14 +166,14 @@
 	//Incase of no reagent product
 	if(!length(reaction.results))
 		step_target_vol = INFINITY
-		for(var/reagent in reaction.required_reagents)
+		for(var/datum/reagent/reagent as anything in reaction.required_reagents)
 			step_target_vol = min(step_target_vol, multiplier * reaction.required_reagents[reagent])
 		return TRUE
 
 	//If we have reagent products
 	step_target_vol = 0
 	reacted_vol = 0 //Because volumes can be lost mid reactions
-	for(var/product in reaction.results)
+	for(var/datum/reagent/product as anything in reaction.results)
 		step_target_vol += multiplier * reaction.results[product]
 		reacted_vol += holder.get_reagent_amount(product)
 	target_vol = reacted_vol + step_target_vol
@@ -181,6 +187,8 @@
 * step_volume_added is how much product (across all products) was added for this single step
 */
 /datum/equilibrium/proc/check_fail_states(step_volume_added)
+	PRIVATE_PROC(TRUE)
+
 	//Are we overheated?
 	if(reaction.is_cold_recipe)
 		if(holder.chem_temp < reaction.overheat_temp && reaction.overheat_temp != NO_OVERHEAT) //This is before the process - this is here so that overly_impure and overheated() share the same code location (and therefore vars) for calls.
@@ -192,7 +200,7 @@
 			reaction.overheated(holder, src, step_volume_added)
 
 	//is our product too impure?
-	for(var/product in reaction.results)
+	for(var/datum/reagent/product as anything in reaction.results)
 		var/datum/reagent/reagent = holder.has_reagent(product)
 		if(!reagent) //might be missing from overheat exploding
 			continue
@@ -212,6 +220,8 @@
 * * seconds_per_tick - the time between the last proc in world.time
 */
 /datum/equilibrium/proc/deal_with_time(seconds_per_tick)
+	PRIVATE_PROC(TRUE)
+
 	if(seconds_per_tick > 1)
 		time_deficit += seconds_per_tick - 1
 		seconds_per_tick = 1 //Lets make sure reactions aren't super speedy and blow people up from a big lag spike
@@ -255,24 +265,23 @@
 	//Begin checks
 	//Calculate DeltapH (Deviation of pH from optimal)
 	//Within mid range
+	var/acceptable_ph
 	if (cached_ph >= reaction.optimal_ph_min  && cached_ph <= reaction.optimal_ph_max)
 		delta_ph = 1 //100% purity for this step
 	//Lower range
 	else if (cached_ph < reaction.optimal_ph_min) //If we're outside of the optimal lower bound
-		if (cached_ph < (reaction.optimal_ph_min - reaction.determin_ph_range)) //If we're outside of the deterministic bound
+		acceptable_ph = reaction.optimal_ph_min - reaction.determin_ph_range
+		if (cached_ph < acceptable_ph) //If we're outside of the deterministic bound
 			delta_ph = 0 //0% purity
 		else //We're in the deterministic phase
-			delta_ph = (((cached_ph - (reaction.optimal_ph_min - reaction.determin_ph_range)) ** reaction.ph_exponent_factor) / ((reaction.determin_ph_range ** reaction.ph_exponent_factor))) //main pH calculation
+			delta_ph = ((cached_ph - acceptable_ph) / reaction.determin_ph_range) ** reaction.ph_exponent_factor
 	//Upper range
 	else if (cached_ph > reaction.optimal_ph_max) //If we're above of the optimal lower bound
-		if (cached_ph > (reaction.optimal_ph_max + reaction.determin_ph_range))  //If we're outside of the deterministic bound
+		acceptable_ph = reaction.optimal_ph_max + reaction.determin_ph_range
+		if (cached_ph > acceptable_ph)  //If we're outside of the deterministic bound
 			delta_ph = 0 //0% purity
 		else  //We're in the deterministic phase
-			delta_ph = (((- cached_ph + (reaction.optimal_ph_max + reaction.determin_ph_range)) ** reaction.ph_exponent_factor) / (reaction.determin_ph_range ** reaction.ph_exponent_factor))//Reverse - to + to prevent math operation failures.
-
-	//This should never proc, but it's a catch incase someone puts in incorrect values
-	else
-		stack_trace("[holder.my_atom] attempted to determine FermiChem pH for '[reaction.type]' which had an invalid pH of [cached_ph] for set recipie pH vars. It's likely the recipe vars are wrong.")
+			delta_ph = ((acceptable_ph - cached_ph) / reaction.determin_ph_range) ** reaction.ph_exponent_factor
 
 	//Calculate DeltaT (Deviation of T from optimal)
 	if(!reaction.is_cold_recipe)
@@ -306,7 +315,7 @@
 	purity = delta_ph
 
 	//Then adjust purity of result with beaker reagent purity.
-	purity *= reactant_purity(reaction)
+	purity *= holder.get_average_purity()
 
 	//Then adjust it from the input modifier
 	purity *= purity_modifier
@@ -324,13 +333,13 @@
 
 	//Calculate how much product to make and how much reactant to remove factors..
 	var/required_amount
+	var/pH_adjust
 	for(var/datum/reagent/requirement as anything in reaction.required_reagents)
 		required_amount = reaction.required_reagents[requirement]
 		if(!holder.remove_reagent(requirement, delta_chem_factor * required_amount))
 			to_delete = TRUE
 			return
 		//Apply pH changes
-		var/pH_adjust
 		if(reaction.reaction_flags & REACTION_PH_VOL_CONSTANT)
 			pH_adjust = ((delta_chem_factor * required_amount) / target_vol) * (reaction.H_ion_release * h_ion_mod)
 		else //Default adds pH independant of volume
@@ -347,7 +356,6 @@
 			return
 
 		//Apply pH changes
-		var/pH_adjust
 		if(reaction.reaction_flags & REACTION_PH_VOL_CONSTANT)
 			pH_adjust = (step_add / target_vol) * (reaction.H_ion_release * h_ion_mod)
 		else
@@ -382,29 +390,15 @@
 	reaction_quality = purity
 
 	//post reaction checks
-	if(!(check_fail_states(total_step_added)))
+	if(!check_fail_states(total_step_added))
 		to_delete = TRUE
 		return
 
-	//end reactions faster so plumbing is faster
-	//length is so that plumbing is faster - but it doesn't disable competitive reactions. Basically, competitive reactions will likely reach their step target at the start, so this will disable that. We want to avoid that. But equally, we do want to full stop a holder from reacting asap so plumbing isn't waiting an tick to resolve.
-	if((step_add >= step_target_vol) && (length(holder.reaction_list) == 1))
+	//If the volume of reagents created(total_step_added) >= volume of reagents still to be created(step_target_vol) then end
+	//i.e. we have created all the reagents needed for this reaction
+	//This is only accurate when a single reaction is present and we don't have multiple reactions where
+	//reaction B consumes the products formed from reaction A(which can happen in add_reagent() as it also triggers handle_reactions() which can consume the reagent just added)
+	//because total_step_added will be higher than the actual volume that was created leading to the reaction ending early
+	//and yielding less products than intended
+	if(total_step_added >= step_target_vol && length(holder.reaction_list) == 1)
 		to_delete = TRUE
-
-/*
-* Calculates the total sum normalised purity of ALL reagents in a holder
-* Currently calculates it irrespective of required reagents at the start, but this should be changed if this is powergamed to required reagents
-* It's not currently because overly_impure affects all reagents
-*/
-/datum/equilibrium/proc/reactant_purity(datum/chemical_reaction/C)
-	var/list/cached_reagents = holder.reagent_list
-
-	var/num_of_reagents = cached_reagents.len
-	if(!num_of_reagents)//I've never seen it get here with 0, but in case - it gets here when it blows up from overheat
-		stack_trace("No reactants found mid reaction for [C.type]. Beaker: [holder.my_atom]")
-		return 0 //we exploded and cleared reagents - but lets not kill the process
-
-	var/cached_purity
-	for(var/datum/reagent/reagent as anything in cached_reagents)
-		cached_purity += reagent.purity
-	return cached_purity / num_of_reagents

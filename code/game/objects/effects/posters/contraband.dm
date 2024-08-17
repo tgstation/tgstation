@@ -4,6 +4,10 @@
 	poster_type = /obj/structure/sign/poster/contraband/random
 	icon_state = "rolled_poster"
 
+/obj/item/poster/random_contraband/Initialize(mapload, obj/structure/sign/poster/new_poster_structure)
+	. = ..()
+	ADD_TRAIT(src, TRAIT_CONTRABAND, INNATE_TRAIT)
+
 /obj/structure/sign/poster/contraband
 	poster_item_name = "contraband poster"
 	poster_item_desc = "This poster comes with its own automatic adhesive mechanism, for easy pinning to any vertical surface. Its vulgar themes have marked it as contraband aboard Nanotrasen space facilities."
@@ -15,7 +19,7 @@
 	never_random = TRUE
 	random_basetype = /obj/structure/sign/poster/contraband
 
-MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sign/poster/contraband/random, 32)
+INVERT_MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sign/poster/contraband/random, 32)
 
 /obj/structure/sign/poster/contraband/free_tonto
 	name = "Free Tonto"
@@ -625,3 +629,35 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sign/poster/contraband/blood_geometer
 	icon_state = "singletank_bomb"
 
 MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sign/poster/contraband/singletank_bomb, 32)
+
+///a special poster meant to fool people into thinking this is a bombable wall at a glance.
+/obj/structure/sign/poster/contraband/fake_bombable
+	name = "fake bombable poster"
+	desc = "We do a little trolling."
+	icon_state = "fake_bombable"
+	never_random = TRUE
+
+/obj/structure/sign/poster/contraband/fake_bombable/Initialize(mapload)
+	. = ..()
+	var/turf/our_wall = get_turf_pixel(src)
+	name = our_wall.name
+
+/obj/structure/sign/poster/contraband/fake_bombable/examine(mob/user)
+	var/turf/our_wall = get_turf_pixel(src)
+	. = our_wall.examine(user)
+	. += span_notice("It seems to be slightly cracked...")
+
+/obj/structure/sign/poster/contraband/fake_bombable/ex_act(severity, target)
+	addtimer(CALLBACK(src, PROC_REF(fall_off_wall)), 2.5 SECONDS)
+	return FALSE
+
+/obj/structure/sign/poster/contraband/fake_bombable/proc/fall_off_wall()
+	if(QDELETED(src) || !isturf(loc))
+		return
+	var/turf/our_wall = get_turf_pixel(src)
+	our_wall.balloon_alert_to_viewers("it was a ruse!")
+	roll_and_drop(loc)
+	playsound(loc, 'sound/items/handling/paper_drop.ogg', 50, TRUE)
+
+
+MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sign/poster/contraband/fake_bombable, 32)

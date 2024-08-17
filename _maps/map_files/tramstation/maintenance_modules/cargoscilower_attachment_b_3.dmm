@@ -30,8 +30,8 @@
 /area/station/maintenance/starboard/central)
 "E" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/sink/directional/south,
 /obj/structure/mirror/directional/north,
+/obj/structure/sink/directional/north,
 /turf/open/floor/iron/smooth,
 /area/station/maintenance/starboard/central)
 "H" = (

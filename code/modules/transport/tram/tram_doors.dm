@@ -1,15 +1,14 @@
-#define TRAM_DOOR_WARNING_TIME (1.4 SECONDS)
-#define TRAM_DOOR_CYCLE_TIME (0.4 SECONDS)
-#define TRAM_DOOR_CRUSH_TIME (0.7 SECONDS)
-#define TRAM_DOOR_RECYCLE_TIME (3 SECONDS)
+#define TRAM_DOOR_RECYCLE_TIME (2.7 SECONDS)
 
 /obj/machinery/door/airlock/tram
 	name = "tram door"
 	icon = 'icons/obj/doors/airlocks/tram/tram.dmi'
 	overlays_file = 'icons/obj/doors/airlocks/tram/tram-overlays.dmi'
+	// YET TO BE UPDATED TO 3/4ths
+	short_rendering = TRUE
 	multi_tile = TRUE
 	opacity = FALSE
-	assemblytype = null
+	assemblytype = /obj/structure/door_assembly/multi_tile/door_assembly_tram
 	airlock_material = "glass"
 	air_tight = TRUE
 	req_access = list(ACCESS_TCOMMS)
@@ -17,6 +16,8 @@
 	doorOpen = 'sound/machines/tramopen.ogg'
 	doorClose = 'sound/machines/tramclose.ogg'
 	autoclose = FALSE
+	greyscale_config = null
+	greyscale_colors = null
 	/// Weakref to the tram we're attached
 	var/datum/weakref/transport_ref
 	var/retry_counter
@@ -28,6 +29,28 @@
 	if(!id_tag)
 		id_tag = assign_random_name()
 
+/obj/machinery/door/airlock/tram/animation_length(animation)
+	switch(animation)
+		if(DOOR_OPENING_ANIMATION)
+			return 1.3 SECONDS
+		if(DOOR_CLOSING_ANIMATION)
+			return 2 SECONDS
+
+/obj/machinery/door/airlock/tram/animation_segment_delay(animation)
+	switch(animation)
+		if(AIRLOCK_OPENING_TRANSPARENT)
+			return 0.6 SECONDS
+		if(AIRLOCK_OPENING_PASSABLE)
+			return 0.9 SECONDS
+		if(AIRLOCK_OPENING_FINISHED)
+			return 0.9 SECONDS
+		if(AIRLOCK_CLOSING_UNPASSABLE)
+			return 0.9 SECONDS
+		if(AIRLOCK_CLOSING_OPAQUE)
+			return 0.7 SECONDS
+		if(AIRLOCK_CLOSING_FINISHED)
+			return 0.9 SECONDS
+
 /obj/machinery/door/airlock/tram/open(forced = DEFAULT_DOOR_CHECKS)
 	if(operating || welded || locked || seal)
 		return FALSE
@@ -38,16 +61,16 @@
 	if(forced == DEFAULT_DOOR_CHECKS && (!hasPower() || wires.is_cut(WIRE_OPEN)))
 		return FALSE
 
-	SEND_SIGNAL(src, COMSIG_AIRLOCK_OPEN, FALSE)
+	SEND_SIGNAL(src, COMSIG_AIRLOCK_OPEN, forced)
 	operating = TRUE
-	update_icon(ALL, AIRLOCK_OPENING, TRUE)
+	update_icon(ALL, AIRLOCK_OPENING)
 
 	if(forced >= BYPASS_DOOR_CHECKS)
 		playsound(src, 'sound/machines/airlockforced.ogg', vol = 40, vary = FALSE)
-		sleep(TRAM_DOOR_CYCLE_TIME)
+		sleep(animation_segment_delay(AIRLOCK_OPENING_TRANSPARENT))
 	else
 		playsound(src, doorOpen, vol = 40, vary = FALSE)
-		sleep(TRAM_DOOR_WARNING_TIME)
+		sleep(animation_segment_delay(AIRLOCK_OPENING_PASSABLE))
 
 	set_density(FALSE)
 	if(!isnull(filler))
@@ -55,16 +78,16 @@
 	update_freelook_sight()
 	flags_1 &= ~PREVENT_CLICK_UNDER_1
 	air_update_turf(TRUE, FALSE)
-	sleep(TRAM_DOOR_CYCLE_TIME)
+	sleep(animation_segment_delay(AIRLOCK_OPENING_FINISHED))
 	layer = OPEN_DOOR_LAYER
-	update_icon(ALL, AIRLOCK_OPEN, TRUE)
 	operating = FALSE
+	update_icon(ALL, AIRLOCK_OPEN)
 
 	return TRUE
 
 /obj/machinery/door/airlock/tram/close(forced = DEFAULT_DOOR_CHECKS, force_crush = FALSE)
 	retry_counter++
-	if(retry_counter >= 4 || force_crush || forced == BYPASS_DOOR_CHECKS)
+	if(retry_counter >= 3 || force_crush || forced == BYPASS_DOOR_CHECKS)
 		try_to_close(forced = BYPASS_DOOR_CHECKS)
 		return
 
@@ -90,12 +113,12 @@
 	if((obj_flags & EMAGGED) || !safe)
 		do_sparks(3, TRUE, src)
 		playsound(src, SFX_SPARKS, vol = 75, vary = FALSE, extrarange = SHORT_RANGE_SOUND_EXTRARANGE)
-	use_power(50)
+	use_energy(50 JOULES)
 	playsound(src, doorClose, vol = 40, vary = FALSE)
 	operating = TRUE
 	layer = CLOSED_DOOR_LAYER
-	update_icon(ALL, AIRLOCK_CLOSING, 1)
-	sleep(TRAM_DOOR_WARNING_TIME)
+	update_icon(ALL, AIRLOCK_CLOSING)
+	sleep(animation_segment_delay(AIRLOCK_CLOSING_UNPASSABLE))
 	if(!hungry_door)
 		for(var/turf/checked_turf in locs)
 			for(var/atom/movable/blocker in checked_turf)
@@ -103,11 +126,11 @@
 					say("Please stand clear of the doors!")
 					playsound(src, 'sound/machines/buzz-sigh.ogg', 60, vary = FALSE, extrarange = SHORT_RANGE_SOUND_EXTRARANGE)
 					layer = OPEN_DOOR_LAYER
-					update_icon(ALL, AIRLOCK_OPEN, 1)
 					operating = FALSE
+					update_icon(ALL, AIRLOCK_OPEN)
 					return FALSE
 	SEND_SIGNAL(src, COMSIG_AIRLOCK_CLOSE)
-	sleep(TRAM_DOOR_CRUSH_TIME)
+	sleep(animation_segment_delay(AIRLOCK_CLOSING_OPAQUE))
 	set_density(TRUE)
 	if(!isnull(filler))
 		filler.set_density(TRUE)
@@ -116,9 +139,9 @@
 	air_update_turf(TRUE, TRUE)
 	crush()
 	crushing_in_progress = FALSE
-	sleep(TRAM_DOOR_CYCLE_TIME)
-	update_icon(ALL, AIRLOCK_CLOSED, 1)
+	sleep(animation_segment_delay(AIRLOCK_CLOSING_FINISHED))
 	operating = FALSE
+	update_icon(ALL, AIRLOCK_CLOSED)
 	retry_counter = 0
 	return TRUE
 
@@ -136,7 +159,7 @@
 		for(var/mob/living/future_pancake in checked_turf)
 			future_pancake.visible_message(span_warning("[src] beeps angrily and closes on [future_pancake]!"), span_userdanger("[src] beeps angrily and closes on you!"))
 			SEND_SIGNAL(future_pancake, COMSIG_LIVING_DOORCRUSHED, src)
-			if(ishuman(future_pancake) || ismonkey(future_pancake))
+			if(ishuman(future_pancake))
 				future_pancake.emote("scream")
 				future_pancake.adjustBruteLoss(DOOR_CRUSH_DAMAGE * 2)
 				future_pancake.Paralyze(2 SECONDS)
@@ -163,7 +186,7 @@
 	if(airlock_state == AIRLOCK_CLOSED)
 		return
 
-	if(retry_counter < 3)
+	if(retry_counter < 2)
 		close()
 		return
 
@@ -184,7 +207,7 @@
 	RemoveElement(/datum/element/atmos_sensitive, mapload)
 	return INITIALIZE_HINT_LATELOAD
 
-/obj/machinery/door/airlock/tram/LateInitialize(mapload)
+/obj/machinery/door/airlock/tram/post_machine_initialize()
 	. = ..()
 	INVOKE_ASYNC(src, PROC_REF(open))
 	SStransport.doors += src
@@ -205,6 +228,9 @@
  * Tram doors can be opened with hands when unpowered
  */
 /obj/machinery/door/airlock/tram/try_safety_unlock(mob/user)
+	if(DOING_INTERACTION_WITH_TARGET(user, src))
+		return
+
 	if(!hasPower()  && density)
 		balloon_alert(user, "pulling emergency exit...")
 		if(do_after(user, 4 SECONDS, target = src))
@@ -215,16 +241,23 @@
  * If you pry (bump) the doors open midtravel, open quickly so you can jump out and make a daring escape.
  */
 /obj/machinery/door/airlock/tram/bumpopen(mob/user, forced = BYPASS_DOOR_CHECKS)
+	if(DOING_INTERACTION_WITH_TARGET(user, src))
+		return
+
 	if(operating || !density)
 		return
+
+	if(!hasPower())
+		try_safety_unlock(user)
+		return
+
 	var/datum/transport_controller/linear/tram/tram_part = transport_ref?.resolve()
 	add_fingerprint(user)
+	if(!tram_part.controller_active)
+		return
 	if((tram_part.travel_remaining < DEFAULT_TRAM_LENGTH || tram_part.travel_remaining > tram_part.travel_trip_length - DEFAULT_TRAM_LENGTH) && tram_part.controller_active)
 		return // we're already animating, don't reset that
 	open(forced = BYPASS_DOOR_CHECKS)
 	return
 
-#undef TRAM_DOOR_WARNING_TIME
-#undef TRAM_DOOR_CYCLE_TIME
-#undef TRAM_DOOR_CRUSH_TIME
 #undef TRAM_DOOR_RECYCLE_TIME

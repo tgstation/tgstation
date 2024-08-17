@@ -1,6 +1,4 @@
 import { classes } from 'common/react';
-
-import { useBackend } from '../backend';
 import {
   Box,
   Button,
@@ -9,7 +7,9 @@ import {
   Section,
   Stack,
   Tooltip,
-} from '../components';
+} from 'tgui-core/components';
+
+import { useBackend } from '../backend';
 import { Window } from '../layouts';
 import { DesignBrowser } from './Fabrication/DesignBrowser';
 import { MaterialAccessBar } from './Fabrication/MaterialAccessBar';
@@ -116,10 +116,14 @@ type CustomPrintProps = {
 const CustomPrint = (props: CustomPrintProps) => {
   const { act } = useBackend();
   const { design, available } = props;
-  const canPrint = !Object.entries(design.cost).some(
-    ([material, amount]) =>
-      !available[material] || amount > (available[material] ?? 0),
+  let maxMult = Object.entries(design.cost).reduce(
+    (accumulator: number, [material, required]) => {
+      return Math.min(accumulator, (available[material] || 0) / required);
+    },
+    Infinity,
   );
+  maxMult = Math.min(Math.floor(maxMult), 50);
+  const canPrint = maxMult > 0;
 
   return (
     <div
@@ -137,7 +141,7 @@ const CustomPrint = (props: CustomPrintProps) => {
           })
         }
       >
-        [Max: {design.maxmult}]
+        [Max: {maxMult}]
       </Button.Input>
     </div>
   );

@@ -6,6 +6,7 @@
 	show_in_antagpanel = FALSE
 	job_rank = ROLE_BLOB
 	ui_name = "AntagInfoBlob"
+	stinger_sound = 'sound/ambience/antag/blobalert.ogg'
 	/// Action to release a blob infection
 	var/datum/action/innate/blobpop/pop_action
 	/// Initial points for a human blob
@@ -31,8 +32,6 @@
 	else
 		has_already_popped = TRUE
 
-	owner.current.playsound_local(get_turf(owner.current), 'sound/ambience/antag/blobalert.ogg', 100, FALSE, pressure_affected = FALSE, use_reverb = FALSE)
-
 /datum/antagonist/blob/on_gain()
 	create_objectives()
 	. = ..()
@@ -44,9 +43,9 @@
 /datum/antagonist/blob/get_preview_icon()
 	var/datum/blobstrain/reagent/reactive_spines/reactive_spines = /datum/blobstrain/reagent/reactive_spines
 
-	var/icon/icon = icon('icons/mob/nonhuman-player/blob.dmi', "blob_core")
+	var/icon/icon = icon('icons/mob/nonhuman-player/blob_tall.dmi', "blob_core")
 	icon.Blend(initial(reactive_spines.color), ICON_MULTIPLY)
-	icon.Blend(icon('icons/mob/nonhuman-player/blob.dmi', "blob_core_overlay"), ICON_OVERLAY)
+	icon.Blend(icon('icons/mob/nonhuman-player/blob_tall.dmi', "blob_core_overlay"), ICON_OVERLAY)
 	icon.Scale(ANTAGONIST_PREVIEW_ICON_SIZE, ANTAGONIST_PREVIEW_ICON_SIZE)
 
 	return icon

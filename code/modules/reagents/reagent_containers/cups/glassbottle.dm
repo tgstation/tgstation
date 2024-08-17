@@ -42,9 +42,8 @@
 
 /obj/item/reagent_containers/cup/glass/bottle/Initialize(mapload, vol)
 	. = ..()
-	AddComponent(/datum/component/slapcrafting,\
-		slapcraft_recipes = list(/datum/crafting_recipe/molotov)\
-	)
+	var/static/list/recipes =  list(/datum/crafting_recipe/molotov)
+	AddElement(/datum/element/slapcrafting, recipes)
 
 /obj/item/reagent_containers/cup/glass/bottle/small
 	name = "small glass bottle"
@@ -82,7 +81,7 @@
 	var/obj/item/bodypart/affecting = user.zone_selected //Find what the player is aiming at
 
 	var/armor_block = 0 //Get the target's armor values for normal attack damage.
-	var/armor_duration = 0 //The more force the bottle has, the longer the duration.
+	var/knockdown_effectiveness = 0 //The more force the bottle has, the longer the duration.
 
 	//Calculating duration and calculating damage.
 	if(ishuman(target))
@@ -95,23 +94,23 @@
 		if(istype(H.head, /obj/item/clothing/head) && affecting == BODY_ZONE_HEAD)
 			headarmor = H.head.get_armor_rating(MELEE)
 		//Calculate the knockdown duration for the target.
-		armor_duration = (bottle_knockdown_duration - headarmor) + force
+		knockdown_effectiveness = (bottle_knockdown_duration - headarmor) + force
 
 	else
 		//Only humans can have armor, right?
 		armor_block = living_target.run_armor_check(affecting, MELEE)
 		if(affecting == BODY_ZONE_HEAD)
-			armor_duration = bottle_knockdown_duration + force
+			knockdown_effectiveness = bottle_knockdown_duration + force
 	//Apply the damage!
 	armor_block = min(90,armor_block)
 	living_target.apply_damage(force, BRUTE, affecting, armor_block)
 
 	// You are going to knock someone down for longer if they are not wearing a helmet.
 	var/head_attack_message = ""
-	if(affecting == BODY_ZONE_HEAD && iscarbon(target))
+	if(affecting == BODY_ZONE_HEAD && iscarbon(target) && !HAS_TRAIT(target, TRAIT_HEAD_INJURY_BLOCKED))
 		head_attack_message = " on the head"
-		if(armor_duration)
-			living_target.apply_effect(min(armor_duration, 200) , EFFECT_KNOCKDOWN)
+		if(knockdown_effectiveness && prob(knockdown_effectiveness))
+			living_target.apply_effect(min(knockdown_effectiveness, 200) , EFFECT_KNOCKDOWN)
 
 	//Display an attack message.
 	if(target != user)
@@ -144,7 +143,7 @@
 		return
 
 	var/amount_lost = intensity * 5
-	reagents.remove_any(amount_lost)
+	reagents.remove_all(amount_lost)
 
 	visible_message(span_warning("Some of [name]'s contents are let loose!"))
 	var/intensity_state = null
@@ -317,6 +316,12 @@
 	icon_state = "rumbottle"
 	list_reagents = list(/datum/reagent/consumable/ethanol/rum = 100)
 
+/obj/item/reagent_containers/cup/glass/bottle/rum/aged
+	name = "Captain Pete's Vintage spiced rum"
+	desc = "Shiver me timbers, a vintage edition of Captain Pete's rum. It's pratically GRIFF in a bottle from over 50 years ago."
+	icon_state = "rumbottle_gold"
+	list_reagents = list(/datum/reagent/consumable/ethanol/rum/aged = 100)
+
 /obj/item/reagent_containers/cup/glass/bottle/maltliquor
 	name = "\improper Rabid Bear malt liquor"
 	desc = "A 40 full of malt liquor. Kicks stronger than, well, a rabid bear."
@@ -406,7 +411,7 @@
 	return "[year] [origin] [type]"
 
 /obj/item/reagent_containers/cup/glass/bottle/absinthe
-	name = "extra-strong absinthe"
+	name = "Extra-strong absinthe"
 	desc = "A strong alcoholic drink brewed and distributed by"
 	icon_state = "absinthebottle"
 	list_reagents = list(/datum/reagent/consumable/ethanol/absinthe = 100)
@@ -894,7 +899,8 @@
 	desc = "Fermented prison wine made from fruit, sugar, and despair. You probably shouldn't drink this around Security."
 	icon_state = "trashbag1" // pruno releases air as it ferments, we don't want to simulate this in atmos, but we can make it look like it did
 	for (var/mob/living/M in view(2, get_turf(src))) // letting people and/or narcs know when the pruno is done
-		to_chat(M, span_info("A pungent smell emanates from [src], like fruit puking out its guts."))
+		if(HAS_TRAIT(M, TRAIT_ANOSMIA))
+			to_chat(M, span_info("A pungent smell emanates from [src], like fruit puking out its guts."))
 		playsound(get_turf(src), 'sound/effects/bubbles2.ogg', 25, TRUE)
 
 /**

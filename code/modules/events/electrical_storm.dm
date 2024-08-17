@@ -22,7 +22,7 @@
 	var/list/epicentreList = list()
 
 	for(var/i in 1 to lightsoutAmount)
-		var/turf/T = find_safe_turf()
+		var/turf/T = get_safe_random_station_turf()
 		if(istype(T))
 			epicentreList += T
 

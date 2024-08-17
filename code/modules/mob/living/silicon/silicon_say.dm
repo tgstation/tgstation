@@ -8,6 +8,9 @@
 		var/mob/living/silicon/player = src
 		designation = trim_left(player.designation + " " + player.job)
 
+	if(HAS_TRAIT(mind, TRAIT_DISPLAY_JOB_IN_BINARY))
+		designation = mind.assigned_role.title
+
 	if(isAI(src))
 		// AIs are loud and ugly
 		spans |= SPAN_COMMAND
@@ -17,6 +20,11 @@
 		spans
 	)
 
+	var/namepart = name
+	// If carbon, use voice to account for voice changers
+	if(iscarbon(src))
+		namepart = GetVoice()
+
 	for(var/mob/M in GLOB.player_list)
 		if(M.binarycheck())
 			if(isAI(M))
@@ -24,7 +32,7 @@
 					M,
 					span_binarysay("\
 						Robotic Talk, \
-						<a href='?src=[REF(M)];track=[html_encode(name)]'>[span_name("[name] ([designation])")]</a> \
+						<a href='?src=[REF(M)];track=[html_encode(namepart)]'>[span_name("[namepart] ([designation])")]</a> \
 						<span class='message'>[quoted_message]</span>\
 					"),
 					avoid_highlighting = src == M
@@ -34,7 +42,7 @@
 					M,
 					span_binarysay("\
 						Robotic Talk, \
-						[span_name("[name]")] <span class='message'>[quoted_message]</span>\
+						[span_name("[namepart]")] <span class='message'>[quoted_message]</span>\
 					"),
 					avoid_highlighting = src == M
 				)
@@ -56,12 +64,15 @@
 				span_binarysay("\
 					[follow_link] \
 					Robotic Talk, \
-					[span_name("[name]")] <span class='message'>[quoted_message]</span>\
+					[span_name("[namepart]")] <span class='message'>[quoted_message]</span>\
 				"),
 				avoid_highlighting = src == M
 			)
 
 /mob/living/silicon/binarycheck()
+	var/area/our_area = get_area(src)
+	if(our_area.area_flags & BINARY_JAMMING)
+		return FALSE
 	return TRUE
 
 /mob/living/silicon/radio(message, list/message_mods = list(), list/spans, language)

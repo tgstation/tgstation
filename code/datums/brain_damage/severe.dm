@@ -187,7 +187,7 @@
 	for(var/mob/M in oview(owner, check_radius))
 		if(!isliving(M)) //ghosts ain't people
 			continue
-		if(istype(M, /mob/living/simple_animal/pet) || istype(M, /mob/living/basic/pet) || M.ckey)
+		if(istype(M, /mob/living/basic/pet) || M.ckey)
 			return FALSE
 	return TRUE
 
@@ -202,7 +202,7 @@
 				to_chat(owner, span_warning("You feel really sick at the thought of being alone!"))
 			else
 				to_chat(owner, span_warning("You feel sick..."))
-			addtimer(CALLBACK(owner, TYPE_PROC_REF(/mob/living/carbon, vomit), high_stress), 50) //blood vomit if high stress
+			addtimer(CALLBACK(owner, TYPE_PROC_REF(/mob/living/carbon, vomit), high_stress), 5 SECONDS) //blood vomit if high stress
 		if(2)
 			if(high_stress)
 				to_chat(owner, span_warning("You feel weak and scared! If only you weren't alone..."))
@@ -309,7 +309,7 @@
 	var/regex/reg = new("(\\b[REGEX_QUOTE(trigger_phrase)]\\b)","ig")
 
 	if(findtext(hearing_args[HEARING_RAW_MESSAGE], reg))
-		addtimer(CALLBACK(src, PROC_REF(hypnotrigger)), 10) //to react AFTER the chat message
+		addtimer(CALLBACK(src, PROC_REF(hypnotrigger)), 1 SECONDS) //to react AFTER the chat message
 		hearing_args[HEARING_RAW_MESSAGE] = reg.Replace(hearing_args[HEARING_RAW_MESSAGE], span_hypnophrase("*********"))
 
 /datum/brain_trauma/severe/hypnotic_trigger/proc/hypnotrigger()
@@ -336,11 +336,11 @@
  * This one is for "The Sister and He Who Wept" or /obj/structure/sign/painting/eldritch
  */
 /datum/brain_trauma/severe/weeping
-	name = "The Weeping"
-	desc = "Patient hallucinates everyone as a figure called He Who Wept"
-	scan_desc = "H_E##%%%WEEP6%11S!!,)()"
-	gain_text = span_warning("HE WEEPS AND I WILL SEE HIM ONCE MORE")
-	lose_text = span_notice("You feel the tendrils of something slip from your mind.")
+	name = "Psychotic Depression"
+	desc = "Patient is suffering from severe depressive episodes. Patient sometimes hallucinates during these episodes."
+	scan_desc = "depression"
+	gain_text = span_warning("The weeping... It haunts my mind...")
+	lose_text = span_notice("Your fixation ends. You feel significantly less stressed.")
 	random_gain = FALSE
 	/// Our cooldown declare for causing hallucinations
 	COOLDOWN_DECLARE(weeping_hallucinations)
@@ -360,11 +360,11 @@
 
 //This one is for "The First Desire" or /obj/structure/sign/painting/eldritch/desire
 /datum/brain_trauma/severe/flesh_desire
-	name = "The Desire for Flesh"
-	desc = "Patient appears hungrier and only wishes to eat meats."
-	scan_desc = "H_(82882)G3E:__))9R"
-	gain_text = span_warning("I feel a hunger, only organs and flesh will feed it...")
-	lose_text = span_notice("You no longer feel the hunger for flesh...")
+	name = "Bean's Disorder"
+	desc = "Patient has a fixation on consuming raw flesh, particularly that of the same species. Patient also suffers from psychosomatic hunger pangs."
+	scan_desc = "moderate eating disorder"
+	gain_text = span_warning("You feel a hunger, for organs and raw meat...")
+	lose_text = span_notice("Your appetite returns to normal.")
 	random_gain = FALSE
 	/// How much faster we loose hunger
 	var/hunger_rate = 15
@@ -379,7 +379,7 @@
 	// Causes them to need to eat at 10x the normal rate
 	owner.adjust_nutrition(-hunger_rate * HUNGER_FACTOR)
 	if(SPT_PROB(10, seconds_per_tick))
-		to_chat(owner, span_notice("You feel a ravenous hunger for flesh..."))
+		to_chat(owner, span_notice(pick("You can't stop thinking about raw meat...", "You **NEED** to eat someone.", "The hunger pangs are back...", "You hunger for flesh.", "You are starving!")))
 	owner.overeatduration = max(owner.overeatduration - 200 SECONDS, 0)
 
 /datum/brain_trauma/severe/flesh_desire/on_lose()
@@ -389,11 +389,11 @@
 
 // This one is for "Lady out of gates" or /obj/item/wallframe/painting/eldritch/beauty
 /datum/brain_trauma/severe/eldritch_beauty
-	name = "The Pursuit of Perfection"
-	desc = "Patient seems to furiously scratch at their body, the only way to make them cease is for them to remove their jumpsuit."
-	scan_desc = "I_)8(P_E##R&&F(E)C__T)"
-	gain_text = span_warning("I WILL RID MY FLESH FROM IMPERFECTION!! I WILL BE PERFECT WITHOUT MY SUITS!!")
-	lose_text = span_notice("You feel the influence of something slip your mind, and you feel content as you are.")
+	name = "Obsessive Perfectionism"
+	desc = "Patient is fixated on the perceived 'imperfection' of objects around them. Patient is agitated by the feeling of clothing on their body."
+	scan_desc = "obsessive personality disorder"
+	gain_text = span_warning("It's all *imperfect*! I can't stand any of it touching me!")
+	lose_text = span_notice("Your mind calms.")
 	random_gain = FALSE
 	/// How much damage we deal with each scratch
 	var/scratch_damage = 0.5
@@ -411,15 +411,15 @@
 		return
 	bodypart.receive_damage(scratch_damage)
 	if(SPT_PROB(33, seconds_per_tick))
-		to_chat(owner, span_notice("You scratch furiously at [bodypart] to ruin the cloth that hides the beauty!"))
+		to_chat(owner, span_notice("You scratch furiously at the clothed [bodypart]!"))
 
 // This one is for "Climb over the rusted mountain" or /obj/structure/sign/painting/eldritch/rust
 /datum/brain_trauma/severe/rusting
-	name = "The Rusted Climb"
-	desc = "Patient seems to oxidise things around them at random, and seem to believe they are aiding a creature in climbing a mountin."
-	scan_desc = "C_)L(#_I_##M;B"
-	gain_text = span_warning("The rusted climb shall finish at the peak")
-	lose_text = span_notice("The rusted climb? Whats that? An odd dream to be sure.")
+	name = "Intermittent Psychic Manifestation Syndrome"
+	desc = "Patient suffers from a rare psychic disorder, and may manifest or amplify psychic phenomena in the area. Patient has no control over these phenomena."
+	scan_desc = "dangerous psi-wave activity"
+	gain_text = span_warning("Climb the rust. Master entropy.")
+	lose_text = span_notice("You feel like you just woke up from a bad dream.")
 	random_gain = FALSE
 
 /datum/brain_trauma/severe/rusting/on_life(seconds_per_tick, times_fired)
@@ -429,5 +429,68 @@
 		return
 
 	if(SPT_PROB(50, seconds_per_tick))
-		to_chat(owner, span_notice("You feel eldritch energies pulse from your body!"))
+		to_chat(owner, span_notice("You feel the decay..."))
 		tile.rust_heretic_act()
+
+/datum/brain_trauma/severe/kleptomaniac
+	name = "Kleptomania"
+	desc = "Patient is prone to stealing things."
+	scan_desc = "kleptomania"
+	gain_text = span_warning("You feel a sudden urge to take that. Surely no one will notice.")
+	lose_text = span_notice("You no longer feel the urge to take things.")
+	/// Cooldown between allowing steal attempts
+	COOLDOWN_DECLARE(steal_cd)
+
+/datum/brain_trauma/severe/kleptomaniac/on_gain()
+	. = ..()
+	RegisterSignal(owner, COMSIG_MOB_APPLY_DAMAGE, PROC_REF(damage_taken))
+
+/datum/brain_trauma/severe/kleptomaniac/on_lose()
+	. = ..()
+	UnregisterSignal(owner, COMSIG_MOB_APPLY_DAMAGE)
+
+/datum/brain_trauma/severe/kleptomaniac/proc/damage_taken(datum/source, damage_amount, damage_type, ...)
+	SIGNAL_HANDLER
+	// While you're fighting someone (or dying horribly) your mind has more important things to focus on than pocketing stuff
+	if(damage_amount >= 5 && (damage_type == BRUTE || damage_type == BURN || damage_type == STAMINA))
+		COOLDOWN_START(src, steal_cd, 12 SECONDS)
+
+/datum/brain_trauma/severe/kleptomaniac/on_life(seconds_per_tick, times_fired)
+	if(owner.usable_hands <= 0)
+		return
+	if(!SPT_PROB(5, seconds_per_tick))
+		return
+	if(!COOLDOWN_FINISHED(src, steal_cd))
+		return
+	if(!owner.has_active_hand() || !owner.get_empty_held_indexes())
+		return
+
+	// If our main hand is full, that means our offhand is empty, so try stealing with that
+	var/steal_to_offhand = !!owner.get_active_held_item()
+	var/curr_index = owner.active_hand_index
+	var/pre_dir = owner.dir
+	if(steal_to_offhand)
+		owner.swap_hand(owner.get_inactive_hand_index())
+
+	var/list/stealables = list()
+	for(var/obj/item/potential_stealable in oview(1, owner))
+		if(potential_stealable.w_class >= WEIGHT_CLASS_BULKY)
+			continue
+		if(potential_stealable.anchored || !(potential_stealable.interaction_flags_item & INTERACT_ITEM_ATTACK_HAND_PICKUP))
+			continue
+		stealables += potential_stealable
+
+	for(var/obj/item/stealable as anything in shuffle(stealables))
+		if(!owner.CanReach(stealable, view_only = TRUE) || stealable.IsObscured())
+			continue
+		// Try to do a raw click on the item with one of our empty hands, to pick it up (duh)
+		owner.log_message("attempted to pick up (kleptomania)", LOG_ATTACK, color = "orange")
+		owner.ClickOn(stealable)
+		// No feedback message. Intentional, you may not even realize you picked up something
+		break
+
+	if(steal_to_offhand)
+		owner.swap_hand(curr_index)
+	owner.setDir(pre_dir)
+	// Gives you a small buffer - not to avoid spam, but to make it more subtle / less predictable
+	COOLDOWN_START(src, steal_cd, 8 SECONDS)

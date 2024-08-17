@@ -1,3 +1,22 @@
+//bitfield defines
+
+///can honkbots slip people?
+#define HONKBOT_MODE_SLIP (1<<0)
+///can honkbots check IDs?
+#define HONKBOT_CHECK_IDS (1<<1)
+///can honkbots check records?
+#define HONKBOT_CHECK_RECORDS (1<<2)
+///can honkbots handcuff people?
+#define HONKBOT_HANDCUFF_TARGET (1<<3)
+
+DEFINE_BITFIELD(honkbot_flags, list(
+	"CAN_SLIP" = HONKBOT_MODE_SLIP,
+	"CHECK_IDS" = HONKBOT_CHECK_IDS,
+	"CHECK_RECORDS" = HONKBOT_CHECK_RECORDS,
+	"CAN_FAKE_CUFF" = HONKBOT_HANDCUFF_TARGET,
+))
+
+
 // bot keys
 ///The first beacon we find
 #define BB_BEACON_TARGET "beacon_target"
@@ -15,8 +34,6 @@
 #define BB_RADIO_CHANNEL "radio_channel"
 ///list of unreachable things we will temporarily ignore
 #define BB_TEMPORARY_IGNORE_LIST "temporary_ignore_list"
-///Last thing we attempted to reach
-#define BB_LAST_ATTEMPTED_PATHING "last_attempted_pathing"
 
 // medbot keys
 ///the patient we must heal
@@ -35,6 +52,10 @@
 #define BB_NEAR_DEATH_SPEECH "near_death_speech"
 ///in crit patient we must alert medbay about
 #define BB_PATIENT_IN_CRIT "patient_in_crit"
+///how much time interval before we clear list
+#define BB_UNREACHABLE_LIST_COOLDOWN "unreachable_list_cooldown"
+///can we clear the list now
+#define	BB_CLEAR_LIST_READY "clear_list_ready"
 
 // cleanbots
 ///key that holds the foaming ability
@@ -71,3 +92,45 @@
 #define BB_WASH_FRUSTRATION "wash_frustration"
 ///key that holds cooldown after we finish cleaning something, so we dont immediately run off to patrol
 #define BB_POST_CLEAN_COOLDOWN "post_clean_cooldown"
+
+//Honkbots
+///key that holds all possible clown friends
+#define BB_CLOWNS_LIST "clowns_list"
+///key that holds the clown we play with
+#define BB_CLOWN_FRIEND "clown_friend"
+///key that holds the list of slippery items
+#define BB_SLIPPERY_ITEMS "slippery_items"
+///key that holds list of types we will attempt to slip
+#define BB_SLIP_LIST "slip_list"
+///key that holds the slippery item we will drag people too
+#define BB_SLIPPERY_TARGET "slippery_target"
+///key that holds the victim we will slip
+#define BB_SLIP_TARGET "slip_target"
+///key that holds our honk ability
+#define BB_HONK_ABILITY "honk_ability"
+
+//firebot keys
+///things we can extinguish
+#define BB_FIREBOT_CAN_EXTINGUISH "can_extinguish"
+///the target we will extinguish
+#define BB_FIREBOT_EXTINGUISH_TARGET "extinguish_target"
+///lines we say when we detect a fire
+#define BB_FIREBOT_FIRE_DETECTED_LINES "fire_detected_lines"
+///lines we say when we are idle
+#define BB_FIREBOT_IDLE_LINES "idle_lines"
+///lines we say when we are emagged
+#define BB_FIREBOT_EMAGGED_LINES "emagged_lines"
+
+//vibebots
+///key that holds our partying ability
+#define BB_VIBEBOT_PARTY_ABILITY "party_ability"
+///key that holds our birthday song
+#define BB_VIBEBOT_BIRTHDAY_SONG "birthday_song"
+///key that holds happy songs we play to depressed targets
+#define BB_VIBEBOT_HAPPY_SONG "happy_song"
+///key that holds grim song we play when emagged
+#define BB_VIBEBOT_GRIM_SONG "GRIM_song"
+///key that holds neutral targets we vibe with
+#define BB_VIBEBOT_PARTY_TARGET "party_target"
+///key that holds our instrument
+#define BB_VIBEBOT_INSTRUMENT "instrument"

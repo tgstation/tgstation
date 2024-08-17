@@ -7,6 +7,7 @@ SUBSYSTEM_DEF(research)
 	//TECHWEB STATIC
 	var/list/techweb_nodes = list() //associative id = node datum
 	var/list/techweb_designs = list() //associative id = node datum
+	var/list/list/datum/design/item_to_design = list() //typepath = list of design datums
 
 	///List of all techwebs, generating points or not.
 	///Autolathes, Mechfabs, and others all have shared techwebs, for example.
@@ -35,12 +36,15 @@ SUBSYSTEM_DEF(research)
 	var/list/techweb_nodes_experimental = list()
 	///path = list(point type = value)
 	var/list/techweb_point_items = list(
-		/obj/item/assembly/signaler/anomaly = list(TECHWEB_POINT_TYPE_GENERIC = 10000)
+		/obj/item/assembly/signaler/anomaly = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_5_POINTS)
 	)
 	var/list/errored_datums = list()
-	var/list/point_types = list() //typecache style type = TRUE list
+	///Associated list of all point types that techwebs will have and their respective 'abbreviated' name.
+	var/list/point_types = list(TECHWEB_POINT_TYPE_GENERIC = "Gen. Res.")
 	//----------------------------------------------
-	var/list/single_server_income = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_SINGLE_SERVER_INCOME)
+	var/list/single_server_income = list(
+		TECHWEB_POINT_TYPE_GENERIC = TECHWEB_SINGLE_SERVER_INCOME,
+	)
 	//^^^^^^^^ ALL OF THESE ARE PER SECOND! ^^^^^^^^
 
 	//Aiming for 1.5 hours to max R&D
@@ -59,6 +63,7 @@ SUBSYSTEM_DEF(research)
 		/obj/item/assembly/signaler/anomaly/hallucination = MAX_CORES_HALLUCINATION,
 		/obj/item/assembly/signaler/anomaly/bioscrambler = MAX_CORES_BIOSCRAMBLER,
 		/obj/item/assembly/signaler/anomaly/dimensional = MAX_CORES_DIMENSIONAL,
+		/obj/item/assembly/signaler/anomaly/ectoplasm = MAX_CORES_ECTOPLASMIC,
 	)
 
 	/// Lookup list for ordnance briefers.
@@ -67,7 +72,6 @@ SUBSYSTEM_DEF(research)
 	var/list/datum/scientific_partner/scientific_partners = list()
 
 /datum/controller/subsystem/research/Initialize()
-	point_types = TECHWEB_POINT_TYPE_LIST_ASSOCIATIVE_NAMES
 	initialize_all_techweb_designs()
 	initialize_all_techweb_nodes()
 	populate_ordnance_experiments()
@@ -97,6 +101,14 @@ SUBSYSTEM_DEF(research)
 			techweb_list.add_point_list(bitcoins)
 
 		techweb_list.last_income = world.time
+
+		if(length(techweb_list.research_queue_nodes))
+			techweb_list.research_node_id(techweb_list.research_queue_nodes[1]) // Attempt to research the first node in queue if possible
+
+			for(var/node_id in techweb_list.research_queue_nodes)
+				var/datum/techweb_node/node = SSresearch.techweb_node_by_id(node_id)
+				if(node.is_free(techweb_list)) // Automatically research all free nodes in queue if any
+					techweb_list.research_node(node)
 
 /datum/controller/subsystem/research/proc/autosort_categories()
 	for(var/i in techweb_nodes)
@@ -159,6 +171,7 @@ SUBSYSTEM_DEF(research)
 
 /datum/controller/subsystem/research/proc/initialize_all_techweb_designs(clearall = FALSE)
 	if(islist(techweb_designs) && clearall)
+		item_to_design = null
 		QDEL_LIST(techweb_designs)
 	var/list/returned = list()
 	for(var/path in subtypesof(/datum/design))
@@ -173,6 +186,11 @@ SUBSYSTEM_DEF(research)
 			stack_trace("WARNING: Design ID clash with ID [initial(DN.id)] detected! Path: [path]")
 			errored_datums[DN] = initial(DN.id)
 			continue
+		var/build_path = initial(DN.build_path)
+		if(!isnull(build_path))
+			if(!(build_path in item_to_design))
+				item_to_design[build_path] = list()
+			item_to_design[build_path] += DN
 		DN.InitializeMaterials() //Initialize the materials in the design
 		returned[initial(DN.id)] = DN
 	techweb_designs = returned
@@ -322,3 +340,16 @@ SUBSYSTEM_DEF(research)
 			continue
 		valid_servers += server
 	return valid_servers
+
+/// Returns true if you can make an anomaly core of the provided type
+/datum/controller/subsystem/research/proc/is_core_available(core_type)
+	if (!ispath(core_type, /obj/item/assembly/signaler/anomaly))
+		return FALSE // The fuck are you checking this random object for?
+	var/already_made = created_anomaly_types[core_type] || 0
+	var/hard_limit = anomaly_hard_limit_by_type[core_type]
+	return already_made < hard_limit
+
+/// Increase our tracked number of cores of this type
+/datum/controller/subsystem/research/proc/increment_existing_anomaly_cores(core_type)
+	var/existing = created_anomaly_types[core_type] || 0
+	created_anomaly_types[core_type] = existing + 1

@@ -38,3 +38,9 @@
 #define RULESET_FORCE_ENABLED "force enabled"
 /// Ruleset should not run regardless of population and threat available
 #define RULESET_FORCE_DISABLED "force disabled"
+
+// Flavor ruletypes, used by station traits
+/// Rulesets selected by dynamic at default
+#define RULESET_CATEGORY_DEFAULT (1 << 0)
+/// Rulesets not including crew antagonists, non-witting referring to antags like obsessed which aren't really enemies of the station
+#define RULESET_CATEGORY_NO_WITTING_CREW_ANTAGONISTS (1 << 1)

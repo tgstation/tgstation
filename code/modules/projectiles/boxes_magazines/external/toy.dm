@@ -29,17 +29,30 @@
 /obj/item/ammo_box/magazine/toy/smgm45
 	name = "donksoft SMG magazine"
 	icon_state = "c20r45-toy"
-	base_icon_state = "c20r45"
+	base_icon_state = "c20r45-toy"
 	caliber = CALIBER_FOAM
 	ammo_type = /obj/item/ammo_casing/foam_dart
 	max_ammo = 20
 
 /obj/item/ammo_box/magazine/toy/smgm45/update_icon_state()
 	. = ..()
-	icon_state = "[base_icon_state]-[round(ammo_count(), 2)]"
+	icon_state = "[base_icon_state]-base"
+
+/obj/item/ammo_box/magazine/toy/smgm45/update_overlays()
+	. = ..()
+	if(!LAZYLEN(stored_ammo))
+		return
+	for(var/i in 1 to stored_ammo.len)
+		var/round_number = round(i, 2) //i meant the number of the round in the magazine, but i guess it's a round number too lol.
+		if(round_number == i) //only count odd numbers.
+			continue
+		var/obj/item/ammo_casing/foam_dart/boolet = stored_ammo[i]
+		. += "c20r45-foam-[boolet.tip_color]-[round_number]"
+
 
 /obj/item/ammo_box/magazine/toy/smgm45/riot
 	icon_state = "c20r45-riot"
+	base_icon_state = "c20r45-riot"
 	ammo_type = /obj/item/ammo_casing/foam_dart/riot
 
 /obj/item/ammo_box/magazine/toy/m762

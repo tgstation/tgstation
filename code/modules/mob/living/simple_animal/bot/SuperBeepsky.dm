@@ -61,7 +61,7 @@
 	weapon.attack(C, src)
 	playsound(src, 'sound/weapons/blade1.ogg', 50, TRUE, -1)
 	if(C.stat == DEAD)
-		addtimer(CALLBACK(src, TYPE_PROC_REF(/atom/, update_appearance)), 2)
+		addtimer(CALLBACK(src, TYPE_PROC_REF(/atom/, update_appearance)), 0.2 SECONDS)
 		back_to_idle()
 
 
@@ -71,7 +71,7 @@
 	switch(mode)
 		if(BOT_IDLE) // idle
 			update_appearance()
-			SSmove_manager.stop_looping(src)
+			GLOB.move_manager.stop_looping(src)
 			look_for_perp() // see if any criminals are in range
 			if(!mode && bot_mode_flags & BOT_MODE_AUTOPATROL) // still idle, and set to patrol
 				mode = BOT_START_PATROL // switch to patrol mode
@@ -80,7 +80,7 @@
 			playsound(src,'sound/effects/beepskyspinsabre.ogg',100,TRUE,-1)
 			// general beepsky doesn't give up so easily, jedi scum
 			if(frustration >= 20)
-				SSmove_manager.stop_looping(src)
+				GLOB.move_manager.stop_looping(src)
 				back_to_idle()
 				return
 			if(target) // make sure target exists
@@ -91,7 +91,7 @@
 					return
 				else // not next to perp
 					var/turf/olddist = get_dist(src, target)
-					SSmove_manager.move_to(src, target, 1, 4)
+					GLOB.move_manager.move_to(src, target, 1, 4)
 					if((get_dist(src, target)) >= (olddist))
 						frustration++
 					else

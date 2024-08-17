@@ -29,7 +29,6 @@ Difficulty: Medium
 	health_doll_icon = "miner"
 	mob_biotypes = MOB_ORGANIC|MOB_HUMANOID
 	light_color = COLOR_LIGHT_GRAYISH_RED
-	movement_type = GROUND
 	speak_emote = list("roars")
 	speed = 3
 	move_to_delay = 3
@@ -52,6 +51,7 @@ Difficulty: Medium
 	death_sound = SFX_BODYFALL
 	footstep_type = FOOTSTEP_MOB_HEAVY
 	move_force = MOVE_FORCE_NORMAL //Miner beeing able to just move structures like bolted doors and glass looks kinda strange
+	shadow_type = SHADOW_MEDIUM
 	/// Does this blood-drunk miner heal slightly while attacking and heal more when gibbing people?
 	var/guidance = FALSE
 	/// Dash ability
@@ -123,7 +123,7 @@ Difficulty: Medium
 		new /obj/effect/temp_visual/dir_setting/miner_death(loc, dir)
 
 /mob/living/simple_animal/hostile/megafauna/blood_drunk_miner/Move(atom/newloc)
-	if(newloc && newloc.z == z && (islava(newloc) || ischasm(newloc))) //we're not stupid!
+	if(newloc && newloc.z == z && ischasm(newloc)) //we're not stupid!
 		return FALSE
 	return ..()
 
@@ -190,7 +190,7 @@ Difficulty: Medium
 /mob/living/simple_animal/hostile/megafauna/blood_drunk_miner/hunter/AttackingTarget(atom/attacked_target)
 	. = ..()
 	if(. && prob(12))
-		INVOKE_ASYNC(dash, TYPE_PROC_REF(/datum/action, Trigger), target)
+		INVOKE_ASYNC(dash, TYPE_PROC_REF(/datum/action, Trigger), NONE, target)
 
 /mob/living/simple_animal/hostile/megafauna/blood_drunk_miner/doom
 	name = "hostile-environment miner"

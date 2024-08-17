@@ -9,8 +9,13 @@ import { MaterialAccessBar } from './Fabrication/MaterialAccessBar';
 import { MaterialCostSequence } from './Fabrication/MaterialCostSequence';
 import { Design, FabricatorData, MaterialMap } from './Fabrication/Types';
 
+type ExosuitDesign = Design & {
+  constructionTime: number;
+};
+
 type ExosuitFabricatorData = FabricatorData & {
   processing: BooleanLike;
+  designs: Record<string, ExosuitDesign>;
 };
 
 export const ExosuitFabricator = (props) => {

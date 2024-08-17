@@ -1,4 +1,5 @@
 /obj/machinery/chem_heater
+	SET_BASE_VISUAL_PIXEL(0, DEPTH_OFFSET)
 	name = "reaction chamber" //Maybe this name is more accurate?
 	density = TRUE
 	pass_flags_self = PASSMACHINE | LETPASSTHROW
@@ -25,9 +26,6 @@
 	create_reagents(200, NO_REACT)
 	register_context()
 
-/obj/machinery/chem_heater/on_deconstruction()
-	beaker?.forceMove(drop_location())
-
 /obj/machinery/chem_heater/Destroy()
 	if(beaker)
 		UnregisterSignal(beaker.reagents, COMSIG_REAGENTS_REACTION_STEP)
@@ -40,81 +38,6 @@
 		UnregisterSignal(beaker.reagents, COMSIG_REAGENTS_REACTION_STEP)
 		beaker = null
 		update_appearance()
-
-/obj/machinery/chem_heater/update_icon_state()
-	icon_state = "[base_icon_state][beaker ? 1 : 0]b"
-	return ..()
-
-/obj/machinery/chem_heater/attack_hand_secondary(mob/user, list/modifiers)
-	. = ..()
-	if(. == SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN)
-		return
-	if(!user.can_perform_action(src, ALLOW_SILICON_REACH | FORBID_TELEKINESIS_REACH))
-		return
-	replace_beaker(user)
-	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
-
-/obj/machinery/chem_heater/attack_robot_secondary(mob/user, list/modifiers)
-	return attack_hand_secondary(user, modifiers)
-
-/obj/machinery/chem_heater/attack_ai_secondary(mob/user, list/modifiers)
-	return attack_hand_secondary(user, modifiers)
-
-/**
- * Replace or eject the beaker inside this machine
- * Arguments
- * * mob/living/user - the player operating this machine
- * * obj/item/reagent_containers/new_beaker - the new beaker to replace the current one if not null else it will just eject
- */
-/obj/machinery/chem_heater/proc/replace_beaker(mob/living/user, obj/item/reagent_containers/new_beaker)
-	PRIVATE_PROC(TRUE)
-
-	if(!QDELETED(beaker))
-		try_put_in_hand(beaker, user)
-
-	if(!QDELETED(new_beaker))
-		if(!user.transferItemToLoc(new_beaker, src))
-			update_appearance()
-			return FALSE
-		beaker = new_beaker
-		RegisterSignal(beaker.reagents, COMSIG_REAGENTS_REACTION_STEP, TYPE_PROC_REF(/obj/machinery/chem_heater, on_reaction_step))
-
-	update_appearance()
-
-	return TRUE
-
-/obj/machinery/chem_heater/RefreshParts()
-	. = ..()
-	heater_coefficient = 0.1
-	for(var/datum/stock_part/micro_laser/micro_laser in component_parts)
-		heater_coefficient *= micro_laser.tier
-
-/**
- * Heats the reagents of the currently inserted beaker only if machine is on & beaker has some reagents inside
- * Arguments
- * * seconds_per_tick - passed from process() or from reaction_step()
- */
-/obj/machinery/chem_heater/proc/heat_reagents(seconds_per_tick)
-	PRIVATE_PROC(TRUE)
-
-	//must be on and beaker must have something inside to heat
-	if(!on || (machine_stat & NOPOWER) || QDELETED(beaker) || !beaker.reagents.total_volume)
-		return FALSE
-
-	//heat the beaker and use some power. we want to use only a small amount of power since this proc gets called frequently
-	beaker.reagents.adjust_thermal_energy((target_temperature - beaker.reagents.chem_temp) * heater_coefficient * seconds_per_tick * SPECIFIC_HEAT_DEFAULT * beaker.reagents.total_volume)
-	use_power(active_power_usage * seconds_per_tick * 0.3)
-	return TRUE
-
-/obj/machinery/chem_heater/proc/on_reaction_step(datum/reagents/holder, num_reactions, seconds_per_tick)
-	SIGNAL_HANDLER
-
-	//adjust temp
-	heat_reagents(seconds_per_tick)
-
-	//send updates to ui. faster than SStgui.update_uis
-	for(var/datum/tgui/ui in src.open_uis)
-		ui.send_update()
 
 /obj/machinery/chem_heater/add_context(atom/source, list/context, obj/item/held_item, mob/user)
 	if(isnull(held_item) || (held_item.item_flags & ABSTRACT) || (held_item.flags_1 & HOLOGRAM_1))
@@ -157,6 +80,124 @@
 		else
 			. += span_notice("Its panel can be [EXAMINE_HINT("pried")] open")
 
+/obj/machinery/chem_heater/update_icon_state()
+	icon_state = "[base_icon_state][beaker ? 1 : 0]b"
+	return ..()
+
+/obj/machinery/chem_heater/RefreshParts()
+	. = ..()
+	heater_coefficient = 0.1
+	for(var/datum/stock_part/micro_laser/micro_laser in component_parts)
+		heater_coefficient *= micro_laser.tier
+
+/obj/machinery/chem_heater/item_interaction(mob/living/user, obj/item/held_item, list/modifiers)
+	if(user.combat_mode || (held_item.item_flags & ABSTRACT) || (held_item.flags_1 & HOLOGRAM_1) || !user.can_perform_action(src, ALLOW_SILICON_REACH | FORBID_TELEKINESIS_REACH))
+		return NONE
+
+	if(!QDELETED(beaker))
+		if(istype(held_item, /obj/item/reagent_containers/dropper) || istype(held_item, /obj/item/reagent_containers/syringe))
+			var/obj/item/reagent_containers/injector = held_item
+			injector.interact_with_atom(beaker, user, modifiers)
+			return ITEM_INTERACT_SUCCESS
+
+	if(is_reagent_container(held_item)  && held_item.is_open_container())
+		if(replace_beaker(user, held_item))
+			ui_interact(user)
+		balloon_alert(user, "beaker added")
+		return ITEM_INTERACT_SUCCESS
+
+	return NONE
+
+/obj/machinery/chem_heater/wrench_act(mob/living/user, obj/item/tool)
+	if(user.combat_mode)
+		return NONE
+
+	. = ITEM_INTERACT_BLOCKING
+	if(default_unfasten_wrench(user, tool) == SUCCESSFUL_UNFASTEN)
+		return ITEM_INTERACT_SUCCESS
+
+/obj/machinery/chem_heater/screwdriver_act(mob/living/user, obj/item/tool)
+	if(user.combat_mode)
+		return NONE
+
+	. = ITEM_INTERACT_BLOCKING
+	if(default_deconstruction_screwdriver(user, "mixer0b", "[base_icon_state][beaker ? 1 : 0]b", tool))
+		return ITEM_INTERACT_SUCCESS
+
+/obj/machinery/chem_heater/crowbar_act(mob/living/user, obj/item/tool)
+	if(user.combat_mode)
+		return NONE
+
+	. = ITEM_INTERACT_BLOCKING
+	if(default_deconstruction_crowbar(tool))
+		return ITEM_INTERACT_SUCCESS
+
+/obj/machinery/chem_heater/attack_hand_secondary(mob/user, list/modifiers)
+	. = ..()
+	if(. == SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN)
+		return
+	if(!user.can_perform_action(src, ALLOW_SILICON_REACH | FORBID_TELEKINESIS_REACH))
+		return
+	replace_beaker(user)
+	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+
+/obj/machinery/chem_heater/attack_robot_secondary(mob/user, list/modifiers)
+	return attack_hand_secondary(user, modifiers)
+
+/obj/machinery/chem_heater/attack_ai_secondary(mob/user, list/modifiers)
+	return attack_hand_secondary(user, modifiers)
+
+/**
+ * Replace or eject the beaker inside this machine
+ * Arguments
+ * * mob/living/user - the player operating this machine
+ * * obj/item/reagent_containers/new_beaker - the new beaker to replace the current one if not null else it will just eject
+ */
+/obj/machinery/chem_heater/proc/replace_beaker(mob/living/user, obj/item/reagent_containers/new_beaker)
+	PRIVATE_PROC(TRUE)
+
+	if(!QDELETED(beaker))
+		try_put_in_hand(beaker, user)
+
+	if(!QDELETED(new_beaker))
+		if(!user.transferItemToLoc(new_beaker, src))
+			update_appearance()
+			return FALSE
+		beaker = new_beaker
+		RegisterSignal(beaker.reagents, COMSIG_REAGENTS_REACTION_STEP, TYPE_PROC_REF(/obj/machinery/chem_heater, on_reaction_step))
+
+	update_appearance()
+
+	return TRUE
+
+/**
+ * Heats the reagents of the currently inserted beaker only if machine is on & beaker has some reagents inside
+ * Arguments
+ * * seconds_per_tick - passed from process() or from reaction_step()
+ */
+/obj/machinery/chem_heater/proc/heat_reagents(seconds_per_tick)
+	PRIVATE_PROC(TRUE)
+
+	//must be on and beaker must have something inside to heat
+	if(!on || !is_operational || QDELETED(beaker) || !beaker.reagents.total_volume)
+		return FALSE
+
+	//heat the beaker and use some power. we want to use only a small amount of power since this proc gets called frequently
+	var/energy = (target_temperature - beaker.reagents.chem_temp) * heater_coefficient * seconds_per_tick * beaker.reagents.heat_capacity()
+	beaker.reagents.adjust_thermal_energy(energy)
+	use_energy(active_power_usage + abs(ROUND_UP(energy) / 120))
+	return TRUE
+
+/obj/machinery/chem_heater/proc/on_reaction_step(datum/reagents/holder, num_reactions, seconds_per_tick)
+	SIGNAL_HANDLER
+
+	//adjust temp
+	heat_reagents(seconds_per_tick)
+
+	//send updates to ui. faster than SStgui.update_uis
+	for(var/datum/tgui/ui in src.open_uis)
+		ui.send_update()
+
 /obj/machinery/chem_heater/process(seconds_per_tick)
 	//is_reacting is handled in reaction_step()
 	if(QDELETED(beaker) || beaker.reagents.is_reacting)
@@ -169,39 +210,6 @@
 	//send updates to ui. faster than SStgui.update_uis
 	for(var/datum/tgui/ui in src.open_uis)
 		ui.send_update()
-
-/obj/machinery/chem_heater/wrench_act(mob/living/user, obj/item/tool)
-	. = ITEM_INTERACT_BLOCKING
-	if(default_unfasten_wrench(user, tool) == SUCCESSFUL_UNFASTEN)
-		return ITEM_INTERACT_SUCCESS
-
-/obj/machinery/chem_heater/screwdriver_act(mob/living/user, obj/item/tool)
-	. = ITEM_INTERACT_BLOCKING
-	if(default_deconstruction_screwdriver(user, "mixer0b", "[base_icon_state][beaker ? 1 : 0]b", tool))
-		return ITEM_INTERACT_SUCCESS
-
-/obj/machinery/chem_heater/crowbar_act(mob/living/user, obj/item/tool)
-	. = ITEM_INTERACT_BLOCKING
-	if(default_deconstruction_crowbar(tool))
-		return ITEM_INTERACT_SUCCESS
-
-/obj/machinery/chem_heater/attackby(obj/item/held_item, mob/user, params)
-	if((held_item.item_flags & ABSTRACT) || (held_item.flags_1 & HOLOGRAM_1))
-		return ..()
-
-	if(beaker)
-		if(istype(held_item, /obj/item/reagent_containers/dropper) || istype(held_item, /obj/item/reagent_containers/syringe))
-			var/obj/item/reagent_containers/injector = held_item
-			injector.afterattack(beaker, user, proximity_flag = TRUE)
-			return TRUE
-
-	if(is_reagent_container(held_item)  && held_item.is_open_container())
-		if(replace_beaker(user, held_item))
-			ui_interact(user)
-		balloon_alert(user, "beaker added!")
-		return TRUE
-
-	return ..()
 
 /obj/machinery/chem_heater/ui_interact(mob/user, datum/tgui/ui)
 	ui = SStgui.try_update_ui(user, src, ui)
@@ -220,13 +228,12 @@
 	if(!QDELETED(beaker))
 		beaker_data = list()
 		beaker_data["maxVolume"] = beaker.volume
-		beaker_data["transferAmounts"] = beaker.possible_transfer_amounts
 		beaker_data["pH"] = round(beaker.reagents.ph, 0.01)
-		beaker_data["currentVolume"] = round(beaker.reagents.total_volume, 0.01)
+		beaker_data["currentVolume"] = round(beaker.reagents.total_volume, CHEMICAL_VOLUME_ROUNDING)
 		var/list/beakerContents = list()
 		if(length(beaker.reagents.reagent_list))
 			for(var/datum/reagent/reagent in beaker.reagents.reagent_list)
-				beakerContents += list(list("name" = reagent.name, "volume" = round(reagent.volume, 0.01))) // list in a list because Byond merges the first list...
+				beakerContents += list(list("name" = reagent.name, "volume" = round(reagent.volume, CHEMICAL_VOLUME_ROUNDING))) // list in a list because Byond merges the first list...
 		beaker_data["contents"] = beakerContents
 		chem_temp = beaker.reagents.chem_temp
 	.["beaker"] = beaker_data
@@ -234,15 +241,13 @@
 
 	var/list/active_reactions = list()
 	var/flashing = DISABLE_FLASHING //for use with alertAfter - since there is no alertBefore, I set the after to 0 if true, or to the max value if false
-	for(var/_reaction in beaker?.reagents.reaction_list)
-		var/datum/equilibrium/equilibrium = _reaction
+	for(var/datum/equilibrium/equilibrium as anything in beaker?.reagents.reaction_list)
 		if(!equilibrium.reaction.results)//Incase of no result reactions
 			continue
-		var/_reagent = equilibrium.reaction.results[1]
-		var/datum/reagent/reagent = beaker?.reagents.has_reagent(_reagent) //Reactions are named after their primary products
+		var/datum/reagents/beaker_reagents = beaker.reagents
+		var/datum/reagent/reagent = beaker_reagents.has_reagent(equilibrium.reaction.results[1]) //Reactions are named after their primary products
 		if(!reagent)
 			continue
-		var/datum/reagents/beaker_reagents = beaker.reagents
 
 		//check for danger levels primirarly overheating
 		var/overheat = FALSE
@@ -366,12 +371,11 @@
 
 	//trying to absorb buffer from currently inserted beaker
 	if(volume < 0)
-		var/datum/reagent/buffer_reagent = reagents.has_reagent(buffer_type)
-		if(!buffer_reagent)
+		if(!beaker.reagents.has_reagent(buffer_type))
 			var/name = initial(buffer_type.name)
 			say("Unable to find [name] in beaker to draw from! Please insert a beaker containing [name].")
 			return FALSE
-		beaker.reagents.trans_to(src, (reagents.maximum_volume / 2) - buffer_reagent.volume, target_id = buffer_type)
+		beaker.reagents.trans_to(src, (reagents.maximum_volume / 2) - reagents.get_reagent_amount(buffer_type), target_id = buffer_type)
 		return TRUE
 
 	//trying to inject buffer into currently inserted beaker

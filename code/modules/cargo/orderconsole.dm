@@ -178,6 +178,7 @@
 			"desc" = P.desc || P.name, // If there is a description, use it. Otherwise use the pack's name.
 			"goody" = P.goody,
 			"access" = P.access,
+			"contraband" = P.contraband,
 		))
 	return data
 
@@ -206,7 +207,7 @@
 		var/mob/living/carbon/human/human = user
 		name = human.get_authentification_name()
 		rank = human.get_assignment(hand_first = TRUE)
-	else if(issilicon(user))
+	else if(HAS_SILICON_ACCESS(user))
 		name = user.real_name
 		rank = "Silicon"
 

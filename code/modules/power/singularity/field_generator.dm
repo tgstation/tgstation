@@ -51,6 +51,8 @@ no power level overlay is currently in the overlays list.
 	var/list/obj/machinery/field/generator/connected_gens = list()
 	///Check for asynk cleanups for this and the connected gens
 	var/clean_up = FALSE
+	/// we warm up and cool down instantly
+	var/instantenous = FALSE
 
 /datum/armor/field_generator
 	melee = 25
@@ -207,6 +209,10 @@ no power level overlay is currently in the overlays list.
 	can_atmos_pass = ATMOS_PASS_YES
 	air_update_turf(TRUE, FALSE)
 	INVOKE_ASYNC(src, PROC_REF(cleanup))
+	RemoveElement(/datum/element/give_turf_traits, string_list(list(TRAIT_CONTAINMENT_FIELD)))
+	if(instantenous)
+		warming_up = 0
+		return
 	addtimer(CALLBACK(src, PROC_REF(cool_down)), 5 SECONDS)
 
 /obj/machinery/field/generator/proc/cool_down()
@@ -218,6 +224,12 @@ no power level overlay is currently in the overlays list.
 		addtimer(CALLBACK(src, PROC_REF(cool_down)), 5 SECONDS)
 
 /obj/machinery/field/generator/proc/turn_on()
+	AddElement(/datum/element/give_turf_traits, string_list(list(TRAIT_CONTAINMENT_FIELD)))
+	if(instantenous)
+		active = FG_ONLINE
+		warming_up = 3
+		start_fields()
+		return
 	active = FG_CHARGING
 	addtimer(CALLBACK(src, PROC_REF(warm_up)), 5 SECONDS)
 
@@ -283,11 +295,11 @@ no power level overlay is currently in the overlays list.
 	set_explosion_block(INFINITY)
 	can_atmos_pass = ATMOS_PASS_NO
 	air_update_turf(TRUE, TRUE)
-	addtimer(CALLBACK(src, PROC_REF(setup_field), 1), 1)
-	addtimer(CALLBACK(src, PROC_REF(setup_field), 2), 2)
-	addtimer(CALLBACK(src, PROC_REF(setup_field), 4), 3)
-	addtimer(CALLBACK(src, PROC_REF(setup_field), 8), 4)
-	addtimer(VARSET_CALLBACK(src, active, FG_ONLINE), 5)
+	addtimer(CALLBACK(src, PROC_REF(setup_field), 1), 0.1 SECONDS)
+	addtimer(CALLBACK(src, PROC_REF(setup_field), 2), 0.2 SECONDS)
+	addtimer(CALLBACK(src, PROC_REF(setup_field), 4), 0.3 SECONDS)
+	addtimer(CALLBACK(src, PROC_REF(setup_field), 8), 0.4 SECONDS)
+	addtimer(VARSET_CALLBACK(src, active, FG_ONLINE), 0.5 SECONDS)
 
 /obj/machinery/field/generator/proc/setup_field(NSEW)
 	var/turf/current_turf = loc
@@ -412,6 +424,25 @@ no power level overlay is currently in the overlays list.
 /obj/machinery/field/generator/bump_field(atom/movable/AM as mob|obj)
 	if(fields.len)
 		..()
+
+/obj/machinery/field/generator/starts_on
+	anchored = TRUE
+	state = FG_WELDED
+
+/obj/machinery/field/generator/starts_on/Initialize(mapload)
+	. = ..()
+	return INITIALIZE_HINT_LATELOAD
+
+/obj/machinery/field/generator/starts_on/post_machine_initialize()
+	. = ..()
+	turn_on()
+
+/obj/machinery/field/generator/starts_on/magic
+	power_level = 6 //forces the highest level overlay
+	instantenous = TRUE
+
+/obj/machinery/field/generator/starts_on/magic/process()
+	return PROCESS_KILL // this is the only place calc_power is called, and doing it here avoids one unnecessary proc call
 
 #undef FG_UNSECURED
 #undef FG_SECURED

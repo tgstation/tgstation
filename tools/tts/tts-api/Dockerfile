@@ -2,7 +2,7 @@
 FROM debian:bullseye-slim
 
 # install required packages
-RUN apt-get update && apt-get upgrade && apt-get install -y ffmpeg wget curl &&\
+RUN apt-get update && apt-get upgrade -y && apt-get install -y ffmpeg wget curl &&\
     apt-get clean && \
     rm -rf /var/lib/apt/lists/*
 
@@ -24,6 +24,8 @@ SHELL ["conda", "run", "-n", "intel", "/bin/bash", "-c"]
 # Setup python requirements and install the TTS python module into the new intel anaconda environment.
 RUN pip install Flask &&\
 	pip install waitress &&\
+	pip install pysbd &&\
+	pip install pydub &&\
 	pip cache purge
 
 COPY . /root

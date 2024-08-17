@@ -109,7 +109,7 @@
 		if (can_create[create_path] == 0)
 			continue
 		can_create[create_path] = can_create[create_path] - 1
-		new create_path(pick(anomaly_positions), new_lifespan = rand(150, 300), drops_core = FALSE)
+		new create_path(pick(anomaly_positions), /*new_lifespan = */rand(15 SECONDS, 30 SECONDS), /*drops_core = */FALSE)
 		to_create--
 
 #undef MIN_ANOMALIES_CREATED
@@ -335,7 +335,7 @@
 /obj/effect/abstract/local_food_rain/proc/drop_food(turf/landing_zone)
 	podspawn(list(
 			"target" = landing_zone,
-			"style" = STYLE_SEETHROUGH,
+			"style" = /datum/pod_style/seethrough,
 			"spawn" = get_random_food(),
 			"delays" = list(POD_TRANSIT = 0, POD_FALLING = (3 SECONDS), POD_OPENING = 0, POD_LEAVING = 0),
 			"effectStealth" = TRUE,

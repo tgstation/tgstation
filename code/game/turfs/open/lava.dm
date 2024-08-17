@@ -40,6 +40,9 @@
 	var/mask_state = "lava-lightmask"
 	/// The type for the preset fishing spot of this type of turf.
 	var/fish_source_type = /datum/fish_source/lavaland
+	/// The color we use for our immersion overlay
+	var/immerse_overlay_color = "#a15e1b"
+	rust_resistance = RUST_RESISTANCE_ABSOLUTE
 
 /turf/open/lava/Initialize(mapload)
 	. = ..()
@@ -48,11 +51,12 @@
 	refresh_light()
 	if(!smoothing_flags)
 		update_appearance()
-
+	AddElement(/datum/element/immerse, icon, icon_state, "immerse", immerse_overlay_color)
 
 /turf/open/lava/Destroy()
 	for(var/mob/living/leaving_mob in contents)
-		REMOVE_TRAIT(leaving_mob, TRAIT_PERMANENTLY_ONFIRE, TURF_TRAIT)
+		leaving_mob.RemoveElement(/datum/element/perma_fire_overlay)
+		REMOVE_TRAIT(leaving_mob, TRAIT_NO_EXTINGUISH, TURF_TRAIT)
 	return ..()
 
 /turf/open/lava/update_overlays()
@@ -144,7 +148,8 @@
 /turf/open/lava/Exited(atom/movable/gone, direction)
 	. = ..()
 	if(isliving(gone) && !islava(gone.loc))
-		REMOVE_TRAIT(gone, TRAIT_PERMANENTLY_ONFIRE, TURF_TRAIT)
+		gone.RemoveElement(/datum/element/perma_fire_overlay)
+		REMOVE_TRAIT(gone, TRAIT_NO_EXTINGUISH, TURF_TRAIT)
 
 /turf/open/lava/hitby(atom/movable/AM, skipcatch, hitpush, blocked, datum/thrownthing/throwingdatum)
 	if(burn_stuff(AM))
@@ -160,12 +165,9 @@
 	return FALSE
 
 /turf/open/lava/rcd_act(mob/user, obj/item/construction/rcd/the_rcd, list/rcd_data)
-	if(rcd_data["[RCD_DESIGN_MODE]"] == RCD_TURF && rcd_data["[RCD_DESIGN_PATH]"] == /turf/open/floor/plating/rcd)
+	if(rcd_data[RCD_DESIGN_MODE] == RCD_TURF && rcd_data[RCD_DESIGN_PATH] == /turf/open/floor/plating/rcd)
 		place_on_top(/turf/open/floor/plating, flags = CHANGETURF_INHERIT_AIR)
 		return TRUE
-	return FALSE
-
-/turf/open/lava/rust_heretic_act()
 	return FALSE
 
 /turf/open/lava/singularity_act()
@@ -203,8 +205,8 @@
 			to_chat(user, span_warning("You need one rod to build a heatproof lattice."))
 		return
 	// Light a cigarette in the lava
-	if(istype(C, /obj/item/clothing/mask/cigarette))
-		var/obj/item/clothing/mask/cigarette/ciggie = C
+	if(istype(C, /obj/item/cigarette))
+		var/obj/item/cigarette/ciggie = C
 		if(ciggie.lit)
 			to_chat(user, span_warning("The [ciggie.name] is already lit!"))
 			return TRUE
@@ -247,7 +249,7 @@
 /turf/open/lava/proc/can_burn_stuff(atom/movable/burn_target)
 	if(QDELETED(burn_target))
 		return LAVA_BE_IGNORING
-	if(burn_target.movement_type & MOVETYPES_NOT_TOUCHING_GROUND) //you're flying over it.
+	if(burn_target.movement_type & MOVETYPES_NOT_TOUCHING_GROUND || !burn_target.has_gravity()) //you're flying over it.
 		return LAVA_BE_IGNORING
 
 	if(isobj(burn_target))
@@ -266,7 +268,7 @@
 	var/mob/living/burn_living = burn_target
 	var/atom/movable/burn_buckled = burn_living.buckled
 	if(burn_buckled)
-		if(burn_buckled.movement_type & MOVETYPES_NOT_TOUCHING_GROUND)
+		if(burn_buckled.movement_type & MOVETYPES_NOT_TOUCHING_GROUND || !burn_buckled.has_gravity())
 			return LAVA_BE_PROCESSING
 		if(isobj(burn_buckled))
 			var/obj/burn_buckled_obj = burn_buckled
@@ -292,11 +294,10 @@
 	if(QDELETED(burn_target))
 		return FALSE
 
-	. = TRUE
 	if(isobj(burn_target))
 		var/obj/burn_obj = burn_target
 		if(burn_obj.resistance_flags & ON_FIRE) // already on fire; skip it.
-			return
+			return TRUE
 		if(!(burn_obj.resistance_flags & FLAMMABLE))
 			burn_obj.resistance_flags |= FLAMMABLE //Even fireproof things burn up in lava
 		if(burn_obj.resistance_flags & FIRE_PROOF)
@@ -305,17 +306,21 @@
 			burn_obj.set_armor_rating(FIRE, 50)
 		burn_obj.fire_act(temperature_damage, 1000 * seconds_per_tick)
 		if(istype(burn_obj, /obj/structure/closet))
-			var/obj/structure/closet/burn_closet = burn_obj
-			for(var/burn_content in burn_closet.contents)
+			for(var/burn_content in burn_target)
 				burn_stuff(burn_content)
-		return
+		return TRUE
 
-	var/mob/living/burn_living = burn_target
-	ADD_TRAIT(burn_living, TRAIT_PERMANENTLY_ONFIRE, TURF_TRAIT)
-	burn_living.ignite_mob()
-	burn_living.adjust_fire_stacks(lava_firestacks * seconds_per_tick)
-	burn_living.update_fire()
-	burn_living.adjustFireLoss(lava_damage * seconds_per_tick)
+	if(isliving(burn_target))
+		var/mob/living/burn_living = burn_target
+		if(!HAS_TRAIT_FROM(burn_living, TRAIT_NO_EXTINGUISH, TURF_TRAIT))
+			burn_living.AddElement(/datum/element/perma_fire_overlay)
+			ADD_TRAIT(burn_living, TRAIT_NO_EXTINGUISH, TURF_TRAIT)
+		burn_living.adjust_fire_stacks(lava_firestacks * seconds_per_tick)
+		burn_living.ignite_mob()
+		burn_living.adjustFireLoss(lava_damage * seconds_per_tick)
+		return TRUE
+
+	return FALSE
 
 /turf/open/lava/can_cross_safely(atom/movable/crossing)
 	return HAS_TRAIT(src, TRAIT_LAVA_STOPPED) || HAS_TRAIT(crossing, immunity_trait ) || HAS_TRAIT(crossing, TRAIT_MOVE_FLYING)
@@ -332,6 +337,7 @@
 	smoothing_groups = SMOOTH_GROUP_TURF_OPEN + SMOOTH_GROUP_FLOOR_LAVA
 	canSmoothWith = SMOOTH_GROUP_FLOOR_LAVA
 	underfloor_accessibility = 2 //This avoids strangeness when routing pipes / wires along catwalks over lava
+	immerse_overlay_color = "#F98511"
 
 /turf/open/lava/smooth/lava_land_surface
 	initial_gas_mix = LAVALAND_DEFAULT_ATMOS
@@ -355,6 +361,7 @@
 	immunity_trait = TRAIT_SNOWSTORM_IMMUNE
 	immunity_resistance_flags = FREEZE_PROOF
 	lava_temperature = 100
+	immerse_overlay_color = "#CD4C9F"
 
 /turf/open/lava/plasma/examine(mob/user)
 	. = ..()

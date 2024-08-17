@@ -16,8 +16,10 @@ PROCESSING_SUBSYSTEM_DEF(station)
 	///A list of trait roles that should never be able to roll antag
 	var/list/antag_restricted_roles = list()
 
-/datum/controller/subsystem/processing/station/Initialize()
+	/// Assosciative list of station goal type -> goal instance
+	var/list/datum/station_goal/goals_by_type = list()
 
+/datum/controller/subsystem/processing/station/Initialize()
 	//If doing unit tests we don't do none of that trait shit ya know?
 	// Autowiki also wants consistent outputs, for example making sure the vending machine page always reports the normal products
 	#if !defined(UNIT_TESTS) && !defined(AUTOWIKI)
@@ -29,6 +31,45 @@ PROCESSING_SUBSYSTEM_DEF(station)
 	SSparallax.post_station_setup() //Apply station effects that parallax might have
 
 	return SS_INIT_SUCCESS
+
+/datum/controller/subsystem/processing/station/Recover()
+	station_traits = SSstation.station_traits
+	selectable_traits_by_types = SSstation.selectable_traits_by_types
+	announcer = SSstation.announcer
+	antag_protected_roles = SSstation.antag_protected_roles
+	antag_restricted_roles = SSstation.antag_restricted_roles
+	goals_by_type = SSstation.goals_by_type
+	..()
+
+/// This gets called by SSdynamic during initial gamemode setup.
+/// This is done because for a greenshift we want all goals to be generated
+/datum/controller/subsystem/processing/station/proc/generate_station_goals(goal_budget)
+	var/list/possible = subtypesof(/datum/station_goal)
+
+	var/goal_weights = 0
+	var/chosen_goals = list()
+	var/is_planetary = SSmapping.is_planetary()
+	while(possible.len && goal_weights < goal_budget)
+		var/datum/station_goal/picked = pick_n_take(possible)
+		if(picked::requires_space && is_planetary)
+			continue
+
+		goal_weights += initial(picked.weight)
+		chosen_goals += picked
+
+	for(var/chosen in chosen_goals)
+		new chosen()
+
+/// Returns all station goals that are currently active
+/datum/controller/subsystem/processing/station/proc/get_station_goals()
+	var/list/goals = list()
+	for(var/goal_type in goals_by_type)
+		goals += goals_by_type[goal_type]
+	return goals
+
+/// Returns a specific station goal by type
+/datum/controller/subsystem/processing/station/proc/get_station_goal(goal_type)
+	return goals_by_type[goal_type]
 
 ///Rolls for the amount of traits and adds them to the traits list
 /datum/controller/subsystem/processing/station/proc/SetupTraits()
@@ -54,8 +95,7 @@ PROCESSING_SUBSYSTEM_DEF(station)
 
 		return
 
-	for(var/i in subtypesof(/datum/station_trait))
-		var/datum/station_trait/trait_typepath = i
+	for(var/datum/station_trait/trait_typepath as anything in subtypesof(/datum/station_trait))
 
 		// If forced, (probably debugging), just set it up now, keep it out of the pool.
 		if(initial(trait_typepath.force))
@@ -71,11 +111,28 @@ PROCESSING_SUBSYSTEM_DEF(station)
 		if(!(initial(trait_typepath.trait_flags) & STATION_TRAIT_SPACE_BOUND) && !SSmapping.is_planetary()) //we're in space but we can't do space ;_;
 			continue
 
+		if(!(initial(trait_typepath.trait_flags) & STATION_TRAIT_REQUIRES_AI) && !CONFIG_GET(flag/allow_ai)) //can't have AI traits without AI
+			continue
+
+		if(ispath(trait_typepath, /datum/station_trait/random_event_weight_modifier)) //Don't add event modifiers for events that can't occur on our map.
+			var/datum/station_trait/random_event_weight_modifier/random_trait_typepath = trait_typepath
+			var/datum/round_event_control/event_to_check = initial(random_trait_typepath.event_control_path)
+			if(event_to_check)
+				event_to_check = new event_to_check()
+				if(!event_to_check.valid_for_map())
+					continue
+
 		selectable_traits_by_types[initial(trait_typepath.trait_type)][trait_typepath] = initial(trait_typepath.weight)
 
 	var/positive_trait_budget = text2num(pick_weight(CONFIG_GET(keyed_list/positive_station_traits)))
 	var/neutral_trait_budget = text2num(pick_weight(CONFIG_GET(keyed_list/neutral_station_traits)))
 	var/negative_trait_budget = text2num(pick_weight(CONFIG_GET(keyed_list/negative_station_traits)))
+
+#ifdef MAP_TEST
+	positive_trait_budget = 0
+	neutral_trait_budget = 0
+	negative_trait_budget = 0
+#endif
 
 	pick_traits(STATION_TRAIT_POSITIVE, positive_trait_budget)
 	pick_traits(STATION_TRAIT_NEUTRAL, neutral_trait_budget)

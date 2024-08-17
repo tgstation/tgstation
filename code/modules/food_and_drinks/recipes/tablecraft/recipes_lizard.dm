@@ -74,7 +74,8 @@
 		/obj/item/food/grown/garlic = 1,
 		/datum/reagent/consumable/lemonjuice = 3,
 		/datum/reagent/consumable/blackpepper = 2,
-		/datum/reagent/consumable/nutriment/fat/oil/olive = 3
+		/datum/reagent/consumable/nutriment/fat/oil/olive = 3,
+		/obj/item/reagent_containers/cup/bowl = 1,
 	)
 	result = /obj/item/food/lizard_escargot
 	category = CAT_LIZARD
@@ -94,7 +95,8 @@
 	reqs = list(
 		/obj/item/food/fries = 1,
 		/obj/item/food/meat/cutlet = 2,
-		/datum/reagent/consumable/bbqsauce = 5
+		/datum/reagent/consumable/bbqsauce = 5,
+		/obj/item/plate = 1,
 	)
 	result = /obj/item/food/lizard_fries
 	category = CAT_LIZARD
@@ -478,6 +480,10 @@
 
 /datum/crafting_recipe/food/reaction/soup/jellyfish_stew
 	reaction = /datum/chemical_reaction/food/soup/jellyfish_stew
+	category = CAT_LIZARD
+
+/datum/crafting_recipe/food/reaction/soup/jellyfish_stew_two
+	reaction = /datum/chemical_reaction/food/soup/jellyfish_stew_two
 	category = CAT_LIZARD
 
 /datum/crafting_recipe/food/reaction/soup/rootbread_soup

@@ -13,6 +13,12 @@
 /obj/item/ammo_box/magazine/internal/shot/tube/fire
 	ammo_type = /obj/projectile/bullet/incendiary/shotgun/no_trail
 
+/obj/item/ammo_box/magazine/internal/shot/tube/buckshot
+	ammo_type = /obj/item/ammo_casing/shotgun/buckshot
+
+/obj/item/ammo_box/magazine/internal/shot/tube/slug
+	ammo_type = /obj/item/ammo_casing/shotgun
+
 /obj/item/ammo_box/magazine/internal/shot/lethal
 	ammo_type = /obj/item/ammo_casing/shotgun/buckshot
 
@@ -46,3 +52,8 @@
 	name = "triple-barrel shotgun internal magazine"
 	ammo_type = /obj/item/ammo_casing/shotgun/incapacitate
 	max_ammo = 3
+
+/obj/item/ammo_box/magazine/internal/shot/musket
+	name = "donk co musket internal magazine"
+	ammo_type = /obj/item/ammo_casing/shotgun/fletchette
+	max_ammo = 1

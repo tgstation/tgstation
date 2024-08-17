@@ -22,9 +22,9 @@
 
 /obj/machinery/component_printer/Initialize(mapload)
 	. = ..()
-	materials = AddComponent(/datum/component/remote_materials, mapload)
+	materials = AddComponent(/datum/component/remote_materials, mapload, whitelist_typecache = typecacheof(/obj/item/circuit_component))
 
-/obj/machinery/component_printer/LateInitialize()
+/obj/machinery/component_printer/post_machine_initialize()
 	. = ..()
 	if(!CONFIG_GET(flag/no_default_techweb_link) && !techweb)
 		CONNECT_TO_RND_SERVER_ROUNDSTART(techweb, src)
@@ -184,8 +184,7 @@
 			"cost" = cost,
 			"id" = researched_design_id,
 			"categories" = design.category,
-			"icon" = "[icon_size == size32x32 ? "" : "[icon_size] "][design.id]",
-			"constructionTime" = -1
+			"icon" = "[icon_size == size32x32 ? "" : "[icon_size] "][design.id]"
 		)
 
 	data["designs"] = designs
@@ -193,13 +192,22 @@
 	return data
 
 /obj/machinery/component_printer/attackby(obj/item/weapon, mob/living/user, params)
-	if(istype(weapon, /obj/item/integrated_circuit) && !user.combat_mode)
-		var/obj/item/integrated_circuit/circuit = weapon
-		circuit.linked_component_printer = WEAKREF(src)
-		circuit.update_static_data_for_all_viewers()
-		balloon_alert(user, "successfully linked to the integrated circuit")
-		return
-	return ..()
+	if (user.combat_mode)
+		return ..()
+
+	var/obj/item/integrated_circuit/circuit
+	if(istype(weapon, /obj/item/integrated_circuit))
+		circuit = weapon
+	else if (istype(weapon, /obj/item/circuit_component/module))
+		var/obj/item/circuit_component/module/module = weapon
+		circuit = module.internal_circuit
+	if (isnull(circuit))
+		return ..()
+
+	circuit.linked_component_printer = WEAKREF(src)
+	circuit.update_static_data_for_all_viewers()
+	balloon_alert(user, "successfully linked to the integrated circuit")
+
 
 /obj/machinery/component_printer/crowbar_act(mob/living/user, obj/item/tool)
 	if(..())

@@ -53,3 +53,7 @@
 /area/station/cargo/miningoffice
 	name = "\improper Mining Office"
 	icon_state = "mining"
+
+/area/station/cargo/miningfoundry
+	name = "\improper Mining Foundry"
+	icon_state = "mining_foundry"

@@ -70,9 +70,8 @@ GLOBAL_LIST_EMPTY(exodrone_launchers)
 	else
 		name_counter[name] = 1
 	GLOB.exodrones += src
-	/// Cargo storage
-	create_storage(max_slots = EXODRONE_CARGO_SLOTS)
-	atom_storage.set_holdable(cant_hold_list = GLOB.blacklisted_cargo_types)
+	// Cargo storage
+	create_storage(max_slots = EXODRONE_CARGO_SLOTS, canthold = GLOB.blacklisted_cargo_types)
 
 /obj/item/exodrone/Destroy()
 	. = ..()
@@ -343,6 +342,7 @@ GLOBAL_LIST_EMPTY(exodrone_launchers)
 
 /// Exploration drone launcher
 /obj/machinery/exodrone_launcher
+	SET_BASE_VISUAL_PIXEL(0, DEPTH_OFFSET)
 	name = "exploration drone launcher"
 	desc = "A launch pad designed to send exploration drones into the great beyond."
 	icon = 'icons/obj/exploration.dmi'

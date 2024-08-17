@@ -65,7 +65,7 @@
 
 /datum/wires/airlock/interact(mob/user)
 	var/obj/machinery/door/airlock/airlock_holder = holder
-	if (!issilicon(user) && airlock_holder.isElectrified() && airlock_holder.shock(user, 100))
+	if (!HAS_SILICON_ACCESS(user) && airlock_holder.isElectrified() && airlock_holder.shock(user, 100))
 		return
 
 	return ..()
@@ -74,9 +74,9 @@
 	if(!..())
 		return FALSE
 	var/obj/machinery/door/airlock/airlock = holder
-	if(!issilicon(user) && !isdrone(user) && airlock.isElectrified())
+	if(!HAS_SILICON_ACCESS(user) && !isdrone(user) && airlock.isElectrified() && airlock.hasPower())
 		var/mob/living/carbon/carbon_user = user
-		if (!istype(carbon_user) || carbon_user.should_electrocute(src))
+		if (!istype(carbon_user) || carbon_user.should_electrocute(get_area(airlock)))
 			return FALSE
 	if(airlock.is_secure())
 		return FALSE
@@ -126,7 +126,7 @@
 			A.update_appearance()
 		if(WIRE_IDSCAN) // Pulse to disable emergency access and flash the red lights.
 			if(A.hasPower() && A.density)
-				A.do_animate("deny")
+				A.run_animation(DOOR_DENY_ANIMATION)
 				if(A.emergency)
 					A.emergency = FALSE
 					A.update_appearance()
