@@ -40434,7 +40434,9 @@
 /obj/structure/transport/linear/tram,
 /obj/structure/thermoplastic,
 /obj/structure/chair/sofa/bench/tram/left,
-/obj/machinery/computer/tram_controls/directional/north,
+/obj/machinery/computer/tram_controls/directional/north{
+	pixel_x = -11
+	},
 /turf/open/openspace,
 /area/station/hallway/primary/tram/center)
 "ndN" = (
@@ -46847,7 +46849,9 @@
 "pvI" = (
 /obj/structure/transport/linear/tram,
 /obj/structure/tram,
-/obj/machinery/transport/destination_sign,
+/obj/machinery/transport/destination_sign{
+	pixel_x = 11
+	},
 /turf/open/openspace,
 /area/station/hallway/primary/tram/center)
 "pvU" = (
@@ -47843,7 +47847,9 @@
 "pLs" = (
 /obj/structure/transport/linear/tram,
 /obj/structure/tram/outer,
-/obj/machinery/transport/destination_sign,
+/obj/machinery/transport/destination_sign{
+	pixel_x = -11
+	},
 /turf/open/openspace,
 /area/station/hallway/primary/tram/center)
 "pLH" = (
