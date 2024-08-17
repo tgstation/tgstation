@@ -837,6 +837,23 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 	if(dragged && button_clicked != dragged)
 		return
 
+	if(mob.turf_click_type != TURF_CLICK_FLAT && isturf(object) && length(modifiers))
+		//Split screen-loc up into X+Pixel_X and Y+Pixel_Y
+		var/list/screen_loc_params = splittext(modifiers[SCREEN_LOC], ",")
+		//Split Y+Pixel_Y up into list(Y, Pixel_Y)
+		var/list/screen_loc_Y = splittext(screen_loc_params[2],":")
+		var/pixel_offset = text2num(screen_loc_Y[2])
+		var/turf/below = get_step(object, SOUTH)
+		if(pixel_offset <= DEPTH_OFFSET && below)
+			object = below // Swap our target, cube click moment
+			if(mob.turf_click_type != TURF_CLICK_CUBE_KEEP_PARAMS)
+				if(modifiers[ICON_Y])
+					modifiers[ICON_Y] = WRAP(text2num(modifiers[ICON_Y]) - DEPTH_OFFSET, 0, world.icon_size)
+				screen_loc_Y[1] -= 1
+				screen_loc_Y[2] =  WRAP(pixel_offset - DEPTH_OFFSET, 0, world.icon_size)
+				screen_loc_params[2] = screen_loc_Y.Join(":")
+				modifiers[SCREEN_LOC] = screen_loc_params.Join(",")
+
 	if (object && IS_WEAKREF_OF(object, middle_drag_atom_ref) && button_clicked == LEFT_CLICK)
 		ab = max(0, 5 SECONDS-(world.time-middragtime)*0.1)
 

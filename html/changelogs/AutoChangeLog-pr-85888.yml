@@ -1,0 +1,5 @@
+author: "MrBagHead"
+delete-after: True
+changes:
+  - bugfix: "Swapped East and West sprites for access buttons to correct previous misalignment."
+  - rscadd: "Added South-facing sprite for access buttons."

@@ -118,6 +118,7 @@
 		desc = "A large piece of space-resistant printed paper. [desc]"
 
 	AddElement(/datum/element/beauty, 300)
+	AddComponent(/datum/component/examine_balloon, pixel_y_offset = 40, pixel_y_offset_arrow = 12)
 
 /// Adds contextual screentips
 /obj/structure/sign/poster/add_context(atom/source, list/context, obj/item/held_item, mob/user)
@@ -295,6 +296,6 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sign/poster/ripped, 32)
 		/obj/structure/sign/poster/abductor,
 	)
 
-MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sign/poster/random, 32)
+INVERT_MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sign/poster/random, 32)
 
 #undef PLACE_SPEED

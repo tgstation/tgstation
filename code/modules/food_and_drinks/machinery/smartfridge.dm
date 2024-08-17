@@ -440,6 +440,7 @@
 //  Drying 'smartfridge'
 // ----------------------------
 /obj/machinery/smartfridge/drying
+	SET_BASE_VISUAL_PIXEL(0, DEPTH_OFFSET)
 	name = "dehydrator"
 	desc = "A machine meant to remove moisture from various food."
 	icon_state = "dehydrator-icon"

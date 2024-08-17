@@ -2,7 +2,9 @@
 "a" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/table,
-/obj/effect/spawner/random/entertainment/deck,
+/obj/effect/spawner/random/entertainment/deck{
+	pixel_y = 7
+	},
 /turf/open/floor/iron/smooth,
 /area/station/maintenance/central/greater)
 "b" = (
@@ -26,7 +28,9 @@
 "s" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/table,
-/obj/effect/spawner/random/entertainment/dice,
+/obj/effect/spawner/random/entertainment/dice{
+	pixel_y = 8
+	},
 /turf/open/floor/iron/smooth,
 /area/station/maintenance/central/greater)
 "t" = (
@@ -35,7 +39,9 @@
 /area/station/maintenance/central/greater)
 "u" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/effect/decal/cleanable/cobweb/cobweb2,
+/obj/effect/decal/cleanable/cobweb/cobweb2{
+	pixel_y = 24
+	},
 /obj/structure/rack,
 /obj/effect/spawner/random/maintenance/four,
 /turf/open/floor/iron/smooth,
@@ -43,9 +49,10 @@
 "A" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/table,
-/obj/effect/spawner/random/contraband/narcotics,
-/obj/machinery/light/small/directional/north,
-/obj/structure/sign/poster/contraband/random/directional/north,
+/obj/effect/spawner/random/contraband/narcotics{
+	pixel_y = 10
+	},
+/obj/structure/sign/poster/contraband/random,
 /turf/open/floor/iron/smooth,
 /area/station/maintenance/central/greater)
 "B" = (
@@ -56,9 +63,17 @@
 "G" = (
 /turf/closed/wall,
 /area/station/maintenance/central/greater)
+"J" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/table,
+/obj/machinery/light/small/directional/east,
+/turf/open/floor/iron/smooth,
+/area/station/maintenance/central/greater)
 "X" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/effect/decal/cleanable/cobweb/cobweb2,
+/obj/effect/decal/cleanable/cobweb/cobweb2{
+	pixel_y = 24
+	},
 /turf/open/floor/iron/smooth,
 /area/station/maintenance/central/greater)
 
@@ -107,7 +122,7 @@ q
 q
 G
 u
-b
+J
 s
 b
 t

@@ -9,11 +9,10 @@
 /turf/open/floor/iron/dark,
 /area/ruin/syndicate_lava_base/testlab)
 "bs" = (
-/obj/machinery/button/door{
+/obj/machinery/button/door/directional/north{
 	id = "lavalandsyndi_mistake";
-	name = "Chemistry Blast Door Control";
-	pixel_y = 26;
-	req_access = list("syndicate")
+	req_access = list("syndicate");
+	name = "Supermatter Engine Blast Door Control"
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/cyan/visible,
 /obj/effect/turf_decal/stripes/line{
@@ -22,7 +21,6 @@
 /turf/open/floor/engine,
 /area/ruin/syndicate_lava_base/testlab)
 "dO" = (
-/obj/structure/sign/warning/explosives/alt/directional/west,
 /obj/machinery/atmospherics/components/tank/nitrogen{
 	dir = 4;
 	initialize_directions = 4
@@ -42,21 +40,28 @@
 /turf/closed/wall/mineral/plastitanium/nodiagonal,
 /area/ruin/syndicate_lava_base/testlab)
 "eq" = (
-/obj/machinery/door/airlock/engineering{
-	name = "Supermatter"
-	},
-/obj/effect/mapping_helpers/airlock/access/all/syndicate/general,
+/obj/structure/cable,
 /turf/open/floor/iron/dark,
 /area/ruin/syndicate_lava_base/testlab)
 "eZ" = (
 /obj/structure/table/reinforced,
-/obj/item/paper_bin,
-/obj/item/pen,
+/obj/item/paper_bin{
+	pixel_y = 8
+	},
+/obj/item/pen{
+	pixel_y = 8
+	},
 /turf/open/floor/iron/dark,
 /area/ruin/syndicate_lava_base/testlab)
 "fY" = (
-/obj/machinery/power/energy_accumulator/grounding_rod/anchored,
 /obj/structure/cable,
+/obj/machinery/power/energy_accumulator/tesla_coil/anchored,
+/turf/open/floor/engine,
+/area/ruin/syndicate_lava_base/testlab)
+"gq" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
 /turf/open/floor/engine,
 /area/ruin/syndicate_lava_base/testlab)
 "gJ" = (
@@ -65,18 +70,20 @@
 	default_raw_text = "Explosive testing on site is STRICTLY forbidden, as this outpost's walls are lined with explosives intended for intentional self-destruct purposes that may be set off prematurely through careless experiments.";
 	name = "Explosives Testing Warning";
 	pixel_x = -6;
-	pixel_y = 5
+	pixel_y = 13
+	},
+/obj/item/clothing/glasses/meson{
+	pixel_y = 16
+	},
+/obj/item/clothing/glasses/meson{
+	pixel_y = 13
+	},
+/obj/item/clothing/glasses/material/mining{
+	pixel_y = 10
 	},
 /obj/item/clothing/glasses/meson{
 	pixel_y = 8
 	},
-/obj/item/clothing/glasses/meson{
-	pixel_y = 5
-	},
-/obj/item/clothing/glasses/material/mining{
-	pixel_y = 2
-	},
-/obj/item/clothing/glasses/meson,
 /turf/open/floor/iron/dark,
 /area/ruin/syndicate_lava_base/testlab)
 "gX" = (
@@ -105,6 +112,7 @@
 /area/ruin/syndicate_lava_base/testlab)
 "hJ" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/cyan/visible,
+/obj/structure/cable,
 /turf/open/floor/catwalk_floor/iron_dark,
 /area/ruin/syndicate_lava_base/testlab)
 "hK" = (
@@ -115,24 +123,20 @@
 /turf/open/floor/plating,
 /area/ruin/syndicate_lava_base/testlab)
 "iF" = (
-/obj/structure/window/reinforced/plasma/spawner/directional/south,
-/obj/structure/window/reinforced/plasma/spawner/directional/west,
-/obj/machinery/atmospherics/components/unary/vent_pump/on{
-	dir = 8
-	},
+/obj/structure/window/reinforced/plasma/spawner/directional/north,
 /turf/open/floor/engine,
 /area/ruin/syndicate_lava_base/testlab)
 "iQ" = (
-/obj/structure/sign/warning/explosives/alt/directional/south,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/cyan/visible,
+/obj/structure/sign/warning/explosives/alt/directional/north,
 /turf/open/floor/engine,
 /area/ruin/syndicate_lava_base/testlab)
 "js" = (
 /turf/open/floor/engine,
 /area/ruin/syndicate_lava_base/testlab)
 "kw" = (
-/obj/item/stack/sheet/plasmarglass,
-/obj/structure/window/reinforced/plasma/spawner/directional/south,
+/obj/structure/cable,
+/obj/machinery/power/energy_accumulator/grounding_rod/anchored,
 /turf/open/floor/engine,
 /area/ruin/syndicate_lava_base/testlab)
 "kE" = (
@@ -174,9 +178,10 @@
 /turf/open/floor/iron/dark,
 /area/ruin/syndicate_lava_base/testlab)
 "oo" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/visible,
-/obj/machinery/power/energy_accumulator/tesla_coil/anchored,
-/obj/structure/cable,
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
+/obj/structure/window/reinforced/plasma/spawner/directional/north,
 /turf/open/floor/engine,
 /area/ruin/syndicate_lava_base/testlab)
 "qY" = (
@@ -204,7 +209,6 @@
 	dir = 1;
 	filter_type = list(/datum/gas/nitrogen)
 	},
-/obj/structure/window/reinforced/plasma/spawner/directional/south,
 /turf/open/floor/engine,
 /area/ruin/syndicate_lava_base/testlab)
 "uG" = (
@@ -223,6 +227,10 @@
 /obj/machinery/portable_atmospherics/canister/nitrogen,
 /turf/open/floor/iron/dark,
 /area/ruin/syndicate_lava_base/testlab)
+"wc" = (
+/obj/structure/extinguisher_cabinet/directional/east,
+/turf/open/floor/iron/dark,
+/area/ruin/syndicate_lava_base/testlab)
 "xI" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/iron/dark,
@@ -235,7 +243,6 @@
 /turf/open/floor/engine,
 /area/ruin/syndicate_lava_base/testlab)
 "yU" = (
-/obj/structure/extinguisher_cabinet/directional/east,
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -255,8 +262,7 @@
 /turf/open/floor/engine,
 /area/ruin/syndicate_lava_base/testlab)
 "Ch" = (
-/obj/machinery/power/supermatter_crystal/shard/syndicate,
-/obj/structure/window/reinforced/plasma/spawner/directional/south,
+/obj/item/stack/sheet/plasmarglass,
 /turf/open/floor/engine,
 /area/ruin/syndicate_lava_base/testlab)
 "EC" = (
@@ -277,9 +283,8 @@
 /turf/closed/wall/mineral/plastitanium/nodiagonal,
 /area/ruin/syndicate_lava_base/testlab)
 "IG" = (
-/obj/effect/spawner/structure/window/reinforced/plasma/plastitanium,
-/obj/structure/cable,
-/turf/open/floor/plating,
+/obj/machinery/power/supermatter_crystal/shard/syndicate,
+/turf/open/floor/engine,
 /area/ruin/syndicate_lava_base/testlab)
 "Lc" = (
 /obj/machinery/atmospherics/components/binary/pump{
@@ -293,11 +298,7 @@
 /turf/open/misc/asteroid/basalt/lava_land_surface,
 /area/ruin/syndicate_lava_base/testlab)
 "OO" = (
-/obj/structure/window/reinforced/plasma/spawner/directional/south,
-/obj/structure/window/reinforced/plasma/spawner/directional/east,
-/obj/machinery/atmospherics/components/unary/vent_scrubber/on{
-	dir = 1
-	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/green/visible,
 /turf/open/floor/engine,
 /area/ruin/syndicate_lava_base/testlab)
 "Qz" = (
@@ -307,13 +308,29 @@
 /obj/machinery/light/small/directional/south,
 /turf/open/floor/iron/dark,
 /area/ruin/syndicate_lava_base/testlab)
-"Rn" = (
+"QH" = (
+/obj/machinery/atmospherics/components/binary/pump{
+	dir = 4
+	},
 /obj/structure/cable,
+/turf/open/floor/iron/dark,
+/area/ruin/syndicate_lava_base/testlab)
+"Rn" = (
+/obj/structure/window/reinforced/plasma/spawner/directional/north,
+/obj/structure/window/reinforced/plasma/spawner/directional/west,
+/obj/machinery/atmospherics/components/unary/vent_pump/on{
+	dir = 8
+	},
 /turf/open/floor/engine,
 /area/ruin/syndicate_lava_base/testlab)
 "Rp" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
+	},
+/obj/structure/window/reinforced/plasma/spawner/directional/east,
+/obj/structure/window/reinforced/plasma/spawner/directional/north,
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on{
+	dir = 1
 	},
 /turf/open/floor/engine,
 /area/ruin/syndicate_lava_base/testlab)
@@ -353,7 +370,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
-/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/cyan/visible,
 /turf/open/floor/engine,
 /area/ruin/syndicate_lava_base/testlab)
 "ZR" = (
@@ -412,10 +429,10 @@ em
 em
 gX
 Lc
-Lc
+QH
 hJ
-kE
-kE
+eq
+eq
 eq
 kE
 HC
@@ -426,12 +443,12 @@ aA
 em
 bs
 Yj
+Yj
 qY
-qY
-qY
+Yj
 Ys
+gq
 xT
-em
 kE
 xI
 aA
@@ -441,12 +458,12 @@ aA
 hK
 me
 XS
-fY
-kw
-iF
 js
+kw
+js
+Rn
+iF
 kP
-IG
 kE
 xI
 be
@@ -456,12 +473,12 @@ aA
 EC
 me
 XS
-Rn
 js
+fY
 Ch
-js
-rT
 IG
+iF
+rT
 Vp
 ef
 yU
@@ -469,16 +486,16 @@ on
 "}
 (8,1,1) = {"
 em
-me
+iQ
 AS
-oo
+AS
 sY
 OO
 Rp
+oo
 lR
-em
 ol
-kE
+wc
 aA
 aA
 "}
@@ -487,7 +504,7 @@ em
 It
 Vo
 ZR
-iQ
+me
 em
 aA
 aA

@@ -10,9 +10,11 @@
 		/obj/item/fish/lanternfish = 5,
 		/obj/item/fish/zipzap = 5,
 		/obj/item/fish/clownfish/lube = 3,
+		/obj/structure/mystery_box/fishing = 1,
 	)
 	fish_counts = list(
 		/obj/item/fish/clownfish/lube = 2,
+		/obj/structure/mystery_box/fishing = 1,
 	)
 	fishing_difficulty = FISHING_DEFAULT_DIFFICULTY + 5
 	explosive_malus = TRUE

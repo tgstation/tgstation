@@ -1,7 +1,7 @@
 /obj/machinery/transport/destination_sign
 	name = "destination sign"
 	desc = "A display to show you what direction the tram is travelling."
-	icon = 'icons/obj/tram/tram_display.dmi'
+	icon = 'icons/obj/structures/tram/tram_display.dmi'
 	icon_state = "desto_blank"
 	base_icon_state = "desto"
 	use_power = NO_POWER_USE
@@ -24,7 +24,7 @@
 	pixel_x = 8
 
 /obj/machinery/transport/destination_sign/indicator
-	icon = 'icons/obj/tram/tram_indicator.dmi'
+	icon = 'icons/obj/structures/tram/tram_indicator.dmi'
 	icon_state = "indi_blank"
 	base_icon_state = "indi"
 	use_power = IDLE_POWER_USE
@@ -38,10 +38,9 @@
 	name = "indicator display frame"
 	desc = "Used to build tram indicator displays, just secure to the wall."
 	icon_state = "indi_blank"
-	icon = 'icons/obj/tram/tram_indicator.dmi'
+	icon = 'icons/obj/structures/tram/tram_indicator.dmi'
 	custom_materials = list(/datum/material/titanium = SHEET_MATERIAL_AMOUNT * 4, /datum/material/iron = SHEET_MATERIAL_AMOUNT * 2, /datum/material/glass = SHEET_MATERIAL_AMOUNT * 2)
 	result_path = /obj/machinery/transport/destination_sign/indicator
-	pixel_shift = 32
 
 /obj/machinery/transport/destination_sign/Initialize(mapload)
 	. = ..()
