@@ -655,26 +655,27 @@
 
 /obj/item/toy/crayon/white/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
 	/// Wherein, we draw a chalk body outline vaguely around the dead or "dead" mob
-	if(ishuman(interacting_with) && !user.combat_mode)
-		var/mob/living/carbon/human/pwned_human = interacting_with
+	if(!ishuman(interacting_with) || user.combat_mode)
+		return ..()
 
-		if(!(pwned_human.stat == DEAD || HAS_TRAIT(pwned_human, TRAIT_FAKEDEATH)))
-			balloon_alert_to_viewers("FEEDING TIME")
-			return ..()
+	var/mob/living/carbon/human/pwned_human = interacting_with
 
-		balloon_alert_to_viewers("drawing outline...")
-		if(!do_after(user, DRAW_TIME, target = pwned_human, max_interact_count = 4))
-			return NONE
-		if(!use_charges(user, 1))
-			return NONE
+	if(!(pwned_human.stat == DEAD || HAS_TRAIT(pwned_human, TRAIT_FAKEDEATH)))
+		balloon_alert_to_viewers("FEEDING TIME")
+		return ..()
 
-		var/decal_rotation = GET_LYING_ANGLE(pwned_human) - 90
-		var/obj/effect/decal/cleanable/crayon/chalk_line = new(get_turf(pwned_human), paint_color, "body", "chalk outline", decal_rotation, null, "A vaguely [pwned_human] shaped outline of a body.")
-		to_chat(user, span_notice("You draw a chalk outline around [pwned_human]."))
-		chalk_line.pixel_y = (pwned_human.pixel_y + pwned_human.pixel_z) + rand(-2, 2)
-		chalk_line.pixel_x = (pwned_human.pixel_x + pwned_human.pixel_w) + rand(-1, 1)
-		return ITEM_INTERACT_SUCCESS
-	return ..()
+	balloon_alert_to_viewers("drawing outline...")
+	if(!do_after(user, DRAW_TIME, target = pwned_human, max_interact_count = 4))
+		return NONE
+	if(!use_charges(user, 1))
+		return NONE
+
+	var/decal_rotation = GET_LYING_ANGLE(pwned_human) - 90
+	var/obj/effect/decal/cleanable/crayon/chalk_line = new(get_turf(pwned_human), paint_color, "body", "chalk outline", decal_rotation, null, "A vaguely [pwned_human] shaped outline of a body.")
+	to_chat(user, span_notice("You draw a chalk outline around [pwned_human]."))
+	chalk_line.pixel_y = (pwned_human.pixel_y + pwned_human.pixel_z) + rand(-2, 2)
+	chalk_line.pixel_x = (pwned_human.pixel_x + pwned_human.pixel_w) + rand(-1, 1)
+	return ITEM_INTERACT_SUCCESS
 
 /obj/item/toy/crayon/mime
 	name = "mime crayon"
