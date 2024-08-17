@@ -8,6 +8,7 @@ body:
         If you are reporting an issue found in another branch or codebase, you MUST link the branch or codebase repo in your issue report or it will be closed.
         For branches, If you have not pushed your code up, you must either reproduce it on master or push your code up before making an issue report.
         For other codebases, if you do not have a public code repo you will be refused help unless you can completely reproduce the issue on our code.
+        Note: If you use the "Report Issue" button in the top-right corner of the game, it will automatically fill in some of the information below.
   - type: input
     id: reporting-version
     attributes:
@@ -44,9 +45,8 @@ body:
     attributes:
       label: Test Merges
       description: |
-        If you're certain the issue is to be caused by a test merge [OOC tab -> Show Server Revision], report it in the pull request's comment section rather than on the tracker.
+        If you're certain the issue is to be caused by a test merge [OOC Tab -> Show Server Revision], report it in the pull request's comment section rather than on the tracker.
         If you're unsure you can refer to the issue number by prefixing said number with #. The issue number can be found beside the title after submitting it to the tracker.
-        If no testmerges are active, feel free to leave this section blank.
     validations:
       required: false
   - type: textarea
