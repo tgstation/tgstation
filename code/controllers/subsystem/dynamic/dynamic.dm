@@ -526,7 +526,7 @@ SUBSYSTEM_DEF(dynamic)
 	//To new_player and such, and we want the datums to just free when the roundstart work is done
 	var/list/roundstart_rules = init_rulesets(/datum/dynamic_ruleset/roundstart)
 
-	SSjob.DivideOccupations(pure = TRUE, allow_all = TRUE)
+	SSjob.divide_occupations(pure = TRUE, allow_all = TRUE)
 	for(var/i in GLOB.new_player_list)
 		var/mob/dead/new_player/player = i
 		if(player.ready == PLAYER_READY_TO_PLAY && player.mind && player.check_preferences())
@@ -541,7 +541,7 @@ SUBSYSTEM_DEF(dynamic)
 			else
 				roundstart_pop_ready++
 				candidates.Add(player)
-	SSjob.ResetOccupations()
+	SSjob.reset_occupations()
 	log_dynamic("Listing [roundstart_rules.len] round start rulesets, and [candidates.len] players ready.")
 	if (candidates.len <= 0)
 		log_dynamic("[candidates.len] candidates.")
@@ -999,7 +999,7 @@ SUBSYSTEM_DEF(dynamic)
 #define MAXIMUM_DYN_DISTANCE 5
 
 /**
- * Returns the comulative distribution of threat centre and width, and a random location of -0.5 to 0.5
+ * Returns the comulative distribution of threat centre and width, and a random location of -5 to 5
  * plus or minus the otherwise unattainable lower and upper percentiles. All multiplied by the maximum
  * threat and then rounded to the nearest interval.
  * rand() calls without arguments returns a value between 0 and 1, allowing for smaller intervals.
@@ -1018,7 +1018,7 @@ SUBSYSTEM_DEF(dynamic)
 	var/list/reopened_jobs = list()
 
 	for(var/mob/living/quitter in GLOB.suicided_mob_list)
-		var/datum/job/job = SSjob.GetJob(quitter.job)
+		var/datum/job/job = SSjob.get_job(quitter.job)
 		if(!job || !(job.job_flags & JOB_REOPEN_ON_ROUNDSTART_LOSS))
 			continue
 		if(!include_command && job.departments_bitflags & DEPARTMENT_BITFLAG_COMMAND)

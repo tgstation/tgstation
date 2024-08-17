@@ -118,7 +118,7 @@
 
 ///Applied preferences to a human
 #define COMSIG_HUMAN_PREFS_APPLIED "human_prefs_applied"
-///Whenever EquipRanked is called, called after job is set
+///Whenever equip_rank is called, called after job is set
 #define COMSIG_JOB_RECEIVED "job_received"
 ///from /mob/living/carbon/human/proc/set_coretemperature(): (oldvalue, newvalue)
 #define COMSIG_HUMAN_CORETEMP_CHANGE "human_coretemp_change"
@@ -133,6 +133,10 @@
 	#define VISIBLE_NAME_FACE 1
 	//Index for the name of the id
 	#define VISIBLE_NAME_ID 2
+	//Index for whether their name is being overriden instead of obsfuscated
+	#define VISIBLE_NAME_FORCED 3
+///from /mob/living/carbon/human/get_id_name; only returns if the mob has TRAIT_UNKNOWN and it's being overriden: (identity)
+#define COMSIG_HUMAN_GET_FORCED_NAME "human_get_forced_name"
 
 // Mob transformation signals
 ///Called when a human turns into a monkey, from /mob/living/carbon/proc/finish_monkeyize()

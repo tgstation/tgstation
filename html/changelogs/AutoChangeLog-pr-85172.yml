@@ -1,4 +1,0 @@
-author: "SmArtKar"
-delete-after: True
-changes:
-  - bugfix: "Xenomorphs and door pryer basic mobs can now attack airlocks in combat mode"

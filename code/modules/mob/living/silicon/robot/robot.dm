@@ -301,7 +301,7 @@
 		else
 			eye_lights.icon_state = "[model.special_light_key ? "[model.special_light_key]":"[model.cyborg_base_icon]"]_e"
 			eye_lights.color = COLOR_WHITE
-			SET_PLANE_EXPLICIT(eye_lights, ABOVE_GAME_PLANE, src)
+			SET_PLANE_EXPLICIT(eye_lights, GAME_PLANE, src)
 		eye_lights.icon = icon
 		add_overlay(eye_lights)
 
@@ -583,6 +583,7 @@
 
 /mob/living/silicon/robot/updatehealth()
 	..()
+	update_damage_particles()
 	if(!model.breakable_modules)
 		return
 
@@ -680,6 +681,9 @@
 		builtInCamera.toggle_cam(src, 0)
 	if(full_heal_flags & HEAL_ADMIN)
 		locked = TRUE
+	if(eye_flash_timer)
+		deltimer(eye_flash_timer)
+		eye_flash_timer = null
 	src.set_stat(CONSCIOUS)
 	notify_ai(AI_NOTIFICATION_NEW_BORG)
 	toggle_headlamp(FALSE, TRUE) //This will reenable borg headlamps if doomsday is currently going on still.
@@ -1003,7 +1007,7 @@
 /mob/living/silicon/robot/get_exp_list(minutes)
 	. = ..()
 
-	var/datum/job/cyborg/cyborg_job_ref = SSjob.GetJobType(/datum/job/cyborg)
+	var/datum/job/cyborg/cyborg_job_ref = SSjob.get_job_type(/datum/job/cyborg)
 
 	.[cyborg_job_ref.title] = minutes
 

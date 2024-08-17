@@ -8,6 +8,7 @@
 
 //Floorbot
 /mob/living/simple_animal/bot/floorbot
+	SET_BASE_VISUAL_PIXEL(0, 7)
 	name = "\improper Floorbot"
 	desc = "A little floor repairing robot, he looks so excited!"
 	icon = 'icons/mob/silicon/aibots.dmi'
@@ -23,6 +24,7 @@
 	hackables = "floor construction protocols"
 	path_image_color = "#FFA500"
 	possessed_message = "You are a floorbot! Repair the hull to the best of your ability!"
+	shadow_offset_y = 6
 
 	var/process_type //Determines what to do when process_scan() receives a target. See process_scan() for details.
 	var/targetdirection

@@ -1,0 +1,4 @@
+template = "bitmask/walls"
+
+[animation]
+delays = [ 2 ]

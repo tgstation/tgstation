@@ -175,7 +175,7 @@
 
 	bodypart_overlay = /datum/bodypart_overlay/mutant/tail/monkey
 
-	dna_block = DNA_MONKEY_TAIL_BLOCK
+	dna_block = null
 
 ///Monkey tail bodypart overlay
 /datum/bodypart_overlay/mutant/tail/monkey

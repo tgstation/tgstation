@@ -17,6 +17,7 @@ import {
 import { FONTS_DISABLED } from './constants';
 import { selectSettings } from './selectors';
 
+let setStatFontTimer: NodeJS.Timeout;
 let overrideRule: HTMLStyleElement;
 let overrideFontFamily: string | undefined;
 let overrideFontSize: string;
@@ -44,8 +45,23 @@ function updateGlobalOverrideRule() {
   document.body.style.setProperty('font-size', overrideFontSize);
 }
 
-function setGlobalFontSize(fontSize: string) {
+function setGlobalFontSize(
+  fontSize: string,
+  statFontSize: string,
+  statLinked: boolean,
+) {
   overrideFontSize = `${fontSize}px`;
+
+  // Used solution from theme.ts
+  clearInterval(setStatFontTimer);
+  Byond.command(
+    `.output statbrowser:set_font_size ${statLinked ? fontSize : statFontSize}px`,
+  );
+  setStatFontTimer = setTimeout(() => {
+    Byond.command(
+      `.output statbrowser:set_font_size ${statLinked ? fontSize : statFontSize}px`,
+    );
+  }, 1500);
 }
 
 function setGlobalFontFamily(fontFamily: string) {
@@ -86,7 +102,11 @@ export function settingsMiddleware(store) {
     const settings = selectSettings(store.getState());
 
     // Update global UI font size
-    setGlobalFontSize(settings.fontSize);
+    setGlobalFontSize(
+      settings.fontSize,
+      settings.statFontSize,
+      settings.statLinked,
+    );
     setGlobalFontFamily(settings.fontFamily);
     updateGlobalOverrideRule();
 

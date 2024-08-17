@@ -1,6 +1,7 @@
 #define FOAM_INTERVAL 5 SECONDS
 
 /mob/living/basic/bot/firebot
+	SET_BASE_VISUAL_PIXEL(0, 10)
 	name = "\improper Firebot"
 	desc = "A little fire extinguishing bot. He looks rather anxious."
 	icon = 'icons/mob/silicon/aibots.dmi'
@@ -17,6 +18,7 @@
 	path_image_color = "#FFA500"
 	possessed_message = "You are a firebot! Protect the station from fires to the best of your ability!"
 	ai_controller = /datum/ai_controller/basic_controller/bot/firebot
+	shadow_offset_y = 2
 	///our inbuilt fire extinguisher
 	var/obj/item/extinguisher/internal_ext
 

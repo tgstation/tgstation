@@ -1,7 +1,5 @@
 /**
  * # The path of Blades. Stab stab.
- * Spell names are in this language: ARAMAIC
- * Both are related: Aramaic-Damascus-Blade
  *
  * Goes as follows:
  *
@@ -57,7 +55,7 @@
 	cost = 1
 	route = PATH_BLADE
 	depth = 3
-	research_tree_icon_path = 'icons/ui_icons/antags/heretic/knowledge.dmi'
+	research_tree_icon_path = 'icons/ui/antags/heretic/knowledge.dmi'
 	research_tree_icon_state = "grasp_blade"
 
 /datum/heretic_knowledge/blade_grasp/on_gain(mob/user, datum/antagonist/heretic/our_heretic)
@@ -325,7 +323,7 @@
 		a flurry of blades, neither hitting their mark, for the Champion was indomitable."
 	next_knowledge = list(/datum/heretic_knowledge/spell/furious_steel)
 	route = PATH_BLADE
-	research_tree_icon_path = 'icons/ui_icons/antags/heretic/knowledge.dmi'
+	research_tree_icon_path = 'icons/ui/antags/heretic/knowledge.dmi'
 	research_tree_icon_state = "blade_upgrade_blade"
 	/// How much force do we apply to the offhand?
 	var/offand_force_decrement = 0

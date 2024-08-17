@@ -13,6 +13,13 @@
 	throw_range = 7
 	slot_flags = ITEM_SLOT_BELT
 	resistance_flags = FLAMMABLE
+
+	unique_reskin = list(
+		"Brown" = "clipboard",
+		"Black" = "clipboard_black",
+		"White" = "clipboard_white",
+	)
+
 	/// The stored pen
 	var/obj/item/pen/pen
 	/// Is the pen integrated?

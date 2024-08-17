@@ -44,6 +44,7 @@
 	mouse_opacity = MOUSE_OPACITY_ICON
 	death_message = "explodes into gore!"
 	loot_drop = /obj/item/crusher_trophy/broodmother_tongue
+	shadow_type = SHADOW_LARGE
 
 	attack_action_types = list(/datum/action/innate/elite_attack/tentacle_patch,
 								/datum/action/innate/elite_attack/spawn_children,

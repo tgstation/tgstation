@@ -226,7 +226,7 @@
 			chosen_candidate.client.prefs.safe_transfer_prefs_to(ert_operative, is_antag = TRUE)
 			ert_operative.key = chosen_candidate.key
 
-			if(ertemplate.enforce_human || !(ert_operative.dna.species.changesource_flags & ERT_SPAWN)) // Don't want any exploding plasmemes
+			if(ertemplate.enforce_human || !(ert_operative.dna.species.changesource_flags & ERT_SPAWN))
 				ert_operative.set_species(/datum/species/human)
 
 			//Give antag datum
@@ -242,7 +242,7 @@
 			ert_antag.random_names = ertemplate.random_names
 
 			ert_operative.mind.add_antag_datum(ert_antag,ert_team)
-			ert_operative.mind.set_assigned_role(SSjob.GetJobType(ert_antag.ert_job_path))
+			ert_operative.mind.set_assigned_role(SSjob.get_job_type(ert_antag.ert_job_path))
 
 			//Logging and cleanup
 			ert_operative.log_message("has been selected as \a [ert_antag.name].", LOG_GAME)

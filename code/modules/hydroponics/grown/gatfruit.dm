@@ -1,7 +1,7 @@
 
 // Gatfruit
 /obj/item/seeds/gatfruit
-	name = "pack of gatfruit seeds"
+	name = "gatfruit seed pack"
 	desc = "These seeds grow into .357 revolvers."
 	icon_state = "seed-gatfruit"
 	species = "gatfruit"

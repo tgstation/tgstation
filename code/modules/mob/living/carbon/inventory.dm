@@ -11,6 +11,8 @@
 		obscured |= ITEM_SLOT_NECK
 	if(hidden_slots & HIDEMASK)
 		obscured |= ITEM_SLOT_MASK
+	if(hidden_slots & HIDEBELT)
+		obscured |= ITEM_SLOT_BELT
 	if(hidden_slots & HIDEEYES)
 		obscured |= ITEM_SLOT_EYES
 	if(hidden_slots & HIDEEARS)

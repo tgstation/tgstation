@@ -5,7 +5,7 @@
 /obj/structure/transport/linear
 	name = "linear transport module"
 	desc = "A lightweight lift platform. It moves."
-	icon = 'icons/obj/smooth_structures/catwalk.dmi'
+	icon = 'icons/obj/structures/smooth/catwalk.dmi'
 	icon_state = "catwalk-0"
 	base_icon_state = "catwalk"
 	density = FALSE
@@ -378,19 +378,19 @@
 			for(var/obj/structure/victim_structure in dest_turf.contents)
 				if(QDELING(victim_structure))
 					continue
-				if(!is_type_in_typecache(victim_structure, transport_controller_datum.ignored_smashthroughs) && victim_structure.layer >= LOW_OBJ_LAYER)
+				if(!is_type_in_typecache(victim_structure, transport_controller_datum.ignored_smashthroughs))
+					if((victim_structure.plane == FLOOR_PLANE && victim_structure.layer > TRAM_RAIL_LAYER) || (victim_structure.plane == GAME_PLANE && victim_structure.layer > LOW_OBJ_LAYER) )
+						if(victim_structure.anchored && initial(victim_structure.anchored) == TRUE)
+							visible_message(span_danger("[src] smashes through [victim_structure]!"))
+							victim_structure.deconstruct(FALSE)
 
-					if(victim_structure.anchored && initial(victim_structure.anchored) == TRUE)
-						visible_message(span_danger("[src] smashes through [victim_structure]!"))
-						victim_structure.deconstruct(FALSE)
-
-					else
-						if(!throw_target)
-							throw_target = get_edge_target_turf(src, turn(travel_direction, pick(45, -45)))
-						visible_message(span_danger("[src] violently rams [victim_structure] out of the way!"))
-						victim_structure.anchored = FALSE
-						victim_structure.take_damage(rand(20, 25) * collision_lethality)
-						victim_structure.throw_at(throw_target, 200 * collision_lethality, 4 * collision_lethality)
+						else
+							if(!throw_target)
+								throw_target = get_edge_target_turf(src, turn(travel_direction, pick(45, -45)))
+							visible_message(span_danger("[src] violently rams [victim_structure] out of the way!"))
+							victim_structure.anchored = FALSE
+							victim_structure.take_damage(rand(20, 25) * collision_lethality)
+							victim_structure.throw_at(throw_target, 200 * collision_lethality, 4 * collision_lethality)
 
 			for(var/obj/machinery/victim_machine in dest_turf.contents)
 				if(QDELING(victim_machine))
@@ -854,7 +854,7 @@
 /obj/structure/transport/linear/tram
 	name = "tram subfloor"
 	desc = "The subfloor lattice of the tram. You can build a tram wall frame by using <b>titanium sheets,</b> or place down <b>thermoplastic tram floor tiles.</b>"
-	icon = 'icons/obj/tram/tram_structure.dmi'
+	icon = 'icons/obj/structures/tram/tram_structure.dmi'
 	icon_state = "subfloor"
 	base_icon_state = null
 	density = FALSE

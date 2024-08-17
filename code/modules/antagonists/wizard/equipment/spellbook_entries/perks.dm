@@ -42,9 +42,9 @@
 /datum/spellbook_entry/perks/dejavu/proc/give_dejavu(mob/living/carbon/human/wizard, area/new_area)
 	SIGNAL_HANDLER
 
-	if(new_area == GLOB.areas_by_type[/area/centcom/wizard_station])
+	if(istype(new_area, /area/centcom))
 		return
-	wizard.AddComponent(/datum/component/dejavu/timeline, -1, 60 SECONDS)
+	wizard.AddComponent(/datum/component/dejavu/wizard, 1, 60 SECONDS, TRUE)
 	UnregisterSignal(wizard, COMSIG_ENTER_AREA)
 
 /datum/spellbook_entry/perks/spell_lottery

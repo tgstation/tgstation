@@ -1295,3 +1295,213 @@
   - balance: Upgraded cybernetic hearts give an extremely brief amount of action when
       you enter softcrit (but not hardcrit).
   - bugfix: Restores some of the items accidentally lost in the autodrobe.
+2024-07-26:
+  LT3:
+  - bugfix: Fixed elevator panel allowing conflicting inputs
+  - bugfix: Fixed elevator sound being out of sync with movement
+  SmArtKar:
+  - bugfix: Xenomorphs and door pryer basic mobs can now attack airlocks in combat
+      mode
+  - bugfix: Borgs now unequip their equipment upon module change like they should
+  YesterdaysPromise:
+  - rscadd: All the melons are now sliceable, and have inhands, instead of just watermelon
+      and holymelon respectively.
+  - rscadd: You can now hollow out melons of all kinds with a spoon to make helmets
+      or chestplates, based on the potency! If you are unlucky, you can tie up three
+      helmets into a chestplate with durathread using the crafting menu.
+  - rscadd: You can now make a bo staff out of bamboo and steelcap logs.
+  - rscadd: You can now make a moonflower buckler out of moonflowers and steelcap
+      logs.
+  - rscadd: You can also hollow out chantarelle to make mock-up wizard hat.
+  - rscadd: Parsnips, as mutation of carrots, become equaly able to be sharpaned,
+      turning into shivs, or with potency and luck, sabres.
+  - rscadd: You can now craft a durathread robe, and customize it into different variants
+      using specific plants in crafting menu.
+  - rscadd: Carrots gain a new possible mutation; cahn'root, brewable into root beer
+      and sharpanable into shivs or daggers!
+  - rscadd: Rice hat, made from bamboo, now has an alternative style, allowing you
+      to wear it in reverse and be much cooler.
+  - rscadd: Two new arrow variants appear in the crafting menu; sticky and poisonous
+      ones! If you want to make arrows at all though, remember to order bow-maker's
+      crate at cargo.
+2024-07-27:
+  00-Steven:
+  - bugfix: Fixes borgs not being able to place apparatus-held items on tables. As
+      a side-effect, they can now combat mode right click splash containers as normal
+      instead of having their own right-click floor splash.
+  Ghommie:
+  - bugfix: Centcom technicians have been trained to recognize cargo-bought fish.
+      You will no longer be able to trick the economy system by buying fish and sending
+      it right back. Also nerfed fish selling price very slightly.
+  - bugfix: Fixes projectiles facing north if ricocheting, deflected or homing
+  - rscdel: Removed a janky fish bounty
+  - rscadd: introduced exporting fish through cargo.
+  - balance: reduced the average weight of the jumpercable. Conversely, eased up the
+      requirements for the bone fish evolution.
+  Ical92:
+  - bugfix: Tram's Tool Storage now has proper lighting
+  Jacquerel:
+  - balance: If a bluespace cookie fails to teleport you then you will trip over.
+  LT3:
+  - bugfix: Fixed delam counter stuck in window near Ice Box bridge
+  - bugfix: Fixed disease outbreak announcement sometimes missing the disease name
+  - bugfix: False supermatter surge announcements are now identical to real ones
+  - bugfix: Tram will no longer eat its own rails as it travels
+  MTandi:
+  - bugfix: Janicart inserts items into the attached trash bag again (manual and vacuumed)
+  Melbert:
+  - qol: All randomly spawned monkeys (and lizardpeople) will spawn with tails. You
+      can still select to be tailless.
+  - code_imp: Cleaned up some code relating to species features (like tails, markings,
+      etc). Report any oddities
+  SmArtKar:
+  - image: Updated gas flow meter sprites
+  Thlumyn:
+  - bugfix: self-resp viruses don't spam messages as often
+  afonamos2:
+  - bugfix: Firelocks will once again respect fire alarm's thermal sensors being disabled.
+  carlarctg:
+  - bugfix: Fixed possessed blades being broken
+  - code_imp: If testing is enabled everyone is polled in ghost polls.
+  mc-oofert:
+  - bugfix: wawastation ordnance no longer has a light fixture on a window and looks
+      objectively slightly better
+  - bugfix: wawastation engineering water tanks are now highcap
+2024-07-28:
+  00-Steven:
+  - bugfix: Clicking on a table in the lootpanel with an item in-hand tries to place
+      it in the center again.
+  Axidyuwu:
+  - bugfix: now Justice invisibility turns off in non combat mode as it supposed to
+  Deadgebert:
+  - bugfix: peg limbs can now be amputated
+  DrDiasyl aka DrTuxedo:
+  - sound: Hearing and talking into the radio now produces a sound. Heads get a special
+      sound.
+  Helg2:
+  - rscadd: Emergency climbing hooks now spawn in emergency boxes on all of the multi-z
+      level stations.
+  JohnFulpWillard:
+  - bugfix: '[Mafia] The show_help button no longer shows you who the Obsessed''s
+      target is.'
+  LT3:
+  - bugfix: Players now receive a notification when trying to perform surgery steps
+      that involve chemicals
+  Rhials:
+  - bugfix: Monkey wizards can now interact with grand ritual runes.
+  - bugfix: Clown Ops gear has been returned to being available only to clown ops.
+      Whoops!
+  SmArtKar:
+  - bugfix: People with tooltips enabled no longer lag the server when they move their
+      mouse. Oops.
+  - bugfix: Mirage grenade dispensers and ionic jump jets now work
+  StrangeWeirdKitten:
+  - bugfix: Voidwalker should not run on planetary maps.
+  grungussuss:
+  - bugfix: Med sec telescreens are no longer the same item as the CMO telescreen.
+  - spellcheck: correcte name for the CMO telescreen mount
+  - bugfix: birdshot holodeck's lighting has been fixed.
+  - sound: medkits now have sounds
+  - sound: gas tanks now have sound
+  - sound: the default metal sound has been changed
+  - bugfix: lavaland no longer has roundstart atmos processing because of a passive
+      vent
+  - sound: only the scream emote can be heard through walls
+  - sound: the sneeze projectile no longer makes a sound when making contact.
+2024-07-29:
+  DaCoolBoss:
+  - spellcheck: military javelin's name is now fully uncapitalised
+  SmArtKar:
+  - rscadd: Mining headsets now allow you to make callouts via pointing. You can use
+      them to communicate with fellow miners or order your army of bots and raptors!
+  - rscadd: Mining headsets keep your voice loud and clear in low-pressure environments
+      (not vacuum!)
+  - qol: If you have auto fit viewport enabled, it will trigger upon entering or exiting
+      fullscreen
+  - bugfix: VIM no longer requires hands to enter
+  - bugfix: Recyclers no longer recycle contents of indestructible items
+  - bugfix: Grass sheath now holds parsnip sabres like its supposed to
+  - spellcheck: Fixed up parsnip sabre description grammar
+  StrangeWeirdKitten:
+  - rscadd: Cosmic Skull glows purple.
+  Time-Green:
+  - bugfix: Fixes void eater not refreshing
+  - bugfix: Fixes planetary gravity not killing voidwalkers and voideds
+  Y0SH1M4S73R:
+  - admin: Admin lua scripting uses a new library that (probably) will not break when
+      BYOND updates.
+2024-07-30:
+  13spacemen:
+  - balance: TTV bombs can be implanted into people's chest once again
+  AyIong:
+  - rscadd: Stat Panel now scales like a chat, depends on the font size. Defaults
+      from the chat font size, but you can separate it.
+  - refactor: Refactored Stat Panel styles and Byond skin theme applying. Stat Panel
+      now looks more like a TGUI
+  Bisar:
+  - bugfix: All mining mobs now properly listen to the signals sent by attackers and
+      will respond appropriately.
+  Gaxeer:
+  - refactor: replace some copypaste code for pod spawn to use `podspawn` proc instead
+  - code_imp: modify  `podspawn` proc to accept amount of item type to spawn in `spawn`
+      specification
+  Ghommie:
+  - qol: Aquariums start unanchored and don't autoconnect to plumbing. Their reproduction
+      prevention is also disabled by default.
+  - balance: Made it a tad easier to control the bait during the minigame. Buffed
+      the fishing skill. No fishing duds at all when using ANY bait.
+  - balance: Chasm Chrabs take less time to grow into Lobstrosities but need food
+      a bit more frequently.
+  - balance: '"Profound fisher" mobs will have less RNG-dependant time fishing.'
+  - bugfix: You can now ACTUALLY interact with other things while fishing if the fishing
+      rod isn't in your active hand.
+  - config: Added a config for specific gateway delays so locations like the beach
+      and the museum don't have to take 30 minutes to become available like the rest.
+  Jackriip:
+  - refactor: moves the create_all_lighting_objects proc to the lighting subsystem
+  KazooBard:
+  - rscadd: The heretic's ritual of knowledge no longer requires binoculars
+  - rscadd: Clipboards are craftable using a wood plank, an iron rod and wirecutters
+  Paxilmaniac:
+  - balance: The nukeops surplus smg, the pp-95, has been reworked into the Abielle
+      Smart-SMG. It performs nearly identically to the pp-95, however it's projectiles
+      get a slight homing ability towards whatever you click on.
+  - sound: New firing sounds for the surplus smg, credit to the m41 sound effects
+      from tgmc
+  - image: New sprites for the surplus smg, made by me
+  SmArtKar:
+  - bugfix: Fixed mapload circuit floors not drawing power and deconstructing circuit
+      floors not reducing power load
+  - bugfix: Projectile dampener, recycler and ninja stealth MOD modules now work properly
+  - bugfix: You can no longer tear peoples arms off with non-killer clamps
+  - bugfix: Mechs can no longer equip infinite amount of weapons
+  - bugfix: Mining MODsuits now can store everything that explorer suits can
+  Vekter:
+  - bugfix: Fixes an exploit that allowed players to open a Bag of Holding rift in
+      the Heretic dimension.
+  deathrobotpunch:
+  - qol: drones now have soap in their internal storage!
+  grungussuss:
+  - sound: leather, skins and cardboard have their own sound now
+  - bugfix: smuggler satchels will no longer spawn in space
+  - sound: added sniff sounds
+  - sound: added sigh sounds
+  grungussuss and Kayozz:
+  - sound: more maintenance ambience has been added
+  rroqc:
+  - bugfix: plants no longer select reagent genes they already have while cross pollinating
+  - code_imp: 'improves reagent cross pollination code
+
+      :cl:'
+2024-07-31:
+  Jacquerel:
+  - image: Big balls are now much rounder, to more easily slide down into a cannon.
+  SmArtKar:
+  - image: All implants have received a fresh coat of paint
+  rroqc:
+  - bugfix: 'fix a bug where botany reagents would dissapear from existing plants
+
+      :cl:'
+  thegrb93:
+  - bugfix: Fixes getting permanently hot or cold if wearing thermal insulation as
+      a lizard
