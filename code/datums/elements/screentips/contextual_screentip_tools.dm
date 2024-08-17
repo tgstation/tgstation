@@ -43,6 +43,8 @@
 	if (!(tool_behavior in tool_behaviors))
 		return NONE
 
-	context += tool_behaviors[tool_behavior]
+	var/behaviors = tool_behaviors[tool_behavior]
+	for(var/button in behaviors)
+		context[button] = behaviors[button]
 
 	return CONTEXTUAL_SCREENTIP_SET

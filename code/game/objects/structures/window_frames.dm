@@ -16,7 +16,9 @@
 	anchored = TRUE
 
 	///whether we currently have a grille
-	var/obj/item/stack/rods/grille = FALSE
+	var/obj/item/stack/rods/grille
+	///The grille this frame spawns with
+	var/grille_type
 	///whether we spawn a window structure with us on mapload
 	var/start_with_window = FALSE
 	///Icon used by grilles for this window frame
@@ -54,8 +56,8 @@
 /obj/structure/window_frame/Initialize(mapload)
 	. = ..()
 
-	if(grille)
-		grille = new grille(src, sheet_amount)
+	if(grille_type)
+		grille = new grille_type(src, sheet_amount)
 
 	update_appearance()
 	AddComponent(/datum/component/climb_walkable)
@@ -94,7 +96,7 @@
 		else if(istype(held_item, /obj/item/stack/rods) && isnull(grille))
 			context[SCREENTIP_CONTEXT_LMB] = "Add grille"
 			return CONTEXTUAL_SCREENTIP_SET
-		return NONE
+	return NONE
 
 ///helper proc to check if we already have a window
 /obj/structure/window_frame/proc/has_window()
@@ -273,7 +275,7 @@
 	if(!isstack(attacking_item))
 		if((attacking_item.obj_flags & CONDUCTS_ELECTRICITY) && try_shock(user, 70))
 			return
-	return ..()
+		return ..()
 
 	var/obj/item/stack/adding_stack = attacking_item
 
@@ -465,10 +467,10 @@
 	return !!powernet.get_electrocute_damage()
 
 /obj/structure/window_frame/grille
-	grille = /obj/item/stack/rods
+	grille_type = /obj/item/stack/rods
 
 /obj/structure/window_frame/grille_and_window
-	grille = /obj/item/stack/rods
+	grille_type = /obj/item/stack/rods
 	start_with_window = TRUE
 
 /obj/structure/window_frame/reinforced
@@ -486,7 +488,7 @@
 	acid = 100
 
 /obj/structure/window_frame/reinforced/grille_and_window
-	grille = /obj/item/stack/rods
+	grille_type = /obj/item/stack/rods
 	start_with_window = TRUE
 
 /obj/structure/window_frame/reinforced/damaged
@@ -502,7 +504,7 @@
 	our_window.update_integrity(rand(max_integrity * integrity_min_factor, max_integrity * integrity_max_factor))
 
 /obj/structure/window_frame/reinforced/damaged/grille_and_window
-	grille = /obj/item/stack/rods
+	grille_type = /obj/item/stack/rods
 	start_with_window = TRUE
 
 /obj/structure/window_frame/titanium
@@ -516,11 +518,11 @@
 	custom_materials = list(/datum/material/titanium = WINDOW_FRAME_BASE_MATERIAL_AMOUNT)
 
 /obj/structure/window_frame/titanium/grille_and_window
-	grille = /obj/item/stack/rods
+	grille_type = /obj/item/stack/rods
 	start_with_window = TRUE
 
 /obj/structure/window_frame/titanium/grille
-	grille = /obj/item/stack/rods
+	grille_type = /obj/item/stack/rods
 
 /obj/structure/window_frame/plastitanium
 	name = "plastitanium window frame"
@@ -533,7 +535,7 @@
 	custom_materials = list(/datum/material/alloy/plastitanium = WINDOW_FRAME_BASE_MATERIAL_AMOUNT)
 
 /obj/structure/window_frame/plastitanium/grille_and_window
-	grille = /obj/item/stack/rods
+	grille_type = /obj/item/stack/rods
 	start_with_window = TRUE
 
 /obj/structure/window_frame/wood
@@ -654,5 +656,5 @@
 	custom_materials = list(/datum/material/paper = WINDOW_FRAME_BASE_MATERIAL_AMOUNT)
 
 /obj/structure/window_frame/paperframe/grille_and_window
-	grille = /obj/item/stack/rods
+	grille_type = /obj/item/stack/rods
 	start_with_window = TRUE
