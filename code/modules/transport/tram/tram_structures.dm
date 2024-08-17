@@ -68,6 +68,8 @@
 	canSmoothWith = SMOOTH_GROUP_TRAM_STRUCTURE
 
 /obj/structure/tram/titanium
+	name = "tram window"
+	desc = "Stops you from flying out the front of the tram. Because that could never happen, right?"
 	icon_state = "tram-titanium-0"
 	base_icon_state = "tram-titanium"
 	smoothing_groups = SMOOTH_GROUP_TRAM_STRUCTURE
