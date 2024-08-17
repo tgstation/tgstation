@@ -222,3 +222,6 @@
   - rscadd: Added Blueshield
   Wisemonster:
   - bugfix: Ghost critter spawn points are now anchored.
+2024-08-17:
+  Absolucy:
+  - bugfix: Fixed the positioning of the painting in the curator's office on Blueshift.
