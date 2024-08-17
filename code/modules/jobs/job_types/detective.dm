@@ -29,13 +29,14 @@
 
 	mail_goodies = list(
 		/obj/item/storage/fancy/cigarettes = 25,
-		/obj/item/ammo_box/c38 = 25,
+		/obj/item/ammo_box/c38 = 20,
 		/obj/item/ammo_box/c38/dumdum = 5,
 		/obj/item/ammo_box/c38/hotshot = 5,
 		/obj/item/ammo_box/c38/iceblox = 5,
 		/obj/item/ammo_box/c38/match = 5,
 		/obj/item/ammo_box/c38/trac = 5,
-		/obj/item/storage/belt/holster/detective/full = 1
+		/obj/item/card/id/advanced/plainclothes = 5,
+		/obj/item/storage/belt/holster/detective/full = 1,
 	)
 
 	family_heirlooms = list(/obj/item/reagent_containers/cup/glass/bottle/whiskey)
@@ -48,6 +49,8 @@
 /datum/outfit/job/detective
 	name = "Detective"
 	jobtype = /datum/job/detective
+
+	id = /obj/item/card/id/advanced/plainclothes
 
 	id_trim = /datum/id_trim/job/detective
 	uniform = /obj/item/clothing/under/rank/security/detective
