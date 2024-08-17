@@ -1,0 +1,4 @@
+author: "Justice12354"
+delete-after: True
+changes:
+  - bugfix: "Fixes the rotation of Centcom's Airlocks"
