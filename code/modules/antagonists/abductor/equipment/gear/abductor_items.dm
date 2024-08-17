@@ -306,8 +306,25 @@ Congratulations! You are now trained for invasive xenobiology research!"}
 
 	var/sleep_time = 2 MINUTES
 	var/time_to_cuff = 3 SECONDS
+	/// Cooldown for sleep inducement.
 	COOLDOWN_DECLARE(sleep_cd)
+	/// Cooldown for handcuffing.
 	COOLDOWN_DECLARE(cuff_cd)
+
+/obj/item/melee/baton/abductor/examine(mob/user)
+	if(!AbductorCheck(user))
+		return
+	if(COOLDOWN_FINISHED(src, sleep_cd))
+		. += span_notice("The sleep inducement function is ready.")
+	else
+		var/timeleft = DisplayTimeText(COOLDOWN_TIMELEFT(src, sleep_cd))
+		. += span_notice("The sleep inducement function is recharging! It will be ready in [timeleft].")
+	if(COOLDOWN_FINISHED(src, cuff_cd))
+		. += span_notice("The hard-light restraint synthesizer is ready.")
+	else
+		var/timeleft = DisplayTimeText(COOLDOWN_TIMELEFT(src, cuff_cd))
+		. += span_notice("The hard-light restraints synthesizer is recharging! It will be ready in [timeleft].")
+
 
 /obj/item/melee/baton/abductor/Initialize(mapload)
 	. = ..()
@@ -421,7 +438,7 @@ Congratulations! You are now trained for invasive xenobiology research!"}
 		return
 	if(COOLDOWN_FINISHED(src, cuff_cd))
 		var/timeleft = DisplayTimeText(COOLDOWN_TIMELEFT(src, cuff_cd))
-		to_chat(user, span_warning("The cuffing projector needs time to recharge! It will be ready again in [timeleft]."))
+		to_chat(user, span_warning("The hard-light restraint synthesizer needs time to recharge! It will be ready again in [timeleft]."))
 		return
 	var/mob/living/carbon/carbon_victim = victim
 	if(!carbon_victim.handcuffed)
