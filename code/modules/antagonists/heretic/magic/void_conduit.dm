@@ -30,6 +30,8 @@
 	density = TRUE
 	///Overlay to apply to the tiles in range of the conduit
 	var/static/image/void_overlay = image(icon = 'icons/turf/overlays.dmi', icon_state = "voidtile")
+	///List of tiles that we added an overlay to, so we can clear them when the conduit is deleted
+	var/list/overlayed_turfs = list()
 	///How many tiles far our effect is
 	var/effect_range = 12
 	///id of the deletion timer
@@ -46,6 +48,7 @@
 		if(!isopenturf(affected_turf))
 			continue
 		affected_turf.add_overlay(void_overlay)
+		overlayed_turfs += affected_turf
 		void_overlay.mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 		void_overlay.alpha = 180
 
@@ -53,7 +56,7 @@
 	QDEL_NULL(soundloop)
 	deltimer(timerid)
 	STOP_PROCESSING(SSobj, src)
-	for(var/turf/affected_turf as anything in RANGE_TURFS(effect_range, src))
+	for(var/turf/affected_turf as anything in overlayed_turfs) //If the portal is moved, the overlays don't stick around
 		affected_turf.cut_overlay(void_overlay)
 	return ..()
 
@@ -78,21 +81,33 @@
 
 ///Applies the effects of the pulse "hitting" something. Freezes non-heretic, destroys airlocks/windows
 /obj/structure/void_conduit/proc/handle_effects(list/turfs)
-	for(var/mob/living/affected_mob in turfs)
-		if(affected_mob.can_block_magic(MAGIC_RESISTANCE))
-			continue
-		if(IS_HERETIC(affected_mob))
-			affected_mob.apply_status_effect(/datum/status_effect/void_conduit)
-		else
-			affected_mob.apply_status_effect(/datum/status_effect/void_chill, 1)
-	for(var/obj/machinery/door/affected_door in turfs)
-		affected_door.take_damage(rand(15, 30))
-	for(var/obj/structure/door_assembly/affected_assembly in turfs)
-		affected_assembly.take_damage(rand(15, 30))
-	for(var/obj/structure/window/affected_window in turfs)
-		affected_window.take_damage(rand(10, 20))
-	for(var/obj/structure/grille/affected_grille in turfs)
-		affected_grille.take_damage(rand(10, 20))
+	for(var/turf/affected_turf as anything in turfs)
+		for(var/atom/thing_to_affect as anything in affected_turf.contents)
+
+			if(isliving(thing_to_affect))
+				var/mob/living/affected_mob = thing_to_affect
+				if(affected_mob.can_block_magic(MAGIC_RESISTANCE))
+					continue
+				if(IS_HERETIC(affected_mob))
+					affected_mob.apply_status_effect(/datum/status_effect/void_conduit)
+				else
+					affected_mob.apply_status_effect(/datum/status_effect/void_chill, 1)
+
+			if(istype(thing_to_affect, /obj/machinery/door))
+				var/obj/machinery/door/affected_door = thing_to_affect
+				affected_door.take_damage(rand(15, 30))
+
+			if(istype(thing_to_affect, /obj/structure/door_assembly))
+				var/obj/structure/door_assembly/affected_assembly = thing_to_affect
+				affected_assembly.take_damage(rand(15, 30))
+
+			if(istype(thing_to_affect, /obj/structure/window))
+				var/obj/structure/window/affected_window = thing_to_affect
+				affected_window.take_damage(rand(10, 20))
+
+			if(istype(thing_to_affect, /obj/structure/grille))
+				var/obj/structure/grille/affected_grille = thing_to_affect
+				affected_grille.take_damage(rand(10, 20))
 
 /datum/looping_sound/void_conduit
 	mid_sounds = 'sound/ambience/ambiatm1.ogg'

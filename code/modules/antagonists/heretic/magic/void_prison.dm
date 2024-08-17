@@ -23,14 +23,16 @@
 	. = ..()
 	if(cast_on.can_block_magic(antimagic_flags))
 		cast_on.visible_message(
-			span_danger("[cast_on]'s flashes in a firey glow, but repels the blaze!"),
-			span_danger("Your body begins to flash a firey glow, but you are protected!!")
+			span_danger("A swirling, cold void wraps around [cast_on], but they burst free in a wave of heat!"),
+			span_danger("A yawning void begins to open before you, but a great wave of heat bursts it apart! You are protected!!")
 		)
 		return
 	cast_on.apply_status_effect(/datum/status_effect/void_prison, "void_stasis")
 
 /datum/status_effect/void_prison
+	id = "void_prison"
 	duration = 10 SECONDS
+	alert_type = /atom/movable/screen/alert/status_effect/void_prison
 	///The overlay that gets applied to whoever has this status active
 	var/obj/effect/abstract/voidball/stasis_overlay
 
@@ -48,7 +50,7 @@
 	if(stasis_overlay)
 		//Free our prisoner
 		owner.status_flags &= ~GODMODE
-		REMOVE_TRAIT(owner, TRAIT_NO_TRANSFORM, REF(src))
+		owner.remove_traits(list(TRAIT_NO_TRANSFORM, TRAIT_SOFTSPOKEN), REF(src))
 		owner.forceMove(get_turf(stasis_overlay))
 		stasis_overlay.forceMove(owner)
 		owner.vis_contents += stasis_overlay
@@ -63,8 +65,7 @@
 /datum/status_effect/void_prison/proc/enter_prison(mob/living/prisoner)
 	stasis_overlay.forceMove(prisoner.loc)
 	prisoner.forceMove(stasis_overlay)
-	prisoner.set_silence_if_lower(9 SECONDS)
-	ADD_TRAIT(prisoner, TRAIT_NO_TRANSFORM, REF(src))
+	prisoner.add_traits(list(TRAIT_NO_TRANSFORM, TRAIT_SOFTSPOKEN), REF(src))
 	prisoner.status_flags |= GODMODE
 
 ///Makes sure to clear the ref in case the voidball ever suddenly disappears
@@ -86,3 +87,10 @@
 ///Plays a closing animation
 /obj/effect/abstract/voidball/proc/animate_closing()
 	flick("voidball_closing", src)
+
+//---- Screen alert
+/atom/movable/screen/alert/status_effect/void_prison
+	name = "Void Prison"
+	desc = "A Yawning void encases your mortal coil." //Go straight to jail, do not pass GO, do not collect 200$
+	icon = 'icons/mob/actions/actions_ecult.dmi'
+	icon_state = "voidball_effect"

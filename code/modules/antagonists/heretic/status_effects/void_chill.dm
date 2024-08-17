@@ -4,7 +4,6 @@
  */
 /datum/status_effect/void_chill
 	id = "void_chill"
-	duration = 30 SECONDS
 	alert_type = /atom/movable/screen/alert/status_effect/void_chill
 	status_type = STATUS_EFFECT_REFRESH //Custom code
 	on_remove_on_mob_delete = TRUE
@@ -19,7 +18,6 @@
 /datum/status_effect/void_chill/on_creation(mob/living/new_owner, new_stacks, ...)
 	. = ..()
 	RegisterSignal(owner, COMSIG_ATOM_UPDATE_OVERLAYS, PROC_REF(update_stacks_overlay))
-	set_stacks(new_stacks)
 	owner.add_atom_colour(COLOR_BLUE_LIGHT, TEMPORARY_COLOUR_PRIORITY)
 	owner.update_icon(UPDATE_OVERLAYS)
 
@@ -33,6 +31,7 @@
 	owner.remove_atom_colour(TEMPORARY_COLOUR_PRIORITY, COLOR_BLUE_LIGHT)
 	owner.remove_movespeed_modifier(/datum/movespeed_modifier/void_chill)
 	owner.remove_alt_appearance("heretic_status")
+	REMOVE_TRAIT(owner, TRAIT_HYPOTHERMIC, REF(src))
 	UnregisterSignal(owner, COMSIG_ATOM_UPDATE_OVERLAYS)
 
 /datum/status_effect/void_chill/tick(seconds_between_ticks)
@@ -50,11 +49,7 @@
 /datum/status_effect/void_chill/proc/update_stacks_overlay(atom/parent_atom, list/overlays)
 	SIGNAL_HANDLER
 
-	if(stacks >= 5)
-		linked_alert.icon_state = "void_chill_oh_fuck"
-		linked_alert.desc = "You had your chance to run, now it's too late. You may never feel warmth again..."
-		linked_alert.update_appearance(UPDATE_ICON_STATE)
-
+	linked_alert.update_appearance(UPDATE_ICON_STATE|UPDATE_DESC)
 	owner.remove_alt_appearance("heretic_status")
 	stacks_overlay = image('icons/effects/effects.dmi', owner, "void_chill_partial")
 	if(stacks >= 5)
@@ -76,6 +71,8 @@
 /datum/status_effect/void_chill/proc/adjust_stacks(new_stacks)
 	stacks = max(0, min(stack_limit, stacks + new_stacks))
 	update_movespeed(stacks)
+	if(stacks >= 5)
+		ADD_TRAIT(owner, TRAIT_HYPOTHERMIC, REF(src))
 
 ///Updates the movespeed of owner based on the amount of stacks of the debuff
 /datum/status_effect/void_chill/proc/update_movespeed(stacks)
@@ -96,3 +93,19 @@
 	name = "Void Chill"
 	desc = "There's something freezing you from within and without. You've never felt cold this oppressive before..."
 	icon_state = "void_chill_minor"
+
+/atom/movable/screen/alert/status_effect/void_chill/update_icon_state() //XANTODO Check if the icon actually updates
+	. = ..()
+	if(!istype(attached_effect, /datum/status_effect/void_chill))
+		return
+	var/datum/status_effect/void_chill/chill_effect = attached_effect
+	if(chill_effect.stacks >= 5)
+		icon_state = "void_chill_oh_fuck"
+
+/atom/movable/screen/alert/status_effect/void_chill/update_desc(updates) //XANTODO Check if the desc actually updates
+	. = ..()
+	if(!istype(attached_effect, /datum/status_effect/void_chill))
+		return
+	var/datum/status_effect/void_chill/chill_effect = attached_effect
+	if(chill_effect.stacks >= 5)
+		desc = "You had your chance to run, now it's too late. You may never feel warmth again..."

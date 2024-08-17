@@ -112,6 +112,8 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_STABLELIVER "stable_liver"
 #define TRAIT_VATGROWN "vatgrown"
 #define TRAIT_RESISTHEAT "resist_heat"
+/// Trait for when you can no longer gain body head
+#define TRAIT_HYPOTHERMIC "body_hypothermic"
 ///For when you've gotten a power from a dna vault
 #define TRAIT_USED_DNA_VAULT "used_dna_vault"
 /// For when you want to be able to touch hot things, but still want fire to be an issue.

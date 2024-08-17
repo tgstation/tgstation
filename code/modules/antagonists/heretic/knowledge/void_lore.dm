@@ -273,29 +273,40 @@
 /datum/heretic_knowledge/ultimate/void_final/proc/on_life(mob/living/source, seconds_per_tick, times_fired)
 	SIGNAL_HANDLER
 
-	var/list/effective_range = range(10, source)
-
-	for(var/mob/living/carbon/close_carbon in effective_range)
-		if(IS_HERETIC_OR_MONSTER(close_carbon))
-			close_carbon.apply_status_effect(/datum/status_effect/void_conduit)
+	for(var/atom/thing_in_range as anything in range(10, source))
+		if(!isatom(thing_in_range)) //Better safe than sorry
 			continue
-		close_carbon.adjust_silence_up_to(2 SECONDS, 20 SECONDS)
-		close_carbon.apply_status_effect(/datum/status_effect/void_chill, 1)
-		close_carbon.adjust_eye_blur(rand(0 SECONDS, 2 SECONDS))
-		close_carbon.adjust_bodytemperature(-30 * TEMPERATURE_DAMAGE_COEFFICIENT)
 
-	for(var/obj/machinery/door/affected_door in effective_range)
-		affected_door.take_damage(rand(60, 80))
-	for(var/obj/structure/door_assembly/affected_assembly in effective_range)
-		affected_assembly.take_damage(rand(60, 80))
-	for(var/obj/structure/window/affected_window in effective_range)
-		affected_window.take_damage(rand(20, 40))
-	for(var/obj/structure/grille/affected_grille in effective_range)
-		affected_grille.take_damage(rand(20, 40))
+		if(iscarbon(thing_in_range))
+			var/mob/living/carbon/close_carbon = thing_in_range
+			if(IS_HERETIC_OR_MONSTER(close_carbon))
+				close_carbon.apply_status_effect(/datum/status_effect/void_conduit)
+				continue
+			close_carbon.adjust_silence_up_to(2 SECONDS, 20 SECONDS)
+			close_carbon.apply_status_effect(/datum/status_effect/void_chill, 1)
+			close_carbon.adjust_eye_blur(rand(0 SECONDS, 2 SECONDS))
+			close_carbon.adjust_bodytemperature(-30 * TEMPERATURE_DAMAGE_COEFFICIENT)
 
-	for(var/turf/affected_turf in effective_range)
-		var/datum/gas_mixture/environment = affected_turf.return_air()
-		environment.temperature *= 0.9
+		if(istype(thing_in_range, /obj/machinery/door))
+			var/obj/machinery/door/affected_door = thing_in_range
+			affected_door.take_damage(rand(60, 80))
+
+		if(istype(thing_in_range, /obj/structure/door_assembly))
+			var/obj/structure/door_assembly/affected_assembly = thing_in_range
+			affected_assembly.take_damage(rand(60, 80))
+
+		if(istype(thing_in_range, /obj/structure/window))
+			var/obj/structure/window/affected_window = thing_in_range
+			affected_window.take_damage(rand(20, 40))
+
+		if(istype(thing_in_range, /obj/structure/grille))
+			var/obj/structure/grille/affected_grille = thing_in_range
+			affected_grille.take_damage(rand(20, 40))
+
+		if(isturf(thing_in_range))
+			var/turf/affected_turf = thing_in_range
+			var/datum/gas_mixture/environment = affected_turf.return_air()
+			environment.temperature *= 0.9
 
 	// Telegraph the storm in every area on the station.
 	var/list/station_levels = SSmapping.levels_by_trait(ZTRAIT_STATION)
@@ -325,7 +336,6 @@
 		return FALSE
 	if(!(ascended_heretic.mobility_flags & MOBILITY_USE))
 		return FALSE
-	var/datum/dna/dna = ascended_heretic.has_dna()
 	if(!isturf(ascended_heretic.loc))
 		return FALSE
 	return TRUE
@@ -337,10 +347,13 @@
 		return NONE
 
 	ascended_heretic.visible_message(
-		span_danger("[ascended_heretic] effortlessly swats [hitting_projectile] aside! [ascended_heretic.p_They()] can block bullets with [ascended_heretic.p_their()] bare hands!"),
-		span_userdanger("You deflect [hitting_projectile]!"),
+		span_danger("The void storm surrounding [ascended_heretic] deflects [hitting_projectile].")
+		span_userdanger("The void storm protects you from [hitting_projectile]!"),
 	)
 	playsound(ascended_heretic, pick('sound/weapons/bulletflyby.ogg', 'sound/weapons/bulletflyby2.ogg', 'sound/weapons/bulletflyby3.ogg'), 75, TRUE)
 	hitting_projectile.firer = ascended_heretic
-	hitting_projectile.set_angle(rand(0, 360))//SHING
+	if(prob(75))
+		hitting_projectile.set_angle(get_angle(hitting_projectile.firer, hitting_projectile.fired_from))
+	else
+		hitting_projectile.set_angle(rand(0, 360))//SHING
 	return COMPONENT_BULLET_PIERCED
