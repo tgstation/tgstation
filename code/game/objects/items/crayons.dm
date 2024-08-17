@@ -658,13 +658,14 @@
 	if(ishuman(interacting_with) && !user.combat_mode)
 		var/mob/living/carbon/human/pwned_human = interacting_with
 
-		if(pwned_human.stat != DEAD || !(HAS_TRAIT(pwned_human, TRAIT_FAKEDEATH)))
+		if(!(pwned_human.stat == DEAD || HAS_TRAIT(pwned_human, TRAIT_FAKEDEATH)))
+			balloon_alert_to_viewers("FEEDING TIME")
 			return ..()
 
 		balloon_alert_to_viewers("drawing outline...")
 		if(!do_after(user, DRAW_TIME, target = pwned_human, max_interact_count = 4))
 			return NONE
-		if(!use_charges(user, cost))
+		if(!use_charges(user, 1))
 			return NONE
 
 		var/decal_rotation = GET_LYING_ANGLE(pwned_human) - 90
