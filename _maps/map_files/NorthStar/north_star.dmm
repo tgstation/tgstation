@@ -52400,7 +52400,6 @@
 	},
 /obj/structure/cable,
 /obj/machinery/power/apc/auto_name/directional/west,
-/obj/machinery/vending/cytopro,
 /turf/open/floor/iron,
 /area/station/science/cytology)
 "nxm" = (

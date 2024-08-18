@@ -24316,7 +24316,6 @@
 /obj/effect/turf_decal/tile/purple/half/contrasted{
 	dir = 1
 	},
-/obj/machinery/vending/cytopro,
 /turf/open/floor/iron,
 /area/station/science/xenobiology)
 "gfR" = (
