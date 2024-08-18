@@ -62,6 +62,7 @@
 		RegisterSignal(parent, COMSIG_LIVING_POST_UPDATE_TRANSFORM, PROC_REF(on_transform_updated))
 		RegisterSignal(parent, COMSIG_MOB_BUCKLED, PROC_REF(hide_shadow))
 		RegisterSignal(parent, COMSIG_MOB_UNBUCKLED, PROC_REF(show_shadow))
+		RegisterSignal(parent, COMSIG_MOD_SPHERE_FORM_TOGGLED, PROC_REF(sphere_toggled))
 
 	if (!HAS_TRAIT(parent, TRAIT_SHADOWLESS))
 		var/atom/atom_parent = parent
@@ -77,6 +78,7 @@
 		COMSIG_LIVING_POST_UPDATE_TRANSFORM,
 		COMSIG_MOB_BUCKLED,
 		COMSIG_MOB_UNBUCKLED,
+		COMSIG_MOD_SPHERE_FORM_TOGGLED,
 		SIGNAL_ADDTRAIT(TRAIT_SHADOWLESS),
 		SIGNAL_REMOVETRAIT(TRAIT_SHADOWLESS),
 	))
@@ -95,6 +97,15 @@
 	if (!HAS_TRAIT(parent, TRAIT_SHADOWLESS))
 		var/atom/atom_parent = parent
 		atom_parent.update_appearance(UPDATE_OVERLAYS)
+
+/// Moves the shadow up or down when toggling sphere form
+/datum/component/drop_shadow/proc/sphere_toggled(datum/source, active)
+	SIGNAL_HANDLER
+	if (active)
+		shadow_offset += 6
+	else
+		shadow_offset -= 6
+	update_shadow_position()
 
 /// Handles actually displaying it
 /datum/component/drop_shadow/proc/on_update_overlays(atom/source, list/overlays)

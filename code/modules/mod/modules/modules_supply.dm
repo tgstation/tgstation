@@ -492,7 +492,6 @@
 	playsound(src, 'sound/items/modsuit/ballin.ogg', 100, TRUE)
 	mod.wearer.base_pixel_z -= 4
 	mod.wearer.pixel_z -= 4
-	mod.wearer.shadow_offset_y += 6
 	mod.wearer.update_appearance(UPDATE_OVERLAYS)
 	mod.wearer.add_filter("mod_ball", 1, alpha_mask_filter(icon = icon('icons/mob/clothing/modsuit/mod_modules.dmi', "ball_mask"), flags = MASK_INVERSE))
 	mod.wearer.add_filter("mod_blur", 2, angular_blur_filter(size = 15))
@@ -505,13 +504,13 @@
 	mod.wearer.add_movespeed_mod_immunities(MOD_TRAIT, /datum/movespeed_modifier/damage_slowdown)
 	mod.wearer.add_movespeed_modifier(/datum/movespeed_modifier/sphere)
 	RegisterSignal(mod.wearer, COMSIG_MOB_STATCHANGE, PROC_REF(on_statchange))
+	SEND_SIGNAL(mod.wearer, COMSIG_MOD_SPHERE_FORM_TOGGLED, TRUE)
 
 /obj/item/mod/module/sphere_transform/on_deactivation(display_message = TRUE, deleting = FALSE)
 	if(!deleting)
 		playsound(src, 'sound/items/modsuit/ballin.ogg', 100, TRUE, frequency = -1)
 	mod.wearer.base_pixel_z += 4
 	mod.wearer.pixel_z += 4
-	mod.wearer.shadow_offset_y -= 6
 	mod.wearer.update_appearance(UPDATE_OVERLAYS)
 	animate(mod.wearer, animate_time, pixel_y = mod.wearer.base_pixel_y)
 	addtimer(CALLBACK(mod.wearer, TYPE_PROC_REF(/datum, remove_filter), list("mod_ball", "mod_blur", "mod_outline")), animate_time)
@@ -521,6 +520,7 @@
 	mod.wearer.AddElement(/datum/element/footstep, FOOTSTEP_MOB_HUMAN, 1, -6)
 	mod.wearer.remove_movespeed_modifier(/datum/movespeed_modifier/sphere)
 	UnregisterSignal(mod.wearer, COMSIG_MOB_STATCHANGE)
+	SEND_SIGNAL(mod.wearer, COMSIG_MOD_SPHERE_FORM_TOGGLED, FALSE)
 
 /obj/item/mod/module/sphere_transform/used()
 	if(!lavaland_equipment_pressure_check(get_turf(src)))

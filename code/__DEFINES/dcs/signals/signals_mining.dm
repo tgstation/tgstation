@@ -7,3 +7,5 @@
 #define COMSIG_GOLIATH_TENTACLE_RETRACTING 	"comsig_goliath_tentacle_retracting"
 /// Fired by a mob which has triggered a brimdust explosion from itself (not the mobs that get hit)
 #define COMSIG_BRIMDUST_EXPLOSION "comsig_brimdust_explosion"
+/// Called on a MOD wearer when they enter/exit mining sphere form (active)
+#define COMSIG_MOD_SPHERE_FORM_TOGGLED "mod_wearer_sphere_form_toggled"
