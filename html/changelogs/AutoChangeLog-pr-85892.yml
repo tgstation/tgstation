@@ -1,0 +1,8 @@
+author: "Ghommie"
+delete-after: True
+changes:
+  - image: "Shrunk the arrow shown when pointing at things to be less invasive."
+  - rscadd: "Wearing an ID with the trim of a command/leader position gives you bigger arrows (about the size of arrows before this PR) which may also be of different colors."
+  - rscadd: "Added a skillchip that does the same, but also makes the color of the arrow totally customizable."
+  - bugfix: "ERT engies and medics now come with the engineering and entrails-reader skillchips respectively, like their station counterparts."
+  - bugfix: "Fixed not facing atoms that you're pointing at."
