@@ -45115,11 +45115,6 @@
 	dir = 8
 	},
 /obj/structure/closet/secure_closet/cytology,
-/obj/merge_conflict_marker{
-	name = "---Merge Conflict Marker---";
-	
-	desc = "A best-effort merge was performed. You must resolve this conflict yourself (manually) and remove this object once complete."
-	},
 /obj/machinery/status_display/ai/directional/north,
 /obj/structure/railing/corner{
 	dir = 8
