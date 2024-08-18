@@ -85,10 +85,6 @@
 	/// The species' name(s) of the parents of the fish. Shown by the fish analyzer.
 	var/progenitors
 
-	var/flopping = FALSE
-
-	var/in_stasis = FALSE
-
 	// Fishing related properties
 
 	/**
@@ -190,9 +186,21 @@
 
 /obj/item/fish/examine(mob/user)
 	. = ..()
-	// All spacemen have magic eyes of fish weight perception until fish scale (get it?) is implemented.
-	. += span_notice("It's [size] cm long.")
-	. += span_notice("It weighs [weight] g.")
+	if(HAS_MIND_TRAIT(user, TRAIT_EXAMINE_DEEPER_FISH))
+		if(status == FISH_DEAD)
+			. += span_deadsay("it's dead.")
+		var/list/warnings = list()
+		if(is_hungry())
+			warnings += "starving"
+		if(!HAS_TRAIT(src, TRAIT_FISH_STASIS) && !proper_environment())
+			warnings += "drowning"
+		if(health < initial(health) * 0.6)
+			warnings += "sick"
+			if(length(warnings))
+				. += span_warning("it's [english_list(warnings)]")
+	if(HAS_MIND_TRAIT(user, TRAIT_EXAMINE_FISH))
+		. += span_notice("It's [size] cm long.")
+		. += span_notice("It weighs [weight] g.")
 
 ///Randomizes weight and size.
 /obj/item/fish/proc/randomize_size_and_weight(base_size = average_size, base_weight = average_weight, deviation = 0.2)
@@ -306,13 +314,13 @@
 	check_environment()
 
 /obj/item/fish/proc/enter_stasis()
-	in_stasis = TRUE
+	ADD_TRAIT(src, TRAIT_FISH_STASIS, INNATE_TRAIT)
 	// Stop processing until inserted into aquarium again.
 	stop_flopping()
 	STOP_PROCESSING(SSobj, src)
 
 /obj/item/fish/proc/exit_stasis()
-	in_stasis = FALSE
+	REMOVE_TRAIT(src, TRAIT_FISH_STASIS, INNATE_TRAIT)
 	if(status != FISH_DEAD)
 		START_PROCESSING(SSobj, src)
 
@@ -332,15 +340,9 @@
 		fed_reagents.remove_reagent(fed_reagent_type, 0.1)
 	SEND_SIGNAL(src, COMSIG_FISH_FED, fed_reagents, fed_reagent_type)
 
-/obj/item/fish/proc/check_environment(stasis_check = TRUE)
+/obj/item/fish/proc/check_environment()
 	if(QDELETED(src)) //we don't care anymore
 		return
-	if(stasis_check)
-		// Apply/remove stasis as needed
-		if(loc && HAS_TRAIT(loc, TRAIT_FISH_SAFE_STORAGE))
-			enter_stasis()
-		else if(in_stasis)
-			exit_stasis()
 
 	if(!do_flop_animation)
 		return
@@ -348,7 +350,7 @@
 	// Do additional stuff
 	var/in_aquarium = isaquarium(loc)
 	// Start flopping if outside of fish container
-	var/should_be_flopping = status == FISH_ALIVE && loc && !HAS_TRAIT(loc,TRAIT_FISH_SAFE_STORAGE) && !in_aquarium
+	var/should_be_flopping = status == FISH_ALIVE && !HAS_TRAIT(src, TRAIT_FISH_STASIS) && !in_aquarium
 
 	if(should_be_flopping)
 		start_flopping()
@@ -356,7 +358,7 @@
 		stop_flopping()
 
 /obj/item/fish/process(seconds_per_tick)
-	if(in_stasis || status != FISH_ALIVE)
+	if(HAS_TRAIT(src, TRAIT_FISH_STASIS) || status != FISH_ALIVE)
 		return
 
 	process_health(seconds_per_tick)
@@ -376,7 +378,7 @@
 			status = FISH_ALIVE
 			health = initial(health) // since the fishe has been revived
 			last_feeding = world.time //reset hunger
-			check_environment(FALSE)
+			check_environment()
 			START_PROCESSING(SSobj, src)
 		if(FISH_DEAD)
 			status = FISH_DEAD
@@ -608,15 +610,15 @@
 
 /// Starts flopping animation
 /obj/item/fish/proc/start_flopping()
-	if(flopping)  //Requires update_transform/animate_wrappers to be less restrictive.
+	if(HAS_TRAIT(src, TRAIT_FISH_FLOPPING))  //Requires update_transform/animate_wrappers to be less restrictive.
 		return
-	flopping = TRUE
+	ADD_TRAIT(src, TRAIT_FISH_FLOPPING, TRAIT_GENERIC)
 	flop_animation()
 
 /// Stops flopping animation
 /obj/item/fish/proc/stop_flopping()
-	if(flopping)
-		flopping = FALSE
+	if(HAS_TRAIT(src, TRAIT_FISH_FLOPPING))
+		REMOVE_TRAIT(src, TRAIT_FISH_FLOPPING, TRAIT_GENERIC)
 		animate(src, transform = matrix()) //stop animation
 
 /// Refreshes flopping animation after temporary animation finishes
@@ -625,7 +627,7 @@
 		addtimer(CALLBACK(src, PROC_REF(refresh_flopping)), animation_duration)
 
 /obj/item/fish/proc/refresh_flopping()
-	if(flopping)
+	if(HAS_TRAIT(src, TRAIT_FISH_FLOPPING))
 		flop_animation()
 
 /obj/item/fish/proc/try_electrogenesis()
