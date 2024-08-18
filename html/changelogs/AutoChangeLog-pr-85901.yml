@@ -1,4 +1,0 @@
-author: "Melbert"
-delete-after: True
-changes:
-  - qol: "Some wall mounts will now consistently layer over others (light switches and cameras, notably, should always layer above other mounts like signs and status displays)"
