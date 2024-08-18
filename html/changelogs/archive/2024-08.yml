@@ -488,3 +488,62 @@
   zxaber:
   - image: Airlocks have a better sprite for indicating which directions (if any)
       you can pass through without ID access.
+2024-08-18:
+  Ben10Omintrix:
+  - bugfix: fixes ai controllers incorrectly idling when changing z level
+  Ghommie:
+  - bugfix: lights placed on walls with the RLD now face the correct direction.
+  - bugfix: Fixes lobby buttons from station traits having no name and being unexaminable.
+  - bugfix: Fixed the shower water visually not coming out behind the showerhead.
+  Justice12354:
+  - bugfix: Fixes the rotation of Centcom's Airlocks
+  KingkumaArt:
+  - image: Resprited mech drills, plasma cutter, pka and cargo clamp.
+  LemonInTheDark:
+  - admin: Subsystem Overview now has the ability to track a rolling average of tick
+      by tick subsystem cpu usage.
+  Melbert:
+  - qol: Icebox now has a trapdoor from Medbay leading into the Morgue (for corpses,
+      of course)
+  - bugfix: Patch exploit allowing nigh-infinite heretic points
+  - qol: Xenos and digi lizards have claw footprints
+  - qol: Some wall mounts will now consistently layer over others (light switches
+      and cameras, notably, should always layer above other mounts like signs and
+      status displays)
+  MrBagHead:
+  - bugfix: Swapped East and West sprites for access buttons to correct previous misalignment.
+  - rscadd: Added South-facing sprite for access buttons.
+  SmArtKar:
+  - bugfix: Mechs' directional armor now actually works
+  - bugfix: Alien beds no longer pretend they can be deconstructed with a wrench
+  - qol: Wallmount balloons are now clickable
+  - admin: Stat change is now logged for living mobs
+  - bugfix: Fixed elephant graveyard active turfs
+  - bugfix: Fixed random lipstick texture, fake syndie lipstick no longer can randomly
+      spawn
+  Timberpoes:
+  - bugfix: Having the Overflow Role set to On will properly ensure you get that role
+      at a High priority as intended by the game code.
+  - bugfix: Job selection is now a little bit more random. Fixes an unintentional
+      bias in random job assignment that could lead to feast-or-famine for roles where
+      everyone is assigned one job and nobody is assigned another job.
+  YesterdaysPromise:
+  - image: adjusted security barriers to be in 3/4 perspective.
+  Zytolg:
+  - bugfix: Updates much of Birdshot for the Wallening
+  mc-oofert:
+  - rscadd: portable gravity unit, bought at cargo
+  necromanceranne:
+  - rscadd: Drunken fist fighting now has bonuses and penalties based on how intoxicated
+      you are. Controlled liquor intake could make you a better brawler. Though you
+      might vomit if you go too hard.
+  - rscadd: Bartenders are now Drunken Brawlers. If they're drunk at all (no matter
+      how drunk), they're stronger at fist fighting.
+  - rscadd: Reintroduces the deterministic stagger combo. The effects of the combo
+      are more varied, and based on attacker unarmed effectiveness and the defender's
+      armor. Read the PR for more details. It's complicated.
+  - qol: Unarmed effects that would utilize stamina values now use a split of half
+      brute, half burn to determine outcomes or for meeting thresholds. This affects;
+      punch accuracy, stagger combo thresholds and grab vulnerability thresholds.
+  thegrb93:
+  - bugfix: Air alarms stuck in warning state despite area completely fine

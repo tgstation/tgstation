@@ -1,4 +1,0 @@
-author: "LemonInTheDark"
-delete-after: True
-changes:
-  - admin: "Subsystem Overview now has the ability to track a rolling average of tick by tick subsystem cpu usage."

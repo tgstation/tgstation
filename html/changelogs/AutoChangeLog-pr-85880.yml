@@ -1,4 +1,0 @@
-author: "SmArtKar"
-delete-after: True
-changes:
-  - bugfix: "Fixed random lipstick texture, fake syndie lipstick no longer can randomly spawn"
