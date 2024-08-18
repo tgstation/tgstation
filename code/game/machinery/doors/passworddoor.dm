@@ -80,9 +80,7 @@
 	var/mutable_appearance/bottom = mutable_appearance(icon, "open_bottom", ABOVE_MOB_LAYER, appearance_flags = KEEP_APART)
 	bottom.alpha = 185
 	. += bottom
-	bottom = emissive_blocker(icon, "open_bottom", src, ABOVE_MOB_LAYER)
-	bottom.alpha = 185
-	. += bottom
+	. += emissive_blocker(icon, "open_bottom", src, ABOVE_MOB_LAYER)
 
 /obj/machinery/door/password/animation_length(animation)
 	switch(animation)

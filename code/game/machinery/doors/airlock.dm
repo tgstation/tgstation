@@ -571,12 +571,11 @@
 			frame_state = AIRLOCK_FRAME_OPEN
 			// If we're open we layer the bit below us "above" any mobs so they can walk through
 			if(!short_rendering)
-				var/mutable_appearance/bottom = mutable_appearance(icon, "open_bottom", ABOVE_MOB_LAYER, appearance_flags = KEEP_APART)
-				bottom.alpha = 185
+				var/mutable_appearance/bottom = mutable_appearance(icon, "open_bottom", appearance_flags = KEEP_APART)
+				bottom.alpha = 1 //near invisible, but still clickable.
 				. += bottom
-				bottom = emissive_blocker(icon, "open_bottom", src, ABOVE_MOB_LAYER)
-				bottom.alpha = 185
-				. += bottom
+				var/obj/effect/overlay/vis/bottom_vis_overlay = SSvis_overlays.add_vis_overlay(src, icon, "open_bottom", ABOVE_MOB_LAYER, MUTATE_PLANE(GAME_PLANE, loc), alpha = 185, add_appearance_flags = KEEP_APART, unique = TRUE)
+				bottom_vis_overlay.add_overlay(emissive_blocker(icon, "open_bottom", src, ABOVE_MOB_LAYER))
 			if(!greyscale_config)
 				. += get_airlock_overlay("[airlock_material]_open", icon , src)
 		if(AIRLOCK_OPENING)

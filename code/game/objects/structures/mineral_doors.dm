@@ -143,10 +143,14 @@
 
 /obj/structure/mineral_door/update_overlays()
 	. = ..()
-	if(!density)
-		// If we're open we layer the bit below us "above" any mobs so they can walk through
-		. += mutable_appearance(icon, "[initial(icon_state)]_open_bottom", ABOVE_MOB_LAYER, appearance_flags = KEEP_APART)
-		. += emissive_blocker(icon, "[initial(icon_state)]_open_bottom", src, ABOVE_MOB_LAYER)
+	if(density)
+		return
+	// If we're open we layer the bit below us "above" any mobs so they can walk through
+	var/mutable_appearance/bottom = mutable_appearance(icon, "[initial(icon_state)]_open_bottom", ABOVE_MOB_LAYER, appearance_flags = KEEP_APART)
+	bottom.alpha = 1
+	. += bottom
+	var/obj/effect/overlay/vis/bottom_vis_overlay = SSvis_overlays.add_vis_overlay(src, icon, "[initial(icon_state)]_open_bottom", ABOVE_MOB_LAYER, MUTATE_PLANE(GAME_PLANE, loc), alpha = 185, add_appearance_flags = KEEP_APART, unique = TRUE)
+	bottom_vis_overlay.add_overlay(emissive_blocker(icon, "[initial(icon_state)]_open_bottom", src, ABOVE_MOB_LAYER))
 
 /obj/structure/mineral_door/attackby(obj/item/I, mob/living/user)
 	if(pickaxe_door(user, I))

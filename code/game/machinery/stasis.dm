@@ -24,6 +24,11 @@
 	. = ..()
 	AddElement(/datum/element/elevation, pixel_shift = 6)
 
+/obj/machinery/stasis/Destroy()
+	mattress_on.cache_expiration = -1
+	mattress_on = null
+	return ..()
+
 /obj/machinery/stasis/examine(mob/user)
 	. = ..()
 	. += span_notice("Alt-click to [stasis_enabled ? "turn off" : "turn on"] the machine.")
@@ -78,6 +83,7 @@
 	var/_running = stasis_running()
 	if(!mattress_on)
 		mattress_on = SSvis_overlays.add_vis_overlay(src, icon, mattress_state, BELOW_OBJ_LAYER, plane, dir, alpha = 0, unique = TRUE)
+		mattress_on.cache_expiration = INFINITY
 	else
 		vis_contents += mattress_on
 		if(managed_vis_overlays)
