@@ -159,7 +159,7 @@
 
 	add_fingerprint(user)
 
-	if(!tool.tool_start_check(user, amount = 0))
+	if(!tool.tool_start_check(user, amount = 0, heat_required = HIGH_TEMPERATURE_REQUIRED))
 		return ITEM_INTERACT_BLOCKING
 	balloon_alert(user, "cutting...")
 	if(!tool.use_tool(src, user, 70, volume = 50))

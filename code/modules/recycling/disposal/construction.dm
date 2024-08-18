@@ -152,7 +152,7 @@
 			to_chat(user, span_warning("A disposals machine already exists here!"))
 			return TRUE
 
-		if(!I.tool_start_check(user, amount=1))
+		if(!I.tool_start_check(user, amount=1, heat_required = HIGH_TEMPERATURE_REQUIRED))
 			return TRUE
 
 		to_chat(user, span_notice("You start welding the [pipename] in place..."))

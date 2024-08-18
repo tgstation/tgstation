@@ -97,7 +97,7 @@
 /obj/machinery/portable_atmospherics/welder_act(mob/living/user, obj/item/tool)
 	if(user.combat_mode)
 		return ITEM_INTERACT_SKIP_TO_ATTACK
-	if(atom_integrity >= max_integrity || (machine_stat & BROKEN) || !tool.tool_start_check(user, amount = 1))
+	if(atom_integrity >= max_integrity || (machine_stat & BROKEN) || !tool.tool_start_check(user, amount = 1, heat_required = HIGH_TEMPERATURE_REQUIRED))
 		return ITEM_INTERACT_BLOCKING
 	balloon_alert(user, "repairing...")
 	while(tool.use_tool(src, user, 2.5 SECONDS, volume=40))

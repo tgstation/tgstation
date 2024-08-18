@@ -155,7 +155,7 @@
 	if(atom_integrity >= max_integrity)
 		to_chat(user, span_warning("[src] is already in good condition!"))
 		return ITEM_INTERACT_SUCCESS
-	if(!tool.tool_start_check(user, amount = 0))
+	if(!tool.tool_start_check(user, amount = 0, heat_required = HIGH_TEMPERATURE_REQUIRED))
 		return FALSE
 	to_chat(user, span_notice("You begin repairing [src]..."))
 	if(tool.use_tool(src, user, 4 SECONDS, volume = 50))
@@ -548,7 +548,7 @@
 	return FALSE
 
 /obj/structure/tram/spoiler/welder_act(mob/living/user, obj/item/tool)
-	if(!tool.tool_start_check(user, amount = 1))
+	if(!tool.tool_start_check(user, amount = 1, heat_required = HIGH_TEMPERATURE_REQUIRED))
 		return FALSE
 
 	if(atom_integrity >= max_integrity)

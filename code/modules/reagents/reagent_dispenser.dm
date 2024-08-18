@@ -82,14 +82,14 @@
 		if(tank_volume && (damage_flag == BULLET || damage_flag == LASER))
 			boom()
 
-/obj/structure/reagent_dispensers/attackby(obj/item/W, mob/user, params)
-	if(W.is_refillable())
+/obj/structure/reagent_dispensers/attackby(obj/item/attacking_item, mob/user, params)
+	if(attacking_item.is_refillable())
 		return FALSE //so we can refill them via their afterattack.
-	if(istype(W, /obj/item/assembly_holder) && accepts_rig)
+	if(istype(attacking_item, /obj/item/assembly_holder) && accepts_rig)
 		if(rig)
 			balloon_alert(user, "another device is in the way!")
 			return ..()
-		var/obj/item/assembly_holder/holder = W
+		var/obj/item/assembly_holder/holder = attacking_item
 		if(!(locate(/obj/item/assembly/igniter) in holder.assemblies))
 			return ..()
 
@@ -110,8 +110,8 @@
 		user.balloon_alert_to_viewers("attached rig")
 		return
 
-	if(istype(W, /obj/item/stack/sheet/iron) && can_be_tanked)
-		var/obj/item/stack/sheet/iron/metal_stack = W
+	if(istype(attacking_item, /obj/item/stack/sheet/iron) && can_be_tanked)
+		var/obj/item/stack/sheet/iron/metal_stack = attacking_item
 		metal_stack.use(1)
 		var/obj/structure/reagent_dispensers/plumbed/storage/new_tank = new /obj/structure/reagent_dispensers/plumbed/storage(drop_location())
 		new_tank.reagents.maximum_volume = reagents.maximum_volume
@@ -294,27 +294,39 @@
 	// if this sucks, feel free to change it, but make sure the damn thing will log. thanks.
 	return ..()
 
-/obj/structure/reagent_dispensers/fueltank/attackby(obj/item/I, mob/living/user, params)
-	if(I.tool_behaviour == TOOL_WELDER)
-		if(!reagents.has_reagent(/datum/reagent/fuel))
-			to_chat(user, span_warning("[src] is out of fuel!"))
+/obj/structure/reagent_dispensers/fueltank/attackby(obj/item/attacking_item, mob/user, params)
+	if(attacking_item.tool_behaviour != TOOL_WELDER)
+		return ..()
+
+	var/obj/item/weldingtool/refilling_welder = attacking_item
+	if(istype(refilling_welder) && !refilling_welder.welding)
+		if(refilling_welder.reagents.has_reagent(/datum/reagent/fuel, refilling_welder.max_fuel))
+			to_chat(user, span_warning("Your [refilling_welder.name] is already full!"))
 			return
-		var/obj/item/weldingtool/W = I
-		if(istype(W) && !W.welding)
-			if(W.reagents.has_reagent(/datum/reagent/fuel, W.max_fuel))
-				to_chat(user, span_warning("Your [W.name] is already full!"))
-				return
-			reagents.trans_to(W, W.max_fuel, transferred_by = user)
-			user.visible_message(span_notice("[user] refills [user.p_their()] [W.name]."), span_notice("You refill [W]."))
-			playsound(src, 'sound/effects/refill.ogg', 50, TRUE)
-			W.update_appearance()
-		else
-			user.visible_message(span_danger("[user] catastrophically fails at refilling [user.p_their()] [I.name]!"), span_userdanger("That was stupid of you."))
-			log_bomber(user, "detonated a", src, "via welding tool")
-			boom()
+		reagents.trans_to(refilling_welder, refilling_welder.max_fuel, transferred_by = user)
+		user.visible_message(span_notice("[user] refills [user.p_their()] [refilling_welder.name]."), span_notice("You refill [refilling_welder]."))
+		playsound(src, 'sound/effects/refill.ogg', 50, TRUE)
+		refilling_welder.update_appearance()
 		return
 
-	return ..()
+	var/obj/item/lighter/refilling_lighter = attacking_item
+	if(istype(refilling_lighter) && !refilling_lighter.lit)
+		if(refilling_lighter.reagents.has_reagent(/datum/reagent/fuel, refilling_lighter.maximum_fuel))
+			to_chat(user, span_warning("Your [refilling_lighter.name] is already full!"))
+			return
+		reagents.trans_to(refilling_lighter, refilling_lighter.maximum_fuel, transferred_by = user)
+		user.visible_message(span_notice("[user] refills [user.p_their()] [refilling_lighter.name]."), span_notice("You refill [refilling_lighter]."))
+		playsound(src, 'sound/effects/refill.ogg', 25, TRUE)
+		return
+
+	if(!reagents.has_reagent(/datum/reagent/fuel))
+		to_chat(user, span_warning("[src] is out of fuel!"))
+		return
+	user.visible_message(
+		span_danger("[user] catastrophically fails at refilling [user.p_their()] [attacking_item.name]!"),
+		span_userdanger("That was stupid of you."))
+	log_bomber(user, "detonated a", src, "via [attacking_item.name]")
+	boom()
 
 /obj/structure/reagent_dispensers/fueltank/large
 	name = "high capacity fuel tank"
