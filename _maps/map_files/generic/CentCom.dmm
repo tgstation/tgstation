@@ -707,7 +707,7 @@
 /area/centcom/central_command_areas/admin)
 "de" = (
 /obj/effect/landmark/start/new_player,
-/turf/closed/indestructible/start_area,
+/turf/cordon,
 /area/misc/start)
 "df" = (
 /obj/structure/table/wood,
@@ -1292,7 +1292,7 @@
 /turf/open/floor/catwalk_floor,
 /area/centcom/central_command_areas/evacuation/ship)
 "fX" = (
-/turf/closed/indestructible/start_area,
+/turf/cordon,
 /area/misc/start)
 "fZ" = (
 /obj/effect/landmark/ctf,
@@ -1332,7 +1332,9 @@
 /area/centcom/central_command_areas/prison)
 "gh" = (
 /turf/closed/indestructible/fakedoor{
-	name = "Thunderdome Admin"
+	name = "Thunderdome Admin";
+	dir = 4;
+	manual_align = 1
 	},
 /area/centcom/tdome/administration)
 "gi" = (
@@ -1542,6 +1544,21 @@
 /obj/machinery/light/directional/north,
 /turf/open/misc/asteroid,
 /area/centcom/central_command_areas/evacuation)
+"hn" = (
+/obj/machinery/door/firedoor,
+/obj/machinery/door/airlock/centcom{
+	name = "CentCom";
+	manual_align = 1;
+	dir = 4
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 8
+	},
+/turf/open/floor/iron,
+/area/centcom/central_command_areas/control)
 "ho" = (
 /obj/structure/table/wood,
 /obj/item/folder/red,
@@ -1795,7 +1812,9 @@
 /area/centcom/central_command_areas/prison)
 "iB" = (
 /turf/closed/indestructible/fakedoor{
-	name = "CentCom Cell"
+	name = "CentCom Cell";
+	dir = 4;
+	manual_align = 1
 	},
 /area/centcom/central_command_areas/prison/cells)
 "iC" = (
@@ -4400,7 +4419,9 @@
 "ub" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/centcom{
-	name = "CentCom"
+	name = "CentCom";
+	manual_align = 1;
+	dir = 4
 	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
@@ -4978,7 +4999,9 @@
 "wu" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/centcom{
-	name = "CentCom Security"
+	name = "CentCom Security";
+	manual_align = 1;
+	dir = 4
 	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
@@ -5068,7 +5091,9 @@
 "wJ" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/centcom{
-	name = "CentCom"
+	name = "CentCom";
+	dir = 4;
+	manual_align = 1
 	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
@@ -5528,7 +5553,9 @@
 "yU" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/centcom{
-	name = "CentCom"
+	name = "CentCom";
+	manual_align = 1;
+	dir = 4
 	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
@@ -7080,6 +7107,13 @@
 /obj/machinery/light/directional/north,
 /turf/open/floor/iron,
 /area/centcom/central_command_areas/admin/storage)
+"Gz" = (
+/turf/closed/indestructible/fakedoor{
+	name = "CentCom Cell";
+	manual_align = 1;
+	dir = 4
+	},
+/area/centcom/central_command_areas/prison/cells)
 "GB" = (
 /obj/machinery/power/apc/auto_name/directional/west,
 /obj/effect/turf_decal/stripes/line,
@@ -8259,6 +8293,22 @@
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron/dark,
 /area/centcom/central_command_areas/control)
+"NL" = (
+/obj/machinery/door/firedoor,
+/obj/machinery/door/airlock/centcom{
+	name = "CentCom Security";
+	dir = 4;
+	manual_align = 1
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 4
+	},
+/obj/effect/mapping_helpers/airlock/access/all/admin/general,
+/turf/open/floor/iron,
+/area/centcom/central_command_areas/ferry)
 "NM" = (
 /obj/structure/closet/crate/bin,
 /obj/machinery/light/directional/south,
@@ -8374,7 +8424,9 @@
 "Oj" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/centcom{
-	name = "CentCom"
+	name = "CentCom";
+	dir = 4;
+	manual_align = 1
 	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
@@ -10271,7 +10323,9 @@
 "WQ" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/centcom{
-	name = "CentCom Security"
+	name = "CentCom Security";
+	dir = 4;
+	manual_align = 1
 	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
@@ -10885,6 +10939,21 @@
 	},
 /turf/open/floor/iron,
 /area/centcom/central_command_areas/supplypod/loading/four)
+"ZR" = (
+/obj/machinery/door/firedoor,
+/obj/machinery/door/airlock/centcom{
+	name = "CentCom";
+	dir = 4;
+	manual_align = 1
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 4
+	},
+/turf/open/floor/iron,
+/area/centcom/central_command_areas/control)
 "ZS" = (
 /obj/structure/table/reinforced,
 /obj/item/wrench,
@@ -47069,9 +47138,9 @@ tu
 mD
 mD
 mD
-wu
+NL
 xh
-wu
+NL
 mD
 gO
 cn
@@ -56580,7 +56649,7 @@ io
 io
 Oj
 mk
-Oj
+hn
 io
 io
 iu
@@ -58356,7 +58425,7 @@ ir
 iB
 Jb
 ir
-iB
+Gz
 YX
 ir
 iB
@@ -58634,9 +58703,9 @@ cg
 cg
 cg
 cg
-yU
+ZR
 GJ
-yU
+ZR
 cg
 cg
 cg

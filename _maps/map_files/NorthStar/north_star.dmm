@@ -52347,6 +52347,7 @@
 	},
 /obj/structure/cable,
 /obj/machinery/power/apc/auto_name/directional/west,
+/obj/machinery/vending/cytopro,
 /turf/open/floor/iron,
 /area/station/science/cytology)
 "nxm" = (
@@ -68772,10 +68773,6 @@
 	},
 /turf/open/floor/iron/dark,
 /area/station/security/checkpoint/third)
-"rLs" = (
-/obj/item/kirbyplants/random,
-/turf/open/floor/iron/dark,
-/area/station/hallway/floor1/fore)
 "rLx" = (
 /obj/machinery/light/directional/north,
 /turf/open/floor/iron,
@@ -83126,10 +83123,6 @@
 	dir = 1
 	},
 /area/station/science/genetics)
-"vvn" = (
-/obj/item/kirbyplants/random,
-/turf/open/floor/iron/dark,
-/area/station/hallway/floor1/fore)
 "vvs" = (
 /obj/machinery/duct,
 /obj/effect/turf_decal/stripes/line{
@@ -111636,7 +111629,7 @@ sZI
 nVw
 vZC
 tKe
-vvn
+muj
 sPJ
 xtY
 oWA
@@ -113166,7 +113159,7 @@ tNS
 wRT
 jxa
 oic
-rLs
+muj
 aUJ
 vWF
 pxu
@@ -113182,7 +113175,7 @@ tTy
 hyD
 vWF
 crO
-rLs
+muj
 hJy
 aLP
 hJy
@@ -115479,7 +115472,7 @@ fHM
 dIz
 nJY
 oic
-rLs
+muj
 gVw
 rpj
 vLP
@@ -117027,7 +117020,7 @@ oOc
 bCz
 prw
 rze
-rLs
+muj
 rpj
 gqU
 vsv

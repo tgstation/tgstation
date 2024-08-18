@@ -56,7 +56,8 @@
 "gM" = (
 /obj/structure/table/reinforced,
 /obj/item/clothing/glasses/sunglasses/big{
-	name = "aesthetic sunglasses"
+	name = "aesthetic sunglasses";
+	pixel_y = 8
 	},
 /turf/open/floor/iron/vaporwave,
 /area/virtual_domain)
@@ -102,7 +103,10 @@
 /area/virtual_domain/safehouse)
 "lI" = (
 /obj/structure/table/reinforced,
-/obj/machinery/chem_dispenser/drinks/beer/fullupgrade,
+/obj/machinery/chem_dispenser/drinks/beer/fullupgrade{
+	pixel_y = 8;
+	dir = 1
+	},
 /turf/open/floor/iron/vaporwave,
 /area/virtual_domain)
 "qm" = (
@@ -206,7 +210,9 @@
 "Nz" = (
 /obj/structure/window/spawner/directional/east,
 /obj/structure/table/reinforced,
-/obj/item/storage/fancy/cigarettes/cigars/havana,
+/obj/item/storage/fancy/cigarettes/cigars/havana{
+	pixel_y = 8
+	},
 /obj/effect/spawner/random/entertainment/lighter,
 /turf/open/floor/iron/vaporwave,
 /area/virtual_domain)
