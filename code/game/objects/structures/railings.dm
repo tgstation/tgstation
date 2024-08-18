@@ -169,6 +169,7 @@
 	icon_state = "wooden_railing"
 	item_deconstruct = /obj/item/stack/sheet/mineral/wood
 	layer = ABOVE_MOB_LAYER
+	plane = GAME_PLANE
 
 /obj/structure/railing/wooden_fence/Initialize(mapload)
 	. = ..()
@@ -181,7 +182,6 @@
 
 /obj/structure/railing/wooden_fence/proc/adjust_dir_layer(direction)
 	layer = (direction & NORTH) ? MOB_LAYER : initial(layer)
-	plane = (direction & NORTH) ? GAME_PLANE : initial(plane)
 
 
 /obj/structure/railing/corner/end/wooden_fence
