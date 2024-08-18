@@ -120,5 +120,7 @@
 		/datum/ai_planning_subtree/make_carp_rift/panic_teleport/flee_key,
 		/datum/ai_planning_subtree/flee_target/from_flee_key,
 		/datum/ai_planning_subtree/find_food,
+		/datum/ai_planning_subtree/make_carp_rift/aggressive_teleport,
+		/datum/ai_planning_subtree/basic_melee_attack_subtree,
 		/datum/ai_planning_subtree/carp_migration,
 	)
