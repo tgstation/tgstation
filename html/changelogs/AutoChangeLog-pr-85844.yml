@@ -1,5 +1,0 @@
-author: "Jacquerel"
-delete-after: True
-changes:
-  - bugfix: "Mobs shown in ghost alerts shouldn't be offset out of the box"
-  - image: "Several midround dynamic alert icons should be more demonstrative of what is spawning"

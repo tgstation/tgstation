@@ -1,7 +1,7 @@
 /obj/structure/extinguisher_cabinet
 	name = "extinguisher cabinet"
 	desc = "A small wall mounted cabinet designed to hold a fire extinguisher."
-	icon = 'icons/obj/extinguisher.dmi'
+	icon = 'icons/obj/structures/cabinet.dmi'
 	icon_state = "cabinet"
 	anchored = TRUE
 	density = FALSE
@@ -171,6 +171,6 @@ WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/structure/extinguisher_cabinet)
 /obj/item/wallframe/extinguisher_cabinet
 	name = "extinguisher cabinet frame"
 	desc = "Used for building wall-mounted extinguisher cabinets."
-	icon = 'icons/obj/extinguisher.dmi'
+	icon = 'icons/obj/structures/cabinet.dmi'
 	icon_state = "cabinet"
 	result_path = /obj/structure/extinguisher_cabinet

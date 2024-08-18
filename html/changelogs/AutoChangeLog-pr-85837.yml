@@ -1,4 +1,0 @@
-author: "tralezab"
-delete-after: True
-changes:
-  - bugfix: "bedsheets are laid on beds properly now"

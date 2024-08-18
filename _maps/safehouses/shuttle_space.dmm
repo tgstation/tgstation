@@ -60,7 +60,9 @@
 	},
 /obj/structure/table/reinforced,
 /obj/effect/decal/cleanable/dirt,
-/obj/item/storage/toolbox/emergency,
+/obj/item/storage/toolbox/emergency{
+	pixel_y = 8
+	},
 /turf/open/floor/iron,
 /area/virtual_domain/safehouse)
 "r" = (
@@ -133,9 +135,12 @@
 	},
 /obj/structure/table/reinforced,
 /obj/item/tank/internals/emergency_oxygen{
-	pixel_x = 3
+	pixel_x = 3;
+	pixel_y = 8
 	},
-/obj/item/clothing/mask/gas,
+/obj/item/clothing/mask/gas{
+	pixel_y = 8
+	},
 /turf/open/floor/iron,
 /area/virtual_domain/safehouse)
 "N" = (
