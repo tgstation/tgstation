@@ -45115,6 +45115,10 @@
 	dir = 8
 	},
 /obj/structure/closet/secure_closet/cytology,
+/obj/machinery/status_display/ai/directional/north,
+/obj/structure/railing/corner{
+	dir = 8
+	},
 /turf/open/floor/iron/smooth_large,
 /area/station/science/cytology)
 "nrF" = (
