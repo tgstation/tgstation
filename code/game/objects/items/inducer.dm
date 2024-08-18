@@ -100,7 +100,7 @@
 			balloon_alert(user, "already fully charged!")
 			return
 		used_item.use(1)
-		cell.give(2.5 * STANDARD_CELL_CHARGE)
+		cell.give(2 * STANDARD_CELL_CHARGE)
 		balloon_alert(user, "cell recharged")
 		return
 
