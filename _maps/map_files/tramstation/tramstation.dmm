@@ -11324,11 +11324,6 @@
 	},
 /obj/effect/turf_decal/trimline/dark_blue/corner,
 /obj/structure/railing/corner,
-/obj/machinery/flasher/directional/west{
-	pixel_x = -24;
-	pixel_y = -8;
-	id = "hopflash"
-	},
 /turf/open/floor/iron/dark,
 /area/station/command/heads_quarters/hop)
 "cOF" = (
@@ -43877,7 +43872,9 @@
 	},
 /obj/effect/turf_decal/trimline/dark_blue/corner,
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2,
-/obj/machinery/flasher/directional/north,
+/obj/machinery/flasher/directional/north{
+	id = "hopflash"
+	},
 /turf/open/floor/iron/dark,
 /area/station/command/heads_quarters/hop)
 "omN" = (
