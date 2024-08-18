@@ -1909,11 +1909,6 @@
 	},
 /turf/open/floor/iron/cafeteria,
 /area/awaymission/snowdin/post/messhall)
-"ht" = (
-/obj/structure/table,
-/obj/item/trash/waffles,
-/turf/open/floor/iron/cafeteria,
-/area/awaymission/snowdin/post/messhall)
 "hu" = (
 /obj/structure/chair{
 	dir = 8
@@ -25007,7 +25002,7 @@ Kd
 ex
 fJ
 gA
-ht
+hq
 hW
 iH
 jz
