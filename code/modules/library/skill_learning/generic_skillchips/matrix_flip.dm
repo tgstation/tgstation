@@ -10,19 +10,17 @@
 
 /obj/item/skillchip/matrix_taunt/on_activate(mob/living/carbon/user, silent = FALSE)
 	. = ..()
-	ADD_TRAIT(user, TRAIT_SLOW_FLIP, SKILLCHIP_TRAIT)
 	RegisterSignal(user, COMSIG_MOB_EMOTED("taunt"), PROC_REF(on_taunt))
-	RegisterSignal(user, COMSIG_MOB_PRE_EMOTED, PROC_REF(check_if_we_can_flip))
+	RegisterSignal(user, COMSIG_MOB_PRE_EMOTED, PROC_REF(check_if_we_can_taunt))
 
 /obj/item/skillchip/matrix_taunt/on_deactivate(mob/living/carbon/user, silent=FALSE)
-	REMOVE_TRAIT(user, TRAIT_SLOW_FLIP, SKILLCHIP_TRAIT)
 	UnregisterSignal(user, list(COMSIG_MOB_EMOTED("taunt"), COMSIG_MOB_PRE_EMOTED))
 	return ..()
 
 ///Prevent players from stamcritting from INTENTIONAL flips. 1.4s of bullet immunity isn't worth several secs of stun.
-/obj/item/skillchip/matrix_taunt/proc/check_if_we_can_flip(mob/living/source, key, params, type_override, intentional, datum/emote/emote)
+/obj/item/skillchip/matrix_taunt/proc/check_if_we_can_taunt(mob/living/source, key, params, type_override, intentional, datum/emote/emote)
 	SIGNAL_HANDLER
-	if(key != "flip" || !intentional)
+	if(key != "taunt" || !intentional)
 		return
 	if((source.maxHealth - (source.getStaminaLoss() + TAUNT_STAMINA_COST)) <= source.crit_threshold)
 		source.balloon_alert(source, "too tired!")
@@ -34,6 +32,6 @@
 		return
 	ADD_TRAIT(source, TRAIT_UNHITTABLE_BY_PROJECTILES, SKILLCHIP_TRAIT)
 	source.adjustStaminaLoss(TAUNT_STAMINA_COST)
-	addtimer(TRAIT_CALLBACK_REMOVE(source, TRAIT_UNHITTABLE_BY_PROJECTILES, SKILLCHIP_TRAIT), TAUNT_EMOTE_DURATION)
+	addtimer(TRAIT_CALLBACK_REMOVE(source, TRAIT_UNHITTABLE_BY_PROJECTILES, SKILLCHIP_TRAIT), TAUNT_EMOTE_DURATION * 1.5)
 
 #undef TAUNT_STAMINA_COST

@@ -8,11 +8,11 @@
 	key = "taunt"
 	key_third_person = "taunts"
 	message = "taunts!"
-	cooldown = 1.5 SECONDS //note when changing this- this is used by the matrix taunt to block projectiles.
+	cooldown = 1.6 SECONDS //note when changing this- this is used by the matrix taunt to block projectiles.
 
 /datum/emote/living/taunt/run_emote(mob/living/user, params, type_override, intentional)
 	. = ..()
-	user.spin(0.5 SECONDS, 0.1 SECONDS)
+	user.spin(TAUNT_EMOTE_DURATION, 0.1 SECONDS)
 
 /datum/emote/living/blush
 	key = "blush"
