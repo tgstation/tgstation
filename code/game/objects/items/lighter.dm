@@ -16,6 +16,7 @@
 	light_power = 1.3
 	light_color = LIGHT_COLOR_FIRE
 	light_on = FALSE
+	toolspeed = 1.5
 	tool_behaviour = TOOL_WELDER
 	///The amount of heat a lighter has while it's on. We're using the define to ensure lighters can't do things we don't want them to.
 	var/heat_while_on = HIGH_TEMPERATURE_REQUIRED - 100
