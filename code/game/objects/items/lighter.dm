@@ -42,7 +42,6 @@
 	. = ..()
 	create_reagents(maximum_fuel, REFILLABLE | DRAINABLE)
 	reagents.add_reagent(/datum/reagent/fuel, maximum_fuel)
-	AddElement(/datum/element/tool_flash, light_range / 2)
 	if(!overlay_state)
 		overlay_state = pick(overlay_list)
 	AddComponent(\
