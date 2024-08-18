@@ -32,7 +32,7 @@
 	unsuitable_atmos_damage = 0
 
 	shadow_type = SHADOW_SMALL
-	death_offset_y = 3
+	death_offset_y = -3
 
 	ai_controller = /datum/ai_controller/basic_controller/space_bat
 
