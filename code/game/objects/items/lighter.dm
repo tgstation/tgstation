@@ -227,7 +227,7 @@
 	if(lit)
 		burned_fuel_for += seconds_per_tick
 		if(burned_fuel_for >= TOOL_FUEL_BURN_INTERVAL)
-			use(used = 1)
+			use(used = 0.5)
 
 	open_flame(heat)
 
