@@ -2254,6 +2254,10 @@ GLOBAL_LIST_EMPTY(fire_appearances)
 	if(isnull(.))
 		return
 
+	// NON-MODULE CHANGE for eyelids
+	if(. <= UNCONSCIOUS || new_stat >= UNCONSCIOUS)
+		update_body()
+
 	switch(.) //Previous stat.
 		if(CONSCIOUS)
 			if(stat >= UNCONSCIOUS)

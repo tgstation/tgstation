@@ -140,8 +140,18 @@
 	var/obj/item/bodypart/head/my_head = parent.get_bodypart(BODY_ZONE_HEAD)
 	if(my_head)
 		if(my_head.head_flags & HEAD_EYECOLOR)
-			eye_right.color = eye_color_right
-			eye_left.color = eye_color_left
+			// NON-MODULE CHANGE for eyelids
+			if(IS_ROBOTIC_ORGAN(src) || !my_head.draw_color || (parent.appears_alive() && !HAS_TRAIT(parent, TRAIT_KNOCKEDOUT)))
+				eye_right.color = eye_color_right
+				eye_left.color = eye_color_left
+			else
+				var/list/base_color = rgb2num(my_head.draw_color, COLORSPACE_HSL)
+				base_color[2] *= 0.85
+				base_color[3] *= 0.85
+				var/eyelid_color = rgb(base_color[1], base_color[2], base_color[3], (length(base_color) >= 4 ? base_color[4] : null), COLORSPACE_HSL)
+				eye_right.color = eyelid_color
+				eye_left.color = eyelid_color
+
 		if(my_head.worn_face_offset)
 			my_head.worn_face_offset.apply_offset(eye_left)
 			my_head.worn_face_offset.apply_offset(eye_right)
