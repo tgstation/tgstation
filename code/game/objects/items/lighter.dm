@@ -207,7 +207,7 @@
 	else
 		cig.light(span_notice("[user] holds the [name] out for [target_mob], and lights [target_mob.p_their()] [cig.name]."))
 
-/// If welding tool ran out of fuel during a construction task, construction fails.
+///Checks if the lighter is able to perform a welding task.
 /obj/item/lighter/tool_use_check(mob/living/user, amount, heat_required)
 	if(!lit)
 		to_chat(user, span_warning("[src] has to be on to complete this task!"))
@@ -218,10 +218,6 @@
 	if(heat < heat_required)
 		return FALSE
 	return TRUE
-
-/// Returns the amount of fuel in the welder
-/obj/item/lighter/proc/get_fuel()
-	return reagents.get_reagent_amount(/datum/reagent/fuel)
 
 /obj/item/lighter/process(seconds_per_tick)
 	if(lit)
@@ -249,11 +245,9 @@
 		return TRUE
 	return FALSE
 
-/// Turns off the welder if there is no more fuel (does this really need to be its own proc?)
-/obj/item/lighter/proc/check_fuel(mob/user)
-	if(get_fuel() <= 0)
-		return FALSE
-	return TRUE
+///Returns the amount of fuel
+/obj/item/lighter/proc/get_fuel()
+	return reagents.get_reagent_amount(/datum/reagent/fuel)
 
 /obj/item/lighter/greyscale
 	name = "cheap lighter"
@@ -271,7 +265,7 @@
 	/// The color of the lighter.
 	var/lighter_color
 	/// The set of colors this lighter can be autoset as on init.
-	var/list/color_list = list( //Same 16 color selection as electronic assemblies
+	var/static/list/color_list = list( //Same 16 color selection as electronic assemblies
 		COLOR_ASSEMBLY_BLACK,
 		COLOR_FLOORTILE_GRAY,
 		COLOR_ASSEMBLY_BGRAY,
