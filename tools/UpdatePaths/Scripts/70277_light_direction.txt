@@ -85,6 +85,12 @@
 /obj/machinery/light/small/red{dir = 4} : /obj/machinery/light/small/red/directional/east
 /obj/machinery/light/small/red{dir = 8} : /obj/machinery/light/small/red/directional/west
 
+/obj/machinery/light/small/warm{dir = @UNSET} : /obj/machinery/light/small/warm/directional/south
+/obj/machinery/light/small/warm{dir = 1} : /obj/machinery/light/small/warm/directional/north
+/obj/machinery/light/small/warm{dir = 2} : /obj/machinery/light/small/warm/directional/south
+/obj/machinery/light/small/warm{dir = 4} : /obj/machinery/light/small/warm/directional/east
+/obj/machinery/light/small/warm{dir = 8} : /obj/machinery/light/small/warm/directional/west
+
 /obj/machinery/light/small/red/dim{dir = @UNSET} : /obj/machinery/light/small/red/dim/directional/south
 /obj/machinery/light/small/red/dim{dir = 1} : /obj/machinery/light/small/red/dim/directional/north
 /obj/machinery/light/small/red/dim{dir = 2} : /obj/machinery/light/small/red/dim/directional/south

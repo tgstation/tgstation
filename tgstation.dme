@@ -5773,6 +5773,7 @@
 #include "monkestation\code\__HELPERS\_lists.dm"
 #include "monkestation\code\__HELPERS\anime.dm"
 #include "monkestation\code\__HELPERS\files.dm"
+#include "monkestation\code\__HELPERS\light_mapping_helpers.dm"
 #include "monkestation\code\__HELPERS\reagents.dm"
 #include "monkestation\code\__HELPERS\text_helpers.dm"
 #include "monkestation\code\__HELPERS\turfs.dm"
