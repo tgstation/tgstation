@@ -1,0 +1,217 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/turf/closed/mineral/random/stationside/asteroid/porus,
+/area/station/asteroid)
+"d" = (
+/turf/closed/wall,
+/area/station/maintenance/department/crew_quarters/dorms)
+"j" = (
+/obj/structure/girder,
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/grille,
+/turf/open/floor/iron/smooth,
+/area/station/maintenance/department/crew_quarters/dorms)
+"o" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/modular_map_connector,
+/turf/open/floor/iron/smooth,
+/area/station/maintenance/department/crew_quarters/dorms)
+"r" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/chair/stool/directional/east,
+/turf/open/floor/iron/smooth,
+/area/station/maintenance/department/crew_quarters/dorms)
+"x" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/spawner/random/trash/cigbutt,
+/turf/open/floor/iron/smooth,
+/area/station/maintenance/department/crew_quarters/dorms)
+"C" = (
+/obj/structure/rack,
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/spawner/random/maintenance/three,
+/obj/effect/spawner/random/engineering/tool,
+/obj/effect/spawner/random/engineering/toolbox,
+/turf/open/floor/iron/smooth,
+/area/station/maintenance/department/crew_quarters/dorms)
+"E" = (
+/obj/structure/closet/crate,
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/spawner/random/medical/minor_healing,
+/obj/effect/spawner/random/engineering/vending_restock,
+/turf/open/floor/iron/smooth,
+/area/station/maintenance/department/crew_quarters/dorms)
+"L" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/table,
+/obj/effect/spawner/random/contraband/cannabis,
+/turf/open/floor/iron/smooth,
+/area/station/maintenance/department/crew_quarters/dorms)
+"N" = (
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/iron/smooth,
+/area/station/maintenance/department/crew_quarters/dorms)
+"Q" = (
+/obj/structure/closet/cardboard,
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/spawner/random/clothing/costume,
+/obj/effect/spawner/random/clothing/costume,
+/turf/open/floor/iron/smooth,
+/area/station/maintenance/department/crew_quarters/dorms)
+"R" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/item/chair/stool,
+/turf/open/floor/iron/smooth,
+/area/station/maintenance/department/crew_quarters/dorms)
+"W" = (
+/obj/structure/closet,
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/spawner/random/engineering/material_cheap,
+/obj/effect/spawner/random/maintenance/two,
+/obj/effect/spawner/random/engineering/flashlight,
+/turf/open/floor/iron/smooth,
+/area/station/maintenance/department/crew_quarters/dorms)
+
+(1,1,1) = {"
+d
+d
+d
+a
+a
+a
+a
+a
+a
+a
+a
+"}
+(2,1,1) = {"
+N
+Q
+d
+a
+a
+a
+a
+a
+a
+a
+a
+"}
+(3,1,1) = {"
+N
+C
+d
+a
+a
+a
+a
+a
+a
+a
+a
+"}
+(4,1,1) = {"
+N
+j
+d
+a
+a
+a
+a
+a
+a
+a
+a
+"}
+(5,1,1) = {"
+N
+r
+d
+a
+a
+a
+a
+a
+a
+a
+a
+"}
+(6,1,1) = {"
+N
+L
+d
+a
+a
+a
+a
+a
+a
+a
+a
+"}
+(7,1,1) = {"
+x
+R
+d
+a
+a
+a
+a
+a
+a
+a
+a
+"}
+(8,1,1) = {"
+N
+j
+d
+a
+a
+a
+a
+a
+a
+a
+a
+"}
+(9,1,1) = {"
+o
+W
+d
+a
+a
+a
+a
+a
+a
+a
+a
+"}
+(10,1,1) = {"
+N
+E
+d
+a
+a
+a
+a
+a
+a
+a
+a
+"}
+(11,1,1) = {"
+d
+d
+d
+a
+a
+a
+a
+a
+a
+a
+a
+"}
