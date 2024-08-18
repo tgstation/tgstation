@@ -23,7 +23,7 @@
 	///The amount of time the lighter has been on for, for fuel consumption.
 	var/burned_fuel_for = 0
 	///The max amount of fuel the lighter can hold.
-	var/maximum_fuel = 10
+	var/maximum_fuel = 6
 	/// Whether the lighter is lit.
 	var/lit = FALSE
 	/// Whether the lighter is fancy. Fancy lighters have fancier flavortext and won't burn thumbs.
@@ -115,7 +115,6 @@
 	else
 		hitsound = SFX_SWING_HIT
 		force = 0
-		burned_fuel_for = 0
 		heat = 0
 		attack_verb_continuous = null //human_defense.dm takes care of it
 		attack_verb_simple = null
@@ -188,7 +187,7 @@
 
 /obj/item/lighter/attack(mob/living/target_mob, mob/living/user, params)
 	if(lit)
-		use(1)
+		use(0.5)
 		if(target_mob.ignite_mob())
 			message_admins("[ADMIN_LOOKUPFLW(user)] set [key_name_admin(target_mob)] on fire with [src] at [AREACOORD(user)]")
 			log_game("[key_name(user)] set [key_name(target_mob)] on fire with [src] at [AREACOORD(user)]")
@@ -223,7 +222,7 @@
 	if(lit)
 		burned_fuel_for += seconds_per_tick
 		if(burned_fuel_for >= TOOL_FUEL_BURN_INTERVAL)
-			use(used = 0.5)
+			use(used = 0.25)
 
 	open_flame(heat)
 
@@ -253,7 +252,7 @@
 	name = "cheap lighter"
 	desc = "A cheap lighter."
 	icon_state = "lighter"
-	maximum_fuel = 5
+	maximum_fuel = 3
 	fancy = FALSE
 	overlay_list = list(
 		"transp",
