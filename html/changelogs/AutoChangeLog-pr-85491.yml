@@ -1,5 +1,0 @@
-author: "Raccoff, aa07, ActionNinja, ArcaneMusic, Armhulen, Azlan, Ben10Omintrix, BigBimmer, Capsandi, CapybaraExtravagante, Draco, Floyd, Iamgoofball, Imaginos16, Infrared, Jacquerel, Justice12354, Kryson, KylerAce, LemonInTheDark, Meyhazah, Mothblocks, MTandi, Ninjanomnom, oranges, Rohesie, Runi-c, san7890, Senefi, SimplyLogan, SomeAngryMiner, SpaceSmithers, Tattle, Thunder12345, Time-Green, Twaticus, unit0016, Viro, Waltermeldon, ZephyrTFA with thanks to the Mojave Sun team!"
-delete-after: True
-changes:
-  - rscadd: "Resprites or offsets almost all \"tall\" objects in the game to match a 3/4ths perspective"
-  - rscadd: "Bunch of rendering mumbo jumbo to make said 3/4ths perspective work"

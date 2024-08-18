@@ -85,16 +85,16 @@
 /obj/structure/sink/oil_well //You're not going to enjoy bathing in this...
 	name = "oil well"
 	desc = "A bubbling pool of oil. This would probably be valuable, had bluespace technology not destroyed the need for fossil fuels 200 years ago."
-	icon = 'icons/obj/watercloset.dmi'
+	icon = 'icons/obj/mining_zones/terrain.dmi'
 	icon_state = "puddle-oil"
 	dispensedreagent = /datum/reagent/fuel/oil
 
 // This is a hole
-/obj/structure/sink/oil_well/find_and_hang_on_wall()
+/obj/structure/sink/oil_well/find_and_hang_on_wall(directional, custom_drop_callback, wall_layer)
 	return
 
 /obj/structure/sink/oil_well/Initialize(mapload)
-	.=..()
+	. = ..()
 	create_reagents(20)
 	reagents.add_reagent(dispensedreagent, 20)
 	//I'm pretty much aware that, because how oil wells and sinks work, attackby() won't work unless in combat mode.
