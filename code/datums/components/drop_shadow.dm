@@ -158,9 +158,9 @@
 	var/mob/mob_parent = parent
 	if(!mob_parent.client)
 		return
-	if(shadow.type != /image)
+	if(shadow.type != /image) //mutable_appearances don't work with lient locs, so we need to convert it to an image.
 		shadow = image(shadow)
-		shadow.loc = mob_parent
+		shadow.loc = mob_parent //loc is not passed down to the image, but other things (the appareance) are.
 	mob_parent.client.images |= shadow
 
 /// Called when we gain or lose the "self-shadow" trait
