@@ -172,7 +172,7 @@
 	desc = "Tired of fisticuffs all the time? Just snip the catwalk underneath instead!"
 	max_players = 8
 	allowed_loadouts = list(
-		/datum/outfit/deathmatch_loadout/lattice_battles
+		/datum/outfit/deathmatch_loadout/lattice_battles,
 	)
 	map_name = "lattice_battles"
 	key = "lattice_battles"
