@@ -695,7 +695,71 @@
 	name = "Decommissioned Garbage Truck"
 	sound_environment = SOUND_AREA_SMALL_ENCLOSED
 	ambience_index = AMBIENCE_MAINT
+
 /area/ruin/space/has_grav/garbagetruck/foodwaste
+
 /area/ruin/space/has_grav/garbagetruck/medicalwaste
+
 /area/ruin/space/has_grav/garbagetruck/squat
+
 /area/ruin/space/has_grav/garbagetruck/toystore
+
+//Donk Co trading outpost
+/area/ruin/space/has_grav/hauntedtradingpost
+	name = "\improper Donk Co. Trading Outpost"
+	icon_state = "donk_public"
+	sound_environment = SOUND_AREA_STANDARD_STATION
+
+/area/ruin/space/has_grav/hauntedtradingpost/public
+	name = "\improper Donk Co. Trading Outpost Public Meeting Area And Cafeteria"
+
+/area/ruin/space/has_grav/hauntedtradingpost/public/corridor
+	name = "\improper Donk Co. Trading Outpost Public Docks And Corridors"
+	sound_environment = SOUND_AREA_LARGE_ENCLOSED
+
+/area/ruin/space/has_grav/hauntedtradingpost/employees
+	name = "\improper Donk Co. Trading Outpost Employees Lounge"
+	icon_state = "donk_employees"
+	airlock_wires = /datum/wires/airlock/engineering
+	sound_environment = SOUND_AREA_MEDIUM_SOFTFLOOR
+
+/area/ruin/space/has_grav/hauntedtradingpost/employees/workstation
+	name = "\improper Donk Co. Trading Outpost Engineering Station"
+
+/area/ruin/space/has_grav/hauntedtradingpost/employees/corridor
+	name = "\improper Donk Co. Trading Outpost Secure Corridor"
+	icon_state = "donk_command"
+
+/area/ruin/space/has_grav/hauntedtradingpost/employees/breakroom
+	name = "\improper Donk Co. Trading Outpost Break Room"
+
+/area/ruin/space/has_grav/hauntedtradingpost/maint
+	name = "\improper Donk Co. Trading Outpost Auxiliary Storage Room"
+	icon_state = "donk_maints"
+	airlock_wires = /datum/wires/airlock/maint
+	sound_environment = SOUND_AREA_TUNNEL_ENCLOSED
+	ambience_index = AMBIENCE_MAINT
+
+/area/ruin/space/has_grav/hauntedtradingpost/maint/toolstorage
+
+/area/ruin/space/has_grav/hauntedtradingpost/maint/toystorage
+
+/area/ruin/space/has_grav/hauntedtradingpost/maint/disposals
+	name = "\improper Donk Co. Trading Outpost Waste Management Station"
+	sound_environment = SOUND_AREA_SMALL_ENCLOSED
+
+/area/ruin/space/has_grav/hauntedtradingpost/office
+	name = "\improper Donk Co. Trading Outpost Captains Office"
+	icon_state = "donk_command"
+	airlock_wires = /datum/wires/airlock/cargo
+	sound_environment = SOUND_ENVIRONMENT_ROOM
+
+/area/ruin/space/has_grav/hauntedtradingpost/office/meetingroom
+	name = "\improper Donk Co. Trading Outpost Board Room"
+
+/area/ruin/space/has_grav/hauntedtradingpost/aicore
+	name = "\improper Cybersun AI Core"
+	icon_state = "donk_command"
+	airlock_wires = /datum/wires/airlock/security
+	sound_environment = SOUND_AREA_SMALL_ENCLOSED
+	ambience_index = AMBIENCE_DANGER

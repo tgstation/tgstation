@@ -8,7 +8,7 @@ Difficulty: Hard
 
 /mob/living/simple_animal/hostile/megafauna/wendigo
 	name = "wendigo"
-	desc = "A mythological man-eating legendary creature, the sockets of it's eyes track you with an unsatiated hunger."
+	desc = "A mythological man-eating legendary creature, the sockets of its eyes track you with an unsatiated hunger."
 	health = 2500
 	maxHealth = 2500
 	icon_state = "wendigo"

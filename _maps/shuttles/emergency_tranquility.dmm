@@ -1696,7 +1696,7 @@
 /obj/effect/turf_decal/siding/wood{
 	dir = 4
 	},
-/obj/machinery/keycard_auth/directional/south,
+/obj/machinery/keycard_auth/wall_mounted/directional/south,
 /turf/open/floor/carpet/royalblue,
 /area/shuttle/escape)
 "Gh" = (
@@ -2129,7 +2129,7 @@
 /area/shuttle/escape)
 "NZ" = (
 /obj/machinery/status_display/evac/directional/west,
-/obj/machinery/keycard_auth/directional/south,
+/obj/machinery/keycard_auth/wall_mounted/directional/south,
 /obj/machinery/light/floor,
 /turf/open/floor/carpet/royalblue,
 /area/shuttle/escape)

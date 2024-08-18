@@ -55,6 +55,8 @@
 			particle_to_spawn = /obj/effect/particle_effect/sparks/electricity
 
 		new particle_to_spawn(get_turf(loccer))
+		loccer.shake_up_animation()
+		playsound(loccer, 'sound/weapons/thudswoosh.ogg', 50, TRUE, -1)
 
 		if(prob(resist_chance))
 			flinged_sword.forceMove(get_turf(loccer))
@@ -82,6 +84,9 @@
 		flinged_sword.throw_at(cast_on, cast_range, flinged_sword.throw_speed, owner)
 		flinged_sword.visible_message(\
 			span_warning("\the [flinged_sword] lunges at \the [cast_on]!"))
+		playsound(flinged_sword, 'sound/items/haunted/ghostitemattack.ogg', 100, TRUE)
+		flinged_sword.add_filter("cool_glow", 2, list("type" = "outline", "color" = COLOR_HERETIC_GREEN, "size" = 0.7))
+		addtimer(CALLBACK(flinged_sword, TYPE_PROC_REF(/datum, remove_filter), "cool_glow"), 0.7 SECONDS)
 
 /obj/effect/temp_visual/eldritch_sparks
 	icon_state = "purplesparkles"

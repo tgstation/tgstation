@@ -53,6 +53,15 @@ GLOBAL_LIST_INIT(specific_fish_icons, zebra_typecacheof(list(
 	var/catalog_description
 	/// Background image name from /datum/asset/simple/fishing_minigame
 	var/background = "background_default"
+	/// It true, repeated and large explosions won't be as efficient. This is usually meant for global fish sources.
+	var/explosive_malus = FALSE
+	/// If explosive_malus is true, this will be used to keep track of the turfs where an explosion happened for when we'll spawn the loot.
+	var/list/exploded_turfs
+	/// Mindless mobs that can fish will never pull up items on this list
+	var/static/list/profound_fisher_blacklist = typecacheof(list(
+		/mob/living/basic/mining/lobstrosity,
+		/obj/structure/closet/crate/necropolis/tendril,
+	))
 
 /datum/fish_source/New()
 	if(!PERFORM_ALL_TESTS(focus_only/fish_sources_tables))
@@ -60,6 +69,10 @@ GLOBAL_LIST_INIT(specific_fish_icons, zebra_typecacheof(list(
 	for(var/path in fish_counts)
 		if(!(path in fish_table))
 			stack_trace("path [path] found in the 'fish_counts' list but not in the fish_table one of [type]")
+
+/datum/fish_source/Destroy()
+	exploded_turfs = null
+	return ..()
 
 ///Called when src is set as the fish source of a fishing spot component
 /datum/fish_source/proc/on_fishing_spot_init(/datum/component/fishing_spot/spot)
@@ -89,7 +102,7 @@ GLOBAL_LIST_INIT(specific_fish_icons, zebra_typecacheof(list(
 		. += EXPERT_FISHER_DIFFICULTY_MOD
 
 	// Difficulty modifier added by the fisher's skill level
-	if(!challenge || !(challenge.special_effects & FISHING_MINIGAME_RULE_NO_EXP))
+	if(!(challenge?.special_effects & FISHING_MINIGAME_RULE_NO_EXP))
 		. += fisherman.mind?.get_skill_modifier(/datum/skill/fishing, SKILL_VALUE_MODIFIER)
 
 	// Difficulty modifier added by the rod
@@ -166,13 +179,7 @@ GLOBAL_LIST_INIT(specific_fish_icons, zebra_typecacheof(list(
 
 /// Gives out the reward if possible
 /datum/fish_source/proc/dispense_reward(reward_path, mob/fisherman, turf/fishing_spot)
-	if((reward_path in fish_counts)) // This is limited count result
-		fish_counts[reward_path] -= 1
-		if(!fish_counts[reward_path])
-			fish_counts -= reward_path //Ran out of these since rolling (multiple fishermen on same source most likely)
-			fish_table -= reward_path
-
-	var/atom/movable/reward = spawn_reward(reward_path, fisherman, fishing_spot)
+	var/atom/movable/reward = simple_dispense_reward(reward_path, get_turf(fisherman), fishing_spot)
 	if(!reward) //balloon alert instead
 		fisherman.balloon_alert(fisherman, pick(duds))
 		return
@@ -185,18 +192,31 @@ GLOBAL_LIST_INIT(specific_fish_icons, zebra_typecacheof(list(
 		INVOKE_ASYNC(reward, TYPE_PROC_REF(/atom/movable, forceMove), get_turf(fisherman))
 	fisherman.balloon_alert(fisherman, "caught [reward]!")
 
-	SEND_SIGNAL(fisherman, COMSIG_MOB_FISHING_REWARD_DISPENSED, reward)
+	return reward
+
+///Simplified version of dispense_reward that doesn't need a fisherman.
+/datum/fish_source/proc/simple_dispense_reward(reward_path, atom/spawn_location, turf/fishing_spot)
+	if(isnull(reward_path))
+		return null
+	if((reward_path in fish_counts)) // This is limited count result
+		fish_counts[reward_path] -= 1
+		if(!fish_counts[reward_path])
+			fish_counts -= reward_path //Ran out of these since rolling (multiple fishermen on same source most likely)
+			fish_table -= reward_path
+
+	var/atom/movable/reward = spawn_reward(reward_path, spawn_location, fishing_spot)
+	SEND_SIGNAL(src, COMSIG_FISH_SOURCE_REWARD_DISPENSED, reward)
 	return reward
 
 /// Spawns a reward from a atom path right where the fisherman is. Part of the dispense_reward() logic.
-/datum/fish_source/proc/spawn_reward(reward_path, mob/fisherman, turf/fishing_spot)
+/datum/fish_source/proc/spawn_reward(reward_path, atom/spawn_location, turf/fishing_spot)
 	if(reward_path == FISHING_DUD)
 		return
 	if(ispath(reward_path, /datum/chasm_detritus))
-		return GLOB.chasm_detritus_types[reward_path].dispense_detritus(fisherman, fishing_spot)
+		return GLOB.chasm_detritus_types[reward_path].dispense_detritus(spawn_location, fishing_spot)
 	if(!ispath(reward_path, /atom/movable))
 		CRASH("Unsupported /datum path [reward_path] passed to fish_source/proc/spawn_reward()")
-	var/atom/movable/reward = new reward_path(get_turf(fisherman))
+	var/atom/movable/reward = new reward_path(spawn_location)
 	if(isfish(reward))
 		var/obj/item/fish/caught_fish = reward
 		caught_fish.randomize_size_and_weight()
@@ -244,6 +264,9 @@ GLOBAL_LIST(fishing_property_cache)
 	///Multiplier used to make fishes more common compared to everything else.
 	var/result_multiplier = 1
 
+
+	var/list/final_table = fish_table.Copy()
+
 	if(bait)
 		if(HAS_TRAIT(bait, TRAIT_GREAT_QUALITY_BAIT))
 			result_multiplier = 9
@@ -254,10 +277,13 @@ GLOBAL_LIST(fishing_property_cache)
 		else if(HAS_TRAIT(bait, TRAIT_BASIC_QUALITY_BAIT))
 			result_multiplier = 2
 			leveling_exponent = 0.1
+		final_table -= FISHING_DUD
 
 	var/list/fish_list_properties = collect_fish_properties()
 
-	var/list/final_table = fish_table.Copy()
+
+	if(HAS_TRAIT(fisherman, TRAIT_PROFOUND_FISHER) && !fisherman.client)
+		final_table -= profound_fisher_blacklist
 	for(var/result in final_table)
 		final_table[result] *= rod.hook?.get_hook_bonus_multiplicative(result)
 		final_table[result] += rod.hook?.get_hook_bonus_additive(result)//Decide on order here so it can be multiplicative
@@ -316,3 +342,37 @@ GLOBAL_LIST(fishing_property_cache)
 			final_table[fish] += round(difference**leveling_exponent, 1)
 
 	return final_table
+
+/datum/fish_source/proc/spawn_reward_from_explosion(atom/location, severity)
+	if(!explosive_malus)
+		explosive_spawn(location, severity)
+		return
+	if(isnull(exploded_turfs))
+		exploded_turfs = list()
+		addtimer(CALLBACK(src, PROC_REF(post_explosion_spawn)), 1) //run this the next tick.
+	var/turf/turf = get_turf(location)
+	var/peak_severity = max(exploded_turfs[turf], severity)
+	exploded_turfs[turf] = peak_severity
+
+/datum/fish_source/proc/post_explosion_spawn()
+	var/multiplier = 1/(length(exploded_turfs)**0.5)
+	for(var/turf/turf as anything in exploded_turfs)
+		explosive_spawn(turf, exploded_turfs[turf], multiplier)
+	exploded_turfs = null
+
+/datum/fish_source/proc/explosive_spawn(location, severity, multiplier = 1)
+	for(var/i in 1 to (severity + 2))
+		if(!prob((100 + 100 * severity)/i * multiplier))
+			continue
+		var/reward_loot = pick_weight(fish_table)
+		var/atom/movable/reward = simple_dispense_reward(reward_loot, location, location)
+		if(isnull(reward))
+			continue
+		if(isfish(reward))
+			var/obj/item/fish/fish = reward
+			fish.set_status(FISH_DEAD)
+		if(isitem(reward))
+			reward.pixel_x = rand(-9, 9)
+			reward.pixel_y = rand(-9, 9)
+		if(severity >= EXPLODE_DEVASTATE)
+			reward.ex_act(EXPLODE_LIGHT)

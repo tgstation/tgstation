@@ -1,38 +1,121 @@
-/// Add to a living mob to allow them to "parry" projectiles by clicking on their tile, sending them back at the firer.
-/datum/component/projectile_parry
-	/// typecache of valid projectiles to be able to parry
-	var/list/parryable_projectiles
+/// Add to a projectile to allow it to be parried by mobs with a certain trait (TRAIT_MINING_PARRYING by default)
+/datum/component/parriable_projectile
+	/// List of all turfs the projectile passed on its last loop and we assigned comsigs to
+	var/list/turf/parry_turfs = list()
+	/// List of all mobs who have clicked on a parry turf in last moveloop
+	var/list/mob/parriers = list()
+	/// When the projectile was created
+	var/fire_time = 0
+	/// If this projectile has been parried
+	var/parried = FALSE
+	/// How much this projectile is sped up when parried
+	var/parry_speed_mult
+	/// How much this projectile's damage is increased when parried
+	var/parry_damage_mult
+	/// How much this projectile is sped up when boosted (parried by owner)
+	var/boost_speed_mult
+	/// How much this projectile's damage is increased when boosted (parried by owner)
+	var/boost_damage_mult
+	/// Trait required to be able to parry this projectile
+	var/parry_trait
+	/// For how long do valid tiles persist? Acts as clientside lag compensation
+	var/grace_period
+	/// Callback for special effects upon parrying
+	var/datum/callback/parry_callback
 
-
-/datum/component/projectile_parry/Initialize(list/projectiles_to_parry)
-	if(!isliving(parent))
+/datum/component/parriable_projectile/Initialize(parry_speed_mult = 0.8, parry_damage_mult = 1.15, boost_speed_mult = 0.6, boost_damage_mult = 1.5, parry_trait = TRAIT_MINING_PARRYING, grace_period = 0.25 SECONDS, datum/callback/parry_callback = null)
+	if(!isprojectile(parent))
 		return COMPONENT_INCOMPATIBLE
+	src.parry_speed_mult = parry_speed_mult
+	src.parry_damage_mult = parry_damage_mult
+	src.boost_speed_mult = boost_speed_mult
+	src.boost_damage_mult = boost_damage_mult
+	src.parry_trait = parry_trait
+	src.grace_period = grace_period
+	src.parry_callback = parry_callback
+	fire_time = world.time
 
-	parryable_projectiles = typecacheof(projectiles_to_parry)
+/datum/component/parriable_projectile/Destroy(force)
+	for (var/turf/parry_turf as anything in parry_turfs)
+		UnregisterSignal(parry_turf, COMSIG_CLICK)
+	. = ..()
 
+/datum/component/parriable_projectile/RegisterWithParent()
+	RegisterSignal(parent, COMSIG_PROJECTILE_PIXEL_STEP, PROC_REF(on_moved))
+	RegisterSignal(parent, COMSIG_MOVABLE_MOVED, PROC_REF(before_move))
+	RegisterSignal(parent, COMSIG_PROJECTILE_BEFORE_MOVE, PROC_REF(before_move))
+	RegisterSignal(parent, COMSIG_PROJECTILE_SELF_PREHIT, PROC_REF(before_hit))
 
-/datum/component/projectile_parry/RegisterWithParent()
-	RegisterSignal(parent, COMSIG_LIVING_PROJECTILE_PARRYING, PROC_REF(parrying_projectile))
-	RegisterSignal(parent, COMSIG_LIVING_PROJECTILE_PARRIED, PROC_REF(parried_projectile))
+/datum/component/parriable_projectile/UnregisterFromParent()
+	UnregisterSignal(parent, list(COMSIG_PROJECTILE_PIXEL_STEP, COMSIG_MOVABLE_MOVED, COMSIG_PROJECTILE_BEFORE_MOVE, COMSIG_PROJECTILE_SELF_PREHIT))
 
-
-/datum/component/projectile_parry/UnregisterFromParent()
-	UnregisterSignal(parent, list(COMSIG_LIVING_PROJECTILE_PARRYING, COMSIG_LIVING_PROJECTILE_PARRIED))
-
-
-/datum/component/projectile_parry/proc/parrying_projectile(datum/source, obj/projectile/parried_projectile)
+/datum/component/parriable_projectile/proc/before_move(obj/projectile/source)
 	SIGNAL_HANDLER
 
-	if(is_type_in_typecache(parried_projectile, parryable_projectiles))
-		return ALLOW_PARRY
+	var/list/turfs_to_remove = list()
+	for (var/turf/parry_turf as anything in parry_turfs)
+		if (parry_turfs[parry_turf] < world.time)
+			turfs_to_remove += parry_turf
 
+	for (var/turf/parry_turf as anything in turfs_to_remove)
+		parry_turfs -= parry_turf
+		UnregisterSignal(parry_turf, COMSIG_CLICK)
 
-/datum/component/projectile_parry/proc/parried_projectile(datum/source, obj/projectile/parried_projectile)
+	var/list/parriers_to_remove = list()
+	for (var/mob/parrier as anything in parriers)
+		if (parriers[parrier] < world.time)
+			parriers_to_remove += parrier
+
+	for (var/mob/parrier as anything in parriers_to_remove)
+		parriers_to_remove -= parrier
+
+/datum/component/parriable_projectile/proc/on_moved(obj/projectile/source)
+	SIGNAL_HANDLER
+	if (!isturf(source.loc))
+		return
+	parry_turfs[source.loc] = world.time + grace_period
+	RegisterSignal(source.loc, COMSIG_CLICK, PROC_REF(on_turf_click))
+
+/datum/component/parriable_projectile/proc/on_turf_click(turf/source, atom/location, control, list/params, mob/user)
+	SIGNAL_HANDLER
+	if (!HAS_TRAIT(user, parry_trait))
+		return
+	var/obj/projectile/proj_parent = parent
+	if (proj_parent.firer == user && (fire_time + grace_period > world.time) && !parried)
+		attempt_parry(proj_parent, user)
+		return
+	parriers[user] = world.time + grace_period
+
+/datum/component/parriable_projectile/proc/before_hit(obj/projectile/source, list/bullet_args)
 	SIGNAL_HANDLER
 
-	var/mob/living/living_parent = parent
+	var/mob/user = bullet_args[2]
+	if (!istype(user) || !parriers[user] || parried)
+		return
+	parriers -= user
+	attempt_parry(source, user)
 
-	living_parent.playsound_local(get_turf(parried_projectile), 'sound/effects/parry.ogg', 50, TRUE)
-	living_parent.overlay_fullscreen("projectile_parry", /atom/movable/screen/fullscreen/crit/projectile_parry, 2)
-	addtimer(CALLBACK(living_parent, TYPE_PROC_REF(/mob, clear_fullscreen), "projectile_parry"), 0.25 SECONDS)
-	living_parent.visible_message(span_warning("[living_parent] expertly parries [parried_projectile] with [living_parent.p_their()] bare hand!"), span_warning("You parry [parried_projectile] with your hand!"))
+/datum/component/parriable_projectile/proc/attempt_parry(obj/projectile/source, mob/user)
+	if (SEND_SIGNAL(user, COMSIG_LIVING_PROJECTILE_PARRIED, source) & INTERCEPT_PARRY_EFFECTS)
+		return
+
+	parried = TRUE
+	if (source.firer != user)
+		if (abs(source.Angle - dir2angle(user)) < 15)
+			source.set_angle((source.Angle + 180) % 360 + rand(-3, 3))
+		else
+			source.set_angle(dir2angle(user) + rand(-3, 3))
+		user.visible_message(span_warning("[user] expertly parries [source] with [user.p_their()] bare hand!"), span_warning("You parry [source] with your hand!"))
+	else
+		user.visible_message(span_warning("[user] boosts [source] with [user.p_their()] bare hand!"), span_warning("You boost [source] with your hand!"))
+	source.firer = user
+	source.speed *= (source.firer == user) ? boost_speed_mult : parry_speed_mult
+	source.damage *= (source.firer == user) ? boost_damage_mult : parry_damage_mult
+	source.add_atom_colour(COLOR_RED_LIGHT, TEMPORARY_COLOUR_PRIORITY)
+	if (!isnull(parry_callback))
+		parry_callback.Invoke(user)
+
+	user.playsound_local(source.loc, 'sound/effects/parry.ogg', 50, TRUE)
+	user.overlay_fullscreen("projectile_parry", /atom/movable/screen/fullscreen/crit/projectile_parry, 2)
+	addtimer(CALLBACK(user, TYPE_PROC_REF(/mob, clear_fullscreen), "projectile_parry"), 0.25 SECONDS)
+	return PROJECTILE_INTERRUPT_HIT

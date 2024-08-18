@@ -28,7 +28,7 @@
 	var/extend_pipe_to_edge = FALSE
 
 ///turn_connects is for wheter or not we spin with the object to change our pipes
-/datum/component/plumbing/Initialize(start=TRUE, ducting_layer, turn_connects=TRUE, datum/reagents/custom_receiver, extend_pipe_to_edge = FALSE)
+/datum/component/plumbing/Initialize(start=TRUE, ducting_layer, turn_connects=TRUE, datum/reagents/custom_receiver, extend_pipe_to_edge = FALSE, invert_demand = FALSE)
 	if(!ismovable(parent))
 		return COMPONENT_INCOMPATIBLE
 
@@ -45,9 +45,20 @@
 
 	set_recipient_reagents_holder(custom_receiver ? custom_receiver : parent_movable.reagents)
 
+	if(invert_demand)
+		var/new_demand_connects
+		var/new_supply_connects
+		for(var/direction in GLOB.cardinals)
+			if(direction & initial(demand_connects))
+				new_demand_connects += turn(direction, 180)
+			if(direction & initial(supply_connects))
+				new_supply_connects += turn(direction, 180)
+		demand_connects = new_demand_connects
+		supply_connects = new_supply_connects
+
 	if(start)
-		//We're registering here because I need to check whether we start active or not, and this is just easier
-		//Should be called after we finished. Done this way because other networks need to finish setting up aswell
+		// We're registering here because I need to check whether we start active or not, and this is just easier
+		// Should be called after we finished. Done this way because other networks need to finish setting up aswell
 		RegisterSignal(parent, COMSIG_COMPONENT_ADDED, PROC_REF(enable))
 
 /datum/component/plumbing/RegisterWithParent()
@@ -302,7 +313,7 @@
 		demand_connects = new_demand_connects
 		supply_connects = new_supply_connects
 
-///Give the direction of a pipe, and it'll return wich direction it originally was when it's object pointed SOUTH
+///Give the direction of a pipe, and it'll return wich direction it originally was when its object pointed SOUTH
 /datum/component/plumbing/proc/get_original_direction(dir)
 	var/atom/movable/parent_movable = parent
 	return turn(dir, dir2angle(parent_movable.dir) - 180)

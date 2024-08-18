@@ -363,8 +363,8 @@
 	var/datum/component/transforming/transform_comp = GetComponent(/datum/component/transforming)
 	.["damage"] = max(5, transform_comp.throwforce_on)
 	.["speed"] = max(0, transform_comp.throw_speed_on - 3)
-	var/list/embed_params = .["embedding"]
-	embed_params["embed_chance"] = 100
+	var/datum/embed_data/data = .["embedding"]
+	.["embedding"] = data.generate_with_values(embed_chance = 100)
 
 /obj/item/pen/edagger/proc/on_containing_dart_fired(obj/projectile/source)
 	SIGNAL_HANDLER

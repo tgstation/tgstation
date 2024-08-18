@@ -165,13 +165,23 @@
 	icon_state = "heart-c-on"
 	base_icon_state = "heart-c"
 	organ_flags = ORGAN_ROBOTIC
-	maxHealth = STANDARD_ORGAN_THRESHOLD*0.75 //This also hits defib timer, so a bit higher than its less important counterparts
+	maxHealth = STANDARD_ORGAN_THRESHOLD * 0.75 //This also hits defib timer, so a bit higher than its less important counterparts
 	failing_desc = "seems to be broken."
 
-	var/dose_available = FALSE
-	var/rid = /datum/reagent/medicine/epinephrine
-	var/ramount = 10
-	var/emp_vulnerability = 80 //Chance of permanent effects if emp-ed.
+	/// Whether or not we have a stabilization available. This prevents our owner from entering softcrit for an amount of time.
+	var/stabilization_available = FALSE
+
+	/// How long our stabilization lasts for.
+	var/stabilization_duration = 10 SECONDS
+
+	/// Whether our heart suppresses bleeders and restores blood automatically.
+	var/bleed_prevention = FALSE
+
+	/// The probability that our blood replication causes toxin damage.
+	var/toxification_probability = 20
+
+	/// Chance of permanent effects if emp-ed.
+	var/emp_vulnerability = 80
 
 /obj/item/organ/internal/heart/cybernetic/emp_act(severity)
 	. = ..()
@@ -197,34 +207,62 @@
 
 /obj/item/organ/internal/heart/cybernetic/on_life(seconds_per_tick, times_fired)
 	. = ..()
-	if(dose_available && owner.health <= owner.crit_threshold && !owner.reagents.has_reagent(rid))
-		used_dose()
 
-/obj/item/organ/internal/heart/cybernetic/proc/used_dose()
-	owner.reagents.add_reagent(rid, ramount)
-	dose_available = FALSE
+	if(organ_flags & ORGAN_EMP)
+		return
+
+	if(stabilization_available && owner.health <= owner.crit_threshold)
+		stabilize_heart()
+
+	if(bleed_prevention && ishuman(owner) && owner.blood_volume < BLOOD_VOLUME_NORMAL)
+		var/mob/living/carbon/human/wounded_owner = owner
+		wounded_owner.blood_volume += 2 * seconds_per_tick
+		if(toxification_probability && prob(toxification_probability))
+			wounded_owner.adjustToxLoss(1 * seconds_per_tick, updating_health = FALSE)
+
+		var/datum/wound/bloodiest_wound
+
+		for(var/datum/wound/iter_wound as anything in wounded_owner.all_wounds)
+			if(iter_wound.blood_flow && iter_wound.blood_flow > bloodiest_wound?.blood_flow)
+				bloodiest_wound = iter_wound
+
+		if(bloodiest_wound)
+			bloodiest_wound.adjust_blood_flow(-1 * seconds_per_tick)
+
+/obj/item/organ/internal/heart/cybernetic/proc/stabilize_heart()
+	ADD_TRAIT(owner, TRAIT_NOSOFTCRIT, ORGAN_TRAIT)
+	stabilization_available = FALSE
+
+	addtimer(TRAIT_CALLBACK_REMOVE(owner, TRAIT_NOSOFTCRIT, ORGAN_TRAIT), stabilization_duration)
+
+	addtimer(VARSET_CALLBACK(src, stabilization_available, TRUE), 5 MINUTES, TIMER_DELETE_ME)
+
+// Largely a sanity check
+/obj/item/organ/internal/heart/cybernetic/on_mob_remove(mob/living/carbon/heart_owner, special = FALSE)
+	. = ..()
+	if(HAS_TRAIT_FROM(heart_owner, TRAIT_NOSOFTCRIT, ORGAN_TRAIT))
+		REMOVE_TRAIT(heart_owner, TRAIT_NOSOFTCRIT, ORGAN_TRAIT)
 
 /obj/item/organ/internal/heart/cybernetic/tier2
 	name = "cybernetic heart"
-	desc = "An electronic device designed to mimic the functions of an organic human heart. Also holds an emergency dose of epinephrine, used automatically after facing severe trauma."
+	desc = "An electronic device designed to mimic the functions of an organic human heart. In case of lacerations or haemorrhaging, the heart rapidly begins self-replicating \
+		artificial blood. However, this can cause toxins to build up in the bloodstream to the imperfect replication process."
 	icon_state = "heart-c-u-on"
 	base_icon_state = "heart-c-u"
 	maxHealth = 1.5 * STANDARD_ORGAN_THRESHOLD
-	dose_available = TRUE
+	bleed_prevention = TRUE
 	emp_vulnerability = 40
 
 /obj/item/organ/internal/heart/cybernetic/tier3
 	name = "upgraded cybernetic heart"
-	desc = "An electronic device designed to mimic the functions of an organic human heart. Also holds an emergency dose of epinephrine, used automatically after facing severe trauma. This upgraded model can regenerate its dose after use."
+	desc = "An electronic device designed to mimic the functions of an organic human heart. In case of physical trauma, the heart has temporary failsafes to maintain patient stability \
+		and mobility for a brief moment. In addition, the heart is able to safely self-replicate blood without risk of toxin buildup."
 	icon_state = "heart-c-u2-on"
 	base_icon_state = "heart-c-u2"
 	maxHealth = 2 * STANDARD_ORGAN_THRESHOLD
-	dose_available = TRUE
+	stabilization_available = TRUE
+	toxification_probability = 0
 	emp_vulnerability = 20
-
-/obj/item/organ/internal/heart/cybernetic/tier3/used_dose()
-	. = ..()
-	addtimer(VARSET_CALLBACK(src, dose_available, TRUE), 5 MINUTES)
 
 /obj/item/organ/internal/heart/cybernetic/surplus
 	name = "surplus prosthetic heart"

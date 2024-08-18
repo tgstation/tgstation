@@ -80,8 +80,8 @@
 	var/base_idle_power_usage = 1 WATTS
 
 	// Modular computers can run on various devices. Each DEVICE (Laptop, Console & Tablet)
-	// must have it's own DMI file. Icon states must be called exactly the same in all files, but may look differently
-	// If you create a program which is limited to Laptops and Consoles you don't have to add it's icon_state overlay for Tablets too, for example.
+	// must have its own DMI file. Icon states must be called exactly the same in all files, but may look differently
+	// If you create a program which is limited to Laptops and Consoles you don't have to add its icon_state overlay for Tablets too, for example.
 
 	///If set, what the icon_state will be if the computer is unpowered.
 	var/icon_state_unpowered

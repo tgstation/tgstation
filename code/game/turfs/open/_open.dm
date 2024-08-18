@@ -225,13 +225,20 @@
 
 /turf/open/indestructible/hierophant
 	icon = 'icons/turf/floors/hierophant_floor.dmi'
+	icon_state = "hierophant_floor-255"
+	base_icon_state = "hierophant_floor"
 	planetary_atmos = TRUE
 	initial_gas_mix = LAVALAND_DEFAULT_ATMOS
 	baseturfs = /turf/open/indestructible/hierophant
-	smoothing_flags = SMOOTH_CORNERS
+	smoothing_flags = SMOOTH_BITMASK
+	smoothing_groups = SMOOTH_GROUP_TURF_OPEN + SMOOTH_GROUP_HIEROPHANT
+	canSmoothWith = SMOOTH_GROUP_HIEROPHANT
 	tiled_dirt = FALSE
 
 /turf/open/indestructible/hierophant/two
+	icon = 'icons/turf/floors/hierophant_floor_alt.dmi'
+	icon_state = "hierophant_floor_alt-255"
+	base_icon_state = "hierophant_floor_alt"
 
 /turf/open/indestructible/hierophant/get_smooth_underlay_icon(mutable_appearance/underlay_appearance, turf/asking_turf, adjacency_dir)
 	return FALSE

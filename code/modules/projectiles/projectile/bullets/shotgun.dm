@@ -108,6 +108,19 @@
 	stamina = 6
 	embed_type = null
 
+/obj/projectile/bullet/pellet/flechette
+	name = "flechette"
+	icon_state = "flechette"
+	damage = 6
+	wound_bonus = -25
+	bare_wound_bonus = 50
+	wound_falloff_tile = -10
+	speed = 0.8
+	ricochet_decay_chance = 0.6
+	ricochet_decay_damage = 0.3
+	demolition_mod = 10
+	weak_against_armour = TRUE
+
 // Mech Scattershot
 
 /obj/projectile/bullet/scattershot

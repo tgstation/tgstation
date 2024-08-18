@@ -3,9 +3,9 @@
 	/// holder we use when we're in dive
 	var/jaunt_type = /obj/effect/dummy/phased_mob/space_dive
 	/// time it takes to enter the dive
-	var/dive_time = 2 SECONDS
+	var/dive_time = 3 SECONDS
 	/// the time it takes to exit our space dive
-	var/surface_time = 2 SECONDS
+	var/surface_time = 1 SECONDS
 	/// Traits added during phasing (and removed after)
 	var/static/phase_traits = list(TRAIT_MAGICALLY_PHASED, TRAIT_RUNECHAT_HIDDEN, TRAIT_WEATHER_IMMUNE)
 

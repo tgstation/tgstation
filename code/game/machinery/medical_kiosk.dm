@@ -13,6 +13,7 @@
 
 
 /obj/machinery/medical_kiosk
+	SET_BASE_VISUAL_PIXEL(0, DEPTH_OFFSET)
 	name = "medical kiosk"
 	desc = "A freestanding medical kiosk, which can provide a wide range of medical analysis for diagnosis."
 	icon = 'icons/obj/machines/medical_kiosk.dmi'
@@ -318,7 +319,7 @@
 		patient_status = pick(
 			"The only kiosk is kiosk, but is the only patient, patient?",
 			"Breathing manually.",
-			"Constact NTOS site admin.",
+			"Contact NTOS site admin.",
 			"97% carbon, 3% natural flavoring",
 			"The ebb and flow wears us all in time.",
 			"It's Lupus. You have Lupus.",

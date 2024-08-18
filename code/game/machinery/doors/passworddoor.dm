@@ -67,31 +67,36 @@
 /obj/machinery/door/password/update_icon_state()
 	. = ..()
 	//Deny animation would be nice to have.
-	switch(animation)
-		if(DOOR_OPENING_ANIMATION)
-			icon_state = "opening"
-		if(DOOR_CLOSING_ANIMATION)
-			icon_state = "closing"
-		else
-			icon_state = density ? "closed" : "open"
+	if(animation && animation != DOOR_DENY_ANIMATION)
+		icon_state = animation
+	else
+		icon_state = density ? "closed" : "open_top"
+
+/obj/machinery/door/password/update_overlays()
+	. = ..()
+	if(density)
+		return
+	// If we're open we layer the bit below us "above" any mobs so they can walk through
+	. += mutable_appearance(icon, "open_bottom", ABOVE_MOB_LAYER, appearance_flags = KEEP_APART)
+	. += emissive_blocker(icon, "open_bottom", src, ABOVE_MOB_LAYER)
 
 /obj/machinery/door/password/animation_length(animation)
 	switch(animation)
 		if(DOOR_OPENING_ANIMATION)
-			return 1.1 SECONDS
+			return 0.9 SECONDS
 		if(DOOR_CLOSING_ANIMATION)
-			return 1.1 SECONDS
+			return 0.8 SECONDS
 
 /obj/machinery/door/password/animation_segment_delay(animation)
 	switch(animation)
 		if(DOOR_OPENING_PASSABLE)
-			return 0.5 SECONDS
+			return 0.6 SECONDS
 		if(DOOR_OPENING_FINISHED)
-			return 1.1 SECONDS
+			return 0.9 SECONDS
 		if(DOOR_CLOSING_UNPASSABLE)
-			return 0.2 SECONDS
+			return 0.3 SECONDS
 		if(DOOR_CLOSING_FINISHED)
-			return 1.1 SECONDS
+			return 0.8 SECONDS
 
 /obj/machinery/door/password/animation_effects(animation)
 	switch(animation)

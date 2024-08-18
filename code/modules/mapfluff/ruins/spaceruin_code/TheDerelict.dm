@@ -213,7 +213,7 @@
 		"\[15:29\] USELESS clown",
 		"\[15:35\] And BATSHIT fucking janitors",
 		"\[15:46\] That includes the crotchety fucking IBM piece of shit we're supposed to call an AI",
-		"\[15:52\] And it's legion of cyborg assholes",
+		"\[15:52\] And its legion of cyborg assholes",
 		"\[15:58\] If this wasn't bad enough there is the wizards federation to worry about",
 		"\[16:06\] Crazy bastards",
 		"\[16:10\] What can be worse than a bunch of plasma-humping-space-freaks?",
@@ -244,7 +244,7 @@
 		"\[47:32\] Once they called me captain, but when it's all said and done",
 		"\[47:41\] I'll be a hero",
 		"\[47:45\] If you run across this transmission by chance",
-		"\[47:52\] Get you pudgy little nerd ass over to Space Station 13 and start busting heads.",
+		"\[47:52\] Get your pudgy little nerd ass over to Space Station 13 and start busting heads.",
 		"\[48:00\] (farting noises)",
 	)
 	timestamp = list(

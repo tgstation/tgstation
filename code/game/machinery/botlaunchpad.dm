@@ -49,7 +49,7 @@
 	podspawn(list(
 		"target" = get_turf(src),
 		"path" = /obj/structure/closet/supplypod/botpod,
-		"style" = STYLE_SEETHROUGH,
+		"style" = /datum/pod_style/seethrough,
 		"reverse_dropoff_coords" = list(reverse_turf.x, reverse_turf.y, reverse_turf.z)
 	))
 
@@ -67,7 +67,7 @@
 	simple_bot.call_bot(src,  get_turf(src))
 
 /obj/structure/closet/supplypod/botpod
-	style = STYLE_SEETHROUGH
+	style = /datum/pod_style/seethrough
 	explosionSize = list(0,0,0,0)
 	reversing = TRUE
 	reverse_option_list = list("Mobs"=TRUE,"Objects"=FALSE,"Anchored"=FALSE,"Underfloor"=FALSE,"Wallmounted"=FALSE,"Floors"=FALSE,"Walls"=FALSE,"Mecha"=FALSE)

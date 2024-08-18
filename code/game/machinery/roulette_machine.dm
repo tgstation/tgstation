@@ -277,7 +277,7 @@
 		var/value = coin_values[coin_type] //Change this to use initial value once we change to mat datum coins.
 		var/coin_count = round(remaining_payout / value)
 
-		if(!coin_count) //Cant make coins of this type, as we can't reach it's value.
+		if(!coin_count) //Cant make coins of this type, as we can't reach its value.
 			continue
 
 		remaining_payout -= value * coin_count
@@ -451,11 +451,12 @@
 	addtimer(CALLBACK(src, PROC_REF(launch_payload)), 4 SECONDS)
 
 /obj/item/roulette_wheel_beacon/proc/launch_payload()
-	var/obj/structure/closet/supplypod/centcompod/toLaunch = new()
-
-	new /obj/machinery/roulette(toLaunch)
-
-	new /obj/effect/pod_landingzone(drop_location(), toLaunch)
+	podspawn(list(
+		"target" = drop_location(),
+		"path" = /obj/structure/closet/supplypod/centcompod,
+		"spawn" = /obj/machinery/roulette
+	))
+	
 	qdel(src)
 
 #undef ROULETTE_DOZ_COL_PAYOUT

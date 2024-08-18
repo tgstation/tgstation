@@ -13,7 +13,7 @@
 /obj/machinery/mineral/stacking_unit_console/Initialize(mapload)
 	. = ..()
 	var/area/our_area = get_area(src)
-	if(!isnull(our_area))
+	if(isnull(our_area))
 		return
 	var/list/turf_list = our_area.get_turfs_by_zlevel(z)
 	if(!islist(turf_list))

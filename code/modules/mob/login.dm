@@ -8,7 +8,7 @@
  * * sets lastKnownIP
  * * sets computer_id
  * * logs the login
- * * tells the world to update it's status (for player count)
+ * * tells the world to update its status (for player count)
  * * create mob huds for the mob if needed
  * * reset next_move to 1
  * * Set statobj to our mob
@@ -96,6 +96,13 @@
 			continue
 		var/datum/atom_hud/alternate_appearance/AA = v
 		AA.onNewMob(src)
+
+	frill_mask = image('icons/effects/frill_mask.dmi', src, "primary", pixel_x = -64, pixel_y = -44)
+	frill_mask.alpha = 200 // (to leave a bit of what's below for vision reasons)
+	SET_PLANE_EXPLICIT(frill_mask, FRILL_MASK_PLANE, src)
+	frill_mask.appearance_flags = RESET_TRANSFORM
+	LAZYADD(update_on_z, frill_mask)
+	client.images |= frill_mask
 
 	update_client_colour()
 	update_mouse_pointer()

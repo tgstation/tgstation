@@ -1264,7 +1264,7 @@
 	},
 /obj/structure/table/reinforced,
 /obj/machinery/button/door/directional/north{
-	desc = "A door remote control switch. From the looks of it, It seems to be broken after being pressed too hard, it's bloody handprint still visible.";
+	desc = "A door remote control switch. From the looks of it, It seems to be broken after being pressed too hard, its bloody handprint still visible.";
 	name = "Vault Lockdown"
 	},
 /obj/item/modular_computer/laptop/preset/civilian,

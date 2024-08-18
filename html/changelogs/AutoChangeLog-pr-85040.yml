@@ -1,5 +1,0 @@
-author: "paganiy"
-delete-after: True
-changes:
-  - qol: "Moving the light bulb removal function from the left mouse button to the right one."
-  - qol: "Added & improved tips related to the light fixture"

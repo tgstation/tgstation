@@ -6,6 +6,7 @@
  *
  */
 /mob/living/basic/spider/growing/spiderling
+	SET_BASE_VISUAL_PIXEL(0, 4)
 	name = "spiderling"
 	desc = "It never stays still for long."
 	icon_state = "spiderling"
@@ -25,6 +26,8 @@
 	player_speed_modifier = 0
 	spider_growth_time = 40 SECONDS
 	ai_controller = /datum/ai_controller/basic_controller/spiderling
+	shadow_type = SHADOW_SMALL
+	shadow_offset_y = 10
 
 /mob/living/basic/spider/growing/spiderling/Initialize(mapload)
 	. = ..()

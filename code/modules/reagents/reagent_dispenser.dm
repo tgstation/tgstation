@@ -1,6 +1,7 @@
 #define REAGENT_SPILL_DIVISOR 200
 
 /obj/structure/reagent_dispensers
+	SET_BASE_VISUAL_PIXEL(0, DEPTH_OFFSET)
 	name = "Dispenser"
 	desc = "..."
 	icon = 'icons/obj/medical/chemical_tanks.dmi'
@@ -323,6 +324,7 @@
 
 /// Wall mounted dispeners, like pepper spray or virus food. Not a normal tank, and shouldn't be able to be turned into a plumbed stationary one.
 /obj/structure/reagent_dispensers/wall
+	SET_BASE_VISUAL_PIXEL(0, 0)
 	anchored = TRUE
 	density = FALSE
 	can_be_tanked = FALSE
@@ -333,7 +335,7 @@
 	icon_state = "pepper"
 	reagent_id = /datum/reagent/consumable/condensedcapsaicin
 
-MAPPING_DIRECTIONAL_HELPERS(/obj/structure/reagent_dispensers/wall/peppertank, 30)
+WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/structure/reagent_dispensers/wall/peppertank)
 
 /obj/structure/reagent_dispensers/wall/peppertank/Initialize(mapload)
 	. = ..()
@@ -342,6 +344,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/reagent_dispensers/wall/peppertank, 3
 	find_and_hang_on_wall()
 
 /obj/structure/reagent_dispensers/water_cooler
+	SET_BASE_VISUAL_PIXEL(0, DEPTH_OFFSET)
 	name = "liquid cooler"
 	desc = "A machine that dispenses liquid to drink."
 	icon = 'icons/obj/machines/vending.dmi'
@@ -372,6 +375,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/reagent_dispensers/wall/peppertank, 3
 	paper_cups--
 
 /obj/structure/reagent_dispensers/beerkeg
+	SET_BASE_VISUAL_PIXEL(0, 0)
 	name = "beer keg"
 	desc = "Beer is liquid bread, it's good for you..."
 	icon_state = "beer"
@@ -389,7 +393,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/reagent_dispensers/wall/peppertank, 3
 	icon_state = "virus_food"
 	reagent_id = /datum/reagent/consumable/virus_food
 
-MAPPING_DIRECTIONAL_HELPERS(/obj/structure/reagent_dispensers/wall/virusfood, 30)
+WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/structure/reagent_dispensers/wall/virusfood)
 
 /obj/structure/reagent_dispensers/wall/virusfood/Initialize(mapload)
 	. = ..()

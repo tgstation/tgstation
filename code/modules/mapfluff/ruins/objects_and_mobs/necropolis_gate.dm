@@ -7,7 +7,6 @@
 	flags_1 = ON_BORDER_1
 	appearance_flags = 0
 	layer = FLY_LAYER
-	plane = ABOVE_GAME_PLANE
 	anchored = TRUE
 	density = TRUE
 	pixel_x = -32
@@ -225,7 +224,6 @@ GLOBAL_DATUM(necropolis_gate, /obj/structure/necropolis_gate/legion_gate)
 	icon_state = "arch_full"
 	appearance_flags = 0
 	layer = FLY_LAYER
-	plane = ABOVE_GAME_PLANE
 	anchored = TRUE
 	pixel_x = -64
 	pixel_y = -40

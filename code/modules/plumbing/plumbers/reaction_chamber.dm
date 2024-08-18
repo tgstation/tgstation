@@ -180,8 +180,8 @@
 
 		/**
 		 * figure out which buffer to transfer to restore balance
-		 * if solution is getting too basic(high ph) add some acid to lower it's value
-		 * else if solution is getting too acidic(low ph) add some base to increase it's value
+		 * if solution is getting too basic(high ph) add some acid to lower its value
+		 * else if solution is getting too acidic(low ph) add some base to increase its value
 		 */
 		var/datum/reagents/buffer = reagents.ph > alkaline_limit ? acidic_beaker.reagents : alkaline_beaker.reagents
 		if(!buffer.total_volume)

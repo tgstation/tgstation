@@ -210,13 +210,16 @@ Turf and target are separate in case you want to teleport some distance from a t
  * if the bounds are odd, the true middle turf of the atom is returned
 **/
 /proc/get_turf_pixel(atom/checked_atom)
-	var/turf/atom_turf = get_turf(checked_atom) //use checked_atom's turfs, as it's coords are the same as checked_atom's AND checked_atom's coords are lost if it is inside another atom
+	var/turf/atom_turf = get_turf(checked_atom) //use checked_atom's turfs, as its coords are the same as checked_atom's AND checked_atom's coords are lost if it is inside another atom
 	if(!atom_turf)
 		return null
 	if(checked_atom.flags_1 & IGNORE_TURF_PIXEL_OFFSET_1)
 		return atom_turf
 
 	var/list/offsets = get_visual_offset(checked_atom)
+	// If we're on the upper half of a turf lower our y offset by 16 to hopefully better acount for like, sidemap rendering and such
+	if(offsets[2] >= 16 && (checked_atom.layer < TOPDOWN_LAYER || checked_atom.layer > BACKGROUND_LAYER))
+		offsets[2] -= 16
 	return pixel_offset_turf(atom_turf, offsets)
 
 /**
@@ -227,7 +230,7 @@ Turf and target are separate in case you want to teleport some distance from a t
  * Icon width/height
 **/
 /proc/get_visual_offset(atom/checked_atom)
-	//Find checked_atom's matrix so we can use it's X/Y pixel shifts
+	//Find checked_atom's matrix so we can use its X/Y pixel shifts
 	var/matrix/atom_matrix = matrix(checked_atom.transform)
 
 	var/pixel_x_offset = checked_atom.pixel_x + checked_atom.pixel_w + atom_matrix.get_x_shift()

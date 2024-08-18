@@ -12,7 +12,7 @@
  *
  *It acts as a melee creature, chasing down and attacking its target while also using different attacks to augment its power that increase as it takes damage.
  *
- *Whenever possible, the drake will breathe fire directly at it's target, igniting and heavily damaging anything caught in the blast.
+ *Whenever possible, the drake will breathe fire directly at its target, igniting and heavily damaging anything caught in the blast.
  *It also often causes lava to pool from the ground around you - many nearby turfs will temporarily turn into lava, dealing damage to anything on the turfs.
  *The drake also utilizes its wings to fly into the sky, flying after its target and attempting to slam down on them. Anything near when it slams down takes huge damage.
  *Sometimes it will chain these swooping attacks over and over, making swiftness a necessity.
@@ -236,8 +236,8 @@
 /obj/effect/temp_visual/drakewall
 	desc = "An ash drakes true flame."
 	name = "Fire Barrier"
-	icon = 'icons/effects/fire.dmi'
-	icon_state = "1"
+	icon = 'icons/effects/atmos/fire.dmi'
+	icon_state = "light"
 	anchored = TRUE
 	opacity = FALSE
 	density = TRUE
@@ -258,7 +258,6 @@
 	name = "fireball"
 	desc = "Get out of the way!"
 	layer = FLY_LAYER
-	plane = ABOVE_GAME_PLANE
 	randomdir = FALSE
 	duration = 9
 	pixel_z = 270

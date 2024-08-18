@@ -34,7 +34,7 @@
 	var/merge_type = null
 	/// The weight class the stack has at amount > 2/3rds max_amount
 	var/full_w_class = WEIGHT_CLASS_NORMAL
-	/// Determines whether the item should update it's sprites based on amount.
+	/// Determines whether the item should update its sprites based on amount.
 	var/novariants = TRUE
 	/// List that tells you how much is in a single unit.
 	var/list/mats_per_unit

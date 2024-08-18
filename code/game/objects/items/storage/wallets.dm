@@ -9,6 +9,7 @@
 	var/obj/item/card/id/front_id = null
 	var/list/combined_access
 	var/cached_flat_icon
+	var/overlay_icon_state = "wallet_overlay"
 
 /obj/item/storage/wallet/Initialize(mapload)
 	. = ..()
@@ -103,7 +104,7 @@
 		return
 	. += mutable_appearance(front_id.icon, front_id.icon_state)
 	. += front_id.overlays
-	. += mutable_appearance(icon, "wallet_overlay")
+	. += mutable_appearance(icon, overlay_icon_state)
 
 /obj/item/storage/wallet/proc/get_cached_flat_icon()
 	if(!cached_flat_icon)
@@ -117,9 +118,9 @@
 
 /obj/item/storage/wallet/proc/update_label()
 	if(front_id)
-		name = "wallet displaying [front_id]"
+		name = "[src::name] displaying [front_id]"
 	else
-		name = "wallet"
+		name = src::name
 
 /obj/item/storage/wallet/examine()
 	. = ..()

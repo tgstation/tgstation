@@ -15,7 +15,7 @@
 	var/datum/language_holder/vending_languages = vending_machine.get_language_holder()
 
 	if(!length(vending_languages.spoken_languages))
-		CRASH("Vending machine [vending_machine] does not have any spoken languages in it's language holder.")
+		CRASH("Vending machine [vending_machine] does not have any spoken languages in its language holder.")
 
 	// synch the current language to the language_iterator
 	for(var/i in vending_languages.spoken_languages)

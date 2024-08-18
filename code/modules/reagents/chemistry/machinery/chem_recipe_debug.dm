@@ -203,7 +203,7 @@
 		ui.send_update()
 
 /**
- * Decodes the ui reaction var into it's original name
+ * Decodes the ui reaction var into its original name
  * Arguments
  *
  * * variable - the name of the variable as seen in the UI

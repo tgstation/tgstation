@@ -17,6 +17,7 @@
 		/obj/item/flashlight/seclite = 4,
 		/obj/item/restraints/legcuffs/bola/energy = 7,
 		/obj/item/clothing/gloves/tackler = 5,
+		/obj/item/holosign_creator/security = 2,
 	)
 	contraband = list(
 		/obj/item/clothing/glasses/sunglasses = 2,

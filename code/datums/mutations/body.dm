@@ -269,20 +269,22 @@
 	var/original_name
 
 /datum/mutation/human/race/on_acquiring(mob/living/carbon/human/owner)
-	if(ismonkey(owner))
-		return TRUE
 	. = ..()
 	if(.)
+		return
+	if(ismonkey(owner))
 		return
 	original_species = owner.dna.species.type
 	original_name = owner.real_name
 	owner.monkeyize()
 
 /datum/mutation/human/race/on_losing(mob/living/carbon/human/owner)
+	if(owner.stat == DEAD)
+		return
 	. = ..()
 	if(.)
 		return
-	if(QDELETED(owner) || owner.stat == DEAD)
+	if(QDELETED(owner))
 		return
 
 	owner.fully_replace_character_name(null, original_name)

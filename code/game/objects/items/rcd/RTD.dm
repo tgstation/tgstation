@@ -135,7 +135,7 @@
 
 /// re create the appearance
 /datum/overlay_info/proc/add_decal(turf/the_turf)
-	the_turf.AddElement(/datum/element/decal, icon, icon_state, direction, null, null, alpha, color, null, FALSE, null)
+	the_turf.AddElement(/datum/element/decal, icon, icon_state, direction, null, null, alpha, color, null, null, null, FALSE, null)
 
 /obj/item/construction/rtd/Initialize(mapload)
 	. = ..()

@@ -38,10 +38,11 @@
 /obj/item/holosign_creator/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
 	if(!check_allowed_items(interacting_with, not_inside = TRUE))
 		return NONE
+
 	var/turf/target_turf = get_turf(interacting_with)
 	var/obj/structure/holosign/target_holosign = locate(holosign_type) in target_turf
+
 	if(target_holosign)
-		qdel(target_holosign)
 		return ITEM_INTERACT_BLOCKING
 	if(target_turf.is_blocked_turf(TRUE)) //can't put holograms on a tile that has dense stuff
 		return ITEM_INTERACT_BLOCKING
@@ -51,7 +52,9 @@
 	if(LAZYLEN(signs) >= max_signs)
 		balloon_alert(user, "max capacity!")
 		return ITEM_INTERACT_BLOCKING
+
 	playsound(src, 'sound/machines/click.ogg', 20, TRUE)
+
 	if(creation_time)
 		holocreator_busy = TRUE
 		if(!do_after(user, creation_time, target = interacting_with))
@@ -62,6 +65,7 @@
 			return ITEM_INTERACT_BLOCKING
 		if(target_turf.is_blocked_turf(TRUE)) //don't try to sneak dense stuff on our tile during the wait.
 			return ITEM_INTERACT_BLOCKING
+
 	target_holosign = create_holosign(interacting_with, user)
 	return ITEM_INTERACT_SUCCESS
 
@@ -105,15 +109,15 @@
 
 /obj/item/holosign_creator/security
 	name = "security holobarrier projector"
-	desc = "A holographic projector that creates holographic security barriers."
+	desc = "A holographic projector that creates holographic security barriers. You can remotely open barriers with it."
 	icon_state = "signmaker_sec"
 	holosign_type = /obj/structure/holosign/barrier
-	creation_time = 3 SECONDS
+	creation_time = 2 SECONDS
 	max_signs = 6
 
 /obj/item/holosign_creator/engineering
 	name = "engineering holobarrier projector"
-	desc = "A holographic projector that creates holographic engineering barriers."
+	desc = "A holographic projector that creates holographic engineering barriers. You can remotely open barriers with it."
 	icon_state = "signmaker_engi"
 	holosign_type = /obj/structure/holosign/barrier/engineering
 	creation_time = 1 SECONDS

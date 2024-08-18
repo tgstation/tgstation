@@ -13,19 +13,27 @@
 /obj/item/canvas/twentythree_twentythree,
 /turf/open/floor/holofloor/carpet,
 /area/template_noop)
+"m" = (
+/obj/structure/mirror/directional/north,
+/turf/open/floor/holofloor/pure_white,
+/area/template_noop)
 "r" = (
 /obj/structure/table/wood,
 /obj/item/paint/anycolor{
-	pixel_x = 7
+	pixel_x = 7;
+	pixel_y = 8
 	},
 /obj/item/paint/anycolor{
-	pixel_x = -5
+	pixel_x = -5;
+	pixel_y = 8
 	},
 /obj/item/paint/anycolor{
-	pixel_x = 7
+	pixel_x = 7;
+	pixel_y = 8
 	},
 /obj/item/paint/anycolor{
-	pixel_x = 7
+	pixel_x = 7;
+	pixel_y = 8
 	},
 /turf/open/floor/holofloor/carpet,
 /area/template_noop)
@@ -33,33 +41,40 @@
 /obj/structure/table/wood,
 /obj/item/toy/crayon/spraycan{
 	pixel_x = 5;
-	pixel_y = 5
+	pixel_y = 13
 	},
 /obj/item/toy/crayon/spraycan{
 	pixel_x = -5;
-	pixel_y = 5
+	pixel_y = 13
 	},
 /turf/open/floor/holofloor/carpet,
 /area/template_noop)
 "u" = (
 /obj/structure/table/wood,
-/obj/item/paper_bin,
+/obj/item/paper_bin{
+	pixel_y = 8
+	},
 /turf/open/floor/holofloor/carpet,
 /area/template_noop)
 "w" = (
 /obj/structure/table/wood,
-/obj/item/camera,
-/obj/item/camera,
+/obj/item/camera{
+	pixel_y = 8
+	},
+/obj/item/camera{
+	pixel_y = 8
+	},
 /turf/open/floor/holofloor/carpet,
 /area/template_noop)
 "H" = (
 /obj/structure/table/wood,
-/obj/item/storage/crayons,
+/obj/item/storage/crayons{
+	pixel_y = 8
+	},
 /turf/open/floor/holofloor/carpet,
 /area/template_noop)
 "L" = (
 /obj/structure/falsewall/wood,
-/obj/structure/mirror,
 /turf/open/floor/holofloor/carpet,
 /area/template_noop)
 
@@ -77,7 +92,7 @@ a
 "}
 (2,1,1) = {"
 L
-a
+m
 a
 a
 a

@@ -42,6 +42,9 @@
 	caliber = CALIBER_HARPOON
 	ammo_type = /obj/item/ammo_casing/harpoon
 
+/obj/item/ammo_box/magazine/internal/boltaction/jezail
+	max_ammo = 4
+
 /obj/item/ammo_box/magazine/internal/boltaction/rebarxbow/normal
 	name = "single round magazine"
 	max_ammo = 1

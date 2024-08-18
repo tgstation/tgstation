@@ -14,6 +14,9 @@
 "e" = (
 /turf/closed/indestructible/hoteldoor,
 /area/misc/hilbertshotel)
+"Q" = (
+/turf/open/indestructible/dark,
+/area/misc/hilbertshotel)
 
 (1,1,1) = {"
 a
@@ -39,7 +42,7 @@ b
 b
 b
 b
-e
+b
 b
 b
 b
@@ -51,7 +54,7 @@ a
 "}
 (3,1,1) = {"
 a
-b
+e
 c
 c
 c
@@ -60,9 +63,9 @@ c
 c
 c
 c
-c
-c
-c
+Q
+Q
+Q
 b
 a
 "}
@@ -77,9 +80,9 @@ c
 c
 c
 c
-c
-c
-c
+Q
+Q
+Q
 b
 a
 "}
@@ -94,9 +97,9 @@ c
 c
 c
 c
-c
-c
-c
+Q
+Q
+Q
 b
 a
 "}
@@ -111,9 +114,9 @@ c
 c
 c
 c
-c
-c
-c
+Q
+Q
+Q
 b
 a
 "}
@@ -128,9 +131,9 @@ c
 c
 c
 c
-c
-c
-c
+Q
+Q
+Q
 b
 a
 "}
@@ -162,7 +165,7 @@ c
 c
 d
 d
-d
+b
 d
 d
 b
@@ -196,7 +199,7 @@ c
 b
 d
 d
-d
+b
 d
 d
 b
@@ -211,20 +214,20 @@ c
 c
 c
 b
+b
+b
+b
 d
-d
-d
-d
-d
+b
 b
 a
 "}
 (13,1,1) = {"
 a
 b
-c
-c
-c
+Q
+Q
+Q
 c
 c
 b
@@ -239,9 +242,9 @@ a
 (14,1,1) = {"
 a
 b
-c
-c
-c
+Q
+Q
+Q
 c
 c
 b

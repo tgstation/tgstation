@@ -6,7 +6,7 @@
 
 
 //Movable Screen Object
-//Not tied to the grid, places it's center where the cursor is
+//Not tied to the grid, places its center where the cursor is
 
 /atom/movable/screen/movable
 	mouse_drag_pointer = 'icons/effects/mouse_pointers/screen_drag.dmi'
