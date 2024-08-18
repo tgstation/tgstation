@@ -32107,11 +32107,6 @@
 	},
 /turf/open/floor/carpet,
 /area/station/service/library)
-"kkR" = (
-/obj/structure/transport/linear/tram/corner/northwest,
-/obj/structure/tram,
-/turf/open/openspace,
-/area/station/hallway/primary/tram/center)
 "kkV" = (
 /obj/machinery/suit_storage_unit/security,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
@@ -32978,11 +32973,6 @@
 /obj/structure/sign/poster/official/report_crimes/directional/north,
 /turf/open/floor/wood,
 /area/station/service/lawoffice)
-"kBG" = (
-/obj/structure/transport/linear/tram/corner/northeast,
-/obj/structure/tram,
-/turf/open/openspace,
-/area/station/hallway/primary/tram/center)
 "kBM" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/trimline/neutral/filled/line{
@@ -38084,11 +38074,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/carpet,
 /area/station/command/heads_quarters/captain)
-"mjp" = (
-/obj/structure/transport/linear/tram/corner/southeast,
-/obj/structure/tram/edge,
-/turf/open/openspace,
-/area/station/hallway/primary/tram/center)
 "mjx" = (
 /obj/effect/turf_decal/trimline/neutral/filled/line{
 	dir = 1
@@ -49758,7 +49743,7 @@
 /turf/open/floor/iron/dark,
 /area/station/commons/fitness/recreation/entertainment)
 "qvf" = (
-/obj/structure/transport/linear/tram/corner/southwest,
+/obj/structure/transport/linear/tram,
 /obj/structure/tram/edge,
 /turf/open/openspace,
 /area/station/hallway/primary/tram/center)
@@ -168518,7 +168503,7 @@ izU
 tAL
 mYI
 avF
-kkR
+oKm
 xMv
 aIV
 rhs
@@ -171088,11 +171073,11 @@ izU
 aEm
 mpa
 oUA
-kBG
+oKm
 xMv
 aIV
 rhs
-mjp
+qvf
 dTx
 lej
 ycx
