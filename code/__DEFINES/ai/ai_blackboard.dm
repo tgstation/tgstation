@@ -133,6 +133,9 @@
 ///Range for a MOD AI controller.
 #define MOD_AI_RANGE 200
 
+///Only target mobs with these traits
+#define BB_TARGET_ONLY_WITH_TRAITS "BB_target_only_with_traits"
+
 ///should we skip the faction check for the targeting strategy?
 #define BB_ALWAYS_IGNORE_FACTION "BB_always_ignore_factions"
 ///are we in some kind of temporary state of ignoring factions when targeting? can result in volatile results if multiple behaviours touch this

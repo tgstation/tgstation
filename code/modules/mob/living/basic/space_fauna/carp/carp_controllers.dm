@@ -106,22 +106,19 @@
  */
 /datum/ai_controller/basic_controller/carp/passive
 	blackboard = list(
-		BB_BASIC_MOB_STOP_FLEEING = TRUE,
-		BB_TARGETING_STRATEGY = /datum/targeting_strategy/basic,
+		BB_TARGETING_STRATEGY = /datum/targeting_strategy/basic/require_traits,
+		BB_FLEE_TARGETING_STRATEGY = /datum/targeting_strategy/basic,
 		BB_PET_TARGETING_STRATEGY = /datum/targeting_strategy/basic/not_friends,
-		BB_TARGET_PRIORITY_TRAIT = TRAIT_SCARY_FISHERMAN,
 		BB_CARPS_FEAR_FISHERMAN = TRUE,
+		BB_TARGET_ONLY_WITH_TRAITS = list(TRAIT_SCARY_FISHERMAN),
 	)
 	ai_traits = STOP_MOVING_WHEN_PULLED
 	planning_subtrees = list(
 		/datum/ai_planning_subtree/pet_planning,
-		/datum/ai_planning_subtree/simple_find_nearest_target_to_flee,
-		/datum/ai_planning_subtree/make_carp_rift/panic_teleport,
-		/datum/ai_planning_subtree/flee_target/from_fisherman,
+		/datum/ai_planning_subtree/simple_find_target/to_flee, // This should only find master fishermen because of the targeting strategy
+		/datum/ai_planning_subtree/find_nearest_thing_which_attacked_me_to_flee/from_flee_key,
+		/datum/ai_planning_subtree/make_carp_rift/panic_teleport/flee_key,
+		/datum/ai_planning_subtree/flee_target/from_flee_key,
 		/datum/ai_planning_subtree/find_food,
-		/datum/ai_planning_subtree/attack_obstacle_in_path/carp,
-		/datum/ai_planning_subtree/shortcut_to_target_through_carp_rift,
-		/datum/ai_planning_subtree/make_carp_rift/aggressive_teleport,
-		/datum/ai_planning_subtree/basic_melee_attack_subtree/no_fisherman,
 		/datum/ai_planning_subtree/carp_migration,
 	)
