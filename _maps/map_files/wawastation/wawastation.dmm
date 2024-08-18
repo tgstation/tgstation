@@ -60693,6 +60693,7 @@
 /turf/open/floor/iron,
 /area/station/engineering/lobby)
 "vqN" = (
+/obj/machinery/vending/cytopro,
 /turf/open/floor/iron/dark/small,
 /area/station/science/cytology)
 "vqQ" = (

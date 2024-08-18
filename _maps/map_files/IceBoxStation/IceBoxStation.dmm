@@ -6004,7 +6004,7 @@
 /area/station/commons/vacant_room/office)
 "bKG" = (
 /obj/structure/railing,
-/obj/structure/closet/secure_closet/cytology,
+/obj/machinery/vending/cytopro,
 /turf/open/floor/iron/smooth_large,
 /area/station/science/cytology)
 "bKI" = (
@@ -45114,6 +45114,7 @@
 /obj/structure/railing/corner{
 	dir = 8
 	},
+/obj/structure/closet/secure_closet/cytology,
 /turf/open/floor/iron/smooth_large,
 /area/station/science/cytology)
 "nrF" = (
