@@ -100,7 +100,7 @@
 			balloon_alert(user, "already fully charged!")
 			return
 		used_item.use(1)
-		cell.give(0.5 * STANDARD_CELL_CHARGE)
+		cell.give(2.5 * STANDARD_CELL_CHARGE)
 		balloon_alert(user, "cell recharged")
 		return
 
@@ -196,7 +196,7 @@
 	opened = TRUE
 
 /obj/item/inducer/orderable
-	cell_type = /obj/item/stock_parts/power_store/cell/inducer_supply
+	cell_type = /obj/item/stock_parts/power_store/battery/upgraded
 	opened = FALSE
 
 /obj/item/inducer/sci
