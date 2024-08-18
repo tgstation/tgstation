@@ -3,7 +3,7 @@
 /obj/machinery/flasher
 	name = "mounted flash"
 	desc = "A wall-mounted flashbulb device."
-	icon = 'icons/obj/flash.dmi'
+	icon = 'icons/obj/machines/flash.dmi'
 	icon_state = "mflash1"
 	base_icon_state = "mflash"
 	max_integrity = 250
@@ -32,7 +32,7 @@ WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/machinery/flasher)
 	name = "Thunderdome Flash"
 
 /obj/machinery/flasher/Initialize(mapload, ndir = 0, built = 0)
-	. = ..() // ..() is EXTREMELY IMPORTANT, never forget to add it
+	. = ..()
 	if(!built)
 		bulb = new(src)
 	if(should_wallmount)
@@ -217,7 +217,7 @@ WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/machinery/flasher)
 /obj/item/wallframe/flasher
 	name = "mounted flash frame"
 	desc = "Used for building wall-mounted flashers."
-	icon = 'icons/obj/flash.dmi'
+	icon = 'icons/obj/machines/flash.dmi'
 	icon_state = "mflash_frame"
 	result_path = /obj/machinery/flasher
 	var/id = null
