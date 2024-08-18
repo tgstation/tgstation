@@ -582,7 +582,7 @@
 	glasses = /obj/item/clothing/glasses/hud/health/sunglasses
 	additional_radio = /obj/item/encryptionkey/heads/cmo
 	mask = /obj/item/clothing/mask/surgical
-	back = /obj/item/mod/control/pre_equipped/medical/corpsman
+	back = /obj/item/mod/control/pre_equipped/emergency/corpsman
 	gloves = null
 	suit = null
 	head = null
@@ -606,13 +606,27 @@
 	glasses = /obj/item/clothing/glasses/hud/health
 	additional_radio = /obj/item/encryptionkey/heads/cmo
 	shoes = /obj/item/clothing/shoes/sneakers/blue
-	back = /obj/item/mod/control/pre_equipped/medical
+	back = /obj/item/mod/control/pre_equipped/emergency
 	gloves = null
 	suit = null
 	head = null
 	suit_store = /obj/item/tank/internals/oxygen
 
-/obj/item/mod/control/pre_equipped/medical/corpsman
+/obj/item/mod/control/pre_equipped/emergency
+	theme = /datum/mod_theme/medical
+	starting_frequency = MODLINK_FREQ_CENTCOM
+	applied_cell = /obj/item/stock_parts/power_store/cell/hyper
+	applied_modules = list(
+		/obj/item/mod/module/organizer,
+		/obj/item/mod/module/defibrillator,
+		/obj/item/mod/module/flashlight,
+		/obj/item/mod/module/health_analyzer,
+		/obj/item/mod/module/injector,
+		/obj/item/mod/module/surgical_processor/emergency,
+		/obj/item/mod/module/storage/large_capacity,
+	)
+
+/obj/item/mod/control/pre_equipped/emergency/corpsman
 	theme = /datum/mod_theme/medical/corpsman
 
 ///Identical to medical MODsuit, but uses the alternate skin by default.
