@@ -64427,7 +64427,6 @@
 	dir = 8
 	},
 /obj/machinery/light/dim/directional/west,
-/obj/effect/spawner/random/vending/colavend,
 /turf/open/floor/iron,
 /area/station/hallway/primary/tram/center)
 "vrS" = (
