@@ -52,6 +52,9 @@
 	if(looking_for == belt)
 		return ITEM_SLOT_BELT
 
+	if(belt && (looking_for in belt))
+		return ITEM_SLOT_BELTPACK
+
 	if(looking_for == wear_id)
 		return ITEM_SLOT_ID
 
