@@ -354,7 +354,7 @@
 	preload += suit_store
 	preload += back
 	//Load in backpack gear and shit
-	for(var/datum/type_to_load in backpack_contents)
+	for(var/type_to_load in backpack_contents)
 		for(var/i in 1 to backpack_contents[type_to_load])
 			preload += type_to_load
 	preload += belt
