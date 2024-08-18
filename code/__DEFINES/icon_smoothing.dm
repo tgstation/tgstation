@@ -216,6 +216,8 @@ DEFINE_BITFIELD(smoothing_junction, list(
 #define SMOOTH_GROUP_SHIELD_GEN_WALL S_OBJ(79) // /obj/machinery/shieldwall
 #define SMOOTH_GROUP_VIS_BLOCK S_OBJ(80) // /obj/effect/abstract/finder/vis_block, marks turfs where vis_blocking is going on
 
+#define SMOOTH_GROUP_GRAV_FIELD S_OBJ(69)
+
 /// Performs the work to set smoothing_groups and canSmoothWith.
 /// An inlined function used in both turf/Initialize and atom/Initialize.
 #define SETUP_SMOOTHING(...) \
