@@ -476,7 +476,7 @@ SUBSYSTEM_DEF(job)
 					job_debug("JOBS: Job not enabled, Job: [job]")
 					continue
 				if(player_job_level != level)
-					job_debug("JOBS: Job enabled at different priority pref, TheirLevel: [job_priority_level_to_string(player_job_level)], ReqLevel: [job_priority_level_to_string(level)]")
+					job_debug("JOBS: Job enabled at different priority pref, Job: [job], TheirLevel: [job_priority_level_to_string(player_job_level)], ReqLevel: [job_priority_level_to_string(level)]")
 					continue
 
 				if(check_job_eligibility(player, job, "JOBS", add_job_to_log = TRUE) != JOB_AVAILABLE)
@@ -484,7 +484,12 @@ SUBSYSTEM_DEF(job)
 
 				possible_jobs += job
 
-			// Pick one of those jobs at random.
+			// If there are no possible jobs for them at this priority, skip them.
+			if(!length(possible_jobs))
+				job_debug("JOBS: Player not eligible for any available jobs at this priority level: [player]")
+				continue
+
+			// Otherwise, pick one of those jobs at random.
 			var/datum/job/picked_job = pick(possible_jobs)
 
 			job_debug("JOBS: Now assigning role to player: [player], Job:[picked_job.title]")
