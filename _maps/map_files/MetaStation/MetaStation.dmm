@@ -28912,6 +28912,7 @@
 /obj/effect/turf_decal/siding/purple/corner,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/structure/disposalpipe/segment,
+/obj/machinery/light_switch/directional/west,
 /turf/open/floor/iron/white,
 /area/station/science/research)
 "kaS" = (
