@@ -22,14 +22,18 @@
 
 	var/atom/movable/movable_parent = parent
 
-	shadow = mutable_appearance(
-		icon,
-		icon_state,
-		layer = layer_override || BELOW_MOB_LAYER,
-		appearance_flags = KEEP_APART | RESET_TRANSFORM | RESET_COLOR
-	)
+	make_mutable_appearance(icon, icon_state, layer_override)
 	shadow.pixel_x = shadow_offset_x - movable_parent.pixel_x
 	update_shadow_position()
+
+/datum/component/drop_shadow/proc/make_mutable_appearance(icon, icon_state, layer)
+	shadow = mutable_appearance(
+			icon,
+			icon_state,
+			layer = layer || BELOW_MOB_LAYER,
+			appearance_flags = KEEP_APART | RESET_TRANSFORM | RESET_COLOR
+		)
+
 
 /datum/component/drop_shadow/InheritComponent(icon = 'icons/mob/mob_shadows.dmi', icon_state = SHADOW_MEDIUM, shadow_offset_x = 0, shadow_offset_y = 0)
 	var/changed_appearance = FALSE
@@ -52,15 +56,13 @@
 		return
 
 	if (changed_appearance && !HAS_TRAIT(parent, TRAIT_SHADOWLESS)) // If we changed position this will get called anyway so don't do it twice
-		var/atom/atom_parent = parent
-		atom_parent.update_appearance(UPDATE_OVERLAYS)
+		add_shadow()
 
 /datum/component/drop_shadow/RegisterWithParent()
-
-	shadow.loc = parent
 	if(!layer_override)
 		var/atom/movable/movable_parent = parent
 		shadow.layer = movable_parent.layer > BELOW_MOB_LAYER ? BELOW_MOB_LAYER : LOW_ITEM_LAYER
+	shadow.alpha = HAS_TRAIT(parent, TRAIT_FAINT_SHADOW) ? 125 : 255
 
 	var/self_shadow = HAS_TRAIT(parent, TRAIT_SELF_SHADOW)
 
@@ -70,21 +72,21 @@
 	RegisterSignals(parent, list(COMSIG_ATOM_FULTON_LANDED, COMSIG_ATOM_STOPPED_ORBITING), PROC_REF(show_shadow))
 	RegisterSignals(parent, list(SIGNAL_ADDTRAIT(TRAIT_SHADOWLESS), SIGNAL_REMOVETRAIT(TRAIT_SHADOWLESS)), PROC_REF(shadowless_trait_updated))
 
+	var/isliving = FALSE
 	if (ismob(parent))
+		isliving = isliving(parent)
 		RegisterSignals(parent, list(SIGNAL_ADDTRAIT(TRAIT_SELF_SHADOW), SIGNAL_REMOVETRAIT(TRAIT_SELF_SHADOW)), PROC_REF(on_self_shadow_updated))
 		if(self_shadow)
 			RegisterSignal(parent, COMSIG_MOB_LOGIN, PROC_REF(on_mob_login))
-		if(isliving(parent))
-			var/mob/living/living_parent = parent
-			RegisterSignal(parent, COMSIG_LIVING_POST_UPDATE_TRANSFORM, PROC_REF(on_transform_updated))
-			RegisterSignal(parent, COMSIG_MOB_BUCKLED, PROC_REF(hide_shadow))
-			RegisterSignal(parent, COMSIG_MOB_UNBUCKLED, PROC_REF(show_shadow))
-			if(!living_parent.buckled)
-				RegisterSignals(parent, list(SIGNAL_ADDTRAIT(TRAIT_FAINT_SHADOW), SIGNAL_REMOVETRAIT(TRAIT_FAINT_SHADOW)), PROC_REF(faint_shadow_trait_updated))
-				shadow.alpha = HAS_TRAIT(parent, TRAIT_FAINT_SHADOW) ? 125 : 255
-			else
-				shadow.alpha = 0
-
+	if(isliving)
+		var/mob/living/living_parent = parent
+		RegisterSignal(parent, COMSIG_LIVING_POST_UPDATE_TRANSFORM, PROC_REF(on_transform_updated))
+		RegisterSignal(parent, COMSIG_MOB_BUCKLED, PROC_REF(hide_shadow))
+		RegisterSignal(parent, COMSIG_MOB_UNBUCKLED, PROC_REF(show_shadow))
+		if(!living_parent.buckled)
+			RegisterSignals(parent, list(SIGNAL_ADDTRAIT(TRAIT_FAINT_SHADOW), SIGNAL_REMOVETRAIT(TRAIT_FAINT_SHADOW)), PROC_REF(faint_shadow_trait_updated))
+		else
+			shadow.alpha = 0
 	else
 		RegisterSignals(parent, list(SIGNAL_ADDTRAIT(TRAIT_FAINT_SHADOW), SIGNAL_REMOVETRAIT(TRAIT_FAINT_SHADOW)), PROC_REF(faint_shadow_trait_updated))
 
@@ -156,6 +158,9 @@
 	var/mob/mob_parent = parent
 	if(!mob_parent.client)
 		return
+	if(shadow.type != /image)
+		shadow = image(shadow)
+		shadow.loc = mob_parent
 	mob_parent.client.images |= shadow
 
 /// Called when we gain or lose the "self-shadow" trait
@@ -171,7 +176,10 @@
 	UnregisterSignal(parent, COMSIG_MOB_LOGIN)
 	RegisterSignal(parent, COMSIG_ATOM_UPDATE_OVERLAYS, PROC_REF(on_update_overlays))
 	if(mob_parent.client)
-		mob_parent.client -= shadow
+		mob_parent.client.images -= shadow
+	///Revert the shadow from image to mutable appearance
+	make_mutable_appearance(shadow.icon, shadow.icon_state, shadow.layer)
+	shadow.alpha = HAS_TRAIT(parent, TRAIT_FAINT_SHADOW) ? 125 : 255
 	mob_parent.update_appearance(UPDATE_OVERLAYS)
 
 /// Handles actually displaying it
