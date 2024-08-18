@@ -54,9 +54,11 @@
 		else if (death_offset == 0)
 			UnregisterSignal(parent, COMSIG_MOB_STATCHANGE, PROC_REF(update_shadow_position))
 		src.death_offset = death_offset
+		changed_offset = TRUE
 
 	if (shadow_offset_y != shadow_offset)
 		shadow_offset = shadow_offset_y
+		changed_offset = TRUE
 
 	if (changed_offset)
 		update_shadow_position() // Calling this will also update the overlays so we can return here and safely apply any of the above changes too
