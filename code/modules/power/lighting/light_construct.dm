@@ -1,7 +1,7 @@
 /obj/structure/light_construct
 	name = "light fixture frame"
 	desc = "A light fixture under construction."
-	icon = 'icons/obj/lighting.dmi'
+	icon = 'icons/obj/machines/lighting.dmi'
 	icon_state = "tube-construct-stage1"
 	anchored = TRUE
 	layer = WALL_OBJ_LAYER
@@ -32,7 +32,7 @@
 	. = ..()
 	if(building)
 		setDir(ndir)
-	find_and_hang_on_wall()
+	find_and_hang_on_wall(wall_layer = HIGH_ON_WALL_LAYER)
 
 /obj/structure/light_construct/Destroy()
 	QDEL_NULL(cell)
