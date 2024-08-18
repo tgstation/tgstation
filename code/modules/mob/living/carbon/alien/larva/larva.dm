@@ -1,4 +1,5 @@
 /mob/living/carbon/alien/larva
+	SET_BASE_VISUAL_PIXEL(0, 7)
 	name = "alien larva"
 	real_name = "alien larva"
 	icon_state = "larva0"
@@ -18,11 +19,13 @@
 	num_legs = 1 //Alien larvas always have a movable apendage.
 	usable_legs = 1 //Alien larvas always have a movable apendage.
 	default_num_hands = 0
+	shadow_offset_y = 5
 
 	bodyparts = list(
 		/obj/item/bodypart/chest/larva,
 		/obj/item/bodypart/head/larva,
 	)
+	shadow_type = SHADOW_SMALL
 
 	var/amount_grown = 0
 	var/max_grown = 100

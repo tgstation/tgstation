@@ -68,7 +68,7 @@
 /turf/open/indestructible/dark,
 /area/ruin/space/has_grav/powered/biooutpost/vault)
 "bh" = (
-/obj/structure/sign/directions/science/directional/west,
+/obj/structure/sign/directions/science/west_arrow,
 /obj/effect/turf_decal/siding/purple{
 	dir = 8
 	},
@@ -1747,7 +1747,7 @@
 /obj/effect/turf_decal/siding/purple{
 	dir = 5
 	},
-/obj/structure/sign/directions/engineering/directional/east,
+/obj/structure/sign/directions/engineering/east_arrow,
 /turf/open/indestructible/white,
 /area/ruin/space/has_grav/powered/biooutpost)
 "Hh" = (
@@ -2195,7 +2195,7 @@
 /obj/effect/turf_decal/siding/purple{
 	dir = 6
 	},
-/obj/structure/sign/directions/engineering/directional/east,
+/obj/structure/sign/directions/engineering/east_arrow,
 /obj/effect/spawner/random/bureaucracy/pen,
 /obj/item/paper/crumpled/fluff/meatderelict/shieldgens,
 /turf/open/indestructible/white,
@@ -2528,7 +2528,7 @@
 /turf/open/indestructible/plating,
 /area/ruin/space/has_grav/powered/biooutpost)
 "XO" = (
-/obj/structure/sign/directions/security/directional/south{
+/obj/structure/sign/directions/security/south_arrow{
 	pixel_x = 32
 	},
 /obj/effect/turf_decal/tile/purple/opposingcorners,

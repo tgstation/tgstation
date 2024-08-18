@@ -42,6 +42,7 @@
 	habitable_atmos = null
 	basic_mob_flags = DEL_ON_DEATH
 	ai_controller = /datum/ai_controller/basic_controller/bee
+	shadow_type = SHADOW_SMALL
 	///the reagent the bee has
 	var/datum/reagent/beegent = null
 	///the house we live in
@@ -164,6 +165,7 @@
 	add_overlay(greyscale_overlay)
 
 	add_overlay("[icon_base]_wings")
+	update_appearance(UPDATE_OVERLAYS)
 
 /mob/living/basic/bee/proc/pollinate(obj/machinery/hydroponics/hydro)
 	if(!hydro.can_bee_pollinate())

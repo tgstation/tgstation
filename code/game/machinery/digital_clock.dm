@@ -2,7 +2,7 @@
 	name = "digital clock"
 	desc = "An ultra-futuristic, sleek, advanced, next-gen normal digital clock that tells the time. Powered by bluespace. Despite supposedly being better in every way to classic clocks, it just doesn't feel the same. They just don't make them the way they used to..."
 	icon_state = "digital_clock_base"
-	icon = 'icons/obj/digital_clock.dmi'
+	icon = 'icons/obj/machines/digital_clock.dmi'
 	verb_say = "beeps"
 	verb_ask = "bloops"
 	verb_exclaim = "blares"
@@ -14,10 +14,9 @@
 	name = "digital clock frame"
 	desc = "Used to build digital clocks, just secure to the wall."
 	icon_state = "digital_clock_base"
-	icon = 'icons/obj/digital_clock.dmi'
+	icon = 'icons/obj/machines/digital_clock.dmi'
 	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 7, /datum/material/glass = SHEET_MATERIAL_AMOUNT * 4)
 	result_path = /obj/machinery/digital_clock
-	pixel_shift = 28
 
 /obj/machinery/digital_clock/wrench_act_secondary(mob/living/user, obj/item/tool)
 	. = ..()
@@ -133,25 +132,25 @@
 
 	var/return_overlays = list()
 
-	var/mutable_appearance/minute_one_overlay = mutable_appearance('icons/obj/digital_clock.dmi', "+[station_minute_one]")
+	var/mutable_appearance/minute_one_overlay = mutable_appearance('icons/obj/machines/digital_clock.dmi', "+[station_minute_one]")
 	minute_one_overlay.pixel_w = 0
 	return_overlays += minute_one_overlay
 
-	var/mutable_appearance/minute_tenth_overlay = mutable_appearance('icons/obj/digital_clock.dmi', "+[station_minute_tenth]")
+	var/mutable_appearance/minute_tenth_overlay = mutable_appearance('icons/obj/machines/digital_clock.dmi', "+[station_minute_tenth]")
 	minute_tenth_overlay.pixel_w = -4
 	return_overlays += minute_tenth_overlay
 
-	var/mutable_appearance/separator = mutable_appearance('icons/obj/digital_clock.dmi', "+separator")
+	var/mutable_appearance/separator = mutable_appearance('icons/obj/machines/digital_clock.dmi', "+separator")
 	return_overlays += separator
 
-	var/mutable_appearance/hour_one_overlay = mutable_appearance('icons/obj/digital_clock.dmi', "+[station_hours_one]")
+	var/mutable_appearance/hour_one_overlay = mutable_appearance('icons/obj/machines/digital_clock.dmi', "+[station_hours_one]")
 	hour_one_overlay.pixel_w = -10
 	return_overlays += hour_one_overlay
 
-	var/mutable_appearance/hour_tenth_overlay = mutable_appearance('icons/obj/digital_clock.dmi', "+[station_hours_tenth]")
+	var/mutable_appearance/hour_tenth_overlay = mutable_appearance('icons/obj/machines/digital_clock.dmi', "+[station_hours_tenth]")
 	hour_tenth_overlay.pixel_w = -14
 	return_overlays += hour_tenth_overlay
 
 	return return_overlays
 
-MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/digital_clock, 28)
+WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/machinery/digital_clock)

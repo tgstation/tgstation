@@ -1,7 +1,7 @@
 //Water source, use the type water_source for unlimited water sources like classic sinks.
 /obj/structure/water_source
 	name = "Water Source"
-	icon = 'icons/obj/watercloset.dmi'
+	icon = 'icons/obj/structures/watercloset.dmi'
 	icon_state = "sink"
 	desc = "A sink used for washing one's hands and face. This one seems to be infinite!"
 	anchored = TRUE
@@ -133,6 +133,7 @@
 /obj/structure/water_source/puddle //splishy splashy ^_^
 	name = "puddle"
 	desc = "A puddle used for washing one's hands and face."
+	icon = 'icons/obj/mining_zones/terrain.dmi'
 	icon_state = "puddle"
 	base_icon_state = "puddle"
 	resistance_flags = UNACIDABLE
@@ -165,7 +166,7 @@
 		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 	icon_state = "[base_icon_state]-splash"
 	balloon_alert(user, "scooping tadpoles...")
-	if(do_after(user, src, 5 SECONDS))
+	if(do_after(user, 5 SECONDS, src))
 		playsound(loc, 'sound/effects/slosh.ogg', 15, TRUE)
 		balloon_alert(user, "got a tadpole")
 		var/obj/item/fish/tadpole/tadpole = new(loc)
