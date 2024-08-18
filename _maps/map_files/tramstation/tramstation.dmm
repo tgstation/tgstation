@@ -34048,12 +34048,6 @@
 /obj/structure/tall_stairs/end/directional/north,
 /turf/open/floor/iron/stairs/left,
 /area/station/hallway/secondary/construction/engineering)
-"kTz" = (
-/obj/machinery/camera/directional/west{
-	c_tag = "Hallway - Port Tram Platform North"
-	},
-/turf/open/floor/noslip/tram,
-/area/station/hallway/primary/tram/left)
 "kTI" = (
 /obj/effect/turf_decal/trimline/dark_green/filled/line{
 	dir = 5
@@ -155133,7 +155127,7 @@ xgZ
 lPY
 esd
 kiU
-kTz
+aQm
 cFs
 nVr
 gbe
