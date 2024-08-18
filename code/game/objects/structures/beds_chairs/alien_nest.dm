@@ -13,6 +13,7 @@
 	canSmoothWith = SMOOTH_GROUP_ALIEN_NEST
 	build_stack_type = null
 	elevation = 0
+	can_deconstruct = FALSE
 	var/static/mutable_appearance/nest_overlay = mutable_appearance('icons/mob/nonhuman-player/alien.dmi', "nestoverlay", LYING_MOB_LAYER)
 
 /obj/structure/bed/nest/add_context(atom/source, list/context, obj/item/held_item, mob/living/user)
@@ -20,10 +21,6 @@
 		return NONE
 
 	return ..()
-
-/obj/structure/bed/nest/wrench_act_secondary(mob/living/user, obj/item/weapon)
-	return ITEM_INTERACT_BLOCKING
-
 
 /obj/structure/bed/nest/user_unbuckle_mob(mob/living/captive, mob/living/hero)
 	if(!length(buckled_mobs))
