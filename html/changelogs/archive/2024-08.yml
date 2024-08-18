@@ -225,3 +225,10 @@
 2024-08-17:
   Absolucy:
   - bugfix: Fixed the positioning of the painting in the curator's office on Blueshift.
+2024-08-18:
+  Absolucy:
+  - bugfix: Fixed pouring stuff into beakers trying to play a list as a sound. Hopefully
+      this stops the crashes.
+  - bugfix: Bloodsucker ethereals, alongside heretics with rust healing, will no longer
+      overcharge.
+  - bugfix: Potential fix for crashes related to drinking sounds.
