@@ -1,4 +1,0 @@
-author: "ShadowLarkens"
-delete-after: True
-changes:
-  - bugfix: "Fixed action buttons relative to EAST,SOUTH, or CENTER being improperly moved during view_audit_buttons()"
