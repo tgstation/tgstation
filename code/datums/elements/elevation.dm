@@ -152,7 +152,7 @@
 /datum/element/elevation_core/proc/on_initialized_on(turf/source, atom/movable/spawned)
 	SIGNAL_HANDLER
 	if(isliving(spawned))
-		elevate_mob(spawned)
+		on_entered(entered = spawned)
 
 /datum/element/elevation_core/proc/on_exited(turf/source, atom/movable/gone)
 	SIGNAL_HANDLER
