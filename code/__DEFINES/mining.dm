@@ -67,3 +67,8 @@
 //String defines to use with CaveGenerator presets for what ore breakdown to use.
 #define OREGEN_PRESET_LAVALAND "lavaland"
 #define OREGEN_PRESET_TRIPLE_Z "triple_z"
+
+/// Signal sent on an atom when fulton beacon begins transporting it
+#define COMSIG_ATOM_FULTON_BEGAN "fulton_began"
+/// Signal sent on an atom when fulton beacon finishes transporting it
+#define COMSIG_ATOM_FULTON_LANDED "fulton_landed"

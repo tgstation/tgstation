@@ -343,7 +343,7 @@
 	if(ismob(weapon.loc))
 		var/mob/owner = weapon.loc
 		if(!owner.transferItemToLoc(weapon, src))
-			to_chat(usr, span_warning("\the [weapon] is stuck to your hand, you cannot put it in \the [src]!"))
+			to_chat(owner, span_warning("\the [weapon] is stuck to your hand, you cannot put it in \the [src]!"))
 			return FALSE
 		return TRUE
 	else
@@ -417,7 +417,8 @@
 			for(var/obj/item/dispensed_item in src)
 				if(desired <= 0)
 					break
-				if(params["path"] == "[dispensed_item.type]-[dispensed_item.name]")
+				var/item_name = "[dispensed_item.type]-[replacetext(replacetext(dispensed_item.name, "\proper", ""), "\improper", "")]"
+				if(params["path"] == item_name)
 					if(dispensed_item in component_parts)
 						CRASH("Attempted removal of [dispensed_item] component_part from smartfridge via smartfridge interface.")
 					//dispense the item
@@ -439,6 +440,7 @@
 //  Drying 'smartfridge'
 // ----------------------------
 /obj/machinery/smartfridge/drying
+	SET_BASE_VISUAL_PIXEL(0, DEPTH_OFFSET)
 	name = "dehydrator"
 	desc = "A machine meant to remove moisture from various food."
 	icon_state = "dehydrator-icon"
@@ -479,15 +481,16 @@
 	.["isdryer"] = TRUE
 	.["drying"] = drying
 
-/obj/machinery/smartfridge/drying/ui_act(action, params)
+/obj/machinery/smartfridge/drying/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if(.)
 		update_appearance() // This is to handle a case where the last item is taken out manually instead of through drying pop-out
 		return
 
+	var/mob/user = ui.user
 	switch(action)
 		if("Dry")
-			toggle_drying(FALSE, usr)
+			toggle_drying(FALSE, user)
 			return TRUE
 
 /obj/machinery/smartfridge/drying/powered()

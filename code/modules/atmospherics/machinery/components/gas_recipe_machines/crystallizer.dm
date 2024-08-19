@@ -10,6 +10,7 @@
 	name = "crystallizer"
 	desc = "Used to crystallize or solidify gases."
 	layer = ABOVE_MOB_LAYER
+	plane = GAME_PLANE
 	density = TRUE
 	max_integrity = 300
 	armor_type = /datum/armor/binary_crystallizer
@@ -300,7 +301,7 @@
 	data["gas_input"] = gas_input
 	return data
 
-/obj/machinery/atmospherics/components/binary/crystallizer/ui_act(action, params)
+/obj/machinery/atmospherics/components/binary/crystallizer/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if(.)
 		return

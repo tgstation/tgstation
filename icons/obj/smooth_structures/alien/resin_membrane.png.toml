@@ -1,2 +1,0 @@
-output_name = "resin_membrane"
-template = "bitmask/diagonal_32x32.toml"

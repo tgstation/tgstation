@@ -1,5 +1,6 @@
 // Camera mob, used by AI camera and blob.
 /mob/camera
+	SET_BASE_VISUAL_PIXEL(0, 0) // These are selecting floor tiles
 	name = "camera mob"
 	density = FALSE
 	move_force = INFINITY
@@ -8,6 +9,7 @@
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 	invisibility = INVISIBILITY_ABSTRACT // No one can see us
 	sight = SEE_SELF
+	shadow_type = SHADOW_NONE
 	/// Toggles if the camera can move on shuttles
 	var/move_on_shuttle = FALSE
 	/// Toggles if the camera can use emotes

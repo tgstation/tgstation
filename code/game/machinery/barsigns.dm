@@ -30,7 +30,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/barsign, 32)
 	//Roundstart/map specific barsigns "belong" in their area and should be renaming it, signs created from wallmounts will not.
 	change_area_name = mapload
 	set_sign(new /datum/barsign/hiddensigns/signoff)
-	find_and_hang_on_wall()
+	find_and_hang_on_wall(wall_layer = FLAT_ON_WALL_LAYER)
 
 /obj/machinery/barsign/proc/set_sign(datum/barsign/sign)
 	if(!istype(sign))
@@ -42,6 +42,9 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/barsign, 32)
 
 	chosen_sign = sign
 	update_appearance()
+
+/obj/machinery/barsign/wall_mount_common_plane(direction)
+	return TRUE
 
 /obj/machinery/barsign/update_icon_state()
 	if(!(machine_stat & BROKEN) && (!(machine_stat & NOPOWER) || machine_stat & EMPED) && chosen_sign && chosen_sign.icon_state)
@@ -540,7 +543,6 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/barsign/all_access, 32)
 	custom_materials = list(
 		/datum/material/iron = SHEET_MATERIAL_AMOUNT,
 	)
-	pixel_shift = 32
 
 /obj/item/wallframe/barsign/Initialize(mapload)
 	. = ..()

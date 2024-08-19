@@ -234,7 +234,7 @@
  * * target - The turf being painted to
 */
 /obj/item/airlock_painter/decal/proc/paint_floor(turf/open/floor/target)
-	target.AddElement(/datum/element/decal, 'icons/turf/decals.dmi', stored_decal_total, stored_dir, null, null, alpha, color, null, FALSE, null)
+	target.AddElement(/datum/element/decal, 'icons/turf/decals.dmi', stored_decal_total, stored_dir, null, null, alpha, color, null, null, null, FALSE, null)
 
 /**
  * Return the final icon_state for the given decal options
@@ -298,7 +298,7 @@
 	.["current_dir"] = stored_dir
 	.["current_custom_color"] = stored_custom_color
 
-/obj/item/airlock_painter/decal/ui_act(action, list/params)
+/obj/item/airlock_painter/decal/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if(.)
 		return
@@ -438,7 +438,7 @@
 		decal_color = rgba_regex.group[1]
 		decal_alpha = text2num(rgba_regex.group[2], 16)
 
-	target.AddElement(/datum/element/decal, 'icons/turf/decals.dmi', source_decal, source_dir, null, null, decal_alpha, decal_color, null, FALSE, null)
+	target.AddElement(/datum/element/decal, 'icons/turf/decals.dmi', source_decal, source_dir, null, null, decal_alpha, decal_color, null, null, null, FALSE, null)
 
 /datum/asset/spritesheet/decals/tiles
 	name = "floor_tile_decals"

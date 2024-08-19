@@ -15,7 +15,7 @@
 	density = TRUE
 	anchored = FALSE
 
-	icon = 'icons/obj/aquarium/tanks.dmi'
+	icon = 'icons/obj/structures/aquarium/tanks.dmi'
 	icon_state = "aquarium_map"
 
 	integrity_failure = 0.3
@@ -323,7 +323,7 @@
 	.["maxTemperature"] = max_fluid_temp
 	.["fluidTypes"] = fluid_types
 
-/obj/structure/aquarium/ui_act(action, params)
+/obj/structure/aquarium/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if(.)
 		return
