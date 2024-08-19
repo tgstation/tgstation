@@ -960,7 +960,8 @@ ADMIN_VERB(cmd_controller_view_ui, R_SERVER|R_DEBUG, "Controller Overview", "Vie
 /world/Tick()
 	_unroll_cpu_value()
 
-#define CPU_SIZE 20
+#define CPU_SIZE 200
+#define WINDOW_SIZE 16
 GLOBAL_LIST_INIT(cpu_values, new /list(CPU_SIZE))
 GLOBAL_LIST_INIT(avg_cpu_values, new /list(CPU_SIZE))
 GLOBAL_VAR_INIT(cpu_index, 1)
@@ -974,7 +975,7 @@ GLOBAL_VAR_INIT(window_size, 0)
 	var/list/cpu_values = GLOB.cpu_values
 	var/cpu_index = GLOB.cpu_index
 
-	if(GLOB.window_size < 16)
+	if(GLOB.window_size < WINDOW_SIZE)
 		GLOB.window_size += 1
 	// We need to hook into the INSTANT we start our moving average so we can reconstruct gained/lost cpu values
 	var/sum_of_past_reals = 0
@@ -993,6 +994,7 @@ GLOBAL_VAR_INIT(window_size, 0)
 
 /proc/update_glide_size()
 	var/list/cpu_values = GLOB.cpu_values
+	/*
 	var/sum = 0
 	var/non_zero = 0
 	#warn there's gotta be a better way then this, or at least a less shitty way
@@ -1015,9 +1017,9 @@ GLOBAL_VAR_INIT(window_size, 0)
 	var/final_average = trimmed_sum ? trimmed_sum / used : first_average
 	GLOB.glide_size_multiplier = min(100 / final_average, 1)
 	GLOB.glide_size_multi_error = max((final_average - 100) / 100 * world.tick_lag, 0)
-
+	*/
 	/// Gets the cpu value we finished the last tick with (since the index reads a step ahead)
-	var/last_cpu = cpu_values[WRAP(GLOB.cpu_index - 1, 1, CPU_SIZE + 1)]
+	var/last_cpu = 0 //cpu_values[WRAP(GLOB.cpu_index - 1, 1, CPU_SIZE + 1)]
 	var/error = max((last_cpu - 100) / 100 * world.tick_lag, 0)
 
 	for(var/atom/movable/trouble as anything in GLOB.gliding_atoms)
