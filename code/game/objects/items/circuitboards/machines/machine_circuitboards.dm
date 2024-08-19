@@ -1695,7 +1695,7 @@
 	req_components = list(
 		/obj/item/pipe/trinary/flippable/filter = 1,
 	)
-  
+
 /obj/item/circuitboard/machine/portagrav
 	name = "Portable Gravity Unit"
 	greyscale_colors = CIRCUIT_COLOR_ENGINEERING
@@ -1704,7 +1704,7 @@
 		/datum/stock_part/capacitor = 2,
 		/datum/stock_part/micro_laser = 2,
 		/obj/item/stack/sheet/glass = 1)
-    
+
 /obj/item/circuitboard/machine/big_manipulator
 	name = "Big Manipulator"
 	greyscale_colors = CIRCUIT_COLOR_ENGINEERING
