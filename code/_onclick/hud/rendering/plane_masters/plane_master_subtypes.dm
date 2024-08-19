@@ -584,18 +584,17 @@
 	name = "Examine Balloons"
 	documentation = "The balloons that appear above objects (often wallmounts) when holding shift."
 	plane = EXAMINE_BALLOONS_PLANE
-	invisibility = INVISIBILITY_ABSTRACT
 	render_target = EXAMINE_BALLOONS_RENDER_TARGET
 	appearance_flags = PLANE_MASTER|NO_CLIENT_COLOR
-	render_relay_planes = list(RENDER_PLANE_GAME_WORLD)
+	render_relay_planes = list()
 	alpha = 0
 	var/invis_timer
 
 /atom/movable/screen/plane_master/examine_balloons/proc/fade_in()
 	animate(src, 0.2 SECONDS, alpha = 255)
-	invisibility = INVISIBILITY_NONE
+	add_relay_to(GET_NEW_PLANE(RENDER_PLANE_GAME_WORLD, offset))
 	deltimer(invis_timer)
 
 /atom/movable/screen/plane_master/examine_balloons/proc/fade_out()
 	animate(src, 0.2 SECONDS, alpha = 0)
-	invis_timer = addtimer(VARSET_CALLBACK(src, invisibility, INVISIBILITY_ABSTRACT), 0.2 SECONDS, TIMER_UNIQUE|TIMER_STOPPABLE)
+	invis_timer = addtimer(CALLBACK(src, PROC_REF(remove_relay_from), GET_NEW_PLANE(RENDER_PLANE_GAME_WORLD, offset)), 0.2 SECONDS, TIMER_UNIQUE|TIMER_STOPPABLE)
