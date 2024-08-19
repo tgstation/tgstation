@@ -78,6 +78,8 @@
 	var/list/metabolized_traits
 	/// A list of traits to apply while the reagent is in a mob.
 	var/list/added_traits
+	/// A list of other reagents this interacts with if they're metabolizing in a mob
+	var/list/datum/reagent/reagent_interactions
 
 	///The default reagent container for the reagent, used for icon generation
 	var/obj/item/reagent_containers/default_container = /obj/item/reagent_containers/cup/bottle
@@ -159,6 +161,23 @@
  */
 /datum/reagent/proc/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
 	SHOULD_CALL_PARENT(TRUE)
+	if(reagent_interactions.len)
+		for(var/datum/reagent/cross_faded in reagent_interactions)
+			if(affected_mob.has_reagent(cross_faded))
+				reagent_interaction(affected_mob, cross_faded, seconds_per_tick, times_fired)
+
+
+/**
+ * Called when a mob has two (or more) reagents that interact with each other in their blood(or jelly(or electricity))stream
+ * Arguments
+ * * mob/living/carbon/affected_mob - the mob which has this combination of reagents
+ * * interacting_reagent - the OTHER reagent this reagent is interacting with. Not meant to be a chemical
+ * reaction, think having a cigarette when you're drunk.
+ * * seconds_per_tick - the time in server seconds between proc calls (when performing normally it will be 2)
+ * * times_fired - the number of times the owner's Life() tick has been called aka The number of times SSmobs has fired
+ */
+/datum/reagent/proc/reagent_interaction(mob/living/carbon/affected_mob, interacting_reagent, seconds_per_tick, times_fired)
+	return
 
 ///Metabolizes a portion of the reagent after on_mob_life() is called
 /datum/reagent/proc/metabolize_reagent(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
