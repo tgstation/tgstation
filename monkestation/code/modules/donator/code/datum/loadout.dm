@@ -482,6 +482,12 @@
 	donator_only = TRUE
 	requires_purchase = FALSE
 
+/datum/loadout_item/toys/pooba_bee_plush
+	name = "Bumbliest Bee Plushie"
+	item_path = /obj/item/toy/plush/pooba_bee_plush
+	donator_only = TRUE
+	requires_purchase = FALSE
+
 //Mr_Sandman02
 /datum/loadout_item/suit/menacing_jacket
 	name = "Menacing Jacket"

@@ -139,3 +139,9 @@
 	desc = "A plushie meant to resemble one of Nanotransen's Tizirian employees. If you put your ear up to it, you swear you could hear a cacophony of terrified rats screaming for their lives. Smells like space cleaner."
 	icon = 'monkestation/code/modules/donator/icons/obj/plushes.dmi'
 	icon_state = "bluedragon66"
+
+/obj/item/toy/plush/pooba_bee_plush
+	name = "bumbliest bee plushie"
+	desc = "God damn thats a cute bee."
+	icon = 'monkestation/code/modules/donator/icons/obj/plushes.dmi'
+	icon_state = "poba_fat_bee"
