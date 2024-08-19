@@ -28,8 +28,6 @@ Behavior that's still missing from this component that original food items had t
 	var/junkiness = 0
 	///Message to send when eating
 	var/list/eatverbs
-	///Callback to be ran to see if the food can be eaten. Specifically used for carbon handling.
-	var/datum/callback/check_edible
 	///Callback to be ran for when you take a bite of something
 	var/datum/callback/after_eat
 	///Callback to be ran for when you finish eating something
@@ -55,7 +53,6 @@ Behavior that's still missing from this component that original food items had t
 	list/eatverbs = list("bite", "chew", "nibble", "gnaw", "gobble", "chomp"),
 	bite_consumption = 2,
 	junkiness,
-	datum/callback/check_edible,
 	datum/callback/after_eat,
 	datum/callback/on_consume,
 	datum/callback/check_liked,
@@ -72,7 +69,6 @@ Behavior that's still missing from this component that original food items had t
 	src.eat_time = eat_time
 	src.eatverbs = string_list(eatverbs)
 	src.junkiness = junkiness
-	src.check_edible = check_edible
 	src.after_eat = after_eat
 	src.on_consume = on_consume
 	src.tastes = string_assoc_list(tastes)
@@ -221,8 +217,6 @@ Behavior that's still missing from this component that original food items had t
 
 	var/atom/owner = parent
 	if(!show_examine)
-		return
-	if(!isnull(check_edible) && !check_edible.Invoke(user))
 		return
 	if(foodtypes)
 		var/list/types = bitfield_to_list(foodtypes, FOOD_FLAGS)
@@ -510,8 +504,6 @@ Behavior that's still missing from this component that original food items had t
 ///Checks whether or not the eater can actually consume the food
 /datum/component/edible/proc/CanConsume(mob/living/carbon/eater, mob/living/feeder)
 	if(!iscarbon(eater))
-		return FALSE
-	if(!isnull(check_edible) && !check_edible.Invoke(eater))
 		return FALSE
 	if(eater.is_mouth_covered())
 		eater.balloon_alert(feeder, "mouth is covered!")
