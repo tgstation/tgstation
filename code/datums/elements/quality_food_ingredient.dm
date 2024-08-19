@@ -9,7 +9,7 @@
 	. = ..()
 	if(!isatom(target))
 		return ELEMENT_INCOMPATIBLE
-	if(HAS_TRAIT_FROM(target, TRAIT_QUALITY_FOOD, "[complexity_increase]")) //It already has this element attached.
+	if(HAS_TRAIT_FROM(target, TRAIT_QUALITY_FOOD_INGREDIENT, REF(src))) //It already has this element attached.
 		return
 
 	src.complexity_increase = complexity_increase
@@ -30,8 +30,9 @@
 		COMSIG_ITEM_BARBEQUE_GRILLED,
 		COMSIG_ITEM_FRIED,
 		COMSIG_ITEM_USED_AS_INGREDIENT,
+		COMSIG_FOOD_GET_EXTRA_COMPLEXITY,
 	))
-	REMOVE_TRAIT(source, TRAIT_QUALITY_FOOD, "[complexity_increase]")
+	REMOVE_TRAIT(source, TRAIT_QUALITY_FOOD_INGREDIENT, REF(src))
 	return ..()
 
 /datum/element/quality_food_ingredient/proc/used_in_craft(datum/source, atom/result)
@@ -53,7 +54,8 @@
 /datum/element/quality_food_ingredient/proc/simply_cooked(datum/source)
 	SIGNAL_HANDLER
 	//The target of the food quality and the source are the same, there's no need to re-add the whole element.
-	ADD_TRAIT(source, TRAIT_QUALITY_FOOD, "[complexity_increase]")
+	RegisterSignal(source, COMSIG_FOOD_GET_EXTRA_COMPLEXITY, PROC_REF(add_complexity), TRUE)
+	ADD_TRAIT(source, TRAIT_QUALITY_FOOD_INGREDIENT, REF(src))
 
 /datum/element/quality_food_ingredient/proc/used_as_ingredient(datum/source, atom/container)
 	SIGNAL_HANDLER
@@ -61,4 +63,9 @@
 
 /datum/element/quality_food_ingredient/proc/add_quality(atom/target)
 	target.AddElement(/datum/element/quality_food_ingredient, complexity_increase)
-	ADD_TRAIT(target, TRAIT_QUALITY_FOOD, "[complexity_increase]")
+	RegisterSignal(target, COMSIG_FOOD_GET_EXTRA_COMPLEXITY, PROC_REF(add_complexity), TRUE)
+	ADD_TRAIT(target, TRAIT_QUALITY_FOOD_INGREDIENT, REF(src))
+
+/datum/element/quality_food_ingredient/proc/add_complexity(datum/source, list/extra_complexity)
+	SIGNAL_HANDLER
+	extra_complexity[1] += complexity_increase

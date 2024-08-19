@@ -16,6 +16,9 @@
 /// called when an edible ingredient is added: (datum/component/edible/ingredient)
 #define COMSIG_FOOD_INGREDIENT_ADDED "edible_ingredient_added"
 
+/// from base of /datum/component/edible/get_recipe_complexity(): (list/extra_complexity)
+#define COMSIG_FOOD_GET_EXTRA_COMPLEXITY "food_get_extra_complexity"
+
 // Deep frying foods
 /// An item becomes fried - From /datum/element/fried_item/Attach: (fry_time)
 #define COMSIG_ITEM_FRIED "item_fried"

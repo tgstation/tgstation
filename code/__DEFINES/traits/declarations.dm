@@ -746,8 +746,8 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_FOOD_SILVER "food_silver"
 /// If this item's been made by a chef instead of being map-spawned or admin-spawned or such
 #define TRAIT_FOOD_CHEF_MADE "food_made_by_chef"
-/// Food recipes that use this item will be of one quality grade higher.
-#define TRAIT_QUALITY_FOOD "quality_food"
+/// This atom has a quality_food_ingredient element attached
+#define TRAIT_QUALITY_FOOD_INGREDIENT "quality_food_ingredient"
 /// The items needs two hands to be carried
 #define TRAIT_NEEDS_TWO_HANDS "needstwohands"
 /// Can't be catched when thrown
