@@ -111,10 +111,7 @@
 	. = ..()
 	if(.)
 		return .
-	. = FALSE
-	if(is_syndicate_affiliated(user))
-		. = TRUE
-	return .
+	return is_syndicate_affiliated(user)
 
 
 /datum/wires/syndicatebomb/proc/tell_admins(obj/machinery/syndicatebomb/B)

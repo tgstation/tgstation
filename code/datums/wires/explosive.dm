@@ -12,10 +12,7 @@
 	. = ..()
 	if (.)
 		return .
-	. = FALSE
-	if(is_syndicate_affiliated(user))
-		. = TRUE
-	return .
+	return is_syndicate_affiliated(user)
 
 /datum/wires/explosive/on_pulse(index)
 	explode()
