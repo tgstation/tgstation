@@ -965,7 +965,7 @@ ADMIN_VERB(cmd_controller_view_ui, R_SERVER|R_DEBUG, "Controller Overview", "Vie
 GLOBAL_LIST_INIT(cpu_values, new /list(CPU_SIZE))
 GLOBAL_LIST_INIT(avg_cpu_values, new /list(CPU_SIZE))
 GLOBAL_VAR_INIT(cpu_index, 1)
-GLOBAL_VAR_INIT(window_size, 0)
+GLOBAL_VAR_INIT(window_size, 16)
 
 /// Inserts our current world.cpu value into our rolling lists
 /// You should NEVER EVER call this as part of its job is to pull out the actual usage last tick instead of the moving average
@@ -975,22 +975,30 @@ GLOBAL_VAR_INIT(window_size, 0)
 	var/list/cpu_values = GLOB.cpu_values
 	var/cpu_index = GLOB.cpu_index
 
-	if(GLOB.window_size < WINDOW_SIZE)
-		GLOB.window_size += 1
 	// We need to hook into the INSTANT we start our moving average so we can reconstruct gained/lost cpu values
-	var/sum_of_past_reals = 0
-	// we average up to 16 but we need to go BACK 15 steps
-	for(var/i in 1 to GLOB.window_size - 1)
-		sum_of_past_reals += cpu_values[WRAP(cpu_index - i, 1, CPU_SIZE + 1)]
+	var/lost_value = 0
+	lost_value = cpu_values[WRAP(cpu_index - GLOB.window_size, 1, CPU_SIZE + 1)]
 
-	// avg = (A + B + C) / 3
-	// C = avg * 3 - (A + B)
-	var/real_cpu = (avg_cpu * GLOB.window_size) - sum_of_past_reals
+	// avg = (A + B + C + D) / 4
+	// old_avg = (A + B + C) / 3
+	// (avg * 4 - old_avg * 3) roughly = D
+	// avg = (B + C + D) / 3
+	// old_avg = (A + B + C) / 3
+	// (avg * 4 - old_avg * 3) roughly = D - A
+	// so if we aren't moving we need to add the value we are losing
+	// We're trying to do this with as few ops as possible mind
+	// soooo
+	// C = (avg * 3 - old_avg * 3) + A
+
+	var/last_avg_cpu = GLOB.avg_cpu_values[WRAP(cpu_index - 1, 1, CPU_SIZE + 1)]
+	var/real_cpu = (avg_cpu * GLOB.window_size - last_avg_cpu * GLOB.last_window_size) + lost_value
 
 	// cache for sonic speed
 	cpu_values[cpu_index] = real_cpu
-	GLOB.avg_cpu_values[cpu_index] = world.cpu
+	GLOB.avg_cpu_values[cpu_index] = avg_cpu
 	GLOB.cpu_index = WRAP(cpu_index + 1, 1, CPU_SIZE + 1)
+	if(GLOB.cpu_index == 2 || GLOB.cpu_index == 17)
+		CONSUME_UNTIL(500)
 
 /proc/update_glide_size()
 	var/list/cpu_values = GLOB.cpu_values
