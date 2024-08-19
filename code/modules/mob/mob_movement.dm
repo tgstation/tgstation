@@ -142,6 +142,95 @@
 	if(P && !ismob(P) && P.density)
 		mob.setDir(REVERSE_DIR(mob.dir))
 
+/mob
+	var/next_move_dir_add = NONE
+	var/next_move_dir_sub = NONE
+	var/input_move_delay = 0
+	var/intended_direction = EAST
+	var/movement_locked = FALSE
+
+/mob/proc/begin_the_infinimove()
+	SSinput.moving_mobs |= src
+
+/mob/Destroy()
+	SSinput.moving_mobs -= src
+	return ..()
+
+
+/mob/proc/bullshit_hell(new_loc, direct)
+	if(world.time < input_move_delay) //do not move anything ahead of this check please
+		return FALSE
+	next_move_dir_add = NONE
+	next_move_dir_sub = NONE
+	var/old_move_delay = input_move_delay
+	input_move_delay = world.time + world.tick_lag //this is here because Move() can now be called mutiple times per tick
+	if(!direct || !new_loc)
+		return FALSE
+	if(!loc)
+		return FALSE
+	if(HAS_TRAIT(src, TRAIT_NO_TRANSFORM))
+		return FALSE //This is sorta the goto stop mobs from moving trait
+	if(SEND_SIGNAL(src, COMSIG_MOB_CLIENT_PRE_LIVING_MOVE, new_loc, direct) & COMSIG_MOB_CLIENT_BLOCK_PRE_LIVING_MOVE)
+		return FALSE
+
+	var/mob/living/L = src //Already checked for isliving earlier
+	if(Process_Grab()) //are we restrained by someone's grip?
+		return
+
+	if(!(L.mobility_flags & MOBILITY_MOVE))
+		return FALSE
+
+	if(ismovable(loc)) //Inside an object, tell it we moved
+		var/atom/loc_atom = loc
+		return loc_atom.relaymove(src, direct)
+
+	if(!Process_Spacemove(direct))
+		return FALSE
+
+	if(SEND_SIGNAL(src, COMSIG_MOB_CLIENT_PRE_MOVE, args) & COMSIG_MOB_CLIENT_BLOCK_PRE_MOVE)
+		return FALSE
+
+	//We are now going to move
+	var/add_delay = cached_multiplicative_slowdown
+	var/new_glide_size = DELAY_TO_GLIDE_SIZE(add_delay * ( (NSCOMPONENT(direct) && EWCOMPONENT(direct)) ? sqrt(2) : 1 ) )
+	set_glide_size(new_glide_size) // set it now in case of pulled objects
+	//If the move was recent, count using old_move_delay
+	//We want fractional behavior and all
+	if(old_move_delay + world.tick_lag > world.time)
+		//Yes this makes smooth movement stutter if add_delay is too fractional
+		//Yes this is better then the alternative
+		input_move_delay = old_move_delay
+	else
+		input_move_delay = world.time
+
+	//Basically an optional override for our glide size
+	//Sometimes you want to look like you're moving with a delay you don't actually have yet
+	var/old_dir = dir
+	// Move here
+	var/old_loc = loc
+	Move(new_loc, direct)
+
+	if((direct & (direct - 1)) && loc == new_loc) //moved diagonally successfully
+		add_delay *= sqrt(2)
+
+	var/after_glide = DELAY_TO_GLIDE_SIZE(add_delay)
+
+	set_glide_size(after_glide)
+
+	input_move_delay += add_delay
+	if(.) // If mob is null here, we deserve the runtime
+		if(throwing)
+			throwing.finalize(FALSE)
+
+		// At this point we've moved the client's attached mob. This is one of the only ways to guess that a move was done
+		// as a result of player input and not because they were pulled or any other magic.
+		SEND_SIGNAL(src, COMSIG_MOB_CLIENT_MOVED, direct, old_dir)
+	if(old_loc == loc)
+		intended_direction = REVERSE_DIR(intended_direction)
+
+	var/atom/movable/P = pulling
+	if(P && !ismob(P) && P.density)
+		setDir(REVERSE_DIR(dir))
 /**
  * Checks to see if you're being grabbed and if so attempts to break it
  *
@@ -161,6 +250,20 @@
 		return TRUE
 	return mob.resist_grab(TRUE)
 
+
+/mob/proc/Process_Grab()
+	if(!pulledby)
+		return FALSE
+	if(pulledby == pulling && pulledby.grab_state == GRAB_PASSIVE) //Don't autoresist passive grabs if we're grabbing them too.
+		return FALSE
+	if(HAS_TRAIT(src, TRAIT_INCAPACITATED))
+		COOLDOWN_START(src, input_move_delay, 1 SECONDS)
+		return TRUE
+	else if(HAS_TRAIT(src, TRAIT_RESTRAINED))
+		COOLDOWN_START(src, input_move_delay, 1 SECONDS)
+		to_chat(src, span_warning("You're restrained! You can't move!"))
+		return TRUE
+	return resist_grab(TRUE)
 
 /**
  * Allows mobs to ignore density and phase through objects

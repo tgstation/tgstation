@@ -684,15 +684,6 @@ ADMIN_VERB(cmd_controller_view_ui, R_SERVER|R_DEBUG, "Controller Overview", "Vie
 #endif
 		CONSUME_UNTIL(overtime_target)
 #endif
-
-		if(sustain_cpu && prob(sustain_chance))
-			// avoids  byond sleeping the loop and causing the MC to infinistall
-			CONSUME_UNTIL(min(sustain_cpu, 10000))
-
-		if(spike_cpu)
-			CONSUME_UNTIL(min(spike_cpu, 10000))
-			spike_cpu = 0
-
 		if (init_stage != INITSTAGE_MAX)
 			current_ticklimit = TICK_LIMIT_RUNNING * 2
 		else
@@ -958,18 +949,29 @@ ADMIN_VERB(cmd_controller_view_ui, R_SERVER|R_DEBUG, "Controller Overview", "Vie
 	SSprofiler.DumpFile(allow_yield = FALSE)
 
 /world/Tick()
-	_unroll_cpu_value()
+	unroll_cpu_value()
+	if(Master.sustain_cpu && prob(Master.sustain_chance))
+		// avoids  byond sleeping the loop and causing the MC to infinistall
+		CONSUME_UNTIL(min(Master.sustain_cpu, 10000))
+
+	if(Master.spike_cpu)
+		CONSUME_UNTIL(min(Master.spike_cpu, 10000))
+		Master.spike_cpu = 0
+
 
 #define CPU_SIZE 20
 #define WINDOW_SIZE 16
 GLOBAL_LIST_INIT(cpu_values, new /list(CPU_SIZE))
 GLOBAL_LIST_INIT(avg_cpu_values, new /list(CPU_SIZE))
 GLOBAL_VAR_INIT(cpu_index, 1)
+GLOBAL_VAR_INIT(last_cpu_update, -1)
 
 /// Inserts our current world.cpu value into our rolling lists
-/// You should NEVER EVER call this as part of its job is to pull out the actual usage last tick instead of the moving average
-/// and calling it would double insert, breaking said logic and fucking up any lag compensation that relies on the lists we manage
-/world/proc/_unroll_cpu_value()
+/// Its job is to pull the actual usage last tick instead of the moving average
+/world/proc/unroll_cpu_value()
+	if(GLOB.last_cpu_update == world.time)
+		return
+	GLOB.last_cpu_update = world.time
 	var/avg_cpu = world.cpu
 	var/list/cpu_values = GLOB.cpu_values
 	var/cpu_index = GLOB.cpu_index
@@ -998,6 +1000,7 @@ GLOBAL_VAR_INIT(cpu_index, 1)
 	GLOB.cpu_index = WRAP(cpu_index + 1, 1, CPU_SIZE + 1)
 
 /proc/update_glide_size()
+	world.unroll_cpu_value()
 	var/list/cpu_values = GLOB.cpu_values
 	var/sum = 0
 	var/non_zero = 0
