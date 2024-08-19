@@ -23,7 +23,7 @@
 /datum/movespeed_modifier/reagent/nitrium
 	multiplicative_slowdown = -0.65
 
-/datum/movespeed_modifier/reagent/cannabis
+/datum/movespeed_modifier/reagent/cannabis_overdose
 	multiplicative_slowdown = 0.4
 
 /datum/movespeed_modifier/reagent/freon
