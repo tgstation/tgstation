@@ -19,12 +19,14 @@
 /obj/effect/turf_decal/loading_area{
 	dir = 4
 	},
-/turf/open/floor/bitrunning_transport,
+/turf/open/indestructible/bitrunning_transport,
 /area/virtual_domain/safehouse)
 "v" = (
 /obj/machinery/light/small/directional/east,
 /obj/structure/table/wood,
-/obj/item/newspaper,
+/obj/item/newspaper{
+	pixel_y = 8
+	},
 /turf/open/indestructible/hotelwood,
 /area/virtual_domain/safehouse)
 "w" = (
@@ -37,10 +39,6 @@
 	},
 /turf/open/floor/carpet/green,
 /area/virtual_domain/safehouse)
-"z" = (
-/obj/structure/sign/poster/random/directional/east,
-/turf/open/indestructible/hotelwood,
-/area/virtual_domain/safehouse)
 "G" = (
 /turf/closed/wall/mineral/wood,
 /area/virtual_domain/safehouse)
@@ -50,7 +48,7 @@
 /obj/effect/turf_decal/loading_area{
 	dir = 4
 	},
-/turf/open/floor/bitrunning_transport,
+/turf/open/indestructible/bitrunning_transport,
 /area/virtual_domain/safehouse)
 "T" = (
 /obj/effect/landmark/bitrunning/hololadder_spawn,
@@ -110,7 +108,7 @@ G
 i
 s
 J
-z
+a
 v
 i
 "}

@@ -7,7 +7,7 @@
 /datum/pet_command/idle
 	command_name = "Stay"
 	command_desc = "Command your pet to stay idle in this location."
-	radial_icon = 'icons/obj/bed.dmi'
+	radial_icon = 'icons/obj/structures/bed.dmi'
 	radial_icon_state = "dogbed"
 	speech_commands = list("sit", "stay", "stop")
 	command_feedback = "sits"
@@ -41,6 +41,7 @@
 	radial_icon = 'icons/testing/turf_analysis.dmi'
 	radial_icon_state = "red_arrow"
 	speech_commands = list("heel", "follow")
+	callout_type = /datum/callout_option/move
 	///the behavior we use to follow
 	var/follow_behavior = /datum/ai_behavior/pet_follow_friend
 
@@ -124,6 +125,7 @@
 	radial_icon = 'icons/effects/effects.dmi'
 	radial_icon_state = "bite"
 
+	callout_type = /datum/callout_option/attack
 	speech_commands = list("attack", "sic", "kill")
 	command_feedback = "growl"
 	pointed_reaction = "and growls"
@@ -220,6 +222,7 @@
 	command_name = "Protect owner"
 	command_desc = "Your pet will run to your aid."
 	hidden = TRUE
+	callout_type = /datum/callout_option/guard
 	///the range our owner needs to be in for us to protect him
 	var/protect_range = 9
 	///the behavior we will use when he is attacked
@@ -250,6 +253,9 @@
 	. = ..()
 	set_command_target(parent, victim)
 
+/datum/pet_command/protect_owner/valid_callout_target(mob/living/caller, datum/callout_option/callout, atom/target)
+	return target == caller || get_dist(caller, target) <= 1
+
 /datum/pet_command/protect_owner/proc/set_attacking_target(atom/source, mob/living/attacker)
 	SIGNAL_HANDLER
 
@@ -275,7 +281,7 @@
 /datum/pet_command/point_targeting/fish
 	command_name = "Fish"
 	command_desc = "Command your pet to try fishing at a nearby fishing spot."
-	radial_icon = 'icons/obj/aquarium/fish.dmi'
+	radial_icon = 'icons/obj/structures/aquarium/fish.dmi'
 	radial_icon_state = "goldfish"
 	speech_commands = list("fish")
 

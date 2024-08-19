@@ -121,7 +121,7 @@
 "pP" = (
 /obj/structure/cable/multilayer/multiz,
 /obj/effect/turf_decal/stripes/end,
-/obj/structure/sign/warning/electric_shock/directional/north,
+/obj/structure/sign/warning/electric_shock,
 /turf/open/floor/plating,
 /area/station/maintenance/department/cargo)
 "qy" = (

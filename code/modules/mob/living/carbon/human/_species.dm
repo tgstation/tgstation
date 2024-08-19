@@ -495,7 +495,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
 			var/mutable_appearance/underwear_overlay
 			if(underwear)
 				if(species_human.dna.species.sexes && species_human.physique == FEMALE && (underwear.gender == MALE))
-					underwear_overlay = wear_female_version(underwear.icon_state, underwear.icon, BODY_LAYER, FEMALE_UNIFORM_FULL)
+					underwear_overlay = mutable_appearance(wear_female_version(underwear.icon_state, underwear.icon, FEMALE_UNIFORM_FULL), layer = -BODY_LAYER)
 				else
 					underwear_overlay = mutable_appearance(underwear.icon, underwear.icon_state, -BODY_LAYER)
 				if(!underwear.use_static)
@@ -507,9 +507,9 @@ GLOBAL_LIST_EMPTY(features_by_species)
 			if(undershirt)
 				var/mutable_appearance/working_shirt
 				if(species_human.dna.species.sexes && species_human.physique == FEMALE)
-					working_shirt = wear_female_version(undershirt.icon_state, undershirt.icon, BODY_LAYER)
+					working_shirt = mutable_appearance(wear_female_version(undershirt.icon_state, undershirt.icon), layer = -BODY_LAYER)
 				else
-					working_shirt = mutable_appearance(undershirt.icon, undershirt.icon_state, -BODY_LAYER)
+					working_shirt = mutable_appearance(undershirt.icon, undershirt.icon_state, layer = -BODY_LAYER)
 				standing += working_shirt
 
 		if(species_human.socks && species_human.num_legs >= 2 && !(species_human.bodyshape & BODYSHAPE_DIGITIGRADE))
@@ -629,7 +629,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
 			if(H.num_legs < 2)
 				return FALSE
 			if((H.bodyshape & BODYSHAPE_DIGITIGRADE) && !(I.item_flags & IGNORE_DIGITIGRADE))
-				if(!(I.supports_variations_flags & (CLOTHING_DIGITIGRADE_VARIATION|CLOTHING_DIGITIGRADE_VARIATION_NO_NEW_ICON)))
+				if(!(I.supports_variations_flags & DIGITIGRADE_VARIATIONS))
 					if(!disable_warning)
 						to_chat(H, span_warning("The footwear around here isn't compatible with your feet!"))
 					return FALSE
@@ -863,14 +863,32 @@ GLOBAL_LIST_EMPTY(features_by_species)
 	var/damage = rand(attacking_bodypart.unarmed_damage_low, attacking_bodypart.unarmed_damage_high)
 	var/limb_accuracy = attacking_bodypart.unarmed_effectiveness
 
+	// In a brawl, drunkenness can make you swing more wildly and with more force, and thus catch your opponent off guard, but it could also totally throw you off if you're too intoxicated
+	// But god is it going to make you sick moving too much while drunk
+	var/user_drunkenness = user.get_drunk_amount()
+
+	if(user_drunkenness && HAS_TRAIT(user, TRAIT_DRUNKEN_BRAWLER)) // Drunken brawlers only need to be intoxicated, doesn't matter how much
+		limb_accuracy += clamp((user.getFireLoss() + user.getBruteLoss()) * 0.5, 10, 200)
+		damage += damage * clamp((user.getFireLoss() + user.getBruteLoss()) / 100, 0.3, 2) //Basically a multiplier of how much extra damage you get based on how low your health is overall. A floor of about a 30%.
+		var/drunken_martial_descriptor = pick("Drunken", "Intoxicated", "Tipsy", "Inebriated", "Delirious", "Day-Drinker's", "Firegut", "Blackout")
+		atk_verb = "[drunken_martial_descriptor] [atk_verb]"
+
+	else if(user_drunkenness > 30 && user_drunkenness < 60)
+		limb_accuracy *= 1.2
+		user.adjust_disgust(2)
+
+	else if(user_drunkenness >= 60)
+		limb_accuracy = -limb_accuracy // good luck landing a punch now, you drunk fuck
+		user.adjust_disgust(5)
+
 	var/obj/item/bodypart/affecting = target.get_bodypart(target.get_random_valid_zone(user.zone_selected))
 
 	var/miss_chance = 100//calculate the odds that a punch misses entirely. considers stamina and brute damage of the puncher. punches miss by default to prevent weird cases
 	if(attacking_bodypart.unarmed_damage_low)
-		if((target.body_position == LYING_DOWN) || HAS_TRAIT(user, TRAIT_PERFECT_ATTACKER) || staggered) //kicks and attacks against staggered targets never miss (provided your species deals more than 0 damage)
+		if((target.body_position == LYING_DOWN) || HAS_TRAIT(user, TRAIT_PERFECT_ATTACKER) || staggered || user_drunkenness && HAS_TRAIT(user, TRAIT_DRUNKEN_BRAWLER)) //kicks and attacks against staggered targets never miss (provided your species deals more than 0 damage). Drunken brawlers while drunk also don't miss
 			miss_chance = 0
 		else
-			miss_chance = clamp(UNARMED_MISS_CHANCE_BASE - limb_accuracy + user.getStaminaLoss() + (user.getBruteLoss()*0.5), 0, UNARMED_MISS_CHANCE_MAX) //Limb miss chance + various damage. capped at 80 so there is at least a chance to land a hit.
+			miss_chance = clamp(UNARMED_MISS_CHANCE_BASE - limb_accuracy + (user.getFireLoss()*0.5 + user.getBruteLoss()*0.5), 0, UNARMED_MISS_CHANCE_MAX) //Limb miss chance + various damage. capped at 80 so there is at least a chance to land a hit.
 
 	if(!damage || !affecting || prob(miss_chance))//future-proofing for species that have 0 damage/weird cases where no zone is targeted
 		playsound(target.loc, attacking_bodypart.unarmed_miss_sound, 25, TRUE, -1)
@@ -881,6 +899,20 @@ GLOBAL_LIST_EMPTY(features_by_species)
 		return FALSE
 
 	var/armor_block = target.run_armor_check(affecting, MELEE)
+
+	// In a brawl, drunkenness is a boon if you're a bit drunk but not too much. Else you're easier to hit.
+	// But, generally, getting hit while drunk is probably a good way to start throwing up
+	var/target_drunkenness = target.get_drunk_amount()
+	if(target_drunkenness && HAS_TRAIT(target, TRAIT_DRUNKEN_BRAWLER)) // Drunken brawlers only need to be intoxicated, doesn't matter how much
+		armor_block += 20
+
+	else if(target_drunkenness > 30 && target_drunkenness < 60)
+		armor_block += 10
+		target.adjust_disgust(2)
+
+	else if(target_drunkenness >= 60)
+		armor_block *= 0.5
+		target.adjust_disgust(5)
 
 	playsound(target.loc, attacking_bodypart.unarmed_attack_sound, 25, TRUE, -1)
 
@@ -908,6 +940,65 @@ GLOBAL_LIST_EMPTY(features_by_species)
 		if(damage >= 9)
 			target.force_say()
 		log_combat(user, target, "punched")
+
+	// If our target is staggered and has sustained enough damage, we can apply a randomly determined status effect to inflict when we punch them.
+	// The effects are based on the punching effectiveness of our attacker. Some effects are not reachable by the average human, and require augmentation to reach or being a species with a heavy punch effectiveness.
+	// Or they're just drunk enough.
+	if(HAS_TRAIT(target, TRAIT_BRAWLING_KNOCKDOWN_BLOCKED) || target.stat == DEAD) //If our target is dead or has specailized armor, there is no way to inflict these effects.
+		return
+
+	// If our target is staggered, the target's armor, minus our limb effectiveness sets the minimum necessary amount of damage sustained to cause an effect. Minimum 40, max 200 for sanity reasons
+	if(staggered && (target.getFireLoss()*0.5 + target.getBruteLoss()*0.5) >= min(armor_block - limb_accuracy, 40, 200))
+		stagger_combo(user, target, atk_verb, limb_accuracy, armor_block)
+
+/// Handles the stagger combo effect of our punch. Follows the same logic as the above proc, target is our owner, user is our attacker.
+/datum/species/proc/stagger_combo(mob/living/carbon/human/user, mob/living/carbon/human/target, atk_verb = "hit", limb_accuracy = 0, armor_block = 0)
+	// Randomly determines the effects of our punch. Limb accuracy is a bonus, armor block is a defense
+	var/roll_them_bones = rand(-20, 20) + limb_accuracy - armor_block
+
+	switch(roll_them_bones)
+		if (-INFINITY to 0) //Mostly a gimmie, this one just keeps them staggered briefly
+			target.adjust_staggered_up_to(1 SECONDS, 10 SECONDS)
+			target.visible_message(span_warning("[user]'s [atk_verb] briefly winds [target]!"), \
+				span_warning("You are briefly winded by [user]'s [atk_verb]!"), span_hear("You hear a thud!"), COMBAT_MESSAGE_RANGE, user)
+			to_chat(user, span_warning("Your [atk_verb] briefly winds [target]!"))
+
+		if (1 to 10)
+			target.adjust_eye_blur_up_to(5 SECONDS, 10 SECONDS)
+			target.visible_message(span_warning("[user]'s [atk_verb] hits [target] so hard, their eyes water! Ouch!"), \
+				span_warning("You are hit viciously by [user]'s [atk_verb], and your eyes begin to water!"), span_hear("You hear a thud!"), COMBAT_MESSAGE_RANGE, user)
+			to_chat(user, span_warning("Your [atk_verb] causes [target] to tear up!"))
+
+		if (11 to 30)
+			target.adjust_dizzy_up_to(5 SECONDS, 10 SECONDS)
+			target.adjust_eye_blur_up_to(5 SECONDS, 10 SECONDS)
+			target.adjust_confusion_up_to(5 SECONDS, 10 SECONDS)
+			target.visible_message(span_warning("[user]'s [atk_verb] hits [target] so hard, they are sent reeling in agony! Damn!"), \
+				span_warning("You are hit viciously by [user]'s [atk_verb], and everything becomes a dizzying blur!"), span_hear("You hear a thud!"), COMBAT_MESSAGE_RANGE, user)
+			to_chat(user, span_warning("Your [atk_verb] causes [target] to go stumbling about in a confuzed daze!"))
+
+		if(31 to 40)
+			target.adjust_dizzy_up_to(5 SECONDS, 10 SECONDS)
+			target.adjust_confusion_up_to(5 SECONDS, 10 SECONDS)
+			target.adjust_temp_blindness_up_to(5 SECONDS, 10 SECONDS)
+			target.visible_message(span_warning("[user]'s [atk_verb] hits [target] so hard, they are sent reeling blindly in agony! Goddamn!"), \
+				span_warning("You are hit viciously by [user]'s [atk_verb], and everything becomes a dizzying, blinding blur!"), span_hear("You hear a thud!"), COMBAT_MESSAGE_RANGE, user)
+			to_chat(user, span_warning("Your [atk_verb] causes [target] to go stumbling about in a confuzed, blind daze!"))
+
+		if (41 to 45)
+			target.apply_effect(4 SECONDS, EFFECT_KNOCKDOWN, armor_block)
+			target.visible_message(span_warning("[user]'s [atk_verb] hits [target] so hard, you knock them off their feet! Holy shit!"), \
+				span_warning("You are hit viciously by [user]'s [atk_verb] and sent toppling head over heels!"), span_hear("You hear a sickening thud!"), COMBAT_MESSAGE_RANGE, user)
+			to_chat(user, span_warning("Your [atk_verb] lands, and you send [target] sailing off their feet!"))
+
+		if (46 to INFINITY)
+			target.apply_effect(4 SECONDS, EFFECT_KNOCKDOWN, armor_block)
+			var/obj/item/bodypart/affecting = target.get_bodypart(target.get_random_valid_zone(user.zone_selected))
+			target.apply_damage(5, BRUTE, affecting, armor_block, wound_bonus = limb_accuracy * 2) //Mostly for the crunchy wounding effect than actually doing damage
+			target.visible_message(span_warning("[user]'s [atk_verb] hits [target] so hard, you hit them off their feet with a loud crunch! Fucking hell!"), \
+				span_warning("You are hit viciously by [user]'s [atk_verb], and suddenly feel an overwhelming pain as you topple head over heels!"), span_hear("You hear a sickening crack and a loud thud!"), COMBAT_MESSAGE_RANGE, user)
+			to_chat(user, span_warning("Your [atk_verb] lands, and [target] is sent crashing to the floor with the immense force! Good god!"))
+
 
 /datum/species/proc/disarm(mob/living/carbon/human/user, mob/living/carbon/human/target, datum/martial_art/attacker_style)
 	if(user.body_position != STANDING_UP)
@@ -1340,6 +1431,14 @@ GLOBAL_LIST_EMPTY(features_by_species)
 
 /// Returns the species' cry sound.
 /datum/species/proc/get_cry_sound(mob/living/carbon/human/human)
+	return
+
+/// Returns the species' sigh sound.
+/datum/species/proc/get_sigh_sound(mob/living/carbon/human/human)
+	return
+
+/// Returns the species' sniff sound.
+/datum/species/proc/get_sniff_sound(mob/living/carbon/human/human)
 	return
 
 /// Returns the species' cough sound.

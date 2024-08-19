@@ -55,7 +55,7 @@
 	if(istype(target, /obj/machinery/door/firedoor) || istype(target, /obj/machinery/door/airlock))
 		var/obj/machinery/door/target_door = target
 		playsound(chassis, clampsound, 50, FALSE, -6)
-		target_door.try_to_crowbar(src, source)
+		target_door.try_to_crowbar(src, source, TRUE)
 		return ..()
 
 	if(isobj(target))
@@ -98,7 +98,7 @@
 			span_notice("[chassis] pushes you aside."))
 		return ..()
 
-	if(iscarbon(victim))//meme clamp here
+	if(iscarbon(victim) && killer_clamp)//meme clamp here
 		var/mob/living/carbon/carbon_victim = target
 		var/torn_off = FALSE
 		var/obj/item/bodypart/affected = carbon_victim.get_bodypart(BODY_ZONE_L_ARM)
@@ -120,7 +120,6 @@
 	if(isnull(victim)) //get gibbed stoopid
 		return ..()
 	victim.adjustOxyLoss(round(clamp_damage/2))
-	victim.updatehealth()
 	victim.visible_message(span_danger("[chassis] squeezes [victim]!"), \
 						span_userdanger("[chassis] squeezes you!"),\
 						span_hear("You hear something crack."))

@@ -1,0 +1,7 @@
+author: "JohnFulpWillard"
+delete-after: True
+changes:
+  - rscadd: "Added Taunting, a faster and cooldowned version of the Spin emote."
+  - balance: "Wizards blocking projectiles with Transparence and the bitrunner matrix skillchip now have a visible effect of deflecting the projectile."
+  - balance: "The bitrunner skillchip now uses taunt instead of flip."
+  - balance: "The style meter now uses taunting instead of flips and spins."

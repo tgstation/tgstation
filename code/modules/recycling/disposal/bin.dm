@@ -416,7 +416,7 @@
 	data["isai"] = HAS_AI_ACCESS(user)
 	return data
 
-/obj/machinery/disposal/bin/ui_act(action, params)
+/obj/machinery/disposal/bin/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if(.)
 		return
@@ -624,6 +624,12 @@
 	SIGNAL_HANDLER
 	if((shove_flags & SHOVE_KNOCKDOWN_BLOCKED) || !(shove_flags & SHOVE_BLOCKED))
 		return
+	var/cur_density = density
+	density = FALSE
+	if (!target.Move(get_turf(src), get_dir(target, src)))
+		density = cur_density
+		return
+	density = cur_density
 	target.Knockdown(SHOVE_KNOCKDOWN_SOLID)
 	target.forceMove(src)
 	target.visible_message(span_danger("[shover.name] shoves [target.name] into \the [src]!"),

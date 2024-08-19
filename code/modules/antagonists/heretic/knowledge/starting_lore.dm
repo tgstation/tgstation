@@ -1,5 +1,4 @@
 // Heretic starting knowledge.
-// Default heretic language is Ancient Greek, because, uh, they're like ancient and shit.
 
 /// Global list of all heretic knowledge that have route = PATH_START. List of PATHS.
 GLOBAL_LIST_INIT(heretic_start_knowledge, initialize_starting_knowledge())
@@ -310,20 +309,26 @@ GLOBAL_LIST_INIT(heretic_start_knowledge, initialize_starting_knowledge())
 	required_atoms = list()
 	research_tree_icon_path = 'icons/mob/actions/actions_animal.dmi'
 	research_tree_icon_state = "god_transmit"
+	/// amount of research points granted
+	var/reward = 5
 
 /datum/heretic_knowledge/feast_of_owls/can_be_invoked(datum/antagonist/heretic/invoker)
 	return !invoker.feast_of_owls
 
 /datum/heretic_knowledge/feast_of_owls/on_finished_recipe(mob/living/user, list/selected_atoms, turf/loc)
-	//amount of research points granted
-	var/reward = 5
 	var/alert = tgui_alert(user,"Do you really want to forsake your ascension? This action cannot be reverted.", "Feast of Owls", list("Yes I'm sure", "No"), 30 SECONDS)
-	if( alert != "Yes I'm sure")
+	if(alert != "Yes I'm sure" || QDELETED(user) || QDELETED(src) || get_dist(user, loc) > 2)
 		return FALSE
-	user.set_temp_blindness(reward SECONDS)
-	user.AdjustParalyzed(reward SECONDS)
-	user.playsound_local(get_turf(user), 'sound/ambience/antag/heretic/heretic_gain_intense.ogg', 100, FALSE, pressure_affected = FALSE, use_reverb = FALSE)
 	var/datum/antagonist/heretic/heretic_datum = IS_HERETIC(user)
+	if(QDELETED(heretic_datum) || heretic_datum.feast_of_owls)
+		return FALSE
+
+	. = TRUE
+
+	heretic_datum.feast_of_owls = TRUE
+	user.set_temp_blindness(reward * 1 SECONDS)
+	user.AdjustParalyzed(reward * 1 SECONDS)
+	user.playsound_local(get_turf(user), 'sound/ambience/antag/heretic/heretic_gain_intense.ogg', 100, FALSE, pressure_affected = FALSE, use_reverb = FALSE)
 	for(var/i in 1 to reward)
 		user.emote("scream")
 		playsound(loc, 'sound/items/eatfood.ogg', 100, TRUE)
@@ -331,7 +336,10 @@ GLOBAL_LIST_INIT(heretic_start_knowledge, initialize_starting_knowledge())
 		to_chat(user, span_danger("You feel something invisible tearing away at your very essence!"))
 		user.do_jitter_animation()
 		sleep(1 SECONDS)
-	heretic_datum.feast_of_owls = TRUE
+		if(QDELETED(user) || QDELETED(heretic_datum))
+			return FALSE
+
 	to_chat(user, span_danger(span_big("Your ambition is ravaged, but something powerful remains in its wake...")))
 	var/drain_message = pick(strings(HERETIC_INFLUENCE_FILE, "drain_message"))
 	to_chat(user, span_hypnophrase(span_big("[drain_message]")))
+	return .

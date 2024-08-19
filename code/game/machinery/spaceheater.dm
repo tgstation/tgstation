@@ -5,6 +5,7 @@
 #define BASE_HEATING_ENERGY (40 KILO JOULES)
 
 /obj/machinery/space_heater
+	SET_BASE_VISUAL_PIXEL(0, DEPTH_OFFSET)
 	anchored = FALSE
 	density = TRUE
 	interaction_flags_machine = INTERACT_MACHINE_WIRES_IF_OPEN | INTERACT_MACHINE_ALLOW_SILICON | INTERACT_MACHINE_OPEN
@@ -262,7 +263,7 @@
 		data["currentTemp"] = round(current_temperature - T0C, 1)
 	return data
 
-/obj/machinery/space_heater/ui_act(action, params)
+/obj/machinery/space_heater/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if(.)
 		return
@@ -387,7 +388,7 @@
 	.["beaker"] = beaker
 	.["currentTemp"] = beaker ? (round(beaker.reagents.chem_temp - T0C)) : "N/A"
 
-/obj/machinery/space_heater/improvised_chem_heater/ui_act(action, params)
+/obj/machinery/space_heater/improvised_chem_heater/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if(.)
 		return

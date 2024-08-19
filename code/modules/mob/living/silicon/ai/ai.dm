@@ -1,6 +1,7 @@
 #define CALL_BOT_COOLDOWN 900
 
 /mob/living/silicon/ai
+	SET_BASE_VISUAL_PIXEL(0, 0) // Needs a new sprite
 	name = "AI"
 	real_name = "AI"
 	icon = 'icons/mob/silicon/ai.dmi'
@@ -15,6 +16,7 @@
 	mob_size = MOB_SIZE_LARGE
 	radio = /obj/item/radio/headset/silicon/ai
 	can_buckle_to = FALSE
+	shadow_type = SHADOW_NONE
 	var/battery = 200 //emergency power if the AI's APC is off
 	var/list/network = list(CAMERANET_NETWORK_SS13)
 	var/obj/machinery/camera/current
@@ -181,7 +183,7 @@
 	RegisterSignal(ai_tracking_tool, COMSIG_TRACKABLE_TRACKING_TARGET, PROC_REF(on_track_target))
 	RegisterSignal(ai_tracking_tool, COMSIG_TRACKABLE_GLIDE_CHANGED, PROC_REF(tracked_glidesize_changed))
 
-	add_traits(list(TRAIT_PULL_BLOCKED, TRAIT_HANDS_BLOCKED), ROUNDSTART_TRAIT)
+	add_traits(list(TRAIT_PULL_BLOCKED, TRAIT_AI_ACCESS, TRAIT_HANDS_BLOCKED), INNATE_TRAIT)
 
 	alert_control = new(src, list(ALARM_ATMOS, ALARM_FIRE, ALARM_POWER, ALARM_CAMERA, ALARM_BURGLAR, ALARM_MOTION), list(z), camera_view = TRUE)
 	RegisterSignal(alert_control.listener, COMSIG_ALARM_LISTENER_TRIGGERED, PROC_REF(alarm_triggered))

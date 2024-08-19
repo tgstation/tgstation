@@ -1,4 +1,0 @@
-author: "00-Steven"
-delete-after: True
-changes:
-  - bugfix: "Clicking on a table in the lootpanel with an item in-hand tries to place it in the center again."

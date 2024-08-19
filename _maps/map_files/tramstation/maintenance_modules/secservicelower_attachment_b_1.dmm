@@ -20,7 +20,9 @@
 "w" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/closet/firecloset,
-/obj/effect/decal/cleanable/cobweb,
+/obj/effect/decal/cleanable/cobweb{
+	pixel_y = 24
+	},
 /turf/open/floor/iron/smooth,
 /area/station/maintenance/port/central)
 "C" = (

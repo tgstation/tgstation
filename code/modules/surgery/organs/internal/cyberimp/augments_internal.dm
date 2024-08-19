@@ -22,8 +22,6 @@
 /obj/item/organ/internal/cyberimp/brain
 	name = "cybernetic brain implant"
 	desc = "Injectors of extra sub-routines for the brain."
-	icon_state = "brain_implant"
-	implant_overlay = "brain_implant_overlay"
 	zone = BODY_ZONE_HEAD
 	w_class = WEIGHT_CLASS_TINY
 
@@ -39,9 +37,9 @@
 /obj/item/organ/internal/cyberimp/brain/anti_drop
 	name = "anti-drop implant"
 	desc = "This cybernetic brain implant will allow you to force your hand muscles to contract, preventing item dropping. Twitch ear to toggle."
+	icon_state = "brain_implant_antidrop"
 	var/active = FALSE
 	var/list/stored_items = list()
-	implant_color = "#DE7E00"
 	slot = ORGAN_SLOT_BRAIN_ANTIDROP
 	actions_types = list(/datum/action/item_action/organ_action/toggle)
 
@@ -99,9 +97,9 @@
 	stored_items -= source
 
 /obj/item/organ/internal/cyberimp/brain/anti_stun
-	name = "CNS Rebooter implant"
+	name = "CNS rebooter implant"
 	desc = "This implant will automatically give you back control over your central nervous system, reducing downtime when stunned."
-	implant_color = COLOR_YELLOW
+	icon_state = "brain_implant_rebooter"
 	slot = ORGAN_SLOT_BRAIN_ANTISTUN
 
 	var/static/list/signalCache = list(

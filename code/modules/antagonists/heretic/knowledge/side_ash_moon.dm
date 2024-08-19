@@ -40,7 +40,7 @@
 	curse_color = "#f19a9a"
 	cost = 1
 	route = PATH_SIDE
-	research_tree_icon_path = 'icons/ui_icons/antags/heretic/knowledge.dmi'
+	research_tree_icon_path = 'icons/ui/antags/heretic/knowledge.dmi'
 	research_tree_icon_state = "curse_paralysis"
 	depth = 8
 
@@ -82,12 +82,3 @@
 	route = PATH_SIDE
 	poll_ignore_define = POLL_IGNORE_ASH_SPIRIT
 	depth = 10
-
-/datum/heretic_knowledge/summon/ashy/cleanup_atoms(list/selected_atoms)
-	var/obj/item/bodypart/head/ritual_head = locate() in selected_atoms
-	if(!ritual_head)
-		CRASH("[type] required a head bodypart, yet did not have one in selected_atoms when it reached cleanup_atoms.")
-
-	// Spill out any brains or stuff before we delete it.
-	ritual_head.drop_organs()
-	return ..()

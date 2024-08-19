@@ -1,5 +1,5 @@
 /obj/item/seeds/shrub
-	name = "pack of shrub seeds"
+	name = "shrub seed pack"
 	desc = "These seeds grow into hedge shrubs."
 	icon_state = "seed-shrub"
 	species = "shrub"
@@ -34,7 +34,7 @@
 /obj/structure/hedge
 	name = "hedge"
 	desc = "A large bushy hedge."
-	icon = 'icons/obj/smooth_structures/hedge.dmi'
+	icon = 'icons/obj/structures/smooth/hedge.dmi'
 	icon_state = "hedge-0"
 	base_icon_state = "hedge"
 	smoothing_flags = SMOOTH_BITMASK

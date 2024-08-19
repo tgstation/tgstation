@@ -174,7 +174,7 @@
 		else
 			return SHUTTLE_CONSOLE_ERROR
 
-/obj/machinery/computer/shuttle/ui_act(action, params)
+/obj/machinery/computer/shuttle/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if(.)
 		return

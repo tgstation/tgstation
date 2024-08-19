@@ -1,6 +1,7 @@
 
 //Cleanbot
 /mob/living/basic/bot/cleanbot
+	SET_BASE_VISUAL_PIXEL(0, 8)
 	name = "\improper Cleanbot"
 	desc = "A little cleaning robot, he looks so excited!"
 	icon = 'icons/mob/silicon/aibots.dmi'
@@ -18,6 +19,8 @@
 	possessed_message = "You are a cleanbot! Clean the station to the best of your ability!"
 	ai_controller = /datum/ai_controller/basic_controller/bot/cleanbot
 	path_image_color = "#993299"
+	shadow_offset_x = 4
+	shadow_offset_y = 4
 	///the bucket used to build us.
 	var/obj/item/reagent_containers/cup/bucket/build_bucket
 	///Flags indicating what kind of cleanables we should scan for to set as our target to clean.
@@ -239,7 +242,8 @@
 // Actions received from TGUI
 /mob/living/basic/bot/cleanbot/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
-	if(. || (bot_access_flags & BOT_COVER_LOCKED) && !HAS_SILICON_ACCESS(ui.user))
+	var/mob/user = ui.user
+	if(. || (bot_access_flags & BOT_COVER_LOCKED) && !HAS_SILICON_ACCESS(user))
 		return
 
 	switch(action)

@@ -12,7 +12,7 @@
 		to_chat(user, "<a href='?src=[REF(user)];ai_take_control=[REF(src)]'>[span_userdanger("ASSUME DIRECT CONTROL?")]</a><br>")
 		return
 	examine(user)
-	if(length(return_drivers()) > 0)
+	if(length(return_occupants()) >= max_occupants)
 		to_chat(user, span_warning("This exosuit has a pilot and cannot be controlled."))
 		return
 	var/can_control_mech = FALSE
@@ -103,6 +103,7 @@
 	AI.controlled_equipment = src
 	AI.remote_control = src
 	AI.ShutOffDoomsdayDevice()
+	add_occupant(AI)
 	to_chat(AI, AI.can_dominate_mechs ? span_greenannounce("Takeover of [name] complete! You are now loaded onto the onboard computer. Do not attempt to leave the station sector!") :\
 		span_notice("You have been uploaded to a mech's onboard computer."))
 	to_chat(AI, "<span class='reallybig boldnotice'>Use Middle-Mouse or the action button in your HUD to toggle equipment safety. Clicks with safety enabled will pass AI commands.</span>")

@@ -39,6 +39,7 @@ I'd rather there be something than the clockwork ruin be entirely empty though s
 	death_sound = SFX_BODYFALL
 	footstep_type = FOOTSTEP_MOB_HEAVY
 	attack_action_types = list()
+	shadow_type = SHADOW_MEDIUM
 
 /mob/living/simple_animal/hostile/megafauna/clockwork_defender/Initialize(mapload)
 	. = ..()

@@ -33,6 +33,7 @@
 	bot_type = MULE_BOT
 	path_image_color = "#7F5200"
 	possessed_message = "You are a MULEbot! Do your best to make sure that packages get to their destination!"
+	shadow_type = SHADOW_LARGE
 
 	/// unique identifier in case there are multiple mulebots.
 	var/id
@@ -286,29 +287,30 @@
 	data["paiInserted"] = !!paicard
 	return data
 
-/mob/living/simple_animal/bot/mulebot/ui_act(action, params)
+/mob/living/simple_animal/bot/mulebot/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
-	if(. || (bot_cover_flags & BOT_COVER_LOCKED && !HAS_SILICON_ACCESS(usr)))
+	var/mob/user = ui.user
+	if(. || (bot_cover_flags & BOT_COVER_LOCKED && !HAS_SILICON_ACCESS(user)))
 		return
 
 	switch(action)
 		if("lock")
-			if(HAS_SILICON_ACCESS(usr))
+			if(HAS_SILICON_ACCESS(user))
 				bot_cover_flags ^= BOT_COVER_LOCKED
 				return TRUE
 		if("on")
 			if(bot_mode_flags & BOT_MODE_ON)
 				turn_off()
 			else if(bot_cover_flags & BOT_COVER_MAINTS_OPEN)
-				to_chat(usr, span_warning("[name]'s maintenance panel is open!"))
+				to_chat(user, span_warning("[name]'s maintenance panel is open!"))
 				return
 			else if(cell)
 				if(!turn_on())
-					to_chat(usr, span_warning("You can't switch on [src]!"))
+					to_chat(user, span_warning("You can't switch on [src]!"))
 					return
 			return TRUE
 		else
-			bot_control(action, usr, params) // Kill this later. // Kill PDAs in general please
+			bot_control(action, user, params) // Kill this later. // Kill PDAs in general please
 			return TRUE
 
 /mob/living/simple_animal/bot/mulebot/bot_control(command, mob/user, list/params = list(), pda = FALSE)
@@ -754,7 +756,6 @@
 	new /obj/item/stack/cable_coil/cut(Tsec)
 	if(cell)
 		cell.forceMove(Tsec)
-		cell.update_appearance()
 		cell = null
 
 	new /obj/effect/decal/cleanable/oil(loc)
