@@ -1,7 +1,5 @@
 /**
  * # The path of Cosmos.
- * Spell names are in this language: SUMERIAN
- * Both are related: Sumerian-Original-Primordial-Cosmic
  *
  * Goes as follows:
  *
@@ -285,7 +283,7 @@
 		text = "[generate_heretic_text()] A Star Gazer has arrived into the station, [user.real_name] has ascended! This station is the domain of the Cosmos! [generate_heretic_text()]",
 		title = "[generate_heretic_text()]",
 		sound = 'sound/ambience/antag/heretic/ascend_cosmic.ogg',
-		color_override = "purple",
+		color_override = "pink",
 	)
 	var/mob/living/basic/heretic_summon/star_gazer/star_gazer_mob = new /mob/living/basic/heretic_summon/star_gazer(loc)
 	star_gazer_mob.maxHealth = INFINITY

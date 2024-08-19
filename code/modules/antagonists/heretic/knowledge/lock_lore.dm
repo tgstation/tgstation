@@ -1,7 +1,5 @@
 /**
  * # The path of Lock.
- * Spell names are in this language: EGYPTIAN
- * Both are related: Egyptian-Mysteries-Secrets-Lock
  *
  * Goes as follows:
  *
@@ -243,7 +241,7 @@
 		text = "Delta-class dimensional anomaly detec[generate_heretic_text()] Reality rended, torn. Gates open, doors open, [user.real_name] has ascended! Fear the tide! [generate_heretic_text()]",
 		title = "[generate_heretic_text()]",
 		sound = 'sound/ambience/antag/heretic/ascend_knock.ogg',
-		color_override = "yellow",
+		color_override = "pink",
 	)
 
 	// buffs

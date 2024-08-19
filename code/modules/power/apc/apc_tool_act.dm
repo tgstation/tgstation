@@ -320,7 +320,6 @@
 		balloon_alert(user, "cell removed")
 		var/turf/user_turf = get_turf(user)
 		cell.forceMove(user_turf)
-		cell.update_appearance()
 		cell = null
 		charging = APC_NOT_CHARGING
 		update_appearance()

@@ -10390,14 +10390,12 @@
 /area/station/command/corporate_showroom)
 "czg" = (
 /obj/machinery/hydroponics/soil,
-/obj/effect/decal/cleanable/dirt,
 /obj/item/plant_analyzer,
 /obj/machinery/camera/directional/east{
 	c_tag = "Permabrig - Garden";
 	network = list("ss13","prison")
 	},
-/obj/effect/mapping_helpers/burnt_floor,
-/turf/open/floor/plating,
+/turf/open/misc/sandy_dirt,
 /area/station/security/prison/garden)
 "czi" = (
 /obj/effect/decal/cleanable/dirt,
@@ -19613,10 +19611,8 @@
 /area/station/engineering/atmos)
 "eQx" = (
 /obj/machinery/hydroponics/soil,
-/obj/effect/decal/cleanable/dirt,
 /obj/item/shovel/spade,
-/obj/effect/mapping_helpers/burnt_floor,
-/turf/open/floor/plating,
+/turf/open/misc/sandy_dirt,
 /area/station/security/prison/garden)
 "eQB" = (
 /obj/machinery/door/airlock/public/glass{
@@ -27561,10 +27557,8 @@
 "gLT" = (
 /obj/machinery/hydroponics/soil,
 /obj/item/cultivator,
-/obj/effect/decal/cleanable/dirt,
 /obj/structure/sign/warning/electric_shock/directional/west,
-/obj/effect/mapping_helpers/burnt_floor,
-/turf/open/floor/plating,
+/turf/open/misc/sandy_dirt,
 /area/station/security/prison/garden)
 "gMd" = (
 /obj/structure/window/reinforced/spawner/directional/west,
@@ -30877,23 +30871,10 @@
 /turf/open/floor/iron,
 /area/station/commons/vacant_room/commissary)
 "hHi" = (
-/obj/structure/closet/crate/hydroponics,
-/obj/item/paper/guides/jobs/hydroponics,
-/obj/item/seeds/onion,
-/obj/item/seeds/garlic,
-/obj/item/seeds/potato,
-/obj/item/seeds/tomato,
-/obj/item/seeds/carrot,
-/obj/item/seeds/grass,
-/obj/item/seeds/ambrosia,
-/obj/item/seeds/wheat,
-/obj/item/seeds/pumpkin,
-/obj/effect/spawner/random/contraband/prison,
 /obj/structure/window/spawner/directional/south,
-/obj/effect/decal/cleanable/dirt,
-/obj/item/seeds/tower,
 /obj/structure/sign/poster/official/random/directional/north,
-/turf/open/floor/iron,
+/obj/structure/water_source/puddle,
+/turf/open/misc/sandy_dirt,
 /area/station/security/prison/garden)
 "hHo" = (
 /obj/structure/disposalpipe/trunk,
@@ -59532,13 +59513,23 @@
 /area/station/service/chapel)
 "oWp" = (
 /obj/structure/window/spawner/directional/south,
-/obj/structure/sink/directional/south,
-/obj/structure/reagent_dispensers/watertank,
-/obj/item/reagent_containers/cup/watering_can,
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/cobweb,
 /obj/structure/cable,
 /obj/machinery/power/apc/auto_name/directional/west,
+/obj/structure/closet/crate/hydroponics,
+/obj/item/seeds/tower,
+/obj/effect/spawner/random/contraband/prison,
+/obj/item/seeds/pumpkin,
+/obj/item/seeds/wheat,
+/obj/item/seeds/ambrosia,
+/obj/item/seeds/grass,
+/obj/item/seeds/carrot,
+/obj/item/seeds/tomato,
+/obj/item/seeds/potato,
+/obj/item/seeds/garlic,
+/obj/item/seeds/onion,
+/obj/item/paper/guides/jobs/hydroponics,
 /turf/open/floor/iron,
 /area/station/security/prison/garden)
 "oWt" = (
@@ -78609,11 +78600,9 @@
 /area/station/command/corporate_showroom)
 "tGW" = (
 /obj/machinery/hydroponics/soil,
-/obj/effect/decal/cleanable/dirt,
 /obj/item/radio/intercom/directional/east,
-/obj/effect/mapping_helpers/burnt_floor,
 /obj/machinery/light/small/directional/east,
-/turf/open/floor/plating,
+/turf/open/misc/sandy_dirt,
 /area/station/security/prison/garden)
 "tHc" = (
 /obj/structure/table/wood/fancy,
@@ -79874,10 +79863,8 @@
 	dir = 1
 	},
 /obj/machinery/firealarm/directional/west,
-/obj/effect/turf_decal/tile/green{
-	dir = 8
-	},
-/turf/open/floor/iron,
+/obj/structure/water_source/puddle,
+/turf/open/misc/sandy_dirt,
 /area/station/service/hydroponics/garden)
 "tXe" = (
 /obj/effect/turf_decal/loading_area/red{
@@ -84678,6 +84665,7 @@
 /obj/machinery/hydroponics/constructable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/effect/turf_decal/tile/green,
+/obj/item/reagent_containers/cup/watering_can,
 /turf/open/floor/iron,
 /area/station/security/prison/garden)
 "veD" = (
@@ -90301,10 +90289,8 @@
 "wAt" = (
 /obj/machinery/hydroponics/soil,
 /obj/item/cultivator,
-/obj/effect/decal/cleanable/dirt,
 /obj/machinery/airalarm/directional/east,
-/obj/effect/mapping_helpers/burnt_floor,
-/turf/open/floor/plating,
+/turf/open/misc/sandy_dirt,
 /area/station/security/prison/garden)
 "wAz" = (
 /obj/structure/table/wood,
@@ -91828,11 +91814,9 @@
 /area/space)
 "wVy" = (
 /obj/machinery/hydroponics/soil,
-/obj/effect/decal/cleanable/dirt,
 /obj/machinery/light/small/directional/west,
-/obj/effect/mapping_helpers/burnt_floor,
 /obj/structure/sign/poster/contraband/ambrosia_vulgaris/directional/west,
-/turf/open/floor/plating,
+/turf/open/misc/sandy_dirt,
 /area/station/security/prison/garden)
 "wVJ" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{

@@ -1430,3 +1430,78 @@
   Y0SH1M4S73R:
   - admin: Admin lua scripting uses a new library that (probably) will not break when
       BYOND updates.
+2024-07-30:
+  13spacemen:
+  - balance: TTV bombs can be implanted into people's chest once again
+  AyIong:
+  - rscadd: Stat Panel now scales like a chat, depends on the font size. Defaults
+      from the chat font size, but you can separate it.
+  - refactor: Refactored Stat Panel styles and Byond skin theme applying. Stat Panel
+      now looks more like a TGUI
+  Bisar:
+  - bugfix: All mining mobs now properly listen to the signals sent by attackers and
+      will respond appropriately.
+  Gaxeer:
+  - refactor: replace some copypaste code for pod spawn to use `podspawn` proc instead
+  - code_imp: modify  `podspawn` proc to accept amount of item type to spawn in `spawn`
+      specification
+  Ghommie:
+  - qol: Aquariums start unanchored and don't autoconnect to plumbing. Their reproduction
+      prevention is also disabled by default.
+  - balance: Made it a tad easier to control the bait during the minigame. Buffed
+      the fishing skill. No fishing duds at all when using ANY bait.
+  - balance: Chasm Chrabs take less time to grow into Lobstrosities but need food
+      a bit more frequently.
+  - balance: '"Profound fisher" mobs will have less RNG-dependant time fishing.'
+  - bugfix: You can now ACTUALLY interact with other things while fishing if the fishing
+      rod isn't in your active hand.
+  - config: Added a config for specific gateway delays so locations like the beach
+      and the museum don't have to take 30 minutes to become available like the rest.
+  Jackriip:
+  - refactor: moves the create_all_lighting_objects proc to the lighting subsystem
+  KazooBard:
+  - rscadd: The heretic's ritual of knowledge no longer requires binoculars
+  - rscadd: Clipboards are craftable using a wood plank, an iron rod and wirecutters
+  Paxilmaniac:
+  - balance: The nukeops surplus smg, the pp-95, has been reworked into the Abielle
+      Smart-SMG. It performs nearly identically to the pp-95, however it's projectiles
+      get a slight homing ability towards whatever you click on.
+  - sound: New firing sounds for the surplus smg, credit to the m41 sound effects
+      from tgmc
+  - image: New sprites for the surplus smg, made by me
+  SmArtKar:
+  - bugfix: Fixed mapload circuit floors not drawing power and deconstructing circuit
+      floors not reducing power load
+  - bugfix: Projectile dampener, recycler and ninja stealth MOD modules now work properly
+  - bugfix: You can no longer tear peoples arms off with non-killer clamps
+  - bugfix: Mechs can no longer equip infinite amount of weapons
+  - bugfix: Mining MODsuits now can store everything that explorer suits can
+  Vekter:
+  - bugfix: Fixes an exploit that allowed players to open a Bag of Holding rift in
+      the Heretic dimension.
+  deathrobotpunch:
+  - qol: drones now have soap in their internal storage!
+  grungussuss:
+  - sound: leather, skins and cardboard have their own sound now
+  - bugfix: smuggler satchels will no longer spawn in space
+  - sound: added sniff sounds
+  - sound: added sigh sounds
+  grungussuss and Kayozz:
+  - sound: more maintenance ambience has been added
+  rroqc:
+  - bugfix: plants no longer select reagent genes they already have while cross pollinating
+  - code_imp: 'improves reagent cross pollination code
+
+      :cl:'
+2024-07-31:
+  Jacquerel:
+  - image: Big balls are now much rounder, to more easily slide down into a cannon.
+  SmArtKar:
+  - image: All implants have received a fresh coat of paint
+  rroqc:
+  - bugfix: 'fix a bug where botany reagents would dissapear from existing plants
+
+      :cl:'
+  thegrb93:
+  - bugfix: Fixes getting permanently hot or cold if wearing thermal insulation as
+      a lizard

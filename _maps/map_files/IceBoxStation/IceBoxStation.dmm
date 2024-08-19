@@ -9036,6 +9036,9 @@
 /obj/effect/turf_decal/tile/neutral/half/contrasted{
 	dir = 4
 	},
+/obj/effect/turf_decal/siding/wood{
+	dir = 4
+	},
 /turf/open/floor/iron,
 /area/station/service/hydroponics/garden)
 "cBG" = (
@@ -24772,10 +24775,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/visible,
 /turf/open/floor/plating,
 /area/station/maintenance/port/aft)
-"hto" = (
-/obj/structure/girder,
-/turf/closed/wall,
-/area/station/maintenance/starboard/aft)
 "htp" = (
 /obj/machinery/door/poddoor/preopen{
 	id = "xenobio2";
@@ -43794,6 +43793,7 @@
 /obj/structure/cable,
 /obj/machinery/power/apc/auto_name/directional/south,
 /obj/item/radio/intercom/directional/west,
+/obj/structure/reagent_dispensers/watertank,
 /turf/open/floor/iron,
 /area/station/service/hydroponics/garden)
 "nhT" = (
@@ -49552,6 +49552,10 @@
 /obj/effect/mapping_helpers/broken_floor,
 /turf/open/floor/wood,
 /area/station/maintenance/aft/lesser)
+"oNW" = (
+/obj/structure/water_source/puddle,
+/turf/open/floor/grass,
+/area/station/security/prison/garden)
 "oNX" = (
 /obj/machinery/airalarm/directional/west,
 /turf/open/floor/iron/dark,
@@ -52423,6 +52427,9 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
+/obj/effect/turf_decal/siding/wood{
+	dir = 1
+	},
 /turf/open/floor/iron/dark,
 /area/station/service/hydroponics/garden)
 "pGJ" = (
@@ -54284,10 +54291,10 @@
 /turf/open/floor/iron,
 /area/station/command/heads_quarters/qm)
 "qiT" = (
-/obj/structure/reagent_dispensers/watertank,
 /obj/effect/turf_decal/tile/green/anticorner/contrasted{
 	dir = 4
 	},
+/obj/item/kirbyplants/random,
 /turf/open/floor/iron/dark,
 /area/station/service/hydroponics/garden)
 "qjb" = (
@@ -73913,7 +73920,6 @@
 /turf/open/floor/iron/large,
 /area/station/command/heads_quarters/ce)
 "wcz" = (
-/obj/structure/sink/directional/south,
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4,
 /obj/effect/turf_decal/tile/green/half/contrasted{
 	dir = 1
@@ -77700,15 +77706,12 @@
 /turf/open/floor/carpet/blue,
 /area/station/hallway/secondary/entry)
 "xhg" = (
-/obj/effect/turf_decal/siding/wood{
-	dir = 1
-	},
 /obj/machinery/camera/directional/east{
 	c_tag = "Garden"
 	},
-/obj/item/kirbyplants/random,
 /obj/machinery/status_display/ai/directional/east,
-/turf/open/floor/iron/dark,
+/obj/structure/water_source/puddle,
+/turf/open/floor/grass,
 /area/station/service/hydroponics/garden)
 "xhk" = (
 /turf/open/floor/iron/dark,
@@ -167765,7 +167768,7 @@ jlF
 jNf
 dpC
 cGQ
-whr
+oNW
 nmr
 hVY
 gjq
@@ -168280,7 +168283,7 @@ jNf
 qIo
 tau
 dWK
-ozX
+whr
 hVY
 gjq
 gjq
@@ -259618,7 +259621,7 @@ lXi
 vzD
 vzD
 vzD
-hto
+vzD
 jOj
 vzD
 daT

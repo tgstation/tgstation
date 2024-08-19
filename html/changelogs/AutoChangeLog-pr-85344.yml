@@ -1,4 +1,0 @@
-author: "Bisar"
-delete-after: True
-changes:
-  - bugfix: "All mining mobs now properly listen to the signals sent by attackers and will respond appropriately."

@@ -10268,15 +10268,27 @@
 /area/station/service/theater)
 "dGs" = (
 /obj/structure/table/reinforced,
-/obj/item/storage/pill_bottle/epinephrine,
-/obj/item/stack/sheet/mineral/plasma{
-	pixel_y = 12
-	},
 /obj/effect/turf_decal/trimline/yellow/filled/line{
 	dir = 4
 	},
 /obj/effect/turf_decal/trimline/yellow/filled/mid_joiner{
 	dir = 4
+	},
+/obj/item/hand_labeler{
+	pixel_x = 3;
+	pixel_y = 5
+	},
+/obj/item/storage/pill_bottle/epinephrine{
+	pixel_x = -9;
+	pixel_y = 1
+	},
+/obj/item/stack/sheet/mineral/plasma{
+	pixel_y = 14;
+	pixel_x = 3
+	},
+/obj/item/hand_labeler_refill{
+	pixel_x = 10;
+	pixel_y = -2
 	},
 /turf/open/floor/iron/white/smooth_edge{
 	dir = 4
@@ -17276,6 +17288,7 @@
 /area/station/science/research)
 "ggl" = (
 /obj/machinery/camera/autoname/directional/west,
+/obj/structure/water_source/puddle,
 /turf/open/floor/grass,
 /area/station/service/hydroponics/garden)
 "ggu" = (
@@ -39047,6 +39060,10 @@
 /obj/effect/turf_decal/tile/dark_blue,
 /turf/open/floor/iron,
 /area/station/command/bridge)
+"nPw" = (
+/obj/structure/water_source/puddle,
+/turf/open/floor/grass,
+/area/station/security/prison/garden)
 "nPM" = (
 /obj/effect/turf_decal/trimline/yellow/filled/line{
 	dir = 4
@@ -82449,7 +82466,7 @@ iUF
 dUc
 xrb
 xrb
-dEG
+nPw
 dEG
 iqf
 cKn

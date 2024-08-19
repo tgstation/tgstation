@@ -48,6 +48,8 @@
 	breakouttime = 1 MINUTES
 	armor_type = /datum/armor/restraints_handcuffs
 	custom_price = PAYCHECK_COMMAND * 0.35
+	pickup_sound = 'sound/items/handcuffs_pick_up.ogg'
+	drop_sound = 'sound/items/handcuffs_drop.ogg'
 
 	///How long it takes to handcuff someone
 	var/handcuff_time = 4 SECONDS
@@ -55,6 +57,8 @@
 	var/handcuff_time_mod = 1
 	///Sound that plays when starting to put handcuffs on someone
 	var/cuffsound = 'sound/weapons/handcuffs.ogg'
+	///Sound that plays when restrain is successful
+	var/cuffsuccesssound = 'sound/items/handcuff_finish.ogg'
 	///If set, handcuffs will be destroyed on application and leave behind whatever this is set to.
 	var/trashtype = null
 	/// How strong the cuffs are. Weak cuffs can be broken with wirecutters or boxcutters.
@@ -120,6 +124,7 @@
 		return
 
 	apply_cuffs(victim, user, dispense = iscyborg(user))
+	playsound(loc, cuffsuccesssound, 30, TRUE, -2)
 
 	victim.visible_message(
 		span_notice("[user] handcuffs [victim]."),

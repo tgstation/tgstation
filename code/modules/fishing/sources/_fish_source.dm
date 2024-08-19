@@ -57,6 +57,11 @@ GLOBAL_LIST_INIT(specific_fish_icons, zebra_typecacheof(list(
 	var/explosive_malus = FALSE
 	/// If explosive_malus is true, this will be used to keep track of the turfs where an explosion happened for when we'll spawn the loot.
 	var/list/exploded_turfs
+	/// Mindless mobs that can fish will never pull up items on this list
+	var/static/list/profound_fisher_blacklist = typecacheof(list(
+		/mob/living/basic/mining/lobstrosity,
+		/obj/structure/closet/crate/necropolis/tendril,
+	))
 
 /datum/fish_source/New()
 	if(!PERFORM_ALL_TESTS(focus_only/fish_sources_tables))
@@ -276,6 +281,9 @@ GLOBAL_LIST(fishing_property_cache)
 
 	var/list/fish_list_properties = collect_fish_properties()
 
+
+	if(HAS_TRAIT(fisherman, TRAIT_PROFOUND_FISHER) && !fisherman.client)
+		final_table -= profound_fisher_blacklist
 	for(var/result in final_table)
 		final_table[result] *= rod.hook?.get_hook_bonus_multiplicative(result)
 		final_table[result] += rod.hook?.get_hook_bonus_additive(result)//Decide on order here so it can be multiplicative

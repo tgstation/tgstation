@@ -1,4 +1,0 @@
-author: "Ghommie"
-delete-after: True
-changes:
-  - config: "Added a config for specific gateway delays so locations like the beach and the museum don't have to take 30 minutes to become available like the rest."

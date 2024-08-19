@@ -25,6 +25,21 @@ plastic_drop.ogg - https://freesound.org/people/martian/sounds/338854/ , License
 } - edited by sadboysuss
 
 {
+gun_drop.ogg - FN FAL Rifle Load and Cock 01.mp3 by PNMCarrieRailfan -- https://freesound.org/s/682029/ -- License: Attribution NonCommercial 4.0
+gun_pick_up.ogg - FN FAL Rifle Unload and Cock.mp3 by PNMCarrieRailfan -- https://freesound.org/s/682031/ -- License: Attribution NonCommercial 4.0
+handcuffs_drop.ogg - handcuffs.ogg by kimuracarter -- https://freesound.org/s/528749/ -- License: Attribution 3.0
+handcuffs_pick_up.ogg - handcuffs.ogg by kimuracarter -- https://freesound.org/s/528749/ -- License: Attribution 3.0
+plastic_shield_drop.ogg - made by sadboysuss -- License: CC-by-SA
+plastic_shield_pick_up.ogg - made by sadboysuss -- License: CC-by-SA
+stun_baton_drop.ogg - Fn P90 Submachine Gun 5.7Mm. Mechan; Empty Mag Inserted Into And Pulled Out Slow And Various 02 by PNMCarrieRailfan -- https://freesound.org/s/682041/ -- License: Attribution NonCommercial 4.0
+stun_baton_pick_up.ogg - Fn P90 Submachine Gun 5.7Mm. Mechan; Empty Mag Inserted Into And Pulled Out Slow And Various 02 by PNMCarrieRailfan -- https://freesound.org/s/682041/ -- License: Attribution NonCommercial 4.0
+pepper_spray_drop.ogg - Spray Paint Shake Slow Five.wav by cbakos -- https://freesound.org/s/200376/ -- License: Creative Commons 0
+pepper_spray_pick_up.ogg - Spray Paint Shake Slow Five.wav by cbakos -- https://freesound.org/s/200376/ -- License: Creative Commons 0
+grenade_drop.ogg - made by sadboysuss -- License: CC-by-SA
+grenade_pick_up.ogg - made by sadboysuss -- License: CC-by-SA
+} - edited by sadboysuss
+
+{
 skin_drop.ogg - https://freesound.org/people/Crinkem/sounds/501015/ , License: CC4
 skin_pick_up.ogg - https://freesound.org/people/Crinkem/sounds/501015/ , License CC3
 cardboard_drop and cardboard_pick_up - https://freesound.org/people/newagesoup/sounds/364736/ , License CC0

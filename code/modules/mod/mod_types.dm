@@ -123,7 +123,7 @@
 	theme = /datum/mod_theme/mining
 	applied_core = /obj/item/mod/core/plasma
 	applied_modules = list(
-		/obj/item/mod/module/storage,
+		/obj/item/mod/module/storage/large_capacity,
 		/obj/item/mod/module/gps,
 		/obj/item/mod/module/orebag,
 		/obj/item/mod/module/clamp,

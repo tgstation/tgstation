@@ -1,5 +1,4 @@
 // Heretic starting knowledge.
-// Default heretic language is Ancient Greek, because, uh, they're like ancient and shit.
 
 /// Global list of all heretic knowledge that have route = PATH_START. List of PATHS.
 GLOBAL_LIST_INIT(heretic_start_knowledge, initialize_starting_knowledge())
