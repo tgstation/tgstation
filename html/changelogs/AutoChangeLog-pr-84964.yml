@@ -1,0 +1,5 @@
+author: "JohnFulpWillard"
+delete-after: True
+changes:
+  - bugfix: "Statues don't count as eyes to creatures."
+  - bugfix: "Human AIs and Admin ghosts no longer get kicked off of machines that aren't on cameranets."
