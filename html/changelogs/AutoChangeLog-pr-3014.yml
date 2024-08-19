@@ -1,0 +1,4 @@
+author: "Absolucy"
+delete-after: True
+changes:
+  - bugfix: "The Soft-Spoken quirk properly makes you speak softly again."
