@@ -83,15 +83,10 @@
 
 /datum/emote/flip/run_emote(mob/user, params , type_override, intentional)
 	. = ..()
-	user.SpinAnimation(HAS_TRAIT(user, TRAIT_SLOW_FLIP) ? FLIP_EMOTE_DURATION * 2 : FLIP_EMOTE_DURATION, 1)
+	user.SpinAnimation(FLIP_EMOTE_DURATION, 1)
 
 /datum/emote/flip/check_cooldown(mob/user, intentional)
-	var/slow_flipper = HAS_TRAIT(user, TRAIT_SLOW_FLIP)
-	if(slow_flipper)
-		cooldown *= 2
 	. = ..()
-	if(slow_flipper)
-		cooldown *= 0.5
 	if(.)
 		return
 	if(!can_run_emote(user, intentional=intentional))

@@ -89,7 +89,6 @@
 		/obj/item/trash/cnds = 1,
 		/obj/item/trash/syndi_cakes = 1,
 		/obj/item/trash/shrimp_chips = 1,
-		/obj/item/trash/waffles = 1,
 		/obj/item/trash/tray = 1,
 	)
 

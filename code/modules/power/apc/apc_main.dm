@@ -18,7 +18,7 @@
 	name = "area power controller"
 	desc = "A control terminal for the area's electrical systems."
 
-	icon = 'icons/obj/APC.dmi'
+	icon = 'icons/obj/machines/APC.dmi'
 	icon_state = "frame"
 	use_power = NO_POWER_USE
 	req_access = null

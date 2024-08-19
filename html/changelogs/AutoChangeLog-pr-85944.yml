@@ -1,0 +1,4 @@
+author: "SmArtKar"
+delete-after: True
+changes:
+  - balance: "Vomiting from disgust now removes 50 of it from you."

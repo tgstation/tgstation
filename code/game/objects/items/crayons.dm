@@ -458,6 +458,12 @@
 		if(RANDOM_ANY)
 			drawing = pick(all_drawables)
 
+	if(drawing in graffiti_large_h)
+		paint_mode = PAINT_LARGE_HORIZONTAL
+		text_buffer = ""
+	else
+		paint_mode = PAINT_NORMAL
+
 	var/istagger = HAS_TRAIT(user, TRAIT_TAGGER)
 	var/cost = all_drawables[drawing] || CRAYON_COST_DEFAULT
 	if(istype(target, /obj/item/canvas))
@@ -645,12 +651,37 @@
 	dye_color = DYE_BLACK
 
 /obj/item/toy/crayon/white
-	name = "white crayon"
+	name = "stick of chalk"
+	desc = "A stark-white stick of chalk."
 	icon_state = "crayonwhite"
 	paint_color = COLOR_WHITE
 	crayon_color = "white"
 	reagent_contents = list(/datum/reagent/consumable/nutriment = 0.5,  /datum/reagent/colorful_reagent/powder/white/crayon = 1.5)
 	dye_color = DYE_WHITE
+
+/obj/item/toy/crayon/white/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
+	/// Wherein, we draw a chalk body outline vaguely around the dead or "dead" mob
+	if(!ishuman(interacting_with) || user.combat_mode)
+		return ..()
+
+	var/mob/living/carbon/human/pwned_human = interacting_with
+
+	if(!(pwned_human.stat == DEAD || HAS_TRAIT(pwned_human, TRAIT_FAKEDEATH)))
+		balloon_alert_to_viewers("FEEDING TIME")
+		return ..()
+
+	balloon_alert_to_viewers("drawing outline...")
+	if(!do_after(user, DRAW_TIME, target = pwned_human, max_interact_count = 4))
+		return NONE
+	if(!use_charges(user, 1))
+		return NONE
+
+	var/decal_rotation = GET_LYING_ANGLE(pwned_human) - 90
+	var/obj/effect/decal/cleanable/crayon/chalk_line = new(get_turf(pwned_human), paint_color, "body", "chalk outline", decal_rotation, null, "A vaguely [pwned_human] shaped outline of a body.")
+	to_chat(user, span_notice("You draw a chalk outline around [pwned_human]."))
+	chalk_line.pixel_y = (pwned_human.pixel_y + pwned_human.pixel_z) + rand(-2, 2)
+	chalk_line.pixel_x = (pwned_human.pixel_x + pwned_human.pixel_w) + rand(-1, 1)
+	return ITEM_INTERACT_SUCCESS
 
 /obj/item/toy/crayon/mime
 	name = "mime crayon"
