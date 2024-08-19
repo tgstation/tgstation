@@ -965,7 +965,6 @@ ADMIN_VERB(cmd_controller_view_ui, R_SERVER|R_DEBUG, "Controller Overview", "Vie
 GLOBAL_LIST_INIT(cpu_values, new /list(CPU_SIZE))
 GLOBAL_LIST_INIT(avg_cpu_values, new /list(CPU_SIZE))
 GLOBAL_VAR_INIT(cpu_index, 1)
-GLOBAL_VAR_INIT(window_size, 16)
 
 /// Inserts our current world.cpu value into our rolling lists
 /// You should NEVER EVER call this as part of its job is to pull out the actual usage last tick instead of the moving average
@@ -977,7 +976,7 @@ GLOBAL_VAR_INIT(window_size, 16)
 
 	// We need to hook into the INSTANT we start our moving average so we can reconstruct gained/lost cpu values
 	var/lost_value = 0
-	lost_value = cpu_values[WRAP(cpu_index - GLOB.window_size, 1, CPU_SIZE + 1)]
+	lost_value = cpu_values[WRAP(cpu_index - WINDOW_SIZE, 1, CPU_SIZE + 1)]
 
 	// avg = (A + B + C + D) / 4
 	// old_avg = (A + B + C) / 3
@@ -991,7 +990,7 @@ GLOBAL_VAR_INIT(window_size, 16)
 	// C = (avg * 3 - old_avg * 3) + A
 
 	var/last_avg_cpu = GLOB.avg_cpu_values[WRAP(cpu_index - 1, 1, CPU_SIZE + 1)]
-	var/real_cpu = (avg_cpu * GLOB.window_size - last_avg_cpu * GLOB.last_window_size) + lost_value
+	var/real_cpu = (avg_cpu *WINDOW_SIZE - last_avg_cpu * WINDOW_SIZE) + lost_value
 
 	// cache for sonic speed
 	cpu_values[cpu_index] = real_cpu
