@@ -54,3 +54,10 @@
 	desc = "D'aww he's gonna save the world, yes he is!"
 	icon = 'monkestation/icons/obj/plushes.dmi'
 	icon_state = "knight"
+
+/obj/item/toy/plush/durrcell // https://www.twitch.tv/durrhurrdurr
+	name = "durrcell plush"
+	desc = "''Behold, Man''"
+	icon = 'monkestation/icons/obj/plushes.dmi'
+	icon_state = "durrcell"
+	squeak_override = list('monkestation/sound/voice/durrcell-squeak.ogg'=1)

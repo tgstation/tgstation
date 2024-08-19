@@ -217,3 +217,7 @@ GLOBAL_LIST_INIT(loadout_toys, generate_loadout_items(/datum/loadout_item/toys))
 	item_path = /obj/item/toy/plush/cirno_plush/ballin
 	requires_purchase = FALSE
 	ckeywhitelist = list("dwasint")
+
+/datum/loadout_item/toys/durrcell
+	name = "Durrcell Plush"
+	item_path = /obj/item/toy/plush/durrcell
