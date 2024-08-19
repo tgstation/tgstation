@@ -232,6 +232,8 @@ GLOBAL_LIST_INIT(message_modes_stat_limits, list(
 		return TRUE
 
 	if(HAS_TRAIT(src, TRAIT_SOFTSPOKEN) && !HAS_TRAIT(src, TRAIT_SIGN_LANG)) // MONKESTATION EDIT: Moved TRAIT_SOFTSPOKEN check to be after radios.
+		message_range = 1
+		spans |= SPAN_ITALICS
 		message_mods[WHISPER_MODE] = MODE_WHISPER
 
 	//No screams in space, unless you're next to someone.
