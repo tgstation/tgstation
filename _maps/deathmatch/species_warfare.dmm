@@ -54,8 +54,11 @@
 /turf/open/floor/iron/dark,
 /area/deathmatch)
 "cy" = (
-/obj/effect/spawner/structure/window/reinforced/indestructible,
-/turf/open/space/basic,
+/obj/effect/turf_decal/tile/blue/half/contrasted{
+	dir = 8
+	},
+/obj/machinery/cryo_cell,
+/turf/open/indestructible/white,
 /area/deathmatch)
 "dv" = (
 /obj/effect/turf_decal/tile/green/half/contrasted,
@@ -314,8 +317,7 @@
 /obj/effect/turf_decal/tile/blue/anticorner/contrasted{
 	dir = 1
 	},
-/obj/machinery/cryo_cell,
-/obj/machinery/light/cold/dim/directional/north,
+/obj/structure/closet/emcloset,
 /turf/open/indestructible/white,
 /area/deathmatch)
 "mO" = (
@@ -459,6 +461,9 @@
 	},
 /obj/item/restraints/legcuffs/beartrap{
 	pixel_x = 2
+	},
+/obj/item/key/janitor{
+	pixel_y = 10
 	},
 /turf/open/indestructible,
 /area/deathmatch)
@@ -626,10 +631,7 @@
 /obj/effect/turf_decal/tile/blue/half/contrasted{
 	dir = 8
 	},
-/obj/machinery/cryo_cell{
-	dir = 1
-	},
-/obj/machinery/light/cold/dim/directional/south,
+/obj/structure/closet/firecloset/full,
 /turf/open/indestructible/white,
 /area/deathmatch)
 "wM" = (
@@ -689,7 +691,6 @@
 	},
 /obj/effect/decal/cleanable/blood,
 /obj/machinery/light/cold/dim/directional/east,
-/obj/structure/closet/firecloset/full,
 /turf/open/indestructible/white,
 /area/deathmatch)
 "yU" = (
@@ -956,7 +957,9 @@
 /obj/effect/turf_decal/tile/blue/half/contrasted{
 	dir = 8
 	},
-/obj/machinery/atmospherics/pipe/smart/manifold4w/cyan/visible,
+/obj/machinery/cryo_cell{
+	dir = 1
+	},
 /turf/open/indestructible/white,
 /area/deathmatch)
 "Ia" = (
@@ -1003,7 +1006,6 @@
 /area/deathmatch)
 "IR" = (
 /obj/vehicle/ridden/janicart/upgraded,
-/obj/item/key/janitor,
 /obj/effect/decal/cleanable/dirt,
 /obj/item/stack/tile/iron/four{
 	pixel_y = 7;
@@ -1516,7 +1518,7 @@ vq
 zJ
 zJ
 mK
-Hy
+cy
 st
 dA
 Hy
@@ -2201,11 +2203,11 @@ is
 gH
 zJ
 zJ
-cy
-cy
+Za
+Za
 zJ
-cy
-cy
+Za
+Za
 zJ
 zJ
 jw
