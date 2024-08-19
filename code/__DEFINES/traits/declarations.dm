@@ -1216,6 +1216,12 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 /// Trait given to anything linked to, not necessarily allied to, the mansus
 #define TRAIT_MANSUS_TOUCHED "mansus_touched"
 
+
+// These traits are used in IS_X() as an OR, and is utilized for pseudoantags (such as deathmatch or domains) so they don't need to actually get antag status.
+// To specifically and only get the antag datum, GET_X() exists now.
+#define TRAIT_ACT_AS_CULTIST "act_as_cultist"
+#define TRAIT_ACT_AS_HERETIC "act_as_heretic"
+
 /// Appiled when wizard buy (/datum/spellbook_entry/perks/spalls_lottery) perk.
 /// Give 50/25% chance not spend a spellbook charge on 1/2 cost spell.
 /// Appiled it wizard can't refund any spells.
