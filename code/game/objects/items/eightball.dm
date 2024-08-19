@@ -63,7 +63,9 @@
 
 	shaking = TRUE
 
-	start_shaking(user)
+	if (!start_shaking(user))
+		return
+
 	if(do_after(user, shake_time))
 		say(get_answer())
 
@@ -73,7 +75,7 @@
 	shaking = FALSE
 
 /obj/item/toy/eightball/proc/start_shaking(mob/user)
-	return
+	return TRUE
 
 /obj/item/toy/eightball/proc/get_answer()
 	return pick(possible_answers)
@@ -152,12 +154,15 @@
 	// notify ghosts that someone's shaking a haunted eightball
 	// and inform them of the message, (hopefully a yes/no question)
 	selected_message = tgui_input_text(user, "What is your question?", "Eightball") || initial(selected_message)
+	if (!(src in user.held_items))
+		return FALSE
 	notify_ghosts(
 		"[user] is shaking [src], hoping to get an answer to \"[selected_message]\"",
 		source = src,
 		header = "Magic eightball",
 		click_interact = TRUE,
 	)
+	return TRUE
 
 /obj/item/toy/eightball/haunted/get_answer()
 	var/top_amount = 0
