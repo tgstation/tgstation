@@ -960,7 +960,7 @@ ADMIN_VERB(cmd_controller_view_ui, R_SERVER|R_DEBUG, "Controller Overview", "Vie
 /world/Tick()
 	_unroll_cpu_value()
 
-#define CPU_SIZE 6000
+#define CPU_SIZE 20
 #define WINDOW_SIZE 16
 GLOBAL_LIST_INIT(cpu_values, new /list(CPU_SIZE))
 GLOBAL_LIST_INIT(avg_cpu_values, new /list(CPU_SIZE))
