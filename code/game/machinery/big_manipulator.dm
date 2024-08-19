@@ -36,6 +36,12 @@
 	create_manipulator_hand()
 	RegisterSignal(manipulator_hand, COMSIG_QDELETING, PROC_REF(on_hand_qdel))
 	manipulator_lvl()
+	if(on)
+		press_on(FALSE)
+
+/obj/machinery/big_manipulator/examine(mob/user)
+	. = ..()
+	. += "You can change direction with alternative wrench using."
 
 /obj/machinery/big_manipulator/Destroy(force)
 	. = ..()
@@ -166,8 +172,11 @@
 	deconstruct(TRUE)
 
 /// Pre take and drop proc from [take and drop procs loop]:
-/// Check if we have item on take_turf to start take and drop loop
+/// Check if we can start take and drop loop
 /obj/machinery/big_manipulator/proc/is_work_check()
+	if(isclosedturf(drop_turf))
+		say("Output way blocked")
+		return FALSE
 	for(var/obj/item/take_item in take_turf.contents)
 		try_take_thing(take_turf, take_item)
 		break
@@ -182,6 +191,8 @@
 	if(!anchored)
 		return
 	if(QDELETED(source) || QDELETED(target))
+		return
+	if(!isturf(target.loc))
 		return
 	if(on_work)
 		return
@@ -208,7 +219,7 @@
 	do_rotate_animation(0)
 	addtimer(CALLBACK(src, PROC_REF(end_work)), working_speed)
 
-/// Fourth and last take and drop proc from take and drop procs loop:
+/// Fourth and last take and drop proc from [take and drop procs loop]:
 /// Finishes work and begins to look for a new item for [take and drop procs loop].
 /obj/machinery/big_manipulator/proc/end_work()
 	on_work = FALSE
@@ -222,6 +233,17 @@
 /// Rotates manipulator hand from 90 degrees to 180 or 0 if backward.
 /obj/machinery/big_manipulator/proc/finish_rotate_animation(backward)
 	animate(manipulator_hand, transform = matrix(180 * backward, MATRIX_ROTATE), working_speed*0.5)
+
+/// Proc call when we press on/off button
+/obj/machinery/big_manipulator/proc/press_on(pressed_by)
+	if(!is_work_check())
+		return
+	if(pressed_by)
+		on = !on
+	if(on)
+		RegisterSignal(take_turf, COMSIG_ATOM_ENTERED, PROC_REF(try_take_thing))
+	else
+		UnregisterSignal(take_turf, COMSIG_ATOM_ENTERED)
 
 /obj/machinery/big_manipulator/ui_interact(mob/user, datum/tgui/ui)
 	if(!anchored)
@@ -243,12 +265,7 @@
 		return
 	switch(action)
 		if("on")
-			on = !on
-			if(on)
-				RegisterSignal(take_turf, COMSIG_ATOM_ENTERED, PROC_REF(try_take_thing))
-			else
-				UnregisterSignal(take_turf, COMSIG_ATOM_ENTERED)
-			is_work_check()
+			press_on(TRUE)
 			return TRUE
 
 /// Manipulator hand. Effect we animate to show that the manipulator is working and moving something.
