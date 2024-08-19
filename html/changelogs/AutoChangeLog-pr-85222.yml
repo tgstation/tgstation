@@ -1,4 +1,0 @@
-author: "mc-oofert"
-delete-after: True
-changes:
-  - balance: "wheelchairs no longer double your movement cooldown if you moved diagonally"

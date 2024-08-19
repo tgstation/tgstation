@@ -1,4 +1,0 @@
-author: "san7890"
-delete-after: True
-changes:
-  - bugfix: "The area of the CentCom Z-Level dedicated to the Lobby Screen should look far better now, with a solid black title screen should the lobby image not load in/get deleted."

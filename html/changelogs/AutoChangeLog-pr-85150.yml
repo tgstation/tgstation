@@ -1,4 +1,0 @@
-author: "Rhials"
-delete-after: True
-changes:
-  - code_imp: "Radios/encryption keys now use a single variable for \"special\" frequencies. Please report if you experience any strangeness with accessing/being unable to access the Centcom, Syndicate, or Cyborg radio."

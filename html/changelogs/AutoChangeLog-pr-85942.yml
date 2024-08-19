@@ -1,4 +1,0 @@
-author: "Jacquerel"
-delete-after: True
-changes:
-  - bugfix: "Carp, bat, parrot, and dragon corpses no longer float in the air."
