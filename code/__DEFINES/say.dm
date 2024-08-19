@@ -73,6 +73,7 @@
 #define SPAN_TAPE_RECORDER "tape_recorder"
 #define SPAN_HELIUM "small"
 #define SPAN_SOAPBOX "soapbox"
+#define SPAN_BOLD "bold" // monkestation addition
 
 //bitflag #defines for return value of the radio() proc.
 #define ITALICS (1<<0)
