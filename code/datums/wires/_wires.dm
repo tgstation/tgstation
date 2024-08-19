@@ -41,6 +41,9 @@
 	/// If every instance of these wires should be random. Prevents wires from showing up in station blueprints.
 	var/randomize = FALSE
 
+	/// The trait someone needs in order to see these wires
+	var/my_wire_trait = TRAIT_KNOW_ENGI_WIRES
+
 	/// Lazy assoc list of refs to mobs to refs to photos they have studied for wires
 	var/list/studied_photos
 
@@ -268,6 +271,10 @@
 			for(var/obj/item/photo/photo in user.held_items)
 				if(LAZYACCESS(studied_photos, REF(user.mind)) == REF(photo))
 					return TRUE
+
+	// If an engineer shouldn't know these wires, we can override this for another trait
+	if(HAS_TRAIT(user, my_wire_trait))
+		return TRUE
 
 	return FALSE
 

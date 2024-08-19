@@ -85,9 +85,3 @@
 			A.locked = !mend
 		if(WIRE_AI) // Disable AI control.
 			A.aidisabled = !mend
-
-/datum/wires/apc/can_reveal_wires(mob/user)
-	if(HAS_TRAIT(user, TRAIT_KNOW_ENGI_WIRES))
-		return TRUE
-
-	return ..()

@@ -3,6 +3,7 @@
 	randomize = TRUE // Only one wire, no need for blueprints
 	holder_type = /obj/item/clothing/neck/collar_bomb
 	wires = list(WIRE_ACTIVATE)
+	my_wire_trait = null
 
 /datum/wires/collar_bomb/interactable(mob/user)
 	. = ..()
@@ -27,6 +28,11 @@
 			triggerer = get_mob_by_key(assembly.fingerprintslast)
 	brian.investigate_log("has had their [collar] triggered [triggerer ? "by [user || assembly][assembly ? " last touched by triggerer" : ""]" : ""].", INVESTIGATE_DEATHS)
 	return ..()
+
+/datum/wires/collar_bomb/can_reveal_wires(mob/user)
+	return FALSE
+
+
 
 ///I'd rather not get people killed by EMP here.
 /datum/wires/collar_bomb/emp_pulse()

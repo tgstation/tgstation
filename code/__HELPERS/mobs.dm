@@ -778,6 +778,27 @@ GLOBAL_DATUM_INIT(dview_mob, /mob/dview, new)
 	. = view(range, GLOB.dview_mob)
 	GLOB.dview_mob.loc = null
 
+/proc/is_syndicate_affiliated(mob/suspect)
+	var/static/list/syndie_scum = list(
+		ROLE_TRAITOR,
+		ROLE_SYNDICATE,
+		ROLE_SYNDICATE_INFILTRATOR,
+		ROLE_SYNDICATE_ASSAULTBORG,
+		ROLE_SYNDICATE_CYBERSUN,
+		ROLE_SYNDICATE_CYBERSUN_CAPTAIN,
+		ROLE_SYNDICATE_MEDBORG,
+		ROLE_SPACE_SYNDICATE,
+		ROLE_LAVALAND_SYNDICATE,
+		ROLE_SLEEPER_AGENT,
+		ROLE_BATTLECRUISER_CAPTAIN,
+		ROLE_BATTLECRUISER_CREW,
+		ROLE_NUCLEAR_OPERATIVE,
+		ROLE_CONTRACTOR_SUPPORT
+	)
+	if(syndie_scum.Find(suspect?.mind?.special_role))
+		return TRUE
+	return FALSE
+
 /mob/dview
 	name = "INTERNAL DVIEW MOB"
 	invisibility = INVISIBILITY_ABSTRACT

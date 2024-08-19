@@ -2,10 +2,20 @@
 	var/duds_number = 2 // All "dud" wires cause an explosion when cut or pulsed
 	proper_name = "Explosive Device"
 	randomize = TRUE // Prevents wires from showing up on blueprints
+	my_wire_trait = null
 
 /datum/wires/explosive/New(atom/holder)
 	add_duds(duds_number) // Duds also explode here.
 	..()
+
+/datum/wires/explosive/can_reveal_wires(mob/user)
+	. = ..()
+	if (.)
+		return .
+	. = FALSE
+	if(is_syndicate_affiliated(user))
+		. = TRUE
+	return .
 
 /datum/wires/explosive/on_pulse(index)
 	explode()

@@ -1,6 +1,7 @@
 /datum/wires/mecha
 	holder_type = /obj/vehicle/sealed/mecha
 	proper_name = "Mecha Control"
+	my_wire_trait = TRAIT_KNOW_ROBO_WIRES
 
 /datum/wires/mecha/New(atom/holder)
 	wires = list(WIRE_IDSCAN, WIRE_DISARM, WIRE_ZAP, WIRE_OVERCLOCK, WIRE_LAUNCH)

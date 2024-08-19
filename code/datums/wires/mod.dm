@@ -1,6 +1,7 @@
 /datum/wires/mod
 	holder_type = /obj/item/mod/control
 	proper_name = "MOD control unit"
+	my_wire_trait = TRAIT_KNOW_ROBO_WIRES
 
 /datum/wires/mod/New(atom/holder)
 	wires = list(WIRE_HACK, WIRE_DISABLE, WIRE_SHOCK, WIRE_INTERFACE)

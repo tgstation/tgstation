@@ -2,6 +2,7 @@
 	holder_type = /obj/machinery/syndicatebomb
 	proper_name = "Syndicate Explosive Device"
 	randomize = TRUE
+	my_wire_trait = null
 
 /datum/wires/syndicatebomb/New(atom/holder)
 	wires = list(
@@ -105,6 +106,16 @@
 				B.update_appearance()
 				if(isliving(usr))
 					add_memory_in_range(B, 7, /datum/memory/bomb_defuse_success, protagonist = usr, antagonist = B, bomb_time_left = bomb_time_left)
+
+/datum/wires/syndicatebomb/can_reveal_wires(mob/user)
+	. = ..()
+	if(.)
+		return .
+	. = FALSE
+	if(is_syndicate_affiliated(user))
+		. = TRUE
+	return .
+
 
 /datum/wires/syndicatebomb/proc/tell_admins(obj/machinery/syndicatebomb/B)
 	var/turf/T = get_turf(B)
