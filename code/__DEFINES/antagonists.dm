@@ -172,7 +172,6 @@ GLOBAL_LIST_INIT(hijack_employers, list(
 	"Gone Postal",
 	"Tiger Cooperative Fanatic",
 	"Waffle Corporation Terrorist",
-	"The Ashen Forge Member",
 ))
 
 ///employers who hire agents to do a task and escape... or martyrdom. whatever
@@ -186,7 +185,6 @@ GLOBAL_LIST_INIT(normal_employers, list(
 	"Legal Trouble",
 	"MI13",
 	"Waffle Corporation",
-	"The Ashen Forge Member",
 ))
 
 ///employers for malfunctioning ais. they do not have sides, unlike traitors.
