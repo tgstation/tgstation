@@ -996,12 +996,9 @@ GLOBAL_VAR_INIT(cpu_index, 1)
 	cpu_values[cpu_index] = real_cpu
 	GLOB.avg_cpu_values[cpu_index] = avg_cpu
 	GLOB.cpu_index = WRAP(cpu_index + 1, 1, CPU_SIZE + 1)
-	if(GLOB.cpu_index == 2 || GLOB.cpu_index == 17)
-		CONSUME_UNTIL(500)
 
 /proc/update_glide_size()
 	var/list/cpu_values = GLOB.cpu_values
-	/*
 	var/sum = 0
 	var/non_zero = 0
 	#warn there's gotta be a better way then this, or at least a less shitty way
@@ -1024,9 +1021,9 @@ GLOBAL_VAR_INIT(cpu_index, 1)
 	var/final_average = trimmed_sum ? trimmed_sum / used : first_average
 	GLOB.glide_size_multiplier = min(100 / final_average, 1)
 	GLOB.glide_size_multi_error = max((final_average - 100) / 100 * world.tick_lag, 0)
-	*/
+
 	/// Gets the cpu value we finished the last tick with (since the index reads a step ahead)
-	var/last_cpu = 0 //cpu_values[WRAP(GLOB.cpu_index - 1, 1, CPU_SIZE + 1)]
+	var/last_cpu = cpu_values[WRAP(GLOB.cpu_index - 1, 1, CPU_SIZE + 1)]
 	var/error = max((last_cpu - 100) / 100 * world.tick_lag, 0)
 
 	for(var/atom/movable/trouble as anything in GLOB.gliding_atoms)
