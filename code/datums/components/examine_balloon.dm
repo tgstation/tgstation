@@ -13,6 +13,7 @@
 	var/draw_in_dirs = NORTH | EAST | WEST
 	/// Balloon holo that is actually displayed to players
 	var/obj/effect/abstract/balloon_hologram/balloon
+	/*
 
 /datum/component/examine_balloon/Initialize(pixel_y_offset = 28, pixel_y_offset_arrow = 16, size_upscaling = 1)
 	. = ..()
@@ -66,6 +67,7 @@
 
 	balloon.overlays = new_overlays
 	balloon.alpha = hologram_alpha
+*/
 
 /obj/effect/abstract/balloon_hologram
 	plane = EXAMINE_BALLOONS_PLANE

@@ -22,6 +22,7 @@
 	see_in_dark = 1e6
 	// A list of factions that this mob is currently in, for hostile mob targeting, amongst other things
 	faction = list(FACTION_NEUTRAL)
+	use_correction = TRUE
 	var/shift_to_open_context_menu = TRUE
 	/// The current client inhabiting this mob. Managed by login/logout
 	/// This exists so we can do cleanup in logout for occasions where a client was transfere rather then destroyed

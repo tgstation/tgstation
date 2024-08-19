@@ -83,6 +83,10 @@ GLOBAL_REAL(Master, /datum/controller/master)
 	/// How long to run our rolling usage averaging
 	var/rolling_usage_length = 5 SECONDS
 
+	var/spike_cpu = 0
+	var/sustain_chance = 100
+	var/sustain_cpu = 0
+
 /datum/controller/master/New()
 	if(!config)
 		config = new
@@ -566,6 +570,8 @@ ADMIN_VERB(cmd_controller_view_ui, R_SERVER|R_DEBUG, "Controller Overview", "Vie
 			AttemptProfileDump(CONFIG_GET(number/drift_profile_delay))
 		olddrift = newdrift
 
+		update_glide_size()
+
 		if (init_stage != init_stage_completed)
 			return MC_LOOP_RTN_NEWSTAGES
 		if (processing <= 0)
@@ -678,6 +684,14 @@ ADMIN_VERB(cmd_controller_view_ui, R_SERVER|R_DEBUG, "Controller Overview", "Vie
 #endif
 		CONSUME_UNTIL(overtime_target)
 #endif
+
+		if(sustain_cpu && prob(sustain_chance))
+			// avoids  byond sleeping the loop and causing the MC to infinistall
+			CONSUME_UNTIL(min(sustain_cpu, 10000))
+
+		if(spike_cpu)
+			CONSUME_UNTIL(min(spike_cpu, 10000))
+			spike_cpu = 0
 
 		if (init_stage != INITSTAGE_MAX)
 			current_ticklimit = TICK_LIMIT_RUNNING * 2
@@ -943,3 +957,72 @@ ADMIN_VERB(cmd_controller_view_ui, R_SERVER|R_DEBUG, "Controller Overview", "Vie
 	last_profiled = REALTIMEOFDAY
 	SSprofiler.DumpFile(allow_yield = FALSE)
 
+/world/Tick()
+	_unroll_cpu_value()
+
+#define CPU_SIZE 20
+GLOBAL_LIST_INIT(cpu_values, new /list(CPU_SIZE))
+GLOBAL_LIST_INIT(avg_cpu_values, new /list(CPU_SIZE))
+GLOBAL_VAR_INIT(cpu_index, 1)
+GLOBAL_VAR_INIT(window_size, 0)
+
+/// Inserts our current world.cpu value into our rolling lists
+/// You should NEVER EVER call this as part of its job is to pull out the actual usage last tick instead of the moving average
+/// and calling it would double insert, breaking said logic and fucking up any lag compensation that relies on the lists we manage
+/world/proc/_unroll_cpu_value()
+	var/avg_cpu = world.cpu
+	var/list/cpu_values = GLOB.cpu_values
+	var/cpu_index = GLOB.cpu_index
+
+	if(GLOB.window_size < 16)
+		GLOB.window_size += 1
+	// We need to hook into the INSTANT we start our moving average so we can reconstruct gained/lost cpu values
+	var/sum_of_past_reals = 0
+	// we average up to 16 but we need to go BACK 15 steps
+	for(var/i in 1 to GLOB.window_size - 1)
+		sum_of_past_reals += cpu_values[WRAP(cpu_index - i, 1, CPU_SIZE + 1)]
+
+	// avg = (A + B + C) / 3
+	// C = avg * 3 - (A + B)
+	var/real_cpu = (avg_cpu * GLOB.window_size) - sum_of_past_reals
+
+	// cache for sonic speed
+	cpu_values[cpu_index] = real_cpu
+	GLOB.avg_cpu_values[cpu_index] = world.cpu
+	GLOB.cpu_index = WRAP(cpu_index + 1, 1, CPU_SIZE + 1)
+
+/proc/update_glide_size()
+	var/list/cpu_values = GLOB.cpu_values
+	var/sum = 0
+	var/non_zero = 0
+	#warn there's gotta be a better way then this, or at least a less shitty way
+	for(var/value in cpu_values)
+		sum += max(value, 100)
+		if(value != 0)
+			non_zero += 1
+
+	var/first_average = non_zero ? sum / non_zero : 1
+	var/trimmed_sum = 0
+	var/used = 0
+	for(var/value in cpu_values)
+		if(!value)
+			continue
+		// If we deviate more then 60% away from the average, skip it
+		if(abs(1 - (max(value, 100) / first_average)) <= 0.3)
+			trimmed_sum += max(value, 100)
+			used += 1
+
+	var/final_average = trimmed_sum ? trimmed_sum / used : first_average
+	GLOB.glide_size_multiplier = min(100 / final_average, 1)
+	GLOB.glide_size_multi_error = max((final_average - 100) / 100 * world.tick_lag, 0)
+
+	/// Gets the cpu value we finished the last tick with (since the index reads a step ahead)
+	var/last_cpu = cpu_values[WRAP(GLOB.cpu_index - 1, 1, CPU_SIZE + 1)]
+	var/error = max((last_cpu - 100) / 100 * world.tick_lag, 0)
+
+	for(var/atom/movable/trouble as anything in GLOB.gliding_atoms)
+		if(world.time >= trouble.glide_stopping_time || QDELETED(trouble))
+			GLOB.gliding_atoms -= trouble
+			trouble.glide_tracking = FALSE
+			continue
+		trouble.account_for_glide_error(error)

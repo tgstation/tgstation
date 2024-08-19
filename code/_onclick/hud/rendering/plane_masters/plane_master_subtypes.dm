@@ -585,5 +585,5 @@
 	documentation = "The balloons that appear above objects (often wallmounts) when holding shift."
 	plane = EXAMINE_BALLOONS_PLANE
 	appearance_flags = PLANE_MASTER|NO_CLIENT_COLOR
-	render_relay_planes = list(RENDER_PLANE_GAME_WORLD)
+	render_relay_planes = list(RENDER_PLANE_NON_GAME)
 	alpha = 0
