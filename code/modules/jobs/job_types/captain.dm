@@ -10,6 +10,7 @@
 	spawn_positions = 1
 	supervisors = "Nanotrasen officials and Space Law"
 	req_admin_notify = 1
+	minimal_player_age = 2
 	exp_granted_type = EXP_TYPE_CREW
 	config_tag = "CAPTAIN"
 
