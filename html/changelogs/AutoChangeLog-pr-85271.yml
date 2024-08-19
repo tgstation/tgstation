@@ -1,6 +1,0 @@
-author: "Ghommie"
-delete-after: True
-changes:
-  - rscadd: "Added a bluespace fish case to the advanced fishing node."
-  - balance: "Fish cases will keep a fish from getting hungrier or ready to reproduce, while also healing it up to 65% health."
-  - balance: "Examining a fish with zero fishing skill whatsoever won't give a reading on its size and weight. Conversely, examining one with the skill leveled two times will give general information on if it's starving, sick, hungry, or dead."
