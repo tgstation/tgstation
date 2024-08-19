@@ -44,10 +44,12 @@ GLOBAL_LIST_EMPTY(active_alternate_appearances)
 /// Wrapper for applying this alt hud to the passed mob (if they should see it)
 /datum/atom_hud/alternate_appearance/proc/apply_to_new_mob(mob/applying_to)
 	if(mobShouldSee(applying_to))
-		show_to(applying_to)
+		if(!hud_users_all_z_levels[applying_to])
+			show_to(applying_to)
 		return TRUE
 	return FALSE
 
+/// Checks if the passed mob should be seeing this hud
 /datum/atom_hud/alternate_appearance/proc/mobShouldSee(mob/M)
 	return FALSE
 
@@ -57,9 +59,10 @@ GLOBAL_LIST_EMPTY(active_alternate_appearances)
 		return
 	track_mob(new_viewer)
 
+/// Registers some signals to track the mob's state to determine if they should be seeing the hud still
 /datum/atom_hud/alternate_appearance/proc/track_mob(mob/new_viewer)
 	SHOULD_CALL_PARENT(TRUE)
-	RegisterSignal(new_viewer, COMSIG_MOB_LOGIN, PROC_REF(check_hud), override = TRUE)
+	return
 
 /datum/atom_hud/alternate_appearance/hide_from(mob/former_viewer, absolute)
 	. = ..()
@@ -67,13 +70,16 @@ GLOBAL_LIST_EMPTY(active_alternate_appearances)
 		return
 	untrack_mob(former_viewer)
 
+/// Unregisters the signals that were tracking the mob's state
 /datum/atom_hud/alternate_appearance/proc/untrack_mob(mob/former_viewer)
 	SHOULD_CALL_PARENT(TRUE)
-	UnregisterSignal(former_viewer, COMSIG_MOB_LOGIN)
+	return
 
 /datum/atom_hud/alternate_appearance/proc/check_hud(mob/source)
 	SIGNAL_HANDLER
-	if(!mobShouldSee(source))
+	// Attempt to re-apply the hud entirely
+	if(!apply_to_new_mob(source))
+		// If that failed, probably shouldn't be seeing it at all, so nuke it
 		hide_from(source, absolute = TRUE)
 
 /datum/atom_hud/alternate_appearance/add_atom_to_hud(atom/A, image/I)
