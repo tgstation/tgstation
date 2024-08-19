@@ -231,6 +231,11 @@
 /obj/effect/turf_decal/stripes/corner{
 	dir = 4
 	},
+/obj/machinery/button/door/directional/east{
+	req_access = list("robotics");
+	name = "Mech Bay Shutters Control";
+	id = "mechbay"
+	},
 /turf/open/floor/iron/white/side{
 	dir = 8
 	},
@@ -24195,11 +24200,6 @@
 	id = "mechbay";
 	name = "Mech Bay Shutters"
 	},
-/obj/machinery/button/door/directional/north{
-	id = "mechbay";
-	name = "Mech Bay Shutters Control";
-	req_access = list("robotics")
-	},
 /turf/open/floor/catwalk_floor/iron_smooth,
 /area/station/science/robotics/mechbay)
 "iAH" = (
@@ -31360,6 +31360,7 @@
 /obj/effect/turf_decal/stripes/asteroid/end{
 	dir = 1
 	},
+/obj/structure/sign/poster/contraband/thunderdrome/directional/north,
 /turf/open/floor/circuit/green,
 /area/station/science/robotics/mechbay)
 "kYA" = (
@@ -37655,6 +37656,11 @@
 	},
 /obj/structure/reagent_dispensers/watertank,
 /obj/effect/mapping_helpers/broken_floor,
+/obj/machinery/button/door/directional/west{
+	req_access = list("robotics");
+	name = "Mech Bay Shutters Control";
+	id = "mechbay"
+	},
 /turf/open/floor/iron/smooth_large,
 /area/station/science/robotics/mechbay)
 "mYq" = (
