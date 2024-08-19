@@ -1,0 +1,6 @@
+author: "SmArtKar"
+delete-after: True
+changes:
+  - balance: "PACMANs now have significantly increased power output and take longer to consume a single sheet"
+  - balance: "Inducers can now be recharged with plasma"
+  - balance: "Inducers ordered from cargo now start with upgraded megacells instead of upgraded batteries"

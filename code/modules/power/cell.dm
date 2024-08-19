@@ -221,9 +221,6 @@
 	custom_materials = null
 	grind_results = null
 
-/obj/item/stock_parts/power_store/cell/inducer_supply
-	maxcharge = STANDARD_CELL_CHARGE * 5
-
 /obj/item/stock_parts/power_store/cell/ethereal
 	name = "ahelp it"
 	desc = "you sohuldn't see this"

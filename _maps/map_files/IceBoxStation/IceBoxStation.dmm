@@ -5756,7 +5756,6 @@
 	dir = 4
 	},
 /obj/effect/decal/cleanable/dirt,
-/obj/item/trash/waffles,
 /turf/open/floor/plating,
 /area/station/maintenance/port/aft)
 "bGm" = (
@@ -73375,6 +73374,7 @@
 /obj/structure/railing/corner{
 	dir = 8
 	},
+/obj/structure/closet/secure_closet/cytology,
 /turf/open/floor/iron/smooth_large,
 /area/station/science/cytology)
 "vvu" = (
@@ -82556,7 +82556,7 @@
 /area/station/medical/chemistry)
 "ycx" = (
 /obj/structure/railing,
-/obj/structure/closet/secure_closet/cytology,
+/obj/machinery/vending/cytopro,
 /turf/open/floor/iron/smooth_large,
 /area/station/science/cytology)
 "ycA" = (

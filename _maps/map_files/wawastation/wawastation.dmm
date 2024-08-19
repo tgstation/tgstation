@@ -13715,7 +13715,6 @@
 "eTu" = (
 /obj/effect/turf_decal/tile/neutral,
 /obj/structure/table,
-/obj/item/trash/waffles,
 /turf/open/floor/iron,
 /area/station/hallway/primary/central)
 "eTZ" = (
@@ -60729,6 +60728,7 @@
 /turf/open/floor/iron,
 /area/station/engineering/lobby)
 "vqN" = (
+/obj/machinery/vending/cytopro,
 /turf/open/floor/iron/dark/small,
 /area/station/science/cytology)
 "vqY" = (
