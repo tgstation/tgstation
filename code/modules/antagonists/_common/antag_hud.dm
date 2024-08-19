@@ -19,6 +19,8 @@ GLOBAL_LIST_EMPTY_TYPED(has_antagonist_huds, /datum/atom_hud/alternate_appearanc
 	return ..()
 
 /datum/atom_hud/alternate_appearance/basic/has_antagonist/mobShouldSee(mob/M)
+	if(add_ghost_version && isobserver(M))
+		return FALSE // use the ghost version instead
 	var/datum/team/antag_team = team_ref?.resolve()
 	if(!isnull(antag_team))
 		return !!(M.mind in antag_team.members)

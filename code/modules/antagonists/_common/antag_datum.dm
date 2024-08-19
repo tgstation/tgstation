@@ -331,13 +331,8 @@ GLOBAL_LIST_EMPTY(antagonists)
 	if(team)
 		team.remove_member(owner)
 	SEND_SIGNAL(owner, COMSIG_ANTAGONIST_REMOVED, src)
-
-	// Remove HUDs that they should no longer see
-	var/mob/living/current = owner.current
-	for (var/datum/atom_hud/alternate_appearance/basic/antag_hud as anything in GLOB.active_alternate_appearances)
-		if (!antag_hud.mobShouldSee(current))
-			antag_hud.hide_from(current, absolute = TRUE)
-
+	if(owner.current)
+		SEND_SIGNAL(owner.current, COMSIG_MOB_ANTAGONIST_REMOVED, src)
 	qdel(src)
 
 /**

@@ -45,9 +45,36 @@ GLOBAL_LIST_EMPTY(active_alternate_appearances)
 /datum/atom_hud/alternate_appearance/proc/apply_to_new_mob(mob/applying_to)
 	if(mobShouldSee(applying_to))
 		show_to(applying_to)
+		return TRUE
+	return FALSE
 
 /datum/atom_hud/alternate_appearance/proc/mobShouldSee(mob/M)
 	return FALSE
+
+/datum/atom_hud/alternate_appearance/show_to(mob/new_viewer)
+	. = ..()
+	if(!new_viewer)
+		return
+	track_mob(new_viewer)
+
+/datum/atom_hud/alternate_appearance/proc/track_mob(mob/new_viewer)
+	SHOULD_CALL_PARENT(TRUE)
+	RegisterSignal(new_viewer, COMSIG_MOB_LOGIN, PROC_REF(check_hud), override = TRUE)
+
+/datum/atom_hud/alternate_appearance/hide_from(mob/former_viewer, absolute)
+	. = ..()
+	if(!former_viewer || hud_atoms_all_z_levels[former_viewer] >= 1)
+		return
+	untrack_mob(former_viewer)
+
+/datum/atom_hud/alternate_appearance/proc/untrack_mob(mob/former_viewer)
+	SHOULD_CALL_PARENT(TRUE)
+	UnregisterSignal(former_viewer, COMSIG_MOB_LOGIN)
+
+/datum/atom_hud/alternate_appearance/proc/check_hud(mob/source)
+	SIGNAL_HANDLER
+	if(!mobShouldSee(source))
+		hide_from(source, absolute = TRUE)
 
 /datum/atom_hud/alternate_appearance/add_atom_to_hud(atom/A, image/I)
 	. = ..()
@@ -98,6 +125,24 @@ GLOBAL_LIST_EMPTY(active_alternate_appearances)
 	target = null
 	if(ghost_appearance)
 		QDEL_NULL(ghost_appearance)
+
+/datum/atom_hud/alternate_appearance/basic/track_mob(mob/new_viewer)
+	. = ..()
+	RegisterSignals(new_viewer, list(
+		COMSIG_MOB_ANTAGONIST_REMOVED,
+		COMSIG_MOB_GHOSTIZED,
+		COMSIG_MOB_MIND_TRANSFERRED_INTO,
+		COMSIG_MOB_MIND_TRANSFERRED_OUT_OF,
+	), PROC_REF(check_hud), override = TRUE)
+
+/datum/atom_hud/alternate_appearance/basic/untrack_mob(mob/former_viewer)
+	. = ..()
+	UnregisterSignal(former_viewer, list(
+		COMSIG_MOB_ANTAGONIST_REMOVED,
+		COMSIG_MOB_GHOSTIZED,
+		COMSIG_MOB_MIND_TRANSFERRED_INTO,
+		COMSIG_MOB_MIND_TRANSFERRED_OUT_OF,
+	))
 
 /datum/atom_hud/alternate_appearance/basic/add_atom_to_hud(atom/A)
 	LAZYINITLIST(A.hud_list)
