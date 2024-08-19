@@ -77715,12 +77715,6 @@
 /obj/effect/landmark/event_spawn,
 /turf/open/floor/iron,
 /area/station/command/bridge)
-"wLI" = (
-/obj/structure/flora/tree/pine/style_random,
-/obj/structure/marker_beacon/cerulean,
-/obj/effect/mapping_helpers/no_atoms_ontop,
-/turf/open/misc/asteroid/snow/icemoon,
-/area/icemoon/surface/outdoors/unexplored/rivers/no_monsters)
 "wLK" = (
 /obj/machinery/light/small/directional/north,
 /obj/structure/sign/warning/secure_area/directional/north,
@@ -269180,8 +269174,8 @@ wNO
 wNO
 wNO
 wNO
-wNO
-wLI
+bln
+fwx
 kDs
 kDs
 kDs
@@ -269437,8 +269431,8 @@ wNO
 wNO
 wNO
 wNO
-wNO
-wNO
+bln
+bln
 kDs
 kDs
 kDs
@@ -269694,8 +269688,8 @@ wNO
 wNO
 wNO
 wNO
-wNO
-wNO
+bln
+bln
 bln
 hHG
 hHG
