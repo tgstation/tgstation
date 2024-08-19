@@ -1,11 +1,8 @@
-#define LEANING_OFFSET 11
-
 /turf/closed/wall
 	name = "wall"
 	desc = "A huge chunk of iron used to separate rooms."
-	icon = 'icons/turf/walls/wall.dmi'
-	icon_state = "wall-0"
-	base_icon_state = "wall"
+	icon = 'icons/turf/walls/metal_wall.dmi'
+	icon_state = "0-2"
 	explosive_resistance = 1
 	rust_resistance = RUST_RESISTANCE_BASIC
 
@@ -17,7 +14,7 @@
 	flags_ricochet = RICOCHET_HARD
 
 	smoothing_flags = SMOOTH_BITMASK
-	smoothing_groups = SMOOTH_GROUP_WALLS + SMOOTH_GROUP_CLOSED_TURFS
+	smoothing_groups = SMOOTH_GROUP_WALLS + SMOOTH_GROUP_TALL_WALLS + SMOOTH_GROUP_CLOSED_TURFS
 	canSmoothWith = SMOOTH_GROUP_WALLS
 
 	rcd_memory = RCD_MEMORY_WALL
@@ -31,66 +28,10 @@
 	var/girder_type = /obj/structure/girder
 	/// A turf that will replace this turf when this turf is destroyed
 	var/decon_type
+	/// If we added a leaning component to ourselves
+	var/added_leaning = FALSE
 
 	var/list/dent_decals
-
-/turf/closed/wall/mouse_drop_receive(atom/dropping, mob/user, params)
-	if(dropping != user)
-		return
-	if(!iscarbon(dropping) && !iscyborg(dropping))
-		return
-	var/mob/living/leaner = dropping
-	if(leaner.incapacitated(IGNORE_RESTRAINTS) || leaner.stat != CONSCIOUS || HAS_TRAIT(leaner, TRAIT_NO_TRANSFORM))
-		return
-	if(!leaner.density || leaner.pulledby || leaner.buckled || !(leaner.mobility_flags & MOBILITY_STAND))
-		return
-	if(HAS_TRAIT_FROM(leaner, TRAIT_UNDENSE, LEANING_TRAIT))
-		return
-	var/turf/checked_turf = get_step(leaner, REVERSE_DIR(leaner.dir))
-	if(checked_turf != src)
-		return
-	leaner.start_leaning(src)
-
-/mob/living/proc/start_leaning(turf/closed/wall/wall)
-	var/new_y = base_pixel_y + pixel_y
-	var/new_x = base_pixel_x + pixel_x
-	switch(dir)
-		if(SOUTH)
-			new_y += LEANING_OFFSET
-		if(NORTH)
-			new_y -= LEANING_OFFSET
-		if(WEST)
-			new_x += LEANING_OFFSET
-		if(EAST)
-			new_x -= LEANING_OFFSET
-
-	animate(src, 0.2 SECONDS, pixel_x = new_x, pixel_y = new_y)
-	add_traits(list(TRAIT_UNDENSE, TRAIT_EXPANDED_FOV), LEANING_TRAIT)
-	visible_message(
-		span_notice("[src] leans against [wall]."),
-		span_notice("You lean against [wall]."),
-	)
-	RegisterSignals(src, list(
-		COMSIG_MOB_CLIENT_PRE_MOVE,
-		COMSIG_LIVING_DISARM_HIT,
-		COMSIG_LIVING_GET_PULLED,
-		COMSIG_MOVABLE_TELEPORTING,
-		COMSIG_ATOM_DIR_CHANGE,
-	), PROC_REF(stop_leaning))
-	update_fov()
-
-/mob/living/proc/stop_leaning()
-	SIGNAL_HANDLER
-	UnregisterSignal(src, list(
-		COMSIG_MOB_CLIENT_PRE_MOVE,
-		COMSIG_LIVING_DISARM_HIT,
-		COMSIG_LIVING_GET_PULLED,
-		COMSIG_MOVABLE_TELEPORTING,
-		COMSIG_ATOM_DIR_CHANGE,
-	))
-	animate(src, 0.2 SECONDS, pixel_x = base_pixel_x, pixel_y = base_pixel_y)
-	remove_traits(list(TRAIT_UNDENSE, TRAIT_EXPANDED_FOV), LEANING_TRAIT)
-	update_fov()
 
 /turf/closed/wall/Initialize(mapload)
 	. = ..()
@@ -107,6 +48,15 @@
 			underlay_appearance.icon_state = fixed_underlay["icon_state"]
 		fixed_underlay = string_assoc_list(fixed_underlay)
 		underlays += underlay_appearance
+
+/turf/closed/wall/mouse_drop_receive(atom/dropping, mob/user, params)
+	. = ..()
+	if (added_leaning)
+		return
+	/// For performance reasons and to cut down on init times we are "lazy-loading" the leaning component when someone drags their sprite onto us, and then calling dragging code again to trigger the component
+	AddComponent(/datum/component/leanable, 11)
+	added_leaning = TRUE
+	dropping.base_mouse_drop_handler(src, null, null, params)
 
 /turf/closed/wall/atom_destruction(damage_flag)
 	. = ..()
@@ -156,6 +106,9 @@
 	new sheet_type(src, sheet_amount)
 	if(girder_type)
 		new /obj/item/stack/sheet/iron(src)
+
+/turf/attacked_by(obj/item/attacking_item, mob/living/user)
+	return
 
 /turf/closed/wall/ex_act(severity, target)
 	if(target == src)
@@ -252,7 +205,7 @@
 
 	//the istype cascade has been spread among various procs for easy overriding
 	if(try_clean(W, user) || try_wallmount(W, user) || try_decon(W, user))
-		return
+		return TRUE
 
 	return ..()
 
@@ -302,6 +255,9 @@
 
 	return FALSE
 
+/turf/closed/wall/proc/try_damage(obj/item/attacking_item, mob/user, turf/user_turf)
+	return //by default walls dont work like this
+
 /turf/closed/wall/singularity_pull(S, current_size)
 	..()
 	wall_singularity_pull(current_size)
@@ -335,9 +291,9 @@
 	return FALSE
 
 /turf/closed/wall/rcd_act(mob/user, obj/item/construction/rcd/the_rcd, list/rcd_data)
-	switch(rcd_data["[RCD_DESIGN_MODE]"])
+	switch(rcd_data[RCD_DESIGN_MODE])
 		if(RCD_WALLFRAME)
-			var/obj/item/wallframe/wallmount = rcd_data["[RCD_DESIGN_PATH]"]
+			var/obj/item/wallframe/wallmount = rcd_data[RCD_DESIGN_PATH]
 			var/obj/item/wallframe/new_wallmount = new wallmount(user.drop_location())
 			return try_wallmount(new_wallmount, user, src)
 		if(RCD_DECONSTRUCT)
@@ -384,5 +340,3 @@
 /turf/closed/wall/Exited(atom/movable/gone, direction)
 	. = ..()
 	SEND_SIGNAL(gone, COMSIG_LIVING_WALL_EXITED, src)
-
-#undef LEANING_OFFSET

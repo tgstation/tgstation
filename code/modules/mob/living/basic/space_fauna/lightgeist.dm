@@ -42,6 +42,7 @@
 	maximum_survivable_temperature = 1500
 	obj_damage = 0
 	environment_smash = ENVIRONMENT_SMASH_NONE
+	shadow_type = SHADOW_SMALL
 
 	ai_controller = /datum/ai_controller/basic_controller/lightgeist
 

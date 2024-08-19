@@ -36,9 +36,9 @@
 	///reference to thr original icons
 	var/static/list/original_options = list(
 		"Color Pick" = icon(icon = 'icons/hud/radial.dmi', icon_state = "omni"),
-		"Glow Stick" = icon(icon = 'icons/obj/lighting.dmi', icon_state = "glowstick"),
+		"Glow Stick" = icon(icon = 'icons/obj/toys/toy.dmi', icon_state = "glowstick"),
 		"Deconstruct" = icon(icon = 'icons/obj/tools.dmi', icon_state = "wrench"),
-		"Light Fixture" = icon(icon = 'icons/obj/lighting.dmi', icon_state = "ltube"),
+		"Light Fixture" = icon(icon = 'icons/obj/service/janitor.dmi', icon_state = "tube"),
 	)
 	///will contain the original icons modified with the color choice
 	var/list/display_options = list()
@@ -166,7 +166,7 @@
 					return ITEM_INTERACT_BLOCKING
 				activate()
 				var/obj/machinery/light/L = new /obj/machinery/light(get_turf(winner))
-				L.setDir(get_dir(winner, interacting_with))
+				L.setDir(get_dir(interacting_with, winner))
 				L.color = color_choice
 				L.set_light_color(color_choice)
 				return ITEM_INTERACT_SUCCESS

@@ -32,7 +32,7 @@
 	desc = "This disk contains a program that lets you shapeshift into a lesser ashdrake, or a polar bear."
 
 /datum/orderable_item/bitrunning_tech/flip_skillchip
-	item_path = /obj/item/skillchip/matrix_flip
+	item_path = /obj/item/skillchip/matrix_taunt
 	cost_per_order = 2000
 
 /datum/orderable_item/bitrunning_tech/pka_mod

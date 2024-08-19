@@ -2,26 +2,26 @@
 	"meter": [
 		{
 			"type": "icon_state",
-			"icon_state": "pressure_off",
+			"icon_state": "meter_base",
 			"blend_mode": "overlay"
 		},
 		{
 			"type": "icon_state",
-			"icon_state": "meter_base",
+			"icon_state": "pressure_off",
 			"blend_mode": "overlay"
 		}
 	],
 	"meter0": [
 		{
 			"type": "icon_state",
-			"icon_state": "pressure0",
-			"blend_mode": "overlay",
-			"color_ids": [ 1 ]
+			"icon_state": "meter_base",
+			"blend_mode": "overlay"
 		},
 		{
 			"type": "icon_state",
-			"icon_state": "meter_base",
-			"blend_mode": "overlay"
+			"icon_state": "pressure0",
+			"blend_mode": "overlay",
+			"color_ids": [ 1 ]
 		},
 		{
 			"type": "icon_state",
@@ -32,14 +32,14 @@
 	"meter1_1": [
 		{
 			"type": "icon_state",
-			"icon_state": "pressure1_1",
-			"blend_mode": "overlay",
-			"color_ids": [ 1 ]
+			"icon_state": "meter_base",
+			"blend_mode": "overlay"
 		},
 		{
 			"type": "icon_state",
-			"icon_state": "meter_base",
-			"blend_mode": "overlay"
+			"icon_state": "pressure1_1",
+			"blend_mode": "overlay",
+			"color_ids": [ 1 ]
 		},
 		{
 			"type": "icon_state",
@@ -50,14 +50,14 @@
 	"meter1_2": [
 		{
 			"type": "icon_state",
-			"icon_state": "pressure1_2",
-			"blend_mode": "overlay",
-			"color_ids": [ 1 ]
+			"icon_state": "meter_base",
+			"blend_mode": "overlay"
 		},
 		{
 			"type": "icon_state",
-			"icon_state": "meter_base",
-			"blend_mode": "overlay"
+			"icon_state": "pressure1_2",
+			"blend_mode": "overlay",
+			"color_ids": [ 1 ]
 		},
 		{
 			"type": "icon_state",
@@ -68,14 +68,14 @@
 	"meter1_3": [
 		{
 			"type": "icon_state",
-			"icon_state": "pressure1_3",
-			"blend_mode": "overlay",
-			"color_ids": [ 1 ]
+			"icon_state": "meter_base",
+			"blend_mode": "overlay"
 		},
 		{
 			"type": "icon_state",
-			"icon_state": "meter_base",
-			"blend_mode": "overlay"
+			"icon_state": "pressure1_3",
+			"blend_mode": "overlay",
+			"color_ids": [ 1 ]
 		},
 		{
 			"type": "icon_state",
@@ -86,14 +86,14 @@
 	"meter1_4": [
 		{
 			"type": "icon_state",
-			"icon_state": "pressure1_4",
-			"blend_mode": "overlay",
-			"color_ids": [ 1 ]
+			"icon_state": "meter_base",
+			"blend_mode": "overlay"
 		},
 		{
 			"type": "icon_state",
-			"icon_state": "meter_base",
-			"blend_mode": "overlay"
+			"icon_state": "pressure1_4",
+			"blend_mode": "overlay",
+			"color_ids": [ 1 ]
 		},
 		{
 			"type": "icon_state",
@@ -104,14 +104,14 @@
 	"meter1_5": [
 		{
 			"type": "icon_state",
-			"icon_state": "pressure1_5",
-			"blend_mode": "overlay",
-			"color_ids": [ 1 ]
+			"icon_state": "meter_base",
+			"blend_mode": "overlay"
 		},
 		{
 			"type": "icon_state",
-			"icon_state": "meter_base",
-			"blend_mode": "overlay"
+			"icon_state": "pressure1_5",
+			"blend_mode": "overlay",
+			"color_ids": [ 1 ]
 		},
 		{
 			"type": "icon_state",
@@ -122,14 +122,14 @@
 	"meter1_6": [
 		{
 			"type": "icon_state",
-			"icon_state": "pressure1_6",
-			"blend_mode": "overlay",
-			"color_ids": [ 1 ]
+			"icon_state": "meter_base",
+			"blend_mode": "overlay"
 		},
 		{
 			"type": "icon_state",
-			"icon_state": "meter_base",
-			"blend_mode": "overlay"
+			"icon_state": "pressure1_6",
+			"blend_mode": "overlay",
+			"color_ids": [ 1 ]
 		},
 		{
 			"type": "icon_state",
@@ -140,14 +140,14 @@
 	"meter2_1": [
 		{
 			"type": "icon_state",
-			"icon_state": "pressure2_1",
-			"blend_mode": "overlay",
-			"color_ids": [ 1 ]
+			"icon_state": "meter_base",
+			"blend_mode": "overlay"
 		},
 		{
 			"type": "icon_state",
-			"icon_state": "meter_base",
-			"blend_mode": "overlay"
+			"icon_state": "pressure2_1",
+			"blend_mode": "overlay",
+			"color_ids": [ 1 ]
 		},
 		{
 			"type": "icon_state",
@@ -158,14 +158,14 @@
 	"meter2_2": [
 		{
 			"type": "icon_state",
-			"icon_state": "pressure2_2",
-			"blend_mode": "overlay",
-			"color_ids": [ 1 ]
+			"icon_state": "meter_base",
+			"blend_mode": "overlay"
 		},
 		{
 			"type": "icon_state",
-			"icon_state": "meter_base",
-			"blend_mode": "overlay"
+			"icon_state": "pressure2_2",
+			"blend_mode": "overlay",
+			"color_ids": [ 1 ]
 		},
 		{
 			"type": "icon_state",
@@ -176,14 +176,14 @@
 	"meter2_3": [
 		{
 			"type": "icon_state",
-			"icon_state": "pressure2_3",
-			"blend_mode": "overlay",
-			"color_ids": [ 1 ]
+			"icon_state": "meter_base",
+			"blend_mode": "overlay"
 		},
 		{
 			"type": "icon_state",
-			"icon_state": "meter_base",
-			"blend_mode": "overlay"
+			"icon_state": "pressure2_3",
+			"blend_mode": "overlay",
+			"color_ids": [ 1 ]
 		},
 		{
 			"type": "icon_state",
@@ -194,14 +194,14 @@
 	"meter2_4": [
 		{
 			"type": "icon_state",
-			"icon_state": "pressure2_4",
-			"blend_mode": "overlay",
-			"color_ids": [ 1 ]
+			"icon_state": "meter_base",
+			"blend_mode": "overlay"
 		},
 		{
 			"type": "icon_state",
-			"icon_state": "meter_base",
-			"blend_mode": "overlay"
+			"icon_state": "pressure2_4",
+			"blend_mode": "overlay",
+			"color_ids": [ 1 ]
 		},
 		{
 			"type": "icon_state",
@@ -212,14 +212,14 @@
 	"meter2_5": [
 		{
 			"type": "icon_state",
-			"icon_state": "pressure2_5",
-			"blend_mode": "overlay",
-			"color_ids": [ 1 ]
+			"icon_state": "meter_base",
+			"blend_mode": "overlay"
 		},
 		{
 			"type": "icon_state",
-			"icon_state": "meter_base",
-			"blend_mode": "overlay"
+			"icon_state": "pressure2_5",
+			"blend_mode": "overlay",
+			"color_ids": [ 1 ]
 		},
 		{
 			"type": "icon_state",
@@ -230,14 +230,14 @@
 	"meter2_6": [
 		{
 			"type": "icon_state",
-			"icon_state": "pressure2_6",
-			"blend_mode": "overlay",
-			"color_ids": [ 1 ]
+			"icon_state": "meter_base",
+			"blend_mode": "overlay"
 		},
 		{
 			"type": "icon_state",
-			"icon_state": "meter_base",
-			"blend_mode": "overlay"
+			"icon_state": "pressure2_6",
+			"blend_mode": "overlay",
+			"color_ids": [ 1 ]
 		},
 		{
 			"type": "icon_state",
@@ -248,14 +248,14 @@
 	"meter3_1": [
 		{
 			"type": "icon_state",
-			"icon_state": "pressure3_1",
-			"blend_mode": "overlay",
-			"color_ids": [ 1 ]
+			"icon_state": "meter_base",
+			"blend_mode": "overlay"
 		},
 		{
 			"type": "icon_state",
-			"icon_state": "meter_base",
-			"blend_mode": "overlay"
+			"icon_state": "pressure3_1",
+			"blend_mode": "overlay",
+			"color_ids": [ 1 ]
 		},
 		{
 			"type": "icon_state",
@@ -266,14 +266,14 @@
 	"meter3_2": [
 		{
 			"type": "icon_state",
-			"icon_state": "pressure3_2",
-			"blend_mode": "overlay",
-			"color_ids": [ 1 ]
+			"icon_state": "meter_base",
+			"blend_mode": "overlay"
 		},
 		{
 			"type": "icon_state",
-			"icon_state": "meter_base",
-			"blend_mode": "overlay"
+			"icon_state": "pressure3_2",
+			"blend_mode": "overlay",
+			"color_ids": [ 1 ]
 		},
 		{
 			"type": "icon_state",
@@ -284,14 +284,14 @@
 	"meter3_3": [
 		{
 			"type": "icon_state",
-			"icon_state": "pressure3_3",
-			"blend_mode": "overlay",
-			"color_ids": [ 1 ]
+			"icon_state": "meter_base",
+			"blend_mode": "overlay"
 		},
 		{
 			"type": "icon_state",
-			"icon_state": "meter_base",
-			"blend_mode": "overlay"
+			"icon_state": "pressure3_3",
+			"blend_mode": "overlay",
+			"color_ids": [ 1 ]
 		},
 		{
 			"type": "icon_state",
@@ -302,14 +302,14 @@
 	"meter3_4": [
 		{
 			"type": "icon_state",
-			"icon_state": "pressure3_4",
-			"blend_mode": "overlay",
-			"color_ids": [ 1 ]
+			"icon_state": "meter_base",
+			"blend_mode": "overlay"
 		},
 		{
 			"type": "icon_state",
-			"icon_state": "meter_base",
-			"blend_mode": "overlay"
+			"icon_state": "pressure3_4",
+			"blend_mode": "overlay",
+			"color_ids": [ 1 ]
 		},
 		{
 			"type": "icon_state",
@@ -320,14 +320,14 @@
 	"meter3_5": [
 		{
 			"type": "icon_state",
-			"icon_state": "pressure3_5",
-			"blend_mode": "overlay",
-			"color_ids": [ 1 ]
+			"icon_state": "meter_base",
+			"blend_mode": "overlay"
 		},
 		{
 			"type": "icon_state",
-			"icon_state": "meter_base",
-			"blend_mode": "overlay"
+			"icon_state": "pressure3_5",
+			"blend_mode": "overlay",
+			"color_ids": [ 1 ]
 		},
 		{
 			"type": "icon_state",
@@ -338,14 +338,14 @@
 	"meter3_6": [
 		{
 			"type": "icon_state",
-			"icon_state": "pressure3_6",
-			"blend_mode": "overlay",
-			"color_ids": [ 1 ]
+			"icon_state": "meter_base",
+			"blend_mode": "overlay"
 		},
 		{
 			"type": "icon_state",
-			"icon_state": "meter_base",
-			"blend_mode": "overlay"
+			"icon_state": "pressure3_6",
+			"blend_mode": "overlay",
+			"color_ids": [ 1 ]
 		},
 		{
 			"type": "icon_state",
@@ -356,14 +356,14 @@
 	"meter4": [
 		{
 			"type": "icon_state",
-			"icon_state": "pressure4",
-			"blend_mode": "overlay",
-			"color_ids": [ 1 ]
+			"icon_state": "meter_base",
+			"blend_mode": "overlay"
 		},
 		{
 			"type": "icon_state",
-			"icon_state": "meter_base",
-			"blend_mode": "overlay"
+			"icon_state": "pressure4",
+			"blend_mode": "overlay",
+			"color_ids": [ 1 ]
 		},
 		{
 			"type": "icon_state",

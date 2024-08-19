@@ -85,6 +85,14 @@
 	. = ..()
 	name = "extended [initial(language.name)] manual"
 
+/obj/item/language_manual/piratespeak
+	name = "\improper Captain Pete's Guide to Pirate Lingo"
+	icon_state = "book_pirate"
+	desc = "A book containing all the knowledge, jargon and buzzwords to speak like a true old salt."
+	language = /datum/language/piratespeak
+	flavour_text = "Blimey! I feel less of a landlubber now."
+	charges = 5
+
 // So drones can teach borgs and AI dronespeak. For best effect, combine with mother drone lawset.
 /obj/item/language_manual/dronespeak_manual
 	name = "dronespeak manual"
