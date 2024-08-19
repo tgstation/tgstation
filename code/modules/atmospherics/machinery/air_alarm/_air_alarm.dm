@@ -17,6 +17,8 @@
 	/// Current alert level of our air alarm.
 	/// [AIR_ALARM_ALERT_NONE], [AIR_ALARM_ALERT_MINOR], [AIR_ALARM_ALERT_SEVERE]
 	var/danger_level = AIR_ALARM_ALERT_NONE
+	/// Current alert level of the area of our air alarm.
+	var/area_danger = FALSE
 
 	/// Currently selected mode of the alarm. An instance of [/datum/air_alarm_mode].
 	var/datum/air_alarm_mode/selected_mode
@@ -236,7 +238,7 @@ WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/machinery/airalarm)
 	data["siliconUser"] = HAS_SILICON_ACCESS(user)
 	data["emagged"] = (obj_flags & EMAGGED ? 1 : 0)
 	data["dangerLevel"] = danger_level
-	data["atmosAlarm"] = !!my_area.active_alarms[ALARM_ATMOS]
+	data["atmosAlarm"] = !!area_danger
 	data["fireAlarm"] = my_area.fire
 	data["faultStatus"] = my_area.fault_status
 	data["faultLocation"] = my_area.fault_location
@@ -514,7 +516,7 @@ WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/machinery/airalarm)
 	var/color
 	if(danger_level == AIR_ALARM_ALERT_HAZARD)
 		color = "#FF0022" // red
-	else if(danger_level == AIR_ALARM_ALERT_WARNING || my_area.active_alarms[ALARM_ATMOS])
+	else if(danger_level == AIR_ALARM_ALERT_WARNING || area_danger)
 		color = "#FFAA00" // yellow
 	else
 		color = "#00FFCC" // teal
@@ -548,8 +550,7 @@ WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/machinery/airalarm)
 		return ..()
 
 	var/alert_level = danger_level
-	var/area/our_area = get_area(src)
-	if(our_area.active_alarms[ALARM_ATMOS])
+	if(area_danger)
 		alert_level = 2
 	. += mutable_appearance(icon, "light-[alert_level]")
 	. += emissive_appearance(icon, "light-[alert_level]", src, alpha)
@@ -566,6 +567,8 @@ WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/machinery/airalarm)
 
 	var/old_danger = danger_level
 	danger_level = AIR_ALARM_ALERT_NONE
+	var/old_area_danger = area_danger
+	area_danger = my_area.active_alarms[ALARM_ATMOS]
 
 	var/total_moles = environment.total_moles()
 	var/pressure = environment.return_pressure()
@@ -611,7 +614,7 @@ WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/machinery/airalarm)
 		alarm_manager.clear_alarm(ALARM_ATMOS)
 		warning_message = null
 
-	if(old_danger != danger_level)
+	if(old_danger != danger_level || old_area_danger != area_danger)
 		update_appearance()
 
 	selected_mode.replace(my_area, pressure)

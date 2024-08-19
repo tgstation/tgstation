@@ -58,6 +58,7 @@
 /turf/closed/indestructible/splashscreen
 	name = "Space Station 13"
 	desc = null
+	baseturfs = /turf/cordon
 	icon = 'icons/blanks/blank_title.png'
 	icon_state = ""
 	pixel_x = -64
@@ -98,21 +99,10 @@ INITIALIZE_IMMEDIATE(/turf/closed/indestructible/splashscreen)
 	desc = pick(strings(SPLASH_FILE, "splashes"))
 	return ..()
 
-/turf/closed/indestructible/start_area
-	name = null
-	desc = null
-	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
-	use_splitvis = FALSE
-	smoothing_flags = NONE
-	smoothing_groups = null
-	canSmoothWith = null
-
 /turf/closed/indestructible/reinforced
 	name = "reinforced wall"
 	desc = "A huge chunk of reinforced metal used to separate rooms. Effectively impervious to conventional methods of destruction."
-	icon = 'icons/turf/walls/riveted_wall.dmi'
-	smoothing_groups = SMOOTH_GROUP_WALLS + SMOOTH_GROUP_TALL_WALLS + SMOOTH_GROUP_CLOSED_TURFS
-	canSmoothWith = SMOOTH_GROUP_WALLS
+	icon = 'icons/turf/walls/reinforced_wall.dmi'
 
 /turf/closed/indestructible/reinforced/titanium
 	name = "reinforced titanium imitation wall"
