@@ -618,9 +618,14 @@
 		send_supply_pod_to_area(supply_pack_shielding.generate(null), /area/station/command/bridge, /obj/structure/closet/supplypod/centcompod)
 
 	// Let medical know resistence is futile
-	if (LAZYLEN(get_areas(/area/station/medical/virology)))
-		send_fax_to_area(new /obj/item/paper/fluff/radiation_nebula_virologist(), /area/station/medical/virology, "NT Virology Department", \
-		force = TRUE, force_pod_type = /obj/structure/closet/supplypod/centcompod)
+	if (/area/station/medical/virology in GLOB.areas_by_type)
+		send_fax_to_area(
+			new /obj/item/paper/fluff/radiation_nebula_virologist,
+			/area/station/medical/virology,
+			"NT Virology Department",
+			force = TRUE,
+			force_pod_type = /obj/structure/closet/supplypod/centcompod,
+		)
 
 	//Disables radstorms, they don't really make sense since we already have the nebula causing storms
 	var/datum/round_event_control/modified_event = locate(/datum/round_event_control/radiation_storm) in SSevents.control
