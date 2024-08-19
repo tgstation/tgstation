@@ -1,4 +1,0 @@
-author: "TwistedSilicon"
-delete-after: True
-changes:
-  - bugfix: "Clarkes will no longer become unable to dump ores upon picking a boulder up. Mine away."

@@ -362,8 +362,6 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_GUNFLIP "gunflip"
 /// Increases chance of getting special traumas, makes them harder to cure
 #define TRAIT_SPECIAL_TRAUMA_BOOST "special_trauma_boost"
-/// Doubles the duration and cooldown of a flip
-#define TRAIT_SLOW_FLIP "slow_flip"
 #define TRAIT_SPACEWALK "spacewalk"
 /// Sanity trait to keep track of when we're in hyperspace and add the appropriate element if we werent
 #define TRAIT_HYPERSPACED "hyperspaced"
@@ -677,6 +675,8 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 /// This movable atom has the explosive block element
 #define TRAIT_BLOCKING_EXPLOSIVES "blocking_explosives"
 
+///This mob is currently blocking a projectile.
+#define TRAIT_BLOCKING_PROJECTILES "blocking_projectiles"
 /// This turf contains something using split visiblity
 #define TRAIT_CONTAINS_SPLITVIS "contains_splitvis"
 
@@ -1059,6 +1059,13 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 /// things with this trait are treated as having no access in /atom/movable/proc/check_access(obj/item)
 #define TRAIT_ALWAYS_NO_ACCESS "alwaysnoaccess"
 
+///The entity has Silicon 'access', so is either a silicon, has an access wand, or is an admin ghost AI.
+///This is put on the mob, it is used on the client for Admins but they are the exception as they use `isAdminGhostAI`.
+#define TRAIT_SILICON_ACCESS "silicon_access_trait"
+///The entity has AI 'access', so is either an AI, has an access wand, or is an admin ghost AI. Used to block off regular Silicons from things.
+///This is put on the mob, it is used on the client for Admins but they are the exception as they use `isAdminGhostAI`.
+#define TRAIT_AI_ACCESS "ai_access_trait"
+
 ///Used by wearable_client_colour to determine whether the mob wants to have the colours of the screen affected by worn items (some still do regardless).
 #define TRAIT_SEE_WORN_COLOURS "see_worn_colour"
 
@@ -1208,6 +1215,12 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 
 /// Trait given to anything linked to, not necessarily allied to, the mansus
 #define TRAIT_MANSUS_TOUCHED "mansus_touched"
+
+
+// These traits are used in IS_X() as an OR, and is utilized for pseudoantags (such as deathmatch or domains) so they don't need to actually get antag status.
+// To specifically and only get the antag datum, GET_X() exists now.
+#define TRAIT_ACT_AS_CULTIST "act_as_cultist"
+#define TRAIT_ACT_AS_HERETIC "act_as_heretic"
 
 /// Appiled when wizard buy (/datum/spellbook_entry/perks/spalls_lottery) perk.
 /// Give 50/25% chance not spend a spellbook charge on 1/2 cost spell.
