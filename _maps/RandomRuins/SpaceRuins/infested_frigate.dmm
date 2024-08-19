@@ -562,7 +562,7 @@
 /obj/machinery/airalarm/directional/north,
 /obj/effect/mapping_helpers/airalarm/all_access,
 /obj/machinery/icecream_vat{
-	desc = "Waffle co. actually ordered these guys to steal one of these just to be sure."
+	desc = "Waffle Corp. actually ordered these guys to steal one of these just to be sure."
 	},
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/infested_frigate)

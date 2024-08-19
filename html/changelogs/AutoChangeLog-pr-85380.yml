@@ -1,5 +1,0 @@
-author: "Ghommie"
-delete-after: True
-changes:
-  - rscadd: "Carps, frogs and young lobstrosities now fear people wearing fishing hats! Adults and megacarp favour the 'fight' part of the fear reflex however."
-  - bugfix: "The hat stabilizer module now inherits the clothing traits of the attached hat."

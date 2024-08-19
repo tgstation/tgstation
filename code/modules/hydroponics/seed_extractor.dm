@@ -42,6 +42,7 @@
 	return seeds
 
 /obj/machinery/seed_extractor
+	SET_BASE_VISUAL_PIXEL(0, DEPTH_OFFSET)
 	name = "seed extractor"
 	desc = "Extracts and bags seeds from produce."
 	icon = 'icons/obj/service/hydroponics/equipment.dmi'

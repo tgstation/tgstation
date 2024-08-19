@@ -11,10 +11,12 @@
 		/obj/item/fish/zipzap = 7,
 		/obj/item/fish/clownfish/lube = 5,
 		/obj/item/fish/swordfish = 5,
+		/obj/structure/mystery_box/fishing = 1,
 	)
 	fish_counts = list(
 		/obj/item/fish/clownfish/lube = 2,
 		/obj/item/fish/swordfish = 2,
+		/obj/structure/mystery_box/fishing = 1,
 	)
 	fish_count_regen = list(
 		/obj/item/fish/clownfish/lube = 3 MINUTES,

@@ -1,0 +1,5 @@
+author: "Ghommie"
+delete-after: True
+changes:
+  - image: "Ported and adapted several food sprites from Aurora, Bay and one instance from Paradise -- Bacon, plant meat, slime meat, cutlets, crab meat, crab rangoon, bechamel sauce, cheese curd, waffles, chips, shrimp chips, cheesie honkers, space twinkie, jerky, peanuts bags, chocolate, boritos, syndicake, popcorn, pesto, tomato sauce, pineapple slice, pineapple salsa, bran request cereals and bronx bar have been resprited."
+  - rscdel: "Waffles no longer magically conjure a \"waffle tray\" trash item when eaten."

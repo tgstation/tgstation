@@ -1,4 +1,0 @@
-author: "Majkl-J"
-delete-after: True
-changes:
-  - bugfix: "Fixes the echolocation screen overlay not appearing with default arguments due to using the wrong icon state"

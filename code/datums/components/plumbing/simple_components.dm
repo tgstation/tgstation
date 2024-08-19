@@ -3,6 +3,9 @@
 /datum/component/plumbing/simple_demand
 	demand_connects = SOUTH
 
+/datum/component/plumbing/inverted_simple_demand
+	demand_connects = NORTH
+
 ///has one pipe output that only supplies. example is liquid pump and manual input pipe
 /datum/component/plumbing/simple_supply
 	supply_connects = SOUTH

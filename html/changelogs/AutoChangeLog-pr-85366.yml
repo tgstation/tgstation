@@ -1,7 +1,0 @@
-author: "MTandi"
-delete-after: True
-changes:
-  - qol: "smart fridge UI now groups items by type+name instead of just type"
-  - qol: "smart fridge UI now shows item names next to the images"
-  - qol: "smart fridge UI has a list view option (default for chem and viro versions)"
-  - bugfix: "fixed smart fridge stacking sounds when dispensing multiple items"

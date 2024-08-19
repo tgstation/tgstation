@@ -128,6 +128,8 @@ GLOBAL_VAR_INIT(sc_safecode5, "[rand(0,9)]")
  */
 /obj/structure/secure_safe/sc_ssafe
 	name = "Captain's secure safe"
+	
+WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/structure/secure_safe/sc_ssafe)
 
 /obj/structure/secure_safe/sc_ssafe/Initialize(mapload)
 	. = ..()

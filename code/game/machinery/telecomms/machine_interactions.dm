@@ -2,6 +2,7 @@
 // of basic interactions with the machines.
 
 /obj/machinery/telecomms
+	SET_BASE_VISUAL_PIXEL(0, DEPTH_OFFSET)
 	/// The current temporary frequency used to add new filtered frequencies
 	/// options.
 	var/tempfreq = FREQ_COMMON

@@ -1,5 +1,0 @@
-author: "Momo8289"
-delete-after: True
-changes:
-  - bugfix: "The charge indicators on power cells now work properly."
-  - code_imp: "Removed some now redundant power cell appearance updates"

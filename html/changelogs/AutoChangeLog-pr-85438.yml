@@ -1,4 +1,0 @@
-author: "Rhials"
-delete-after: True
-changes:
-  - rscadd: "Spies can now pick their own custom objectives, if they so choose."

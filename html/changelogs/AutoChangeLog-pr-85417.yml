@@ -1,4 +1,0 @@
-author: "carlarctg"
-delete-after: True
-changes:
-  - rscdel: "Revert \"Heretic spell invocations now use one dead language per path\""

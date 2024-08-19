@@ -1,6 +1,0 @@
-author: "MTandi"
-delete-after: True
-changes:
-  - bugfix: "Portable atmos machine circuit boards list correct components"
-  - bugfix: "Portable atmos machine circuit boards accept unwrenched fittings"
-  - bugfix: "Portable atmos machines are movable on construction"

@@ -1,5 +1,0 @@
-author: "SmArtKar"
-delete-after: True
-changes:
-  - qol: "You no longer goofily swap with others trying to move in the same direction as you if you're not faster than them"
-  - code_imp: "Moved mobswap check logic into a separate proc and made it more readable"

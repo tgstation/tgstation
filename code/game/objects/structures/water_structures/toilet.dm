@@ -1,7 +1,8 @@
 /obj/structure/toilet
+	SET_BASE_VISUAL_PIXEL(0, DEPTH_OFFSET)
 	name = "toilet"
 	desc = "The HT-451, a torque rotation-based, waste disposal unit for small matter. This one seems remarkably clean."
-	icon = 'icons/obj/watercloset.dmi'
+	icon = 'icons/obj/structures/watercloset.dmi'
 	icon_state = "toilet00" //The first number represents if the toilet lid is up, the second is if the cistern is open.
 	base_icon_state = "toilet"
 	density = FALSE
@@ -36,6 +37,7 @@
 	update_appearance(UPDATE_ICON)
 	if(mapload && SSmapping.level_trait(z, ZTRAIT_STATION))
 		AddElement(/datum/element/lazy_fishing_spot, /datum/fish_source/toilet)
+	AddElement(/datum/element/fish_safe_storage)
 	register_context()
 
 /obj/structure/toilet/add_context(atom/source, list/context, obj/item/held_item, mob/user)

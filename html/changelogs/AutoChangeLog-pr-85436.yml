@@ -1,7 +1,0 @@
-author: "LT3"
-delete-after: True
-changes:
-  - bugfix: "Scanner gate now detects items thrown through it"
-  - bugfix: "Scanner gate does not alarm for guns on players with mindshield"
-  - bugfix: "Scanner gate does not alarm for guns on players with weapons ID card access"
-  - sound: "Reduced volume of scanner gate alarm"
