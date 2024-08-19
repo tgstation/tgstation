@@ -232,3 +232,6 @@
   - bugfix: Bloodsucker ethereals, alongside heretics with rust healing, will no longer
       overcharge.
   - bugfix: Potential fix for crashes related to drinking sounds.
+2024-08-19:
+  MomoBerri:
+  - rscadd: new light subtypes for mappers
