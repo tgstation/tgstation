@@ -5756,6 +5756,7 @@
 	dir = 4
 	},
 /obj/effect/decal/cleanable/dirt,
+/obj/item/trash/waffles,
 /turf/open/floor/plating,
 /area/station/maintenance/port/aft)
 "bGm" = (
@@ -56205,9 +56206,6 @@
 	},
 /turf/open/floor/iron/dark/textured,
 /area/station/security/range)
-"qtv" = (
-/turf/open/misc/asteroid/snow/icemoon,
-/area/icemoon/surface/outdoors/unexplored/rivers/no_monsters)
 "qtw" = (
 /obj/machinery/door/airlock/security{
 	name = "Prison Forestry"
@@ -270718,7 +270716,7 @@ wNO
 tkU
 tkU
 tkU
-qtv
+bln
 hHG
 hHG
 hHG
