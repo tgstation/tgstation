@@ -151,7 +151,7 @@
 
 /datum/element/elevation_core/proc/on_initialized_on(turf/source, atom/movable/spawned)
 	SIGNAL_HANDLER
-	if(isliving(spawned) && isturf(spawned.loc))
+	if(isliving(spawned) && !HAS_TRAIT(spawned, TRAIT_ON_ELEVATED_SURFACE))
 		on_entered(entered = spawned)
 
 /datum/element/elevation_core/proc/on_exited(turf/source, atom/movable/gone)
