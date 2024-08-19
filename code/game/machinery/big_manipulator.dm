@@ -248,6 +248,7 @@
 /obj/machinery/big_manipulator/ui_interact(mob/user, datum/tgui/ui)
 	if(!anchored)
 		to_chat(user, span_warning("[src] isn't attached to the ground!"))
+		ui?.close()
 		return
 	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
