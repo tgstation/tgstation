@@ -26,7 +26,7 @@
 	if(SPT_PROB(3.5, seconds_per_tick))
 		affected_mob.emote(pick("twitch","drool","moan","giggle"))
 	if(SPT_PROB(volume, seconds_per_tick))
-		for(var/mob/living/broski in view())
+		for(var/mob/living/broski in view(7, affected_mob))
 			if(broski.faction)
 				var/chill_like_that = affected_mob.faction_check_atom(broski)
 				//Oh shit, you didn't know I was chill like that?
@@ -216,6 +216,7 @@
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 	addiction_types = list(/datum/addiction/stimulants = 12) //4.8 per 2 seconds
 	metabolized_traits = list(TRAIT_STIMULATED, TRAIT_BATON_RESISTANCE)
+	reagent_interactions = list(/datum/reagent/medicine/neurine, /datum/reagent/medicine/mannitol)
 
 /datum/reagent/drug/methamphetamine/on_new(data)
 	. = ..()
@@ -262,7 +263,7 @@
 		var/datum/reagent/medicine/neurine/purged_neurine = interacting_reagent
 		//You can't use staccato neurine dosing to hard counter meth brain damage
 		purged_neurine.initial_bdamage = affected_mob.get_organ_loss(ORGAN_SLOT_BRAIN)
-		affected_mob.reagents.remove_reagent(interacting_reagent)
+		affected_mob.reagents.remove_reagent(interacting_reagent.type, interacting_reagent.volume)
 	else
 		//Explicitly specify source here for readability
 		//How much mannitol plus how much meth
@@ -280,14 +281,12 @@
 			)
 			to_chat(affected_mob, span_notice(pick(warning_signs)))
 			var/bad_interaction_affect = round(bad_interaction_chance/10) * pick(1, 2)
-			switch (rand(1,3))
+			switch (rand(1,4))
 				if(1)
 					affected_mob.adjustToxLoss(bad_interaction_affect)
 				if(2)
 					var/affected_organ = pick(ORGAN_SLOT_BRAIN, ORGAN_SLOT_EYES, ORGAN_SLOT_HEART)
 					affected_mob.adjustOrganLoss(bad_interaction_affect, affected_organ)
-				if(3)
-					to_chat(affected_mob, span_notice("You have a bad feeling..."))
 
 /datum/reagent/drug/methamphetamine/overdose_process(mob/living/affected_mob, seconds_per_tick, times_fired)
 	. = ..()
@@ -459,7 +458,7 @@
 			affected_mob.say("This shit ain't nothing to me, man!", forced = REF(src))
 		affected_mob.adjustStaminaLoss((-5 * greytide_factor), updating_stamina = TRUE)
 	//the tunnels giveth, but they also taketh away
-	if(SPT_PROB((7.5 * greytide_factor), seconds_per_tick))
+	if(SPT_PROB((7.5), seconds_per_tick))
 		affected_mob.losebreath += (1 * greytide_factor)
 		affected_mob.adjustToxLoss((2 * greytide_factor), updating_health = FALSE, required_biotype = affected_biotype)
 		return UPDATE_MOB_HEALTH

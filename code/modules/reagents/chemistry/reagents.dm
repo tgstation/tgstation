@@ -104,6 +104,8 @@
 		AddElement(/datum/element/venue_price, glass_price)
 	if(!mass)
 		mass = rand(10, 800)
+	if(reagent_interactions)
+		reagent_interactions = typecacheof(reagent_interactions)
 
 /// This should only be called by the holder, so it's already handled clearing its references
 /datum/reagent/Destroy()
@@ -162,9 +164,10 @@
 /datum/reagent/proc/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
 	SHOULD_CALL_PARENT(TRUE)
 	if(reagent_interactions.len)
-		for(var/datum/reagent/cross_faded in reagent_interactions)
-			if(affected_mob.has_reagent(cross_faded))
-				reagent_interaction(affected_mob, cross_faded, seconds_per_tick, times_fired)
+		for(var/cross_faded as anything in reagent_interactions)
+			var/datum/reagent/co_drug = affected_mob.has_reagent(cross_faded)
+			if(co_drug)
+				reagent_interaction(affected_mob, co_drug, seconds_per_tick, times_fired)
 
 
 /**
