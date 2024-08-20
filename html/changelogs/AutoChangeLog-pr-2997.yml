@@ -1,5 +1,0 @@
-author: "Absolucy, Momo8289, JohnFulpWillard, Wayland-Smithy, LT3"
-delete-after: True
-changes:
-  - qol: "Service personnel now show up in green in the crew monitor console."
-  - rscadd: "The crew monitor now has sorting options and a search bar."

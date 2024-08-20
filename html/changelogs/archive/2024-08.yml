@@ -235,3 +235,12 @@
 2024-08-19:
   MomoBerri:
   - rscadd: new light subtypes for mappers
+2024-08-20:
+  Absolucy:
+  - bugfix: The Ashen Forge traitor faction can now actually roll.
+  - bugfix: The Soft-Spoken quirk properly makes you speak softly again.
+  Absolucy, Momo8289, JohnFulpWillard, Wayland-Smithy, LT3:
+  - qol: Service personnel now show up in green in the crew monitor console.
+  - rscadd: The crew monitor now has sorting options and a search bar.
+  CannibalHunter:
+  - rscadd: Added new durrcell plushie to the monkeshop!
