@@ -1,5 +1,0 @@
-author: "Vekter"
-delete-after: True
-changes:
-  - bugfix: "Fixed further Wallening issues on Metastation, including Cargo's shuttle door buttons and Xenobiology's access buttons."
-  - rscdel: "Removed department directional signs from Metastation as they are currently broken. They will return once they've been fixed."
