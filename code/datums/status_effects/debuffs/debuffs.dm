@@ -717,6 +717,13 @@
 	alert_type = null
 	var/msg_stage = 0//so you dont get the most intense messages immediately
 
+/datum/status_effect/fake_virus/on_apply()
+	if(HAS_TRAIT(owner, TRAIT_VIRUSIMMUNE))
+		return FALSE
+	if(owner.stat != CONSCIOUS)
+		return FALSE
+	return TRUE
+
 /datum/status_effect/fake_virus/tick()
 	var/fake_msg = ""
 	var/fake_emote = ""
