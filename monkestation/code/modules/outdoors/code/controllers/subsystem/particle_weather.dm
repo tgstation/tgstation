@@ -22,22 +22,27 @@ SUBSYSTEM_DEF(particle_weather)
 	var/datum/weather_effect/weather_special_effect_eclipse
 	var/obj/weather_effect/weather_effect_eclipse
 
+	var/enabled = TRUE
+
 /datum/controller/subsystem/particle_weather/stat_entry(msg)
-	if(running_weather?.running)
-		var/time_left = COOLDOWN_TIMELEFT(running_weather, time_left)/10
-		var/time_left_eclipse = COOLDOWN_TIMELEFT(running_eclipse_weather, time_left)/10
-		if(running_weather?.display_name)
-			msg = "P:Current event station: [running_weather.display_name] - [time_left] seconds left, Current event Eclipse: [running_eclipse_weather.display_name] - [time_left_eclipse] seconds left"
+	if(enabled)
+		if(running_weather?.running)
+			var/time_left = COOLDOWN_TIMELEFT(running_weather, time_left)/10
+			var/time_left_eclipse = COOLDOWN_TIMELEFT(running_eclipse_weather, time_left)/10
+			if(running_weather?.display_name)
+				msg = "P:Current event station: [running_weather.display_name] - [time_left] seconds left, Current event Eclipse: [running_eclipse_weather.display_name] - [time_left_eclipse] seconds left"
+			else if(running_weather)
+				msg = "P:Current event of unknown type ([running_weather]) - [time_left] seconds left"
 		else if(running_weather)
-			msg = "P:Current event of unknown type ([running_weather]) - [time_left] seconds left"
-	else if(running_weather)
-		var/time_left = COOLDOWN_TIMELEFT(src, next_weather_start)
-		if(running_weather?.display_name)
-			msg = "P:Next event: [running_weather.display_name] hit in [time_left] seconds"
-		else if(running_weather)
-			msg = "P:Next event of unknown type ([running_weather]) hit in [time_left] seconds"
+			var/time_left = COOLDOWN_TIMELEFT(src, next_weather_start)
+			if(running_weather?.display_name)
+				msg = "P:Next event: [running_weather.display_name] hit in [time_left] seconds"
+			else if(running_weather)
+				msg = "P:Next event of unknown type ([running_weather]) hit in [time_left] seconds"
+		else
+			msg = "P:No event"
 	else
-		msg = "P:No event"
+		msg = "Disabled"
 	return ..()
 
 /datum/controller/subsystem/particle_weather/fire()
@@ -77,6 +82,9 @@ SUBSYSTEM_DEF(particle_weather)
 
 //This has been mangled - currently only supports 1 weather effect serverwide so I can finish this
 /datum/controller/subsystem/particle_weather/Initialize(start_timeofday)
+	if(CONFIG_GET(flag/disable_particle_weather))
+		disable()
+		return SS_INIT_NO_NEED
 	for(var/i in subtypesof(/datum/particle_weather))
 		var/datum/particle_weather/particle_weather = new i
 		if(particle_weather.target_trait in SSmapping.config.particle_weathers)
@@ -87,7 +95,14 @@ SUBSYSTEM_DEF(particle_weather)
 
 	return SS_INIT_SUCCESS
 
+/datum/controller/subsystem/particle_weather/proc/disable()
+	flags |= SS_NO_FIRE
+	enabled = FALSE
+	stop_weather()
+
 /datum/controller/subsystem/particle_weather/proc/run_weather(datum/particle_weather/weather_datum_type, force = FALSE, eclipse = FALSE)
+	if(!enabled)
+		return
 	if(eclipse)
 		if(running_eclipse_weather)
 			if(force)

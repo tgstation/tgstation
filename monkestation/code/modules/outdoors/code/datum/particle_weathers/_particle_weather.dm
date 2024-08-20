@@ -67,10 +67,11 @@ GLOBAL_LIST_EMPTY(siren_objects)
 				else
 					playsound_z(SSmapping.levels_by_trait(ZTRAIT_ECLIPSE), pick(sound_effects), 50, _mixer_channel = CHANNEL_WEATHER)
 		if(GLE_STAGE_THIRD)
-			color_animating = SSoutdoor_effects.current_color
+			if(SSoutdoor_effects.enabled)
+				color_animating = SSoutdoor_effects.current_color
 			animate_flags = CIRCULAR_EASING | EASE_IN
 
-	if(color_animating)
+	if(color_animating && SSoutdoor_effects.enabled)
 		for(var/atom/movable/screen/fullscreen/lighting_backdrop/sunlight/plane in SSoutdoor_effects.sunlighting_planes)
 			animate(plane, color = color_animating, easing = animate_flags, time = duration)
 
@@ -82,9 +83,10 @@ GLOBAL_LIST_EMPTY(siren_objects)
 		sleep(duration)
 
 	else if(stage > max_stages)
-		SSoutdoor_effects.weather_light_affecting_event = null
-		for(var/atom/movable/screen/fullscreen/lighting_backdrop/sunlight/plane in SSoutdoor_effects.sunlighting_planes)
-			SSoutdoor_effects.transition_sunlight_color(plane)
+		if(SSoutdoor_effects.enabled)
+			SSoutdoor_effects.weather_light_affecting_event = null
+			for(var/atom/movable/screen/fullscreen/lighting_backdrop/sunlight/plane in SSoutdoor_effects.sunlighting_planes)
+				SSoutdoor_effects.transition_sunlight_color(plane)
 		qdel(src)
 		return
 

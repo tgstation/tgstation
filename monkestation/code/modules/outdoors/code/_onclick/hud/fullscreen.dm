@@ -15,6 +15,8 @@
 
 /atom/movable/screen/fullscreen/lighting_backdrop/sunlight/Initialize()
 	. = ..()
+	if(!SSoutdoor_effects.enabled)
+		return
 	SSoutdoor_effects.sunlighting_planes |= src
 	color = SSoutdoor_effects.last_color
 
@@ -23,11 +25,8 @@
 		if(SSmapping.level_trait(z, ZTRAIT_DAYCYCLE))
 			daylight = TRUE
 			continue
-	if(!daylight)
-		SSoutdoor_effects.transition_sunlight_color(src, 1)
-	else
-		SSoutdoor_effects.transition_sunlight_color(src)
+	SSoutdoor_effects.transition_sunlight_color(src, !daylight)
 
 /atom/movable/screen/fullscreen/lighting_backdrop/sunlight/Destroy()
-	. = ..()
 	SSoutdoor_effects.sunlighting_planes -= src
+	return ..()

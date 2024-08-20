@@ -68,11 +68,10 @@ SUBSYSTEM_DEF(demo)
 /datum/controller/subsystem/demo/Initialize()
 	if(!CONFIG_GET(flag/demos_enabled))
 		flags |= SS_NO_FIRE
-		can_fire = FALSE
 		marked_dirty.Cut()
 		marked_new.Cut()
 		marked_turfs.Cut()
-		return SS_INIT_SUCCESS
+		return SS_INIT_NO_NEED
 
 	var/rounder = file("[GLOB.demo_directory]/round_number.txt")
 	fdel(rounder)

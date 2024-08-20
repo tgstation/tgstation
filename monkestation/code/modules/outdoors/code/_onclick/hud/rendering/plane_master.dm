@@ -31,7 +31,8 @@
 /atom/movable/screen/plane_master/weather_effect/Initialize()
 	. = ..()
 	//filters += filter(type="alpha", render_source=WEATHER_RENDER_TARGET)
-	SSoutdoor_effects.weather_planes_need_vis |= src
+	if(SSoutdoor_effects.enabled)
+		SSoutdoor_effects.weather_planes_need_vis |= src
 
 /atom/movable/screen/plane_master/weather_effect/Destroy()
 	. = ..()

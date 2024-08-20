@@ -189,6 +189,9 @@ SUBSYSTEM_DEF(gamemode)
 		event_pools[event.track] += event //Add it to the categorized event pools
 
 	load_roundstart_data()
+	if(CONFIG_GET(flag/disable_storyteller)) // we're just gonna disable firing but still initialize, so we don't have any weird runtimes
+		flags |= SS_NO_FIRE
+		return SS_INIT_NO_NEED
 	return SS_INIT_SUCCESS
 
 

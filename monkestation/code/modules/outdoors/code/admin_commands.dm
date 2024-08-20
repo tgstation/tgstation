@@ -6,6 +6,10 @@
 	if(!holder)
 		return
 
+	if(!SSparticle_weather.enabled)
+		to_chat(src, span_warning("Particle weather is currently disabled!"), type = MESSAGE_TYPE_ADMINLOG)
+		return
+
 	var/weather_type = input("Choose a weather", "Weather")  as null|anything in sort_list(subtypesof(/datum/particle_weather), /proc/cmp_typepaths_asc)
 	if(!weather_type)
 		return

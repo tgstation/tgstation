@@ -30,3 +30,9 @@
 /datum/config_entry/flag/looc_enabled
 
 /datum/config_entry/flag/log_storyteller
+
+/datum/config_entry/flag/disable_sunlight_visuals
+
+/datum/config_entry/flag/disable_particle_weather
+
+/datum/config_entry/flag/disable_storyteller
