@@ -746,6 +746,8 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_FOOD_SILVER "food_silver"
 /// If this item's been made by a chef instead of being map-spawned or admin-spawned or such
 #define TRAIT_FOOD_CHEF_MADE "food_made_by_chef"
+/// This atom has a quality_food_ingredient element attached
+#define TRAIT_QUALITY_FOOD_INGREDIENT "quality_food_ingredient"
 /// The items needs two hands to be carried
 #define TRAIT_NEEDS_TWO_HANDS "needstwohands"
 /// Can't be catched when thrown
@@ -754,6 +756,8 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_FISH_CASE_COMPATIBILE "fish_case_compatibile"
 /// If the item can be used as a bit.
 #define TRAIT_FISHING_BAIT "fishing_bait"
+/// This bait will kill any fish that doesn't have it on its favorite_bait list
+#define TRAIT_POISONOUS_BAIT "poisonous_bait"
 /// The quality of the bait. It influences odds of catching fish
 #define TRAIT_BASIC_QUALITY_BAIT "baic_quality_bait"
 #define TRAIT_GOOD_QUALITY_BAIT "good_quality_bait"
@@ -959,6 +963,10 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_FISH_FROM_CASE "fish_from_case"
 ///Fish will also occasionally fire weak tesla zaps
 #define TRAIT_FISH_ELECTROGENESIS "fish_electrogenesis"
+///Offsprings from this fish will never be of its same type (unless it's self-reproducing).
+#define TRAIT_FISH_RECESSIVE "fish_recessive"
+///This fish comes equipped with a stinger (increased damage and potentially venomous if also toxic)
+#define TRAIT_FISH_STINGER "fish_stinger"
 
 /// Trait given to angelic constructs to let them purge cult runes
 #define TRAIT_ANGELIC "angelic"
