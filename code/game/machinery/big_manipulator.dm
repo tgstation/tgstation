@@ -37,11 +37,11 @@
 	RegisterSignal(manipulator_hand, COMSIG_QDELETING, PROC_REF(on_hand_qdel))
 	manipulator_lvl()
 	if(on)
-		press_on(FALSE)
+		press_on(pressed_by = null)
 
 /obj/machinery/big_manipulator/examine(mob/user)
 	. = ..()
-	. += "You can change direction with alternative wrench using."
+	. += "You can change direction with alternative wrench usage."
 
 /obj/machinery/big_manipulator/Destroy(force)
 	. = ..()
@@ -115,7 +115,7 @@
 	if(!locate_servo)
 		return
 	switch(locate_servo.tier)
-		if(1)
+		if(-INFINITY to 1)
 			working_speed = 2 SECONDS
 			power_use_lvl = 0.2
 			set_greyscale(COLOR_YELLOW)
@@ -130,7 +130,7 @@
 			power_use_lvl = 0.6
 			set_greyscale(COLOR_RED)
 			manipulator_hand?.set_greyscale(COLOR_RED)
-		if(4)
+		if(4 to INFINITY)
 			working_speed = 0.2 SECONDS
 			power_use_lvl = 0.8
 			set_greyscale(COLOR_PURPLE)
@@ -175,7 +175,7 @@
 /// Check if we can start take and drop loop
 /obj/machinery/big_manipulator/proc/is_work_check()
 	if(isclosedturf(drop_turf))
-		say("Output way blocked")
+		say("Output blocked")
 		return FALSE
 	for(var/obj/item/take_item in take_turf.contents)
 		try_take_thing(take_turf, take_item)
