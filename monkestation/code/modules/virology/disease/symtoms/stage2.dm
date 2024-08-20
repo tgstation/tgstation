@@ -74,17 +74,6 @@
 					strength -= 30
 					i++
 
-/datum/symptom/hungry
-	name = "Appetiser Effect"
-	desc = "Starves the infected."
-	stage = 2
-	badness = EFFECT_DANGER_ANNOYING
-	multiplier = 10
-	max_multiplier = 20
-
-/datum/symptom/hungry/activate(mob/living/mob)
-	mob.nutrition = max(0, mob.nutrition - 20*multiplier)
-
 /datum/symptom/fridge
 	name = "Refridgerator Syndrome"
 	desc = "Causes the infected to shiver at random."
