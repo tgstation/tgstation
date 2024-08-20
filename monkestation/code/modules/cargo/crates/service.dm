@@ -40,8 +40,12 @@
 	name = "Bulk Cassette Crate"
 	desc = "In the unlikely event all your cassettes are the same, or the likely event youve run out of songs to play, this crate is here to help you, contains 10 Approved Cassettes for use in the DJ Station."
 	cost = CARGO_CRATE_VALUE * 4
-	contains = list(/obj/item/device/cassette_tape/random = 10)
+	//contains = list(/obj/item/device/cassette_tape/random = 10)
 	crate_name = "cassette crate"
+
+/datum/supply_pack/service/cassettes/fill(obj/structure/closet/crate/our_crate)
+	for(var/id in unique_random_tapes(10))
+		new /obj/item/device/cassette_tape(our_crate, id)
 
 /datum/supply_pack/service/blankcassettes
 	name = "Blank Cassettes Crate"

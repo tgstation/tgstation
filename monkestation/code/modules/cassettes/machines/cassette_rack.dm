@@ -48,11 +48,44 @@
 /obj/structure/cassette_rack/prefilled/Initialize(mapload)
 	. = ..()
 	REGISTER_REQUIRED_MAP_ITEM(1, INFINITY)
+	RegisterSignal(SSdcs, COMSIG_GLOB_CREWMEMBER_JOINED, PROC_REF(spawn_curator_tapes))
 	for(var/i in 1 to spawn_blanks)
 		new /obj/item/device/cassette_tape/blank(src)
 	for(var/id in unique_random_tapes(spawn_random))
 		new /obj/item/device/cassette_tape(src, id)
 	update_appearance()
+
+/obj/structure/cassette_rack/prefilled/Destroy()
+	UnregisterSignal(SSdcs, COMSIG_GLOB_CREWMEMBER_JOINED)
+	return ..()
+
+/obj/structure/cassette_rack/prefilled/proc/spawn_curator_tapes(datum/source, mob/living/new_crewmember, rank)
+	SIGNAL_HANDLER
+	if(QDELETED(new_crewmember) || new_crewmember.stat == DEAD || !new_crewmember.ckey)
+		return
+	if(!istype(new_crewmember.mind?.assigned_role, /datum/job/curator))
+		return
+	add_user_tapes(new_crewmember.ckey)
+
+/obj/structure/cassette_rack/prefilled/proc/add_user_tapes(user_ckey, max_amt = 3, expand_max_size = TRUE)
+	var/list/user_tapes = SScassette_storage.get_cassettes_by_ckey(user_ckey)
+	if(!length(user_tapes))
+		return FALSE
+	var/list/existing_tapes = list()
+	for(var/obj/item/device/cassette_tape/tape in src)
+		if(tape.id)
+			existing_tapes[tape.id] = TRUE
+	for(var/iter in 1 to max_amt)
+		if(!length(user_tapes))
+			break
+		var/datum/cassette_data/tape = pick_n_take(user_tapes)
+		if(existing_tapes[tape.cassette_id])
+			continue
+		new /obj/item/device/cassette_tape(src, tape.cassette_id)
+	if(expand_max_size && !QDELETED(atom_storage))
+		atom_storage.max_slots += max_amt
+		atom_storage.max_total_storage += max_amt * WEIGHT_CLASS_SMALL
+	return TRUE
 
 #undef DEFAULT_BLANKS_TO_SPAWN
 #undef DEFAULT_CASSETTES_TO_SPAWN

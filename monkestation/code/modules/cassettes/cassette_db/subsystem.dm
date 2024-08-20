@@ -1,7 +1,7 @@
 SUBSYSTEM_DEF(cassette_storage)
 	name = "Cassette Storage"
 	flags = SS_NO_FIRE
-	runlevels = RUNLEVEL_LOBBY|RUNLEVELS_DEFAULT
+	runlevels = RUNLEVEL_LOBBY | RUNLEVELS_DEFAULT
 	var/list/cassette_datums = list()
 
 
@@ -18,3 +18,13 @@ SUBSYSTEM_DEF(cassette_storage)
 			qdel(new_data)
 			continue
 		cassette_datums += new_data
+
+/datum/controller/subsystem/cassette_storage/proc/get_cassettes_by_ckey(user_ckey) as /list
+	RETURN_TYPE(/list)
+	. = list()
+	if(!user_ckey)
+		return
+	user_ckey = ckey(user_ckey)
+	for(var/datum/cassette_data/tape as anything in SScassette_storage.cassette_datums)
+		if(ckey(tape.cassette_author_ckey) == user_ckey)
+			. += tape
