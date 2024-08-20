@@ -1,0 +1,5 @@
+author: "SmArtKar"
+delete-after: True
+changes:
+  - qol: "Haunted 8ball now gives you a TGUI input with your question for ghosts instead of telling them the last thing it heard."
+  - image: "8ball has received a resprite"

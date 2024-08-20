@@ -68,7 +68,7 @@ WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/machinery/bluespace_vendor)
 /obj/machinery/bluespace_vendor/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/payment, tank_cost, SSeconomy.get_dep_account(ACCOUNT_ENG), PAYMENT_ANGRY)
-	find_and_hang_on_wall( FALSE)
+	find_and_hang_on_wall(directional = FALSE)
 
 /obj/machinery/bluespace_vendor/post_machine_initialize()
 	. = ..()
@@ -250,7 +250,7 @@ WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/machinery/bluespace_vendor)
 	data["tank_full"] = total_tank_pressure
 	return data
 
-/obj/machinery/bluespace_vendor/ui_act(action, params)
+/obj/machinery/bluespace_vendor/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if(.)
 		return
