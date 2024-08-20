@@ -724,7 +724,7 @@ GLOBAL_LIST_INIT(disease_hivemind_users, list())
 /datum/symptom/darkness/proc/CanHeal(mob/living/carbon/mob)
 	var/light_amount = 0
 	if(isturf(mob.loc)) //else, there's considered to be no light
-		var/turf/mob_turf = mob
+		var/turf/mob_turf = mob.loc
 		light_amount = min(1, mob_turf.get_lumcount()) - 0.5
 		if(light_amount < SHADOW_SPECIES_LIGHT_THRESHOLD)
 			return power
