@@ -379,16 +379,16 @@
 /datum/symptom/famine/activate(mob/living/mob)
 	if(ishuman(mob))
 		var/mob/living/carbon/human/victim = mob
-		if(victim.dna)
-			if(ispodperson(victim)) //Plantmen take a LOT of damage
-				victim.adjustCloneLoss(5 * multiplier)
+		if(ispodperson(victim))
+			victim.adjustCloneLoss(5 * multiplier) //Plantmen take a LOT of damag
 
-	for(var/obj/item/food/grown/crop in range(2*multiplier,mob))
-		crop.visible_message("<span class = 'warning'>\The [crop] rots at an alarming rate!</span>")
+	for(var/obj/item/food/grown/crop in range(2 * multiplier,mob))
+		crop.visible_message(span_warning("\The [crop] rots at an alarming rate!"))
 		new /obj/item/food/badrecipe(get_turf(crop))
 		qdel(crop)
-		if(prob(30/multiplier))
+		if(prob(30 / multiplier))
 			break
+
 /datum/symptom/cyborg_vomit
 	name = "Oleum Syndrome"
 	desc = "Causes the infected to internally synthesize oil and other inorganic material."
@@ -396,12 +396,8 @@
 	badness = EFFECT_DANGER_ANNOYING
 
 /datum/symptom/cyborg_vomit/activate(mob/living/mob)
-	if((HAS_TRAIT(mob, TRAIT_NOHUNGER)))
+	if(HAS_TRAIT(mob, TRAIT_NOHUNGER) || !mob.has_mouth())
 		return
-
-	if(!(mob.has_mouth()))
-		return
-
 	if(prob(90))		//90% chance for just oil
 		mob.visible_message(span_danger("[mob.name] vomits up some oil!"))
 		mob.adjustToxLoss(-3)
@@ -522,11 +518,11 @@
 	max_count = 1
 
 /datum/symptom/disfiguration/activate(mob/living/carbon/mob)
-	ADD_TRAIT(mob, TRAIT_DISFIGURED, DISEASE_TRAIT)
+	ADD_TRAIT(mob, TRAIT_DISFIGURED, type)
 	mob.visible_message(span_warning("[mob]'s face appears to cave in!"), span_notice("You feel your face crumple and cave in!"))
 
 /datum/symptom/disfiguration/deactivate(mob/living/carbon/mob)
-	REMOVE_TRAIT(mob, TRAIT_DISFIGURED, DISEASE_TRAIT)
+	REMOVE_TRAIT(mob, TRAIT_DISFIGURED, type)
 
 /datum/symptom/blindness
 	name = "Hyphema"

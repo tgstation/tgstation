@@ -720,34 +720,29 @@ GLOBAL_LIST_INIT(disease_hivemind_users, list())
 			Heal(mob, multiplier)
 		else
 			multiplier = min(multiplier + 0.1, max_multiplier)
-	return
 
 /datum/symptom/darkness/proc/CanHeal(mob/living/carbon/mob)
 	var/light_amount = 0
 	if(isturf(mob.loc)) //else, there's considered to be no light
-		var/turf/T = mob.loc
-		light_amount = min(1,T.get_lumcount()) - 0.5
+		var/turf/mob_turf = mob
+		light_amount = min(1, mob_turf.get_lumcount()) - 0.5
 		if(light_amount < SHADOW_SPECIES_LIGHT_THRESHOLD)
 			return power
 
-/datum/symptom/darkness/proc/Heal(mob/living/carbon/M, actual_power)
+/datum/symptom/darkness/proc/Heal(mob/living/carbon/victim, actual_power)
 	var/heal_amt = 2 * actual_power
-
-	var/list/parts = M.get_damaged_bodyparts(1,1,BODYTYPE_ORGANIC)
-
-	if(!parts.len)
+	var/list/parts = victim.get_damaged_bodyparts(brute = TRUE, burn = TRUE, required_bodytype = BODYTYPE_ORGANIC)
+	if(!length(parts))
 		return
-
 	if(prob(5))
-		to_chat(M, span_notice("The darkness soothes and mends your wounds."))
+		to_chat(victim, span_notice("The darkness soothes and mends your wounds."))
+	var/brute_heal = heal_amt / length(parts)
+	var/burn_heal = brute_heal * 0.5
+	victim.heal_overall_damage(brute = brute_heal, burn = burn_heal, required_bodytype = BODYTYPE_ORGANIC)
+	return TRUE
 
-	for(var/obj/item/bodypart/L in parts)
-		if(L.heal_damage(heal_amt/parts.len, heal_amt/parts.len * 0.5, BODYTYPE_ORGANIC)) //more effective on brute
-			M.update_damage_overlays()
-	return 1
-
-/datum/symptom/darkness/proc/passive_message_condition(mob/living/M)
-	if(M.getBruteLoss() || M.getFireLoss())
+/datum/symptom/darkness/proc/passive_message_condition(mob/living/victim)
+	if(victim.getBruteLoss() || victim.getFireLoss())
 		return TRUE
 	return FALSE
 
@@ -766,7 +761,7 @@ GLOBAL_LIST_INIT(disease_hivemind_users, list())
 	. = ..()
 	if(!added_to_mob && max_multiplier >= 12)
 		added_to_mob = TRUE
-		ADD_TRAIT(mob, TRAIT_NOCRITDAMAGE, DISEASE_TRAIT)
+		ADD_TRAIT(mob, TRAIT_NOCRITDAMAGE, type)
 
 	var/effectiveness = CanHeal(mob)
 	if(!effectiveness)
@@ -781,54 +776,47 @@ GLOBAL_LIST_INIT(disease_hivemind_users, list())
 		uncoma()
 	if(!added_to_mob)
 		return
-	REMOVE_TRAIT(mob, TRAIT_NOCRITDAMAGE, DISEASE_TRAIT)
+	REMOVE_TRAIT(mob, TRAIT_NOCRITDAMAGE, type)
 
-/datum/symptom/coma/proc/CanHeal(mob/living/M)
-	if(HAS_TRAIT(M, TRAIT_DEATHCOMA))
+/datum/symptom/coma/proc/CanHeal(mob/living/victim)
+	if(HAS_TRAIT(victim, TRAIT_DEATHCOMA))
 		return multiplier
-	if(M.IsSleeping())
+	if(victim.IsSleeping())
 		return multiplier * 0.25 //Voluntary unconsciousness yields lower healing.
-	switch(M.stat)
+	switch(victim.stat)
 		if(UNCONSCIOUS, HARD_CRIT)
 			return multiplier * 0.9
 		if(SOFT_CRIT)
 			return multiplier * 0.5
-	if(M.getBruteLoss() + M.getFireLoss() >= 70 && !active_coma)
-		to_chat(M, span_warning("You feel yourself slip into a regenerative coma..."))
+	if((victim.getBruteLoss() + victim.getFireLoss()) >= 70 && !active_coma)
+		to_chat(victim, span_warning("You feel yourself slip into a regenerative coma..."))
 		active_coma = TRUE
-		addtimer(CALLBACK(src, PROC_REF(coma), M), 60)
+		addtimer(CALLBACK(src, PROC_REF(coma), victim), 6 SECONDS)
 	return FALSE
 
-/datum/symptom/coma/proc/coma(mob/living/M)
-	if(QDELETED(M) || M.stat == DEAD)
+/datum/symptom/coma/proc/coma(mob/living/victim)
+	if(QDELETED(victim) || victim.stat == DEAD)
 		return
-	M.fakedeath("regenerative_coma", TRUE)
-	addtimer(CALLBACK(src, PROC_REF(uncoma), M), 300)
+	victim.fakedeath("regenerative_coma", TRUE)
+	addtimer(CALLBACK(src, PROC_REF(uncoma), victim), 30 SECONDS)
 
-/datum/symptom/coma/proc/uncoma(mob/living/M)
-	if(QDELETED(M) || !active_coma)
+/datum/symptom/coma/proc/uncoma(mob/living/victim)
+	if(QDELETED(victim) || !active_coma)
 		return
 	active_coma = FALSE
-	M.cure_fakedeath("regenerative_coma")
+	victim.cure_fakedeath("regenerative_coma")
 
-/datum/symptom/coma/proc/Heal(mob/living/carbon/M, actual_power)
-	var/heal_amt = 4 * actual_power
-
-	var/list/parts = M.get_damaged_bodyparts(1,1)
-
-	if(!parts.len)
+/datum/symptom/coma/proc/Heal(mob/living/carbon/victim, actual_power)
+	var/list/parts = victim.get_damaged_bodyparts(brute = TRUE, burn = TRUE)
+	if(!length(parts))
 		return
+	var/heal_amt = (4 * actual_power) / length(parts)
+	victim.heal_overall_damage(brute = heal_amt, burn = heal_amt)
+	if(active_coma && (victim.getBruteLoss() + victim.getFireLoss()) == 0)
+		uncoma(victim)
+	return TRUE
 
-	for(var/obj/item/bodypart/L in parts)
-		if(L.heal_damage(heal_amt/parts.len, heal_amt/parts.len, BODYTYPE_ORGANIC))
-			M.update_damage_overlays()
-
-	if(active_coma && M.getBruteLoss() + M.getFireLoss() == 0)
-		uncoma(M)
-
-	return 1
-
-/datum/symptom/coma/proc/passive_message_condition(mob/living/M)
-	if((M.getBruteLoss() + M.getFireLoss()) > 30)
+/datum/symptom/coma/proc/passive_message_condition(mob/living/victim)
+	if((victim.getBruteLoss() + victim.getFireLoss()) > 30)
 		return TRUE
 	return FALSE
