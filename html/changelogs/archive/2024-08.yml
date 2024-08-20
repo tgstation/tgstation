@@ -616,3 +616,33 @@
   - qol: Reporting issues on the Github should now be a far more simpler experience.
       Hitting the "Report Issue" button in the top-right of your BYOND Client Screen
       will still autofill in the fields as expected.
+2024-08-20:
+  JohnFulpWillard:
+  - rscadd: Added Taunting, a faster and cooldowned version of the Spin emote.
+  - balance: Wizards blocking projectiles with Transparence and the bitrunner matrix
+      skillchip now have a visible effect of deflecting the projectile.
+  - balance: The bitrunner skillchip now uses taunt instead of flip.
+  - balance: The style meter now uses taunting instead of flips and spins.
+  - bugfix: Statues don't count as eyes to creatures.
+  - bugfix: Human AIs and Admin ghosts no longer get kicked off of machines that aren't
+      on cameranets.
+  SmArtKar:
+  - image: Utility belts got new tool overlay sprites
+  - spellcheck: CE's toolbelt is no longer capitalized or considered an improper noun
+  - balance: PACMANs now have significantly increased power output and take longer
+      to consume a single sheet
+  - balance: Inducers can now be recharged with plasma
+  - balance: Inducers ordered from cargo now start with upgraded megacells instead
+      of upgraded batteries
+  - balance: Vomiting from disgust now removes 50 of it from you.
+  Vekter:
+  - bugfix: Fixed further Wallening issues on Metastation, including Cargo's shuttle
+      door buttons and Xenobiology's access buttons.
+  - rscdel: Removed department directional signs from Metastation as they are currently
+      broken. They will return once they've been fixed.
+  Zytolg:
+  - bugfix: Continues to update Birdshot into a postwallening playable state
+  carlarctg:
+  - rscadd: Added three new DM maps - Ragnarok, Lattice Battles, Species Showdown.
+  mc-oofert:
+  - bugfix: spawning on a table or other elevated object does not offset you forever
