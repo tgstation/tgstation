@@ -10,7 +10,7 @@
 	obj_flags = BLOCKS_CONSTRUCTION
 	can_buckle = TRUE
 	buckle_lying = 90
-	buckle_dir = WEST
+	buckle_dir = SOUTH
 	circuit = /obj/item/circuitboard/machine/stasis
 	fair_market_price = 10
 	payment_department = ACCOUNT_MED
@@ -66,7 +66,6 @@
 
 /obj/machinery/stasis/proc/update_buckle_vars(newdir)
 	buckle_lying = newdir & NORTHEAST ? 270 : 90
-	buckle_dir = newdir & NORTHEAST ? EAST : WEST
 
 /obj/machinery/stasis/proc/stasis_running()
 	return stasis_enabled && is_operational
