@@ -53,7 +53,7 @@ GLOBAL_LIST_INIT(high_priority_sentience, typecacheof(list(
 	candidates = SSpolling.poll_ghost_candidates(
 		"Would you like to be a random animal?",
 		role = ROLE_SENTIENCE,
-		pic_source = /obj/item/slimepotion/slime/sentience,
+		alert_pic = /obj/item/slimepotion/slime/sentience,
 		role_name_text = role_name
 	)
 

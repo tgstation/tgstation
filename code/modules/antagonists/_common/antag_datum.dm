@@ -286,20 +286,15 @@ GLOBAL_LIST_EMPTY(antagonists)
 /datum/antagonist/proc/replace_banned_player()
 	set waitfor = FALSE
 
-	var/list/mob/dead/observer/candidates = SSpolling.poll_ghost_candidates_for_mob(
-		"Do you want to play as a [name]?",
-		check_jobban = job_rank || "[name]",
-		role = job_rank,
-		poll_time = 5 SECONDS,
-		target_mob = owner.current,
-		role_name_text = name
-	)
-	if(LAZYLEN(candidates))
-		var/mob/dead/observer/C = pick(candidates)
+	var/mob/chosen_one = SSpolling.poll_ghosts_for_target(check_jobban = job_rank, role = job_rank, poll_time = 5 SECONDS, checked_target = owner.current, alert_pic = owner.current, role_name_text = name)
+	if(chosen_one)
 		to_chat(owner, "Your mob has been taken over by a ghost! Appeal your job ban if you want to avoid this in the future!")
-		message_admins("[key_name_admin(C)] has taken control of ([key_name_admin(owner)]) to replace a jobbanned player.")
+		message_admins("[key_name_admin(chosen_one)] has taken control of ([key_name_admin(owner)]) to replace antagonist banned player.")
+		log_game("[key_name(chosen_one)] has taken control of ([key_name(owner)]) to replace antagonist banned player.")
 		owner.current.ghostize(FALSE)
-		owner.current.key = C.key
+		owner.current.key = chosen_one.key
+	else
+		log_game("Couldn't find antagonist ban replacement for ([key_name(owner)]).")
 
 /**
  * Called by the remove_antag_datum() and remove_all_antag_datums() mind procs for the antag datum to handle its own removal and deletion.

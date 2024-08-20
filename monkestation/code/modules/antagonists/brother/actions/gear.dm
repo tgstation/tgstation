@@ -56,7 +56,7 @@
 	var/list/agreed = SSpolling.poll_candidates(
 		"[owner.mind.name || owner.real_name] wishes to choose [chosen_gear.name] as your team's gear. Do you agree?",
 		group = to_poll,
-		pic_source = chosen_gear.preview(),
+		alert_pic = chosen_gear.preview(),
 		role_name_text = "Blood Brother Gear",
 		custom_response_messages = list(
 			POLL_RESPONSE_SIGNUP = "You have agreed to choose [chosen_gear.name] as your team's gear.",

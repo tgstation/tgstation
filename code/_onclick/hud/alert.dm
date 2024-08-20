@@ -883,11 +883,11 @@ or shoot a gun to move around via Newton's 3rd Law of Motion."
 	if(!. || isnull(poll))
 		return
 	var/list/modifiers = params2list(params)
-	if(LAZYACCESS(modifiers, ALT_CLICK) && poll.ignoring_category)
+	if(LAZYACCESS(modifiers, ALT_CLICK))
 		set_never_round()
 		return
-	if(LAZYACCESS(modifiers, CTRL_CLICK) && poll.jump_to_me)
-		jump_to_pic_source()
+	if(LAZYACCESS(modifiers, CTRL_CLICK))
+		jump_to_jump_target()
 		return
 	handle_sign_up()
 
@@ -899,6 +899,8 @@ or shoot a gun to move around via Newton's 3rd Law of Motion."
 	update_signed_up_overlay()
 
 /atom/movable/screen/alert/poll_alert/proc/set_never_round()
+	if(!poll?.ignoring_category)
+		return
 	if(!(owner.ckey in GLOB.poll_ignore[poll.ignoring_category]))
 		poll.do_never_for_this_round(owner)
 		color = "red"
@@ -907,7 +909,7 @@ or shoot a gun to move around via Newton's 3rd Law of Motion."
 	poll.undo_never_for_this_round(owner)
 	color = initial(color)
 
-/atom/movable/screen/alert/poll_alert/proc/jump_to_pic_source()
+/atom/movable/screen/alert/poll_alert/proc/jump_to_jump_target()
 	if(!poll?.jump_to_me || !isobserver(owner))
 		return
 	var/turf/target_turf = get_turf(poll.jump_to_me)
@@ -921,7 +923,7 @@ or shoot a gun to move around via Newton's 3rd Law of Motion."
 	if(href_list["signup"])
 		handle_sign_up()
 	if(href_list["jump"])
-		jump_to_pic_source()
+		jump_to_jump_target()
 		return
 
 /atom/movable/screen/alert/poll_alert/proc/update_signed_up_overlay()
@@ -932,7 +934,7 @@ or shoot a gun to move around via Newton's 3rd Law of Motion."
 
 /atom/movable/screen/alert/poll_alert/proc/update_candidates_number_overlay()
 	cut_overlay(candidates_num_overlay)
-	if(!length(poll.signed_up))
+	if(!length(poll.signed_up) || !poll.show_candidate_amount)
 		return
 	candidates_num_overlay = new
 	candidates_num_overlay.maptext = MAPTEXT("<span style='text-align: right; color: aqua'>[length(poll.signed_up)]</span>")

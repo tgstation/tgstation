@@ -92,7 +92,7 @@
 		role = ROLE_TRAITOR,
 		poll_time = 10 SECONDS,
 		ignore_category = POLL_IGNORE_CONTRACTOR_SUPPORT,
-		pic_source = user,
+		alert_pic = user,
 		role_name_text = "contractor support unit",
 	)
 

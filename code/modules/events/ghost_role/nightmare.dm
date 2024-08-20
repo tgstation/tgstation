@@ -20,7 +20,7 @@
 		role = ROLE_NIGHTMARE,
 		check_jobban = ROLE_NIGHTMARE,
 		poll_time = 20 SECONDS,
-		pic_source = /datum/antagonist/nightmare,
+		alert_pic = /datum/antagonist/nightmare,
 		role_name_text = "nightmare"
 	)
 	if(!length(candidates))

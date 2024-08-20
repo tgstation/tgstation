@@ -28,6 +28,10 @@
 		POLL_RESPONSE_TOO_LATE_TO_UNREGISTER = "It's too late to unregister yourself, selection has already begun!",
 		POLL_RESPONSE_UNREGISTERED = "You have been unregistered as a candidate for %ROLE%. You can sign up again before the poll ends.",
 	)
+	/// Chosen candidates.
+	var/list/chosen_candidates = list()
+	/// Whether to show trhe amount who've signed up or not.
+	var/show_candidate_amount = TRUE
 
 /datum/candidate_poll/New(
 	polled_role,
@@ -113,11 +117,12 @@
 
 /datum/candidate_poll/proc/do_never_for_this_round(mob/candidate)
 	LAZYADDASSOCLIST(GLOB.poll_ignore, ignoring_category, candidate.ckey)
+	GLOB.poll_ignore[ignoring_category] += candidate.ckey
 	to_chat(candidate, span_danger("Choice registered: Never for this round."))
 	remove_candidate(candidate, silent = TRUE)
 
 /datum/candidate_poll/proc/undo_never_for_this_round(mob/candidate)
-	LAZYREMOVEASSOC(GLOB.poll_ignore, ignoring_category, candidate.ckey)
+	GLOB.poll_ignore[ignoring_category] -= candidate.ckey
 	to_chat(candidate, span_notice("Choice registered: Eligible for this round"))
 
 /datum/candidate_poll/proc/trim_candidates()
@@ -128,3 +133,13 @@
 
 /datum/candidate_poll/proc/time_left()
 	return duration - (world.time - time_started)
+
+
+/// Print to chat which candidate was selected
+/datum/candidate_poll/proc/announce_chosen(list/poll_recipients)
+	if(!length(chosen_candidates))
+		return
+	for(var/mob/chosen in chosen_candidates)
+		var/client/chosen_client = chosen.client
+		for(var/mob/poll_recipient as anything in poll_recipients)
+			to_chat(poll_recipient, span_ooc("[isobserver(poll_recipient) ? FOLLOW_LINK(poll_recipient, chosen_client.mob) : null][span_warning(" [full_capitalize(role)] Poll: ")][key_name(chosen_client, include_name = FALSE)] was selected."))

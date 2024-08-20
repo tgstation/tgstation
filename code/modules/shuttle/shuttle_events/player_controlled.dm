@@ -21,7 +21,7 @@
 		ghost_alert_string + " (Warning: you will not be able to return to your body!)",
 		check_jobban = role_type,
 		poll_time = 10 SECONDS,
-		pic_source = spawn_type,
+		alert_pic = spawn_type,
 		role_name_text = "shot at shuttle"
 	)
 	var/mob/dead/observer/candidate = length(candidates) ? pick(candidates) : null

@@ -17,18 +17,12 @@
 	role_name = "Plague Rat"
 
 /datum/round_event/ghost_role/plague_rat/spawn_role()
-	var/list/candidates = SSpolling.poll_ghost_candidates(check_jobban = ROLE_PLAGUERAT, role = ROLE_PLAGUERAT, pic_source = /mob/living/basic/mouse/plague)
+	var/list/candidates = SSpolling.poll_ghost_candidates(check_jobban = ROLE_PLAGUERAT, role = ROLE_PLAGUERAT, alert_pic = /mob/living/basic/mouse/plague, amount_to_pick = 4)
 	if(!length(candidates))
 		return NOT_ENOUGH_PLAYERS
 
-	for(var/i = 1 to 4)
-
-		var/mob/dead/selected = pick_n_take(candidates)
-		if(!selected)
-			break
-
+	for(var/mob/dead/selected in candidates)
 		var/key = selected.key
-
 		var/mob/living/basic/mouse/plague/dragon = new
 		dragon.key = key
 		dragon.mind.special_role = ROLE_PLAGUERAT

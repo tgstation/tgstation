@@ -97,7 +97,7 @@
 		check_jobban = ROLE_ALIEN,
 		poll_time = 10 SECONDS,
 		ignore_category = POLL_IGNORE_ALIEN_LARVA,
-		pic_source = /mob/living/carbon/alien/larva,
+		alert_pic = /mob/living/carbon/alien/larva,
 		role_name_text = "alien larva"
 	)
 

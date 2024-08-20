@@ -47,7 +47,7 @@
 		role = ROLE_CORTICAL_BORER,
 		poll_time = 10 SECONDS,
 		ignore_category = POLL_IGNORE_CORTICAL_BORER,
-		pic_source = /mob/living/basic/cortical_borer/empowered,
+		alert_pic = /mob/living/basic/cortical_borer/empowered,
 	)
 	if(!length(candidates))
 		var/obj/effect/mob_spawn/ghost_role/borer_egg/empowered/borer_egg = new(owner.drop_location())

@@ -29,7 +29,7 @@
 		role = ROLE_CLOCK_CULTIST,
 		poll_time = 10 SECONDS,
 		ignore_category = POLL_IGNORE_CONSTRUCT,
-		pic_source = /mob/living/basic/clockwork_marauder,
+		alert_pic = /mob/living/basic/clockwork_marauder,
 		role_name_text = "clockwork marauder"
 	)
 	if(length(candidates))

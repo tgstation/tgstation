@@ -51,7 +51,7 @@
 		role = ROLE_CORTICAL_BORER,
 		poll_time = polling_time,
 		ignore_category = POLL_IGNORE_CORTICAL_BORER,
-		pic_source = /mob/living/basic/cortical_borer/neutered,
+		alert_pic = /mob/living/basic/cortical_borer/neutered,
 	)
 	if(QDELETED(src)) // prevent shenanigans with refunds
 		return

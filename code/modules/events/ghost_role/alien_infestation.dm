@@ -67,7 +67,7 @@
 			role = antag_flag,
 			poll_time = 20 SECONDS,
 			group = candidates,
-			pic_source = antag_datum,
+			alert_pic = antag_datum,
 			role_name_text = lowertext(cast_control.name),
 		)
 

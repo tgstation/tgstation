@@ -90,17 +90,16 @@
 		role_text = "defective clone"
 		poll_text = "Do you want to play as [clonename]'s defective clone?"
 
-	var/list/mob/dead/observer/candidates = SSpolling.poll_ghost_candidates_for_mob(
+	var/mob/chosen_one = SSpolling.poll_ghosts_for_target(
 		poll_text,
 		poll_time = 10 SECONDS,
-		target_mob = clonee,
+		checked_target = clonee,
 		ignore_category = POLL_IGNORE_DEFECTIVECLONE,
-		pic_source = get_clone_preview(clonee.dna) || clonee,
+		alert_pic = get_clone_preview(clonee.dna) || clonee,
 		role_name_text = role_text
 	)
-	if(LAZYLEN(candidates))
-		var/mob/dead/observer/candidate = pick(candidates)
-		clonee.key = candidate.key
+	if(chosen_one)
+		clonee.key = chosen_one.key
 
 	if(grab_ghost_when == CLONER_FRESH_CLONE)
 		clonee.grab_ghost()

@@ -13,7 +13,7 @@
 	role_name = "morphling"
 
 /datum/round_event/ghost_role/morph/spawn_role()
-	var/list/candidates = SSpolling.poll_ghost_candidates(check_jobban = ROLE_MORPH, pic_source = /mob/living/basic/morph, role_name_text = "morph")
+	var/list/candidates = SSpolling.poll_ghost_candidates(check_jobban = ROLE_MORPH, alert_pic = /mob/living/basic/morph, role_name_text = "morph")
 	if(!length(candidates))
 		return NOT_ENOUGH_PLAYERS
 

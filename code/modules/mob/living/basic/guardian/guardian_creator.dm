@@ -98,7 +98,7 @@ GLOBAL_LIST_INIT(guardian_radial_images, setup_guardian_radial())
 		check_jobban = ROLE_PAI,
 		poll_time = 10 SECONDS,
 		ignore_category = POLL_IGNORE_HOLOPARASITE,
-		pic_source = guardian_path,
+		alert_pic = guardian_path,
 		role_name_text = "guardian spirit"
 	)
 	if(LAZYLEN(candidates))

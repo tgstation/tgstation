@@ -428,7 +428,7 @@
 		check_jobban = ROLE_PAI,
 		poll_time = 10 SECONDS,
 		ignore_category = POLL_IGNORE_POSSESSED_BLADE,
-		pic_source = src,
+		alert_pic = src,
 		role_name_text = "soul scythe"
 	)
 	if(LAZYLEN(candidates))

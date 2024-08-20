@@ -673,7 +673,6 @@
 	desc = "A miraculous chemical mix that grants human like intelligence to living beings."
 	icon = 'icons/obj/medical/chemical.dmi'
 	icon_state = "potpink"
-	var/list/not_interested = list()
 	var/being_used = FALSE
 	var/sentience_type = SENTIENCE_ORGANIC
 
@@ -689,31 +688,38 @@
 	if(!dumb_mob.compare_sentience_type(sentience_type)) // Will also return false if not a basic or simple mob, which are the only two we want anyway
 		balloon_alert(user, "invalid creature!")
 		return
-
+	var/potion_reason = tgui_input_text(user, "For what reason?", "Intelligence Potion", multiline = TRUE, timeout = 2 MINUTES)
+	if(isnull(potion_reason))
+		return
 	balloon_alert(user, "offering...")
 	being_used = TRUE
-
-	var/list/mob/dead/observer/candidates = SSpolling.poll_ghost_candidates_for_mob(
-		"Do you want to play as [dumb_mob.name]",
-		role = ROLE_SENTIENCE,
-		poll_time = 5 SECONDS,
-		target_mob = dumb_mob,
+	var/mob/chosen_one = SSpolling.poll_ghosts_for_target(
+		question = "[span_danger(user)] is offering [span_notice(dumb_mob)] an intelligence potion! Reason: [span_boldnotice(potion_reason)]",
+		check_jobban = ROLE_SENTIENCE,
+		poll_time = 20 SECONDS,
+		checked_target = dumb_mob,
 		ignore_category = POLL_IGNORE_SENTIENCE_POTION,
-		pic_source = dumb_mob,
-		role_name_text = "sentient mob"
+		alert_pic = dumb_mob,
+		role_name_text = "intelligence potion",
+		chat_text_border_icon = src,
 	)
-	if(!LAZYLEN(candidates))
+	on_poll_concluded(user, dumb_mob, chosen_one)
+
+/// Assign the chosen ghost to the mob
+/obj/item/slimepotion/slime/sentience/proc/on_poll_concluded(mob/user, mob/living/dumb_mob, mob/dead/observer/ghost)
+	if(isnull(ghost))
 		balloon_alert(user, "try again later!")
 		being_used = FALSE
-		return ..()
+		return
 
-	var/mob/dead/observer/C = pick(candidates)
-	dumb_mob.key = C.key
+	dumb_mob.key = ghost.key
 	dumb_mob.mind.enslave_mind_to_creator(user)
 	SEND_SIGNAL(dumb_mob, COMSIG_SIMPLEMOB_SENTIENCEPOTION, user)
+
 	if(isanimal(dumb_mob))
 		var/mob/living/simple_animal/smart_animal = dumb_mob
 		smart_animal.sentience_act()
+
 	dumb_mob.mind.add_antag_datum(/datum/antagonist/sentient_creature)
 	balloon_alert(user, "success")
 	after_success(user, dumb_mob)

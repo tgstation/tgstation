@@ -252,8 +252,10 @@
 					role = antag_flag,
 					poll_time = 20 SECONDS,
 					group = list(picked_mob),
-					pic_source = antag_datum,
+					alert_pic = antag_datum,
 					role_name_text = lowertext(cast_control.name),
+					chat_text_border_icon = antag_datum,
+					show_candidate_amount = FALSE,
 				)
 		else
 			if(!length(weighted_candidates))
@@ -319,7 +321,7 @@
 			role = antag_flag,
 			poll_time = 20 SECONDS,
 			group = candidates,
-			pic_source = antag_datum,
+			alert_pic = antag_datum,
 			role_name_text = lowertext(cast_control.name),
 		)
 

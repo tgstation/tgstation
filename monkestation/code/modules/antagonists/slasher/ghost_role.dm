@@ -18,7 +18,7 @@
 		role = ROLE_SLASHER,
 		check_jobban = ROLE_SLASHER,
 		poll_time = 20 SECONDS,
-		pic_source = /datum/antagonist/slasher,
+		alert_pic = /datum/antagonist/slasher,
 		role_name_text = "slasher"
 	)
 	var/turf/spawn_loc = find_safe_turf()//Used for the Drop Pod type of spawn

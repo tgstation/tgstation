@@ -46,8 +46,9 @@
 			"Would you like to be a paradox clone?",
 			check_jobban = ROLE_PARADOX_CLONE,
 			poll_time = 20 SECONDS,
-			pic_source = /datum/antagonist/paradox_clone,
+			alert_pic = /datum/antagonist/paradox_clone,
 			role_name_text = "paradox clone",
+			chat_text_border_icon = /datum/antagonist/paradox_clone,
 		)
 
 	var/list/weighted_candidates = return_antag_rep_weight(candidates)

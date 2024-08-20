@@ -52,7 +52,7 @@
 		check_jobban = ROLE_PAI,
 		poll_time = 10 SECONDS,
 		ignore_category = POLL_IGNORE_IMAGINARYFRIEND,
-		pic_source = owner,
+		alert_pic = owner,
 		role_name_text = "imaginary friend"
 	)
 	if(LAZYLEN(candidates))

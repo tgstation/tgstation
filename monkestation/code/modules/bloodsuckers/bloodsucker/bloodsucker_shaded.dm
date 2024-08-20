@@ -21,6 +21,7 @@
 		var/datum/antagonist/shaded_bloodsucker/shaded_datum = shades.mind.has_antag_datum(/datum/antagonist/shaded_bloodsucker)
 		shaded_datum.objectives = bloodsuckerdatum.objectives
 
+/*
 /obj/item/soulstone/bloodsucker/get_ghost_to_replace_shade(mob/living/carbon/victim, mob/user)
 	var/mob/dead/observer/chosen_ghost = victim.get_ghost(FALSE, TRUE)
 	if(QDELETED(chosen_ghost?.client))
@@ -29,3 +30,4 @@
 	victim.unequip_everything()
 	init_shade(victim, user, shade_controller = chosen_ghost)
 	return TRUE
+*/

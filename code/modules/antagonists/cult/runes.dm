@@ -672,35 +672,36 @@ structure_check() searches for nearby cultist structures required for the invoca
 		. += "<b>Sacrifices unrewarded:</b> [LAZYLEN(GLOB.sacrificed) - sacrifices_used]"
 
 /obj/effect/rune/raise_dead/invoke(list/invokers)
-	var/turf/T = get_turf(src)
-	var/mob/living/mob_to_revive
-	var/list/potential_revive_mobs = list()
-	var/mob/living/user = invokers[1]
 	if(rune_in_use)
 		return
 	rune_in_use = TRUE
-	for(var/mob/living/M in T.contents)
-		if(IS_CULTIST(M) && (M.stat == DEAD || !M.client || M.client.is_afk()))
-			potential_revive_mobs |= M
+	var/mob/living/mob_to_revive
+	var/list/potential_revive_mobs = list()
+	var/mob/living/user = invokers[1]
+
+	for(var/mob/living/target in loc)
+		if(IS_CULTIST(target) && (target.stat == DEAD || isnull(target.client) || target.client.is_afk()))
+			potential_revive_mobs += target
+
 	if(!length(potential_revive_mobs))
-		to_chat(user, "<span class='cult italic'>There are no dead cultists on the rune!</span>")
+		to_chat(user, span_cultitalic("There are no dead cultists on the rune!"))
 		log_game("Raise Dead rune activated by [user] at [COORD(src)] failed - no cultists to revive.")
 		fail_invoke()
 		return
-	if(length(potential_revive_mobs) > 1)
+
+	if(length(potential_revive_mobs) > 1 && user.mind)
 		mob_to_revive = tgui_input_list(user, "Cultist to revive", "Revive Cultist", potential_revive_mobs)
 		if(isnull(mob_to_revive))
 			return
 	else
 		mob_to_revive = potential_revive_mobs[1]
+
 	if(QDELETED(src) || !validness_checks(mob_to_revive, user))
 		fail_invoke()
 		return
-	if(user.name == "Herbert West")
-		invocation = "To life, to life, I bring them!"
-	else
-		invocation = initial(invocation)
-	..()
+
+	invocation = (user.name == "Herbert West") ? "To life, to life, I bring them!" : initial(invocation)
+
 	if(mob_to_revive.stat == DEAD)
 		var/diff = LAZYLEN(GLOB.sacrificed) - SOULS_TO_REVIVE - sacrifices_used
 		if(diff < 0)
@@ -712,28 +713,21 @@ structure_check() searches for nearby cultist structures required for the invoca
 
 	if(!mob_to_revive.client || mob_to_revive.client.is_afk())
 		set waitfor = FALSE
-		var/list/mob/dead/observer/candidates = SSpolling.poll_ghost_candidates_for_mob(
-			"Do you want to play as a [mob_to_revive.real_name], an inactive blood cultist?",
-			check_jobban = ROLE_CULTIST,
-			role = ROLE_CULTIST,
-			poll_time = 5 SECONDS,
-			target_mob = mob_to_revive,
-			role_name_text = "blood cultist"
-		)
-		if(LAZYLEN(candidates))
-			var/mob/dead/observer/C = pick(candidates)
+		var/mob/chosen_one = SSpolling.poll_ghosts_for_target("Do you want to play as [span_danger(mob_to_revive.real_name)], an [span_notice("inactive blood cultist")]?", check_jobban = ROLE_CULTIST, role = ROLE_CULTIST, poll_time = 5 SECONDS, checked_target = mob_to_revive, alert_pic = mob_to_revive, role_name_text = "inactive cultist")
+		if(chosen_one)
 			to_chat(mob_to_revive.mind, "Your physical form has been taken over by another soul due to your inactivity! Ahelp if you wish to regain your form.")
-			message_admins("[key_name_admin(C)] has taken control of ([key_name_admin(mob_to_revive)]) to replace an AFK player.")
+			message_admins("[key_name_admin(chosen_one)] has taken control of ([key_name_admin(mob_to_revive)]) to replace an AFK player.")
 			mob_to_revive.ghostize(FALSE)
-			mob_to_revive.key = C.key
+			mob_to_revive.key = chosen_one.key
 		else
 			fail_invoke()
 			return
 	SEND_SOUND(mob_to_revive, 'sound/ambience/antag/bloodcult/bloodcult_gain.ogg')
 	to_chat(mob_to_revive, span_cultlarge("\"PASNAR SAVRAE YAM'TOTH. Arise.\""))
 	mob_to_revive.visible_message(span_warning("[mob_to_revive] draws in a huge breath, red light shining from [mob_to_revive.p_their()] eyes."), \
-								  span_cultlarge("You awaken suddenly from the void. You're alive!"))
+		span_cultlarge("You awaken suddenly from the void. You're alive!"))
 	rune_in_use = FALSE
+	return ..()
 
 /obj/effect/rune/raise_dead/proc/validness_checks(mob/living/target_mob, mob/living/user)
 	var/turf/T = get_turf(src)

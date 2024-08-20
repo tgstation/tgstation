@@ -2599,18 +2599,9 @@ GLOBAL_LIST_EMPTY(fire_appearances)
 	if(isnull(guardian_client))
 		return
 	else if(guardian_client == "Poll Ghosts")
-		var/list/mob/dead/observer/candidates = SSpolling.poll_ghost_candidates_for_mob(
-			"Do you want to play as an admin created Guardian Spirit of [real_name]?",
-			check_jobban = ROLE_PAI,
-			poll_time = 10 SECONDS,
-			target_mob = src,
-			ignore_category = POLL_IGNORE_HOLOPARASITE,
-			pic_source = /mob/living/basic/guardian,
-			role_name_text = "guardian spirit"
-		)
-		if(LAZYLEN(candidates))
-			var/mob/dead/observer/candidate = pick(candidates)
-			guardian_client = candidate.client
+		var/mob/chosen_one = SSpolling.poll_ghost_candidates("Do you want to play as an admin created [span_notice("Guardian Spirit")] of [span_danger(real_name)]?", check_jobban = ROLE_PAI, poll_time = 10 SECONDS, ignore_category = POLL_IGNORE_HOLOPARASITE, alert_pic = mutable_appearance('icons/mob/nonhuman-player/guardian.dmi', "magicexample"), jump_target = src, role_name_text = "guardian spirit", amount_to_pick = 1)
+		if(chosen_one)
+			guardian_client = chosen_one.client
 		else
 			tgui_alert(admin, "No ghost candidates.", "Guardian Controller")
 			return
@@ -2623,7 +2614,7 @@ GLOBAL_LIST_EMPTY(fire_appearances)
 	if(picked_theme == "Random")
 		picked_theme = null //holopara code handles not having a theme by giving a random one
 	var/picked_name = tgui_input_text(admin, "Name the guardian, leave empty to let player name it.", "Guardian Controller")
-	var/picked_color = tgui_color_picker(admin, "Set the guardian's color, cancel to let player set it.", "Guardian Controller", "#ffffff")
+	var/picked_color = input(admin, "Set the guardian's color, cancel to let player set it.", "Guardian Controller", "#ffffff") as color|null
 	if(tgui_alert(admin, "Confirm creation.", "Guardian Controller", list("Yes", "No")) != "Yes")
 		return
 	var/mob/living/basic/guardian/summoned_guardian = new picked_type(src, picked_theme)

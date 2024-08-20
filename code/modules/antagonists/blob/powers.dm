@@ -199,7 +199,7 @@
 		check_jobban = ROLE_BLOB,
 		role = ROLE_BLOB,
 		poll_time = 5 SECONDS,
-		pic_source = /mob/living/basic/blob_minion/blobbernaut/minion,
+		alert_pic = /mob/living/basic/blob_minion/blobbernaut/minion,
 		role_name_text = "blobbernaut"
 	)
 

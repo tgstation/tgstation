@@ -30,7 +30,7 @@
 		"Do you want to play as Florida Man?",
 		role = ROLE_FLORIDA_MAN,
 		poll_time = 20 SECONDS,
-		pic_source = /datum/antagonist/florida_man,
+		alert_pic = /datum/antagonist/florida_man,
 		role_name_text = "florida man"
 	)
 	var/turf/spawn_loc = find_safe_turf()//Used for the Drop Pod type of spawn

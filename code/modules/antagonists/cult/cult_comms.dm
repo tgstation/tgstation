@@ -143,7 +143,7 @@
 		question = "[span_notice(nominee.name)] seeks to lead your cult, do you support [nominee.p_them()]?",
 		poll_time = 30 SECONDS,
 		group = asked_cultists,
-		pic_source = nominee,
+		alert_pic = nominee,
 		role_name_text = "cult master nomination",
 		custom_response_messages = list(
 			POLL_RESPONSE_SIGNUP = "You have pledged your allegience to [nominee].",

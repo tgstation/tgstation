@@ -190,18 +190,10 @@ While using this makes the system rely on OnFire, it still gives options for tim
 				addtimer(CALLBACK(src, PROC_REF(spawn_elite)), 30)
 				return
 			visible_message(span_boldwarning("Something within [src] stirs..."))
-			var/list/candidates = SSpolling.poll_ghost_candidates_for_mob(
-				"Do you want to play as a lavaland elite?",
-				role = ROLE_SENTIENCE,
-				poll_time = 5 SECONDS,
-				target_mob = src,
-				ignore_category = POLL_IGNORE_LAVALAND_ELITE,
-				pic_source = src,
-				role_name_text = "lavaland elite"
-			)
-			if(length(candidates))
+			var/mob/chosen_one = SSpolling.poll_ghosts_for_target(check_jobban = ROLE_SENTIENCE, role = ROLE_SENTIENCE, poll_time = 5 SECONDS, checked_target = src, ignore_category = POLL_IGNORE_LAVALAND_ELITE, alert_pic = src, role_name_text = "lavaland elite")
+			if(chosen_one)
 				audible_message(span_boldwarning("The stirring sounds increase in volume!"))
-				elitemind = pick(candidates)
+				elitemind = chosen_one
 				elitemind.playsound_local(get_turf(elitemind), 'sound/effects/magic.ogg', 40, 0)
 				to_chat(elitemind, "<b>You have been chosen to play as a Lavaland Elite.\nIn a few seconds, you will be summoned on Lavaland as a monster to fight your activator, in a fight to the death.\n\
 					Your attacks can be switched using the buttons on the top left of the HUD, and used by clicking on targets or tiles similar to a gun.\n\

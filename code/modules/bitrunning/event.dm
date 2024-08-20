@@ -127,7 +127,7 @@
 		check_jobban = ROLE_PAI,
 		poll_time = 7.5 SECONDS,
 		ignore_category = POLL_IGNORE_SPLITPERSONALITY,
-		pic_source = /datum/antagonist/cyber_police,
+		alert_pic = /datum/antagonist/cyber_police,
 		role_name_text = role_name
 	)
 

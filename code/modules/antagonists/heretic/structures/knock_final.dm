@@ -43,7 +43,7 @@
 		check_jobban = ROLE_SENTIENCE,
 		poll_time = 10 SECONDS,
 		ignore_category = POLL_IGNORE_HERETIC_MONSTER,
-		pic_source = src,
+		alert_pic = src,
 		role_name_text = "eldritch monster"
 	)
 	while(LAZYLEN(candidates))

@@ -62,7 +62,7 @@
 		check_jobban = ROLE_PAI,
 		poll_time = 10 SECONDS,
 		ignore_category = POLL_IGNORE_POSSESSED_BLADE,
-		pic_source = parent,
+		alert_pic = parent,
 		role_name_text = "possessed blade",
 	)
 	if(!LAZYLEN(candidates))

@@ -21,7 +21,7 @@
 		check_jobban = ROLE_DRIFTING_CONTRACTOR,
 		role = ROLE_DRIFTING_CONTRACTOR,
 		poll_time = 20 SECONDS,
-		pic_source = /datum/antagonist/traitor/contractor,
+		alert_pic = /datum/antagonist/traitor/contractor,
 		role_name_text = "drifting contractor"
 	)
 	if(!length(candidates))

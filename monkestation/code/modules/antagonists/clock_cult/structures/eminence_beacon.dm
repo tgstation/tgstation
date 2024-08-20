@@ -47,7 +47,7 @@
 			check_jobban = ROLE_CLOCK_CULTIST,
 			role = ROLE_CLOCK_CULTIST,
 			poll_time = 10 SECONDS,
-			pic_source = /mob/living/eminence,
+			alert_pic = /mob/living/eminence,
 			role_name_text = "eminence"
 		)
 		if(length(candidates))
