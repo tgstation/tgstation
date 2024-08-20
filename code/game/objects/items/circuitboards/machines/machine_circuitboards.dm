@@ -1712,3 +1712,65 @@
 	req_components = list(
 		/datum/stock_part/servo = 1,
 		)
+
+/obj/item/circuitboard/machine/manucrafter
+	name = /obj/machinery/power/manufacturing/crafter::name
+	greyscale_colors = CIRCUIT_COLOR_ENGINEERING
+	build_path = /obj/machinery/power/manufacturing/crafter
+	req_components = list(
+		/obj/item/stack/sheet/iron = 5,
+		/datum/stock_part/servo = 1,
+	)
+
+/obj/item/circuitboard/machine/manulathe
+	name = /obj/machinery/power/manufacturing/lathe::name
+	greyscale_colors = CIRCUIT_COLOR_ENGINEERING
+	build_path = /obj/machinery/power/manufacturing/lathe
+	req_components = list(
+		/obj/item/stack/sheet/iron = 5,
+		/datum/stock_part/servo = 1,
+	)
+
+/obj/item/circuitboard/machine/manucrusher
+	name = /obj/machinery/power/manufacturing/crusher::name
+	greyscale_colors = CIRCUIT_COLOR_ENGINEERING
+	build_path = /obj/machinery/power/manufacturing/crusher
+	req_components = list(
+		/obj/item/stack/sheet/iron = 5,
+		/datum/stock_part/servo = 1,
+	)
+
+/obj/item/circuitboard/machine/manuunloader
+	name = /obj/machinery/power/manufacturing/unloader::name
+	greyscale_colors = CIRCUIT_COLOR_ENGINEERING
+	build_path = /obj/machinery/power/manufacturing/unloader
+	req_components = list(
+		/obj/item/stack/sheet/iron = 5,
+		/datum/stock_part/servo = 1,
+	)
+
+/obj/item/circuitboard/machine/manusorter
+	name = /obj/machinery/power/manufacturing/sorter::name
+	greyscale_colors = CIRCUIT_COLOR_ENGINEERING
+	build_path = /obj/machinery/power/manufacturing/sorter
+	req_components = list(
+		/obj/item/stack/sheet/iron = 5,
+		/datum/stock_part/scanning_module = 1,
+	)
+
+/obj/item/circuitboard/machine/manusmelter
+	name = /obj/machinery/power/manufacturing/smelter::name
+	greyscale_colors = CIRCUIT_COLOR_ENGINEERING
+	build_path = /obj/machinery/power/manufacturing/smelter
+	req_components = list(
+		/obj/item/stack/sheet/iron = 5,
+		/datum/stock_part/micro_laser = 1,
+	)
+
+/obj/item/circuitboard/machine/manurouter
+	name = /obj/machinery/power/manufacturing/router::name
+	greyscale_colors = CIRCUIT_COLOR_ENGINEERING
+	build_path = /obj/machinery/power/manufacturing/router
+	req_components = list(
+		/obj/item/stack/sheet/iron = 5,
+	)

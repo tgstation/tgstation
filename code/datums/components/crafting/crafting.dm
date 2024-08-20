@@ -21,6 +21,8 @@
 	var/display_craftable_only = FALSE
 	var/display_compact = FALSE
 	var/forced_mode = FALSE
+	/// crafting flags we ignore when considering a recipe
+	var/ignored_flags = NONE
 
 /* This is what procs do:
 	get_environment - gets a list of things accessable for crafting by user
@@ -205,16 +207,16 @@
 	if(!check_tools(crafter, recipe, contents))
 		return ", missing tool."
 
+	var/considered_flags = recipe.crafting_flags & ~(ignored_flags)
 
-
-	if((recipe.crafting_flags & CRAFT_ONE_PER_TURF) && (locate(recipe.result) in dest_turf))
+	if((considered_flags & CRAFT_ONE_PER_TURF) && (locate(recipe.result) in dest_turf))
 		return ", already one here!"
 
-	if(recipe.crafting_flags & CRAFT_CHECK_DIRECTION)
-		if(!valid_build_direction(dest_turf, crafter.dir, is_fulltile = (recipe.crafting_flags & CRAFT_IS_FULLTILE)))
+	if(considered_flags & CRAFT_CHECK_DIRECTION)
+		if(!valid_build_direction(dest_turf, crafter.dir, is_fulltile = (considered_flags & CRAFT_IS_FULLTILE)))
 			return ", won't fit here!"
 
-	if(recipe.crafting_flags & CRAFT_ON_SOLID_GROUND)
+	if(considered_flags & CRAFT_ON_SOLID_GROUND)
 		if(isclosedturf(dest_turf))
 			return ", cannot be made on a wall!"
 
@@ -222,7 +224,7 @@
 			if(!locate(/obj/structure/thermoplastic) in dest_turf) // for tram construction
 				return ", must be made on solid ground!"
 
-	if(recipe.crafting_flags & CRAFT_CHECK_DENSITY)
+	if(considered_flags & CRAFT_CHECK_DENSITY)
 		for(var/obj/object in dest_turf)
 			if(object.density && !(object.obj_flags & IGNORE_DENSITY) || object.obj_flags & BLOCKS_CONSTRUCTION)
 				return ", something is in the way!"
@@ -702,3 +704,20 @@
 		if(recipe == potential_recipe)
 			return TRUE
 	return FALSE
+
+/datum/component/personal_crafting/machine
+	ignored_flags = CRAFT_CHECK_DENSITY
+
+/datum/component/personal_crafting/machine/get_environment(atom/a, list/blacklist = null, radius_range = 1)
+	. = list()
+	for(var/atom/movable/AM in a.contents)
+		if((AM.flags_1 & HOLOGRAM_1) || (blacklist && (AM.type in blacklist)))
+			continue
+		if(isitem(AM))
+			var/obj/item/item = AM
+			if(item.item_flags & ABSTRACT) //let's not tempt fate, shall we?
+				continue
+		. += AM
+
+/datum/component/personal_crafting/machine/check_tools(atom/source, datum/crafting_recipe/recipe, list/surroundings)
+	return TRUE

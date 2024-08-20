@@ -74,3 +74,14 @@
 	)
 	category = CAT_STRUCTURE
 	crafting_flags = CRAFT_CHECK_DENSITY | CRAFT_MUST_BE_LEARNED
+
+/datum/crafting_recipe/manucrate
+	name = "Manufacturing Storage Unit"
+	result = /obj/machinery/power/manufacturing/storagebox
+	tool_behaviors = list(TOOL_SCREWDRIVER, TOOL_WELDER)
+	time = 6 SECONDS
+	reqs = list(
+		/obj/item/stack/sheet/iron = 10,
+	)
+	category = CAT_STRUCTURE
+	crafting_flags = CRAFT_CHECK_DENSITY

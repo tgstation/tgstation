@@ -49,3 +49,14 @@
 	name = "Gateway Room"
 	icon = 'icons/area/areas_station.dmi'
 	icon_state = "gateway"
+
+/area/misc/test_plains
+	requires_power = FALSE
+	has_gravity = STANDARD_GRAVITY
+	static_lighting = FALSE
+	base_lighting_alpha = 230
+	base_lighting_color = "#fcffb5"
+	name = "The Plains"
+	icon_state = "test_room"
+	outdoors = TRUE
+	sound_environment = SOUND_ENVIRONMENT_FOREST
