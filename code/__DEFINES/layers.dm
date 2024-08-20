@@ -108,6 +108,7 @@
 #define BALLOON_CHAT_PLANE 31
 /// Plane for the wallmount balloons
 #define EXAMINE_BALLOONS_PLANE 32
+#define EXAMINE_BALLOONS_RENDER_TARGET "*EXAMINE_BALLOONS_RENDER_TARGET"
 
 //-------------------- HUD ---------------------
 //HUD layer defines

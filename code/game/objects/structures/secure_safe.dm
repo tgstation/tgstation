@@ -107,8 +107,6 @@ WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/structure/secure_safe/hos)
 	custom_materials = list(/datum/material/gold = SMALL_MATERIAL_AMOUNT)
 	material_flags = MATERIAL_EFFECTS
 
-WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/structure/secure_safe/caps_spare)
-
 /datum/armor/safe_caps_spare
 	melee = 100
 	bullet = 100
