@@ -1,0 +1,6 @@
+author: "Absolucy"
+delete-after: True
+changes:
+  - bugfix: "The \"Space Adaptation Effect\" symptom now actually works as intended."
+  - bugfix: "Fixed some runtimes related to pathology symptoms."
+  - code_imp: "Cleaned up the code of some pathology symptoms."
