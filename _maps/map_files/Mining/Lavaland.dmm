@@ -719,13 +719,6 @@
 /obj/structure/sign/poster/official/work_for_a_future/directional/west,
 /turf/open/floor/iron/smooth,
 /area/mine/laborcamp/quarters)
-"eW" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/machinery/power/port_gen/pacman{
-	anchored = 1
-	},
-/turf/open/floor/plating,
-/area/mine/maintenance/service)
 "eX" = (
 /obj/machinery/door/airlock/external/glass{
 	name = "Labor Camp External Airlock"
@@ -1196,6 +1189,17 @@
 /obj/machinery/porta_turret/aux_base,
 /turf/closed/wall,
 /area/mine/maintenance/production)
+"hw" = (
+/obj/structure/lattice/catwalk,
+/obj/structure/cable,
+/obj/structure/railing{
+	dir = 8
+	},
+/obj/structure/railing{
+	dir = 4
+	},
+/turf/open/lava/smooth/lava_land_surface,
+/area/lavaland/surface/outdoors)
 "hx" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -3478,6 +3482,15 @@
 	},
 /turf/open/misc/asteroid/basalt/lava_land_surface,
 /area/lavaland/surface/outdoors)
+"tn" = (
+/obj/machinery/door/airlock/external{
+	name = "Mining External Airlock"
+	},
+/obj/effect/mapping_helpers/airlock/access/any/engineering/maintenance/departmental,
+/obj/effect/mapping_helpers/airlock/cyclelink_helper,
+/obj/structure/cable,
+/turf/open/floor/plating,
+/area/mine/maintenance/service)
 "tr" = (
 /obj/structure/closet/secure_closet/brig,
 /obj/effect/decal/cleanable/dirt,
@@ -3636,6 +3649,17 @@
 "ul" = (
 /obj/item/crowbar/large/emergency,
 /turf/open/misc/asteroid/basalt/lava_land_surface,
+/area/lavaland/surface/outdoors)
+"up" = (
+/obj/structure/lattice/catwalk,
+/obj/structure/railing{
+	dir = 1
+	},
+/obj/structure/railing,
+/obj/structure/railing{
+	dir = 8
+	},
+/turf/open/lava/smooth/lava_land_surface,
 /area/lavaland/surface/outdoors)
 "uq" = (
 /obj/effect/spawner/structure/window,
@@ -4302,6 +4326,17 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/lava/smooth/lava_land_surface,
 /area/lavaland/surface/outdoors)
+"yr" = (
+/obj/structure/lattice/catwalk,
+/obj/structure/railing,
+/obj/structure/railing{
+	dir = 1
+	},
+/obj/structure/railing{
+	dir = 4
+	},
+/turf/open/lava/smooth/lava_land_surface,
+/area/lavaland/surface/outdoors)
 "yu" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/item/stack/tile/iron/smooth_edge{
@@ -4406,12 +4441,7 @@
 /area/mine/maintenance/public/south)
 "zd" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/item/stock_parts/cell/crap{
-	desc = "A legendary infinite-capacity power cell. This one looks like a poor quality AA battery with a coat of flaking gold paint.";
-	icon_state = "icell";
-	name = "infinite-capacity power cell"
-	},
-/obj/structure/rack,
+/obj/structure/cable,
 /turf/open/floor/plating,
 /area/mine/maintenance/service)
 "zf" = (
@@ -4718,6 +4748,20 @@
 	},
 /turf/open/floor/iron/dark,
 /area/mine/production)
+"Bg" = (
+/obj/structure/lattice/catwalk,
+/obj/structure/cable,
+/obj/structure/railing,
+/turf/open/lava/smooth/lava_land_surface,
+/area/lavaland/surface/outdoors)
+"Bw" = (
+/obj/machinery/door/airlock/maintenance{
+	name = "Mining Station Maintenance"
+	},
+/obj/effect/mapping_helpers/airlock/access/all/engineering/general,
+/obj/structure/cable,
+/turf/open/floor/plating,
+/area/mine/maintenance/service)
 "By" = (
 /obj/machinery/door/poddoor/preopen{
 	id = "labor";
@@ -5659,6 +5703,7 @@
 "HG" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/space_heater,
+/obj/machinery/portable_atmospherics/canister/oxygen,
 /turf/open/floor/plating,
 /area/mine/maintenance/service)
 "HH" = (
@@ -5804,11 +5849,6 @@
 /obj/structure/lattice/catwalk/mining,
 /turf/open/lava/smooth/lava_land_surface,
 /area/lavaland/surface/outdoors)
-"IJ" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/machinery/portable_atmospherics/canister/oxygen,
-/turf/open/floor/plating,
-/area/mine/maintenance/service)
 "IK" = (
 /obj/machinery/computer/libraryconsole/bookmanagement,
 /obj/structure/table,
@@ -7118,6 +7158,17 @@
 	},
 /turf/open/floor/iron/dark,
 /area/mine/mechbay)
+"Qj" = (
+/obj/structure/lattice/catwalk,
+/obj/structure/cable,
+/turf/open/lava/smooth/lava_land_surface,
+/area/lavaland/surface/outdoors)
+"Qo" = (
+/obj/structure/lattice/catwalk,
+/obj/structure/cable,
+/obj/machinery/power/colony_wind_turbine,
+/turf/open/lava/smooth/lava_land_surface,
+/area/lavaland/surface/outdoors)
 "Qp" = (
 /obj/machinery/power/apc/auto_name/directional/west,
 /obj/structure/cable,
@@ -7292,6 +7343,15 @@
 /obj/structure/closet/toolcloset,
 /turf/open/floor/plating,
 /area/mine/maintenance/service)
+"RC" = (
+/obj/structure/lattice/catwalk,
+/obj/structure/cable,
+/obj/structure/railing,
+/obj/structure/railing{
+	dir = 1
+	},
+/turf/open/lava/smooth/lava_land_surface,
+/area/lavaland/surface/outdoors)
 "RD" = (
 /turf/closed/wall,
 /area/mine/maintenance/labor)
@@ -7998,6 +8058,17 @@
 /obj/structure/lattice/catwalk/mining,
 /turf/open/lava/smooth/lava_land_surface,
 /area/lavaland/surface/outdoors)
+"VM" = (
+/obj/machinery/door/airlock/external{
+	name = "Mining External Airlock"
+	},
+/obj/effect/mapping_helpers/airlock/access/any/engineering/maintenance/departmental,
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 1
+	},
+/obj/structure/cable,
+/turf/open/floor/plating,
+/area/mine/maintenance/service)
 "VO" = (
 /obj/machinery/power/apc/auto_name/directional/south,
 /obj/structure/cable,
@@ -36434,8 +36505,8 @@ aj
 aj
 aj
 aj
-ad
-pU
+aj
+aj
 aj
 aj
 aj
@@ -36690,9 +36761,9 @@ aj
 aj
 aj
 aj
-ad
-ad
-ad
+aj
+aj
+aj
 aj
 aj
 aj
@@ -36946,9 +37017,9 @@ aj
 aj
 aj
 aj
-pU
-ad
-ad
+aj
+aj
+aj
 aj
 aj
 aj
@@ -37204,8 +37275,8 @@ aj
 aj
 aj
 aj
-ad
-ad
+up
+aj
 aj
 aj
 aj
@@ -37452,7 +37523,7 @@ pU
 Qz
 ON
 rw
-eW
+Hs
 HG
 vA
 ON
@@ -37460,9 +37531,9 @@ ON
 pU
 aj
 aj
-aj
-aj
-aj
+Qo
+Qj
+Qo
 aj
 aj
 aj
@@ -37709,16 +37780,16 @@ Ue
 gB
 ON
 rA
-Hs
-sO
-Hs
-IJ
+zd
+fi
+zd
+Rw
 ON
 ON
 ON
 aj
 aj
-aj
+RC
 aj
 aj
 aj
@@ -37966,19 +38037,19 @@ Qz
 ON
 ON
 ON
+Bw
 ON
-ON
-sO
-Rw
-ON
+fi
 zd
-ON
+tn
+zd
+VM
+hw
+hw
+Bg
 aj
 aj
 aj
-aj
-aj
-pU
 pU
 kY
 kY
@@ -38223,7 +38294,7 @@ Qz
 ON
 ni
 rZ
-ni
+fi
 ON
 TV
 xD
@@ -38232,10 +38303,10 @@ xD
 xD
 aj
 aj
+RC
 aj
 aj
 aj
-pU
 pU
 kY
 Wx
@@ -38488,11 +38559,11 @@ BK
 HA
 xD
 aj
+Qo
+Qj
+Qo
 aj
 aj
-aj
-pU
-pU
 pU
 Tc
 HT
@@ -38746,9 +38817,9 @@ HH
 xD
 aj
 aj
+yr
 aj
 aj
-pU
 pU
 pU
 Tc
@@ -43370,8 +43441,8 @@ aj
 aj
 aj
 aj
-aj
-aj
+ad
+pU
 aj
 aj
 aj
@@ -43626,9 +43697,9 @@ pU
 aj
 aj
 aj
-aj
-aj
-aj
+ad
+ad
+ad
 aj
 aj
 aj
@@ -43882,9 +43953,9 @@ pU
 aj
 aj
 aj
-aj
-aj
-aj
+pU
+ad
+ad
 aj
 aj
 aj
@@ -44140,8 +44211,8 @@ aj
 aj
 aj
 aj
-aj
-aj
+ad
+ad
 aj
 aj
 aj
