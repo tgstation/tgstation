@@ -286,7 +286,11 @@
 					affected_mob.adjustToxLoss(bad_interaction_affect)
 				if(2)
 					var/affected_organ = pick(ORGAN_SLOT_BRAIN, ORGAN_SLOT_EYES, ORGAN_SLOT_HEART)
-					affected_mob.adjustOrganLoss(bad_interaction_affect, affected_organ)
+					affected_mob.adjustOrganLoss(affected_organ, bad_interaction_affect)
+				if(3)
+					return
+				if(4)
+					return
 
 /datum/reagent/drug/methamphetamine/overdose_process(mob/living/affected_mob, seconds_per_tick, times_fired)
 	. = ..()
