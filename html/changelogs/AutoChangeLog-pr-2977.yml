@@ -1,0 +1,7 @@
+author: "Absolucy, 13spacemen, Melbert"
+delete-after: True
+changes:
+  - code_imp: "Poll alerts support small border pictures in the chat message."
+  - code_imp: "Poll alert alert picture and jump target do not have to be the same."
+  - qol: "Slime intelligence potions ask the user for a reason, this will be shown to ghosts."
+  - bugfix: "Fixes polling for things causing said things to have their planes and layers screwed up (causing random objects or mobs to appear above runechat and blindness, for example)"
