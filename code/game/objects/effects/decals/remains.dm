@@ -18,18 +18,22 @@
 	return !istype(here_turf, /obj/structure/closet/crate/grave/filled) && ..()
 
 /obj/effect/decal/remains/human/smokey
-	desc = "They look like human remains. They have a strange, smokey aura about them..."
+	name = "remains of Charles Morlbaro"
+	desc = "I guess we figured out what happened to the guy who lives here. You'd best tread lightly around this..."
 	///Our proximity monitor, for detecting nearby looters.
 	var/datum/proximity_monitor/proximity_monitor
 	///The reagent we will release when our remains are disturbed.
 	var/datum/reagent/that_shit_that_killed_saddam
+	///A cooldown for how frequently the gas is released when disturbed.
 	COOLDOWN_DECLARE(gas_cooldown)
+	///The length of the aforementioned cooldown.
+	var/gas_cooldown_length = (20 SECONDS)
 
 /obj/effect/decal/remains/human/smokey/Initialize(mapload)
 	. = ..()
 
-	proximity_monitor = new(src, 0)
-	that_shit_that_killed_saddam = get_random_reagent_id()
+	proximity_monitor = new(src, 1)
+	that_shit_that_killed_saddam = generate_reagent()
 
 /obj/effect/decal/remains/human/smokey/HasProximity(atom/movable/tomb_raider)
 	if(!COOLDOWN_FINISHED(src, gas_cooldown))
@@ -39,8 +43,9 @@
 		var/mob/living/carbon/nearby_carbon = tomb_raider
 		if (nearby_carbon.move_intent != MOVE_INTENT_WALK || prob(15))
 			release_smoke(nearby_carbon)
-			COOLDOWN_START(src, gas_cooldown, rand(20 SECONDS, 2 MINUTES))
+			COOLDOWN_START(src, gas_cooldown, gas_cooldown_length)
 
+///Releases a cloud of smoke based on the randomly generated reagent in Initialize().
 /obj/effect/decal/remains/human/smokey/proc/release_smoke(mob/living/smoke_releaser)
 	visible_message(span_warning("[smoke_releaser] disturbs the [src], which releases a huge cloud of gas!"))
 	var/datum/effect_system/fluid_spread/smoke/chem/cigarette_puff = new()
@@ -48,6 +53,28 @@
 	cigarette_puff.attach(get_turf(src))
 	cigarette_puff.set_up(range = 2, amount = DIAMOND_AREA(2), holder = src, location = get_turf(src), silent = TRUE)
 	cigarette_puff.start()
+
+///Returns a random reagent object minus blacklisted reagents and with other blocking conditions to make the potential choices more interesting.
+/obj/effect/decal/remains/human/smokey/proc/generate_reagent()
+	var/static/list/random_reagents = list()
+	if(!length(random_reagents))
+		for(var/datum/reagent/reagent_path as anything in subtypesof(/datum/reagent))
+			if(!(initial(reagent_path.chemical_flags) & REAGENT_CAN_BE_SYNTHESIZED))
+				continue
+			if(istype(reagent_path, /datum/reagent/medicine) || istype(reagent_path, /datum/reagent/consumable)) //Boooooriiiiing
+				continue
+			random_reagents += reagent_path
+	var/picked_reagent = pick(random_reagents)
+	return picked_reagent
+
+///Subtype of smokey remains used for rare maintenance spawns.
+/obj/effect/decal/remains/human/smokey/maintenance
+	name = "smokey remains"
+	desc = "They look like human remains. They have a strange, smokey aura about them... You should tread lightly when walking near this."
+
+/obj/effect/decal/remains/human/smokey/maintenance/Initialize(mapload)
+	. = ..()
+	gas_cooldown_length = rand(3 MINUTES, 5 MINUTES)
 
 /obj/effect/decal/remains/plasma
 	icon_state = "remainsplasma"
