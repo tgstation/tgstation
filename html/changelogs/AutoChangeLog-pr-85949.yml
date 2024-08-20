@@ -1,4 +1,0 @@
-author: "SmArtKar"
-delete-after: True
-changes:
-  - bugfix: "Examine balloons for wall-mounted buttons no longer inflate themselves infinitely"
