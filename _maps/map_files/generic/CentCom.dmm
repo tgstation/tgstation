@@ -12002,7 +12002,7 @@
 /area/space)
 "aFj" = (
 /obj/structure/fake_stairs/wood/directional/north,
-/turf/open/misc/dirt,
+/turf/open/misc/dirt/station,
 /area/centcom/central_command_areas/retirement_yard)
 "aFk" = (
 /obj/effect/turf_decal/siding/white{
@@ -18434,7 +18434,7 @@
 /area/centcom/central_command_areas/admin_hangout)
 "aVW" = (
 /obj/effect/turf_decal/siding/white,
-/turf/open/misc/dirt,
+/turf/open/misc/dirt/station,
 /area/centcom/central_command_areas/retirement_yard)
 "aVX" = (
 /obj/effect/turf_decal/siding/wood/corner{
@@ -19288,7 +19288,7 @@
 /turf/open/floor/carpet/purple,
 /area/centcom/central_command_areas/admin)
 "aYe" = (
-/turf/open/misc/dirt,
+/turf/open/misc/dirt/station,
 /area/centcom/central_command_areas/retirement_yard)
 "aYf" = (
 /obj/effect/turf_decal/siding/wood{
