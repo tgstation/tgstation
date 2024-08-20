@@ -1,0 +1,5 @@
+author: "Absolucy"
+delete-after: True
+changes:
+  - rscadd: "Curators will now spawn with some of the tapes they've had approved (if any) in their cassette rack."
+  - qol: "Bulk cassette crates will no longer contain duplicates tapes."
