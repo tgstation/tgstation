@@ -289,7 +289,7 @@
 
 //---------- EMISSIVES -------------
 //Layering order of these is not particularly meaningful.
-//Important part is the seperation of the planes for control via plane_master
+//Important part is the separation of the planes for control via plane_master
 
 /// The layer you should use if you _really_ don't want an emissive overlay to be blocked.
 #define EMISSIVE_LAYER_UNBLOCKABLE 9999
