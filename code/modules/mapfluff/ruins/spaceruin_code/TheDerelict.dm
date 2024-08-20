@@ -140,7 +140,7 @@
 		ui = new(user, src, "VaultController", name)
 		ui.open()
 
-/obj/machinery/computer/vaultcontroller/ui_act(action, params)
+/obj/machinery/computer/vaultcontroller/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if(.)
 		return

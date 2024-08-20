@@ -63,12 +63,8 @@
 
 	/// Encryption key handling
 	var/obj/item/encryptionkey/keyslot
-	/// If true, can hear the special binary channel.
-	var/translate_binary = FALSE
-	/// If true, can say/hear on the special CentCom channel.
-	var/independent = FALSE
-	/// If true, hears all well-known channels automatically, and can say/hear on the Syndicate channel. Also protects from radio jammers.
-	var/syndie = FALSE
+	/// Flags for which "special" radio networks should be accessible
+	var/special_channels = NONE
 	/// associative list of the encrypted radio channels this radio is currently set to listen/broadcast to, of the form: list(channel name = TRUE or FALSE)
 	var/list/channels
 	/// associative list of the encrypted radio channels this radio can listen/broadcast to, of the form: list(channel name = channel frequency)
@@ -91,6 +87,11 @@
 	/// If TRUE, will set the icon in initializations.
 	VAR_PRIVATE/should_update_icon = FALSE
 
+	/// A very brief cooldown to prevent regular radio sounds from overlapping.
+	COOLDOWN_DECLARE(audio_cooldown)
+	/// A very brief cooldown to prevent "important" radio sounds from overlapping.
+	COOLDOWN_DECLARE(important_audio_cooldown)
+
 /obj/item/radio/Initialize(mapload)
 	set_wires(new /datum/wires/radio(src))
 	secure_radio_connections = list()
@@ -104,7 +105,7 @@
 	perform_update_icon = FALSE
 	set_listening(listening)
 	set_broadcasting(broadcasting)
-	set_frequency(sanitize_frequency(frequency, freerange, syndie))
+	set_frequency(sanitize_frequency(frequency, freerange, (special_channels & RADIO_SPECIAL_SYNDIE)))
 	set_on(on)
 	perform_update_icon = TRUE
 
@@ -149,12 +150,7 @@
 			if(!(channel_name in channels))
 				channels[channel_name] = keyslot.channels[channel_name]
 
-		if(keyslot.translate_binary)
-			translate_binary = TRUE
-		if(keyslot.syndie)
-			syndie = TRUE
-		if(keyslot.independent)
-			independent = TRUE
+		special_channels = keyslot.special_channels
 
 	for(var/channel_name in channels)
 		secure_radio_connections[channel_name] = add_radio(src, GLOB.radiochannels[channel_name])
@@ -166,9 +162,7 @@
 /obj/item/radio/proc/resetChannels()
 	channels = list()
 	secure_radio_connections = list()
-	translate_binary = FALSE
-	syndie = FALSE
-	independent = FALSE
+	special_channels = NONE
 
 ///goes through all radio channels we should be listening for and readds them to the global list
 /obj/item/radio/proc/readd_listening_radio_channels()
@@ -180,7 +174,7 @@
 /obj/item/radio/proc/make_syndie() // Turns normal radios into Syndicate radios!
 	qdel(keyslot)
 	keyslot = new /obj/item/encryptionkey/syndicate()
-	syndie = TRUE
+	special_channels |= RADIO_SPECIAL_SYNDIE
 	recalculateChannels()
 
 /obj/item/radio/interact(mob/user)
@@ -337,7 +331,7 @@
 		channel = null
 
 	// Nearby active jammers prevent the message from transmitting
-	if(is_within_radio_jammer_range(src) && !syndie)
+	if(is_within_radio_jammer_range(src) && !(special_channels & RADIO_SPECIAL_SYNDIE))
 		return
 
 	// Determine the identity information which will be attached to the signal.
@@ -347,7 +341,7 @@
 	var/datum/signal/subspace/vocal/signal = new(src, freq, speaker, language, radio_message, spans, message_mods)
 
 	// Independent radios, on the CentCom frequency, reach all independent radios
-	if (independent && (freq == FREQ_CENTCOM || freq == FREQ_CTF_RED || freq == FREQ_CTF_BLUE || freq == FREQ_CTF_GREEN || freq == FREQ_CTF_YELLOW))
+	if (special_channels & RADIO_SPECIAL_CENTCOM && (freq == FREQ_CENTCOM || freq == FREQ_CTF_RED || freq == FREQ_CTF_BLUE || freq == FREQ_CTF_GREEN || freq == FREQ_CTF_YELLOW))
 		signal.data["compression"] = 0
 		signal.transmission_method = TRANSMISSION_SUPERSPACE
 		signal.levels = list(0)
@@ -357,7 +351,7 @@
 
 	if(isliving(talking_movable))
 		var/mob/living/talking_living = talking_movable
-		if(talking_living.client?.prefs.read_preference(/datum/preference/toggle/radio_noise))
+		if(talking_living.client?.prefs.read_preference(/datum/preference/toggle/radio_noise) && !HAS_TRAIT(talking_living, TRAIT_DEAF))
 			SEND_SOUND(talking_living, 'sound/misc/radio_talk.ogg')
 
 	// All radios make an attempt to use the subspace system first
@@ -415,7 +409,7 @@
 		if(!position || !(position.z in levels))
 			return FALSE
 
-	if (input_frequency == FREQ_SYNDICATE && !syndie)
+	if (input_frequency == FREQ_SYNDICATE && !(special_channels & RADIO_SPECIAL_SYNDIE))
 		return FALSE
 
 	// allow checks: are we listening on that frequency?
@@ -423,7 +417,7 @@
 		return TRUE
 	for(var/ch_name in channels)
 		if(channels[ch_name] & FREQ_LISTENING)
-			if(GLOB.radiochannels[ch_name] == text2num(input_frequency) || syndie)
+			if(GLOB.radiochannels[ch_name] == text2num(input_frequency) || special_channels & RADIO_SPECIAL_SYNDIE)
 				return TRUE
 	return FALSE
 
@@ -435,12 +429,15 @@
 		return
 
 	var/mob/living/holder = loc
-	if(!holder.client?.prefs.read_preference(/datum/preference/toggle/radio_noise))
+	if(!holder.client?.prefs.read_preference(/datum/preference/toggle/radio_noise) && !HAS_TRAIT(holder, TRAIT_DEAF))
 		return
 
 	var/list/spans = data["spans"]
-	SEND_SOUND(holder, 'sound/misc/radio_receive.ogg')
-	if(SPAN_COMMAND in spans)
+	if(COOLDOWN_FINISHED(src, audio_cooldown))
+		COOLDOWN_START(src, audio_cooldown, 0.5 SECONDS)
+		SEND_SOUND(holder, 'sound/misc/radio_receive.ogg')
+	if((SPAN_COMMAND in spans) && COOLDOWN_FINISHED(src, important_audio_cooldown))
+		COOLDOWN_START(src, important_audio_cooldown, 0.5 SECONDS)
 		SEND_SOUND(holder, 'sound/misc/radio_important.ogg')
 
 /obj/item/radio/ui_state(mob/user)
@@ -491,7 +488,7 @@
 				tune = tune * 10
 				. = TRUE
 			if(.)
-				set_frequency(sanitize_frequency(tune, freerange, syndie))
+				set_frequency(sanitize_frequency(tune, freerange, (special_channels & RADIO_SPECIAL_SYNDIE)))
 		if("listen")
 			set_listening(!listening)
 			. = TRUE
@@ -518,10 +515,6 @@
 				else
 					recalculateChannels()
 				. = TRUE
-
-/obj/item/radio/suicide_act(mob/living/user)
-	user.visible_message(span_suicide("[user] starts bouncing [src] off [user.p_their()] head! It looks like [user.p_theyre()] trying to commit suicide!"))
-	return BRUTELOSS
 
 /obj/item/radio/examine(mob/user)
 	. = ..()
@@ -594,7 +587,7 @@
 			channels[ch_name] = TRUE
 
 /obj/item/radio/borg/syndicate
-	syndie = TRUE
+	special_channels = RADIO_SPECIAL_SYNDIE
 	keyslot = /obj/item/encryptionkey/syndicate
 
 /obj/item/radio/borg/syndicate/Initialize(mapload)

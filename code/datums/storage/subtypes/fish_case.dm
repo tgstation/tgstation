@@ -1,6 +1,6 @@
 /datum/storage/fish_case
 	max_slots = 1
-	max_specific_storage = WEIGHT_CLASS_HUGE
+	max_specific_storage = WEIGHT_CLASS_GIGANTIC
 	can_hold_description = "Fish and aquarium equipment"
 
 /datum/storage/fish_case/can_insert(obj/item/to_insert, mob/user, messages, force)
@@ -13,11 +13,13 @@
 		return FALSE
 	return .
 
+/datum/storage/fish_case/adjust_size
+
 /*
  * Change the size of the storage item to match the inserted item's
  * Because of that, we also check if conditions to keep it inside another storage or pockets are still met.
  */
-/datum/storage/fish_case/handle_enter(datum/source, obj/item/arrived)
+/datum/storage/fish_case/adjust_size/handle_enter(datum/source, obj/item/arrived)
 	. = ..()
 	if(!isitem(parent) || !istype(arrived))
 		return
@@ -26,7 +28,7 @@
 		return
 	item_parent.update_weight_class(arrived.w_class)
 
-/datum/storage/fish_case/handle_exit(datum/source, obj/item/gone)
+/datum/storage/fish_case/adjust_size/handle_exit(datum/source, obj/item/gone)
 	. = ..()
 	if(!isitem(parent) || !istype(gone))
 		return

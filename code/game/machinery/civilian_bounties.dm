@@ -203,7 +203,7 @@
 
 	return data
 
-/obj/machinery/computer/piratepad_control/civilian/ui_act(action, params)
+/obj/machinery/computer/piratepad_control/civilian/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if(.)
 		return

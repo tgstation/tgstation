@@ -1,4 +1,0 @@
-author: "SmArtKar"
-delete-after: True
-changes:
-  - bugfix: "You can now move horizontally on tall stairs and they no longer have a hole in them when facing south"

@@ -1,0 +1,4 @@
+author: "SmArtKar"
+delete-after: True
+changes:
+  - bugfix: "Replaced a locked cabinet that you cannot open in ninja den with an unlocked one"

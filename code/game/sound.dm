@@ -472,7 +472,9 @@
 				'sound/creatures/monkey/monkey_screech_6.ogg',
 				'sound/creatures/monkey/monkey_screech_7.ogg',
 			)
-			if(SFX_KEYBOARD_CLICKS)
+		if(SFX_TOOL_SWITCH)
+			soundin = 'sound/items/handling/tool_switch.ogg'
+		if(SFX_KEYBOARD_CLICKS)
 			soundin = pick(
 				'sound/machines/computer/keyboard_clicks_1.ogg',
 				'sound/machines/computer/keyboard_clicks_2.ogg',
@@ -482,7 +484,7 @@
 				'sound/machines/computer/keyboard_clicks_6.ogg',
 				'sound/machines/computer/keyboard_clicks_7.ogg',
 			)
-					if(SFX_STONE_DROP)
+		if(SFX_STONE_DROP)
 			soundin = pick(
 				'sound/items/stones/stone_drop1.ogg',
 				'sound/items/stones/stone_drop2.ogg',

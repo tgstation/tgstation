@@ -1,7 +1,7 @@
 // the standard tube light fixture
 /obj/machinery/light
 	name = "light fixture"
-	icon = 'icons/obj/lighting.dmi'
+	icon = 'icons/obj/machines/lighting.dmi'
 	icon_state = "tube"
 	desc = "A lighting fixture."
 	layer = WALL_OBJ_LAYER
@@ -14,7 +14,7 @@
 	light_angle = 170
 	light_flags = LIGHT_IGNORE_OFFSET
 	///What overlay the light should use
-	var/overlay_icon = 'icons/obj/lighting_overlay.dmi'
+	var/overlay_icon = 'icons/obj/machines/lighting.dmi'
 	///base description and icon_state
 	var/base_state = "tube"
 	///Is the light on?
@@ -120,7 +120,7 @@
 	AddElement(/datum/element/atmos_sensitive, mapload)
 	AddElement(/datum/element/contextual_screentip_bare_hands, rmb_text = "Remove bulb")
 	if(break_if_moved)
-		find_and_hang_on_wall(custom_drop_callback = CALLBACK(src, PROC_REF(knock_down)))
+		find_and_hang_on_wall(custom_drop_callback = CALLBACK(src, PROC_REF(knock_down)), wall_layer = HIGH_ON_WALL_LAYER)
 
 /obj/machinery/light/post_machine_initialize()
 	. = ..()
@@ -180,12 +180,12 @@
 	if(!on || status != LIGHT_OK)
 		return
 
-	. += emissive_appearance(overlay_icon, "[base_state]", src, alpha = src.alpha)
+	. += emissive_appearance(overlay_icon, "[base_state]_overlay", src, alpha = src.alpha)
 
 	var/area/local_area = get_room_area()
 
 	if(low_power_mode || major_emergency || (local_area?.fire))
-		. += mutable_appearance(overlay_icon, "[base_state]_emergency")
+		. += mutable_appearance(overlay_icon, "[base_state]_overlay_emergency")
 		return
 	if(nightshift_enabled)
 		. += mutable_appearance(overlay_icon, "[base_state]_nightshift")
@@ -724,7 +724,7 @@
 /obj/machinery/light/floor
 	name = "floor light"
 	desc = "A lightbulb you can walk on without breaking it, amazing."
-	icon = 'icons/obj/lighting.dmi'
+	icon = 'icons/obj/machines/lighting.dmi'
 	base_state = "floor" // base description and icon_state
 	icon_state = "floor"
 	brightness = 4
@@ -737,7 +737,7 @@
 	fire_brightness = 4.5
 
 // No hanging for us brother
-/obj/machinery/light/floor/find_and_hang_on_wall(directional, custom_drop_callback)
+/obj/machinery/light/floor/find_and_hang_on_wall(directional, custom_drop_callback, wall_layer)
 	return
 
 /obj/machinery/light/floor/get_light_offset()
