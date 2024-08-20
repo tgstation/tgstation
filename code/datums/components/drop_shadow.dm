@@ -7,14 +7,17 @@
 	var/shadow_offset
 	/// Any temporary extra offsets we are tracking
 	var/additional_offset = 0
+	/// Additional offset to apply while mob is dead
+	var/death_offset
 	/// Timer to make sure
 	var/unhide_shadow_timer
 
-/datum/component/drop_shadow/Initialize(icon = 'icons/mob/mob_shadows.dmi', icon_state = SHADOW_MEDIUM, shadow_offset_x = 0, shadow_offset_y = 0)
+/datum/component/drop_shadow/Initialize(icon = 'icons/mob/mob_shadows.dmi', icon_state = SHADOW_MEDIUM, shadow_offset_x = 0, shadow_offset_y = 0, death_offset = 0)
 	. = ..()
 	if (!ismovable(parent)) // Only being used for mobs at the moment but it seems reasonably likely that we'll want to put it on some effect some time
 		return COMPONENT_INCOMPATIBLE
 
+	src.death_offset = death_offset
 	shadow_offset = shadow_offset_y
 
 	var/atom/movable/movable_parent = parent
@@ -28,7 +31,7 @@
 	shadow.pixel_x = shadow_offset_x - movable_parent.pixel_x
 	update_shadow_position()
 
-/datum/component/drop_shadow/InheritComponent(icon = 'icons/mob/mob_shadows.dmi', icon_state = SHADOW_MEDIUM, shadow_offset_x = 0, shadow_offset_y = 0)
+/datum/component/drop_shadow/InheritComponent(icon = 'icons/mob/mob_shadows.dmi', icon_state = SHADOW_MEDIUM, shadow_offset_x = 0, shadow_offset_y = 0, death_offset = 0)
 	var/changed_appearance = FALSE
 
 	if (shadow.pixel_x != shadow_offset_x)
@@ -43,8 +46,21 @@
 		shadow.icon_state = icon_state
 		changed_appearance = TRUE
 
+	var/changed_offset = FALSE
+
+	if (death_offset != src.death_offset)
+		if (src.death_offset == 0)
+			RegisterSignal(parent, COMSIG_MOB_STATCHANGE, PROC_REF(update_shadow_position))
+		else if (death_offset == 0)
+			UnregisterSignal(parent, COMSIG_MOB_STATCHANGE, PROC_REF(update_shadow_position))
+		src.death_offset = death_offset
+		changed_offset = TRUE
+
 	if (shadow_offset_y != shadow_offset)
 		shadow_offset = shadow_offset_y
+		changed_offset = TRUE
+
+	if (changed_offset)
 		update_shadow_position() // Calling this will also update the overlays so we can return here and safely apply any of the above changes too
 		return
 
@@ -63,6 +79,8 @@
 		RegisterSignal(parent, COMSIG_MOB_BUCKLED, PROC_REF(hide_shadow))
 		RegisterSignal(parent, COMSIG_MOB_UNBUCKLED, PROC_REF(show_shadow))
 		RegisterSignal(parent, COMSIG_MOD_SPHERE_FORM_TOGGLED, PROC_REF(sphere_toggled))
+		if (death_offset != 0)
+			RegisterSignal(parent, COMSIG_MOB_STATCHANGE, PROC_REF(update_shadow_position))
 
 	if (!HAS_TRAIT(parent, TRAIT_SHADOWLESS))
 		var/atom/atom_parent = parent
@@ -77,6 +95,7 @@
 		COMSIG_ATOM_STOPPED_ORBITING,
 		COMSIG_LIVING_POST_UPDATE_TRANSFORM,
 		COMSIG_MOB_BUCKLED,
+		COMSIG_MOB_STATCHANGE,
 		COMSIG_MOB_UNBUCKLED,
 		COMSIG_MOD_SPHERE_FORM_TOGGLED,
 		SIGNAL_ADDTRAIT(TRAIT_SHADOWLESS),
@@ -85,14 +104,18 @@
 
 /// Repositions the shadow to try and stay under our mob should be at under current conditions
 /datum/component/drop_shadow/proc/update_shadow_position()
-	var/lying_offset = 0
+	SIGNAL_HANDLER
+
+	var/living_offset = 0
 	if (isliving(parent))
 		var/mob/living/living_parent = parent
 		if (living_parent.rotate_on_lying && living_parent.body_position != STANDING_UP)
-			lying_offset = living_parent.body_position_pixel_y_offset
+			living_offset -= living_parent.body_position_pixel_y_offset
+		if (death_offset != 0 && living_parent.stat == DEAD)
+			living_offset += death_offset
 		shadow.transform = matrix() * living_parent.current_size
 
-	shadow.pixel_z = -DEPTH_OFFSET - additional_offset - lying_offset + shadow_offset
+	shadow.pixel_z = -DEPTH_OFFSET - additional_offset + living_offset + shadow_offset
 
 	if (!HAS_TRAIT(parent, TRAIT_SHADOWLESS))
 		var/atom/atom_parent = parent
