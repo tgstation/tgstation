@@ -89,9 +89,6 @@ Unlike normal organs, we're actually inside a persons limbs at all times
 		bodypart_owner.update_icon_dropped()
 	//else if(use_mob_sprite_as_obj_sprite) //are we out in the world, unprotected by flesh?
 
-/obj/item/organ/on_life(seconds_per_tick, times_fired)
-	return
-
 /obj/item/organ/update_overlays()
 	. = ..()
 

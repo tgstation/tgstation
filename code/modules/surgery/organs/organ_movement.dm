@@ -18,6 +18,9 @@
 	mob_insert(receiver, special, movement_flags)
 	bodypart_insert(limb_owner = receiver, movement_flags = movement_flags)
 
+	if(!special)
+		receiver.update_body_parts()
+
 /*
  * Remove the organ from the select mob.
  *
@@ -29,6 +32,9 @@
 
 	mob_remove(organ_owner, special, movement_flags)
 	bodypart_remove(limb_owner = organ_owner, movement_flags = movement_flags)
+
+	if(!special)
+		organ_owner.update_body_parts()
 
 /*
  * Insert the organ into the select mob.
@@ -94,9 +100,6 @@
 	RegisterSignal(owner, COMSIG_ATOM_EXAMINE, PROC_REF(on_owner_examine))
 	SEND_SIGNAL(src, COMSIG_ORGAN_IMPLANTED, organ_owner)
 	SEND_SIGNAL(organ_owner, COMSIG_CARBON_GAIN_ORGAN, src, special)
-
-	if(bodypart_overlay && !special)
-		organ_owner.update_body_parts()
 
 /// Insert an organ into a limb, assume the limb as always detached and include no owner operations here (except the get_bodypart helper here I guess)
 /// Give EITHER a limb OR a limb owner
@@ -172,6 +175,9 @@
 	SEND_SIGNAL(organ_owner, COMSIG_CARBON_LOSE_ORGAN, src, special)
 	ADD_TRAIT(src, TRAIT_USED_ORGAN, ORGAN_TRAIT)
 
+	organ_owner.synchronize_bodytypes()
+	organ_owner.synchronize_bodyshapes()
+
 	var/list/diseases = organ_owner.get_static_viruses()
 	if(!LAZYLEN(diseases))
 		return
@@ -187,11 +193,6 @@
 			continue
 
 		diseases_to_add += disease
-
-	if(!special)
-		organ_owner.synchronize_bodytypes()
-		organ_owner.synchronize_bodyshapes()
-		organ_owner.update_body_parts()
 
 	if(LAZYLEN(diseases_to_add))
 		AddComponent(/datum/component/infective, diseases_to_add)
@@ -234,10 +235,6 @@
 		update_appearance(UPDATE_OVERLAYS)
 
 	color = bodypart_overlay.draw_color // so a pink felinid doesn't drop a gray tail
-
-/obj/item/organ/on_bodypart_remove(obj/item/bodypart/bodypart)
-
-	return ..()
 
 /// In space station videogame, nothing is sacred. If somehow an organ is removed unexpectedly, handle it properly
 /obj/item/organ/proc/forced_removal()
