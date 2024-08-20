@@ -12218,6 +12218,14 @@
 /obj/machinery/light/cold/directional/north,
 /turf/open/floor/iron/dark,
 /area/station/commons/lounge)
+"ddE" = (
+/obj/structure/fluff/tram_rail/electric{
+	dir = 1
+	},
+/obj/structure/transport/linear/tram,
+/obj/structure/thermoplastic/light,
+/turf/open/openspace,
+/area/station/hallway/primary/tram/center)
 "ddM" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/stripes/white/line{
@@ -18412,7 +18420,7 @@
 /obj/effect/landmark/start/hangover,
 /obj/effect/turf_decal/tile/neutral/tram,
 /obj/structure/transport/linear/tram,
-/obj/structure/thermoplastic,
+/obj/structure/thermoplastic/light,
 /turf/open/indestructible/tram/plate,
 /area/station/hallway/primary/tram/center)
 "frp" = (
@@ -20312,6 +20320,12 @@
 /obj/effect/turf_decal/tile/brown/fourcorners,
 /turf/open/floor/iron/dark,
 /area/station/cargo/miningdock/oresilo)
+"gbq" = (
+/obj/effect/turf_decal/tile/neutral/tram,
+/obj/structure/transport/linear/tram,
+/obj/structure/thermoplastic/light,
+/turf/open/indestructible/tram/plate,
+/area/station/hallway/primary/tram/center)
 "gbr" = (
 /obj/effect/landmark/event_spawn,
 /obj/structure/cable,
@@ -45972,6 +45986,12 @@
 	},
 /turf/open/floor/iron/dark,
 /area/station/service/chapel/monastery)
+"pgH" = (
+/obj/structure/fluff/tram_rail/electric,
+/obj/structure/transport/linear/tram,
+/obj/structure/thermoplastic/light,
+/turf/open/openspace,
+/area/station/hallway/primary/tram/center)
 "pgS" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/disposalpipe/segment{
@@ -71086,7 +71106,7 @@
 "xRc" = (
 /obj/structure/fluff/tram_rail,
 /obj/structure/transport/linear/tram,
-/obj/structure/thermoplastic,
+/obj/structure/thermoplastic/light,
 /turf/open/openspace,
 /area/station/hallway/primary/tram/center)
 "xRl" = (
@@ -169007,9 +169027,9 @@ rOu
 mYI
 ykP
 kQe
-hEB
-wgA
-mar
+pgH
+gbq
+ddE
 bHm
 ykP
 lej
@@ -169264,9 +169284,9 @@ obC
 kjY
 ykP
 czY
-hEB
+pgH
 frh
-mar
+ddE
 czY
 ykP
 lej
@@ -170294,7 +170314,7 @@ ykP
 kQe
 xRc
 frh
-mar
+ddE
 bHm
 ykP
 lej
@@ -170549,9 +170569,9 @@ rOu
 mpa
 ykP
 czY
-hEB
-wgA
-mar
+pgH
+gbq
+ddE
 czY
 ykP
 lej
