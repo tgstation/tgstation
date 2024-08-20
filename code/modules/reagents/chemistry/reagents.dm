@@ -163,11 +163,10 @@
  */
 /datum/reagent/proc/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
 	SHOULD_CALL_PARENT(TRUE)
-	if(reagent_interactions.len)
-		for(var/cross_faded as anything in reagent_interactions)
-			var/datum/reagent/co_drug = affected_mob.has_reagent(cross_faded)
-			if(co_drug)
-				reagent_interaction(affected_mob, co_drug, seconds_per_tick, times_fired)
+	for(var/cross_faded as anything in reagent_interactions)
+		var/datum/reagent/co_drug = affected_mob.has_reagent(cross_faded)
+		if(co_drug)
+			reagent_interaction(affected_mob, co_drug, seconds_per_tick, times_fired)
 
 
 /**
