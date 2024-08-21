@@ -46,7 +46,7 @@ GLOBAL_LIST_INIT(spontaneous_fish_traits, populate_spontaneous_fish_traits())
 	return list(ADDITIVE_FISHING_MOD = 0, MULTIPLICATIVE_FISHING_MOD = 1)
 
 /// Catch weight table modifier from this mod, needs to return a list with two values
-/datum/fish_trait/proc/catch_weight_mod(obj/item/fishing_rod/rod, mob/fisherman)
+/datum/fish_trait/proc/catch_weight_mod(obj/item/fishing_rod/rod, mob/fisherman, atom/location, obj/item/fish/fish_type)
 	SHOULD_CALL_PARENT(TRUE)
 	return list(ADDITIVE_FISHING_MOD = 0, MULTIPLICATIVE_FISHING_MOD = 1)
 
@@ -113,8 +113,8 @@ GLOBAL_LIST_INIT(spontaneous_fish_traits, populate_spontaneous_fish_traits())
 	var/live_amount = max(round((source.weight/FISH_GRIND_RESULTS_WEIGHT_DIVISOR) * live_mult, 0.1), live_mult)
 	var/dead_amount = max(round((source.weight/FISH_GRIND_RESULTS_WEIGHT_DIVISOR) * dead_mult, 0.1), dead_mult)
 	var/is_dead = source.status == FISH_DEAD
-	source.RemoveElement(/datum/element/venomous, venom_path, is_dead ? live_amount : dead_amount)
-	source.AddElement(/datum/element/venomous, venom_path, is_dead ? dead_amount : live_amount)
+	source.RemoveElement(/datum/element/venomous, venom_path, is_dead ? live_amount : dead_amount, thrown_effect = TRUE)
+	source.AddElement(/datum/element/venomous, venom_path, is_dead ? dead_amount : live_amount, thrown_effect = TRUE)
 
 /datum/fish_trait/wary
 	name = "Wary"
@@ -138,27 +138,30 @@ GLOBAL_LIST_INIT(spontaneous_fish_traits, populate_spontaneous_fish_traits())
 
 /datum/fish_trait/picky_eater
 	name = "Picky Eater"
-	catalog_description = "This fish is very picky and will ignore low quality bait."
+	catalog_description = "This fish is very picky and will ignore low quality bait (unless it's amongst its favorites)."
 
-/datum/fish_trait/picky_eater/catch_weight_mod(obj/item/fishing_rod/rod, mob/fisherman)
+/datum/fish_trait/picky_eater/catch_weight_mod(obj/item/fishing_rod/rod, mob/fisherman, atom/location, obj/item/fish/fish_type)
 	. = ..()
 	if(!rod.bait)
 		.[MULTIPLICATIVE_FISHING_MOD] = 0
 		return
 	if(HAS_TRAIT(rod.bait, TRAIT_OMNI_BAIT))
 		return
+	if(is_matching_bait(rod.bait, SSfishing.fish_properties[fish_type][FISH_PROPERTIES_FAV_BAIT])) //we like this bait anyway
+		return
 	if(!HAS_TRAIT(rod.bait, TRAIT_GOOD_QUALITY_BAIT) && !HAS_TRAIT(rod.bait, TRAIT_GREAT_QUALITY_BAIT))
 		.[MULTIPLICATIVE_FISHING_MOD] = 0
-
 
 /datum/fish_trait/nocturnal
 	name = "Nocturnal"
 	catalog_description = "This fish avoids bright lights, fishing and storing in darkness recommended."
 
-/datum/fish_trait/nocturnal/catch_weight_mod(obj/item/fishing_rod/rod, mob/fisherman)
+/datum/fish_trait/nocturnal/catch_weight_mod(obj/item/fishing_rod/rod, mob/fisherman, atom/location, obj/item/fish/fish_type)
 	. = ..()
-	var/turf/turf = get_turf(fisherman)
-	var/light_amount = turf.get_lumcount()
+	if(rod.bait && HAS_TRAIT(rod.bait, TRAIT_BAIT_IGNORE_ENVIRONMENT))
+		return
+	var/turf/turf = get_turf(location)
+	var/light_amount = turf?.get_lumcount()
 	if(light_amount > SHADOW_SPECIES_LIGHT_THRESHOLD)
 		.[MULTIPLICATIVE_FISHING_MOD] = 0
 
@@ -195,7 +198,7 @@ GLOBAL_LIST_INIT(spontaneous_fish_traits, populate_spontaneous_fish_traits())
 		mob.apply_status_effect(/datum/status_effect/shadow_regeneration)
 
 /datum/fish_trait/heavy
-	name = "Heavy"
+	name = "Demersal"
 	catalog_description = "This fish tends to stay near the waterbed."
 
 /datum/fish_trait/heavy/apply_to_mob(mob/living/basic/mob)
@@ -215,7 +218,28 @@ GLOBAL_LIST_INIT(spontaneous_fish_traits, populate_spontaneous_fish_traits())
 	catalog_description = "This fish can only be baited with meat."
 	incompatible_traits = list(/datum/fish_trait/vegan)
 
-/datum/fish_trait/carnivore/catch_weight_mod(obj/item/fishing_rod/rod, mob/fisherman)
+/datum/fish_trait/carnivore/catch_weight_mod(obj/item/fishing_rod/rod, mob/fisherman, atom/location, obj/item/fish/fish_type)
+	. = ..()
+	if(!rod.bait)
+		.[MULTIPLICATIVE_FISHING_MOD] = 0
+		return
+	if(HAS_TRAIT(rod.bait, TRAIT_OMNI_BAIT))
+		return
+	if(isfish(rod.bait))
+		return
+	if(!istype(rod.bait, /obj/item/food))
+		.[MULTIPLICATIVE_FISHING_MOD] = 0
+		return
+	var/obj/item/food/food_bait = rod.bait
+	if(!(food_bait.foodtypes & (MEAT|SEAFOOD|BUGS)))
+		.[MULTIPLICATIVE_FISHING_MOD] = 0
+
+/datum/fish_trait/vegan
+	name = "Herbivore"
+	catalog_description = "This fish can only be baited with fresh produce."
+	incompatible_traits = list(/datum/fish_trait/carnivore, /datum/fish_trait/predator, /datum/fish_trait/necrophage)
+
+/datum/fish_trait/vegan/catch_weight_mod(obj/item/fishing_rod/rod, mob/fisherman, atom/location, obj/item/fish/fish_type)
 	. = ..()
 	if(!rod.bait)
 		.[MULTIPLICATIVE_FISHING_MOD] = 0
@@ -225,23 +249,10 @@ GLOBAL_LIST_INIT(spontaneous_fish_traits, populate_spontaneous_fish_traits())
 	if(!istype(rod.bait, /obj/item/food))
 		.[MULTIPLICATIVE_FISHING_MOD] = 0
 		return
+	if(istype(rod.bait, /obj/item/food/grown))
+		return
 	var/obj/item/food/food_bait = rod.bait
-	if(!(food_bait.foodtypes & MEAT))
-		.[MULTIPLICATIVE_FISHING_MOD] = 0
-
-/datum/fish_trait/vegan
-	name = "Herbivore"
-	catalog_description = "This fish can only be baited with fresh produce."
-	incompatible_traits = list(/datum/fish_trait/carnivore, /datum/fish_trait/predator, /datum/fish_trait/necrophage)
-
-/datum/fish_trait/vegan/catch_weight_mod(obj/item/fishing_rod/rod, mob/fisherman)
-	. = ..()
-	if(!rod.bait)
-		.[MULTIPLICATIVE_FISHING_MOD] = 0
-		return
-	if(HAS_TRAIT(rod.bait, TRAIT_OMNI_BAIT))
-		return
-	if(!istype(rod.bait, /obj/item/food/grown))
+	if(food_bait.foodtypes & (MEAT|SEAFOOD|GORE|BUGS|DAIRY) || !(food_bait.foodtypes & (VEGETABLES|FRUIT)))
 		.[MULTIPLICATIVE_FISHING_MOD] = 0
 
 /datum/fish_trait/emulsijack
@@ -370,6 +381,11 @@ GLOBAL_LIST_INIT(spontaneous_fish_traits, populate_spontaneous_fish_traits())
 	name = "Predator"
 	catalog_description = "It's a predatory fish. It'll hunt down and eat live fishes of smaller size when hungry."
 	incompatible_traits = list(/datum/fish_trait/vegan)
+
+/datum/fish_trait/predator/catch_weight_mod(obj/item/fishing_rod/rod, mob/fisherman, atom/location, obj/item/fish/fish_type)
+	. = ..()
+	if(isfish(rod.bait))
+		.[MULTIPLICATIVE_FISHING_MOD] *= 2
 
 /datum/fish_trait/predator/apply_to_fish(obj/item/fish/fish)
 	. = ..()
@@ -647,3 +663,60 @@ GLOBAL_LIST_INIT(spontaneous_fish_traits, populate_spontaneous_fish_traits())
 	if(!HAS_TRAIT(source, TRAIT_FISH_STINGER))
 		return
 	change_venom_on_death(source, /datum/reagent/toxin/venom, 0.7, 0.3)
+
+/datum/fish_trait/ink
+	name = "Ink Production"
+	catalog_description = "This fish possess a sac that produces ink."
+	diff_traits_inheritability = 70
+	spontaneous_manifest_types = list(/obj/item/fish/squid = 35)
+
+/datum/fish_trait/ink/apply_to_fish(obj/item/fish/fish)
+	. = ..()
+	RegisterSignal(fish, COMSIG_ATOM_PROCESSED, PROC_REF(on_process))
+	RegisterSignal(fish, COMSIG_ITEM_ATTACK_ZONE, PROC_REF(attacked_someone))
+
+/datum/fish_trait/ink/proc/attacked_someone(obj/item/fish/source, mob/living/target, mob/living/user, zone)
+	SIGNAL_HANDLER
+	if(HAS_TRAIT(source, TRAIT_FISH_INK_ON_COOLDOWN) || source.status == FISH_DEAD)
+		return
+	if(!iscarbon(target) || target.get_bodypart(BODY_ZONE_HEAD))
+		target.adjust_temp_blindness_up_to(4 SECONDS, 8 SECONDS)
+		target.adjust_confusion_up_to(1.5 SECONDS, 4 SECONDS)
+		target.AddComponent(/datum/component/creamed, \
+			cream_color = COLOR_NEARLY_ALL_BLACK, \
+			memory_type = /datum/memory/witnessed_inking, \
+			moodlet_type = /datum/mood_event/inked, \
+		)
+	target.visible_message(span_warning("[target] is inked by [source]!"), span_userdanger("You've been inked by [source]!"))
+	playsound(target, SFX_DESECRATION, 50, TRUE)
+	ADD_TRAIT(source, TRAIT_FISH_INK_ON_COOLDOWN, FISH_TRAIT_DATUM)
+	addtimer(TRAIT_CALLBACK_REMOVE(source, TRAIT_FISH_INK_ON_COOLDOWN, FISH_TRAIT_DATUM), 9 SECONDS)
+
+/datum/fish_trait/ink/proc/on_process(obj/item/fish/source, mob/living/user, obj/item/process_item, list/results)
+	SIGNAL_HANDLER
+	new /obj/item/food/ink_sac(source.drop_location())
+
+/datum/fish_trait/camouflage
+	name = "Camouflage"
+	catalog_description = "This fish possess the ability to blend with its surroundings."
+	spontaneous_manifest_types = list(/obj/item/fish/squid = 35)
+
+/datum/fish_trait/camouflage/minigame_mod(obj/item/fishing_rod/rod, mob/fisherman, datum/fishing_challenge/minigame)
+	minigame.special_effects |= FISHING_MINIGAME_RULE_CAMO
+
+/datum/fish_trait/camouflage/apply_to_fish(obj/item/fish/fish)
+	. = ..()
+	RegisterSignal(fish, COMSIG_FISH_LIFE, PROC_REF(fade_out))
+	RegisterSignal(fish, list(COMSIG_MOVABLE_MOVED, COMSIG_FISH_STATUS_CHANGED), PROC_REF(reset_alpha))
+
+/datum/fish_trait/camouflage/proc/fade_out(obj/item/fish/source, seconds_per_tick)
+	SIGNAL_HANDLER
+	if(source.status == FISH_DEAD || source.last_move + 5 SECONDS >= world.time)
+		return
+	source.alpha = max(source.alpha - 10 * seconds_per_tick, 10)
+
+/datum/fish_trait/camouflage/proc/reset_alpha(obj/item/fish/source)
+	SIGNAL_HANDLER
+	var/init_alpha = initial(source.alpha)
+	if(init_alpha != source.alpha)
+		animate(source.alpha, alpha = init_alpha, time = 1.2 SECONDS, easing = CIRCULAR_EASING|EASE_OUT)

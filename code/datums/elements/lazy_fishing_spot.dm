@@ -60,14 +60,7 @@
 		return
 
 	var/datum/fish_source/fish_source = GLOB.preset_fish_sources[configuration]
-
-	var/list/known_fishes = list()
-	for(var/reward in fish_source.fish_table)
-		if(!ispath(reward, /obj/item/fish))
-			continue
-		var/obj/item/fish/prototype = reward
-		if(initial(prototype.show_in_catalog))
-			known_fishes += initial(prototype.name)
+	var/list/known_fishes = fish_source.get_catchable_fish_names(user, source)
 
 	if(!length(known_fishes))
 		return

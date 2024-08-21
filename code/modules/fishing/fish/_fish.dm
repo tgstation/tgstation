@@ -206,6 +206,8 @@
 	if(HAS_MIND_TRAIT(user, TRAIT_EXAMINE_FISH))
 		. += span_notice("It's [size] cm long.")
 		. += span_notice("It weighs [weight] g.")
+		if(HAS_TRAIT(src, TRAIT_FISHING_BAIT))
+			. += span_smallnoticeital("It can be used as a fishing bait.")
 
 ///Randomizes weight and size.
 /obj/item/fish/proc/randomize_size_and_weight(base_size = average_size, base_weight = average_weight, deviation = weight_size_deviation)
@@ -253,7 +255,7 @@
 				inhand_icon_state = "fish_huge"
 			update_weight_class(WEIGHT_CLASS_GIGANTIC)
 
-	if(size > FISH_SIZE_TWO_HANDS_REQUIRED)
+	if(size > FISH_SIZE_TWO_HANDS_REQUIRED || (HAS_TRAIT(src, TRAIT_FISH_SHOULD_TWOHANDED) && w_class >= WEIGHT_CLASS_BULKY))
 		inhand_icon_state = "[inhand_icon_state]_wielded"
 		AddComponent(/datum/component/two_handed, require_twohands = TRUE)
 

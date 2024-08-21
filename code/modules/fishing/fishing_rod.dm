@@ -42,6 +42,12 @@
 	///The name of the icon state of the reel overlay
 	var/reel_overlay = "reel_overlay"
 
+	/**
+	 * A list with two keys delimiting the spinning interval in which a mouse click has to be pressed while fishing.
+	 * Inherited from baits, passed down to the minigame lure.
+	 */
+	var/list/spin_frequency
+
 	///Prevents spamming the line casting, without affecting the player's click cooldown.
 	COOLDOWN_DECLARE(casting_cd)
 
@@ -437,6 +443,8 @@
 	switch(slot)
 		if(ROD_SLOT_BAIT)
 			bait = equipment
+			if(!HAS_TRAIT(bait, TRAIT_BAIT_ALLOW_FISHING_DUD))
+				ADD_TRAIT(src, TRAIT_ROD_REMOVE_FISHING_DUD, INNATE_TRAIT)
 		if(ROD_SLOT_HOOK)
 			hook = equipment
 		if(ROD_SLOT_LINE)
@@ -447,6 +455,7 @@
 	. = ..()
 	if(gone == bait)
 		bait = null
+		REMOVE_TRAIT(src, TRAIT_ROD_REMOVE_FISHING_DUD, INNATE_TRAIT)
 	if(gone == line)
 		cast_range -= FISHING_ROD_REEL_CAST_RANGE
 		line = null

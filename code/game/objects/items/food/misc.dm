@@ -797,3 +797,30 @@
 	foodtypes = VEGETABLES | GRAIN
 	w_class = WEIGHT_CLASS_TINY
 	crafting_complexity = FOOD_COMPLEXITY_4
+
+///Extracted from squids, or any fish with the ink fish trait.
+/obj/item/food/ink_sac
+	name = "ink sac"
+	desc = "the ink sac from some sort of fish or mollusk. It could be canned with a processor."
+	icon_state = "ink_sac"
+	food_reagents = list(/datum/reagent/consumable/nutriment = 5, /datum/reagent/consumable/salt = 5)
+	tastes = list("seafood" = 3)
+	foodtypes = SEAFOOD|RAW
+
+/obj/item/food/ink_sac/Initialize(mapload)
+	. = ..()
+	AddComponent(/datum/component/splat, \
+		memory_type = /datum/memory/witnessed_inking, \
+		smudge_type = /obj/effect/decal/cleanable/food/squid_ink, \
+		moodlet_type = /datum/mood_event/inked, \
+		splat_color = COLOR_NEARLY_ALL_BLACK, \
+		hit_callback = CALLBACK(src, PROC_REF(blind_em)), \
+	)
+
+/obj/item/food/ink_sac/proc/blind_em(mob/living/victim, inkable)
+	if(inkable)
+		victim.adjust_temp_blindness_up_to(7 SECONDS, 10 SECONDS)
+		victim.adjust_confusion_up_to(3.5 SECONDS, 6 SECONDS)
+		victim.Paralyze(2 SECONDS) //splat!
+	victim.visible_message(span_warning("[victim] is inked by [src]!"), span_userdanger("You've been inked by [src]!"))
+	playsound(victim, SFX_DESECRATION, 50, TRUE)

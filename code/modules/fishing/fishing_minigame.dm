@@ -53,6 +53,8 @@
 	var/phase = WAIT_PHASE
 	// Timer for the next phase
 	var/next_phase_timer
+	// The last time we clicked during the baiting phase
+	var/last_baiting_click
 	/// Fishing mob
 	var/mob/user
 	/// Rod that is used for the challenge
@@ -111,6 +113,7 @@
 	src.used_rod = rod
 	var/atom/spot = comp.parent
 	lure = new(get_turf(spot), spot)
+	lure.spin_frequency = rod.spin_frequency
 	RegisterSignal(spot, COMSIG_QDELETING, PROC_REF(on_spot_gone))
 	RegisterSignal(comp.fish_source, COMSIG_FISHING_SOURCE_INTERRUPT_CHALLENGE, PROC_REF(interrupt_challenge))
 	comp.fish_source.RegisterSignal(src, COMSIG_FISHING_CHALLENGE_COMPLETED, TYPE_PROC_REF(/datum/fish_source, on_challenge_completed))
@@ -122,7 +125,7 @@
 		var/movement_path = initial(fish.fish_movement_type)
 		mover = new movement_path(src)
 		// Apply fish trait modifiers
-		var/list/fish_list_properties = collect_fish_properties()
+		var/list/fish_list_properties = SSfishing.fish_properties
 		var/list/fish_traits = fish_list_properties[fish][NAMEOF(fish, fish_traits)]
 		for(var/fish_trait in fish_traits)
 			var/datum/fish_trait/trait = GLOB.fish_traits[fish_trait]
@@ -217,6 +220,35 @@
 	to_chat(user, span_notice("You start fishing..."))
 	playsound(lure, 'sound/effects/splash.ogg', 100)
 
+///Set the timers for lure that need to be spun at intervals.
+/datum/fishing_challenge/proc/set_lure_timers()
+	lure.spin_ready = FALSE
+	addtimer(CALLBACK(src, PROC_REF(set_lure_ready)), lure.spin_frequency[1], TIMER_UNIQUE | TIMER_OVERRIDE|TIMER_DELETE_ME)
+	addtimer(CALLBACK(src, PROC_REF(missed_lure)), lure.spin_frequency[2], TIMER_UNIQUE | TIMER_OVERRIDE|TIMER_DELETE_ME)
+	lure.update_appearance(UPDATE_OVERLAYS)
+
+/datum/fishing_challenge/proc/set_lure_ready()
+	if(phase != WAIT_PHASE)
+		return
+	lure.spin_ready = TRUE
+	lure.update_appearance(UPDATE_OVERLAYS)
+	if(special_effects & FISHING_MINIGAME_AUTOREEL)
+		addtimer(CALLBACK(src, PROC_REF(auto_spin)), 0.2 SECONDS)
+
+/datum/fishing_challenge/proc/auto_spin()
+	if(phase != WAIT_PHASE || !lure.spin_ready)
+		return
+	lure.spin_ready = FALSE
+	lure.update_appearance(UPDATE_OVERLAYS)
+	set_lure_timers()
+	send_alert("spun")
+
+/datum/fishing_challenge/proc/missed_lure()
+	if(phase != WAIT_PHASE)
+		return
+	send_alert("miss!")
+	start_baiting_phase(TRUE) //Add in another 3 to 5 seconds for not spinning the lure.
+
 /datum/fishing_challenge/proc/on_line_deleted(datum/source)
 	SIGNAL_HANDLER
 	fishing_line = null
@@ -238,8 +270,20 @@
 	if(!HAS_TRAIT(source, TRAIT_PROFOUND_FISHER) && source.get_active_held_item() != used_rod)
 		return
 	if(phase == WAIT_PHASE)
-		send_alert("miss!")
-		start_baiting_phase(TRUE) //Add in another 3 to 5 seconds for that blunder.
+		if(world.time < last_baiting_click + 0.25 SECONDS)
+			return //Don't punish players if they accidentally double clicked.
+		if(lure.spin_frequency)
+			if(!lure.spin_ready)
+				send_alert("too early!")
+				start_baiting_phase(TRUE) //Add in another 3 to 5 seconds for that blunder.
+			else
+				send_alert("spun")
+				last_baiting_click = world.time
+			lure.spin_ready = FALSE
+			set_lure_timers()
+		else
+			send_alert("miss!")
+			start_baiting_phase(TRUE) //Add in another 3 to 5 seconds for that blunder.
 	else if(phase == BITING_PHASE)
 		start_minigame_phase()
 	return COMSIG_MOB_CANCEL_CLICKON
@@ -284,10 +328,11 @@
 
 /datum/fishing_challenge/proc/start_baiting_phase(penalty = FALSE)
 	var/wait_time
+	last_baiting_click = world.time
 	if(penalty)
 		wait_time = min(timeleft(next_phase_timer) + rand(3 SECONDS, 5 SECONDS), 30 SECONDS)
 	else
-		wait_time = rand(3 SECONDS, 25 SECONDS)
+		wait_time = lure.spin_frequency ? rand(11 SECONDS, 17 SECONDS) : rand(3 SECONDS, 25 SECONDS)
 		if(special_effects & FISHING_MINIGAME_AUTOREEL && wait_time >= 15 SECONDS)
 			wait_time = max(wait_time - 7.5 SECONDS, 15 SECONDS)
 	deltimer(next_phase_timer)
@@ -295,7 +340,9 @@
 	//Bobbing animation
 	animate(lure, pixel_y = 1, time = 1 SECONDS, loop = -1, flags = ANIMATION_RELATIVE)
 	animate(pixel_y = -1, time = 1 SECONDS, flags = ANIMATION_RELATIVE)
-	next_phase_timer = addtimer(CALLBACK(src, PROC_REF(start_biting_phase)), wait_time, TIMER_STOPPABLE)
+	next_phase_timer = addtimer(CALLBACK(src, PROC_REF(start_biting_phase)), wait_time, TIMER_STOPPABLE|TIMER_DELETE_ME)
+	if(lure.spin_frequency)
+		set_lure_timers()
 
 /datum/fishing_challenge/proc/start_biting_phase()
 	phase = BITING_PHASE
@@ -336,10 +383,16 @@
 	animate(lure, pixel_y = 3, time = 5, loop = -1, flags = ANIMATION_RELATIVE)
 	animate(pixel_y = -3, time = 5, flags = ANIMATION_RELATIVE)
 	if(special_effects & FISHING_MINIGAME_AUTOREEL)
-		start_minigame_phase(auto_reel = TRUE)
-		return
+		addtimer(CALLBACK(src, PROC_REF(automatically_start_minigame)), 0.2 SECONDS)
 	// Setup next phase
-	next_phase_timer = addtimer(CALLBACK(src, PROC_REF(start_baiting_phase)), BITING_TIME_WINDOW, TIMER_STOPPABLE)
+	next_phase_timer = addtimer(CALLBACK(src, PROC_REF(start_baiting_phase)), BITING_TIME_WINDOW, TIMER_STOPPABLE|TIMER_DELETE_ME)
+	///We want lures with a set spin frequency to show a little green light during the minigame and not a red one.
+	lure.spin_frequency = TRUE
+	lure.update_appearance(UPDATE_OVERLAYS)
+
+/datum/fishing_challenge/proc/automatically_start_minigame()
+	if(phase == BITING_PHASE)
+		start_minigame_phase(auto_reel = TRUE)
 
 ///The damage dealt per second to the fish when FISHING_MINIGAME_RULE_KILL is active.
 #define FISH_DAMAGE_PER_SECOND 2
@@ -380,15 +433,33 @@
 	var/diff_dist = 100 + difficulty
 	bait_position = clamp(round(fish_position + rand(-diff_dist, diff_dist) - bait_height * 0.5), 0, FISHING_MINIGAME_AREA - bait_height)
 	if(!prepare_minigame_hud())
+		get_stack_trace("couldn't prepare minigame hud for a fishing challenge.") //just to be sure. This shouldn't happen.
+		qdel(src)
 		return
 	phase = MINIGAME_PHASE
 	deltimer(next_phase_timer)
 	if((FISHING_MINIGAME_RULE_KILL in special_effects) && ispath(reward_path,/obj/item/fish))
 		var/obj/item/fish/fish = reward_path
 		var/wait_time = (initial(fish.health) / FISH_DAMAGE_PER_SECOND) SECONDS
-		addtimer(CALLBACK(src, PROC_REF(win_anyway)), wait_time)
+		addtimer(CALLBACK(src, PROC_REF(win_anyway)), wait_time, TIMER_DELETE_ME)
 	start_time = world.time
 	experience_multiplier += difficulty * FISHING_SKILL_DIFFIULTY_EXP_MULT
+
+///Throws a stack with prefixed text.
+/datum/fishing_challenge/proc/get_stack_trace(init_text)
+	var/text = "[init_text] "
+	text += "used rod: [used_rod || "null"], "
+	if(used_rod)
+		text += "bait: [used_rod.bait || "null"], "
+	text += "reward: [reward_path || "null"], "
+	text += "user: [user || "null"]"
+	if(user)
+		if(QDELING(user))
+			text += ", user qdeling"
+		else if(!user.client)
+			text += ", user clientless"
+	text += "."
+	stack_trace(text)
 
 #undef FISH_DAMAGE_PER_SECOND
 
@@ -451,6 +522,11 @@
 				fishing_hud.transform = fishing_hud.transform.Scale(1, -1)
 				SEND_SOUND(user, sound('sound/effects/boing.ogg'))
 				COOLDOWN_START(src, active_effect_cd, rand(5, 6) SECONDS)
+			if(FISHING_MINIGAME_RULE_CAMO)
+				fishing_hud.icon_state = "background_camo"
+				SEND_SOUND(user, sound('sound/effects/nightmare_poof.ogg', volume = 15))
+				COOLDOWN_START(src, active_effect_cd, rand(6, 8) SECONDS)
+				animate(fishing_hud.hud_fish, alpha = 7, time = 2 SECONDS)
 		return
 
 	///go back to normal
@@ -463,6 +539,10 @@
 		if(FISHING_MINIGAME_RULE_FLIP)
 			fishing_hud.transform = fishing_hud.transform.Scale(1, -1)
 			COOLDOWN_START(src, active_effect_cd, rand(8, 12) SECONDS)
+		if(FISHING_MINIGAME_RULE_CAMO)
+			COOLDOWN_START(src, active_effect_cd, rand(9, 16) SECONDS)
+			SEND_SOUND(user, sound('sound/effects/nightmare_reappear.ogg', volume = 15))
+			animate(fishing_hud.hud_fish, alpha = 255, time = 1.2 SECONDS)
 
 	fishing_hud.icon_state = background
 	current_active_effect = null
@@ -624,8 +704,17 @@
 
 /// The visual that appears over the fishing spot
 /obj/effect/fishing_lure
+	name = "lure"
 	icon = 'icons/obj/fishing.dmi'
-	icon_state = "lure_idle"
+	icon_state = "lure"
+	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
+	/**
+	 * A list with two keys delimiting the spinning interval in which a mouse click has to be pressed while fishing.
+	 * If set, an emissive overlay will be added, colored green when the lure is ready to be spun, otherwise red.
+	 */
+	var/list/spin_frequency
+	///Is the bait ready to be spun?
+	var/spin_ready = FALSE
 
 /obj/effect/fishing_lure/Initialize(mapload, atom/spot)
 	. = ..()
@@ -637,6 +726,15 @@
 
 	set_glide_size(source.glide_size)
 	forceMove(source.loc)
+
+/obj/effect/fishing_lure/update_overlays()
+	. = ..()
+	if(!spin_frequency)
+		return
+	var/mutable_appearance/overlay = mutable_appearance(icon, "lure_spin_light")
+	overlay.color = spin_ready ? COLOR_GREEN : COLOR_RED
+	. += overlay
+	. += emissive_appearance(icon, "lure_spin_light_emissive")
 
 #undef WAIT_PHASE
 #undef BITING_PHASE

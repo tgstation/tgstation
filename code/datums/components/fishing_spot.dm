@@ -61,13 +61,7 @@
 	if(!HAS_MIND_TRAIT(user, TRAIT_EXAMINE_FISHING_SPOT))
 		return
 
-	var/list/known_fishes = list()
-	for(var/reward in fish_source.fish_table)
-		if(!ispath(reward, /obj/item/fish))
-			continue
-		var/obj/item/fish/prototype = reward
-		if(initial(prototype.show_in_catalog))
-			known_fishes += initial(prototype.name)
+	var/list/known_fishes = fish_source.get_catchable_fish_names(user, parent)
 
 	if(!length(known_fishes))
 		return
@@ -93,7 +87,7 @@
 
 /datum/component/fishing_spot/proc/start_fishing_challenge(obj/item/fishing_rod/rod, mob/user)
 	/// Roll what we caught based on modified table
-	var/result = fish_source.roll_reward(rod, user)
+	var/result = fish_source.roll_reward(rod, user, parent)
 	var/datum/fishing_challenge/challenge = new(src, result, rod, user)
 	fish_source.pre_challenge_started(rod, user, challenge)
 	challenge.start(user)

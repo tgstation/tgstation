@@ -6,24 +6,30 @@ GLOBAL_LIST_INIT(creamable, typecacheof(list(
 /**
  * Creamed component
  *
- * For when you have pie on your face
+ * For when you have some creamy/liquid-filled food thrown on your face
  */
 /datum/component/creamed
-	dupe_mode = COMPONENT_DUPE_UNIQUE_PASSARGS
 	/// Creampie overlay we use for non-carbon mobs
 	var/mutable_appearance/normal_overlay
 	/// Creampie bodypart overlay we use for carbon mobs
 	var/datum/bodypart_overlay/simple/creampie/bodypart_overlay
 	/// Cached head for carbons, to ensure proper removal of the creampie overlay
 	var/obj/item/bodypart/my_head
+	/// The color of the overlay
+	var/cream_color
+	/// The moodlet we give to the victim
+	var/datum/mood_event/moodlet_type
 
-/datum/component/creamed/Initialize()
+/datum/component/creamed/Initialize(cream_color, memory_type = /datum/memory/witnessed_creampie, moodlet_type = /datum/mood_event/creampie)
 	if(!is_type_in_typecache(parent, GLOB.creamable))
 		return COMPONENT_INCOMPATIBLE
 
 	SEND_SIGNAL(parent, COMSIG_MOB_CREAMED, src)
 
-	add_memory_in_range(parent, 7, /datum/memory/witnessed_creampie, protagonist = parent)
+	src.cream_color = cream_color
+	src.moodlet_type = moodlet_type
+
+	add_memory_in_range(parent, 7, memory_type, protagonist = parent)
 
 /datum/component/creamed/Destroy(force)
 	. = ..()
@@ -39,6 +45,7 @@ GLOBAL_LIST_INIT(creamable, typecacheof(list(
 			qdel(src)
 			return
 		bodypart_overlay = new()
+		bodypart_overlay.draw_color = cream_color
 		if(carbon_parent.bodyshape & BODYSHAPE_SNOUTED) //stupid, but external organ bodytypes are not stored on the limb
 			bodypart_overlay.icon_state = "creampie_lizard"
 		else if(my_head.bodyshape & BODYSHAPE_MONKEY)
@@ -47,7 +54,7 @@ GLOBAL_LIST_INIT(creamable, typecacheof(list(
 			bodypart_overlay.icon_state = "creampie_human"
 		my_head.add_bodypart_overlay(bodypart_overlay)
 		RegisterSignals(my_head, list(COMSIG_BODYPART_REMOVED, COMSIG_QDELETING), PROC_REF(lost_head))
-		carbon_parent.add_mood_event("creampie", /datum/mood_event/creampie)
+		carbon_parent.add_mood_event("creampie", moodlet_type)
 		carbon_parent.update_body_parts()
 	else if(iscorgi(parent))
 		normal_overlay = mutable_appearance('icons/mob/effects/creampie.dmi', "creampie_corgi")
@@ -60,6 +67,7 @@ GLOBAL_LIST_INIT(creamable, typecacheof(list(
 		PROC_REF(clean_up)
 	)
 	if(normal_overlay)
+		normal_overlay.color = cream_color
 		var/atom/atom_parent = parent
 		RegisterSignal(atom_parent, COMSIG_ATOM_UPDATE_OVERLAYS, PROC_REF(update_overlays))
 		atom_parent.update_appearance()
