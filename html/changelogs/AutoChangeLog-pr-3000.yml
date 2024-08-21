@@ -1,4 +1,0 @@
-author: "Wisemonster"
-delete-after: True
-changes:
-  - rscdel: "Removed the stage 2 hunger symptom"

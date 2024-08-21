@@ -1,4 +1,0 @@
-author: "Melbert"
-delete-after: True
-changes:
-  - bugfix: "Crewmembers immune to viruses won't be picked by the fake virus event."

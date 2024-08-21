@@ -244,3 +244,36 @@
   - rscadd: The crew monitor now has sorting options and a search bar.
   CannibalHunter:
   - rscadd: Added new durrcell plushie to the monkeshop!
+2024-08-21:
+  Absolucy:
+  - bugfix: The "Space Adaptation Effect" symptom now actually works as intended.
+  - bugfix: Fixed some runtimes related to pathology symptoms.
+  - code_imp: Cleaned up the code of some pathology symptoms.
+  - qol: Grey Tide viruses will no longer affect airlocks that lead to space.
+  - bugfix: Fixed a runtime related to ghost hearing.
+  - bugfix: Fixed some dirt tiles at centcom that wasted init time with useless atmos
+      processing.
+  - rscadd: Curators will now spawn with some of the tapes they've had approved (if
+      any) in their cassette rack.
+  - qol: Bulk cassette crates will no longer contain duplicates tapes.
+  Absolucy, 13spacemen, Melbert:
+  - code_imp: Poll alerts support small border pictures in the chat message.
+  - code_imp: Poll alert alert picture and jump target do not have to be the same.
+  - qol: Slime intelligence potions ask the user for a reason, this will be shown
+      to ghosts.
+  - bugfix: Fixes polling for things causing said things to have their planes and
+      layers screwed up (causing random objects or mobs to appear above runechat and
+      blindness, for example)
+  Absolucy, Vekter:
+  - bugfix: Fixed the DNA Infuser's circuit board missing from the techfab and tech
+      storage.
+  KnigTheThrasher:
+  - rscadd: Added wind turbines to lavaland mining base
+  Melbert:
+  - bugfix: Crewmembers immune to viruses won't be picked by the fake virus event.
+  RedBaronFlyer:
+  - qol: Janitorial has had a budget increase. All janitors are now equipped with
+      keyrings.
+  Wisemonster:
+  - rscdel: Removed the stage 2 hunger symptom
+  - bugfix: Fixed one of the bars in box station having flooring that can create chasms
