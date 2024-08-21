@@ -1,0 +1,4 @@
+author: "Absolucy"
+delete-after: True
+changes:
+  - qol: "Unarmed attacks with carp jaws now uses a bite effect rather than a punch effect."
