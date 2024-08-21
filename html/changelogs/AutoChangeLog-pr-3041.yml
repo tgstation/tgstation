@@ -1,0 +1,4 @@
+author: "TTNT789"
+delete-after: True
+changes:
+  - bugfix: "makes the rage chemical system not explode you repeatedly apon implantation"
