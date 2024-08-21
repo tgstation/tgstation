@@ -1,0 +1,5 @@
+author: "Ghommie"
+delete-after: True
+changes:
+  - rscadd: "Buckshot is back on the menu, on the blackmarket."
+  - balance: "the integrity of firearms now counts toward projectile damage. A gun that's on the very verge of breaking down will deal half as much damage."
