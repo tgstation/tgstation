@@ -160,9 +160,17 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	throw_range = 5
 	armour_penetration = 35
 
+/obj/item/claymore/cutlass/old
+	name = "old cutlass"
+	desc = parent_type::desc + " This one seems a tad old."
+	force = 24
+	throwforce = 17
+	armour_penetration = 20
+	block_chance = 30
+
 /obj/item/claymore/carrot
 	name = "carrot sword"
-	desc = "A full-sized carrot sword. Definitely \not\ good for the eyes, not anymore."
+	desc = "A full-sized carrot sword. Definitely <b>not</b> good for the eyes, not anymore."
 	icon_state = "carrot_sword"
 	inhand_icon_state = "carrot_sword"
 	worn_icon_state = "carrot_sword"
@@ -327,7 +335,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	playsound(user, 'sound/items/screwdriver2.ogg', 50, TRUE)
 
 /obj/item/claymore/highlander/robot //BLOODTHIRSTY BORGS NOW COME IN PLAID
-	icon = 'icons/obj/items_cyborg.dmi'
+	icon = 'icons/mob/silicon/robot_items.dmi'
 	icon_state = "claymore_cyborg"
 	var/mob/living/silicon/robot/robot
 
@@ -387,7 +395,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	force = 2
 	throwforce = 10 //10 + 2 (WEIGHT_CLASS_SMALL) * 4 (EMBEDDED_IMPACT_PAIN_MULTIPLIER) = 18 damage on hit due to guaranteed embedding
 	throw_speed = 4
-	embedding = list("pain_mult" = 4, "embed_chance" = 100, "fall_chance" = 0)
+	embed_type = /datum/embed_data/throwing_star
 	armour_penetration = 40
 
 	w_class = WEIGHT_CLASS_SMALL
@@ -395,11 +403,22 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	custom_materials = list(/datum/material/iron= SMALL_MATERIAL_AMOUNT * 5, /datum/material/glass= SMALL_MATERIAL_AMOUNT * 5)
 	resistance_flags = FIRE_PROOF
 
+/datum/embed_data/throwing_star
+	pain_mult = 4
+	embed_chance = 100
+	fall_chance = 0
+
 /obj/item/throwing_star/stamina
 	name = "shock throwing star"
 	desc = "An aerodynamic disc designed to cause excruciating pain when stuck inside fleeing targets, hopefully without causing fatal harm."
 	throwforce = 5
-	embedding = list("pain_chance" = 5, "embed_chance" = 100, "fall_chance" = 0, "jostle_chance" = 10, "pain_stam_pct" = 0.8, "jostle_pain_mult" = 3)
+	embed_type = /datum/embed_data/throwing_star/stamina
+
+/datum/embed_data/throwing_star/stamina
+	pain_mult = 5
+	jostle_chance = 10
+	pain_stam_pct = 0.8
+	jostle_pain_mult = 3
 
 /obj/item/throwing_star/toy
 	name = "toy throwing star"
@@ -407,7 +426,11 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	sharpness = NONE
 	force = 0
 	throwforce = 0
-	embedding = list("pain_mult" = 0, "jostle_pain_mult" = 0, "embed_chance" = 100, "fall_chance" = 0)
+	embed_type = /datum/embed_data/throwing_star/toy
+
+/datum/embed_data/throwing_star/toy
+	pain_mult = 0
+	jostle_pain_mult = 0
 
 /obj/item/switchblade
 	name = "switchblade"
@@ -489,6 +512,36 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	else
 		user.visible_message(span_suicide("[user] is strangling [user.p_them()]self with [src]'s cord! It looks like [user.p_theyre()] trying to commit suicide!"))
 	return OXYLOSS
+
+/obj/item/bambostaff
+	name = "Bamboo Staff"
+	desc = "A long bamboo-made staff with steel-capped ends. It is rumoured that initiates of Spider Clan train with such before getting to learn how to use a katana."
+	force = 10
+	block_chance = 45
+	block_sound = 'sound/weapons/genhit.ogg'
+	slot_flags = ITEM_SLOT_BACK
+	w_class = WEIGHT_CLASS_BULKY
+	hitsound = SFX_SWING_HIT
+	attack_verb_continuous = list("smashes", "slams", "whacks", "thwacks")
+	attack_verb_simple = list("smash", "slam", "whack", "thwack")
+	icon = 'icons/obj/weapons/staff.dmi'
+	icon_state = "bambostaff0"
+	base_icon_state = "bambostaff"
+	inhand_icon_state = "bambostaff0"
+	worn_icon_state = "bambostaff0"
+	lefthand_file = 'icons/mob/inhands/weapons/staves_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/weapons/staves_righthand.dmi'
+
+/obj/item/bambostaff/Initialize(mapload)
+	. = ..()
+	AddComponent(/datum/component/two_handed, \
+		force_unwielded = 10, \
+		force_wielded = 14, \
+	)
+
+/obj/item/bambostaff/update_icon_state()
+	icon_state = inhand_icon_state = "[base_icon_state][HAS_TRAIT(src, TRAIT_WIELDED)]"
+	return ..()
 
 /obj/item/cane
 	name = "cane"
@@ -761,6 +814,40 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	icon_state = "hoverboard_nt_held"
 	inhand_icon_state = "hoverboard_nt"
 	board_item_type = /obj/vehicle/ridden/scooter/skateboard/hoverboard/admin
+
+/obj/item/melee/skateboard/holyboard
+	name = "holy skateboard"
+	desc = "A board blessed by the gods with the power to grind for our sins. Has the initials 'J.C.' on the underside."
+	icon_state = "hoverboard_holy_held"
+	inhand_icon_state = "hoverboard_holy"
+	force = 18
+	throwforce = 6
+	w_class = WEIGHT_CLASS_NORMAL
+	attack_verb_continuous = list("bashes", "crashes", "grinds", "skates")
+	attack_verb_simple = list("bash", "crash", "grind", "skate")
+	board_item_type = /obj/vehicle/ridden/scooter/skateboard/hoverboard/holyboarded
+
+/obj/item/melee/skateboard/holyboard/Initialize(mapload)
+	. = ..()
+	AddComponent(/datum/component/anti_magic, MAGIC_RESISTANCE|MAGIC_RESISTANCE_HOLY)
+	AddComponent(/datum/component/effect_remover, \
+	success_feedback = "You disrupt the magic of %THEEFFECT with %THEWEAPON.", \
+	success_forcesay = "BEGONE FOUL MAGICKS!!", \
+	tip_text = "Clear rune", \
+	on_clear_callback = CALLBACK(src, PROC_REF(on_cult_rune_removed)), \
+	effects_we_clear = list(/obj/effect/rune, /obj/effect/heretic_rune) \
+	)
+	AddElement(/datum/element/bane, target_type = /mob/living/basic/revenant, damage_multiplier = 0, added_damage = 25, requires_combat_mode = FALSE)
+
+/obj/item/melee/skateboard/holyboard/proc/on_cult_rune_removed(obj/effect/target, mob/living/user)
+	SIGNAL_HANDLER
+	if(!istype(target, /obj/effect/rune))
+		return
+
+	var/obj/effect/rune/target_rune = target
+	if(target_rune.log_when_erased)
+		user.log_message("erased [target_rune.cultist_name] rune using [src]", LOG_GAME)
+	SSshuttle.shuttle_purchase_requirements_met[SHUTTLE_UNLOCK_NARNAR] = TRUE
 
 /obj/item/melee/baseball_bat
 	name = "baseball bat"
@@ -1048,7 +1135,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	throwforce = 25
 	throw_speed = 4
 	attack_speed = CLICK_CD_HYPER_RAPID
-	embedding = list("embed_chance" = 100)
+	embed_type = /datum/embed_data/hfr_blade
 	block_chance = 25
 	block_sound = 'sound/weapons/parry.ogg'
 	sharpness = SHARP_EDGED
@@ -1062,6 +1149,9 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	var/previous_y
 	/// The previous target we attacked
 	var/datum/weakref/previous_target
+
+/datum/embed_data/hfr_blade
+	embed_chance = 100
 
 /obj/item/highfrequencyblade/Initialize(mapload)
 	. = ..()
@@ -1150,7 +1240,6 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	alpha = 150
 	duration = 0.5 SECONDS
 	layer = ABOVE_ALL_MOB_LAYER
-	plane = ABOVE_GAME_PLANE
 
 /obj/effect/temp_visual/slash/Initialize(mapload, atom/target, x_slashed, y_slashed, slash_color)
 	. = ..()

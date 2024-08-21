@@ -23,6 +23,17 @@
 	time = 4 SECONDS
 	category = CAT_EQUIPMENT
 
+/datum/crafting_recipe/moonflowershield
+	name = "Moonflower Shield"
+	result = /obj/item/shield/buckler/moonflower
+	reqs = list(
+		/obj/item/seeds/sunflower/moonflower = 3,
+		/obj/item/grown/log/steel = 3,
+	)
+	time = 4 SECONDS
+	category = CAT_EQUIPMENT
+
+
 /datum/crafting_recipe/radiogloves
 	name = "Radio Gloves"
 	result = /obj/item/clothing/gloves/radio
@@ -257,6 +268,17 @@
 	reqs = list(
 		/obj/item/tank/internals/oxygen = 1,
 		/obj/item/stack/cable_coil = 15,
+	)
+	category = CAT_EQUIPMENT
+	tool_behaviors = list(TOOL_WELDER, TOOL_WIRECUTTER)
+
+/datum/crafting_recipe/arrow_quiver
+	name = "Archery Quiver"
+	result = /obj/item/storage/bag/quiver/lesser
+	time = 10
+	reqs = list(
+		/obj/item/stack/sheet/leather = 4,
+		/obj/item/stack/sheet/cardboard = 4
 	)
 	category = CAT_EQUIPMENT
 	tool_behaviors = list(TOOL_WELDER, TOOL_WIRECUTTER)

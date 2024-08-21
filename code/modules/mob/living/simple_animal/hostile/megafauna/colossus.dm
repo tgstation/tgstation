@@ -164,7 +164,6 @@
 	icon = 'icons/effects/effects.dmi'
 	icon_state = "at_shield2"
 	layer = FLY_LAYER
-	plane = ABOVE_GAME_PLANE
 	light_system = OVERLAY_LIGHT
 	light_range = 2.5
 	light_power = 1.2
@@ -187,6 +186,10 @@
 	pass_flags = PASSTABLE
 	plane = GAME_PLANE
 	var/explode_hit_objects = TRUE
+
+/obj/projectile/colossus/Initialize(mapload)
+	. = ..()
+	AddComponent(/datum/component/parriable_projectile)
 
 /obj/projectile/colossus/can_hit_target(atom/target, direct_target = FALSE, ignore_loc = FALSE, cross_failed = FALSE)
 	if(isliving(target))
@@ -538,9 +541,9 @@
 			possessor.investigate_log("has died from [src].", INVESTIGATE_DEATHS)
 			possessor.death(FALSE)
 		if(holder_animal)
-			possessor.forceMove(get_turf(holder_animal))
 			holder_animal.mind.transfer_to(possessor)
 			possessor.mind.grab_ghost(force = TRUE)
+			possessor.forceMove(get_turf(holder_animal))
 			holder_animal.investigate_log("has been gibbed by [src].", INVESTIGATE_DEATHS)
 			holder_animal.gib(DROP_ALL_REMAINS)
 			return ..()

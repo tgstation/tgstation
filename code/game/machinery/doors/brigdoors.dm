@@ -14,8 +14,8 @@
 	desc = "A remote control for a door."
 	current_mode = SD_MESSAGE
 	req_access = list(ACCESS_SECURITY)
-	text_color = "#F44"
-	header_text_color = "#F88"
+	text_color = "#FF4444"
+	header_text_color = "#FF8888"
 
 	/// ID of linked machinery/lockers.
 	var/id = null
@@ -33,6 +33,8 @@
 	var/list/closets = list()
 	///needed to send messages to sec radio
 	var/obj/item/radio/sec_radio
+
+WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/machinery/status_display/door_timer)
 
 /obj/machinery/status_display/door_timer/Initialize(mapload)
 	. = ..()
@@ -173,21 +175,21 @@
  * * seconds - Return the time in seconds if TRUE, else deciseconds.
  */
 /obj/machinery/status_display/door_timer/proc/time_left(seconds = FALSE)
-	. = max(0, timer_duration + activation_time - world.time)
+	. = max(0, timer_duration + (activation_time ? activation_time - world.time : 0))
 	if(seconds)
 		. /= (1 SECONDS)
 
 /**
  * Set the timer. Does NOT automatically start counting down, but does update the display.
  *
- * returns TRUE if no change occurred
+ * returns FALSE if no change occurred
  *
  * Arguments:
  * value - time in deciseconds to set the timer for.
  */
 /obj/machinery/status_display/door_timer/proc/set_timer(value)
-	var/new_time = clamp(value, 0, MAX_TIMER + world.time - activation_time)
-	. = new_time == timer_duration //return 1 on no change
+	var/new_time = clamp(value, 0, MAX_TIMER)
+	. = new_time != timer_duration //return 1 on change
 	timer_duration = new_time
 	update_content()
 
@@ -214,7 +216,7 @@
 			break
 	return data
 
-/obj/machinery/status_display/door_timer/ui_act(action, params)
+/obj/machinery/status_display/door_timer/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if(.)
 		return

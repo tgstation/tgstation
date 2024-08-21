@@ -73,6 +73,11 @@
 	name = "Russian Cargo Hauler"
 	requires_power = TRUE
 
+/area/shuttle/hunter/mi13_foodtruck
+	name = "Perfectly Ordinary Food Truck"
+	requires_power = TRUE
+	ambience_index = AMBIENCE_DANGER
+
 ////////////////////////////White Ship////////////////////////////
 
 /area/shuttle/abandoned

@@ -1,4 +1,5 @@
 /obj/machinery/power/emitter
+	SET_BASE_VISUAL_PIXEL(0, DEPTH_OFFSET)
 	name = "emitter"
 	desc = "A heavy-duty industrial laser, often used in containment fields and power generation."
 	icon = 'icons/obj/machines/engine/singularity.dmi'
@@ -60,6 +61,8 @@
 
 /obj/machinery/power/emitter/Initialize(mapload)
 	. = ..()
+	//Add to the early process queue to prioritize power draw
+	SSmachines.processing_early += src
 	RefreshParts()
 	set_wires(new /datum/wires/emitter(src))
 	if(welded)
@@ -187,7 +190,7 @@
 	togglelock(user)
 	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
-/obj/machinery/power/emitter/process(seconds_per_tick)
+/obj/machinery/power/emitter/process_early(seconds_per_tick)
 	var/power_usage = active_power_usage * seconds_per_tick
 	if(machine_stat & (BROKEN))
 		return

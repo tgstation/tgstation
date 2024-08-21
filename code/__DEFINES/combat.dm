@@ -163,13 +163,13 @@ DEFINE_BITFIELD(status_flags, list(
 #define DEFAULT_MESSAGE_RANGE 7
 
 //Shove knockdown lengths (deciseconds)
-#define SHOVE_KNOCKDOWN_SOLID 20
-#define SHOVE_KNOCKDOWN_HUMAN 20
-#define SHOVE_KNOCKDOWN_TABLE 20
+#define SHOVE_KNOCKDOWN_SOLID 2 SECONDS
+#define SHOVE_KNOCKDOWN_HUMAN 2 SECONDS
+#define SHOVE_KNOCKDOWN_TABLE 2 SECONDS
 #define SHOVE_KNOCKDOWN_COLLATERAL 1
-#define SHOVE_CHAIN_PARALYZE 30
+#define SHOVE_CHAIN_PARALYZE 3 SECONDS
 //Staggered slowdown, an effect caused by shoving and a few other features, such as tackling
-#define STAGGERED_SLOWDOWN_LENGTH 30
+#define STAGGERED_SLOWDOWN_LENGTH 3 SECONDS
 #define STAGGERED_SLOWDOWN_STRENGTH 0.85 //multiplier
 //Shove disarming item list
 GLOBAL_LIST_INIT(shove_disarming_types, typecacheof(list(
@@ -180,37 +180,10 @@ GLOBAL_LIST_INIT(shove_disarming_types, typecacheof(list(
 #define UNARMED_MISS_CHANCE_MAX 80
 
 //Combat object defines
-
-//Embedded objects
-///Chance for embedded objects to cause pain (damage user)
-#define EMBEDDED_PAIN_CHANCE 15
-///Chance for embedded object to fall out (causing pain but removing the object)
-#define EMBEDDED_ITEM_FALLOUT 5
-///Chance for an object to embed into somebody when thrown
-#define EMBED_CHANCE 45
-///Coefficient of multiplication for the damage the item does while embedded (this*item.w_class)
-#define EMBEDDED_PAIN_MULTIPLIER 2
-///Coefficient of multiplication for the damage the item does when it first embeds (this*item.w_class)
-#define EMBEDDED_IMPACT_PAIN_MULTIPLIER 4
-///The minimum value of an item's throw_speed for it to embed (Unless it has embedded_ignore_throwspeed_threshold set to 1)
+/// The minimum value of an item's throw_speed for it to embed (Unless it has embedded_ignore_throwspeed_threshold set to 1)
 #define EMBED_THROWSPEED_THRESHOLD 4
-///Coefficient of multiplication for the damage the item does when it falls out or is removed without a surgery (this*item.w_class)
-#define EMBEDDED_UNSAFE_REMOVAL_PAIN_MULTIPLIER 6
-///A Time in ticks, total removal time = (this*item.w_class)
-#define EMBEDDED_UNSAFE_REMOVAL_TIME 30
-///Chance for embedded objects to cause pain every time they move (jostle)
-#define EMBEDDED_JOSTLE_CHANCE 5
-///Coefficient of multiplication for the damage the item does while
-#define EMBEDDED_JOSTLE_PAIN_MULTIPLIER 1
-///This percentage of all pain will be dealt as stam damage rather than brute (0-1)
-#define EMBEDDED_PAIN_STAM_PCT 0.0
-///For thrown weapons, every extra speed it's thrown at above its normal throwspeed will add this to the embed chance
+/// For thrown embedding weapons, every extra speed it's thrown at above its normal throwspeed will add this to the embed chance
 #define EMBED_CHANCE_SPEED_BONUS 10
-
-#define EMBED_HARMLESS list("pain_mult" = 0, "jostle_pain_mult" = 0, "ignore_throwspeed_threshold" = TRUE)
-#define EMBED_HARMLESS_SUPERIOR list("pain_mult" = 0, "jostle_pain_mult" = 0, "ignore_throwspeed_threshold" = TRUE, "embed_chance" = 100, "fall_chance" = 0.1)
-#define EMBED_POINTY list("ignore_throwspeed_threshold" = TRUE)
-#define EMBED_POINTY_SUPERIOR list("embed_chance" = 100, "ignore_throwspeed_threshold" = TRUE)
 
 //Gun weapon weight
 #define WEAPON_LIGHT 1
@@ -381,7 +354,7 @@ GLOBAL_LIST_INIT(leg_zones, list(BODY_ZONE_R_LEG, BODY_ZONE_L_LEG))
 ///If the obstacle is an object at the border of the turf (so no signal from being sent to the other turf)
 #define SHOVE_DIRECTIONAL_BLOCKED (1<<6)
 
-///Bitfield returned by listeners for COMSIG_CARBON_ENTER_STAMCRIT when they perform some action that prevents a mob going into stamcrit.
+///Bitfield returned by listeners for COMSIG_LIVING_ENTER_STAMCRIT when they perform some action that prevents a mob going into stamcrit.
 #define STAMCRIT_CANCELLED (1<<0)
 
 ///Deathmatch lobby current status

@@ -11,7 +11,7 @@ GLOBAL_LIST_INIT(nearsighted_glasses, list(
 ))
 
 ///Options for the prosthetic limb quirk to choose from
-GLOBAL_LIST_INIT(limb_choice, list(
+GLOBAL_LIST_INIT(prosthetic_limb_choice, list(
 	"Left Arm" = /obj/item/bodypart/arm/left/robot/surplus,
 	"Right Arm" = /obj/item/bodypart/arm/right/robot/surplus,
 	"Left Leg" = /obj/item/bodypart/leg/left/robot/surplus,
@@ -91,4 +91,10 @@ GLOBAL_LIST_INIT(organ_choice, list(
 	"Lungs" = ORGAN_SLOT_LUNGS,
 	"Liver" = ORGAN_SLOT_LIVER,
 	"Stomach" = ORGAN_SLOT_STOMACH,
+))
+
+///Paraplegic Quirk
+GLOBAL_LIST_INIT(paraplegic_choice, list(
+	"Default" = FALSE,
+	"Amputee" = TRUE,
 ))

@@ -144,7 +144,8 @@
 	if(!can_emag(interacting_with, user))
 		return ITEM_INTERACT_BLOCKING
 	log_combat(user, interacting_with, "attempted to emag")
-	interacting_with.emag_act(user, src)
+	if(interacting_with.emag_act(user, src))
+		SSblackbox.record_feedback("tally", "atom_emagged", 1, interacting_with.type)
 	return ITEM_INTERACT_SUCCESS
 
 /obj/item/card/emag/ranged_interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)

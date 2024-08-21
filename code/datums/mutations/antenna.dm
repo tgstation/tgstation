@@ -2,8 +2,8 @@
 	name = "Antenna"
 	desc = "The affected person sprouts an antenna. This is known to allow them to access common radio channels passively."
 	quality = POSITIVE
-	text_gain_indication = "<span class='notice'>You feel an antenna sprout from your forehead.</span>"
-	text_lose_indication = "<span class='notice'>Your antenna shrinks back down.</span>"
+	text_gain_indication = span_notice("You feel an antenna sprout from your forehead.")
+	text_lose_indication = span_notice("Your antenna shrinks back down.")
 	instability = POSITIVE_INSTABILITY_MINOR
 	difficulty = 8
 	var/datum/weakref/radio_weakref
@@ -44,8 +44,8 @@
 	name = "Mind Reader"
 	desc = "The affected person can look into the recent memories of others."
 	quality = POSITIVE
-	text_gain_indication = "<span class='notice'>You hear distant voices at the corners of your mind.</span>"
-	text_lose_indication = "<span class='notice'>The distant voices fade.</span>"
+	text_gain_indication = span_notice("You hear distant voices at the corners of your mind.")
+	text_lose_indication = span_notice("The distant voices fade.")
 	power_path = /datum/action/cooldown/spell/pointed/mindread
 	instability = POSITIVE_INSTABILITY_MINOR
 	difficulty = 8

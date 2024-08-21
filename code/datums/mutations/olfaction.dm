@@ -3,8 +3,8 @@
 	desc = "Your sense of smell is comparable to that of a canine."
 	quality = POSITIVE
 	difficulty = 12
-	text_gain_indication = "<span class='notice'>Smells begin to make more sense...</span>"
-	text_lose_indication = "<span class='notice'>Your sense of smell goes back to normal.</span>"
+	text_gain_indication = span_notice("Smells begin to make more sense...")
+	text_lose_indication = span_notice("Your sense of smell goes back to normal.")
 	power_path = /datum/action/cooldown/spell/olfaction
 	instability = POSITIVE_INSTABILITY_MODERATE
 	synchronizer_coeff = 1

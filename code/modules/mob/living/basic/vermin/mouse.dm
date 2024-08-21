@@ -1,10 +1,13 @@
 /mob/living/basic/mouse
+	SET_BASE_VISUAL_PIXEL(0, 10)
 	name = "mouse"
 	desc = "This cute little guy just loves the taste of uninsulated electrical cables. Isn't he adorable?"
 	icon_state = "mouse_gray"
 	icon_living = "mouse_gray"
 	icon_dead = "mouse_gray_dead"
 	held_state = "mouse_gray"
+	shadow_type = SHADOW_SMALL
+	shadow_offset_y = 2
 
 	maxHealth = 5
 	health = 5
@@ -117,11 +120,19 @@
 	. = ..(TRUE)
 	// Now if we were't ACTUALLY gibbed, spawn the dead mouse
 	if(!gibbed)
-		var/obj/item/food/deadmouse/mouse = new(loc)
-		mouse.copy_corpse(src)
-		if(HAS_TRAIT(src, TRAIT_BEING_SHOCKED))
-			mouse.desc = "They're toast."
-			mouse.add_atom_colour("#3A3A3A", FIXED_COLOUR_PRIORITY)
+		var/make_a_corpse = TRUE
+		var/place_to_make_corpse = loc
+		if(istype(loc, /obj/item/clothing/head/mob_holder))//If our mouse is dying in place holder we want to put the dead mouse where the place holder was
+			var/obj/item/clothing/head/mob_holder/found_holder = loc
+			place_to_make_corpse = found_holder.loc
+			if(istype(found_holder.loc, /obj/machinery/microwave))//Microwaves gib things that die when cooked, so we don't need to make a dead body too
+				make_a_corpse = FALSE
+		if(make_a_corpse)
+			var/obj/item/food/deadmouse/mouse = new(place_to_make_corpse)
+			mouse.copy_corpse(src)
+			if(HAS_TRAIT(src, TRAIT_BEING_SHOCKED))
+				mouse.desc = "They're toast."
+				mouse.add_atom_colour("#3A3A3A", FIXED_COLOUR_PRIORITY)
 	qdel(src)
 
 /mob/living/basic/mouse/UnarmedAttack(atom/attack_target, proximity_flag, list/modifiers)
@@ -361,9 +372,7 @@
 	var/trans_amount = reagents.maximum_volume - reagents.total_volume * (4 / 3)
 	if(target_reagents.has_reagent(/datum/reagent/fuel) && target_reagents.trans_to(src, trans_amount))
 		to_chat(user, span_notice("You dip [src] into [interacting_with]."))
-	else
-		to_chat(user, span_warning("That's a terrible idea."))
-	return ITEM_INTERACT_BLOCKING
+		return ITEM_INTERACT_SUCCESS
 
 /obj/item/food/deadmouse/moldy
 	name = "moldy dead mouse"

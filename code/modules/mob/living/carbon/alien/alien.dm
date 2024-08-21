@@ -76,6 +76,7 @@
 		return pick (list("xltrails_1", "xltrails2"))
 	else
 		return pick (list("xttrails_1", "xttrails2"))
+
 /*----------------------------------------
 Proc: AddInfectionImages()
 Des: Gives the client of the alien an image on each infected mob.
@@ -161,3 +162,6 @@ Des: Removes all infected images from the alien.
 
 /mob/living/carbon/alien/proc/update_alien_speed()
 	add_or_update_variable_movespeed_modifier(/datum/movespeed_modifier/alien_speed, multiplicative_slowdown = alien_speed)
+
+/mob/living/carbon/alien/get_footprint_sprite()
+	return FOOTPRINT_SPRITE_CLAWS

@@ -276,7 +276,7 @@
 	else
 		icon_state = initial(icon_state)
 
-/obj/structure/closet/body_bag/environmental/prisoner/container_resist_act(mob/living/user)
+/obj/structure/closet/body_bag/environmental/prisoner/container_resist_act(mob/living/user, loc_required = TRUE)
 	/// copy-pasted with changes because flavor text as well as some other misc stuff
 	if(opened)
 		return

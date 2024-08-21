@@ -403,7 +403,6 @@
 	desc = "Communism powerful force."
 	icon = 'icons/effects/96x96.dmi'
 	icon_state = "communist"
-	layer = ABOVE_OPEN_TURF_LAYER
 	pixel_x = -32
 	pixel_y = -32
 

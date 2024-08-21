@@ -47,13 +47,15 @@
 	var/cooling_power = 2
 	/// Icon state when inside a tank holder.
 	var/tank_holder_icon_state = "holder_extinguisher"
+	///Icon state when inside an extinguisher cabinet.
+	var/cabinet_icon_state = "extinguisher_common"
 
 /obj/item/extinguisher/Initialize(mapload)
 	. = ..()
 	var/static/list/slapcraft_recipe_list = list(/datum/crafting_recipe/ghettojetpack)
 
-	AddComponent(
-		/datum/component/slapcrafting,\
+	AddElement(
+		/datum/element/slapcrafting,\
 		slapcraft_recipes = slapcraft_recipe_list,\
 	)
 
@@ -84,6 +86,7 @@
 	max_water = 30
 	sprite_name = "miniFE"
 	dog_fashion = null
+	cabinet_icon_state = "extinguisher_mini"
 
 /obj/item/extinguisher/mini/empty
 	starting_water = FALSE
@@ -141,6 +144,7 @@
 	)
 	sprite_name = "foam_extinguisher"
 	precision = TRUE
+	cabinet_icon_state = "extinguisher_adv"
 	max_water = 100
 
 /obj/item/extinguisher/advanced/empty
@@ -190,7 +194,7 @@
 			balloon_alert(user, "already full!")
 			return TRUE
 		// Make sure we're refilling with the proper chem.
-		if(!(target.reagents.has_reagent(chem)))
+		if(!(target.reagents.has_reagent(chem, check_subtypes = TRUE)))
 			balloon_alert(user, "can't refill with this liquid!")
 			return TRUE
 		var/obj/structure/reagent_dispensers/W = target //will it work?

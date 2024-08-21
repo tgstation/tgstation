@@ -16,8 +16,15 @@
 	var/reckoning_complete = FALSE
 	///Has the cult risen, and gotten red eyes?
 	var/cult_risen = FALSE
-	///Has the cult asceneded, and gotten halos?
+	///Has the cult ascended, and gotten halos?
 	var/cult_ascendent = FALSE
+
+	/// List that keeps track of which items have been unlocked after a heretic was sacked.
+	var/list/unlocked_heretic_items = list(
+		CURSED_BLADE_UNLOCKED = FALSE,
+		CRIMSON_MEDALLION_UNLOCKED = FALSE,
+		PROTEON_ORB_UNLOCKED = FALSE,
+	)
 
 	///Has narsie been summoned yet?
 	var/narsie_summoned = FALSE
@@ -58,7 +65,7 @@
 		for(var/datum/mind/mind as anything in members)
 			if(mind.current)
 				SEND_SOUND(mind.current, 'sound/ambience/antag/bloodcult/bloodcult_halos.ogg')
-				to_chat(mind.current, span_cult_large(span_warning("Your cult is ascendent and the red harvest approaches - you cannot hide your true nature for much longer!!")))
+				to_chat(mind.current, span_cult_large(span_warning("Your cult is ascendant and the red harvest approaches - you cannot hide your true nature for much longer!!")))
 				mind.current.AddElement(/datum/element/cult_halo)
 		cult_ascendent = TRUE
 		log_game("The blood cult has ascended with [cultplayers] players.")
@@ -127,6 +134,7 @@
 	return "<div class='panel redborder'>[parts.Join("<br>")]</div>"
 
 /datum/team/cult/proc/is_sacrifice_target(datum/mind/mind)
+
 	for(var/datum/objective/sacrifice/sac_objective in objectives)
 		if(mind == sac_objective.target)
 			return TRUE

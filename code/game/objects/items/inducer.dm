@@ -11,13 +11,13 @@
 	var/power_transfer_multiplier = 1
 	var/opened = FALSE
 	var/cell_type = /obj/item/stock_parts/power_store/battery/high
-	var/obj/item/stock_parts/power_store/cell
+	var/obj/item/stock_parts/power_store/powerdevice
 	var/recharging = FALSE
 
 /obj/item/inducer/Initialize(mapload)
 	. = ..()
-	if(!cell && cell_type)
-		cell = new cell_type
+	if(!powerdevice && cell_type)
+		powerdevice = new cell_type
 
 /obj/item/inducer/proc/induce(obj/item/stock_parts/power_store/target, coefficient)
 	var/obj/item/stock_parts/power_store/our_cell = get_cell()
@@ -30,7 +30,7 @@
 	target.update_appearance()
 
 /obj/item/inducer/get_cell()
-	return cell
+	return powerdevice
 
 /obj/item/inducer/emp_act(severity)
 	. = ..()
@@ -81,19 +81,28 @@
 		return
 
 /obj/item/inducer/attackby(obj/item/used_item, mob/user)
-	if(istype(used_item, /obj/item/stock_parts/power_store/cell))
+	var/obj/item/stock_parts/power_store/our_cell = get_cell()
+	if(istype(used_item, /obj/item/stock_parts/power_store))
 		if(opened)
-			var/obj/item/stock_parts/power_store/our_cell = get_cell()
 			if(isnull(our_cell))
 				if(!user.transferItemToLoc(used_item, src))
 					return
 				to_chat(user, span_notice("You insert [used_item] into [src]."))
-				cell = used_item
+				powerdevice = used_item
 				update_appearance()
 				return
 			else
 				to_chat(user, span_warning("[src] already has \a [our_cell] installed!"))
 				return
+
+	if (istype(used_item, /obj/item/stack/sheet/mineral/plasma) && !isnull(our_cell))
+		if(our_cell.charge == our_cell.maxcharge)
+			balloon_alert(user, "already fully charged!")
+			return
+		used_item.use(1)
+		our_cell.give(1.5 * STANDARD_CELL_CHARGE)
+		balloon_alert(user, "cell recharged")
+		return
 
 	if(cantbeused(user))
 		return
@@ -158,11 +167,11 @@
 
 
 /obj/item/inducer/attack_self(mob/user)
-	if(opened && cell)
-		user.visible_message(span_notice("[user] removes [cell] from [src]!"), span_notice("You remove [cell]."))
-		cell.update_appearance()
-		user.put_in_hands(cell)
-		cell = null
+	if(opened && powerdevice)
+		user.visible_message(span_notice("[user] removes [powerdevice] from [src]!"), span_notice("You remove [powerdevice]."))
+		powerdevice.update_appearance()
+		user.put_in_hands(powerdevice)
+		powerdevice = null
 		update_appearance()
 
 
@@ -187,7 +196,7 @@
 	opened = TRUE
 
 /obj/item/inducer/orderable
-	cell_type = /obj/item/stock_parts/power_store/cell/inducer_supply
+	cell_type = /obj/item/stock_parts/power_store/battery/upgraded
 	opened = FALSE
 
 /obj/item/inducer/sci

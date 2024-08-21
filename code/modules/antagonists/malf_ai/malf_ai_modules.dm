@@ -777,7 +777,7 @@ GLOBAL_LIST_INIT(malf_modules, subtypesof(/datum/ai_module))
 /datum/action/innate/ai/emergency_lights
 	name = "Disable Emergency Lights"
 	desc = "Disables all emergency lighting. Note that emergency lights can be restored through reboot at an APC."
-	button_icon = 'icons/obj/lighting.dmi'
+	button_icon = 'icons/obj/machines/lighting.dmi'
 	button_icon_state = "floor_emergency"
 	uses = 1
 
@@ -995,7 +995,7 @@ GLOBAL_LIST_INIT(malf_modules, subtypesof(/datum/ai_module))
 	data["selected"] = say_span || owner.speech_span
 	return data
 
-/obj/machinery/ai_voicechanger/ui_act(action, params)
+/obj/machinery/ai_voicechanger/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	if(..())
 		return
 	switch(action)
@@ -1044,14 +1044,14 @@ GLOBAL_LIST_INIT(malf_modules, subtypesof(/datum/ai_module))
 				owner.speech_span = say_span
 			to_chat(usr, span_notice("Voice set to [selection]."))
 		if("verb")
-			say_verb = params["verb"]
+			say_verb = strip_html(params["verb"], MAX_NAME_LEN)
 			if(changing_voice)
 				owner.verb_say = say_verb
 				owner.verb_ask = say_verb
 				owner.verb_exclaim = say_verb
 				owner.verb_yell = say_verb
 		if("name")
-			say_name = params["name"]
+			say_name = strip_html(params["name"], MAX_NAME_LEN)
 
 /datum/ai_module/utility/emag
 	name = "Targeted Safeties Override"

@@ -309,11 +309,29 @@
 		risky espionage hallway operations. Enjoy our product!"
 	contraband = TRUE
 	cost = CARGO_CRATE_VALUE * 6
-	contains = list(/obj/item/clothing/under/syndicate/floortilecamo = 3,
-			/obj/item/clothing/mask/floortilebalaclava = 3,
-			/obj/item/clothing/gloves/combat/floortile = 3,
-			/obj/item/clothing/shoes/jackboots/floortile = 3,
-			/obj/item/storage/backpack/floortile = 3
+	contains = list(
+		/obj/item/clothing/under/syndicate/floortilecamo = 3,
+		/obj/item/clothing/mask/floortilebalaclava = 3,
+		/obj/item/clothing/gloves/combat/floortile = 3,
+		/obj/item/clothing/shoes/jackboots/floortile = 3,
+		/obj/item/storage/backpack/floortile = 3
 	)
 	crate_name = "floortile camouflauge crate"
 	crate_type = /obj/structure/closet/crate/secure/weapon
+
+/**
+ * The Long To Short Range Bluespace Teleporter, used to deliver (black) market purchases more effiiently
+ * It can also be used to restock it, if you hit it with enough credits.
+ */
+/datum/supply_pack/imports/blackmarket_telepad
+	name = "Black Market LTSRBT"
+	desc = "Need a faster and better way of transporting your illegal goods from and to the \
+		station? Fear not, the Long-To-Short-Range-Bluespace-Transceiver (LTSRBT for short) \
+		is here to help. Contains a LTSRBT circuit, two bluespace crystals, and one ansible."
+	cost = CARGO_CRATE_VALUE * 10
+	contraband = TRUE
+	contains = list(
+		/obj/item/circuitboard/machine/ltsrbt,
+		/obj/item/stack/ore/bluespace_crystal/artificial = 2,
+		/obj/item/stock_parts/subspace/ansible,
+	)

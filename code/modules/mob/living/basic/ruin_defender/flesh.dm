@@ -1,3 +1,6 @@
+#define LIVING_FLESH_TOUCH_CHANCE 30
+#define LIVING_FLESH_COMBAT_TOUCH_CHANCE 70
+
 /datum/ai_controller/basic_controller/living_limb_flesh
 	blackboard = list(
 		BB_TARGETING_STRATEGY = /datum/targeting_strategy/basic,
@@ -67,11 +70,9 @@
 	if(istype(current_bodypart, /obj/item/bodypart/arm))
 		var/list/candidates = list()
 		for(var/atom/movable/movable in orange(victim, 1))
-			if(movable.anchored)
-				continue
 			if(movable == victim)
 				continue
-			if(!victim.CanReach(movable))
+			if(!victim.CanReach(movable) || victim.invisibility)
 				continue
 			candidates += movable
 		if(!length(candidates))
@@ -79,8 +80,19 @@
 		var/atom/movable/candidate = pick(candidates)
 		if(isnull(candidate))
 			return
-		victim.start_pulling(candidate, supress_message = TRUE)
-		victim.visible_message(span_warning("[victim][victim.p_s()] [current_bodypart] instinctually starts feeling [candidate]!"))
+
+		victim.visible_message(span_warning("[victim]'s [current_bodypart.name] instinctively starts feeling [candidate]!"))
+		if (!victim.anchored && !prob(victim.combat_mode ? LIVING_FLESH_COMBAT_TOUCH_CHANCE : LIVING_FLESH_TOUCH_CHANCE))
+			victim.start_pulling(candidate, supress_message = TRUE)
+			return
+
+		var/active_hand = victim.active_hand_index
+		var/new_index = (current_bodypart.body_zone == BODY_ZONE_L_ARM) ? LEFT_HANDS : RIGHT_HANDS
+		if (active_hand != new_index)
+			victim.swap_hand(new_index, TRUE)
+		victim.resolve_unarmed_attack(candidate)
+		if (active_hand != victim.active_hand_index) // Different check in case we failed to swap hands previously due to holding a bulky item
+			victim.swap_hand(active_hand, TRUE)
 		return
 
 	if(HAS_TRAIT(victim, TRAIT_IMMOBILIZED))
@@ -127,7 +139,11 @@
 		if(BODY_ZONE_R_LEG)
 			part_type = /obj/item/bodypart/leg/right/flesh
 
-	target.visible_message(span_danger("[src] [target_part ? "tears off and attaches itself" : "attaches itself"] to where [target][target.p_s()] limb used to be!"))
+	if (!isnull(target_part))
+		target.visible_message(span_danger("[src] tears off [target]'s [target_part.plaintext_zone] and attaches itself in [target_part.p_their()] place!"), span_userdanger("[src] tears off your [target_part.plaintext_zone] and attaches itself in [target_part.p_their()] place!"))
+	else
+		target.visible_message(span_danger("[src] attaches itself to where [target]'s [target.parse_zone_with_bodypart(target_zone)] used to be!"), span_userdanger("[src] attaches itself to where your [target.parse_zone_with_bodypart(target_zone)] used to be!"))
+
 	var/obj/item/bodypart/new_bodypart = new part_type()
 	forceMove(new_bodypart)
 	new_bodypart.replace_limb(target, TRUE)
@@ -181,3 +197,6 @@
 	ai_controller.set_ai_status(AI_STATUS_ON)
 	forceMove(limb.drop_location())
 	qdel(limb)
+
+#undef LIVING_FLESH_TOUCH_CHANCE
+#undef LIVING_FLESH_COMBAT_TOUCH_CHANCE

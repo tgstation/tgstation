@@ -5,12 +5,10 @@
 	id = SPECIES_LIZARD
 	inherent_traits = list(
 		TRAIT_MUTANT_COLORS,
-		TRAIT_TACKLING_TAILED_DEFENDER,
 	)
 	inherent_biotypes = MOB_ORGANIC|MOB_HUMANOID|MOB_REPTILE
-	mutant_bodyparts = list("legs" = "Normal Legs")
 	body_markings = list(/datum/bodypart_overlay/simple/body_marking/lizard = "None")
-	external_organs = list(
+	mutant_organs = list(
 		/obj/item/organ/external/horns = "None",
 		/obj/item/organ/external/frills = "None",
 		/obj/item/organ/external/snout = "Round",
@@ -101,6 +99,16 @@
 /datum/species/lizard/get_laugh_sound(mob/living/carbon/human/lizard)
 	return 'sound/voice/lizard/lizard_laugh1.ogg'
 
+/datum/species/lizard/get_sigh_sound(mob/living/carbon/human/lizard)
+	if(lizard.physique == FEMALE)
+		return 'sound/voice/human/female_sigh.ogg'
+	return 'sound/voice/human/male_sigh.ogg'
+
+/datum/species/lizard/get_sniff_sound(mob/living/carbon/human/lizard)
+	if(lizard.physique == FEMALE)
+		return 'sound/voice/human/female_sniff.ogg'
+	return 'sound/voice/human/male_sniff.ogg'
+
 /datum/species/lizard/get_physical_attributes()
 	return "Lizardpeople can withstand slightly higher temperatures than most species, but they are very vulnerable to the cold \
 		and can't regulate their body-temperature internally, making the vacuum of space extremely deadly to them."
@@ -158,6 +166,7 @@ Lizard subspecies: ASHWALKERS
 		TRAIT_MUTANT_COLORS,
 		TRAIT_VIRUSIMMUNE,
 	)
+	inherent_factions = list(FACTION_ASHWALKER)
 	species_language_holder = /datum/language_holder/lizard/ash
 	digitigrade_customization = DIGITIGRADE_FORCED
 	examine_limb_id = SPECIES_LIZARD

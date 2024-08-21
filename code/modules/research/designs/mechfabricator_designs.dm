@@ -907,6 +907,104 @@
 		RND_CATEGORY_MECHFAB_SAVANNAH_IVANOV + RND_SUBCATEGORY_MECHFAB_CHASSIS
 	)
 
+//Justice (emaged only)
+/datum/design/justice_chassis
+	name = "Exosuit Chassis (\"Justice\")"
+	id = "justice_chassis"
+	build_type = MECHFAB
+	build_path = /obj/item/mecha_parts/chassis/justice
+	materials = list(/datum/material/iron=SHEET_MATERIAL_AMOUNT*20)
+	construction_time = 10 SECONDS
+	category = list(
+		RND_CATEGORY_MECHFAB_JUSTICE + RND_SUBCATEGORY_MECHFAB_CHASSIS
+	)
+
+/datum/design/justice_torso
+	name = "Exosuit Torso (\"Justice\")"
+	id = "justice_torso"
+	build_type = MECHFAB
+	build_path = /obj/item/mecha_parts/part/justice_torso
+	materials = list(
+		/datum/material/iron = SHEET_MATERIAL_AMOUNT * 50,
+		/datum/material/silver = SHEET_MATERIAL_AMOUNT * 5,
+	)
+	construction_time = 30 SECONDS
+	category = list(
+		RND_CATEGORY_MECHFAB_JUSTICE + RND_SUBCATEGORY_MECHFAB_CHASSIS
+	)
+
+/datum/design/justice_left_arm
+	name = "Exosuit Left Arm (\"Justice\")"
+	id = "justice_left_arm"
+	build_type = MECHFAB
+	build_path = /obj/item/mecha_parts/part/justice_left_arm
+	materials = list(
+		/datum/material/iron = SHEET_MATERIAL_AMOUNT * 5,
+		/datum/material/silver = SHEET_MATERIAL_AMOUNT * 2,
+	)
+	construction_time = 10 SECONDS
+	category = list(
+		RND_CATEGORY_MECHFAB_JUSTICE + RND_SUBCATEGORY_MECHFAB_CHASSIS
+	)
+
+/datum/design/justice_right_arm
+	name = "Exosuit Right Arm (\"Justice\")"
+	id = "justice_right_arm"
+	build_type = MECHFAB
+	build_path = /obj/item/mecha_parts/part/justice_right_arm
+	materials = list(
+		/datum/material/iron=SHEET_MATERIAL_AMOUNT*5,
+		/datum/material/silver=SHEET_MATERIAL_AMOUNT*2,
+	)
+	construction_time = 10 SECONDS
+	category = list(
+		RND_CATEGORY_MECHFAB_JUSTICE + RND_SUBCATEGORY_MECHFAB_CHASSIS
+	)
+
+/datum/design/justice_left_leg
+	name = "Exosuit Left Leg (\"Justice\")"
+	id = "justice_left_leg"
+	build_type = MECHFAB
+	build_path = /obj/item/mecha_parts/part/justice_left_leg
+	materials = list(
+		/datum/material/iron=SHEET_MATERIAL_AMOUNT*5,
+		/datum/material/titanium=SHEET_MATERIAL_AMOUNT*2,
+	)
+	construction_time = 10 SECONDS
+	category = list(
+		RND_CATEGORY_MECHFAB_JUSTICE + RND_SUBCATEGORY_MECHFAB_CHASSIS
+	)
+
+/datum/design/justice_right_leg
+	name = "Exosuit Right Leg (\"Justice\")"
+	id = "justice_right_leg"
+	build_type = MECHFAB
+	build_path = /obj/item/mecha_parts/part/justice_right_leg
+	materials = list(
+		/datum/material/iron=SHEET_MATERIAL_AMOUNT*5,
+		/datum/material/titanium=SHEET_MATERIAL_AMOUNT*2,
+	)
+	construction_time = 10 SECONDS
+	category = list(
+		RND_CATEGORY_MECHFAB_JUSTICE + RND_SUBCATEGORY_MECHFAB_CHASSIS
+	)
+
+/datum/design/justice_armor
+	name = "Exosuit Armor (\"Justice\")"
+	id = "justice_armor"
+	build_type = MECHFAB
+	build_path = /obj/item/mecha_parts/part/justice_armor
+	materials = list(
+		/datum/material/silver=SHEET_MATERIAL_AMOUNT*10,
+		/datum/material/titanium=SHEET_MATERIAL_AMOUNT*10,
+		/datum/material/plastic=SHEET_MATERIAL_AMOUNT*5,
+		/datum/material/diamond=SHEET_MATERIAL_AMOUNT*1,
+	)
+	construction_time = 20 SECONDS
+	category = list(
+		RND_CATEGORY_MECHFAB_JUSTICE + RND_SUBCATEGORY_MECHFAB_CHASSIS
+	)
+
 //Clarke
 /datum/design/clarke_chassis
 	name = "Exosuit Chassis (\"Clarke\")"
@@ -1480,6 +1578,20 @@
 		RND_CATEGORY_MECHFAB_CYBORG_MODULES + RND_SUBCATEGORY_MECHFAB_CYBORG_MODULES_JANITOR
 	)
 
+/datum/design/borg_upgrade_plunger
+	name = "Integrated Plunger"
+	id = "borg_upgrade_plunger"
+	build_type = MECHFAB
+	build_path = /obj/item/borg/upgrade/plunger
+	materials = list(
+		/datum/material/iron = SHEET_MATERIAL_AMOUNT*1.125,
+		/datum/material/glass = HALF_SHEET_MATERIAL_AMOUNT*0.75,
+	)
+	construction_time = 4 SECONDS
+	category = list(
+		RND_CATEGORY_MECHFAB_CYBORG_MODULES + RND_SUBCATEGORY_MECHFAB_CYBORG_MODULES_JANITOR
+	)
+
 /datum/design/borg_upgrade_rolling_table
 	name = "Rolling Table Dock"
 	id = "borg_upgrade_rolling_table"
@@ -1888,6 +2000,17 @@
 	var/obj/item/mod/construction/plating/armor_type = build_path
 	var/datum/mod_theme/theme = GLOB.mod_themes[initial(armor_type.theme)]
 	desc = "External plating for a MODsuit. [theme.desc]"
+
+/datum/design/mod_plating/civilian
+	name = "MOD Civilian Plating"
+	id = "mod_plating_civilian"
+	build_path = /obj/item/mod/construction/plating/civilian
+	materials = list(
+		/datum/material/iron =SHEET_MATERIAL_AMOUNT*3,
+		/datum/material/glass =SHEET_MATERIAL_AMOUNT*1.5,
+		/datum/material/plasma =HALF_SHEET_MATERIAL_AMOUNT,
+	)
+	research_icon_state = "civilian-plating"
 
 /datum/design/mod_plating/engineering
 	name = "MOD Engineering Plating"
@@ -2338,14 +2461,14 @@
 		RND_CATEGORY_MODSUIT_MODULES + RND_SUBCATEGORY_MODSUIT_MODULES_SUPPLY
 	)
 
-/datum/design/module/mod_organ_thrower
-	name = "Organ Thrower Module"
-	id = "mod_organ_thrower"
+/datum/design/module/mod_organizer
+	name = "Organizer Module"
+	id = "mod_organizer"
 	materials = list(
 		/datum/material/iron =HALF_SHEET_MATERIAL_AMOUNT,
 		/datum/material/glass =HALF_SHEET_MATERIAL_AMOUNT,
 	)
-	build_path = /obj/item/mod/module/organ_thrower
+	build_path = /obj/item/mod/module/organizer
 	category = list(
 		RND_CATEGORY_MODSUIT_MODULES + RND_SUBCATEGORY_MODSUIT_MODULES_MEDICAL
 	)
@@ -2508,6 +2631,18 @@
 		/datum/material/bluespace =HALF_SHEET_MATERIAL_AMOUNT,
 	)
 	build_path = /obj/item/mod/module/criminalcapture
+	category = list(
+		RND_CATEGORY_MODSUIT_MODULES + RND_SUBCATEGORY_MODSUIT_MODULES_SECURITY
+	)
+
+/datum/design/module/mirage
+	name = "Mirage Grenade Dispenser Module"
+	id = "mod_mirage_grenade"
+	materials = list(
+		/datum/material/iron =HALF_SHEET_MATERIAL_AMOUNT,
+		/datum/material/bluespace =HALF_SHEET_MATERIAL_AMOUNT,
+	)
+	build_path = /obj/item/mod/module/dispenser/mirage
 	category = list(
 		RND_CATEGORY_MODSUIT_MODULES + RND_SUBCATEGORY_MODSUIT_MODULES_SECURITY
 	)

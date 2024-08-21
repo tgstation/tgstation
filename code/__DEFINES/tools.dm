@@ -8,6 +8,7 @@
 #define TOOL_ANALYZER "analyzer"
 #define TOOL_MINING "mining"
 #define TOOL_SHOVEL "shovel"
+#define TOOL_DRAPES "surgicaldrapes"
 #define TOOL_RETRACTOR "retractor"
 #define TOOL_HEMOSTAT "hemostat"
 #define TOOL_CAUTERY "cautery"

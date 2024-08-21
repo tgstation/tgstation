@@ -101,6 +101,8 @@
 
 /obj/machinery/portable_atmospherics/canister/examine(user)
 	. = ..()
+	if(atom_integrity < max_integrity)
+		. += span_notice("Integrity compromised, repair hull with a welding tool.")
 	. += span_notice("A sticker on its side says <b>MAX SAFE PRESSURE: [siunit_pressure(initial(pressure_limit), 0)]; MAX SAFE TEMPERATURE: [siunit(temp_limit, "K", 0)]</b>.")
 	. += span_notice("The hull is <b>welded</b> together and can be cut apart.")
 	if(internal_cell)
@@ -109,8 +111,6 @@
 		. += span_notice("Warning, no cell installed, use a screwdriver to open the hatch and insert one.")
 	if(panel_open)
 		. += span_notice("Hatch open, close it with a screwdriver.")
-	if(integrity_failure)
-		. += span_notice("Integrity compromised, repair hull with a welding tool.")
 
 // Please keep the canister types sorted
 // Basic canister per gas below here
@@ -343,6 +343,7 @@
 	var/list/window_overlays = list()
 	for(var/visual in air_contents.return_visuals(get_turf(src)))
 		var/image/new_visual = image(visual, layer = FLOAT_LAYER)
+		new_visual.pixel_z = -12 // Weird offset artifacting? might be my fault idk
 		new_visual.filters = alpha_filter
 		window_overlays += new_visual
 	window.overlays = window_overlays
@@ -461,18 +462,24 @@
 		user.investigate_log("started a transfer into [holding].", INVESTIGATE_ATMOS)
 
 /obj/machinery/portable_atmospherics/canister/process(seconds_per_tick)
+	if(!shielding_powered)
+		return
+
 	var/our_pressure = air_contents.return_pressure()
 	var/our_temperature = air_contents.return_temperature()
+	var/energy_factor = round(log(10, max(our_pressure - pressure_limit, 1)) + log(10, max(our_temperature - temp_limit, 1)))
+	var/energy_consumed = energy_factor * 250 * seconds_per_tick
 
-	if(shielding_powered)
-		var/energy_factor = round(log(10, max(our_pressure - pressure_limit, 1)) + log(10, max(our_temperature - temp_limit, 1)))
-		var/energy_consumed = energy_factor * 250 * seconds_per_tick
-		if(powered(AREA_USAGE_EQUIP, ignore_use_power = TRUE))
-			use_energy(energy_consumed, channel = AREA_USAGE_EQUIP)
-		else if(!internal_cell?.use(energy_consumed * 0.025))
-			shielding_powered = FALSE
-			SSair.start_processing_machine(src)
-			investigate_log("shielding turned off due to power loss")
+	if(!energy_consumed)
+		return
+
+	if(powered(AREA_USAGE_EQUIP, ignore_use_power = TRUE))
+		use_energy(energy_consumed, channel = AREA_USAGE_EQUIP)
+	else if(!internal_cell?.use(energy_consumed * 0.025))
+		shielding_powered = FALSE
+		SSair.start_processing_machine(src)
+		investigate_log("shielding turned off due to power loss")
+		update_appearance()
 
 ///return the icon_state component for the canister's indicator light based on its current pressure reading
 /obj/machinery/portable_atmospherics/canister/proc/get_pressure_state()
@@ -560,7 +567,7 @@
 		"cellCharge" = internal_cell ? internal_cell.percent() : 0
 	)
 
-/obj/machinery/portable_atmospherics/canister/ui_act(action, params)
+/obj/machinery/portable_atmospherics/canister/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if(.)
 		return

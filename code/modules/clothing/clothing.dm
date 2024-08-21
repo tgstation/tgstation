@@ -353,7 +353,7 @@
 		how_cool_are_your_threads += "</span>"
 		. += how_cool_are_your_threads.Join()
 
-	if(get_armor().has_any_armor() || (flags_cover & (HEADCOVERSMOUTH|PEPPERPROOF)))
+	if(get_armor().has_any_armor() || (flags_cover & (HEADCOVERSMOUTH|PEPPERPROOF)) || (clothing_flags & STOPSPRESSUREDAMAGE) || (visor_flags & STOPSPRESSUREDAMAGE))
 		. += span_notice("It has a <a href='?src=[REF(src)];list_armor=1'>tag</a> listing its protection classes.")
 
 /obj/item/clothing/Topic(href, href_list)
@@ -393,6 +393,20 @@
 				readout += "<b><u>COVERAGE</u></b>"
 				readout += "It will block [english_list(things_blocked)]."
 
+		if(clothing_flags & STOPSPRESSUREDAMAGE || visor_flags & STOPSPRESSUREDAMAGE)
+			var/list/parts_covered = list()
+			var/output_string = "It"
+			if(!(clothing_flags & STOPSPRESSUREDAMAGE))
+				output_string = "When sealed, it"
+			if(body_parts_covered & HEAD)
+				parts_covered += "head"
+			if(body_parts_covered & CHEST)
+				parts_covered += "torso"
+			if(length(parts_covered)) // Just in case someone makes spaceproof gloves or something
+				readout += "[output_string] will protect the wearer's [english_list(parts_covered)] from [span_tooltip("The extremely low pressure is the biggest danger posed by the vacuum of space.", "low pressure")]."
+
+		if(min_cold_protection_temperature == SPACE_SUIT_MIN_TEMP_PROTECT)
+			readout += "It will insulate the wearer from [span_tooltip("While not as dangerous as the lack of pressure, the extremely low temperature of space is also a hazard.", "the cold of space")]."
 
 		if(!length(readout))
 			readout += "No armor or durability information available."

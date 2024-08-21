@@ -6,6 +6,7 @@
  * A component that allows mobs to have happiness levels
  */
 /datum/component/happiness
+	dupe_mode = COMPONENT_DUPE_UNIQUE //Prioritize the old comp over, which may have callbacks and stuff specific to the mob.
 	///our current happiness level
 	var/happiness_level
 	///our maximum happiness level
@@ -53,11 +54,9 @@
 	if(on_eat_change)
 		RegisterSignal(parent, COMSIG_MOB_ATE, PROC_REF(on_eat))
 	RegisterSignal(parent, COMSIG_SHIFT_CLICKED_ON, PROC_REF(view_happiness))
-	ADD_TRAIT(parent, TRAIT_MOB_RELAY_HAPPINESS, REF(src))
 
 /datum/component/happiness/UnregisterFromParent()
 	UnregisterSignal(parent, list(COMSIG_HOSTILE_PRE_ATTACKINGTARGET, COMSIG_COMPONENT_CLEAN_ACT, COMSIG_MOB_ATE))
-	REMOVE_TRAIT(parent, TRAIT_MOB_RELAY_HAPPINESS, REF(src))
 	happiness_callback = null
 
 /datum/component/happiness/proc/on_eat(datum/source)
@@ -69,6 +68,11 @@
 	SIGNAL_HANDLER
 	if(!COOLDOWN_FINISHED(src, groom_cooldown))
 		return
+
+	var/mob/living/living_parent = parent
+	if (living_parent.stat != CONSCIOUS)
+		return
+
 	COOLDOWN_START(src, groom_cooldown, GROOM_COOLDOWN)
 	increase_happiness_level(on_groom_change)
 
@@ -76,15 +80,12 @@
 	SIGNAL_HANDLER
 	if(!LAZYACCESS(modifiers, LEFT_CLICK) || petter.combat_mode)
 		return
-	pet_animal()
 
-/datum/component/happiness/proc/on_animal_petted(datum/source, mob/living/petter)
-	SIGNAL_HANDLER
-
-	if(petter.combat_mode)
+	var/mob/living/living_parent = parent
+	if (living_parent.stat != CONSCIOUS)
 		return
+
 	pet_animal()
-	return COMSIG_BASIC_ATTACK_CANCEL_CHAIN
 
 /datum/component/happiness/proc/pet_animal()
 	if(!COOLDOWN_FINISHED(src, pet_cooldown))
@@ -95,13 +96,14 @@
 
 /datum/component/happiness/proc/increase_happiness_level(amount)
 	happiness_level = min(happiness_level + amount, maximum_happiness)
-	var/mob/living/living_parent = parent
-	new /obj/effect/temp_visual/heart(living_parent.loc)
-	living_parent.spin(spintime = 2 SECONDS, speed = 1)
+	if(!HAS_TRAIT(parent, TRAIT_MOB_HIDE_HAPPINESS))
+		var/mob/living/living_parent = parent
+		new /obj/effect/temp_visual/heart(living_parent.loc)
+		living_parent.spin(spintime = 2 SECONDS, speed = 1)
 	START_PROCESSING(SSprocessing, src)
 
 /datum/component/happiness/proc/view_happiness(mob/living/source, mob/living/clicker)
-	if(!istype(clicker) || !COOLDOWN_FINISHED(src, happiness_inspect) || !clicker.CanReach(source))
+	if(HAS_TRAIT(source, TRAIT_MOB_HIDE_HAPPINESS) || !istype(clicker) || !COOLDOWN_FINISHED(src, happiness_inspect) || !clicker.CanReach(source))
 		return
 	var/list/offset_to_add = get_icon_dimensions(source.icon)
 	var/y_position = offset_to_add["height"] + 1

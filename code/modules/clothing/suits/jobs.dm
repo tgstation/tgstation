@@ -61,7 +61,7 @@
 	body_parts_covered = CHEST|GROIN|ARMS
 	allowed = list(
 		/obj/item/assembly/flash/handheld,
-		/obj/item/clothing/mask/cigarette,
+		/obj/item/cigarette,
 		/obj/item/disk,
 		/obj/item/lighter,
 		/obj/item/melee,
@@ -225,6 +225,10 @@
 	blood_overlay_type = "coat"
 	body_parts_covered = CHEST|ARMS
 	allowed = list(
+		/obj/item/tank/internals/emergency_oxygen,
+		/obj/item/tank/internals/plasmaman,
+		/obj/item/boxcutter,
+		/obj/item/dest_tagger,
 		/obj/item/stamp,
 		/obj/item/storage/bag/mail,
 		/obj/item/universal_scanner,
@@ -234,7 +238,7 @@
 
 /obj/item/clothing/suit/jacket/quartermaster
 	name = "quartermaster's overcoat"
-	desc = "A luxury, brown double-breasted overcoat made from kangaroo skin. It's gold cuffs are linked and styled on the credits symbol. It makes you feel more important than you probably are."
+	desc = "A luxury, brown double-breasted overcoat made from kangaroo skin. Its gold cuffs are linked and styled on the credits symbol. It makes you feel more important than you probably are."
 	icon_state = "qm_coat"
 	blood_overlay_type = "coat"
 	body_parts_covered = CHEST|GROIN|LEGS|ARMS
@@ -384,27 +388,6 @@
 	inhand_icon_state = null
 	body_parts_covered = HEAD
 	flags_inv = HIDEHAIR|HIDEEARS
-
-// Research Director
-
-/obj/item/clothing/suit/jacket/research_director
-	name = "research director's coat"
-	desc = "A mix between a labcoat and just a regular coat. It's made out of a special anti-bacterial, anti-acidic, and anti-biohazardous synthetic fabric."
-	icon_state = "labcoat_rd"
-	armor_type = /datum/armor/jacket_research_director
-	body_parts_covered = CHEST|GROIN|ARMS
-
-/datum/armor/jacket_research_director
-	bio = 75
-	fire = 75
-	acid = 75
-
-/obj/item/clothing/suit/jacket/research_director/Initialize(mapload)
-	. = ..()
-	allowed += list(
-		/obj/item/storage/bag/xeno,
-		/obj/item/melee/baton/telescopic,
-	)
 
 // Atmos
 /obj/item/clothing/suit/atmos_overalls

@@ -6,7 +6,7 @@
 	desc = "A genetic defect that sporadically causes seizures."
 	instability = NEGATIVE_STABILITY_MODERATE
 	quality = NEGATIVE
-	text_gain_indication = "<span class='danger'>You get a headache.</span>"
+	text_gain_indication = span_danger("You get a headache.")
 	synchronizer_coeff = 1
 	power_coeff = 1
 
@@ -53,7 +53,7 @@
 	desc = "Strange mutation that causes the holder to randomly mutate."
 	instability = NEGATIVE_STABILITY_MAJOR
 	quality = NEGATIVE
-	text_gain_indication = "<span class='danger'>You feel strange.</span>"
+	text_gain_indication = span_danger("You feel strange.")
 	locked = TRUE
 
 /datum/mutation/human/bad_dna/on_acquiring(mob/living/carbon/human/owner)
@@ -83,7 +83,7 @@
 	desc = "A chronic cough."
 	instability = NEGATIVE_STABILITY_MODERATE
 	quality = MINOR_NEGATIVE
-	text_gain_indication = "<span class='danger'>You start coughing.</span>"
+	text_gain_indication = span_danger("You start coughing.")
 	synchronizer_coeff = 1
 	power_coeff = 1
 
@@ -101,8 +101,8 @@
 	desc = "Subject is easily terrified, and may suffer from hallucinations."
 	instability = NEGATIVE_STABILITY_MODERATE
 	quality = NEGATIVE
-	text_gain_indication = "<span class='danger'>You feel screams echo through your mind...</span>"
-	text_lose_indication = "<span class='notice'>The screaming in your mind fades.</span>"
+	text_gain_indication = span_danger("You feel screams echo through your mind...")
+	text_lose_indication = span_notice("The screaming in your mind fades.")
 
 /datum/mutation/human/paranoia/on_life(seconds_per_tick, times_fired)
 	if(SPT_PROB(2.5, seconds_per_tick) && owner.stat == CONSCIOUS)
@@ -198,7 +198,7 @@
 	desc = "A genome that inhibits certain brain functions, causing the holder to appear clumsy. Honk!"
 	instability = NEGATIVE_STABILITY_MAJOR
 	quality = MINOR_NEGATIVE
-	text_gain_indication = "<span class='danger'>You feel lightheaded.</span>"
+	text_gain_indication = span_danger("You feel lightheaded.")
 
 /datum/mutation/human/clumsy/on_acquiring(mob/living/carbon/human/owner)
 	if(..())
@@ -217,7 +217,7 @@
 	desc = "A chronic twitch that forces the user to scream bad words." //definitely needs rewriting
 	quality = NEGATIVE
 	instability = 0
-	text_gain_indication = "<span class='danger'>You twitch.</span>"
+	text_gain_indication = span_danger("You twitch.")
 	synchronizer_coeff = 1
 
 /datum/mutation/human/tourettes/on_life(seconds_per_tick, times_fired)
@@ -241,7 +241,7 @@
 	desc = "The holder of this genome is completely deaf."
 	instability = NEGATIVE_STABILITY_MAJOR
 	quality = NEGATIVE
-	text_gain_indication = "<span class='danger'>You can't seem to hear anything.</span>"
+	text_gain_indication = span_danger("You can't seem to hear anything.")
 
 /datum/mutation/human/deaf/on_acquiring(mob/living/carbon/human/owner)
 	if(..())
@@ -258,8 +258,8 @@
 /datum/mutation/human/race
 	name = "Monkified"
 	desc = "A strange genome, believing to be what differentiates monkeys from humans."
-	text_gain_indication = "You feel unusually monkey-like."
-	text_lose_indication = "You feel like your old self."
+	text_gain_indication = span_green("You feel unusually monkey-like.")
+	text_lose_indication = span_notice("You feel like your old self.")
 	quality = NEGATIVE
 	instability = NEGATIVE_STABILITY_MAJOR // mmmonky
 	remove_on_aheal = FALSE
@@ -269,24 +269,32 @@
 	var/original_name
 
 /datum/mutation/human/race/on_acquiring(mob/living/carbon/human/owner)
-	if(..())
+	. = ..()
+	if(.)
 		return
-	if(!ismonkey(owner))
-		original_species = owner.dna.species.type
-		original_name = owner.real_name
-		owner.fully_replace_character_name(null, "monkey ([rand(1,999)])")
-	. = owner.monkeyize()
+	if(ismonkey(owner))
+		return
+	original_species = owner.dna.species.type
+	original_name = owner.real_name
+	owner.monkeyize()
 
 /datum/mutation/human/race/on_losing(mob/living/carbon/human/owner)
-	if(!QDELETED(owner) && owner.stat != DEAD && (owner.dna.mutations.Remove(src)) && ismonkey(owner))
-		owner.fully_replace_character_name(null, original_name)
-		. = owner.humanize(original_species)
+	if(owner.stat == DEAD)
+		return
+	. = ..()
+	if(.)
+		return
+	if(QDELETED(owner))
+		return
+
+	owner.fully_replace_character_name(null, original_name)
+	owner.humanize(original_species)
 
 /datum/mutation/human/glow
 	name = "Glowy"
 	desc = "You permanently emit a light with a random color and intensity."
 	quality = POSITIVE
-	text_gain_indication = "<span class='notice'>Your skin begins to glow softly.</span>"
+	text_gain_indication = span_notice("Your skin begins to glow softly.")
 	instability = POSITIVE_INSTABILITY_MINI
 	power_coeff = 1
 	conflicts = list(/datum/mutation/human/glow/anti)
@@ -323,7 +331,7 @@
 /datum/mutation/human/glow/anti
 	name = "Anti-Glow"
 	desc = "Your skin seems to attract and absorb nearby light creating 'darkness' around you."
-	text_gain_indication = "<span class='notice'>The light around you seems to disappear.</span>"
+	text_gain_indication = span_notice("The light around you seems to disappear.")
 	conflicts = list(/datum/mutation/human/glow)
 	instability = POSITIVE_INSTABILITY_MINOR
 	locked = TRUE
@@ -336,7 +344,7 @@
 	name = "Strength"
 	desc = "The user's muscles slightly expand. Commonly seen in top-ranking boxers."
 	quality = POSITIVE
-	text_gain_indication = "<span class='notice'>You feel strong.</span>"
+	text_gain_indication = span_notice("You feel strong.")
 	instability = POSITIVE_INSTABILITY_MINI
 	difficulty = 16
 
@@ -358,7 +366,7 @@
 	desc = "The user's chemical balance is more robust. This mutation is known to slightly improve workout efficiency."
 	quality = POSITIVE
 	instability = POSITIVE_INSTABILITY_MINI
-	text_gain_indication = "<span class='notice'>You feel stimmed.</span>"
+	text_gain_indication = span_notice("You feel stimmed.")
 	difficulty = 16
 
 /datum/mutation/human/stimmed/on_acquiring(mob/living/carbon/human/owner)
@@ -377,8 +385,8 @@
 	name = "Insulated"
 	desc = "The affected person does not conduct electricity."
 	quality = POSITIVE
-	text_gain_indication = "<span class='notice'>Your fingertips go numb.</span>"
-	text_lose_indication = "<span class='notice'>Your fingertips regain feeling.</span>"
+	text_gain_indication = span_notice("Your fingertips go numb.")
+	text_lose_indication = span_notice("Your fingertips regain feeling.")
 	difficulty = 16
 	instability = POSITIVE_INSTABILITY_MODERATE
 
@@ -396,8 +404,9 @@
 	name = "Fiery Sweat"
 	desc = "The user's skin will randomly combust, but is generally a lot more resilient to burning."
 	quality = NEGATIVE
-	text_gain_indication = "<span class='warning'>You feel hot.</span>"
-	text_lose_indication = "<span class='notice'>You feel a lot cooler.</span>"
+	text_gain_indication = span_warning("You feel hot.")
+	text_lose_indication = span_notice("You feel a lot cooler.")
+	conflicts = list(/datum/mutation/human/adaptation/heat)
 	difficulty = 14
 	synchronizer_coeff = 1
 	power_coeff = 1
@@ -421,8 +430,8 @@
 	name = "Spatial Instability"
 	desc = "The victim of the mutation has a very weak link to spatial reality, and may be displaced. Often causes extreme nausea."
 	quality = NEGATIVE
-	text_gain_indication = "<span class='warning'>The space around you twists sickeningly.</span>"
-	text_lose_indication = "<span class='notice'>The space around you settles back to normal.</span>"
+	text_gain_indication = span_warning("The space around you twists sickeningly.")
+	text_lose_indication = span_notice("The space around you settles back to normal.")
 	difficulty = 18//high so it's hard to unlock and abuse
 	instability = NEGATIVE_STABILITY_MODERATE
 	synchronizer_coeff = 1
@@ -452,8 +461,8 @@
 	desc = "Subject has acidic chemicals building up underneath the skin. This is often lethal."
 	instability = NEGATIVE_STABILITY_MAJOR
 	quality = NEGATIVE
-	text_gain_indication = "<span class='userdanger'>A horrible burning sensation envelops you as your flesh turns to acid!</span>"
-	text_lose_indication = "<span class='notice'>A feeling of relief fills you as your flesh goes back to normal.</span>"
+	text_gain_indication = span_userdanger("A horrible burning sensation envelops you as your flesh turns to acid!")
+	text_lose_indication = span_notice("A feeling of relief fills you as your flesh goes back to normal.")
 	difficulty = 18//high so it's hard to unlock and use on others
 	/// The cooldown for the warning message
 	COOLDOWN_DECLARE(msgcooldown)
@@ -473,8 +482,8 @@
 	desc = "Subject suffers from muscle spasms."
 	instability = NEGATIVE_STABILITY_MODERATE
 	quality = NEGATIVE
-	text_gain_indication = "<span class='warning'>You flinch.</span>"
-	text_lose_indication = "<span class='notice'>Your flinching subsides.</span>"
+	text_gain_indication = span_warning("You flinch.")
+	text_lose_indication = span_notice("Your flinching subsides.")
 	difficulty = 16
 
 /datum/mutation/human/spastic/on_acquiring()
@@ -492,8 +501,8 @@
 	desc = "A mutation that replaces the right foot with another left foot. Symptoms include kissing the floor when taking a step."
 	instability = NEGATIVE_STABILITY_MODERATE
 	quality = NEGATIVE
-	text_gain_indication = "<span class='warning'>Your right foot feels... left.</span>"
-	text_lose_indication = "<span class='notice'>Your right foot feels alright.</span>"
+	text_gain_indication = span_warning("Your right foot feels... left.")
+	text_lose_indication = span_notice("Your right foot feels alright.")
 	difficulty = 16
 
 /datum/mutation/human/extrastun/on_acquiring()
@@ -525,8 +534,8 @@
 	instability = NEGATIVE_STABILITY_MAJOR // free stability >:)
 	locked = TRUE
 	quality = POSITIVE //not that cloning will be an option a lot but generally lets keep this around i guess?
-	text_gain_indication = "<span class='warning'>You get an intense feeling of heartburn.</span>"
-	text_lose_indication = "<span class='notice'>Your internal organs feel at ease.</span>"
+	text_gain_indication = span_warning("You get an intense feeling of heartburn.")
+	text_lose_indication = span_notice("Your internal organs feel at ease.")
 
 /datum/mutation/human/martyrdom/on_acquiring()
 	. = ..()
@@ -573,7 +582,7 @@
 	instability = NEGATIVE_STABILITY_MAJOR
 	difficulty = 12 //pretty good for traitors
 	quality = NEGATIVE //holy shit no eyes or tongue or ears
-	text_gain_indication = "<span class='warning'>Something feels off.</span>"
+	text_gain_indication = span_warning("Something feels off.")
 
 /datum/mutation/human/headless/on_acquiring()
 	. = ..()
@@ -582,9 +591,9 @@
 
 	var/obj/item/organ/internal/brain/brain = owner.get_organ_slot(ORGAN_SLOT_BRAIN)
 	if(brain)
-		brain.Remove(owner, special = TRUE)
+		brain.Remove(owner, special = TRUE, movement_flags = NO_ID_TRANSFER)
 		brain.zone = BODY_ZONE_CHEST
-		brain.Insert(owner, special = TRUE)
+		brain.Insert(owner, special = TRUE, movement_flags = NO_ID_TRANSFER)
 
 	var/obj/item/bodypart/head/head = owner.get_bodypart(BODY_ZONE_HEAD)
 	if(head)
@@ -607,9 +616,9 @@
 		return TRUE
 	var/obj/item/organ/internal/brain/brain = owner.get_organ_slot(ORGAN_SLOT_BRAIN)
 	if(brain)
-		brain.Remove(owner, special = TRUE)
+		brain.Remove(owner, special = TRUE, movement_flags = NO_ID_TRANSFER)
 		brain.zone = initial(brain.zone)
-		brain.Insert(owner, special = TRUE)
+		brain.Insert(owner, special = TRUE, movement_flags = NO_ID_TRANSFER)
 
 	owner.dna.species.regenerate_organs(owner, replace_current = FALSE, excluded_zones = list(BODY_ZONE_CHEST)) //replace_current needs to be FALSE to prevent weird adding and removing mutation healing
 	owner.apply_damage(damage = 50, damagetype = BRUTE, def_zone = BODY_ZONE_HEAD) //and this to DISCOURAGE organ farming, or at least not make it free.

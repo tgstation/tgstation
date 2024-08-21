@@ -15,7 +15,7 @@
 	var/boulders_held_max = 1
 	/// What sound plays when a thing operates?
 	var/usage_sound = 'sound/machines/mining/wooping_teleport.ogg'
-	/// Silo link to it's materials list.
+	/// Silo link to its materials list.
 	var/datum/component/remote_materials/silo_materials
 	/// Mining points held by the machine for miners.
 	var/points_held = 0

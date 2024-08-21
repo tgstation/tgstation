@@ -156,6 +156,7 @@
 #define INIT_ORDER_TICKER 55
 #define INIT_ORDER_TCG 55
 #define INIT_ORDER_MAPPING 50
+#define INIT_ORDER_AI_IDLE_CONTROLLERS 50
 #define INIT_ORDER_EARLY_ASSETS 48
 #define INIT_ORDER_RESEARCH 47
 #define INIT_ORDER_TIMETRACK 46
@@ -192,7 +193,7 @@
 
 // Subsystem fire priority, from lowest to highest priority
 // If the subsystem isn't listed here it's either DEFAULT or PROCESS (if it's a processing subsystem child)
-
+#define FIRE_PRIORITY_IDLE_NPC 5
 #define FIRE_PRIORITY_PING 10
 #define FIRE_PRIORITY_SERVER_MAINT 10
 #define FIRE_PRIORITY_RESEARCH 10
@@ -299,9 +300,14 @@
 #define SSEXPLOSIONS_THROWS 3
 
 // Machines subsystem subtasks.
-#define SSMACHINES_APCS_EARLY 1
-#define SSMACHINES_MACHINES 2
-#define SSMACHINES_APCS_LATE 3
+#define SSMACHINES_MACHINES_EARLY 1
+#define SSMACHINES_APCS_EARLY 2
+#define SSMACHINES_APCS_ENVIRONMENT 3
+#define SSMACHINES_APCS_LIGHTS 4
+#define SSMACHINES_APCS_EQUIPMENT 5
+#define SSMACHINES_APCS_LATE 6
+#define SSMACHINES_MACHINES 7
+#define SSMACHINES_MACHINES_LATE 8
 
 // Wardrobe subsystem tasks
 #define SSWARDROBE_STOCK 1

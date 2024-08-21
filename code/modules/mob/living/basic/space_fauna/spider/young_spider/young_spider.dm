@@ -6,6 +6,7 @@
  * All spiders can produce webbing.
  */
 /mob/living/basic/spider/growing/young
+	SET_BASE_VISUAL_PIXEL(0, 4)
 	name = "young spider"
 	desc = "Furry and black, it makes you shudder to look at it. This one has deep red eyes."
 	icon_state = "young_guard"
@@ -20,6 +21,7 @@
 	melee_damage_upper = 12
 	ai_controller = /datum/ai_controller/basic_controller/young_spider
 	player_speed_modifier = -1
+	shadow_offset_y = 8
 
 /mob/living/basic/spider/growing/young/Initialize(mapload)
 	. = ..()

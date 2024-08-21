@@ -2,10 +2,9 @@
 #define MAX_ITEMS_PER_RATING 10
 /// How many items are converted per cycle, per rating point of the manipulator used.
 #define PROCESSED_ITEMS_PER_RATING 5
-/// Starting purity of reagents made in biogenerator
-#define BIOGEN_REAGENT_PURITY 0.3
 
 /obj/machinery/biogenerator
+	SET_BASE_VISUAL_PIXEL(0, DEPTH_OFFSET)
 	name = "biogenerator"
 	desc = "Converts plants into biomass, which can be used to construct useful items."
 	icon = 'icons/obj/machines/biogenerator.dmi'
@@ -528,7 +527,7 @@
 	return data
 
 
-/obj/machinery/biogenerator/ui_act(action, list/params)
+/obj/machinery/biogenerator/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if(.)
 		return
@@ -571,4 +570,3 @@
 
 #undef MAX_ITEMS_PER_RATING
 #undef PROCESSED_ITEMS_PER_RATING
-#undef BIOGEN_REAGENT_PURITY

@@ -21,8 +21,18 @@
 	ricochet_auto_aim_range = 3
 	wound_bonus = -20
 	bare_wound_bonus = 10
-	embedding = list(embed_chance=25, fall_chance=2, jostle_chance=2, ignore_throwspeed_threshold=TRUE, pain_stam_pct=0.4, pain_mult=3, jostle_pain_mult=5, rip_time=1 SECONDS)
+	embed_type = /datum/embed_data/bullet_c38
 	embed_falloff_tile = -4
+
+/datum/embed_data/bullet_c38
+	embed_chance=25
+	fall_chance=2
+	jostle_chance=2
+	ignore_throwspeed_threshold=TRUE
+	pain_stam_pct=0.4
+	pain_mult=3
+	jostle_pain_mult=5
+	rip_time=1 SECONDS
 
 /obj/projectile/bullet/c38/match
 	name = ".38 Match bullet"
@@ -45,7 +55,7 @@
 	ricochet_decay_damage = 0.8
 	shrapnel_type = null
 	sharpness = NONE
-	embedding = null
+	embed_type = null
 
 // premium .38 ammo from cargo, weak against armor, lower base damage, but excellent at embedding and causing slice wounds at close range
 /obj/projectile/bullet/c38/dumdum
@@ -56,9 +66,19 @@
 	sharpness = SHARP_EDGED
 	wound_bonus = 20
 	bare_wound_bonus = 20
-	embedding = list(embed_chance=75, fall_chance=3, jostle_chance=4, ignore_throwspeed_threshold=TRUE, pain_stam_pct=0.4, pain_mult=5, jostle_pain_mult=6, rip_time=1 SECONDS)
+	embed_type = /datum/embed_data/bullet_c38_dumdum
 	wound_falloff_tile = -5
 	embed_falloff_tile = -15
+
+/datum/embed_data/bullet_c38_dumdum
+	embed_chance=75
+	fall_chance=3
+	jostle_chance=4
+	ignore_throwspeed_threshold=TRUE
+	pain_stam_pct=0.4
+	pain_mult=5
+	jostle_pain_mult=6
+	rip_time=1 SECONDS
 
 /obj/projectile/bullet/c38/trac
 	name = ".38 TRAC bullet"

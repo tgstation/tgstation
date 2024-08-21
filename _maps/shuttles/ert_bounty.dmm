@@ -18,7 +18,9 @@
 	movement_force = list("KNOCKDOWN"=0,"THROW"=0);
 	name = "hunter shuttle";
 	rechargeTime = 1800;
-	shuttle_id = "huntership"
+	shuttle_id = "huntership";
+	port_direction = 4;
+	preferred_direction = 4
 	},
 /obj/structure/fans/tiny,
 /turf/open/floor/pod/dark,
@@ -205,7 +207,9 @@
 /area/shuttle/hunter)
 "H" = (
 /obj/machinery/computer/camera_advanced/shuttle_docker/syndicate/hunter{
-	dir = 8
+	dir = 8;
+	y_offset = 6;
+	x_offset = 3
 	},
 /turf/open/floor/pod/dark,
 /area/shuttle/hunter)

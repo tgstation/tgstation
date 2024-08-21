@@ -109,6 +109,18 @@ DEFINE_BITFIELD(honkbot_flags, list(
 ///key that holds our honk ability
 #define BB_HONK_ABILITY "honk_ability"
 
+//firebot keys
+///things we can extinguish
+#define BB_FIREBOT_CAN_EXTINGUISH "can_extinguish"
+///the target we will extinguish
+#define BB_FIREBOT_EXTINGUISH_TARGET "extinguish_target"
+///lines we say when we detect a fire
+#define BB_FIREBOT_FIRE_DETECTED_LINES "fire_detected_lines"
+///lines we say when we are idle
+#define BB_FIREBOT_IDLE_LINES "idle_lines"
+///lines we say when we are emagged
+#define BB_FIREBOT_EMAGGED_LINES "emagged_lines"
+
 //vibebots
 ///key that holds our partying ability
 #define BB_VIBEBOT_PARTY_ABILITY "party_ability"

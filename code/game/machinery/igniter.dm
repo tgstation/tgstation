@@ -4,6 +4,7 @@
 	icon = 'icons/obj/machines/floor.dmi'
 	icon_state = "igniter0"
 	base_icon_state = "igniter"
+	layer = ABOVE_OPEN_TURF_LAYER
 	plane = FLOOR_PLANE
 	max_integrity = 300
 	armor_type = /datum/armor/machinery_igniter
@@ -90,6 +91,8 @@
 	fire = 100
 	acid = 70
 
+WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/machinery/igniter)
+
 /// turns the igniter on/off
 /obj/machinery/igniter/proc/toggle()
 	on = !( on )
@@ -133,15 +136,15 @@
 /obj/item/wallframe/sparker
 	name = "Sparker WallFrame"
 	desc = "An unmounted sparker. Attach it to a wall to use."
-	icon = 'icons/obj/wallmounts.dmi'
+	icon = 'icons/obj/machines/igniter.dmi'
 	icon_state = "migniter"
 	result_path = /obj/machinery/sparker
-	pixel_shift = 26
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT)
 
 /obj/machinery/sparker
 	name = "mounted igniter"
 	desc = "A wall-mounted ignition device."
-	icon = 'icons/obj/wallmounts.dmi'
+	icon = 'icons/obj/machines/igniter.dmi'
 	icon_state = "migniter"
 	base_icon_state = "migniter"
 	resistance_flags = FIRE_PROOF
@@ -150,7 +153,7 @@
 	var/last_spark = 0
 	var/datum/effect_system/spark_spread/spark_system
 
-MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/sparker, 26)
+WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/machinery/sparker)
 
 /obj/machinery/sparker/ordmix
 	id = INCINERATOR_ORDMIX_IGNITER

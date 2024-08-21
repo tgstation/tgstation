@@ -39,7 +39,7 @@ export const Flatpacker = (props: any) => {
   const { SHEET_MATERIAL_AMOUNT, materials, design, busy } = data;
 
   return (
-    <Window width={400} height={445} title="Flatpacker">
+    <Window width={670} height={400} title="Flatpacker">
       <Window.Content>
         {!!busy && (
           <Dimmer
@@ -74,6 +74,7 @@ export const Flatpacker = (props: any) => {
                   tooltipPosition="left"
                   height="37px"
                   width="37px"
+                  disabled={!design}
                   onClick={() => act('ejectBoard')}
                 >
                   <Icon name="eject" size={1.5} mt="0.8rem" ml="0rem" />
@@ -167,22 +168,28 @@ const CostPreview = (props: CostPreviewProps) => {
   const { materials, SHEET_MATERIAL_AMOUNT } = props;
 
   return (
-    <Section fill>
+    <Section fill scrollable>
       {materials ? (
         <Table>
           {materials.map((material) => (
             <Table.Row key={material.name} className="candystripe">
               <Table.Cell verticalAlign="middle">
-                <MaterialIcon
-                  materialName={material.name}
-                  sheets={material.amount / SHEET_MATERIAL_AMOUNT}
-                />
+                <div style={{ width: '200px' }}>
+                  <MaterialIcon
+                    materialName={material.name}
+                    sheets={material.amount / SHEET_MATERIAL_AMOUNT}
+                  />
+                </div>
               </Table.Cell>
               <TableCell verticalAlign="middle">
-                {toTitleCase(material.name)}
+                <div style={{ width: '200px' }}>
+                  {toTitleCase(material.name)}
+                </div>
               </TableCell>
               <Table.Cell verticalAlign="middle">
-                &times;{(material.amount / SHEET_MATERIAL_AMOUNT).toFixed(2)}
+                <div style={{ width: '200px' }}>
+                  {(material.amount / SHEET_MATERIAL_AMOUNT).toFixed(2)}
+                </div>
               </Table.Cell>
             </Table.Row>
           ))}

@@ -11,7 +11,7 @@
 	glasses = /obj/item/clothing/glasses/thermal/eyepatch
 	gloves = /obj/item/clothing/gloves/tackler/combat/insulated
 	head = /obj/item/clothing/head/helmet/space/beret
-	mask = /obj/item/clothing/mask/cigarette/cigar/havana
+	mask = /obj/item/cigarette/cigar/havana
 	shoes = /obj/item/clothing/shoes/combat/swat
 	r_pocket = /obj/item/lighter
 
@@ -245,7 +245,7 @@
 	glasses = /obj/item/clothing/glasses/sunglasses
 	gloves = /obj/item/clothing/gloves/tackler/combat/insulated
 	head = /obj/item/clothing/head/hats/centhat
-	mask = /obj/item/clothing/mask/cigarette/cigar/cohiba
+	mask = /obj/item/cigarette/cigar/cohiba
 	shoes = /obj/item/clothing/shoes/combat/swat
 	l_pocket = /obj/item/ammo_box/a357
 	r_pocket = /obj/item/lighter

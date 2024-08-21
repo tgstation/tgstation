@@ -166,7 +166,7 @@
 		return list("delay" = 0, "cost" = 1)
 
 /turf/open/floor/plating/foam/rcd_act(mob/user, obj/item/construction/rcd/the_rcd, list/rcd_data)
-	if(rcd_data["[RCD_DESIGN_MODE]"] == RCD_TURF && rcd_data["[RCD_DESIGN_PATH]"] == /turf/open/floor/plating/rcd)
+	if(rcd_data[RCD_DESIGN_MODE] == RCD_TURF && rcd_data[RCD_DESIGN_PATH] == /turf/open/floor/plating/rcd)
 		ChangeTurf(/turf/open/floor/plating, flags = CHANGETURF_INHERIT_AIR)
 		return TRUE
 	return FALSE
@@ -176,8 +176,8 @@
 	ScrapeAway(flags = CHANGETURF_INHERIT_AIR)
 	return TRUE
 
-/turf/open/floor/plating/foam/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
-	return user.combat_mode ? ITEM_INTERACT_SKIP_TO_ATTACK : ITEM_INTERACT_BLOCKING // Fuck you
+/turf/open/floor/plating/foam/welder_act(mob/living/user, obj/item/I)
+	return NONE // Fuck you
 
 //reinforced plating deconstruction states
 #define PLATE_INTACT 0

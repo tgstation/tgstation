@@ -4,7 +4,7 @@
 	name = "Aquarium Upgrade"
 	desc = "An upgrade."
 
-	icon = 'icons/obj/aquarium/supplies.dmi'
+	icon = 'icons/obj/structures/aquarium/supplies.dmi'
 	icon_state = "construction_kit"
 	/// What kind of aquarium can accept this upgrade. Strict type check, no subtypes.
 	var/upgrade_from_type = /obj/structure/aquarium
@@ -23,6 +23,8 @@
 
 	icon_state = "bioelec_map"
 	icon_prefix = "bioelec"
+
+	current_beauty = 0
 
 /obj/structure/aquarium/bioelec_gen/zap_act(power, zap_flags)
 	var/explosive = zap_flags & ZAP_MACHINE_EXPLOSIVE

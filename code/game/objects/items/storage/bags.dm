@@ -119,7 +119,7 @@
 /obj/item/storage/bag/ore
 	name = "mining satchel"
 	desc = "This little bugger can be used to store and transport ores."
-	icon = 'icons/obj/mining.dmi'
+	icon = 'icons/obj/mining_zones/equipment.dmi'
 	icon_state = "satchel"
 	worn_icon_state = "satchel"
 	slot_flags = ITEM_SLOT_BELT | ITEM_SLOT_POCKETS
@@ -286,7 +286,7 @@
 /obj/item/storage/bag/sheetsnatcher
 	name = "sheet snatcher"
 	desc = "A patented Nanotrasen storage system designed for any kind of mineral sheet."
-	icon = 'icons/obj/mining.dmi'
+	icon = 'icons/obj/mining_zones/equipment.dmi'
 	icon_state = "sheetsnatcher"
 	worn_icon_state = "satchel"
 
@@ -363,7 +363,7 @@
 	atom_storage.max_specific_storage = WEIGHT_CLASS_BULKY //Plates are required bulky to keep them out of backpacks
 	atom_storage.set_holdable(
 		can_hold_list = list(
-			/obj/item/clothing/mask/cigarette,
+			/obj/item/cigarette,
 			/obj/item/food,
 			/obj/item/kitchen,
 			/obj/item/lighter,

@@ -255,7 +255,7 @@
 
 /datum/greyscale_config/vape
 	name = "Vape"
-	icon_file = 'icons/obj/clothing/masks.dmi'
+	icon_file = 'icons/obj/cigarettes.dmi'
 	json_config = 'code/datums/greyscale/json_configs/vape.json'
 
 /datum/greyscale_config/vape/worn
@@ -265,15 +265,15 @@
 
 /datum/greyscale_config/vape/open_low
 	name = "Open Vape Low"
-	json_config = 'code/datums/greyscale/json_configs/vape_open_low.json'
+	json_config = 'code/datums/greyscale/json_configs/vapeopen_low.json'
 
 /datum/greyscale_config/vape/open_med
 	name = "Open Vape Medium"
-	json_config = 'code/datums/greyscale/json_configs/vape_open_med.json'
+	json_config = 'code/datums/greyscale/json_configs/vapeopen_med.json'
 
 /datum/greyscale_config/vape/open_high
 	name = "Open Vape High"
-	json_config = 'code/datums/greyscale/json_configs/vape_open_high.json'
+	json_config = 'code/datums/greyscale/json_configs/vapeopen_high.json'
 
 //
 // TAPE

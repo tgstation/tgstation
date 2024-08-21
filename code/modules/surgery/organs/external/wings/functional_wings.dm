@@ -25,6 +25,8 @@
 
 	///Are our wings open or closed?
 	var/wings_open = FALSE
+	///We cant hide this wings in suit
+	var/cant_hide = FALSE
 
 	// grind_results = list(/datum/reagent/flightpotion = 5)
 	food_reagents = list(/datum/reagent/flightpotion = 5)
@@ -33,15 +35,14 @@
 	QDEL_NULL(fly)
 	return ..()
 
-/obj/item/organ/external/wings/functional/Insert(mob/living/carbon/receiver, special, movement_flags)
+/obj/item/organ/external/wings/functional/mob_insert(mob/living/carbon/receiver, special, movement_flags)
 	. = ..()
-	if(!.)
-		return
+
 	if(QDELETED(fly))
 		fly = new
 	fly.Grant(receiver)
 
-/obj/item/organ/external/wings/functional/Remove(mob/living/carbon/organ_owner, special, movement_flags)
+/obj/item/organ/external/wings/functional/mob_remove(mob/living/carbon/organ_owner, special, movement_flags)
 	. = ..()
 	fly?.Remove(organ_owner)
 	if(wings_open)
@@ -66,7 +67,7 @@
 	if(human.stat || human.body_position == LYING_DOWN)
 		return FALSE
 	//Jumpsuits have tail holes, so it makes sense they have wing holes too
-	if(human.wear_suit && ((human.wear_suit.flags_inv & HIDEJUMPSUIT) && (!human.wear_suit.species_exception || !is_type_in_list(src, human.wear_suit.species_exception))))
+	if(!cant_hide && human.wear_suit && ((human.wear_suit.flags_inv & HIDEJUMPSUIT) && (!human.wear_suit.species_exception || !is_type_in_list(src, human.wear_suit.species_exception))))
 		to_chat(human, span_warning("Your suit blocks your wings from extending!"))
 		return FALSE
 	var/turf/location = get_turf(human)

@@ -1,15 +1,12 @@
 /obj/item/organ/internal/cyberimp/chest
 	name = "cybernetic torso implant"
 	desc = "Implants for the organs in your torso."
-	icon_state = "chest_implant"
-	implant_overlay = "chest_implant_overlay"
 	zone = BODY_ZONE_CHEST
 
 /obj/item/organ/internal/cyberimp/chest/nutriment
-	name = "Nutriment pump implant"
+	name = "nutriment pump implant"
 	desc = "This implant will synthesize and pump into your bloodstream a small amount of nutriment when you are starving."
-	icon_state = "chest_implant"
-	implant_color = "#00AA00"
+	icon_state = "nutriment_implant"
 	var/hunger_threshold = NUTRITION_LEVEL_STARVING
 	var/synthesizing = 0
 	var/poison_amount = 5
@@ -37,18 +34,16 @@
 
 
 /obj/item/organ/internal/cyberimp/chest/nutriment/plus
-	name = "Nutriment pump implant PLUS"
+	name = "nutriment pump implant PLUS"
 	desc = "This implant will synthesize and pump into your bloodstream a small amount of nutriment when you are hungry."
-	icon_state = "chest_implant"
-	implant_color = "#006607"
+	icon_state = "adv_nutriment_implant"
 	hunger_threshold = NUTRITION_LEVEL_HUNGRY
 	poison_amount = 10
 
 /obj/item/organ/internal/cyberimp/chest/reviver
-	name = "Reviver implant"
+	name = "reviver implant"
 	desc = "This implant will attempt to revive and heal you if you lose consciousness. For the faint of heart!"
-	icon_state = "chest_implant"
-	implant_color = "#AD0000"
+	icon_state = "reviver_implant"
 	slot = ORGAN_SLOT_HEART_AID
 	var/revive_cost = 0
 	var/reviving = FALSE
@@ -164,7 +159,6 @@
 	slot = ORGAN_SLOT_THRUSTERS
 	icon_state = "imp_jetpack"
 	base_icon_state = "imp_jetpack"
-	implant_overlay = null
 	implant_color = null
 	actions_types = list(/datum/action/item_action/organ_action/toggle)
 	w_class = WEIGHT_CLASS_NORMAL
@@ -260,3 +254,62 @@
 
 	deactivate(silent = TRUE)
 	return FALSE
+
+/obj/item/organ/internal/cyberimp/chest/spine
+	name = "\improper Herculean gravitronic spinal implant"
+	desc = "This gravitronic spinal interface is able to improve the athletics of a user, allowing them greater physical ability. \
+		Contains a slot which can be upgraded with a gravity anomaly core, improving its performance."
+	icon_state = "herculean_implant"
+	slot = ORGAN_SLOT_SPINE
+	/// How much faster does the spinal implant improve our lifting speed, workout ability, reducing falling damage and improving climbing and standing speed
+	var/athletics_boost_multiplier = 0.8
+	/// How much additional throwing range does our spinal implant grant us.
+	var/added_throw_range = 2
+	/// How much additional boxing damage and tackling power do we add?
+	var/strength_bonus = 4
+	/// Whether or not a gravity anomaly core has been installed, improving the effectiveness of the spinal implant.
+	var/core_applied = FALSE
+	/// The overlay for our implant to indicate that, yes, this person has an implant inserted.
+	var/mutable_appearance/stone_overlay
+
+/obj/item/organ/internal/cyberimp/chest/spine/emp_act(severity)
+	. = ..()
+	if(!owner || . & EMP_PROTECT_SELF)
+		return
+	to_chat(owner, span_warning("You feel sheering pain as your body is crushed like a soda can!"))
+	owner.apply_damage(20/severity, BRUTE, def_zone = BODY_ZONE_CHEST)
+
+/obj/item/organ/internal/cyberimp/chest/spine/on_mob_insert(mob/living/carbon/organ_owner, special, movement_flags)
+	. = ..()
+	stone_overlay = mutable_appearance(icon = 'icons/effects/effects.dmi', icon_state = "stone")
+	organ_owner.add_overlay(stone_overlay)
+	if(core_applied)
+		organ_owner.AddElement(/datum/element/forced_gravity, 1)
+
+/obj/item/organ/internal/cyberimp/chest/spine/on_mob_remove(mob/living/carbon/organ_owner, special)
+	. = ..()
+	if(stone_overlay)
+		organ_owner.cut_overlay(stone_overlay)
+		stone_overlay = null
+	if(core_applied)
+		organ_owner.RemoveElement(/datum/element/forced_gravity, 1)
+
+/obj/item/organ/internal/cyberimp/chest/spine/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	. = ..()
+	if(core_applied)
+		user.balloon_alert(user, "core already installed!")
+		return ITEM_INTERACT_BLOCKING
+
+	if(istype(tool, /obj/item/assembly/signaler/anomaly/grav))
+		user.balloon_alert(user, "core installed.")
+		athletics_boost_multiplier = 0.25
+		added_throw_range += 2
+		strength_bonus += 4
+		core_applied = TRUE
+		name = "\improper Atlas gravitonic spinal implant"
+		desc = "This gravitronic spinal interface is able to improve the athletics of a user, allowing them greater physical ability. \
+			This one has been improved through the installation of a gravity anomaly core, allowing for personal gravity manipulation."
+		icon_state = "herculean_implant_core"
+		update_appearance()
+		qdel(tool)
+		return ITEM_INTERACT_SUCCESS

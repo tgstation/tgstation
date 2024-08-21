@@ -1,5 +1,6 @@
 
 /mob/living/basic/snake
+	SET_BASE_VISUAL_PIXEL(0, 7)
 	name = "snake"
 	desc = "A slithery snake. These legless reptiles are the bane of mice and adventurers alike."
 	icon_state = "snake"
@@ -13,6 +14,9 @@
 	melee_damage_upper = 6
 	obj_damage = 0
 	environment_smash = ENVIRONMENT_SMASH_NONE
+	shadow_offset_y = 5
+	//how many units of venom are injected in target per attack
+	var/venom_dose = 4
 
 	attack_verb_continuous = "bites"
 	attack_verb_simple = "bite"
@@ -62,7 +66,7 @@
 	if(isnull(special_reagent))
 		special_reagent = /datum/reagent/toxin
 
-	AddElement(/datum/element/venomous, special_reagent, 4)
+	AddElement(/datum/element/venomous, special_reagent, venom_dose)
 
 /mob/living/basic/snake/befriend(mob/living/new_friend)
 	. = ..()

@@ -10,7 +10,7 @@
 	throwforce = 0
 	throw_speed = 3
 	throw_range = 6
-	grind_results = list()
+	grind_results = list(/datum/reagent/toxin/slimejelly = 20)
 	///uses before it goes inert
 	var/extract_uses = 1
 	///deletion timer, for delayed reactions
@@ -43,11 +43,6 @@
 /obj/item/slime_extract/Initialize(mapload)
 	. = ..()
 	create_reagents(100, INJECTABLE | DRAWABLE)
-
-/obj/item/slime_extract/on_grind()
-	. = ..()
-	if(extract_uses)
-		grind_results[/datum/reagent/toxin/slimejelly] = 20
 
 /**
 * Effect when activated by a Luminescent.
@@ -720,13 +715,10 @@
 	if(!dumb_mob.compare_sentience_type(sentience_type)) // Will also return false if not a basic or simple mob, which are the only two we want anyway
 		balloon_alert(user, "invalid creature!")
 		return
-	if(isnull(potion_reason))
-		balloon_alert(user, "no reason for offering set!")
-		return
 	balloon_alert(user, "offering...")
 	being_used = TRUE
 	var/mob/chosen_one = SSpolling.poll_ghosts_for_target(
-		question = "[span_danger(user.name)] is offering [span_notice(dumb_mob.name)] an intelligence potion! Reason: [span_boldnotice(potion_reason)]",
+		question = "[span_danger(user.name)] is offering [span_notice(dumb_mob.name)] an intelligence potion![potion_reason ? " Reason: [span_boldnotice(potion_reason)]" : ""]",
 		check_jobban = ROLE_SENTIENCE,
 		poll_time = 20 SECONDS,
 		checked_target = dumb_mob,
@@ -804,7 +796,7 @@
 
 	user.do_attack_animation(interacting_with)
 	prompted = 1
-	if(tgui_alert(usr,"This will permanently transfer your consciousness to [switchy_mob]. Are you sure you want to do this?",,list("Yes","No")) == "No")
+	if(tgui_alert(usr,"This will permanently transfer your consciousness to [switchy_mob]. Are you sure you want to do this?",,list("Yes","No")) != "Yes")
 		prompted = 0
 		return ITEM_INTERACT_BLOCKING
 

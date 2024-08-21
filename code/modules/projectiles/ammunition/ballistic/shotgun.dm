@@ -103,6 +103,15 @@
 	variance = 25
 	custom_materials = list(/datum/material/iron=SHEET_MATERIAL_AMOUNT*2)
 
+/obj/item/ammo_casing/shotgun/fletchette
+	name = "\improper Donk Co Flechette Shell"
+	desc = "A shotgun casing filled with small metal darts. Has poor armor penetration and velocity, but is good at destroying most electronic devices and injuring unarmored humanoids."
+	icon_state = "fletchette"
+	projectile_type = /obj/projectile/bullet/pellet/flechette
+	custom_materials = list(/datum/material/iron=SHEET_MATERIAL_AMOUNT*2, /datum/material/glass=SMALL_MATERIAL_AMOUNT*1)
+	pellets = 6
+	variance = 20
+
 /obj/item/ammo_casing/shotgun/ion
 	name = "ion shell"
 	desc = "An advanced shotgun shell which uses a subspace ansible crystal to produce an effect similar to a standard ion rifle. \
@@ -140,8 +149,8 @@
 
 	var/static/list/slapcraft_recipe_list = list(/datum/crafting_recipe/meteorslug, /datum/crafting_recipe/pulseslug, /datum/crafting_recipe/dragonsbreath, /datum/crafting_recipe/ionslug)
 
-	AddComponent(
-		/datum/component/slapcrafting,\
+	AddElement(
+		/datum/element/slapcrafting,\
 		slapcraft_recipes = slapcraft_recipe_list,\
 	)
 
@@ -159,7 +168,13 @@
 /obj/item/ammo_casing/shotgun/dart/attackby()
 	return
 
+/obj/item/ammo_casing/shotgun/dart/large
+	name = "XL shotgun dart"
+	desc = "A dart for use in shotguns. Can be injected with up to 25 units of any chemical."
+	reagent_amount = 25
+
 /obj/item/ammo_casing/shotgun/dart/bioterror
+	name = "bioterror dart"
 	desc = "An improved shotgun dart filled with deadly toxins. Can be injected with up to 30 units of any chemical."
 	reagent_amount = 30
 

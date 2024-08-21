@@ -28,7 +28,7 @@
 	var/extend_pipe_to_edge = FALSE
 
 ///turn_connects is for wheter or not we spin with the object to change our pipes
-/datum/component/plumbing/Initialize(start=TRUE, ducting_layer, turn_connects=TRUE, datum/reagents/custom_receiver, extend_pipe_to_edge = FALSE)
+/datum/component/plumbing/Initialize(start=TRUE, ducting_layer, turn_connects=TRUE, datum/reagents/custom_receiver, extend_pipe_to_edge = FALSE, invert_demand = FALSE)
 	if(!ismovable(parent))
 		return COMPONENT_INCOMPATIBLE
 
@@ -45,9 +45,20 @@
 
 	set_recipient_reagents_holder(custom_receiver ? custom_receiver : parent_movable.reagents)
 
+	if(invert_demand)
+		var/new_demand_connects
+		var/new_supply_connects
+		for(var/direction in GLOB.cardinals)
+			if(direction & initial(demand_connects))
+				new_demand_connects += turn(direction, 180)
+			if(direction & initial(supply_connects))
+				new_supply_connects += turn(direction, 180)
+		demand_connects = new_demand_connects
+		supply_connects = new_supply_connects
+
 	if(start)
-		//We're registering here because I need to check whether we start active or not, and this is just easier
-		//Should be called after we finished. Done this way because other networks need to finish setting up aswell
+		// We're registering here because I need to check whether we start active or not, and this is just easier
+		// Should be called after we finished. Done this way because other networks need to finish setting up aswell
 		RegisterSignal(parent, COMSIG_COMPONENT_ADDED, PROC_REF(enable))
 
 /datum/component/plumbing/RegisterWithParent()
@@ -94,7 +105,7 @@
 	process_request(dir = dir)
 
 ///check who can give us what we want, and how many each of them will give us
-/datum/component/plumbing/proc/process_request(amount = MACHINE_REAGENT_TRANSFER, reagent, dir)
+/datum/component/plumbing/proc/process_request(amount = MACHINE_REAGENT_TRANSFER, reagent, dir, round_robin = TRUE)
 	//find the duct to take from
 	var/datum/ductnet/net
 	if(!ducts.Find(num2text(dir)))
@@ -115,7 +126,7 @@
 	var/target_volume = reagents.total_volume + amount
 	for(var/datum/component/plumbing/give as anything in valid_suppliers)
 		currentRequest = (target_volume - reagents.total_volume) / suppliersLeft
-		give.transfer_to(src, currentRequest, reagent, net)
+		give.transfer_to(src, currentRequest, reagent, net, round_robin)
 		suppliersLeft--
 	return TRUE
 
@@ -134,11 +145,11 @@
 	return FALSE
 
 ///this is where the reagent is actually transferred and is thus the finish point of our process()
-/datum/component/plumbing/proc/transfer_to(datum/component/plumbing/target, amount, reagent, datum/ductnet/net)
+/datum/component/plumbing/proc/transfer_to(datum/component/plumbing/target, amount, reagent, datum/ductnet/net, round_robin = TRUE)
 	if(!reagents || !target || !target.reagents)
 		return FALSE
 
-	reagents.trans_to(target.recipient_reagents_holder, amount, target_id = reagent)
+	reagents.trans_to(target.recipient_reagents_holder, amount, target_id = reagent, methods = round_robin ? LINEAR : NONE)
 
 ///We create our luxurious piping overlays/underlays, to indicate where we do what. only called once if use_overlays = TRUE in Initialize()
 /datum/component/plumbing/proc/create_overlays(atom/movable/parent_movable, list/overlays)
@@ -302,7 +313,7 @@
 		demand_connects = new_demand_connects
 		supply_connects = new_supply_connects
 
-///Give the direction of a pipe, and it'll return wich direction it originally was when it's object pointed SOUTH
+///Give the direction of a pipe, and it'll return wich direction it originally was when its object pointed SOUTH
 /datum/component/plumbing/proc/get_original_direction(dir)
 	var/atom/movable/parent_movable = parent
 	return turn(dir, dir2angle(parent_movable.dir) - 180)
@@ -376,50 +387,3 @@
 
 	// Defer to later frame because pixel_* is actually updated after all callbacks
 	addtimer(CALLBACK(parent_obj, TYPE_PROC_REF(/atom/, update_appearance)), 0.1 SECONDS)
-
-///has one pipe input that only takes, example is manual output pipe
-/datum/component/plumbing/simple_demand
-	demand_connects = SOUTH
-
-///has one pipe output that only supplies. example is liquid pump and manual input pipe
-/datum/component/plumbing/simple_supply
-	supply_connects = SOUTH
-
-///input and output, like a holding tank
-/datum/component/plumbing/tank
-	demand_connects = WEST
-	supply_connects = EAST
-
-/datum/component/plumbing/manifold
-	demand_connects = NORTH
-	supply_connects = SOUTH
-
-/datum/component/plumbing/iv_drip
-	demand_connects = SOUTH
-	supply_connects = NORTH
-
-/datum/component/plumbing/manifold/change_ducting_layer(obj/caller, obj/changer, new_layer)
-	return
-
-#define READY 2
-///Baby component for the buffer plumbing machine
-/datum/component/plumbing/buffer
-	demand_connects = WEST
-	supply_connects = EAST
-
-/datum/component/plumbing/buffer/Initialize(start=TRUE, _turn_connects=TRUE, _ducting_layer, datum/reagents/custom_receiver)
-	if(!istype(parent, /obj/machinery/plumbing/buffer))
-		return COMPONENT_INCOMPATIBLE
-
-	return ..()
-
-/datum/component/plumbing/buffer/can_give(amount, reagent, datum/ductnet/net)
-	var/obj/machinery/plumbing/buffer/buffer = parent
-	return (buffer.mode == READY) ? ..() : FALSE
-
-#undef READY
-
-///Lazily demand from any direction. Overlays won't look good, and the aquarium sprite occupies about the entire 32x32 area anyway.
-/datum/component/plumbing/aquarium
-	demand_connects = SOUTH|NORTH|EAST|WEST
-	use_overlays = FALSE

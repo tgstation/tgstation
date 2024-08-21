@@ -176,17 +176,17 @@ DEFINE_BITFIELD(bot_cover_flags, list(
 /// Medibots - Healing people
 #define BOT_HEALING "Healing"
 /// MULEbot - Moving to deliver
-#define BOT_DELIVER "Navigating to Delivery Location"
+#define BOT_DELIVER "Delivering"
 /// MULEbot - Returning to home
-#define BOT_GO_HOME "Proceeding to work site"
+#define BOT_GO_HOME "Returning"
 /// MULEbot - Blocked
-#define BOT_BLOCKED "No Route"
+#define BOT_BLOCKED "Blocked"
 /// MULEbot - Computing navigation
-#define BOT_NAV "Unable to reach destination"
+#define BOT_NAV "Unreachable"
 /// MULEbot - Waiting for nav computation
-#define BOT_WAIT_FOR_NAV "Calculating navigation path"
+#define BOT_WAIT_FOR_NAV "Calculating"
 /// MULEbot - No destination beacon found (or no route)
-#define BOT_NO_ROUTE "Navigating to Home"
+#define BOT_NO_ROUTE "Returning Home"
 
 //Secbot and ED209 judgement criteria bitflag values
 #define JUDGE_EMAGGED (1<<0)
@@ -244,6 +244,32 @@ DEFINE_BITFIELD(medical_mode_flags, list(
 	"MEDBOT_TIPPED_MODE" = MEDBOT_TIPPED_MODE,
 ))
 
+///Whether we are stationary or not
+#define FIREBOT_STATIONARY_MODE (1<<0)
+///If we will extinguish people
+#define FIREBOT_EXTINGUISH_PEOPLE (1<<1)
+///if we will extinguish turfs on flames
+#define FIREBOT_EXTINGUISH_FLAMES (1<<2)
+
+DEFINE_BITFIELD(firebot_mode_flags, list(
+	"FIREBOT_STATIONARY_MODE" = FIREBOT_STATIONARY_MODE,
+	"FIREBOT_EXTINGUISH_PEOPLE" = FIREBOT_EXTINGUISH_PEOPLE,
+	"FIREBOT_EXTINGUISH_FLAMES" = FIREBOT_EXTINGUISH_FLAMES,
+))
+
+///auto return to home after delivery
+#define MULEBOT_RETURN_MODE (1<<0)
+///autopickups at beacons
+#define MULEBOT_AUTO_PICKUP_MODE (1<<1)
+///announce every delivery we make
+#define MULEBOT_REPORT_DELIVERY_MODE (1<<2)
+
+DEFINE_BITFIELD(mulebot_delivery_flags, list(
+	"MULEBOT_RETURN_MODE" = MULEBOT_RETURN_MODE,
+	"MULEBOT_AUTO_PICKUP_MODE" = MULEBOT_AUTO_PICKUP_MODE,
+	"MULEBOT_REPORT_DELIVERY_MODE" = MULEBOT_REPORT_DELIVERY_MODE,
+))
+
 //cleanBOT defines on what to clean
 #define CLEANBOT_CLEAN_BLOOD (1<<0)
 #define CLEANBOT_CLEAN_TRASH (1<<1)
@@ -284,6 +310,9 @@ DEFINE_BITFIELD(janitor_mode_flags, list(
 #define FIREBOT_VOICED_ONLY_YOU "Only you can prevent station fires."
 #define FIREBOT_VOICED_TEMPERATURE_NOMINAL "Temperature nominal."
 #define FIREBOT_VOICED_KEEP_COOL "Keep it cool."
+#define FIREBOT_VOICED_CANDLE_TIP "Keep candles near curtains for cozy night lights!"
+#define FIREBOT_VOICED_ELECTRIC_FIRE "Keep full buckets of water near outlets in case of an electric fire!"
+#define FIREBOT_VOICED_FUEL_TIP "Pouring fuel on fire makes it burn out faster!"
 
 #define HYGIENEBOT_VOICED_UNHYGIENIC "Unhygienic client found. Please stand still so I can clean you."
 #define HYGIENEBOT_VOICED_ENJOY_DAY "Enjoy your clean and tidy day!"

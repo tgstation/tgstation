@@ -70,6 +70,9 @@
 			)
 
 /mob/living/silicon/binarycheck()
+	var/area/our_area = get_area(src)
+	if(our_area.area_flags & BINARY_JAMMING)
+		return FALSE
 	return TRUE
 
 /mob/living/silicon/radio(message, list/message_mods = list(), list/spans, language)

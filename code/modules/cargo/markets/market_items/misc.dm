@@ -2,7 +2,7 @@
 	category = "Miscellaneous"
 	abstract_path = /datum/market_item/misc
 
-/datum/market_item/misc/Clear_PDA
+/datum/market_item/misc/clear_pda
 	name = "Clear PDA"
 	desc = "Show off your style with this limited edition clear PDA!."
 	item = /obj/item/modular_computer/pda/clear
@@ -12,7 +12,7 @@
 	stock_max = 2
 	availability_prob = 50
 
-/datum/market_item/misc/jade_Lantern
+/datum/market_item/misc/jade_lantern
 	name = "Jade Lantern"
 	desc = "Found in a box labeled 'Danger: Radioactive'. Probably safe."
 	item = /obj/item/flashlight/lantern/jade
@@ -90,7 +90,7 @@
 
 /datum/market_item/misc/smugglers_satchel
 	name = "Smuggler's Satchel"
-	desc = "This easily hidden satchel can become a versatile tool to anybody with the desire to keep certain items out of sight and out of mind."
+	desc = "This easily hidden satchel can become a versatile tool to anybody with the desire to keep certain items out of sight and out of mind. Its contents cannot be detected by contraband scanners."
 	item = /obj/item/storage/backpack/satchel/flat/empty
 
 	price_min = CARGO_CRATE_VALUE * 3.75

@@ -1,6 +1,6 @@
 /obj/structure/reflector
 	name = "reflector base"
-	icon = 'icons/obj/structures.dmi'
+	icon = 'icons/obj/machines/engine/reflector.dmi'
 	icon_state = "reflector_map"
 	desc = "A base for reflector assemblies."
 	anchored = FALSE
@@ -79,10 +79,10 @@
 	P.decayedRange = max(P.decayedRange--, 0)
 	return BULLET_ACT_FORCE_PIERCE
 
-/obj/structure/reflector/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+/obj/structure/reflector/tool_act(mob/living/user, obj/item/tool, list/modifiers)
 	if(admin && tool.tool_behaviour)
 		return ITEM_INTERACT_BLOCKING
-	return NONE
+	return ..()
 
 /obj/structure/reflector/screwdriver_act(mob/living/user, obj/item/tool)
 	can_rotate = !can_rotate
@@ -311,7 +311,7 @@
 
 	return data
 
-/obj/structure/reflector/ui_act(action, params)
+/obj/structure/reflector/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if(.)
 		return

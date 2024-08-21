@@ -133,7 +133,7 @@
 			if(src.uses >= max_uses)
 				break
 
-			//consume the item only if it's an light tube,bulb or shard
+			//consume the item only if it's a light tube, bulb or shard
 			loaded = FALSE
 			if(istype(item_to_check, /obj/item/light))
 				var/obj/item/light/found_light = item_to_check

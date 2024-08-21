@@ -1,10 +1,9 @@
 /obj/item/wallframe/bluespace_vendor_mount
 	name = "bluespace vendor wall mount"
 	desc = "Used for placing bluespace vendors."
-	icon = 'icons/obj/machines/atmospherics/bluespace_gas_selling.dmi'
+	icon = 'icons/obj/machines/atmospherics/bluespace_gas_vendor.dmi'
 	icon_state = "bluespace_vendor_open"
 	result_path = /obj/machinery/bluespace_vendor/built
-	pixel_shift = 30
 
 ///Defines for the mode of the vendor
 #define BS_MODE_OFF 1
@@ -13,7 +12,7 @@
 #define BS_MODE_OPEN 4
 
 /obj/machinery/bluespace_vendor
-	icon = 'icons/obj/machines/atmospherics/bluespace_gas_selling.dmi'
+	icon = 'icons/obj/machines/atmospherics/bluespace_gas_vendor.dmi'
 	icon_state = "bluespace_vendor_off"
 	base_icon_state = "bluespace_vendor"
 	name = "Bluespace Gas Vendor"
@@ -51,7 +50,7 @@
 	map_spawned = FALSE
 	mode = BS_MODE_OPEN
 
-MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/bluespace_vendor, 30)
+WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/machinery/bluespace_vendor)
 
 /datum/armor/machinery_bluespace_vendor
 	energy = 100
@@ -69,7 +68,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/bluespace_vendor, 30)
 /obj/machinery/bluespace_vendor/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/payment, tank_cost, SSeconomy.get_dep_account(ACCOUNT_ENG), PAYMENT_ANGRY)
-	find_and_hang_on_wall( FALSE)
+	find_and_hang_on_wall(directional = FALSE)
 
 /obj/machinery/bluespace_vendor/post_machine_initialize()
 	. = ..()
@@ -93,6 +92,13 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/bluespace_vendor, 30)
 		if(BS_MODE_OPEN)
 			icon_state = "[base_icon_state]_open"
 	return ..()
+
+/obj/machinery/bluespace_vendor/update_overlays()
+	. = ..()
+	if(mode == BS_MODE_IDLE)
+		. += emissive_appearance(icon, "[base_icon_state]_idle_light-mask", src,  alpha)
+	else if(mode == BS_MODE_PUMPING)
+		. += emissive_appearance(icon, "[base_icon_state]_pumping_light-mask", src, alpha)
 
 /obj/machinery/bluespace_vendor/Exited(atom/movable/gone, direction)
 	if(gone == internal_tank)
@@ -244,7 +250,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/bluespace_vendor, 30)
 	data["tank_full"] = total_tank_pressure
 	return data
 
-/obj/machinery/bluespace_vendor/ui_act(action, params)
+/obj/machinery/bluespace_vendor/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if(.)
 		return

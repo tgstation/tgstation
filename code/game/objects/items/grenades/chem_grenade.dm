@@ -35,7 +35,6 @@
 	set_wires(new /datum/wires/explosive/chem_grenade(src))
 
 /obj/item/grenade/chem_grenade/Destroy(force)
-	QDEL_NULL(wires)
 	QDEL_NULL(landminemode)
 	QDEL_LIST(beakers)
 	return ..()
@@ -502,7 +501,7 @@
 
 /obj/item/grenade/chem_grenade/ez_clean
 	name = "cleaner grenade"
-	desc = "Waffle Co.-brand foaming space cleaner. In a special applicator for rapid cleaning of wide areas."
+	desc = "Waffle Corp. brand foaming space cleaner. In a special applicator for rapid cleaning of wide areas."
 	stage = GRENADE_READY
 
 /obj/item/grenade/chem_grenade/ez_clean/Initialize(mapload)

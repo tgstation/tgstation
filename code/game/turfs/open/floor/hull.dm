@@ -10,6 +10,16 @@
 	name = "shuttle ceiling plating"
 	var/old_turf_type
 
+/turf/open/floor/engine/hull/ceiling/Initialize(mapload)
+	. = ..()
+	if(!istype(loc, /area/space))
+		return
+	if(istype(loc, /area/space/nearstation))
+		return
+	new /obj/effect/mapping_error (src) //We're in a normal space tile, meaning we aren't lit correct.
+										///datum/unit_test/mapping_nearstation_test.dm SHOULD fail this case automatically
+										//this is just here so the mapper responsible can easily see where the issues are directly on the map.
+
 /turf/open/floor/engine/hull/ceiling/AfterChange(flags, oldType)
 	. = ..()
 	old_turf_type = oldType

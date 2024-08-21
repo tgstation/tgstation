@@ -107,7 +107,7 @@
 	body_parts_covered = CHEST|GROIN
 
 /obj/item/clothing/suit/armor/vest/marine/pmc
-	desc = "A set of the finest mass produced, stamped plasteel armor plates, for an all-around door-kicking and ass-smashing. Its stellar survivability making up is for it's lack of space worthiness"
+	desc = "A set of the finest mass produced, stamped plasteel armor plates, for an all-around door-kicking and ass-smashing. Its stellar survivability making up is for its lack of space worthiness"
 	min_cold_protection_temperature = HELMET_MIN_TEMP_PROTECT
 	max_heat_protection_temperature = HELMET_MAX_TEMP_PROTECT
 	clothing_flags = THICKMATERIAL
@@ -652,7 +652,7 @@
 
 /obj/item/clothing/suit/armor/militia
 	name = "station defender's coat"
-	desc = "A well worn uniform used by militia across the frontier, it's thick padding useful for cushioning blows."
+	desc = "A well worn uniform used by militia across the frontier, its thick padding useful for cushioning blows."
 	icon_state = "militia"
 	inhand_icon_state = "b_suit"
 	body_parts_covered = CHEST|GROIN|ARMS
@@ -714,3 +714,113 @@
 	fire = 50
 	acid = 50
 	wound = 30
+
+/obj/item/clothing/suit/armor/durability/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK, damage_type = BRUTE)
+	take_damage(1, BRUTE, 0, 0)
+
+/obj/item/clothing/suit/armor/durability/watermelon
+	name = "watermelon"
+	desc = "An armour, made from watermelons. Propably won't take too many hits, but at least it looks serious... As serious as worn watermelon can be."
+	icon_state = "watermelon"
+	inhand_icon_state = null
+	body_parts_covered = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
+	armor_type = /datum/armor/watermelon
+	strip_delay = 60
+	equip_delay_other = 40
+	clothing_traits = list(TRAIT_BRAWLING_KNOCKDOWN_BLOCKED)
+	max_integrity = 15
+
+/obj/item/clothing/suit/armor/durability/watermelon/fire_resist
+	resistance_flags = FIRE_PROOF
+	armor_type = /datum/armor/watermelon_fr
+
+/datum/armor/watermelon
+	melee = 15
+	bullet = 10
+	energy = 10
+	bomb = 10
+	fire = 0
+	acid = 25
+	wound = 5
+
+/datum/armor/watermelon_fr
+	melee = 15
+	bullet = 10
+	energy = 10
+	bomb = 10
+	fire = 15
+	acid = 30
+	wound = 5
+
+/obj/item/clothing/suit/armor/durability/holymelon
+	name = "holymelon"
+	desc = "An armour, made from holymelons. Inspires you to go on some sort of a crusade... Perhaps spreading spinach to children?"
+	icon_state = "holymelon"
+	inhand_icon_state = null
+	body_parts_covered = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
+	armor_type = /datum/armor/watermelon
+	strip_delay = 60
+	equip_delay_other = 40
+	clothing_traits = list(TRAIT_BRAWLING_KNOCKDOWN_BLOCKED)
+	max_integrity = 15
+	var/decayed = FALSE
+
+/obj/item/clothing/suit/armor/durability/holymelon/fire_resist
+	resistance_flags = FIRE_PROOF
+	armor_type = /datum/armor/watermelon_fr
+
+/obj/item/clothing/suit/armor/durability/holymelon/Initialize(mapload)
+	. = ..()
+	if(decayed)
+		decay()
+		return
+
+	AddComponent(
+		/datum/component/anti_magic, \
+		antimagic_flags = MAGIC_RESISTANCE_HOLY, \
+		inventory_flags = ITEM_SLOT_OCLOTHING, \
+		charges = 1, \
+		drain_antimagic = CALLBACK(src, PROC_REF(drain_antimagic)), \
+		expiration = CALLBACK(src, PROC_REF(decay)) \
+	)
+
+/obj/item/clothing/suit/armor/durability/holymelon/proc/drain_antimagic(mob/user)
+	to_chat(user, span_warning("[src] looses a bit of its shimmer and glossiness..."))
+
+/obj/item/clothing/suit/armor/durability/holymelon/proc/decay()
+	take_damage(8, BRUTE, 0, 0)
+
+
+/obj/item/clothing/suit/armor/durability/barrelmelon
+	name = "barrelmelon"
+	desc = "An armour, made from barrelmelons. Reeks of ale, inspiring to courageous deeds. Or, perhaps, a bar brawl."
+	icon_state = "barrelmelon"
+	inhand_icon_state = null
+	body_parts_covered = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
+	armor_type = /datum/armor/barrelmelon
+	strip_delay = 60
+	equip_delay_other = 40
+	clothing_traits = list(TRAIT_BRAWLING_KNOCKDOWN_BLOCKED)
+	max_integrity = 10
+
+/obj/item/clothing/suit/armor/durability/barrelmelon/fire_resist
+	resistance_flags = FIRE_PROOF
+	armor_type = /datum/armor/barrelmelon_fr
+
+/datum/armor/barrelmelon
+	melee = 25
+	bullet = 20
+	energy = 15
+	bomb = 10
+	fire = 0
+	acid = 35
+	wound = 10
+
+/datum/armor/barrelmelon_fr
+	melee = 25
+	bullet = 20
+	energy = 15
+	bomb = 10
+	fire = 20
+	acid = 40
+	wound = 10

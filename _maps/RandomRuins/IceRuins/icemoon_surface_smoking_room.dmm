@@ -175,11 +175,11 @@
 /area/ruin/smoking_room/room)
 "E" = (
 /obj/item/trash/shrimp_chips,
-/obj/item/clothing/mask/cigarette/rollie/trippy{
+/obj/item/cigarette/rollie/trippy{
 	pixel_x = 3;
 	pixel_y = -1
 	},
-/obj/item/clothing/mask/cigarette/rollie/trippy{
+/obj/item/cigarette/rollie/trippy{
 	pixel_x = 3;
 	pixel_y = 5
 	},

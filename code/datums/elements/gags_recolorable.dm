@@ -10,7 +10,7 @@
 
 /datum/element/gags_recolorable/proc/on_examine(atom/source, mob/user, list/examine_text)
 	SIGNAL_HANDLER
-	examine_text += span_notice("Now utilising PPP recolouring technology, capable of absorbing paint and pigments for changing it's colours!")
+	examine_text += span_notice("Now utilising PPP recolouring technology, capable of absorbing paint and pigments for changing its colours!")
 
 /datum/element/gags_recolorable/proc/on_attackby(datum/source, obj/item/attacking_item, mob/user)
 	SIGNAL_HANDLER

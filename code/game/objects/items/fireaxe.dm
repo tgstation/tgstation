@@ -77,7 +77,7 @@
 	icon_state = "metalh2_axe0"
 	base_icon_state = "metalh2_axe"
 	name = "metallic hydrogen axe"
-	desc = "A lightweight crowbar with an extreme sharp fire axe head attached. It trades it's hefty as a weapon by making it easier to carry around when holstered to suits without having to sacrifice your backpack."
+	desc = "A lightweight crowbar with an extreme sharp fire axe head attached. It trades its heft as a weapon by making it easier to carry around when holstered to suits without having to sacrifice your backpack."
 	force_unwielded = 5
 	force_wielded = 15
 	demolition_mod = 2

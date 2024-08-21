@@ -4,7 +4,7 @@
 
 /datum/market_item/clothing/ninja_mask
 	name = "Space Ninja Mask"
-	desc = "Apart from being acid, lava, fireproof and being hard to take off someone it does nothing special on it's own."
+	desc = "Apart from being acid, lava, fireproof and being hard to take off someone it does nothing special on its own."
 	item = /obj/item/clothing/mask/gas/ninja
 
 	price_min = CARGO_CRATE_VALUE
@@ -32,13 +32,23 @@
 	stock_max = 4
 	availability_prob = 50
 
+/datum/market_item/tool/medsechud
+	name = "MedSec HUD"
+	desc = "A mostly defunct combination of security and health scanner HUDs. They don't produce these around anymore."
+	item = /obj/item/clothing/glasses/hud/medsechud
+
+	price_min = CARGO_CRATE_VALUE * 2
+	price_max = CARGO_CRATE_VALUE * 3.5
+	stock_max = 3
+	availability_prob = 50
+
 /datum/market_item/clothing/full_spacesuit_set
 	name = "\improper Nanotrasen Branded Spacesuit Box"
 	desc = "A few boxes of \"Old Style\" space suits fell off the back of a space truck."
 	item = /obj/item/storage/box
 
-	price_min = CARGO_CRATE_VALUE * 7.5
-	price_max = CARGO_CRATE_VALUE * 20
+	price_min = CARGO_CRATE_VALUE * 1.875
+	price_max = CARGO_CRATE_VALUE * 4
 	stock_max = 3
 	availability_prob = 30
 
@@ -66,7 +76,7 @@
 	item = /obj/item/clothing/shoes/bhop/rocket
 
 	price_min = CARGO_CRATE_VALUE * 5
-	price_max = CARGO_CRATE_VALUE * 15
+	price_max = CARGO_CRATE_VALUE * 10
 	stock_max = 1
 	availability_prob = 40
 

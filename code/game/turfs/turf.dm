@@ -3,6 +3,7 @@ GLOBAL_LIST_EMPTY(station_turfs)
 /// Any floor or wall. What makes up the station and the rest of the map.
 /turf
 	icon = 'icons/turf/floors.dmi'
+	datum_flags = DF_STATIC_OBJECT
 	vis_flags = VIS_INHERIT_ID // Important for interaction with and visualization of openspace.
 	luminosity = 1
 	light_height = LIGHTING_HEIGHT_FLOOR
@@ -52,6 +53,8 @@ GLOBAL_LIST_EMPTY(station_turfs)
 
 	var/tiled_dirt = FALSE // use smooth tiled dirt decal
 
+	/// The prefix to use (from lighting_object.dmi) as our lighting underlay
+	var/lighting_state = "lighting"
 	///Icon-smoothing variable to map a diagonal wall corner with a fixed underlay.
 	var/list/fixed_underlay = null
 
@@ -153,7 +156,7 @@ GLOBAL_LIST_EMPTY(station_turfs)
 
 	SETUP_SMOOTHING()
 
-	if (smoothing_flags & (SMOOTH_CORNERS|SMOOTH_BITMASK))
+	if (smoothing_flags & USES_SMOOTHING)
 		QUEUE_SMOOTH(src)
 
 	for(var/atom/movable/content as anything in src)
@@ -768,6 +771,12 @@ GLOBAL_LIST_EMPTY(station_turfs)
 	explosive_resistance -= get_explosive_block()
 	inherent_explosive_resistance = explosion_block
 	explosive_resistance += get_explosive_block()
+
+/turf/proc/set_lighting_state(new_state)
+	lighting_state = new_state
+	if (lighting_object && !lighting_object.needs_update)
+		lighting_object.needs_update = TRUE
+		SSlighting.objects_queue += lighting_object
 
 /// Returns whether it is safe for an atom to move across this turf
 /turf/proc/can_cross_safely(atom/movable/crossing)

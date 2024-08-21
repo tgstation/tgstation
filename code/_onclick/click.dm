@@ -12,11 +12,10 @@
 /mob/var/next_move_modifier = 1 //Value to multiply action/click delays by
 
 
-//Delays the mob's next click/action by num deciseconds
-// eg: 10-3 = 7 deciseconds of delay
-// eg: 10*0.5 = 5 deciseconds of delay
-// DOES NOT EFFECT THE BASE 1 DECISECOND DELAY OF NEXT_CLICK
-
+///Delays the mob's next click/action by num deciseconds
+/// eg: 10-3 = 7 deciseconds of delay
+/// eg: 10*0.5 = 5 deciseconds of delay
+/// DOES NOT EFFECT THE BASE 1 DECISECOND DELAY OF NEXT_CLICK
 /mob/proc/changeNext_move(num)
 	next_move = world.time + ((num+next_move_adjust)*next_move_modifier)
 
@@ -93,9 +92,9 @@
 		return
 	if(LAZYACCESS(modifiers, ALT_CLICK)) // alt and alt-gr (rightalt)
 		if(LAZYACCESS(modifiers, RIGHT_CLICK))
-			base_click_alt_secondary(A)
+			AltClickSecondaryOn(A)
 		else
-			base_click_alt(A)
+			AltClickOn(A)
 		return
 	if(LAZYACCESS(modifiers, CTRL_CLICK))
 		CtrlClickOn(A)
@@ -197,7 +196,7 @@
  * A backwards depth-limited breadth-first-search to see if the target is
  * logically "in" anything adjacent to us.
  */
-/atom/movable/proc/CanReach(atom/ultimate_target, obj/item/tool, view_only = FALSE)
+/atom/proc/CanReach(atom/ultimate_target, obj/item/tool, view_only = FALSE)
 	var/list/direct_access = DirectAccess()
 	var/depth = 1 + (view_only ? STORAGE_VIEW_DEPTH : INVENTORY_DEPTH)
 
@@ -225,9 +224,13 @@
 				next += target.loc
 
 		checking = next
+
+	if(SEND_SIGNAL(src, COMSIG_ATOM_CANREACH, ultimate_target) & COMPONENT_ALLOW_REACH)
+		return TRUE
+
 	return FALSE
 
-/atom/movable/proc/DirectAccess()
+/atom/proc/DirectAccess()
 	return list(src, loc)
 
 /mob/DirectAccess(atom/target)

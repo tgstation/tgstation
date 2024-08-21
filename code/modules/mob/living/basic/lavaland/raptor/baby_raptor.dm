@@ -15,6 +15,7 @@
 	change_offsets = FALSE
 	dex_description = "A cute baby raptor, Having it near a parent or a birds-nest could encourage it to grow faster, \
 		grooming it and feeding it could also ensure that it grows up quicker!"
+	shadow_type = SHADOW_SMALL
 	///what do we grow into
 	var/growth_path
 	///probability we are to be rolled

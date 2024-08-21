@@ -101,6 +101,12 @@ GLOBAL_VAR_INIT(total_runtimes_skipped, 0)
 	// The proceeding mess will almost definitely break if error messages are ever changed
 	var/list/splitlines = splittext(E.desc, "\n")
 	var/list/desclines = list()
+	var/list/state_stack = GLOB.lua_state_stack
+	var/is_lua_call = length(state_stack)
+	var/list/lua_stacks = list()
+	if(is_lua_call)
+		for(var/level in 1 to state_stack.len)
+			lua_stacks += list(splittext(DREAMLUAU_GET_TRACEBACK(level), "\n"))
 	if(LAZYLEN(splitlines) > ERROR_USEFUL_LEN) // If there aren't at least three lines, there's no info
 		for(var/line in splitlines)
 			if(LAZYLEN(line) < 3 || findtext(line, "source file:") || findtext(line, "usr.loc:"))
@@ -110,13 +116,14 @@ GLOBAL_VAR_INIT(total_runtimes_skipped, 0)
 					desclines.Add(usrinfo)
 					usrinfo = null
 				continue // Our usr info is better, replace it
-
 			if(copytext(line, 1, 3) != "  ")//3 == length("  ") + 1
 				desclines += ("  " + line) // Pad any unpadded lines, so they look pretty
 			else
 				desclines += line
 	if(usrinfo) //If this info isn't null, it hasn't been added yet
 		desclines.Add(usrinfo)
+	if(is_lua_call)
+		SSlua.log_involved_runtime(E, desclines, lua_stacks)
 	if(silencing)
 		desclines += "  (This error will now be silenced for [DisplayTimeText(configured_error_silence_time)])"
 	if(GLOB.error_cache)

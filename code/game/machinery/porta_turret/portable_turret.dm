@@ -25,6 +25,7 @@ DEFINE_BITFIELD(turret_flags, list(
 ))
 
 /obj/machinery/porta_turret
+	SET_BASE_VISUAL_PIXEL(0, DEPTH_OFFSET)
 	name = "turret"
 	icon = 'icons/obj/weapons/turrets.dmi'
 	icon_state = "turretCover"
@@ -264,7 +265,7 @@ DEFINE_BITFIELD(turret_flags, list(
 				data["allow_manual_control"] = TRUE
 	return data
 
-/obj/machinery/porta_turret/ui_act(action, list/params)
+/obj/machinery/porta_turret/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if(.)
 		return
@@ -317,6 +318,15 @@ DEFINE_BITFIELD(turret_flags, list(
 		remove_control()
 	check_should_process()
 
+/obj/machinery/porta_turret/multitool_act(mob/living/user, obj/item/multitool/tool)
+	. = NONE
+	if(locked)
+		return
+
+	tool.set_buffer(src)
+	balloon_alert(user, "saved to multitool buffer")
+	return ITEM_INTERACT_SUCCESS
+
 /obj/machinery/porta_turret/attackby(obj/item/I, mob/user, params)
 	if(machine_stat & BROKEN)
 		if(I.tool_behaviour == TOOL_CROWBAR)
@@ -364,12 +374,6 @@ DEFINE_BITFIELD(turret_flags, list(
 			to_chat(user, span_notice("Controls are now [locked ? "locked" : "unlocked"]."))
 		else
 			to_chat(user, span_alert("Access denied."))
-	else if(I.tool_behaviour == TOOL_MULTITOOL && !locked)
-		if(!multitool_check_buffer(user, I))
-			return
-		var/obj/item/multitool/M = I
-		M.set_buffer(src)
-		balloon_alert(user, "saved to multitool buffer")
 	else
 		return ..()
 
@@ -911,12 +915,13 @@ DEFINE_BITFIELD(turret_flags, list(
 	name = "turret control panel"
 	desc = "Used to control a room's automated defenses."
 	icon = 'icons/obj/machines/turret_control.dmi'
-	icon_state = "control_standby"
+	icon_state = "control"
 	base_icon_state = "control"
 	density = FALSE
 	req_access = list(ACCESS_AI_UPLOAD)
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
 	interaction_flags_click = ALLOW_SILICON_REACH
+	pixel_y = -5 // Shift it down far enough to fit the south facing state correctly
 	/// Variable dictating if linked turrets are active and will shoot targets
 	var/enabled = TRUE
 	/// Variable dictating if linked turrets will shoot lethal projectiles
@@ -967,18 +972,19 @@ DEFINE_BITFIELD(turret_flags, list(
 		. += {"[span_notice("Ctrl-click [src] to [ enabled ? "disable" : "enable"] turrets.")]
 					[span_notice("Alt-click [src] to set turrets to [ lethal ? "stun" : "kill"].")]"}
 
-/obj/machinery/turretid/attackby(obj/item/attacking_item, mob/user, params)
+/obj/machinery/turretid/multitool_act(mob/living/user, obj/item/multitool/multi_tool)
+	. = NONE
 	if(machine_stat & BROKEN)
 		return
 
-	if(attacking_item.tool_behaviour == TOOL_MULTITOOL)
-		if(!multitool_check_buffer(user, attacking_item))
-			return
-		var/obj/item/multitool/M = attacking_item
-		if(M.buffer && istype(M.buffer, /obj/machinery/porta_turret))
-			turrets |= WEAKREF(M.buffer)
-			to_chat(user, span_notice("You link \the [M.buffer] with \the [src]."))
-			return
+	if(multi_tool.buffer && istype(multi_tool.buffer, /obj/machinery/porta_turret))
+		turrets |= WEAKREF(multi_tool.buffer)
+		to_chat(user, span_notice("You link \the [multi_tool.buffer] with \the [src]."))
+		return ITEM_INTERACT_SUCCESS
+
+/obj/machinery/turretid/attackby(obj/item/attacking_item, mob/user, params)
+	if(machine_stat & BROKEN)
+		return
 
 	if (issilicon(user))
 		return attack_hand(user)
@@ -1021,34 +1027,36 @@ DEFINE_BITFIELD(turret_flags, list(
 /obj/machinery/turretid/ui_data(mob/user)
 	var/list/data = list()
 	data["locked"] = locked
-	data["siliconUser"] = user.has_unlimited_silicon_privilege
+	data["siliconUser"] = HAS_SILICON_ACCESS(user)
 	data["enabled"] = enabled
 	data["lethal"] = lethal
 	data["shootCyborgs"] = shoot_cyborgs
 	return data
 
-/obj/machinery/turretid/ui_act(action, list/params)
+/obj/machinery/turretid/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if(.)
 		return
 
+	var/mob/user = ui.user
+
 	switch(action)
 		if("lock")
-			if(!usr.has_unlimited_silicon_privilege)
+			if(!HAS_SILICON_ACCESS(user))
 				return
 			if((obj_flags & EMAGGED) || (machine_stat & BROKEN))
-				to_chat(usr, span_warning("The turret control is unresponsive!"))
+				to_chat(user, span_warning("The turret control is unresponsive!"))
 				return
 			locked = !locked
 			return TRUE
 		if("power")
-			toggle_on(usr)
+			toggle_on(user)
 			return TRUE
 		if("mode")
-			toggle_lethal(usr)
+			toggle_lethal(user)
 			return TRUE
 		if("shoot_silicons")
-			shoot_silicons(usr)
+			shoot_silicons(user)
 			return TRUE
 
 /obj/machinery/turretid/proc/toggle_lethal(mob/user)
@@ -1087,15 +1095,18 @@ DEFINE_BITFIELD(turret_flags, list(
 		turret.setState(enabled, lethal, shoot_cyborgs)
 	update_appearance()
 
-/obj/machinery/turretid/update_icon_state()
+/obj/machinery/turretid/update_overlays()
+	. = ..()
 	if(machine_stat & NOPOWER)
-		icon_state = "[base_icon_state]_off"
-		return ..()
-	if (enabled)
-		icon_state = "[base_icon_state]_[lethal ? "kill" : "stun"]"
-		return ..()
-	icon_state = "[base_icon_state]_standby"
-	return ..()
+		return
+	if(enabled)
+		. += mutable_appearance(icon, "[base_icon_state]_[lethal ? "kill" : "stun"]")
+		. += emissive_appearance(icon, "[base_icon_state]_[lethal ? "kill" : "stun"]", src, alpha = src.alpha)
+	else
+		. += mutable_appearance(icon, "[base_icon_state]_standby")
+		. += emissive_appearance(icon, "[base_icon_state]_standby", src, alpha = src.alpha)
+
+WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/machinery/turretid)
 
 /obj/item/wallframe/turret_control
 	name = "turret control frame"
@@ -1104,7 +1115,6 @@ DEFINE_BITFIELD(turret_flags, list(
 	icon_state = "control_frame"
 	result_path = /obj/machinery/turretid
 	custom_materials = list(/datum/material/iron= SHEET_MATERIAL_AMOUNT)
-	pixel_shift = 29
 
 /obj/item/gun/proc/get_turret_properties()
 	. = list()

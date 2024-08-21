@@ -42,9 +42,8 @@
 
 /obj/item/reagent_containers/cup/glass/bottle/Initialize(mapload, vol)
 	. = ..()
-	AddComponent(/datum/component/slapcrafting,\
-		slapcraft_recipes = list(/datum/crafting_recipe/molotov)\
-	)
+	var/static/list/recipes =  list(/datum/crafting_recipe/molotov)
+	AddElement(/datum/element/slapcrafting, recipes)
 
 /obj/item/reagent_containers/cup/glass/bottle/small
 	name = "small glass bottle"
@@ -316,6 +315,12 @@
 	desc = "This isn't just rum, oh no. It's practically GRIFF in a bottle."
 	icon_state = "rumbottle"
 	list_reagents = list(/datum/reagent/consumable/ethanol/rum = 100)
+
+/obj/item/reagent_containers/cup/glass/bottle/rum/aged
+	name = "Captain Pete's Vintage spiced rum"
+	desc = "Shiver me timbers, a vintage edition of Captain Pete's rum. It's pratically GRIFF in a bottle from over 50 years ago."
+	icon_state = "rumbottle_gold"
+	list_reagents = list(/datum/reagent/consumable/ethanol/rum/aged = 100)
 
 /obj/item/reagent_containers/cup/glass/bottle/maltliquor
 	name = "\improper Rabid Bear malt liquor"

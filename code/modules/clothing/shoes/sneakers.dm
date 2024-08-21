@@ -12,6 +12,11 @@
 	flags_1 = IS_PLAYER_COLORABLE_1
 	interaction_flags_mouse_drop = NEED_HANDS
 
+/obj/item/clothing/shoes/sneakers/random/Initialize(mapload)
+	. = ..()
+	greyscale_colors = "#" + random_color() + "#" + random_color()
+	update_greyscale()
+
 /obj/item/clothing/shoes/sneakers/black
 	name = "black shoes"
 	desc = "A pair of black shoes."

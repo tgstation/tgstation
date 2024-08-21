@@ -76,7 +76,7 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 	cut_overlays(TRUE)
 
 /mob/living/carbon/human/dummy/setup_human_dna()
-	randomize_human(src, randomize_mutations = FALSE)
+	randomize_human_normie(src, randomize_mutations = FALSE)
 
 /mob/living/carbon/human/dummy/log_mob_tag(text)
 	return

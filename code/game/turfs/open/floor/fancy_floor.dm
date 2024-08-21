@@ -34,9 +34,9 @@
 /turf/open/floor/wood/try_replace_tile(obj/item/stack/tile/T, mob/user, params)
 	if(T.turf_type == type)
 		return
-	var/obj/item/tool = user.is_holding_item_of_type(/obj/item/screwdriver)
+	var/obj/item/tool = user.is_holding_tool_quality(TOOL_SCREWDRIVER)
 	if(!tool)
-		tool = user.is_holding_item_of_type(/obj/item/crowbar)
+		tool = user.is_holding_tool_quality(TOOL_CROWBAR)
 	if(!tool)
 		return
 	var/turf/open/floor/plating/P = pry_tile(tool, user, TRUE)
@@ -160,6 +160,9 @@
 	AddElement(/datum/element/diggable, /obj/item/stack/ore/glass, 2, worm_chance = 50, \
 		action_text = "uproot", action_text_third_person = "uproots")
 
+/turf/open/floor/grass/Airless
+	initial_gas_mix = AIRLESS_ATMOS
+
 /turf/open/floor/grass/proc/spawniconchange()
 	icon_state = "grass[rand(0,3)]"
 
@@ -239,7 +242,11 @@
 	AddElement(/datum/element/diggable, /obj/item/stack/ore/glass/basalt, 2, worm_chance = 0)
 	if(prob(15))
 		icon_state = "basalt[rand(0, 12)]"
-		set_basalt_light(src)
+		switch(icon_state)
+			if("basalt1", "basalt2", "basalt3")
+				set_light(BASALT_LIGHT_RANGE_BRIGHT, BASALT_LIGHT_POWER, LIGHT_COLOR_LAVA)
+			if("basalt5", "basalt9")
+				set_light(BASALT_LIGHT_RANGE_DIM, BASALT_LIGHT_POWER, LIGHT_COLOR_LAVA)
 
 /turf/open/floor/carpet
 	name = "carpet"
@@ -273,11 +280,11 @@
 	if(!. || !(updates & UPDATE_SMOOTHING))
 		return
 	if(!broken && !burnt)
-		if(smoothing_flags & (SMOOTH_CORNERS|SMOOTH_BITMASK))
+		if(smoothing_flags & USES_SMOOTHING)
 			QUEUE_SMOOTH(src)
 	else
 		make_plating()
-		if(smoothing_flags & (SMOOTH_CORNERS|SMOOTH_BITMASK))
+		if(smoothing_flags & USES_SMOOTHING)
 			QUEUE_SMOOTH_NEIGHBORS(src)
 
 /turf/open/floor/carpet/lone
@@ -484,8 +491,8 @@
 
 /turf/open/floor/carpet/neon/Initialize(mapload)
 	. = ..()
-	AddElement(/datum/element/decal, neon_icon || icon, neon_icon_state || base_icon_state, dir, null, null, alpha, neon_color, smoothing_junction)
-	AddElement(/datum/element/decal, neon_icon || icon, neon_icon_state || base_icon_state, dir, EMISSIVE_PLANE, null, emissive_alpha, GLOB.emissive_color, smoothing_junction)
+	AddElement(/datum/element/decal, neon_icon || icon, neon_icon_state || base_icon_state, dir, null, null, alpha, neon_color, null, null, smoothing_junction)
+	AddElement(/datum/element/decal, neon_icon || icon, neon_icon_state || base_icon_state, dir, EMISSIVE_PLANE, null, emissive_alpha, GLOB.emissive_color, null, null, smoothing_junction)
 
 /turf/open/floor/carpet/neon/simple
 	name = "simple neon carpet"
@@ -868,6 +875,7 @@
 	icon = 'icons/turf/space.dmi'
 	icon_state = "space"
 	floor_tile = /obj/item/stack/tile/fakespace
+	layer = SPACE_LAYER
 	plane = PLANE_SPACE
 	tiled_dirt = FALSE
 	damaged_dmi = 'icons/turf/space.dmi'

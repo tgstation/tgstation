@@ -1,9 +1,9 @@
-import { BooleanLike } from 'common/react';
-import { createSearch } from 'common/string';
 import { useState } from 'react';
+import { Box, Button, Icon, Input, Section, Table } from 'tgui-core/components';
+import { BooleanLike } from 'tgui-core/react';
+import { createSearch } from 'tgui-core/string';
 
 import { useBackend } from '../backend';
-import { Box, Button, Icon, Input, Section, Table } from '../components';
 import { COLORS } from '../constants';
 import { Window } from '../layouts';
 
@@ -26,7 +26,7 @@ const SORT_NAMES = {
 const STAT_LIVING = 0;
 const STAT_DEAD = 4;
 
-const SORT_OPTIONS = ['ijob', 'name', 'area', 'health'];
+const SORT_OPTIONS = ['health', 'ijob', 'name', 'area'];
 
 const jobIsHead = (jobId: number) => jobId % 10 === 0;
 
@@ -69,10 +69,10 @@ const statToIcon = (life_status: number) => {
 };
 
 const healthSort = (a: CrewSensor, b: CrewSensor) => {
-  if (a.life_status < b.life_status) return -1;
-  if (a.life_status > b.life_status) return 1;
-  if (a.health > b.health) return -1;
-  if (a.health < b.health) return 1;
+  if (a.life_status > b.life_status) return -1;
+  if (a.life_status < b.life_status) return 1;
+  if (a.health < b.health) return -1;
+  if (a.health > b.health) return 1;
   return 0;
 };
 

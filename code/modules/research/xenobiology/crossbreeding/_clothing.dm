@@ -38,7 +38,12 @@ Slimecrossing Armor
 	icon = 'icons/obj/science/slimecrossing.dmi'
 	icon_state = "prismglasses"
 	actions_types = list(/datum/action/item_action/change_prism_colour, /datum/action/item_action/place_light_prism)
+	forced_glass_color = TRUE
 	var/glasses_color = COLOR_WHITE
+
+/obj/item/clothing/glasses/prism_glasses/Initialize(mapload)
+	. = ..()
+	AddElement(/datum/element/wearable_client_colour, /datum/client_colour/glass_colour, ITEM_SLOT_EYES, glasses_color, forced_glass_color)
 
 /obj/item/clothing/glasses/prism_glasses/item_action_slot_check(slot)
 	if(slot & ITEM_SLOT_EYES)
@@ -76,7 +81,9 @@ Slimecrossing Armor
 	var/new_color = input(owner, "Choose the lens color:", "Color change",glasses.glasses_color) as color|null
 	if(!new_color)
 		return
+	RemoveElement(/datum/element/wearable_client_colour, /datum/client_colour/glass_colour, ITEM_SLOT_EYES, glasses.glasses_color, glasses.forced_glass_color)
 	glasses.glasses_color = new_color
+	AddElement(/datum/element/wearable_client_colour, /datum/client_colour/glass_colour, ITEM_SLOT_EYES, new_color, glasses.forced_glass_color)
 
 /datum/action/item_action/place_light_prism
 	name = "Fabricate Light Prism"

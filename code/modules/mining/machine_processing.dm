@@ -4,6 +4,7 @@
 /**********************Mineral processing unit console**************************/
 
 /obj/machinery/mineral
+	SET_BASE_VISUAL_PIXEL(0, DEPTH_OFFSET)
 	processing_flags = START_PROCESSING_MANUALLY
 	subsystem_type = /datum/controller/subsystem/processing/fastprocess
 	/// The current direction of `input_turf`, in relation to the machine.
@@ -94,7 +95,7 @@
 /obj/machinery/mineral/processing_unit_console/ui_data(mob/user)
 	return processing_machine.ui_data()
 
-/obj/machinery/mineral/processing_unit_console/ui_act(action, list/params)
+/obj/machinery/mineral/processing_unit_console/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if(.)
 		return

@@ -206,6 +206,11 @@ function CatalogList(props: CatalogListProps) {
                     <Icon color="average" name="lock" />
                   </Tooltip>
                 )}
+                {!!pack.contraband && (
+                  <Tooltip content="Contraband">
+                    <Icon color="bad" name="pastafarianism" />
+                  </Tooltip>
+                )}
               </Table.Cell>
               <Table.Cell collapsing textAlign="right">
                 <Button

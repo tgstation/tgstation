@@ -75,8 +75,14 @@
 		if(contents[requirement_path] < R.chem_catalysts[requirement_path])
 			return FALSE
 
+	var/mech_found = FALSE
 	for(var/machinery_path in R.machinery)
-		if(!machines[machinery_path])//We don't care for volume with machines, just if one is there or not
+		mech_found = FALSE
+		for(var/obj/machinery/machine as anything in machines)
+			if(ispath(machine, machinery_path))//We don't care for volume with machines, just if one is there or not
+				mech_found = TRUE
+				break
+		if(!mech_found)
 			return FALSE
 
 	for(var/required_structure_path in R.structures)
@@ -339,7 +345,6 @@
 							RC.reagents.trans_to(holder, reagent_volume, target_id = path_key, no_react = TRUE)
 							surroundings -= RC
 							amt -= reagent_volume
-						SEND_SIGNAL(RC.reagents, COMSIG_REAGENTS_CRAFTING_PING) // - [] TODO: Make this entire thing less spaghetti
 					else
 						surroundings -= RC
 					RC.update_appearance(UPDATE_ICON)
@@ -484,11 +489,25 @@
 	var/list/atoms = mode ? GLOB.cooking_recipes_atoms : GLOB.crafting_recipes_atoms
 
 	// Prepare atom data
+
+	//load sprite sheets and select the correct one based on the mode
+	var/static/list/sprite_sheets
+	if(isnull(sprite_sheets))
+		sprite_sheets = ui_assets()
+	var/datum/asset/spritesheet/sheet = sprite_sheets[mode ? 2 : 1]
+
+	data["icon_data"] = list()
 	for(var/atom/atom as anything in atoms)
+		var/atom_id = atoms.Find(atom)
+
 		data["atom_data"] += list(list(
 			"name" = initial(atom.name),
-			"is_reagent" = ispath(atom, /datum/reagent/)
+			"is_reagent" = ispath(atom, /datum/reagent/),
 		))
+
+		var/icon_size = sheet.icon_size_id("a[atom_id]")
+		if(!endswith(icon_size, "32x32"))
+			data["icon_data"]["[atom_id]"] = "[icon_size] a[atom_id]"
 
 	// Prepare materials data
 	for(var/atom/atom as anything in material_occurences)
@@ -517,7 +536,7 @@
 	return TRUE
 
 
-/datum/component/personal_crafting/ui_act(action, params)
+/datum/component/personal_crafting/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if(.)
 		return
@@ -563,16 +582,7 @@
 	data["ref"] = "[REF(recipe)]"
 	var/atom/atom = recipe.result
 
-	//load sprite sheets and select the correct one based on the mode
-	var/static/list/sprite_sheets
-	if(isnull(sprite_sheets))
-		sprite_sheets = ui_assets()
-	var/datum/asset/spritesheet/sheet = sprite_sheets[mode ? 2 : 1]
-
-	//infer icon size of this atom
-	var/atom_id = atoms.Find(atom)
-	var/icon_size = sheet.icon_size_id("a[atom_id]")
-	data["icon"] = "[icon_size] a[atom_id]"
+	data["id"] = atoms.Find(atom)
 
 	var/recipe_data = recipe.crafting_ui_data()
 	for(var/new_data in recipe_data)
@@ -600,6 +610,9 @@
 			data["name"] = "[data["name"]] [recipe.result_amount]x"
 		data["desc"] = recipe.desc || initial(atom.desc)
 
+	if(ispath(recipe.result, /obj/item/food))
+		var/obj/item/food/food = recipe.result
+		data["has_food_effect"] = !!food.crafted_food_buff
 
 	// Crafting
 	if(recipe.non_craftable)

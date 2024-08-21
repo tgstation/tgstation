@@ -13,6 +13,10 @@
 "e" = (
 /turf/open/floor/carpet/red,
 /area/virtual_domain/fullbright)
+"f" = (
+/obj/effect/baseturf_helper/virtual_domain,
+/turf/open/water/beach,
+/area/virtual_domain/fullbright)
 "g" = (
 /obj/item/toy/beach_ball/branded,
 /turf/open/misc/beach/sand,
@@ -31,11 +35,13 @@
 "m" = (
 /obj/item/fishing_rod{
 	pixel_x = 5;
-	pixel_y = -5
+	pixel_y = 4
 	},
-/obj/item/fishing_rod,
 /obj/item/fishing_rod{
-	pixel_y = 5;
+	pixel_y = 8
+	},
+/obj/item/fishing_rod{
+	pixel_y = 12;
 	pixel_x = -5
 	},
 /obj/structure/table/wood,
@@ -174,10 +180,6 @@
 /obj/machinery/light/small/directional/west,
 /turf/open/misc/beach/sand,
 /area/virtual_domain/fullbright)
-"Z" = (
-/obj/effect/baseturf_helper/virtual_domain,
-/turf/closed/indestructible/binary,
-/area/virtual_domain/fullbright)
 
 (1,1,1) = {"
 a
@@ -204,7 +206,7 @@ a
 a
 a
 a
-Z
+a
 "}
 (2,1,1) = {"
 a
@@ -230,7 +232,7 @@ i
 Q
 i
 i
-i
+f
 a
 "}
 (3,1,1) = {"

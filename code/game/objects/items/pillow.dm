@@ -2,7 +2,7 @@
 /obj/item/pillow
 	name = "pillow"
 	desc = "A soft and fluffy pillow. You can smack someone with this!"
-	icon = 'icons/obj/bed.dmi'
+	icon = 'icons/obj/structures/bed.dmi'
 	icon_state = "pillow_1_t"
 	inhand_icon_state = "pillow_t"
 	lefthand_file = 'icons/mob/inhands/items/pillow_lefthand.dmi'
@@ -37,8 +37,8 @@
 		/datum/crafting_recipe/pillow_suit, /datum/crafting_recipe/pillow_hood,\
 		)
 
-	AddComponent(
-		/datum/component/slapcrafting,\
+	AddElement(
+		/datum/element/slapcrafting,\
 		slapcraft_recipes = slapcraft_recipe_list,\
 	)
 
@@ -131,7 +131,7 @@
 		icon_state = "pillow_[variation]_t"
 		inhand_icon_state = "pillow_t"
 
-/// Puts a brick inside the pillow, increasing it's damage
+/// Puts a brick inside the pillow, increasing its damage
 /obj/item/pillow/proc/become_bricked()
 	bricked = TRUE
 	var/datum/component/two_handed/two_handed = GetComponent(/datum/component/two_handed)
@@ -166,7 +166,7 @@
 	body_parts_covered = CHEST|GROIN|ARMS|LEGS|FEET
 	cold_protection = CHEST|GROIN|ARMS|LEGS //a pillow suit must be hella warm
 	allowed = list(/obj/item/pillow) //moar pillow carnage
-	icon = 'icons/obj/bed.dmi'
+	icon = 'icons/obj/structures/bed.dmi'
 	worn_icon = 'icons/mob/clothing/suits/pillow.dmi'
 	icon_state = "pillow_suit"
 	armor_type = /datum/armor/suit_pillow_suit
@@ -189,7 +189,7 @@
 	name = "pillow hood"
 	desc = "The final piece of the pillow juggernaut"
 	body_parts_covered = HEAD
-	icon = 'icons/obj/bed.dmi'
+	icon = 'icons/obj/structures/bed.dmi'
 	worn_icon = 'icons/mob/clothing/suits/pillow.dmi'
 	icon_state = "pillowcase_hat"
 	body_parts_covered = HEAD
@@ -203,7 +203,7 @@
 /obj/item/clothing/neck/pillow_tag
 	name = "pillow tag"
 	desc = "A price tag for the pillow. It appears to have space to fill names in."
-	icon = 'icons/obj/bed.dmi'
+	icon = 'icons/obj/structures/bed.dmi'
 	icon_state = "pillow_tag"
 	worn_icon = 'icons/mob/clothing/neck.dmi'
 	worn_icon_state = "pillow_tag"

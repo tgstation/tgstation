@@ -28,6 +28,10 @@
 		release_projectile(projectile)
 	return ..()
 
+/datum/proximity_monitor/advanced/projectile_dampener/recalculate_field(full_recalc)
+	full_recalc = TRUE // We always perform a full recalc because we need to update ALL the sprites
+	return ..()
+
 /datum/proximity_monitor/advanced/projectile_dampener/process()
 	var/list/ranged = list()
 	for(var/obj/projectile/projectile in range(current_range, get_turf(host)))
@@ -44,7 +48,6 @@
 	effect.icon_state = overlay.icon_state
 	effect.mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 	effect.layer = ABOVE_ALL_MOB_LAYER
-	SET_PLANE(effect, ABOVE_GAME_PLANE, target)
 	LAZYSET(edgeturf_effects, target, effect)
 
 /datum/proximity_monitor/advanced/projectile_dampener/on_z_change(datum/source)

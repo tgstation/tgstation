@@ -1,7 +1,7 @@
 /obj/structure/light_construct
 	name = "light fixture frame"
 	desc = "A light fixture under construction."
-	icon = 'icons/obj/lighting.dmi'
+	icon = 'icons/obj/machines/lighting.dmi'
 	icon_state = "tube-construct-stage1"
 	anchored = TRUE
 	layer = WALL_OBJ_LAYER
@@ -32,11 +32,27 @@
 	. = ..()
 	if(building)
 		setDir(ndir)
-	find_and_hang_on_wall()
+	find_and_hang_on_wall(wall_layer = HIGH_ON_WALL_LAYER)
 
 /obj/structure/light_construct/Destroy()
 	QDEL_NULL(cell)
 	return ..()
+
+/obj/structure/light_construct/setDir(newdir)
+	. = ..()
+	switch(dir)
+		if(NORTH)
+			pixel_x = 0
+			pixel_y = 24
+		if(SOUTH)
+			pixel_x = 0
+			pixel_y = 16
+		if(EAST)
+			pixel_x = 0
+			pixel_y = 0
+		if(WEST)
+			pixel_x = 0
+			pixel_y = 0
 
 /obj/structure/light_construct/get_cell()
 	return cell
@@ -45,16 +61,16 @@
 	. = ..()
 	switch(stage)
 		if(LIGHT_CONSTRUCT_EMPTY)
-			. += "It's an empty frame."
+			. += span_notice("It's an empty frame with no wires.")
 		if(LIGHT_CONSTRUCT_WIRED)
-			. += "It's wired."
+			. += span_notice("It is wired, but the bolts are not screwed in.")
 		if(LIGHT_CONSTRUCT_CLOSED)
-			. += "The casing is closed."
+			. += span_notice("The casing is closed.")
 	if(cell_connectors)
 		if(cell)
-			. += "You see [cell] inside the casing."
+			. += span_notice("You see [cell] inside the casing.")
 		else
-			. += "The casing has no power cell for backup power."
+			. += span_notice("The casing has no power cell for backup power.")
 	else
 		. += span_danger("This casing doesn't support power cells for backup power.")
 
@@ -63,7 +79,6 @@
 		return
 	user.visible_message(span_notice("[user] removes [cell] from [src]!"), span_notice("You remove [cell]."))
 	user.put_in_hands(cell)
-	cell.update_appearance()
 	cell = null
 	add_fingerprint(user)
 

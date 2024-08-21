@@ -32,7 +32,7 @@
 	START_PROCESSING(SSobj, src)
 
 /obj/effect/meteor/dark_matteor/process(seconds_per_tick)
-	//meteor's warp quickly contracts then slowly expands it's ring
+	//meteor's warp quickly contracts then slowly expands its ring
 	animate(warp, time = seconds_per_tick*3, transform = matrix().Scale(0.5,0.5))
 	animate(time = seconds_per_tick*7, transform = matrix())
 
@@ -60,7 +60,7 @@
 	qdel(defender)
 	return FALSE
 
-/obj/effect/meteor/dark_matteor/handle_stopping()
+/obj/effect/meteor/dark_matteor/moved_off_z()
 	. = ..()
 	if(previous_security_level && SSsecurity_level.get_current_level_as_number() != SEC_LEVEL_DELTA)
 		SSsecurity_level.set_level(previous_security_level)

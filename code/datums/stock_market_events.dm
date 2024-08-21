@@ -23,7 +23,7 @@
 
 	/// When this event is ongoing, what direction will the price trend in?
 	var/trend_value
-	/// When this event is triggered, for how long will it's effects last?
+	/// When this event is triggered, for how long will its effects last?
 	var/trend_duration
 
 /**

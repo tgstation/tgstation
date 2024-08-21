@@ -174,6 +174,10 @@
 	icon_state = "synd"
 	contraband = TRUE
 
+/obj/item/sticker/syndicate/Initialize(mapload)
+	. = ..()
+	ADD_TRAIT(src, TRAIT_CONTRABAND, INNATE_TRAIT)
+
 /obj/item/sticker/syndicate/c4
 	name = "C-4 sticker"
 	icon_state = "c4"

@@ -206,11 +206,11 @@
 /turf/open/floor/iron,
 /area/shuttle/escape)
 "eZ" = (
-/obj/structure/sign/directions/medical/directional/north,
-/obj/structure/sign/directions/command/directional/north{
+/obj/structure/sign/directions/medical/north_arrow,
+/obj/structure/sign/directions/command/north_arrow{
 	pixel_y = 38
 	},
-/obj/structure/sign/directions/arrival/directional/north{
+/obj/structure/sign/directions/arrival/north_arrow{
 	pixel_y = 26
 	},
 /obj/effect/turf_decal/trimline/white/line{
@@ -857,7 +857,6 @@
 "sz" = (
 /obj/machinery/shuttle_manipulator{
 	desc = "A holographic display of the cruise shuttle we're on right now.";
-	layer = 2.7;
 	max_integrity = 99999;
 	name = "shuttle holographic display"
 	},
@@ -874,7 +873,7 @@
 /turf/open/floor/plating/airless,
 /area/shuttle/escape)
 "sZ" = (
-/obj/structure/sign/directions/engineering/directional/east,
+/obj/structure/sign/directions/engineering/east_arrow,
 /obj/structure/rack,
 /obj/effect/turf_decal/trimline/brown/filled/corner,
 /obj/effect/turf_decal/trimline/brown/filled/corner{
@@ -920,13 +919,13 @@
 /turf/open/floor/iron/stairs/medium,
 /area/shuttle/escape)
 "tP" = (
-/obj/structure/sign/directions/command/directional/north{
+/obj/structure/sign/directions/command/north_arrow{
 	pixel_y = 38
 	},
-/obj/structure/sign/directions/arrival/directional/north{
+/obj/structure/sign/directions/arrival/north_arrow{
 	pixel_y = 26
 	},
-/obj/structure/sign/directions/medical/directional/east{
+/obj/structure/sign/directions/medical/east_arrow{
 	pixel_x = 0;
 	pixel_y = 32
 	},
@@ -1112,7 +1111,7 @@
 /turf/open/floor/iron,
 /area/shuttle/escape)
 "xH" = (
-/obj/structure/sign/directions/engineering/directional/west,
+/obj/structure/sign/directions/engineering/west_arrow,
 /obj/effect/turf_decal/trimline/brown/filled/corner{
 	dir = 8
 	},
@@ -1230,7 +1229,7 @@
 /turf/open/floor/iron,
 /area/shuttle/escape)
 "Am" = (
-/obj/structure/sign/directions/dorms/directional/south,
+/obj/structure/sign/directions/dorms/south_arrow,
 /turf/open/floor/iron,
 /area/shuttle/escape)
 "Av" = (
@@ -1345,7 +1344,6 @@
 	density = 1;
 	icon = 'icons/obj/machines/shuttle_manipulator.dmi';
 	icon_state = "hologram_on";
-	layer = 2.8;
 	light_color = "#2cb2e8";
 	light_range = 2;
 	max_integrity = 7500;
@@ -1358,7 +1356,6 @@
 	desc = "This is the shuttle we're on. It's amazing what Nanotrasen can do once they actually put more than ten seconds of effort into their projects.";
 	icon = 'icons/obj/machines/shuttle_manipulator.dmi';
 	icon_state = "hologram_whiteship";
-	layer = 4;
 	light_color = "#2cb2e8";
 	light_range = 7;
 	max_integrity = 75000;
@@ -1633,7 +1630,7 @@
 /turf/open/floor/iron/white,
 /area/shuttle/escape)
 "Jj" = (
-/obj/structure/sign/directions/supply/directional/south,
+/obj/structure/sign/directions/supply/south_arrow,
 /obj/effect/turf_decal/trimline/white/line{
 	dir = 1
 	},
@@ -2126,11 +2123,11 @@
 /turf/open/floor/iron/dark,
 /area/shuttle/escape)
 "Ut" = (
-/obj/structure/sign/directions/dorms/directional/south{
+/obj/structure/sign/directions/dorms/south_arrow{
 	pixel_y = -38
 	},
-/obj/structure/sign/directions/supply/directional/south,
-/obj/structure/sign/directions/medical/directional/south{
+/obj/structure/sign/directions/supply/south_arrow,
+/obj/structure/sign/directions/medical/south_arrow{
 	pixel_y = -26
 	},
 /turf/open/floor/iron,
@@ -2272,7 +2269,7 @@
 /turf/open/floor/wood/parquet,
 /area/shuttle/escape)
 "XJ" = (
-/obj/structure/sign/directions/command/directional/north,
+/obj/structure/sign/directions/command/north_arrow,
 /turf/open/floor/carpet/red,
 /area/shuttle/escape)
 "XK" = (

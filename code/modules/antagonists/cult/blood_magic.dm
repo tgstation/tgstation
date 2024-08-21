@@ -12,6 +12,8 @@
 	default_button_position = DEFAULT_BLOODSPELLS
 	var/list/spells = list()
 	var/channeling = FALSE
+	/// If the magic has been enhanced somehow, likely due to a crimson medallion.
+	var/magic_enhanced = FALSE
 
 /datum/action/innate/cult/blood_magic/Remove()
 	for(var/X in spells)
@@ -29,7 +31,7 @@
 		var/atom/movable/screen/movable/action_button/button = viewers[hud]
 		var/position = screen_loc_to_offset(button.screen_loc)
 		var/list/position_list = list()
-		for(var/possible_position in 1 to MAX_BLOODCHARGE)
+		for(var/possible_position in 1 to magic_enhanced ? ENHANCED_BLOODCHARGE : MAX_BLOODCHARGE)
 			position_list += possible_position
 		for(var/datum/action/innate/cult/blood_spell/blood_spell in spells)
 			if(blood_spell.positioned)
@@ -50,10 +52,10 @@
 		rune = TRUE
 		break
 	if(rune)
-		limit = MAX_BLOODCHARGE
+		limit = magic_enhanced ? ENHANCED_BLOODCHARGE : MAX_BLOODCHARGE
 	if(length(spells) >= limit)
 		if(rune)
-			to_chat(owner, span_cult_italic("You cannot store more than [MAX_BLOODCHARGE] spells. <b>Pick a spell to remove.</b>"))
+			to_chat(owner, span_cult_italic("You cannot store more than [limit] spells. <b>Pick a spell to remove.</b>"))
 		else
 			to_chat(owner, span_cult_bold_italic("<u>You cannot store more than [RUNELESS_MAX_BLOODCHARGE] spells without an empowering rune! Pick a spell to remove.</u>"))
 		var/nullify_spell = tgui_input_list(owner, "Spell to remove", "Current Spells", spells)
@@ -86,10 +88,15 @@
 	else
 		to_chat(owner, span_cult_italic("You are already invoking blood magic!"))
 		return
-	if(do_after(owner, 100 - rune*60, target = owner))
+	var/spell_carving_timer = 10 SECONDS
+	if(rune)
+		spell_carving_timer = 4 SECONDS
+	if(magic_enhanced)
+		spell_carving_timer *= 0.5
+	if(do_after(owner, spell_carving_timer, target = owner))
 		if(ishuman(owner))
 			var/mob/living/carbon/human/human_owner = owner
-			human_owner.bleed(40 - rune*32)
+			human_owner.bleed(rune ? 8 : 40)
 		var/datum/action/innate/cult/blood_spell/new_spell = new BS(owner.mind)
 		new_spell.Grant(owner, src)
 		spells += new_spell
@@ -155,14 +162,14 @@
 	name = "Stun"
 	desc = "Empowers your hand to stun and mute a victim on contact. Gets weaker depending on how many have joined the Cult."
 	button_icon_state = "hand"
-	magic_path = "/obj/item/melee/blood_magic/stun"
+	magic_path = /obj/item/melee/blood_magic/stun
 	health_cost = 10
 
 /datum/action/innate/cult/blood_spell/teleport
 	name = "Teleport"
 	desc = "Empowers your hand to teleport yourself or another cultist to a teleport rune on contact."
 	button_icon_state = "tele"
-	magic_path = "/obj/item/melee/blood_magic/teleport"
+	magic_path = /obj/item/melee/blood_magic/teleport
 	health_cost = 7
 
 /datum/action/innate/cult/blood_spell/emp
@@ -187,20 +194,20 @@
 	desc = "Empowers your hand to start handcuffing victim on contact, and mute them if successful."
 	button_icon_state = "cuff"
 	charges = 4
-	magic_path = "/obj/item/melee/blood_magic/shackles"
+	magic_path = /obj/item/melee/blood_magic/shackles
 
 /datum/action/innate/cult/blood_spell/construction
 	name = "Twisted Construction"
 	desc = "Empowers your hand to corrupt certain metalic objects.<br><u>Converts:</u><br>Plasteel into runed metal<br>50 metal into a construct shell<br>Living cyborgs into constructs after a delay<br>Cyborg shells into construct shells<br>Purified soulstones (and any shades inside) into cultist soulstones<br>Airlocks into brittle runed airlocks after a delay (harm intent)"
 	button_icon_state = "transmute"
-	magic_path = "/obj/item/melee/blood_magic/construction"
+	magic_path = /obj/item/melee/blood_magic/construction
 	health_cost = 12
 
 /datum/action/innate/cult/blood_spell/equipment
 	name = "Summon Combat Equipment"
 	desc = "Empowers your hand to summon combat gear onto a cultist you touch, including cult armor, a cult bola, and a cult sword. Not recommended for use before the blood cult's presence has been revealed."
 	button_icon_state = "equip"
-	magic_path = "/obj/item/melee/blood_magic/armor"
+	magic_path = /obj/item/melee/blood_magic/armor
 
 /datum/action/innate/cult/blood_spell/dagger
 	name = "Summon Ritual Dagger"
@@ -332,7 +339,7 @@
 	invocation = "Fel'th Dol Ab'orod!"
 	button_icon_state = "manip"
 	charges = 5
-	magic_path = "/obj/item/melee/blood_magic/manipulator"
+	magic_path = /obj/item/melee/blood_magic/manipulator
 	deletes_on_empty = FALSE
 
 // The "magic hand" items
@@ -426,21 +433,39 @@
 /obj/item/melee/blood_magic/stun/cast_spell(mob/living/target, mob/living/carbon/user)
 	if(!istype(target) || IS_CULTIST(target))
 		return
-	var/datum/antagonist/cult/cultist = IS_CULTIST(user)
-	var/datum/team/cult/cult_team = cultist.get_team()
-	var/effect_coef = 1 - (cult_team.cult_risen ? 0.4 : 0) - (cult_team.cult_ascendent ? 0.5 : 0)
+	var/datum/antagonist/cult/cultist = GET_CULTIST(user)
+	var/datum/team/cult/cult_team = cultist?.get_team()
+	var/effect_coef = 1
+	if(cult_team?.cult_ascendent)
+		effect_coef = 0.1
+	else if(cult_team?.cult_risen)
+		effect_coef = 0.4
+	if(IS_CULTIST(user) && isnull(GET_CULTIST(user)))
+		effect_coef = 0.2
 	user.visible_message(
 		span_warning("[user] holds up [user.p_their()] hand, which explodes in a flash of red light!"),
 		span_cult_italic("You attempt to stun [target] with the spell!"),
 		visible_message_flags = ALWAYS_SHOW_SELF_MESSAGE,
 	)
 	user.mob_light(range = 1.1, power = 2, color = LIGHT_COLOR_BLOOD_MAGIC, duration = 0.2 SECONDS)
+	// Heretics are momentarily disoriented by the stunning aura. Enough for both parties to go 'oh shit' but only a mild combat ability.
+	// Heretics have an identical effect on their grasp. The cultist's worse spell preparation is offset by their extra gear and teammates.
 	if(IS_HERETIC(target))
-		to_chat(user, span_warning("Some force greater than you intervenes! [target] is protected by the Forgotten Gods!"))
-		to_chat(target, span_warning("You are protected by your faith to the Forgotten Gods."))
+		target.AdjustKnockdown(0.5 SECONDS)
+		target.adjust_confusion_up_to(1.5 SECONDS, 3 SECONDS)
+		target.adjust_dizzy_up_to(1.5 SECONDS, 3 SECONDS)
+		ADD_TRAIT(target, TRAIT_NO_SIDE_KICK, REF(src)) // We don't want this to be a good stunning tool, just minor disorientation
+		addtimer(TRAIT_CALLBACK_REMOVE(target, TRAIT_NO_SIDE_KICK, REF(src)), 1 SECONDS)
+
 		var/old_color = target.color
-		target.color = rgb(0, 128, 0)
-		animate(target, color = old_color, time = 1 SECONDS, easing = EASE_IN)
+		target.color = COLOR_HERETIC_GREEN
+		animate(target, color = old_color, time = 4 SECONDS, easing = EASE_IN)
+		target.mob_light(range = 1.5, power = 2.5, color = COLOR_HERETIC_GREEN, duration = 0.5 SECONDS)
+		playsound(target, 'sound/magic/magic_block_mind.ogg', 150, TRUE) // insanely quiet
+
+		to_chat(user, span_warning("An eldritch force intervenes as you touch [target], absorbing most of the effects!"))
+		to_chat(target, span_warning("As [user] touches you with vile magicks, the Mansus absorbs most of the effects!"))
+		target.balloon_alert_to_viewers("absorbed!")
 	else if(target.can_block_magic())
 		to_chat(user, span_warning("The spell had no effect!"))
 	else

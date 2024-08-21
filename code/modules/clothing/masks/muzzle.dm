@@ -5,10 +5,13 @@
 	inhand_icon_state = "blindfold"
 	lefthand_file = 'icons/mob/inhands/clothing/glasses_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/clothing/glasses_righthand.dmi'
-	clothing_flags = BLOCKS_SPEECH
 	flags_cover = MASKCOVERSMOUTH
 	w_class = WEIGHT_CLASS_SMALL
 	equip_delay_other = 20
+
+/obj/item/clothing/mask/muzzle/Initialize(mapload)
+	. = ..()
+	AddElement(/datum/element/muffles_speech)
 
 /obj/item/clothing/mask/muzzle/attack_paw(mob/user, list/modifiers)
 	if(iscarbon(user))
@@ -26,7 +29,7 @@
 	lefthand_file = 'icons/mob/inhands/clothing/masks_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/clothing/masks_righthand.dmi'
 	body_parts_covered = NONE
-	clothing_flags = MASKINTERNALS | BLOCKS_SPEECH
+	clothing_flags = MASKINTERNALS
 	armor_type = /datum/armor/muzzle_breath
 	equip_delay_other = 25 // my sprite has 4 straps, a-la a head harness. takes a while to equip, longer than a muzzle
 
@@ -37,7 +40,7 @@
 	worn_icon_state = "tape_piece_worn"
 	inhand_icon_state = null
 	w_class = WEIGHT_CLASS_TINY
-	clothing_flags = INEDIBLE_CLOTHING|BLOCKS_SPEECH
+	clothing_flags = INEDIBLE_CLOTHING
 	equip_delay_other = 40
 	strip_delay = 40
 	greyscale_config = /datum/greyscale_config/tape_piece

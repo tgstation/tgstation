@@ -17,8 +17,7 @@
 	name = "bullet"
 	icon = 'icons/obj/weapons/guns/ammo.dmi'
 	icon_state = "s-casing"
-	embedding = null // embedding vars are taken from the projectile itself
-
+	embed_type = null
 
 /obj/projectile/bullet/shrapnel
 	name = "flying shrapnel shard"
@@ -34,7 +33,12 @@
 	ignore_range_hit_prone_targets = TRUE
 	sharpness = SHARP_EDGED
 	wound_bonus = 30
-	embedding = list(embed_chance=70, ignore_throwspeed_threshold=TRUE, fall_chance=1)
+	embed_type = /datum/embed_data/shrapnel
+
+/datum/embed_data/shrapnel
+	embed_chance = 70
+	ignore_throwspeed_threshold = TRUE
+	fall_chance = 1
 
 /obj/projectile/bullet/shrapnel/short_range
 	range = 5
@@ -70,7 +74,17 @@
 	ricochet_incidence_leeway = 0
 	embed_falloff_tile = -2
 	shrapnel_type = /obj/item/shrapnel/stingball
-	embedding = list(embed_chance=55, fall_chance=2, jostle_chance=7, ignore_throwspeed_threshold=TRUE, pain_stam_pct=0.7, pain_mult=3, jostle_pain_mult=3, rip_time=15)
+	embed_type = /datum/embed_data/stingball
+
+/datum/embed_data/stingball
+	embed_chance = 55
+	fall_chance = 2
+	jostle_chance = 7
+	ignore_throwspeed_threshold = TRUE
+	pain_stam_pct = 0.7
+	pain_mult = 3
+	jostle_pain_mult = 3
+	rip_time = 15
 
 /obj/projectile/bullet/pellet/stingball/on_ricochet(atom/A)
 	hit_prone_targets = TRUE // ducking will save you from the first wave, but not the rebounds
@@ -92,9 +106,19 @@
 	ricochets_max = 2
 	ricochet_chance = 140
 	shrapnel_type = /obj/item/shrapnel/capmine
-	embedding = list(embed_chance=90, fall_chance=3, jostle_chance=7, ignore_throwspeed_threshold=TRUE, pain_stam_pct=0.7, pain_mult=5, jostle_pain_mult=6, rip_time=15)
+	embed_type = /datum/embed_data/capmine
 	wound_falloff_tile = 0
 	embed_falloff_tile = 0
+
+/datum/embed_data/capmine
+	embed_chance = 90
+	fall_chance = 3
+	jostle_chance = 7
+	ignore_throwspeed_threshold = TRUE
+	pain_stam_pct = 0.7
+	pain_mult = 5
+	jostle_pain_mult = 6
+	rip_time = 15
 
 /obj/item/shrapnel/capmine
 	name = "\improper AP shrapnel shard"

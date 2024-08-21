@@ -1,5 +1,0 @@
-author: "Ben10Omintrix"
-delete-after: True
-changes:
-  - refactor: "vibebots are not basic bots"
-  - rscadd: "vibebots will now seek out the depressed and cheer them up"

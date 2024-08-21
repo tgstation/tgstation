@@ -50,13 +50,10 @@ GLOBAL_VAR_INIT(bsa_unlock, FALSE)
 	. = ..()
 	AddComponent(/datum/component/simple_rotation)
 
-/obj/machinery/bsa/back/multitool_act(mob/living/user, obj/item/I)
-	if(!multitool_check_buffer(user, I)) //make sure it has a data buffer
-		return
-	var/obj/item/multitool/M = I
+/obj/machinery/bsa/back/multitool_act(mob/living/user, obj/item/multitool/M)
 	M.set_buffer(src)
 	balloon_alert(user, "saved to multitool buffer")
-	return TRUE
+	return ITEM_INTERACT_SUCCESS
 
 /obj/machinery/bsa/front
 	name = "Bluespace Artillery Bore"
@@ -67,13 +64,10 @@ GLOBAL_VAR_INIT(bsa_unlock, FALSE)
 	. = ..()
 	AddComponent(/datum/component/simple_rotation)
 
-/obj/machinery/bsa/front/multitool_act(mob/living/user, obj/item/I)
-	if(!multitool_check_buffer(user, I)) //make sure it has a data buffer
-		return
-	var/obj/item/multitool/M = I
+/obj/machinery/bsa/front/multitool_act(mob/living/user, obj/item/multitool/M)
 	M.set_buffer(src)
 	balloon_alert(user, "saved to multitool buffer")
-	return TRUE
+	return ITEM_INTERACT_SUCCESS
 
 /obj/machinery/bsa/middle
 	name = "Bluespace Artillery Fusor"
@@ -86,22 +80,19 @@ GLOBAL_VAR_INIT(bsa_unlock, FALSE)
 	. = ..()
 	AddComponent(/datum/component/simple_rotation)
 
-/obj/machinery/bsa/middle/multitool_act(mob/living/user, obj/item/I)
-	if(!multitool_check_buffer(user, I))
-		return
-	var/obj/item/multitool/M = I
-	if(M.buffer)
-		if(istype(M.buffer, /obj/machinery/bsa/back))
-			back_ref = WEAKREF(M.buffer)
-			to_chat(user, span_notice("You link [src] with [M.buffer]."))
-			M.set_buffer(null)
-		else if(istype(M.buffer, /obj/machinery/bsa/front))
-			front_ref = WEAKREF(M.buffer)
-			to_chat(user, span_notice("You link [src] with [M.buffer]."))
-			M.set_buffer(null)
-	else
-		to_chat(user, span_warning("[I]'s data buffer is empty!"))
-	return TRUE
+/obj/machinery/bsa/middle/multitool_act(mob/living/user, obj/item/multitool/tool)
+	. = NONE
+
+	if(istype(tool.buffer, /obj/machinery/bsa/back))
+		back_ref = WEAKREF(tool.buffer)
+		to_chat(user, span_notice("You link [src] with [tool.buffer]."))
+		tool.set_buffer(null)
+		return ITEM_INTERACT_SUCCESS
+	else if(istype(tool.buffer, /obj/machinery/bsa/front))
+		front_ref = WEAKREF(tool.buffer)
+		to_chat(user, span_notice("You link [src] with [tool.buffer]."))
+		tool.set_buffer(null)
+		return ITEM_INTERACT_SUCCESS
 
 /obj/machinery/bsa/middle/proc/check_completion()
 	var/obj/machinery/bsa/front/front = front_ref?.resolve()
@@ -209,13 +200,6 @@ GLOBAL_VAR_INIT(bsa_unlock, FALSE)
 			top_layer.icon_state = "top_east"
 	add_overlay(top_layer)
 
-/obj/machinery/bsa/full/on_changed_z_level(turf/old_turf, turf/new_turf, same_z_layer, notify_contents)
-	if(same_z_layer)
-		return ..()
-	cut_overlay(top_layer)
-	get_layer()
-	return ..()
-
 /obj/machinery/bsa/full/proc/fire(mob/user, turf/bullseye)
 	reload()
 
@@ -308,7 +292,7 @@ GLOBAL_VAR_INIT(bsa_unlock, FALSE)
 		data["target"] = get_target_name()
 	return data
 
-/obj/machinery/computer/bsa_control/ui_act(action, params)
+/obj/machinery/computer/bsa_control/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if(.)
 		return

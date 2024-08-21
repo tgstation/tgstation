@@ -59,26 +59,15 @@
 		spawned_human.underwear = "Nude"
 		spawned_human.undershirt = "Nude"
 		spawned_human.socks = "Nude"
+		randomize_human_normie(spawned_human)
 		if(hairstyle)
-			spawned_human.hairstyle = hairstyle
-		else
-			spawned_human.hairstyle = random_hairstyle(spawned_human.gender)
+			spawned_human.set_hairstyle(hairstyle, update = FALSE)
 		if(facial_hairstyle)
-			spawned_human.facial_hairstyle = facial_hairstyle
-		else
-			spawned_human.facial_hairstyle = random_facial_hairstyle(spawned_human.gender)
+			spawned_human.set_facial_hairstyle(facial_hairstyle, update = FALSE)
 		if(haircolor)
-			spawned_human.hair_color = haircolor
-		else
-			spawned_human.hair_color = "#[random_color()]"
+			spawned_human.set_haircolor(haircolor, update = FALSE)
 		if(facial_haircolor)
-			spawned_human.facial_hair_color = facial_haircolor
-		else
-			spawned_human.facial_hair_color = "#[random_color()]"
-		if(skin_tone)
-			spawned_human.skin_tone = skin_tone
-		else
-			spawned_human.skin_tone = pick(GLOB.skin_tones)
+			spawned_human.set_facial_haircolor(facial_haircolor, update = FALSE)
 		spawned_human.update_body(is_creating = TRUE)
 
 /obj/effect/mob_spawn/proc/name_mob(mob/living/spawned_mob, forced_name)

@@ -761,11 +761,8 @@
 /turf/open/floor/engine/cult,
 /area/deathmatch/teleport)
 "Xv" = (
+/obj/structure/railing,
 /obj/structure/railing{
-	layer = 3.1
-	},
-/obj/structure/railing{
-	layer = 3.1;
 	dir = 1
 	},
 /turf/open/floor/engine/cult,

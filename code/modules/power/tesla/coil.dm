@@ -1,4 +1,5 @@
 /obj/machinery/power/energy_accumulator/tesla_coil
+	SET_BASE_VISUAL_PIXEL(0, DEPTH_OFFSET)
 	name = "tesla coil"
 	desc = "For the union!"
 	icon = 'icons/obj/machines/engine/tesla_coil.dmi'
@@ -119,6 +120,7 @@
 	zap_buckle_check(power)
 
 /obj/machinery/power/energy_accumulator/grounding_rod
+	SET_BASE_VISUAL_PIXEL(0, DEPTH_OFFSET)
 	name = "grounding rod"
 	desc = "Keeps an area from being fried by Edison's Bane."
 	icon = 'icons/obj/machines/engine/tesla_coil.dmi'
@@ -126,6 +128,8 @@
 	anchored = FALSE
 	density = TRUE
 	wants_powernet = FALSE
+
+	circuit = /obj/item/circuitboard/machine/grounding_rod
 
 	can_buckle = TRUE
 	buckle_lying = 0

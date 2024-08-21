@@ -41,6 +41,11 @@
 	set_custom_materials(initialized_mineral.mats_per_unit, sheetAmount)
 	qdel(initialized_mineral)
 	air_update_turf(TRUE, TRUE)
+	return INITIALIZE_HINT_LATELOAD
+
+/obj/structure/mineral_door/LateInitialize(mapload)
+	if(mapload)
+		auto_align()
 
 /obj/structure/mineral_door/Destroy()
 	if(!door_opened)
@@ -103,9 +108,8 @@
 /obj/structure/mineral_door/proc/Open()
 	isSwitchingStates = TRUE
 	playsound(src, openSound, 100, TRUE)
+	sleep(0.8 SECONDS)
 	set_opacity(FALSE)
-	flick("[initial(icon_state)]opening",src)
-	sleep(1 SECONDS)
 	set_density(FALSE)
 	door_opened = TRUE
 	layer = OPEN_DOOR_LAYER
@@ -124,8 +128,7 @@
 		return
 	isSwitchingStates = TRUE
 	playsound(src, closeSound, 100, TRUE)
-	flick("[initial(icon_state)]closing",src)
-	sleep(1 SECONDS)
+	sleep(0.8 SECONDS)
 	set_density(TRUE)
 	set_opacity(TRUE)
 	door_opened = FALSE
@@ -135,8 +138,15 @@
 	isSwitchingStates = FALSE
 
 /obj/structure/mineral_door/update_icon_state()
-	icon_state = "[initial(icon_state)][door_opened ? "open":""]"
+	icon_state = "[initial(icon_state)][door_opened ? "_open_top":""]"
 	return ..()
+
+/obj/structure/mineral_door/update_overlays()
+	. = ..()
+	if(!density)
+		// If we're open we layer the bit below us "above" any mobs so they can walk through
+		. += mutable_appearance(icon, "[initial(icon_state)]_open_bottom", ABOVE_MOB_LAYER, appearance_flags = KEEP_APART)
+		. += emissive_blocker(icon, "[initial(icon_state)]_open_bottom", src, ABOVE_MOB_LAYER)
 
 /obj/structure/mineral_door/attackby(obj/item/I, mob/living/user)
 	if(pickaxe_door(user, I))
@@ -300,7 +310,7 @@
 
 /obj/structure/mineral_door/paperframe/Initialize(mapload)
 	. = ..()
-	if(smoothing_flags & (SMOOTH_CORNERS|SMOOTH_BITMASK))
+	if(smoothing_flags & USES_SMOOTHING)
 		QUEUE_SMOOTH_NEIGHBORS(src)
 
 /obj/structure/mineral_door/paperframe/examine(mob/user)
@@ -333,6 +343,6 @@
 	return ..()
 
 /obj/structure/mineral_door/paperframe/Destroy()
-	if(smoothing_flags & (SMOOTH_CORNERS|SMOOTH_BITMASK))
+	if(smoothing_flags & USES_SMOOTHING)
 		QUEUE_SMOOTH_NEIGHBORS(src)
 	return ..()

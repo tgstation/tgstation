@@ -10,10 +10,17 @@
 			step_y = AM.step_y
 	. = ..()
 
+#define PHYSICAL_POSITION(atom) ((atom.y * world.icon_size) + (atom.pixel_y))
+
 /obj/item/camera/proc/camera_get_icon(list/turfs, turf/center, psize_x = 96, psize_y = 96, datum/turf_reservation/clone_area, size_x, size_y, total_x, total_y)
 	var/list/atoms = list()
+	var/list/lighting = list()
 	var/skip_normal = FALSE
 	var/wipe_atoms = FALSE
+
+	var/mutable_appearance/backdrop = mutable_appearance('icons/hud/screen_gen.dmi', "flash")
+	backdrop.blend_mode = BLEND_OVERLAY
+	backdrop.color = "#292319"
 
 	if(istype(clone_area) && total_x == clone_area.width && total_y == clone_area.height && size_x >= 0 && size_y > 0)
 		var/turf/bottom_left = clone_area.bottom_left_turfs[1]
@@ -29,6 +36,12 @@
 			atoms += new /obj/effect/appearance_clone(newT, T)
 			if(T.loc.icon_state)
 				atoms += new /obj/effect/appearance_clone(newT, T.loc)
+			if(T.lighting_object)
+				var/obj/effect/appearance_clone/lighting_overlay = new(newT)
+				lighting_overlay.appearance = T.lighting_object.current_underlay
+				lighting_overlay.underlays += backdrop
+				lighting_overlay.blend_mode = BLEND_MULTIPLY
+				lighting += lighting_overlay
 			for(var/i in T.contents)
 				var/atom/A = i
 				if(!A.invisibility || (see_ghosts && isobserver(A)))
@@ -41,6 +54,12 @@
 		for(var/i in turfs)
 			var/turf/T = i
 			atoms += T
+			if(T.lighting_object)
+				var/obj/effect/appearance_clone/lighting_overlay = new(T)
+				lighting_overlay.appearance = T.lighting_object.current_underlay
+				lighting_overlay.underlays += backdrop
+				lighting_overlay.blend_mode = BLEND_MULTIPLY
+				lighting += lighting_overlay
 			for(var/atom/movable/A in T)
 				if(A.invisibility)
 					if(!(see_ghosts && isobserver(A)))
@@ -50,6 +69,7 @@
 
 	var/icon/res = icon('icons/blanks/96x96.dmi', "nothing")
 	res.Scale(psize_x, psize_y)
+	atoms += lighting
 
 	var/list/sorted = list()
 	var/j
@@ -57,7 +77,19 @@
 		var/atom/c = atoms[i]
 		for(j = sorted.len, j > 0, --j)
 			var/atom/c2 = sorted[j]
-			if((c2.plane <= c.plane) && (c2.layer <= c.layer))
+			if(c2.plane > c.plane)
+				continue
+			if(c2.plane < c.plane)
+				break
+			var/c_position = PHYSICAL_POSITION(c)
+			var/c2_position = PHYSICAL_POSITION(c2)
+			// If you are above me, I layer above you
+			if(c2_position - 32 >= c_position)
+				break
+			// If I am above you you will always layer above me
+			if(c2_position <= c_position - 32)
+				continue
+			if(c2.layer < c.layer)
 				break
 		sorted.Insert(j+1, c)
 		CHECK_TICK
@@ -80,32 +112,34 @@
 		for(var/X in sorted) //these are clones
 			var/obj/effect/appearance_clone/clone = X
 			var/icon/img = getFlatIcon(clone, no_anim = TRUE)
-			if(img)
-				// Center of the image in X
-				var/xo = (clone.x - center.x) * world.icon_size + clone.pixel_x + xcomp + clone.step_x
-				// Center of the image in Y
-				var/yo = (clone.y - center.y) * world.icon_size + clone.pixel_y + ycomp + clone.step_y
+			if(!img)
+				CHECK_TICK
+				continue
+			// Center of the image in X
+			var/xo = (clone.x - center.x) * world.icon_size + clone.pixel_x + xcomp + clone.step_x
+			// Center of the image in Y
+			var/yo = (clone.y - center.y) * world.icon_size + clone.pixel_y + ycomp + clone.step_y
 
-				if(clone.transform) // getFlatIcon doesn't give a snot about transforms.
-					var/datum/decompose_matrix/decompose = clone.transform.decompose()
-					// Scale in X, Y
-					if(decompose.scale_x != 1 || decompose.scale_y != 1)
-						var/base_w = img.Width()
-						var/base_h = img.Height()
-						// scale_x can be negative
-						img.Scale(base_w * abs(decompose.scale_x), base_h * decompose.scale_y)
-						if(decompose.scale_x < 0)
-							img.Flip(EAST)
-						xo -= base_w * (decompose.scale_x - SIGN(decompose.scale_x)) / 2 * SIGN(decompose.scale_x)
-						yo -= base_h * (decompose.scale_y - 1) / 2
-					// Rotation
-					if(decompose.rotation != 0)
-						img.Turn(decompose.rotation)
-					// Shift
-					xo += decompose.shift_x
-					yo += decompose.shift_y
+			if(clone.transform) // getFlatIcon doesn't give a snot about transforms.
+				var/datum/decompose_matrix/decompose = clone.transform.decompose()
+				// Scale in X, Y
+				if(decompose.scale_x != 1 || decompose.scale_y != 1)
+					var/base_w = img.Width()
+					var/base_h = img.Height()
+					// scale_x can be negative
+					img.Scale(base_w * abs(decompose.scale_x), base_h * decompose.scale_y)
+					if(decompose.scale_x < 0)
+						img.Flip(EAST)
+					xo -= base_w * (decompose.scale_x - SIGN(decompose.scale_x)) / 2 * SIGN(decompose.scale_x)
+					yo -= base_h * (decompose.scale_y - 1) / 2
+				// Rotation
+				if(decompose.rotation != 0)
+					img.Turn(decompose.rotation)
+				// Shift
+				xo += decompose.shift_x
+				yo += decompose.shift_y
 
-				res.Blend(img, blendMode2iconMode(clone.blend_mode), xo, yo)
+			res.Blend(img, blendMode2iconMode(clone.blend_mode), xo, yo)
 			CHECK_TICK
 
 	if(!silent)
@@ -116,5 +150,9 @@
 
 	if(wipe_atoms)
 		QDEL_LIST(atoms)
+	else
+		QDEL_LIST(lighting)
 
 	return res
+
+#undef PHYSICAL_POSITION

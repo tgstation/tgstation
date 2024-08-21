@@ -28,6 +28,7 @@
  */
 /datum/antagonist/heretic_monster/proc/set_owner(datum/mind/master)
 	src.master = master
+	owner.enslave_mind_to_creator(master.current)
 
 	var/datum/objective/master_obj = new()
 	master_obj.owner = owner

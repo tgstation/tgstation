@@ -28,6 +28,20 @@
 		else
 			return COLOR_BLACK
 
+/proc/random_hair_color()
+	var/static/list/natural_hair_colors = list(
+		"#111111", "#362925", "#3B3831", "#41250C", "#412922",
+		"#544C49", "#583322", "#593029", "#703b30", "#714721",
+		"#744729", "#74482a", "#7b746e", "#855832", "#863019",
+		"#8c4734", "#9F550E", "#A29A96", "#A4381C", "#B17B41",
+		"#C0BAB7", "#EFE5E4", "#F7F3F1", "#FFF2D6", "#a15537",
+		"#a17e61", "#b38b67", "#ba673c", "#c89f73", "#d9b380",
+		"#dbc9b8", "#e1621d", "#e17d17", "#e1af93", "#f1cc8f",
+		"#fbe7a1",
+	)
+
+	return pick(natural_hair_colors)
+
 /proc/random_underwear(gender)
 	if(length(SSaccessories.underwear_list) == 0)
 		CRASH("No underwear to choose from!")
@@ -618,7 +632,7 @@ GLOBAL_LIST_INIT(skin_tone_names, list(
 		else
 			return zone
 
-///Takes a zone and returns it's "parent" zone, if it has one.
+///Takes a zone and returns its "parent" zone, if it has one.
 /proc/deprecise_zone(precise_zone)
 	switch(precise_zone)
 		if(BODY_ZONE_PRECISE_GROIN)
@@ -679,6 +693,8 @@ GLOBAL_LIST_INIT(skin_tone_names, list(
 		slot_strings += "dextrous storage"
 	if(slot_flags & ITEM_SLOT_BACKPACK)
 		slot_strings += "backpack"
+	if(slot_flags & ITEM_SLOT_BELTPACK)
+		slot_strings += "belt" // ?
 	return slot_strings
 
 ///Returns the direction that the initiator and the target are facing

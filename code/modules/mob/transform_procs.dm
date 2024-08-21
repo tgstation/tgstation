@@ -17,7 +17,7 @@
 
 	//Make mob invisible and spawn animation
 	ADD_TRAIT(src, TRAIT_NO_TRANSFORM, TEMPORARY_TRANSFORMATION_TRAIT)
-	Paralyze(TRANSFORMATION_DURATION, ignore_canstun = TRUE)
+	Stun(TRANSFORMATION_DURATION, ignore_canstun = TRUE)
 	icon = null
 	cut_overlays()
 
@@ -29,12 +29,12 @@
 
 /mob/living/carbon/proc/finish_monkeyize()
 	transformation_timer = null
-	to_chat(src, span_boldnotice("You are now a monkey."))
 	REMOVE_TRAIT(src, TRAIT_NO_TRANSFORM, TEMPORARY_TRANSFORMATION_TRAIT)
 	icon = initial(icon)
 	RemoveInvisibility(type)
 	set_species(/datum/species/monkey)
-	name = "monkey"
+	to_chat(src, span_boldnotice("You are now \a [dna.species.name]."))
+	name = LOWER_TEXT(dna.species.name)
 	regenerate_icons()
 	set_name()
 	SEND_SIGNAL(src, COMSIG_HUMAN_MONKEYIZE)
@@ -57,7 +57,7 @@
 
 	//Make mob invisible and spawn animation
 	ADD_TRAIT(src, TRAIT_NO_TRANSFORM, TEMPORARY_TRANSFORMATION_TRAIT)
-	Paralyze(TRANSFORMATION_DURATION, ignore_canstun = TRUE)
+	Stun(TRANSFORMATION_DURATION, ignore_canstun = TRUE)
 	icon = null
 	cut_overlays()
 
@@ -67,15 +67,22 @@
 
 	transformation_timer = addtimer(CALLBACK(src, PROC_REF(finish_humanize), species), TRANSFORMATION_DURATION, TIMER_UNIQUE)
 
+
 /mob/living/carbon/proc/finish_humanize(species = /datum/species/human)
 	transformation_timer = null
-	to_chat(src, span_boldnotice("You are now a human."))
 	REMOVE_TRAIT(src, TRAIT_NO_TRANSFORM, TEMPORARY_TRANSFORMATION_TRAIT)
 	icon = initial(icon)
 	RemoveInvisibility(type)
 	set_species(species)
+	to_chat(src, span_boldnotice("You are now \a [dna.species.name]."))
 	SEND_SIGNAL(src, COMSIG_MONKEY_HUMANIZE)
 	return src
+
+/mob/living/carbon/human/finish_humanize(species = /datum/species/human)
+	underwear = "Nude"
+	undershirt = "Nude"
+	socks = "Nude"
+	return ..()
 
 /mob/proc/AIize(client/preference_source, move = TRUE)
 	var/list/turf/landmark_loc = list()

@@ -54,9 +54,6 @@
 
 	slot_flags = ITEM_SLOT_BACK
 	accepted_magazine_type = /obj/item/ammo_box/magazine/internal/boltaction
-	can_bayonet = TRUE
-	knife_x_offset = 42
-	knife_y_offset = 12
 	can_be_sawn_off = TRUE
 	weapon_weight = WEAPON_HEAVY
 	var/jamming_chance = 20
@@ -67,11 +64,13 @@
 
 	SET_BASE_PIXEL(-8, 0)
 
+/obj/item/gun/ballistic/rifle/boltaction/add_bayonet_point()
+	AddComponent(/datum/component/bayonet_attachable, offset_x = 32, offset_y = 12)
+
 /obj/item/gun/ballistic/rifle/boltaction/sawoff(mob/user)
 	. = ..()
 	if(.)
 		spread = 36
-		can_bayonet = FALSE
 		SET_BASE_PIXEL(0, 0)
 		update_appearance()
 
@@ -160,6 +159,7 @@
 		You are now probably one of the few people in the universe to ever hold an \"Obrez Moderna\". \
 		All you had to do was take an allen wrench to the stock to take it off. But no, you just had to \
 		go for the saw."
+	accepted_magazine_type = /obj/item/ammo_box/magazine/internal/boltaction/phasic
 
 /obj/item/gun/ballistic/rifle/boltaction/prime/Initialize(mapload)
 	. = ..()
@@ -169,6 +169,27 @@
 	. = ..()
 	if(.)
 		name = "\improper Obrez Moderna" // wear it loud and proud
+
+/obj/item/gun/ballistic/rifle/boltaction/donkrifle
+	name = "\improper Donk Co. Jezail"
+	desc = "A mass-manufactured bolt-action sporting rifle with a distinctively long barrel. Powerful enough to take down a space bear from a thousand paces. The lengthened barrel gives it good accuracy and power, even at range."
+	w_class = WEIGHT_CLASS_HUGE
+	lefthand_file = 'icons/mob/inhands/weapons/64x_guns_left.dmi'
+	righthand_file = 'icons/mob/inhands/weapons/64x_guns_right.dmi'
+	inhand_x_dimension = 64
+	inhand_y_dimension = 64
+	icon_state = "jezail"
+	inhand_icon_state = "jezail"
+	worn_icon_state = "jezail"
+	accepted_magazine_type = /obj/item/ammo_box/magazine/internal/boltaction/jezail
+	can_be_sawn_off = TRUE
+	sawn_desc = "A mass-manufactured bolt-action sporting rifle with a distinctively long barrel. Powerful enough to take down a space bear from a thousand paces. Its barrel has been cut off, so its power and accuracy have been impaired."
+
+/obj/item/gun/ballistic/rifle/boltaction/donkrifle/sawoff(mob/user) //the heavy price one pays for fitting this in a backpack
+	. = ..()
+	if(.)
+		projectile_damage_multiplier = 0.75
+		spread = 50
 
 /obj/item/gun/ballistic/rifle/rebarxbow
 	name = "Heated Rebar Crossbow"
@@ -271,15 +292,16 @@
 
 	projectile_damage_multiplier = 1.35
 	obj_flags = UNIQUE_RENAME
-	can_bayonet = TRUE
-	knife_x_offset = 35
-	knife_y_offset = 10
 	can_be_sawn_off = FALSE
 	trigger_guard = TRIGGER_GUARD_ALLOW_ALL
+	pb_knockback = 3
 
 	SET_BASE_PIXEL(-8, 0)
 
-/obj/item/gun/ballistic/rifle/boltaction/pipegun/handle_chamber()
+/obj/item/gun/ballistic/rifle/boltaction/pipegun/add_bayonet_point()
+	AddComponent(/datum/component/bayonet_attachable, offset_x = 35, offset_y = 10)
+
+/obj/item/gun/ballistic/rifle/boltaction/pipegun/handle_chamber(empty_chamber = TRUE, from_firing = TRUE, chamber_next_round = TRUE)
 	. = ..()
 	do_sparks(1, TRUE, src)
 
@@ -303,12 +325,17 @@
 	accepted_magazine_type = /obj/item/ammo_box/magazine/internal/boltaction/pipegun/pistol
 	projectile_damage_multiplier = 0.50
 	spread = 15 //kinda inaccurate
+	burst_size = 3 //but it empties the entire magazine when it fires
+	fire_delay = 0.3 // and by empties, I mean it does it all at once
 	slot_flags = ITEM_SLOT_BELT
 	w_class = WEIGHT_CLASS_NORMAL
-	can_bayonet = FALSE
 	weapon_weight = WEAPON_MEDIUM
+	semi_auto = TRUE
 
 	SET_BASE_PIXEL(0, 0)
+
+/obj/item/gun/ballistic/rifle/boltaction/pipegun/pistol/add_bayonet_point()
+	return
 
 /obj/item/gun/ballistic/rifle/boltaction/pipegun/prime
 	name = "regal pipegun"
@@ -328,6 +355,7 @@
 	inhand_icon_state = "regal_pipepistol"
 	accepted_magazine_type = /obj/item/ammo_box/magazine/internal/boltaction/pipegun/pistol/prime
 	projectile_damage_multiplier = 1
+	burst_size = 6 // WHOLE CLIP
 	spread = 0
 
 /// MAGICAL BOLT ACTIONS ///

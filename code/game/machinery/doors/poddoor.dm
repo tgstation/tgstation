@@ -32,6 +32,26 @@
 	fire = 100
 	acid = 70
 
+/obj/machinery/door/poddoor/Initialize(mapload)
+	. = ..()
+	AddComponent(/datum/component/conditionally_transparent, \
+		transparent_signals = list(COSMIG_DOOR_OPENING), \
+		opaque_signals = list(COSMIG_DOOR_CLOSING), \
+		start_transparent = !density, \
+		transparency_delay = 0 SECONDS, \
+		in_midpoint_alpha = 215, \
+		transparent_alpha = 64, \
+		opacity_delay = 0 SECONDS, \
+		out_midpoint_alpha = 104, \
+	)
+	if(mapload)
+		return INITIALIZE_HINT_LATELOAD
+
+/obj/machinery/door/poddoor/post_machine_initialize(mapload)
+	. = ..()
+	if(mapload)
+		auto_align()
+
 /obj/machinery/door/poddoor/get_save_vars()
 	return ..() + NAMEOF(src, id)
 
@@ -40,7 +60,7 @@
 	if(panel_open)
 		if(deconstruction == BLASTDOOR_FINISHED)
 			. += span_notice("The maintenance panel is opened and the electronics could be <b>pried</b> out.")
-			. += span_notice("\The [src] could be calibrated to a blast door controller ID with a <b>multitool</b>.")
+			. += span_notice("\The [src] could be calibrated to a blast door controller ID with a <b>multitool</b> or a <b>blast door controller</b>.")
 		else if(deconstruction == BLASTDOOR_NEEDS_ELECTRONICS)
 			. += span_notice("The <i>electronics</i> are missing and there are some <b>wires</b> sticking out.")
 		else if(deconstruction == BLASTDOOR_NEEDS_WIRES)
@@ -55,6 +75,9 @@
 		return CONTEXTUAL_SCREENTIP_SET
 	if(deconstruction == BLASTDOOR_NEEDS_ELECTRONICS && istype(held_item, /obj/item/electronics/airlock))
 		context[SCREENTIP_CONTEXT_LMB] = "Add electronics"
+		return CONTEXTUAL_SCREENTIP_SET
+	if(deconstruction == BLASTDOOR_FINISHED && istype(held_item, /obj/item/assembly/control))
+		context[SCREENTIP_CONTEXT_LMB] = "Calibrate ID"
 		return CONTEXTUAL_SCREENTIP_SET
 	//we do not check for special effects like if they can actually perform the action because they will be told they can't do it when they try,
 	//with feedback on what they have to do in order to do so.
@@ -99,6 +122,19 @@
 		balloon_alert(user, "electronics added")
 		deconstruction = BLASTDOOR_FINISHED
 		return ITEM_INTERACT_SUCCESS
+
+	if(deconstruction == BLASTDOOR_FINISHED && istype(tool, /obj/item/assembly/control))
+		if(density)
+			balloon_alert(user, "open the door first!")
+			return ITEM_INTERACT_BLOCKING
+		if(!panel_open)
+			balloon_alert(user, "open the panel first!")
+			return ITEM_INTERACT_BLOCKING
+		var/obj/item/assembly/control/controller_item = tool
+		id = controller_item.id
+		balloon_alert(user, "id changed")
+		return ITEM_INTERACT_SUCCESS
+
 	return NONE
 
 /obj/machinery/door/poddoor/screwdriver_act(mob/living/user, obj/item/tool)
@@ -195,18 +231,52 @@
 		return FALSE
 	return ..()
 
-/obj/machinery/door/poddoor/do_animate(animation)
-	switch(animation)
-		if("opening")
-			flick("opening", src)
-			playsound(src, animation_sound, 50, TRUE)
-		if("closing")
-			flick("closing", src)
-			playsound(src, animation_sound, 50, TRUE)
-
 /obj/machinery/door/poddoor/update_icon_state()
 	. = ..()
-	icon_state = density ? "closed" : "open"
+	if(animation)
+		icon_state = animation
+	else
+		icon_state = density ? "closed" : "open_top"
+
+/obj/machinery/door/poddoor/update_overlays()
+	. = ..()
+	var/list/mutable_appearance/lower = get_lower_overlays()
+	if(length(lower))
+		. += lower
+
+/obj/machinery/door/poddoor/proc/get_lower_overlays()
+	if(density)
+		return
+	var/list/hand_back = list()
+	// If we're open we layer the bit below us "above" any mobs so they can walk through
+	hand_back += mutable_appearance(icon, "open_bottom", ABOVE_MOB_LAYER, appearance_flags = KEEP_APART)
+	hand_back += emissive_blocker(icon, "open_bottom", src, ABOVE_MOB_LAYER)
+	return hand_back
+
+/obj/machinery/door/poddoor/animation_length(animation)
+	switch(animation)
+		if(DOOR_OPENING_ANIMATION)
+			return 0.9 SECONDS
+		if(DOOR_CLOSING_ANIMATION)
+			return 0.8 SECONDS
+
+/obj/machinery/door/poddoor/animation_segment_delay(animation)
+	switch(animation)
+		if(DOOR_OPENING_PASSABLE)
+			return 0.6 SECONDS
+		if(DOOR_OPENING_FINISHED)
+			return 0.9 SECONDS
+		if(DOOR_CLOSING_UNPASSABLE)
+			return 0.3 SECONDS
+		if(DOOR_CLOSING_FINISHED)
+			return 0.8 SECONDS
+
+/obj/machinery/door/poddoor/animation_effects(animation)
+	switch(animation)
+		if(DOOR_OPENING_ANIMATION)
+			playsound(src, animation_sound, 50, TRUE)
+		if(DOOR_CLOSING_ANIMATION)
+			playsound(src, animation_sound, 50, TRUE)
 
 /obj/machinery/door/poddoor/attack_alien(mob/living/carbon/alien/adult/user, list/modifiers)
 	if(density & !(resistance_flags & INDESTRUCTIBLE))
@@ -228,7 +298,7 @@
 		return ..()
 
 /obj/machinery/door/poddoor/preopen
-	icon_state = "open"
+	icon_state = "open_map"
 	density = FALSE
 	opacity = FALSE
 

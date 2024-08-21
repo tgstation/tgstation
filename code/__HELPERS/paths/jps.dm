@@ -34,7 +34,7 @@
 		previous_node = incoming_previous_node
 		number_tiles = previous_node.number_tiles + jumps
 		node_goal = previous_node.node_goal
-		heuristic = get_dist(tile, node_goal)
+		heuristic = get_dist_euclidean(tile, node_goal)
 		f_value = number_tiles + heuristic
 	// otherwise, no parent node means this is from a subscan lateral scan, so we just need the tile for now until we call [datum/jps/proc/update_parent] on it
 
@@ -47,7 +47,7 @@
 	node_goal = previous_node.node_goal
 	jumps = get_dist(tile, previous_node.tile)
 	number_tiles = previous_node.number_tiles + jumps
-	heuristic = get_dist(tile, node_goal)
+	heuristic = get_dist_euclidean(tile, node_goal)
 	f_value = number_tiles + heuristic
 
 /proc/HeapPathWeightCompare(datum/jps_node/a, datum/jps_node/b)

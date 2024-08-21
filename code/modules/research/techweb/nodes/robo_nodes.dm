@@ -1,5 +1,5 @@
 /datum/techweb_node/robotics
-	id = "robotics"
+	id = TECHWEB_NODE_ROBOTICS
 	starting_node = TRUE
 	display_name = "Robotics"
 	description = "Programmable machines that make our lives lazier."
@@ -10,10 +10,10 @@
 	)
 
 /datum/techweb_node/exodrone
-	id = "exodrone"
+	id = TECHWEB_NODE_EXODRONE
 	display_name = "Exploration Drones"
 	description = "Adapted arcade machines to covertly harness gamers' skills in controlling real drones for practical purposes."
-	prereq_ids = list("robotics")
+	prereq_ids = list(TECHWEB_NODE_ROBOTICS)
 	design_ids = list(
 		"exoscanner_console",
 		"exoscanner",
@@ -24,10 +24,10 @@
 
 // AI root node
 /datum/techweb_node/ai
-	id = "ai"
+	id = TECHWEB_NODE_AI
 	display_name = "Artificial Intelligence"
 	description = "Exploration of AI systems, more intelligent than the entire crew put together."
-	prereq_ids = list("robotics")
+	prereq_ids = list(TECHWEB_NODE_ROBOTICS)
 	design_ids = list(
 		"aiupload",
 		"aifixer",
@@ -67,10 +67,10 @@
 		research_costs[TECHWEB_POINT_TYPE_GENERIC] *= 3
 
 /datum/techweb_node/ai_laws
-	id = "ai_laws"
+	id = TECHWEB_NODE_AI_LAWS
 	display_name = "Advanced AI Laws"
 	description = "Delving into sophisticated AI directives, with hopes that they won't lead to humanity's extinction."
-	prereq_ids = list("ai")
+	prereq_ids = list(TECHWEB_NODE_AI)
 	design_ids = list(
 		"asimovpp_module",
 		"paladin_devotion_module",

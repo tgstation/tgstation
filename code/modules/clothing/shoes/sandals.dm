@@ -11,6 +11,12 @@
 	can_be_tied = FALSE
 	species_exception = list(/datum/species/golem)
 
+/obj/item/clothing/shoes/sandal/alt
+	desc = "A pair of shiny black wooden sandals."
+	name = "black sandals"
+	icon_state = "blacksandals"
+	inhand_icon_state = "blacksandals"
+
 /datum/armor/shoes_sandal
 	bio = 10
 

@@ -420,6 +420,10 @@ world
 				} \
 				current_layer = base_layer + appearance.layer + current_layer / 1000; \
 			} \
+			/* If we are using topdown rendering, chop that part off so things layer together as expected */ \
+			if((current_layer >= TOPDOWN_LAYER && current_layer < EFFECTS_LAYER) || current_layer > TOPDOWN_LAYER + EFFECTS_LAYER) { \
+				current_layer -= TOPDOWN_LAYER; \
+			} \
 			for (var/index_to_compare_to in 1 to layers.len) { \
 				var/compare_to = layers[index_to_compare_to]; \
 				if (current_layer < layers[compare_to]) { \
@@ -431,9 +435,10 @@ world
 		}
 
 	var/static/icon/flat_template = icon('icons/blanks/32x32.dmi', "nothing")
+	var/icon/flat = icon(flat_template)
 
 	if(!appearance || appearance.alpha <= 0)
-		return icon(flat_template)
+		return flat
 
 	if(start)
 		if(!defdir)
@@ -474,10 +479,15 @@ world
 	if(!base_icon_dir)
 		base_icon_dir = curdir
 
+	// Expand our canvas to fit if we're too big
+	if(render_icon)
+		var/icon/active_icon = icon(curicon)
+		if(active_icon.Width() != 32 || active_icon.Height() != 32)
+			flat.Scale(active_icon.Width(), active_icon.Height())
+
 	var/curblend = appearance.blend_mode || defblend
 
 	if(appearance.overlays.len || appearance.underlays.len)
-		var/icon/flat = icon(flat_template)
 		// Layers will be a sorted list of icons/overlays, based on the order in which they are displayed
 		var/list/layers = list()
 		var/image/copy
@@ -517,10 +527,10 @@ world
 				continue
 
 			// Find the new dimensions of the flat icon to fit the added overlay
-			addX1 = min(flatX1, layer_image.pixel_x + 1)
-			addX2 = max(flatX2, layer_image.pixel_x + add.Width())
-			addY1 = min(flatY1, layer_image.pixel_y + 1)
-			addY2 = max(flatY2, layer_image.pixel_y + add.Height())
+			addX1 = min(flatX1, layer_image.pixel_x + layer_image.pixel_w + 1)
+			addX2 = max(flatX2, layer_image.pixel_x + layer_image.pixel_w + add.Width())
+			addY1 = min(flatY1, layer_image.pixel_y + layer_image.pixel_z + 1)
+			addY2 = max(flatY2, layer_image.pixel_y + layer_image.pixel_z + add.Height())
 
 			if (
 				addX1 != flatX1 \
@@ -542,7 +552,7 @@ world
 				flatY2 = addY2
 
 			// Blend the overlay into the flattened icon
-			flat.Blend(add, blendMode2iconMode(curblend), layer_image.pixel_x + 2 - flatX1, layer_image.pixel_y + 2 - flatY1)
+			flat.Blend(add, blendMode2iconMode(curblend), layer_image.pixel_x + layer_image.pixel_w + 2 - flatX1, layer_image.pixel_y + layer_image.pixel_z + 2 - flatY1)
 
 		if(appearance.color)
 			if(islist(appearance.color))
@@ -1125,7 +1135,7 @@ GLOBAL_LIST_EMPTY(transformation_animation_objects)
 	if((x_dimension == world.icon_size) && (y_dimension == world.icon_size))
 		return image_to_center
 
-	//Offset the image so that it's bottom left corner is shifted this many pixels
+	//Offset the image so that its bottom left corner is shifted this many pixels
 	//This makes it infinitely easier to draw larger inhands/images larger than world.iconsize
 	//but still use them in game
 	var/x_offset = -((x_dimension / world.icon_size) - 1) * (world.icon_size * 0.5)
@@ -1229,6 +1239,8 @@ GLOBAL_LIST_EMPTY(transformation_animation_objects)
 	var/mutable_appearance/alert_overlay = new(source)
 	alert_overlay.pixel_x = 0
 	alert_overlay.pixel_y = 0
+	alert_overlay.pixel_z = 0
+	alert_overlay.pixel_w = 0
 
 	var/scale = 1
 	var/list/icon_dimensions = get_icon_dimensions(source.icon)

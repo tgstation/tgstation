@@ -13,6 +13,8 @@
 	attack_verb_simple = list("bash", "batter", "bludgeon", "thrash", "smash")
 	novariants = FALSE
 	material_flags = MATERIAL_EFFECTS
+	pickup_sound = 'sound/items/metal_pick_up.ogg'
+	drop_sound = 'sound/items/metal_drop.ogg'
 	var/sheettype = null //this is used for girders in the creation of walls/false walls
 	///If true, this is worth points in the gulag labour stacker
 	var/gulag_valid = FALSE
@@ -22,6 +24,8 @@
 	var/walltype
 	/// whether this sheet can be sniffed by the material sniffer
 	var/sniffable = FALSE
+	/// this makes pickup and drop sounds vary
+	sound_vary = TRUE
 
 /obj/item/stack/sheet/Initialize(mapload, new_amount, merge = TRUE, list/mat_override=null, mat_amt=1)
 	. = ..()

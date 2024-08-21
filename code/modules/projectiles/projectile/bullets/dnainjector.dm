@@ -4,7 +4,7 @@
 	var/obj/item/dnainjector/injector
 	damage = 5
 	hitsound_wall = SFX_SHATTER
-	embedding = null
+	embed_type = null
 	shrapnel_type = null
 
 /obj/projectile/bullet/dnainjector/on_hit(atom/target, blocked = 0, pierce_hit)

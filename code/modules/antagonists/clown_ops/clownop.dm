@@ -65,6 +65,11 @@
 	if(liver)
 		ADD_TRAIT(liver, TRAIT_COMEDY_METABOLISM, CLOWNOP_TRAIT)
 
+// Clown op reinforcements
+/datum/antagonist/nukeop/reinforcement/clownop
+	name = "Clown Operative Reinforcement"
+	nukeop_outfit = /datum/outfit/syndicate/clownop/no_crystals
+
 /datum/outfit/clown_operative
 	name = "Clown Operative (Preview only)"
 

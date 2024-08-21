@@ -56,7 +56,7 @@ GLOBAL_DATUM_INIT(cameranet, /datum/cameranet, new)
 	if(!.)
 		chunks[key] = . = new /datum/camerachunk(x, y, lowest.z)
 
-/// Updates what the aiEye can see. It is recommended you use this when the aiEye moves or it's location is set.
+/// Updates what the aiEye can see. It is recommended you use this when the aiEye moves or its location is set.
 /datum/cameranet/proc/visibility(list/moved_eyes, client/C, list/other_eyes, use_static = TRUE)
 	if(!islist(moved_eyes))
 		moved_eyes = moved_eyes ? list(moved_eyes) : list()
@@ -67,7 +67,7 @@ GLOBAL_DATUM_INIT(cameranet, /datum/cameranet, new)
 
 	for(var/mob/camera/ai_eye/eye as anything in moved_eyes)
 		var/list/visibleChunks = list()
-		//Get the eye's turf in case it's located in an object like a mecha
+		//Get the eye's turf in case its located in an object like a mecha
 		var/turf/eye_turf = get_turf(eye)
 		if(eye.loc)
 			var/static_range = eye.static_visibility_range

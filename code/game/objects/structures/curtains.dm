@@ -4,7 +4,7 @@
 /obj/structure/curtain
 	name = "curtain"
 	desc = "Contains less than 1% mercury."
-	icon = 'icons/obj/watercloset.dmi'
+	icon = 'icons/obj/structures/watercloset.dmi'
 	icon_state = "bathroom-open"
 	color = "#ACD1E9" //Default color, didn't bother hardcoding other colors, mappers can and should easily change it.
 	alpha = 200 //Mappers can also just set this to 255 if they want curtains that can't be seen through
@@ -146,7 +146,7 @@
 		set_opacity(TRUE)
 
 /obj/structure/curtain/cloth/fancy/mechanical/attack_hand(mob/user, list/modifiers)
-		return
+	return
 
 /obj/structure/curtain/cloth/fancy/mechanical/start_closed
 	icon_state = "cur_fancy-closed"

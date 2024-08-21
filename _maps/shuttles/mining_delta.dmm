@@ -224,9 +224,7 @@
 /area/shuttle/mining)
 "t" = (
 /obj/machinery/power/shuttle_engine/propulsion/burst,
-/obj/structure/window/reinforced/spawner/directional/north{
-	layer = 2.9
-	},
+/obj/structure/window/reinforced/spawner/directional/north,
 /obj/effect/turf_decal/stripes/line,
 /turf/open/floor/plating/airless,
 /area/shuttle/mining)

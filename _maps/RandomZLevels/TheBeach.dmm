@@ -279,10 +279,10 @@
 /turf/open/floor/wood,
 /area/awaymission/beach)
 "dx" = (
-/obj/structure/sign/directions/dorms/directional/north{
+/obj/structure/sign/directions/dorms/north_arrow{
 	pixel_y = 35
 	},
-/obj/structure/sign/directions/medical/directional/north{
+/obj/structure/sign/directions/medical/north_arrow{
 	pixel_y = 29
 	},
 /obj/machinery/computer/slot_machine,
@@ -346,7 +346,7 @@
 /area/awaymission/beach)
 "eT" = (
 /obj/structure/table/wood,
-/obj/item/clothing/mask/cigarette/cigar{
+/obj/item/cigarette/cigar{
 	pixel_y = 16;
 	pixel_x = -2
 	},
@@ -504,6 +504,10 @@
 	dir = 8
 	},
 /turf/closed/wall/mineral/wood,
+/area/awaymission/beach)
+"gq" = (
+/obj/item/broken_bottle,
+/turf/open/misc/beach/sand,
 /area/awaymission/beach)
 "gw" = (
 /obj/item/stack/sheet/mineral/sandstone{
@@ -1191,6 +1195,10 @@
 	},
 /turf/open/misc/beach/sand,
 /area/awaymission/beach)
+"pq" = (
+/obj/effect/spawner/random/trash/cigbutt,
+/turf/open/misc/beach/sand,
+/area/awaymission/beach)
 "pr" = (
 /obj/item/reagent_containers/cup/soda_cans/space_mountain_wind{
 	pixel_x = -17;
@@ -1688,7 +1696,7 @@
 "vq" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/mapping_helpers/broken_floor,
-/obj/effect/landmark/awaystart,
+/obj/effect/landmark/awaystart/beach,
 /turf/open/floor/plating,
 /area/awaymission/beach)
 "vx" = (
@@ -2023,7 +2031,6 @@
 "Aa" = (
 /obj/structure/table/wood,
 /obj/item/reagent_containers/condiment/enzyme{
-	layer = 5;
 	pixel_x = 9;
 	pixel_y = 5
 	},
@@ -2510,9 +2517,7 @@
 /area/awaymission/beach)
 "Ft" = (
 /obj/structure/window/reinforced/spawner/directional/east,
-/obj/structure/window/reinforced/spawner/directional/north{
-	layer = 2.9
-	},
+/obj/structure/window/reinforced/spawner/directional/north,
 /obj/structure/chair/stool/directional/south,
 /obj/item/clothing/glasses/sunglasses{
 	pixel_y = -2;
@@ -2858,6 +2863,17 @@
 "Jr" = (
 /obj/machinery/light/directional/west,
 /turf/open/floor/wood/large,
+/area/awaymission/beach)
+"Jv" = (
+/obj/item/paper/fluff/old_pirate_note{
+	pixel_x = -5;
+	pixel_y = -7
+	},
+/obj/item/pen/fountain{
+	pixel_y = -11;
+	pixel_x = -8
+	},
+/turf/open/misc/beach/sand,
 /area/awaymission/beach)
 "JF" = (
 /obj/structure/marker_beacon/burgundy,
@@ -3333,6 +3349,12 @@
 	},
 /turf/open/misc/beach/sand,
 /area/awaymission/beach)
+"Pb" = (
+/obj/item/fishing_rod,
+/obj/structure/closet/crate/trashcart,
+/obj/item/reagent_containers/cup/glass/bottle/rum/aged,
+/turf/open/misc/beach/sand,
+/area/awaymission/beach)
 "Pe" = (
 /turf/open/misc/beach/coast{
 	dir = 5
@@ -3379,6 +3401,11 @@
 /obj/effect/turf_decal/siding/wood{
 	dir = 5
 	},
+/turf/open/misc/beach/sand,
+/area/awaymission/beach)
+"PU" = (
+/obj/effect/mob_spawn/corpse/human/old_pirate_captain,
+/obj/structure/bed/maint,
 /turf/open/misc/beach/sand,
 /area/awaymission/beach)
 "Qe" = (
@@ -3589,7 +3616,7 @@
 /area/awaymission/beach)
 "SB" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/effect/landmark/awaystart,
+/obj/effect/landmark/awaystart/beach,
 /turf/open/floor/plating,
 /area/awaymission/beach)
 "SI" = (
@@ -7418,8 +7445,8 @@ XB
 XB
 Vf
 YV
-VY
-VY
+Pb
+gq
 hL
 ni
 XB
@@ -7675,8 +7702,8 @@ XB
 XB
 Vf
 VY
-VY
-VY
+pq
+PU
 Er
 BK
 XB
@@ -7932,7 +7959,7 @@ XB
 XB
 Vf
 VY
-VY
+Jv
 VY
 VY
 BK
@@ -8190,7 +8217,7 @@ XB
 Vf
 IZ
 VY
-VY
+pq
 VY
 BK
 XB

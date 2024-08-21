@@ -4,7 +4,7 @@
 	icon = 'icons/obj/medical/chempuff.dmi'
 	pass_flags = PASSTABLE | PASSGRILLE
 	layer = FLY_LAYER
-	plane = ABOVE_GAME_PLANE
+	plane = GAME_PLANE
 	///The mob who sourced this puff, if one exists
 	var/mob/user
 	///The sprayer who fired this puff
@@ -99,6 +99,6 @@
 /obj/effect/decal/fakelattice
 	name = "lattice"
 	desc = "A lightweight support lattice."
-	icon = 'icons/obj/smooth_structures/lattice.dmi'
+	icon = 'icons/obj/structures/smooth/lattice.dmi'
 	icon_state = "lattice-255"
 	density = TRUE

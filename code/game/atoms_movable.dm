@@ -231,6 +231,10 @@
 
 	LAZYNULL(client_mobs_in_contents)
 
+	// These lists cease existing when src does, so we need to clear any lua refs to them that exist.
+	DREAMLUAU_CLEAR_REF_USERDATA(vis_contents)
+	DREAMLUAU_CLEAR_REF_USERDATA(vis_locs)
+
 	. = ..()
 
 	for(var/movable_content in contents)
@@ -261,8 +265,10 @@
 		if (blocks_emissive == EMISSIVE_BLOCK_UNIQUE)
 			if(em_block)
 				SET_PLANE(em_block, EMISSIVE_PLANE, src)
+				em_block.render_source = render_target
 			else if(!QDELETED(src))
-				render_target = ref(src)
+				if(!render_target)
+					render_target = ref(src)
 				em_block = new(null, src)
 			return em_block
 		// Implied else if (blocks_emissive == EMISSIVE_BLOCK_NONE) -> return
@@ -879,9 +885,10 @@
 // Make sure you know what you're doing if you call this
 // You probably want CanPass()
 /atom/movable/Cross(atom/movable/crossed_atom)
-	. = TRUE
-	SEND_SIGNAL(src, COMSIG_MOVABLE_CROSS, crossed_atom)
-	SEND_SIGNAL(crossed_atom, COMSIG_MOVABLE_CROSS_OVER, src)
+	if(SEND_SIGNAL(src, COMSIG_MOVABLE_CROSS, crossed_atom) & COMPONENT_BLOCK_CROSS)
+		return FALSE
+	if(SEND_SIGNAL(crossed_atom, COMSIG_MOVABLE_CROSS_OVER, src) & COMPONENT_BLOCK_CROSS)
+		return FALSE
 	return CanPass(crossed_atom, get_dir(src, crossed_atom))
 
 ///default byond proc that is deprecated for us in lieu of signals. do not call
@@ -926,7 +933,8 @@
 /atom/movable/Bump(atom/bumped_atom)
 	if(!bumped_atom)
 		CRASH("Bump was called with no argument.")
-	SEND_SIGNAL(src, COMSIG_MOVABLE_BUMP, bumped_atom)
+	if(SEND_SIGNAL(src, COMSIG_MOVABLE_BUMP, bumped_atom) & COMPONENT_INTERCEPT_BUMPED)
+		return
 	. = ..()
 	if(!QDELETED(throwing))
 		throwing.finalize(hit = TRUE, target = bumped_atom)
@@ -1420,7 +1428,15 @@
 /atom/movable/proc/CanPassThrough(atom/blocker, movement_dir, blocker_opinion)
 	SHOULD_CALL_PARENT(TRUE)
 	SHOULD_BE_PURE(TRUE)
-	return blocker_opinion
+
+	var/blocking_signal = SEND_SIGNAL(src, COMSIG_MOVABLE_CAN_PASS_THROUGH, blocker, movement_dir)
+	if(!blocking_signal)
+		return blocker_opinion
+
+	if(blocking_signal & COMSIG_COMPONENT_PERMIT_PASSAGE)
+		return TRUE
+	else //we have a COMSIG_COMPONENT_REFUSE_PASSAGE but like its either this or that, unlike someone wanna adds half-passing through but fuck you
+		return FALSE
 
 /// called when this atom is removed from a storage item, which is passed on as S. The loc variable is already set to the new destination before this is called.
 /atom/movable/proc/on_exit_storage(datum/storage/master_storage)
@@ -1713,3 +1729,17 @@
 	if(!("[REF(target)]" in faction_src))
 		faction_target -= "[REF(target)]" //same thing here.
 	return faction_check(faction_src, faction_target, TRUE)
+
+/// Offsets this movable based on dir (in context of wallmounts)
+/// Yes yes mothblocks I know this is not modular but I don't want to make the element bespoke
+/// Insert ranting about element key generation here
+/// This proc is filled in by the directional macros, should not need to manually touch it unless something is wrong
+/atom/movable/proc/wall_mount_offset(direction)
+	return
+
+/// Returns true if we should layer in common with the general game
+/// If false, render over the frill plane insted
+/atom/movable/proc/wall_mount_common_plane(direction)
+	if(direction == SOUTH)
+		return TRUE
+	return FALSE

@@ -76,7 +76,7 @@
 #define SPAN_SINGING "singing"
 #define SPAN_TAPE_RECORDER "tape_recorder"
 #define SPAN_SMALL_VOICE "small"
-
+#define SPAN_SOAPBOX "soapbox"
 //bitflag #defines for return value of the radio() proc.
 /// Makes the message use italics
 #define ITALICS (1<<0)

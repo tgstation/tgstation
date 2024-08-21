@@ -272,6 +272,7 @@
 	var/list/new_underlays = list()
 	for(var/obj/effect/overlay/gas/gas as anything in air_contents.return_visuals(get_turf(src)))
 		var/image/new_underlay = image(gas.icon, icon_state = gas.icon_state, layer = FLOAT_LAYER)
+		new_underlay.pixel_z = -12 // Weird offset artifacting? might be my fault idk
 		new_underlay.filters = alpha_mask_filter(icon = icon(icon, icon_state = "window-bg"))
 		new_underlays += new_underlay
 
@@ -362,6 +363,18 @@
 
 /obj/machinery/atmospherics/components/tank/air
 	name = "pressure tank (Air)"
+
+/obj/machinery/atmospherics/components/tank/air/layer1
+	piping_layer = 1
+
+/obj/machinery/atmospherics/components/tank/air/layer2
+	piping_layer = 2
+
+/obj/machinery/atmospherics/components/tank/air/layer4
+	piping_layer = 4
+
+/obj/machinery/atmospherics/components/tank/air/layer5
+	piping_layer = 5
 
 /obj/machinery/atmospherics/components/tank/air/Initialize(mapload)
 	. = ..()
