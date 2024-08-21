@@ -170,7 +170,7 @@
 /datum/component/overlay_lighting/proc/clean_old_turfs()
 	for(var/turf/lit_turf as anything in affected_turfs)
 		lit_turf.dynamic_lumcount -= lum_power
-		SSdemo.mark_turf(lit_turf) //Monkestation Edit: REPLAYS
+	SSdemo.mark_multiple_turfs(affected_turfs) // monkestation edit: REPLAYS
 	affected_turfs = null
 
 
@@ -181,9 +181,9 @@
 	. = list()
 	for(var/turf/lit_turf in view(lumcount_range, get_turf(current_holder)))
 		lit_turf.dynamic_lumcount += lum_power
-		SSdemo.mark_turf(lit_turf) //Monkestation Edit: REPLAYS
 		. += lit_turf
 	if(length(.))
+		SSdemo.mark_multiple_turfs(.) // monkestation edit: REPLAYS
 		affected_turfs = .
 
 

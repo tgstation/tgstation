@@ -112,8 +112,6 @@ All ShuttleMove procs go here
 
 	abstract_move(newT)
 
-	SSdemo.mark_dirty(src) //Monkestation Edit: Replays
-
 	return TRUE
 
 // Called on atoms after everything has been moved

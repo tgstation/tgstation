@@ -10,13 +10,13 @@
 /obj/item/proc/melee_attack_chain(mob/user, atom/target, params)
 	var/is_right_clicking = (user.istate & ISTATE_SECONDARY)
 
-	//Monkestation edit: REPLAYS
+	// monkestation start: REPLAYS
 	SSdemo.mark_dirty(src)
 	if(isturf(target))
 		SSdemo.mark_turf(target)
 	else
 		SSdemo.mark_dirty(target)
-	//Monkestation edit: REPLAYS
+	// monkestation end: REPLAYS
 
 	if(tool_behaviour && (target.tool_act(user, src, tool_behaviour, is_right_clicking) & TOOL_ACT_MELEE_CHAIN_BLOCKING))
 		return TRUE

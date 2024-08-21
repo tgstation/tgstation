@@ -193,16 +193,21 @@
 /datum/light_source/proc/remove_lum()
 	SETUP_CORNERS_REMOVAL_CACHE(src)
 	applied = FALSE
+	var/list/turfs_to_mark = list()
 	for (var/datum/lighting_corner/corner as anything in effect_str)
 		REMOVE_CORNER(corner)
 		LAZYREMOVE(corner.affecting, src)
 
-		//Monkestation Edit: REPLAYS
-		SSdemo.mark_turf(corner.master_NE)
-		SSdemo.mark_turf(corner.master_SE)
-		SSdemo.mark_turf(corner.master_SW)
-		SSdemo.mark_turf(corner.master_NW)
-		//Monkestation Edit: REPLAYS
+		// monkestation start: REPLAYS
+		turfs_to_mark += list(
+			corner.master_NE,
+			corner.master_SE,
+			corner.master_SW,
+			corner.master_NW
+		)
+		// monkestation end: REPLAYS
+
+	SSdemo.mark_multiple_turfs(turfs_to_mark) // monkestation edit: REPLAYS
 
 	effect_str = null
 
@@ -321,6 +326,7 @@
 		var/uses_multiz = !!GET_LOWEST_STACK_OFFSET(source_turf.z)
 		var/oldlum = source_turf.luminosity
 		source_turf.luminosity = CEILING(light_outer_range, 1)
+		var/list/turfs_to_mark = list()
 		if(!uses_multiz) // Yes I know this could be acomplished with an if in the for loop, but it's fukin lighting code man
 			for(var/turf/T in view(CEILING(light_outer_range, 1), source_turf))
 				if(IS_OPAQUE_TURF(T))
@@ -332,7 +338,7 @@
 				corners[T.lighting_corner_SE] = 0
 				corners[T.lighting_corner_SW] = 0
 				corners[T.lighting_corner_NW] = 0
-				SSdemo.mark_turf(T) //Monkestation Edit: REPLAYS
+				turfs_to_mark += T // Monkestation Edit: REPLAYS
 		else
 			for(var/turf/T in view(CEILING(light_outer_range, 1), source_turf))
 				if(IS_OPAQUE_TURF(T))
@@ -344,7 +350,7 @@
 				corners[T.lighting_corner_SE] = 0
 				corners[T.lighting_corner_SW] = 0
 				corners[T.lighting_corner_NW] = 0
-				SSdemo.mark_turf(T) //Monkestation Edit: REPLAYS
+				turfs_to_mark += T // Monkestation Edit: REPLAYS
 
 				var/turf/below = GET_TURF_BELOW(T)
 				var/turf/previous = T
@@ -383,9 +389,10 @@
 					corners[above.lighting_corner_SW] = 0
 					corners[above.lighting_corner_NW] = 0
 					above = GET_TURF_ABOVE(above)
-				SSdemo.mark_turf(T) //Monkestation Edit: REPLAYS
+				turfs_to_mark += T // Monkestation Edit: REPLAYS
 
 		source_turf.luminosity = oldlum
+		SSdemo.mark_multiple_turfs(turfs_to_mark)
 
 	SETUP_CORNERS_CACHE(src)
 
