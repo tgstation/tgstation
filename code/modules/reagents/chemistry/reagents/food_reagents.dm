@@ -155,8 +155,6 @@
 /datum/reagent/consumable/nutriment/fat/on_transfer(atom/A, methods, trans_volume)
 	. = ..()
 	for(var/datum/reagent/consumable/nutriment/fat/slurry as anything in holder.reagent_list)
-//		var/my_type = type
-//		var/slurry_type = slurry.type
 		if(slurry.type != type)
 			holder.my_atom.visible_message("The various fats sluice together until they become homogenous and inseparable.")
 			var/new_slurry_volume = src.volume + slurry.volume
