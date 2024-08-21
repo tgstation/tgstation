@@ -45,7 +45,7 @@
 
 /obj/item/food/pie/empty
 	name = "pie"
-	desc = "A custom pie made by a crazed chef"
+	desc = "A custom pie made by a crazed chef."
 	icon_state = "pie_custom"
 	foodtypes = GRAIN
 	slice_type = /obj/item/food/pieslice/empty
