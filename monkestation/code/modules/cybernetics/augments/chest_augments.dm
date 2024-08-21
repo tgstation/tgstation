@@ -108,7 +108,7 @@
 		/datum/reagent/determination = 2,
 		/datum/reagent/medicine/c2/penthrite = 3 ,
 		/datum/reagent/drug/bath_salts = 3 ,
-		/datum/reagent/medicine/ephedrine = 3,
+		/datum/reagent/medicine/omnizine = 3,
 		/datum/reagent/medicine/brain_healer = 5,
 	)
 
