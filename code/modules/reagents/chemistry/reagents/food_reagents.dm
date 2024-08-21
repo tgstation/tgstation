@@ -152,6 +152,21 @@
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 	var/fry_temperature = 450 //Around ~350 F (117 C) which deep fryers operate around in the real world
 
+/datum/reagent/consumable/nutriment/fat/on_transfer(atom/A, methods, trans_volume)
+	. = ..()
+	for(var/datum/reagent/consumable/nutriment/fat/slurry as anything in holder.reagent_list)
+//		var/my_type = type
+//		var/slurry_type = slurry.type
+		if(slurry.type != type)
+			holder.my_atom.visible_message("The various fats sluice together until they become homogenous and inseparable.")
+			var/new_slurry_volume = src.volume + slurry.volume
+			slurry.holder.remove_reagent(slurry.type, slurry.volume)
+			holder.remove_reagent(type, volume)
+			holder.add_reagent(/datum/reagent/consumable/nutriment/fat, new_slurry_volume)
+
+
+
+
 /datum/reagent/consumable/nutriment/fat/expose_obj(obj/exposed_obj, reac_volume)
 	. = ..()
 	if(!holder || (holder.chem_temp <= fry_temperature))
