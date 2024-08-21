@@ -15,9 +15,15 @@
 	var/obj/item/bodypart/my_head
 	/// Base icon state we use for the effect
 	var/icon_state
+	/// Layers for the bodypart_overlay to draw on
+	var/layers
+	/// Color that the overlay is modified by
+	var/color
 
-/datum/component/face_decal/Initialize(icon_state)
+/datum/component/face_decal/Initialize(icon_state, layers, color)
 	src.icon_state = icon_state
+	src.layers = layers
+	src.color = color
 
 /datum/component/face_decal/Destroy(force)
 	. = ..()
@@ -33,12 +39,15 @@
 			qdel(src)
 			return
 		bodypart_overlay = new()
+		bodypart_overlay.layers = layers
 		if(carbon_parent.bodyshape & BODYSHAPE_SNOUTED) //stupid, but external organ bodytypes are not stored on the limb
 			bodypart_overlay.icon_state = "[icon_state]_lizard"
 		else if(my_head.bodyshape & BODYSHAPE_MONKEY)
 			bodypart_overlay.icon_state = "[icon_state]_monkey"
 		else
 			bodypart_overlay.icon_state = "[icon_state]_human"
+		if (!isnull(color))
+			bodypart_overlay.draw_color = color
 		my_head.add_bodypart_overlay(bodypart_overlay)
 		RegisterSignals(my_head, list(COMSIG_BODYPART_REMOVED, COMSIG_QDELETING), PROC_REF(lost_head))
 		carbon_parent.update_body_parts()
@@ -51,7 +60,9 @@
 		PROC_REF(clean_up)
 	)
 
-	if(normal_overlay)
+	if (!isnull(normal_overlay))
+		if (!isnull(color))
+			normal_overlay.color = color
 		var/atom/atom_parent = parent
 		RegisterSignal(atom_parent, COMSIG_ATOM_UPDATE_OVERLAYS, PROC_REF(update_overlays))
 		atom_parent.update_appearance()
@@ -101,8 +112,6 @@
 /datum/component/face_decal/proc/lost_head(obj/item/bodypart/source, mob/living/carbon/owner, dismembered)
 	SIGNAL_HANDLER
 	qdel(src)
-
-
 
 /// Creampie subtype, handling signals and mood logic
 

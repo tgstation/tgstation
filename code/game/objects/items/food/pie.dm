@@ -77,7 +77,7 @@
 		living_target_getting_hit.visible_message(span_warning("[living_target_getting_hit] is creamed by [src]!"), span_userdanger("You've been creamed by [src]!"))
 		playsound(living_target_getting_hit, SFX_DESECRATION, 50, TRUE)
 	if(is_creamable && is_type_in_typecache(hit_atom, GLOB.creamable))
-		hit_atom.AddComponent(/datum/component/creamed, src)
+		hit_atom.AddComponent(/datum/component/face_decal/creampie, "creampie", EXTERNAL_FRONT)
 	qdel(src)
 
 /obj/item/food/pie/cream/nostun
