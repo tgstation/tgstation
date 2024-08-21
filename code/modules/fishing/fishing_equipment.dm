@@ -281,6 +281,7 @@
 	new /obj/item/fishing_rod/unslotted(src)
 	new /obj/item/fishing_hook(src)
 	new /obj/item/fishing_line(src)
+	new /obj/item/paper/paperslip/fishing_tip(src)
 
 /obj/item/storage/toolbox/fishing/small
 	name = "compact fishing toolbox"
@@ -297,6 +298,7 @@
 	new /obj/item/fishing_rod/unslotted(src)
 	new /obj/item/fishing_hook(src)
 	new /obj/item/fishing_line(src)
+	new /obj/item/paper/paperslip/fishing_tip(src)
 
 /obj/item/storage/toolbox/fishing/master
 	name = "super fishing toolbox"
@@ -352,6 +354,15 @@
 /obj/item/storage/box/fish_debug/PopulateContents()
 	for(var/fish_type in subtypesof(/obj/item/fish))
 		new fish_type(src)
+
+///Used to give the average player info about fishing stuff that's unknown to many.
+/obj/item/paper/paperslip/fishing_tip
+	name = "fishing tip"
+	desc = "A slip of paper containing a pearl of wisdom about fishing within it, though you wish it were an actual pearl."
+
+/obj/item/paper/paperslip/fortune/Initialize(mapload)
+	default_raw_text = pick(GLOB.fishing_tips)
+	return ..()
 
 ///From the fishing mystery box. It's basically a lazarus and a few bottles of strange reagents.
 /obj/item/storage/box/fish_revival_kit

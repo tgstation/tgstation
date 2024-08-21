@@ -2036,6 +2036,7 @@
 #include "code\game\machinery\autolathe.dm"
 #include "code\game\machinery\bank_machine.dm"
 #include "code\game\machinery\barsigns.dm"
+#include "code\game\machinery\big_manipulator.dm"
 #include "code\game\machinery\botlaunchpad.dm"
 #include "code\game\machinery\buttons.dm"
 #include "code\game\machinery\cell_charger.dm"
