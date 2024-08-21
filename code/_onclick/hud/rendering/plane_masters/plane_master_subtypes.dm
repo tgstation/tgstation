@@ -588,13 +588,14 @@
 	appearance_flags = PLANE_MASTER|NO_CLIENT_COLOR
 	render_relay_planes = list()
 	alpha = 0
-	var/invis_timer = TIMER_ID_NULL
+	var/invis_timer
 
 /atom/movable/screen/plane_master/examine_balloons/proc/fade_in()
 	animate(src, 0.2 SECONDS, alpha = 255)
 	add_relay_to(GET_NEW_PLANE(RENDER_PLANE_GAME_WORLD, offset))
-	deltimer(invis_timer)
-	invis_timer = TIMER_ID_NULL
+	if (!isnull(invis_timer))
+		deltimer(invis_timer)
+		invis_timer = null
 
 /atom/movable/screen/plane_master/examine_balloons/proc/fade_out()
 	animate(src, 0.2 SECONDS, alpha = 0)
