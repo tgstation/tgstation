@@ -323,7 +323,7 @@
 		return
 	if(!usr.can_perform_action(src))
 		return
-	if(usr.incapacitated())
+	if(usr.incapacitated)
 		return
 	if(reagent_container)
 		if(attached)
@@ -341,7 +341,7 @@
 	if(!isliving(usr))
 		to_chat(usr, span_warning("You can't do that!"))
 		return
-	if(!usr.can_perform_action(src) || usr.incapacitated())
+	if(!usr.can_perform_action(src) || usr.incapacitated)
 		return
 	if(inject_only)
 		mode = IV_INJECTING

@@ -167,7 +167,7 @@ Possible to do for anyone motivated enough:
 /obj/machinery/holopad/tutorial/attack_hand(mob/user, list/modifiers)
 	if(!istype(user))
 		return
-	if(user.incapacitated() || !is_operational)
+	if(user.incapacitated || !is_operational)
 		return
 	if(replay_mode)
 		replay_stop()
@@ -673,7 +673,7 @@ For the other part of the code, check silicon say.dm. Particularly robot talk.*/
 	if(!isliving(owner))
 		return TRUE
 	var/mob/living/user = owner
-	if(user.incapacitated() || !user.client)
+	if(user.incapacitated || !user.client)
 		return FALSE
 	return TRUE
 

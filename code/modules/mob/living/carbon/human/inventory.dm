@@ -368,7 +368,7 @@
 /// take the most recent item out of a slot or place held item in a slot
 
 /mob/living/carbon/human/proc/smart_equip_targeted(slot_type = ITEM_SLOT_BELT, slot_item_name = "belt")
-	if(incapacitated())
+	if(incapacitated)
 		return
 	var/obj/item/thing = get_active_held_item()
 	var/obj/item/equipped_item = get_item_by_slot(slot_type)

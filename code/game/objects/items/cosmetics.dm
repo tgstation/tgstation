@@ -75,7 +75,7 @@
 /obj/item/lipstick/proc/check_menu(mob/living/user)
 	if(!istype(user))
 		return FALSE
-	if(user.incapacitated() || !user.is_holding(src))
+	if(user.incapacitated || !user.is_holding(src))
 		return FALSE
 	return TRUE
 

@@ -454,6 +454,8 @@ GLOBAL_LIST_INIT(channel_tokens, list(
 		grant_headset_languages(mob_loc)
 
 /obj/item/radio/headset/click_alt(mob/living/user)
+	if(!istype(user) || !Adjacent(user) || user.incapacitated)
+		return CLICK_ACTION_BLOCKING
 	if (!command)
 		return CLICK_ACTION_BLOCKING
 	use_command = !use_command

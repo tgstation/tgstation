@@ -66,6 +66,20 @@
 	/// Whether a mob is alive or dead. TODO: Move this to living - Nodrak (2019, still here)
 	var/stat = CONSCIOUS
 
+	/**
+	 * Whether and how a mob is incapacitated
+	 *
+	 * Normally being restrained, agressively grabbed, or in stasis counts as incapacitated
+	 * unless there is a flag being used to check if it's ignored
+	 *
+	 * * bitflags: (see code/__DEFINES/status_effects.dm)
+	 * * INCAPABLE_RESTRAINTS - if our mob is in a restraint (handcuffs)
+	 * * INCAPABLE_STASIS - if our mob is in stasis (stasis bed, etc.)
+	 * * INCAPABLE_GRAB - if our mob is being agressively grabbed
+	 *
+	**/
+	VAR_FINAL/incapacitated = NONE
+
 	/* A bunch of this stuff really needs to go under their own defines instead of being globally attached to mob.
 	A variable should only be globally attached to turfs/objects/whatever, when it is in fact needed as such.
 	The current method unnecessarily clusters up the variable list, especially for humans (although rearranging won't really clean it up a lot but the difference will be noticable for other mobs).

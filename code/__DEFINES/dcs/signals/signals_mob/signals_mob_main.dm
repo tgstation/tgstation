@@ -247,3 +247,6 @@
 
 /// from /mob/proc/key_down(): (key, client/client, full_key)
 #define COMSIG_MOB_KEYDOWN "mob_key_down"
+
+/// from /mob/update_incapacitated(): (old_incap, new_incap)
+#define COMSIG_MOB_INCAPACITATE_CHANGED "mob_incapacitated"

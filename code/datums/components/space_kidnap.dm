@@ -23,7 +23,7 @@
 		target.balloon_alert(parent, "is dead!")
 		return COMPONENT_CANCEL_ATTACK_CHAIN
 
-	if(!victim.incapacitated())
+	if(!victim.incapacitated)
 		return
 
 	if(!isspaceturf(get_turf(target)))
