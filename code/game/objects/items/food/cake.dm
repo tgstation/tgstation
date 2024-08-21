@@ -58,7 +58,7 @@
 
 /obj/item/food/cake/empty
 	name = "cake"
-	desc = "A custom cake made by an insane chef"
+	desc = "A custom cake made by an insane chef."
 	icon_state = "cake_custom"
 	foodtypes = GRAIN | DAIRY | SUGAR
 	slice_type = /obj/item/food/cakeslice/empty
