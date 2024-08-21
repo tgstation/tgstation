@@ -1,0 +1,6 @@
+author: "Jacquerel"
+delete-after: True
+changes:
+  - balance: "Pacifist carp can now be spawned from the friendly gold core reaction, and no longer appear from the hostile one."
+  - bugfix: "The teeth of toothless carp will not occasionally reappear"
+  - bugfix: "Crabs will now run from attackers larger than them and attack things smaller than them, as intended."

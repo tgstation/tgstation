@@ -1,4 +1,0 @@
-author: "Rhials"
-delete-after: True
-changes:
-  - sound: "\"radio message received\" audio now has a brief cooldown."
