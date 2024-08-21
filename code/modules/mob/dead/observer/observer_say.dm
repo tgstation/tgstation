@@ -63,11 +63,13 @@
 	if (client?.prefs.read_preference(/datum/preference/toggle/enable_runechat) && (client.prefs.read_preference(/datum/preference/toggle/enable_runechat_non_mobs) || ismob(speaker)))
 		create_chat_message(speaker, message_language, raw_message, spans)
 	// monkestation start: bold messages for ghosts when they're nearby
+	var/list/our_spans = spans
 	if((client?.prefs.chat_toggles & CHAT_GHOSTEARS) && in_view_range(src, to_follow))
-		spans |= SPAN_BOLD
+		our_spans = spans.Copy()
+		our_spans |= SPAN_BOLD
 	// monkestation end
 	// Recompose the message, because it's scrambled by default
-	message = compose_message(speaker, message_language, raw_message, radio_freq, spans, message_mods)
+	message = compose_message(speaker, message_language, raw_message, radio_freq, our_spans, message_mods)
 	to_chat(src,
 		html = "[link] [message]",
 		avoid_highlighting = speaker == src)
