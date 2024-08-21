@@ -1,4 +1,0 @@
-author: "Ghommie"
-delete-after: True
-changes:
-  - bugfix: "paintings now drop canvas and frame when knocked off the wall."

@@ -1,4 +1,0 @@
-author: "Bisar"
-delete-after: True
-changes:
-  - bugfix: "The Nanotrasen Emergency Religious Response Team has blessed the station; heretic summon rituals now actually consume resources, fixing infinite summon loops."

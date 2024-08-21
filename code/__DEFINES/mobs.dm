@@ -152,7 +152,10 @@
 ///The species is forced to have digitigrade legs in generation.
 #define DIGITIGRADE_FORCED 2
 
-///Digitigrade's prefs, used in features for legs if you're meant to be a Digitigrade.
+// Preferences for leg types
+/// Legs that are normal
+#define NORMAL_LEGS "Normal Legs"
+/// Digitgrade legs that are like bended and uhhh no shoes
 #define DIGITIGRADE_LEGS "Digitigrade Legs"
 
 // Health/damage defines
@@ -974,6 +977,8 @@ GLOBAL_LIST_INIT(layers_to_offset, list(
 
 /// The duration of the flip emote animation
 #define FLIP_EMOTE_DURATION 0.7 SECONDS
+///The duration of a taunt emote, so how long they can deflect projectiles
+#define TAUNT_EMOTE_DURATION 0.9 SECONDS
 
 // Sprites for photocopying butts
 #define BUTT_SPRITE_HUMAN_MALE "human_male"

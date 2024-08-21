@@ -1,0 +1,4 @@
+author: "Ben10Omintrix"
+delete-after: True
+changes:
+  - bugfix: "fences will no longer appear pitch black and they will layer properly"
