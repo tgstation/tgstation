@@ -24,6 +24,16 @@
 	stock_max = 4
 	availability_prob = 40
 
+/datum/market_item/weapon/buckshot
+	name = "Box of Buckshot Shells"
+	desc = "It wasn't easy since buckshot has been made illegal all over this sector of space, but \
+	we managed to find a large cache of it... somewhere. A word of caution, the stuff may be a tad old."
+	stock_max = 3
+	availability_prob = 35
+	item = /obj/item/storage/box/lethalshot/old
+	price_min = CARGO_CRATE_VALUE * 3
+	price_max = CARGO_CRATE_VALUE * 4.5
+
 /datum/market_item/weapon/bone_spear
 	name = "Bone Spear"
 	desc = "Authentic tribal spear, made from real bones! A steal at any price, especially if you're a caveman."
