@@ -28,7 +28,7 @@
 	src.splat_color = splat_color
 
 /datum/component/splat/Destroy()
-	QDEL_NULL(hit_callback)
+	hit_callback = null
 	return ..()
 
 /datum/component/splat/RegisterWithParent()
