@@ -707,7 +707,7 @@ GLOBAL_LIST_INIT(spontaneous_fish_traits, populate_spontaneous_fish_traits())
 /datum/fish_trait/camouflage/apply_to_fish(obj/item/fish/fish)
 	. = ..()
 	RegisterSignal(fish, COMSIG_FISH_LIFE, PROC_REF(fade_out))
-	RegisterSignal(fish, list(COMSIG_MOVABLE_MOVED, COMSIG_FISH_STATUS_CHANGED), PROC_REF(reset_alpha))
+	RegisterSignals(fish, list(COMSIG_MOVABLE_MOVED, COMSIG_FISH_STATUS_CHANGED), PROC_REF(reset_alpha))
 
 /datum/fish_trait/camouflage/proc/fade_out(obj/item/fish/source, seconds_per_tick)
 	SIGNAL_HANDLER
