@@ -1,0 +1,4 @@
+author: "Absolucy"
+delete-after: True
+changes:
+  - bugfix: "Having a nonfunctional heart or lungs will no longer CONSTANTLY spam chat."
