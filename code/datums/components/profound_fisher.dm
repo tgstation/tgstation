@@ -43,17 +43,17 @@
 	var/datum/fish_source/fish_spot = fish_spot_container[NPC_FISHING_SPOT]
 	if(isnull(fish_spot))
 		return null
-	var/obj/effect/fishing_lure/lure = new(get_turf(target), target)
-	playsound(lure, 'sound/effects/splash.ogg', 100)
+	var/obj/effect/fishing_float/float = new(get_turf(target), target)
+	playsound(float, 'sound/effects/splash.ogg', 100)
 	var/happiness_percentage = living_parent.ai_controller?.blackboard[BB_BASIC_HAPPINESS] / 100
 	var/fishing_speed = 10 SECONDS - round(4 SECONDS * happiness_percentage)
 	if(!do_after(living_parent, fishing_speed, target = target) && !QDELETED(fish_spot))
-		qdel(lure)
+		qdel(float)
 		return
 	var/reward_loot = fish_spot.roll_reward(our_rod, parent)
 	fish_spot.dispense_reward(reward_loot, parent, target)
-	playsound(lure, 'sound/effects/bigsplash.ogg', 100)
-	qdel(lure)
+	playsound(float, 'sound/effects/bigsplash.ogg', 100)
+	qdel(float)
 
 /obj/item/fishing_rod/mob_fisher
 	display_fishing_line = FALSE

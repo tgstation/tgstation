@@ -75,9 +75,11 @@
 
 /obj/item/fishing_rod/add_item_context(obj/item/source, list/context, atom/target, mob/living/user)
 	. = ..()
-	if(currently_hooked)
-		context[SCREENTIP_CONTEXT_LMB] = "Reel in"
-		context[SCREENTIP_CONTEXT_RMB] = "Unhook"
+	var/gone_fishing = HAS_TRAIT(user, TRAIT_GONE_FISHING)
+	if(currently_hooked || gone_fishing)
+		context[SCREENTIP_CONTEXT_LMB] = (gone_fishing && spin_frequency) ? "Spin" : "Reel in"
+		if(!gone_fishing)
+			context[SCREENTIP_CONTEXT_RMB] = "Unhook"
 		return CONTEXTUAL_SCREENTIP_SET
 	return NONE
 
@@ -417,23 +419,20 @@
 		if(user.transferItemToLoc(new_item,src))
 			set_slot(new_item, slot)
 			balloon_alert(user, "[slot] installed")
+		else
+			balloon_alert(user, "stuck to your hands!")
+			return
 	/// Trying to swap item
 	else if(new_item && current_item)
 		if(!slot_check(new_item,slot))
 			return
-		if(user.transferItemToLoc(new_item,src))
-			switch(slot)
-				if(ROD_SLOT_BAIT)
-					bait = new_item
-				if(ROD_SLOT_HOOK)
-					hook = new_item
-				if(ROD_SLOT_LINE)
-					line = new_item
-		user.put_in_hands(current_item)
-		balloon_alert(user, "[slot] swapped")
-
-	if(new_item)
-		SEND_SIGNAL(new_item, COMSIG_FISHING_EQUIPMENT_SLOTTED, src)
+		if(user.transferItemToLoc(new_item, src))
+			user.put_in_hands(current_item)
+			set_slot(new_item, slot)
+			balloon_alert(user, "[slot] swapped")
+		else
+			balloon_alert(user, "stuck to your hands!")
+			return
 
 	update_icon()
 	playsound(src, 'sound/items/click.ogg', 50, TRUE)
@@ -450,6 +449,10 @@
 		if(ROD_SLOT_LINE)
 			line = equipment
 			cast_range += FISHING_ROD_REEL_CAST_RANGE
+		else
+			CRASH("set_slot called with an undefined slot: [slot]")
+
+	SEND_SIGNAL(equipment, COMSIG_FISHING_EQUIPMENT_SLOTTED, src)
 
 /obj/item/fishing_rod/Exited(atom/movable/gone, direction)
 	. = ..()

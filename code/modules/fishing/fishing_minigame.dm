@@ -1,4 +1,4 @@
-// Lure bobbing
+// float bobbing
 #define WAIT_PHASE 1
 // Click now to start tgui part
 #define BITING_PHASE 2
@@ -59,8 +59,8 @@
 	var/mob/user
 	/// Rod that is used for the challenge
 	var/obj/item/fishing_rod/used_rod
-	/// Lure visual
-	var/obj/effect/fishing_lure/lure
+	/// float visual
+	var/obj/effect/fishing_float/float
 	/// Background icon state from fishing_hud.dmi
 	var/background = "background_default"
 	/// Fish icon state from fishing_hud.dmi
@@ -112,8 +112,8 @@
 	src.reward_path = reward_path
 	src.used_rod = rod
 	var/atom/spot = comp.parent
-	lure = new(get_turf(spot), spot)
-	lure.spin_frequency = rod.spin_frequency
+	float = new(get_turf(spot), spot)
+	float.spin_frequency = rod.spin_frequency
 	RegisterSignal(spot, COMSIG_QDELETING, PROC_REF(on_spot_gone))
 	RegisterSignal(comp.fish_source, COMSIG_FISHING_SOURCE_INTERRUPT_CHALLENGE, PROC_REF(interrupt_challenge))
 	comp.fish_source.RegisterSignal(src, COMSIG_FISHING_CHALLENGE_COMPLETED, TYPE_PROC_REF(/datum/fish_source, on_challenge_completed))
@@ -181,8 +181,7 @@
 		//Stops the line snapped message from appearing everytime the minigame is over.
 		UnregisterSignal(fishing_line, COMSIG_QDELETING)
 		QDEL_NULL(fishing_line)
-	if(lure)
-		QDEL_NULL(lure)
+	QDEL_NULL(float)
 	SStgui.close_uis(src)
 	user = null
 	used_rod = null
@@ -190,8 +189,8 @@
 	return ..()
 
 /datum/fishing_challenge/proc/send_alert(message)
-	var/turf/lure_turf = get_turf(lure)
-	lure_turf?.balloon_alert(user, message)
+	var/turf/float_turf = get_turf(float)
+	float_turf?.balloon_alert(user, message)
 
 /datum/fishing_challenge/proc/on_spot_gone(datum/source)
 	SIGNAL_HANDLER
@@ -206,7 +205,7 @@
 /datum/fishing_challenge/proc/start(mob/living/user)
 	/// Create fishing line visuals
 	if(used_rod.display_fishing_line)
-		fishing_line = used_rod.create_fishing_line(lure, target_py = 5)
+		fishing_line = used_rod.create_fishing_line(float, target_py = 5)
 		RegisterSignal(fishing_line, COMSIG_QDELETING, PROC_REF(on_line_deleted))
 	else //if the rod doesnt have a fishing line, then it ends when they move away
 		RegisterSignal(user, COMSIG_MOVABLE_MOVED, PROC_REF(on_user_move))
@@ -218,28 +217,29 @@
 	RegisterSignal(user, COMSIG_MOB_CLICKON, PROC_REF(handle_click))
 	start_baiting_phase()
 	to_chat(user, span_notice("You start fishing..."))
-	playsound(lure, 'sound/effects/splash.ogg', 100)
+	playsound(float, 'sound/effects/splash.ogg', 100)
 
 ///Set the timers for lure that need to be spun at intervals.
 /datum/fishing_challenge/proc/set_lure_timers()
-	lure.spin_ready = FALSE
-	addtimer(CALLBACK(src, PROC_REF(set_lure_ready)), lure.spin_frequency[1], TIMER_UNIQUE | TIMER_OVERRIDE|TIMER_DELETE_ME)
-	addtimer(CALLBACK(src, PROC_REF(missed_lure)), lure.spin_frequency[2], TIMER_UNIQUE | TIMER_OVERRIDE|TIMER_DELETE_ME)
-	lure.update_appearance(UPDATE_OVERLAYS)
+	float.spin_ready = FALSE
+	addtimer(CALLBACK(src, PROC_REF(set_lure_ready)), float.spin_frequency[1], TIMER_UNIQUE | TIMER_OVERRIDE|TIMER_DELETE_ME)
+	addtimer(CALLBACK(src, PROC_REF(missed_lure)), float.spin_frequency[2], TIMER_UNIQUE | TIMER_OVERRIDE|TIMER_DELETE_ME)
+	float.update_appearance(UPDATE_OVERLAYS)
 
 /datum/fishing_challenge/proc/set_lure_ready()
 	if(phase != WAIT_PHASE)
 		return
-	lure.spin_ready = TRUE
-	lure.update_appearance(UPDATE_OVERLAYS)
+	float.spin_ready = TRUE
+	float.update_appearance(UPDATE_OVERLAYS)
 	if(special_effects & FISHING_MINIGAME_AUTOREEL)
 		addtimer(CALLBACK(src, PROC_REF(auto_spin)), 0.2 SECONDS)
+	playsound(float, 'sound/machines/ping.ogg', 15, TRUE)
 
 /datum/fishing_challenge/proc/auto_spin()
-	if(phase != WAIT_PHASE || !lure.spin_ready)
+	if(phase != WAIT_PHASE || !float.spin_ready)
 		return
-	lure.spin_ready = FALSE
-	lure.update_appearance(UPDATE_OVERLAYS)
+	float.spin_ready = FALSE
+	float.update_appearance(UPDATE_OVERLAYS)
 	set_lure_timers()
 	send_alert("spun")
 
@@ -252,7 +252,7 @@
 /datum/fishing_challenge/proc/on_line_deleted(datum/source)
 	SIGNAL_HANDLER
 	fishing_line = null
-	///The lure may be out of sight if the user has moed around a corner, so the message should be displayed over him instead.
+	///The float may be out of sight if the user has moed around a corner, so the message should be displayed over him instead.
 	user.balloon_alert(user, user.is_holding(used_rod) ? "line snapped" : "rod dropped")
 	interrupt()
 
@@ -272,14 +272,14 @@
 	if(phase == WAIT_PHASE)
 		if(world.time < last_baiting_click + 0.25 SECONDS)
 			return //Don't punish players if they accidentally double clicked.
-		if(lure.spin_frequency)
-			if(!lure.spin_ready)
+		if(float.spin_frequency)
+			if(!float.spin_ready)
 				send_alert("too early!")
 				start_baiting_phase(TRUE) //Add in another 3 to 5 seconds for that blunder.
 			else
 				send_alert("spun")
 				last_baiting_click = world.time
-			lure.spin_ready = FALSE
+			float.spin_ready = FALSE
 			set_lure_timers()
 		else
 			send_alert("miss!")
@@ -321,7 +321,7 @@
 					user.client?.give_award(/datum/award/achievement/skill/legendary_fisher, user)
 	if(win)
 		if(reward_path != FISHING_DUD)
-			playsound(lure, 'sound/effects/bigsplash.ogg', 100)
+			playsound(float, 'sound/effects/bigsplash.ogg', 100)
 	SEND_SIGNAL(src, COMSIG_FISHING_CHALLENGE_COMPLETED, user, win)
 	if(!QDELETED(src))
 		qdel(src)
@@ -332,22 +332,22 @@
 	if(penalty)
 		wait_time = min(timeleft(next_phase_timer) + rand(3 SECONDS, 5 SECONDS), 30 SECONDS)
 	else
-		wait_time = lure.spin_frequency ? rand(11 SECONDS, 17 SECONDS) : rand(3 SECONDS, 25 SECONDS)
+		wait_time = float.spin_frequency ? rand(11 SECONDS, 17 SECONDS) : rand(3 SECONDS, 25 SECONDS)
 		if(special_effects & FISHING_MINIGAME_AUTOREEL && wait_time >= 15 SECONDS)
 			wait_time = max(wait_time - 7.5 SECONDS, 15 SECONDS)
 	deltimer(next_phase_timer)
 	phase = WAIT_PHASE
 	//Bobbing animation
-	animate(lure, pixel_y = 1, time = 1 SECONDS, loop = -1, flags = ANIMATION_RELATIVE)
+	animate(float, pixel_y = 1, time = 1 SECONDS, loop = -1, flags = ANIMATION_RELATIVE)
 	animate(pixel_y = -1, time = 1 SECONDS, flags = ANIMATION_RELATIVE)
 	next_phase_timer = addtimer(CALLBACK(src, PROC_REF(start_biting_phase)), wait_time, TIMER_STOPPABLE|TIMER_DELETE_ME)
-	if(lure.spin_frequency)
+	if(float.spin_frequency)
 		set_lure_timers()
 
 /datum/fishing_challenge/proc/start_biting_phase()
 	phase = BITING_PHASE
 	// Trashing animation
-	playsound(lure, 'sound/effects/fish_splash.ogg', 100)
+	playsound(float, 'sound/effects/fish_splash.ogg', 100)
 	if(HAS_MIND_TRAIT(user, TRAIT_REVEAL_FISH))
 		switch(fish_icon)
 			if(FISH_ICON_DEF)
@@ -380,15 +380,15 @@
 				send_alert("seed!!!")
 	else
 		send_alert("!!!")
-	animate(lure, pixel_y = 3, time = 5, loop = -1, flags = ANIMATION_RELATIVE)
+	animate(float, pixel_y = 3, time = 5, loop = -1, flags = ANIMATION_RELATIVE)
 	animate(pixel_y = -3, time = 5, flags = ANIMATION_RELATIVE)
 	if(special_effects & FISHING_MINIGAME_AUTOREEL)
 		addtimer(CALLBACK(src, PROC_REF(automatically_start_minigame)), 0.2 SECONDS)
 	// Setup next phase
 	next_phase_timer = addtimer(CALLBACK(src, PROC_REF(start_baiting_phase)), BITING_TIME_WINDOW, TIMER_STOPPABLE|TIMER_DELETE_ME)
-	///We want lures with a set spin frequency to show a little green light during the minigame and not a red one.
-	lure.spin_frequency = TRUE
-	lure.update_appearance(UPDATE_OVERLAYS)
+	///If we're using a lure, we want the float to show a little green light during the minigame phase and not a red one.
+	float.spin_frequency = TRUE
+	float.update_appearance(UPDATE_OVERLAYS)
 
 /datum/fishing_challenge/proc/automatically_start_minigame()
 	if(phase == BITING_PHASE)
@@ -703,10 +703,10 @@
 		icon_state = "completion_[FLOOR(challenge.completion, 5)]"
 
 /// The visual that appears over the fishing spot
-/obj/effect/fishing_lure
-	name = "lure"
+/obj/effect/fishing_float
+	name = "float"
 	icon = 'icons/obj/fishing.dmi'
-	icon_state = "lure"
+	icon_state = "float"
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 	/**
 	 * A list with two keys delimiting the spinning interval in which a mouse click has to be pressed while fishing.
@@ -716,25 +716,25 @@
 	///Is the bait ready to be spun?
 	var/spin_ready = FALSE
 
-/obj/effect/fishing_lure/Initialize(mapload, atom/spot)
+/obj/effect/fishing_float/Initialize(mapload, atom/spot)
 	. = ..()
-	if(ismovable(spot)) // we want the lure and therefore the fishing line to stay connected with the fishing spot.
+	if(ismovable(spot)) // we want the float and therefore the fishing line to stay connected with the fishing spot.
 		RegisterSignal(spot, COMSIG_MOVABLE_MOVED, PROC_REF(follow_movable))
 
-/obj/effect/fishing_lure/proc/follow_movable(atom/movable/source)
+/obj/effect/fishing_float/proc/follow_movable(atom/movable/source)
 	SIGNAL_HANDLER
 
 	set_glide_size(source.glide_size)
 	forceMove(source.loc)
 
-/obj/effect/fishing_lure/update_overlays()
+/obj/effect/fishing_float/update_overlays()
 	. = ..()
 	if(!spin_frequency)
 		return
-	var/mutable_appearance/overlay = mutable_appearance(icon, "lure_spin_light")
+	var/mutable_appearance/overlay = mutable_appearance(icon, "lure_light")
 	overlay.color = spin_ready ? COLOR_GREEN : COLOR_RED
 	. += overlay
-	. += emissive_appearance(icon, "lure_spin_light_emissive")
+	. += emissive_appearance(icon, "lure_light_emissive")
 
 #undef WAIT_PHASE
 #undef BITING_PHASE

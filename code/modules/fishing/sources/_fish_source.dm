@@ -30,6 +30,7 @@ GLOBAL_LIST_INIT(specific_fish_icons, generate_specific_fish_icons())
 		/obj/item/fish/jumpercable = FISH_ICON_ELECTRIC,
 		/obj/item/fish/lavaloop = FISH_ICON_WEAPON,
 		/obj/item/fish/mastodon = FISH_ICON_BONE,
+		/obj/item/fish/pike/armored = FISH_ICON_WEAPON,
 		/obj/item/fish/pufferfish = FISH_ICON_CHUNKY,
 		/obj/item/fish/sand_crab = FISH_ICON_CRAB,
 		/obj/item/fish/skin_crab = FISH_ICON_CRAB,
@@ -46,6 +47,7 @@ GLOBAL_LIST_INIT(specific_fish_icons, generate_specific_fish_icons())
 		/obj/item/stack/sheet/mineral = FISH_ICON_GEM,
 		/obj/item/stack/ore = FISH_ICON_GEM,
 		/obj/structure/closet/crate = FISH_ICON_COIN,
+		/obj/structure/mystery_box = FISH_ICON_COIN,
 	))
 
 	return_list[FISHING_RANDOM_SEED] = FISH_ICON_SEED
@@ -193,7 +195,7 @@ GLOBAL_LIST_INIT(specific_fish_icons, generate_specific_fish_icons())
 		return
 	var/obj/item/fish/caught = source.reward_path
 	user.add_mob_memory(/datum/memory/caught_fish, protagonist = user, deuteragonist = initial(caught.name))
-	var/turf/fishing_spot = get_turf(source.lure)
+	var/turf/fishing_spot = get_turf(source.float)
 	var/atom/movable/reward = dispense_reward(source.reward_path, user, fishing_spot)
 	if(source.used_rod)
 		SEND_SIGNAL(source.used_rod, COMSIG_FISHING_ROD_CAUGHT_FISH, reward, user)
@@ -342,7 +344,18 @@ GLOBAL_LIST_INIT(specific_fish_icons, generate_specific_fish_icons())
 
 	return round(weight * multiplier, 1)
 
-/datum/fish_source/proc/get_catchable_fish_names(mob/user, atom/location)
+///returns true if this fishing spot has fish that are shown in the catalog.
+/datum/fish_source/proc/has_known_fishes()
+	for(var/reward in fish_table)
+		if(!ispath(reward, /obj/item/fish))
+			continue
+		var/obj/item/fish/prototype = reward
+		if(initial(prototype.show_in_catalog))
+			return TRUE
+	return FALSE
+
+///Add a string with the names of catchable fishes to the examine text.
+/datum/fish_source/proc/get_catchable_fish_names(mob/user, atom/location, list/examine_text)
 	var/list/known_fishes = list()
 
 	var/obj/item/fishing_rod/rod = user.get_active_held_item()
@@ -361,13 +374,20 @@ GLOBAL_LIST_INIT(specific_fish_icons, generate_specific_fish_icons())
 				weight = get_fish_trait_catch_mods(weight, reward, rod, user, location)
 				if(weight > init_weight)
 					init_name = span_bold(init_name)
-					if(weight/init_weight > 4)
+					if(weight/init_weight >= 3.5)
 						init_name = "<u>init_name</u>"
 				else if(weight < init_weight)
 					init_name = span_small(reward)
 			known_fishes += init_name
 
-	return known_fishes
+	if(!length(known_fishes))
+		return
+
+	var/info = "You can catch the following fish here"
+
+	if(rod)
+		info = span_tooltip("boldened are the fish you're more likely to catch with your current setup. The opposite is true for smaller names", info)
+	examine_text += span_info("[info]: [english_list(known_fishes)].")
 
 /datum/fish_source/proc/spawn_reward_from_explosion(atom/location, severity)
 	if(!explosive_malus)

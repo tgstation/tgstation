@@ -43,15 +43,7 @@
 	if(!HAS_MIND_TRAIT(user, TRAIT_EXAMINE_FISHING_SPOT))
 		return
 
-	var/has_known_fishes = FALSE
-	for(var/reward in fish_source.fish_table)
-		if(!ispath(reward, /obj/item/fish))
-			continue
-		var/obj/item/fish/prototype = reward
-		if(initial(prototype.show_in_catalog))
-			has_known_fishes = TRUE
-			break
-	if(!has_known_fishes)
+	if(!fish_source.has_known_fishes())
 		return
 
 	examine_text += span_tinynoticeital("This is a fishing spot. You can look again to list its fishes...")
@@ -61,12 +53,7 @@
 	if(!HAS_MIND_TRAIT(user, TRAIT_EXAMINE_FISHING_SPOT))
 		return
 
-	var/list/known_fishes = fish_source.get_catchable_fish_names(user, parent)
-
-	if(!length(known_fishes))
-		return
-
-	examine_text += span_info("You can catch the following fish here: [english_list(known_fishes)].")
+	fish_source.get_catchable_fish_names(user, parent, examine_text)
 
 /datum/component/fishing_spot/proc/try_start_fishing(obj/item/possibly_rod, mob/user)
 	SIGNAL_HANDLER

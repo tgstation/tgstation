@@ -14,7 +14,7 @@
 		/obj/effect/constructing_effect,
 		/obj/effect/dummy/phased_mob,
 		/obj/effect/ebeam,
-		/obj/effect/fishing_lure,
+		/obj/effect/fishing_float,
 		/obj/effect/hotspot,
 		/obj/effect/landmark,
 		/obj/effect/light_emitter/tendril,

@@ -381,15 +381,38 @@
 	name = "fishing lures set"
 	desc = "A small tackle box containing all the fishing lures you will ever need to curb randomness."
 	icon_state = "plasticbox"
+	foldable_result = null
 	illustration = "fish"
 
 /obj/item/storage/box/fishing_lures/PopulateContents()
+	new /obj/item/paper/lures_instructions(src)
 	var/list/typesof = typesof(/obj/item/fishing_lure)
 	for(var/type in typesof)
 		new type (src)
-	atom_storage.set_holdable(/obj/item/fishing_lure)
-	atom_storage.max_slots = length(typesof)
-	atom_storage.max_total_storage = WEIGHT_CLASS_SMALL * atom_storage.max_slots
+	atom_storage.set_holdable(/obj/item/fishing_lure) //can only hold lures
+	//adds an extra slot, so we can put back the lures even if we didn't take out the instructions.
+	atom_storage.max_slots = length(typesof) + 1
+	atom_storage.max_total_storage = WEIGHT_CLASS_SMALL * (atom_storage.max_slots + 1)
+
+/obj/item/paper/lures_instructions
+	name = "instructions paper"
+	icon_state = "slipfull"
+	show_written_words = FALSE
+	desc = "A piece of grey paper with an how-to for dummies about fishing lures printed on it. Smells cheap."
+	default_raw_text =  "<b>Thank you for buying this set.</b><br>\
+		This a simple non-exhaustive set of instructions on how to use fishing lures, some information may \
+		be slightly incorrect or oversimplified.<br><br>\
+
+		First and foremost, fishing lures are <b>inedible, artificia baits</b>, fairly sturdy so that \
+		they won't be destroyed by the hungry fish. However, they need to be <b>spun at intervals</b> to replicate \
+		the motion of a prey or organic bait to tempt the fish, since a piece of plastic and metal ins't \
+		by itself all that tasty. <b>Different lures</b> can be used to catch <b>different fish</b>.<br><br>\
+
+		To help you, each lure comes with <b>a small light</b> that's attached to the <b>float</b> of your fishing rod. \
+		For those who don't know it, the float is basically the thing bobbing up'n'down above the fishing spot. \
+		The light will flash <b>green<b> and a sound cue will be played when the bait is <b>ready<b> to be spun. \
+		Do <b>not</b> spin while the light is still <b>red</b>.<br><br>\
+		That's all, best of luck to your angling journey.<br><br>"
 
 #undef MAGNET_HOOK_BONUS_MULTIPLIER
 #undef RESCUE_HOOK_FISH_MULTIPLIER
