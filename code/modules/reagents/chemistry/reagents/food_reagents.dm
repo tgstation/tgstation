@@ -164,9 +164,6 @@
 			holder.remove_reagent(type, volume)
 			holder.add_reagent(/datum/reagent/consumable/nutriment/fat, new_slurry_volume)
 
-
-
-
 /datum/reagent/consumable/nutriment/fat/expose_obj(obj/exposed_obj, reac_volume)
 	. = ..()
 	if(!holder || (holder.chem_temp <= fry_temperature))
