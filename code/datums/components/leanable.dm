@@ -44,7 +44,7 @@
 	if (!iscarbon(dropped) && !iscyborg(dropped))
 		return
 	var/mob/living/leaner = dropped
-	if (leaner.incapacitated(IGNORE_RESTRAINTS) || leaner.stat != CONSCIOUS || HAS_TRAIT(leaner, TRAIT_NO_TRANSFORM))
+	if (INCAPACITATED_IGNORING(leaner, INCAPABLE_RESTRAINTS) || leaner.stat != CONSCIOUS || HAS_TRAIT(leaner, TRAIT_NO_TRANSFORM))
 		return
 	if (HAS_TRAIT_FROM(leaner, TRAIT_UNDENSE, LEANING_TRAIT))
 		return

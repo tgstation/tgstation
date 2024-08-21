@@ -93,7 +93,7 @@
 
 	var/mob/living/loser = leaving
 	var/graceful_landing = FALSE
-	if(!loser.incapacitated(IGNORE_RESTRAINTS))
+	if(!INCAPACITATED_IGNORING(loser, INCAPABLE_RESTRAINTS))
 		var/obj/item/organ/external/wings/gliders = loser.get_organ_by_type(/obj/item/organ/external/wings)
 		if(HAS_TRAIT(loser, TRAIT_FREERUNNING) || gliders?.can_soften_fall())
 			graceful_landing = HAS_TRAIT(loser, TRAIT_CATLIKE_GRACE)

@@ -1343,9 +1343,9 @@
 	if(!(interaction_flags_atom & INTERACT_ATOM_IGNORE_INCAPACITATED))
 		var/ignore_flags = NONE
 		if(interaction_flags_atom & INTERACT_ATOM_IGNORE_RESTRAINED)
-			ignore_flags |= IGNORE_RESTRAINTS
+			ignore_flags |= INCAPABLE_RESTRAINTS
 		if(!(interaction_flags_atom & INTERACT_ATOM_CHECK_GRAB))
-			ignore_flags |= IGNORE_GRAB
+			ignore_flags |= INCAPABLE_GRAB
 
 		if(INCAPACITATED_IGNORING(src, ignore_flags))
 			to_chat(src, span_warning("You are incapacitated at the moment!"))
@@ -2340,6 +2340,7 @@ GLOBAL_LIST_EMPTY(fire_appearances)
 
 /mob/living/set_pulledby(new_pulledby)
 	. = ..()
+	update_incapacitated()
 	if(. == FALSE) //null is a valid value here, we only want to return if FALSE is explicitly passed.
 		return
 	if(pulledby)
@@ -2352,7 +2353,6 @@ GLOBAL_LIST_EMPTY(fire_appearances)
 /// Updates the grab state of the mob and updates movespeed
 /mob/living/setGrabState(newstate)
 	. = ..()
-	update_incapacitated()
 	switch(grab_state)
 		if(GRAB_PASSIVE)
 			remove_movespeed_modifier(MOVESPEED_ID_MOB_GRAB_STATE)

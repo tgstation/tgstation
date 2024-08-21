@@ -39,7 +39,7 @@
 	var/obj/particles = new /obj/effect/abstract/particle_holder (victim, /particles/void_kidnap)
 	kidnapping = TRUE
 
-	if(do_after(parent, kidnap_time, victim, extra_checks = CALLBACK(victim, TYPE_PROC_REF(/mob, incapacitated))))
+	if(do_after(parent, kidnap_time, victim, extra_checks = victim.incapacitated))
 		take_them(victim)
 
 	qdel(particles)

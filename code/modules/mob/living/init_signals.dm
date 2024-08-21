@@ -40,8 +40,8 @@
 
 	RegisterSignal(src, SIGNAL_ADDTRAIT(TRAIT_DEAF), PROC_REF(on_hearing_loss))
 	RegisterSignal(src, SIGNAL_REMOVETRAIT(TRAIT_DEAF), PROC_REF(on_hearing_regain))
-	RegisterSignals(src, SIGNAL_ADDTRAIT(TRAIT_STASIS), PROC_REF(on_stasis_trait_gain))
-	RegisterSignals(src, SIGNAL_REMOVETRAIT(TRAIT_STASIS), PROC_REF(on_stasis_trait_loss))
+	RegisterSignal(src, SIGNAL_ADDTRAIT(TRAIT_STASIS), PROC_REF(on_stasis_trait_gain))
+	RegisterSignal(src, SIGNAL_REMOVETRAIT(TRAIT_STASIS), PROC_REF(on_stasis_trait_loss))
 
 	RegisterSignals(src, list(
 		SIGNAL_ADDTRAIT(TRAIT_CRITICAL_CONDITION),
