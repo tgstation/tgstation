@@ -68,3 +68,4 @@
 
 /obj/effect/decal/cleanable/food/squid_ink/Initialize(mapload, list/datum/disease/diseases)
 	icon_state = "floor[rand(1, 7)]"
+	return ..()
