@@ -31,8 +31,7 @@
 
 /obj/machinery/big_manipulator/Initialize(mapload)
 	. = ..()
-	take_turf = get_step(src, take_here)
-	drop_turf = get_step(src, drop_here)
+	take_and_drop_turfs_check()
 	create_manipulator_hand()
 	RegisterSignal(manipulator_hand, COMSIG_QDELETING, PROC_REF(on_hand_qdel))
 	manipulator_lvl()
@@ -49,9 +48,7 @@
 	if(isnull(containment_obj))
 		return
 	var/obj/obj_resolve = containment_obj?.resolve()
-	if(isnull(obj_resolve))
-		return
-	obj_resolve.forceMove(get_turf(obj_resolve))
+	obj_resolve?.forceMove(get_turf(obj_resolve))
 
 /obj/machinery/big_manipulator/Moved(atom/old_loc, movement_dir, forced, list/old_locs, momentum_change)
 	. = ..()
@@ -175,11 +172,14 @@
 /// Check if we can start take and drop loop
 /obj/machinery/big_manipulator/proc/is_work_check()
 	if(isclosedturf(drop_turf))
+		on = !on
 		say("Output blocked")
 		return FALSE
 	for(var/obj/item/take_item in take_turf.contents)
 		try_take_thing(take_turf, take_item)
 		break
+
+	return TRUE
 
 /// First take and drop proc from [take and drop procs loop]:
 /// Check if we can take item from take_turf to work with him. This proc also calling from ATOM_ENTERED signal.
@@ -236,10 +236,10 @@
 
 /// Proc call when we press on/off button
 /obj/machinery/big_manipulator/proc/press_on(pressed_by)
-	if(!is_work_check())
-		return
 	if(pressed_by)
 		on = !on
+	if(!is_work_check())
+		return
 	if(on)
 		RegisterSignal(take_turf, COMSIG_ATOM_ENTERED, PROC_REF(try_take_thing))
 	else
@@ -266,7 +266,7 @@
 		return
 	switch(action)
 		if("on")
-			press_on(TRUE)
+			press_on(pressed_by = TRUE)
 			return TRUE
 
 /// Manipulator hand. Effect we animate to show that the manipulator is working and moving something.
