@@ -74,7 +74,7 @@
 
 /obj/effect/decal/remains/human/smokey/maintenance/Initialize(mapload)
 	. = ..()
-	gas_cooldown_length = rand(3 MINUTES, 5 MINUTES)
+	gas_cooldown_length = rand(4 MINUTES, 6 MINUTES)
 
 /obj/effect/decal/remains/plasma
 	icon_state = "remainsplasma"
