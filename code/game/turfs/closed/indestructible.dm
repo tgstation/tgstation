@@ -58,6 +58,7 @@
 /turf/closed/indestructible/splashscreen
 	name = "Space Station 13"
 	desc = null
+	baseturfs = /turf/cordon
 	icon = 'icons/blanks/blank_title.png'
 	icon_state = ""
 	pixel_x = -64
@@ -98,21 +99,10 @@ INITIALIZE_IMMEDIATE(/turf/closed/indestructible/splashscreen)
 	desc = pick(strings(SPLASH_FILE, "splashes"))
 	return ..()
 
-/turf/closed/indestructible/start_area
-	name = null
-	desc = null
-	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
-	use_splitvis = FALSE
-	smoothing_flags = NONE
-	smoothing_groups = null
-	canSmoothWith = null
-
 /turf/closed/indestructible/reinforced
 	name = "reinforced wall"
 	desc = "A huge chunk of reinforced metal used to separate rooms. Effectively impervious to conventional methods of destruction."
-	icon = 'icons/turf/walls/riveted_wall.dmi'
-	smoothing_groups = SMOOTH_GROUP_WALLS + SMOOTH_GROUP_TALL_WALLS + SMOOTH_GROUP_CLOSED_TURFS
-	canSmoothWith = SMOOTH_GROUP_WALLS
+	icon = 'icons/turf/walls/reinforced_wall.dmi'
 
 /turf/closed/indestructible/reinforced/titanium
 	name = "reinforced titanium imitation wall"
@@ -186,7 +176,7 @@ INITIALIZE_IMMEDIATE(/turf/closed/indestructible/splashscreen)
 
 /turf/closed/indestructible/fakeglass
 	name = "window"
-	icon = MAP_SWITCH('icons/obj/smooth_structures/windows/reinforced_window.dmi', 'icons/obj/smooth_structures/structure_variations.dmi')
+	icon = MAP_SWITCH('icons/obj/structures/smooth/windows/reinforced_window.dmi', 'icons/obj/structures/smooth/structure_variations.dmi')
 	icon_state = MAP_SWITCH("0-lower", "plastitanium_window-0")
 	layer = ABOVE_OBJ_LAYER
 	opacity = FALSE
@@ -205,14 +195,14 @@ INITIALIZE_IMMEDIATE(/turf/closed/indestructible/splashscreen)
 
 /turf/closed/indestructible/fakeglass/update_overlays()
 	. = ..()
-	. += mutable_appearance('icons/obj/smooth_structures/window_grille_black.dmi', "window_grille_black-[smoothing_junction]", BELOW_OBJ_LAYER)
-	. += mutable_appearance('icons/obj/smooth_structures/window_grille.dmi', "window_grille-[smoothing_junction]", BELOW_OBJ_LAYER)
-	. += mutable_appearance('icons/obj/smooth_structures/window_frames/frame_faces/window_frame_normal.dmi', "window_frame_normal-[smoothing_junction]", BELOW_OBJ_LAYER, appearance_flags = KEEP_APART)
+	. += mutable_appearance('icons/obj/structures/smooth/window_grille_black.dmi', "window_grille_black-[smoothing_junction]", BELOW_OBJ_LAYER)
+	. += mutable_appearance('icons/obj/structures/smooth/window_grille.dmi', "window_grille-[smoothing_junction]", BELOW_OBJ_LAYER)
+	. += mutable_appearance('icons/obj/structures/smooth/window_frames/frame_faces/window_frame_normal.dmi', "window_frame_normal-[smoothing_junction]", BELOW_OBJ_LAYER, appearance_flags = KEEP_APART)
 
 /turf/closed/indestructible/opsglass
 	name = "window"
-	icon = MAP_SWITCH('icons/obj/smooth_structures/windows/plastitanium_window.dmi', 'icons/obj/smooth_structures/plastitanium_window.dmi')
-	icon_state = MAP_SWITCH("0-lower", "plastitanium_window-0")
+	icon = MAP_SWITCH('icons/obj/structures/smooth/windows/plastitanium_window.dmi', 'icons/obj/structures_spawners.dmi')
+	icon_state = MAP_SWITCH("0-lower", "plastitaniumwindow_spawner")
 	layer = ABOVE_OBJ_LAYER
 	opacity = FALSE
 	use_splitvis = FALSE
@@ -230,9 +220,9 @@ INITIALIZE_IMMEDIATE(/turf/closed/indestructible/splashscreen)
 
 /turf/closed/indestructible/opsglass/update_overlays()
 	. = ..()
-	. += mutable_appearance('icons/obj/smooth_structures/window_grille_black.dmi', "window_grille_black-[smoothing_junction]", BELOW_OBJ_LAYER)
-	. += mutable_appearance('icons/obj/smooth_structures/window_grille.dmi', "window_grille-[smoothing_junction]", BELOW_OBJ_LAYER)
-	. += mutable_appearance('icons/obj/smooth_structures/window_frames/frame_faces/window_frame_plastitanium.dmi', "window_frame_plastitanium-[smoothing_junction]", BELOW_OBJ_LAYER, appearance_flags = KEEP_APART)
+	. += mutable_appearance('icons/obj/structures/smooth/window_grille_black.dmi', "window_grille_black-[smoothing_junction]", BELOW_OBJ_LAYER)
+	. += mutable_appearance('icons/obj/structures/smooth/window_grille.dmi', "window_grille-[smoothing_junction]", BELOW_OBJ_LAYER)
+	. += mutable_appearance('icons/obj/structures/smooth/window_frames/frame_faces/window_frame_plastitanium.dmi', "window_frame_plastitanium-[smoothing_junction]", BELOW_OBJ_LAYER, appearance_flags = KEEP_APART)
 
 /turf/closed/indestructible/fakedoor
 	name = "airlock"
@@ -344,6 +334,7 @@ INITIALIZE_IMMEDIATE(/turf/closed/indestructible/splashscreen)
 	underlay_appearance.icon_state = "basalt"
 	return TRUE
 
+
 /turf/closed/indestructible/riveted/hierophant
 	name = "wall"
 	desc = "A wall made out of a strange metal. The squares on it pulse in a predictable pattern."
@@ -353,13 +344,13 @@ INITIALIZE_IMMEDIATE(/turf/closed/indestructible/splashscreen)
 
 /turf/closed/indestructible/resin
 	name = "resin wall"
-	icon = 'icons/obj/smooth_structures/alien/resin_wall_1.dmi'
+	icon = 'icons/obj/structures/smooth/alien/resin_wall_1.dmi'
 	smoothing_groups = SMOOTH_GROUP_ALIEN_WALLS + SMOOTH_GROUP_TALL_WALLS
 	canSmoothWith = SMOOTH_GROUP_ALIEN_WALLS
 
 /turf/closed/indestructible/resin/membrane
 	name = "resin membrane"
-	icon = 'icons/obj/smooth_structures/alien/resin_membrane.dmi'
+	icon = 'icons/obj/structures/smooth/alien/resin_membrane.dmi'
 	icon_state = "resin_membrane-0"
 	base_icon_state = "resin_membrane"
 	opacity = FALSE
@@ -374,7 +365,7 @@ INITIALIZE_IMMEDIATE(/turf/closed/indestructible/splashscreen)
 /turf/closed/indestructible/grille
 	name = "grille"
 	desc = "A flimsy framework of iron rods."
-	icon = 'icons/obj/smooth_structures/grille.dmi'
+	icon = 'icons/obj/structures/smooth/grille.dmi'
 	icon_state = "grille-0"
 	base_icon_state = "grille"
 	use_splitvis = FALSE

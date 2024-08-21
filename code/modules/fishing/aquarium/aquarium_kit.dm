@@ -2,7 +2,7 @@
 /obj/item/fish_feed
 	name = "fish feed can"
 	desc = "A refillable can that dispenses nutritious fish feed."
-	icon = 'icons/obj/aquarium/supplies.dmi'
+	icon = 'icons/obj/structures/aquarium/supplies.dmi'
 	icon_state = "fish_feed"
 	w_class = WEIGHT_CLASS_TINY
 
@@ -21,15 +21,15 @@
 	desc = "A resizable case keeping the fish inside in stasis."
 	icon = 'icons/obj/storage/case.dmi'
 	icon_state = "fishbox"
-
+	w_class = WEIGHT_CLASS_SMALL
 	inhand_icon_state = "syringe_kit"
 	lefthand_file = 'icons/mob/inhands/equipment/medical_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/medical_righthand.dmi'
-	storage_type = /datum/storage/fish_case
+	storage_type = /datum/storage/fish_case/adjust_size
 
 /obj/item/storage/fish_case/Initialize(mapload)
-	ADD_TRAIT(src, TRAIT_FISH_SAFE_STORAGE, TRAIT_GENERIC) // Before populate so fish instatiates in ready container already
-	return ..()
+	. = ..()
+	AddElement(/datum/element/fish_safe_storage)
 
 /obj/item/storage/fish_case/PopulateContents()
 	var/fish_type = get_fish_type()
@@ -58,7 +58,7 @@
 	name = "ominous fish case"
 
 /obj/item/storage/fish_case/syndicate/get_fish_type()
-	return pick(/obj/item/fish/donkfish, /obj/item/fish/emulsijack, /obj/item/fish/jumpercable)
+	return pick(/obj/item/fish/donkfish, /obj/item/fish/emulsijack, /obj/item/fish/jumpercable, /obj/item/fish/chainsawfish)
 
 /obj/item/storage/fish_case/tiziran
 	name = "imported fish case"
@@ -91,10 +91,17 @@
 	for(var/obj/item/fish/fish as anything in contents)
 		fish.set_status(FISH_DEAD)
 
+/obj/item/storage/fish_case/bluespace
+	name = "bluespace fish case"
+	icon_state = "fishbox_bluespace"
+	desc = "An improved fish case to keep large fish in stasis in a compact little space."
+	w_class = WEIGHT_CLASS_NORMAL
+	storage_type = /datum/storage/fish_case
+
 /obj/item/aquarium_kit
 	name = "DIY Aquarium Construction Kit"
 	desc = "Everything you need to build your own aquarium. Raw materials sold separately."
-	icon = 'icons/obj/aquarium/supplies.dmi'
+	icon = 'icons/obj/structures/aquarium/supplies.dmi'
 	icon_state = "construction_kit"
 	w_class = WEIGHT_CLASS_TINY
 
@@ -106,7 +113,7 @@
 /obj/item/aquarium_prop
 	name = "generic aquarium prop"
 	desc = "very boring"
-	icon = 'icons/obj/aquarium/supplies.dmi'
+	icon = 'icons/obj/structures/aquarium/supplies.dmi'
 
 	w_class = WEIGHT_CLASS_TINY
 	var/layer_mode = AQUARIUM_LAYER_MODE_BOTTOM
@@ -143,6 +150,7 @@
 /obj/item/storage/box/aquarium_props
 	name = "aquarium props box"
 	desc = "All you need to make your aquarium look good."
+	illustration = "fish"
 
 /obj/item/storage/box/aquarium_props/PopulateContents()
 	for(var/prop_type in subtypesof(/obj/item/aquarium_prop))

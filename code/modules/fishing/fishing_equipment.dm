@@ -260,7 +260,6 @@
 	// Can hold fishing rod despite the size
 	var/static/list/exception_cache = typecacheof(list(
 		/obj/item/fishing_rod,
-		/obj/item/fishing_line,
 	))
 	atom_storage.exception_hold = exception_cache
 
@@ -269,6 +268,7 @@
 	new /obj/item/fishing_rod/unslotted(src)
 	new /obj/item/fishing_hook(src)
 	new /obj/item/fishing_line(src)
+	new /obj/item/paper/paperslip/fishing_tip(src)
 
 /obj/item/storage/toolbox/fishing/small
 	name = "compact fishing toolbox"
@@ -285,31 +285,84 @@
 	new /obj/item/fishing_rod/unslotted(src)
 	new /obj/item/fishing_hook(src)
 	new /obj/item/fishing_line(src)
+	new /obj/item/paper/paperslip/fishing_tip(src)
+
+/obj/item/storage/toolbox/fishing/master
+	name = "super fishing toolbox"
+	desc = "Contains EVERYTHING (almost) you need for your fishing trip."
+	icon_state = "gold"
+	inhand_icon_state = "toolbox_gold"
+
+/obj/item/storage/toolbox/fishing/master/PopulateContents()
+	new /obj/item/fishing_rod/telescopic/master(src)
+	new /obj/item/storage/box/fishing_hooks/master(src)
+	new /obj/item/storage/box/fishing_lines/master(src)
+	new /obj/item/bait_can/super_baits(src)
+	new /obj/item/fish_feed(src)
+	new /obj/item/aquarium_kit(src)
+	new /obj/item/fish_analyzer(src)
+	new /obj/item/experi_scanner(src)
 
 /obj/item/storage/box/fishing_hooks
 	name = "fishing hook set"
+	illustration = "fish"
 
 /obj/item/storage/box/fishing_hooks/PopulateContents()
-	. = ..()
 	new /obj/item/fishing_hook/magnet(src)
 	new /obj/item/fishing_hook/shiny(src)
 	new /obj/item/fishing_hook/weighted(src)
 
+/obj/item/storage/box/fishing_hooks/master
+
+/obj/item/storage/box/fishing_hooks/master/PopulateContents()
+	. = ..()
+	new /obj/item/fishing_hook/stabilized(src)
+	new /obj/item/fishing_hook/jaws(src)
+
 /obj/item/storage/box/fishing_lines
 	name = "fishing line set"
+	illustration = "fish"
 
 /obj/item/storage/box/fishing_lines/PopulateContents()
-	. = ..()
 	new /obj/item/fishing_line/bouncy(src)
 	new /obj/item/fishing_line/reinforced(src)
 	new /obj/item/fishing_line/cloaked(src)
 
+/obj/item/storage/box/fishing_lines/master
+
+/obj/item/storage/box/fishing_lines/master/PopulateContents()
+	. = ..()
+	new /obj/item/fishing_line/auto_reel(src)
+
 /obj/item/storage/box/fish_debug
 	name = "box full of fish"
+	illustration = "fish"
 
 /obj/item/storage/box/fish_debug/PopulateContents()
 	for(var/fish_type in subtypesof(/obj/item/fish))
 		new fish_type(src)
+
+///Used to give the average player info about fishing stuff that's unknown to many.
+/obj/item/paper/paperslip/fishing_tip
+	name = "fishing tip"
+	desc = "A slip of paper containing a pearl of wisdom about fishing within it, though you wish it were an actual pearl."
+
+/obj/item/paper/paperslip/fortune/Initialize(mapload)
+	default_raw_text = pick(GLOB.fishing_tips)
+	return ..()
+
+///From the fishing mystery box. It's basically a lazarus and a few bottles of strange reagents.
+/obj/item/storage/box/fish_revival_kit
+	name = "fish revival kit"
+	desc = "Become a fish doctor today."
+	illustration = "fish"
+
+/obj/item/storage/box/fish_revival_kit/PopulateContents()
+	new /obj/item/lazarus_injector(src)
+	new /obj/item/reagent_containers/cup/bottle/strange_reagent(src)
+	new /obj/item/reagent_containers/cup(src) //to splash the reagents on the fish.
+	new /obj/item/storage/fish_case(src)
+	new /obj/item/storage/fish_case(src)
 
 #undef MAGNET_HOOK_BONUS_MULTIPLIER
 #undef RESCUE_HOOK_FISH_MULTIPLIER

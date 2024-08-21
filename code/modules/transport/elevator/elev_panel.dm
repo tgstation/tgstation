@@ -15,7 +15,7 @@
 	desc = "<i>\"In case of emergency, please use the stairs.\"</i> Thus, always use the stairs."
 	density = FALSE
 
-	icon = 'icons/obj/wallmounts.dmi'
+	icon = 'icons/obj/structures/wallmounts.dmi'
 	icon_state = "elevpanel0"
 	base_icon_state = "elevpanel"
 
@@ -299,7 +299,7 @@
 
 	return data
 
-/obj/machinery/elevator_control_panel/ui_act(action, list/params)
+/obj/machinery/elevator_control_panel/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if(.)
 		return
