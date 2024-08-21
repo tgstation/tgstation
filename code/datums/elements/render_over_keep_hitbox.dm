@@ -147,6 +147,3 @@
 	// Make it clickable, and direct all clicks to the source object
 	click_catch.mouse_opacity = MOUSE_OPACITY_ICON
 	click_catch.vis_flags |= VIS_INHERIT_ID
-
-
-

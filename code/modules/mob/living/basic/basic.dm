@@ -97,6 +97,8 @@
 	var/unsuitable_cold_damage = 1
 	///This damage is taken when the body temp is too hot. Set both this and unsuitable_cold_damage to 0 to avoid adding the body_temp_sensitive element.
 	var/unsuitable_heat_damage = 1
+	///Amount to increment our vertical position by when dead
+	var/death_offset_y = 0
 
 /mob/living/basic/Initialize(mapload)
 	. = ..()
@@ -122,6 +124,18 @@
 	apply_atmos_requirements(mapload)
 	apply_temperature_requirements(mapload)
 	apply_target_randomisation()
+
+/mob/living/basic/create_shadow()
+	if (shadow_type == SHADOW_NONE)
+		qdel(GetComponent(/datum/component/drop_shadow))
+		return
+
+	AddComponent(/datum/component/drop_shadow, \
+		icon_state = shadow_type, \
+		shadow_offset_x = shadow_offset_x, \
+		shadow_offset_y = shadow_offset_y, \
+		death_offset = -death_offset_y, \
+	)
 
 /mob/living/basic/proc/on_ssair_init(datum/source)
 	SIGNAL_HANDLER
@@ -189,6 +203,7 @@
 	if(!(basic_mob_flags & REMAIN_DENSE_WHILE_DEAD))
 		ADD_TRAIT(src, TRAIT_UNDENSE, BASIC_MOB_DEATH_TRAIT)
 	SEND_SIGNAL(src, COMSIG_BASICMOB_LOOK_DEAD)
+	pixel_z = base_pixel_z + death_offset_y
 
 /mob/living/basic/revive(full_heal_flags = NONE, excess_healing = 0, force_grab_ghost = FALSE)
 	. = ..()
@@ -204,6 +219,8 @@
 	if(!(basic_mob_flags & REMAIN_DENSE_WHILE_DEAD))
 		REMOVE_TRAIT(src, TRAIT_UNDENSE, BASIC_MOB_DEATH_TRAIT)
 	SEND_SIGNAL(src, COMSIG_BASICMOB_LOOK_ALIVE)
+	if (death_offset_y != 0)
+		pixel_z = base_pixel_z
 
 /mob/living/basic/update_sight()
 	lighting_color_cutoffs = list(lighting_cutoff_red, lighting_cutoff_green, lighting_cutoff_blue)
@@ -247,6 +264,8 @@
 		if(NAMEOF(src, speed))
 			datum_flags |= DF_VAR_EDITED
 			set_varspeed(vval)
+		if(NAMEOF(src, death_offset_y))
+			create_shadow()
 
 /mob/living/basic/proc/set_varspeed(var_value)
 	speed = var_value

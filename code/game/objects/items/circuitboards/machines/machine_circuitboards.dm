@@ -631,6 +631,7 @@
 		/obj/machinery/vending/coffee = "Solar's Best Hot Drinks",
 		/obj/machinery/vending/cola = "Robust Softdrinks",
 		/obj/machinery/vending/custom = "Custom Vendor",
+		/obj/machinery/vending/cytopro = "CytoPro",
 		/obj/machinery/vending/dinnerware = "Plasteel Chef's Dinnerware Vendor",
 		/obj/machinery/vending/drugs = "NanoDrug Plus",
 		/obj/machinery/vending/engineering = "Robco Tool Maker",
@@ -1694,3 +1695,20 @@
 	req_components = list(
 		/obj/item/pipe/trinary/flippable/filter = 1,
 	)
+
+/obj/item/circuitboard/machine/portagrav
+	name = "Portable Gravity Unit"
+	greyscale_colors = CIRCUIT_COLOR_ENGINEERING
+	build_path = /obj/machinery/power/portagrav
+	req_components = list(
+		/datum/stock_part/capacitor = 2,
+		/datum/stock_part/micro_laser = 2,
+		/obj/item/stack/sheet/glass = 1)
+
+/obj/item/circuitboard/machine/big_manipulator
+	name = "Big Manipulator"
+	greyscale_colors = CIRCUIT_COLOR_ENGINEERING
+	build_path = /obj/machinery/big_manipulator
+	req_components = list(
+		/datum/stock_part/servo = 1,
+		)
