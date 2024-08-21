@@ -1,10 +1,13 @@
 /mob/living/basic/mouse
+	SET_BASE_VISUAL_PIXEL(0, 10)
 	name = "mouse"
 	desc = "This cute little guy just loves the taste of uninsulated electrical cables. Isn't he adorable?"
 	icon_state = "mouse_gray"
 	icon_living = "mouse_gray"
 	icon_dead = "mouse_gray_dead"
 	held_state = "mouse_gray"
+	shadow_type = SHADOW_SMALL
+	shadow_offset_y = 2
 
 	maxHealth = 5
 	health = 5
@@ -369,9 +372,7 @@
 	var/trans_amount = reagents.maximum_volume - reagents.total_volume * (4 / 3)
 	if(target_reagents.has_reagent(/datum/reagent/fuel) && target_reagents.trans_to(src, trans_amount))
 		to_chat(user, span_notice("You dip [src] into [interacting_with]."))
-	else
-		to_chat(user, span_warning("That's a terrible idea."))
-	return ITEM_INTERACT_BLOCKING
+		return ITEM_INTERACT_SUCCESS
 
 /obj/item/food/deadmouse/moldy
 	name = "moldy dead mouse"

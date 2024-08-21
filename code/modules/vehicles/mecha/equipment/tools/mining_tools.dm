@@ -117,12 +117,12 @@
 			drill_mob(target, source)
 			playsound(src,'sound/weapons/drill.ogg',40,TRUE)
 		else if(isobj(target))
-			var/obj/O = target
-			if(istype(O, /obj/item/boulder))
-				var/obj/item/boulder/nu_boulder = O
+			var/obj/obj_target = target
+			if(istype(obj_target, /obj/item/boulder))
+				var/obj/item/boulder/nu_boulder = obj_target
 				nu_boulder.manual_process(src, source)
 			else
-				O.take_damage(15, BRUTE, 0, FALSE, get_dir(chassis, target))
+				obj_target.take_damage(15, BRUTE, 0, FALSE, get_dir(chassis, target))
 			playsound(src,'sound/weapons/drill.ogg', 40, TRUE)
 
 		// If we caused a qdel drilling the target, we can stop drilling them.
@@ -149,24 +149,21 @@
 		to_chat(user, "[icon2html(src, user)][span_danger("[src] is too durable to drill through.")]")
 
 /turf/closed/mineral/drill_act(obj/item/mecha_parts/mecha_equipment/drill/drill, mob/user)
-	for(var/turf/closed/mineral/M in range(drill.chassis,1))
-		if(get_dir(drill.chassis,M)&drill.chassis.dir)
-			M.gets_drilled()
+	for(var/turf/closed/mineral/wall in range(drill.chassis, 1))
+		if(get_dir(drill.chassis, wall) & drill.chassis.dir)
+			wall.gets_drilled()
 	drill.log_message("[user] drilled through [src]", LOG_MECHA)
 	drill.move_ores()
 
 /turf/open/misc/asteroid/drill_act(obj/item/mecha_parts/mecha_equipment/drill/drill)
-	for(var/turf/open/misc/asteroid/M in range(1, drill.chassis))
-		if((get_dir(drill.chassis,M) & drill.chassis.dir) && !M.dug)
-			M.getDug()
+	for(var/turf/open/misc/asteroid/floor in range(1, drill.chassis))
+		if((get_dir(drill.chassis, floor) & drill.chassis.dir) && !floor.dug)
+			floor.getDug()
 	drill.log_message("Drilled through [src]", LOG_MECHA)
 	drill.move_ores()
 
-
 /obj/item/mecha_parts/mecha_equipment/drill/proc/move_ores()
-	if(istype(chassis, /obj/vehicle/sealed/mecha/ripley) && (locate(/obj/item/mecha_parts/mecha_equipment/hydraulic_clamp) in chassis.flat_equipment))
-		var/obj/vehicle/sealed/mecha/ripley/R = chassis //we could assume that it's a ripley because it has a clamp, but that's ~unsafe~ and ~bad practice~
-		R.collect_ore()
+	chassis.collect_ore()
 
 /obj/item/mecha_parts/mecha_equipment/drill/proc/drill_mob(mob/living/target, mob/living/user)
 	target.visible_message(span_danger("[chassis] is drilling [target] with [src]!"), \
@@ -179,21 +176,24 @@
 		else
 			target.investigate_log("has been gibbed by [src] (attached to [chassis]).", INVESTIGATE_DEATHS)
 			target.gib(DROP_ALL_REMAINS)
+		return
+
+	//drill makes a hole
+	var/def_zone = target.get_random_valid_zone(BODY_ZONE_CHEST)
+	var/obj/item/bodypart/target_part = target.get_bodypart(def_zone)
+	var/blocked = target.run_armor_check(def_zone, MELEE)
+	target.apply_damage(10, BRUTE, def_zone, blocked)
+
+	//blood splatters
+	var/splatter_dir = get_dir(chassis, target)
+	if(isalien(target))
+		new /obj/effect/temp_visual/dir_setting/bloodsplatter/xenosplatter(target.drop_location(), splatter_dir)
 	else
-		//drill makes a hole
-		var/obj/item/bodypart/target_part = target.get_bodypart(target.get_random_valid_zone(BODY_ZONE_CHEST))
-		target.apply_damage(10, BRUTE, BODY_ZONE_CHEST, target.run_armor_check(target_part, MELEE))
+		new /obj/effect/temp_visual/dir_setting/bloodsplatter(target.drop_location(), splatter_dir)
 
-		//blood splatters
-		var/splatter_dir = get_dir(chassis, target)
-		if(isalien(target))
-			new /obj/effect/temp_visual/dir_setting/bloodsplatter/xenosplatter(target.drop_location(), splatter_dir)
-		else
-			new /obj/effect/temp_visual/dir_setting/bloodsplatter(target.drop_location(), splatter_dir)
-
-		//organs go everywhere
-		if(target_part && prob(10 * drill_level))
-			target_part.dismember(BRUTE)
+	//organs go everywhere
+	if(target_part && blocked < 100 && prob(10 * drill_level))
+		target_part.dismember(BRUTE)
 
 /obj/item/mecha_parts/mecha_equipment/drill/diamonddrill
 	name = "diamond-tipped exosuit drill"
@@ -204,7 +204,6 @@
 	drill_level = DRILL_HARDENED
 	force = 15
 	toolspeed = 0.7
-
 
 /obj/item/mecha_parts/mecha_equipment/mining_scanner
 	name = "exosuit mining scanner"

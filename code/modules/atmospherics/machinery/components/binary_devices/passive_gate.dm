@@ -84,7 +84,7 @@ Passive gate is similar to the regular pump except:
 	data["max_pressure"] = round(MAX_OUTPUT_PRESSURE)
 	return data
 
-/obj/machinery/atmospherics/components/binary/passive_gate/ui_act(action, params)
+/obj/machinery/atmospherics/components/binary/passive_gate/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if(.)
 		return

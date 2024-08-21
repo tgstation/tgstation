@@ -3,10 +3,8 @@
 /turf/template_noop,
 /area/template_noop)
 "b" = (
-/obj/machinery/computer/message_monitor{
-	dir = 1
-	},
-/obj/item/paper/monitorkey,
+/obj/structure/filingcabinet/security,
+/obj/structure/noticeboard/directional/south,
 /turf/open/floor/iron/dark,
 /area/ruin/syndicate_lava_base/telecomms)
 "c" = (
@@ -28,8 +26,8 @@
 /turf/open/floor/circuit/green,
 /area/ruin/syndicate_lava_base/telecomms)
 "m" = (
-/obj/machinery/computer/camera_advanced,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron/dark,
 /area/ruin/syndicate_lava_base/telecomms)
 "n" = (
@@ -44,14 +42,17 @@
 /turf/open/floor/iron/dark,
 /area/ruin/syndicate_lava_base/telecomms)
 "p" = (
-/obj/structure/table,
-/obj/item/storage/toolbox/syndicate,
-/obj/item/multitool,
-/obj/machinery/button/door{
+/obj/structure/table/reinforced,
+/obj/item/storage/toolbox/syndicate{
+	pixel_y = 8
+	},
+/obj/item/multitool{
+	pixel_y = 8
+	},
+/obj/machinery/button/door/directional/east{
 	id = "lavalandsyndi_telecomms";
-	name = "Telecomms Blast Door Control";
-	pixel_x = 26;
-	req_access = list("syndicate")
+	req_access = list("syndicate");
+	name = "Telecomms Blast Door Control"
 	},
 /turf/open/floor/iron/dark,
 /area/ruin/syndicate_lava_base/telecomms)
@@ -77,25 +78,16 @@
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron/dark,
 /area/ruin/syndicate_lava_base/telecomms)
-"z" = (
-/obj/structure/table/reinforced,
-/obj/item/radio/intercom{
-	freerange = 1;
-	name = "Syndicate Radio Intercom"
-	},
-/obj/effect/turf_decal/tile/neutral/fourcorners,
-/turf/open/floor/iron/dark,
-/area/ruin/syndicate_lava_base/telecomms)
 "B" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
+/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4,
 /turf/open/floor/iron/dark,
 /area/ruin/syndicate_lava_base/telecomms)
 "C" = (
-/obj/structure/chair/office{
-	dir = 4
-	},
 /obj/effect/turf_decal/tile/neutral/fourcorners,
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
+	dir = 1
+	},
 /turf/open/floor/iron/dark,
 /area/ruin/syndicate_lava_base/telecomms)
 "E" = (
@@ -110,14 +102,17 @@
 /turf/template_noop,
 /area/ruin/syndicate_lava_base/telecomms)
 "G" = (
-/obj/structure/table/reinforced,
-/obj/item/paper_bin,
-/obj/item/pen,
+/obj/item/radio/intercom/directional/north{
+	freerange = 1;
+	name = "Syndicate Radio Intercom"
+	},
+/obj/machinery/computer/camera_advanced,
 /turf/open/floor/iron/dark,
 /area/ruin/syndicate_lava_base/telecomms)
 "K" = (
-/obj/structure/table/reinforced,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/iron/dark,
 /area/ruin/syndicate_lava_base/telecomms)
 "N" = (
@@ -137,17 +132,20 @@
 /area/ruin/syndicate_lava_base/telecomms)
 "U" = (
 /obj/machinery/light/small/directional/east,
-/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/structure/noticeboard/directional/east,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron/dark,
 /area/ruin/syndicate_lava_base/telecomms)
 "V" = (
-/obj/structure/sign/warning/secure_area,
-/turf/closed/wall/mineral/plastitanium/nodiagonal,
+/obj/machinery/computer/message_monitor,
+/obj/item/paper/monitorkey,
+/turf/open/floor/iron/dark,
 /area/ruin/syndicate_lava_base/telecomms)
 "W" = (
+/obj/structure/table/reinforced,
+/obj/item/paper_bin{
+	pixel_y = 8
+	},
+/obj/item/pen,
 /turf/open/floor/iron/dark,
 /area/ruin/syndicate_lava_base/telecomms)
 "Y" = (
@@ -156,10 +154,10 @@
 /turf/open/floor/iron/dark,
 /area/ruin/syndicate_lava_base/telecomms)
 "Z" = (
-/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
-	dir = 4
-	},
 /obj/effect/turf_decal/tile/neutral/fourcorners,
+/obj/structure/chair/office{
+	dir = 1
+	},
 /turf/open/floor/iron/dark,
 /area/ruin/syndicate_lava_base/telecomms)
 
@@ -196,7 +194,7 @@ a
 (4,1,1) = {"
 f
 f
-V
+f
 O
 f
 f
@@ -205,8 +203,8 @@ a
 "}
 (5,1,1) = {"
 a
-e
-c
+f
+G
 o
 Y
 N
@@ -216,7 +214,7 @@ f
 (6,1,1) = {"
 a
 e
-c
+V
 Z
 m
 C
@@ -229,8 +227,8 @@ e
 W
 B
 K
-z
-G
+o
+c
 f
 "}
 (8,1,1) = {"

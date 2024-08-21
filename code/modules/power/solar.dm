@@ -61,7 +61,7 @@
 /obj/machinery/power/solar/proc/add_panel_overlay(icon_state, z_offset)
 	var/obj/effect/overlay/solar_panel/overlay = new(src)
 	overlay.icon_state = icon_state
-	SET_PLANE_EXPLICIT(overlay, ABOVE_GAME_PLANE, src)
+	SET_PLANE_EXPLICIT(overlay, GAME_PLANE, src)
 	overlay.pixel_z = z_offset
 	vis_contents += overlay
 	return overlay
@@ -367,6 +367,7 @@
 //
 
 /obj/machinery/power/solar_control
+	SET_BASE_VISUAL_PIXEL(0, DEPTH_OFFSET)
 	name = "solar panel control"
 	desc = "A controller for solar panel arrays."
 	icon = 'icons/obj/machines/computer.dmi'
@@ -486,7 +487,7 @@
 	data["history"] = history
 	return data
 
-/obj/machinery/power/solar_control/ui_act(action, params)
+/obj/machinery/power/solar_control/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if(.)
 		return

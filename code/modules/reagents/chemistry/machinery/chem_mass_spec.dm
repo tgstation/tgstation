@@ -1,4 +1,5 @@
 /obj/machinery/chem_mass_spec
+	SET_BASE_VISUAL_PIXEL(0, DEPTH_OFFSET)
 	name = "High-performance liquid chromatography machine"
 	desc = "Allows you to purify reagents & seperate out inverse reagents"
 	icon = 'icons/obj/medical/chemical.dmi'

@@ -7,7 +7,7 @@
 	name = "liver"
 	desc = "Pairing suggestion: chianti and fava beans."
 	icon_state = "liver"
-	visual = FALSE
+
 	w_class = WEIGHT_CLASS_SMALL
 	zone = BODY_ZONE_CHEST
 	slot = ORGAN_SLOT_LIVER
@@ -132,6 +132,7 @@
 	. = ..()
 	//If your liver is failing, then we use the liverless version of metabolize
 	if((organ_flags & ORGAN_FAILING) || HAS_TRAIT(owner, TRAIT_LIVERLESS_METABOLISM))
+		owner.reagents.end_metabolization(keep_liverless = TRUE)
 		owner.reagents.metabolize(owner, seconds_per_tick, times_fired, can_overdose = TRUE, liverless = TRUE)
 		return
 

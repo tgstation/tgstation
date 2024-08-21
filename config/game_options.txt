@@ -100,6 +100,11 @@ TRAITOR_SCALING_COEFF 6
 BROTHER_SCALING_COEFF 6
 CHANGELING_SCALING_COEFF 6
 
+## Global scaling for traitor progression.
+## Higher values will accelerate traitor progression, while lower values will decrease it.
+## Bypasses an upper limit of 1 MINUTE
+#TRAITOR_SCALING_MULTIPLIER 1
+
 ## Variables calculate how number of open security officer positions will scale to population.
 ## Used as (Officers = Population / Coeff)
 ## Set to 0 to disable scaling and use default numbers instead.
@@ -179,6 +184,10 @@ ALLOW_AI_MULTICAM
 ## How long the delay is before the Away Mission gate opens. Default is half an hour.
 ## 600 is one minute.
 GATEWAY_DELAY 18000
+
+## Overrides to gateway delay for specific away mission start points.
+GATEWAY_DELAYS_BY_ID AWAYSTART_BEACH 6000
+GATEWAY_DELAYS_BY_ID AWAYSTART_MUSEUM 9000
 
 ## The probability of the gateway mission being a config one
 CONFIG_GATEWAY_CHANCE 0

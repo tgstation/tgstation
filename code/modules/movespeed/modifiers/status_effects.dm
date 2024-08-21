@@ -38,6 +38,9 @@
 /datum/movespeed_modifier/status_effect/tired_post_charge
 	multiplicative_slowdown = 3
 
+/datum/movespeed_modifier/status_effect/tired_post_charge/lesser
+	multiplicative_slowdown = 2
+
 /// Get slower the more gold is in your system.
 /datum/movespeed_modifier/status_effect/midas_blight
 	id = MOVESPEED_ID_MIDAS_BLIGHT

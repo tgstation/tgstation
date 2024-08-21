@@ -6,6 +6,61 @@
 	time = 5 SECONDS
 	category = CAT_CLOTHING
 
+/datum/crafting_recipe/durathread_robe
+	name = "Durathread Robe"
+	result = /obj/item/clothing/suit/wizrobe/durathread
+	reqs = list(
+		/obj/item/stack/sheet/durathread = 3,
+		/obj/item/stack/sheet/leather = 6,
+	)
+	time = 5 SECONDS
+	category = CAT_CLOTHING
+
+/datum/crafting_recipe/durathread_robe_fire
+	name = "Durathread Pyromancer Robe"
+	result = /obj/item/clothing/suit/wizrobe/durathread/fire
+	reqs = list(/obj/item/clothing/suit/wizrobe/durathread = 1,
+				/obj/item/grown/novaflower = 1,
+				/obj/item/seeds/chili = 3)
+	time = 2 SECONDS
+	category = CAT_CLOTHING
+
+/datum/crafting_recipe/durathread_robe_ice
+	name = "Durathread Ice-o-mancer Robe"
+	result = /obj/item/clothing/suit/wizrobe/durathread/ice
+	reqs = list(/obj/item/clothing/suit/wizrobe/durathread = 1,
+				/obj/item/seeds/chili/ice = 1,
+				/obj/item/food/grown/herbs = 3)
+	time = 2 SECONDS
+	category = CAT_CLOTHING
+
+/datum/crafting_recipe/durathread_robe_electric
+	name = "Durathread Electromancer Robe"
+	result = /obj/item/clothing/suit/wizrobe/durathread/electric
+	reqs = list(/obj/item/clothing/suit/wizrobe/durathread = 1,
+				/obj/item/food/grown/mushroom/jupitercup = 1,
+				/obj/item/food/grown/sunflower = 3)
+	time = 2 SECONDS
+	category = CAT_CLOTHING
+
+/datum/crafting_recipe/durathread_robe_earth
+	name = "Durathread Geomancer Robe"
+	result = /obj/item/clothing/suit/wizrobe/durathread/earth
+	reqs = list(/obj/item/clothing/suit/wizrobe/durathread = 1,
+				/obj/item/food/grown/cahnroot = 1,
+				/obj/item/food/grown/potato = 3)
+	time = 2 SECONDS
+	category = CAT_CLOTHING
+
+/datum/crafting_recipe/durathread_robe_necro
+	name = "Durathread Necromancer Robe"
+	result = /obj/item/clothing/suit/wizrobe/durathread/necro
+	reqs = list(/obj/item/clothing/suit/wizrobe/durathread = 1,
+				/obj/item/food/grown/cannabis/death = 2,
+				/obj/item/food/grown/mushroom/angel = 2)
+	time = 2 SECONDS
+	category = CAT_CLOTHING
+
 /datum/crafting_recipe/durathread_helmet
 	name = "Durathread Helmet"
 	result = /obj/item/clothing/head/helmet/durathread
@@ -13,6 +68,62 @@
 				/obj/item/stack/sheet/leather = 5)
 	time = 4 SECONDS
 	category = CAT_CLOTHING
+
+/datum/crafting_recipe/watermelon_armour
+	name = "Watermelon Armour"
+	result = /obj/item/clothing/suit/armor/durability/watermelon
+	reqs = list(/obj/item/clothing/head/helmet/durability/watermelon = 3,
+				/obj/item/stack/sheet/durathread = 1)
+	time = 4 SECONDS
+	category = CAT_CLOTHING
+
+/datum/crafting_recipe/watermelon_armour_fr
+	name = "Watermelon Armour"
+	result = /obj/item/clothing/suit/armor/durability/watermelon/fire_resist
+	reqs = list(/obj/item/clothing/head/helmet/durability/watermelon/fire_resist = 3,
+				/obj/item/stack/sheet/durathread = 1)
+	time = 4 SECONDS
+	category = CAT_CLOTHING
+
+/datum/crafting_recipe/holymelon_armour
+	name = "Holymelon Armour"
+	result = /obj/item/clothing/suit/armor/durability/holymelon
+	reqs = list(/obj/item/clothing/head/helmet/durability/holymelon = 3,
+				/obj/item/stack/sheet/durathread = 1)
+	time = 4 SECONDS
+	category = CAT_CLOTHING
+
+/datum/crafting_recipe/holymelonmelon_armour_fr
+	name = "Holymelon Armour"
+	result = /obj/item/clothing/suit/armor/durability/holymelon/fire_resist
+	reqs = list(/obj/item/clothing/head/helmet/durability/holymelon/fire_resist = 3,
+				/obj/item/stack/sheet/durathread = 1)
+	time = 4 SECONDS
+	category = CAT_CLOTHING
+
+/datum/crafting_recipe/barrelmelon_armour
+	name = "Barrelmelon Armour"
+	result = /obj/item/clothing/suit/armor/durability/barrelmelon
+	reqs = list(/obj/item/clothing/head/helmet/durability/barrelmelon = 3,
+				/obj/item/stack/sheet/durathread = 1)
+	time = 4 SECONDS
+	category = CAT_CLOTHING
+
+/datum/crafting_recipe/barrelmelon_armour_fr
+	name = "Barrelmelon Armour"
+	result = /obj/item/clothing/suit/armor/durability/barrelmelon/fire_resist
+	reqs = list(/obj/item/clothing/head/helmet/durability/barrelmelon/fire_resist = 3,
+				/obj/item/stack/sheet/durathread = 1)
+	time = 4 SECONDS
+	category = CAT_CLOTHING
+
+/datum/crafting_recipe/grass_sheath
+	name = "Grass Sabre Sheath"
+	result = /obj/item/storage/belt/grass_sabre
+	reqs = list(/obj/item/food/grown/grass = 4,
+				/obj/item/food/grown/grass/fairy = 2)
+	time = 4 SECONDS
+	category = CAT_CONTAINERS
 
 /datum/crafting_recipe/fannypack
 	name = "Fannypack"

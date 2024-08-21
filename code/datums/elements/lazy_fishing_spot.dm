@@ -16,12 +16,14 @@
 	src.configuration = configuration
 	ADD_TRAIT(target, TRAIT_FISHING_SPOT, REF(src))
 	RegisterSignal(target, COMSIG_PRE_FISHING, PROC_REF(create_fishing_spot))
+	RegisterSignal(target, COMSIG_NPC_FISHING, PROC_REF(return_glob_fishing_spot))
 	RegisterSignal(target, COMSIG_ATOM_EXAMINE, PROC_REF(on_examined))
 	RegisterSignal(target, COMSIG_ATOM_EXAMINE_MORE, PROC_REF(on_examined_more))
 	RegisterSignal(target, COMSIG_ATOM_EX_ACT, PROC_REF(explosive_fishing))
 
 /datum/element/lazy_fishing_spot/Detach(datum/target)
 	UnregisterSignal(target, list(COMSIG_PRE_FISHING, COMSIG_ATOM_EXAMINE, COMSIG_ATOM_EXAMINE_MORE, COMSIG_ATOM_EX_ACT))
+	UnregisterSignal(target, list(COMSIG_PRE_FISHING, COMSIG_NPC_FISHING))
 	REMOVE_TRAIT(target, TRAIT_FISHING_SPOT, REF(src))
 	return ..()
 
@@ -76,3 +78,6 @@
 	SIGNAL_HANDLER
 	var/datum/fish_source/fish_source = GLOB.preset_fish_sources[configuration]
 	fish_source.spawn_reward_from_explosion(location, severity)
+
+/datum/element/lazy_fishing_spot/proc/return_glob_fishing_spot(datum/source, list/fish_spot_container)
+	fish_spot_container[NPC_FISHING_SPOT] = GLOB.preset_fish_sources[configuration]

@@ -78,21 +78,21 @@
 	var/list/contents = chassis.ore_box?.contents
 	var/list/contents_grouped = list()
 	for(var/obj/item/stack/ore/item as anything in contents)
-		if(isnull(contents_grouped[item.icon_state]))
+		if(isnull(contents_grouped[item.name]))
 			var/ore_data = list()
 			ore_data["name"] = item.name
 			ore_data["icon"] = item.icon_state
 			ore_data["amount"] = item.amount
-			contents_grouped[item.icon_state] = ore_data
+			contents_grouped[item.name] = ore_data
 		else
-			contents_grouped[item.icon_state]["amount"] += item.amount
+			contents_grouped[item.name]["amount"] += item.amount
 	var/list/data = list(
 		"snowflake_id" = MECHA_SNOWFLAKE_ID_OREBOX_MANAGER,
 		"contents" = contents_grouped,
 		)
 	return data
 
-/obj/item/mecha_parts/mecha_equipment/orebox_manager/ui_act(action, list/params)
+/obj/item/mecha_parts/mecha_equipment/orebox_manager/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if(.)
 		return TRUE

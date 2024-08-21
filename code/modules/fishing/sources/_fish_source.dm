@@ -8,30 +8,48 @@ GLOBAL_LIST_INIT(preset_fish_sources, init_subtypes_w_path_keys(/datum/fish_sour
  * A lot of the icons here may be a tad inaccurate, but since we're limited to the free font awesome icons we
  * have access to, we got to make do.
  */
-GLOBAL_LIST_INIT(specific_fish_icons, zebra_typecacheof(list(
-	/mob/living/basic/carp = FISH_ICON_DEF,
-	/mob/living/basic/mining = FISH_ICON_HOSTILE,
-	/obj/effect/decal/remains = FISH_ICON_BONE,
-	/obj/effect/mob_spawn/corpse = FISH_ICON_BONE,
-	/obj/item/coin = FISH_ICON_COIN,
-	/obj/item/fish = FISH_ICON_DEF,
-	/obj/item/fish/armorfish = FISH_ICON_CRAB,
-	/obj/item/fish/boned = FISH_ICON_BONE,
-	/obj/item/fish/chasm_crab = FISH_ICON_CRAB,
-	/obj/item/fish/gunner_jellyfish = FISH_ICON_JELLYFISH,
-	/obj/item/fish/holo/crab = FISH_ICON_CRAB,
-	/obj/item/fish/holo/puffer = FISH_ICON_CHUNKY,
-	/obj/item/fish/mastodon = FISH_ICON_BONE,
-	/obj/item/fish/pufferfish = FISH_ICON_CHUNKY,
-	/obj/item/fish/slimefish = FISH_ICON_SLIME,
-	/obj/item/fish/sludgefish = FISH_ICON_SLIME,
-	/obj/item/fish/starfish = FISH_ICON_STAR,
-	/obj/item/storage/wallet = FISH_ICON_COIN,
-	/obj/item/stack/sheet/bone = FISH_ICON_BONE,
-	/obj/item/stack/sheet/mineral = FISH_ICON_GEM,
-	/obj/item/stack/ore = FISH_ICON_GEM,
-	/obj/structure/closet/crate = FISH_ICON_COIN,
-)))
+GLOBAL_LIST_INIT(specific_fish_icons, generate_specific_fish_icons())
+
+/proc/generate_specific_fish_icons()
+	var/list/return_list = zebra_typecacheof(list(
+		/mob/living/basic/axolotl = FISH_ICON_CRITTER,
+		/mob/living/basic/frog = FISH_ICON_CRITTER,
+		/mob/living/basic/carp = FISH_ICON_DEF,
+		/mob/living/basic/mining = FISH_ICON_HOSTILE,
+		/obj/effect/decal/remains = FISH_ICON_BONE,
+		/obj/effect/mob_spawn/corpse = FISH_ICON_BONE,
+		/obj/item/coin = FISH_ICON_COIN,
+		/obj/item/fish = FISH_ICON_DEF,
+		/obj/item/fish/armorfish = FISH_ICON_CRAB,
+		/obj/item/fish/boned = FISH_ICON_BONE,
+		/obj/item/fish/chainsawfish = FISH_ICON_WEAPON,
+		/obj/item/fish/chasm_crab = FISH_ICON_CRAB,
+		/obj/item/fish/gunner_jellyfish = FISH_ICON_JELLYFISH,
+		/obj/item/fish/holo/crab = FISH_ICON_CRAB,
+		/obj/item/fish/holo/puffer = FISH_ICON_CHUNKY,
+		/obj/item/fish/jumpercable = FISH_ICON_ELECTRIC,
+		/obj/item/fish/lavaloop = FISH_ICON_WEAPON,
+		/obj/item/fish/mastodon = FISH_ICON_BONE,
+		/obj/item/fish/pufferfish = FISH_ICON_CHUNKY,
+		/obj/item/fish/sand_crab = FISH_ICON_CRAB,
+		/obj/item/fish/skin_crab = FISH_ICON_CRAB,
+		/obj/item/fish/slimefish = FISH_ICON_SLIME,
+		/obj/item/fish/sludgefish = FISH_ICON_SLIME,
+		/obj/item/fish/starfish = FISH_ICON_STAR,
+		/obj/item/fish/stingray = FISH_ICON_WEAPON,
+		/obj/item/fish/swordfish = FISH_ICON_WEAPON,
+		/obj/item/fish/zipzap = FISH_ICON_ELECTRIC,
+		/obj/item/seeds/grass = FISH_ICON_SEED,
+		/obj/item/seeds/random = FISH_ICON_SEED,
+		/obj/item/storage/wallet = FISH_ICON_COIN,
+		/obj/item/stack/sheet/bone = FISH_ICON_BONE,
+		/obj/item/stack/sheet/mineral = FISH_ICON_GEM,
+		/obj/item/stack/ore = FISH_ICON_GEM,
+		/obj/structure/closet/crate = FISH_ICON_COIN,
+	))
+
+	return_list[FISHING_RANDOM_SEED] = FISH_ICON_SEED
+	return return_list
 
 /**
  * Where the fish actually come from - every fishing spot has one assigned but multiple fishing holes
@@ -45,6 +63,10 @@ GLOBAL_LIST_INIT(specific_fish_icons, zebra_typecacheof(list(
 	var/list/fish_table = list()
 	/// If a key from fish_table is present here, that fish is availible in limited quantity and is reduced by one on successful fishing
 	var/list/fish_counts = list()
+	/// Any limited quantity stuff in this list will be readded to the counts after a while
+	var/list/fish_count_regen
+	/// A list of stuff that's currently waiting to be readded to fish_counts
+	var/list/currently_on_regen
 	/// Text shown as baloon alert when you roll a dud in the table
 	var/duds = list("it was nothing", "the hook is empty")
 	/// Baseline difficulty for fishing in this spot
@@ -57,6 +79,11 @@ GLOBAL_LIST_INIT(specific_fish_icons, zebra_typecacheof(list(
 	var/explosive_malus = FALSE
 	/// If explosive_malus is true, this will be used to keep track of the turfs where an explosion happened for when we'll spawn the loot.
 	var/list/exploded_turfs
+	/// Mindless mobs that can fish will never pull up items on this list
+	var/static/list/profound_fisher_blacklist = typecacheof(list(
+		/mob/living/basic/mining/lobstrosity,
+		/obj/structure/closet/crate/necropolis/tendril,
+	))
 
 /datum/fish_source/New()
 	if(!PERFORM_ALL_TESTS(focus_only/fish_sources_tables))
@@ -97,7 +124,7 @@ GLOBAL_LIST_INIT(specific_fish_icons, zebra_typecacheof(list(
 		. += EXPERT_FISHER_DIFFICULTY_MOD
 
 	// Difficulty modifier added by the fisher's skill level
-	if(!challenge || !(challenge.special_effects & FISHING_MINIGAME_RULE_NO_EXP))
+	if(!(challenge?.special_effects & FISHING_MINIGAME_RULE_NO_EXP))
 		. += fisherman.mind?.get_skill_modifier(/datum/skill/fishing, SKILL_VALUE_MODIFIER)
 
 	// Difficulty modifier added by the rod
@@ -193,15 +220,25 @@ GLOBAL_LIST_INIT(specific_fish_icons, zebra_typecacheof(list(
 /datum/fish_source/proc/simple_dispense_reward(reward_path, atom/spawn_location, turf/fishing_spot)
 	if(isnull(reward_path))
 		return null
-	if((reward_path in fish_counts)) // This is limited count result
+	if(reward_path in fish_counts) // This is limited count result
 		fish_counts[reward_path] -= 1
-		if(!fish_counts[reward_path])
-			fish_counts -= reward_path //Ran out of these since rolling (multiple fishermen on same source most likely)
-			fish_table -= reward_path
+		var/regen_time = fish_count_regen?[reward_path]
+		if(regen_time)
+			LAZYADDASSOC(currently_on_regen, reward_path, 1)
+			if(currently_on_regen[reward_path] == 1)
+				addtimer(CALLBACK(src, PROC_REF(regen_count), reward_path), regen_time)
 
 	var/atom/movable/reward = spawn_reward(reward_path, spawn_location, fishing_spot)
 	SEND_SIGNAL(src, COMSIG_FISH_SOURCE_REWARD_DISPENSED, reward)
 	return reward
+
+/datum/fish_source/proc/regen_count(reward_path, regen_time)
+	fish_counts[reward_path] += 1
+	currently_on_regen[reward_path] -= 1
+	if(!currently_on_regen[reward_path])
+		LAZYREMOVE(currently_on_regen, reward_path)
+	else
+		addtimer(CALLBACK(src, PROC_REF(regen_count), reward_path), regen_time)
 
 /// Spawns a reward from a atom path right where the fisherman is. Part of the dispense_reward() logic.
 /datum/fish_source/proc/spawn_reward(reward_path, atom/spawn_location, turf/fishing_spot)
@@ -234,22 +271,13 @@ GLOBAL_LIST(fishing_property_cache)
 		GLOB.fishing_property_cache = fish_property_table
 	return GLOB.fishing_property_cache
 
-/// Checks if bait matches identifier from fav/disliked bait list
-/datum/fish_source/proc/is_matching_bait(obj/item/bait, identifier)
-	if(ispath(identifier)) //Just a path
-		return istype(bait, identifier)
-	if(islist(identifier))
-		var/list/special_identifier = identifier
-		switch(special_identifier["Type"])
-			if("Foodtype")
-				var/obj/item/food/food_bait = bait
-				return istype(food_bait) && food_bait.foodtypes & special_identifier["Value"]
-			if("Reagent")
-				return bait.reagents?.has_reagent(special_identifier["Value"], special_identifier["Amount"], check_subtypes = TRUE)
-			else
-				CRASH("Unknown bait identifier in fish favourite/disliked list")
-	else
-		return HAS_TRAIT(bait, identifier)
+/// Returns the fish table, with with the unavailable items from fish_counts removed.
+/datum/fish_source/proc/get_fish_table()
+	var/list/table = fish_table.Copy()
+	for(var/result in table)
+		if(fish_counts[result] == 0)
+			table -= result
+	return table
 
 /// Builds a fish weights table modified by bait/rod/user properties
 /datum/fish_source/proc/get_modified_fish_table(obj/item/fishing_rod/rod, mob/fisherman)
@@ -258,6 +286,9 @@ GLOBAL_LIST(fishing_property_cache)
 	var/leveling_exponent = 0
 	///Multiplier used to make fishes more common compared to everything else.
 	var/result_multiplier = 1
+
+
+	var/list/final_table = fish_table.Copy()
 
 	if(bait)
 		if(HAS_TRAIT(bait, TRAIT_GREAT_QUALITY_BAIT))
@@ -269,10 +300,13 @@ GLOBAL_LIST(fishing_property_cache)
 		else if(HAS_TRAIT(bait, TRAIT_BASIC_QUALITY_BAIT))
 			result_multiplier = 2
 			leveling_exponent = 0.1
+		final_table -= FISHING_DUD
 
 	var/list/fish_list_properties = collect_fish_properties()
 
-	var/list/final_table = fish_table.Copy()
+
+	if(HAS_TRAIT(fisherman, TRAIT_PROFOUND_FISHER) && !fisherman.client)
+		final_table -= profound_fisher_blacklist
 	for(var/result in final_table)
 		final_table[result] *= rod.hook?.get_hook_bonus_multiplicative(result)
 		final_table[result] += rod.hook?.get_hook_bonus_additive(result)//Decide on order here so it can be multiplicative
@@ -353,13 +387,13 @@ GLOBAL_LIST(fishing_property_cache)
 	for(var/i in 1 to (severity + 2))
 		if(!prob((100 + 100 * severity)/i * multiplier))
 			continue
-		var/reward_loot = pick_weight(fish_table)
+		var/reward_loot = pick_weight(get_fish_table())
 		var/atom/movable/reward = simple_dispense_reward(reward_loot, location, location)
 		if(isnull(reward))
 			continue
 		if(isfish(reward))
 			var/obj/item/fish/fish = reward
-			fish.set_status(FISH_DEAD)
+			fish.set_status(FISH_DEAD, silent = TRUE)
 		if(isitem(reward))
 			reward.pixel_x = rand(-9, 9)
 			reward.pixel_y = rand(-9, 9)

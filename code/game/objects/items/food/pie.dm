@@ -11,7 +11,7 @@
 	crafting_complexity = FOOD_COMPLEXITY_2
 	/// type is spawned 5 at a time and replaces this pie when processed by cutting tool
 	var/obj/item/food/pieslice/slice_type
-	/// so that the yield can change if it isnt 5
+	/// so that the yield can change if it isn't 5
 	var/yield = 5
 
 /obj/item/food/pie/make_processable()
@@ -316,6 +316,7 @@
 	)
 	tastes = list("nothing" = 3)
 	foodtypes = GRAIN
+	crafted_food_buff = /datum/status_effect/food/trait/mute
 
 /obj/item/food/pie/berrytart
 	name = "berry tart"

@@ -6,27 +6,22 @@
  * This is just so you can apply the animation to things which can be animated but are not movables (like images)
  */
 #define DO_FLOATING_ANIM(target) \
-	animate(target, pixel_y = 2, time = 1 SECONDS, loop = -1, flags = ANIMATION_RELATIVE); \
-	animate(pixel_y = -2, time = 1 SECONDS, flags = ANIMATION_RELATIVE)
+	animate(target, transform = target.transform.Translate(0, 2), time = 1 SECONDS, loop = -1, flags = ANIMATION_PARALLEL); \
+	animate(transform = target.transform.Translate(0, -2), time = 1 SECONDS);
 
 /**
  * Stops the passed atom / image from appearing floating
- * (Living mobs also have a 'body_position_pixel_y_offset' variable that has to be taken into account here)
  *
  * In most cases you should NOT call this manually, instead use [/datum/element/movetype_handler]!
  * This is just so you can apply the animation to things which can be animated but are not movables (like images)
  */
 #define STOP_FLOATING_ANIM(target) \
-	var/final_pixel_y = 0; \
-	if(ismovable(target)) { \
-		var/atom/movable/movable_target = target; \
-		final_pixel_y = movable_target.base_pixel_y; \
-	}; \
-	if(isliving(target)) { \
-		var/mob/living/living_target = target; \
-		final_pixel_y += living_target.body_position_pixel_y_offset; \
-	}; \
-	animate(target, pixel_y = final_pixel_y, time = 1 SECONDS)
+	do { \
+		var/datum/decompose_matrix/_decomposed_target_matrix = target.transform.decompose();\
+		var/matrix/_original_matrix = matrix().Turn(_decomposed_target_matrix.rotation);\
+		_original_matrix = _original_matrix.Scale(_decomposed_target_matrix.scale_x, _decomposed_target_matrix.scale_y);\
+		animate(target, transform = _original_matrix, time = 1 SECONDS);\
+	} while(FALSE)
 
 /// The duration of the animate call in mob/living/update_transform
 #define UPDATE_TRANSFORM_ANIMATION_TIME (0.2 SECONDS)
@@ -44,9 +39,9 @@
 	speed /= segments
 
 	if(parallel)
-		animate(src, transform = matrices[1], time = speed, loops , flags = ANIMATION_PARALLEL)
+		animate(src, transform = matrices[1], time = speed, loop = loops, flags = ANIMATION_PARALLEL)
 	else
-		animate(src, transform = matrices[1], time = speed, loops)
+		animate(src, transform = matrices[1], time = speed, loop = loops)
 	for(var/i in 2 to segments) //2 because 1 is covered above
 		animate(transform = matrices[i], time = speed)
 		//doesn't have an object argument because this is "Stacking" with the animate call above

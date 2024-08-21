@@ -49,6 +49,17 @@
 	resistance_flags = FLAMMABLE
 	dog_fashion = /datum/dog_fashion/head/blue_wizard
 
+/obj/item/clothing/head/wizard/chanterelle
+	name = "chanterelle hat"
+	desc = "An oversized chanterelle with hollow out space to fit a head in. Kinda looks like wizard's hat."
+	icon_state = "chanterelle"
+	inhand_icon_state = "chanterellehat"
+	armor_type = /datum/armor/none
+	resistance_flags = FLAMMABLE
+
+/obj/item/clothing/head/wizard/chanterelle/fr
+	resistance_flags = FIRE_PROOF
+
 /obj/item/clothing/head/wizard/marisa
 	name = "witch hat"
 	desc = "Strange-looking hat-wear. Makes you want to cast fireballs."
@@ -203,6 +214,63 @@
 	inhand_icon_state = null
 	var/robe_charge = TRUE
 	actions_types = list(/datum/action/item_action/stickmen)
+
+
+/obj/item/clothing/suit/wizrobe/durathread
+	name = "durathread robe"
+	desc = "A rather dull durathread robe; not quite as protective as a proper piece of armour, but much stylish."
+	icon_state = "durathread-fake"
+	inhand_icon_state = null
+	armor_type = /datum/armor/robe_durathread
+	allowed = list(
+		/obj/item/cultivator,
+		/obj/item/geneshears,
+		/obj/item/graft,
+		/obj/item/hatchet,
+		/obj/item/plant_analyzer,
+		/obj/item/reagent_containers/cup/beaker,
+		/obj/item/reagent_containers/cup/bottle,
+		/obj/item/reagent_containers/cup/tube,
+		/obj/item/reagent_containers/spray/pestspray,
+		/obj/item/reagent_containers/spray/plantbgone,
+		/obj/item/secateurs,
+		/obj/item/seeds,
+		/obj/item/storage/bag/plants,
+	)
+
+/datum/armor/robe_durathread
+	melee = 15
+	bullet = 5
+	laser = 25
+	energy = 30
+	bomb = 10
+	fire = 30
+	acid = 40
+
+/obj/item/clothing/suit/wizrobe/durathread/fire
+	name = "pyromancer robe"
+	desc = "A rather dull durathread robe; not quite as protective as an woven armour, but much stylish."
+	icon_state = "durathread-fire"
+
+/obj/item/clothing/suit/wizrobe/durathread/ice
+	name = "pyromancer robe"
+	desc = "A rather dull durathread robe; not quite as protective as an woven armour, but much stylish."
+	icon_state = "durathread-ice"
+
+/obj/item/clothing/suit/wizrobe/durathread/electric
+	name = "electromancer robe"
+	desc = "Doesn't actually conduit or isolate from electricity. Though it does have some durability on account of being made from durathread."
+	icon_state = "durathread-electric"
+
+/obj/item/clothing/suit/wizrobe/durathread/earth
+	name = "geomancer robe"
+	desc = "A rather dull durathread robe; not quite as protective as an woven armour, but much stylish."
+	icon_state = "durathread-earth"
+
+/obj/item/clothing/suit/wizrobe/durathread/necro
+	name = "necromancer robe"
+	desc = "A rather dull durathread robe; not quite as protective as an woven armour, but much stylish."
+	icon_state = "durathread-necro"
 
 
 /obj/item/clothing/suit/wizrobe/paper/ui_action_click(mob/user, action)

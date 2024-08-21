@@ -101,14 +101,25 @@
 
 /obj/item/fishing_rod/proc/consume_bait(atom/movable/reward)
 	// catching things that aren't fish or alive mobs doesn't consume baits.
-	if(isnull(reward) || isnull(bait))
+	if(isnull(reward) || isnull(bait) || HAS_TRAIT(bait, TRAIT_BAIT_UNCONSUMABLE))
 		return
 	if(isliving(reward))
 		var/mob/living/caught_mob = reward
 		if(caught_mob.stat == DEAD)
 			return
-	else if(!isfish(reward))
-		return
+	else
+		if(!isfish(reward))
+			return
+		var/obj/item/fish/fish = reward
+		if(HAS_TRAIT(bait, TRAIT_POISONOUS_BAIT) && !HAS_TRAIT(fish, TRAIT_FISH_TOXIN_IMMUNE))
+			var/kill_fish = TRUE
+			for(var/bait_identifer in fish.favorite_bait)
+				if(is_matching_bait(bait, bait_identifer))
+					kill_fish = FALSE
+					break
+			if(kill_fish)
+				fish.set_status(FISH_DEAD, silent = TRUE)
+
 	QDEL_NULL(bait)
 	update_icon()
 
@@ -365,7 +376,7 @@
 				return FALSE
 	return TRUE
 
-/obj/item/fishing_rod/ui_act(action, list/params)
+/obj/item/fishing_rod/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if(.)
 		return .
@@ -536,7 +547,7 @@
 	ui_description = "This rod has an infinite supply of synth-bait. Also doubles as an Experi-Scanner for fish."
 	icon_state = "fishing_rod_science"
 	reel_overlay = "reel_science"
-	bait = /obj/item/food/bait/doughball/synthetic
+	bait = /obj/item/food/bait/doughball/synthetic/unconsumable
 
 /obj/item/fishing_rod/tech/Initialize(mapload)
 	. = ..()
@@ -557,9 +568,6 @@
 /obj/item/fishing_rod/tech/examine(mob/user)
 	. = ..()
 	. += span_notice("<b>Alt-Click</b> to access the Experiment Configuration UI")
-
-/obj/item/fishing_rod/tech/consume_bait(atom/movable/reward)
-	return
 
 /obj/item/fishing_rod/tech/use_slot(slot, mob/user, obj/item/new_item)
 	if(slot == ROD_SLOT_BAIT)
@@ -586,24 +594,21 @@
 	if(owner.hook)
 		icon_state = owner.hook.icon_state
 		transform = transform.Scale(1, -1)
-	return ..()
+	. = ..()
+	if(!QDELETED(src))
+		our_line = owner.create_fishing_line(src)
 
 /obj/projectile/fishing_cast/on_hit(atom/target, blocked = 0, pierce_hit)
 	. = ..()
 	if(blocked < 100)
+		QDEL_NULL(our_line) //we need to delete the old beam datum, otherwise it won't let you fish.
 		owner.hook_hit(target)
-	qdel(src)
-
-/obj/projectile/fishing_cast/fire(angle, atom/direct_target)
-	. = ..()
-	our_line = owner.create_fishing_line(src)
 
 /obj/projectile/fishing_cast/Destroy()
-	. = ..()
 	QDEL_NULL(our_line)
 	owner?.casting = FALSE
-
-
+	owner = null
+	return ..()
 
 /datum/beam/fishing_line
 	// Is the fishing rod held in left side hand
