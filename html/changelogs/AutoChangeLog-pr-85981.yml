@@ -1,0 +1,4 @@
+author: "MMMiracles"
+delete-after: True
+changes:
+  - bugfix: "More various Tramstation-adjacent wallening fixes."
