@@ -6,9 +6,6 @@
 	sexes = TRUE
 	species_traits = list(
 		MUTCOLORS,
-		EYECOLOR,
-		HAIR,
-		FACEHAIR
 	)
 	inherent_traits = list(
 		TRAIT_DWARF,

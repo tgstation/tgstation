@@ -14,15 +14,12 @@
 	knife_butcher_results = list(/obj/item/food/meat/slab/monkey = 5, /obj/item/stack/sheet/animalhide/monkey = 1)
 	species_traits = list(
 		NO_UNDERWEAR,
-		LIPS,
-		NOEYESPRITES,
 		NOBLOODOVERLAY,
 		NOTRANSSTING,
 		NOAUGMENTS,
 	)
 	inherent_traits = list(
 		TRAIT_GUN_NATURAL,
-		//TRAIT_LITERATE,
 		TRAIT_VENTCRAWLER_NUDE,
 		TRAIT_WEAK_SOUL,
 	)

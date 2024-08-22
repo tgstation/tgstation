@@ -10,7 +10,6 @@
 	species_traits = list(
 		NOZOMBIE,
 		NOTRANSSTING,
-		HAIR, // monke edit: allow them to have hair (it's the future, why not)
 	)
 	inherent_traits = list(
 		// SHARED WITH ALL ZOMBIES

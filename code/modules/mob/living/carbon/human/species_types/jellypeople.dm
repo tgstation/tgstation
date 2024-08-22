@@ -12,11 +12,7 @@
 	id = SPECIES_JELLYPERSON
 	species_traits = list(
 		MUTCOLORS,
-		EYECOLOR,
-		HAIR, // monke edit: allow them to have hair (it's the future, why not)
 	)
-	hair_color = "mutcolor"
-	hair_alpha = 150
 	inherent_traits = list(
 		TRAIT_CAN_USE_FLIGHT_POTION,
 		TRAIT_TOXINLOVER,
@@ -41,6 +37,9 @@
 	species_language_holder = /datum/language_holder/jelly
 	ass_image = 'icons/ass/assslime.png'
 	wing_types = list(/obj/item/organ/external/wings/functional/slime)
+	hair_color = "mutcolor"
+	hair_alpha = 150
+	facial_hair_alpha = 150
 
 	bodypart_overrides = list(
 		BODY_ZONE_L_ARM = /obj/item/bodypart/arm/left/jelly,
@@ -182,9 +181,10 @@
 	name = "\improper Slimeperson"
 	plural_form = "Slimepeople"
 	id = SPECIES_SLIMEPERSON
-	species_traits = list(MUTCOLORS,EYECOLOR,HAIR,FACEHAIR)
+	species_traits = list(MUTCOLORS,)
 	hair_color = "mutcolor"
 	hair_alpha = 150
+	facial_hair_alpha = 150
 	changesource_flags = MIRROR_BADMIN | WABBAJACK | MIRROR_PRIDE | RACE_SWAP | ERT_SPAWN | SLIME_EXTRACT
 	mutanteyes = /obj/item/organ/internal/eyes
 	var/datum/action/innate/split_body/slime_split

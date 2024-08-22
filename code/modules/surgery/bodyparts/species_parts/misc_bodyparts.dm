@@ -2,6 +2,7 @@
 /obj/item/bodypart/head/snail
 	limb_id = SPECIES_SNAIL
 	is_dimorphic = FALSE
+	head_flags = HEAD_EYESPRITES|HEAD_DEBRAIN
 
 /obj/item/bodypart/chest/snail
 	limb_id = SPECIES_SNAIL
@@ -31,6 +32,7 @@
 	limb_id = SPECIES_ABDUCTOR
 	is_dimorphic = FALSE
 	should_draw_greyscale = FALSE
+	head_flags = NONE
 
 /obj/item/bodypart/chest/abductor
 	limb_id = SPECIES_ABDUCTOR
@@ -61,6 +63,7 @@
 	limb_id = SPECIES_JELLYPERSON
 	is_dimorphic = TRUE
 	dmg_overlay_type = null
+	head_flags = HEAD_ALL_FEATURES
 
 /obj/item/bodypart/chest/jelly
 	biological_state = (BIO_FLESH|BIO_BLOODED)
@@ -93,6 +96,7 @@
 	biological_state = (BIO_FLESH|BIO_BLOODED)
 	limb_id = SPECIES_SLIMEPERSON
 	is_dimorphic = FALSE
+	head_flags = HEAD_ALL_FEATURES
 
 /obj/item/bodypart/chest/slime
 	biological_state = (BIO_FLESH|BIO_BLOODED)
@@ -147,6 +151,7 @@
 	limb_id = SPECIES_ZOMBIE
 	is_dimorphic = FALSE
 	should_draw_greyscale = FALSE
+	head_flags = HEAD_EYESPRITES | HEAD_DEBRAIN | HEAD_HAIR
 
 /obj/item/bodypart/chest/zombie
 	limb_id = SPECIES_ZOMBIE
@@ -203,6 +208,7 @@
 	limb_id = SPECIES_FLYPERSON
 	is_dimorphic = FALSE
 	should_draw_greyscale = FALSE
+	head_flags = HEAD_EYESPRITES | HEAD_DEBRAIN
 
 /obj/item/bodypart/chest/fly
 	limb_id = SPECIES_FLYPERSON
@@ -230,6 +236,7 @@
 	limb_id = SPECIES_SHADOW
 	is_dimorphic = FALSE
 	should_draw_greyscale = FALSE
+	head_flags = NONE
 
 /obj/item/bodypart/chest/shadow
 	limb_id = SPECIES_SHADOW
@@ -265,6 +272,7 @@
 	is_dimorphic = FALSE
 	should_draw_greyscale = FALSE
 	dmg_overlay_type = null
+	head_flags = HEAD_HAIR
 
 /obj/item/bodypart/chest/skeleton
 	biological_state = BIO_BONE
@@ -301,6 +309,7 @@
 /obj/item/bodypart/head/mushroom
 	limb_id = SPECIES_MUSHROOM
 	is_dimorphic = TRUE
+	head_flags = NONE
 
 /obj/item/bodypart/chest/mushroom
 	limb_id = SPECIES_MUSHROOM
@@ -331,13 +340,14 @@
 	unarmed_damage_high = 15
 	unarmed_stun_threshold = 14
 
-///GOLEMS (i hate xenobio SO FUCKING MUCH) (from 2022: Yeah I fucking feel your pain brother)
+///GOLEMS (i hate xenobio SO FUCKING MUCH) (from 2022: Yeah I fucking feel your pain brother) (2024: yeah this is shit)
 /obj/item/bodypart/head/golem
 	biological_state = BIO_BONE
 	bodytype = BODYTYPE_ORGANIC
 	limb_id = SPECIES_GOLEM
 	is_dimorphic = FALSE
 	dmg_overlay_type = null
+	head_flags = HEAD_EYESPRITES
 
 /obj/item/bodypart/chest/golem
 	biological_state = BIO_BONE
@@ -413,6 +423,7 @@
 	limb_id = SPECIES_GOLEM_CULT
 	is_dimorphic = FALSE
 	should_draw_greyscale = FALSE
+	head_flags = NONE
 
 /obj/item/bodypart/chest/golem/cult
 	limb_id = SPECIES_GOLEM_CULT
@@ -479,6 +490,7 @@
 	limb_id = SPECIES_GOLEM_CARDBOARD
 	is_dimorphic = FALSE
 	should_draw_greyscale = FALSE
+	head_flags = NONE
 
 /obj/item/bodypart/chest/golem/cardboard
 	limb_id = SPECIES_GOLEM_CARDBOARD
@@ -528,6 +540,7 @@
 	limb_id = SPECIES_GOLEM_DURATHREAD
 	is_dimorphic = FALSE
 	should_draw_greyscale = FALSE
+	head_flags = NONE
 
 /obj/item/bodypart/chest/golem/durathread
 	limb_id = SPECIES_GOLEM_DURATHREAD
@@ -556,6 +569,7 @@
 	limb_id = SPECIES_GOLEM_BONE
 	is_dimorphic = FALSE
 	should_draw_greyscale = FALSE
+	head_flags = NONE
 
 /obj/item/bodypart/chest/golem/bone
 	biological_state = BIO_BONE
@@ -588,6 +602,7 @@
 	limb_id = SPECIES_GOLEM_SNOW
 	is_dimorphic = FALSE
 	should_draw_greyscale = FALSE
+	head_flags = NONE
 
 /obj/item/bodypart/chest/golem/snow
 	limb_id = SPECIES_GOLEM_SNOW
@@ -701,3 +716,5 @@
 	unarmed_damage_low = 0
 	unarmed_damage_high = 1
 	unarmed_stun_threshold = 2
+
+//

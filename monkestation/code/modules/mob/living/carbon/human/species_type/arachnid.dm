@@ -6,8 +6,6 @@
 	visual_gender = FALSE
 	species_traits = list(
 		MUTCOLORS,
-		EYECOLOR,
-		LIPS,
 	)
 	inherent_biotypes = MOB_ORGANIC|MOB_HUMANOID|MOB_BUG
 	external_organs = list(

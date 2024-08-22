@@ -3,9 +3,7 @@
 	plural_form = "Mothmen"
 	id = SPECIES_MOTH
 	species_traits = list(
-		LIPS,
 		HAS_MARKINGS,
-		HAIR // monke edit: moths can have hair (it's the future, why not)
 	)
 	inherent_traits = list(
 		TRAIT_CAN_USE_FLIGHT_POTION,

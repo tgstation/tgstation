@@ -551,8 +551,27 @@
 	icon = 'monkestation/code/modules/blueshift/icons/items.dmi'
 	icon_state = "razor"
 	w_class = WEIGHT_CLASS_TINY
+	flags_1 = CONDUCT_1
+	toolspeed = 1
 	// How long do we take to shave someone's (facial) hair?
 	var/shaving_time = 5 SECONDS
+	//Gigarazor W/ Bananium
+	var/unlocked = FALSE //for unlocking super hairstyles
+
+/obj/item/razor/attackby(obj/item/item, mob/user, params)
+	.=..()
+	if(istype(item, /obj/item/stack/sheet/mineral/bananium))
+		if(unlocked)
+			to_chat(user, "<span class='userdanger'>[src] is already powered by bananium!</span>")
+			return
+		item.use_tool(src, user, amount=1)
+		unlocked = TRUE
+		to_chat(user, "<span class='userdanger'>You insert the bananium into the battery pack.</span>")
+
+/obj/item/razor/gigarazor
+	name = "shmick 9000"
+	desc = "It gets the job done."
+	unlocked = TRUE
 
 /obj/item/razor/suicide_act(mob/living/carbon/user)
 	user.visible_message(span_suicide("[user] begins shaving [user.p_them()]self without the razor guard! It looks like [user.p_theyre()] trying to commit suicide!"))
@@ -578,7 +597,7 @@
 	var/mob/living/carbon/human/target_human = attacked_mob
 	var/location = user.zone_selected
 	var/obj/item/bodypart/head/noggin = target_human.get_bodypart(BODY_ZONE_HEAD)
-	var/static/list/head_zones = list(BODY_ZONE_PRECISE_MOUTH, BODY_ZONE_HEAD)
+	var/static/list/head_zones = list(BODY_ZONE_PRECISE_EYES, BODY_ZONE_PRECISE_MOUTH, BODY_ZONE_HEAD)
 
 	if(!noggin && (location in head_zones))
 		to_chat(user, span_warning("[target_human] doesn't have a head!"))
@@ -591,6 +610,10 @@
 	if(location == BODY_ZONE_PRECISE_MOUTH)
 		if(!get_location_accessible(target_human, location))
 			to_chat(user, span_warning("The mask is in the way!"))
+			return
+
+		if(!(noggin.head_flags & HEAD_FACIAL_HAIR))
+			to_chat(user, span_warning("There is no facial hair to style!"))
 			return
 
 		if(HAS_TRAIT(target_human, TRAIT_SHAVED))
@@ -615,6 +638,10 @@
 
 		if(!get_location_accessible(target_human, location))
 			to_chat(user, span_warning("The headgear is in the way!"))
+			return
+
+		if(!(noggin.head_flags & HEAD_HAIR))
+			to_chat(user, span_warning("There is no hair to shave!"))
 			return
 
 		if(target_human.hairstyle == "Bald" || target_human.hairstyle == "Balding Hair" || target_human.hairstyle == "Skinhead")

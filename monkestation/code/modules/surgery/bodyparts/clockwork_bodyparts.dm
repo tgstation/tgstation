@@ -88,7 +88,7 @@
 	burn_modifier = 0.95
 	damage_examines = list(BRUTE = ROBOTIC_BRUTE_EXAMINE_TEXT, BURN = ROBOTIC_BURN_EXAMINE_TEXT, CLONE = DEFAULT_CLONE_EXAMINE_TEXT)
 	disabling_threshold_percentage = 1
-
+	head_flags = NONE
 
 /obj/item/bodypart/chest/robot/clockwork
 	name = "clockwork torso"

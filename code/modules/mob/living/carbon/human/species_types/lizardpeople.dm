@@ -7,9 +7,6 @@
 	species_traits = list(
 		MUTCOLORS,
 		MUTCOLORS_SECONDARY,
-		EYECOLOR,
-		LIPS,
-		HAIR // monke edit: lizards can have hair (it's the future, why not)
 	)
 	inherent_traits = list(
 		TRAIT_CAN_USE_FLIGHT_POTION,
@@ -128,8 +125,6 @@ Lizard subspecies: ASHWALKERS
 	species_traits = list(
 		MUTCOLORS,
 		MUTCOLORS_SECONDARY,
-		EYECOLOR,
-		LIPS,
 		NO_UNDERWEAR, //MONKESTATION ADDITION: no more flesh clothes lol
 	)
 	inherent_traits = list(

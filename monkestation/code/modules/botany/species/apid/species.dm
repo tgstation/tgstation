@@ -27,11 +27,7 @@
 	name = "\improper Apid"
 	plural_form = "Apids"
 	id = SPECIES_APID
-	species_traits = list(
-		LIPS,
-		HAS_MARKINGS,
-		HAIR
-	)
+	species_traits = list(HAS_MARKINGS,)
 
 	/*
 	mutant_bodyparts = list(

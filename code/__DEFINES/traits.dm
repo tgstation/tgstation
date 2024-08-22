@@ -245,6 +245,8 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_VIRUSIMMUNE "virus_immunity"
 #define TRAIT_PIERCEIMMUNE "pierce_immunity"
 #define TRAIT_NODISMEMBER "dismember_immunity"
+/// This carbon doesn't show an overlay when they have no brain
+#define TRAIT_NO_DEBRAIN_OVERLAY "no_debrain_overlay"
 #define TRAIT_NOFIRE "nonflammable"
 #define TRAIT_NOFIRE_SPREAD "no_fire_spreading"
 /// Prevents plasmamen from self-igniting if only their helmet is missing

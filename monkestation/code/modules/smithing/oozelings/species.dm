@@ -9,8 +9,6 @@
 
 	species_traits = list(
 		MUTCOLORS,
-		EYECOLOR,
-		HAIR,FACEHAIR,
 		)
 
 	hair_color = "mutcolor"

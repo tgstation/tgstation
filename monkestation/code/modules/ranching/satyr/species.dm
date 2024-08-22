@@ -6,9 +6,6 @@
 	no_equip_flags = ITEM_SLOT_FEET
 	sexes = TRUE
 	species_traits = list(
-		EYECOLOR,
-		HAIR,
-		FACEHAIR,
 		NO_UNDERWEAR,
 	)
 	inherent_traits = list(

@@ -6,10 +6,9 @@
 	bodytype = BODYTYPE_CUSTOM
 
 	species_traits = list(
-		EYECOLOR,
-		LIPS,
 		NO_UNDERWEAR,
 		SPECIES_FUR,
+		SKINTONES,
 		)
 	inherent_traits = list(
 		TRAIT_VAULTING,

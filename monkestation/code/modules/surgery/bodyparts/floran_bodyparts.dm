@@ -2,6 +2,7 @@
 	icon_greyscale = 'monkestation/icons/mob/species/floran/bodyparts.dmi'
 	limb_id = SPECIES_FLORAN
 	is_dimorphic = FALSE
+	head_flags = HEAD_EYESPRITES | HEAD_EYEHOLES | HEAD_DEBRAIN
 
 /obj/item/bodypart/chest/floran
 	icon_greyscale = 'monkestation/icons/mob/species/floran/bodyparts.dmi'

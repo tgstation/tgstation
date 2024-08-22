@@ -10,7 +10,6 @@
 
 	species_traits = list(
 		MUTCOLORS,
-		NOEYESPRITES,
 		NO_UNDERWEAR,
 	)
 	inherent_traits = list(

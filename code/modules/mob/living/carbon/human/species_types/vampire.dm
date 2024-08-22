@@ -8,10 +8,6 @@
 	name = "Vampire"
 	id = SPECIES_VAMPIRE
 	species_traits = list(
-		EYECOLOR,
-		HAIR,
-		FACEHAIR,
-		LIPS,
 		DRINKSBLOOD,
 		BLOOD_CLANS,
 	)

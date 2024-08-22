@@ -1,12 +1,7 @@
 /datum/species/dullahan
 	name = "Dullahan"
 	id = SPECIES_DULLAHAN
-	species_traits = list(
-		EYECOLOR,
-		HAIR,
-		FACEHAIR,
-		LIPS,
-	)
+	species_traits = list()
 	inherent_traits = list(
 		TRAIT_NOBREATH,
 		TRAIT_NOHUNGER,

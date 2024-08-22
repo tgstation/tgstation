@@ -2,6 +2,7 @@
 	icon_greyscale = 'icons/mob/species/lizard/bodyparts.dmi'
 	limb_id = SPECIES_LIZARD
 	is_dimorphic = FALSE
+	head_flags = HEAD_HAIR| HEAD_EYESPRITES | HEAD_EYEHOLES | HEAD_DEBRAIN | HEAD_EYECOLOR
 
 /obj/item/bodypart/chest/lizard
 	icon_greyscale = 'icons/mob/species/lizard/bodyparts.dmi'

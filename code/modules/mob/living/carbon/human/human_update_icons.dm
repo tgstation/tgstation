@@ -836,12 +836,14 @@ generate/load female uniform sprites matching all previously decided variables
 
 	var/obj/item/bodypart/HD = get_bodypart("head")
 
-	if (!istype(HD))
+	if(!istype(HD))
 		return
 
 	HD.update_limb(is_creating = update_limb_data)
 
 	add_overlay(HD.get_limb_icon())
+
+	/*
 	update_damage_overlays()
 
 	if(HD && !(HAS_TRAIT(src, TRAIT_HUSK)))
@@ -867,6 +869,7 @@ generate/load female uniform sprites matching all previously decided variables
 				add_overlay(missing_eyes)
 	update_worn_head()
 	update_worn_mask()
+	*/
 
 // Hooks into human apply overlay so that we can modify all overlays applied through standing overlays to our height system.
 // Some of our overlays will be passed through a displacement filter to make our mob look taller or shorter.

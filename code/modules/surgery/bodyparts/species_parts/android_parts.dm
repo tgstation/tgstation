@@ -6,6 +6,7 @@
 
 /obj/item/bodypart/head/robot/android
 	change_exempt_flags = null
+	head_flags = HEAD_HAIR | HEAD_EYESPRITES
 
 /obj/item/bodypart/chest/robot/android
 	change_exempt_flags = null

@@ -56,7 +56,7 @@
 		return
 	eye_recipient.cure_blind(NO_EYES)
 	apply_damaged_eye_effects()
-	refresh(eye_recipient, inserting = TRUE)
+	refresh(eye_recipient, inserting = TRUE, call_update = TRUE)
 
 /// Refreshes the visuals of the eyes
 /// If call_update is TRUE, we also will call update_body
@@ -85,7 +85,7 @@
 		affected_human.add_fov_trait(type, native_fov)
 
 	if(call_update)
-		affected_human.dna?.species?.handle_body(affected_human) //updates eye icon
+		affected_human.update_body()
 
 /obj/item/organ/internal/eyes/Remove(mob/living/carbon/eye_owner, special = FALSE)
 	. = ..()
@@ -95,10 +95,9 @@
 			human_owner.eye_color_left = old_eye_color_left
 		if(initial(eye_color_right))
 			human_owner.eye_color_right = old_eye_color_right
-		human_owner.update_body()
 		if(native_fov)
 			eye_owner.remove_fov_trait(type)
-
+		human_owner.update_body()
 	// Cure blindness from eye damage
 	eye_owner.cure_blind(EYE_DAMAGE)
 	eye_owner.cure_nearsighted(EYE_DAMAGE)
@@ -124,22 +123,24 @@
 
 	var/mutable_appearance/eye_left = mutable_appearance(eye_icon, "[eye_icon_state]_l", -FACE_LAYER)
 	var/mutable_appearance/eye_right = mutable_appearance(eye_icon, "[eye_icon_state]_r", -FACE_LAYER)
+
 	var/list/overlays = list(eye_left, eye_right)
+	var/obj/item/bodypart/head/my_head = parent.get_bodypart(BODY_ZONE_HEAD)
+	if(my_head)
+		if(my_head.head_flags & HEAD_EYECOLOR)
+			eye_right.color = eye_color_right
+			eye_left.color = eye_color_left
 
-	if(EYECOLOR in parent.dna?.species.species_traits)
-		eye_right.color = eye_color_right
-		eye_left.color = eye_color_left
+		var/obscured = parent.check_obscured_slots(TRUE)
+		if(overlay_ignore_lighting && !(obscured & ITEM_SLOT_EYES))
+			overlays += emissive_appearance_copy(eye_left, src, NONE)
+			overlays += emissive_appearance_copy(eye_right, src, NONE)
 
-	var/obscured = parent.check_obscured_slots(TRUE)
-	if(overlay_ignore_lighting && !(obscured & ITEM_SLOT_EYES))
-		overlays += emissive_appearance_copy(eye_left, src, NONE)
-		overlays += emissive_appearance_copy(eye_right, src, NONE)
-
-	if(OFFSET_FACE in parent.dna?.species.offset_features)
-		var/offset = parent.dna.species.offset_features[OFFSET_FACE]
-		for(var/mutable_appearance/overlay in overlays)
-			overlay.pixel_x += offset[OFFSET_X]
-			overlay.pixel_y += offset[OFFSET_Y]
+		if(OFFSET_FACE in parent.dna?.species.offset_features)
+			var/offset = parent.dna.species.offset_features[OFFSET_FACE]
+			for(var/mutable_appearance/overlay in overlays)
+				overlay.pixel_x += offset[OFFSET_X]
+				overlay.pixel_y += offset[OFFSET_Y]
 
 	return overlays
 

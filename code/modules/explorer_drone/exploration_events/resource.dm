@@ -242,8 +242,8 @@
 	var/mob/living/carbon/human/head_species_source = new
 	head_species_source.set_species(/datum/species/skeleton)
 	head_species_source.real_name = "spaced locker victim"
-	var/obj/item/bodypart/head/skeleton_head = new
-	skeleton_head.update_limb(FALSE,head_species_source)
+	var/obj/item/bodypart/head/skeleton_head = head_species_source.get_bodypart(BODY_ZONE_HEAD)
+	skeleton_head.drop_limb(FALSE)
 	qdel(head_species_source)
 	drone.try_transfer(skeleton_head)
 

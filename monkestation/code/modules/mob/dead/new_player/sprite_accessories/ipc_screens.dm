@@ -1,6 +1,6 @@
 /datum/sprite_accessory/ipc_screens
 	icon = 'monkestation/icons/mob/species/ipc/ipc_screens.dmi'
-	color_src = EYECOLOR
+	color_src = EYE_COLOR
 	is_emissive = TRUE
 
 /datum/sprite_accessory/ipc_screens/blue

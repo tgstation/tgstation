@@ -553,27 +553,41 @@
 
 /obj/item/bodypart/head/generate_icon_key()
 	. = ..()
-	. += "-[facial_hairstyle]"
-	. += "-[facial_hair_color]"
-	if(facial_hair_gradient_style)
-		. += "-[facial_hair_gradient_style]"
-		if(hair_gradient_color)
-			. += "-[facial_hair_gradient_color]"
+	if(lip_style)
+		. += "-[lip_style]"
+		. += "-[lip_color]"
 	if(facial_hair_hidden)
 		. += "-FACIAL_HAIR_HIDDEN"
+	else
+		. += "-[facial_hairstyle]"
+		. += "-[override_hair_color || fixed_hair_color || facial_hair_color]"
+		. += "-[facial_hair_alpha]"
+		if(facial_hair_gradient_style)
+			. += "-[facial_hair_gradient_style]"
+			. += "-[facial_hair_gradient_color]"
+	if(show_missing_eyes)
+		. += "-SHOW_MISSING_EYES"
 	if(show_debrained)
 		. += "-SHOW_DEBRAINED"
 		return .
-
-	. += "-[hair_style]"
-	. += "-[fixed_hair_color || override_hair_color || hair_color]"
-	if(hair_gradient_style)
-		. += "-[hair_gradient_style]"
-		if(hair_gradient_color)
-			. += "-[hair_gradient_color]"
 	if(hair_hidden)
 		. += "-HAIR_HIDDEN"
+	else
+		. += "-[hair_style]"
+		. += "-[override_hair_color || fixed_hair_color || hair_color]"
+		. += "-[hair_alpha]"
+		if(hair_gradient_style)
+			. += "-[hair_gradient_style]"
+			. += "-[hair_gradient_color]"
 
+	return .
+
+/obj/item/bodypart/head/generate_husk_key()
+	. = ..()
+	if(show_missing_eyes)
+		. += "-SHOW_MISSING_EYES"
+	if(show_debrained)
+		. += "-SHOW_DEBRAINED"
 	return .
 
 GLOBAL_LIST_EMPTY(masked_leg_icons_cache)

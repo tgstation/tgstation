@@ -13,6 +13,7 @@
 		var/mob/living/carbon/human/potato_oc = owner
 		var/datum/species/ethereal/eth_holder = potato_oc.dna.species
 		species_color = eth_holder.current_color
+		head_flags = HEAD_HAIR | HEAD_FACIAL_HAIR | HEAD_EYESPRITES | HEAD_EYEHOLES | HEAD_DEBRAIN | HEAD_EYECOLOR
 
 /obj/item/bodypart/chest/ethereal
 	icon_greyscale = 'icons/mob/species/ethereal/bodyparts.dmi'

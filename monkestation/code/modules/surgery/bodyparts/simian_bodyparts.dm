@@ -5,7 +5,7 @@
 	limb_id = SPECIES_SIMIAN
 	is_dimorphic = FALSE
 	bodytype = BODYTYPE_HUMANOID | BODYTYPE_ORGANIC | BODYTYPE_CUSTOM
-
+	head_flags = HEAD_EYESPRITES | HEAD_EYEHOLES | HEAD_DEBRAIN | HEAD_EYECOLOR
 	dmg_overlay_type = "monkey"
 
 /obj/item/bodypart/chest/simian
