@@ -387,5 +387,98 @@
 	'sound/effects/fireclip5.ogg' = 1, 'sound/effects/fireclip6.ogg' = 1, 'sound/effects/fireclip7.ogg' = 1)
 	volume = 100
 	mid_length = 2 SECONDS
-	falloff_distance = 6
+	falloff_distance = 1
+//handle the grouping of hotspot and then determining an average center to play sound in
+/datum/hot_group
+	var/list/obj/effect/hotspot/spot_list = list()
+	var/turf/open/current_sound_loc
+	var/datum/looping_sound/fire/sound
+	var/tiles_limit = 50
+	//these lists and average var are to find the average center of a group
+	var/list/x_coord = list()
+	var/list/y_coord = list()
+	var/list/z_coord = list()
+	var/average_x
+	var/average_y
+	var/average_Z
+	var/drop_off_dist
+	COOLDOWN_DECLARE(update_sound_center)
+	//use to prevent hot group from expanding outside a room, a group spandin multiple rooms may have issue when they are cutoff and rebuilding groups like zas is too expensive
+	//var/list/turf/open/our_airtight_room = list()
+
+
+/datum/hot_group/New()
+	. = ..()
+	SSair.hot_groups += src
+
+/datum/hot_group/process(seconds_per_tick)
+	. = ..()
+	if(spot_list.len <= 0)
+		qdel(src)
+		return
+	if(COOLDOWN_FINISHED(src, update_sound_center) && spot_list.len >= 3)//arbitrary size to start playing the sound
+		update_sound()
+		COOLDOWN_START(src, update_sound_center, 5 SECONDS)
+
+/datum/hot_group/Destroy()
+	. = ..()
+	SSair.hot_groups -= src
+	current_sound_loc = null
+	spot_list = null
+	qdel(sound)
+
+/datum/hot_group/proc/remove_from_group(obj/effect/hotspot/target)
+	spot_list -= target
+	var/turf/open/target_turf = target.loc
+	x_coord -= target_turf.x
+	y_coord -= target_turf.y
+
+/datum/hot_group/proc/add_to_group(obj/effect/hotspot/target)
+	spot_list += target
+	target.our_hot_group = src
+	var/turf/open/target_turf = target.loc
+	x_coord += target_turf.x
+	y_coord += target_turf.y
+	z_coord += target_turf.z
+
+/datum/hot_group/proc/merge_hot_groups(datum/hot_group/enemy_group)
+	var/choose_a_group
+	var/datum/hot_group/saving_group
+	var/datum/hot_group/sacrificial_group
+
+	if(spot_list.len >= tiles_limit || enemy_group.spot_list.len >= tiles_limit)
+		return
+	if(spot_list.len == enemy_group.spot_list.len)
+		choose_a_group = rand(0,1)
+	if(spot_list.len > enemy_group.spot_list.len || choose_a_group)//we're bigger take all of their territory!
+		saving_group = src
+		sacrificial_group = enemy_group
+	else
+		saving_group = enemy_group
+		sacrificial_group = src
+	for(var/obj/effect/hotspot/reference in sacrificial_group.spot_list)
+		reference.our_hot_group = saving_group
+	saving_group.spot_list += sacrificial_group.spot_list
+	saving_group.x_coord += sacrificial_group.x_coord
+	saving_group.y_coord += sacrificial_group.y_coord
+	qdel(sacrificial_group)
+
+/datum/hot_group/proc/update_sound()
+	//we can draw a cross around the average middle of any globs of group, curves or hollow groups may cause issues with this
+	average_x = round((max(x_coord) + min(x_coord))/2)
+	average_y = round((max(y_coord) + min(y_coord))/2)
+	average_Z = round((min(z_coord) + max(z_coord))/2)
+	drop_off_dist = max((max(y_coord) - min(y_coord)), (max(x_coord) - min(x_coord)))// pick the largest value between the width and length of the group to determine sound drop off
+	var/turf/open/sound_turf = locate(average_x, average_y, average_Z)
+	if(sound)
+		falloff_distance = drop_off_dist
+		if(sound_turf == current_sound_loc)
+			return
+		else
+			sound.parent = sound_turf
+			return
+	else
+		sound = new(sound_turf, TRUE)
+		current_sound_loc = sound_turf
+
 #undef INSUFFICIENT
