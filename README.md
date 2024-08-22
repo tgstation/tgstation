@@ -4,11 +4,7 @@
 
 | Website                   | Link                                           |
 |---------------------------|------------------------------------------------|
-| Website                   | [https://www.tgstation13.org](https://www.tgstation13.org)          |
-| Code                      | [https://github.com/tgstation/tgstation](https://github.com/tgstation/tgstation)    |
-| Wiki                      | [https://tgstation13.org/wiki/Main_Page](https://tgstation13.org/wiki/Main_Page)   |
-| Codedocs                  | [https://codedocs.tgstation13.org/](https://codedocs.tgstation13.org/)       |
-| /tg/station Discord       | [https://tgstation13.org/phpBB/viewforum.php?f=60](https://tgstation13.org/phpBB/viewforum.php?f=60) |
+| Code                      | [https://github.com/Vect0r2/Signia-Station](https://github.com/Vect0r2/Signia-Station)    |
 | Coderbus Discord          | [https://discord.gg/Vh8TJp9](https://discord.gg/Vh8TJp9)               |
 
 This is my personal codebase. Please have fun and look around.
