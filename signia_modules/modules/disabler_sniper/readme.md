@@ -6,12 +6,11 @@ https://github.com/Vect0r2/Signia-Station/pull/3
 Module ID: DISABLER_SNIPER
 
 ### Description:
-
-<!-- Here, try to describe what your PR does, what features it provides and any other directly useful information. -->
+Adds a disabler sniper rifle.
 
 ### TG Proc/File Changes:
 
-- N/A
+N/A
 <!-- If you edited any core procs, you should list them here. You should specify the files and procs you changed.
 E.g:
 - `code/modules/mob/living.dm`: `proc/overriden_proc`, `var/overriden_var`
@@ -19,7 +18,8 @@ E.g:
 
 ### Modular Overrides:
 
-- N/A
+`modular_signia/master_files/code/modules/research/techweb/nodes/security_nodes.dm`
+/datum/techweb_node/beam_weapons
 <!-- If you added a new modular override (file or code-wise) for your module, you should list it here. Code files should specify what procs they changed, in case of multiple modules using the same file.
 E.g:
 - `modular_signia/master_files/sound/my_cool_sound.ogg`
