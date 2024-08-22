@@ -75,7 +75,7 @@
 		return FALSE
 
 	// We've got no targets set, let's try to set some.
-	// If we recently failed to aquire targets, we will be unable to aquire any.
+	// If we recently failed to acquire targets, we will be unable to acquire any.
 	if(!LAZYLEN(heretic_datum.sac_targets))
 		atoms += user
 		return TRUE
@@ -189,7 +189,7 @@
  * Arguments
  * * user - the mob doing the sacrifice (a heretic)
  * * selected_atoms - a list of all atoms chosen. Should be (at least) one human.
- * * loc - the turf the sacrifice is occuring on
+ * * loc - the turf the sacrifice is occurring on
  */
 /datum/heretic_knowledge/hunt_and_sacrifice/proc/sacrifice_process(mob/living/user, list/selected_atoms, turf/loc)
 
