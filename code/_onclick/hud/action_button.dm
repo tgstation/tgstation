@@ -94,7 +94,7 @@
 		old_object.MouseExited(over_location, over_control, params)
 
 	last_hovored_ref = WEAKREF(over_object)
-	over_object?.MouseEntered(over_location, over_control, params)
+	over_object.MouseEntered(over_location, over_control, params)
 
 /atom/movable/screen/movable/action_button/MouseEntered(location, control, params)
 	. = ..()
@@ -230,7 +230,7 @@
 		return
 
 	for(var/datum/action/action as anything in take_from.actions)
-		if(!action.show_to_observers || !action.owner_has_control)
+		if(!action.show_to_observers)
 			continue
 		action.GiveAction(src)
 	RegisterSignal(take_from, COMSIG_MOB_GRANTED_ACTION, PROC_REF(on_observing_action_granted), TRUE)
@@ -251,7 +251,7 @@
 /mob/proc/on_observing_action_granted(mob/living/source, datum/action/action)
 	SIGNAL_HANDLER
 
-	if(!action.show_to_observers || !action.owner_has_control)
+	if(!action.show_to_observers)
 		return
 	action.GiveAction(src)
 

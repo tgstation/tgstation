@@ -330,7 +330,6 @@ GLOBAL_VAR(restart_counter)
 			shutdown_logging() // See comment below.
 			auxcleanup()
 			TgsEndProcess()
-			return ..()
 
 	log_world("World rebooted at [time_stamp()]")
 

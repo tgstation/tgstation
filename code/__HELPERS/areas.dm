@@ -160,7 +160,7 @@ GLOBAL_LIST_INIT(typecache_powerfailure_safe_areas, typecacheof(list(
 		//inform atoms on the turf that their area has changed
 		for(var/atom/stuff as anything in the_turf)
 			//unregister the stuff from its old area
-			SEND_SIGNAL(stuff, COMSIG_EXIT_AREA, old_area)
+			SEND_SIGNAL(stuff, COMSIG_EXIT_AREA, oldA)
 
 			//register the stuff to its new area. special exception for apc as its not registered to this signal
 			if(istype(stuff, /obj/machinery/power/apc))
