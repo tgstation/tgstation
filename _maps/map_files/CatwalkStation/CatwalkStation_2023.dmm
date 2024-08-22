@@ -356,6 +356,10 @@
 /obj/effect/turf_decal/siding/brown,
 /turf/open/floor/wood,
 /area/station/security/courtroom)
+"ahK" = (
+/obj/effect/spawner/random/trash/garbage,
+/turf/open/floor/plating,
+/area/station/maintenance/port/aft)
 "ahU" = (
 /obj/effect/turf_decal/delivery,
 /obj/effect/spawner/random/vending/snackvend,
@@ -4217,6 +4221,11 @@
 "bzB" = (
 /turf/closed/wall/r_wall,
 /area/station/science/robotics)
+"bzF" = (
+/obj/effect/spawner/random/trash/box,
+/obj/item/clothing/gloves/color/fyellow/old,
+/turf/open/floor/plating,
+/area/station/maintenance/port/aft)
 "bzN" = (
 /obj/machinery/computer/quantum_console{
 	dir = 1
@@ -4764,6 +4773,14 @@
 	},
 /turf/open/floor/plating,
 /area/station/security/execution/education)
+"bHA" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/turf_decal/tile/blue/full,
+/obj/effect/turf_decal/tile/dark/full,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/structure/sign/poster/contraband/missing_gloves/directional/south,
+/turf/open/floor/iron/smooth_large,
+/area/station/maintenance/department/medical)
 "bHB" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2,
 /turf/open/floor/iron/dark/textured,
@@ -7160,6 +7177,11 @@
 	},
 /turf/open/floor/iron/dark,
 /area/station/science/xenobiology)
+"cxb" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/structure/broken_flooring/singular/always_floorplane/directional/east,
+/turf/open/floor/plating,
+/area/station/maintenance/port/aft)
 "cxg" = (
 /obj/effect/landmark/carpspawn,
 /turf/open/floor/plating/airless,
@@ -14986,6 +15008,10 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2,
 /turf/open/floor/iron,
 /area/station/science/lab)
+"ffQ" = (
+/obj/effect/mapping_helpers/burnt_floor,
+/turf/open/floor/plating,
+/area/station/maintenance/port/aft)
 "ffR" = (
 /obj/machinery/airalarm/directional/east,
 /turf/open/floor/iron,
@@ -16748,6 +16774,19 @@
 	},
 /turf/open/floor/iron,
 /area/station/hallway/primary/fore)
+"fJI" = (
+/obj/structure/table/wood,
+/obj/item/book/random{
+	pixel_y = 4;
+	pixel_x = -7
+	},
+/obj/item/flashlight/lamp/bananalamp{
+	pixel_y = 9;
+	pixel_x = 5
+	},
+/obj/structure/broken_flooring/side/always_floorplane/directional/north,
+/turf/open/floor/carpet/blue,
+/area/station/maintenance/port/aft)
 "fJK" = (
 /obj/effect/turf_decal/trimline/blue/filled/line{
 	dir = 8
@@ -26335,6 +26374,10 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/lesser)
+"iPM" = (
+/obj/structure/sign/poster/contraband/missing_gloves/directional/west,
+/turf/open/floor/iron/terracotta/small,
+/area/station/maintenance/port/aft)
 "iPT" = (
 /obj/structure/disposalpipe/junction,
 /turf/open/floor/iron,
@@ -47437,6 +47480,10 @@
 	},
 /turf/open/openspace,
 /area/space)
+"pRp" = (
+/obj/item/reagent_containers/syringe,
+/turf/open/floor/plating,
+/area/station/maintenance/port/aft)
 "pRt" = (
 /obj/effect/turf_decal/trimline/green/filled/line{
 	dir = 1
@@ -62528,8 +62575,10 @@
 /turf/open/floor/iron/grimy,
 /area/station/security/detectives_office/private_investigators_office)
 "uYc" = (
-/obj/effect/spawner/random/trash/hobo_squat,
-/turf/open/floor/plating,
+/obj/effect/spawner/random/trash/hobo_squat{
+	pixel_y = 9
+	},
+/turf/open/floor/carpet/blue,
 /area/station/maintenance/port/aft)
 "uYd" = (
 /obj/effect/decal/cleanable/dirt,
@@ -64186,6 +64235,7 @@
 /area/station/science/robotics)
 "vBx" = (
 /obj/structure/sign/warning/cold_temp/directional/north,
+/obj/item/reagent_containers/syringe,
 /turf/open/floor/plating,
 /area/station/maintenance/port/aft)
 "vBM" = (
@@ -65714,6 +65764,10 @@
 	},
 /turf/open/floor/wood,
 /area/station/service/library)
+"wcz" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/plating,
+/area/station/maintenance/port/aft)
 "wcL" = (
 /obj/effect/turf_decal/siding/brown,
 /obj/structure/closet/athletic_mixed,
@@ -68962,6 +69016,11 @@
 /obj/effect/landmark/start/depsec/science,
 /turf/open/floor/iron/dark,
 /area/station/security/checkpoint/science)
+"xhq" = (
+/obj/effect/spawner/random/trash/crushed_can,
+/obj/structure/broken_flooring/side/always_floorplane/directional/east,
+/turf/open/floor/carpet/blue,
+/area/station/maintenance/port/aft)
 "xhr" = (
 /obj/structure/table/wood,
 /obj/effect/decal/cleanable/blood/old,
@@ -69555,6 +69614,11 @@
 	},
 /turf/open/floor/iron/white/textured_large,
 /area/station/medical/surgery)
+"xsG" = (
+/obj/item/reagent_containers/syringe,
+/obj/structure/broken_flooring/singular/always_floorplane/directional/east,
+/turf/open/floor/plating,
+/area/station/maintenance/port/aft)
 "xsJ" = (
 /obj/effect/turf_decal/siding/purple{
 	dir = 8
@@ -94532,7 +94596,7 @@ dLq
 xta
 miT
 pim
-pim
+bHA
 lIr
 lIr
 lIr
@@ -94792,10 +94856,10 @@ nNf
 jVY
 tiF
 bPC
-bPC
-bPC
-bPC
-bPC
+ahK
+wcz
+xsG
+ffQ
 dtR
 lIr
 lIr
@@ -95050,11 +95114,11 @@ mnp
 lIr
 lIr
 lIr
-bPC
+ffQ
 lIr
-bPC
-bPC
-bPC
+xhq
+cxb
+ahK
 lIr
 lIr
 dcE
@@ -95310,8 +95374,8 @@ lIr
 vBx
 lIr
 uYc
-bPC
-bPC
+fJI
+wcz
 bPC
 lIr
 lIr
@@ -95568,9 +95632,9 @@ eeH
 ygD
 ygD
 lIr
+bzF
 bPC
-bPC
-bPC
+ffQ
 lIr
 dcE
 dcE
@@ -95826,8 +95890,8 @@ jrv
 jFG
 ygD
 lIr
-bPC
-bPC
+xXW
+pRp
 lIr
 dcE
 dcE
@@ -96084,7 +96148,7 @@ qbY
 uVL
 ygD
 bPC
-bPC
+ahK
 lIr
 dcE
 dcE
@@ -96341,7 +96405,7 @@ xQI
 cVe
 eeH
 bPC
-bPC
+wcz
 lIr
 dcE
 dcE
@@ -96597,7 +96661,7 @@ rYd
 xQI
 vqu
 ygD
-bPC
+ahK
 bPC
 lIr
 dcE
@@ -96854,7 +96918,7 @@ cVe
 rYd
 opJ
 ygD
-bPC
+wcz
 bPC
 lIr
 dcE
@@ -97623,7 +97687,7 @@ ygD
 ygD
 dWi
 ygD
-hCk
+iPM
 hCk
 hCk
 hCk
