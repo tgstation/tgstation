@@ -64,3 +64,9 @@ toolbox_open.ogg - made by sadboysuss
 toolbox_rustle.ogg - made by sadboysuss
 medkit_rustle.ogg - made by sadboysuss
 } - license: CC-by-SA
+
+{
+glove_pick_up.ogg - made by sadboysuss
+glove_drop.ogg - made by sadboysuss
+} - license: CC-by-SA
+glove_equip.ogg - LETHRCreak_Leather Belt Short Creak 01_PF_365 DAYS OF SOUND by itmightgetloud -- https://freesound.org/s/751281/ -- License: Creative Commons 0
