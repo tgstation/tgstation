@@ -454,7 +454,7 @@
 		var/obj/item/circuitboard/machine/leaving_circuit = circuit
 		circuit = null
 		// Assign the circuit & parts & move them all at once into the machine
-		// no need to seperatly move circuit board as its already part of the components list
+		// no need to separately move circuit board as its already part of the components list
 		new_machine.circuit = leaving_circuit
 		new_machine.component_parts = components
 		for (var/obj/new_part in components)

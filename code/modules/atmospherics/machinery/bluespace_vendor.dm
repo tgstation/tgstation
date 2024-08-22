@@ -250,7 +250,7 @@ WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/machinery/bluespace_vendor)
 	data["tank_full"] = total_tank_pressure
 	return data
 
-/obj/machinery/bluespace_vendor/ui_act(action, params)
+/obj/machinery/bluespace_vendor/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if(.)
 		return
