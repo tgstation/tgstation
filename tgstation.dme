@@ -6391,4 +6391,9 @@
 #include "interface\fonts\spess_font.dm"
 #include "interface\fonts\tiny_unicode.dm"
 #include "interface\fonts\vcr_osd_mono.dm"
+#include "signia_modules\master_files\code\modules\research\techweb\nodes\security_nodes.dm"
+#include "signia_modules\modules\disabler_sniper\code\beams.dm"
+#include "signia_modules\modules\disabler_sniper\code\guncrafting.dm"
+#include "signia_modules\modules\disabler_sniper\code\rifle.dm"
+#include "signia_modules\modules\disabler_sniper\code\tech.dm"
 // END_INCLUDE
