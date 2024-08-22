@@ -1,4 +1,0 @@
-author: "Absolucy"
-delete-after: True
-changes:
-  - refactor: "Implemented batch marking for replays. Basically, this should somewhat reduce lag caused by the replay system in some situations."

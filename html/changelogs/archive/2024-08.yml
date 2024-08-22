@@ -277,3 +277,11 @@
   Wisemonster:
   - rscdel: Removed the stage 2 hunger symptom
   - bugfix: Fixed one of the bars in box station having flooring that can create chasms
+2024-08-22:
+  Absolucy:
+  - refactor: Implemented batch marking for replays. Basically, this should somewhat
+      reduce lag caused by the replay system in some situations.
+  - bugfix: Fixed messages getting bolded for everyone when ghosts are watching.
+  - bugfix: Having a nonfunctional heart or lungs will no longer CONSTANTLY spam chat.
+  TTNT789:
+  - bugfix: makes the rage chemical system not explode you repeatedly apon implantation
