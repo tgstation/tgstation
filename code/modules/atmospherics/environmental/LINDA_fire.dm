@@ -468,10 +468,10 @@
 	average_x = round((max(x_coord) + min(x_coord))/2)
 	average_y = round((max(y_coord) + min(y_coord))/2)
 	average_Z = round((min(z_coord) + max(z_coord))/2)
-	drop_off_dist = max((max(y_coord) - min(y_coord)), (max(x_coord) - min(x_coord)))// pick the largest value between the width and length of the group to determine sound drop off
+	drop_off_dist = max((max(y_coord) - min(y_coord)), (max(x_coord) - min(x_coord)), 1)// pick the largest value between the width and length of the group to determine sound drop off
 	var/turf/open/sound_turf = locate(average_x, average_y, average_Z)
 	if(sound)
-		falloff_distance = drop_off_dist
+		sound.falloff_distance = drop_off_dist
 		if(sound_turf == current_sound_loc)
 			return
 		else
@@ -479,6 +479,7 @@
 			return
 	else
 		sound = new(sound_turf, TRUE)
+		sound.falloff_distance = drop_off_dist
 		current_sound_loc = sound_turf
 
 #undef INSUFFICIENT
