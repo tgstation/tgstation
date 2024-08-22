@@ -47,6 +47,8 @@ TELESCREEN_DIRECTIONAL_HELPERS(/obj/machinery/computer/security/telescreen)
 	circuit = null
 	interaction_flags_atom = INTERACT_ATOM_UI_INTERACT | INTERACT_ATOM_NO_FINGERPRINT_INTERACT | INTERACT_ATOM_NO_FINGERPRINT_ATTACK_HAND | INTERACT_MACHINE_REQUIRES_SIGHT
 	frame_type = /obj/item/wallframe/telescreen/entertainment
+	/// Virtual radio inside of the entertainment monitor to broadcast audio
+	var/obj/item/radio/entertainment_speakers/speakers
 
 /obj/item/wallframe/telescreen/entertainment
 	name = "entertainment telescreen frame"
@@ -60,12 +62,18 @@ TELESCREEN_DIRECTIONAL_HELPERS(/obj/machinery/computer/security/telescreen/enter
 	. = ..()
 	RegisterSignal(src, COMSIG_CLICK, PROC_REF(BigClick))
 	update_appearance()
+	speakers = new(src)
+
+/obj/machinery/computer/security/telescreen/entertainment/Destroy()
+	. = ..()
+	if(speakers)
+		qdel(speakers)
 
 /obj/machinery/computer/security/telescreen/on_set_machine_stat(old_value)
 	. = ..()
 	update_appearance()
 
-// Bypass clickchain to allow humans to use the telescreen from a distance
+/// Bypass clickchain to allow humans to use the telescreen from a distance
 /obj/machinery/computer/security/telescreen/entertainment/proc/BigClick()
 	SIGNAL_HANDLER
 
@@ -75,7 +83,7 @@ TELESCREEN_DIRECTIONAL_HELPERS(/obj/machinery/computer/security/telescreen/enter
 
 	INVOKE_ASYNC(src, TYPE_PROC_REF(/atom, interact), usr)
 
-///Sets the monitor's icon to the selected state, and says an announcement
+/// Sets the monitor's icon to the selected state, and says an announcement
 /obj/machinery/computer/security/telescreen/entertainment/proc/notify(on, announcement)
 	if(announcement)
 		say(announcement)

@@ -57,6 +57,8 @@
 	var/use_command = FALSE
 	/// If true, use_command can be toggled at will.
 	var/command = FALSE
+	/// Does it play radio noise?
+	var/radio_noise = TRUE
 
 	///makes anyone who is talking through this anonymous.
 	var/anonymize = FALSE
@@ -351,7 +353,7 @@
 
 	if(isliving(talking_movable))
 		var/mob/living/talking_living = talking_movable
-		if(talking_living.client?.prefs.read_preference(/datum/preference/toggle/radio_noise) && !HAS_TRAIT(talking_living, TRAIT_DEAF))
+		if(talking_living.client?.prefs.read_preference(/datum/preference/toggle/radio_noise) && !HAS_TRAIT(talking_living, TRAIT_DEAF) && !radio_noise)
 			SEND_SOUND(talking_living, 'sound/misc/radio_talk.ogg')
 
 	// All radios make an attempt to use the subspace system first
@@ -429,16 +431,14 @@
 		return
 
 	var/mob/living/holder = loc
-	if(!holder.client?.prefs.read_preference(/datum/preference/toggle/radio_noise) && !HAS_TRAIT(holder, TRAIT_DEAF))
-		return
-
-	var/list/spans = data["spans"]
-	if(COOLDOWN_FINISHED(src, audio_cooldown))
-		COOLDOWN_START(src, audio_cooldown, 0.5 SECONDS)
-		SEND_SOUND(holder, 'sound/misc/radio_receive.ogg')
-	if((SPAN_COMMAND in spans) && COOLDOWN_FINISHED(src, important_audio_cooldown))
-		COOLDOWN_START(src, important_audio_cooldown, 0.5 SECONDS)
-		SEND_SOUND(holder, 'sound/misc/radio_important.ogg')
+	if(holder.client?.prefs.read_preference(/datum/preference/toggle/radio_noise) && !HAS_TRAIT(holder, TRAIT_DEAF) && radio_noise)
+		var/list/spans = data["spans"]
+		if(COOLDOWN_FINISHED(src, audio_cooldown))
+			COOLDOWN_START(src, audio_cooldown, 0.5 SECONDS)
+			SEND_SOUND(holder, 'sound/misc/radio_receive.ogg')
+		if((SPAN_COMMAND in spans) && COOLDOWN_FINISHED(src, important_audio_cooldown))
+			COOLDOWN_START(src, important_audio_cooldown, 0.5 SECONDS)
+			SEND_SOUND(holder, 'sound/misc/radio_important.ogg')
 
 /obj/item/radio/ui_state(mob/user)
 	return GLOB.inventory_state
@@ -634,5 +634,56 @@
 /obj/item/radio/off/Initialize(mapload)
 	. = ..()
 	set_listening(FALSE)
+
+// RADIOS USED BY BROADCASTING
+/obj/item/radio/entertainment
+	desc = "You should not hold this."
+	canhear_range = 7
+	freerange = TRUE
+	freqlock = RADIO_FREQENCY_LOCKED
+	radio_noise = FALSE
+
+/obj/item/radio/entertainment/speakers // Used inside of entertainment monitors, not to be used as a actual item
+	should_be_listening = TRUE
+	should_be_broadcasting = FALSE
+
+/obj/item/radio/entertainment_speakers/Initialize(mapload)
+	. = ..()
+	set_frequency(FREQ_ENTERTAINMENT)
+	set_broadcasting(FALSE)
+	set_listening(TRUE)
+	wires?.cut(WIRE_TX)
+
+/obj/item/radio/entertainment_speakers/on_receive_message(list/data)
+	. = ..()
+	/// Muffled speech that plays when something is heard on entertainment frequency
+	var/list/muffled_speech = list(
+		'sound/effects/muffspeech/muffspeech1.ogg',
+		'sound/effects/muffspeech/muffspeech2.ogg',
+		'sound/effects/muffspeech/muffspeech3.ogg',
+		'sound/effects/muffspeech/muffspeech4.ogg',
+		'sound/effects/muffspeech/muffspeech5.ogg',
+		'sound/effects/muffspeech/muffspeech6.ogg',
+		'sound/effects/muffspeech/muffspeech7.ogg',
+		'sound/effects/muffspeech/muffspeech8.ogg',
+		'sound/effects/muffspeech/muffspeech9.ogg',
+	)
+
+	playsound(source = src, soundin = pick(muffled_speech), vol = 50, extrarange = -4, vary = TRUE, ignore_walls = FALSE)
+
+	// There is no other way to create runechat really
+	var/message = data["message"]
+	balloon_alert_to_viewers("[message]")
+
+/obj/item/radio/entertainment/microphone // Used inside of broadcast camera, not to be used as a actual item
+	should_be_listening = FALSE
+	should_be_broadcasting = TRUE
+
+/obj/item/radio/entertainment_microphone/Initialize(mapload)
+	. = ..()
+	set_frequency(FREQ_ENTERTAINMENT)
+	set_broadcasting(TRUE)
+	set_listening(FALSE)
+	wires?.cut(WIRE_RX)
 
 #undef FREQ_LISTENING
