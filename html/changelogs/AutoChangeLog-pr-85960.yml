@@ -1,4 +1,0 @@
-author: "Rhials"
-delete-after: True
-changes:
-  - bugfix: "Beepsky will now salute commissioned bots, instead of himself, when encountering one."

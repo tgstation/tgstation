@@ -646,3 +646,79 @@
   - rscadd: Added three new DM maps - Ragnarok, Lattice Battles, Species Showdown.
   mc-oofert:
   - bugfix: spawning on a table or other elevated object does not offset you forever
+2024-08-21:
+  Ghommie:
+  - rscadd: Added twelve new fish types to the game. Some are cool, other are not,
+      some come with their own special traits and some are straight-up weapons.
+  - rscadd: Added more fishing spots to the game. Sand, ice, rivers, the cursed spring...
+  - balance: A few fish like salmon, swordfish and pufferfish (poisonous btw) now
+      give better quality fillets when butchered, which can improve the quality of
+      food that uses them even further.
+  - balance: Excessive fish weight will make the fish slowier to carry, while excessive
+      size may make it require two hands.
+  - balance: Adjusted size, weight and cooldowns of several fish, for the better.
+  Iamgoofball:
+  - balance: Air alarms are now usable by Station Engineers as well as Atmospherics
+      Technicians.
+  Rhials:
+  - bugfix: Adjusts some areas by the Icebox Cliffside Bench to generate a bit less
+      weirdly.
+  - sound: '"radio message received" audio now has a brief cooldown.'
+  - bugfix: Beepsky will now salute commissioned bots, instead of himself, when encountering
+      one.
+  SmArtKar:
+  - bugfix: Ragnarok deathmatch arena now has noteleport area
+  - bugfix: Replaced a locked cabinet that you cannot open in ninja den with an unlocked
+      one
+  - qol: Haunted 8ball now gives you a TGUI input with your question for ghosts instead
+      of telling them the last thing it heard.
+  - image: 8ball has received a resprite
+  - bugfix: Fixed examine balloons not being click transparent even while inactive
+  - image: Updated cryostasis beaker's sprite
+  grungussuss:
+  - sound: computers now make clicky clacky sounds
+2024-08-22:
+  Absolucy:
+  - qol: Clicking floor tiles now also closes curator/morgue doors, like with normal
+      airlocks.
+  - qol: Unarmed attacks with carp jaws now uses a bite effect rather than a punch
+      effect.
+  Ben10Omintrix:
+  - bugfix: fences will no longer appear pitch black and they will layer properly
+  Bisar:
+  - rscadd: Nanotrasen Intelligence has received reports of botanical experimentation
+      in a Syndicate base on lavaland. What fiendish flora are taking root in their
+      secret lair?
+  Ghommie:
+  - rscadd: Fishing toolboxes (and occasionally maintenance) now come with a paper
+      slip containing fishing-related tips.
+  - rscadd: Buckshot is back on the menu, on the blackmarket.
+  - balance: the integrity of firearms now counts toward projectile damage. A gun
+      that's on the very verge of breaking down will deal half as much damage.
+  Jacquerel:
+  - balance: Pacifist carp can now be spawned from the friendly gold core reaction,
+      and no longer appear from the hostile one.
+  - bugfix: The teeth of toothless carp will not occasionally reappear
+  - bugfix: Crabs will now run from attackers larger than them and attack things smaller
+      than them, as intended.
+  Redrover1760:
+  - balance: Changed max refined vortex cores from 1 to 3. Changed the Event Horizon
+      Anti-Existential Beam Rifle recipe to require 2 vortex cores.
+  Rhials:
+  - qol: Delivery/Bot pathing nodes have been added to the middle room of Runtime
+      station.
+  - sound: Windows blown out by a Voidwalker blade now have a cool sound that plays
+      as they reform.
+  - admin: You can now choose the humanoid species spawned by an ERT summon in the
+      summon menu.
+  SmArtKar:
+  - bugfix: Fixes kudzu being able to spawn on openspace turfs resulting in it getting
+      stuck
+  - bugfix: Radioactive nebula no longer runtimes on runtime station
+  - bugfix: Fixed delam counter going over objects
+  by Xackii, sprites by ArcaneMusic:
+  - rscadd: Added big manipulators.
+  lizelive:
+  - balance: reticence requires progression
+  r3dj4ck0424:
+  - balance: The CytoPro has had prices raised to slightly more reasonable levels.

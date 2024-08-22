@@ -1,8 +1,0 @@
-author: "Ghommie"
-delete-after: True
-changes:
-  - rscadd: "Added twelve new fish types to the game. Some are cool, other are not, some come with their own special traits and some are straight-up weapons."
-  - rscadd: "Added more fishing spots to the game. Sand, ice, rivers, the cursed spring..."
-  - balance: "A few fish like salmon, swordfish and pufferfish (poisonous btw) now give better quality fillets when butchered, which can improve the quality of food that uses them even further."
-  - balance: "Excessive fish weight will make the fish slowier to carry, while excessive size may make it require two hands."
-  - balance: "Adjusted size, weight and cooldowns of several fish, for the better."
