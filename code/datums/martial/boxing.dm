@@ -307,12 +307,13 @@
 	boxing_traits = list(TRAIT_BOXING_READY)
 	/// The mobs we are looking for to pass the honor check
 	var/honorable_mob_biotypes = MOB_BEAST | MOB_SPECIAL | MOB_PLANT | MOB_BUG
+	/// Our crit shout words. First word is then paired with a second word to form an attack name.
+	var/list/first_word_strike = list("Extinction", "Brutalization", "Explosion", "Adventure", "Thunder", "Lightning", "Sonic", "Atomizing", "Whirlwind", "Tornado", "Shark", "Falcon")
+	var/list/second_word_strike = list(" Punch", " Pawnch", "-punch", " Jab", " Hook", " Fist", " Uppercut", " Straight", " Strike", " Lunge")
 
 /datum/martial_art/boxing/hunter/honor_check(mob/living/possible_boxer)
-	// Unlike normal, this isn't an early return, because we're looking for MOB_HUMANOID as an early return. We DO want to return true for any instance where our target is boxing ready.
 	if(HAS_TRAIT(possible_boxer, TRAIT_BOXING_READY))
 		return TRUE
-
 
 	if(possible_boxer.mob_biotypes & MOB_HUMANOID && !istype(possible_boxer, /mob/living/simple_animal/hostile/megafauna)) //We're after animals, not people. Unless they want to box. (Or a megafauna)
 		return FALSE
@@ -328,20 +329,21 @@
 	if(defender.mob_biotypes & MOB_HUMANOID && !istype(defender, /mob/living/simple_animal/hostile/megafauna))
 		return ..() //Applies the regular crit effect if it is a normal human, and not a megafauna
 
-	var/first_word_strike = pick("Extinction", "Brutalization", "Explosion", "Adventure", "Thunder", "Lightning", "Sonic", "Atomizing", "Whirlwind", "Tornado", "Shark", "Falcon")
-	var/second_word_strike = pick(" Punch", " Pawnch", "-punch", " Jab", " Hook", " Fist", " Uppercut", " Straight")
+	var/first_workd_pick = pick(first_word_strike)
+	var/second_workd_pick = pick(second_word_strike)
+
 	defender.visible_message(
-		span_danger("[attacker] knocks the absolute bajeezus out of [defender] utilizing the terrifying [first_word_strike][second_word_strike]!!!"),
+		span_danger("[attacker] knocks the absolute bajeezus out of [defender] utilizing the terrifying [first_word_pick][second_word_pick]!!!"),
 		span_userdanger("You have the absolute bajeezus knocked out of you by [attacker]!!!"),
 		span_hear("You hear a sickening sound of flesh hitting flesh!"),
 		COMBAT_MESSAGE_RANGE,
 		attacker,
 	)
-	to_chat(attacker, span_danger("You knock the absolute bajeezus out of [defender] out with the terrifying [first_word_strike][second_word_strike]!!!"))
+	to_chat(attacker, span_danger("You knock the absolute bajeezus out of [defender] out with the terrifying [first_word_pick][second_word_pick]!!!"))
 	if(ishuman(attacker))
 		var/mob/living/carbon/human/human_attacker = attacker
 		human_attacker.force_say()
-		human_attacker.say("[first_word_strike][second_word_strike]!!!", forced = "hunter boxing enthusiastic battlecry")
+		human_attacker.say("[first_word_pick][second_word_pick]!!!", forced = "hunter boxing enthusiastic battlecry")
 	defender.apply_status_effect(/datum/status_effect/rebuked)
 	defender.apply_damage(damage * 2, default_damage_type, BODY_ZONE_CHEST, armor_block) //deals double our damage AGAIN
 	attacker.reagents.add_reagent(/datum/reagent/medicine/omnizine/godblood, 3) //Get a little healing in return for a successful crit
@@ -353,7 +355,7 @@
 	if(defender.mob_biotypes & MOB_HUMANOID && !istype(defender, /mob/living/simple_animal/hostile/megafauna))
 		return // Does not apply to humans (who aren't megafauna)
 
-	defender.changeNext_move(CLICK_CD_RAPID)
+	attacker.changeNext_move(CLICK_CD_RAPID)
 	defender.apply_damage(rand(15,20), default_damage_type, BODY_ZONE_CHEST)
 
 #undef LEFT_RIGHT_COMBO
