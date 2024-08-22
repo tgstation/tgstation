@@ -329,8 +329,8 @@
 	if(defender.mob_biotypes & MOB_HUMANOID && !istype(defender, /mob/living/simple_animal/hostile/megafauna))
 		return ..() //Applies the regular crit effect if it is a normal human, and not a megafauna
 
-	var/first_workd_pick = pick(first_word_strike)
-	var/second_workd_pick = pick(second_word_strike)
+	var/first_word_pick = pick(first_word_strike)
+	var/second_word_pick = pick(second_word_strike)
 
 	defender.visible_message(
 		span_danger("[attacker] knocks the absolute bajeezus out of [defender] utilizing the terrifying [first_word_pick][second_word_pick]!!!"),
