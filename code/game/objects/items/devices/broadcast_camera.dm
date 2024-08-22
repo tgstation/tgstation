@@ -26,7 +26,7 @@
 	var/list/camera_networks = list(CAMERANET_NETWORK_CURATOR)
 	/// The "virtual" security camera inside of the physical camera
 	var/obj/machinery/camera/internal_camera
-	/// The "virtual" radio inside of the the physical camera
+	/// The "virtual" radio inside of the the physical camera, a la microphone
 	var/obj/item/radio/entertainment_microphone/internal_radio
 
 /obj/item/broadcast_camera/Initialize(mapload)
