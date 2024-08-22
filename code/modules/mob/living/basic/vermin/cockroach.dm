@@ -1,4 +1,5 @@
 /mob/living/basic/cockroach
+	SET_BASE_VISUAL_PIXEL(0, 0) // These guys are too small not to be tile-bound sorry
 	name = "cockroach"
 	desc = "This station is just crawling with bugs."
 	icon_state = "cockroach"
@@ -13,6 +14,8 @@
 	can_be_held = TRUE
 	gold_core_spawnable = FRIENDLY_SPAWN
 	pass_flags = PASSTABLE | PASSGRILLE | PASSMOB
+	shadow_type = SHADOW_SMALL
+	shadow_offset_y = 12
 
 	verb_say = "chitters"
 	verb_ask = "chitters inquisitively"

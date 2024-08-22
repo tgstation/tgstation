@@ -3,16 +3,17 @@
 /obj/machinery/flasher
 	name = "mounted flash"
 	desc = "A wall-mounted flashbulb device."
-	icon = 'icons/obj/wallmounts.dmi'
+	icon = 'icons/obj/machines/flash.dmi'
 	icon_state = "mflash1"
 	base_icon_state = "mflash"
 	max_integrity = 250
 	integrity_failure = 0.4
 	damage_deflection = 10
+	/// Does this flasher try to attach to the wall?
+	var/should_wallmount = TRUE
 	///The contained flash. Mostly just handles the bulb burning out & needing placement.
 	var/obj/item/assembly/flash/handheld/bulb
 	var/id = null
-	/// How far this flash reaches. Affects both proximity distance and the actual stun effect.
 	var/flash_range = 2 //this is roughly the size of a brig cell.
 
 	/// How strong Paralyze()'d targets are when flashed.
@@ -22,13 +23,20 @@
 	/// Duration of time between flashes.
 	var/flash_cooldown_duration = 15 SECONDS
 
-MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/flasher, 26)
+WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/machinery/flasher)
+
+// Variant of the flasher that's used in the thunderdome.
+/obj/machinery/flasher/thunderdome
+	should_wallmount = FALSE
+	id = "tdomeflash"
+	name = "Thunderdome Flash"
 
 /obj/machinery/flasher/Initialize(mapload, ndir = 0, built = 0)
-	. = ..() // ..() is EXTREMELY IMPORTANT, never forget to add it
+	. = ..()
 	if(!built)
 		bulb = new(src)
-	find_and_hang_on_wall()
+	if(should_wallmount)
+		find_and_hang_on_wall()
 
 /obj/machinery/flasher/vv_edit_var(vname, vval)
 	. = ..()
@@ -156,6 +164,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/flasher, 26)
 		new /obj/item/stack/sheet/iron (loc, 2)
 
 /obj/machinery/flasher/portable //Portable version of the flasher. Only flashes when anchored
+	SET_BASE_VISUAL_PIXEL(0, DEPTH_OFFSET)
 	name = "portable flasher"
 	desc = "A portable flashing device. Wrench to activate and deactivate. Cannot detect slow movements."
 	icon = 'icons/obj/machines/sec.dmi'
@@ -208,11 +217,10 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/flasher, 26)
 /obj/item/wallframe/flasher
 	name = "mounted flash frame"
 	desc = "Used for building wall-mounted flashers."
-	icon = 'icons/obj/wallmounts.dmi'
+	icon = 'icons/obj/machines/flash.dmi'
 	icon_state = "mflash_frame"
 	result_path = /obj/machinery/flasher
 	var/id = null
-	pixel_shift = 28
 
 /obj/item/wallframe/flasher/examine(mob/user)
 	. = ..()

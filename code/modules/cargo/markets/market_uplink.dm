@@ -80,7 +80,8 @@
 					"name" = item.name,
 					"cost" = item.price,
 					"amount" = item.stock,
-					"desc" = item.desc || item.name
+					"desc" = item.desc || item.name,
+					"html_icon" = item.html_icon,
 				))
 	return data
 
@@ -97,7 +98,7 @@
 		))
 	return data
 
-/obj/item/market_uplink/ui_act(action, params)
+/obj/item/market_uplink/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if(.)
 		return

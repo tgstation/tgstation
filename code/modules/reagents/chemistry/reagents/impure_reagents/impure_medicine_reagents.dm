@@ -783,7 +783,10 @@ Basically, we fill the time between now and 2s from now with hands based off the
 	if(!isnull(speaker) && HAS_TRAIT(speaker, TRAIT_SIGN_LANG))
 		return
 
-	hearing_args[HEARING_SPANS] |= random_span
+	var/list/spans = hearing_args[HEARING_SPANS]
+	var/list/copied_spans = spans.Copy()
+	copied_spans |= random_span
+	hearing_args[HEARING_SPANS] = copied_spans
 
 /datum/reagent/inverse/sal_acid
 	name = "Benzoic Acid"

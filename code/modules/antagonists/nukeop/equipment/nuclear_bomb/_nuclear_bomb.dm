@@ -328,7 +328,7 @@ GLOBAL_VAR(station_nuke_source)
 
 	return data
 
-/obj/machinery/nuclearbomb/ui_act(action, params)
+/obj/machinery/nuclearbomb/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if(.)
 		return

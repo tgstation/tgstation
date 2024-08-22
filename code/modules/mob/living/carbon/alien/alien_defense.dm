@@ -33,7 +33,6 @@ In all, this is a lot like the monkey code. /N
 		to_chat(user, span_danger("You bite [src]!"))
 		adjustBruteLoss(1)
 		log_combat(user, src, "attacked")
-		updatehealth()
 	else
 		to_chat(user, span_warning("[name] is too injured for that."))
 

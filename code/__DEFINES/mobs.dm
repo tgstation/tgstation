@@ -152,7 +152,10 @@
 ///The species is forced to have digitigrade legs in generation.
 #define DIGITIGRADE_FORCED 2
 
-///Digitigrade's prefs, used in features for legs if you're meant to be a Digitigrade.
+// Preferences for leg types
+/// Legs that are normal
+#define NORMAL_LEGS "Normal Legs"
+/// Digitgrade legs that are like bended and uhhh no shoes
 #define DIGITIGRADE_LEGS "Digitigrade Legs"
 
 // Health/damage defines
@@ -974,6 +977,8 @@ GLOBAL_LIST_INIT(layers_to_offset, list(
 
 /// The duration of the flip emote animation
 #define FLIP_EMOTE_DURATION 0.7 SECONDS
+///The duration of a taunt emote, so how long they can deflect projectiles
+#define TAUNT_EMOTE_DURATION 0.9 SECONDS
 
 // Sprites for photocopying butts
 #define BUTT_SPRITE_HUMAN_MALE "human_male"
@@ -988,3 +993,10 @@ GLOBAL_LIST_INIT(layers_to_offset, list(
 #define BUTT_SPRITE_PLASMA "plasma"
 #define BUTT_SPRITE_FUZZY "fuzzy"
 #define BUTT_SPRITE_SLIME "slime"
+
+// Type of shadow used for drop shadows, really they're mostly just an icon state
+/// Don't bother applying the drop shadow component at all if this is provided as the shadow type
+#define SHADOW_NONE "none"
+#define SHADOW_SMALL "small"
+#define SHADOW_MEDIUM "medium"
+#define SHADOW_LARGE "large"

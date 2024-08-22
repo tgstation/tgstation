@@ -2,6 +2,7 @@
 #define ELECTROLYZER_MODE_WORKING "working"
 
 /obj/machinery/electrolyzer
+	SET_BASE_VISUAL_PIXEL(0, DEPTH_OFFSET)
 	anchored = FALSE
 	density = TRUE
 	interaction_flags_machine = INTERACT_MACHINE_ALLOW_SILICON | INTERACT_MACHINE_OPEN

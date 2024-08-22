@@ -4,6 +4,7 @@
 #define PROCESSED_ITEMS_PER_RATING 5
 
 /obj/machinery/biogenerator
+	SET_BASE_VISUAL_PIXEL(0, DEPTH_OFFSET)
 	name = "biogenerator"
 	desc = "Converts plants into biomass, which can be used to construct useful items."
 	icon = 'icons/obj/machines/biogenerator.dmi'
@@ -526,7 +527,7 @@
 	return data
 
 
-/obj/machinery/biogenerator/ui_act(action, list/params)
+/obj/machinery/biogenerator/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if(.)
 		return

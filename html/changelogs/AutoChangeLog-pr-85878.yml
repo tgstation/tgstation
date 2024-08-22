@@ -1,0 +1,4 @@
+author: "Redrover1760"
+delete-after: True
+changes:
+  - balance: "Changed max refined vortex cores from 1 to 3. Changed the Event Horizon Anti-Existential Beam Rifle recipe to require 2 vortex cores."

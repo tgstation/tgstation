@@ -1,6 +1,6 @@
 /// Inert structures, such as girders, machine frames, and crates/lockers.
 /obj/structure
-	icon = 'icons/obj/structures.dmi'
+	icon = 'icons/obj/structures/tall.dmi'
 	pressure_resistance = 8
 	max_integrity = 300
 	interaction_flags_atom = INTERACT_ATOM_ATTACK_HAND | INTERACT_ATOM_UI_INTERACT
@@ -32,7 +32,7 @@
 		QUEUE_SMOOTH_NEIGHBORS(src)
 	return ..()
 
-/obj/structure/ui_act(action, params)
+/obj/structure/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	add_fingerprint(usr)
 	return ..()
 
