@@ -1,0 +1,5 @@
+author: "necromanceranne"
+delete-after: True
+changes:
+  - rscadd: "Punching mitts! Punch wildlife to death and scream the whole time. ADVENTURE!"
+  - balance: "Megafauna can be affected by martial arts."

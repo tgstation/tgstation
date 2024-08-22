@@ -67,7 +67,6 @@
 	name = "waffles"
 	desc = "Mmm, waffles."
 	icon_state = "waffles"
-	trash_type = /obj/item/trash/waffles
 	food_reagents = list(
 		/datum/reagent/consumable/nutriment = 8,
 		/datum/reagent/consumable/nutriment/vitamin = 2,
@@ -85,7 +84,6 @@
 	name = "\improper Soylent Green"
 	desc = "Not made of people. Honest." //Totally people.
 	icon_state = "soylent_green"
-	trash_type = /obj/item/trash/waffles
 	food_reagents = list(
 		/datum/reagent/consumable/nutriment = 10,
 		/datum/reagent/consumable/nutriment/vitamin = 2,
@@ -100,7 +98,6 @@
 	name = "\improper Soylent Virdians"
 	desc = "Not made of people. Honest." //Actually honest for once.
 	icon_state = "soylent_yellow"
-	trash_type = /obj/item/trash/waffles
 	food_reagents = list(
 		/datum/reagent/consumable/nutriment = 10,
 		/datum/reagent/consumable/nutriment/vitamin = 2,
@@ -115,7 +112,6 @@
 	name = "roffle waffles"
 	desc = "Waffles from Roffle. Co."
 	icon_state = "rofflewaffles"
-	trash_type = /obj/item/trash/waffles
 	bite_consumption = 4
 	food_reagents = list(
 		/datum/reagent/consumable/nutriment = 8,
