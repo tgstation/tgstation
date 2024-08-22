@@ -519,6 +519,10 @@ SUBSYSTEM_DEF(id_access)
 
 	return tally
 
+/datum/controller/subsystem/id_access/proc/add_listening_remote(region_listened_to, obj/item/door_remote/remote_added)
+
+	LAZYADD(remotes_listening_by_region[region_listened_to], remote_added)
+
 
 /* When someone bops a door with the alternate action of their ID, they will request the door be opened by the door remote.
  * First, we deduce the appropriate region(s) for the access request.
@@ -528,7 +532,7 @@ SUBSYSTEM_DEF(id_access)
  * * door_requested - The door that the ID card is requesting be opened.
  */
 /datum/controller/subsystem/id_access/proc/route_request_to_door_remote(obj/item/card/id/ID_requesting, obj/machinery/door/airlock/door_requested)
-	for(region in SSid_access.station_regions)
-		if(requested_door.check_access(SSid_access.accesses_by_region[region]))
+	for(var/region in SSid_access.station_regions)
+		if(door_requested.check_access(SSid_access.accesses_by_region[region]))
 			for(var/obj/item/door_remote/remote in SSid_access.remotes_listening_by_region[region])
 				SEND_SIGNAL(remote, COMSIG_DOOR_REMOTE_ACCESS_REQUEST, ID_requesting, door_requested)

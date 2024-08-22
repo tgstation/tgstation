@@ -454,7 +454,7 @@
 	add_fingerprint(user)
 
 /obj/item/card/id/interact_with_atom_secondary(atom/interacting_with, mob/living/user, list/modifiers)
-	if(!check_allowed_items(interacting_with)
+	if(!check_allowed_items(interacting_with))
 		return NONE
 	if(is_station_level(user.z) && isairlock(interacting_with))
 		. = validate_access_request_attempt(user, interacting_with)
@@ -468,7 +468,7 @@
 	. = FALSE
 	if(to_request.allowed(user) && !to_request.locked) // if you can use the door don't waste time asking for access to it
 		return .
-	if(!interacting_with.hasPower() || interacting_with.machine_stat & BROKEN) // can't request access to a door with no functionality
+	if(!to_request.hasPower() || to_request.machine_stat & BROKEN) // can't request access to a door with no functionality
 		return .
 	if(!registered_name) // you may not need a job but your ID at least needs a name
 		return .

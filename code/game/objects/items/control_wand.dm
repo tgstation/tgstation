@@ -18,6 +18,9 @@
 	var/region_access = REGION_GENERAL
 	var/list/access_list
 	/// A list of paired items, the first being the ID card requesting access, the second being the door that access is requested for.
+	/// They'll only be able to request one door per ID, both so we're not cramming this full of lists that need to be GC'd and to make
+	/// remote requests kind of a pain in the ass and a situation where they should request adding the access to their ID from the relevant
+	/// head of staff.
 	var/open_requests = list()
 
 /obj/item/door_remote/Initialize(mapload)
@@ -32,15 +35,33 @@
 /obj/item/door_remote/proc/set_listen_for_requests(datum/source, toggle_state = TRUE)
 	SIGNAL_HANDLER
 
-	RegisterSignal(src, COMSIG_ITEM_DROPPED, PROC_REF(eventually_stop_listening))
+//	RegisterSignal(src, COMSIG_ITEM_DROPPED, PROC_REF(eventually_stop_listening))
+	RegisterSignal(src, COMSIG_DOOR_REMOTE_ACCESS_REQUEST, PROC_REF(receive_access_request))
+	SSid_access.add_listening_remote(region_access, src)
 
-/obj/item/door_remote/proc/set_listen_for_requests(datum/source)
+
+/obj/item/door_remote/proc/receive_access_request(datum/source, obj/item/card/id/ID_requesting, obj/machinery/door/airlock/requested_door)
 	SIGNAL_HANDLER
 
-	var/time_to_stop_listening = 5 MINUTES
-	ADD_TIMER
+	if(open_requests[ID_requesting])
+		return COMPONENT_REQUEST_LIMIT_REACHED
 
-/obj/item/door_remote/proc/add_open_request(datum/source, obj/item/card/id/ID_requesting, obj/machinery/door/airlock/requested_door)
+
+	open_requests[ID_requesting] = requested_door
+	ID_requesting.visible_message("A sedate blue light blinks on [ID_requesting].", vision_distance = 1)
+	addtimer(CALLBACK(src, PROC_REF(expire_access_request), ID_requesting), 10 SECONDS)
+
+/obj/item/door_remote/proc/expire_access_request(obj/item/card/id/ID_requesting)
+	/// Open request gets removed if the remote holder decides to approve it or EA the door
+	if(open_requests[ID_requesting])
+		open_requests -= ID_requesting
+		ID_requesting.visible_message("A bland yellow light blinks quickly on [ID_requesting].", vision_distance = 1)
+
+/obj/item/door_remote/proc/approve_access_request(obj/item/card/id/ID_requesting)
+
+	var/obj/machinery/door/airlock/requested_door = open_requests[ID_requesting]
+	requested_door.open()
+	open_requests -= ID_requesting
 
 
 /obj/item/door_remote/attack_self(mob/user)
