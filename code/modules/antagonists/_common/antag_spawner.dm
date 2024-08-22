@@ -45,7 +45,7 @@
 		get_asset_datum(/datum/asset/simple/contracts),
 	)
 
-/obj/item/antag_spawner/contract/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
+/obj/item/antag_spawner/contract/ui_act(action, list/params)
 	. = ..()
 	if(used || polling || !ishuman(usr))
 		return

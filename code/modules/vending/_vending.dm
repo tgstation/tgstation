@@ -832,7 +832,7 @@ GLOBAL_LIST_EMPTY(vending_machines_to_restock)
  * Args:
  * * turf/target: The turf to fall onto. Cannot be null.
  * * damage: The raw numerical damage to do by default.
- * * chance_to_crit: The percent chance of a critical hit occurring. Default: 0
+ * * chance_to_crit: The percent chance of a critical hit occuring. Default: 0
  * * forced_crit_case: If given a value from crushing.dm, [target] and its contents will always be hit with that specific critical hit. Default: null
  * * paralyze_time: The time, in deciseconds, a given mob/living will be paralyzed for if crushed.
  * * crush_dir: The direction the crush is coming from. Default: dir of src to [target].
@@ -1185,18 +1185,16 @@ GLOBAL_LIST_EMPTY(vending_machines_to_restock)
 	return TRUE
 
 /obj/machinery/vending/interact(mob/user)
-	if (HAS_AI_ACCESS(user))
-		return ..()
+	if (!HAS_AI_ACCESS(user))
+		if(seconds_electrified && !(machine_stat & NOPOWER))
+			if(shock(user, 100))
+				return
 
-	if(seconds_electrified && !(machine_stat & NOPOWER))
-		if(shock(user, 100))
+		if(tilted && !user.buckled && !isAdminGhostAI(user))
+			to_chat(user, span_notice("You begin righting [src]."))
+			if(do_after(user, 5 SECONDS, target=src))
+				untilt(user)
 			return
-
-	if(tilted && !user.buckled)
-		to_chat(user, span_notice("You begin righting [src]."))
-		if(do_after(user, 5 SECONDS, target=src))
-			untilt(user)
-		return
 
 	return ..()
 
@@ -1320,7 +1318,7 @@ GLOBAL_LIST_EMPTY(vending_machines_to_restock)
 
 	.["extended_inventory"] = extended_inventory
 
-/obj/machinery/vending/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
+/obj/machinery/vending/ui_act(action, params)
 	. = ..()
 	if(.)
 		return
@@ -1769,7 +1767,7 @@ GLOBAL_LIST_EMPTY(vending_machines_to_restock)
 			)
 			.["vending_machine_input"] += list(data)
 
-/obj/machinery/vending/custom/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
+/obj/machinery/vending/custom/ui_act(action, params)
 	. = ..()
 	if(.)
 		return

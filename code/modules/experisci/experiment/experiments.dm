@@ -387,7 +387,7 @@
 			if (organ.type == target_species.get_mutant_organ_type_for_slot(organ.slot))
 				continue
 		else
-			if ((organ.type in target_species.mutant_organs))
+			if ((organ.type in target_species.mutant_organs) || (organ.type in target_species.external_organs))
 				continue
 		return TRUE
 	return FALSE

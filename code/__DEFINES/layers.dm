@@ -108,7 +108,6 @@
 #define BALLOON_CHAT_PLANE 31
 /// Plane for the wallmount balloons
 #define EXAMINE_BALLOONS_PLANE 32
-#define EXAMINE_BALLOONS_RENDER_TARGET "*EXAMINE_BALLOONS_RENDER_TARGET"
 
 //-------------------- HUD ---------------------
 //HUD layer defines
@@ -290,7 +289,7 @@
 
 //---------- EMISSIVES -------------
 //Layering order of these is not particularly meaningful.
-//Important part is the separation of the planes for control via plane_master
+//Important part is the seperation of the planes for control via plane_master
 
 /// The layer you should use if you _really_ don't want an emissive overlay to be blocked.
 #define EMISSIVE_LAYER_UNBLOCKABLE 9999

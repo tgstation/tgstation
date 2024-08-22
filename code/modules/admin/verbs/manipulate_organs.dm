@@ -18,7 +18,10 @@ ADMIN_VERB(manipulate_organs, R_DEBUG, "Manipulate Organs", "Manipulate the orga
 				return
 			organ_to_grant = organs[organ_to_grant]
 			organ_to_grant = new organ_to_grant
-			organ_to_grant.Insert(carbon_victim)
+			if(!organ_to_grant.Insert(carbon_victim))
+				to_chat(user, span_notice("[carbon_victim] is unable to carry this organ!"))
+				qdel(organ_to_grant)
+				return
 			log_admin("[key_name(user)] has added organ [organ_to_grant.type] to [key_name(carbon_victim)]")
 			message_admins("[key_name_admin(user)] has added organ [organ_to_grant.type] to [ADMIN_LOOKUPFLW(carbon_victim)]")
 

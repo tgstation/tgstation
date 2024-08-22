@@ -195,7 +195,7 @@ _INVERTED_WALL_MOUNT_OFFSET(path, north_offset, physical_north_offset, south_off
 	dir = WEST; \
 	pixel_x = -offset; \
 } \
-_WALL_MOUNT_OFFSET(path, offset, -offset, 0, offset, -offset, 0)
+_WALL_MOUNT_OFFSET(path, offset, 0, -offset, offset, -offset, 0)
 
 #define MAPPING_DIRECTIONAL_HELPERS_EMPTY(path) \
 ##path/directional/north {\

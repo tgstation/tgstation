@@ -108,7 +108,7 @@
 
 	return data
 
-/obj/machinery/computer/security/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
+/obj/machinery/computer/security/ui_act(action, params)
 	. = ..()
 	if(.)
 		return
@@ -116,6 +116,7 @@
 	if(action == "switch_camera")
 		var/obj/machinery/camera/selected_camera = locate(params["camera"]) in GLOB.cameranet.cameras
 		active_camera = selected_camera
+		playsound(src, SFX_TERMINAL_TYPE, 25, FALSE)
 
 		if(isnull(active_camera))
 			return TRUE

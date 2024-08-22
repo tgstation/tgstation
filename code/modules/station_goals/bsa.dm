@@ -292,7 +292,7 @@ GLOBAL_VAR_INIT(bsa_unlock, FALSE)
 		data["target"] = get_target_name()
 	return data
 
-/obj/machinery/computer/bsa_control/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
+/obj/machinery/computer/bsa_control/ui_act(action, params)
 	. = ..()
 	if(.)
 		return

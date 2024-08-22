@@ -8,7 +8,7 @@
 #define BB_FOOD_TARGET "bb_food_target"
 ///How close a mob must be for us to select it as a target, if that is less than how far we can maintain it as a target
 #define BB_AGGRO_RANGE "BB_aggro_range"
-///are we hungry? determined by the udder component
+///are we hungry? determined by the udder compnent
 #define BB_CHECK_HUNGRY "BB_check_hungry"
 ///are we ready to breed?
 #define BB_BREED_READY "BB_breed_ready"
@@ -47,7 +47,7 @@
 
 ///bane ai used by example script
 #define BB_BANE_BATMAN "BB_bane_batman"
-//yep that's it
+//yep thats it
 
 ///Hunting BB keys
 #define BB_CURRENT_HUNTING_TARGET "BB_current_hunting_target"
@@ -132,9 +132,6 @@
 #define BB_MOD_IMPLANT "BB_mod_implant"
 ///Range for a MOD AI controller.
 #define MOD_AI_RANGE 200
-
-///Only target mobs with these traits
-#define BB_TARGET_ONLY_WITH_TRAITS "BB_target_only_with_traits"
 
 ///should we skip the faction check for the targeting strategy?
 #define BB_ALWAYS_IGNORE_FACTION "BB_always_ignore_factions"

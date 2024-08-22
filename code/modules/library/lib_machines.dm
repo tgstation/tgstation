@@ -80,7 +80,7 @@ GLOBAL_VAR_INIT(library_table_modified, 0)
 	data["params_changed"] = params_changed
 	return data
 
-/obj/machinery/computer/libraryconsole/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
+/obj/machinery/computer/libraryconsole/ui_act(action, params)
 	. = ..()
 	if(.)
 		return
@@ -424,7 +424,7 @@ GLOBAL_VAR_INIT(library_table_modified, 0)
 		scanner = WEAKREF(foundya)
 		return foundya
 
-/obj/machinery/computer/libraryconsole/bookmanagement/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
+/obj/machinery/computer/libraryconsole/bookmanagement/ui_act(action, params)
 	//The parent call takes care of stuff like searching, don't forget about that yeah?
 	. = ..()
 	if(.)

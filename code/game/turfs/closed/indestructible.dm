@@ -58,7 +58,6 @@
 /turf/closed/indestructible/splashscreen
 	name = "Space Station 13"
 	desc = null
-	baseturfs = /turf/cordon
 	icon = 'icons/blanks/blank_title.png'
 	icon_state = ""
 	pixel_x = -64
@@ -98,6 +97,15 @@ INITIALIZE_IMMEDIATE(/turf/closed/indestructible/splashscreen)
 /turf/closed/indestructible/splashscreen/examine()
 	desc = pick(strings(SPLASH_FILE, "splashes"))
 	return ..()
+
+/turf/closed/indestructible/start_area
+	name = null
+	desc = null
+	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
+	use_splitvis = FALSE
+	smoothing_flags = NONE
+	smoothing_groups = null
+	canSmoothWith = null
 
 /turf/closed/indestructible/reinforced
 	name = "reinforced wall"
@@ -201,8 +209,8 @@ INITIALIZE_IMMEDIATE(/turf/closed/indestructible/splashscreen)
 
 /turf/closed/indestructible/opsglass
 	name = "window"
-	icon = MAP_SWITCH('icons/obj/structures/smooth/windows/plastitanium_window.dmi', 'icons/obj/structures_spawners.dmi')
-	icon_state = MAP_SWITCH("0-lower", "plastitaniumwindow_spawner")
+	icon = MAP_SWITCH('icons/obj/structures/smooth/windows/plastitanium_window.dmi', 'icons/obj/structures/smooth/plastitanium_window.dmi')
+	icon_state = MAP_SWITCH("0-lower", "plastitanium_window-0")
 	layer = ABOVE_OBJ_LAYER
 	opacity = FALSE
 	use_splitvis = FALSE

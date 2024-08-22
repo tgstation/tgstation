@@ -5756,6 +5756,7 @@
 	dir = 4
 	},
 /obj/effect/decal/cleanable/dirt,
+/obj/item/trash/waffles,
 /turf/open/floor/plating,
 /area/station/maintenance/port/aft)
 "bGm" = (
@@ -56205,6 +56206,9 @@
 	},
 /turf/open/floor/iron/dark/textured,
 /area/station/security/range)
+"qtv" = (
+/turf/open/misc/asteroid/snow/icemoon,
+/area/icemoon/surface/outdoors/unexplored/rivers/no_monsters)
 "qtw" = (
 /obj/machinery/door/airlock/security{
 	name = "Prison Forestry"
@@ -73371,7 +73375,6 @@
 /obj/structure/railing/corner{
 	dir = 8
 	},
-/obj/structure/closet/secure_closet/cytology,
 /turf/open/floor/iron/smooth_large,
 /area/station/science/cytology)
 "vvu" = (
@@ -77712,6 +77715,12 @@
 /obj/effect/landmark/event_spawn,
 /turf/open/floor/iron,
 /area/station/command/bridge)
+"wLI" = (
+/obj/structure/flora/tree/pine/style_random,
+/obj/structure/marker_beacon/cerulean,
+/obj/effect/mapping_helpers/no_atoms_ontop,
+/turf/open/misc/asteroid/snow/icemoon,
+/area/icemoon/surface/outdoors/unexplored/rivers/no_monsters)
 "wLK" = (
 /obj/machinery/light/small/directional/north,
 /obj/structure/sign/warning/secure_area/directional/north,
@@ -82547,7 +82556,7 @@
 /area/station/medical/chemistry)
 "ycx" = (
 /obj/structure/railing,
-/obj/machinery/vending/cytopro,
+/obj/structure/closet/secure_closet/cytology,
 /turf/open/floor/iron/smooth_large,
 /area/station/science/cytology)
 "ycA" = (
@@ -269171,8 +269180,8 @@ wNO
 wNO
 wNO
 wNO
-bln
-fwx
+wNO
+wLI
 kDs
 kDs
 kDs
@@ -269428,8 +269437,8 @@ wNO
 wNO
 wNO
 wNO
-bln
-bln
+wNO
+wNO
 kDs
 kDs
 kDs
@@ -269685,8 +269694,8 @@ wNO
 wNO
 wNO
 wNO
-bln
-bln
+wNO
+wNO
 bln
 hHG
 hHG
@@ -270715,7 +270724,7 @@ wNO
 tkU
 tkU
 tkU
-bln
+qtv
 hHG
 hHG
 hHG

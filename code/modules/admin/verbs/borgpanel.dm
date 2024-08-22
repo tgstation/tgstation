@@ -64,7 +64,7 @@ ADMIN_VERB(borg_panel, R_ADMIN, "Show Borg Panel", ADMIN_VERB_NO_DESCRIPTION, AD
 		.["ais"] += list(list("name" = ai.name, "ref" = REF(ai), "connected" = (borg.connected_ai == ai)))
 
 
-/datum/borgpanel/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
+/datum/borgpanel/ui_act(action, params)
 	. = ..()
 	if(.)
 		return
@@ -153,15 +153,15 @@ ADMIN_VERB(borg_panel, R_ADMIN, "Show Borg Panel", ADMIN_VERB_NO_DESCRIPTION, AD
 				if (!borg.radio.keyslot) // There's no encryption key. This shouldn't happen but we can cope
 					borg.radio.channels -= channel
 					if (channel == RADIO_CHANNEL_SYNDICATE)
-						borg.radio.special_channels &= ~RADIO_SPECIAL_SYNDIE
+						borg.radio.syndie = FALSE
 					else if (channel == "CentCom")
-						borg.radio.special_channels &= ~RADIO_SPECIAL_CENTCOM
+						borg.radio.independent = FALSE
 				else
 					borg.radio.keyslot.channels -= channel
 					if (channel == RADIO_CHANNEL_SYNDICATE)
-						borg.radio.keyslot.special_channels &= ~RADIO_SPECIAL_SYNDIE
+						borg.radio.keyslot.syndie = FALSE
 					else if (channel == "CentCom")
-						borg.radio.keyslot.special_channels &= ~RADIO_SPECIAL_CENTCOM
+						borg.radio.keyslot.independent = FALSE
 				message_admins("[key_name_admin(user)] removed the [channel] radio channel from [ADMIN_LOOKUPFLW(borg)].")
 				log_silicon("[key_name(user)] removed the [channel] radio channel from [key_name(borg)].")
 			else // We're adding a channel
@@ -169,9 +169,9 @@ ADMIN_VERB(borg_panel, R_ADMIN, "Show Borg Panel", ADMIN_VERB_NO_DESCRIPTION, AD
 					borg.radio.keyslot = new()
 				borg.radio.keyslot.channels[channel] = 1
 				if (channel == RADIO_CHANNEL_SYNDICATE)
-					borg.radio.keyslot.special_channels |= RADIO_SPECIAL_SYNDIE
+					borg.radio.keyslot.syndie = TRUE
 				else if (channel == "CentCom")
-					borg.radio.keyslot.special_channels |= RADIO_SPECIAL_CENTCOM
+					borg.radio.keyslot.independent = TRUE
 				message_admins("[key_name_admin(user)] added the [channel] radio channel to [ADMIN_LOOKUPFLW(borg)].")
 				log_silicon("[key_name(user)] added the [channel] radio channel to [key_name(borg)].")
 			borg.radio.recalculateChannels()

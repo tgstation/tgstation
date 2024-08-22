@@ -343,7 +343,7 @@
 	if(ismob(weapon.loc))
 		var/mob/owner = weapon.loc
 		if(!owner.transferItemToLoc(weapon, src))
-			to_chat(owner, span_warning("\the [weapon] is stuck to your hand, you cannot put it in \the [src]!"))
+			to_chat(usr, span_warning("\the [weapon] is stuck to your hand, you cannot put it in \the [src]!"))
 			return FALSE
 		return TRUE
 	else
@@ -481,16 +481,15 @@
 	.["isdryer"] = TRUE
 	.["drying"] = drying
 
-/obj/machinery/smartfridge/drying/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
+/obj/machinery/smartfridge/drying/ui_act(action, params)
 	. = ..()
 	if(.)
 		update_appearance() // This is to handle a case where the last item is taken out manually instead of through drying pop-out
 		return
 
-	var/mob/user = ui.user
 	switch(action)
 		if("Dry")
-			toggle_drying(FALSE, user)
+			toggle_drying(FALSE, usr)
 			return TRUE
 
 /obj/machinery/smartfridge/drying/powered()

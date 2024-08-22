@@ -889,7 +889,7 @@
 
 /obj/item/food/burger/rootrib
 	name = "rootrib"
-	desc = "An elusive rib shaped burger with limited availability across the galaxy. Now meeting subhuman requirements."
+	desc = "An elusive rib shaped burger with limited availablity across the galaxy. Now meeting subhuman requirements."
 	icon_state = "rootrib"
 	icon = 'icons/obj/food/lizard.dmi'
 	food_reagents = list(

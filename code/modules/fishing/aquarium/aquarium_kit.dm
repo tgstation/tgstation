@@ -21,15 +21,15 @@
 	desc = "A resizable case keeping the fish inside in stasis."
 	icon = 'icons/obj/storage/case.dmi'
 	icon_state = "fishbox"
-	w_class = WEIGHT_CLASS_SMALL
+
 	inhand_icon_state = "syringe_kit"
 	lefthand_file = 'icons/mob/inhands/equipment/medical_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/medical_righthand.dmi'
-	storage_type = /datum/storage/fish_case/adjust_size
+	storage_type = /datum/storage/fish_case
 
 /obj/item/storage/fish_case/Initialize(mapload)
-	. = ..()
-	AddElement(/datum/element/fish_safe_storage)
+	ADD_TRAIT(src, TRAIT_FISH_SAFE_STORAGE, TRAIT_GENERIC) // Before populate so fish instatiates in ready container already
+	return ..()
 
 /obj/item/storage/fish_case/PopulateContents()
 	var/fish_type = get_fish_type()
@@ -58,7 +58,7 @@
 	name = "ominous fish case"
 
 /obj/item/storage/fish_case/syndicate/get_fish_type()
-	return pick(/obj/item/fish/donkfish, /obj/item/fish/emulsijack, /obj/item/fish/jumpercable, /obj/item/fish/chainsawfish)
+	return pick(/obj/item/fish/donkfish, /obj/item/fish/emulsijack, /obj/item/fish/jumpercable)
 
 /obj/item/storage/fish_case/tiziran
 	name = "imported fish case"
@@ -90,13 +90,6 @@
 	. = ..()
 	for(var/obj/item/fish/fish as anything in contents)
 		fish.set_status(FISH_DEAD)
-
-/obj/item/storage/fish_case/bluespace
-	name = "bluespace fish case"
-	icon_state = "fishbox_bluespace"
-	desc = "An improved fish case to keep large fish in stasis in a compact little space."
-	w_class = WEIGHT_CLASS_NORMAL
-	storage_type = /datum/storage/fish_case
 
 /obj/item/aquarium_kit
 	name = "DIY Aquarium Construction Kit"

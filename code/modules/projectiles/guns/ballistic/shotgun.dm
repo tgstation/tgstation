@@ -24,7 +24,6 @@
 	cartridge_wording = "shell"
 	tac_reloads = FALSE
 	weapon_weight = WEAPON_HEAVY
-	misfire_probability_cap = 35 // Even if the misfire probability and increment are both zero, we've some shots that may do that.
 
 	pb_knockback = 2
 
