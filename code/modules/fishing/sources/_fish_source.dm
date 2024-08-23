@@ -271,38 +271,44 @@ GLOBAL_LIST(fishing_property_cache)
 
 /// Awful workaround around initial(x.list_variable) not being a thing while trying to keep some semblance of being structured
 /proc/collect_fish_properties()
-	if(GLOB.fishing_property_cache == null)
-		var/list/fish_property_table = list()
-		for(var/fish_type in subtypesof(/obj/item/fish))
-			var/obj/item/fish/fish = new fish_type(null, FALSE)
-			fish_property_table[fish_type] = list()
-			fish_property_table[fish_type][NAMEOF(fish, favorite_bait)] = fish.favorite_bait.Copy()
-			fish_property_table[fish_type][NAMEOF(fish, disliked_bait)] = fish.disliked_bait.Copy()
-			fish_property_table[fish_type][NAMEOF(fish, fish_traits)] = fish.fish_traits.Copy()
+	if(GLOB.fishing_property_cache)
+		return GLOB.fishing_property_cache
+	var/list/fish_property_table = list()
+	for(var/fish_type in subtypesof(/obj/item/fish))
+		var/obj/item/fish/fish = new fish_type(null, FALSE)
+		fish_property_table[fish_type] = list()
+		fish_property_table[fish_type][NAMEOF(fish, favorite_bait)] = fish.favorite_bait.Copy()
+		fish_property_table[fish_type][NAMEOF(fish, disliked_bait)] = fish.disliked_bait.Copy()
+		fish_property_table[fish_type][NAMEOF(fish, fish_traits)] = fish.fish_traits.Copy()
+		var/list/evo_types = fish.evolution_types?.Copy()
+		fish_property_table[fish_type][FISH_PROPERTIES_EVOLUTIONS] = evo_types
+		for(var/type in evo_types)
+			LAZYADD(GLOB.fishes_by_fish_evolution[type], fish_type)
 
-			var/beauty_score = "???"
-			switch(beauty_score)
-				if(-INFINITY to FISH_BEAUTY_DISGUSTING)
-					beauty_score = "OH HELL NAW!"
-				if(FISH_BEAUTY_DISGUSTING to FISH_BEAUTY_UGLY)
-					beauty_score = "☆☆☆☆☆"
-				if(FISH_BEAUTY_UGLY to FISH_BEAUTY_BAD)
-					beauty_score = "★☆☆☆☆"
-				if(FISH_BEAUTY_BAD to FISH_BEAUTY_NULL)
-					beauty_score = "★★☆☆☆"
-				if(FISH_BEAUTY_NULL to FISH_BEAUTY_GENERIC)
-					beauty_score = "★★★☆☆"
-				if(FISH_BEAUTY_GENERIC to FISH_BEAUTY_GOOD)
-					beauty_score = "★★★★☆"
-				if(FISH_BEAUTY_GOOD to FISH_BEAUTY_GREAT)
-					beauty_score = "★★★★★"
-				if(FISH_BEAUTY_GREAT to INFINITY)
-					beauty_score = "★★★★★★"
+		var/beauty_score = "???"
+		switch(beauty_score)
+			if(-INFINITY to FISH_BEAUTY_DISGUSTING)
+				beauty_score = "OH HELL NAW!"
+			if(FISH_BEAUTY_DISGUSTING to FISH_BEAUTY_UGLY)
+				beauty_score = "☆☆☆☆☆"
+			if(FISH_BEAUTY_UGLY to FISH_BEAUTY_BAD)
+				beauty_score = "★☆☆☆☆"
+			if(FISH_BEAUTY_BAD to FISH_BEAUTY_NULL)
+				beauty_score = "★★☆☆☆"
+			if(FISH_BEAUTY_NULL to FISH_BEAUTY_GENERIC)
+				beauty_score = "★★★☆☆"
+			if(FISH_BEAUTY_GENERIC to FISH_BEAUTY_GOOD)
+				beauty_score = "★★★★☆"
+			if(FISH_BEAUTY_GOOD to FISH_BEAUTY_GREAT)
+				beauty_score = "★★★★★"
+			if(FISH_BEAUTY_GREAT to INFINITY)
+				beauty_score = "★★★★★★"
 
-			fish_property_table[fish_type][FISH_PROPERTIES_BEAUTY_SCORE] = beauty_score
+		fish_property_table[fish_type][FISH_PROPERTIES_BEAUTY_SCORE] = beauty_score
 
-			QDEL_NULL(fish)
-		GLOB.fishing_property_cache = fish_property_table
+		QDEL_NULL(fish)
+
+	GLOB.fishing_property_cache = fish_property_table
 	return GLOB.fishing_property_cache
 
 /// Returns the fish table, with with the unavailable items from fish_counts removed.

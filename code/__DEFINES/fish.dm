@@ -183,6 +183,7 @@
 #define FISHING_MINIGAME_AREA 1000
 
 #define FISH_PROPERTIES_BEAUTY_SCORE "beauty_score"
+#define FISH_PROPERTIES_EVOLUTIONS "evolutions"
 
 ///We multiply the weight of fish inside the loot table by this value if we are goofy enough to fish without a bait.
 #define FISH_WEIGHT_MULT_WITHOUT_BAIT 0.15

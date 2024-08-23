@@ -1,4 +1,7 @@
+///A global list of fish evolutions, which are singletons.
 GLOBAL_LIST_INIT(fish_evolutions, init_subtypes_w_path_keys(/datum/fish_evolution, list()))
+///A list of fish evolution types, each having an associated list containing all fish types that have it.
+GLOBAL_LIST_EMPTY(fishes_by_fish_evolution)
 
 /**
  * Fish evolution datums
@@ -7,7 +10,9 @@ GLOBAL_LIST_INIT(fish_evolutions, init_subtypes_w_path_keys(/datum/fish_evolutio
  * then there's a chance the offspring may be of a new type rather than the same as its source or mate (if any).
  */
 /datum/fish_evolution
+	///The name of the evolution. If not set, it'll be generated on runtime from the name of the new fish type.
 	var/name
+	///The probability that this evolution can happen.
 	var/probability = 0
 	///The obj/item/fish path of the new fish
 	var/obj/item/fish/new_fish_type = /obj/item/fish
@@ -21,8 +26,13 @@ GLOBAL_LIST_INIT(fish_evolutions, init_subtypes_w_path_keys(/datum/fish_evolutio
 	var/list/removed_traits
 	///A text string shown in the catalog, containing information on conditions specific to this evolution.
 	var/conditions_note
+	///Is this evolution shown on the wiki?
+	var/show_on_wiki = TRUE
+	///Is the result of this evolution shown on the wiki?
+	var/show_result_on_wiki = TRUE
 
 /datum/fish_evolution/New()
+	SHOULD_CALL_PARENT(TRUE)
 	if(!ispath(new_fish_type, /obj/item/fish))
 		stack_trace("[type] instantiated with a new fish type of [new_fish_type]. That's not a fish, hun, things will break.")
 	if(!name)
@@ -87,6 +97,7 @@ GLOBAL_LIST_INIT(fish_evolutions, init_subtypes_w_path_keys(/datum/fish_evolutio
 	new_fish_type = /obj/item/fish/mastodon
 	new_traits = list(/datum/fish_trait/heavy, /datum/fish_trait/amphibious, /datum/fish_trait/predator, /datum/fish_trait/aggressive)
 	conditions_note = "The fish (and its mate) needs to be unusually big both in size and weight."
+	show_result_on_wiki = FALSE
 
 /datum/fish_evolution/mastodon/check_conditions(obj/item/fish/source, obj/item/fish/mate, obj/structure/aquarium/aquarium)
 	if((source.size < 120 || source.weight < 3000) || (mate && (mate.size < 120 || mate.weight < 3000)))
@@ -106,13 +117,11 @@ GLOBAL_LIST_INIT(fish_evolutions, init_subtypes_w_path_keys(/datum/fish_evolutio
 	required_temperature_max = MIN_AQUARIUM_TEMP+10
 
 /datum/fish_evolution/three_eyes
-	name = "Three-eyed Goldfish"
 	probability = 3
 	new_fish_type = /obj/item/fish/three_eyes
 	new_traits = list(/datum/fish_trait/recessive)
 
 /datum/fish_evolution/chainsawfish
-	name = "Chainsawfish"
 	probability = 30
 	new_fish_type = /obj/item/fish/chainsawfish
 	new_traits = list(/datum/fish_trait/predator, /datum/fish_trait/aggressive)

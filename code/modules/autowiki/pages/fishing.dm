@@ -18,10 +18,14 @@
 
 	for (var/obj/item/fish/fish as anything in fish_types)
 
+		var/filename = FISH_AUTOWIKI_FILENAME(fish)
+
+		if(!generated_icons[filename])
+			upload_icon(icon(fish:icon, fish::icon_state, frame = 1), filename)
+		generated_icons[filename] = TRUE
+
 		if(!fish::show_in_catalog)
 			continue
-
-		var/filename = FISH_AUTOWIKI_FILENAME(fish)
 
 		var/list/properties = fish_properties[fish]
 
@@ -55,10 +59,6 @@
 			"reproduction" = fish::breeding_timeout,
 			"beauty_score" = properties[FISH_PROPERTIES_BEAUTY_SCORE],
 		))
-
-		if(!generated_icons[filename])
-			upload_icon(icon(fish:icon, fish::icon_state, frame = 1), filename)
-		generated_icons[filename] = TRUE
 
 	return output
 
@@ -360,5 +360,38 @@
 	if(!generated_icons[filename])
 		upload_icon(icon(icon = 'icons/hud/radial_fishing.dmi', icon_state = reward.radial_state), filename)
 	generated_icons[filename] = TRUE
+
+	return output
+
+/datum/autowiki/fish_evolution
+	page = "Template:Autowiki/Content/Fish/Evolution"
+
+/datum/autowiki/fish_evolution/generate()
+	var/output = ""
+
+	for(var/evo_type in GLOB.fish_evolutions)
+		var/datum/fish_evolution/evolution = GLOB.fish_evolutions[evo_type]
+		if(!evolution.show_on_wiki)
+			continue
+
+		output += "\n\n" + include_template("Autowiki/FishEvolution", list(
+			"name" = escape_value(evolution.name),
+			"fish" = get_fish(evo_type),
+			"min_max_temp" = "[evolution.required_temperature_min] - [evolution.required_temperature_max] K",
+			"notes" = escape_value(evolution.conditions_note),
+			"result_icon" = evolution.show_result_on_wiki ? FISH_AUTOWIKI_FILENAME(evolution.new_fish_type) : null,
+
+		))
+
+	return output
+
+/datum/autowiki/fish_evolution/proc/get_fish(evo_type)
+	var/output = ""
+
+	for(var/obj/item/fish/fish as anything in GLOB.fishes_by_fish_evolution[evo_type])
+		output += include_template("Autowiki/FishEvolutionCandidate", list(
+			"name" = escape_value(full_capitalize(initial(fish.name))),
+			"icon" = FISH_AUTOWIKI_FILENAME(fish),
+		))
 
 	return output
