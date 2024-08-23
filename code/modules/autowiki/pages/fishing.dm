@@ -287,7 +287,7 @@
 
 /datum/autowiki/fish_sources/proc/get_contents(datum/fish_source/source)
 	var/output = ""
-	var/list/data = source.generate_wiki_contents()
+	var/list/data = source.generate_wiki_contents(src)
 	sortTim(data, GLOBAL_PROC_REF(cmp_autowiki_fish_sources_content))
 	for(var/list/entry in data)
 		entry[FISH_SOURCE_AUTOWIKI_WEIGHT] = "[round(entry[FISH_SOURCE_AUTOWIKI_WEIGHT], 0.1)]%"
