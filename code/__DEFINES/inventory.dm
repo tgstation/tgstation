@@ -63,6 +63,8 @@
 #define ITEM_SLOT_HANDCUFFED (1<<18)
 /// Legcuff slot (bolas, beartraps)
 #define ITEM_SLOT_LEGCUFFED (1<<19)
+/// Inside of a character's BELT.........
+#define ITEM_SLOT_BELTPACK (1<<20)
 
 /// Total amount of slots
 #define SLOTS_AMT 20 // Keep this up to date!
