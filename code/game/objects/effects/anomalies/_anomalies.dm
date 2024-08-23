@@ -95,6 +95,7 @@
 
 /obj/effect/anomaly/proc/anomalyNeutralize()
 	new /obj/effect/particle_effect/fluid/smoke/bad(loc)
+	SSblackbox.record_feedback("nested tally", "anomaly_defused", 1, list("[type]", "[immortal ? "N/A" : round((death_time - world.time) / 10)]"))
 
 	if(drops_core)
 		if(isnull(anomaly_core))
