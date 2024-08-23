@@ -262,12 +262,12 @@ GLOBAL_LIST_EMPTY(chasm_fallen_mobs)
 	. = ..()
 	if(isliving(gone))
 		UnregisterSignal(gone, COMSIG_LIVING_REVIVE)
-		LAZYREMOVE(GLOB.chasm_fallen_mobs[get_chasm_category(loc)], arrived)
+		LAZYREMOVE(GLOB.chasm_fallen_mobs[get_chasm_category(loc)], gone)
 
 /obj/effect/abstract/chasm_storage/on_changed_z_level(turf/old_turf, turf/new_turf, same_z_layer, notify_contents)
 	. = ..()
 	var/old_cat = get_chasm_category(old_turf)
-	var/new_cat = get_chasm_categeory(new_turf)
+	var/new_cat = get_chasm_category(new_turf)
 	var/list/mobs = list()
 	for(var/mob/fallen in src)
 		mobs += fallen
@@ -284,15 +284,15 @@ GLOBAL_LIST_EMPTY(chasm_fallen_mobs)
 	if(istype(area, /area/shuttle)) //shuttle move between z-levels, so they're a special case.
 		return area
 
-	if(is_away_level(turf))
+	if(is_away_level(z_level))
 		return ZTRAIT_AWAY
-	if(is_mining_level(turf))
+	if(is_mining_level(z_level))
 		return ZTRAIT_MINING
-	if(is_station_level(turf))
+	if(is_station_level(z_level))
 		return ZTRAIT_STATION
-	if(is_centcom_level(turf))
+	if(is_centcom_level(z_level))
 		return ZTRAIT_CENTCOM
-	if(is_reserved_level(turf))
+	if(is_reserved_level(z_level))
 		return ZTRAIT_RESERVED
 
 	return ZTRAIT_SPACE_RUINS
