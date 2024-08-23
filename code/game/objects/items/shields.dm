@@ -28,6 +28,8 @@
 	COOLDOWN_DECLARE(baton_bash)
 	/// is shield bashable?
 	var/is_bashable = TRUE
+	/// sound when a shield is bashed
+	var/shield_bash_sound = 'sound/effects/shieldbash.ogg'
 
 /datum/armor/item_shield
 	melee = 50
@@ -66,13 +68,13 @@
 /obj/item/shield/item_interaction(mob/living/user, obj/item/tool, list/modifiers, is_right_clicking)
 	. = ..()
 	if(. & ITEM_INTERACT_ANY_BLOCKER)
-		return . 
+		return .
 	if(!istype(tool, /obj/item/melee/baton) || !is_bashable)
-		return . 
+		return .
 	if(!COOLDOWN_FINISHED(src, baton_bash))
 		return ITEM_INTERACT_BLOCKING
 	user.visible_message(span_warning("[user] bashes [src] with [tool]!"))
-	playsound(src, 'sound/effects/shieldbash.ogg', 50, TRUE)
+	playsound(src, shield_bash_sound, 50, TRUE)
 	COOLDOWN_START(src, baton_bash, BATON_BASH_COOLDOWN)
 	return ITEM_INTERACT_SUCCESS
 
@@ -304,7 +306,8 @@
 	throw_speed = 3
 	breakable_by_damage = FALSE
 	block_sound = 'sound/weapons/block_blade.ogg'
-	is_bashable = FALSE
+	is_bashable = FALSE // Gotta wait till it activates y'know
+	shield_bash_sound = 'sound/effects/energyshieldbash.ogg'
 	/// Force of the shield when active.
 	var/active_force = 10
 	/// Throwforce of the shield when active.
