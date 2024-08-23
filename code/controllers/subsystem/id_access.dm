@@ -1,3 +1,4 @@
+
 /**
  * Non-processing subsystem that holds various procs and data structures to manage ID cards, trims and access.
  */
@@ -35,6 +36,8 @@ SUBSYSTEM_DEF(id_access)
 
 	/// The roundstart generated code for the spare ID safe. This is given to the Captain on shift start. If there's no Captain, it's given to the HoP. If there's no HoP
 	var/spare_id_safe_code = ""
+	/// Associated list of regions; entries are null until getting LAZYADD'd a ref to a given remote once it gets registered
+	var/remotes_listening_by_region = list()
 
 /datum/controller/subsystem/id_access/Initialize()
 	// We use this because creating the trim singletons requires the config to be loaded.
@@ -123,6 +126,15 @@ SUBSYSTEM_DEF(id_access)
 	accesses_by_region[REGION_CENTCOM] = REGION_ACCESS_CENTCOM
 
 	station_regions = REGION_AREA_STATION
+	remotes_listening_by_region = list(
+		REGION_ALL_STATION = null,
+		REGION_SECURITY = null,
+		REGION_MEDBAY = null,
+		REGION_RESEARCH = null,
+		REGION_ENGINEERING = null,
+		REGION_SUPPLY = null,
+		REGION_COMMAND = null,
+	)
 
 /// Instantiate trim singletons and add them to a list.
 /datum/controller/subsystem/id_access/proc/setup_trim_singletons()
@@ -506,3 +518,23 @@ SUBSYSTEM_DEF(id_access)
 			tally++
 
 	return tally
+
+/datum/controller/subsystem/id_access/proc/add_listening_remote(region_listened_to, obj/item/door_remote/remote_added)
+	LAZYADD(remotes_listening_by_region[region_listened_to], remote_added)
+
+/datum/controller/subsystem/id_access/proc/remove_listening_remote(region_listened_to, obj/item/door_remote/remote_removed)
+	LAZYREMOVE(remotes_listening_by_region[region_listened_to], remote_removed)
+
+
+/* When someone bops a door with the alternate action of their ID, they will request the door be opened by the door remote.
+ * First, we deduce the appropriate region(s) for the access request.
+ * If we find an appropriate region, then we add it to the list of regions we're gonna send a signal for.
+ *
+ * * ID_requesting - The ID card that is requesting the door be opened.
+ * * door_requested - The door that the ID card is requesting be opened.
+ */
+/datum/controller/subsystem/id_access/proc/route_request_to_door_remote(obj/item/card/id/ID_requesting, obj/machinery/door/airlock/door_requested)
+	for(var/region in SSid_access.station_regions)
+		if(door_requested.check_access_list(SSid_access.accesses_by_region[region]))
+			for(var/obj/item/door_remote/remote in SSid_access.remotes_listening_by_region[region])
+				SEND_SIGNAL(remote, COMSIG_DOOR_REMOTE_ACCESS_REQUEST, ID_requesting, door_requested)

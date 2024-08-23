@@ -454,10 +454,28 @@
 	add_fingerprint(user)
 
 /obj/item/card/id/interact_with_atom_secondary(atom/interacting_with, mob/living/user, list/modifiers)
-	if(!check_allowed_items(interacting_with) || !isfloorturf(interacting_with))
+	if(!check_allowed_items(interacting_with))
+		return NONE
+	if(is_station_level(user.z) && isairlock(interacting_with))
+		. = validate_access_request_attempt(user, interacting_with)
+		return (. ? ITEM_INTERACT_SUCCESS : NONE)
+	if(!isfloorturf(interacting_with))
 		return NONE
 	try_project_paystand(user, interacting_with)
 	return ITEM_INTERACT_SUCCESS
+
+/obj/item/card/id/proc/validate_access_request_attempt(mob/living/user, obj/machinery/door/airlock/to_request)
+	. = FALSE
+	if(to_request.allowed(user) && !to_request.locked) // if you can use the door don't waste time asking for access to it
+		return .
+	if(!to_request.hasPower() || to_request.machine_stat & BROKEN) // can't request access to a door with no functionality
+		return .
+	if(!registered_name) // you may not need a job but your ID at least needs a name
+		return .
+	. = TRUE
+	SSid_access.route_request_to_door_remote(src, to_request, user)
+	return .
+
 
 /obj/item/card/id/attack_self_secondary(mob/user, modifiers)
 	. = ..()
