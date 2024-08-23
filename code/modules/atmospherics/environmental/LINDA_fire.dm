@@ -393,7 +393,7 @@
 	var/list/obj/effect/hotspot/spot_list = list()
 	var/turf/open/current_sound_loc
 	var/datum/looping_sound/fire/sound
-	var/tiles_limit = 50
+	var/tiles_limit = 80 // arbitrary limit so we dont have one giant group
 	//these lists and average var are to find the average center of a group
 	var/list/x_coord = list()
 	var/list/y_coord = list()
@@ -407,22 +407,8 @@
 	//var/list/turf/open/our_airtight_room = list()
 
 
-/datum/hot_group/New()
-	. = ..()
-	SSair.hot_groups += src
-
-/datum/hot_group/process(seconds_per_tick)
-	. = ..()
-	if(spot_list.len <= 0)
-		qdel(src)
-		return
-	if(COOLDOWN_FINISHED(src, update_sound_center) && spot_list.len >= 3)//arbitrary size to start playing the sound
-		update_sound()
-		COOLDOWN_START(src, update_sound_center, 5 SECONDS)
-
 /datum/hot_group/Destroy()
 	. = ..()
-	SSair.hot_groups -= src
 	current_sound_loc = null
 	spot_list = null
 	qdel(sound)
@@ -432,6 +418,9 @@
 	var/turf/open/target_turf = target.loc
 	x_coord -= target_turf.x
 	y_coord -= target_turf.y
+	if(spot_list.len <= 0)
+		qdel(src)
+		return
 
 /datum/hot_group/proc/add_to_group(obj/effect/hotspot/target)
 	spot_list += target
@@ -440,6 +429,9 @@
 	x_coord += target_turf.x
 	y_coord += target_turf.y
 	z_coord += target_turf.z
+	if(COOLDOWN_FINISHED(src, update_sound_center) && spot_list.len >= 3)//arbitrary size to start playing the sound
+		update_sound()
+		COOLDOWN_START(src, update_sound_center, 5 SECONDS)
 
 /datum/hot_group/proc/merge_hot_groups(datum/hot_group/enemy_group)
 	var/choose_a_group
@@ -462,6 +454,9 @@
 	saving_group.x_coord += sacrificial_group.x_coord
 	saving_group.y_coord += sacrificial_group.y_coord
 	qdel(sacrificial_group)
+	if(COOLDOWN_FINISHED(src, update_sound_center) && spot_list.len >= 3)//arbitrary size to start playing the sound
+		update_sound()
+		COOLDOWN_START(src, update_sound_center, 5 SECONDS)
 
 /datum/hot_group/proc/update_sound()
 	//we can draw a cross around the average middle of any globs of group, curves or hollow groups may cause issues with this

@@ -18,14 +18,12 @@ SUBSYSTEM_DEF(air)
 	var/cost_atmos_machinery = 0
 	var/cost_rebuilds = 0
 	var/cost_adjacent = 0
-	var/cost_hot_groups = 0
 
 	var/list/excited_groups = list()
 	var/list/active_turfs = list()
 	var/list/hotspots = list()
 	var/list/networks = list()
 	var/list/rebuild_queue = list()
-	var/list/hot_groups = list()
 	//Subservient to rebuild queue
 	var/list/expansion_queue = list()
 	/// List of turfs to recalculate adjacent turfs on before processing
@@ -86,7 +84,6 @@ SUBSYSTEM_DEF(air)
 	msg += "EP:[expansion_queue.len]|"
 	msg += "AJ:[adjacent_rebuild.len]|"
 	msg += "AT/MS:[round((cost ? active_turfs.len/cost : 0),0.1)]|"
-	msg += "HG:[hot_groups.len]"
 	return ..()
 
 
@@ -224,18 +221,7 @@ SUBSYSTEM_DEF(air)
 			return
 		cost_atoms = MC_AVERAGE(cost_atoms, TICK_DELTA_TO_MS(cached_cost))
 		resumed = FALSE
-		currentpart = SSAIR_PROCESS_HOT_GROUP
 
-	if(currentpart == SSAIR_PROCESS_HOT_GROUP)
-		timer = TICK_USAGE_REAL
-		if(!resumed)
-			cached_cost = 0
-		process_hot_groups(resumed)
-		cached_cost += TICK_USAGE_REAL - timer
-		if(state != SS_RUNNING)
-			return
-		cost_hot_groups = MC_AVERAGE(cost_hot_groups, TICK_DELTA_TO_MS(cached_cost))
-		resumed = FALSE
 
 	currentpart = SSAIR_PIPENETS
 	SStgui.update_uis(SSair) //Lightning fast debugging motherfucker
@@ -368,19 +354,6 @@ SUBSYSTEM_DEF(air)
 		if(MC_TICK_CHECK)
 			return
 
-/datum/controller/subsystem/air/proc/process_hot_groups(resumed = FALSE)
-	if (!resumed)
-		src.currentrun = hot_groups.Copy()
-	var/list/currentrun = src.currentrun
-	while(currentrun.len)
-		var/datum/hot_group/HG = currentrun[currentrun.len]
-		currentrun.len--
-		if (HG)
-			HG.process()
-		else
-			hot_groups -= HG
-		if(MC_TICK_CHECK)
-			return
 
 /datum/controller/subsystem/air/proc/process_high_pressure_delta(resumed = FALSE)
 	while (high_pressure_delta.len)
