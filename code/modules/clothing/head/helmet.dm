@@ -111,6 +111,7 @@
 	name = "tactical combat helmet"
 	desc = "A tactical black helmet, sealed from outside hazards with a plate of glass and not much else."
 	icon_state = "marine_command"
+	base_icon_state = "marine_command"
 	inhand_icon_state = "marine_helmet"
 	armor_type = /datum/armor/helmet_marine
 	min_cold_protection_temperature = SPACE_HELM_MIN_TEMP_PROTECT
@@ -136,14 +137,17 @@
 /obj/item/clothing/head/helmet/marine/security
 	name = "marine heavy helmet"
 	icon_state = "marine_security"
+	base_icon_state = "marine_security"
 
 /obj/item/clothing/head/helmet/marine/engineer
 	name = "marine utility helmet"
 	icon_state = "marine_engineer"
+	base_icon_state = "marine_engineer"
 
 /obj/item/clothing/head/helmet/marine/medic
 	name = "marine medic helmet"
 	icon_state = "marine_medic"
+	base_icon_state = "marine_medic"
 
 /obj/item/clothing/head/helmet/marine/pmc
 	icon_state = "marine"
