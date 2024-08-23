@@ -9615,6 +9615,7 @@
 	cycle_id = "engine_airlock_1"
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/structure/cable,
 /turf/open/floor/catwalk_floor,
 /area/station/engineering/main)
 "dLQ" = (
@@ -12437,6 +12438,14 @@
 /obj/machinery/atmospherics/pipe/bridge_pipe/green/visible,
 /turf/open/floor/iron,
 /area/station/engineering/atmos)
+"eKa" = (
+/obj/machinery/atmospherics/components/trinary/filter/flipped/critical{
+	dir = 1;
+	filter_type = list(/datum/gas/nitrogen)
+	},
+/obj/effect/turf_decal/bot,
+/turf/open/floor/engine,
+/area/station/engineering/supermatter/room)
 "eKf" = (
 /obj/structure/table,
 /obj/item/storage/box/donkpockets/donkpocketpizza,
@@ -29642,6 +29651,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
+/obj/structure/cable,
 /turf/open/floor/iron/smooth_large,
 /area/station/engineering/supermatter/room)
 "kse" = (
@@ -29794,6 +29804,13 @@
 	dir = 1
 	},
 /area/station/hallway/secondary/dock)
+"ktY" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
+/obj/structure/cable,
+/turf/open/floor/iron/dark/small,
+/area/station/engineering/supermatter/room)
 "kua" = (
 /obj/structure/table,
 /obj/item/disk/cargo{
@@ -88573,7 +88590,7 @@ fXd
 fXd
 qrX
 pyj
-bag
+ktY
 bag
 fEW
 ugF
@@ -88831,7 +88848,7 @@ sxK
 qrX
 pyj
 ksd
-fXd
+kEf
 xgW
 nor
 oPa
@@ -90107,7 +90124,7 @@ mER
 ujm
 gqx
 qEL
-dAd
+eKa
 toE
 hqU
 dla
