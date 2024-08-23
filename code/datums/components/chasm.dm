@@ -252,7 +252,7 @@ GLOBAL_LIST_EMPTY(chasm_fallen_mobs)
 	. = ..()
 	if(isliving(arrived))
 		 //Mobs that have fallen in reserved area should be deleted to avoid fishing stuff from the deathmatch or VR.
-		if(is_reserved_level(loc) && !istype(get_area(loc), /area/shuttle))
+		if(is_reserved_level(loc.z) && !istype(get_area(loc), /area/shuttle))
 			qdel(arrived)
 			return
 		RegisterSignal(arrived, COMSIG_LIVING_REVIVE, PROC_REF(on_revive))
