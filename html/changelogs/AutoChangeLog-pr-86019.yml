@@ -1,0 +1,5 @@
+author: "DaCoolBoss"
+delete-after: True
+changes:
+  - bugfix: "Aquarium decorations now contain plastic."
+  - spellcheck: "Added item descriptions for aquarium decorations."
