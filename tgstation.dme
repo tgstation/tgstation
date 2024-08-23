@@ -3525,6 +3525,7 @@
 #include "code\modules\atmospherics\machinery\portable\scrubber.dm"
 #include "code\modules\autowiki\autowiki.dm"
 #include "code\modules\autowiki\pages\base.dm"
+#include "code\modules\autowiki\pages\fishing.dm"
 #include "code\modules\autowiki\pages\soup.dm"
 #include "code\modules\autowiki\pages\stockparts.dm"
 #include "code\modules\autowiki\pages\techweb.dm"

@@ -15,12 +15,12 @@
 	. = ..()
 	var/static/fish_info
 	if(!fish_info)
+		var/list/fish_list_properties = collect_fish_properties()
 		fish_info = list()
-		for(var/_fish_type as anything in subtypesof(/obj/item/fish))
-			var/obj/item/fish/fish = _fish_type
-			var/list/fish_data = list()
+		for(var/obj/item/fish/fish as anything in subtypesof(/obj/item/fish))
 			if(!initial(fish.show_in_catalog))
 				continue
+			var/list/fish_data = list()
 			fish_data["name"] = initial(fish.name)
 			fish_data["desc"] = initial(fish.desc)
 			fish_data["fluid"] = initial(fish.required_fluid_type)
@@ -37,27 +37,9 @@
 			else
 				fish_data["feed"] = "[AQUARIUM_COMPANY] Fish Feed"
 			fish_data["fishing_tips"] = build_fishing_tips(fish)
-			var/beauty_score = initial(fish.beauty)
-			switch(beauty_score)
-				if(-INFINITY to FISH_BEAUTY_DISGUSTING)
-					beauty_score = "OH HELL NAW!"
-				if(FISH_BEAUTY_DISGUSTING to FISH_BEAUTY_UGLY)
-					beauty_score = "☆☆☆☆☆"
-				if(FISH_BEAUTY_UGLY to FISH_BEAUTY_BAD)
-					beauty_score = "★☆☆☆☆"
-				if(FISH_BEAUTY_BAD to FISH_BEAUTY_NULL)
-					beauty_score = "★★☆☆☆"
-				if(FISH_BEAUTY_NULL to FISH_BEAUTY_GENERIC)
-					beauty_score = "★★★☆☆"
-				if(FISH_BEAUTY_GENERIC to FISH_BEAUTY_GOOD)
-					beauty_score = "★★★★☆"
-				if(FISH_BEAUTY_GOOD to FISH_BEAUTY_GREAT)
-					beauty_score = "★★★★★"
-				if(FISH_BEAUTY_GREAT to INFINITY)
-					beauty_score = "★★★★★★"
-			fish_data["beauty"] = beauty_score
+			fish_data["beauty"] = fish_list_properties[fish][FISH_PROPERTIES_BEAUTY_SCORE]
+
 			fish_info += list(fish_data)
-		// TODO: Custom entries for unusual stuff
 
 	.["fish_info"] = fish_info
 	.["sponsored_by"] = AQUARIUM_COMPANY

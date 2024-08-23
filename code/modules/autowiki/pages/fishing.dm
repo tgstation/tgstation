@@ -1,0 +1,364 @@
+/datum/autowiki/fish
+	page = "Template:Autowiki/Content/Fish"
+
+/datum/autowiki/fish/generate()
+	var/output = ""
+
+	var/list/fish_properties = collect_fish_properties()
+	var/datum/reagent/def_food = /obj/item/fish::food
+	var/def_food_name = initial(def_food.name)
+	var/def_feeding = /obj/item/fish::feeding_frequency
+	var/def_feeding_text = DisplayTimeText(def_feeding)
+	var/def_breeding = /obj/item/fish::breeding_timeout
+	var/def_breeding_text = DisplayTimeText(def_breeding)
+
+	var/list/generated_icons = list()
+	var/list/fish_types = subtypesof(/obj/item/fish)
+	sortTim(fish_types, GLOBAL_PROC_REF(cmp_fish_fluid))
+
+	for (var/obj/item/fish/fish as anything in fish_types)
+
+		if(!fish::show_in_catalog)
+			continue
+
+		var/filename = FISH_AUTOWIKI_FILENAME(fish)
+
+		var/list/properties = fish_properties[fish]
+
+		var/description = escape_value(fish::desc)
+		var/list/extra_info = list()
+		if(fish::fillet_type != /obj/item/food/fishmeat)
+			var/obj/item/fillet = fish::fillet_type
+			extra_info += "When butchered, it'll yield [initial(fillet.name)]."
+		var/datum/reagent/food = fish::food
+		if(food != def_food)
+			extra_info += "It has to be fed <b>[initial(food.name)]</b> instead of [def_food_name]"
+		if(fish::feeding_frequency != def_feeding)
+			extra_info += "It has to be fed every <b>[DisplayTimeText(fish::feeding_frequency)]</b> instead of [def_feeding_text]"
+		if(fish::breeding_timeout != def_breeding)
+			extra_info += "It takes <b>[DisplayTimeText(fish::breeding_timeout)]</b> to reproduce instead of [def_breeding_text]"
+		if(length(extra_info))
+			description += "<br>[extra_info.Join(extra_info,"<br>")]"
+
+		output += "\n\n" + include_template("Autowiki/FishEntry", list(
+			"name" = full_capitalize(escape_value(fish::name)),
+			"icon" = filename,
+			"description" = description,
+			"size_weight" = "[fish::average_size]cm / [fish::average_weight]g",
+			"fluid" = escape_value(fish::required_fluid_type),
+			"temperature" = "[fish::required_temperature_min] - [fish::required_temperature_max] K",
+			"stable_population" = fish::stable_population,
+			"traits" = generate_traits(properties[NAMEOF(fish, fish_traits)]),
+			"favorite_baits" = generate_baits(properties[NAMEOF(fish, favorite_bait)]),
+			"disliked_baits" = generate_baits(properties[NAMEOF(fish, disliked_bait)], TRUE),
+			"feeding_frequency" = fish::feeding_frequency,
+			"reproduction" = fish::breeding_timeout,
+			"beauty_score" = properties[FISH_PROPERTIES_BEAUTY_SCORE],
+		))
+
+		if(!generated_icons[filename])
+			upload_icon(icon(fish:icon, fish::icon_state, frame = 1), filename)
+		generated_icons[filename] = TRUE
+
+	return output
+
+/datum/autowiki/fish/proc/generate_baits(list/baits, bad = FALSE)
+	var/list/list = list()
+	if(!length(baits))
+		return list("None")
+
+	for (var/identifier in baits)
+		if(ispath(identifier)) //Just a path
+			var/obj/item/item = identifier
+			list += initial(item.name)
+			continue
+		var/list/special_identifier = identifier
+		switch(special_identifier["Type"])
+			if("Foodtype")
+				list += english_list(bitfield_to_list(special_identifier["Value"], FOOD_FLAGS_IC))
+			if("Reagent")
+				var/datum/reagent/reagent = special_identifier["Value"]
+				list += "[reagent::name][bad ? "" : "(At least [special_identifier["Amount"]] units)"]"
+
+	return list
+
+/datum/autowiki/fish/proc/generate_traits(list/traits)
+	var/output = ""
+
+	for(var/trait_type in traits)
+		var/datum/fish_trait/trait = GLOB.fish_traits[trait_type]
+		output += include_template("Autowiki/FishTypeTraits", list(
+			"name" = escape_value(trait.name),
+			"description" = escape_value(trait.catalog_description),
+		))
+
+	return output
+
+/datum/autowiki/fish_trait
+	page = "Template:Autowiki/Content/Fish/Trait"
+
+/datum/autowiki/fish_trait/generate()
+	var/output = ""
+
+	for(var/trait_type in GLOB.fish_traits)
+		var/datum/fish_trait/trait = GLOB.fish_traits[trait_type]
+		var/desc = escape_value(trait.catalog_description)
+		if(length(trait.incompatible_traits))
+			var/incompatible = list()
+			for(var/datum/fish_trait/bad as anything in trait.incompatible_traits)
+				incompatible += span_bold(initial(bad.name))
+			desc += "<br>Incompatible with [english_list(incompatible)]."
+		output += include_template("Autowiki/FishAllTraits", list(
+			"name" = escape_value(trait.name),
+			"description" = escape_value(trait.catalog_description),
+			"inheritability" = trait.inheritability,
+			"inheritability_diff" = trait.diff_traits_inheritability,
+
+		))
+
+	return output
+
+/datum/autowiki/fish_bait
+	page = "Template:Autowiki/Content/Fish/Bait"
+
+/datum/autowiki/fish_bait/generate()
+	var/output = ""
+
+	var/list/generated_icons = list()
+	for (var/obj/item/food/bait/bait as anything in subtypesof(/obj/item/food/bait))
+		if(!bait::show_on_wiki)
+			continue
+
+		var/filename = SANITIZE_FILENAME(bait::icon_state)
+
+		var/quality = "Bland"
+
+		switch(bait::bait_quality)
+			if(TRAIT_BASIC_QUALITY_BAIT)
+				quality = "Basic"
+			if(TRAIT_GOOD_QUALITY_BAIT)
+				quality = "Good"
+			if(TRAIT_GREAT_QUALITY_BAIT)
+				quality = "Great"
+
+		output += "\n\n" + include_template("Autowiki/FishBait", list(
+			"name" = full_capitalize(escape_value(bait::name)),
+			"icon" = filename,
+			"description" = escape_value(bait::desc),
+			"foodtypes" = bitfield_to_list(bait::foodtypes, FOOD_FLAGS_IC),
+			"quality" = quality,
+		))
+
+		if(!generated_icons[filename])
+			upload_icon(icon(bait:icon, bait::icon_state, frame = 1), filename)
+		generated_icons[filename] = TRUE
+
+	var/filename = SANITIZE_FILENAME(/obj/item/stock_parts/power_store/cell/lead::icon_state)
+
+	var/lead_desc = /obj/item/stock_parts/power_store/cell/lead::desc
+	lead_desc += " You probably shouldn't use it unless you're trying to catch a zipzap."
+	output += "\n\n" + include_template("Autowiki/FishBait", list(
+		"name" = full_capitalize(escape_value(/obj/item/stock_parts/power_store/cell/lead::name)),
+		"icon" = filename,
+		"description" = lead_desc,
+		"foodtypes" = "None",
+		"quality" = "Poisonous",
+	))
+
+	upload_icon(icon(/obj/item/stock_parts/power_store/cell/lead::icon, /obj/item/stock_parts/power_store/cell/lead::icon_state), filename)
+
+	output += "\n\n" + include_template("Autowiki/FishBait", list(
+		"name" = "Baitfish",
+		"icon" = SANITIZE_FILENAME(/obj/item/fish/needlefish::icon_state),
+		"description" = "Smaller fish such as goldfish, needlefish, armorfish and lavaloops can also be used as bait, It's a fish eat fish world.",
+		"foodtypes" = "Seafood?",
+		"quality" = "Good",
+	))
+
+	output += "\n\n" + include_template("Autowiki/FishBait", list(
+		"name" = "Food",
+		"icon" = "plain_bread",
+		"description" = "In absence of baits, food can be used as a substitute.",
+		"foodtypes" = "Depends",
+		"quality" = "Bland most of the times",
+	))
+
+	upload_icon(icon(/obj/item/food/bread/plain::icon, /obj/item/food/bread/plain::icon_state), "plain_bread")
+
+	return output
+
+/datum/autowiki/fishing_line
+	page = "Template:Autowiki/Content/Fish/Line"
+
+/datum/autowiki/datum/autowiki/fishing_line/generate()
+	var/output = ""
+
+	var/list/generated_icons = list()
+	for (var/obj/item/fishing_line/line as anything in typesof(/obj/item/fishing_line))
+		var/filename = SANITIZE_FILENAME(line::icon_state)
+
+		output += "\n\n" + include_template("Autowiki/FishLine", list(
+			"name" = full_capitalize(escape_value(line::name)),
+			"icon" = filename,
+			"description" = escape_value(line::wiki_desc),
+		))
+
+		if(!generated_icons[filename])
+			upload_icon(icon(line:icon, line::icon_state), filename)
+		generated_icons[filename] = TRUE
+
+	return output
+
+/datum/autowiki/fishing_hook
+	page = "Template:Autowiki/Content/Fish/Hook"
+
+/datum/autowiki/fishing_hook/generate()
+	var/output = ""
+
+	var/list/generated_icons = list()
+	for (var/obj/item/fishing_hook/hook as anything in typesof(/obj/item/fishing_hook))
+		var/filename = SANITIZE_FILENAME(hook::icon_state)
+
+		output += "\n\n" + include_template("Autowiki/FishHook", list(
+			"name" = full_capitalize(escape_value(hook::name)),
+			"icon" = filename,
+			"description" = escape_value(hook::wiki_desc),
+		))
+
+		if(!generated_icons[filename])
+			upload_icon(icon(hook:icon, hook::icon_state), filename)
+		generated_icons[filename] = TRUE
+
+	return output
+
+/datum/autowiki/fishing_rod
+	page = "Template:Autowiki/Content/Fish/Rod"
+
+/datum/autowiki/fishing_rod/generate()
+	var/output = ""
+
+	var/list/generated_icons = list()
+	for (var/obj/item/fishing_rod/rod as anything in typesof(/obj/item/fishing_rod))
+		if(!rod::show_in_wiki)
+			continue
+
+		var/filename = SANITIZE_FILENAME(rod::icon_state)
+
+		var/desc = escape_value(rod::ui_description)
+		if(rod::wiki_description)
+			desc += "<br>[escape_value(rod::wiki_description)]"
+		output += "\n\n" + include_template("Autowiki/FishingRod", list(
+			"name" = full_capitalize(escape_value(rod::name)),
+			"icon" = filename,
+			"description" = desc,
+		))
+
+		if(!generated_icons[filename])
+			var/icon/rod_icon = icon(rod:icon, rod::icon_state)
+			var/icon/line = icon(rod::icon, rod::reel_overlay)
+			line.Blend(rod::default_line_color, ICON_MULTIPLY)
+			rod_icon.Insert(line)
+			upload_icon(rod_icon, filename)
+		generated_icons[filename] = TRUE
+
+	return output
+
+/datum/autowiki/fish_sources
+	page = "Template:Autowiki/Content/Fish/Source"
+
+/datum/autowiki/fish_sources/generate()
+	var/output = ""
+
+	for(var/source_type in GLOB.preset_fish_sources)
+		var/datum/fish_source/source = GLOB.preset_fish_sources[source_type]
+		if(!source.catalog_description)
+			continue
+
+		output += "\n\n" + include_template("Autowiki/FishSource", list(
+			"name" = full_capitalize(source.catalog_description),
+			"difficulty" = source.fishing_difficulty,
+			"contents" = get_contents(source),
+		))
+
+	///Used for stuff that isn't fish by default
+	upload_icon(icon('icons/effects/random_spawners.dmi', "questionmark"), FISH_SOURCE_AUTOWIKI_QUESTIONMARK)
+
+	return output
+
+/datum/autowiki/fish_sources/proc/get_contents(datum/fish_source/source)
+	var/output = ""
+	var/list/data = source.generate_wiki_contents()
+	sortTim(data, GLOBAL_PROC_REF(cmp_autowiki_fish_sources_content))
+	for(var/list/entry in data)
+		entry[FISH_SOURCE_AUTOWIKI_WEIGHT] = "[round(entry[FISH_SOURCE_AUTOWIKI_WEIGHT], 0.1)]%"
+		if(entry[FISH_SOURCE_AUTOWIKI_WEIGHT_SUFFIX])
+			entry[FISH_SOURCE_AUTOWIKI_WEIGHT] += " [entry[FISH_SOURCE_AUTOWIKI_WEIGHT_SUFFIX]]"
+		output += include_template("Autowiki/FishSourceContents", entry)
+
+	return output
+
+///Sort the autowiki fish entries by their weight. However, duds always come first.
+/proc/cmp_autowiki_fish_sources_content(list/A, list/B)
+	if(A[FISH_SOURCE_AUTOWIKI_NAME] == FISH_SOURCE_AUTOWIKI_NAME)
+		return -1
+	if(B[FISH_SOURCE_AUTOWIKI_NAME] == FISH_SOURCE_AUTOWIKI_NAME)
+		return 1
+	return B[FISH_SOURCE_AUTOWIKI_WEIGHT] - A[FISH_SOURCE_AUTOWIKI_WEIGHT]
+
+/datum/autowiki/fish_scan
+	page = "Template:Autowiki/Content/Fish/Scan"
+
+/datum/autowiki/fish_scan/generate()
+	var/output = ""
+
+	var/list/generated_icons = list()
+	var/datum/techweb/techweb = locate(/datum/techweb/admin) in SSresearch.techwebs
+	for(var/scan_type in typesof(/datum/experiment/scanning/fish))
+		techweb.add_experiment(scan_type) //Make sure each followup experiment is available
+		var/datum/experiment/scanning/fish/scan = locate(scan_type) in techweb.available_experiments
+		if(!scan) //Just to be sure, if the scan was already completed.
+			scan = locate(scan_type) in techweb.completed_experiments
+
+		output += "\n\n" + include_template("Autowiki/FishScan", list(
+			"name" = full_capitalize(escape_value(scan.name)),
+			"description" = escape_value(scan.description),
+			"requirements" = build_requirements(scan),
+			"rewards" = build_rewards(scan, generated_icons),
+
+		))
+
+	return output
+
+/datum/autowiki/fish_scan/proc/build_requirements(datum/experiment/scanning/fish/scan)
+	var/output = ""
+	for(var/obj/item/type as anything in scan.required_atoms)
+		var/name = initial(type.name)
+		//snowflake case because the default holographic fish is called goldfish but we don't want to confuse readers.
+		if(type == /obj/item/fish/holo)
+			name = "holographic Fish"
+		output += include_template("Autowiki/FishScanRequirements", list(
+			"name" = full_capitalize(escape_value(name)),
+			"amount" = scan.required_atoms[type],
+		))
+	return output
+
+/datum/autowiki/fish_scan/proc/build_rewards(datum/experiment/scanning/fish/scan, list/generated_icons)
+	var/output = ""
+	var/datum/fish_source/portal/reward = GLOB.preset_fish_sources[scan.fish_source_reward]
+	var/filename = SANITIZE_FILENAME("fishing_portal_[reward.radial_state]")
+
+	var/list/unlocks = list()
+	for(var/datum/experiment/unlock as anything in scan.points_reward)
+		unlocks += initial(unlock.name)
+	output += include_template("Autowiki/FishScanRewards", list(
+		"name" = full_capitalize(escape_value("[reward.radial_name] Dimension")),
+		"icon" = filename,
+		"points" = scan.get_points_reward_text(),
+		"unlock" = english_list(unlocks, nothing_text = "Nothing"),
+	))
+
+	if(!generated_icons[filename])
+		upload_icon(icon(icon = 'icons/hud/radial_fishing.dmi', icon_state = reward.radial_state), filename)
+	generated_icons[filename] = TRUE
+
+	return output

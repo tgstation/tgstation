@@ -17,8 +17,12 @@
 	var/cast_range = 3
 	/// Fishing minigame difficulty modifier (additive)
 	var/difficulty_modifier = 0
-	/// Explaination of rod functionality shown in the ui
+	/// Explaination of rod functionality shown in the ui and the autowiki
 	var/ui_description = "A classic fishing rod, with no special qualities."
+	/// More explaination shown in the wiki after ui_description
+	var/wiki_description = ""
+	/// Is this fishing rod shown in the wiki
+	var/show_in_wiki = TRUE
 
 	var/obj/item/bait
 	var/obj/item/fishing_line/line = /obj/item/fishing_line
@@ -458,10 +462,12 @@
 /obj/item/fishing_rod/unslotted
 	hook = null
 	line = null
+	show_in_wiki = FALSE
 
 /obj/item/fishing_rod/bone
 	name = "bone fishing rod"
 	desc = "A humble rod, made with whatever happened to be on hand."
+	ui_description = "A fishing rod crafted with leather, sinew and bones."
 	icon_state = "fishing_rod_bone"
 	reel_overlay = "reel_bone"
 	default_line_color = "red"
@@ -476,6 +482,7 @@
 	force = 0
 	w_class = WEIGHT_CLASS_NORMAL
 	ui_description = "A collapsible fishing rod that can fit within a backpack."
+	wiki_description = "<b>It has to be bought from Cargo</b>."
 	reel_overlay = "reel_telescopic"
 	///The force of the item when extended.
 	var/active_force = 8
@@ -525,15 +532,20 @@
 	if(user)
 		balloon_alert(user, active ? "extended" : "collapsed")
 	playsound(src, 'sound/weapons/batonextend.ogg', 50, TRUE)
-	update_appearance(UPDATE_OVERLAYS)
+	update_appearance()
 	QDEL_NULL(fishing_line)
 	return COMPONENT_NO_DEFAULT_MESSAGE
+
+/obj/item/fishing_rod/telescopic/update_icon_state()
+	. = ..()
+	icon_state = "[initial(icon_state)][!HAS_TRAIT(src, TRAIT_TRANSFORM_ACTIVE) ? "_collapsed" : ""]"
 
 /obj/item/fishing_rod/telescopic/master
 	name = "master fishing rod"
 	desc = "The mythical rod of a lost fisher king. Said to be imbued with un-paralleled fishing power. There's writing on the back of the pole. \"中国航天制造\""
 	difficulty_modifier = -10
-	ui_description = "This rod makes fishing easy even for an absolute beginner."
+	ui_description = "A mythical telescopic fishing rod that makes fishing quite easier."
+	wiki_description = null
 	icon_state = "fishing_rod_master"
 	reel_overlay = "reel_master"
 	active_force = 13 //It's that sturdy
@@ -544,7 +556,8 @@
 /obj/item/fishing_rod/tech
 	name = "advanced fishing rod"
 	desc = "An embedded universal constructor along with micro-fusion generator makes this marvel of technology never run out of bait. Interstellar treaties prevent using it outside of recreational fishing. And you can fish with this. "
-	ui_description = "This rod has an infinite supply of synth-bait. Also doubles as an Experi-Scanner for fish."
+	ui_description = "A rod with an infinite supply of synthetic bait. Doubles as an Experi-Scanner for fish."
+	wiki_description = "<b>It requires the Advanced Fishing Technology Node to be researched to be printed.</b>"
 	icon_state = "fishing_rod_science"
 	reel_overlay = "reel_science"
 	bait = /obj/item/food/bait/doughball/synthetic/unconsumable

@@ -132,9 +132,15 @@ GLOBAL_LIST_INIT(spontaneous_fish_traits, populate_spontaneous_fish_traits())
 
 /datum/fish_trait/shiny_lover/difficulty_mod(obj/item/fishing_rod/rod, mob/fisherman)
 	. = ..()
-	// These fish are easier to catch with shiny lure
+	// These fish are easier to catch with shiny hook
 	if(rod.hook && rod.hook.fishing_hook_traits & FISHING_HOOK_SHINY)
 		.[ADDITIVE_FISHING_MOD] -= FISH_TRAIT_MINOR_DIFFICULTY_BOOST
+
+/datum/fish_trait/shiny_lover/catch_weight_mod(obj/item/fishing_rod/rod, mob/fisherman)
+	. = ..()
+	// These fish are harder to find without a shiny hook
+	if(rod.hook && rod.hook.fishing_hook_traits & FISHING_HOOK_SHINY)
+		.[MULTIPLICATIVE_FISHING_MOD] = 0.5
 
 /datum/fish_trait/picky_eater
 	name = "Picky Eater"

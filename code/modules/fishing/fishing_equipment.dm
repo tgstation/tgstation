@@ -16,6 +16,8 @@
 	var/list/fishing_line_traits
 	/// Color of the fishing line
 	var/line_color = COLOR_GRAY
+	///The description given to the autowiki
+	var/wiki_desc = "A generic fishing line. <b>Without one, the casting range of the rod will be significantly hampered.</b>"
 
 /obj/item/fishing_line/reinforced
 	name = "reinforced fishing line reel"
@@ -23,6 +25,7 @@
 	icon_state = "reel_green"
 	fishing_line_traits = FISHING_LINE_REINFORCED
 	line_color = "#2b9c2b"
+	wiki_desc = "Allows you to fish in lava and plasma rivers and lakes."
 
 /obj/item/fishing_line/cloaked
 	name = "cloaked fishing line reel"
@@ -30,6 +33,7 @@
 	icon_state = "reel_white"
 	fishing_line_traits = FISHING_LINE_CLOAKED
 	line_color = "#82cfdd"
+	wiki_desc = "Fishing anxious and wary fish will be easier with this equipped."
 
 /obj/item/fishing_line/bouncy
 	name = "flexible fishing line reel"
@@ -37,6 +41,7 @@
 	icon_state = "reel_red"
 	fishing_line_traits = FISHING_LINE_BOUNCY
 	line_color = "#99313f"
+	wiki_desc = "It reduces the progression loss during the fishing minigame."
 
 /obj/item/fishing_line/sinew
 	name = "fishing sinew"
@@ -44,6 +49,7 @@
 	icon_state = "reel_sinew"
 	fishing_line_traits = FISHING_LINE_REINFORCED|FISHING_LINE_STIFF
 	line_color = "#d1cca3"
+	wiki_desc = "Crafted from sinew. It allows you to fish in lava and plasma like the reinforced line, but it'll make the minigame harder."
 
 /**
  * A special line reel that let you skip the biting phase of the minigame, netting you a completion bonus,
@@ -56,6 +62,9 @@
 	icon_state = "reel_auto"
 	fishing_line_traits = FISHING_LINE_AUTOREEL
 	line_color = "#F88414"
+	wiki_desc = "Automatically starts the minigame once the fish bites the bait. It also spin fishing lures for you without needing an input. \
+		It can also be used to snag in objects from a distance more rapidly.<br>\
+		<b>It requires the Advanced Fishing Technology Node to be researched to be printed.</b>"
 
 /obj/item/fishing_line/auto_reel/Initialize(mapload)
 	. = ..()
@@ -118,7 +127,8 @@
 	var/rod_overlay_icon_state = "hook_overlay"
 	/// What subtype of `/obj/item/chasm_detritus` do we fish out of chasms? Defaults to `/obj/item/chasm_detritus`.
 	var/chasm_detritus_type = /datum/chasm_detritus
-
+	///The description given to the autowiki
+	var/wiki_desc = "A generic fishing hook. <b>You won't be able to fish without one.</b>"
 
 /**
  * Simple getter proc for hooks to implement special hook bonuses for
@@ -162,7 +172,7 @@
 	icon_state = "treasure"
 	rod_overlay_icon_state = "hook_treasure_overlay"
 	chasm_detritus_type = /datum/chasm_detritus/restricted/objects
-
+	wiki_desc = "It vastly improves the chances of catching things other than fish."
 
 /obj/item/fishing_hook/magnet/get_hook_bonus_multiplicative(fish_type, datum/fish_source/source)
 	if(fish_type == FISHING_DUD || ispath(fish_type, /obj/item/fish))
@@ -177,13 +187,14 @@
 	icon_state = "gold_shiny"
 	fishing_hook_traits = FISHING_HOOK_SHINY
 	rod_overlay_icon_state = "hook_shiny_overlay"
+	wiki_desc = "It's used to attract shiny-loving fish and make them easier to catch."
 
 /obj/item/fishing_hook/weighted
 	name = "weighted hook"
 	icon_state = "weighted"
 	fishing_hook_traits = FISHING_HOOK_WEIGHTED
 	rod_overlay_icon_state = "hook_weighted_overlay"
-
+	wiki_desc = "It reduces the bounce that happens when you hit the boundaries of the minigame bar."
 
 /obj/item/fishing_hook/rescue
 	name = "rescue hook"
@@ -191,6 +202,8 @@
 	icon_state = "rescue"
 	rod_overlay_icon_state = "hook_rescue_overlay"
 	chasm_detritus_type = /datum/chasm_detritus/restricted/bodies
+	wiki_desc = "A hook used to rescue bodies whom have fallen into chasms. \
+		You won't catch fish with it, nor it can't be used for fishing outside of chasms, though it can still be used to reel in people and items from unreachable locations.."
 
 /obj/item/fishing_hook/rescue/can_be_hooked(atom/target)
 	return ..() || isliving(target)
@@ -220,6 +233,7 @@
 	name = "bone hook"
 	desc = "A simple hook carved from sharpened bone"
 	icon_state = "hook_bone"
+	wiki_desc = "A generic fishing hook carved out of sharpened bone. Bone fishing rods come pre-equipped with it."
 
 /obj/item/fishing_hook/stabilized
 	name = "gyro-stabilized hook"
@@ -227,6 +241,8 @@
 	icon_state = "gyro"
 	fishing_hook_traits = FISHING_HOOK_BIDIRECTIONAL
 	rod_overlay_icon_state = "hook_gyro_overlay"
+	wiki_desc = "It allows you to move both up (left-click) and down (right-click) during the minigame while negating gravity.<br>\
+		<b>It requires the Advanced Fishing Technology Node to be researched to be printed.</b>"
 
 /obj/item/fishing_hook/stabilized/examine(mob/user)
 	. = ..()
@@ -239,6 +255,9 @@
 	w_class = WEIGHT_CLASS_NORMAL
 	fishing_hook_traits = FISHING_HOOK_NO_ESCAPE|FISHING_HOOK_NO_ESCAPE|FISHING_HOOK_KILL
 	rod_overlay_icon_state = "hook_jaws_overlay"
+	wiki_desc = "A beartrap-looking hook that makes losing the fishing minigame impossible (Unless you drop the rod or get stunned). However it'll hurt the fish and eventually kill it. \
+		Funnily enough, you can snag in people with it too. It won't hurt them like a actual beartrap, but it'll still slow them down.<br>\
+		<b>It has to be bought from the black market uplink.</b>"
 
 /obj/item/fishing_hook/jaws/can_be_hooked(atom/target)
 	return ..() || isliving(target)

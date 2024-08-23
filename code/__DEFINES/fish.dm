@@ -181,3 +181,26 @@
 //Minigame defines
 /// The height of the minigame slider. Not in pixels, but minigame units.
 #define FISHING_MINIGAME_AREA 1000
+
+#define FISH_PROPERTIES_BEAUTY_SCORE "beauty_score"
+
+///We multiply the weight of fish inside the loot table by this value if we are goofy enough to fish without a bait.
+#define FISH_WEIGHT_MULT_WITHOUT_BAIT 0.15
+
+/**
+ * A macro to ensure the wikimedia filenames of fish icons are unique, especially since there're a couple fish that have
+ * quite ambiguous names/icon_states like "checkered" or "pike"
+ */
+#define FISH_AUTOWIKI_FILENAME(fish) SANITIZE_FILENAME("[initial(fish.icon_state)]_wiki_fish")
+
+///The list keys for the autowiki for fish sources
+#define FISH_SOURCE_AUTOWIKI_NAME "name"
+#define FISH_SOURCE_AUTOWIKI_ICON "icon"
+#define FISH_SOURCE_AUTOWIKI_WEIGHT "weight"
+#define FISH_SOURCE_AUTOWIKI_WEIGHT_SUFFIX "weight_suffix"
+#define FISH_SOURCE_AUTOWIKI_NOTES "notes"
+
+///Special value for the name key that prioritizes all the rest when sorted, regardless of weight.
+#define FISH_SOURCE_AUTOWIKI_DUD "Nothing"
+///The filename for the icon for "other stuff" which we don't articulate about on the autowiki
+#define FISH_SOURCE_AUTOWIKI_QUESTIONMARK "questionmark"
