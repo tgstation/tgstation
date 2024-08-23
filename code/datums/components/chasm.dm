@@ -251,7 +251,7 @@ GLOBAL_LIST_EMPTY(chasm_fallen_mobs)
 /obj/effect/abstract/chasm_storage/Entered(atom/movable/arrived)
 	. = ..()
 	if(isliving(arrived))
-		 //Mobs that have fallen in reserved area should be deleted to avoid fishing stuff from the deathmatch or VR.
+		//Mobs that have fallen in reserved area should be deleted to avoid fishing stuff from the deathmatch or VR.
 		if(is_reserved_level(loc.z) && !istype(get_area(loc), /area/shuttle))
 			qdel(arrived)
 			return
