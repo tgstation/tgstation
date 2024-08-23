@@ -209,6 +209,6 @@
 		AQUARIUM_FLUID_ANY_WATER,
 		AQUARIUM_FLUID_AIR,
 	)
-	var/position_a = initial(a.required_fluid_type)
-	var/position_b = initial(b.required_fluid_type)
-	return cmp_numeric_asc(position_a, position_b) || cmp_name_asc(initial(b.name), initial(a.name))
+	var/position_a = fluids_priority.Find(initial(a.required_fluid_type))
+	var/position_b = fluids_priority.Find(initial(b.required_fluid_type))
+	return cmp_numeric_asc(position_a, position_b) || cmp_text_asc(initial(b.name), initial(a.name))
