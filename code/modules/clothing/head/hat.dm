@@ -186,7 +186,9 @@
 /obj/item/clothing/head/costume/santa/gags
 	name = "santa hat"
 	desc = "On the first day of christmas my employer gave to me!"
-	icon_state = "santa_hat"
+	icon = 'icons/map_icons/items.dmi'
+	icon_state = "/obj/item/clothing/head/costume/santa/gags"
+	post_init_icon_state = "santa_hat"
 	greyscale_colors = "#cc0000#f8f8f8"
 	greyscale_config = /datum/greyscale_config/santa_hat
 	greyscale_config_worn = /datum/greyscale_config/santa_hat/worn
@@ -195,7 +197,9 @@
 /obj/item/clothing/head/costume/jester
 	name = "jester hat"
 	desc = "A hat with bells, to add some merriness to the suit."
-	icon_state = "jester_map"
+	icon = 'icons/map_icons/items.dmi'
+	icon_state = "/obj/item/clothing/head/costume/jester"
+	post_init_icon_state = "jester_map"
 	greyscale_colors = "#00ff00#ff0000"
 	greyscale_config = /datum/greyscale_config/jester_hat
 	greyscale_config_worn = /datum/greyscale_config/jester_hat/worn
