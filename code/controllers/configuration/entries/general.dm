@@ -738,3 +738,5 @@
 /datum/config_entry/number/upload_limit_admin
 	default = 5242880
 	min_val = 0
+
+/datum/config_entry/flag/generate_assets_in_init

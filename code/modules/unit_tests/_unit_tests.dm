@@ -153,6 +153,7 @@
 #include "geyser.dm"
 #include "gloves_and_shoes_armor.dm"
 #include "greyscale_config.dm"
+#include "greyscale_map_icons.dm"
 #include "hallucination_icons.dm"
 #include "heretic_knowledge.dm"
 #include "heretic_rituals.dm"

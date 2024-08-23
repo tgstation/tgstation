@@ -2,8 +2,9 @@
 	name = "sticky tape"
 	singular_name = "sticky tape"
 	desc = "Used for sticking to things for sticking said things to people."
-	icon = 'icons/obj/tapes.dmi'
-	icon_state = "tape"
+	icon = 'icons/map_icons/items.dmi'
+	icon_state = "/obj/item/stack/sticky_tape"
+	post_init_icon_state = "tape"
 	var/prefix = "sticky"
 	w_class = WEIGHT_CLASS_TINY
 	full_w_class = WEIGHT_CLASS_TINY
@@ -83,6 +84,7 @@
 	name = "super sticky tape"
 	singular_name = "super sticky tape"
 	desc = "Quite possibly the most mischevious substance in the galaxy. Use with extreme lack of caution."
+	icon_state = "/obj/item/stack/sticky_tape/super"
 	prefix = "super sticky"
 	conferred_embed = /datum/embed_data/sticky_tape/super
 	splint_factor = 0.4
@@ -98,7 +100,8 @@
 	name = "pointy tape"
 	singular_name = "pointy tape"
 	desc = "Used for sticking to things for sticking said things inside people."
-	icon_state = "tape_spikes"
+	icon_state = "/obj/item/stack/sticky_tape/pointy"
+	post_init_icon_state = "tape_spikes"
 	prefix = "pointy"
 	conferred_embed = /datum/embed_data/pointy_tape
 	merge_type = /obj/item/stack/sticky_tape/pointy
@@ -113,6 +116,7 @@
 	name = "super pointy tape"
 	singular_name = "super pointy tape"
 	desc = "You didn't know tape could look so sinister. Welcome to Space Station 13."
+	icon_state = "/obj/item/stack/sticky_tape/pointy/super"
 	prefix = "super pointy"
 	conferred_embed = /datum/embed_data/pointy_tape/super
 	merge_type = /obj/item/stack/sticky_tape/pointy/super
@@ -126,6 +130,7 @@
 	name = "surgical tape"
 	singular_name = "surgical tape"
 	desc = "Made for patching broken bones back together alongside bone gel, not for playing pranks."
+	icon_state = "/obj/item/stack/sticky_tape/surgical"
 	prefix = "surgical"
 	conferred_embed = /datum/embed_data/sticky_tape/surgical
 	splint_factor = 0.5
