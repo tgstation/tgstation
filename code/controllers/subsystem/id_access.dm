@@ -1,4 +1,5 @@
 
+
 /**
  * Non-processing subsystem that holds various procs and data structures to manage ID cards, trims and access.
  */
@@ -36,6 +37,8 @@ SUBSYSTEM_DEF(id_access)
 
 	/// The roundstart generated code for the spare ID safe. This is given to the Captain on shift start. If there's no Captain, it's given to the HoP. If there's no HoP
 	var/spare_id_safe_code = ""
+	/// Associated list of regions; entries are null until getting LAZYADD'd a ref to a given remote once it gets registered
+	var/remotes_listening_by_region = list()
 	/// Associated list of regions; entries are null until getting LAZYADD'd a ref to a given remote once it gets registered
 	var/remotes_listening_by_region = list()
 
@@ -126,6 +129,15 @@ SUBSYSTEM_DEF(id_access)
 	accesses_by_region[REGION_CENTCOM] = REGION_ACCESS_CENTCOM
 
 	station_regions = REGION_AREA_STATION
+	remotes_listening_by_region = list(
+		REGION_ALL_STATION = null,
+		REGION_SECURITY = null,
+		REGION_MEDBAY = null,
+		REGION_RESEARCH = null,
+		REGION_ENGINEERING = null,
+		REGION_SUPPLY = null,
+		REGION_COMMAND = null,
+	)
 	remotes_listening_by_region = list(
 		REGION_ALL_STATION = null,
 		REGION_SECURITY = null,

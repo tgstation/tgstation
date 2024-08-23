@@ -28,6 +28,17 @@
 	/// Like above, an ID to a door, but if you get rejected, you get a five minute cooldown before you can send another request
 	/// to this remote.
 	var/recent_rejections = list()
+	/// The name that gets sent back to IDs that send access requests to this remote. Defaults to department.
+	var/response_name = null
+	var/listening = FALSE
+	/// A list of paired items, the first being the ID card requesting access, the second being the door that access is requested for.
+	/// They'll only be able to request one door per ID, both so we're not cramming this full of lists that need to be GC'd and to make
+	/// remote requests kind of a pain in the ass and a situation where they should request adding the access to their ID from the relevant
+	/// head of staff.
+	var/open_requests = list()
+	/// Like above, an ID to a door, but if you get rejected, you get a five minute cooldown before you can send another request
+	/// to this remote.
+	var/recent_rejections = list()
 
 /obj/item/door_remote/Initialize(mapload)
 	. = ..()
@@ -183,8 +194,10 @@
 	region_access = REGION_ALL_STATION
 
 /obj/item/door_remote/command
+/obj/item/door_remote/command
 	name = "command door remote"
 	department = "command"
+	response_name = "CAPTAIN"
 	response_name = "CAPTAIN"
 	region_access = REGION_COMMAND
 
@@ -192,17 +205,21 @@
 	name = "engineering door remote"
 	department = "engi"
 	response_name = "CHIEF ENGINEER"
+	response_name = "CHIEF ENGINEER"
 	region_access = REGION_ENGINEERING
 
 /obj/item/door_remote/research_director
 	name = "research door remote"
 	department = "sci"
 	response_name = "RESEARCH DIRECTOR"
+	response_name = "RESEARCH DIRECTOR"
 	region_access = REGION_RESEARCH
 
 /obj/item/door_remote/head_of_security
 	name = "security door remote"
 	department = "security"
+	/// Warden wishes they were a head
+	response_name = "HEAD OF SEC~~!*$-- WARDEN"
 	/// Warden wishes they were a head
 	response_name = "HEAD OF SEC~~!*$-- WARDEN"
 	region_access = REGION_SECURITY
@@ -212,17 +229,20 @@
 	desc = "Remotely controls airlocks. This remote has additional Vault access."
 	department = "cargo"
 	response_name = "QUARTERMASTER"
+	response_name = "QUARTERMASTER"
 	region_access = REGION_SUPPLY
 
 /obj/item/door_remote/chief_medical_officer
 	name = "medical door remote"
 	department = "med"
 	response_name = "CHIEF MEDICAL OFFICER"
+	response_name = "CHIEF MEDICAL OFFICER"
 	region_access = REGION_MEDBAY
 
 /obj/item/door_remote/civilian
 	name = "civilian door remote"
 	department = "civilian"
+	response_name = "HEAD OF PERSONNEL"
 	response_name = "HEAD OF PERSONNEL"
 	region_access = REGION_GENERAL
 
