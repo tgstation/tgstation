@@ -78,6 +78,22 @@ SUBSYSTEM_DEF(polling)
 
 	var/category = "[new_poll.poll_key]_poll_alert"
 
+	var/image/surrounding_image
+	if(isnull(chat_text_border_icon) && !isnull(alert_pic))
+		chat_text_border_icon = alert_pic
+	if(chat_text_border_icon)
+		if(isatom(chat_text_border_icon))
+			surrounding_image = getFlatIcon(chat_text_border_icon, SOUTH, no_anim = TRUE)
+		else if(!ispath(chat_text_border_icon))
+			var/mutable_appearance/border_image = chat_text_border_icon
+			surrounding_image = border_image
+		else if(ispath(chat_text_border_icon, /datum/antagonist))
+			var/datum/antagonist/antagonist = new chat_text_border_icon
+			surrounding_image = antagonist.render_poll_preview()
+			QDEL_NULL(antagonist)
+		else
+			surrounding_image = image(chat_text_border_icon)
+
 	for(var/mob/candidate_mob as anything in group)
 		if(!candidate_mob.client)
 			continue
@@ -139,8 +155,8 @@ SUBSYSTEM_DEF(polling)
 			var/datum/antagonist/antagonist = new alert_pic
 			poll_image = antagonist.render_poll_preview() || image('icons/effects/effects.dmi', icon_state = "static", layer = FLOAT_LAYER)
 			QDEL_NULL(antagonist)
-		else if(!isnull(alert_pic))
-			poll_image = alert_pic
+		else if(isicon(alert_pic))
+			poll_image = image(alert_pic)
 		else
 			poll_image = image('icons/effects/effects.dmi', icon_state = "static")
 
@@ -163,17 +179,7 @@ SUBSYSTEM_DEF(polling)
 		if(!duplicate_message_check(alert_poll)) //Only notify people once. They'll notice if there are multiple and we don't want to spam people.
 			SEND_SOUND(candidate_mob, sound('monkestation/sound/effects/prompt.ogg', volume = candidate_mob.client?.prefs?.channel_volume["[CHANNEL_SOUND_EFFECTS]"])) // monkestation edit: prompt sound
 			var/surrounding_icon
-			if(chat_text_border_icon)
-				var/image/surrounding_image
-				if(!ispath(chat_text_border_icon))
-					var/mutable_appearance/border_image = chat_text_border_icon
-					surrounding_image = border_image
-				else if(ispath(chat_text_border_icon, /datum/antagonist))
-					var/datum/antagonist/antagonist = new chat_text_border_icon
-					surrounding_image = antagonist.render_poll_preview()
-					QDEL_NULL(antagonist)
-				else
-					surrounding_image = image(chat_text_border_icon)
+			if(surrounding_image)
 				surrounding_icon = icon2html(surrounding_image, candidate_mob, extra_classes = "bigicon")
 			var/final_message =  examine_block("<span style='text-align:center;display:block'>[surrounding_icon] <span style='font-size:1.2em'>[span_ooc(question)]</span> [surrounding_icon]\n[act_jump]      [act_signup]      [act_never]</span>")
 			to_chat(candidate_mob, final_message)

@@ -90,13 +90,15 @@
 		role_text = "defective clone"
 		poll_text = "Do you want to play as [clonename]'s defective clone?"
 
+	var/preview = get_clone_preview(clonee.dna) || clonee
 	var/mob/chosen_one = SSpolling.poll_ghosts_for_target(
 		poll_text,
 		poll_time = 10 SECONDS,
 		checked_target = clonee,
 		ignore_category = POLL_IGNORE_DEFECTIVECLONE,
-		alert_pic = get_clone_preview(clonee.dna) || clonee,
-		role_name_text = role_text
+		alert_pic = preview,
+		role_name_text = role_text,
+		chat_text_border_icon = preview,
 	)
 	if(chosen_one)
 		clonee.key = chosen_one.key

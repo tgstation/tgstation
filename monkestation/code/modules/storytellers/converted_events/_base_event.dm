@@ -323,6 +323,7 @@
 			group = candidates,
 			alert_pic = antag_datum,
 			role_name_text = lowertext(cast_control.name),
+			chat_text_border_icon = antag_datum,
 		)
 
 	var/list/weighted_candidates = return_antag_rep_weight(candidates)

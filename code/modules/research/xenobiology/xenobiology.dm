@@ -676,7 +676,7 @@
 	var/being_used = FALSE
 	var/sentience_type = SENTIENCE_ORGANIC
 
-/obj/item/slimepotion/slime/sentience/attack(mob/living/dumb_mob, mob/user)
+/obj/item/slimepotion/slime/sentience/attack(mob/living/dumb_mob, mob/living/user)
 	if(being_used || !isliving(dumb_mob))
 		return
 	if(dumb_mob.ckey) //only works on animals that aren't player controlled
@@ -694,7 +694,7 @@
 	balloon_alert(user, "offering...")
 	being_used = TRUE
 	var/mob/chosen_one = SSpolling.poll_ghosts_for_target(
-		question = "[span_danger(user)] is offering [span_notice(dumb_mob)] an intelligence potion! Reason: [span_boldnotice(potion_reason)]",
+		question = "[span_danger("[user.real_name || user.name]")] is offering [span_notice("[dumb_mob.real_name || dumb_mob.name]")] an intelligence potion! Reason: [span_boldnotice(potion_reason)]",
 		check_jobban = ROLE_SENTIENCE,
 		poll_time = 20 SECONDS,
 		checked_target = dumb_mob,
