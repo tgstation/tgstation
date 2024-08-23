@@ -119,6 +119,19 @@
 		if(is_station_level(apc.z) && prob(60))
 			apc.overload_lighting()
 
+/datum/station_trait/supermatter_ban
+	name = "Supermatter Ban"
+	trait_type = STATION_TRAIT_NEGATIVE
+	weight = 1
+	show_in_report = TRUE
+	report_message = "Recent delaminations in other stations have raised safety concerns over our Supermatter engine, please use alternative power sources while we sort things out."
+
+/datum/station_trait/supermatter_ban/on_round_start()
+	. = ..()
+	for(var/obj/machinery/power/supermatter_crystal/sm as anything in SSmachines.get_machines_by_type_and_subtypes(/obj/machinery/power/supermatter_crystal))
+		if(is_station_level(sm.z))
+			qdel(sm)
+
 /datum/station_trait/empty_maint
 	name = "Cleaned out maintenance"
 	trait_type = STATION_TRAIT_NEGATIVE
