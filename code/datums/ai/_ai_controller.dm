@@ -249,13 +249,10 @@ multiple modular subtrees with behaviors
 			return
 	if(old_turf)
 		GLOB.ai_controllers_by_zlevel[old_turf.z] -= src
-	if(new_turf)
-		GLOB.ai_controllers_by_zlevel[new_turf.z] += src
-		var/new_level_clients = SSmobs.clients_by_zlevel[new_turf.z].len
-		if(new_level_clients)
-			set_ai_status(AI_STATUS_IDLE)
-		else
-			set_ai_status(AI_STATUS_OFF)
+	if(isnull(new_turf))
+		return
+	GLOB.ai_controllers_by_zlevel[new_turf.z] += src
+	reset_ai_status()
 
 ///Abstract proc for initializing the pawn to the new controller
 /datum/ai_controller/proc/TryPossessPawn(atom/new_pawn)

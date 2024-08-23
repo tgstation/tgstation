@@ -1,0 +1,15 @@
+{
+	"core": [
+		{
+			"type": "icon_state",
+			"icon_state": "core",
+			"blend_mode": "overlay"
+		},
+		{
+			"type": "icon_state",
+			"icon_state": "core_colour",
+			"blend_mode": "overlay",
+			"color_ids": [ 1 ]
+		}
+	]
+}

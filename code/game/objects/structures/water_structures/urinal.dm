@@ -16,7 +16,7 @@ WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/structure/urinal)
 	. = ..()
 	if(mapload)
 		hidden_item = new /obj/item/food/urinalcake(src)
-	find_and_hang_on_wall()
+	find_and_hang_on_wall(wall_layer = FLAT_ON_WALL_LAYER)
 
 /obj/structure/urinal/Exited(atom/movable/gone, direction)
 	. = ..()

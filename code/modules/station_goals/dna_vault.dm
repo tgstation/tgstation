@@ -164,7 +164,7 @@
 			data["choiceB"] = initial(mutation2.name)
 	return data
 
-/obj/machinery/dna_vault/ui_act(action, params)
+/obj/machinery/dna_vault/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if(.)
 		return
