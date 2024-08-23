@@ -369,11 +369,9 @@
 
 /datum/fish_source/holographic/generate_wiki_contents(datum/autowiki/fish_sources/wiki)
 	var/obj/item/fish/prototype = /obj/item/fish/holo/checkered
-	var/filename = FISH_AUTOWIKI_FILENAME(prototype)
-	wiki.upload_icon(icon(prototype::icon, prototype::icon_state), filename)
 	return LIST_VALUE_WRAP_LISTS(list(
 		FISH_SOURCE_AUTOWIKI_NAME = "Holographic Fish",
-		FISH_SOURCE_AUTOWIKI_ICON = filename,
+		FISH_SOURCE_AUTOWIKI_ICON = FISH_AUTOWIKI_FILENAME(prototype),
 		FISH_SOURCE_AUTOWIKI_WEIGHT = 100,
 		FISH_SOURCE_AUTOWIKI_NOTES = "Holographic fish disappears outside the Holodeck",
 	))
