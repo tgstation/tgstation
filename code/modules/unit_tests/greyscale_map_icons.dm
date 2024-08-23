@@ -8,9 +8,13 @@
 			continue
 		var/atom/fake_parent = fake::parent_type
 		if(ispath(fake_parent, /atom) && fake::greyscale_config == fake_parent::greyscale_config && fake::greyscale_colors == fake_parent::greyscale_colors)
+			if(fake::icon != fake_parent::icon)
+				TEST_FAIL("'[fake]' has a different icon defined even though that will do nothing since it has GAGS configured on a parent type.")
+			if(fake::icon_state != fake_parent::icon_state)
+				TEST_FAIL("'[fake]' has a different icon state defined. It should be the same as parent since both use the same map icon.")
 			continue // It can use the same icon as the parent just fine
 		if(fake::icon_state != "[fake]")
-			TEST_FAIL("'[fake]' has a GAGS generated appearance but does not set its icon state to be the same as the typepath. This will make map tool graphics for the item fail.")
+			TEST_FAIL("'[fake]' has a GAGS generated appearance but does not set its icon state to be the same as the typepath. This will make map graphics for the item fail.")
 			continue
 		var/list/icon_states = cached_icon_states[fake::icon]
 		if(!icon_states)
