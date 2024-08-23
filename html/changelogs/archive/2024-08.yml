@@ -285,3 +285,6 @@
   - bugfix: Having a nonfunctional heart or lungs will no longer CONSTANTLY spam chat.
   TTNT789:
   - bugfix: makes the rage chemical system not explode you repeatedly apon implantation
+2024-08-23:
+  DragonLee66:
+  - rscadd: gave the cryobeaker a different sprite
