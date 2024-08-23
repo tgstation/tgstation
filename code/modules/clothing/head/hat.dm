@@ -84,7 +84,9 @@
 /obj/item/clothing/head/flatcap
 	name = "flat cap"
 	desc = "A working man's cap."
-	icon_state = "beret_flat"
+	icon = 'icons/map_icons/items.dmi'
+	icon_state = "/obj/item/clothing/head/flatcap"
+	post_init_icon_state = "beret_flat"
 	icon_preview = 'icons/obj/clothing/head/beret.dmi'
 	icon_state_preview = "beret_flat"
 	greyscale_config = /datum/greyscale_config/beret

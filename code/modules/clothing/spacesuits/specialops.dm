@@ -3,7 +3,9 @@
 	desc = "An armored beret commonly used by special operations officers. Uses advanced force field technology to protect the head from space."
 	greyscale_config = /datum/greyscale_config/beret_badge
 	greyscale_config_worn = /datum/greyscale_config/beret_badge/worn
-	icon_state = "beret_badge"
+	icon = 'icons/map_icons/items.dmi'
+	icon_state = "/obj/item/clothing/head/helmet/space/beret"
+	post_init_icon_state = "beret_badge"
 	inhand_icon_state = null
 	greyscale_colors = "#397F3F#FFCE5B"
 	clothing_flags = STOPSPRESSUREDAMAGE | THICKMATERIAL | SNUG_FIT
