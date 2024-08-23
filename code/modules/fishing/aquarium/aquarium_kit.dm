@@ -116,6 +116,7 @@
 	icon = 'icons/obj/structures/aquarium/supplies.dmi'
 
 	w_class = WEIGHT_CLASS_TINY
+	custom_materials = list(/datum/material/plastic = COIN_MATERIAL_AMOUNT)
 	var/layer_mode = AQUARIUM_LAYER_MODE_BOTTOM
 	var/beauty = 150
 
@@ -124,26 +125,30 @@
 	AddComponent(/datum/component/aquarium_content, icon, beauty = beauty)
 
 /obj/item/aquarium_prop/rocks
-	name = "rocks"
+	name = "decorative rocks"
+	desc = "A bunch of tiny plastic rocks for decorating an aquarium. Surely you could have just used real pebbles?"
 	icon_state = "rocks"
 
-/obj/item/aquarium_prop/seaweed_top
-	name = "dense seaweeds"
-	icon_state = "seaweeds_front"
-	layer_mode = AQUARIUM_LAYER_MODE_TOP
-
 /obj/item/aquarium_prop/seaweed
-	name = "seaweeds"
+	name = "fake seaweed"
+	desc = "Little plastic sheets with weighted bottoms, designed to look like underwater foliage. They can be used to spruce up an aquarium."
 	icon_state = "seaweeds_back"
 	layer_mode = AQUARIUM_LAYER_MODE_BOTTOM
 
+/obj/item/aquarium_prop/seaweed/top
+	desc = "A bunch of artificial plants for an aquarium."
+	icon_state = "seaweeds_front"
+	layer_mode = AQUARIUM_LAYER_MODE_TOP
+
 /obj/item/aquarium_prop/sand
 	name = "aquarium sand"
+	desc = "A plastic board for lining the bottom of an aquarium. It's got a bumpy patterned surface vaguely reminiscent of yellow sand."
 	icon_state = "sand"
 	layer_mode = AQUARIUM_LAYER_MODE_BEHIND_GLASS
 
 /obj/item/aquarium_prop/treasure
 	name = "tiny treasure chest"
+	desc = "A very small plastic treaure chest, with nothing inside. You could put this in an aquarium, and it'll look like very small pirates hid treasure in there. Wouldn't that be nice?"
 	icon_state = "treasure"
 	layer_mode = AQUARIUM_LAYER_MODE_BOTTOM
 
