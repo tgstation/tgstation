@@ -2289,12 +2289,14 @@ GLOBAL_LIST_EMPTY(fire_appearances)
 			if(. >= UNCONSCIOUS)
 				REMOVE_TRAIT(src, TRAIT_IMMOBILIZED, TRAIT_KNOCKEDOUT)
 			remove_traits(list(TRAIT_HANDS_BLOCKED, TRAIT_INCAPACITATED, TRAIT_FLOORED, TRAIT_CRITICAL_CONDITION), STAT_TRAIT)
+			log_combat(src, src, "regained consciousness")
 		if(SOFT_CRIT)
 			if(pulledby)
 				ADD_TRAIT(src, TRAIT_IMMOBILIZED, PULLED_WHILE_SOFTCRIT_TRAIT) //adding trait sources should come before removing to avoid unnecessary updates
 			if(. >= UNCONSCIOUS)
 				REMOVE_TRAIT(src, TRAIT_IMMOBILIZED, TRAIT_KNOCKEDOUT)
 			ADD_TRAIT(src, TRAIT_CRITICAL_CONDITION, STAT_TRAIT)
+			log_combat(src, src, "entered soft crit")
 		if(UNCONSCIOUS)
 			if(. != HARD_CRIT)
 				become_blind(UNCONSCIOUS_TRAIT)
@@ -2302,14 +2304,17 @@ GLOBAL_LIST_EMPTY(fire_appearances)
 				ADD_TRAIT(src, TRAIT_CRITICAL_CONDITION, STAT_TRAIT)
 			else
 				REMOVE_TRAIT(src, TRAIT_CRITICAL_CONDITION, STAT_TRAIT)
+			log_combat(src, src, "lost consciousness")
 		if(HARD_CRIT)
 			if(. != UNCONSCIOUS)
 				become_blind(UNCONSCIOUS_TRAIT)
 			ADD_TRAIT(src, TRAIT_CRITICAL_CONDITION, STAT_TRAIT)
+			log_combat(src, src, "entered hard crit")
 		if(DEAD)
 			REMOVE_TRAIT(src, TRAIT_CRITICAL_CONDITION, STAT_TRAIT)
 			remove_from_alive_mob_list()
 			add_to_dead_mob_list()
+			log_combat(src, src, "died")
 	if(!can_hear())
 		stop_sound_channel(CHANNEL_AMBIENCE)
 	refresh_looping_ambience()
@@ -2819,3 +2824,25 @@ GLOBAL_LIST_EMPTY(fire_appearances)
 		return "[span_notice("You'd estimate [p_their()] fitness level at about...")] [span_boldwarning("What?!? [our_fitness_level]???")]"
 
 	return span_notice("You'd estimate [p_their()] fitness level at about [our_fitness_level]. [comparative_fitness <= 0.33 ? "Pathetic." : ""]")
+
+///Performs the aftereffects of blocking a projectile.
+/mob/living/proc/block_projectile_effects()
+	var/static/list/icon/blocking_overlay
+	if(isnull(blocking_overlay))
+		blocking_overlay = list(
+			mutable_appearance('icons/mob/effects/blocking.dmi', "wow"),
+			mutable_appearance('icons/mob/effects/blocking.dmi', "nice"),
+			mutable_appearance('icons/mob/effects/blocking.dmi', "good"),
+		)
+	ADD_TRAIT(src, TRAIT_BLOCKING_PROJECTILES, BLOCKING_TRAIT)
+	var/icon/selected_overlay = pick(blocking_overlay)
+	add_overlay(selected_overlay)
+	playsound(src, 'sound/weapons/fwoosh.ogg', 90, FALSE, frequency = 0.7)
+	update_transform(1.25)
+	addtimer(CALLBACK(src, PROC_REF(end_block_effects), selected_overlay), 0.6 SECONDS)
+
+///Remoevs the effects of blocking a projectile and allows the user to block another.
+/mob/living/proc/end_block_effects(selected_overlay)
+	REMOVE_TRAIT(src, TRAIT_BLOCKING_PROJECTILES, BLOCKING_TRAIT)
+	cut_overlay(selected_overlay)
+	update_transform(0.8)
