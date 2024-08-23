@@ -6,6 +6,9 @@
 	for(var/atom/fake as anything in typesof(/atom))
 		if(!fake::greyscale_config || !fake::greyscale_colors)
 			continue
+		var/atom/fake_parent = fake::parent_type
+		if(ispath(fake_parent, /atom) && fake::greyscale_config == fake_parent::greyscale_config && fake::greyscale_colors == fake_parent::greyscale_colors)
+			continue // It can use the same icon as the parent just fine
 		if(fake::icon_state != "[fake]")
 			TEST_FAIL("'[fake]' has a GAGS generated appearance but does not set its icon state to be the same as the typepath. This will make map tool graphics for the item fail.")
 			continue
