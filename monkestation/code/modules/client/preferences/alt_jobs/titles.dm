@@ -141,6 +141,7 @@
 		"Jester",
 		"Joker",
 		"Comedian",
+		"Professional Nuisance",
 	)
 
 /datum/job/cook
@@ -150,6 +151,7 @@
 		"Butcher",
 		"Culinary Artist",
 		"Sous-Chef",
+		"Pizzaiolo",
 	)
 
 /datum/job/curator
