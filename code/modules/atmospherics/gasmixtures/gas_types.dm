@@ -19,12 +19,15 @@
 
 /proc/generate_gas_overlays(old_offset, new_offset, datum/gas/gas_type)
 	var/list/to_return = list()
-	for(var/i in old_offset to new_offset)
-		var/fill = list()
-		to_return += list(fill)
-		for(var/j in 1 to TOTAL_VISIBLE_STATES)
-			var/obj/effect/overlay/gas/gas = new (initial(gas_type.gas_overlay), log(4, (j+0.4*TOTAL_VISIBLE_STATES) / (0.35*TOTAL_VISIBLE_STATES)) * 255, i)
-			fill += gas
+	for(var/offset in old_offset to new_offset)
+		var/offset_layer = list()
+		to_return += list(offset_layer)
+		for(var/alpha in 1 to TOTAL_VISIBLE_STATES)
+			var/list/alpha_layer = new /list(CARDINAL_SMOOTHING_JUNCTIONS + 1) // +1 to handle 0
+			offset_layer += list(alpha_layer)
+			for(var/junction in 0 to CARDINAL_SMOOTHING_JUNCTIONS)
+				var/obj/effect/overlay/gas/gas = new (initial(gas_type.gas_overlay), log(4, (alpha+0.4*TOTAL_VISIBLE_STATES) / (0.35*TOTAL_VISIBLE_STATES)) * 255, offset, junction, alpha_layer)
+				alpha_layer[junction + 1] = gas
 	return to_return
 
 /proc/gas_id2path(id)
@@ -45,13 +48,13 @@
 |||| only by meta_gas_list().            ||||
 \*||||||||||||||||||||||||||||||||||||||||*/
 
-//This is a plot created using the values for gas exports. Each gas has a value that works as it's kind of soft-cap, which limits you from making billions of credits per sale, based on the base_value variable on the gasses themselves. Most of these gasses as a result have a rather low value when sold, like nitrogen and oxygen at 1500 and 600 respectively at their maximum value. The
+//This is a plot created using the values for gas exports. Each gas has a value that works as its kind of soft-cap, which limits you from making billions of credits per sale, based on the base_value variable on the gasses themselves. Most of these gasses as a result have a rather low value when sold, like nitrogen and oxygen at 1500 and 600 respectively at their maximum value. The
 /datum/gas
 	var/id = ""
 	var/specific_heat = 0
 	var/name = ""
-	///icon_state in icons/effects/atmospherics.dmi
-	var/gas_overlay = ""
+	///dmi to pull our gas sprites from
+	var/gas_overlay = null
 	var/moles_visible = null
 	///currently used by canisters
 	var/dangerous = FALSE
@@ -97,25 +100,25 @@
 	purchaseable = TRUE
 	base_value = 0.2
 	desc = "What the fuck is carbon dioxide?"
-	primary_color = "#808080"
+	primary_color = COLOR_GRAY
 
 /datum/gas/plasma
 	id = GAS_PLASMA
 	specific_heat = 200
 	name = "Plasma"
-	gas_overlay = "plasma"
+	gas_overlay = 'icons/effects/atmos/plasma.dmi'
 	moles_visible = MOLES_GAS_VISIBLE
 	dangerous = TRUE
 	rarity = 800
 	base_value = 1.5
-	desc = "A flammable gas with many other curious properties. It's research is one of NT's primary objective."
+	desc = "A flammable gas with many other curious properties. Its research is one of NT's primary objective."
 	primary_color = "#ffc0cb"
 
 /datum/gas/water_vapor
 	id = GAS_WATER_VAPOR
 	specific_heat = 40
 	name = "Water Vapor"
-	gas_overlay = "water_vapor"
+	gas_overlay = 'icons/effects/atmos/water_vapor.dmi'
 	moles_visible = MOLES_GAS_VISIBLE
 	fusion_power = 8
 	rarity = 500
@@ -128,19 +131,19 @@
 	id = GAS_HYPER_NOBLIUM
 	specific_heat = 2000
 	name = "Hyper-noblium"
-	gas_overlay = "freon"
+	gas_overlay = 'icons/effects/atmos/freon.dmi'
 	moles_visible = MOLES_GAS_VISIBLE
 	fusion_power = 10
 	rarity = 50
 	base_value = 2.5
 	desc = "The most noble gas of them all. High quantities of hyper-noblium actively prevents reactions from occuring."
-	primary_color = "#008080"
+	primary_color = COLOR_TEAL
 
 /datum/gas/nitrous_oxide
 	id = GAS_N2O
 	specific_heat = 40
 	name = "Nitrous Oxide"
-	gas_overlay = "nitrous_oxide"
+	gas_overlay = 'icons/effects/atmos/nitrous_oxide.dmi'
 	moles_visible = MOLES_GAS_VISIBLE * 2
 	fusion_power = 10
 	dangerous = TRUE
@@ -155,7 +158,7 @@
 	specific_heat = 10
 	name = "Nitrium"
 	fusion_power = 7
-	gas_overlay = "nitrium"
+	gas_overlay = 'icons/effects/atmos/nitrium.dmi'
 	moles_visible = MOLES_GAS_VISIBLE
 	dangerous = TRUE
 	rarity = 1
@@ -167,7 +170,7 @@
 	id = GAS_TRITIUM
 	specific_heat = 10
 	name = "Tritium"
-	gas_overlay = "tritium"
+	gas_overlay = 'icons/effects/atmos/tritium.dmi'
 	moles_visible = MOLES_GAS_VISIBLE
 	dangerous = TRUE
 	fusion_power = 5
@@ -203,24 +206,24 @@
 	specific_heat = 20
 	name = "Miasma"
 	dangerous = TRUE
-	gas_overlay = "miasma"
+	gas_overlay = 'icons/effects/atmos/miasma.dmi'
 	moles_visible = MOLES_GAS_VISIBLE * 60
 	rarity = 250
 	base_value = 1
 	desc = "Not necessarily a gas, miasma refers to biological pollutants found in the atmosphere."
-	primary_color = "#808000"
+	primary_color = COLOR_OLIVE
 
 /datum/gas/freon
 	id = GAS_FREON
 	specific_heat = 600
 	name = "Freon"
 	dangerous = TRUE
-	gas_overlay = "freon"
+	gas_overlay = 'icons/effects/atmos/freon.dmi'
 	moles_visible = MOLES_GAS_VISIBLE *30
 	fusion_power = -5
 	rarity = 10
 	base_value = 5
-	desc = "A coolant gas. Mainly used for it's endothermic reaction with oxygen."
+	desc = "A coolant gas. Mainly used for its endothermic reaction with oxygen."
 	primary_color = "#afeeee"
 
 /datum/gas/hydrogen
@@ -239,7 +242,7 @@
 	specific_heat = 10
 	name = "Healium"
 	dangerous = TRUE
-	gas_overlay = "healium"
+	gas_overlay = 'icons/effects/atmos/healium.dmi'
 	moles_visible = MOLES_GAS_VISIBLE
 	rarity = 300
 	base_value = 5.5
@@ -251,7 +254,7 @@
 	specific_heat = 30
 	name = "Proto Nitrate"
 	dangerous = TRUE
-	gas_overlay = "proto_nitrate"
+	gas_overlay = 'icons/effects/atmos/proto_nitrate.dmi'
 	moles_visible = MOLES_GAS_VISIBLE
 	rarity = 200
 	base_value = 2.5
@@ -263,11 +266,11 @@
 	specific_heat = 350
 	name = "Zauker"
 	dangerous = TRUE
-	gas_overlay = "zauker"
+	gas_overlay = 'icons/effects/atmos/zauker.dmi'
 	moles_visible = MOLES_GAS_VISIBLE
 	rarity = 1
 	base_value = 7
-	desc = "A highly toxic gas, it's production is highly regulated on top of being difficult. It also breaks down when in contact with nitrogen."
+	desc = "A highly toxic gas, its production is highly regulated on top of being difficult. It also breaks down when in contact with nitrogen."
 	primary_color = "#006400"
 
 /datum/gas/halon
@@ -275,12 +278,12 @@
 	specific_heat = 175
 	name = "Halon"
 	dangerous = TRUE
-	gas_overlay = "halon"
+	gas_overlay = 'icons/effects/atmos/halon.dmi'
 	moles_visible = MOLES_GAS_VISIBLE
 	rarity = 300
 	base_value = 4
 	desc = "A potent fire supressant. Removes oxygen from high temperature fires and cools down the area"
-	primary_color = "#800080"
+	primary_color = COLOR_PURPLE
 
 /datum/gas/helium
 	id = GAS_HELIUM
@@ -289,7 +292,7 @@
 	fusion_power = 7
 	rarity = 50
 	base_value = 3.5
-	desc = "A very inert gas produced by the fusion of hydrogen and it's derivatives."
+	desc = "A very inert gas produced by the fusion of hydrogen and its derivatives."
 	primary_color = "#f0f8ff"
 
 /datum/gas/antinoblium
@@ -297,33 +300,53 @@
 	specific_heat = 1
 	name = "Antinoblium"
 	dangerous = TRUE
-	gas_overlay = "antinoblium"
+	gas_overlay = 'icons/effects/atmos/antinoblium.dmi'
 	moles_visible = MOLES_GAS_VISIBLE
 	fusion_power = 20
 	rarity = 1
 	base_value = 10
 	desc = "We still don't know what it does, but it sells for a lot."
-	primary_color = "#800000"
+	primary_color = COLOR_MAROON
 
 /obj/effect/overlay/gas
-	icon = 'icons/effects/atmospherics.dmi'
+	// Default to make tests happy
+	icon = 'icons/effects/atmos/plasma.dmi'
+	icon_state = "-0"
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 	anchored = TRUE  // should only appear in vis_contents, but to be safe
 	layer = FLY_LAYER
-	plane = ABOVE_GAME_PLANE
 	appearance_flags = TILE_BOUND
 	vis_flags = NONE
 	// The visual offset we are "on".
 	// Can't use the tradtional loc because we are stored in nullspace, and we can't set plane before init because of the helping that SET_PLANE_EXPLICIT does IN init
 	var/plane_offset = 0
+	// The alpha list we are a member of, for fast junction changing
+	var/list/alpha_list
 
-/obj/effect/overlay/gas/New(state, alph, offset)
+/obj/effect/overlay/gas/New(icon, alpha, plane_offset, operating_junction, list/alpha_list)
 	. = ..()
-	icon_state = state
-	alpha = alph
-	plane_offset = offset
+	src.icon = icon
+	src.alpha = alpha
+	src.plane_offset = plane_offset
+	src.alpha_list = alpha_list
+	set_smoothed_icon_state(operating_junction)
 
 /obj/effect/overlay/gas/Initialize(mapload)
 	. = ..()
 	SET_PLANE_W_SCALAR(src, initial(plane), plane_offset)
 
+/obj/effect/overlay/gas/set_smoothed_icon_state(new_junction)
+	. = ..()
+	// If we have a connection down offset physically down so we render correctly
+	if(new_junction & SOUTH)
+		// this ensures things physically below us but visually overlapping us render how we would want
+		pixel_y = -16
+		pixel_z = 16
+	// Otherwise render normally, to avoid weird layering
+	else
+		pixel_y = 0
+		pixel_z = 0
+
+/// Returns the gas overlay we'd prefer if we had different smoothing
+/obj/effect/overlay/gas/proc/get_smoothed_overlay(new_junction)
+	return alpha_list[new_junction + 1]

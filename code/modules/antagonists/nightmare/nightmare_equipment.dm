@@ -52,10 +52,9 @@
 	if(!has_crit)
 		return
 	playsound(target, 'sound/effects/wounds/crackandbleed.ogg', 100, TRUE)
-	var/datum/dna/target_dna = target.has_dna()
 	if(target.stat == DEAD)
 		user.visible_message(span_warning("[user] gores [target] with [src]!"), span_warning("You gore [target] with [src], which doesn't accomplish much, but it does make you feel a little better."))
-	else if(!target_dna?.check_mutation(/datum/mutation/human/hulk) && (iscarbon(target) || issilicon(target)))
+	else if(!HAS_TRAIT(target, TRAIT_HULK) && (iscarbon(target) || issilicon(target)))
 		user.visible_message(span_boldwarning("[user] gores [target] with [src], bringing them to a halt!"), span_userdanger("You gore [target] with [src], bringing them to a halt!"))
 		target.Paralyze(issilicon(target) ? 2 SECONDS : 1 SECONDS)
 	else
@@ -73,7 +72,7 @@
 	if(has_crit)
 		return
 	has_crit = TRUE
-	add_filter("crit_glow", 3, list("type" = "outline", "color" = "#ff330030", "size" = 5))
+	add_filter("crit_glow", 3, list("type" = "outline", "color" = COLOR_CARP_RIFT_RED, "size" = 5))
 	if(ismob(loc))
 		loc.balloon_alert(loc, "critical strike ready")
 

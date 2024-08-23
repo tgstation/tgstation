@@ -8,27 +8,27 @@ Prismatic extracts:
 	effect = "prismatic"
 	effect_desc = "When used it paints whatever it hits."
 	icon_state = "prismatic"
-	var/paintcolor = "#FFFFFF"
+	var/paintcolor = COLOR_WHITE
 
-/obj/item/slimecross/prismatic/afterattack(turf/target, mob/user, proximity)
-	if(!proximity)
-		return
-	if(!istype(target) || isspaceturf(target))
-		return
-	target.add_atom_colour(paintcolor, WASHABLE_COLOUR_PRIORITY)
-	playsound(target, 'sound/effects/slosh.ogg', 20, TRUE)
+/obj/item/slimecross/prismatic/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
+	if(!isturf(interacting_with) || isspaceturf(interacting_with))
+		return NONE
+	user.do_attack_animation(interacting_with)
+	interacting_with.add_atom_colour(paintcolor, WASHABLE_COLOUR_PRIORITY)
+	playsound(interacting_with, 'sound/effects/slosh.ogg', 20, TRUE)
+	return ITEM_INTERACT_SUCCESS
 
-/obj/item/slimecross/prismatic/grey/
+/obj/item/slimecross/prismatic/grey
 	colour = SLIME_TYPE_GREY
 	desc = "It's constantly wet with a pungent-smelling, clear chemical."
 
-/obj/item/slimecross/prismatic/grey/afterattack(turf/target, mob/user, proximity)
-	. = ..()
-	if(!proximity)
-		return
-	if(istype(target) && target.color != initial(target.color))
-		target.remove_atom_colour(WASHABLE_COLOUR_PRIORITY)
-		playsound(target, 'sound/effects/slosh.ogg', 20, TRUE)
+/obj/item/slimecross/prismatic/grey/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
+	if(isturf(interacting_with) && interacting_with.color != initial(interacting_with.color))
+		user.do_attack_animation(interacting_with)
+		interacting_with.remove_atom_colour(WASHABLE_COLOUR_PRIORITY)
+		playsound(interacting_with, 'sound/effects/slosh.ogg', 20, TRUE)
+		return ITEM_INTERACT_SUCCESS
+	return ..()
 
 /obj/item/slimecross/prismatic/orange
 	paintcolor = "#FFA500"
@@ -47,15 +47,15 @@ Prismatic extracts:
 	colour = SLIME_TYPE_METAL
 
 /obj/item/slimecross/prismatic/yellow
-	paintcolor = "#FFFF00"
+	paintcolor = COLOR_YELLOW
 	colour = SLIME_TYPE_YELLOW
 
 /obj/item/slimecross/prismatic/darkpurple
-	paintcolor = "#551A8B"
+	paintcolor = COLOR_DARK_PURPLE
 	colour = SLIME_TYPE_DARK_PURPLE
 
 /obj/item/slimecross/prismatic/darkblue
-	paintcolor = "#0000FF"
+	paintcolor = COLOR_BLUE
 	colour = SLIME_TYPE_DARK_BLUE
 
 /obj/item/slimecross/prismatic/silver
@@ -63,7 +63,7 @@ Prismatic extracts:
 	colour = SLIME_TYPE_SILVER
 
 /obj/item/slimecross/prismatic/bluespace
-	paintcolor = "#32CD32"
+	paintcolor = COLOR_LIME
 	colour = SLIME_TYPE_BLUESPACE
 
 /obj/item/slimecross/prismatic/sepia
@@ -79,11 +79,11 @@ Prismatic extracts:
 	colour = SLIME_TYPE_PYRITE
 
 /obj/item/slimecross/prismatic/red
-	paintcolor = "#FF0000"
+	paintcolor = COLOR_RED
 	colour = SLIME_TYPE_RED
 
 /obj/item/slimecross/prismatic/green
-	paintcolor = "#00FF00"
+	paintcolor = COLOR_VIBRANT_LIME
 	colour = SLIME_TYPE_GREEN
 
 /obj/item/slimecross/prismatic/pink
@@ -91,7 +91,7 @@ Prismatic extracts:
 	colour = SLIME_TYPE_PINK
 
 /obj/item/slimecross/prismatic/gold
-	paintcolor = "#FFD700"
+	paintcolor = COLOR_GOLD
 	colour = SLIME_TYPE_GOLD
 
 /obj/item/slimecross/prismatic/oil
@@ -99,7 +99,7 @@ Prismatic extracts:
 	colour = SLIME_TYPE_OIL
 
 /obj/item/slimecross/prismatic/black
-	paintcolor = "#000000"
+	paintcolor = COLOR_BLACK
 	colour = SLIME_TYPE_BLACK
 
 /obj/item/slimecross/prismatic/lightpink
@@ -111,7 +111,7 @@ Prismatic extracts:
 	colour = SLIME_TYPE_ADAMANTINE
 
 /obj/item/slimecross/prismatic/rainbow
-	paintcolor = "#FFFFFF"
+	paintcolor = COLOR_WHITE
 	colour = SLIME_TYPE_RAINBOW
 
 /obj/item/slimecross/prismatic/rainbow/attack_self(mob/user)

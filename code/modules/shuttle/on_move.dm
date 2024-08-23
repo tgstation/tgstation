@@ -21,26 +21,22 @@ All ShuttleMove procs go here
 		return
 
 	var/shuttle_dir = shuttle.dir
-	for(var/i in contents)
-		var/atom/movable/thing = i
-		if(ismob(thing))
-			if(isliving(thing))
-				var/mob/living/M = thing
-				if(M.buckled)
-					M.buckled.unbuckle_mob(M, 1)
-				if(M.pulledby)
-					M.pulledby.stop_pulling()
-				M.stop_pulling()
-				M.visible_message(span_warning("[shuttle] slams into [M]!"))
-				SSblackbox.record_feedback("tally", "shuttle_gib", 1, M.type)
-				log_shuttle("[key_name(M)] was shuttle gibbed by [shuttle].")
-				M.investigate_log("has been gibbed by [shuttle].", INVESTIGATE_DEATHS)
-				M.gib(DROP_ALL_REMAINS)
-
-
-		else //non-living mobs shouldn't be affected by shuttles, which is why this is an else
-			if(istype(thing, /obj/effect/abstract) || istype(thing, /obj/singularity) || istype(thing, /obj/energy_ball))
+	for(var/atom/movable/thing as anything in contents)
+		if(thing.resistance_flags & SHUTTLE_CRUSH_PROOF)
+			continue
+		if(isliving(thing))
+			var/mob/living/living_thing = thing
+			if(living_thing.incorporeal_move) // Don't crush incorporeal things
 				continue
+			living_thing.buckled?.unbuckle_mob(living_thing, force = TRUE)
+			living_thing.pulledby?.stop_pulling()
+			living_thing.stop_pulling()
+			living_thing.visible_message(span_warning("[shuttle] slams into [living_thing]!"))
+			SSblackbox.record_feedback("tally", "shuttle_gib", 1, living_thing.type)
+			log_shuttle("[key_name(living_thing)] was shuttle gibbed by [shuttle].")
+			living_thing.investigate_log("has been gibbed by [shuttle].", INVESTIGATE_DEATHS)
+			living_thing.gib(DROP_ALL_REMAINS)
+		else if(!ismob(thing)) //non-living mobs shouldn't be affected by shuttles, which is why this is an else
 			if(!thing.anchored)
 				step(thing, shuttle_dir)
 			else
@@ -118,8 +114,6 @@ All ShuttleMove procs go here
 		update_light()
 	if(rotation)
 		shuttleRotate(rotation)
-
-	update_parallax_contents()
 
 	return TRUE
 
@@ -270,12 +264,12 @@ All ShuttleMove procs go here
 /************************************Mob move procs************************************/
 
 /mob/onShuttleMove(turf/newT, turf/oldT, list/movement_force, move_dir, obj/docking_port/stationary/old_dock, obj/docking_port/mobile/moving_dock)
-	if(!move_on_shuttle)
+	if(HAS_TRAIT(src, TRAIT_BLOCK_SHUTTLE_MOVEMENT))
 		return
 	. = ..()
 
 /mob/afterShuttleMove(turf/oldT, list/movement_force, shuttle_dir, shuttle_preferred_direction, move_dir, rotation)
-	if(!move_on_shuttle)
+	if(HAS_TRAIT(src, TRAIT_BLOCK_SHUTTLE_MOVEMENT))
 		return
 	. = ..()
 	if(client && movement_force)
@@ -333,7 +327,7 @@ All ShuttleMove procs go here
 /obj/structure/ladder/afterShuttleMove(turf/oldT, list/movement_force, shuttle_dir, shuttle_preferred_direction, move_dir, rotation)
 	. = ..()
 	if (!(resistance_flags & INDESTRUCTIBLE))
-		LateInitialize()
+		LateInitialize(/* mapload = */ FALSE)
 
 /obj/structure/ladder/onShuttleMove(turf/newT, turf/oldT, list/movement_force, move_dir, obj/docking_port/stationary/old_dock, obj/docking_port/mobile/moving_dock)
 	if (resistance_flags & INDESTRUCTIBLE)

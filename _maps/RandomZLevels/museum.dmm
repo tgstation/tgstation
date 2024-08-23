@@ -518,15 +518,11 @@
 /turf/open/indestructible/plating,
 /area/awaymission/museum)
 "ek" = (
-/obj/effect/decal/cleanable/crayon{
-	icon_state = "l";
+/obj/effect/decal/cleanable/crayon/l{
 	pixel_x = -10
 	},
-/obj/effect/decal/cleanable/crayon{
-	icon_state = "i"
-	},
-/obj/effect/decal/cleanable/crayon{
-	icon_state = "e";
+/obj/effect/decal/cleanable/crayon/i,
+/obj/effect/decal/cleanable/crayon/e{
 	pixel_x = 12
 	},
 /obj/effect/decal/cleanable/dirt/dust,
@@ -1001,15 +997,11 @@
 /turf/open/floor/iron/dark,
 /area/awaymission/museum)
 "ix" = (
-/obj/effect/decal/cleanable/crayon{
-	icon_state = "l";
+/obj/effect/decal/cleanable/crayon/l{
 	pixel_x = -10
 	},
-/obj/effect/decal/cleanable/crayon{
-	icon_state = "i"
-	},
-/obj/effect/decal/cleanable/crayon{
-	icon_state = "e";
+/obj/effect/decal/cleanable/crayon/i,
+/obj/effect/decal/cleanable/crayon/e{
 	pixel_x = 12
 	},
 /obj/effect/turf_decal/stripes/line{
@@ -1434,7 +1426,7 @@
 /turf/open/indestructible/plating,
 /area/awaymission/museum)
 "lz" = (
-/obj/effect/landmark/awaystart,
+/obj/effect/landmark/awaystart/museum,
 /obj/structure/flora/bush/sparsegrass/style_random,
 /turf/open/floor/grass,
 /area/awaymission/museum)
@@ -3103,7 +3095,7 @@
 /turf/open/floor/iron/smooth_large,
 /area/awaymission/museum)
 "zd" = (
-/obj/effect/landmark/awaystart,
+/obj/effect/landmark/awaystart/museum,
 /turf/open/floor/grass,
 /area/awaymission/museum)
 "zg" = (
@@ -4007,15 +3999,11 @@
 /turf/open/floor/iron/white/small,
 /area/awaymission/museum)
 "Gv" = (
-/obj/effect/decal/cleanable/crayon{
-	icon_state = "l";
+/obj/effect/decal/cleanable/crayon/l{
 	pixel_x = -10
 	},
-/obj/effect/decal/cleanable/crayon{
-	icon_state = "i"
-	},
-/obj/effect/decal/cleanable/crayon{
-	icon_state = "e";
+/obj/effect/decal/cleanable/crayon/i,
+/obj/effect/decal/cleanable/crayon/e{
 	pixel_x = 12
 	},
 /obj/effect/decal/cleanable/dirt/dust,
@@ -4515,7 +4503,7 @@
 	},
 /area/awaymission/museum)
 "KN" = (
-/obj/effect/landmark/awaystart,
+/obj/effect/landmark/awaystart/museum,
 /obj/effect/turf_decal/siding/wood{
 	dir = 1
 	},
@@ -4767,7 +4755,7 @@
 /obj/structure/lattice/catwalk/mining,
 /obj/structure/railing,
 /obj/structure/table,
-/obj/item/clothing/mask/cigarette/cigar{
+/obj/item/cigarette/cigar{
 	icon_state = "cigaron";
 	lit = 1
 	},

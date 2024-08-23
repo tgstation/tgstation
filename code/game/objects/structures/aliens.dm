@@ -41,10 +41,8 @@
 	icon = 'icons/obj/fluff/general.dmi'
 	icon_state = "gelmound"
 
-/obj/structure/alien/gelpod/deconstruct(disassembled = TRUE)
-	if(!(obj_flags & NO_DECONSTRUCTION))
-		new /obj/effect/mob_spawn/corpse/human/damaged(get_turf(src))
-	qdel(src)
+/obj/structure/alien/gelpod/atom_deconstruct(disassembled = TRUE)
+	new /obj/effect/mob_spawn/corpse/human/damaged(get_turf(src))
 
 /*
  * Resin
@@ -52,15 +50,13 @@
 /obj/structure/alien/resin
 	name = "resin"
 	desc = "Looks like some kind of thick resin."
-	icon = 'icons/obj/smooth_structures/alien/resin_wall.dmi'
-	icon_state = "resin_wall-0"
-	base_icon_state = "resin_wall"
+	icon = 'icons/obj/structures/smooth/alien/resin_wall_1.dmi'
 	density = TRUE
 	opacity = TRUE
 	anchored = TRUE
 	smoothing_flags = SMOOTH_BITMASK
-	smoothing_groups = SMOOTH_GROUP_ALIEN_RESIN
-	canSmoothWith = SMOOTH_GROUP_ALIEN_RESIN
+	smoothing_groups = SMOOTH_GROUP_ALIEN_WALLS + SMOOTH_GROUP_TALL_WALLS
+	canSmoothWith = SMOOTH_GROUP_ALIEN_WALLS
 	max_integrity = 200
 	var/resintype = null
 	can_atmos_pass = ATMOS_PASS_DENSITY
@@ -68,7 +64,9 @@
 
 /obj/structure/alien/resin/Initialize(mapload)
 	. = ..()
+	icon = get_icon()
 	air_update_turf(TRUE, TRUE)
+	make_splitvis()
 
 /obj/structure/alien/resin/Destroy()
 	air_update_turf(TRUE, FALSE)
@@ -79,15 +77,17 @@
 	. = ..()
 	move_update_air(T)
 
+/obj/structure/alien/resin/proc/make_splitvis()
+	AddElement(/datum/element/split_visibility, icon, color)
+
+/obj/structure/alien/resin/proc/get_icon()
+	if(prob(50))
+		return 'icons/obj/structures/smooth/alien/resin_wall_1.dmi'
+	return 'icons/obj/structures/smooth/alien/resin_wall_2.dmi'
+
 /obj/structure/alien/resin/wall
 	name = "resin wall"
 	desc = "Thick resin solidified into a wall."
-	icon = 'icons/obj/smooth_structures/alien/resin_wall.dmi'
-	icon_state = "resin_wall-0"
-	base_icon_state = "resin_wall"
-	resintype = "wall"
-	smoothing_groups = SMOOTH_GROUP_ALIEN_WALLS + SMOOTH_GROUP_ALIEN_RESIN
-	canSmoothWith = SMOOTH_GROUP_ALIEN_WALLS
 
 /obj/structure/alien/resin/wall/block_superconductivity()
 	return 1
@@ -105,14 +105,20 @@
 /obj/structure/alien/resin/membrane
 	name = "resin membrane"
 	desc = "Resin just thin enough to let light pass through."
-	icon = 'icons/obj/smooth_structures/alien/resin_membrane.dmi'
+	icon = 'icons/obj/structures/smooth/alien/resin_membrane.dmi'
 	icon_state = "resin_membrane-0"
 	base_icon_state = "resin_membrane"
 	opacity = FALSE
 	max_integrity = 160
 	resintype = "membrane"
-	smoothing_groups = SMOOTH_GROUP_ALIEN_WALLS + SMOOTH_GROUP_ALIEN_RESIN
+	smoothing_groups = SMOOTH_GROUP_ALIEN_WALLS
 	canSmoothWith = SMOOTH_GROUP_ALIEN_WALLS
+
+/obj/structure/alien/resin/membrane/make_splitvis()
+	return
+
+/obj/structure/alien/resin/membrane/get_icon()
+	return 'icons/obj/structures/smooth/alien/resin_membrane.dmi'
 
 /obj/structure/alien/resin/attack_paw(mob/user, list/modifiers)
 	return attack_hand(user, modifiers)
@@ -137,12 +143,12 @@
 	density = FALSE
 	layer = MID_TURF_LAYER
 	plane = FLOOR_PLANE
-	icon = 'icons/obj/smooth_structures/alien/weeds1.dmi'
+	icon = 'icons/obj/structures/smooth/alien/weeds1.dmi'
 	icon_state = "weeds1-0"
 	base_icon_state = "weeds1"
 	max_integrity = 15
 	smoothing_flags = SMOOTH_BITMASK
-	smoothing_groups = SMOOTH_GROUP_ALIEN_WEEDS + SMOOTH_GROUP_ALIEN_RESIN
+	smoothing_groups = SMOOTH_GROUP_ALIEN_WEEDS
 	canSmoothWith = SMOOTH_GROUP_ALIEN_WEEDS + SMOOTH_GROUP_WALLS
 	///the range of the weeds going to be affected by the node
 	var/node_range = NODERANGE
@@ -179,13 +185,13 @@
 	. = base_icon_state
 	switch(rand(1,3))
 		if(1)
-			icon = 'icons/obj/smooth_structures/alien/weeds1.dmi'
+			icon = 'icons/obj/structures/smooth/alien/weeds1.dmi'
 			base_icon_state = "weeds1"
 		if(2)
-			icon = 'icons/obj/smooth_structures/alien/weeds2.dmi'
+			icon = 'icons/obj/structures/smooth/alien/weeds2.dmi'
 			base_icon_state = "weeds2"
 		if(3)
-			icon = 'icons/obj/smooth_structures/alien/weeds3.dmi'
+			icon = 'icons/obj/structures/smooth/alien/weeds3.dmi'
 			base_icon_state = "weeds3"
 	set_smoothed_icon_state(smoothing_junction)
 
@@ -255,7 +261,7 @@
 /obj/structure/alien/weeds/node
 	name = "glowing resin"
 	desc = "Blue bioluminescence shines from beneath the surface."
-	icon = 'icons/obj/smooth_structures/alien/weednode.dmi'
+	icon = 'icons/obj/structures/smooth/alien/weednode.dmi'
 	icon_state = "weednode-0"
 	base_icon_state = "weednode"
 	light_color = LIGHT_COLOR_BLUE
@@ -278,6 +284,10 @@
 	//we are the parent node
 	parent_node = src
 
+	return INITIALIZE_HINT_LATELOAD
+
+// we do this in LateInitialize() because weeds on the same loc may not be done initializing yet (as in create_and_destroy)
+/obj/structure/alien/weeds/node/LateInitialize()
 	//destroy any non-node weeds on turf
 	var/obj/structure/alien/weeds/check_weed = locate(/obj/structure/alien/weeds) in loc
 	if(check_weed && check_weed != src)
@@ -416,7 +426,7 @@
 		status = BURSTING
 		proximity_monitor.set_range(0)
 		flick("egg_opening", src)
-		addtimer(CALLBACK(src, PROC_REF(finish_bursting), kill), 15)
+		addtimer(CALLBACK(src, PROC_REF(finish_bursting), kill), 1.5 SECONDS)
 
 /obj/structure/alien/egg/proc/finish_bursting(kill = TRUE)
 	status = BURST
@@ -446,9 +456,8 @@
 
 /obj/structure/alien/egg/atom_break(damage_flag)
 	. = ..()
-	if(!(obj_flags & NO_DECONSTRUCTION))
-		if(status != BURST)
-			Burst(kill=TRUE)
+	if(status != BURST)
+		Burst(kill=TRUE)
 
 /obj/structure/alien/egg/HasProximity(atom/movable/AM)
 	if(status == GROWN)

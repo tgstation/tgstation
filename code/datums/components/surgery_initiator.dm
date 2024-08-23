@@ -88,6 +88,8 @@
 			continue
 		if(!is_type_in_list(target, surgery.target_mobtypes))
 			continue
+		if(user == target && !(surgery.surgery_flags & SURGERY_SELF_OPERABLE))
+			continue
 
 		if(isnull(affecting))
 			if(surgery.surgery_flags & SURGERY_REQUIRE_LIMB)
@@ -117,11 +119,11 @@
 		patient.surgeries -= the_surgery
 		REMOVE_TRAIT(patient, TRAIT_ALLOWED_HONORBOUND_ATTACK, type)
 		user.visible_message(
-			span_notice("[user] removes [parent] from [patient]'s [parse_zone(selected_zone)]."),
-			span_notice("You remove [parent] from [patient]'s [parse_zone(selected_zone)]."),
+			span_notice("[user] removes [parent] from [patient]'s [patient.parse_zone_with_bodypart(selected_zone)]."),
+			span_notice("You remove [parent] from [patient]'s [patient.parse_zone_with_bodypart(selected_zone)]."),
 		)
 
-		patient.balloon_alert(user, "stopped work on [parse_zone(selected_zone)]")
+		patient.balloon_alert(user, "stopped work on [patient.parse_zone_with_bodypart(selected_zone)]")
 
 		qdel(the_surgery)
 		return
@@ -132,12 +134,7 @@
 	if(is_robotic)
 		required_tool_type = TOOL_SCREWDRIVER
 
-	if(iscyborg(user))
-		close_tool = locate(/obj/item/cautery) in user.held_items
-		if(!close_tool)
-			patient.balloon_alert(user, "need a cautery in an inactive slot to stop the surgery!")
-			return
-	else if(!close_tool || close_tool.tool_behaviour != required_tool_type)
+	if(!close_tool || close_tool.tool_behaviour != required_tool_type)
 		patient.balloon_alert(user, "need a [is_robotic ? "screwdriver": "cautery"] in your inactive hand to stop the surgery!")
 		return
 
@@ -148,11 +145,11 @@
 	REMOVE_TRAIT(patient, TRAIT_ALLOWED_HONORBOUND_ATTACK, ELEMENT_TRAIT(type))
 
 	user.visible_message(
-		span_notice("[user] closes [patient]'s [parse_zone(selected_zone)] with [close_tool] and removes [parent]."),
-		span_notice("You close [patient]'s [parse_zone(selected_zone)] with [close_tool] and remove [parent]."),
+		span_notice("[user] closes [patient]'s [patient.parse_zone_with_bodypart(selected_zone)] with [close_tool] and removes [parent]."),
+		span_notice("You close [patient]'s [patient.parse_zone_with_bodypart(selected_zone)] with [close_tool] and remove [parent]."),
 	)
 
-	patient.balloon_alert(user, "closed up [parse_zone(selected_zone)]")
+	patient.balloon_alert(user, "closed up [patient.parse_zone_with_bodypart(selected_zone)]")
 
 	qdel(the_surgery)
 
@@ -221,7 +218,7 @@
 	)
 
 /datum/component/surgery_initiator/ui_data(mob/user)
-	var/mob/living/surgery_target = surgery_target_ref.resolve()
+	var/mob/living/surgery_target = surgery_target_ref?.resolve()
 
 	var/list/surgeries = list()
 	if (!isnull(surgery_target))
@@ -248,10 +245,6 @@
 	return ..()
 
 /datum/component/surgery_initiator/ui_status(mob/user, datum/ui_state/state)
-	var/obj/item/item_parent = parent
-	if (user != item_parent.loc)
-		return UI_CLOSE
-
 	var/mob/living/surgery_target = surgery_target_ref?.resolve()
 	if (isnull(surgery_target))
 		return UI_CLOSE
@@ -266,7 +259,8 @@
 		return FALSE
 
 	// The item was moved somewhere else
-	if (!(parent in user))
+	var/atom/movable/tool = parent
+	if (tool.loc != user)
 		return FALSE
 
 	// While we were choosing, another surgery was started at the same location
@@ -307,7 +301,7 @@
 		return
 
 	if (surgery_needs_exposure(surgery, target))
-		target.balloon_alert(user, "expose [target.p_their()] [parse_zone(selected_zone)]!")
+		target.balloon_alert(user, "expose [target.p_their()] [target.parse_zone_with_bodypart(selected_zone)]!")
 		return
 
 	ui_close()
@@ -315,11 +309,11 @@
 	var/datum/surgery/procedure = new surgery.type(target, selected_zone, affecting_limb)
 	ADD_TRAIT(target, TRAIT_ALLOWED_HONORBOUND_ATTACK, type)
 
-	target.balloon_alert(user, "starting \"[lowertext(procedure.name)]\"")
+	target.balloon_alert(user, "starting \"[LOWER_TEXT(procedure.name)]\"")
 
 	user.visible_message(
-		span_notice("[user] drapes [parent] over [target]'s [parse_zone(selected_zone)] to prepare for surgery."),
-		span_notice("You drape [parent] over [target]'s [parse_zone(selected_zone)] to prepare for \an [procedure.name]."),
+		span_notice("[user] drapes [parent] over [target]'s [target.parse_zone_with_bodypart(selected_zone)] to prepare for surgery."),
+		span_notice("You drape [parent] over [target]'s [target.parse_zone_with_bodypart(selected_zone)] to prepare for \an [procedure.name]."),
 	)
 
 	log_combat(user, target, "operated on", null, "(OPERATION TYPE: [procedure.name]) (TARGET AREA: [selected_zone])")

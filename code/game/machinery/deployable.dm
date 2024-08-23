@@ -17,12 +17,13 @@
 	var/proj_pass_rate = 50 //How many projectiles will pass the cover. Lower means stronger cover
 	var/bar_material = METAL
 
-/obj/structure/barricade/deconstruct(disassembled = TRUE)
-	if(!(obj_flags & NO_DECONSTRUCTION))
-		make_debris()
-	qdel(src)
+/obj/structure/barricade/atom_deconstruct(disassembled = TRUE)
+	make_debris()
 
+/// Spawn debris & stuff upon deconstruction
 /obj/structure/barricade/proc/make_debris()
+	PROTECTED_PROC(TRUE)
+
 	return
 
 /obj/structure/barricade/attackby(obj/item/I, mob/living/user, params)
@@ -55,7 +56,7 @@
 /obj/structure/barricade/wooden
 	name = "wooden barricade"
 	desc = "This space is blocked off by a wooden barricade."
-	icon = 'icons/obj/structures.dmi'
+	icon = 'icons/obj/structures/tall.dmi'
 	icon_state = "woodenbarricade"
 	resistance_flags = FLAMMABLE
 	bar_material = WOOD
@@ -77,7 +78,7 @@
 		else
 			to_chat(user, span_notice("You start adding [I] to [src]..."))
 			playsound(src, 'sound/items/hammering_wood.ogg', 50, vary = TRUE)
-			if(do_after(user, 50, target=src))
+			if(do_after(user, 5 SECONDS, target=src))
 				W.use(5)
 				var/turf/T = get_turf(src)
 				T.place_on_top(/turf/closed/wall/mineral/wood/nonmetal)
@@ -98,7 +99,8 @@
 /obj/structure/barricade/wooden/crude
 	name = "crude plank barricade"
 	desc = "This space is blocked off by a crude assortment of planks."
-	icon_state = "woodenbarricade-old"
+	icon = 'icons/obj/structures/tall.dmi'
+	icon_state = "woodenbarricade"
 	drop_amount = 1
 	max_integrity = 50
 	proj_pass_rate = 65
@@ -106,7 +108,8 @@
 
 /obj/structure/barricade/wooden/crude/snow
 	desc = "This space is blocked off by a crude assortment of planks. It seems to be covered in a layer of snow."
-	icon_state = "woodenbarricade-snow-old"
+	icon = 'icons/obj/structures/tall.dmi'
+	icon_state = "woodenbarricade_snow"
 	max_integrity = 75
 
 /obj/structure/barricade/wooden/make_debris()
@@ -115,7 +118,7 @@
 /obj/structure/barricade/sandbags
 	name = "sandbags"
 	desc = "Bags of sand. Self explanatory."
-	icon = 'icons/obj/smooth_structures/sandbags.dmi'
+	icon = 'icons/obj/structures/smooth/sandbags.dmi'
 	icon_state = "sandbags-0"
 	base_icon_state = "sandbags"
 	max_integrity = 280
@@ -134,7 +137,7 @@
 /obj/structure/barricade/security
 	name = "security barrier"
 	desc = "A deployable barrier. Provides good cover in fire fights."
-	icon = 'icons/obj/structures.dmi'
+	icon = 'icons/obj/structures/tall.dmi'
 	icon_state = "barrier0"
 	density = FALSE
 	anchored = FALSE
@@ -179,10 +182,9 @@
 	. = ..()
 	. += span_notice("Alt-click to toggle modes.")
 
-/obj/item/grenade/barrier/AltClick(mob/living/carbon/user)
-	if(!istype(user) || !user.can_perform_action(src))
-		return
+/obj/item/grenade/barrier/click_alt(mob/living/carbon/user)
 	toggle_mode(user)
+	return CLICK_ACTION_SUCCESS
 
 /obj/item/grenade/barrier/proc/toggle_mode(mob/user)
 	switch(mode)

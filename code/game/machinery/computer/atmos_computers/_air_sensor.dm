@@ -2,7 +2,7 @@
 /// These always hook to monitors, be mindful of them
 /obj/machinery/air_sensor
 	name = "gas sensor"
-	icon = 'icons/obj/wallmounts.dmi'
+	icon = 'icons/obj/structures/wallmounts.dmi'
 	icon_state = "gsensor1"
 	resistance_flags = FIRE_PROOF
 	power_channel = AREA_USAGE_ENVIRON
@@ -43,7 +43,7 @@
 	if(!on)
 		return
 	. = ..()
-	use_power(active_power_usage) //use power for analyzing gases
+	use_energy(active_power_usage) //use power for analyzing gases
 
 /obj/machinery/air_sensor/process()
 	//update appearance according to power state
@@ -57,7 +57,7 @@
 
 /obj/machinery/air_sensor/examine(mob/user)
 	. = ..()
-	. += span_notice("Use multitool to link it to an injector/vent or reset it's ports")
+	. += span_notice("Use multitool to link it to an injector/vent or reset its ports")
 	. += span_notice("Click with hand to turn it off.")
 
 /obj/machinery/air_sensor/attack_hand(mob/living/user, list/modifiers)
@@ -123,7 +123,7 @@
 /obj/item/air_sensor
 	name = "Air Sensor"
 	desc = "A device designed to detect gases and their concentration in an area."
-	icon = 'icons/obj/wallmounts.dmi'
+	icon = 'icons/obj/structures/wallmounts.dmi'
 	icon_state = "gsensor0"
 	custom_materials = list(/datum/material/iron = SMALL_MATERIAL_AMOUNT, /datum/material/glass = SMALL_MATERIAL_AMOUNT)
 	/// The injector linked with this sensor
@@ -196,7 +196,7 @@
 		if(initial(sensor.chamber_id) != target_chamber)
 			continue
 
-		//make real air sensor in it's place
+		//make real air sensor in its place
 		var/obj/machinery/air_sensor/new_sensor = new sensor(get_turf(src))
 		new_sensor.inlet_id = input_id
 		new_sensor.outlet_id = output_id
@@ -221,8 +221,6 @@
 	deconstruct(TRUE)
 	return ITEM_INTERACT_SUCCESS
 
-/obj/item/air_sensor/deconstruct(disassembled)
-	if(!(obj_flags & NO_DECONSTRUCTION))
-		new /obj/item/analyzer(loc)
-		new /obj/item/stack/sheet/iron(loc, 1)
-	return ..()
+/obj/item/air_sensor/atom_deconstruct(disassembled)
+	new /obj/item/analyzer(loc)
+	new /obj/item/stack/sheet/iron(loc, 1)

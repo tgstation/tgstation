@@ -20,6 +20,10 @@
 	if(!ismovable(target))
 		return COMPONENT_INCOMPATIBLE
 
+	if(!isliving(target))
+		target.pixel_z = DEPTH_OFFSET
+		target.base_pixel_z = DEPTH_OFFSET
+
 	if(component_type == /datum/component/riding)
 		stack_trace("Tried attaching a ridable element to [target] with basic/abstract /datum/component/riding component type. Please designate a specific riding component subtype when adding the ridable element.")
 		return COMPONENT_INCOMPATIBLE
@@ -35,6 +39,10 @@
 		RegisterSignal(target, COMSIG_MOB_STATCHANGE, PROC_REF(on_stat_change))
 
 /datum/element/ridable/Detach(atom/movable/target)
+	if(!isliving(target))
+		target.pixel_z = target::pixel_z
+		target.base_pixel_z = target::base_pixel_z
+
 	target.can_buckle = initial(target.can_buckle)
 	UnregisterSignal(target, list(COMSIG_MOVABLE_PREBUCKLE, COMSIG_SPEED_POTION_APPLIED, COMSIG_MOB_STATCHANGE))
 	return ..()
@@ -133,7 +141,7 @@
 	ridable_atom.AddElement(/datum/element/ridable, component_type = riding_component_type, potion_boost = TRUE)
 	to_chat(user, span_notice("You slather the red gunk over [ridable_atom], making it faster."))
 	ridable_atom.remove_atom_colour(WASHABLE_COLOUR_PRIORITY)
-	ridable_atom.add_atom_colour("#FF0000", FIXED_COLOUR_PRIORITY)
+	ridable_atom.add_atom_colour(COLOR_RED, FIXED_COLOUR_PRIORITY)
 	qdel(speed_potion)
 	return SPEED_POTION_STOP
 
@@ -197,3 +205,15 @@
 		to_chat(user, span_notice("You gently let go of [rider]."))
 		return
 	return rider
+
+/obj/item/riding_offhand/interact_with_atom(atom/movable/interacting_with, mob/living/user, list/modifiers)
+	if(!istype(interacting_with) || !interacting_with.can_buckle)
+		return NONE
+	if(rider == user) // Piggyback user
+		return ITEM_INTERACT_BLOCKING
+
+	// Handles de-fireman carrying a mob and buckling them onto something (tables, etc)
+	var/mob/living/former_rider = rider
+	user.unbuckle_mob(former_rider)
+	former_rider.forceMove(get_turf(interacting_with))
+	return interacting_with.mouse_buckle_handling(former_rider, user) ? ITEM_INTERACT_SUCCESS : ITEM_INTERACT_BLOCKING

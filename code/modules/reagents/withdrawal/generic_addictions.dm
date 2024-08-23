@@ -183,7 +183,7 @@
 
 /datum/addiction/medicine/withdrawal_stage_1_process(mob/living/carbon/affected_carbon, seconds_per_tick)
 	. = ..()
-	if(SPT_PROB(10, seconds_per_tick))
+	if(SPT_PROB(1, seconds_per_tick))
 		affected_carbon.emote("cough")
 
 /datum/addiction/medicine/withdrawal_enters_stage_2(mob/living/carbon/affected_carbon)
@@ -216,6 +216,9 @@
 
 /datum/addiction/medicine/withdrawal_stage_2_process(mob/living/carbon/affected_carbon, seconds_per_tick)
 	. = ..()
+	if(SPT_PROB(2, seconds_per_tick))
+		affected_carbon.emote("cough")
+
 	var/datum/hallucination/fake_health_doll/hallucination = health_doll_ref?.resolve()
 	if(QDELETED(hallucination))
 		health_doll_ref = null
@@ -235,13 +238,12 @@
 
 /datum/addiction/medicine/withdrawal_stage_3_process(mob/living/carbon/affected_carbon, seconds_per_tick)
 	. = ..()
+	if(SPT_PROB(5, seconds_per_tick))
+		affected_carbon.emote("cough")
+
 	var/datum/hallucination/fake_health_doll/hallucination = health_doll_ref?.resolve()
 	if(!QDELETED(hallucination) && SPT_PROB(5, seconds_per_tick))
 		hallucination.increment_fake_damage()
-		return
-
-	if(SPT_PROB(15, seconds_per_tick))
-		affected_carbon.emote("cough")
 		return
 
 	if(SPT_PROB(65, seconds_per_tick))
@@ -283,11 +285,11 @@
 /datum/addiction/nicotine/withdrawal_stage_2_process(mob/living/carbon/affected_carbon, seconds_per_tick)
 	. = ..()
 	affected_carbon.set_jitter_if_lower(20 SECONDS * seconds_per_tick)
-	if(SPT_PROB(10, seconds_per_tick))
+	if(SPT_PROB(2, seconds_per_tick))
 		affected_carbon.emote("cough")
 
 /datum/addiction/nicotine/withdrawal_stage_3_process(mob/living/carbon/affected_carbon, seconds_per_tick)
 	. = ..()
 	affected_carbon.set_jitter_if_lower(30 SECONDS * seconds_per_tick)
-	if(SPT_PROB(15, seconds_per_tick))
+	if(SPT_PROB(5, seconds_per_tick))
 		affected_carbon.emote("cough")

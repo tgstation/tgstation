@@ -45,7 +45,7 @@
 
 	return data
 
-/obj/machinery/computer/mecha/ui_act(action, params)
+/obj/machinery/computer/mecha/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if(.)
 		return
@@ -106,7 +106,7 @@
 
 	return answer
 
-/obj/item/mecha_parts/mecha_tracking/emp_act()
+/obj/item/mecha_parts/mecha_tracking/emp_act(severity)
 	. = ..()
 	if(!(. & EMP_PROTECT_SELF))
 		qdel(src)

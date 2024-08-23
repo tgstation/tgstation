@@ -98,10 +98,11 @@ export const ModularShieldGen = (props) => {
                   <NumberInput
                     disabled={active}
                     fluid
+                    step={1}
                     value={current_radius}
                     minValue={3}
                     maxValue={max_radius}
-                    onChange={(e, value) =>
+                    onChange={(value) =>
                       act('set_radius', {
                         new_radius: value,
                       })

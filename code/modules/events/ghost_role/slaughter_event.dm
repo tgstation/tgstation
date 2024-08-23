@@ -29,7 +29,6 @@
 	new /obj/effect/dummy/phased_mob(spawn_location, spawned)
 
 	player_mind.transfer_to(spawned)
-	spawned.generate_antagonist_status()
 
 	message_admins("[ADMIN_LOOKUPFLW(spawned)] has been made into a slaughter demon by an event.")
 	spawned.log_message("was spawned as a slaughter demon by an event.", LOG_GAME)

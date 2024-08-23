@@ -62,7 +62,7 @@
 		if(HAS_TRAIT_FROM(affected_mob, TRAIT_NO_TRANSFORM, REF(src)))
 			return
 		ADD_TRAIT(affected_mob, TRAIT_NO_TRANSFORM, REF(src))
-		for(var/obj/item/W in affected_mob.get_equipped_items(include_pockets = TRUE))
+		for(var/obj/item/W in affected_mob.get_equipped_items(INCLUDE_POCKETS))
 			affected_mob.dropItemToGround(W)
 		for(var/obj/item/I in affected_mob.held_items)
 			affected_mob.dropItemToGround(I)
@@ -148,7 +148,6 @@
 				affected_mob.say(pick("Eeee!", "Eeek, ook ook!", "Eee-eeek!", "Ungh, ungh."), forced = "jungle fever")
 
 /datum/disease/transformation/robot
-
 	name = "Robotic Transformation"
 	cure_text = "An injection of copper."
 	cures = list(/datum/reagent/copper)
@@ -169,7 +168,6 @@
 	new_form = /mob/living/silicon/robot
 	infectable_biotypes = MOB_ORGANIC|MOB_UNDEAD|MOB_ROBOTIC
 	bantype = JOB_CYBORG
-
 
 /datum/disease/transformation/robot/stage_act(seconds_per_tick, times_fired)
 	. = ..()
@@ -244,7 +242,7 @@
 	stage3 = list(span_danger("Your appendages are melting away."), span_danger("Your limbs begin to lose their shape."))
 	stage4 = list(span_danger("You are turning into a slime."))
 	stage5 = list(span_danger("You have become a slime."))
-	new_form = /mob/living/simple_animal/slime
+	new_form = /mob/living/basic/slime
 
 
 /datum/disease/transformation/slime/stage_act(seconds_per_tick, times_fired)
@@ -268,7 +266,7 @@
 	if(affected_mob.client && ishuman(affected_mob)) // if they are a human who's not a monkey and are sentient, then let them have the old fun
 		var/mob/living/carbon/human/human = affected_mob
 		if(!ismonkey(human))
-			new_form = /mob/living/simple_animal/slime/random
+			new_form = /mob/living/basic/slime/random
 	return ..()
 
 /datum/disease/transformation/corgi
@@ -337,7 +335,7 @@
 	)
 	stage4 = list(span_danger("You can't feel your arms. It does not bother you anymore."), span_danger("You forgive the clown for hurting you."))
 	stage5 = list(span_danger("You have become a Gondola."))
-	new_form = /mob/living/simple_animal/pet/gondola
+	new_form = /mob/living/basic/pet/gondola
 
 
 /datum/disease/transformation/gondola/stage_act(seconds_per_tick, times_fired)

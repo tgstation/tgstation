@@ -12,7 +12,7 @@
 	// wires will attach to this
 	terminal = new/obj/machinery/power/terminal(loc)
 	terminal.cable_layer = terminal_cable_layer
-	terminal.setDir(dir)
+	terminal.setDir(REVERSE_DIR(dir))
 	terminal.master = src
 
 /obj/machinery/power/apc/proc/toggle_nightshift_lights(mob/user)
@@ -50,19 +50,26 @@
 	update()
 	update_appearance()
 
+/// Returns the surplus energy from the terminal's grid.
 /obj/machinery/power/apc/surplus()
 	if(terminal)
 		return terminal.surplus()
 	return 0
 
+/// Adds load (energy) to the terminal's grid.
 /obj/machinery/power/apc/add_load(amount)
 	if(terminal?.powernet)
 		terminal.add_load(amount)
 
+/// Returns the amount of energy the terminal's grid has.
 /obj/machinery/power/apc/avail(amount)
 	if(terminal)
 		return terminal.avail(amount)
 	return 0
+
+/// Returns the surplus energy from the terminal's grid and the cell.
+/obj/machinery/power/apc/available_energy()
+	return charge() + surplus()
 
 /**
  * Returns the new status value for an APC channel.

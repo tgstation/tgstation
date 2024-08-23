@@ -158,7 +158,7 @@
 
 /// Drains power from the connected powernet, if any.
 /obj/item/powersink/proc/drain_power()
-	var/datum/powernet/PN = attached.powernet
+	var/datum/powernet/powernet = attached.powernet
 	var/drained = 0
 	set_light(5)
 
@@ -167,14 +167,11 @@
 	attached.add_delayedload(drained)
 
 	// If tried to drain more than available on powernet, now look for APCs and drain their cells
-	for(var/obj/machinery/power/terminal/T in PN.nodes)
-		if(istype(T.master, /obj/machinery/power/apc))
-			var/obj/machinery/power/apc/A = T.master
-			if(A.operating && A.cell)
-				A.cell.charge = max(0, A.cell.charge - 50)
-				drained += 50
-				if(A.charging == 2) // If the cell was full
-					A.charging = 1 // It's no longer full
+	for(var/obj/machinery/power/terminal/terminal in powernet.nodes)
+		if(istype(terminal.master, /obj/machinery/power/apc))
+			var/obj/machinery/power/apc/apc = terminal.master
+			if(apc.operating && apc.cell)
+				drained += 0.001 * apc.cell.use(0.05 * STANDARD_CELL_CHARGE, force = TRUE)
 	internal_heat += drained
 
 /obj/item/powersink/process()

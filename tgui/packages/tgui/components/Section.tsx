@@ -23,6 +23,8 @@ type Props = Partial<{
   scrollableHorizontal: boolean;
   /** Title of the section. */
   title: ReactNode;
+  /** id to assosiate with the parent div element used by this section, for uses with procs like getElementByID */
+  container_id: string;
   /** @member Callback function for the `scroll` event */
   onScroll: ((this: GlobalEventHandlers, ev: Event) => any) | null;
 }> &
@@ -67,6 +69,7 @@ export const Section = forwardRef(
       scrollable,
       scrollableHorizontal,
       title,
+      container_id,
       ...rest
     } = props;
 
@@ -87,6 +90,7 @@ export const Section = forwardRef(
 
     return (
       <div
+        id={container_id || ''}
         className={classes([
           'Section',
           fill && 'Section--fill',

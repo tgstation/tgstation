@@ -3,23 +3,28 @@
 #define SMOOTH_CORNERS (1<<0)
 /// Smoothing system in where adjacencies are calculated and used to select a pre-baked icon_state, encoded by bitmasking.
 #define SMOOTH_BITMASK (1<<1)
+/// Limits SMOOTH_BITMASK to only cardinal directions, for use with cardinal smoothing
+#define SMOOTH_BITMASK_CARDINALS (1<<2)
 /// Atom has diagonal corners, with underlays under them.
-#define SMOOTH_DIAGONAL_CORNERS (1<<2)
+#define SMOOTH_DIAGONAL_CORNERS (1<<3)
 /// Atom will smooth with the borders of the map.
-#define SMOOTH_BORDER (1<<3)
+#define SMOOTH_BORDER (1<<4)
 /// Atom is currently queued to smooth.
-#define SMOOTH_QUEUED (1<<4)
+#define SMOOTH_QUEUED (1<<5)
 /// Smooths with objects, and will thus need to scan turfs for contents.
-#define SMOOTH_OBJ (1<<5)
+#define SMOOTH_OBJ (1<<6)
 /// Uses directional object smoothing, so we care not only about something being on the right turf, but also its direction
 /// Changes the meaning of smoothing_junction, instead of representing the directions we are smoothing in
 /// it represents the sides of our directional border object that have a neighbor
 /// Is incompatible with SMOOTH_CORNERS because border objects don't have corners
-#define SMOOTH_BORDER_OBJECT (1<<6)
+#define SMOOTH_BORDER_OBJECT (1<<7)
+
+#define USES_SMOOTHING (SMOOTH_CORNERS|SMOOTH_BITMASK|SMOOTH_BITMASK_CARDINALS)
 
 DEFINE_BITFIELD(smoothing_flags, list(
 	"SMOOTH_CORNERS" = SMOOTH_CORNERS,
 	"SMOOTH_BITMASK" = SMOOTH_BITMASK,
+	"SMOOTH_BITMASK_CARDINALS" = SMOOTH_BITMASK_CARDINALS,
 	"SMOOTH_DIAGONAL_CORNERS" = SMOOTH_DIAGONAL_CORNERS,
 	"SMOOTH_BORDER" = SMOOTH_BORDER,
 	"SMOOTH_QUEUED" = SMOOTH_QUEUED,
@@ -38,6 +43,9 @@ DEFINE_BITFIELD(smoothing_flags, list(
 #define SOUTHWEST_JUNCTION (1<<6)
 #define NORTHWEST_JUNCTION (1<<7)
 
+#define CARDINAL_SMOOTHING_JUNCTIONS (NORTH_JUNCTION|SOUTH_JUNCTION|EAST_JUNCTION|WEST_JUNCTION)
+#define ALL_SMOOTHING_JUNCTIONS (NORTH_JUNCTION|SOUTH_JUNCTION|EAST_JUNCTION|WEST_JUNCTION|NORTHEAST_JUNCTION|SOUTHEAST_JUNCTION|SOUTHWEST_JUNCTION|NORTHWEST_JUNCTION)
+
 DEFINE_BITFIELD(smoothing_junction, list(
 	"NORTH_JUNCTION" = NORTH_JUNCTION,
 	"SOUTH_JUNCTION" = SOUTH_JUNCTION,
@@ -51,7 +59,7 @@ DEFINE_BITFIELD(smoothing_junction, list(
 
 /*smoothing macros*/
 
-#define QUEUE_SMOOTH(thing_to_queue) if(thing_to_queue.smoothing_flags & (SMOOTH_CORNERS|SMOOTH_BITMASK)) {SSicon_smooth.add_to_queue(thing_to_queue)}
+#define QUEUE_SMOOTH(thing_to_queue) if(thing_to_queue.smoothing_flags & USES_SMOOTHING) {SSicon_smooth.add_to_queue(thing_to_queue)}
 
 #define QUEUE_SMOOTH_NEIGHBORS(thing_to_queue) for(var/atom/atom_neighbor as anything in orange(1, thing_to_queue)) {QUEUE_SMOOTH(atom_neighbor)}
 
@@ -130,43 +138,47 @@ DEFINE_BITFIELD(smoothing_junction, list(
 #define SMOOTH_GROUP_BOSS_WALLS S_TURF(58) ///turf/closed/indestructible/riveted/boss
 #define SMOOTH_GROUP_SURVIVAL_TITANIUM_WALLS S_TURF(59) ///turf/closed/wall/mineral/titanium/survival
 #define SMOOTH_GROUP_TURF_OPEN_CLIFF S_TURF(60) ///turf/open/cliff
+#define SMOOTH_GROUP_HIEROPHANT S_TURF(61) ///turf/open/indestructible/hierophant
 
-#define MAX_S_TURF 60 //Always match this value with the one above it.
+#define MAX_S_TURF 61 //Always match this value with the one above it.
 
 #define S_OBJ(num) ("-" + #num + ",")
 /* /obj included */
 
-#define SMOOTH_GROUP_WALLS S_OBJ(1) ///turf/closed/wall, /obj/structure/falsewall
-#define SMOOTH_GROUP_URANIUM_WALLS S_OBJ(2) ///turf/closed/wall/mineral/uranium, /obj/structure/falsewall/uranium
-#define SMOOTH_GROUP_GOLD_WALLS S_OBJ(3) ///turf/closed/wall/mineral/gold, /obj/structure/falsewall/gold
-#define SMOOTH_GROUP_SILVER_WALLS S_OBJ(4) ///turf/closed/wall/mineral/silver, /obj/structure/falsewall/silver
-#define SMOOTH_GROUP_DIAMOND_WALLS S_OBJ(5) ///turf/closed/wall/mineral/diamond, /obj/structure/falsewall/diamond
-#define SMOOTH_GROUP_PLASMA_WALLS S_OBJ(6) ///turf/closed/wall/mineral/plasma, /obj/structure/falsewall/plasma
-#define SMOOTH_GROUP_BANANIUM_WALLS S_OBJ(7) ///turf/closed/wall/mineral/bananium, /obj/structure/falsewall/bananium
-#define SMOOTH_GROUP_SANDSTONE_WALLS S_OBJ(8) ///turf/closed/wall/mineral/sandstone, /obj/structure/falsewall/sandstone
-#define SMOOTH_GROUP_WOOD_WALLS S_OBJ(9) ///turf/closed/wall/mineral/wood, /obj/structure/falsewall/wood
-#define SMOOTH_GROUP_IRON_WALLS S_OBJ(10) ///turf/closed/wall/mineral/iron, /obj/structure/falsewall/iron
-#define SMOOTH_GROUP_ABDUCTOR_WALLS S_OBJ(11) ///turf/closed/wall/mineral/abductor, /obj/structure/falsewall/abductor
-#define SMOOTH_GROUP_TITANIUM_WALLS S_OBJ(12) ///turf/closed/wall/mineral/titanium, /obj/structure/falsewall/titanium
+/// Applied to anything that acts like a tall wall, helps vis_opacity work properly
+#define SMOOTH_GROUP_TALL_WALLS S_OBJ(1)
+#define SMOOTH_GROUP_WALLS S_OBJ(2) ///turf/closed/wall, /obj/structure/falsewall
+#define SMOOTH_GROUP_URANIUM_WALLS S_OBJ(3) ///turf/closed/wall/mineral/uranium, /obj/structure/falsewall/uranium
+#define SMOOTH_GROUP_GOLD_WALLS S_OBJ(4) ///turf/closed/wall/mineral/gold, /obj/structure/falsewall/gold
+#define SMOOTH_GROUP_SILVER_WALLS S_OBJ(5) ///turf/closed/wall/mineral/silver, /obj/structure/falsewall/silver
+#define SMOOTH_GROUP_DIAMOND_WALLS S_OBJ(6) ///turf/closed/wall/mineral/diamond, /obj/structure/falsewall/diamond
+#define SMOOTH_GROUP_PLASMA_WALLS S_OBJ(7) ///turf/closed/wall/mineral/plasma, /obj/structure/falsewall/plasma
+#define SMOOTH_GROUP_BANANIUM_WALLS S_OBJ(8) ///turf/closed/wall/mineral/bananium, /obj/structure/falsewall/bananium
+#define SMOOTH_GROUP_SANDSTONE_WALLS S_OBJ(9) ///turf/closed/wall/mineral/sandstone, /obj/structure/falsewall/sandstone
+#define SMOOTH_GROUP_WOOD_WALLS S_OBJ(10) ///turf/closed/wall/mineral/wood, /obj/structure/falsewall/wood
+#define SMOOTH_GROUP_IRON_WALLS S_OBJ(11) ///turf/closed/wall/mineral/iron, /obj/structure/falsewall/iron
+#define SMOOTH_GROUP_ABDUCTOR_WALLS S_OBJ(12) ///turf/closed/wall/mineral/abductor, /obj/structure/falsewall/abductor
+#define SMOOTH_GROUP_TITANIUM_WALLS S_OBJ(13) ///turf/closed/wall/mineral/titanium, /obj/structure/falsewall/titanium
 #define SMOOTH_GROUP_PLASTITANIUM_WALLS S_OBJ(14) ///turf/closed/wall/mineral/plastitanium, /obj/structure/falsewall/plastitanium
 #define SMOOTH_GROUP_SURVIVAL_TITANIUM_POD S_OBJ(15) ///turf/closed/wall/mineral/titanium/survival/pod, /obj/machinery/door/airlock/survival_pod, /obj/structure/window/reinforced/shuttle/survival_pod
 #define SMOOTH_GROUP_HIERO_WALL S_OBJ(16) ///obj/effect/temp_visual/elite_tumor_wall, /obj/effect/temp_visual/hierophant/wall
-#define SMOOTH_GROUP_BAMBOO_WALLS S_TURF(17) //![/turf/closed/wall/mineral/bamboo, /obj/structure/falsewall/bamboo]
-#define SMOOTH_GROUP_PLASTINUM_WALLS S_TURF(18) //![turf/closed/indestructible/riveted/plastinum]
+#define SMOOTH_GROUP_BAMBOO_WALLS S_OBJ(17) //![/turf/closed/wall/mineral/bamboo, /obj/structure/falsewall/bamboo]
+#define SMOOTH_GROUP_MEAT_WALLS S_OBJ(18) //![/turf/closed/wall/mineral/meat, /obj/structure/falsewall/meat]
+#define SMOOTH_GROUP_PLASTINUM_WALLS S_OBJ(19) //![turf/closed/indestructible/riveted/plastinum]
+#define SMOOTH_GROUP_PIZZA_WALLS S_OBJ(20)  ///turf/closed/wall/mineral/pizza, /obj/structure/falsewall/pizza (wallening todo: these don't exist)
+#define SMOOTH_GROUP_CLOCK_WALLS S_OBJ(21) ///turf/closed/wall/mineral/bronze
+#define SMOOTH_GROUP_SNOW_WALLS S_OBJ(22) ///turf/closed/wall/mineral/snow
 
-#define SMOOTH_GROUP_PAPERFRAME S_OBJ(21) ///obj/structure/window/paperframe, /obj/structure/mineral_door/paperframe
+#define SMOOTH_GROUP_PAPERFRAME S_OBJ(23) ///obj/structure/window/paperframe, /obj/structure/mineral_door/paperframe
 
-#define SMOOTH_GROUP_WINDOW_FULLTILE S_OBJ(22) ///turf/closed/indestructible/fakeglass, /obj/structure/window/fulltile, /obj/structure/window/reinforced/fulltile, /obj/structure/window/reinforced/tinted/fulltile, /obj/structure/window/plasma/fulltile, /obj/structure/window/reinforced/plasma/fulltile
-#define SMOOTH_GROUP_WINDOW_FULLTILE_BRONZE S_OBJ(23) ///obj/structure/window/bronze/fulltile
-#define SMOOTH_GROUP_WINDOW_FULLTILE_PLASTITANIUM S_OBJ(24) ///turf/closed/indestructible/opsglass, /obj/structure/window/reinforced/plasma/plastitanium
-#define SMOOTH_GROUP_WINDOW_FULLTILE_SHUTTLE S_OBJ(25) ///obj/structure/window/reinforced/shuttle
-
-#define SMOOTH_GROUP_WINDOW_DIRECTIONAL_TRAM S_OBJ(26) ///obj/structure/tram
+#define SMOOTH_GROUP_WINDOW_FULLTILE S_OBJ(24) ///turf/closed/indestructible/fakeglass, /obj/structure/window/fulltile, /obj/structure/window/reinforced/fulltile, /obj/structure/window/reinforced/tinted/fulltile, /obj/structure/window/plasma/fulltile, /obj/structure/window/reinforced/plasma/fulltile
+#define SMOOTH_GROUP_WINDOW_FULLTILE_BRONZE S_OBJ(25) ///obj/structure/window/bronze/fulltile
+#define SMOOTH_GROUP_WINDOW_FULLTILE_PLASTITANIUM S_OBJ(26) ///turf/closed/indestructible/opsglass, /obj/structure/window/reinforced/plasma/plastitanium
+#define SMOOTH_GROUP_WINDOW_FULLTILE_SHUTTLE S_OBJ(27) ///obj/structure/window/reinforced/shuttle
+#define SMOOTH_GROUP_WINDOW_FRAMES S_OBJ(28) ///obj/structure/window_frame
 
 #define SMOOTH_GROUP_LATTICE S_OBJ(31) ///obj/structure/lattice
 #define SMOOTH_GROUP_CATWALK S_OBJ(32) ///obj/structure/lattice/catwalk
-
-#define SMOOTH_GROUP_AIRLOCK S_OBJ(41) ///obj/machinery/door/airlock
 
 #define SMOOTH_GROUP_INDUSTRIAL_LIFT S_OBJ(46) ///obj/structure/transport/linear
 #define SMOOTH_GROUP_TRAM_STRUCTURE S_OBJ(47) //obj/structure/tram
@@ -179,26 +191,32 @@ DEFINE_BITFIELD(smoothing_junction, list(
 #define SMOOTH_GROUP_GLASS_TABLES S_OBJ(56) ///obj/structure/table/glass
 
 #define SMOOTH_GROUP_ALIEN_NEST S_OBJ(60) ///obj/structure/bed/nest
-#define SMOOTH_GROUP_ALIEN_RESIN S_OBJ(61) ///obj/structure/alien/resin
-#define SMOOTH_GROUP_ALIEN_WALLS S_OBJ(62) ///obj/structure/alien/resin/wall, /obj/structure/alien/resin/membrane
-#define SMOOTH_GROUP_ALIEN_WEEDS S_OBJ(63) ///obj/structure/alien/weeds
+#define SMOOTH_GROUP_ALIEN_WALLS S_OBJ(61) ///obj/structure/alien/resin/wall, /obj/structure/alien/resin/membrane
+#define SMOOTH_GROUP_ALIEN_WEEDS S_OBJ(62) ///obj/structure/alien/weeds
 
-#define SMOOTH_GROUP_SECURITY_BARRICADE S_OBJ(64) ///obj/structure/barricade/security
-#define SMOOTH_GROUP_SANDBAGS S_OBJ(65) ///obj/structure/barricade/sandbags
+#define SMOOTH_GROUP_SECURITY_BARRICADE S_OBJ(63) ///obj/structure/barricade/security
+#define SMOOTH_GROUP_SANDBAGS S_OBJ(64) ///obj/structure/barricade/sandbags
 
-#define SMOOTH_GROUP_HEDGE_FLUFF S_OBJ(66) ///obj/structure/hedge
+#define SMOOTH_GROUP_HEDGE_FLUFF S_OBJ(65) ///obj/structure/hedge
 
-#define SMOOTH_GROUP_SHUTTLE_PARTS S_OBJ(67) ///obj/structure/window/reinforced/shuttle, /obj/structure/window/reinforced/plasma/plastitanium, /turf/closed/indestructible/opsglass, /obj/machinery/power/shuttle_engine
+#define SMOOTH_GROUP_CLEANABLE_DIRT S_OBJ(67) ///obj/effect/decal/cleanable/dirt
 
-#define SMOOTH_GROUP_CLEANABLE_DIRT S_OBJ(68) ///obj/effect/decal/cleanable/dirt
-
+#define SMOOTH_GROUP_GRILLE S_OBJ(68) ///obj/structure/grille
 #define SMOOTH_GROUP_GAS_TANK S_OBJ(69)
+#define SMOOTH_GROUP_THINDOWS S_OBJ(70)
 
-#define SMOOTH_GROUP_SPIDER_WEB S_OBJ(70) // /obj/structure/spider/stickyweb
-#define SMOOTH_GROUP_SPIDER_WEB_WALL S_OBJ(71) // /obj/structure/spider/stickyweb/sealed
-#define SMOOTH_GROUP_SPIDER_WEB_ROOF S_OBJ(72) // /obj/structure/spider/passage
-#define SMOOTH_GROUP_SPIDER_WEB_WALL_TOUGH S_OBJ(73) // /obj/structure/spider/stickyweb/sealed/thick
-#define SMOOTH_GROUP_SPIDER_WEB_WALL_MIRROR S_OBJ(74) // /obj/structure/spider/stickyweb/sealed/reflector
+#define SMOOTH_GROUP_SPIDER_WEB S_OBJ(71) // /obj/structure/spider/stickyweb
+#define SMOOTH_GROUP_SPIDER_WEB_WALL S_OBJ(72) // /obj/structure/spider/stickyweb/sealed
+#define SMOOTH_GROUP_SPIDER_WEB_ROOF S_OBJ(73) // /obj/structure/spider/passage
+#define SMOOTH_GROUP_SPIDER_WEB_WALL_TOUGH S_OBJ(74) // /obj/structure/spider/stickyweb/sealed/thick
+#define SMOOTH_GROUP_SPIDER_WEB_WALL_MIRROR S_OBJ(75) // /obj/structure/spider/stickyweb/sealed/reflector
+#define SMOOTH_GROUP_GLITTER_PINK S_OBJ(76) // /obj/effect/decal/cleanable/glitter/pink
+#define SMOOTH_GROUP_GLITTER_WHITE S_OBJ(77) // /obj/effect/decal/cleanable/glitter/white
+#define SMOOTH_GROUP_GLITTER_BLUE S_OBJ(78) // /obj/effect/decal/cleanable/glitter/blue
+#define SMOOTH_GROUP_SHIELD_GEN_WALL S_OBJ(79) // /obj/machinery/shieldwall
+#define SMOOTH_GROUP_VIS_BLOCK S_OBJ(80) // /obj/effect/abstract/finder/vis_block, marks turfs where vis_blocking is going on
+
+#define SMOOTH_GROUP_GRAV_FIELD S_OBJ(69)
 
 /// Performs the work to set smoothing_groups and canSmoothWith.
 /// An inlined function used in both turf/Initialize and atom/Initialize.
@@ -229,3 +247,7 @@ DEFINE_BITFIELD(smoothing_junction, list(
 #define ASSERT_SORTED_SMOOTHING_GROUPS(smoothing_group_variable) \
 	var/list/unwrapped = UNWRAP_SMOOTHING_GROUPS(smoothing_group_variable, unwrapped); \
 	assert_sorted(unwrapped, "[#smoothing_group_variable] ([type])"); \
+
+// Defines used to convert dirs to 32,32 pixel offsets
+#define DIR_TO_PIXEL_Y(dir) ((dir & NORTH) ? 32 : (dir & SOUTH) ? -32 : 0)
+#define DIR_TO_PIXEL_X(dir) ((dir & EAST) ? 32 : (dir & WEST) ? -32 : 0)

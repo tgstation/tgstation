@@ -2,6 +2,7 @@
 #define ELECTROLYZER_MODE_WORKING "working"
 
 /obj/machinery/electrolyzer
+	SET_BASE_VISUAL_PIXEL(0, DEPTH_OFFSET)
 	anchored = FALSE
 	density = TRUE
 	interaction_flags_machine = INTERACT_MACHINE_ALLOW_SILICON | INTERACT_MACHINE_OPEN
@@ -15,7 +16,7 @@
 	/// We don't use area power, we always use the cell
 	use_power = NO_POWER_USE
 	///used to check if there is a cell in the machine
-	var/obj/item/stock_parts/cell/cell
+	var/obj/item/stock_parts/power_store/cell
 	///check if the machine is on or off
 	var/on = FALSE
 	///check what mode the machine should be (WORKING, STANDBY)
@@ -125,7 +126,7 @@
 
 	var/power_to_use = (5 * (3 * working_power) * working_power) / (efficiency + working_power)
 	if(anchored)
-		use_power(power_to_use)
+		use_energy(power_to_use)
 	else
 		cell.use(power_to_use)
 
@@ -170,7 +171,7 @@
 
 /obj/machinery/electrolyzer/attackby(obj/item/I, mob/user, params)
 	add_fingerprint(user)
-	if(istype(I, /obj/item/stock_parts/cell))
+	if(istype(I, /obj/item/stock_parts/power_store/cell))
 		if(!panel_open)
 			balloon_alert(user, "open panel!")
 			return
@@ -187,14 +188,12 @@
 		return
 	return ..()
 
-/obj/machinery/electrolyzer/AltClick(mob/user)
-	. = ..()
+/obj/machinery/electrolyzer/click_alt(mob/user)
 	if(panel_open)
 		balloon_alert(user, "close panel!")
-		return
-	if(!can_interact(user))
-		return
+		return CLICK_ACTION_BLOCKING
 	toggle_power(user)
+	return CLICK_ACTION_SUCCESS
 
 /obj/machinery/electrolyzer/proc/toggle_power(mob/user)
 	if(!anchored && !cell)

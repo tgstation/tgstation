@@ -57,14 +57,13 @@
 	return ismovable(target) && isturf(target.loc) && ismob(controller.pawn)
 
 /datum/ai_behavior/face_target_or_face_initial/perform(seconds_per_tick, datum/ai_controller/controller, target_key)
-	. = ..()
 	var/atom/movable/target = controller.blackboard[target_key]
 	var/mob/living/we = controller.pawn
 	if(isnull(target) || get_dist(we, target) > 8)
 		we.dir = controller.blackboard[BB_STARTING_DIRECTION]
-		finish_action(controller, TRUE)
-	else
-		we.face_atom(target)
+		return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_SUCCEEDED
+	we.face_atom(target)
+	return AI_BEHAVIOR_DELAY
 
 /mob/living/basic/statue/mannequin/suspicious
 	name = "mannequin?"

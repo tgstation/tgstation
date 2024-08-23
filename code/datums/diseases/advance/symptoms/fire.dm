@@ -65,13 +65,16 @@
 				warn_mob(living_mob)
 
 			if(infective)
-				A.spread(advanced_stage ? 4 : 2)
+				A.airborne_spread(advanced_stage ? 4 : 2)
 
 /datum/symptom/fire/proc/warn_mob(mob/living/living_mob)
 	if(prob(33.33))
 		living_mob.show_message(span_hear("You hear a crackling noise."), type = MSG_AUDIBLE)
 	else
-		to_chat(living_mob, span_warning("[pick("You feel hot.", "You smell smoke.")]"))
+		if(HAS_TRAIT(living_mob, TRAIT_ANOSMIA)) //Anosmia quirk holder can't smell anything.
+			to_chat(living_mob, span_warning("You feel hot."))
+		else
+			to_chat(living_mob, span_warning("[pick("You feel hot.", "You smell smoke.")]"))
 
 /*
 Alkali perspiration

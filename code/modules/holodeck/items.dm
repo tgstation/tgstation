@@ -14,7 +14,7 @@
 	throw_speed = 2
 	block_chance = 0
 	throwforce = 0
-	embedding = null
+	embed_type = null
 	sword_color_icon = null
 
 	active_throwforce = 0
@@ -75,8 +75,8 @@
 /obj/machinery/readybutton
 	name = "ready declaration device"
 	desc = "This device is used to declare ready. If all devices in an area are ready, the event will begin!"
-	icon = 'icons/obj/machines/wallmounts.dmi'
-	icon_state = "auth_off"
+	icon = 'icons/obj/machines/keycard.dmi'
+	icon_state = "auth_on"
 	var/ready = 0
 	var/area/currentarea = null
 	var/eventstarted = FALSE
@@ -140,7 +140,7 @@
 	for (var/list/zlevel_turfs as anything in currentarea.get_zlevel_turf_lists())
 		for(var/turf/area_turf as anything in zlevel_turfs)
 			for(var/obj/structure/window/barrier in area_turf)
-				if((barrier.obj_flags & NO_DECONSTRUCTION) || (barrier.flags_1 & HOLOGRAM_1))// Just in case: only holo-windows
+				if(barrier.flags_1 & HOLOGRAM_1)// Just in case: only holo-windows
 					qdel(barrier)
 
 			for(var/mob/contestant in area_turf)

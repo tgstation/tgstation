@@ -9,13 +9,16 @@
 	flags_1 = ALLOW_DARK_PAINTS_1
 	var/do_icon_rotate = TRUE
 	var/rotation = 0
-	var/paint_colour = "#FFFFFF"
+	var/paint_colour = COLOR_WHITE
 
-/obj/effect/decal/cleanable/crayon/Initialize(mapload, main, type, e_name, graf_rot, alt_icon = null)
+/obj/effect/decal/cleanable/crayon/Initialize(mapload, main, type, e_name, graf_rot, alt_icon = null, desc_override = null)
 	. = ..()
 	if(e_name)
 		name = e_name
-	desc = "A [name] vandalizing the station."
+	if(desc_override)
+		desc = "[desc_override]"
+	else
+		desc = "A [name] vandalizing the station."
 	if(alt_icon)
 		icon = alt_icon
 	if(type)
@@ -41,3 +44,29 @@
 		cost *= 0.5
 	spraycan.use_charges(user, cost, requires_full = FALSE)
 	return DONT_USE_SPRAYCAN_CHARGES
+
+///Common crayon decals in map.
+/obj/effect/decal/cleanable/crayon/rune4
+	icon_state = "rune4"
+	paint_colour = COLOR_CRAYON_RED
+
+/obj/effect/decal/cleanable/crayon/rune2
+	icon_state = "rune2"
+
+/obj/effect/decal/cleanable/crayon/x
+	icon_state = "x"
+	name = "graffiti"
+	paint_colour = COLOR_CRAYON_ORANGE
+
+/obj/effect/decal/cleanable/crayon/l
+	icon_state = "l"
+
+/obj/effect/decal/cleanable/crayon/i
+	icon_state = "i"
+
+/obj/effect/decal/cleanable/crayon/e
+	icon_state = "e"
+
+/obj/effect/decal/cleanable/crayon/i/orange
+	name = "graffiti"
+	paint_colour = COLOR_CRAYON_ORANGE

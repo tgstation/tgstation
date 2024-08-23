@@ -42,7 +42,9 @@
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/deepstorage/crusher)
 "am" = (
-/obj/machinery/recycler/deathtrap,
+/obj/machinery/recycler/deathtrap{
+	dir = 8
+	},
 /obj/machinery/conveyor{
 	dir = 4;
 	id = "bunkerrecycle"
@@ -827,12 +829,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/orange/hidden{
 	dir = 4
 	},
-/obj/machinery/computer/security/telescreen{
-	dir = 1;
-	name = "Bunker Entrance monitor";
-	network = list("bunker1");
-	pixel_y = 2
-	},
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/button/door/directional/west{
 	id = "bunkerexterior";
@@ -851,6 +847,7 @@
 	pixel_y = 8;
 	req_access = list("away_general")
 	},
+/obj/machinery/computer/security/telescreen/deep_storage/bunker/directional/north,
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/deepstorage/airlock)
 "eL" = (

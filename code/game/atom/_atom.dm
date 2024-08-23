@@ -5,7 +5,7 @@
  * as much as possible to the components/elements system
  */
 /atom
-	layer = TURF_LAYER
+	layer = ABOVE_NORMAL_TURF_LAYER
 	plane = GAME_PLANE
 	appearance_flags = TILE_BOUND|LONG_GLIDE
 
@@ -127,6 +127,8 @@
 
 	///AI controller that controls this atom. type on init, then turned into an instance during runtime
 	var/datum/ai_controller/ai_controller
+	///Should we ignore any attempts to auto align? Mappers should edit this
+	var/manual_align = FALSE
 
 	/// forensics datum, contains fingerprints, fibres, blood_dna and hiddenprints on this atom
 	var/datum/forensics/forensics
@@ -135,6 +137,15 @@
 	var/can_astar_pass = CANASTARPASS_DENSITY
 	///whether ghosts can see screentips on it
 	var/ghost_screentips = FALSE
+
+	/// Flags to check for in can_perform_action. Used in alt-click & ctrl-click checks
+	var/interaction_flags_click = NONE
+	/// Flags to check for in can_perform_action for mouse drag & drop checks. To bypass checks see interaction_flags_atom mouse drop flags
+	var/interaction_flags_mouse_drop = NONE
+
+	/// if truthy, rcd spritesheets will use this as the key to this atom's cached icon
+	/// instead of its name.
+	var/rcd_spritesheet_override = ""
 
 /**
  * Top level of the destroy chain for most atoms
@@ -161,6 +172,9 @@
 	if(atom_storage)
 		QDEL_NULL(atom_storage)
 
+	if(wires)
+		QDEL_NULL(wires)
+
 	orbiters = null // The component is attached to us normaly and will be deleted elsewhere
 
 	// Checking length(overlays) before cutting has significant speed benefits
@@ -177,6 +191,13 @@
 
 	if(smoothing_flags & SMOOTH_QUEUED)
 		SSicon_smooth.remove_from_queues(src)
+
+	// These lists cease existing when src does, so we need to clear any lua refs to them that exist.
+	if(!(datum_flags & DF_STATIC_OBJECT))
+		DREAMLUAU_CLEAR_REF_USERDATA(contents)
+		DREAMLUAU_CLEAR_REF_USERDATA(filters)
+		DREAMLUAU_CLEAR_REF_USERDATA(overlays)
+		DREAMLUAU_CLEAR_REF_USERDATA(underlays)
 
 	return ..()
 
@@ -215,6 +236,8 @@
 	if(mover.pass_flags & pass_flags_self)
 		return TRUE
 	if(mover.throwing && (pass_flags_self & LETPASSTHROW))
+		return TRUE
+	if(SEND_SIGNAL(src, COMSIG_ATOM_CAN_ALLOW_THROUGH, mover, border_dir) & COMSIG_FORCE_ALLOW_THROUGH)
 		return TRUE
 	return !density
 
@@ -367,11 +390,6 @@
 ///Return the air if we can analyze it
 /atom/proc/return_analyzable_air()
 	return null
-
-///Check if this atoms eye is still alive (probably)
-/atom/proc/check_eye(mob/user)
-	SIGNAL_HANDLER
-	return
 
 /atom/proc/Bumped(atom/movable/bumped_atom)
 	set waitfor = FALSE
@@ -567,8 +585,9 @@
 		newdir = dir
 		return
 	SEND_SIGNAL(src, COMSIG_ATOM_DIR_CHANGE, dir, newdir)
+	var/oldDir = dir
 	dir = newdir
-	SEND_SIGNAL(src, COMSIG_ATOM_POST_DIR_CHANGE, dir, newdir)
+	SEND_SIGNAL(src, COMSIG_ATOM_POST_DIR_CHANGE, oldDir, newdir)
 	if(smoothing_flags & SMOOTH_BORDER_OBJECT)
 		QUEUE_SMOOTH_NEIGHBORS(src)
 
@@ -794,6 +813,10 @@
 /atom/proc/setClosed()
 	return
 
+///Called after the atom is 'tamed' for type-specific operations, Usually called by the tameable component but also other things.
+/atom/proc/tamed(mob/living/tamer, obj/item/food)
+	return
+
 /**
  * Used to attempt to charge an object with a payment component.
  *
@@ -855,7 +878,6 @@
 		active_hud.screentip_text.maptext = ""
 		return
 
-	active_hud.screentip_text.maptext_y = 10 // 10px lines us up with the action buttons top left corner
 	var/lmb_rmb_line = ""
 	var/ctrl_lmb_ctrl_rmb_line = ""
 	var/alt_lmb_alt_rmb_line = ""
@@ -925,14 +947,26 @@
 
 				if(extra_lines)
 					extra_context = "<br><span class='subcontext'>[lmb_rmb_line][ctrl_lmb_ctrl_rmb_line][alt_lmb_alt_rmb_line][shift_lmb_ctrl_shift_lmb_line]</span>"
-					//first extra line pushes atom name line up 11px, subsequent lines push it up 9px, this offsets that and keeps the first line in the same place
-					active_hud.screentip_text.maptext_y = -1 + (extra_lines - 1) * -9
 
+	var/new_maptext
 	if (screentips_enabled == SCREENTIP_PREFERENCE_CONTEXT_ONLY && extra_context == "")
-		active_hud.screentip_text.maptext = ""
+		new_maptext = ""
 	else
 		//We inline a MAPTEXT() here, because there's no good way to statically add to a string like this
-		active_hud.screentip_text.maptext = "<span class='context' style='text-align: center; color: [active_hud.screentip_color]'>[name][extra_context]</span>"
+		new_maptext = "<span class='context' style='text-align: center; color: [active_hud.screentip_color]'>[name][extra_context]</span>"
+
+	if (length(name) * 10 > active_hud.screentip_text.maptext_width)
+		INVOKE_ASYNC(src, PROC_REF(set_hover_maptext), client, active_hud, new_maptext)
+		return
+
+	active_hud.screentip_text.maptext = new_maptext
+	active_hud.screentip_text.maptext_y = 10 - (extra_lines > 0 ? 11 + 9 * (extra_lines - 1): 0)
+
+/atom/proc/set_hover_maptext(client/client, datum/hud/active_hud, new_maptext)
+	var/map_height
+	WXH_TO_HEIGHT(client.MeasureText(new_maptext, null, active_hud.screentip_text.maptext_width), map_height)
+	active_hud.screentip_text.maptext = new_maptext
+	active_hud.screentip_text.maptext_y = 26 - map_height
 
 /**
  * This proc is used for telling whether something can pass by this atom in a given direction, for use by the pathfinding system.
@@ -953,3 +987,66 @@
 	if(pass_info.pass_flags & pass_flags_self)
 		return TRUE
 	. = !density
+
+/*
+Some details about how to use these lists
+We're essentially trying to predict how doors/doorlike things will be placed/surounded, and use that to set their direction
+It's a little finiky, and you may need to override the lists or worst case senario manually edit something's dir
+But it should behave like you expect
+*/
+
+///What to connect with by default. Used by /atom/proc/auto_align(). This can be overriden
+GLOBAL_LIST_INIT(default_connectables, typecacheof(list(
+	/obj/machinery/door/airlock,
+	/obj/machinery/door/poddoor,
+	/obj/machinery/smartfridge,
+	/obj/structure/girder/reinforced,
+	/obj/structure/plasticflaps,
+	/obj/machinery/power/shieldwallgen,
+	/obj/structure/door_assembly,
+)))
+
+///What to connect with at a lower priority by default. Used for stuff that we want to consider, but only if we don't find anything else
+GLOBAL_LIST_INIT(lower_priority_connectables, typecacheof(list(
+	/obj/machinery/door/firedoor,
+	/obj/machinery/door/window,
+	/obj/structure/table,
+	/obj/structure/window,
+	/obj/structure/girder,
+)))
+
+/// Ok so this whole proc is about finding tiles that we could in theory be connected to, and blocking off that direction right?
+/// It's not perfect, and it can make mistakes, but it does a pretty good job predicting a mapper's intentions
+/// Maybe someday every door will have its dir set properly, but we'll keep this until then
+/atom/proc/auto_align(connectables_typecache, lower_priority_typecache)
+	if(manual_align)
+		return
+	if(!connectables_typecache)
+		connectables_typecache = GLOB.default_connectables
+	if(!lower_priority_typecache)
+		lower_priority_typecache = GLOB.lower_priority_connectables
+
+	var/list/dirs_usable = GLOB.cardinals.Copy()
+	var/list/dirs_secondary_priority = GLOB.cardinals.Copy()
+	for(var/dir_to_check in GLOB.cardinals)
+		var/turf/turf_to_check = get_step(src, dir_to_check)
+		if(turf_to_check.density) //Dense turfs are connectable
+			dirs_usable -= dir_to_check
+			continue
+		for(var/atom/movable/thing_to_check as anything in turf_to_check)
+			if(is_type_in_typecache(thing_to_check, connectables_typecache))
+				dirs_usable -= dir_to_check //So are things in the default typecache
+				break
+			if(is_type_in_typecache(thing_to_check, lower_priority_typecache))
+				dirs_secondary_priority -= dir_to_check //Assuming we find nothing else, note down the secondary priority stuff
+
+	var/dirs_avalible = length(dirs_usable)
+	//Only continue if we've got ourself either a corner or a side piece. Only side pieces really work well here, since corners aren't really something we can fudge handling for
+	if(dirs_avalible && dirs_avalible <= 2)
+		setDir(dirs_usable[1]) //Just take the first dir avalible
+		return
+	dirs_usable &= dirs_secondary_priority //Only consider dirs we both share
+	dirs_avalible = length(dirs_usable)
+	if(dirs_avalible && dirs_avalible <= 2)
+		setDir(dirs_usable[1])
+		return

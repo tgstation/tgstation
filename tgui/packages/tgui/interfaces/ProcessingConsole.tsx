@@ -135,7 +135,7 @@ const DisplayRow = (props: DisplayRowProps) => {
   const { name, icon, amount, selected, onSelect } = props;
 
   return (
-    <Table.Row collapsing className="candystripe">
+    <Table.Row className="candystripe">
       <Table.Cell collapsing pl={1}>
         {icon ? (
           <Image

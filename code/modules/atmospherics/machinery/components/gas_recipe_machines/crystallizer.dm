@@ -10,6 +10,7 @@
 	name = "crystallizer"
 	desc = "Used to crystallize or solidify gases."
 	layer = ABOVE_MOB_LAYER
+	plane = GAME_PLANE
 	density = TRUE
 	max_integrity = 300
 	armor_type = /datum/armor/binary_crystallizer
@@ -88,17 +89,17 @@
 	else
 		icon_state = "[base_icon_state]-off"
 
-/obj/machinery/atmospherics/components/binary/crystallizer/CtrlClick(mob/living/user)
-	if(!can_interact(user))
-		return
+/obj/machinery/atmospherics/components/binary/crystallizer/click_ctrl(mob/user)
+	if(!is_operational)
+		return CLICK_ACTION_BLOCKING
 	if(panel_open)
 		balloon_alert(user, "close panel!")
-		return
+		return CLICK_ACTION_BLOCKING
 	on = !on
 	balloon_alert(user, "turned [on ? "on" : "off"]")
 	investigate_log("was turned [on ? "on" : "off"] by [key_name(user)]", INVESTIGATE_ATMOS)
 	update_icon()
-	return ..()
+	return CLICK_ACTION_SUCCESS
 
 ///Checks if the reaction temperature is inside the range of temperature + a little deviation
 /obj/machinery/atmospherics/components/binary/crystallizer/proc/check_temp_requirements()
@@ -300,7 +301,7 @@
 	data["gas_input"] = gas_input
 	return data
 
-/obj/machinery/atmospherics/components/binary/crystallizer/ui_act(action, params)
+/obj/machinery/atmospherics/components/binary/crystallizer/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if(.)
 		return

@@ -12,7 +12,7 @@
 		/obj/item/clothing/under/rank/rnd/roboticist = 4,
 		/obj/item/stack/cable_coil = 4,
 		/obj/item/assembly/flash/handheld = 4,
-		/obj/item/stock_parts/cell/high = 12,
+		/obj/item/stock_parts/power_store/cell/high = 12,
 		/obj/item/assembly/prox_sensor = 3,
 		/obj/item/assembly/signaler = 3,
 		/obj/item/healthanalyzer = 3,

@@ -1,4 +1,4 @@
-/// Sets the direction of the mecha and all of its occcupents, required for FOV. Alternatively one could make a recursive contents registration and register topmost direction changes in the fov component
+/// Sets the direction of the mecha and all of its occcupents
 /obj/vehicle/sealed/mecha/setDir(newdir)
 	. = ..()
 	for(var/mob/living/occupant as anything in occupants)
@@ -103,7 +103,7 @@
 			to_chat(occupants, "[icon2html(src, occupants)][span_warning("Missing [english_list(missing_parts)].")]")
 			TIMER_COOLDOWN_START(src, COOLDOWN_MECHA_MESSAGE, 2 SECONDS)
 		return FALSE
-	if(!use_power(step_energy_drain))
+	if(!use_energy(step_energy_drain))
 		if(TIMER_COOLDOWN_FINISHED(src, COOLDOWN_MECHA_MESSAGE))
 			to_chat(occupants, "[icon2html(src, occupants)][span_warning("Insufficient power to move!")]")
 			TIMER_COOLDOWN_START(src, COOLDOWN_MECHA_MESSAGE, 2 SECONDS)
@@ -142,7 +142,7 @@
 	//Otherwise just walk normally
 	. = try_step_multiz(direction)
 	if(phasing)
-		use_power(phasing_energy_drain)
+		use_energy(phasing_energy_drain)
 	if(strafe)
 		setDir(olddir)
 
@@ -154,13 +154,17 @@
 		return
 	if(.) //mech was thrown/door/whatever
 		return
-	if(bumpsmash) //Need a pilot to push the PUNCH button.
-		if(COOLDOWN_FINISHED(src, mecha_bump_smash))
-			var/list/mob/mobster = return_drivers()
-			obstacle.mech_melee_attack(src, mobster[1])
-			COOLDOWN_START(src, mecha_bump_smash, smashcooldown)
-			if(!obstacle || obstacle.CanPass(src, get_dir(obstacle, src) || dir)) // The else is in case the obstacle is in the same turf.
-				step(src,dir)
+
+	// Whether or not we're on our mecha melee cooldown
+	var/on_cooldown = TIMER_COOLDOWN_RUNNING(src, COOLDOWN_MECHA_MELEE_ATTACK)
+
+	if(bumpsmash && !on_cooldown)
+		// Our pilot for this evening
+		var/list/mob/mobster = return_drivers()
+		if(obstacle.mech_melee_attack(src, mobster[1]))
+			TIMER_COOLDOWN_START(src, COOLDOWN_MECHA_MELEE_ATTACK, melee_cooldown * 0.3)
+		if(!obstacle || obstacle.CanPass(src, get_dir(obstacle, src) || dir)) // The else is in case the obstacle is in the same turf.
+			step(src,dir)
 	if(isobj(obstacle))
 		var/obj/obj_obstacle = obstacle
 		if(!obj_obstacle.anchored && obj_obstacle.move_resist <= move_force)

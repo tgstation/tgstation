@@ -48,9 +48,7 @@
 /turf/closed/wall/mineral/plastitanium/nodiagonal,
 /area/shuttle/abandoned/engine)
 "am" = (
-/obj/machinery/power/smes/engineering{
-	charge = 1e+006
-	},
+/obj/machinery/power/smes/ship,
 /obj/effect/turf_decal/stripes/white/line{
 	dir = 9
 	},
@@ -502,7 +500,7 @@
 /obj/structure/cable,
 /obj/structure/table,
 /obj/machinery/cell_charger,
-/obj/item/stock_parts/cell/high,
+/obj/item/stock_parts/power_store/cell/high,
 /obj/item/multitool{
 	pixel_x = 7;
 	pixel_y = 5
@@ -1166,7 +1164,9 @@
 /area/shuttle/abandoned/cargo)
 "Ft" = (
 /obj/machinery/computer/camera_advanced/shuttle_docker/whiteship{
-	dir = 8
+	dir = 8;
+	x_offset = 0;
+	y_offset = 13
 	},
 /obj/effect/turf_decal/stripes/white/corner{
 	dir = 1

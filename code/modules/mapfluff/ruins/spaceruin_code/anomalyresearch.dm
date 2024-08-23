@@ -17,7 +17,7 @@
 		/obj/effect/anomaly/flux,
 		/obj/effect/anomaly/bluespace,
 		/obj/effect/anomaly/hallucination,
-		/obj/effect/anomaly/bioscrambler
+		/obj/effect/anomaly/bioscrambler/docile
 	)
 
 	///Do we anchor the anomaly? Set to true if you don't want anomalies drifting away (like if theyre in space or something)

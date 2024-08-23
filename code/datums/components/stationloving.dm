@@ -51,7 +51,8 @@
 
 /// Teleports parent to a safe turf on the station z-level.
 /datum/component/stationloving/proc/relocate()
-	var/target_turf = find_safe_turf()
+
+	var/target_turf = length(GLOB.the_station_areas) ? get_safe_random_station_turf(GLOB.the_station_areas) : find_safe_turf() //Fallback. Mostly for debug maps.
 
 	if(!target_turf)
 		if(GLOB.blobstart.len > 0)

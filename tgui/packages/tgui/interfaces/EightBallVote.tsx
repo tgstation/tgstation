@@ -2,50 +2,51 @@ import { BooleanLike } from 'common/react';
 import { toTitleCase } from 'common/string';
 
 import { useBackend } from '../backend';
-import { Box, Button, Grid, NoticeBox, Section } from '../components';
+import { Box, Button, NoticeBox, Section, Stack } from '../components';
 import { Window } from '../layouts';
 
 type Data = {
-  shaking: BooleanLike;
-  question: string;
   answers: Answer[];
+  question: string;
+  shaking: BooleanLike;
 };
 
 type Answer = {
-  answer: string;
   amount: number;
+  answer: string;
   selected: BooleanLike;
 };
 
-export const EightBallVote = (props) => {
-  const { act, data } = useBackend<Data>();
+export function EightBallVote(props) {
+  const { data } = useBackend<Data>();
   const { shaking } = data;
+
   return (
     <Window width={400} height={600}>
       <Window.Content>
-        {(!shaking && (
+        {(shaking && (
           <NoticeBox>No question is currently being asked.</NoticeBox>
         )) || <EightBallVoteQuestion />}
       </Window.Content>
     </Window>
   );
-};
+}
 
-const EightBallVoteQuestion = (props) => {
+function EightBallVoteQuestion(props) {
   const { act, data } = useBackend<Data>();
   const { question, answers = [] } = data;
+
   return (
     <Section>
       <Box bold textAlign="center" fontSize="16px" m={1}>
         &quot;{question}&quot;
       </Box>
-      <Grid>
+      <Stack>
         {answers.map((answer) => (
-          <Grid.Column key={answer.answer}>
+          <Stack.Item grow key={answer.answer}>
             <Button
               fluid
               bold
-              content={toTitleCase(answer.answer)}
               selected={answer.selected}
               fontSize="16px"
               lineHeight="24px"
@@ -56,13 +57,15 @@ const EightBallVoteQuestion = (props) => {
                   answer: answer.answer,
                 })
               }
-            />
+            >
+              {toTitleCase(answer.answer)}
+            </Button>
             <Box bold textAlign="center" fontSize="30px">
               {answer.amount}
             </Box>
-          </Grid.Column>
+          </Stack.Item>
         ))}
-      </Grid>
+      </Stack>
     </Section>
   );
-};
+}

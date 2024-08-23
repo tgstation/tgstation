@@ -1,7 +1,7 @@
 /obj/machinery/transport/power_rectifier
 	name = "tram power rectifier"
 	desc = "An electrical device that converts alternating current (AC) to direct current (DC) for powering the tram."
-	icon = 'icons/obj/tram/tram_controllers.dmi'
+	icon = 'icons/obj/structures/tram/tram_controllers.dmi'
 	icon_state = "rectifier"
 	idle_power_usage = BASE_MACHINE_IDLE_CONSUMPTION * 11.4
 	active_power_usage = BASE_MACHINE_ACTIVE_CONSUMPTION * 114
@@ -15,11 +15,7 @@
 	/// The tram platform we're connected to and providing power
 	var/obj/effect/landmark/transport/nav_beacon/tram/platform/connected_platform
 
-/obj/machinery/transport/power_rectifier/Initialize(mapload)
-	. = ..()
-	return INITIALIZE_HINT_LATELOAD
-
-/obj/machinery/transport/power_rectifier/LateInitialize(mapload)
+/obj/machinery/transport/power_rectifier/post_machine_initialize()
 	. = ..()
 	RegisterSignal(SStransport, COMSIG_TRANSPORT_ACTIVE, PROC_REF(power_tram))
 	find_platform()

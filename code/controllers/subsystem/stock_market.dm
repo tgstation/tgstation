@@ -9,7 +9,7 @@ SUBSYSTEM_DEF(stock_market)
 	var/list/materials_prices = list()
 	/// Associated list of materials alongside their market trends. 1 is up, 0 is stable, -1 is down.
 	var/list/materials_trends = list()
-	/// Associated list of materials alongside the life of it's current trend. After it's life is up, it will change to a new trend.
+	/// Associated list of materials alongside the life of its current trend. After its life is up, it will change to a new trend.
 	var/list/materials_trend_life = list()
 	/// Associated list of materials alongside their available quantity. This is used to determine how much of a material is available to buy, and how much buying and selling affects the price.
 	var/list/materials_quantity = list()
@@ -39,6 +39,37 @@ SUBSYSTEM_DEF(stock_market)
 		handle_trends_and_price(market)
 	for(var/datum/stock_market_event/event as anything in active_events)
 		event.handle()
+
+///Adjust the price of a material(either through buying or selling) ensuring it stays within limits
+/datum/controller/subsystem/stock_market/proc/adjust_material_price(datum/material/mat, delta)
+	mat = GET_MATERIAL_REF(mat)
+
+	//adjust the price
+	var/new_price = materials_prices[mat.type] + delta
+
+	//get the limits
+	var/price_minimum = round(mat.value_per_unit * SHEET_MATERIAL_AMOUNT * 0.5)
+	if(!isnull(mat.minimum_value_override))
+		price_minimum = round(mat.minimum_value_override * SHEET_MATERIAL_AMOUNT)
+	var/price_maximum = round(mat.value_per_unit * SHEET_MATERIAL_AMOUNT * 3)
+
+	//clamp it down
+	new_price = round(clamp(new_price, price_minimum, price_maximum))
+	materials_prices[mat.type] = new_price
+
+///Adjust the amount of material(either through buying or selling) ensuring it stays within limits
+/datum/controller/subsystem/stock_market/proc/adjust_material_quantity(datum/material/mat, delta)
+	mat = GET_MATERIAL_REF(mat)
+
+	//adjust the quantity
+	var/new_quantity = materials_quantity[mat.type] + delta
+
+	//get the upper limit
+	var/quantity_baseline = mat.tradable_base_quantity
+
+	//clamp it down
+	new_quantity = round(clamp(new_quantity, 0, quantity_baseline * 2))
+	materials_quantity[mat.type] = new_quantity
 
 /**
  * Handles shifts in the cost of materials, and in what direction the material is most likely to move.

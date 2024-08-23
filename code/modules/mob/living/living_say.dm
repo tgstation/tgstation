@@ -94,28 +94,39 @@ GLOBAL_LIST_INIT(message_modes_stat_limits, list(
 
 	return new_msg
 
-/mob/living/say(message, bubble_type, list/spans = list(), sanitize = TRUE, datum/language/language = null, ignore_spam = FALSE, forced = null, filterproof = null, message_range = 7, datum/saymode/saymode = null)
+/mob/living/say(
+	message,
+	bubble_type,
+	list/spans = list(),
+	sanitize = TRUE,
+	datum/language/language,
+	ignore_spam = FALSE,
+	forced,
+	filterproof = FALSE,
+	message_range = 7,
+	datum/saymode/saymode,
+	list/message_mods = list(),
+)
 	if(sanitize)
 		message = trim(copytext_char(sanitize(message), 1, MAX_MESSAGE_LEN))
 	if(!message || message == "")
 		return
 
-	var/list/message_mods = list()
 	var/original_message = message
 	message = get_message_mods(message, message_mods)
 	saymode = SSradio.saymodes[message_mods[RADIO_KEY]]
-	if (!forced)
+	if (!forced && !saymode)
 		message = check_for_custom_say_emote(message, message_mods)
 
 	if(!message)
 		return
 
 	if(message_mods[RADIO_EXTENSION] == MODE_ADMIN)
-		client?.cmd_admin_say(message)
+		SSadmin_verbs.dynamic_invoke_verb(client, /datum/admin_verb/cmd_admin_say, message)
 		return
 
 	if(message_mods[RADIO_EXTENSION] == MODE_DEADMIN)
-		client?.dsay(message)
+		SSadmin_verbs.dynamic_invoke_verb(client, /datum/admin_verb/dsay, message)
 		return
 
 	// dead is the only state you can never emote
@@ -197,16 +208,16 @@ GLOBAL_LIST_INIT(message_modes_stat_limits, list(
 
 	spans |= speech_span
 
-	if(language)
-		var/datum/language/L = GLOB.language_datum_instances[language]
-		spans |= L.spans
+	var/datum/language/spoken_lang = GLOB.language_datum_instances[language]
+	if(LAZYLEN(spoken_lang?.spans))
+		spans |= spoken_lang.spans
 
 	if(message_mods[MODE_SING])
 		var/randomnote = pick("\u2669", "\u266A", "\u266B")
 		message = "[randomnote] [message] [randomnote]"
 		spans |= SPAN_SINGING
 
-	if(LAZYACCESS(message_mods,WHISPER_MODE)) // whisper away
+	if(message_mods[WHISPER_MODE]) // whisper away
 		spans |= SPAN_ITALICS
 
 	if(!message)
@@ -222,6 +233,9 @@ GLOBAL_LIST_INIT(message_modes_stat_limits, list(
 		return
 
 	var/radio_return = radio(message, message_mods, spans, language)//roughly 27% of living/say()'s total cost
+	if(radio_return & NOPASS)
+		return TRUE
+
 	if(radio_return & ITALICS)
 		spans |= SPAN_ITALICS
 	if(radio_return & REDUCE_RANGE)
@@ -229,8 +243,6 @@ GLOBAL_LIST_INIT(message_modes_stat_limits, list(
 		if(!message_mods[WHISPER_MODE])
 			message_mods[WHISPER_MODE] = MODE_WHISPER
 			message_mods[SAY_MOD_VERB] = say_mod(message, message_mods)
-	if(radio_return & NOPASS)
-		return TRUE
 
 	//No screams in space, unless you're next to someone.
 	var/turf/T = get_turf(src)
@@ -239,7 +251,7 @@ GLOBAL_LIST_INIT(message_modes_stat_limits, list(
 	if(pressure < SOUND_MINIMUM_PRESSURE && !HAS_TRAIT(src, TRAIT_SIGN_LANG))
 		message_range = 1
 
-	if(pressure < ONE_ATMOSPHERE*0.4) //Thin air, let's italicise the message
+	if(pressure < ONE_ATMOSPHERE * (HAS_TRAIT(src, TRAIT_SPEECH_BOOSTER) ? 0.1 : 0.4)) //Thin air, let's italicise the message unless we have a loud low pressure speech trait and not in vacuum
 		spans |= SPAN_ITALICS
 
 	send_speech(message, message_range, src, bubble_type, spans, language, message_mods, tts_message = tts_message, tts_filter = tts_filter)//roughly 58% of living/say()'s total cost
@@ -389,74 +401,44 @@ GLOBAL_LIST_INIT(message_modes_stat_limits, list(
 
 		var/list/filter = list()
 		var/list/special_filter = list()
-		var/voice_to_use = voice
-		var/use_radio = FALSE
 		if(length(voice_filter) > 0)
 			filter += voice_filter
 
 		if(length(tts_filter) > 0)
 			filter += tts_filter.Join(",")
-		if(ishuman(src))
-			var/mob/living/carbon/human/human_speaker = src
-			if(istype(human_speaker.wear_mask, /obj/item/clothing/mask))
-				var/obj/item/clothing/mask/worn_mask = human_speaker.wear_mask
-				if(!worn_mask.mask_adjusted)
-					if(worn_mask.voice_override)
-						voice_to_use = worn_mask.voice_override
-					if(worn_mask.voice_filter)
-						filter += worn_mask.voice_filter
-					use_radio = worn_mask.use_radio_beeps_tts
-		if(use_radio)
-			special_filter += TTS_FILTER_RADIO
-		if(issilicon(src))
-			special_filter += TTS_FILTER_SILICON
+
+		var/voice_to_use = get_tts_voice(filter, special_filter)
 
 		INVOKE_ASYNC(SStts, TYPE_PROC_REF(/datum/controller/subsystem/tts, queue_tts_message), src, html_decode(tts_message_to_use), message_language, voice_to_use, filter.Join(","), listened, message_range = message_range, pitch = pitch, special_filters = special_filter.Join("|"))
 
 	var/image/say_popup = image('icons/mob/effects/talk.dmi', src, "[bubble_type][talk_icon_state]", FLY_LAYER)
-	SET_PLANE_EXPLICIT(say_popup, ABOVE_GAME_PLANE, src)
+	SET_PLANE_EXPLICIT(say_popup, GAME_PLANE, src)
 	say_popup.appearance_flags = APPEARANCE_UI_IGNORE_ALPHA
 	INVOKE_ASYNC(GLOBAL_PROC, GLOBAL_PROC_REF(flick_overlay_global), say_popup, speech_bubble_recipients, 3 SECONDS)
 	LAZYADD(update_on_z, say_popup)
 	addtimer(CALLBACK(src, PROC_REF(clear_saypopup), say_popup), 3.5 SECONDS)
+
+/mob/living/proc/get_tts_voice(list/filter, list/special_filter)
+	. = voice
+	var/obj/item/clothing/mask/mask = get_item_by_slot(ITEM_SLOT_MASK)
+	if(!istype(mask) || mask.up)
+		return
+	if(mask.voice_override)
+		. = mask.voice_override
+	if(mask.voice_filter)
+		filter += mask.voice_filter
+	if(mask.use_radio_beeps_tts)
+		special_filter |= TTS_FILTER_RADIO
+
+/mob/living/silicon/get_tts_voice(list/filter, list/special_filter)
+	. = ..()
+	special_filter |= TTS_FILTER_SILICON
 
 /mob/living/proc/clear_saypopup(image/say_popup)
 	LAZYREMOVE(update_on_z, say_popup)
 
 /mob/proc/binarycheck()
 	return FALSE
-
-/mob/living/try_speak(message, ignore_spam = FALSE, forced = null, filterproof = FALSE)
-	if(!..())
-		return FALSE
-	var/sigreturn = SEND_SIGNAL(src, COMSIG_LIVING_TRY_SPEECH, message, ignore_spam, forced)
-	if(sigreturn & COMPONENT_CAN_ALWAYS_SPEAK)
-		return TRUE
-
-	if(sigreturn & COMPONENT_CANNOT_SPEAK)
-		return FALSE
-
-	if(!can_speak())
-		if(HAS_MIND_TRAIT(src, TRAIT_MIMING))
-			to_chat(src, span_green("Your vow of silence prevents you from speaking!"))
-		else
-			to_chat(src, span_warning("You find yourself unable to speak!"))
-		return FALSE
-
-	return TRUE
-
-/mob/living/can_speak(allow_mimes = FALSE)
-	if(!allow_mimes && HAS_MIND_TRAIT(src, TRAIT_MIMING))
-		return FALSE
-
-	if(HAS_TRAIT(src, TRAIT_MUTE))
-		return FALSE
-
-	if(is_muzzled())
-		return FALSE
-
-	return TRUE
-
 
 /**
  * Treats the passed message with things that may modify speech (stuttering, slurring etc).
@@ -474,11 +456,12 @@ GLOBAL_LIST_INIT(message_modes_stat_limits, list(
 		message = unintelligize(message)
 
 	tts_filter = list()
-	var/list/data = list(message, tts_message, tts_filter)
+	var/list/data = list(message, tts_message, tts_filter, capitalize_message)
 	SEND_SIGNAL(src, COMSIG_LIVING_TREAT_MESSAGE, data)
 	message = data[TREAT_MESSAGE_ARG]
 	tts_message = data[TREAT_TTS_MESSAGE_ARG]
 	tts_filter = data[TREAT_TTS_FILTER_ARG]
+	capitalize_message = data[TREAT_CAPITALIZE_MESSAGE]
 
 	if(!tts_message)
 		tts_message = message

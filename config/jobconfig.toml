@@ -183,8 +183,8 @@
 "# Playtime Requirements" = 0
 "# Required Account Age" = 0
 "# Required Character Age" = 0
-"# Spawn Positions" = 3
-"# Total Positions" = 5
+"# Spawn Positions" = 4
+"# Total Positions" = 6
 
 [MIME]
 "# Playtime Requirements" = 0
@@ -269,13 +269,6 @@
 "# Required Character Age" = 0
 "# Spawn Positions" = 0
 "# Total Positions" = 0
-
-[VIROLOGIST]
-"# Playtime Requirements" = 60
-"# Required Account Age" = 0
-"# Required Character Age" = 0
-"# Spawn Positions" = 1
-"# Total Positions" = 1
 
 [WARDEN]
 "# Playtime Requirements" = 300

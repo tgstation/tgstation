@@ -1,7 +1,7 @@
-import { classes } from 'common/react';
+import { Box, Icon, Section, Stack, Tooltip } from 'tgui-core/components';
+import { classes } from 'tgui-core/react';
 
 import { useBackend } from '../backend';
-import { Box, Icon, Section, Stack, Tooltip } from '../components';
 import { Window } from '../layouts';
 import { DesignBrowser } from './Fabrication/DesignBrowser';
 import { MaterialAccessBar } from './Fabrication/MaterialAccessBar';

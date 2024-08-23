@@ -37,6 +37,7 @@
 	name = "mob fire lighting"
 	light_color = LIGHT_COLOR_FIRE
 	light_range = LIGHT_RANGE_FIRE
+	light_power = 2
 
 /obj/effect/dummy/lighting_obj/moblight/species
 	name = "species lighting"

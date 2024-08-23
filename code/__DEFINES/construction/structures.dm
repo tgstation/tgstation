@@ -17,13 +17,13 @@
 #define GIRDER_TRAM 5
 
 //rwall construction states
-#define INTACT 0
-#define SUPPORT_LINES 1
-#define COVER 2
-#define CUT_COVER 3
-#define ANCHOR_BOLTS 4
-#define SUPPORT_RODS 5
-#define SHEATH 6
+#define INTACT "intact"
+#define SUPPORT_LINES "support_lines"
+#define COVER "cover"
+#define CUT_COVER "cut_cover"
+#define ANCHOR_BOLTS "anchor_bolts"
+#define SUPPORT_RODS "support_rods"
+#define SHEATH "sheath"
 
 //window construction states
 #define WINDOW_OUT_OF_FRAME 0
@@ -38,6 +38,9 @@
 #define RWINDOW_BOLTS_HEATED 7
 #define RWINDOW_SECURE 8
 
+#define WINDOW_ON_FRAME_Y_OFFSET 0
+#define WINDOW_OFF_FRAME_Y_OFFSET -7
+
 //tram structure construction states
 #define TRAM_OUT_OF_FRAME 0
 #define TRAM_IN_FRAME 1
@@ -48,9 +51,11 @@
 #define AIRLOCK_ASSEMBLY_NEEDS_ELECTRONICS 1
 #define AIRLOCK_ASSEMBLY_NEEDS_SCREWDRIVER 2
 
-//blast door (de)construction states
+///The blast door is missing wires, first step of construction.
 #define BLASTDOOR_NEEDS_WIRES 0
+///The blast door needs electronics, second step of construction.
 #define BLASTDOOR_NEEDS_ELECTRONICS 1
+///The blast door is fully constructed.
 #define BLASTDOOR_FINISHED 2
 
 //floodlights because apparently we use defines now
@@ -83,3 +88,12 @@
 #define FRAME_COMPUTER_STATE_WIRED 3
 /// Frame has had glass applied to it
 #define FRAME_COMPUTER_STATE_GLASSED 4
+
+///The camera assembly is wrenched in (aka placed on the wall), and wrenching will deconstruct.
+#define CAMERA_STATE_WRENCHED 1
+///The camera assembly is welded in place, so won't come off from wrench anymore.
+#define CAMERA_STATE_WELDED 2
+///The camera assembly is wired and ready to finish construction.
+#define CAMERA_STATE_WIRED 3
+///The camera assembly is finished construction fully, and is currently chilling in the camera machine.
+#define CAMERA_STATE_FINISHED 4

@@ -30,17 +30,21 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/barsign, 32)
 	//Roundstart/map specific barsigns "belong" in their area and should be renaming it, signs created from wallmounts will not.
 	change_area_name = mapload
 	set_sign(new /datum/barsign/hiddensigns/signoff)
-	find_and_hang_on_wall()
+	find_and_hang_on_wall(wall_layer = FLAT_ON_WALL_LAYER)
 
 /obj/machinery/barsign/proc/set_sign(datum/barsign/sign)
 	if(!istype(sign))
 		return
 
+	var/area/bar_area = get_area(src)
 	if(change_area_name && sign.rename_area)
-		rename_area(src, sign.name)
+		rename_area(bar_area, sign.name)
 
 	chosen_sign = sign
 	update_appearance()
+
+/obj/machinery/barsign/wall_mount_common_plane(direction)
+	return TRUE
 
 /obj/machinery/barsign/update_icon_state()
 	if(!(machine_stat & BROKEN) && (!(machine_stat & NOPOWER) || machine_stat & EMPED) && chosen_sign && chosen_sign.icon_state)
@@ -88,7 +92,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/barsign, 32)
 
 /obj/machinery/barsign/atom_break(damage_flag)
 	. = ..()
-	if((machine_stat & BROKEN) && !(obj_flags & NO_DECONSTRUCTION))
+	if(machine_stat & BROKEN)
 		set_sign(new /datum/barsign/hiddensigns/signoff)
 
 /obj/machinery/barsign/on_deconstruction(disassembled)
@@ -152,7 +156,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/barsign, 32)
 
 /obj/machinery/barsign/attackby(obj/item/attacking_item, mob/user)
 
-	if(istype(attacking_item, /obj/item/areaeditor/blueprints) && !change_area_name)
+	if(istype(attacking_item, /obj/item/blueprints) && !change_area_name)
 		if(!panel_open)
 			balloon_alert(user, "open the panel first!")
 			return TRUE
@@ -539,7 +543,6 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/barsign/all_access, 32)
 	custom_materials = list(
 		/datum/material/iron = SHEET_MATERIAL_AMOUNT,
 	)
-	pixel_shift = 32
 
 /obj/item/wallframe/barsign/Initialize(mapload)
 	. = ..()

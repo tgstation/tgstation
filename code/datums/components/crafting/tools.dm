@@ -19,7 +19,6 @@
 
 /datum/crafting_recipe/boneshovel
 	name = "Serrated Bone Shovel"
-	always_available = FALSE
 	reqs = list(
 		/obj/item/stack/sheet/bone = 4,
 		/datum/reagent/fuel/oil = 5,
@@ -27,6 +26,7 @@
 	)
 	result = /obj/item/shovel/serrated
 	category = CAT_TOOLS
+	crafting_flags = CRAFT_CHECK_DENSITY | CRAFT_MUST_BE_LEARNED
 
 /datum/crafting_recipe/lasso
 	name = "Bone Lasso"

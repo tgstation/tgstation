@@ -41,6 +41,11 @@
 	stored.forceMove(get_turf(usr))
 	return
 
+/obj/item/borg/apparatus/get_proxy_attacker_for(atom/target, mob/user)
+	if(stored) // Use the stored item if available
+		return stored
+	return ..()
+
 /**
 * Attack_self will pass for the stored item.
 */
@@ -50,16 +55,13 @@
 	stored.attack_self(user)
 
 //Alt click drops the stored item.
-/obj/item/borg/apparatus/AltClick(mob/living/silicon/robot/user)
+/obj/item/borg/apparatus/click_alt(mob/living/silicon/robot/user)
 	if(!stored || !issilicon(user))
-		return ..()
+		return CLICK_ACTION_BLOCKING
 	stored.forceMove(user.drop_location())
+	return CLICK_ACTION_SUCCESS
 
 /obj/item/borg/apparatus/pre_attack(atom/atom, mob/living/user, params)
-	if(stored)
-		stored.melee_attack_chain(user, atom, params)
-		return TRUE
-
 	if(istype(atom.loc, /mob/living/silicon/robot) || istype(atom.loc, /obj/item/robot_model) || HAS_TRAIT(atom, TRAIT_NODROP))
 		return ..() // Borgs should not be grabbing their own modules
 
@@ -131,7 +133,6 @@
 		else
 			. += "Nothing."
 
-		. += span_notice(" <i>Right-clicking</i> will splash the beaker on the ground.")
 	. += span_notice(" <i>Alt-click</i> will drop the currently stored beaker. ")
 
 /obj/item/borg/apparatus/beaker/update_overlays()
@@ -149,15 +150,6 @@
 	else
 		arm.pixel_y = arm.pixel_y - 5
 	. += arm
-
-/// Secondary attack spills the content of the beaker.
-/obj/item/borg/apparatus/beaker/pre_attack_secondary(atom/target, mob/living/silicon/robot/user)
-	var/obj/item/reagent_containers/stored_beaker = stored
-	if(!stored_beaker)
-		return ..()
-	stored_beaker.SplashReagents(drop_location(user))
-	loc.visible_message(span_notice("[user] spills the contents of [stored_beaker] all over the ground."))
-	return ..()
 
 /obj/item/borg/apparatus/beaker/extra
 	name = "secondary beaker storage apparatus"
@@ -244,16 +236,16 @@
 		bag = mutable_appearance(icon, icon_state = "evidenceobj") // empty bag
 	. += bag
 
-/obj/item/borg/apparatus/organ_storage/AltClick(mob/living/silicon/robot/user)
-	. = ..()
-	if(stored)
-		var/obj/item/organ = stored
-		user.visible_message(span_notice("[user] dumps [organ] from [src]."), span_notice("You dump [organ] from [src]."))
-		cut_overlays()
-		organ.forceMove(get_turf(src))
-	else
+/obj/item/borg/apparatus/organ_storage/click_alt(mob/living/silicon/robot/user)
+	if(!stored)
 		to_chat(user, span_notice("[src] is empty."))
-	return
+		return CLICK_ACTION_BLOCKING
+
+	var/obj/item/organ = stored
+	user.visible_message(span_notice("[user] dumps [organ] from [src]."), span_notice("You dump [organ] from [src]."))
+	cut_overlays()
+	organ.forceMove(get_turf(src))
+	return CLICK_ACTION_SUCCESS
 
 ///Apparatus to allow Engineering/Sabo borgs to manipulate any material sheets.
 /obj/item/borg/apparatus/sheet_manipulator

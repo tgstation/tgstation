@@ -42,6 +42,7 @@
 	return seeds
 
 /obj/machinery/seed_extractor
+	SET_BASE_VISUAL_PIXEL(0, DEPTH_OFFSET)
 	name = "seed extractor"
 	desc = "Extracts and bags seeds from produce."
 	icon = 'icons/obj/service/hydroponics/equipment.dmi'
@@ -276,7 +277,7 @@
 		data["trait_db"] += trait_data
 	return data
 
-/obj/machinery/seed_extractor/ui_act(action, params)
+/obj/machinery/seed_extractor/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if(.)
 		return

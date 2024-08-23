@@ -20,6 +20,8 @@
 
 /mob/living/basic/pet/penguin/Initialize(mapload)
 	. = ..()
+	AddElement(/datum/element/cultist_pet)
+	AddElement(/datum/element/wears_collar)
 	AddElement(/datum/element/ai_retaliate)
 	AddElement(/datum/element/ai_flee_while_injured)
 	AddElement(/datum/element/pet_bonus, "honks happily!")
@@ -149,6 +151,7 @@
 	butcher_results = list(/obj/item/organ/internal/ears/penguin = 1, /obj/item/food/meat/slab/penguin = 1)
 	ai_controller = /datum/ai_controller/basic_controller/penguin/baby
 	can_lay_eggs = FALSE
+	shadow_type = SHADOW_SMALL
 	///will it grow up?
 	var/can_grow_up = TRUE
 
@@ -196,4 +199,10 @@
 /mob/living/basic/pet/penguin/baby/permanent
 	can_grow_up = FALSE
 
+/mob/living/basic/pet/penguin/emperor/snowdin
+	minimum_survivable_temperature = ICEBOX_MIN_TEMPERATURE
+	gold_core_spawnable = NO_SPAWN
 
+/mob/living/basic/pet/penguin/baby/permanent/snowdin
+	minimum_survivable_temperature = ICEBOX_MIN_TEMPERATURE
+	gold_core_spawnable = NO_SPAWN

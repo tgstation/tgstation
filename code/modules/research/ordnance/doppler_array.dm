@@ -1,4 +1,5 @@
 /obj/machinery/doppler_array
+	SET_BASE_VISUAL_PIXEL(0, DEPTH_OFFSET)
 	name = "tachyon-doppler array"
 	desc = "A highly precise directional sensor array which measures the release of quants from decaying tachyons. The doppler shifting of the mirror-image formed by these quants can reveal the size, location and temporal affects of energetic disturbances within a large radius ahead of the array.\n"
 	circuit = /obj/item/circuitboard/machine/doppler_array
@@ -20,7 +21,7 @@
 	// Lighting system to better communicate the directions.
 	light_system = OVERLAY_LIGHT_DIRECTIONAL
 	light_range = 4
-	light_power = 1
+	light_power = 1.5
 	light_color = COLOR_RED
 
 /obj/machinery/doppler_array/Initialize(mapload)
@@ -250,8 +251,6 @@
 	SIGNAL_HANDLER
 	set_light_on(!(machine_stat & NOPOWER))
 
-/obj/machinery/doppler_array/AltClick(mob/user)
-	return ..() // This hotkey is BLACKLISTED since it's used by /datum/component/simple_rotation
 
 /obj/machinery/doppler_array/ui_interact(mob/user, datum/tgui/ui)
 	ui = SStgui.try_update_ui(user, src, ui)
@@ -292,7 +291,7 @@
 		data["records"] += list(record_data)
 	return data
 
-/obj/machinery/doppler_array/ui_act(action, list/params)
+/obj/machinery/doppler_array/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if(.)
 		return

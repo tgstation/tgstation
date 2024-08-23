@@ -78,7 +78,7 @@
 			break
 	return data
 
-/obj/machinery/computer/pod/ui_act(action, list/params)
+/obj/machinery/computer/pod/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if(.)
 		return
@@ -139,10 +139,16 @@
 
 /obj/machinery/computer/pod/old/mass_driver_controller
 	name = "\improper Mass Driver Controller"
-	icon = 'icons/obj/machines/wallmounts.dmi'
+	icon = 'icons/obj/machines/airlock_machines.dmi'
 	icon_state = "airlock_control_standby"
 	icon_screen = null
 	density = FALSE
+
+/obj/machinery/computer/pod/old/mass_driver_controller/Initialize(mapload)
+	. = ..()
+	find_and_hang_on_wall()
+
+WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/machinery/computer/pod/old/mass_driver_controller)
 
 /obj/machinery/computer/pod/old/mass_driver_controller/ordnancedriver
 	id = MASSDRIVER_ORDNANCE

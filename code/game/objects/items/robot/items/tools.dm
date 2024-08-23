@@ -1,4 +1,5 @@
 #define PKBORG_DAMPEN_CYCLE_DELAY (2 SECONDS)
+#define POWER_RECHARGE_CYBORG_DRAIN_MULTIPLIER (0.0004 * STANDARD_CELL_RATE)
 
 /obj/item/cautery/prt //it's a subtype of cauteries so that it inherits the cautery sprites and behavior and stuff, because I'm too lazy to make sprites for this thing
 	name = "plating repair tool"
@@ -24,8 +25,6 @@
 	var/energy = 1500
 	/// Recharging rate in energy per second
 	var/energy_recharge = 37.5
-	/// Charge draining right
-	var/energy_recharge_cyborg_drain_coefficient = 0.4
 	/// Critical power level percentage
 	var/cyborg_cell_critical_percentage = 0.05
 	/// The owner of the dampener
@@ -156,7 +155,7 @@
 			energy = clamp(energy + energy_recharge * seconds_per_tick, 0, maxenergy)
 			return
 	if(host.cell && (host.cell.charge >= (host.cell.maxcharge * cyborg_cell_critical_percentage)) && (energy < maxenergy))
-		host.cell.use(energy_recharge * seconds_per_tick * energy_recharge_cyborg_drain_coefficient)
+		host.cell.use(energy_recharge * seconds_per_tick * POWER_RECHARGE_CYBORG_DRAIN_MULTIPLIER)
 		energy += energy_recharge * seconds_per_tick
 
 /obj/item/borg/projectile_dampen/proc/dampen_projectile(datum/source, obj/projectile/projectile)
@@ -175,4 +174,138 @@
 	projectile.speed *= (1 / projectile_speed_coefficient)
 	projectile.cut_overlay(projectile_effect)
 
+//bare minimum omni-toolset for modularity
+/obj/item/borg/cyborg_omnitool
+	name = "cyborg omni-toolset"
+	desc = "You shouldn't see this in-game normally."
+	icon = 'icons/mob/silicon/robot_items.dmi'
+	icon_state = "toolkit_medborg"
+
+	///our tools (list of item typepaths)
+	var/list/obj/item/omni_toolkit = list()
+	///Map of solid objects internally used by the omni tool
+	var/list/obj/item/atoms = list()
+	///object we are referencing to for force, sharpness and sound
+	var/obj/item/reference
+	//is the toolset upgraded or not
+	var/upgraded = FALSE
+
+/obj/item/borg/cyborg_omnitool/Destroy(force)
+	for(var/obj/item/tool_path as anything in atoms)
+		var/obj/item/tool = atoms[tool_path]
+		if(!QDELETED(tool)) //if we are sharing tools from our other omnitool brothers we don't want to re delete them if they got deleted first
+			qdel(tool)
+	atoms.Cut()
+
+	return ..()
+
+/obj/item/borg/cyborg_omnitool/get_all_tool_behaviours()
+	. = list()
+	for(var/obj/item/tool as anything in omni_toolkit)
+		. += initial(tool.tool_behaviour)
+
+///The omnitool interacts with real world objects based on the state it has assumed
+/obj/item/borg/cyborg_omnitool/get_proxy_attacker_for(atom/target, mob/user)
+	if(!reference)
+		return src
+
+	//first check if we have the tool
+	var/obj/item/tool = atoms[reference]
+	if(!QDELETED(tool))
+		return tool
+
+	//else try to borrow an in-built tool from our other omnitool brothers to save & share memory & such
+	var/mob/living/silicon/robot/borg = user
+	for(var/obj/item/borg/cyborg_omnitool/omni_tool in borg.model.basic_modules)
+		if(omni_tool == src)
+			continue
+		tool = omni_tool.atoms[reference]
+		if(!QDELETED(tool))
+			atoms[reference] = tool
+			return tool
+
+	//if all else fails just make a new one from scratch
+	tool = new reference(user)
+	ADD_TRAIT(tool, TRAIT_NODROP, CYBORG_ITEM_TRAIT)
+	atoms[reference] = tool
+	return tool
+
+/obj/item/borg/cyborg_omnitool/attack_self(mob/user)
+	//build the radial menu options
+	var/list/radial_menu_options = list()
+	for(var/obj/item/tool as anything in omni_toolkit)
+		radial_menu_options[initial(tool.tool_behaviour)] = image(icon = initial(tool.icon), icon_state = initial(tool.icon_state))
+
+	//assign the new tool behaviour
+	var/new_tool_behaviour = show_radial_menu(user, src, radial_menu_options, require_near = TRUE, tooltips = TRUE)
+	if(isnull(new_tool_behaviour) || new_tool_behaviour == tool_behaviour)
+		return
+	tool_behaviour = new_tool_behaviour
+
+	//set the reference & update icons
+	for(var/obj/item/tool as anything in omni_toolkit)
+		if(initial(tool.tool_behaviour) == new_tool_behaviour)
+			reference = tool
+			update_appearance(UPDATE_ICON_STATE)
+			playsound(src, 'sound/items/change_jaws.ogg', 50, TRUE)
+			break
+
+/obj/item/borg/cyborg_omnitool/update_icon_state()
+	icon_state = initial(icon_state)
+
+	if (tool_behaviour)
+		icon_state += "_[sanitize_css_class_name(tool_behaviour)]"
+
+	return ..()
+
+/**
+ * Is this omni tool upgraded or not
+ * Arguments
+ *
+ * * upgrade - TRUE/FALSE for upgraded
+ */
+/obj/item/borg/cyborg_omnitool/proc/set_upgraded(upgrade)
+	upgraded = upgraded
+
+	playsound(src, 'sound/items/change_jaws.ogg', 50, TRUE)
+
+/obj/item/borg/cyborg_omnitool/medical
+	name = "surgical omni-toolset"
+	desc = "A set of surgical tools used by cyborgs to operate on various surgical operations."
+
+	omni_toolkit = list(
+		/obj/item/surgical_drapes/cyborg,
+		/obj/item/scalpel/cyborg,
+		/obj/item/surgicaldrill/cyborg,
+		/obj/item/hemostat/cyborg,
+		/obj/item/retractor/cyborg,
+		/obj/item/cautery/cyborg,
+		/obj/item/circular_saw/cyborg,
+		/obj/item/bonesetter/cyborg,
+	)
+
+//Toolset for engineering cyborgs, this is all of the tools except for the welding tool. since it's quite hard to implement (read:can't be arsed to)
+/obj/item/borg/cyborg_omnitool/engineering
+	name = "engineering omni-toolset"
+	desc = "A set of engineering tools used by cyborgs to conduct various engineering tasks."
+	icon = 'icons/mob/silicon/robot_items.dmi'
+	icon_state = "toolkit_engiborg"
+
+	omni_toolkit = list(
+		/obj/item/wrench/cyborg,
+		/obj/item/wirecutters/cyborg,
+		/obj/item/screwdriver/cyborg,
+		/obj/item/crowbar/cyborg,
+		/obj/item/multitool/cyborg,
+	)
+
+/obj/item/borg/cyborg_omnitool/engineering/examine(mob/user)
+	. = ..()
+
+	if(tool_behaviour == TOOL_MULTITOOL)
+		for(var/obj/item/multitool/tool in atoms)
+			. += "Its multitool buffer contains [tool.buffer]"
+			break
+
 #undef PKBORG_DAMPEN_CYCLE_DELAY
+#undef POWER_RECHARGE_CYBORG_DRAIN_MULTIPLIER

@@ -107,8 +107,8 @@
 	desc = "It's as strong as it smells."
 	icon_state = "absinthe"
 
-/datum/glass_style/drinking_glass/hooch
-	required_drink_type = /datum/reagent/consumable/ethanol/hooch
+/datum/glass_style/drinking_glass/ale
+	required_drink_type = /datum/reagent/consumable/ethanol/ale
 	name = "glass of ale"
 	desc = "A freezing pint of delicious Ale."
 	icon_state = "aleglass"

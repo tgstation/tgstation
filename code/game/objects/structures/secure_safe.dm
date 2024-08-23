@@ -1,3 +1,24 @@
+/obj/item/wallframe/secure_safe
+	name = "secure safe frame"
+	desc = "A locked safe. It being unpowered prevents any access until placed back onto a wall."
+	icon = 'icons/obj/storage/storage.dmi'
+	icon_state = "wall_safe"
+	base_icon_state = "wall_safe"
+	result_path = /obj/structure/secure_safe
+
+/obj/item/wallframe/secure_safe/Initialize(mapload)
+	. = ..()
+	create_storage(
+		max_specific_storage = WEIGHT_CLASS_GIGANTIC,
+		max_total_storage = 20,
+	)
+	atom_storage.locked = STORAGE_FULLY_LOCKED
+
+/obj/item/wallframe/secure_safe/after_attach(obj/attached_to)
+	. = ..()
+	for(var/obj/item in contents)
+		item.forceMove(attached_to)
+
 /**
  * Wall safes
  * Holds items and uses the lockable storage component
@@ -12,21 +33,53 @@
 	anchored = TRUE
 	density = FALSE
 
-MAPPING_DIRECTIONAL_HELPERS(/obj/structure/secure_safe, 32)
+WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/structure/secure_safe)
 
 /obj/structure/secure_safe/Initialize(mapload)
 	. = ..()
 	//this will create the storage for us.
 	AddComponent(/datum/component/lockable_storage)
-	find_and_hang_on_wall()
-	PopulateContents()
+	if(!density)
+		find_and_hang_on_wall()
+	if(mapload)
+		PopulateContents()
+
+/obj/structure/secure_safe/atom_deconstruct(disassembled)
+	if(!density) //if we're a wall item, we'll drop a wall frame.
+		var/obj/item/wallframe/secure_safe/new_safe = new(get_turf(src))
+		for(var/obj/item in contents)
+			item.forceMove(new_safe)
 
 /obj/structure/secure_safe/proc/PopulateContents()
 	new /obj/item/paper(src)
 	new /obj/item/pen(src)
 
+/obj/structure/secure_safe/update_icon()
+	..()
+	if(!atom_storage)
+		return
+	if(atom_storage.locked)
+		icon_state = "[initial(icon_state)]_locked"
+	else
+		icon_state = "[initial(icon_state)]_open"
+
+/obj/structure/secure_safe/update_overlays()
+	. = ..()
+	if(!atom_storage)
+		return
+	if(atom_storage.locked) //No door if we're locked.
+		return
+	var/mutable_appearance/door_overlay = mutable_appearance(icon, "[initial(icon_state)]_door") // Wallening todo: This needs attention for wall safes.
+	if(dir == SOUTH)
+		door_overlay.pixel_y = -1
+	else if(dir == WEST)
+		door_overlay.pixel_y = -6
+	. += door_overlay
+
 /obj/structure/secure_safe/hos
 	name = "head of security's safe"
+
+WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/structure/secure_safe/hos)
 
 /**
  * This safe is meant to be damn robust. To break in, you're supposed to get creative, or use acid or an explosion.
@@ -42,12 +95,17 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/secure_safe, 32)
 	desc = "In case of emergency, do not break glass. All Captains and Acting Captains are provided with codes to access this safe. \
 		It is made out of the same material as the station's Black Box and is designed to resist all conventional weaponry. \
 		There appears to be a small amount of surface corrosion. It doesn't look like it could withstand much of an explosion.\
-		It remains quite flush against the wall, and there only seems to be enough room to fit something as slim as an ID card."
+		Due to the expensive material, it was made incredibly small to cut corners, leaving only enough room to fit something as slim as an ID card."
+	icon = 'icons/obj/storage/storage.dmi'
+	icon_state = "spare_safe"
+	base_icon_state = "spare_safe"
 	armor_type = /datum/armor/safe_caps_spare
 	max_integrity = 300
-	color = "#ffdd33"
-
-MAPPING_DIRECTIONAL_HELPERS(/obj/structure/secure_safe/caps_spare, 32)
+	damage_deflection = 30 // prevents stealing the captain's spare using null rods/lavaland monsters/AP projectiles
+	density = TRUE
+	anchored_tabletop_offset = 6
+	custom_materials = list(/datum/material/gold = SMALL_MATERIAL_AMOUNT)
+	material_flags = MATERIAL_EFFECTS
 
 /datum/armor/safe_caps_spare
 	melee = 100

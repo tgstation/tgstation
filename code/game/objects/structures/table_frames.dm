@@ -12,7 +12,7 @@
 /obj/structure/table_frame
 	name = "table frame"
 	desc = "Four metal legs with four framing rods for a table. You could easily pass through this."
-	icon = 'icons/obj/structures.dmi'
+	icon = 'icons/obj/structures/smooth/table_singles.dmi'
 	icon_state = "table_frame"
 	density = FALSE
 	anchored = FALSE
@@ -75,9 +75,8 @@
 		T.set_custom_materials(custom_materials)
 	qdel(src)
 
-/obj/structure/table_frame/deconstruct(disassembled = TRUE)
+/obj/structure/table_frame/atom_deconstruct(disassembled = TRUE)
 	new framestack(get_turf(src), framestackamount)
-	qdel(src)
 
 /obj/structure/table_frame/narsie_act()
 	new /obj/structure/table_frame/wood(src.loc)
@@ -110,7 +109,7 @@
 				to_chat(user, span_warning("You need one [material.name] sheet to do this!"))
 				return
 			to_chat(user, span_notice("You start adding [material] to [src]..."))
-			if(do_after(user, 20, target = src) && material.use(1))
+			if(do_after(user, 2 SECONDS, target = src) && material.use(1))
 				make_new_table(toConstruct, null, carpet_type)
 	else
 		return ..()

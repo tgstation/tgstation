@@ -27,7 +27,7 @@
 /turf/open/floor/grass,
 /area/ruin/space/has_grav)
 "h" = (
-/mob/living/simple_animal/pet/gondola,
+/mob/living/basic/pet/gondola,
 /turf/open/floor/grass,
 /area/ruin/space/has_grav)
 "i" = (

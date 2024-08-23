@@ -33,7 +33,6 @@
 	return INITIALIZE_HINT_LATELOAD
 
 /turf/open/floor/glass/LateInitialize()
-	. = ..()
 	AddElement(/datum/element/turf_z_transparency)
 	setup_glow()
 
@@ -79,6 +78,9 @@
 	base_icon_state = "reinf_glass"
 	floor_tile = /obj/item/stack/tile/rglass
 	alpha_to_leave = 206
+
+/turf/open/floor/glass/reinforced/telecomms
+	initial_gas_mix = TCOMMS_ATMOS
 
 /turf/open/floor/glass/reinforced/icemoon
 	initial_gas_mix = ICEMOON_DEFAULT_ATMOS

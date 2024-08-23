@@ -3,6 +3,7 @@ GLOBAL_LIST_EMPTY(station_turfs)
 /// Any floor or wall. What makes up the station and the rest of the map.
 /turf
 	icon = 'icons/turf/floors.dmi'
+	datum_flags = DF_STATIC_OBJECT
 	vis_flags = VIS_INHERIT_ID // Important for interaction with and visualization of openspace.
 	luminosity = 1
 	light_height = LIGHTING_HEIGHT_FLOOR
@@ -52,6 +53,8 @@ GLOBAL_LIST_EMPTY(station_turfs)
 
 	var/tiled_dirt = FALSE // use smooth tiled dirt decal
 
+	/// The prefix to use (from lighting_object.dmi) as our lighting underlay
+	var/lighting_state = "lighting"
 	///Icon-smoothing variable to map a diagonal wall corner with a fixed underlay.
 	var/list/fixed_underlay = null
 
@@ -88,6 +91,9 @@ GLOBAL_LIST_EMPTY(station_turfs)
 	///whether or not this turf forces movables on it to have no gravity (unless they themselves have forced gravity)
 	var/force_no_gravity = FALSE
 
+	///This turf's resistance to getting rusted
+	var/rust_resistance = RUST_RESISTANCE_ORGANIC
+
 	/// How pathing algorithm will check if this turf is passable by itself (not including content checks). By default it's just density check.
 	/// WARNING: Currently to use a density shortcircuiting this does not support dense turfs with special allow through function
 	var/pathing_pass_method = TURF_PATHING_PASS_DENSITY
@@ -104,6 +110,7 @@ GLOBAL_LIST_EMPTY(station_turfs)
 	/// This would either be expensive, or impossible to manage. Let's just avoid it yes?
 	/// Never directly access this, use get_explosive_block() instead
 	var/inherent_explosive_resistance = -1
+
 
 /turf/vv_edit_var(var_name, new_value)
 	var/static/list/banned_edits = list(NAMEOF_STATIC(src, x), NAMEOF_STATIC(src, y), NAMEOF_STATIC(src, z))
@@ -149,7 +156,7 @@ GLOBAL_LIST_EMPTY(station_turfs)
 
 	SETUP_SMOOTHING()
 
-	if (smoothing_flags & (SMOOTH_CORNERS|SMOOTH_BITMASK))
+	if (smoothing_flags & USES_SMOOTHING)
 		QUEUE_SMOOTH(src)
 
 	for(var/atom/movable/content as anything in src)
@@ -185,6 +192,7 @@ GLOBAL_LIST_EMPTY(station_turfs)
 	. = QDEL_HINT_IWILLGC
 	if(!changing_turf)
 		stack_trace("Incorrect turf deletion")
+
 	changing_turf = FALSE
 	if(GET_LOWEST_STACK_OFFSET(z))
 		var/turf/T = GET_TURF_ABOVE(src)
@@ -193,6 +201,7 @@ GLOBAL_LIST_EMPTY(station_turfs)
 		T = GET_TURF_BELOW(src)
 		if(T)
 			T.multiz_turf_del(src, UP)
+
 	if(force)
 		..()
 		//this will completely wipe turf state
@@ -200,6 +209,7 @@ GLOBAL_LIST_EMPTY(station_turfs)
 		for(var/A in B.contents)
 			qdel(A)
 		return
+
 	LAZYCLEARLIST(blueprint_data)
 	flags_1 &= ~INITIALIZED_1
 	requires_activation = FALSE
@@ -561,7 +571,6 @@ GLOBAL_LIST_EMPTY(station_turfs)
 			if(EXPLODE_LIGHT)
 				SSexplosions.low_mov_atom += movable_thing
 
-
 /turf/narsie_act(force, ignore_mobs, probability = 20)
 	. = (prob(probability) || force)
 	for(var/I in src)
@@ -610,13 +619,19 @@ GLOBAL_LIST_EMPTY(station_turfs)
 /turf/proc/acid_melt()
 	return
 
-/turf/rust_heretic_act()
-	if(turf_flags & NO_RUST)
+/// Check if the heretic is strong enough to rust this turf, and if so, rusts the turf with an added visual effect.
+/turf/rust_heretic_act(rust_strength = 1)
+	if((turf_flags & NO_RUST) || (rust_strength < rust_resistance))
 		return
+	rust_turf()
+
+/// Override this to change behaviour when being rusted by a heretic
+/turf/proc/rust_turf()
 	if(HAS_TRAIT(src, TRAIT_RUSTY))
 		return
 
-	AddElement(/datum/element/rust)
+	AddElement(/datum/element/rust/heretic)
+	new /obj/effect/glowing_rune(src)
 
 /turf/handle_fall(mob/faller)
 	if(has_gravity(src))
@@ -756,6 +771,12 @@ GLOBAL_LIST_EMPTY(station_turfs)
 	explosive_resistance -= get_explosive_block()
 	inherent_explosive_resistance = explosion_block
 	explosive_resistance += get_explosive_block()
+
+/turf/proc/set_lighting_state(new_state)
+	lighting_state = new_state
+	if (lighting_object && !lighting_object.needs_update)
+		lighting_object.needs_update = TRUE
+		SSlighting.objects_queue += lighting_object
 
 /// Returns whether it is safe for an atom to move across this turf
 /turf/proc/can_cross_safely(atom/movable/crossing)

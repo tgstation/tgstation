@@ -6,7 +6,7 @@
 
 
 /**
- * Render relay object assigned to a plane master to be able to relay it's render onto other planes that are not it's own
+ * Render relay object assigned to a plane master to be able to relay its render onto other planes that are not its own
  */
 /atom/movable/render_plane_relay
 	screen_loc = "CENTER"
@@ -189,6 +189,41 @@
 	AddComponent(/datum/component/plane_hide_highest_offset)
 	color = list(0.9,0,0,0, 0,0.9,0,0, 0,0,0.9,0, 0,0,0,1, 0,0,0,0)
 
+/atom/movable/screen/plane_master/rendering_plate/frill
+	name = "Frill plate"
+	documentation = "Contains frills (the tops of windows/walls). Exists so we can mask this with the frill mask and avoid double transforming in rare cases."
+	plane = RENDER_PLANE_FRILL
+	render_relay_planes = list(RENDER_PLANE_GAME_WORLD)
+	appearance_flags = PLANE_MASTER //should use client color
+	blend_mode = BLEND_OVERLAY
+
+/atom/movable/screen/plane_master/rendering_plate/frill/show_to(mob/mymob)
+	. = ..()
+	remove_filter(FRILL_MOB_MASK)
+	if(!mymob?.client)
+		return
+	if(mymob.canon_client?.prefs?.read_preference(/datum/preference/toggle/frill_transparency))
+		alpha = 120
+	else
+		alpha = 255
+	add_filter(FRILL_MOB_MASK, 1, alpha_mask_filter(render_source = OFFSET_RENDER_TARGET(FRILL_MASK_RENDER_TARGET, offset), flags = MASK_INVERSE))
+
+/atom/movable/screen/plane_master/rendering_plate/wall_weather_mask
+	name = "Wall Masked Weather plate"
+	documentation = "Used to mask off the bottom edge of weather so it does not flow overtop walls/frills"
+	plane = RENDER_PLANE_WALL_WEATHER_MASK
+	render_target = WALL_WEATHER_MASK_RENDER_TARGET
+	render_relay_planes = list()
+	start_hidden = TRUE
+
+/atom/movable/screen/plane_master/rendering_plate/wall_weather_mask/Initialize(mapload, datum/hud/hud_owner, datum/plane_master_group/home, offset)
+	. = ..()
+	if(!home)
+		return
+	home.AddComponent(/datum/component/hide_weather_planes, src)
+	// mask with the weather mask plane BUT drop the bottom 16 pixels. this will let us mask WEATHER with the walls at its bottom
+	add_filter("weather_mask", 1, alpha_mask_filter(y = 16, render_source = OFFSET_RENDER_TARGET(WEATHER_MASK_RENDER_TARGET, offset), flags = MASK_INVERSE))
+
 ///Contains most things in the game world
 /atom/movable/screen/plane_master/rendering_plate/game_world
 	name = "Game world plate"
@@ -340,12 +375,16 @@
 	blend_mode = BLEND_MULTIPLY
 	render_relay_planes = list(RENDER_PLANE_GAME)
 
+/atom/movable/screen/plane_master/rendering_plate/light_mask/Initialize(mapload, datum/hud/hud_owner, datum/plane_master_group/home, offset)
+	. = ..()
+	add_filter("directional_opacity_mask", 1, alpha_mask_filter(render_source = OFFSET_RENDER_TARGET(DARKNESS_MASK_RENDER_TARGET, offset), flags = MASK_INVERSE))
+
 /atom/movable/screen/plane_master/rendering_plate/light_mask/show_to(mob/mymob)
 	. = ..()
 	if(!.)
 		return
 
-	RegisterSignal(mymob, COMSIG_MOB_SIGHT_CHANGE, PROC_REF(handle_sight))
+	RegisterSignal(mymob, COMSIG_MOB_SIGHT_CHANGE, PROC_REF(handle_sight), override = TRUE)
 	handle_sight(mymob, mymob.sight, NONE)
 
 /atom/movable/screen/plane_master/rendering_plate/light_mask/hide_from(mob/oldmob)
@@ -382,7 +421,7 @@
 	render_relay_planes = list(RENDER_PLANE_MASTER)
 
 /**
- * Plane master proc called in Initialize() that creates relay objects, and sets them uo as needed
+ * Plane master proc called in Initialize() that creates relay objects, and sets them up as needed
  * Sets:
  * * layer from plane to avoid z-fighting
  * * planes to relay the render to
@@ -392,6 +431,9 @@
  * Other vars such as alpha will automatically be applied with the render source
  */
 /atom/movable/screen/plane_master/proc/generate_render_relays()
+#if MIN_COMPILER_VERSION > 516
+	#warn Fully change default relay_loc to "1,1"
+#endif
 	var/relay_loc = home?.relay_loc || "CENTER"
 	// If we're using a submap (say for a popup window) make sure we draw onto it
 	if(home?.map)
@@ -426,7 +468,7 @@
 	if(!length(relays) && !initial(render_target))
 		render_target = OFFSET_RENDER_TARGET(get_plane_master_render_base(name), offset)
 	if(!relay_loc)
-		relay_loc = "CENTER"
+		relay_loc = (show_to?.byond_version > 515) ? "1,1" : "CENTER"
 		// If we're using a submap (say for a popup window) make sure we draw onto it
 		if(home?.map)
 			relay_loc = "[home.map]:[relay_loc]"
@@ -454,6 +496,8 @@
 	// That's what this is for
 	if(show_to)
 		show_to.screen += relay
+	if(offsetting_flags & OFFSET_RELAYS_MATCH_HIGHEST && home.our_hud)
+		offset_relay(relay, home.our_hud.current_plane_offset)
 	return relay
 
 /// Breaks a connection between this plane master, and the passed in place
@@ -476,3 +520,40 @@
 			return relay
 
 	return null
+
+/**
+ * Offsets our relays in place using the given parameter by adjusting their plane and
+ * layer values, avoiding changing the layer for relays with custom-set layers.
+ *
+ * Used in [proc/build_planes_offset] to make the relays for non-offsetting planes
+ * match the highest rendering plane that matches the target, to avoid them rendering
+ * on the highest level above things that should be visible.
+ *
+ * Parameters:
+ * - new_offset: the offset we will adjust our relays to
+ */
+/atom/movable/screen/plane_master/proc/offset_relays_in_place(new_offset)
+	for(var/atom/movable/render_plane_relay/rpr in relays)
+		offset_relay(rpr, new_offset)
+
+/**
+ * Offsets a given render relay using the given parameter by adjusting its plane and
+ * layer values, avoiding changing the layer if it has a custom-set layer.
+ *
+ * Parameters:
+ * - rpr: the render plane relay we will offset
+ * - new_offset: the offset we will adjust it by
+ */
+/atom/movable/screen/plane_master/proc/offset_relay(atom/movable/render_plane_relay/rpr, new_offset)
+	var/base_relay_plane = PLANE_TO_TRUE(rpr.plane)
+	var/old_offset = PLANE_TO_OFFSET(rpr.plane)
+	rpr.plane = GET_NEW_PLANE(base_relay_plane, new_offset)
+
+	var/old_offset_plane = real_plane - (PLANE_RANGE * old_offset)
+	var/old_layer = (old_offset_plane + abs(LOWEST_EVER_PLANE * 30))
+	if(rpr.layer != old_layer) // Avoid overriding custom-set layers
+		return
+
+	var/offset_plane = real_plane - (PLANE_RANGE * new_offset)
+	var/new_layer = (offset_plane + abs(LOWEST_EVER_PLANE * 30))
+	rpr.layer = new_layer

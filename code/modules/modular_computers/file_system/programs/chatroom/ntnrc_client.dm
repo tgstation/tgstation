@@ -8,13 +8,13 @@
 	filename = "ntnrc_client"
 	filedesc = "Chat Client"
 	downloader_category = PROGRAM_CATEGORY_DEVICE
-	program_open_overlay = "command"
-	extended_desc = "This program allows communication over NTNRC network"
+	program_open_overlay = "text"
+	extended_desc = "This program allows communication over NTNRC network."
 	size = 8
 	ui_header = "ntnrc_idle.gif"
 	program_flags = PROGRAM_ON_NTNET_STORE | PROGRAM_REQUIRES_NTNET
 	tgui_id = "NtosNetChat"
-	program_icon = "comment-alt"
+	program_icon = FA_ICON_COMMENT_ALT
 	alert_able = TRUE
 
 	///The user's screen name.

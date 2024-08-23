@@ -2,7 +2,7 @@
 /obj/item/fish
 	name = "generic looking aquarium fish"
 	desc = "very bland"
-	icon = 'icons/obj/aquarium.dmi'
+	icon = 'icons/obj/structures/aquarium/fish.dmi'
 	icon_state = "bugfish"
 	lefthand_file = 'icons/mob/inhands/fish_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/fish_righthand.dmi'
@@ -12,7 +12,7 @@
 	attack_verb_simple = list("slap", "whack")
 	hitsound = 'sound/weapons/slap.ogg'
 	///The grind results of the fish. They scale with the weight of the fish.
-	grind_results = list(/datum/reagent/blood = 20, /datum/reagent/consumable/liquidgibs = 5)
+	grind_results = list(/datum/reagent/blood = 5, /datum/reagent/consumable/liquidgibs = 5)
 	obj_flags = UNIQUE_RENAME
 
 	/// Resulting width of aquarium visual icon - default size of "fish_greyscale" state
@@ -85,10 +85,6 @@
 	/// The species' name(s) of the parents of the fish. Shown by the fish analyzer.
 	var/progenitors
 
-	var/flopping = FALSE
-
-	var/in_stasis = FALSE
-
 	// Fishing related properties
 
 	/**
@@ -138,10 +134,17 @@
 
 	/// If this fish type counts towards the Fish Species Scanning experiments
 	var/experisci_scannable = TRUE
+	/// cooldown on creating tesla zaps
+	COOLDOWN_DECLARE(electrogenesis_cooldown)
+	/// power of the tesla zap created by the fish in a bioelectric generator
+	var/electrogenesis_power = 10 MEGA JOULES
+
+	/// The beauty this fish provides to the aquarium it's inserted in.
+	var/beauty = FISH_BEAUTY_GENERIC
 
 /obj/item/fish/Initialize(mapload, apply_qualities = TRUE)
 	. = ..()
-	AddComponent(/datum/component/aquarium_content, PROC_REF(get_aquarium_animation), list(COMSIG_FISH_STATUS_CHANGED,COMSIG_FISH_STIRRED))
+	AddComponent(/datum/component/aquarium_content, icon, PROC_REF(get_aquarium_animation), list(COMSIG_FISH_STIRRED), beauty)
 
 	RegisterSignal(src, COMSIG_ATOM_ON_LAZARUS_INJECTOR, PROC_REF(use_lazarus))
 	if(do_flop_animation)
@@ -183,9 +186,21 @@
 
 /obj/item/fish/examine(mob/user)
 	. = ..()
-	// All spacemen have magic eyes of fish weight perception until fish scale (get it?) is implemented.
-	. += span_notice("It's [size] cm long.")
-	. += span_notice("It weighs [weight] g.")
+	if(HAS_MIND_TRAIT(user, TRAIT_EXAMINE_DEEPER_FISH))
+		if(status == FISH_DEAD)
+			. += span_deadsay("it's dead.")
+		var/list/warnings = list()
+		if(is_hungry())
+			warnings += "starving"
+		if(!HAS_TRAIT(src, TRAIT_FISH_STASIS) && !proper_environment())
+			warnings += "drowning"
+		if(health < initial(health) * 0.6)
+			warnings += "sick"
+			if(length(warnings))
+				. += span_warning("it's [english_list(warnings)]")
+	if(HAS_MIND_TRAIT(user, TRAIT_EXAMINE_FISH))
+		. += span_notice("It's [size] cm long.")
+		. += span_notice("It weighs [weight] g.")
 
 ///Randomizes weight and size.
 /obj/item/fish/proc/randomize_size_and_weight(base_size = average_size, base_weight = average_weight, deviation = 0.2)
@@ -204,20 +219,20 @@
 	size = new_size
 	switch(size)
 		if(0 to FISH_SIZE_TINY_MAX)
-			w_class = WEIGHT_CLASS_TINY
+			update_weight_class(WEIGHT_CLASS_TINY)
 			inhand_icon_state = "fish_small"
 		if(FISH_SIZE_TINY_MAX to FISH_SIZE_SMALL_MAX)
 			inhand_icon_state = "fish_small"
-			w_class = WEIGHT_CLASS_SMALL
+			update_weight_class(WEIGHT_CLASS_SMALL)
 		if(FISH_SIZE_SMALL_MAX to FISH_SIZE_NORMAL_MAX)
 			inhand_icon_state = "fish_normal"
-			w_class = WEIGHT_CLASS_NORMAL
+			update_weight_class(WEIGHT_CLASS_NORMAL)
 		if(FISH_SIZE_NORMAL_MAX to FISH_SIZE_BULKY_MAX)
 			inhand_icon_state = "fish_bulky"
-			w_class = WEIGHT_CLASS_BULKY
+			update_weight_class(WEIGHT_CLASS_BULKY)
 		if(FISH_SIZE_BULKY_MAX to INFINITY)
 			inhand_icon_state = "fish_huge"
-			w_class = WEIGHT_CLASS_HUGE
+			update_weight_class(WEIGHT_CLASS_HUGE)
 	if(fillet_type)
 		var/init_fillets = initial(num_fillets)
 		var/amount = max(round(init_fillets * size / FISH_FILLET_NUMBER_SIZE_DIVISOR, 1), 1)
@@ -246,18 +261,21 @@
 
 	var/list/same_traits = x_traits & y_traits
 	var/list/all_traits = (x_traits|y_traits)-removed_traits
-	/**
-	 * Traits that the fish is guaranteed to inherit will be inherited,
-	 * with the assertion that they're compatible anyway.
-	 */
-	for(var/trait_type in all_traits)
-		var/datum/fish_trait/trait = GLOB.fish_traits[trait_type]
-		if(type in trait.guaranteed_inheritance_types)
-			fish_traits |= trait_type
-			all_traits -= trait_type
 
-	///Build a list of incompatible traits. Don't let any such trait pass onto the fish.
+	/// a list of incompatible traits that'll be filled as it goes on. Don't let any such trait pass onto the fish.
 	var/list/incompatible_traits = list()
+
+	///some traits can spontaneously manifest for some fishes. These have higher priorities than other traits
+	var/list/potential_spontaneous_traits = GLOB.spontaneous_fish_traits[type]
+	for(var/trait_type in potential_spontaneous_traits)
+		if(!prob(potential_spontaneous_traits[trait_type]))
+			continue
+		var/datum/fish_trait/trait = GLOB.fish_traits[trait_type]
+		if(length(fish_traits & trait.incompatible_traits))
+			continue
+		fish_traits |= trait_type
+		incompatible_traits |= trait.incompatible_traits
+
 	for(var/trait_type in fish_traits)
 		var/datum/fish_trait/trait = GLOB.fish_traits[trait_type]
 		incompatible_traits |= trait.incompatible_traits
@@ -271,6 +289,8 @@
 		if(trait_type in incompatible_traits)
 			continue
 		var/datum/fish_trait/trait = GLOB.fish_traits[trait_type]
+		if(!isnull(trait.fish_whitelist) && !(type in trait.fish_whitelist))
+			continue
 		if(length(fish_traits & trait.incompatible_traits))
 			continue
 		if((trait_type in same_traits) ? prob(trait.inheritability) : prob(trait.diff_traits_inheritability))
@@ -294,13 +314,13 @@
 	check_environment()
 
 /obj/item/fish/proc/enter_stasis()
-	in_stasis = TRUE
+	ADD_TRAIT(src, TRAIT_FISH_STASIS, INNATE_TRAIT)
 	// Stop processing until inserted into aquarium again.
 	stop_flopping()
 	STOP_PROCESSING(SSobj, src)
 
 /obj/item/fish/proc/exit_stasis()
-	in_stasis = FALSE
+	REMOVE_TRAIT(src, TRAIT_FISH_STASIS, INNATE_TRAIT)
 	if(status != FISH_DEAD)
 		START_PROCESSING(SSobj, src)
 
@@ -320,15 +340,9 @@
 		fed_reagents.remove_reagent(fed_reagent_type, 0.1)
 	SEND_SIGNAL(src, COMSIG_FISH_FED, fed_reagents, fed_reagent_type)
 
-/obj/item/fish/proc/check_environment(stasis_check = TRUE)
+/obj/item/fish/proc/check_environment()
 	if(QDELETED(src)) //we don't care anymore
 		return
-	if(stasis_check)
-		// Apply/remove stasis as needed
-		if(loc && HAS_TRAIT(loc, TRAIT_FISH_SAFE_STORAGE))
-			enter_stasis()
-		else if(in_stasis)
-			exit_stasis()
 
 	if(!do_flop_animation)
 		return
@@ -336,7 +350,7 @@
 	// Do additional stuff
 	var/in_aquarium = isaquarium(loc)
 	// Start flopping if outside of fish container
-	var/should_be_flopping = status == FISH_ALIVE && loc && !HAS_TRAIT(loc,TRAIT_FISH_SAFE_STORAGE) && !in_aquarium
+	var/should_be_flopping = status == FISH_ALIVE && !HAS_TRAIT(src, TRAIT_FISH_STASIS) && !in_aquarium
 
 	if(should_be_flopping)
 		start_flopping()
@@ -344,12 +358,15 @@
 		stop_flopping()
 
 /obj/item/fish/process(seconds_per_tick)
-	if(in_stasis || status != FISH_ALIVE)
+	if(HAS_TRAIT(src, TRAIT_FISH_STASIS) || status != FISH_ALIVE)
 		return
 
 	process_health(seconds_per_tick)
 	if(ready_to_reproduce())
 		try_to_reproduce()
+
+	if(HAS_TRAIT(src, TRAIT_FISH_ELECTROGENESIS) && COOLDOWN_FINISHED(src, electrogenesis_cooldown))
+		try_electrogenesis()
 
 	SEND_SIGNAL(src, COMSIG_FISH_LIFE, seconds_per_tick)
 
@@ -361,7 +378,7 @@
 			status = FISH_ALIVE
 			health = initial(health) // since the fishe has been revived
 			last_feeding = world.time //reset hunger
-			check_environment(FALSE)
+			check_environment()
 			START_PROCESSING(SSobj, src)
 		if(FISH_DEAD)
 			status = FISH_DEAD
@@ -374,6 +391,20 @@
 				visible_message(message)
 	update_appearance()
 	SEND_SIGNAL(src, COMSIG_FISH_STATUS_CHANGED)
+
+/obj/item/fish/expose_reagents(list/reagents, datum/reagents/source, methods = TOUCH, volume_modifier = 1, show_message = TRUE)
+	. = ..()
+	if(. & COMPONENT_NO_EXPOSE_REAGENTS || status != FISH_DEAD)
+		return
+	var/datum/reagent/medicine/strange_reagent/revival = locate() in reagents
+	if(!revival)
+		return
+	if(reagents[revival] >= 2 * w_class)
+		set_status(FISH_ALIVE)
+	else
+		balloon_alert_to_viewers("twitches for a moment!")
+		animate(src, pixel_x = 1, time = 0.1 SECONDS, loop = 2, flags = ANIMATION_RELATIVE|ANIMATION_PARALLEL)
+		animate(pixel_x = -1, flags = ANIMATION_RELATIVE)
 
 /obj/item/fish/proc/use_lazarus(datum/source, obj/item/lazarus_injector/injector, mob/user)
 	SIGNAL_HANDLER
@@ -437,10 +468,6 @@
 	if(health <= 0)
 		set_status(FISH_DEAD)
 
-
-//Fish breeding stops if fish count exceeds this.
-#define AQUARIUM_MAX_BREEDING_POPULATION 20
-
 /obj/item/fish/proc/ready_to_reproduce(being_targeted = FALSE)
 	var/obj/structure/aquarium/aquarium = loc
 	if(!istype(aquarium))
@@ -450,8 +477,6 @@
 	if(!being_targeted && length(aquarium.get_fishes()) >= AQUARIUM_MAX_BREEDING_POPULATION)
 		return FALSE
 	return aquarium.allow_breeding && health >= initial(health) * 0.8 && stable_population > 1 && world.time >= breeding_wait
-
-#undef AQUARIUM_MAX_BREEDING_POPULATION
 
 /obj/item/fish/proc/try_to_reproduce()
 	var/obj/structure/aquarium/aquarium = loc
@@ -585,15 +610,15 @@
 
 /// Starts flopping animation
 /obj/item/fish/proc/start_flopping()
-	if(flopping)  //Requires update_transform/animate_wrappers to be less restrictive.
+	if(HAS_TRAIT(src, TRAIT_FISH_FLOPPING))  //Requires update_transform/animate_wrappers to be less restrictive.
 		return
-	flopping = TRUE
+	ADD_TRAIT(src, TRAIT_FISH_FLOPPING, TRAIT_GENERIC)
 	flop_animation()
 
 /// Stops flopping animation
 /obj/item/fish/proc/stop_flopping()
-	if(flopping)
-		flopping = FALSE
+	if(HAS_TRAIT(src, TRAIT_FISH_FLOPPING))
+		REMOVE_TRAIT(src, TRAIT_FISH_FLOPPING, TRAIT_GENERIC)
 		animate(src, transform = matrix()) //stop animation
 
 /// Refreshes flopping animation after temporary animation finishes
@@ -602,8 +627,29 @@
 		addtimer(CALLBACK(src, PROC_REF(refresh_flopping)), animation_duration)
 
 /obj/item/fish/proc/refresh_flopping()
-	if(flopping)
+	if(HAS_TRAIT(src, TRAIT_FISH_FLOPPING))
 		flop_animation()
+
+/obj/item/fish/proc/try_electrogenesis()
+	if(status == FISH_DEAD || is_hungry())
+		return
+	COOLDOWN_START(src, electrogenesis_cooldown, ELECTROGENESIS_DURATION + ELECTROGENESIS_VARIANCE)
+	var/fish_zap_range = 1
+	var/fish_zap_power = 1 KILO JOULES // ~5 damage, just a little friendly "yeeeouch!"
+	var/fish_zap_flags = ZAP_MOB_DAMAGE
+	if(istype(loc, /obj/structure/aquarium/bioelec_gen))
+		fish_zap_range = 5
+		fish_zap_power = electrogenesis_power
+		fish_zap_flags |= (ZAP_GENERATES_POWER | ZAP_MOB_STUN)
+	tesla_zap(source = get_turf(src), zap_range = fish_zap_range, power = fish_zap_power, cutoff = 1 MEGA JOULES, zap_flags = fish_zap_flags)
+
+///Returns the price of this fish, for the fish export.
+/obj/item/fish/proc/get_export_price(price, percent)
+	var/size_weight_exponentation = (size * weight * 0.01)^0.85
+	var/calculated_price = price + size_weight_exponentation * percent
+	if(HAS_TRAIT(src, TRAIT_FISH_FROM_CASE)) //Avoid printing money by simply ordering fish and sending it back.
+		calculated_price *= 0.05
+	return round(calculated_price)
 
 /// Returns random fish, using random_case_rarity probabilities.
 /proc/random_fish_type(required_fluid)

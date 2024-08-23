@@ -3,7 +3,7 @@
 	name = "door"
 	desc = "It opens and closes."
 	icon = 'icons/obj/doors/doorint.dmi'
-	icon_state = "door1"
+	icon_state = "door_closed"
 	base_icon_state = "door"
 	opacity = TRUE
 	density = TRUE
@@ -24,6 +24,8 @@
 	idle_power_usage = BASE_MACHINE_IDLE_CONSUMPTION * 0.1
 	active_power_usage = BASE_MACHINE_ACTIVE_CONSUMPTION * 0.2
 
+	/// The animation we're currently playing, if any
+	var/animation
 	var/visible = TRUE
 	var/operating = FALSE
 	var/glass = FALSE
@@ -32,22 +34,32 @@
 	/// A filler object used to fill the space of multi-tile airlocks
 	var/obj/structure/fluff/airlock_filler/filler
 	var/welded = FALSE
-	var/heat_proof = FALSE // For rglass-windowed airlocks and firedoors
-	var/emergency = FALSE // Emergency access override
-	var/sub_door = FALSE // true if it's meant to go under another door.
+	/// For rglass-windowed airlocks and firedoors
+	var/heat_proof = FALSE
+	/// Emergency access override
+	var/emergency = FALSE
+	/// true if it's meant to go under another door.
+	var/sub_door = FALSE
 	var/closingLayer = CLOSED_DOOR_LAYER
-	var/autoclose = FALSE //does it automatically close after some time
-	var/safe = TRUE //whether the door detects things and mobs in its way and reopen or crushes them.
-	var/locked = FALSE //whether the door is bolted or not.
+	///does it automatically close after some time
+	var/autoclose = FALSE
+	///whether the door detects things and mobs in its way and reopen or crushes them.
+	var/safe = TRUE
+	///whether the door is bolted or not.
+	var/locked = FALSE
 	var/datum/effect_system/spark_spread/spark_system
-	var/real_explosion_block //ignore this, just use explosion_block
-	var/red_alert_access = FALSE //if TRUE, this door will always open on red alert
+	///ignore this, just use explosion_block
+	var/real_explosion_block
+	///if TRUE, this door will always open on red alert
+	var/red_alert_access = FALSE
 	/// Checks to see if this airlock has an unrestricted "sensor" within (will set to TRUE if present).
 	var/unres_sensor = FALSE
 	/// Unrestricted sides. A bitflag for which direction (if any) can open the door with no access
 	var/unres_sides = NONE
-	var/can_crush = TRUE /// Whether or not the door can crush mobs.
-	var/can_open_with_hands = TRUE /// Whether or not the door can be opened by hand (used for blast doors and shutters)
+	/// Whether or not the door can crush mobs.
+	var/can_crush = TRUE
+	/// Whether or not the door can be opened by hand (used for blast doors and shutters)
+	var/can_open_with_hands = TRUE
 	/// Whether or not this door can be opened through a door remote, ever
 	var/opens_with_door_remote = FALSE
 	/// Special operating mode for elevator doors
@@ -56,6 +68,13 @@
 	var/elevator_status
 	/// What specific lift ID do we link with?
 	var/transport_linked_id
+	/// Icon state prefix to use for masks from vis_mask.dmi
+	var/dir_mask = "standard"
+	/// Similar to the above but used for cases where walls are adjacent
+	var/edge_dir_mask = "standard"
+	/// What directions in which we do not fully cover our darkness with masks
+	/// Allows for full directional visibility
+	var/inner_transparent_dirs = NONE
 
 /datum/armor/machinery_door
 	melee = 30
@@ -82,7 +101,7 @@
 			elevator_status = LIFT_PLATFORM_LOCKED
 			GLOB.elevator_doors += src
 		else
-			stack_trace("Elevator door [src] has no linked elevator ID!")
+			stack_trace("Elevator door [src] ([x],[y],[z]) has no linked elevator ID!")
 	spark_system = new /datum/effect_system/spark_spread
 	spark_system.set_up(2, 1, src)
 	if(density)
@@ -90,6 +109,8 @@
 	else
 		flags_1 &= ~PREVENT_CLICK_UNDER_1
 
+	if(glass)
+		passwindow_on(src, INNATE_TRAIT)
 	//doors only block while dense though so we have to use the proc
 	real_explosion_block = explosion_block
 	update_explosive_block()
@@ -100,6 +121,12 @@
 	)
 	AddElement(/datum/element/connect_loc, loc_connections)
 	AddElement(/datum/element/can_barricade)
+	make_dir_opaque()
+
+/obj/machinery/door/proc/make_dir_opaque()
+	if(!dir_mask || !edge_dir_mask)
+		return
+	AddComponent(/datum/component/vis_block, dir_mask, edge_dir_mask, inner_transparent_dirs)
 
 /obj/machinery/door/examine(mob/user)
 	. = ..()
@@ -116,7 +143,7 @@
 	if(!can_open_with_hands)
 		return .
 
-	if(isaicamera(user) || issilicon(user))
+	if(isaicamera(user) || HAS_SILICON_ACCESS(user))
 		return .
 
 	if(isnull(held_item) && Adjacent(user))
@@ -239,10 +266,10 @@
 		var/obj/item/I = AM
 		if(!density || (I.w_class < WEIGHT_CLASS_NORMAL && !LAZYLEN(I.GetAccess())))
 			return
-		if(check_access(I))
+		if(requiresID() && check_access(I))
 			open()
 		else
-			do_animate("deny")
+			run_animation(DOOR_DENY_ANIMATION)
 		return
 
 /obj/machinery/door/Move()
@@ -272,7 +299,7 @@
 	else if(requiresID() && allowed(user))
 		open()
 	else
-		do_animate("deny")
+		run_animation(DOOR_DENY_ANIMATION)
 
 /obj/machinery/door/attack_hand(mob/user, list/modifiers)
 	. = ..()
@@ -300,7 +327,7 @@
 			close()
 		return TRUE
 	if(density)
-		do_animate("deny")
+		run_animation(DOOR_DENY_ANIMATION)
 
 /obj/machinery/door/allowed(mob/M)
 	if(emergency)
@@ -357,6 +384,12 @@
 		return TRUE
 	return ..()
 
+/obj/machinery/door/item_interaction_secondary(mob/living/user, obj/item/tool, list/modifiers)
+	// allows you to crowbar doors while in combat mode
+	if(user.combat_mode && tool.tool_behaviour == TOOL_CROWBAR)
+		return crowbar_act_secondary(user, tool)
+	return ..()
+
 /obj/machinery/door/welder_act_secondary(mob/living/user, obj/item/tool)
 	try_to_weld_secondary(tool, user)
 	return ITEM_INTERACT_SUCCESS
@@ -395,24 +428,64 @@
 		INVOKE_ASYNC(src, PROC_REF(open))
 
 /obj/machinery/door/update_icon_state()
-	icon_state = "[base_icon_state][density]"
+	. = ..()
+	switch(animation)
+		if(DOOR_OPENING_ANIMATION)
+			if(panel_open)
+				icon_state = "o_doorc0"
+			else
+				icon_state = "doorc0"
+		if(DOOR_CLOSING_ANIMATION)
+			if(panel_open)
+				icon_state = "o_doorc1"
+			else
+				icon_state = "doorc1"
+		if(DOOR_DENY_ANIMATION)
+			if(!machine_stat)
+				icon_state = "door_deny"
+		else
+			icon_state = "[base_icon_state][density]"
 	return ..()
 
-/obj/machinery/door/proc/do_animate(animation)
+/// Returns the delay to use for the passed in animation
+/// We'll do our cleanup once the delay runs out
+/obj/machinery/door/proc/animation_length(animation)
 	switch(animation)
-		if("opening")
-			if(panel_open)
-				flick("o_doorc0", src)
-			else
-				flick("doorc0", src)
-		if("closing")
-			if(panel_open)
-				flick("o_doorc1", src)
-			else
-				flick("doorc1", src)
-		if("deny")
-			if(!machine_stat)
-				flick("door_deny", src)
+		if(DOOR_OPENING_ANIMATION)
+			return 0.6 SECONDS
+		if(DOOR_CLOSING_ANIMATION)
+			return 0.6 SECONDS
+		if(DOOR_DENY_ANIMATION)
+			return 0.3 SECONDS
+
+/// Returns the time required to hit particular points in an animation
+/// Used to manage delays for opening/closing and such
+/obj/machinery/door/proc/animation_segment_delay(animation)
+	switch(animation)
+		if(DOOR_OPENING_PASSABLE)
+			return 0.5 SECONDS
+		if(DOOR_OPENING_FINISHED)
+			return 0.6 SECONDS
+		if(DOOR_CLOSING_UNPASSABLE)
+			return 0.2 SECONDS
+		if(DOOR_CLOSING_FINISHED)
+			return 0.6 SECONDS
+
+/// Override this to do misc tasks on animation start
+/obj/machinery/door/proc/animation_effects(animation)
+	return
+
+/// Used to start a new animation
+/// Accepts the animation to start as an arg
+/obj/machinery/door/proc/run_animation(animation)
+	set_animation(animation)
+	addtimer(CALLBACK(src, PROC_REF(set_animation), null), animation_length(animation), TIMER_UNIQUE|TIMER_OVERRIDE)
+	animation_effects(animation)
+
+// React to our animation changing
+/obj/machinery/door/proc/set_animation(animation)
+	src.animation = animation
+	update_appearance()
 
 /// Public proc that simply handles opening the door. Returns TRUE if the door was opened, FALSE otherwise.
 /// Use argument "forced" in conjunction with try_to_force_door_open if you want/need additional checks depending on how sorely you need the door opened.
@@ -422,13 +495,16 @@
 	if(operating)
 		return FALSE
 	operating = TRUE
-	use_power(active_power_usage)
-	do_animate("opening")
+	SEND_SIGNAL(src, COSMIG_DOOR_OPENING)
+	use_energy(active_power_usage)
+	run_animation(DOOR_OPENING_ANIMATION)
 	set_opacity(0)
-	SLEEP_NOT_DEL(0.5 SECONDS)
+	var/passable_delay = animation_segment_delay(DOOR_OPENING_PASSABLE)
+	SLEEP_NOT_DEL(passable_delay)
 	set_density(FALSE)
 	flags_1 &= ~PREVENT_CLICK_UNDER_1
-	SLEEP_NOT_DEL(0.5 SECONDS)
+	var/open_delay = animation_segment_delay(DOOR_OPENING_FINISHED) - passable_delay
+	SLEEP_NOT_DEL(open_delay)
 	layer = initial(layer)
 	update_appearance()
 	set_opacity(0)
@@ -459,13 +535,16 @@
 				return FALSE
 
 	operating = TRUE
+	SEND_SIGNAL(src, COSMIG_DOOR_CLOSING)
 
-	do_animate("closing")
+	run_animation(DOOR_CLOSING_ANIMATION)
 	layer = closingLayer
-	SLEEP_NOT_DEL(0.5 SECONDS)
+	var/unpassable_delay = animation_segment_delay(DOOR_CLOSING_UNPASSABLE)
+	SLEEP_NOT_DEL(unpassable_delay)
 	set_density(TRUE)
 	flags_1 |= PREVENT_CLICK_UNDER_1
-	SLEEP_NOT_DEL(0.5 SECONDS)
+	var/close_delay = animation_segment_delay(DOOR_CLOSING_FINISHED) - unpassable_delay
+	SLEEP_NOT_DEL(close_delay)
 	update_appearance()
 	if(visible && !glass)
 		set_opacity(1)
@@ -542,9 +621,44 @@
 
 /obj/machinery/door/morgue
 	icon = 'icons/obj/doors/doormorgue.dmi'
+	icon_state = "closed"
+
+/obj/machinery/door/morgue/update_icon_state()
+	. = ..()
+	if(animation && animation != "deny")
+		icon_state = animation
+	else
+		icon_state = density ? "closed" : "open_top"
+
+/obj/machinery/door/morgue/update_overlays()
+	. = ..()
+	if(!density)
+		// If we're open we layer the bit below us "above" any mobs so they can walk through
+		. += mutable_appearance(icon, "open_bottom", ABOVE_MOB_LAYER, appearance_flags = KEEP_APART)
+		. += emissive_blocker(icon, "open_bottom", src, ABOVE_MOB_LAYER)
 
 /obj/machinery/door/get_dumping_location()
 	return null
+
+/obj/machinery/door/morgue/animation_length(animation)
+	switch(animation)
+		if(DOOR_OPENING_ANIMATION)
+			return 2.04 SECONDS
+		if(DOOR_CLOSING_ANIMATION)
+			return 1.64 SECONDS
+		if(DOOR_DENY_ANIMATION)
+			return 0.1 SECONDS
+
+/obj/machinery/door/morgue/animation_segment_delay(animation)
+	switch(animation)
+		if(DOOR_OPENING_PASSABLE)
+			return 1.4 SECONDS
+		if(DOOR_OPENING_FINISHED)
+			return 2.04 SECONDS
+		if(DOOR_CLOSING_UNPASSABLE)
+			return 0.54 SECONDS
+		if(DOOR_CLOSING_FINISHED)
+			return 1.64 SECONDS
 
 /obj/machinery/door/proc/lock()
 	return

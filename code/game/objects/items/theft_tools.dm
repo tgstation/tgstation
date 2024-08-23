@@ -61,7 +61,7 @@
 	core = ncore
 	icon_state = "core_container_loaded"
 	to_chat(user, span_warning("Container is sealing..."))
-	addtimer(CALLBACK(src, PROC_REF(seal)), 50)
+	addtimer(CALLBACK(src, PROC_REF(seal)), 5 SECONDS)
 	return TRUE
 
 /obj/item/nuke_core_container/proc/seal()
@@ -236,7 +236,7 @@
 	T.icon_state = "supermatter_tongs"
 	icon_state = "core_container_loaded"
 	to_chat(user, span_warning("Container is sealing..."))
-	addtimer(CALLBACK(src, PROC_REF(seal)), 50)
+	addtimer(CALLBACK(src, PROC_REF(seal)), 5 SECONDS)
 	return TRUE
 
 /obj/item/nuke_core_container/supermatter/seal()
@@ -246,13 +246,6 @@
 		playsound(src, 'sound/items/Deconstruct.ogg', 60, TRUE)
 		if(ismob(loc))
 			to_chat(loc, span_warning("[src] is permanently sealed, [sliver] is safely contained."))
-
-/obj/item/nuke_core_container/supermatter/attackby(obj/item/hemostat/supermatter/tongs, mob/user)
-	if(istype(tongs))
-		//try to load shard into core
-		load(tongs, user)
-	else
-		return ..()
 
 /obj/item/scalpel/supermatter
 	name = "supermatter scalpel"
@@ -293,16 +286,17 @@
 	inhand_icon_state = "supermatter_tongs[sliver ? "_loaded" : null]"
 	return ..()
 
-/obj/item/hemostat/supermatter/afterattack(atom/O, mob/user, proximity)
-	. = ..()
+/obj/item/hemostat/supermatter/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
 	if(!sliver)
-		return
-	if (!proximity)
-		return
-	. |= AFTERATTACK_PROCESSED_ITEM
-	if(ismovable(O) && O != sliver)
-		Consume(O, user)
-	return .
+		return ..()
+	if (istype(interacting_with, /obj/item/nuke_core_container/supermatter))
+		var/obj/item/nuke_core_container/supermatter/container = interacting_with
+		container.load(src, user)
+		return ITEM_INTERACT_SUCCESS
+	if(ismovable(interacting_with) && interacting_with != sliver)
+		Consume(interacting_with, user)
+		return ITEM_INTERACT_SUCCESS
+	return ..()
 
 /obj/item/hemostat/supermatter/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum) // no instakill supermatter javelins
 	if(sliver)

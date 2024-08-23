@@ -10,6 +10,7 @@
 		/mob/living/basic/mining/bileworm = 20,
 		/mob/living/basic/mining/brimdemon = 20,
 		/mob/living/basic/mining/lobstrosity/lava = 20,
+		/obj/effect/spawner/random/lavaland_mob/raptor = 15,
 		/mob/living/basic/mining/goldgrub = 10,
 		/obj/structure/spawner/lavaland = 2,
 		/obj/structure/spawner/lavaland/goliath = 3,

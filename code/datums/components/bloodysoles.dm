@@ -1,3 +1,5 @@
+/// The percentage of blood we lose on each step
+#define BLOOD_PERCENT_LOSS_ON_STEP 0.33
 
 /**
  * Component for clothing items that can pick up blood from decals and spread it around everywhere when walking, such as shoes or suits with integrated shoes.
@@ -76,7 +78,7 @@
 ///lowers bloody_shoes[index] by adjust_by
 /datum/component/bloodysoles/proc/adjust_bloody_shoes(index, adjust_by)
 	bloody_shoes[index] = max(bloody_shoes[index] - adjust_by, 0)
-	on_changed_bloody_shoes()
+	on_changed_bloody_shoes(index)
 
 /datum/component/bloodysoles/proc/set_bloody_shoes(index, new_value)
 	bloody_shoes[index] = new_value
@@ -172,10 +174,11 @@
 	if(wielder.body_position == LYING_DOWN || !wielder.has_gravity(wielder.loc))
 		return
 
-	var/half_our_blood = bloody_shoes[last_blood_state] / 2
+	var/blood_lost = bloody_shoes[last_blood_state] * BLOOD_PERCENT_LOSS_ON_STEP
+	var/theoretical_new_blood = bloody_shoes[last_blood_state] - blood_lost
 	var/footprint_sprite = wielder.get_footprint_sprite()
 	// Add footprints in old loc if we have enough cream
-	if(half_our_blood >= BLOOD_FOOTPRINTS_MIN)
+	if(theoretical_new_blood >= BLOOD_FOOTPRINTS_MIN)
 		var/turf/oldLocTurf = get_turf(OldLoc)
 		var/obj/effect/decal/cleanable/blood/footprints/oldLocFP = find_pool_by_blood_state(oldLocTurf, /obj/effect/decal/cleanable/blood/footprints, footprint_sprite)
 		if(oldLocFP)
@@ -186,7 +189,7 @@
 				oldLocFP.update_appearance()
 		else if(find_pool_by_blood_state(oldLocTurf, footprint_sprite = footprint_sprite))
 			// No footprints in the tile we left, but there was some other blood pool there. Add exit footprints on it
-			adjust_bloody_shoes(last_blood_state, half_our_blood)
+			adjust_bloody_shoes(last_blood_state, blood_lost)
 			update_icon()
 
 			oldLocFP = new(oldLocTurf, footprint_sprite)
@@ -194,19 +197,20 @@
 				oldLocFP.blood_state = last_blood_state
 				oldLocFP.exited_dirs |= wielder.dir
 				add_parent_to_footprint(oldLocFP)
-				oldLocFP.bloodiness = half_our_blood
+				oldLocFP.bloodiness = blood_lost
 				oldLocFP.add_blood_DNA(GET_ATOM_BLOOD_DNA(parent_atom))
 				oldLocFP.update_appearance()
 
-			half_our_blood = bloody_shoes[last_blood_state] / 2
+			blood_lost = bloody_shoes[last_blood_state] * BLOOD_PERCENT_LOSS_ON_STEP
+			theoretical_new_blood = theoretical_new_blood - blood_lost
 
 	// If we picked up the blood on this tick in on_step_blood, don't make footprints at the same place
 	if(last_pickup && last_pickup == world.time)
 		return
 
 	// Create new footprints
-	if(half_our_blood >= BLOOD_FOOTPRINTS_MIN)
-		adjust_bloody_shoes(last_blood_state, half_our_blood)
+	if(theoretical_new_blood >= BLOOD_FOOTPRINTS_MIN)
+		adjust_bloody_shoes(last_blood_state, blood_lost)
 		update_icon()
 
 		var/obj/effect/decal/cleanable/blood/footprints/FP = new(get_turf(parent_atom), footprint_sprite)
@@ -214,7 +218,7 @@
 			FP.blood_state = last_blood_state
 			FP.entered_dirs |= wielder.dir
 			add_parent_to_footprint(FP)
-			FP.bloodiness = half_our_blood
+			FP.bloodiness = blood_lost
 			FP.add_blood_DNA(GET_ATOM_BLOOD_DNA(parent_atom))
 			FP.update_appearance()
 
@@ -234,10 +238,11 @@
 		// The pool we stepped in was actually footprints with the same type
 		var/obj/effect/decal/cleanable/blood/footprints/pool_FP = pool
 		add_parent_to_footprint(pool_FP)
-		if((bloody_shoes[last_blood_state] / 2) >= BLOOD_FOOTPRINTS_MIN && !(pool_FP.entered_dirs & wielder.dir))
+		if((bloody_shoes[last_blood_state] - (bloody_shoes[last_blood_state] * BLOOD_PERCENT_LOSS_ON_STEP)) >= BLOOD_FOOTPRINTS_MIN && !(pool_FP.entered_dirs & wielder.dir))
 			// If our feet are bloody enough, add an entered dir
 			pool_FP.entered_dirs |= wielder.dir
 			pool_FP.update_appearance()
+		return
 
 	share_blood(pool)
 
@@ -328,3 +333,5 @@
 	SIGNAL_HANDLER
 
 	update_icon()
+
+#undef BLOOD_PERCENT_LOSS_ON_STEP

@@ -113,7 +113,7 @@
 	new /obj/item/clothing/head/helmet/space/nasavoid(src)
 	new /obj/item/clothing/suit/space/nasavoid(src)
 	new /obj/item/crowbar(src)
-	new /obj/item/stock_parts/cell(src)
+	new /obj/item/stock_parts/power_store/cell(src)
 	new /obj/item/multitool(src)
 
 /obj/structure/closet/mini_fridge

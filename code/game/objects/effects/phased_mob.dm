@@ -2,7 +2,7 @@
 	name = "water"
 	anchored = TRUE
 	flags_1 = PREVENT_CONTENTS_EXPLOSION_1
-	resistance_flags = LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
+	resistance_flags = LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF | SHUTTLE_CRUSH_PROOF
 	invisibility = INVISIBILITY_OBSERVER
 	movement_type = FLOATING
 	/// The movable which's jaunting in this dummy
@@ -84,11 +84,15 @@
 		return
 	var/area/destination_area = newloc.loc
 	movedelay = world.time + movespeed
+
+	if(SEND_SIGNAL(src, COMSIG_MOB_PHASED_CHECK, user, newloc) & COMPONENT_BLOCK_PHASED_MOVE)
+		return null
+
 	if(newloc.turf_flags & NOJAUNT)
 		to_chat(user, span_warning("Some strange aura is blocking the way."))
 		return
 	if(destination_area.area_flags & NOTELEPORT || SSmapping.level_trait(newloc.z, ZTRAIT_NOPHASE))
-		to_chat(user, span_danger("Some dull, universal force is blocking the way. It's overwhelmingly oppressive force feels dangerous."))
+		to_chat(user, span_danger("Some dull, universal force is blocking the way. Its overwhelmingly oppressive force feels dangerous."))
 		return
 	if (direction == UP || direction == DOWN)
 		newloc = can_z_move(direction, get_turf(src), newloc, ZMOVE_INCAPACITATED_CHECKS | ZMOVE_FEEDBACK | ZMOVE_ALLOW_ANCHORED, user)

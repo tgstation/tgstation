@@ -25,6 +25,7 @@ GLOBAL_LIST_EMPTY(dead_players_during_shift)
 	stop_sound_channel(CHANNEL_HEARTBEAT)
 	var/obj/item/organ/internal/heart/human_heart = get_organ_slot(ORGAN_SLOT_HEART)
 	human_heart?.beat = BEAT_NONE
+	human_heart?.Stop()
 
 	. = ..()
 

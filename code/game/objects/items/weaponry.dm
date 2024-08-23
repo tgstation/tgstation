@@ -40,6 +40,48 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	if(user.combat_mode)
 		return ..(M, user)
 
+
+/obj/item/balloon_mallet
+	name = "balloon mallet"
+	desc = "It's a mallet, a weapon known for being heavy, but made from notoriously light balloons. Air inside removes any force from the swings. It'd be quite embarrassing to get hit by this."
+	icon = 'icons/obj/weapons/hammer.dmi'
+	icon_state = "balloon_mallet"
+	inhand_icon_state = "balloon_mallet"
+	lefthand_file = 'icons/mob/inhands/weapons/hammers_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/weapons/hammers_righthand.dmi'
+	siemens_coefficient = 0
+	force = 1
+	throw_speed = 1
+	throwforce = 1
+	throw_range = 1
+	w_class = WEIGHT_CLASS_HUGE
+	attack_verb_continuous = list("mallets", "smoother")
+	attack_verb_simple = list("mallet", "smoother")
+	max_integrity = 20
+	armor_type = /datum/armor/item_banhammer
+	resistance_flags = FIRE_PROOF
+
+/obj/item/balloon_mallet/examine(mob/user)
+	. = ..()
+	if(HAS_TRAIT(user,TRAIT_BALLOON_SUTRA))
+		. = "A sacred weapon of the higher castes from the clown planet, used to strike fear into the hearts of their foes. Wield it with care."
+
+/obj/item/balloon_mallet/attack(mob/living/target, mob/living/user)
+	playsound(loc, 'sound/creatures/clown/hehe.ogg', 20)
+	if (!isliving(target))
+		return
+	switch(target.mob_mood.sanity)
+		if (SANITY_INSANE to SANITY_CRAZY)
+			force = 8
+		if (SANITY_UNSTABLE to SANITY_DISTURBED)
+			force = 4
+			target.add_mood_event("humiliated", /datum/mood_event/mallet_humiliation)
+		if (SANITY_NEUTRAL to SANITY_GREAT)
+			target.add_mood_event("humiliated", /datum/mood_event/mallet_humiliation)
+
+	if(user.combat_mode)
+		return ..(target, user)
+
 /obj/item/sord
 	name = "\improper SORD"
 	desc = "This thing is so unspeakably shitty you are having a hard time even holding it."
@@ -118,9 +160,17 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	throw_range = 5
 	armour_penetration = 35
 
+/obj/item/claymore/cutlass/old
+	name = "old cutlass"
+	desc = parent_type::desc + " This one seems a tad old."
+	force = 24
+	throwforce = 17
+	armour_penetration = 20
+	block_chance = 30
+
 /obj/item/claymore/carrot
 	name = "carrot sword"
-	desc = "A full-sized carrot sword. Definitely \not\ good for the eyes, not anymore."
+	desc = "A full-sized carrot sword. Definitely <b>not</b> good for the eyes, not anymore."
 	icon_state = "carrot_sword"
 	inhand_icon_state = "carrot_sword"
 	worn_icon_state = "carrot_sword"
@@ -132,6 +182,18 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	armour_penetration = 5
 	block_chance = 10
 	resistance_flags = NONE
+
+//bootleg claymore
+/obj/item/claymore/shortsword
+	name = "shortsword"
+	desc = "A mercenary's sword, chipped and worn from battles long gone. You could say it is a swordsman's shortsword short sword."
+	icon_state = "shortsword"
+	inhand_icon_state = "shortsword"
+	worn_icon_state = "shortsword"
+	slot_flags = ITEM_SLOT_BELT
+	force = 20
+	demolition_mod = 0.75
+	block_chance = 30
 
 /obj/item/claymore/highlander //ALL COMMENTS MADE REGARDING THIS SWORD MUST BE MADE IN ALL CAPS
 	desc = "<b><i>THERE CAN BE ONLY ONE, AND IT WILL BE YOU!!!</i></b>\nActivate it in your hand to point to the nearest victim."
@@ -161,7 +223,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 /obj/item/claymore/highlander/process()
 	if(ishuman(loc))
 		var/mob/living/carbon/human/holder = loc
-		layer = ABOVE_ALL_MOB_LAYER //NO HIDING BEHIND PLANTS FOR YOU, DICKWEED (HA GET IT, BECAUSE WEEDS ARE PLANTS)
+		holder.layer = ABOVE_ALL_MOB_LAYER //NO HIDING BEHIND PLANTS FOR YOU, DICKWEED (HA GET IT, BECAUSE WEEDS ARE PLANTS)
 		ADD_TRAIT(holder, TRAIT_NOBLOOD, HIGHLANDER_TRAIT) //AND WE WON'T BLEED OUT LIKE COWARDS
 	else
 		if(!(flags_1 & ADMIN_SPAWNED_1))
@@ -273,7 +335,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	playsound(user, 'sound/items/screwdriver2.ogg', 50, TRUE)
 
 /obj/item/claymore/highlander/robot //BLOODTHIRSTY BORGS NOW COME IN PLAID
-	icon = 'icons/obj/items_cyborg.dmi'
+	icon = 'icons/mob/silicon/robot_items.dmi'
 	icon_state = "claymore_cyborg"
 	var/mob/living/silicon/robot/robot
 
@@ -285,7 +347,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 		return INITIALIZE_HINT_QDEL
 
 /obj/item/claymore/highlander/robot/process()
-	layer = ABOVE_ALL_MOB_LAYER
+	loc.layer = ABOVE_ALL_MOB_LAYER
 
 /obj/item/katana
 	name = "katana"
@@ -333,7 +395,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	force = 2
 	throwforce = 10 //10 + 2 (WEIGHT_CLASS_SMALL) * 4 (EMBEDDED_IMPACT_PAIN_MULTIPLIER) = 18 damage on hit due to guaranteed embedding
 	throw_speed = 4
-	embedding = list("pain_mult" = 4, "embed_chance" = 100, "fall_chance" = 0)
+	embed_type = /datum/embed_data/throwing_star
 	armour_penetration = 40
 
 	w_class = WEIGHT_CLASS_SMALL
@@ -341,11 +403,22 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	custom_materials = list(/datum/material/iron= SMALL_MATERIAL_AMOUNT * 5, /datum/material/glass= SMALL_MATERIAL_AMOUNT * 5)
 	resistance_flags = FIRE_PROOF
 
+/datum/embed_data/throwing_star
+	pain_mult = 4
+	embed_chance = 100
+	fall_chance = 0
+
 /obj/item/throwing_star/stamina
 	name = "shock throwing star"
 	desc = "An aerodynamic disc designed to cause excruciating pain when stuck inside fleeing targets, hopefully without causing fatal harm."
 	throwforce = 5
-	embedding = list("pain_chance" = 5, "embed_chance" = 100, "fall_chance" = 0, "jostle_chance" = 10, "pain_stam_pct" = 0.8, "jostle_pain_mult" = 3)
+	embed_type = /datum/embed_data/throwing_star/stamina
+
+/datum/embed_data/throwing_star/stamina
+	pain_mult = 5
+	jostle_chance = 10
+	pain_stam_pct = 0.8
+	jostle_pain_mult = 3
 
 /obj/item/throwing_star/toy
 	name = "toy throwing star"
@@ -353,7 +426,11 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	sharpness = NONE
 	force = 0
 	throwforce = 0
-	embedding = list("pain_mult" = 0, "jostle_pain_mult" = 0, "embed_chance" = 100, "fall_chance" = 0)
+	embed_type = /datum/embed_data/throwing_star/toy
+
+/datum/embed_data/throwing_star/toy
+	pain_mult = 0
+	jostle_pain_mult = 0
 
 /obj/item/switchblade
 	name = "switchblade"
@@ -436,6 +513,36 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 		user.visible_message(span_suicide("[user] is strangling [user.p_them()]self with [src]'s cord! It looks like [user.p_theyre()] trying to commit suicide!"))
 	return OXYLOSS
 
+/obj/item/bambostaff
+	name = "Bamboo Staff"
+	desc = "A long bamboo-made staff with steel-capped ends. It is rumoured that initiates of Spider Clan train with such before getting to learn how to use a katana."
+	force = 10
+	block_chance = 45
+	block_sound = 'sound/weapons/genhit.ogg'
+	slot_flags = ITEM_SLOT_BACK
+	w_class = WEIGHT_CLASS_BULKY
+	hitsound = SFX_SWING_HIT
+	attack_verb_continuous = list("smashes", "slams", "whacks", "thwacks")
+	attack_verb_simple = list("smash", "slam", "whack", "thwack")
+	icon = 'icons/obj/weapons/staff.dmi'
+	icon_state = "bambostaff0"
+	base_icon_state = "bambostaff"
+	inhand_icon_state = "bambostaff0"
+	worn_icon_state = "bambostaff0"
+	lefthand_file = 'icons/mob/inhands/weapons/staves_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/weapons/staves_righthand.dmi'
+
+/obj/item/bambostaff/Initialize(mapload)
+	. = ..()
+	AddComponent(/datum/component/two_handed, \
+		force_unwielded = 10, \
+		force_wielded = 14, \
+	)
+
+/obj/item/bambostaff/update_icon_state()
+	icon_state = inhand_icon_state = "[base_icon_state][HAS_TRAIT(src, TRAIT_WIELDED)]"
+	return ..()
+
 /obj/item/cane
 	name = "cane"
 	desc = "A cane used by a true gentleman. Or a clown."
@@ -451,9 +558,88 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	attack_verb_continuous = list("bludgeons", "whacks", "disciplines", "thrashes")
 	attack_verb_simple = list("bludgeon", "whack", "discipline", "thrash")
 
+/obj/item/cane/examine(mob/user, thats)
+	. = ..()
+	. += span_notice("This item can be used to support your weight, preventing limping from any broken bones on your legs you may have.")
+
+/obj/item/cane/equipped(mob/living/user, slot, initial)
+	..()
+	if(!(slot & ITEM_SLOT_HANDS))
+		return
+	movement_support_add(user)
+
+/obj/item/cane/dropped(mob/living/user, silent = FALSE)
+	. = ..()
+	movement_support_del(user)
+
+/obj/item/cane/proc/movement_support_add(mob/living/user)
+	RegisterSignal(user, COMSIG_CARBON_LIMPING, PROC_REF(handle_limping))
+	return TRUE
+
+/obj/item/cane/proc/movement_support_del(mob/living/user)
+	UnregisterSignal(user, list(COMSIG_CARBON_LIMPING))
+	return TRUE
+
+/obj/item/cane/proc/handle_limping(mob/living/user)
+	SIGNAL_HANDLER
+	return COMPONENT_CANCEL_LIMP
+
+/obj/item/cane/crutch
+	name = "medical crutch"
+	desc = "A medical crutch used by people missing a leg. Not all that useful if you're missing both of them, though."
+	icon = 'icons/obj/weapons/staff.dmi'
+	icon_state = "crutch_med"
+	inhand_icon_state = "crutch_med"
+	lefthand_file = 'icons/mob/inhands/weapons/melee_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/weapons/melee_righthand.dmi'
+	force = 12
+	throwforce = 8
+	w_class = WEIGHT_CLASS_BULKY
+	custom_materials = list(/datum/material/iron = SMALL_MATERIAL_AMOUNT * 0.5)
+	attack_verb_continuous = list("bludgeons", "whacks", "thrashes")
+	attack_verb_simple = list("bludgeon", "whack", "thrash")
+
+/obj/item/cane/crutch/examine(mob/user, thats)
+	. = ..()
+	// tacked on after the cane string
+	. += span_notice("As a crutch, it can also help lessen the slowdown incurred by missing a leg.")
+
+/obj/item/cane/crutch/movement_support_add(mob/living/user)
+	. = ..()
+	if(!.)
+		return
+	RegisterSignal(user, COMSIG_LIVING_LIMBLESS_SLOWDOWN, PROC_REF(handle_slowdown))
+	user.update_usable_leg_status()
+	user.AddElementTrait(TRAIT_WADDLING, REF(src), /datum/element/waddling)
+
+/obj/item/cane/crutch/movement_support_del(mob/living/user)
+	. = ..()
+	if(!.)
+		return
+	UnregisterSignal(user, list(COMSIG_LIVING_LIMBLESS_SLOWDOWN, COMSIG_CARBON_LIMPING))
+	user.update_usable_leg_status()
+	REMOVE_TRAIT(user, TRAIT_WADDLING, REF(src))
+
+/obj/item/cane/crutch/proc/handle_slowdown(mob/living/user, limbless_slowdown, list/slowdown_mods)
+	SIGNAL_HANDLER
+	var/leg_amount = user.usable_legs
+	// Don't do anything if the number is equal (or higher) to the usual.
+	if(leg_amount >= user.default_num_legs)
+		return
+	// If we have at least one leg and it's less than the default, reduce slowdown by 60%.
+	if(leg_amount && (leg_amount < user.default_num_legs))
+		slowdown_mods += 0.4
+
+/obj/item/cane/crutch/wood
+	name = "wooden crutch"
+	desc = "A handmade crutch. Also makes a decent bludgeon if you need it."
+	icon_state = "crutch_wood"
+	inhand_icon_state = "crutch_wood"
+	custom_materials = list(/datum/material/wood = SMALL_MATERIAL_AMOUNT * 0.5)
+
 /obj/item/cane/white
 	name = "white cane"
-	desc = "A cane traditionally used by the blind to help them see. Folds down to be easier to transport."
+	desc = "Traditionally used by the blind to help them see. Folds down to be easier to transport."
 	icon_state = "cane_white"
 	inhand_icon_state = "cane_white"
 	lefthand_file = 'icons/mob/inhands/weapons/melee_lefthand.dmi'
@@ -475,6 +661,9 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	)
 	RegisterSignal(src, COMSIG_TRANSFORMING_ON_TRANSFORM, PROC_REF(on_transform))
 	ADD_TRAIT(src, TRAIT_BLIND_TOOL, INNATE_TRAIT)
+
+/obj/item/cane/white/handle_limping(mob/living/user)
+	return HAS_TRAIT(src, TRAIT_TRANSFORM_ACTIVE) ? COMPONENT_CANCEL_LIMP : NONE
 
 /*
  * Signal proc for [COMSIG_TRANSFORMING_ON_TRANSFORM].
@@ -582,7 +771,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 /obj/item/melee/skateboard
 	name = "skateboard"
 	desc = "A skateboard. It can be placed on its wheels and ridden, or used as a radical weapon."
-	icon = 'icons/obj/vehicles.dmi'
+	icon = 'icons/mob/rideables/vehicles.dmi'
 	icon_state = "skateboard_held"
 	inhand_icon_state = "skateboard"
 	force = 12
@@ -625,6 +814,40 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	icon_state = "hoverboard_nt_held"
 	inhand_icon_state = "hoverboard_nt"
 	board_item_type = /obj/vehicle/ridden/scooter/skateboard/hoverboard/admin
+
+/obj/item/melee/skateboard/holyboard
+	name = "holy skateboard"
+	desc = "A board blessed by the gods with the power to grind for our sins. Has the initials 'J.C.' on the underside."
+	icon_state = "hoverboard_holy_held"
+	inhand_icon_state = "hoverboard_holy"
+	force = 18
+	throwforce = 6
+	w_class = WEIGHT_CLASS_NORMAL
+	attack_verb_continuous = list("bashes", "crashes", "grinds", "skates")
+	attack_verb_simple = list("bash", "crash", "grind", "skate")
+	board_item_type = /obj/vehicle/ridden/scooter/skateboard/hoverboard/holyboarded
+
+/obj/item/melee/skateboard/holyboard/Initialize(mapload)
+	. = ..()
+	AddComponent(/datum/component/anti_magic, MAGIC_RESISTANCE|MAGIC_RESISTANCE_HOLY)
+	AddComponent(/datum/component/effect_remover, \
+	success_feedback = "You disrupt the magic of %THEEFFECT with %THEWEAPON.", \
+	success_forcesay = "BEGONE FOUL MAGICKS!!", \
+	tip_text = "Clear rune", \
+	on_clear_callback = CALLBACK(src, PROC_REF(on_cult_rune_removed)), \
+	effects_we_clear = list(/obj/effect/rune, /obj/effect/heretic_rune) \
+	)
+	AddElement(/datum/element/bane, target_type = /mob/living/basic/revenant, damage_multiplier = 0, added_damage = 25, requires_combat_mode = FALSE)
+
+/obj/item/melee/skateboard/holyboard/proc/on_cult_rune_removed(obj/effect/target, mob/living/user)
+	SIGNAL_HANDLER
+	if(!istype(target, /obj/effect/rune))
+		return
+
+	var/obj/effect/rune/target_rune = target
+	if(target_rune.log_when_erased)
+		user.log_message("erased [target_rune.cultist_name] rune using [src]", LOG_GAME)
+	SSshuttle.shuttle_purchase_requirements_met[SHUTTLE_UNLOCK_NARNAR] = TRUE
 
 /obj/item/melee/baseball_bat
 	name = "baseball bat"
@@ -791,37 +1014,35 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	hitsound = 'sound/effects/snap.ogg'
 	w_class = WEIGHT_CLASS_SMALL
 	/// Things in this list will be instantly splatted.  Flyman weakness is handled in the flyman species weakness proc.
-	var/list/splattable
+	var/static/list/splattable
 	/// Things in this list which take a lot more damage from the fly swatter, but not be necessarily killed by it.
-	var/list/strong_against
+	var/static/list/strong_against
 	/// How much extra damage the fly swatter does against mobs it is strong against
 	var/extra_strength_damage = 24
 
 /obj/item/melee/flyswatter/Initialize(mapload)
 	. = ..()
-	splattable = typecacheof(list(
-		/mob/living/basic/ant,
-		/mob/living/basic/butterfly,
-		/mob/living/basic/cockroach,
-		/mob/living/basic/spider/growing/spiderling,
-		/mob/living/basic/bee,
-		/obj/effect/decal/cleanable/ants,
-		/obj/item/queen_bee,
-	))
-	strong_against = typecacheof(list(
-		/mob/living/basic/spider/giant,
-	))
+	if (isnull(splattable))
+		splattable = typecacheof(list(
+			/mob/living/basic/ant,
+			/mob/living/basic/butterfly,
+			/mob/living/basic/cockroach,
+			/mob/living/basic/spider/growing/spiderling,
+			/mob/living/basic/bee,
+			/obj/effect/decal/cleanable/ants,
+			/obj/item/queen_bee,
+		))
+	if (isnull(strong_against))
+		strong_against = typecacheof(list(
+			/mob/living/basic/spider,
+		))
 
 
-/obj/item/melee/flyswatter/afterattack(atom/target, mob/user, proximity_flag)
-	. = ..()
-	if(!proximity_flag || HAS_TRAIT(user, TRAIT_PACIFISM))
-		return
-
+/obj/item/melee/flyswatter/afterattack(atom/target, mob/user, click_parameters)
 	if(is_type_in_typecache(target, splattable))
-		new /obj/effect/decal/cleanable/insectguts(target.drop_location())
 		to_chat(user, span_warning("You easily splat [target]."))
 		if(isliving(target))
+			new /obj/effect/decal/cleanable/insectguts(target.drop_location())
 			var/mob/living/bug = target
 			bug.investigate_log("has been splatted by a flyswatter.", INVESTIGATE_DEATHS)
 			bug.gib(DROP_ALL_REMAINS)
@@ -914,7 +1135,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	throwforce = 25
 	throw_speed = 4
 	attack_speed = CLICK_CD_HYPER_RAPID
-	embedding = list("embed_chance" = 100)
+	embed_type = /datum/embed_data/hfr_blade
 	block_chance = 25
 	block_sound = 'sound/weapons/parry.ogg'
 	sharpness = SHARP_EDGED
@@ -928,6 +1149,9 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	var/previous_y
 	/// The previous target we attacked
 	var/datum/weakref/previous_target
+
+/datum/embed_data/hfr_blade
+	embed_chance = 100
 
 /obj/item/highfrequencyblade/Initialize(mapload)
 	. = ..()
@@ -951,24 +1175,18 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	if(prob(final_block_chance * (HAS_TRAIT(src, TRAIT_WIELDED) ? 2 : 1)))
 		owner.visible_message(span_danger("[owner] parries [attack_text] with [src]!"))
 		return TRUE
+	return FALSE
 
-/obj/item/highfrequencyblade/attack(mob/living/target, mob/living/user, params)
-	if(!HAS_TRAIT(src, TRAIT_WIELDED) || HAS_TRAIT(src, TRAIT_PACIFISM))
-		return ..()
-	slash(target, user, params)
-
-/obj/item/highfrequencyblade/attack_atom(atom/target, mob/living/user, params)
-	if(HAS_TRAIT(src, TRAIT_WIELDED))
-		return
-	return ..()
-
-/obj/item/highfrequencyblade/afterattack(atom/target, mob/user, proximity_flag, params)
+/obj/item/highfrequencyblade/pre_attack(atom/A, mob/living/user, params)
+	. = ..()
+	if(.)
+		return .
 	if(!HAS_TRAIT(src, TRAIT_WIELDED))
-		return ..()
-	if(!proximity_flag || !(isclosedturf(target) || isitem(target) || ismachinery(target) || isstructure(target) || isvehicle(target)))
-		return
-	slash(target, user, params)
-	return AFTERATTACK_PROCESSED_ITEM
+		return . // Default attack
+	if(isliving(A) && HAS_TRAIT(src, TRAIT_PACIFISM))
+		return . // Default attack (ultimately nothing)
+
+	return slash(A, user, params)
 
 /// triggered on wield of two handed item
 /obj/item/highfrequencyblade/proc/on_wield(obj/item/source, mob/user)
@@ -1003,21 +1221,25 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 			living_target.investigate_log("has been gibbed by [src].", INVESTIGATE_DEATHS)
 			living_target.gib(DROP_ALL_REMAINS)
 			log_combat(user, living_target, "gibbed", src)
+		return TRUE
 	else if(target.uses_integrity)
 		target.take_damage(force*damage_mod*3, BRUTE, MELEE, FALSE, null, 50)
+		return TRUE
 	else if(iswallturf(target) && prob(force*damage_mod*0.5))
 		var/turf/closed/wall/wall_target = target
 		wall_target.dismantle_wall()
+		return TRUE
 	else if(ismineralturf(target) && prob(force*damage_mod))
 		var/turf/closed/mineral/mineral_target = target
 		mineral_target.gets_drilled()
+		return TRUE
+	return FALSE
 
 /obj/effect/temp_visual/slash
 	icon_state = "highfreq_slash"
 	alpha = 150
 	duration = 0.5 SECONDS
 	layer = ABOVE_ALL_MOB_LAYER
-	plane = ABOVE_GAME_PLANE
 
 /obj/effect/temp_visual/slash/Initialize(mapload, atom/target, x_slashed, y_slashed, slash_color)
 	. = ..()

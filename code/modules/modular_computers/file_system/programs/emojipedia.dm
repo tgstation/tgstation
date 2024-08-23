@@ -14,7 +14,7 @@
 /datum/computer_file/program/emojipedia/New()
 	. = ..()
 	// Sort the emoji list so it's easier to find things and we don't have to keep sorting on ui_data since the number of emojis can not change in-game.
-	emoji_list = sortTim(emoji_list, /proc/cmp_text_asc)
+	sortTim(emoji_list, /proc/cmp_text_asc)
 
 /datum/computer_file/program/emojipedia/ui_static_data(mob_user)
 	var/list/data = list()

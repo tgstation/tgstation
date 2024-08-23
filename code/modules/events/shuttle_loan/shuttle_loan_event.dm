@@ -40,12 +40,15 @@
 	situation = new situation()
 
 /datum/round_event/shuttle_loan/announce(fake)
-	var/announcement_text = situation?.announcement_text
-	if(isnull(announcement_text) || fake)
+	if(fake)
 		var/datum/shuttle_loan_situation/fake_situation = pick(subtypesof(/datum/shuttle_loan_situation))
-		announcement_text = initial(fake_situation.announcement_text)
-	priority_announce("Cargo: [announcement_text]", situation.sender)
-	SSshuttle.shuttle_loan = src
+		situation = new fake_situation
+	else
+		SSshuttle.shuttle_loan = src
+	priority_announce("Cargo: [situation.announcement_text]", situation.sender)
+	if(fake)
+		qdel(situation)
+
 
 /datum/round_event/shuttle_loan/proc/loan_shuttle()
 	priority_announce(situation.thanks_msg, "Cargo shuttle commandeered by [command_name()].")

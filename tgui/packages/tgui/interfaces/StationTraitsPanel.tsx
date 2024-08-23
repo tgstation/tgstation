@@ -1,4 +1,4 @@
-import { filterMap } from 'common/collections';
+import { filter, map } from 'common/collections';
 import { exhaustiveCheck } from 'common/exhaustive';
 import { BooleanLike } from 'common/react';
 import { useState } from 'react';
@@ -34,7 +34,7 @@ const FutureStationTraitsPage = (props) => {
   const { act, data } = useBackend<StationTraitsData>();
   const { future_station_traits } = data;
 
-  const [selectedTrait, setSelectedTrait] = useState<string | undefined>();
+  const [selectedTrait, setSelectedTrait] = useState<string>('');
 
   const traitsByName = Object.fromEntries(
     data.valid_station_traits.map((trait) => {
@@ -50,9 +50,9 @@ const FutureStationTraitsPage = (props) => {
       <Stack fill>
         <Stack.Item grow>
           <Dropdown
-            displayText={!selectedTrait && 'Select trait to add...'}
             onSelected={setSelectedTrait}
             options={traitNames}
+            placeholder="Select trait to add..."
             selected={selectedTrait}
             width="100%"
           />
@@ -110,15 +110,9 @@ const FutureStationTraitsPage = (props) => {
                       icon="times"
                       onClick={() => {
                         act('setup_future_traits', {
-                          station_traits: filterMap(
-                            future_station_traits,
-                            (otherTrait) => {
-                              if (otherTrait.path === trait.path) {
-                                return undefined;
-                              } else {
-                                return otherTrait.path;
-                              }
-                            },
+                          station_traits: filter(
+                            map(future_station_traits, (t) => t.path),
+                            (p) => p !== trait.path,
                           ),
                         });
                       }}

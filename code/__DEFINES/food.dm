@@ -99,6 +99,7 @@ DEFINE_BITFIELD(foodtypes, list(
 #define DRINK_GOOD 3
 #define DRINK_VERYGOOD 4
 #define DRINK_FANTASTIC 5
+
 #define FOOD_AMAZING 6
 
 #define FOOD_QUALITY_NORMAL 1
@@ -138,7 +139,7 @@ GLOBAL_LIST_INIT(food_quality_events, list(
 	FOOD_QUALITY_TOP = /datum/mood_event/food/top,
 ))
 
-/// Crafted food buffs grouped by crafting_complexity
+/// Weighted lists of crafted food buffs randomly given according to crafting_complexity unless the food has a specific buff
 GLOBAL_LIST_INIT(food_buffs, list(
 	FOOD_COMPLEXITY_1 = list(
 		/datum/status_effect/food/haste = 1,
@@ -151,11 +152,9 @@ GLOBAL_LIST_INIT(food_buffs, list(
 	),
 	FOOD_COMPLEXITY_4 = list(
 		/datum/status_effect/food/haste = 1,
-		/datum/status_effect/food/trait/shockimmune = 1,
 	),
 	FOOD_COMPLEXITY_5 = list(
 		/datum/status_effect/food/haste = 1,
-		/datum/status_effect/food/trait/shockimmune = 2,
 	),
 ))
 
@@ -179,19 +178,15 @@ DEFINE_BITFIELD(food_flags, list(
 
 #define STOP_SERVING_BREAKFAST (15 MINUTES)
 
-#define FOOD_MEAT_NORMAL 5
 #define FOOD_MEAT_HUMAN 50
 #define FOOD_MEAT_MUTANT 100
 #define FOOD_MEAT_MUTANT_RARE 200
 
 #define IS_EDIBLE(O) (O.GetComponent(/datum/component/edible))
 
-
 ///Food trash flags
 #define FOOD_TRASH_POPABLE (1<<0)
 #define FOOD_TRASH_OPENABLE (1<<1)
-
-
 
 ///Food preference enums
 #define FOOD_LIKED 1
@@ -201,8 +196,6 @@ DEFINE_BITFIELD(food_flags, list(
 
 ///Venue reagent requirement
 #define VENUE_BAR_MINIMUM_REAGENTS 10
-
-
 
 ///***Food price classes***
 ///Foods that are meant to have no value, such as lollypops from medborgs.

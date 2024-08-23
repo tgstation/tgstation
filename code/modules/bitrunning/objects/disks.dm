@@ -48,7 +48,7 @@
 		names += initial(thing.name)
 
 	var/choice = tgui_input_list(user, message = "Select an ability",  title = "Bitrunning Program", items = names)
-	if(isnull(choice))
+	if(isnull(choice) || !user.is_holding(src))
 		return
 
 	for(var/datum/action/thing as anything in selectable_actions)
@@ -105,7 +105,7 @@
 		names += initial(thing.name)
 
 	var/choice = tgui_input_list(user, message = "Select an ability",  title = "Bitrunning Program", items = names)
-	if(isnull(choice))
+	if(isnull(choice) || !user.is_holding(src))
 		return
 
 	for(var/obj/thing as anything in selectable_items)
@@ -141,4 +141,47 @@
 		/obj/item/gun/energy/e_gun/nuclear,
 		/obj/item/dualsaber/green,
 		/obj/item/grenade/syndieminibomb,
+	)
+
+///proto-kinetic accelerator mods, to be applied to pka's given inside domains
+/obj/item/bitrunning_disk/item/pka_mods
+	name = "bitrunning gear: proto-kinetic accelerator mods"
+	selectable_items = list(
+		/obj/item/borg/upgrade/modkit/range,
+		/obj/item/borg/upgrade/modkit/damage,
+		/obj/item/borg/upgrade/modkit/cooldown,
+		/obj/item/borg/upgrade/modkit/aoe/mobs,
+		/obj/item/borg/upgrade/modkit/human_passthrough,
+	)
+
+/obj/item/bitrunning_disk/item/pka_mods/premium
+	name = "bitrunning gear: premium proto-kinetic accelerator mods"
+	selectable_items = list(
+		/obj/item/borg/upgrade/modkit/cooldown/repeater,
+		/obj/item/borg/upgrade/modkit/lifesteal,
+		/obj/item/borg/upgrade/modkit/resonator_blasts,
+		/obj/item/borg/upgrade/modkit/bounty,
+		/obj/item/borg/upgrade/modkit/indoors,
+	)
+
+///proto-kinetic crusher trophies, to be applied to pkc's given inside domains
+/obj/item/bitrunning_disk/item/pkc_mods
+	name = "bitrunning gear: proto-kinetic crusher mods"
+	selectable_items = list(
+		/obj/item/crusher_trophy/watcher_wing,
+		/obj/item/crusher_trophy/blaster_tubes/magma_wing,
+		/obj/item/crusher_trophy/legion_skull,
+		/obj/item/crusher_trophy/wolf_ear,
+	)
+
+/obj/item/bitrunning_disk/item/pkc_mods/premium
+	name = "bitrunning gear: premium proto-kinetic crusher mods"
+	selectable_items = list(
+		/obj/item/crusher_trophy/watcher_wing/ice_wing,
+		/obj/item/crusher_trophy/blaster_tubes,
+		/obj/item/crusher_trophy/miner_eye,
+		/obj/item/crusher_trophy/tail_spike,
+		/obj/item/crusher_trophy/demon_claws,
+		/obj/item/crusher_trophy/vortex_talisman,
+		/obj/item/crusher_trophy/ice_demon_cube,
 	)

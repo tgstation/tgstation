@@ -59,6 +59,8 @@ Simple datum which is instanced once per type and is used for every object of sa
 	var/cached_texture_filter_icon
 	///What type of shard the material will shatter to
 	var/obj/item/shard_type
+	///How resistant the material is to rusting when applied to a turf
+	var/mat_rust_resistance = RUST_RESISTANCE_ORGANIC
 	///What type of debris the tile will leave behind when shattered.
 	var/obj/effect/decal/debris_type
 	/// How likely this mineral is to be found in a boulder during mining.
@@ -157,9 +159,10 @@ Simple datum which is instanced once per type and is used for every object of sa
 			O.barefootstep = turf_sound_override + "barefoot"
 			O.clawfootstep = turf_sound_override + "claw"
 			O.heavyfootstep = FOOTSTEP_GENERIC_HEAVY
-	if(alpha < 255)
+	if(alpha < 255 && !iswallturf(T))
 		T.AddElement(/datum/element/turf_z_transparency)
 		setup_glow(T)
+	T.rust_resistance = mat_rust_resistance
 	return
 
 /datum/material/proc/setup_glow(turf/on)

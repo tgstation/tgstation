@@ -1,8 +1,6 @@
-import { multiline } from 'common/string';
-
 import { Antagonist, Category } from '../base';
 
-export const REVOLUTIONARY_MECHANICAL_DESCRIPTION = multiline`
+export const REVOLUTIONARY_MECHANICAL_DESCRIPTION = `
       Armed with a flash, convert as many people to the revolution as you can.
       Kill or exile all heads of staff on the station.
    `;

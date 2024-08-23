@@ -147,14 +147,16 @@
 	else
 		return ..()
 
-/obj/item/airlock_painter/AltClick(mob/user)
-	. = ..()
-	if(ink && user.can_perform_action(src))
-		playsound(src.loc, 'sound/machines/click.ogg', 50, TRUE)
-		ink.forceMove(user.drop_location())
-		user.put_in_hands(ink)
-		to_chat(user, span_notice("You remove [ink] from [src]."))
-		ink = null
+/obj/item/airlock_painter/click_alt(mob/user)
+	if(!ink)
+		return CLICK_ACTION_BLOCKING
+
+	playsound(src.loc, 'sound/machines/click.ogg', 50, TRUE)
+	ink.forceMove(user.drop_location())
+	user.put_in_hands(ink)
+	to_chat(user, span_notice("You remove [ink] from [src]."))
+	ink = null
+	return CLICK_ACTION_SUCCESS
 
 /obj/item/airlock_painter/decal
 	name = "decal painter"
@@ -217,14 +219,11 @@
 	. = ..()
 	stored_custom_color = stored_color
 
-/obj/item/airlock_painter/decal/afterattack(atom/target, mob/user, proximity)
-	. = ..()
-	if(!proximity)
-		balloon_alert(user, "get closer!")
-		return
-
-	if(isfloorturf(target) && use_paint(user))
-		paint_floor(target)
+/obj/item/airlock_painter/decal/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
+	if(isfloorturf(interacting_with) && use_paint(user))
+		paint_floor(interacting_with)
+		return ITEM_INTERACT_SUCCESS
+	return NONE
 
 /**
  * Actually add current decal to the floor.
@@ -235,7 +234,7 @@
  * * target - The turf being painted to
 */
 /obj/item/airlock_painter/decal/proc/paint_floor(turf/open/floor/target)
-	target.AddElement(/datum/element/decal, 'icons/turf/decals.dmi', stored_decal_total, stored_dir, null, null, alpha, color, null, FALSE, null)
+	target.AddElement(/datum/element/decal, 'icons/turf/decals.dmi', stored_decal_total, stored_dir, null, null, alpha, color, null, null, null, FALSE, null)
 
 /**
  * Return the final icon_state for the given decal options
@@ -299,7 +298,7 @@
 	.["current_dir"] = stored_dir
 	.["current_custom_color"] = stored_custom_color
 
-/obj/item/airlock_painter/decal/ui_act(action, list/params)
+/obj/item/airlock_painter/decal/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if(.)
 		return
@@ -439,7 +438,7 @@
 		decal_color = rgba_regex.group[1]
 		decal_alpha = text2num(rgba_regex.group[2], 16)
 
-	target.AddElement(/datum/element/decal, 'icons/turf/decals.dmi', source_decal, source_dir, null, null, decal_alpha, decal_color, null, FALSE, null)
+	target.AddElement(/datum/element/decal, 'icons/turf/decals.dmi', source_decal, source_dir, null, null, decal_alpha, decal_color, null, null, null, FALSE, null)
 
 /datum/asset/spritesheet/decals/tiles
 	name = "floor_tile_decals"

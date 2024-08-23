@@ -36,6 +36,9 @@
 	/// The default color for the reel overlay if no line is equipped.
 	var/default_line_color = "gray"
 
+	///should there be a fishing line?
+	var/display_fishing_line = TRUE
+
 	///The name of the icon state of the reel overlay
 	var/reel_overlay = "reel_overlay"
 
@@ -68,6 +71,7 @@
 	. = ..()
 	if(currently_hooked)
 		context[SCREENTIP_CONTEXT_LMB] = "Reel in"
+		context[SCREENTIP_CONTEXT_RMB] = "Unhook"
 		return CONTEXTUAL_SCREENTIP_SET
 	return NONE
 
@@ -97,7 +101,7 @@
 
 /obj/item/fishing_rod/proc/consume_bait(atom/movable/reward)
 	// catching things that aren't fish or alive mobs doesn't consume baits.
-	if(isnull(reward) || isnull(bait))
+	if(isnull(reward) || isnull(bait) || HAS_TRAIT(bait, TRAIT_BAIT_UNCONSUMABLE))
 		return
 	if(isliving(reward))
 		var/mob/living/caught_mob = reward
@@ -142,21 +146,13 @@
 	. = ..()
 	ui_interact(user)
 
-/obj/item/fishing_rod/pre_attack(atom/targeted_atom, mob/living/user, params)
-	. = ..()
-	/// Reel in if able
-	if(currently_hooked)
-		reel(user)
-		return TRUE
-	if(!hook)
-		balloon_alert(user, "install a hook first!")
-	SEND_SIGNAL(targeted_atom, COMSIG_PRE_FISHING)
-
 /// Generates the fishing line visual from the current user to the target and updates inhands
 /obj/item/fishing_rod/proc/create_fishing_line(atom/movable/target, target_py = null)
+	if(!display_fishing_line)
+		return null
 	var/mob/user = loc
 	if(!istype(user))
-		return
+		return null
 	if(fishing_line)
 		QDEL_NULL(fishing_line)
 	var/beam_color = line?.line_color || default_line_color
@@ -200,33 +196,42 @@
 		qdel(source)
 		return BEAM_CANCEL_DRAW
 
-/obj/item/fishing_rod/afterattack(atom/target, mob/user, proximity_flag, click_parameters)
-	. = ..()
-	. |= AFTERATTACK_PROCESSED_ITEM
+/obj/item/fishing_rod/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
+	return ranged_interact_with_atom(interacting_with, user, modifiers)
 
-	/// Reel in if able
+/obj/item/fishing_rod/ranged_interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
+	if(!hook)
+		balloon_alert(user, "install a hook first!")
+		return ITEM_INTERACT_BLOCKING
+
+	// Reel in if able
 	if(currently_hooked)
 		reel(user)
-		return .
+		return ITEM_INTERACT_BLOCKING
 
-	cast_line(target, user, proximity_flag)
+	SEND_SIGNAL(interacting_with, COMSIG_PRE_FISHING)
+	cast_line(interacting_with, user)
+	return ITEM_INTERACT_SUCCESS
 
-	return .
+/obj/item/fishing_rod/interact_with_atom_secondary(atom/interacting_with, mob/living/user, list/modifiers)
+	return ranged_interact_with_atom_secondary(interacting_with, user, modifiers)
 
-///Called by afterattack(). If the line to whatever that is is clear and we're not already busy, try fishing in it
-/obj/item/fishing_rod/proc/cast_line(atom/target, mob/user, proximity_flag)
-	if(casting || currently_hooked || proximity_flag)
+/obj/item/fishing_rod/ranged_interact_with_atom_secondary(atom/interacting_with, mob/living/user, list/modifiers)
+	//Stop reeling, delete the fishing line
+	if(currently_hooked)
+		QDEL_NULL(fishing_line)
+		return ITEM_INTERACT_BLOCKING
+	return ..()
+
+/// If the line to whatever that is is clear and we're not already busy, try fishing in it
+/obj/item/fishing_rod/proc/cast_line(atom/target, mob/user)
+	if(casting || currently_hooked)
 		return
 	if(!hook)
 		balloon_alert(user, "install a hook first!")
 		return
-	if(!CheckToolReach(user, target, cast_range))
-		balloon_alert(user, "cannot reach there!")
-		return
 	if(!COOLDOWN_FINISHED(src, casting_cd))
 		return
-	/// Annoyingly pre attack is only called in melee
-	SEND_SIGNAL(target, COMSIG_PRE_FISHING)
 	casting = TRUE
 	var/obj/projectile/fishing_cast/cast_projectile = new(get_turf(src))
 	cast_projectile.range = cast_range
@@ -234,7 +239,7 @@
 	cast_projectile.original = target
 	cast_projectile.fired_from = src
 	cast_projectile.firer = user
-	cast_projectile.impacted = list(user = TRUE)
+	cast_projectile.impacted = list(WEAKREF(user) = TRUE)
 	cast_projectile.preparePixelProjectile(target, user)
 	cast_projectile.fire()
 	COOLDOWN_START(src, casting_cd, 1 SECONDS)
@@ -280,6 +285,8 @@
 		if(istype(bait, /obj/item/food/bait))
 			var/obj/item/food/bait/real_bait = bait
 			bait_state = real_bait.rod_overlay_icon_state
+		if(istype(bait, /obj/item/stock_parts/power_store/cell/lead))
+			bait_state = "battery_overlay"
 		. += bait_state
 
 /obj/item/fishing_rod/worn_overlays(mutable_appearance/standing, isinhands, icon_file)
@@ -358,7 +365,7 @@
 				return FALSE
 	return TRUE
 
-/obj/item/fishing_rod/ui_act(action, list/params)
+/obj/item/fishing_rod/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if(.)
 		return .
@@ -529,7 +536,7 @@
 	ui_description = "This rod has an infinite supply of synth-bait. Also doubles as an Experi-Scanner for fish."
 	icon_state = "fishing_rod_science"
 	reel_overlay = "reel_science"
-	bait = /obj/item/food/bait/doughball/synthetic
+	bait = /obj/item/food/bait/doughball/synthetic/unconsumable
 
 /obj/item/fishing_rod/tech/Initialize(mapload)
 	. = ..()
@@ -550,9 +557,6 @@
 /obj/item/fishing_rod/tech/examine(mob/user)
 	. = ..()
 	. += span_notice("<b>Alt-Click</b> to access the Experiment Configuration UI")
-
-/obj/item/fishing_rod/tech/consume_bait(atom/movable/reward)
-	return
 
 /obj/item/fishing_rod/tech/use_slot(slot, mob/user, obj/item/new_item)
 	if(slot == ROD_SLOT_BAIT)
@@ -579,23 +583,21 @@
 	if(owner.hook)
 		icon_state = owner.hook.icon_state
 		transform = transform.Scale(1, -1)
-	return ..()
-
-/obj/projectile/fishing_cast/Impact(atom/hit_atom)
 	. = ..()
-	owner.hook_hit(hit_atom)
-	qdel(src)
+	if(!QDELETED(src))
+		our_line = owner.create_fishing_line(src)
 
-/obj/projectile/fishing_cast/fire(angle, atom/direct_target)
+/obj/projectile/fishing_cast/on_hit(atom/target, blocked = 0, pierce_hit)
 	. = ..()
-	our_line = owner.create_fishing_line(src)
+	if(blocked < 100)
+		QDEL_NULL(our_line) //we need to delete the old beam datum, otherwise it won't let you fish.
+		owner.hook_hit(target)
 
 /obj/projectile/fishing_cast/Destroy()
-	. = ..()
 	QDEL_NULL(our_line)
 	owner?.casting = FALSE
-
-
+	owner = null
+	return ..()
 
 /datum/beam/fishing_line
 	// Is the fishing rod held in left side hand

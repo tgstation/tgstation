@@ -1,6 +1,18 @@
 
 
-/mob/living/carbon/human/say(message, bubble_type, list/spans, sanitize, datum/language/language, ignore_spam, forced, filterproof, message_range, datum/saymode/saymode)
+/mob/living/carbon/human/say(
+	message,
+	bubble_type,
+	list/spans = list(),
+	sanitize = TRUE,
+	datum/language/language,
+	ignore_spam = FALSE,
+	forced,
+	filterproof = FALSE,
+	message_range = 7,
+	datum/saymode/saymode,
+	list/message_mods = list(),
+)
 	if(!HAS_TRAIT(src, TRAIT_SPEAKS_CLEARLY))
 		var/static/regex/tongueless_lower = new("\[gdntke]+", "g")
 		var/static/regex/tongueless_upper = new("\[GDNTKE]+", "g")
@@ -58,7 +70,10 @@
 	var/obj/item/radio/headset/dongle = ears
 	if(!istype(dongle))
 		return FALSE
-	return dongle.translate_binary
+	var/area/our_area = get_area(src)
+	if(our_area.area_flags & BINARY_JAMMING)
+		return FALSE
+	return (dongle.special_channels & RADIO_SPECIAL_BINARY)
 
 /mob/living/carbon/human/radio(message, list/message_mods = list(), list/spans, language) //Poly has a copy of this, lazy bastard
 	. = ..()

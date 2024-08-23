@@ -36,7 +36,9 @@
 /area/station/maintenance/department/security)
 "o" = (
 /obj/structure/table,
-/obj/item/paper_bin/carbon,
+/obj/item/paper_bin/carbon{
+	pixel_y = 11
+	},
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/smooth,
 /area/station/maintenance/department/security)
@@ -44,14 +46,16 @@
 /obj/structure/table,
 /obj/item/paper_bin{
 	pixel_x = -5;
-	pixel_y = 4
+	pixel_y = 11
 	},
 /obj/item/pen{
-	pixel_x = -4
+	pixel_x = -4;
+	pixel_y = 12
 	},
 /obj/effect/decal/cleanable/dirt,
 /obj/item/folder/red{
-	pixel_x = 3
+	pixel_x = 6;
+	pixel_y = 5
 	},
 /turf/open/floor/iron/smooth,
 /area/station/maintenance/department/security)
@@ -65,7 +69,9 @@
 	},
 /obj/item/paper/secretrecipe,
 /obj/effect/decal/cleanable/dirt,
-/obj/effect/decal/cleanable/cobweb/cobweb2,
+/obj/effect/decal/cleanable/cobweb/cobweb2{
+	pixel_y = 24
+	},
 /turf/open/floor/iron/smooth,
 /area/station/maintenance/department/security)
 "H" = (
@@ -78,7 +84,8 @@
 /obj/structure/table,
 /obj/machinery/fax{
 	fax_name = "Head of Personnel's Office";
-	name = "Head of Personnel's Fax Machine"
+	name = "Head of Personnel's Fax Machine";
+	pixel_y = 10
 	},
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/smooth,
@@ -90,8 +97,13 @@
 /area/station/maintenance/department/security)
 "T" = (
 /obj/structure/table,
-/obj/item/papercutter,
-/obj/item/paper/paperslip,
+/obj/item/papercutter{
+	pixel_y = 8;
+	pixel_x = 4
+	},
+/obj/item/paper/paperslip{
+	pixel_y = 10
+	},
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/smooth,
 /area/station/maintenance/department/security)

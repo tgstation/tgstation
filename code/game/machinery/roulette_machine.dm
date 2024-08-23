@@ -98,7 +98,7 @@
 
 	return data
 
-/obj/machinery/roulette/ui_act(action, params)
+/obj/machinery/roulette/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if(.)
 		return
@@ -224,9 +224,9 @@
 
 	playsound(src, 'sound/machines/roulettewheel.ogg', 50)
 	addtimer(CALLBACK(src, PROC_REF(finish_play), player_id, bet_type, bet_amount, payout, rolled_number), 34) //4 deciseconds more so the animation can play
-	addtimer(CALLBACK(src, PROC_REF(finish_play_animation)), 30)
+	addtimer(CALLBACK(src, PROC_REF(finish_play_animation)), 3 SECONDS)
 
-	use_power(active_power_usage)
+	use_energy(active_power_usage)
 
 /obj/machinery/roulette/proc/finish_play_animation()
 	icon_state = "idle"
@@ -277,7 +277,7 @@
 		var/value = coin_values[coin_type] //Change this to use initial value once we change to mat datum coins.
 		var/coin_count = round(remaining_payout / value)
 
-		if(!coin_count) //Cant make coins of this type, as we can't reach it's value.
+		if(!coin_count) //Cant make coins of this type, as we can't reach its value.
 			continue
 
 		remaining_payout -= value * coin_count
@@ -448,14 +448,15 @@
 		return
 	loc.visible_message(span_warning("\The [src] begins to beep loudly!"))
 	used = TRUE
-	addtimer(CALLBACK(src, PROC_REF(launch_payload)), 40)
+	addtimer(CALLBACK(src, PROC_REF(launch_payload)), 4 SECONDS)
 
 /obj/item/roulette_wheel_beacon/proc/launch_payload()
-	var/obj/structure/closet/supplypod/centcompod/toLaunch = new()
-
-	new /obj/machinery/roulette(toLaunch)
-
-	new /obj/effect/pod_landingzone(drop_location(), toLaunch)
+	podspawn(list(
+		"target" = drop_location(),
+		"path" = /obj/structure/closet/supplypod/centcompod,
+		"spawn" = /obj/machinery/roulette
+	))
+	
 	qdel(src)
 
 #undef ROULETTE_DOZ_COL_PAYOUT

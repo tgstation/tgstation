@@ -324,7 +324,7 @@
 /area/ruin/space/has_grav/thelizardsgas)
 "Io" = (
 /obj/machinery/power/smes{
-	charge = 2e+006;
+	charge = 4e+007;
 	output_level = 0
 	},
 /obj/structure/cable,

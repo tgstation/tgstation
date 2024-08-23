@@ -44,7 +44,8 @@ export type PodLauncherData = {
   shrapnelMagnitude: number;
   shrapnelType: string;
   soundVolume: number;
-  styleChoice: number;
+  styleChoice: string;
+  podStyles: Array<Record<string, string>>;
 };
 
 export type PodDelay = {

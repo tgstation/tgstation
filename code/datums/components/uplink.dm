@@ -3,7 +3,7 @@
 /**
  * Uplinks
  *
- * All /obj/item(s) have a hidden_uplink var. By default it's null. Give the item one with 'new(src') (it must be in it's contents). Then add 'uses.'
+ * All /obj/item(s) have a hidden_uplink var. By default it's null. Give the item one with 'new(src') (it must be in its contents). Then add 'uses.'
  * Use whatever conditionals you want to check that the user has an uplink, and then call interact() on their uplink.
  * You might also want the uplink menu to open if active. Check if the uplink is 'active' and then interact() with it.
 **/
@@ -227,9 +227,12 @@
 	for(var/datum/uplink_item/item as anything in uplink_handler.extra_purchasable)
 		if(item.stock_key in stock_list)
 			extra_purchasable_stock[REF(item)] = stock_list[item.stock_key]
+		var/atom/actual_item = item.item
 		extra_purchasable += list(list(
 			"id" = item.type,
 			"name" = item.name,
+			"icon" = actual_item.icon,
+			"icon_state" = actual_item.icon_state,
 			"cost" = item.cost,
 			"desc" = item.desc,
 			"category" = item.category ? initial(item.category.name) : null,
@@ -266,7 +269,7 @@
 
 /datum/component/uplink/ui_assets(mob/user)
 	return list(
-		get_asset_datum(/datum/asset/json/uplink)
+		get_asset_datum(/datum/asset/json/uplink),
 	)
 
 /datum/component/uplink/ui_act(action, params, datum/tgui/ui, datum/ui_state/state)
@@ -288,6 +291,13 @@
 					return
 				item = SStraitor.uplink_items_by_type[item_path]
 			uplink_handler.purchase_item(ui.user, item, parent)
+		if("buy_raw_tc")
+			if (uplink_handler.telecrystals <= 0)
+				return
+			var/desired_amount = tgui_input_number(ui.user, "How many raw telecrystals to buy?", "Buy Raw TC", default = uplink_handler.telecrystals, max_value = uplink_handler.telecrystals)
+			if(!desired_amount || desired_amount < 1)
+				return
+			uplink_handler.purchase_raw_tc(ui.user, desired_amount, parent)
 		if("lock")
 			if(!lockable)
 				return TRUE
@@ -378,8 +388,8 @@
 /datum/component/uplink/proc/new_ringtone(datum/source, mob/living/user, new_ring_text)
 	SIGNAL_HANDLER
 
-	if(trim(lowertext(new_ring_text)) != trim(lowertext(unlock_code)))
-		if(trim(lowertext(new_ring_text)) == trim(lowertext(failsafe_code)))
+	if(trim(LOWER_TEXT(new_ring_text)) != trim(LOWER_TEXT(unlock_code)))
+		if(trim(LOWER_TEXT(new_ring_text)) == trim(LOWER_TEXT(failsafe_code)))
 			failsafe(user)
 			return COMPONENT_STOP_RINGTONE_CHANGE
 		return
@@ -415,8 +425,8 @@
 	if(channel != RADIO_CHANNEL_UPLINK)
 		return
 
-	if(!findtext(lowertext(message), lowertext(unlock_code)))
-		if(failsafe_code && findtext(lowertext(message), lowertext(failsafe_code)))
+	if(!findtext(LOWER_TEXT(message), LOWER_TEXT(unlock_code)))
+		if(failsafe_code && findtext(LOWER_TEXT(message), LOWER_TEXT(failsafe_code)))
 			failsafe(user)  // no point returning cannot radio, youre probably ded
 		return
 	locked = FALSE

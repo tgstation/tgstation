@@ -52,8 +52,7 @@
 	if(command_radio)
 		radio.command = TRUE
 		radio.use_command = TRUE
-
-	if(ispath(uplink_type, /obj/item/uplink/nuclear) || tc) // /obj/item/uplink/nuclear understands 0 tc
+	if(ispath(uplink_type, /obj/item/uplink) || tc) // /obj/item/uplink understands 0 tc
 		var/obj/item/uplink = new uplink_type(nukie, nukie.key, tc)
 		nukie.equip_to_slot_or_del(uplink, ITEM_SLOT_BACKPACK, indirect_action = TRUE)
 
@@ -67,7 +66,7 @@
 /datum/outfit/syndicate/full
 	name = "Syndicate Operative - Full Kit"
 
-	glasses = /obj/item/clothing/glasses/night
+	glasses = /obj/item/clothing/glasses/night/colorless
 	mask = /obj/item/clothing/mask/gas/syndicate
 	back = /obj/item/mod/control/pre_equipped/nuclear
 	r_pocket = /obj/item/tank/internals/emergency_oxygen/engi
@@ -77,7 +76,12 @@
 	backpack_contents = list(
 		/obj/item/gun/ballistic/automatic/pistol/clandestine = 1,
 		/obj/item/pen/edagger = 1,
+		/obj/item/ammo_box/magazine/m12g = 3,
 	)
+
+/datum/outfit/syndicate/full/loneop
+	name = "Syndicate Operative - Full Kit (Loneop)"
+	uplink_type = /obj/item/uplink/loneop
 
 /datum/outfit/syndicate/full/plasmaman
 	name = "Syndicate Operative - Full Kit (Plasmaman)"
@@ -90,12 +94,16 @@
 	backpack_contents += /obj/item/clothing/head/helmet/space/plasmaman/syndie
 	return ..()
 
+/datum/outfit/syndicate/full/plasmaman/loneop
+	name = "Syndicate Operative - Full Kit (Loneop Plasmaman)"
+	uplink_type = /obj/item/uplink/loneop
+
 /datum/outfit/syndicate/reinforcement
 	name = "Syndicate Operative - Reinforcement"
 	tc = 0
 	backpack_contents = list(
-		/obj/item/gun/ballistic/automatic/plastikov = 1,
-		/obj/item/ammo_box/magazine/plastikov9mm = 2,
+		/obj/item/gun/ballistic/automatic/smartgun = 1,
+		/obj/item/ammo_box/magazine/smartgun = 2,
 	)
 	var/faction = "The Syndicate"
 
@@ -113,6 +121,14 @@
 	r_hand = /obj/item/tank/internals/plasmaman/belt/full
 	tc = 0
 
+/datum/outfit/syndicate/support/plasmaman
+	name = "Nuclear Operative Overwatch Agent (Plasmaman)"
+	back = /obj/item/storage/backpack/satchel
+	head = /obj/item/clothing/head/helmet/space/plasmaman/syndie
+	uniform = /obj/item/clothing/under/plasmaman/syndicate
+	glasses = /obj/item/clothing/glasses/overwatch
+	r_hand = /obj/item/tank/internals/plasmaman/belt/full
+
 /datum/outfit/syndicate/reinforcement/gorlex
 	name = "Syndicate Operative - Gorlex Reinforcement"
 	suit = /obj/item/clothing/suit/armor/vest/alt
@@ -127,7 +143,7 @@
 	suit = /obj/item/clothing/suit/jacket/oversized
 	gloves = /obj/item/clothing/gloves/fingerless
 	glasses = /obj/item/clothing/glasses/sunglasses
-	mask = /obj/item/clothing/mask/cigarette/cigar
+	mask = /obj/item/cigarette/cigar
 	faction = "Cybersun Industries"
 
 /datum/outfit/syndicate/reinforcement/donk
@@ -136,7 +152,7 @@
 	head = /obj/item/clothing/head/utility/hardhat/orange
 	shoes = /obj/item/clothing/shoes/workboots
 	glasses = /obj/item/clothing/glasses/meson
-	faction = "the Donk Corporation"
+	faction = "Donk Company"
 
 /datum/outfit/syndicate/reinforcement/waffle
 	name = "Syndicate Operative - Waffle Reinforcement"
@@ -190,3 +206,14 @@
 	var/obj/item/shield/energy/shield = locate() in H.held_items
 	shield.icon_state = "[shield.base_icon_state]1"
 	H.update_held_items()
+
+/datum/outfit/syndicate/support
+	name = "Nuclear Operative Overwatch Agent"
+	back = /obj/item/storage/backpack/satchel
+	uniform = /obj/item/clothing/under/syndicate/tacticool
+	glasses = /obj/item/clothing/glasses/overwatch
+	suit = /obj/item/clothing/suit/jacket/letterman_syndie
+	shoes = /obj/item/clothing/shoes/sandal
+	command_radio = TRUE
+	tc = 0
+	uplink_type = null

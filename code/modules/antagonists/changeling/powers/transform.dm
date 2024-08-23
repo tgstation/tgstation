@@ -19,6 +19,9 @@
 		return
 	. = ..()
 
+/obj/item/clothing/glasses/changeling/attack_paw(mob/user, list/modifiers)
+	attack_hand(user, modifiers)
+
 /obj/item/clothing/under/changeling
 	name = "flesh"
 	item_flags = DROPDEL
@@ -30,6 +33,9 @@
 		qdel(src)
 		return
 	. = ..()
+
+/obj/item/clothing/under/changeling/attack_paw(mob/user, list/modifiers)
+	attack_hand(user, modifiers)
 
 /obj/item/clothing/suit/changeling
 	name = "flesh"
@@ -44,6 +50,9 @@
 		return
 	. = ..()
 
+/obj/item/clothing/suit/changeling/attack_paw(mob/user, list/modifiers)
+	attack_hand(user, modifiers)
+
 /obj/item/clothing/head/changeling
 	name = "flesh"
 	icon_state = null
@@ -57,6 +66,9 @@
 		return
 	. = ..()
 
+/obj/item/clothing/head/changeling/attack_paw(mob/user, list/modifiers)
+	attack_hand(user, modifiers)
+
 /obj/item/clothing/shoes/changeling
 	name = "flesh"
 	item_flags = DROPDEL
@@ -68,6 +80,9 @@
 		qdel(src)
 		return
 	. = ..()
+
+/obj/item/clothing/shoes/changeling/attack_paw(mob/user, list/modifiers)
+	attack_hand(user, modifiers)
 
 /obj/item/clothing/gloves/changeling
 	name = "flesh"
@@ -81,6 +96,9 @@
 		return
 	. = ..()
 
+/obj/item/clothing/gloves/changeling/attack_paw(mob/user, list/modifiers)
+	attack_hand(user, modifiers)
+
 /obj/item/clothing/mask/changeling
 	name = "flesh"
 	item_flags = DROPDEL
@@ -92,6 +110,9 @@
 		qdel(src)
 		return
 	. = ..()
+
+/obj/item/clothing/mask/changeling/attack_paw(mob/user, list/modifiers)
+	attack_hand(user, modifiers)
 
 /obj/item/changeling
 	name = "flesh"
@@ -105,6 +126,9 @@
 		qdel(src)
 		return
 	. = ..()
+
+/obj/item/changeling/attack_paw(mob/user, list/modifiers)
+	attack_hand(user, modifiers)
 
 /obj/item/changeling/id
 	slot_flags = ITEM_SLOT_ID
@@ -127,7 +151,12 @@
 /obj/item/changeling/id/proc/get_cached_flat_icon()
 	if(!cached_flat_icon)
 		cached_flat_icon = getFlatIcon(src)
+		cached_flat_icon.Crop(ID_ICON_BORDERS)
 	return cached_flat_icon
+
+/obj/item/changeling/id/get_id_examine_strings(mob/user)
+	. = ..()
+	. += list("[icon2html(get_cached_flat_icon(), user, extra_classes = "bigicon")]")
 
 /obj/item/changeling/id/get_examine_string(mob/user, thats = FALSE)
 	return "[icon2html(get_cached_flat_icon(), user)] [thats? "That's ":""][get_examine_name(user)]" //displays all overlays in chat

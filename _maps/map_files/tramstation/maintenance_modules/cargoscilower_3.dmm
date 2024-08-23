@@ -158,7 +158,9 @@
 "py" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/closet/emcloset,
-/obj/effect/decal/cleanable/cobweb/cobweb2,
+/obj/effect/decal/cleanable/cobweb/cobweb2{
+	pixel_y = 24
+	},
 /turf/open/floor/iron/smooth,
 /area/station/maintenance/starboard/central)
 "qa" = (
@@ -178,8 +180,12 @@
 /obj/effect/turf_decal/trimline/purple/filled/line{
 	dir = 8
 	},
-/obj/machinery/cell_charger,
-/obj/item/stock_parts/cell/high/empty,
+/obj/machinery/cell_charger{
+	pixel_y = 10
+	},
+/obj/item/stock_parts/power_store/cell/high/empty{
+	pixel_y = 9
+	},
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron,
 /area/station/maintenance/starboard/central)
@@ -206,8 +212,13 @@
 /obj/effect/turf_decal/trimline/purple/filled/line{
 	dir = 8
 	},
-/obj/item/storage/belt/utility,
-/obj/item/clothing/glasses/welding,
+/obj/item/storage/belt/utility{
+	pixel_y = 15;
+	pixel_x = 3
+	},
+/obj/item/clothing/glasses/welding{
+	pixel_y = 9
+	},
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron,
 /area/station/maintenance/starboard/central)
@@ -255,7 +266,9 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/structure/cable,
-/obj/effect/decal/cleanable/cobweb/cobweb2,
+/obj/effect/decal/cleanable/cobweb/cobweb2{
+	pixel_y = 24
+	},
 /turf/open/floor/catwalk_floor,
 /area/station/maintenance/starboard/central)
 "xJ" = (
@@ -333,7 +346,7 @@
 /obj/structure/table,
 /obj/item/stack/sheet/plasteel{
 	amount = 5;
-	pixel_y = 9
+	pixel_y = 13
 	},
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/tile/purple/fourcorners,
@@ -507,7 +520,9 @@
 "RH" = (
 /obj/structure/table,
 /obj/effect/decal/cleanable/dirt,
-/obj/effect/decal/cleanable/cobweb,
+/obj/effect/decal/cleanable/cobweb{
+	pixel_y = 24
+	},
 /obj/effect/turf_decal/tile/purple/fourcorners,
 /turf/open/floor/iron,
 /area/station/maintenance/starboard/central)

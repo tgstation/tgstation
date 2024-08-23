@@ -67,6 +67,7 @@
 		language = language,
 		forced = "[source]'s marionette",
 		saymode = saymode,
+		message_mods = list(MODE_RELAY = TRUE),
 	)
 	speech_args[SPEECH_RANGE] = WHISPER_RANGE
 

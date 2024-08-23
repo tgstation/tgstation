@@ -66,7 +66,7 @@ Consuming extracts:
 		fed = TRUE
 	else
 		M.visible_message(span_danger("[user] tries to force [M] to eat [src]!"), span_userdanger("[user] tries to force you to eat [src]!"))
-		if(do_after(user, 20, target = M))
+		if(do_after(user, 2 SECONDS, target = M))
 			fed = TRUE
 			M.visible_message(span_danger("[user] forces [M] to eat [src]!"), span_warning("[user] forces you to eat [src]."))
 	if(fed)
@@ -226,30 +226,40 @@ Consuming extracts:
 	icon_state = "bluespace"
 	taste = "sugar and starlight"
 
-/obj/item/slime_cookie/bluespace/do_effect(mob/living/M, mob/user)
-	var/list/L = get_area_turfs(get_area(get_turf(M)))
-	var/turf/target
-	while (L.len && !target)
-		var/I = rand(1, L.len)
-		var/turf/T = L[I]
-		if (is_centcom_level(T.z))
-			L.Cut(I,I+1)
-			continue
-		if(!T.density)
-			var/clear = TRUE
-			for(var/obj/O in T)
-				if(O.density)
-					clear = FALSE
-					break
-			if(clear)
-				target = T
-		if (!target)
-			L.Cut(I,I+1)
+/obj/item/slime_cookie/bluespace/do_effect(mob/living/eater, mob/user)
+	var/area/eater_area = get_area(eater)
+	if (eater_area.area_flags & NOTELEPORT)
+		fail_effect(eater)
+		return
 
-	if(target)
-		do_teleport(M, target, 0, asoundin = 'sound/effects/phasein.ogg', channel = TELEPORT_CHANNEL_BLUESPACE)
-		new /obj/effect/particle_effect/sparks(get_turf(M))
-		playsound(get_turf(M), SFX_SPARKS, 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
+	var/list/area_turfs = get_area_turfs(get_area(get_turf(eater)))
+	var/turf/target
+
+	while (length(area_turfs))
+		var/turf/check_turf = pick_n_take(area_turfs)
+		if (is_centcom_level(check_turf.z))
+			continue // Probably already filtered out by NOTELEPORT but let's just be careful
+		if (check_turf.is_blocked_turf())
+			continue
+		target = check_turf
+		break
+
+	if (isnull(target))
+		fail_effect(eater)
+		return
+	if (!do_teleport(eater, target, 0, asoundin = 'sound/effects/phasein.ogg', channel = TELEPORT_CHANNEL_BLUESPACE))
+		fail_effect(eater)
+		return
+	new /obj/effect/particle_effect/sparks(target)
+	playsound(target, SFX_SPARKS, 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
+
+/obj/item/slime_cookie/bluespace/proc/fail_effect(mob/living/eater)
+	eater.visible_message(
+		message = span_warning("[eater] briefly vanishes... then slams forcefully into the ground"),
+		self_message = span_warning("You briefly vanish... and are returned forcefully to the ground.")
+	)
+	eater.Knockdown(0.1 SECONDS)
+	new /obj/effect/particle_effect/sparks(get_turf(eater))
 
 /obj/item/slimecross/consuming/sepia
 	colour = SLIME_TYPE_SEPIA
@@ -293,7 +303,7 @@ Consuming extracts:
 	desc = "A yellow cookie with rainbow-colored icing. Reflects the light strangely."
 	icon_state = "pyrite"
 	taste = "vanilla and " //Randomly selected color dye.
-	var/colour = "#FFFFFF"
+	var/colour = COLOR_WHITE
 
 /obj/item/slime_cookie/pyrite/Initialize(mapload)
 	. = ..()
@@ -301,25 +311,25 @@ Consuming extracts:
 	switch(rand(1,7))
 		if(1)
 			tastemessage = "red dye"
-			colour = "#FF0000"
+			colour = COLOR_RED
 		if(2)
 			tastemessage = "orange dye"
 			colour = "#FFA500"
 		if(3)
 			tastemessage = "yellow dye"
-			colour = "#FFFF00"
+			colour = COLOR_YELLOW
 		if(4)
 			tastemessage = "green dye"
-			colour = "#00FF00"
+			colour = COLOR_VIBRANT_LIME
 		if(5)
 			tastemessage = "blue dye"
-			colour = "#0000FF"
+			colour = COLOR_BLUE
 		if(6)
 			tastemessage = "indigo dye"
 			colour = "#4B0082"
 		if(7)
 			tastemessage = "violet dye"
-			colour = "#FF00FF"
+			colour = COLOR_MAGENTA
 	taste += tastemessage
 
 /obj/item/slime_cookie/pyrite/do_effect(mob/living/M, mob/user)

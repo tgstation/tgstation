@@ -49,10 +49,8 @@
 		if(prob(10/severity))
 			switch(rand(1,5))
 				if(1)
-					if(prob(10))
-						target.name = "[pick(lizard_name(MALE),lizard_name(FEMALE))]"
-					else
-						target.name = "[pick(pick(GLOB.first_names_male), pick(GLOB.first_names_female))] [pick(GLOB.last_names)]"
+					target.name = generate_random_name()
+
 				if(2)
 					target.gender = pick("Male", "Female", "Other")
 				if(3)
@@ -104,6 +102,7 @@
 				paid = warrant.paid,
 				time = warrant.time,
 				valid = warrant.valid,
+				voider = warrant.voider,
 			))
 
 		var/list/crimes = list()
@@ -115,6 +114,7 @@
 				name = crime.name,
 				time = crime.time,
 				valid = crime.valid,
+				voider = crime.voider,
 			))
 
 		records += list(list(
@@ -147,6 +147,8 @@
 	if(.)
 		return
 
+	var/mob/user = ui.user
+
 	var/datum/record/crew/target
 	if(params["crew_ref"])
 		target = locate(params["crew_ref"]) in GLOB.manifest.general
@@ -155,28 +157,30 @@
 
 	switch(action)
 		if("add_crime")
-			add_crime(usr, target, params)
+			add_crime(user, target, params)
 			return TRUE
 
 		if("delete_record")
+			investigate_log("[user] deleted record: \"[target]\".", INVESTIGATE_RECORDS)
 			qdel(target)
 			return TRUE
 
 		if("edit_crime")
-			edit_crime(usr, target, params)
+			edit_crime(user, target, params)
 			return TRUE
 
 		if("invalidate_crime")
-			invalidate_crime(usr, target, params)
+			invalidate_crime(user, target, params)
 			return TRUE
 
 		if("print_record")
-			print_record(usr, target, params)
+			print_record(user, target, params)
 			return TRUE
 
 		if("set_note")
-			var/note = params["note"]
-			target.security_note = trim(note, MAX_MESSAGE_LEN)
+			var/note = strip_html_full(params["note"], MAX_MESSAGE_LEN)
+			investigate_log("[user] has changed the security note of record: \"[target]\" from \"[target.security_note]\" to \"[note]\".")
+			target.security_note = note
 			return TRUE
 
 		if("set_wanted")
@@ -197,7 +201,7 @@
 
 /// Handles adding a crime to a particular record.
 /obj/machinery/computer/records/security/proc/add_crime(mob/user, datum/record/crew/target, list/params)
-	var/input_name = trim(params["name"], MAX_CRIME_NAME_LEN)
+	var/input_name = strip_html_full(params["name"], MAX_CRIME_NAME_LEN)
 	if(!input_name)
 		to_chat(usr, span_warning("You must enter a name for the crime."))
 		playsound(src, 'sound/machines/terminal_error.ogg', 75, TRUE)
@@ -211,7 +215,7 @@
 
 	var/input_details
 	if(params["details"])
-		input_details = trim(params["details"], MAX_MESSAGE_LEN)
+		input_details = strip_html_full(params["details"], MAX_MESSAGE_LEN)
 
 	if(params["fine"] == 0)
 		var/datum/crime/new_crime = new(name = input_name, details = input_details, author = usr)
@@ -239,14 +243,19 @@
 		return FALSE
 
 	if(user != editing_crime.author && !has_armory_access(user)) // only warden/hos/command can edit crimes they didn't author
+		investigate_log("[user] attempted to edit crime: \"[editing_crime.name]\" for target: \"[target.name]\" but failed due to lacking armoury access and not being the author of the crime.", INVESTIGATE_RECORDS)
 		return FALSE
 
 	if(params["name"] && length(params["name"]) > 2 && params["name"] != editing_crime.name)
-		editing_crime.name = trim(params["name"], MAX_CRIME_NAME_LEN)
+		var/new_name = strip_html_full(params["name"], MAX_CRIME_NAME_LEN)
+		investigate_log("[user] edited crime: \"[editing_crime.name]\" for target: \"[target.name]\", changing the name to: \"[new_name]\".", INVESTIGATE_RECORDS)
+		editing_crime.name = new_name
 		return TRUE
 
-	if(params["details"] && length(params["description"]) > 2 && params["name"] != editing_crime.name)
-		editing_crime.details = trim(params["details"], MAX_MESSAGE_LEN)
+	if(params["description"] && length(params["description"]) > 2 && params["name"] != editing_crime.name)
+		var/new_details = strip_html_full(params["description"], MAX_MESSAGE_LEN)
+		investigate_log("[user] edited crime \"[editing_crime.name]\" for target: \"[target.name]\", changing the details to: \"[new_details]\" from: \"[editing_crime.details]\".", INVESTIGATE_RECORDS)
+		editing_crime.details = new_details
 		return TRUE
 
 	return FALSE
@@ -262,6 +271,9 @@
 
 /// Only qualified personnel can edit records.
 /obj/machinery/computer/records/security/proc/has_armory_access(mob/user)
+	if (HAS_SILICON_ACCESS(user))
+		return TRUE
+
 	if(!isliving(user))
 		return FALSE
 	var/mob/living/player = user
@@ -277,16 +289,22 @@
 
 /// Voids crimes, or sets someone to discharged if they have none left.
 /obj/machinery/computer/records/security/proc/invalidate_crime(mob/user, datum/record/crew/target, list/params)
-	if(!has_armory_access(user))
-		return FALSE
 	var/datum/crime/to_void = locate(params["crime_ref"]) in target.crimes
+	var/acquitted = TRUE
 	if(!to_void)
+		to_void = locate(params["crime_ref"]) in target.citations
+		// No need to change status after invalidatation of citation
+		acquitted = FALSE
+		if(!to_void)
+			return FALSE
+
+	if(user != to_void.author && !has_armory_access(user))
 		return FALSE
 
 	to_void.valid = FALSE
+	to_void.voider = user
 	investigate_log("[key_name(user)] has invalidated [target.name]'s crime: [to_void.name]", INVESTIGATE_RECORDS)
 
-	var/acquitted = TRUE
 	for(var/datum/crime/incident in target.crimes)
 		if(!incident.valid)
 			continue
@@ -311,7 +329,7 @@
 /// Handles printing records via UI. Takes the params from UI_act.
 /obj/machinery/computer/records/security/proc/print_record(mob/user, datum/record/crew/target, list/params)
 	if(printing)
-		balloon_alert(usr, "printer busy")
+		balloon_alert(user, "printer busy")
 		playsound(src, 'sound/machines/terminal_error.ogg', 100, TRUE)
 		return FALSE
 
@@ -320,9 +338,9 @@
 	playsound(src, 'sound/machines/printer.ogg', 100, TRUE)
 
 	var/obj/item/printable
-	var/input_alias = trim(params["alias"], MAX_NAME_LEN) || target.name
-	var/input_description = trim(params["desc"], MAX_BROADCAST_LEN) || "No further details."
-	var/input_header = trim(params["head"], 8) || capitalize(params["type"])
+	var/input_alias = strip_html_full(params["alias"], MAX_NAME_LEN) || target.name
+	var/input_description = strip_html_full(params["desc"], MAX_BROADCAST_LEN) || "No further details."
+	var/input_header = strip_html_full(params["head"], 8) || capitalize(params["type"])
 
 	switch(params["type"])
 		if("missing")

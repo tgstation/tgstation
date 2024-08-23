@@ -353,12 +353,15 @@
 /turf/open/floor/carpet/black,
 /area/ruin/space/has_grav/powered/hilbertresearchfacility)
 "jC" = (
-/mob/living/simple_animal/slime{
-	rabid = 1;
-	slime_type = /datum/slime_type/bluespace
-	},
+/mob/living/basic/slime/hilbert,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/mineral/titanium/tiled/purple,
+/area/ruin/space/has_grav/powered/hilbertresearchfacility)
+"jG" = (
+/obj/effect/turf_decal/trimline/white/arrow_cw,
+/obj/effect/turf_decal/trimline/white/mid_joiner,
+/obj/structure/sign/departments/evac/aft/directional/west,
+/turf/open/floor/mineral/plastitanium,
 /area/ruin/space/has_grav/powered/hilbertresearchfacility)
 "jJ" = (
 /obj/item/reagent_containers/cup/beaker/bluespace{
@@ -892,10 +895,7 @@
 /turf/open/floor/mineral/plastitanium,
 /area/ruin/space/has_grav/powered/hilbertresearchfacility)
 "wY" = (
-/mob/living/simple_animal/slime{
-	rabid = 1;
-	slime_type = /datum/slime_type/bluespace
-	},
+/mob/living/basic/slime/hilbert,
 /turf/open/floor/mineral/plastitanium,
 /area/ruin/space/has_grav/powered/hilbertresearchfacility)
 "xb" = (
@@ -1863,12 +1863,6 @@
 /obj/machinery/hydroponics,
 /turf/open/floor/mineral/titanium/white,
 /area/ruin/space/has_grav/powered/hilbertresearchfacility)
-"Rk" = (
-/obj/structure/sign/departments/evac/directional/south,
-/obj/effect/turf_decal/trimline/white/arrow_cw,
-/obj/effect/turf_decal/trimline/white/mid_joiner,
-/turf/open/floor/mineral/plastitanium,
-/area/ruin/space/has_grav/powered/hilbertresearchfacility)
 "Ru" = (
 /obj/effect/turf_decal/stripes/red/line{
 	dir = 4
@@ -1959,7 +1953,7 @@
 /area/ruin/space/has_grav/powered/hilbertresearchfacility)
 "Sn" = (
 /obj/structure/table/wood,
-/obj/item/stock_parts/cell/bluespace{
+/obj/item/stock_parts/power_store/cell/bluespace{
 	pixel_y = 4
 	},
 /obj/machinery/cell_charger{
@@ -2169,10 +2163,7 @@
 	dir = 10
 	},
 /obj/effect/decal/cleanable/dirt,
-/mob/living/simple_animal/slime{
-	rabid = 1;
-	slime_type = /datum/slime_type/bluespace
-	},
+/mob/living/basic/slime/hilbert,
 /turf/open/floor/mineral/titanium/tiled/purple,
 /area/ruin/space/has_grav/powered/hilbertresearchfacility)
 "WI" = (
@@ -2295,10 +2286,7 @@
 /turf/open/floor/wood,
 /area/ruin/space/has_grav/powered/hilbertresearchfacility)
 "Ze" = (
-/mob/living/simple_animal/slime{
-	rabid = 1;
-	slime_type = /datum/slime_type/bluespace
-	},
+/mob/living/basic/slime/hilbert,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/mineral/plastitanium,
 /area/ruin/space/has_grav/powered/hilbertresearchfacility)
@@ -3005,7 +2993,7 @@ Do
 KC
 vG
 YG
-Rk
+jG
 Bo
 To
 To

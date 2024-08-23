@@ -28,18 +28,6 @@
 			if(user_unbuckle_mob(buckled_mobs[1],user))
 				return TRUE
 
-/atom/movable/item_interaction(mob/living/user, obj/item/tool, list/modifiers, is_right_clicking)
-	if(!can_buckle || !istype(tool, /obj/item/riding_offhand) || !user.Adjacent(src))
-		return ..()
-
-	var/obj/item/riding_offhand/riding_item = tool
-	var/mob/living/carried_mob = riding_item.rider
-	if(carried_mob == user) //Piggyback user.
-		return ITEM_INTERACT_BLOCKING
-	user.unbuckle_mob(carried_mob)
-	carried_mob.forceMove(get_turf(src))
-	return mouse_buckle_handling(carried_mob, user) ? ITEM_INTERACT_SUCCESS: ITEM_INTERACT_BLOCKING
-
 //literally just the above extension of attack_hand(), but for silicons instead (with an adjacency check, since attack_robot() being called doesn't mean that you're adjacent to something)
 /atom/movable/attack_robot(mob/living/user)
 	. = ..()
@@ -54,8 +42,7 @@
 		else
 			return user_unbuckle_mob(buckled_mobs[1], user)
 
-/atom/movable/MouseDrop_T(mob/living/M, mob/living/user)
-	. = ..()
+/atom/movable/mouse_drop_receive(mob/living/M, mob/user, params)
 	return mouse_buckle_handling(M, user)
 
 /**
@@ -128,6 +115,7 @@
 	post_buckle_mob(M)
 
 	SEND_SIGNAL(src, COMSIG_MOVABLE_BUCKLE, M, force)
+	SEND_SIGNAL(M, COMSIG_MOB_BUCKLED, src)
 	return TRUE
 
 /obj/buckle_mob(mob/living/M, force = FALSE, check_loc = TRUE)
@@ -163,6 +151,7 @@
 	if(!length(buckled_mobs))
 		UnregisterSignal(src, COMSIG_MOVABLE_SET_ANCHORED)
 	SEND_SIGNAL(src, COMSIG_MOVABLE_UNBUCKLE, buckled_mob, force)
+	SEND_SIGNAL(buckled_mob, COMSIG_MOB_UNBUCKLED, src)
 
 	if(can_fall)
 		var/turf/location = buckled_mob.loc

@@ -43,7 +43,7 @@
 	/// Crayon overlay to use if placed into a crayon box
 	var/crayon_color = "red"
 	/// Current paint colour
-	var/paint_color = "#FF0000"
+	var/paint_color = COLOR_RED
 
 	/// Contains chosen symbol to draw
 	var/drawtype
@@ -372,7 +372,7 @@
 	.["selected_color"] = GLOB.pipe_color_name[paint_color] || paint_color
 	.["paint_colors"] = GLOB.pipe_paint_colors
 
-/obj/item/toy/crayon/ui_act(action, list/params)
+/obj/item/toy/crayon/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if(.)
 		return
@@ -418,17 +418,20 @@
 /obj/item/toy/crayon/proc/crayon_text_strip(text)
 	text = copytext(text, 1, MAX_MESSAGE_LEN)
 	var/static/regex/crayon_regex = new /regex(@"[^\w!?,.=&%#+/\-]", "ig")
-	return lowertext(crayon_regex.Replace(text, ""))
+	return LOWER_TEXT(crayon_regex.Replace(text, ""))
 
-/// Attempts to color the target. Returns how many charges were used.
-/obj/item/toy/crayon/proc/use_on(atom/target, mob/user, params)
+/// Is this a valid object for use_on to run on?
+/obj/item/toy/crayon/proc/can_use_on(atom/target, mob/user, list/modifiers)
+	if(!isturf(target) && !istype(target, /obj/effect/decal/cleanable))
+		return FALSE
+	return TRUE
+
+/// Attempts to color the target.
+/obj/item/toy/crayon/proc/use_on(atom/target, mob/user, list/modifiers)
 	var/static/list/punctuation = list("!","?",".",",","/","+","-","=","%","#","&")
 
 	if(istype(target, /obj/effect/decal/cleanable))
 		target = target.loc
-
-	if(!isturf(target))
-		return
 
 	if(!isValidSurface(target))
 		target.balloon_alert(user, "can't use there!")
@@ -454,6 +457,12 @@
 			drawing = ascii2text(rand(48, 57)) // 0-9
 		if(RANDOM_ANY)
 			drawing = pick(all_drawables)
+
+	if(drawing in graffiti_large_h)
+		paint_mode = PAINT_LARGE_HORIZONTAL
+		text_buffer = ""
+	else
+		paint_mode = PAINT_NORMAL
 
 	var/istagger = HAS_TRAIT(user, TRAIT_TAGGER)
 	var/cost = all_drawables[drawing] || CRAYON_COST_DEFAULT
@@ -491,7 +500,6 @@
 			else
 				graf_rot = 0
 
-	var/list/modifiers = params2list(params)
 	var/clickx
 	var/clicky
 
@@ -512,7 +520,7 @@
 	if(istagger)
 		wait_time *= 0.5
 
-	if(!instant && !do_after(user, wait_time, target = target))
+	if(!instant && !do_after(user, wait_time, target = target, max_interact_count = 4))
 		return
 
 	if(!use_charges(user, cost))
@@ -567,20 +575,16 @@
 		for(var/turf/draw_turf as anything in affected_turfs)
 			reagents.expose(draw_turf, methods = TOUCH, volume_modifier = volume_multiplier)
 	check_empty(user)
+	return
 
-/obj/item/toy/crayon/afterattack(atom/target, mob/user, proximity, params)
-	. = ..()
+/obj/item/toy/crayon/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
+	if (!check_allowed_items(interacting_with))
+		return NONE
 
-	if(!proximity)
-		return
-
-	if (isitem(target))
-		. |= AFTERATTACK_PROCESSED_ITEM
-
-	if (!check_allowed_items(target))
-		return
-
-	use_on(target, user, params)
+	if(can_use_on(interacting_with, user, modifiers))
+		use_on(interacting_with, user, modifiers)
+		return ITEM_INTERACT_BLOCKING
+	return NONE
 
 /obj/item/toy/crayon/get_writing_implement_details()
 	return list(
@@ -647,12 +651,37 @@
 	dye_color = DYE_BLACK
 
 /obj/item/toy/crayon/white
-	name = "white crayon"
+	name = "stick of chalk"
+	desc = "A stark-white stick of chalk."
 	icon_state = "crayonwhite"
 	paint_color = COLOR_WHITE
 	crayon_color = "white"
 	reagent_contents = list(/datum/reagent/consumable/nutriment = 0.5,  /datum/reagent/colorful_reagent/powder/white/crayon = 1.5)
 	dye_color = DYE_WHITE
+
+/obj/item/toy/crayon/white/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
+	/// Wherein, we draw a chalk body outline vaguely around the dead or "dead" mob
+	if(!ishuman(interacting_with) || user.combat_mode)
+		return ..()
+
+	var/mob/living/carbon/human/pwned_human = interacting_with
+
+	if(!(pwned_human.stat == DEAD || HAS_TRAIT(pwned_human, TRAIT_FAKEDEATH)))
+		balloon_alert_to_viewers("FEEDING TIME")
+		return ..()
+
+	balloon_alert_to_viewers("drawing outline...")
+	if(!do_after(user, DRAW_TIME, target = pwned_human, max_interact_count = 4))
+		return NONE
+	if(!use_charges(user, 1))
+		return NONE
+
+	var/decal_rotation = GET_LYING_ANGLE(pwned_human) - 90
+	var/obj/effect/decal/cleanable/crayon/chalk_line = new(get_turf(pwned_human), paint_color, "body", "chalk outline", decal_rotation, null, "A vaguely [pwned_human] shaped outline of a body.")
+	to_chat(user, span_notice("You draw a chalk outline around [pwned_human]."))
+	chalk_line.pixel_y = (pwned_human.pixel_y + pwned_human.pixel_z) + rand(-2, 2)
+	chalk_line.pixel_x = (pwned_human.pixel_x + pwned_human.pixel_w) + rand(-1, 1)
+	return ITEM_INTERACT_SUCCESS
 
 /obj/item/toy/crayon/mime
 	name = "mime crayon"
@@ -674,7 +703,7 @@
 	charges = INFINITE_CHARGES
 	dye_color = DYE_RAINBOW
 
-/obj/item/toy/crayon/rainbow/afterattack(atom/target, mob/user, proximity, params)
+/obj/item/toy/crayon/rainbow/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
 	set_painting_tool_color(rgb(rand(0,255), rand(0,255), rand(0,255)))
 	return ..()
 
@@ -759,13 +788,14 @@
 
 	pre_noise = TRUE
 	post_noise = FALSE
+	interaction_flags_click = NEED_DEXTERITY|NEED_HANDS|ALLOW_RESTING
 
 /obj/item/toy/crayon/spraycan/Initialize(mapload)
 	. = ..()
 	var/static/list/slapcraft_recipe_list = list(/datum/crafting_recipe/improvised_coolant)
 
-	AddComponent(
-		/datum/component/slapcrafting,\
+	AddElement(
+		/datum/element/slapcrafting,\
 		slapcraft_recipes = slapcraft_recipe_list,\
 	)
 	register_context()
@@ -774,7 +804,7 @@
 /obj/item/toy/crayon/spraycan/add_context(atom/source, list/context, obj/item/held_item, mob/living/user)
 	. = ..()
 
-	if(!user.can_perform_action(src, NEED_DEXTERITY|NEED_HANDS))
+	if(!user.can_perform_action(src, NEED_DEXTERITY|NEED_HANDS|SILENT_ADJACENCY))
 		return .
 
 	if(has_cap)
@@ -785,7 +815,7 @@
 /obj/item/toy/crayon/spraycan/add_item_context(datum/source, list/context, atom/target, mob/living/user)
 	. = ..()
 
-	if(!user.can_perform_action(src, NEED_DEXTERITY|NEED_HANDS))
+	if(!user.can_perform_action(src, NEED_DEXTERITY|NEED_HANDS|SILENT_ADJACENCY))
 		return .
 
 	context[SCREENTIP_CONTEXT_LMB] = "Paint"
@@ -809,7 +839,7 @@
 	if(pre_noise || post_noise)
 		playsound(src, 'sound/effects/spray.ogg', 5, TRUE, 5)
 	if(can_change_colour)
-		set_painting_tool_color("#C0C0C0")
+		set_painting_tool_color(COLOR_SILVER)
 	update_appearance()
 	if(actually_paints)
 		H.update_lips("spray_face", paint_color)
@@ -832,7 +862,17 @@
 			. += "It is empty."
 	. += span_notice("Alt-click [src] to [ is_capped ? "take the cap off" : "put the cap on"]. Right-click a colored object to match its existing color.")
 
-/obj/item/toy/crayon/spraycan/use_on(atom/target, mob/user, params)
+
+/obj/item/toy/crayon/spraycan/can_use_on(atom/target, mob/user, list/modifiers)
+	if(iscarbon(target))
+		return TRUE
+	if(ismob(target) && (HAS_TRAIT(target, TRAIT_SPRAY_PAINTABLE)))
+		return TRUE
+	if(isobj(target) && !(target.flags_1 & UNPAINTABLE_1))
+		return TRUE
+	return ..()
+
+/obj/item/toy/crayon/spraycan/use_on(atom/target, mob/user, list/modifiers)
 	if(is_capped)
 		balloon_alert(user, "take the cap off first!")
 		return
@@ -851,7 +891,7 @@
 		if(carbon_target.client)
 			carbon_target.set_eye_blur_if_lower(6 SECONDS)
 			carbon_target.adjust_temp_blindness(2 SECONDS)
-		if(carbon_target.get_eye_protection() <= 0) // no eye protection? ARGH IT BURNS. Warning: don't add a stun here. It's a roundstart item with some quirks.
+		if(carbon_target.get_eye_protection() <= 0 || carbon_target.is_eyes_covered()) // no eye protection? ARGH IT BURNS. Warning: don't add a stun here. It's a roundstart item with some quirks. added redundancy because gas masks don't give you eye protection
 			carbon_target.adjust_jitter(1 SECONDS)
 			carbon_target.adjust_eye_blur(0.5 SECONDS)
 			flash_color(carbon_target, flash_color=paint_color, flash_time=40)
@@ -864,7 +904,7 @@
 
 	else if(actually_paints && target.is_atom_colour(paint_color, min_priority_index = WASHABLE_COLOUR_PRIORITY))
 		balloon_alert(user, "[target.p_theyre()] already that color!")
-		return FALSE
+		return
 
 	if(ismob(target) && (HAS_TRAIT(target, TRAIT_SPRAY_PAINTABLE)))
 		if(actually_paints)
@@ -885,7 +925,7 @@
 
 			if (color_is_dark && !(target.flags_1 & ALLOW_DARK_PAINTS_1))
 				to_chat(user, span_warning("A color that dark on an object like this? Surely not..."))
-				return FALSE
+				return
 
 			if(istype(target, /obj/item/pipe))
 				if(GLOB.pipe_color_name.Find(paint_color))
@@ -895,7 +935,7 @@
 					balloon_alert(user, "painted in [GLOB.pipe_color_name[paint_color]] color")
 				else
 					balloon_alert(user, "invalid pipe color!")
-					return FALSE
+					return
 			else if(istype(target, /obj/machinery/atmospherics))
 				if(GLOB.pipe_color_name.Find(paint_color))
 					var/obj/machinery/atmospherics/target_pipe = target
@@ -903,7 +943,7 @@
 					balloon_alert(user, "painted in  [GLOB.pipe_color_name[paint_color]] color")
 				else
 					balloon_alert(user, "invalid pipe color!")
-					return FALSE
+					return
 			else
 				target.add_atom_colour(paint_color, WASHABLE_COLOUR_PRIORITY)
 
@@ -926,17 +966,15 @@
 
 	return ..()
 
-/obj/item/toy/crayon/spraycan/afterattack_secondary(atom/target, mob/user, proximity_flag, click_parameters)
-	if(!proximity_flag)
-		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+/obj/item/toy/crayon/spraycan/interact_with_atom_secondary(atom/interacting_with, mob/living/user, list/modifiers)
 	if(is_capped)
 		balloon_alert(user, "take the cap off first!")
-		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+		return ITEM_INTERACT_BLOCKING
 	if(check_empty(user))
-		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+		return ITEM_INTERACT_BLOCKING
 
-	if(isbodypart(target) && actually_paints)
-		var/obj/item/bodypart/limb = target
+	if(isbodypart(interacting_with) && actually_paints)
+		var/obj/item/bodypart/limb = interacting_with
 		if(!IS_ORGANIC_LIMB(limb))
 			var/list/skins = list()
 			var/static/list/style_list_icons = list("standard" = 'icons/mob/augmentation/augments.dmi', "engineer" = 'icons/mob/augmentation/augments_engineer.dmi', "security" = 'icons/mob/augmentation/augments_security.dmi', "mining" = 'icons/mob/augmentation/augments_mining.dmi')
@@ -949,25 +987,24 @@
 			if(choice && (use_charges(user, 5, requires_full = FALSE)))
 				playsound(user.loc, 'sound/effects/spray.ogg', 5, TRUE, 5)
 				limb.change_appearance(style_list_icons[choice], greyscale = FALSE)
-			return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
-	if(target.color)
-		paint_color = target.color
+			return ITEM_INTERACT_SUCCESS
+	if(interacting_with.color)
+		paint_color = interacting_with.color
 		balloon_alert(user, "matched colour of target")
 		update_appearance()
-		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
-	else
-		balloon_alert(user, "can't match those colours!")
+		return ITEM_INTERACT_BLOCKING
+	balloon_alert(user, "can't match those colours!")
+	return ITEM_INTERACT_BLOCKING
 
-	return SECONDARY_ATTACK_CONTINUE_CHAIN
-
-/obj/item/toy/crayon/spraycan/AltClick(mob/user)
-	if(!has_cap || !user.can_perform_action(src, NEED_DEXTERITY|NEED_HANDS))
-		return
+/obj/item/toy/crayon/spraycan/click_alt(mob/user)
+	if(!has_cap)
+		return CLICK_ACTION_BLOCKING
 	is_capped = !is_capped
 	balloon_alert(user, is_capped ? "capped" : "cap removed")
 	update_appearance()
+	return CLICK_ACTION_SUCCESS
 
-/obj/item/toy/crayon/spraycan/attackby_storage_insert(datum/storage, atom/storage_holder, mob/user)
+/obj/item/toy/crayon/spraycan/storage_insert_on_interaction(datum/storage, atom/storage_holder, mob/user)
 	return is_capped
 
 /obj/item/toy/crayon/spraycan/update_icon_state()
@@ -1013,7 +1050,7 @@
 	expose_turfs = TRUE
 	charges = 100
 	reagent_contents = list(/datum/reagent/clf3 = 1)
-	paint_color = "#000000"
+	paint_color = COLOR_BLACK
 
 /obj/item/toy/crayon/spraycan/hellcan/isValidSurface(surface)
 	return isfloorturf(surface)
@@ -1042,7 +1079,7 @@
 	overlay_paint_colour = FALSE
 
 	can_change_colour = FALSE
-	paint_color = "#FFFFFF" //RGB
+	paint_color = COLOR_WHITE //RGB
 
 	pre_noise = FALSE
 	post_noise = FALSE

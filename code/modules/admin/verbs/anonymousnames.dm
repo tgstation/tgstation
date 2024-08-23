@@ -94,7 +94,7 @@ GLOBAL_DATUM(current_anonymous_theme, /datum/anonymous_theme)
 			return
 		var/mob/living/carbon/human/human_mob = player
 		var/original_name = player.real_name //id will not be changed if you do not do this
-		randomize_human(player) //do this first so the special name can be given
+		randomize_human_normie(player) //do this first so the special name can be given
 		player.fully_replace_character_name(original_name, anonymous_name(player))
 		if(extras_enabled)
 			player_extras(player)
@@ -131,8 +131,7 @@ GLOBAL_DATUM(current_anonymous_theme, /datum/anonymous_theme)
 /datum/anonymous_theme/proc/anonymous_name(mob/target)
 	var/datum/client_interface/client = GET_CLIENT(target)
 	var/species_type = client.prefs.read_preference(/datum/preference/choiced/species)
-	var/datum/species/species = new species_type
-	return species.random_name(target.gender,1)
+	return generate_random_name_species_based(target.gender, TRUE, species_type)
 
 /**
  * anonymous_ai_name: generates a random name, based off of whatever the round's anonymousnames is set to (but for sillycones).

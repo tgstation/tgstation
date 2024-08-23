@@ -8,6 +8,8 @@
 
 	/// An assoc list of signal -> procpath to register to the loc this object is on.
 	var/list/connections
+	/// The turfs currently connected to this component
+	var/list/turfs = list()
 	/**
 	 * The atom the component is tracking. The component will delete itself if the tracked is deleted.
 	 * Signals will also be updated whenever it moves (if it's a movable).
@@ -41,7 +43,7 @@
 	if(src.range == range && src.works_in_containers == works_in_containers)
 		return
 	//Unregister the signals with the old settings.
-	unregister_signals(isturf(tracked) ? tracked : tracked.loc)
+	unregister_signals(isturf(tracked) ? tracked : tracked.loc, turfs)
 	src.range = range
 	src.works_in_containers = works_in_containers
 	//Re-register the signals with the new settings.
@@ -49,7 +51,7 @@
 
 /datum/component/connect_range/proc/set_tracked(atom/new_tracked)
 	if(tracked) //Unregister the signals from the old tracked and its surroundings
-		unregister_signals(isturf(tracked) ? tracked : tracked.loc)
+		unregister_signals(isturf(tracked) ? tracked : tracked.loc, turfs)
 		UnregisterSignal(tracked, list(
 			COMSIG_MOVABLE_MOVED,
 			COMSIG_QDELETING,
@@ -66,28 +68,34 @@
 	SIGNAL_HANDLER
 	qdel(src)
 
-/datum/component/connect_range/proc/update_signals(atom/target, atom/old_loc, forced = FALSE)
+/datum/component/connect_range/proc/update_signals(atom/target, atom/old_loc)
 	var/turf/current_turf = get_turf(target)
-	var/on_same_turf = current_turf == get_turf(old_loc) //Only register/unregister turf signals if it's moved to a new turf.
-	unregister_signals(old_loc, on_same_turf)
-
 	if(isnull(current_turf))
+		unregister_signals(old_loc, turfs)
+		turfs = list()
 		return
 
 	if(ismovable(target.loc))
 		if(!works_in_containers)
+			unregister_signals(old_loc, turfs)
+			turfs = list()
 			return
 		//Keep track of possible movement of all movables the target is in.
 		for(var/atom/movable/container as anything in get_nested_locs(target))
 			RegisterSignal(container, COMSIG_MOVABLE_MOVED, PROC_REF(on_moved))
 
-	if(on_same_turf && !forced)
+	//Only register/unregister turf signals if it's moved to a new turf.
+	if(current_turf == get_turf(old_loc))
+		unregister_signals(old_loc, null)
 		return
-	for(var/turf/target_turf in RANGE_TURFS(range, current_turf))
+	var/list/old_turfs = turfs
+	turfs = RANGE_TURFS(range, current_turf)
+	unregister_signals(old_loc, old_turfs - turfs)
+	for(var/turf/target_turf as anything in turfs - old_turfs)
 		for(var/signal in connections)
 			parent.RegisterSignal(target_turf, signal, connections[signal])
 
-/datum/component/connect_range/proc/unregister_signals(atom/location, on_same_turf = FALSE)
+/datum/component/connect_range/proc/unregister_signals(atom/location, list/remove_from)
 	//The location is null or is a container and the component shouldn't have register signals on it
 	if(isnull(location) || (!works_in_containers && !isturf(location)))
 		return
@@ -96,10 +104,9 @@
 		for(var/atom/movable/target as anything in (get_nested_locs(location) + location))
 			UnregisterSignal(target, COMSIG_MOVABLE_MOVED)
 
-	if(on_same_turf)
+	if(!length(remove_from))
 		return
-	var/turf/previous_turf = get_turf(location)
-	for(var/turf/target_turf in RANGE_TURFS(range, previous_turf))
+	for(var/turf/target_turf as anything in remove_from)
 		parent.UnregisterSignal(target_turf, connections)
 
 /datum/component/connect_range/proc/on_moved(atom/movable/movable, atom/old_loc)

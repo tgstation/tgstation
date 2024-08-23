@@ -9,8 +9,8 @@
 	var/speed = 2
 	///Self explanatory, ratio of how much power we use
 	var/power_efficiency = 1
-	///How much power we use
-	var/power_usage = 100
+	///How much energy we use
+	var/energy_usage = 0.1 * STANDARD_CELL_CHARGE
 	///whether the panel is open so a user can take out the cell
 	var/panel_open = FALSE
 	///Parts used in building the wheelchair
@@ -20,18 +20,21 @@
 		/datum/stock_part/capacitor,
 	)
 	///power cell we draw power from
-	var/obj/item/stock_parts/cell/power_cell
+	var/obj/item/stock_parts/power_store/power_cell
 	///stock parts for this chair
 	var/list/component_parts = list()
 
 /obj/vehicle/ridden/wheelchair/motorized/Initialize(mapload)
 	. = ..()
+	add_component_parts()
+	refresh_parts()
+
+/obj/vehicle/ridden/wheelchair/motorized/proc/add_component_parts()
 	// Add tier 1 stock parts so that non-crafted wheelchairs aren't empty
 	component_parts += GLOB.stock_part_datums[/datum/stock_part/capacitor]
 	component_parts += GLOB.stock_part_datums[/datum/stock_part/servo]
 	component_parts += GLOB.stock_part_datums[/datum/stock_part/servo]
-	power_cell = new /obj/item/stock_parts/cell(src)
-	refresh_parts()
+	power_cell = new /obj/item/stock_parts/power_store/cell(src)
 
 /obj/vehicle/ridden/wheelchair/motorized/make_ridable()
 	AddElement(/datum/element/ridable, /datum/component/riding/vehicle/wheelchair/motorized)
@@ -42,7 +45,7 @@
 	component_parts = list()
 
 	for(var/obj/item/stock_parts/part in parts_list)
-		if(istype(part, /obj/item/stock_parts/cell)) // power cell, physically moves into the wheelchair
+		if(istype(part, /obj/item/stock_parts/power_store/cell)) // power cell, physically moves into the wheelchair
 			power_cell = part
 			part.forceMove(src)
 			continue
@@ -87,7 +90,7 @@
 		canmove = FALSE
 		addtimer(VARSET_CALLBACK(src, canmove, TRUE), 2 SECONDS)
 		return FALSE
-	if(power_cell.charge < power_usage / max(power_efficiency, 1))
+	if(power_cell.charge < energy_usage / max(power_efficiency, 1))
 		to_chat(user, span_warning("The display on [src] blinks 'Out of Power'."))
 		canmove = FALSE
 		addtimer(VARSET_CALLBACK(src, canmove, TRUE), 2 SECONDS)
@@ -97,7 +100,6 @@
 /obj/vehicle/ridden/wheelchair/motorized/attack_hand(mob/living/user, list/modifiers)
 	if(!power_cell || !panel_open)
 		return ..()
-	power_cell.update_appearance()
 	to_chat(user, span_notice("You remove [power_cell] from [src]."))
 	user.put_in_hands(power_cell)
 	power_cell = null
@@ -106,7 +108,7 @@
 	if(!panel_open)
 		return ..()
 
-	if(istype(attacking_item, /obj/item/stock_parts/cell))
+	if(istype(attacking_item, /obj/item/stock_parts/power_store/cell))
 		if(power_cell)
 			to_chat(user, span_warning("There is a power cell already installed."))
 		else
@@ -221,3 +223,12 @@
 	visible_message(span_warning("A bomb appears in [src], what the fuck?"))
 	obj_flags |= EMAGGED
 	return TRUE
+
+///Version with slightly better components. Used by deathmatches.
+/obj/vehicle/ridden/wheelchair/motorized/improved
+
+/obj/vehicle/ridden/wheelchair/motorized/improved/add_component_parts()
+	component_parts += GLOB.stock_part_datums[/datum/stock_part/capacitor]
+	component_parts += GLOB.stock_part_datums[/datum/stock_part/servo/tier2]
+	component_parts += GLOB.stock_part_datums[/datum/stock_part/servo]
+	power_cell = new /obj/item/stock_parts/power_store/cell/upgraded/plus(src)

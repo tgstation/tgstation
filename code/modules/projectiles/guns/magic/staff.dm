@@ -150,6 +150,7 @@
 		/obj/projectile/magic/teleport,
 		/obj/projectile/magic/wipe,
 		/obj/projectile/temp/chill,
+		/obj/projectile/magic/shrink
 	)
 
 /obj/item/gun/magic/staff/chaos/unrestricted
@@ -319,3 +320,17 @@
 	inhand_icon_state = "pharoah_sceptre"
 	worn_icon_state = "wipestaff"
 	school = SCHOOL_FORBIDDEN //arguably the worst staff in the entire game effect wise
+
+/obj/item/gun/magic/staff/shrink
+	name = "staff of shrinking"
+	desc = "An artefact that spits bolts of tiny magic that makes things small. It's easily mistaken for a wand."
+	fire_sound = 'sound/magic/staff_shrink.ogg'
+	ammo_type = /obj/item/ammo_casing/magic/shrink
+	icon_state = "shrinkstaff"
+	inhand_icon_state = "staff"
+	max_charges = 10 // slightly more/faster charges since this will be used on walls and such
+	recharge_rate = 5
+	no_den_usage = TRUE
+	school = SCHOOL_TRANSMUTATION
+	slot_flags = NONE //too small to wear on your back
+	w_class = WEIGHT_CLASS_NORMAL //but small enough for a bag

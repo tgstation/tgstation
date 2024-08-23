@@ -21,22 +21,26 @@
 		/obj/item/storage/fancy/cigarettes/cigpack_syndicate = 10,
 		/obj/item/storage/fancy/cigarettes/cigpack_shadyjims = 10,
 		/obj/item/storage/box/donkpockets = 10,
+		/obj/effect/spawner/random/contraband/plus = 10,
 		/obj/item/reagent_containers/pill/maintenance = 5,
-		/obj/effect/spawner/random/contraband/plus = 5,
 	)
+
+
+/obj/effect/spawner/random/contraband/make_item(spawn_loc, type_path_to_make)
+	var/obj/item/made = ..()
+	ADD_TRAIT(made, TRAIT_CONTRABAND, INNATE_TRAIT)
+	return made
 
 /obj/effect/spawner/random/contraband/plus
 	name = "contraband loot spawner plus"
 	desc = "Where'd ya find this?"
 	loot = list(
-		/obj/effect/spawner/random/contraband/prison = 40,
 		/obj/item/clothing/under/syndicate = 20,
 		/obj/item/reagent_containers/cup/bottle/thermite = 20,
-		/obj/item/reagent_containers/pill/maintenance = 10,
 		/obj/item/restraints/legcuffs/beartrap = 10,
-		/obj/effect/spawner/random/contraband/narcotics = 10,
-		/obj/item/seeds/kronkus = 5,
-		/obj/item/seeds/odious_puffball = 5,
+		/obj/item/food/drug/saturnx = 5,
+		/obj/item/reagent_containers/cup/blastoff_ampoule = 5,
+		/obj/item/food/drug/moon_rock = 5,
 		/obj/item/grenade/empgrenade = 5,
 		/obj/effect/spawner/random/contraband/armory = 1,
 	)
@@ -45,13 +49,14 @@
 	name = "armory loot spawner"
 	icon_state = "pistol"
 	loot = list(
-		/obj/item/gun/ballistic/automatic/pistol = 8,
-		/obj/item/gun/ballistic/shotgun/automatic/combat = 5,
-		/obj/item/storage/box/syndie_kit/throwing_weapons = 3,
-		/obj/item/grenade/clusterbuster/teargas = 2,
-		/obj/item/grenade/clusterbuster = 2,
-		/obj/item/gun/ballistic/automatic/pistol/deagle,
-		/obj/item/gun/ballistic/revolver/mateba,
+		/obj/item/gun/ballistic/automatic/pistol/contraband = 80,
+		/obj/item/gun/ballistic/shotgun/automatic/combat = 50,
+		/obj/item/storage/box/syndie_kit/throwing_weapons = 30,
+		/obj/item/grenade/clusterbuster/teargas = 20,
+		/obj/item/grenade/clusterbuster = 20,
+		/obj/item/gun/ballistic/automatic/pistol/deagle/contraband,
+		/obj/item/gun/ballistic/revolver/mateba = 9,
+		/obj/item/gun/ballistic/revolver/reverse/mateba = 1,
 	)
 
 /obj/effect/spawner/random/contraband/narcotics
@@ -140,6 +145,13 @@
 		/obj/effect/mine/explosive = 2,
 		/obj/item/restraints/legcuffs/beartrap/prearmed = 5, //not really a landmine, but still a good threat
 		/obj/effect/mine/shrapnel = 5,
+	)
+
+/obj/effect/spawner/random/contraband/qm_rocket
+	name = "QMs dud rocket spawner"
+	loot = list(
+		/obj/item/ammo_casing/rocket/reverse = 85,
+		/obj/item/ammo_casing/rocket = 15,
 	)
 
 /obj/effect/spawner/random/contraband/grenades

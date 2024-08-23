@@ -33,7 +33,7 @@
 	playsound(src, SFX_SPARKS, 25, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
 	return TRUE
 
-/obj/machinery/fishing_portal_generator/interact(mob/user, special_state)
+/obj/machinery/fishing_portal_generator/interact(mob/user)
 	. = ..()
 	if(active)
 		deactivate()
@@ -100,3 +100,7 @@
 	if(!choice || !can_interact(user))
 		return
 	activate(available_fish_sources[choice])
+
+/obj/machinery/fishing_portal_generator/emagged
+	obj_flags = parent_type::obj_flags | EMAGGED
+	circuit = /obj/item/circuitboard/machine/fishing_portal_generator/emagged

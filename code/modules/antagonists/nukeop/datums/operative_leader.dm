@@ -21,7 +21,7 @@
 			H.update_icons()
 
 /datum/antagonist/nukeop/leader/greet()
-	owner.current.playsound_local(get_turf(owner.current), 'sound/ambience/antag/ops.ogg',100,0, use_reverb = FALSE)
+	play_stinger()
 	to_chat(owner, "<span class='warningplain'><B>You are the Syndicate [title] for this mission. You are responsible for guiding the team and your ID is the only one who can open the launch bay doors.</B></span>")
 	to_chat(owner, "<span class='warningplain'><B>If you feel you are not up to this task, give your ID and radio to another operative.</B></span>")
 	if(!CONFIG_GET(flag/disable_warops))
@@ -35,7 +35,7 @@
 		var/obj/item/war_declaration = new challengeitem(leader.drop_location())
 		leader.put_in_hands(war_declaration)
 		nuke_team.war_button_ref = WEAKREF(war_declaration)
-	addtimer(CALLBACK(src, PROC_REF(nuketeam_name_assign)), 1)
+	addtimer(CALLBACK(src, PROC_REF(nuketeam_name_assign)), 0.1 SECONDS)
 
 /datum/antagonist/nukeop/leader/proc/nuketeam_name_assign()
 	if(!nuke_team)

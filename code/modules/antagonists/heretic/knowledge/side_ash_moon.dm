@@ -16,6 +16,9 @@
 	result_atoms = list(/obj/item/clothing/neck/eldritch_amulet)
 	cost = 1
 	route = PATH_SIDE
+	research_tree_icon_path = 'icons/obj/antags/eldritch.dmi'
+	research_tree_icon_state = "eye_medalion"
+	depth = 4
 
 /datum/heretic_knowledge/curse/paralysis
 	name = "Curse of Paralysis"
@@ -25,7 +28,7 @@
 	gain_text = "The flesh of humanity is weak. Make them bleed. Show them their fragility."
 	next_knowledge = list(
 		/datum/heretic_knowledge/mad_mask,
-		/datum/heretic_knowledge/moon_amulette,
+		/datum/heretic_knowledge/moon_amulet,
 	)
 	required_atoms = list(
 		/obj/item/bodypart/leg/left = 1,
@@ -37,6 +40,9 @@
 	curse_color = "#f19a9a"
 	cost = 1
 	route = PATH_SIDE
+	research_tree_icon_path = 'icons/ui/antags/heretic/knowledge.dmi'
+	research_tree_icon_state = "curse_paralysis"
+	depth = 8
 
 /datum/heretic_knowledge/curse/paralysis/curse(mob/living/carbon/human/chosen_mob, boosted = FALSE)
 	if(chosen_mob.usable_legs <= 0) // What're you gonna do, curse someone who already can't walk?
@@ -75,12 +81,4 @@
 	cost = 1
 	route = PATH_SIDE
 	poll_ignore_define = POLL_IGNORE_ASH_SPIRIT
-
-/datum/heretic_knowledge/summon/ashy/cleanup_atoms(list/selected_atoms)
-	var/obj/item/bodypart/head/ritual_head = locate() in selected_atoms
-	if(!ritual_head)
-		CRASH("[type] required a head bodypart, yet did not have one in selected_atoms when it reached cleanup_atoms.")
-
-	// Spill out any brains or stuff before we delete it.
-	ritual_head.drop_organs()
-	return ..()
+	depth = 10

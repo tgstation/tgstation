@@ -9,11 +9,7 @@
 	///Easy way to connect a computer and a turbine roundstart by setting an id on both this and the core_rotor
 	var/mapping_id
 
-/obj/machinery/computer/turbine_computer/Initialize(mapload)
-	. = ..()
-	return INITIALIZE_HINT_LATELOAD
-
-/obj/machinery/computer/turbine_computer/LateInitialize()
+/obj/machinery/computer/turbine_computer/post_machine_initialize()
 	. = ..()
 	locate_machinery()
 
@@ -72,7 +68,7 @@
 
 	return data
 
-/obj/machinery/computer/turbine_computer/ui_act(action, params)
+/obj/machinery/computer/turbine_computer/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if(.)
 		return

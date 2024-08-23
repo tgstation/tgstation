@@ -11,16 +11,17 @@
 	time = 16
 	preop_sound = 'sound/surgery/scalpel1.ogg'
 	success_sound = 'sound/surgery/scalpel2.ogg'
+	surgery_effects_mood = TRUE
 
 /datum/surgery_step/incise/preop(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
 	display_results(
 		user,
 		target,
-		span_notice("You begin to make an incision in [target]'s [parse_zone(target_zone)]..."),
-		span_notice("[user] begins to make an incision in [target]'s [parse_zone(target_zone)]."),
-		span_notice("[user] begins to make an incision in [target]'s [parse_zone(target_zone)]."),
+		span_notice("You begin to make an incision in [target]'s [target.parse_zone_with_bodypart(target_zone)]..."),
+		span_notice("[user] begins to make an incision in [target]'s [target.parse_zone_with_bodypart(target_zone)]."),
+		span_notice("[user] begins to make an incision in [target]'s [target.parse_zone_with_bodypart(target_zone)]."),
 	)
-	display_pain(target, "You feel a stabbing in your [parse_zone(target_zone)].")
+	display_pain(target, "You feel a stabbing in your [target.parse_zone_with_bodypart(target_zone)].")
 
 /datum/surgery_step/incise/tool_check(mob/user, obj/item/tool)
 	if(implement_type == /obj/item && !tool.get_sharpness())
@@ -35,9 +36,9 @@
 			display_results(
 				user,
 				target,
-				span_notice("Blood pools around the incision in [human_target]'s [parse_zone(target_zone)]."),
-				span_notice("Blood pools around the incision in [human_target]'s [parse_zone(target_zone)]."),
-				span_notice("Blood pools around the incision in [human_target]'s [parse_zone(target_zone)]."),
+				span_notice("Blood pools around the incision in [human_target]'s [target.parse_zone_with_bodypart(target_zone)]."),
+				span_notice("Blood pools around the incision in [human_target]'s [target.parse_zone_with_bodypart(target_zone)]."),
+				span_notice("Blood pools around the incision in [human_target]'s [target.parse_zone_with_bodypart(target_zone)]."),
 			)
 			var/obj/item/bodypart/target_bodypart = target.get_bodypart(target_zone)
 			if(target_bodypart)
@@ -48,11 +49,11 @@
 	display_results(
 		user,
 		target,
-		span_notice("You begin to <i>carefully</i> make an incision in [target]'s [parse_zone(target_zone)]..."),
-		span_notice("[user] begins to <i>carefully</i> make an incision in [target]'s [parse_zone(target_zone)]."),
-		span_notice("[user] begins to <i>carefully</i> make an incision in [target]'s [parse_zone(target_zone)]."),
+		span_notice("You begin to <i>carefully</i> make an incision in [target]'s [target.parse_zone_with_bodypart(target_zone)]..."),
+		span_notice("[user] begins to <i>carefully</i> make an incision in [target]'s [target.parse_zone_with_bodypart(target_zone)]."),
+		span_notice("[user] begins to <i>carefully</i> make an incision in [target]'s [target.parse_zone_with_bodypart(target_zone)]."),
 	)
-	display_pain(target, "You feel a <i>careful</i> stabbing in your [parse_zone(target_zone)].")
+	display_pain(target, "You feel a <i>careful</i> stabbing in your [target.parse_zone_with_bodypart(target_zone)].")
 
 //clamp bleeders
 /datum/surgery_step/clamp_bleeders
@@ -69,11 +70,11 @@
 	display_results(
 		user,
 		target,
-		span_notice("You begin to clamp bleeders in [target]'s [parse_zone(target_zone)]..."),
-		span_notice("[user] begins to clamp bleeders in [target]'s [parse_zone(target_zone)]."),
-		span_notice("[user] begins to clamp bleeders in [target]'s [parse_zone(target_zone)]."),
+		span_notice("You begin to clamp bleeders in [target]'s [target.parse_zone_with_bodypart(target_zone)]..."),
+		span_notice("[user] begins to clamp bleeders in [target]'s [target.parse_zone_with_bodypart(target_zone)]."),
+		span_notice("[user] begins to clamp bleeders in [target]'s [target.parse_zone_with_bodypart(target_zone)]."),
 	)
-	display_pain(target, "You feel a pinch as the bleeding in your [parse_zone(target_zone)] is slowed.")
+	display_pain(target, "You feel a pinch as the bleeding in your [target.parse_zone_with_bodypart(target_zone)] is slowed.")
 
 /datum/surgery_step/clamp_bleeders/success(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery, default_display_results)
 	if(locate(/datum/surgery_step/saw) in surgery.steps)
@@ -101,11 +102,11 @@
 	display_results(
 		user,
 		target,
-		span_notice("You begin to retract the skin in [target]'s [parse_zone(target_zone)]..."),
-		span_notice("[user] begins to retract the skin in [target]'s [parse_zone(target_zone)]."),
-		span_notice("[user] begins to retract the skin in [target]'s [parse_zone(target_zone)]."),
+		span_notice("You begin to retract the skin in [target]'s [target.parse_zone_with_bodypart(target_zone)]..."),
+		span_notice("[user] begins to retract the skin in [target]'s [target.parse_zone_with_bodypart(target_zone)]."),
+		span_notice("[user] begins to retract the skin in [target]'s [target.parse_zone_with_bodypart(target_zone)]."),
 	)
-	display_pain(target, "You feel a severe stinging pain spreading across your [parse_zone(target_zone)] as the skin is pulled back!")
+	display_pain(target, "You feel a severe stinging pain spreading across your [target.parse_zone_with_bodypart(target_zone)] as the skin is pulled back!")
 
 //close incision
 /datum/surgery_step/close
@@ -123,11 +124,11 @@
 	display_results(
 		user,
 		target,
-		span_notice("You begin to mend the incision in [target]'s [parse_zone(target_zone)]..."),
-		span_notice("[user] begins to mend the incision in [target]'s [parse_zone(target_zone)]."),
-		span_notice("[user] begins to mend the incision in [target]'s [parse_zone(target_zone)]."),
+		span_notice("You begin to mend the incision in [target]'s [target.parse_zone_with_bodypart(target_zone)]..."),
+		span_notice("[user] begins to mend the incision in [target]'s [target.parse_zone_with_bodypart(target_zone)]."),
+		span_notice("[user] begins to mend the incision in [target]'s [target.parse_zone_with_bodypart(target_zone)]."),
 	)
-	display_pain(target, "Your [parse_zone(target_zone)] is being burned!")
+	display_pain(target, "Your [target.parse_zone_with_bodypart(target_zone)] is being burned!")
 
 /datum/surgery_step/close/tool_check(mob/user, obj/item/tool)
 	if(implement_type == TOOL_WELDER || implement_type == /obj/item)
@@ -168,16 +169,17 @@
 		/obj/item = 'sound/surgery/scalpel1.ogg',
 	)
 	success_sound = 'sound/surgery/organ2.ogg'
+	surgery_effects_mood = TRUE
 
 /datum/surgery_step/saw/preop(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
 	display_results(
 		user,
 		target,
-		span_notice("You begin to saw through the bone in [target]'s [parse_zone(target_zone)]..."),
-		span_notice("[user] begins to saw through the bone in [target]'s [parse_zone(target_zone)]."),
-		span_notice("[user] begins to saw through the bone in [target]'s [parse_zone(target_zone)]."),
+		span_notice("You begin to saw through the bone in [target]'s [target.parse_zone_with_bodypart(target_zone)]..."),
+		span_notice("[user] begins to saw through the bone in [target]'s [target.parse_zone_with_bodypart(target_zone)]."),
+		span_notice("[user] begins to saw through the bone in [target]'s [target.parse_zone_with_bodypart(target_zone)]."),
 	)
-	display_pain(target, "You feel a horrid ache spread through the inside of your [parse_zone(target_zone)]!")
+	display_pain(target, "You feel a horrid ache spread through the inside of your [target.parse_zone_with_bodypart(target_zone)]!")
 
 /datum/surgery_step/saw/tool_check(mob/user, obj/item/tool)
 	if(implement_type == /obj/item && !(tool.get_sharpness() && (tool.force >= 10)))
@@ -189,11 +191,11 @@
 	display_results(
 		user,
 		target,
-		span_notice("You saw [target]'s [parse_zone(target_zone)] open."),
-		span_notice("[user] saws [target]'s [parse_zone(target_zone)] open!"),
-		span_notice("[user] saws [target]'s [parse_zone(target_zone)] open!"),
+		span_notice("You saw [target]'s [target.parse_zone_with_bodypart(target_zone)] open."),
+		span_notice("[user] saws [target]'s [target.parse_zone_with_bodypart(target_zone)] open!"),
+		span_notice("[user] saws [target]'s [target.parse_zone_with_bodypart(target_zone)] open!"),
 	)
-	display_pain(target, "It feels like something just broke in your [parse_zone(target_zone)]!")
+	display_pain(target, "It feels like something just broke in your [target.parse_zone_with_bodypart(target_zone)]!")
 	return ..()
 
 //drill bone
@@ -211,18 +213,18 @@
 	display_results(
 		user,
 		target,
-		span_notice("You begin to drill into the bone in [target]'s [parse_zone(target_zone)]..."),
-		span_notice("[user] begins to drill into the bone in [target]'s [parse_zone(target_zone)]."),
-		span_notice("[user] begins to drill into the bone in [target]'s [parse_zone(target_zone)]."),
+		span_notice("You begin to drill into the bone in [target]'s [target.parse_zone_with_bodypart(target_zone)]..."),
+		span_notice("[user] begins to drill into the bone in [target]'s [target.parse_zone_with_bodypart(target_zone)]."),
+		span_notice("[user] begins to drill into the bone in [target]'s [target.parse_zone_with_bodypart(target_zone)]."),
 	)
-	display_pain(target, "You feel a horrible piercing pain in your [parse_zone(target_zone)]!")
+	display_pain(target, "You feel a horrible piercing pain in your [target.parse_zone_with_bodypart(target_zone)]!")
 
 /datum/surgery_step/drill/success(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery, default_display_results = FALSE)
 	display_results(
 		user,
 		target,
-		span_notice("You drill into [target]'s [parse_zone(target_zone)]."),
-		span_notice("[user] drills into [target]'s [parse_zone(target_zone)]!"),
-		span_notice("[user] drills into [target]'s [parse_zone(target_zone)]!"),
+		span_notice("You drill into [target]'s [target.parse_zone_with_bodypart(target_zone)]."),
+		span_notice("[user] drills into [target]'s [target.parse_zone_with_bodypart(target_zone)]!"),
+		span_notice("[user] drills into [target]'s [target.parse_zone_with_bodypart(target_zone)]!"),
 	)
 	return ..()

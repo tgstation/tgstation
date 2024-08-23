@@ -13,6 +13,8 @@
 	///Custom plaque structures and items both start "unengraved", once engraved with a fountain pen their text can't be altered again. Static plaques are already engraved.
 	var/engraved = FALSE
 
+WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/structure/plaque)
+
 /datum/armor/structure_plaque
 	melee = 50
 	fire = 50
@@ -20,6 +22,7 @@
 
 /obj/structure/plaque/Initialize(mapload)
 	. = ..()
+	find_and_hang_on_wall(wall_layer = FLAT_ON_WALL_LAYER)
 	register_context()
 
 /obj/structure/plaque/add_context(atom/source, list/context, obj/item/held_item, mob/user)
@@ -103,6 +106,7 @@
 		engraved = TRUE //The plaque now has a name, description, and can't be altered again.
 		user.visible_message(span_notice("[user] engraves [src]."), \
 			span_notice("You engrave [src]."))
+		icon_state = "goldenplaque"
 		return
 	if(istype(I, /obj/item/pen))
 		if(engraved)
@@ -169,7 +173,7 @@
 			return
 		user.visible_message(span_notice("[user] begins engraving [src]."), \
 			span_notice("You begin engraving [src]."))
-		if(!do_after(user, 40, target = src)) //This spits out a visible message that somebody is engraving a plaque, then has a delay.
+		if(!do_after(user, 4 SECONDS, target = src)) //This spits out a visible message that somebody is engraving a plaque, then has a delay.
 			return
 		name = "\improper [namechoice]" //We want improper here so examine doesn't get weird if somebody capitalizes the plaque title.
 		desc = "The plaque reads: '[descriptionchoice]'"
@@ -185,23 +189,14 @@
 		return
 	return ..()
 
-/obj/item/plaque/afterattack(atom/target, mob/user, proximity)
-	. = ..()
-	if(!iswallturf(target) || !proximity)
-		return
-	var/turf/target_turf = target
+/obj/item/plaque/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
+	if(!iswallturf(interacting_with))
+		return NONE
+	var/turf/target_turf = interacting_with
 	var/turf/user_turf = get_turf(user)
 	var/obj/structure/plaque/placed_plaque = new plaque_path(user_turf) //We place the plaque on the turf the user is standing, and pixel shift it to the target wall, as below.
 	//This is to mimic how signs and other wall objects are usually placed by mappers, and so they're only visible from one side of a wall.
 	var/dir = get_dir(user_turf, target_turf)
-	if(dir & NORTH)
-		placed_plaque.pixel_y = 32
-	else if(dir & SOUTH)
-		placed_plaque.pixel_y = -32
-	if(dir & EAST)
-		placed_plaque.pixel_x = 32
-	else if(dir & WEST)
-		placed_plaque.pixel_x = -32
 	user.visible_message(span_notice("[user] fastens [src] to [target_turf]."), \
 		span_notice("You attach [src] to [target_turf]."))
 	playsound(target_turf, 'sound/items/deconstruct.ogg', 50, TRUE)
@@ -213,3 +208,4 @@
 	placed_plaque.update_integrity(get_integrity())
 	placed_plaque.setDir(dir)
 	qdel(src)
+	return ITEM_INTERACT_SUCCESS

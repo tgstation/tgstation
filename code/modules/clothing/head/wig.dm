@@ -7,7 +7,7 @@
 	inhand_icon_state = "pwig"
 	worn_icon_state = "wig"
 	flags_inv = HIDEHAIR
-	color = "#000000"
+	color = COLOR_BLACK
 	var/hairstyle = "Very Long Hair"
 	var/adjustablecolor = TRUE //can color be changed manually?
 
@@ -25,30 +25,18 @@
 	item_flags &= ~EXAMINE_SKIP
 
 /obj/item/clothing/head/wig/update_icon_state()
-	var/datum/sprite_accessory/hair/hair_style = GLOB.hairstyles_list[hairstyle]
+	var/datum/sprite_accessory/hair/hair_style = SSaccessories.hairstyles_list[hairstyle]
 	if(hair_style)
 		icon = hair_style.icon
 		icon_state = hair_style.icon_state
 	return ..()
-
-
-/obj/item/clothing/head/wig/build_worn_icon(
-	default_layer = 0,
-	default_icon_file = null,
-	isinhands = FALSE,
-	female_uniform = NO_FEMALE_UNIFORM,
-	override_state = null,
-	override_file = null,
-	use_height_offset = TRUE,
-)
-	return ..(default_layer, default_icon_file, isinhands, female_uniform, override_state, override_file, use_height_offset = FALSE)
 
 /obj/item/clothing/head/wig/worn_overlays(mutable_appearance/standing, isinhands = FALSE, file2use)
 	. = ..()
 	if(isinhands)
 		return
 
-	var/datum/sprite_accessory/hair/hair = GLOB.hairstyles_list[hairstyle]
+	var/datum/sprite_accessory/hair/hair = SSaccessories.hairstyles_list[hairstyle]
 	if(!hair)
 		return
 
@@ -61,7 +49,7 @@
 	hair_overlay.overlays += emissive_blocker(hair_overlay.icon, hair_overlay.icon_state, src, alpha = hair_overlay.alpha)
 
 /obj/item/clothing/head/wig/attack_self(mob/user)
-	var/new_style = tgui_input_list(user, "Select a hairstyle", "Wig Styling", GLOB.hairstyles_list - "Bald")
+	var/new_style = tgui_input_list(user, "Select a hairstyle", "Wig Styling", SSaccessories.hairstyles_list - "Bald")
 	var/newcolor = adjustablecolor ? input(usr,"","Choose Color",color) as color|null : null
 	if(!user.can_perform_action(src))
 		return
@@ -72,20 +60,22 @@
 		add_atom_colour(newcolor, FIXED_COLOUR_PRIORITY)
 	update_appearance()
 
-/obj/item/clothing/head/wig/afterattack(mob/living/carbon/human/target, mob/user)
-	. = ..()
-	if(!istype(target))
-		return
+/obj/item/clothing/head/wig/ranged_interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
+	return interact_with_atom(interacting_with, user, modifiers)
 
+/obj/item/clothing/head/wig/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
+	if(!ishuman(interacting_with) || interacting_with == user)
+		return NONE
+	var/mob/living/carbon/human/target = interacting_with
 	if(target.head)
 		var/obj/item/clothing/head = target.head
 		if((head.flags_inv & HIDEHAIR) && !istype(head, /obj/item/clothing/head/wig))
 			to_chat(user, span_warning("You can't get a good look at [target.p_their()] hair!"))
-			return
+			return ITEM_INTERACT_BLOCKING
 	var/obj/item/bodypart/head/noggin = target.get_bodypart(BODY_ZONE_HEAD)
 	if(!noggin)
 		to_chat(user, span_warning("[target.p_They()] have no head!"))
-		return
+		return ITEM_INTERACT_BLOCKING
 
 	var/selected_hairstyle = null
 	var/selected_hairstyle_color = null
@@ -102,21 +92,22 @@
 		add_atom_colour(selected_hairstyle_color, FIXED_COLOUR_PRIORITY)
 		hairstyle = selected_hairstyle
 		update_appearance()
+	return ITEM_INTERACT_SUCCESS
 
 /obj/item/clothing/head/wig/random/Initialize(mapload)
-	hairstyle = pick(GLOB.hairstyles_list - "Bald") //Don't want invisible wig
+	hairstyle = pick(SSaccessories.hairstyles_list - "Bald") //Don't want invisible wig
 	add_atom_colour("#[random_short_color()]", FIXED_COLOUR_PRIORITY)
 	. = ..()
 
 /obj/item/clothing/head/wig/natural
 	name = "natural wig"
 	desc = "A bunch of hair without a head attached. This one changes color to match the hair of the wearer. Nothing natural about that."
-	color = "#FFFFFF"
+	color = COLOR_WHITE
 	adjustablecolor = FALSE
 	custom_price = PAYCHECK_COMMAND
 
 /obj/item/clothing/head/wig/natural/Initialize(mapload)
-	hairstyle = pick(GLOB.hairstyles_list - "Bald")
+	hairstyle = pick(SSaccessories.hairstyles_list - "Bald")
 	. = ..()
 
 /obj/item/clothing/head/wig/natural/visual_equipped(mob/living/carbon/human/user, slot)

@@ -161,6 +161,7 @@
 	UnregisterSignal(organ_owner, COMSIG_ATOM_EXAMINE)
 	SEND_SIGNAL(src, COMSIG_ORGAN_REMOVED, organ_owner)
 	SEND_SIGNAL(organ_owner, COMSIG_CARBON_LOSE_ORGAN, src, special)
+	ADD_TRAIT(src, TRAIT_USED_ORGAN, ORGAN_TRAIT)
 
 	var/list/diseases = organ_owner.get_static_viruses()
 	if(!LAZYLEN(diseases))
@@ -193,7 +194,6 @@
 
 	// The true movement is here
 	moveToNullspace()
-	bodypart_owner.contents -= src
 	bodypart_owner = null
 
 	on_bodypart_remove(limb)
@@ -224,9 +224,14 @@
 
 /**
  * Proc that gets called when the organ is surgically removed by someone, can be used for special effects
- * Currently only used so surplus organs can explode when surgically removed.
  */
 /obj/item/organ/proc/on_surgical_removal(mob/living/user, mob/living/carbon/old_owner, target_zone, obj/item/tool)
 	SHOULD_CALL_PARENT(TRUE)
 	SEND_SIGNAL(src, COMSIG_ORGAN_SURGICALLY_REMOVED, user, old_owner, target_zone, tool)
 	RemoveElement(/datum/element/decal/blood)
+/**
+ * Proc that gets called when the organ is surgically inserted by someone. Seem familiar?
+ */
+/obj/item/organ/proc/on_surgical_insertion(mob/living/user, mob/living/carbon/new_owner, target_zone, obj/item/tool)
+	SHOULD_CALL_PARENT(TRUE)
+	SEND_SIGNAL(src, COMSIG_ORGAN_SURGICALLY_INSERTED, user, new_owner, target_zone, tool)

@@ -66,9 +66,9 @@
 /datum/computer_file/proc/on_examine(obj/item/modular_computer/source, mob/user)
 	return null
 
-/// Called when attacking a tablet with an item, checking if any application uses it. Return TRUE to cancel the attack chain.
-/datum/computer_file/proc/application_attackby(obj/item/attacking_item, mob/living/user)
-	return FALSE
+/// Called on modular computer item_interaction, checking if any application uses the given item. Uses the item interaction chain flags.
+/datum/computer_file/proc/application_item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	return NONE
 
 /**
  * Implement this when your program has an object that the user can eject.

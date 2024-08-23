@@ -2,22 +2,34 @@
 
 /obj/structure/plaque/static_plaque
 	engraved = TRUE
+	icon_state = "goldenplaque"
+
+WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/structure/plaque/static_plaque)
 
 /obj/structure/plaque/static_plaque/atmos
 	name = "\improper FEA Atmospherics Division plaque"
 	desc = "This plaque commemorates the fall of the Atmos FEA division. For all the charred, dizzy, and brittle men who have died in its hands."
+	icon_state = "employeeplaque"
+
+WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/structure/plaque/static_plaque/atmos)
 
 /obj/structure/plaque/static_plaque/thunderdome
 	name = "Thunderdome Plaque"
 	desc = "This plaque commemorates those who have fallen in glorious combat.  For all the charred, dizzy, and beaten men who have died in its hands."
 
+WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/structure/plaque/static_plaque/thunderdome)
+
 /obj/structure/plaque/static_plaque/golden
 	name = "The Most Robust Men Award for Robustness"
 	desc = "To be Robust is not an action or a way of life, but a mental state. Only those with the force of Will strong enough to act during a crisis, saving friend from foe, are truly Robust. Stay Robust my friends."
-	icon_state = "goldenplaque"
+	icon_state = "employeeplaque"
+
+WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/structure/plaque/static_plaque/golden)
 
 /obj/structure/plaque/static_plaque/golden/captain
 	name = "The Most Robust Captain Award for Robustness"
+
+WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/structure/plaque/static_plaque/golden/captain)
 
 /obj/structure/plaque/static_plaque/tram
 	/// The tram we have info about
@@ -30,13 +42,16 @@
 	icon_state = "commission_tram"
 	custom_materials = list(/datum/material/titanium = SHEET_MATERIAL_AMOUNT)
 	layer = SIGN_LAYER
+	pixel_y = -29
+	pixel_z = 29
+
+WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/structure/plaque/static_plaque/tram)
 
 /obj/structure/plaque/static_plaque/tram/Initialize(mapload)
 	. = ..()
 	return INITIALIZE_HINT_LATELOAD
 
-/obj/structure/plaque/static_plaque/tram/LateInitialize(mapload)
-	. = ..()
+/obj/structure/plaque/static_plaque/tram/LateInitialize()
 	link_tram()
 	set_tram_serial()
 
@@ -108,31 +123,51 @@
 	icon_state = "commission_nt"
 	layer = BELOW_OPEN_DOOR_LAYER
 
+WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/structure/plaque/static_plaque/golden/commission)
+
 //Current stations
 
 // Icebox Station: added May 13, 2020 (#51090)
 /obj/structure/plaque/static_plaque/golden/commission/icebox
 	desc = "Spinward Sector Station SS-13\n'Box' Class Outpost (Revision 2.2: 'Icebox')\nCommissioned 13/05/2560\n'Cold Reliable'"
 
+WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/structure/plaque/static_plaque/golden/commission/icebox)
+
 // Metastation: added Mar 11, 2013 (best estimate, pre-git)
 /obj/structure/plaque/static_plaque/golden/commission/meta
 	desc = "Spinward Sector Station SS-13\n'Meta' Class Outpost\nCommissioned 11/03/2553\n'Theseus' Station'"
+
+WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/structure/plaque/static_plaque/golden/commission/meta)
 
 // Deltastation: added Dec 17, 2016 (#22066)
 /obj/structure/plaque/static_plaque/golden/commission/delta
 	desc = "Spinward Sector Station SS-13\n'Delta' Class Outpost\nCommissioned 17/12/2556\n'Efficiency Through Redundancy'"
 
+WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/structure/plaque/static_plaque/golden/commission/delta)
+
 // Tramstation: added Mar 11, 2021 (#56509)
 /obj/structure/plaque/static_plaque/golden/commission/tram
 	desc = "Spinward Sector Station SS-13\n'Tram' Class Outpost\nCommissioned 11/03/2561\n'Making Moves'"
+
+WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/structure/plaque/static_plaque/golden/commission/tram)
+
+// Wawastation: added add date here
+/obj/structure/plaque/static_plaque/golden/commission/wawa
+	desc = "Spinward Sector Station SS-13\n'Wawa' Class Outpost\nCommissioned 11/03/add here\n'Forever Vertical'"
+
+WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/structure/plaque/static_plaque/golden/commission/wawa)
 
 // North Star: added Apr 13, 2023 (#74371)
 /obj/structure/plaque/static_plaque/golden/commission/northstar
 	desc = "Spinward Sector Ship SS-13\n'North Star' Class Vessel\nCommissioned 13/04/2563\n'New Opportunities'"
 
+WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/structure/plaque/static_plaque/golden/commission/northstar)
+
 // Birdshot: added Apr 29, 2023 (#74371)
 /obj/structure/plaque/static_plaque/golden/commission/birdshot
 	desc = "Spinward Sector Station SS-13\n'Birdshot' Class Outpost\nCommissioned 29/04/2563\n'Shooting for the Stars'"
+
+WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/structure/plaque/static_plaque/golden/commission/birdshot)
 
 //Removed stations
 
@@ -140,53 +175,79 @@
 /obj/structure/plaque/static_plaque/golden/commission/asteroid
 	desc = "Spinward Sector Station SS-12\n'Asteroid' Class Outpost\nCommissioned 13/10/2555\nDecommissioned 19/06/2556\n'A Meteoric Success'"
 
+WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/structure/plaque/static_plaque/golden/commission/asteroid)
+
 // Birdboat Station: added Sep 17, 2015 (#11829), removed Feb 09, 2017 (#23754)- 1 year, 4 months, 23 days
 /obj/structure/plaque/static_plaque/golden/commission/birdboat
 	desc = "Spinward Sector Station SS-03\n'Birdboat' Class Outpost\nCommissioned 17/09/2555\nDecommissioned 09/02/2557\n'Rocking the Boat'"
+
+WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/structure/plaque/static_plaque/golden/commission/birdboat)
 
 // Boxstation: added Nov 15, 2010 (pre-git), removed Jul 06, 2020 (#52017)- 9 years, 7 months, 21 days
 /obj/structure/plaque/static_plaque/golden/commission/box
 	desc = "Spinward Sector Station SS-02\n'Box' Class Outpost\nCommissioned 15/11/2550\nDecommissioned 06/07/2560\n'Old Faithful'"
 
+WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/structure/plaque/static_plaque/golden/commission/box)
+
 // Pubbystation: added Oct 19, 2016 (#20925), removed Dec 10, 2020 (#54588)- 4 years, 1 month, 21 days
 /obj/structure/plaque/static_plaque/golden/commission/pubby
 	desc = "Spinward Sector Station SS-06\n'Pubby' Class Outpost\nCommissioned 19/10/2556\nDecommissioned 10/12/2560\n'No Law But Ours'"
+
+WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/structure/plaque/static_plaque/golden/commission/pubby)
 
 // Cerestation: added Mar 29, 2017 (#24665), removed Aug 26th, 2017 (#30196)- 4 months, 28 days
 /obj/structure/plaque/static_plaque/golden/commission/cere
 	desc = "Spinward Sector Station SS-10\n'Cere' Class Outpost\nCommissioned 29/03/2557\nDecommissioned 26/08/2557\n'Take a Hike'"
 
+WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/structure/plaque/static_plaque/golden/commission/cere)
+
 // Discstation: added Sep 21, 2015 (#11923), removed Jan 31, 2016 (#15069)- 4 months, 10 days
 /obj/structure/plaque/static_plaque/golden/commission/disc
 	desc = "Spinward Sector Station SS-05\n'Disc' Class Outpost\nCommissioned 21/09/2555\nDecommissioned 31/01/2556\n'Sleep Tight'"
+
+WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/structure/plaque/static_plaque/golden/commission/disc)
 
 // Donutstation: added Dec 16, 2018 (#41099), removed Apr 28, 2020 (#50730)- 1 year, 4 months, 12 days
 /obj/structure/plaque/static_plaque/golden/commission/donut
 	desc = "Spinward Sector Station SS-11\n'Donut' Class Outpost\nCommissioned 16/12/2558\nDecommissioned 28/04/2560\n'Hail the Lord'"
 
+WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/structure/plaque/static_plaque/golden/commission/donut)
+
 // Dreamstation: added Oct 06, 2015 (#12154), removed Dec 22, 2016 (#22305)- 1 year, 2 months, 16 days
 /obj/structure/plaque/static_plaque/golden/commission/dream
 	desc = "Spinward Sector Station SS-04\n'Dream' Class Outpost\nCommissioned 06/10/2555\nDecommissioned 22/12/2556\n'Aiming High'"
+
+WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/structure/plaque/static_plaque/golden/commission/dream)
 
 // Efficiencystation: added Jan 28, 2016 (46f64266cfb8b40e35faa8a4d9a2d3aeec689943), removed Dec 20, 2016 (#22306)- 10 months, 22 days
 /obj/structure/plaque/static_plaque/golden/commission/efficiency
 	desc = "Spinward Sector Station SS-07\n'Efficiency' Class Outpost\nCommissioned 28/01/2556\nDecommissioned 20/12/2556\n'Work Smarter, Not Harder'"
 
+WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/structure/plaque/static_plaque/golden/commission/efficiency)
+
 // Kilostation: added Nov 13, 2019 (#46968), removed
 /obj/structure/plaque/static_plaque/golden/commission/kilo
 	desc = "Spinward Sector Station SS-13\n'Kilo' Class Outpost\nCommissioned 13/11/2559\nDecommissioned \n'Forever Different'"
+
+WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/structure/plaque/static_plaque/golden/commission/kilo)
 
 // Ministation: added Jan 29, 2014 (7a76e9456b782e6626bf81e27a912d8232c76b18), removed Dec 27, 2016 (#22453)- 2 years, 10 months, 28 days
 /obj/structure/plaque/static_plaque/golden/commission/mini
 	desc = "Spinward Sector Station SS-08\n'Mini' Class Outpost\nCommissioned 29/01/2554\nDecommissioned 27/12/2556\n'The Littlest Station'"
 
+WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/structure/plaque/static_plaque/golden/commission/mini)
+
 // Omegastation: added Dec 27, 2016 (#22453), removed Sep 20, 2018 (#40352)- 1 year, 8 months, 24 days
 /obj/structure/plaque/static_plaque/golden/commission/omega
 	desc = "Spinward Sector Station SS-09\n'Omega' Class Outpost\nCommissioned 27/12/2556\nDecommissioned 20/09/2558\n'Tiny Take Two'"
 
+WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/structure/plaque/static_plaque/golden/commission/omega)
+
 // Uterusstation: added Sep 03, 2011 (bbd6db9ce2d6341892b89a620593fc8877f5a817), removed Jun 21, 2012 (72d72f7ce522c2d2ad4863f44ee9f5054413c489)- 9 months, 18 days
 /obj/structure/plaque/static_plaque/golden/commission/uterus
 	desc = "Spinward Sector Station SS-01\n'Uterus' Class Outpost\nCommissioned 03/09/2551\nDecommissioned 21/06/2552\n'Humanity's Vanguard'"
+
+WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/structure/plaque/static_plaque/golden/commission/uterus)
 
 // Other Stations
 
@@ -196,6 +257,8 @@
 	desc = "космическая-станция-13\nфорпост класса разработчика\nстанция сдана 30.12.2322\nво славу тружеников третьего советского союза"
 	icon_state = "commission_commie"
 
+WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/structure/plaque/static_plaque/golden/commission/ks13)
+
 //These are plaques that aren't made of metal, so we'll just consider them signs. Those are made of plastic (default) or wood, not gold.
 //See: code>game>objects>structures>signs>_signs.dm
 
@@ -204,26 +267,40 @@
 	desc = "Next to the extremely long list of names and job titles, there is a drawing of a little child. The child appears to be disabled. Beneath the image, someone has scratched the word \"PACKETS\"."
 	icon_state = "kiddieplaque"
 
+WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/structure/sign/plaques/kiddie)
+
 /obj/structure/sign/plaques/kiddie/devils_tooth
 	name = "\improper Devil's Tooth Plaque"
 	desc = "A plaque commemorating the fallen souls who had to die tunneling out this segment of the frozen ice planet that surrounds it. It's named \"Devil's Tooth\" because those who laid down their life here surely thought they were in hell."
+
+WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/structure/sign/plaques/kiddie/devils_tooth)
 
 /obj/structure/sign/plaques/kiddie/badger
 	name = "\improper Remembrance Plaque"
 	desc = "A plaque commemorating the fallen, may they rest in peace, forever asleep amongst the stars. Someone has drawn a picture of a crying badger at the bottom."
 
+WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/structure/sign/plaques/kiddie/badger)
+
 /obj/structure/sign/plaques/kiddie/library
 	name = "\improper Library Rules Sign"
 	desc = "A long list of rules to be followed when in the library, extolling the virtues of being quiet at all times and threatening those who would dare eat hot food inside."
+
+WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/structure/sign/plaques/kiddie/library)
 
 /obj/structure/sign/plaques/kiddie/perfect_man
 	name = "\improper 'Perfect Man' sign"
 	desc = "A guide to the exhibit, explaining how recent developments in mindshield implant and cloning technologies by Nanotrasen Corporation have led to the development and the effective immortality of the 'perfect man', the loyal Nanotrasen Employee."
 
+WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/structure/sign/plaques/kiddie/perfect_man)
+
 /obj/structure/sign/plaques/kiddie/perfect_drone
 	name = "\improper 'Perfect Drone' sign"
 	desc = "A guide to the drone shell dispenser, detailing the constructive and destructive applications of modern repair drones, as well as the development of the incorruptible cyborg servants of tomorrow, available today."
 
+WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/structure/sign/plaques/kiddie/perfect_drone)
+
 /obj/structure/sign/plaques/kiddie/gameoflife
 	name = "\improper Conway's The Game Of Life plaque"
 	desc = "A plaque detailing the historical significance of The Game Of Life in the field of computer science, and that the mural underfoot is a representation of the game in action."
+
+WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/structure/sign/plaques/kiddie/gameoflife)

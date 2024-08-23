@@ -21,8 +21,7 @@
 	. = ..()
 	break_message = span_warning("[src] falls apart with a thud!")
 
-/obj/structure/destructible/eldritch_crucible/deconstruct(disassembled = TRUE)
-
+/obj/structure/destructible/eldritch_crucible/atom_deconstruct(disassembled = TRUE)
 	// Create a spillage if we were destroyed with leftover mass
 	if(current_mass)
 		break_message = span_warning("[src] falls apart with a thud, spilling shining extract everywhere!")
@@ -57,6 +56,10 @@
 	if(IS_HERETIC_OR_MONSTER(user) || isobserver(user))
 		return span_notice("It's at <b>[round(atom_integrity * 100 / max_integrity)]%</b> stability.")
 	return ..()
+
+// no breaky herety thingy
+/obj/structure/destructible/eldritch_crucible/rust_heretic_act()
+	return
 
 /obj/structure/destructible/eldritch_crucible/attacked_by(obj/item/weapon, mob/living/user)
 	if(!iscarbon(user))

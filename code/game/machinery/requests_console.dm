@@ -13,7 +13,7 @@ GLOBAL_LIST_EMPTY(req_console_ckey_departments)
 /obj/machinery/requests_console
 	name = "requests console"
 	desc = "A console intended to send requests to different departments on the station."
-	icon = 'icons/obj/machines/wallmounts.dmi'
+	icon = 'icons/obj/machines/request_console.dmi'
 	icon_state = "req_comp_off"
 	base_icon_state = "req_comp"
 	active_power_usage = BASE_MACHINE_ACTIVE_CONSUMPTION * 0.15
@@ -128,6 +128,7 @@ GLOBAL_LIST_EMPTY(req_console_ckey_departments)
 	radio = new /obj/item/radio(src)
 	radio.set_listening(FALSE)
 	find_and_hang_on_wall()
+	AddComponent(/datum/component/examine_balloon)
 
 /obj/machinery/requests_console/Destroy()
 	QDEL_NULL(radio)
@@ -144,7 +145,7 @@ GLOBAL_LIST_EMPTY(req_console_ckey_departments)
 		ui.set_autoupdate(FALSE)
 		ui.open()
 
-/obj/machinery/requests_console/ui_act(action, params)
+/obj/machinery/requests_console/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if(.)
 		return
@@ -213,7 +214,8 @@ GLOBAL_LIST_EMPTY(req_console_ckey_departments)
 			var/recipient = params["reply_recipient"]
 
 			var/reply_message = reject_bad_text(tgui_input_text(usr, "Write a quick reply to [recipient]", "Awaiting Input"), ascii_only = FALSE)
-
+			if(QDELETED(ui) || ui.status != UI_INTERACTIVE)
+				return
 			if(!reply_message)
 				has_mail_send_error = TRUE
 				playsound(src, 'sound/machines/buzz-two.ogg', 50, TRUE)
@@ -400,16 +402,15 @@ GLOBAL_LIST_EMPTY(req_console_ckey_departments)
 /obj/machinery/requests_console/auto_name // Register an autoname variant and then make the directional helpers before undefing all the magic bits
 	auto_name = TRUE
 
-MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/requests_console, 30)
-MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/requests_console/auto_name, 30)
+WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/machinery/requests_console)
+WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/machinery/requests_console/auto_name)
 
 /obj/item/wallframe/requests_console
 	name = "requests console"
 	desc = "An unmounted requests console. Attach it to a wall to use."
-	icon = 'icons/obj/machines/wallmounts.dmi'
+	icon = 'icons/obj/machines/request_console.dmi'
 	icon_state = "req_comp_off"
 	result_path = /obj/machinery/requests_console/auto_name
-	pixel_shift = 30
 
 #undef REQ_EMERGENCY_SECURITY
 #undef REQ_EMERGENCY_ENGINEERING

@@ -93,10 +93,12 @@
 	var/minimum_survivable_temperature = NPC_DEFAULT_MIN_TEMP
 	///Maximal body temperature without receiving damage
 	var/maximum_survivable_temperature = NPC_DEFAULT_MAX_TEMP
-	///This damage is taken when the body temp is too cold. Set both this and unsuitable_heat_damage to 0 to avoid adding the basic_body_temp_sensitive element.
+	///This damage is taken when the body temp is too cold. Set both this and unsuitable_heat_damage to 0 to avoid adding the body_temp_sensitive element.
 	var/unsuitable_cold_damage = 1
-	///This damage is taken when the body temp is too hot. Set both this and unsuitable_cold_damage to 0 to avoid adding the basic_body_temp_sensitive element.
+	///This damage is taken when the body temp is too hot. Set both this and unsuitable_cold_damage to 0 to avoid adding the body_temp_sensitive element.
 	var/unsuitable_heat_damage = 1
+	///Amount to increment our vertical position by when dead
+	var/death_offset_y = 0
 
 /mob/living/basic/Initialize(mapload)
 	. = ..()
@@ -115,23 +117,50 @@
 	if(speak_emote)
 		speak_emote = string_list(speak_emote)
 
-	apply_atmos_requirements()
-	apply_temperature_requirements()
+	///We need to wait for SSair to be initialized before we can check atmos/temp requirements.
+	if(PERFORM_ALL_TESTS(focus_only/atmos_and_temp_requirements) && mapload && !SSair.initialized)
+		RegisterSignal(SSair, COMSIG_SUBSYSTEM_POST_INITIALIZE, PROC_REF(on_ssair_init))
+		return
+	apply_atmos_requirements(mapload)
+	apply_temperature_requirements(mapload)
+	apply_target_randomisation()
+
+/mob/living/basic/create_shadow()
+	if (shadow_type == SHADOW_NONE)
+		qdel(GetComponent(/datum/component/drop_shadow))
+		return
+
+	AddComponent(/datum/component/drop_shadow, \
+		icon_state = shadow_type, \
+		shadow_offset_x = shadow_offset_x, \
+		shadow_offset_y = shadow_offset_y, \
+		death_offset = -death_offset_y, \
+	)
+
+/mob/living/basic/proc/on_ssair_init(datum/source)
+	SIGNAL_HANDLER
+	UnregisterSignal(SSair, COMSIG_SUBSYSTEM_POST_INITIALIZE)
+	apply_atmos_requirements(TRUE)
+	apply_temperature_requirements(TRUE)
 
 /// Ensures this mob can take atmospheric damage if it's supposed to
-/mob/living/basic/proc/apply_atmos_requirements()
-	if(unsuitable_atmos_damage == 0)
+/mob/living/basic/proc/apply_atmos_requirements(mapload)
+	if(unsuitable_atmos_damage == 0 || isnull(habitable_atmos))
 		return
 	//String assoc list returns a cached list, so this is like a static list to pass into the element below.
 	habitable_atmos = string_assoc_list(habitable_atmos)
-	AddElement(/datum/element/atmos_requirements, habitable_atmos, unsuitable_atmos_damage)
+	AddElement(/datum/element/atmos_requirements, habitable_atmos, unsuitable_atmos_damage, mapload)
 
 /// Ensures this mob can take temperature damage if it's supposed to
-/mob/living/basic/proc/apply_temperature_requirements()
-	if(unsuitable_cold_damage == 0 && unsuitable_heat_damage == 0)
+/mob/living/basic/proc/apply_temperature_requirements(mapload)
+	if((unsuitable_cold_damage == 0 && unsuitable_heat_damage == 0) || (minimum_survivable_temperature <= 0 && maximum_survivable_temperature >= INFINITY))
 		return
-	AddElement(/datum/element/basic_body_temp_sensitive, minimum_survivable_temperature, maximum_survivable_temperature, unsuitable_cold_damage, unsuitable_heat_damage)
+	AddElement(/datum/element/body_temp_sensitive, minimum_survivable_temperature, maximum_survivable_temperature, unsuitable_cold_damage, unsuitable_heat_damage, mapload)
 
+/mob/living/basic/proc/apply_target_randomisation()
+	if (basic_mob_flags & PRECISE_ATTACK_ZONES)
+		return
+	AddElement(/datum/element/attack_zone_randomiser)
 
 /mob/living/basic/Life(seconds_per_tick = SSMOBS_DT, times_fired)
 	. = ..()
@@ -174,6 +203,7 @@
 	if(!(basic_mob_flags & REMAIN_DENSE_WHILE_DEAD))
 		ADD_TRAIT(src, TRAIT_UNDENSE, BASIC_MOB_DEATH_TRAIT)
 	SEND_SIGNAL(src, COMSIG_BASICMOB_LOOK_DEAD)
+	pixel_z = base_pixel_z + death_offset_y
 
 /mob/living/basic/revive(full_heal_flags = NONE, excess_healing = 0, force_grab_ghost = FALSE)
 	. = ..()
@@ -189,6 +219,8 @@
 	if(!(basic_mob_flags & REMAIN_DENSE_WHILE_DEAD))
 		REMOVE_TRAIT(src, TRAIT_UNDENSE, BASIC_MOB_DEATH_TRAIT)
 	SEND_SIGNAL(src, COMSIG_BASICMOB_LOOK_ALIVE)
+	if (death_offset_y != 0)
+		pixel_z = base_pixel_z
 
 /mob/living/basic/update_sight()
 	lighting_color_cutoffs = list(lighting_cutoff_red, lighting_cutoff_green, lighting_cutoff_blue)
@@ -219,7 +251,7 @@
 			RemoveElement(/datum/element/atmos_requirements, habitable_atmos, unsuitable_atmos_damage)
 			. = TRUE
 		if(NAMEOF(src, minimum_survivable_temperature), NAMEOF(src, maximum_survivable_temperature), NAMEOF(src, unsuitable_cold_damage), NAMEOF(src, unsuitable_heat_damage))
-			RemoveElement(/datum/element/basic_body_temp_sensitive, minimum_survivable_temperature, maximum_survivable_temperature, unsuitable_cold_damage, unsuitable_heat_damage)
+			RemoveElement(/datum/element/body_temp_sensitive, minimum_survivable_temperature, maximum_survivable_temperature, unsuitable_cold_damage, unsuitable_heat_damage)
 			. = TRUE
 
 	. = ..()
@@ -232,6 +264,8 @@
 		if(NAMEOF(src, speed))
 			datum_flags |= DF_VAR_EDITED
 			set_varspeed(vval)
+		if(NAMEOF(src, death_offset_y))
+			create_shadow()
 
 /mob/living/basic/proc/set_varspeed(var_value)
 	speed = var_value
@@ -303,3 +337,9 @@
 
 /mob/living/basic/get_body_temp_cold_damage_limit()
 	return minimum_survivable_temperature
+
+/mob/living/basic/proc/hop_on_nearby_turf()
+	var/dir = pick(GLOB.cardinals)
+	Move(get_step(src, dir), dir)
+	animate(src, pixel_y = 18, time = 0.4 SECONDS, flags = ANIMATION_RELATIVE, easing = CUBIC_EASING|EASE_OUT)
+	animate(pixel_y = -18, time = 0.4 SECONDS, flags = ANIMATION_RELATIVE, easing = CUBIC_EASING|EASE_IN)

@@ -35,11 +35,13 @@
 	dir = SOUTH
 	pixel_x = -8
 	pixel_y = 32
+	pixel_z = 0
 
 /obj/machinery/computer/tram_controls/split/directional/south
 	dir = NORTH
 	pixel_x = 8
 	pixel_y = -32
+	pixel_z = 0
 
 /obj/machinery/computer/tram_controls/split/directional/east
 	dir = WEST
@@ -54,7 +56,7 @@
 	var/obj/item/circuitboard/computer/tram_controls/my_circuit = circuit
 	split_mode = my_circuit.split_mode
 
-/obj/machinery/computer/tram_controls/LateInitialize()
+/obj/machinery/computer/tram_controls/post_machine_initialize()
 	. = ..()
 	if(!id_tag)
 		id_tag = assign_random_name()
@@ -130,7 +132,7 @@
 		this_destination["id"] = destination.platform_code
 		. += list(this_destination)
 
-/obj/machinery/computer/tram_controls/ui_act(action, params)
+/obj/machinery/computer/tram_controls/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if(.)
 		return

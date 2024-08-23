@@ -1,4 +1,5 @@
-import { FeatureChoiced, FeatureDropdownInput } from '../base';
+import { FeatureChoiced } from '../base';
+import { FeatureDropdownInput } from '../dropdowns';
 
 export const ghost_lighting: FeatureChoiced = {
   name: 'Ghost Lighting',

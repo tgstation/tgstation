@@ -77,7 +77,7 @@
 	return TRUE
 
 /datum/id_trim/job/assistant
-	assignment = "Assistant"
+	assignment = JOB_ASSISTANT
 	trim_state = "trim_assistant"
 	intern_alt_name = "Intern"
 	sechud_icon_state = SECHUD_ASSISTANT
@@ -104,7 +104,7 @@
 			ACCESS_MAINT_TUNNELS)
 
 /datum/id_trim/job/atmospheric_technician
-	assignment = "Atmospheric Technician"
+	assignment = JOB_ATMOSPHERIC_TECHNICIAN
 	trim_state = "trim_atmospherictechnician"
 	department_color = COLOR_ENGINEERING_ORANGE
 	subdepartment_color = COLOR_ENGINEERING_ORANGE
@@ -133,7 +133,7 @@
 	job = /datum/job/atmospheric_technician
 
 /datum/id_trim/job/bartender
-	assignment = "Bartender"
+	assignment = JOB_BARTENDER
 	trim_state = "trim_bartender"
 	department_color = COLOR_SERVICE_LIME
 	subdepartment_color = COLOR_SERVICE_LIME
@@ -157,7 +157,7 @@
 	job = /datum/job/bartender
 
 /datum/id_trim/job/bitrunner
-	assignment = "Bitrunner"
+	assignment = JOB_BITRUNNER
 	trim_state = "trim_bitrunner"
 	department_color = COLOR_CARGO_BROWN
 	subdepartment_color = COLOR_CARGO_BROWN
@@ -181,7 +181,7 @@
 	job = /datum/job/bitrunner
 
 /datum/id_trim/job/botanist
-	assignment = "Botanist"
+	assignment = JOB_BOTANIST
 	trim_state = "trim_botanist"
 	department_color = COLOR_SERVICE_LIME
 	subdepartment_color = COLOR_SERVICE_LIME
@@ -204,7 +204,7 @@
 	job = /datum/job/botanist
 
 /datum/id_trim/job/bridge_assistant
-	assignment = "Bridge Assistant"
+	assignment = JOB_BRIDGE_ASSISTANT
 	trim_state = "trim_assistant"
 	department_color = COLOR_COMMAND_BLUE
 	subdepartment_color = COLOR_COMMAND_BLUE
@@ -226,7 +226,7 @@
 	job = /datum/job/bridge_assistant
 
 /datum/id_trim/job/captain
-	assignment = "Captain"
+	assignment = JOB_CAPTAIN
 	intern_alt_name = "Captain-in-Training"
 	trim_state = "trim_captain"
 	department_color = COLOR_COMMAND_BLUE
@@ -238,6 +238,8 @@
 		ACCESS_CHANGE_IDS,
 		)
 	job = /datum/job/captain
+	big_pointer = TRUE
+	pointer_color = COLOR_COMMAND_BLUE
 
 /// Captain gets all station accesses hardcoded in because it's the Captain.
 /datum/id_trim/job/captain/New()
@@ -249,7 +251,7 @@
 	return ..()
 
 /datum/id_trim/job/cargo_technician
-	assignment = "Cargo Technician"
+	assignment = JOB_CARGO_TECHNICIAN
 	trim_state = "trim_cargotechnician"
 	department_color = COLOR_CARGO_BROWN
 	subdepartment_color = COLOR_CARGO_BROWN
@@ -274,7 +276,7 @@
 	job = /datum/job/cargo_technician
 
 /datum/id_trim/job/chaplain
-	assignment = "Chaplain"
+	assignment = JOB_CHAPLAIN
 	trim_state = "trim_chaplain"
 	department_color = COLOR_SERVICE_LIME
 	subdepartment_color = COLOR_SERVICE_LIME
@@ -296,7 +298,7 @@
 	job = /datum/job/chaplain
 
 /datum/id_trim/job/chemist
-	assignment = "Chemist"
+	assignment = JOB_CHEMIST
 	trim_state = "trim_chemist"
 	department_color = COLOR_MEDICAL_BLUE
 	subdepartment_color = COLOR_MEDICAL_BLUE
@@ -321,7 +323,7 @@
 	job = /datum/job/chemist
 
 /datum/id_trim/job/chief_engineer
-	assignment = "Chief Engineer"
+	assignment = JOB_CHIEF_ENGINEER
 	intern_alt_name = "Chief Engineer-in-Training"
 	trim_state = "trim_stationengineer"
 	department_color = COLOR_COMMAND_BLUE
@@ -360,9 +362,11 @@
 		ACCESS_CHANGE_IDS,
 		)
 	job = /datum/job/chief_engineer
+	big_pointer = TRUE
+	pointer_color = COLOR_ENGINEERING_ORANGE
 
 /datum/id_trim/job/chief_medical_officer
-	assignment = "Chief Medical Officer"
+	assignment = JOB_CHIEF_MEDICAL_OFFICER
 	intern_alt_name = "Chief Medical Officer-in-Training"
 	trim_state = "trim_medicaldoctor"
 	department_color = COLOR_COMMAND_BLUE
@@ -399,9 +403,11 @@
 		ACCESS_CHANGE_IDS,
 	)
 	job = /datum/job/chief_medical_officer
+	big_pointer = TRUE
+	pointer_color = COLOR_MEDICAL_BLUE
 
 /datum/id_trim/job/clown
-	assignment = "Clown"
+	assignment = JOB_CLOWN
 	trim_state = "trim_clown"
 	department_color = COLOR_MAGENTA
 	subdepartment_color = COLOR_MAGENTA
@@ -420,7 +426,7 @@
 	job = /datum/job/clown
 
 /datum/id_trim/job/cook
-	assignment = "Cook"
+	assignment = JOB_COOK
 	trim_state = "trim_cook"
 	department_color = COLOR_SERVICE_LIME
 	subdepartment_color = COLOR_SERVICE_LIME
@@ -443,11 +449,11 @@
 	job = /datum/job/cook
 
 /datum/id_trim/job/cook/chef
-	assignment = "Chef"
+	assignment = JOB_CHEF
 	sechud_icon_state = SECHUD_CHEF
 
 /datum/id_trim/job/coroner
-	assignment = "Coroner"
+	assignment = JOB_CORONER
 	trim_state = "trim_coroner"
 	department_color = COLOR_MEDICAL_BLUE
 	subdepartment_color = COLOR_SERVICE_LIME
@@ -474,7 +480,7 @@
 	job = /datum/job/coroner
 
 /datum/id_trim/job/curator
-	assignment = "Curator"
+	assignment = JOB_CURATOR
 	trim_state = "trim_curator"
 	department_color = COLOR_SERVICE_LIME
 	subdepartment_color = COLOR_SERVICE_LIME
@@ -495,7 +501,7 @@
 	job = /datum/job/curator
 
 /datum/id_trim/job/detective
-	assignment = "Detective"
+	assignment = JOB_DETECTIVE
 	trim_state = "trim_detective"
 	department_color = COLOR_SECURITY_RED
 	subdepartment_color = COLOR_SECURITY_RED
@@ -533,7 +539,7 @@
 		access |= list(ACCESS_MAINT_TUNNELS)
 
 /datum/id_trim/job/geneticist
-	assignment = "Geneticist"
+	assignment = JOB_GENETICIST
 	trim_state = "trim_geneticist"
 	department_color = COLOR_SCIENCE_PINK
 	subdepartment_color = COLOR_SCIENCE_PINK
@@ -545,11 +551,13 @@
 		ACCESS_MORGUE,
 		ACCESS_RESEARCH,
 		ACCESS_SCIENCE,
+		ACCESS_XENOBIOLOGY,
 		)
 	extra_access = list(
 		ACCESS_ROBOTICS,
 		ACCESS_TECH_STORAGE,
-		ACCESS_XENOBIOLOGY,
+		ACCESS_ORDNANCE,
+		ACCESS_ORDNANCE_STORAGE,
 		)
 	template_access = list(
 		ACCESS_CAPTAIN,
@@ -559,7 +567,7 @@
 	job = /datum/job/geneticist
 
 /datum/id_trim/job/head_of_personnel
-	assignment = "Head of Personnel"
+	assignment = JOB_HEAD_OF_PERSONNEL
 	intern_alt_name = "Head of Personnel-in-Training"
 	trim_state = "trim_headofpersonnel"
 	department_color = COLOR_COMMAND_BLUE
@@ -610,9 +618,11 @@
 		ACCESS_CHANGE_IDS,
 	)
 	job = /datum/job/head_of_personnel
+	big_pointer = TRUE
+	pointer_color = COLOR_SERVICE_LIME
 
 /datum/id_trim/job/head_of_security
-	assignment = "Head of Security"
+	assignment = JOB_HEAD_OF_SECURITY
 	intern_alt_name = "Head of Security-in-Training"
 	trim_state = "trim_securityofficer"
 	department_color = COLOR_COMMAND_BLUE
@@ -659,6 +669,8 @@
 		ACCESS_CHANGE_IDS,
 	)
 	job = /datum/job/head_of_security
+	big_pointer = TRUE
+	pointer_color = COLOR_SECURITY_RED
 
 /datum/id_trim/job/head_of_security/refresh_trim_access()
 	. = ..()
@@ -671,7 +683,7 @@
 		access |= list(ACCESS_MAINT_TUNNELS)
 
 /datum/id_trim/job/janitor
-	assignment = "Janitor"
+	assignment = JOB_JANITOR
 	trim_state = "trim_janitor"
 	department_color = COLOR_SERVICE_LIME
 	subdepartment_color = COLOR_SERVICE_LIME
@@ -691,7 +703,7 @@
 	job = /datum/job/janitor
 
 /datum/id_trim/job/lawyer
-	assignment = "Lawyer"
+	assignment = JOB_LAWYER
 	trim_state = "trim_lawyer"
 	department_color = COLOR_SERVICE_LIME
 	subdepartment_color = COLOR_SECURITY_RED
@@ -712,7 +724,7 @@
 	job = /datum/job/lawyer
 
 /datum/id_trim/job/medical_doctor
-	assignment = "Medical Doctor"
+	assignment = JOB_MEDICAL_DOCTOR
 	trim_state = "trim_medicaldoctor"
 	department_color = COLOR_MEDICAL_BLUE
 	subdepartment_color = COLOR_MEDICAL_BLUE
@@ -737,7 +749,7 @@
 	job = /datum/job/doctor
 
 /datum/id_trim/job/mime
-	assignment = "Mime"
+	assignment = JOB_MIME
 	trim_state = "trim_mime"
 	department_color = COLOR_SILVER
 	subdepartment_color = COLOR_WHITE
@@ -756,7 +768,7 @@
 	job = /datum/job/mime
 
 /datum/id_trim/job/paramedic
-	assignment = "Paramedic"
+	assignment = JOB_PARAMEDIC
 	trim_state = "trim_paramedic"
 	department_color = COLOR_MEDICAL_BLUE
 	subdepartment_color = COLOR_MEDICAL_BLUE
@@ -788,7 +800,7 @@
 	job = /datum/job/paramedic
 
 /datum/id_trim/job/prisoner
-	assignment = "Prisoner"
+	assignment = JOB_PRISONER
 	trim_state = "trim_warden"
 	department_color = COLOR_PRISONER_BLACK
 	subdepartment_color = COLOR_PRISONER_BLACK
@@ -831,7 +843,7 @@
 	template_access = null
 
 /datum/id_trim/job/psychologist
-	assignment = "Psychologist"
+	assignment = JOB_PSYCHOLOGIST
 	trim_state = "trim_psychologist"
 	department_color = COLOR_SERVICE_LIME
 	subdepartment_color = COLOR_MEDICAL_BLUE
@@ -855,7 +867,7 @@
 	job = /datum/job/psychologist
 
 /datum/id_trim/job/quartermaster
-	assignment = "Quartermaster"
+	assignment = JOB_QUARTERMASTER
 	intern_alt_name = "Quartermaster-in-Training"
 	trim_state = "trim_cargotechnician"
 	department_color = COLOR_COMMAND_BLUE
@@ -891,9 +903,11 @@
 		ACCESS_CHANGE_IDS,
 	)
 	job = /datum/job/quartermaster
+	big_pointer = TRUE
+	pointer_color = COLOR_CARGO_BROWN
 
 /datum/id_trim/job/research_director
-	assignment = "Research Director"
+	assignment = JOB_RESEARCH_DIRECTOR
 	intern_alt_name = "Research Director-in-Training"
 	trim_state = "trim_scientist"
 	department_color = COLOR_COMMAND_BLUE
@@ -939,9 +953,11 @@
 		ACCESS_CHANGE_IDS,
 		)
 	job = /datum/job/research_director
+	big_pointer = TRUE
+	pointer_color = COLOR_SCIENCE_PINK
 
 /datum/id_trim/job/roboticist
-	assignment = "Roboticist"
+	assignment = JOB_ROBOTICIST
 	trim_state = "trim_roboticist"
 	department_color = COLOR_SCIENCE_PINK
 	subdepartment_color = COLOR_SCIENCE_PINK
@@ -955,6 +971,8 @@
 		ACCESS_ROBOTICS,
 		ACCESS_SCIENCE,
 		ACCESS_TECH_STORAGE,
+		ACCESS_ORDNANCE,
+		ACCESS_ORDNANCE_STORAGE,
 		)
 	extra_access = list(
 		ACCESS_GENETICS,
@@ -969,7 +987,7 @@
 	job = /datum/job/roboticist
 
 /datum/id_trim/job/scientist
-	assignment = "Scientist"
+	assignment = JOB_SCIENTIST
 	trim_state = "trim_scientist"
 	department_color = COLOR_SCIENCE_PINK
 	subdepartment_color = COLOR_SCIENCE_PINK
@@ -997,7 +1015,7 @@
 
 /// Sec officers have departmental variants. They each have their own trims with bonus departmental accesses.
 /datum/id_trim/job/security_officer
-	assignment = "Security Officer"
+	assignment = JOB_SECURITY_OFFICER
 	trim_state = "trim_securityofficer"
 	department_color = COLOR_SECURITY_RED
 	subdepartment_color = COLOR_SECURITY_RED
@@ -1060,7 +1078,7 @@
 		access |= elevated_access
 
 /datum/id_trim/job/security_officer/supply
-	assignment = "Security Officer (Cargo)"
+	assignment = JOB_SECURITY_OFFICER_SUPPLY
 	subdepartment_color = COLOR_CARGO_BROWN
 	department_access = list(
 		ACCESS_BIT_DEN,
@@ -1074,7 +1092,7 @@
 	)
 
 /datum/id_trim/job/security_officer/engineering
-	assignment = "Security Officer (Engineering)"
+	assignment = JOB_SECURITY_OFFICER_ENGINEERING
 	subdepartment_color = COLOR_ENGINEERING_ORANGE
 	department_access = list(
 		ACCESS_ATMOSPHERICS,
@@ -1088,7 +1106,7 @@
 	)
 
 /datum/id_trim/job/security_officer/medical
-	assignment = "Security Officer (Medical)"
+	assignment = JOB_SECURITY_OFFICER_MEDICAL
 	subdepartment_color = COLOR_MEDICAL_BLUE
 	department_access = list(
 		ACCESS_MEDICAL,
@@ -1102,7 +1120,7 @@
 	)
 
 /datum/id_trim/job/security_officer/science
-	assignment = "Security Officer (Science)"
+	assignment = JOB_SECURITY_OFFICER_SCIENCE
 	subdepartment_color = COLOR_SCIENCE_PINK
 	department_access = list(
 		ACCESS_RESEARCH,
@@ -1118,7 +1136,7 @@
 	)
 
 /datum/id_trim/job/shaft_miner
-	assignment = "Shaft Miner"
+	assignment = JOB_SHAFT_MINER
 	trim_state = "trim_shaftminer"
 	department_color = COLOR_CARGO_BROWN
 	subdepartment_color = COLOR_SCIENCE_PINK
@@ -1155,7 +1173,7 @@
 	template_access = null
 
 /datum/id_trim/job/station_engineer
-	assignment = "Station Engineer"
+	assignment = JOB_STATION_ENGINEER
 	trim_state = "trim_stationengineer"
 	department_color = COLOR_ENGINEERING_ORANGE
 	subdepartment_color = COLOR_ENGINEERING_ORANGE
@@ -1184,7 +1202,7 @@
 	job = /datum/job/station_engineer
 
 /datum/id_trim/job/veteran_advisor
-	assignment = "Veteran Security Advisor"
+	assignment = JOB_VETERAN_ADVISOR
 	trim_state = "trim_veteranadvisor"
 	department_color = COLOR_SECURITY_RED
 	subdepartment_color = COLOR_COMMAND_BLUE
@@ -1202,6 +1220,7 @@
 	extra_access = list()
 	template_access = list()
 	job = /datum/job/veteran_advisor
+	big_pointer = TRUE
 
 /datum/id_trim/job/veteran_advisor/refresh_trim_access()
 	. = ..()
@@ -1213,33 +1232,9 @@
 	if(CONFIG_GET(flag/security_has_maint_access))
 		access |= list(ACCESS_MAINT_TUNNELS)
 
-/datum/id_trim/job/virologist
-	assignment = "Virologist"
-	trim_state = "trim_virologist"
-	department_color = COLOR_MEDICAL_BLUE
-	subdepartment_color = COLOR_MEDICAL_BLUE
-	sechud_icon_state = SECHUD_VIROLOGIST
-	minimal_access = list(
-		ACCESS_MECH_MEDICAL,
-		ACCESS_MEDICAL,
-		ACCESS_MINERAL_STOREROOM,
-		ACCESS_VIROLOGY,
-		ACCESS_PHARMACY,
-		)
-	extra_access = list(
-		ACCESS_PLUMBING,
-		ACCESS_MORGUE,
-		ACCESS_SURGERY,
-		)
-	template_access = list(
-		ACCESS_CAPTAIN,
-		ACCESS_CHANGE_IDS,
-		ACCESS_CMO,
-		)
-	job = /datum/job/virologist
 
 /datum/id_trim/job/warden
-	assignment = "Warden"
+	assignment = JOB_WARDEN
 	trim_state = "trim_warden"
 	department_color = COLOR_SECURITY_RED
 	subdepartment_color = COLOR_SECURITY_RED
@@ -1278,3 +1273,22 @@
 
 #undef POPULATION_SCALED_ACCESS
 #undef ALWAYS_GETS_ACCESS
+
+/datum/id_trim/job/human_ai
+	assignment = JOB_HUMAN_AI
+	trim_state = "trim_recluse"
+	department_color = COLOR_BLUE_GRAY
+	subdepartment_color = COLOR_MODERATE_BLUE
+	sechud_icon_state = SECHUD_HUMAN_AI
+	minimal_access = list(
+		ACCESS_ROBOTICS, // to access robotic controls
+		ACCESS_NETWORK, //to access NTOS
+		ACCESS_KEYCARD_AUTH, //to access holopads
+		ACCESS_MINISAT,
+		ACCESS_AI_UPLOAD,
+	)
+	extra_access = list()
+	template_access = list()
+	job = /datum/job/human_ai
+	big_pointer = TRUE
+	pointer_color = COLOR_MODERATE_BLUE

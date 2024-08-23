@@ -653,7 +653,6 @@
 	},
 /obj/machinery/light/warm,
 /obj/machinery/power/apc{
-	cell_type = /obj/item/stock_parts/cell/lead;
 	locked = 0;
 	pixel_y = -25;
 	start_charge = 0
@@ -672,7 +671,7 @@
 "Mp" = (
 /obj/structure/table/reinforced,
 /obj/machinery/cell_charger,
-/obj/item/stock_parts/cell/lead,
+/obj/item/stock_parts/power_store/cell/lead,
 /turf/open/floor/iron/smooth,
 /area/ruin/space/has_grav/garbagetruck/toystore)
 "MK" = (
@@ -758,7 +757,7 @@
 /area/ruin/space/has_grav/garbagetruck/toystore)
 "Rl" = (
 /obj/item/paper/crumpled,
-/obj/item/stock_parts/cell/hyper,
+/obj/item/stock_parts/power_store/cell/hyper,
 /obj/item/hand_labeler,
 /obj/item/hand_labeler_refill,
 /obj/item/hand_labeler_refill,

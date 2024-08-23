@@ -42,9 +42,8 @@
 
 /obj/item/reagent_containers/cup/glass/bottle/Initialize(mapload, vol)
 	. = ..()
-	AddComponent(/datum/component/slapcrafting,\
-		slapcraft_recipes = list(/datum/crafting_recipe/molotov)\
-	)
+	var/static/list/recipes =  list(/datum/crafting_recipe/molotov)
+	AddElement(/datum/element/slapcrafting, recipes)
 
 /obj/item/reagent_containers/cup/glass/bottle/small
 	name = "small glass bottle"
@@ -144,7 +143,7 @@
 		return
 
 	var/amount_lost = intensity * 5
-	reagents.remove_any(amount_lost)
+	reagents.remove_all(amount_lost)
 
 	visible_message(span_warning("Some of [name]'s contents are let loose!"))
 	var/intensity_state = null
@@ -317,6 +316,12 @@
 	icon_state = "rumbottle"
 	list_reagents = list(/datum/reagent/consumable/ethanol/rum = 100)
 
+/obj/item/reagent_containers/cup/glass/bottle/rum/aged
+	name = "Captain Pete's Vintage spiced rum"
+	desc = "Shiver me timbers, a vintage edition of Captain Pete's rum. It's pratically GRIFF in a bottle from over 50 years ago."
+	icon_state = "rumbottle_gold"
+	list_reagents = list(/datum/reagent/consumable/ethanol/rum/aged = 100)
+
 /obj/item/reagent_containers/cup/glass/bottle/maltliquor
 	name = "\improper Rabid Bear malt liquor"
 	desc = "A 40 full of malt liquor. Kicks stronger than, well, a rabid bear."
@@ -406,7 +411,7 @@
 	return "[year] [origin] [type]"
 
 /obj/item/reagent_containers/cup/glass/bottle/absinthe
-	name = "extra-strong absinthe"
+	name = "Extra-strong absinthe"
 	desc = "A strong alcoholic drink brewed and distributed by"
 	icon_state = "absinthebottle"
 	list_reagents = list(/datum/reagent/consumable/ethanol/absinthe = 100)
@@ -894,7 +899,8 @@
 	desc = "Fermented prison wine made from fruit, sugar, and despair. You probably shouldn't drink this around Security."
 	icon_state = "trashbag1" // pruno releases air as it ferments, we don't want to simulate this in atmos, but we can make it look like it did
 	for (var/mob/living/M in view(2, get_turf(src))) // letting people and/or narcs know when the pruno is done
-		to_chat(M, span_info("A pungent smell emanates from [src], like fruit puking out its guts."))
+		if(HAS_TRAIT(M, TRAIT_ANOSMIA))
+			to_chat(M, span_info("A pungent smell emanates from [src], like fruit puking out its guts."))
 		playsound(get_turf(src), 'sound/effects/bubbles2.ogg', 25, TRUE)
 
 /**

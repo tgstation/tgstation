@@ -17,7 +17,7 @@
 	scars_covered_by_clothes = FALSE
 	grind_results = null
 	is_dimorphic = TRUE
-	unarmed_attack_verb = "bite"
+	unarmed_attack_verbs = list("bite", "chomp")
 	unarmed_attack_effect = ATTACK_EFFECT_BITE
 	unarmed_attack_sound = 'sound/weapons/bite.ogg'
 	unarmed_miss_sound = 'sound/weapons/bite.ogg'
@@ -38,7 +38,7 @@
 	/// Hair style
 	var/hairstyle = "Bald"
 	/// Hair colour and style
-	var/hair_color = "#000000"
+	var/hair_color = COLOR_BLACK
 	/// Hair alpha
 	var/hair_alpha = 255
 	/// Is the hair currently hidden by something?
@@ -47,16 +47,22 @@
 	///Facial hair style
 	var/facial_hairstyle = "Shaved"
 	///Facial hair color
-	var/facial_hair_color = "#000000"
+	var/facial_hair_color = COLOR_BLACK
 	///Facial hair alpha
 	var/facial_hair_alpha = 255
 	///Is the facial hair currently hidden by something?
 	var/facial_hair_hidden = FALSE
 
 	/// Gradient styles, if any
-	var/list/gradient_styles = null
+	var/list/gradient_styles = list(
+		"None",	//Hair gradient style
+		"None",	//Facial hair gradient style
+	)
 	/// Gradient colors, if any
-	var/list/gradient_colors = null
+	var/list/gradient_colors = list(
+		COLOR_BLACK,	//Hair gradient color
+		COLOR_BLACK,	//Facial hair gradient color
+	)
 
 	/// An override color that can be cleared later, affects both hair and facial hair
 	var/override_hair_color = null
@@ -69,6 +75,9 @@
 	var/lip_color
 	///Current lipstick trait, if any (such as TRAIT_KISS_OF_DEATH)
 	var/stored_lipstick_trait
+
+	/// How many teeth the head's species has, humans have 32 so that's the default. Used for a limit to dental pill implants.
+	var/teeth_count = 32
 
 	/// Offset to apply to equipment worn on the ears
 	var/datum/worn_feature_offset/worn_ears_offset
@@ -132,7 +141,7 @@
 	if (!can_dismember)
 		return FALSE
 
-	if(owner.stat < HARD_CRIT)
+	if(!HAS_TRAIT(owner, TRAIT_CURSED) && owner.stat < HARD_CRIT)
 		return FALSE
 
 	return ..()
@@ -194,13 +203,9 @@
 
 	return
 
-/obj/item/bodypart/head/talk_into(mob/holder, message, channel, spans, datum/language/language, list/message_mods)
-	var/mob/headholder = holder
-	if(istype(headholder))
-		headholder.log_talk(message, LOG_SAY, tag = "beheaded talk")
-
-	say(message, language, sanitize = FALSE)
-	return NOPASS
+/obj/item/bodypart/head/Initialize(mapload)
+	. = ..()
+	AddElement(/datum/element/toy_talk)
 
 /obj/item/bodypart/head/GetVoice()
 	return "The head of [real_name]"

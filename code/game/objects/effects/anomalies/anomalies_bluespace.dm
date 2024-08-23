@@ -4,7 +4,7 @@
 	icon = 'icons/obj/weapons/guns/projectiles.dmi'
 	icon_state = "bluespace"
 	density = TRUE
-	aSignal = /obj/item/assembly/signaler/anomaly/bluespace
+	anomaly_core = /obj/item/assembly/signaler/anomaly/bluespace
 	///range from which we can teleport someone
 	var/teleport_range = 1
 	///Distance we can teleport someone passively
@@ -31,8 +31,16 @@
 	// Calculate new position (searches through beacons in world)
 	var/obj/item/beacon/chosen
 	var/list/possible = list()
-	for(var/obj/item/beacon/W in GLOB.teleportbeacons)
-		possible += W
+	for(var/obj/item/beacon/beacon in GLOB.teleportbeacons)
+		var/turf/turf = get_turf(beacon)
+		if(!turf)
+			continue
+		if(is_centcom_level(turf.z) || is_away_level(turf.z))
+			continue
+		var/area/area = get_area(turf)
+		if(!area || (area.area_flags & NOTELEPORT))
+			continue
+		possible += beacon
 
 	if(possible.len > 0)
 		chosen = pick(possible)
@@ -85,7 +93,7 @@
 	immortal = TRUE
 	teleport_range = 2
 	teleport_distance = 12
-	aSignal = null
+	anomaly_core = null
 
 /obj/effect/anomaly/bluespace/big/Initialize(mapload, new_lifespan, drops_core)
 	. = ..()

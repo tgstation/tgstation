@@ -62,7 +62,7 @@
 	var/directional = FALSE
 	///Whether we're a beam light
 	var/beam = FALSE
-	///A cone overlay for directional light, it's alpha and color are dependant on the light
+	///A cone overlay for directional light, its alpha and color are dependant on the light
 	var/image/cone
 	///Current tracked direction for the directional cast behaviour
 	var/current_direction
@@ -398,7 +398,7 @@
 		return
 	if(current_holder && overlay_lighting_flags & LIGHTING_ON)
 		current_holder.underlays -= cone
-	cone.alpha = min(200, (abs(new_power) * 90)+20)
+	cone.alpha = min(120, (abs(new_power) * 60) + 15)
 	if(current_holder && overlay_lighting_flags & LIGHTING_ON)
 		current_holder.underlays += cone
 

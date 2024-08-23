@@ -146,7 +146,7 @@
 	desc = "A surprisingly clean cryogenic sleeper. You can see your reflection on the sides!"
 	density = FALSE
 	you_are_text = "You are an agent working for the space IRS"
-	flavour_text = "Not even in the expanse of the expanding universe can someone evade the tax man! Whether you are just a well disciplined and professional pirate gang or an actual agent from a local polity. You will squeeze the station dry of it's income regardless! Through peaceful means or otherwise..."
+	flavour_text = "Not even in the expanse of the expanding universe can someone evade the tax man! Whether you are just a well disciplined and professional pirate gang or an actual agent from a local polity. You will squeeze the station dry of its income regardless! Through peaceful means or otherwise..."
 	icon = 'icons/obj/machines/sleeper.dmi'
 	icon_state = "sleeper"
 	prompt_name = "An agent of the space IRS"
@@ -191,3 +191,33 @@
 
 /obj/effect/mob_spawn/ghost_role/human/pirate/lustrous/gunner
 	rank = "Coruscant"
+
+/obj/effect/mob_spawn/ghost_role/human/pirate/medieval
+	name = "\improper Improvised sleeper"
+	desc = "A body bag poked with holes, currently being used as a sleeping bag. Someone seems to be sleeping inside of it."
+	density = FALSE
+	you_are_text = "You were a nobody before, until you were given a sword and the opportunity to rise up in ranks. If you put some effort, you can make it big!"
+	flavour_text = "Raiding some cretins while engaging in bloodsport and violence? what a deal. Stay together and pillage everything!"
+	icon = 'icons/obj/medical/bodybag.dmi'
+	icon_state = "bodybag"
+	fluff_spawn = null
+	prompt_name = "a medieval warmonger"
+	outfit = /datum/outfit/pirate/medieval
+	rank = "Footsoldier"
+
+/obj/effect/mob_spawn/ghost_role/human/pirate/medieval/special(mob/living/carbon/spawned_mob)
+	. = ..()
+	if(rank == "Footsoldier")
+		spawned_mob.add_traits(list(TRAIT_NOGUNS, TRAIT_TOSS_GUN_HARD), INNATE_TRAIT)
+		spawned_mob.AddComponent(/datum/component/unbreakable)
+		var/datum/action/cooldown/mob_cooldown/dash/dodge = new(spawned_mob)
+		dodge.Grant(spawned_mob)
+
+/obj/effect/mob_spawn/ghost_role/human/pirate/medieval/warlord
+	rank = "Warlord"
+	outfit = /datum/outfit/pirate/medieval/warlord
+
+/obj/effect/mob_spawn/ghost_role/human/pirate/medieval/warlord/special(mob/living/carbon/spawned_mob)
+	. = ..()
+	spawned_mob.dna.add_mutation(/datum/mutation/human/hulk/superhuman)
+	spawned_mob.dna.add_mutation(/datum/mutation/human/gigantism)

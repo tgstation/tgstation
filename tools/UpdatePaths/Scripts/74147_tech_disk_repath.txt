@@ -1,7 +1,7 @@
 # removes advanced design, and moves bepis tech disks to its new type
 
 /obj/item/disk/design_disk/adv : /obj/item/disk/design_disk{@OLD}
-/obj/item/disk/design_disk/adv/@SUBTPYES : /obj/item/disk/design_disk/@SUBTYPES{@OLD}
+/obj/item/disk/design_disk/adv/@SUBTYPES : /obj/item/disk/design_disk/@SUBTYPES{@OLD}
 
 /obj/item/disk/tech_disk/major : /obj/item/disk/design_disk/bepis/remove_tech
 /obj/item/disk/tech_disk/spaceloot : /obj/item/disk/design_disk/bepis

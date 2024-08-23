@@ -55,7 +55,7 @@
 	to_chat(owner, span_notice("You begin linking [linkee]'s mind to yours..."))
 	to_chat(linkee, span_warning("You feel your mind being pulled somewhere... connected... intertwined with the very fabric of reality..."))
 
-	if(!do_after(owner, link_time, linkee))
+	if(!do_after(owner, link_time, linkee, hidden = TRUE))
 		to_chat(owner, span_warning("You fail to link to [linkee]'s mind."))
 		to_chat(linkee, span_warning("The foreign presence leaves your mind."))
 		return FALSE

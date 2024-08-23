@@ -47,8 +47,7 @@
 
 // We actually only wanted the movement so if we've arrived we're done
 /datum/ai_behavior/step_towards_turf/perform(seconds_per_tick, datum/ai_controller/controller, area_key, turf_key)
-	. = ..()
-	finish_action(controller, succeeded = TRUE)
+	return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_SUCCEEDED
 
 /**
  * # Step towards turf in area

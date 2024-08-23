@@ -70,7 +70,9 @@
 		spawn_time = spawn_time, \
 		max_spawned = max_mobs, \
 		faction = faction, \
-		spawn_text = spawn_text, \
+		spawn_text = spawn_text,\
+		spawn_callback = CALLBACK(src, PROC_REF(on_mob_spawn)), \
+		initial_spawn_delay = !mapload, \
 	)
 
 /obj/structure/spawner/attack_animal(mob/living/simple_animal/user, list/modifiers)
@@ -78,6 +80,8 @@
 		return
 	return ..()
 
+/obj/structure/spawner/proc/on_mob_spawn(atom/created_atom)
+	return
 
 /obj/structure/spawner/syndicate
 	name = "warp beacon"
@@ -226,3 +230,74 @@
 				newmob.desc = "It's [living_mob], but [living_mob.p_their()] flesh has an ashy texture, and [living_mob.p_their()] face is featureless save an eerie smile."
 				src.visible_message(span_warning("[living_mob] reemerges from the link!"))
 				qdel(living_mob)
+
+/obj/structure/spawner/sentient
+	var/role_name = "A sentient mob"
+	var/assumed_control_message = "You are a sentient mob from a badly coded spawner"
+
+/obj/structure/spawner/sentient/Initialize(mapload)
+	. = ..()
+	notify_ghosts(
+		"A [name] has been created in \the [get_area(src)]!",
+		source = src,
+		header = "Sentient Spawner Created",
+		notify_flags = NOTIFY_CATEGORY_NOFLASH,
+	)
+
+/obj/structure/spawner/sentient/on_mob_spawn(atom/created_atom)
+	created_atom.AddComponent(\
+		/datum/component/ghost_direct_control,\
+		role_name = src.role_name,\
+		assumed_control_message = src.assumed_control_message,\
+		after_assumed_control = CALLBACK(src, PROC_REF(became_player_controlled)),\
+	)
+
+/obj/structure/spawner/sentient/proc/became_player_controlled(mob/proteon)
+	return
+
+/obj/structure/spawner/sentient/proteon_spawner
+	name = "eldritch gateway"
+	desc = "A dizzying structure that somehow links into Nar'Sie's own domain. The screams of the damned echo continously."
+	icon = 'icons/obj/antags/cult/structures.dmi'
+	icon_state = "hole"
+	light_power = 2
+	light_color = COLOR_CULT_RED
+	max_integrity = 50
+	density = FALSE
+	max_mobs = 2
+	spawn_time = 15 SECONDS
+	mob_types = list(/mob/living/basic/construct/proteon/hostile)
+	spawn_text = "arises from"
+	faction = list(FACTION_CULT)
+	role_name = "A proteon cult construct"
+	assumed_control_message = null
+
+/obj/structure/spawner/sentient/proteon_spawner/examine_status(mob/user)
+	if(IS_CULTIST(user) || !isliving(user))
+		return span_cult("It's at <b>[round(atom_integrity * 100 / max_integrity)]%</b> stability.")
+	return ..()
+
+/obj/structure/spawner/sentient/proteon_spawner/examine(mob/user)
+	. = ..()
+	if(!IS_CULTIST(user) && isliving(user))
+		var/mob/living/living_user = user
+		living_user.adjustOrganLoss(ORGAN_SLOT_BRAIN, 15)
+		. += span_danger("The voices of the damned echo relentlessly in your mind, continously rebounding on the walls of your self the more you focus on [src]. Your head pounds, better keep away...")
+	else
+		. += span_cult("The gateway will create one weak proteon construct every [spawn_time * 0.1] seconds, up to a total of [max_mobs], that may be controlled by the spirits of the dead.")
+
+/obj/structure/spawner/sentient/proteon_spawner/became_player_controlled(mob/living/basic/construct/proteon/proteon)
+	proteon.mind.add_antag_datum(/datum/antagonist/cult)
+	proteon.add_filter("awoken_proteon", 3, list("type" = "outline", "color" = COLOR_CULT_RED, "size" = 2))
+	visible_message(span_cult_bold("[proteon] awakens, glowing an eerie red as it stirs from its stupor!"))
+	playsound(proteon, 'sound/items/haunted/ghostitemattack.ogg', 100, TRUE)
+	proteon.balloon_alert_to_viewers("awoken!")
+	addtimer(CALLBACK(src, PROC_REF(remove_wake_outline), proteon), 8 SECONDS)
+
+/obj/structure/spawner/sentient/proteon_spawner/proc/remove_wake_outline(mob/proteon)
+	proteon.remove_filter("awoken_proteon")
+	proteon.add_filter("sentient_proteon", 3, list("type" = "outline", "color" = COLOR_CULT_RED, "size" = 2, "alpha" = 40))
+
+/obj/structure/spawner/sentient/proteon_spawner/handle_deconstruct(disassembled)
+	playsound('sound/hallucinations/veryfar_noise.ogg', 125)
+	visible_message(span_cult_bold("[src] completely falls apart, the screams of the damned reaching a feverous pitch before slowly fading away into nothing."))

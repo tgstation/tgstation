@@ -15,8 +15,8 @@
 #define MAXCOIL 30
 
 //Category of materials
-/// Is the material from an ore? currently unused but exists atm for categorizations sake
-#define MAT_CATEGORY_ORE "ore capable"
+/// Can this material be stored in the ore silo
+#define MAT_CATEGORY_SILO "silo capable"
 /// Hard materials, such as iron or silver
 #define MAT_CATEGORY_RIGID "rigid material"
 /// Materials that can be used to craft items

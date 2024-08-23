@@ -21,10 +21,12 @@
 	RegisterSignal(parent, COMSIG_MOB_SPELL_PROJECTILE, PROC_REF(on_spell_projectile))
 	RegisterSignal(parent, COMSIG_MOB_BEFORE_SPELL_CAST, PROC_REF(on_before_spell_cast))
 	RegisterSignal(parent, COMSIG_MOB_AFTER_SPELL_CAST, PROC_REF(on_after_spell_cast))
+	ADD_TRAIT(parent, TRAIT_SPLATTERCASTER, REF(src))
 
 /datum/component/splattercasting/UnregisterFromParent()
 	. = ..()
 	UnregisterSignal(parent, list(COMSIG_SPECIES_LOSS, COMSIG_MOB_SPELL_PROJECTILE, COMSIG_MOB_BEFORE_SPELL_CAST, COMSIG_MOB_AFTER_SPELL_CAST))
+	REMOVE_TRAIT(parent, TRAIT_SPLATTERCASTER, REF(src))
 
 ///signal sent when a spell casts a projectile
 /datum/component/splattercasting/proc/on_species_change(mob/living/carbon/source, datum/species/lost_species)

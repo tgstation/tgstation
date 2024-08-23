@@ -6,7 +6,6 @@
 	icon = 'icons/obj/machines/recycling.dmi'
 	icon_state = "separator-AO1"
 	layer = ABOVE_ALL_MOB_LAYER // Overhead
-	plane = ABOVE_GAME_PLANE
 	density = FALSE
 	active_power_usage = BASE_MACHINE_ACTIVE_CONSUMPTION * 5
 	/// Whether this machine transforms dead mobs into cyborgs
@@ -20,7 +19,7 @@
 	/// How long until the next mob can be processed
 	var/cooldown_timer
 	/// The created cyborg's cell chage
-	var/robot_cell_charge = 5000
+	var/robot_cell_charge = STANDARD_CELL_CHARGE * 5
 	/// The visual countdown effect
 	var/obj/effect/countdown/transformer/countdown
 	/// Who the master AI is that created this factory
@@ -99,9 +98,9 @@
 	// Sleep for a couple of ticks to allow the human to see the pain
 	sleep(0.5 SECONDS)
 
-	use_power(active_power_usage) // Use a lot of power.
+	use_energy(active_power_usage) // Use a lot of power.
 	var/mob/living/silicon/robot/new_borg = victim.Robotize()
-	new_borg.cell = new /obj/item/stock_parts/cell/upgraded/plus(new_borg, robot_cell_charge)
+	new_borg.cell = new /obj/item/stock_parts/power_store/cell/upgraded/plus(new_borg, robot_cell_charge)
 
 	// So he can't jump out the gate right away.
 	new_borg.SetLockdown()

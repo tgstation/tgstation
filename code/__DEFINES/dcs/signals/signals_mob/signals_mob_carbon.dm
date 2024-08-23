@@ -133,6 +133,10 @@
 	#define VISIBLE_NAME_FACE 1
 	//Index for the name of the id
 	#define VISIBLE_NAME_ID 2
+	//Index for whether their name is being overriden instead of obsfuscated
+	#define VISIBLE_NAME_FORCED 3
+///from /mob/living/carbon/human/get_id_name; only returns if the mob has TRAIT_UNKNOWN and it's being overriden: (identity)
+#define COMSIG_HUMAN_GET_FORCED_NAME "human_get_forced_name"
 
 // Mob transformation signals
 ///Called when a human turns into a monkey, from /mob/living/carbon/proc/finish_monkeyize()
@@ -148,3 +152,21 @@
 
 ///from /atom/movable/screen/alert/give/proc/handle_transfer(): (taker, item)
 #define COMSIG_CARBON_ITEM_GIVEN "carbon_item_given"
+
+/// Sent from /mob/living/carbon/human/handle_blood(): (seconds_per_tick, times_fired)
+#define COMSIG_HUMAN_ON_HANDLE_BLOOD "human_on_handle_blood"
+	/// Return to prevent all default blood handling
+	#define HANDLE_BLOOD_HANDLED (1<<0)
+	/// Return to skip default nutrition -> blood conversion
+	#define HANDLE_BLOOD_NO_NUTRITION_DRAIN (1<<1)
+	/// Return to skip oxyloss and similar effecst from blood level
+	#define HANDLE_BLOOD_NO_OXYLOSS (1<<2)
+
+/// from /datum/status_effect/limp/proc/check_step(mob/whocares, OldLoc, Dir, forced) iodk where it shuld go
+#define COMSIG_CARBON_LIMPING "mob_limp_check"
+	#define COMPONENT_CANCEL_LIMP (1<<0)
+
+///Called from on_acquiring(mob/living/carbon/human/acquirer)
+#define COMSIG_MUTATION_GAINED "mutation_gained"
+///Called from on_losing(mob/living/carbon/human/owner)
+#define COMSIG_MUTATION_LOST "mutation_lost"

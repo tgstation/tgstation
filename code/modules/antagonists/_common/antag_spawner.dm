@@ -45,7 +45,7 @@
 		get_asset_datum(/datum/asset/simple/contracts),
 	)
 
-/obj/item/antag_spawner/contract/ui_act(action, list/params)
+/obj/item/antag_spawner/contract/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if(used || polling || !ishuman(usr))
 		return
@@ -95,22 +95,21 @@
  */
 /obj/item/antag_spawner/nuke_ops
 	name = "syndicate operative beacon"
-	desc = "MI13 designed one-use radio for calling immediate backup. Have no regards for safety of whom it summons - they are all inferior clones from Interdyne's genebanks anyway."
+	desc = "A single-use beacon designed to quickly launch reinforcement operatives into the field."
 	icon = 'icons/obj/devices/voice.dmi'
 	icon_state = "nukietalkie"
-	var/borg_to_spawn
 	/// The name of the special role given to the recruit
 	var/special_role_name = ROLE_NUCLEAR_OPERATIVE
 	/// The applied outfit
 	var/datum/outfit/syndicate/outfit = /datum/outfit/syndicate/reinforcement
-	/// The outfit given to plasmaman operatives
-	var/datum/outfit/syndicate/plasma_outfit = /datum/outfit/syndicate/reinforcement/plasmaman
 	/// The antag datum applied
-	var/datum/antagonist/nukeop/antag_datum = /datum/antagonist/nukeop
+	var/antag_datum = /datum/antagonist/nukeop/reinforcement
 	/// Style used by the droppod
-	var/pod_style = STYLE_SYNDICATE
+	var/pod_style = /datum/pod_style/syndicate
 	/// Do we use a random subtype of the outfit?
 	var/use_subtypes = TRUE
+	/// Where do we land our pod?
+	var/turf/spawn_location
 
 /obj/item/antag_spawner/nuke_ops/proc/check_usability(mob/user)
 	if(used)
@@ -133,7 +132,7 @@
 		return
 
 	to_chat(user, span_notice("You activate [src] and wait for confirmation."))
-	var/mob/chosen_one = SSpolling.poll_ghost_candidates(check_jobban = ROLE_OPERATIVE, role = ROLE_OPERATIVE, poll_time = 15 SECONDS, ignore_category = POLL_IGNORE_SYNDICATE, alert_pic = src, role_name_text = "syndicate [borg_to_spawn ? "[borg_to_spawn] cyborg":"operative"]", amount_to_pick = 1)
+	var/mob/chosen_one = SSpolling.poll_ghost_candidates("Do you want to play as a reinforcement [special_role_name]?", check_jobban = ROLE_OPERATIVE, role = ROLE_OPERATIVE, poll_time = 15 SECONDS, ignore_category = POLL_IGNORE_SYNDICATE, alert_pic = src, role_name_text = special_role_name, amount_to_pick = 1)
 	if(chosen_one)
 		if(QDELETED(src) || !check_usability(user))
 			return
@@ -146,7 +145,6 @@
 
 /obj/item/antag_spawner/nuke_ops/spawn_antag(client/our_client, turf/T, kind, datum/mind/user)
 	var/mob/living/carbon/human/nukie = new()
-	var/obj/structure/closet/supplypod/pod = setup_pod()
 	our_client.prefs.safe_transfer_prefs_to(nukie, is_antag = TRUE)
 	nukie.ckey = our_client.key
 	var/datum/mind/op_mind = nukie.mind
@@ -155,16 +153,33 @@
 	else
 		nukie.forceMove(locate(1,1,1))
 
-	antag_datum = new()
-	antag_datum.send_to_spawnpoint = FALSE
-
-	antag_datum.nukeop_outfit = use_subtypes ? pick(subtypesof(outfit)) : outfit
+	var/new_datum = new antag_datum()
 
 	var/datum/antagonist/nukeop/creator_op = user.has_antag_datum(/datum/antagonist/nukeop, TRUE)
-	op_mind.add_antag_datum(antag_datum, creator_op ? creator_op.get_team() : null)
+	op_mind.add_antag_datum(new_datum, creator_op ? creator_op.get_team() : null)
 	op_mind.special_role = special_role_name
+
+	if(outfit)
+		var/datum/antagonist/nukeop/nukie_datum = op_mind.has_antag_datum(antag_datum)
+		nukie_datum.nukeop_outfit = use_subtypes ? pick(subtypesof(outfit)) : outfit
+
+	var/obj/structure/closet/supplypod/pod = setup_pod()
 	nukie.forceMove(pod)
-	new /obj/effect/pod_landingzone(get_turf(src), pod)
+	new /obj/effect/pod_landingzone(spawn_location ? spawn_location : get_turf(src), pod)
+
+/obj/item/antag_spawner/nuke_ops/overwatch
+	name = "overwatch support beacon"
+	desc = "Assigns an Overwatch Intelligence Agent to your operation. Stationed at their own remote outpost, they can view station cameras, alarms, and even move the Infiltrator shuttle! \
+		Also, all members of your operation will receive body cameras that they can view your progress from."
+	special_role_name = ROLE_OPERATIVE_OVERWATCH
+	outfit = /datum/outfit/syndicate/support
+	use_subtypes = FALSE
+	antag_datum = /datum/antagonist/nukeop/support
+
+/obj/item/antag_spawner/nuke_ops/overwatch/Initialize(mapload)
+	. = ..()
+	if(length(GLOB.nukeop_overwatch_start)) //Otherwise, it will default to the datum's spawn point anyways
+		spawn_location = pick(GLOB.nukeop_overwatch_start)
 
 //////CLOWN OP
 /obj/item/antag_spawner/nuke_ops/clown
@@ -172,28 +187,28 @@
 	desc = "A single-use beacon designed to quickly launch reinforcement clown operatives into the field."
 	special_role_name = ROLE_CLOWN_OPERATIVE
 	outfit = /datum/outfit/syndicate/clownop/no_crystals
-	antag_datum = /datum/antagonist/nukeop/clownop
-	pod_style = STYLE_HONK
+	antag_datum = /datum/antagonist/nukeop/reinforcement/clownop
+	pod_style = /datum/pod_style/clown
 	use_subtypes = FALSE
 
 //////SYNDICATE BORG
 /obj/item/antag_spawner/nuke_ops/borg_tele
 	name = "syndicate cyborg beacon"
 	desc = "A single-use beacon designed to quickly launch reinforcement cyborgs into the field."
-	icon = 'icons/obj/devices/remote.dmi'
-	icon_state = "gangtool-red"
+	antag_datum = /datum/antagonist/nukeop/reinforcement/cyborg
+	special_role_name = "Syndicate Cyborg"
 
 /obj/item/antag_spawner/nuke_ops/borg_tele/assault
 	name = "syndicate assault cyborg beacon"
-	borg_to_spawn = "Assault"
+	special_role_name = ROLE_SYNDICATE_ASSAULTBORG
 
 /obj/item/antag_spawner/nuke_ops/borg_tele/medical
 	name = "syndicate medical beacon"
-	borg_to_spawn = "Medical"
+	special_role_name = ROLE_SYNDICATE_MEDBORG
 
 /obj/item/antag_spawner/nuke_ops/borg_tele/saboteur
 	name = "syndicate saboteur beacon"
-	borg_to_spawn = "Saboteur"
+	special_role_name = ROLE_SYNDICATE_SABOBORG
 
 /obj/item/antag_spawner/nuke_ops/borg_tele/spawn_antag(client/C, turf/T, kind, datum/mind/user)
 	var/mob/living/silicon/robot/borg
@@ -201,13 +216,15 @@
 	if(!creator_op)
 		return
 	var/obj/structure/closet/supplypod/pod = setup_pod()
-	switch(borg_to_spawn)
-		if("Medical")
+	switch(special_role_name)
+		if(ROLE_SYNDICATE_MEDBORG)
 			borg = new /mob/living/silicon/robot/model/syndicate/medical()
-		if("Saboteur")
+		if(ROLE_SYNDICATE_SABOBORG)
 			borg = new /mob/living/silicon/robot/model/syndicate/saboteur()
+		if(ROLE_SYNDICATE_ASSAULTBORG)
+			borg = new /mob/living/silicon/robot/model/syndicate()
 		else
-			borg = new /mob/living/silicon/robot/model/syndicate() //Assault borg by default
+			stack_trace("Unknown cyborg type '[special_role_name]' could not be found by [src]!")
 
 	var/brainfirstname = pick(GLOB.first_names_male)
 	if(prob(50))
@@ -225,10 +242,8 @@
 
 	borg.key = C.key
 
-	var/datum/antagonist/nukeop/new_borg = new()
-	new_borg.send_to_spawnpoint = FALSE
-	borg.mind.add_antag_datum(new_borg,creator_op.nuke_team)
-	borg.mind.special_role = "Syndicate Cyborg"
+	borg.mind.add_antag_datum(antag_datum, creator_op ? creator_op.get_team() : null)
+	borg.mind.special_role = special_role_name
 	borg.forceMove(pod)
 	new /obj/effect/pod_landingzone(get_turf(src), pod)
 
@@ -269,7 +284,6 @@
 	new /obj/effect/dummy/phased_mob(T, spawned)
 
 	spawned.key = C.key
-	spawned.generate_antagonist_status()
 
 /obj/item/antag_spawner/slaughter_demon/laughter
 	name = "vial of tickles"
@@ -299,7 +313,7 @@
 	/// The antag datum applied
 	var/datum/antagonist/antag_datum
 	/// Style used by the droppod
-	var/pod_style = STYLE_SYNDICATE
+	var/pod_style = /datum/pod_style/syndicate
 	/// Do we use a random subtype of the outfit?
 	var/use_subtypes = TRUE
 	/// The antag role we check if the ghosts have enabled to get the poll.
@@ -429,7 +443,7 @@
 	name = "Syndicate Monkey Agent Kit"
 
 	head = /obj/item/clothing/head/fedora
-	mask = /obj/item/clothing/mask/cigarette/syndicate
+	mask = /obj/item/cigarette/syndicate
 	uniform = /obj/item/clothing/under/syndicate
 	l_pocket = /obj/item/reagent_containers/cup/soda_cans/monkey_energy
 	r_pocket = /obj/item/storage/fancy/cigarettes/cigpack_syndicate

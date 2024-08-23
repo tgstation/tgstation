@@ -11,6 +11,7 @@
 	hitsound = null
 	attack_verb_continuous = list("attacks")
 	attack_verb_simple = list("attack")
+	interaction_flags_click = NEED_DEXTERITY|FORBID_TELEKINESIS_REACH|ALLOW_RESTING
 	/// The amount of time it takes to shuffle
 	var/shuffle_time = DECK_SHUFFLE_TIME
 	/// Deck shuffling cooldown.
@@ -116,15 +117,17 @@
 
 	if(length(card_players) >= 2) // need at least 2 people to play a cardgame, duh!
 		for(var/mob/living/carbon/player in card_players)
-			var/other_players = english_list(card_players - player)
+			var/other_players = card_players - player
 			var/obj/item/toy/held_card_item = card_players[player]
 
 			player.add_mood_event("playing_cards", /datum/mood_event/playing_cards)
-			player.add_mob_memory(/datum/memory/playing_cards, \
+			player.add_mob_memory( \
+				/datum/memory/playing_cards, \
 				deuteragonist = dealer, \
 				game = cardgame_desc, \
 				protagonist_held_card = held_card_item, \
-				other_players = other_players)
+				other_players = other_players, \
+			)
 
 /obj/item/toy/cards/deck/attack_hand(mob/living/user, list/modifiers, flip_card = FALSE)
 	if(!ishuman(user) || !user.can_perform_action(src, NEED_DEXTERITY|FORBID_TELEKINESIS_REACH))
@@ -143,13 +146,13 @@
 	attack_hand(user, modifiers, flip_card = TRUE)
 	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
-/obj/item/toy/cards/deck/AltClick(mob/living/user)
-	if(user.can_perform_action(src, NEED_DEXTERITY|FORBID_TELEKINESIS_REACH))
-		if(HAS_TRAIT(src, TRAIT_WIELDED))
-			shuffle_cards(user)
-		else
-			to_chat(user, span_notice("You must hold the [src] with both hands to shuffle."))
-	return ..()
+/obj/item/toy/cards/deck/click_alt(mob/living/user)
+	if(!HAS_TRAIT(src, TRAIT_WIELDED))
+		to_chat(user, span_notice("You must hold the [src] with both hands to shuffle."))
+		return CLICK_ACTION_BLOCKING
+
+	shuffle_cards(user)
+	return CLICK_ACTION_SUCCESS
 
 /obj/item/toy/cards/deck/update_icon_state()
 	switch(count_cards())

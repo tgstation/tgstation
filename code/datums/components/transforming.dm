@@ -34,6 +34,8 @@
 	var/list/attack_verb_simple_on
 	/// Whether clumsy people need to succeed an RNG check to turn it on without hurting themselves
 	var/clumsy_check
+	/// Amount of damage to deal to clumsy people
+	var/clumsy_damage
 	/// If we get sharpened with a whetstone, save the bonus here for later use if we un/redeploy
 	var/sharpened_bonus = 0
 	/// Dictate whether we change inhands or not
@@ -51,6 +53,7 @@
 	hitsound_on = 'sound/weapons/blade1.ogg',
 	w_class_on = WEIGHT_CLASS_BULKY,
 	clumsy_check = TRUE,
+	clumsy_damage = 10,
 	list/attack_verb_continuous_on,
 	list/attack_verb_simple_on,
 	inhand_icon_change = TRUE,
@@ -69,6 +72,7 @@
 	src.hitsound_on = hitsound_on
 	src.w_class_on = w_class_on
 	src.clumsy_check = clumsy_check
+	src.clumsy_damage = clumsy_damage
 	src.inhand_icon_change = inhand_icon_change
 
 	if(attack_verb_continuous_on)
@@ -208,7 +212,7 @@
 		source.attack_verb_simple = attack_verb_simple_on
 
 	source.hitsound = hitsound_on
-	source.w_class = w_class_on
+	source.update_weight_class(w_class_on)
 	source.icon_state = "[source.icon_state]_on"
 	if(inhand_icon_change && source.inhand_icon_state)
 		source.inhand_icon_state = "[source.inhand_icon_state]_on"
@@ -237,7 +241,7 @@
 		source.attack_verb_simple = attack_verb_simple_off
 
 	source.hitsound = initial(source.hitsound)
-	source.w_class = initial(source.w_class)
+	source.update_weight_class(initial(source.w_class))
 	source.icon_state = initial(source.icon_state)
 	source.inhand_icon_state = initial(source.inhand_icon_state)
 	if(ismob(source.loc))
@@ -266,8 +270,21 @@
 			span_warning("[user] triggers [parent] while holding it backwards and [hurt_self_verb_continuous] themself, like a doofus!"),
 			span_warning("You trigger [parent] while holding it backwards and [hurt_self_verb_simple] yourself, like a doofus!"),
 		)
-		user.take_bodypart_damage(10)
+		var/obj/item/item_parent = parent
+		switch(item_parent.damtype)
+			if(STAMINA)
+				user.adjustStaminaLoss(clumsy_damage)
+			if(OXY)
+				user.adjustOxyLoss(clumsy_damage)
+			if(TOX)
+				user.adjustToxLoss(clumsy_damage)
+			if(BRUTE)
+				user.take_bodypart_damage(brute=clumsy_damage)
+			if(BURN)
+				user.take_bodypart_damage(burn=clumsy_damage)
+
 		return TRUE
+
 	return FALSE
 
 /*

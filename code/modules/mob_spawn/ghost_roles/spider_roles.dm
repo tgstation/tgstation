@@ -155,7 +155,7 @@
 	cluster_type = /obj/structure/spider/eggcluster/abnormal
 	potentialspawns = list(
 		/mob/living/basic/spider/growing/spiderling/tank,
-		/mob/living/basic/spider/growing/spiderling/breacher,
+		/mob/living/basic/spider/growing/spiderling/viper,
 	)
 	flash_window = TRUE
 
@@ -166,7 +166,7 @@
 	cluster_type = /obj/structure/spider/eggcluster/enriched
 	potentialspawns = list(
 		/mob/living/basic/spider/growing/spiderling/tarantula,
-		/mob/living/basic/spider/growing/spiderling/viper,
+		/mob/living/basic/spider/growing/spiderling/breacher,
 		/mob/living/basic/spider/growing/spiderling/midwife,
 	)
 	flash_window = TRUE

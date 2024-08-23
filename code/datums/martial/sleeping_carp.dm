@@ -9,7 +9,7 @@
 	help_verb = /mob/living/proc/sleeping_carp_help
 	display_combos = TRUE
 	/// List of traits applied to users of this martial art.
-	var/list/scarp_traits = list(TRAIT_NOGUNS, TRAIT_HARDLY_WOUNDED, TRAIT_NODISMEMBER, TRAIT_HEAVY_SLEEPER)
+	var/list/scarp_traits = list(TRAIT_NOGUNS, TRAIT_TOSS_GUN_HARD, TRAIT_HARDLY_WOUNDED, TRAIT_NODISMEMBER, TRAIT_HEAVY_SLEEPER)
 
 /datum/martial_art/the_sleeping_carp/on_teach(mob/living/new_holder)
 	. = ..()
@@ -188,8 +188,7 @@
 		return FALSE
 	if(!(carp_user.mobility_flags & MOBILITY_USE)) //NO UNABLE TO USE
 		return FALSE
-	var/datum/dna/dna = carp_user.has_dna()
-	if(dna?.check_mutation(/datum/mutation/human/hulk)) //NO HULK
+	if(HAS_TRAIT(carp_user, TRAIT_HULK)) //NO HULK
 		return FALSE
 	if(!isturf(carp_user.loc)) //NO MOTHERFLIPPIN MECHS!
 		return FALSE
@@ -264,11 +263,10 @@
 	AddComponent(/datum/component/two_handed, \
 		force_unwielded = 10, \
 		force_wielded = 24, \
-		icon_wielded = "[base_icon_state]1", \
 	)
 
 /obj/item/staff/bostaff/update_icon_state()
-	icon_state = "[base_icon_state]0"
+	icon_state = inhand_icon_state = "[base_icon_state][HAS_TRAIT(src, TRAIT_WIELDED)]"
 	return ..()
 
 /obj/item/staff/bostaff/attack(mob/target, mob/living/user, params)
@@ -325,34 +323,18 @@
 
 /obj/item/clothing/gloves/the_sleeping_carp
 	name = "carp gloves"
-	desc = "This gloves are capable of making people use The Sleeping Carp."
+	desc = "These gloves are capable of making people use The Sleeping Carp."
 	icon_state = "black"
-	greyscale_colors = "#000000"
+	greyscale_colors = COLOR_BLACK
 	cold_protection = HANDS
 	min_cold_protection_temperature = GLOVES_MIN_TEMP_PROTECT
 	heat_protection = HANDS
 	max_heat_protection_temperature = GLOVES_MAX_TEMP_PROTECT
 	resistance_flags = NONE
-	var/datum/martial_art/the_sleeping_carp/style
 
 /obj/item/clothing/gloves/the_sleeping_carp/Initialize(mapload)
 	. = ..()
-	style = new()
-	style.allow_temp_override = FALSE
-
-/obj/item/clothing/gloves/the_sleeping_carp/Destroy()
-	QDEL_NULL(style)
-	return ..()
-
-/obj/item/clothing/gloves/the_sleeping_carp/equipped(mob/user, slot)
-	. = ..()
-	if(slot & ITEM_SLOT_GLOVES)
-		style.teach(user, TRUE)
-
-/obj/item/clothing/gloves/the_sleeping_carp/dropped(mob/user)
-	. = ..()
-	if(!isnull(style))
-		style.fully_remove(user)
+	AddComponent(/datum/component/martial_art_giver, /datum/martial_art/the_sleeping_carp)
 
 #undef STRONG_PUNCH_COMBO
 #undef LAUNCH_KICK_COMBO

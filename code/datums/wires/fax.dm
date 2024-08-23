@@ -12,7 +12,7 @@
 	if(!.)
 		return FALSE
 	var/obj/machinery/fax/machine = holder
-	if(!issilicon(user) && machine.seconds_electrified && machine.shock(user, 100))
+	if(!HAS_SILICON_ACCESS(user) && machine.seconds_electrified && machine.shock(user, 100))
 		return FALSE
 	if(machine.panel_open)
 		return TRUE

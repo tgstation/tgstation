@@ -1,0 +1,4 @@
+# repating all subtypes of xeno (and snipe base type) to basic mob.
+
+/mob/living/simple_animal/hostile/alien/@SUBTYPES : /mob/living/basic/alien/@SUBTYPES{@OLD}
+/mob/living/simple_animal/hostile/alien : /mob/living/basic/alien{@OLD}

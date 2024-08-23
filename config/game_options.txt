@@ -43,7 +43,7 @@ WALK_DELAY 4
 ##MULTIPLICATIVE_MOVESPEED /mob/living/carbon/human 0
 ##MULTIPLICATIVE_MOVESPEED /mob/living/silicon/robot 0
 ##MULTIPLICATIVE_MOVESPEED /mob/living/carbon/alien 0
-##MULTIPLICATIVE_MOVESPEED /mob/living/simple_animal/slime 0
+##MULTIPLICATIVE_MOVESPEED /mob/living/basic/slime 0
 MULTIPLICATIVE_MOVESPEED /mob/living/simple_animal 0
 MULTIPLICATIVE_MOVESPEED /mob/living/basic 0
 
@@ -100,6 +100,11 @@ TRAITOR_SCALING_COEFF 6
 BROTHER_SCALING_COEFF 6
 CHANGELING_SCALING_COEFF 6
 
+## Global scaling for traitor progression.
+## Higher values will accelerate traitor progression, while lower values will decrease it.
+## Bypasses an upper limit of 1 MINUTE
+#TRAITOR_SCALING_MULTIPLIER 1
+
 ## Variables calculate how number of open security officer positions will scale to population.
 ## Used as (Officers = Population / Coeff)
 ## Set to 0 to disable scaling and use default numbers instead.
@@ -147,6 +152,13 @@ EVENTS_MIN_TIME_MUL 1
 ## Set to 0 to make dangerous events avaliable for all populations.
 EVENTS_MIN_PLAYERS_MUL 1
 
+## The lower bound, in deciseconds, for how soon another random event can be scheduled.
+## Defaults to 1500 deciseconds or 2.5 minutes
+EVENTS_FREQUENCY_LOWER 1500
+
+## The upper bound, in deciseconds, for how soon another random event can be scheduled.
+## Defaults to 4200 deciseconds or 7 minutes
+EVENTS_FREQUENCY_UPPER 4200
 
 ## AI ###
 
@@ -172,6 +184,10 @@ ALLOW_AI_MULTICAM
 ## How long the delay is before the Away Mission gate opens. Default is half an hour.
 ## 600 is one minute.
 GATEWAY_DELAY 18000
+
+## Overrides to gateway delay for specific away mission start points.
+GATEWAY_DELAYS_BY_ID AWAYSTART_BEACH 6000
+GATEWAY_DELAYS_BY_ID AWAYSTART_MUSEUM 9000
 
 ## The probability of the gateway mission being a config one
 CONFIG_GATEWAY_CHANCE 0
@@ -265,6 +281,7 @@ RANDOM_LAWS corporate
 #RANDOM_LAWS reporter
 #RANDOM_LAWS hulkamania
 #RANDOM_LAWS ten_commandments
+#RANDOM_LAWS yesman
 
 ## Bad idea laws. Probably shouldn't enable these
 #RANDOM_LAWS syndie
@@ -352,43 +369,16 @@ ROUNDSTART_RACES plasmaman
 ROUNDSTART_RACES ethereal
 #ROUNDSTART_RACES jelly
 #ROUNDSTART_RACES abductor
-#ROUNDSTART_RACES synth
-
-## Including all the various golem subtypes that are better than humans in some ways, but worse in others
-#ROUNDSTART_RACES iron_golem
-#ROUNDSTART_RACES adamantine_golem
-#ROUNDSTART_RACES plasma_golem
-#ROUNDSTART_RACES diamond_golem
-#ROUNDSTART_RACES gold_golem
-#ROUNDSTART_RACES silver_golem
-#ROUNDSTART_RACES uranium_golem
-#ROUNDSTART_RACES plasteel_golem
-#ROUNDSTART_RACES titanium_golem
-#ROUNDSTART_RACES plastitanium_golem
-#ROUNDSTART_RACES alloy_golem
-#ROUNDSTART_RACES wood_golem
-#ROUNDSTART_RACES sand_golem
-#ROUNDSTART_RACES glass_golem
-#ROUNDSTART_RACES bluespace_golem
-#ROUNDSTART_RACES bananium_golem
-#ROUNDSTART_RACES runic_golem
-#ROUNDSTART_RACES cloth_golem
-#ROUNDSTART_RACES plastic_golem
-#ROUNDSTART_RACES bronze_golem
-#ROUNDSTART_RACES cardboard_golem
-#ROUNDSTART_RACES leather_golem
-#ROUNDSTART_RACES durathread_golem
-#ROUNDSTART_RACES bone_golem
-#ROUNDSTART_RACES snow_golem
-#ROUNDSTART_RACES metallic_hydrogen_golem
+#ROUNDSTART_RACES snail
 
 ## Races that are straight upgrades. If these are on expect powergamers to always pick them
 #ROUNDSTART_RACES skeleton
 #ROUNDSTART_RACES zombie
-#ROUNDSTART_RACES slime
 #ROUNDSTART_RACES pod
-#ROUNDSTART_RACES military_synth
-#ROUNDSTART_RACES agent
+
+## Races that are radical departures to what a species is, so while they technically can be roundstart - it's probably not wise
+#ROUNDSTART_RACES android
+#ROUNDSTART_RACES golem
 
 ##-------------------------------------------------------------------------------------------
 
@@ -558,3 +548,8 @@ NEGATIVE_STATION_TRAITS 3 1
 # If set to 0, then players won't be able to select any positive quirks.
 # If commented-out or undefined, the maximum default is 6.
 MAX_POSITIVE_QUIRKS 6
+
+# A config that skews with the random spawners weights
+# If the value is lower than 1, it'll tend to even out the odds
+# If higher than 1, it'll lean toward common spawns even more.
+RANDOM_LOOT_WEIGHT_MODIFIER 1

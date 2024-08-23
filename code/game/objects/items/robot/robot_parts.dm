@@ -30,7 +30,7 @@
 
 	/// If the cyborg starts movement free and not under lockdown
 	var/locomotion = TRUE
-	/// If the cyborg synchronizes it's laws with it's master AI
+	/// If the cyborg synchronizes its laws with its master AI
 	var/lawsync = TRUE
 	/// If the cyborg starts with a master AI
 	var/aisync = TRUE
@@ -76,7 +76,7 @@
 	head.flash2 = new(head)
 	chest = new(src)
 	chest.wired = TRUE
-	chest.cell = new /obj/item/stock_parts/cell/high(chest)
+	chest.cell = new /obj/item/stock_parts/power_store/cell/high(chest)
 	update_appearance()
 
 /obj/item/robot_suit/update_overlays()
@@ -145,7 +145,7 @@
 		to_chat(user, span_warning("[src] has no attached torso!"))
 		return
 
-	var/obj/item/stock_parts/cell/temp_cell = user.is_holding_item_of_type(/obj/item/stock_parts/cell)
+	var/obj/item/stock_parts/power_store/cell/temp_cell = user.is_holding_item_of_type(/obj/item/stock_parts/power_store/cell)
 	var/swap_failed = FALSE
 	if(!temp_cell) //if we're not holding a cell
 		swap_failed = TRUE
@@ -376,7 +376,7 @@
 			if(!locomotion)
 				O.set_lockcharge(TRUE)
 
-	else if(istype(W, /obj/item/pen))
+	else if(IS_WRITING_UTENSIL(W))
 		to_chat(user, span_warning("You need to use a multitool to name [src]!"))
 	else
 		return ..()
@@ -409,7 +409,7 @@
 	data["lawsync"] = lawsync
 	return data
 
-/obj/item/robot_suit/ui_act(action, list/params)
+/obj/item/robot_suit/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if(.)
 		return

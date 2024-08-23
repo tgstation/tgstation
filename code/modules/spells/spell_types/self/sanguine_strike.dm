@@ -58,7 +58,7 @@
 	RegisterSignal(enchanted, COMSIG_ITEM_DROPPED, PROC_REF(on_dropped))
 
 /// signal called from attacking with the enchanted item
-/datum/action/cooldown/spell/sanguine_strike/proc/on_enchanted_afterattack(obj/item/enchanted, atom/target, mob/user, proximity_flag, click_parameters)
+/datum/action/cooldown/spell/sanguine_strike/proc/on_enchanted_afterattack(obj/item/enchanted, atom/target, mob/user, click_parameters)
 	SIGNAL_HANDLER
 	end_enchantment(enchanted)
 	if(!isliving(target))
@@ -66,7 +66,7 @@
 	var/mob/living/living_target = target
 	if(living_target.blood_volume < BLOOD_VOLUME_SURVIVE)
 		return
-	playsound(target, "sound/effects/wounds/crackandbleed.ogg", 100)
+	playsound(target, 'sound/effects/wounds/crackandbleed.ogg', 100)
 	playsound(target, 'sound/magic/charge.ogg', 100)
 	var/attack_direction = get_dir(user, living_target)
 	if(iscarbon(living_target))

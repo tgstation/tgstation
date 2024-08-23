@@ -2,7 +2,7 @@
 /**********************Ore box**************************/
 
 /obj/structure/ore_box
-	icon = 'icons/obj/mining.dmi'
+	icon = 'icons/obj/mining_zones/equipment.dmi'
 	icon_state = "orebox"
 	name = "ore box"
 	desc = "A heavy wooden box, which can be filled with a lot of ores or boulders"
@@ -19,12 +19,10 @@
 	for(var/obj/item/weapon in src)
 		weapon.forceMove(drop)
 
-/obj/structure/ore_box/deconstruct(disassembled = TRUE)
+/obj/structure/ore_box/atom_deconstruct(disassembled = TRUE)
 	new /obj/item/stack/sheet/mineral/wood(loc, 4)
 
 	dump_box_contents()
-
-	return ..()
 
 /obj/structure/ore_box/add_context(atom/source, list/context, obj/item/held_item, mob/user)
 	. = NONE
@@ -97,7 +95,7 @@
 
 	return list("materials" = materials)
 
-/obj/structure/ore_box/ui_act(action, params)
+/obj/structure/ore_box/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if(.)
 		return

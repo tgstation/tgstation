@@ -1,5 +1,3 @@
-import { multiline } from 'common/string';
-
 import { useBackend } from '../../backend';
 import { Button, Section } from '../../components';
 import { BAYS } from './constants';
@@ -17,7 +15,7 @@ export function PodBays(props) {
             color="transparent"
             icon="trash"
             onClick={() => act('clearBay')}
-            tooltip={multiline`
+            tooltip={`
               Clears everything
               from the selected bay`}
             tooltipPosition="top-end"
@@ -25,7 +23,7 @@ export function PodBays(props) {
           <Button
             color="transparent"
             icon="question"
-            tooltip={multiline`
+            tooltip={`
               Each option corresponds
               to an area on centcom.
               Launched pods will

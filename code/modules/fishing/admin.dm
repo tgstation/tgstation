@@ -1,12 +1,6 @@
-// Helper tool to see fishing probabilities with different setups
-/datum/admins/proc/fishing_calculator()
-	set name = "Fishing Calculator"
-	set category = "Debug"
-
-	if(!check_rights(R_DEBUG))
-		return
-	var/datum/fishing_calculator/ui = new(usr)
-	ui.ui_interact(usr)
+ADMIN_VERB(fishing_calculator, R_DEBUG, "Fishing Calculator", "A calculator... for fishes?", ADMIN_CATEGORY_DEBUG)
+	var/datum/fishing_calculator/ui = new
+	ui.ui_interact(user.mob)
 
 /datum/fishing_calculator
 	var/list/current_table
@@ -54,7 +48,7 @@
 			if(hook_type)
 				temporary_rod.set_slot(new hook_type(temporary_rod), ROD_SLOT_HOOK)
 			if(line_type)
-				temporary_rod.set_slot(new line_type(temporary_rod), ROD_SLOT_HOOK)
+				temporary_rod.set_slot(new line_type(temporary_rod), ROD_SLOT_LINE)
 
 			var/result_table = list()
 			var/modified_table = spot.get_modified_fish_table(temporary_rod,user)

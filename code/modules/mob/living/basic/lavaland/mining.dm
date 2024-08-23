@@ -5,7 +5,7 @@
 	status_flags = NONE //don't inherit standard basicmob flags
 	mob_size = MOB_SIZE_LARGE
 	mob_biotypes = MOB_ORGANIC|MOB_BEAST
-	faction = list(FACTION_MINING)
+	faction = list(FACTION_MINING, FACTION_ASHWALKER)
 	unsuitable_atmos_damage = 0
 	minimum_survivable_temperature = 0
 	maximum_survivable_temperature = INFINITY
@@ -27,6 +27,20 @@
 	var/static/list/vulnerable_projectiles
 	if(!vulnerable_projectiles)
 		vulnerable_projectiles = string_list(MINING_MOB_PROJECTILE_VULNERABILITY)
+	add_ranged_armour(vulnerable_projectiles)
+	if(crusher_loot)
+		AddElement(\
+			/datum/element/crusher_loot,\
+			trophy_type = crusher_loot,\
+			drop_mod = crusher_drop_chance,\
+			drop_immediately = basic_mob_flags & DEL_ON_DEATH,\
+		)
+	RegisterSignal(src, COMSIG_ATOM_WAS_ATTACKED, PROC_REF(check_ashwalker_peace_violation))
+	// We add this to ensure that mobs will actually receive the above signal, as some will lack AI
+	// handling for retaliation and attack special cases
+	AddElement(/datum/element/relay_attackers)
+
+/mob/living/basic/mining/proc/add_ranged_armour(list/vulnerable_projectiles)
 	AddElement(\
 		/datum/element/ranged_armour,\
 		minimum_projectile_force = 30,\
@@ -35,10 +49,10 @@
 		minimum_thrown_force = 20,\
 		throw_blocked_message = throw_blocked_message,\
 	)
-	if(crusher_loot)
-		AddElement(\
-			/datum/element/crusher_loot,\
-			trophy_type = crusher_loot,\
-			drop_mod = crusher_drop_chance,\
-			drop_immediately = basic_mob_flags & DEL_ON_DEATH,\
-		)
+
+/mob/living/basic/mining/proc/check_ashwalker_peace_violation(datum/source, mob/living/carbon/human/possible_ashwalker)
+	SIGNAL_HANDLER
+
+	if(!isashwalker(possible_ashwalker) || !(FACTION_ASHWALKER in faction))
+		return
+	faction.Remove(FACTION_ASHWALKER)

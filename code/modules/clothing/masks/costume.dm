@@ -4,6 +4,7 @@
 	icon_state = "joy"
 	clothing_flags = MASKINTERNALS
 	flags_inv = HIDESNOUT
+	obj_flags = parent_type::obj_flags | INFINITE_RESKIN
 	unique_reskin = list(
 			"Joy" = "joy",
 			"Flushed" = "flushed",
@@ -12,19 +13,10 @@
 			"Pleading" = "pleading"
 	)
 
-/obj/item/clothing/mask/joy/Initialize(mapload)
-	. = ..()
-	register_context()
-
-/obj/item/clothing/mask/joy/add_context(atom/source, list/context, obj/item/held_item, mob/user)
-	. = ..()
-	context[SCREENTIP_CONTEXT_ALT_LMB] = "Change Emotion"
-	return CONTEXTUAL_SCREENTIP_SET
 
 /obj/item/clothing/mask/joy/reskin_obj(mob/user)
 	. = ..()
 	user.update_worn_mask()
-	current_skin = null//so we can infinitely reskin
 
 /obj/item/clothing/mask/mummy
 	name = "mummy mask"
@@ -61,7 +53,7 @@
 	w_class = WEIGHT_CLASS_SMALL
 	flags_inv = HIDEFACE|HIDEFACIALHAIR|HIDESNOUT
 	custom_price = PAYCHECK_CREW
-	greyscale_colors = "#EEEEEE"
+	greyscale_colors = COLOR_VERY_LIGHT_GRAY
 	greyscale_config = /datum/greyscale_config/rebellion_mask
 	greyscale_config_worn = /datum/greyscale_config/rebellion_mask/worn
 	flags_1 = IS_PLAYER_COLORABLE_1

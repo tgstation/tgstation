@@ -62,6 +62,7 @@
 		UnregisterSignal(parent, list(
 			COMSIG_ATOM_TOOL_ACT(TOOL_SCREWDRIVER),
 			COMSIG_ATOM_TOOL_ACT(TOOL_MULTITOOL),
+			COMSIG_ATOM_STORAGE_ITEM_INTERACT_INSERT,
 		))
 	UnregisterSignal(parent, list(
 		COMSIG_ATOM_EXAMINE,
@@ -115,6 +116,7 @@
 		return NONE
 
 	panel_open = !panel_open
+	tool.play_tool_sound(source)
 	source.balloon_alert(user, "panel [panel_open ? "opened" : "closed"]")
 	return ITEM_INTERACT_SUCCESS
 
@@ -135,7 +137,7 @@
 
 ///Does a do_after to hack the storage open, takes a long time cause idk.
 /datum/component/lockable_storage/proc/hack_open(atom/source, mob/user, obj/item/tool)
-	if(!tool.use_tool(parent, user, 40 SECONDS))
+	if(!tool.use_tool(parent, user, 40 SECONDS, volume = 50))
 		return
 	source.balloon_alert(user, "hacked")
 	lock_code = null

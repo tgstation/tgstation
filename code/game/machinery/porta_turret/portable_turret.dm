@@ -25,6 +25,7 @@ DEFINE_BITFIELD(turret_flags, list(
 ))
 
 /obj/machinery/porta_turret
+	SET_BASE_VISUAL_PIXEL(0, DEPTH_OFFSET)
 	name = "turret"
 	icon = 'icons/obj/weapons/turrets.dmi'
 	icon_state = "turretCover"
@@ -103,6 +104,8 @@ DEFINE_BITFIELD(turret_flags, list(
 	var/datum/action/turret_toggle/toggle_action
 	/// Mob that is remotely controlling the turret
 	var/mob/remote_controller
+	/// While the cooldown is still going on, it cannot be re-enabled.
+	COOLDOWN_DECLARE(disabled_time)
 
 /datum/armor/machinery_porta_turret
 	melee = 50
@@ -133,18 +136,32 @@ DEFINE_BITFIELD(turret_flags, list(
 	if(!has_cover)
 		INVOKE_ASYNC(src, PROC_REF(popUp))
 
+	RegisterSignal(src, COMSIG_HIT_BY_SABOTEUR, PROC_REF(on_saboteur))
+
 	AddElement(/datum/element/hostile_machine)
 
-/obj/machinery/porta_turret/proc/toggle_on(set_to)
-	var/current = on
-	if (!isnull(set_to))
-		on = set_to
-	else
-		on = !on
-	if (current != on)
-		check_should_process()
-		if (!on)
-			popDown()
+///Toggles the turret on or off depending on the value of the turn_on arg.
+/obj/machinery/porta_turret/proc/toggle_on(turn_on = TRUE)
+	if(on == turn_on)
+		return
+	if(on && !COOLDOWN_FINISHED(src, disabled_time))
+		return
+	on = turn_on
+	check_should_process()
+	if (!on)
+		popDown()
+
+///Prevents turned from being turned on for a duration, then restarts them after that if the second ard is true.
+/obj/machinery/porta_turret/proc/set_disabled(duration = 6 SECONDS, will_restart = on)
+	COOLDOWN_START(src, disabled_time, duration)
+	if(will_restart)
+		addtimer(CALLBACK(src, PROC_REF(toggle_on), TRUE), duration + 1) //the cooldown isn't over until the tick after its end.
+	toggle_on(FALSE)
+
+/obj/machinery/porta_turret/proc/on_saboteur(datum/source, disrupt_duration)
+	SIGNAL_HANDLER
+	INVOKE_ASYNC(src, PROC_REF(set_disabled), disrupt_duration)
+	return COMSIG_SABOTEUR_SUCCESS
 
 /obj/machinery/porta_turret/proc/check_should_process()
 	if (datum_flags & DF_ISPROCESSING)
@@ -248,7 +265,7 @@ DEFINE_BITFIELD(turret_flags, list(
 				data["allow_manual_control"] = TRUE
 	return data
 
-/obj/machinery/porta_turret/ui_act(action, list/params)
+/obj/machinery/porta_turret/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if(.)
 		return
@@ -256,7 +273,7 @@ DEFINE_BITFIELD(turret_flags, list(
 	switch(action)
 		if("power")
 			if(anchored)
-				toggle_on()
+				toggle_on(!on)
 				return TRUE
 			else
 				to_chat(usr, span_warning("It has to be secured first!"))
@@ -300,6 +317,15 @@ DEFINE_BITFIELD(turret_flags, list(
 		update_appearance()
 		remove_control()
 	check_should_process()
+
+/obj/machinery/porta_turret/multitool_act(mob/living/user, obj/item/multitool/tool)
+	. = NONE
+	if(locked)
+		return
+
+	tool.set_buffer(src)
+	balloon_alert(user, "saved to multitool buffer")
+	return ITEM_INTERACT_SUCCESS
 
 /obj/machinery/porta_turret/attackby(obj/item/I, mob/user, params)
 	if(machine_stat & BROKEN)
@@ -348,12 +374,6 @@ DEFINE_BITFIELD(turret_flags, list(
 			to_chat(user, span_notice("Controls are now [locked ? "locked" : "unlocked"]."))
 		else
 			to_chat(user, span_alert("Access denied."))
-	else if(I.tool_behaviour == TOOL_MULTITOOL && !locked)
-		if(!multitool_check_buffer(user, I))
-			return
-		var/obj/item/multitool/M = I
-		M.set_buffer(src)
-		balloon_alert(user, "saved to multitool buffer")
 	else
 		return ..()
 
@@ -364,10 +384,8 @@ DEFINE_BITFIELD(turret_flags, list(
 	audible_message(span_hear("[src] hums oddly..."))
 	obj_flags |= EMAGGED
 	controllock = TRUE
-	toggle_on(FALSE) //turns off the turret temporarily
+	set_disabled(6 SECONDS)
 	update_appearance()
-	//6 seconds for the traitor to gtfo of the area before the turret decides to ruin his shit
-	addtimer(CALLBACK(src, PROC_REF(toggle_on), TRUE), 6 SECONDS)
 	//turns it back on. The cover popUp() popDown() are automatically called in process(), no need to define it here
 	return TRUE
 
@@ -385,10 +403,8 @@ DEFINE_BITFIELD(turret_flags, list(
 		if(prob(20))
 			turret_flags |= TURRET_FLAG_SHOOT_ALL // Shooting everyone is a pretty big deal, so it's least likely to get turned on
 
-		toggle_on(FALSE)
+		set_disabled(rand(6 SECONDS, 20 SECONDS))
 		remove_control()
-
-		addtimer(CALLBACK(src, PROC_REF(toggle_on), TRUE), rand(60,600))
 
 /obj/machinery/porta_turret/take_damage(damage_amount, damage_type = BRUTE, damage_flag = "", sound_effect = TRUE, attack_dir, armour_penetration = 0)
 	. = ..()
@@ -397,7 +413,7 @@ DEFINE_BITFIELD(turret_flags, list(
 			spark_system.start()
 		if(on && !(turret_flags & TURRET_FLAG_SHOOT_ALL_REACT) && !(obj_flags & EMAGGED))
 			turret_flags |= TURRET_FLAG_SHOOT_ALL_REACT
-			addtimer(CALLBACK(src, PROC_REF(reset_attacked)), 60)
+			addtimer(CALLBACK(src, PROC_REF(reset_attacked)), 6 SECONDS)
 
 /obj/machinery/porta_turret/proc/reset_attacked()
 	turret_flags &= ~TURRET_FLAG_SHOOT_ALL_REACT
@@ -408,17 +424,23 @@ DEFINE_BITFIELD(turret_flags, list(
 		power_change()
 		SetInvisibility(INVISIBILITY_NONE, id=type)
 		spark_system.start() //creates some sparks because they look cool
+		has_cover = FALSE
 		qdel(cover) //deletes the cover - no need on keeping it there!
+
+/obj/machinery/porta_turret/atom_fix()
+	set_machine_stat(machine_stat & ~BROKEN)
+	has_cover = initial(has_cover)
+	check_should_process()
+	return ..()
+
 
 /obj/machinery/porta_turret/process()
 	//the main machinery process
-	if(cover == null && anchored) //if it has no cover and is anchored
-		if(machine_stat & BROKEN) //if the turret is borked
-			qdel(cover) //delete its cover, assuming it has one. Workaround for a pesky little bug
-		else
-			if(has_cover)
-				cover = new /obj/machinery/porta_turret_cover(loc) //if the turret has no cover and is anchored, give it a cover
-				cover.parent_turret = src //assign the cover its parent_turret, which would be this (src)
+	if(has_cover && cover == null && anchored && !(machine_stat & BROKEN)) //if it has no cover and is anchored
+		cover = new /obj/machinery/porta_turret_cover(loc) //if the turret has no cover and is anchored, give it a cover
+		cover.parent_turret = src //assign the cover its parent_turret, which would be this (src)
+		if(raised)
+			cover.icon_state = "openTurretCover"
 
 	if(!on || (machine_stat & (NOPOWER|BROKEN)))
 		return PROCESS_KILL
@@ -626,11 +648,11 @@ DEFINE_BITFIELD(turret_flags, list(
 	var/obj/projectile/A
 	//any emagged turrets drains 2x power and uses a different projectile?
 	if(mode == TURRET_STUN)
-		use_power(reqpower)
+		use_energy(reqpower)
 		A = new stun_projectile(T)
 		playsound(loc, stun_projectile_sound, 75, TRUE)
 	else
-		use_power(reqpower * 2)
+		use_energy(reqpower * 2)
 		A = new lethal_projectile(T)
 		playsound(loc, lethal_projectile_sound, 75, TRUE)
 
@@ -815,9 +837,9 @@ DEFINE_BITFIELD(turret_flags, list(
 	if(target)
 		setDir(get_dir(base, target))//even if you can't shoot, follow the target
 		shootAt(target)
-		addtimer(CALLBACK(src, PROC_REF(shootAt), target), 5)
-		addtimer(CALLBACK(src, PROC_REF(shootAt), target), 10)
-		addtimer(CALLBACK(src, PROC_REF(shootAt), target), 15)
+		addtimer(CALLBACK(src, PROC_REF(shootAt), target), 0.5 SECONDS)
+		addtimer(CALLBACK(src, PROC_REF(shootAt), target), 1 SECONDS)
+		addtimer(CALLBACK(src, PROC_REF(shootAt), target), 1.5 SECONDS)
 		return TRUE
 
 /obj/machinery/porta_turret/ai
@@ -893,11 +915,13 @@ DEFINE_BITFIELD(turret_flags, list(
 	name = "turret control panel"
 	desc = "Used to control a room's automated defenses."
 	icon = 'icons/obj/machines/turret_control.dmi'
-	icon_state = "control_standby"
+	icon_state = "control"
 	base_icon_state = "control"
 	density = FALSE
 	req_access = list(ACCESS_AI_UPLOAD)
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
+	interaction_flags_click = ALLOW_SILICON_REACH
+	pixel_y = -5 // Shift it down far enough to fit the south facing state correctly
 	/// Variable dictating if linked turrets are active and will shoot targets
 	var/enabled = TRUE
 	/// Variable dictating if linked turrets will shoot lethal projectiles
@@ -948,32 +972,37 @@ DEFINE_BITFIELD(turret_flags, list(
 		. += {"[span_notice("Ctrl-click [src] to [ enabled ? "disable" : "enable"] turrets.")]
 					[span_notice("Alt-click [src] to set turrets to [ lethal ? "stun" : "kill"].")]"}
 
-/obj/machinery/turretid/attackby(obj/item/I, mob/user, params)
+/obj/machinery/turretid/multitool_act(mob/living/user, obj/item/multitool/multi_tool)
+	. = NONE
 	if(machine_stat & BROKEN)
 		return
 
-	if(I.tool_behaviour == TOOL_MULTITOOL)
-		if(!multitool_check_buffer(user, I))
-			return
-		var/obj/item/multitool/M = I
-		if(M.buffer && istype(M.buffer, /obj/machinery/porta_turret))
-			turrets |= WEAKREF(M.buffer)
-			to_chat(user, span_notice("You link \the [M.buffer] with \the [src]."))
-			return
+	if(multi_tool.buffer && istype(multi_tool.buffer, /obj/machinery/porta_turret))
+		turrets |= WEAKREF(multi_tool.buffer)
+		to_chat(user, span_notice("You link \the [multi_tool.buffer] with \the [src]."))
+		return ITEM_INTERACT_SUCCESS
+
+/obj/machinery/turretid/attackby(obj/item/attacking_item, mob/user, params)
+	if(machine_stat & BROKEN)
+		return
 
 	if (issilicon(user))
 		return attack_hand(user)
 
-	if ( get_dist(src, user) == 0 ) // trying to unlock the interface
-		if (allowed(usr))
-			if(obj_flags & EMAGGED)
-				to_chat(user, span_warning("The turret control is unresponsive!"))
-				return
+	var/id = attacking_item.GetID()
 
-			locked = !locked
-			to_chat(user, span_notice("You [ locked ? "lock" : "unlock"] the panel."))
-		else
-			to_chat(user, span_alert("Access denied."))
+	if(isnull(id))
+		return
+
+	if (check_access(id))
+		if(obj_flags & EMAGGED)
+			to_chat(user, span_warning("The turret control is unresponsive!"))
+			return
+
+		locked = !locked
+		to_chat(user, span_notice("You [ locked ? "lock" : "unlock"] the panel."))
+	else
+		to_chat(user, span_alert("Access denied."))
 
 /obj/machinery/turretid/emag_act(mob/user, obj/item/card/emag/emag_card)
 	if(obj_flags & EMAGGED)
@@ -998,34 +1027,36 @@ DEFINE_BITFIELD(turret_flags, list(
 /obj/machinery/turretid/ui_data(mob/user)
 	var/list/data = list()
 	data["locked"] = locked
-	data["siliconUser"] = user.has_unlimited_silicon_privilege
+	data["siliconUser"] = HAS_SILICON_ACCESS(user)
 	data["enabled"] = enabled
 	data["lethal"] = lethal
 	data["shootCyborgs"] = shoot_cyborgs
 	return data
 
-/obj/machinery/turretid/ui_act(action, list/params)
+/obj/machinery/turretid/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if(.)
 		return
 
+	var/mob/user = ui.user
+
 	switch(action)
 		if("lock")
-			if(!usr.has_unlimited_silicon_privilege)
+			if(!HAS_SILICON_ACCESS(user))
 				return
 			if((obj_flags & EMAGGED) || (machine_stat & BROKEN))
-				to_chat(usr, span_warning("The turret control is unresponsive!"))
+				to_chat(user, span_warning("The turret control is unresponsive!"))
 				return
 			locked = !locked
 			return TRUE
 		if("power")
-			toggle_on(usr)
+			toggle_on(user)
 			return TRUE
 		if("mode")
-			toggle_lethal(usr)
+			toggle_lethal(user)
 			return TRUE
 		if("shoot_silicons")
-			shoot_silicons(usr)
+			shoot_silicons(user)
 			return TRUE
 
 /obj/machinery/turretid/proc/toggle_lethal(mob/user)
@@ -1050,7 +1081,7 @@ DEFINE_BITFIELD(turret_flags, list(
 	shoot_cyborgs = !shoot_cyborgs
 	if (user)
 		var/status = shoot_cyborgs ? "Shooting Borgs" : "Not Shooting Borgs"
-		balloon_alert(user, lowertext(status))
+		balloon_alert(user, LOWER_TEXT(status))
 		add_hiddenprint(user)
 		log_combat(user, src, "[status]")
 	updateTurrets()
@@ -1064,15 +1095,18 @@ DEFINE_BITFIELD(turret_flags, list(
 		turret.setState(enabled, lethal, shoot_cyborgs)
 	update_appearance()
 
-/obj/machinery/turretid/update_icon_state()
+/obj/machinery/turretid/update_overlays()
+	. = ..()
 	if(machine_stat & NOPOWER)
-		icon_state = "[base_icon_state]_off"
-		return ..()
-	if (enabled)
-		icon_state = "[base_icon_state]_[lethal ? "kill" : "stun"]"
-		return ..()
-	icon_state = "[base_icon_state]_standby"
-	return ..()
+		return
+	if(enabled)
+		. += mutable_appearance(icon, "[base_icon_state]_[lethal ? "kill" : "stun"]")
+		. += emissive_appearance(icon, "[base_icon_state]_[lethal ? "kill" : "stun"]", src, alpha = src.alpha)
+	else
+		. += mutable_appearance(icon, "[base_icon_state]_standby")
+		. += emissive_appearance(icon, "[base_icon_state]_standby", src, alpha = src.alpha)
+
+WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/machinery/turretid)
 
 /obj/item/wallframe/turret_control
 	name = "turret control frame"
@@ -1081,7 +1115,6 @@ DEFINE_BITFIELD(turret_flags, list(
 	icon_state = "control_frame"
 	result_path = /obj/machinery/turretid
 	custom_materials = list(/datum/material/iron= SHEET_MATERIAL_AMOUNT)
-	pixel_shift = 29
 
 /obj/item/gun/proc/get_turret_properties()
 	. = list()
@@ -1186,17 +1219,14 @@ DEFINE_BITFIELD(turret_flags, list(
 	installation = /obj/item/gun/energy/laser/bluetag
 	team_color = "blue"
 
-/obj/machinery/porta_turret/lasertag/bullet_act(obj/projectile/P)
+/obj/machinery/porta_turret/lasertag/bullet_act(obj/projectile/projectile)
 	. = ..()
-	if(on)
-		if(team_color == "blue")
-			if(istype(P, /obj/projectile/beam/lasertag/redtag))
-				toggle_on(FALSE)
-				addtimer(CALLBACK(src, PROC_REF(toggle_on), TRUE), 10 SECONDS)
-		else if(team_color == "red")
-			if(istype(P, /obj/projectile/beam/lasertag/bluetag))
-				toggle_on(FALSE)
-				addtimer(CALLBACK(src, PROC_REF(toggle_on), TRUE), 10 SECONDS)
+	if(!on)
+		return
+	if(team_color == "blue" && istype(projectile, /obj/projectile/beam/lasertag/redtag))
+		set_disabled(10 SECONDS)
+	else if(team_color == "red" && istype(projectile, /obj/projectile/beam/lasertag/bluetag))
+		set_disabled(10 SECONDS)
 
 #undef TURRET_STUN
 #undef TURRET_LETHAL

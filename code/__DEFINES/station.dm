@@ -13,6 +13,8 @@
 #define STATION_TRAIT_PLANETARY (1<<0)
 /// Only run on space stations
 #define STATION_TRAIT_SPACE_BOUND (1<<1)
+/// Only run if AIs are enabled.
+#define STATION_TRAIT_REQUIRES_AI (1<<2)
 
 /// Not restricted by space or planet, can always just happen
 #define STATION_TRAIT_MAP_UNRESTRICTED STATION_TRAIT_PLANETARY | STATION_TRAIT_SPACE_BOUND

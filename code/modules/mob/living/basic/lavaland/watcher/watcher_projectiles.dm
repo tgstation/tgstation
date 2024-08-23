@@ -7,6 +7,10 @@
 	armor_flag = ENERGY
 	temperature = -50
 
+/obj/projectile/temp/watcher/Initialize(mapload)
+	. = ..()
+	AddComponent(/datum/component/parriable_projectile)
+
 /obj/projectile/temp/watcher/on_hit(mob/living/target, blocked = 0, pierce_hit)
 	. = ..()
 	if (!isliving(target))
@@ -34,4 +38,6 @@
 	damage = 5
 
 /obj/projectile/temp/watcher/ice_wing/apply_status(mob/living/target)
+	if(!HAS_TRAIT(target, TRAIT_RESISTCOLD))
+		return
 	target.apply_status_effect(/datum/status_effect/freon/watcher)

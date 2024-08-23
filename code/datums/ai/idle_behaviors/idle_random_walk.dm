@@ -6,14 +6,15 @@
 	. = ..()
 	var/mob/living/living_pawn = controller.pawn
 	if(LAZYLEN(living_pawn.do_afters))
-		return
+		return FALSE
 
 	if(SPT_PROB(walk_chance, seconds_per_tick) && (living_pawn.mobility_flags & MOBILITY_MOVE) && isturf(living_pawn.loc) && !living_pawn.pulledby)
 		var/move_dir = pick(GLOB.alldirs)
 		var/turf/destination_turf = get_step(living_pawn, move_dir)
 		if(!destination_turf?.can_cross_safely(living_pawn))
-			return
+			return FALSE
 		living_pawn.Move(destination_turf, move_dir)
+	return TRUE
 
 /datum/idle_behavior/idle_random_walk/less_walking
 	walk_chance = 10

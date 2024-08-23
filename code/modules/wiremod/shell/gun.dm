@@ -9,7 +9,7 @@
 	icon = 'icons/obj/science/circuits.dmi'
 	icon_state = "setup_gun"
 	ammo_type = list(/obj/item/ammo_casing/energy/wiremod_gun)
-	cell_type = /obj/item/stock_parts/cell/emproof/wiremod_gun
+	cell_type = /obj/item/stock_parts/power_store/cell/emproof/wiremod_gun
 	item_flags = NONE
 	light_system = OVERLAY_LIGHT_DIRECTIONAL
 	light_on = FALSE
@@ -29,8 +29,8 @@
 	damage = 0
 	range = 7
 
-/obj/item/stock_parts/cell/emproof/wiremod_gun
-	maxcharge = 100
+/obj/item/stock_parts/power_store/cell/emproof/wiremod_gun
+	maxcharge = 0.1 * STANDARD_CELL_CHARGE
 
 /obj/item/gun/energy/wiremod_gun/Initialize(mapload)
 	. = ..()
@@ -68,7 +68,7 @@
 /obj/item/circuit_component/wiremod_gun/proc/handle_shot(atom/source, mob/firer, atom/target, angle)
 	SIGNAL_HANDLER
 
-	playsound(source, get_sfx(SFX_TERMINAL_TYPE), 25, FALSE)
+	playsound(source, SFX_TERMINAL_TYPE, 25, FALSE)
 	shooter.set_output(firer)
 	shot.set_output(target)
 	signal.set_output(COMPONENT_SIGNAL)
@@ -82,6 +82,6 @@
 	if(!parent?.cell)
 		return
 	var/obj/item/gun/energy/fired_gun = source
-	var/totransfer = min(100, parent.cell.charge)
-	var/transferred = fired_gun.cell.give(totransfer)
-	parent.cell.use(transferred)
+	var/transferred = fired_gun.cell.give(min(0.1 * STANDARD_CELL_CHARGE, parent.cell.charge))
+	if(transferred)
+		parent.cell.use(transferred, force = TRUE)

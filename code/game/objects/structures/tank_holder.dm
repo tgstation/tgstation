@@ -1,5 +1,6 @@
 ///?
 /obj/structure/tank_holder
+	SET_BASE_VISUAL_PIXEL(0, DEPTH_OFFSET)
 	name = "tank holder"
 	desc = "A metallic frame that can hold tanks and extinguishers."
 	icon = 'icons/obj/canisters.dmi'
@@ -63,12 +64,11 @@
 	deconstruct(TRUE)
 	return TRUE
 
-/obj/structure/tank_holder/deconstruct(disassembled = TRUE)
+/obj/structure/tank_holder/atom_deconstruct(disassembled = TRUE)
 	var/atom/Tsec = drop_location()
 	new /obj/item/stack/rods(Tsec, 2)
 	if(tank)
 		tank.forceMove(Tsec)
-	qdel(src)
 
 /obj/structure/tank_holder/attack_paw(mob/user, list/modifiers)
 	return attack_hand(user, modifiers)

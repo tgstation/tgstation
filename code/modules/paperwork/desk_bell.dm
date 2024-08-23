@@ -9,6 +9,7 @@
 	anchored = FALSE
 	pass_flags = PASSTABLE // Able to place on tables
 	max_integrity = 5000 // To make attacking it not instantly break it
+
 	/// The amount of times this bell has been rang, used to check the chance it breaks
 	var/times_rang = 0
 	/// Is this bell broken?
@@ -110,17 +111,14 @@
 	desc = "The cornerstone of any customer service job. This one's been modified for hyper-performance."
 	ring_cooldown_length = 0
 
-/obj/structure/desk_bell/MouseDrop(obj/over_object, src_location, over_location)
+/obj/structure/desk_bell/mouse_drop_dragged(atom/over_object, mob/user)
 	if(!istype(over_object, /obj/vehicle/ridden/wheelchair))
-		return
-	if(!Adjacent(over_object) || !Adjacent(usr))
 		return
 	var/obj/vehicle/ridden/wheelchair/target = over_object
 	if(target.bell_attached)
-		usr.balloon_alert(usr, "already has a bell!")
+		user.balloon_alert(user, "already has a bell!")
 		return
-	usr.balloon_alert(usr, "attaching bell...")
-	if(!do_after(usr, 0.5 SECONDS))
+	user.balloon_alert(user, "attaching bell...")
+	if(!do_after(user, 0.5 SECONDS))
 		return
 	target.attach_bell(src)
-	return ..()

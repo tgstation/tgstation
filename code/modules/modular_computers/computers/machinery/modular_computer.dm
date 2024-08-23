@@ -2,11 +2,12 @@
 
 // Modular Computer - A machinery that is mostly just a host to the Modular Computer item.
 /obj/machinery/modular_computer
+	SET_BASE_VISUAL_PIXEL(0, DEPTH_OFFSET)
 	name = "modular computer"
 	desc = "You shouldn't see this. If you do, report it." //they should be examining the processor instead
 	icon = 'icons/obj/machines/modular_console.dmi'
 	icon_state = "console"
-	idle_power_usage = BASE_MACHINE_IDLE_CONSUMPTION * 0.05
+	idle_power_usage = BASE_MACHINE_IDLE_CONSUMPTION * 0.025
 	density = TRUE
 	max_integrity = 300
 	integrity_failure = 0.5
@@ -116,11 +117,11 @@
 	SIGNAL_HANDLER
 	return update_icon(updates)
 
-/obj/machinery/modular_computer/AltClick(mob/user)
-	. = ..()
+/obj/machinery/modular_computer/click_alt(mob/user)
 	if(CPU_INTERACTABLE(user) || !can_interact(user))
-		return
-	cpu.AltClick(user)
+		return NONE
+	cpu.click_alt(user)
+	return CLICK_ACTION_SUCCESS
 
 //ATTACK HAND IGNORING PARENT RETURN VALUE
 // On-click handling. Turns on the computer if it's off and opens the GUI.
@@ -129,7 +130,7 @@
 
 // Modular computers can have battery in them, we handle power in previous proc, so prevent this from messing it up for us.
 /obj/machinery/modular_computer/power_change()
-	if(cpu?.use_power()) // If it still has a power source, PC wouldn't go offline.
+	if(cpu?.use_energy()) // If it still has a power source, PC wouldn't go offline.
 		set_machine_stat(machine_stat & ~NOPOWER)
 		update_appearance()
 		return
@@ -137,13 +138,10 @@
 
 ///Try to recharge our internal cell if it isn't fully charged.
 /obj/machinery/modular_computer/process(seconds_per_tick)
-	var/obj/item/stock_parts/cell/cell = get_cell()
+	var/obj/item/stock_parts/power_store/cell = get_cell()
 	if(isnull(cell) || cell.percent() >= 100)
 		return
-	var/power_to_draw = idle_power_usage * seconds_per_tick * 0.5
-	if(!use_power_from_net(power_to_draw))
-		return
-	cell.give(power_to_draw)
+	charge_cell(idle_power_usage * seconds_per_tick, cell)
 
 /obj/machinery/modular_computer/get_cell()
 	return cpu?.internal_cell
@@ -157,8 +155,8 @@
 /obj/machinery/modular_computer/welder_act(mob/user, obj/item/tool)
 	return CPU_INTERACTABLE(user) ? cpu.welder_act(user, tool) : ..()
 
-/obj/machinery/modular_computer/attackby(obj/item/weapon, mob/living/user)
-	return (CPU_INTERACTABLE(user) && !user.combat_mode) ? cpu.attackby(weapon, user) : ..()
+/obj/machinery/modular_computer/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	return (CPU_INTERACTABLE(user) && !user.combat_mode) ? cpu.item_interaction(user, tool, modifiers) : ..()
 
 /obj/machinery/modular_computer/attacked_by(obj/item/attacking_item, mob/living/user)
 	return CPU_INTERACTABLE(user) ? cpu.attacked_by(attacking_item, user) : ..()

@@ -91,6 +91,7 @@ const LabeledListItem = (props: LabeledListItemProps) => {
         color={color}
         textAlign={textAlign}
         className={classes(['LabeledList__cell', 'LabeledList__content'])}
+        // @ts-ignore
         colSpan={buttons ? undefined : 2}
         verticalAlign={verticalAlign}
       >

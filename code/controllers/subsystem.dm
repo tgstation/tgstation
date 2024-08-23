@@ -63,6 +63,9 @@
 	/// Running average of the amount of tick usage (in percents of a game tick) the subsystem has spent past its allocated time without pausing
 	var/tick_overrun = 0
 
+	/// Flat list of usage and time, every odd index is a log time, every even index is a usage
+	var/list/rolling_usage = list()
+
 	/// How much of a tick (in percents of a tick) were we allocated last fire.
 	var/tick_allocation_last = 0
 
@@ -103,6 +106,9 @@
 	var/datum/controller/subsystem/queue_next
 	/// Previous subsystem in the queue of subsystems to run this tick
 	var/datum/controller/subsystem/queue_prev
+
+	/// String to store an applicable error message for a subsystem crashing, used to help debug crashes in contexts such as Continuous Integration/Unit Tests
+	var/initialization_failure_message = null
 
 	//Do not blindly add vars here to the bottom, put it where it goes above
 	//If your var only has two values, put it in as a flag.
@@ -295,6 +301,15 @@
 /datum/controller/subsystem/proc/postpone(cycles = 1)
 	if (can_fire && cycles >= 1)
 		postponed_fires += cycles
+
+/// Prunes out of date entries in our rolling usage list
+/datum/controller/subsystem/proc/prune_rolling_usage()
+	var/list/rolling_usage = src.rolling_usage
+	var/cut_to = 0
+	while(cut_to + 2 <= length(rolling_usage) && rolling_usage[cut_to + 1] < DS2TICKS(world.time - Master.rolling_usage_length))
+		cut_to += 2
+	if(cut_to)
+		rolling_usage.Cut(1, cut_to + 1)
 
 //usually called via datum/controller/subsystem/New() when replacing a subsystem (i.e. due to a recurring crash)
 //should attempt to salvage what it can from the old instance of subsystem

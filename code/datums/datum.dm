@@ -93,7 +93,7 @@
  * Default implementation of clean-up code.
  *
  * This should be overridden to remove all references pointing to the object being destroyed, if
- * you do override it, make sure to call the parent and return it's return value by default
+ * you do override it, make sure to call the parent and return its return value by default
  *
  * Return an appropriate [QDEL_HINT][QDEL_HINT_QUEUE] to modify handling of your deletion;
  * in most cases this is [QDEL_HINT_QUEUE].
@@ -111,6 +111,9 @@
 	tag = null
 	datum_flags &= ~DF_USE_TAG //In case something tries to REF us
 	weak_reference = null //ensure prompt GCing of weakref.
+	if(!(datum_flags & DF_STATIC_OBJECT))
+		DREAMLUAU_CLEAR_REF_USERDATA(vars) // vars ceases existing when src does, so we need to clear any lua refs to it that exist.
+		DREAMLUAU_CLEAR_REF_USERDATA(src)
 
 	if(_active_timers)
 		var/list/timers = _active_timers
@@ -206,7 +209,7 @@
 
 ///Serializes into JSON. Does not encode type.
 /datum/proc/serialize_json(list/options)
-	. = serialize_list(options)
+	. = serialize_list(options, list())
 	if(!islist(.))
 		. = null
 	else
@@ -313,12 +316,22 @@
 	filter_data[name] = copied_parameters
 	update_filters()
 
+///A version of add_filter that takes a list of filters to add rather than being individual, to limit calls to update_filters().
+/datum/proc/add_filters(list/list/filters)
+	LAZYINITLIST(filter_data)
+	for(var/list/individual_filter as anything in filters)
+		var/list/params = individual_filter["params"]
+		var/list/copied_parameters = params.Copy()
+		copied_parameters["priority"] = individual_filter["priority"]
+		filter_data[individual_filter["name"]] = copied_parameters
+	update_filters()
+
 /// Reapplies all the filters.
 /datum/proc/update_filters()
-	ASSERT(isatom(src) || istype(src, /image))
+	ASSERT(isatom(src) || isimage(src))
 	var/atom/atom_cast = src // filters only work with images or atoms.
 	atom_cast.filters = null
-	filter_data = sortTim(filter_data, GLOBAL_PROC_REF(cmp_filter_data_priority), TRUE)
+	sortTim(filter_data, GLOBAL_PROC_REF(cmp_filter_data_priority), TRUE)
 	for(var/filter_raw in filter_data)
 		var/list/data = filter_data[filter_raw]
 		var/list/arguments = data.Copy()
@@ -377,7 +390,7 @@
 
 /// Returns the filter associated with the passed key
 /datum/proc/get_filter(name)
-	ASSERT(isatom(src) || istype(src, /image))
+	ASSERT(isatom(src) || isimage(src))
 	if(filter_data && filter_data[name])
 		var/atom/atom_cast = src // filters only work with images or atoms.
 		return atom_cast.filters[filter_data.Find(name)]
@@ -400,7 +413,7 @@
 	update_filters()
 
 /datum/proc/clear_filters()
-	ASSERT(isatom(src) || istype(src, /image))
+	ASSERT(isatom(src) || isimage(src))
 	var/atom/atom_cast = src // filters only work with images or atoms.
 	filter_data = null
 	atom_cast.filters = null
@@ -417,4 +430,3 @@
 		return
 	harddel_deets_dumped = TRUE
 	return "Image icon: [icon] - icon_state: [icon_state] [loc ? "loc: [loc] ([loc.x],[loc.y],[loc.z])" : ""]"
-

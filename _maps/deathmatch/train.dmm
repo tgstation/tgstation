@@ -1,0 +1,2421 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"ai" = (
+/obj/structure/table_frame/wood,
+/obj/effect/mapping_helpers/broken_floor,
+/turf/open/floor/wood/tile,
+/area/deathmatch)
+"as" = (
+/obj/effect/particle_effect/ion_trails/flight{
+	icon_state = "shieldwall"
+	},
+/turf/open/chasm/true/no_smooth/fake_motion_sand/fast,
+/area/deathmatch)
+"at" = (
+/turf/open/floor/wood/tile,
+/area/deathmatch)
+"be" = (
+/obj/effect/turf_decal/siding/thinplating_new{
+	dir = 1
+	},
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/landmark/deathmatch_player_spawn,
+/turf/open/indestructible/plating,
+/area/deathmatch)
+"bR" = (
+/obj/effect/landmark/deathmatch_player_spawn,
+/obj/effect/decal/cleanable/blood/old,
+/turf/open/floor/iron/kitchen,
+/area/deathmatch)
+"bY" = (
+/obj/structure/railing{
+	dir = 6
+	},
+/obj/structure/closet/crate/secure/weapon{
+	locked = 0
+	},
+/obj/effect/decal/cleanable/fuel_pool/hivis,
+/obj/item/ammo_box/c38,
+/obj/effect/turf_decal/stripes/asteroid/line{
+	dir = 6
+	},
+/obj/effect/decal/cleanable/dirt,
+/turf/open/indestructible/plating,
+/area/deathmatch)
+"ca" = (
+/obj/effect/decal/cleanable/glass,
+/obj/effect/mapping_helpers/broken_floor,
+/obj/structure/girder/displaced,
+/turf/open/indestructible/plating,
+/area/deathmatch)
+"ci" = (
+/obj/effect/mapping_helpers/broken_floor,
+/obj/effect/turf_decal/stripes/asteroid/line{
+	dir = 4
+	},
+/obj/effect/decal/cleanable/dirt,
+/turf/open/indestructible/plating,
+/area/deathmatch)
+"cr" = (
+/obj/item/chair/wood,
+/obj/effect/mapping_helpers/broken_floor,
+/turf/open/floor/wood/tile,
+/area/deathmatch)
+"cv" = (
+/obj/structure/safe,
+/obj/item/gun/energy/laser/instakill,
+/obj/effect/decal/cleanable/blood/old,
+/obj/effect/mapping_helpers/broken_floor,
+/turf/open/indestructible/plating,
+/area/deathmatch)
+"cy" = (
+/obj/effect/spawner/structure/window/hollow/middle{
+	dir = 4
+	},
+/turf/open/indestructible/plating,
+/area/deathmatch)
+"cU" = (
+/obj/effect/mapping_helpers/broken_floor,
+/obj/item/grenade/syndieminibomb/concussion,
+/turf/open/indestructible/plating,
+/area/deathmatch)
+"dB" = (
+/obj/effect/mapping_helpers/broken_floor,
+/obj/effect/turf_decal/siding/thinplating_new{
+	dir = 4
+	},
+/turf/open/indestructible/plating,
+/area/deathmatch)
+"dU" = (
+/obj/structure/grille/broken,
+/obj/effect/decal/cleanable/glass,
+/turf/open/indestructible/plating,
+/area/deathmatch)
+"ec" = (
+/obj/item/ammo_casing/shotgun/breacher,
+/obj/effect/decal/cleanable/blood/old,
+/obj/effect/mapping_helpers/broken_floor,
+/turf/open/indestructible/plating,
+/area/deathmatch)
+"eA" = (
+/obj/effect/mapping_helpers/broken_floor,
+/obj/structure/girder/displaced,
+/turf/open/indestructible/plating,
+/area/deathmatch)
+"fa" = (
+/obj/structure/chair/wood{
+	dir = 1
+	},
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/wood,
+/area/deathmatch)
+"fJ" = (
+/obj/effect/turf_decal/siding/thinplating_new{
+	dir = 1
+	},
+/obj/effect/decal/cleanable/dirt,
+/turf/open/indestructible/plating,
+/area/deathmatch)
+"gL" = (
+/obj/effect/mapping_helpers/broken_floor,
+/obj/effect/turf_decal/siding/thinplating_new{
+	dir = 4
+	},
+/obj/effect/decal/fakelattice{
+	density = 0
+	},
+/turf/open/indestructible/plating,
+/area/deathmatch)
+"gN" = (
+/obj/effect/mapping_helpers/broken_floor,
+/obj/effect/decal/cleanable/fuel_pool/hivis,
+/obj/effect/turf_decal/stripes/asteroid/line{
+	dir = 8
+	},
+/obj/effect/decal/cleanable/dirt,
+/turf/open/indestructible/plating,
+/area/deathmatch)
+"hR" = (
+/obj/structure/chair/wood,
+/obj/effect/mapping_helpers/broken_floor,
+/turf/open/floor/wood/tile,
+/area/deathmatch)
+"hZ" = (
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/wood/tile,
+/area/deathmatch)
+"ii" = (
+/obj/structure/closet/crate/critter{
+	mob_storage_capacity = 33
+	},
+/mob/living/basic/mothroach,
+/mob/living/basic/mothroach,
+/mob/living/basic/mothroach,
+/mob/living/basic/mothroach,
+/mob/living/basic/mothroach,
+/mob/living/basic/mothroach,
+/mob/living/basic/mothroach,
+/mob/living/basic/mothroach,
+/mob/living/basic/mothroach,
+/mob/living/basic/mothroach,
+/mob/living/basic/mothroach,
+/mob/living/basic/mothroach,
+/mob/living/basic/mothroach,
+/mob/living/basic/mothroach,
+/mob/living/basic/mothroach,
+/mob/living/basic/mothroach,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/indestructible/plating,
+/area/deathmatch)
+"il" = (
+/obj/effect/light_emitter/fake_outdoors,
+/obj/effect/particle_effect/ion_trails/flight{
+	icon_state = "shieldwall"
+	},
+/turf/open/chasm/true/no_smooth/fake_motion_sand/fast,
+/area/deathmatch)
+"jj" = (
+/obj/machinery/power/shuttle_engine/heater,
+/obj/structure/window/spawner/directional/north,
+/turf/open/indestructible/plating,
+/area/deathmatch)
+"jq" = (
+/obj/effect/turf_decal/siding/thinplating_new{
+	dir = 1
+	},
+/obj/effect/decal/cleanable/dirt,
+/obj/item/storage/toolbox/mechanical,
+/turf/open/indestructible/plating,
+/area/deathmatch)
+"kd" = (
+/obj/structure/closet/crate/bin,
+/obj/effect/decal/cleanable/blood/old,
+/turf/open/floor/iron/kitchen,
+/area/deathmatch)
+"ke" = (
+/obj/effect/spawner/structure/window/hollow/middle,
+/turf/open/indestructible/plating,
+/area/deathmatch)
+"kt" = (
+/obj/structure/table/reinforced,
+/obj/item/gun/ballistic/automatic/pistol/m1911,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/wood,
+/area/deathmatch)
+"kR" = (
+/obj/effect/decal/fakelattice{
+	density = 0
+	},
+/obj/effect/mapping_helpers/broken_floor,
+/obj/effect/turf_decal/siding/wood{
+	dir = 4
+	},
+/turf/open/floor/wood,
+/area/deathmatch)
+"lJ" = (
+/obj/effect/mapping_helpers/broken_floor,
+/obj/effect/turf_decal/siding/thinplating_new{
+	dir = 8
+	},
+/turf/open/indestructible/plating,
+/area/deathmatch)
+"mi" = (
+/obj/effect/mapping_helpers/broken_floor,
+/obj/machinery/computer/old{
+	dir = 8
+	},
+/turf/open/floor/wood,
+/area/deathmatch)
+"mr" = (
+/obj/structure/chair/wood,
+/turf/open/floor/wood/tile,
+/area/deathmatch)
+"mS" = (
+/obj/structure/barricade/wooden,
+/obj/effect/mapping_helpers/broken_floor,
+/turf/open/indestructible/plating,
+/area/deathmatch)
+"mW" = (
+/obj/structure/railing{
+	dir = 4
+	},
+/obj/structure/closet/crate/secure/weapon{
+	locked = 0
+	},
+/obj/effect/decal/cleanable/fuel_pool/hivis,
+/obj/item/ammo_box/c38,
+/obj/effect/turf_decal/stripes/asteroid/line{
+	dir = 4
+	},
+/obj/effect/decal/cleanable/dirt,
+/turf/open/indestructible/plating,
+/area/deathmatch)
+"nj" = (
+/obj/effect/decal/fakelattice{
+	density = 0
+	},
+/obj/effect/decal/cleanable/glass,
+/obj/effect/mapping_helpers/broken_floor,
+/turf/open/indestructible/plating,
+/area/deathmatch)
+"oo" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 8
+	},
+/obj/effect/turf_decal/siding/wood{
+	dir = 4
+	},
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/wood,
+/area/deathmatch)
+"pm" = (
+/obj/effect/decal/cleanable/blood/old,
+/turf/open/floor/iron/kitchen,
+/area/deathmatch)
+"pO" = (
+/obj/structure/railing{
+	dir = 8
+	},
+/obj/effect/mapping_helpers/broken_floor,
+/obj/effect/decal/cleanable/fuel_pool/hivis,
+/obj/structure/closet/crate,
+/obj/effect/turf_decal/stripes/asteroid/line{
+	dir = 8
+	},
+/obj/item/storage/medkit/brute,
+/obj/item/reagent_containers/hypospray/medipen,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/indestructible/plating,
+/area/deathmatch)
+"qJ" = (
+/obj/effect/turf_decal/siding/thinplating_new{
+	dir = 1
+	},
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/closet/crate,
+/obj/item/extinguisher,
+/obj/item/extinguisher/anti,
+/turf/open/indestructible/plating,
+/area/deathmatch)
+"qY" = (
+/obj/effect/landmark/deathmatch_player_spawn,
+/obj/effect/decal/cleanable/blood/old,
+/obj/effect/mapping_helpers/broken_floor,
+/turf/open/indestructible/plating,
+/area/deathmatch)
+"rd" = (
+/obj/structure/chair/comfy/shuttle/tactical{
+	dir = 1
+	},
+/obj/effect/mapping_helpers/broken_floor,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/indestructible/plating,
+/area/deathmatch)
+"ru" = (
+/obj/structure/table/wood,
+/obj/item/food/spaghetti/pastatomato,
+/obj/item/knife/kitchen,
+/turf/open/floor/wood/tile,
+/area/deathmatch)
+"ry" = (
+/obj/item/stack/rods/ten,
+/obj/effect/mapping_helpers/broken_floor,
+/obj/effect/turf_decal/stripes/asteroid/line{
+	dir = 8
+	},
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/fakelattice{
+	density = 0
+	},
+/turf/open/indestructible/plating,
+/area/deathmatch)
+"rM" = (
+/obj/structure/shipping_container/deforest,
+/obj/structure/railing{
+	dir = 8
+	},
+/obj/effect/turf_decal/stripes/asteroid/line{
+	dir = 8
+	},
+/obj/effect/decal/cleanable/dirt,
+/turf/open/indestructible/plating,
+/area/deathmatch)
+"rZ" = (
+/obj/structure/girder,
+/obj/structure/railing{
+	dir = 4
+	},
+/obj/effect/turf_decal/stripes/asteroid/line{
+	dir = 4
+	},
+/obj/effect/decal/cleanable/dirt,
+/turf/open/indestructible/plating,
+/area/deathmatch)
+"sp" = (
+/obj/structure/girder/displaced,
+/turf/open/indestructible/plating,
+/area/deathmatch)
+"ty" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 8
+	},
+/obj/effect/turf_decal/siding/wood{
+	dir = 4
+	},
+/obj/effect/decal/fakelattice{
+	density = 0
+	},
+/turf/open/floor/wood,
+/area/deathmatch)
+"tQ" = (
+/obj/machinery/oven/range,
+/obj/effect/mapping_helpers/broken_floor,
+/turf/open/floor/iron/kitchen,
+/area/deathmatch)
+"uM" = (
+/obj/structure/railing{
+	dir = 4
+	},
+/obj/effect/mapping_helpers/broken_floor,
+/obj/effect/turf_decal/stripes/asteroid/line{
+	dir = 4
+	},
+/obj/item/spear,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/indestructible/plating,
+/area/deathmatch)
+"vl" = (
+/obj/effect/mapping_helpers/broken_floor,
+/obj/effect/turf_decal/siding/thinplating_new{
+	dir = 8
+	},
+/obj/effect/decal/fakelattice{
+	density = 0
+	},
+/turf/open/indestructible/plating,
+/area/deathmatch)
+"vV" = (
+/obj/effect/decal/cleanable/fuel_pool/hivis,
+/obj/effect/decal/cleanable/dirt,
+/obj/item/storage/bag/money,
+/turf/open/indestructible/plating,
+/area/deathmatch)
+"vW" = (
+/obj/structure/lattice/catwalk,
+/obj/structure/door_assembly/door_assembly_wood,
+/turf/open/chasm/true/no_smooth/fake_motion_sand/fast,
+/area/deathmatch)
+"wf" = (
+/turf/open/floor/wood,
+/area/deathmatch)
+"wm" = (
+/obj/structure/door_assembly/door_assembly_wood,
+/obj/effect/decal/fakelattice{
+	density = 0
+	},
+/obj/effect/mapping_helpers/broken_floor,
+/obj/effect/turf_decal/siding/wood{
+	dir = 4
+	},
+/turf/open/floor/wood,
+/area/deathmatch)
+"wv" = (
+/obj/effect/turf_decal/siding/thinplating_new{
+	dir = 1
+	},
+/obj/effect/decal/cleanable/dirt,
+/obj/item/reagent_containers/cup/bucket/wooden,
+/obj/item/flashlight/flare/torch,
+/turf/open/indestructible/plating,
+/area/deathmatch)
+"wy" = (
+/obj/structure/chair/wood{
+	dir = 1
+	},
+/obj/effect/decal/cleanable/glass,
+/obj/effect/decal/cleanable/blood/old,
+/obj/effect/mapping_helpers/broken_floor,
+/turf/open/indestructible/plating,
+/area/deathmatch)
+"wE" = (
+/obj/effect/spawner/structure/window,
+/turf/open/indestructible/plating,
+/area/deathmatch)
+"wR" = (
+/obj/effect/turf_decal/siding/thinplating_new{
+	dir = 1
+	},
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/fermenting_barrel/gunpowder,
+/obj/item/stack/cannonball/the_big_one,
+/turf/open/indestructible/plating,
+/area/deathmatch)
+"xd" = (
+/obj/machinery/computer/old,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/wood,
+/area/deathmatch)
+"xn" = (
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/wood,
+/area/deathmatch)
+"xp" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 8
+	},
+/obj/effect/turf_decal/siding/wood{
+	dir = 4
+	},
+/obj/effect/mapping_helpers/broken_floor,
+/obj/effect/decal/fakelattice{
+	density = 0
+	},
+/turf/open/floor/wood,
+/area/deathmatch)
+"xN" = (
+/obj/structure/railing,
+/obj/effect/decal/cleanable/fuel_pool/hivis,
+/obj/structure/reagent_dispensers/fueltank/large,
+/obj/effect/turf_decal/stripes/asteroid/line,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/indestructible/plating,
+/area/deathmatch)
+"xV" = (
+/obj/effect/decal/cleanable/glass,
+/obj/effect/mapping_helpers/broken_floor,
+/turf/open/indestructible/plating,
+/area/deathmatch)
+"yi" = (
+/obj/structure/barricade/wooden/crude,
+/obj/effect/mapping_helpers/broken_floor,
+/turf/open/indestructible/plating,
+/area/deathmatch)
+"yr" = (
+/obj/effect/light_emitter/fake_outdoors,
+/turf/open/chasm/true/no_smooth/fake_motion_sand/fast,
+/area/deathmatch)
+"yR" = (
+/obj/effect/turf_decal/stripes/asteroid/line{
+	dir = 1
+	},
+/obj/effect/decal/cleanable/dirt,
+/turf/open/indestructible/plating,
+/area/deathmatch)
+"ze" = (
+/obj/machinery/door/airlock/wood/glass,
+/obj/effect/turf_decal/siding/wood/corner,
+/obj/effect/turf_decal/siding/wood/corner{
+	dir = 8
+	},
+/turf/open/floor/wood,
+/area/deathmatch)
+"zg" = (
+/obj/machinery/power/shuttle_engine/propulsion,
+/turf/open/indestructible/plating,
+/area/deathmatch)
+"zP" = (
+/obj/effect/mapping_helpers/broken_floor,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/indestructible/plating,
+/area/deathmatch)
+"An" = (
+/obj/structure/grille/broken,
+/obj/item/shard,
+/obj/effect/decal/cleanable/glass,
+/turf/open/indestructible/plating,
+/area/deathmatch)
+"AR" = (
+/obj/effect/decal/cleanable/fuel_pool/hivis,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/indestructible/plating,
+/area/deathmatch)
+"Bx" = (
+/obj/effect/turf_decal/siding/thinplating_new{
+	dir = 1
+	},
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/cannon{
+	anchorable_cannon = 0;
+	anchored = 0
+	},
+/turf/open/indestructible/plating,
+/area/deathmatch)
+"BC" = (
+/obj/item/ammo_casing/shotgun/scatterlaser,
+/obj/structure/kitchenspike,
+/obj/effect/decal/cleanable/blood/old,
+/obj/effect/mapping_helpers/broken_floor,
+/turf/open/indestructible/plating,
+/area/deathmatch)
+"BN" = (
+/obj/structure/table_frame/wood,
+/turf/open/floor/wood/tile,
+/area/deathmatch)
+"CN" = (
+/obj/effect/mapping_helpers/broken_floor,
+/turf/open/floor/wood/tile,
+/area/deathmatch)
+"CO" = (
+/obj/structure/chair/wood{
+	dir = 1
+	},
+/obj/effect/mapping_helpers/broken_floor,
+/turf/open/floor/wood/tile,
+/area/deathmatch)
+"CX" = (
+/obj/structure/girder,
+/obj/structure/railing{
+	dir = 8
+	},
+/obj/effect/decal/cleanable/fuel_pool/hivis,
+/obj/effect/turf_decal/stripes/asteroid/line{
+	dir = 8
+	},
+/obj/effect/decal/cleanable/dirt,
+/turf/open/indestructible/plating,
+/area/deathmatch)
+"Da" = (
+/obj/structure/reagent_dispensers/fueltank,
+/turf/open/floor/wood,
+/area/deathmatch)
+"Du" = (
+/obj/effect/mapping_helpers/broken_floor,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/wood/tile,
+/area/deathmatch)
+"Dy" = (
+/obj/machinery/door/airlock/wood/glass,
+/obj/effect/turf_decal/siding/wood/corner{
+	dir = 4
+	},
+/obj/effect/turf_decal/siding/wood/corner{
+	dir = 1
+	},
+/turf/open/floor/wood,
+/area/deathmatch)
+"Ej" = (
+/obj/effect/spawner/structure/window/hollow/reinforced/end,
+/turf/open/indestructible/plating,
+/area/deathmatch)
+"ED" = (
+/obj/effect/mapping_helpers/broken_floor,
+/turf/open/floor/iron/kitchen,
+/area/deathmatch)
+"EH" = (
+/obj/effect/mapping_helpers/broken_floor,
+/obj/effect/turf_decal/stripes/asteroid/line{
+	dir = 8
+	},
+/obj/effect/decal/cleanable/dirt,
+/obj/item/storage/toolbox/mechanical,
+/turf/open/indestructible/plating,
+/area/deathmatch)
+"EU" = (
+/obj/item/stack/rods/ten,
+/obj/effect/decal/cleanable/fuel_pool/hivis,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/indestructible/plating,
+/area/deathmatch)
+"EX" = (
+/obj/structure/lattice/catwalk,
+/obj/item/ammo_box/c38/match,
+/turf/open/chasm/true/no_smooth/fake_motion_sand/fast,
+/area/deathmatch)
+"Fa" = (
+/obj/structure/girder,
+/obj/structure/railing{
+	dir = 9
+	},
+/obj/effect/turf_decal/stripes/asteroid/line{
+	dir = 9
+	},
+/obj/effect/decal/cleanable/dirt,
+/turf/open/indestructible/plating,
+/area/deathmatch)
+"Fh" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/item/storage/bag/money,
+/turf/open/indestructible/plating,
+/area/deathmatch)
+"Fs" = (
+/obj/effect/mapping_helpers/broken_floor,
+/turf/open/indestructible/plating,
+/area/deathmatch)
+"FB" = (
+/obj/effect/spawner/structure/window/hollow/reinforced/end{
+	dir = 1
+	},
+/turf/open/indestructible/plating,
+/area/deathmatch)
+"Ge" = (
+/obj/structure/lattice/catwalk,
+/obj/item/storage/medkit/ancient,
+/turf/open/chasm/true/no_smooth/fake_motion_sand/fast,
+/area/deathmatch)
+"Gl" = (
+/obj/structure/barricade/wooden/crude,
+/obj/effect/mapping_helpers/broken_floor,
+/obj/effect/turf_decal/siding/thinplating_new{
+	dir = 8
+	},
+/turf/open/indestructible/plating,
+/area/deathmatch)
+"Gx" = (
+/obj/effect/turf_decal/siding/wood,
+/obj/machinery/door/airlock/wood/glass,
+/turf/open/floor/iron/kitchen,
+/area/deathmatch)
+"GQ" = (
+/obj/effect/decal/cleanable/blood/old,
+/obj/effect/mapping_helpers/broken_floor,
+/turf/open/indestructible/plating,
+/area/deathmatch)
+"Ht" = (
+/obj/structure/girder,
+/obj/structure/railing{
+	dir = 10
+	},
+/obj/effect/decal/cleanable/fuel_pool/hivis,
+/obj/effect/turf_decal/stripes/asteroid/line{
+	dir = 10
+	},
+/obj/effect/decal/cleanable/dirt,
+/turf/open/indestructible/plating,
+/area/deathmatch)
+"Hx" = (
+/obj/effect/mapping_helpers/broken_floor,
+/turf/open/floor/wood,
+/area/deathmatch)
+"HH" = (
+/obj/machinery/door/airlock/wood/glass,
+/obj/effect/turf_decal/siding/wood{
+	dir = 8
+	},
+/turf/open/floor/wood,
+/area/deathmatch)
+"HV" = (
+/obj/item/stack/rods/ten,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/indestructible/plating,
+/area/deathmatch)
+"HZ" = (
+/obj/structure/girder,
+/obj/structure/railing{
+	dir = 5
+	},
+/obj/effect/turf_decal/stripes/asteroid/line{
+	dir = 5
+	},
+/obj/effect/decal/cleanable/dirt,
+/turf/open/indestructible/plating,
+/area/deathmatch)
+"ID" = (
+/obj/effect/landmark/deathmatch_player_spawn,
+/turf/open/floor/wood,
+/area/deathmatch)
+"IJ" = (
+/obj/structure/kitchenspike,
+/obj/effect/decal/cleanable/blood/old,
+/obj/effect/mapping_helpers/broken_floor,
+/turf/open/indestructible/plating,
+/area/deathmatch)
+"IR" = (
+/obj/structure/lattice/catwalk,
+/obj/item/shield/improvised,
+/turf/open/chasm/true/no_smooth/fake_motion_sand/fast,
+/area/deathmatch)
+"Je" = (
+/obj/structure/lattice/catwalk,
+/turf/open/chasm/true/no_smooth/fake_motion_sand/fast,
+/area/deathmatch)
+"Js" = (
+/obj/effect/mapping_helpers/broken_floor,
+/obj/effect/decal/cleanable/fuel_pool/hivis,
+/obj/effect/turf_decal/stripes/asteroid/line,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/indestructible/plating,
+/area/deathmatch)
+"Kv" = (
+/obj/structure/table/reinforced,
+/obj/item/gun/ballistic/shotgun/doublebarrel,
+/obj/effect/decal/cleanable/blood/old,
+/obj/effect/mapping_helpers/broken_floor,
+/turf/open/indestructible/plating,
+/area/deathmatch)
+"KT" = (
+/turf/closed/wall/r_wall,
+/area/deathmatch)
+"LX" = (
+/obj/effect/decal/cleanable/glass,
+/obj/structure/girder/displaced,
+/turf/open/indestructible/plating,
+/area/deathmatch)
+"Mq" = (
+/obj/effect/mapping_helpers/broken_floor,
+/obj/effect/decal/cleanable/fuel_pool/hivis,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/indestructible/plating,
+/area/deathmatch)
+"Mt" = (
+/turf/open/chasm/true/no_smooth/fake_motion_sand/fast,
+/area/deathmatch)
+"Mz" = (
+/obj/machinery/door/airlock/wood/glass,
+/obj/effect/mapping_helpers/broken_floor,
+/turf/open/indestructible/plating,
+/area/deathmatch)
+"MV" = (
+/obj/effect/decal/fakelattice{
+	density = 0
+	},
+/obj/effect/mapping_helpers/broken_floor,
+/turf/open/indestructible/plating,
+/area/deathmatch)
+"Ow" = (
+/obj/item/ammo_casing/shotgun/pulverizer,
+/obj/structure/kitchenspike,
+/obj/effect/decal/cleanable/blood/old,
+/obj/effect/mapping_helpers/broken_floor,
+/turf/open/indestructible/plating,
+/area/deathmatch)
+"Pa" = (
+/obj/effect/landmark/deathmatch_player_spawn,
+/obj/effect/mapping_helpers/broken_floor,
+/turf/open/indestructible/plating,
+/area/deathmatch)
+"Pc" = (
+/obj/structure/table/reinforced,
+/obj/item/storage/fancy/cigarettes/cigars/cohiba,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/wood,
+/area/deathmatch)
+"PD" = (
+/obj/effect/mapping_helpers/broken_floor,
+/obj/machinery/vending/dinnerware,
+/turf/open/floor/iron/kitchen,
+/area/deathmatch)
+"QL" = (
+/obj/machinery/computer/old,
+/obj/effect/mapping_helpers/broken_machine,
+/turf/open/indestructible/plating,
+/area/deathmatch)
+"Rg" = (
+/obj/item/chair/wood,
+/turf/open/floor/wood/tile,
+/area/deathmatch)
+"Rn" = (
+/obj/effect/decal/cleanable/glass,
+/obj/effect/mapping_helpers/broken_floor,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/indestructible/plating,
+/area/deathmatch)
+"Se" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 8
+	},
+/obj/effect/turf_decal/siding/wood{
+	dir = 4
+	},
+/turf/open/floor/wood,
+/area/deathmatch)
+"Sm" = (
+/obj/effect/decal/cleanable/dirt,
+/turf/open/indestructible/plating,
+/area/deathmatch)
+"Sy" = (
+/obj/structure/lattice,
+/turf/open/chasm/true/no_smooth/fake_motion_sand/fast,
+/area/deathmatch)
+"Tg" = (
+/obj/structure/table/reinforced,
+/obj/item/food/meat/slab/pig,
+/obj/item/food/meat/slab/pig,
+/obj/item/food/meat/slab/pig,
+/obj/item/food/meat/slab/pig,
+/obj/item/food/meat/slab/pig,
+/turf/open/floor/iron/kitchen,
+/area/deathmatch)
+"TA" = (
+/obj/machinery/griddle,
+/obj/effect/decal/cleanable/blood/old,
+/turf/open/floor/iron/kitchen,
+/area/deathmatch)
+"Uq" = (
+/obj/structure/lattice/catwalk,
+/obj/item/ammo_casing/shotgun/executioner,
+/turf/open/chasm/true/no_smooth/fake_motion_sand/fast,
+/area/deathmatch)
+"Vc" = (
+/obj/effect/decal/cleanable/glass,
+/obj/effect/decal/cleanable/blood/old,
+/obj/effect/mapping_helpers/broken_floor,
+/turf/open/indestructible/plating,
+/area/deathmatch)
+"Vu" = (
+/obj/effect/mapping_helpers/broken_floor,
+/obj/structure/girder,
+/turf/open/indestructible/plating,
+/area/deathmatch)
+"VS" = (
+/obj/structure/closet/secure_closet/freezer/kitchen{
+	req_access = null
+	},
+/obj/item/food/grown/potato,
+/obj/item/food/grown/potato,
+/obj/item/food/grown/potato,
+/obj/item/food/grown/potato,
+/obj/item/food/grown/potato,
+/obj/item/food/grown/potato,
+/obj/item/food/grown/potato,
+/obj/effect/decal/cleanable/blood/old,
+/turf/open/floor/iron/kitchen,
+/area/deathmatch)
+"VT" = (
+/obj/structure/table/reinforced,
+/obj/item/knife/kitchen,
+/turf/open/floor/iron/kitchen,
+/area/deathmatch)
+"Wa" = (
+/turf/closed/wall/mineral/wood/nonmetal,
+/area/deathmatch)
+"Ww" = (
+/obj/machinery/computer/old,
+/obj/effect/decal/cleanable/blood/old,
+/obj/effect/mapping_helpers/broken_floor,
+/turf/open/indestructible/plating,
+/area/deathmatch)
+"Xr" = (
+/obj/structure/barricade/wooden/crude,
+/obj/effect/mapping_helpers/broken_floor,
+/obj/effect/turf_decal/siding/thinplating_new{
+	dir = 4
+	},
+/turf/open/indestructible/plating,
+/area/deathmatch)
+"Xw" = (
+/obj/structure/chair/wood,
+/obj/effect/landmark/deathmatch_player_spawn,
+/obj/effect/mapping_helpers/broken_floor,
+/turf/open/floor/wood/tile,
+/area/deathmatch)
+"XD" = (
+/obj/structure/table/reinforced,
+/obj/item/storage/fancy/egg_box,
+/turf/open/floor/iron/kitchen,
+/area/deathmatch)
+"Yg" = (
+/obj/item/stack/rods/ten,
+/obj/effect/mapping_helpers/broken_floor,
+/obj/effect/turf_decal/stripes/asteroid/line{
+	dir = 4
+	},
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/fakelattice{
+	density = 0
+	},
+/turf/open/indestructible/plating,
+/area/deathmatch)
+"Yi" = (
+/obj/effect/turf_decal/siding/thinplating_new{
+	dir = 1
+	},
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/closet/crate,
+/obj/item/clothing/suit/armor/bulletproof,
+/turf/open/indestructible/plating,
+/area/deathmatch)
+"Ys" = (
+/obj/structure/railing{
+	dir = 4
+	},
+/obj/effect/mapping_helpers/broken_floor,
+/obj/structure/closet/crate/secure/weapon{
+	locked = 0
+	},
+/obj/effect/decal/cleanable/fuel_pool/hivis,
+/obj/item/ammo_box/c38,
+/obj/effect/turf_decal/stripes/asteroid/line{
+	dir = 4
+	},
+/obj/item/gun/energy/laser,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/indestructible/plating,
+/area/deathmatch)
+"Yt" = (
+/obj/effect/decal/cleanable/fuel_pool/hivis,
+/obj/structure/closet/crate/secure/freezer{
+	locked = 0
+	},
+/obj/item/food/pizza/flatbread/zmorgast,
+/obj/item/food/pizza/flatbread/stinging,
+/obj/item/food/pizza/flatbread/rustic,
+/obj/item/food/pizza/flatbread/nutty,
+/obj/item/food/pizza/flatbread/mushroom,
+/obj/item/food/pizza/flatbread/italic,
+/obj/item/food/pizza/flatbread/imperial,
+/obj/item/food/pizza/flatbread/fish,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/indestructible/plating,
+/area/deathmatch)
+"YP" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 1
+	},
+/obj/machinery/door/airlock/wood/glass,
+/turf/open/floor/iron/kitchen,
+/area/deathmatch)
+"YR" = (
+/obj/structure/railing{
+	dir = 1
+	},
+/obj/effect/mapping_helpers/broken_floor,
+/obj/effect/turf_decal/stripes/asteroid/line{
+	dir = 1
+	},
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/landmark/deathmatch_player_spawn,
+/turf/open/indestructible/plating,
+/area/deathmatch)
+"Zc" = (
+/obj/structure/lattice/catwalk,
+/obj/structure/girder/displaced,
+/turf/open/chasm/true/no_smooth/fake_motion_sand/fast,
+/area/deathmatch)
+"ZR" = (
+/turf/open/floor/iron/kitchen,
+/area/deathmatch)
+
+(1,1,1) = {"
+Mt
+Mt
+Mt
+Mt
+Mt
+Mt
+Mt
+Mt
+Mt
+Mt
+Mt
+Mt
+Mt
+Mt
+Mt
+Mt
+Mt
+Mt
+Mt
+Mt
+Mt
+Mt
+Mt
+Mt
+Mt
+Mt
+Mt
+Mt
+Mt
+Mt
+Mt
+Mt
+Mt
+Mt
+Mt
+Mt
+Mt
+Mt
+Mt
+"}
+(2,1,1) = {"
+Mt
+Mt
+Mt
+yr
+Mt
+Mt
+Mt
+Mt
+yr
+Mt
+Mt
+Mt
+Mt
+yr
+Mt
+Mt
+Mt
+Mt
+Mt
+yr
+Mt
+Mt
+Mt
+Mt
+yr
+Mt
+Mt
+Mt
+Mt
+Mt
+yr
+Mt
+Mt
+Mt
+Mt
+Mt
+yr
+Mt
+Mt
+"}
+(3,1,1) = {"
+Mt
+Mt
+Mt
+Mt
+Mt
+Mt
+Mt
+Mt
+Mt
+Mt
+Mt
+Mt
+Mt
+Mt
+Mt
+Mt
+Mt
+Mt
+Mt
+Mt
+Mt
+Mt
+Mt
+Mt
+Mt
+Mt
+Mt
+Mt
+Mt
+Mt
+Mt
+Mt
+Mt
+Mt
+Mt
+Mt
+Mt
+Mt
+Mt
+"}
+(4,1,1) = {"
+Mt
+Mt
+Mt
+Mt
+Mt
+Mt
+Mt
+Mt
+Mt
+Mt
+Mt
+Mt
+Mt
+Mt
+Mt
+Mt
+Mt
+Mt
+Mt
+Mt
+Mt
+Mt
+Mt
+Mt
+Mt
+Mt
+Mt
+Mt
+Mt
+Mt
+Mt
+Mt
+Mt
+Mt
+Mt
+Mt
+Mt
+Mt
+Mt
+"}
+(5,1,1) = {"
+Mt
+Mt
+Mt
+Mt
+Mt
+Mt
+Mt
+Mt
+Mt
+Mt
+Mt
+Mt
+Mt
+Mt
+Mt
+Mt
+Mt
+Mt
+Mt
+Mt
+Mt
+Mt
+Mt
+Mt
+Mt
+Mt
+Mt
+Mt
+Mt
+Mt
+Mt
+Mt
+Mt
+Mt
+Mt
+Mt
+Mt
+Mt
+Mt
+"}
+(6,1,1) = {"
+Mt
+Mt
+Mt
+yr
+Mt
+Mt
+Mt
+Mt
+yr
+Mt
+Mt
+Mt
+Mt
+yr
+Mt
+Mt
+Mt
+Mt
+Mt
+yr
+Mt
+Mt
+Mt
+Mt
+yr
+Mt
+Mt
+Mt
+Mt
+Mt
+yr
+Mt
+Mt
+Mt
+Mt
+Mt
+yr
+Mt
+Mt
+"}
+(7,1,1) = {"
+Mt
+Mt
+Mt
+Mt
+Mt
+Mt
+Mt
+Mt
+Mt
+Mt
+Je
+Je
+Je
+Ge
+Mt
+Mt
+Mt
+Mt
+Mt
+Je
+Je
+Je
+Je
+Je
+EX
+Mt
+Mt
+Mt
+Mt
+Mt
+Mt
+Mt
+Mt
+Mt
+Mt
+Mt
+Mt
+Mt
+Mt
+"}
+(8,1,1) = {"
+Mt
+Mt
+Mt
+Mt
+Mt
+Mt
+Mt
+Wa
+cy
+cy
+Wa
+HH
+HH
+Wa
+Wa
+Sy
+Sy
+Sy
+Wa
+Wa
+An
+Wa
+Wa
+wE
+Wa
+Wa
+Sy
+Sy
+Sy
+Wa
+Wa
+zg
+as
+as
+as
+as
+as
+as
+as
+"}
+(9,1,1) = {"
+Mt
+Mt
+Mt
+Mt
+Mt
+Mt
+Mt
+ke
+kt
+xn
+xn
+xn
+Hx
+Da
+Wa
+Mt
+Mt
+Mt
+Wa
+hR
+BN
+Rg
+mr
+ru
+CO
+Wa
+Mt
+Mt
+Mt
+Yi
+jj
+zg
+as
+as
+as
+as
+as
+as
+as
+"}
+(10,1,1) = {"
+Mt
+Mt
+Mt
+yr
+Mt
+Mt
+Mt
+ke
+xd
+fa
+Fs
+ID
+Hx
+xn
+ze
+Se
+oo
+oo
+Dy
+at
+at
+CN
+at
+Du
+hZ
+ze
+Se
+xp
+oo
+be
+jj
+zg
+as
+as
+as
+as
+il
+as
+as
+"}
+(11,1,1) = {"
+Mt
+Mt
+Mt
+Mt
+Mt
+Mt
+Mt
+ke
+Pc
+Fs
+Fs
+wf
+xn
+mi
+Wa
+Mt
+Mt
+Mt
+Wa
+Xw
+ai
+CN
+at
+BN
+cr
+Wa
+Mt
+Je
+Mt
+jq
+jj
+zg
+as
+as
+as
+as
+as
+as
+as
+"}
+(12,1,1) = {"
+Mt
+Mt
+Mt
+Mt
+Mt
+Mt
+Mt
+Wa
+cy
+cy
+Wa
+wm
+kR
+yi
+Wa
+Sy
+Sy
+Sy
+Wa
+Wa
+dB
+gL
+dB
+Xr
+Wa
+Wa
+Sy
+Je
+Sy
+Wa
+Wa
+zg
+as
+as
+as
+as
+as
+as
+as
+"}
+(13,1,1) = {"
+Mt
+Mt
+Mt
+Mt
+Mt
+Mt
+Mt
+Mt
+Mt
+Mt
+Mt
+Je
+Je
+Mt
+Mt
+Mt
+Mt
+Mt
+Mt
+Mt
+Mt
+Je
+Mt
+Mt
+Mt
+Mt
+Mt
+Je
+Mt
+Mt
+Mt
+Mt
+Mt
+Mt
+Mt
+Mt
+Mt
+Mt
+Mt
+"}
+(14,1,1) = {"
+Mt
+Mt
+Mt
+yr
+Mt
+Mt
+Mt
+Mt
+yr
+Mt
+Mt
+Je
+Je
+yr
+Mt
+Mt
+Mt
+Mt
+Mt
+yr
+Mt
+Je
+Mt
+Mt
+yr
+Mt
+Mt
+Je
+Mt
+Mt
+yr
+Mt
+Mt
+Mt
+Mt
+Mt
+yr
+Mt
+Mt
+"}
+(15,1,1) = {"
+Mt
+Mt
+Mt
+Mt
+Mt
+Mt
+Mt
+Mt
+Mt
+Mt
+Mt
+Zc
+Je
+Mt
+Mt
+Mt
+Mt
+Mt
+Mt
+Mt
+Mt
+Je
+Mt
+Mt
+Mt
+Mt
+Mt
+Je
+Mt
+Mt
+Mt
+Mt
+Mt
+Mt
+Mt
+Mt
+Mt
+Mt
+Mt
+"}
+(16,1,1) = {"
+Mt
+Mt
+Mt
+Mt
+Mt
+Mt
+Mt
+Fs
+cU
+ca
+eA
+MV
+MV
+xV
+KT
+Sy
+Sy
+Sy
+Fa
+rM
+EH
+ry
+gN
+pO
+CX
+Ht
+Sy
+Je
+Sy
+KT
+KT
+zg
+as
+as
+as
+as
+as
+as
+as
+"}
+(17,1,1) = {"
+Mt
+Mt
+Mt
+Mt
+Mt
+Mt
+Mt
+zP
+ca
+xV
+xV
+Fs
+LX
+Rn
+Fs
+Se
+Se
+Se
+yR
+Sm
+HV
+Sm
+EU
+vV
+Mq
+Js
+Se
+ty
+Se
+wR
+jj
+zg
+as
+as
+as
+as
+as
+as
+as
+"}
+(18,1,1) = {"
+Mt
+Mt
+Mt
+yr
+Mt
+Mt
+Mt
+Fs
+xV
+rd
+xV
+Pa
+zP
+xV
+Vu
+Mt
+Mt
+Mt
+YR
+Sm
+ii
+Sm
+Mq
+Yt
+AR
+xN
+Mt
+Je
+Mt
+wv
+jj
+zg
+as
+as
+as
+as
+il
+as
+as
+"}
+(19,1,1) = {"
+Mt
+Mt
+Mt
+Mt
+Mt
+Mt
+Mt
+Fs
+QL
+Fs
+Fs
+eA
+sp
+xV
+zP
+Se
+Se
+Se
+yR
+Fh
+zP
+Fh
+Sm
+AR
+Mq
+Js
+Se
+ty
+Se
+Bx
+jj
+zg
+as
+as
+as
+as
+as
+as
+as
+"}
+(20,1,1) = {"
+Mt
+Mt
+Mt
+Mt
+Mt
+Mt
+Mt
+eA
+Fs
+KT
+Ej
+nj
+nj
+FB
+KT
+Sy
+Sy
+Sy
+HZ
+rZ
+uM
+Yg
+ci
+Ys
+mW
+bY
+Sy
+Je
+Sy
+KT
+KT
+zg
+as
+as
+as
+as
+as
+as
+as
+"}
+(21,1,1) = {"
+Mt
+Mt
+Mt
+Mt
+Mt
+Mt
+Mt
+Mt
+Mt
+Mt
+Mt
+Je
+Je
+Mt
+Mt
+Mt
+Mt
+Mt
+Mt
+Mt
+Mt
+Je
+Mt
+Mt
+Mt
+Mt
+Mt
+Je
+Mt
+Mt
+Mt
+Mt
+Mt
+Mt
+Mt
+Mt
+Mt
+Mt
+Mt
+"}
+(22,1,1) = {"
+Mt
+Mt
+Mt
+yr
+Mt
+Mt
+Mt
+Mt
+yr
+Mt
+Mt
+Je
+Je
+yr
+Mt
+Mt
+Mt
+Mt
+Mt
+yr
+Mt
+Je
+Mt
+Mt
+yr
+Mt
+Mt
+Je
+Mt
+Mt
+yr
+Mt
+Mt
+Mt
+Mt
+Mt
+yr
+Mt
+Mt
+"}
+(23,1,1) = {"
+Mt
+Mt
+Mt
+Mt
+Mt
+Mt
+Mt
+Mt
+Mt
+Mt
+Mt
+Je
+vW
+Mt
+Mt
+Mt
+Mt
+Mt
+Mt
+Mt
+Mt
+Je
+Mt
+Mt
+Mt
+Mt
+Mt
+Je
+Mt
+Mt
+Mt
+Mt
+Mt
+Mt
+Mt
+Mt
+Mt
+Mt
+Mt
+"}
+(24,1,1) = {"
+Mt
+Mt
+Mt
+Mt
+Mt
+Mt
+Mt
+Wa
+cy
+dU
+mS
+MV
+MV
+Wa
+Wa
+Sy
+Sy
+Sy
+Wa
+Gl
+lJ
+vl
+lJ
+lJ
+Wa
+Wa
+Sy
+Je
+Sy
+Wa
+Wa
+zg
+as
+as
+as
+as
+as
+as
+as
+"}
+(25,1,1) = {"
+Mt
+Mt
+Mt
+Mt
+Mt
+Mt
+Mt
+ke
+cv
+Vc
+Vc
+Vc
+ec
+Ow
+Wa
+Mt
+Mt
+Mt
+Wa
+tQ
+ED
+ED
+ED
+ED
+PD
+Wa
+Mt
+Je
+Mt
+fJ
+jj
+zg
+as
+as
+as
+as
+as
+as
+as
+"}
+(26,1,1) = {"
+Mt
+Mt
+Mt
+Mt
+Mt
+Mt
+Mt
+ke
+Ww
+wy
+Vc
+qY
+GQ
+GQ
+ze
+Se
+Se
+Se
+YP
+ZR
+ZR
+bR
+ZR
+pm
+ZR
+Gx
+Se
+ty
+Se
+be
+jj
+zg
+as
+as
+as
+as
+il
+as
+as
+"}
+(27,1,1) = {"
+Mt
+Mt
+Mt
+yr
+Mt
+Mt
+Mt
+ke
+Kv
+GQ
+BC
+GQ
+GQ
+IJ
+Wa
+Mt
+Mt
+Mt
+Wa
+TA
+VT
+Tg
+XD
+VS
+kd
+Wa
+Mt
+Mt
+Mt
+qJ
+jj
+zg
+as
+as
+as
+as
+as
+as
+as
+"}
+(28,1,1) = {"
+Mt
+Mt
+Mt
+Mt
+Mt
+Mt
+Mt
+Wa
+cy
+cy
+Wa
+Mz
+Mz
+Wa
+Wa
+Sy
+Sy
+Sy
+Wa
+Wa
+wE
+Wa
+Wa
+wE
+Wa
+Wa
+Sy
+Sy
+Sy
+Wa
+Wa
+zg
+as
+as
+as
+as
+as
+as
+as
+"}
+(29,1,1) = {"
+Mt
+Mt
+Mt
+Mt
+Mt
+Mt
+Mt
+Mt
+Mt
+Mt
+Je
+Je
+Je
+Uq
+Mt
+Mt
+Mt
+Mt
+Mt
+Je
+Je
+Je
+IR
+Je
+Je
+Mt
+Mt
+Mt
+Mt
+Mt
+Mt
+Mt
+Mt
+Mt
+Mt
+Mt
+Mt
+Mt
+Mt
+"}
+(30,1,1) = {"
+Mt
+Mt
+Mt
+yr
+Mt
+Mt
+Mt
+Mt
+yr
+Mt
+Mt
+Mt
+Mt
+yr
+Mt
+Mt
+Mt
+Mt
+Mt
+yr
+Mt
+Mt
+Mt
+Mt
+yr
+Mt
+Mt
+Mt
+Mt
+Mt
+yr
+Mt
+Mt
+Mt
+Mt
+Mt
+yr
+Mt
+Mt
+"}
+(31,1,1) = {"
+Mt
+Mt
+Mt
+Mt
+Mt
+Mt
+Mt
+Mt
+Mt
+Mt
+Mt
+Mt
+Mt
+Mt
+Mt
+Mt
+Mt
+Mt
+Mt
+Mt
+Mt
+Mt
+Mt
+Mt
+Mt
+Mt
+Mt
+Mt
+Mt
+Mt
+Mt
+Mt
+Mt
+Mt
+Mt
+Mt
+Mt
+Mt
+Mt
+"}
+(32,1,1) = {"
+Mt
+Mt
+Mt
+Mt
+Mt
+Mt
+Mt
+Mt
+Mt
+Mt
+Mt
+Mt
+Mt
+Mt
+Mt
+Mt
+Mt
+Mt
+Mt
+Mt
+Mt
+Mt
+Mt
+Mt
+Mt
+Mt
+Mt
+Mt
+Mt
+Mt
+Mt
+Mt
+Mt
+Mt
+Mt
+Mt
+Mt
+Mt
+Mt
+"}
+(33,1,1) = {"
+Mt
+Mt
+Mt
+Mt
+Mt
+Mt
+Mt
+Mt
+Mt
+Mt
+Mt
+Mt
+Mt
+Mt
+Mt
+Mt
+Mt
+Mt
+Mt
+Mt
+Mt
+Mt
+Mt
+Mt
+Mt
+Mt
+Mt
+Mt
+Mt
+Mt
+Mt
+Mt
+Mt
+Mt
+Mt
+Mt
+Mt
+Mt
+Mt
+"}
+(34,1,1) = {"
+Mt
+Mt
+Mt
+yr
+Mt
+Mt
+Mt
+Mt
+yr
+Mt
+Mt
+Mt
+Mt
+yr
+Mt
+Mt
+Mt
+Mt
+Mt
+yr
+Mt
+Mt
+Mt
+Mt
+yr
+Mt
+Mt
+Mt
+Mt
+Mt
+yr
+Mt
+Mt
+Mt
+Mt
+Mt
+yr
+Mt
+Mt
+"}
+(35,1,1) = {"
+Mt
+Mt
+Mt
+Mt
+Mt
+Mt
+Mt
+Mt
+Mt
+Mt
+Mt
+Mt
+Mt
+Mt
+Mt
+Mt
+Mt
+Mt
+Mt
+Mt
+Mt
+Mt
+Mt
+Mt
+Mt
+Mt
+Mt
+Mt
+Mt
+Mt
+Mt
+Mt
+Mt
+Mt
+Mt
+Mt
+Mt
+Mt
+Mt
+"}

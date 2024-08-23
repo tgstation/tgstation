@@ -214,8 +214,9 @@
 		N.nukeop_outfit = null
 		add_antag_datum(N,converter.nuke_team)
 
-
 	enslaved_to = WEAKREF(creator)
+
+	SEND_SIGNAL(current, COMSIG_MOB_ENSLAVED_TO, creator)
 
 	current.faction |= creator.faction
 	creator.faction |= "[REF(current)]"

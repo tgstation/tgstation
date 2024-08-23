@@ -16,15 +16,18 @@
 	flags_1 = PREVENT_CONTENTS_EXPLOSION_1 // We detonate upon being exploded.
 	obj_flags = CONDUCTS_ELECTRICITY
 	slot_flags = ITEM_SLOT_BELT
-	resistance_flags = FLAMMABLE
 	max_integrity = 40
+	pickup_sound = 'sound/items/grenade_pick_up.ogg'
+	drop_sound = 'sound/items/grenade_drop.ogg'
 	/// Bitfields which prevent the grenade from detonating if set. Includes ([GRENADE_DUD]|[GRENADE_USED])
 	var/dud_flags = NONE
 	///Is this grenade currently armed?
 	var/active = FALSE
+	///Is it a cluster grenade? We dont wanna spam admin logs with these.
+	var/type_cluster = FALSE
 	///How long it takes for a grenade to explode after being armed
 	var/det_time = 5 SECONDS
-	///Will this state what it's det_time is when examined?
+	///Will this state what its det_time is when examined?
 	var/display_timer = TRUE
 	///Used in botch_check to determine how a user's clumsiness affects that user's ability to prime a grenade correctly.
 	var/clumsy_check = GRENADE_CLUMSY_FUMBLE
@@ -61,11 +64,9 @@
 	sleep(det_time)//so you dont die instantly
 	return dud_flags ? SHAME : BRUTELOSS
 
-/obj/item/grenade/deconstruct(disassembled = TRUE)
+/obj/item/grenade/atom_deconstruct(disassembled = TRUE)
 	if(!disassembled)
 		detonate()
-	if(!QDELETED(src))
-		qdel(src)
 
 /obj/item/grenade/apply_fantasy_bonuses(bonus)
 	. = ..()
@@ -135,7 +136,8 @@
 		arm_grenade(user)
 
 /obj/item/grenade/proc/log_grenade(mob/user)
-	log_bomber(user, "has primed a", src, "for detonation", message_admins = !dud_flags)
+	if(!type_cluster)
+		log_bomber(user, "has primed a", src, "for detonation", message_admins = dud_flags != NONE)
 
 /**
  * arm_grenade (formerly preprime) refers to when a grenade with a standard time fuze is activated, making it go beepbeepbeep and then detonate a few seconds later.
@@ -262,8 +264,8 @@
 			qdel(src)
 		return TRUE //It hit the grenade, not them
 
-/obj/item/grenade/afterattack(atom/target, mob/user)
-	. = ..()
+/obj/item/grenade/ranged_interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
 	if(active)
-		user.throw_item(target)
-		return . | AFTERATTACK_PROCESSED_ITEM
+		user.throw_item(interacting_with)
+		return ITEM_INTERACT_SUCCESS
+	return NONE

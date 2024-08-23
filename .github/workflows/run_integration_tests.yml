@@ -16,9 +16,11 @@ on:
       max_required_byond_client:
         required: true
         type: string
+
 jobs:
   run_integration_tests:
     runs-on: ubuntu-latest
+    timeout-minutes: 15
     services:
       mysql:
         image: mysql:latest
@@ -33,7 +35,7 @@ jobs:
         uses: actions/cache@v4
         with:
           path: ~/BYOND
-          key: ${{ runner.os }}-byond-${{ secrets.CACHE_PURGE_KEY }}
+          key: ${{ runner.os }}-byond-${{ hashFiles('dependencies.sh') }}
       - name: Setup database
         run: |
           sudo systemctl start mysql
@@ -44,9 +46,9 @@ jobs:
       - name: Install rust-g
         run: |
           bash tools/ci/install_rust_g.sh
-      - name: Install auxlua
+      - name: Install dreamluau
         run: |
-          bash tools/ci/install_auxlua.sh
+          bash tools/ci/install_dreamluau.sh
       - name: Configure version
         run: |
           echo "BYOND_MAJOR=${{ inputs.major }}" >> $GITHUB_ENV
@@ -57,7 +59,7 @@ jobs:
         run: |
           bash tools/ci/install_byond.sh
           source $HOME/BYOND/byond/bin/byondsetup
-          tools/build/build --ci dm -DCIBUILDING -DANSICOLORS -WError -NWTG0001
+          tools/build/build --ci dm -DCIBUILDING -DANSICOLORS -Werror -ITG0001 -I"loop_checks"
       - name: Run Tests
         run: |
           source $HOME/BYOND/byond/bin/byondsetup

@@ -3,6 +3,7 @@
 	icon = 'icons/obj/clothing/neck.dmi'
 	body_parts_covered = NECK
 	slot_flags = ITEM_SLOT_NECK
+	interaction_flags_click = NEED_DEXTERITY
 	strip_delay = 40
 	equip_delay_other = 40
 
@@ -44,6 +45,7 @@
 	icon = 'icons/obj/clothing/neck.dmi'
 	icon_state = "tie_greyscale_tied"
 	inhand_icon_state = "" //no inhands
+	alternate_worn_layer = LOW_NECK_LAYER // So that it renders below suit jackets, MODsuits, etc
 	w_class = WEIGHT_CLASS_SMALL
 	custom_price = PAYCHECK_CREW
 	greyscale_config = /datum/greyscale_config/ties
@@ -59,13 +61,13 @@
 
 /obj/item/clothing/neck/tie/Initialize(mapload)
 	. = ..()
-	if(clip_on)
-		return
-	update_appearance(UPDATE_ICON)
+	if(!clip_on)
+		update_appearance(UPDATE_ICON)
 	register_context()
 
 /obj/item/clothing/neck/tie/examine(mob/user)
 	. = ..()
+	. += span_notice("The tie can be worn above or below your suit. Alt-Right-click to toggle.")
 	if(clip_on)
 		. += span_notice("Looking closely, you can see that it's actually a cleverly disguised clip-on.")
 	else if(!is_tied)
@@ -73,10 +75,9 @@
 	else
 		. += span_notice("The tie can be untied with Alt-Click.")
 
-/obj/item/clothing/neck/tie/AltClick(mob/user)
-	. = ..()
+/obj/item/clothing/neck/tie/click_alt(mob/user)
 	if(clip_on)
-		return
+		return NONE
 	to_chat(user, span_notice("You concentrate as you begin [is_tied ? "untying" : "tying"] [src]..."))
 	var/tie_timer_actual = tie_timer
 	// Mirrors give you a boost to your tying speed. I realize this stacks and I think that's hilarious.
@@ -88,11 +89,11 @@
 	// Tie/Untie our tie
 	if(!do_after(user, tie_timer_actual))
 		to_chat(user, span_notice("Your fingers fumble away from [src] as your concentration breaks."))
-		return
+		return CLICK_ACTION_BLOCKING
 	// Clumsy & Dumb people have trouble tying their ties.
 	if((HAS_TRAIT(user, TRAIT_CLUMSY) || HAS_TRAIT(user, TRAIT_DUMB)) && prob(50))
 		to_chat(user, span_notice("You just can't seem to get a proper grip on [src]!"))
-		return
+		return CLICK_ACTION_BLOCKING
 	// Success!
 	is_tied = !is_tied
 	user.visible_message(
@@ -101,6 +102,12 @@
 	)
 	update_appearance(UPDATE_ICON)
 	user.update_clothing(ITEM_SLOT_NECK)
+	return CLICK_ACTION_SUCCESS
+
+/obj/item/clothing/neck/tie/click_alt_secondary(mob/user)
+	alternate_worn_layer = (alternate_worn_layer == initial(alternate_worn_layer) ? NONE : initial(alternate_worn_layer))
+	user.update_clothing(ITEM_SLOT_NECK)
+	balloon_alert(user, "wearing [alternate_worn_layer == initial(alternate_worn_layer) ? "below" : "above"] suits")
 
 /obj/item/clothing/neck/tie/update_icon()
 	. = ..()
@@ -120,13 +127,25 @@
 
 /obj/item/clothing/neck/tie/add_context(atom/source, list/context, obj/item/held_item, mob/user)
 	. = ..()
+	context[SCREENTIP_CONTEXT_ALT_RMB] = "Wear [alternate_worn_layer == initial(alternate_worn_layer) ? "above" : "below"] suit"
 	if(clip_on)
-		return
+		return CONTEXTUAL_SCREENTIP_SET
 	if(is_tied)
 		context[SCREENTIP_CONTEXT_ALT_LMB] = "Untie"
 	else
 		context[SCREENTIP_CONTEXT_ALT_LMB] = "Tie"
 	return CONTEXTUAL_SCREENTIP_SET
+
+/obj/item/clothing/neck/tie/worn_overlays(mutable_appearance/standing, isinhands)
+	. = ..()
+	var/mob/living/carbon/human/wearer = loc
+	if(!ishuman(wearer) || !wearer.w_uniform)
+		return
+	var/obj/item/clothing/under/undershirt = wearer.w_uniform
+	if(!istype(undershirt) || !LAZYLEN(undershirt.attached_accessories))
+		return
+	if(alternate_worn_layer)
+		. += undershirt.accessory_overlay
 
 /obj/item/clothing/neck/tie/blue
 	name = "blue tie"
@@ -198,14 +217,14 @@
 	user.visible_message(span_suicide("[user] puts \the [src] to [user.p_their()] chest! It looks like [user.p_they()] won't hear much!"))
 	return OXYLOSS
 
-/obj/item/clothing/neck/stethoscope/attack(mob/living/M, mob/living/user)
-	if(!ishuman(M) || !isliving(user))
+/obj/item/clothing/neck/stethoscope/attack(mob/living/target, mob/living/user)
+	if(!ishuman(target) || !isliving(user))
 		return ..()
 	if(user.combat_mode)
 		return
 
-	var/mob/living/carbon/carbon_patient = M
-	var/body_part = parse_zone(user.zone_selected)
+	var/mob/living/carbon/carbon_patient = target
+	var/body_part = carbon_patient.parse_zone_with_bodypart(user.zone_selected)
 	var/oxy_loss = carbon_patient.getOxyLoss()
 
 	var/heart_strength
@@ -235,13 +254,13 @@
 				|| (HAS_TRAIT(carbon_patient, TRAIT_NOBREATH))\
 				|| carbon_patient.failed_last_breath \
 				|| carbon_patient.losebreath)//If pt is dead or otherwise not breathing
-				render_list += "<span class='danger ml-1'>[M.p_Theyre()] not breathing!</span>\n"
+				render_list += "<span class='danger ml-1'>[target.p_Theyre()] not breathing!</span>\n"
 			else if(lungs.damage > 10)//if breathing, check for lung damage
-				render_list += "<span class='danger ml-1'>You hear fluid in [M.p_their()] lungs!</span>\n"
+				render_list += "<span class='danger ml-1'>You hear fluid in [target.p_their()] lungs!</span>\n"
 			else if(oxy_loss > 10)//if they have suffocation damage
-				render_list += "<span class='danger ml-1'>[M.p_Theyre()] breathing heavily!</span>\n"
+				render_list += "<span class='danger ml-1'>[target.p_Theyre()] breathing heavily!</span>\n"
 			else
-				render_list += "<span class='notice ml-1'>[M.p_Theyre()] breathing normally.</span>\n"//they're okay :D
+				render_list += "<span class='notice ml-1'>[target.p_Theyre()] breathing normally.</span>\n"//they're okay :D
 
 			//assess heart
 			if(body_part == BODY_ZONE_CHEST)//if we're listening to the chest
@@ -261,20 +280,20 @@
 				var/appendix_okay = TRUE
 				var/liver_okay = TRUE
 				if(!liver)//sanity check, ensure the patient actually has a liver
-					render_list += "<span class='danger ml-1'>You can't feel anything where [M.p_their()] liver would be.</span>\n"
+					render_list += "<span class='danger ml-1'>You can't feel anything where [target.p_their()] liver would be.</span>\n"
 					liver_okay = FALSE
 				else
 					if(liver.damage > 10)
-						render_list += "<span class='danger ml-1'>[M.p_Their()] liver feels firm.</span>\n"//their liver is damaged
+						render_list += "<span class='danger ml-1'>[target.p_Their()] liver feels firm.</span>\n"//their liver is damaged
 						liver_okay = FALSE
 
 				if(!appendix)//sanity check, ensure the patient actually has an appendix
-					render_list += "<span class='danger ml-1'>You can't feel anything where [M.p_their()] appendix would be.</span>\n"
+					render_list += "<span class='danger ml-1'>You can't feel anything where [target.p_their()] appendix would be.</span>\n"
 					appendix_okay = FALSE
 				else
 					if(appendix.damage > 10 && carbon_patient.stat == CONSCIOUS)
-						render_list += "<span class='danger ml-1'>[M] screams when you lift your hand from [M.p_their()] appendix!</span>\n"//scream if their appendix is damaged and they're awake
-						M.emote("scream")
+						render_list += "<span class='danger ml-1'>[target] screams when you lift your hand from [target.p_their()] appendix!</span>\n"//scream if their appendix is damaged and they're awake
+						target.emote("scream")
 						appendix_okay = FALSE
 
 				if(liver_okay && appendix_okay)//if they have all their organs and have no detectable damage
@@ -310,7 +329,7 @@
 				else
 					pulse_pressure = span_notice("strong")//they're okay :D
 
-				render_list += "<span class='notice ml-1'>[M.p_Their()] pulse is [pulse_pressure] and [heart_strength].</span>\n"
+				render_list += "<span class='notice ml-1'>[target.p_Their()] pulse is [pulse_pressure] and [heart_strength].</span>\n"
 
 	//display our packaged information in an examine block for easy reading
 	to_chat(user, examine_block(jointext(render_list, "")), type = MESSAGE_TYPE_INFO)
@@ -379,6 +398,8 @@
 /obj/item/clothing/neck/large_scarf
 	name = "large scarf"
 	icon_state = "large_scarf"
+	icon_preview = 'icons/obj/fluff/previews.dmi'
+	icon_state_preview = "scarf_large"
 	w_class = WEIGHT_CLASS_TINY
 	custom_price = PAYCHECK_CREW
 	greyscale_colors = "#C6C6C6#EEEEEE"
@@ -409,7 +430,7 @@
 	icon_state = "infinity_scarf"
 	w_class = WEIGHT_CLASS_TINY
 	custom_price = PAYCHECK_CREW
-	greyscale_colors = "#EEEEEE"
+	greyscale_colors = COLOR_VERY_LIGHT_GRAY
 	greyscale_config = /datum/greyscale_config/infinity_scarf
 	greyscale_config_worn = /datum/greyscale_config/infinity_scarf/worn
 	flags_1 = IS_PLAYER_COLORABLE_1
@@ -455,25 +476,21 @@
 	selling = !selling
 	to_chat(user, span_notice("[src] has been set to [selling ? "'Sell'" : "'Get Price'"] mode."))
 
-/obj/item/clothing/neck/necklace/dope/merchant/afterattack(obj/item/I, mob/user, proximity)
-	. = ..()
-	if(!proximity)
-		return
-	. |= AFTERATTACK_PROCESSED_ITEM
-	var/datum/export_report/ex = export_item_and_contents(I, delete_unsold = selling, dry_run = !selling)
+/obj/item/clothing/neck/necklace/dope/merchant/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
+	var/datum/export_report/ex = export_item_and_contents(interacting_with, delete_unsold = selling, dry_run = !selling)
 	var/price = 0
 	for(var/x in ex.total_amount)
 		price += ex.total_value[x]
 
 	if(price)
 		var/true_price = round(price*profit_scaling)
-		to_chat(user, span_notice("[selling ? "Sold" : "Getting the price of"] [I], value: <b>[true_price]</b> credits[I.contents.len ? " (exportable contents included)" : ""].[profit_scaling < 1 && selling ? "<b>[round(price-true_price)]</b> credit\s taken as processing fee\s." : ""]"))
+		to_chat(user, span_notice("[selling ? "Sold" : "Getting the price of"] [interacting_with], value: <b>[true_price]</b> credits[interacting_with.contents.len ? " (exportable contents included)" : ""].[profit_scaling < 1 && selling ? "<b>[round(price-true_price)]</b> credit\s taken as processing fee\s." : ""]"))
 		if(selling)
 			new /obj/item/holochip(get_turf(user), true_price)
 	else
-		to_chat(user, span_warning("There is no export value for [I] or any items within it."))
+		to_chat(user, span_warning("There is no export value for [interacting_with] or any items within it."))
 
-	return .
+	return ITEM_INTERACT_BLOCKING
 
 /obj/item/clothing/neck/beads
 	name = "plastic bead necklace"
@@ -487,3 +504,23 @@
 /obj/item/clothing/neck/beads/Initialize(mapload)
 	. = ..()
 	color = color = pick("#ff0077","#d400ff","#2600ff","#00ccff","#00ff2a","#e5ff00","#ffae00","#ff0000", "#ffffff")
+
+/obj/item/clothing/neck/wreath
+	name = "\improper Watcher Wreath"
+	desc = "An elaborate crown made from the twisted flesh and sinew of a watcher. \
+		Wearing it makes you feel like you have eyes in the back of your head."
+	icon_state = "watcher_wreath"
+	worn_y_offset = 10
+	alternate_worn_layer = ABOVE_BODY_FRONT_HEAD_LAYER
+	resistance_flags = FIRE_PROOF
+
+/obj/item/clothing/neck/wreath/worn_overlays(mutable_appearance/standing, isinhands, icon_file)
+	. = ..()
+	if(!isinhands)
+		. += emissive_appearance(icon_file, "wreath_emissive", src, alpha = src.alpha)
+
+/obj/item/clothing/neck/wreath/icewing
+	name = "\improper Icewing Wreath"
+	desc = "An elaborate crown made from the twisted flesh and sinew of an icewing watcher. \
+		Wearing it sends shivers down your spine just from being near it."
+	icon_state = "icewing_wreath"

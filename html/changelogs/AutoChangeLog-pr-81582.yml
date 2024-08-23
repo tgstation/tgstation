@@ -1,9 +1,0 @@
-author: "ArcaneMusic"
-delete-after: True
-changes:
-  - rscadd: "Vending machines now track how many credits have been spent on them, and when restocked will pay out that saved portion to the restocker, with a 50% match going to the cargo department."
-  - rscadd: "Adds the restock tracker app, an NTOS app that tracks how well stocked the station's vending machine units are at a glance as well as how much is contained in each."
-  - refactor: "Vending machines now use the payment component for money handling behavior, meaning it will now accept held or pulled coins/cash/credits"
-  - qol: "Attacking vending machines can drop a portion of it's stored credits, at the usual expected danger."
-  - balance: "Tweaked the cost of various restock modules up and down."
-  - qol: "Restock modules can now be sold for 50 credits."

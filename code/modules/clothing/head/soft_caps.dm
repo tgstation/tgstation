@@ -5,11 +5,14 @@
 	worn_icon = 'icons/mob/clothing/head/hats.dmi'
 	icon_state = "cargosoft"
 	inhand_icon_state = "greyscale_softcap" //todo wip
+	interaction_flags_click = NEED_DEXTERITY|ALLOW_RESTING
+	/// For setting icon archetype
 	var/soft_type = "cargo"
+	/// If there is a suffix to append
 	var/soft_suffix = "soft"
 
 	dog_fashion = /datum/dog_fashion/head/cargo_tech
-
+	/// Whether this is on backwards... Woah, cool
 	var/flipped = FALSE
 
 /obj/item/clothing/head/soft/dropped()
@@ -24,10 +27,9 @@
 	flip(usr)
 
 
-/obj/item/clothing/head/soft/AltClick(mob/user)
-	..()
-	if(user.can_perform_action(src, NEED_DEXTERITY))
-		flip(user)
+/obj/item/clothing/head/soft/click_alt(mob/user)
+	flip(user)
+	return CLICK_ACTION_SUCCESS
 
 
 /obj/item/clothing/head/soft/proc/flip(mob/user)
@@ -167,9 +169,11 @@
 	clothing_flags = SNUG_FIT
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE
 	dog_fashion = null
+	clothing_traits = list(TRAIT_SCARY_FISHERMAN) //Fish, carps, lobstrosities and frogs fear me.
 
 /obj/item/clothing/head/soft/fishing_hat/Initialize(mapload)
 	. = ..()
+	AddComponent(/datum/component/speechmod, replacements = strings("crustacean_replacement.json", "crustacean")) //you asked for this.
 	AddElement(/datum/element/skill_reward, /datum/skill/fishing)
 
 #define PROPHAT_MOOD "prophat"

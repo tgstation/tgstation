@@ -85,6 +85,7 @@
 	w_class = WEIGHT_CLASS_HUGE
 	semi_auto = TRUE
 	accepted_magazine_type = /obj/item/ammo_box/magazine/internal/shot/tube
+	interaction_flags_click = NEED_DEXTERITY|NEED_HANDS|ALLOW_RESTING
 	/// If defined, the secondary tube is this type, if you want different shell loads
 	var/alt_mag_type
 	/// If TRUE, we're drawing from the alternate_magazine
@@ -131,32 +132,34 @@
 	else
 		balloon_alert(user, "switched to tube A")
 
-/obj/item/gun/ballistic/shotgun/automatic/dual_tube/AltClick(mob/living/user)
-	if(!user.can_perform_action(src, NEED_DEXTERITY|NEED_HANDS))
-		return
+/obj/item/gun/ballistic/shotgun/automatic/dual_tube/click_alt(mob/living/user)
 	rack()
+	return CLICK_ACTION_SUCCESS
 
 // Bulldog shotgun //
 
 /obj/item/gun/ballistic/shotgun/bulldog
 	name = "\improper Bulldog Shotgun"
-	desc = "A semi-auto, mag-fed shotgun for combat in narrow corridors, nicknamed 'Bulldog' by boarding parties. Compatible only with specialized 8-round drum magazines. Can have a secondary magazine attached to quickly swap between ammo types, or just to keep shooting."
+	desc = "A 2-round burst fire, mag-fed shotgun for combat in narrow corridors, \
+		nicknamed 'Bulldog' by boarding parties. Compatible only with specialized 8-round drum magazines. \
+		Can have a secondary magazine attached to quickly swap between ammo types, or just to keep shooting."
 	icon_state = "bulldog"
-	inhand_icon_state = "bulldog"
-	worn_icon_state = "cshotgun"
 	lefthand_file = 'icons/mob/inhands/weapons/guns_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/guns_righthand.dmi'
+	inhand_icon_state = "bulldog"
+	worn_icon = 'icons/mob/clothing/back.dmi'
+	worn_icon_state = "bulldog"
 	inhand_x_dimension = 32
 	inhand_y_dimension = 32
 	projectile_damage_multiplier = 1.2
 	weapon_weight = WEAPON_MEDIUM
 	accepted_magazine_type = /obj/item/ammo_box/magazine/m12g
 	can_suppress = FALSE
-	burst_size = 1
-	fire_delay = 0
+	burst_size = 2
+	fire_delay = 1
 	pin = /obj/item/firing_pin/implant/pindicate
 	fire_sound = 'sound/weapons/gun/shotgun/shot_alt.ogg'
-	actions_types = list()
+	actions_types = list(/datum/action/item_action/toggle_firemode)
 	mag_display = TRUE
 	empty_indicator = TRUE
 	empty_alarm = TRUE
@@ -165,9 +168,10 @@
 	semi_auto = TRUE
 	internal_magazine = FALSE
 	tac_reloads = TRUE
-	///the type of secondary magazine for the bulldog
+	burst_fire_selection = TRUE
+	/// The type of secondary magazine for the bulldog
 	var/secondary_magazine_type
-	///the secondary magazine
+	/// The secondary magazine
 	var/obj/item/ammo_box/magazine/secondary_magazine
 
 /obj/item/gun/ballistic/shotgun/bulldog/Initialize(mapload)
@@ -198,10 +202,8 @@
 		. += "[icon_state]_secondary_mag_[initial(secondary_magazine.icon_state)]"
 		if(!secondary_magazine.ammo_count())
 			. += "[icon_state]_secondary_mag_empty"
-	else
-		. += "[icon_state]_no_secondary_mag"
 
-/obj/item/gun/ballistic/shotgun/bulldog/handle_chamber()
+/obj/item/gun/ballistic/shotgun/bulldog/handle_chamber(empty_chamber = TRUE, from_firing = TRUE, chamber_next_round = TRUE)
 	if(!secondary_magazine)
 		return ..()
 	var/secondary_shells_left = LAZYLEN(secondary_magazine.stored_ammo)
@@ -217,35 +219,32 @@
 	toggle_magazine()
 	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
-/obj/item/gun/ballistic/shotgun/bulldog/afterattack_secondary(mob/living/victim, mob/living/user, proximity_flag, click_parameters)
+/obj/item/gun/ballistic/shotgun/bulldog/ranged_interact_with_atom_secondary(atom/interacting_with, mob/living/user, list/modifiers)
 	if(secondary_magazine)
 		toggle_magazine()
-	return SECONDARY_ATTACK_CALL_NORMAL
+	return ..()
 
-/obj/item/gun/ballistic/shotgun/bulldog/attackby_secondary(obj/item/weapon, mob/user, params)
-	if(!istype(weapon, secondary_magazine_type))
-		balloon_alert(user, "[weapon.name] doesn't fit!")
-		return SECONDARY_ATTACK_CALL_NORMAL
-	if(!user.transferItemToLoc(weapon, src))
-		to_chat(user, span_warning("You cannot seem to get [src] out of your hands!"))
-		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+/obj/item/gun/ballistic/shotgun/bulldog/item_interaction_secondary(mob/living/user, obj/item/tool, list/modifiers)
+	if(!istype(tool, secondary_magazine_type))
+		return ..()
+	if(!user.transferItemToLoc(tool, src))
+		return ITEM_INTERACT_BLOCKING
 	var/obj/item/ammo_box/magazine/old_mag = secondary_magazine
-	secondary_magazine = weapon
+	secondary_magazine = tool
 	if(old_mag)
 		user.put_in_hands(old_mag)
 	balloon_alert(user, "secondary [magazine_wording] loaded")
 	playsound(src, load_empty_sound, load_sound_volume, load_sound_vary)
 	update_appearance()
-	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+	return ITEM_INTERACT_SUCCESS
 
-/obj/item/gun/ballistic/shotgun/bulldog/alt_click_secondary(mob/user)
+/obj/item/gun/ballistic/shotgun/bulldog/click_alt_secondary(mob/user)
 	if(secondary_magazine)
 		var/obj/item/ammo_box/magazine/old_mag = secondary_magazine
 		secondary_magazine = null
 		user.put_in_hands(old_mag)
 		update_appearance()
 		playsound(src, load_empty_sound, load_sound_volume, load_sound_vary)
-	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
 /obj/item/gun/ballistic/shotgun/bulldog/proc/toggle_magazine()
 	var/primary_magazine = magazine
@@ -287,10 +286,6 @@
 	can_be_sawn_off = TRUE
 	pb_knockback = 3 // it's a super shotgun!
 
-/obj/item/gun/ballistic/shotgun/doublebarrel/AltClick(mob/user)
-	. = ..()
-	if(unique_reskin && !current_skin && user.can_perform_action(src, NEED_DEXTERITY))
-		reskin_obj(user)
 
 /obj/item/gun/ballistic/shotgun/doublebarrel/sawoff(mob/user)
 	. = ..()
@@ -342,6 +337,22 @@
 	. = ..()
 	. += span_notice("Right-click to shoot the hook.")
 
-/obj/item/gun/ballistic/shotgun/hook/afterattack_secondary(atom/target, mob/user, proximity_flag, click_parameters)
-	hook.afterattack(target, user, proximity_flag, click_parameters)
-	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+/obj/item/gun/ballistic/shotgun/hook/try_fire_gun(atom/target, mob/living/user, params)
+	if(LAZYACCESS(params2list(params), RIGHT_CLICK))
+		return hook.try_fire_gun(target, user, params)
+	return ..()
+
+/obj/item/gun/ballistic/shotgun/musket
+	name = "\improper Donk Co. Musket"
+	icon = 'icons/obj/weapons/guns/ballistic.dmi'
+	icon_state = "donk_musket"
+	inhand_icon_state = "donk_musket"
+	worn_icon_state = "donk_musket"
+	desc = "A large-bore boltloading firearm with a classy wooden frame. Cheap, accurate, and easy to maintain. Reload and rack after every shot."
+	semi_auto = TRUE
+	alternative_caliber = CALIBER_50BMG
+	casing_ejector = TRUE
+	bolt_type = BOLT_TYPE_LOCKING
+	bolt_wording = "bolt"
+	internal_magazine = TRUE
+	accepted_magazine_type = /obj/item/ammo_box/magazine/internal/shot/musket

@@ -16,12 +16,12 @@
 		/datum/component/blood_walk,\
 		blood_type = blood_decal_type,\
 		blood_spawn_chance = 45,\
-		max_blood = custom_materials[custom_materials[1]],\
+		max_blood = custom_materials[custom_materials[1]] / SHEET_MATERIAL_AMOUNT,\
 	)
 
 	AddComponent(
 		/datum/component/bloody_spreader,\
-		blood_left = custom_materials[custom_materials[1]],\
+		blood_left = custom_materials[custom_materials[1]] / SHEET_MATERIAL_AMOUNT,\
 		blood_dna = list("meaty DNA" = "MT-"),\
 		diseases = null,\
 	)
@@ -39,7 +39,7 @@
 	tastes = list("meat" = 1)
 	foodtypes = MEAT | RAW
 	///Legacy code, handles the coloring of the overlay of the cutlets made from this.
-	var/slab_color = "#FF0000"
+	var/slab_color = COLOR_RED
 
 
 /obj/item/food/meat/slab/Initialize(mapload)
@@ -353,7 +353,7 @@
 /obj/item/food/meat/rawbacon
 	name = "raw piece of bacon"
 	desc = "A raw piece of bacon."
-	icon_state = "baconb"
+	icon_state = "bacon"
 	bite_consumption = 2
 	food_reagents = list(
 		/datum/reagent/consumable/nutriment/protein = 2,
@@ -369,7 +369,7 @@
 /obj/item/food/meat/bacon
 	name = "piece of bacon"
 	desc = "A delicious piece of bacon."
-	icon_state = "baconcookedb"
+	icon_state = "baconcooked"
 	food_reagents = list(
 		/datum/reagent/consumable/nutriment/protein = 2,
 		/datum/reagent/consumable/nutriment/vitamin = 1,

@@ -6,6 +6,8 @@
 #define CHANGETURF_RECALC_ADJACENT (1<<5) //Immediately recalc adjacent atmos turfs instead of queuing.
 #define CHANGETURF_TRAPDOOR_INDUCED (1<<6) // Caused by a trapdoor, for trapdoor to know that this changeturf was caused by itself
 
+#define WINDOW_FRAME_BASE_MATERIAL_AMOUNT 2000
+
 #define IS_OPAQUE_TURF(turf) (turf.directional_opacity == ALL_CARDINALS)
 
 //supposedly the fastest way to do this according to https://gist.github.com/Giacom/be635398926bb463b42a
@@ -64,9 +66,6 @@
 /// Turf has superlube on the floor and mobs will slip even if they are crawling
 #define TURF_WET_SUPERLUBE (1<<4)
 
-/// Checks if a turf is wet
-#define IS_WET_OPEN_TURF(O) O.GetComponent(/datum/component/wet_floor)
-
 /// Maximum amount of time, (in deciseconds) a tile can be wet for.
 #define MAXIMUM_WET_TIME (5 MINUTES)
 
@@ -85,9 +84,13 @@
  */
 #define get_area(A) (isarea(A) ? A : get_step(A, 0)?.loc)
 
-#define TEMPORARY_THERMAL_CONDUCTIVITY 1
+// Defines for turfs rust resistance
+#define RUST_RESISTANCE_BASIC 1
+#define RUST_RESISTANCE_REINFORCED 2
+#define RUST_RESISTANCE_TITANIUM 3
+#define RUST_RESISTANCE_ORGANIC 4
+#define RUST_RESISTANCE_ABSOLUTE 5
 
-#define MAX_TEMPORARY_THERMAL_CONDUCTIVITY 1
 /// Turf will be passable if density is 0
 #define TURF_PATHING_PASS_DENSITY 0
 /// Turf will be passable depending on [CanAStarPass] return value
@@ -110,3 +113,15 @@
  * Finds the midpoint of two given turfs.
  */
 #define TURF_MIDPOINT(a, b) (locate(((a.x + b.x) * 0.5), (a.y + b.y) * 0.5, (a.z + b.z) * 0.5))
+
+/// Defines the x offset to apply to larger smoothing turfs (such as grass).
+#define LARGE_TURF_SMOOTHING_X_OFFSET -9
+/// Defines the y offset to apply to larger smoothing turfs (such as grass).
+#define LARGE_TURF_SMOOTHING_Y_OFFSET -9
+
+/// Defines a consistent light power for our various basalt turfs
+#define BASALT_LIGHT_POWER 0.6
+/// Defines a consistent light range for basalt turfs that have a bigger area of lava
+#define BASALT_LIGHT_RANGE_BRIGHT 2
+/// Defines a consistent light range for basalt turfs that have a smaller area of lava
+#define BASALT_LIGHT_RANGE_DIM 1.4

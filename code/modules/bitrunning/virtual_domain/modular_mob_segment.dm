@@ -52,7 +52,7 @@
 
 /datum/modular_mob_segment/gondolas
 	mobs = list(
-		/mob/living/simple_animal/pet/gondola,
+		/mob/living/basic/pet/gondola,
 	)
 
 /datum/modular_mob_segment/corgis
@@ -151,9 +151,9 @@
 
 /datum/modular_mob_segment/xenos
 	mobs = list(
-		/mob/living/simple_animal/hostile/alien,
-		/mob/living/simple_animal/hostile/alien/sentinel,
-		/mob/living/simple_animal/hostile/alien/drone,
+		/mob/living/basic/alien,
+		/mob/living/basic/alien/sentinel,
+		/mob/living/basic/alien/drone,
 	)
 
 #undef SPAWN_ALWAYS

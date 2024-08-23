@@ -69,7 +69,7 @@
 	text += "<br>"
 	text += "(Syndicates used [TC_uses] TC) [purchases]"
 	if(TC_uses == 0 && GLOB.station_was_nuked && !are_all_operatives_dead())
-		text += "<BIG>[icon2html('icons/ui_icons/antags/badass.dmi', world, "badass")]</BIG>"
+		text += "<BIG>[icon2html('icons/ui/antags/badass.dmi', world, "badass")]</BIG>"
 
 	parts += text
 
@@ -312,6 +312,10 @@
 		if(infiltrator_turf in loaded_area.reserved_turfs)
 			return TRUE
 	return FALSE
+
+/datum/team/nuclear/add_member(datum/mind/new_member)
+	..()
+	SEND_SIGNAL(src, COMSIG_NUKE_TEAM_ADDITION, new_member.current)
 
 #undef SPAWN_AT_BASE
 #undef SPAWN_AT_INFILTRATOR

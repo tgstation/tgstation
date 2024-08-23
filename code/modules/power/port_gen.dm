@@ -1,5 +1,6 @@
-//Baseline portable generator. Has all the default handling. Not intended to be used on it's own (since it generates unlimited power).
+//Baseline portable generator. Has all the default handling. Not intended to be used on its own (since it generates unlimited power).
 /obj/machinery/power/port_gen
+	SET_BASE_VISUAL_PIXEL(0, DEPTH_OFFSET)
 	name = "portable generator"
 	desc = "A portable generator for emergency backup power."
 	icon = 'icons/obj/machines/engine/other.dmi'
@@ -10,7 +11,7 @@
 	use_power = NO_POWER_USE
 
 	var/active = FALSE
-	var/power_gen = 5000
+	var/power_gen = 5 KILO JOULES
 	var/power_output = 1
 	var/consumption = 0
 	var/datum/looping_sound/generator/soundloop
@@ -66,7 +67,7 @@
 			TogglePower()
 			return
 		if(powernet)
-			add_avail(power_gen * power_output)
+			add_avail(power_to_energy(power_gen * power_output))
 		UseFuel()
 	else
 		handleInactive()
@@ -81,13 +82,13 @@
 /obj/machinery/power/port_gen/pacman
 	name = "\improper P.A.C.M.A.N.-type portable generator"
 	circuit = /obj/item/circuitboard/machine/pacman
-	power_gen = 5000
+	power_gen = 10 KILO JOULES
 	var/sheets = 0
 	var/max_sheets = 50
 	var/sheet_name = ""
 	var/sheet_path = /obj/item/stack/sheet/mineral/plasma
 	var/sheet_left = 0 // How much is left of the sheet
-	var/time_per_sheet = 60
+	var/time_per_sheet = 180
 	var/current_heat = 0
 
 /obj/machinery/power/port_gen/pacman/Initialize(mapload)
@@ -98,7 +99,7 @@
 	var/obj/S = sheet_path
 	sheet_name = initial(S.name)
 
-/obj/machinery/power/port_gen/pacman/Destroy()
+/obj/machinery/power/port_gen/pacman/on_deconstruction(disassembled)
 	DropFuel()
 	return ..()
 
@@ -108,13 +109,13 @@
 		icon_state = "portgen1_0"
 		base_icon_state = "portgen1"
 		max_sheets = 20
-		time_per_sheet = 20
-		power_gen = 15000
+		time_per_sheet = 60
+		power_gen = 30 KILO JOULES
 		sheet_path = /obj/item/stack/sheet/mineral/uranium
 
 /obj/machinery/power/port_gen/pacman/examine(mob/user)
 	. = ..()
-	. += span_notice("The generator has [sheets] units of [sheet_name] fuel left, producing [display_power(power_gen)] per cycle.")
+	. += span_notice("The generator has [sheets] units of [sheet_name] fuel left, producing [display_power(power_gen)].")
 	if(anchored)
 		. += span_notice("It is anchored to the ground.")
 
@@ -240,13 +241,13 @@
 	data["anchored"] = anchored
 	data["connected"] = (powernet == null ? 0 : 1)
 	data["ready_to_boot"] = anchored && HasFuel()
-	data["power_generated"] = display_power(power_gen)
-	data["power_output"] = display_power(power_gen * power_output)
+	data["power_generated"] = display_power(power_gen, convert = FALSE)
+	data["power_output"] = display_power(power_gen * power_output, convert = FALSE)
 	data["power_available"] = (powernet == null ? 0 : display_power(avail()))
 	data["current_heat"] = current_heat
 	. = data
 
-/obj/machinery/power/port_gen/pacman/ui_act(action, params)
+/obj/machinery/power/port_gen/pacman/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if(.)
 		return
@@ -274,8 +275,8 @@
 	icon_state = "portgen1_0"
 	base_icon_state = "portgen1"
 	max_sheets = 20
-	time_per_sheet = 20
-	power_gen = 15000
+	time_per_sheet = 60
+	power_gen = 30 KILO JOULES
 	sheet_path = /obj/item/stack/sheet/mineral/uranium
 
 /obj/machinery/power/port_gen/pacman/pre_loaded

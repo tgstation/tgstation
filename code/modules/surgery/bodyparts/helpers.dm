@@ -48,6 +48,15 @@
 		which_hand = BODY_ZONE_PRECISE_R_HAND
 	return get_bodypart(check_zone(which_hand))
 
+/// Gets the inactive hand of the mob. Returns FALSE on non-carbons, otherwise returns the /obj/item/bodypart.
+/mob/proc/get_inactive_hand()
+	return null
+
+/mob/living/carbon/get_inactive_hand()
+	var/which_hand = BODY_ZONE_PRECISE_R_HAND
+	if(!(active_hand_index % RIGHT_HANDS))
+		which_hand = BODY_ZONE_PRECISE_L_HAND
+	return get_bodypart(check_zone(which_hand))
 
 /mob/proc/has_left_hand(check_disabled = TRUE)
 	return TRUE
@@ -83,7 +92,7 @@
 
 /mob/living/carbon/proc/get_missing_limbs()
 	RETURN_TYPE(/list)
-	var/list/full = list(BODY_ZONE_HEAD, BODY_ZONE_CHEST, BODY_ZONE_R_ARM, BODY_ZONE_L_ARM, BODY_ZONE_R_LEG, BODY_ZONE_L_LEG)
+	var/list/full = GLOB.all_body_zones.Copy()
 	for(var/zone in full)
 		if(get_bodypart(zone))
 			full -= zone
@@ -100,7 +109,7 @@
 	return list()
 
 /mob/living/carbon/get_disabled_limbs()
-	var/list/full = list(BODY_ZONE_HEAD, BODY_ZONE_CHEST, BODY_ZONE_R_ARM, BODY_ZONE_L_ARM, BODY_ZONE_R_LEG, BODY_ZONE_L_LEG)
+	var/list/full = GLOB.all_body_zones.Copy()
 	var/list/disabled = list()
 	for(var/zone in full)
 		var/obj/item/bodypart/affecting = get_bodypart(zone)
@@ -130,7 +139,7 @@
 /mob/living/carbon/proc/has_embedded_objects(include_harmless=FALSE)
 	for(var/obj/item/bodypart/bodypart as anything in bodyparts)
 		for(var/obj/item/embedded in bodypart.embedded_objects)
-			if(!include_harmless && embedded.isEmbedHarmless())
+			if(!include_harmless && embedded.is_embed_harmless())
 				continue
 			return TRUE
 
@@ -169,7 +178,7 @@
 	if(new_bodypart)
 		new_bodypart.update_limb(is_creating = TRUE)
 
-/// Makes sure that the owner's bodytype flags match the flags of all of it's parts and organs
+/// Makes sure that the owner's bodytype flags match the flags of all of its parts and organs
 /mob/living/carbon/proc/synchronize_bodytypes()
 	var/all_limb_flags = NONE
 	for(var/obj/item/bodypart/limb as anything in bodyparts)
@@ -179,7 +188,7 @@
 
 	bodytype = all_limb_flags
 
-/// Makes sure that the owner's bodyshape flags match the flags of all of it's parts and organs
+/// Makes sure that the owner's bodyshape flags match the flags of all of its parts and organs
 /mob/living/carbon/proc/synchronize_bodyshapes()
 	var/all_limb_flags = NONE
 	for(var/obj/item/bodypart/limb as anything in bodyparts)

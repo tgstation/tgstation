@@ -45,7 +45,7 @@ export const VirtualList = (props: PropsWithChildren) => {
 
       setPadding((children.length - newVisibleElements) * averageItemHeight);
     }
-  }, [containerRef, visibleElements, setVisibleElements, setPadding]);
+  }, [containerRef, visibleElements, children]);
 
   useEffect(() => {
     adjustExtents();

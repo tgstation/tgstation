@@ -1,7 +1,7 @@
 /obj/structure/lattice
 	name = "lattice"
 	desc = "A lightweight support lattice. These hold our station together."
-	icon = 'icons/obj/smooth_structures/lattice.dmi'
+	icon = 'icons/obj/structures/smooth/lattice.dmi'
 	icon_state = "lattice-255"
 	base_icon_state = "lattice"
 	density = FALSE
@@ -23,6 +23,7 @@
 	if(length(give_turf_traits))
 		give_turf_traits = string_list(give_turf_traits)
 		AddElement(/datum/element/give_turf_traits, give_turf_traits)
+	AddElement(/datum/element/footstep_override, footstep = FOOTSTEP_CATWALK)
 
 /datum/armor/structure_lattice
 	melee = 50
@@ -57,10 +58,8 @@
 		var/turf/T = get_turf(src)
 		return T.attackby(C, user) //hand this off to the turf instead (for building plating, catwalks, etc)
 
-/obj/structure/lattice/deconstruct(disassembled = TRUE)
-	if(!(obj_flags & NO_DECONSTRUCTION))
-		new build_material(get_turf(src), number_of_mats)
-	qdel(src)
+/obj/structure/lattice/atom_deconstruct(disassembled = TRUE)
+	new build_material(get_turf(src), number_of_mats)
 
 /obj/structure/lattice/rcd_vals(mob/user, obj/item/construction/rcd/the_rcd)
 	if(the_rcd.mode == RCD_TURF)
@@ -68,8 +67,8 @@
 	return FALSE
 
 /obj/structure/lattice/rcd_act(mob/user, obj/item/construction/rcd/the_rcd, list/rcd_data)
-	if(rcd_data["[RCD_DESIGN_MODE]"] == RCD_TURF)
-		var/design_structure = rcd_data["[RCD_DESIGN_PATH]"]
+	if(rcd_data[RCD_DESIGN_MODE] == RCD_TURF)
+		var/design_structure = rcd_data[RCD_DESIGN_PATH]
 		if(design_structure == /turf/open/floor/plating)
 			var/turf/T = src.loc
 			if(isgroundlessturf(T))
@@ -90,7 +89,7 @@
 /obj/structure/lattice/catwalk
 	name = "catwalk"
 	desc = "A catwalk for easier EVA maneuvering and cable placement."
-	icon = 'icons/obj/smooth_structures/catwalk.dmi'
+	icon = 'icons/obj/structures/smooth/catwalk.dmi'
 	icon_state = "catwalk-0"
 	base_icon_state = "catwalk"
 	number_of_mats = 2
@@ -99,10 +98,6 @@
 	canSmoothWith = SMOOTH_GROUP_CATWALK
 	obj_flags = CAN_BE_HIT | BLOCK_Z_OUT_DOWN | BLOCK_Z_IN_UP
 	give_turf_traits = list(TRAIT_TURF_IGNORE_SLOWDOWN, TRAIT_LAVA_STOPPED, TRAIT_CHASM_STOPPED, TRAIT_IMMERSE_STOPPED, TRAIT_HYPERSPACE_STOPPED)
-
-/obj/structure/lattice/catwalk/Initialize(mapload)
-	. = ..()
-	AddElement(/datum/element/footstep_override, footstep = FOOTSTEP_CATWALK)
 
 /obj/structure/lattice/catwalk/deconstruction_hints(mob/user)
 	return span_notice("The supporting rods look like they could be <b>cut</b>.")
@@ -113,11 +108,11 @@
 		C.deconstruct()
 	..()
 
-/obj/structure/lattice/catwalk/deconstruct()
+/obj/structure/lattice/catwalk/atom_deconstruct(disassembled = TRUE)
+	..()
 	var/turf/T = loc
 	for(var/obj/structure/cable/C in T)
 		C.deconstruct()
-	..()
 
 /obj/structure/lattice/catwalk/rcd_vals(mob/user, obj/item/construction/rcd/the_rcd)
 	if(the_rcd.mode == RCD_DECONSTRUCT)
@@ -143,7 +138,7 @@
 /obj/structure/lattice/lava
 	name = "heatproof support lattice"
 	desc = "A specialized support beam for building across lava. Watch your step."
-	icon = 'icons/obj/smooth_structures/catwalk.dmi'
+	icon = 'icons/obj/structures/smooth/catwalk.dmi'
 	icon_state = "catwalk-0"
 	base_icon_state = "catwalk"
 	number_of_mats = 1

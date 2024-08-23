@@ -1,7 +1,3 @@
-import { BooleanLike, classes } from 'common/react';
-import { capitalize } from 'common/string';
-
-import { useBackend } from '../backend';
 import {
   Box,
   Button,
@@ -12,7 +8,11 @@ import {
   Section,
   Stack,
   Tooltip,
-} from '../components';
+} from 'tgui-core/components';
+import { BooleanLike, classes } from 'tgui-core/react';
+import { capitalize } from 'tgui-core/string';
+
+import { useBackend } from '../backend';
 import { Window } from '../layouts';
 import { DesignBrowser } from './Fabrication/DesignBrowser';
 import { MaterialCostSequence } from './Fabrication/MaterialCostSequence';
@@ -189,18 +189,18 @@ const AutolatheRecipe = (props: AutolatheRecipeProps) => {
 
   let maxmult = 0;
   if (design.customMaterials) {
-    const smallest_mat =
+    const largest_mat =
       Object.entries(availableMaterials).reduce(
         (accumulator: number, [material, amount]) => {
-          return Math.min(accumulator, amount);
+          return Math.max(accumulator, amount);
         },
-        Infinity,
+        0,
       ) || 0;
 
-    if (smallest_mat > 0) {
+    if (largest_mat > 0) {
       maxmult = Object.entries(design.cost).reduce(
         (accumulator: number, [material, required]) => {
-          return Math.min(accumulator, smallest_mat / required);
+          return Math.min(accumulator, largest_mat / required);
         },
         Infinity,
       );

@@ -209,25 +209,10 @@
 
 /obj/item/clothing/gloves/krav_maga
 	clothing_traits = list(TRAIT_FAST_CUFFING)
-	var/datum/martial_art/krav_maga/style
 
 /obj/item/clothing/gloves/krav_maga/Initialize(mapload)
 	. = ..()
-	style = new()
-	style.allow_temp_override = FALSE
-
-/obj/item/clothing/gloves/krav_maga/Destroy()
-	QDEL_NULL(style)
-	return ..()
-
-/obj/item/clothing/gloves/krav_maga/equipped(mob/user, slot)
-	. = ..()
-	if(slot & ITEM_SLOT_GLOVES)
-		style.teach(user, TRUE)
-
-/obj/item/clothing/gloves/krav_maga/dropped(mob/user)
-	. = ..()
-	style.fully_remove(user)
+	AddComponent(/datum/component/martial_art_giver, /datum/martial_art/krav_maga)
 
 /obj/item/clothing/gloves/krav_maga/sec//more obviously named, given to sec
 	name = "krav maga gloves"

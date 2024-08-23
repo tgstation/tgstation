@@ -18,16 +18,8 @@
 /// Does this light ignore inherent offsets? (Pixels, transforms, etc)
 #define LIGHT_IGNORE_OFFSET (1<<2)
 
-// Bay lighting engine shit, not in /code/modules/lighting because BYOND is being shit about it
-/// frequency, in 1/10ths of a second, of the lighting process
-#define LIGHTING_INTERVAL 5
-
 #define MINIMUM_USEFUL_LIGHT_RANGE 1.4
 
-/// type of falloff to use for lighting; 1 for circular, 2 for square
-#define LIGHTING_FALLOFF 1
-/// use lambertian shading for light sources
-#define LIGHTING_LAMBERTIAN 0
 /// light UNDER the floor. primarily used for starlight, shouldn't fuck with this
 #define LIGHTING_HEIGHT_SPACE -0.5
 /// light ON the floor
@@ -38,7 +30,7 @@
 #define LIGHTING_ROUND_VALUE (1 / 64)
 
 /// icon used for lighting shading effects
-#define LIGHTING_ICON 'icons/effects/lighting_object.dmi'
+#define LIGHTING_ICON 'icons/effects/lighting_objects/lighting_object.dmi'
 
 /// If the max of the lighting lumcounts of each spectrum drops below this, disable luminosity on the lighting objects.
 /// Set to zero to disable soft lighting. Luminosity changes then work if it's lit at all.
@@ -71,7 +63,7 @@
 #define LIGHTING_FORCE_UPDATE 3
 
 #define FLASH_LIGHT_DURATION 2
-#define FLASH_LIGHT_POWER 3
+#define FLASH_LIGHT_POWER 2
 #define FLASH_LIGHT_RANGE 3.8
 
 // Emissive blocking.

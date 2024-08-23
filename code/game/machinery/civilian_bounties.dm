@@ -60,7 +60,7 @@
 		pad_ref = WEAKREF(I.buffer)
 		return TRUE
 
-/obj/machinery/computer/piratepad_control/civilian/LateInitialize()
+/obj/machinery/computer/piratepad_control/civilian/post_machine_initialize()
 	. = ..()
 	if(cargo_hold_id)
 		for(var/obj/machinery/piratepad/civilian/C as anything in SSmachines.get_machines_by_type_and_subtypes(/obj/machinery/piratepad/civilian))
@@ -95,7 +95,7 @@
 	playsound(loc, 'sound/machines/synth_no.ogg', 30 , TRUE)
 
 /**
- * This fully rewrites base behavior in order to only check for bounty objects, and nothing else.
+ * This fully rewrites base behavior in order to only check for bounty objects, and no other types of objects like pirate-pads do.
  */
 /obj/machinery/computer/piratepad_control/civilian/send()
 	playsound(loc, 'sound/machines/wewewew.ogg', 70, TRUE)
@@ -125,6 +125,7 @@
 	if(curr_bounty.can_claim())
 		//Pay for the bounty with the ID's department funds.
 		status_report += "Bounty completed! Please give your bounty cube to cargo for your automated payout shortly."
+		SSblackbox.record_feedback("tally", "bounties_completed", 1, curr_bounty.type)
 		inserted_scan_id.registered_account.reset_bounty()
 		SSeconomy.civ_bounty_tracker++
 
@@ -155,19 +156,24 @@
 	COOLDOWN_START(pot_acc, bounty_timer, (5 MINUTES) - cooldown_reduction)
 	pot_acc.bounties = crumbs
 
-/obj/machinery/computer/piratepad_control/civilian/proc/pick_bounty(choice)
+/**
+ * Proc that assigned a civilian bounty to an ID card, from the list of potential bounties that that bank account currently has available.
+ * Available choices are assigned during add_bounties, and one is locked in here.
+ *
+ * @param choice The index of the bounty in the list of bounties that the player can choose from.
+ */
+/obj/machinery/computer/piratepad_control/civilian/proc/pick_bounty(datum/bounty/choice)
 	if(!inserted_scan_id || !inserted_scan_id.registered_account || !inserted_scan_id.registered_account.bounties || !inserted_scan_id.registered_account.bounties[choice])
 		playsound(loc, 'sound/machines/synth_no.ogg', 40 , TRUE)
 		return
 	inserted_scan_id.registered_account.civilian_bounty = inserted_scan_id.registered_account.bounties[choice]
 	inserted_scan_id.registered_account.bounties = null
+	SSblackbox.record_feedback("tally", "bounties_assigned", 1, inserted_scan_id.registered_account.civilian_bounty.type)
 	return inserted_scan_id.registered_account.civilian_bounty
 
-/obj/machinery/computer/piratepad_control/civilian/AltClick(mob/user)
-	. = ..()
-	if(!Adjacent(user))
-		return FALSE
+/obj/machinery/computer/piratepad_control/civilian/click_alt(mob/user)
 	id_eject(user, inserted_scan_id)
+	return CLICK_ACTION_SUCCESS
 
 /obj/machinery/computer/piratepad_control/civilian/ui_data(mob/user)
 	var/list/data = list()
@@ -186,6 +192,9 @@
 			data["id_bounty_names"] = list(inserted_scan_id.registered_account.bounties[1].name,
 											inserted_scan_id.registered_account.bounties[2].name,
 											inserted_scan_id.registered_account.bounties[3].name)
+			data["id_bounty_infos"] = list(inserted_scan_id.registered_account.bounties[1].description,
+											inserted_scan_id.registered_account.bounties[2].description,
+											inserted_scan_id.registered_account.bounties[3].description)
 			data["id_bounty_values"] = list(inserted_scan_id.registered_account.bounties[1].reward * (CIV_BOUNTY_SPLIT/100),
 											inserted_scan_id.registered_account.bounties[2].reward * (CIV_BOUNTY_SPLIT/100),
 											inserted_scan_id.registered_account.bounties[3].reward * (CIV_BOUNTY_SPLIT/100))
@@ -194,7 +203,7 @@
 
 	return data
 
-/obj/machinery/computer/piratepad_control/civilian/ui_act(action, params)
+/obj/machinery/computer/piratepad_control/civilian/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if(.)
 		return

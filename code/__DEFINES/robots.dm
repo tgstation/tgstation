@@ -34,6 +34,10 @@
 
 /// Special value to reset cyborg's lamp_cooldown
 #define BORG_LAMP_CD_RESET -1
+/// How many watts per lamp power is consumed while the lamp is on.
+#define BORG_LAMP_POWER_CONSUMPTION (5 WATTS)
+/// The minimum power consumption of a cyborg.
+#define BORG_MINIMUM_POWER_CONSUMPTION (1 WATTS)
 
 //Module slot define
 ///The third module slots is disabed.
@@ -96,7 +100,7 @@
 
 //Bot cover defines indicating the Bot's status
 ///The Bot's cover is open and can be modified/emagged by anyone.
-#define BOT_COVER_OPEN (1<<0)
+#define BOT_COVER_MAINTS_OPEN (1<<0)
 ///The Bot's cover is locked, and cannot be opened without unlocking it.
 #define BOT_COVER_LOCKED (1<<1)
 ///The Bot is emagged.
@@ -104,18 +108,18 @@
 ///The Bot has been hacked by a Silicon, emagging them, but revertable.
 #define BOT_COVER_HACKED (1<<3)
 
-
-//basic bots defines
-
-///is our maintenancle panel currently open
-#define BOT_MAINTS_PANEL_OPEN (1<<0)
-///is our control panel currently open
-#define BOT_CONTROL_PANEL_OPEN (1<<1)
-
-///bitfield for our access flags
+///bitfield, used by basic bots, for our access flags
 DEFINE_BITFIELD(bot_access_flags, list(
-	"MAINTS_OPEN" = BOT_MAINTS_PANEL_OPEN,
-	"CONTROL_OPEN" = BOT_CONTROL_PANEL_OPEN,
+	"MAINTS_OPEN" = BOT_COVER_MAINTS_OPEN,
+	"COVER_OPEN" = BOT_COVER_LOCKED,
+	"COVER_EMAGGED" = BOT_COVER_EMAGGED,
+	"COVER_HACKED" = BOT_COVER_HACKED,
+))
+
+///bitfield, used by simple bots, for our access flags
+DEFINE_BITFIELD(bot_cover_flags, list(
+	"MAINTS_OPEN" = BOT_COVER_MAINTS_OPEN,
+	"COVER_OPEN" = BOT_COVER_LOCKED,
 	"COVER_EMAGGED" = BOT_COVER_EMAGGED,
 	"COVER_HACKED" = BOT_COVER_HACKED,
 ))
@@ -172,23 +176,25 @@ DEFINE_BITFIELD(bot_access_flags, list(
 /// Medibots - Healing people
 #define BOT_HEALING "Healing"
 /// MULEbot - Moving to deliver
-#define BOT_DELIVER "Navigating to Delivery Location"
+#define BOT_DELIVER "Delivering"
 /// MULEbot - Returning to home
-#define BOT_GO_HOME "Proceeding to work site"
+#define BOT_GO_HOME "Returning"
 /// MULEbot - Blocked
-#define BOT_BLOCKED "No Route"
+#define BOT_BLOCKED "Blocked"
 /// MULEbot - Computing navigation
-#define BOT_NAV "Unable to reach destination"
+#define BOT_NAV "Unreachable"
 /// MULEbot - Waiting for nav computation
-#define BOT_WAIT_FOR_NAV "Calculating navigation path"
+#define BOT_WAIT_FOR_NAV "Calculating"
 /// MULEbot - No destination beacon found (or no route)
-#define BOT_NO_ROUTE "Navigating to Home"
+#define BOT_NO_ROUTE "Returning Home"
 
 //Secbot and ED209 judgement criteria bitflag values
 #define JUDGE_EMAGGED (1<<0)
 #define JUDGE_IDCHECK (1<<1)
 #define JUDGE_WEAPONCHECK (1<<2)
 #define JUDGE_RECORDCHECK (1<<3)
+///lowered threat level
+#define JUDGE_CHILLOUT (1<<4)
 
 /// Above this level of assessed threat, Beepsky will attack you
 #define THREAT_ASSESS_DANGEROUS 4
@@ -206,6 +212,8 @@ DEFINE_BITFIELD(bot_access_flags, list(
 #define SECBOT_CHECK_RECORDS (1<<3)
 ///Whether we will stun & cuff or endlessly stun
 #define SECBOT_HANDCUFF_TARGET (1<<4)
+///if it's currently affected by a saboteur bolt (lowered perp threat level)
+#define SECBOT_SABOTEUR_AFFECTED (1<<5)
 
 DEFINE_BITFIELD(security_mode_flags, list(
 	"SECBOT_DECLARE_ARRESTS" = SECBOT_DECLARE_ARRESTS,
@@ -213,6 +221,7 @@ DEFINE_BITFIELD(security_mode_flags, list(
 	"SECBOT_CHECK_WEAPONS" = SECBOT_CHECK_WEAPONS,
 	"SECBOT_CHECK_RECORDS" = SECBOT_CHECK_RECORDS,
 	"SECBOT_HANDCUFF_TARGET" = SECBOT_HANDCUFF_TARGET,
+	"SECBOT_SABOTEUR_AFFECTED" = SECBOT_SABOTEUR_AFFECTED,
 ))
 
 //MedBOT defines
@@ -233,6 +242,32 @@ DEFINE_BITFIELD(medical_mode_flags, list(
 	"MEDBOT_STATIONARY_MODE" = MEDBOT_STATIONARY_MODE,
 	"MEDBOT_SPEAK_MODE" = MEDBOT_SPEAK_MODE,
 	"MEDBOT_TIPPED_MODE" = MEDBOT_TIPPED_MODE,
+))
+
+///Whether we are stationary or not
+#define FIREBOT_STATIONARY_MODE (1<<0)
+///If we will extinguish people
+#define FIREBOT_EXTINGUISH_PEOPLE (1<<1)
+///if we will extinguish turfs on flames
+#define FIREBOT_EXTINGUISH_FLAMES (1<<2)
+
+DEFINE_BITFIELD(firebot_mode_flags, list(
+	"FIREBOT_STATIONARY_MODE" = FIREBOT_STATIONARY_MODE,
+	"FIREBOT_EXTINGUISH_PEOPLE" = FIREBOT_EXTINGUISH_PEOPLE,
+	"FIREBOT_EXTINGUISH_FLAMES" = FIREBOT_EXTINGUISH_FLAMES,
+))
+
+///auto return to home after delivery
+#define MULEBOT_RETURN_MODE (1<<0)
+///autopickups at beacons
+#define MULEBOT_AUTO_PICKUP_MODE (1<<1)
+///announce every delivery we make
+#define MULEBOT_REPORT_DELIVERY_MODE (1<<2)
+
+DEFINE_BITFIELD(mulebot_delivery_flags, list(
+	"MULEBOT_RETURN_MODE" = MULEBOT_RETURN_MODE,
+	"MULEBOT_AUTO_PICKUP_MODE" = MULEBOT_AUTO_PICKUP_MODE,
+	"MULEBOT_REPORT_DELIVERY_MODE" = MULEBOT_REPORT_DELIVERY_MODE,
 ))
 
 //cleanBOT defines on what to clean
@@ -275,6 +310,9 @@ DEFINE_BITFIELD(janitor_mode_flags, list(
 #define FIREBOT_VOICED_ONLY_YOU "Only you can prevent station fires."
 #define FIREBOT_VOICED_TEMPERATURE_NOMINAL "Temperature nominal."
 #define FIREBOT_VOICED_KEEP_COOL "Keep it cool."
+#define FIREBOT_VOICED_CANDLE_TIP "Keep candles near curtains for cozy night lights!"
+#define FIREBOT_VOICED_ELECTRIC_FIRE "Keep full buckets of water near outlets in case of an electric fire!"
+#define FIREBOT_VOICED_FUEL_TIP "Pouring fuel on fire makes it burn out faster!"
 
 #define HYGIENEBOT_VOICED_UNHYGIENIC "Unhygienic client found. Please stand still so I can clean you."
 #define HYGIENEBOT_VOICED_ENJOY_DAY "Enjoy your clean and tidy day!"

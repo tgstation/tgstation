@@ -20,13 +20,15 @@
 /// The minimum velocity required for the bait to bounce
 #define BAIT_MIN_VELOCITY_BOUNCE 150
 /// The extra deceleration of velocity that happens when the bait switches direction
-#define BAIT_DECELERATION_MULT 1.5
+#define BAIT_DECELERATION_MULT 1.8
 
 /// Reduce initial completion rate depending on difficulty
 #define MAX_FISH_COMPLETION_MALUS 15
 /// The window of time between biting phase and back to baiting phase
 #define BITING_TIME_WINDOW 4 SECONDS
 
+/// The multiplier of how much the difficulty negatively impacts the bait height
+#define BAIT_HEIGHT_DIFFICULTY_MALUS 1.3
 
 ///Defines to know how the bait is moving on the minigame slider.
 #define REELING_STATE_IDLE 0
@@ -36,7 +38,7 @@
 ///The pixel height of the minigame bar
 #define MINIGAME_SLIDER_HEIGHT 76
 ///The standard pixel height of the bait
-#define MINIGAME_BAIT_HEIGHT 24
+#define MINIGAME_BAIT_HEIGHT 27
 ///The standard pixel height of the fish (minus a pixel on each direction for the sake of a better looking sprite)
 #define MINIGAME_FISH_HEIGHT 4
 
@@ -82,7 +84,7 @@
 	/// How much space the fish takes on the minigame slider
 	var/fish_height = 50
 	/// How much space the bait takes on the minigame slider
-	var/bait_height = 320
+	var/bait_height = 360
 	/// The height in pixels of the bait bar
 	var/bait_pixel_height = MINIGAME_BAIT_HEIGHT
 	/// The height in pixels of the fish
@@ -182,14 +184,16 @@
 		if(rod.hook.fishing_hook_traits & FISHING_HOOK_KILL)
 			special_effects |= FISHING_MINIGAME_RULE_KILL
 
+	completion_loss += user.mind?.get_skill_modifier(/datum/skill/fishing, SKILL_VALUE_MODIFIER)/5
+
 	if(special_effects & FISHING_MINIGAME_RULE_KILL && ispath(reward_path,/obj/item/fish))
-		RegisterSignal(user, COMSIG_MOB_FISHING_REWARD_DISPENSED, PROC_REF(hurt_fish))
+		RegisterSignal(comp.fish_source, COMSIG_FISH_SOURCE_REWARD_DISPENSED, PROC_REF(hurt_fish))
 
 	difficulty += comp.fish_source.calculate_difficulty(reward_path, rod, user, src)
-	difficulty = clamp(round(difficulty), 1, 100)
+	difficulty = clamp(round(difficulty), FISHING_EASY_DIFFICULTY - 5, 100)
 
 	if(difficulty > FISHING_EASY_DIFFICULTY)
-		completion -= round(MAX_FISH_COMPLETION_MALUS * (difficulty/100), 1)
+		completion -= MAX_FISH_COMPLETION_MALUS * (difficulty * 0.01)
 
 	if(HAS_MIND_TRAIT(user, TRAIT_REVEAL_FISH))
 		fish_icon = GLOB.specific_fish_icons[reward_path] || "fish"
@@ -211,7 +215,7 @@
 	else
 		long_jump_chance *= difficulty
 
-	bait_height -= difficulty
+	bait_height -= round(difficulty * BAIT_HEIGHT_DIFFICULTY_MALUS)
 	bait_pixel_height = round(MINIGAME_BAIT_HEIGHT * (bait_height/initial(bait_height)), 1)
 
 /datum/fishing_challenge/Destroy(force)
@@ -244,10 +248,13 @@
 
 /datum/fishing_challenge/proc/start(mob/living/user)
 	/// Create fishing line visuals
-	fishing_line = used_rod.create_fishing_line(lure, target_py = 5)
+	if(used_rod.display_fishing_line)
+		fishing_line = used_rod.create_fishing_line(lure, target_py = 5)
+		RegisterSignal(fishing_line, COMSIG_QDELETING, PROC_REF(on_line_deleted))
+	else //if the rod doesnt have a fishing line, then it ends when they move away
+		RegisterSignal(user, COMSIG_MOVABLE_MOVED, PROC_REF(on_user_move))
 	active_effects = bitfield_to_list(special_effects & FISHING_MINIGAME_ACTIVE_EFFECTS)
 	// If fishing line breaks los / rod gets dropped / deleted
-	RegisterSignal(fishing_line, COMSIG_QDELETING, PROC_REF(on_line_deleted))
 	RegisterSignal(used_rod, COMSIG_ITEM_ATTACK_SELF, PROC_REF(on_attack_self))
 	ADD_TRAIT(user, TRAIT_GONE_FISHING, REF(src))
 	user.add_mood_event("fishing", /datum/mood_event/fishing)
@@ -263,14 +270,22 @@
 	user.balloon_alert(user, user.is_holding(used_rod) ? "line snapped" : "rod dropped")
 	interrupt()
 
+/datum/fishing_challenge/proc/on_user_move(datum/source)
+	SIGNAL_HANDLER
+
+	user.balloon_alert(user, "too far!")
+	interrupt()
+
 /datum/fishing_challenge/proc/handle_click(mob/source, atom/target, modifiers)
 	SIGNAL_HANDLER
 	//You need to be holding the rod to use it.
-	if(!source.get_active_held_item(used_rod) || LAZYACCESS(modifiers, SHIFT_CLICK) || LAZYACCESS(modifiers, CTRL_CLICK) || LAZYACCESS(modifiers, ALT_CLICK))
+	if(LAZYACCESS(modifiers, SHIFT_CLICK) || LAZYACCESS(modifiers, CTRL_CLICK) || LAZYACCESS(modifiers, ALT_CLICK))
 		return
-	if(phase == WAIT_PHASE) //Reset wait
+	if(!HAS_TRAIT(source, TRAIT_PROFOUND_FISHER) && source.get_active_held_item() != used_rod)
+		return
+	if(phase == WAIT_PHASE)
 		send_alert("miss!")
-		start_baiting_phase(TRUE)
+		start_baiting_phase(TRUE) //Add in another 3 to 5 seconds for that blunder.
 	else if(phase == BITING_PHASE)
 		start_minigame_phase()
 	return COMSIG_MOB_CANCEL_CLICKON
@@ -318,7 +333,7 @@
 	if(penalty)
 		wait_time = min(timeleft(next_phase_timer) + rand(3 SECONDS, 5 SECONDS), 30 SECONDS)
 	else
-		wait_time = rand(1 SECONDS, 30 SECONDS)
+		wait_time = rand(3 SECONDS, 25 SECONDS)
 		if(special_effects & FISHING_MINIGAME_AUTOREEL && wait_time >= 15 SECONDS)
 			wait_time = max(wait_time - 7.5 SECONDS, 15 SECONDS)
 	deltimer(next_phase_timer)
@@ -398,7 +413,6 @@
 				completion *= 1.2
 			if(BITING_TIME_WINDOW - 0.5 SECONDS to BITING_TIME_WINDOW)
 				completion *= 1.4
-	completion = round(completion, 1)
 	if(!prepare_minigame_hud())
 		return
 	phase = MINIGAME_PHASE
@@ -644,8 +658,12 @@
 	hud_completion = new(null, null, challenge)
 	vis_contents += list(hud_bait, hud_fish, hud_completion)
 	challenge.user.client.screen += src
+	master_ref = WEAKREF(challenge)
 
 /atom/movable/screen/fishing_hud/Destroy()
+	var/datum/fishing_challenge/challenge = master_ref?.resolve()
+	if(!isnull(challenge))
+		challenge.user.client.screen -= src
 	QDEL_NULL(hud_fish)
 	QDEL_NULL(hud_bait)
 	QDEL_NULL(hud_completion)
@@ -699,6 +717,8 @@
 		RegisterSignal(spot, COMSIG_MOVABLE_MOVED, PROC_REF(follow_movable))
 
 /obj/effect/fishing_lure/proc/follow_movable(atom/movable/source)
+	SIGNAL_HANDLER
+
 	set_glide_size(source.glide_size)
 	forceMove(source.loc)
 
@@ -718,6 +738,8 @@
 #undef MINIGAME_SLIDER_HEIGHT
 #undef MINIGAME_BAIT_HEIGHT
 #undef MINIGAME_FISH_HEIGHT
+
+#undef BAIT_HEIGHT_DIFFICULTY_MALUS
 
 #undef REELING_STATE_IDLE
 #undef REELING_STATE_UP

@@ -235,6 +235,7 @@
 	var/total_removed_amount = 0
 	var/remove_amount = 0
 	var/list/cached_reagents = reagent_list
+	var/list/removed_reagents = list()
 	for(var/datum/reagent/cached_reagent as anything in cached_reagents)
 		//check for specific type or subtypes
 		if(!include_subtypes)
@@ -243,65 +244,28 @@
 		else if(!istype(cached_reagent, reagent_type))
 			continue
 
+		//reduce the volume
 		remove_amount = min(cached_reagent.volume, amount)
 		cached_reagent.volume -= remove_amount
 
-		update_total()
-		if(!safety)//So it does not handle reactions when it need not to
-			handle_reactions()
-		SEND_SIGNAL(src, COMSIG_REAGENTS_REM_REAGENT, QDELING(cached_reagent) ? reagent_type : cached_reagent, amount)
-
+		//record the changes
+		removed_reagents[cached_reagent] = remove_amount
 		total_removed_amount += remove_amount
 
 		//if we reached here means we have found our specific reagent type so break
 		if(!include_subtypes)
 			break
 
-	return total_removed_amount
+	//inform others about our reagents being removed
+	for(var/datum/reagent/removed_reagent as anything in removed_reagents)
+		SEND_SIGNAL(src, COMSIG_REAGENTS_REM_REAGENT, removed_reagent, removed_reagents[removed_reagent])
 
-/**
- * Removes a reagent at random and by a random quantity till the specified amount has been removed.
- * Used to create a shower/spray effect for e.g. when you spill a bottle or turn a shower on
- * and you want an chaotic effect of whatever coming out
- * Arguments
- *
- * * amount- the volume to remove
- */
-/datum/reagents/proc/remove_any(amount = 1)
-	if(!IS_FINITE(amount))
-		stack_trace("non finite amount passed to remove any reagent [amount]")
-		return FALSE
+	//update the holder & handle reactions
+	update_total()
+	if(!safety)
+		handle_reactions()
 
-	amount = round(amount, CHEMICAL_QUANTISATION_LEVEL)
-	if(amount <= 0)
-		return FALSE
-
-	var/list/cached_reagents = reagent_list
-	var/total_removed = 0
-	var/current_list_element = 1
-	var/initial_list_length = cached_reagents.len //stored here because removing can cause some reagents to be deleted, ergo length change.
-
-	current_list_element = rand(1, cached_reagents.len)
-
-	while(total_removed != amount)
-		if(total_removed >= amount)
-			break
-		if(total_volume <= 0 || !cached_reagents.len)
-			break
-
-		if(current_list_element > cached_reagents.len)
-			current_list_element = 1
-
-		var/datum/reagent/target_holder = cached_reagents[current_list_element]
-		var/remove_amt = min(amount - total_removed, round(amount / rand(2, initial_list_length), round(amount / 10, 0.01))) //double round to keep it at a somewhat even spread relative to amount without getting funky numbers.
-		//min ensures we don't go over amount.
-		remove_reagent(target_holder.type, remove_amt)
-
-		current_list_element++
-		total_removed += remove_amt
-
-	handle_reactions()
-	return total_removed //this should be amount unless the loop is prematurely broken, in which case it'll be lower. It shouldn't ever go OVER amount.
+	return round(total_removed_amount, CHEMICAL_VOLUME_ROUNDING)
 
 /**
  * Removes all reagents either proportionally(amount is the direct volume to remove)
@@ -336,8 +300,8 @@
 		part /= total_volume
 	for(var/datum/reagent/reagent as anything in cached_reagents)
 		total_removed_amount += remove_reagent(reagent.type, reagent.volume * part)
-
 	handle_reactions()
+
 	return round(total_removed_amount, CHEMICAL_VOLUME_ROUNDING)
 
 /**
@@ -476,8 +440,6 @@
 			target_holder = target.reagents
 			target_atom = target
 
-	var/cached_amount = amount
-
 	// Prevents small amount problems, as well as zero and below zero amounts.
 	amount = round(min(amount, total_volume, target_holder.maximum_volume - target_holder.total_volume), CHEMICAL_QUANTISATION_LEVEL)
 	if(amount <= 0)
@@ -513,7 +475,9 @@
 
 		if(preserve_data)
 			trans_data = copy_data(reagent)
-		if(reagent.intercept_reagents_transfer(target_holder, cached_amount))
+		if(reagent.intercept_reagents_transfer(target_holder, amount))
+			update_total()
+			target_holder.update_total()
 			continue
 		transfered_amount = target_holder.add_reagent(reagent.type, transfer_amount * multiplier, trans_data, chem_temp, reagent.purity, reagent.ph, no_react = TRUE, ignore_splitting = reagent.chemical_flags & REAGENT_DONOTSPLIT) //we only handle reaction after every reagent has been transferred.
 		if(!transfered_amount)
@@ -548,8 +512,6 @@
 		log_target.add_hiddenprint(transferred_by) //log prints so admins can figure out who touched it last.
 		log_combat(transferred_by, log_target, "transferred reagents to", my_atom, "which had [get_external_reagent_log_string(transfer_log)]")
 
-	update_total()
-	target_holder.update_total()
 	if(!no_react)
 		target_holder.handle_reactions()
 		src.handle_reactions()
@@ -647,7 +609,7 @@
 	. = 0
 
 	//responsible for removing reagents and computing total ph & volume
-	//all it's code was taken out of del_reagent() initially for efficiency purposes
+	//all its code was taken out of del_reagent() initially for efficiency purposes
 	while(chem_index <= num_reagents)
 		var/datum/reagent/reagent = cached_reagents[chem_index]
 		chem_index += 1

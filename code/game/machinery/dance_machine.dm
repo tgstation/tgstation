@@ -32,8 +32,6 @@
 /obj/machinery/jukebox/wrench_act(mob/living/user, obj/item/tool)
 	if(!isnull(music_player.active_song_sound))
 		return NONE
-	if(obj_flags & NO_DECONSTRUCTION)
-		return NONE
 
 	if(default_unfasten_wrench(user, tool) == SUCCESSFUL_UNFASTEN)
 		return ITEM_INTERACT_SUCCESS
@@ -69,7 +67,7 @@
 /obj/machinery/jukebox/ui_data(mob/user)
 	return music_player.get_ui_data()
 
-/obj/machinery/jukebox/ui_act(action, list/params)
+/obj/machinery/jukebox/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if(.)
 		return
@@ -164,7 +162,6 @@
 	req_access = null
 	anchored = TRUE
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
-	obj_flags = parent_type::obj_flags | NO_DECONSTRUCTION
 
 /obj/machinery/jukebox/disco/activate_music()
 	. = ..()

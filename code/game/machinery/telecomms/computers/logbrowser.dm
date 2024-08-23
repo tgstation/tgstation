@@ -70,7 +70,7 @@
 					race = "Humanoid"
 
 				// NT knows a lot about slimes, but not aliens. Can identify slimes
-				else if(ispath(mobtype, /mob/living/simple_animal/slime))
+				else if(ispath(mobtype, /mob/living/basic/slime))
 					race = "Slime"
 
 				// sometimes M gets deleted prematurely for AIs... just check the job
@@ -95,7 +95,7 @@
 	return data
 
 
-/obj/machinery/computer/telecomms/server/ui_act(action, params)
+/obj/machinery/computer/telecomms/server/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if(.)
 		return

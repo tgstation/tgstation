@@ -55,7 +55,7 @@
 		ShiftClickOn(A)
 		return
 	if(LAZYACCESS(modifiers, ALT_CLICK)) // alt and alt-gr (rightalt)
-		AltClickOn(A)
+		ai_base_click_alt(A)
 		return
 	if(LAZYACCESS(modifiers, CTRL_CLICK))
 		CtrlClickOn(A)
@@ -120,8 +120,24 @@
 /mob/living/silicon/ai/CtrlClickOn(atom/target)
 	target.AICtrlClick(src)
 
-/mob/living/silicon/ai/AltClickOn(atom/target)
-	target.AIAltClick(src)
+
+/// Reimplementation of base_click_alt for AI
+/mob/living/silicon/ai/proc/ai_base_click_alt(atom/target)
+	// If for some reason we can't alt click
+	if(SEND_SIGNAL(src, COMSIG_MOB_ALTCLICKON, target) & COMSIG_MOB_CANCEL_CLICKON)
+		return
+
+	if(!isturf(target) && can_perform_action(target, (target.interaction_flags_click | SILENT_ADJACENCY)))
+		// Signal intercept
+		if(SEND_SIGNAL(target, COMSIG_CLICK_ALT, src) & CLICK_ACTION_ANY)
+			return
+
+		// AI alt click interaction succeeds
+		if(target.ai_click_alt(src) & CLICK_ACTION_ANY)
+			return
+
+	client.loot_panel.open(get_turf(target))
+
 
 /*
 	The following criminally helpful code is just the previous code cleaned up;
@@ -133,8 +149,8 @@
 /atom/proc/AICtrlClick(mob/living/silicon/ai/user)
 	return
 
-/atom/proc/AIAltClick(mob/living/silicon/ai/user)
-	AltClick(user)
+/atom/proc/ai_click_alt(mob/living/silicon/ai/user)
+	SHOULD_CALL_PARENT(FALSE)
 	return
 
 /atom/proc/AIShiftClick(mob/living/silicon/ai/user)
@@ -151,14 +167,15 @@
 	toggle_bolt(user)
 	add_hiddenprint(user)
 
-/obj/machinery/door/airlock/AIAltClick(mob/living/silicon/ai/user) // Eletrifies doors.
+/obj/machinery/door/airlock/ai_click_alt(mob/living/silicon/ai/user)
 	if(obj_flags & EMAGGED)
-		return
+		return NONE
 
 	if(!secondsElectrified)
 		shock_perm(user)
 	else
 		shock_restore(user)
+	return CLICK_ACTION_SUCCESS
 
 /obj/machinery/door/airlock/AIShiftClick(mob/living/silicon/ai/user)  // Opens and closes doors!
 	if(obj_flags & EMAGGED)
@@ -220,12 +237,12 @@
 	update()
 
 /// Toggle APC equipment settings
-/obj/machinery/power/apc/AIAltClick(mob/living/silicon/ai/user)
+/obj/machinery/power/apc/ai_click_alt(mob/living/silicon/ai/user)
 	if(!can_use(user, loud = TRUE))
-		return
+		return NONE
 
 	if(!is_operational || failure_timer)
-		return
+		return CLICK_ACTION_BLOCKING
 
 	equipment = equipment ? APC_CHANNEL_OFF : APC_CHANNEL_ON
 	if (user)
@@ -235,19 +252,19 @@
 		user.log_message("turned [enabled_or_disabled] the [src] equipment settings", LOG_GAME)
 	update_appearance()
 	update()
+	return CLICK_ACTION_SUCCESS
 
 /obj/machinery/power/apc/attack_ai_secondary(mob/living/silicon/user, list/modifiers)
-	if(!can_use(user, loud = TRUE))
-		return
-
-	togglelock(user)
+	if(can_use(user, loud = TRUE))
+		togglelock(user)
 	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
 /* AI Turrets */
-/obj/machinery/turretid/AIAltClick(mob/living/silicon/ai/user) //toggles lethal on turrets
+/obj/machinery/turretid/ai_click_alt(mob/living/silicon/ai/user) //toggles lethal on turrets
 	if(ailock)
-		return
+		return CLICK_ACTION_BLOCKING
 	toggle_lethal(user)
+	return CLICK_ACTION_SUCCESS
 
 /obj/machinery/turretid/AICtrlClick(mob/living/silicon/ai/user) //turns off/on Turrets
 	if(ailock)
@@ -255,11 +272,12 @@
 	toggle_on(user)
 
 /* Holopads */
-/obj/machinery/holopad/AIAltClick(mob/living/silicon/ai/user)
+/obj/machinery/holopad/ai_click_alt(mob/living/silicon/ai/user)
 	if (user)
 		balloon_alert(user, "disrupted all active calls")
 		add_hiddenprint(user)
 	hangup_all_calls()
+	return CLICK_ACTION_SUCCESS
 
 //
 // Override TurfAdjacent for AltClicking

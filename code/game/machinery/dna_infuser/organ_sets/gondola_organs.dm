@@ -1,6 +1,6 @@
 #define GONDOLA_ORGAN_COLOR "#7a503d"
-#define GONDOLA_SCLERA_COLOR "#000000"
-#define GONDOLA_PUPIL_COLOR "#000000"
+#define GONDOLA_SCLERA_COLOR COLOR_BLACK
+#define GONDOLA_PUPIL_COLOR COLOR_BLACK
 #define GONDOLA_COLORS GONDOLA_ORGAN_COLOR + GONDOLA_SCLERA_COLOR + GONDOLA_PUPIL_COLOR
 
 /*
@@ -31,7 +31,8 @@ Fluoride Stare: After someone says 5 words, blah blah blah...
 /obj/item/organ/internal/heart/gondola/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/organ_set_bonus, /datum/status_effect/organ_set_bonus/gondola)
-	AddElement(/datum/element/noticable_organ, "radiate%PRONOUN_S an aura of serenity.")
+	AddElement(/datum/element/noticable_organ, "%PRONOUN_They radiate%PRONOUN_s an aura of serenity.")
+	AddElement(/datum/element/update_icon_blocker)
 
 /obj/item/organ/internal/heart/gondola/Insert(mob/living/carbon/receiver, special, movement_flags)
 	. = ..()
@@ -60,7 +61,7 @@ Fluoride Stare: After someone says 5 words, blah blah blah...
 
 /obj/item/organ/internal/tongue/gondola/Initialize(mapload)
 	. = ..()
-	AddElement(/datum/element/noticable_organ, "mouth is permanently affixed into a relaxed smile.", BODY_ZONE_PRECISE_MOUTH)
+	AddElement(/datum/element/noticable_organ, "%PRONOUN_Their mouth is permanently affixed into a relaxed smile.", BODY_ZONE_PRECISE_MOUTH)
 	AddElement(/datum/element/organ_set_bonus, /datum/status_effect/organ_set_bonus/gondola)
 
 /obj/item/organ/internal/tongue/gondola/Insert(mob/living/carbon/tongue_owner, special, movement_flags)
@@ -83,8 +84,8 @@ Fluoride Stare: After someone says 5 words, blah blah blah...
 /obj/item/organ/internal/liver/gondola/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/organ_set_bonus, /datum/status_effect/organ_set_bonus/gondola)
-	AddElement(/datum/element/noticable_organ, "left arm has small needles breaching the skin all over it.", BODY_ZONE_L_ARM)
-	AddElement(/datum/element/noticable_organ, "right arm has small needles breaching the skin all over it.", BODY_ZONE_R_ARM)
+	AddElement(/datum/element/noticable_organ, "%PRONOUN_Their left arm has small needles breaching the skin all over it.", BODY_ZONE_L_ARM)
+	AddElement(/datum/element/noticable_organ, "%PRONOUN_Their right arm has small needles breaching the skin all over it.", BODY_ZONE_R_ARM)
 
 /obj/item/organ/internal/liver/gondola/Insert(mob/living/carbon/liver_owner, special, movement_flags)
 	. = ..()

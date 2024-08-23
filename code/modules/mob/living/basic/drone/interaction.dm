@@ -14,7 +14,7 @@
 				to_chat(drone, span_warning("You're already in perfect condition!"))
 				return
 			drone.visible_message(span_notice("[drone] begins to cannibalize parts from [src]."), span_notice("You begin to cannibalize parts from [src]..."))
-			if(do_after(drone, 60, 0, target = src))
+			if(do_after(drone, 6 SECONDS, 0, target = src))
 				drone.visible_message(span_notice("[drone] repairs itself using [src]'s remains!"), span_notice("You repair yourself using [src]'s remains."))
 				drone.adjustBruteLoss(-src.maxHealth)
 				new /obj/effect/decal/cleanable/oil/streak(get_turf(src))
@@ -67,7 +67,7 @@
 		to_chat(user, span_warning("You can't seem to find the [pick(faux_gadgets)]! Without it, [src] [pick(faux_problems)]."))
 		return
 	user.visible_message(span_notice("[user] begins to reactivate [src]."), span_notice("You begin to reactivate [src]..."))
-	if(do_after(user, 30, 1, target = src))
+	if(do_after(user, 3 SECONDS, 1, target = src))
 		revive(HEAL_ALL)
 		user.visible_message(span_notice("[user] reactivates [src]!"), span_notice("You reactivate [src]."))
 		alert_drones(DRONE_NET_CONNECT)

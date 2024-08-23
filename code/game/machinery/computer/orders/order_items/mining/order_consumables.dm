@@ -31,11 +31,11 @@
 	cost_per_order = 100
 
 /datum/orderable_item/consumables/havana_cigars
-	item_path = /obj/item/clothing/mask/cigarette/cigar/havana
+	item_path = /obj/item/cigarette/cigar/havana
 	cost_per_order = 150
 
 /datum/orderable_item/consumables/havana_cigars
-	item_path = /obj/item/clothing/mask/cigarette/cigar/havana
+	item_path = /obj/item/cigarette/cigar/havana
 	cost_per_order = 150
 
 /datum/orderable_item/consumables/tracking_implants

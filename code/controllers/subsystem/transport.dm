@@ -98,7 +98,7 @@ PROCESSING_SUBSYSTEM_DEF(transport)
 	// We've made it this far, tram is physically fine so let's trip plan
 	// This is based on the destination nav beacon, the logical location
 	// If Something Happens and the location the controller thinks it's at
-	// gets out of sync with it's actual physical location, it can be reset
+	// gets out of sync with its actual physical location, it can be reset
 
 	// Since players can set the platform ID themselves, make sure it's a valid platform we're aware of
 	var/network = LAZYACCESS(nav_beacons, transport_id)
@@ -169,10 +169,6 @@ PROCESSING_SUBSYSTEM_DEF(transport)
  */
 /datum/controller/subsystem/processing/transport/proc/pre_departure(datum/transport_controller/linear/tram/transport_controller, request_flags)
 	log_transport("Sub: [transport_controller.specific_transport_id] start pre-departure. Info: [SUB_TS_STATUS]")
-
-	// Tram Malfunction event
-	if(transport_controller.controller_status & COMM_ERROR)
-		request_flags |= BYPASS_SENSORS
 
 	// Lock the physical controls of the tram
 	transport_controller.set_status_code(PRE_DEPARTURE, TRUE)

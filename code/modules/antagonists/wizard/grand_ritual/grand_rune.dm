@@ -19,7 +19,7 @@
 	pixel_y = 16
 	pixel_z = -48
 	anchored = TRUE
-	interaction_flags_atom = INTERACT_ATOM_ATTACK_HAND
+	interaction_flags_atom = INTERACT_ATOM_ATTACK_HAND | INTERACT_ATOM_ATTACK_PAW
 	resistance_flags = FIRE_PROOF | UNACIDABLE | ACID_PROOF
 	layer = SIGIL_LAYER
 	/// How many prior grand rituals have been completed?
@@ -187,7 +187,7 @@
 	tear_reality()
 	SEND_SIGNAL(src, COMSIG_GRAND_RUNE_COMPLETE, cheese_sacrificed)
 	flick("[icon_state]_activate", src)
-	addtimer(CALLBACK(src, PROC_REF(remove_rune)), 6)
+	addtimer(CALLBACK(src, PROC_REF(remove_rune)), 0.6 SECONDS)
 	SSblackbox.record_feedback("amount", "grand_runes_invoked", 1)
 
 /obj/effect/grand_rune/proc/remove_rune()

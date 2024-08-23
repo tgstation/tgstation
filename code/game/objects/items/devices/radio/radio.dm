@@ -63,12 +63,8 @@
 
 	/// Encryption key handling
 	var/obj/item/encryptionkey/keyslot
-	/// If true, can hear the special binary channel.
-	var/translate_binary = FALSE
-	/// If true, can say/hear on the special CentCom channel.
-	var/independent = FALSE
-	/// If true, hears all well-known channels automatically, and can say/hear on the Syndicate channel. Also protects from radio jammers.
-	var/syndie = FALSE
+	/// Flags for which "special" radio networks should be accessible
+	var/special_channels = NONE
 	/// associative list of the encrypted radio channels this radio is currently set to listen/broadcast to, of the form: list(channel name = TRUE or FALSE)
 	var/list/channels
 	/// associative list of the encrypted radio channels this radio can listen/broadcast to, of the form: list(channel name = channel frequency)
@@ -76,7 +72,7 @@
 
 	/// overlay when speaker is on
 	var/overlay_speaker_idle = "s_idle"
-	/// overlay when recieving a message
+	/// overlay when receiving a message
 	var/overlay_speaker_active = "s_active"
 
 	/// overlay when mic is on
@@ -104,7 +100,7 @@
 	perform_update_icon = FALSE
 	set_listening(listening)
 	set_broadcasting(broadcasting)
-	set_frequency(sanitize_frequency(frequency, freerange, syndie))
+	set_frequency(sanitize_frequency(frequency, freerange, (special_channels & RADIO_SPECIAL_SYNDIE)))
 	set_on(on)
 	perform_update_icon = TRUE
 
@@ -116,16 +112,21 @@
 	// No subtypes
 	if(type != /obj/item/radio)
 		return
-	AddComponent(/datum/component/slapcrafting,\
-		slapcraft_recipes = list(/datum/crafting_recipe/improv_explosive)\
-	)
+	AddElement(/datum/element/slapcrafting, string_list(list(/datum/crafting_recipe/improv_explosive)))
+
+	RegisterSignal(src, COMSIG_HIT_BY_SABOTEUR, PROC_REF(on_saboteur))
 
 /obj/item/radio/Destroy()
 	remove_radio_all(src) //Just to be sure
-	QDEL_NULL(wires)
 	if(istype(keyslot))
 		QDEL_NULL(keyslot)
 	return ..()
+
+/obj/item/radio/proc/on_saboteur(datum/source, disrupt_duration)
+	SIGNAL_HANDLER
+	if(broadcasting) //no broadcasting but it can still be used to send radio messages.
+		set_broadcasting(FALSE)
+		return COMSIG_SABOTEUR_SUCCESS
 
 /obj/item/radio/proc/set_frequency(new_frequency)
 	SEND_SIGNAL(src, COMSIG_RADIO_NEW_FREQUENCY, args)
@@ -144,23 +145,19 @@
 			if(!(channel_name in channels))
 				channels[channel_name] = keyslot.channels[channel_name]
 
-		if(keyslot.translate_binary)
-			translate_binary = TRUE
-		if(keyslot.syndie)
-			syndie = TRUE
-		if(keyslot.independent)
-			independent = TRUE
+		special_channels = keyslot.special_channels
 
 	for(var/channel_name in channels)
 		secure_radio_connections[channel_name] = add_radio(src, GLOB.radiochannels[channel_name])
+
+	if(!listening)
+		remove_radio_all(src)
 
 // Used for cyborg override
 /obj/item/radio/proc/resetChannels()
 	channels = list()
 	secure_radio_connections = list()
-	translate_binary = FALSE
-	syndie = FALSE
-	independent = FALSE
+	special_channels = NONE
 
 ///goes through all radio channels we should be listening for and readds them to the global list
 /obj/item/radio/proc/readd_listening_radio_channels()
@@ -172,7 +169,7 @@
 /obj/item/radio/proc/make_syndie() // Turns normal radios into Syndicate radios!
 	qdel(keyslot)
 	keyslot = new /obj/item/encryptionkey/syndicate()
-	syndie = TRUE
+	special_channels |= RADIO_SPECIAL_SYNDIE
 	recalculateChannels()
 
 /obj/item/radio/interact(mob/user)
@@ -262,17 +259,29 @@
 
 /obj/item/radio/talk_into(atom/movable/talking_movable, message, channel, list/spans, datum/language/language, list/message_mods)
 	if(SEND_SIGNAL(talking_movable, COMSIG_MOVABLE_USING_RADIO, src) & COMPONENT_CANNOT_USE_RADIO)
-		return
+		return NONE
 	if(SEND_SIGNAL(src, COMSIG_RADIO_NEW_MESSAGE, talking_movable, message, channel) & COMPONENT_CANNOT_USE_RADIO)
-		return
+		return NONE
 
 	if(!spans)
 		spans = list(talking_movable.speech_span)
 	if(!language)
 		language = talking_movable.get_selected_language()
-	INVOKE_ASYNC(src, PROC_REF(talk_into_impl), talking_movable, message, channel, spans.Copy(), language, message_mods)
+	INVOKE_ASYNC(src, PROC_REF(talk_into_impl), talking_movable, message, channel, LAZYLISTDUPLICATE(spans), language, LAZYLISTDUPLICATE(message_mods))
 	return ITALICS | REDUCE_RANGE
 
+/**
+ * Handles talking into the radio
+ *
+ * Unlike most speech related procs, spans and message_mods are not guaranteed to be lists
+ *
+ * * talking_movable - the atom that is talking
+ * * message - the message to be spoken
+ * * channel - the channel to be spoken on
+ * * spans - the spans to be used, lazylist
+ * * language - the language to be spoken in. (Should) never be null
+ * * message_mods - the message mods to be used, lazylist
+ */
 /obj/item/radio/proc/talk_into_impl(atom/movable/talking_movable, message, channel, list/spans, datum/language/language, list/message_mods)
 	if(!on)
 		return // the device has to be on
@@ -317,7 +326,7 @@
 		channel = null
 
 	// Nearby active jammers prevent the message from transmitting
-	if(is_within_radio_jammer_range(src) && !syndie)
+	if(is_within_radio_jammer_range(src) && !(special_channels & RADIO_SPECIAL_SYNDIE))
 		return
 
 	// Determine the identity information which will be attached to the signal.
@@ -327,12 +336,18 @@
 	var/datum/signal/subspace/vocal/signal = new(src, freq, speaker, language, radio_message, spans, message_mods)
 
 	// Independent radios, on the CentCom frequency, reach all independent radios
-	if (independent && (freq == FREQ_CENTCOM || freq == FREQ_CTF_RED || freq == FREQ_CTF_BLUE || freq == FREQ_CTF_GREEN || freq == FREQ_CTF_YELLOW))
+	if (special_channels & RADIO_SPECIAL_CENTCOM && (freq == FREQ_CENTCOM || freq == FREQ_CTF_RED || freq == FREQ_CTF_BLUE || freq == FREQ_CTF_GREEN || freq == FREQ_CTF_YELLOW))
 		signal.data["compression"] = 0
 		signal.transmission_method = TRANSMISSION_SUPERSPACE
 		signal.levels = list(0)
 		signal.broadcast()
 		return
+
+
+	if(isliving(talking_movable))
+		var/mob/living/talking_living = talking_movable
+		if(talking_living.client?.prefs.read_preference(/datum/preference/toggle/radio_noise) && !HAS_TRAIT(talking_living, TRAIT_DEAF))
+			SEND_SOUND(talking_living, 'sound/misc/radio_talk.ogg')
 
 	// All radios make an attempt to use the subspace system first
 	signal.send_to_receivers()
@@ -343,7 +358,7 @@
 
 	// Non-subspace radios will check in a couple of seconds, and if the signal
 	// was never received, send a mundane broadcast (no headsets).
-	addtimer(CALLBACK(src, PROC_REF(backup_transmission), signal), 20)
+	addtimer(CALLBACK(src, PROC_REF(backup_transmission), signal), 2 SECONDS)
 
 /obj/item/radio/proc/backup_transmission(datum/signal/subspace/vocal/signal)
 	var/turf/T = get_turf(src)
@@ -358,9 +373,9 @@
 
 /obj/item/radio/Hear(message, atom/movable/speaker, message_language, raw_message, radio_freq, list/spans, list/message_mods = list(), message_range)
 	. = ..()
-	if(radio_freq || !broadcasting || get_dist(src, speaker) > canhear_range)
+	if(radio_freq || !broadcasting || get_dist(src, speaker) > canhear_range || message_mods[MODE_RELAY])
 		return
-	var/filtered_mods = list()
+	var/list/filtered_mods = list()
 
 	if (message_mods[MODE_SING])
 		filtered_mods[MODE_SING] = message_mods[MODE_SING]
@@ -379,7 +394,6 @@
 			// left hands are odd slots
 			if (idx && (idx % 2) == (message_mods[RADIO_EXTENSION] == MODE_L_HAND))
 				return
-
 	talk_into(speaker, raw_message, , spans, language=message_language, message_mods=filtered_mods)
 
 /// Checks if this radio can receive on the given frequency.
@@ -390,7 +404,7 @@
 		if(!position || !(position.z in levels))
 			return FALSE
 
-	if (input_frequency == FREQ_SYNDICATE && !syndie)
+	if (input_frequency == FREQ_SYNDICATE && !(special_channels & RADIO_SPECIAL_SYNDIE))
 		return FALSE
 
 	// allow checks: are we listening on that frequency?
@@ -398,13 +412,25 @@
 		return TRUE
 	for(var/ch_name in channels)
 		if(channels[ch_name] & FREQ_LISTENING)
-			if(GLOB.radiochannels[ch_name] == text2num(input_frequency) || syndie)
+			if(GLOB.radiochannels[ch_name] == text2num(input_frequency) || special_channels & RADIO_SPECIAL_SYNDIE)
 				return TRUE
 	return FALSE
 
 /obj/item/radio/proc/on_receive_message(list/data)
 	SEND_SIGNAL(src, COMSIG_RADIO_RECEIVE_MESSAGE, data)
 	flick_overlay_view(overlay_speaker_active, 5 SECONDS)
+
+	if(!isliving(loc))
+		return
+
+	var/mob/living/holder = loc
+	if(!holder.client?.prefs.read_preference(/datum/preference/toggle/radio_noise) && !HAS_TRAIT(holder, TRAIT_DEAF))
+		return
+
+	var/list/spans = data["spans"]
+	SEND_SOUND(holder, 'sound/misc/radio_receive.ogg')
+	if(SPAN_COMMAND in spans)
+		SEND_SOUND(holder, 'sound/misc/radio_important.ogg')
 
 /obj/item/radio/ui_state(mob/user)
 	return GLOB.inventory_state
@@ -454,7 +480,7 @@
 				tune = tune * 10
 				. = TRUE
 			if(.)
-				set_frequency(sanitize_frequency(tune, freerange, syndie))
+				set_frequency(sanitize_frequency(tune, freerange, (special_channels & RADIO_SPECIAL_SYNDIE)))
 		if("listen")
 			set_listening(!listening)
 			. = TRUE
@@ -481,10 +507,6 @@
 				else
 					recalculateChannels()
 				. = TRUE
-
-/obj/item/radio/suicide_act(mob/living/user)
-	user.visible_message(span_suicide("[user] starts bouncing [src] off [user.p_their()] head! It looks like [user.p_theyre()] trying to commit suicide!"))
-	return BRUTELOSS
 
 /obj/item/radio/examine(mob/user)
 	. = ..()
@@ -523,7 +545,7 @@
 	for (var/ch_name in channels)
 		channels[ch_name] = 0
 	set_on(FALSE)
-	addtimer(CALLBACK(src, PROC_REF(end_emp_effect), curremp), 200)
+	addtimer(CALLBACK(src, PROC_REF(end_emp_effect), curremp), 20 SECONDS)
 
 /obj/item/radio/suicide_act(mob/living/user)
 	user.visible_message(span_suicide("[user] starts bouncing [src] off [user.p_their()] head! It looks like [user.p_theyre()] trying to commit suicide!"))
@@ -557,7 +579,7 @@
 			channels[ch_name] = TRUE
 
 /obj/item/radio/borg/syndicate
-	syndie = TRUE
+	special_channels = RADIO_SPECIAL_SYNDIE
 	keyslot = /obj/item/encryptionkey/syndicate
 
 /obj/item/radio/borg/syndicate/Initialize(mapload)

@@ -41,8 +41,6 @@ other types of metals and chemistry for reagents).
 	var/list/category = list()
 	/// List of reagents required to create one unit of the product. Currently only supported by the limb grower.
 	var/list/reagents_list = list()
-	/// The maximum number of units of whatever is produced by this can be produced in one go.
-	var/maxstack = 1
 	/// How many times faster than normal is this to build on the protolathe
 	var/lathe_time_factor = 1
 	/// Bitflags indicating what departmental lathes should be allowed to process this design.

@@ -19,6 +19,7 @@
 	)
 
 /mob/living/basic/living_floor
+	SET_BASE_VISUAL_PIXEL(0, 0) // Floor mimic
 	name = "floor"
 	desc = "The floor you walk on. It looks near-impervious to damage."
 	icon = 'icons/turf/floors.dmi'
@@ -35,7 +36,7 @@
 	move_resist = INFINITY
 	density = FALSE
 	combat_mode = TRUE
-	layer = TURF_LAYER
+	layer = LOW_FLOOR_LAYER
 	plane = FLOOR_PLANE
 	faction = list(FACTION_HOSTILE)
 	melee_damage_lower = 20
@@ -46,6 +47,7 @@
 	attack_verb_simple = "bite"
 	ai_controller = /datum/ai_controller/basic_controller/living_floor
 	melee_attack_cooldown = 0.5 SECONDS // get real
+	shadow_type = SHADOW_NONE
 
 	var/icon_aggro = "floor-hostile"
 	var/desc_aggro = "This flooring is alive and filled with teeth, better not step on that. Being covered in plating, it is immune to damage. Seems vulnerable to prying though."

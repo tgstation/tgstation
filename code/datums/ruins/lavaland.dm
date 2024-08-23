@@ -29,6 +29,13 @@
 	description = "WELCOME TO CLOWN PLANET! HONK HONK HONK etc.!"
 	suffix = "lavaland_biodome_clown_planet.dmm"
 
+/datum/map_template/ruin/lavaland/lizgas
+	name = "Lava-Ruin The Lizard's Gas"
+	id = "lizgas2"
+	description = "A recently opened gas station from the Lizard's Gas franchise."
+	suffix = "lavaland_surface_gas.dmm"
+	allow_duplicates = FALSE
+
 /datum/map_template/ruin/lavaland/cube
 	name = "Lava-Ruin The Wishgranter Cube"
 	id = "wishgranter-cube"
@@ -309,3 +316,17 @@
 	suffix = "lavaland_surface_mookvillage.dmm"
 	allow_duplicates = FALSE
 	cost = 5
+
+/datum/map_template/ruin/lavaland/shuttle_wreckage
+	name = "Lava-Ruin Shuttle Wreckage"
+	id = "shuttle_wreckage"
+	description = "Not every shuttle makes it back to CentCom."
+	suffix = "lavaland_surface_shuttle_wreckage.dmm"
+	allow_duplicates = FALSE
+
+/datum/map_template/ruin/lavaland/crashsite
+	name = "Lava-Ruin Pod Crashsite"
+	id = "crashsite"
+	description = "They launched too early"
+	suffix = "lavaland_surface_crashsite.dmm"
+	allow_duplicates = FALSE

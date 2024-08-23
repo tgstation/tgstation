@@ -12,6 +12,11 @@
 	name = "Bitrunning hololadder spawn"
 	icon_state = "hololadder"
 
+/// A permanent exit for the domain
+/obj/effect/landmark/bitrunning/permanent_exit
+	name = "Bitrunning permanent exit"
+	icon_state = "perm_exit"
+
 /// Where the crates need to be taken
 /obj/effect/landmark/bitrunning/cache_goal_turf
 	name = "Bitrunning goal turf"
@@ -20,6 +25,11 @@
 /// Where you want the crate to spawn
 /obj/effect/landmark/bitrunning/cache_spawn
 	name = "Bitrunning crate spawn"
+	icon_state = "crate"
+
+/// Where you want secondary objectives to spawn
+/obj/effect/landmark/bitrunning/curiosity_spawn
+	name = "Bitrunning curiosity spawn"
 	icon_state = "crate"
 
 ///Swaps the locations of an encrypted crate in the area with another randomly selected crate.

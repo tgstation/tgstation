@@ -21,6 +21,10 @@
 	body_parts_covered = HEAD
 	flags_inv = HIDEHAIR|HIDEEARS|HIDEFACIALHAIR|HIDEFACE|HIDEMASK|HIDESNOUT
 
+/obj/item/clothing/head/hooded/flashsuit/Initialize(mapload)
+	. = ..()
+	AddElement(/datum/element/wearable_client_colour, /datum/client_colour/flash_hood, ITEM_SLOT_HEAD, forced = TRUE)
+
 /obj/item/clothing/suit/costume/pirate
 	name = "pirate coat"
 	desc = "Yarr."
@@ -358,6 +362,48 @@
 	icon = 'icons/obj/clothing/head/costume.dmi'
 	worn_icon = 'icons/mob/clothing/head/costume.dmi'
 	icon_state = "bee"
+	body_parts_covered = HEAD
+	clothing_flags = THICKMATERIAL
+	flags_inv = HIDEHAIR|HIDEEARS
+
+/obj/item/clothing/suit/hooded/shark_costume // Blahaj
+	name = "Shark costume"
+	desc = "Finally, a costume to match your favorite plush."
+	icon_state = "shark"
+	icon = 'icons/obj/clothing/suits/costume.dmi'
+	worn_icon = 'icons/mob/clothing/suits/costume.dmi'
+	inhand_icon_state = "shark"
+	body_parts_covered = CHEST|GROIN|ARMS
+	clothing_flags = THICKMATERIAL
+	hoodtype = /obj/item/clothing/head/hooded/shark_hood
+
+/obj/item/clothing/head/hooded/shark_hood
+	name = "shark hood"
+	desc = "A hood attached to a shark costume."
+	icon = 'icons/obj/clothing/head/costume.dmi'
+	worn_icon = 'icons/mob/clothing/head/costume.dmi'
+	icon_state = "shark"
+	body_parts_covered = HEAD
+	clothing_flags = THICKMATERIAL
+	flags_inv = HIDEHAIR|HIDEEARS
+
+/obj/item/clothing/suit/hooded/shork_costume // Oh God Why
+	name = "shork costume"
+	desc = "Why would you ever do this?"
+	icon_state = "sharkcursed"
+	icon = 'icons/obj/clothing/suits/costume.dmi'
+	worn_icon = 'icons/mob/clothing/suits/costume.dmi'
+	inhand_icon_state = "sharkcursed"
+	body_parts_covered = CHEST|GROIN|ARMS
+	clothing_flags = THICKMATERIAL
+	hoodtype = /obj/item/clothing/head/hooded/shork_hood
+
+/obj/item/clothing/head/hooded/shork_hood
+	name = "shork hood"
+	desc = "A hood attached to a shork costume."
+	icon = 'icons/obj/clothing/head/costume.dmi'
+	worn_icon = 'icons/mob/clothing/head/costume.dmi'
+	icon_state = "sharkcursed"
 	body_parts_covered = HEAD
 	clothing_flags = THICKMATERIAL
 	flags_inv = HIDEHAIR|HIDEEARS

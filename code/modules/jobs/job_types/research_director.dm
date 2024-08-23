@@ -58,7 +58,7 @@
 	id = /obj/item/card/id/advanced/silver
 	id_trim = /datum/id_trim/job/research_director
 	uniform = /obj/item/clothing/under/rank/rnd/research_director/turtleneck
-	suit = /obj/item/clothing/suit/jacket/research_director
+	suit = /obj/item/clothing/suit/toggle/labcoat/research_director
 	backpack_contents = list(
 		/obj/item/melee/baton/telescopic = 1,
 		)
@@ -76,7 +76,10 @@
 	messenger = /obj/item/storage/backpack/messenger/science
 
 	chameleon_extras = /obj/item/stamp/head/rd
-	skillchips = list(/obj/item/skillchip/job/research_director)
+	skillchips = list(
+		/obj/item/skillchip/research_director,
+		/obj/item/skillchip/job/roboticist,
+	)
 
 /datum/outfit/job/rd/mod
 	name = "Research Director (MODsuit)"

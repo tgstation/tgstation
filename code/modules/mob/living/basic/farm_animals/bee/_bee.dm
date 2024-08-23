@@ -39,9 +39,10 @@
 	can_be_held = TRUE
 	held_w_class = WEIGHT_CLASS_TINY
 	environment_smash  = ENVIRONMENT_SMASH_NONE
-	habitable_atmos = list("min_oxy" = 0, "max_oxy" = 0, "min_plas" = 0, "max_plas" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
+	habitable_atmos = null
 	basic_mob_flags = DEL_ON_DEATH
 	ai_controller = /datum/ai_controller/basic_controller/bee
+	shadow_type = SHADOW_SMALL
 	///the reagent the bee has
 	var/datum/reagent/beegent = null
 	///the house we live in
@@ -164,6 +165,7 @@
 	add_overlay(greyscale_overlay)
 
 	add_overlay("[icon_base]_wings")
+	update_appearance(UPDATE_OVERLAYS)
 
 /mob/living/basic/bee/proc/pollinate(obj/machinery/hydroponics/hydro)
 	if(!hydro.can_bee_pollinate())

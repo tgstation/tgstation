@@ -55,28 +55,21 @@
 	var/datum/status_effect/teleport_flux/perma/permaflux = user.has_status_effect(/datum/status_effect/teleport_flux/perma)
 	permaflux?.delayed_remove(src)
 
-/obj/item/teleport_rod/afterattack(atom/target, mob/living/user, proximity_flag, click_parameters)
-	. = ..()
-	if(!isliving(user))
-		return
-	if(proximity_flag) // assuming you don't want to teleport 1 tile away
-		return
-
-	. |= AFTERATTACK_PROCESSED_ITEM
-
+/obj/item/teleport_rod/ranged_interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
+	. = ITEM_INTERACT_BLOCKING
 	var/turf/start_turf = get_turf(user)
-	var/turf/target_turf = get_turf(target)
+	var/turf/target_turf = get_turf(interacting_with)
 	if(get_dist(start_turf, target_turf) > max_tp_range)
 		user.balloon_alert(user, "too far!")
-		return
+		return .
 
 	if(!(target_turf in view(user, user.client?.view || world.view)))
 		user.balloon_alert(user, "out of view!")
-		return
+		return .
 
 	if(target_turf.is_blocked_turf(exclude_mobs = TRUE, source_atom = user))
 		user.balloon_alert(user, "obstructed!")
-		return
+		return .
 
 	var/tp_result = do_teleport(
 		teleatom = user,
@@ -88,7 +81,9 @@
 
 	if(!tp_result)
 		user.balloon_alert(user, "teleport failed!")
-		return
+		return .
+
+	. = ITEM_INTERACT_SUCCESS
 
 	var/sound/teleport_sound = sound('sound/magic/summonitems_generic.ogg')
 	teleport_sound.pitch = 0.5
@@ -101,7 +96,7 @@
 	user.changeNext_move(CLICK_CD_SLOW * 1.2)
 
 	if(!apply_debuffs)
-		return
+		return .
 
 	// Teleporting leaves some of your reagents behind!
 	// (Primarily a way to prevent cheese with damage healing chem mixes,
@@ -110,13 +105,14 @@
 	user.reagents?.remove_all(0.33, relative = TRUE)
 	user_stomach?.reagents?.remove_all(0.33, relative = TRUE)
 	if(user.has_status_effect(/datum/status_effect/teleport_flux/perma))
-		return
+		return .
 
 	if(user.has_status_effect(/datum/status_effect/teleport_flux))
 		// The status effect handles the damage, but we'll add a special pop up for rod usage specifically
 		user.balloon_alert(user, "too soon!")
 
 	user.apply_status_effect(/datum/status_effect/teleport_flux)
+	return .
 
 /// Temp visual displayed on both sides of a teleport rod teleport
 /obj/effect/temp_visual/teleport_flux
@@ -144,6 +140,7 @@
 	duration = 6 SECONDS
 	alert_type = /atom/movable/screen/alert/status_effect/teleport_flux
 	remove_on_fullheal = TRUE // staff of healing ~synergy~
+	show_duration = TRUE
 
 	/// Amount of damage to deal when teleporting in flux
 	var/tp_damage = 15

@@ -41,9 +41,8 @@
 		if(BURN)
 			playsound(src, 'sound/items/welder.ogg', 100, TRUE)
 
-/obj/structure/pinata/deconstruct(disassembled)
+/obj/structure/pinata/atom_deconstruct(disassembled)
 	new debris(get_turf(src))
-	return ..()
 
 ///An item that when used inhand spawns an immovable pinata
 /obj/item/pinata
@@ -72,7 +71,7 @@
 	base_icon_state = "pinata_syndie_placed"
 	destruction_loot = 2
 	debris = /obj/effect/decal/cleanable/wrapping/pinata/syndie
-	candy_options = list( 
+	candy_options = list(
 		/obj/item/food/bubblegum,
 		/obj/item/food/candy,
 		/obj/item/food/chocolatebar,
@@ -90,3 +89,28 @@
 	desc = "A papier-mâché corgi that contains various candy and explosives, must be set up before you can smash it."
 	icon_state = "pinata_syndie"
 	pinata_type = /obj/structure/pinata/syndie
+
+/obj/structure/pinata/donk
+	name = "donk corgi pinata"
+	desc = "A papier-mâché representation of a corgi that contains all sorts of savory treats."
+	icon_state = "pinata_donk_placed"
+	base_icon_state = "pinata_donk_placed"
+	debris = /obj/effect/decal/cleanable/wrapping/pinata/donk
+	candy_options = list(
+		/obj/item/food/donkpocket/warm,
+		/obj/item/food/donkpocket/warm/pizza,
+		/obj/item/food/donkpocket/warm/honk,
+		/obj/item/food/donkpocket/warm/berry,
+		/obj/item/food/donkpocket/warm,
+		/obj/item/food/tatortot,
+		/obj/item/gun/ballistic/automatic/pistol/toy,
+		/obj/item/hot_potato/harmless/toy,
+		/obj/item/storage/box/donkpockets,
+		/obj/item/toy/plush/donkpocket,
+	)
+
+/obj/item/pinata/donk
+	name = "\improper Donk Co. pinata assembly kit"
+	desc = "A papier-mâché corgi that contains various foodstuff and toys, must be set up before you can smash it."
+	icon_state = "pinata_donk"
+	pinata_type = /obj/structure/pinata/donk

@@ -51,7 +51,7 @@
 /obj/structure/fluff/preserved_borer
 	name = "preserved borer exhibit"
 	desc = "A preserved cortical borer. Probably been there long enough to not last long outside the exhibit."
-	icon = 'icons/obj/structures.dmi'
+	icon = 'icons/obj/fluff/general.dmi'
 	icon_state = "preservedborer"
 	density = TRUE
 
@@ -78,15 +78,15 @@
 	desc = /obj/machinery/atmospherics/components/unary/vent_scrubber::desc
 	icon = /obj/machinery/atmospherics/components/unary/vent_scrubber::icon
 	layer = /obj/machinery/atmospherics/components/unary/vent_scrubber::layer
-	plane = FLOOR_PLANE
+	plane = /obj/machinery/atmospherics/components/unary/vent_scrubber::plane
 	icon_state = "scrub_on"
 
 /obj/structure/fluff/fake_vent
 	name = /obj/machinery/atmospherics/components/unary/vent_pump::name
 	desc = /obj/machinery/atmospherics/components/unary/vent_pump::desc
 	icon = /obj/machinery/atmospherics/components/unary/vent_pump::icon
-	layer = /obj/machinery/atmospherics/components/unary/vent_scrubber::layer
-	plane = FLOOR_PLANE
+	layer = /obj/machinery/atmospherics/components/unary/vent_pump::layer
+	plane = /obj/machinery/atmospherics/components/unary/vent_pump::plane
 	icon_state = "vent_out"
 
 /turf/open/mirage
@@ -122,7 +122,7 @@
 	anchored = TRUE
 	density = TRUE
 	smoothing_flags = SMOOTH_BITMASK
-	smoothing_groups = SMOOTH_GROUP_WALLS + SMOOTH_GROUP_CLOSED_TURFS
+	smoothing_groups = SMOOTH_GROUP_WALLS + SMOOTH_GROUP_TALL_WALLS + SMOOTH_GROUP_CLOSED_TURFS
 
 /obj/item/paper/fluff/museum/noend
 	name = "scrambled note"
@@ -159,8 +159,13 @@
 	mask = /obj/item/clothing/mask/fakemoustache/italian
 
 /obj/machinery/vending/hotdog/museum
-	obj_flags = parent_type::obj_flags|NO_DECONSTRUCTION
 	onstation_override = TRUE
+
+/obj/machinery/vending/hotdog/museum/screwdriver_act(mob/living/user, obj/item/attack_item)
+	return NONE
+
+/obj/machinery/vending/hotdog/museum/crowbar_act(mob/living/user, obj/item/attack_item)
+	return NONE
 
 #define CAFE_KEYCARD_TOILETS "museum_cafe_key_toilets"
 
@@ -185,7 +190,6 @@
 		return INITIALIZE_HINT_LATELOAD
 
 /obj/item/keycard/cafeteria/LateInitialize()
-	. = ..()
 	if(SSqueuelinks.queues[CAFE_KEYCARD_TOILETS])
 		SSqueuelinks.pop_link(CAFE_KEYCARD_TOILETS)
 

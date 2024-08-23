@@ -129,6 +129,45 @@
 	body_parts_covered = CHEST|GROIN|ARMS
 	can_adjust = FALSE
 
+/obj/item/clothing/under/costume/yukata
+	name = "black yukata"
+	desc = "A comfortable black cotton yukata inspired by traditional designs, perfect for a non-formal setting."
+	icon_state = "yukata1"
+	body_parts_covered = CHEST|GROIN|ARMS
+	can_adjust = FALSE
+	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION_NO_NEW_ICON
+
+/obj/item/clothing/under/costume/yukata/green
+	name = "green yukata"
+	desc = "A comfortable green cotton yukata inspired by traditional designs, perfect for a non-formal setting."
+	icon_state = "yukata2"
+
+/obj/item/clothing/under/costume/yukata/white
+	name = "white yukata"
+	desc = "A comfortable white cotton yukata inspired by traditional designs, perfect for a non-formal setting."
+	icon_state = "yukata3"
+
+/obj/item/clothing/under/costume/kimono
+	name = "black kimono"
+	desc = "A luxurious black silk kimono with traditional flair, ideal for elegant festive occasions."
+	icon_state = "kimono1"
+	inhand_icon_state = "yukata1"
+	body_parts_covered = CHEST|GROIN|ARMS
+	can_adjust = FALSE
+	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION_NO_NEW_ICON
+
+/obj/item/clothing/under/costume/kimono/red
+	name = "red kimono"
+	desc = "A luxurious red silk kimono with traditional flair, ideal for elegant festive occasions."
+	icon_state = "kimono2"
+	inhand_icon_state = "kimono2"
+
+/obj/item/clothing/under/costume/kimono/purple
+	name = "purple kimono"
+	desc = "A luxurious purple silk kimono with traditional flair, ideal for elegant festive occasions."
+	icon_state = "kimono3"
+	inhand_icon_state = "kimono3"
+
 /obj/item/clothing/under/costume/villain
 	name = "villain suit"
 	desc = "A change of wardrobe is necessary if you ever want to catch a real superhero."
@@ -238,6 +277,7 @@
 						"Blue" = "blue_mech_suit",
 						"Black" = "black_mech_suit",
 						)
+
 
 /obj/item/clothing/under/costume/russian_officer
 	name = "\improper Russian officer's uniform"
@@ -380,9 +420,24 @@
 	name = "Martial Artist Gi"
 	desc = "Assistant, nukie, whatever. You can beat anyone; it's called hard work!"
 	icon_state = "martial_arts_gi"
+	greyscale_config = /datum/greyscale_config/gi
+	greyscale_config_worn = /datum/greyscale_config/gi/worn
+	greyscale_colors = "#f1eeee#000000"
+	flags_1 = IS_PLAYER_COLORABLE_1
 	inhand_icon_state = null
 	female_sprite_flags = NO_FEMALE_UNIFORM
 	can_adjust = FALSE
+
+/obj/item/clothing/under/costume/gi/Initialize(mapload)
+	. = ..()
+	AddElement(/datum/element/gags_recolorable)
+	update_icon(UPDATE_OVERLAYS)
+
+/obj/item/clothing/under/costume/gi/goku
+	name = "Sacred Gi"
+	desc = "Created by a man who touched the hearts and lives of many."
+	icon_state = "martial_arts_gi_goku"
+	greyscale_colors = "#f89925#3e6dd7"
 
 /obj/item/clothing/under/costume/traditional
 	name = "Traditional Suit"
@@ -411,4 +466,18 @@
 	inhand_icon_state = null
 	body_parts_covered = CHEST|GROIN|LEGS|FEET|ARMS|HANDS|HEAD
 	flags_inv = HIDEGLOVES|HIDESHOES|HIDEEARS|HIDEEYES|HIDEHAIR
+
+/obj/item/clothing/under/costume/gamberson
+	name = "re-enactor's Gamberson"
+	desc = "A colorful set of clothes made to look like a medieval gamberson."
+	icon_state = "gamberson"
+	inhand_icon_state = null
+	female_sprite_flags = NO_FEMALE_UNIFORM
+	can_adjust = FALSE
+
+/obj/item/clothing/under/costume/gamberson/military
+	name = "swordsman's Gamberson"
+	desc = "A padded medieval gamberson. Has enough woolen layers to dull a strike from any small weapon."
+	armor_type = /datum/armor/clothing_under/rank_security
+	has_sensor = NO_SENSORS
 

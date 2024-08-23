@@ -22,19 +22,6 @@
 		/obj/item/pillow/random,
 	)
 
-	///a list of all the reagents which alleviate the negative moodlet
-	var/list/stimulants = list(
-		/datum/reagent/medicine/stimulants,
-		/datum/reagent/drug/methamphetamine,
-		/datum/reagent/drug/bath_salts,
-		/datum/reagent/drug/aranesp,
-		/datum/reagent/drug/pumpup,
-		/datum/reagent/drug/blastoff,
-		/datum/reagent/consumable/coffee,
-		/datum/reagent/consumable/tea,
-		/datum/reagent/consumable/volt_energy,
-		/datum/reagent/consumable/monkey_energy
-	)
 	///essentially our "sleep bank". sleeping charges it up and its drained while awake
 	var/five_more_minutes = 0
 	///the overlay we put over the eyes
@@ -43,30 +30,42 @@
 
 ///adds the corresponding moodlet and visual effects
 /datum/quirk/all_nighter/add(client/client_source)
+	RegisterSignal(quirk_holder, COMSIG_CARBON_REMOVE_LIMB, PROC_REF(on_removed_limb))
 	quirk_holder.add_mood_event("all_nighter", /datum/mood_event/all_nighter)
 	add_bags()
 
 ///removes the corresponding moodlet and visual effects
 /datum/quirk/all_nighter/remove(client/client_source)
+	UnregisterSignal(quirk_holder, COMSIG_CARBON_REMOVE_LIMB)
 	quirk_holder.clear_mood_event("all_nighter", /datum/mood_event/all_nighter)
-	remove_bags()
+	if(bodypart_overlay)
+		remove_bags()
+
+///if we have bags and lost a head, remove them
+/datum/quirk/all_nighter/proc/on_removed_limb(datum/source, obj/item/bodypart/removed_limb, special, dismembered)
+	SIGNAL_HANDLER
+
+	if(bodypart_overlay && istype(removed_limb, /obj/item/bodypart/head))
+		remove_bags()
 
 ///adds the bag overlay
-/datum/quirk/all_nighter/proc/add_bags(client/client_source)
+/datum/quirk/all_nighter/proc/add_bags()
 	var/mob/living/carbon/human/sleepy_head = quirk_holder
-	var/obj/item/bodypart/head/face = sleepy_head.get_bodypart(BODY_ZONE_HEAD)
+	var/obj/item/bodypart/head/face = sleepy_head?.get_bodypart(BODY_ZONE_HEAD)
+	if(isnull(face))
+		return
 	bodypart_overlay = new() //creates our overlay
 	face.add_bodypart_overlay(bodypart_overlay)
 	sleepy_head.update_body_parts() //make sure to update icon
 
 ///removes the bag overlay
-/datum/quirk/all_nighter/proc/remove_bags(client/client_source)
+/datum/quirk/all_nighter/proc/remove_bags()
 	var/mob/living/carbon/human/sleepy_head = quirk_holder
-	var/obj/item/bodypart/head/face = sleepy_head.get_bodypart(BODY_ZONE_HEAD)
-	//our overlay is stored as a datum var, so referencing it is easy
-	face.remove_bodypart_overlay(bodypart_overlay)
+	var/obj/item/bodypart/head/face = sleepy_head?.get_bodypart(BODY_ZONE_HEAD)
+	if(face)
+		face.remove_bodypart_overlay(bodypart_overlay)
+		sleepy_head.update_body_parts()
 	QDEL_NULL(bodypart_overlay)
-	sleepy_head.update_body_parts()
 
 /**
 *Here we actively handle our moodlet & eye bags, adding/removing them as necessary
@@ -84,7 +83,6 @@
 /datum/quirk/all_nighter/process(seconds_per_tick)
 	var/happy_camper = TRUE
 	var/beauty_sleep = TRUE
-	var/stims_present = FALSE
 
 	if(quirk_holder.IsSleeping())
 		five_more_minutes += SLEEP_BANK_MULTIPLIER * seconds_per_tick
@@ -93,11 +91,8 @@
 	else
 		beauty_sleep = FALSE //no sleep means eye bags
 
-		for(var/stimulant in stimulants)
-			if(quirk_holder.has_reagent(stimulant))  //checking for stims
-				stims_present = TRUE
-				break
-		if(!stims_present) //no stims and no sleep means an unhappy camper
+		// Defining which reagents count is handled by the reagents
+		if(!HAS_TRAIT(quirk_holder, TRAIT_STIMULATED))
 			happy_camper = FALSE
 
 	//adjusts the mood event accordingly
