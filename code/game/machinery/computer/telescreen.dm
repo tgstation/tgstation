@@ -48,7 +48,7 @@ TELESCREEN_DIRECTIONAL_HELPERS(/obj/machinery/computer/security/telescreen)
 	interaction_flags_atom = INTERACT_ATOM_UI_INTERACT | INTERACT_ATOM_NO_FINGERPRINT_INTERACT | INTERACT_ATOM_NO_FINGERPRINT_ATTACK_HAND | INTERACT_MACHINE_REQUIRES_SIGHT
 	frame_type = /obj/item/wallframe/telescreen/entertainment
 	/// Virtual radio inside of the entertainment monitor to broadcast audio
-	var/obj/item/radio/entertainment_speakers/speakers
+	var/obj/item/radio/entertainment/speakers/speakers
 
 /obj/item/wallframe/telescreen/entertainment
 	name = "entertainment telescreen frame"

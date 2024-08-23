@@ -1,10 +1,10 @@
 // Unique broadcast camera given to the first Curator
-// Only one should exist ideally
+// Only one should exist ideally, if other types are created they must have different camera_networks
 // Broadcasts its surroundings to entertainment monitors and its audio to entertainment radio channel
 /obj/item/broadcast_camera
 	name = "broadcast camera"
 	desc = "A large camera that streams its live feed and audio to entertainment monitors across the station, allowing everyone to watch the broadcast."
-	desc_controls = "Right-click to change the broadcast name."
+	desc_controls = "Right-click to change the broadcast name. Alt-click to toggle microphone."
 	icon = 'icons/obj/service/broadcast.dmi'
 	icon_state = "broadcast_cam0"
 	base_icon_state = "broadcast_cam"
@@ -27,7 +27,7 @@
 	/// The "virtual" security camera inside of the physical camera
 	var/obj/machinery/camera/internal_camera
 	/// The "virtual" radio inside of the the physical camera, a la microphone
-	var/obj/item/radio/entertainment_microphone/internal_radio
+	var/obj/item/radio/entertainment/microphone/internal_radio
 
 /obj/item/broadcast_camera/Initialize(mapload)
 	. = ..()
@@ -54,6 +54,10 @@
 /obj/item/broadcast_camera/attack_self_secondary(mob/user, modifiers)
 	. = ..()
 	broadcast_name = tgui_input_text(user = user, title = "Broadcast Name", message = "What will be the name of your broadcast?", default = "[broadcast_name]", max_length = MAX_CHARTER_LEN)
+
+/obj/item/broadcast_camera/examine(mob/user)
+	. = ..()
+	. += span_notice("Broadcast name is <b>[broadcast_name]</b>")
 
 /// When wielding the camera
 /obj/item/broadcast_camera/proc/on_wield()
