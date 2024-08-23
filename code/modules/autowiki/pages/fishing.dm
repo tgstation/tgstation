@@ -190,7 +190,7 @@
 /datum/autowiki/fishing_line
 	page = "Template:Autowiki/Content/Fish/Line"
 
-/datum/autowiki/datum/autowiki/fishing_line/generate()
+/datum/autowiki/fishing_line/generate()
 	var/output = ""
 
 	var/list/generated_icons = list()
