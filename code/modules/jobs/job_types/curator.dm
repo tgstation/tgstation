@@ -62,7 +62,7 @@
 	/// There can be only one cameraman on this station, and no, not that kind
 	var/static/cameraman_choosen = FALSE
 	if(!cameraman_choosen)
-		backpack_contents = [/obj/item/broadcast_camera] = 1
+		backpack_contents[/obj/item/broadcast_camera] = 1
 		cameraman_choosen = TRUE
 	return ..()
 
