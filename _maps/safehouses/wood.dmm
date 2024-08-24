@@ -2,6 +2,10 @@
 "a" = (
 /turf/open/indestructible/hotelwood,
 /area/virtual_domain/safehouse)
+"d" = (
+/obj/structure/sign/poster/random/directional/east,
+/turf/open/indestructible/hotelwood,
+/area/virtual_domain/safehouse)
 "i" = (
 /obj/effect/spawner/structure/window,
 /turf/open/floor/plating,
@@ -24,9 +28,7 @@
 "v" = (
 /obj/machinery/light/small/directional/east,
 /obj/structure/table/wood,
-/obj/item/newspaper{
-	pixel_y = 8
-	},
+/obj/item/newspaper,
 /turf/open/indestructible/hotelwood,
 /area/virtual_domain/safehouse)
 "w" = (
@@ -108,7 +110,7 @@ G
 i
 s
 J
-a
+d
 v
 i
 "}

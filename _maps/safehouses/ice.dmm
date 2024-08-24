@@ -146,6 +146,11 @@
 /obj/machinery/smartfridge/drying/rack,
 /turf/open/floor/iron,
 /area/virtual_domain/safehouse)
+"N" = (
+/obj/effect/spawner/structure/window/ice,
+/obj/structure/barricade/wooden/crude/snow,
+/turf/open/floor/plating/snowed,
+/area/virtual_domain/safehouse)
 "O" = (
 /obj/effect/turf_decal/weather/snow/corner{
 	dir = 4
@@ -198,7 +203,7 @@
 (1,1,1) = {"
 i
 i
-a
+N
 a
 i
 e
@@ -246,8 +251,8 @@ i
 (7,1,1) = {"
 i
 i
-a
-a
+N
+N
 i
 i
 "}
