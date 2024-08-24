@@ -199,6 +199,23 @@
 			</ul>
 			Good luck agent. You can burn this document."}
 
+/obj/item/storage/box/syndie_kit/shotgun_revolver
+	desc = "A box containing a value bundled shotgun revolver and some shotgun shells. Comes with two quickload cartridges of slugs"
+
+/obj/item/storage/box/syndie_kit/shotgun_revolver/PopulateContents()
+	new /obj/item/gun/ballistic/revolver/shotgun_revolver(src)
+	new /obj/item/ammo_box/advanced/s12gauge(src)
+	new /obj/item/ammo_box/advanced/s12gauge(src)
+
+
+/obj/item/storage/box/syndie_kit/surplus_smg_bundle
+	desc = "A box containing a surplus space soviet Plastikov and two magazines. Perfect for henchmen."
+
+/obj/item/storage/box/syndie_kit/surplus_smg_bundle/PopulateContents()
+	new /obj/item/gun/ballistic/automatic/plastikov(src)
+	new /obj/item/ammo_box/magazine/plastikov9mm(src)
+	new /obj/item/ammo_box/magazine/plastikov9mm(src)
+
 #undef KIT_ITEM_CATEGORY_SUPPORT
 #undef KIT_ITEM_CATEGORY_WEAPONS
 #undef KIT_ITEM_CATEGORY_MISC
