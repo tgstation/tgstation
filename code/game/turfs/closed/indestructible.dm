@@ -201,8 +201,8 @@ INITIALIZE_IMMEDIATE(/turf/closed/indestructible/splashscreen)
 
 /turf/closed/indestructible/opsglass
 	name = "window"
-	icon = MAP_SWITCH('icons/obj/structures/smooth/windows/plastitanium_window.dmi', 'icons/obj/structures_spawners.dmi')
-	icon_state = MAP_SWITCH("0-lower", "plastitaniumwindow_spawner")
+	icon = MAP_SWITCH('icons/obj/structures/smooth/windows/plastitanium_window.dmi', 'icons/obj/structures/smooth/plastitanium_window.dmi')
+	icon_state = MAP_SWITCH("0-lower", "plastitanium_window-0")
 	layer = ABOVE_OBJ_LAYER
 	opacity = FALSE
 	use_splitvis = FALSE
