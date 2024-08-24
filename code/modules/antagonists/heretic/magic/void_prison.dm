@@ -19,6 +19,13 @@
 	invocation_type = INVOCATION_SHOUT
 	spell_requirements = NONE
 
+/datum/action/cooldown/spell/pointed/void_prison/before_cast(atom/cast_on)
+	. = ..()
+	if(. & SPELL_CANCEL_CAST)
+		return
+	if(!ismob(cast_on))
+		return SPELL_CANCEL_CAST
+
 /datum/action/cooldown/spell/pointed/void_prison/cast(mob/living/carbon/human/cast_on)
 	. = ..()
 	if(cast_on.can_block_magic(antimagic_flags))

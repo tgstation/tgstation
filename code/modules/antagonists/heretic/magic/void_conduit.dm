@@ -93,21 +93,13 @@
 				else
 					affected_mob.apply_status_effect(/datum/status_effect/void_chill, 1)
 
-			if(istype(thing_to_affect, /obj/machinery/door))
-				var/obj/machinery/door/affected_door = thing_to_affect
+			if(istype(thing_to_affect, /obj/machinery/door) || istype(thing_to_affect, /obj/structure/door_assembly))
+				var/obj/affected_door = thing_to_affect
 				affected_door.take_damage(rand(15, 30))
 
-			if(istype(thing_to_affect, /obj/structure/door_assembly))
-				var/obj/structure/door_assembly/affected_assembly = thing_to_affect
-				affected_assembly.take_damage(rand(15, 30))
-
-			if(istype(thing_to_affect, /obj/structure/window))
-				var/obj/structure/window/affected_window = thing_to_affect
-				affected_window.take_damage(rand(10, 20))
-
-			if(istype(thing_to_affect, /obj/structure/grille))
-				var/obj/structure/grille/affected_grille = thing_to_affect
-				affected_grille.take_damage(rand(10, 20))
+			if(istype(thing_to_affect, /obj/structure/window) || istype(thing_to_affect, /obj/structure/grille))
+				var/obj/structure/affected_structure = thing_to_affect
+				affected_structure.take_damage(rand(10, 20))
 
 /datum/looping_sound/void_conduit
 	mid_sounds = 'sound/ambience/ambiatm1.ogg'

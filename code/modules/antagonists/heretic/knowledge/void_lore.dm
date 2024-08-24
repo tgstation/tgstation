@@ -256,11 +256,14 @@
 	RegisterSignal(user, COMSIG_ATOM_PRE_BULLET_ACT, PROC_REF(hit_by_projectile))
 	RegisterSignals(user, list(COMSIG_LIVING_DEATH, COMSIG_QDELETING), PROC_REF(on_death))
 	heavy_storm = new(user, 10)
+	if(ishuman(user))
+		var/mob/living/carbon/human/ascended_human = user
+		var/obj/item/organ/internal/eyes/heretic_eyes = ascended_human.get_organ_slot(ORGAN_SLOT_EYES)
+		heretic_eyes?.color_cutoffs = list(30, 30, 30)
+		ascended_human.update_sight()
 
 /datum/heretic_knowledge/ultimate/void_final/on_lose(mob/user, datum/antagonist/heretic/our_heretic)
 	on_death() // Losing is pretty much dying. I think
-	RegisterSignals(user, list(COMSIG_LIVING_LIFE, COMSIG_LIVING_DEATH))
-	QDEL_NULL(heavy_storm)
 
 /**
  * Signal proc for [COMSIG_LIVING_LIFE].
@@ -274,9 +277,6 @@
 	SIGNAL_HANDLER
 
 	for(var/atom/thing_in_range as anything in range(10, source))
-		if(!isatom(thing_in_range)) //Better safe than sorry
-			continue
-
 		if(iscarbon(thing_in_range))
 			var/mob/living/carbon/close_carbon = thing_in_range
 			if(IS_HERETIC_OR_MONSTER(close_carbon))
@@ -287,21 +287,13 @@
 			close_carbon.adjust_eye_blur(rand(0 SECONDS, 2 SECONDS))
 			close_carbon.adjust_bodytemperature(-30 * TEMPERATURE_DAMAGE_COEFFICIENT)
 
-		if(istype(thing_in_range, /obj/machinery/door))
-			var/obj/machinery/door/affected_door = thing_in_range
+		if(istype(thing_in_range, /obj/machinery/door) || istype(thing_in_range, /obj/structure/door_assembly))
+			var/obj/affected_door = thing_in_range
 			affected_door.take_damage(rand(60, 80))
 
-		if(istype(thing_in_range, /obj/structure/door_assembly))
-			var/obj/structure/door_assembly/affected_assembly = thing_in_range
-			affected_assembly.take_damage(rand(60, 80))
-
-		if(istype(thing_in_range, /obj/structure/window))
-			var/obj/structure/window/affected_window = thing_in_range
-			affected_window.take_damage(rand(20, 40))
-
-		if(istype(thing_in_range, /obj/structure/grille))
-			var/obj/structure/grille/affected_grille = thing_in_range
-			affected_grille.take_damage(rand(20, 40))
+		if(istype(thing_in_range, /obj/structure/window) || istype(thing_in_range, /obj/structure/grille))
+			var/obj/structure/affected_structure = thing_in_range
+			affected_structure.take_damage(rand(20, 40))
 
 		if(isturf(thing_in_range))
 			var/turf/affected_turf = thing_in_range
@@ -327,6 +319,9 @@
 	if(storm)
 		storm.end()
 		QDEL_NULL(storm)
+	if(heavy_storm)
+		QDEL_NULL(heavy_storm)
+	UnregisterSignal(source, list(COMSIG_LIVING_LIFE, COMSIG_ATOM_PRE_BULLET_ACT, COMSIG_LIVING_DEATH, COMSIG_QDELETING))
 
 ///Few checks to determine if we can deflect bullets
 /datum/heretic_knowledge/ultimate/void_final/proc/can_deflect(mob/living/ascended_heretic)
@@ -345,7 +340,7 @@
 		return NONE
 
 	ascended_heretic.visible_message(
-		span_danger("The void storm surrounding [ascended_heretic] deflects [hitting_projectile]."),
+		span_danger("The void storm surrounding [ascended_heretic] deflects [hitting_projectile]!"),
 		span_userdanger("The void storm protects you from [hitting_projectile]!"),
 	)
 	playsound(ascended_heretic, pick('sound/weapons/bulletflyby.ogg', 'sound/weapons/bulletflyby2.ogg', 'sound/weapons/bulletflyby3.ogg'), 75, TRUE)

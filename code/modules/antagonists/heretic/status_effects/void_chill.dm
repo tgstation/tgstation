@@ -37,7 +37,7 @@
 	UnregisterSignal(owner, COMSIG_ATOM_UPDATE_OVERLAYS)
 
 /datum/status_effect/void_chill/tick(seconds_between_ticks)
-	owner.adjust_bodytemperature(-12 * stacks)
+	owner.adjust_bodytemperature(-12 * stacks * seconds_between_ticks)
 
 /datum/status_effect/void_chill/refresh(mob/living/new_owner, new_stacks, forced = FALSE)
 	. = ..()
@@ -51,7 +51,7 @@
 /datum/status_effect/void_chill/proc/update_stacks_overlay(atom/parent_atom, list/overlays)
 	SIGNAL_HANDLER
 
-	linked_alert.update_appearance(UPDATE_ICON_STATE|UPDATE_DESC)
+	linked_alert?.update_appearance(UPDATE_ICON_STATE|UPDATE_DESC)
 	owner.remove_alt_appearance("heretic_status")
 	stacks_overlay = image('icons/effects/effects.dmi', owner, "void_chill_partial")
 	if(stacks >= 5)
