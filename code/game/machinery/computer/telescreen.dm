@@ -66,8 +66,7 @@ TELESCREEN_DIRECTIONAL_HELPERS(/obj/machinery/computer/security/telescreen/enter
 
 /obj/machinery/computer/security/telescreen/entertainment/Destroy()
 	. = ..()
-	if(speakers)
-		qdel(speakers)
+	QDEL_NULL(speakers)
 
 /obj/machinery/computer/security/telescreen/on_set_machine_stat(old_value)
 	. = ..()

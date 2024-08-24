@@ -270,15 +270,17 @@
 
 /obj/item/clothing/accessory/press_badge/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
 	. = ..()
-	if(isliving(interacting_with))
-		var/mob/living/interacting_living = interacting_with
-		if(user.combat_mode)
-			playsound(interacting_living, 'sound/weapons/throw.ogg', 30)
-			examine(interacting_living)
-			to_chat(interacting_living, span_userdanger("[user] shoves the [src] up your face!"))
-			user.visible_message(span_warning("[user] have shoved a [src] into [interacting_living] face."))
-		else
-			playsound(interacting_living, 'sound/weapons/throwsoft.ogg', 20)
-			examine(interacting_living)
-			to_chat(interacting_living, span_boldwarning("[user] shows the [src] to you."))
-			user.visible_message(span_notice("[user] shows a [src] to [interacting_living]."))
+	if(!isliving(interacting_with))
+		return
+
+	var/mob/living/interacting_living = interacting_with
+	if(user.combat_mode)
+		playsound(interacting_living, 'sound/weapons/throw.ogg', 30)
+		examine(interacting_living)
+		to_chat(interacting_living, span_userdanger("[user] shoves the [src] up your face!"))
+		user.visible_message(span_warning("[user] have shoved a [src] into [interacting_living] face."))
+	else
+		playsound(interacting_living, 'sound/weapons/throwsoft.ogg', 20)
+		examine(interacting_living)
+		to_chat(interacting_living, span_boldwarning("[user] shows the [src] to you."))
+		user.visible_message(span_notice("[user] shows a [src] to [interacting_living]."))

@@ -40,10 +40,8 @@
 	)
 
 /obj/item/broadcast_camera/Destroy(force)
-	if(internal_radio)
-		qdel(internal_radio)
-	if(internal_camera)
-		qdel(internal_camera)
+	QDEL_NULL(internal_radio)
+	QDEL_NULL(internal_camera)
 
 	return ..()
 
@@ -82,11 +80,8 @@
 
 /// When unwielding the camera
 /obj/item/broadcast_camera/proc/on_unwield()
-	if(internal_camera)
-		QDEL_NULL(internal_camera)
-
-	if(internal_radio)
-		QDEL_NULL(internal_radio)
+	QDEL_NULL(internal_camera)
+	QDEL_NULL(internal_radio)
 
 	stop_broadcasting_network(camera_networks)
 

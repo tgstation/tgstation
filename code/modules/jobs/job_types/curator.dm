@@ -62,13 +62,9 @@
 	/// There can be only one cameraman on this station, and no, not that kind
 	var/static/cameraman_choosen = FALSE
 	if(!cameraman_choosen)
-		backpack_contents = list(
-			/obj/item/barcodescanner = 1,
-			/obj/item/choice_beacon/hero = 1,
-			/obj/item/broadcast_camera = 1,
-		)
+		backpack_contents = [/obj/item/broadcast_camera] = 1
 		cameraman_choosen = TRUE
-	..()
+	return ..()
 
 
 /datum/outfit/job/curator/post_equip(mob/living/carbon/human/translator, visualsOnly = FALSE)

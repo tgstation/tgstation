@@ -431,14 +431,16 @@
 		return
 
 	var/mob/living/holder = loc
-	if(holder.client?.prefs.read_preference(/datum/preference/toggle/radio_noise) && !HAS_TRAIT(holder, TRAIT_DEAF) && radio_noise)
-		var/list/spans = data["spans"]
-		if(COOLDOWN_FINISHED(src, audio_cooldown))
-			COOLDOWN_START(src, audio_cooldown, 0.5 SECONDS)
-			SEND_SOUND(holder, 'sound/misc/radio_receive.ogg')
-		if((SPAN_COMMAND in spans) && COOLDOWN_FINISHED(src, important_audio_cooldown))
-			COOLDOWN_START(src, important_audio_cooldown, 0.5 SECONDS)
-			SEND_SOUND(holder, 'sound/misc/radio_important.ogg')
+	if(!holder.client?.prefs.read_preference(/datum/preference/toggle/radio_noise) && HAS_TRAIT(holder, TRAIT_DEAF) && !radio_noise)
+		return
+
+	var/list/spans = data["spans"]
+	if(COOLDOWN_FINISHED(src, audio_cooldown))
+		COOLDOWN_START(src, audio_cooldown, 0.5 SECONDS)
+		SEND_SOUND(holder, 'sound/misc/radio_receive.ogg')
+	if((SPAN_COMMAND in spans) && COOLDOWN_FINISHED(src, important_audio_cooldown))
+		COOLDOWN_START(src, important_audio_cooldown, 0.5 SECONDS)
+		SEND_SOUND(holder, 'sound/misc/radio_important.ogg')
 
 /obj/item/radio/ui_state(mob/user)
 	return GLOB.inventory_state
@@ -658,21 +660,9 @@
 	wires?.cut(WIRE_TX)
 
 /obj/item/radio/entertainment/speakers/on_receive_message(list/data)
-	. = ..()
-	/// Muffled speech that plays when something is heard on entertainment frequency
-	var/list/muffled_speech = list(
-		'sound/effects/muffspeech/muffspeech1.ogg',
-		'sound/effects/muffspeech/muffspeech2.ogg',
-		'sound/effects/muffspeech/muffspeech3.ogg',
-		'sound/effects/muffspeech/muffspeech4.ogg',
-		'sound/effects/muffspeech/muffspeech5.ogg',
-		'sound/effects/muffspeech/muffspeech6.ogg',
-		'sound/effects/muffspeech/muffspeech7.ogg',
-		'sound/effects/muffspeech/muffspeech8.ogg',
-		'sound/effects/muffspeech/muffspeech9.ogg',
-	)
+	playsound(source = src, soundin = SFX_MUFFLED_SPEECH, vol = 60, extrarange = -4, vary = TRUE, ignore_walls = FALSE)
 
-	playsound(source = src, soundin = pick(muffled_speech), vol = 60, extrarange = -4, vary = TRUE, ignore_walls = FALSE)
+	return ..()
 
 /obj/item/radio/entertainment/speakers/physical // Can be used as a physical item
 	name = "entertainment radio"
