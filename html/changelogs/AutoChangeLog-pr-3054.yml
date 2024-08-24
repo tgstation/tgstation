@@ -1,6 +1,0 @@
-author: "Absolucy"
-delete-after: True
-changes:
-  - bugfix: "Role prompts now properly show the preview pics in the chat."
-  - bugfix: "Fixed intelligence potions being broken."
-  - bugfix: "Fixed blood brother gear choosing being broken."

@@ -288,3 +288,8 @@
 2024-08-23:
   DragonLee66:
   - rscadd: gave the cryobeaker a different sprite
+2024-08-24:
+  Absolucy:
+  - bugfix: Role prompts now properly show the preview pics in the chat.
+  - bugfix: Fixed intelligence potions being broken.
+  - bugfix: Fixed blood brother gear choosing being broken.
