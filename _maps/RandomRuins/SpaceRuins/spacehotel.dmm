@@ -1692,7 +1692,7 @@
 /obj/structure/sign/warning/fire{
 	desc = "A sign that states the labeled room's number.";
 	dir = 8;
-	icon_state = "direction_roomnum";
+	icon_state = "roomnum";
 	name = "Room Number 4";
 	pixel_y = 24
 	},
@@ -1910,7 +1910,7 @@
 /obj/structure/sign/warning/fire{
 	desc = "A sign that states the labeled room's number.";
 	dir = 4;
-	icon_state = "direction_roomnum";
+	icon_state = "roomnum";
 	name = "Room Number 3";
 	pixel_y = -24
 	},
@@ -1936,7 +1936,7 @@
 /obj/structure/sign/warning/fire{
 	desc = "A sign that states the labeled room's number.";
 	dir = 6;
-	icon_state = "direction_roomnum";
+	icon_state = "roomnum";
 	name = "Room Number 5";
 	pixel_y = -24
 	},
@@ -1978,7 +1978,7 @@
 /obj/structure/sign/warning/fire{
 	desc = "A sign that states the labeled room's number.";
 	dir = 10;
-	icon_state = "direction_roomnum";
+	icon_state = "roomnum";
 	name = "Room Number 6";
 	pixel_y = 24
 	},
@@ -3825,7 +3825,7 @@
 	},
 /obj/structure/sign/warning/fire{
 	desc = "A sign that states the labeled room's number.";
-	icon_state = "direction_roomnum";
+	icon_state = "roomnum";
 	name = "Room Number 1";
 	pixel_y = -24
 	},
@@ -3865,7 +3865,7 @@
 /obj/structure/sign/warning/fire{
 	desc = "A sign that states the labeled room's number.";
 	dir = 1;
-	icon_state = "direction_roomnum";
+	icon_state = "roomnum";
 	name = "Room Number 2";
 	pixel_y = 24
 	},

@@ -27,15 +27,11 @@
 /area/ruin/syndicate_lava_base/testlab)
 "ag" = (
 /obj/structure/table/reinforced,
-/obj/item/restraints/handcuffs{
-	pixel_y = 8
-	},
-/obj/item/taperecorder{
-	pixel_y = 8
-	},
+/obj/item/restraints/handcuffs,
+/obj/item/taperecorder,
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
-/obj/machinery/light/directional/east,
+/obj/machinery/light/small/directional/east,
 /turf/open/floor/iron/dark,
 /area/ruin/syndicate_lava_base/testlab)
 "ah" = (
@@ -53,12 +49,8 @@
 "ak" = (
 /obj/structure/table/reinforced,
 /obj/effect/decal/cleanable/dirt,
-/obj/item/paper_bin{
-	pixel_y = 8
-	},
-/obj/item/pen{
-	pixel_y = 8
-	},
+/obj/item/paper_bin,
+/obj/item/pen,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
@@ -73,10 +65,6 @@
 	},
 /turf/open/floor/plating,
 /area/ruin/syndicate_lava_base/testlab)
-"an" = (
-/obj/structure/sign/warning/explosives/alt/directional/north,
-/turf/open/floor/engine,
-/area/ruin/syndicate_lava_base/testlab)
 "ao" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
 	dir = 4
@@ -85,14 +73,12 @@
 /area/ruin/syndicate_lava_base/testlab)
 "ap" = (
 /obj/structure/table/reinforced,
-/obj/item/storage/toolbox/syndicate{
-	pixel_y = 8
-	},
+/obj/item/storage/toolbox/syndicate,
 /obj/item/paper/crumpled{
 	default_raw_text = "Explosive testing on site is STRICTLY forbidden, as this outpost's walls are lined with explosives intended for intentional self-destruct purposes that may be set off prematurely through careless experiments.";
 	name = "Explosives Testing Warning";
 	pixel_x = -6;
-	pixel_y = 5
+	pixel_y = -3
 	},
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron/dark,
@@ -115,12 +101,8 @@
 /area/ruin/syndicate_lava_base/testlab)
 "av" = (
 /obj/structure/table/reinforced,
-/obj/item/storage/box/monkeycubes/syndicate{
-	pixel_y = 8
-	},
-/obj/item/storage/box/monkeycubes/syndicate{
-	pixel_y = 8
-	},
+/obj/item/storage/box/monkeycubes/syndicate,
+/obj/item/storage/box/monkeycubes/syndicate,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron/dark,
 /area/ruin/syndicate_lava_base/testlab)
@@ -139,16 +121,18 @@
 /turf/open/floor/iron/dark,
 /area/ruin/syndicate_lava_base/testlab)
 "aB" = (
+/obj/machinery/light/small/directional/north,
+/obj/machinery/button/door{
+	id = "lavalandsyndi";
+	name = "Syndicate Experimentation Lockdown Control";
+	pixel_y = 26;
+	req_access = list("syndicate")
+	},
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/stripes/corner{
 	dir = 1
 	},
 /obj/effect/turf_decal/tile/neutral/fourcorners,
-/obj/machinery/button/door/directional/north{
-	id = "lavalandsyndi";
-	req_access = list("syndicate");
-	name = "Syndicate Experimentation Lockdown Control"
-	},
 /turf/open/floor/iron/dark,
 /area/ruin/syndicate_lava_base/testlab)
 "aD" = (
@@ -258,6 +242,18 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/engine,
 /area/ruin/syndicate_lava_base/testlab)
+"kP" = (
+/obj/structure/sign/warning/explosives/alt/directional/west,
+/turf/open/floor/engine,
+/area/ruin/syndicate_lava_base/testlab)
+"mk" = (
+/obj/structure/sign/warning/explosives/alt/directional/east,
+/turf/open/floor/engine,
+/area/ruin/syndicate_lava_base/testlab)
+"tK" = (
+/obj/structure/sign/warning/secure_area,
+/turf/closed/wall/mineral/plastitanium/nodiagonal,
+/area/ruin/syndicate_lava_base/testlab)
 "IP" = (
 /obj/effect/mapping_helpers/airalarm/syndicate_access,
 /obj/machinery/airalarm/directional/north,
@@ -302,12 +298,12 @@ aa
 (3,1,1) = {"
 aD
 aD
-an
 ah
 ah
+kP
 aY
 ah
-aD
+tK
 aL
 au
 aa
@@ -372,9 +368,9 @@ aE
 (8,1,1) = {"
 aD
 aD
-an
 ah
 ah
+mk
 aS
 ah
 am

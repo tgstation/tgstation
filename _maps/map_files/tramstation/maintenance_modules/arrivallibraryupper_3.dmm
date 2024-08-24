@@ -27,7 +27,6 @@
 "n" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/closet/emcloset,
-/obj/structure/sign/warning/vacuum/external,
 /turf/open/floor/plating,
 /area/station/maintenance/port/aft)
 "p" = (
@@ -82,6 +81,11 @@
 "Q" = (
 /turf/closed/mineral/random/stationside/asteroid/porus,
 /area/station/asteroid)
+"T" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/sign/warning/vacuum/external/directional/south,
+/turf/open/floor/iron/smooth,
+/area/station/maintenance/port/aft)
 "U" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/door/airlock/external{
@@ -394,7 +398,7 @@ a
 a
 a
 Z
-Z
+T
 y
 w
 G

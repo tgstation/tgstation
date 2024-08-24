@@ -2913,10 +2913,11 @@
 /turf/open/floor/iron,
 /area/station/hallway/primary/central)
 "bac" = (
-/obj/machinery/turretid/directional/south{
+/obj/machinery/turretid{
 	control_area = "/area/station/ai_monitored/turret_protected/ai_upload";
 	icon_state = "control_stun";
-	name = "AI Upload Turret Control"
+	name = "AI Upload Turret Control";
+	pixel_y = 28
 	},
 /obj/item/radio/intercom/directional/north{
 	broadcasting = 1;
@@ -13336,9 +13337,11 @@
 /turf/open/floor/iron,
 /area/station/cargo/storage)
 "ePK" = (
-/obj/machinery/turretid/directional/south{
+/obj/machinery/turretid{
 	icon_state = "control_stun";
-	name = "AI Chamber turret control"
+	name = "AI Chamber turret control";
+	pixel_x = 3;
+	pixel_y = -23
 	},
 /obj/structure/cable,
 /obj/machinery/power/apc/auto_name/directional/north,
@@ -60155,9 +60158,10 @@
 /turf/open/floor/plating,
 /area/station/maintenance/aft/greater)
 "vkt" = (
-/obj/machinery/turretid/directional/south{
+/obj/machinery/turretid{
 	control_area = "/area/station/ai_monitored/turret_protected/aisat_interior";
 	name = "Antechamber Turret Control";
+	pixel_x = 30;
 	req_access = list("minisat")
 	},
 /obj/machinery/ai_slipper{

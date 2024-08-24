@@ -358,9 +358,9 @@
 /turf/open/floor/mineral/titanium/tiled/purple,
 /area/ruin/space/has_grav/powered/hilbertresearchfacility)
 "jG" = (
+/obj/structure/sign/departments/evac/directional/south,
 /obj/effect/turf_decal/trimline/white/arrow_cw,
 /obj/effect/turf_decal/trimline/white/mid_joiner,
-/obj/structure/sign/departments/evac/aft/directional/west,
 /turf/open/floor/mineral/plastitanium,
 /area/ruin/space/has_grav/powered/hilbertresearchfacility)
 "jJ" = (

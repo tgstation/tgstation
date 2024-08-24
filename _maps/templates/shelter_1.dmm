@@ -42,11 +42,37 @@
 /obj/machinery/door/airlock/survival_pod/glass,
 /turf/open/floor/pod,
 /area/misc/survivalpod)
+"u" = (
+/obj/effect/turf_decal/mining/survival,
+/turf/closed/wall/mineral/titanium/survival/pod,
+/area/misc/survivalpod)
+"w" = (
+/obj/effect/turf_decal/mining/survival{
+	dir = 1
+	},
+/turf/closed/wall/mineral/titanium/survival/pod,
+/area/misc/survivalpod)
+"x" = (
+/obj/effect/turf_decal/mining/survival{
+	dir = 8
+	},
+/turf/closed/wall/mineral/titanium/survival/pod,
+/area/misc/survivalpod)
+"T" = (
+/obj/effect/turf_decal/mining/survival{
+	dir = 4
+	},
+/turf/closed/wall/mineral/titanium/survival/pod,
+/area/misc/survivalpod)
+"X" = (
+/obj/effect/turf_decal/mining,
+/turf/closed/wall/mineral/titanium/survival/pod,
+/area/misc/survivalpod)
 
 (1,1,1) = {"
 a
 a
-a
+x
 a
 a
 "}
@@ -55,10 +81,10 @@ a
 c
 g
 k
-a
+u
 "}
 (3,1,1) = {"
-a
+w
 d
 h
 h
@@ -69,12 +95,12 @@ a
 e
 i
 l
-a
+X
 "}
 (5,1,1) = {"
 a
 a
-a
+T
 a
 a
 "}

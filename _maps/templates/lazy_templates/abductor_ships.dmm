@@ -5,6 +5,16 @@
 "ab" = (
 /turf/open/lava,
 /area/awaymission/caves)
+"ay" = (
+/turf/closed/indestructible/abductor{
+	icon_state = "alien11"
+	},
+/area/centcom/abductor_ship)
+"ck" = (
+/turf/closed/indestructible/abductor{
+	icon_state = "alien15"
+	},
+/area/centcom/abductor_ship)
 "ea" = (
 /obj/effect/landmark/abductor/scientist{
 	team_number = 2
@@ -23,11 +33,21 @@
 	},
 /turf/open/floor/plating/abductor,
 /area/centcom/abductor_ship)
+"gO" = (
+/turf/closed/indestructible/abductor{
+	icon_state = "alien18"
+	},
+/area/centcom/abductor_ship)
 "ie" = (
 /obj/structure/closet/abductor,
 /obj/item/storage/box/alienhandcuffs,
 /obj/item/reagent_containers/cup/beaker/synthflesh,
 /turf/open/floor/plating/abductor,
+/area/centcom/abductor_ship)
+"iP" = (
+/turf/closed/indestructible/abductor{
+	icon_state = "alien5"
+	},
 /area/centcom/abductor_ship)
 "lV" = (
 /turf/closed/indestructible/abductor,
@@ -52,6 +72,16 @@
 	},
 /turf/open/floor/plating/abductor,
 /area/centcom/abductor_ship)
+"ob" = (
+/turf/closed/indestructible/abductor{
+	icon_state = "alien21"
+	},
+/area/centcom/abductor_ship)
+"pn" = (
+/turf/closed/indestructible/abductor{
+	icon_state = "alien19"
+	},
+/area/centcom/abductor_ship)
 "pK" = (
 /obj/machinery/abductor/console{
 	team_number = 3
@@ -63,6 +93,11 @@
 	team_number = 1
 	},
 /turf/open/floor/plating/abductor,
+/area/centcom/abductor_ship)
+"qZ" = (
+/turf/closed/indestructible/abductor{
+	icon_state = "alien6"
+	},
 /area/centcom/abductor_ship)
 "rh" = (
 /obj/item/scalpel/alien{
@@ -77,15 +112,18 @@
 	},
 /turf/open/floor/plating/abductor,
 /area/centcom/abductor_ship)
+"sE" = (
+/turf/closed/indestructible/abductor{
+	icon_state = "alien22"
+	},
+/area/centcom/abductor_ship)
 "sS" = (
 /obj/structure/table/abductor,
 /obj/machinery/recharger{
-	pixel_x = 7;
-	pixel_y = 8
+	pixel_x = 7
 	},
 /obj/item/paper/guides/antag/abductor{
-	pixel_x = -5;
-	pixel_y = 8
+	pixel_x = -5
 	},
 /turf/open/floor/plating/abductor,
 /area/centcom/abductor_ship)
@@ -120,6 +158,11 @@
 	},
 /turf/open/floor/plating/abductor,
 /area/centcom/abductor_ship)
+"wO" = (
+/turf/closed/indestructible/abductor{
+	icon_state = "alien3"
+	},
+/area/centcom/abductor_ship)
 "xf" = (
 /obj/machinery/abductor/pad{
 	team_number = 2
@@ -150,9 +193,24 @@
 	},
 /turf/open/floor/plating/abductor,
 /area/centcom/abductor_ship)
+"Ag" = (
+/turf/closed/indestructible/abductor{
+	icon_state = "alien7"
+	},
+/area/centcom/abductor_ship)
+"Ax" = (
+/turf/closed/indestructible/abductor{
+	icon_state = "alien12"
+	},
+/area/centcom/abductor_ship)
 "Bh" = (
 /obj/machinery/abductor/gland_dispenser,
 /turf/open/floor/plating/abductor,
+/area/centcom/abductor_ship)
+"Cr" = (
+/turf/closed/indestructible/abductor{
+	icon_state = "alien17"
+	},
 /area/centcom/abductor_ship)
 "CF" = (
 /obj/machinery/abductor/console{
@@ -165,6 +223,11 @@
 	team_number = 4
 	},
 /turf/open/floor/plating/abductor,
+/area/centcom/abductor_ship)
+"DU" = (
+/turf/closed/indestructible/abductor{
+	icon_state = "alien4"
+	},
 /area/centcom/abductor_ship)
 "Gs" = (
 /obj/machinery/computer/camera_advanced/abductor{
@@ -181,15 +244,40 @@
 "Il" = (
 /obj/structure/table/optable/abductor,
 /obj/item/surgical_drapes{
-	pixel_y = 3
+	pixel_y = -5
 	},
 /turf/open/floor/plating/abductor,
+/area/centcom/abductor_ship)
+"KA" = (
+/turf/closed/indestructible/abductor{
+	icon_state = "alien14"
+	},
+/area/centcom/abductor_ship)
+"LV" = (
+/turf/closed/indestructible/abductor{
+	icon_state = "alien2"
+	},
 /area/centcom/abductor_ship)
 "Pv" = (
 /obj/effect/landmark/abductor/agent{
 	team_number = 3
 	},
 /turf/open/floor/plating/abductor,
+/area/centcom/abductor_ship)
+"PC" = (
+/turf/closed/indestructible/abductor{
+	icon_state = "alien23"
+	},
+/area/centcom/abductor_ship)
+"Qd" = (
+/turf/closed/indestructible/abductor{
+	icon_state = "alien9"
+	},
+/area/centcom/abductor_ship)
+"Rb" = (
+/turf/closed/indestructible/abductor{
+	icon_state = "alien16"
+	},
 /area/centcom/abductor_ship)
 "SK" = (
 /obj/structure/table/abductor,
@@ -199,12 +287,17 @@
 	},
 /obj/item/toy/plush/abductor/agent{
 	pixel_x = 9;
-	pixel_y = 8
+	pixel_y = 2
 	},
 /turf/open/floor/plating/abductor,
 /area/centcom/abductor_ship)
 "UE" = (
 /turf/open/floor/plating/abductor,
+/area/centcom/abductor_ship)
+"Vm" = (
+/turf/closed/indestructible/abductor{
+	icon_state = "alien8"
+	},
 /area/centcom/abductor_ship)
 "VZ" = (
 /obj/effect/landmark/abductor/agent,
@@ -219,6 +312,16 @@
 	},
 /turf/open/floor/plating/abductor,
 /area/centcom/abductor_ship)
+"Ym" = (
+/turf/closed/indestructible/abductor{
+	icon_state = "alien20"
+	},
+/area/centcom/abductor_ship)
+"YA" = (
+/turf/closed/indestructible/abductor{
+	icon_state = "alien10"
+	},
+/area/centcom/abductor_ship)
 "YY" = (
 /obj/machinery/abductor/experiment{
 	team_number = 4
@@ -229,124 +332,134 @@
 /obj/effect/landmark/abductor/scientist,
 /turf/open/floor/plating/abductor,
 /area/centcom/abductor_ship)
+"Zt" = (
+/turf/closed/indestructible/abductor{
+	icon_state = "alien24"
+	},
+/area/centcom/abductor_ship)
+"Zz" = (
+/turf/closed/indestructible/abductor{
+	icon_state = "alien13"
+	},
+/area/centcom/abductor_ship)
 
 (1,1,1) = {"
 Xy
-lV
-lV
-lV
-lV
-lV
+Rb
+KA
+Ax
+YA
+qZ
 Xy
 Xy
 Xy
-lV
-lV
-lV
-lV
-lV
+Rb
+KA
+Ax
+YA
+qZ
 Xy
 "}
 (2,1,1) = {"
-lV
-lV
+Ym
+Cr
 nL
 tu
 rh
-lV
+Ag
 lV
 Xy
-lV
-lV
+Ym
+Cr
 XD
 tu
 rh
-lV
+Ag
 lV
 "}
 (3,1,1) = {"
-lV
+ob
 es
 UE
 wM
 UE
 Bh
-lV
+LV
 Xy
-lV
+ob
 nb
 UE
 Zn
 UE
 Bh
-lV
+LV
 "}
 (4,1,1) = {"
-lV
+sE
 pK
 UE
 Il
 UE
 SK
-lV
+wO
 Xy
-lV
+sE
 xM
 UE
 Il
 UE
 SK
-lV
+wO
 "}
 (5,1,1) = {"
-lV
+PC
 eq
 UE
 Pv
 UE
 nt
-lV
+DU
 Xy
-lV
+PC
 qV
 UE
 VZ
 UE
 nt
-lV
+DU
 "}
 (6,1,1) = {"
-lV
-lV
+Zt
+gO
 ie
 sS
 mr
-lV
-lV
+Vm
+iP
 Xy
-lV
-lV
+Zt
+gO
 ie
 sS
 mr
-lV
-lV
+Vm
+iP
 "}
 (7,1,1) = {"
 Xy
-lV
-lV
-lV
-lV
-lV
+pn
+ck
+Zz
+ay
+Qd
 Xy
 Xy
 Xy
-lV
-lV
-lV
-lV
-lV
+pn
+ck
+Zz
+ay
+Qd
 Xy
 "}
 (8,1,1) = {"
@@ -368,121 +481,121 @@ Xy
 "}
 (9,1,1) = {"
 Xy
-lV
-lV
-lV
-lV
-lV
+Rb
+KA
+Ax
+YA
+qZ
 Xy
 Xy
 Xy
-lV
-lV
-lV
-lV
-lV
+Rb
+KA
+Ax
+YA
+qZ
 Xy
 "}
 (10,1,1) = {"
-lV
-lV
+Ym
+Cr
 Gs
 tu
 rh
-lV
+Ag
 lV
 Xy
-lV
-lV
+Ym
+Cr
 zV
 tu
 rh
-lV
+Ag
 lV
 "}
 (11,1,1) = {"
-lV
+ob
 YY
 UE
 tL
 UE
 Bh
-lV
+LV
 Xy
-lV
+ob
 ze
 UE
 ea
 UE
 Bh
-lV
+LV
 "}
 (12,1,1) = {"
-lV
+sE
 xR
 UE
 Il
 UE
 SK
-lV
+wO
 Xy
-lV
+sE
 CF
 UE
 Il
 UE
 SK
-lV
+wO
 "}
 (13,1,1) = {"
-lV
+PC
 tT
 UE
 DL
 UE
 nt
-lV
+DU
 Xy
-lV
+PC
 xf
 UE
 HK
 UE
 nt
-lV
+DU
 "}
 (14,1,1) = {"
-lV
-lV
+Zt
+gO
 ie
 sS
 mr
-lV
-lV
+Vm
+iP
 Xy
-lV
-lV
+Zt
+gO
 ie
 sS
 mr
-lV
-lV
+Vm
+iP
 "}
 (15,1,1) = {"
 Xy
-lV
-lV
-lV
-lV
-lV
+pn
+ck
+Zz
+ay
+Qd
 Xy
 Xy
 Xy
-lV
-lV
-lV
-lV
-lV
+pn
+ck
+Zz
+ay
+Qd
 Xy
 "}
 

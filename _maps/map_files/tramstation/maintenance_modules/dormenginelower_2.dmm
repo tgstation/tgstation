@@ -96,8 +96,8 @@
 "fe" = (
 /obj/effect/turf_decal/stripes/end,
 /obj/structure/cable/multilayer/multiz,
+/obj/structure/sign/warning/electric_shock/directional/north,
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/sign/warning/electric_shock,
 /turf/open/floor/plating,
 /area/station/maintenance/central/lesser)
 "fE" = (
@@ -119,17 +119,6 @@
 "gs" = (
 /turf/closed/mineral/random/stationside/asteroid/porus,
 /area/station/asteroid)
-"gt" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/structure/disposalpipe/segment{
-	dir = 4
-	},
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/structure/cable,
-/obj/structure/sign/warning/vacuum/external,
-/turf/open/floor/catwalk_floor,
-/area/station/maintenance/central/lesser)
 "gx" = (
 /obj/effect/turf_decal/sand/plating,
 /obj/effect/mapping_helpers/broken_floor,
@@ -187,24 +176,11 @@
 /area/station/maintenance/central/lesser)
 "id" = (
 /obj/effect/decal/cleanable/dirt,
+/obj/structure/sink/directional/south,
 /obj/structure/mirror/directional/north,
 /obj/item/soap/nanotrasen,
-/obj/structure/sink/directional/north,
 /turf/open/floor/iron/smooth,
 /area/station/maintenance/department/crew_quarters/dorms)
-"iU" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/structure/disposalpipe/segment{
-	dir = 6
-	},
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/structure/cable,
-/obj/effect/decal/cleanable/cobweb{
-	pixel_y = 24
-	},
-/turf/open/floor/catwalk_floor,
-/area/station/maintenance/central/lesser)
 "jG" = (
 /obj/effect/turf_decal/sand/plating,
 /obj/effect/mapping_helpers/broken_floor,
@@ -262,12 +238,12 @@
 /turf/open/floor/plating/airless,
 /area/station/maintenance/department/crew_quarters/dorms)
 "lU" = (
+/obj/structure/sink/directional/south,
 /obj/item/reagent_containers/cup/bucket{
 	pixel_x = 8;
 	pixel_y = 12
 	},
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/sink/directional/north,
 /turf/open/floor/plating,
 /area/template_noop)
 "mg" = (
@@ -315,9 +291,7 @@
 /area/station/maintenance/department/crew_quarters/dorms)
 "np" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/effect/decal/cleanable/cobweb{
-	pixel_y = 24
-	},
+/obj/effect/decal/cleanable/cobweb,
 /obj/structure/rack,
 /obj/effect/spawner/random/engineering/material,
 /obj/effect/spawner/random/engineering/material_cheap,
@@ -753,9 +727,7 @@
 /area/station/maintenance/department/crew_quarters/dorms)
 "Lp" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/effect/decal/cleanable/cobweb/cobweb2{
-	pixel_y = 24
-	},
+/obj/effect/decal/cleanable/cobweb/cobweb2,
 /turf/open/floor/catwalk_floor,
 /area/station/maintenance/department/crew_quarters/dorms)
 "Lq" = (
@@ -780,9 +752,7 @@
 /area/station/maintenance/department/crew_quarters/dorms)
 "Mq" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/effect/decal/cleanable/cobweb/cobweb2{
-	pixel_y = 24
-	},
+/obj/effect/decal/cleanable/cobweb/cobweb2,
 /turf/open/floor/iron/smooth,
 /area/station/maintenance/central/lesser)
 "MA" = (
@@ -835,9 +805,7 @@
 /obj/structure/mop_bucket/janitorialcart,
 /obj/item/mop,
 /obj/effect/decal/cleanable/dirt,
-/obj/effect/decal/cleanable/cobweb/cobweb2{
-	pixel_y = 24
-	},
+/obj/effect/decal/cleanable/cobweb/cobweb2,
 /turf/open/floor/plating,
 /area/template_noop)
 "PL" = (
@@ -971,9 +939,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/mop_bucket/janitorialcart,
 /obj/item/mop,
-/obj/effect/decal/cleanable/cobweb{
-	pixel_y = 24
-	},
+/obj/effect/decal/cleanable/cobweb,
 /turf/open/floor/plating,
 /area/station/maintenance/department/crew_quarters/dorms)
 "Xm" = (
@@ -997,6 +963,17 @@
 /obj/structure/mop_bucket,
 /obj/item/mop,
 /turf/open/floor/iron/smooth,
+/area/station/maintenance/central/lesser)
+"XK" = (
+/obj/structure/cable,
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/sign/warning/vacuum/external/directional/south,
+/turf/open/floor/catwalk_floor,
 /area/station/maintenance/central/lesser)
 "XM" = (
 /obj/effect/turf_decal/sand/plating,
@@ -3063,7 +3040,7 @@ cV
 cV
 cV
 cV
-gt
+oU
 cV
 cV
 cV
@@ -3099,7 +3076,7 @@ BO
 CB
 oP
 zF
-gZ
+XK
 cV
 Xm
 Gs
@@ -3512,7 +3489,7 @@ AN
 AN
 AN
 cV
-iU
+pM
 gQ
 AN
 AN

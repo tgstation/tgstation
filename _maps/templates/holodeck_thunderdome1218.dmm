@@ -6,27 +6,23 @@
 /turf/open/floor/holofloor/grass,
 /area/template_noop)
 "f" = (
-/obj/structure/window/reinforced/half/directional/south,
+/obj/structure/window/reinforced/spawner/directional/south,
 /obj/item/banner/red,
 /turf/open/floor/holofloor/asteroid,
 /area/template_noop)
 "g" = (
-/obj/structure/window/reinforced/half/directional/south,
+/obj/structure/window/reinforced/spawner/directional/south,
 /obj/item/banner/blue,
 /turf/open/floor/holofloor/asteroid,
 /area/template_noop)
 "k" = (
 /obj/structure/table/wood/fancy,
-/obj/item/clothing/suit/armor/riot/knight/blue{
-	pixel_y = 8
-	},
-/obj/item/clothing/head/helmet/knight/blue{
-	pixel_y = 8
-	},
+/obj/item/clothing/suit/armor/riot/knight/blue,
+/obj/item/clothing/head/helmet/knight/blue,
 /turf/open/floor/holofloor/grass,
 /area/template_noop)
 "n" = (
-/obj/machinery/door/window/half/left/directional/south,
+/obj/machinery/door/window/left/directional/south,
 /turf/open/floor/holofloor/grass,
 /area/template_noop)
 "p" = (
@@ -34,20 +30,15 @@
 /area/template_noop)
 "r" = (
 /obj/structure/table/wood,
-/obj/item/scythe{
-	pixel_y = 8
-	},
-/obj/item/spear{
-	pixel_y = 8
-	},
+/obj/item/scythe,
+/obj/item/spear,
 /obj/item/melee/chainofcommand{
-	name = "chain whip";
-	pixel_y = 8
+	name = "chain whip"
 	},
 /turf/open/floor/holofloor/asteroid,
 /area/template_noop)
 "s" = (
-/obj/machinery/door/window/half/right/directional/south,
+/obj/machinery/door/window/right/directional/south,
 /turf/open/floor/holofloor/grass,
 /area/template_noop)
 "x" = (
@@ -56,12 +47,9 @@
 "y" = (
 /obj/structure/table/wood,
 /obj/item/melee/chainofcommand{
-	name = "chain whip";
-	pixel_y = 8
+	name = "chain whip"
 	},
-/obj/item/spear{
-	pixel_y = 8
-	},
+/obj/item/spear,
 /turf/open/floor/holofloor/asteroid,
 /area/template_noop)
 "B" = (
@@ -72,12 +60,12 @@
 "C" = (
 /obj/structure/table/wood/fancy,
 /obj/item/clothing/head/costume/crown/fancy{
-	pixel_y = 14
+	pixel_y = 6
 	},
 /turf/open/floor/holofloor/grass,
 /area/template_noop)
 "E" = (
-/obj/structure/window/reinforced/half/directional/south,
+/obj/structure/window/reinforced/spawner/directional/south,
 /turf/open/floor/holofloor/asteroid,
 /area/template_noop)
 "H" = (
@@ -85,55 +73,35 @@
 /turf/open/floor/holofloor/grass,
 /area/template_noop)
 "J" = (
-/obj/structure/window/reinforced/half/directional/south,
+/obj/structure/window/reinforced/spawner/directional/south,
 /turf/open/floor/holofloor/grass,
 /area/template_noop)
 "N" = (
 /obj/structure/table/wood,
-/obj/item/spear{
-	pixel_y = 8
-	},
+/obj/item/spear,
 /turf/open/floor/holofloor/asteroid,
 /area/template_noop)
 "Q" = (
 /obj/structure/table/wood/fancy,
-/obj/item/clothing/suit/armor/riot/knight/blue{
-	pixel_y = 8
-	},
-/obj/item/clothing/head/helmet/knight/blue{
-	pixel_y = 8
-	},
-/obj/item/claymore/weak{
-	pixel_y = 8
-	},
+/obj/item/clothing/suit/armor/riot/knight/blue,
+/obj/item/clothing/head/helmet/knight/blue,
+/obj/item/claymore/weak,
 /turf/open/floor/holofloor/grass,
-/area/template_noop)
-"R" = (
-/obj/machinery/door/window/half/left/directional/south,
-/turf/open/floor/holofloor/asteroid,
 /area/template_noop)
 "T" = (
 /obj/structure/table/wood,
-/obj/item/tailclub{
-	pixel_y = 8
-	},
-/obj/item/spear{
-	pixel_y = 8
-	},
+/obj/item/tailclub,
+/obj/item/spear,
 /turf/open/floor/holofloor/asteroid,
 /area/template_noop)
 "X" = (
 /obj/structure/table/wood,
-/obj/item/scythe{
-	pixel_y = 8
-	},
-/obj/item/spear{
-	pixel_y = 8
-	},
+/obj/item/scythe,
+/obj/item/spear,
 /turf/open/floor/holofloor/asteroid,
 /area/template_noop)
 "Z" = (
-/obj/machinery/door/window/half/right/directional/south,
+/obj/machinery/door/window/left/directional/south,
 /turf/open/floor/holofloor/asteroid,
 /area/template_noop)
 
@@ -205,7 +173,7 @@ p
 p
 p
 p
-R
+Z
 x
 a
 "}

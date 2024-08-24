@@ -187,7 +187,6 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 5
 	},
-/obj/structure/sign/warning/directional/north,
 /turf/open/floor/grass{
 	color = "#1eff00"
 	},
@@ -202,7 +201,6 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 9
 	},
-/obj/structure/sign/warning/directional/north,
 /turf/open/floor/grass{
 	color = "#1eff00"
 	},
@@ -226,7 +224,6 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
-/obj/structure/sign/warning/xeno_mining/directional/north,
 /turf/open/floor/grass{
 	color = "#1eff00"
 	},
@@ -370,14 +367,13 @@
 /obj/structure/barricade/wooden/crude,
 /turf/open/misc/asteroid,
 /area/ruin/space/has_grav/powered/clownplanet)
-"VA" = (
-/obj/effect/turf_decal/stripes/line{
-	dir = 1
-	},
-/obj/structure/sign/warning/xeno_mining/directional/north,
-/turf/open/floor/grass{
-	color = "#1eff00"
-	},
+"zn" = (
+/obj/structure/sign/warning,
+/turf/closed/wall/mineral/sandstone,
+/area/ruin/space/has_grav/powered/clownplanet)
+"Kf" = (
+/obj/structure/sign/warning/xeno_mining,
+/turf/closed/wall/mineral/sandstone,
 /area/ruin/space/has_grav/powered/clownplanet)
 
 (1,1,1) = {"
@@ -618,7 +614,7 @@ aa
 ae
 ae
 ac
-af
+zn
 aM
 aE
 ak
@@ -645,7 +641,7 @@ ae
 ac
 ad
 af
-af
+Kf
 aR
 aj
 aj
@@ -657,7 +653,7 @@ av
 av
 at
 aL
-aj
+az
 ab
 aD
 aD
@@ -709,7 +705,7 @@ av
 av
 at
 aL
-az
+aj
 aq
 ab
 aD
@@ -723,8 +719,8 @@ ae
 ad
 ac
 af
-af
-VA
+Kf
+aL
 au
 aj
 aU
@@ -748,7 +744,7 @@ ae
 ae
 ae
 ac
-af
+zn
 aO
 aP
 aj

@@ -68,13 +68,6 @@
 	var/elevator_status
 	/// What specific lift ID do we link with?
 	var/transport_linked_id
-	/// Icon state prefix to use for masks from vis_mask.dmi
-	var/dir_mask = "standard"
-	/// Similar to the above but used for cases where walls are adjacent
-	var/edge_dir_mask = "standard"
-	/// What directions in which we do not fully cover our darkness with masks
-	/// Allows for full directional visibility
-	var/inner_transparent_dirs = NONE
 
 /datum/armor/machinery_door
 	melee = 30
@@ -121,12 +114,6 @@
 	)
 	AddElement(/datum/element/connect_loc, loc_connections)
 	AddElement(/datum/element/can_barricade)
-	make_dir_opaque()
-
-/obj/machinery/door/proc/make_dir_opaque()
-	if(!dir_mask || !edge_dir_mask)
-		return
-	AddComponent(/datum/component/vis_block, dir_mask, edge_dir_mask, inner_transparent_dirs)
 
 /obj/machinery/door/examine(mob/user)
 	. = ..()
@@ -432,20 +419,24 @@
 	switch(animation)
 		if(DOOR_OPENING_ANIMATION)
 			if(panel_open)
-				icon_state = "o_doorc0"
+				icon_state = "o_door_opening"
 			else
-				icon_state = "doorc0"
+				icon_state = "door_opening"
 		if(DOOR_CLOSING_ANIMATION)
 			if(panel_open)
-				icon_state = "o_doorc1"
+				icon_state = "o_door_closing"
 			else
-				icon_state = "doorc1"
+				icon_state = "door_closing"
 		if(DOOR_DENY_ANIMATION)
 			if(!machine_stat)
 				icon_state = "door_deny"
 		else
-			icon_state = "[base_icon_state][density]"
-	return ..()
+			icon_state = "[base_icon_state]_[density ? "closed" : "open"]"
+
+/obj/machinery/door/update_overlays()
+	. = ..()
+	if(panel_open)
+		. += mutable_appearance(icon, "panel_open")
 
 /// Returns the delay to use for the passed in animation
 /// We'll do our cleanup once the delay runs out
@@ -495,7 +486,6 @@
 	if(operating)
 		return FALSE
 	operating = TRUE
-	SEND_SIGNAL(src, COSMIG_DOOR_OPENING)
 	use_energy(active_power_usage)
 	run_animation(DOOR_OPENING_ANIMATION)
 	set_opacity(0)
@@ -535,7 +525,6 @@
 				return FALSE
 
 	operating = TRUE
-	SEND_SIGNAL(src, COSMIG_DOOR_CLOSING)
 
 	run_animation(DOOR_CLOSING_ANIMATION)
 	layer = closingLayer
@@ -647,9 +636,9 @@
 /obj/machinery/door/morgue/animation_length(animation)
 	switch(animation)
 		if(DOOR_OPENING_ANIMATION)
-			return 2.04 SECONDS
+			return 1.5 SECONDS
 		if(DOOR_CLOSING_ANIMATION)
-			return 1.64 SECONDS
+			return 1.5 SECONDS
 		if(DOOR_DENY_ANIMATION)
 			return 0.1 SECONDS
 
@@ -658,11 +647,11 @@
 		if(DOOR_OPENING_PASSABLE)
 			return 1.4 SECONDS
 		if(DOOR_OPENING_FINISHED)
-			return 2.04 SECONDS
+			return 1.5 SECONDS
 		if(DOOR_CLOSING_UNPASSABLE)
-			return 0.54 SECONDS
+			return 0.2 SECONDS
 		if(DOOR_CLOSING_FINISHED)
-			return 1.64 SECONDS
+			return 1.5 SECONDS
 
 /obj/machinery/door/proc/lock()
 	return

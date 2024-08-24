@@ -1,8 +1,9 @@
 /turf/closed/wall
 	name = "wall"
 	desc = "A huge chunk of iron used to separate rooms."
-	icon = 'icons/turf/walls/metal_wall.dmi'
-	icon_state = "0-2"
+	icon = 'icons/turf/walls/wall.dmi'
+	icon_state = "wall-0"
+	base_icon_state = "wall"
 	explosive_resistance = 1
 	rust_resistance = RUST_RESISTANCE_BASIC
 
@@ -14,7 +15,7 @@
 	flags_ricochet = RICOCHET_HARD
 
 	smoothing_flags = SMOOTH_BITMASK
-	smoothing_groups = SMOOTH_GROUP_WALLS + SMOOTH_GROUP_TALL_WALLS + SMOOTH_GROUP_CLOSED_TURFS
+	smoothing_groups = SMOOTH_GROUP_WALLS + SMOOTH_GROUP_CLOSED_TURFS
 	canSmoothWith = SMOOTH_GROUP_WALLS
 
 	rcd_memory = RCD_MEMORY_WALL
@@ -106,9 +107,6 @@
 	new sheet_type(src, sheet_amount)
 	if(girder_type)
 		new /obj/item/stack/sheet/iron(src)
-
-/turf/attacked_by(obj/item/attacking_item, mob/living/user)
-	return
 
 /turf/closed/wall/ex_act(severity, target)
 	if(target == src)
@@ -205,7 +203,7 @@
 
 	//the istype cascade has been spread among various procs for easy overriding
 	if(try_clean(W, user) || try_wallmount(W, user) || try_decon(W, user))
-		return TRUE
+		return
 
 	return ..()
 
@@ -255,9 +253,6 @@
 
 	return FALSE
 
-/turf/closed/wall/proc/try_damage(obj/item/attacking_item, mob/user, turf/user_turf)
-	return //by default walls dont work like this
-
 /turf/closed/wall/singularity_pull(S, current_size)
 	..()
 	wall_singularity_pull(current_size)
@@ -291,9 +286,9 @@
 	return FALSE
 
 /turf/closed/wall/rcd_act(mob/user, obj/item/construction/rcd/the_rcd, list/rcd_data)
-	switch(rcd_data[RCD_DESIGN_MODE])
+	switch(rcd_data["[RCD_DESIGN_MODE]"])
 		if(RCD_WALLFRAME)
-			var/obj/item/wallframe/wallmount = rcd_data[RCD_DESIGN_PATH]
+			var/obj/item/wallframe/wallmount = rcd_data["[RCD_DESIGN_PATH]"]
 			var/obj/item/wallframe/new_wallmount = new wallmount(user.drop_location())
 			return try_wallmount(new_wallmount, user, src)
 		if(RCD_DECONSTRUCT)

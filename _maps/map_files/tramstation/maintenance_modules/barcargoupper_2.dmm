@@ -187,17 +187,6 @@
 /obj/effect/mapping_helpers/airlock/access/all/engineering/maintenance,
 /turf/open/floor/catwalk_floor,
 /area/station/maintenance/department/cargo)
-"tf" = (
-/obj/structure/cable,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/effect/decal/cleanable/dirt,
-/obj/structure/sign/warning/secure_area{
-	desc = "A warning sign which reads 'MULE CROSSING - LOOK BOTH WAYS";
-	name = "MULE CROSSING - LOOK BOTH WAYS"
-	},
-/turf/open/floor/catwalk_floor,
-/area/station/maintenance/department/cargo)
 "tI" = (
 /obj/structure/plasticflaps/opaque{
 	name = "airtight delivery flaps"
@@ -297,6 +286,17 @@
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/plating,
+/area/station/maintenance/department/cargo)
+"yO" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/cable,
+/obj/structure/sign/warning/secure_area{
+	desc = "A warning sign which reads 'MULE CROSSING - LOOK BOTH WAYS";
+	name = "MULE CROSSING - LOOK BOTH WAYS";
+	pixel_x = -32
+	},
+/turf/open/floor/catwalk_floor,
 /area/station/maintenance/department/cargo)
 "yT" = (
 /obj/structure/plasticflaps/opaque{
@@ -1124,7 +1124,7 @@ Fz
 Fz
 Fz
 Fz
-tf
+wo
 Fz
 Fz
 Fz
@@ -1160,7 +1160,7 @@ se
 se
 se
 Fz
-nK
+yO
 wo
 Fz
 se

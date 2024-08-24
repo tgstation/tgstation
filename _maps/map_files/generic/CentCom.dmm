@@ -6683,9 +6683,12 @@
 /turf/open/floor/iron,
 /area/centcom/tdome/arena)
 "DT" = (
-/obj/machinery/camera/motion/thunderdome/green_team{
-	pixel_x = 11;
-	pixel_y = -9
+/obj/machinery/camera/directional/north{
+	c_tag = "Green Team";
+	network = list("thunder");
+	pixel_x = 12;
+	pixel_y = -10;
+	resistance_flags = 64
 	},
 /obj/effect/landmark/thunderdome/one,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
@@ -7473,7 +7476,10 @@
 /turf/open/floor/circuit/green,
 /area/centcom/tdome/arena)
 "Jj" = (
-/obj/machinery/flasher/thunderdome,
+/obj/machinery/flasher{
+	id = "tdomeflash";
+	name = "Thunderdome Flash"
+	},
 /turf/open/floor/circuit/green,
 /area/centcom/tdome/arena)
 "Jl" = (
@@ -9803,9 +9809,12 @@
 /turf/open/floor/iron/dark,
 /area/centcom/tdome/observation)
 "UE" = (
-/obj/machinery/camera/motion/thunderdome/red_team{
+/obj/machinery/camera/directional/north{
+	c_tag = "Red Team";
+	network = list("thunder");
 	pixel_x = 11;
-	pixel_y = -9
+	pixel_y = -9;
+	resistance_flags = 64
 	},
 /obj/effect/landmark/thunderdome/two,
 /obj/effect/turf_decal/tile/neutral/fourcorners,

@@ -13,6 +13,10 @@
 	},
 /turf/open/floor/pod,
 /area/misc/survivalpod)
+"d" = (
+/obj/effect/turf_decal/mining/survival,
+/turf/closed/wall/mineral/titanium/survival/pod,
+/area/misc/survivalpod)
 "e" = (
 /obj/structure/fans,
 /turf/open/floor/pod,
@@ -58,12 +62,9 @@
 /area/misc/survivalpod)
 "p" = (
 /obj/structure/table/survival_pod,
-/obj/item/storage/medkit/regular{
-	pixel_y = 8
-	},
+/obj/item/storage/medkit/regular,
 /obj/item/storage/medkit/brute{
-	pixel_x = 5;
-	pixel_y = 8
+	pixel_x = 5
 	},
 /turf/open/floor/pod,
 /area/misc/survivalpod)
@@ -81,7 +82,7 @@
 /obj/structure/table/wood/fancy/black,
 /obj/item/reagent_containers/cup/glass/drinkingglass{
 	pixel_x = 7;
-	pixel_y = 10
+	pixel_y = 2
 	},
 /obj/item/reagent_containers/cup/glass/bottle/wine{
 	pixel_x = -6;
@@ -91,7 +92,7 @@
 /area/misc/survivalpod)
 "t" = (
 /obj/machinery/microwave{
-	pixel_y = 6
+	pixel_y = -2
 	},
 /obj/structure/window/reinforced/survival_pod/spawner/directional/north,
 /obj/structure/table/wood/fancy/black{
@@ -118,11 +119,9 @@
 /obj/structure/table/wood/fancy/black,
 /obj/item/reagent_containers/cup/glass/drinkingglass{
 	pixel_x = 7;
-	pixel_y = 10
+	pixel_y = 2
 	},
-/obj/effect/spawner/random/food_or_drink/three_course_meal{
-	pixel_y = 8
-	},
+/obj/effect/spawner/random/food_or_drink/three_course_meal,
 /turf/open/floor/carpet/black,
 /area/misc/survivalpod)
 "y" = (
@@ -147,24 +146,53 @@
 /obj/machinery/door/airlock/survival_pod/glass,
 /turf/open/floor/pod,
 /area/misc/survivalpod)
+"H" = (
+/obj/effect/turf_decal/mining/survival{
+	dir = 1
+	},
+/turf/closed/wall/mineral/titanium/survival/pod,
+/area/misc/survivalpod)
+"I" = (
+/obj/structure/window/reinforced/survival_pod{
+	density = 0;
+	dir = 9
+	},
+/turf/open/floor/carpet/black,
+/area/misc/survivalpod)
+"K" = (
+/obj/effect/turf_decal/mining/survival{
+	dir = 8
+	},
+/turf/closed/wall/mineral/titanium/survival/pod,
+/area/misc/survivalpod)
+"R" = (
+/obj/effect/turf_decal/mining/survival{
+	dir = 4
+	},
+/turf/closed/wall/mineral/titanium/survival/pod,
+/area/misc/survivalpod)
+"W" = (
+/obj/effect/turf_decal/mining,
+/turf/closed/wall/mineral/titanium/survival/pod,
+/area/misc/survivalpod)
 
 (1,1,1) = {"
 a
+K
 a
+K
 a
-a
-a
-a
+K
 a
 "}
 (2,1,1) = {"
-a
+H
 e
 k
 p
 t
 y
-a
+d
 "}
 (3,1,1) = {"
 a
@@ -176,7 +204,7 @@ z
 a
 "}
 (4,1,1) = {"
-a
+H
 g
 m
 q
@@ -189,25 +217,25 @@ a
 c
 n
 r
-A
+I
 A
 a
 "}
 (6,1,1) = {"
-a
+H
 i
 o
 s
 x
 B
-a
+W
 "}
 (7,1,1) = {"
 a
+R
 a
+R
 a
-a
-a
-a
+R
 a
 "}

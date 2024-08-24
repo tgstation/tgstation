@@ -7,37 +7,26 @@
 /obj/effect/spawner/random/trash/cigbutt,
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/lesser)
-"g" = (
-/turf/open/floor/plating,
-/area/station/maintenance/starboard/lesser)
 "h" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/table,
 /obj/item/folder/blue{
-	pixel_y = 14;
+	pixel_y = 6;
 	pixel_x = 6
 	},
 /obj/item/folder/red{
-	pixel_x = 8;
-	pixel_y = 6
+	pixel_x = 8
 	},
 /obj/item/paper_bin{
 	pixel_x = -5;
-	pixel_y = 10
+	pixel_y = 4
 	},
 /obj/item/pen/fourcolor,
 /turf/open/floor/iron/smooth,
 /area/station/maintenance/starboard/lesser)
-"j" = (
-/obj/effect/spawner/random/trash/food_packaging,
-/obj/effect/decal/cleanable/dirt,
-/turf/open/floor/iron/smooth,
-/area/station/maintenance/starboard/lesser)
 "k" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/effect/decal/cleanable/cobweb{
-	pixel_y = 24
-	},
+/obj/effect/decal/cleanable/cobweb,
 /obj/effect/spawner/random/trash/hobo_squat,
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/lesser)
@@ -48,34 +37,9 @@
 	},
 /turf/open/floor/iron/smooth,
 /area/station/maintenance/starboard/lesser)
-"t" = (
-/obj/item/wrench,
-/obj/effect/decal/cleanable/dirt,
-/turf/open/floor/iron/smooth,
-/area/station/maintenance/starboard/lesser)
 "u" = (
-/obj/effect/decal/cleanable/crayon/i/orange{
-	pixel_x = 1;
-	pixel_y = 32
-	},
-/obj/effect/decal/cleanable/crayon/i/orange{
-	pixel_x = 5;
-	pixel_y = 32
-	},
-/obj/effect/decal/cleanable/crayon/i/orange{
-	pixel_x = 9;
-	pixel_y = 32
-	},
-/obj/effect/decal/cleanable/crayon/i/orange{
-	pixel_x = 13;
-	pixel_y = 32
-	},
-/obj/effect/decal/cleanable/crayon/x{
-	pixel_x = 8;
-	pixel_y = 32
-	},
-/obj/effect/decal/cleanable/dirt,
 /obj/item/weldingtool/empty,
+/obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/smooth,
 /area/station/maintenance/starboard/lesser)
 "w" = (
@@ -90,6 +54,25 @@
 /area/station/maintenance/starboard/lesser)
 "x" = (
 /obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/crayon/i/orange{
+	pixel_x = 37;
+	pixel_y = 1
+	},
+/obj/effect/decal/cleanable/crayon/i/orange{
+	pixel_x = 22;
+	pixel_y = 1
+	},
+/obj/effect/decal/cleanable/crayon/i/orange{
+	pixel_x = 27;
+	pixel_y = 1
+	},
+/obj/effect/decal/cleanable/crayon/i/orange{
+	pixel_x = 32;
+	pixel_y = 1
+	},
+/obj/effect/decal/cleanable/crayon/x{
+	pixel_x = 32
+	},
 /obj/effect/spawner/random/trash/food_packaging,
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/lesser)
@@ -116,6 +99,30 @@
 /obj/structure/chair/stool/directional/south,
 /turf/open/floor/iron/smooth,
 /area/station/maintenance/starboard/lesser)
+"K" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/crayon/i/orange{
+	pixel_x = 37;
+	pixel_y = 1
+	},
+/obj/effect/decal/cleanable/crayon/i/orange{
+	pixel_x = 22;
+	pixel_y = 1
+	},
+/obj/effect/decal/cleanable/crayon/i/orange{
+	pixel_x = 27;
+	pixel_y = 1
+	},
+/obj/effect/decal/cleanable/crayon/i/orange{
+	pixel_x = 32;
+	pixel_y = 1
+	},
+/obj/effect/decal/cleanable/crayon/x{
+	pixel_x = 32
+	},
+/obj/effect/spawner/random/trash/food_packaging,
+/turf/open/floor/iron/smooth,
+/area/station/maintenance/starboard/lesser)
 "L" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/table,
@@ -125,72 +132,27 @@
 	},
 /obj/item/paper{
 	name = "my last will and testament";
-	default_raw_text = "if you are reading this, that means i have died during the construction of this abomination against mankind. i leave behind all my material wealth to my dog brian and i part this plane of existence with these words of wisdom: do no take contract work from nanotrasen they don't give you health benefits";
-	pixel_y = 10
+	default_raw_text = "if you are reading this, that means i have died during the construction of this abomination against mankind. i leave behind all my material wealth to my dog brian and i part this plane of existence with these words of wisdom: do no take contract work from nanotrasen they don't give you health benefits"
 	},
 /turf/open/floor/iron/smooth,
 /area/station/maintenance/starboard/lesser)
 "M" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/table,
-/obj/item/radio/off{
-	pixel_y = 10
-	},
+/obj/item/radio/off,
 /turf/open/floor/iron/smooth,
 /area/station/maintenance/starboard/lesser)
 "N" = (
-/obj/effect/decal/cleanable/crayon/i/orange{
-	pixel_x = 1;
-	pixel_y = 32
-	},
-/obj/effect/decal/cleanable/crayon/i/orange{
-	pixel_x = 5;
-	pixel_y = 32
-	},
-/obj/effect/decal/cleanable/crayon/i/orange{
-	pixel_x = 9;
-	pixel_y = 32
-	},
-/obj/effect/decal/cleanable/crayon/i/orange{
-	pixel_x = 13;
-	pixel_y = 32
-	},
-/obj/effect/decal/cleanable/crayon/x{
-	pixel_x = 8;
-	pixel_y = 32
-	},
 /obj/effect/decal/cleanable/dirt,
+/obj/item/wrench,
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/lesser)
 "O" = (
-/obj/effect/decal/cleanable/crayon/i/orange{
-	pixel_x = 1;
-	pixel_y = 32
-	},
-/obj/effect/decal/cleanable/crayon/i/orange{
-	pixel_x = 5;
-	pixel_y = 32
-	},
-/obj/effect/decal/cleanable/crayon/i/orange{
-	pixel_x = 9;
-	pixel_y = 32
-	},
-/obj/effect/decal/cleanable/crayon/i/orange{
-	pixel_x = 13;
-	pixel_y = 32
-	},
-/obj/effect/decal/cleanable/crayon/x{
-	pixel_x = 8;
-	pixel_y = 32
-	},
 /obj/effect/decal/cleanable/dirt,
+/obj/item/reagent_containers/cup/glass/waterbottle/empty,
 /obj/item/reagent_containers/cup/glass/waterbottle/empty{
 	pixel_x = -7;
 	pixel_y = -4
-	},
-/obj/item/reagent_containers/cup/glass/waterbottle/empty{
-	pixel_x = 4;
-	pixel_y = 4
 	},
 /turf/open/floor/iron/smooth,
 /area/station/maintenance/starboard/lesser)
@@ -208,6 +170,29 @@
 /obj/item/clothing/suit/hazardvest,
 /obj/item/clothing/head/utility/hardhat/orange,
 /turf/open/floor/iron/smooth,
+/area/station/maintenance/starboard/lesser)
+"S" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/crayon/i/orange{
+	pixel_x = 37;
+	pixel_y = 1
+	},
+/obj/effect/decal/cleanable/crayon/i/orange{
+	pixel_x = 22;
+	pixel_y = 1
+	},
+/obj/effect/decal/cleanable/crayon/i/orange{
+	pixel_x = 27;
+	pixel_y = 1
+	},
+/obj/effect/decal/cleanable/crayon/i/orange{
+	pixel_x = 32;
+	pixel_y = 1
+	},
+/obj/effect/decal/cleanable/crayon/x{
+	pixel_x = 32
+	},
+/turf/open/floor/plating,
 /area/station/maintenance/starboard/lesser)
 "W" = (
 /turf/template_noop,
@@ -257,7 +242,7 @@ W
 "}
 (3,1,1) = {"
 w
-g
+F
 F
 C
 R
@@ -276,7 +261,7 @@ W
 (4,1,1) = {"
 W
 N
-t
+E
 E
 s
 h
@@ -294,7 +279,7 @@ W
 (5,1,1) = {"
 W
 u
-j
+A
 d
 I
 M
@@ -313,8 +298,8 @@ W
 W
 O
 x
-F
-A
+S
+K
 a
 a
 W

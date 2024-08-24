@@ -798,10 +798,11 @@
 /obj/structure/chair/comfy/shuttle{
 	dir = 8
 	},
-/obj/machinery/turretid/directional/south{
+/obj/machinery/turretid{
 	icon_state = "control_kill";
 	lethal = 1;
 	locked = 0;
+	pixel_y = -24;
 	req_access = null
 	},
 /obj/effect/turf_decal/tile/dark_blue/anticorner/contrasted{

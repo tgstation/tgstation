@@ -703,10 +703,11 @@
 /obj/structure/chair/office{
 	dir = 4
 	},
-/obj/machinery/turretid/directional/south{
+/obj/machinery/turretid{
 	icon_state = "control_kill";
 	lethal = 1;
 	locked = 0;
+	pixel_y = -30;
 	req_access = null
 	},
 /mob/living/basic/trooper/pirate/ranged{

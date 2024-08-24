@@ -581,10 +581,11 @@
 /obj/effect/turf_decal/weather/dirt{
 	dir = 4
 	},
-/obj/machinery/turretid/directional/south{
+/obj/machinery/turretid{
 	icon_state = "control_kill";
 	lethal = 1;
 	locked = 0;
+	pixel_y = -24;
 	req_access = null
 	},
 /turf/open/floor/plating,

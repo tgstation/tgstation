@@ -10,6 +10,10 @@
 	},
 /turf/open/floor/pod,
 /area/misc/survivalpod)
+"E" = (
+/obj/structure/sign/warning/biohazard,
+/turf/closed/wall/mineral/titanium/survival/pod,
+/area/misc/survivalpod)
 "H" = (
 /obj/structure/toilet,
 /obj/item/paper{
@@ -27,7 +31,7 @@
 
 (1,1,1) = {"
 a
-a
+E
 a
 "}
 (2,1,1) = {"

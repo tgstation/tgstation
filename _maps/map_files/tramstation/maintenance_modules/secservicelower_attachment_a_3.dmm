@@ -23,20 +23,15 @@
 /area/template_noop)
 "s" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/sink/directional/north,
-/obj/structure/mirror/directional/north,
-/obj/item/reagent_containers/cup/bucket{
-	pixel_x = 9;
-	pixel_y = 15
+/obj/structure/mop_bucket/janitorialcart{
+	dir = 8
 	},
 /turf/open/floor/iron/smooth,
 /area/station/maintenance/central/greater)
 "t" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/table,
-/obj/effect/spawner/random/entertainment/toy{
-	pixel_y = 9
-	},
+/obj/effect/spawner/random/entertainment/toy,
 /turf/open/floor/iron/smooth,
 /area/station/maintenance/central/greater)
 "w" = (
@@ -56,12 +51,7 @@
 /area/station/maintenance/central/greater)
 "E" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/effect/decal/cleanable/cobweb{
-	pixel_y = 24
-	},
-/obj/structure/mop_bucket/janitorialcart{
-	dir = 8
-	},
+/obj/effect/decal/cleanable/cobweb,
 /turf/open/floor/iron/smooth,
 /area/station/maintenance/central/greater)
 "R" = (
@@ -74,6 +64,16 @@
 	},
 /obj/effect/mapping_helpers/airlock/access/all/engineering/maintenance,
 /obj/effect/decal/cleanable/dirt,
+/turf/open/floor/iron/smooth,
+/area/station/maintenance/central/greater)
+"Z" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/sink/directional/west,
+/obj/structure/mirror/directional/east,
+/obj/item/reagent_containers/cup/bucket{
+	pixel_x = 9;
+	pixel_y = -5
+	},
 /turf/open/floor/iron/smooth,
 /area/station/maintenance/central/greater)
 
@@ -120,7 +120,7 @@ q
 a
 x
 s
-R
+Z
 x
 R
 R

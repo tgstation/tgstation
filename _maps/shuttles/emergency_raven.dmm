@@ -1615,10 +1615,12 @@
 /turf/open/floor/iron/dark,
 /area/shuttle/escape)
 "RL" = (
-/obj/machinery/turretid/directional/south{
+/obj/machinery/turretid{
 	desc = "Used to the Raven's automated defenses.";
 	icon_state = "control_kill";
 	lethal = 1;
+	pixel_x = 5;
+	pixel_y = 32;
 	req_access = list("command")
 	},
 /obj/effect/turf_decal/tile/blue/half/contrasted{

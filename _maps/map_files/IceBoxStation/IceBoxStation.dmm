@@ -8370,8 +8370,10 @@
 "ctt" = (
 /obj/structure/window/reinforced/spawner/directional/north,
 /obj/structure/window/reinforced/spawner/directional/west,
-/obj/machinery/turretid/directional/south{
-	name = "AI Chamber turret control"
+/obj/machinery/turretid{
+	name = "AI Chamber turret control";
+	pixel_x = 5;
+	pixel_y = -24
 	},
 /turf/open/floor/circuit,
 /area/station/ai_monitored/turret_protected/ai)
@@ -20177,9 +20179,10 @@
 /turf/open/misc/asteroid/snow/icemoon,
 /area/icemoon/underground/explored)
 "fWK" = (
-/obj/machinery/turretid/directional/south{
+/obj/machinery/turretid{
 	control_area = "/area/station/ai_monitored/turret_protected/aisat/service";
 	name = "Service Bay Turret Control";
+	pixel_x = 27;
 	req_access = list("minisat")
 	},
 /obj/effect/turf_decal/tile/blue{
@@ -30237,9 +30240,10 @@
 /turf/open/floor/plating,
 /area/station/maintenance/port/greater)
 "jeB" = (
-/obj/machinery/turretid/directional/south{
+/obj/machinery/turretid{
 	control_area = "/area/station/ai_monitored/turret_protected/aisat_interior";
 	name = "Antechamber Turret Control";
+	pixel_y = -24;
 	req_access = list("minisat")
 	},
 /obj/machinery/light/small/directional/south,
@@ -48079,9 +48083,11 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/structure/cable/layer3,
-/obj/machinery/turretid/directional/south{
+/obj/machinery/turretid{
 	control_area = "/area/station/ai_monitored/turret_protected/aisat/hallway";
 	name = "Chamber Hallway Turret Control";
+	pixel_x = 32;
+	pixel_y = -24;
 	req_access = list("minisat")
 	},
 /turf/open/floor/iron/dark,
@@ -58531,9 +58537,10 @@
 	network = list("minisat");
 	start_active = 1
 	},
-/obj/machinery/turretid/directional/south{
+/obj/machinery/turretid{
 	control_area = "/area/station/ai_monitored/turret_protected/aisat/atmos";
 	name = "Atmospherics Turret Control";
+	pixel_x = -27;
 	req_access = list("minisat")
 	},
 /obj/effect/turf_decal/tile/blue{
@@ -77103,9 +77110,10 @@
 /turf/open/floor/plating,
 /area/station/ai_monitored/turret_protected/aisat_interior)
 "wZR" = (
-/obj/machinery/turretid/directional/south{
+/obj/machinery/turretid{
 	control_area = "/area/station/ai_monitored/turret_protected/ai_upload";
-	name = "AI Upload Turret Control"
+	name = "AI Upload Turret Control";
+	pixel_y = -25
 	},
 /obj/machinery/camera/directional/south{
 	c_tag = "Bridge Center"

@@ -328,12 +328,14 @@
 /turf/open/floor/catwalk_floor/iron_dark,
 /area/shuttle/sbc_corvette)
 "jy" = (
-/obj/machinery/turretid/directional/south{
+/obj/machinery/turretid{
 	ailock = 1;
 	desc = "A specially designed set of turret controls. Looks to be covered in protective casing to prevent AI interfacing.";
 	icon_state = "control_kill";
 	lethal = 1;
 	name = "Ship Turret Control";
+	pixel_x = 32;
+	pixel_y = -2;
 	req_access = list("syndicate")
 	},
 /obj/machinery/button/door{

@@ -212,11 +212,13 @@
 	dir = 8
 	},
 /obj/effect/decal/cleanable/dirt,
-/obj/machinery/turretid/directional/south{
+/obj/machinery/turretid{
 	icon_state = "control_kill";
 	lethal = 1;
 	locked = 0;
 	name = "NTMS-037 Mining Turret control panel";
+	pixel_x = 28;
+	pixel_y = 6;
 	req_access = null
 	},
 /obj/structure/frame/computer{

@@ -8713,12 +8713,12 @@
 /turf/open/floor/tram,
 /area/station/maintenance/port/aft)
 "dta" = (
-/obj/structure/sign/directions/evac/west_arrow,
-/obj/structure/sign/directions/science/west_arrow{
+/obj/structure/sign/directions/evac/directional/west,
+/obj/structure/sign/directions/science/directional/west{
 	dir = 4;
 	pixel_y = -8
 	},
-/obj/structure/sign/directions/security/west_arrow{
+/obj/structure/sign/directions/security/directional/west{
 	pixel_y = 8
 	},
 /obj/machinery/door/firedoor,
@@ -9186,7 +9186,7 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 4
 	},
-/obj/structure/sign/directions/vault/east_arrow{
+/obj/structure/sign/directions/vault/directional/east{
 	dir = 8
 	},
 /turf/open/floor/iron,
@@ -10850,14 +10850,14 @@
 /obj/machinery/light/cold/dim/directional/east,
 /obj/structure/disposalpipe/segment,
 /obj/effect/turf_decal/tile/neutral,
-/obj/structure/sign/directions/evac/east_arrow{
+/obj/structure/sign/directions/evac/directional/east{
 	dir = 2
 	},
-/obj/structure/sign/directions/command/east_arrow{
+/obj/structure/sign/directions/command/directional/east{
 	pixel_y = 8;
 	dir = 2
 	},
-/obj/structure/sign/directions/medical/east_arrow{
+/obj/structure/sign/directions/medical/directional/east{
 	pixel_y = -8;
 	dir = 2
 	},
@@ -13898,13 +13898,13 @@
 /obj/machinery/door/window/right/directional/north{
 	name = "Security Desk"
 	},
-/obj/structure/sign/directions/command/east_arrow{
+/obj/structure/sign/directions/command/directional/east{
 	dir = 1
 	},
-/obj/structure/sign/directions/medical/east_arrow{
+/obj/structure/sign/directions/medical/directional/east{
 	pixel_y = 8
 	},
-/obj/structure/sign/directions/vault/east_arrow{
+/obj/structure/sign/directions/vault/directional/east{
 	pixel_y = -8
 	},
 /obj/item/storage/fancy/donut_box,
@@ -22329,10 +22329,11 @@
 "hYi" = (
 /obj/effect/mapping_helpers/broken_floor,
 /obj/effect/landmark/start/cyborg,
-/obj/machinery/turretid/directional/south{
+/obj/machinery/turretid{
 	control_area = "/area/station/ai_monitored/turret_protected/ai_upload";
 	icon_state = "control_stun";
-	name = "AI Upload Turret Control"
+	name = "AI Upload Turret Control";
+	pixel_y = -28
 	},
 /obj/machinery/status_display/ai/directional/west,
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
@@ -25116,7 +25117,7 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
-/obj/structure/sign/directions/vault/west_arrow{
+/obj/structure/sign/directions/vault/directional/west{
 	dir = 2
 	},
 /turf/open/floor/iron,
@@ -30965,9 +30966,10 @@
 /turf/open/floor/iron,
 /area/station/hallway/secondary/dock)
 "kTy" = (
-/obj/machinery/turretid/directional/south{
+/obj/machinery/turretid{
 	control_area = "/area/station/ai_monitored/turret_protected/aisat_interior";
 	name = "Antechamber Turret Control";
+	pixel_y = 30;
 	req_access = list("minisat")
 	},
 /obj/structure/showcase/cyborg/old{
@@ -31076,7 +31078,7 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
-/obj/structure/sign/directions/vault/south_arrow{
+/obj/structure/sign/directions/vault/directional/south{
 	dir = 8
 	},
 /turf/closed/wall,
@@ -43597,14 +43599,14 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
-/obj/structure/sign/directions/security/west_arrow{
+/obj/structure/sign/directions/security/directional/west{
 	dir = 2
 	},
-/obj/structure/sign/directions/science/west_arrow{
+/obj/structure/sign/directions/science/directional/west{
 	pixel_y = 8;
 	dir = 10
 	},
-/obj/structure/sign/directions/upload/west_arrow{
+/obj/structure/sign/directions/upload/directional/west{
 	pixel_y = -8;
 	dir = 10
 	},
@@ -63657,7 +63659,7 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
 	dir = 1
 	},
-/obj/structure/sign/directions/lavaland/south_arrow,
+/obj/structure/sign/directions/lavaland/directional/south,
 /turf/open/floor/iron/white/corner{
 	dir = 8
 	},
@@ -69282,9 +69284,11 @@
 /turf/open/floor/iron/dark,
 /area/station/medical/medbay/central)
 "xoO" = (
-/obj/machinery/turretid/directional/south{
+/obj/machinery/turretid{
 	icon_state = "control_stun";
-	name = "AI Chamber turret control"
+	name = "AI Chamber turret control";
+	pixel_x = 3;
+	pixel_y = -23
 	},
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/dark/textured,
@@ -69507,11 +69511,11 @@
 /obj/machinery/cell_charger,
 /obj/item/stock_parts/power_store/cell,
 /obj/machinery/status_display/evac/directional/north,
-/obj/structure/sign/directions/supply/west_arrow,
-/obj/structure/sign/directions/engineering/west_arrow{
+/obj/structure/sign/directions/supply/directional/west,
+/obj/structure/sign/directions/engineering/directional/west{
 	pixel_y = 8
 	},
-/obj/structure/sign/directions/command/west_arrow{
+/obj/structure/sign/directions/command/directional/west{
 	pixel_y = -8
 	},
 /turf/open/floor/iron/white,

@@ -12,10 +12,11 @@
 /area/shuttle/abandoned/bar)
 "aM" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/machinery/turretid/directional/south{
+/obj/machinery/turretid{
 	icon_state = "control_kill";
 	lethal = 1;
 	locked = 0;
+	pixel_y = 28;
 	req_access = null
 	},
 /turf/open/floor/iron/dark/small,
