@@ -6,6 +6,8 @@
 	var/trigger_chance = 0
 	//how many credits do we get for discovering this? Should be negative.
 	var/discovered_credits = 0
+	//If availible, warns users that this WILL fuck you up. Picks randomly from list
+	var/list/inspect_warning
 
 /datum/artifact_fault/proc/on_trigger(datum/component/artifact/component)
 	return

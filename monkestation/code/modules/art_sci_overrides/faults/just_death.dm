@@ -1,7 +1,10 @@
 /datum/artifact_fault/death
 	name = "Instant Death Fault"
-	trigger_chance = 0.25 //You are so unlucky if this procs
+	trigger_chance = 50 //God forbid this actually rolls on a touch artifact
 	visible_message = "blows someone up with mind."
+	inspect_warning = list(span_danger("The grim reapers scythe seems to be reflected in its surface!"),
+	span_danger("An Aura of death surrounds this object!"),
+	span_danger("I'd bet 50/50 someone dies near this!"))
 
 /datum/artifact_fault/death/on_trigger(datum/component/artifact/component)
 	var/list/mobs = list()

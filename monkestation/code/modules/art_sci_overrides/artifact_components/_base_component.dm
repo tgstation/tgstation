@@ -41,7 +41,8 @@
 		/datum/artifact_fault/speech = 10,
 		/datum/artifact_fault/whisper = 8,
 		/datum/artifact_fault/monkey_mode = 4,
-		/datum/artifact_fault/shutdown = 10
+		/datum/artifact_fault/shutdown = 10,
+		/datum/artifact_fault/bioscramble = 5
 	)
 	///origin datum
 	var/datum/artifact_origin/artifact_origin

@@ -6227,6 +6227,7 @@
 #include "monkestation\code\modules\art_sci_overrides\asteroids\cartesian_plane.dm"
 #include "monkestation\code\modules\art_sci_overrides\asteroids\simple_asteroid.dm"
 #include "monkestation\code\modules\art_sci_overrides\faults\_fault.dm"
+#include "monkestation\code\modules\art_sci_overrides\faults\bioscrambler.dm"
 #include "monkestation\code\modules\art_sci_overrides\faults\explosion.dm"
 #include "monkestation\code\modules\art_sci_overrides\faults\ignite.dm"
 #include "monkestation\code\modules\art_sci_overrides\faults\just_death.dm"
