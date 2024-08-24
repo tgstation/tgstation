@@ -18,7 +18,8 @@
 			continue
 		var/list/icon_states = cached_icon_states[fake::icon]
 		if(!icon_states)
-			var/icon/default_icon = fake::icon
+			// Occasionally fails to give an icon object even when the value is in single quotes, icon(icon) is safe so this fixes the issue
+			var/icon/default_icon = icon(fake::icon)
 			icon_states = cached_icon_states[fake::icon] = default_icon.IconStates()
 		if(!(fake::icon_state in icon_states))
 			TEST_FAIL("The icon file for '[fake]' does not have an icon state for the object. Likely this is because it is the wrong icon file, make sure to reference the right file in 'icons/map_icons/'.")
