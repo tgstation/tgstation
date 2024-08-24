@@ -37,38 +37,46 @@
 		response_name = department
 	/// For cases where it spawns on somebody
 	if(get(loc, /mob/living))
-		RegisterSignal(COMSIG_ATOM_PICKUP, PROC_REF(start_listening))
+		set_listen_for_requests(src, loc)
+	else
+		RegisterSignal(COMSIG_ITEM_PICKUP, PROC_REF(set_listen_for_requests))
 
 /obj/item/door_remote/proc/set_listen_for_requests(datum/source, atom/new_location)
 	SIGNAL_HANDLER
 	/// If we were moved to a mob, start listening...
 	RegisterSignal(src, COMSIG_DOOR_REMOTE_ACCESS_REQUEST, PROC_REF(receive_access_request))
+	UnregisterSignal(COMSIG_ITEM_PICKUP)
 	SSid_access.add_listening_remote(region_access, src)
 
 /obj/item/door_remote/proc/receive_access_request(datum/source, obj/item/card/id/ID_requesting, obj/machinery/door/airlock/requested_door)
 	SIGNAL_HANDLER
 
 	if(open_requests[ID_requesting])
-		ID_requesting.visible_message(span_notice("Irritably vibrating text rolls across [ID_requesting]: ONE REQUEST PENDING FOR _[response_name], PLEASE WAIT."), vision_distance = 1)
+		ID_requesting.visible_message(span_notice("Irritably vibrating text rolls across [ID_requesting]: REQUEST PENDING FOR _[response_name]_, PLEASE WAIT."), vision_distance = 1)
 		return COMPONENT_REQUEST_LIMIT_REACHED
 	if(recent_rejections[ID_requesting])
-		ID_requesting.visible_message(span_danger("A grating buzz sounds and [ID_requesting] warns: REQUEST REFUSED TO _[response_name]_"))
+		ID_requesting.visible_message(span_danger("A grating buzz sounds and [ID_requesting] warns: REQUEST TO _[response_name]_ REFUSED."))
 		return COMPONENT_NOT_ON_THE_LIST_PAL
 	open_requests[ID_requesting] = requested_door
 	ID_requesting.visible_message(span_notice("Sedate text pulses slowly on [ID_requesting]: REQUEST RECEIVED BY _[response_name]_, PLEASE WAIT."), vision_distance = 1)
 	addtimer(CALLBACK(src, PROC_REF(expire_access_request), ID_requesting), 30 SECONDS)
+	return COMPONENT_REQUEST_RECEIVED
 
 /obj/item/door_remote/proc/expire_access_request(obj/item/card/id/ID_requesting)
 	/// Open request gets removed if the remote holder decides to approve it or EA the door
 	/// so check that it's there first
 	if(open_requests[ID_requesting])
 		open_requests -= ID_requesting
-		ID_requesting.visible_message(span_notice("A bland banner blinks on [ID_requesting]: RESPONSE TIMEOUT FOR _[response_name]."), vision_distance = 1)
+		ID_requesting.visible_message(span_notice("A bland banner blinks on [ID_requesting]: RESPONSE TIMEOUT FOR _[response_name]_."), vision_distance = 1)
 
-/obj/item/door_remote/proc/approve_access_request(obj/item/card/id/ID_requesting)
-	var/obj/machinery/door/airlock/requested_door = open_requests[ID_requesting]
-	requested_door.open()
-	open_requests -= ID_requesting
+/obj/item/door_remote/proc/handle_requests()
+	tgui_input_checkboxes(mob/user, message, title = "Select", list/items, min_checked = 1, max_checked = 50, timeout = 0, )
+
+
+
+
+
+
 
 /obj/item/door_remote/attack_self(mob/user)
 	var/static/list/desc = list(WAND_OPEN = "Open Door", WAND_BOLT = "Toggle Bolts", WAND_EMERGENCY = "Toggle Emergency Access")
@@ -82,8 +90,18 @@
 	update_icon_state()
 	balloon_alert(user, "mode: [desc[mode]]")
 
+/obj/item/door_remote/attack_self_secondary(mob/user)
+	var/choice = tgui_alert(user, message = "", src.name, list/buttons = list("Configure remote", "Handle access requests"), timeout = 10 SECONDS)
+	if(choice == "Configure remote")
+		configure_remote(mob/user)
+	else if (choice == "Handle access requests")
+		handle_requests(mob/user)
+	else
+		return
+
 /obj/item/door_remote/ranged_interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
 	return interact_with_atom(interacting_with, user, modifiers)
+
 
 /obj/item/door_remote/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
 	var/obj/machinery/door/door
