@@ -36,7 +36,9 @@
 /obj/item/clothing/mask/muzzle/tape
 	name = "tape piece"
 	desc = "A piece of tape that can be put over someone's mouth."
-	icon_state = "tape_piece"
+	icon = 'icons/map_icons/items.dmi'
+	icon_state = "/obj/item/clothing/mask/muzzle/tape"
+	post_init_icon_state = "tape_piece"
 	worn_icon_state = "tape_piece_worn"
 	inhand_icon_state = null
 	w_class = WEIGHT_CLASS_TINY
@@ -87,12 +89,14 @@
 /obj/item/clothing/mask/muzzle/tape/super
 	name = "super tape piece"
 	desc = "A piece of tape that can be put over someone's mouth. This one has extra strengh."
+	icon_state = "/obj/item/clothing/mask/muzzle/tape/super"
 	greyscale_colors = "#4D4D4D"
 	strip_delay = 80
 
 /obj/item/clothing/mask/muzzle/tape/surgical
 	name = "surgical tape piece"
 	desc = "A piece of tape that can be put over someone's mouth. As long as you apply this to your patient, you won't hear their screams of pain!"
+	icon_state = "/obj/item/clothing/mask/muzzle/tape/surgical"
 	greyscale_colors = "#70BAE7"
 	equip_delay_other = 30
 	strip_delay = 30
@@ -100,7 +104,8 @@
 /obj/item/clothing/mask/muzzle/tape/pointy
 	name = "pointy tape piece"
 	desc = "A piece of tape that can be put over someone's mouth. Looks like it will hurt if this is ripped off."
-	icon_state = "tape_piece_spikes"
+	icon_state = "/obj/item/clothing/mask/muzzle/tape/pointy"
+	post_init_icon_state = "tape_piece_spikes"
 	worn_icon_state = "tape_piece_spikes_worn"
 	greyscale_config = /datum/greyscale_config/tape_piece/spikes
 	greyscale_config_worn = /datum/greyscale_config/tape_piece/worn/spikes
@@ -111,6 +116,7 @@
 /obj/item/clothing/mask/muzzle/tape/pointy/super
 	name = "super pointy tape piece"
 	desc = "A piece of tape that can be put over someone's mouth. This thing could rip your face into a thousand pieces if ripped off."
+	icon_state = "/obj/item/clothing/mask/muzzle/tape/pointy/super"
 	greyscale_colors = "#8C0A00#300008"
 	strip_delay = 60
 	stripping_damage = 20

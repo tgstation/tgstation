@@ -35,7 +35,9 @@
 /obj/item/clothing/mask/kitsune
 	name = "kitsune mask"
 	desc = "Porcelain mask made in the style of the Sol-3 region. It is painted to look like a kitsune."
-	icon_state = "kitsune"
+	icon = 'icons/map_icons/items.dmi'
+	icon_state = "/obj/item/clothing/mask/kitsune"
+	post_init_icon_state = "kitsune"
 	inhand_icon_state = null
 	w_class = WEIGHT_CLASS_SMALL
 	flags_inv = HIDEFACE|HIDEFACIALHAIR
@@ -48,7 +50,9 @@
 /obj/item/clothing/mask/rebellion
 	name = "rebellion mask"
 	desc = "Mask that is usually used during rebellions by insurgents. It covers the entire face and makes you unrecognizable."
-	icon_state = "rebellion_mask"
+	icon = 'icons/map_icons/items.dmi'
+	icon_state = "/obj/item/clothing/mask/rebellion"
+	post_init_icon_state = "rebellion_mask"
 	inhand_icon_state = null
 	w_class = WEIGHT_CLASS_SMALL
 	flags_inv = HIDEFACE|HIDEFACIALHAIR|HIDESNOUT
