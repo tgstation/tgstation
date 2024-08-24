@@ -1,0 +1,5 @@
+author: "DrDiasyl aka DrTuxedo"
+delete-after: True
+changes:
+  - rscadd: "Curator has received a new BROADCAST CAMERA which can broadcast the surroundings LIVE on Entertainment Screens/ Alongside with some other Journalism related gear in his Heroic Beacon"
+  - sound: "Entertainment screens now play muffled speech when hearing a message on Entertainment frequency"
