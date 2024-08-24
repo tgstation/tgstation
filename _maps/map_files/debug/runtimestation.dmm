@@ -1063,6 +1063,7 @@
 /area/station/engineering/atmos)
 "ht" = (
 /obj/effect/turf_decal/stripes/line,
+/obj/structure/cable,
 /obj/machinery/airalarm/directional/north,
 /obj/effect/mapping_helpers/airalarm/unlocked,
 /turf/open/floor/iron,
@@ -2484,7 +2485,10 @@
 	dir = 8
 	},
 /obj/structure/cable,
-/obj/machinery/power/apc/auto_name/directional/north,
+/turf/open/floor/iron,
+/area/station/commons/storage/primary)
+"Se" = (
+/obj/machinery/power/apc/auto_name/directional/south,
 /turf/open/floor/iron,
 /area/station/commons/storage/primary)
 "Sg" = (
@@ -7552,7 +7556,7 @@ dJ
 dJ
 AE
 dJ
-dJ
+Se
 cS
 Tt
 bL
