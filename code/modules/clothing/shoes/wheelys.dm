@@ -1,7 +1,9 @@
 /obj/item/clothing/shoes/wheelys
 	name = "Wheely-Heels"
 	desc = "Uses patented retractable wheel technology. Never sacrifice speed for style - not that this provides much of either." //Thanks Fel
-	icon_state = "sneakers"
+	icon = 'icons/map_icons/items.dmi'
+	icon_state = "/obj/item/clothing/shoes/wheelys"
+	post_init_icon_state = "sneakers"
 	worn_icon_state = "wheelys"
 	inhand_icon_state = "sneakers_back"
 	greyscale_colors = "#545454#ffffff"

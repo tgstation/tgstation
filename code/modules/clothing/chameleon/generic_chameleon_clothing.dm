@@ -217,7 +217,9 @@ do { \
 /obj/item/clothing/shoes/chameleon
 	name = "black shoes"
 	desc = "A pair of black shoes."
-	icon_state = "sneakers"
+	icon = 'icons/map_icons/items.dmi'
+	icon_state = "/obj/item/clothing/shoes/chameleon"
+	post_init_icon_state = "sneakers"
 	inhand_icon_state = "sneakers_back"
 	body_parts_covered = FEET|LEGS
 	greyscale_colors = "#545454#ffffff"
