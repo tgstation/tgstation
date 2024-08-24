@@ -534,7 +534,12 @@ SUBSYSTEM_DEF(id_access)
  * * door_requested - The door that the ID card is requesting be opened.
  */
 /datum/controller/subsystem/id_access/proc/route_request_to_door_remote(obj/item/card/id/ID_requesting, obj/machinery/door/airlock/door_requested)
+	. = FALSE
 	for(var/region in SSid_access.station_regions)
 		if(door_requested.check_access_list(SSid_access.accesses_by_region[region]))
 			for(var/obj/item/door_remote/remote in SSid_access.remotes_listening_by_region[region])
-				SEND_SIGNAL(remote, COMSIG_DOOR_REMOTE_ACCESS_REQUEST, ID_requesting, door_requested)
+				. = SEND_SIGNAL(remote, COMSIG_DOOR_REMOTE_ACCESS_REQUEST, ID_requesting, door_requested)
+	if(!.)
+		ID_requesting.visible_message("A scroll of text rolls across the front of [ID_requesting]: ACCESS REQUEST ROUTING FAILED, CONSULT ARTIFICIAL INTELLIGENCE FOR ASSISTANCE.", vision_distance = 1)
+
+

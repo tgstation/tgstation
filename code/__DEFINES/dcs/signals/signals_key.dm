@@ -4,3 +4,5 @@
 ///Called when someone sends a signal to any listening door remotes. (obj/item/card/id/ID_requesting, obj/machinery/door/airlock/requested_door)
 #define COMSIG_DOOR_REMOTE_ACCESS_REQUEST "door_remote_access_request"
 	#define COMPONENT_REQUEST_LIMIT_REACHED 1
+	#define COMPONENT_NOT_ON_THE_LIST_PAL 2
+	#define COMPONENT_REQUEST_RECEIVED 3
