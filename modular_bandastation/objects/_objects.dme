@@ -1,11 +1,9 @@
 #include "_objects.dm"
 
-#include "code/wallets.dm"
 #include "code/hampters.dm"
-#include "code/papershredder.dm"
 #include "code/material_pouch.dm"
-
-#include "code/structures/posters.dm"
+#include "code/papershredder.dm"
+#include "code/wallets.dm"
 
 #include "code/clothing/head/hat.dm"
 #include "code/clothing/head/soft_caps.dm"
@@ -13,6 +11,11 @@
 #include "code/clothing/suits/jacket.dm"
 #include "code/clothing/suits/wintercoats.dm"
 #include "code/clothing/under/jobs/rnd.dm"
+
+#include "code/consumables/drinks.dm"
+#include "code/consumables/customer_data.dm"
+
+#include "code/structures/posters.dm"
 
 #include "code/vending/vending.dm"
 
