@@ -291,7 +291,7 @@
 	data["visible"] = visible
 	return data
 
-/obj/item/assembly/infra/ui_act(action, params)
+/obj/item/assembly/infra/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if(.)
 		return .

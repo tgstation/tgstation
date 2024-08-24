@@ -98,7 +98,7 @@ WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/structure/glowshroom/single)
 	setDir(calc_dir())
 	base_icon_state = initial(icon_state)
 	if(!floor)
-		find_and_hang_on_wall()
+		find_and_hang_on_wall(wall_layer = FLAT_ON_WALL_LAYER)
 		icon_state = "[base_icon_state][rand(1,3)]"
 	else //if on the floor, glowshroom on-floor sprite
 		icon_state = base_icon_state

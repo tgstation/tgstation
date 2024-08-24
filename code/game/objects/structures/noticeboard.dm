@@ -26,7 +26,7 @@ WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/structure/noticeboard)
 			I.forceMove(src)
 			notices++
 	update_appearance(UPDATE_ICON)
-	find_and_hang_on_wall()
+	find_and_hang_on_wall(wall_layer = FLAT_ON_WALL_LAYER)
 
 //attaching papers!!
 /obj/structure/noticeboard/attackby(obj/item/O, mob/user, params)
@@ -66,7 +66,7 @@ WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/structure/noticeboard)
 		data["items"] += list(content_data)
 	return data
 
-/obj/structure/noticeboard/ui_act(action, params)
+/obj/structure/noticeboard/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if(.)
 		return

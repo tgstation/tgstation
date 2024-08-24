@@ -94,6 +94,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/incident_display/tram, 32)
 /obj/machinery/incident_display/Initialize(mapload)
 	..()
 	register_context()
+	find_and_hang_on_wall(wall_layer = FLAT_ON_WALL_LAYER)
 	return INITIALIZE_HINT_LATELOAD
 
 /obj/machinery/incident_display/post_machine_initialize()
@@ -107,6 +108,9 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/incident_display/tram, 32)
 /obj/machinery/incident_display/Destroy()
 	GLOB.map_incident_displays -= src
 	return ..()
+
+/obj/machinery/incident_display/wall_mount_common_plane(direction)
+	return TRUE
 
 /obj/machinery/incident_display/process()
 	if(!isnull(configured_advert) && COOLDOWN_FINISHED(src, advert_cooldown))// time to show an advert

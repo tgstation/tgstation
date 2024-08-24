@@ -1,4 +1,0 @@
-author: "SmArtKar"
-delete-after: True
-changes:
-  - bugfix: "Alien beds no longer pretend they can be deconstructed with a wrench"
