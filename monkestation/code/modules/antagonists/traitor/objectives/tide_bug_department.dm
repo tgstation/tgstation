@@ -169,7 +169,7 @@
 /// any tiles that have likely unsafe atmospheric conditions.
 /obj/machinery/door/airlock/proc/is_probably_external_airlock()
 	. = FALSE
-	if(leads_to_space() || closeOther?.leads_to_space())
+	if(leads_to_space() || closeOther?.leads_to_space() || cyclelinkedairlock?.leads_to_space())
 		return TRUE
 	for(var/obj/machinery/door/airlock/other_door in close_others)
 		if(other_door.leads_to_space())
