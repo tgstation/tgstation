@@ -261,6 +261,7 @@
 	sound = 'sound/items/welder.ogg'
 	replace_walls = /turf/closed/wall/mineral/uranium
 
+/*
 /datum/dimension_theme/meat
 	name = "Meat"
 	icon = 'icons/obj/food/meat.dmi'
@@ -276,6 +277,7 @@
 	material = /datum/material/pizza
 	sound = 'sound/items/eatfood.ogg'
 	replace_walls = /turf/closed/wall/mineral/pizza
+	*/
 
 /datum/dimension_theme/natural
 	name = "Natural"

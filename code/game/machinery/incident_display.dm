@@ -108,8 +108,10 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/incident_display/tram, 32)
 	GLOB.map_incident_displays -= src
 	return ..()
 
+/*
 /obj/machinery/incident_display/wall_mount_common_plane(direction)
 	return TRUE
+	*/
 
 /obj/machinery/incident_display/process()
 	if(!isnull(configured_advert) && COOLDOWN_FINISHED(src, advert_cooldown))// time to show an advert

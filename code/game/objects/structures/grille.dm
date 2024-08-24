@@ -107,7 +107,6 @@
 			if(!ispath(window_path))
 				CRASH("Invalid window path type in RCD: [window_path]")
 
-			var/window_direction = rcd_data[RCD_BUILD_DIRECTION] || user.dir
 			//checks if its a valid build direction
 			if(!initial(window_path.fulltile))
 				if(!valid_build_direction(loc, user.dir, is_fulltile = FALSE))

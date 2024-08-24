@@ -154,9 +154,11 @@
 	replace_floor = /turf/open/floor/mineral/plastitanium
 	barricade = /obj/structure/holosign/barrier
 
+/*
 /datum/armour_dimensional_theme/safe/meat
 	replace_wall = /turf/closed/wall/mineral/meat
 	material = /datum/material/meat
+	*/
 
 /// Dangerous themes can potentially impede the user as much as people pursuing them
 /datum/armour_dimensional_theme/dangerous

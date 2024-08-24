@@ -7,8 +7,8 @@
 	glow_colour = "#dbdd4c48"
 	var/static/list/permitted_transforms = list( // Non-dangerous only
 		/datum/dimension_theme/gold,
-		/datum/dimension_theme/meat,
-		/datum/dimension_theme/pizza,
+		///datum/dimension_theme/meat,
+		///datum/dimension_theme/pizza,
 		/datum/dimension_theme/natural,
 	)
 	var/datum/dimension_theme/chosen_theme
