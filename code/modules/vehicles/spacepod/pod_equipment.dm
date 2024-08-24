@@ -24,7 +24,7 @@
 		update_appearance(UPDATE_OVERLAYS)
 		return ITEM_INTERACT_SUCCESS
 
-	if(istype(equipment, /obj/item/stock_parts/power_store/cell) && isnull(cell) && panel_open)
+	if(istype(equipment, /obj/item/stock_parts/power_store/battery) && isnull(cell) && panel_open)
 		if(!user.transferItemToLoc(equipment, src))
 			return ITEM_INTERACT_FAILURE
 		cell = equipment
