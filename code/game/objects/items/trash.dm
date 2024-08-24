@@ -109,7 +109,7 @@
 
 /obj/item/trash/flare
 	name = "burnt flare"
-	icon = 'icons/obj/devices/lighting.dmi'
+	icon = 'icons/obj/lighting.dmi'
 	icon_state = "flare-empty"
 
 /obj/item/trash/can

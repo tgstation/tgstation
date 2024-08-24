@@ -30,27 +30,27 @@
 
 /datum/greyscale_config/bench_solo
 	name = "Bench Solo"
-	icon_file = 'icons/obj/structures/chairs_wide.dmi'
+	icon_file = 'icons/obj/chairs_wide.dmi'
 	json_config = 'code/datums/greyscale/json_configs/bench_solo.json'
 
 /datum/greyscale_config/bench_middle
 	name = "Bench Middle"
-	icon_file = 'icons/obj/structures/chairs_wide.dmi'
+	icon_file = 'icons/obj/chairs_wide.dmi'
 	json_config = 'code/datums/greyscale/json_configs/bench_middle.json'
 
 /datum/greyscale_config/bench_left
 	name = "Bench Left"
-	icon_file = 'icons/obj/structures/chairs_wide.dmi'
+	icon_file = 'icons/obj/chairs_wide.dmi'
 	json_config = 'code/datums/greyscale/json_configs/bench_left.json'
 
 /datum/greyscale_config/bench_right
 	name = "Bench Right"
-	icon_file = 'icons/obj/structures/chairs_wide.dmi'
+	icon_file = 'icons/obj/chairs_wide.dmi'
 	json_config = 'code/datums/greyscale/json_configs/bench_right.json'
 
 /datum/greyscale_config/bench_corner
 	name = "Bench Corner"
-	icon_file = 'icons/obj/structures/chairs_wide.dmi'
+	icon_file = 'icons/obj/chairs_wide.dmi'
 	json_config = 'code/datums/greyscale/json_configs/bench_corner.json'
 
 //

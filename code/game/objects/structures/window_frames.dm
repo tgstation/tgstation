@@ -1,7 +1,7 @@
 /obj/structure/window_frame
 	name = "window frame"
 	desc = "A frame section to place a window on top."
-	icon = 'icons/obj/structures/smooth/window_frames/window_frame_normal.dmi'
+	icon = 'icons/obj/smooth_structures/window_frames/window_frame_normal.dmi'
 	icon_state = "window_frame_normal-0"
 	base_icon_state = "window_frame_normal"
 	smoothing_flags = SMOOTH_BITMASK|SMOOTH_OBJ
@@ -20,13 +20,13 @@
 	///whether we spawn a window structure with us on mapload
 	var/start_with_window = FALSE
 	///Icon used by grilles for this window frame
-	var/grille_icon = 'icons/obj/structures/smooth/window_grille.dmi'
+	var/grille_icon = 'icons/obj/smooth_structures/window_grille.dmi'
 
-	var/grille_black_icon = 'icons/obj/structures/smooth/window_grille_black.dmi'
+	var/grille_black_icon = 'icons/obj/smooth_structures/window_grille_black.dmi'
 	///Icon state used by grilles for this window frame.
 	var/grille_icon_state = "window_grille"
 
-	var/frame_icon = 'icons/obj/structures/smooth/window_frames/frame_faces/window_frame_normal.dmi'
+	var/frame_icon = 'icons/obj/smooth_structures/window_frames/frame_faces/window_frame_normal.dmi'
 
 	///whether or not this window is reinforced and thus doesnt use the default attackby() behavior
 	var/is_reinforced = FALSE
@@ -438,10 +438,10 @@
 
 /obj/structure/window_frame/titanium
 	name = "shuttle window frame"
-	icon = 'icons/obj/structures/smooth/window_frames/window_frame_shuttle.dmi'
+	icon = 'icons/obj/smooth_structures/window_frames/window_frame_shuttle.dmi'
 	icon_state = "window_frame_shuttle-0"
 	base_icon_state = "window_frame_shuttle"
-	frame_icon = 'icons/obj/structures/smooth/window_frames/frame_faces/window_frame_shuttle.dmi'
+	frame_icon = 'icons/obj/smooth_structures/window_frames/frame_faces/window_frame_shuttle.dmi'
 	sheet_type = /obj/item/stack/sheet/mineral/titanium
 	window_type = /obj/item/stack/sheet/titaniumglass
 	custom_materials = list(/datum/material/titanium = WINDOW_FRAME_BASE_MATERIAL_AMOUNT)
@@ -455,10 +455,10 @@
 
 /obj/structure/window_frame/plastitanium
 	name = "plastitanium window frame"
-	icon = 'icons/obj/structures/smooth/window_frames/window_frame_plastitanium.dmi'
+	icon = 'icons/obj/smooth_structures/window_frames/window_frame_plastitanium.dmi'
 	icon_state = "window_frame_plastitanium-0"
 	base_icon_state = "window_frame_plastitanium"
-	frame_icon = 'icons/obj/structures/smooth/window_frames/frame_faces/window_frame_plastitanium.dmi'
+	frame_icon = 'icons/obj/smooth_structures/window_frames/frame_faces/window_frame_plastitanium.dmi'
 	sheet_type = /obj/item/stack/sheet/mineral/plastitanium
 	window_type = /obj/item/stack/sheet/plastitaniumglass
 	custom_materials = list(/datum/material/alloy/plastitanium = WINDOW_FRAME_BASE_MATERIAL_AMOUNT)
@@ -469,7 +469,7 @@
 
 /obj/structure/window_frame/wood
 	name = "wooden platform"
-	icon = 'icons/obj/structures/smooth/window_frames/window_frame_wood.dmi'
+	icon = 'icons/obj/smooth_structures/window_frames/window_frame_wood.dmi'
 	icon_state = "window_frame_wood-0"
 	base_icon_state = "window_frame_wood"
 	frame_icon = null //no walls above the center
@@ -478,87 +478,87 @@
 
 /obj/structure/window_frame/uranium
 	name = "uranium window frame"
-	icon = 'icons/obj/structures/smooth/window_frames/window_frame_uranium.dmi'
+	icon = 'icons/obj/smooth_structures/window_frames/window_frame_uranium.dmi'
 	icon_state = "window_frame_uranium-0"
 	base_icon_state = "window_frame_uranium"
-	frame_icon = 'icons/obj/structures/smooth/window_frames/frame_faces/window_frame_uranium.dmi'
+	frame_icon = 'icons/obj/smooth_structures/window_frames/frame_faces/window_frame_uranium.dmi'
 	sheet_type = /obj/item/stack/sheet/mineral/uranium
 	custom_materials = list(/datum/material/uranium = WINDOW_FRAME_BASE_MATERIAL_AMOUNT)
 
 /obj/structure/window_frame/iron
 	name = "rough iron window frame"
-	icon = 'icons/obj/structures/smooth/window_frames/window_frame_iron.dmi'
+	icon = 'icons/obj/smooth_structures/window_frames/window_frame_iron.dmi'
 	icon_state = "window_frame_iron-0"
 	base_icon_state = "window_frame_iron"
-	frame_icon = 'icons/obj/structures/smooth/window_frames/frame_faces/window_frame_iron.dmi'
+	frame_icon = 'icons/obj/smooth_structures/window_frames/frame_faces/window_frame_iron.dmi'
 	sheet_type = /obj/item/stack/sheet/iron
 	custom_materials = list(/datum/material/iron = WINDOW_FRAME_BASE_MATERIAL_AMOUNT)
 
 /obj/structure/window_frame/silver
 	name = "silver window frame"
-	icon = 'icons/obj/structures/smooth/window_frames/window_frame_silver.dmi'
+	icon = 'icons/obj/smooth_structures/window_frames/window_frame_silver.dmi'
 	icon_state = "window_frame_silver-0"
 	base_icon_state = "window_frame_silver"
-	frame_icon = 'icons/obj/structures/smooth/window_frames/frame_faces/window_frame_silver.dmi'
+	frame_icon = 'icons/obj/smooth_structures/window_frames/frame_faces/window_frame_silver.dmi'
 	sheet_type = /obj/item/stack/sheet/mineral/silver
 	custom_materials = list(/datum/material/silver = WINDOW_FRAME_BASE_MATERIAL_AMOUNT)
 
 /obj/structure/window_frame/gold
 	name = "gold window frame"
-	icon = 'icons/obj/structures/smooth/window_frames/window_frame_gold.dmi'
+	icon = 'icons/obj/smooth_structures/window_frames/window_frame_gold.dmi'
 	icon_state = "window_frame_gold-0"
 	base_icon_state = "window_frame_gold"
-	frame_icon = 'icons/obj/structures/smooth/window_frames/frame_faces/window_frame_gold.dmi'
+	frame_icon = 'icons/obj/smooth_structures/window_frames/frame_faces/window_frame_gold.dmi'
 	sheet_type = /obj/item/stack/sheet/mineral/gold
 	custom_materials = list(/datum/material/gold = WINDOW_FRAME_BASE_MATERIAL_AMOUNT)
 
 /obj/structure/window_frame/bronze
 	name = "clockwork window mount"
-	icon = 'icons/obj/structures/smooth/window_frames/window_frame_bronze.dmi'
+	icon = 'icons/obj/smooth_structures/window_frames/window_frame_bronze.dmi'
 	icon_state = "window_frame_bronze-0"
 	base_icon_state = "window_frame_bronze"
-	frame_icon = 'icons/obj/structures/smooth/window_frames/frame_faces/window_frame_bronze.dmi'
+	frame_icon = 'icons/obj/smooth_structures/window_frames/frame_faces/window_frame_bronze.dmi'
 	sheet_type = /obj/item/stack/sheet/bronze
 	custom_materials = list(/datum/material/bronze = WINDOW_FRAME_BASE_MATERIAL_AMOUNT)
 
 /obj/structure/window_frame/cult
 	name = "rune-scarred window frame"
-	icon = 'icons/obj/structures/smooth/window_frames/window_frame_cult.dmi'
+	icon = 'icons/obj/smooth_structures/window_frames/window_frame_cult.dmi'
 	icon_state = "window_frame_cult-0"
 	base_icon_state = "window_frame_cult"
-	frame_icon = 'icons/obj/structures/smooth/window_frames/frame_faces/window_frame_cult.dmi'
+	frame_icon = 'icons/obj/smooth_structures/window_frames/frame_faces/window_frame_cult.dmi'
 	sheet_type = /obj/item/stack/sheet/runed_metal
 	custom_materials = list(/datum/material/runedmetal = WINDOW_FRAME_BASE_MATERIAL_AMOUNT)
 
 /obj/structure/window_frame/hotel
 	name = "hotel window frame"
-	icon = 'icons/obj/structures/smooth/window_frames/window_frame_hotel.dmi'
+	icon = 'icons/obj/smooth_structures/window_frames/window_frame_hotel.dmi'
 	icon_state = "window_frame_hotel-0"
 	base_icon_state = "window_frame_hotel"
-	frame_icon = 'icons/obj/structures/smooth/window_frames/frame_faces/window_frame_hotel.dmi'
+	frame_icon = 'icons/obj/smooth_structures/window_frames/frame_faces/window_frame_hotel.dmi'
 	sheet_type = /obj/item/stack/sheet/mineral/wood
 	custom_materials = list(/datum/material/wood = WINDOW_FRAME_BASE_MATERIAL_AMOUNT)
 
 /obj/structure/window_frame/material
 	name = "material window frame"
-	icon = 'icons/obj/structures/smooth/window_frames/window_frame_material.dmi'
+	icon = 'icons/obj/smooth_structures/window_frames/window_frame_material.dmi'
 	icon_state = "window_frame_material-0"
 	base_icon_state = "window_frame_material"
-	frame_icon = 'icons/obj/structures/smooth/window_frames/frame_faces/window_frame_material.dmi'
+	frame_icon = 'icons/obj/smooth_structures/window_frames/frame_faces/window_frame_material.dmi'
 	material_flags = MATERIAL_ADD_PREFIX | MATERIAL_COLOR | MATERIAL_AFFECT_STATISTICS
 
 /obj/structure/window_frame/rusty
 	name = "rusty window frame"
-	icon = 'icons/obj/structures/smooth/window_frames/window_frame_rusty.dmi'
+	icon = 'icons/obj/smooth_structures/window_frames/window_frame_rusty.dmi'
 	icon_state = "window_frame_rusty-0"
 	base_icon_state = "window_frame_rusty"
-	frame_icon = 'icons/obj/structures/smooth/window_frames/frame_faces/window_frame_rusty.dmi'
+	frame_icon = 'icons/obj/smooth_structures/window_frames/frame_faces/window_frame_rusty.dmi'
 	sheet_type = /obj/item/stack/sheet/iron
 	custom_materials = list(/datum/material/iron = WINDOW_FRAME_BASE_MATERIAL_AMOUNT)
 
 /obj/structure/window_frame/sandstone
 	name = "sandstone plinth"
-	icon = 'icons/obj/structures/smooth/window_frames/window_frame_sandstone.dmi'
+	icon = 'icons/obj/smooth_structures/window_frames/window_frame_sandstone.dmi'
 	icon_state = "window_frame_sandstone-0"
 	base_icon_state = "window_frame_sandstone"
 	frame_icon = null //no walls above center
@@ -567,19 +567,19 @@
 
 /obj/structure/window_frame/bamboo
 	name = "bamboo platform"
-	icon = 'icons/obj/structures/smooth/window_frames/window_frame_bamboo.dmi'
+	icon = 'icons/obj/smooth_structures/window_frames/window_frame_bamboo.dmi'
 	icon_state = "window_frame_bamboo-0"
 	base_icon_state = "window_frame_bamboo"
-	frame_icon = 'icons/obj/structures/smooth/window_frames/frame_faces/window_frame_bamboo.dmi'
+	frame_icon = 'icons/obj/smooth_structures/window_frames/frame_faces/window_frame_bamboo.dmi'
 	sheet_type = /obj/item/stack/sheet/mineral/bamboo
 	custom_materials = list(/datum/material/bamboo = WINDOW_FRAME_BASE_MATERIAL_AMOUNT)
 
 /obj/structure/window_frame/paperframe
 	name = "japanese window frame"
-	icon = 'icons/obj/structures/smooth/window_frames/window_frame_paperframe.dmi'
+	icon = 'icons/obj/smooth_structures/window_frames/window_frame_paperframe.dmi'
 	icon_state = "window_frame_paperframe-0"
 	base_icon_state = "window_frame_paperframe"
-	frame_icon = 'icons/obj/structures/smooth/window_frames/frame_faces/window_frame_paperframe.dmi'
+	frame_icon = 'icons/obj/smooth_structures/window_frames/frame_faces/window_frame_paperframe.dmi'
 	sheet_type = /obj/item/stack/sheet/paperframes
 	window_type = /obj/item/stack/sheet/paperframes
 	custom_materials = list(/datum/material/paper = WINDOW_FRAME_BASE_MATERIAL_AMOUNT)
