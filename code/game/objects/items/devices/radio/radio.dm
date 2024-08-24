@@ -57,6 +57,8 @@
 	var/use_command = FALSE
 	/// If true, use_command can be toggled at will.
 	var/command = FALSE
+	/// Does it play radio noise?
+	var/radio_noise = TRUE
 
 	///makes anyone who is talking through this anonymous.
 	var/anonymize = FALSE
@@ -351,7 +353,7 @@
 
 	if(isliving(talking_movable))
 		var/mob/living/talking_living = talking_movable
-		if(talking_living.client?.prefs.read_preference(/datum/preference/toggle/radio_noise) && !HAS_TRAIT(talking_living, TRAIT_DEAF))
+		if(talking_living.client?.prefs.read_preference(/datum/preference/toggle/radio_noise) && !HAS_TRAIT(talking_living, TRAIT_DEAF) && radio_noise)
 			SEND_SOUND(talking_living, 'sound/misc/radio_talk.ogg')
 
 	// All radios make an attempt to use the subspace system first
@@ -429,7 +431,7 @@
 		return
 
 	var/mob/living/holder = loc
-	if(!holder.client?.prefs.read_preference(/datum/preference/toggle/radio_noise) && !HAS_TRAIT(holder, TRAIT_DEAF))
+	if(!holder.client?.prefs.read_preference(/datum/preference/toggle/radio_noise) && HAS_TRAIT(holder, TRAIT_DEAF) && !radio_noise)
 		return
 
 	var/list/spans = data["spans"]
@@ -634,5 +636,61 @@
 /obj/item/radio/off/Initialize(mapload)
 	. = ..()
 	set_listening(FALSE)
+
+// RADIOS USED BY BROADCASTING
+/obj/item/radio/entertainment
+	desc = "You should not hold this."
+	canhear_range = 7
+	freerange = TRUE
+	freqlock = RADIO_FREQENCY_LOCKED
+	radio_noise = FALSE
+
+/obj/item/radio/entertainment/Initialize(mapload)
+	. = ..()
+	set_frequency(FREQ_ENTERTAINMENT)
+
+/obj/item/radio/entertainment/speakers // Used inside of the entertainment monitors, not to be used as a actual item
+	should_be_listening = TRUE
+	should_be_broadcasting = FALSE
+
+/obj/item/radio/entertainment/speakers/Initialize(mapload)
+	. = ..()
+	set_broadcasting(FALSE)
+	set_listening(TRUE)
+	wires?.cut(WIRE_TX)
+
+/obj/item/radio/entertainment/speakers/on_receive_message(list/data)
+	playsound(source = src, soundin = SFX_MUFFLED_SPEECH, vol = 60, extrarange = -4, vary = TRUE, ignore_walls = FALSE)
+
+	return ..()
+
+/obj/item/radio/entertainment/speakers/physical // Can be used as a physical item
+	name = "entertainment radio"
+	desc = "A portable one-way radio permamently tuned into entertainment frequency."
+	icon_state = "radio"
+	inhand_icon_state = "radio"
+	worn_icon_state = "radio"
+	overlay_speaker_idle = "radio_s_idle"
+	overlay_speaker_active = "radio_s_active"
+	overlay_mic_idle = "radio_m_idle"
+	overlay_mic_active = "radio_m_active"
+
+/obj/item/radio/entertainment/microphone // Used inside of a broadcast camera, not to be used as a actual item
+	should_be_listening = FALSE
+	should_be_broadcasting = TRUE
+
+/obj/item/radio/entertainment/microphone/Initialize(mapload)
+	. = ..()
+	set_broadcasting(TRUE)
+	set_listening(FALSE)
+	wires?.cut(WIRE_RX)
+
+/obj/item/radio/entertainment/microphone/physical // Can be used as a physical item
+	name = "microphone"
+	desc = "No comments."
+	icon = 'icons/obj/service/broadcast.dmi'
+	icon_state = "microphone"
+	inhand_icon_state = "microphone"
+	canhear_range = 3
 
 #undef FREQ_LISTENING
