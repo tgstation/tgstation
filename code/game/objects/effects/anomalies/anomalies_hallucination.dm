@@ -18,6 +18,8 @@
 /obj/effect/anomaly/hallucination/Initialize(mapload, new_lifespan, drops_core)
 	. = ..()
 	apply_wibbly_filters(src)
+	for(var/turf/floor in orange(1, src))
+		new /obj/effect/anomaly/hallucination/decoy(floor)
 
 /obj/effect/anomaly/hallucination/anomalyEffect(seconds_per_tick)
 	. = ..()
@@ -46,4 +48,19 @@
 		hallucination_duration = 50 SECONDS,
 		hallucination_max_duration = 300 SECONDS,
 		optional_messages = messages,
+		ignore_walls = TRUE,
 	)
+
+/obj/effect/anomaly/hallucination/decoy
+
+/obj/effect/anomaly/hallucination/decoy/anomalyEffect(seconds_per_tick)
+	if(SPT_PROB(move_chance, seconds_per_tick))
+		move_anomaly()
+
+/obj/effect/anomaly/hallucination/decoy/analyzer_act(mob/living/user, obj/item/analyzer/tool)
+	to_chat(user, span_notice("You activate your [tool], but it does nothing. What?"))
+	return ITEM_INTERACT_BLOCKING
+
+/obj/effect/anomaly/hallucination/decoy/detonate()
+	do_sparks(3, source = src)
+	return

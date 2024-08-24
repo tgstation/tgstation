@@ -68,8 +68,9 @@ GLOBAL_LIST_EMPTY(all_ongoing_hallucinations)
  * hallucination_duration - how much hallucination is added by the pulse. reduced based on distance to the center.
  * hallucination_max_duration - a cap on how much hallucination can be added
  * optional_messages - optional list of messages passed. Those affected by pulses will be given one of the messages in said list.
+ * ignore_walls - override the line-of-sight check. Kind of defeats the purpose of being a "visible" hallucination pulse but it's not worth making a nearly identical helper.
  */
-/proc/visible_hallucination_pulse(atom/center, radius = 7, hallucination_duration = 50 SECONDS, hallucination_max_duration, list/optional_messages)
+/proc/visible_hallucination_pulse(atom/center, radius = 7, hallucination_duration = 50 SECONDS, hallucination_max_duration, list/optional_messages, ignore_walls = FALSE)
 	for(var/mob/living/nearby_living in view(center, radius))
 		if(HAS_MIND_TRAIT(nearby_living, TRAIT_MADNESS_IMMUNE))
 			continue
