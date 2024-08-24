@@ -1,6 +1,6 @@
 /obj/structure/reflector
 	name = "reflector base"
-	icon = 'icons/obj/structures.dmi'
+	icon = 'icons/obj/machines/engine/reflector.dmi'
 	icon_state = "reflector_map"
 	desc = "A base for reflector assemblies."
 	anchored = FALSE
@@ -311,7 +311,7 @@
 
 	return data
 
-/obj/structure/reflector/ui_act(action, params)
+/obj/structure/reflector/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if(.)
 		return

@@ -3,7 +3,7 @@
 /obj/structure/bed/nest
 	name = "alien nest"
 	desc = "It's a gruesome pile of thick, sticky resin shaped like a nest."
-	icon = 'icons/obj/smooth_structures/alien/nest.dmi'
+	icon = 'icons/obj/structures/smooth/alien/nest.dmi'
 	icon_state = "nest-0"
 	base_icon_state = "nest"
 	max_integrity = 120
@@ -13,6 +13,7 @@
 	canSmoothWith = SMOOTH_GROUP_ALIEN_NEST
 	build_stack_type = null
 	elevation = 0
+	can_deconstruct = FALSE
 	var/static/mutable_appearance/nest_overlay = mutable_appearance('icons/mob/nonhuman-player/alien.dmi', "nestoverlay", LYING_MOB_LAYER)
 
 /obj/structure/bed/nest/add_context(atom/source, list/context, obj/item/held_item, mob/living/user)
@@ -20,10 +21,6 @@
 		return NONE
 
 	return ..()
-
-/obj/structure/bed/nest/wrench_act_secondary(mob/living/user, obj/item/weapon)
-	return ITEM_INTERACT_BLOCKING
-
 
 /obj/structure/bed/nest/user_unbuckle_mob(mob/living/captive, mob/living/hero)
 	if(!length(buckled_mobs))
@@ -41,7 +38,7 @@
 		unbuckle_mob(captive)
 		add_fingerprint(hero)
 		return
-	
+
 	captive.visible_message(span_warning("[captive.name] struggles to break free from the gelatinous resin!"),
 		span_notice("You struggle to break free from the gelatinous resin... (Stay still for about a minute and a half.)"),
 		span_hear("You hear squelching..."))

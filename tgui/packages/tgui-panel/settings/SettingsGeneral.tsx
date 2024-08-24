@@ -8,8 +8,8 @@ import {
   Divider,
   Input,
   LabeledList,
-  NumberInput,
   Section,
+  Slider,
   Stack,
 } from 'tgui/components';
 
@@ -20,10 +20,11 @@ import { FONTS } from './constants';
 import { selectSettings } from './selectors';
 
 export function SettingsGeneral(props) {
-  const { theme, fontFamily, fontSize, lineHeight } =
+  const { theme, fontFamily, fontSize, lineHeight, statLinked, statFontSize } =
     useSelector(selectSettings);
   const dispatch = useDispatch();
   const [freeFont, setFreeFont] = useState(false);
+  const [statFont, setStatFont] = useState(false);
 
   return (
     <Section>
@@ -109,35 +110,66 @@ export function SettingsGeneral(props) {
             )}
           </Stack.Item>
         </LabeledList.Item>
-        <LabeledList.Item label="Font size">
-          <NumberInput
-            width="4.2em"
-            step={1}
-            stepPixelSize={10}
-            minValue={8}
-            maxValue={32}
-            value={fontSize}
-            unit="px"
-            format={(value) => toFixed(value)}
-            onChange={(value) =>
-              dispatch(
-                updateSettings({
-                  fontSize: value,
-                }),
-              )
-            }
-          />
+        <LabeledList.Item label="Font size" verticalAlign="middle">
+          <Stack textAlign="center">
+            <Stack.Item grow>
+              <Slider
+                width="100%"
+                step={1}
+                stepPixelSize={20}
+                minValue={8}
+                maxValue={32}
+                value={statFont ? statFontSize : fontSize}
+                unit="px"
+                format={(value) => toFixed(value)}
+                onChange={(e, value) =>
+                  dispatch(
+                    updateSettings({
+                      [statFont ? 'statFontSize' : 'fontSize']: value,
+                    }),
+                  )
+                }
+              />
+            </Stack.Item>
+            <Stack.Item>
+              <Button
+                width={statFont ? 7.3 : 10}
+                onClick={() => setStatFont(!statFont)}
+              >
+                {statFont ? 'Stat Panel' : 'Chat'}
+              </Button>
+            </Stack.Item>
+            {!!statFont && (
+              <Stack.Item>
+                <Button
+                  tooltip={
+                    statLinked
+                      ? 'Unlink Stat Panel settings from chat'
+                      : 'Link Stat Panel settings to chat'
+                  }
+                  icon={statLinked ? 'link' : 'link-slash'}
+                  color={statLinked ? 'bad' : 'good'}
+                  onClick={() =>
+                    dispatch(
+                      updateSettings({
+                        statLinked: !statLinked,
+                      }),
+                    )
+                  }
+                />
+              </Stack.Item>
+            )}
+          </Stack>
         </LabeledList.Item>
         <LabeledList.Item label="Line height">
-          <NumberInput
-            width="4.2em"
+          <Slider
+            width="100%"
             step={0.01}
-            stepPixelSize={2}
             minValue={0.8}
             maxValue={5}
             value={lineHeight}
             format={(value) => toFixed(value, 2)}
-            onDrag={(value) =>
+            onDrag={(e, value) =>
               dispatch(
                 updateSettings({
                   lineHeight: value,

@@ -27,6 +27,7 @@
 	maximum_survivable_temperature = 1500
 	combat_mode = TRUE
 	move_resist = INFINITY // This mob IS the floor
+	shadow_type = SHADOW_LARGE
 
 	/// Looping heartbeat sound
 	var/datum/looping_sound/heartbeat/soundloop

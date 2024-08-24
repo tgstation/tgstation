@@ -53,9 +53,9 @@
 				"dest" = simple_mulebot.destination,
 				"power" = simple_mulebot.cell ? simple_mulebot.cell.percent() : 0,
 				"home" = simple_mulebot.home_destination,
-				"autoReturn" = simple_mulebot.auto_return,
-				"autoPickup" = simple_mulebot.auto_pickup,
-				"reportDelivery" = simple_mulebot.report_delivery,
+				"autoReturn" = simple_mulebot.mulebot_delivery_flags & MULEBOT_RETURN_MODE,
+				"autoPickup" = simple_mulebot.mulebot_delivery_flags & MULEBOT_AUTO_PICKUP_MODE,
+				"reportDelivery" = simple_mulebot.mulebot_delivery_flags & MULEBOT_REPORT_DELIVERY_MODE,
 				"mule_ref" = REF(simple_mulebot),
 				"load" = simple_mulebot.get_load_name(),
 			))

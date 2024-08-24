@@ -1,6 +1,6 @@
 /obj/structure/sink
 	name = "sink"
-	icon = 'icons/obj/watercloset.dmi'
+	icon = 'icons/obj/structures/watercloset.dmi'
 	icon_state = "sink"
 	desc = "A sink used for washing one's hands and face. Passively reclaims water over time."
 	anchored = TRUE
@@ -14,14 +14,12 @@
 	var/buildstacktype = /obj/item/stack/sheet/iron
 	///Number of sheets of material to drop when broken or deconstructed.
 	var/buildstackamount = 1
-	///Does the sink have a water recycler to recollect it's water supply?
+	///Does the sink have a water recycler to recollect its water supply?
 	var/has_water_reclaimer = TRUE
 	///Units of water to reclaim per second
 	var/reclaim_rate = 0.5
-	///Amount of shift the pixel for placement
-	var/pixel_shift = 14
 
-MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sink, (-14))
+SINK_DIRECTIONAL_HELPERS(/obj/structure/sink)
 
 /obj/structure/sink/Initialize(mapload, ndir = 0, has_water_reclaimer = null)
 	. = ..()
@@ -32,24 +30,11 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sink, (-14))
 	if(has_water_reclaimer != null)
 		src.has_water_reclaimer = has_water_reclaimer
 
-	switch(dir)
-		if(NORTH)
-			pixel_x = 0
-			pixel_y = -pixel_shift
-		if(SOUTH)
-			pixel_x = 0
-			pixel_y = pixel_shift
-		if(EAST)
-			pixel_x = -pixel_shift
-			pixel_y = 0
-		if(WEST)
-			pixel_x = pixel_shift
-			pixel_y = 0
-
 	create_reagents(100, NO_REACT)
 	if(src.has_water_reclaimer)
 		reagents.add_reagent(dispensedreagent, 100)
-	AddComponent(/datum/component/plumbing/simple_demand, extend_pipe_to_edge = TRUE)
+	AddComponent(/datum/component/plumbing/inverted_simple_demand, extend_pipe_to_edge = TRUE, invert_demand = TRUE)
+	find_and_hang_on_wall()
 
 /obj/structure/sink/examine(mob/user)
 	. = ..()
@@ -246,9 +231,8 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sink, (-14))
 	name = "kitchen sink"
 	icon_state = "sink_alt"
 	pixel_z = 4
-	pixel_shift = 16
 
-MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sink/kitchen, (-16))
+SINK_DIRECTIONAL_HELPERS(/obj/structure/sink/kitchen)
 
 /obj/structure/sink/gasstation
 	name = "plasma fuel station"
@@ -264,7 +248,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sink/kitchen, (-16))
 
 /obj/structure/sinkframe
 	name = "sink frame"
-	icon = 'icons/obj/watercloset.dmi'
+	icon = 'icons/obj/structures/watercloset.dmi'
 	icon_state = "sink_frame"
 	desc = "A sink frame, that needs a water recycler to finish construction."
 	anchored = FALSE

@@ -140,9 +140,9 @@ SUBSYSTEM_DEF(discord)
  * ```
  *
  * Notes:
- * * The token is guaranteed to unique during it's validity period
+ * * The token is guaranteed to unique during its validity period
  * * The validity period is currently set at 4 hours
- * * a token may not be unique outside it's validity window (to reduce conflicts)
+ * * a token may not be unique outside its validity window (to reduce conflicts)
  *
  * Arguments:
  * * ckey_for a string representing the ckey this token is for

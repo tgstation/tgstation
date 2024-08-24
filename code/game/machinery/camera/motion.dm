@@ -68,6 +68,13 @@
 	network = list(CAMERANET_NETWORK_THUNDERDOME)
 	c_tag = "Arena"
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | ACID_PROOF | FREEZE_PROOF
+	should_wallmount = FALSE
+
+/obj/machinery/camera/motion/thunderdome/red_team
+	c_tag = "Red Team"
+
+/obj/machinery/camera/motion/thunderdome/green_team
+	c_tag = "Green Team"
 
 /obj/machinery/camera/motion/thunderdome/Initialize(mapload)
 	. = ..()

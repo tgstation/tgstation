@@ -12,14 +12,17 @@
 		fish_source = configuration
 	else
 		return COMPONENT_INCOMPATIBLE
-	fish_source.on_fishing_spot_init()
+	fish_source.on_fishing_spot_init(src)
 	RegisterSignal(parent, COMSIG_ATOM_ATTACKBY, PROC_REF(handle_attackby))
 	RegisterSignal(parent, COMSIG_FISHING_ROD_CAST, PROC_REF(handle_cast))
 	RegisterSignal(parent, COMSIG_ATOM_EXAMINE, PROC_REF(on_examined))
 	RegisterSignal(parent, COMSIG_ATOM_EXAMINE_MORE, PROC_REF(on_examined_more))
+	RegisterSignal(parent, COMSIG_NPC_FISHING, PROC_REF(return_fishing_spot))
+	RegisterSignal(parent, COMSIG_ATOM_EX_ACT, PROC_REF(explosive_fishing))
 	ADD_TRAIT(parent, TRAIT_FISHING_SPOT, REF(src))
 
 /datum/component/fishing_spot/Destroy()
+	fish_source.on_fishing_spot_del(src)
 	fish_source = null
 	return ..()
 
@@ -95,3 +98,10 @@
 	var/datum/fishing_challenge/challenge = new(src, result, rod, user)
 	fish_source.pre_challenge_started(rod, user, challenge)
 	challenge.start(user)
+
+/datum/component/fishing_spot/proc/return_fishing_spot(datum/source, list/fish_spot_container)
+	fish_spot_container[NPC_FISHING_SPOT] = fish_source
+
+/datum/component/fishing_spot/proc/explosive_fishing(atom/location, severity)
+	SIGNAL_HANDLER
+	fish_source.spawn_reward_from_explosion(location, severity)

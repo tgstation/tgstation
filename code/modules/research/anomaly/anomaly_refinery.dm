@@ -11,6 +11,7 @@
  * Uses the standard ordnance/tank explosion scaling to compress raw anomaly cores into completed ones. The required explosion radius increases as more cores of that type are created.
  */
 /obj/machinery/research/anomaly_refinery
+	SET_BASE_VISUAL_PIXEL(0, DEPTH_OFFSET)
 	name = "anomaly refinery"
 	desc = "An advanced machine capable of implosion-compressing raw anomaly cores into finished artifacts. Also equipped with state of the art bomb prediction software."
 	circuit = /obj/item/circuitboard/machine/anomaly_refinery
@@ -315,7 +316,7 @@
 		ui = new(user, src, "AnomalyRefinery")
 		ui.open()
 
-/obj/machinery/research/anomaly_refinery/ui_act(action, list/params)
+/obj/machinery/research/anomaly_refinery/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if (.)
 		return

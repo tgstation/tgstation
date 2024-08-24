@@ -83,7 +83,7 @@ GLOBAL_LIST_EMPTY(elevator_music)
 /datum/proximity_monitor/advanced/elevator_music_area/field_turf_uncrossed(mob/exited, turf/old_location, turf/new_location)
 	if (!(exited in tracked_mobs))
 		return
-	if (exited.z == host.z && get_dist(exited, host) <= current_range)
+	if ((new_location in field_turfs) || (new_location in edge_turfs))
 		return
 	qdel(tracked_mobs[exited])
 	tracked_mobs -= exited

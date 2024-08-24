@@ -62,6 +62,7 @@
 		)
 	if(paint_jobs)
 		paint_jobs = crate_paint_jobs
+	AddComponent(/datum/component/soapbox)
 
 /obj/structure/closet/crate/Destroy()
 	QDEL_NULL(manifest)
@@ -221,6 +222,12 @@
 	icon_state = "medicalcrate"
 	base_icon_state = "medicalcrate"
 
+/obj/structure/closet/crate/deforest
+	name = "deforest medical crate"
+	desc = "A DeFortest brand crate of medical supplies."
+	icon_state = "deforest"
+	base_icon_state = "deforest"
+
 /obj/structure/closet/crate/medical/department
 	icon_state = "medical"
 	base_icon_state = "medical"
@@ -289,6 +296,24 @@
 	icon_state = "food"
 	base_icon_state = "food"
 
+/obj/structure/closet/crate/freezer/donk
+	name = "donk co. fridge"
+	desc = "A Donk Co. brand fridge, keeps your donkpcokets and foam ammunition fresh!"
+	icon_state = "donkcocrate"
+	base_icon_state = "donkcocrate"
+
+/obj/structure/closet/crate/freezer/interdyne
+	name = "interdyne freezer"
+	desc = "Interdyne Pharmauceutics branded freezer. Might or might not contain cold steel, or fresh organs."
+	icon_state = "interdynefreezer"
+	base_icon_state = "interdynefreezer"
+
+/obj/structure/closet/crate/freezer/blood/interdyne
+	name = "interdyne blood freezer"
+	desc = "Interdyne Pharmauceutics branded freezer. Only freshly harvested- I mean, freshly kept blood inside!"
+	icon_state = "interdynefreezer"
+	base_icon_state = "interdynefreezer"
+
 /obj/structure/closet/crate/radiation
 	desc = "A crate with a radiation sign on it."
 	name = "radiation crate"
@@ -311,6 +336,12 @@
 	icon_state = "cargo"
 	base_icon_state = "cargo"
 
+/obj/structure/closet/crate/robust
+	name = "robust industries crate"
+	desc = "Robust Inustries LLC. crate. Feels oddly nostalgic."
+	icon_state = "robust"
+	base_icon_state = "robust"
+
 /obj/structure/closet/crate/cargo/mining
 	name = "mining crate"
 	icon_state = "mining"
@@ -320,6 +351,12 @@
 	name = "engineering crate"
 	icon_state = "engi_crate"
 	base_icon_state = "engi_crate"
+
+/obj/structure/closet/crate/nakamura
+	name = "nakamura engineering crate"
+	desc = "Crate from Nakamura Engineering, most likely containing engineering supplies or MODcores."
+	icon_state = "nakamura"
+	base_icon_state = "nakamura"
 
 /obj/structure/closet/crate/engineering/electrical
 	icon_state = "engi_e_crate"

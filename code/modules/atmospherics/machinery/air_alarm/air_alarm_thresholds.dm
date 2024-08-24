@@ -5,7 +5,7 @@
 	var/hazard_min = 0
 	var/hazard_max = 0
 
-/** Initialize a TLV and set it's values if given arguments, mostly for map varedits.
+/** Initialize a TLV and set its values if given arguments, mostly for map varedits.
  * We provide this functionality but please consider not doing this and making proper subtypes.
  * Only by doing the latter will [datum/tlv/proc/reset_value] work.
  */
@@ -47,7 +47,7 @@
 	if(threshold_type & TLV_VAR_HAZARD_MAX)
 		hazard_max = value
 
-/** Reset this particular TLV to it's original value.
+/** Reset this particular TLV to its original value.
  *
  * Arguments:
  * * threshold_type: What kind of variable do we want to set. Accepts bitfield subsets of [TLV_VAR_ALL].

@@ -12,7 +12,9 @@
 /area/station/maintenance/port/aft)
 "d" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/effect/decal/cleanable/cobweb/cobweb2,
+/obj/effect/decal/cleanable/cobweb/cobweb2{
+	pixel_y = 24
+	},
 /turf/open/floor/plating,
 /area/station/maintenance/port/aft)
 "f" = (
@@ -33,7 +35,9 @@
 /area/station/maintenance/port/aft)
 "m" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/effect/decal/cleanable/cobweb/cobweb2,
+/obj/effect/decal/cleanable/cobweb/cobweb2{
+	pixel_y = 24
+	},
 /obj/structure/cable,
 /turf/open/floor/catwalk_floor,
 /area/station/maintenance/port/aft)
@@ -45,7 +49,9 @@
 "o" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/table,
-/obj/item/camera,
+/obj/item/camera{
+	pixel_y = 7
+	},
 /turf/open/floor/iron/smooth,
 /area/station/maintenance/port/aft)
 "p" = (
@@ -117,7 +123,8 @@
 "A" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/table,
-/obj/machinery/button/door{
+/obj/machinery/button/door/table{
+	pixel_y = 6;
 	id = "maintmememan"
 	},
 /turf/open/floor/iron/smooth,
@@ -168,7 +175,9 @@
 /area/station/maintenance/port/aft)
 "N" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/effect/decal/cleanable/cobweb,
+/obj/effect/decal/cleanable/cobweb{
+	pixel_y = 24
+	},
 /turf/open/floor/iron/smooth,
 /area/station/maintenance/port/aft)
 "O" = (
@@ -218,7 +227,9 @@
 /obj/structure/rack,
 /obj/effect/spawner/random/engineering/tool,
 /obj/effect/spawner/random/engineering/flashlight,
-/obj/effect/decal/cleanable/cobweb,
+/obj/effect/decal/cleanable/cobweb{
+	pixel_y = 24
+	},
 /turf/open/floor/iron/smooth,
 /area/station/maintenance/port/aft)
 "Z" = (

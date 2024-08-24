@@ -13,6 +13,7 @@
 		/obj/item/stack/sheet/animalhide/gondola = 2,
 		/obj/item/food/meat/slab/gondola = 2,
 	)
+	shadow_type = SHADOW_LARGE
 
 	///Boolean on whether the pod is currently open, and should appear such.
 	var/opened = FALSE

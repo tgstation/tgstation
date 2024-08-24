@@ -60,7 +60,7 @@
 		balloon_alert(user, "cell already installed!")
 		return ITEM_INTERACT_BLOCKING
 	if(machine_stat & MAINT)
-		balloon_alert(user, "no connector for a cell!")
+		balloon_alert(user, "no connector for a cell!") //We are stuck here
 		return ITEM_INTERACT_BLOCKING
 	if(!user.transferItemToLoc(new_cell, src))
 		return ITEM_INTERACT_BLOCKING
@@ -236,7 +236,7 @@
 /obj/machinery/power/apc/crowbar_act(mob/user, obj/item/crowbar)
 	. = TRUE
 
-	//Prying off broken cover
+	// Removing the cover from a broken APC
 	if((opened == APC_COVER_CLOSED || opened == APC_COVER_OPENED) && (machine_stat & BROKEN))
 		crowbar.play_tool_sound(src)
 		balloon_alert(user, "prying...")
@@ -247,29 +247,28 @@
 		update_appearance()
 		return
 
-	//Opening and closing cover
-	if((!opened && opened != APC_COVER_REMOVED) && !(machine_stat & BROKEN))
-		if(coverlocked && !(machine_stat & MAINT)) // locked...
-			balloon_alert(user, "cover is locked!")
+	if(!panel_open || has_electronics != APC_ELECTRONICS_INSTALLED)
+		//Opening and closing cover
+		if(opened == APC_COVER_REMOVED)
 			return
-		else if(panel_open)
-			balloon_alert(user, "wires prevents opening it!")
+		if(machine_stat & BROKEN)
 			return
-		else
-			opened = APC_COVER_OPENED
-			update_appearance()
-			return
-
-	if((opened && has_electronics == APC_ELECTRONICS_SECURED) && !(machine_stat & BROKEN))
-		opened = APC_COVER_CLOSED
-		coverlocked = TRUE //closing cover relocks it
-		balloon_alert(user, "locking the cover")
+		switch(opened)
+			if(APC_COVER_CLOSED)
+				if(coverlocked && !(machine_stat & MAINT)) // locked...
+					balloon_alert(user, "cover is locked!")
+					return
+				opened = APC_COVER_OPENED
+			if(APC_COVER_OPENED)
+				if(has_electronics != APC_ELECTRONICS_SECURED)
+					return
+				opened = APC_COVER_CLOSED
+				coverlocked = TRUE //closing cover relocks it
+				balloon_alert(user, "locking the cover")
 		update_appearance()
 		return
 
 	//Taking out the electronics
-	if(!opened || has_electronics != APC_ELECTRONICS_INSTALLED)
-		return
 	if(terminal)
 		balloon_alert(user, "disconnect wires first!")
 		return
@@ -283,21 +282,20 @@
 		user.visible_message(span_notice("[user.name] breaks the power control board inside [name]!"), \
 			span_hear("You hear a crack."))
 		balloon_alert(user, "charred board breaks")
-		return
 	else if(obj_flags & EMAGGED)
 		obj_flags &= ~EMAGGED
 		user.visible_message(span_notice("[user.name] discards an emagged power control board from [name]!"))
 		balloon_alert(user, "emagged board discarded")
-		return
 	else if(malfhack)
 		user.visible_message(span_notice("[user.name] discards a strangely programmed power control board from [name]!"))
 		balloon_alert(user, "reprogrammed board discarded")
 		malfai = null
-		malfhack = 0
-		return
-	user.visible_message(span_notice("[user.name] removes the power control board from [name]!"))
-	balloon_alert(user, "removed the board")
-	new /obj/item/electronics/apc(loc)
+		malfhack = FALSE
+	else
+		user.visible_message(span_notice("[user.name] removes the power control board from [name]!"))
+		balloon_alert(user, "removed the board")
+		new /obj/item/electronics/apc(loc)
+	update_appearance()
 	return
 
 /obj/machinery/power/apc/screwdriver_act(mob/living/user, obj/item/W)
@@ -305,24 +303,14 @@
 		return TRUE
 	. = TRUE
 
-	if(!opened)
+	//You can only touch the electronics if the panel and tray are open, and the terminal is yoten
+	if((!opened || !panel_open || terminal) && !(machine_stat & MAINT))
 		if(obj_flags & EMAGGED)
 			balloon_alert(user, "interface is broken!")
 			return
 		toggle_panel_open()
 		balloon_alert(user, "wires [panel_open ? "exposed" : "unexposed"]")
 		W.play_tool_sound(src)
-		update_appearance()
-		return
-
-	if(cell)
-		user.visible_message(span_notice("[user] removes \the [cell] from [src]!"))
-		balloon_alert(user, "cell removed")
-		var/turf/user_turf = get_turf(user)
-		cell.forceMove(user_turf)
-		cell.update_appearance()
-		cell = null
-		charging = APC_NOT_CHARGING
 		update_appearance()
 		return
 
@@ -344,7 +332,7 @@
 
 /obj/machinery/power/apc/wirecutter_act(mob/living/user, obj/item/W)
 	. = ..()
-	if(terminal && opened)
+	if(terminal && opened && panel_open)
 		terminal.dismantle(user, W)
 		return TRUE
 
@@ -408,7 +396,7 @@
 	return FALSE
 
 /obj/machinery/power/apc/rcd_act(mob/user, obj/item/construction/rcd/the_rcd, list/rcd_data)
-	if(!(the_rcd.upgrade & RCD_UPGRADE_SIMPLE_CIRCUITS) || rcd_data["[RCD_DESIGN_MODE]"] != RCD_WALLFRAME)
+	if(!(the_rcd.upgrade & RCD_UPGRADE_SIMPLE_CIRCUITS) || rcd_data[RCD_DESIGN_MODE] != RCD_WALLFRAME)
 		return FALSE
 
 	if(!has_electronics)
@@ -440,22 +428,31 @@
 
 	if(opened)
 		balloon_alert(user, "close the cover first!")
+
+/obj/machinery/power/apc/emag_act(mob/user, obj/item/card/emag/emag_card)
+	if((obj_flags & EMAGGED) || malfhack)
 		return FALSE
+
+	if(opened)
+		balloon_alert(user, "close the cover first!")
+		return
 	else if(panel_open)
 		balloon_alert(user, "close the panel first!")
 		return FALSE
 	else if(machine_stat & (BROKEN|MAINT))
 		balloon_alert(user, "nothing happens!")
 		return FALSE
-	else
-		flick("apc-spark", src)
-		playsound(src, SFX_SPARKS, 75, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
-		obj_flags |= EMAGGED
-		locked = FALSE
-		balloon_alert(user, "interface damaged")
-		update_appearance()
-		flicker_hacked_icon()
-		return TRUE
+
+	var/image/overlay = image(icon, src, "sparks_flick", layer, dir)
+	SET_PLANE_EXPLICIT(overlay, plane, src)
+	flick_overlay_view(overlay, src, 0.5 SECONDS)
+	playsound(src, SFX_SPARKS, 75, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
+	obj_flags |= EMAGGED
+	locked = FALSE
+	balloon_alert(user, "interface damaged")
+	update_appearance()
+	flicker_hacked_icon()
+	return TRUE
 
 // damage and destruction acts
 /obj/machinery/power/apc/emp_act(severity)
@@ -479,8 +476,6 @@
 		balloon_alert(user, "interface is broken!")
 	else if(opened)
 		balloon_alert(user, "close the cover first!")
-	else if(panel_open)
-		balloon_alert(user, "close the panel first!")
 	else if(machine_stat & (BROKEN|MAINT))
 		balloon_alert(user, "nothing happens!")
 	else

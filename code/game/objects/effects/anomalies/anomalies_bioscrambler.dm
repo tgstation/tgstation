@@ -24,7 +24,7 @@
 	if(!COOLDOWN_FINISHED(src, pulse_cooldown))
 		return
 
-	new /obj/effect/temp_visual/bioscrambler_wave(get_turf(src))
+	new /obj/effect/temp_visual/circle_wave/bioscrambler(get_turf(src))
 	playsound(src, 'sound/magic/cosmic_energy.ogg', vol = 50, vary = TRUE)
 	COOLDOWN_START(src, pulse_cooldown, pulse_delay)
 	for(var/mob/living/carbon/nearby in hearers(range, src))
@@ -81,7 +81,7 @@
 	return
 
 /// Visual effect spawned when the bioscrambler scrambles your bio
-/obj/effect/temp_visual/bioscrambler_wave
+/obj/effect/temp_visual/circle_wave
 	icon = 'icons/effects/64x64.dmi'
 	icon_state = "circle_wave"
 	pixel_x = -16
@@ -90,7 +90,7 @@
 	color = COLOR_LIME
 	var/max_alpha = 255
 
-/obj/effect/temp_visual/bioscrambler_wave/Initialize(mapload)
+/obj/effect/temp_visual/circle_wave/Initialize(mapload)
 	transform = matrix().Scale(0.1)
 	animate(src, transform = matrix().Scale(2), time = duration, flags = ANIMATION_PARALLEL)
 	animate(src, alpha = max_alpha, time = duration * 0.6, flags = ANIMATION_PARALLEL)
@@ -98,5 +98,9 @@
 	apply_wibbly_filters(src)
 	return ..()
 
-/obj/effect/temp_visual/bioscrambler_wave/light
+/obj/effect/temp_visual/circle_wave/bioscrambler
+	color = COLOR_LIME
+
+/obj/effect/temp_visual/circle_wave/bioscrambler/light
 	max_alpha = 128
+

@@ -59,7 +59,7 @@
 
 /obj/item/multitool/suicide_act(mob/living/carbon/user)
 	user.visible_message(span_suicide("[user] puts the [src] to [user.p_their()] chest. It looks like [user.p_theyre()] trying to pulse [user.p_their()] heart off!"))
-	return OXYLOSS//theres a reason it wasn't recommended by doctors
+	return OXYLOSS//there's a reason it wasn't recommended by doctors
 
 /**
  * Sets the multitool internal object buffer
@@ -142,7 +142,7 @@
 		if(distance < rangealert) //ai should be able to see us
 			detect_state = PROXIMITY_ON_SCREEN
 			break
-		if(distance < rangewarning) //ai cant see us but is close
+		if(distance < rangewarning) //ai can't see us but is close
 			detect_state = PROXIMITY_NEAR
 
 /datum/action/item_action/toggle_multitool
@@ -169,7 +169,7 @@
 /obj/item/multitool/cyborg
 	name = "electronic multitool"
 	desc = "Optimised version of a regular multitool. Streamlines processes handled by its internal microchip."
-	icon = 'icons/obj/items_cyborg.dmi'
+	icon = 'icons/mob/silicon/robot_items.dmi'
 	icon_state = "toolkit_engiborg_multitool"
 	toolspeed = 0.5
 

@@ -4,8 +4,8 @@
 /obj/structure/grille
 	desc = "A flimsy framework of iron rods."
 	name = "grille"
-	icon = 'icons/obj/structures.dmi'
-	icon_state = "grille"
+	icon = 'icons/obj/structures/smooth/grille.dmi'
+	icon_state = "grille-0"
 	base_icon_state = "grille"
 	density = TRUE
 	anchored = TRUE
@@ -15,6 +15,9 @@
 	armor_type = /datum/armor/structure_grille
 	max_integrity = 50
 	integrity_failure = 0.4
+	smoothing_flags = SMOOTH_BITMASK
+	smoothing_groups = SMOOTH_GROUP_GRILLE
+	canSmoothWith = SMOOTH_GROUP_GRILLE
 	var/rods_type = /obj/item/stack/rods
 	var/rods_amount = 2
 
@@ -37,17 +40,44 @@
 	. = ..()
 	update_appearance()
 
-/obj/structure/grille/update_appearance(updates)
-	if(QDELETED(src) || broken)
+/obj/structure/grille/update_icon(updates=ALL)
+	if(QDELETED(src))
 		return
 
-	. = ..()
-	if((updates & UPDATE_SMOOTHING) && (smoothing_flags & USES_SMOOTHING))
-		QUEUE_SMOOTH(src)
+	var/old_base_state = base_icon_state
+	var/ratio = atom_integrity / max_integrity
+	if(ratio <= 0.7)
+		icon = 'icons/obj/structures/smooth/grille_damaged.dmi'
+		base_icon_state = "grille_damaged"
+	else
+		icon = 'icons/obj/structures/smooth/grille.dmi'
+		base_icon_state = "grille"
 
-/obj/structure/grille/update_icon_state()
-	icon_state = "[base_icon_state][((atom_integrity / max_integrity) <= 0.5) ? "50_[rand(0, 3)]" : null]"
-	return ..()
+	if(old_base_state != base_icon_state)
+		icon_state = "[base_icon_state]-[smoothing_junction]"
+
+	var/old_smoothing_flags = smoothing_flags
+	if(broken)
+		icon = 'icons/obj/structures/smooth/tall_structure_variations.dmi'
+		icon_state = "grille-broken"
+		base_icon_state = "grille-broken"
+		smoothing_flags = NONE
+		smoothing_groups = null
+		canSmoothWith = null
+	else
+		smoothing_flags = initial(smoothing_flags)
+		smoothing_groups = initial(smoothing_groups)
+		canSmoothWith = initial(canSmoothWith)
+		SETUP_SMOOTHING()
+	. = ..()
+
+	if(!(updates & UPDATE_SMOOTHING))
+		return
+	if(old_smoothing_flags == smoothing_flags && (smoothing_flags & USES_SMOOTHING))
+		return
+	// If our flags changed, update EVERYBODY
+	QUEUE_SMOOTH(src)
+	QUEUE_SMOOTH_NEIGHBORS(src)
 
 /obj/structure/grille/examine(mob/user)
 	. = ..()
@@ -87,7 +117,7 @@
 	return FALSE
 
 /obj/structure/grille/rcd_act(mob/user, obj/item/construction/rcd/the_rcd, list/rcd_data)
-	switch(rcd_data["[RCD_DESIGN_MODE]"])
+	switch(rcd_data[RCD_DESIGN_MODE])
 		if(RCD_DECONSTRUCT)
 			qdel(src)
 			return TRUE
@@ -101,18 +131,19 @@
 			if(!clear_tile(user))
 				return FALSE
 
-			var/obj/structure/window/window_path = rcd_data["[RCD_DESIGN_PATH]"]
+			var/obj/structure/window/window_path = rcd_data[RCD_DESIGN_PATH]
 			if(!ispath(window_path))
 				CRASH("Invalid window path type in RCD: [window_path]")
 
+			var/window_direction = rcd_data[RCD_BUILD_DIRECTION] || user.dir
 			//checks if its a valid build direction
 			if(!initial(window_path.fulltile))
-				if(!valid_build_direction(loc, user.dir, is_fulltile = FALSE))
+				if(!valid_build_direction(loc, window_direction , is_fulltile = FALSE))
 					balloon_alert(user, "window already here!")
 					return FALSE
 
-			var/obj/structure/window/WD = new window_path(T, user.dir)
-			WD.set_anchored(TRUE)
+			var/obj/structure/window/window = new window_path(T, window_direction )
+			window.set_anchored(TRUE)
 			return TRUE
 	return FALSE
 
@@ -296,21 +327,21 @@
 /obj/structure/grille/atom_break()
 	. = ..()
 	if(!broken)
-		icon_state = "brokengrille"
 		set_density(FALSE)
 		atom_integrity = 20
 		broken = TRUE
 		rods_amount = 1
 		var/obj/item/dropped_rods = new rods_type(drop_location(), rods_amount)
 		transfer_fingerprints_to(dropped_rods)
+		update_appearance()
 
 /obj/structure/grille/proc/repair_grille()
 	if(broken)
-		icon_state = "grille"
 		set_density(TRUE)
 		atom_integrity = max_integrity
 		broken = FALSE
 		rods_amount = 2
+		update_appearance()
 		return TRUE
 	return FALSE
 
@@ -366,10 +397,14 @@
 	return null
 
 /obj/structure/grille/broken // Pre-broken grilles for map placement
-	icon_state = "brokengrille"
+	icon = 'icons/obj/structures/smooth/tall_structure_variations.dmi'
+	icon_state = "grille-broken"
 	density = FALSE
 	broken = TRUE
 	rods_amount = 1
+	smoothing_flags = null
+	smoothing_groups = null
+	canSmoothWith = null
 
 /obj/structure/grille/broken/Initialize(mapload)
 	. = ..()

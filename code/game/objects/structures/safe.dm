@@ -13,7 +13,7 @@ FLOOR SAFES
 /obj/structure/safe
 	name = "safe"
 	desc = "A huge chunk of metal with a dial embedded in it. Fine print on the dial reads \"Scarborough Arms - 2 tumbler safe, guaranteed thermite resistant, explosion resistant, and assistant resistant.\""
-	icon = 'icons/obj/structures.dmi'
+	icon = 'icons/obj/storage/storage.dmi'
 	icon_state = "safe"
 	anchored = TRUE
 	density = TRUE
@@ -129,7 +129,7 @@ FLOOR SAFES
 
 	return data
 
-/obj/structure/safe/ui_act(action, params)
+/obj/structure/safe/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if(.)
 		return

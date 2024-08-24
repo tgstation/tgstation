@@ -98,18 +98,13 @@
 		/obj/item/door_remote/omni = 1,
 		/obj/item/machine_remote = 1,
 		/obj/item/secure_camera_console_pod = 1,
-	)
-	implants = list(
-		/obj/item/implant/teleport_blocker,
+		/obj/item/sensor_device = 1,
 	)
 
 	uniform = /obj/item/clothing/under/rank/station_trait/human_ai
 	belt = /obj/item/modular_computer/pda/human_ai
 	ears = /obj/item/radio/headset/silicon/human_ai
 	glasses = /obj/item/clothing/glasses/hud/diagnostic
-
-	suit = /obj/item/clothing/suit/costume/cardborg
-	head = /obj/item/clothing/head/costume/cardborg
 
 	l_pocket = /obj/item/laser_pointer/infinite_range //to punish borgs, this works through the camera console.
 	r_pocket = /obj/item/assembly/flash/handheld

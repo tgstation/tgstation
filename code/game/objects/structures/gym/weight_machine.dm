@@ -3,6 +3,7 @@
 #define SAFE_DRUNK_LEVEL 39
 
 /obj/structure/weightmachine
+	SET_BASE_VISUAL_PIXEL(0, DEPTH_OFFSET)
 	name = "chest press machine"
 	desc = "Just looking at this thing makes you feel tired."
 	icon = 'icons/obj/fluff/gym_equipment.dmi'
@@ -171,10 +172,14 @@
 	var/workout_reps = total_workout_reps[user.mind.get_skill_level(/datum/skill/athletics)] * gravity_modifier
 	// total stamina drain of 1 workout calculated based on the workout length
 	var/stamina_exhaustion = FLOOR(user.maxHealth / workout_reps / WORKOUT_LENGTH, 0.1)
-	
+
+	var/obj/item/organ/internal/cyberimp/chest/spine/potential_spine = user.get_organ_slot(ORGAN_SLOT_SPINE)
+	if(istype(potential_spine))
+		stamina_exhaustion *= potential_spine.athletics_boost_multiplier
+
 	if(HAS_TRAIT(user, TRAIT_STRENGTH)) //The strong get reductions to stamina damage taken while exercising
 		stamina_exhaustion *= 0.5
-	
+
 	user.adjustStaminaLoss(stamina_exhaustion * seconds_per_tick)
 
 	return TRUE

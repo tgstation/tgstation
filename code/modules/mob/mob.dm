@@ -92,11 +92,24 @@
 		AA.onNewMob(src)
 	set_nutrition(rand(NUTRITION_LEVEL_START_MIN, NUTRITION_LEVEL_START_MAX))
 	. = ..()
+	setup_hud_traits()
 	update_config_movespeed()
 	initialize_actionspeed()
 	update_movespeed(TRUE)
 	become_hearing_sensitive()
+	create_shadow()
 	log_mob_tag("TAG: [tag] CREATED: [key_name(src)] \[[type]\]")
+
+/mob/proc/create_shadow()
+	if (shadow_type == SHADOW_NONE)
+		qdel(GetComponent(/datum/component/drop_shadow))
+		return
+
+	AddComponent(/datum/component/drop_shadow, \
+		icon_state = shadow_type, \
+		shadow_offset_x = shadow_offset_x, \
+		shadow_offset_y = shadow_offset_y, \
+	)
 
 /**
  * Generate the tag for this mob
@@ -1598,3 +1611,23 @@
 /mob/key_down(key, client/client, full_key)
 	..()
 	SEND_SIGNAL(src, COMSIG_MOB_KEYDOWN, key, client, full_key)
+
+/mob/proc/setup_hud_traits()
+	for(var/hud_trait in GLOB.trait_to_hud)
+		RegisterSignal(src, SIGNAL_ADDTRAIT(hud_trait), PROC_REF(hud_trait_enabled))
+		RegisterSignal(src, SIGNAL_REMOVETRAIT(hud_trait), PROC_REF(hud_trait_disabled))
+
+/mob/proc/hud_trait_enabled(datum/source, new_trait)
+	SIGNAL_HANDLER
+	var/datum/atom_hud/datahud = GLOB.huds[GLOB.trait_to_hud[new_trait]]
+	datahud.show_to(src)
+
+/mob/proc/hud_trait_disabled(datum/source, new_trait)
+	SIGNAL_HANDLER
+	var/datum/atom_hud/datahud = GLOB.huds[GLOB.trait_to_hud[new_trait]]
+	datahud.hide_from(src)
+
+/// Sets the turf click type this client should use for its next attempted click
+/// See [TURF_CLICK_FLAT]
+/mob/proc/set_turf_click_type(click_type)
+	turf_click_type = click_type

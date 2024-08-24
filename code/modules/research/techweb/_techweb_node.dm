@@ -90,10 +90,20 @@
 		var/list/boostlist = host.boosted_nodes[id]
 		for(var/booster in boostlist)
 			if(actual_costs[booster])
-				var/delta = max(0, actual_costs[booster] - 250)
-				actual_costs[booster] -= min(boostlist[booster], delta)
+				actual_costs[booster] = max(actual_costs[booster] - boostlist[booster], 0)
 
 	return actual_costs
+
+/datum/techweb_node/proc/is_free(datum/techweb/host)
+	var/list/costs = get_price(host)
+	var/total_points = 0
+
+	for(var/point_type in costs)
+		total_points += costs[point_type]
+
+	if(total_points == 0)
+		return TRUE
+	return FALSE
 
 /datum/techweb_node/proc/price_display(datum/techweb/TN)
 	return techweb_point_display_generic(get_price(TN))

@@ -51,7 +51,7 @@
 
 /obj/item/organ/internal/tongue/fly/New(class, timer, datum/mutation/human/copymut)
 	. = ..()
-	AddComponent(/datum/component/speechmod, replacements = speech_replacements)
+	AddComponent(/datum/component/speechmod, replacements = speech_replacements, should_modify_speech = CALLBACK(src, PROC_REF(should_modify_speech)))
 
 /obj/item/organ/internal/tongue/fly/Initialize(mapload)
 	. = ..()
@@ -125,7 +125,6 @@
 //useless organs we throw in just to fuck with surgeons a bit more. they aren't part of a bonus, just the (absolute) state of flies
 /obj/item/organ/internal/fly
 	desc = FLY_INFUSED_ORGAN_DESC
-	visual = FALSE
 
 /obj/item/organ/internal/fly/Initialize(mapload)
 	. = ..()

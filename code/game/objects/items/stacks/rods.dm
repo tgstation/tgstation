@@ -39,6 +39,9 @@ GLOBAL_LIST_INIT(rod_recipes, list ( \
 	cost = HALF_SHEET_MATERIAL_AMOUNT
 	source = /datum/robot_energy_storage/material/iron
 	merge_type = /obj/item/stack/rods
+	pickup_sound = 'sound/items/iron_rod_pick_up.ogg'
+	drop_sound = 'sound/items/metal_drop.ogg'
+	sound_vary = TRUE
 
 /datum/embed_data/rods
 	embed_chance = 50

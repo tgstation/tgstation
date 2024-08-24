@@ -151,7 +151,7 @@
 				return
 
 /**
- * Occurs when a reation is overheated (i.e. past it's overheatTemp)
+ * Occurs when a reation is overheated (i.e. past its overheatTemp)
  * Will be called every tick in the reaction that it is overheated
  * If you want this to be a once only proc (i.e. the reaction is stopped after) set reaction.toDelete = TRUE
  * The above is useful if you're writing an explosion

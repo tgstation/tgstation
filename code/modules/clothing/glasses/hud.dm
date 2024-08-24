@@ -2,25 +2,6 @@
 	name = "HUD"
 	desc = "A heads-up display that provides important info in (almost) real time."
 	flags_1 = null //doesn't protect eyes because it's a monocle, duh
-	var/hud_type = null
-
-	// NOTE: Just because you have a HUD display doesn't mean you should be able to interact with stuff on examine, that's where the associated trait (TRAIT_MEDICAL_HUD, TRAIT_SECURITY_HUD, etc) is necessary.
-
-/obj/item/clothing/glasses/hud/equipped(mob/living/carbon/human/user, slot)
-	..()
-	if(!(slot & ITEM_SLOT_EYES))
-		return
-	if(hud_type)
-		var/datum/atom_hud/our_hud = GLOB.huds[hud_type]
-		our_hud.show_to(user)
-
-/obj/item/clothing/glasses/hud/dropped(mob/living/carbon/human/user)
-	..()
-	if(!istype(user) || user.glasses != src)
-		return
-	if(hud_type)
-		var/datum/atom_hud/our_hud = GLOB.huds[hud_type]
-		our_hud.hide_from(user)
 
 /obj/item/clothing/glasses/hud/emp_act(severity)
 	. = ..()
@@ -55,9 +36,14 @@
 	name = "health scanner HUD"
 	desc = "A heads-up display that scans the humanoids in view and provides accurate data about their health status."
 	icon_state = "healthhud"
-	hud_type = DATA_HUD_MEDICAL_ADVANCED
 	clothing_traits = list(TRAIT_MEDICAL_HUD)
 	glass_colour_type = /datum/client_colour/glass_colour/lightblue
+
+/obj/item/clothing/glasses/hud/medsechud
+	name = "health scanner security HUD"
+	desc = "A heads-up display that scans the humanoids in view and provides accurate data about their health status, ID status and security records."
+	icon_state = "medsechud"
+	clothing_traits = list(TRAIT_MEDICAL_HUD, TRAIT_SECURITY_HUD)
 
 /obj/item/clothing/glasses/hud/health/night
 	name = "night vision health scanner HUD"
@@ -110,7 +96,6 @@
 	name = "diagnostic HUD"
 	desc = "A heads-up display capable of analyzing the integrity and status of robotics and exosuits."
 	icon_state = "diagnostichud"
-	hud_type = DATA_HUD_DIAGNOSTIC_BASIC
 	clothing_traits = list(TRAIT_DIAGNOSTIC_HUD)
 	glass_colour_type = /datum/client_colour/glass_colour/lightorange
 
@@ -153,7 +138,6 @@
 	name = "security HUD"
 	desc = "A heads-up display that scans the humanoids in view and provides accurate data about their ID status and security records."
 	icon_state = "securityhud"
-	hud_type = DATA_HUD_SECURITY_ADVANCED
 	clothing_traits = list(TRAIT_SECURITY_HUD)
 	glass_colour_type = /datum/client_colour/glass_colour/red
 
@@ -243,20 +227,18 @@
 	if (wearer.glasses != src)
 		return
 
-	if (hud_type)
-		var/datum/atom_hud/our_hud = GLOB.huds[hud_type]
-		our_hud.hide_from(user)
+	for(var/trait in clothing_traits)
+		REMOVE_CLOTHING_TRAIT(user, trait)
 
-	if (hud_type == DATA_HUD_MEDICAL_ADVANCED)
-		hud_type = null
-	else if (hud_type == DATA_HUD_SECURITY_ADVANCED)
-		hud_type = DATA_HUD_MEDICAL_ADVANCED
+	if (TRAIT_MEDICAL_HUD in clothing_traits)
+		clothing_traits = null
+	else if (TRAIT_SECURITY_HUD in clothing_traits)
+		clothing_traits = list(TRAIT_MEDICAL_HUD)
 	else
-		hud_type = DATA_HUD_SECURITY_ADVANCED
+		clothing_traits = list(TRAIT_SECURITY_HUD)
 
-	if (hud_type)
-		var/datum/atom_hud/our_hud = GLOB.huds[hud_type]
-		our_hud.show_to(user)
+	for(var/trait in clothing_traits)
+		ADD_CLOTHING_TRAIT(user, trait)
 
 /datum/action/item_action/switch_hud
 	name = "Switch HUD"
@@ -265,19 +247,22 @@
 	name = "thermal HUD scanner"
 	desc = "Thermal imaging HUD in the shape of glasses."
 	icon_state = "thermal"
-	hud_type = DATA_HUD_SECURITY_ADVANCED
 	vision_flags = SEE_MOBS
 	color_cutoffs = list(25, 8, 5)
 	glass_colour_type = /datum/client_colour/glass_colour/red
+	clothing_traits = list(TRAIT_SECURITY_HUD)
 
 /obj/item/clothing/glasses/hud/toggle/thermal/attack_self(mob/user)
 	..()
+	var/hud_type
+	if (!isnull(clothing_traits) && clothing_traits.len)
+		hud_type = clothing_traits[1]
 	switch (hud_type)
-		if (DATA_HUD_MEDICAL_ADVANCED)
+		if (TRAIT_MEDICAL_HUD)
 			icon_state = "meson"
 			color_cutoffs = list(5, 15, 5)
 			change_glass_color(/datum/client_colour/glass_colour/green)
-		if (DATA_HUD_SECURITY_ADVANCED)
+		if (TRAIT_SECURITY_HUD)
 			icon_state = "thermal"
 			color_cutoffs = list(25, 8, 5)
 			change_glass_color(/datum/client_colour/glass_colour/red)

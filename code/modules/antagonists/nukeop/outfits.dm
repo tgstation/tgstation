@@ -52,8 +52,7 @@
 	if(command_radio)
 		radio.command = TRUE
 		radio.use_command = TRUE
-
-	if(ispath(uplink_type, /obj/item/uplink/nuclear) || tc) // /obj/item/uplink/nuclear understands 0 tc
+	if(ispath(uplink_type, /obj/item/uplink) || tc) // /obj/item/uplink understands 0 tc
 		var/obj/item/uplink = new uplink_type(nukie, nukie.key, tc)
 		nukie.equip_to_slot_or_del(uplink, ITEM_SLOT_BACKPACK, indirect_action = TRUE)
 
@@ -103,8 +102,8 @@
 	name = "Syndicate Operative - Reinforcement"
 	tc = 0
 	backpack_contents = list(
-		/obj/item/gun/ballistic/automatic/plastikov = 1,
-		/obj/item/ammo_box/magazine/plastikov9mm = 2,
+		/obj/item/gun/ballistic/automatic/smartgun = 1,
+		/obj/item/ammo_box/magazine/smartgun = 2,
 	)
 	var/faction = "The Syndicate"
 
@@ -153,7 +152,7 @@
 	head = /obj/item/clothing/head/utility/hardhat/orange
 	shoes = /obj/item/clothing/shoes/workboots
 	glasses = /obj/item/clothing/glasses/meson
-	faction = "the Donk Corporation"
+	faction = "Donk Company"
 
 /datum/outfit/syndicate/reinforcement/waffle
 	name = "Syndicate Operative - Waffle Reinforcement"

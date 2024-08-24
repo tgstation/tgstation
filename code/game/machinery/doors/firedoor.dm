@@ -7,7 +7,10 @@
 	name = "firelock"
 	desc = "Apply crowbar."
 	icon = 'icons/obj/doors/doorfireglass.dmi'
-	icon_state = "door_open"
+	icon_state = "door_open_map"
+	dir_mask = "firelock_mask"
+	edge_dir_mask = "shutter"
+	inner_transparent_dirs = EAST|WEST
 	opacity = FALSE
 	density = FALSE
 	max_integrity = 300
@@ -24,6 +27,8 @@
 
 	COOLDOWN_DECLARE(activation_cooldown)
 
+	///If we split up our sprite into top and bottom parts or not
+	var/use_split_sprites = TRUE
 	///X offset for the overlay lights, so that they line up with the thin border firelocks
 	var/light_xoffset = 0
 	///Y offset for the overlay lights, so that they line up with the thin border firelocks
@@ -89,9 +94,37 @@
 
 	RegisterSignal(src, COMSIG_MACHINERY_POWER_RESTORED, PROC_REF(on_power_restore))
 	RegisterSignal(src, COMSIG_MACHINERY_POWER_LOST, PROC_REF(on_power_loss))
+	AddComponent(/datum/component/conditionally_transparent, \
+		transparent_signals = list(COSMIG_DOOR_OPENING), \
+		opaque_signals = list(COSMIG_DOOR_CLOSING), \
+		start_transparent = !density, \
+		transparency_delay = 0 SECONDS, \
+		in_midpoint_alpha = 215, \
+		transparent_alpha = 64, \
+		opacity_delay = 0 SECONDS, \
+		out_midpoint_alpha = 104, \
+	)
 	return INITIALIZE_HINT_LATELOAD
 
-/obj/machinery/door/firedoor/post_machine_initialize()
+/obj/machinery/door/firedoor/setDir(new_dir)
+	. = ..()
+	update_layering()
+
+/obj/machinery/door/firedoor/proc/update_layering()
+	switch(dir)
+		if(NORTH)
+			layer = BELOW_OPEN_DOOR_LAYER
+			closingLayer = CLOSED_FIREDOOR_LAYER
+		else
+			layer = ABOVE_MOB_LAYER
+			closingLayer = ABOVE_MOB_LAYER
+
+/obj/machinery/door/firedoor/set_init_door_layer()
+	update_layering()
+	if(density)
+		layer = closingLayer
+
+/obj/machinery/door/firedoor/post_machine_initialize(mapload)
 	. = ..()
 	RegisterSignal(src, COMSIG_MERGER_ADDING, PROC_REF(merger_adding))
 	RegisterSignal(src, COMSIG_MERGER_REMOVING, PROC_REF(merger_removing))
@@ -101,13 +134,8 @@
 	if(alarm_type) // Fucking subtypes fucking mappers fucking hhhhhhhh
 		start_activation_process(alarm_type)
 
-/**
- * Sets the offset for the warning lights.
- *
- * Used for special firelocks with light overlays that don't line up to their sprite.
- */
-/obj/machinery/door/firedoor/proc/adjust_lights_starting_offset()
-	return
+	if(mapload)
+		auto_align()
 
 /obj/machinery/door/firedoor/Destroy()
 	remove_from_areas()
@@ -431,6 +459,10 @@
 	ignore_alarms = FALSE
 	if(!alarm_type || active) // If we have no alarm type, or are already active, go away
 		return
+	// Do we even care about temperature?
+	for(var/area/place in affecting_areas)
+		if(!place.fire_detect) // If any area is set to disable detection
+			return
 	// Otherwise, reactivate ourselves
 	start_activation_process(alarm_type)
 
@@ -546,7 +578,7 @@
 
 	if(density)
 		being_held_open = TRUE
-		user.balloon_alert_to_viewers("holding [src] open", "holding [src] open")
+		user.balloon_alert_to_viewers("holding firelock open", "holding firelock open")
 		COOLDOWN_START(src, activation_cooldown, REACTIVATION_DELAY)
 		open()
 		if(QDELETED(user))
@@ -583,7 +615,7 @@
 	UnregisterSignal(user, COMSIG_LIVING_SET_BODY_POSITION)
 	UnregisterSignal(user, COMSIG_QDELETING)
 	if(user)
-		user.balloon_alert_to_viewers("released [src]", "released [src]")
+		user.balloon_alert_to_viewers("released firelock", "released firelock")
 
 /obj/machinery/door/firedoor/attack_ai(mob/user)
 	add_fingerprint(user)
@@ -603,48 +635,36 @@
 /obj/machinery/door/firedoor/attack_alien(mob/user, list/modifiers)
 	add_fingerprint(user)
 	if(welded)
-		to_chat(user, span_warning("[src] refuses to budge!"))
+		balloon_alert(user, "refuses to budge!")
 		return
 	open()
 	if(active)
 		addtimer(CALLBACK(src, PROC_REF(correct_state)), 2 SECONDS, TIMER_UNIQUE)
 
+/// Returns the base icon state we're currently using
+/obj/machinery/door/firedoor/proc/get_base_state()
+	if(animation)
+		return "[base_icon_state]_[animation]"
+	return "[base_icon_state]_[density ? "closed" : "open"]"
+
 /obj/machinery/door/firedoor/update_icon_state()
 	. = ..()
-	switch(animation)
-		if(DOOR_OPENING_ANIMATION)
-			icon_state = "[base_icon_state]_opening"
-		if(DOOR_CLOSING_ANIMATION)
-			icon_state = "[base_icon_state]_closing"
-		if(DOOR_DENY_ANIMATION)
-			icon_state = "[base_icon_state]_deny"
-		else
-			icon_state = "[base_icon_state]_[density ? "closed" : "open"]"
-
-/obj/machinery/door/firedoor/animation_length(animation)
-	switch(animation)
-		if(DOOR_OPENING_ANIMATION)
-			return 1.2 SECONDS
-		if(DOOR_CLOSING_ANIMATION)
-			return 1.2 SECONDS
-		if(DOOR_DENY_ANIMATION)
-			return 0.3 SECONDS
-
-/obj/machinery/door/firedoor/animation_segment_delay(animation)
-	switch(animation)
-		if(DOOR_OPENING_PASSABLE)
-			return 1.0 SECONDS
-		if(DOOR_OPENING_FINISHED)
-			return 1.2 SECONDS
-		if(DOOR_CLOSING_UNPASSABLE)
-			return 0.2 SECONDS
-		if(DOOR_CLOSING_FINISHED)
-			return 1.2 SECONDS
+	if(use_split_sprites)
+		icon_state = "[get_base_state()]_top"
+	else
+		icon_state = get_base_state()
 
 /obj/machinery/door/firedoor/update_overlays()
 	. = ..()
+
+	if(use_split_sprites)
+		var/working_icon_state = "[get_base_state()]_bottom"
+		. += mutable_appearance(icon, working_icon_state, ABOVE_MOB_LAYER, appearance_flags = KEEP_APART)
+		. += emissive_blocker(icon, working_icon_state, src, ABOVE_MOB_LAYER)
+
 	if(welded)
-		. += density ? "welded" : "welded_open"
+		. += mutable_appearance(icon, density ? "welded_bottom" : "welded_top")
+
 	if(alarm_type && powered() && !ignore_alarms)
 		var/mutable_appearance/hazards
 		hazards = mutable_appearance(icon, "[(obj_flags & EMAGGED) ? "firelock_alarm_type_emag" : alarm_type]")
@@ -655,6 +675,26 @@
 		hazards.pixel_x = light_xoffset
 		hazards.pixel_y = light_yoffset
 		. += hazards
+
+/obj/machinery/door/firedoor/animation_length(animation)
+	switch(animation)
+		if(DOOR_OPENING_ANIMATION)
+			return 0.9 SECONDS
+		if(DOOR_CLOSING_ANIMATION)
+			return 1.1 SECONDS
+		if(DOOR_DENY_ANIMATION)
+			return 0.3 SECONDS
+
+/obj/machinery/door/firedoor/animation_segment_delay(animation)
+	switch(animation)
+		if(DOOR_OPENING_PASSABLE)
+			return 0.6 SECONDS
+		if(DOOR_OPENING_FINISHED)
+			return 0.9 SECONDS
+		if(DOOR_CLOSING_UNPASSABLE)
+			return 0.2 SECONDS
+		if(DOOR_CLOSING_FINISHED)
+			return 1.1 SECONDS
 
 /**
  * Corrects the current state of the door, based on its activity.
@@ -709,15 +749,20 @@
 	register_adjacent_turfs()
 
 /obj/machinery/door/firedoor/closed
-	icon_state = "door_closed"
+	icon_state = "door_closed_map"
 	density = TRUE
 	alarm_type = FIRELOCK_ALARM_TYPE_GENERIC
 
 /obj/machinery/door/firedoor/border_only
 	icon = 'icons/obj/doors/edge_Doorfire.dmi'
+	icon_state = "door_open"
+	// Disable directional opacity please (we are always transparent)
+	dir_mask = ""
+	edge_dir_mask = ""
 	can_crush = FALSE
 	flags_1 = ON_BORDER_1
 	can_atmos_pass = ATMOS_PASS_PROC
+	use_split_sprites = FALSE
 
 /obj/machinery/door/firedoor/border_only/closed
 	icon_state = "door_closed"
@@ -726,30 +771,35 @@
 
 /obj/machinery/door/firedoor/border_only/Initialize(mapload)
 	. = ..()
-	adjust_lights_starting_offset()
 	var/static/list/loc_connections = list(
 		COMSIG_ATOM_EXIT = PROC_REF(on_exit),
 	)
 
+	// Needed because render targets seem to shift larger then 32x32 icons down constantly. This is a known side effect that should? be changed by 516
+	pixel_y = 0
+	pixel_z = 12
+	AddElement(/datum/element/render_over_keep_hitbox, 0, /* use_position_layering = */ TRUE, NORTH|WEST|EAST)
 	AddElement(/datum/element/connect_loc, loc_connections)
 
-/obj/machinery/door/firedoor/border_only/adjust_lights_starting_offset()
-	light_xoffset = 0
-	light_yoffset = 0
-	switch(dir)
-		if(NORTH)
-			light_yoffset = 2
-		if(SOUTH)
-			light_yoffset = -2
-		if(EAST)
-			light_xoffset = 2
-		if(WEST)
-			light_xoffset = -2
-	update_appearance(UPDATE_ICON)
+/obj/machinery/door/firedoor/border_only/animation_length(animation)
+	switch(animation)
+		if(DOOR_OPENING_ANIMATION)
+			return 0.7 SECONDS
+		if(DOOR_CLOSING_ANIMATION)
+			return 0.7 SECONDS
+		if(DOOR_DENY_ANIMATION)
+			return 0.4 SECONDS
 
-/obj/machinery/door/firedoor/border_only/Moved(atom/old_loc, movement_dir, forced, list/old_locs, momentum_change = TRUE)
-	. = ..()
-	adjust_lights_starting_offset()
+/obj/machinery/door/firedoor/border_only/animation_segment_delay(animation)
+	switch(animation)
+		if(DOOR_OPENING_PASSABLE)
+			return 0.6 SECONDS
+		if(DOOR_OPENING_FINISHED)
+			return 0.7 SECONDS
+		if(DOOR_CLOSING_UNPASSABLE)
+			return 0.2 SECONDS
+		if(DOOR_CLOSING_FINISHED)
+			return 0.2 SECONDS
 
 /obj/machinery/door/firedoor/border_only/CanAllowThrough(atom/movable/mover, border_dir)
 	. = ..()
@@ -794,7 +844,7 @@
 	name = "firelock frame"
 	desc = "A partially completed firelock."
 	icon = 'icons/obj/doors/Doorfire.dmi'
-	icon_state = "frame1"
+	icon_state = "frame1_map"
 	base_icon_state = "frame"
 	anchored = FALSE
 	density = TRUE
@@ -812,8 +862,14 @@
 			. += span_notice("There are no <i>firelock electronics</i> in the frame. The frame could be <b>welded</b> apart .")
 
 /obj/structure/firelock_frame/update_icon_state()
-	icon_state = "[base_icon_state][constructionStep]"
+	icon_state = "[base_icon_state][constructionStep]_top"
 	return ..()
+
+/obj/structure/firelock_frame/update_overlays()
+	. = ..()
+	var/working_icon_state = "[base_icon_state][constructionStep]_bottom"
+	. += mutable_appearance(icon, working_icon_state, ABOVE_MOB_LAYER, appearance_flags = KEEP_APART)
+	. += emissive_blocker(icon, working_icon_state, src, ABOVE_MOB_LAYER)
 
 /obj/structure/firelock_frame/attackby(obj/item/attacking_object, mob/user)
 	switch(constructionStep)
@@ -924,7 +980,7 @@
 	return FALSE
 
 /obj/structure/firelock_frame/rcd_act(mob/user, obj/item/construction/rcd/the_rcd, list/rcd_data)
-	switch(rcd_data["[RCD_DESIGN_MODE]"])
+	switch(rcd_data[RCD_DESIGN_MODE])
 		if(RCD_UPGRADE_SIMPLE_CIRCUITS)
 			user.balloon_alert(user, "circuit installed")
 			constructionStep = CONSTRUCTION_PANEL_OPEN

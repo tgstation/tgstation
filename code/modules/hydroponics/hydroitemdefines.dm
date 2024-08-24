@@ -160,7 +160,7 @@
 
 /**
  * This proc is called when we scan a hydroponics tray or soil on left click (stats mode)
- * It formats the plant name, it's age, the plant's stats, and the tray's stats.
+ * It formats the plant name, its age, the plant's stats, and the tray's stats.
  *
  * - scanned_tray - the tray or soil we are scanning.
  *

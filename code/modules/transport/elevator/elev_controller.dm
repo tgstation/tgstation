@@ -122,7 +122,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/button/elevator, 32)
 		return FALSE
 
 	// We can't call an elevator that's moving. You may say "you totally can do that", but that's not modelled
-	if(lift.controls_locked == LIFT_PLATFORM_LOCKED)
+	if(lift.controller_status & CONTROLS_LOCKED)
 		loc.balloon_alert(activator, "elevator is moving!")
 		return FALSE
 

@@ -57,8 +57,9 @@
 
 /obj/vehicle/sealed/mecha/justice/update_icon_state()
 	. = ..()
-	if(LAZYLEN(occupants))
-		icon_state = weapons_safety ? "[base_icon_state]" : "[base_icon_state]-angry"
+	if(!LAZYLEN(occupants))
+		return
+	icon_state = weapons_safety ? "[base_icon_state]" : "[base_icon_state]-angry"
 	if(!has_gravity())
 		icon_state = "[icon_state]-fly"
 
@@ -169,10 +170,10 @@
 	. = ..()
 	RegisterSignal(chassis, COMSIG_MECH_SAFETIES_TOGGLE, PROC_REF(on_toggle_safety))
 
-/// update button icon when toggle safety.
+/// update button icon when toggle safety and turns invisibility off.
 /datum/action/vehicle/sealed/mecha/invisibility/proc/on_toggle_safety()
 	SIGNAL_HANDLER
-
+	invisibility_off()
 	build_all_button_icons(UPDATE_BUTTON_STATUS)
 
 /datum/action/vehicle/sealed/mecha/invisibility/Trigger(trigger_flags)

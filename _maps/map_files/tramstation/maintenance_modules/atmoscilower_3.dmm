@@ -18,19 +18,20 @@
 /obj/effect/turf_decal/stripes/end{
 	dir = 1
 	},
-/obj/structure/sign/warning/electric_shock/directional/south,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/lesser)
 "d" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/mirror/directional/east,
-/obj/structure/sink/directional/west,
 /obj/item/reagent_containers/cup/bucket{
 	pixel_x = -12;
 	pixel_y = 14
 	},
-/obj/effect/decal/cleanable/cobweb,
+/obj/effect/decal/cleanable/cobweb{
+	pixel_y = 24
+	},
+/obj/structure/sink/directional/north,
+/obj/structure/mirror/directional/north,
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/lesser)
 "f" = (

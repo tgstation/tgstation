@@ -50,7 +50,7 @@
 	#define COMSIG_MOB_CLIENT_BLOCK_PRE_MOVE COMPONENT_MOVABLE_BLOCK_PRE_MOVE
 	/// The argument of move_args which corresponds to the loc we're moving to
 	#define MOVE_ARG_NEW_LOC 1
-	/// The arugment of move_args which dictates our movement direction
+	/// The argument of move_args which dictates our movement direction
 	#define MOVE_ARG_DIRECTION 2
 /// From base of /client/Move(): (direction, old_dir)
 #define COMSIG_MOB_CLIENT_MOVED "mob_client_moved"
@@ -72,7 +72,7 @@
 #define COMSIG_MOB_MIND_TRANSFERRED_INTO "mob_mind_transferred_into"
 ///from mind/transfer_from. Sent to the mob the mind is being transferred out of.
 #define COMSIG_MOB_MIND_TRANSFERRED_OUT_OF "mob_mind_transferred_out_of"
-/// From /mob/proc/ghostize() Called when a mob sucessfully ghosts
+/// From /mob/proc/ghostize() Called when a mob successfully ghosts
 #define COMSIG_MOB_GHOSTIZED "mob_ghostized"
 
 ///from base of obj/allowed(mob/M): (/obj) returns ACCESS_ALLOWED if mob has id access to the obj
@@ -138,6 +138,7 @@
 	#define SPEECH_FILTERPROOF 8
 	#define SPEECH_RANGE 9
 	#define SPEECH_SAYMODE 10
+	#define SPEECH_MODS 11
 
 ///from /mob/say_dead(): (mob/speaker, message)
 #define COMSIG_MOB_DEADSAY "mob_deadsay"
@@ -150,8 +151,6 @@
 /// from base of mob/swap_hand(): ()
 /// Performed after the hands are swapped.
 #define COMSIG_MOB_SWAP_HANDS "mob_swap_hands"
-///from base of /mob/verb/pointed: (atom/A)
-#define COMSIG_MOB_POINTED "mob_pointed"
 ///Mob is trying to open the wires of a target [/atom], from /datum/wires/interactable(): (atom/target)
 #define COMSIG_TRY_WIRES_INTERACT "try_wires_interact"
 	#define COMPONENT_CANT_INTERACT_WIRES (1<<0)
@@ -242,6 +241,9 @@
 
 /// from /mob/proc/slip(): (knockdown_amonut, obj/slipped_on, lube_flags [mobs.dm], paralyze, force_drop)
 #define COMSIG_MOB_SLIPPED "mob_slipped"
+
+/// From the base of /datum/component/callouts/proc/callout_picker(mob/user, atom/clicked_atom): (datum/callout_option/callout, atom/target)
+#define COMSIG_MOB_CREATED_CALLOUT "mob_created_callout"
 
 /// from /mob/proc/key_down(): (key, client/client, full_key)
 #define COMSIG_MOB_KEYDOWN "mob_key_down"

@@ -1,6 +1,7 @@
 #define FOAM_INTERVAL 5 SECONDS
 
 /mob/living/basic/bot/firebot
+	SET_BASE_VISUAL_PIXEL(0, 10)
 	name = "\improper Firebot"
 	desc = "A little fire extinguishing bot. He looks rather anxious."
 	icon = 'icons/mob/silicon/aibots.dmi'
@@ -17,6 +18,7 @@
 	path_image_color = "#FFA500"
 	possessed_message = "You are a firebot! Protect the station from fires to the best of your ability!"
 	ai_controller = /datum/ai_controller/basic_controller/bot/firebot
+	shadow_offset_y = 2
 	///our inbuilt fire extinguisher
 	var/obj/item/extinguisher/internal_ext
 
@@ -74,15 +76,15 @@
 	internal_ext.refill()
 
 /mob/living/basic/bot/firebot/melee_attack(atom/attacked_atom, list/modifiers, ignore_cooldown = FALSE)
-	use_extinguisher(attacked_atom)
+	use_extinguisher(attacked_atom, modifiers)
 
 /mob/living/basic/bot/firebot/RangedAttack(atom/attacked_atom, list/modifiers)
-	use_extinguisher(attacked_atom)
+	use_extinguisher(attacked_atom, modifiers)
 
-/mob/living/basic/bot/firebot/proc/use_extinguisher(atom/attacked_atom)
+/mob/living/basic/bot/firebot/proc/use_extinguisher(atom/attacked_atom, list/modifiers)
 	if(!(bot_mode_flags & BOT_MODE_ON))
 		return
-	spray_water(attacked_atom)
+	spray_water(attacked_atom, modifiers)
 
 /mob/living/basic/bot/firebot/emag_act(mob/user, obj/item/card/emag/emag_card)
 	. = ..()
@@ -112,9 +114,10 @@
 	return data
 
 // Actions received from TGUI
-/mob/living/basic/bot/firebot/ui_act(action, params)
+/mob/living/basic/bot/firebot/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
-	if(. || (bot_access_flags & BOT_COVER_LOCKED && !HAS_SILICON_ACCESS(usr)))
+	var/mob/user = ui.user
+	if(. || (bot_access_flags & BOT_COVER_LOCKED && !HAS_SILICON_ACCESS(user)))
 		return
 
 	switch(action)
@@ -137,12 +140,12 @@
 	foam.start()
 	COOLDOWN_START(src, foam_cooldown, FOAM_INTERVAL)
 
-/mob/living/basic/bot/firebot/proc/spray_water(atom/attacked_atom)
+/mob/living/basic/bot/firebot/proc/spray_water(atom/attacked_atom, list/modifiers)
 	if(firebot_mode_flags & FIREBOT_STATIONARY_MODE)
 		flick("firebots_use", src)
 	else
 		flick("firebot1_use", src)
-	internal_ext?.melee_attack_chain(src, attacked_atom)
+	internal_ext?.interact_with_atom(attacked_atom, src, modifiers)
 
 /mob/living/basic/bot/firebot/update_icon_state()
 	. = ..()

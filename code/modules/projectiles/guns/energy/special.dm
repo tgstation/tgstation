@@ -169,6 +169,9 @@
 	else
 		. = ..(amount=1)
 
+/obj/item/gun/energy/plasmacutter/try_fire_gun(atom/target, mob/living/user, params)
+	return fire_gun(target, user, user.Adjacent(target) && !isturf(target), params)
+
 #undef PLASMA_CUTTER_CHARGE_WELD
 
 /obj/item/gun/energy/plasmacutter/adv

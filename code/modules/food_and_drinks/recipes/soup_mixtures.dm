@@ -1469,6 +1469,20 @@
 		/datum/reagent/water = 5,
 	)
 
+//Fresh Jellyfish fillet soup!
+/datum/chemical_reaction/food/soup/jellyfish_stew_two
+	required_reagents = list(/datum/reagent/water = 50)
+	required_ingredients = list(
+		/obj/item/food/fishmeat/gunner_jellyfish = 1,
+		/obj/item/food/grown/soybeans = 1,
+		/obj/item/food/grown/redbeet = 1,
+		/obj/item/food/grown/potato = 1
+	)
+	results = list(
+		/datum/reagent/consumable/nutriment/soup/jellyfish = 50,
+	)
+
+
 // Rootbread Soup
 /datum/reagent/consumable/nutriment/soup/rootbread
 	name = "Rootbread Soup"

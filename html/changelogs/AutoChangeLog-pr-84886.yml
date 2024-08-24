@@ -1,4 +1,0 @@
-author: "Singul0"
-delete-after: True
-changes:
-  - bugfix: "Fixes Icemoon syndie listening station APC's from being affected by station-side events"

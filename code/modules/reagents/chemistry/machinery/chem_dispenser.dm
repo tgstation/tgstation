@@ -1,4 +1,5 @@
 /obj/machinery/chem_dispenser
+	SET_BASE_VISUAL_PIXEL(0, DEPTH_OFFSET)
 	name = "chem dispenser"
 	desc = "Creates and dispenses chemicals."
 	density = TRUE
@@ -211,8 +212,8 @@
 	.["amount"] = amount
 	.["energy"] = cell.charge ? cell.charge : 0 //To prevent NaN in the UI.
 	.["maxEnergy"] = cell.maxcharge
-	.["displayedEnergy"] = display_energy(cell.charge)
-	.["displayedMaxEnergy"] = display_energy(cell.maxcharge)
+	.["displayedUnits"] = cell.charge ? (cell.charge / power_cost) : 0
+	.["displayedMaxUnits"] = cell.maxcharge / power_cost
 	.["showpH"] = isnull(recording_recipe) ? show_ph : FALSE //virtual beakers have no ph to compute & display
 
 	var/list/chemicals = list()
@@ -572,6 +573,7 @@
 /obj/machinery/chem_dispenser/drinks/fullupgrade //fully ugpraded stock parts, emagged
 	desc = "Contains a large reservoir of soft drinks. This model has had its safeties shorted out."
 	obj_flags = CAN_BE_HIT | EMAGGED
+	circuit = /obj/item/circuitboard/machine/chem_dispenser/drinks/fullupgrade
 
 /obj/machinery/chem_dispenser/drinks/fullupgrade/Initialize(mapload)
 	. = ..()

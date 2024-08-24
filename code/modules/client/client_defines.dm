@@ -45,8 +45,6 @@
 	var/datum/click_intercept = null
 	///Time when the click was intercepted
 	var/click_intercept_time = 0
-	///Used for admin AI interaction
-	var/AI_Interact = FALSE
 
 	///Used to cache this client's bans to save on DB queries
 	var/ban_cache = null
@@ -168,9 +166,9 @@
 	var/middragtime = 0
 	//Middle-mouse-button clicked object control for aimbot exploit detection. Weakref
 	var/datum/weakref/middle_drag_atom_ref
-	//When we started the currently active drag
+	///When we started the currently active drag
 	var/drag_start = 0
-	//The params we were passed at the start of the drag, in list form
+	///The params we were passed at the start of the drag, in list form
 	var/list/drag_details
 
 

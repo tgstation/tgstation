@@ -258,8 +258,8 @@
 /datum/mutation/human/race
 	name = "Monkified"
 	desc = "A strange genome, believing to be what differentiates monkeys from humans."
-	text_gain_indication = "You feel unusually monkey-like."
-	text_lose_indication = "You feel like your old self."
+	text_gain_indication = span_green("You feel unusually monkey-like.")
+	text_lose_indication = span_notice("You feel like your old self.")
 	quality = NEGATIVE
 	instability = NEGATIVE_STABILITY_MAJOR // mmmonky
 	remove_on_aheal = FALSE
@@ -269,18 +269,26 @@
 	var/original_name
 
 /datum/mutation/human/race/on_acquiring(mob/living/carbon/human/owner)
-	if(..())
+	. = ..()
+	if(.)
 		return
-	if(!ismonkey(owner))
-		original_species = owner.dna.species.type
-		original_name = owner.real_name
-		owner.fully_replace_character_name(null, "monkey ([rand(1,999)])")
-	. = owner.monkeyize()
+	if(ismonkey(owner))
+		return
+	original_species = owner.dna.species.type
+	original_name = owner.real_name
+	owner.monkeyize()
 
 /datum/mutation/human/race/on_losing(mob/living/carbon/human/owner)
-	if(!QDELETED(owner) && owner.stat != DEAD && (owner.dna.mutations.Remove(src)) && ismonkey(owner))
-		owner.fully_replace_character_name(null, original_name)
-		. = owner.humanize(original_species)
+	if(owner.stat == DEAD)
+		return
+	. = ..()
+	if(.)
+		return
+	if(QDELETED(owner))
+		return
+
+	owner.fully_replace_character_name(null, original_name)
+	owner.humanize(original_species)
 
 /datum/mutation/human/glow
 	name = "Glowy"

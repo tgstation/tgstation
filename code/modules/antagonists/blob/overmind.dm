@@ -15,7 +15,6 @@ GLOBAL_LIST_EMPTY(blob_nodes)
 	move_on_shuttle = TRUE
 	invisibility = INVISIBILITY_OBSERVER
 	layer = FLY_LAYER
-	plane = ABOVE_GAME_PLANE
 	see_invisible = SEE_INVISIBLE_LIVING
 	pass_flags = PASSBLOB
 	faction = list(ROLE_BLOB)
@@ -73,6 +72,10 @@ GLOBAL_LIST_EMPTY(blob_nodes)
 	. = ..()
 	START_PROCESSING(SSobj, src)
 	GLOB.blob_telepathy_mobs |= src
+	var/mutable_appearance/high_marker = mutable_appearance('icons/mob/silicon/cameramob.dmi', "marker", ABOVE_MOB_LAYER, src, ABOVE_GAME_PLANE)
+	high_marker.pixel_y -= 12
+	add_overlay(high_marker)
+	AddElement(/datum/element/elevation, pixel_shift = 10)
 
 /mob/camera/blob/proc/validate_location()
 	var/turf/T = get_turf(src)
@@ -206,7 +209,7 @@ GLOBAL_LIST_EMPTY(blob_nodes)
 			if(live_guy.stat != DEAD)
 				live_guy.investigate_log("has died from blob takeover.", INVESTIGATE_DEATHS)
 			live_guy.death()
-			create_spore(guy_turf)
+			create_spore(guy_turf, spore_type = /mob/living/basic/blob_minion/spore)
 		else
 			live_guy.fully_heal()
 
@@ -217,7 +220,7 @@ GLOBAL_LIST_EMPTY(blob_nodes)
 				continue
 			check_area.color = blobstrain.color
 			check_area.name = "blob"
-			check_area.icon = 'icons/mob/nonhuman-player/blob.dmi'
+			check_area.icon = 'icons/mob/nonhuman-player/blob_tall.dmi'
 			check_area.icon_state = "blob_shield"
 			check_area.layer = BELOW_MOB_LAYER
 			check_area.SetInvisibility(INVISIBILITY_NONE)

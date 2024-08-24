@@ -5,7 +5,7 @@ import { Window } from '../layouts';
 
 const TOOLTIP_NAME = `
   Enter a new name for this unit. Set to blank to reset to default,
-  which means unit will be able to choose it's own name.
+  which means unit will be able to choose its own name.
 `;
 
 const TOOLTIP_LOCOMOTION = `
@@ -30,7 +30,7 @@ const TOOLTIP_AI = `
 
 const TOOLTIP_LAWSYNC = `
   If closed, this unit will not synchronize
-  it's laws with it's master AI.
+  its laws with its master AI.
 `;
 
 export const CyborgBootDebug = (props) => {

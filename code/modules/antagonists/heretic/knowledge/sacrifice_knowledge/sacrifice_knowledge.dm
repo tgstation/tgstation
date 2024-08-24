@@ -66,7 +66,7 @@
 		CRASH("Failed to lazy load heretic sacrifice template!")
 
 /datum/heretic_knowledge/hunt_and_sacrifice/recipe_snowflake_check(mob/living/user, list/atoms, list/selected_atoms, turf/loc)
-	var/datum/antagonist/heretic/heretic_datum = IS_HERETIC(user)
+	var/datum/antagonist/heretic/heretic_datum = GET_HERETIC(user)
 	// First we have to check if the heretic has a Living Heart.
 	// You may wonder why we don't straight up prevent them from invoking the ritual if they don't have one -
 	// Hunt and sacrifice should always be invokable for clarity's sake, even if it'll fail immediately.
@@ -75,7 +75,7 @@
 		return FALSE
 
 	// We've got no targets set, let's try to set some.
-	// If we recently failed to aquire targets, we will be unable to aquire any.
+	// If we recently failed to acquire targets, we will be unable to acquire any.
 	if(!LAZYLEN(heretic_datum.sac_targets))
 		atoms += user
 		return TRUE
@@ -99,7 +99,7 @@
 	return FALSE
 
 /datum/heretic_knowledge/hunt_and_sacrifice/on_finished_recipe(mob/living/user, list/selected_atoms, turf/loc)
-	var/datum/antagonist/heretic/heretic_datum = IS_HERETIC(user)
+	var/datum/antagonist/heretic/heretic_datum = GET_HERETIC(user)
 	// Force it to work if the sacrifice is a cultist, even if there's no targets.
 	var/mob/living/carbon/human/sac = selected_atoms[1]
 	if(!LAZYLEN(heretic_datum.sac_targets) && !IS_CULTIST(sac))
@@ -189,11 +189,11 @@
  * Arguments
  * * user - the mob doing the sacrifice (a heretic)
  * * selected_atoms - a list of all atoms chosen. Should be (at least) one human.
- * * loc - the turf the sacrifice is occuring on
+ * * loc - the turf the sacrifice is occurring on
  */
 /datum/heretic_knowledge/hunt_and_sacrifice/proc/sacrifice_process(mob/living/user, list/selected_atoms, turf/loc)
 
-	var/datum/antagonist/heretic/heretic_datum = IS_HERETIC(user)
+	var/datum/antagonist/heretic/heretic_datum = GET_HERETIC(user)
 	var/mob/living/carbon/human/sacrifice = locate() in selected_atoms
 	if(!sacrifice)
 		CRASH("[type] sacrifice_process didn't have a human in the atoms list. How'd it make it so far?")
@@ -207,14 +207,14 @@
 
 	var/feedback = "Your patrons accept your offer"
 	var/sac_job_flag = sacrifice.mind?.assigned_role?.job_flags | sacrifice.last_mind?.assigned_role?.job_flags
-	var/datum/antagonist/cult/cultist_datum = IS_CULTIST(sacrifice)
+	var/datum/antagonist/cult/cultist_datum = GET_CULTIST(sacrifice)
 	// Heads give 3 points, cultists give 1 point (and a special reward), normal sacrifices give 2 points.
 	heretic_datum.total_sacrifices++
 	if((sac_job_flag & JOB_HEAD_OF_STAFF))
 		heretic_datum.knowledge_points += 3
 		heretic_datum.high_value_sacrifices++
 		feedback += " <i>graciously</i>"
-	else if(cultist_datum)
+	if(cultist_datum)
 		heretic_datum.knowledge_points += 1
 		grant_reward(user, sacrifice, loc)
 		// easier to read
@@ -229,9 +229,9 @@
 					span_narsie(" one of our own. Destroy and sacrifice the infidel before it claims more!")
 					to_chat(mind.current, message)
 			// he(retic) gets a warn too
-			var/message = span_cult_bold("You feel that your action has attracted") + \
-			span_cult_bold_italic(" attention.")
-			to_chat(user, message)
+			to_chat(user, span_narsiesmall("How DARE you!? I will see you destroyed for this."))
+			var/non_flavor_warning = span_cult_bold("You feel that your action has attracted ") + span_hypnophrase("attention") + span_cult_bold(".")
+			to_chat(user, non_flavor_warning)
 		return
 	else
 		heretic_datum.knowledge_points += 2
@@ -260,14 +260,8 @@
 	sacrifice.dust(TRUE, TRUE)
 
 	// Increase reward counter
-	var/datum/antagonist/heretic/antag = IS_HERETIC(user)
+	var/datum/antagonist/heretic/antag = GET_HERETIC(user)
 	antag.rewards_given++
-
-	// We limit the amount so the heretic doesn't just turn into a frickin' god (early)
-	to_chat(user, span_hierophant("You feel the rotten energies of the infidel warp and twist, mixing with that of your own..."))
-	if(prob(8 * antag.rewards_given))
-		to_chat(user, span_hierophant("Faint, dark red sparks flit around the dust, then fade. It looks like your patrons weren't able to fashion something out of it."))
-		return
 
 	// Cool effect for the rune as well as the item
 	var/obj/effect/heretic_rune/rune = locate() in range(2, user)
@@ -285,10 +279,10 @@
 /datum/heretic_knowledge/hunt_and_sacrifice/proc/deposit_reward(mob/user, turf/loc, loop = 0, obj/rune)
 	if(loop > 5) // Max limit for retrying a reward
 		return
-	// Remove the rays, we don't need them anymore.
+	// Remove the outline, we don't need it anymore.
 	rune?.remove_filter("reward_outline")
 	playsound(loc, 'sound/magic/repulse.ogg', 75, TRUE)
-	var/datum/antagonist/heretic/heretic_datum = IS_HERETIC(user)
+	var/datum/antagonist/heretic/heretic_datum = GET_HERETIC(user)
 	ASSERT(heretic_datum)
 	// This list will be almost identical to unlocked_heretic_items, with the same keys, the difference being the values will be 1 to 5.
 	var/list/rewards = heretic_datum.unlocked_heretic_items.Copy()
@@ -422,20 +416,13 @@
 		usable_organs -= /obj/item/organ/internal/lungs/corrupt // Their lungs are already more cursed than anything I could give them
 
 	var/total_implant = rand(2, 4)
-	var/gave_any = FALSE
 
 	for (var/i in 1 to total_implant)
 		if (!length(usable_organs))
-			break
+			return
 		var/organ_path = pick_n_take(usable_organs)
 		var/obj/item/organ/internal/to_give = new organ_path
-		if (!to_give.Insert(sac_target))
-			qdel(to_give)
-		else
-			gave_any = TRUE
-
-	if (!gave_any)
-		return
+		to_give.Insert(sac_target)
 
 	new /obj/effect/gibspawner/human/bodypartless(get_turf(sac_target))
 	sac_target.visible_message(span_boldwarning("Several organs force themselves out of [sac_target]!"))

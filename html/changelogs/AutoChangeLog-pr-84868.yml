@@ -1,4 +1,0 @@
-author: "vinylspiders"
-delete-after: True
-changes:
-  - bugfix: "password doors and shutters will now play their sound effects again instead of just silently opening/closing"

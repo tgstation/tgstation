@@ -79,6 +79,7 @@
 	using = new /atom/movable/screen/resist(null, src)
 	using.icon = ui_style
 	using.screen_loc = ui_above_movement
+	using.update_appearance()
 	hotkeybuttons += using
 
 	throw_icon = new /atom/movable/screen/throw_catch(null, src)

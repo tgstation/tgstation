@@ -5,6 +5,7 @@
 ///////////
 
 /obj/structure/easel
+	SET_BASE_VISUAL_PIXEL(0, DEPTH_OFFSET)
 	name = "easel"
 	desc = "Only for the finest of art!"
 	icon = 'icons/obj/art/artstuff.dmi'
@@ -57,6 +58,8 @@
 	var/icon/generated_icon
 	///boolean that blocks persistence from saving it. enabled from printing copies, because we do not want to save copies.
 	var/no_save = FALSE
+	/// What icon file do we get our frame sprites from?
+	var/frame_icon = 'icons/obj/art/painting_frames.dmi'
 
 	///reference to the last patron's mind datum, used to allow them (and no others) to change the frame before the round ends.
 	var/datum/weakref/last_patron
@@ -64,8 +67,11 @@
 	var/datum/painting/painting_metadata
 
 	// Painting overlay offset when framed
-	var/framed_offset_x = 11
-	var/framed_offset_y = 10
+	var/framed_offset_x = 10
+	var/framed_offset_y = 9
+
+	/// Additional offset to apply to the parent while framed
+	var/wall_y_offset = 0
 
 	/**
 	 * How big the grid cells that compose the painting are in the UI (multiplied by zoom).
@@ -76,7 +82,7 @@
 	///A list that keeps track of the current zoom value for each current viewer.
 	var/list/zoom_by_observer
 
-	SET_BASE_PIXEL(11, 10)
+	SET_BASE_PIXEL(10, 9)
 
 	custom_price = PAYCHECK_CREW
 
@@ -91,6 +97,14 @@
 	painting_metadata.height = height
 	ADD_KEEP_TOGETHER(src, INNATE_TRAIT)
 
+/obj/item/canvas/Destroy()
+	last_patron = null
+	if(istype(loc,/obj/structure/sign/painting))
+		var/obj/structure/sign/painting/frame = loc
+		frame.remove_art_element(painting_metadata.credit_value)
+	painting_metadata = null
+	return ..()
+
 /obj/item/canvas/proc/reset_grid()
 	grid = new/list(width,height)
 	for(var/x in 1 to width)
@@ -102,6 +116,8 @@
 	ui_interact(user)
 
 /obj/item/canvas/ui_state(mob/user)
+	if(isobserver(user))
+		return GLOB.observer_state
 	if(finalized)
 		return GLOB.physical_obscured_state
 	else
@@ -149,11 +165,14 @@
 	. = ..()
 	ui_interact(user)
 
-/obj/item/canvas/ui_act(action, params)
+/obj/item/canvas/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if(.)
 		return
 	var/mob/user = usr
+	///this is here to allow observers to zoom in and out but not do anything else.
+	if(action != "zoom_in" && action != "zoom_out" && isobserver(user))
+		return
 	switch(action)
 		if("paint")
 			if(finalized)
@@ -286,10 +305,16 @@
 					curator.adjust_money(curator_cut, "Painting: Patronage cut")
 					curator.bank_card_talk("Cut on patronage received, account now holds [curator.account_balance] cr.")
 
+	if(istype(loc, /obj/structure/sign/painting))
+		var/obj/structure/sign/painting/frame = loc
+		frame.remove_art_element(painting_metadata.credit_value)
+		frame.add_art_element(offer_amount)
+
 	painting_metadata.patron_ckey = user.ckey
 	painting_metadata.patron_name = user.real_name
 	painting_metadata.credit_value = offer_amount
 	last_patron = WEAKREF(user.mind)
+
 	to_chat(user, span_notice("Nanotrasen Trust Foundation thanks you for your contribution. You're now an official patron of this painting."))
 	var/list/possible_frames = SSpersistent_paintings.get_available_frames(offer_amount)
 	if(possible_frames.len <= 1) // Not much room for choices here.
@@ -308,7 +333,7 @@
 	var/possible_frames = candidates || SSpersistent_paintings.get_available_frames(painting_metadata.credit_value)
 	var/list/radial_options = list()
 	for(var/frame_name in possible_frames)
-		radial_options[frame_name] = image(icon, "[icon_state]frame_[frame_name]")
+		radial_options[frame_name] = image(frame_icon, "[icon_state]frame_[frame_name]")
 	var/result = show_radial_menu(user, loc, radial_options, radius = 60, custom_check = CALLBACK(src, PROC_REF(can_select_frame), user), tooltips = TRUE)
 	if(!result)
 		return
@@ -418,29 +443,32 @@
 	icon_state = "19x19"
 	width = 19
 	height = 19
-	SET_BASE_PIXEL(7, 7)
-	framed_offset_x = 7
+	SET_BASE_PIXEL(6, 7)
+	framed_offset_x = 6
 	framed_offset_y = 7
+	wall_y_offset = -2
 
 /obj/item/canvas/twentythree_nineteen
 	name = "canvas (23x19)"
 	icon_state = "23x19"
 	width = 23
 	height = 19
-	SET_BASE_PIXEL(5, 7)
-	framed_offset_x = 5
+	SET_BASE_PIXEL(4, 7)
+	framed_offset_x = 4
 	framed_offset_y = 7
 	pixels_per_unit = 8
+	wall_y_offset = -2
 
 /obj/item/canvas/twentythree_twentythree
 	name = "canvas (23x23)"
 	icon_state = "23x23"
 	width = 23
 	height = 23
-	SET_BASE_PIXEL(5, 5)
-	framed_offset_x = 5
-	framed_offset_y = 5
+	SET_BASE_PIXEL(4, 7)
+	framed_offset_x = 4
+	framed_offset_y = 7
 	pixels_per_unit = 8
+	wall_y_offset = -5
 
 /obj/item/canvas/twentyfour_twentyfour
 	name = "canvas (24x24) (AI Universal Standard)"
@@ -448,9 +476,10 @@
 	icon_state = "24x24"
 	width = 24
 	height = 24
-	SET_BASE_PIXEL(4, 4)
+	SET_BASE_PIXEL(4, 11)
 	framed_offset_x = 4
-	framed_offset_y = 4
+	framed_offset_y = 7
+	wall_y_offset = -6
 	pixels_per_unit = 8
 
 /obj/item/canvas/thirtysix_twentyfour
@@ -459,10 +488,11 @@
 	icon_state = "24x24" //The vending spritesheet needs the icons to be 32x32. We'll set the actual icon on Initialize.
 	width = 36
 	height = 24
-	SET_BASE_PIXEL(-4, 4)
+	SET_BASE_PIXEL(-4, 7)
 	framed_offset_x = 14
-	framed_offset_y = 4
+	framed_offset_y = 7
 	pixels_per_unit = 7
+	wall_y_offset = 1
 	w_class = WEIGHT_CLASS_BULKY
 
 	custom_price = PAYCHECK_CREW * 1.25
@@ -471,6 +501,7 @@
 	. = ..()
 	AddElement(/datum/element/item_scaling, 1, 0.8)
 	icon = 'icons/obj/art/artstuff_64x64.dmi'
+	frame_icon = 'icons/obj/art/artstuff_64x64.dmi'
 	icon_state = "36x24"
 
 /obj/item/canvas/fortyfive_twentyseven
@@ -479,10 +510,11 @@
 	icon_state = "24x24" //Ditto
 	width = 45
 	height = 27
-	SET_BASE_PIXEL(-8, 2)
+	SET_BASE_PIXEL(-8, 7)
 	framed_offset_x = 9
-	framed_offset_y = 4
+	framed_offset_y = 7
 	pixels_per_unit = 6
+	wall_y_offset = -1
 	w_class = WEIGHT_CLASS_BULKY
 
 	custom_price = PAYCHECK_CREW * 1.75
@@ -491,26 +523,27 @@
 	. = ..()
 	AddElement(/datum/element/item_scaling, 1, 0.7)
 	icon = 'icons/obj/art/artstuff_64x64.dmi'
+	frame_icon = 'icons/obj/art/artstuff_64x64.dmi'
 	icon_state = "45x27"
 
 /obj/item/wallframe/painting
 	name = "painting frame"
 	desc = "The perfect showcase for your favorite deathtrap memories."
-	icon = 'icons/obj/signs.dmi'
-	custom_materials = list(/datum/material/wood =SHEET_MATERIAL_AMOUNT)
+	icon = 'icons/obj/art/painting_frames.dmi'
+	custom_materials = list(/datum/material/wood = SHEET_MATERIAL_AMOUNT)
 	resistance_flags = FLAMMABLE
 	flags_1 = NONE
 	icon_state = "frame-empty"
 	result_path = /obj/structure/sign/painting
-	pixel_shift = 30
+	north_only = TRUE
 
 /obj/structure/sign/painting
 	name = "Painting"
 	desc = "Art or \"Art\"? You decide."
-	icon = 'icons/obj/signs.dmi'
+	icon = 'icons/obj/art/painting_frames.dmi'
 	icon_state = "frame-empty"
 	base_icon_state = "frame"
-	custom_materials = list(/datum/material/wood =SHEET_MATERIAL_AMOUNT)
+	custom_materials = list(/datum/material/wood = SHEET_MATERIAL_AMOUNT)
 	resistance_flags = FLAMMABLE
 	buildable_sign = FALSE
 	///Canvas we're currently displaying.
@@ -526,12 +559,14 @@
 		/obj/item/canvas/twentythree_twentythree,
 		/obj/item/canvas/twentyfour_twentyfour,
 	)
+	/// the type of wallframe it 'disassembles' into
+	var/wallframe_type = /obj/item/wallframe/painting
+
+WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/structure/sign/painting)
 
 /obj/structure/sign/painting/Initialize(mapload, dir, building)
 	. = ..()
 	SSpersistent_paintings.painting_frames += src
-	if(dir)
-		setDir(dir)
 
 /obj/structure/sign/painting/Destroy()
 	. = ..()
@@ -545,6 +580,16 @@
 			SStgui.update_uis(src)
 	else
 		return ..()
+
+/obj/structure/sign/painting/knock_down(mob/living/user)
+	var/turf/drop_turf
+	if(user)
+		drop_turf = get_turf(user)
+	else
+		drop_turf = drop_location()
+	current_canvas?.forceMove(drop_turf)
+	var/obj/item/wallframe/frame = new wallframe_type(drop_turf)
+	frame.update_integrity(get_integrity()) //Transfer how damaged it is.
 
 /obj/structure/sign/painting/examine(mob/user)
 	. = ..()
@@ -566,6 +611,8 @@
 /obj/structure/sign/painting/Exited(atom/movable/movable, atom/newloc)
 	. = ..()
 	if(movable == current_canvas)
+		if(!QDELETED(current_canvas))
+			remove_art_element(current_canvas.painting_metadata.credit_value)
 		current_canvas = null
 		update_appearance()
 
@@ -585,6 +632,8 @@
 		if(!current_canvas.finalized)
 			current_canvas.finalize(user)
 		to_chat(user,span_notice("You frame [current_canvas]."))
+		pixel_y += current_canvas.wall_y_offset
+		add_art_element()
 		update_appearance()
 		return TRUE
 	return FALSE
@@ -619,7 +668,7 @@
 	painting.pixel_y = current_canvas.framed_offset_y
 	. += painting
 	var/frame_type = current_canvas.painting_metadata.frame_type
-	. += mutable_appearance(current_canvas.icon,"[current_canvas.icon_state]frame_[frame_type]") //add the frame
+	. += mutable_appearance(current_canvas.frame_icon, "[current_canvas.icon_state]frame_[frame_type]") //add the frame
 
 /**
  * Loads a painting from SSpersistence. Called globally by said subsystem when it inits
@@ -654,9 +703,30 @@
 	new_canvas.finalized = TRUE
 	new_canvas.name = "painting - [painting.title]"
 	current_canvas = new_canvas
+	add_art_element()
 	current_canvas.update_appearance()
 	update_appearance()
 	return TRUE
+
+/obj/structure/sign/painting/proc/add_art_element()
+	var/artistic_value = get_art_value(current_canvas.painting_metadata.credit_value)
+	if(artistic_value)
+		AddElement(/datum/element/art, artistic_value)
+
+/obj/structure/sign/painting/proc/remove_art_element(patronage)
+	var/artistic_value = get_art_value(patronage)
+	if(artistic_value)
+		RemoveElement(/datum/element/art, artistic_value)
+
+/obj/structure/sign/painting/proc/get_art_value(patronage)
+	switch(patronage)
+		if(PATRONAGE_SUPERB_FRAME to INFINITY)
+			return GREAT_ART
+		if(PATRONAGE_EXCELLENT_FRAME to PATRONAGE_SUPERB_FRAME)
+			return GOOD_ART
+		if(PATRONAGE_NICE_FRAME to PATRONAGE_EXCELLENT_FRAME)
+			return OK_ART
+	return 0
 
 /obj/structure/sign/painting/proc/save_persistent()
 	if(!persistence_id || !current_canvas || current_canvas.no_save || current_canvas.painting_metadata.loaded_from_json)
@@ -694,9 +764,10 @@
 	name = "large painting frame"
 	desc = "The perfect showcase for your favorite deathtrap memories. Make sure you have enough space to mount this one to the wall."
 	custom_materials = list(/datum/material/wood = SHEET_MATERIAL_AMOUNT*2)
-	icon_state = "frame-large-empty"
+	icon = 'icons/obj/art/artstuff_64x64.dmi'
+	icon_state = "frame-empty"
+	base_pixel_x = -17
 	result_path = /obj/structure/sign/painting/large
-	pixel_shift = 0 //See [/obj/structure/sign/painting/large/proc/finalize_size]
 	custom_price = PAYCHECK_CREW * 1.25
 
 /obj/item/wallframe/painting/large/try_build(turf/on_wall, mob/user)
@@ -725,6 +796,7 @@
 		/obj/item/canvas/thirtysix_twentyfour,
 		/obj/item/canvas/fortyfive_twentyseven,
 	)
+	wallframe_type = /obj/item/wallframe/painting/large
 
 /obj/structure/sign/painting/large/Initialize(mapload)
 	. = ..()
@@ -738,11 +810,13 @@
  * of the way it's designed, the pixel_shift variable from the wallframe item won't do.
  * Also we want higher bounds so it actually covers an extra wall turf, so that it can count toward check_wall_item calls for
  * that wall turf.
+ *
+ * I havent figured out if we still want this in wallening yet?
  */
 /obj/structure/sign/painting/large/proc/finalize_size()
 	switch(dir)
 		if(SOUTH)
-			pixel_y = -32
+			pixel_y = -11
 			bound_width = 64
 		if(NORTH)
 			bound_width = 64
@@ -753,6 +827,8 @@
 			bound_height = 64
 		if(EAST)
 			bound_height = 64
+	if (!isnull(current_canvas))
+		pixel_y += current_canvas.wall_y_offset
 
 /obj/structure/sign/painting/large/frame_canvas(mob/user, obj/item/canvas/new_canvas)
 	. = ..()
@@ -795,11 +871,15 @@
 	desc_with_canvas = "A piece of art (or \"art\"). Anyone could've hung it."
 	persistence_id = "library"
 
+WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/structure/sign/painting/library)
+
 /obj/structure/sign/painting/library_secure
 	name = "\improper Curated Painting Exhibit mounting"
 	desc = "For masterpieces hand-picked by the curator."
 	desc_with_canvas = "A masterpiece hand-picked by the curator, supposedly."
 	persistence_id = "library_secure"
+
+WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/structure/sign/painting/library_secure)
 
 /obj/structure/sign/painting/library_private // keep your smut away from prying eyes, or non-librarians at least
 	name = "\improper Private Painting Exhibit mounting"
@@ -807,17 +887,23 @@
 	desc_with_canvas = "A painting hung away from lesser minds."
 	persistence_id = "library_private"
 
+WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/structure/sign/painting/library_private)
+
 /obj/structure/sign/painting/large/library
 	name = "\improper Large Painting Exhibit mounting"
 	desc = "For the bulkier art pieces, hand-picked by the curator."
 	desc_with_canvas = "A curated, large piece of art (or \"art\"). Hopefully the price of the canvas was worth it."
 	persistence_id = "library_large"
 
+WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/structure/sign/painting/large/library)
+
 /obj/structure/sign/painting/large/library_private
 	name = "\improper Private Painting Exhibit mounting"
 	desc = "For the privier and less tasteful compositions that oughtn't to be shown in a parlor nor to the masses."
 	desc_with_canvas = "A painting that oughn't to be shown to the less open-minded commoners."
 	persistence_id = "library_large_private"
+
+WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/structure/sign/painting/large/library_private)
 
 
 #define AVAILABLE_PALETTE_SPACE 14 // Enough to fill two radial menu pages

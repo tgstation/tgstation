@@ -112,7 +112,6 @@
 
 /obj/machinery/microwave/Destroy()
 	QDEL_LIST(ingredients)
-	QDEL_NULL(wires)
 	QDEL_NULL(soundloop)
 	QDEL_NULL(particles)
 	if(!isnull(cell))
@@ -382,6 +381,9 @@
 	if(operating)
 		return NONE
 
+	if (item.item_flags & ABSTRACT)
+		return NONE
+
 	if(broken > NOT_BROKEN)
 		balloon_alert(user, "it's broken!")
 		return ITEM_INTERACT_BLOCKING
@@ -414,32 +416,7 @@
 		balloon_alert(user, "max 1 device!")
 		return ITEM_INTERACT_BLOCKING
 
-	if(istype(item, /obj/item/storage))
-		var/obj/item/storage/tray = item
-		var/loaded = 0
-
-		if(!istype(item, /obj/item/storage/bag/tray))
-			// Non-tray dumping requires a do_after
-			to_chat(user, span_notice("You start dumping out the contents of [item] into [src]..."))
-			if(!do_after(user, 2 SECONDS, target = tray))
-				return ITEM_INTERACT_BLOCKING
-
-		for(var/obj/tray_item in tray.contents)
-			if(!IS_EDIBLE(tray_item))
-				continue
-			if(ingredients.len >= max_n_of_items)
-				balloon_alert(user, "it's full!")
-				return ITEM_INTERACT_BLOCKING
-			if(tray.atom_storage.attempt_remove(tray_item, src))
-				loaded++
-				ingredients += tray_item
-		if(loaded)
-			open(autoclose = 0.6 SECONDS)
-			to_chat(user, span_notice("You insert [loaded] items into \the [src]."))
-			update_appearance()
-		return ITEM_INTERACT_SUCCESS
-
-	if(item.w_class <= WEIGHT_CLASS_NORMAL && !user.combat_mode)
+	if(item.w_class <= WEIGHT_CLASS_NORMAL && !user.combat_mode && isnull(item.atom_storage))
 		if(ingredients.len >= max_n_of_items)
 			balloon_alert(user, "it's full!")
 			return ITEM_INTERACT_BLOCKING
@@ -452,6 +429,43 @@
 		user.visible_message(span_notice("[user] adds \a [item] to \the [src]."), span_notice("You add [item] to \the [src]."))
 		update_appearance()
 		return ITEM_INTERACT_SUCCESS
+
+/obj/machinery/microwave/item_interaction_secondary(mob/living/user, obj/item/tool, list/modifiers)
+	if (isnull(tool.atom_storage))
+		return
+	handle_dumping(user, tool)
+	return ITEM_INTERACT_BLOCKING
+
+/obj/machinery/microwave/proc/handle_dumping(mob/living/user, obj/item/tool)
+	if(isnull(tool.atom_storage))
+		return
+
+	var/loaded = 0
+	if(!istype(tool, /obj/item/storage/bag/tray))
+		// Non-tray dumping requires a do_after
+		to_chat(user, span_notice("You start dumping out the contents of [tool] into [src]..."))
+		if(!do_after(user, 2 SECONDS, target = tool))
+			return
+
+	for(var/obj/tray_item in tool.contents)
+		if(!IS_EDIBLE(tray_item))
+			continue
+		if(ingredients.len >= max_n_of_items)
+			balloon_alert(user, "it's full!")
+			return
+		if(tool.atom_storage.attempt_remove(tray_item, src))
+			loaded++
+			ingredients += tray_item
+
+	if(loaded)
+		open(autoclose = 0.6 SECONDS)
+		to_chat(user, span_notice("You insert [loaded] items into \the [src]."))
+		update_appearance()
+
+/obj/machinery/microwave/mouse_drop_receive(obj/item/tool, mob/user, params)
+	if (!istype(tool) || isnull(tool.atom_storage))
+		return
+	handle_dumping(user, tool)
 
 /obj/machinery/microwave/attack_hand_secondary(mob/user, list/modifiers)
 	if(user.can_perform_action(src, ALLOW_SILICON_REACH))

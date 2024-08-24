@@ -29,6 +29,7 @@
 	attack_sound = 'sound/weapons/pierce.ogg'
 	density = FALSE
 	ai_controller = /datum/ai_controller/basic_controller/legion_brood
+	shadow_type = SHADOW_SMALL
 	/// Reference to a guy who made us
 	var/datum/weakref/created_by
 

@@ -13,17 +13,26 @@
 	availability_prob = 40
 
 /datum/market_item/weapon/shotgun_dart
-	name = "Shotgun Dart"
+	name = "Box of XL Shotgun Darts"
 	desc = "These handy darts can be filled up with any chemical and be shot with a shotgun! \
 	Prank your friends by shooting them with laughter! \
 	Not recommended for comercial use."
-	item = /obj/item/ammo_casing/shotgun/dart
+	item = /obj/item/storage/box/large_dart
 
-	price_min = CARGO_CRATE_VALUE * 0.05
-	price_max = CARGO_CRATE_VALUE * 0.25
-	stock_min = 10
-	stock_max = 60
+	price_min = CARGO_CRATE_VALUE * 1.375
+	price_max = CARGO_CRATE_VALUE * 2.875
+	stock_max = 4
 	availability_prob = 40
+
+/datum/market_item/weapon/buckshot
+	name = "Box of Buckshot Shells"
+	desc = "It wasn't easy since buckshot has been made illegal all over this sector of space, but \
+	we managed to find a large cache of it... somewhere. A word of caution, the stuff may be a tad old."
+	stock_max = 3
+	availability_prob = 35
+	item = /obj/item/storage/box/lethalshot/old
+	price_min = CARGO_CRATE_VALUE * 3
+	price_max = CARGO_CRATE_VALUE * 4.5
 
 /datum/market_item/weapon/bone_spear
 	name = "Bone Spear"

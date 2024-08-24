@@ -36,9 +36,11 @@ Buildable meters
 	icon_state_preview = "junction"
 	pipe_type = /obj/machinery/atmospherics/pipe/heat_exchanging/junction
 /obj/item/pipe/directional/vent
+	name = "air vent fitting"
 	icon_state_preview = "uvent"
 	pipe_type = /obj/machinery/atmospherics/components/unary/vent_pump
 /obj/item/pipe/directional/scrubber
+	name = "air scrubber fitting"
 	icon_state_preview = "scrubber"
 	pipe_type = /obj/machinery/atmospherics/components/unary/vent_scrubber
 /obj/item/pipe/directional/connector
@@ -53,6 +55,9 @@ Buildable meters
 /obj/item/pipe/directional/he_exchanger
 	icon_state_preview = "heunary"
 	pipe_type = /obj/machinery/atmospherics/components/unary/heat_exchanger
+/obj/item/pipe/directional/airlock_pump
+	icon_state_preview = "airlock_pump"
+	pipe_type = /obj/machinery/atmospherics/components/unary/airlock_pump
 /obj/item/pipe/binary
 	RPD_type = PIPE_STRAIGHT
 /obj/item/pipe/binary/layer_adapter
@@ -75,6 +80,7 @@ Buildable meters
 	RPD_type = PIPE_TRIN_M
 	var/flipped = FALSE
 /obj/item/pipe/trinary/flippable/filter
+	name = "gas filter fitting"
 	icon_state_preview = "filter"
 	pipe_type = /obj/machinery/atmospherics/components/trinary/filter
 /obj/item/pipe/trinary/flippable/mixer
