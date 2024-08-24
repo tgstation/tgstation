@@ -1,7 +1,7 @@
 /obj/vehicle/sealed/space_pod/screwdriver_act(mob/living/user, obj/item/tool)
 	. = NONE
 	if(length(occupants))
-		balloon_alert(user, "mustnt have passengers or drivers!")
+		balloon_alert(user, "must not be occupied!")
 		return ITEM_INTERACT_BLOCKING
 	if(!panel_open && !does_lock_permit_it(user))
 		balloon_alert(user, "locked!")
