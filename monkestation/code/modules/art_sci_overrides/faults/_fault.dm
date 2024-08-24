@@ -12,6 +12,9 @@
 
 /datum/artifact_fault/shutdown
 	name = "Random Shutdown Fault"
+	visible_message = "has something malfunction and shuts down!"
+	trigger_chance = 1
+
 
 /datum/artifact_fault/on_trigger(datum/component/artifact/component)
 	if(component.active)

@@ -6230,6 +6230,7 @@
 #include "monkestation\code\modules\art_sci_overrides\faults\explosion.dm"
 #include "monkestation\code\modules\art_sci_overrides\faults\ignite.dm"
 #include "monkestation\code\modules\art_sci_overrides\faults\just_death.dm"
+#include "monkestation\code\modules\art_sci_overrides\faults\monkey_mode.dm"
 #include "monkestation\code\modules\art_sci_overrides\faults\reagents.dm"
 #include "monkestation\code\modules\art_sci_overrides\faults\say.dm"
 #include "monkestation\code\modules\art_sci_overrides\faults\size_change.dm"

@@ -34,10 +34,14 @@
 		/datum/artifact_fault/ignite = 10,
 		/datum/artifact_fault/warp = 10,
 		/datum/artifact_fault/reagent/poison = 10,
-		/datum/artifact_fault/death = 2,
+		/datum/artifact_fault/death = 1,
 		/datum/artifact_fault/tesla_zap = 5,
 		/datum/artifact_fault/shrink = 10,
 		/datum/artifact_fault/explosion = 2,
+		/datum/artifact_fault/speech = 10,
+		/datum/artifact_fault/whisper = 8,
+		/datum/artifact_fault/monkey_mode = 4,
+		/datum/artifact_fault/shutdown = 10
 	)
 	///origin datum
 	var/datum/artifact_origin/artifact_origin

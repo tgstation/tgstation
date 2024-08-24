@@ -1,7 +1,7 @@
 /datum/artifact_fault/speech
 	name = "Talkative Fault"
 	trigger_chance = 30
-	var/list/speech = list()
+	var/list/speech = list("Hello there.","I see you.","I know what you've done.")
 
 /datum/artifact_fault/speech/on_trigger(datum/component/artifact/component)
 	if(!length(speech))
