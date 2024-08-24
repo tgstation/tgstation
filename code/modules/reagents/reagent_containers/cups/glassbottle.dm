@@ -85,11 +85,11 @@
 		. += span_tinynoticeital("you could place a paper, photo or space cash inside it...")
 
 /obj/item/reagent_containers/cup/glass/bottle/update_overlays()
+	. = ..()
 	if(message_in_a_bottle)
 		var/overlay = add_message_overlay()
 		if(overlay)
 			. += overlay
-	return ..()
 
 /obj/item/reagent_containers/cup/glass/bottle/interact_with_atom_secondary(atom/target, mob/living/user, list/modifiers)
 	if(user.combat_mode || !HAS_TRAIT(target, TRAIT_MESSAGE_IN_A_BOTTLE_LOCATION))

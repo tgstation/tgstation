@@ -17,6 +17,7 @@
 
 /obj/item/photo/Initialize(mapload, datum/picture/P, datum_name = TRUE, datum_desc = TRUE)
 	set_picture(P, datum_name, datum_desc, TRUE)
+	//Photos are quite rarer than papers, so they're more likely to be added to the queue to make things even.
 	if(!mapload && prob(MESSAGE_BOTTLE_CHANCE * 5) && picture?.id)
 		LAZYADD(SSpersistence.queued_message_bottles, src)
 	return ..()
