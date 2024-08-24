@@ -2,33 +2,24 @@
 #define SPECIAL_IGNITE "ignite"
 #define SPECIAL_TELEPORT "teleport"
 
-/datum/component/artifact/melee
-	associated_object = /obj/item/melee/artifact
+/datum/artifact_effect/melee
 	artifact_size = ARTIFACT_SIZE_SMALL
-	type_name = "Melee Weapon"
+	type_name = "Melee Weapon Effect"
 	weight = ARTIFACT_VERYUNCOMMON //rare
-	xray_result = "DENSE"
 	valid_activators = list(
 		/datum/artifact_activator/touch/silicon,
 		/datum/artifact_activator/range/heat,
 		/datum/artifact_activator/range/shock,
 		/datum/artifact_activator/range/radiation
 	)
-	valid_faults = list(
-		/datum/artifact_fault/ignite = 10,
-		/datum/artifact_fault/warp = 10,
-		/datum/artifact_fault/reagent/poison = 10,
-		/datum/artifact_fault/death = 2,
-		/datum/artifact_fault/tesla_zap = 5,
-		/datum/artifact_fault/grow = 10,
-		/datum/artifact_fault/explosion = 2,
-	)
 	var/active_force //force when active
 	var/active_reach
 	var/active_woundbonus = 0
 
-/datum/component/artifact/melee/setup() //RNG incarnate
-	var/obj/item/melee/artifact/weapon = holder
+	examine_discovered = span_warning("It appears to be some sort of melee weapon")
+
+/datum/artifact_effect/melee/setup() //RNG incarnate
+	var/obj/item/melee/artifact/weapon = our_artifact.holder
 	weapon.special_cooldown_time = rand(3,8) SECONDS
 	active_force = rand(-10,30)
 	weapon.demolition_mod = rand(-1.0, 2.0)
@@ -58,15 +49,15 @@
 		potency += 15
 		weapon.special = pick(SPECIAL_LAUNCH, SPECIAL_IGNITE, SPECIAL_TELEPORT)
 
-/datum/component/artifact/melee/effect_activate()
-	var/obj/item/melee/artifact/weapon = holder
+/datum/artifact_effect/melee/effect_activate()
+	var/obj/item/melee/artifact/weapon = our_artifact.holder
 	weapon.reach = active_reach
 	weapon.force = active_force
 	weapon.wound_bonus = active_woundbonus
 	weapon.throwforce = weapon.force
 
-/datum/component/artifact/melee/effect_deactivate()
-	var/obj/item/melee/artifact/weapon = holder
+/datum/artifact_effect/melee/effect_deactivate()
+	var/obj/item/melee/artifact/weapon = our_artifact.holder
 	weapon.force = active_force / 3
 	weapon.throwforce = weapon.force
 	weapon.reach = 1

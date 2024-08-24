@@ -1,7 +1,6 @@
-/datum/component/artifact/emotegen
-	associated_object = /obj/structure/artifact/emotegen
+/datum/artifact_effect/emotegen
 	weight = ARTIFACT_UNCOMMON
-	type_name = "Emote Forcefield"
+	type_name = "Emote Forcefield Effect"
 	activation_message = "springs to life and starts emitting a forcefield!"
 	deactivation_message = "shuts down, its forcefields shutting down with it."
 	valid_activators = list(
@@ -25,10 +24,13 @@
 		"snore",
 		"cry",
 	)
+
+	examine_discovered = span_warning("It appears to radiate an emotional field")
+
 	var/list/picked_emotes = list()
 	COOLDOWN_DECLARE(cooldown)
 
-/datum/component/artifact/emotegen/setup()
+/datum/artifact_effect/emotegen/setup()
 	for(var/i = 1 to rand(3,4))
 		picked_emotes += pick(all_emotes)
 
@@ -39,24 +41,24 @@
 	cooldown_time = shield_time / 3
 	potency += radius * 3 + shield_time / 30
 
-/datum/component/artifact/emotegen/effect_activate(silent)
+/datum/artifact_effect/emotegen/effect_activate(silent)
 	if(!COOLDOWN_FINISHED(src,cooldown))
-		holder.visible_message(span_notice("[holder] wheezes, shutting down."))
-		artifact_deactivate(TRUE)
+		our_artifact.holder.visible_message(span_notice("[our_artifact.holder] wheezes, shutting down."))
+		our_artifact.artifact_deactivate(TRUE)
 		return
 	addtimer(CALLBACK(src, TYPE_PROC_REF(/datum/component/artifact, artifact_deactivate)), shield_time)
 	COOLDOWN_START(src,cooldown,shield_time + cooldown_time)
 
-/datum/component/artifact/emotegen/effect_process()
+/datum/artifact_effect/emotegen/effect_process()
 	var/current_emote = pick(picked_emotes)
 
-	holder.anchored = TRUE
-	var/turf/our_turf = get_turf(holder)
-	for(var/turf/open/floor in range(radius,holder))
+	our_artifact.holder.anchored = TRUE
+	var/turf/our_turf = get_turf(our_artifact.holder)
+	for(var/turf/open/floor in range(radius,our_artifact.holder))
 		if(floor == our_turf)
 			continue
 		for(var/mob/living/living in floor)
 			living.emote(current_emote, intentional = FALSE)
 
-/datum/component/artifact/emotegen/effect_deactivate()
-	holder.anchored = FALSE
+/datum/artifact_effect/emotegen/effect_deactivate()
+	our_artifact.holder.anchored = FALSE

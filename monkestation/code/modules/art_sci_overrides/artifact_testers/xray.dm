@@ -107,7 +107,25 @@
 	COOLDOWN_START(src,pulse_cooldown,pulse_cooldown_time)
 	pulsing = FALSE
 	if(artifact)
-		last_results = list("STRUCTURAL ABNORMALITY ANALYSIS: [artifact.xray_result]", "SIZE: [artifact.artifact_size < ARTIFACT_SIZE_LARGE ? "SMALL" : "LARGE" ]")
+		if(!artifact.fault_discovered)
+			artifact.freebies = 0 //No more freebies, you know what it does now.
+			artifact.fault_discovered = TRUE
+		if(artifact.chosen_fault)
+			last_results = list("ARTIFACT FAULT DISCOVERED: [artifact.chosen_fault.name]", "SIZE: [artifact.artifact_size < ARTIFACT_SIZE_LARGE ? "SMALL" : "LARGE" ]")
+		else
+			last_results = list("FLAWLESS ARTIFACT. NO FAULTS.", "SIZE: [artifact.artifact_size < ARTIFACT_SIZE_LARGE ? "SMALL" : "LARGE" ]")
+		if(length(artifact.discovered_effects) != length(artifact.artifact_effects))
+			for(var/datum/artifact_effect/eff in artifact.artifact_effects)
+				artifact.discovered_effects += eff.type
+			last_results += "ARTIFACT EFFECTS REVEALED."
+		if(!length(artifact.artifact_effects))
+			last_results += "MUNDANE ARTIFACT DETECTED. NO NOTEABLE EFFECTS."
+		if(length(artifact.artifact_effects) != length(artifact.activators))
+			for(var/datum/artifact_activator/activator in artifact.activators)
+				artifact.discovered_activators += activator.type
+			last_results += "ARTIFACT ACTIVATORS REVEALED."
+		last_results+= "WARNING: ARTIFACT FAULT NOW ACTIVE."
+
 	else
 		last_results = list("INCONCLUSIVE;", "NO SPECIAL PROPERTIES DETECTED")
 

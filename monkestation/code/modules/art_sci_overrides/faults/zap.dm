@@ -1,5 +1,5 @@
 /datum/artifact_fault/tesla_zap
-	name = "Tesla Zap"
+	name = "Energetic Discharge Fault"
 	trigger_chance = 12
 	visible_message = "discharges a large amount of electricity."
 

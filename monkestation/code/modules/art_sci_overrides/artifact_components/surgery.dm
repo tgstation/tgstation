@@ -1,7 +1,6 @@
-/datum/component/artifact/surgery
-	associated_object = /obj/structure/artifact/surgery
+/datum/artifact_effect/surgery
 	weight = ARTIFACT_VERYUNCOMMON
-	type_name = "Surgery Object"
+	type_name = "Surgery Object Effect"
 	activation_message = "springs to life!"
 	deactivation_message = "becomes silent."
 	valid_activators = list(
@@ -10,14 +9,15 @@
 	)
 	COOLDOWN_DECLARE(surgery_cooldown)
 
+	examine_discovered = span_warning("It appears to be some sort of automated surgery device")
 
-/datum/component/artifact/surgery/effect_touched(mob/living/user)
+/datum/artifact_effect/surgery/effect_touched(mob/living/user)
 	if(!COOLDOWN_FINISHED(src, surgery_cooldown))
-		holder.visible_message(span_notice("[holder] wheezes, shutting down."))
+		our_artifact.holder.visible_message(span_notice("[our_artifact.holder] wheezes, shutting down."))
 		return
 	if(!ishuman(user))
 		return
 	var/mob/living/carbon/human/human = user
-	human.bioscramble(holder.name)
+	human.bioscramble(our_artifact.holder.name)
 
 	COOLDOWN_START(src,surgery_cooldown, 5 SECONDS)

@@ -1,9 +1,10 @@
-/datum/component/artifact/smoke
-	associated_object = /obj/structure/artifact/smoke
+/datum/artifact_effect/smoke
 	weight = ARTIFACT_UNCOMMON
-	type_name = "Smoke Machine"
+	type_name = "Smoke Machine Effect"
 	activation_message = "starts spewing out smoke!"
 	deactivation_message = "becomes silent."
+
+	examine_discovered = span_warning("It appears to be some sort of checmical aerolyzer")
 
 	var/list/valid_chemicals = list(
 		/datum/reagent/colorful_reagent,
@@ -19,7 +20,7 @@
 	var/list/chemicals = list()
 	var/smoke_range = 3
 
-/datum/component/artifact/smoke/setup()
+/datum/artifact_effect/smoke/setup()
 	per_chemical_amount = rand(5, 10)
 	chemicals_chosen = rand(1, 5)
 	smoke_range = rand(1, 5)
@@ -28,13 +29,12 @@
 	for(var/i = 1 to chemicals_chosen)
 		chemicals += pick(valid_chemicals)
 
-/datum/component/artifact/smoke/effect_activate(silent)
+/datum/artifact_effect/smoke/effect_activate(silent)
 	for(var/chemical in chemicals)
-		do_chem_smoke(smoke_range, holder = holder, location = get_turf(holder), reagent_type = chemical, reagent_volume = per_chemical_amount, log = TRUE)
-	artifact_deactivate()
+		do_chem_smoke(smoke_range, holder = our_artifact.holder, location = get_turf(our_artifact.holder), reagent_type = chemical, reagent_volume = per_chemical_amount, log = TRUE)
+	our_artifact.artifact_deactivate()
 
-/datum/component/artifact/smoke/toxin
-	associated_object = /obj/structure/artifact/smoke/toxin
+/datum/artifact_effect/smoke/toxin
 	weight = ARTIFACT_RARE
 	activation_message = "starts spewing out toxic smoke!"
 	valid_chemicals = list(
@@ -44,16 +44,14 @@
 		/datum/reagent/toxin/spewium,
 	)
 
-/datum/component/artifact/smoke/flesh
-	associated_object = /obj/structure/artifact/smoke/flesh
+/datum/artifact_effect/smoke/flesh
 	weight = ARTIFACT_RARE
 	activation_message = "starts spewing out flesh mending smoke!"
 	valid_chemicals = list(
 		/datum/reagent/medicine/c2/synthflesh
 	)
 
-/datum/component/artifact/smoke/exotic
-	associated_object = /obj/structure/artifact/smoke/exotic
+/datum/artifact_effect/smoke/exotic
 	weight = ARTIFACT_RARE
 	activation_message = "starts spewing out exotic smoke!"
 	valid_chemicals = list(

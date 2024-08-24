@@ -4,12 +4,14 @@
 	var/visible_message
 	///the chance of us triggering on bad info
 	var/trigger_chance = 0
+	//how many credits do we get for discovering this? Should be negative.
+	var/discovered_credits = 0
 
 /datum/artifact_fault/proc/on_trigger(datum/component/artifact/component)
 	return
 
 /datum/artifact_fault/shutdown
-	name = "Generic Shutdown Fault"
+	name = "Random Shutdown Fault"
 
 /datum/artifact_fault/on_trigger(datum/component/artifact/component)
 	if(component.active)

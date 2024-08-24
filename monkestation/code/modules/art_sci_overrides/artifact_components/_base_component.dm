@@ -1,13 +1,10 @@
 #define BASE_MAX_ACTIVATORS 2
+#define BASE_MAX_EFFECTS 2
 
 /datum/component/artifact
 	dupe_mode = COMPONENT_DUPE_UNIQUE
-	///object related to this datum for spawning
-	var/obj/associated_object
-	///actual specific object for this instance
-	var/obj/holder
-	///list weight for picking this artifact datum (0 = never)
-	var/weight = 0
+	//The object we are attached to
+	var/obj/structure/artifact/holder
 	///size class for visuals (ARTIFACT_SIZE_TINY,ARTIFACT_SIZE_SMALL,ARTIFACT_SIZE_LARGE)
 	var/artifact_size = ARTIFACT_SIZE_LARGE
 	///type name for displaying on analysis forms
@@ -50,33 +47,36 @@
 		/datum/artifact_origin/wizard,
 		/datum/artifact_origin/silicon,
 		/datum/artifact_origin/precursor,
-		/datum/artifact_origin/martian,
+		/datum/artifact_origin/martian
 	)
 	var/activation_message
 	var/activation_sound
 	var/deactivation_message
 	var/deactivation_sound
-	var/hint_text = "emits a <i>faint</i> noise.."
-	var/examine_hint
 	var/mutable_appearance/act_effect
-	/// Potency in percentage, used for making more strong artifacts need more stimulus. (1% - 100%) 100 is strongest.
-	var/potency = 1
 
-	///structure description from x-ray machines
-	var/xray_result = "NONE"
 	///we store our analysis form var here
 	var/obj/item/sticker/analysis_form/analysis
 
 	var/mutable_appearance/extra_effect
-	///the fault we picked from the listed ones
+	///the fault we picked from the listed ones. Can be null!
 	var/datum/artifact_fault/chosen_fault
-	///the amount of freebies we get
+	///the amount of times an artifact WONT do something bad, even though it should have
 	var/freebies = 3
 	///if we have a special examine IE borgers
 	var/explict_examine
 
-/datum/component/artifact/Initialize(forced_origin = null)
-	. = ..()
+	//The activators we have discovered.
+	var/list/datum/artifact_activator/discovered_activators = list()
+	//Have we discovered what the bad is?
+	var/fault_discovered = FALSE
+	//A list of effects the artifact has
+	var/list/datum/artifact_effect/artifact_effects = list()
+	//A list of effects that have been discovered
+	var/list/datum/artifact_effect/discovered_effects = list()
+
+/datum/component/artifact/Initialize(forced_origin,forced_effect)
+	. = ..(forced_origin,forced_effect)
 	if(!isobj(parent))
 		return COMPONENT_INCOMPATIBLE
 
@@ -88,15 +88,16 @@
 	var/picked_origin = pick(valid_origins)
 	artifact_origin = new picked_origin
 	fake_name = "[pick(artifact_origin.name_vars["adjectives"])] [pick(isitem(holder) ? artifact_origin.name_vars["small-nouns"] : artifact_origin.name_vars["large-nouns"])]"
-	var/picked_fault = pick_weight(valid_faults)
-	chosen_fault = new picked_fault
+	if(rand(0,100)<95)
+		var/picked_fault = pick_weight(valid_faults)
+		chosen_fault = new picked_fault
 
 	generated_name = artifact_origin.generate_name()
 	if(!generated_name)
 		generated_name  = "[pick(artifact_origin.name_vars["adjectives"])] [pick(isitem(holder) ? artifact_origin.name_vars["small-nouns"] : artifact_origin.name_vars["large-nouns"])]"
 
 	holder.name = fake_name
-	holder.desc = "You have absolutely no clue what this thing is or how it got here."
+	holder.desc = "Some sort of artifact from a time long past."
 
 	var/dat_icon
 	switch(artifact_size)
@@ -131,13 +132,46 @@
 		valid_activators -= selection
 		activators += new selection()
 		activator_amount--
-
+	var/effect_amount = rand(1,BASE_MAX_EFFECTS)
+	var/list/datum/artifact_effect/all_possible_effects = GLOB.artifact_effect_rarity["all"]// We need all of them as we check later if ifs a valid origin
+	while(effect_amount >0)
+		if(length(all_possible_effects) <= 0)
+			logger.Log(LOG_CATEGORY_ARTIFACT, "[src] has ran out of possible artifact effects! It may not have any at all!")
+			effect_amount = 0
+			continue
+		var/datum/artifact_effect/effect = pick_weight(all_possible_effects)
+		if(effect.valid_origins)
+			if(!effect.valid_origins.Find(picked_origin))
+				all_possible_effects -= effect
+				continue
+		if(effect.valid_activators)
+			var/good_activators = FALSE
+			for(var/datum/artifact_activator/activator in activators) //Only need one to be correct.
+				if(effect.valid_activators.Find(activator))
+					good_activators = TRUE
+					break
+			if(good_activators)
+				all_possible_effects -= effect
+				continue
+		if(effect.artifact_size)
+			if(artifact_size != effect.artifact_size)
+				all_possible_effects -=effect
+				continue
+		var/datum/artifact_effect/added = new effect
+		artifact_effects += added
+		added.setup()
+		effect_amount--
+		all_possible_effects -= effect
+	if(forced_effect)
+		var/datum/artifact_effect/added_boogaloo = new forced_effect
+		artifact_effects += added_boogaloo
+		added_boogaloo.setup()
 	ADD_TRAIT(holder, TRAIT_HIDDEN_EXPORT_VALUE, INNATE_TRAIT)
 	setup()
-	potency = clamp(potency, 0, 100)
 	for(var/datum/artifact_activator/activator in activators)
+		var/potency = rand(0,100)
+		activators += list(activator.type = potency)
 		activator.setup(potency)
-		hint_text = activator.grab_hint()
 
 /datum/component/artifact/RegisterWithParent()
 	RegisterSignals(parent, list(COMSIG_ATOM_DESTRUCTION, COMSIG_QDELETING), PROC_REF(on_destroy))
@@ -183,7 +217,8 @@
 	active = TRUE
 	holder.add_overlay(act_effect)
 	logger.Log(LOG_CATEGORY_ARTIFACT, "[parent] has been activated")
-	effect_activate(silent)
+	for(var/datum/artifact_effect/effect in artifact_effects)
+		effect.effect_activate(silent)
 	return TRUE
 
 /datum/component/artifact/proc/artifact_deactivate(silent)
@@ -196,14 +231,15 @@
 	active = FALSE
 	holder.cut_overlay(act_effect)
 	logger.Log(LOG_CATEGORY_ARTIFACT, "[parent] has been deactivated")
-	effect_deactivate(silent)
+	for(var/datum/artifact_effect/effect in artifact_effects)
+		effect.effect_deactivate(silent)
 
 /datum/component/artifact/proc/process_stimuli(stimuli, stimuli_value, triggers_faults = TRUE)
 	if(!stimuli || active) // if called without a stimuli dont bother, if active we dont wanna reactivate
 		return
 	var/checked_fault = FALSE
 	for(var/datum/artifact_activator/listed_activator in activators)
-		if(!(listed_activator.required_stimuli & stimuli))
+		if(!(listed_activator.required_stimuli & stimuli) && chosen_fault)
 			if(!triggers_faults)
 				continue
 			if(freebies >= 1)
@@ -223,11 +259,10 @@
 			var/datum/artifact_activator/range/ranged_activator = listed_activator
 			//if we fail the range check check if we are in hint range to send out the hint
 			if(!ISINRANGE(stimuli_value, ranged_activator.amount, ranged_activator.upper_range))
-				if(hint_text && !ISINRANGE(stimuli_value, ranged_activator.amount - ranged_activator.hint_range, ranged_activator.upper_range + ranged_activator.hint_range))
+				if(!ISINRANGE(stimuli_value, ranged_activator.amount - ranged_activator.hint_range, ranged_activator.upper_range + ranged_activator.hint_range))
 					continue
 				if(!prob(ranged_activator.hint_prob))
 					continue
-				holder.visible_message(span_notice("[hint_text]"))
 				continue
 		artifact_activate()
 
@@ -239,3 +274,4 @@
 	process_stimuli(STIMULUS_RADIATION, intensity)
 
 #undef BASE_MAX_ACTIVATORS
+#undef BASE_MAX_EFFECTS

@@ -21,6 +21,7 @@
 	hint_prob = 50
 	hint_range = 10
 	hint_texts = list("you almost want to start hitting things.", "a good whack might fix this.")
+	discovered_text = "Activated by Kinetic Energy"
 
 /datum/artifact_activator/range/heat
 	name = "Heat Sensisty"
@@ -28,6 +29,7 @@
 	hint_range = 20
 	highest_trigger_amount = 15000
 	hint_texts = list("it feels like someone messed with the thermostat.", "it feels unpleasent being near")
+	discovered_text = "Activated by Thermal Energy"
 
 /datum/artifact_activator/range/heat/New()
 	base_trigger_amount = rand(350, 1000)
@@ -38,6 +40,7 @@
 	highest_trigger_amount = 10000 // requires atleast t2 parts to trigger a max roll one
 	hint_range = 500
 	hint_texts = list("you can feel the static in the air", "your hairs stand on their ends")
+	discovered_text = "Activated by Electrical Energy"
 
 /datum/artifact_activator/range/shock/New()
 	base_trigger_amount = rand(400, 1200)
@@ -49,3 +52,4 @@
 	hint_range = 2
 	base_trigger_amount = 1 //x-ray machine goes from 1-10
 	hint_texts = list("emits a hum that resembles the Super Matter", "you could swear you saw your bones for a second")
+	discovered_text = "Activated by Radiation"

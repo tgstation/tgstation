@@ -1,7 +1,7 @@
 /proc/random_rgb_pairlists(list/red_pairs, list/green_pairs, list/blue_pairs, list/alpha_pairs)
 	if(!length(red_pairs) || !length(blue_pairs) || !length(green_pairs) || !length(alpha_pairs))
 		return COLOR_CULT_RED
-	
+
 	if(!length(red_pairs) >= 2)
 		red_pairs[2] = 255
 	if(!length(blue_pairs) >= 2)
@@ -22,31 +22,23 @@
 /proc/spawn_artifact(turf/loc, forced_origin)
 	if (!loc)
 		return
-	if(!length(GLOB.artifact_rarity))
+	if(!length(GLOB.artifact_effect_rarity))
 		build_weighted_rarities()
 
-	var/list/weighted_list
-
-	if(forced_origin)
-		weighted_list = GLOB.artifact_rarity[forced_origin]
-	else
-		weighted_list = GLOB.artifact_rarity["all"]
-
-	var/datum/component/artifact/picked  = pick_weight(weighted_list)
-	var/type = initial(picked.associated_object)
-	return new type(loc)
+	var/obj/structure/artifact/A = new(loc,forced_origin)
+	return A
 
 
 /proc/build_weighted_rarities()
-	GLOB.artifact_rarity["all"] = list() ///this needs to be created first for indexing sake
+	GLOB.artifact_effect_rarity["all"] = list() ///this needs to be created first for indexing sake
 	for(var/datum/artifact_origin/origin as anything in subtypesof(/datum/artifact_origin))
-		GLOB.artifact_rarity[initial(origin.type_name)] = list()
+		GLOB.artifact_effect_rarity[initial(origin.type_name)] = list()
 
-	for(var/datum/component/artifact/artifact_type as anything in subtypesof(/datum/component/artifact))
-		var/weight = initial(artifact_type.weight)
+	for(var/datum/artifact_effect/artifact_effect as anything in subtypesof(/datum/artifact_effect))
+		var/weight = initial(artifact_effect.weight)
 		if(!weight)
 			continue
-		GLOB.artifact_rarity["all"][artifact_type] = weight
-		for(var/origin in GLOB.artifact_rarity)
-			if(origin in initial(artifact_type.valid_origins))
-				GLOB.artifact_rarity[origin][artifact_type] = weight
+		GLOB.artifact_effect_rarity["all"][artifact_effect] = weight
+		for(var/origin in GLOB.artifact_effect_rarity)
+			if(origin in initial(artifact_effect.valid_origins))
+				GLOB.artifact_effect_rarity[origin][artifact_effect] = weight

@@ -1,5 +1,5 @@
 /datum/artifact_fault/warp
-	name = "Generic Warp Artifact"
+	name = "Warping Fault"
 	trigger_chance = 12
 	visible_message = "warps space sending everyone away."
 	var/list/warp_areas = list()

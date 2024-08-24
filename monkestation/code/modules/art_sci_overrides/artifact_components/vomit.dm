@@ -1,7 +1,6 @@
-/datum/component/artifact/vomit
-	associated_object = /obj/structure/artifact/vomit
+/datum/artifact_effect/vomit
 	weight = ARTIFACT_UNCOMMON
-	type_name = "Vomiting Inducer"
+	type_name = "Vomiting Inducer Effect"
 	activation_message = "starts emitting disgusting imagery!"
 	deactivation_message = "falls silent, its aura dissipating!"
 	valid_origins = list(
@@ -15,7 +14,9 @@
 	var/bloody_vomit = FALSE
 	COOLDOWN_DECLARE(cooldown)
 
-/datum/component/artifact/vomit/setup()
+	examine_discovered = span_warning("It appears to be some sort of sick prank")
+
+/datum/artifact_effect/vomit/setup()
 	switch(rand(1,100))
 		if(1 to 84)
 			range = rand(2,3)
@@ -31,16 +32,8 @@
 	potency += (range) * 4
 	addtimer(CALLBACK(src, TYPE_PROC_REF(/datum/component/artifact, artifact_deactivate)), round(30 * (potency * 10) SECONDS))
 
-/datum/component/artifact/vomit/on_examine(atom/source, mob/user, list/examine_list)
-	. = ..()
-	var/mob/living/carbon/carbon = user
-	if(active && istype(carbon) && carbon.stat < UNCONSCIOUS)
-		examine_list += span_warning("It has an [spew_organs ? "extremely" : ""] disgusting aura! [prob(20) ? "..is that a felinid?" : ""]")
-		carbon.vomit(blood = bloody_vomit, stun = (spew_organs ? TRUE : prob(25)), distance = spew_range)
-		if(spew_organs && prob(40))
-			carbon.spew_organ()
 
-/datum/component/artifact/vomit/effect_process()
+/datum/artifact_effect/vomit/effect_process()
 	for(var/mob/living/carbon/viewed in view(range, src))
 		if(prob(100 - potency))
 			continue

@@ -35,9 +35,9 @@ export const ArtifactForm = (props) => {
           {alltypes.map((x) => (
             <Button
               key={x}
-              icon={chosentype === x ? 'check-square-o' : 'square-o'}
+              icon={chosentype.includes(x) ? 'check-square-o' : 'square-o'}
               content={x}
-              selected={chosentype === x}
+              selected={chosentype.includes(x)}
               onClick={() =>
                 act('type', {
                   type: x,

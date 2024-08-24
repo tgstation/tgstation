@@ -4,7 +4,7 @@
 /obj/item/ammo_casing/magic/artifact/ready_proj(atom/target, mob/living/user, quiet, zone_override = "", atom/fired_from)
 	if(!loaded_projectile)
 		return
-	var/datum/component/artifact/gun/gun = fired_from.GetComponent(/datum/component/artifact/gun)
+	var/datum/artifact_effect/gun/gun = fired_from.GetComponent(/datum/artifact_effect/gun)//todo: this wont work
 	loaded_projectile.damage = gun.damage / pellets
 	loaded_projectile.icon_state = gun.projectile_icon
 	loaded_projectile.damage_type = gun.dam_type
@@ -39,7 +39,8 @@
 	pinless = TRUE
 	recharge_rate = 1
 	antimagic_flags = null
-	var/datum/component/artifact/assoc_comp = /datum/component/artifact/gun
+	var/forced_effect = /datum/artifact_effect/gun
+	var/datum/component/artifact/assoc_comp = /datum/component/artifact
 
 ARTIFACT_SETUP(/obj/item/gun/magic/artifact, SSobj)
 

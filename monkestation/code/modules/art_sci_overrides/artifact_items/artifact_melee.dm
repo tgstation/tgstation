@@ -12,7 +12,8 @@
 	righthand_file = 'icons/mob/inhands/weapons/swords_righthand.dmi'
 	var/special_cooldown_time
 	var/special
-	var/datum/component/artifact/assoc_comp = /datum/component/artifact/melee
+	var/forced_effect = /datum/artifact_effect/melee
+	var/datum/component/artifact/assoc_comp = /datum/component/artifact
 	COOLDOWN_DECLARE(special_cooldown)
 
 ARTIFACT_SETUP(/obj/item/melee/artifact, SSobj)

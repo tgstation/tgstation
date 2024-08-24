@@ -1,5 +1,5 @@
 /datum/artifact_fault/speech
-	name = "Generic Speech"
+	name = "Talkative Fault"
 	trigger_chance = 30
 	var/list/speech = list()
 

@@ -6193,6 +6193,7 @@
 #include "monkestation\code\modules\art_sci_overrides\activators\_base.dm"
 #include "monkestation\code\modules\art_sci_overrides\activators\range.dm"
 #include "monkestation\code\modules\art_sci_overrides\activators\touch.dm"
+#include "monkestation\code\modules\art_sci_overrides\artifact_components\_artifact_effect.dm"
 #include "monkestation\code\modules\art_sci_overrides\artifact_components\_base_component.dm"
 #include "monkestation\code\modules\art_sci_overrides\artifact_components\_base_component_signal_procs.dm"
 #include "monkestation\code\modules\art_sci_overrides\artifact_components\_base_subtype_helpers.dm"

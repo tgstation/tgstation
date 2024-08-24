@@ -18,11 +18,11 @@
 #define ARTIFACT_VERYRARE 140
 
 //cuts down on boiler plate code
-#define ARTIFACT_SETUP(X,subsystem) ##X/Initialize(mapload, var/forced_origin = null){\
+#define ARTIFACT_SETUP(X,subsystem) ##X/Initialize(mapload, var/forced_origin = null,var/forced_effect = null){\
 	. = ..();\
 	START_PROCESSING(subsystem, src);\
 	if(assoc_comp) {\
-		assoc_comp = AddComponent(assoc_comp, forced_origin);\
+		assoc_comp = AddComponent(assoc_comp, forced_origin, forced_effect);\
 		RegisterSignal(src, COMSIG_QDELETING, PROC_REF(on_delete));\
 	}\
 } \
@@ -33,7 +33,9 @@
 ##X/process(){\
 	assoc_comp?.stimulate_from_turf_heat(get_turf(src));\
 	if(assoc_comp?.active) {\
-		assoc_comp.effect_process();\
+		for(var/datum/artifact_effect/eff in assoc_comp.artifact_effects) {\
+			eff.effect_process();\
+		}\
 	}\
 } \
 ##X/rad_act(intensity){\

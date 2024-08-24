@@ -1,5 +1,5 @@
 /datum/artifact_fault/shrink
-	name = "Shrink"
+	name = "Shrinking Fault"
 	trigger_chance = 13
 	visible_message = "starts to shrink."
 
@@ -14,7 +14,7 @@
 		qdel(component.holder)
 
 /datum/artifact_fault/grow
-	name = "Grow"
+	name = "Growing Fault"
 	trigger_chance = 13
 	visible_message = "starts to grow."
 

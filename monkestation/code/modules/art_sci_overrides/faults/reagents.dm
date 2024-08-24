@@ -1,5 +1,5 @@
 /datum/artifact_fault/reagent
-	name = "Generic Reagent Injector"
+	name = "Chemical Force Injector Fault"
 	trigger_chance = 15
 	visible_message = "shoots a syringe out."
 	var/list/reagents = list()

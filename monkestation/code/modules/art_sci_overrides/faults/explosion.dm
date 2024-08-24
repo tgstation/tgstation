@@ -1,5 +1,5 @@
 /datum/artifact_fault/explosion
-	name = "Explode"
+	name = "Exploding Fault"
 	trigger_chance = 3
 	visible_message = "reaches a catastrophic overload, cracks forming at its surface!"
 

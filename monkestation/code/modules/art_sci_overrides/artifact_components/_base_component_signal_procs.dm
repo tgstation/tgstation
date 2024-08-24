@@ -4,15 +4,26 @@
 	if(!QDELETED(holder))
 		holder.loc.visible_message(span_warning("[holder] [artifact_origin.destroy_message]"))
 	artifact_deactivate(TRUE)
+	for(var/datum/artifact_effect/effect in artifact_effects)
+		effect.on_destroy(source)
 	if(!QDELETED(holder))
 		qdel(holder)
 
 /datum/component/artifact/proc/on_examine(atom/source, mob/user, list/examine_list)
 	SIGNAL_HANDLER
-	if(examine_hint)
-		examine_list += examine_hint
 	if(explict_examine)
 		examine_list += explict_examine
+	for(var/datum/artifact_effect/effect in artifact_effects)
+		if(discovered_effects.Find(effect.type))
+			examine_list += effect.examine_discovered
+		else
+			examine_list += effect.examine_hint
+
+	for(var/datum/artifact_activator/act in activators)
+		if(discovered_activators.Find(act.type))
+			examine_list += act.discovered_text
+		else
+			examine_list += pick(act.hint_texts)
 
 /datum/component/artifact/proc/on_sticker(atom/source, obj/item/sticker/sticker, mob/user)
 	SIGNAL_HANDLER
@@ -75,7 +86,8 @@
 	logger.Log(LOG_CATEGORY_ARTIFACT, "[user] has touched [parent]")
 
 	if(active)
-		effect_touched(user)
+		for(var/datum/artifact_effect/effect in artifact_effects)
+			effect.effect_touched(user)
 		return
 	if(LAZYLEN(artifact_origin.touch_descriptors))
 		addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(to_chat), user, span_notice("<i>[pick(artifact_origin.touch_descriptors)]</i>")), 0.5 SECONDS)

@@ -1,12 +1,13 @@
 
-/datum/component/artifact/lamp
-	associated_object = /obj/structure/artifact/lamp
+/datum/artifact_effect/lamp
 	weight = ARTIFACT_COMMON
 	type_name = "Lamp"
 	activation_message = "starts shining!"
 	deactivation_message = "stops shining."
 
-/datum/component/artifact/lamp/setup()
+	examine_discovered = span_warning("It appears to be some sort of light source")
+
+/datum/artifact_effect/lamp/setup()
 	var/power
 	var/color = pick(COLOR_RED, COLOR_BLUE, COLOR_YELLOW, COLOR_GREEN, COLOR_PURPLE, COLOR_ORANGE)
 	var/range
@@ -17,18 +18,18 @@
 		if(76 to 100)
 			range = rand(4,10)
 			power = rand(2,10) // the sun
-			
-	if(artifact_origin.type_name == ORIGIN_NARSIE && prob(40))
+
+	if(our_artifact.artifact_origin.type_name == ORIGIN_NARSIE && prob(40))
 		color = COLOR_BLACK
-	holder.set_light_range_power_color(range, power, color)
+	our_artifact.holder.set_light_range_power_color(range, power, color)
 	potency += (range + power) * 2
 
-/datum/component/artifact/lamp/effect_touched(mob/user)
-	holder.set_light_on(!holder.light_on) //toggle
-	to_chat(user, span_hear("[holder] clicks."))
+/datum/artifact_effect/lamp/effect_touched(mob/user)
+	our_artifact.holder.set_light_on(!our_artifact.holder.light_on) //toggle
+	to_chat(user, span_hear("[our_artifact.holder] clicks."))
 
-/datum/component/artifact/lamp/effect_activate()
-	holder.set_light_on(TRUE)
+/datum/artifact_effect/lamp/effect_activate()
+	our_artifact.holder.set_light_on(TRUE)
 
-/datum/component/artifact/lamp/effect_deactivate()
-	holder.set_light_on(FALSE)
+/datum/artifact_effect/lamp/effect_deactivate()
+	our_artifact.holder.set_light_on(FALSE)

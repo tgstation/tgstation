@@ -1,5 +1,5 @@
 /datum/artifact_fault/ignite
-	name = "Combust"
+	name = "Combustion Fault"
 	trigger_chance = 9
 	visible_message = "starts rapidly heating up while covering everything around it in something that seems to be oil."
 

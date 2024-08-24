@@ -1,6 +1,6 @@
 /datum/artifact_fault/death
-	name = "Instant Death"
-	trigger_chance = 1
+	name = "Instant Death Fault"
+	trigger_chance = 0.5
 	visible_message = "blows someone up with mind."
 
 /datum/artifact_fault/death/on_trigger(datum/component/artifact/component)

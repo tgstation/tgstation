@@ -1,14 +1,14 @@
-/datum/component/artifact/borger
-	associated_object = /obj/structure/artifact/borger
+/datum/artifact_effect/borger
 	weight = ARTIFACT_UNCOMMON
-	type_name = "Borger"
+	type_name = "Borger Effect"
 	activation_message = "opens up!"
 	deactivation_message = "closes up."
 	valid_activators = list(
 		/datum/artifact_activator/touch/carbon,
 		/datum/artifact_activator/touch/silicon
 	)
-	explict_examine = span_bolddanger("It is vaguely forboding, <i>touching this might be a bad idea...</i>")
+	examine_hint = span_bolddanger("It is vaguely forboding, <i>touching this might be a bad idea...</i>")
+	examine_discovered = span_bolddanger("It will turn a random limb robotic if touched, <i>touching this might be a bad idea...</i>")
 	/// The time between each limb replacement
 	var/limb_replace_time = 1 SECONDS
 	/// People who've already touched it once. Touching it again will cause it to react.
@@ -16,9 +16,9 @@
 	/// The cooldown between borgings.
 	COOLDOWN_DECLARE(borg_cooldown)
 
-/datum/component/artifact/borger/effect_touched(mob/living/user)
+/datum/artifact_effect/borger/effect_touched(mob/living/user)
 	if(!iscarbon(user) || !COOLDOWN_FINISHED(src, borg_cooldown) || QDELETED(user.client) || did_robot_touch(user))
-		holder.visible_message(span_smallnoticeital("[holder] does not react to [user]."))
+		our_artifact.holder.visible_message(span_smallnoticeital("[our_artifact.holder] does not react to [user]."))
 		return
 
 	if(!LAZYACCESS(first_touched, user))
@@ -54,14 +54,14 @@
 	addtimer(CALLBACK(carbon_target, TYPE_PROC_REF(/mob/, Robotize)), timer + 5)
 	COOLDOWN_START(src, borg_cooldown, 10 SECONDS)
 
-/datum/component/artifact/borger/proc/eat_limb(mob/living/carbon/victim)
+/datum/artifact_effect/borger/proc/eat_limb(mob/living/carbon/victim)
 	var/arm_name = victim.get_held_index_name(victim.active_hand_index)
-	victim.visible_message(span_warning("[holder] lashes out and clamps down on [victim], rapidly transmuting [victim.p_their()] [arm_name]!"), \
-		span_userdanger("[holder] lashes out and clamps down onto your [arm_name], rapidly transmuting it into cold metal!"))
+	victim.visible_message(span_warning("[our_artifact.holder] lashes out and clamps down on [victim], rapidly transmuting [victim.p_their()] [arm_name]!"), \
+		span_userdanger("[our_artifact.holder] lashes out and clamps down onto your [arm_name], rapidly transmuting it into cold metal!"))
 	var/new_arm_type = (victim.active_hand_index % 2) ? /obj/item/bodypart/arm/left/robot : /obj/item/bodypart/arm/right/robot
 	victim.del_and_replace_bodypart(new new_arm_type)
 	victim.emote("scream")
 
-/datum/component/artifact/borger/proc/did_robot_touch(mob/living/carbon/user)
+/datum/artifact_effect/borger/proc/did_robot_touch(mob/living/carbon/user)
 	var/obj/item/bodypart/arm/active_arm = user.get_active_hand()
 	return istype(active_arm) && (active_arm.bodytype & BODYTYPE_ROBOTIC)
