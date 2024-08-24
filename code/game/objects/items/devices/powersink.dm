@@ -171,7 +171,7 @@
 		if(istype(terminal.master, /obj/machinery/power/apc))
 			var/obj/machinery/power/apc/apc = terminal.master
 			if(apc.operating && apc.cell)
-				drained += 0.001 * apc.cell.use(0.05 * STANDARD_BATTERY_CHARGE, force = TRUE)
+				drained += 0.001 * apc.cell.use(0.1 * STANDARD_BATTERY_CHARGE, force = TRUE)
 	internal_heat += drained
 
 /obj/item/powersink/process()
