@@ -1332,9 +1332,7 @@
 /area/centcom/central_command_areas/prison)
 "gh" = (
 /turf/closed/indestructible/fakedoor{
-	name = "Thunderdome Admin";
-	dir = 4;
-	manual_align = 1
+	name = "Thunderdome Admin"
 	},
 /area/centcom/tdome/administration)
 "gi" = (
@@ -1547,9 +1545,7 @@
 "hn" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/centcom{
-	name = "CentCom";
-	manual_align = 1;
-	dir = 4
+	name = "CentCom"
 	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
@@ -1812,9 +1808,7 @@
 /area/centcom/central_command_areas/prison)
 "iB" = (
 /turf/closed/indestructible/fakedoor{
-	name = "CentCom Cell";
-	dir = 4;
-	manual_align = 1
+	name = "CentCom Cell"
 	},
 /area/centcom/central_command_areas/prison/cells)
 "iC" = (
@@ -4419,9 +4413,7 @@
 "ub" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/centcom{
-	name = "CentCom";
-	manual_align = 1;
-	dir = 4
+	name = "CentCom"
 	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
@@ -4996,22 +4988,6 @@
 	},
 /turf/open/floor/iron,
 /area/centcom/central_command_areas/ferry)
-"wu" = (
-/obj/machinery/door/firedoor,
-/obj/machinery/door/airlock/centcom{
-	name = "CentCom Security";
-	manual_align = 1;
-	dir = 4
-	},
-/obj/effect/turf_decal/stripes/line{
-	dir = 8
-	},
-/obj/effect/mapping_helpers/airlock/cyclelink_helper{
-	dir = 4
-	},
-/obj/effect/mapping_helpers/airlock/access/all/admin/general,
-/turf/open/floor/iron,
-/area/centcom/central_command_areas/ferry)
 "wv" = (
 /obj/machinery/door/poddoor/shutters{
 	id = "XCCFerry";
@@ -5091,9 +5067,7 @@
 "wJ" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/centcom{
-	name = "CentCom";
-	dir = 4;
-	manual_align = 1
+	name = "CentCom"
 	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
@@ -5553,9 +5527,7 @@
 "yU" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/centcom{
-	name = "CentCom";
-	manual_align = 1;
-	dir = 4
+	name = "CentCom"
 	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
@@ -7107,13 +7079,6 @@
 /obj/machinery/light/directional/north,
 /turf/open/floor/iron,
 /area/centcom/central_command_areas/admin/storage)
-"Gz" = (
-/turf/closed/indestructible/fakedoor{
-	name = "CentCom Cell";
-	manual_align = 1;
-	dir = 4
-	},
-/area/centcom/central_command_areas/prison/cells)
 "GB" = (
 /obj/machinery/power/apc/auto_name/directional/west,
 /obj/effect/turf_decal/stripes/line,
@@ -8296,9 +8261,7 @@
 "NL" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/centcom{
-	name = "CentCom Security";
-	dir = 4;
-	manual_align = 1
+	name = "CentCom Security"
 	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
@@ -8421,21 +8384,6 @@
 /obj/machinery/light/floor,
 /turf/open/floor/iron,
 /area/centcom/central_command_areas/evacuation)
-"Oj" = (
-/obj/machinery/door/firedoor,
-/obj/machinery/door/airlock/centcom{
-	name = "CentCom";
-	dir = 4;
-	manual_align = 1
-	},
-/obj/effect/turf_decal/stripes/line{
-	dir = 8
-	},
-/obj/effect/mapping_helpers/airlock/cyclelink_helper{
-	dir = 8
-	},
-/turf/open/floor/iron,
-/area/centcom/central_command_areas/control)
 "Om" = (
 /obj/structure/table/reinforced,
 /obj/item/clipboard,
@@ -10323,9 +10271,7 @@
 "WQ" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/centcom{
-	name = "CentCom Security";
-	dir = 4;
-	manual_align = 1
+	name = "CentCom Security"
 	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
@@ -10939,21 +10885,6 @@
 	},
 /turf/open/floor/iron,
 /area/centcom/central_command_areas/supplypod/loading/four)
-"ZR" = (
-/obj/machinery/door/firedoor,
-/obj/machinery/door/airlock/centcom{
-	name = "CentCom";
-	dir = 4;
-	manual_align = 1
-	},
-/obj/effect/turf_decal/stripes/line{
-	dir = 8
-	},
-/obj/effect/mapping_helpers/airlock/cyclelink_helper{
-	dir = 4
-	},
-/turf/open/floor/iron,
-/area/centcom/central_command_areas/control)
 "ZS" = (
 /obj/structure/table/reinforced,
 /obj/item/wrench,
@@ -52021,9 +51952,9 @@ YU
 YU
 mD
 mD
-wu
+NL
 xh
-wu
+NL
 mD
 Ya
 rY
@@ -56647,7 +56578,7 @@ io
 yj
 io
 io
-Oj
+hn
 mk
 hn
 io
@@ -58425,7 +58356,7 @@ ir
 iB
 Jb
 ir
-Gz
+iB
 YX
 ir
 iB
@@ -58703,9 +58634,9 @@ cg
 cg
 cg
 cg
-ZR
+yU
 GJ
-ZR
+yU
 cg
 cg
 cg
