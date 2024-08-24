@@ -167,7 +167,7 @@
 	name = "\improper Indy spoon lure"
 	desc = "A lustrous piece of metal mimicking the scales of a fish. Good for catching small to medium freshwater omnivore fish."
 	icon_state = "spoon"
-	spin_frequency = list(1.25 SECONDS, 2 SECONDS)
+	spin_frequency = list(1.25 SECONDS, 2.1 SECONDS)
 
 /obj/item/fishing_lure/spoon/is_catchable_fish(obj/item/fish/fish_type, list/fish_properties)
 	var/avg_size = initial(fish_type.average_size)
@@ -187,7 +187,7 @@
 	name = "\improper Silkbuzz artificial fly"
 	desc = "A fishing lure resembling a large wooly fly. Good for catching all sort of picky fish."
 	icon_state = "artificial_fly"
-	spin_frequency = list(0.8 SECONDS, 1.3 SECONDS)
+	spin_frequency = list(1.1 SECONDS, 1.9 SECONDS)
 
 /obj/item/fishing_lure/artificial_fly/is_catchable_fish(obj/item/fish/fish_type, list/fish_properties)
 	var/list/fish_traits = fish_properties[FISH_PROPERTIES_TRAITS]
@@ -199,7 +199,7 @@
 	name = "\improper LED fishing lure"
 	desc = "A heavy, waterproof and fish-looking LED stick, used to catch abyssal and demersal fish alike."
 	icon_state = "led"
-	spin_frequency = list(3 SECONDS, 3.5 SECONDS)
+	spin_frequency = list(3 SECONDS, 3.75 SECONDS)
 
 /obj/item/fishing_lure/led/Initialize(mapload)
 	. = ..()
@@ -244,7 +244,7 @@
 	name = "\improper Twister Worm lure"
 	desc = "A soft plastic lure with the body of a grub and a twisting tail. Good for panfish and other small omnivore fish."
 	icon_state = "grub"
-	spin_frequency = list(1 SECONDS, 1.5 SECONDS)
+	spin_frequency = list(1 SECONDS, 2.5 SECONDS)
 
 /obj/item/fishing_lure/grub/is_catchable_fish(obj/item/fish/fish_type, list/fish_properties)
 	if(initial(fish_type.average_size) >= FISH_SIZE_SMALL_MAX)
@@ -258,7 +258,7 @@
 	name = "\improper Electric-Buzz lure"
 	desc = "A metallic, colored clanked attached to a series of cables that somehow attract shock-worthy fish."
 	icon_state = "buzzbait"
-	spin_frequency = list(0.6 SECONDS, 1.2 SECONDS)
+	spin_frequency = list(0.8 SECONDS, 1.6 SECONDS)
 
 /obj/item/fishing_lure/buzzbait/is_catchable_fish(obj/item/fish/fish_type, list/fish_properties)
 	var/list/fish_traits = fish_properties[FISH_PROPERTIES_TRAITS]

@@ -1,4 +1,0 @@
-author: "Absolucy"
-delete-after: True
-changes:
-  - qol: "Clicking floor tiles now also closes curator/morgue doors, like with normal airlocks."

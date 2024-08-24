@@ -299,11 +299,10 @@ GLOBAL_LIST_INIT(specific_fish_icons, generate_specific_fish_icons())
 		if(ispath(result, /obj/item/fish))
 			if(bait)
 				final_table[result] = round(final_table[result] * result_multiplier, 1)
-				if(!HAS_TRAIT(bait, TRAIT_OMNI_BAIT))
-					var/mult = bait.check_bait(result)
-					final_table[result] = round(final_table[result] * mult, 1)
-					if(mult > 1 && HAS_TRAIT(bait, TRAIT_BAIT_ALLOW_FISHING_DUD))
-						final_table -= FISHING_DUD
+				var/mult = bait.check_bait(result)
+				final_table[result] = round(final_table[result] * mult, 1)
+				if(mult > 1 && HAS_TRAIT(bait, TRAIT_BAIT_ALLOW_FISHING_DUD))
+					final_table -= FISHING_DUD
 			else
 				final_table[result] = round(final_table[result] * 0.15, 1) //Fishing without bait is not going to be easy
 
