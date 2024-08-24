@@ -69519,7 +69519,7 @@
 /area/station/engineering/atmos)
 "nBp" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/machinery/drone_dispenser,
+/obj/machinery/drone_dispenser/preloaded,
 /obj/effect/turf_decal/bot,
 /turf/open/floor/iron,
 /area/station/science/research/abandoned)
