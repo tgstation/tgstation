@@ -206,7 +206,7 @@ GLOBAL_LIST_INIT(channel_tokens, list(
 
 /obj/item/radio/headset/headset_srvent
 	name = "press headset"
-	desc = "A head allowing the wearer to communicate with service and broadcast to entertainment channel."
+	desc = "A headset allowing the wearer to communicate with service and broadcast to entertainment channel."
 	icon_state = "srvent_headset"
 	worn_icon_state = "srv_headset"
 	keyslot = /obj/item/encryptionkey/headset_srvent
