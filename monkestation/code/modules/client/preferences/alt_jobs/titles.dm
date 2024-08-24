@@ -70,6 +70,7 @@
 
 /datum/job/brig_physician
 	alt_titles = list(
+		"Brig Physician",
 		"Jail Doctor",
 		"Brig Orderly",
 		"Prison Medic",
