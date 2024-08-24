@@ -1,0 +1,4 @@
+author: "Tag114"
+delete-after: True
+changes:
+  - bugfix: "Fixes players being unable to switch back to the default title for Brig Physician after selecting an alternate title."
