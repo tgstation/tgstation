@@ -23,7 +23,7 @@
 	throw_speed = 1
 	throw_range = 2
 	custom_materials = list(/datum/material/iron=SMALL_MATERIAL_AMOUNT* 7.5)
-	var/max_heat = 5e7 // Maximum contained heat before exploding. Not actual temperature.
+	var/max_heat = 100 * STANDARD_BATTERY_CHARGE // Maximum contained heat before exploding. Not actual temperature.
 	var/internal_heat = 0 // Contained heat, goes down every tick.
 	var/mode = DISCONNECTED // DISCONNECTED, CLAMPED_OFF, OPERATING
 	var/warning_given = FALSE //! Stop warning spam, only warn the admins/deadchat once that we are about to boom.
@@ -145,7 +145,7 @@
 	var/temp_to_give = internal_heat / FRACTION_TO_RELEASE
 	internal_heat -= temp_to_give
 	var/datum/gas_mixture/environment = our_turf.return_air()
-	var/delta_temperature = temp_to_give / environment.heat_capacity()
+	var/delta_temperature = (temp_to_give / 100) / environment.heat_capacity()
 	if(delta_temperature)
 		environment.temperature += delta_temperature
 		air_update_turf(FALSE, FALSE)
@@ -171,7 +171,7 @@
 		if(istype(terminal.master, /obj/machinery/power/apc))
 			var/obj/machinery/power/apc/apc = terminal.master
 			if(apc.operating && apc.cell)
-				drained += 0.001 * apc.cell.use(0.05 * STANDARD_CELL_CHARGE, force = TRUE)
+				drained += 0.001 * apc.cell.use(0.05 * STANDARD_BATTERY_CHARGE, force = TRUE)
 	internal_heat += drained
 
 /obj/item/powersink/process()
