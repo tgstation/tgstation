@@ -205,9 +205,7 @@
 #define WALL_LAYER 2.67
 #define ABOVE_WALL_LAYER 2.68
 #define WALL_CLICKCATCH_LAYER 2.69
-#define FLAT_ON_WALL_LAYER 2.70 // wall mounts that lie flat against the wall or are generally less important gameplay-wise (such as signs)
-#define ON_WALL_LAYER 2.71 // normal wall mounts
-#define HIGH_ON_WALL_LAYER 2.72 // wall mounts that hang high on the wall (light fixtures)
+#define ON_WALL_LAYER 2.7
 
 #define BELOW_OPEN_DOOR_LAYER 2.74
 ///Anything below this layer is to be considered completely (visually) under water by the immerse layer.
