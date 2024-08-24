@@ -64,7 +64,7 @@
 	acid = 30
 
 /obj/machinery/newscaster/pai/ui_state(mob/user)
-	return GLOB.reverse_contained_state
+	return GLOB.deep_inventory_state
 
 WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/machinery/newscaster)
 
@@ -265,7 +265,7 @@ WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/machinery/newscaster)
 	return data
 
 
-/obj/machinery/newscaster/ui_act(action, params)
+/obj/machinery/newscaster/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if(.)
 		return

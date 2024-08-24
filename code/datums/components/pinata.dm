@@ -1,8 +1,8 @@
-///Objects or mobs with this componenet will drop items when taking damage.
+///Objects or mobs with this component will drop items when taking damage.
 /datum/component/pinata
 	///How much damage does an attack need to do to have a chance to drop "candy"
 	var/minimum_damage
-	///What is the likelyhood some "candy" should drop when attacked.
+	///What is the likelihood some "candy" should drop when attacked.
 	var/drop_chance
 	///A list of "candy" items that can be dropped when taking damage
 	var/candy

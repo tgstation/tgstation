@@ -7,7 +7,7 @@
 	/// Extra examine line to describe controls, such as right-clicking, left-clicking, etc.
 	var/desc_controls
 
-	/// The context returned when an attack against this object doesnt deal any traditional damage to the object.
+	/// The context returned when an attack against this object doesn't deal any traditional damage to the object.
 	var/no_damage_feedback = "without leaving a mark"
 	/// Icon to use as a 32x32 preview in crafting menus and such
 	var/icon_preview
@@ -24,7 +24,7 @@
 	/// If this attacks a human with no wound armor on the affected body part, add this to the wound mod. Some attacks may be significantly worse at wounding if there's even a slight layer of armor to absorb some of it vs bare flesh
 	var/bare_wound_bonus = 0
 
-	/// A multiplier to an objecet's force when used against a stucture, vechicle, machine, or robot.
+	/// A multiplier to an object's force when used against a structure, vehicle, machine, or robot.
 	var/demolition_mod = 1
 
 	/// Custom fire overlay icon, will just use the default overlay if this is null
@@ -32,7 +32,7 @@
 	/// Particles this obj uses when burning, if any
 	var/burning_particles
 
-	var/drag_slowdown // Amont of multiplicative slowdown applied if pulled. >1 makes you slower, <1 makes you faster.
+	var/drag_slowdown // Amount of multiplicative slowdown applied if pulled. >1 makes you slower, <1 makes you faster.
 
 	/// Map tag for something.  Tired of it being used on snowflake items.  Moved here for some semblance of a standard.
 	/// Next pr after the network fix will have me refactor door interactions, so help me god.
@@ -70,7 +70,7 @@ GLOBAL_LIST_EMPTY(objects_by_id_tag)
 
 	var/total_force = (attacking_item.force * attacking_item.demolition_mod)
 
-	var/damage = take_damage(total_force, attacking_item.damtype, MELEE, 1)
+	var/damage = take_damage(total_force, attacking_item.damtype, MELEE, 1, get_dir(src, user))
 
 	var/damage_verb = "hit"
 

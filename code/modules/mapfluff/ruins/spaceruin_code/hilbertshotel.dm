@@ -4,7 +4,7 @@ GLOBAL_VAR_INIT(hhMysteryRoomNumber, rand(1, 999999))
 /obj/item/hilbertshotel
 	name = "Hilbert's Hotel"
 	desc = "A sphere of what appears to be an intricate network of bluespace. Observing it in detail seems to give you a headache as you try to comprehend the infinite amount of infinitesimally distinct points on its surface."
-	icon = 'icons/obj/structures.dmi'
+	icon = 'icons/obj/fluff/general.dmi'
 	icon_state = "hilbertshotel"
 	w_class = WEIGHT_CLASS_SMALL
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
@@ -367,7 +367,7 @@ GLOBAL_VAR_INIT(hhMysteryRoomNumber, rand(1, 999999))
 		to_chat(user, span_warning("Drats! Your vision is too poor to use this!"))
 		return CLICK_ACTION_BLOCKING
 
-	to_chat(user, span_notice("You peak through the door's bluespace peephole..."))
+	to_chat(user, span_notice("You peek through the door's bluespace peephole..."))
 	user.reset_perspective(parentSphere)
 	var/datum/action/peephole_cancel/PHC = new
 	user.overlay_fullscreen("remote_view", /atom/movable/screen/fullscreen/impaired, 1)

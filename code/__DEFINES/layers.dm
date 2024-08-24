@@ -108,6 +108,7 @@
 #define BALLOON_CHAT_PLANE 31
 /// Plane for the wallmount balloons
 #define EXAMINE_BALLOONS_PLANE 32
+#define EXAMINE_BALLOONS_RENDER_TARGET "*EXAMINE_BALLOONS_RENDER_TARGET"
 
 //-------------------- HUD ---------------------
 //HUD layer defines
@@ -205,7 +206,9 @@
 #define WALL_LAYER 2.67
 #define ABOVE_WALL_LAYER 2.68
 #define WALL_CLICKCATCH_LAYER 2.69
-#define ON_WALL_LAYER 2.7
+#define FLAT_ON_WALL_LAYER 2.70 // wall mounts that lie flat against the wall or are generally less important gameplay-wise (such as signs)
+#define ON_WALL_LAYER 2.71 // normal wall mounts
+#define HIGH_ON_WALL_LAYER 2.72 // wall mounts that hang high on the wall (light fixtures)
 
 #define BELOW_OPEN_DOOR_LAYER 2.74
 ///Anything below this layer is to be considered completely (visually) under water by the immerse layer.
@@ -287,7 +290,7 @@
 
 //---------- EMISSIVES -------------
 //Layering order of these is not particularly meaningful.
-//Important part is the seperation of the planes for control via plane_master
+//Important part is the separation of the planes for control via plane_master
 
 /// The layer you should use if you _really_ don't want an emissive overlay to be blocked.
 #define EMISSIVE_LAYER_UNBLOCKABLE 9999
