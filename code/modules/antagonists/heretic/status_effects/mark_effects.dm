@@ -50,7 +50,7 @@
 	playsound(owner, 'sound/magic/repulse.ogg', 75, TRUE)
 	qdel(src) //what happens when this is procced.
 
-//Each mark has diffrent effects when it is destroyed that combine with the mansus grasp effect.
+//Each mark has different effects when it is destroyed that combine with the mansus grasp effect.
 
 // MARK OF FLESH
 
@@ -284,5 +284,5 @@
 	. = ..()
 	UnregisterSignal (owner, COMSIG_MOB_APPLY_DAMAGE)
 
-	// Incase the trait was not removed earlier
+	// In case the trait was not removed earlier
 	REMOVE_TRAIT(owner, TRAIT_PACIFISM, id)
