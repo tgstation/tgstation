@@ -76,7 +76,7 @@
 	cost = CARGO_CRATE_VALUE * 4
 	contains = list(/obj/item/inducer/orderable = 2)
 	crate_name = "inducer crate"
-	crate_type = /obj/structure/closet/crate/engineering/electrical
+	crate_type = /obj/structure/closet/crate/nakamura
 
 /datum/supply_pack/engineering/pacman
 	name = "P.A.C.M.A.N Generator Crate"
@@ -86,7 +86,7 @@
 	access_view = ACCESS_ENGINEERING
 	contains = list(/obj/machinery/power/port_gen/pacman)
 	crate_name = "\improper PACMAN generator crate"
-	crate_type = /obj/structure/closet/crate/engineering/electrical
+	crate_type = /obj/structure/closet/crate/nakamura
 
 /datum/supply_pack/engineering/power
 	name = "Power Cell Crate"
