@@ -2,9 +2,9 @@
 #define CLAMPED_OFF 1
 #define OPERATING 2
 
-#define FRACTION_TO_RELEASE 50
+#define FRACTION_TO_RELEASE 25
 #define ALERT 90
-#define MINIMUM_HEAT 10000
+#define MINIMUM_HEAT 20000
 
 // Powersink - used to drain station power
 
@@ -145,7 +145,7 @@
 	var/temp_to_give = internal_heat / FRACTION_TO_RELEASE
 	internal_heat -= temp_to_give
 	var/datum/gas_mixture/environment = our_turf.return_air()
-	var/delta_temperature = (temp_to_give / 100) / environment.heat_capacity()
+	var/delta_temperature = temp_to_give / environment.heat_capacity()
 	if(delta_temperature)
 		environment.temperature += delta_temperature
 		air_update_turf(FALSE, FALSE)
