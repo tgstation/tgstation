@@ -36,7 +36,7 @@
 
 /obj/item/pod_equipment/thrusters/blazer
 	name = "overtuned pod thruster array"
-	desc = "An array of... wait. This thing seems to be a haphazardly modified thruster array for pods. Notably, <b>stabilizers have been removed to make way</b>. Not safe, but its for science."
+	desc = "An array of... wait. This thing seems to be a haphazardly modified thruster array for pods. Notably, stabilizers have been removed to make way. Not safe, but its for science."
 	max_speed = 25 NEWTONS
 	stabilizer_force = 0 // no stabilizers
 
