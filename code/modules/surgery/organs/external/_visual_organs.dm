@@ -27,7 +27,7 @@ Unlike normal organs, we're actually inside a persons limbs at all times
 	///If not null, overrides the appearance with this sprite accessory datum
 	var/sprite_accessory_override
 
-/**accessory_type is optional if you havent set sprite_datums for the object, and is used mostly to generate sprite_datums from a persons DNA
+/**accessory_type is optional if you haven't set sprite_datums for the object, and is used mostly to generate sprite_datums from a persons DNA
 * For _mob_sprite we make a distinction between "Round Snout" and "round". Round Snout is the name of the sprite datum, while "round" would be part of the sprite
 * I'm sorry
 */

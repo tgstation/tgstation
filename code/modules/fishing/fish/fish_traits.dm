@@ -314,7 +314,7 @@ GLOBAL_LIST_INIT(spontaneous_fish_traits, populate_spontaneous_fish_traits())
 
 /**
  * Useful for those species with the parthenogenesis trait if you don't want them to mate with each other,
- * or for similar shenanigeans, I don't know.
+ * or for similar shenanigans, I don't know.
  * Otherwise you could just set the stable_population to 1.
  */
 /datum/fish_trait/no_mating
@@ -399,7 +399,7 @@ GLOBAL_LIST_INIT(spontaneous_fish_traits, populate_spontaneous_fish_traits())
 
 /datum/fish_trait/toxic
 	name = "Toxic"
-	catalog_description = "This fish contains toxins. Feeding it to predatory fishes or people is not reccomended."
+	catalog_description = "This fish contains toxins. Feeding it to predatory fishes or people is not recommended."
 	diff_traits_inheritability = 25
 	reagents_to_add = list(/datum/reagent/toxin/tetrodotoxin = 2.5)
 
