@@ -43,6 +43,8 @@ GLOBAL_VAR_INIT(nt_fax_department, pick("NT HR Department", "NT Legal Department
 		/obj/item/card,
 		/obj/item/folder/biscuit,
 		/obj/item/food/breadslice,
+		/obj/item/food/chapslice,
+		/obj/item/food/grilled_chapslice,
 		/obj/item/food/pizza/flatbread,
 		/obj/item/food/pizzaslice,
 		/obj/item/food/root_flatbread,
