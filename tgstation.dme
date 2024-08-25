@@ -6397,6 +6397,7 @@
 #include "signia_modules\master_files\code\game\area\areas\shuttles.dm"
 #include "signia_modules\master_files\code\modules\research\techweb\nodes\security_nodes.dm"
 #include "signia_modules\modules\custom_whiteship\code\circuits.dm"
+#include "signia_modules\modules\custom_whiteship\code\shuttle.dm"
 #include "signia_modules\modules\custom_whiteship\code\shuttle_creator.dm"
 #include "signia_modules\modules\custom_whiteship\code\shuttle_creator_actions.dm"
 #include "signia_modules\modules\custom_whiteship\code\shuttle_creator_console.dm"

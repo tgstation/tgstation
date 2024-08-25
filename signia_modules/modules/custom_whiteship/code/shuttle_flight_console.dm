@@ -3,6 +3,7 @@
 	desc = "A shuttle control computer."
 	icon_screen = "shuttle"
 	icon_keyboard = "tech_key"
+	shuttleId = ""
 	light_color = LIGHT_COLOR_CYAN
 	req_access = list()
 	interaction_flags_machine = INTERACT_MACHINE_ALLOW_SILICON
@@ -10,7 +11,7 @@
 
 /obj/machinery/computer/shuttle/custom_shuttle/proc/linkShuttle(var/new_id)
 	shuttleId = new_id
-	possible_destinations = "whiteship_home;shuttle[new_id]_custom"
+	possible_destinations = "whiteship_home;shuttle[new_id]_custom;whiteship_lavaland"
 	return TRUE
 
 
@@ -22,7 +23,7 @@
 	whitelist_turfs = list(/turf/open/space, /turf/open/lava)
 	jump_to_ports = list("whiteship_home" = 1)
 	view_range = 12
-	designate_time = 100
+	designate_time = 30
 	circuit = /obj/item/circuitboard/computer/shuttle/docker
 
 /obj/machinery/computer/camera_advanced/shuttle_docker/custom/Initialize()

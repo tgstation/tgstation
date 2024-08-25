@@ -69,14 +69,13 @@ GLOBAL_LIST_EMPTY(custom_shuttle_machines)		//Machines that require updating (He
 	overlay_holder.add_client(user.client)
 	internal_shuttle_creator.attack_hand(user)
 
-/obj/item/shuttle_creator/afterattack(atom/target, mob/user, proximity_flag)
+/obj/item/shuttle_creator/pre_attack(atom/target, mob/living/user, params)
 	. = ..()
 	if(!ready)
 		to_chat(user, "<span class='warning'>You need to define a shuttle area first.</span>")
 		return
-	if(!proximity_flag)
-		return
 	if(istype(target, /obj/machinery/computer/shuttle/custom_shuttle))
+		to_chat(user, "<span class='warning'>targeted console</span>")
 		if(!linkedShuttleId)
 			to_chat(user, "<span class='warning'>Error, no defined shuttle linked to device</span>")
 			return
@@ -85,6 +84,7 @@ GLOBAL_LIST_EMPTY(custom_shuttle_machines)		//Machines that require updating (He
 		to_chat(user, "<span class='notice'>Console linked successfully!</span>")
 		return
 	else if(istype(target, /obj/machinery/computer/camera_advanced/shuttle_docker/custom))
+		to_chat(user, "<span class='warning'>targeted targeter</span>")
 		if(!linkedShuttleId)
 			to_chat(user, "<span class='warning'>Error, no defined shuttle linked to device</span>")
 			return
@@ -94,6 +94,10 @@ GLOBAL_LIST_EMPTY(custom_shuttle_machines)		//Machines that require updating (He
 		return
 	to_chat(user, "<span class='warning'>The [src] bleeps. Select an airlock to create a docking port, or a valid machine to link.</span>")
 	return
+
+
+
+
 
 //=========== shuttle designation actions ============
 /obj/item/shuttle_creator/proc/calculate_bounds(obj/docking_port/mobile/port)
@@ -180,11 +184,11 @@ GLOBAL_LIST_EMPTY(custom_shuttle_machines)		//Machines that require updating (He
 		to_chat(user, "<span class='warning'>Invalid shuttle, restarting bluespace systems...</span>")
 		return FALSE
 
-	var/datum/map_template/shuttle/new_shuttle = new /datum/map_template/shuttle()
+	var/datum/map_template/shuttle/new_shuttle = new /datum/map_template/shuttle/custom()
 
 	var/obj/docking_port/mobile/port = new /obj/docking_port/mobile(get_turf(target))
 	var/obj/docking_port/stationary/stationary_port = new /obj/docking_port/stationary(get_turf(target))
-	port.callTime = 50
+	port.callTime = 100
 	port.dir = 1	//Point away from space.
 	port.shuttle_id = "custom_[GLOB.custom_shuttle_count]"
 	linkedShuttleId = port.shuttle_id
@@ -193,6 +197,7 @@ GLOBAL_LIST_EMPTY(custom_shuttle_machines)		//Machines that require updating (He
 	port.port_direction = 2
 	port.preferred_direction = 4
 	port.area_type = recorded_shuttle_area
+	port.can_move_docking_ports = TRUE
 
 	stationary_port.area_type = overwritten_area
 
@@ -240,7 +245,6 @@ GLOBAL_LIST_EMPTY(custom_shuttle_machines)		//Machines that require updating (He
 
 	port.register()
 
-	icon_state = "rsd_used"
 
 	//Clear highlights
 	overlay_holder.clear_highlights()
