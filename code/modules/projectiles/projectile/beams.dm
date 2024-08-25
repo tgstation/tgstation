@@ -54,6 +54,7 @@
 	wound_bonus = 0
 	damage = 30
 	speed = 0.6 // higher power = faster, that's how light works right
+	light_color = COLOR_PINK_RED
 
 /obj/projectile/beam/laser/heavylaser
 	name = "heavy laser"
