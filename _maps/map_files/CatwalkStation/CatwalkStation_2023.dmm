@@ -5584,6 +5584,10 @@
 	},
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/lesser)
+"bUQ" = (
+/obj/effect/spawner/random/trash/graffiti,
+/turf/open/floor/plating,
+/area/space)
 "bUS" = (
 /obj/machinery/door/poddoor/shutters/preopen{
 	id = "abandonedcafe";
@@ -17994,6 +17998,7 @@
 /obj/structure/chair/sofa/left/brown{
 	dir = 1
 	},
+/obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/plating,
 /area/space)
 "gfh" = (
@@ -41538,6 +41543,13 @@
 	},
 /turf/open/floor/iron/freezer,
 /area/station/maintenance/port)
+"nQd" = (
+/obj/effect/turf_decal/arrows{
+	dir = 4
+	},
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/plating,
+/area/space)
 "nQl" = (
 /obj/structure/lattice/catwalk,
 /obj/machinery/disposal/bin,
@@ -54139,6 +54151,7 @@
 	dir = 4;
 	pixel_y = 4
 	},
+/obj/effect/spawner/random/trash/crushed_can,
 /turf/open/floor/plating,
 /area/space)
 "scT" = (
@@ -62654,6 +62667,11 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/grimy,
 /area/station/security/detectives_office/private_investigators_office)
+"uXZ" = (
+/obj/effect/spawner/random/structure/closet_maintenance,
+/obj/effect/spawner/random/maintenance/three,
+/turf/open/floor/plating,
+/area/space)
 "uYc" = (
 /obj/effect/spawner/random/trash/hobo_squat{
 	pixel_y = 9
@@ -70337,6 +70355,10 @@
 /obj/item/radio/intercom/directional/east,
 /turf/open/floor/iron/dark,
 /area/station/science/xenobiology)
+"xER" = (
+/obj/effect/spawner/random/trash/crushed_can,
+/turf/open/floor/plating,
+/area/space)
 "xEU" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/wood,
@@ -71199,6 +71221,10 @@
 	},
 /turf/open/floor/plating,
 /area/station/construction/mining/aux_base)
+"xVB" = (
+/obj/structure/closet/crate/trashcart,
+/turf/open/floor/plating,
+/area/station/maintenance/port)
 "xVE" = (
 /obj/machinery/light/directional/east,
 /obj/structure/sign/directions/science/directional/east{
@@ -92065,7 +92091,7 @@ dcE
 dcE
 aCL
 aCL
-xOW
+nHS
 fXh
 lHp
 udr
@@ -93094,9 +93120,9 @@ aCL
 aCL
 aCL
 xOW
+nHS
 xOW
-xOW
-xOW
+nHS
 xOW
 dZM
 hUA
@@ -93350,9 +93376,9 @@ fZn
 xOW
 qPW
 ong
+nHS
 xOW
-xOW
-xOW
+bUQ
 xOW
 jfK
 dZM
@@ -93608,7 +93634,7 @@ lry
 weo
 ong
 xOW
-xOW
+nHS
 xOW
 xOW
 nQw
@@ -93893,7 +93919,7 @@ iwa
 sXq
 hzC
 nFL
-wTk
+xVB
 nJk
 tEv
 riD
@@ -94640,7 +94666,7 @@ nDt
 aCL
 xOW
 xOW
-xOW
+nHS
 kTw
 auX
 aMd
@@ -95148,13 +95174,13 @@ loT
 sRY
 sRY
 tXg
+nHS
 xOW
 xOW
 xOW
+nHS
 xOW
-xOW
-xOW
-xOW
+bUQ
 rBs
 nYc
 aCL
@@ -95926,7 +95952,7 @@ fqL
 mXV
 mUR
 xOW
-xOW
+nHS
 xOW
 aCL
 dcE
@@ -96182,8 +96208,8 @@ hTJ
 mBW
 bKL
 mUR
-xOW
-xOW
+nHS
+xER
 jzA
 aCL
 aCL
@@ -96443,7 +96469,7 @@ aCL
 jLc
 tcs
 aCL
-xOW
+nHS
 hNf
 hNf
 hNf
@@ -96696,12 +96722,12 @@ jez
 gse
 vaO
 own
-xOW
-xOW
+nGI
+nHS
 xya
 xOW
 xOW
-xOW
+nHS
 aCL
 aCL
 aCL
@@ -96956,8 +96982,8 @@ own
 xOW
 xOW
 tAM
-xOW
-jLc
+oLO
+nQd
 xOW
 aCL
 iCe
@@ -97211,11 +97237,11 @@ lSN
 aCL
 aCL
 aCL
-xOW
+nHS
 kmx
 sRY
 tXg
-xOW
+oLO
 aCL
 qrQ
 tOw
@@ -97467,8 +97493,8 @@ fWY
 xOW
 xOW
 aCL
-xOW
-xOW
+uXZ
+oLO
 xOW
 aCL
 tAM
@@ -97722,10 +97748,10 @@ xpV
 jpy
 fWY
 fWY
-xOW
+nHS
 aCL
 aCL
-xOW
+nit
 aCL
 aCL
 wqB
@@ -97985,7 +98011,7 @@ aCL
 aCL
 aCL
 xjV
-xOW
+oLO
 ubo
 aCL
 fhO
@@ -98237,10 +98263,10 @@ vsf
 fWY
 fWY
 aCL
+bUQ
 xOW
-xOW
-xOW
-xOW
+nHS
+nHS
 xOW
 gfc
 aCL
@@ -98498,7 +98524,7 @@ xOW
 aCL
 gnp
 nzZ
-xOW
+oLO
 teC
 aCL
 xrM
@@ -99007,7 +99033,7 @@ sXZ
 uKp
 tRc
 aCL
-xOW
+nHS
 xOW
 iGB
 iGB
@@ -99264,7 +99290,7 @@ rkD
 pOM
 nUE
 aCL
-xOW
+nHS
 aCL
 iGB
 pxv
@@ -99522,7 +99548,7 @@ pOM
 pWr
 aCL
 xOW
-xOW
+bUQ
 iGB
 hSA
 nwo
@@ -99779,7 +99805,7 @@ pyk
 tOj
 aCL
 aCL
-xOW
+nHS
 iGB
 sAn
 wWm
@@ -100293,7 +100319,7 @@ qGF
 ioC
 fBd
 aCL
-xOW
+nHS
 iGB
 lcO
 ndo
