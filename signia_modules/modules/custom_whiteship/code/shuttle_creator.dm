@@ -1,6 +1,9 @@
-
+/*
 #define SHUTTLE_CREATOR_MAX_SIZE CONFIG_GET(number/max_shuttle_size)
 #define CUSTOM_SHUTTLE_LIMIT CONFIG_GET(number/max_shuttle_count)
+*/
+#define SHUTTLE_CREATOR_MAX_SIZE 200
+#define CUSTOM_SHUTTLE_LIMIT 6
 #define CARDINAL_DIRECTIONS_X list(1, 0, -1, 0)
 #define CARDINAL_DIRECTIONS_Y list(0, 1, 0, -1)
 
@@ -11,7 +14,8 @@ GLOBAL_LIST_EMPTY(custom_shuttle_machines)		//Machines that require updating (He
 /obj/item/shuttle_creator
 	name = "Rapid Shuttle Designator"
 	icon = 'icons/obj/tools.dmi'
-	icon_state = "rsd"
+	icon_state = "rcd"
+
 	lefthand_file = 'icons/mob/inhands/equipment/tools_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/tools_righthand.dmi'
 	desc = "A device used to define the area required for custom ships. Uses bluespace crystals to create bluespace-capable ships."
@@ -72,11 +76,11 @@ GLOBAL_LIST_EMPTY(custom_shuttle_machines)		//Machines that require updating (He
 		return
 	if(!proximity_flag)
 		return
-	if(istype(target, /obj/machinery/computer/custom_shuttle))
+	if(istype(target, /obj/machinery/computer/shuttle/custom_shuttle))
 		if(!linkedShuttleId)
 			to_chat(user, "<span class='warning'>Error, no defined shuttle linked to device</span>")
 			return
-		var/obj/machinery/computer/custom_shuttle/console = target
+		var/obj/machinery/computer/shuttle/custom_shuttle/console = target
 		console.linkShuttle(linkedShuttleId)
 		to_chat(user, "<span class='notice'>Console linked successfully!</span>")
 		return
@@ -182,8 +186,8 @@ GLOBAL_LIST_EMPTY(custom_shuttle_machines)		//Machines that require updating (He
 	var/obj/docking_port/stationary/stationary_port = new /obj/docking_port/stationary(get_turf(target))
 	port.callTime = 50
 	port.dir = 1	//Point away from space.
-	port.id = "custom_[GLOB.custom_shuttle_count]"
-	linkedShuttleId = port.id
+	port.shuttle_id = "custom_[GLOB.custom_shuttle_count]"
+	linkedShuttleId = port.shuttle_id
 	port.ignitionTime = 25
 	port.name = "Custom Shuttle"
 	port.port_direction = 2
@@ -260,12 +264,8 @@ GLOBAL_LIST_EMPTY(custom_shuttle_machines)		//Machines that require updating (He
 	if(length(str) > 50)
 		to_chat(user, "<span class='warning'>The provided ship name is too long, blares the [src]</span>")
 		return FALSE
-	if(OOC_FILTER_CHECK(str))
-		to_chat(user, "<span class='warning'>Nanotrasen prohibited words are in use in this shuttle name, blares the [src] in a slightly offended tone.</span>")
-		return FALSE
 	newS = new /area/shuttle/custom/powered()
 	newS.setup(str)
-	newS.set_dynamic_lighting()
 	//Shuttles always have gravity
 	newS.has_gravity = TRUE
 	newS.requires_power = TRUE

@@ -1,6 +1,6 @@
 /obj/item/circuitboard/computer/shuttle/flight_control
 	name = "Shuttle Flight Control (Computer Board)"
-	build_path = /obj/machinery/computer/custom_shuttle
+	build_path = /obj/machinery/computer/shuttle/custom_shuttle
 
 /obj/item/circuitboard/computer/shuttle/docker
 	name = "Shuttle Navigation Computer (Computer Board)"
