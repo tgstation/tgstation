@@ -113,7 +113,7 @@
 // Charge
 /// Sent from /datum/action/cooldown/spell/charge/cast(), to the item in hand being charged: (datum/action/cooldown/spell/spell, mob/user)
 #define COMSIG_ITEM_MAGICALLY_CHARGED "item_magic_charged"
-	/// Return if an item was successfuly recharged
+	/// Return if an item was successful recharged
 	#define COMPONENT_ITEM_CHARGED (1 << 0)
 	/// Return if the item had a negative side effect occur while recharging
 	#define COMPONENT_ITEM_BURNT_OUT (1 << 1)

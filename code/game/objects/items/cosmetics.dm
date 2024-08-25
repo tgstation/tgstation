@@ -202,7 +202,7 @@
 /obj/item/razor/suicide_act(mob/living/carbon/user)
 	user.visible_message(span_suicide("[user] begins shaving [user.p_them()]self without the razor guard! It looks like [user.p_theyre()] trying to commit suicide!"))
 	shave(user, BODY_ZONE_PRECISE_MOUTH)
-	shave(user, BODY_ZONE_HEAD)//doesnt need to be BODY_ZONE_HEAD specifically, but whatever
+	shave(user, BODY_ZONE_HEAD)//doesn't need to be BODY_ZONE_HEAD specifically, but whatever
 	return BRUTELOSS
 
 /obj/item/razor/proc/shave(mob/living/carbon/human/skinhead, location = BODY_ZONE_PRECISE_MOUTH)
