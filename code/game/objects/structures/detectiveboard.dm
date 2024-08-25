@@ -64,6 +64,16 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/detectiveboard, 32)
 		return
 	return ..()
 
+/obj/structure/detectiveboard/wrench_act_secondary(mob/living/user, obj/item/tool)
+	. = ..()
+	balloon_alert(user, "[anchored ? "un" : ""]securing...")
+	tool.play_tool_sound(src)
+	if(tool.use_tool(src, user, 6 SECONDS))
+		playsound(loc, 'sound/items/deconstruct.ogg', 50, TRUE)
+		balloon_alert(user, "[anchored ? "un" : ""]secured")
+		deconstruct()
+		return TRUE
+
 /obj/structure/detectiveboard/ui_state(mob/user)
 	return GLOB.physical_state
 
