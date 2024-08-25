@@ -257,3 +257,13 @@
 	)
 	result = /obj/item/food/cake/wedding
 	category = CAT_CAKE
+
+/datum/crafting_recipe/food/pineapple_cream_cake
+	name = "Pineapple cream cake"
+	reqs = list(
+		/obj/item/food/cake/plain = 1,
+		/obj/item/food/grown/pineapple = 1,
+		/datum/reagent/consumable/cream = 20,
+	)
+	result = /obj/item/food/cake/pineapple_cream_cake
+	category = CAT_CAKE

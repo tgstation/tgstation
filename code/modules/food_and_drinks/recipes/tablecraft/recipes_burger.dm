@@ -202,15 +202,6 @@
 /datum/crafting_recipe/food/spellburger
 	name = "Spell burger"
 	reqs = list(
-		/obj/item/clothing/head/wizard/fake = 1,
-		/obj/item/food/bun = 1
-	)
-	result = /obj/item/food/burger/spell
-	category = CAT_BURGER
-
-/datum/crafting_recipe/food/spellburger2
-	name = "Spell burger"
-	reqs = list(
 		/obj/item/clothing/head/wizard = 1,
 		/obj/item/food/bun = 1
 	)
@@ -394,4 +385,15 @@
 			/datum/reagent/consumable/cooking_oil = 15
 	)
 	result = /obj/item/food/burger/crazy
+	category = CAT_BURGER
+
+/datum/crafting_recipe/food/sloppy_moe
+	name = "Sloppy moe"
+	reqs = list(
+			/obj/item/food/bun = 1,
+			/obj/item/food/meat/cutlet = 2,
+			/obj/item/food/onion_slice = 1,
+			/datum/reagent/consumable/bbqsauce = 5,
+	)
+	result = /obj/item/food/burger/sloppy_moe
 	category = CAT_BURGER

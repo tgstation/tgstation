@@ -48,6 +48,7 @@
 		var/datum/chemical_reaction/chemical_reaction = new reaction()
 		setup_chemical_reaction_details(chemical_reaction)
 		qdel(chemical_reaction)
+	..()
 
 /**
  * Sets up information for our recipe based on the chemical reaction we have set.
@@ -269,6 +270,10 @@
 	reqs = list(/obj/item/food/piedough = 1)
 	result = /obj/item/food/pastrybase
 	category = CAT_BREAD
+
+/datum/crafting_recipe/food/knife/butterslice
+	reqs = list(/obj/item/food/butter = 1)
+	result = /obj/item/food/butterslice
 
 /datum/crafting_recipe/food/knife/doughball
 	reqs = list(/obj/item/food/doughslice = 1)
@@ -552,7 +557,7 @@
 	result = /datum/reagent/consumable/flour
 
 /datum/crafting_recipe/food/grinder/butter
-	reqs = list(/datum/reagent/consumable/milk = 15)
+	reqs = list(/datum/reagent/consumable/milk = MILK_TO_BUTTER_COEFF)
 	result = /obj/item/food/butter
 	steps = list("Put into grinder and mix")
 
@@ -644,10 +649,6 @@
 /datum/crafting_recipe/food/processor/tempeh
 	reqs = list(/obj/item/food/tempehstarter = 1)
 	result = /obj/item/food/tempeh
-
-/datum/crafting_recipe/food/processor/yakiimo
-	reqs = list(/obj/item/food/grown/potato/sweet = 1)
-	result = /obj/item/food/yakiimo
 
 /datum/crafting_recipe/food/processor/popsicle_stick
 	reqs = list(/obj/item/grown/log = 1)
@@ -796,7 +797,7 @@
 /datum/crafting_recipe/food/oven/yakiimo
 	reqs = list(/obj/item/food/grown/potato/sweet = 1)
 	result = /obj/item/food/yakiimo
-	category = CAT_SALAD
+	category = CAT_MISCFOOD
 
 /datum/crafting_recipe/food/oven/reispan
 	reqs = list(/obj/item/food/rice_dough = 1)

@@ -89,7 +89,7 @@
 	time = 40
 	reqs = list(/obj/item/food/grown/garlic = 1,
 				/obj/item/food/breadslice/plain = 1,
-				/obj/item/food/butter = 1
+				/obj/item/food/butterslice = 1
 	)
 	result = /obj/item/food/garlicbread
 	category = CAT_BREAD
@@ -98,7 +98,7 @@
 	name = "Butter Biscuit"
 	reqs = list(
 		/obj/item/food/bun = 1,
-		/obj/item/food/butter = 1
+		/obj/item/food/butterslice = 1
 	)
 	result = /obj/item/food/butterbiscuit
 	category = CAT_BREAD
@@ -107,7 +107,7 @@
 	name = "Butterdog"
 	reqs = list(
 		/obj/item/food/bun = 1,
-		/obj/item/food/butter = 3,
+		/obj/item/food/butter = 1,
 		)
 	result = /obj/item/food/butterdog
 	category = CAT_BREAD
@@ -127,7 +127,7 @@
 	reqs = list(
 		/obj/item/food/doughslice = 1,
 		/datum/reagent/consumable/salt = 1,
-		/obj/item/food/butter = 1
+		/obj/item/food/butterslice = 1
 	)
 	result = /obj/item/food/raw_breadstick
 	category = CAT_BREAD
@@ -137,7 +137,7 @@
 	reqs = list(
 		/obj/item/food/doughslice = 1,
 		/datum/reagent/consumable/sugar = 1,
-		/obj/item/food/butter = 1
+		/obj/item/food/butterslice = 1
 	)
 	result = /obj/item/food/raw_croissant
 	category = CAT_BREAD
@@ -189,7 +189,7 @@
 	name = "Buttered Toast"
 	reqs = list(
 		/obj/item/food/breadslice/plain = 1,
-		/obj/item/food/butter = 1
+		/obj/item/food/butterslice = 1
 	)
 	result = /obj/item/food/butteredtoast
 	category = CAT_BREAD

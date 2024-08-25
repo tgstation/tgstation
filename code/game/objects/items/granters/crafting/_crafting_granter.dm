@@ -6,6 +6,7 @@
 	. = ..()
 	if(!user.mind)
 		return
-	for(var/datum/crafting_recipe/crafting_recipe_type as anything in crafting_recipe_types)
+	for(var/crafting_recipe_type in crafting_recipe_types)
 		user.mind.teach_crafting_recipe(crafting_recipe_type)
-		to_chat(user, span_notice("You learned how to make [initial(crafting_recipe_type.name)]."))
+		var/datum/crafting_recipe/recipe = locate(crafting_recipe_type) in GLOB.crafting_recipes
+		to_chat(user, span_notice("You learned how to make [recipe.name]."))
