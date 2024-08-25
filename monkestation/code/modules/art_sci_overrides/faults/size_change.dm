@@ -3,6 +3,8 @@
 	trigger_chance = 13
 	visible_message = "starts to shrink."
 
+	research_value = 200
+
 /datum/artifact_fault/shrink/on_trigger(datum/component/artifact/component)
 	component.holder.transform = matrix(component.holder.transform, 0.9, 0.9, MATRIX_SCALE)
 	if(!isstructure(component.holder))

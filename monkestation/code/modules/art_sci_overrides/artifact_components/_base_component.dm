@@ -1,5 +1,5 @@
-#define BASE_MAX_ACTIVATORS 2
-#define BASE_MAX_EFFECTS 2
+#define BASE_MAX_ACTIVATORS 3
+#define BASE_MAX_EFFECTS 3
 
 /datum/component/artifact
 	dupe_mode = COMPONENT_DUPE_UNIQUE
@@ -130,32 +130,37 @@
 	activation_sound = pick(artifact_origin.activation_sounds)
 	if(LAZYLEN(artifact_origin.deactivation_sounds))
 		deactivation_sound = pick(artifact_origin.deactivation_sounds)
-
+	setup()
 	var/activator_amount = rand(1,max_activators)
-	while(activator_amount>0)
+	for(var/i in 1 to activator_amount)
 		var/selection = pick(valid_activators)
 		valid_activators -= selection
-		activators += new selection()
-		activator_amount--
-	var/effect_amount = rand(1,BASE_MAX_EFFECTS)
+		var/datum/artifact_activator/activator = new selection()
+		activators += activator
+		var/potency = rand(0,100)
+		activator.setup(potency)
+	if(forced_effect)
+		var/datum/artifact_effect/added_boogaloo = new forced_effect
+		artifact_effects += added_boogaloo
+		added_boogaloo.our_artifact = src
+		added_boogaloo.setup()
 	var/list/datum/artifact_effect/all_possible_effects = GLOB.artifact_effect_rarity["all"]// We need all of them as we check later if ifs a valid origin
-	while(effect_amount >0)
+	for(var/j in 1 to BASE_MAX_EFFECTS)
 		if(length(all_possible_effects) <= 0)
 			logger.Log(LOG_CATEGORY_ARTIFACT, "[src] has ran out of possible artifact effects! It may not have any at all!")
-			effect_amount = 0
 			continue
 		var/datum/artifact_effect/effect = pick_weight(all_possible_effects)
 		if(effect.valid_origins)
-			if(!effect.valid_origins.Find(picked_origin))
+			if(!(picked_origin in effect.valid_origins))
 				all_possible_effects -= effect
 				continue
 		if(effect.valid_activators)
 			var/good_activators = FALSE
 			for(var/datum/artifact_activator/activator in activators) //Only need one to be correct.
-				if(effect.valid_activators.Find(activator))
+				if(activator.type in effect.valid_activators)
 					good_activators = TRUE
 					break
-			if(good_activators)
+			if(!good_activators)
 				all_possible_effects -= effect
 				continue
 		if(effect.artifact_size)
@@ -164,19 +169,10 @@
 				continue
 		var/datum/artifact_effect/added = new effect
 		artifact_effects += added
+		added.our_artifact = src
 		added.setup()
-		effect_amount--
 		all_possible_effects -= effect
-	if(forced_effect)
-		var/datum/artifact_effect/added_boogaloo = new forced_effect
-		artifact_effects += added_boogaloo
-		added_boogaloo.setup()
 	ADD_TRAIT(holder, TRAIT_HIDDEN_EXPORT_VALUE, INNATE_TRAIT)
-	setup()
-	for(var/datum/artifact_activator/activator in activators)
-		var/potency = rand(0,100)
-		activators += list(activator.type = potency)
-		activator.setup(potency)
 
 /datum/component/artifact/RegisterWithParent()
 	RegisterSignals(parent, list(COMSIG_ATOM_DESTRUCTION, COMSIG_QDELETING), PROC_REF(on_destroy))

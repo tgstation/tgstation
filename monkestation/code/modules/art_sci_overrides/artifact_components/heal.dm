@@ -11,6 +11,8 @@
 
 	examine_discovered = span_warning("It appears to heal those who touch it.")
 
+	research_value = 250
+
 	///list of damage types we heal, this is randomly removed from at setup
 	var/list/damage_types = list(
 		BRUTE,

@@ -4,6 +4,8 @@
 	visible_message = "shoots a syringe out."
 	var/list/reagents = list()
 
+	research_value = 100
+
 /datum/artifact_fault/reagent/on_trigger(datum/component/artifact/component)
 	. = ..()
 	if(!length(reagents))

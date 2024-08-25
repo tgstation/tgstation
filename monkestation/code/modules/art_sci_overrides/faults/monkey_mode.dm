@@ -3,6 +3,8 @@
 	trigger_chance = 3
 	visible_message = "summons a mass of simians!"
 
+	research_value = 250
+
 /datum/artifact_fault/monkey_mode/on_trigger(datum/component/artifact/component)
 	var/monkey = rand(1,4)
 	var/center_turf = get_turf(component.parent)

@@ -11,6 +11,8 @@
 		/datum/artifact_activator/range/radiation
 	)
 
+	research_value = 500
+
 	examine_discovered = span_warning("It appears to be some sort of projectile weapon")
 
 	//list of projectile exclusive projectiles

@@ -7,7 +7,7 @@
 		/datum/artifact_activator/range/shock,
 		/datum/artifact_activator/range/radiation
 	)
-
+	research_value = 500
 	examine_discovered = span_warning("It appears to hold power")
 
 /datum/artifact_effect/cell/setup()

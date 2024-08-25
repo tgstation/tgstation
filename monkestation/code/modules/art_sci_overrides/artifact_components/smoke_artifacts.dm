@@ -4,6 +4,8 @@
 	activation_message = "starts spewing out smoke!"
 	deactivation_message = "becomes silent."
 
+	research_value = 250
+
 	examine_discovered = span_warning("It appears to be some sort of checmical aerolyzer")
 
 	var/list/valid_chemicals = list(
@@ -30,9 +32,10 @@
 		chemicals += pick(valid_chemicals)
 
 /datum/artifact_effect/smoke/effect_activate(silent)
-	for(var/chemical in chemicals)
-		do_chem_smoke(smoke_range, holder = our_artifact.holder, location = get_turf(our_artifact.holder), reagent_type = chemical, reagent_volume = per_chemical_amount, log = TRUE)
-	our_artifact.artifact_deactivate()
+	if(our_artifact.holder)
+		for(var/chemical in chemicals)
+			do_chem_smoke(smoke_range, holder = our_artifact.holder, location = get_turf(our_artifact.holder), reagent_type = chemical, reagent_volume = per_chemical_amount, log = TRUE)
+		our_artifact.artifact_deactivate()
 
 /datum/artifact_effect/smoke/toxin
 	weight = ARTIFACT_RARE

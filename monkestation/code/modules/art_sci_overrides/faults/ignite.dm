@@ -3,6 +3,8 @@
 	trigger_chance = 9
 	visible_message = "starts rapidly heating up while covering everything around it in something that seems to be oil."
 
+	research_value = 200
+
 /datum/artifact_fault/ignite/on_trigger(datum/component/artifact/component)
 	var/center_turf = get_turf(component.parent)
 

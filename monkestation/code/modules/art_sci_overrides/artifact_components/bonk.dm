@@ -10,7 +10,7 @@
 	///force of the hit
 	var/hit_power = 1
 	COOLDOWN_DECLARE(bonk_cooldown)
-
+	research_value = 500
 	examine_discovered = span_warning("It appears to bonk those with heads on said head.")
 
 /datum/artifact_effect/bonk/setup()

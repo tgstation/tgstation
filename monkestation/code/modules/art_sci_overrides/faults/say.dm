@@ -3,6 +3,8 @@
 	trigger_chance = 30
 	var/list/speech = list("Hello there.","I see you.","I know what you've done.")
 
+	research_value = 50
+
 /datum/artifact_fault/speech/on_trigger(datum/component/artifact/component)
 	if(!length(speech))
 		return

@@ -11,6 +11,7 @@
 	resistance_flags = INDESTRUCTIBLE
 	can_atmos_pass = ATMOS_PASS_DENSITY
 
+
 /obj/structure/artifact_forcefield/play_attack_sound(damage_amount, damage_type = BRUTE, damage_flag = 0)
 	playsound(loc, 'sound/weapons/egloves.ogg', 80, TRUE)
 
@@ -24,6 +25,8 @@
 		/datum/artifact_activator/touch/silicon,
 		/datum/artifact_activator/range/force
 	)
+
+	research_value = 5000
 
 	examine_discovered = span_warning("It appears to generate some kind of forcefield")
 

@@ -10,7 +10,10 @@
 	var/cooldown_time
 	COOLDOWN_DECLARE(cooldown)
 
+	research_value = 1000
+
 	examine_discovered = span_warning("It appears to be some object mover")
+
 /datum/artifact_effect/repulsor/setup()
 	attract = prob(40)
 	range = rand(1,3)

@@ -6,6 +6,8 @@
 	span_danger("An Aura of death surrounds this object!"),
 	span_danger("I'd bet 50/50 someone dies near this!"))
 
+	research_value = 10000 //Wow, this would make a fucking amazing weapon
+
 /datum/artifact_fault/death/on_trigger(datum/component/artifact/component)
 	var/list/mobs = list()
 	var/mob/living/carbon/human

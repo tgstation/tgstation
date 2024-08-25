@@ -1,6 +1,6 @@
 /obj/machinery/artifact_xray
 	name = "artifact x-ray machine"
-	desc = "An x-ray machine, used to scan artifacts."
+	desc = "An x-ray machine, used to scan artifacts for what they do and research them."
 	icon = 'icons/obj/machines/artifact_machines.dmi'
 	icon_state = "xray-0"
 	base_icon_state = "xray"
@@ -15,13 +15,34 @@
 	var/pulse_cooldown_time = 3 SECONDS
 	var/list/last_results = list("NO DATA")
 	var/pulsing = FALSE
+	var/datum/techweb/stored_research
 	COOLDOWN_DECLARE(message_cooldown)
 	COOLDOWN_DECLARE(pulse_cooldown)
 
 /obj/machinery/artifact_xray/Initialize(mapload)
 	. = ..()
+	if(!CONFIG_GET(flag/no_default_techweb_link) && !stored_research)
+		connect_techweb(SSresearch.science_tech)
 	RefreshParts()
 
+/obj/machinery/artifact_xray/Destroy()
+	if(stored_research)
+		log_research("[src] disconnected from techweb [stored_research] (destroyed).")
+		QDEL_NULL(stored_research)
+	QDEL_NULL(wires)
+	return ..()
+
+
+/obj/machinery/artifact_xray/proc/connect_techweb(datum/techweb/new_techweb)
+	if(stored_research)
+		log_research("[src] disconnected from techweb [stored_research] when connected to [new_techweb].")
+	stored_research = new_techweb
+
+/obj/machinery/artifact_xray/multitool_act(mob/living/user, obj/item/multitool/tool)
+	if(!QDELETED(tool.buffer) && istype(tool.buffer, /datum/techweb))
+		connect_techweb(tool.buffer)
+		return TRUE
+	return FALSE
 /obj/machinery/artifact_xray/RefreshParts()
 	. = ..()
 	var/power_usage = 250
@@ -106,28 +127,38 @@
 	playsound(loc, 'sound/machines/chime.ogg', 30, FALSE)
 	COOLDOWN_START(src,pulse_cooldown,pulse_cooldown_time)
 	pulsing = FALSE
-	if(artifact)
-		if(!artifact.fault_discovered)
+	if(artifact && stored_research)
+		var/research_added = 0
+		if(!artifact.fault_discovered && artifact.chosen_fault)
 			artifact.freebies = 0 //No more freebies, you know what it does now.
 			artifact.fault_discovered = TRUE
+			research_added += artifact.chosen_fault.research_value
+			stored_research.add_point_list(list(TECHWEB_POINT_TYPE_GENERIC = artifact.chosen_fault.research_value))
 		if(artifact.chosen_fault)
 			last_results = list("ARTIFACT FAULT DISCOVERED: [artifact.chosen_fault.name]", "SIZE: [artifact.artifact_size < ARTIFACT_SIZE_LARGE ? "SMALL" : "LARGE" ]")
 		else
+			research_added += 2500
+			stored_research.add_point_list(list(TECHWEB_POINT_TYPE_GENERIC = 2500))
 			last_results = list("FLAWLESS ARTIFACT. NO FAULTS.", "SIZE: [artifact.artifact_size < ARTIFACT_SIZE_LARGE ? "SMALL" : "LARGE" ]")
 		if(length(artifact.discovered_effects) != length(artifact.artifact_effects))
 			for(var/datum/artifact_effect/eff in artifact.artifact_effects)
 				artifact.discovered_effects += eff.type
+				research_added += eff.research_value
+				stored_research.add_point_list(list(TECHWEB_POINT_TYPE_GENERIC = eff.research_value))
 			last_results += "ARTIFACT EFFECTS REVEALED."
 		if(!length(artifact.artifact_effects))
 			last_results += "MUNDANE ARTIFACT DETECTED. NO NOTEABLE EFFECTS."
-		if(length(artifact.artifact_effects) != length(artifact.activators))
+		if(length(artifact.activators) != length(artifact.activators))
 			for(var/datum/artifact_activator/activator in artifact.activators)
 				artifact.discovered_activators += activator.type
+				stored_research.add_point_list(list(TECHWEB_POINT_TYPE_GENERIC = activator.research_value))
+				research_added += activator.research_value
 			last_results += "ARTIFACT ACTIVATORS REVEALED."
 		last_results+= "WARNING: ARTIFACT FAULT NOW ACTIVE."
-
+		if(research_added > 0 )
+			src.visible_message(span_notice("The [src] blares: ") + span_robot("ARTIFACT RESEARCHED:[research_added] ADDED TO LINKED CONSOLE"))
 	else
-		last_results = list("INCONCLUSIVE;", "NO SPECIAL PROPERTIES DETECTED")
+		last_results = list("INCONCLUSIVE;", "NO SPECIAL PROPERTIES DETECTED OR NO RESEARCH CONSOLE LINKED.")
 
 
 /obj/machinery/artifact_xray/ui_data(mob/user)

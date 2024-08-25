@@ -8,6 +8,8 @@
 	var/discovered_credits = 0
 	//If availible, warns users that this WILL fuck you up. Picks randomly from list
 	var/list/inspect_warning
+	///Added by xray machine when discovered.
+	var/research_value = 0
 
 /datum/artifact_fault/proc/on_trigger(datum/component/artifact/component)
 	return

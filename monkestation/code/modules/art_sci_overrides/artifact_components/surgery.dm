@@ -9,6 +9,8 @@
 	)
 	COOLDOWN_DECLARE(surgery_cooldown)
 
+	research_value = 1250
+
 	examine_discovered = span_warning("It appears to be some sort of automated surgery device")
 
 /datum/artifact_effect/surgery/effect_touched(mob/living/user)

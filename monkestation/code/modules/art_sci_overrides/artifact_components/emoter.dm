@@ -8,6 +8,9 @@
 		/datum/artifact_activator/touch/silicon,
 		/datum/artifact_activator/range/force
 	)
+
+	research_value = 150
+
 	var/cooldown_time //cooldown AFTER the shield lowers
 	var/radius
 	var/shield_time

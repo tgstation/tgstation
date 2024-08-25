@@ -3,6 +3,8 @@
 	trigger_chance = 30
 	var/list/whispers = list("Help me!","I've seen your sins","Egg.")
 
+	research_value = 50
+
 /datum/artifact_fault/whisper/on_trigger(datum/component/artifact/component)
 	if(!length(whispers))
 		return

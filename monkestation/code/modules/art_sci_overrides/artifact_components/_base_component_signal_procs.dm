@@ -25,7 +25,7 @@
 		else
 			examine_list += pick(act.hint_texts)
 
-	if(chosen_fault.inspect_warning)
+	if(chosen_fault && chosen_fault.inspect_warning)
 		examine_list += pick(chosen_fault.inspect_warning)
 
 /datum/component/artifact/proc/on_sticker(atom/source, obj/item/sticker/sticker, mob/user)

@@ -28,6 +28,8 @@ ARTIFACT_SETUP(/obj/machinery/power/generator_artifact, SSmachines)
 		/datum/artifact_origin/precursor,
 		/datum/artifact_origin/martian,
 	) //narnar doesnt need power
+
+	research_value = 10000 //Holy moly lucky you!
 	activation_message = "begins emitting a faint, droning hum."
 	deactivation_message = "shortcircuits!"
 	COOLDOWN_DECLARE(sideeffect_cooldown)

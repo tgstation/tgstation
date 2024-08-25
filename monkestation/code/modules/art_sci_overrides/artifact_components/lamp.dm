@@ -7,6 +7,8 @@
 
 	examine_discovered = span_warning("It appears to be some sort of light source")
 
+	research_value = 250
+
 /datum/artifact_effect/lamp/setup()
 	var/power
 	var/color = pick(COLOR_RED, COLOR_BLUE, COLOR_YELLOW, COLOR_GREEN, COLOR_PURPLE, COLOR_ORANGE)

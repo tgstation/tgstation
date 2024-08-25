@@ -6,6 +6,7 @@
 		/datum/artifact_activator/range/shock,
 		/datum/artifact_activator/range/radiation
 	)
+	research_value = 1000
 
 	type_name = "Explosive Effect"
 	examine_discovered = span_warning("It appears to explode.")
@@ -31,6 +32,8 @@
 		dud = TRUE
 
 /datum/artifact_effect/bomb/effect_activate()
+	if(!our_artifact)
+		return
 	if(!COOLDOWN_FINISHED(src,explode_cooldown_time))
 		our_artifact.holder.visible_message(span_warning("[our_artifact] [deactivation_message]")) //rekt
 		addtimer(CALLBACK(src.our_artifact, TYPE_PROC_REF(/datum/component/artifact, artifact_deactivate)), 1 SECONDS)
@@ -77,7 +80,7 @@
 /// EXPLOSIVE BOMB
 
 /datum/artifact_effect/bomb/explosive
-	type_name = "Bomb (explosive)"
+	type_name = "Bomb"
 	weight = ARTIFACT_RARE
 	var/devast
 	var/heavy
@@ -99,7 +102,7 @@
 /// DEVESTATING BOMB
 
 /datum/artifact_effect/bomb/explosive/devastating
-	type_name = "Bomb (explosive, devastating)"
+	type_name = "Large Bomb"
 	do_alert = TRUE
 	weight = ARTIFACT_VERYRARE
 	explode_delay = 2 MINUTES
@@ -114,7 +117,7 @@
 /// GAS BOMB
 
 /datum/artifact_effect/bomb/gas
-	type_name = "Bomb (gas)"
+	type_name = "Atmospheric Bomb"
 	weight = ARTIFACT_RARE
 	initial_warning = "begins rattling violenty!"
 	final_message = "reaches a critical pressure, cracks forming at its surface!"

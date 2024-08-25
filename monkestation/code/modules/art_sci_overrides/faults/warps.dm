@@ -4,6 +4,8 @@
 	visible_message = "warps space sending everyone away."
 	var/list/warp_areas = list()
 
+	research_value = 250
+
 /datum/artifact_fault/warp/on_trigger(datum/component/artifact/component)
 	if(!length(warp_areas))
 		warp_areas = GLOB.the_station_areas

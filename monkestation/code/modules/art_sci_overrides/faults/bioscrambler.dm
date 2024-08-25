@@ -3,10 +3,9 @@
 	trigger_chance = 33
 	visible_message = "corrupts nearby biological life!"
 
-/datum/artifact_fault/bioscramble/on_trigger(datum/component/artifact/component)
-	var/list/mobs = list()
-	var/mob/living/carbon/poor_soul
+	research_value = 250
 
+/datum/artifact_fault/bioscramble/on_trigger(datum/component/artifact/component)
 	var/center_turf = get_turf(component.parent)
 
 	if(!center_turf)

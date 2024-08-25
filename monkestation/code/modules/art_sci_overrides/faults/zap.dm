@@ -1,7 +1,9 @@
 /datum/artifact_fault/tesla_zap
 	name = "Energetic Discharge Fault"
 	trigger_chance = 12
-	visible_message = "discharges a large amount of electricity."
+	visible_message = "discharges a large amount of electricity!"
+
+	research_value = 200
 
 /datum/artifact_fault/tesla_zap/on_trigger(datum/component/artifact/component)
 	. = ..()

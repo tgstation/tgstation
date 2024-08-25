@@ -16,6 +16,8 @@
 	var/active_reach
 	var/active_woundbonus = 0
 
+	research_value = 500
+
 	examine_discovered = span_warning("It appears to be some sort of melee weapon")
 
 /datum/artifact_effect/melee/setup() //RNG incarnate
