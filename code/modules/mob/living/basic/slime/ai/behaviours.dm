@@ -74,5 +74,6 @@
 /datum/ai_behavior/hunt_target/unarmed_attack_target/slime/finish_action(datum/ai_controller/controller, succeeded, hunting_target_key, hunting_cooldown_key)
 	. = ..()
 	var/mob/living/basic/slime/slime_pawn = controller.pawn
-	if(!slime_pawn.can_feed_on(hunted))
+	var/atom/target = controller.blackboard[hunting_target_key]
+	if(!slime_pawn.can_feed_on(target))
 		controller.clear_blackboard_key(hunting_target_key)
