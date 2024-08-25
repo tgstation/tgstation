@@ -62,8 +62,8 @@
 	return target?.return_air() || ..()
 
 /obj/machinery/meter/process_atmos()
-	var/datum/gas_mixture/pipe_air = target.return_air()
-	if(!pipe_air)
+	var/datum/gas_mixture/pipe_air = target?.return_air()
+	if(isnull(pipe_air))
 		icon_state = "meter0"
 		return FALSE
 

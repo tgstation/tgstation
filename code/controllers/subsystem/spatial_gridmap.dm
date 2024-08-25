@@ -482,21 +482,106 @@ SUBSYSTEM_DEF(spatial_grid)
 
 	return TRUE
 
-///find the cell this movable is associated with and removes it from all lists
-/datum/controller/subsystem/spatial_grid/proc/force_remove_from_cell(atom/movable/to_remove, datum/spatial_grid_cell/input_cell)
+/// if for whatever reason this movable is "untracked" e.g. it breaks the assumption that a movable is only inside the contents of any grid cell associated with its loc,
+/// this will error. this checks every grid cell in the world so dont call this on live unless you have to.
+/// returns TRUE if this movable is untracked, FALSE otherwise
+/datum/controller/subsystem/spatial_grid/proc/untracked_movable_error(atom/movable/movable_to_check)
+	if(!movable_to_check?.spatial_grid_key)
+		return FALSE
+
+	if(!initialized)
+		return FALSE
+
+	var/datum/spatial_grid_cell/loc_cell = get_cell_of(movable_to_check)
+	var/list/containing_cells = find_hanging_cell_refs_for_movable(movable_to_check, remove_from_cells=FALSE)
+	//if we're in multiple cells, throw an error.
+	//if we're in 1 cell but it cant be deduced by our location, throw an error.
+	if(length(containing_cells) > 1 || (length(containing_cells) == 1 && loc_cell && containing_cells[1] != loc_cell && containing_cells[1] != null))
+		var/error_data = ""
+
+		var/location_string = "which is in nullspace, and thus not be within the contents of any spatial grid cell"
+		if(loc_cell)
+			location_string = "which is supposed to only be in the contents of a spatial grid cell at coords: ([GRID_INDEX_TO_COORDS(loc_cell.cell_x)], [GRID_INDEX_TO_COORDS(loc_cell.cell_y)], [loc_cell.cell_z])"
+
+		var/error_explanation = "was in the contents of [length(containing_cells)] spatial grid cells when it was only supposed to be in one!"
+		if(length(containing_cells) == 1)
+			error_explanation = "was in the contents of 1 spatial grid cell but it was inside the area handled by another grid cell!"
+			var/datum/spatial_grid_cell/bad_cell = containing_cells[1]
+
+			error_data = "within the contents of a cell at coords: ([GRID_INDEX_TO_COORDS(bad_cell.cell_x)], [GRID_INDEX_TO_COORDS(bad_cell.cell_y)], [bad_cell.cell_z])"
+
+		if(!error_data)
+			for(var/datum/spatial_grid_cell/cell in containing_cells)
+				var/coords = "([GRID_INDEX_TO_COORDS(cell.cell_x)], [GRID_INDEX_TO_COORDS(cell.cell_y)], [cell.cell_z])"
+				var/contents = ""
+
+				if(movable_to_check in cell.hearing_contents)
+					contents = "hearing"
+
+				if(movable_to_check in cell.client_contents)
+					if(length(contents) > 0)
+						contents = "[contents], client"
+					else
+						contents = "client"
+
+				if(movable_to_check in cell.atmos_contents)
+					if(length(contents) > 0)
+						contents = "[contents], atmos"
+					else
+						contents = "atmos"
+
+				if(length(error_data) > 0)
+					error_data = "[error_data], {coords: [coords], within channels: [contents]}"
+				else
+					error_data = "within the contents of the following cells: {coords: [coords], within channels: [contents]}"
+
+		/**
+		 * example:
+		 *
+		 * /mob/living/trolls_the_maintainer instance, which is supposed to only be in the contents of a spatial grid cell at coords: (136, 136, 14),
+		 * was in the contents of 3 spatial grid cells when it was only supposed to be in one! within the contents of the following cells:
+		 * {(68, 153, 2), within channels: hearing},
+		 * {coords: (221, 170, 3), within channels: hearing},
+		 * {coords: (255, 153, 11), within channels: hearing},
+		 * {coords: (136, 136, 14), within channels: hearing}.
+		 */
+		stack_trace("[movable_to_check.type] instance, [location_string], [error_explanation] [error_data].")
+
+		return TRUE
+
+	return FALSE
+
+/**
+ * remove this movable from the grid by finding the grid cell its in and removing it from that.
+ * if it cant infer a grid cell its located in (e.g. if its in nullspace but it can happen if the grid isnt expanded to a z level), search every grid cell.
+ */
+/datum/controller/subsystem/spatial_grid/proc/force_remove_from_grid(atom/movable/to_remove)
+	if(!to_remove?.spatial_grid_key)
+		return
+
 	if(!initialized)
 		remove_from_pre_init_queue(to_remove)//the spatial grid doesnt exist yet, so just take it out of the queue
 		return
 
-	if(!input_cell)
-		input_cell = get_cell_of(to_remove)
-		if(!input_cell)
-			find_hanging_cell_refs_for_movable(to_remove, TRUE)
-			return
+#ifdef UNIT_TESTS
+	if(untracked_movable_error(to_remove))
+		find_hanging_cell_refs_for_movable(to_remove, remove_from_cells=TRUE)
+		return
+#endif
 
-	GRID_CELL_REMOVE(input_cell.client_contents, to_remove)
-	GRID_CELL_REMOVE(input_cell.hearing_contents, to_remove)
-	GRID_CELL_REMOVE(input_cell.atmos_contents, to_remove)
+	var/datum/spatial_grid_cell/loc_cell = get_cell_of(to_remove)
+
+	if(loc_cell)
+		GRID_CELL_REMOVE_ALL(loc_cell, to_remove)
+	else
+		find_hanging_cell_refs_for_movable(to_remove, remove_from_cells=TRUE)
+
+///remove this movable from the given spatial_grid_cell
+/datum/controller/subsystem/spatial_grid/proc/force_remove_from_cell(atom/movable/to_remove, datum/spatial_grid_cell/input_cell)
+	if(!input_cell)
+		return
+
+	GRID_CELL_REMOVE_ALL(input_cell, to_remove)
 
 ///if shit goes south, this will find hanging references for qdeleting movables inside the spatial grid
 /datum/controller/subsystem/spatial_grid/proc/find_hanging_cell_refs_for_movable(atom/movable/to_remove, remove_from_cells = TRUE)
@@ -526,7 +611,7 @@ SUBSYSTEM_DEF(spatial_grid)
 ///debug proc for checking if a movable is in multiple cells when it shouldnt be (ie always unless multitile entering is implemented)
 /atom/proc/find_all_cells_containing(remove_from_cells = FALSE)
 	var/datum/spatial_grid_cell/real_cell = SSspatial_grid.get_cell_of(src)
-	var/list/containing_cells = SSspatial_grid.find_hanging_cell_refs_for_movable(src, FALSE, remove_from_cells)
+	var/list/containing_cells = SSspatial_grid.find_hanging_cell_refs_for_movable(src, remove_from_cells)
 
 	message_admins("[src] is located in the contents of [length(containing_cells)] spatial grid cells")
 
@@ -758,7 +843,5 @@ SUBSYSTEM_DEF(spatial_grid)
 
 #undef BOUNDING_BOX_MAX
 #undef BOUNDING_BOX_MIN
-#undef GRID_CELL_ADD
-#undef GRID_CELL_REMOVE
-#undef GRID_CELL_SET
+
 #undef NUMBER_OF_PREGENERATED_ORANGES_EARS

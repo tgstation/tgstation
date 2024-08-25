@@ -284,7 +284,13 @@ GENERAL_PROTECT_DATUM(/datum/log_holder)
 /datum/log_holder/proc/human_readable_timestamp(precision = 3)
 	var/start = time2text(world.timeofday, "YYYY-MM-DD hh:mm:ss")
 	// now we grab the millis from the rustg timestamp
-	var/list/timestamp = splittext(unix_timestamp_string(), ".")
+	var/rustg_stamp = unix_timestamp_string()
+	var/list/timestamp = splittext(rustg_stamp, ".")
+#ifdef UNIT_TESTS
+	if(length(timestamp) != 2)
+		stack_trace("rustg returned illegally formatted string '[rustg_stamp]'")
+		return start
+#endif
 	var/millis = timestamp[2]
 	if(length(millis) > precision)
 		millis = copytext(millis, 1, precision + 1)
