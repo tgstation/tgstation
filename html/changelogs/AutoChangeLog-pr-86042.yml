@@ -1,6 +1,0 @@
-author: "Ghommie"
-delete-after: True
-changes:
-  - bugfix: "You can no longer pickup closets and crates wrapped in a package with a fishing rod."
-  - bugfix: "Fixed a few harddel issues with mob spawns that caused charred corpses fished from lavaland to create an invisible blockade."
-  - bugfix: "Fixed being able to fish up mobs that have fallen in totally different z-levels with a rescue hook (i.e. from bitrunning domains to lavaland)."
