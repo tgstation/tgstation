@@ -83,7 +83,7 @@
 	return "input's name contains [value]"
 
 /datum/sortrouter_filter/name_contains/meets_conditions(atom/checking)
-	return findtext(lowertext(checking.name), value)
+	return findtext(LOWER_TEXT(checking.name), value)
 
 /datum/sortrouter_filter/is_path_specific
 	name = "input is specific item"
