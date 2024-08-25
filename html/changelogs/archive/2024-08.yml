@@ -750,3 +750,29 @@
   - spellcheck: Hierophant no longer lies about obliterating someone
   TheBoondock:
   - qol: goliath arm can defuse gibonite by bumping or direct click
+2024-08-25:
+  DrDiasyl aka DrTuxedo:
+  - rscadd: Curator has received a new BROADCAST CAMERA which can broadcast the surroundings
+      LIVE on Entertainment Screens/ Alongside with some other Journalism related
+      gear in his Heroic Beacon
+  - sound: Entertainment screens now play muffled speech when hearing a message on
+      Entertainment frequency
+  Ghommie:
+  - rscadd: You can place papers, photos and cash bills (no holochips) inside bottles
+      and then toss them into the ocean (or fishing portal gen with relative settings)
+      with right-click, for others to fish them up on future rounds.
+  - bugfix: You can no longer pickup closets and crates wrapped in a package with
+      a fishing rod.
+  - bugfix: Fixed a few harddel issues with mob spawns that caused charred corpses
+      fished from lavaland to create an invisible blockade.
+  - bugfix: Fixed being able to fish up mobs that have fallen in totally different
+      z-levels with a rescue hook (i.e. from bitrunning domains to lavaland).
+  SmArtKar:
+  - bugfix: Removed all ways of teleportation from deathmatch and replaced all consoles
+      on a certain map with non-functional variants. Loadouts have been adjusted to
+      account for this.
+  - rscdel: Species Warfare no longer has atmospherics-related equipment on it.
+  YesterdaysPromise:
+  - rscadd: Added crates of the following varieties; Interdyne, Interdyne freezer,
+      Tiger Co-Op, S.E.L.F. MI13, A.R.C., Cybersun (4 colour variants), Waffle Corp,
+      Donk, Gorlex, Gorlex weapons, DeForest, Nakamure Engineeing, Robust Industries
