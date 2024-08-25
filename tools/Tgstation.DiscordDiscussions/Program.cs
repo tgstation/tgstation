@@ -24,6 +24,7 @@ namespace Tgstation.DiscordDiscussions
 {
 	public sealed partial class Program : IDiscordResponders
 	{
+		const bool LockPullRequest = true;
 		const int InitSlowModeSeconds = 5;
 
 		[GeneratedRegex(@"https://discord.com/channels/[0-9]+/([0-9]+)")]
@@ -271,7 +272,10 @@ namespace Tgstation.DiscordDiscussions
 					}
 
 					// ensure the PR is locked
-					await gitHubClient.PullRequest.LockUnlock.Lock(repoOwner, repoName, prNumber);
+					if (LockPullRequest)
+					{
+						await gitHubClient.PullRequest.LockUnlock.Lock(repoOwner, repoName, prNumber);
+					}
 
 					return 0;
 				}
