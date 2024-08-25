@@ -512,6 +512,7 @@ GLOBAL_LIST_INIT(total_uf_len_by_block, populate_total_uf_len_by_block())
 	return
 
 /mob/living/carbon/has_dna()
+	RETURN_TYPE(/datum/dna)
 	return dna
 
 /// Returns TRUE if the mob is allowed to mutate via its DNA, or FALSE if otherwise.

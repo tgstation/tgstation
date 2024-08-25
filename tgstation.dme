@@ -7760,6 +7760,7 @@
 #include "monkestation\code\modules\virology\effects\cleanables.dm"
 #include "monkestation\code\modules\virology\effects\pathogen_cloud.dm"
 #include "monkestation\code\modules\virology\immune_systems\_immune_system.dm"
+#include "monkestation\code\modules\virology\immune_systems\job_boosting.dm"
 #include "monkestation\code\modules\virology\items\_base_item_additions.dm"
 #include "monkestation\code\modules\virology\items\antibodyscanner.dm"
 #include "monkestation\code\modules\virology\items\bio_hazard_deployable.dm"
