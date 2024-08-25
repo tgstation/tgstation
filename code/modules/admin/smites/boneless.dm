@@ -1,4 +1,4 @@
-/// Gives the target critically bad wounds
+/// Gives the target critically bad bones
 /datum/smite/boneless
 	name = ":B:oneless"
 
@@ -8,14 +8,12 @@
 	if (!iscarbon(target))
 		to_chat(user, span_warning("This must be used on a carbon mob."), confidential = TRUE)
 		return
-
 	var/mob/living/carbon/carbon_target = target
-	for(var/obj/item/bodypart/limb as anything in carbon_target.bodyparts)
-		var/severity = pick(list(
-			"[WOUND_SEVERITY_MODERATE]",
-			"[WOUND_SEVERITY_SEVERE]",
-			"[WOUND_SEVERITY_SEVERE]",
-			"[WOUND_SEVERITY_CRITICAL]",
-			"[WOUND_SEVERITY_CRITICAL]",
-		))
-		carbon_target.cause_wound_of_type_and_severity(WOUND_BLUNT, limb, severity)
+	for(var/_limb in carbon_target.bodyparts)
+		var/obj/item/bodypart/limb = _limb // fine to use this raw, its a meme smite
+		var/type_wound = pick(list(/datum/wound/blunt/bone/critical, /datum/wound/blunt/bone/severe))
+		limb.force_wound_upwards(type_wound, smited = TRUE)
+		type_wound = pick(list(/datum/wound/blunt/bone/critical, /datum/wound/blunt/bone/severe, /datum/wound/blunt/bone/moderate))
+		limb.force_wound_upwards(type_wound, smited = TRUE)
+		type_wound = pick(list(/datum/wound/blunt/bone/critical, /datum/wound/blunt/bone/severe))
+		limb.force_wound_upwards(type_wound, smited = TRUE)

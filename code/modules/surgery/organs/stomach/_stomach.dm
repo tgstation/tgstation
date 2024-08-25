@@ -230,6 +230,7 @@
 				disgusted.adjust_confusion(2.5 SECONDS)
 				disgusted.adjust_stutter(2 SECONDS)
 				disgusted.vomit(10, distance = 0, vomit_type = NONE)
+				disgusted.adjust_disgust(-50)
 			disgusted.set_dizzy_if_lower(10 SECONDS)
 		if(disgust >= DISGUST_LEVEL_DISGUSTED)
 			if(SPT_PROB(13, seconds_per_tick))

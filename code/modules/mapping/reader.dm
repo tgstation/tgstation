@@ -347,6 +347,7 @@
 	// And we are done lads, call it off
 	loading = FALSE
 	SSatoms.map_loader_stop(REF(src))
+	loading = FALSE
 
 	if(new_z)
 		for(var/z_index in bounds[MAP_MINZ] to bounds[MAP_MAXZ])

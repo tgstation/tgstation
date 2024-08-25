@@ -1392,7 +1392,7 @@
 	return ..()
 
 /obj/machinery/door/airlock/proc/prison_open()
-	if(obj_flags & EMAGGED)
+	if((obj_flags & EMAGGED) || is_probably_external_airlock()) // monkestation edit: STOP SPACING ENGI
 		return
 	locked = FALSE
 	open()

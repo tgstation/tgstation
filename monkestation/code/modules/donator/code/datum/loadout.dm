@@ -515,6 +515,18 @@
 	donator_only = TRUE
 	requires_purchase = FALSE
 
+/datum/loadout_item/mask/holstein_cow_mask
+	name = "Holstein Cow Mask"
+	item_path = /obj/item/clothing/mask/gas/holstein_cow_mask
+	donator_only = TRUE
+	requires_purchase = FALSE
+
+/datum/loadout_item/under/miscellaneous/holstein_cow_jumpsuit
+	name = "Holstein Cow Jumpsuit"
+	item_path = /obj/item/clothing/under/costume/holstein_cow_jumpsuit
+	donator_only = TRUE
+	requires_purchase = FALSE
+
 //av4l0n
 /datum/loadout_item/toys/sheep_plush_av4l0n
 	name = "Sheep Plush"

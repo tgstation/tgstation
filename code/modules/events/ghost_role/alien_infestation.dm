@@ -67,8 +67,9 @@
 			role = antag_flag,
 			poll_time = 20 SECONDS,
 			group = candidates,
-			alert_pic = antag_datum,
+			alert_pic = /mob/living/carbon/alien/larva,
 			role_name_text = lowertext(cast_control.name),
+			chat_text_border_icon = /mob/living/carbon/alien/larva
 		)
 
 	var/list/weighted_candidates = return_antag_rep_weight(candidates)

@@ -24082,7 +24082,7 @@
 /turf/open/floor/iron,
 /area/station/security/prison)
 "hjz" = (
-/obj/machinery/drone_dispenser,
+/obj/machinery/drone_dispenser/preloaded,
 /turf/open/floor/plating,
 /area/station/maintenance/port/lesser)
 "hjJ" = (

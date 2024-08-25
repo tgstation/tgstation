@@ -183,7 +183,7 @@
 	to_chat(src, "<b>You are job banned from cyborg! Appeal your job ban if you want to avoid this in the future!</b>")
 	ghostize(FALSE)
 
-	var/mob/chosen_one = SSpolling.poll_ghosts_for_target("Do you want to play as [span_notice(name)]?", check_jobban = JOB_CYBORG, poll_time = 5 SECONDS, checked_target = src, alert_pic = src, role_name_text = "cyborg")
+	var/mob/chosen_one = SSpolling.poll_ghosts_for_target("Do you want to play as [span_notice(name)]?", check_jobban = JOB_CYBORG, poll_time = 5 SECONDS, checked_target = src, alert_pic = src, role_name_text = "cyborg", chat_text_border_icon = src)
 	if(chosen_one)
 		message_admins("[key_name_admin(chosen_one)] has taken control of ([key_name_admin(src)]) to replace a jobbanned player.")
 		key = chosen_one.key

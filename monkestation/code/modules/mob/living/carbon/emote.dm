@@ -51,7 +51,7 @@
 	lefthand_file = 'icons/mob/inhands/items_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/items_righthand.dmi'
 	inhand_icon_state = "nothing"
-	item_flags = DROPDEL | HAND_ITEM
+	item_flags = DROPDEL | HAND_ITEM | ABSTRACT
 	force = 0
 	throwforce = 0
 	load_sound_volume = 0

@@ -7474,7 +7474,7 @@
 "bwW" = (
 /obj/structure/flora/bush/jungle/b/style_2,
 /obj/structure/flora/bush/flowers_pp,
-/obj/structure/window/fulltile,
+/obj/structure/window/reinforced/fulltile,
 /turf/open/floor/grass,
 /area/station/hallway/primary/upper)
 "bwY" = (
@@ -19625,7 +19625,7 @@
 "dKI" = (
 /obj/structure/flora/bush/jungle/b/style_2,
 /obj/structure/flora/bush/flowers_pp/style_3,
-/obj/structure/window/fulltile,
+/obj/structure/window/reinforced/fulltile,
 /turf/open/floor/grass,
 /area/station/hallway/primary/upper)
 "dKK" = (
@@ -34127,7 +34127,7 @@
 "gBx" = (
 /obj/structure/flora/bush/jungle,
 /obj/structure/flora/bush/flowers_yw/style_3,
-/obj/structure/window/fulltile,
+/obj/structure/window/reinforced/fulltile,
 /turf/open/floor/grass,
 /area/station/hallway/primary/upper)
 "gBz" = (
@@ -38475,7 +38475,7 @@
 "hwe" = (
 /obj/structure/flora/bush/jungle/a/style_2,
 /obj/structure/flora/bush/flowers_yw/style_2,
-/obj/structure/window/fulltile,
+/obj/structure/window/reinforced/fulltile,
 /turf/open/floor/grass,
 /area/station/hallway/primary/upper)
 "hwi" = (
@@ -45125,7 +45125,7 @@
 "iMf" = (
 /obj/structure/flora/bush/jungle/c/style_3,
 /obj/structure/flora/bush/flowers_br,
-/obj/structure/window/fulltile,
+/obj/structure/window/reinforced/fulltile,
 /turf/open/floor/grass,
 /area/station/hallway/primary/upper)
 "iMj" = (
@@ -45984,7 +45984,7 @@
 "iWF" = (
 /obj/structure/flora/bush/jungle/c/style_3,
 /obj/structure/flora/bush/flowers_yw/style_3,
-/obj/structure/window/fulltile,
+/obj/structure/window/reinforced/fulltile,
 /turf/open/floor/grass,
 /area/station/hallway/primary/upper)
 "iWJ" = (
@@ -49924,7 +49924,7 @@
 "jJh" = (
 /obj/structure/flora/bush/jungle/c/style_3,
 /obj/structure/flora/bush/flowers_pp/style_3,
-/obj/structure/window/fulltile,
+/obj/structure/window/reinforced/fulltile,
 /turf/open/floor/grass,
 /area/station/hallway/primary/upper)
 "jJi" = (
@@ -53172,7 +53172,7 @@
 "knr" = (
 /obj/structure/flora/bush/jungle/a,
 /obj/structure/flora/bush/flowers_br/style_3,
-/obj/structure/window/fulltile,
+/obj/structure/window/reinforced/fulltile,
 /turf/open/floor/grass,
 /area/station/hallway/primary/upper)
 "knt" = (
@@ -55037,7 +55037,7 @@
 "kER" = (
 /obj/structure/flora/bush/jungle/a/style_3,
 /obj/structure/flora/bush/flowers_br/style_2,
-/obj/structure/window/fulltile,
+/obj/structure/window/reinforced/fulltile,
 /turf/open/floor/grass,
 /area/station/hallway/primary/upper)
 "kFd" = (
@@ -64372,6 +64372,9 @@
 /obj/machinery/light/directional/south,
 /turf/open/floor/wood,
 /area/station/command/heads_quarters/captain/private)
+"mzu" = (
+/turf/closed/wall/r_wall,
+/area/station/hallway/primary/upper)
 "mzv" = (
 /obj/machinery/duct,
 /turf/open/floor/iron/freezer,
@@ -66564,7 +66567,7 @@
 "mVh" = (
 /obj/structure/flora/bush/jungle/b,
 /obj/structure/flora/bush/flowers_yw,
-/obj/structure/window/fulltile,
+/obj/structure/window/reinforced/fulltile,
 /turf/open/floor/grass,
 /area/station/hallway/primary/upper)
 "mVi" = (
@@ -69519,7 +69522,7 @@
 /area/station/engineering/atmos)
 "nBp" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/machinery/drone_dispenser,
+/obj/machinery/drone_dispenser/preloaded,
 /obj/effect/turf_decal/bot,
 /turf/open/floor/iron,
 /area/station/science/research/abandoned)
@@ -78122,7 +78125,7 @@
 "pit" = (
 /obj/structure/flora/bush/jungle/c,
 /obj/structure/flora/bush/flowers_pp/style_2,
-/obj/structure/window/fulltile,
+/obj/structure/window/reinforced/fulltile,
 /turf/open/floor/grass,
 /area/station/hallway/primary/upper)
 "piw" = (
@@ -85343,7 +85346,7 @@
 "qDe" = (
 /obj/structure/flora/bush/jungle/a/style_2,
 /obj/structure/flora/bush/flowers_yw/style_3,
-/obj/structure/window/fulltile,
+/obj/structure/window/reinforced/fulltile,
 /turf/open/floor/grass,
 /area/station/hallway/primary/upper)
 "qDf" = (
@@ -93411,7 +93414,7 @@
 "sgt" = (
 /obj/structure/flora/bush/jungle/b,
 /obj/structure/flora/bush/flowers_br,
-/obj/structure/window/fulltile,
+/obj/structure/window/reinforced/fulltile,
 /turf/open/floor/grass,
 /area/station/hallway/primary/upper)
 "sgv" = (
@@ -104398,6 +104401,16 @@
 /obj/effect/landmark/start/librarian,
 /turf/open/floor/carpet,
 /area/station/service/library/lounge)
+"ukH" = (
+/obj/structure/sign/directions/command{
+	dir = 1;
+	pixel_y = 3
+	},
+/obj/structure/sign/directions/science{
+	pixel_y = -3
+	},
+/turf/closed/wall/r_wall,
+/area/station/hallway/primary/upper)
 "ukI" = (
 /obj/effect/turf_decal/siding/wood{
 	dir = 1
@@ -114329,7 +114342,7 @@
 "wdN" = (
 /obj/structure/flora/bush/jungle/b/style_2,
 /obj/structure/flora/bush/flowers_br/style_3,
-/obj/structure/window/fulltile,
+/obj/structure/window/reinforced/fulltile,
 /turf/open/floor/grass,
 /area/station/hallway/primary/upper)
 "wdS" = (
@@ -221844,11 +221857,11 @@ pQF
 tYT
 tYT
 tYT
-pKz
+mzu
 mVh
 iMf
 gBx
-pQF
+ukH
 qJk
 qJk
 lcX
@@ -222105,7 +222118,7 @@ bwW
 wfr
 cMo
 tiA
-pKz
+mzu
 coT
 gST
 lcX
@@ -223133,7 +223146,7 @@ pit
 mMJ
 xtV
 eUH
-pKz
+mzu
 ugc
 uol
 lcX
@@ -223386,11 +223399,11 @@ pQF
 akt
 akt
 akt
-pKz
+mzu
 iWF
 knr
 dKI
-pQF
+ukH
 wiK
 wiK
 lcX

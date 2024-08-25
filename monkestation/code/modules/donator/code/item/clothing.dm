@@ -449,3 +449,22 @@
 	icon_state = "western_wizard_hat"
 	inhand_icon_state = null
 	worn_y_offset = 16
+
+/obj/item/clothing/mask/gas/holstein_cow_mask
+	name = "holstein cow mask"
+	desc = "It's an internals mask covered in paper mache and paint to look like a cow's head. It smells like grass."
+	icon = 'monkestation/code/modules/donator/icons/obj/clothing.dmi'
+	worn_icon = 'monkestation/code/modules/donator/icons/mob/clothing.dmi'
+	icon_state = "holstein_cow_mask"
+	worn_icon_state = "holstein_cow_mask"
+	inhand_icon_state = null
+	flags_inv = HIDEFACE
+
+/obj/item/clothing/under/costume/holstein_cow_jumpsuit
+	name = "holstein cow jumpsuit"
+	desc = "A frumpy black and white holstein cow jumpsuit. It smells like grass."
+	icon = 'monkestation/code/modules/donator/icons/obj/clothing.dmi'
+	worn_icon = 'monkestation/code/modules/donator/icons/mob/clothing.dmi'
+	icon_state = "holstein_cow_jumpsuit"
+	worn_icon_state = "holstein_cow_jumpsuit"
+	inhand_icon_state = null

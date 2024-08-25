@@ -362,7 +362,7 @@
 			var/datum/antagonist/A = M.mind.has_antag_datum(/datum/antagonist/)
 			if(A)
 				poll_message = "[poll_message] Status: [A.name]."
-	var/mob/chosen_one = SSpolling.poll_ghosts_for_target(poll_message, check_jobban = ROLE_PAI, poll_time = 10 SECONDS, checked_target = M, alert_pic = M, role_name_text = "ghost control")
+	var/mob/chosen_one = SSpolling.poll_ghosts_for_target(poll_message, check_jobban = ROLE_PAI, poll_time = 10 SECONDS, checked_target = M, alert_pic = M, role_name_text = "ghost control", chat_text_border_icon = M)
 
 	if(chosen_one)
 		to_chat(M, "Your mob has been taken over by a ghost!")
