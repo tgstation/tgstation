@@ -548,7 +548,7 @@ GLOBAL_LIST_INIT(gaslist_cache, init_gaslist_cache())
 
 /**
  * Counts how much pressure will there be if we impart MOLAR_ACCURACY amounts of our gas to the output gasmix.
- * We do all of this without actually transferring it so dont worry about it changing the gasmix.
+ * We do all of this without actually transferring it so don't worry about it changing the gasmix.
  * Returns: Resulting pressure (number).
  * Args:
  * - output_air (gasmix).
@@ -563,10 +563,10 @@ GLOBAL_LIST_INIT(gaslist_cache, init_gaslist_cache())
  * Args:
  * - output_air. The gas mix we want to pump to.
  * - target_pressure. The target pressure we want.
- * - ignore_temperature. Returns a cheaper form of gas calculation, useful if the temperature difference between the two gasmixes is low or nonexistant.
+ * - ignore_temperature. Returns a cheaper form of gas calculation, useful if the temperature difference between the two gasmixes is low or nonexistent.
  */
 /datum/gas_mixture/proc/gas_pressure_calculate(datum/gas_mixture/output_air, target_pressure, ignore_temperature = FALSE)
-	// So we dont need to iterate the gaslist multiple times.
+	// So we don't need to iterate the gaslist multiple times.
 	var/our_moles = total_moles()
 	var/output_moles = output_air.total_moles()
 	var/output_pressure = output_air.return_pressure()

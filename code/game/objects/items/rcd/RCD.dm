@@ -132,7 +132,7 @@
 	var/atom/movable/rcd_structure = rcd_results[RCD_DESIGN_PATH]
 	/**
 	 *For anything that does not go an a wall we have to make sure that turf is clear for us to put the structure on it
-	 *If we are just trying to destory something then this check is not nessassary
+	 *If we are just trying to destroy something then this check is not necessary
 	 *RCD_WALLFRAME is also returned as the rcd_mode when upgrading apc, airalarm, firealarm using simple circuits upgrade
 	 */
 	if(rcd_mode != RCD_WALLFRAME && rcd_mode != RCD_DECONSTRUCT)
@@ -148,7 +148,7 @@
 					structures_to_ignore = list(/obj/structure/window_frame)
 				else //when building directional windows we ignore the grill and other directional windows
 					structures_to_ignore = list(/obj/structure/window_frame, /obj/structure/window)
-			else //for directional windows we ignore other directional windows as they can be in diffrent directions on the turf.
+			else //for directional windows we ignore other directional windows as they can be in different directions on the turf.
 				structures_to_ignore = list(/obj/structure/window)
 
 			//check if we can build our window on the grill
@@ -158,7 +158,7 @@
 				return FALSE
 
 		/**
-		 * if we are trying to create plating on turf which is not a proper floor then dont check for objects on top of the turf just allow that turf to be converted into plating. e.g. create plating beneath a player or underneath a machine frame/any dense object
+		 * if we are trying to create plating on turf which is not a proper floor then don't check for objects on top of the turf just allow that turf to be converted into plating. e.g. create plating beneath a player or underneath a machine frame/any dense object
 		 * if we are trying to finish a wall girder then let it finish then make sure no one/nothing is stuck in the girder
 		 */
 		else if(rcd_mode == RCD_TURF && rcd_structure == /turf/open/floor/plating/rcd  && (!istype(target_turf, /turf/open/floor) || istype(target, /obj/structure/girder)))
@@ -190,10 +190,10 @@
 				ignored_types = list(/obj/structure/window)
 				//if we are trying to create grills/windoors we can go ahead and further ignore other windoors on the turf
 				if(rcd_mode == RCD_WINDOWGRILLE || (rcd_mode == RCD_AIRLOCK && ispath(rcd_structure, /obj/machinery/door/window)))
-					//only ignore mobs if we are trying to create windoors and not grills. We dont want to drop a grill on top of somebody
+					//only ignore mobs if we are trying to create windoors and not grills. We don't want to drop a grill on top of somebody
 					ignore_mobs = rcd_mode == RCD_AIRLOCK
 					ignored_types += /obj/machinery/door/window
-				//if we are trying to create full airlock doors then we do the regular checks and make sure we have the full space for them. i.e. dont ignore anything dense on the turf
+				//if we are trying to create full airlock doors then we do the regular checks and make sure we have the full space for them. i.e. don't ignore anything dense on the turf
 				else if(rcd_mode == RCD_AIRLOCK)
 					ignored_types = list()
 
@@ -213,7 +213,7 @@
  * * [mob][user]- the user building this structure
  */
 /obj/item/construction/rcd/proc/rcd_create(atom/target, mob/user)
-	//straight up cant touch this
+	//straight up can't touch this
 	if(mode == RCD_DECONSTRUCT && (target.resistance_flags & INDESTRUCTIBLE))
 		balloon_alert(user, "too durable!")
 		return
@@ -382,10 +382,10 @@
 			 * The advantage of organizing designs into categories is that
 			 * You can ignore an complete category if the design disk upgrade for that category isn't installed.
 			 */
-			//You can't select designs from the Machines category if you dont have the frames upgrade installed.
+			//You can't select designs from the Machines category if you don't have the frames upgrade installed.
 			if(category == "Machines" && !(upgrade & RCD_UPGRADE_FRAMES))
 				return TRUE
-			//You can't select designs from the Furniture category if you dont have the furnishing upgrade installed.
+			//You can't select designs from the Furniture category if you don't have the furnishing upgrade installed.
 			if(category == "Furniture" && !(upgrade & RCD_UPGRADE_FURNISHING))
 				return TRUE
 

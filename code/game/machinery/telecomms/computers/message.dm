@@ -139,7 +139,7 @@
 				return TRUE
 
 			authenticated = TRUE
-			success_message = "YOU SUCCESFULLY LOGGED IN!"
+			success_message = "YOU SUCCESSFULLY LOGGED IN!"
 
 			return TRUE
 		if("link_server")

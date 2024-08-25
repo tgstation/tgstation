@@ -33,7 +33,7 @@ GLOBAL_LIST_EMPTY(lobby_station_traits)
 	var/list/lobby_buttons = list()
 	/// The ID that we look for in dynamic.json. Not synced with 'name' because I can already see this go wrong
 	var/dynamic_threat_id
-	/// If ran during dynamic, do we reduce the total threat? Will be overriden by config if set
+	/// If ran during dynamic, do we reduce the total threat? Will be overridden by config if set
 	var/threat_reduction = 0
 	/// Which ruleset flags to allow dynamic to use. null to disregard
 	var/dynamic_category = null

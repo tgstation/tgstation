@@ -75,7 +75,7 @@
 	desc = "EVERYONE CALM DOWN! I'm not implying anything with this entry. Are we really so surprised that felinids are humans with mixed feline DNA?"
 	threshold_desc = DNA_INFUSION_NO_THRESHOLD
 	qualities = list(
-		"oh, let me guess, you're a big fan of those japanese tourist bots",
+		"oh, let me guess, you're a big fan of those Japanese tourist bots",
 	)
 	input_obj_or_mob = list(
 		/mob/living/basic/pet/cat,

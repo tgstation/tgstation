@@ -57,14 +57,14 @@
  * Called when an atom is created in byond (built in engine proc)
  *
  * Not a lot happens here in SS13 code, as we offload most of the work to the
- * [Intialization][/atom/proc/Initialize] proc, mostly we run the preloader
+ * [Initialization][/atom/proc/Initialize] proc, mostly we run the preloader
  * if the preloader is being used and then call [InitAtom][/datum/controller/subsystem/atoms/proc/InitAtom] of which the ultimate
- * result is that the Intialize proc is called.
+ * result is that the Initialize proc is called.
  *
  */
 /atom/New(loc, ...)
 	//atom creation method that preloads variables at creation
-	if(GLOB.use_preloader && src.type == GLOB._preloader_path)//in case the instanciated atom is creating other atoms in New()
+	if(GLOB.use_preloader && src.type == GLOB._preloader_path)//in case the instantiated atom is creating other atoms in New()
 		world.preloader_load(src)
 
 	var/do_initialize = SSatoms.initialized
@@ -80,17 +80,17 @@
  * we don't use New as we have better control over when this is called and we can choose
  * to delay calls or hook other logic in and so forth
  *
- * During roundstart map parsing, atoms are queued for intialization in the base atom/New(),
- * After the map has loaded, then Initalize is called on all atoms one by one. NB: this
- * is also true for loading map templates as well, so they don't Initalize until all objects
+ * During roundstart map parsing, atoms are queued for initialization in the base atom/New(),
+ * After the map has loaded, then Initialize is called on all atoms one by one. NB: this
+ * is also true for loading map templates as well, so they don't Initialize until all objects
  * in the map file are parsed and present in the world
  *
  * If you're creating an object at any point after SSInit has run then this proc will be
  * immediately be called from New.
  *
- * mapload: This parameter is true if the atom being loaded is either being intialized during
- * the Atom subsystem intialization, or if the atom is being loaded from the map template.
- * If the item is being created at runtime any time after the Atom subsystem is intialized then
+ * mapload: This parameter is true if the atom being loaded is either being initialized during
+ * the Atom subsystem initialization, or if the atom is being loaded from the map template.
+ * If the item is being created at runtime any time after the Atom subsystem is initialized then
  * it's false.
  *
  * The mapload argument occupies the same position as loc when Initialize() is called by New().
@@ -98,7 +98,7 @@
  * with mapload at the end of atom/New() before this proc (atom/Initialize()) is called.
  *
  * You must always call the parent of this proc, otherwise failures will occur as the item
- * will not be seen as initalized (this can lead to all sorts of strange behaviour, like
+ * will not be seen as initialized (this can lead to all sorts of strange behaviour, like
  * the item being completely unclickable)
  *
  * You must not sleep in this proc, or any subprocs
@@ -136,7 +136,7 @@
 
 	if(uses_integrity)
 		atom_integrity = max_integrity
-	TEST_ONLY_ASSERT((!armor || istype(armor)), "[type] has an armor that contains an invalid value at intialize")
+	TEST_ONLY_ASSERT((!armor || istype(armor)), "[type] has an armor that contains an invalid value at initialize")
 
 	// apply materials properly from the default custom_materials value
 	// This MUST come after atom_integrity is set above, as if old materials get removed,
@@ -150,14 +150,14 @@
 	return INITIALIZE_HINT_NORMAL
 
 /**
- * Late Intialization, for code that should run after all atoms have run Intialization
+ * Late Initialization, for code that should run after all atoms have run Initialization
  *
- * To have your LateIntialize proc be called, your atoms [Initalization][/atom/proc/Initialize]
+ * To have your LateIntialize proc be called, your atoms [Initialization][/atom/proc/Initialize]
  *  proc must return the hint
  * [INITIALIZE_HINT_LATELOAD] otherwise it will never be called.
  *
  * useful for doing things like finding other machines on GLOB.machines because you can guarantee
- * that all atoms will actually exist in the "WORLD" at this time and that all their Intialization
+ * that all atoms will actually exist in the "WORLD" at this time and that all their Initialization
  * code has been run
  *
  * mapload: This parameter behaves the same as what you may have seen in [/atom/proc/Initialize]

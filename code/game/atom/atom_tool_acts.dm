@@ -1,7 +1,7 @@
 /**
  * ## Item interaction
  *
- * Handles non-combat iteractions of a tool on this atom,
+ * Handles non-combat interactions of a tool on this atom,
  * such as using a tool on a wall to deconstruct it,
  * or scanning someone with a health analyzer
  */
@@ -61,7 +61,7 @@
  *
  * Handles the tool_acts in particular, such as wrenches and screwdrivers.
  *
- * This can be overriden to handle unique "tool interactions"
+ * This can be overridden to handle unique "tool interactions"
  * IE using an item like a tool (when it's not actually one)
  * This is particularly useful for things that shouldn't be inserted into storage
  * (because tool acting runs before storage checks)

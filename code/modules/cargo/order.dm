@@ -136,7 +136,7 @@
 		manifest_text += "Item: [packname]<br/>"
 	manifest_text += "Contents: <br/>"
 	manifest_text += "<ul>"
-	var/container_contents = list() // Associative list with the format (item_name = nº of occurences, ...)
+	var/container_contents = list() // Associative list with the format (item_name = nº of occurrences, ...)
 	for(var/atom/movable/AM in container.contents - manifest_paper)
 		container_contents[AM.name]++
 	if((manifest_paper.errors & MANIFEST_ERROR_CONTENTS) && container_contents)

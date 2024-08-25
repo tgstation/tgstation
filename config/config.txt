@@ -269,7 +269,7 @@ NOTE_FRESH_DAYS 91.31055
 ## Notes older then this will be completely faded out.
 NOTE_STALE_DAYS 365.2422
 
-## Uncomment to allow drastic performence enhancemet measures to turn on automatically once there are equal or more clients than the configured amount (will also prompt admin for veto)
+## Uncomment to allow drastic performance enhancement measures to turn on automatically once there are equal or more clients than the configured amount (will also prompt admin for veto)
 #AUTO_LAG_SWITCH_POP 75
 
 ##Note: all population caps can be used with each other if desired.
@@ -296,7 +296,7 @@ EXTREME_POPCAP_MESSAGE The server is currently serving a high number of users, f
 BYOND_MEMBER_BYPASS_POPCAP
 
 ## Notify admins when a new player connects for the first x days a player's been around. (0 for first connection only, -1 for never)
-##	Requres database
+##	Requires database
 NOTIFY_NEW_PLAYER_AGE 0
 
 ## Notify admins when a player connects if their byond account was created in the last X days
@@ -304,7 +304,7 @@ NOTIFY_NEW_PLAYER_AGE 0
 NOTIFY_NEW_PLAYER_ACCOUNT_AGE 1
 
 ## Notify the irc channel when a new player makes their first connection
-##	Requres database
+##	Requires database
 #IRC_FIRST_CONNECTION_ALERT
 
 ## Discord ID of a role that should be pinged when a new player makes their first connection
@@ -408,13 +408,13 @@ SECOND_CLICK_LIMIT 15
 MINUTE_CLICK_LIMIT 400
 
 ##Error handling related options
-## The "cooldown" time for each occurence of a unique error
+## The "cooldown" time for each occurrence of a unique error
 #ERROR_COOLDOWN 600
-## How many occurences before the next will silence them
+## How many occurrences before the next will silence them
 #ERROR_LIMIT 90
 ## How long a unique error will be silenced for
 #ERROR_SILENCE_TIME 6000
-##How long to wait between messaging admins about occurences of a unique error
+##How long to wait between messaging admins about occurrences of a unique error
 #ERROR_MSG_DELAY 50
 
 
