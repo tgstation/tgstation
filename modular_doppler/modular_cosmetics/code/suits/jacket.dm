@@ -217,14 +217,14 @@
 	name = "rugged fur coat"
 	desc = "Even in an age where any large mammal can be grown in situ at industrial levels some insist on having \
 	the pelts of 'real' creatures to wear. The unnecessary suffering gives this coat a grim aura."
-	icon_state = "winter_coat"
+	icon_state = "fur_coat"
 	armor_type = /datum/armor/jacket_armor
 
 /obj/item/clothing/suit/jacket/doppler/wrap_coat
 	name = "chic wrap coat"
 	desc = "A jacket possessed of measured asymmetry, its fly-front closure conceals its fasteners as if the single \
 	wide belt is all that holds it closed. Surprisingly warm."
-	icon_state = "modern_winter"
+	icon_state = "wrap_coat"
 
 /obj/item/clothing/suit/jacket/doppler/red_trench
 	name = "Marsian PLA trenchcoat by Alpha Atelier"
