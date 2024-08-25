@@ -1,4 +1,0 @@
-author: "Absolucy"
-delete-after: True
-changes:
-  - bugfix: "Heavily optimized glowshrooms, resulting in far less lag during shroomlooses."

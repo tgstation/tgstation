@@ -293,3 +293,47 @@
   - bugfix: Role prompts now properly show the preview pics in the chat.
   - bugfix: Fixed intelligence potions being broken.
   - bugfix: Fixed blood brother gear choosing being broken.
+2024-08-25:
+  Absolucy:
+  - rscadd: Certain jobs, mostly most medical and the janitor, now have naturally
+      stronger immune systems.
+  - bugfix: Tide viruses now properly exclude external airlocks.
+  - qol: As part of an agreement with the Church of Carp'Sie, the windows and walls
+      for the aquarium on Blueshift-model stations has been reinforced.
+  - bugfix: Heavily optimized glowshrooms, resulting in far less lag during shroomlooses.
+  AlbertNanotracen:
+  - bugfix: Nanotrasen Cookery Command has ended the plague of staff complaining that
+      their tomato dishes are just complicated forms of soup by redefining "tomato
+      soup" to include a dash of cream.
+  - rscadd: Added butter slices, which you can make by cutting butter into 3.
+  - qol: Recipes that once required butter now only require a slice of it. With the
+      exception of the butter on a stick, of course.
+  - balance: Butter now requires 25 milk to mix and has 3 times as much nutriment.
+  - image: Resprited butter and butter on a stick using bluespace technology, managing
+      to compress more butter into a smaller space
+  - bugfix: ' Infinite spider eggs are no more.'
+  - bugfix: Removed duplicate and incorrect Yaki Imo recipe
+  - qol: "Swapped out the flour in \xC6losterrm\xE6sch with two dough slices, to avoid\
+      \ competing reactions while preparing or cooking"
+  - spellcheck: Chicken nugget will have a description in the craft menu, and fiesta
+      skewers will have a description in general
+  - bugfix: Spell burger now has only one recipe
+  - bugfix: crafting recipes without a name, such as the mothic pizzas, will inherit
+      the name of the item they make
+  - rscadd: Added 28 new food recipes!
+  - qol: 'Martian fried noodles now requires 2 grown peanuts instead of
+
+      salted peanut packet.'
+  - bugfix: Moussaka now only uses eggplants instead of eggplants and potatoes
+  - bugfix: Pita bread no longer burns on the griddle/oven
+  Tag114:
+  - bugfix: Fixes players being unable to switch back to the default title for Brig
+      Physician after selecting an alternate title.
+  ThePooba:
+  - rscadd: added multiple guns to traitor uplink under conspicious
+  Wisemonster:
+  - rscadd: Replaced the drone dispensers on blueshift and ouroboros with pre-loaded
+      variants
+  ven1883:
+  - bugfix: fixed cyberware quirks being incompatible with eachother
+  - bugfix: Bright Eyes now is incompatible with Body Purist

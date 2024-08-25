@@ -1,5 +1,0 @@
-author: "ven1883"
-delete-after: True
-changes:
-  - bugfix: "fixed cyberware quirks being incompatible with eachother"
-  - bugfix: "Bright Eyes now is incompatible with Body Purist"
