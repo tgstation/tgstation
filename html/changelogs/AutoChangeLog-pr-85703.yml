@@ -1,0 +1,4 @@
+author: "Ghommie"
+delete-after: True
+changes:
+  - rscadd: "You can place papers, photos and cash bills (no holochips) inside bottles and then toss them into the ocean (or fishing portal gen with relative settings) with right-click, for others to fish them up on future rounds."

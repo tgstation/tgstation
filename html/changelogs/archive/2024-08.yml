@@ -722,3 +722,31 @@
   - balance: reticence requires progression
   r3dj4ck0424:
   - balance: The CytoPro has had prices raised to slightly more reasonable levels.
+2024-08-23:
+  MMMiracles:
+  - bugfix: More various Tramstation-adjacent wallening fixes.
+  Majkl-J:
+  - bugfix: custom pies and cakes are craftable again
+  SmArtKar:
+  - image: Updated goliath cloak sprites
+  necromanceranne:
+  - rscadd: Punching mitts! Punch wildlife to death and scream the whole time. ADVENTURE!
+  - balance: Megafauna can be affected by martial arts.
+2024-08-24:
+  DaCoolBoss:
+  - bugfix: Aquarium decorations now contain plastic.
+  - spellcheck: Added item descriptions for aquarium decorations.
+  EnterTheJake:
+  - balance: Rusted Ritual now requries 10 sheets of Iron instead of Titanium.
+  Ghommie:
+  - rscadd: Added Athletic Fishing Gloves and Fishing Glove Module to the advanced
+      fishing tech node. Both can be used to fish without having to hold a fishing
+      rod.  The athletic fishing gloves will also train your athletics skill.
+  LT3:
+  - spellcheck: Sneak a peek of Hilbert's Hotel, not a sneak peak
+  SmArtKar:
+  - bugfix: Marine helmets no longer change their sprite to security helmets when
+      their flashlight is toggled
+  - spellcheck: Hierophant no longer lies about obliterating someone
+  TheBoondock:
+  - qol: goliath arm can defuse gibonite by bumping or direct click
