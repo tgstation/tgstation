@@ -343,7 +343,7 @@
 		span_danger("The void storm surrounding [ascended_heretic] deflects [hitting_projectile]!"),
 		span_userdanger("The void storm protects you from [hitting_projectile]!"),
 	)
-	playsound(ascended_heretic, pick('sound/weapons/bulletflyby.ogg', 'sound/weapons/bulletflyby2.ogg', 'sound/weapons/bulletflyby3.ogg'), 75, TRUE)
+	playsound(ascended_heretic, pick('sound/magic/VoidDeflect01.ogg', 'sound/magic/VoidDeflect02.ogg', 'sound/magic/VoidDeflect03.ogg'), 75, TRUE)
 	hitting_projectile.firer = ascended_heretic
 	if(prob(75))
 		hitting_projectile.set_angle(get_angle(hitting_projectile.firer, hitting_projectile.fired_from))
