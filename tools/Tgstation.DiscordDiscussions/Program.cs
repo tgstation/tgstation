@@ -25,7 +25,7 @@ namespace Tgstation.DiscordDiscussions
 	public sealed partial class Program : IDiscordResponders
 	{
 		const bool LockPullRequest = true;
-		const int InitSlowModeSeconds = 5;
+		const int InitSlowModeSeconds = 60;
 
 		[GeneratedRegex(@"https://discord.com/channels/[0-9]+/([0-9]+)")]
 		private static partial Regex ChannelLinkRegex();
