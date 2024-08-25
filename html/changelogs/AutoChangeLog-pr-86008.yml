@@ -1,5 +1,0 @@
-author: "SmArtKar"
-delete-after: True
-changes:
-  - bugfix: "Removed all ways of teleportation from deathmatch and replaced all consoles on a certain map with non-functional variants. Loadouts have been adjusted to account for this."
-  - rscdel: "Species Warfare no longer has atmospherics-related equipment on it."
