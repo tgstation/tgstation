@@ -75,6 +75,9 @@
 	for(var/datum/crafting_recipe/potential_recipe as anything in cooking ? GLOB.cooking_recipes : GLOB.crafting_recipes)
 		if(craftsman.is_recipe_available(potential_recipe, user))
 			continue
+		var/obj/result = initial(potential_recipe.result)
+		if(istype(result) && initial(result.anchored))
+			continue
 		unavailable += potential_recipe
 	var/result = tgui_input_list(usr, "Recipe", "Select Recipe", (cooking ? GLOB.cooking_recipes : GLOB.crafting_recipes) - unavailable)
 	if(isnull(result) || result == recipe || !user.can_perform_action(src))

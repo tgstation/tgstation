@@ -22,7 +22,16 @@
 	. = ..()
 	user.Move(drop_location())
 
+/obj/machinery/power/manufacturing/storagebox/screwdriver_act(mob/living/user, obj/item/tool)
+	. = NONE
+	balloon_alert(user, "disassembling...")
+	if(!do_after(user, 5 SECONDS, src))
+		return ITEM_INTERACT_FAILURE
+	atom_destruction()
+	return ITEM_INTERACT_SUCCESS
+
 /obj/machinery/power/manufacturing/storagebox/atom_destruction(damage_flag)
+	new /obj/item/stack/sheet/iron(drop_location(), 10)
 	for(var/atom/movable/movable as anything in contents - circuit)
 		movable.Move(drop_location())
 	return ..()
