@@ -11,7 +11,7 @@
 
 /obj/machinery/computer/shuttle/custom_shuttle/proc/linkShuttle(var/new_id)
 	shuttleId = new_id
-	possible_destinations = "whiteship_home;shuttle[new_id]_custom;whiteship_lavaland"
+	possible_destinations = "whiteship_home;shuttle[new_id]_custom;"
 	return TRUE
 
 
