@@ -481,9 +481,11 @@ world
 
 	// Expand our canvas to fit if we're too big
 	if(render_icon)
-		var/icon/active_icon = icon(curicon)
-		if(active_icon.Width() != 32 || active_icon.Height() != 32)
-			flat.Scale(active_icon.Width(), active_icon.Height())
+		var/list/icon_dimensions = get_icon_dimensions(curicon)
+		var/icon_width = icon_dimensions["width"]
+		var/icon_height = icon_dimensions["height"]
+		if(icon_width != 32 || icon_height != 32)
+			flat.Scale(icon_width, icon_height)
 
 	var/curblend = appearance.blend_mode || defblend
 
