@@ -158,8 +158,8 @@ GLOBAL_LIST_EMPTY(roundstart_station_closets)
 	register_context()
 
 	if(opened)
-		opened = FALSE //nessassary because open() proc will early return if its true
-		if(open(special_effects = FALSE)) //closets which are meant to be open by default dont need to be animated open
+		opened = FALSE //necessary because open() proc will early return if its true
+		if(open(special_effects = FALSE)) //closets which are meant to be open by default don't need to be animated open
 			return
 	update_appearance()
 
@@ -1069,7 +1069,7 @@ GLOBAL_LIST_EMPTY(roundstart_station_closets)
 			addtimer(CALLBACK(src, PROC_REF(check_if_shake)), next_check_time)
 			return TRUE
 
-	// If we reach here, nobody is resisting, so dont shake
+	// If we reach here, nobody is resisting, so don't shake
 	return FALSE
 
 /obj/structure/closet/proc/bust_open()

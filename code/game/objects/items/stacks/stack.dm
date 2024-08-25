@@ -177,7 +177,7 @@
 	/**
 	 * use available_amount of sheets/pieces, return TRUE only if all sheets/pieces of this stack were used
 	 * we don't delete this stack when it reaches 0 because we expect the all in one grinder, etc to delete
-	 * this stack if grinding was successfull
+	 * this stack if grinding was successful
 	 */
 	use(available_amount, check = FALSE)
 	return available_amount == current_amount

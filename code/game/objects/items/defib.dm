@@ -492,7 +492,7 @@
 
 	do_help(H, user)
 
-/// Called whenever the paddles successful shock something
+/// Called whenever the paddles successfully shock something
 /obj/item/shockpaddles/proc/do_success()
 	if(busy)
 		busy = FALSE
