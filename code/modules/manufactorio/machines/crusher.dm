@@ -10,7 +10,7 @@
 	/// withheld output because output is either blocked or full
 	var/atom/movable/withholding
 	/// list of held mats
-	var/obj/item/stack/held_mats = list()
+	var/list/obj/item/stack/held_mats = list()
 
 /obj/machinery/power/manufacturing/crusher/update_overlays()
 	. = ..()
