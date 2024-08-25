@@ -17,6 +17,7 @@
 	can_install_electronics = FALSE
 	elevation = 21
 	elevation_open = 0
+	can_weld_shut = FALSE
 
 	var/obj/item/tank/internals/emergency_oxygen/tank
 

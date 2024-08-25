@@ -12,6 +12,7 @@
 	paint_jobs = null
 	elevation = 17
 	elevation_open = 17
+	can_weld_shut = FALSE
 
 /obj/structure/closet/crate/bin/LateInitialize()
 	. = ..()

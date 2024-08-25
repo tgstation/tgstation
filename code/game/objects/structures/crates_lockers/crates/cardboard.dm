@@ -12,6 +12,7 @@
 	close_sound_volume = 25
 	paint_jobs = null
 	cutting_tool = /obj/item/wirecutters
+	can_weld_shut = FALSE
 
 /obj/structure/closet/crate/cardboard/mothic
 	name = "\improper Mothic Fleet box"
