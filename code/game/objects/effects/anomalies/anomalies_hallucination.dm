@@ -41,13 +41,12 @@
 	if(!isturf(loc))
 		return
 
-	visible_hallucination_pulse(
+	hallucination_pulse(
 		center = get_turf(src),
 		radius = 10,
 		hallucination_duration = 50 SECONDS,
 		hallucination_max_duration = 300 SECONDS,
 		optional_messages = messages,
-		ignore_walls = TRUE,
 	)
 
 /obj/effect/anomaly/hallucination/proc/generate_decoys()
