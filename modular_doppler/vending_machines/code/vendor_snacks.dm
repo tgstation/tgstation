@@ -11,7 +11,7 @@
 	junkiness = 10
 	custom_price = PAYCHECK_LOWER * INFINITY
 	tastes = list("the unmatched power of the sun" = 10)
-	foodtypes = JUNKFOOD | CLOTH | GORE | NUTS | FRIED | FRUIT //You don't want to know what's in the broken debug snacks
+	foodtypes = JUNKFOOD | CLOTH | GORE | NUTS | FRIED | FRUIT
 	w_class = WEIGHT_CLASS_SMALL
 
 /obj/item/trash/vendor_trash
@@ -86,11 +86,11 @@
 /obj/item/reagent_containers/cup/glass/waterbottle/tea
 	name = "bottle of tea"
 	desc = "A bottle of tea brought to you in a convenient plastic bottle."
-	icon = 'modular_doppler/modular_food_and_drinks/icons/drinks.dmi'
+	icon = 'modular_doppler/modular_food_drinks_and_chems/icons/drinks.dmi'
 	icon_state = "tea_bottle"
 	list_reagents = list(/datum/reagent/consumable/tea = 40)
 	cap_icon_state = "bottle_cap_tea"
-	flip_chance = 5 //I fucking dare you
+	flip_chance = 5
 	custom_price = PAYCHECK_LOWER * 1.2
 	fill_icon_state = null
 
@@ -100,7 +100,7 @@
 	icon_state = "tea_bottle_blue"
 	list_reagents = list(
 		/datum/reagent/consumable/tea = 25,
-		/datum/reagent/medicine/salglu_solution = 10, // I know this looks strange but this is what tea astra grinds into, tea in the year 25whatever baby
+		/datum/reagent/medicine/salglu_solution = 10,
 		/datum/reagent/consumable/nutriment/vitamin = 5,
 	)
 	custom_price = PAYCHECK_LOWER * 2
@@ -118,7 +118,7 @@
 	icon_state = "tea_bottle_pink"
 	list_reagents = list(
 		/datum/reagent/consumable/catnip_tea = 20,
-		/datum/reagent/consumable/pinkmilk = 20, // I can't believe they would cut my catnip
+		/datum/reagent/consumable/pinkmilk = 20,
 	)
 	custom_price = PAYCHECK_LOWER * 2.5
 
@@ -184,50 +184,50 @@
 	desc = "The clear plastic reveals that this no longer holds tasty treats for your winged friends."
 	icon_state = "moth_bag_trash"
 
-/obj/item/reagent_containers/cup/soda_cans/nova/lemonade
+/obj/item/reagent_containers/cup/soda_cans/doppler/lemonade
 	name = "\improper Gyárhajó 1023: Lemonade"
 	desc = "A can of lemonade, for those who are into that kind of thing, or just have no choice."
 	icon_state = "lemonade"
 	list_reagents = list(/datum/reagent/consumable/lemonade = 30)
 	drink_type = FRUIT
 
-/obj/item/reagent_containers/cup/soda_cans/nova/lemonade/examine_more(mob/user)
+/obj/item/reagent_containers/cup/soda_cans/doppler/lemonade/examine_more(mob/user)
 	. = ..()
 	. += span_notice("Markings on the can indicate this one was made on <i>factory ship 1023</i> of the Grand Nomad Fleet.")
 	return .
 
-/obj/item/reagent_containers/cup/soda_cans/nova/navy_rum
+/obj/item/reagent_containers/cup/soda_cans/doppler/navy_rum
 	name = "\improper Gyárhajó 1506: Navy Rum"
 	desc = "A can of navy rum brewed up and imported from a detachment of the nomad fleet, or so the can says."
 	icon_state = "navy_rum"
 	list_reagents = list(/datum/reagent/consumable/ethanol/navy_rum = 30)
 	drink_type = ALCOHOL
 
-/obj/item/reagent_containers/cup/soda_cans/nova/navy_rum/examine_more(mob/user)
+/obj/item/reagent_containers/cup/soda_cans/doppler/navy_rum/examine_more(mob/user)
 	. = ..()
 	. += span_notice("Markings on the can indicate this one was made on <i>factory ship 1506</i> of the Grand Nomad Fleet.")
 	return .
 
-/obj/item/reagent_containers/cup/soda_cans/nova/soda_water_moth
+/obj/item/reagent_containers/cup/soda_cans/doppler/soda_water_moth
 	name = "\improper Gyárhajó 1023: Soda Water"
 	desc = "A can of soda water. Why not make a rum and soda? Now that you think of it, maybe not."
 	icon_state = "soda_water"
 	list_reagents = list(/datum/reagent/consumable/sodawater = 30)
 	drink_type = SUGAR
 
-/obj/item/reagent_containers/cup/soda_cans/nova/soda_water_moth/examine_more(mob/user)
+/obj/item/reagent_containers/cup/soda_cans/doppler/soda_water_moth/examine_more(mob/user)
 	. = ..()
 	. += span_notice("Markings on the can indicate this one was made on <i>factory ship 1023</i> of the Grand Nomad Fleet.")
 	return .
 
-/obj/item/reagent_containers/cup/soda_cans/nova/ginger_beer
+/obj/item/reagent_containers/cup/soda_cans/doppler/ginger_beer
 	name = "\improper Gyárhajó 1023: Ginger Beer"
 	desc = "A can of ginger beer, don't let the beer part mislead you, this is entirely non-alcoholic."
 	icon_state = "gingie_beer"
 	list_reagents = list(/datum/reagent/consumable/sol_dry = 30)
 	drink_type = SUGAR
 
-/obj/item/reagent_containers/cup/soda_cans/nova/ginger_beer/examine_more(mob/user)
+/obj/item/reagent_containers/cup/soda_cans/doppler/ginger_beer/examine_more(mob/user)
 	. = ..()
 	. += span_notice("Markings on the can indicate this one was made on <i>factory ship 1023</i> of the Grand Nomad Fleet.")
 	return .
@@ -294,7 +294,7 @@
 	list_reagents = list(/datum/reagent/consumable/mushroom_tea = 40)
 	custom_price = PAYCHECK_LOWER * 2
 
-/obj/item/reagent_containers/cup/soda_cans/nova/kortara
+/obj/item/reagent_containers/cup/soda_cans/doppler/kortara
 	name = "kortara"
 	desc = "A can of kortara, alcohol brewed from korta seeds, which gives it a unique peppery spice flavor."
 	icon_state = "kortara"

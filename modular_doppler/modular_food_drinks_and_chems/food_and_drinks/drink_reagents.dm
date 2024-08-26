@@ -7,7 +7,7 @@
 
 /datum/glass_style/drinking_glass/pinkmilk
 	required_drink_type = /datum/reagent/consumable/pinkmilk
-	icon = 'modular_nova/master_files/icons/obj/drinks.dmi'
+	icon = 'modular_doppler/modular_food_drinks_and_chems/icons/drinks.dmi'
 	icon_state = "pinkmilk"
 	name = "tall glass of strawberry milk"
 	desc = "Delicious flavored strawberry syrup mixed with milk."
@@ -27,7 +27,7 @@
 
 /datum/glass_style/drinking_glass/pinktea
 	required_drink_type = /datum/reagent/consumable/pinktea
-	icon = 'modular_nova/master_files/icons/obj/drinks.dmi'
+	icon = 'modular_doppler/modular_food_drinks_and_chems/icons/drinks.dmi'
 	icon_state = "pinktea"
 	name = "mug of strawberry tea"
 	desc = "Delicious traditional tea flavored with strawberries."
@@ -46,14 +46,14 @@
 
 /datum/glass_style/drinking_glass/catnip_tea
 	required_drink_type = /datum/reagent/consumable/catnip_tea
-	icon = 'modular_nova/master_files/icons/obj/drinks.dmi'
+	icon = 'modular_doppler/modular_food_drinks_and_chems/icons/drinks.dmi'
 	icon_state = "catnip_tea"
 	name = "glass of catnip tea"
 	desc = "A purrfect drink for a cat."
 
 /datum/reagent/consumable/catnip_tea/on_mob_life(mob/living/carbon/M)
 	M.adjustStaminaLoss(min(50 - M.getStaminaLoss(), 3))
-	if(isfeline(M))
+	if(isfelinid(M))
 		if(prob(20))
 			M.emote("nya")
 		if(prob(20))

@@ -197,7 +197,7 @@
 		/datum/reagent/consumable/berryjuice = 1,
 		)
 
-/datum/chemical_reaction/drink/blizzard_brew
+/*/datum/chemical_reaction/drink/blizzard_brew
 	results = list(/datum/reagent/consumable/ethanol/blizzard_brew = 3)
 	required_reagents = list(
 		/datum/reagent/consumable/ethanol/iced_beer = 1,
@@ -215,7 +215,7 @@
 		/datum/reagent/consumable/ethanol/mauna_loa = 1,
 		)
 	mix_message = "You hear sizzling flesh and angry wasps buzzing as it mixes."
-	mix_sound = 'sound/effects/wounds/sizzle2.ogg'
+	mix_sound = 'sound/effects/wounds/sizzle2.ogg'*/
 
 /datum/chemical_reaction/drink/hippie_hooch
 	results = list(/datum/reagent/consumable/ethanol/hippie_hooch = 5)
@@ -225,7 +225,7 @@
 		/datum/reagent/medicine/earthsblood = 1,
 		)
 	mix_message = "You hear wood flutes and nature as it mixes."
-	mix_sound = 'modular_skyrat/modules/emotes/sound/voice/hoot.ogg'
+	mix_sound = 'modular_doppler/emotes/sound/hoot.ogg'
 
 /datum/chemical_reaction/drink/research_rum
 	results = list(/datum/reagent/consumable/ethanol/research_rum = 4)
@@ -332,7 +332,7 @@
 		/datum/reagent/sulfur = 5,
 		)
 	required_temp = 900 // (626.85'C)
-
+*/
 /datum/chemical_reaction/drink/frisky_kitty
 	results = list(/datum/reagent/consumable/ethanol/frisky_kitty = 2)
 	required_reagents = list(
@@ -340,7 +340,7 @@
 		/datum/reagent/consumable/milk = 1,
 		)
 	required_temp = 296 //Just above room temp (22.85'C)
-
+/*
 /datum/chemical_reaction/drink/bloodshot_base
 	results = list(/datum/reagent/consumable/ethanol/bloodshot_base = 2)
 	required_reagents = list(
@@ -358,7 +358,7 @@
 	reaction_tags = REACTION_TAG_DRINK | REACTION_TAG_EASY | REACTION_TAG_OTHER
 */
 
-// Non-Booze, see modular_skyrat\modules\customization\modules\reagents\chemistry\reagents\drink_reagents.dm
+// Non-Booze
 
 /datum/chemical_reaction/drink/pinkmilk
 	results = list(/datum/reagent/consumable/pinkmilk = 2)

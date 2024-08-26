@@ -4,16 +4,16 @@
 		/obj/machinery/vending/imported/yangyu,
 		/obj/machinery/vending/imported/mothic,
 		/obj/machinery/vending/imported/tiziran,
-//		/obj/machinery/vending/deforest_medvend,   //commented out until i'm ready to port them
+//		/obj/machinery/vending/deforest_medvend,
 	)
 
-/obj/effect/spawner/random/vending/colavend //These can serve both snacks AND drinks so its kinda both of them?
+/obj/effect/spawner/random/vending/colavend //These can serve both snacks AND drinks so it's kinda both of them?
 	loot = list(
 		/obj/machinery/vending/imported/nt,
 		/obj/machinery/vending/imported/yangyu,
 		/obj/machinery/vending/imported/mothic,
 		/obj/machinery/vending/imported/tiziran,
-//		/obj/machinery/vending/deforest_medvend,  //commented out until i'm ready to port them
+//		/obj/machinery/vending/deforest_medvend,
 	)
 
 /datum/supply_pack/vending/imported/fill(obj/structure/closet/crate/target_crate)
@@ -144,10 +144,10 @@
 				/obj/item/food/vendor_snacks/moth_bag/fuel_jack = 6,
 				/obj/item/food/vendor_snacks/moth_bag/cheesecake = 6,
 				/obj/item/food/vendor_snacks/moth_bag/cheesecake/honey = 6,
-				/obj/item/reagent_containers/cup/soda_cans/nova/lemonade = 6,
-				/obj/item/reagent_containers/cup/soda_cans/nova/navy_rum = 6,
-				/obj/item/reagent_containers/cup/soda_cans/nova/soda_water_moth = 6,
-				/obj/item/reagent_containers/cup/soda_cans/nova/ginger_beer = 6,
+				/obj/item/reagent_containers/cup/soda_cans/doppler/lemonade = 6,
+				/obj/item/reagent_containers/cup/soda_cans/doppler/navy_rum = 6,
+				/obj/item/reagent_containers/cup/soda_cans/doppler/soda_water_moth = 6,
+				/obj/item/reagent_containers/cup/soda_cans/doppler/ginger_beer = 6,
 			),
 		),
 		list(
@@ -197,7 +197,7 @@
 				/obj/item/food/vendor_snacks/lizard_box/sweet_roll = 6,
 				/obj/item/reagent_containers/cup/glass/bottle/mushi_kombucha = 6,
 				/obj/item/reagent_containers/cup/glass/waterbottle/tea/mushroom = 6,
-				/obj/item/reagent_containers/cup/soda_cans/nova/kortara = 6,
+				/obj/item/reagent_containers/cup/soda_cans/doppler/kortara = 6,
 			),
 		),
 		list(
