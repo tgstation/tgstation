@@ -65,6 +65,9 @@
 		"bluespace_pod",
 		"quantum_keycard",
 		"swapper",
+		"shuttle_creator",
+		"shuttle_control",
+		"shuttle_docker",
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_3_POINTS)
 
