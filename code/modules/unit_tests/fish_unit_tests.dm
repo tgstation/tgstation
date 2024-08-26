@@ -1,5 +1,21 @@
 #define TRAIT_FISH_TESTING "made_you_read_this"
 
+///Ensures that all fish have an aquarium icon state and that sprite_width and sprite_height have been set.
+/datum/unit_test/fish_aquarium_icons
+
+/datum/unit_test/fish_aquarium_icons/Run()
+	for(var/obj/item/fish/fish as anything in subtypesof(/obj/item/fish))
+		var/init_icon = fish::dedicated_in_aquarium_icon
+		var/init_icon_state = fish::dedicated_in_aquarium_icon_state
+		if(!init_icon_state)
+			init_icon_state = "[fish::icon_state]_small"
+		if(!icon_exists(init_icon, init_icon_state))
+			TEST_FAIL("[fish] with doesn't have a \"[init_icon_state]\" aquarium icon state in [init_icon]. Please make one.")
+		if(!fish::sprite_width)
+			TEST_FAIL("[fish] doesn't have a set sprite_width.")
+		if(!fish::sprite_height)
+			TEST_FAIL("[fish] doesn't have a set sprite_height.")
+
 ///Checks that things associated with fish size and weight work correctly.
 /datum/unit_test/fish_size_weight
 
