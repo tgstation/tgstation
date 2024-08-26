@@ -2,6 +2,9 @@
 #define MAX_EVIDENCE_Y 3500
 #define MAX_EVIDENCE_X 1180
 
+#define EVIDENCE_TYPE_PHOTO "photo"
+#define EVIDENCE_TYPE_PAPER "paper"
+
 /obj/structure/detectiveboard
 	name = "detective notice board"
 	desc = "A board for linking evidence to crimes."
@@ -27,9 +30,9 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/detectiveboard, 32)
 
 	if(!mapload)
 		return
-	for(var/obj/item/I in loc)
-		if(istype(I, /obj/item/paper))
-			I.forceMove(src)
+	for(var/obj/item/item in loc)
+		if(istype(item, /obj/item/paper) || istype(item, /obj/item/photo))
+			item.forceMove(src)
 			cases[current_case].notices++
 
 /// Attaching evidences: photo and papers
@@ -96,12 +99,12 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/detectiveboard, 32)
 				data_connections += REF(connection) // TODO: create array of strings
 			data_evidence["connections"] = data_connections
 			switch(evidence.evidence_type)
-				if("photo")
+				if(EVIDENCE_TYPE_PHOTO)
 					var/obj/item/photo/photo = evidence.item
 					var/tmp_picture_name = "evidence_photo[REF(photo)].png"
 					user << browse_rsc(photo.picture.picture_image, tmp_picture_name)
 					data_evidence["photo_url"] = tmp_picture_name
-				if("paper")
+				if(EVIDENCE_TYPE_PAPER)
 					var/obj/item/paper/paper = evidence.item
 					data_evidence["text"] = ""
 					if(paper.raw_text_inputs && paper.raw_text_inputs.len)
@@ -152,9 +155,10 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/detectiveboard, 32)
 			update_appearance(UPDATE_ICON)
 			return TRUE
 		if("set_case")
-			current_case = params["case"]
-			update_appearance(UPDATE_ICON)
-			return TRUE
+			if(cases && params["case"] && params["case"] <= cases.len)
+				current_case = params["case"]
+				update_appearance(UPDATE_ICON)
+				return TRUE
 		if("remove_case")
 			var/datum/case/case = locate(params["case_ref"]) in cases
 			for(var/datum/evidence/evidence in case.evidences)
@@ -172,7 +176,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/detectiveboard, 32)
 		if("look_evidence")
 			var/datum/case/case = locate(params["case_ref"]) in cases
 			var/datum/evidence/evidence = locate(params["evidence_ref"]) in case.evidences
-			if(evidence.evidence_type == "photo")
+			if(evidence.evidence_type == EVIDENCE_TYPE_PHOTO)
 				var/obj/item/photo/item = evidence.item
 				item.show(user)
 				return TRUE
@@ -210,8 +214,9 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/detectiveboard, 32)
 		if("add_connection")
 			var/datum/evidence/from_evidence = locate(params["from_ref"]) in cases[current_case].evidences
 			var/datum/evidence/to_evidence = locate(params["to_ref"]) in cases[current_case].evidences
-			from_evidence.connections += to_evidence
-			to_evidence.connections += from_evidence
+			if(from_evidence && to_evidence)
+				from_evidence.connections += to_evidence
+				to_evidence.connections += from_evidence
 			return TRUE
 
 
@@ -271,9 +276,9 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/detectiveboard, 32)
 	description = param_desc
 	item = param_item
 	if(istype(param_item, /obj/item/photo))
-		evidence_type = "photo"
+		evidence_type = EVIDENCE_TYPE_PHOTO
 	else
-		evidence_type = "paper"
+		evidence_type = EVIDENCE_TYPE_PAPER
 
 /datum/case
 	var/notices = 0
@@ -285,6 +290,9 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/detectiveboard, 32)
 	name = param_name
 	color = param_color
 
+
+#undef EVIDENCE_TYPE_PHOTO
+#undef EVIDENCE_TYPE_PAPER
 
 #undef MAX_EVIDENCE_Y
 #undef MAX_EVIDENCE_X
