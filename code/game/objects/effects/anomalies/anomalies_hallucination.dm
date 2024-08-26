@@ -71,7 +71,7 @@
 		"It tells you to try again, because you're doing it all wrong. What?",
 		"It occurs to you that the anomaly you're scanning isn't actually there.",
 		"It's not working. You activate %TOOL% again. Still broken. You activate %TOOL%. You activate %TOOL%. Why isn't this working??",
-		"Something happens. You can't tell what. The interface on the %TOOL% remains blank.",
+		"Something happens. You can't tell what. The interface on %TOOL% remains blank.",
 		"What are you even trying to accomplish here? Did you really think that was going to work?",
 		"Someone behind you whispers frequency code to you, but you can't quite hear them. The interface on %TOOL% remains blank.",
 		"For a brief moment, you see yourself traversing a frozen forest, before snapping back to reality. The interface on %TOOL% remains blank.",
@@ -79,8 +79,8 @@
 		"For a moment you can feel your skin falling off, then blink as the sensation vanishes. What the hell did that mean?",
 		"The interface reports that you are a complete failure, and have screwed everything up again. Great work.",
 		"You realize that the formatting of this message is completely wrong, and get confused. Now why would that be?",
-		"The %TOOL% stares back at you, dissapointed. You missed the anomaly, you dolt. There's nothing there!",
-		"Nothing. Weird, maybe the %TOOL% must be broken or something?",
+		"Strange, %TOOL% stares back at you. It looks dissapointed, its screen almost saying 'You missed the anomaly, you dolt. There's nothing there!'",
+		"Nothing. Weird, maybe %TOOL% must be broken or something?",
 	)
 
 /obj/effect/anomaly/hallucination/decoy/anomalyEffect(seconds_per_tick)
