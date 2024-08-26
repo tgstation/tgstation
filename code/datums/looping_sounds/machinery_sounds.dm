@@ -128,7 +128,7 @@
 /datum/looping_sound/gravgen
 	start_sound = 'sound/machines/gravgen/grav_gen_start.ogg'
 	start_length = 1 SECONDS
-	mid_sounds = list('sound/machines/gravgen/grav_gen_mid1.ogg', 'sound/machines/gravgen/grav_gen_mid2.ogg')
+	mid_sounds = list('sound/machines/gravgen/grav_gen_mid1.ogg' = 1, 'sound/machines/gravgen/grav_gen_mid2.ogg' = 1)
 	mid_length = 1.1 SECONDS
 	end_sound = 'sound/machines/gravgen/grav_gen_end.ogg'
 	extra_range = 8
