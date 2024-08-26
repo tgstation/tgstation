@@ -126,10 +126,13 @@
 	falloff_distance = 1 //Instant falloff after initial tile
 
 /datum/looping_sound/gravgen
-	mid_sounds = 'sound/machines/gravgen/grav_gen_mid1.ogg'
-	mid_length = 1 SECONDS
-	extra_range = 7
-	volume = 20
+	start_sound = 'sound/machines/gravgen/grav_gen_start.ogg'
+	mid_sounds = list('sound/machines/gravgen/grav_gen_mid1.ogg' , 'sound/machines/gravgen/grav_gen_mid2.ogg')
+	mid_length = 1.2 SECONDS
+	end_sound = 'sound/machines/gravgen/grav_gen_end.ogg'
+	extra_range = 8
+	in_order = TRUE
+	volume = 50
 	falloff_distance = 5
 	falloff_exponent = 20
 
