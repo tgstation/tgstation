@@ -162,7 +162,8 @@ GLOBAL_VAR_INIT(custom_shuttle_count, 0)		//The amount of custom shuttles create
 	return position
 
 /obj/item/shuttle_creator/proc/invertDir(input_dir)
-
+	if(input_dir == NORTH)
+		return SOUTH
 	else if(input_dir == SOUTH)
 		return NORTH
 	else if(input_dir == EAST)
