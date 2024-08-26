@@ -1,0 +1,4 @@
+author: "Sakamoto4ka"
+delete-after: True
+changes:
+  - rscadd: "Added salt electrolysis reaction"
