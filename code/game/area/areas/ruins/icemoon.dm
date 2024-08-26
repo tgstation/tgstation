@@ -75,3 +75,7 @@
 /area/ruin/powered/hermit
 	name = "\improper Hermit's Cabin"
 
+/area/ruin/powered/syndielab
+	name = "\improper Top Secret Syndicate Lab"
+	ambience_index = AMBIENCE_DANGER
+	sound_environment = SOUND_ENVIRONMENT_CAVE
