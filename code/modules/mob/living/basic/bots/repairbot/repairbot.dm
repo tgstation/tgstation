@@ -186,11 +186,13 @@
 	. = ..()
 	. += mutable_appearance(icon, "repairbot[bot_mode_flags & BOT_MODE_ON]", appearance_flags = RESET_COLOR)
 	if(our_glass)
-		. +=  mutable_appearance(icon, "repairbot_glass_overlay", BELOW_MOB_LAYER + 0.02, appearance_flags = RESET_COLOR)
+		var/mutable_appearance/glass =  mutable_appearance(icon, "repairbot_glass_overlay", BELOW_MOB_LAYER - 0.02, appearance_flags = RESET_COLOR)
+		glass.pixel_y = -8
+		. += glass
 	if(our_iron)
-		. +=  mutable_appearance(icon, "repairbot_iron_overlay", BELOW_MOB_LAYER + 0.01, appearance_flags = RESET_COLOR)
-	if(our_tiles)
-		. +=  mutable_appearance(icon, "repairbot_tile_overlay", BELOW_MOB_LAYER + 0.03, appearance_flags = RESET_COLOR)
+		var/mutable_appearance/iron =  mutable_appearance(icon, "repairbot_iron_overlay", BELOW_MOB_LAYER - 0.02, appearance_flags = RESET_COLOR)
+		iron.pixel_y = -8
+		. += iron
 
 /mob/living/basic/bot/repairbot/update_icon_state()
 	. = ..()
@@ -250,14 +252,13 @@
 
 /obj/item/carried_repairbot/proc/set_bot(mob/living/basic/bot/repairbot/repairbot)
 	var/obj/item/bot_toolbox = repairbot.toolbox
-	icon = repairbot.icon
-	icon_state = repairbot.icon_state
+	icon = bot_toolbox::icon
+	icon_state = bot_toolbox::icon_state
 	lefthand_file = bot_toolbox::lefthand_file
 	righthand_file = bot_toolbox::righthand_file
 	inhand_icon_state = bot_toolbox::inhand_icon_state
 	force = bot_toolbox::force
 	repairbot.forceMove(src)
-	add_atom_colour(repairbot.toolbox_color, FIXED_COLOUR_PRIORITY)
 
 /obj/item/carried_repairbot/dropped()
 	. = ..()

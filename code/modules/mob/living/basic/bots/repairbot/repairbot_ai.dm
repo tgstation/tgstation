@@ -62,7 +62,7 @@
 	for(var/atom/possible_blacklisted as anything in my_target)
 		if(is_type_in_typecache(possible_blacklisted, blacklist_objects))
 			return FALSE
-	return !istype(get_area(my_target), /area/space)
+	return !istype(get_area(my_target), /area/space) && can_see(controller.pawn, my_target, 5)
 
 
 ///subtree to fix hull breaches
@@ -113,7 +113,7 @@
 
 	var/turf/adjacent_turfs = get_adjacent_open_turfs(my_target)
 	for(var/turf/possible_spaced_turf as anything in adjacent_turfs)
-		if(isspaceturf(possible_spaced_turf) && istype(get_area(possible_spaced_turf), /area/space))
+		if(isspaceturf(possible_spaced_turf) && istype(get_area(possible_spaced_turf), /area/space) && can_see(controller.pawn, my_target, 5))
 			return TRUE
 	return FALSE
 
@@ -153,7 +153,7 @@
 /datum/ai_behavior/bot_search/valid_grille_target/valid_target(datum/ai_controller/basic_controller/bot/controller, obj/structure/my_target)
 	if(locate(/obj/structure/window) in get_turf(my_target))
 		return FALSE
-	return (!istype(get_area(my_target), /area/space))
+	return (!istype(get_area(my_target), /area/space) && can_see(controller.pawn, my_target, 5))
 
 
 ///subtree to place iron on girders
@@ -173,7 +173,7 @@
 	controller.queue_behavior(/datum/ai_behavior/bot_search/valid_girder, BB_GIRDER_TO_WALL_TARGET, searchable_girder)
 
 /datum/ai_behavior/bot_search/valid_girder/valid_target(datum/ai_controller/basic_controller/bot/controller, obj/my_target)
-	return isfloorturf(my_target.loc)
+	return isfloorturf(my_target.loc) && can_see(controller.pawn, my_target, 5)
 
 ///subtree to repair machines with welders
 /datum/ai_planning_subtree/fix_window
@@ -188,5 +188,8 @@
 /datum/ai_behavior/bot_search/valid_window_fix
 
 /datum/ai_behavior/bot_search/valid_window_fix/valid_target(datum/ai_controller/basic_controller/bot/controller, obj/my_target)
-	return (my_target.get_integrity() < my_target.max_integrity || !my_target.anchored)
+
+	if(my_target.get_integrity() >= my_target.max_integrity && my_target.anchored)
+		return FALSE
+	return can_see(controller.pawn, my_target, 5)
 

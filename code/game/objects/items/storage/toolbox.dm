@@ -275,7 +275,7 @@
 
 //repairbot assembly
 /obj/item/storage/toolbox/tool_act(mob/living/user, obj/item/tool, list/modifiers)
-	if(!istype(tool, /obj/item/stack/tile/iron))
+	if(!istype(tool, /obj/item/assembly/prox_sensor))
 		return ..()
 	var/static/list/allowed_toolbox = list(
 		/obj/item/storage/toolbox/artistic,
@@ -297,17 +297,15 @@
 		/obj/item/storage/toolbox/artistic = "#378752",
 		/obj/item/storage/toolbox/syndicate = "#3d3d3d",
 	)
-	if(tool.use(10))
-		var/obj/item/bot_assembly/repairbot/repair = new
-		repair.toolbox = type
-		var/new_color = toolbox_colors[type] || "#445eb3"
-		repair.set_color(new_color)
-		user.put_in_hands(repair)
-		repair.update_appearance()
-		repair.balloon_alert(user, "tiles added")
-		qdel(src)
-		return ITEM_INTERACT_BLOCKING
-	balloon_alert(user, "needs 10 tiles!")
+	var/obj/item/bot_assembly/repairbot/repair = new
+	repair.toolbox = type
+	var/new_color = toolbox_colors[type] || "#445eb3"
+	repair.set_color(new_color)
+	user.put_in_hands(repair)
+	repair.update_appearance()
+	repair.balloon_alert(user, "sensor added!")
+	qdel(tool)
+	qdel(src)
 	return ITEM_INTERACT_SUCCESS
 
 /obj/item/storage/toolbox/haunted

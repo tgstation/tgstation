@@ -193,7 +193,7 @@
 //Repairbot assemblies
 /obj/item/bot_assembly/repairbot
 	desc = "It's a toolbox with tiles sticking out the top."
-	name = "tiles and toolbox"
+	name = "Repairbot Chasis"
 	icon_state = "repairbot_base"
 	throwforce = 10
 	created_name = "Repairbot"
@@ -208,53 +208,45 @@
 	add_atom_colour(new_color, FIXED_COLOUR_PRIORITY)
 	toolbox_color = new_color
 
-/obj/item/bot_assembly/repairbot/update_name()
-	. = ..()
-	switch(build_step)
-		if(ASSEMBLY_SECOND_STEP)
-			name = "incomplete repairbot assembly"
-		else
-			name = initial(name)
-
 /obj/item/bot_assembly/repairbot/update_desc()
 	. = ..()
 	switch(build_step)
-		if(ASSEMBLY_SECOND_STEP)
-			desc = "It's a toolbox with tiles sticking out the top and a sensor attached."
+		if(ASSEMBLY_FIRST_STEP)
+			desc = "It's a toolbox with a giant monitor sticking out!."
 		else
 			desc = initial(desc)
 
 /obj/item/bot_assembly/repairbot/update_overlays()
 	. = ..()
 	if(build_step >= ASSEMBLY_FIRST_STEP)
-		. += mutable_appearance(icon, "repairbot_tile_overlay", appearance_flags = RESET_COLOR)
-	if(build_step >= ASSEMBLY_SECOND_STEP)
 		. += mutable_appearance(icon, "repairbot_base_sensor", appearance_flags = RESET_COLOR)
+	if(build_step >= ASSEMBLY_SECOND_STEP)
+		. += mutable_appearance(icon, "repairbot_base_arms", appearance_flags = RESET_COLOR)
 
-/obj/item/bot_assembly/repairbot/attackby(obj/item/W, mob/user, params)
+/obj/item/bot_assembly/repairbot/attackby(obj/item/item, mob/user, params)
 	..()
 	switch(build_step)
 		if(ASSEMBLY_FIRST_STEP)
-			if(isprox(W))
-				if(!user.temporarilyRemoveItemFromInventory(W))
-					return
-				to_chat(user, span_notice("You add [W] to [src]."))
-				qdel(W)
-				build_step++
-				update_appearance()
-
+			if(!istype(item, /obj/item/bodypart/arm/left/robot) && !istype(item, /obj/item/bodypart/arm/right/robot))
+				return
+			if(!can_finish_build(item, user))
+				return
+			build_step++
+			to_chat(user, span_notice("You add [item] to [src]. Boop beep!"))
+			qdel(item)
+			update_appearance()
 		if(ASSEMBLY_SECOND_STEP)
-			if(istype(W, /obj/item/bodypart/arm/left/robot) || istype(W, /obj/item/bodypart/arm/right/robot))
-				if(!can_finish_build(W, user))
-					return
-				var/mob/living/basic/bot/repairbot/repair = new(drop_location())
-				repair.name = created_name
-				repair.robot_arm = W.type
-				repair.toolbox = toolbox
-				repair.set_color(toolbox_color)
-				to_chat(user, span_notice("You add [W] to [src]. Boop beep!"))
-				qdel(W)
-				qdel(src)
+			if(!istype(item, /obj/item/stack/conveyor))
+				return
+			if(!can_finish_build(item, user))
+				return
+			var/mob/living/basic/bot/repairbot/repair = new(drop_location())
+			repair.name = created_name
+			repair.toolbox = toolbox
+			repair.set_color(toolbox_color)
+			to_chat(user, span_notice("You add [item] to [src]. Boop beep!"))
+			qdel(item)
+			qdel(src)
 
 
 //Medbot Assembly
