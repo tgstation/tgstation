@@ -6362,6 +6362,8 @@
 #include "modular_doppler\emotes\code\added_emotes\robot_sounds.dm"
 #include "modular_doppler\face_mouse_preferences\code\face_mouse_pref.dm"
 #include "modular_doppler\languages\language_datums.dm"
+#include "modular_doppler\modular_cosmetics\code\jacket_pockets.dm"
+#include "modular_doppler\modular_cosmetics\code\suits\jacket.dm"
 #include "modular_doppler\modular_food_drinks_and_chems\chemistry_reagents.dm"
 #include "modular_doppler\modular_food_drinks_and_chems\food_and_drinks\alcohol reagents.dm"
 #include "modular_doppler\modular_food_drinks_and_chems\food_and_drinks\drink_reagents.dm"
