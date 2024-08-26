@@ -25,7 +25,7 @@
 		return FALSE
 	. = ..()
 	if(.)
-		return
+		return .
 	if(message_mods[MODE_HEADSET])
 		if(radio)
 			radio.talk_into(src, message, , spans, language, message_mods)
