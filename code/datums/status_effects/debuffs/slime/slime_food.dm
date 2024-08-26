@@ -54,12 +54,3 @@
 
 /datum/status_effect/slime_food/on_remove()
 	feeder = null
-
-/datum/status_effect/slime_food/update_particles()
-	if(particle_effect)
-		return
-
-	particle_effect = new(owner, /particles/pollen)
-
-	//particle coloured like the "pheromones" of the feeder
-	particle_effect.particles.color = "[feeder.chat_color]a0"
