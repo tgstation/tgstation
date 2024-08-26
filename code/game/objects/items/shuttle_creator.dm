@@ -1,6 +1,3 @@
-
-#define SHUTTLE_CREATOR_MAX_SIZE CONFIG_GET(number/max_shuttle_size)
-#define CUSTOM_SHUTTLE_LIMIT CONFIG_GET(number/max_shuttle_count)
 #define CARDINAL_DIRECTIONS_X list(1, 0, -1, 0)
 #define CARDINAL_DIRECTIONS_Y list(0, 1, 0, -1)
 
