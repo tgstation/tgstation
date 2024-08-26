@@ -143,7 +143,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/detectiveboard, 32)
 			if(!new_case)
 				return
 			var/case_color = tgui_input_list(user, "Please choose case color", "Detective's Board", case_colors)
-			if(!case_color || case_color == "")
+			if(!case_color)
 				return
 
 			var/datum/case/case = new (new_case, case_color)
