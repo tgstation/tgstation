@@ -165,7 +165,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/detectiveboard, 32)
 			return TRUE
 		if("rename_case")
 			var/new_name = tgui_input_text(user, "Please ender the case new name",  "Detective's Board")
-			if(new_name && new_name != "")
+			if(new_name)
 				var/datum/case/case = locate(params["case_ref"]) in cases
 				case.name = new_name
 				return TRUE
