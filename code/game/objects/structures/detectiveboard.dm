@@ -159,7 +159,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/detectiveboard, 32)
 			var/datum/case/case = locate(params["case_ref"]) in cases
 			for(var/datum/evidence/evidence in case.evidences)
 				remove_item(evidence.item, user)
-			cases.Remove(case)
+			cases -= case
 			current_case = cases.len
 			update_appearance(UPDATE_ICON)
 			return TRUE
