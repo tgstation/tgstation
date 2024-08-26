@@ -90,14 +90,16 @@ GLOBAL_LIST_INIT(specific_fish_icons, generate_specific_fish_icons())
 
 	///List of multipliers used to make fishes more common compared to everything else depending on bait quality, indexed from best to worst.
 	var/static/weight_result_multiplier = list(
-		TRAIT_BASIC_QUALITY_BAIT = 2,
+		TRAIT_GREAT_QUALITY_BAIT = 9,
 		TRAIT_GOOD_QUALITY_BAIT = 3.5,
-		TRAIT_GREAT_QUALITY_BAIT = 9)
+		TRAIT_BASIC_QUALITY_BAIT = 2,
+	)
 	///List of exponents used to level out the table weight differences between fish depending on bait quality.
 	var/static/weight_leveling_exponents = list(
-		TRAIT_BASIC_QUALITY_BAIT = 0.1,
-		TRAIT_GOOD_QUALITY_BAIT = 0.25,
-		TRAIT_GREAT_QUALITY_BAIT = 0.5)
+		TRAIT_GREAT_QUALITY_BAIT = 0.7,
+		TRAIT_GOOD_QUALITY_BAIT = 0.55,
+		TRAIT_BASIC_QUALITY_BAIT = 0.4,
+	)
 
 /datum/fish_source/New()
 	if(!PERFORM_ALL_TESTS(focus_only/fish_sources_tables))
@@ -291,6 +293,7 @@ GLOBAL_LIST(fishing_property_cache)
 			LAZYADD(GLOB.fishes_by_fish_evolution[type], fish_type)
 
 		var/beauty_score = "???"
+		var/beauty_value = fish.beauty
 		switch(beauty_score)
 			if(-INFINITY to FISH_BEAUTY_DISGUSTING)
 				beauty_score = "OH HELL NAW!"
@@ -391,7 +394,7 @@ GLOBAL_LIST(fishing_property_cache)
 
 
 	if(leveling_exponent)
-		level_out_fish(final_table)
+		level_out_fish(final_table, leveling_exponent)
 
 	return final_table
 
@@ -507,7 +510,7 @@ GLOBAL_LIST(fishing_property_cache)
 			FISH_SOURCE_AUTOWIKI_ICON = "",
 			FISH_SOURCE_AUTOWIKI_WEIGHT = PERCENT(fish_table[FISHING_DUD]/total_weight_without_bait),
 			FISH_SOURCE_AUTOWIKI_WEIGHT_SUFFIX = "WITHOUT A BAIT",
-			FISH_SOURCE_AUTOWIKI_NOTES = "Unless you have a magnet or rescue hook, or you know what you're doing, always use a bait",
+			FISH_SOURCE_AUTOWIKI_NOTES = "Unless you have a magnet or rescue hook or you know what you're doing, always use a bait",
 		))
 
 	for(var/obj/item/fish/fish as anything in only_fish)
@@ -516,7 +519,7 @@ GLOBAL_LIST(fishing_property_cache)
 		if(fish in fish_counts)
 			deets = "It's quite rare and can only be caught up to [fish_counts[fish]] times"
 			if(fish in fish_count_regen)
-				deets = " every [DisplayTimeText(fish::breeding_timeout)]"
+				deets += " every [DisplayTimeText(fish::breeding_timeout)]"
 		var/list/weight_deets = list()
 		for(var/trait in tables_by_quality)
 			weight_deets += "[round(PERCENT(tables_by_quality[trait][fish]/total_weight_by_quality[trait]), 0.1)]%"
@@ -535,7 +538,7 @@ GLOBAL_LIST(fishing_property_cache)
 			weight_deets += "[round(PERCENT(total_weight_by_quality_no_fish[trait]/total_weight_by_quality[trait]), 0.1)]%"
 		var/weight_suffix = "([english_list(weight_deets, and_text = ", ")])"
 		data += LIST_VALUE_WRAP_LISTS(list(
-			FISH_SOURCE_AUTOWIKI_NAME = "Other Stuff",
+			FISH_SOURCE_AUTOWIKI_NAME = FISH_SOURCE_AUTOWIKI_OTHER,
 			FISH_SOURCE_AUTOWIKI_ICON = FISH_SOURCE_AUTOWIKI_QUESTIONMARK,
 			FISH_SOURCE_AUTOWIKI_WEIGHT = PERCENT(total_weight_no_fish/total_weight),
 			FISH_SOURCE_AUTOWIKI_WEIGHT_SUFFIX = weight_suffix,

@@ -289,10 +289,11 @@
 /obj/item/fishing_rod/proc/get_fishing_overlays()
 	. = list()
 	var/line_color = line?.line_color || default_line_color
-	/// Line part by the rod, always visible
-	var/mutable_appearance/reel_appearance = mutable_appearance(icon, reel_overlay)
-	reel_appearance.color = line_color
-	. += reel_appearance
+	/// Line part by the rod.
+	if(reel_overlay)
+		var/mutable_appearance/reel_appearance = mutable_appearance(icon, reel_overlay)
+		reel_appearance.color = line_color
+		. += reel_appearance
 
 	// Line & hook is also visible when only bait is equipped but it uses default appearances then
 	if(hook || bait)

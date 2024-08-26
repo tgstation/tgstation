@@ -33,7 +33,10 @@
 		var/list/extra_info = list()
 		if(fish::fillet_type != /obj/item/food/fishmeat)
 			var/obj/item/fillet = fish::fillet_type
-			extra_info += "When butchered, it'll yield [initial(fillet.name)]."
+			if(!fillet)
+				extra_info += "Cannot be butchered."
+			else
+				extra_info += "When butchered, it'll yield [initial(fillet.name)]."
 		var/datum/reagent/food = fish::food
 		if(food != def_food)
 			extra_info += "It has to be fed <b>[initial(food.name)]</b> instead of [def_food_name]"
@@ -55,8 +58,6 @@
 			"traits" = generate_traits(properties[NAMEOF(fish, fish_traits)]),
 			"favorite_baits" = generate_baits(properties[NAMEOF(fish, favorite_bait)]),
 			"disliked_baits" = generate_baits(properties[NAMEOF(fish, disliked_bait)], TRUE),
-			"feeding_frequency" = fish::feeding_frequency,
-			"reproduction" = fish::breeding_timeout,
 			"beauty_score" = properties[FISH_PROPERTIES_BEAUTY_SCORE],
 		))
 
@@ -129,9 +130,15 @@
 		if(!bait::show_on_wiki)
 			continue
 
-		var/filename = SANITIZE_FILENAME(bait::icon_state)
+		var/filename = SANITIZE_FILENAME("[bait::icon_state]_wiki_bait")
 
 		var/quality = "Bland"
+
+		var/list/foodtypes
+		if(ispath(bait, /obj/item/food/bait/doughball/synthetic))
+			foodtypes = list("Don't worry about it")
+		else
+			foodtypes = bitfield_to_list(bait::foodtypes, FOOD_FLAGS_IC) || list("None")
 
 		switch(bait::bait_quality)
 			if(TRAIT_BASIC_QUALITY_BAIT)
@@ -145,7 +152,7 @@
 			"name" = full_capitalize(escape_value(bait::name)),
 			"icon" = filename,
 			"description" = escape_value(bait::desc),
-			"foodtypes" = bitfield_to_list(bait::foodtypes, FOOD_FLAGS_IC),
+			"foodtypes" = foodtypes,
 			"quality" = quality,
 		))
 
@@ -167,9 +174,10 @@
 
 	upload_icon(icon(/obj/item/stock_parts/power_store/cell/lead::icon, /obj/item/stock_parts/power_store/cell/lead::icon_state), filename)
 
+	var/obj/needletype = /obj/item/fish/needlefish
 	output += "\n\n" + include_template("Autowiki/FishBait", list(
 		"name" = "Baitfish",
-		"icon" = SANITIZE_FILENAME(/obj/item/fish/needlefish::icon_state),
+		"icon" = FISH_AUTOWIKI_FILENAME(needletype),
 		"description" = "Smaller fish such as goldfish, needlefish, armorfish and lavaloops can also be used as bait, It's a fish eat fish world.",
 		"foodtypes" = "Seafood?",
 		"quality" = "Good",
@@ -195,7 +203,7 @@
 
 	var/list/generated_icons = list()
 	for (var/obj/item/fishing_line/line as anything in typesof(/obj/item/fishing_line))
-		var/filename = SANITIZE_FILENAME(line::icon_state)
+		var/filename = SANITIZE_FILENAME("[line::icon_state]_wiki_line")
 
 		output += "\n\n" + include_template("Autowiki/FishLine", list(
 			"name" = full_capitalize(escape_value(line::name)),
@@ -217,7 +225,7 @@
 
 	var/list/generated_icons = list()
 	for (var/obj/item/fishing_hook/hook as anything in typesof(/obj/item/fishing_hook))
-		var/filename = SANITIZE_FILENAME(hook::icon_state)
+		var/filename = SANITIZE_FILENAME("[hook::icon_state]_wiki_hook")
 
 		output += "\n\n" + include_template("Autowiki/FishHook", list(
 			"name" = full_capitalize(escape_value(hook::name)),
@@ -242,7 +250,7 @@
 		if(!rod::show_in_wiki)
 			continue
 
-		var/filename = SANITIZE_FILENAME(rod::icon_state)
+		var/filename = SANITIZE_FILENAME("[rod::icon_state]_wiki_rod")
 
 		var/desc = escape_value(rod::ui_description)
 		if(rod::wiki_description)
@@ -255,9 +263,10 @@
 
 		if(!generated_icons[filename])
 			var/icon/rod_icon = icon(rod:icon, rod::icon_state)
-			var/icon/line = icon(rod::icon, rod::reel_overlay)
-			line.Blend(rod::default_line_color, ICON_MULTIPLY)
-			rod_icon.Insert(line)
+			if(rod::reel_overlay)
+				var/icon/line = icon(rod::icon, rod::reel_overlay)
+				line.Blend(rod::default_line_color, ICON_MULTIPLY)
+				rod_icon.Blend(line, ICON_OVERLAY)
 			upload_icon(rod_icon, filename)
 		generated_icons[filename] = TRUE
 
@@ -291,18 +300,24 @@
 	sortTim(data, GLOBAL_PROC_REF(cmp_autowiki_fish_sources_content))
 	for(var/list/entry in data)
 		entry[FISH_SOURCE_AUTOWIKI_WEIGHT] = "[round(entry[FISH_SOURCE_AUTOWIKI_WEIGHT], 0.1)]%"
-		if(entry[FISH_SOURCE_AUTOWIKI_WEIGHT_SUFFIX])
-			entry[FISH_SOURCE_AUTOWIKI_WEIGHT] += " [entry[FISH_SOURCE_AUTOWIKI_WEIGHT_SUFFIX]]"
+		var/weight_suffix = entry[FISH_SOURCE_AUTOWIKI_WEIGHT_SUFFIX]
+		if(weight_suffix)
+			entry[FISH_SOURCE_AUTOWIKI_WEIGHT] += " [weight_suffix]"
+		entry -= FISH_SOURCE_AUTOWIKI_WEIGHT
 		output += include_template("Autowiki/FishSourceContents", entry)
 
 	return output
 
 ///Sort the autowiki fish entries by their weight. However, duds always come first.
 /proc/cmp_autowiki_fish_sources_content(list/A, list/B)
-	if(A[FISH_SOURCE_AUTOWIKI_NAME] == FISH_SOURCE_AUTOWIKI_NAME)
+	if(A[FISH_SOURCE_AUTOWIKI_NAME] == FISH_SOURCE_AUTOWIKI_DUD)
 		return -1
-	if(B[FISH_SOURCE_AUTOWIKI_NAME] == FISH_SOURCE_AUTOWIKI_NAME)
+	if(B[FISH_SOURCE_AUTOWIKI_NAME] == FISH_SOURCE_AUTOWIKI_DUD)
 		return 1
+	if(A[FISH_SOURCE_AUTOWIKI_NAME] == FISH_SOURCE_AUTOWIKI_OTHER)
+		return 1
+	if(B[FISH_SOURCE_AUTOWIKI_NAME] == FISH_SOURCE_AUTOWIKI_OTHER)
+		return -1
 	return B[FISH_SOURCE_AUTOWIKI_WEIGHT] - A[FISH_SOURCE_AUTOWIKI_WEIGHT]
 
 /datum/autowiki/fish_scan
@@ -348,7 +363,7 @@
 	var/filename = SANITIZE_FILENAME("fishing_portal_[reward.radial_state]")
 
 	var/list/unlocks = list()
-	for(var/datum/experiment/unlock as anything in scan.points_reward)
+	for(var/datum/experiment/unlock as anything in scan.next_experiments)
 		unlocks += initial(unlock.name)
 	output += include_template("Autowiki/FishScanRewards", list(
 		"name" = full_capitalize(escape_value("[reward.radial_name] Dimension")),
@@ -379,7 +394,7 @@
 			"fish" = get_fish(evo_type),
 			"min_max_temp" = "[evolution.required_temperature_min] - [evolution.required_temperature_max] K",
 			"notes" = escape_value(evolution.conditions_note),
-			"result_icon" = evolution.show_result_on_wiki ? FISH_AUTOWIKI_FILENAME(evolution.new_fish_type) : null,
+			"result_icon" = evolution.show_result_on_wiki ? FISH_AUTOWIKI_FILENAME(evolution.new_fish_type) : FISH_SOURCE_AUTOWIKI_QUESTIONMARK,
 
 		))
 
