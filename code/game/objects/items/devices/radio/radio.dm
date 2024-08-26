@@ -536,6 +536,11 @@
 	if(listening && overlay_speaker_idle)
 		. += overlay_speaker_idle
 
+/obj/item/radio/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if(user.combat_mode && tool.tool_behaviour == TOOL_SCREWDRIVER)
+		return screwdriver_act(user, tool)
+	return ..()
+
 /obj/item/radio/screwdriver_act(mob/living/user, obj/item/tool)
 	add_fingerprint(user)
 	unscrewed = !unscrewed
