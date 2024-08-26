@@ -776,3 +776,22 @@
   - rscadd: Added crates of the following varieties; Interdyne, Interdyne freezer,
       Tiger Co-Op, S.E.L.F. MI13, A.R.C., Cybersun (4 colour variants), Waffle Corp,
       Donk, Gorlex, Gorlex weapons, DeForest, Nakamure Engineeing, Robust Industries
+2024-08-26:
+  GPeckman:
+  - bugfix: The instagib, ragecage, mech madness, secu-ring, shooting range, and sniper
+      elite deathmatch maps are available again.
+  Ghommie:
+  - bugfix: Fixes the chainsaw evolution for goldfishes.
+  Majkl-J:
+  - rscadd: Achievement for eating 500 cigarettes
+  - balance: Cigarettes are now edible
+  - code_imp: Adds a variable to hide the food examine on the edible element
+  - bugfix: SSPolling no longer fills in the candidate list with empty entries to
+      guarantee it returns a list size of amount_to_pick
+  SmArtKar:
+  - spellcheck: Fixed a typo on snowdin shuttle transi(s)t consoles
+  grungussuss:
+  - sound: lead pipe has sound
+  vinylspiders:
+  - bugfix: wet hides and hairless hides no longer make metal clanging noises when
+      picked up/dropped
