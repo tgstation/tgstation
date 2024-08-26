@@ -293,8 +293,7 @@ GLOBAL_LIST(fishing_property_cache)
 			LAZYADD(GLOB.fishes_by_fish_evolution[type], fish_type)
 
 		var/beauty_score = "???"
-		var/beauty_value = fish.beauty
-		switch(beauty_score)
+		switch(fish.beauty)
 			if(-INFINITY to FISH_BEAUTY_DISGUSTING)
 				beauty_score = "OH HELL NAW!"
 			if(FISH_BEAUTY_DISGUSTING to FISH_BEAUTY_UGLY)
