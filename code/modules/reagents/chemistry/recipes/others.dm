@@ -41,9 +41,10 @@
 	required_other = TRUE
 
 /datum/chemical_reaction/sodiumchloride/pre_reaction_other_checks(datum/reagents/holder)
+	. = ..()	
 	if(holder.has_reagent(/datum/reagent/consumable/liquidelectricity) || holder.has_reagent(/datum/reagent/consumable/liquidelectricity/enriched))
 		return FALSE
-	. = ..()
+
 
 /datum/chemical_reaction/stable_plasma
 	results = list(/datum/reagent/stable_plasma = 1)
