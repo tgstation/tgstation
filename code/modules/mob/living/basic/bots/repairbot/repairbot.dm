@@ -17,14 +17,14 @@
 	radio_key = /obj/item/encryptionkey/headset_service
 	radio_channel = RADIO_CHANNEL_ENGINEERING
 	bot_type = REPAIR_BOT
-//	additional_access = /datum/id_trim/job/engineer
+	additional_access = /datum/id_trim/job/station_engineer
 	ai_controller = /datum/ai_controller/basic_controller/bot/repairbot
 	///our iron stack
 	var/obj/item/stack/sheet/iron/our_iron
 	///our glass stack
 	var/obj/item/stack/sheet/glass/our_glass
 	///our floor stack
-	var/obj/item/stack/tile/iron/our_tiles //testing -iron-
+	var/obj/item/stack/tile/our_tiles
 	///our welder
 	var/obj/item/weldingtool/repairbot/our_welder
 	///our crowbar
@@ -43,6 +43,21 @@
 		/obj/item/weldingtool/repairbot = typecacheof(list(/obj/machinery, /obj/structure/window)),
 		/obj/item/crowbar = typecacheof(list(/turf/open/floor)),
 	)
+	///our neutral voicelines
+	var/static/list/neutral_voicelines = list(
+		REPAIRBOT_VOICED_BRICK = 'sound/voice/repairbot/brick.ogg',
+		REPAIRBOT_VOICED_ENTROPY = 'sound/voice/repairbot/entropy.ogg',
+		REPAIRBOT_VOICED_FIX_IT = 'sound/voice/repairbot/fixit.ogg',
+		REPAIRBOT_VOICED_FIX_TOUCH = 'sound/voice/repairbot/fixtouch.ogg',
+		REPAIRBOT_VOICED_HOLE = 'sound/voice/repairbot/patchingholes.ogg',
+		REPAIRBOT_VOICED_PAY = 'sound/voice/repairbot/pay.ogg',
+	)
+	///our emagged voicelines
+	var/static/list/emagged_voicelines = list(
+		REPAIRBOT_VOICED_ENTROPY = 'sound/voice/repairbot/entropy.ogg',
+		REPAIRBOT_VOICED_STRINGS = 'sound/voice/repairbot/strings.ogg',
+		REPAIRBOT_VOICED_PASSION = 'sound/voice/repairbot/passionproject.ogg',
+	)
 	///our flags
 	var/repairbot_flags = REPAIRBOT_FIX_BREACHES | REPAIRBOT_FIX_GIRDERS | REPAIRBOT_REPLACE_WINDOWS | REPAIRBOT_REPLACE_TILES | REPAIRBOT_BUILD_GIRDERS
 	///our color
@@ -55,6 +70,7 @@
 	var/static/list/abilities = list(
 		/datum/action/cooldown/mob_cooldown/bot/build_girder = BB_GIRDER_BUILD_ABILITY,
 	)
+	ADD_TRAIT(src, TRAIT_SHADOWLESS, INNATE_TRAIT)
 	grant_actions_by_list(abilities)
 	add_traits(list(TRAIT_SPACEWALK, TRAIT_NEGATES_GRAVITY, TRAIT_MOB_MERGE_STACKS, TRAIT_FIREDOOR_OPENER), INNATE_TRAIT)
 	our_welder = new(src)
@@ -163,14 +179,6 @@
 /mob/living/basic/bot/repairbot/process(seconds_per_tick) //generate 1 iron rod every 2 seconds
 	if(isnull(our_rods) || our_rods.amount < our_rods.max_amount)
 		new /obj/item/stack/rods(src)
-	//testing purposes
-	if(isnull(our_iron) || our_iron.amount < our_iron.max_amount)
-		new /obj/item/stack/sheet/iron(src)
-	if(isnull(our_glass) || our_glass.amount < our_glass.max_amount)
-		new /obj/item/stack/sheet/glass(src)
-	if(isnull(our_tiles) || our_tiles.amount < our_tiles.max_amount)
-		new /obj/item/stack/tile/iron(src)
-
 
 /mob/living/basic/bot/repairbot/turn_on()
 	. = ..()
@@ -187,16 +195,21 @@
 	. += mutable_appearance(icon, "repairbot[bot_mode_flags & BOT_MODE_ON]", appearance_flags = RESET_COLOR)
 	if(our_glass)
 		var/mutable_appearance/glass =  mutable_appearance(icon, "repairbot_glass_overlay", BELOW_MOB_LAYER - 0.02, appearance_flags = RESET_COLOR)
-		glass.pixel_y = -8
+		glass.pixel_x = -6
+		glass.pixel_y = -5
 		. += glass
 	if(our_iron)
 		var/mutable_appearance/iron =  mutable_appearance(icon, "repairbot_iron_overlay", BELOW_MOB_LAYER - 0.02, appearance_flags = RESET_COLOR)
-		iron.pixel_y = -8
+		iron.pixel_y = -5
+		iron.pixel_x = 7
 		. += iron
 
 /mob/living/basic/bot/repairbot/update_icon_state()
 	. = ..()
 	icon_state = base_icon_state
+
+/mob/living/basic/bot/repairbot/generate_speak_list()
+	return neutral_voicelines + emagged_voicelines
 
 /mob/living/basic/bot/repairbot/attempt_access(mob/bot, obj/door_attempt)
 	. = ..()

@@ -261,7 +261,7 @@
 
 	var/mob/living/living_pawn = controller.pawn
 	var/list/ignore_list = controller.blackboard[BB_TEMPORARY_IGNORE_LIST]
-	var/list/objects_to_search = turf_search ? RANGE_TURFS(radius, controller.pawn) : oview(radius, controller.pawn) //use range turfs instead of oview when we can for performance
+	var/list/objects_to_search = turf_search ? spiral_range_turfs(radius, controller.pawn) : oview(radius, controller.pawn) //use range turfs instead of oview when we can for performance
 	for(var/atom/potential_target as anything in objects_to_search)
 		if(QDELETED(living_pawn))
 			return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_FAILED
@@ -294,7 +294,7 @@
 
 ///behavior to interact with atoms
 /datum/ai_behavior/bot_interact
-	behavior_flags = AI_BEHAVIOR_REQUIRE_MOVEMENT | AI_BEHAVIOR_CAN_PLAN_DURING_EXECUTION | AI_BEHAVIOR_REQUIRE_REACH
+	behavior_flags = AI_BEHAVIOR_REQUIRE_MOVEMENT | AI_BEHAVIOR_REQUIRE_REACH
 
 /datum/ai_behavior/bot_interact/setup(datum/ai_controller/controller, target_key)
 	. = ..()
