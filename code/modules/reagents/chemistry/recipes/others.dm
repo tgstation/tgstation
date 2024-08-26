@@ -615,11 +615,9 @@
 	required_catalysts = list(/datum/reagent/consumable/liquidelectricity = 1)
 	reaction_tags = REACTION_TAG_EASY | REACTION_TAG_CHEMICAL
 
-/datum/chemical_reaction/saltelectrolysis2
-	results = list(/datum/reagent/chlorine = 2.5, /datum/reagent/sodium = 2.5)
-	required_reagents = list(/datum/reagent/consumable/salt = 5)
+/datum/chemical_reaction/saltelectrolysis/enriched
 	required_catalysts = list(/datum/reagent/consumable/liquidelectricity/enriched = 1)
-	reaction_tags = REACTION_TAG_EASY | REACTION_TAG_CHEMICAL
+
 
 //butterflium
 /datum/chemical_reaction/butterflium
