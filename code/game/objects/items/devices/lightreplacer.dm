@@ -208,7 +208,7 @@
 	for(var/obj/machinery/light/target in user.loc)
 		replace_light(target, user)
 		on_a_light = TRUE
-	if(!on_a_light) //So we dont give a ballon alert when we just used replace_light
+	if(!on_a_light) //So we don't give a balloon alert when we just used replace_light
 		user.balloon_alert(user, "[uses] lights, [bulb_shards]/[BULB_SHARDS_REQUIRED] fragments")
 
 /**

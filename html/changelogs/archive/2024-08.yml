@@ -677,3 +677,121 @@
   - image: Updated cryostasis beaker's sprite
   grungussuss:
   - sound: computers now make clicky clacky sounds
+2024-08-22:
+  Absolucy:
+  - qol: Clicking floor tiles now also closes curator/morgue doors, like with normal
+      airlocks.
+  - qol: Unarmed attacks with carp jaws now uses a bite effect rather than a punch
+      effect.
+  Ben10Omintrix:
+  - bugfix: fences will no longer appear pitch black and they will layer properly
+  Bisar:
+  - rscadd: Nanotrasen Intelligence has received reports of botanical experimentation
+      in a Syndicate base on lavaland. What fiendish flora are taking root in their
+      secret lair?
+  Ghommie:
+  - rscadd: Fishing toolboxes (and occasionally maintenance) now come with a paper
+      slip containing fishing-related tips.
+  - rscadd: Buckshot is back on the menu, on the blackmarket.
+  - balance: the integrity of firearms now counts toward projectile damage. A gun
+      that's on the very verge of breaking down will deal half as much damage.
+  Jacquerel:
+  - balance: Pacifist carp can now be spawned from the friendly gold core reaction,
+      and no longer appear from the hostile one.
+  - bugfix: The teeth of toothless carp will not occasionally reappear
+  - bugfix: Crabs will now run from attackers larger than them and attack things smaller
+      than them, as intended.
+  Redrover1760:
+  - balance: Changed max refined vortex cores from 1 to 3. Changed the Event Horizon
+      Anti-Existential Beam Rifle recipe to require 2 vortex cores.
+  Rhials:
+  - qol: Delivery/Bot pathing nodes have been added to the middle room of Runtime
+      station.
+  - sound: Windows blown out by a Voidwalker blade now have a cool sound that plays
+      as they reform.
+  - admin: You can now choose the humanoid species spawned by an ERT summon in the
+      summon menu.
+  SmArtKar:
+  - bugfix: Fixes kudzu being able to spawn on openspace turfs resulting in it getting
+      stuck
+  - bugfix: Radioactive nebula no longer runtimes on runtime station
+  - bugfix: Fixed delam counter going over objects
+  by Xackii, sprites by ArcaneMusic:
+  - rscadd: Added big manipulators.
+  lizelive:
+  - balance: reticence requires progression
+  r3dj4ck0424:
+  - balance: The CytoPro has had prices raised to slightly more reasonable levels.
+2024-08-23:
+  MMMiracles:
+  - bugfix: More various Tramstation-adjacent wallening fixes.
+  Majkl-J:
+  - bugfix: custom pies and cakes are craftable again
+  SmArtKar:
+  - image: Updated goliath cloak sprites
+  necromanceranne:
+  - rscadd: Punching mitts! Punch wildlife to death and scream the whole time. ADVENTURE!
+  - balance: Megafauna can be affected by martial arts.
+2024-08-24:
+  DaCoolBoss:
+  - bugfix: Aquarium decorations now contain plastic.
+  - spellcheck: Added item descriptions for aquarium decorations.
+  EnterTheJake:
+  - balance: Rusted Ritual now requries 10 sheets of Iron instead of Titanium.
+  Ghommie:
+  - rscadd: Added Athletic Fishing Gloves and Fishing Glove Module to the advanced
+      fishing tech node. Both can be used to fish without having to hold a fishing
+      rod.  The athletic fishing gloves will also train your athletics skill.
+  LT3:
+  - spellcheck: Sneak a peek of Hilbert's Hotel, not a sneak peak
+  SmArtKar:
+  - bugfix: Marine helmets no longer change their sprite to security helmets when
+      their flashlight is toggled
+  - spellcheck: Hierophant no longer lies about obliterating someone
+  TheBoondock:
+  - qol: goliath arm can defuse gibonite by bumping or direct click
+2024-08-25:
+  DrDiasyl aka DrTuxedo:
+  - rscadd: Curator has received a new BROADCAST CAMERA which can broadcast the surroundings
+      LIVE on Entertainment Screens/ Alongside with some other Journalism related
+      gear in his Heroic Beacon
+  - sound: Entertainment screens now play muffled speech when hearing a message on
+      Entertainment frequency
+  Ghommie:
+  - rscadd: You can place papers, photos and cash bills (no holochips) inside bottles
+      and then toss them into the ocean (or fishing portal gen with relative settings)
+      with right-click, for others to fish them up on future rounds.
+  - bugfix: You can no longer pickup closets and crates wrapped in a package with
+      a fishing rod.
+  - bugfix: Fixed a few harddel issues with mob spawns that caused charred corpses
+      fished from lavaland to create an invisible blockade.
+  - bugfix: Fixed being able to fish up mobs that have fallen in totally different
+      z-levels with a rescue hook (i.e. from bitrunning domains to lavaland).
+  SmArtKar:
+  - bugfix: Removed all ways of teleportation from deathmatch and replaced all consoles
+      on a certain map with non-functional variants. Loadouts have been adjusted to
+      account for this.
+  - rscdel: Species Warfare no longer has atmospherics-related equipment on it.
+  YesterdaysPromise:
+  - rscadd: Added crates of the following varieties; Interdyne, Interdyne freezer,
+      Tiger Co-Op, S.E.L.F. MI13, A.R.C., Cybersun (4 colour variants), Waffle Corp,
+      Donk, Gorlex, Gorlex weapons, DeForest, Nakamure Engineeing, Robust Industries
+2024-08-26:
+  GPeckman:
+  - bugfix: The instagib, ragecage, mech madness, secu-ring, shooting range, and sniper
+      elite deathmatch maps are available again.
+  Ghommie:
+  - bugfix: Fixes the chainsaw evolution for goldfishes.
+  Majkl-J:
+  - rscadd: Achievement for eating 500 cigarettes
+  - balance: Cigarettes are now edible
+  - code_imp: Adds a variable to hide the food examine on the edible element
+  - bugfix: SSPolling no longer fills in the candidate list with empty entries to
+      guarantee it returns a list size of amount_to_pick
+  SmArtKar:
+  - spellcheck: Fixed a typo on snowdin shuttle transi(s)t consoles
+  grungussuss:
+  - sound: lead pipe has sound
+  vinylspiders:
+  - bugfix: wet hides and hairless hides no longer make metal clanging noises when
+      picked up/dropped
