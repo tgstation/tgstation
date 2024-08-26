@@ -196,7 +196,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/detectiveboard, 32)
 				remove_item(item, user)
 				for(var/datum/evidence/connection in evidence.connections)
 					connection.connections.Remove(evidence)
-				case.evidences.Remove(evidence)
+				case.evidences -= evidence
 				update_appearance(UPDATE_ICON)
 				return TRUE
 		if("set_evidence_cords")
