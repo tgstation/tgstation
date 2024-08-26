@@ -101,17 +101,6 @@
 		))
 		to_chat(owner, span_userdanger("[feedback_text] as the layer of slime eats away at you!"))
 
-/datum/status_effect/slimed/update_particles()
-	if(particle_effect)
-		return
-
-	// taste the rainbow
-	var/particle_type = rainbow ? /particles/slime/rainbow : /particles/slime
-	particle_effect = new(owner, particle_type)
-
-	if(!rainbow)
-		particle_effect.particles.color = "[slime_color]a0"
-
 /datum/status_effect/slimed/get_examine_text()
 	return span_warning("[owner.p_They()] [owner.p_are()] covered in bubbling slime!")
 
