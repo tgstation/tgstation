@@ -530,10 +530,16 @@
 // Preset lizard plushie that uses the original lizard plush green. (Or close to it)
 /obj/item/toy/plush/lizard_plushie/green
 	desc = "An adorable stuffed toy that resembles a green lizardperson. This one fills you with nostalgia and soul."
+	icon = 'icons/map_icons/items.dmi'
+	icon_state = "/obj/item/toy/plush/lizard_plushie/green"
+	post_init_icon_state = "map_plushie_lizard"
 	greyscale_colors = "#66ff33#000000"
 
 /obj/item/toy/plush/lizard_plushie/greyscale
 	desc = "An adorable stuffed toy that resembles a lizardperson. This one has been custom made."
+	icon = 'icons/map_icons/items.dmi'
+	icon_state = "/obj/item/toy/plush/lizard_plushie/greyscale"
+	post_init_icon_state = "map_plushie_lizard"
 	greyscale_colors = "#d3d3d3#000000"
 	flags_1 = IS_PLAYER_COLORABLE_1
 
@@ -548,12 +554,17 @@
 
 /obj/item/toy/plush/lizard_plushie/space/green
 	desc = "An adorable stuffed toy that resembles a very determined spacefaring green lizardperson. To infinity and beyond, little guy. This one fills you with nostalgia and soul."
+	icon = 'icons/map_icons/items.dmi'
+	icon_state = "/obj/item/toy/plush/lizard_plushie/space/green"
+	post_init_icon_state = "map_plushie_spacelizard"
 	greyscale_colors = "#66ff33#000000"
 
 /obj/item/toy/plush/snakeplushie
 	name = "snake plushie"
 	desc = "An adorable stuffed toy that resembles a snake. Not to be mistaken for the real thing."
-	icon_state = "map_plushie_snake"
+	icon = 'icons/map_icons/items.dmi'
+	icon_state = "/obj/item/toy/plush/snakeplushie"
+	post_init_icon_state = "map_plushie_snake"
 	greyscale_config = /datum/greyscale_config/plush_snake
 	greyscale_colors = "#99ff99#000000"
 	inhand_icon_state = null
@@ -582,7 +593,9 @@
 /obj/item/toy/plush/slimeplushie
 	name = "slime plushie"
 	desc = "An adorable stuffed toy that resembles a slime. It is practically just a hacky sack."
-	icon_state = "map_plushie_slime"
+	icon = 'icons/map_icons/items.dmi'
+	icon_state = "/obj/item/toy/plush/slimeplushie"
+	post_init_icon_state = "map_plushie_slime"
 	greyscale_config = /datum/greyscale_config/plush_slime
 	greyscale_colors = "#aaaaff#000000"
 	inhand_icon_state = null
