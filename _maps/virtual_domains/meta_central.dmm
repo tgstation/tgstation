@@ -689,7 +689,6 @@
 	department = "Head of Personnel's Desk";
 	name = "Head of Personnel's Requests Console"
 	},
-/obj/machinery/light/small/directional/north,
 /turf/open/floor/wood,
 /area/virtual_domain)
 "fB" = (
@@ -1628,7 +1627,6 @@
 /turf/open/floor/iron,
 /area/virtual_domain)
 "nU" = (
-/obj/machinery/light/small/directional/north,
 /obj/effect/turf_decal/stripes/corner{
 	dir = 4
 	},
@@ -1698,6 +1696,7 @@
 	pixel_y = 12;
 	pixel_x = 2
 	},
+/obj/machinery/light/small/directional/north,
 /turf/open/floor/iron,
 /area/virtual_domain)
 "on" = (
@@ -1945,11 +1944,9 @@
 /turf/open/floor/carpet,
 /area/virtual_domain)
 "qq" = (
-/obj/effect/turf_decal/stripes/line{
-	dir = 6
-	},
-/obj/structure/alien/resin,
-/turf/open/floor/iron,
+/obj/structure/broken_flooring/side/directional/west,
+/obj/structure/sign/warning/gas_mask/directional/north,
+/turf/open/floor/plating,
 /area/virtual_domain)
 "qr" = (
 /obj/machinery/airalarm/directional/east,
@@ -2523,7 +2520,6 @@
 /obj/effect/turf_decal/bot{
 	dir = 1
 	},
-/obj/structure/sign/departments/medbay/alt/directional/west,
 /obj/effect/landmark/bitrunning/cache_spawn,
 /turf/open/floor/iron,
 /area/virtual_domain)
@@ -2638,7 +2634,7 @@
 	name = "Teleporter Shutter Control";
 	pixel_y = 5
 	},
-/obj/structure/alien/resin,
+/obj/structure/alien/weeds,
 /turf/open/floor/iron,
 /area/virtual_domain)
 "vK" = (
@@ -3088,7 +3084,6 @@
 "zL" = (
 /obj/item/reagent_containers/cup/bottle/random_virus,
 /obj/effect/decal/cleanable/blood/gibs/down,
-/obj/structure/sign/warning/biohazard/directional/south,
 /turf/open/indestructible/meat,
 /area/virtual_domain)
 "zO" = (
@@ -3210,7 +3205,6 @@
 /turf/open/floor/plating,
 /area/virtual_domain)
 "AQ" = (
-/obj/structure/sign/poster/random/directional/east,
 /obj/effect/turf_decal/tile/bar,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 4
@@ -4632,9 +4626,10 @@
 /turf/open/floor/carpet,
 /area/virtual_domain)
 "ML" = (
-/obj/structure/sign/warning/secure_area/directional/west,
-/obj/effect/mapping_helpers/broken_floor,
-/turf/open/floor/plating,
+/obj/structure/bed/maint,
+/obj/item/bedsheet/pirate,
+/obj/machinery/light/small/directional/north,
+/turf/open/floor/carpet,
 /area/virtual_domain)
 "MM" = (
 /obj/structure/closet/crate,
@@ -4780,7 +4775,6 @@
 /obj/effect/turf_decal/trimline/blue/filled/warning{
 	dir = 4
 	},
-/obj/structure/sign/warning/gas_mask/directional/south,
 /turf/open/floor/iron,
 /area/virtual_domain)
 "NO" = (
@@ -4971,12 +4965,12 @@
 /area/virtual_domain)
 "Pg" = (
 /obj/effect/turf_decal/delivery,
-/obj/structure/alien/resin,
+/obj/structure/alien/weeds,
 /turf/open/floor/iron,
 /area/virtual_domain)
 "Pk" = (
 /obj/effect/turf_decal/tile/neutral/fourcorners,
-/obj/structure/alien/resin,
+/obj/structure/alien/weeds,
 /turf/open/floor/iron/dark,
 /area/virtual_domain)
 "Pq" = (
@@ -6551,7 +6545,7 @@ uS
 uS
 uS
 uS
-pA
+qq
 kI
 eZ
 eX
@@ -6726,7 +6720,7 @@ uS
 uS
 uS
 uS
-bO
+ML
 DP
 Mk
 uS
@@ -6981,7 +6975,7 @@ Cd
 CQ
 Lm
 jD
-qq
+IH
 vI
 mq
 vn
@@ -8131,7 +8125,7 @@ ey
 eu
 fh
 wV
-ML
+vw
 ja
 Tm
 DO
