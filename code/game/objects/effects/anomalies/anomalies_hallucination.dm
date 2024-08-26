@@ -43,7 +43,7 @@
 
 	hallucination_pulse(
 		center = get_turf(src),
-		radius = 10,
+		radius = 15,
 		hallucination_duration = 50 SECONDS,
 		hallucination_max_duration = 300 SECONDS,
 		optional_messages = messages,
@@ -51,7 +51,7 @@
 
 /obj/effect/anomaly/hallucination/proc/generate_decoys()
 	for(var/turf/floor in orange(1, src))
-		if(prob(30))
+		if(prob(35))
 			new /obj/effect/anomaly/hallucination/decoy(floor)
 
 /obj/effect/anomaly/hallucination/decoy
