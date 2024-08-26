@@ -1,0 +1,6 @@
+author: "Majkl-J"
+delete-after: True
+changes:
+  - rscadd: "Achievement for eating 500 cigarettes"
+  - balance: "Cigarettes are now edible"
+  - code_imp: "Adds a variable to hide the food examine on the edible element"

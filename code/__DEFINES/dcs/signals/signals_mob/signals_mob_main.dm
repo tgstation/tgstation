@@ -50,7 +50,7 @@
 	#define COMSIG_MOB_CLIENT_BLOCK_PRE_MOVE COMPONENT_MOVABLE_BLOCK_PRE_MOVE
 	/// The argument of move_args which corresponds to the loc we're moving to
 	#define MOVE_ARG_NEW_LOC 1
-	/// The arugment of move_args which dictates our movement direction
+	/// The argument of move_args which dictates our movement direction
 	#define MOVE_ARG_DIRECTION 2
 /// From base of /client/Move(): (direction, old_dir)
 #define COMSIG_MOB_CLIENT_MOVED "mob_client_moved"
@@ -72,7 +72,7 @@
 #define COMSIG_MOB_MIND_TRANSFERRED_INTO "mob_mind_transferred_into"
 ///from mind/transfer_from. Sent to the mob the mind is being transferred out of.
 #define COMSIG_MOB_MIND_TRANSFERRED_OUT_OF "mob_mind_transferred_out_of"
-/// From /mob/proc/ghostize() Called when a mob sucessfully ghosts
+/// From /mob/proc/ghostize() Called when a mob successfully ghosts
 #define COMSIG_MOB_GHOSTIZED "mob_ghostized"
 
 ///from base of obj/allowed(mob/M): (/obj) returns ACCESS_ALLOWED if mob has id access to the obj

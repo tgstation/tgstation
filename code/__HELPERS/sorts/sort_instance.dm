@@ -392,7 +392,7 @@ GLOBAL_DATUM_INIT(sortInstance, /datum/sort_instance, new())
 			var/count1 = 0 //# of times in a row that first run won
 			var/count2 = 0 // " " " " " "  second run won
 
-			//do the straightfoward thin until one run starts winning consistently
+			//do the straightforward thin until one run starts winning consistently
 
 			do
 				//ASSERT(len1 > 1 && len2 > 0)
@@ -417,7 +417,7 @@ GLOBAL_DATUM_INIT(sortInstance, /datum/sort_instance, new())
 			while((count1 | count2) < minGallop)
 
 
-			//one run is winning consistently so galloping may provide huge benifits
+			//one run is winning consistently so galloping may provide huge benefits
 			//so try galloping, until such time as the run is no longer consistently winning
 			do
 				//ASSERT(len1 > 1 && len2 > 0)
@@ -493,7 +493,7 @@ GLOBAL_DATUM_INIT(sortInstance, /datum/sort_instance, new())
 			var/count1 = 0 //# of times in a row that first run won
 			var/count2 = 0 // " " " " " "  second run won
 
-			//do the straightfoward thing until one run starts winning consistently
+			//do the straightforward thing until one run starts winning consistently
 			do
 				//ASSERT(len1 > 0 && len2 > 1)
 				if(call(cmp)(fetchElement(L,cursor2), fetchElement(L,cursor1)) < 0)
@@ -516,7 +516,7 @@ GLOBAL_DATUM_INIT(sortInstance, /datum/sort_instance, new())
 						break outer
 			while((count1 | count2) < minGallop)
 
-			//one run is winning consistently so galloping may provide huge benifits
+			//one run is winning consistently so galloping may provide huge benefits
 			//so try galloping, until such time as the run is no longer consistently winning
 			do
 				//ASSERT(len1 > 0 && len2 > 1)

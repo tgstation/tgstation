@@ -36,6 +36,8 @@
 
 #define VENDING_MACHINE_TRAIT "vending_machine"
 
+///A trait given by a held item
+#define HELD_ITEM_TRAIT "held-item-trait"
 #define ABSTRACT_ITEM_TRAIT "abstract-item"
 /// A trait given by any status effect
 #define STATUS_EFFECT_TRAIT "status-effect"

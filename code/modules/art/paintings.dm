@@ -165,7 +165,7 @@
 	. = ..()
 	ui_interact(user)
 
-/obj/item/canvas/ui_act(action, params)
+/obj/item/canvas/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if(.)
 		return
