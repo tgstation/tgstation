@@ -18,8 +18,7 @@
 /obj/effect/anomaly/hallucination/Initialize(mapload, new_lifespan, drops_core)
 	. = ..()
 	apply_wibbly_filters(src)
-	for(var/turf/floor in orange(1, src))
-		new /obj/effect/anomaly/hallucination/decoy(floor)
+	generate_decoys()
 
 /obj/effect/anomaly/hallucination/anomalyEffect(seconds_per_tick)
 	. = ..()
@@ -51,16 +50,26 @@
 		ignore_walls = TRUE,
 	)
 
-/obj/effect/anomaly/hallucination/decoy
+/obj/effect/anomaly/hallucination/proc/generate_decoys()
+	for(var/turf/floor in orange(1, src))
+		if(prob(30))
+			new /obj/effect/anomaly/hallucination/decoy(floor)
+
+/obj/effect/anomaly/hallucination/decoy/Initialize(mapload, new_lifespan, drops_core)
+	. = ..()
+	ADD_TRAIT(src, TRAIT_FAKE_EFFECT, INNATE_TRAIT)
 
 /obj/effect/anomaly/hallucination/decoy/anomalyEffect(seconds_per_tick)
 	if(SPT_PROB(move_chance, seconds_per_tick))
 		move_anomaly()
 
 /obj/effect/anomaly/hallucination/decoy/analyzer_act(mob/living/user, obj/item/analyzer/tool)
-	to_chat(user, span_notice("You activate your [tool], but it does nothing. What?"))
+	to_chat(user, span_notice("You activate [tool], but it doesn't detect anything where you're pointing it. What?"))
 	return ITEM_INTERACT_BLOCKING
 
 /obj/effect/anomaly/hallucination/decoy/detonate()
 	do_sparks(3, source = src)
+	return
+
+/obj/effect/anomaly/hallucination/decoy/generate_decoys()
 	return
