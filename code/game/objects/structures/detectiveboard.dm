@@ -44,7 +44,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/detectiveboard, 32)
 			return
 		attaching_evidence = TRUE
 		var/name = tgui_input_text(user, "Please enter the evidence name", "Detective's Board")
-		if(!name || name == "")
+		if(!name)
 			attaching_evidence = FALSE
 			return
 		var/desc = tgui_input_text(user, "Please enter the evidence description", "Detective's Board")
