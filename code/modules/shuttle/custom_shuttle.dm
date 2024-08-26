@@ -9,7 +9,7 @@
 	interaction_flags_machine = INTERACT_MACHINE_ALLOW_SILICON
 
 
-/obj/machinery/computer/shuttle/custom_shuttle/proc/linkShuttle(var/new_id)
+/obj/machinery/computer/shuttle/custom_shuttle/proc/linkShuttle(new_id)
 	shuttleId = new_id
 	possible_destinations = "whiteship_home;shuttle[new_id]_custom;"
 	return TRUE
@@ -49,6 +49,6 @@
 		return
 	return ..()
 
-/obj/machinery/computer/camera_advanced/shuttle_docker/custom/proc/linkShuttle(var/new_id)
+/obj/machinery/computer/camera_advanced/shuttle_docker/custom/proc/linkShuttle(new_id)
 	shuttleId = new_id
 	shuttlePortId = "shuttle[new_id]_custom"
