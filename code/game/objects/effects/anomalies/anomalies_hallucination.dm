@@ -61,7 +61,7 @@
 
 /obj/effect/anomaly/hallucination/decoy/Initialize(mapload, new_lifespan, drops_core)
 	. = ..()
-	ADD_TRAIT(src, TRAIT_FAKE_EFFECT, INNATE_TRAIT)
+	ADD_TRAIT(src, TRAIT_ILLUSORY_EFFECT, INNATE_TRAIT)
 	report_text = pick(
 		"[src]'s unstable field is fluctuating along frequency 9999999.99999, code 9999999.99999. No, no, that can't be right?",
 		"It doesn't detect anything. It awaits an input, as if you're pointing it towards nothing at all. What?",

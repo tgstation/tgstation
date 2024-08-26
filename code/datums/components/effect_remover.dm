@@ -66,7 +66,7 @@
 	if(!isliving(user))
 		return NONE
 
-	if(HAS_TRAIT(target, TRAIT_FAKE_EFFECT))
+	if(HAS_TRAIT(target, TRAIT_ILLUSORY_EFFECT))
 		to_chat(user, span_notice("You pass [parent] through the [target], but nothing seems to happen. Is it really even there?"))
 		return NONE
 

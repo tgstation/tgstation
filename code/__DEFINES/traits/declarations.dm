@@ -1278,7 +1278,7 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 ///Trait which allows mobs to parry mining mob projectiles
 #define TRAIT_MINING_PARRYING "mining_parrying"
 
-///A "fake" effect that should not be subject to normal effect removal methods (like the anomaly remover component)
-#define TRAIT_FAKE_EFFECT "fake_effect"
+///A "fake" effect that should not be subject to normal effect removal methods (like the effect remover component)
+#define TRAIT_ILLUSORY_EFFECT "illusory_effect"
 
 // END TRAIT DEFINES
