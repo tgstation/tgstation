@@ -55,16 +55,41 @@
 		if(prob(30))
 			new /obj/effect/anomaly/hallucination/decoy(floor)
 
+/obj/effect/anomaly/hallucination/decoy
+	drops_core = FALSE
+	///Stores the fake analyzer scan text, so the result is always consistent for each anomaly.
+	var/report_text
+
 /obj/effect/anomaly/hallucination/decoy/Initialize(mapload, new_lifespan, drops_core)
 	. = ..()
 	ADD_TRAIT(src, TRAIT_FAKE_EFFECT, INNATE_TRAIT)
+	report_text = pick(
+		"[src]'s unstable field is fluctuating along frequency 9999999.99999, code 9999999.99999. No, no, that can't be right?",
+		"It doesn't detect anything. It awaits an input, as if you're pointing it towards nothing at all. What?",
+		"The interface displays [pick("a bad memory from your past", "the frequency numbers in a language you cannot read", "the first 15 digits of Pi", "yourself, from behind, angled at a 3/4ths isometric perspective")]. What the hell?",
+		"Nothing happens?",
+		"It reports that you are a [pick("moron", "idiot", "cretin", "lowlife", "worthless denthead", "gump")]. Huh?",
+		"It tells you to try again, because you're doing it all wrong. What?",
+		"It occurs to you that the anomaly you're scanning isn't actually there.",
+		"It's not working. You activate %TOOL% again. Still broken. You activate %TOOL%. You activate %TOOL%. Why isn't this working??",
+		"Something happens. You can't tell what. The interface on the %TOOL% remains blank.",
+		"What are you even trying to accomplish here? Did you really think that was going to work?",
+		"Someone behind you whispers frequency code to you, but you can't quite hear them. The interface on %TOOL% remains blank.",
+		"For a brief moment, you see yourself traversing a frozen forest, before snapping back to reality. The interface on %TOOL% remains blank.",
+		"Nothing interesting happens. Are you sure you're actually using it on anything?",
+		"For a moment you can feel your skin falling off, then blink as the sensation vanishes. What the hell did that mean?",
+		"The interface reports that you are a complete failure, and have screwed everything up again. Great work.",
+		"You realize that the formatting of this message is completely wrong, and get confused. Now why would that be?",
+		"The %TOOL% stares back at you, dissapointed. You missed the anomaly, you dolt. There's nothing there!",
+		"Nothing. Weird, maybe the %TOOL% must be broken or something?",
+	)
 
 /obj/effect/anomaly/hallucination/decoy/anomalyEffect(seconds_per_tick)
 	if(SPT_PROB(move_chance, seconds_per_tick))
 		move_anomaly()
 
 /obj/effect/anomaly/hallucination/decoy/analyzer_act(mob/living/user, obj/item/analyzer/tool)
-	to_chat(user, span_notice("You activate [tool], but it doesn't detect anything where you're pointing it. What?"))
+	to_chat(user, span_notice("You activate [tool]. [replacetext(report_text, "%TOOL%", "[tool]")]"))
 	return ITEM_INTERACT_BLOCKING
 
 /obj/effect/anomaly/hallucination/decoy/detonate()
