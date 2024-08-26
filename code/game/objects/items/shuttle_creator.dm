@@ -181,7 +181,7 @@ GLOBAL_VAR_INIT(custom_shuttle_count, 0)		//The amount of custom shuttles create
 		to_chat(user, "<span class='warning'>Invalid shuttle, restarting bluespace systems...</span>")
 		return FALSE
 
-	var/datum/map_template/shuttle/new_shuttle = new /datum/map_template/shuttle/custom()
+	var/datum/map_template/shuttle/new_shuttle = new /datum/map_template/shuttle()
 
 	var/obj/docking_port/mobile/port = new /obj/docking_port/mobile(get_turf(target))
 	var/obj/docking_port/stationary/stationary_port = new /obj/docking_port/stationary(get_turf(target))

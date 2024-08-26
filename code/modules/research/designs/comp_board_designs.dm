@@ -402,7 +402,7 @@
 	id = "shuttle_control"
 	build_path = /obj/item/circuitboard/computer/shuttle/flight_control
 	category = list("Computer Boards", "Shuttle Machinery")
-	departmental_flags = DEPARTMENTAL_FLAG_SCIENCE | DEPARTMENTAL_FLAG_ENGINEERING
+	departmental_flags = DEPARTMENT_BITFLAG_SCIENCE | DEPARTMENT_BITFLAG_ENGINEERING
 
 /datum/design/board/shuttle/shuttle_docker
 	name = "Computer Design (Private Navigation Computer)"
@@ -410,4 +410,4 @@
 	id = "shuttle_docker"
 	build_path = /obj/item/circuitboard/computer/shuttle/docker
 	category = list("Computer Boards", "Shuttle Machinery")
-	departmental_flags = DEPARTMENTAL_FLAG_SCIENCE | DEPARTMENTAL_FLAG_ENGINEERING
+	departmental_flags = DEPARTMENT_BITFLAG_SCIENCE | DEPARTMENT_BITFLAG_ENGINEERING
