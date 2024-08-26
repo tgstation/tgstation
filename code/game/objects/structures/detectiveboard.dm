@@ -210,8 +210,8 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/detectiveboard, 32)
 		if("add_connection")
 			var/datum/evidence/from_evidence = locate(params["from_ref"]) in cases[current_case].evidences
 			var/datum/evidence/to_evidence = locate(params["to_ref"]) in cases[current_case].evidences
-			from_evidence.connections.Add(to_evidence)
-			to_evidence.connections.Add(from_evidence)
+			from_evidence.connections += to_evidence
+			to_evidence.connections += from_evidence
 			return TRUE
 
 
