@@ -26,7 +26,7 @@
 	designate_time = 30
 	circuit = /obj/item/circuitboard/computer/shuttle/docker
 
-/obj/machinery/computer/camera_advanced/shuttle_docker/custom/Initialize()
+/obj/machinery/computer/camera_advanced/shuttle_docker/custom/Initialize(mapload)
 	. = ..()
 	GLOB.jam_on_wardec += src
 
