@@ -127,10 +127,10 @@
 
 /datum/looping_sound/gravgen
 	mid_sounds = list(
-		'sound/machines/gravgen/grav_gen_mid1.ogg' = 1,
-		'sound/machines/gravgen/grav_gen_mid2.ogg' = 1,
+		'sound/machines/gravgen/grav_gen_mid1.ogg',
+		'sound/machines/gravgen/grav_gen_mid2.ogg',
 		)
-	mid_length = 1.0 SECONDS
+	mid_length = 1.1 SECONDS
 	extra_range = 8
 	in_order = TRUE
 	volume = 50
