@@ -466,26 +466,23 @@ world
 
 	var/base_icon_dir //We'll use this to get the icon state to display if not null BUT NOT pass it to overlays as the dir we have
 
-	//Try to remove/optimize this section ASAP, CPU hog.
-	//Determines if there's directionals.
-	if(render_icon && curdir != SOUTH)
-		if (
-			!length(icon_states(icon(curicon, curstate, NORTH))) \
-			&& !length(icon_states(icon(curicon, curstate, EAST))) \
-			&& !length(icon_states(icon(curicon, curstate, WEST))) \
-		)
-			base_icon_dir = SOUTH
-
-	if(!base_icon_dir)
-		base_icon_dir = curdir
-
-	// Expand our canvas to fit if we're too big
 	if(render_icon)
+		//Try to remove/optimize this section if you can, it's a CPU hog.
+		//Determines if there're directionals.
+		if (curdir != SOUTH)
+			// icon states either have 1, 4 or 8 dirs. We only have to check
+			// one of NORTH, EAST or WEST to know that this isn't a 1-dir icon_state since they just have SOUTH.
+			if(!length(icon_states(icon(curicon, curstate, NORTH))))
+				base_icon_dir = SOUTH
+
 		var/list/icon_dimensions = get_icon_dimensions(curicon)
 		var/icon_width = icon_dimensions["width"]
 		var/icon_height = icon_dimensions["height"]
 		if(icon_width != 32 || icon_height != 32)
 			flat.Scale(icon_width, icon_height)
+
+	if(!base_icon_dir)
+		base_icon_dir = curdir
 
 	var/curblend = appearance.blend_mode || defblend
 
