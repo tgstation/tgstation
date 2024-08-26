@@ -89,6 +89,7 @@
 		/datum/language/shadowtongue,
 		/datum/language/terrum,
 		/datum/language/nekomimetic,
+		/datum/language/yangyu, //DOPPLER ADDITION
 	)
 
 /obj/item/organ/internal/tongue/proc/handle_speech(datum/source, list/speech_args)
