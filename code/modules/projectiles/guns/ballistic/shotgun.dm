@@ -287,7 +287,6 @@
 	can_be_sawn_off = TRUE
 	pb_knockback = 3 // it's a super shotgun!
 
-
 /obj/item/gun/ballistic/shotgun/doublebarrel/sawoff(mob/user)
 	. = ..()
 	if(.)
@@ -343,6 +342,30 @@
 		return hook.try_fire_gun(target, user, params)
 	return ..()
 
+///An underpowered shotgun given to Pun Pun when the station job trait roll.
+/obj/item/gun/ballistic/shotgun/monkey
+	name = "\improper Barback's Shot"
+	desc = "A chimp-sized, single-shot and break-action shotgun with an unpractical stock."
+	icon_state = "chimp_shottie"
+	inhand_icon_state = "shotgun"
+	lefthand_file = 'icons/mob/inhands/weapons/guns_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/weapons/guns_righthand.dmi'
+	force = 8
+	obj_flags = CONDUCTS_ELECTRICITY
+	slot_flags = NONE
+	accepted_magazine_type = /obj/item/ammo_box/magazine/internal/shot/single
+	obj_flags = UNIQUE_RENAME
+	w_class = WEIGHT_CLASS_NORMAL
+	weapon_weight = WEAPON_MEDIUM
+	semi_auto = TRUE
+	bolt_type = BOLT_TYPE_NO_BOLT
+	spread = 10
+	projectile_damage_multiplier = 0.5
+	projectile_wound_bonus = -25
+	recoil = 1
+	pin = /obj/item/firing_pin/monkey
+	pb_knockback = 1
+
 /obj/item/gun/ballistic/shotgun/musket
 	name = "\improper Donk Co. Musket"
 	icon = 'icons/obj/weapons/guns/ballistic.dmi'
@@ -356,4 +379,4 @@
 	bolt_type = BOLT_TYPE_LOCKING
 	bolt_wording = "bolt"
 	internal_magazine = TRUE
-	accepted_magazine_type = /obj/item/ammo_box/magazine/internal/shot/musket
+	accepted_magazine_type = /obj/item/ammo_box/magazine/internal/shot/single/musket

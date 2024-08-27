@@ -433,6 +433,14 @@
 		/datum/computer_file/program/borg_monitor,
 	)
 
+/obj/item/modular_computer/pda/pun_pun
+	name = "monkey PDA"
+	greyscale_colors = "#ffcc66#914800"
+	starting_programs = list(
+		/datum/computer_file/program/bounty_board,
+		/datum/computer_file/program/emojipedia,
+	)
+
 /**
  * Non-roles
  */

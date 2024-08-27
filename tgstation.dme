@@ -4449,6 +4449,7 @@
 #include "code\modules\jobs\job_types\station_trait\bridge_assistant.dm"
 #include "code\modules\jobs\job_types\station_trait\cargo_gorilla.dm"
 #include "code\modules\jobs\job_types\station_trait\human_ai.dm"
+#include "code\modules\jobs\job_types\station_trait\pun_pun.dm"
 #include "code\modules\jobs\job_types\station_trait\veteran_advisor.dm"
 #include "code\modules\keybindings\bindings_atom.dm"
 #include "code\modules\keybindings\bindings_client.dm"

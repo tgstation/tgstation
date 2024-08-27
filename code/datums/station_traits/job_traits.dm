@@ -243,6 +243,19 @@
 			qdel(thing_on_table)
 	new /obj/machinery/fax/auto_name(picked_turf)
 
+/datum/station_trait/job/pun_pun
+	name = "Pun Pun is a Crewmember"
+	button_desc = "Ook ook ah ah, sign up to play as the bartender's monkey."
+	weight = 0 //Unrollable by default, available all day during monkey day.
+	report_message = "We've evaluated the bartender's monkey to have the mental capacity of the average crewmember. As such, we made them one."
+	show_in_report = TRUE
+	can_roll_antag = CAN_ROLL_ALWAYS
+	job_to_add = /datum/job/pun_pun
+
+/datum/station_trait/job/pun_pun/on_lobby_button_update_overlays(atom/movable/screen/lobby/button/sign_up/lobby_button, list/overlays)
+	. = ..()
+	overlays += LAZYFIND(lobby_candidates, lobby_button.get_mob()) ? "pun_pun_on" : "pun_pun_off"
+
 #undef CAN_ROLL_ALWAYS
 #undef CAN_ROLL_PROTECTED
 #undef CAN_ROLL_NEVER
