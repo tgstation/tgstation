@@ -30,6 +30,7 @@
 	hidden = TRUE
 
 /datum/techweb_node/alientech/on_station_research()
+	. = ..()
 	SSshuttle.shuttle_purchase_requirements_met[SHUTTLE_UNLOCK_ALIENTECH] = TRUE
 
 /datum/techweb_node/alien_engi
