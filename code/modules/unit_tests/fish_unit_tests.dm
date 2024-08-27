@@ -68,6 +68,7 @@
 	fish_traits = list(/datum/fish_trait/dummy)
 	stable_population = INFINITY
 	breeding_timeout = 0
+	show_in_catalog = FALSE //skipped by the autowiki unit test.
 
 /obj/item/fish/testdummy/two
 	fish_traits = list(/datum/fish_trait/dummy/two)
