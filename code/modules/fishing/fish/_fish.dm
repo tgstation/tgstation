@@ -3,7 +3,6 @@
 	name = "generic looking aquarium fish"
 	desc = "very bland"
 	icon = 'icons/obj/structures/aquarium/fish.dmi'
-	icon_state = "bugfish"
 	lefthand_file = 'icons/mob/inhands/fish_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/fish_righthand.dmi'
 	force = 6
