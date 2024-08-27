@@ -371,8 +371,9 @@ export const TguiEslintTarget = new Juke.Target({
 });
 
 export const TguiPrettierTarget = new Juke.Target({
+  parameters: [CiParameter],
   dependsOn: [YarnTarget],
-  executes: () => yarn('tgui:prettier'),
+  executes: ({ get }) => yarn('tgui:prettier', !get(CiParameter) && '--write'),
 });
 
 export const TguiSonarTarget = new Juke.Target({
