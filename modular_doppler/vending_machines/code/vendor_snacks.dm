@@ -86,7 +86,7 @@
 /obj/item/reagent_containers/cup/glass/waterbottle/tea
 	name = "bottle of tea"
 	desc = "A bottle of tea brought to you in a convenient plastic bottle."
-	icon = 'modular_doppler/modular_food_drinks_and_chems/icons/drinks.dmi'
+	icon = 'modular_doppler/vending_machines/icons/imported_quick_foods.dmi'
 	icon_state = "tea_bottle"
 	list_reagents = list(/datum/reagent/consumable/tea = 40)
 	cap_icon_state = "bottle_cap_tea"
