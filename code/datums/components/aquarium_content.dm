@@ -160,7 +160,7 @@
 	SEND_SIGNAL(parent, COMSIG_AQUARIUM_CONTENT_GENERATE_APPEARANCE, vc_obj)
 
 /datum/component/aquarium_content/proc/set_vc_base_position()
-	SEND_SIGNAL(parent, AQUARIUM_CONTENT_RANDOMIZE_POSITION, current_aquarium)
+	SEND_SIGNAL(parent, AQUARIUM_CONTENT_RANDOMIZE_POSITION, current_aquarium, vc_obj)
 	if(vc_obj.layer)
 		current_aquarium.free_layer(vc_obj.layer)
 	vc_obj.layer = current_aquarium.request_layer(vc_obj.layer_mode)
