@@ -42,6 +42,12 @@
 	var/show_on_wiki = TRUE
 	/// Hidden Mech nodes unlocked when mech fabricator emaged.
 	var/illegal_mech_node = FALSE
+	/**
+	 * If set, the researched node will be announced on these channels by an announcement system
+	 * with 'announce_research_node' set to TRUE when researched by the station.
+	 * Not every node has to be announced if you want, some are best kept a little "subtler", like Illegal Weapons.
+	 */
+	var/list/announce_channels
 
 /datum/techweb_node/error_node
 	id = "ERROR"
@@ -110,4 +116,16 @@
 
 ///Proc called when the Station (Science techweb specific) researches a node.
 /datum/techweb_node/proc/on_station_research()
-	SHOULD_CALL_PARENT(FALSE)
+	SHOULD_CALL_PARENT(TRUE)
+	if(!length(announce_channels) || starting_node)
+		return
+	var/obj/machinery/announcement_system/system
+	var/list/available_machines = list()
+	for(var/obj/machinery/announcement_system/announce as anything in GLOB.announcement_systems)
+		if(announce.announce_research_node)
+			available_machines += announce
+			break
+	if(!length(available_machines))
+		return
+	system = pick(available_machines)
+	system.announce(AUTO_ANNOUNCE_NODE, display_name, channels = announce_channels)
