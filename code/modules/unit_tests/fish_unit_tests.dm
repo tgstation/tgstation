@@ -5,6 +5,8 @@
 
 /datum/unit_test/fish_aquarium_icons/Run()
 	for(var/obj/item/fish/fish as anything in subtypesof(/obj/item/fish))
+		if(ispath(fish, /obj/item/fish/testdummy)) //We don't care about unit test fish.
+			continue
 		var/init_icon = fish::dedicated_in_aquarium_icon
 		var/init_icon_state = fish::dedicated_in_aquarium_icon_state || "[fish::icon_state]_small"
 		if(!icon_exists(init_icon, init_icon_state))

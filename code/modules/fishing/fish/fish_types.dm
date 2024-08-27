@@ -440,6 +440,8 @@
 	random_case_rarity = FISH_RARITY_VERY_RARE
 	required_fluid_type = AQUARIUM_FLUID_FRESHWATER
 	stable_population = 4
+	sprite_width = 5
+	sprite_height = 4
 	fillet_type = /obj/item/food/fishmeat/donkfish
 	fish_traits = list(/datum/fish_trait/yucky)
 	required_temperature_min = MIN_AQUARIUM_TEMP+15
@@ -453,6 +455,8 @@
 	random_case_rarity = FISH_RARITY_GOOD_LUCK_FINDING_THIS
 	required_fluid_type = AQUARIUM_FLUID_ANADROMOUS
 	stable_population = 3
+	sprite_width = 7
+	sprite_height = 3
 	fish_traits = list(/datum/fish_trait/emulsijack)
 	required_temperature_min = MIN_AQUARIUM_TEMP+5
 	required_temperature_max = MIN_AQUARIUM_TEMP+40
