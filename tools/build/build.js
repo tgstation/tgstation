@@ -372,7 +372,7 @@ export const TguiEslintTarget = new Juke.Target({
 
 export const TguiPrettierTarget = new Juke.Target({
   dependsOn: [YarnTarget],
-  executes: () => yarn('tgui:prettier', '--write'),
+  executes: () => yarn('tgui:prettier'),
 });
 
 export const TguiSonarTarget = new Juke.Target({
