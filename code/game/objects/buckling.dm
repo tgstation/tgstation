@@ -294,9 +294,9 @@
 
 	add_fingerprint(user)
 
-	// If the mob we're attempting to buckle is not stood on this atom's turf and it isn't the user buckling themselves,
+	// If the mob we're attempting to buckle is not stood on this atom's turf and it isn't the user buckling themselves and the user isn't a borg buckling to themselves,
 	// we'll try it with a 2 second do_after delay.
-	if(M != user && (get_turf(M) != get_turf(src)))
+	if(M != user && (get_turf(M) != get_turf(src)) && !(iscyborg(src) && user == src))
 		M.visible_message(span_warning("[user] starts buckling [M] to [src]!"),\
 			span_userdanger("[user] starts buckling you to [src]!"),\
 			span_hear("You hear metal clanking."))
