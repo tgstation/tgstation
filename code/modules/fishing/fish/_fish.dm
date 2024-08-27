@@ -149,7 +149,11 @@
 
 /obj/item/fish/Initialize(mapload, apply_qualities = TRUE)
 	. = ..()
-	AddComponent(/datum/component/aquarium_content, icon, PROC_REF(get_aquarium_animation), list(COMSIG_FISH_STIRRED), beauty)
+	//It's important that we register the signals before the component is attached.
+	RegisterSignal(src, COMSIG_AQUARIUM_CONTENT_DO_ANIMATION, PROC_REF(update_aquarium_animation))
+	RegisterSignal(src, AQUARIUM_CONTENT_RANDOMIZE_POSITION, PROC_REF(randomize_aquarium_position))
+	RegisterSignal(src, COMSIG_AQUARIUM_CONTENT_GENERATE_APPEARANCE, PROC_REF(update_aquarium_appearance))
+	AddComponent(/datum/component/aquarium_content, list(COMSIG_FISH_STIRRED), beauty)
 
 	RegisterSignal(src, COMSIG_ATOM_ON_LAZARUS_INJECTOR, PROC_REF(use_lazarus))
 	if(do_flop_animation)
@@ -512,12 +516,84 @@
 	injector.expend(src, user)
 	return LAZARUS_INJECTOR_USED
 
+/obj/item/fish/proc/update_aquarium_appearance(datum/source, obj/effect/aquarium/visual)
+	SIGNAL_HANDLER
+	visual.icon = dedicated_in_aquarium_icon
+	visual.icon_state = dedicated_in_aquarium_icon_state || "[initial(icon_state)]_small"
+	visual.color = aquarium_vc_color
+
+/obj/item/fish/proc/randomize_aquarium_position(datum/source, obj/structure/aquarium/current_aquarium, obj/effect/aquarium/visual)
+	SIGNAL_HANDLER
+	var/list/aq_properties = current_aquarium.get_surface_properties()
+	var/avg_width = round(sprite_width * 0.5)
+	var/avg_height = round(sprite_height * 0.5)
+	var/px_min = aq_properties[AQUARIUM_PROPERTIES_PX_MIN] + avg_width - 16
+	var/px_max = aq_properties[AQUARIUM_PROPERTIES_PX_MAX] - avg_width - 16
+	var/py_min = aq_properties[AQUARIUM_PROPERTIES_PY_MIN] + avg_height - 16
+	var/py_max = aq_properties[AQUARIUM_PROPERTIES_PY_MAX] - avg_width - 16
+
+	visual.pixel_x = visual.base_px = rand(px_min,px_max)
+	visual.pixel_y = visual.base_py = rand(py_min,py_max)
+
 /obj/item/fish/proc/get_aquarium_animation()
 	var/obj/structure/aquarium/aquarium = loc
 	if(!istype(aquarium) || aquarium.fluid_type == AQUARIUM_FLUID_AIR || status == FISH_DEAD)
 		return AQUARIUM_ANIMATION_FISH_DEAD
 	else
 		return AQUARIUM_ANIMATION_FISH_SWIM
+
+/obj/item/fish/proc/update_aquarium_animation(datum/source, current_animation, obj/structure/current_aquarium, obj/effect/visual)
+	SIGNAL_HANDLER
+	var/animation = get_aquarium_animation()
+	if(animation == current_animation)
+		return
+	switch(animation)
+		if(AQUARIUM_ANIMATION_FISH_SWIM)
+			swim_animation(current_aquarium, visual)
+		if(AQUARIUM_ANIMATION_FISH_DEAD)
+			dead_animation(current_aquarium, visual)
+
+/// Create looping random path animation, pixel offsets parameters include offsets already
+/obj/item/fish/proc/swim_animation(obj/structure/aquarium/current_aquarium, obj/effect/aquarium/visual)
+	var/avg_width = round(sprite_width / 2)
+	var/avg_height = round(sprite_height / 2)
+
+	var/list/aq_properties = current_aquarium.get_surface_properties()
+	var/px_min = aq_properties[AQUARIUM_PROPERTIES_PX_MIN] + avg_width - 16
+	var/px_max = aq_properties[AQUARIUM_PROPERTIES_PX_MAX] - avg_width - 16
+	var/py_min = aq_properties[AQUARIUM_PROPERTIES_PY_MIN] + avg_height - 16
+	var/py_max = aq_properties[AQUARIUM_PROPERTIES_PY_MAX] - avg_width - 16
+
+	var/origin_x = visual.base_px
+	var/origin_y = visual.base_py
+	var/prev_x = origin_x
+	var/prev_y = origin_y
+	animate(visual, pixel_x = origin_x, time = 0, loop = -1) //Just to start the animation
+	var/move_number = rand(3, 5) //maybe unhardcode this
+	for(var/i in 1 to move_number)
+		//If it's last movement, move back to start otherwise move to some random point
+		var/target_x = i == move_number ? origin_x : rand(px_min,px_max) //could do with enforcing minimal delta for prettier zigzags
+		var/target_y = i == move_number ? origin_y : rand(py_min,py_max)
+		var/dx = prev_x - target_x
+		var/dy = prev_y - target_y
+		prev_x = target_x
+		prev_y = target_y
+		var/dist = abs(dx) + abs(dy)
+		var/eyeballed_time = dist * 2 //2ds per px
+		//Face the direction we're going
+		var/matrix/dir_mx = matrix(visual.transform)
+		if(dx <= 0) //assuming default sprite is facing left here
+			dir_mx.Scale(-1, 1)
+		animate(transform = dir_mx, time = 0, loop = -1)
+		animate(pixel_x = target_x, pixel_y = target_y, time = eyeballed_time, loop = -1)
+
+/obj/item/fish/proc/dead_animation(obj/structure/aquarium/current_aquarium, obj/effect/aquarium/visual)
+	//Set base_py to lowest possible value
+	var/avg_height = round(sprite_height / 2)
+	var/list/aq_properties = current_aquarium.get_surface_properties()
+	var/py_min = aq_properties[AQUARIUM_PROPERTIES_PY_MIN] + avg_height - 16
+	visual.base_py = py_min
+	animate(visual, pixel_y = py_min, time = 1) //flop to bottom and end current animation.
 
 /// Checks if our current environment lets us live.
 /obj/item/fish/proc/proper_environment()
