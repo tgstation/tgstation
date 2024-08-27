@@ -34,6 +34,7 @@ SUBSYSTEM_DEF(bitrunning)
 			"has_secondary_objectives" = assoc_value_sum(domain.secondary_loot) ? TRUE : FALSE,
 			"name" = can_view ? domain.name : REDACTED,
 			"reward" = can_view_reward ? domain.reward_points : REDACTED,
+			"bitrunning_network" = bitrunning_network,
 		))
 
 	return levels

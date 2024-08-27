@@ -32,6 +32,8 @@
 	var/name = "Virtual Domain"
 	/// Points to reward for completion. Used to purchase new domains and calculate ore rewards.
 	var/reward_points = BITRUNNER_REWARD_MIN
+	/// What bitrunning network does this domain show up on? Used to split between Security's Torment Nexus and normal bitrunning.
+	var/bitrunning_network = BITRUNNER_DOMAIN_DEFAULT
 
 	/**
 	 * Player customization

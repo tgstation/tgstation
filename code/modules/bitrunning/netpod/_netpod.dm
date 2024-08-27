@@ -27,6 +27,8 @@
 	var/disconnect_damage
 	/// Static list of outfits to select from
 	var/list/cached_outfits = list()
+	/// Determines our ID for what bitrunning machinery we're linked to.
+	var/bitrunning_id = "DEFAULT"
 
 
 /obj/machinery/netpod/post_machine_initialize()

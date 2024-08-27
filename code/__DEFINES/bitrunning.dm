@@ -26,3 +26,8 @@
 
 /// Camera network bitrunner bodycams are on
 #define BITRUNNER_CAMERA_NET "bitrunner"
+
+/// Default bitrunning domains, shows up in Cargo.
+#define BITRUNNER_DOMAIN_DEFAULT "gibson"
+/// Security bitrunning domains, shows up in the Torment Nexus.
+#define BITRUNNER_DOMAIN_SECURITY "torment_nexus"

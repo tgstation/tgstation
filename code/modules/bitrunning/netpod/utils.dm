@@ -113,11 +113,16 @@
 	if(server)
 		return server
 
-	server = locate(/obj/machinery/quantum_server) in oview(4, src)
-	if(isnull(server))
-		return
 
-	server_ref = WEAKREF(server)
+	for(var/obj/machinery/quantum_server/possible_server in oview(4, src))
+		if(isnull(possible_server))
+			continue
+		if(possible_server.bitrunning_id == bitrunning_id)
+			server = possible_server
+			server_ref = WEAKREF(server)
+			break
+	if(!server)
+		CRASH("Couldn't find a bitrunning quantum server with ID [bitrunning_id]! Report this on the github.")
 	RegisterSignal(server, COMSIG_MACHINERY_REFRESH_PARTS, PROC_REF(on_server_upgraded))
 	RegisterSignal(server, COMSIG_BITRUNNER_DOMAIN_COMPLETE, PROC_REF(on_domain_complete))
 	RegisterSignal(server, COMSIG_BITRUNNER_DOMAIN_SCRUBBED, PROC_REF(on_domain_scrubbed))
