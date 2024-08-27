@@ -1,7 +1,7 @@
 /obj/structure/flippedtable
 	name = "flipped table"
 	desc = "A flipped table."
-	icon = 'modular_nova/modules/tableflip/icons/flipped_tables.dmi'
+	icon = 'modular_doppler/tableflip/flipped_tables.dmi'
 	icon_state = "table"
 	anchored = TRUE
 	density = TRUE
@@ -49,7 +49,7 @@
 		return COMPONENT_ATOM_BLOCK_EXIT
 
 /obj/structure/flippedtable/click_ctrl_shift(mob/user)
-	if(!istype(user) || iscorticalborer(user))
+	if(!istype(user))
 		return FALSE
 	user.balloon_alert_to_viewers("flipping table upright...")
 	if(do_after(user, max_integrity * 0.25))
@@ -72,7 +72,7 @@
 	interaction_flags_click = NEED_DEXTERITY
 
 /obj/structure/table/click_ctrl_shift(mob/user)
-	if(!istype(user) || iscorticalborer(user))
+	if(!istype(user))
 		return
 	if(!can_flip)
 		return
