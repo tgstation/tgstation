@@ -19,7 +19,7 @@ type Data = {
   newheadToggle: BooleanLike;
   newhead: string;
   node_toggle: BooleanLike;
-  node_message : string;
+  node_message: string;
 };
 
 export const AutomatedAnnouncement = (props) => {
