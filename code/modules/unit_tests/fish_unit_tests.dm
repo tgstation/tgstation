@@ -6,9 +6,7 @@
 /datum/unit_test/fish_aquarium_icons/Run()
 	for(var/obj/item/fish/fish as anything in subtypesof(/obj/item/fish))
 		var/init_icon = fish::dedicated_in_aquarium_icon
-		var/init_icon_state = fish::dedicated_in_aquarium_icon_state
-		if(!init_icon_state)
-			init_icon_state = "[fish::icon_state]_small"
+		var/init_icon_state = fish::dedicated_in_aquarium_icon_state || "[fish::icon_state]_small"
 		if(!icon_exists(init_icon, init_icon_state))
 			TEST_FAIL("[fish] with doesn't have a \"[init_icon_state]\" aquarium icon state in [init_icon]. Please make one.")
 		if(!fish::sprite_width)
