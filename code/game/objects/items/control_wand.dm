@@ -69,11 +69,6 @@
 		open_requests -= ID_requesting
 		ID_requesting.visible_message(span_notice("A bland banner blinks on [ID_requesting]: RESPONSE TIMEOUT FOR _[response_name]_."), vision_distance = 1)
 
-/obj/item/door_remote/proc/handle_requests()
-	tgui_input_checkboxes(mob/user, message, title = "Select", list/items, min_checked = 1, max_checked = 50, timeout = 0, )
-
-
-
 
 
 
@@ -93,11 +88,17 @@
 /obj/item/door_remote/attack_self_secondary(mob/user)
 	var/choice = tgui_alert(user, message = "", src.name, list/buttons = list("Configure remote", "Handle access requests"), timeout = 10 SECONDS)
 	if(choice == "Configure remote")
-		configure_remote(mob/user)
+		configure_remote(user)
 	else if (choice == "Handle access requests")
-		handle_requests(mob/user)
+		handle_requests(user)
 	else
 		return
+
+/obj/item/door_remote/proc/configure_remote(mob/user)
+
+/obj/item/door_remote/proc/handle_requests()
+	tgui_input_checkboxes(mob/user, message, title = "Select", list/items, min_checked = 1, max_checked = 50, timeout = 0, )
+
 
 /obj/item/door_remote/ranged_interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
 	return interact_with_atom(interacting_with, user, modifiers)
