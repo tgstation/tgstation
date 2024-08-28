@@ -33,10 +33,7 @@
 	. = ..()
 
 	proximity_monitor = new(src, 1)
-	var/list/blocked_reagents = list()
-	for(var/datum/reagent/reagent_path as anything in subtypesof(/datum/reagent))
-		if(ispath(reagent_path, /datum/reagent/medicine) || ispath(reagent_path, /datum/reagent/consumable)) //Boooooriiiiing
-			blocked_reagents += reagent_path
+	var/list/blocked_reagents = subtypesof(/datum/reagent/medicine) + subtypesof(/datum/reagent/consumable) //Boooooriiiiing
 	that_shit_that_killed_saddam = get_random_reagent_id(blacklist = blocked_reagents)
 
 /obj/effect/decal/remains/human/smokey/HasProximity(atom/movable/tomb_raider)
