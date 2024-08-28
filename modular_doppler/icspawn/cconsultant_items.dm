@@ -1,23 +1,12 @@
-/obj/item/card/id/advanced/debug/ccid
-	name = "\improper Continuity Consultant ID"
-	desc = "An obscure ID card. In your peripheral vision the plasticene surface swims with flowing color."
-	icon_state = "card_centcom"
-	assigned_icon_state = "assigned_centcom"
-	trim = /datum/id_trim/admin/ccid
-	wildcard_slots = WILDCARD_LIMIT_ADMIN
+//////////
+//datums//
+//////////
 
 /datum/id_trim/admin/ccid
 	assignment = "Continuity Consultant"
 	trim_state = "trim_stationengineer"
 	department_color = COLOR_VOID_PURPLE
 	subdepartment_color = COLOR_ENGINEERING_ORANGE
-	sechud_icon_state = SECHUD_SCRAMBLED
-
-/obj/item/clothing/suit/armor/vest/debug
-	name = "Continuity Consultant vest"
-	desc = "A sleek piece of armour designed for Bluespace agents."
-	armor_type = /datum/armor/vest_debug
-	w_class = WEIGHT_CLASS_TINY
 
 /datum/armor/vest_debug
 	melee = 95
@@ -29,13 +18,6 @@
 	fire = 98
 	acid = 98
 
-/obj/item/clothing/shoes/combat/debug
-	w_class = WEIGHT_CLASS_TINY
-
-/obj/item/storage/belt/utility/chief/full/debug
-	name = "\improper Continuity Consultant's belt"
-	w_class = WEIGHT_CLASS_TINY
-
 /datum/outfit/debug/cconsultant
 	name = "Continuity Consultant"
 	uniform = /obj/item/clothing/under/syndicate/combat
@@ -44,14 +26,12 @@
 	id = /obj/item/card/id/advanced/debug/ccid
 	box = /obj/item/storage/box/debugtools
 	backpack_contents = list(
-		/obj/item/melee/energy/axe = 1,
 		/obj/item/storage/part_replacer/bluespace/tier4/cconsultant = 1,
 		/obj/item/gun/magic/wand/resurrection/debug = 1,
 		/obj/item/gun/magic/wand/death/debug = 1,
 		/obj/item/debug/human_spawner = 1,
 		/obj/item/debug/omnitool = 1,
 		/obj/item/storage/box/stabilized = 1,
-		/obj/item/storage/hypospraykit/cmo/combat = 1,
 	)
 
 /datum/outfit/admin/cconsultant
@@ -62,15 +42,38 @@
 	id = /obj/item/card/id/advanced/debug/ccid
 	box = /obj/item/storage/box/debugtools
 	backpack_contents = list(
-		/obj/item/melee/energy/axe = 1,
 		/obj/item/storage/part_replacer/bluespace/tier4/cconsultant = 1,
 		/obj/item/gun/magic/wand/resurrection/debug = 1,
 		/obj/item/gun/magic/wand/death/debug = 1,
 		/obj/item/debug/human_spawner = 1,
 		/obj/item/debug/omnitool = 1,
 		/obj/item/storage/box/stabilized = 1,
-		/obj/item/storage/hypospraykit/cmo/combat = 1,
 	)
+
+/////////
+//items//
+/////////
+
+/obj/item/card/id/advanced/debug/ccid
+	name = "\improper Continuity Consultant ID"
+	desc = "An obscure ID card. In your peripheral vision the plasticene surface swims with flowing color."
+	icon_state = "card_centcom"
+	assigned_icon_state = "assigned_centcom"
+	trim = /datum/id_trim/admin/ccid
+	wildcard_slots = WILDCARD_LIMIT_ADMIN
+
+/obj/item/clothing/suit/armor/vest/debug
+	name = "Continuity Consultant vest"
+	desc = "A sleek piece of armour designed for Bluespace agents."
+	armor_type = /datum/armor/vest_debug
+	w_class = WEIGHT_CLASS_TINY
+
+/obj/item/clothing/shoes/combat/debug
+	w_class = WEIGHT_CLASS_TINY
+
+/obj/item/storage/belt/utility/chief/full/debug
+	name = "\improper Continuity Consultant's belt"
+	w_class = WEIGHT_CLASS_TINY
 
 /obj/item/storage/part_replacer/bluespace/tier4/cconsultant
 	name = "\improper Continuity Consultant RPED"
