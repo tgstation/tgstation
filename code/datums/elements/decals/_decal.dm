@@ -13,6 +13,10 @@
 	var/smoothing
 	/// The overlay applied by this decal to the target.
 	var/mutable_appearance/pic
+	/// The pixel_x offset applied to this decal.
+	var/pixel_x
+	/// The pixel_y offset applied to this decal.
+	var/pixel_y
 
 /// Remove old decals and apply new decals after rotation as necessary
 /datum/controller/subsystem/processing/dcs/proc/rotate_decals(datum/source, old_dir, new_dir)
@@ -37,7 +41,7 @@
 		decal.Detach(source)
 
 	for(var/result in resulting_decals_params)
-		source.AddElement(/datum/element/decal, result["icon"], result["icon_state"], result["dir"], PLANE_TO_TRUE(result["plane"]), result["layer"], result["alpha"], result["color"], result["pixel_w"], result["pixel_z"], result["smoothing"], result["cleanable"], result["desc"])
+		source.AddElement(/datum/element/decal, result["icon"], result["icon_state"], result["dir"], PLANE_TO_TRUE(result["plane"]), result["layer"], result["alpha"], result["color"], result["pixel_w"], result["pixel_z"], result["smoothing"], result["cleanable"], result["desc"], result["pixel_x"], result["pixel_y"])
 
 
 /datum/element/decal/proc/get_rotated_parameters(old_dir,new_dir)
@@ -58,22 +62,26 @@
 		"pixel_z" = pixels[2],
 		"smoothing" = smoothing,
 		"cleanable" = cleanable,
-		"desc" = description
+		"desc" = description,
+		"pixel_x" = pixel_x,
+		"pixel_y" = pixel_y
 	)
 
-/datum/element/decal/Attach(atom/target, _icon, _icon_state, _dir, _plane=FLOAT_PLANE, _layer=FLOAT_LAYER, _alpha=255, _color, _pixel_w = 0, _pixel_z = 0, _smoothing, _cleanable=FALSE, _description, mutable_appearance/_pic)
+/datum/element/decal/Attach(atom/target, _icon, _icon_state, _dir, _plane=FLOAT_PLANE, _layer=FLOAT_LAYER, _alpha=255, _color, _pixel_w = 0, _pixel_z = 0, _smoothing, _cleanable=FALSE, _description, mutable_appearance/_pic, _pixel_x, _pixel_y)
 	. = ..()
 	if(!isatom(target))
 		return ELEMENT_INCOMPATIBLE
 	if(_pic)
 		pic = _pic
-	else if(!generate_appearance(_icon, _icon_state, _dir, _plane, _layer, _color, _alpha, _pixel_w, _pixel_z, _smoothing, target))
+	else if(!generate_appearance(_icon, _icon_state, _dir, _plane, _layer, _color, _alpha, _pixel_w, _pixel_z, _smoothing, target, _pixel_x, _pixel_y))
 		return ELEMENT_INCOMPATIBLE
 	description = _description
 	cleanable = _cleanable
 	directional = _dir
 	base_icon_state = _icon_state
 	smoothing = _smoothing
+	pixel_x = _pixel_x
+	pixel_y = _pixel_y
 
 	RegisterSignal(target, COMSIG_ATOM_UPDATE_OVERLAYS, PROC_REF(apply_overlay), TRUE)
 	if(target.flags_1 & INITIALIZED_1)
@@ -102,7 +110,7 @@
  * all args are fed into creating an image, they are byond vars for images you'll recognize in the byond docs
  * (except source, source is the object whose appearance we're copying.)
  */
-/datum/element/decal/proc/generate_appearance(_icon, _icon_state, _dir, _plane, _layer, _color, _alpha, _pixel_w, _pixel_z, _smoothing, source)
+/datum/element/decal/proc/generate_appearance(_icon, _icon_state, _dir, _plane, _layer, _color, _alpha, _pixel_w, _pixel_z, _smoothing, source, _pixel_x, _pixel_y)
 	if(!_icon || !_icon_state)
 		return FALSE
 	var/temp_image = image(_icon, null, isnull(_smoothing) ? _icon_state : "[_icon_state]-[_smoothing]", _layer, _dir)
@@ -113,6 +121,8 @@
 	pic.alpha = _alpha
 	pic.pixel_w = _pixel_w
 	pic.pixel_z = _pixel_z
+	pic.pixel_x = _pixel_x
+	pic.pixel_y = _pixel_y
 	return TRUE
 
 /datum/element/decal/Detach(atom/source)
@@ -156,7 +166,7 @@
 	if(new_turf == source)
 		return
 	Detach(source)
-	new_turf.AddElement(type, pic.icon, base_icon_state, directional, pic.plane, pic.layer, pic.alpha, pic.color, pic.pixel_w, pic.pixel_z, smoothing, cleanable, description)
+	new_turf.AddElement(type, pic.icon, base_icon_state, directional, pic.plane, pic.layer, pic.alpha, pic.color, pic.pixel_w, pic.pixel_z, smoothing, cleanable, description, pixel_x, pixel_y)
 
 /datum/element/decal/proc/shuttle_rotate(datum/source, list/datum/element/decal/rotating)
 	SIGNAL_HANDLER
@@ -175,5 +185,5 @@
 		return NONE
 
 	Detach(source)
-	source.AddElement(type, pic.icon, base_icon_state, directional, PLANE_TO_TRUE(pic.plane), pic.layer, pic.alpha, pic.color, pic.pixel_w, pic.pixel_z, smoothing_junction, cleanable, description)
+	source.AddElement(type, pic.icon, base_icon_state, directional, PLANE_TO_TRUE(pic.plane), pic.layer, pic.alpha, pic.color, pic.pixel_w, pic.pixel_z, smoothing_junction, cleanable, description, pixel_x, pixel_y)
 	return NONE

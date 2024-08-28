@@ -10,11 +10,37 @@
 
 
 /obj/machinery/netpod/container_resist_act(mob/living/user)
-	user.visible_message(span_notice("[occupant] emerges from [src]!"),
-		span_notice("You climb out of [src]!"),
-		span_notice("With a hiss, you hear a machine opening."))
-	open_machine()
+	if(!trapped)
+		user.visible_message(span_notice("[occupant] emerges from [src]!"),
+			span_notice("You climb out of [src]!"),
+			span_notice("With a hiss, you hear a machine opening."))
+		open_machine()
+	else
+		if(iscarbon(user))
+			var/mob/living/carbon/carbon_user = user
+			if(carbon_user.handcuffed)
+				balloon_alert(carbon_user, "can't pull the lever!")
+			else
+				balloon_alert(carbon_user, "pulling escape lever")
+				carbon_user.changeNext_move(CLICK_CD_BREAKOUT)
+				carbon_user.last_special = world.time + CLICK_CD_BREAKOUT
+				addtimer(CALLBACK(src, PROC_REF(check_if_shake)), 1 SECONDS)
+				if(do_after(carbon_user, breakout_time, target = src, hidden = FALSE))
+					user.visible_message(span_notice("[occupant] emerges from [src]!"),
+						span_notice("You climb out of [src]!"),
+						span_notice("With a hiss, you hear a machine opening."))
+					open_machine()
 
+/obj/machinery/netpod/proc/check_if_shake()
+	var/next_check_time = 1 SECONDS
+	var/shake_duration =  0.3 SECONDS
+
+	for(var/mob/living/mob in contents)
+		if(DOING_INTERACTION_WITH_TARGET(mob, src))
+			Shake(2, 1, shake_duration, shake_interval = 0.1 SECONDS)
+			addtimer(CALLBACK(src, PROC_REF(check_if_shake)), next_check_time)
+			return TRUE
+	return FALSE
 
 /obj/machinery/netpod/open_machine(drop = TRUE, density_to_set = FALSE)
 	playsound(src, 'sound/machines/tramopen.ogg', 60, TRUE, frequency = 65000)

@@ -57,7 +57,7 @@
 	is_ready = TRUE
 
 	var/spawn_chance = clamp((threat * glitch_chance), 5, threat_prob_max)
-	if(prob(spawn_chance))
+	if(!no_glitches && prob(spawn_chance))
 		setup_glitch()
 
 	playsound(src, 'sound/machines/terminal_insert_disc.ogg', 30, vary = TRUE)
@@ -135,9 +135,9 @@
 			new /obj/structure/hololadder(tile)
 
 
-	if(!length(exit_turfs))
+	if(!length(exit_turfs) && !skip_requirements)
 		CRASH("Failed to find exit turfs on generated domain.")
-	if(!length(goal_turfs))
+	if(!length(goal_turfs) && !skip_requirements)
 		CRASH("Failed to find send turfs on generated domain.")
 
 	if(!attempt_spawn_cache(cache_turfs))

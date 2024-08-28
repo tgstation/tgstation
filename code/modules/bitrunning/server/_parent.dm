@@ -53,6 +53,10 @@
 	var/bitrunning_network = BITRUNNER_DOMAIN_DEFAULT
 	/// Determines our ID for what bitrunning machinery we're linked to.
 	var/bitrunning_id = "DEFAULT"
+	/// Does this bitrunning server ignore the requirements for exit/goal turfs? Only turn on if you're manually controlling this in your domains.
+	var/skip_requirements = FALSE
+	/// Should glitches be disabled on this server entirely?
+	var/no_glitches = FALSE
 	/// Cooldown between being able to toggle broadcasting
 	COOLDOWN_DECLARE(broadcast_toggle_cd)
 
@@ -183,3 +187,12 @@
 	servo_bonus = servo_rating
 
 	return ..()
+
+/obj/machinery/quantum_server/prisoner
+	name = "torment nexus"
+	desc = "The backbone of the Torment Nexus, purchased from a failed startup that wanted to revolutionize working remote, hastily repurposed for \
+	re-educating crewmembers who can't stay within the lines at work via the latest and greatest in realistic working simulations."
+	no_glitches = TRUE
+	skip_requirements = TRUE
+	bitrunning_network = BITRUNNER_DOMAIN_SECURITY
+	bitrunning_id = "torment_nexus"

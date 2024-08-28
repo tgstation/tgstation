@@ -98,6 +98,15 @@
 			var/obj/item/mod/control/modsuit = thing
 			modsuit.disable_modlink()
 
+		if(istype(thing, /obj/machinery/janitorial_scanner))
+			var/obj/machinery/janitorial_scanner/jani_scanner = thing
+			jani_scanner.unique_id = REF(src)
+			jani_scanner.our_room = detect_room(get_turf(jani_scanner))
+
+		if(istype(thing, /obj/machinery/janitorial_submit))
+			var/obj/machinery/janitorial_submit/jani_plunger = thing
+			jani_plunger.unique_id = REF(src)
+
 	UnregisterSignal(source, COMSIG_LAZY_TEMPLATE_LOADED)
 
 	/// Just in case there's any special handling for the domain

@@ -471,6 +471,8 @@ GLOBAL_LIST_EMPTY(crematoriums)
 		for(var/mob/living/M in conts)
 			if(M.incorporeal_move) //can't cook revenants!
 				continue
+			if(HAS_TRAIT(M, TRAIT_TEMPORARY_BODY)) // you can't cook code
+				continue
 			if (M.stat != DEAD)
 				M.emote("scream")
 			if(user)

@@ -5,6 +5,7 @@
 		return ELEMENT_INCOMPATIBLE
 
 	. = ..()
+	ADD_TRAIT(target, TRAIT_BLOOD_ELEMENT, ELEMENT_SOURCE_TRAIT)
 	RegisterSignal(target, COMSIG_ATOM_GET_EXAMINE_NAME, PROC_REF(get_examine_name), TRUE)
 
 /datum/element/decal/blood/Detach(atom/source)
@@ -12,6 +13,7 @@
 	if(isitem(source))
 		var/obj/item/source_item = source
 		REMOVE_KEEP_TOGETHER(source_item, type)
+	REMOVE_TRAIT(source, TRAIT_BLOOD_ELEMENT, ELEMENT_SOURCE_TRAIT)
 	return ..()
 
 /datum/element/decal/blood/generate_appearance(_icon, _icon_state, _dir, _plane, _layer, _color, _alpha, _pixel_w, _pixel_z, _smoothing, source)

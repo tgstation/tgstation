@@ -102,6 +102,7 @@
 		server = server, \
 		pod = src, \
 		help_text = generated_domain.help_text, \
+		trapped = trapped, \
 	)
 
 	connected = TRUE

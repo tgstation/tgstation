@@ -29,6 +29,10 @@
 	var/list/cached_outfits = list()
 	/// Determines our ID for what bitrunning machinery we're linked to.
 	var/bitrunning_id = "DEFAULT"
+	/// Is this a trapped pod, ie. doesn't move damage to the host and revives you if you die?
+	var/trapped = FALSE
+	/// If trapped, how long does it take to break out?
+	var/breakout_time = 10 SECONDS
 
 
 /obj/machinery/netpod/post_machine_initialize()
@@ -120,7 +124,7 @@
 
 /obj/machinery/netpod/attack_hand(mob/living/user, list/modifiers)
 	. = ..()
-	if(!state_open && user == occupant)
+	if(!state_open && user == occupant && !trapped)
 		container_resist_act(user)
 
 
@@ -138,3 +142,10 @@
 
 
 #undef BASE_DISCONNECT_DAMAGE
+
+/obj/machinery/netpod/prisoner
+	name = "torment nexus pod"
+	desc = "After an unsuccessful commercial launch, Nanotrasen purchased the rights to the Torment Nexus as a form of new workplace behavioral adjustment program for \
+	misbehaving crewmembers. Critics say that this is just like Greg Orville's book, Twenty Five Eighty Four."
+	bitrunning_id = BITRUNNER_DOMAIN_SECURITY
+	trapped = TRUE

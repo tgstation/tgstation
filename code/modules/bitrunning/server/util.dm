@@ -99,6 +99,7 @@
 		if(!initial(available.test_only) && \
 			init_cost <= points && \
 			init_cost > BITRUNNER_COST_NONE && \
+			initial(available.bitrunning_network) == bitrunning_network && \
 			init_cost < BITRUNNER_COST_EXTREME \
 		)
 			random_domains.Add(available)

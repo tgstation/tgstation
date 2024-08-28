@@ -7,6 +7,8 @@
 	req_access = list(ACCESS_MINING)
 	/// The server this console is connected to.
 	var/datum/weakref/server_ref
+	/// ID for making sure we connect to the correct server.
+	var/bitrunning_id = "DEFAULT"
 
 /obj/machinery/computer/quantum_console/Initialize(mapload, obj/item/circuitboard/circuit)
 	. = ..()
@@ -55,7 +57,7 @@
 	if(isnull(server))
 		return data
 
-	data["available_domains"] = SSbitrunning.get_available_domains(server.scanner_tier, server.points)
+	data["available_domains"] = SSbitrunning.get_available_domains(server.scanner_tier, server.points, server.bitrunning_network)
 	data["avatars"] = server.get_avatar_data()
 
 	return data
@@ -96,6 +98,6 @@
 
 	for(var/direction in GLOB.cardinals)
 		var/obj/machinery/quantum_server/nearby_server = locate(/obj/machinery/quantum_server, get_step(src, direction))
-		if(nearby_server)
+		if(nearby_server && nearby_server.bitrunning_id == bitrunning_id)
 			server_ref = WEAKREF(nearby_server)
 			return nearby_server
