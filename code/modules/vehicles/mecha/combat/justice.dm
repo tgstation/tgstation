@@ -11,7 +11,7 @@
 	icon_state = "justice"
 	base_icon_state = "justice"
 	movedelay = MOVEDELAY_SAFETY // fast
-	max_integrity = 200 // but weak
+	max_integrity = 300 // but weak
 	accesses = list(ACCESS_SYNDICATE)
 	armor_type = /datum/armor/mecha_justice
 	max_temperature = 40000
@@ -147,7 +147,6 @@
 		if(prob(60))
 			new /obj/effect/temp_visual/mech_sparks(get_turf(src))
 			playsound(src, 'sound/mecha/mech_stealth_effect.ogg' , 75, FALSE)
-			return
 	return ..()
 
 /datum/action/vehicle/sealed/mecha/invisibility
