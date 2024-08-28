@@ -25,7 +25,7 @@
 	UnregisterSignal(owner, COMSIG_LIVING_DEATH)
 	owner.remove_movespeed_modifier(/datum/movespeed_modifier/staggered)
 	// Resetting both X on remove so we're back to normal
-	animate(owner, pixel_x = owner.base_pixel_x, time = 0.2 SECONDS)
+	animate(owner, pixel_x = owner.base_pixel_x, time = 0.2 SECONDS, flags = ANIMATION_PARALLEL)
 
 /// Signal proc that self deletes our staggered effect
 /datum/status_effect/staggered/proc/clear_staggered(datum/source)
@@ -40,14 +40,16 @@
 		return
 	if(HAS_TRAIT(owner, TRAIT_FAKEDEATH))
 		return
-	owner.do_stagger_animation()
+	INVOKE_ASYNC(owner, TYPE_PROC_REF(/mob/living, do_stagger_animation))
 
 /// Helper proc that causes the mob to do a stagger animation.
 /// Doesn't change significantly, just meant to represent swaying back and forth
 /mob/living/proc/do_stagger_animation()
-	animate(src, pixel_x = 4, time = 0.2 SECONDS, flags = ANIMATION_RELATIVE)
-	animate(pixel_x = -8, time = 0.2 SECONDS, flags = ANIMATION_RELATIVE)
-	animate(pixel_x = 4, time = 0.2 SECONDS, flags = ANIMATION_RELATIVE)
+	animate(src, pixel_x = 4, time = 0.2 SECONDS, flags = ANIMATION_RELATIVE|ANIMATION_PARALLEL)
+	sleep(0.2 SECONDS)
+	animate(src, pixel_x = -8, time = 0.2 SECONDS, flags = ANIMATION_RELATIVE|ANIMATION_PARALLEL)
+	sleep(0.2 SECONDS)
+	animate(src, pixel_x = 4, time = 0.2 SECONDS, flags = ANIMATION_RELATIVE|ANIMATION_PARALLEL)
 
 /// Status effect specifically for instances where someone is vulnerable to being stunned when shoved.
 /datum/status_effect/next_shove_stuns
