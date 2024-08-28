@@ -61,6 +61,7 @@
 	taste_description = "потеря кокетливости"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 	quality = DRINK_NICE
+	glass_price = DRINK_PRICE_EASY
 
 /datum/glass_style/drinking_glass/innocent_erp
 	required_drink_type = /datum/reagent/consumable/ethanol/innocent_erp
@@ -85,6 +86,7 @@
 	taste_description = "дребезжащие в ритме металлические струны."
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 	quality = DRINK_GOOD
+	glass_price = DRINK_PRICE_MEDIUM
 
 /datum/reagent/consumable/ethanol/soundhand/on_mob_life(mob/living/carbon/drinker, seconds_per_tick, times_fired)
 	. = ..()
@@ -145,10 +147,11 @@
 	taste_description = "кровавая тьма"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 	quality = DRINK_NICE
+	glass_price = DRINK_PRICE_EASY
 
 /datum/reagent/consumable/ethanol/black_blood/on_mob_life(mob/living/carbon/drinker, seconds_per_tick, times_fired)
 	. = ..()
-	if(SPT_PROB(25, seconds_per_tick))
+	if(SPT_PROB(5, seconds_per_tick))
 		drinker.say(pick("Fuu ma'jin!", "Sas'so c'arta forbici!", "Ta'gh fara'qha fel d'amar det!", "Kla'atu barada nikt'o!", "Fel'th Dol Ab'orod!", "In'totum Lig'abis!", "Ethra p'ni dedol!", "Ditans Gut'ura Inpulsa!", "O bidai nabora se'sma!"))
 
 /datum/glass_style/drinking_glass/black_blood
@@ -175,6 +178,7 @@
 	taste_description = "грузовой канал"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 	quality = DRINK_GOOD
+	glass_price = DRINK_PRICE_EASY
 
 /datum/glass_style/drinking_glass/pegu_club
 	required_drink_type = /datum/reagent/consumable/ethanol/pegu_club
@@ -223,6 +227,7 @@
 	taste_description = "увядание суперзвезды"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 	quality = DRINK_GOOD
+	glass_price = DRINK_PRICE_EASY
 
 /datum/glass_style/drinking_glass/silverhand
 	required_drink_type = /datum/reagent/consumable/ethanol/silverhand
@@ -248,6 +253,7 @@
 	taste_description = "старые времена"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 	quality = DRINK_VERYGOOD
+	glass_price = DRINK_PRICE_MEDIUM
 
 /datum/glass_style/drinking_glass/oldfashion
 	required_drink_type = /datum/reagent/consumable/ethanol/oldfashion
@@ -273,6 +279,7 @@
 	taste_description = "солено-сладкий"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 	quality = DRINK_GOOD
+	glass_price = DRINK_PRICE_EASY
 
 /datum/glass_style/drinking_glass/brandy_crusta
 	required_drink_type = /datum/reagent/consumable/ethanol/brandy_crusta
@@ -351,6 +358,7 @@
 	taste_description = "истощение"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 	quality = DRINK_GOOD
+	glass_price = DRINK_PRICE_EASY
 
 /datum/reagent/consumable/ethanol/vampiro/on_mob_life(mob/living/carbon/drinker, seconds_per_tick, times_fired)
 	. = ..()
@@ -458,6 +466,7 @@
 	taste_description = "радуга"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 	quality = DRINK_FANTASTIC
+	glass_price = DRINK_PRICE_HIGH
 
 /datum/reagent/consumable/ethanol/rainbow_sky/on_mob_life(mob/living/carbon/drinker, seconds_per_tick, times_fired)
 	. = ..()
