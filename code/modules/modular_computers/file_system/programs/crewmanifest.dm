@@ -5,7 +5,7 @@
 	program_open_overlay = "id"
 	extended_desc = "Program for viewing and printing the current crew manifest"
 	program_flags = PROGRAM_ON_NTNET_STORE | PROGRAM_REQUIRES_NTNET
-	size = 2
+	size = 0
 	tgui_id = "NtosCrewManifest"
 	program_icon = "clipboard-list"
 
