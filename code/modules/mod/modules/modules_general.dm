@@ -310,6 +310,15 @@
 		mask.flags_cover &= ~(MASKCOVERSMOUTH |PEPPERPROOF)
 		mask.visor_flags_cover &= ~(MASKCOVERSMOUTH |PEPPERPROOF)
 
+/obj/item/mod/module/mouthhole/has_required_parts(list/parts, need_extended)
+	var/obj/item/clothing/helmet = mod.get_part_from_slot(ITEM_SLOT_HEAD)
+	var/obj/item/clothing/mask = mod.get_part_from_slot(ITEM_SLOT_MASK)
+	if(istype(helmet) && ((helmet.flags_cover|helmet.visor_flags_cover) & (HEADCOVERSMOUTH|PEPPERPROOF)))
+		return ..()
+	if(istype(mask) && ((mask.flags_cover|mask.visor_flags_cover) & (MASKCOVERSMOUTH|PEPPERPROOF)))
+		return ..()
+	return FALSE
+
 /obj/item/mod/module/mouthhole/on_uninstall(deleting = FALSE)
 	if(deleting)
 		return
