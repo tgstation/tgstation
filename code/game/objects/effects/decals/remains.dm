@@ -33,7 +33,11 @@
 	. = ..()
 
 	proximity_monitor = new(src, 1)
-	that_shit_that_killed_saddam = generate_reagent()
+	var/list/blocked_reagents = list()
+	for(var/datum/reagent/reagent_path as anything in subtypesof(/datum/reagent))
+		if(ispath(reagent_path, /datum/reagent/medicine) || ispath(reagent_path, /datum/reagent/consumable)) //Boooooriiiiing
+			blocked_reagents += reagent_path
+	that_shit_that_killed_saddam = get_random_reagent_id(blacklist = blocked_reagents)
 
 /obj/effect/decal/remains/human/smokey/HasProximity(atom/movable/tomb_raider)
 	if(!COOLDOWN_FINISHED(src, gas_cooldown))
@@ -53,19 +57,6 @@
 	cigarette_puff.attach(get_turf(src))
 	cigarette_puff.set_up(range = 2, amount = DIAMOND_AREA(2), holder = src, location = get_turf(src), silent = TRUE)
 	cigarette_puff.start()
-
-///Returns a random reagent object minus blacklisted reagents and with other blocking conditions to make the potential choices more interesting.
-/obj/effect/decal/remains/human/smokey/proc/generate_reagent()
-	var/static/list/random_reagents = list()
-	if(!length(random_reagents))
-		for(var/datum/reagent/reagent_path as anything in subtypesof(/datum/reagent))
-			if(!(initial(reagent_path.chemical_flags) & REAGENT_CAN_BE_SYNTHESIZED))
-				continue
-			if(istype(reagent_path, /datum/reagent/medicine) || istype(reagent_path, /datum/reagent/consumable)) //Boooooriiiiing
-				continue
-			random_reagents += reagent_path
-	var/picked_reagent = pick(random_reagents)
-	return picked_reagent
 
 ///Subtype of smokey remains used for rare maintenance spawns.
 /obj/effect/decal/remains/human/smokey/maintenance
