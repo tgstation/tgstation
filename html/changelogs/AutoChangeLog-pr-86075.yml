@@ -1,5 +1,0 @@
-author: "Vekter"
-delete-after: True
-changes:
-  - bugfix: "Fixed an issue causing Quartermaster office access to show in the wrong area on Plexagon Access Management."
-  - bugfix: "Fixed an inconsistency in the naming for QM Office access."
