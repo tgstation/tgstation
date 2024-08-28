@@ -1403,7 +1403,7 @@
 			"resolve": "0",
 			"faction": "Service",
 			"summoncost": "0",
-			"cardtype": "Item",
+			"cardtype": "Equipment",
 			"cardsubtype": "Plant",
 			"series": "coreset2020",
 			"rarity": "legendary"
