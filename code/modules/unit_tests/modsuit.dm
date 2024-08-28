@@ -14,7 +14,7 @@
 			module = new module()
 			complexity += module.complexity
 			TEST_ASSERT(complexity <= complexity_max, "[modpath] starting modules reach above max complexity.")
-			TEST_ASSERT(module.has_required_parts(mod.mod_parts), "[modpath] initial module [module.type] is not supported by its parts.")
+			TEST_ASSERT(module.has_required_parts(mod, mod.mod_parts), "[modpath] initial module [module.type] is not supported by its parts.")
 			for(var/obj/item/mod/module/module_to_check as anything in modules)
 				TEST_ASSERT(!is_type_in_list(module, module_to_check.incompatible_modules), "[modpath] initial module [module.type] is incompatible with initial module [module_to_check.type]")
 				TEST_ASSERT(!is_type_in_list(module_to_check, module.incompatible_modules), "[modpath] initial module [module.type] is incompatible with initial module [module_to_check.type]")

@@ -567,7 +567,7 @@
 			balloon_alert(user, "[new_module] would make [src] too complex!")
 			playsound(src, 'sound/machines/scanbuzz.ogg', 25, TRUE, SILENCED_SOUND_EXTRARANGE)
 		return
-	if(!new_module.has_required_parts(mod_parts))
+	if(!new_module.has_required_parts(src, mod_parts))
 		if(user)
 			balloon_alert(user, "[new_module] incompatible with [src]'s parts!")
 			playsound(src, 'sound/machines/scanbuzz.ogg', 25, TRUE, SILENCED_SOUND_EXTRARANGE)
