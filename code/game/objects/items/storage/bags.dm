@@ -636,15 +636,15 @@
 
 /obj/item/storage/bag/rebar_quiver/syndicate/proc/reload_held_rebar(mob/user)
 	if(!contents.len)
-		user.balloon_alert(user, "No bolts left!")
+		user.balloon_alert(user, "no bolts left!")
 		return
 	var/obj/held_item = user.get_active_held_item()
 	if(!held_item || !istype(held_item, /obj/item/gun/ballistic/rifle/rebarxbow))
-		user.balloon_alert(user, "No held crossbow!")
+		user.balloon_alert(user, "no held crossbow!")
 		return
 	var/obj/item/gun/ballistic/rifle/rebarxbow/held_crossbow = held_item
 	if(held_crossbow.magazine.contents.len >= held_crossbow.magazine.max_ammo)
-		user.balloon_alert(user, "No more room!")
+		user.balloon_alert(user, "no more room!")
 		return
 	if(!do_after(user, 0.8 SECONDS, user, IGNORE_USER_LOC_CHANGE))
 		return
