@@ -2688,6 +2688,7 @@
 #include "code\game\objects\structures\curtains.dm"
 #include "code\game\objects\structures\deployable_turret.dm"
 #include "code\game\objects\structures\destructible_structures.dm"
+#include "code\game\objects\structures\detectiveboard.dm"
 #include "code\game\objects\structures\displaycase.dm"
 #include "code\game\objects\structures\divine.dm"
 #include "code\game\objects\structures\door_assembly.dm"

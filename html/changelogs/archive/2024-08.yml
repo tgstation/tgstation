@@ -795,3 +795,19 @@
   vinylspiders:
   - bugfix: wet hides and hairless hides no longer make metal clanging noises when
       picked up/dropped
+2024-08-27:
+  Ben10Omintrix:
+  - bugfix: fixes blob spore and slime AI endlessly attacking the dead
+  Sakamoto4ka:
+  - rscadd: Added salt electrolysis reaction
+  SmArtKar:
+  - bugfix: Bioscrambler anomalies no longer affect inorganic species
+2024-08-28:
+  Melbert:
+  - bugfix: Juicing and grinding should break less
+  Vekter:
+  - bugfix: Fixed an issue causing Quartermaster office access to show in the wrong
+      area on Plexagon Access Management.
+  - bugfix: Fixed an inconsistency in the naming for QM Office access.
+  grungussuss:
+  - bugfix: after 4 years, computer sound loop now works properly

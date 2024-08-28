@@ -1,0 +1,4 @@
+author: "Xackii"
+delete-after: True
+changes:
+  - qol: "revolver in roundstart holsters is on the last slot and not on first"
