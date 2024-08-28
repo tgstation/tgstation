@@ -580,7 +580,7 @@
 
 /obj/item/food/burger/rib
 	name = "mcrib"
-	desc = "An elusive rib shaped burger with limited availablity across the galaxy. Not as good as you remember it."
+	desc = "An elusive rib shaped burger with limited availability across the galaxy. Not as good as you remember it."
 	icon_state = "mcrib"
 	food_reagents = list(
 		/datum/reagent/consumable/nutriment = 2,

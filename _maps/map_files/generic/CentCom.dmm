@@ -707,7 +707,7 @@
 /area/centcom/central_command_areas/admin)
 "de" = (
 /obj/effect/landmark/start/new_player,
-/turf/closed/indestructible/start_area,
+/turf/cordon,
 /area/misc/start)
 "df" = (
 /obj/structure/table/wood,
@@ -1185,7 +1185,7 @@
 /area/centcom/central_command_areas/ferry)
 "fy" = (
 /obj/structure/signpost/salvation{
-	icon = 'icons/obj/structures.dmi';
+	icon = 'icons/obj/fluff/general.dmi';
 	icon_state = "ladder10";
 	invisibility = 100
 	},
@@ -1292,7 +1292,7 @@
 /turf/open/floor/catwalk_floor,
 /area/centcom/central_command_areas/evacuation/ship)
 "fX" = (
-/turf/closed/indestructible/start_area,
+/turf/cordon,
 /area/misc/start)
 "fZ" = (
 /obj/effect/landmark/ctf,
@@ -1332,7 +1332,9 @@
 /area/centcom/central_command_areas/prison)
 "gh" = (
 /turf/closed/indestructible/fakedoor{
-	name = "Thunderdome Admin"
+	name = "Thunderdome Admin";
+	dir = 4;
+	manual_align = 1
 	},
 /area/centcom/tdome/administration)
 "gi" = (
@@ -1542,6 +1544,21 @@
 /obj/machinery/light/directional/north,
 /turf/open/misc/asteroid,
 /area/centcom/central_command_areas/evacuation)
+"hn" = (
+/obj/machinery/door/firedoor,
+/obj/machinery/door/airlock/centcom{
+	name = "CentCom";
+	manual_align = 1;
+	dir = 4
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 8
+	},
+/turf/open/floor/iron,
+/area/centcom/central_command_areas/control)
 "ho" = (
 /obj/structure/table/wood,
 /obj/item/folder/red,
@@ -1795,7 +1812,9 @@
 /area/centcom/central_command_areas/prison)
 "iB" = (
 /turf/closed/indestructible/fakedoor{
-	name = "CentCom Cell"
+	name = "CentCom Cell";
+	dir = 4;
+	manual_align = 1
 	},
 /area/centcom/central_command_areas/prison/cells)
 "iC" = (
@@ -2427,10 +2446,7 @@
 "lb" = (
 /obj/structure/table/wood,
 /obj/machinery/door/window/left/directional/south,
-/obj/item/radio/intercom{
-	desc = "Talk smack through this.";
-	syndie = 1
-	},
+/obj/item/radio/intercom/syndicate,
 /turf/open/floor/iron/grimy,
 /area/centcom/central_command_areas/courtroom)
 "lc" = (
@@ -2443,10 +2459,7 @@
 /area/centcom/central_command_areas/courtroom)
 "ld" = (
 /obj/structure/table/wood,
-/obj/item/radio/intercom{
-	desc = "Talk smack through this.";
-	syndie = 1
-	},
+/obj/item/radio/intercom/syndicate,
 /obj/machinery/door/window/brigdoor/right/directional/south{
 	name = "CentCom Stand";
 	req_access = list("cent_captain")
@@ -2615,10 +2628,8 @@
 /obj/structure/chair{
 	dir = 8
 	},
-/obj/item/radio/intercom{
-	desc = "Talk smack through this.";
+/obj/item/radio/intercom/syndicate{
 	pixel_x = -32;
-	syndie = 1
 	},
 /turf/open/floor/iron/grimy,
 /area/centcom/central_command_areas/courtroom)
@@ -2684,10 +2695,7 @@
 /area/centcom/central_command_areas/courtroom)
 "mn" = (
 /obj/structure/table/wood,
-/obj/item/radio/intercom{
-	desc = "Talk smack through this.";
-	syndie = 1
-	},
+/obj/item/radio/intercom/syndicate,
 /turf/open/floor/iron/grimy,
 /area/centcom/central_command_areas/courtroom)
 "mo" = (
@@ -4400,7 +4408,9 @@
 "ub" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/centcom{
-	name = "CentCom"
+	name = "CentCom";
+	manual_align = 1;
+	dir = 4
 	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
@@ -4978,7 +4988,9 @@
 "wu" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/centcom{
-	name = "CentCom Security"
+	name = "CentCom Security";
+	manual_align = 1;
+	dir = 4
 	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
@@ -5068,7 +5080,9 @@
 "wJ" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/centcom{
-	name = "CentCom"
+	name = "CentCom";
+	dir = 4;
+	manual_align = 1
 	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
@@ -5528,7 +5542,9 @@
 "yU" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/centcom{
-	name = "CentCom"
+	name = "CentCom";
+	manual_align = 1;
+	dir = 4
 	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
@@ -7080,6 +7096,13 @@
 /obj/machinery/light/directional/north,
 /turf/open/floor/iron,
 /area/centcom/central_command_areas/admin/storage)
+"Gz" = (
+/turf/closed/indestructible/fakedoor{
+	name = "CentCom Cell";
+	manual_align = 1;
+	dir = 4
+	},
+/area/centcom/central_command_areas/prison/cells)
 "GB" = (
 /obj/machinery/power/apc/auto_name/directional/west,
 /obj/effect/turf_decal/stripes/line,
@@ -8259,6 +8282,22 @@
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron/dark,
 /area/centcom/central_command_areas/control)
+"NL" = (
+/obj/machinery/door/firedoor,
+/obj/machinery/door/airlock/centcom{
+	name = "CentCom Security";
+	dir = 4;
+	manual_align = 1
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 4
+	},
+/obj/effect/mapping_helpers/airlock/access/all/admin/general,
+/turf/open/floor/iron,
+/area/centcom/central_command_areas/ferry)
 "NM" = (
 /obj/structure/closet/crate/bin,
 /obj/machinery/light/directional/south,
@@ -8374,7 +8413,9 @@
 "Oj" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/centcom{
-	name = "CentCom"
+	name = "CentCom";
+	dir = 4;
+	manual_align = 1
 	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
@@ -10261,17 +10302,17 @@
 /obj/machinery/computer/station_alert{
 	dir = 8
 	},
-/obj/item/radio/intercom{
-	desc = "Talk smack through this.";
-	pixel_x = 28;
-	syndie = 1
+/obj/item/radio/intercom/syndicate{
+	pixel_x = 28
 	},
 /turf/open/floor/iron/dark,
 /area/centcom/central_command_areas/control)
 "WQ" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/centcom{
-	name = "CentCom Security"
+	name = "CentCom Security";
+	dir = 4;
+	manual_align = 1
 	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
@@ -10885,6 +10926,21 @@
 	},
 /turf/open/floor/iron,
 /area/centcom/central_command_areas/supplypod/loading/four)
+"ZR" = (
+/obj/machinery/door/firedoor,
+/obj/machinery/door/airlock/centcom{
+	name = "CentCom";
+	dir = 4;
+	manual_align = 1
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 4
+	},
+/turf/open/floor/iron,
+/area/centcom/central_command_areas/control)
 "ZS" = (
 /obj/structure/table/reinforced,
 /obj/item/wrench,
@@ -47069,9 +47125,9 @@ tu
 mD
 mD
 mD
-wu
+NL
 xh
-wu
+NL
 mD
 gO
 cn
@@ -56580,7 +56636,7 @@ io
 io
 Oj
 mk
-Oj
+hn
 io
 io
 iu
@@ -58356,7 +58412,7 @@ ir
 iB
 Jb
 ir
-iB
+Gz
 YX
 ir
 iB
@@ -58634,9 +58690,9 @@ cg
 cg
 cg
 cg
-yU
+ZR
 GJ
-yU
+ZR
 cg
 cg
 cg

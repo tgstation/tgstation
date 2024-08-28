@@ -50,6 +50,13 @@
 	. = ..()
 	AddElement(/datum/element/rust)
 
+/turf/closed/wall/heretic_rust
+	color = MAP_SWITCH(null, COLOR_GREEN_GRAY)
+
+/turf/closed/wall/heretic_rust/Initialize(mapload)
+	. = ..()
+	AddElement(/datum/element/rust/heretic)
+
 /turf/closed/wall/r_wall/rust
 	name = "rusted reinforced wall"
 	desc = "A huge chunk of rusted reinforced metal."
@@ -60,6 +67,14 @@
 /turf/closed/wall/r_wall/rust/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/rust)
+
+/turf/closed/wall/r_wall/heretic_rust
+	color = MAP_SWITCH(null, COLOR_GREEN_GRAY)
+	icon = 'icons/turf/walls/rusty_reinforced_wall.dmi'
+
+/turf/closed/wall/r_wall/heretic_rust/Initialize(mapload)
+	. = ..()
+	AddElement(/datum/element/rust/heretic)
 
 /turf/closed/wall/mineral/bronze
 	name = "clockwork wall"
@@ -98,6 +113,13 @@
 	canSmoothWith = null
 	smoothing_groups = null
 	use_splitvis = FALSE
+
+/turf/closed/wall/fake_hierophant
+	name = "vibrant wall"
+	desc = "A wall made out of a strange metal. The squares on it pulse in a predictable pattern."
+	icon = 'icons/turf/walls/hierophant_wall.dmi'
+	smoothing_groups = SMOOTH_GROUP_HIERO_WALL + SMOOTH_GROUP_TALL_WALLS
+	canSmoothWith = SMOOTH_GROUP_HIERO_WALL
 
 /turf/closed/wall/material/meat
 	name = "living wall"

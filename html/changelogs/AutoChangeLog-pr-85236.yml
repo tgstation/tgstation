@@ -1,6 +1,0 @@
-author: "00-Steven"
-delete-after: True
-changes:
-  - bugfix: "Fixed pipes/cables/disposals rendering above closed catwalks."
-  - bugfix: "Fixed catwalks covering pipes generating illogical pipe caps when screwed."
-  - bugfix: "Opened catwalks are no longer assumed to be above-floor for the sake of generating pipe caps."

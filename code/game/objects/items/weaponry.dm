@@ -160,6 +160,14 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	throw_range = 5
 	armour_penetration = 35
 
+/obj/item/claymore/cutlass/old
+	name = "old cutlass"
+	desc = parent_type::desc + " This one seems a tad old."
+	force = 24
+	throwforce = 17
+	armour_penetration = 20
+	block_chance = 30
+
 /obj/item/claymore/carrot
 	name = "carrot sword"
 	desc = "A full-sized carrot sword. Definitely <b>not</b> good for the eyes, not anymore."
@@ -327,7 +335,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	playsound(user, 'sound/items/screwdriver2.ogg', 50, TRUE)
 
 /obj/item/claymore/highlander/robot //BLOODTHIRSTY BORGS NOW COME IN PLAID
-	icon = 'icons/obj/items_cyborg.dmi'
+	icon = 'icons/mob/silicon/robot_items.dmi'
 	icon_state = "claymore_cyborg"
 	var/mob/living/silicon/robot/robot
 

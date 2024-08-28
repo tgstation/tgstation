@@ -3,7 +3,7 @@
 /obj/structure/noticeboard
 	name = "notice board"
 	desc = "A board for pinning important notices upon. It is made of the finest Spanish cork."
-	icon = 'icons/obj/noticeboard.dmi'
+	icon = 'icons/obj/structures/wallmounts.dmi'
 	icon_state = "noticeboard"
 	density = FALSE
 	anchored = TRUE
@@ -26,7 +26,7 @@ WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/structure/noticeboard)
 			I.forceMove(src)
 			notices++
 	update_appearance(UPDATE_ICON)
-	find_and_hang_on_wall()
+	find_and_hang_on_wall(wall_layer = FLAT_ON_WALL_LAYER)
 
 //attaching papers!!
 /obj/structure/noticeboard/attackby(obj/item/O, mob/user, params)
@@ -66,7 +66,7 @@ WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/structure/noticeboard)
 		data["items"] += list(content_data)
 	return data
 
-/obj/structure/noticeboard/ui_act(action, params)
+/obj/structure/noticeboard/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if(.)
 		return
@@ -126,7 +126,7 @@ WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/structure/noticeboard)
 /obj/item/wallframe/noticeboard
 	name = "notice board"
 	desc = "Right now it's more of a clipboard. Attach to a wall to use."
-	icon = 'icons/obj/noticeboard.dmi'
+	icon = 'icons/obj/structures/wallmounts.dmi'
 	icon_state = "noticeboard"
 	custom_materials = list(
 		/datum/material/wood = SHEET_MATERIAL_AMOUNT,

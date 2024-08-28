@@ -1,4 +1,0 @@
-author: "SmArtKar"
-delete-after: True
-changes:
-  - bugfix: "Slimes no longer can feed when they're inside of objects or attacking a target that became invalid after they chose their dinner"

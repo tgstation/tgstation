@@ -1,7 +1,7 @@
 /obj/structure/window
 	name = "window"
 	desc = "A directional window."
-	icon = 'icons/obj/smooth_structures/windows/normal_thindow.dmi'
+	icon = 'icons/obj/structures/smooth/windows/normal_thindow.dmi'
 	icon_state = "window"
 	density = TRUE
 	layer = ABOVE_OBJ_LAYER //Just above doors
@@ -41,6 +41,8 @@
 	var/datum/material/glass_material_datum = /datum/material/glass
 	/// Whether or not we're disappearing but dramatically
 	var/dramatically_disappearing = FALSE
+	/// If we added a leaning component to ourselves
+	var/added_leaning = FALSE
 
 /datum/armor/structure_window
 	melee = 50
@@ -89,6 +91,24 @@
 
 	if (flags_1 & ON_BORDER_1)
 		AddElement(/datum/element/connect_loc, loc_connections)
+
+/obj/structure/window/mouse_drop_receive(atom/dropping, mob/user, params)
+	. = ..()
+	if (added_leaning)
+		return
+	/// For performance reasons and to cut down on init times we are "lazy-loading" the leaning component when someone drags their sprite onto us, and then calling dragging code again to trigger the component
+	AddComponent(/datum/component/leanable, 11, same_turf = (flags_1 & ON_BORDER_1), lean_check = CALLBACK(src, PROC_REF(lean_check)))
+	added_leaning = TRUE
+	dropping.base_mouse_drop_handler(src, null, null, params)
+
+/obj/structure/window/proc/lean_check(mob/living/leaner, list/modifiers)
+	if (!(flags_1 & ON_BORDER_1))
+		return TRUE
+
+	if (leaner.loc == loc)
+		return dir == REVERSE_DIR(leaner.dir)
+
+	return get_dir(src, leaner) == dir && leaner.dir == dir
 
 /obj/structure/window/setDir(newdir)
 	. = ..()
@@ -462,11 +482,11 @@
 		var/broken_icon = null
 		switch(ratio)
 			if(3)
-				broken_icon = 'icons/obj/smooth_structures/windows/window_broken_light.dmi'
+				broken_icon = 'icons/obj/structures/smooth/windows/window_broken_light.dmi'
 			if(2)
-				broken_icon = 'icons/obj/smooth_structures/windows/window_broken_medium.dmi'
+				broken_icon = 'icons/obj/structures/smooth/windows/window_broken_medium.dmi'
 			if(1)
-				broken_icon = 'icons/obj/smooth_structures/windows/window_broken_heavy.dmi'
+				broken_icon = 'icons/obj/structures/smooth/windows/window_broken_heavy.dmi'
 
 		if(broken_icon)
 			. += mutable_appearance(broken_icon, "[smoothing_junction]", -(layer+0.1))
@@ -685,6 +705,7 @@ MAPPING_DIRECTIONAL_HELPERS_EMPTY(/obj/structure/window/spawner)
 	addtimer(VARSET_CALLBACK(src, atom_integrity, atom_integrity), time_to_go + time_to_return) //set the health back (icon is updated on move)
 	addtimer(CALLBACK(src, TYPE_PROC_REF(/atom/movable, forceMove), loc), time_to_go + time_to_return) //we back boys
 	addtimer(VARSET_CALLBACK(src, dramatically_disappearing, FALSE), time_to_go + time_to_return) //also set the var back
+	addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(playsound), get_turf(src), 'sound/effects/glass_reverse.ogg', 70, TRUE), time_to_go + time_to_return)
 
 	var/obj/structure/window_frame/frame = take_grill ? (locate(/obj/structure/window_frame) in loc) : null
 	if(frame)
@@ -705,7 +726,7 @@ MAPPING_DIRECTIONAL_HELPERS_EMPTY(/obj/structure/window/unanchored/spawner)
 
 /obj/structure/window/half
 	can_atmos_pass = ATMOS_PASS_YES
-	icon = 'icons/obj/smooth_structures/windows/half_thindow.dmi'
+	icon = 'icons/obj/structures/smooth/windows/half_thindow.dmi'
 
 MAPPING_DIRECTIONAL_HELPERS_EMPTY(/obj/structure/window/half)
 
@@ -717,7 +738,7 @@ MAPPING_DIRECTIONAL_HELPERS_EMPTY(/obj/structure/window/half/unanchored)
 /obj/structure/window/reinforced
 	name = "reinforced window"
 	desc = "A window that is reinforced with metal rods."
-	icon = 'icons/obj/smooth_structures/windows/reinforced_thindow.dmi'
+	icon = 'icons/obj/structures/smooth/windows/reinforced_thindow.dmi'
 	reinf = TRUE
 	heat_resistance = 1600
 	armor_type = /datum/armor/window_reinforced
@@ -849,7 +870,7 @@ MAPPING_DIRECTIONAL_HELPERS_EMPTY(/obj/structure/window/reinforced/unanchored/sp
 
 /obj/structure/window/reinforced/half
 	can_atmos_pass = ATMOS_PASS_YES
-	icon = 'icons/obj/smooth_structures/windows/reinforced_half_thindow.dmi'
+	icon = 'icons/obj/structures/smooth/windows/reinforced_half_thindow.dmi'
 
 MAPPING_DIRECTIONAL_HELPERS_EMPTY(/obj/structure/window/reinforced/half)
 
@@ -870,7 +891,7 @@ MAPPING_DIRECTIONAL_HELPERS_EMPTY(/obj/structure/window/reinforced/half/unanchor
 /obj/structure/window/plasma
 	name = "plasma window"
 	desc = "A window made out of a plasma-silicate alloy. It looks insanely tough to break and burn through."
-	icon = 'icons/obj/smooth_structures/windows/plasma_thindow.dmi'
+	icon = 'icons/obj/structures/smooth/windows/plasma_thindow.dmi'
 	reinf = FALSE
 	heat_resistance = 25000
 	armor_type = /datum/armor/window_plasma
@@ -899,7 +920,7 @@ MAPPING_DIRECTIONAL_HELPERS_EMPTY(/obj/structure/window/plasma/spawner)
 /obj/structure/window/reinforced/plasma
 	name = "reinforced plasma window"
 	desc = "A window made out of a plasma-silicate alloy and a rod matrix. It looks hopelessly tough to break and is most likely nigh fireproof."
-	icon = 'icons/obj/smooth_structures/windows/plasma_reinforced_thindow.dmi'
+	icon = 'icons/obj/structures/smooth/windows/plasma_reinforced_thindow.dmi'
 	reinf = TRUE
 	heat_resistance = 50000
 	armor_type = /datum/armor/reinforced_plasma
@@ -928,7 +949,7 @@ MAPPING_DIRECTIONAL_HELPERS_EMPTY(/obj/structure/window/reinforced/plasma/spawne
 
 /obj/structure/window/reinforced/tinted
 	name = "tinted window"
-	icon = 'icons/obj/smooth_structures/windows/tinted_thindow.dmi'
+	icon = 'icons/obj/structures/smooth/windows/tinted_thindow.dmi'
 
 /obj/structure/window/reinforced/tinted/Initialize(mapload, direct)
 	. = ..()
@@ -939,7 +960,7 @@ MAPPING_DIRECTIONAL_HELPERS_EMPTY(/obj/structure/window/reinforced/tinted/spawne
 
 /obj/structure/window/reinforced/tinted/frosted
 	name = "frosted window"
-	icon = 'icons/obj/smooth_structures/windows/frosted_thindow.dmi'
+	icon = 'icons/obj/structures/smooth/windows/frosted_thindow.dmi'
 
 MAPPING_DIRECTIONAL_HELPERS(/obj/structure/window/reinforced/tinted/frosted/spawner, 0)
 

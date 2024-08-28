@@ -431,10 +431,10 @@
 /turf/open/get_dumping_location()
 	return src
 
-/turf/open/proc/ClearWet()//Nuclear option of immediately removing slipperyness from the tile instead of the natural drying over time
+/turf/open/proc/ClearWet()//Nuclear option of immediately removing slipperiness from the tile instead of the natural drying over time
 	qdel(GetComponent(/datum/component/wet_floor))
 
-/// Builds with rods. This doesn't exist to be overriden, just to remove duplicate logic for turfs that want
+/// Builds with rods. This doesn't exist to be overridden, just to remove duplicate logic for turfs that want
 /// To support floor tile creation
 /// I'd make it a component, but one of these things is space. So no.
 /turf/open/proc/build_with_rods(obj/item/stack/rods/used_rods, mob/user)

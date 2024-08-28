@@ -29,7 +29,7 @@ GLOBAL_LIST_INIT(shower_mode_descriptions, list(
 /obj/machinery/shower
 	name = "shower"
 	desc = "The HS-452. Installed in the 2550s by the Nanotrasen Hygiene Division, now with 2560 lead compliance! Passively replenishes itself with water when not in use."
-	icon = 'icons/obj/watercloset.dmi'
+	icon = 'icons/obj/structures/watercloset.dmi'
 	icon_state = "shower"
 	density = FALSE
 	layer = ABOVE_WINDOW_LAYER
@@ -173,12 +173,23 @@ SHOWER_DIRECTIONAL_HELPERS(/obj/machinery/shower)
 	deconstruct()
 	return TRUE
 
+/obj/machinery/shower/setDir(newdir)
+	. = ..()
+	update_appearance(UPDATE_OVERLAYS)
+
 /obj/machinery/shower/update_overlays()
 	. = ..()
 	if(!actually_on)
 		return
-	var/mutable_appearance/water_falling = mutable_appearance('icons/obj/watercloset.dmi', "water", ABOVE_MOB_LAYER)
+	var/mutable_appearance/water_falling = mutable_appearance('icons/obj/structures/watercloset.dmi', "water", ABOVE_MOB_LAYER)
 	water_falling.color = mix_color_from_reagents(reagents.reagent_list)
+	switch(dir)
+		if(SOUTH)
+			water_falling.pixel_z -= 24
+		if(EAST)
+			water_falling.pixel_w += 16
+		if(WEST)
+			water_falling.pixel_w -= 16
 	. += water_falling
 
 /obj/machinery/shower/on_changed_z_level(turf/old_turf, turf/new_turf, same_z_layer, notify_contents)
@@ -309,7 +320,7 @@ SHOWER_DIRECTIONAL_HELPERS(/obj/machinery/shower)
 
 /obj/structure/showerframe
 	name = "shower frame"
-	icon = 'icons/obj/watercloset.dmi'
+	icon = 'icons/obj/structures/watercloset.dmi'
 	icon_state = "shower_frame"
 	desc = "A shower frame, that needs a water recycler to finish construction."
 	anchored = FALSE
@@ -345,7 +356,7 @@ SHOWER_DIRECTIONAL_HELPERS(/obj/machinery/shower)
 
 /obj/effect/mist
 	name = "mist"
-	icon = 'icons/obj/watercloset.dmi'
+	icon = 'icons/obj/structures/watercloset.dmi'
 	icon_state = "mist"
 	layer = FLY_LAYER
 	anchored = TRUE
