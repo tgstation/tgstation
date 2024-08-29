@@ -33,7 +33,11 @@
 	allowed_configs += "[config]"
 	if(isitem(target))
 		var/obj/item/item = target
-		if(initial(item.greyscale_config_worn))
+		/// DOPPLER SHIFT ADDITION BEGIN
+		if(initial(item.greyscale_config_worn_bodyshapes))
+			for(var/bconfig in item.greyscale_config_worn_bodyshapes)
+				allowed_configs += "[initial(item.greyscale_config_worn_bodyshapes[bconfig])]"
+		else if(initial(item.greyscale_config_worn)) /// DOPPLER SHIFT EDIT END
 			allowed_configs += "[initial(item.greyscale_config_worn)]"
 		if(initial(item.greyscale_config_inhand_left))
 			allowed_configs += "[initial(item.greyscale_config_inhand_left)]"
