@@ -410,6 +410,7 @@
 	desc = "A bandana. It seems to have a little carp embroidered on the inside, as well as the kanji '魚'."
 	icon_state = "snake_eater"
 	inhand_icon_state = null
+	clothing_traits = list(TRAIT_FISH_EATER)
 
 /obj/item/clothing/head/costume/knight
 	name = "fake medieval helmet"

@@ -676,4 +676,7 @@
 			override_origin_pixel_x = lefthand ? lefthand_n_px : righthand_n_px
 			override_origin_pixel_y = lefthand ? lefthand_n_py : righthand_n_py
 
+	override_origin_pixel_x += origin.pixel_x
+	override_origin_pixel_y += origin.pixel_y
+
 #undef FISHING_ROD_REEL_CAST_RANGE

@@ -15,6 +15,8 @@
 #define COMSIG_FISH_LIFE "fish_life"
 ///From /datum/fish_trait/eat_fish: (predator)
 #define COMSIG_FISH_EATEN_BY_OTHER_FISH "fish_eaten_by_other_fish"
+///Called when the fish is eaten by humans through the edible component: (eater, feeder, bitecount)
+#define COMSIG_EDIBLE_FISH_EATEN "edible_fish_eaten"
 ///From /obj/item/fish/feed: (fed_reagents, fed_reagent_type)
 #define COMSIG_FISH_FED "fish_on_fed"
 ///From /obj/item/fish/update_size_and_weight: (new_size, new_weight)

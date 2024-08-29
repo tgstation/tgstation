@@ -204,11 +204,12 @@
  *
  * * [list_reagents][list] - list to add. Format it like this: list(/datum/reagent/toxin = 10, "beer" = 15)
  * * [data][list] - additional data to add
+ * * [added_purity][number] - an override to the default purity for each reagent to add.
  */
-/datum/reagents/proc/add_reagent_list(list/list_reagents, list/data = null)
+/datum/reagents/proc/add_reagent_list(list/list_reagents, list/data = null, added_purity = null)
 	for(var/r_id in list_reagents)
 		var/amt = list_reagents[r_id]
-		add_reagent(r_id, amt, data)
+		add_reagent(r_id, amt, data, added_purity = added_purity)
 
 /**
  * Removes a specific reagent. can supress reactions if needed

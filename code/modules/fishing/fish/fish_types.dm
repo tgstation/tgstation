@@ -113,6 +113,9 @@
 	RegisterSignal(src, COMSIG_FISH_BEFORE_GROWING, PROC_REF(growth_checks))
 	RegisterSignal(src, COMSIG_FISH_FINISH_GROWING, PROC_REF(on_growth))
 
+/obj/item/fish/tadpole/make_edible()
+	return
+
 /obj/item/fish/tadpole/set_status(new_status, silent = FALSE)
 	. = ..()
 	if(status == FISH_DEAD)
@@ -266,6 +269,7 @@
 	required_fluid_type = AQUARIUM_FLUID_SALTWATER
 	stable_population = 4
 	fillet_type = /obj/item/food/fishmeat/gunner_jellyfish
+	fish_traits = list(/datum/fish_trait/hallucinogenic)
 	required_temperature_min = MIN_AQUARIUM_TEMP+24
 	required_temperature_max = MIN_AQUARIUM_TEMP+32
 	beauty = FISH_BEAUTY_GOOD
@@ -481,6 +485,14 @@
 	//stable pop reflects the config for how many mice migrate. powerful...
 	stable_population = CONFIG_GET(number/mice_roundstart)
 
+/obj/item/fish/ratfish/get_food_types()
+	return MEAT|RAW|GORE|GROSS //Not-so-quite-seafood
+
+/obj/item/fish/ratfish/get_edible_reagents_to_add()
+	var/return_list = ..()
+	return_list[/datum/reagent/rat_spit] = 1
+	return return_list
+
 /obj/item/fish/sludgefish
 	name = "sludgefish"
 	desc = "A misshapen, fragile, loosely fish-like living goop, the only thing that'd ever thrive in the acidic and claustrophobic cavities of the station's organic waste disposal system."
@@ -538,6 +550,12 @@
 	required_temperature_min = MIN_AQUARIUM_TEMP+20
 	beauty = FISH_BEAUTY_GREAT
 
+/obj/item/fish/slimefish/get_food_types()
+	return SEAFOOD|TOXIC
+
+/obj/item/fish/slimefish/get_edible_reagents_to_add()
+	return list(/datum/reagent/toxin/slimejelly = 2)
+
 /obj/item/fish/boned
 	name = "unmarine bonemass"
 	desc = "What one could mistake for fish remains, is in reality a species that chose to discard its weak flesh a long time ago. A living fossil, in its most literal sense."
@@ -560,6 +578,9 @@
 	death_text = "%SRC stops moving." //It's dead... or is it?
 	evolution_types = list(/datum/fish_evolution/mastodon)
 	beauty = FISH_BEAUTY_UGLY
+
+/obj/item/fish/boned/make_edible()
+	return //it's all bones and no meat.
 
 /obj/item/fish/mastodon
 	name = "unmarine mastodon"
@@ -589,6 +610,9 @@
 	death_text = "%SRC stops moving."
 	fish_traits = list(/datum/fish_trait/heavy, /datum/fish_trait/amphibious, /datum/fish_trait/revival, /datum/fish_trait/carnivore, /datum/fish_trait/predator, /datum/fish_trait/aggressive)
 	beauty = FISH_BEAUTY_BAD
+
+/obj/item/fish/mastodon/make_edible()
+	return //it's all bones and no meat.
 
 /obj/item/fish/holo
 	name = "holographic goldfish"
@@ -729,11 +753,15 @@
 		/datum/fish_trait/carnivore,
 		/datum/fish_trait/heavy,
 	)
+	fillet
 	hitsound = null
 	throwforce = 5
 	beauty = FISH_BEAUTY_GOOD
 	///maximum bonus damage when winded up
 	var/maximum_bonus = 25
+
+/obj/item/fish/lavaloop/get_food_types()
+	return SEAFOOD|MEAT|GORE //Well-cooked in lava
 
 /obj/item/fish/lavaloop/Initialize(mapload, apply_qualities = TRUE)
 	. = ..()
@@ -820,6 +848,11 @@
 	required_fluid_type = AQUARIUM_FLUID_ANADROMOUS
 	fillet_type = /obj/item/food/fishmeat/salmon
 	beauty = FISH_BEAUTY_GOOD
+
+/obj/item/fish/slimefish/get_edible_reagents_to_add()
+	var/return_list = ..()
+	return_list[/datum/reagent/consumable/nutriment/fat] = 1
+	return return_list
 
 /obj/item/fish/arctic_char
 	name = "arctic char"
@@ -1186,6 +1219,9 @@
 	required_temperature_min = MIN_AQUARIUM_TEMP+3
 	required_temperature_max = MIN_AQUARIUM_TEMP+38
 	random_case_rarity = FISH_RARITY_NOPE
+
+/obj/item/fish/soul/get_food_types()
+	return MEAT|RAW|GORE //Not-so-quite-seafood
 
 /obj/item/fish/skin_crab
 	name = "skin crab"

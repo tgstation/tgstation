@@ -134,6 +134,8 @@
 #define FISH_WEIGHT_SLOWDOWN_EXPONENT 0.54
 ///Used to calculate the force of the fish by comparing (1 + log(weight/this_define)) and the w_class of the item.
 #define FISH_WEIGHT_FORCE_DIVISOR 250
+///Used to calculate how many bites a fish can take before being deleted.
+#define FISH_WEIGHT_BITE_DIVISOR (FISH_GRIND_RESULTS_WEIGHT_DIVISOR * 0.4)
 
 ///The breeding timeout for newly instantiated fish is multiplied by this.
 #define NEW_FISH_BREEDING_TIMEOUT_MULT 2
@@ -182,3 +184,6 @@
 //Minigame defines
 /// The height of the minigame slider. Not in pixels, but minigame units.
 #define FISHING_MINIGAME_AREA 1000
+
+///The fish needs to be cooked for at least this long so that it can be safely eaten
+#define FISH_SAFE_COOKING_DURATION 30 SECONDS

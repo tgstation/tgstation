@@ -219,6 +219,8 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_NO_STAGGER "no_stagger"
 /// Getting hit by thrown movables won't push you away
 #define TRAIT_NO_THROW_HITPUSH "no_throw_hitpush"
+/// This mob likes to eat fish. Raw, uncut fish.
+#define TRAIT_FISH_EATER "fish_eater"
 ///Added to mob or mind, changes the icons of the fish shown in the minigame UI depending on the possible reward.
 #define TRAIT_REVEAL_FISH "reveal_fish"
 ///This trait gets you a list of fishes that can be caught when examining a fishing spot.
@@ -744,6 +746,8 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_T_RAY_VISIBLE "t-ray-visible"
 /// If this item's been fried
 #define TRAIT_FOOD_FRIED "food_fried"
+/// If this item's been bbq grilled
+#define TRAIT_FOOD_BBQ_GRILLED "food_bbq_grilled"
 /// This is a silver slime created item
 #define TRAIT_FOOD_SILVER "food_silver"
 /// If this item's been made by a chef instead of being map-spawned or admin-spawned or such
@@ -832,6 +836,7 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_THROWINGARM "throwing_arm"
 #define TRAIT_SETTLER "settler"
 #define TRAIT_STRONG_STOMACH "strong_stomach"
+#define TRAIT_VEGETARIAN "trait_vegetarian"
 
 /// This mob always lands on their feet when they fall, for better or for worse.
 #define TRAIT_CATLIKE_GRACE "catlike_grace"

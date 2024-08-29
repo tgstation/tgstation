@@ -326,6 +326,10 @@
 	else
 		affected_mob.adjust_hallucinations(10 SECONDS * REM * seconds_per_tick)
 
+/datum/reagent/toxin/mindbreaker/fish
+	name = "Jellyfish Hallucinogen"
+	description = "A hallucinogen structurally similar to the mindbreaker toxin, but with weaker molecular bonds, making it easily degradeable by heat and cooking."
+
 /datum/reagent/toxin/plantbgone
 	name = "Plant-B-Gone"
 	description = "A harmful toxic mixture to kill plantlife. Do not ingest!"
