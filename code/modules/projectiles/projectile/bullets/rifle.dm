@@ -140,7 +140,7 @@
 /obj/projectile/bullet/rebar/hydrogen
 	name = "metallic hydrogen bolt"
 	icon_state = "rebar_hydrogen"
-	damage = 50
+	damage = 55
 	speed = 0.6
 	projectile_piercing = PASSMOB|PASSVEHICLE
 	projectile_phasing = ~(PASSMOB|PASSVEHICLE)
@@ -150,8 +150,6 @@
 	armour_penetration = 30 //very pointy.
 	wound_bonus = -15
 	bare_wound_bonus = 10
-	embed_type = /datum/embed_data/rebar_hydrogen
-	embed_falloff_tile = -3
 	shrapnel_type = /obj/item/ammo_casing/rebar/hydrogen
 
 /obj/projectile/bullet/rebar/hydrogen/on_hit(atom/target, blocked, pierce_hit)
@@ -163,16 +161,6 @@
 	. = ..()
 	if(pierces >= 3)
 		qdel(src)
-
-/datum/embed_data/rebar_hydrogen
-	embed_chance = 50
-	fall_chance = 2
-	jostle_chance = 3
-	ignore_throwspeed_threshold = TRUE
-	pain_stam_pct = 0.6
-	pain_mult = 4
-	jostle_pain_mult = 2
-	rip_time =18
 
 /obj/projectile/bullet/rebar/healium
 	name = "healium bolt"
