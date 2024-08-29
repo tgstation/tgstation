@@ -22,8 +22,13 @@
 	RegisterSignal(target, COMSIG_ATOM_EX_ACT, PROC_REF(explosive_fishing))
 
 /datum/element/lazy_fishing_spot/Detach(datum/target)
-	UnregisterSignal(target, list(COMSIG_PRE_FISHING, COMSIG_ATOM_EXAMINE, COMSIG_ATOM_EXAMINE_MORE, COMSIG_ATOM_EX_ACT))
-	UnregisterSignal(target, list(COMSIG_PRE_FISHING, COMSIG_NPC_FISHING))
+	UnregisterSignal(target, list(
+		COMSIG_PRE_FISHING,
+		COMSIG_NPC_FISHING,
+		COMSIG_ATOM_EXAMINE,
+		COMSIG_ATOM_EXAMINE_MORE,
+		COMSIG_ATOM_EX_ACT,
+	))
 	REMOVE_TRAIT(target, TRAIT_FISHING_SPOT, REF(src))
 	return ..()
 
