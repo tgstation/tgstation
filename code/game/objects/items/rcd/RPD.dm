@@ -363,9 +363,10 @@ GLOBAL_LIST_INIT(transit_tube_recipes, list(
 
 /obj/item/pipe_dispenser/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
-	playsound(src, SFX_TOOL_SWITCH, 20, TRUE)
 	if(.)
 		return
+
+	playsound(src, SFX_TOOL_SWITCH, 20, TRUE)
 
 	var/playeffect = TRUE
 	switch(action)
