@@ -6369,6 +6369,7 @@
 #include "modular_doppler\modular_food_drinks_and_chems\food_and_drinks\drink_reagents.dm"
 #include "modular_doppler\modular_food_drinks_and_chems\food_and_drinks\drinks.dm"
 #include "modular_doppler\modular_food_drinks_and_chems\food_and_drinks\drinks_recipes.dm"
+#include "modular_doppler\sprite_accessories\code\hair.dm"
 #include "modular_doppler\tableflip\tableflip.dm"
 #include "modular_doppler\vending_machines\code\vendor_containers.dm"
 #include "modular_doppler\vending_machines\code\vendor_food.dm"
