@@ -1,0 +1,448 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/obj/structure/window/reinforced/spawner/directional/south,
+/obj/bitrunning/teleporter,
+/turf/open/floor/circuit,
+/area/virtual_domain/fullbright)
+"c" = (
+/obj/structure/table/reinforced,
+/obj/item/toy/crayon/spraycan/infinite,
+/obj/item/toy/crayon/spraycan/infinite{
+	pixel_x = 8
+	},
+/obj/item/toy/crayon/spraycan/infinite{
+	pixel_x = -8
+	},
+/turf/open/floor/iron/textured,
+/area/virtual_domain/fullbright)
+"e" = (
+/obj/structure/window/reinforced/spawner/directional/north,
+/obj/bitrunning/teleporter,
+/turf/open/floor/circuit,
+/area/virtual_domain/fullbright)
+"f" = (
+/obj/structure/window/reinforced/spawner/directional/east,
+/obj/bitrunning/teleporter,
+/turf/open/floor/circuit,
+/area/virtual_domain/fullbright)
+"g" = (
+/obj/effect/turf_decal/arrows,
+/turf/open/floor/iron/textured,
+/area/virtual_domain/fullbright)
+"j" = (
+/obj/structure/window/reinforced/spawner/directional/east,
+/obj/structure/window/reinforced/spawner/directional/north,
+/obj/bitrunning/teleporter,
+/turf/open/floor/circuit,
+/area/virtual_domain/fullbright)
+"k" = (
+/obj/structure/window/reinforced/spawner/directional/north,
+/turf/open/floor/iron/textured,
+/area/virtual_domain/fullbright)
+"l" = (
+/obj/structure/window/reinforced/spawner/directional/west,
+/obj/structure/window/reinforced/spawner/directional/north,
+/obj/bitrunning/teleporter,
+/turf/open/floor/circuit,
+/area/virtual_domain/fullbright)
+"m" = (
+/obj/effect/landmark/bitrunning/bitrunner_spawn,
+/turf/open/floor/iron/textured,
+/area/virtual_domain/fullbright)
+"o" = (
+/obj/structure/window/reinforced/spawner/directional/south,
+/turf/open/floor/iron/textured,
+/area/virtual_domain/fullbright)
+"q" = (
+/turf/closed/wall/r_wall,
+/area/virtual_domain/fullbright)
+"r" = (
+/obj/structure/window/reinforced/spawner/directional/east,
+/obj/structure/window/reinforced/spawner/directional/south,
+/obj/bitrunning/teleporter,
+/turf/open/floor/circuit,
+/area/virtual_domain/fullbright)
+"s" = (
+/obj/effect/landmark/bitrunning/cache_goal_turf,
+/obj/effect/turf_decal/loading_area,
+/obj/structure/window/reinforced/spawner/directional/south,
+/turf/open/indestructible/bitrunning_transport,
+/area/virtual_domain/fullbright)
+"u" = (
+/obj/bitrunning/teleporter,
+/turf/open/floor/circuit,
+/area/virtual_domain/fullbright)
+"w" = (
+/obj/structure/window/reinforced/spawner/directional/north,
+/obj/structure/window/reinforced/spawner/directional/east,
+/obj/bitrunning/teleporter,
+/turf/open/floor/circuit,
+/area/virtual_domain/fullbright)
+"x" = (
+/turf/open/floor/iron/textured,
+/area/virtual_domain/fullbright)
+"A" = (
+/obj/structure/window/reinforced/spawner/directional/east,
+/turf/open/floor/iron/textured,
+/area/virtual_domain/fullbright)
+"B" = (
+/obj/structure/window/reinforced/spawner/directional/south,
+/obj/structure/window/reinforced/spawner/directional/west,
+/obj/bitrunning/teleporter,
+/turf/open/floor/circuit,
+/area/virtual_domain/fullbright)
+"D" = (
+/obj/structure/window/reinforced/spawner/directional/west,
+/turf/open/floor/iron/textured,
+/area/virtual_domain/fullbright)
+"H" = (
+/obj/structure/window/reinforced/spawner/directional/south,
+/obj/structure/window/reinforced/spawner/directional/east,
+/obj/effect/landmark/bitrunning/cache_goal_turf,
+/obj/effect/turf_decal/loading_area,
+/turf/open/indestructible/bitrunning_transport,
+/area/virtual_domain/fullbright)
+"I" = (
+/turf/closed/indestructible/binary,
+/area/virtual_domain/fullbright)
+"J" = (
+/obj/effect/turf_decal/arrows{
+	dir = 1
+	},
+/turf/open/floor/iron/textured,
+/area/virtual_domain/fullbright)
+"L" = (
+/obj/structure/window/reinforced/spawner/directional/west,
+/obj/structure/window/reinforced/spawner/directional/south,
+/obj/bitrunning/teleporter,
+/turf/open/floor/circuit,
+/area/virtual_domain/fullbright)
+"M" = (
+/obj/structure/window/reinforced/spawner/directional/south,
+/obj/structure/window/reinforced/spawner/directional/east,
+/obj/bitrunning/teleporter,
+/turf/open/floor/circuit,
+/area/virtual_domain/fullbright)
+"N" = (
+/obj/structure/closet/crate/secure/bitrunning/encrypted,
+/obj/effect/turf_decal/arrows,
+/turf/open/floor/iron/textured,
+/area/virtual_domain/fullbright)
+"Q" = (
+/obj/structure/table/reinforced,
+/obj/item/toy/crayon/spraycan/infinite{
+	pixel_x = -8
+	},
+/obj/item/toy/crayon/spraycan/infinite{
+	pixel_x = 8
+	},
+/obj/item/toy/crayon/spraycan/infinite,
+/turf/open/floor/iron/textured,
+/area/virtual_domain/fullbright)
+"R" = (
+/obj/structure/window/reinforced/spawner/directional/east,
+/obj/effect/turf_decal/arrows,
+/turf/open/floor/iron/textured,
+/area/virtual_domain/fullbright)
+"T" = (
+/obj/structure/window/reinforced/spawner/directional/south,
+/obj/effect/landmark/bitrunning/cache_goal_turf,
+/obj/effect/turf_decal/loading_area,
+/turf/open/indestructible/bitrunning_transport,
+/area/virtual_domain/fullbright)
+"V" = (
+/obj/structure/window/reinforced/spawner/directional/west,
+/obj/bitrunning/teleporter,
+/turf/open/floor/circuit,
+/area/virtual_domain/fullbright)
+"W" = (
+/obj/structure/window/reinforced/spawner/directional/north,
+/obj/structure/window/reinforced/spawner/directional/east,
+/turf/open/floor/iron/textured,
+/area/virtual_domain/fullbright)
+
+(1,1,1) = {"
+I
+I
+I
+I
+I
+I
+I
+I
+I
+I
+I
+I
+I
+"}
+(2,1,1) = {"
+I
+q
+q
+q
+q
+q
+q
+q
+q
+I
+I
+I
+I
+"}
+(3,1,1) = {"
+I
+q
+l
+D
+L
+V
+D
+B
+q
+I
+I
+I
+I
+"}
+(4,1,1) = {"
+I
+q
+k
+x
+o
+x
+x
+o
+q
+I
+I
+I
+I
+"}
+(5,1,1) = {"
+I
+q
+w
+A
+r
+f
+A
+r
+q
+I
+I
+I
+I
+"}
+(6,1,1) = {"
+I
+q
+e
+x
+a
+u
+x
+a
+q
+I
+I
+I
+I
+"}
+(7,1,1) = {"
+I
+q
+k
+x
+o
+x
+x
+o
+q
+I
+I
+I
+I
+"}
+(8,1,1) = {"
+I
+q
+w
+A
+M
+f
+A
+M
+q
+q
+q
+q
+I
+"}
+(9,1,1) = {"
+I
+q
+k
+g
+T
+u
+x
+a
+c
+x
+m
+q
+I
+"}
+(10,1,1) = {"
+I
+q
+e
+N
+s
+x
+x
+o
+u
+J
+m
+q
+I
+"}
+(11,1,1) = {"
+I
+q
+W
+R
+H
+f
+A
+r
+Q
+x
+m
+q
+I
+"}
+(12,1,1) = {"
+I
+q
+e
+x
+a
+u
+x
+a
+q
+q
+q
+q
+I
+"}
+(13,1,1) = {"
+I
+q
+k
+x
+o
+x
+x
+o
+q
+I
+I
+I
+I
+"}
+(14,1,1) = {"
+I
+q
+w
+A
+r
+f
+A
+M
+q
+I
+I
+I
+I
+"}
+(15,1,1) = {"
+I
+q
+e
+x
+a
+u
+x
+a
+q
+I
+I
+I
+I
+"}
+(16,1,1) = {"
+I
+q
+k
+x
+o
+x
+x
+o
+q
+I
+I
+I
+I
+"}
+(17,1,1) = {"
+I
+q
+j
+A
+r
+f
+A
+r
+q
+I
+I
+I
+I
+"}
+(18,1,1) = {"
+I
+q
+q
+q
+q
+q
+q
+q
+q
+I
+I
+I
+I
+"}
+(19,1,1) = {"
+I
+I
+I
+I
+I
+I
+I
+I
+I
+I
+I
+I
+I
+"}

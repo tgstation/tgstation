@@ -5,7 +5,7 @@
 	key = "janitor_work_test"
 	map_name = "janitor_work_test"
 	bitrunning_network = BITRUNNER_DOMAIN_SECURITY
-	forced_outfit = /datum/outfit/job/janitor/prisoner
+	forced_outfit = /datum/outfit/job/prisoner/janitor
 
 /datum/lazy_template/virtual_domain/janitor_work_test/setup_domain(list/created_atoms)
 	for(var/obj/effect/landmark/bitrunning/bitrunner_spawn/spawner in created_atoms)
@@ -22,7 +22,7 @@
 		casing.loaded_projectile = null
 		casing.update_icon_state()
 
-/datum/outfit/job/janitor/prisoner
+/datum/outfit/job/prisoner/janitor
 	name = "Janitor (Prisoner)"
 	uniform = /obj/item/clothing/under/rank/prisoner
 	head = /obj/item/clothing/head/soft/purple
@@ -39,14 +39,14 @@
 	key = "customer_push_test"
 	map_name = "customer_push_test"
 	bitrunning_network = BITRUNNER_DOMAIN_SECURITY
-	forced_outfit = /datum/outfit/job/janitor/waiter
+	forced_outfit = /datum/outfit/job/prisoner/waiter
 
 /datum/lazy_template/virtual_domain/customer_push_test/setup_domain(list/created_atoms)
 	for(var/obj/effect/landmark/bitrunning/bitrunner_spawn/spawner in created_atoms)
 		custom_spawns += spawner
 
-/datum/outfit/job/janitor/waiter
-	name = "Janitor (Waiter)"
+/datum/outfit/job/prisoner/waiter
+	name = "Waiter (Prisoner)"
 	neck = /obj/item/clothing/neck/bowtie
 	suit = /obj/item/clothing/suit/apron
 	uniform = /obj/item/clothing/under/rank/prisoner
@@ -56,3 +56,27 @@
 	skillchips = null
 	backpack_contents = null
 
+/datum/lazy_template/virtual_domain/teleporter_maze_test
+	name = "Teleporter Maze Mapping: Test"
+	desc = "Crewmember making it hard to get around the station? Teach them how to respect easily navigatable areas."
+	help_text = "Test domain for Teleporter Maze."
+	key = "teleporter_maze_test"
+	map_name = "teleporter_maze_test"
+	bitrunning_network = BITRUNNER_DOMAIN_SECURITY
+	forced_outfit = /datum/outfit/job/prisoner/scientist
+
+/datum/lazy_template/virtual_domain/teleporter_maze_test/setup_domain(list/created_atoms)
+	for(var/obj/effect/landmark/bitrunning/bitrunner_spawn/spawner in created_atoms)
+		custom_spawns += spawner
+
+/datum/outfit/job/prisoner/scientist
+	name = "Scientist (Prisoner)"
+	neck = /obj/item/clothing/neck/tie/horrible
+	suit = /obj/item/clothing/suit/toggle/labcoat/science
+	uniform = /obj/item/clothing/under/rank/prisoner
+	head = null
+	glasses = /obj/item/clothing/glasses/science
+	ears = null
+	shoes = /obj/item/clothing/shoes/sneakers/purple
+	skillchips = null
+	backpack_contents = null

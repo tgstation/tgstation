@@ -3597,6 +3597,7 @@
 #include "code\modules\bitrunning\objects\loot_box.dm"
 #include "code\modules\bitrunning\objects\loot_crate.dm"
 #include "code\modules\bitrunning\objects\quantum_console.dm"
+#include "code\modules\bitrunning\objects\teleporter_maze.dm"
 #include "code\modules\bitrunning\objects\vendor.dm"
 #include "code\modules\bitrunning\orders\bepis.dm"
 #include "code\modules\bitrunning\orders\flair.dm"

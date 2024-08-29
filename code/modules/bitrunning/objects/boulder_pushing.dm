@@ -11,6 +11,7 @@
 	var/arrived = FALSE
 	var/speech_sound = 'sound/creatures/tourist/tourist_talk.ogg'
 	var/list/mad_lines = list("NO TIP FOR YOU. GOODBYE!", "At least at SpaceDonalds they serve their food FAST!", "This venue is horrendous!", "I will speak to your manager!", "I'll be sure to leave a bad Yelp review.")
+	var/list/push_lines = list("I hope there's a seat that supports my weight.", "I hope I can bring my gun in here.", "I hope they have the triple deluxe fatty burger.", "I just love the culture here.")
 
 /obj/bitrunning/hungry_customer/Initialize(mapload)
 	. = ..()
@@ -61,7 +62,7 @@
 		balloon_alert(hit_object, "pushing customer")
 		sisyphus = hit_object
 		RegisterSignal(sisyphus, COMSIG_MOB_CLIENT_PRE_MOVE, PROC_REF(sisyphus_movement))
-		say(pick(list("I hope there's a seat that supports my weight.", "I hope I can bring my gun in here.", "I hope they have the triple deluxe fatty burger.", "I just love the culture here.")))
+		say(pick(push_lines))
 		playsound(src, speech_sound, 100, FALSE)
 		sisyphus.add_movespeed_modifier(/datum/movespeed_modifier/status_effect/shoving_customer, update=TRUE)
 
@@ -226,3 +227,17 @@
 			return
 	else
 		said_blocked_line = FALSE
+
+/obj/bitrunning/hungry_customer/supermatter
+	name = "engineering enjoyer"
+	desc = "Help this tourist see their favorite thing, the supermatter!"
+	mad_lines = list("Ugh, this is what I get for a premium Lift?", "I'm absolutely giving you a bad review.", "This is coming out of your tip!!!")
+	push_lines = list("I'm so excited to see the Supermatter!", "Do you think they'll let me touch the crystal?", "I've been saving for this trip for years!")
+
+/obj/bitrunning/customer_speech/supermatter
+	possible_lines = list(
+		"I wonder if my healthcare covers radiation.",
+		"You're not very fast, you know?",
+		"You're not really earning that tip. Ever heard of customer service?",
+		"This is taking FOREVER. Can't you push faster?"
+	)
