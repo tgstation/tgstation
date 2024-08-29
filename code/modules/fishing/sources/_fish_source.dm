@@ -92,7 +92,7 @@ GLOBAL_LIST_INIT(specific_fish_icons, generate_specific_fish_icons())
 		return
 	for(var/path in fish_counts)
 		if(!(path in fish_table))
-			stack_trace("path [path] found in the 'fish_counts' list but not in the fish_table one of [type]")
+			stack_trace("path [path] found in the 'fish_counts' list but not in the 'fish_table'")
 
 /datum/fish_source/Destroy()
 	exploded_turfs = null
@@ -296,7 +296,7 @@ GLOBAL_LIST(fishing_property_cache)
 	var/result_multiplier = 1
 
 
-	var/list/final_table = fish_table.Copy()
+	var/list/final_table = get_fish_table()
 
 	if(bait)
 		if(HAS_TRAIT(bait, TRAIT_GREAT_QUALITY_BAIT))
