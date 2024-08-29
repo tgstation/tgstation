@@ -90,7 +90,7 @@ GLOBAL_LIST_INIT(spontaneous_fish_traits, populate_spontaneous_fish_traits())
 /datum/fish_trait/proc/on_fish_eaten(obj/item/fish/fish, list/reagents)
 	SIGNAL_HANDLER
 	for(var/reagent in reagents_to_add)
-		reagents[reagent] += reagents_to_add[reagent] * 0.25
+		reagents[reagent] += reagents_to_add[reagent] * 0.35
 
 /// Proc that handles adding reagents from the trait to the fillets from butchered fish.
 /datum/fish_trait/proc/process_reagents(obj/item/fish/source, mob/living/user, obj/item/process_item, list/results)
