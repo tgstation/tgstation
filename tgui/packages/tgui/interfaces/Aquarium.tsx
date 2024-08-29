@@ -1,17 +1,15 @@
 import { capitalizeFirst } from 'common/string';
 import {
-  Button,
-  Flex,
-  Input,
-  Knob,
-  Icon,
   Box,
-  LabeledControls,
+  Button,
   DmIcon,
-  Stack,
+  Flex,
+  Icon,
+  Knob,
+  LabeledList,
   NumberInput,
   Section,
-  LabeledList,
+  Stack,
 } from 'tgui-core/components';
 import { BooleanLike } from 'tgui-core/react';
 
@@ -138,7 +136,7 @@ const FishInfo = (props) => {
                     item_reference: fish.fish_ref,
                   })
                 }
-              ></Button>
+              />
             </Flex>
           </Flex.Item>
         </Flex>
@@ -188,7 +186,7 @@ const FishInfo = (props) => {
             >
               <Flex>
                 <Flex.Item ml={3}>
-                  <Icon name="keyboard"></Icon>
+                  <Icon name="keyboard" />
                 </Flex.Item>
                 <Flex.Item ml={1}>Rename</Flex.Item>
               </Flex>
@@ -252,7 +250,7 @@ const CalculateHappiness = (props) => {
     <Box>
       {Array.from({ length: 5 }, (_, index) => (
         <DmIcon
-          ml={index == 0 ? 0 : -6}
+          ml={index === 0 ? 0 : -6}
           icon={heartIcon}
           icon_state={happiness >= index ? 'full_heart' : 'empty_heart'}
           height="48px"
