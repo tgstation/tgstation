@@ -167,8 +167,8 @@
 	)
 	ADD_TRAIT(src, TRAIT_UNCATCHABLE, INNATE_TRAIT) //good luck catching the liquid
 
-/obj/item/food/canned/squid_ink/proc/blind_em(mob/living/victim, inkable)
-	if(inkable)
+/obj/item/food/canned/squid_ink/proc/blind_em(mob/living/victim, can_splat_on)
+	if(can_splat_on)
 		victim.adjust_temp_blindness_up_to(7 SECONDS, 10 SECONDS)
 		victim.adjust_confusion_up_to(3.5 SECONDS, 6 SECONDS)
 		victim.Paralyze(2 SECONDS) //splat!

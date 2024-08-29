@@ -292,6 +292,14 @@
 	foodtypes = FRUIT | ALCOHOL
 	crafting_complexity = FOOD_COMPLEXITY_2
 
+/obj/item/food/melonkeg/CheckParts(list/parts_list)
+	. = ..()
+	var/obj/item/reagent_containers/cup/glass/bottle/bottle = locate() in contents
+	if(!bottle)
+		return
+	if(bottle.message_in_a_bottle)
+		bottle.message_in_a_bottle.forceMove(drop_location())
+
 /obj/item/food/honeybar
 	name = "honey nut bar"
 	desc = "Oats and nuts compressed together into a bar, held together with a honey glaze."
@@ -817,8 +825,8 @@
 		hit_callback = CALLBACK(src, PROC_REF(blind_em)), \
 	)
 
-/obj/item/food/ink_sac/proc/blind_em(mob/living/victim, inkable)
-	if(inkable)
+/obj/item/food/ink_sac/proc/blind_em(mob/living/victim, can_splat_on)
+	if(can_splat_on)
 		victim.adjust_temp_blindness_up_to(7 SECONDS, 10 SECONDS)
 		victim.adjust_confusion_up_to(3.5 SECONDS, 6 SECONDS)
 		victim.Paralyze(2 SECONDS) //splat!

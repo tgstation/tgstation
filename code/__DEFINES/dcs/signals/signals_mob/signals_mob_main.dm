@@ -170,8 +170,8 @@
 ///Called on user, from base of /datum/strippable_item/try_(un)equip() (atom/target, obj/item/equipping?)
 #define COMSIG_TRY_STRIP "try_strip"
 	#define COMPONENT_CANT_STRIP (1<<0)
-///From /datum/component/creamed/Initialize()
-#define COMSIG_MOB_CREAMED "mob_creamed"
+///From /datum/component/face_decal/splat/Initialize()
+#define COMSIG_MOB_HIT_BY_SPLAT "hit_by_splat"
 ///From /obj/item/gun/proc/check_botched()
 #define COMSIG_MOB_CLUMSY_SHOOT_FOOT "mob_clumsy_shoot_foot"
 ///from /obj/item/hand_item/slapper/attack_atom(): (source=obj/structure/table/slammed_table, mob/living/slammer)

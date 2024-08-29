@@ -1,4 +1,8 @@
 /datum/component/splat
+	///The icon state to use for the decal
+	var/icon_state
+	///The bodypart layer to use for the decal
+	var/layer
 	///The type of memory to celebrate the event of getting hit by this
 	var/memory_type
 	///The type of smudge we create on the floor
@@ -11,6 +15,8 @@
 	var/datum/callback/hit_callback
 
 /datum/component/splat/Initialize(
+	icon_state = "creampie",
+	layer = EXTERNAL_FRONT,
 	memory_type = /datum/memory/witnessed_creampie,
 	smudge_type = /obj/effect/decal/cleanable/food/pie_smudge,
 	moodlet_type = /datum/mood_event/creampie,
@@ -21,6 +27,8 @@
 	if(!ismovable(parent))
 		return COMPONENT_INCOMPATIBLE
 
+	src.icon_state = icon_state
+	src.layer = layer
 	src.memory_type = memory_type
 	src.smudge_type = smudge_type
 	src.moodlet_type = moodlet_type
@@ -54,13 +62,13 @@
 /datum/component/splat/proc/splat(atom/movable/source, atom/hit_atom)
 	var/turf/hit_turf = get_turf(hit_atom)
 	new smudge_type(hit_turf)
-	var/is_creamable = TRUE
+	var/can_splat_on = TRUE
 	if(isliving(hit_atom))
 		var/mob/living/living_target_getting_hit = hit_atom
 		if(iscarbon(living_target_getting_hit))
-			is_creamable = !!(living_target_getting_hit.get_bodypart(BODY_ZONE_HEAD))
-		hit_callback?.Invoke(living_target_getting_hit, is_creamable)
-	if(is_creamable && is_type_in_typecache(hit_atom, GLOB.creamable))
-		hit_atom.AddComponent(/datum/component/creamed, splat_color || source.color, memory_type, moodlet_type)
+			can_splat_on = !!(living_target_getting_hit.get_bodypart(BODY_ZONE_HEAD))
+		hit_callback?.Invoke(living_target_getting_hit, can_splat_on)
+	if(can_splat_on && is_type_in_typecache(hit_atom, GLOB.splattable))
+		hit_atom.AddComponent(/datum/component/face_decal/splat, icon_state, layer, splat_color || source.color, memory_type, moodlet_type)
 	SEND_SIGNAL(source, COMSIG_MOVABLE_SPLAT, hit_atom)
 	qdel(source)

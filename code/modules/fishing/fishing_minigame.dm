@@ -64,7 +64,7 @@
 	/// Background icon state from fishing_hud.dmi
 	var/background = "background_default"
 	/// Fish icon state from fishing_hud.dmi
-	var/fish_icon = "fish"
+	var/fish_icon = FISH_ICON_DEF
 
 	/// Fishing line visual
 	var/datum/beam/fishing_line
@@ -167,7 +167,7 @@
 		completion -= MAX_FISH_COMPLETION_MALUS * (difficulty * 0.01)
 
 	if(HAS_MIND_TRAIT(user, TRAIT_REVEAL_FISH))
-		fish_icon = GLOB.specific_fish_icons[reward_path] || "fish"
+		fish_icon = GLOB.specific_fish_icons[reward_path] || FISH_ICON_DEF
 
 	mover.adjust_to_difficulty()
 
@@ -402,6 +402,8 @@
 				send_alert("critter!!!")
 			if(FISH_ICON_SEED)
 				send_alert("seed!!!")
+			if(FISH_ICON_BOTTLE)
+				send_alert("bottle!!!")
 	else
 		send_alert("!!!")
 	animate(float, pixel_y = 3, time = 5, loop = -1, flags = ANIMATION_RELATIVE)
