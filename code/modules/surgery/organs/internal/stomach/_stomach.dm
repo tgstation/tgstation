@@ -5,7 +5,7 @@
 	name = "stomach"
 	desc = "Onaka ga suite imasu."
 	icon_state = "stomach"
-	visual = FALSE
+
 	w_class = WEIGHT_CLASS_SMALL
 	zone = BODY_ZONE_CHEST
 	slot = ORGAN_SLOT_STOMACH
@@ -245,11 +245,11 @@
 			disgusted.throw_alert(ALERT_DISGUST, /atom/movable/screen/alert/disgusted)
 			disgusted.add_mood_event("disgust", /datum/mood_event/disgusted)
 
-/obj/item/organ/internal/stomach/Insert(mob/living/carbon/receiver, special, movement_flags)
+/obj/item/organ/internal/stomach/mob_insert(mob/living/carbon/receiver, special, movement_flags)
 	. = ..()
 	receiver.hud_used?.hunger?.update_appearance()
 
-/obj/item/organ/internal/stomach/Remove(mob/living/carbon/stomach_owner, special, movement_flags)
+/obj/item/organ/internal/stomach/mob_remove(mob/living/carbon/stomach_owner, special, movement_flags)
 	if(ishuman(stomach_owner))
 		var/mob/living/carbon/human/human_owner = owner
 		human_owner.clear_alert(ALERT_DISGUST)
