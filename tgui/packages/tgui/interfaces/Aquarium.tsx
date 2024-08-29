@@ -20,139 +20,57 @@ import { Window } from '../layouts';
 
 type Data = {
   temperature: number;
-  fluid_type: string;
+  fluidType: string;
   minTemperature: number;
   maxTemperature: number;
   fluidTypes: string[];
-  fish_data: fish_data[];
-  prop_data: prop_data[];
-  allow_breeding: BooleanLike;
-  feeding_interval: number;
-  heart_icon: string;
-  heart_icon_state: string;
-  heart_empty_icon_state: string;
+  fishData: fish_data[];
+  propData: prop_data[];
+  allowBreeding: BooleanLike;
+  feedingInterval: number;
+  heartIcon: string;
+  heartIconState: string;
+  heartEmptyIconState: string;
 };
 
 type fish_data = {
-  fish_ref: string;
-  fish_name: string;
-  fish_happiness: number;
-  fish_icon: string;
-  fish_icon_state: string;
-  fish_health: number;
+  fishRef: string;
+  fishName: string;
+  fishHappiness: number;
+  fishIcon: string;
+  fishIconState: string;
+  fishHealth: number;
 };
 
 type prop_data = {
-  prop_ref: string;
-  prop_name: string;
-  prop_icon: string;
-  prop_icon_state: string;
+  propRef: string;
+  propName: string;
+  propIcon: string;
+  propIconState: string;
 };
 
 export const Aquarium = (props) => {
   const { act, data } = useBackend<Data>();
-  const {
-    temperature,
-    fluid_type,
-    minTemperature,
-    maxTemperature,
-    fluidTypes,
-    fish_data,
-    prop_data,
-    allow_breeding,
-    feeding_interval,
-  } = data;
+  const { fishData } = data;
 
   return (
     <Window width={765} height={500} theme="ntos">
       <Window.Content>
         <Stack vertical fill>
           <Stack.Item>
-            <Flex fill>
-              <Flex.Item grow>
-                <Section fill title="Temperature">
-                  <Knob
-                    mt={3}
-                    size={1.5}
-                    mb={1}
-                    value={temperature}
-                    unit="K"
-                    minValue={minTemperature}
-                    maxValue={maxTemperature}
-                    step={1}
-                    stepPixelSize={1}
-                    onDrag={(_, value) =>
-                      act('temperature', {
-                        temperature: value,
-                      })
-                    }
-                  />
-                </Section>
-              </Flex.Item>
-              <Flex.Item ml={1} grow>
-                <Section fill title="Fluid">
-                  <Flex direction="column" mb={1}>
-                    {fluidTypes.map((f) => (
-                      <Flex.Item className="candystripe" key={f}>
-                        <Button
-                          textAlign="center"
-                          fluid
-                          color="transparent"
-                          selected={fluid_type === f}
-                          onClick={() => act('fluid', { fluid: f })}
-                        >
-                          {f}
-                        </Button>
-                      </Flex.Item>
-                    ))}
-                  </Flex>
-                </Section>
-              </Flex.Item>
-              <Flex.Item ml={1} grow>
-                <Section fill title="Settings">
-                  <Box mt={2}>
-                    <LabeledList>
-                      <LabeledList.Item label="Reproduction">
-                        <Button
-                          textAlign="center"
-                          width="75px"
-                          content={allow_breeding ? 'Online' : 'Offline'}
-                          selected={allow_breeding}
-                          onClick={() => act('allow_breeding')}
-                        />
-                      </LabeledList.Item>
-                      <LabeledList.Item label="Feeding Interval">
-                        <NumberInput
-                          width="15px"
-                          value={feeding_interval}
-                          minValue={1}
-                          maxValue={7}
-                          step={1}
-                          unit="minutes"
-                          onChange={(value) =>
-                            act('feeding_interval', {
-                              feeding_interval: value,
-                            })
-                          }
-                        />
-                      </LabeledList.Item>
-                    </LabeledList>
-                  </Box>
-                </Section>
-              </Flex.Item>
-            </Flex>
+            <Settings />
           </Stack.Item>
           <Stack.Item grow>
             <Flex>
               <Flex.Item height="300px" width="75%">
                 <Section fill title="Fish" scrollable>
                   <Stack wrap>
-                    {fish_data.map((fish) => (
+                    {fishData.map((fish) => (
                       <Stack.Item
                         width="44%"
                         height="100px"
                         ml={1}
-                        key={fish.fish_ref}
+                        key={fish.fishRef}
                         style={{
                           background: 'rgba(36, 50, 67, 0.5)',
                           padding: '5px 5px',
@@ -167,41 +85,7 @@ export const Aquarium = (props) => {
                 </Section>
               </Flex.Item>
               <Flex.Item ml={1} grow>
-                <Section scrollable fill title="Props">
-                  <Stack vertical>
-                    {prop_data.map((prop) => (
-                      <Stack.Item className="candystripe" key={prop.prop_ref}>
-                        <Button
-                          fluid
-                          color="transparent"
-                          onClick={() =>
-                            act('remove_item', {
-                              item_reference: prop.prop_ref,
-                            })
-                          }
-                        >
-                          <Flex>
-                            <Flex.Item>
-                              <DmIcon
-                                icon={prop.prop_icon}
-                                icon_state={prop.prop_icon_state}
-                                height="40px"
-                                width="40px"
-                              />
-                            </Flex.Item>
-                            <Flex.Item
-                              ml={1}
-                              mt={1}
-                              style={{ fontSize: '11px', fontWeight: 'bold' }}
-                            >
-                              {capitalizeFirst(prop.prop_name)}
-                            </Flex.Item>
-                          </Flex>
-                        </Button>
-                      </Stack.Item>
-                    ))}
-                  </Stack>
-                </Section>
+                <PropTypes />
               </Flex.Item>
             </Flex>
           </Stack.Item>
@@ -316,9 +200,52 @@ const FishInfo = (props) => {
   );
 };
 
+const PropTypes = (props) => {
+  const { data, act } = useBackend<Data>();
+  const { propData } = data;
+
+  return (
+    <Section scrollable fill title="Props">
+      <Stack vertical>
+        {propData.map((prop) => (
+          <Stack.Item className="candystripe" key={prop.propRef}>
+            <Button
+              fluid
+              color="transparent"
+              onClick={() =>
+                act('remove_item', {
+                  item_reference: prop.propRef,
+                })
+              }
+            >
+              <Flex>
+                <Flex.Item>
+                  <DmIcon
+                    icon={prop.propIcon}
+                    icon_state={prop.propIconState}
+                    height="40px"
+                    width="40px"
+                  />
+                </Flex.Item>
+                <Flex.Item
+                  ml={1}
+                  mt={1}
+                  style={{ fontSize: '11px', fontWeight: 'bold' }}
+                >
+                  {capitalizeFirst(prop.propName)}
+                </Flex.Item>
+              </Flex>
+            </Button>
+          </Stack.Item>
+        ))}
+      </Stack>
+    </Section>
+  );
+};
+
 const CalculateHappiness = (props) => {
   const { data } = useBackend<Data>();
-  const { heart_icon } = data;
+  const { heartIcon } = data;
   const { happiness } = props;
 
   return (
@@ -326,7 +253,7 @@ const CalculateHappiness = (props) => {
       {Array.from({ length: 5 }, (_, index) => (
         <DmIcon
           ml={index == 0 ? 0 : -6}
-          icon={heart_icon}
+          icon={heartIcon}
           icon_state={happiness >= index ? 'full_heart' : 'empty_heart'}
           height="48px"
           width="48px"
@@ -336,6 +263,94 @@ const CalculateHappiness = (props) => {
   );
 };
 
+const Settings = (props) => {
+  const { data, act } = useBackend<Data>();
+  const {
+    temperature,
+    minTemperature,
+    maxTemperature,
+    fluidTypes,
+    fluidType,
+    allowBreeding,
+    feedingInterval,
+  } = data;
+
+  return (
+    <Flex fill>
+      <Flex.Item grow>
+        <Section fill title="Temperature">
+          <Knob
+            mt={3}
+            size={1.5}
+            mb={1}
+            value={temperature}
+            unit="K"
+            minValue={minTemperature}
+            maxValue={maxTemperature}
+            step={1}
+            stepPixelSize={1}
+            onDrag={(_, value) =>
+              act('temperature', {
+                temperature: value,
+              })
+            }
+          />
+        </Section>
+      </Flex.Item>
+      <Flex.Item ml={1} grow>
+        <Section fill title="Fluid">
+          <Flex direction="column" mb={1}>
+            {fluidTypes.map((f) => (
+              <Flex.Item className="candystripe" key={f}>
+                <Button
+                  textAlign="center"
+                  fluid
+                  color="transparent"
+                  selected={fluidType === f}
+                  onClick={() => act('fluid', { fluid: f })}
+                >
+                  {f}
+                </Button>
+              </Flex.Item>
+            ))}
+          </Flex>
+        </Section>
+      </Flex.Item>
+      <Flex.Item ml={1} grow>
+        <Section fill title="Settings">
+          <Box mt={2}>
+            <LabeledList>
+              <LabeledList.Item label="Reproduction">
+                <Button
+                  textAlign="center"
+                  width="75px"
+                  content={allowBreeding ? 'Online' : 'Offline'}
+                  selected={allowBreeding}
+                  onClick={() => act('allow_breeding')}
+                />
+              </LabeledList.Item>
+              <LabeledList.Item label="Feeding Interval">
+                <NumberInput
+                  width="15px"
+                  value={feedingInterval}
+                  minValue={1}
+                  maxValue={7}
+                  step={1}
+                  unit="minutes"
+                  onChange={(value) =>
+                    act('feeding_interval', {
+                      feeding_interval: value,
+                    })
+                  }
+                />
+              </LabeledList.Item>
+            </LabeledList>
+          </Box>
+        </Section>
+      </Flex.Item>
+    </Flex>
+  );
+};
 function dissectName(input: string): string {
   return input.split(' ')[0].slice(0, 18);
 }
