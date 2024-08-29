@@ -31,6 +31,11 @@ type Data =
       scanner_tier: number;
       broadcasting: BooleanLike;
       broadcasting_on_cd: BooleanLike;
+      diff1_name: string;
+      diff2_name: string;
+      diff3_name: string;
+      diff4_name: string;
+      diff5_name: string;
     }
   | {
       connected: 0;
@@ -73,6 +78,7 @@ enum Difficulty {
   Low,
   Medium,
   High,
+  Overkill,
 }
 
 function isConnected(data: Data): data is Data & { connected: 1 } {
@@ -87,6 +93,8 @@ function getColor(difficulty: number) {
       return 'average';
     case Difficulty.High:
       return 'bad';
+    case Difficulty.Overkill:
+      return 'black';
     default:
       return 'green';
   }
@@ -122,6 +130,11 @@ function AccessView(props) {
     points,
     randomized,
     ready,
+    diff1_name,
+    diff2_name,
+    diff3_name,
+    diff4_name,
+    diff5_name,
   } = data;
 
   const sorted = available_domains.sort((a, b) => a.cost - b.cost);
@@ -184,7 +197,7 @@ function AccessView(props) {
               onClick={() => setTab(0)}
               icon="chevron-down"
             >
-              Peaceful
+              {diff1_name}
             </Tabs.Tab>
             <Tabs.Tab
               backgroundColor={getColor(Difficulty.Low)}
@@ -193,7 +206,7 @@ function AccessView(props) {
               onClick={() => setTab(1)}
               icon="chevron-down"
             >
-              Easy
+              {diff2_name}
             </Tabs.Tab>
             <Tabs.Tab
               backgroundColor={getColor(Difficulty.Medium)}
@@ -202,7 +215,7 @@ function AccessView(props) {
               onClick={() => setTab(2)}
               icon="chevron-down"
             >
-              Medium
+              {diff3_name}
             </Tabs.Tab>
             <Tabs.Tab
               backgroundColor={getColor(Difficulty.High)}
@@ -211,7 +224,17 @@ function AccessView(props) {
               onClick={() => setTab(3)}
               icon="chevron-down"
             >
-              Hard <Icon name="skull" ml={1} />{' '}
+              {diff4_name} <Icon name="skull" ml={1} />{' '}
+            </Tabs.Tab>
+            <Tabs.Tab
+              backgroundColor={getColor(Difficulty.Overkill)}
+              textColor="white"
+              selected={tab === 4}
+              onClick={() => setTab(4)}
+              icon="chevron-down"
+            >
+              {diff5_name} <Icon name="skull" ml={1} />{' '}
+              <Icon name="skull" ml={1} />{' '}
             </Tabs.Tab>
           </Tabs>
           {filtered.map((domain) => (

@@ -25,7 +25,9 @@ SUBSYSTEM_DEF(bitrunning)
 			continue
 		var/can_view = domain.difficulty < scanner_tier && domain.cost <= points + 5
 		var/can_view_reward = domain.difficulty < (scanner_tier + 1) && domain.cost <= points + 3
-
+		if(bitrunning_network == BITRUNNER_DOMAIN_SECURITY)
+			can_view = TRUE
+			can_view_reward = TRUE
 		UNTYPED_LIST_ADD(levels, list(
 			"announce_ghosts"= domain.announce_to_ghosts,
 			"cost" = domain.cost,

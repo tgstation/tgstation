@@ -59,6 +59,11 @@
 
 	data["available_domains"] = SSbitrunning.get_available_domains(server.scanner_tier, server.points, server.bitrunning_network)
 	data["avatars"] = server.get_avatar_data()
+	data["diff1_name"] = (server.bitrunning_network == BITRUNNER_DOMAIN_SECURITY ? "Mischief - 1XX" : "Easy")
+	data["diff2_name"] = (server.bitrunning_network == BITRUNNER_DOMAIN_SECURITY ? "Misdemeanor - 2XX" : "Normal")
+	data["diff3_name"] = (server.bitrunning_network == BITRUNNER_DOMAIN_SECURITY ? "Felony - 3XX" : "Hard")
+	data["diff4_name"] = (server.bitrunning_network == BITRUNNER_DOMAIN_SECURITY ? "Grand Felony - 4XX" : "Very Hard")
+	data["diff5_name"] = (server.bitrunning_network == BITRUNNER_DOMAIN_SECURITY ? "Capital - 5XX" : "Overkill")
 
 	return data
 
