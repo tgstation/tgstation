@@ -18,7 +18,7 @@
 	..()
 	. = 1
 
-/datum/reagent/consumable/pinktea //Tiny Tim song
+/datum/reagent/consumable/pinktea
 	name = "Strawberry Tea"
 	description = "A timeless classic!"
 	color = "#f76aeb"//rgb(247, 106, 235)

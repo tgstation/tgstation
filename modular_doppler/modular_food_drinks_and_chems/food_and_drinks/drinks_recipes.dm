@@ -249,7 +249,7 @@
 	mix_message = "You hear golden coins and snobby rich laughing as it mixes."
 	mix_sound = 'sound/items/coinflip.ogg'
 
-/* DEPRECATED UNTIL WE'RE READY
+/* MORE STUFF WE CAN'T USE YET
 // RACE SPECIFIC DRINKS
 
 /datum/chemical_reaction/drink/coldscales
