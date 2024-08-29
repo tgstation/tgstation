@@ -1,0 +1,4 @@
+author: "kittysmooch"
+delete-after: True
+changes:
+  - admin: "ported ctrl+click spawning as aghost from skyrat\n:cl:"
