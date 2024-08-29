@@ -197,12 +197,8 @@
 
 	return data
 
-/obj/item/construction/rtd/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
-	. = ..()
-	playsound(src, SFX_TOOL_SWITCH, 20, TRUE)
-
-
 /obj/item/construction/rtd/handle_ui_act(action, params, datum/tgui/ui, datum/ui_state/state)
+	playsound(src, SFX_TOOL_SWITCH, 20, TRUE)
 
 	var/floor_designs = GLOB.floor_designs
 	switch(action)
