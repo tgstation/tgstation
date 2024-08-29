@@ -77,7 +77,7 @@ GLOBAL_LIST_INIT(specific_fish_icons, generate_specific_fish_icons())
 	var/catalog_description
 	/// Background image name from /datum/asset/simple/fishing_minigame
 	var/background = "background_default"
-	/// It true, repeated and large explosions won't be as efficient. This is usually meant for global fish sources.
+	/// It true, repeated and large explosions won't be as efficient. This is usually for fish sources that cover multiple turfs (i.e. rivers, oceans).
 	var/explosive_malus = FALSE
 	/// If explosive_malus is true, this will be used to keep track of the turfs where an explosion happened for when we'll spawn the loot.
 	var/list/exploded_turfs
@@ -226,6 +226,9 @@ GLOBAL_LIST_INIT(specific_fish_icons, generate_specific_fish_icons())
 	if(isnull(reward_path))
 		return null
 	if(reward_path in fish_counts) // This is limited count result
+		//Somehow, we're trying to spawn an expended reward.
+		if(fish_counts[reward_path] <= 0)
+			return null
 		fish_counts[reward_path] -= 1
 		var/regen_time = fish_count_regen?[reward_path]
 		if(regen_time)
@@ -280,7 +283,7 @@ GLOBAL_LIST(fishing_property_cache)
 /datum/fish_source/proc/get_fish_table()
 	var/list/table = fish_table.Copy()
 	for(var/result in table)
-		if(fish_counts[result] == 0)
+		if(fish_counts[result] <= 0)
 			table -= result
 	return table
 

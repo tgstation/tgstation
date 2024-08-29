@@ -54,6 +54,7 @@
 		/obj/item/fish/three_eyes = 1,
 	)
 	fishing_difficulty = FISHING_DEFAULT_DIFFICULTY + 5
+	explosive_malus = TRUE
 
 /datum/fish_source/sand
 	catalog_description = "Sand"
@@ -65,6 +66,7 @@
 		/obj/item/coin/gold = 3,
 	)
 	fishing_difficulty = FISHING_DEFAULT_DIFFICULTY + 20
+	explosive_malus = TRUE
 
 /datum/fish_source/cursed_spring
 	catalog_description = null //it's a secret (sorta, I know you're reading this)
@@ -78,6 +80,7 @@
 		/obj/item/fishing_rod/telescopic/master = 1,
 	)
 	fishing_difficulty = FISHING_DEFAULT_DIFFICULTY + 25
+	explosive_malus = TRUE
 
 /datum/fish_source/portal
 	fish_table = list(
