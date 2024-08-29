@@ -55,13 +55,12 @@ GLOBAL_LIST_EMPTY(janitorial_scanners)
 
 /obj/machinery/janitorial_scanner/Initialize(mapload)
 	. = ..()
-	our_room = detect_room(get_turf(src))
 	GLOB.janitorial_scanners += src
 
 /obj/machinery/janitorial_scanner/proc/scan_area()
 	for(var/turf/floor in our_room)
 		for(var/atom/possible_disqualifier in floor)
-			if(HAS_TRAIT(possible_disqualifier, TRAIT_BLOOD_ELEMENT))
+			if(GET_ATOM_BLOOD_DNA_LENGTH(possible_disqualifier))
 				return "ERROR: Blood-stained [possible_disqualifier] detected in [area_name]!"
 			for(var/path in GLOB.janitorial_reject_type_to_speech)
 				if(istype(possible_disqualifier, path))
@@ -113,3 +112,14 @@ GLOBAL_LIST_EMPTY(janitorial_scanners)
 	say("No messes detected! Thank you for being a reformed employee!")
 	say("Deposit this box to return to reality!")
 	new /obj/structure/closet/crate/secure/bitrunning/encrypted(get_turf(src))
+
+/obj/effect/bitrunner_exit_portal
+	name = "exit portal"
+	desc = "Exit the domain by clicking here with an empty hand!"
+	icon = 'icons/obj/machines/bitrunning.dmi'
+	base_icon_state = "exit_portal"
+	icon_state = "exit_portal"
+
+/obj/effect/bitrunner_exit_portal/attack_hand(mob/living/user, list/modifiers)
+	. = ..()
+	SEND_SIGNAL(user, COMSIG_BITRUNNER_ALERT_SEVER)

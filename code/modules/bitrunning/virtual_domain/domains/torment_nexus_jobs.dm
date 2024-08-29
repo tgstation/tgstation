@@ -11,6 +11,17 @@
 	for(var/obj/effect/landmark/bitrunning/bitrunner_spawn/spawner in created_atoms)
 		custom_spawns += spawner
 
+	for(var/obj/item/gun/ballistic/ballistic_gun in created_atoms)
+		ballistic_gun.magazine.empty_magazine()
+
+	for(var/obj/item/gun/energy/energy_gun in created_atoms)
+		energy_gun.cell.charge = 0
+		energy_gun.update_icon()
+
+	for(var/obj/item/ammo_casing/casing in created_atoms)
+		casing.loaded_projectile = null
+		casing.update_icon_state()
+
 /datum/outfit/job/janitor/prisoner
 	name = "Janitor (Prisoner)"
 	uniform = /obj/item/clothing/under/rank/prisoner

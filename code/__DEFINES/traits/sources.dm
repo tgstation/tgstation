@@ -298,6 +298,3 @@
 
 /// Trait added by style component
 #define STYLE_TRAIT "style"
-
-/// Trait given by an element
-#define ELEMENT_SOURCE_TRAIT "element_source_trait"

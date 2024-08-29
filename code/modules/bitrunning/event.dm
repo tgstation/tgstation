@@ -63,7 +63,7 @@
 		var/obj/machinery/quantum_server/server = server_ref?.resolve()
 		if(isnull(server))
 			continue
-		if(server.no_glitches)
+		if(!server.has_glitches)
 			continue
 
 		total += length(server.mutation_candidate_refs)

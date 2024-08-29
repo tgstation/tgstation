@@ -15,21 +15,21 @@
 			span_notice("You climb out of [src]!"),
 			span_notice("With a hiss, you hear a machine opening."))
 		open_machine()
-	else
-		if(iscarbon(user))
-			var/mob/living/carbon/carbon_user = user
-			if(carbon_user.handcuffed)
-				balloon_alert(carbon_user, "can't pull the lever!")
-			else
-				balloon_alert(carbon_user, "pulling escape lever")
-				carbon_user.changeNext_move(CLICK_CD_BREAKOUT)
-				carbon_user.last_special = world.time + CLICK_CD_BREAKOUT
-				addtimer(CALLBACK(src, PROC_REF(check_if_shake)), 1 SECONDS)
-				if(do_after(carbon_user, breakout_time, target = src, hidden = FALSE))
-					user.visible_message(span_notice("[occupant] emerges from [src]!"),
-						span_notice("You climb out of [src]!"),
-						span_notice("With a hiss, you hear a machine opening."))
-					open_machine()
+		return
+	if(iscarbon(user))
+		var/mob/living/carbon/carbon_user = user
+		if(carbon_user.handcuffed)
+			balloon_alert(carbon_user, "can't pull the lever!")
+			return
+		balloon_alert(carbon_user, "pulling escape lever")
+		carbon_user.changeNext_move(CLICK_CD_BREAKOUT)
+		carbon_user.last_special = world.time + CLICK_CD_BREAKOUT
+		addtimer(CALLBACK(src, PROC_REF(check_if_shake)), 1 SECONDS)
+		if(do_after(carbon_user, breakout_time, target = src, hidden = FALSE))
+			user.visible_message(span_notice("[occupant] emerges from [src]!"),
+				span_notice("You climb out of [src]!"),
+				span_notice("With a hiss, you hear a machine opening."))
+			open_machine()
 
 /obj/machinery/netpod/proc/check_if_shake()
 	var/next_check_time = 1 SECONDS

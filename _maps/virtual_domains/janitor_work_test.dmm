@@ -315,24 +315,12 @@
 	},
 /turf/open/floor/iron,
 /area/virtual_domain/fullbright)
-"Q" = (
-/obj/structure/table,
-/obj/effect/mapping_helpers/atom_injector/element_injector{
-	element_type = /datum/element/decal/blood;
-	target_type = /obj/structure/table
-	},
-/turf/open/floor/iron/kitchen,
-/area/virtual_domain/fullbright)
 "R" = (
 /obj/effect/mob_spawn/corpse/human/doctor,
 /turf/open/floor/iron,
 /area/virtual_domain/fullbright)
 "S" = (
 /obj/item/knife/butcher,
-/obj/effect/mapping_helpers/atom_injector/element_injector{
-	element_type = /datum/element/decal/blood;
-	target_type = /obj/item/knife/butcher
-	},
 /obj/effect/decal/cleanable/blood/splatter,
 /obj/effect/decal/cleanable/blood/hitsplatter{
 	dir = 4;
@@ -355,6 +343,9 @@
 	pixel_x = 9
 	},
 /obj/effect/mob_spawn/corpse/human/cook,
+/obj/effect/mapping_helpers/atom_injector/bloody_my_shit_up{
+	target_type = /obj/item/knife/butcher
+	},
 /turf/open/floor/iron/kitchen,
 /area/virtual_domain/fullbright)
 "T" = (
@@ -509,7 +500,7 @@ s
 j
 E
 Y
-Q
+D
 d
 k
 G

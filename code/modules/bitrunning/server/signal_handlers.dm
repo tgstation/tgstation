@@ -47,6 +47,8 @@
 		return
 
 	if(istype(arrived, /obj/structure/closet/crate/secure/bitrunning/encrypted))
+		var/goal_turf = get_turf(arrived)
+		new /obj/effect/bitrunner_exit_portal(goal_turf)
 		generate_loot(arrived, chosen_forge)
 		return
 
@@ -102,6 +104,19 @@
 			var/obj/machinery/janitorial_scanner/jani_scanner = thing
 			jani_scanner.unique_id = REF(src)
 			jani_scanner.our_room = detect_room(get_turf(jani_scanner))
+			for(var/turf/floor in jani_scanner.our_room) // We fuck up the corpses here because this is our opportunity to do so after they've been spawned.
+				for(var/mob/living/carbon/human/corpse in floor)
+					for(var/_ in 1 to rand(5, 15))
+						corpse.apply_damage(
+							damage = rand(25,50),
+							damagetype = pick(list(BRUTE, BURN)),
+							forced = TRUE,
+							spread_damage = FALSE,
+							wound_bonus = rand(0, 50),
+							bare_wound_bonus = rand(0, 20),
+							sharpness = pick(list(null, SHARP_EDGED, SHARP_POINTY)),
+							attack_direction = pick(list(NORTH,SOUTH,EAST,WEST,NORTHWEST,NORTHEAST,SOUTHWEST,SOUTHEAST)),
+						)
 
 		if(istype(thing, /obj/machinery/janitorial_submit))
 			var/obj/machinery/janitorial_submit/jani_plunger = thing

@@ -55,8 +55,8 @@
 	var/bitrunning_id = "DEFAULT"
 	/// Does this bitrunning server ignore the requirements for exit/goal turfs? Only turn on if you're manually controlling this in your domains.
 	var/skip_requirements = FALSE
-	/// Should glitches be disabled on this server entirely?
-	var/no_glitches = FALSE
+	/// Should glitches be enabled on this server
+	var/has_glitches = TRUE
 	/// Cooldown between being able to toggle broadcasting
 	COOLDOWN_DECLARE(broadcast_toggle_cd)
 
@@ -192,7 +192,8 @@
 	name = "torment nexus"
 	desc = "The backbone of the Torment Nexus, purchased from a failed startup that wanted to revolutionize working remote, hastily repurposed for \
 	re-educating crewmembers who can't stay within the lines at work via the latest and greatest in realistic working simulations."
-	no_glitches = TRUE
+	has_glitches = FALSE
 	skip_requirements = TRUE
 	bitrunning_network = BITRUNNER_DOMAIN_SECURITY
 	bitrunning_id = "torment_nexus"
+	broadcasting = TRUE // lets the Warden monitor them in their pod/lets the crew watch them work so they know punishment is real
