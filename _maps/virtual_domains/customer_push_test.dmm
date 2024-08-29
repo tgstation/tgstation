@@ -1,0 +1,331 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/turf/closed/indestructible/binary,
+/area/virtual_domain/fullbright)
+"h" = (
+/obj/structure/table,
+/obj/item/food/burger/bigbite{
+	pixel_x = -6;
+	pixel_y = 10
+	},
+/obj/item/food/fries{
+	pixel_y = 2;
+	pixel_x = 3
+	},
+/obj/item/reagent_containers/cup/soda_cans/space_mountain_wind{
+	pixel_x = 9;
+	pixel_y = 16
+	},
+/turf/open/floor/iron/kitchen,
+/area/virtual_domain/fullbright)
+"i" = (
+/obj/bitrunning/boulder_checkpoint,
+/turf/open/floor/iron/textured,
+/area/virtual_domain/fullbright)
+"j" = (
+/obj/bitrunning/customer_waiter/east/fast,
+/obj/bitrunning/customer_speech,
+/turf/open/floor/iron/textured,
+/area/virtual_domain/fullbright)
+"n" = (
+/obj/bitrunning/customer_waiter/west/slow,
+/turf/open/floor/iron/textured,
+/area/virtual_domain/fullbright)
+"q" = (
+/obj/structure/chair/stool,
+/obj/bitrunning/customer_destination,
+/turf/open/floor/iron/textured,
+/area/virtual_domain/fullbright)
+"r" = (
+/obj/item/grown/bananapeel,
+/obj/bitrunning/customer_speech,
+/turf/open/floor/iron/textured,
+/area/virtual_domain/fullbright)
+"s" = (
+/obj/effect/landmark/bitrunning/bitrunner_spawn,
+/turf/open/floor/iron/textured,
+/area/virtual_domain/fullbright)
+"u" = (
+/obj/effect/turf_decal/arrows{
+	dir = 1
+	},
+/obj/structure/table/wood/fancy,
+/turf/open/floor/iron/textured,
+/area/virtual_domain/fullbright)
+"w" = (
+/obj/effect/turf_decal/arrows{
+	dir = 1
+	},
+/turf/open/floor/iron/textured,
+/area/virtual_domain/fullbright)
+"x" = (
+/turf/open/floor/iron/kitchen,
+/area/virtual_domain/fullbright)
+"A" = (
+/obj/structure/table/wood/fancy,
+/turf/open/floor/iron/textured,
+/area/virtual_domain/fullbright)
+"E" = (
+/obj/structure/table,
+/turf/open/floor/iron/kitchen,
+/area/virtual_domain/fullbright)
+"F" = (
+/obj/effect/turf_decal/arrows{
+	dir = 4
+	},
+/turf/open/floor/iron/textured,
+/area/virtual_domain/fullbright)
+"G" = (
+/obj/bitrunning/customer_waiter/west,
+/obj/bitrunning/customer_speech,
+/turf/open/floor/iron/textured,
+/area/virtual_domain/fullbright)
+"H" = (
+/obj/effect/landmark/bitrunning/cache_goal_turf,
+/obj/effect/turf_decal/loading_area{
+	dir = 4
+	},
+/obj/structure/railing,
+/turf/open/indestructible/bitrunning_transport,
+/area/virtual_domain/fullbright)
+"I" = (
+/obj/effect/turf_decal/arrows{
+	dir = 1
+	},
+/obj/bitrunning/hungry_customer,
+/turf/open/floor/iron/textured,
+/area/virtual_domain/fullbright)
+"J" = (
+/obj/effect/turf_decal/arrows{
+	dir = 4
+	},
+/obj/structure/railing/corner/end{
+	dir = 4
+	},
+/turf/open/floor/iron/textured,
+/area/virtual_domain/fullbright)
+"M" = (
+/obj/bitrunning/customer_speech,
+/obj/item/grown/bananapeel,
+/turf/open/floor/iron/textured,
+/area/virtual_domain/fullbright)
+"O" = (
+/obj/bitrunning/customer_speech,
+/turf/open/floor/iron/textured,
+/area/virtual_domain/fullbright)
+"Q" = (
+/turf/open/floor/iron/textured,
+/area/virtual_domain/fullbright)
+"U" = (
+/obj/effect/turf_decal/loading_area{
+	dir = 4
+	},
+/obj/effect/landmark/bitrunning/cache_goal_turf,
+/turf/open/indestructible/bitrunning_transport,
+/area/virtual_domain/fullbright)
+"V" = (
+/obj/item/grown/bananapeel,
+/turf/open/floor/iron/textured,
+/area/virtual_domain/fullbright)
+"Y" = (
+/turf/closed/wall/r_wall,
+/area/virtual_domain/fullbright)
+
+(1,1,1) = {"
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+"}
+(2,1,1) = {"
+a
+Y
+Y
+Y
+Y
+Y
+Y
+Y
+Y
+Y
+Y
+Y
+Y
+Y
+Y
+Y
+Y
+Y
+Y
+a
+"}
+(3,1,1) = {"
+a
+Y
+x
+E
+Q
+Q
+i
+Q
+j
+Q
+A
+Q
+Q
+O
+Q
+Q
+i
+Q
+Y
+a
+"}
+(4,1,1) = {"
+a
+Y
+x
+E
+Q
+Q
+i
+Q
+O
+Q
+A
+Q
+V
+O
+Q
+Q
+i
+s
+Y
+a
+"}
+(5,1,1) = {"
+a
+Y
+x
+h
+q
+Q
+i
+w
+M
+w
+O
+w
+Q
+u
+Q
+I
+i
+s
+Y
+a
+"}
+(6,1,1) = {"
+a
+Y
+x
+E
+F
+J
+i
+Q
+O
+Q
+G
+Q
+Q
+O
+Q
+Q
+i
+s
+Y
+a
+"}
+(7,1,1) = {"
+a
+Y
+x
+E
+U
+H
+i
+Q
+O
+Q
+r
+Q
+n
+O
+Q
+Q
+i
+Q
+Y
+a
+"}
+(8,1,1) = {"
+a
+Y
+Y
+Y
+Y
+Y
+Y
+Y
+Y
+Y
+Y
+Y
+Y
+Y
+Y
+Y
+Y
+Y
+Y
+a
+"}
+(9,1,1) = {"
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+"}

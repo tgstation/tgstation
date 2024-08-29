@@ -3585,6 +3585,7 @@
 #include "code\modules\bitrunning\netpod\tools.dm"
 #include "code\modules\bitrunning\netpod\ui.dm"
 #include "code\modules\bitrunning\netpod\utils.dm"
+#include "code\modules\bitrunning\objects\boulder_pushing.dm"
 #include "code\modules\bitrunning\objects\byteforge.dm"
 #include "code\modules\bitrunning\objects\clothing.dm"
 #include "code\modules\bitrunning\objects\debug.dm"

@@ -31,3 +31,28 @@
 	shoes = /obj/item/clothing/shoes/galoshes
 	skillchips = null
 	backpack_contents = null
+
+/datum/lazy_template/virtual_domain/customer_push_test
+	name = "Tourist Assistance: Test"
+	desc = "Crewmember being rude to our guests? Teach them how to help their fellow tourist."
+	help_text = "Test domain for Tourist Assistance."
+	key = "customer_push_test"
+	map_name = "customer_push_test"
+	bitrunning_network = BITRUNNER_DOMAIN_SECURITY
+	forced_outfit = /datum/outfit/job/janitor/waiter
+
+/datum/lazy_template/virtual_domain/customer_push_test/setup_domain(list/created_atoms)
+	for(var/obj/effect/landmark/bitrunning/bitrunner_spawn/spawner in created_atoms)
+		custom_spawns += spawner
+
+/datum/outfit/job/janitor/waiter
+	name = "Janitor (Waiter)"
+	neck = /obj/item/clothing/neck/bowtie
+	suit = /obj/item/clothing/suit/apron
+	uniform = /obj/item/clothing/under/rank/prisoner
+	head = /obj/item/clothing/head/collectable/chef
+	ears = null
+	shoes = /obj/item/clothing/shoes/laceup
+	skillchips = null
+	backpack_contents = null
+
