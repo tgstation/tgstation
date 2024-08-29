@@ -6364,6 +6364,7 @@
 #include "modular_doppler\languages\language_datums.dm"
 #include "modular_doppler\modular_cosmetics\code\jacket_pockets.dm"
 #include "modular_doppler\modular_cosmetics\code\suits\jacket.dm"
+#include "modular_doppler\sprite_accessories\code\hair.dm"
 #include "modular_doppler\tableflip\tableflip.dm"
 #include "modular_doppler\wargaming\code\game_kit.dm"
 #include "modular_doppler\wargaming\code\holograms.dm"
