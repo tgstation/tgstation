@@ -682,10 +682,10 @@ GLOBAL_LIST_INIT(spontaneous_fish_traits, populate_spontaneous_fish_traits())
 	if(!iscarbon(target) || target.get_bodypart(BODY_ZONE_HEAD))
 		target.adjust_temp_blindness_up_to(4 SECONDS, 8 SECONDS)
 		target.adjust_confusion_up_to(1.5 SECONDS, 4 SECONDS)
-		target.AddComponent(/datum/component/creamed, \
-			cream_color = COLOR_NEARLY_ALL_BLACK, \
+		target.AddComponent(/datum/component/face_decal/splat, \
+			color = COLOR_NEARLY_ALL_BLACK, \
 			memory_type = /datum/memory/witnessed_inking, \
-			moodlet_type = /datum/mood_event/inked, \
+			mood_event_type = /datum/mood_event/inked, \
 		)
 	target.visible_message(span_warning("[target] is inked by [source]!"), span_userdanger("You've been inked by [source]!"))
 	playsound(target, SFX_DESECRATION, 50, TRUE)
