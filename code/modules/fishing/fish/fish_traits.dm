@@ -673,13 +673,13 @@ GLOBAL_LIST_INIT(spontaneous_fish_traits, populate_spontaneous_fish_traits())
 
 /datum/fish_trait/hallucinogenic/proc/on_fish_cooked(obj/item/fish/fish, cooked_time)
 	SIGNAL_HANDLER
-	if(cooked_time >= 30 SECONDS)
+	if(cooked_time >= FISH_SAFE_COOKING_DURATION)
 		fish.grind_results -= /datum/reagent/toxin/mindbreaker/fish
 
 /datum/fish_trait/hallucinogenic/on_fish_eaten(obj/item/fish/fish, list/reagents)
-	if(!HAS_TRAIT(src, TRAIT_FOOD_FRIED) && !HAS_TRAIT(src, TRAIT_FOOD_BBQ_GRILLED))
+	if(/datum/reagent/toxin/mindbreaker/fish in fish.grind_results) //The fish wasn't cooked for enough time.
 		return ..()
 
 /datum/fish_trait/hallucinogenic/process_reagents(obj/item/fish/source, mob/living/user, obj/item/process_item, list/results)
-	if(/datum/reagent/toxin/mindbreaker/fish in fish.grind_results) //The fish wasn't cooked.
+	if(/datum/reagent/toxin/mindbreaker/fish in fish.grind_results) //The fish wasn't cooked for enough time.
 		return ..()
