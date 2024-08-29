@@ -681,5 +681,5 @@ GLOBAL_LIST_INIT(spontaneous_fish_traits, populate_spontaneous_fish_traits())
 		return ..()
 
 /datum/fish_trait/hallucinogenic/process_reagents(obj/item/fish/source, mob/living/user, obj/item/process_item, list/results)
-	if(/datum/reagent/toxin/mindbreaker/fish in fish.grind_results) //The fish wasn't cooked for enough time.
+	if(/datum/reagent/toxin/mindbreaker/fish in source.grind_results) //The fish wasn't cooked for enough time.
 		return ..()
