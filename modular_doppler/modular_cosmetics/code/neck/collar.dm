@@ -94,7 +94,7 @@
 	icon_state = "bell"
 	greyscale_config = /datum/greyscale_config/collar/bell
 	greyscale_config_worn = /datum/greyscale_config/collar/bell/worn
-	greyscale_colors = "#663300#FFCC00"
+	greyscale_colors = "##222222#C0C0C0"
 
 /obj/item/clothing/neck/human_petcollar/locked/choker
 	name = "choker"
