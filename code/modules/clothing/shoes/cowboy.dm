@@ -109,4 +109,3 @@
 	desc = "And they sing, oh, ain't you glad you're single? And that song ain't so very far from wrong."
 	armor_type = /datum/armor/shoes_combat
 	has_spurs = TRUE
-	body_parts_covered = FEET|LEGS
