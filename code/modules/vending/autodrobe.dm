@@ -195,14 +195,13 @@ GLOBAL_LIST_INIT(autodrobe_contraband_items, list(
 	/obj/item/clothing/head/costume/powdered_wig = 1,
 	/obj/item/clothing/head/costume/tv_head = 1,
 	/obj/item/clothing/mask/muzzle = 2,
+	/obj/item/clothing/shoes/ducky_shoes = 1,
 	/obj/item/clothing/shoes/clown_shoes/meown_shoes = 1,
 	/obj/item/clothing/shoes/clown_shoes/moffers = 1,
-	/obj/item/clothing/shoes/ducky_shoes = 1,
 	/obj/item/clothing/suit/costume/judgerobe = 1,
 	/obj/item/clothing/head/costume/lobsterhat = 1,
 	/obj/item/clothing/under/costume/lobster = 1,
 	/obj/item/gun/magic/wand/nothing = 2,
-	/obj/item/skillchip/musical = 3,
 	/obj/item/storage/box/tape_wizard = 1,
 ))
 
