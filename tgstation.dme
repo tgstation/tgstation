@@ -6206,7 +6206,6 @@
 #include "code\modules\vending\clothesmate.dm"
 #include "code\modules\vending\coffee.dm"
 #include "code\modules\vending\cola.dm"
-#include "code\modules\vending\cytopro.dm"
 #include "code\modules\vending\donk.dm"
 #include "code\modules\vending\drinnerware.dm"
 #include "code\modules\vending\engineering.dm"
