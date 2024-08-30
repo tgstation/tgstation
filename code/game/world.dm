@@ -1,13 +1,11 @@
 #define RESTART_COUNTER_PATH "data/round_counter.txt"
-/// Load byond-tracy. If USE_BYOND_TRACY is defined, then this is ignored and byond-tracy is always loaded.
-#define USE_TRACY_PARAMETER "tracy"
+
 /// Force the log directory to be something specific in the data/logs folder
 #define OVERRIDE_LOG_DIRECTORY_PARAMETER "log-directory"
 /// Prevent the master controller from starting automatically
 #define NO_INIT_PARAMETER "no-init"
 
 GLOBAL_VAR(restart_counter)
-GLOBAL_VAR(tracy_log)
 
 /**
  * WORLD INITIALIZATION
@@ -69,12 +67,10 @@ GLOBAL_VAR(tracy_log)
 #ifdef USE_BYOND_TRACY
 #warn USE_BYOND_TRACY is enabled
 	if(!tracy_initialized)
-#else
-	if(!tracy_initialized && (USE_TRACY_PARAMETER in params))
-#endif
-		GLOB.tracy_log = init_byond_tracy()
+		init_byond_tracy()
 		Genesis(tracy_initialized = TRUE)
 		return
+#endif
 
 	Profile(PROFILE_RESTART)
 	Profile(PROFILE_RESTART, type = "sendmaps")
@@ -220,9 +216,6 @@ GLOBAL_VAR(tracy_log)
 		GLOB.picture_log_directory = "data/picture_logs/[override_dir]"
 
 	logger.init_logging()
-
-	if(GLOB.tracy_log)
-		rustg_file_write("[GLOB.tracy_log]", "[GLOB.log_directory]/tracy.loc")
 
 	var/latest_changelog = file("[global.config.directory]/../html/changelogs/archive/" + time2text(world.timeofday, "YYYY-MM") + ".yml")
 	GLOB.changelog_hash = fexists(latest_changelog) ? md5(latest_changelog) : 0 //for telling if the changelog has changed recently
@@ -492,9 +485,7 @@ GLOBAL_VAR(tracy_log)
 			CRASH("Unsupported platform: [system_type]")
 
 	var/init_result = call_ext(library, "init")("block")
-	if(length(init_result) != 0 && init_result[1] == ".") // if first character is ., then it returned the output filename
-		return init_result
-	else if(init_result != "0")
+	if (init_result != "0")
 		CRASH("Error initializing byond-tracy: [init_result]")
 
 /world/proc/init_debugger()
@@ -509,5 +500,4 @@ GLOBAL_VAR(tracy_log)
 
 #undef NO_INIT_PARAMETER
 #undef OVERRIDE_LOG_DIRECTORY_PARAMETER
-#undef USE_TRACY_PARAMETER
 #undef RESTART_COUNTER_PATH
