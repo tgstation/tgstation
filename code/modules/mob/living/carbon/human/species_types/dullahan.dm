@@ -19,6 +19,7 @@
 		BODY_ZONE_CHEST = /obj/item/bodypart/chest,
 	)
 	inherent_biotypes = MOB_UNDEAD|MOB_HUMANOID
+	mutant_bodyparts = list("wings" = "None")
 	mutantbrain = /obj/item/organ/internal/brain/dullahan
 	mutanteyes = /obj/item/organ/internal/eyes/dullahan
 	mutanttongue = /obj/item/organ/internal/tongue/dullahan

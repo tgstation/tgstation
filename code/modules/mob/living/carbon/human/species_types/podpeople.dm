@@ -7,7 +7,7 @@
 		TRAIT_MUTANT_COLORS,
 		TRAIT_PLANT_SAFE,
 	)
-	mutant_organs = list(
+	external_organs = list(
 		/obj/item/organ/external/pod_hair = "None",
 	)
 	inherent_biotypes = MOB_ORGANIC | MOB_HUMANOID | MOB_PLANT

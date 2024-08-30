@@ -27,13 +27,14 @@
 	eye_owner.remove_traits(HUD_traits, ORGAN_TRAIT)
 	balloon_alert(eye_owner, "hud enabled")
 
-/obj/item/organ/internal/cyberimp/eyes/hud/mob_insert(mob/living/carbon/eye_owner, special = FALSE, movement_flags)
+/obj/item/organ/internal/cyberimp/eyes/hud/Insert(mob/living/carbon/eye_owner, special = FALSE, movement_flags)
 	. = ..()
-
+	if(!.)
+		return
 	eye_owner.add_traits(HUD_traits, ORGAN_TRAIT)
 	toggled_on = TRUE
 
-/obj/item/organ/internal/cyberimp/eyes/hud/mob_remove(mob/living/carbon/eye_owner, special, movement_flags)
+/obj/item/organ/internal/cyberimp/eyes/hud/Remove(mob/living/carbon/eye_owner, special, movement_flags)
 	. = ..()
 	eye_owner.remove_traits(HUD_traits, ORGAN_TRAIT)
 	toggled_on = FALSE
