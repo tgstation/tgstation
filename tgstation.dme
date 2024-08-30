@@ -4485,7 +4485,6 @@
 #include "code\modules\library\skill_learning\skill_station.dm"
 #include "code\modules\library\skill_learning\skillchip.dm"
 #include "code\modules\library\skill_learning\generic_skillchips\matrix_flip.dm"
-#include "code\modules\library\skill_learning\generic_skillchips\point.dm"
 #include "code\modules\library\skill_learning\generic_skillchips\rod_suplex.dm"
 #include "code\modules\library\skill_learning\job_skillchips\_job.dm"
 #include "code\modules\library\skill_learning\job_skillchips\chef.dm"
