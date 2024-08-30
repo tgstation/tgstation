@@ -11,14 +11,11 @@
 	var/rotation = 0
 	var/paint_colour = COLOR_WHITE
 
-/obj/effect/decal/cleanable/crayon/Initialize(mapload, main, type, e_name, graf_rot, alt_icon = null, desc_override = null)
+/obj/effect/decal/cleanable/crayon/Initialize(mapload, main, type, e_name, graf_rot, alt_icon = null)
 	. = ..()
 	if(e_name)
 		name = e_name
-	if(desc_override)
-		desc = "[desc_override]"
-	else
-		desc = "A [name] vandalizing the station."
+	desc = "A [name] vandalizing the station."
 	if(alt_icon)
 		icon = alt_icon
 	if(type)
