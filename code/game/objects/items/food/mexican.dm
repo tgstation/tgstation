@@ -196,7 +196,6 @@
 	w_class = WEIGHT_CLASS_SMALL
 	venue_value = FOOD_PRICE_LEGENDARY
 	crafting_complexity = FOOD_COMPLEXITY_5
-	crafted_food_buff = /datum/status_effect/food/trait/ashstorm_immune
 
 /obj/item/food/chipsandsalsa
 	name = "chips and salsa"
