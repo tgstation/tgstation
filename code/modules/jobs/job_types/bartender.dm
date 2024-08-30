@@ -59,8 +59,6 @@
 	glasses = /obj/item/clothing/glasses/sunglasses/reagent
 	shoes = /obj/item/clothing/shoes/laceup
 
-	skillchips = list(/obj/item/skillchip/drunken_brawler)
-
 /datum/outfit/job/bartender/post_equip(mob/living/carbon/human/H, visualsOnly)
 	. = ..()
 
