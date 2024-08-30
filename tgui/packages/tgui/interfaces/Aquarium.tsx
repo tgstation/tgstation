@@ -22,8 +22,8 @@ type Data = {
   minTemperature: number;
   maxTemperature: number;
   fluidTypes: string[];
-  fishData: fish_data[];
-  propData: prop_data[];
+  fishData: fishData[];
+  propData: propData[];
   allowBreeding: BooleanLike;
   feedingInterval: number;
   heartIcon: string;
@@ -31,20 +31,20 @@ type Data = {
   heartEmptyIconState: string;
 };
 
-type fish_data = {
-  fishRef: string;
-  fishName: string;
-  fishHappiness: number;
-  fishIcon: string;
-  fishIconState: string;
-  fishHealth: number;
+type fishData = {
+  fish_ref: string;
+  fish_name: string;
+  fish_happiness: number;
+  fish_icon: string;
+  fish_icon_state: string;
+  fish_health: number;
 };
 
-type prop_data = {
-  propRef: string;
-  propName: string;
-  propIcon: string;
-  propIconState: string;
+type propData = {
+  prop_ref: string;
+  prop_name: string;
+  prop_icon: string;
+  prop_icon_state: string;
 };
 
 export const Aquarium = (props) => {
@@ -68,7 +68,7 @@ export const Aquarium = (props) => {
                         width="44%"
                         height="100px"
                         ml={1}
-                        key={fish.fishRef}
+                        key={fish.fish_ref}
                         style={{
                           background: 'rgba(36, 50, 67, 0.5)',
                           padding: '5px 5px',
@@ -199,28 +199,28 @@ const FishInfo = (props) => {
 };
 
 const PropTypes = (props) => {
-  const { data, act } = useBackend<Data>();
+  const { act, data } = useBackend<Data>();
   const { propData } = data;
 
   return (
     <Section scrollable fill title="Props">
       <Stack vertical>
         {propData.map((prop) => (
-          <Stack.Item className="candystripe" key={prop.propRef}>
+          <Stack.Item className="candystripe" key={prop.prop_ref}>
             <Button
               fluid
               color="transparent"
               onClick={() =>
                 act('remove_item', {
-                  item_reference: prop.propRef,
+                  item_reference: prop.prop_ref,
                 })
               }
             >
               <Flex>
                 <Flex.Item>
                   <DmIcon
-                    icon={prop.propIcon}
-                    icon_state={prop.propIconState}
+                    icon={prop.prop_icon}
+                    icon_state={prop.prop_icon_state}
                     height="40px"
                     width="40px"
                   />
@@ -230,7 +230,7 @@ const PropTypes = (props) => {
                   mt={1}
                   style={{ fontSize: '11px', fontWeight: 'bold' }}
                 >
-                  {capitalizeFirst(prop.propName)}
+                  {capitalizeFirst(prop.prop_name)}
                 </Flex.Item>
               </Flex>
             </Button>
@@ -262,7 +262,7 @@ const CalculateHappiness = (props) => {
 };
 
 const Settings = (props) => {
-  const { data, act } = useBackend<Data>();
+  const { act, data } = useBackend<Data>();
   const {
     temperature,
     minTemperature,

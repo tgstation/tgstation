@@ -307,16 +307,16 @@
 
 /obj/structure/aquarium/ui_data(mob/user)
 	. = ..()
-	.["fluid_type"] = fluid_type
+	.["fluidType"] = fluid_type
 	.["temperature"] = fluid_temp
-	.["allow_breeding"] = allow_breeding
-	.["fish_data"] = list()
-	.["feeding_interval"] = feeding_interval / (1 MINUTES)
-	.["prop_data"] = list()
+	.["allowBreeding"] = allow_breeding
+	.["fishData"] = list()
+	.["feedingInterval"] = feeding_interval / (1 MINUTES)
+	.["propData"] = list()
 	for(var/atom/movable/item in contents)
 		if(isfish(item))
 			var/obj/item/fish/fish = item
-			.["fish_data"] += list(list(
+			.["fishData"] += list(list(
 				"fish_ref" = REF(fish),
 				"fish_name" = fish.name,
 				"fish_happiness" = fish.get_happiness_value(),
@@ -325,7 +325,7 @@
 				"fish_health" = fish.health,
 			))
 			continue
-		.["prop_data"] += list(list(
+		.["propData"] += list(list(
 			"prop_ref" = REF(item),
 			"prop_name" = item.name,
 			"prop_icon" = item::icon,
