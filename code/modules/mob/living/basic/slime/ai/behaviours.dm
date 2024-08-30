@@ -30,14 +30,14 @@
 /datum/ai_behavior/find_hunt_target/find_slime_food/valid_dinner(mob/living/basic/slime/hunter, mob/living/dinner, radius, datum/ai_controller/controller, seconds_per_tick)
 
 	if(REF(dinner) in hunter.faction) //Don't eat our friends...
-		return FALSE
+		return
 
 	var/static/list/slime_faction = list(FACTION_SLIME)
 	if(faction_check(slime_faction, dinner.faction)) //Don't try to eat slimy things, no matter how hungry we are. Anyone else can be betrayed.
-		return FALSE
+		return
 
 	if(!hunter.can_feed_on(dinner, check_adjacent = FALSE)) //Are they tasty to slimes?
-		return FALSE
+		return
 
 	//If we are retaliating on someone edible, lets eat them instead
 	if(dinner == controller.blackboard[BB_BASIC_MOB_CURRENT_TARGET])
@@ -73,7 +73,6 @@
 
 /datum/ai_behavior/hunt_target/unarmed_attack_target/slime/finish_action(datum/ai_controller/controller, succeeded, hunting_target_key, hunting_cooldown_key)
 	. = ..()
-	var/mob/living/basic/slime/slime_pawn = controller.pawn
-	var/atom/target = controller.blackboard[hunting_target_key]
-	if(!slime_pawn.can_feed_on(target))
+	var/mob/living/living_pawn = controller.pawn
+	if(living_pawn.buckled)
 		controller.clear_blackboard_key(hunting_target_key)
