@@ -64,7 +64,3 @@ toolbox_open.ogg - made by sadboysuss
 toolbox_rustle.ogg - made by sadboysuss
 medkit_rustle.ogg - made by sadboysuss
 } - license: CC-by-SA
-
-lead_pipe_hit.ogg - jixaw-metal-pipe-falling-sound.mp3 by thenotcheeseman -- https://freesound.org/s/679206/ -- License: Creative Commons 0
-lead_pipe_drop.ogg - jixaw-metal-pipe-falling-sound.mp3 by thenotcheeseman -- https://freesound.org/s/679206/ -- License: Creative Commons 0
-lead_pipe_pickup.ogg - Metal pipe hitting the ground.flac by CGEffex -- https://freesound.org/s/93962/ -- License: Attribution 4.0
