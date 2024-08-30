@@ -39,11 +39,11 @@ GLOBAL_LIST_INIT(trait_to_hud, list(
 	// by z level so when they change z's we can adjust what images they see from this hud.
 	var/list/hud_users = list()
 
-	///used for signal tracking purposes, associative list of the form: list(hud atom = TRUE) that isn't separated by z level
+	///used for signal tracking purposes, associative list of the form: list(hud atom = TRUE) that isnt separated by z level
 	var/list/atom/hud_atoms_all_z_levels = list()
 
 	///used for signal tracking purposes, associative list of the form: list(hud user = number of times this hud was added to this user).
-	///that isn't separated by z level
+	///that isnt separated by z level
 	var/list/mob/hud_users_all_z_levels = list()
 
 	///these will be the indexes for the atom's hud_list
@@ -53,10 +53,10 @@ GLOBAL_LIST_INIT(trait_to_hud, list(
 	var/list/next_time_allowed = list()
 	///mobs that have triggered the cooldown and are queued to see the hud, but do not yet
 	var/list/queued_to_see = list()
-	/// huduser = list(atoms with their hud hidden) - aka everyone hates targeted invisibility
+	/// huduser = list(atoms with their hud hidden) - aka everyone hates targeted invisiblity
 	var/list/hud_exceptions = list()
 	///whether or not this atom_hud type updates the global huds_by_category list.
-	///some subtypes can't work like this since they're supposed to "belong" to
+	///some subtypes cant work like this since theyre supposed to "belong" to
 	///one target atom each. it will still go in the other global hud lists.
 	var/uses_global_hud_category = TRUE
 
@@ -175,9 +175,9 @@ GLOBAL_LIST_INIT(trait_to_hud, list(
 
 	hud_users_all_z_levels[former_viewer] -= 1//decrement number of sources for this hud on this user (bad way to track i know)
 
-	if (absolute || hud_users_all_z_levels[former_viewer] <= 0)//if forced or there aren't any sources left, remove the user
+	if (absolute || hud_users_all_z_levels[former_viewer] <= 0)//if forced or there arent any sources left, remove the user
 
-		if(!hud_atoms_all_z_levels[former_viewer])//make sure we aren't unregistering changes on a mob that's also a hud atom for this hud
+		if(!hud_atoms_all_z_levels[former_viewer])//make sure we arent unregistering changes on a mob thats also a hud atom for this hud
 			UnregisterSignal(former_viewer, COMSIG_MOVABLE_Z_CHANGED)
 			UnregisterSignal(former_viewer, COMSIG_QDELETING)
 
@@ -222,7 +222,7 @@ GLOBAL_LIST_INIT(trait_to_hud, list(
 	if(!hud_atom_to_remove || !hud_atoms_all_z_levels[hud_atom_to_remove])
 		return FALSE
 
-	//make sure we aren't unregistering a hud atom that's also a hud user mob
+	//make sure we arent unregistering a hud atom thats also a hud user mob
 	if(!hud_users_all_z_levels[hud_atom_to_remove])
 		UnregisterSignal(hud_atom_to_remove, COMSIG_MOVABLE_Z_CHANGED)
 		UnregisterSignal(hud_atom_to_remove, COMSIG_QDELETING)
@@ -278,12 +278,12 @@ GLOBAL_LIST_INIT(trait_to_hud, list(
 	for(var/mob/hud_user as anything in get_hud_users_for_z_level(atom_turf.z))
 		if(!hud_user.client)
 			continue
-		hud_user.client.images -= hud_atom.active_hud_list[hud_category_to_remove]//by this point it shouldn't be in active_hud_list
+		hud_user.client.images -= hud_atom.active_hud_list[hud_category_to_remove]//by this point it shouldnt be in active_hud_list
 
 	return TRUE
 
-///when a hud atom or hud user changes z levels this makes sure it gets the images it needs and removes the images it doesn't need.
-///because of how signals work we need the same proc to handle both use cases because being a hud atom and being a hud user aren't mutually exclusive
+///when a hud atom or hud user changes z levels this makes sure it gets the images it needs and removes the images it doesnt need.
+///because of how signals work we need the same proc to handle both use cases because being a hud atom and being a hud user arent mutually exclusive
 /datum/atom_hud/proc/on_atom_or_user_z_level_changed(atom/movable/moved_atom, turf/old_turf, turf/new_turf)
 	SIGNAL_HANDLER
 	if(old_turf)
@@ -300,7 +300,7 @@ GLOBAL_LIST_INIT(trait_to_hud, list(
 
 	if(new_turf)
 		if(hud_users_all_z_levels[moved_atom])
-			hud_users[new_turf.z][moved_atom] = TRUE //hud users is associative, hud atoms isn't
+			hud_users[new_turf.z][moved_atom] = TRUE //hud users is associative, hud atoms isnt
 
 			add_all_atoms_to_single_mob_hud(moved_atom, get_hud_atoms_for_z_level(new_turf.z))
 

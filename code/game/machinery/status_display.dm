@@ -188,7 +188,7 @@ GLOBAL_LIST_EMPTY(key_to_status_display)
 	var/matrix/working_transform = matrix()
 	var/working_alpha = alpha
 	if(dir != SOUTH)
-		// Translate the text separately, since they are vis_contents.
+		// Translate the text seperately, since they are vis_contents.
 		working_transform = floor_projections["[dir]"]
 		working_alpha = PROJECTION_TEXT_ALPHA
 	var/obj/effect/overlay/status_display_text/current_overlay = get_status_text(current_key)

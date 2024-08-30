@@ -165,7 +165,7 @@ GLOBAL_LIST_INIT(syndicate_employers, list(
 	"Waffle Corporation Terrorist",
 	"Waffle Corporation",
 ))
-///employers that are from Nanotrasen
+///employers that are from nanotrasen
 GLOBAL_LIST_INIT(nanotrasen_employers, list(
 	"Champions of Evil",
 	"Corporate Climber",
