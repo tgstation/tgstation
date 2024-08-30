@@ -94,7 +94,7 @@
 		flashed.balloon_alert(source, "[flashed.p_theyre()] loyal to someone else!")
 		return
 
-	if (HAS_TRAIT(flashed, TRAIT_UNCONVERTABLE))
+	if (HAS_TRAIT(flashed, TRAIT_MINDSHIELD))
 		flashed.balloon_alert(source, "[flashed.p_they()] resist!")
 		return
 
