@@ -39,27 +39,6 @@
 	foodtypes = GRAIN
 	crafting_complexity = FOOD_COMPLEXITY_2
 
-/obj/item/food/pie/plain/Initialize(mapload)
-	. = ..()
-	AddComponent(/datum/component/customizable_reagent_holder, /obj/item/food/pie/empty, CUSTOM_INGREDIENT_ICON_FILL, max_ingredients = 8)
-
-/obj/item/food/pie/empty
-	name = "pie"
-	desc = "A custom pie made by a crazed chef."
-	icon_state = "pie_custom"
-	foodtypes = GRAIN
-	slice_type = /obj/item/food/pieslice/empty
-
-/obj/item/food/pieslice/empty
-	name = "pie slice"
-	desc = "A custom pie slice made by a crazed chef."
-	icon_state = "pie_custom_slice"
-	foodtypes = GRAIN
-
-/obj/item/food/pieslice/empty/Initialize(mapload)
-	. = ..()
-	AddComponent(/datum/component/customizable_reagent_holder, null, CUSTOM_INGREDIENT_ICON_FILL, max_ingredients = 8)
-
 /obj/item/food/pie/cream
 	name = "banana cream pie"
 	desc = "Just like back home, on clown planet! HONK!"
