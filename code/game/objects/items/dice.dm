@@ -360,7 +360,7 @@
 		if(4)
 			//Destroy Equipment
 			selected_turf.visible_message(span_userdanger("Everything [user] is holding and wearing disappears!"))
-			var/list/belongings = get_all_gear()
+			var/list/belongings = user.get_all_gear()
 			QDEL_LIST(belongings)
 		if(5)
 			//Monkeying
