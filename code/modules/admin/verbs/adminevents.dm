@@ -218,15 +218,9 @@ ADMIN_VERB(hostile_environment, R_ADMIN, "Hostile Environment", "Disable the shu
 			SSshuttle.hostile_environments.Cut()
 			SSshuttle.checkHostileEnvironment()
 
-ADMIN_VERB(toggle_nuke, R_DEBUG|R_ADMIN, "Toggle Nuke", "Arm or disarm a nuke.", ADMIN_CATEGORY_EVENTS)
-	var/list/nukes = list()
-	for (var/obj/machinery/nuclearbomb/bomb in world)
-		nukes += bomb
-	var/obj/machinery/nuclearbomb/nuke = tgui_input_list(user, "", "Toggle Nuke", nukes)
-	if (isnull(nuke))
-		return
+ADMIN_VERB(toggle_nuke, R_DEBUG|R_ADMIN, "Toggle Nuke", "Arm or disarm a nuke.", ADMIN_CATEGORY_EVENTS, obj/machinery/nuclearbomb/nuke in world)
 	if(!nuke.timing)
-		var/newtime = tgui_input_number(user, "Set activation timer.", "Activate Nuke", nuke.timer_set)
+		var/newtime = input(user, "Set activation timer.", "Activate Nuke", "[nuke.timer_set]") as num|null
 		if(!newtime)
 			return
 		nuke.timer_set = newtime
