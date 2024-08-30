@@ -348,8 +348,6 @@ GLOBAL_LIST_INIT(sinew_recipes, list ( \
 	icon_state = "sheet-hairlesshide"
 	inhand_icon_state = null
 	merge_type = /obj/item/stack/sheet/hairlesshide
-	pickup_sound = 'sound/items/skin_pick_up.ogg'
-	drop_sound = 'sound/items/skin_drop.ogg'
 
 /obj/item/stack/sheet/hairlesshide/examine(mob/user)
 	. = ..()
@@ -363,8 +361,6 @@ GLOBAL_LIST_INIT(sinew_recipes, list ( \
 	icon_state = "sheet-wetleather"
 	inhand_icon_state = null
 	merge_type = /obj/item/stack/sheet/wethide
-	pickup_sound = 'sound/items/skin_pick_up.ogg'
-	drop_sound = 'sound/items/skin_drop.ogg'
 	/// Reduced when exposed to high temperatures
 	var/wetness = 30
 	/// Kelvin to start drying
