@@ -125,6 +125,7 @@
 //useless organs we throw in just to fuck with surgeons a bit more. they aren't part of a bonus, just the (absolute) state of flies
 /obj/item/organ/internal/fly
 	desc = FLY_INFUSED_ORGAN_DESC
+	visual = FALSE
 
 /obj/item/organ/internal/fly/Initialize(mapload)
 	. = ..()

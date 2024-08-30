@@ -34,6 +34,8 @@
 	 * This is the source that this accessory will get its color from. Default is MUTCOLOR, but can also be HAIR, FACEHAIR, EYECOLOR and 0 if none.
 	 */
 	var/color_src = MUTANT_COLOR
+	/// Decides if this sprite has an "inner" part, such as the fleshy parts on ears.
+	var/hasinner = FALSE
 	/// Is this part locked from roundstart selection? Used for parts that apply effects.
 	var/locked = FALSE
 	/// Should we center the sprite?
@@ -1888,6 +1890,7 @@
 /datum/sprite_accessory/ears/cat
 	name = "Cat"
 	icon_state = "cat"
+	hasinner = TRUE
 	color_src = HAIR_COLOR
 
 /datum/sprite_accessory/ears/cat/big
@@ -1914,6 +1917,7 @@
 	icon = 'icons/mob/human/fox_features.dmi'
 	name = "Fox"
 	icon_state = "fox"
+	hasinner = TRUE
 	color_src = HAIR_COLOR
 	locked = TRUE
 
@@ -2119,6 +2123,16 @@
 /datum/sprite_accessory/tail_spines/aquatic
 	name = "Aquatic"
 	icon_state = "aqua"
+
+/datum/sprite_accessory/legs //legs are a special case, they aren't actually sprite_accessories but are updated with them.
+	icon = null //These datums exist for selecting legs on preference, and little else
+	em_block = TRUE
+
+/datum/sprite_accessory/legs/none
+	name = "Normal Legs"
+
+/datum/sprite_accessory/legs/digitigrade_lizard
+	name = DIGITIGRADE_LEGS
 
 /datum/sprite_accessory/caps
 	icon = 'icons/mob/human/species/mush_cap.dmi'
