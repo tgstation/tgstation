@@ -1585,6 +1585,7 @@
 /turf/open/floor/wood/tile,
 /area/centcom/central_command_areas/holding)
 "JV" = (
+/obj/structure/closet/secure_closet/freezer/kitchen,
 /obj/item/food/grown/rice,
 /obj/item/food/grown/rice,
 /obj/item/food/grown/rice,
@@ -1600,9 +1601,6 @@
 /obj/item/food/grown/onion/red,
 /obj/item/food/grown/onion/red,
 /obj/item/food/grown/coffee,
-/obj/structure/closet/secure_closet/freezer/fridge/open{
-	name = "kitchen cabinet"
-	},
 /turf/open/floor/carpet/black,
 /area/centcom/central_command_areas/holding)
 "Kb" = (
