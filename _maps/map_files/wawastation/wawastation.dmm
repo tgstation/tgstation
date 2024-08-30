@@ -53694,12 +53694,6 @@
 	},
 /turf/open/floor/iron,
 /area/station/security/brig)
-"sUD" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/structure/cable,
-/turf/open/floor/catwalk_floor,
-/area/station/maintenance/central/lesser)
 "sUI" = (
 /obj/machinery/door/airlock{
 	name = "Kitchen Cold Room"
@@ -93674,7 +93668,7 @@ dTU
 pMD
 acc
 kYl
-sUD
+jUd
 dGc
 fDN
 enu
