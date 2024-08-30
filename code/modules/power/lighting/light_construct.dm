@@ -32,7 +32,7 @@
 	. = ..()
 	if(building)
 		setDir(ndir)
-	find_and_hang_on_wall(wall_layer = HIGH_ON_WALL_LAYER)
+	find_and_hang_on_wall()
 
 /obj/structure/light_construct/Destroy()
 	QDEL_NULL(cell)
