@@ -26823,13 +26823,13 @@
 /turf/open/floor/iron/dark,
 /area/station/engineering/atmos)
 "juH" = (
+/obj/item/kirbyplants/random,
 /obj/machinery/firealarm/directional/west{
 	pixel_y = -9
 	},
 /obj/effect/turf_decal/tile/purple/half/contrasted{
 	dir = 8
 	},
-/obj/machinery/vending/cytopro,
 /turf/open/floor/iron/white,
 /area/station/science/cytology)
 "juJ" = (
@@ -55093,7 +55093,6 @@
 /obj/machinery/atmospherics/components/binary/pump{
 	dir = 4
 	},
-/obj/item/kirbyplants/random,
 /turf/open/floor/iron/white,
 /area/station/science/cytology)
 "tmq" = (
