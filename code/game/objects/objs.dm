@@ -70,7 +70,7 @@ GLOBAL_LIST_EMPTY(objects_by_id_tag)
 
 	var/total_force = (attacking_item.force * attacking_item.demolition_mod)
 
-	var/damage = take_damage(total_force, attacking_item.damtype, MELEE, 1, get_dir(src, user))
+	var/damage = take_damage(total_force, attacking_item.damtype, MELEE, 1)
 
 	var/damage_verb = "hit"
 
