@@ -174,12 +174,6 @@
 	for(var/i in 1 to 7)
 		new /obj/item/ammo_casing/shotgun/buckshot(src)
 
-/obj/item/storage/box/lethalshot/old
-
-/obj/item/storage/box/lethalshot/old/PopulateContents()
-	for(var/i in 1 to 7)
-		new /obj/item/ammo_casing/shotgun/buckshot/old(src)
-
 /obj/item/storage/box/slugs
 	name = "box of shotgun shells (Lethal - Slugs)"
 	desc = "A box full of lethal shotgun slugs, designed for shotguns."
