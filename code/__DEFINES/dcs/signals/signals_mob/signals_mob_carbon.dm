@@ -118,7 +118,7 @@
 
 ///Applied preferences to a human
 #define COMSIG_HUMAN_PREFS_APPLIED "human_prefs_applied"
-///Whenever EquipRanked is called, called after job is set
+///Whenever equip_rank is called, called after job is set
 #define COMSIG_JOB_RECEIVED "job_received"
 ///from /mob/living/carbon/human/proc/set_coretemperature(): (oldvalue, newvalue)
 #define COMSIG_HUMAN_CORETEMP_CHANGE "human_coretemp_change"
