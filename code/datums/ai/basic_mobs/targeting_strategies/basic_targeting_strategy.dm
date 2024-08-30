@@ -88,21 +88,6 @@
 		// trust fall exercise
 		return TRUE
 
-/datum/targeting_strategy/basic/require_traits
-
-/datum/targeting_strategy/basic/require_traits/can_attack(mob/living/living_mob, atom/the_target, vision_range)
-	. = ..()
-	if (!.)
-		return FALSE
-	var/list/required_traits = living_mob.ai_controller.blackboard[BB_TARGET_ONLY_WITH_TRAITS]
-	if (!length(required_traits))
-		return TRUE
-
-	for (var/trait as anything in required_traits)
-		if (HAS_TRAIT(the_target, trait))
-			return TRUE
-	return FALSE
-
 /// Subtype which searches for mobs of a size relative to ours
 /datum/targeting_strategy/basic/of_size
 	/// If true, we will return mobs which are smaller than us. If false, larger.
