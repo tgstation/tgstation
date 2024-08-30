@@ -225,7 +225,8 @@
 		organ_evacced.Remove(target, special = TRUE)
 		organ_evacced.forceMove(get_turf(target))
 
-	organ.Insert(target)
+	if (!organ.Insert(target))
+		organ.forceMove(drop_location())
 	organ = null
 
 ///Patrient Transport - Generates hardlight bags you can put people in.
