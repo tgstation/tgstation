@@ -357,7 +357,7 @@
 
 	if(isliving(talking_movable))
 		var/mob/living/talking_living = talking_movable
-		if(talking_living.client?.prefs.read_preference(/datum/preference/toggle/radio_noise) && !HAS_TRAIT(talking_living, TRAIT_DEAF))
+		if(talking_living.client?.prefs.read_preference(/datum/preference/toggle/radio_noise))
 			SEND_SOUND(talking_living, 'sound/misc/radio_talk.ogg')
 
 	// All radios make an attempt to use the subspace system first
@@ -435,7 +435,7 @@
 		return
 
 	var/mob/living/holder = loc
-	if(!holder.client?.prefs.read_preference(/datum/preference/toggle/radio_noise) && !HAS_TRAIT(holder, TRAIT_DEAF))
+	if(!holder.client?.prefs.read_preference(/datum/preference/toggle/radio_noise))
 		return
 
 	var/list/spans = data["spans"]
@@ -518,6 +518,10 @@
 				else
 					recalculateChannels()
 				. = TRUE
+
+/obj/item/radio/suicide_act(mob/living/user)
+	user.visible_message(span_suicide("[user] starts bouncing [src] off [user.p_their()] head! It looks like [user.p_theyre()] trying to commit suicide!"))
+	return BRUTELOSS
 
 /obj/item/radio/examine(mob/user)
 	. = ..()
