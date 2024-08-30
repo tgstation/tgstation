@@ -336,11 +336,6 @@
 	mood_change = 4
 	timeout = 3 MINUTES
 
-/datum/mood_event/fishing/add_effects(pacifist)
-	if(pacifist)
-		description = "Fishing may be relaxing, but it's also animal cruelty..."
-		mood_change -= 2
-
 /datum/mood_event/fish_released
 	description = "Go, fish, swim and be free!"
 	mood_change = 1
