@@ -433,15 +433,13 @@
 /obj/item/melee/blood_magic/stun/cast_spell(mob/living/target, mob/living/carbon/user)
 	if(!istype(target) || IS_CULTIST(target))
 		return
-	var/datum/antagonist/cult/cultist = GET_CULTIST(user)
-	var/datum/team/cult/cult_team = cultist?.get_team()
+	var/datum/antagonist/cult/cultist = IS_CULTIST(user)
+	var/datum/team/cult/cult_team = cultist.get_team()
 	var/effect_coef = 1
-	if(cult_team?.cult_ascendent)
+	if(cult_team.cult_ascendent)
 		effect_coef = 0.1
-	else if(cult_team?.cult_risen)
+	else if(cult_team.cult_risen)
 		effect_coef = 0.4
-	if(IS_CULTIST(user) && isnull(GET_CULTIST(user)))
-		effect_coef = 0.2
 	user.visible_message(
 		span_warning("[user] holds up [user.p_their()] hand, which explodes in a flash of red light!"),
 		span_cult_italic("You attempt to stun [target] with the spell!"),

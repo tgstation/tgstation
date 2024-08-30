@@ -200,22 +200,15 @@ structure_check() searches for nearby cultist structures required for the invoca
 	invocation = "Ra'sha yoka!"
 	invoke_damage = 30
 	can_be_scribed = FALSE
-	var/randomized = TRUE
 
 /obj/effect/rune/malformed/Initialize(mapload, set_keyword)
 	. = ..()
-	if(!randomized)
-		return
 	icon_state = "[rand(1,7)]"
 	color = rgb(rand(0,255), rand(0,255), rand(0,255))
-
 
 /obj/effect/rune/malformed/invoke(list/invokers)
 	..()
 	qdel(src)
-
-/obj/effect/rune/malformed/norandom
-	randomized = FALSE
 
 //Rite of Offering: Converts or sacrifices a target.
 /obj/effect/rune/convert

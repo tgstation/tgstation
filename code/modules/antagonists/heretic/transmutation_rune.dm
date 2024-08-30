@@ -50,7 +50,7 @@
 /obj/effect/heretic_rune/proc/try_rituals(mob/living/user)
 	is_in_use = TRUE
 
-	var/datum/antagonist/heretic/heretic_datum = GET_HERETIC(user)
+	var/datum/antagonist/heretic/heretic_datum = IS_HERETIC(user)
 	var/list/rituals = heretic_datum.get_rituals()
 	if(!length(rituals))
 		loc.balloon_alert(user, "no rituals available!")
