@@ -711,7 +711,7 @@
 /obj/item/proc/on_equipped(mob/user, slot, initial = FALSE)
 	SHOULD_NOT_OVERRIDE(TRUE)
 	equipped(user, slot, initial)
-	if(SEND_SIGNAL(src, COMSIG_ITEM_POST_EQUIPPED, user, slot) & COMPONENT_EQUIPPED_FAILED)
+	if(SEND_SIGNAL(src, COMSIG_ITEM_POST_EQUIPPED, user, slot) && COMPONENT_EQUIPPED_FAILED)
 		return FALSE
 	return TRUE
 
