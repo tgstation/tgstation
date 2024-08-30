@@ -13,3 +13,4 @@
 		"UNLIMITED power? Well... maybe if I practice...",
 		"Wait until they're grouped up...",
 	)
+
