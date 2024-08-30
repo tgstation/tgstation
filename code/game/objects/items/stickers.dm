@@ -149,6 +149,11 @@
 	name = "toolbox sticker"
 	icon_state = "soul"
 
+/obj/item/sticker/chief_engineer
+	name = "CE approved sticker"
+	icon_state = "ce_approved"
+	contraband = TRUE
+
 /obj/item/sticker/clown
 	name = "clown sticker"
 	icon_state = "honkman"

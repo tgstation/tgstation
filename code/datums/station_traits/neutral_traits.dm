@@ -512,7 +512,7 @@
 	new /obj/item/sticker/skub(src)
 
 /obj/item/storage/box/stickers/anti_skub
-	name = "anti-skub stickers box"
+	name = "anti-skub stickers pack"
 	desc = "The enemy may have been given a skub and a shirt, but I've more stickers! Plus the box can hold my anti-skub shirt."
 
 /obj/item/storage/box/stickers/anti_skub/Initialize(mapload)

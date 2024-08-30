@@ -224,8 +224,17 @@
 		new /obj/item/toy/balloon/long(src)
 
 /obj/item/storage/box/stickers
-	name = "box of stickers"
-	desc = "A box full of random stickers. Do give to the clown."
+	name = "sticker pack"
+	desc = "A pack of removable stickers. Removable? What a rip off!<br>On the back, <b>DO NOT GIVE TO THE CLOWN!</b> is printed in large lettering."
+	icon_state = "stickerpack"
+	w_class = WEIGHT_CLASS_TINY
+
+/obj/item/storage/box/stickers/Initialize(mapload)
+	. = ..()
+	atom_storage.max_slots = 14
+	atom_storage.set_holdable(list(/obj/item/sticker))
+	atom_storage.max_total_storage = 14
+	atom_storage.max_specific_storage = WEIGHT_CLASS_TINY
 
 /obj/item/storage/box/stickers/proc/generate_non_contraband_stickers_list()
 	var/list/allowed_stickers = list()
@@ -247,7 +256,7 @@
 		new type(src)
 
 /obj/item/storage/box/stickers/googly
-	name = "box of googly eye stickers"
+	name = "googly eye sticker pack"
 	desc = "Turn anything and everything into something vaguely alive!"
 
 /obj/item/storage/box/stickers/googly/PopulateContents()
