@@ -49,13 +49,6 @@
 	/// Type path of item to go in belt slot
 	var/belt = null
 
-	/**
-	  * list of items that should go in the belt of the user
-	  *
-	  * Format of this list should be: list(path=count,otherpath=count)
-	  */
-	var/list/belt_contents = null
-
 	/// Type path of item to go in ears slot
 	var/ears = null
 
@@ -259,14 +252,6 @@
 				for(var/i in 1 to number)
 					EQUIP_OUTFIT_ITEM(path, ITEM_SLOT_BACKPACK)
 
-		if(belt_contents)
-			for(var/path in belt_contents)
-				var/number = belt_contents[path]
-				if(!isnum(number))//Default to 1
-					number = 1
-				for(var/i in 1 to number)
-					EQUIP_OUTFIT_ITEM(path, ITEM_SLOT_BELTPACK)
-
 	post_equip(user, visualsOnly)
 
 	if(!visualsOnly)
@@ -375,10 +360,6 @@
 			num_to_load = 1
 		for(var/i in 1 to num_to_load)
 			preload += type_to_load
-	//Load in belt gear and shit
-	for(var/datum/type_to_load in belt_contents)
-		for(var/i in 1 to belt_contents[type_to_load])
-			preload += type_to_load
 	preload += belt
 	preload += ears
 	preload += glasses
@@ -425,7 +406,6 @@
 	.["l_hand"] = l_hand
 	.["internals_slot"] = internals_slot
 	.["backpack_contents"] = backpack_contents
-	.["belt_contents"] = belt_contents
 	.["box"] = box
 	.["implants"] = implants
 	.["accessory"] = accessory
@@ -453,7 +433,6 @@
 	l_hand = target.l_hand
 	internals_slot = target.internals_slot
 	backpack_contents = target.backpack_contents
-	belt_contents = target.belt_contents
 	box = target.box
 	implants = target.implants
 	accessory = target.accessory
@@ -497,12 +476,6 @@
 		var/itype = text2path(item)
 		if(itype)
 			backpack_contents[itype] = backpack[item]
-	var/list/beltpack = outfit_data["belt_contents"]
-	belt_contents = list()
-	for(var/item in beltpack)
-		var/itype = text2path(item)
-		if(itype)
-			belt_contents[itype] = belt[item]
 	box = text2path(outfit_data["box"])
 	var/list/impl = outfit_data["implants"]
 	implants = list()
