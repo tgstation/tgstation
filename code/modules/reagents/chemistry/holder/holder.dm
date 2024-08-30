@@ -344,29 +344,26 @@
 		stack_trace("invalid reagent path passed to convert reagent [source_reagent_typepath]")
 		return FALSE
 
-	var/reagent_amount = 0
-	var/reagent_purity = 0
-	var/reagent_ph = 0
+	var/reagent_amount
+	var/reagent_purity
+	var/reagent_ph
 	if(include_source_subtypes)
 		reagent_ph = ph
 		var/weighted_purity
 		var/list/reagent_type_list = typecacheof(source_reagent_typepath)
 		for(var/datum/reagent/reagent as anything in reagent_list)
-			if(is_type_in_typecache(reagent, reagent_type_list))
+			if(reagent.type in reagent_type_list)
 				weighted_purity += reagent.volume * reagent.purity
 				reagent_amount += reagent.volume
 				remove_reagent(reagent.type, reagent.volume * multiplier)
 		reagent_purity = weighted_purity / reagent_amount
 	else
 		var/datum/reagent/source_reagent = has_reagent(source_reagent_typepath)
-		if(istype(source_reagent))
-			reagent_amount = source_reagent.volume
-			reagent_purity = source_reagent.purity
-			reagent_ph = source_reagent.ph
-			remove_reagent(source_reagent_typepath, reagent_amount)
-
-	if(reagent_amount > 0)
-		add_reagent(target_reagent_typepath, reagent_amount * multiplier, reagtemp = chem_temp, added_purity = reagent_purity, added_ph = reagent_ph)
+		reagent_amount = source_reagent.volume
+		reagent_purity = source_reagent.purity
+		reagent_ph = source_reagent.ph
+		remove_reagent(source_reagent_typepath, reagent_amount)
+	add_reagent(target_reagent_typepath, reagent_amount * multiplier, reagtemp = chem_temp, added_purity = reagent_purity, added_ph = reagent_ph)
 
 /// Removes all reagents
 /datum/reagents/proc/clear_reagents()
