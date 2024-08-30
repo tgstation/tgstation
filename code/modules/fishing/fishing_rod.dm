@@ -138,10 +138,9 @@
 		return
 	//Try to move it 'till it's under the user's feet, then try to pick it up
 	if(isitem(currently_hooked))
-		var/obj/item/item = currently_hooked
-		step_towards(item, get_turf(src))
-		if(item.loc == user.loc && (item.interaction_flags_item & INTERACT_ITEM_ATTACK_HAND_PICKUP))
-			user.put_in_inactive_hand(item)
+		step_towards(currently_hooked, get_turf(src))
+		if(currently_hooked.loc == user.loc)
+			user.put_in_inactive_hand(currently_hooked)
 			QDEL_NULL(fishing_line)
 	//Not an item, so just delete the line if it's adjacent to the user.
 	else if(get_dist(currently_hooked,get_turf(src)) > 1)
