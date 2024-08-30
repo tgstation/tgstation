@@ -114,6 +114,13 @@
 	bodypart.contents |= src
 	bodypart_owner = bodypart
 
+	/// DOPPLER SHIFT ADDITION - recalculate these things now, this is a fix until TG unbuggers it all up
+	if(external_bodytypes)
+		limb_owner.synchronize_bodytypes()
+	if(external_bodyshapes)
+		limb_owner.synchronize_bodyshapes()
+	/// DOPPLER SHIFT ADDITION END
+
 	RegisterSignal(src, COMSIG_MOVABLE_MOVED, PROC_REF(forced_removal))
 
 	// Apply unique side-effects. Return value does not matter.
