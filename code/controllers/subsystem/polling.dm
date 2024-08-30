@@ -130,9 +130,10 @@ SUBSYSTEM_DEF(polling)
 
 		// Image to display
 		var/image/poll_image
-		if(ispath(alert_pic, /atom) || isatom(alert_pic))
+		if(ispath(alert_pic, /atom))
+			poll_image = image(alert_pic)
+		else if(isatom(alert_pic))
 			poll_image = new /mutable_appearance(alert_pic)
-			poll_image.pixel_z = 0
 		else if(!isnull(alert_pic))
 			poll_image = alert_pic
 		else
