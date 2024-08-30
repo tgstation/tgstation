@@ -87,11 +87,6 @@
 	/// If TRUE, will set the icon in initializations.
 	VAR_PRIVATE/should_update_icon = FALSE
 
-	/// A very brief cooldown to prevent regular radio sounds from overlapping.
-	COOLDOWN_DECLARE(audio_cooldown)
-	/// A very brief cooldown to prevent "important" radio sounds from overlapping.
-	COOLDOWN_DECLARE(important_audio_cooldown)
-
 /obj/item/radio/Initialize(mapload)
 	set_wires(new /datum/wires/radio(src))
 	secure_radio_connections = list()
@@ -433,11 +428,8 @@
 		return
 
 	var/list/spans = data["spans"]
-	if(COOLDOWN_FINISHED(src, audio_cooldown))
-		COOLDOWN_START(src, audio_cooldown, 0.5 SECONDS)
-		SEND_SOUND(holder, 'sound/misc/radio_receive.ogg')
-	if((SPAN_COMMAND in spans) && COOLDOWN_FINISHED(src, important_audio_cooldown))
-		COOLDOWN_START(src, important_audio_cooldown, 0.5 SECONDS)
+	SEND_SOUND(holder, 'sound/misc/radio_receive.ogg')
+	if(SPAN_COMMAND in spans)
 		SEND_SOUND(holder, 'sound/misc/radio_important.ogg')
 
 /obj/item/radio/ui_state(mob/user)
