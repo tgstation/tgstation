@@ -58,7 +58,6 @@
 /turf/closed/indestructible/splashscreen
 	name = "Space Station 13"
 	desc = null
-	baseturfs = /turf/cordon
 	icon = 'icons/blanks/blank_title.png'
 	icon_state = ""
 	pixel_x = -64
@@ -98,6 +97,15 @@ INITIALIZE_IMMEDIATE(/turf/closed/indestructible/splashscreen)
 /turf/closed/indestructible/splashscreen/examine()
 	desc = pick(strings(SPLASH_FILE, "splashes"))
 	return ..()
+
+/turf/closed/indestructible/start_area
+	name = null
+	desc = null
+	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
+	use_splitvis = FALSE
+	smoothing_flags = NONE
+	smoothing_groups = null
+	canSmoothWith = null
 
 /turf/closed/indestructible/reinforced
 	name = "reinforced wall"
