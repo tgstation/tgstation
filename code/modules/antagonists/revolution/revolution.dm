@@ -15,7 +15,9 @@
 /datum/antagonist/rev/can_be_owned(datum/mind/new_owner)
 	if(new_owner.assigned_role.job_flags & JOB_HEAD_OF_STAFF)
 		return FALSE
-	if(new_owner.current && HAS_MIND_TRAIT(new_owner.current, TRAIT_UNCONVERTABLE))
+	if(new_owner.unconvertable)
+		return FALSE
+	if(new_owner.current && HAS_TRAIT(new_owner.current, TRAIT_MINDSHIELD))
 		return FALSE
 	return ..()
 
