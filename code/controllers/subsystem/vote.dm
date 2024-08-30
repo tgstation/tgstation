@@ -356,7 +356,7 @@ SUBSYSTEM_DEF(vote)
 	data["VoteCD"] = CONFIG_GET(number/vote_delay)
 	return data
 
-/datum/controller/subsystem/vote/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
+/datum/controller/subsystem/vote/ui_act(action, params)
 	. = ..()
 	if(.)
 		return

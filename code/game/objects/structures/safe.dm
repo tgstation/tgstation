@@ -129,7 +129,7 @@ FLOOR SAFES
 
 	return data
 
-/obj/structure/safe/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
+/obj/structure/safe/ui_act(action, params)
 	. = ..()
 	if(.)
 		return

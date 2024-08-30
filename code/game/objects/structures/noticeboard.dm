@@ -66,7 +66,7 @@ WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/structure/noticeboard)
 		data["items"] += list(content_data)
 	return data
 
-/obj/structure/noticeboard/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
+/obj/structure/noticeboard/ui_act(action, params)
 	. = ..()
 	if(.)
 		return

@@ -161,7 +161,7 @@
 	else if(on && holding)
 		user.investigate_log("started a transfer into [holding].", INVESTIGATE_ATMOS)
 
-/obj/machinery/portable_atmospherics/scrubber/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
+/obj/machinery/portable_atmospherics/scrubber/ui_act(action, params)
 	. = ..()
 	if(.)
 		return

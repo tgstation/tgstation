@@ -1096,7 +1096,7 @@
 
 	return data
 
-/obj/machinery/transport/tram_controller/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
+/obj/machinery/transport/tram_controller/ui_act(action, params)
 	. = ..()
 	if (.)
 		return

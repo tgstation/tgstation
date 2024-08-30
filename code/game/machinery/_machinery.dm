@@ -686,11 +686,10 @@
 	return ..()
 
 /obj/machinery/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
-	var/mob/user = ui.user
-	add_fingerprint(user)
-	update_last_used(user)
-	if(isAI(user) && !GLOB.cameranet.checkTurfVis(get_turf(src))) //We check if they're an AI specifically here, so borgs/adminghosts/human wand can still access off-camera stuff.
-		to_chat(user, span_warning("You can no longer connect to this device!"))
+	add_fingerprint(usr)
+	update_last_used(usr)
+	if(HAS_AI_ACCESS(usr) && !GLOB.cameranet.checkTurfVis(get_turf(src))) //We check if they're an AI specifically here, so borgs can still access off-camera stuff.
+		to_chat(usr, span_warning("You can no longer connect to this device!"))
 		return FALSE
 	return ..()
 
