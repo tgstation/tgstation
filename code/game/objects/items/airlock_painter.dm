@@ -229,7 +229,7 @@
  * Actually add current decal to the floor.
  *
  * Responsible for actually adding the element to the turf for maximum flexibility.area
- * Can be overridden for different decal behaviors.
+ * Can be overriden for different decal behaviors.
  * Arguments:
  * * target - The turf being painted to
 */

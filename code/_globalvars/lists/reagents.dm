@@ -49,7 +49,7 @@ GLOBAL_LIST_INIT(chemical_reagents_list, init_chemical_reagent_list())
 GLOBAL_LIST(chemical_reactions_results_lookup_list)
 /// list of all reagents that are parent types used to define a bunch of children - but aren't used themselves as anything.
 GLOBAL_LIST(fake_reagent_blacklist)
-/// Turfs metalgen can't touch
+/// Turfs metalgen cant touch
 GLOBAL_LIST_INIT(blacklisted_metalgen_types, typecacheof(list(
 	/turf/closed/indestructible, //indestructible turfs should be indestructible, metalgen transmutation to plasma allows them to be destroyed
 	/turf/open/indestructible
@@ -176,7 +176,7 @@ GLOBAL_LIST_INIT(name2reagent, build_name2reagentlist())
 /proc/build_name2reagentlist()
 	. = list()
 
-	//build map with keys stored separately
+	//build map with keys stored seperatly
 	var/list/name_to_reagent = list()
 	var/list/only_names = list()
 	for (var/datum/reagent/reagent as anything in GLOB.chemical_reagents_list)
