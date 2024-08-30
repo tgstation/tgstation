@@ -60,7 +60,7 @@ SUBSYSTEM_DEF(title)
 	for(var/thing in GLOB.clients)
 		if(!thing)
 			continue
-		var/atom/movable/screen/splash/S = new(null, thing, FALSE)
+		var/atom/movable/screen/splash/S = new(thing, FALSE)
 		S.Fade(FALSE,FALSE)
 
 /datum/controller/subsystem/title/Recover()
