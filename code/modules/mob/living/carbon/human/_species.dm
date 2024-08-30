@@ -572,7 +572,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
 			var/mutable_appearance/underwear_overlay
 			if(underwear)
 				if(species_human.dna.species.sexes && species_human.physique == FEMALE && (underwear.gender == MALE))
-					underwear_overlay = mutable_appearance(wear_female_version(underwear.icon_state, underwear.icon, FEMALE_UNIFORM_FULL), layer = -BODY_LAYER)
+					underwear_overlay = wear_female_version(underwear.icon_state, underwear.icon, BODY_LAYER, FEMALE_UNIFORM_FULL)
 				else
 					underwear_overlay = mutable_appearance(underwear.icon, underwear.icon_state, -BODY_LAYER)
 				if(!underwear.use_static)
@@ -584,9 +584,9 @@ GLOBAL_LIST_EMPTY(features_by_species)
 			if(undershirt)
 				var/mutable_appearance/working_shirt
 				if(species_human.dna.species.sexes && species_human.physique == FEMALE)
-					working_shirt = mutable_appearance(wear_female_version(undershirt.icon_state, undershirt.icon), layer = -BODY_LAYER)
+					working_shirt = wear_female_version(undershirt.icon_state, undershirt.icon, BODY_LAYER)
 				else
-					working_shirt = mutable_appearance(undershirt.icon, undershirt.icon_state, layer = -BODY_LAYER)
+					working_shirt = mutable_appearance(undershirt.icon, undershirt.icon_state, -BODY_LAYER)
 				standing += working_shirt
 
 		if(species_human.socks && species_human.num_legs >= 2 && !(species_human.bodyshape & BODYSHAPE_DIGITIGRADE))
@@ -800,7 +800,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
 			if(H.num_legs < 2)
 				return FALSE
 			if((H.bodyshape & BODYSHAPE_DIGITIGRADE) && !(I.item_flags & IGNORE_DIGITIGRADE))
-				if(!(I.supports_variations_flags & DIGITIGRADE_VARIATIONS))
+				if(!(I.supports_variations_flags & (CLOTHING_DIGITIGRADE_VARIATION|CLOTHING_DIGITIGRADE_VARIATION_NO_NEW_ICON)))
 					if(!disable_warning)
 						to_chat(H, span_warning("The footwear around here isn't compatible with your feet!"))
 					return FALSE
