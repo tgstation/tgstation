@@ -53,7 +53,6 @@
 /obj/item/ammo_casing/energy/chameleon
 	projectile_type = /obj/projectile/energy/chameleon
 	e_cost = 0 // Can't really use the macro here, unfortunately
-	harmful = FALSE
 	var/projectile_vars = list()
 
 /obj/item/ammo_casing/energy/chameleon/ready_proj()
