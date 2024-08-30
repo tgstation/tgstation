@@ -344,7 +344,6 @@ INITIALIZE_IMMEDIATE(/turf/closed/indestructible/splashscreen)
 	underlay_appearance.icon_state = "basalt"
 	return TRUE
 
-
 /turf/closed/indestructible/riveted/hierophant
 	name = "wall"
 	desc = "A wall made out of a strange metal. The squares on it pulse in a predictable pattern."
