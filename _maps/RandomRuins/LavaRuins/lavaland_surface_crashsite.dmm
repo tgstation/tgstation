@@ -93,7 +93,7 @@
 /turf/open/misc/asteroid/basalt/lava_land_surface,
 /area/lavaland/surface)
 "u" = (
-/obj/structure/bonfire/prelit,
+/obj/structure/spawner/lavaland/goliath,
 /turf/open/misc/asteroid/basalt/lava_land_surface,
 /area/lavaland/surface)
 "v" = (
@@ -127,10 +127,6 @@
 /area/lavaland/surface)
 "B" = (
 /mob/living/basic/mining/goliath,
-/turf/open/misc/asteroid/basalt/lava_land_surface,
-/area/lavaland/surface)
-"D" = (
-/obj/item/gun/energy/recharge/kinetic_accelerator,
 /turf/open/misc/asteroid/basalt/lava_land_surface,
 /area/lavaland/surface)
 "E" = (
@@ -205,10 +201,6 @@
 /obj/structure/tubes,
 /turf/open/floor/pod/dark,
 /area/ruin/powered)
-"U" = (
-/obj/item/bait_can/worm/premium,
-/turf/open/misc/ashplanet/wateryrock,
-/area/lavaland/surface)
 "V" = (
 /obj/structure/table/survival_pod,
 /obj/item/food/meat/steak/goliath,
@@ -455,7 +447,7 @@ a
 E
 E
 l
-U
+E
 E
 a
 a
@@ -545,7 +537,7 @@ B
 a
 a
 a
-G
+o
 G
 G
 "}
@@ -560,7 +552,7 @@ a
 a
 a
 a
-D
+a
 a
 a
 a
@@ -572,8 +564,8 @@ a
 a
 a
 a
-G
-G
+o
+o
 G
 "}
 (14,1,1) = {"
@@ -599,7 +591,7 @@ a
 a
 a
 a
-G
+o
 G
 G
 "}
@@ -626,8 +618,8 @@ a
 a
 a
 a
-G
-G
+o
+o
 G
 "}
 (16,1,1) = {"
@@ -652,9 +644,9 @@ a
 a
 a
 a
-G
-G
-G
+o
+o
+o
 G
 "}
 (17,1,1) = {"
