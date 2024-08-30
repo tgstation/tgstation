@@ -220,7 +220,7 @@
 		data["answers"] += list(L)
 	return data
 
-/obj/item/toy/eightball/haunted/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
+/obj/item/toy/eightball/haunted/ui_act(action, params)
 	. = ..()
 	if(.)
 		return

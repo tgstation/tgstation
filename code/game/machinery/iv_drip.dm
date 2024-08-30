@@ -107,7 +107,7 @@
 		.["containerMaxVolume"] = drip_reagents.maximum_volume
 		.["containerReagentColor"] = mix_color_from_reagents(drip_reagents.reagent_list)
 
-/obj/machinery/iv_drip/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
+/obj/machinery/iv_drip/ui_act(action, params)
 	. = ..()
 	if(.)
 		return

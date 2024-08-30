@@ -61,7 +61,7 @@
 			data["alarms"] += list(nominal_category)
 	return data
 
-/datum/station_alert/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
+/datum/station_alert/ui_act(action, params)
 	. = ..()
 	if(.)
 		return

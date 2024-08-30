@@ -63,7 +63,7 @@
 	data["init_directions"] = init_directions
 	return data
 
-/obj/machinery/pipedispenser/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
+/obj/machinery/pipedispenser/ui_act(action, params)
 	if(..())
 		return
 	switch(action)

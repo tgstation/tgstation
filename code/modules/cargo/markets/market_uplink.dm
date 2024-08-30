@@ -98,7 +98,7 @@
 		))
 	return data
 
-/obj/item/market_uplink/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
+/obj/item/market_uplink/ui_act(action, params)
 	. = ..()
 	if(.)
 		return

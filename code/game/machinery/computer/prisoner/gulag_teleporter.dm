@@ -67,7 +67,7 @@
 
 	return data
 
-/obj/machinery/computer/prisoner/gulag_teleporter_computer/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
+/obj/machinery/computer/prisoner/gulag_teleporter_computer/ui_act(action, list/params)
 	. = ..()
 	if(.)
 		return
