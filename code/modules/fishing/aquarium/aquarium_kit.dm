@@ -143,7 +143,6 @@
 /obj/item/storage/box/aquarium_props
 	name = "aquarium props box"
 	desc = "All you need to make your aquarium look good."
-	illustration = "fish"
 
 /obj/item/storage/box/aquarium_props/PopulateContents()
 	for(var/prop_type in subtypesof(/obj/item/aquarium_prop))
