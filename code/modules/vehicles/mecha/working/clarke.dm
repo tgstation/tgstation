@@ -77,19 +77,15 @@
 /obj/item/mecha_parts/mecha_equipment/orebox_manager/get_snowflake_data()
 	var/list/contents = chassis.ore_box?.contents
 	var/list/contents_grouped = list()
-	for(var/atom/movable/item as anything in contents)
-		var/amount = 1
-		if(isstack(item))
-			var/obj/item/stack/stack = item
-			amount = stack.amount
-		if(isnull(contents_grouped[item.icon_state]))
+	for(var/obj/item/stack/ore/item as anything in contents)
+		if(isnull(contents_grouped[item.name]))
 			var/ore_data = list()
 			ore_data["name"] = item.name
 			ore_data["icon"] = item.icon_state
-			ore_data["amount"] = amount
-			contents_grouped[item.icon_state] = ore_data
+			ore_data["amount"] = item.amount
+			contents_grouped[item.name] = ore_data
 		else
-			contents_grouped[item.icon_state]["amount"] += amount
+			contents_grouped[item.name]["amount"] += item.amount
 	var/list/data = list(
 		"snowflake_id" = MECHA_SNOWFLAKE_ID_OREBOX_MANAGER,
 		"contents" = contents_grouped,
