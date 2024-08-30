@@ -42,7 +42,3 @@
 	baseturfs = /turf/open/water/beach
 	immerse_overlay_color = "#7799AA"
 	fishing_datum = /datum/fish_source/ocean/beach
-
-/turf/open/water/lavaland_atmos
-	initial_gas_mix = LAVALAND_DEFAULT_ATMOS
-	planetary_atmos = TRUE
