@@ -22,8 +22,6 @@
 	var/boulder_size = BOULDER_SIZE_SMALL
 	/// Used in inheriting the icon_state from our parent vent in update_icon.
 	var/boulder_string = "boulder"
-	// There is one boulder per boulder (this is required for the Clarke UI as it treats ores and boulders in the same fashion and needs an amount for both)
-	var/amount = 1
 
 /obj/item/boulder/Initialize(mapload)
 	. = ..()
