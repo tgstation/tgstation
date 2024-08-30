@@ -21363,12 +21363,6 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating,
 /area/station/science/xenobiology)
-"hAS" = (
-/obj/machinery/hydroponics/soil,
-/obj/effect/decal/cleanable/dirt,
-/obj/item/cultivator/rake,
-/turf/open/floor/grass,
-/area/station/security/prison/garden)
 "hAV" = (
 /obj/structure/table/wood,
 /obj/item/flashlight/flare/candle{
@@ -24722,7 +24716,6 @@
 /obj/machinery/hydroponics/soil,
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/cable,
-/obj/item/plant_analyzer,
 /turf/open/floor/grass,
 /area/station/security/prison/garden)
 "iNv" = (
@@ -39103,7 +39096,6 @@
 /area/station/command/bridge)
 "nPw" = (
 /obj/structure/water_source/puddle,
-/obj/item/reagent_containers/cup/watering_can,
 /turf/open/floor/grass,
 /area/station/security/prison/garden)
 "nPM" = (
@@ -46402,10 +46394,6 @@
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/plating,
 /area/station/maintenance/department/cargo)
-"qwB" = (
-/obj/item/shovel/spade,
-/turf/open/floor/grass,
-/area/station/security/prison/garden)
 "qwG" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -52492,7 +52480,6 @@
 /area/station/engineering/atmos)
 "syF" = (
 /obj/effect/landmark/start/prisoner,
-/obj/item/plant_analyzer,
 /turf/open/floor/grass,
 /area/station/security/prison/garden)
 "syK" = (
@@ -82588,7 +82575,7 @@ dUc
 xrb
 xrb
 nPw
-qwB
+dEG
 iqf
 cKn
 pjt
@@ -83100,7 +83087,7 @@ cLf
 dUc
 cLf
 xrb
-hAS
+nEx
 syF
 ckc
 sqk
@@ -83871,7 +83858,7 @@ cLf
 iUF
 cLf
 sNu
-hAS
+nEx
 rXZ
 vjm
 hbw
