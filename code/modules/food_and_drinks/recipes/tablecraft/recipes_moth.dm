@@ -2,8 +2,7 @@
 	name = "Herby cheese"
 	reqs = list(
 		/obj/item/food/cheese/curd_cheese = 1,
-		/obj/item/food/grown/herbs = 4,
-		/obj/item/reagent_containers/cup/bowl = 1,
+		/obj/item/food/grown/herbs = 4
 	)
 	result = /obj/item/food/herby_cheese
 	category = CAT_MOTH
@@ -188,8 +187,7 @@
 	reqs = list(
 		/datum/reagent/consumable/nutriment/soup/rice_porridge = 10,
 		/obj/item/food/meat/bacon = 1,
-		/obj/item/food/friedegg = 2,
-		/obj/item/reagent_containers/cup/bowl = 1,
+		/obj/item/food/friedegg = 2
 	)
 	result = /obj/item/food/bowled/hua_mulan_congee
 	category = CAT_MOTH
@@ -201,8 +199,7 @@
 		/obj/item/food/grown/eggplant = 1,
 		/obj/item/food/breadslice/plain = 2,
 		/obj/item/food/tomato_sauce = 1,
-		/obj/item/food/cheese/mozzarella = 1,
-		/obj/item/reagent_containers/cup/bowl = 1,
+		/obj/item/food/cheese/mozzarella = 1
 	)
 	result = /obj/item/food/bowled/fried_eggplant_polenta
 	category = CAT_MOTH
