@@ -111,6 +111,10 @@ GLOBAL_LIST_INIT(preference_entries_by_key, init_preference_entries_by_key())
 	/// DOES have random body on, will this already be randomized?
 	var/randomize_by_default = TRUE
 
+	/// If the selected species has this in its /datum/species/mutant_bodyparts,
+	/// will show the feature as selectable.
+	var/relevant_mutant_bodypart = null
+
 	/// If the selected species has this in its /datum/species/body_markings,
 	/// will show the feature as selectable.
 	var/relevant_body_markings = null
@@ -332,7 +336,8 @@ GLOBAL_LIST_INIT(preference_entries_by_key, init_preference_entries_by_key())
 	SHOULD_NOT_SLEEP(TRUE)
 
 	if ( \
-		!isnull(relevant_inherent_trait) \
+		!isnull(relevant_mutant_bodypart) \
+		|| !isnull(relevant_inherent_trait) \
 		|| !isnull(relevant_external_organ) \
 		|| !isnull(relevant_head_flag) \
 		|| !isnull(relevant_body_markings) \
