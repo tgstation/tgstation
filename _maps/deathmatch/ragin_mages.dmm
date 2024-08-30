@@ -8,7 +8,7 @@
 	dir = 4
 	},
 /turf/open/floor/engine/cult,
-/area/deathmatch)
+/area/deathmatch/teleport)
 "aT" = (
 /obj/item/cardboard_cutout/adaptive{
 	pixel_y = 14;
@@ -17,7 +17,7 @@
 /obj/effect/decal/cleanable/cobweb,
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/engine/cult,
-/area/deathmatch)
+/area/deathmatch/teleport)
 "bb" = (
 /obj/structure/chair/wood/wings{
 	dir = 8
@@ -28,15 +28,15 @@
 	set_luminosity = 4
 	},
 /turf/open/floor/engine/cult,
-/area/deathmatch)
+/area/deathmatch/teleport)
 "bg" = (
 /obj/effect/spawner/random/entertainment/arcade,
 /turf/open/floor/engine/cult,
-/area/deathmatch)
+/area/deathmatch/teleport)
 "bv" = (
 /obj/machinery/power/shuttle_engine/propulsion,
 /turf/open/floor/plating/airless,
-/area/deathmatch)
+/area/deathmatch/teleport)
 "co" = (
 /obj/structure/table/reinforced,
 /obj/item/paper_bin/carbon{
@@ -44,7 +44,7 @@
 	pixel_x = 7
 	},
 /turf/open/floor/engine/cult,
-/area/deathmatch)
+/area/deathmatch/teleport)
 "ct" = (
 /obj/structure/flora/bush/grassy/style_random,
 /mob/living/basic/pet/gondola{
@@ -52,24 +52,24 @@
 	faction = list("gondola", "Wizard")
 	},
 /turf/open/floor/grass,
-/area/deathmatch)
+/area/deathmatch/teleport)
 "cU" = (
 /obj/structure/chair/wood/wings{
 	dir = 1
 	},
 /turf/open/floor/engine/cult,
-/area/deathmatch)
+/area/deathmatch/teleport)
 "dj" = (
 /obj/machinery/door/airlock/wood,
 /turf/open/floor/engine/cult,
-/area/deathmatch)
+/area/deathmatch/teleport)
 "ds" = (
 /turf/open/floor/carpet/purple,
-/area/deathmatch)
+/area/deathmatch/teleport)
 "ez" = (
 /obj/structure/closet/crate,
 /turf/open/floor/engine/cult,
-/area/deathmatch)
+/area/deathmatch/teleport)
 "fH" = (
 /obj/effect/turf_decal/tile/bar/opposingcorners,
 /obj/machinery/griddle,
@@ -82,19 +82,19 @@
 	pixel_x = 9
 	},
 /turf/open/floor/iron,
-/area/deathmatch)
+/area/deathmatch/teleport)
 "fI" = (
 /turf/open/lava,
-/area/deathmatch)
+/area/deathmatch/teleport)
 "gn" = (
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/engine/cult,
-/area/deathmatch)
+/area/deathmatch/teleport)
 "gr" = (
 /obj/effect/turf_decal/tile/bar/opposingcorners,
 /obj/structure/chair/wood,
 /turf/open/floor/iron,
-/area/deathmatch)
+/area/deathmatch/teleport)
 "hg" = (
 /obj/structure/railing/corner/end/flip{
 	dir = 8
@@ -104,14 +104,14 @@
 	dir = 8
 	},
 /turf/open/floor/engine/cult,
-/area/deathmatch)
+/area/deathmatch/teleport)
 "hk" = (
 /obj/item/kirbyplants/organic/plant10{
 	pixel_y = 21;
 	pixel_x = -7
 	},
 /turf/open/floor/engine/cult,
-/area/deathmatch)
+/area/deathmatch/teleport)
 "hK" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/effect/light_emitter{
@@ -120,20 +120,20 @@
 	set_luminosity = 4
 	},
 /turf/open/floor/engine/cult,
-/area/deathmatch)
+/area/deathmatch/teleport)
 "ig" = (
 /obj/structure/table/wood,
 /obj/item/stack/medical/bruise_pack{
 	pixel_x = -12
 	},
 /turf/open/floor/engine/cult,
-/area/deathmatch)
+/area/deathmatch/teleport)
 "iz" = (
 /obj/structure/chair/comfy/brown{
 	dir = 1
 	},
 /turf/open/floor/engine/cult,
-/area/deathmatch)
+/area/deathmatch/teleport)
 "iL" = (
 /obj/effect/light_emitter{
 	set_cap = 2;
@@ -141,7 +141,7 @@
 	set_luminosity = 4
 	},
 /turf/open/floor/carpet/red,
-/area/deathmatch)
+/area/deathmatch/teleport)
 "iQ" = (
 /obj/structure/table,
 /obj/structure/bedsheetbin{
@@ -149,42 +149,42 @@
 	pixel_x = 3
 	},
 /turf/open/floor/plastic,
-/area/deathmatch)
+/area/deathmatch/teleport)
 "iZ" = (
 /obj/effect/turf_decal/tile/bar/opposingcorners,
 /obj/structure/sink/directional/west,
 /turf/open/floor/iron,
-/area/deathmatch)
+/area/deathmatch/teleport)
 "jb" = (
 /obj/machinery/door/airlock/wood,
 /obj/structure/railing/corner/end/flip,
 /obj/structure/railing/corner/end,
 /turf/open/floor/engine/cult,
-/area/deathmatch)
+/area/deathmatch/teleport)
 "jg" = (
 /obj/effect/turf_decal/tile/bar/opposingcorners,
 /obj/effect/landmark/deathmatch_player_spawn,
 /turf/open/floor/iron,
-/area/deathmatch)
+/area/deathmatch/teleport)
 "jm" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/structure/mystery_box/wands,
 /turf/open/floor/engine/cult,
-/area/deathmatch)
+/area/deathmatch/teleport)
 "js" = (
 /obj/effect/turf_decal/tile/bar/opposingcorners,
 /turf/open/floor/iron,
-/area/deathmatch)
+/area/deathmatch/teleport)
 "jM" = (
 /obj/structure/table/reinforced,
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/engine/cult,
-/area/deathmatch)
+/area/deathmatch/teleport)
 "jV" = (
 /obj/effect/turf_decal/tile/bar/opposingcorners,
 /obj/machinery/door/airlock/wood,
 /turf/open/floor/iron,
-/area/deathmatch)
+/area/deathmatch/teleport)
 "kl" = (
 /obj/structure/flora/bush/grassy/style_random,
 /obj/machinery/light/floor,
@@ -194,7 +194,7 @@
 	set_luminosity = 4
 	},
 /turf/open/floor/grass,
-/area/deathmatch)
+/area/deathmatch/teleport)
 "li" = (
 /obj/structure/table,
 /obj/item/extinguisher{
@@ -206,7 +206,7 @@
 	pixel_x = -6
 	},
 /turf/open/floor/engine/cult,
-/area/deathmatch)
+/area/deathmatch/teleport)
 "lM" = (
 /obj/structure/bed{
 	dir = 1
@@ -220,19 +220,19 @@
 	set_luminosity = 4
 	},
 /turf/open/floor/engine/cult,
-/area/deathmatch)
+/area/deathmatch/teleport)
 "lO" = (
 /obj/structure/closet/crate,
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/engine/cult,
-/area/deathmatch)
+/area/deathmatch/teleport)
 "mu" = (
 /obj/effect/turf_decal/stripes,
 /obj/structure/railing{
 	dir = 4
 	},
 /turf/open/floor/iron,
-/area/deathmatch)
+/area/deathmatch/teleport)
 "mV" = (
 /obj/structure/railing{
 	dir = 4
@@ -242,40 +242,40 @@
 	},
 /obj/structure/mystery_box/tdome,
 /turf/open/floor/engine/cult,
-/area/deathmatch)
+/area/deathmatch/teleport)
 "nk" = (
 /obj/item/gun/magic/wand/death,
 /obj/structure/window/reinforced/plasma/spawner/directional/east,
 /obj/structure/window/reinforced/plasma/spawner/directional/north,
 /obj/structure/window/reinforced/plasma/spawner/directional/west,
 /turf/open/floor/grass,
-/area/deathmatch)
+/area/deathmatch/teleport)
 "nx" = (
 /obj/effect/landmark/deathmatch_player_spawn,
 /turf/open/floor/carpet/red,
-/area/deathmatch)
+/area/deathmatch/teleport)
 "nQ" = (
 /obj/machinery/door/airlock/wood,
 /turf/open/floor/plastic,
-/area/deathmatch)
+/area/deathmatch/teleport)
 "on" = (
 /obj/structure/table/wood,
 /turf/open/floor/carpet/red,
-/area/deathmatch)
+/area/deathmatch/teleport)
 "oP" = (
 /obj/structure/destructible/cult/item_dispenser/archives/library,
 /turf/open/floor/engine/cult,
-/area/deathmatch)
+/area/deathmatch/teleport)
 "pe" = (
 /obj/item/kirbyplants/organic/plant10{
 	pixel_y = 21;
 	pixel_x = -7
 	},
 /turf/open/floor/carpet/red,
-/area/deathmatch)
+/area/deathmatch/teleport)
 "ph" = (
 /turf/open/floor/engine/cult,
-/area/deathmatch)
+/area/deathmatch/teleport)
 "pv" = (
 /obj/effect/light_emitter{
 	set_cap = 2;
@@ -283,18 +283,18 @@
 	set_luminosity = 4
 	},
 /turf/open/floor/iron,
-/area/deathmatch)
+/area/deathmatch/teleport)
 "pL" = (
 /obj/effect/turf_decal/stripes{
 	dir = 1
 	},
 /obj/structure/mystery_box/wands,
 /turf/open/floor/engine/cult,
-/area/deathmatch)
+/area/deathmatch/teleport)
 "pV" = (
 /obj/structure/flora/bush/flowers_br/style_random,
 /turf/open/floor/grass,
-/area/deathmatch)
+/area/deathmatch/teleport)
 "qx" = (
 /obj/effect/light_emitter{
 	set_cap = 2;
@@ -302,15 +302,15 @@
 	set_luminosity = 4
 	},
 /turf/open/floor/carpet/purple,
-/area/deathmatch)
+/area/deathmatch/teleport)
 "qY" = (
 /obj/structure/closet/crate/bin,
 /turf/open/floor/engine/cult,
-/area/deathmatch)
+/area/deathmatch/teleport)
 "rj" = (
 /obj/machinery/door/window/right/directional/east,
 /turf/open/floor/engine/cult,
-/area/deathmatch)
+/area/deathmatch/teleport)
 "rD" = (
 /obj/structure/railing{
 	dir = 4
@@ -319,11 +319,11 @@
 	dir = 8
 	},
 /turf/open/floor/engine/cult,
-/area/deathmatch)
+/area/deathmatch/teleport)
 "sf" = (
 /obj/structure/mirror/directional/east,
 /turf/open/floor/engine/cult,
-/area/deathmatch)
+/area/deathmatch/teleport)
 "tL" = (
 /obj/structure/flora/bush/fullgrass/style_random,
 /mob/living/simple_animal/hostile/ooze/gelatinous{
@@ -331,7 +331,7 @@
 	faction = list("slime", "Wizard")
 	},
 /turf/open/floor/grass,
-/area/deathmatch)
+/area/deathmatch/teleport)
 "ue" = (
 /obj/effect/turf_decal/tile/bar/opposingcorners,
 /obj/item/food/burger/yellow{
@@ -347,14 +347,14 @@
 	},
 /obj/structure/table/reinforced,
 /turf/open/floor/iron,
-/area/deathmatch)
+/area/deathmatch/teleport)
 "ui" = (
 /obj/effect/turf_decal/stripes,
 /turf/open/floor/iron,
-/area/deathmatch)
+/area/deathmatch/teleport)
 "uz" = (
 /turf/open/floor/iron,
-/area/deathmatch)
+/area/deathmatch/teleport)
 "uR" = (
 /obj/item/clothing/shoes/sandal/magic{
 	pixel_y = 16
@@ -365,82 +365,82 @@
 	set_luminosity = 4
 	},
 /turf/open/floor/plastic,
-/area/deathmatch)
+/area/deathmatch/teleport)
 "vh" = (
 /obj/structure/mystery_box/wands,
 /turf/open/floor/engine/cult,
-/area/deathmatch)
+/area/deathmatch/teleport)
 "vv" = (
 /obj/vehicle/ridden/scooter/skateboard{
 	dir = 4
 	},
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/engine/cult,
-/area/deathmatch)
+/area/deathmatch/teleport)
 "vR" = (
 /obj/structure/bookcase/random,
 /turf/open/floor/engine/cult,
-/area/deathmatch)
+/area/deathmatch/teleport)
 "wd" = (
 /obj/effect/turf_decal/tile/bar/opposingcorners,
 /obj/structure/mystery_box/wands,
 /turf/open/floor/iron,
-/area/deathmatch)
+/area/deathmatch/teleport)
 "wl" = (
 /obj/item/kirbyplants/organic/plant10{
 	pixel_y = 1;
 	pixel_x = -6
 	},
 /turf/open/floor/carpet/purple,
-/area/deathmatch)
+/area/deathmatch/teleport)
 "wL" = (
 /obj/effect/turf_decal/tile/bar/opposingcorners,
 /obj/machinery/gibber/autogibber,
 /turf/open/floor/iron,
-/area/deathmatch)
+/area/deathmatch/teleport)
 "xk" = (
 /obj/structure/sink/directional/south,
 /obj/structure/mirror/directional/north{
 	pixel_y = 36
 	},
 /turf/open/floor/plastic,
-/area/deathmatch)
+/area/deathmatch/teleport)
 "xs" = (
 /obj/structure/flora/bush/grassy/style_random,
 /turf/open/floor/grass,
-/area/deathmatch)
+/area/deathmatch/teleport)
 "yA" = (
 /obj/structure/chair/wood/wings,
 /turf/open/floor/engine/cult,
-/area/deathmatch)
+/area/deathmatch/teleport)
 "zN" = (
 /obj/structure/mystery_box/wands,
 /obj/structure/sign/poster/contraband/the_big_gas_giant_truth/directional/north,
 /turf/open/floor/engine/cult,
-/area/deathmatch)
+/area/deathmatch/teleport)
 "zO" = (
 /obj/structure/closet,
 /turf/open/floor/engine/cult,
-/area/deathmatch)
+/area/deathmatch/teleport)
 "Au" = (
 /obj/structure/railing{
 	dir = 4
 	},
 /turf/open/floor/engine/cult,
-/area/deathmatch)
+/area/deathmatch/teleport)
 "AD" = (
 /obj/structure/sign/departments/restroom/directional/west,
 /turf/open/floor/engine/cult,
-/area/deathmatch)
+/area/deathmatch/teleport)
 "Bm" = (
 /obj/effect/landmark/deathmatch_player_spawn,
 /turf/open/floor/plastic,
-/area/deathmatch)
+/area/deathmatch/teleport)
 "Cb" = (
 /obj/effect/turf_decal/tile/bar/opposingcorners,
 /obj/structure/table/wood,
 /turf/open/floor/iron,
-/area/deathmatch)
+/area/deathmatch/teleport)
 "Cj" = (
 /obj/structure/table,
 /obj/item/clothing/ears/earmuffs{
@@ -456,10 +456,10 @@
 	pixel_y = -10
 	},
 /turf/open/floor/engine/cult,
-/area/deathmatch)
+/area/deathmatch/teleport)
 "Cq" = (
 /turf/open/floor/carpet/red,
-/area/deathmatch)
+/area/deathmatch/teleport)
 "CM" = (
 /obj/structure/railing/corner,
 /obj/structure/railing/corner{
@@ -477,7 +477,7 @@
 	set_luminosity = 4
 	},
 /turf/open/floor/engine/cult,
-/area/deathmatch)
+/area/deathmatch/teleport)
 "DK" = (
 /obj/structure/railing{
 	dir = 8
@@ -489,11 +489,11 @@
 	dir = 4
 	},
 /turf/open/floor/engine/cult,
-/area/deathmatch)
+/area/deathmatch/teleport)
 "DW" = (
 /obj/machinery/computer,
 /turf/open/floor/carpet/red,
-/area/deathmatch)
+/area/deathmatch/teleport)
 "Eh" = (
 /obj/effect/light_emitter{
 	set_cap = 2;
@@ -501,64 +501,64 @@
 	set_luminosity = 4
 	},
 /turf/open/floor/engine/cult,
-/area/deathmatch)
+/area/deathmatch/teleport)
 "Fb" = (
 /obj/effect/turf_decal/stripes{
 	dir = 1
 	},
 /turf/open/floor/engine/cult,
-/area/deathmatch)
+/area/deathmatch/teleport)
 "Fm" = (
 /obj/structure/chair/comfy/black{
 	dir = 1
 	},
 /turf/open/floor/engine/cult,
-/area/deathmatch)
+/area/deathmatch/teleport)
 "Fv" = (
 /obj/structure/chair/wood/wings{
 	dir = 4
 	},
 /turf/open/floor/engine/cult,
-/area/deathmatch)
+/area/deathmatch/teleport)
 "Fx" = (
 /obj/item/target,
 /obj/structure/sign/flag/nanotrasen/directional/north,
 /turf/open/floor/iron,
-/area/deathmatch)
+/area/deathmatch/teleport)
 "FL" = (
 /turf/open/floor/plastic,
-/area/deathmatch)
+/area/deathmatch/teleport)
 "Ge" = (
 /obj/item/flashlight/flare{
 	pixel_x = -5;
 	pixel_y = -12
 	},
 /turf/open/floor/engine/cult,
-/area/deathmatch)
+/area/deathmatch/teleport)
 "Gv" = (
 /obj/item/kirbyplants/organic/plant10{
 	pixel_y = 2;
 	pixel_x = 5
 	},
 /turf/open/floor/engine/cult,
-/area/deathmatch)
+/area/deathmatch/teleport)
 "GC" = (
 /obj/effect/spawner/structure/window,
 /turf/open/floor/engine/cult,
-/area/deathmatch)
+/area/deathmatch/teleport)
 "GZ" = (
 /obj/structure/curtain,
 /obj/machinery/shower/directional/north,
 /obj/item/soap/syndie,
 /turf/open/floor/noslip,
-/area/deathmatch)
+/area/deathmatch/teleport)
 "Hf" = (
 /obj/item/kirbyplants/organic/plant10{
 	pixel_y = 1;
 	pixel_x = -6
 	},
 /turf/open/floor/engine/cult,
-/area/deathmatch)
+/area/deathmatch/teleport)
 "Hs" = (
 /turf/template_noop,
 /area/template_noop)
@@ -572,17 +572,17 @@
 	pixel_y = 4
 	},
 /turf/open/floor/engine/cult,
-/area/deathmatch)
+/area/deathmatch/teleport)
 "HP" = (
 /obj/structure/chair/comfy/black{
 	dir = 1
 	},
 /turf/open/floor/carpet/red,
-/area/deathmatch)
+/area/deathmatch/teleport)
 "HS" = (
 /obj/structure/table/wood/fancy,
 /turf/open/floor/plastic,
-/area/deathmatch)
+/area/deathmatch/teleport)
 "IE" = (
 /obj/structure/table/wood,
 /obj/item/clothing/suit/wizrobe/black{
@@ -594,40 +594,40 @@
 	pixel_x = 6
 	},
 /turf/open/floor/engine/cult,
-/area/deathmatch)
+/area/deathmatch/teleport)
 "IM" = (
 /obj/item/kirbyplants/organic/plant10{
 	pixel_y = 2;
 	pixel_x = 5
 	},
 /turf/open/floor/carpet/purple,
-/area/deathmatch)
+/area/deathmatch/teleport)
 "Jm" = (
 /turf/closed/wall/mineral/wood,
-/area/deathmatch)
+/area/deathmatch/teleport)
 "Jo" = (
 /obj/structure/toilet{
 	dir = 4
 	},
 /turf/open/floor/plastic,
-/area/deathmatch)
+/area/deathmatch/teleport)
 "Kr" = (
 /obj/effect/landmark/deathmatch_player_spawn,
 /turf/open/floor/engine/cult,
-/area/deathmatch)
+/area/deathmatch/teleport)
 "KW" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/engine/cult,
-/area/deathmatch)
+/area/deathmatch/teleport)
 "Le" = (
 /obj/structure/filingcabinet,
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/engine/cult,
-/area/deathmatch)
+/area/deathmatch/teleport)
 "Mg" = (
 /obj/machinery/computer,
 /turf/open/floor/engine/cult,
-/area/deathmatch)
+/area/deathmatch/teleport)
 "Nl" = (
 /obj/machinery/power/shuttle_engine/heater{
 	resistance_flags = 3
@@ -636,21 +636,21 @@
 	resistance_flags = 3
 	},
 /turf/open/floor/engine/cult,
-/area/deathmatch)
+/area/deathmatch/teleport)
 "Nm" = (
 /obj/item/kirbyplants/organic/plant10{
 	pixel_y = 21;
 	pixel_x = 6
 	},
 /turf/open/floor/engine/cult,
-/area/deathmatch)
+/area/deathmatch/teleport)
 "Nt" = (
 /obj/item/target{
 	pixel_y = 11
 	},
 /obj/effect/turf_decal/stripes,
 /turf/open/floor/iron,
-/area/deathmatch)
+/area/deathmatch/teleport)
 "NW" = (
 /obj/structure/railing{
 	dir = 4
@@ -659,30 +659,30 @@
 	dir = 1
 	},
 /turf/open/floor/engine/cult,
-/area/deathmatch)
+/area/deathmatch/teleport)
 "Ok" = (
 /obj/machinery/vending/cigarette,
 /turf/open/floor/engine/cult,
-/area/deathmatch)
+/area/deathmatch/teleport)
 "OD" = (
 /obj/structure/filingcabinet,
 /turf/open/floor/engine/cult,
-/area/deathmatch)
+/area/deathmatch/teleport)
 "OK" = (
 /obj/item/kirbyplants/organic/plant10{
 	pixel_y = 21;
 	pixel_x = 6
 	},
 /turf/open/floor/carpet/red,
-/area/deathmatch)
+/area/deathmatch/teleport)
 "PD" = (
 /obj/structure/table/wood,
 /turf/open/floor/engine/cult,
-/area/deathmatch)
+/area/deathmatch/teleport)
 "Qj" = (
 /obj/structure/dresser,
 /turf/open/floor/engine/cult,
-/area/deathmatch)
+/area/deathmatch/teleport)
 "QH" = (
 /obj/structure/table,
 /obj/item/clothing/head/wizard{
@@ -690,19 +690,19 @@
 	pixel_x = 4
 	},
 /turf/open/floor/plastic,
-/area/deathmatch)
+/area/deathmatch/teleport)
 "QT" = (
 /obj/structure/mystery_box/wands,
 /turf/open/floor/plastic,
-/area/deathmatch)
+/area/deathmatch/teleport)
 "RB" = (
 /obj/machinery/vending/snack,
 /turf/open/floor/engine/cult,
-/area/deathmatch)
+/area/deathmatch/teleport)
 "RI" = (
 /obj/effect/decal/cleanable/cobweb,
 /turf/open/floor/engine/cult,
-/area/deathmatch)
+/area/deathmatch/teleport)
 "RT" = (
 /obj/machinery/power/shuttle_engine/heater{
 	resistance_flags = 3
@@ -711,14 +711,14 @@
 	resistance_flags = 3
 	},
 /turf/open/lava,
-/area/deathmatch)
+/area/deathmatch/teleport)
 "Sa" = (
 /turf/open/floor/grass,
-/area/deathmatch)
+/area/deathmatch/teleport)
 "SK" = (
 /obj/structure/flora/bush/fullgrass/style_random,
 /turf/open/floor/grass,
-/area/deathmatch)
+/area/deathmatch/teleport)
 "Th" = (
 /obj/effect/turf_decal/tile/bar/opposingcorners,
 /obj/structure/table/reinforced,
@@ -736,15 +736,15 @@
 	set_luminosity = 4
 	},
 /turf/open/floor/iron,
-/area/deathmatch)
+/area/deathmatch/teleport)
 "Vk" = (
 /obj/machinery/door/window/left/directional/east,
 /turf/open/floor/engine/cult,
-/area/deathmatch)
+/area/deathmatch/teleport)
 "VM" = (
 /obj/structure/table/wood/poker,
 /turf/open/floor/engine/cult,
-/area/deathmatch)
+/area/deathmatch/teleport)
 "Wl" = (
 /obj/structure/railing{
 	dir = 4
@@ -755,37 +755,37 @@
 	set_luminosity = 4
 	},
 /turf/open/floor/engine/cult,
-/area/deathmatch)
+/area/deathmatch/teleport)
 "WX" = (
 /obj/machinery/vending/magivend,
 /turf/open/floor/engine/cult,
-/area/deathmatch)
+/area/deathmatch/teleport)
 "Xv" = (
 /obj/structure/railing,
 /obj/structure/railing{
 	dir = 1
 	},
 /turf/open/floor/engine/cult,
-/area/deathmatch)
+/area/deathmatch/teleport)
 "YP" = (
 /obj/structure/closet/crate/coffin,
 /obj/effect/decal/cleanable/cobweb/cobweb2,
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/engine/cult,
-/area/deathmatch)
+/area/deathmatch/teleport)
 "YS" = (
 /obj/effect/decal/cleanable/cobweb,
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/engine/cult,
-/area/deathmatch)
+/area/deathmatch/teleport)
 "Zo" = (
 /obj/structure/flora/bush/flowers_pp/style_random,
 /turf/open/floor/grass,
-/area/deathmatch)
+/area/deathmatch/teleport)
 "ZS" = (
 /obj/structure/railing/corner/end/flip,
 /turf/open/floor/iron,
-/area/deathmatch)
+/area/deathmatch/teleport)
 
 (1,1,1) = {"
 Hs
