@@ -1,7 +1,7 @@
 /obj/structure/lattice
 	name = "lattice"
 	desc = "A lightweight support lattice. These hold our station together."
-	icon = 'icons/obj/structures/smooth/lattice.dmi'
+	icon = 'icons/obj/smooth_structures/lattice.dmi'
 	icon_state = "lattice-255"
 	base_icon_state = "lattice"
 	density = FALSE
@@ -89,7 +89,7 @@
 /obj/structure/lattice/catwalk
 	name = "catwalk"
 	desc = "A catwalk for easier EVA maneuvering and cable placement."
-	icon = 'icons/obj/structures/smooth/catwalk.dmi'
+	icon = 'icons/obj/smooth_structures/catwalk.dmi'
 	icon_state = "catwalk-0"
 	base_icon_state = "catwalk"
 	number_of_mats = 2
@@ -138,7 +138,7 @@
 /obj/structure/lattice/lava
 	name = "heatproof support lattice"
 	desc = "A specialized support beam for building across lava. Watch your step."
-	icon = 'icons/obj/structures/smooth/catwalk.dmi'
+	icon = 'icons/obj/smooth_structures/catwalk.dmi'
 	icon_state = "catwalk-0"
 	base_icon_state = "catwalk"
 	number_of_mats = 1

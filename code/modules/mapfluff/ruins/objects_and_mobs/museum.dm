@@ -51,7 +51,7 @@
 /obj/structure/fluff/preserved_borer
 	name = "preserved borer exhibit"
 	desc = "A preserved cortical borer. Probably been there long enough to not last long outside the exhibit."
-	icon = 'icons/obj/fluff/general.dmi'
+	icon = 'icons/obj/structures.dmi'
 	icon_state = "preservedborer"
 	density = TRUE
 

@@ -16,7 +16,7 @@ path/corner/color_name {\
 /obj/structure/chair/sofa
 	name = "old ratty sofa"
 	icon_state = "error"
-	icon = 'icons/obj/structures/chairs_wide.dmi'
+	icon = 'icons/obj/chairs_wide.dmi'
 	buildstackamount = 1
 	item_chair = null
 	var/mutable_appearance/armrest
@@ -32,7 +32,7 @@ path/corner/color_name {\
 
 /obj/structure/chair/sofa/electrify_self(obj/item/assembly/shock_kit/input_shock_kit, mob/user, list/overlays_from_child_procs)
 	if(!overlays_from_child_procs)
-		overlays_from_child_procs = list(image('icons/obj/structures/chairs.dmi', loc, "echair_over", pixel_x = -1))
+		overlays_from_child_procs = list(image('icons/obj/chairs.dmi', loc, "echair_over", pixel_x = -1))
 	. = ..()
 
 /obj/structure/chair/sofa/post_buckle_mob(mob/living/M)

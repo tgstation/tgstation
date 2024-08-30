@@ -255,7 +255,7 @@
 
 /datum/dimension_theme/radioactive
 	name = "Radioactive"
-	icon = 'icons/obj/mining_zones/ore.dmi'
+	icon = 'icons/obj/ore.dmi'
 	icon_state = "uranium"
 	material = /datum/material/uranium
 	sound = 'sound/items/welder.ogg'
@@ -407,8 +407,8 @@
 
 /datum/dimension_theme/disco
 	name = "Disco"
-	icon = 'icons/obj/service/janitor.dmi'
-	icon_state = "bulb"
+	icon = 'icons/obj/lighting.dmi'
+	icon_state = "lbulb"
 	replace_walls = /turf/closed/wall/fake_hierophant
 	material = /datum/material/glass
 	replace_floors = list(/turf/open/floor/light = 1)

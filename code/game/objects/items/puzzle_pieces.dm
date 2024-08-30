@@ -520,7 +520,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/puzzle/password/pin, 32)
 /obj/structure/puzzle_blockade/oneway
 	name = "one-way gate"
 	desc = "A wall of solid light, likely defending something important. Virtually indestructible."
-	icon = 'icons/obj/fluff/general.dmi'
+	icon = 'icons/obj/structures.dmi'
 	icon_state = "oneway"
 	base_icon_state = "oneway"
 	light_color = COLOR_BIOLUMINESCENCE_BLUE

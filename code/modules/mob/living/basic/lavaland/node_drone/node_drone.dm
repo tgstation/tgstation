@@ -13,7 +13,7 @@
 	SET_BASE_VISUAL_PIXEL(0, 6)
 	name = "NODE drone"
 	desc = "Standard in-atmosphere drone, used by Nanotrasen to operate and excavate valuable ore vents."
-	icon = 'icons/obj/mining_zones/equipment.dmi'
+	icon = 'icons/obj/mining.dmi'
 	icon_state = "mining_node_active"
 	icon_living = "mining_node_active"
 	icon_dead = "mining_node_active"

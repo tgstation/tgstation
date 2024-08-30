@@ -228,5 +228,5 @@
 /obj/item/goliath_saddle
 	name = "goliath saddle"
 	desc = "This rough saddle will give you a serviceable seat upon a goliath! Provided you can get one to stand still."
-	icon = 'icons/obj/mining_zones/equipment.dmi'
+	icon = 'icons/obj/mining.dmi'
 	icon_state = "goliath_saddle"
