@@ -52,7 +52,7 @@ export const CheckboxInput = (props) => {
     setSelections(newSelections);
   };
   const selectionIndexes = selections.map((selected: string) =>
-    items.indexOf(selected),
+    items.indexOf(selected) + 1,
   );
 
   return (
