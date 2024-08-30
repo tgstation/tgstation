@@ -17,7 +17,6 @@
 	cost = CARGO_CRATE_VALUE * 2
 	contains = list(/obj/item/gun/ballistic/shotgun/toy = 8)
 	crate_name = "foam force crate"
-	crate_type = /obj/structure/closet/crate/freezer/donk
 	discountable = SUPPLY_PACK_STD_DISCOUNTABLE
 
 /datum/supply_pack/imports/foamforce/bonus
@@ -31,7 +30,6 @@
 		/obj/item/ammo_box/magazine/toy/pistol = 2,
 	)
 	crate_name = "foam force crate"
-	crate_type = /obj/structure/closet/crate/freezer/donk
 
 /datum/supply_pack/imports/meatmeatmeatmeat // MEAT MEAT MEAT MEAT
 	name = "MEAT MEAT MEAT MEAT MEAT"
@@ -143,7 +141,6 @@
 		/obj/item/gun/ballistic/automatic/wt550 = 2,
 		/obj/item/ammo_box/magazine/wt550m9 = 2,
 	)
-	crate_type = /obj/structure/closet/crate/secure/gorlex_weapons/jammed
 
 /datum/supply_pack/imports/wt550ammo
 	name = "Smuggled WT-550 Ammo Crate"
@@ -156,7 +153,7 @@
 		/obj/item/ammo_box/magazine/wt550m9/wtic = 2,
 	)
 	crate_name = "emergency crate"
-	crate_type = /obj/structure/closet/crate/secure/gorlex_weapons/jammed
+	crate_type = /obj/structure/closet/crate/internals
 
 /datum/supply_pack/imports/shocktrooper
 	name = "Shocktrooper Crate"
@@ -172,7 +169,6 @@
 		/obj/item/clothing/suit/armor/vest,
 		/obj/item/clothing/head/helmet,
 	)
-	crate_type = /obj/structure/closet/crate/secure/gorlex_weapons/jammed
 
 /datum/supply_pack/imports/specialops
 	name = "Special Ops Crate"
@@ -188,7 +184,6 @@
 		/obj/item/switchblade,
 		/obj/item/grenade/mirage = 5,
 	)
-	crate_type = /obj/structure/closet/crate/secure/gorlex_weapons/jammed
 
 /datum/supply_pack/imports/russian
 	name = "Russian Surplus Military Gear Crate"

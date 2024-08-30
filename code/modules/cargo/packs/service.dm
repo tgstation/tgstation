@@ -245,7 +245,7 @@
 					/obj/item/food/ready_donk/donkhiladas,
 				)
 	crate_name = "\improper Ready-Donk crate"
-	crate_type = /obj/structure/closet/crate/freezer/donk
+	crate_type = /obj/structure/closet/crate/freezer/food
 	discountable = SUPPLY_PACK_UNCOMMON_DISCOUNTABLE
 
 /datum/supply_pack/service/randomized/ready_donk/fill(obj/structure/closet/crate/C)
@@ -269,7 +269,6 @@
 		/obj/item/reagent_containers/cup/bottle/syrup_bottle/caramel, //one extra syrup as a treat
 	)
 	crate_name = "coffee equipment crate"
-	crate_type = /obj/structure/closet/crate/robust
 	discountable = SUPPLY_PACK_UNCOMMON_DISCOUNTABLE
 
 /datum/supply_pack/service/coffeemaker
