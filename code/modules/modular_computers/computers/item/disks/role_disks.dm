@@ -6,6 +6,7 @@
 	max_capacity = 32
 	///Static list of programss ALL command tablets have.
 	var/static/list/datum/computer_file/command_programs = list(
+		/datum/computer_file/program/crew_manifest,
 		/datum/computer_file/program/science,
 		/datum/computer_file/program/status,
 	)
@@ -73,6 +74,7 @@
 	icon_state = "datadisk9"
 	starting_programs = list(
 		/datum/computer_file/program/records/security,
+		/datum/computer_file/program/crew_manifest,
 	)
 
 /**
