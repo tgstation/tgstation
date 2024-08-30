@@ -346,9 +346,9 @@
 		description = "Go, [fish.name], swim and be free!"
 		return
 	if(fish.status == FISH_DEAD)
-		description = "Releasing dead fish is relaxing."
+		description = "Some scavenger will surely find a use for the remains of [fish.name]. How pragmatic."
 	else
-		description = "Go, [fish.name], swim and die soon!"
+		description = "Returned to the burden of the deep. But is this truly a mercy, [fish.name]? There will always be bigger fish..."
 
 /datum/mood_event/kobun
 	description = "You are all loved by the Universe. I’m not alone, and you aren’t either."
