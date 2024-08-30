@@ -141,7 +141,6 @@
 	)
 
 /obj/effect/decal/cleanable/cobweb
-	SET_BASE_PIXEL(0, 24)
 	name = "cobweb"
 	desc = "Somebody should remove that."
 	gender = NEUTER
