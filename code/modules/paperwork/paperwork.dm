@@ -44,7 +44,7 @@
 	if(.)
 		return
 
-	if(stamped || !istype(attacking_item, /obj/item/stamp))
+	if(stamped || istype(attacking_item, /obj/item/stamp))
 		return
 
 	if(istype(attacking_item, stamp_requested))
