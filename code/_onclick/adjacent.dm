@@ -68,8 +68,6 @@
 /atom/movable/Adjacent(atom/neighbor, atom/target, atom/movable/mover)
 	if(neighbor == loc)
 		return TRUE
-	if(neighbor?.loc == src)
-		return TRUE
 	var/turf/T = loc
 	if(!istype(T))
 		return FALSE
@@ -80,8 +78,6 @@
 // This is necessary for storage items not on your person.
 /obj/item/Adjacent(atom/neighbor, atom/target, atom/movable/mover, recurse = 1)
 	if(neighbor == loc)
-		return TRUE
-	if(neighbor?.loc == src)
 		return TRUE
 	if(isitem(loc))
 		if(recurse > 0)
