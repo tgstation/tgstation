@@ -25,6 +25,8 @@
 		return FALSE
 #endif
 
+	if(target.mind.unconvertable)
+		return FALSE
 	if(ishuman(target) && target.mind.holy_role)
 		return FALSE
 	if(specific_cult?.is_sacrifice_target(target.mind))
@@ -34,6 +36,6 @@
 		return FALSE
 	if(IS_HERETIC_OR_MONSTER(target))
 		return FALSE
-	if(HAS_MIND_TRAIT(target, TRAIT_UNCONVERTABLE) || issilicon(target) || isbot(target) || isdrone(target))
+	if(HAS_TRAIT(target, TRAIT_MINDSHIELD) || issilicon(target) || isbot(target) || isdrone(target))
 		return FALSE //can't convert machines, shielded, or braindead
 	return TRUE
