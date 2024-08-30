@@ -50,7 +50,7 @@
 		negative = FALSE
 	else if(target.x == initial_x) //if their x is the same, pick a direction
 		negative = prob(50)
-	var/obj/effect/temp_visual/dragon_flight/flight_vis = new /obj/effect/temp_visual/dragon_flight(owner.loc, negative)
+	var/obj/effect/temp_visual/dragon_flight/F = new /obj/effect/temp_visual/dragon_flight(owner.loc, negative)
 
 	negative = !negative //invert it for the swoop down later
 
@@ -60,7 +60,7 @@
 	for(var/i in 1 to 3)
 		sleep(0.1 SECONDS)
 		if(QDELETED(owner) || owner.stat == DEAD) //we got hit and died, rip us
-			qdel(flight_vis)
+			qdel(F)
 			if(owner.stat == DEAD)
 				swooping = FALSE
 				animate(owner, alpha = 255, transform = oldtransform, time = 0, flags = ANIMATION_END_NOW) //reset immediately
@@ -72,17 +72,16 @@
 	owner.mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 	SLEEP_CHECK_DEATH(7, owner)
 
-	var/turf/target_turf = get_turf(target)
-	while(!QDELETED(target) && owner.loc != target_turf && owner.z == target_turf.z)
-		owner.forceMove(get_step(owner, get_dir(owner, target_turf)))
+	while(target && owner.loc != get_turf(target))
+		owner.forceMove(get_step(owner, get_dir(owner, target)))
 		SLEEP_CHECK_DEATH(0.5, owner)
-		target_turf = get_turf(target)
 
 	// Ash drake flies onto its target and rains fire down upon them
 	var/descentTime = 10
 	var/lava_success = TRUE
 	if(lava_arena)
 		lava_success = lava_arena(target)
+
 
 	//ensure swoop direction continuity.
 	if(negative)
@@ -97,20 +96,20 @@
 	SLEEP_CHECK_DEATH(descentTime, owner)
 	owner.mouse_opacity = initial(owner.mouse_opacity)
 	playsound(owner.loc, 'sound/effects/meteorimpact.ogg', 200, TRUE)
-	for(var/mob/living/victim in orange(1, owner) - owner)
-		victim.adjustBruteLoss(75)
-		if(!QDELETED(victim)) // Some mobs are deleted on death
-			var/throw_dir = get_dir(owner, victim)
-			if(victim.loc == owner.loc)
+	for(var/mob/living/L in orange(1, owner) - owner)
+		L.adjustBruteLoss(75)
+		if(!QDELETED(L)) // Some mobs are deleted on death
+			var/throw_dir = get_dir(owner, L)
+			if(L.loc == owner.loc)
 				throw_dir = pick(GLOB.alldirs)
 			var/throwtarget = get_edge_target_turf(owner, throw_dir)
-			victim.throw_at(throwtarget, 3)
-			owner.visible_message(span_warning("[victim] is thrown clear of [owner]!"))
-	for(var/obj/vehicle/sealed/mecha/mech in orange(1, owner))
-		mech.take_damage(75, BRUTE, MELEE, 1)
+			L.throw_at(throwtarget, 3)
+			owner.visible_message(span_warning("[L] is thrown clear of [owner]!"))
+	for(var/obj/vehicle/sealed/mecha/M in orange(1, owner))
+		M.take_damage(75, BRUTE, MELEE, 1)
 
-	for(var/mob/observer in range(7, owner))
-		shake_camera(observer, 15, 1)
+	for(var/mob/M in range(7, owner))
+		shake_camera(M, 15, 1)
 
 	REMOVE_TRAIT(owner, TRAIT_UNDENSE, SWOOPING_TRAIT)
 	SLEEP_CHECK_DEATH(1, owner)
@@ -127,16 +126,15 @@
 	while(amount > 0)
 		if(QDELETED(target))
 			break
-		var/turf/target_turf = get_turf(target)
-		var/turf/lava_turf = pick(RANGE_TURFS(1, target_turf))
-		var/obj/effect/temp_visual/lava_warning/warn_effect = new /obj/effect/temp_visual/lava_warning(lava_turf, 60) // longer reset time for the lava
-		warn_effect.owner = owner
+		var/turf/TT = get_turf(target)
+		var/turf/T = pick(RANGE_TURFS(1,TT))
+		var/obj/effect/temp_visual/lava_warning/LW = new /obj/effect/temp_visual/lava_warning(T, 60) // longer reset time for the lava
+		LW.owner = owner
 		amount--
 		SLEEP_CHECK_DEATH(delay, owner)
 
 /datum/action/cooldown/mob_cooldown/lava_swoop/proc/lava_arena(atom/target)
-	var/turf/target_turf = get_turf(target)
-	if(QDELETED(target) || !isliving(target) || target_turf.z != owner.z)
+	if(!target || !isliving(target))
 		return
 	target.visible_message(span_boldwarning("[owner] encases you in an arena of fire!"))
 	var/amount = 3
@@ -149,7 +147,9 @@
 	for(var/turf/T in RANGE_TURFS(2, center))
 		if(isindestructiblefloor(T))
 			continue
-		if(isindestructiblewall(T))
+		if(!isindestructiblewall(T))
+			T.TerraformTurf(/turf/open/misc/asteroid/basalt/lava_land_surface, flags = CHANGETURF_INHERIT_AIR)
+		else
 			indestructible_turfs += T
 	SLEEP_CHECK_DEATH(1 SECONDS, owner) // give them a bit of time to realize what attack is actually happening
 
