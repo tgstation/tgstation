@@ -33,7 +33,7 @@
 	. = ..()
 	register_context()
 	knock_down_callback = CALLBACK(src, PROC_REF(knock_down))
-	find_and_hang_on_wall(custom_drop_callback = knock_down_callback, wall_layer = FLAT_ON_WALL_LAYER)
+	find_and_hang_on_wall(custom_drop_callback = knock_down_callback)
 
 /obj/structure/sign/Destroy()
 	. = ..()

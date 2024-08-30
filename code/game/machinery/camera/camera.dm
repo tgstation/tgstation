@@ -133,7 +133,8 @@ CAMERA_DIRECTIONAL_HELPERS(/obj/machinery/camera/xray)
 
 	alarm_manager = new(src)
 	if(should_wallmount)
-		find_and_hang_on_wall(directional = TRUE, custom_drop_callback = CALLBACK(src, PROC_REF(deconstruct), FALSE), wall_layer = HIGH_ON_WALL_LAYER)
+		find_and_hang_on_wall(directional = TRUE, \
+			custom_drop_callback = CALLBACK(src, PROC_REF(deconstruct), FALSE))
 
 	RegisterSignal(src, COMSIG_HIT_BY_SABOTEUR, PROC_REF(on_saboteur))
 

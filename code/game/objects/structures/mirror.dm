@@ -73,9 +73,9 @@ WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/structure/mirror)
 		return FALSE
 	return TRUE
 
-/obj/structure/mirror/Initialize(mapload)
+/obj/structure/mirrr/Initialize(mapload)
 	. = ..()
-	find_and_hang_on_wall(wall_layer = FLAT_ON_WALL_LAYER)
+	find_and_hang_on_wall()
 
 /obj/structure/mirror/broken
 	icon_state = "mirror_broke"
