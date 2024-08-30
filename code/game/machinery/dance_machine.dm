@@ -67,7 +67,7 @@
 /obj/machinery/jukebox/ui_data(mob/user)
 	return music_player.get_ui_data()
 
-/obj/machinery/jukebox/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
+/obj/machinery/jukebox/ui_act(action, list/params)
 	. = ..()
 	if(.)
 		return

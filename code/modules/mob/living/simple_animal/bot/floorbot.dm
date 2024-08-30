@@ -144,8 +144,7 @@
 // Actions received from TGUI
 /mob/living/simple_animal/bot/floorbot/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
-	var/mob/user = ui.user
-	if(. || (bot_cover_flags & BOT_COVER_LOCKED && !HAS_SILICON_ACCESS(user)))
+	if(. || (bot_cover_flags & BOT_COVER_LOCKED && !HAS_SILICON_ACCESS(usr)))
 		return
 
 	switch(action)
@@ -163,7 +162,7 @@
 			if(tilestack)
 				tilestack.forceMove(drop_location())
 		if("line_mode")
-			var/setdir = tgui_input_list(user, "Select construction direction", "Direction", list("north", "east", "south", "west", "disable"))
+			var/setdir = tgui_input_list(usr, "Select construction direction", "Direction", list("north", "east", "south", "west", "disable"))
 			if(isnull(setdir) || QDELETED(ui) || ui.status != UI_INTERACTIVE)
 				return
 			switch(setdir)

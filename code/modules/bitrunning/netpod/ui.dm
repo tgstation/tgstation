@@ -27,7 +27,7 @@
 	return data
 
 
-/obj/machinery/netpod/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
+/obj/machinery/netpod/ui_act(action, params)
 	. = ..()
 	if(.)
 		return TRUE

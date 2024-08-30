@@ -287,30 +287,29 @@
 	data["paiInserted"] = !!paicard
 	return data
 
-/mob/living/simple_animal/bot/mulebot/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
+/mob/living/simple_animal/bot/mulebot/ui_act(action, params)
 	. = ..()
-	var/mob/user = ui.user
-	if(. || (bot_cover_flags & BOT_COVER_LOCKED && !HAS_SILICON_ACCESS(user)))
+	if(. || (bot_cover_flags & BOT_COVER_LOCKED && !HAS_SILICON_ACCESS(usr)))
 		return
 
 	switch(action)
 		if("lock")
-			if(HAS_SILICON_ACCESS(user))
+			if(HAS_SILICON_ACCESS(usr))
 				bot_cover_flags ^= BOT_COVER_LOCKED
 				return TRUE
 		if("on")
 			if(bot_mode_flags & BOT_MODE_ON)
 				turn_off()
 			else if(bot_cover_flags & BOT_COVER_MAINTS_OPEN)
-				to_chat(user, span_warning("[name]'s maintenance panel is open!"))
+				to_chat(usr, span_warning("[name]'s maintenance panel is open!"))
 				return
 			else if(cell)
 				if(!turn_on())
-					to_chat(user, span_warning("You can't switch on [src]!"))
+					to_chat(usr, span_warning("You can't switch on [src]!"))
 					return
 			return TRUE
 		else
-			bot_control(action, user, params) // Kill this later. // Kill PDAs in general please
+			bot_control(action, usr, params) // Kill this later. // Kill PDAs in general please
 			return TRUE
 
 /mob/living/simple_animal/bot/mulebot/bot_control(command, mob/user, list/params = list(), pda = FALSE)

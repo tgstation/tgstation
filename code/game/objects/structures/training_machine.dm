@@ -79,7 +79,7 @@
  *
  * Will not respond if moving and emagged, so once you set it to go it can't be stopped!
  */
-/obj/structure/training_machine/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
+/obj/structure/training_machine/ui_act(action, params)
 	. = ..()
 	if(.)
 		return

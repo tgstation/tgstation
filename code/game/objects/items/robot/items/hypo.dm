@@ -225,7 +225,7 @@
 /obj/item/reagent_containers/borghypo/attack_self(mob/user)
 	ui_interact(user)
 
-/obj/item/reagent_containers/borghypo/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
+/obj/item/reagent_containers/borghypo/ui_act(action, params)
 	. = ..()
 	if(.)
 		return

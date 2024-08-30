@@ -136,7 +136,7 @@
 
 	return data
 
-/obj/machinery/plumbing/pill_press/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
+/obj/machinery/plumbing/pill_press/ui_act(action, params)
 	. = ..()
 	if(.)
 		return

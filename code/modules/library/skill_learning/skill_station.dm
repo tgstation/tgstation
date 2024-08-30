@@ -253,7 +253,7 @@
 		current_skills += list(skill_chip.get_chip_data())
 	.["current"] = current_skills
 
-/obj/machinery/skill_station/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
+/obj/machinery/skill_station/ui_act(action, list/params)
 	. = ..()
 	if(.)
 		return
