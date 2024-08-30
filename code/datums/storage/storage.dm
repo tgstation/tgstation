@@ -43,10 +43,7 @@
 	/// Determines whether we play a rustle animation when inserting/removing items.
 	var/animated = TRUE
 	/// Determines whether we play a rustle sound when inserting/removing items.
-	var/do_rustle = TRUE
-	var/rustle_vary = TRUE
-	/// Path for the item's rustle sound.
-	var/rustle_sound = SFX_RUSTLE
+	var/rustle_sound = TRUE
 	/// The sound to play when we open/access the storage
 	var/open_sound
 	var/open_sound_vary = TRUE
@@ -532,8 +529,8 @@ GLOBAL_LIST_EMPTY(cached_storage_typecaches)
 	if(silent)
 		return
 
-	if(do_rustle)
-		playsound(parent, rustle_sound, 50, rustle_vary, -5)
+	if(rustle_sound)
+		playsound(parent, SFX_RUSTLE, 50, TRUE, -5)
 
 	if(!silent_for_user)
 		to_chat(user, span_notice("You put [thing] [insert_preposition]to [parent]."))
@@ -563,7 +560,7 @@ GLOBAL_LIST_EMPTY(cached_storage_typecaches)
 		reset_item(thing)
 		thing.forceMove(remove_to_loc)
 
-		if(do_rustle && !silent)
+		if(rustle_sound && !silent)
 			playsound(parent, SFX_RUSTLE, 50, TRUE, -5)
 	else
 		thing.moveToNullspace()
@@ -797,7 +794,7 @@ GLOBAL_LIST_EMPTY(cached_storage_typecaches)
 	if(dest_object.atom_storage)
 		to_chat(user, span_notice("You dump the contents of [parent] into [dest_object]."))
 
-		if(do_rustle)
+		if(rustle_sound)
 			playsound(parent, SFX_RUSTLE, 50, TRUE, -5)
 
 		for(var/obj/item/to_dump in real_location)
@@ -960,7 +957,7 @@ GLOBAL_LIST_EMPTY(cached_storage_typecaches)
 	if(animated)
 		animate_parent()
 
-	if(do_rustle && !silent)
+	if(rustle_sound)
 		playsound(parent, (open_sound ? open_sound : SFX_RUSTLE), 50, open_sound_vary, -5)
 
 	return TRUE
