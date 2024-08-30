@@ -22,7 +22,7 @@ WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/structure/plaque)
 
 /obj/structure/plaque/Initialize(mapload)
 	. = ..()
-	find_and_hang_on_wall(wall_layer = FLAT_ON_WALL_LAYER)
+	find_and_hang_on_wall()
 	register_context()
 
 /obj/structure/plaque/add_context(atom/source, list/context, obj/item/held_item, mob/user)
