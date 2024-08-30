@@ -88,7 +88,7 @@
 	key = "fredingtonfastingbear"
 	map_name = "fredingtonfastingbear"
 	bitrunning_network = BITRUNNER_DOMAIN_SECURITY
-	forced_outfit = /datum/outfit/job/prisoner
+	forced_outfit = /datum/outfit/job/prisoner/night_guard
 	test_only = TRUE // Don't show the base class
 	var/list/starting_ai_levels = list(
 		/obj/bitrunning/animatronic/standard = 0,
@@ -99,6 +99,15 @@
 	var/list/phone_message = list(
 		"ay yo the pizza here",
 	)
+
+/datum/outfit/job/prisoner/night_guard
+	name = "Night Guard"
+	uniform = /obj/item/clothing/under/rank/purple_guy
+	head = /obj/item/clothing/head/purple_guy
+	ears = null
+	shoes = /obj/item/clothing/shoes/laceup
+	skillchips = null
+	backpack_contents = null
 
 /datum/lazy_template/virtual_domain/pizza_guarding_base/mischief
 	name = "After-Hours Pizzeria Guarding: Mischief"
@@ -288,7 +297,9 @@
 	var/obj/machinery/door/poddoor/right_door = locate(/obj/machinery/door/poddoor/bitrunner_right) in created_atoms
 	var/obj/machinery/light/small/dim/left_light = locate(/obj/machinery/light/small/dim/bitrunner_left) in created_atoms
 	var/obj/machinery/light/small/dim/right_light = locate(/obj/machinery/light/small/dim/bitrunner_right) in created_atoms
-	if(!camera_console || !our_phone || !left_door || !right_door || !left_light || !right_light)
+	var/obj/machinery/digital_clock/bitrunner/my_clock = locate(/obj/machinery/digital_clock/bitrunner) in created_atoms
+	var/obj/machinery/digital_clock/bitrunner_power/my_power = locate(/obj/machinery/digital_clock/bitrunner_power) in created_atoms
+	if(!camera_console || !our_phone || !left_door || !right_door || !left_light || !right_light || !my_clock || !my_power)
 		CRASH("Missing critical items for the domain!")
 	our_controller.camera_console = camera_console
 	camera_console.network = list("[REF(our_controller)]")
@@ -299,6 +310,10 @@
 	our_controller.right_door = right_door
 	our_controller.left_light = left_light
 	our_controller.right_light = right_light
+	our_controller.my_clock = my_clock
+	our_controller.my_clock.my_controller = our_controller
+	our_controller.my_power = my_power
+	our_controller.my_power.my_controller = our_controller
 
 	for(var/obj/machinery/camera/active_camera in created_atoms)
 		active_camera.network = list("[REF(our_controller)]")

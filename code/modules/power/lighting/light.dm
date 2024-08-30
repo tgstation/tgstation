@@ -82,6 +82,8 @@
 	var/power_consumption_rate = 20
 	///break if moved, if false also makes it ignore if the wall its on breaks
 	var/break_if_moved = TRUE
+	///Can this light randomly break if toggled?
+	var/cam_break_toggle = TRUE
 
 /obj/machinery/light/Move()
 	if(status != LIGHT_BROKEN && break_if_moved)
@@ -127,10 +129,10 @@
 #ifndef MAP_TEST
 	switch(fitting)
 		if("tube")
-			if(prob(2))
+			if(prob(2) && cam_break_toggle)
 				break_light_tube(TRUE)
 		if("bulb")
-			if(prob(5))
+			if(prob(5) && cam_break_toggle)
 				break_light_tube(TRUE)
 #endif
 	update(trigger = FALSE)
@@ -244,7 +246,7 @@
 		var/matching = light && brightness_set == light.light_range && power_set == light.light_power && color_set == light.light_color
 		if(!matching)
 			switchcount++
-			if( prob( min(60, (switchcount**2)*0.01) ) )
+			if( cam_break_toggle && prob( min(60, (switchcount**2)*0.01) ) )
 				if(trigger)
 					burn_out()
 			else

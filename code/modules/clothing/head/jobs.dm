@@ -822,3 +822,11 @@
 	greyscale_config_worn = /datum/greyscale_config/beret_badge/worn
 	greyscale_colors = "#43523d#a2abb0"
 	armor_type = /datum/armor/cosmetic_sec
+
+/obj/item/clothing/head/purple_guy
+	name = "purple night guard cap"
+	desc = "Keeps the light of the clock and power alarm out of your eyes."
+	icon_state = "purple_guy"
+	worn_icon_state = "purple_guy"
+	icon = 'icons/obj/clothing/under/security.dmi'
+	worn_icon = 'icons/mob/clothing/head/hats.dmi'

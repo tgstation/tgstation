@@ -1,6 +1,6 @@
 #define BITRUNNING_DOORBLOCK_RIGHT "right_door"
 #define BITRUNNING_DOORBLOCK_LEFT "left_door"
-
+#define DISPLAY_PIXEL_ALPHA 96
 /datum/looping_sound/phone_ring
 	mid_sounds = list('sound/weapons/ring.ogg' = 1)
 	mid_length = 2 SECONDS
@@ -48,10 +48,12 @@
 	current_line++
 
 /obj/machinery/light/small/dim/bitrunner_right
-	flickering = TRUE
+	cam_break_toggle = FALSE
+	no_low_power = TRUE
 
 /obj/machinery/light/small/dim/bitrunner_left
-	flickering = TRUE
+	cam_break_toggle = FALSE
+	no_low_power = TRUE
 
 /obj/machinery/door/poddoor/bitrunner_right
 
@@ -161,6 +163,110 @@
 	if(!shut_down)
 		. = ..()
 
+/obj/machinery/digital_clock/bitrunner
+	var/obj/bitrunning/animatronic_controller/my_controller
+
+/obj/machinery/digital_clock/bitrunner/update_time()
+	if(!my_controller || !my_controller.power_left)
+		return // lol no power
+	var/return_overlays = list()
+
+	var/mutable_appearance/minute_one_overlay = mutable_appearance('icons/obj/machines/digital_clock.dmi', "+0")
+	var/mutable_appearance/minute_one_e = emissive_appearance('icons/obj/machines/digital_clock.dmi', "+0", src, alpha = DISPLAY_PIXEL_ALPHA)
+	minute_one_overlay.pixel_w = 0
+	minute_one_e.pixel_w = 0
+	return_overlays += minute_one_overlay
+	return_overlays += minute_one_e
+
+	var/mutable_appearance/minute_tenth_overlay = mutable_appearance('icons/obj/machines/digital_clock.dmi', "+0")
+	var/mutable_appearance/minute_tenth_e = emissive_appearance('icons/obj/machines/digital_clock.dmi', "+0", src, alpha = DISPLAY_PIXEL_ALPHA)
+	minute_tenth_overlay.pixel_w = -4
+	minute_tenth_e.pixel_w = -4
+	return_overlays += minute_tenth_overlay
+	return_overlays += minute_tenth_e
+
+	var/mutable_appearance/separator = mutable_appearance('icons/obj/machines/digital_clock.dmi', "+separator")
+	var/mutable_appearance/separator_e = emissive_appearance('icons/obj/machines/digital_clock.dmi', "+separator", src, alpha = DISPLAY_PIXEL_ALPHA)
+	return_overlays += separator
+	return_overlays += separator_e
+
+	var/hours_render = my_controller.minutes_passed == 0 ? 2 : my_controller.minutes_passed
+	var/mutable_appearance/hour_one_overlay = mutable_appearance('icons/obj/machines/digital_clock.dmi', "+[hours_render]")
+	var/mutable_appearance/hour_one_e = emissive_appearance('icons/obj/machines/digital_clock.dmi', "+[hours_render]", src, alpha = DISPLAY_PIXEL_ALPHA)
+	hour_one_overlay.pixel_w = -10
+	hour_one_e.pixel_w = -10
+	return_overlays += hour_one_overlay
+	return_overlays += hour_one_e
+	var/subhours_render = my_controller.minutes_passed == 0 ? 1 : 0
+	var/mutable_appearance/hour_tenth_overlay = mutable_appearance('icons/obj/machines/digital_clock.dmi', "+[subhours_render]")
+	var/mutable_appearance/hour_tenth_e = emissive_appearance('icons/obj/machines/digital_clock.dmi', "+[subhours_render]", src, alpha = DISPLAY_PIXEL_ALPHA)
+	hour_tenth_overlay.pixel_w = -14
+	hour_tenth_e.pixel_w = -14
+	return_overlays += hour_tenth_overlay
+	return_overlays += hour_tenth_e
+
+	return return_overlays
+
+/obj/machinery/digital_clock/bitrunner_power
+	icon = 'icons/obj/machines/bitrunning.dmi'
+	icon_state = "power_base"
+	var/obj/bitrunning/animatronic_controller/my_controller
+
+/obj/machinery/digital_clock/bitrunner_power/update_time()
+	if(!my_controller || !my_controller.power_left)
+		return // lol no power
+	var/return_overlays = list()
+
+	var/mutable_appearance/percent_symbol = mutable_appearance('icons/obj/machines/bitrunning.dmi', "percent")
+	var/mutable_appearance/percent_symbol_e = emissive_appearance('icons/obj/machines/bitrunning.dmi', "percent", src, alpha = DISPLAY_PIXEL_ALPHA)
+	return_overlays += percent_symbol
+	return_overlays += percent_symbol_e
+
+	var/first_digit_string = "[my_controller.power_left]"
+	if(my_controller.power_left >= 100)
+		first_digit_string = first_digit_string[3]
+	else if (my_controller.power_left >= 10)
+		first_digit_string = first_digit_string[2]
+	var/mutable_appearance/first_digit = mutable_appearance('icons/obj/machines/bitrunning.dmi', "+[first_digit_string]")
+	var/mutable_appearance/first_digit_e = emissive_appearance('icons/obj/machines/bitrunning.dmi', "+[first_digit_string]", src, alpha = DISPLAY_PIXEL_ALPHA)
+	first_digit.pixel_w = -7
+	first_digit_e.pixel_w = -7
+	return_overlays += first_digit
+	return_overlays += first_digit_e
+
+	if(my_controller.power_left >= 100)
+		first_digit_string = "[my_controller.power_left]"
+		var/mutable_appearance/hundredth_digit = mutable_appearance('icons/obj/machines/bitrunning.dmi', "+1")
+		var/mutable_appearance/hundredth_digit_e = emissive_appearance('icons/obj/machines/bitrunning.dmi', "+1", src, alpha = DISPLAY_PIXEL_ALPHA)
+		hundredth_digit.pixel_w = -16
+		hundredth_digit_e.pixel_w = -16
+		return_overlays += hundredth_digit
+		return_overlays += hundredth_digit_e
+		var/mutable_appearance/tenth_digit = mutable_appearance('icons/obj/machines/bitrunning.dmi', "+[first_digit_string[2]]")
+		var/mutable_appearance/tenth_digit_e = emissive_appearance('icons/obj/machines/bitrunning.dmi', "+[first_digit_string[2]]", src, alpha = DISPLAY_PIXEL_ALPHA)
+		tenth_digit.pixel_w = -12
+		tenth_digit_e.pixel_w = -12
+		return_overlays += tenth_digit
+		return_overlays += tenth_digit_e
+
+	else if(my_controller.power_left >= 10)
+		first_digit_string = "[my_controller.power_left]"
+		var/mutable_appearance/tenth_digit = mutable_appearance('icons/obj/machines/bitrunning.dmi', "+[first_digit_string[1]]")
+		var/mutable_appearance/tenth_digit_e = emissive_appearance('icons/obj/machines/bitrunning.dmi', "+[first_digit_string[1]]", src, alpha = DISPLAY_PIXEL_ALPHA)
+		tenth_digit.pixel_w = -12
+		tenth_digit_e.pixel_w = -12
+		return_overlays += tenth_digit
+		return_overlays += tenth_digit_e
+
+
+	if(my_controller.active_drains)
+		var/mutable_appearance/power_usage = mutable_appearance('icons/obj/machines/bitrunning.dmi', "powerbar_[my_controller.active_drains]")
+		var/mutable_appearance/power_usage_e = emissive_appearance('icons/obj/machines/bitrunning.dmi', "powerbar_[my_controller.active_drains]", src, alpha = DISPLAY_PIXEL_ALPHA)
+		return_overlays += power_usage
+		return_overlays += power_usage_e
+
+	return return_overlays
+
 /obj/bitrunning/animatronic_controller
 	name = "Animatronic Controller"
 	desc = "If you can see this, file a bug report."
@@ -195,10 +301,13 @@
 	var/six_minute_timer
 	var/power_drain_timer
 	var/every_minute_timer
+	var/active_drains = 0
 	var/obj/machinery/door/poddoor/left_door
 	var/obj/machinery/door/poddoor/right_door
 	var/obj/machinery/light/small/dim/left_light
 	var/obj/machinery/light/small/dim/right_light
+	var/obj/machinery/digital_clock/bitrunner/my_clock
+	var/obj/machinery/digital_clock/bitrunner_power/my_power
 
 /obj/bitrunning/animatronic_controller/proc/start_night()
 	power_left = 100
@@ -213,6 +322,10 @@
 	right_door.open(TRUE)
 	left_light.set_on(FALSE)
 	right_light.set_on(FALSE)
+	my_clock.set_light(0)
+	my_clock.update_icon()
+	my_power.set_light(0)
+	my_power.update_icon()
 	for(var/obj/bitrunning/animatronic/robot in animatronics)
 		robot.forceMove(get_turf(robot.starting_node))
 		robot.setDir(robot.starting_node.dir)
@@ -235,6 +348,7 @@
 			ai_levels[/obj/bitrunning/animatronic/janitor] += 1
 			ai_levels[/obj/bitrunning/animatronic/engineering] += 1
 			ai_levels[/obj/bitrunning/animatronic/security] += 1
+	my_clock.update_icon()
 
 /obj/bitrunning/animatronic_controller/proc/movement_tick()
 	for(var/obj/bitrunning/animatronic/robot in animatronics)
@@ -242,9 +356,7 @@
 		if(ai_levels[robot.type] >= movement_roll)
 			if(!robot.can_move(src))
 				continue
-			to_chat(world, robot.current_node.node_id)
 			var/chosen_node = pick(robot.current_node.possible_movement_nodes)
-			to_chat(world, "[chosen_node] CHOSEN TARGET")
 			var/obj/bitrunning/animatronic_movement_node/next_node = pathfinding_nodes[chosen_node]
 			var/blocked = FALSE
 			if(next_node.kill_node)
@@ -264,20 +376,27 @@
 
 /obj/bitrunning/animatronic_controller/proc/drain_power()
 	power_left--
+	active_drains = 0
 	if(power_left <= 0)
 		power_outage()
 		return
 	var/default_timer = 9.6 SECONDS
 	if(left_door.density)
 		default_timer *= 0.5
+		active_drains++
 	if(right_door.density)
 		default_timer *= 0.5
+		active_drains++
 	if(length(camera_console.concurrent_users))
 		default_timer *= 0.5
+		active_drains++
 	if(left_light.on)
 		default_timer *= 0.5
+		active_drains++
 	if(right_light.on)
 		default_timer *= 0.5
+		active_drains++
+	my_power.update_icon()
 	deltimer(power_drain_timer)
 	power_drain_timer = addtimer(CALLBACK(src, PROC_REF(drain_power)), default_timer, TIMER_STOPPABLE | TIMER_DELETE_ME)
 
@@ -292,6 +411,8 @@
 	right_door.open(TRUE)
 	left_light.set_on(FALSE)
 	right_light.set_on(FALSE)
+	my_clock.update_icon()
+	my_power.update_icon()
 
 /obj/bitrunning/animatronic_controller/proc/victory()
 	deltimer(movement_process_timer)
@@ -299,6 +420,8 @@
 	deltimer(power_drain_timer)
 	deltimer(every_minute_timer)
 	SStgui.close_uis(camera_console)
+	minutes_passed = 6
+	my_clock.update_icon() // show me that 6 AM
 	playsound(src, 'sound/misc/announce.ogg', 100, FALSE)
 	our_phone.say("Congratulations on making it through the night! Here's your nightly bonus.")
 	new /obj/structure/closet/crate/secure/bitrunning/encrypted(get_turf(src))
@@ -369,7 +492,7 @@
 
 /obj/bitrunning/animatronic/security/can_move(obj/bitrunning/animatronic_controller/animatronic_controller_used)
 	if(current_node.node_id != "stage3_security") // still on stage, we can camera stall him
-		if(length(animatronic_controller_used.camera_console.concurrent_users) && animatronic_controller_used.camera_console.active_camera.c_tag == "Security Cove")
+		if(length(animatronic_controller_used.camera_console.concurrent_users) && animatronic_controller_used.camera_console.active_camera && animatronic_controller_used.camera_console.active_camera.c_tag == "Security Cove")
 			return FALSE // keeping an eye on the Security Cyborg keeps him contained, unless he's already escaped
 	return TRUE
 
@@ -377,6 +500,10 @@
 	if(blocked)
 		animatronic_controller_used.power_left -= 1 + (animatronic_controller_used.security_attacks * 5)
 		animatronic_controller_used.security_attacks++
+		if(animatronic_controller_used.power_left <= 0)
+			animatronic_controller_used.power_left = 0
+			animatronic_controller_used.power_outage()
+		animatronic_controller_used.my_power.update_icon()
 		playsound(animatronic_controller_used.left_door, 'sound/items/gas_tank_drop.ogg', 125, FALSE)
 
 /obj/bitrunning/animatronic_movement_node

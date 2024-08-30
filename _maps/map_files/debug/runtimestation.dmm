@@ -1199,6 +1199,10 @@
 /obj/structure/cable,
 /turf/open/floor/iron,
 /area/station/engineering/main)
+"mA" = (
+/obj/machinery/netpod/prisoner,
+/turf/open/floor/plating,
+/area/station/construction)
 "mC" = (
 /turf/open/floor/iron/dark,
 /area/station/medical/medbay)
@@ -1305,6 +1309,10 @@
 	},
 /turf/open/floor/iron,
 /area/station/cargo/storage)
+"pV" = (
+/obj/machinery/byteforge,
+/turf/open/floor/plating,
+/area/station/construction)
 "pZ" = (
 /obj/machinery/light/directional/north,
 /obj/machinery/camera/directional/north,
@@ -1630,6 +1638,10 @@
 /obj/structure/cable,
 /turf/open/floor/iron,
 /area/station/cargo/miningoffice)
+"yk" = (
+/obj/structure/chair/stool,
+/turf/open/floor/plating,
+/area/station/construction)
 "yl" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
 	dir = 4
@@ -2008,6 +2020,12 @@
 /obj/structure/cable,
 /turf/open/floor/iron,
 /area/station/commons/storage/primary)
+"Hr" = (
+/obj/machinery/quantum_server/prisoner{
+	bitrunning_id = "torment_nexus"
+	},
+/turf/open/floor/plating,
+/area/station/construction)
 "Ht" = (
 /obj/effect/turf_decal/stripes/line,
 /obj/structure/transit_tube/horizontal,
@@ -2102,6 +2120,12 @@
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron/dark,
 /area/station/engineering/gravity_generator)
+"Jv" = (
+/obj/machinery/computer/quantum_console{
+	bitrunning_id = "torment_nexus"
+	},
+/turf/open/floor/plating,
+/area/station/construction)
 "Jw" = (
 /obj/machinery/light/directional/north,
 /obj/machinery/rnd/production/circuit_imprinter/department,
@@ -6533,7 +6557,7 @@ cY
 dn
 dn
 dn
-dn
+pV
 dn
 dn
 dn
@@ -6625,8 +6649,8 @@ cY
 dn
 dn
 dn
-dn
-dn
+Hr
+mA
 dn
 dn
 dn
@@ -6717,7 +6741,7 @@ cY
 dn
 dn
 dn
-dn
+Jv
 dn
 dn
 dn
@@ -6990,7 +7014,7 @@ QV
 bE
 cy
 cY
-dn
+yk
 dn
 dn
 dn

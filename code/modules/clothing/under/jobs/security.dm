@@ -243,6 +243,17 @@
 	sensor_mode = SENSOR_COORDS
 	random_sensor = FALSE
 
+/obj/item/clothing/under/rank/purple_guy
+	name = "purple night guard uniform"
+	desc = "Perfect for sitting in an office, all alone, in the middle of the night, with nobody but cyborgs nearby."
+	icon_state = "purple_guy"
+	worn_icon_state = "purple_guy"
+	icon = 'icons/obj/clothing/under/security.dmi'
+	worn_icon = 'icons/mob/clothing/under/security.dmi'
+	has_sensor = LOCKED_SENSORS
+	sensor_mode = SENSOR_COORDS
+	random_sensor = FALSE
+
 /obj/item/clothing/under/rank/prisoner/nosensor
 	desc = "Standardised Nanotrasen prisoner-wear. Its suit sensors are stuck in the \"OFF\" position."
 	has_sensor = NO_SENSORS
