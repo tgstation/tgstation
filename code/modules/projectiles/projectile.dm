@@ -296,7 +296,7 @@
 		hitx = target.pixel_x + rand(-8, 8)
 		hity = target.pixel_y + rand(-8, 8)
 
-	if(isturf(target) && hitsound_wall)
+	if(isturf(target_turf) && hitsound_wall)
 		var/volume = clamp(vol_by_damage() + 20, 0, 100)
 		if(suppressed)
 			volume = 5
@@ -1048,7 +1048,7 @@
 
 	var/tx = (text2num(screen_loc_X[1]) - 1) * world.icon_size + text2num(screen_loc_X[2])
 	// We are here trying to lower our target location by the firing source's visual offset
-	// So visually things make a nice straight line while properly accounting for actual physical position
+	// So visually things make a nice straight line while properly accounting for actual physical position 
 	var/ty = (text2num(screen_loc_Y[1]) - 1) * world.icon_size + text2num(screen_loc_Y[2]) - source.pixel_z
 
 	//Calculate the "resolution" of screen based on client's view and world's icon size. This will work if the user can view more tiles than average.
