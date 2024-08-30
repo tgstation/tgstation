@@ -81,7 +81,7 @@
 	for(var/obj/item/boulder/potential_boulder in contents)
 		boulder_count += 1
 	. += span_notice("Storage capacity = <b>[boulder_count]/[boulders_held_max] boulders</b>.")
-	. += span_notice("Can process upto <b>[boulders_processing_count] boulders</b> at a time.")
+	. += span_notice("Can process up to <b>[boulders_processing_count] boulders</b> at a time.")
 
 	if(anchored)
 		. += span_notice("Its [EXAMINE_HINT("anchored")] in place.")
@@ -127,7 +127,7 @@
 	if(!istype(new_boulder) || QDELETED(new_boulder))
 		return FALSE
 
-	//someone just processed this
+	//someone is still processing this
 	if(new_boulder.processed_by)
 		return FALSE
 
@@ -149,7 +149,6 @@
  */
 /obj/machinery/bouldertech/proc/accept_boulder(obj/item/boulder/new_boulder)
 	PRIVATE_PROC(TRUE)
-
 	if(!can_process_boulder(new_boulder))
 		return FALSE
 
@@ -257,8 +256,6 @@
 		return ITEM_INTERACT_SUCCESS
 
 	if(istype(tool, /obj/item/card/id))
-		if(machine_stat & NOPOWER)
-			return ITEM_INTERACT_BLOCKING
 		if(points_held <= 0)
 			balloon_alert_to_viewers("no points to claim!")
 			if(!COOLDOWN_FINISHED(src, sound_cooldown))
@@ -410,9 +407,12 @@
 		return TRUE
 	if(locate(/obj/item/boulder) in loc) //There is an boulder in our loc. it has be removed so we don't clog up our loc with even more boulders
 		return FALSE
+	if(!length(specific_boulder.custom_materials))
+		specific_boulder.break_apart()
+		return TRUE
 
 	//Reset durability to little random lower value cause we have crushed it so many times
-	var/size = specific_boulder.boulder_size
+	var/size = specific_boulder::boulder_size
 	if(size == BOULDER_SIZE_SMALL)
 		specific_boulder.durability = rand(2, BOULDER_SIZE_SMALL - 1)
 	else

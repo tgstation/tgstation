@@ -25,6 +25,10 @@
 	artifact_inside = null
 	return ..()
 
+/obj/item/boulder/artifact/update_icon_state()
+	. = ..()
+	icon_state = "boulder_artifact" // Hardset to artifact sprites for consistency
+
 ///Boulders usually spawned in lavaland labour camp area
 /obj/item/boulder/gulag
 	name = "low-quality boulder"
