@@ -20,7 +20,7 @@
 
 /obj/item/clothing/glasses/sunglasses/spy/proc/on_screen_clear(client/source, window)
 	SIGNAL_HANDLER
-	linked_bug.cam_screen.hide_from_client(source)
+	linked_bug.cam_screen.hide_from(source.mob)
 
 /obj/item/clothing/glasses/sunglasses/spy/equipped(mob/user, slot)
 	. = ..()
