@@ -81,7 +81,8 @@ WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/machinery/light/very_dim)
 
 /area/centcom/heretic_sacrifice/Initialize(mapload)
 	if(!ambientsounds)
-		ambientsounds = GLOB.ambience_assoc[ambience_index] + 'sound/ambience/ambiatm1.ogg'
+		ambientsounds = GLOB.ambience_assoc[ambience_index]
+		ambientsounds += 'sound/ambience/ambiatm1.ogg'
 	return ..()
 
 /area/centcom/heretic_sacrifice/ash //also, the default
