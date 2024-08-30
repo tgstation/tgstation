@@ -393,9 +393,9 @@
 		if(11)
 			//Cookie
 			selected_turf.visible_message(span_userdanger("A cookie appears out of thin air!"))
-			var/obj/item/food/cookie/C = new(drop_location())
+			var/obj/item/food/cookie/ooh_a_cookie = new(drop_location())
 			do_smoke(0, holder = src, location = drop_location())
-			C.name = "Cookie of Fate"
+			ooh_a_cookie.name = "Cookie of Fate"
 		if(12)
 			//Healing
 			selected_turf.visible_message(span_userdanger("[user] looks very healthy!"))
