@@ -45,7 +45,6 @@
 		/obj/item/food/grown/onion = 1,
 		/datum/reagent/consumable/sugar = 3,
 		/datum/reagent/consumable/limejuice = 3,
-		/obj/item/reagent_containers/cup/bowl = 1,
 	)
 	result = /obj/item/food/sambal
 	category = CAT_MARTIAN
@@ -79,7 +78,6 @@
 		/obj/item/food/meat/cutlet = 1,
 		/obj/item/food/pineappleslice = 1,
 		/datum/reagent/consumable/soysauce = 3,
-		/obj/item/reagent_containers/cup/bowl = 1,
 	)
 	result = /obj/item/food/salad/hurricane_rice
 	category = CAT_MARTIAN
@@ -93,7 +91,6 @@
 		/obj/item/food/onion_slice = 1,
 		/obj/item/food/sausage = 1,
 		/obj/item/food/grown/chili = 1,
-		/obj/item/reagent_containers/cup/bowl = 1,
 	)
 	result = /obj/item/food/salad/ikareis
 	category = CAT_MARTIAN
@@ -106,8 +103,7 @@
 		/obj/item/food/grown/bell_pepper = 1,
 		/obj/item/food/pineappleslice = 1,
 		/obj/item/food/onion_slice = 1,
-		/datum/reagent/consumable/soysauce = 5,
-		/obj/item/reagent_containers/cup/bowl = 1,
+		/datum/reagent/consumable/soysauce = 5
 	)
 	result = /obj/item/food/salad/hawaiian_fried_rice
 	category = CAT_MARTIAN
@@ -122,7 +118,6 @@
 		/obj/item/food/grown/peas = 1,
 		/datum/reagent/consumable/ketchup = 5,
 		/datum/reagent/consumable/worcestershire = 2,
-		/obj/item/reagent_containers/cup/bowl = 1,
 	)
 	result = /obj/item/food/salad/ketchup_fried_rice
 	category = CAT_MARTIAN
@@ -136,7 +131,6 @@
 		/obj/item/food/cheese/firm_cheese_slice = 1,
 		/obj/item/food/grown/olive = 1,
 		/obj/item/food/meatball = 1,
-		/obj/item/reagent_containers/cup/bowl = 1,
 	)
 	result = /obj/item/food/salad/mediterranean_fried_rice
 	category = CAT_MARTIAN
@@ -147,7 +141,6 @@
 		/obj/item/food/boiledrice = 1,
 		/obj/item/food/egg = 1,
 		/datum/reagent/consumable/soysauce = 3,
-		/obj/item/reagent_containers/cup/bowl = 1,
 	)
 	result = /obj/item/food/salad/egg_fried_rice
 	category = CAT_MARTIAN
@@ -161,7 +154,6 @@
 		/obj/item/food/meat/cutlet = 1,
 		/obj/item/food/kimchi = 1,
 		/obj/item/food/egg = 1,
-		/obj/item/reagent_containers/cup/bowl = 1,
 	)
 	result = /obj/item/food/salad/bibimbap
 	category = CAT_MARTIAN
@@ -175,7 +167,6 @@
 		/obj/item/food/grown/garlic = 1,
 		/obj/item/food/onion_slice = 1,
 		/datum/reagent/consumable/nutriment/soup/teriyaki = 4,
-		/obj/item/reagent_containers/cup/bowl = 1,
 	)
 	result = /obj/item/food/salad/bulgogi_noodles
 	category = CAT_MARTIAN
@@ -189,7 +180,6 @@
 		/obj/item/food/onion_slice = 1,
 		/obj/item/food/katsu_fillet = 1,
 		/datum/reagent/consumable/worcestershire = 3,
-		/obj/item/reagent_containers/cup/bowl = 1,
 	)
 	result = /obj/item/food/salad/yakisoba_katsu
 	category = CAT_MARTIAN
@@ -204,7 +194,6 @@
 		/obj/item/food/egg = 1,
 		/datum/reagent/consumable/soysauce = 3,
 		/datum/reagent/consumable/red_bay = 3,
-		/obj/item/reagent_containers/cup/bowl = 1,
 	)
 	result = /obj/item/food/salad/martian_fried_noodles
 	category = CAT_MARTIAN
@@ -214,7 +203,6 @@
 	reqs = list(
 		/obj/item/food/spaghetti/boilednoodles = 1,
 		/datum/reagent/consumable/soysauce = 3,
-		/obj/item/reagent_containers/cup/bowl = 1,
 	)
 	result = /obj/item/food/salad/simple_fried_noodles
 	category = CAT_MARTIAN
@@ -234,7 +222,6 @@
 		/obj/item/food/grown/onion = 1,
 		/obj/item/food/grown/carrot = 1,
 		/obj/item/food/grown/potato = 1,
-		/obj/item/reagent_containers/cup/bowl = 1,
 	)
 	result = /obj/item/food/salad/setagaya_curry
 	category = CAT_MARTIAN
@@ -558,7 +545,6 @@
 		/obj/item/food/meat/slab/chicken = 1,
 		/datum/reagent/consumable/coconut_milk = 5,
 		/datum/reagent/consumable/curry_powder = 3,
-		/obj/item/reagent_containers/cup/bowl = 1,
 	)
 	result = /obj/item/food/salad/po_kok_gai
 	category = CAT_MARTIAN
@@ -593,7 +579,6 @@
 		/obj/item/food/grown/tomato = 1,
 		/obj/item/food/uncooked_rice = 1,
 		/datum/reagent/blood = 5,
-		/obj/item/reagent_containers/cup/bowl = 1,
 	)
 	result = /obj/item/food/salad/galinha_de_cabidela
 	category = CAT_MARTIAN
@@ -604,7 +589,6 @@
 		/obj/item/food/katsu_fillet = 1,
 		/obj/item/food/boiledrice = 1,
 		/datum/reagent/consumable/nutriment/soup/curry_sauce = 5,
-		/obj/item/reagent_containers/cup/bowl = 1,
 	)
 	result = /obj/item/food/salad/katsu_curry
 	category = CAT_MARTIAN
@@ -616,7 +600,6 @@
 		/obj/item/food/onion_slice = 1,
 		/obj/item/food/boiledrice = 1,
 		/datum/reagent/consumable/nutriment/soup/dashi = 5,
-		/obj/item/reagent_containers/cup/bowl = 1,
 	)
 	result = /obj/item/food/salad/beef_bowl
 	category = CAT_MARTIAN
@@ -630,7 +613,6 @@
 		/obj/item/food/boiledrice = 1,
 		/datum/reagent/consumable/salt = 2,
 		/datum/reagent/consumable/nutriment/soup/curry_sauce = 5,
-		/obj/item/reagent_containers/cup/bowl = 1,
 	)
 	result = /obj/item/food/salad/salt_chilli_bowl
 	category = CAT_MARTIAN
@@ -643,7 +625,6 @@
 		/obj/item/food/grown/onion = 1,
 		/obj/item/food/boiledrice = 1,
 		/datum/reagent/consumable/nutriment/soup/dashi = 5,
-		/obj/item/reagent_containers/cup/bowl = 1,
 	)
 	result = /obj/item/food/salad/kansai_bowl
 	category = CAT_MARTIAN
@@ -656,7 +637,6 @@
 		/obj/item/food/fishmeat = 1,
 		/obj/item/food/boiledrice = 1,
 		/datum/reagent/consumable/cafe_latte = 5,
-		/obj/item/reagent_containers/cup/bowl = 1,
 	)
 	result = /obj/item/food/salad/eigamudo_curry
 	category = CAT_MARTIAN
@@ -701,7 +681,6 @@
 		/datum/reagent/consumable/caramel = 2,
 		/obj/item/food/icecream = 1,
 		/datum/reagent/consumable/ethanol/rum = 2,
-		/obj/item/reagent_containers/cup/bowl = 1,
 	)
 	result = /obj/item/food/salad/pineapple_foster
 	category = CAT_MARTIAN
@@ -869,7 +848,6 @@
 		/obj/item/food/fishmeat = 1,
 		/obj/item/food/boiledrice = 1,
 		/datum/reagent/consumable/nutriment/soup/dashi = 5,
-		/obj/item/reagent_containers/cup/bowl = 1,
 	)
 	result = /obj/item/food/salad/sprout_bowl
 	category = CAT_MARTIAN
