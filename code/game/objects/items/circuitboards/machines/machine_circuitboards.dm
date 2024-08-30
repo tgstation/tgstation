@@ -1286,15 +1286,6 @@
 		/obj/item/stack/sheet/glass = 1)
 	needs_anchored = FALSE
 
-/obj/item/circuitboard/machine/hydroponics/fullupgrade
-	build_path = /obj/machinery/hydroponics/constructable/fullupgrade
-	specific_parts = TRUE
-	req_components = list(
-		/datum/stock_part/matter_bin/tier4 = 2,
-		/datum/stock_part/servo/tier4 = 1,
-		/obj/item/stack/sheet/glass = 1
-	)
-
 /obj/item/circuitboard/machine/microwave
 	name = "Microwave"
 	greyscale_colors = CIRCUIT_COLOR_SERVICE
