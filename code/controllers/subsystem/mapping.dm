@@ -184,20 +184,17 @@ SUBSYSTEM_DEF(mapping)
 				if(index)
 					lists_to_reserve.Cut(1, index)
 				return
-			var/turf/reserving_turf = packet[packetlen]
-			reserving_turf.empty(RESERVED_TURF_TYPE, RESERVED_TURF_TYPE, null, TRUE)
-			LAZYINITLIST(unused_turfs["[reserving_turf.z]"])
-			unused_turfs["[reserving_turf.z]"] |= reserving_turf
-			var/area/old_area = reserving_turf.loc
-			LISTASSERTLEN(old_area.turfs_to_uncontain_by_zlevel, reserving_turf.z, list())
-			old_area.turfs_to_uncontain_by_zlevel[reserving_turf.z] += reserving_turf
-			reserving_turf.turf_flags = UNUSED_RESERVATION_TURF
-			// reservation turfs are not allowed to interact with atmos at all
-			reserving_turf.blocks_air = TRUE
-
-			world_contents += reserving_turf
-			LISTASSERTLEN(world_turf_contents_by_z, reserving_turf.z, list())
-			world_turf_contents_by_z[reserving_turf.z] += reserving_turf
+			var/turf/T = packet[packetlen]
+			T.empty(RESERVED_TURF_TYPE, RESERVED_TURF_TYPE, null, TRUE)
+			LAZYINITLIST(unused_turfs["[T.z]"])
+			unused_turfs["[T.z]"] |= T
+			var/area/old_area = T.loc
+			LISTASSERTLEN(old_area.turfs_to_uncontain_by_zlevel, T.z, list())
+			old_area.turfs_to_uncontain_by_zlevel[T.z] += T
+			T.turf_flags = UNUSED_RESERVATION_TURF
+			world_contents += T
+			LISTASSERTLEN(world_turf_contents_by_z, T.z, list())
+			world_turf_contents_by_z[T.z] += T
 			packet.len--
 			packetlen = length(packet)
 
@@ -734,7 +731,6 @@ ADMIN_VERB(load_away_mission, R_FUN, "Load Away Mission", "Load a specific away 
 	for(var/turf/T as anything in block)
 		// No need to empty() these, because they just got created and are already /turf/open/space/basic.
 		T.turf_flags = UNUSED_RESERVATION_TURF
-		T.blocks_air = TRUE
 		CHECK_TICK
 
 	// Gotta create these suckers if we've not done so already
