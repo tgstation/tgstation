@@ -72,11 +72,9 @@
 	cooldown_time = 3 SECONDS
 
 /obj/item/mod/module/stealth/ninja/on_activation()
-	. = ..()
 	ADD_TRAIT(mod.wearer, TRAIT_SILENT_FOOTSTEPS, MOD_TRAIT)
 
 /obj/item/mod/module/stealth/ninja/on_deactivation(display_message = TRUE, deleting = FALSE)
-	. = ..()
 	REMOVE_TRAIT(mod.wearer, TRAIT_SILENT_FOOTSTEPS, MOD_TRAIT)
 
 ///Camera Vision - Prevents flashes, blocks tracking.
