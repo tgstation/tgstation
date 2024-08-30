@@ -155,15 +155,12 @@
 	embed_falloff_tile = -3
 	shrapnel_type = /obj/item/ammo_casing/rebar/hydrogen
 
+/obj/projectile/bullet/rebar/hydrogen/Initialize(mapload)
+	. = ..()
+	ADD_TRAIT(src, TRAIT_ALWAYS_HIT_ZONE, REF(src))
+
 /datum/embed_data/rebar_hydrogen
 	embed_chance = 0
-	fall_chance = 2
-	jostle_chance = 3
-	ignore_throwspeed_threshold = TRUE
-	pain_stam_pct = 0.6
-	pain_mult = 4
-	jostle_pain_mult = 2
-	rip_time =18
 
 /obj/projectile/bullet/rebar/hydrogen/on_hit(atom/target, blocked, pierce_hit)
 	if(isAI(target))
