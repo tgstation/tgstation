@@ -18,6 +18,8 @@
 	heat_capacity = 10000
 	tiled_dirt = TRUE
 
+	max_fire_temperature_sustained = 20000
+
 
 	overfloor_placed = TRUE
 	damaged_dmi = 'icons/turf/damaged.dmi'
