@@ -31,11 +31,11 @@
 /datum/ai_planning_subtree/find_and_hunt_target/find_slime_food/SelectBehaviors(datum/ai_controller/controller, seconds_per_tick)
 	var/mob/living/living_pawn = controller.pawn
 	if(living_pawn.buckled)
-		return FALSE
+		return
 
 	//Slimes don't want to hunt if they are neither rabid, hungry or feeling attack right now
 	if( (controller.blackboard[BB_SLIME_HUNGER_LEVEL] == SLIME_HUNGER_NONE) && !controller.blackboard[BB_SLIME_RABID] && isnull(controller.blackboard[BB_BASIC_MOB_CURRENT_TARGET]))
-		return FALSE
+		return
 
 	return ..()
 

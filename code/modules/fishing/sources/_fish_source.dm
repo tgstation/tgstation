@@ -18,6 +18,7 @@ GLOBAL_LIST_INIT(specific_fish_icons, generate_specific_fish_icons())
 		/mob/living/basic/mining = FISH_ICON_HOSTILE,
 		/obj/effect/decal/remains = FISH_ICON_BONE,
 		/obj/effect/mob_spawn/corpse = FISH_ICON_BONE,
+		/obj/effect/spawner/message_in_a_bottle = FISH_ICON_BOTTLE,
 		/obj/item/coin = FISH_ICON_COIN,
 		/obj/item/fish = FISH_ICON_DEF,
 		/obj/item/fish/armorfish = FISH_ICON_CRAB,
@@ -46,6 +47,7 @@ GLOBAL_LIST_INIT(specific_fish_icons, generate_specific_fish_icons())
 		/obj/item/stack/sheet/mineral = FISH_ICON_GEM,
 		/obj/item/stack/ore = FISH_ICON_GEM,
 		/obj/structure/closet/crate = FISH_ICON_COIN,
+		/obj/structure/mystery_box = FISH_ICON_COIN,
 	))
 
 	return_list[FISHING_RANDOM_SEED] = FISH_ICON_SEED
@@ -97,8 +99,11 @@ GLOBAL_LIST_INIT(specific_fish_icons, generate_specific_fish_icons())
 	return ..()
 
 ///Called when src is set as the fish source of a fishing spot component
-/datum/fish_source/proc/on_fishing_spot_init(/datum/component/fishing_spot/spot)
+/datum/fish_source/proc/on_fishing_spot_init(datum/component/fishing_spot/spot)
 	return
+
+///Called whenever a fishing spot with this fish source attached is deleted
+/datum/fish_source/proc/on_fishing_spot_del(datum/component/fishing_spot/spot)
 
 /// Can we fish in this spot at all. Returns DENIAL_REASON or null if we're good to go
 /datum/fish_source/proc/reason_we_cant_fish(obj/item/fishing_rod/rod, mob/fisherman, atom/parent)
