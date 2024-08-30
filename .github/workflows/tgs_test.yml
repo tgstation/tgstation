@@ -18,8 +18,8 @@ on:
     - 'tools/tgs_test/**'
   pull_request:
     branches:
-    - master
     - 'project/**'
+    - 1989-11-09
     paths:
     - '.tgs.yml'
     - '.github/workflows/tgs_test.yml'
