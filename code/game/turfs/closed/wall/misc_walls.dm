@@ -99,13 +99,6 @@
 	smoothing_groups = null
 	use_splitvis = FALSE
 
-/turf/closed/wall/fake_hierophant
-	name = "vibrant wall"
-	desc = "A wall made out of a strange metal. The squares on it pulse in a predictable pattern."
-	icon = 'icons/turf/walls/hierophant_wall.dmi'
-	smoothing_groups = SMOOTH_GROUP_HIERO_WALL + SMOOTH_GROUP_TALL_WALLS
-	canSmoothWith = SMOOTH_GROUP_HIERO_WALL
-
 /turf/closed/wall/material/meat
 	name = "living wall"
 	baseturfs = /turf/open/floor/material/meat
