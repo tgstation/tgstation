@@ -1,7 +1,7 @@
 /obj/structure/fireaxecabinet
 	name = "fire axe cabinet"
 	desc = "There is a small label that reads \"For Emergency use only\" along with details for safe use of the axe. As if."
-	icon = 'icons/obj/structures/cabinet.dmi'
+	icon = 'icons/obj/extinguisher.dmi'
 	icon_state = "fireaxe"
 	anchored = TRUE
 	density = FALSE
@@ -214,7 +214,7 @@ WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/structure/fireaxecabinet/empty)
 /obj/item/wallframe/fireaxecabinet
 	name = "fire axe cabinet"
 	desc = "Home to a window's greatest nightmare. Apply to wall to use."
-	icon = 'icons/obj/structures/cabinet.dmi'
+	icon = 'icons/obj/extinguisher.dmi'
 	icon_state = "fireaxe"
 	result_path = /obj/structure/fireaxecabinet/empty
 

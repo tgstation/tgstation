@@ -1,7 +1,7 @@
 /obj/structure/chair/pew
 	name = "wooden pew"
 	desc = "Kneel here and pray."
-	icon = 'icons/obj/structures/chairs_wide.dmi'
+	icon = 'icons/obj/chairs_wide.dmi'
 	icon_state = "pewmiddle"
 	resistance_flags = FLAMMABLE
 	max_integrity = 70
@@ -28,7 +28,7 @@
 	update_leftpewarmrest()
 
 /obj/structure/chair/pew/left/proc/GetLeftPewArmrest()
-	return mutable_appearance('icons/obj/structures/chairs_wide.dmi', "pewend_left_armrest")
+	return mutable_appearance('icons/obj/chairs_wide.dmi', "pewend_left_armrest")
 
 /obj/structure/chair/pew/left/Destroy()
 	QDEL_NULL(leftpewarmrest)
@@ -63,7 +63,7 @@
 	update_rightpewarmrest()
 
 /obj/structure/chair/pew/right/proc/GetRightPewArmrest()
-	return mutable_appearance('icons/obj/structures/chairs_wide.dmi', "pewend_right_armrest")
+	return mutable_appearance('icons/obj/chairs_wide.dmi', "pewend_right_armrest")
 
 /obj/structure/chair/pew/right/Destroy()
 	QDEL_NULL(rightpewarmrest)
