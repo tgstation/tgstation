@@ -98,7 +98,6 @@
 		"borg_upgrade_broomer",
 		"borg_upgrade_expand",
 		"borg_upgrade_prt",
-		"borg_upgrade_plunger",
 		"borg_upgrade_selfrepair",
 		"borg_upgrade_thrusters",
 		"borg_upgrade_trashofholding",
