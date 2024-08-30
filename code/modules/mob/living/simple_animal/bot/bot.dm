@@ -378,9 +378,9 @@
 
 	if(HAS_TRAIT(src, TRAIT_COMMISSIONED) && COOLDOWN_FINISHED(src, next_salute_check))
 		COOLDOWN_START(src, next_salute_check, BOT_COMMISSIONED_SALUTE_DELAY)
-		for(var/mob/living/simple_animal/bot/nearby_bot in view(5, src))
-			if(!HAS_TRAIT(nearby_bot, TRAIT_COMMISSIONED) && nearby_bot.bot_mode_flags & BOT_MODE_ON)
-				manual_emote("performs an elaborate salute for [nearby_bot]!")
+		for(var/mob/living/simple_animal/bot/B in view(5, src))
+			if(!HAS_TRAIT(B, TRAIT_COMMISSIONED) && B.bot_mode_flags & BOT_MODE_ON)
+				manual_emote("performs an elaborate salute for [src]!")
 				break
 
 	switch(mode) //High-priority overrides are processed first. Bots can do nothing else while under direct command.
