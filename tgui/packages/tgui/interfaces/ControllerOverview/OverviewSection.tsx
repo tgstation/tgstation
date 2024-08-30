@@ -4,18 +4,12 @@ import { ControllerData } from './types';
 
 export function OverviewSection(props) {
   const { act, data } = useBackend<ControllerData>();
-  const {
-    fast_update,
-    rolling_length,
-    map_cpu,
-    subsystems = [],
-    world_time,
-  } = data;
+  const { fast_update, map_cpu, subsystems = [], world_time } = data;
 
-  let avgUsage = 0;
+  let overallUsage = 0;
   let overallOverrun = 0;
   for (let i = 0; i < subsystems.length; i++) {
-    avgUsage += subsystems[i].usage_per_tick;
+    overallUsage += subsystems[i].tick_usage;
     overallOverrun += subsystems[i].tick_overrun;
   }
 
@@ -24,28 +18,16 @@ export function OverviewSection(props) {
       fill
       title="Master Overview"
       buttons={
-        <>
-          <Button
-            tooltip="Fast Update"
-            icon={fast_update ? 'check-square-o' : 'square-o'}
-            color={fast_update && 'average'}
-            onClick={() => {
-              act('toggle_fast_update');
-            }}
-          >
-            Fast
-          </Button>
-          <Button.Input
-            currentValue={(rolling_length / 10).toString()}
-            onCommit={(e, value) => {
-              act('set_rolling_length', {
-                rolling_length: value,
-              });
-            }}
-          >
-            Average: {rolling_length / 10} Second(s)
-          </Button.Input>
-        </>
+        <Button
+          tooltip="Fast Update"
+          icon={fast_update ? 'check-square-o' : 'square-o'}
+          color={fast_update && 'average'}
+          onClick={() => {
+            act('toggle_fast_update');
+          }}
+        >
+          Fast
+        </Button>
       }
     >
       <Stack fill>
@@ -61,11 +43,11 @@ export function OverviewSection(props) {
         </Stack.Item>
         <Stack.Item grow>
           <LabeledList>
-            <LabeledList.Item label="Overall Avg Usage">
-              {avgUsage.toFixed(2)}%
+            <LabeledList.Item label="Overall Usage">
+              {(overallUsage * 0.01).toFixed(2)}%
             </LabeledList.Item>
             <LabeledList.Item label="Overall Overrun">
-              {overallOverrun.toFixed(2)}%
+              {(overallOverrun * 0.01).toFixed(2)}%
             </LabeledList.Item>
           </LabeledList>
         </Stack.Item>
