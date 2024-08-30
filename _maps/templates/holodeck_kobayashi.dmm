@@ -3,6 +3,18 @@
 /turf/open/floor/holofloor/plating,
 /area/template_noop)
 "c" = (
+/obj/machinery/button/massdriver/indestructible{
+	id = "trektorpedo1";
+	name = "photon torpedo button";
+	pixel_x = -16;
+	pixel_y = -5
+	},
+/obj/machinery/button/massdriver/indestructible{
+	id = "trektorpedo2";
+	name = "photon torpedo button";
+	pixel_x = 16;
+	pixel_y = -5
+	},
 /obj/machinery/computer/arcade/orion_trail/kobayashi,
 /turf/open/floor/holofloor/plating,
 /area/template_noop)
@@ -29,7 +41,7 @@
 /turf/open/floor/holofloor/plating,
 /area/template_noop)
 "l" = (
-/obj/structure/window/reinforced/half/directional/south,
+/obj/structure/window/reinforced/spawner/directional/south,
 /obj/machinery/computer/station_alert{
 	dir = 4
 	},
@@ -63,29 +75,15 @@
 /area/template_noop)
 "t" = (
 /obj/structure/table/glass,
-/obj/item/gun/energy/e_gun/mini/practice_phaser{
-	pixel_y = 8
-	},
+/obj/item/gun/energy/e_gun/mini/practice_phaser,
 /obj/structure/window/reinforced/spawner/directional/west,
-/obj/machinery/recharger{
-	pixel_y = 8
-	},
-/obj/machinery/button/massdriver/indestructible/table{
-	pixel_x = 8;
-	pixel_y = 1;
-	id = "trektorpedo1";
-	name = "photon torpedo button"
-	},
+/obj/machinery/recharger,
 /turf/open/floor/holofloor/plating,
 /area/template_noop)
 "w" = (
 /obj/structure/table,
-/obj/item/folder{
-	pixel_y = 8
-	},
-/obj/item/pen/blue{
-	pixel_y = 8
-	},
+/obj/item/folder,
+/obj/item/pen/blue,
 /obj/structure/window/reinforced/spawner/directional/west,
 /obj/effect/turf_decal/tile/neutral/half/contrasted{
 	dir = 1
@@ -104,7 +102,7 @@
 /obj/machinery/computer/atmos_alert{
 	dir = 8
 	},
-/obj/structure/window/reinforced/half/directional/south,
+/obj/structure/window/reinforced/spawner/directional/south,
 /turf/open/floor/holofloor/plating,
 /area/template_noop)
 "A" = (
@@ -150,27 +148,15 @@
 /area/template_noop)
 "L" = (
 /obj/structure/table/glass,
-/obj/item/gun/energy/e_gun/mini/practice_phaser{
-	pixel_y = 8
-	},
+/obj/item/gun/energy/e_gun/mini/practice_phaser,
 /obj/structure/window/reinforced/spawner/directional/east,
-/obj/machinery/button/massdriver/indestructible/table{
-	pixel_x = -8;
-	pixel_y = 1;
-	name = "photon torpedo button";
-	id = "trektorpedo2"
-	},
 /turf/open/floor/holofloor/plating,
 /area/template_noop)
 "Q" = (
 /obj/structure/table,
 /obj/structure/window/reinforced/spawner/directional/east,
-/obj/item/folder{
-	pixel_y = 8
-	},
-/obj/item/pen/red{
-	pixel_y = 8
-	},
+/obj/item/folder,
+/obj/item/pen/red,
 /obj/effect/turf_decal/tile/neutral/half/contrasted{
 	dir = 1
 	},
@@ -210,12 +196,8 @@
 /area/template_noop)
 "Z" = (
 /obj/structure/table,
-/obj/item/folder{
-	pixel_y = 8
-	},
-/obj/item/pen{
-	pixel_y = 8
-	},
+/obj/item/folder,
+/obj/item/pen,
 /obj/effect/turf_decal/tile/neutral/half/contrasted{
 	dir = 1
 	},
