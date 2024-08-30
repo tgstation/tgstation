@@ -32,6 +32,8 @@
 	var/list/icon_states
 	/// Whether sticker is legal and allowed to generate inside non-syndicate boxes.
 	var/contraband = FALSE
+	/// Text added to the atom's examine when stickered.
+	var/examine_text
 
 /obj/item/sticker/Initialize(mapload)
 	. = ..()
@@ -85,7 +87,7 @@
 			user.log_message("stuck [src] to [key_name(victim)]", LOG_ATTACK)
 			victim.log_message("had [src] stuck to them by [key_name(user)]", LOG_ATTACK)
 
-	target.AddComponent(/datum/component/sticker, src, get_dir(target, src), px, py)
+	target.AddComponent(/datum/component/sticker, src, get_dir(target, src), px, py, null, null, examine_text)
 	return TRUE
 
 #undef MAX_STICKER_COUNT
@@ -153,6 +155,7 @@
 	name = "CE approved sticker"
 	icon_state = "ce_approved"
 	contraband = TRUE
+	examine_text = "This is displaying the Chief Engineer's SEAL OF APPROVAL."
 
 /obj/item/sticker/clown
 	name = "clown sticker"
