@@ -121,7 +121,7 @@
 /datum/supply_pack/medical/experimentalmedicine
 	name = "Experimental Medicine Crate"
 	desc = "A crate containing the medication required for living with Hereditary Manifold Sickness, Sansufentanyl."
-	cost = CARGO_CRATE_VALUE * 3
+	cost = CARGO_CRATE_VALUE * 2
 	contains = list(/obj/item/storage/pill_bottle/sansufentanyl = 2)
 	crate_name = "experimental medicine crate"
 	crate_type = /obj/structure/closet/crate/medical
