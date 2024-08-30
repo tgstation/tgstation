@@ -237,12 +237,15 @@ GLOBAL_LIST_INIT(specific_fish_icons, generate_specific_fish_icons())
 	SEND_SIGNAL(src, COMSIG_FISH_SOURCE_REWARD_DISPENSED, reward)
 	return reward
 
-/datum/fish_source/proc/regen_count(reward_path, regen_time)
+/datum/fish_source/proc/regen_count(reward_path)
+	if(!LAZYACCESS(currently_on_regen, reward_path))
+		return
 	fish_counts[reward_path] += 1
 	currently_on_regen[reward_path] -= 1
 	if(!currently_on_regen[reward_path])
 		LAZYREMOVE(currently_on_regen, reward_path)
 	else
+		var/regen_time = fish_count_regen[reward_path]
 		addtimer(CALLBACK(src, PROC_REF(regen_count), reward_path), regen_time)
 
 /// Spawns a reward from a atom path right where the fisherman is. Part of the dispense_reward() logic.
@@ -404,3 +407,22 @@ GLOBAL_LIST(fishing_property_cache)
 			reward.pixel_y = rand(-9, 9)
 		if(severity >= EXPLODE_DEVASTATE)
 			reward.ex_act(EXPLODE_LIGHT)
+
+///Called when releasing a fish in a fishing spot with the TRAIT_CATCH_AND_RELEASE trait.
+/datum/fish_source/proc/readd_fish(obj/item/fish/fish, mob/living/releaser)
+	var/is_morbid = HAS_MIND_TRAIT(releaser, TRAIT_MORBID)
+	var/is_naive = HAS_MIND_TRAIT(releaser, TRAIT_NAIVE)
+	if(fish.status == FISH_DEAD) //ded fish won't repopulate the sea.
+		if(is_naive || is_morbid)
+			releaser.add_mood_event("fish_released", /datum/mood_event/fish_released, is_morbid && !is_naive, fish)
+		return
+	var/fish_in_table = (fish.type in fish_table)
+	if(fish_in_table != is_morbid || is_naive)
+		releaser.add_mood_event("fish_released", /datum/mood_event/fish_released, is_morbid && !is_naive, fish)
+	if(!(fish.type in fish_counts)) //This fish can be caught indefinitely so it won't matter.
+		return
+	//If this fish population isn't recovering from recent losses, we just increase it.
+	if(!LAZYACCESS(currently_on_regen, fish.type))
+		fish_counts[fish.type] += 1
+	else
+		regen_count(fish.type)

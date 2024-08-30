@@ -333,8 +333,27 @@
 
 /datum/mood_event/fishing
 	description = "Fishing is relaxing."
-	mood_change = 5
+	mood_change = 4
 	timeout = 3 MINUTES
+
+/datum/mood_event/fishing/add_effects(pacifist)
+	if(pacifist)
+		description = "Fishing may be relaxing, but it's also animal cruelty..."
+		mood_change -= 2
+
+/datum/mood_event/fish_released
+	description = "Go, fish, swim and be free!"
+	mood_change = 1
+	timeout = 2 MINUTES
+
+/datum/mood_event/fish_released/add_effects(morbid, obj/item/fish/fish)
+	if(!morbid)
+		description = "Go, [fish.name], swim and be free!"
+		return
+	if(fish.status == FISH_DEAD)
+		description = "Releasing dead fish is relaxing."
+	else
+		description = "Go, [fish.name], swim and die soon!"
 
 /datum/mood_event/kobun
 	description = "You are all loved by the Universe. I’m not alone, and you aren’t either."

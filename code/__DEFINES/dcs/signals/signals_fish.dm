@@ -22,6 +22,9 @@
 ///From /obj/item/fish/update_fish_force: (weight_rank, bonus_malus)
 #define COMSIG_FISH_FORCE_UPDATED "fish_force_updated"
 
+///From /obj/item/fish/interact_with_atom_secondary, sent to the target: (fish)
+#define TRAIT_FISH_RELEASED_INTO "fish_released_into"
+
 /// Fishing challenge completed
 #define COMSIG_FISHING_CHALLENGE_COMPLETED "fishing_completed"
 /// Sent to the fisherman when the reward is dispensed: (reward)

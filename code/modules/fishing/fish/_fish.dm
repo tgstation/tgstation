@@ -168,6 +168,32 @@
 		progenitors = full_capitalize(name) //default value
 
 	register_evolutions()
+	register_item_context()
+
+/obj/item/fish/add_context(atom/source, list/context, obj/item/held_item, mob/user)
+	if(HAS_TRAIT(source, TRAIT_CATCH_AND_RELEASE))
+		context[SCREENTIP_CONTEXT_RMB] = "Release"
+		return CONTEXTUAL_SCREENTIP_SET
+	return NONE
+
+/obj/item/fish/interact_with_atom_secondary(atom/interacting_with, mob/living/user, list/modifiers)
+	if(!HAS_TRAIT(interacting_with, TRAIT_CATCH_AND_RELEASE))
+		return
+	if(HAS_TRAIT(src, TRAIT_NODROP))
+		balloon_alert(user, "it's stuck to your hand!")
+		return ITEM_INTERACT_BLOCKING
+	balloon_alert(user, "releasing fish...")
+	if(!do_after(src, 3 SECONDS, interacting_with))
+		return ITEM_INTERACT_BLOCKING
+	balloon_alert(user, "fish released")
+	var/fish_dead_not_naive = status == FISH_DEAD && !HAS_MIND_TRAIT(user, TRAIT_NAIVE)
+	user.visible_message(span_notice("[user] releases [src] into [interacting_with]"), \
+		span_notice("You release [src] into [interacting_with]. [fish_dead_not_naive ? "May it rest in peace..." : "Bye bye [name]."]"), \
+		span_notice("You hear a splash."))
+	playsound(interacting_with, 'sound/effects/splash.ogg', 50)
+	SEND_SIGNAL(interacting_with, TRAIT_FISH_RELEASED_INTO, src)
+	qdel(src)
+	return ITEM_INTERACT_SUCCESS
 
 /obj/item/fish/update_icon_state()
 	if(status == FISH_DEAD && icon_state_dead)
@@ -180,29 +206,30 @@
 	if(!istype(item, /obj/item/fish_feed))
 		return ..()
 	if(!item.reagents.total_volume)
-		balloon_alert(user, "[item] is empty!")
+		balloon_alert(user, "[item.name] is empty!")
 		return TRUE
 	if(status == FISH_DEAD)
-		balloon_alert(user, "[src] is dead!")
+		balloon_alert(user, "[name] [HAS_MIND_TRAIT(user, TRAIT_NAIVE) ? "isn't hungry" : "is dead!"]")
 		return TRUE
 	feed(item.reagents)
-	balloon_alert(user, "fed [src]")
+	balloon_alert(user, "fed [name]")
 	return TRUE
 
 /obj/item/fish/examine(mob/user)
 	. = ..()
 	if(HAS_MIND_TRAIT(user, TRAIT_EXAMINE_DEEPER_FISH))
 		if(status == FISH_DEAD)
-			. += span_deadsay("it's dead.")
-		var/list/warnings = list()
-		if(is_hungry())
-			warnings += "starving"
-		if(!HAS_TRAIT(src, TRAIT_FISH_STASIS) && !proper_environment())
-			warnings += "drowning"
-		if(health < initial(health) * 0.6)
-			warnings += "sick"
-			if(length(warnings))
-				. += span_warning("it's [english_list(warnings)]")
+			. += span_deadsay(HAS_MIND_TRAIT(user, TRAIT_NAIVE) ? "it's taking the big snooze" : "it's dead.")
+		else
+			var/list/warnings = list()
+			if(is_hungry())
+				warnings += "starving"
+			if(!HAS_TRAIT(src, TRAIT_FISH_STASIS) && !proper_environment())
+				warnings += "drowning"
+			if(health < initial(health) * 0.6)
+				warnings += "sick"
+				if(length(warnings))
+					. += span_warning("it's [english_list(warnings)]")
 	if(HAS_MIND_TRAIT(user, TRAIT_EXAMINE_FISH))
 		. += span_notice("It's [size] cm long.")
 		. += span_notice("It weighs [weight] g.")

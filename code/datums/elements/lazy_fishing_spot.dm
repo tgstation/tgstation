@@ -20,10 +20,17 @@
 	RegisterSignal(target, COMSIG_ATOM_EXAMINE, PROC_REF(on_examined))
 	RegisterSignal(target, COMSIG_ATOM_EXAMINE_MORE, PROC_REF(on_examined_more))
 	RegisterSignal(target, COMSIG_ATOM_EX_ACT, PROC_REF(explosive_fishing))
+	RegisterSignal(target, TRAIT_FISH_RELEASED_INTO, PROC_REF(fish_released))
 
 /datum/element/lazy_fishing_spot/Detach(datum/target)
-	UnregisterSignal(target, list(COMSIG_PRE_FISHING, COMSIG_ATOM_EXAMINE, COMSIG_ATOM_EXAMINE_MORE, COMSIG_ATOM_EX_ACT))
-	UnregisterSignal(target, list(COMSIG_PRE_FISHING, COMSIG_NPC_FISHING))
+	UnregisterSignal(target, list(
+		TRAIT_FISH_RELEASED_INTO,
+		COMSIG_NPC_FISHING,
+		COMSIG_PRE_FISHING,
+		COMSIG_ATOM_EXAMINE,
+		COMSIG_ATOM_EXAMINE_MORE,
+		COMSIG_ATOM_EX_ACT,
+	))
 	REMOVE_TRAIT(target, TRAIT_FISHING_SPOT, REF(src))
 	return ..()
 
@@ -81,3 +88,8 @@
 
 /datum/element/lazy_fishing_spot/proc/return_glob_fishing_spot(datum/source, list/fish_spot_container)
 	fish_spot_container[NPC_FISHING_SPOT] = GLOB.preset_fish_sources[configuration]
+
+/datum/element/lazy_fishing_spot/proc/fish_released(datum/source, obj/item/fish/fish, mob/living/releaser)
+	SIGNAL_HANDLER
+	var/datum/fish_source/fish_source = GLOB.preset_fish_sources[configuration]
+	fish_source.readd_fish(fish, releaser)

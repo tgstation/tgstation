@@ -225,6 +225,8 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_EXAMINE_FISHING_SPOT "examine_fishing_spot"
 ///lobstrosities and carps will prioritize/flee from those that have this trait (given by the skill-locked hat)
 #define TRAIT_SCARY_FISHERMAN "scary_fisherman"
+/// Atoms with this trait can be right-clicked with a fish to release them, presumably back in the fishing spot they were caught from.
+#define TRAIT_CATCH_AND_RELEASE "catch_and_release"
 ///This trait lets you get the size and weight of the fish by examining them
 #define TRAIT_EXAMINE_FISH "examine_fish"
 ///This trait lets you roughly know if the fish is dead, starving, drowning or sick by examining them
