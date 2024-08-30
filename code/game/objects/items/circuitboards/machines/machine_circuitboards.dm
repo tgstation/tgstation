@@ -1381,10 +1381,6 @@
 		/datum/stock_part/capacitor = 1)
 	needs_anchored = FALSE
 
-/obj/item/circuitboard/machine/fishing_portal_generator/emagged
-	name = "Emagged Fishing Portal Generator"
-	build_path = /obj/machinery/fishing_portal_generator
-
 //Supply
 /obj/item/circuitboard/machine/ore_redemption
 	name = "Ore Redemption"
