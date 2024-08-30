@@ -232,7 +232,6 @@
 	blade_orbit_radius = 20,
 	time_between_initial_blades = 0.25 SECONDS,
 	blade_recharge_time = 1 MINUTES,
-	blade_type = /obj/effect/floating_blade,
 )
 
 	src.blade_recharge_time = blade_recharge_time
