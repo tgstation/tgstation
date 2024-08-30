@@ -80,8 +80,7 @@
 					"name" = item.name,
 					"cost" = item.price,
 					"amount" = item.stock,
-					"desc" = item.desc || item.name,
-					"html_icon" = item.html_icon,
+					"desc" = item.desc || item.name
 				))
 	return data
 
