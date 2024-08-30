@@ -152,10 +152,7 @@
 ///The species is forced to have digitigrade legs in generation.
 #define DIGITIGRADE_FORCED 2
 
-// Preferences for leg types
-/// Legs that are normal
-#define NORMAL_LEGS "Normal Legs"
-/// Digitgrade legs that are like bended and uhhh no shoes
+///Digitigrade's prefs, used in features for legs if you're meant to be a Digitigrade.
 #define DIGITIGRADE_LEGS "Digitigrade Legs"
 
 // Health/damage defines

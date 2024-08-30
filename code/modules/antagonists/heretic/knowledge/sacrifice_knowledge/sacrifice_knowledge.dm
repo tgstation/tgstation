@@ -416,13 +416,20 @@
 		usable_organs -= /obj/item/organ/internal/lungs/corrupt // Their lungs are already more cursed than anything I could give them
 
 	var/total_implant = rand(2, 4)
+	var/gave_any = FALSE
 
 	for (var/i in 1 to total_implant)
 		if (!length(usable_organs))
-			return
+			break
 		var/organ_path = pick_n_take(usable_organs)
 		var/obj/item/organ/internal/to_give = new organ_path
-		to_give.Insert(sac_target)
+		if (!to_give.Insert(sac_target))
+			qdel(to_give)
+		else
+			gave_any = TRUE
+
+	if (!gave_any)
+		return
 
 	new /obj/effect/gibspawner/human/bodypartless(get_turf(sac_target))
 	sac_target.visible_message(span_boldwarning("Several organs force themselves out of [sac_target]!"))
