@@ -36,7 +36,6 @@ WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/machinery/light_switch)
 	find_and_hang_on_wall(custom_drop_callback = CALLBACK(src, PROC_REF(deconstruct), TRUE))
 	register_context()
 	update_appearance()
-	AddComponent(/datum/component/examine_balloon, pixel_y_offset = 24, pixel_y_offset_arrow = 8)
 
 /obj/machinery/light_switch/add_context(atom/source, list/context, obj/item/held_item, mob/user)
 	. = ..()
