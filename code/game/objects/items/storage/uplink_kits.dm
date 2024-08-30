@@ -687,7 +687,7 @@
 /obj/item/storage/box/stickers/syndie_kit/PopulateContents()
 	var/list/types = subtypesof(/obj/item/sticker/syndicate)
 
-	for(var/i in 1 to 8)
+	for(var/i in 1 to atom_storage.max_slots)
 		var/type = pick(types)
 		new type(src)
 
