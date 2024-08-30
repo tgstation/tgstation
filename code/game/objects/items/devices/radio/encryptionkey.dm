@@ -98,13 +98,6 @@
 	greyscale_config = /datum/greyscale_config/encryptionkey_service
 	greyscale_colors = "#ebebeb#3bca5a"
 
-/obj/item/encryptionkey/headset_srvent
-	name = "press radio encryption key"
-	icon_state = "cypherkey_service"
-	channels = list(RADIO_CHANNEL_SERVICE = 1, RADIO_CHANNEL_ENTERTAINMENT = 0)
-	greyscale_config = /datum/greyscale_config/encryptionkey_service
-	greyscale_colors = "#83eb8f#3bca5a"
-
 /obj/item/encryptionkey/headset_com
 	name = "command radio encryption key"
 	icon_state = "cypherkey_cube"
@@ -200,7 +193,6 @@
 		RADIO_CHANNEL_SUPPLY = 1,
 		RADIO_CHANNEL_SERVICE = 1,
 		RADIO_CHANNEL_AI_PRIVATE = 1,
-		RADIO_CHANNEL_ENTERTAINMENT = 1,
 	)
 
 /obj/item/encryptionkey/ai_with_binary
@@ -214,7 +206,6 @@
 		RADIO_CHANNEL_SUPPLY = 1,
 		RADIO_CHANNEL_SERVICE = 1,
 		RADIO_CHANNEL_AI_PRIVATE = 1,
-		RADIO_CHANNEL_ENTERTAINMENT = 1,
 	)
 	special_channels = RADIO_SPECIAL_BINARY
 	translated_language = /datum/language/machine
