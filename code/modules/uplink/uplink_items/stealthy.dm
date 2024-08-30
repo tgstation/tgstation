@@ -29,12 +29,6 @@
 	item = /obj/item/pen/edagger
 	cost = 2
 
-/datum/uplink_item/stealthy_weapons/slipstick
-	name = "Syndie Lipstick"
-	desc = "Stylish way to kiss to death, isn't it syndiekisser?"
-	item = /obj/item/lipstick/syndie
-	cost = 6
-
 /datum/uplink_item/stealthy_weapons/traitor_chem_bottle
 	name = "Poison Kit"
 	desc = "An assortment of deadly chemicals packed into a compact box. Comes with a syringe for more precise application."
