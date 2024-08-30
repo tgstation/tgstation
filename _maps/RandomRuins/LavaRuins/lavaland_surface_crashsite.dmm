@@ -59,10 +59,10 @@
 /area/ruin/unpowered)
 "k" = (
 /obj/structure/girder,
-/turf/open/floor/plating/lavaland_atmos,
+/turf/open/floor/plating,
 /area/ruin/unpowered)
 "l" = (
-/turf/open/water/lavaland_atmos,
+/turf/open/water,
 /area/lavaland/surface)
 "m" = (
 /obj/machinery/door/airlock/survival_pod/glass,
@@ -84,12 +84,6 @@
 /area/ruin/powered)
 "q" = (
 /turf/closed/wall/mineral/titanium/interior,
-/area/ruin/unpowered)
-"r" = (
-/obj/machinery/door/airlock/titanium{
-	name = "Escape Pod Airlock"
-	},
-/turf/open/floor/mineral/titanium/blue/lavaland_atmos,
 /area/ruin/unpowered)
 "s" = (
 /turf/open/floor/pod/dark,
@@ -125,7 +119,7 @@
 	dir = 1
 	},
 /obj/effect/mob_spawn/corpse/human/engineer,
-/turf/open/floor/mineral/titanium/blue/lavaland_atmos,
+/turf/open/floor/mineral/titanium/blue,
 /area/ruin/unpowered)
 "z" = (
 /obj/item/book/manual/fish_catalog,
@@ -160,7 +154,7 @@
 /obj/structure/chair/comfy/shuttle{
 	dir = 1
 	},
-/turf/open/floor/mineral/titanium/blue/lavaland_atmos,
+/turf/open/floor/mineral/titanium/blue,
 /area/ruin/unpowered)
 "J" = (
 /obj/machinery/smartfridge/survival_pod{
@@ -482,7 +476,7 @@ o
 O
 y
 I
-r
+b
 a
 a
 R
