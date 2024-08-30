@@ -442,7 +442,7 @@
 "zw" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/power/floodlight,
-/turf/open/floor/plating/lavaland_atmos,
+/turf/open/floor/plating/lavaland_baseturf,
 /area/ruin/unpowered/elephant_graveyard)
 "zY" = (
 /obj/effect/decal/cleanable/blood/drip,
@@ -683,7 +683,7 @@
 /obj/structure/cable,
 /obj/machinery/power/floodlight,
 /obj/effect/decal/cleanable/dirt,
-/turf/open/floor/plating/lavaland_atmos,
+/turf/open/floor/plating/lavaland_baseturf,
 /area/ruin/unpowered/elephant_graveyard)
 "NA" = (
 /obj/structure/lattice/catwalk/mining,
@@ -716,7 +716,7 @@
 /obj/structure/cable,
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt,
-/turf/open/floor/plating/lavaland_atmos,
+/turf/open/floor/plating/lavaland_baseturf,
 /area/ruin/unpowered/elephant_graveyard)
 "Ql" = (
 /obj/structure/barricade/wooden,
