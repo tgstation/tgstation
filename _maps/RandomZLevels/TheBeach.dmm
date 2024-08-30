@@ -505,10 +505,6 @@
 	},
 /turf/closed/wall/mineral/wood,
 /area/awaymission/beach)
-"gq" = (
-/obj/item/broken_bottle,
-/turf/open/misc/beach/sand,
-/area/awaymission/beach)
 "gw" = (
 /obj/item/stack/sheet/mineral/sandstone{
 	pixel_x = -8
@@ -1193,10 +1189,6 @@
 /obj/effect/turf_decal/siding/dark_red{
 	dir = 8
 	},
-/turf/open/misc/beach/sand,
-/area/awaymission/beach)
-"pq" = (
-/obj/effect/spawner/random/trash/cigbutt,
 /turf/open/misc/beach/sand,
 /area/awaymission/beach)
 "pr" = (
@@ -2864,17 +2856,6 @@
 /obj/machinery/light/directional/west,
 /turf/open/floor/wood/large,
 /area/awaymission/beach)
-"Jv" = (
-/obj/item/paper/fluff/old_pirate_note{
-	pixel_x = -5;
-	pixel_y = -7
-	},
-/obj/item/pen/fountain{
-	pixel_y = -11;
-	pixel_x = -8
-	},
-/turf/open/misc/beach/sand,
-/area/awaymission/beach)
 "JF" = (
 /obj/structure/marker_beacon/burgundy,
 /turf/open/water/beach,
@@ -3349,12 +3330,6 @@
 	},
 /turf/open/misc/beach/sand,
 /area/awaymission/beach)
-"Pb" = (
-/obj/item/fishing_rod,
-/obj/structure/closet/crate/trashcart,
-/obj/item/reagent_containers/cup/glass/bottle/rum/aged,
-/turf/open/misc/beach/sand,
-/area/awaymission/beach)
 "Pe" = (
 /turf/open/misc/beach/coast{
 	dir = 5
@@ -3401,11 +3376,6 @@
 /obj/effect/turf_decal/siding/wood{
 	dir = 5
 	},
-/turf/open/misc/beach/sand,
-/area/awaymission/beach)
-"PU" = (
-/obj/effect/mob_spawn/corpse/human/old_pirate_captain,
-/obj/structure/bed/maint,
 /turf/open/misc/beach/sand,
 /area/awaymission/beach)
 "Qe" = (
@@ -7445,8 +7415,8 @@ XB
 XB
 Vf
 YV
-Pb
-gq
+VY
+VY
 hL
 ni
 XB
@@ -7702,8 +7672,8 @@ XB
 XB
 Vf
 VY
-pq
-PU
+VY
+VY
 Er
 BK
 XB
@@ -7959,7 +7929,7 @@ XB
 XB
 Vf
 VY
-Jv
+VY
 VY
 VY
 BK
@@ -8217,7 +8187,7 @@ XB
 Vf
 IZ
 VY
-pq
+VY
 VY
 BK
 XB
