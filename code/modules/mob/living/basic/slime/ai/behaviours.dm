@@ -57,10 +57,6 @@
 /datum/ai_behavior/hunt_target/unarmed_attack_target/slime
 
 /datum/ai_behavior/hunt_target/unarmed_attack_target/slime/target_caught(mob/living/basic/slime/hunter, mob/living/hunted)
-	if (!hunter.can_feed_on(hunted)) // Target is no longer edible
-		hunter.UnarmedAttack(hunted, TRUE)
-		return
-
 	if((hunted.body_position != STANDING_UP) || prob(20)) //Not standing, or we rolled well? Feed.
 		hunter.start_feeding(hunted)
 		return
