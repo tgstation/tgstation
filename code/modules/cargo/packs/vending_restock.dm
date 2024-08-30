@@ -17,7 +17,7 @@
 	cost = CARGO_CRATE_VALUE * 2
 	contains = list(/obj/item/vending_refill/cigarette)
 	crate_name = "cigarette supply crate"
-	crate_type = /obj/structure/closet/crate/robust
+	crate_type = /obj/structure/closet/crate
 
 /datum/supply_pack/vending/science/cytopro
 	name = "Cytology Vendor Supply Crate"
@@ -113,7 +113,6 @@
 	cost = CARGO_CRATE_VALUE * 2
 	contains = list(/obj/item/vending_refill/snack)
 	crate_name = "snacks supply crate"
-	crate_type = /obj/structure/closet/crate/robust
 
 /datum/supply_pack/vending/cola
 	name = "Softdrinks Supply Crate"
