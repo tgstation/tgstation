@@ -1,5 +1,0 @@
-author: "SmArtKar"
-delete-after: True
-changes:
-  - balance: "Plexagon Crew Manifest is now a default PDA app for everyone, and is free."
-  - balance: "Plexagon Crew Manifest no longer provides Detomatix resistance, but security records and status display control now do."
