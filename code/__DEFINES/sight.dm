@@ -63,7 +63,7 @@
 /// We've gotta alpha it down if we get this, cause otherwise the sight flag won't work
 #define BLACKNESS_CUTTING (SEE_MOBS|SEE_OBJS|SEE_TURFS|SEE_TURFS|SEE_TURFS)
 
-/// Range at which blindness effects treat nearsightedness as blind and play
+/// Range at which blindness effects treat nearsightness as blind and play
 #define NEARSIGHTNESS_BLINDNESS 2
 
 /// Range in tiles that a mob can see in the dark (used to determine if a mob has night_vision)
@@ -84,7 +84,7 @@
 //------------------------
 // INVISIBILITY SOURCE IDS
 // Though don't feel the need to add one here if you have a simple effect that
-// gets added and/or removed in only one place near each other in the code.
+// gets added and/or removed in only one place near eachother in the code.
 
 #define INVISIBILITY_SOURCE_INVISIMIN "invisimin"
 #define INVISIBILITY_SOURCE_STEALTHMODE "stealthmode"
