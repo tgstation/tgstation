@@ -827,6 +827,7 @@
 	return (isfloorturf(surface) || iswallturf(surface))
 
 /obj/item/toy/crayon/spraycan/suicide_act(mob/living/user)
+	var/mob/living/carbon/human/H = user
 	var/used = min(charges_left, 10)
 	if(is_capped || !actually_paints || !use_charges(user, 10, FALSE))
 		user.visible_message(span_suicide("[user] shakes up [src] with a rattle and lifts it to [user.p_their()] mouth, but nothing happens!"))
@@ -841,7 +842,7 @@
 		set_painting_tool_color(COLOR_SILVER)
 	update_appearance()
 	if(actually_paints)
-		user.AddComponent(/datum/component/face_decal, "spray", EXTERNAL_ADJACENT, paint_color)
+		H.update_lips("spray_face", paint_color)
 	reagents.trans_to(user, used, volume_multiplier, transferred_by = user, methods = VAPOR)
 	return OXYLOSS
 
@@ -896,7 +897,7 @@
 			flash_color(carbon_target, flash_color=paint_color, flash_time=40)
 		if(ishuman(carbon_target) && actually_paints)
 			var/mob/living/carbon/human/human_target = carbon_target
-			human_target.AddComponent(/datum/component/face_decal, "spray", EXTERNAL_ADJACENT, paint_color)
+			human_target.update_lips("spray_face", paint_color)
 		use_charges(user, 10, FALSE)
 		var/fraction = min(1, . / reagents.maximum_volume)
 		reagents.expose(carbon_target, VAPOR, fraction * volume_multiplier)
