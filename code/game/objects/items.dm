@@ -1746,10 +1746,11 @@
 /obj/item/proc/set_embed(datum/embed_data/embed)
 	if(embed_data == embed)
 		return
+	if(isnull(get_embed())) // Add embed on objects that did not have it added
+		AddElement(/datum/element/embed)
 	if(!GLOB.embed_by_type[embed_data?.type])
 		qdel(embed_data)
 	embed_data = ispath(embed) ? get_embed_by_type(embed) : embed
-	AddElement(/datum/element/embed)
 	SEND_SIGNAL(src, COMSIG_ITEM_EMBEDDING_UPDATE)
 
 /**
