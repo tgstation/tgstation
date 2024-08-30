@@ -221,9 +221,6 @@
 		return
 	. = ..()
 	member.remove_antag_datum(/datum/antagonist/brother)
-	if (!length(members))
-		qdel(src)
-		return
 	if (isnull(member.current))
 		return
 	for (var/datum/mind/brother_mind as anything in members)
