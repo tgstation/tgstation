@@ -27,7 +27,6 @@
 	var/atom/movable/atom_parent = parent
 	balloon = new(atom_parent, atom_parent, pixel_y_offset_arrow - pixel_y_offset)
 	balloon.pixel_y = pixel_y_offset
-	balloon.transform = balloon.transform.Scale(size_upscaling, size_upscaling)
 	atom_parent.vis_contents += balloon
 
 	// We use UPDATED_ICON specifically because we need to be last in the icon chain, even if UPDATE_OVERLAYS would otherwise be more apt
@@ -60,11 +59,12 @@
 			continue
 		new_overlays += actually_mutable_appearance
 
-	var/mutable_appearance/examine_arrow = mutable_appearance('icons/effects/effects.dmi', "examine_arrow", appearance_flags = RESET_COLOR | RESET_TRANSFORM)
+	var/mutable_appearance/examine_arrow = mutable_appearance('icons/effects/effects.dmi', "examine_arrow")
 	examine_arrow.pixel_y = pixel_y_offset_arrow - balloon.pixel_y
 	new_overlays += examine_arrow
 
 	balloon.overlays = new_overlays
+	balloon.transform = balloon.transform.Scale(size_upscaling, size_upscaling)
 	balloon.alpha = hologram_alpha
 
 /obj/effect/abstract/balloon_hologram
