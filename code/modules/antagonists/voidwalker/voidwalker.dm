@@ -50,10 +50,9 @@
 		"They must see what you have seen. They must walk where you have walked. Bring them to the void and show them the truth. The dead cannot know what you know.",
 		"Recover what you have lost. Bring your children into the inky black and return them to your flock.",
 	)
+	if(prob(20))
+		explanation_text += "Man I fucking love glass."
 	explanation_text = pick(explanation_texts)
-
-	if(prob(5))
-		explanation_text = "Man I fucking love glass."
 	..()
 
 /datum/objective/voidwalker_objective/check_completion()
