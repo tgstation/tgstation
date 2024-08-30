@@ -623,10 +623,6 @@
 	icon = 'icons/obj/doors/doormorgue.dmi'
 	icon_state = "closed"
 
-/obj/machinery/door/morgue/Initialize(mapload)
-	. = ..()
-	AddComponent(/datum/component/redirect_attack_hand_from_turf)
-
 /obj/machinery/door/morgue/update_icon_state()
 	. = ..()
 	if(animation && animation != "deny")
