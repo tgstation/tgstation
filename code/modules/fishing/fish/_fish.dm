@@ -313,6 +313,16 @@
 
 	SEND_SIGNAL(src, COMSIG_FISH_FORCE_UPDATED, weight_rank, bonus_malus)
 
+	if(!(material_flags & MATERIAL_EFFECTS))
+		return
+	//may have been struck by metal gen or something.
+	for(var/current_material in custom_materials)
+		var/datum/material/material = GET_MATERIAL_REF(current_material)
+		force *= material.strength_modifier
+		throwforce *= material.strength_modifier
+		if(material.item_sound_override)
+			hitsound = material.item_sound_override
+
 ///A proc that makes the fish slightly stronger or weaker if there's a noticeable discrepancy between size and weight.
 /obj/item/fish/proc/calculate_fish_force_bonus(bonus_malus)
 	demolition_mod += bonus_malus * 0.1
