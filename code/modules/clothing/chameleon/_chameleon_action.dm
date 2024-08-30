@@ -208,7 +208,7 @@
 
 	if(istype(applying_from, /datum/outfit/job))
 		var/datum/outfit/job/job_outfit = applying_from
-		var/datum/job/job_datum = SSjob.GetJobType(job_outfit.jobtype)
+		var/datum/job/job_datum = SSjob.get_job_type(job_outfit.jobtype)
 		apply_job_data(job_datum)
 
 	update_look(using_item_type)
