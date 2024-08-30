@@ -92,7 +92,7 @@
 		)
 	return data
 
-/obj/item/mecha_parts/mecha_equipment/orebox_manager/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
+/obj/item/mecha_parts/mecha_equipment/orebox_manager/ui_act(action, list/params)
 	. = ..()
 	if(.)
 		return TRUE

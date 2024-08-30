@@ -731,7 +731,7 @@
 	coffeepot.reagents.add_reagent_list(reagent_delta)
 
 	qdel(reference_bean)
-
+	
 	// remove the coffee beans from the machine
 	coffee.Cut(1,2)
 	coffee_amount--

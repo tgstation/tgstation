@@ -181,7 +181,7 @@
 
 	return static_data
 
-/obj/machinery/computer/arcade/orion_trail/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
+/obj/machinery/computer/arcade/orion_trail/ui_act(action, list/params)
 	. = ..()
 	if(.)
 		return

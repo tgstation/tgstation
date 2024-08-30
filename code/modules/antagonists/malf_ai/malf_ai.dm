@@ -207,7 +207,7 @@
 
 	return data
 
-/datum/antagonist/malf_ai/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
+/datum/antagonist/malf_ai/ui_act(action, list/params)
 	. = ..()
 	if(.)
 		return

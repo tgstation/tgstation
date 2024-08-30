@@ -84,7 +84,7 @@
 	power_station.teleporter_hub.update_appearance()
 	power_station.teleporter_hub.calibrated = FALSE
 
-/obj/machinery/computer/teleporter/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
+/obj/machinery/computer/teleporter/ui_act(action, params)
 	. = ..()
 	if(.)
 		return
