@@ -3,7 +3,7 @@ GLOBAL_LIST_EMPTY(total_extraction_beacons)
 /obj/item/extraction_pack
 	name = "fulton extraction pack"
 	desc = "A balloon that can be used to extract equipment or personnel to a Fulton Recovery Beacon. Anything not bolted down can be moved. Link the pack to a beacon by using the pack in hand."
-	icon = 'icons/obj/mining_zones/fulton.dmi'
+	icon = 'icons/obj/fulton.dmi'
 	icon_state = "extraction_pack"
 	w_class = WEIGHT_CLASS_NORMAL
 	/// Beacon weakref
@@ -187,7 +187,7 @@ GLOBAL_LIST_EMPTY(total_extraction_beacons)
 /obj/item/fulton_core
 	name = "extraction beacon assembly kit"
 	desc = "When built, emits a signal which fulton recovery devices can lock onto. Activate in hand to unfold into a beacon."
-	icon = 'icons/obj/mining_zones/fulton.dmi'
+	icon = 'icons/obj/fulton.dmi'
 	icon_state = "folded_extraction"
 
 /obj/item/fulton_core/attack_self(mob/user)
@@ -199,7 +199,7 @@ GLOBAL_LIST_EMPTY(total_extraction_beacons)
 /obj/structure/extraction_point
 	name = "fulton recovery beacon"
 	desc = "A beacon for the fulton recovery system. Activate a pack in your hand to link it to a beacon."
-	icon = 'icons/obj/mining_zones/fulton.dmi'
+	icon = 'icons/obj/fulton.dmi'
 	icon_state = "extraction_point"
 	anchored = TRUE
 	density = FALSE

@@ -199,7 +199,7 @@
 
 /obj/item/knife/combat/cyborg
 	name = "cyborg knife"
-	icon = 'icons/mob/silicon/robot_items.dmi'
+	icon = 'icons/obj/items_cyborg.dmi'
 	icon_state = "knife_cyborg"
 	worn_icon_state = "knife_cyborg" //error sprite - this shouldn't have been dropped
 	desc = "A cyborg-mounted plasteel knife. Extremely sharp and durable."
