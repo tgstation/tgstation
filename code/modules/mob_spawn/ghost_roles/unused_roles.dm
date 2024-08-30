@@ -273,7 +273,7 @@
 /obj/effect/mob_spawn/ghost_role/human/syndicatespace/special(mob/living/new_spawn)
 	. = ..()
 	new_spawn.grant_language(/datum/language/codespeak, source = LANGUAGE_MIND)
-	var/datum/job/spawn_job = SSjob.get_job_type(spawner_job_path)
+	var/datum/job/spawn_job = SSjob.GetJobType(spawner_job_path)
 	var/policy = get_policy(spawn_job.policy_index)
 	if(policy)
 		to_chat(new_spawn, span_bold("[policy]"))
