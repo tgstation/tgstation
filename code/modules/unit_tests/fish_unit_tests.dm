@@ -66,7 +66,7 @@
 ///dummy fish item used for the tests, as well with related subtypes and datums.
 /obj/item/fish/testdummy
 	grind_results = list()
-	average_weight = FISH_PROCESS_RESULTS_WEIGHT_DIVISOR * 2
+	average_weight = FISH_GRIND_RESULTS_WEIGHT_DIVISOR * 2
 	average_size = FISH_SIZE_BULKY_MAX
 	num_fillets = 2
 	fish_traits = list(/datum/fish_trait/dummy)
