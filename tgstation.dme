@@ -6374,6 +6374,8 @@
 #include "modular_doppler\modular_cosmetics\code\shoes\baseshoes.dm"
 #include "modular_doppler\modular_cosmetics\code\suits\basesuits.dm"
 #include "modular_doppler\modular_cosmetics\code\suits\jacket.dm"
+#include "modular_doppler\modular_cosmetics\code\suits\modsuit.dm"
+#include "modular_doppler\modular_cosmetics\code\under\doppler_uniforms.dm"
 #include "modular_doppler\sprite_accessories\code\hair.dm"
 #include "modular_doppler\tableflip\tableflip.dm"
 #include "modular_doppler\wargaming\code\game_kit.dm"
