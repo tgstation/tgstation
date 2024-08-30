@@ -173,7 +173,6 @@
 
 /obj/item/clothing/head/soft/fishing_hat/Initialize(mapload)
 	. = ..()
-	AddComponent(/datum/component/speechmod, replacements = strings("crustacean_replacement.json", "crustacean")) //you asked for this.
 	AddElement(/datum/element/skill_reward, /datum/skill/fishing)
 
 #define PROPHAT_MOOD "prophat"
