@@ -396,12 +396,12 @@
 	if(message_mods[RADIO_EXTENSION] == MODE_L_HAND || message_mods[RADIO_EXTENSION] == MODE_R_HAND)
 		// try to avoid being heard double
 		if (loc == speaker && ismob(speaker))
-			var/mob/M = speaker
-			var/idx = M.get_held_index_of_item(src)
+			var/mob/mob_speaker = speaker
+			var/idx = mob_speaker.get_held_index_of_item(src)
 			// left hands are odd slots
 			if (idx && (idx % 2) == (message_mods[RADIO_EXTENSION] == MODE_L_HAND))
 				return
-	talk_into(speaker, raw_message, , spans, language=message_language, message_mods=filtered_mods)
+	talk_into(speaker, raw_message, spans=spans, language=message_language, message_mods=filtered_mods)
 
 /// Checks if this radio can receive on the given frequency.
 /obj/item/radio/proc/can_receive(input_frequency, list/levels)
