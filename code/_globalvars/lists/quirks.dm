@@ -92,9 +92,3 @@ GLOBAL_LIST_INIT(organ_choice, list(
 	"Liver" = ORGAN_SLOT_LIVER,
 	"Stomach" = ORGAN_SLOT_STOMACH,
 ))
-
-///Paraplegic Quirk
-GLOBAL_LIST_INIT(paraplegic_choice, list(
-	"Default" = FALSE,
-	"Amputee" = TRUE,
-))
