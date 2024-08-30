@@ -120,8 +120,7 @@
 		/obj/item/food/cornchips = 1,
 		/obj/item/food/grown/chili = 1,
 		/obj/item/food/grown/onion = 1,
-		/obj/item/food/grown/tomato = 1,
-		/obj/item/reagent_containers/cup/bowl = 1,
+		/obj/item/food/grown/tomato = 1
 	)
 	result = /obj/item/food/chipsandsalsa
 	category = CAT_MEXICAN
@@ -199,7 +198,6 @@
 		/obj/item/food/grown/tomato = 1,
 		/obj/item/food/grown/onion = 1,
 		/obj/item/food/grown/chili = 1,
-		/obj/item/reagent_containers/cup/bowl = 1,
 	)
 	result = /obj/item/food/pineapple_salsa
 	category = CAT_MEXICAN
