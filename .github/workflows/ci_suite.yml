@@ -8,8 +8,8 @@ on:
     - 'gh-readonly-queue/project/**'
   pull_request:
     branches:
-    - master
     - 'project/**'
+    - 1989-11-09
   merge_group:
     branches:
     - master
