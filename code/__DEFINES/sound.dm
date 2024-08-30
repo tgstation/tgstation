@@ -180,4 +180,3 @@ GLOBAL_LIST_INIT(announcer_keys, list(
 #define SFX_KEYBOARD_CLICKS "keyboard_clicks"
 #define SFX_STONE_DROP "stone_drop"
 #define SFX_STONE_PICKUP "stone_pickup"
-#define SFX_MUFFLED_SPEECH "muffspeech"
