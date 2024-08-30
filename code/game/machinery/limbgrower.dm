@@ -233,7 +233,7 @@
  */
 /obj/machinery/limbgrower/proc/build_limb(buildpath)
 	/// The limb we're making with our buildpath, so we can edit it.
-	//i need to create a body part manually using a set icon (otherwise it doesn't appear)
+	//i need to create a body part manually using a set icon (otherwise it doesnt appear)
 	var/obj/item/bodypart/limb
 	limb = new buildpath(loc)
 	limb.name = "\improper synthetic [selected_category] [limb.plaintext_zone]"

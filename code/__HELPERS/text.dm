@@ -71,7 +71,7 @@
 		return t
 	t = matchMiddle.group[1]
 
-	// Replace any non-space whitespace characters with spaces, and also multiple occurrences with just one space
+	// Replace any non-space whitespace characters with spaces, and also multiple occurences with just one space
 	var/static/regex/matchSpacing = new(@"\s+", "g")
 	t = replacetext(t, matchSpacing, " ")
 
@@ -153,7 +153,7 @@
 /**
  * Filters out undesirable characters from names.
  *
- * * strict - return null immediately instead of filtering out
+ * * strict - return null immidiately instead of filtering out
  * * allow_numbers - allows numbers and common special characters - used for silicon/other weird things names
  * * cap_after_symbols - words like Bob's will be capitalized to Bob'S by default. False is good for titles.
  */
@@ -169,7 +169,7 @@
 	var/char = ""
 
 	// This is a sanity short circuit, if the users name is three times the maximum allowable length of name
-	// We bail out on trying to process the name at all, as it could be a bug or malicious input and we don't
+	// We bail out on trying to process the name at all, as it could be a bug or malicious input and we dont
 	// Want to iterate all of it.
 	if(t_len > 3 * MAX_NAME_LEN)
 		return

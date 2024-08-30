@@ -530,7 +530,7 @@
 	w_class = WEIGHT_CLASS_SMALL
 	crafting_complexity = FOOD_COMPLEXITY_1
 
-///Exists purely for the crafting recipe (because it'll take subtypes)
+///Exists purely for the crafting recipe (because itll take subtypes)
 /obj/item/food/patty/plain
 
 /obj/item/food/patty/human
@@ -925,7 +925,7 @@
 
 /obj/item/food/beef_stroganoff
 	name = "beef stroganoff"
-	desc = "A Russian dish that consists of beef and sauce. Really popular in Japan, or at least that's what my animes would allude to."
+	desc = "A russian dish that consists of beef and sauce. Really popular in japan, or at least that's what my animes would allude to."
 	icon = 'icons/obj/food/meat.dmi'
 	icon_state = "beefstroganoff"
 	trash_type = /obj/item/reagent_containers/cup/bowl
@@ -1107,7 +1107,7 @@
 	crafting_complexity = FOOD_COMPLEXITY_5
 
 /obj/item/food/full_english
-	name = "full English breakfast"
+	name = "full english breakfast"
 	desc = "A hearty plate with all the trimmings, representing the pinnacle of the breakfast art."
 	icon = 'icons/obj/food/meat.dmi'
 	icon_state = "full_english"
