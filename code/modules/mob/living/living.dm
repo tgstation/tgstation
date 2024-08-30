@@ -26,6 +26,17 @@
 
 /mob/living/proc/testme()
 	var/list/choiced = list("one", "two", "three")
+	var/list/stuff = tgui_input_checkboxes(src, message = "test", title = "still testing", items = choiced)
+	var/list/indexed = stuff[2]
+	var/list/returned_choices
+	for(var/choice in indexed)
+		returned_choices += choiced[choice]
+	return returned_choices
+
+
+
+/mob/living/proc/testme()
+	var/list/choiced = list("one", "two", "three")
 	var/list/stuff = tgui_input_checkboxes(src, message = "test", title = "still testing", items = choiced))
 	var/list/indexed = stuff[2]
 	var/list/returned_choices
