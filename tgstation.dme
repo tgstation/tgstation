@@ -6028,7 +6028,7 @@
 #include "code\modules\surgery\organs\autosurgeon.dm"
 #include "code\modules\surgery\organs\helpers.dm"
 #include "code\modules\surgery\organs\organ_movement.dm"
-#include "code\modules\surgery\organs\external\_visual_organs.dm"
+#include "code\modules\surgery\organs\external\_external_organ.dm"
 #include "code\modules\surgery\organs\external\restyling.dm"
 #include "code\modules\surgery\organs\external\spines.dm"
 #include "code\modules\surgery\organs\external\tails.dm"

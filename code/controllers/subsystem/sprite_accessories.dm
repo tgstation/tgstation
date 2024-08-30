@@ -40,6 +40,7 @@ SUBSYSTEM_DEF(accessories) // just 'accessories' for brevity
 	var/list/horns_list
 	var/list/frills_list
 	var/list/spines_list
+	var/list/legs_list
 	var/list/tail_spines_list
 
 	//Mutant Human bits
@@ -98,6 +99,7 @@ SUBSYSTEM_DEF(accessories) // just 'accessories' for brevity
 	frills_list = init_sprite_accessory_subtypes(/datum/sprite_accessory/frills, add_blank = TRUE)[DEFAULT_SPRITE_LIST]
 	spines_list = init_sprite_accessory_subtypes(/datum/sprite_accessory/spines, add_blank = TRUE)[DEFAULT_SPRITE_LIST]
 	tail_spines_list = init_sprite_accessory_subtypes(/datum/sprite_accessory/tail_spines, add_blank = TRUE)[DEFAULT_SPRITE_LIST]
+	legs_list = init_sprite_accessory_subtypes(/datum/sprite_accessory/legs)[DEFAULT_SPRITE_LIST]
 	caps_list = init_sprite_accessory_subtypes(/datum/sprite_accessory/caps)[DEFAULT_SPRITE_LIST]
 	moth_wings_list = init_sprite_accessory_subtypes(/datum/sprite_accessory/moth_wings)[DEFAULT_SPRITE_LIST]
 	moth_antennae_list = init_sprite_accessory_subtypes(/datum/sprite_accessory/moth_antennae)[DEFAULT_SPRITE_LIST]
