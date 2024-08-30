@@ -695,9 +695,6 @@
 	color = LIGHT_COLOR_GREEN
 	light_color = LIGHT_COLOR_GREEN
 
-/obj/item/flashlight/lantern/jade/on
-	start_on = TRUE
-
 /obj/item/flashlight/slime
 	gender = PLURAL
 	name = "glowing slime extract"
