@@ -1,3 +1,4 @@
+
 /obj/item/kirbyplants
 	SET_BASE_VISUAL_PIXEL(0, DEPTH_OFFSET)
 	name = "potted plant"
