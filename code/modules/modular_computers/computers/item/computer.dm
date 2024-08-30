@@ -727,8 +727,6 @@
 	UpdateDisplay()
 
 /obj/item/modular_computer/ui_action_click(mob/user, actiontype)
-	if(!issilicon(user))
-		playsound(src, SFX_KEYBOARD_CLICKS, 10, TRUE, FALSE)
 	if(istype(actiontype, /datum/action/item_action/toggle_computer_light))
 		toggle_flashlight(user)
 		return
