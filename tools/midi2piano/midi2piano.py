@@ -7,9 +7,7 @@ import MidiDependencies as mi
 import tkinter as tk
 from tkinter import filedialog
 from tkinter import messagebox
-import pyperclip as pclip
 root = tk.Tk()
-root.attributes('-topmost', 1)
 root.withdraw()
 
 LINE_LENGTH_LIM = 50
@@ -292,24 +290,24 @@ def main_cycle():
     """
     Activate the script
     """
-    midi_file = obtain_midi_file()
-    if not midi_file:
-        return # Cancel
-    score = midi2score_without_ticks(midi_file)
-    score = filter_events_from_score(score)
-    score = filter_start_time_and_note_num(score)
-    score = filter_empty_tracks(score)
-    score = merge_events(score)
-    score = sort_score_by_event_times(score)
-    score = convert_into_delta_times(score)
-    score = perform_roundation(score)
-    most_frequent_dur = obtain_common_duration(score)
-    score = reduce_score_to_chords(score)
-    sheet_music = obtain_sheet_music(score, most_frequent_dur)
-    split_music = explode_sheet_music(sheet_music)
-    sheet_music = finalize_sheet_music(split_music, most_frequent_dur)
+    while True:
+        midi_file = obtain_midi_file()
+        if not midi_file:
+            return # Cancel
+        score = midi2score_without_ticks(midi_file)
+        score = filter_events_from_score(score)
+        score = filter_start_time_and_note_num(score)
+        score = filter_empty_tracks(score)
+        score = merge_events(score)
+        score = sort_score_by_event_times(score)
+        score = convert_into_delta_times(score)
+        score = perform_roundation(score)
+        most_frequent_dur = obtain_common_duration(score)
+        score = reduce_score_to_chords(score)
+        sheet_music = obtain_sheet_music(score, most_frequent_dur)
+        split_music = explode_sheet_music(sheet_music)
+        sheet_music = finalize_sheet_music(split_music, most_frequent_dur)
 
-    pclip.copy(sheet_music)
-    messagebox.showinfo("Midi2Piano Information", "Your sheet music has been copied to your clipboard.")
+        root.clipboard_append(sheet_music)
 
 main_cycle()
