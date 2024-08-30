@@ -586,10 +586,11 @@
 	AddComponent(/datum/component/two_handed, \
 		force_unwielded = 14, \
 		force_wielded = 18, \
+		icon_wielded = "[base_icon_state]1", \
 	)
 
 /obj/item/nullrod/bostaff/update_icon_state()
-	icon_state = inhand_icon_state = "[base_icon_state][HAS_TRAIT(src, TRAIT_WIELDED)]"
+	icon_state = "[base_icon_state]0"
 	return ..()
 
 
