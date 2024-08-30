@@ -360,10 +360,8 @@
 		if(4)
 			//Destroy Equipment
 			selected_turf.visible_message(span_userdanger("Everything [user] is holding and wearing disappears!"))
-			for(var/obj/item/non_implant in user)
-				if(istype(non_implant, /obj/item/implant))
-					continue
-				qdel(non_implant)
+			var/list/belongings = get_all_gear()
+			QDEL_LIST(belongings)
 		if(5)
 			//Monkeying
 			selected_turf.visible_message(span_userdanger("[user] transforms into a monkey!"))
