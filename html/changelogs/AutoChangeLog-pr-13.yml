@@ -1,0 +1,5 @@
+author: "kittysmooch"
+delete-after: True
+changes:
+  - rscadd: "added a diverse range of collars to improve pet safety and identifcation"
+  - code_imp: "set up dopplerGAGS so that our modular files won't cause runtimes :3c\n:cl:"
