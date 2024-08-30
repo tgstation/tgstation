@@ -95,7 +95,6 @@ GLOBAL_LIST_EMPTY(lobby_station_traits)
 /// Apply any additional handling we need to our lobby button
 /datum/station_trait/proc/setup_lobby_button(atom/movable/screen/lobby/button/sign_up/lobby_button)
 	SHOULD_CALL_PARENT(TRUE)
-	lobby_button.name = name
 	lobby_buttons |= lobby_button
 	RegisterSignal(lobby_button, COMSIG_ATOM_UPDATE_ICON, PROC_REF(on_lobby_button_update_icon))
 	RegisterSignal(lobby_button, COMSIG_SCREEN_ELEMENT_CLICK, PROC_REF(on_lobby_button_click))
