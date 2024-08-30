@@ -76,7 +76,6 @@ GLOBAL_LIST_INIT(spanname_to_formatting, list(
 	"Drone Radio" = "drone",
 	"Engineering Radio" = "engradio",
 	"Extremely Big" = "extremelybig",
-	"Entertainment Radio" = "enteradio",
 	"Game Say" = "game say",
 	"Ghost Alert" = "ghostalert",
 	"Green" = "green",
