@@ -650,13 +650,13 @@
 	. = ..()
 	affected_mob.adjust_drowsiness(3 SECONDS * REM * seconds_per_tick)
 	var/need_mob_update
-	switch(affected_mob.mob_mood.sanity_level)
-		if (SANITY_LEVEL_GREAT to SANITY_LEVEL_NEUTRAL)
-			need_mob_update = affected_mob.adjustBruteLoss(-1.5 * REM * seconds_per_tick, updating_health = FALSE)
-		if (SANITY_LEVEL_DISTURBED to SANITY_LEVEL_UNSTABLE)
-			affected_mob.add_mood_event("wellcheers", /datum/mood_event/wellcheers)
-		if (SANITY_LEVEL_CRAZY to SANITY_LEVEL_INSANE)
+	switch(affected_mob.mob_mood.sanity)
+		if (SANITY_INSANE to SANITY_CRAZY)
 			need_mob_update = affected_mob.adjustStaminaLoss(3 * REM * seconds_per_tick, updating_stamina = FALSE)
+		if (SANITY_UNSTABLE to SANITY_DISTURBED)
+			affected_mob.add_mood_event("wellcheers", /datum/mood_event/wellcheers)
+		if (SANITY_NEUTRAL to SANITY_GREAT)
+			need_mob_update = affected_mob.adjustBruteLoss(-1.5 * REM * seconds_per_tick, updating_health = FALSE)
 	if(need_mob_update)
 		return UPDATE_MOB_HEALTH
 
