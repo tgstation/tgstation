@@ -7,7 +7,7 @@ GLOBAL_VAR_INIT(glowshrooms, 0)
 	anchored = TRUE
 	opacity = FALSE
 	density = FALSE
-	icon = 'icons/turf/overlays.dmi'
+	icon = 'icons/obj/lighting.dmi'
 	icon_state = "glowshroom" //replaced in New
 	layer = ABOVE_NORMAL_TURF_LAYER
 	max_integrity = GLOWSHROOM_BASE_INTEGRITY
