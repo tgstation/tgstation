@@ -77,7 +77,7 @@
 	reqs = list(
 		/obj/item/assembly/signaler/anomaly/flux = 2,
 		/obj/item/assembly/signaler/anomaly/grav = 1,
-		/obj/item/assembly/signaler/anomaly/vortex = (MAX_CORES_VORTEX - 1),
+		/obj/item/assembly/signaler/anomaly/vortex = MAX_CORES_VORTEX,
 		/obj/item/assembly/signaler/anomaly/bluespace = 1,
 		/obj/item/weaponcrafting/gunkit/beam_rifle = 1,
 	)
