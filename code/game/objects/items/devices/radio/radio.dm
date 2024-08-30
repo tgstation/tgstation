@@ -353,7 +353,7 @@
 
 	if(isliving(talking_movable))
 		var/mob/living/talking_living = talking_movable
-		if(talking_living.client?.prefs.read_preference(/datum/preference/toggle/radio_noise) && !HAS_TRAIT(talking_living, TRAIT_DEAF) && radio_noise)
+		if(radio_noise && !HAS_TRAIT(talking_living, TRAIT_DEAF) && talking_living.client?.prefs.read_preference(/datum/preference/toggle/radio_noise))
 			SEND_SOUND(talking_living, 'sound/misc/radio_talk.ogg')
 
 	// All radios make an attempt to use the subspace system first
@@ -431,7 +431,7 @@
 		return
 
 	var/mob/living/holder = loc
-	if(!holder.client?.prefs.read_preference(/datum/preference/toggle/radio_noise) && HAS_TRAIT(holder, TRAIT_DEAF) && !radio_noise)
+	if(!radio_noise || HAS_TRAIT(holder, TRAIT_DEAF) || !holder.client?.prefs.read_preference(/datum/preference/toggle/radio_noise))
 		return
 
 	var/list/spans = data["spans"]
