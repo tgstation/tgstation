@@ -12,7 +12,7 @@
 	deactive_msg = "You refocus your eyes..."
 	/// how long we need to stare at someone to unsettle them (woooooh)
 	var/stare_time = 8 SECONDS
-	/// how long we stun someone on succesful cast
+	/// how long we stun someone on successful cast
 	var/stun_time = 2 SECONDS
 	/// stamina damage we doooo
 	var/stamina_damage = 80

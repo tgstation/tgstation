@@ -34,10 +34,10 @@
 /area/deathmatch)
 "cd" = (
 /obj/effect/turf_decal/tile/dark_blue/full,
-/obj/machinery/computer/crew{
+/obj/machinery/light/built/directional/south,
+/obj/machinery/computer{
 	dir = 4
 	},
-/obj/machinery/light/built/directional/south,
 /turf/open/indestructible/dark/smooth_large,
 /area/deathmatch)
 "cl" = (
@@ -71,18 +71,12 @@
 /obj/machinery/atmospherics/components/unary/portables_connector/visible{
 	dir = 4
 	},
-/obj/machinery/portable_atmospherics/canister/anesthetic_mix,
 /turf/open/indestructible/white,
 /area/deathmatch)
 "dB" = (
 /obj/effect/turf_decal/tile/yellow/fourcorners,
-/obj/machinery/portable_atmospherics/canister/plasma,
+/obj/machinery/portable_atmospherics/canister,
 /turf/open/indestructible,
-/area/deathmatch)
-"dX" = (
-/obj/effect/turf_decal/tile/dark_blue/full,
-/obj/machinery/computer/communications,
-/turf/open/indestructible/dark/smooth_large,
 /area/deathmatch)
 "ee" = (
 /obj/effect/turf_decal/tile/green{
@@ -365,7 +359,6 @@
 /area/deathmatch)
 "oy" = (
 /obj/machinery/atmospherics/components/unary/portables_connector/visible,
-/obj/machinery/portable_atmospherics/canister/bz,
 /turf/open/indestructible,
 /area/deathmatch)
 "oD" = (
@@ -380,7 +373,6 @@
 	dir = 4
 	},
 /obj/machinery/atmospherics/components/unary/portables_connector/visible,
-/obj/machinery/portable_atmospherics/canister/nitrium,
 /turf/open/indestructible,
 /area/deathmatch)
 "pD" = (
@@ -420,7 +412,7 @@
 /area/deathmatch)
 "qV" = (
 /obj/effect/turf_decal/tile/dark_blue/full,
-/obj/machinery/computer/atmos_alert{
+/obj/machinery/computer{
 	dir = 8
 	},
 /turf/open/indestructible/dark/smooth_large,
@@ -495,7 +487,7 @@
 /area/deathmatch)
 "sx" = (
 /obj/effect/turf_decal/tile/dark_blue/fourcorners,
-/obj/machinery/computer/message_monitor{
+/obj/machinery/computer{
 	dir = 4
 	},
 /turf/open/indestructible/dark,
@@ -520,7 +512,7 @@
 /area/deathmatch)
 "tR" = (
 /obj/effect/turf_decal/tile/dark_blue/full,
-/obj/machinery/computer/atmos_alert{
+/obj/machinery/computer{
 	dir = 4
 	},
 /turf/open/indestructible/dark/smooth_large,
@@ -582,7 +574,6 @@
 /obj/machinery/atmospherics/components/unary/portables_connector/visible{
 	dir = 4
 	},
-/obj/machinery/portable_atmospherics/canister/nob,
 /obj/machinery/light/built/directional/south,
 /turf/open/indestructible,
 /area/deathmatch)
@@ -709,10 +700,10 @@
 /area/deathmatch)
 "zt" = (
 /obj/effect/turf_decal/tile/dark_blue/full,
-/obj/machinery/computer/crew{
+/obj/machinery/light/built/directional/south,
+/obj/machinery/computer{
 	dir = 8
 	},
-/obj/machinery/light/built/directional/south,
 /turf/open/indestructible/dark/smooth_large,
 /area/deathmatch)
 "zw" = (
@@ -1013,11 +1004,6 @@
 	},
 /turf/open/indestructible/plating,
 /area/deathmatch)
-"IU" = (
-/obj/effect/turf_decal/tile/yellow/fourcorners,
-/obj/machinery/portable_atmospherics/canister/nitrogen,
-/turf/open/indestructible,
-/area/deathmatch)
 "JL" = (
 /obj/effect/turf_decal/tile/dark_blue/anticorner/contrasted,
 /obj/structure/table/glass,
@@ -1034,11 +1020,6 @@
 "JX" = (
 /obj/item/melee/chainofcommand/tailwhip/kitty,
 /turf/open/floor/wood,
-/area/deathmatch)
-"JZ" = (
-/obj/effect/turf_decal/tile/yellow/fourcorners,
-/obj/machinery/portable_atmospherics/canister/oxygen,
-/turf/open/indestructible,
 /area/deathmatch)
 "Ka" = (
 /obj/machinery/door/airlock{
@@ -1064,7 +1045,7 @@
 /area/deathmatch)
 "Lq" = (
 /obj/effect/turf_decal/tile/dark_blue/full,
-/obj/machinery/computer/monitor,
+/obj/machinery/computer,
 /turf/open/indestructible/dark/smooth_large,
 /area/deathmatch)
 "Lr" = (
@@ -1087,8 +1068,6 @@
 "Mi" = (
 /obj/structure/cable,
 /obj/structure/table/reinforced,
-/obj/item/grenade/gas_crystal/proto_nitrate_crystal,
-/obj/item/grenade/gas_crystal/nitrous_oxide_crystal,
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/indestructible,
 /area/deathmatch)
@@ -1152,7 +1131,7 @@
 /area/deathmatch)
 "ND" = (
 /obj/effect/turf_decal/tile/dark_blue/fourcorners,
-/obj/machinery/computer/message_monitor{
+/obj/machinery/computer{
 	dir = 8
 	},
 /turf/open/indestructible/dark,
@@ -1197,8 +1176,6 @@
 /area/deathmatch)
 "Ps" = (
 /obj/structure/table/reinforced,
-/obj/item/grenade/gas_crystal/healium_crystal,
-/obj/item/nitrium_crystal,
 /turf/open/indestructible,
 /area/deathmatch)
 "Qo" = (
@@ -1243,7 +1220,6 @@
 /area/deathmatch)
 "Sm" = (
 /obj/structure/table/reinforced,
-/obj/item/hypernoblium_crystal,
 /obj/item/grenade/gas_crystal/crystal_foam,
 /turf/open/indestructible,
 /area/deathmatch)
@@ -1260,13 +1236,8 @@
 /obj/effect/turf_decal/tile/purple/half/contrasted{
 	dir = 1
 	},
-/obj/machinery/computer/rdconsole,
+/obj/machinery/computer,
 /turf/open/indestructible/white,
-/area/deathmatch)
-"Tl" = (
-/obj/effect/turf_decal/tile/green/half/contrasted,
-/obj/machinery/portable_atmospherics/canister/water_vapor,
-/turf/open/indestructible,
 /area/deathmatch)
 "To" = (
 /obj/effect/turf_decal/tile/dark_blue/half/contrasted{
@@ -1278,9 +1249,8 @@
 /turf/open/indestructible/dark,
 /area/deathmatch)
 "TZ" = (
-/obj/effect/turf_decal/tile/yellow/fourcorners,
-/obj/machinery/portable_atmospherics/canister/zauker,
-/turf/open/indestructible,
+/obj/structure/cable,
+/turf/open/floor/plating/airless,
 /area/deathmatch)
 "Uj" = (
 /obj/effect/turf_decal/tile/green/half/contrasted{
@@ -1411,7 +1381,7 @@ jw
 jw
 jw
 jw
-fA
+TZ
 rV
 jw
 jw
@@ -1664,7 +1634,7 @@ zJ
 wM
 BV
 pL
-Tl
+dv
 Za
 rV
 jw
@@ -1846,7 +1816,7 @@ jw
 (14,1,1) = {"
 rV
 Za
-dX
+Lq
 BL
 gI
 Vp
@@ -2005,9 +1975,9 @@ XZ
 XZ
 XZ
 Os
-IU
-JZ
-TZ
+dB
+dB
+dB
 dB
 zJ
 rV
@@ -2039,9 +2009,9 @@ Vl
 Vl
 Vl
 EC
-IU
-JZ
-TZ
+dB
+dB
+dB
 dB
 zJ
 jw
@@ -2409,7 +2379,7 @@ jw
 jw
 jw
 rV
-fA
+TZ
 rV
 jw
 jw

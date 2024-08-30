@@ -1,4 +1,0 @@
-author: "SmArtKar"
-delete-after: True
-changes:
-  - bugfix: "Marine helmets no longer change their sprite to security helmets when their flashlight is toggled"
