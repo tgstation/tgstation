@@ -571,9 +571,6 @@
 	if((target.pass_flags_self & pass_flags) && !direct_target)
 		return FALSE
 	if(HAS_TRAIT(target, TRAIT_UNHITTABLE_BY_PROJECTILES))
-		if(!HAS_TRAIT(target, TRAIT_BLOCKING_PROJECTILES) && isliving(target))
-			var/mob/living/living_target = target
-			living_target.block_projectile_effects()
 		return FALSE
 	if(!ignore_source_check && firer)
 		var/mob/M = firer
