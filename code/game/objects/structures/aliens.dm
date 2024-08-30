@@ -50,13 +50,15 @@
 /obj/structure/alien/resin
 	name = "resin"
 	desc = "Looks like some kind of thick resin."
-	icon = 'icons/obj/smooth_structures/alien/resin_wall_1.dmi'
+	icon = 'icons/obj/smooth_structures/alien/resin_wall.dmi'
+	icon_state = "resin_wall-0"
+	base_icon_state = "resin_wall"
 	density = TRUE
 	opacity = TRUE
 	anchored = TRUE
 	smoothing_flags = SMOOTH_BITMASK
-	smoothing_groups = SMOOTH_GROUP_ALIEN_WALLS + SMOOTH_GROUP_TALL_WALLS
-	canSmoothWith = SMOOTH_GROUP_ALIEN_WALLS
+	smoothing_groups = SMOOTH_GROUP_ALIEN_RESIN
+	canSmoothWith = SMOOTH_GROUP_ALIEN_RESIN
 	max_integrity = 200
 	var/resintype = null
 	can_atmos_pass = ATMOS_PASS_DENSITY
@@ -64,9 +66,7 @@
 
 /obj/structure/alien/resin/Initialize(mapload)
 	. = ..()
-	icon = get_icon()
 	air_update_turf(TRUE, TRUE)
-	make_splitvis()
 
 /obj/structure/alien/resin/Destroy()
 	air_update_turf(TRUE, FALSE)
@@ -77,17 +77,15 @@
 	. = ..()
 	move_update_air(T)
 
-/obj/structure/alien/resin/proc/make_splitvis()
-	AddElement(/datum/element/split_visibility, icon, color)
-
-/obj/structure/alien/resin/proc/get_icon()
-	if(prob(50))
-		return 'icons/obj/smooth_structures/alien/resin_wall_1.dmi'
-	return 'icons/obj/smooth_structures/alien/resin_wall_2.dmi'
-
 /obj/structure/alien/resin/wall
 	name = "resin wall"
 	desc = "Thick resin solidified into a wall."
+	icon = 'icons/obj/smooth_structures/alien/resin_wall.dmi'
+	icon_state = "resin_wall-0"
+	base_icon_state = "resin_wall"
+	resintype = "wall"
+	smoothing_groups = SMOOTH_GROUP_ALIEN_WALLS + SMOOTH_GROUP_ALIEN_RESIN
+	canSmoothWith = SMOOTH_GROUP_ALIEN_WALLS
 
 /obj/structure/alien/resin/wall/block_superconductivity()
 	return 1
@@ -111,14 +109,8 @@
 	opacity = FALSE
 	max_integrity = 160
 	resintype = "membrane"
-	smoothing_groups = SMOOTH_GROUP_ALIEN_WALLS
+	smoothing_groups = SMOOTH_GROUP_ALIEN_WALLS + SMOOTH_GROUP_ALIEN_RESIN
 	canSmoothWith = SMOOTH_GROUP_ALIEN_WALLS
-
-/obj/structure/alien/resin/membrane/make_splitvis()
-	return
-
-/obj/structure/alien/resin/membrane/get_icon()
-	return 'icons/obj/smooth_structures/alien/resin_membrane.dmi'
 
 /obj/structure/alien/resin/attack_paw(mob/user, list/modifiers)
 	return attack_hand(user, modifiers)
@@ -148,7 +140,7 @@
 	base_icon_state = "weeds1"
 	max_integrity = 15
 	smoothing_flags = SMOOTH_BITMASK
-	smoothing_groups = SMOOTH_GROUP_ALIEN_WEEDS
+	smoothing_groups = SMOOTH_GROUP_ALIEN_WEEDS + SMOOTH_GROUP_ALIEN_RESIN
 	canSmoothWith = SMOOTH_GROUP_ALIEN_WEEDS + SMOOTH_GROUP_WALLS
 	///the range of the weeds going to be affected by the node
 	var/node_range = NODERANGE
