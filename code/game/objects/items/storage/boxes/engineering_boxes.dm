@@ -116,8 +116,8 @@
 /obj/item/storage/box/stickers/chief_engineer
 	name = "CE approved sticker pack"
 	desc = "With one of these stickers, inform the crew that the contraption in the corridor is COMPLETELY SAFE!"
-	illustration = "chief_engineer"
+	illustration = "label_ce"
 
 /obj/item/storage/box/stickers/chief_engineer/PopulateContents()
-	for(var/i in 1 to 5)
+	for(var/i in 1 to 3)
 		new /obj/item/sticker/chief_engineer(src)

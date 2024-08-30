@@ -125,6 +125,7 @@
 	name = "blue R sticker"
 	desc = "A sticker of FUCK THE SYSTEM, the galaxy's premiere hardcore punk band."
 	icon_state = "revhead"
+	examine_text = "It has a sticker of <b>FUCK THE SYSTEM</b>, the galaxy's premiere hardcore punk band."
 
 /obj/item/sticker/pslime
 	name = "slime plushie sticker"
@@ -155,7 +156,7 @@
 	name = "CE approved sticker"
 	icon_state = "ce_approved"
 	contraband = TRUE
-	examine_text = "This is displaying the Chief Engineer's SEAL OF APPROVAL."
+	examine_text = "It has a sticker displaying the <b>Chief Engineer's SEAL OF APPROVAL.</b>"
 
 /obj/item/sticker/clown
 	name = "clown sticker"
@@ -172,10 +173,12 @@
 /obj/item/sticker/skub
 	name = "skub sticker"
 	icon_state = "skub"
+	examine_text = "It has a sticker displaying <b>Skubtide, Stationwide!</b>"
 
 /obj/item/sticker/anti_skub
 	name = "anti-skub sticker"
 	icon_state = "anti_skub"
+	examine_text = "It has an <b>anti-skub</b> sticker."
 
 /obj/item/sticker/syndicate
 	name = "syndicate sticker"

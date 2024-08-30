@@ -226,15 +226,27 @@
 /obj/item/storage/box/stickers
 	name = "sticker pack"
 	desc = "A pack of removable stickers. Removable? What a rip off!<br>On the back, <b>DO NOT GIVE TO THE CLOWN!</b> is printed in large lettering."
+	icon = 'icons/obj/toys/stickers.dmi'
 	icon_state = "stickerpack"
+	illustration = null
 	w_class = WEIGHT_CLASS_TINY
+	var/static/list/pack_labels = list(
+		"smile",
+		"frown",
+		"heart",
+		"silentman",
+		"tider",
+		"star",
+	)
 
 /obj/item/storage/box/stickers/Initialize(mapload)
 	. = ..()
-	atom_storage.max_slots = 14
+	atom_storage.max_slots = 8
 	atom_storage.set_holdable(list(/obj/item/sticker))
-	atom_storage.max_total_storage = 14
 	atom_storage.max_specific_storage = WEIGHT_CLASS_TINY
+	if(isnull(illustration))
+		illustration = pick(pack_labels)
+		update_appearance()
 
 /obj/item/storage/box/stickers/proc/generate_non_contraband_stickers_list()
 	var/list/allowed_stickers = list()
@@ -258,6 +270,7 @@
 /obj/item/storage/box/stickers/googly
 	name = "googly eye sticker pack"
 	desc = "Turn anything and everything into something vaguely alive!"
+	illustration = "googly-alt"
 
 /obj/item/storage/box/stickers/googly/PopulateContents()
 	for(var/i in 1 to 6)
