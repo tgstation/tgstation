@@ -238,10 +238,6 @@
 		H.open_internals(H.get_item_for_held_index(2))
 	H.equipOutfit(outfit)
 
-	if(isplasmaman(H))
-		var/obj/item/mod/control/our_modsuit = locate() in H.get_equipped_items()
-		if(our_modsuit)
-			our_modsuit.install(new /obj/item/mod/module/plasma_stabilizer)
 
 /datum/antagonist/ert/greet()
 	if(!ert_team)
