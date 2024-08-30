@@ -515,9 +515,9 @@
 
 /datum/component/riding/creature/leaper/Initialize(mob/living/riding_mob, force = FALSE, ride_check_flags = NONE, potion_boost = FALSE)
 	. = ..()
-	RegisterSignal(riding_mob, COMSIG_MOVABLE_POINTED, PROC_REF(attack_pointed))
+	RegisterSignal(riding_mob, COMSIG_MOB_POINTED, PROC_REF(attack_pointed))
 
-/datum/component/riding/creature/leaper/proc/attack_pointed(mob/living/rider, atom/pointed, obj/effect/temp_visual/point/point)
+/datum/component/riding/creature/leaper/proc/attack_pointed(mob/living/rider, atom/pointed)
 	SIGNAL_HANDLER
 	if(!isclosedturf(pointed))
 		return
@@ -529,7 +529,7 @@
 
 /datum/component/riding/leaper/handle_unbuckle(mob/living/rider)
 	. = ..()
-	UnregisterSignal(rider,  COMSIG_MOVABLE_POINTED)
+	UnregisterSignal(rider,  COMSIG_MOB_POINTED)
 
 /datum/component/riding/creature/raptor
 	require_minigame = TRUE
