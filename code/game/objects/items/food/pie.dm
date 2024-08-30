@@ -316,7 +316,6 @@
 	)
 	tastes = list("nothing" = 3)
 	foodtypes = GRAIN
-	crafted_food_buff = /datum/status_effect/food/trait/mute
 
 /obj/item/food/pie/berrytart
 	name = "berry tart"
