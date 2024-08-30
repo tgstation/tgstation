@@ -9,7 +9,6 @@
 		Herbs are one such addition, and are particularly beloved."
 	icon = 'icons/obj/food/moth.dmi'
 	icon_state = "herby_cheese"
-	trash_type = /obj/item/reagent_containers/cup/bowl
 	food_reagents = list(/datum/reagent/consumable/nutriment/protein = 6)
 	tastes = list("cheese" = 1, "herbs" = 1)
 	foodtypes = DAIRY | VEGETABLES
@@ -462,7 +461,6 @@
 		it's just sorta what it's always been called."
 	icon = 'icons/obj/food/moth.dmi'
 	icon_state = "hua_mulan_congee"
-	trash_type = /obj/item/reagent_containers/cup/bowl
 	food_reagents = list(
 		/datum/reagent/consumable/nutriment = 6,
 		/datum/reagent/consumable/nutriment/vitamin = 10,
@@ -478,7 +476,6 @@
 	desc = "Polenta loaded with cheese, served with a few discs of fried eggplant and some tomato sauce. Lække!"
 	icon = 'icons/obj/food/moth.dmi'
 	icon_state = "fried_eggplant_polenta"
-	trash_type = /obj/item/reagent_containers/cup/bowl
 	food_reagents = list(
 		/datum/reagent/consumable/nutriment/protein = 12,
 		/datum/reagent/consumable/nutriment/vitamin = 6,

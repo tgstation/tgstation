@@ -243,7 +243,6 @@
 		/obj/item/food/grown/onion = 1,
 		/obj/item/food/grown/tomato = 1,
 		/obj/item/food/meat/steak = 1,
-		/obj/item/reagent_containers/cup/bowl = 1,
 	)
 	result = /obj/item/food/beef_stroganoff
 	category = CAT_MEAT
