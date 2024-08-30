@@ -286,7 +286,7 @@
 /datum/mind/proc/make_wizard()
 	if(has_antag_datum(/datum/antagonist/wizard))
 		return
-	set_assigned_role(SSjob.get_job_type(/datum/job/space_wizard))
+	set_assigned_role(SSjob.GetJobType(/datum/job/space_wizard))
 	special_role = ROLE_WIZARD
 	add_antag_datum(/datum/antagonist/wizard)
 

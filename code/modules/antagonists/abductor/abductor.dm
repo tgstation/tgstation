@@ -70,7 +70,7 @@
 	return team
 
 /datum/antagonist/abductor/on_gain()
-	owner.set_assigned_role(SSjob.get_job_type(role_job))
+	owner.set_assigned_role(SSjob.GetJobType(role_job))
 	owner.special_role = ROLE_ABDUCTOR
 	objectives += team.objectives
 	finalize_abductor()
