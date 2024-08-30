@@ -112,7 +112,7 @@
 		turf_loc.add_blueprints_preround(src)
 
 	if(hide)
-		setup_hiding()
+		RegisterSignal(src, COMSIG_OBJ_HIDE, PROC_REF(on_hide))
 
 	SSspatial_grid.add_grid_awareness(src, SPATIAL_GRID_CONTENTS_TYPE_ATMOS)
 	SSspatial_grid.add_grid_membership(src, turf_loc, SPATIAL_GRID_CONTENTS_TYPE_ATMOS)
@@ -133,18 +133,9 @@
 	return ..()
 
 /**
- * Sets up our pipe hiding logic, consolidated in one place so subtypes may override it.
- * This lets subtypes implement their own hiding logic without needing to worry about conflicts with the parent hiding logic.
+ * Handler for `COMSIG_OBJ_HIDE`, connects only if `hide` is set to `TRUE`. Calls `update_cap_visuals` on pipe and its connected nodes
  */
-/obj/machinery/atmospherics/proc/setup_hiding()
-	// Register pipe cap updating when hidden/unhidden
-	RegisterSignal(src, COMSIG_OBJ_HIDE, PROC_REF(on_hide))
-
-/**
- * Signal handler. Updates both our pipe cap visuals and those of adjacent nodes.
- * We update adjacent nodes as their pipe caps are based partially on our state, so they need updating as well.
- */
-/obj/machinery/atmospherics/proc/on_hide(datum/source)
+/obj/machinery/atmospherics/proc/on_hide(datum/source, underfloor_accessibility)
 	SHOULD_CALL_PARENT(TRUE)
 	SIGNAL_HANDLER
 
@@ -660,8 +651,7 @@
 		if(HAS_TRAIT(node, TRAIT_UNDERFLOOR))
 			continue
 
-		var/turf/node_turf = get_turf(node)
-		if(isplatingturf(node_turf) || iscatwalkturf(node_turf))
+		if(isplatingturf(get_turf(node)))
 			continue
 
 		var/connected_dir = get_dir(src, node)
