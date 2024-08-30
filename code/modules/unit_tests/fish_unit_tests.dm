@@ -76,11 +76,10 @@
 	incompatible_traits = list(/datum/fish_trait/dummy/two)
 	inheritability = 100
 	diff_traits_inheritability = 100
-	reagents_to_add = list(/datum/reagent = 10)
 
 /datum/fish_trait/dummy/apply_to_fish(obj/item/fish/fish)
-	. = ..()
 	ADD_TRAIT(fish, TRAIT_FISH_TESTING, FISH_TRAIT_DATUM)
+	fish.grind_results[/datum/reagent] = 10
 
 /datum/fish_trait/dummy/two
 	incompatible_traits = list(/datum/fish_trait/dummy)
@@ -260,17 +259,15 @@
 /datum/unit_test/explosive_fishing/Run()
 	var/datum/fish_source/source = GLOB.preset_fish_sources[/datum/fish_source/unit_test]
 	source.spawn_reward_from_explosion(run_loc_floor_bottom_left, 1)
-	if(source.fish_counts[/obj/item/wrench])
+	if(length(source.fish_table))
 		TEST_FAIL("The unit test item wasn't removed/spawned from fish_table during 'spawn_reward_from_explosion'.")
 
 /datum/fish_source/unit_test
 	fish_table = list(
 		/obj/item/wrench = 1,
-		/obj/item/screwdriver = INFINITY,
 	)
 	fish_counts = list(
 		/obj/item/wrench = 1,
-		/obj/item/screwdriver = 0,
 	)
 
 #undef TRAIT_FISH_TESTING
