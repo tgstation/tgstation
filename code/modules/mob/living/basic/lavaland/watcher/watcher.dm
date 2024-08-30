@@ -23,7 +23,6 @@
 		/obj/item/stack/sheet/sinew = 2,
 	)
 	shadow_type = SHADOW_LARGE
-
 	/// How often can we shoot?
 	var/ranged_cooldown = 3 SECONDS
 	/// What kind of beams we got?
