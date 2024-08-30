@@ -3,7 +3,7 @@
 
 /datum/action/cooldown/mob_cooldown/charge_apc
 	name = "Charge APCs"
-	button_icon = 'icons/obj/machines/APC.dmi'
+	button_icon = 'icons/obj/APC.dmi'
 	button_icon_state = "frame"
 	desc = "Give off charge to an APC."
 	cooldown_time = 5 SECONDS

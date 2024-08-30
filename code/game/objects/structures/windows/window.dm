@@ -1,7 +1,7 @@
 /obj/structure/window
 	name = "window"
 	desc = "A directional window."
-	icon = 'icons/obj/structures/smooth/windows/normal_thindow.dmi'
+	icon = 'icons/obj/smooth_structures/windows/normal_thindow.dmi'
 	icon_state = "window"
 	density = TRUE
 	layer = ABOVE_OBJ_LAYER //Just above doors
@@ -462,11 +462,11 @@
 		var/broken_icon = null
 		switch(ratio)
 			if(3)
-				broken_icon = 'icons/obj/structures/smooth/windows/window_broken_light.dmi'
+				broken_icon = 'icons/obj/smooth_structures/windows/window_broken_light.dmi'
 			if(2)
-				broken_icon = 'icons/obj/structures/smooth/windows/window_broken_medium.dmi'
+				broken_icon = 'icons/obj/smooth_structures/windows/window_broken_medium.dmi'
 			if(1)
-				broken_icon = 'icons/obj/structures/smooth/windows/window_broken_heavy.dmi'
+				broken_icon = 'icons/obj/smooth_structures/windows/window_broken_heavy.dmi'
 
 		if(broken_icon)
 			. += mutable_appearance(broken_icon, "[smoothing_junction]", -(layer+0.1))
@@ -705,7 +705,7 @@ MAPPING_DIRECTIONAL_HELPERS_EMPTY(/obj/structure/window/unanchored/spawner)
 
 /obj/structure/window/half
 	can_atmos_pass = ATMOS_PASS_YES
-	icon = 'icons/obj/structures/smooth/windows/half_thindow.dmi'
+	icon = 'icons/obj/smooth_structures/windows/half_thindow.dmi'
 
 MAPPING_DIRECTIONAL_HELPERS_EMPTY(/obj/structure/window/half)
 
@@ -717,7 +717,7 @@ MAPPING_DIRECTIONAL_HELPERS_EMPTY(/obj/structure/window/half/unanchored)
 /obj/structure/window/reinforced
 	name = "reinforced window"
 	desc = "A window that is reinforced with metal rods."
-	icon = 'icons/obj/structures/smooth/windows/reinforced_thindow.dmi'
+	icon = 'icons/obj/smooth_structures/windows/reinforced_thindow.dmi'
 	reinf = TRUE
 	heat_resistance = 1600
 	armor_type = /datum/armor/window_reinforced
@@ -849,7 +849,7 @@ MAPPING_DIRECTIONAL_HELPERS_EMPTY(/obj/structure/window/reinforced/unanchored/sp
 
 /obj/structure/window/reinforced/half
 	can_atmos_pass = ATMOS_PASS_YES
-	icon = 'icons/obj/structures/smooth/windows/reinforced_half_thindow.dmi'
+	icon = 'icons/obj/smooth_structures/windows/reinforced_half_thindow.dmi'
 
 MAPPING_DIRECTIONAL_HELPERS_EMPTY(/obj/structure/window/reinforced/half)
 
@@ -870,7 +870,7 @@ MAPPING_DIRECTIONAL_HELPERS_EMPTY(/obj/structure/window/reinforced/half/unanchor
 /obj/structure/window/plasma
 	name = "plasma window"
 	desc = "A window made out of a plasma-silicate alloy. It looks insanely tough to break and burn through."
-	icon = 'icons/obj/structures/smooth/windows/plasma_thindow.dmi'
+	icon = 'icons/obj/smooth_structures/windows/plasma_thindow.dmi'
 	reinf = FALSE
 	heat_resistance = 25000
 	armor_type = /datum/armor/window_plasma
@@ -899,7 +899,7 @@ MAPPING_DIRECTIONAL_HELPERS_EMPTY(/obj/structure/window/plasma/spawner)
 /obj/structure/window/reinforced/plasma
 	name = "reinforced plasma window"
 	desc = "A window made out of a plasma-silicate alloy and a rod matrix. It looks hopelessly tough to break and is most likely nigh fireproof."
-	icon = 'icons/obj/structures/smooth/windows/plasma_reinforced_thindow.dmi'
+	icon = 'icons/obj/smooth_structures/windows/plasma_reinforced_thindow.dmi'
 	reinf = TRUE
 	heat_resistance = 50000
 	armor_type = /datum/armor/reinforced_plasma
@@ -928,7 +928,7 @@ MAPPING_DIRECTIONAL_HELPERS_EMPTY(/obj/structure/window/reinforced/plasma/spawne
 
 /obj/structure/window/reinforced/tinted
 	name = "tinted window"
-	icon = 'icons/obj/structures/smooth/windows/tinted_thindow.dmi'
+	icon = 'icons/obj/smooth_structures/windows/tinted_thindow.dmi'
 
 /obj/structure/window/reinforced/tinted/Initialize(mapload, direct)
 	. = ..()
@@ -939,6 +939,6 @@ MAPPING_DIRECTIONAL_HELPERS_EMPTY(/obj/structure/window/reinforced/tinted/spawne
 
 /obj/structure/window/reinforced/tinted/frosted
 	name = "frosted window"
-	icon = 'icons/obj/structures/smooth/windows/frosted_thindow.dmi'
+	icon = 'icons/obj/smooth_structures/windows/frosted_thindow.dmi'
 
 MAPPING_DIRECTIONAL_HELPERS_EMPTY(/obj/structure/window/reinforced/tinted/frosted/spawner)

@@ -2970,7 +2970,7 @@
 /area/station/science/research)
 "aZt" = (
 /obj/structure/transport/linear/public{
-	icon = 'icons/obj/structures/smooth/catwalk.dmi';
+	icon = 'icons/obj/smooth_structures/catwalk.dmi';
 	base_icon_state = "catwalk";
 	icon_state = "catwalk-6"
 	},
@@ -4363,7 +4363,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron/stairs{
-	icon = 'icons/obj/structures/stairs.dmi';
+	icon = 'icons/obj/stairs.dmi';
 	icon_state = "stairs_wood"
 	},
 /area/station/service/chapel)
@@ -6145,7 +6145,7 @@
 /area/station/engineering/atmos)
 "ciR" = (
 /obj/structure/transport/linear/public{
-	icon = 'icons/obj/structures/smooth/catwalk.dmi';
+	icon = 'icons/obj/smooth_structures/catwalk.dmi';
 	base_icon_state = "catwalk";
 	icon_state = "catwalk-8"
 	},
@@ -14635,7 +14635,7 @@
 /area/space/nearstation)
 "fnO" = (
 /obj/structure/transport/linear/public{
-	icon = 'icons/obj/structures/smooth/catwalk.dmi';
+	icon = 'icons/obj/smooth_structures/catwalk.dmi';
 	base_icon_state = "catwalk";
 	icon_state = "catwalk-13"
 	},
@@ -15236,7 +15236,7 @@
 /area/station/command/heads_quarters/qm)
 "fxG" = (
 /obj/structure/transport/linear/public{
-	icon = 'icons/obj/structures/smooth/catwalk.dmi';
+	icon = 'icons/obj/smooth_structures/catwalk.dmi';
 	base_icon_state = "catwalk";
 	icon_state = "catwalk-137"
 	},
@@ -15898,7 +15898,7 @@
 /area/station/engineering/atmos)
 "fHk" = (
 /obj/structure/transport/linear/public{
-	icon = 'icons/obj/structures/smooth/catwalk.dmi';
+	icon = 'icons/obj/smooth_structures/catwalk.dmi';
 	base_icon_state = "catwalk";
 	icon_state = "catwalk-74"
 	},
@@ -21123,7 +21123,7 @@
 /area/station/asteroid)
 "hvA" = (
 /obj/structure/transport/linear/public{
-	icon = 'icons/obj/structures/smooth/catwalk.dmi';
+	icon = 'icons/obj/smooth_structures/catwalk.dmi';
 	base_icon_state = "catwalk";
 	icon_state = "catwalk-78"
 	},
@@ -21935,7 +21935,7 @@
 /area/station/maintenance/department/bridge)
 "hNC" = (
 /obj/structure/transport/linear/public{
-	icon = 'icons/obj/structures/smooth/catwalk.dmi';
+	icon = 'icons/obj/smooth_structures/catwalk.dmi';
 	base_icon_state = "catwalk";
 	icon_state = "catwalk-4"
 	},
@@ -22500,7 +22500,7 @@
 /area/station/hallway/secondary/entry)
 "hVQ" = (
 /obj/structure/transport/linear/public{
-	icon = 'icons/obj/structures/smooth/catwalk.dmi';
+	icon = 'icons/obj/smooth_structures/catwalk.dmi';
 	base_icon_state = "catwalk";
 	icon_state = "catwalk-203"
 	},
@@ -27741,7 +27741,7 @@
 /area/station/medical/treatment_center)
 "jPR" = (
 /obj/structure/transport/linear/public{
-	icon = 'icons/obj/structures/smooth/catwalk.dmi';
+	icon = 'icons/obj/smooth_structures/catwalk.dmi';
 	base_icon_state = "catwalk";
 	icon_state = "catwalk-255"
 	},
@@ -43417,7 +43417,7 @@
 /area/station/medical/chemistry/minisat)
 "puP" = (
 /obj/structure/transport/linear/public{
-	icon = 'icons/obj/structures/smooth/catwalk.dmi';
+	icon = 'icons/obj/smooth_structures/catwalk.dmi';
 	base_icon_state = "catwalk";
 	icon_state = "catwalk-3"
 	},
@@ -44286,7 +44286,7 @@
 /area/station/command/heads_quarters/cmo)
 "pJL" = (
 /obj/structure/transport/linear/public{
-	icon = 'icons/obj/structures/smooth/catwalk.dmi';
+	icon = 'icons/obj/smooth_structures/catwalk.dmi';
 	base_icon_state = "catwalk";
 	icon_state = "catwalk-157"
 	},
@@ -49458,7 +49458,7 @@
 /area/station/service/bar)
 "rzg" = (
 /obj/structure/transport/linear/public{
-	icon = 'icons/obj/structures/smooth/catwalk.dmi';
+	icon = 'icons/obj/smooth_structures/catwalk.dmi';
 	base_icon_state = "catwalk";
 	icon_state = "catwalk-55"
 	},
@@ -54485,7 +54485,7 @@
 /obj/structure/cable,
 /obj/item/radio/intercom/directional/south,
 /turf/open/floor/iron/stairs{
-	icon = 'icons/obj/structures/stairs.dmi';
+	icon = 'icons/obj/stairs.dmi';
 	icon_state = "stairs_wood";
 	dir = 4
 	},
@@ -58983,7 +58983,7 @@
 /area/station/command/heads_quarters/cmo)
 "uKA" = (
 /obj/structure/transport/linear/public{
-	icon = 'icons/obj/structures/smooth/catwalk.dmi';
+	icon = 'icons/obj/smooth_structures/catwalk.dmi';
 	base_icon_state = "catwalk";
 	icon_state = "catwalk-14"
 	},
@@ -66323,7 +66323,7 @@
 /area/station/maintenance/department/cargo)
 "xrH" = (
 /obj/structure/transport/linear/public{
-	icon = 'icons/obj/structures/smooth/catwalk.dmi';
+	icon = 'icons/obj/smooth_structures/catwalk.dmi';
 	base_icon_state = "catwalk";
 	icon_state = "catwalk-21"
 	},
