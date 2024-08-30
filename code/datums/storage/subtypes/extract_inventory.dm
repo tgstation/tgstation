@@ -5,7 +5,7 @@
 	attack_hand_interact = FALSE
 	quickdraw = FALSE
 	locked = STORAGE_FULLY_LOCKED
-	do_rustle = FALSE
+	rustle_sound = FALSE
 	silent = TRUE
 	// Snowflake so you can feed it
 	insert_on_attack = FALSE
