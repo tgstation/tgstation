@@ -61,7 +61,7 @@
 		if (isnull(signee) || !signee.client || !signee.mind || signee.ready != PLAYER_READY_TO_PLAY)
 			LAZYREMOVE(lobby_candidates, signee)
 
-	var/datum/job/our_job = SSjob.get_job_type(job_to_add)
+	var/datum/job/our_job = SSjob.GetJobType(job_to_add)
 	our_job.total_positions = position_amount
 	our_job.spawn_positions = position_amount
 	while(length(lobby_candidates) && position_amount > 0)
@@ -73,7 +73,7 @@
 	lobby_candidates = null
 
 /datum/station_trait/job/can_display_lobby_button(client/player)
-	var/datum/job/our_job = SSjob.get_job_type(job_to_add)
+	var/datum/job/our_job = SSjob.GetJobType(job_to_add)
 	return our_job.player_old_enough(player) && ..()
 
 /// Adds a gorilla to the cargo department, replacing the sloth and the mech
