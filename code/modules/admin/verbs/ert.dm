@@ -226,7 +226,7 @@
 			chosen_candidate.client.prefs.safe_transfer_prefs_to(ert_operative, is_antag = TRUE)
 			ert_operative.key = chosen_candidate.key
 
-			if(ertemplate.enforce_human || !(ert_operative.dna.species.changesource_flags & ERT_SPAWN))
+			if(ertemplate.enforce_human || !(ert_operative.dna.species.changesource_flags & ERT_SPAWN)) // Don't want any exploding plasmemes
 				ert_operative.set_species(/datum/species/human)
 
 			//Give antag datum
