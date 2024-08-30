@@ -33,7 +33,7 @@
 	SIGNAL_HANDLER
 	for(var/atom/movable/loud as anything in soapboxers)
 		UnregisterSignal(loud, COMSIG_MOB_SAY)
-	soapboxers.Cut()
+		soapboxers = list()
 
 ///Gives a mob a unique say span
 /datum/component/soapbox/proc/soapbox_speech(datum/source, list/speech_args)
