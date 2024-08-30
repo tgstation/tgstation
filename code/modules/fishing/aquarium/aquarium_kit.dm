@@ -58,7 +58,7 @@
 	name = "ominous fish case"
 
 /obj/item/storage/fish_case/syndicate/get_fish_type()
-	return pick(/obj/item/fish/donkfish, /obj/item/fish/emulsijack, /obj/item/fish/jumpercable, /obj/item/fish/chainsawfish)
+	return pick(/obj/item/fish/donkfish, /obj/item/fish/emulsijack, /obj/item/fish/jumpercable)
 
 /obj/item/storage/fish_case/tiziran
 	name = "imported fish case"

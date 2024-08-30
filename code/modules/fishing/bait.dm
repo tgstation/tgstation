@@ -61,21 +61,3 @@
 	bait_type = /obj/item/food/bait/doughball/synthetic/super
 	uses_left = 12
 
-
-/// Helper proc that checks if a bait matches identifier from fav/disliked bait list
-/proc/is_matching_bait(obj/item/bait, identifier)
-	if(ispath(identifier)) //Just a path
-		return istype(bait, identifier)
-	if(islist(identifier))
-		var/list/special_identifier = identifier
-		switch(special_identifier["Type"])
-			if("Foodtype")
-				var/obj/item/food/food_bait = bait
-				return istype(food_bait) && food_bait.foodtypes & special_identifier["Value"]
-			if("Reagent")
-				return bait.reagents?.has_reagent(special_identifier["Value"], special_identifier["Amount"], check_subtypes = TRUE)
-			else
-				CRASH("Unknown bait identifier in fish favourite/disliked list")
-	else
-		return HAS_TRAIT(bait, identifier)
-
