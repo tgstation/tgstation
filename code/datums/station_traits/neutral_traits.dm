@@ -501,6 +501,7 @@
 	desc = "A vinyl pouch to store your skub and pro-skub shirt in. A label on the back reads: \"Skubtide, Stationwide\"."
 	icon_state = "skubpack"
 	illustration = "label_skub"
+	w_class = WEIGHT_CLASS_SMALL
 
 /obj/item/storage/box/stickers/skub/Initialize(mapload)
 	. = ..()
