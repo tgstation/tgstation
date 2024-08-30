@@ -19,7 +19,7 @@
 	w_class = WEIGHT_CLASS_SMALL
 	custom_materials = list(/datum/material/iron=SMALL_MATERIAL_AMOUNT * 0.75, /datum/material/glass=SMALL_MATERIAL_AMOUNT * 0.25)
 
-	///if FALSE, broadcasting and listening don't matter and this radio shouldn't do anything
+	///if FALSE, broadcasting and listening dont matter and this radio shouldnt do anything
 	VAR_PRIVATE/on = TRUE
 	///the "default" radio frequency this radio is set to, listens and transmits to this frequency by default. wont work if the channel is encrypted
 	VAR_PRIVATE/frequency = FREQ_COMMON
@@ -77,7 +77,7 @@
 
 	/// overlay when mic is on
 	var/overlay_mic_idle = "m_idle"
-	/// overlay when speaking a message (is displayed simultaneously with speaker_active)
+	/// overlay when speaking a message (is displayed simultaniously with speaker_active)
 	var/overlay_mic_active = "m_active"
 
 	/// When set to FALSE, will avoid calling update_icon() in set_broadcasting and co.
@@ -185,7 +185,7 @@
 		..()
 
 //simple getters only because i NEED to enforce complex setter use for these vars for caching purposes but VAR_PROTECTED requires getter usage as well.
-//if another decorator is made that doesn't require getters feel free to nuke these and change these vars over to that
+//if another decorator is made that doesnt require getters feel free to nuke these and change these vars over to that
 
 ///simple getter for the on variable. necessary due to VAR_PROTECTED
 /obj/item/radio/proc/is_on()
@@ -240,7 +240,7 @@
 	if(actual_setting)
 		should_be_broadcasting = broadcasting
 
-	if(broadcasting && on) //we don't need hearing sensitivity if we aren't broadcasting, because talk_into doesn't care about hearing
+	if(broadcasting && on) //we dont need hearing sensitivity if we arent broadcasting, because talk_into doesnt care about hearing
 		become_hearing_sensitive(INNATE_TRAIT)
 	else if(!broadcasting)
 		lose_hearing_sensitivity(INNATE_TRAIT)
@@ -256,7 +256,7 @@
 	on = new_on
 
 	if(on)
-		set_broadcasting(should_be_broadcasting)//set them to whatever they're supposed to be
+		set_broadcasting(should_be_broadcasting)//set them to whatever theyre supposed to be
 		set_listening(should_be_listening)
 	else
 		set_broadcasting(FALSE, actual_setting = FALSE)//fake set them to off

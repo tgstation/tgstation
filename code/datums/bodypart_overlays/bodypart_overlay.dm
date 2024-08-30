@@ -26,7 +26,7 @@
 	)
 	return all_images
 
-///Generate the image. Needs to be overridden
+///Generate the image. Needs to be overriden
 /datum/bodypart_overlay/proc/get_image(layer, obj/item/bodypart/limb)
 	CRASH("Get image needs to be overridden")
 
@@ -42,7 +42,7 @@
 /datum/bodypart_overlay/proc/removed_from_limb(obj/item/bodypart/limb)
 	return
 
-///Use this to change the appearance (and yes you must overwrite hahahahahah) (or don't use this, I just don't want people directly changing the image)
+///Use this to change the appearance (and yes you must overwrite hahahahahah) (or dont use this, I just dont want people directly changing the image)
 /datum/bodypart_overlay/proc/set_appearance()
 	CRASH("Update appearance needs to be overridden")
 
