@@ -1,5 +1,5 @@
 /obj/item/storage/portable_chem_mixer
-	name = "portable chemical mixer"
+	name = "Portable Chemical Mixer"
 	desc = "A portable device that dispenses and mixes chemicals using the beakers inserted inside."
 	icon = 'icons/obj/medical/chemical.dmi'
 	icon_state = "portablechemicalmixer_open"
@@ -132,12 +132,10 @@
 			return
 		beaker = new_beaker
 
-/obj/item/storage/portable_chem_mixer/ui_status(mob/user, datum/ui_state/state)
-	if(loc != user)
-		return UI_CLOSE
-	return ..()
-
 /obj/item/storage/portable_chem_mixer/ui_interact(mob/user, datum/tgui/ui)
+	if(loc != user)
+		balloon_alert(user, "hold it in your hand!")
+		return
 	if(!atom_storage.locked)
 		balloon_alert(user, "lock it first!")
 		return
