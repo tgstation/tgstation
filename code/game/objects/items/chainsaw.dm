@@ -80,7 +80,7 @@
 /**
  * Handles adding components to the chainsaw. Added in Initialize()
  *
- * Applies components to the chainsaw. Added as a separate proc to allow for
+ * Applies components to the chainsaw. Added as a seperate proc to allow for
  * variance between subtypes
  */
 /obj/item/chainsaw/proc/apply_components()

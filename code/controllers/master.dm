@@ -575,7 +575,7 @@ ADMIN_VERB(cmd_controller_view_ui, R_SERVER|R_DEBUG, "Controller Overview", "Vie
 
 		//Anti-tick-contention heuristics:
 		if (init_stage == INITSTAGE_MAX)
-			//if there are multiple sleeping procs running before us hogging the cpu, we have to run later.
+			//if there are mutiple sleeping procs running before us hogging the cpu, we have to run later.
 			// (because sleeps are processed in the order received, longer sleeps are more likely to run first)
 			if (starting_tick_usage > TICK_LIMIT_MC) //if there isn't enough time to bother doing anything this tick, sleep a bit.
 				sleep_delta *= 2

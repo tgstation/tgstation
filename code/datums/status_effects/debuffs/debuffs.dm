@@ -1,11 +1,11 @@
 /// The damage healed per tick while sleeping without any modifiers
 #define HEALING_SLEEP_DEFAULT 0.2
-/// The sleep healing multiplier for organ passive healing (since organs heal slowly)
+/// The sleep healing multipler for organ passive healing (since organs heal slowly)
 #define HEALING_SLEEP_ORGAN_MULTIPLIER 5
-/// The sleep multiplier for fitness xp conversion
+/// The sleep multipler for fitness xp conversion
 #define SLEEP_QUALITY_WORKOUT_MULTIPLER 10
 
-//Largely negative status effects go here, even if they have small beneficial effects
+//Largely negative status effects go here, even if they have small benificial effects
 //STUN EFFECTS
 /datum/status_effect/incapacitating
 	tick_interval = -1
@@ -732,7 +732,7 @@
 	status_type = STATUS_EFFECT_REPLACE
 	tick_interval = 0.2 SECONDS
 	alert_type = null
-	var/msg_stage = 0//so you don't get the most intense messages immediately
+	var/msg_stage = 0//so you dont get the most intense messages immediately
 
 /datum/status_effect/fake_virus/on_apply()
 	if(HAS_TRAIT(owner, TRAIT_VIRUSIMMUNE))
