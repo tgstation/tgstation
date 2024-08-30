@@ -107,7 +107,6 @@ do { \
 	greyscale_colors = null
 
 	resistance_flags = NONE
-	body_parts_covered = HANDS|ARMS
 	armor_type = /datum/armor/gloves_chameleon
 	actions_types = list(/datum/action/item_action/chameleon/change/gloves)
 	clothing_traits = list(TRAIT_FAST_CUFFING)
@@ -219,7 +218,6 @@ do { \
 	desc = "A pair of black shoes."
 	icon_state = "sneakers"
 	inhand_icon_state = "sneakers_back"
-	body_parts_covered = FEET|LEGS
 	greyscale_colors = "#545454#ffffff"
 	greyscale_config = /datum/greyscale_config/sneakers
 	greyscale_config_worn = /datum/greyscale_config/sneakers/worn
