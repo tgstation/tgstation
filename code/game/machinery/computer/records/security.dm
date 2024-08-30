@@ -102,7 +102,6 @@
 				paid = warrant.paid,
 				time = warrant.time,
 				valid = warrant.valid,
-				voider = warrant.voider,
 			))
 
 		var/list/crimes = list()
@@ -114,7 +113,6 @@
 				name = crime.name,
 				time = crime.time,
 				valid = crime.valid,
-				voider = crime.voider,
 			))
 
 		records += list(list(
@@ -252,8 +250,8 @@
 		editing_crime.name = new_name
 		return TRUE
 
-	if(params["description"] && length(params["description"]) > 2 && params["name"] != editing_crime.name)
-		var/new_details = strip_html_full(params["description"], MAX_MESSAGE_LEN)
+	if(params["details"] && length(params["description"]) > 2 && params["name"] != editing_crime.name)
+		var/new_details = strip_html_full(params["details"], MAX_MESSAGE_LEN)
 		investigate_log("[user] edited crime \"[editing_crime.name]\" for target: \"[target.name]\", changing the details to: \"[new_details]\" from: \"[editing_crime.details]\".", INVESTIGATE_RECORDS)
 		editing_crime.details = new_details
 		return TRUE
@@ -271,9 +269,6 @@
 
 /// Only qualified personnel can edit records.
 /obj/machinery/computer/records/security/proc/has_armory_access(mob/user)
-	if (HAS_SILICON_ACCESS(user))
-		return TRUE
-
 	if(!isliving(user))
 		return FALSE
 	var/mob/living/player = user
@@ -289,22 +284,16 @@
 
 /// Voids crimes, or sets someone to discharged if they have none left.
 /obj/machinery/computer/records/security/proc/invalidate_crime(mob/user, datum/record/crew/target, list/params)
+	if(!has_armory_access(user))
+		return FALSE
 	var/datum/crime/to_void = locate(params["crime_ref"]) in target.crimes
-	var/acquitted = TRUE
 	if(!to_void)
-		to_void = locate(params["crime_ref"]) in target.citations
-		// No need to change status after invalidatation of citation
-		acquitted = FALSE
-		if(!to_void)
-			return FALSE
-
-	if(user != to_void.author && !has_armory_access(user))
 		return FALSE
 
 	to_void.valid = FALSE
-	to_void.voider = user
 	investigate_log("[key_name(user)] has invalidated [target.name]'s crime: [to_void.name]", INVESTIGATE_RECORDS)
 
+	var/acquitted = TRUE
 	for(var/datum/crime/incident in target.crimes)
 		if(!incident.valid)
 			continue
