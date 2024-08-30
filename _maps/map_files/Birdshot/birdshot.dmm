@@ -9396,7 +9396,6 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
 	dir = 8
 	},
-/obj/item/kirbyplants/random,
 /turf/open/floor/iron/white,
 /area/station/science/cytology)
 "dGi" = (
@@ -45620,9 +45619,9 @@
 /turf/open/floor/iron/cafeteria,
 /area/station/science/circuits)
 "pKM" = (
+/obj/item/kirbyplants/random,
 /obj/item/radio/intercom/directional/north,
 /obj/machinery/firealarm/directional/west,
-/obj/machinery/vending/cytopro,
 /turf/open/floor/iron/white,
 /area/station/science/cytology)
 "pKR" = (
