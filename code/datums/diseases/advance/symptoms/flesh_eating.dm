@@ -70,7 +70,7 @@ Autophagocytosis (AKA Programmed mass cell death)
 	Very noticable.
 	Lowers resistance.
 	Fast stage speed.
-	Decreases transmittability.
+	Decreases transmittablity.
 	Fatal Level.
 
 Bonus

@@ -416,7 +416,7 @@ GLOBAL_VAR(tracy_log)
 		hub_password = "SORRYNOPASSWORD"
 
 /**
- * Handles increasing the world's maxx var and initializing the new turfs and assigning them to the global area.
+ * Handles incresing the world's maxx var and intializing the new turfs and assigning them to the global area.
  * If map_load_z_cutoff is passed in, it will only load turfs up to that z level, inclusive.
  * This is because maploading will handle the turfs it loads itself.
  */
@@ -443,7 +443,7 @@ GLOBAL_VAR(tracy_log)
 	maxy = new_maxy
 	if(!map_load_z_cutoff)
 		return
-	var/area/global_area = GLOB.areas_by_type[world.area] // We're guaranteed to be touching the global area, so we'll just do this
+	var/area/global_area = GLOB.areas_by_type[world.area] // We're guarenteed to be touching the global area, so we'll just do this
 	LISTASSERTLEN(global_area.turfs_by_zlevel, map_load_z_cutoff, list())
 	for (var/zlevel in 1 to map_load_z_cutoff)
 		var/list/to_add = block(
