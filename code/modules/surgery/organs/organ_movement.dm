@@ -115,9 +115,9 @@
 	bodypart_owner = bodypart
 
 	/// DOPPLER SHIFT ADDITION - recalculate these things now, this is a fix until TG unbuggers it all up
-	if(external_bodytypes)
+	if(external_bodytypes && istype(limb_owner))
 		limb_owner.synchronize_bodytypes()
-	if(external_bodyshapes)
+	if(external_bodyshapes && istype(limb_owner))
 		limb_owner.synchronize_bodyshapes()
 	/// DOPPLER SHIFT ADDITION END
 

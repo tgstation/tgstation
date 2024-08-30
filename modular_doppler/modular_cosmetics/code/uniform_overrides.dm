@@ -189,3 +189,106 @@
 
 /datum/outfit/job/security
 	uniform = /obj/item/clothing/under/misc/doppler_uniform/security
+
+// ASSISTANTS & OTHER UNASSIGNED CREW
+/datum/outfit/job
+	uniform = /obj/item/clothing/under/misc/doppler_uniform/standard/suit/overalls
+
+/datum/colored_assistant/grey
+	jumpsuits = list(/obj/item/clothing/under/misc/doppler_uniform/standard/suit/overalls)
+	jumpskirts = list(/obj/item/clothing/under/misc/doppler_uniform/standard/suit/overalls) // TODO: jumpskirt variants for all of these
+
+/datum/colored_assistant/random
+	jumpsuits = list(/obj/item/clothing/under/misc/doppler_uniform/standard/suit/overalls/random)
+	jumpskirts = list(/obj/item/clothing/under/misc/doppler_uniform/standard/suit/overalls/random) // DITTO: see above
+
+
+
+/// BESPOKE UNIFORMS IN APPROPRIATE WARDROBE VENDORS
+// Medical
+/obj/machinery/vending/wardrobe/medi_wardrobe/Initialize(mapload)
+	products[/obj/item/clothing/under/misc/doppler_uniform/medical] = 3
+	. = ..()
+
+/obj/machinery/vending/wardrobe/chem_wardrobe/Initialize(mapload)
+	products[/obj/item/clothing/under/misc/doppler_uniform/medical] = 3
+	. = ..()
+
+/obj/machinery/vending/wardrobe/viro_wardrobe/Initialize(mapload)
+	products[/obj/item/clothing/under/misc/doppler_uniform/medical] = 3
+	. = ..()
+
+// Science
+/obj/machinery/vending/wardrobe/science_wardrobe/Initialize(mapload)
+	products[/obj/item/clothing/under/misc/doppler_uniform/science] = 3
+	. = ..()
+
+/obj/machinery/vending/wardrobe/gene_wardrobe/Initialize(mapload)
+	products[/obj/item/clothing/under/misc/doppler_uniform/science] = 3
+	. = ..()
+
+/obj/machinery/vending/wardrobe/robo_wardrobe/Initialize(mapload)
+	products[/obj/item/clothing/under/misc/doppler_uniform/science] = 3
+	. = ..()
+
+// Engineering
+/obj/machinery/vending/wardrobe/engi_wardrobe/Initialize(mapload)
+	products[/obj/item/clothing/under/misc/doppler_uniform/engineering] = 3
+	. = ..()
+
+/obj/machinery/vending/wardrobe/atmos_wardrobe/Initialize(mapload)
+	products[/obj/item/clothing/under/misc/doppler_uniform/engineering] = 3
+	. = ..()
+
+// Cargo
+/obj/machinery/vending/wardrobe/cargo_wardrobe/Initialize(mapload)
+	products[/obj/item/clothing/under/misc/doppler_uniform/cargo] = 3
+	. = ..()
+
+// Service
+/obj/machinery/vending/wardrobe/bar_wardrobe/Initialize(mapload)
+	products[/obj/item/clothing/under/misc/doppler_uniform/service] = 3
+	. = ..()
+
+/obj/machinery/vending/wardrobe/chef_wardrobe/Initialize(mapload)
+	products[/obj/item/clothing/under/misc/doppler_uniform/service] = 3
+	. = ..()
+
+/obj/machinery/vending/wardrobe/curator_wardrobe/Initialize(mapload)
+	products[/obj/item/clothing/under/misc/doppler_uniform/service] = 3
+	. = ..()
+
+//PSYCH HAS NO DEDICATED WARDROBE
+
+/obj/machinery/vending/wardrobe/chap_wardrobe/Initialize(mapload)
+	products[/obj/item/clothing/under/misc/doppler_uniform/service] = 3
+	. = ..()
+
+// Command
+/obj/machinery/vending/wardrobe/law_wardrobe/Initialize(mapload)
+	products[/obj/item/clothing/under/misc/doppler_uniform/command] = 3
+	. = ..()
+
+// Performers/casual crew
+/obj/machinery/vending/wardrobe/hydro_wardrobe/Initialize(mapload)
+	products[/obj/item/clothing/under/misc/doppler_uniform/performer] = 3
+	. = ..()
+
+// Security
+/obj/machinery/vending/wardrobe/sec_wardrobe/Initialize(mapload)
+	products[/obj/item/clothing/under/misc/doppler_uniform/security] = 3
+	. = ..()
+
+/obj/machinery/vending/wardrobe/det_wardrobe/Initialize(mapload)
+	products[/obj/item/clothing/under/misc/doppler_uniform/security] = 3
+	. = ..()
+
+// Autodrobe
+/obj/machinery/vending/autodrobe/Initialize(mapload)
+	premium[/obj/item/clothing/under/misc/doppler_uniform/standard] = 10
+	premium[/obj/item/clothing/under/misc/doppler_uniform/standard/cozy] = 10
+	premium[/obj/item/clothing/under/misc/doppler_uniform/standard/suit] = 10
+	premium[/obj/item/clothing/under/misc/doppler_uniform/standard/overalls] = 10
+	premium[/obj/item/clothing/under/misc/doppler_uniform/standard/cozy/overalls] = 10
+	premium[/obj/item/clothing/under/misc/doppler_uniform/standard/suit/overalls] = 10
+	. = ..()
