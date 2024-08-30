@@ -290,7 +290,7 @@
 	// We don't need to set being_drained back since we delete after anyways
 	loc.balloon_alert(user, "influence drained")
 
-	var/datum/antagonist/heretic/heretic_datum = GET_HERETIC(user)
+	var/datum/antagonist/heretic/heretic_datum = IS_HERETIC(user)
 	heretic_datum.knowledge_points += knowledge_to_gain
 
 	// Aaand now we delete it
