@@ -55,7 +55,7 @@
 	if(istype(target, /obj/machinery/door/firedoor) || istype(target, /obj/machinery/door/airlock))
 		var/obj/machinery/door/target_door = target
 		playsound(chassis, clampsound, 50, FALSE, -6)
-		target_door.try_to_crowbar(src, source, TRUE)
+		target_door.try_to_crowbar(src, source)
 		return ..()
 
 	if(isobj(target))
