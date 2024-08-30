@@ -269,7 +269,6 @@
 		new_traits |= pick_weight(weighted_traits)
 	caught_fish.inherit_traits(new_traits)
 	caught_fish.randomize_size_and_weight(deviation = 0.3)
-	caught_fish.progenitors = full_capitalize(caught_fish.name)
 	return caught_fish
 
 
