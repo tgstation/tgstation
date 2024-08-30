@@ -100,7 +100,7 @@
 	data["target"] = health_target
 	return data
 
-/obj/item/assembly/health/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
+/obj/item/assembly/health/ui_act(action, params)
 	. = ..()
 	if(.)
 		return .

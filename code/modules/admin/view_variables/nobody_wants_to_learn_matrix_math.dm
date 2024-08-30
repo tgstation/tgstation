@@ -42,7 +42,7 @@
 	data["pixelated"] = target.appearance_flags & PIXEL_SCALE
 	return data
 
-/datum/nobody_wants_to_learn_matrix_math/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
+/datum/nobody_wants_to_learn_matrix_math/ui_act(action, list/params)
 	. = ..()
 	if(.)
 		return

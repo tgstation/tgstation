@@ -427,7 +427,7 @@
 
 	return data
 
-/obj/machinery/mecha_part_fabricator/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
+/obj/machinery/mecha_part_fabricator/ui_act(action, list/params)
 	. = ..()
 
 	if(.)

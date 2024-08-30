@@ -276,7 +276,7 @@
 	data["initiating_field"] = initiating
 	return data
 
-/obj/machinery/modular_shield_generator/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
+/obj/machinery/modular_shield_generator/ui_act(action, params)
 	. = ..()
 	if(.)
 		return

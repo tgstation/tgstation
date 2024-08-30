@@ -280,7 +280,7 @@ GLOBAL_VAR_INIT(nt_fax_department, pick("NT HR Department", "NT Legal Department
 	data["special_faxes"] = special_networks_data
 	return data
 
-/obj/machinery/fax/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
+/obj/machinery/fax/ui_act(action, list/params)
 	. = ..()
 	if(.)
 		return
