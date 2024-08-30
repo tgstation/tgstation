@@ -169,9 +169,9 @@
 #define WIRE_LAYER (9 + TOPDOWN_LAYER)
 #define GLASS_FLOOR_LAYER (10 + TOPDOWN_LAYER)
 #define TRAM_RAIL_LAYER (11 + TOPDOWN_LAYER)
-#define ABOVE_OPEN_TURF_LAYER (12 + TOPDOWN_LAYER)
 ///catwalk overlay of /turf/open/floor/plating/catwalk_floor
-#define CATWALK_LAYER (13 + TOPDOWN_LAYER)
+#define CATWALK_LAYER (12 + TOPDOWN_LAYER)
+#define ABOVE_OPEN_TURF_LAYER (13 + TOPDOWN_LAYER)
 
 //GAME_PLANE layers
 #define BELOW_CLOSED_TURF_LAYER 2.053
