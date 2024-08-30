@@ -17,6 +17,8 @@
 	righthand_file = 'icons/mob/inhands/equipment/medical_righthand.dmi'
 	icon_state = "sampler"
 	item_flags = NOBLUDGEON
+	///Whether we have Carp DNA
+	var/carp_dna_loaded = FALSE
 	///What sources of DNA this sampler can extract from.
 	var/allowed_scans = DNA_PROBE_SCAN_PLANTS | DNA_PROBE_SCAN_ANIMALS | DNA_PROBE_SCAN_HUMANS
 	///List of all Animal DNA scanned with this sampler.
@@ -33,14 +35,10 @@
 		if(dna_vault_ref?.resolve())
 			// Weirdly we can upload to any existing DNA vault so long as we're linked to any other existing DNA vault.
 			return try_upload_dna(interacting_with, user) ? ITEM_INTERACT_SUCCESS : ITEM_INTERACT_BLOCKING
-		return try_linking_vault(interacting_with, user) ? ITEM_INTERACT_SUCCESS : ITEM_INTERACT_BLOCKING
+		else
+			return try_linking_vault(interacting_with, user) ? ITEM_INTERACT_SUCCESS : ITEM_INTERACT_BLOCKING
 
-	if (!valid_scan_target(interacting_with))
-		return NONE
-
-	if (scan_dna(interacting_with, user))
-		return ITEM_INTERACT_SUCCESS
-
+	scan_dna(interacting_with, user)
 	return ITEM_INTERACT_BLOCKING
 
 /obj/item/dna_probe/proc/try_linking_vault(obj/machinery/dna_vault/target, mob/user)
@@ -80,7 +78,7 @@
 		playsound(user, 'sound/machines/buzz-sigh.ogg', 50)
 		balloon_alert(user, "need database!")
 		return
-	if(istype(target, /obj/machinery/hydroponics))
+	if((allowed_scans & DNA_PROBE_SCAN_PLANTS) && istype(target, /obj/machinery/hydroponics))
 		var/obj/machinery/hydroponics/hydro_tray = target
 		if(!hydro_tray.myseed)
 			return
@@ -92,12 +90,11 @@
 			return
 		if(hydro_tray.plant_status != HYDROTRAY_PLANT_HARVESTABLE) // So it's bit harder.
 			to_chat(user, span_alert("Plant needs to be ready to harvest to perform full data scan.")) //Because space dna is actually magic
-			return
+			return .
 		stored_dna_plants[hydro_tray.myseed.type] = TRUE
 		playsound(src, 'sound/misc/compiler-stage2.ogg', 50)
 		balloon_alert(user, "data added")
-		return TRUE
-	else if(ishuman(target))
+	else if((allowed_scans & DNA_PROBE_SCAN_HUMANS) && ishuman(target))
 		var/mob/living/carbon/human/human_target = target
 		if(our_vault.human_dna[human_target.dna.unique_identity])
 			to_chat(user, span_notice("Humanoid data already present in vault storage."))
@@ -111,40 +108,23 @@
 		stored_dna_human[human_target.dna.unique_identity] = TRUE
 		playsound(src, 'sound/misc/compiler-stage2.ogg', 50)
 		balloon_alert(user, "data added")
-		return TRUE
 
-	if(!isliving(target))
-		return
-
-	var/static/list/non_simple_animals = typecacheof(list(/mob/living/carbon/alien))
-	if(!isanimal_or_basicmob(target) && !is_type_in_typecache(target, non_simple_animals) && !ismonkey(target))
-		return
-
-	var/mob/living/living_target = target
-	if(our_vault.animal_dna[living_target.type])
-		to_chat(user, span_notice("Animal data already present in vault storage."))
-		return
-	if(stored_dna_animal[living_target.type])
-		to_chat(user, span_notice("Animal data already present in local storage."))
-		return
-	if(!(living_target.mob_biotypes & MOB_ORGANIC))
-		to_chat(user, span_alert("No compatible DNA detected."))
-		return .
-	stored_dna_animal[living_target.type] = TRUE
-	playsound(src, 'sound/misc/compiler-stage2.ogg', 50)
-	balloon_alert(user, "data added")
-	return TRUE
-
-/obj/item/dna_probe/proc/valid_scan_target(atom/target)
-	if((allowed_scans & DNA_PROBE_SCAN_PLANTS) && istype(target, /obj/machinery/hydroponics))
-		return TRUE
-	if((allowed_scans & DNA_PROBE_SCAN_HUMANS) && ishuman(target))
-		return TRUE
-	if((allowed_scans & DNA_PROBE_SCAN_ANIMALS) && isliving(target))
+	else if((allowed_scans & DNA_PROBE_SCAN_ANIMALS) && isliving(target))
 		var/static/list/non_simple_animals = typecacheof(list(/mob/living/carbon/alien))
 		if(isanimal_or_basicmob(target) || is_type_in_typecache(target, non_simple_animals) || ismonkey(target))
-			return TRUE
-	return FALSE
+			var/mob/living/living_target = target
+			if(our_vault.animal_dna[living_target.type])
+				to_chat(user, span_notice("Animal data already present in vault storage."))
+				return
+			if(stored_dna_animal[living_target.type])
+				to_chat(user, span_notice("Animal data already present in local storage."))
+				return
+			if(!(living_target.mob_biotypes & MOB_ORGANIC))
+				to_chat(user, span_alert("No compatible DNA detected."))
+				return .
+			stored_dna_animal[living_target.type] = TRUE
+			playsound(src, 'sound/misc/compiler-stage2.ogg', 50)
+			balloon_alert(user, "data added")
 
 #define CARP_MIX_DNA_TIMER (15 SECONDS)
 
@@ -152,8 +132,6 @@
 /obj/item/dna_probe/carp_scanner
 	name = "Carp DNA Sampler"
 	desc = "Can be used to take chemical and genetic samples of animals."
-	///Whether we have Carp DNA
-	var/carp_dna_loaded = FALSE
 
 /obj/item/dna_probe/carp_scanner/examine_more(mob/user)
 	. = ..()
@@ -166,11 +144,6 @@
 		balloon_alert(user, "dna scanned")
 	else
 		return ..()
-
-/obj/item/dna_probe/carp_scanner/valid_scan_target(atom/target)
-	if (istype(target, /mob/living/basic/carp))
-		return TRUE
-	return ..()
 
 /obj/item/dna_probe/carp_scanner/attack_self(mob/user, modifiers)
 	. = ..()
