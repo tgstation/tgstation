@@ -79,7 +79,7 @@
 	))
 
 /obj/item/storage/belt/utility/chief
-	name = "chief engineer's toolbelt"
+	name = "\improper Chief Engineer's toolbelt" //"the Chief Engineer's toolbelt", because "Chief Engineer's toolbelt" is not a proper noun
 	desc = "Holds tools, looks snazzy."
 	icon_state = "utility_ce"
 	inhand_icon_state = "utility_ce"
