@@ -406,10 +406,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer4,
 /turf/open/floor/plating,
 /area/ruin/powered/beach)
-"mv" = (
-/obj/effect/spawner/message_in_a_bottle/low_prob,
-/turf/open/misc/beach/coast,
-/area/ruin/powered/beach)
 "mw" = (
 /obj/structure/flora/coconuts,
 /turf/open/misc/beach/sand,
@@ -989,7 +985,6 @@
 	dir = 1
 	},
 /obj/machinery/light/directional/south,
-/obj/effect/spawner/message_in_a_bottle/low_prob,
 /turf/open/misc/beach/coast/corner{
 	dir = 8
 	},
@@ -1995,7 +1990,7 @@ bG
 bL
 VI
 VI
-mv
+yT
 pz
 Eu
 pz
