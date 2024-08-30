@@ -181,7 +181,7 @@
 	name = "knucklebones rules"
 	default_raw_text = "How to play knucklebones<br>\
 	<ul>\
-	<li>Make two 3x3 grids right next to each other using anything you can find to mark the ground. I like using the bartenders hologram projector.</li>\
+	<li>Make two 3x3 grids right next to eachother using anything you can find to mark the ground. I like using the bartenders hologram projector.</li>\
 	<li>Take turns rolling the dice and moving the dice into one of the three rows on your 3x3 grid.</li>\
 	<li>Your goal is to get the most points by putting die of the same number in the same row.</li>\
 	<li>If you have two of the same die in the same row, you will add them together and then times the sum by two. Then add that to the rest of the die.</li>\
