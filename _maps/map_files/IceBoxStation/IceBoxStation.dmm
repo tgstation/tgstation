@@ -73375,7 +73375,6 @@
 /obj/structure/railing/corner{
 	dir = 8
 	},
-/obj/structure/closet/secure_closet/cytology,
 /turf/open/floor/iron/smooth_large,
 /area/station/science/cytology)
 "vvu" = (
@@ -82557,7 +82556,7 @@
 /area/station/medical/chemistry)
 "ycx" = (
 /obj/structure/railing,
-/obj/machinery/vending/cytopro,
+/obj/structure/closet/secure_closet/cytology,
 /turf/open/floor/iron/smooth_large,
 /area/station/science/cytology)
 "ycA" = (
