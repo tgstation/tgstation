@@ -237,7 +237,7 @@
 
 #define WITHIN_RANGE(id, table) (id >= 1 && id <= length(table))
 
-/obj/item/circuit_component/module/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
+/obj/item/circuit_component/module/ui_act(action, list/params)
 	. = ..()
 	if(.)
 		return

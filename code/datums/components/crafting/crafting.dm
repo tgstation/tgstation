@@ -537,7 +537,7 @@
 	return TRUE
 
 
-/datum/component/personal_crafting/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
+/datum/component/personal_crafting/ui_act(action, params)
 	. = ..()
 	if(.)
 		return

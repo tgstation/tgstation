@@ -331,7 +331,7 @@
 	data["contraband_enabled"] = !!n_spect
 	return data
 
-/obj/machinery/scanner_gate/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
+/obj/machinery/scanner_gate/ui_act(action, params)
 	. = ..()
 	if(.)
 		return
