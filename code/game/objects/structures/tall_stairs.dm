@@ -1,6 +1,6 @@
 /obj/structure/tall_stairs
 	name = "stairs"
-	icon = 'icons/obj/structures/tall.dmi'
+	icon = 'icons/obj/structures_tall.dmi'
 	icon_state = "stairs_start"
 	anchored = TRUE
 	move_resist = INFINITY

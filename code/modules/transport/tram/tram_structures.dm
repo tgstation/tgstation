@@ -22,7 +22,7 @@
 /obj/structure/tram
 	name = "tram wall"
 	desc = "A lightweight titanium composite structure with titanium silicate panels."
-	icon = 'icons/obj/structures/tram/tram_structure.dmi'
+	icon = 'icons/obj/tram/tram_structure.dmi'
 	icon_state = "tram-part-0"
 	base_icon_state = "tram-part"
 	max_integrity = 150
@@ -109,7 +109,7 @@
 	if(ratio > 75)
 		return
 
-	damage_overlay = mutable_appearance('icons/turf/damaged.dmi', "damage[ratio]", -(layer + 0.1))
+	damage_overlay = mutable_appearance('icons/obj/structures.dmi', "damage[ratio]", -(layer + 0.1))
 	. += damage_overlay
 
 /obj/structure/tram/attack_hand(mob/living/user, list/modifiers)
@@ -431,7 +431,7 @@
 
 /obj/structure/tram/spoiler
 	name = "tram spoiler"
-	icon = 'icons/obj/structures/tram/tram_structure.dmi'
+	icon = 'icons/obj/tram/tram_structure.dmi'
 	desc = "Nanotrasen bought the luxury package under the impression titanium spoilers make the tram go faster. They're just for looks, or potentially stabbing anybody who gets in the way."
 	icon_state = "tram-spoiler-retracted"
 	max_integrity = 400
