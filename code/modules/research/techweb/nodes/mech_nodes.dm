@@ -254,7 +254,7 @@
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_5_POINTS)
 
 /datum/techweb_node/mech_equip_bluespace
-	id = TECHWEB_NODE_MECH_EQUIP_BLUESPACE
+	id = TECHWEB_NODE_BLUESPACE
 	display_name = "Bluespace Exosuit Equipment"
 	description = "An array of equipment empowered by bluespace, providing unmatched mobility and utility."
 	prereq_ids = list(TECHWEB_NODE_MECH_INFILTRATOR, TECHWEB_NODE_BLUESPACE_TRAVEL)
