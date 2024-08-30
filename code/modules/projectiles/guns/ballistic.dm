@@ -451,7 +451,7 @@
 		if (sawoff(user, A))
 			return
 
-	if(misfire_probability && istype(A, /obj/item/stack/sheet/cloth))
+	if(can_misfire && istype(A, /obj/item/stack/sheet/cloth))
 		if(guncleaning(user, A))
 			return
 
@@ -463,8 +463,7 @@
 	return TRUE
 
 /obj/item/gun/ballistic/process_fire(atom/target, mob/living/user, message = TRUE, params = null, zone_override = "", bonus_spread = 0)
-	var/could_it_misfire = (can_misfire && chambered.can_misfire != FALSE) || chambered.can_misfire
-	if(target != user && chambered.loaded_projectile && could_it_misfire && prob(misfire_probability) && blow_up(user))
+	if(target != user && chambered.loaded_projectile && can_misfire && prob(misfire_probability) && blow_up(user))
 		to_chat(user, span_userdanger("[src] misfires!"))
 		return
 
@@ -474,11 +473,8 @@
 	return ..()
 
 /obj/item/gun/ballistic/shoot_live_shot(mob/living/user, pointblank = 0, atom/pbtarget = null, message = 1)
-	if(can_misfire && chambered.can_misfire != FALSE)
+	if(can_misfire)
 		misfire_probability += misfire_percentage_increment
-		misfire_probability = clamp(misfire_probability, 0, misfire_probability_cap)
-	if(chambered.can_misfire)
-		misfire_probability += chambered.misfire_increment
 		misfire_probability = clamp(misfire_probability, 0, misfire_probability_cap)
 	return ..()
 
@@ -583,9 +579,6 @@
 		. += span_danger("You get the feeling this might explode if you fire it...")
 		if(misfire_probability > 0)
 			. += span_danger("Given the state of the gun, there is a [misfire_probability]% chance it'll misfire.")
-	else if(misfire_probability > 0)
-		. += span_warning("You get a feeling this might explode if you fire it with the wrong ammunitions...")
-		. += span_warning("Given the state of the gun, there is a [EXAMINE_HINT("[misfire_probability]%")] chance it'll misfire.")
 
 ///Gets the number of bullets in the gun
 /obj/item/gun/ballistic/proc/get_ammo(countchambered = TRUE)
