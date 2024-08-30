@@ -824,7 +824,7 @@
 	AddElement(/datum/element/update_icon_updates_onmob)
 
 	atom_storage.max_slots = 1
-	atom_storage.do_rustle = FALSE
+	atom_storage.rustle_sound = FALSE
 	atom_storage.max_specific_storage = WEIGHT_CLASS_BULKY
 	atom_storage.set_holdable(/obj/item/melee/sabre)
 	atom_storage.click_alt_open = FALSE
@@ -872,7 +872,7 @@
 	AddElement(/datum/element/update_icon_updates_onmob)
 
 	atom_storage.max_slots = 1
-	atom_storage.do_rustle = FALSE
+	atom_storage.rustle_sound = FALSE
 	atom_storage.max_specific_storage = WEIGHT_CLASS_BULKY
 	atom_storage.set_holdable(/obj/item/melee/parsnip_sabre)
 	atom_storage.click_alt_open = FALSE
