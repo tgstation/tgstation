@@ -10,5 +10,3 @@
 // Sends a supply pod to the buyer's location, showy.
 #define SHIPPING_METHOD_SUPPLYPOD "Supply Pod"
 
-/// The percentage on gains that's removed when selling an item through the blackmarket with the LTSRBT
-#define MARKET_WITHHOLDING_TAX 0.15
