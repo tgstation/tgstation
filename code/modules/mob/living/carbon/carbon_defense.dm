@@ -650,12 +650,6 @@
 
 /// Randomise a body part and organ of this mob
 /mob/living/carbon/proc/bioscramble(scramble_source)
-	if(!(mob_biotypes & MOB_ORGANIC))
-		return FALSE
-
-	if (HAS_TRAIT(src, TRAIT_GENELESS))
-		return FALSE
-
 	if (run_armor_check(attack_flag = BIO, absorb_text = "Your armor protects you from [scramble_source]!") >= 100)
 		return FALSE
 
