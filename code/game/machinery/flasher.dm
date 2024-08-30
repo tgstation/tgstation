@@ -32,7 +32,7 @@ WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/machinery/flasher)
 	name = "Thunderdome Flash"
 
 /obj/machinery/flasher/Initialize(mapload, ndir = 0, built = 0)
-	. = ..()
+	. = ..() // ..() is EXTREMELY IMPORTANT, never forget to add it
 	if(!built)
 		bulb = new(src)
 	if(should_wallmount)
