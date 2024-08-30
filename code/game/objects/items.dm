@@ -39,12 +39,6 @@
 	///The config type to use for greyscaled belt overlays. Both this and greyscale_colors must be assigned to work.
 	var/greyscale_config_belt
 
-	/// Greyscale config used when generating digitigrade versions of the sprite.
-	var/digitigrade_greyscale_config_worn
-	/// Greyscale colors used when generating digitigrade versions of the sprite.
-	/// Optional - If not set it will default to normal greyscale colors, or approximate them if those are unset as well
-	var/digitigrade_greyscale_colors
-
 	/* !!!!!!!!!!!!!!! IMPORTANT !!!!!!!!!!!!!!
 
 		IF YOU ADD MORE ICON CRAP TO THIS
