@@ -2,7 +2,7 @@
  * Slightly hidden.
  * Lowers resistance tremendously.
  * Decreases stage speed tremendously.
- * Decreases transmittability tremendously.
+ * Decreases transmittablity tremendously.
  * Fatal level
  * Bonus: Ignites infected mob.
  */

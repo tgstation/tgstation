@@ -1,5 +1,5 @@
 /**
- * Logs a message to the mob_tags log, including the mobs tag
+ * Logs a mesage to the mob_tags log, including the mobs tag
  * Arguments:
  * * text - text to log.
  */
