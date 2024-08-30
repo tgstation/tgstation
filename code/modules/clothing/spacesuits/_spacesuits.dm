@@ -24,7 +24,6 @@
 	flags_cover = HEADCOVERSEYES | HEADCOVERSMOUTH | PEPPERPROOF
 	resistance_flags = NONE
 	dog_fashion = null
-	slowdown = 0.5
 
 /datum/armor/helmet_space
 	bio = 100
@@ -48,7 +47,7 @@
 		/obj/item/tank/internals,
 		/obj/item/tank/jetpack/oxygen/captain,
 		)
-	slowdown = 0.5
+	slowdown = 1
 	armor_type = /datum/armor/suit_space
 	flags_inv = HIDEGLOVES|HIDESHOES|HIDEJUMPSUIT
 	cold_protection = CHEST | GROIN | LEGS | FEET | ARMS | HANDS
