@@ -155,9 +155,9 @@
 	embed_falloff_tile = -3
 	shrapnel_type = /obj/item/ammo_casing/rebar/hydrogen
 
-/obj/projectile/bullet/rebar/hydrogen/Initialize(mapload)
+/obj/projectile/bullet/rebar/hydrogen/Impact(atom/A)
 	. = ..()
-	ADD_TRAIT(src, TRAIT_ALWAYS_HIT_ZONE, REF(src))
+	def_zone = ran_zone(def_zone, clamp(205-(7*get_dist(get_turf(A), starting)), 5, 100))
 
 /datum/embed_data/rebar_hydrogen
 	embed_chance = 0
