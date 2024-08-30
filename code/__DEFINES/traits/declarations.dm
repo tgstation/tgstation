@@ -1119,8 +1119,6 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 
 /// Currently fishing
 #define TRAIT_GONE_FISHING "fishing"
-/// Currently fishing, and it's the active minigame phase
-#define TRAIT_ACTIVELY_FISHING "actively_fishing"
 
 /// Makes a character be better/worse at tackling depending on their wing's status
 #define TRAIT_TACKLING_WINGED_ATTACKER "tacking_winged_attacker"
