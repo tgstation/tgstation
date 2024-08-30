@@ -707,7 +707,7 @@
 /area/centcom/central_command_areas/admin)
 "de" = (
 /obj/effect/landmark/start/new_player,
-/turf/cordon,
+/turf/closed/indestructible/start_area,
 /area/misc/start)
 "df" = (
 /obj/structure/table/wood,
@@ -1292,7 +1292,7 @@
 /turf/open/floor/catwalk_floor,
 /area/centcom/central_command_areas/evacuation/ship)
 "fX" = (
-/turf/cordon,
+/turf/closed/indestructible/start_area,
 /area/misc/start)
 "fZ" = (
 /obj/effect/landmark/ctf,
