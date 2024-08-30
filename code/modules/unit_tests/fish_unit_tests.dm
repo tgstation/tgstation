@@ -1,11 +1,15 @@
 #define TRAIT_FISH_TESTING "made_you_read_this"
+#define FISH_REAGENT_AMOUNT (10 * FISH_WEIGHT_GRIND_TO_BITE_MULT)
 
 ///Checks that things associated with fish size and weight work correctly.
 /datum/unit_test/fish_size_weight
 
 /datum/unit_test/fish_size_weight/Run()
 	var/obj/item/fish/fish = allocate(/obj/item/fish/testdummy)
-	TEST_ASSERT_EQUAL(fish.grind_results[/datum/reagent/fishdummy], 20, "the test fish has [fish.grind_results[/datum/reagent/fishdummy]] units of the test reagent when it should have 20")
+	var/datum/reagent/reagent = fish.reagents?.has_reagent(/datum/reagent/fishdummy)
+	TEST_ASSERT(reagent, "the test fish doesn't have the test reagent.[fish.reagents ? "" : " It doesn't even have a reagent holder."]")
+	var/expected_units = FISH_REAGENT_AMOUNT * fish.weight / FISH_WEIGHT_BITE_DIVISOR
+	TEST_ASSERT_EQUAL(reagent.volume, expected_units, "the test fish has [reagent.volume] units of the test reagent when it should have [expected_units]")
 	TEST_ASSERT_EQUAL(fish.w_class, WEIGHT_CLASS_BULKY, "the test fish has w_class of [fish.w_class] when it should have been [WEIGHT_CLASS_BULKY]")
 	var/expected_num_fillets = round(FISH_SIZE_BULKY_MAX / FISH_FILLET_NUMBER_SIZE_DIVISOR * 2, 1)
 	TEST_ASSERT_EQUAL(fish.num_fillets, expected_num_fillets, "the test fish has [fish.num_fillets] number of fillets when it should have [expected_num_fillets]")
@@ -62,7 +66,7 @@
 ///dummy fish item used for the tests, as well with related subtypes and datums.
 /obj/item/fish/testdummy
 	grind_results = list()
-	average_weight = FISH_GRIND_RESULTS_WEIGHT_DIVISOR * 2
+	average_weight = FISH_PROCESS_RESULTS_WEIGHT_DIVISOR * 2
 	average_size = FISH_SIZE_BULKY_MAX
 	num_fillets = 2
 	fish_traits = list(/datum/fish_trait/dummy)
@@ -76,7 +80,7 @@
 	incompatible_traits = list(/datum/fish_trait/dummy/two)
 	inheritability = 100
 	diff_traits_inheritability = 100
-	reagents_to_add = list(/datum/reagent/fishdummy = 10)
+	reagents_to_add = list(/datum/reagent/fishdummy = FISH_REAGENT_AMOUNT)
 
 /datum/fish_trait/dummy/apply_to_fish(obj/item/fish/fish)
 	. = ..()
@@ -324,5 +328,6 @@
 /obj/item/fish/testdummy/food
 	average_weight = FISH_WEIGHT_BITE_DIVISOR * 2 //One bite, it's death; the other, it's gone.
 
+#undef FISH_REAGENT_AMOUNT
 #undef TRAIT_FISH_TESTING
 

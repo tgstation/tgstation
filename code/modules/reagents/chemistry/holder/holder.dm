@@ -590,10 +590,11 @@
  */
 /datum/reagents/proc/multiply_reagents(multiplier = 1)
 	var/list/cached_reagents = reagent_list
-	if(!total_volume)
+	if(!total_volume || multiplier == 1)
 		return
 	var/change = (multiplier - 1) //Get the % change
 	for(var/datum/reagent/reagent as anything in cached_reagents)
+		_multiply_reagent(reagent, change)
 		if(change > 0)
 			add_reagent(reagent.type, reagent.volume * change, added_purity = reagent.purity, ignore_splitting = reagent.chemical_flags & REAGENT_DONOTSPLIT)
 		else
@@ -601,6 +602,28 @@
 
 	update_total()
 	handle_reactions()
+
+/**
+ * Multiplies a single inside this holder by a specific amount
+ * Arguments
+ * * reagent_path - The path of the reagent we want to multiply the volume of.
+ * * multiplier - the amount to multiply each reagent by
+ */
+/datum/reagents/proc/multiply_single_reagent(reagent_path, multiplier = 1)
+	var/datum/reagent/reagent = locate(reagent_path) in reagent_list
+	if(!reagent || multiplier == 1)
+		return
+	var/change = (multiplier - 1) //Get the % change
+	_multiply_reagent(reagent, change)
+	update_total()
+	handle_reactions()
+
+///Proc containing the operations called by both multiply_reagents() and multiply_single_reagent()
+/datum/reagents/proc/_multiply_reagent(datum/reagent/reagent, change)
+	if(change > 0)
+		add_reagent(reagent.type, reagent.volume * change, added_purity = reagent.purity, ignore_splitting = reagent.chemical_flags & REAGENT_DONOTSPLIT)
+	else
+		remove_reagent(reagent.type, abs(reagent.volume * change)) //absolute value to prevent a double negative situation (removing -50% would be adding 50%)
 
 /// Updates [/datum/reagents/var/total_volume]
 /datum/reagents/proc/update_total()

@@ -134,8 +134,10 @@
 #define FISH_WEIGHT_SLOWDOWN_EXPONENT 0.54
 ///Used to calculate the force of the fish by comparing (1 + log(weight/this_define)) and the w_class of the item.
 #define FISH_WEIGHT_FORCE_DIVISOR 250
-///Used to calculate how many bites a fish can take before being deleted.
-#define FISH_WEIGHT_BITE_DIVISOR (FISH_GRIND_RESULTS_WEIGHT_DIVISOR * 0.4)
+///The multiplier used in the FISH_WEIGHT_BITE_DIVISOR define
+#define FISH_WEIGHT_GRIND_TO_BITE_MULT 0.4
+///Used to calculate how many bites a fish can take and therefore the amount of reagents it has.
+#define FISH_WEIGHT_BITE_DIVISOR (FISH_GRIND_RESULTS_WEIGHT_DIVISOR * FISH_WEIGHT_GRIND_TO_BITE_MULT)
 
 ///The breeding timeout for newly instantiated fish is multiplied by this.
 #define NEW_FISH_BREEDING_TIMEOUT_MULT 2

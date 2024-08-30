@@ -12,8 +12,6 @@
 	attack_verb_continuous = list("slaps", "whacks")
 	attack_verb_simple = list("slap", "whack")
 	hitsound = 'sound/weapons/slap.ogg'
-	///The grind results of the fish. They scale with the weight of the fish.
-	grind_results = list(/datum/reagent/blood = 5, /datum/reagent/consumable/liquidgibs = 5)
 	obj_flags = UNIQUE_RENAME
 	item_flags = IMMUTABLE_SLOW|SLOWS_WHILE_IN_HAND
 
@@ -150,8 +148,8 @@
 	/**
 	 * If you wonder why this isn't being tracked by the edible component instead:
 	 * We reset the this value when revived, and slowly chip it away as we heal.
-	 * This way we have a fairly consistent amount of bites that we can get from
-	 * both live (ouch) and dead fish if they haven't been nibbled before.
+	 * Of course, it would be daunting to get this to be handled by the edible component
+	 * given its complexity.
 	 */
 	var/bites_amount = 0
 
@@ -164,6 +162,7 @@
 		RegisterSignal(src, COMSIG_ATOM_TEMPORARY_ANIMATION_START, PROC_REF(on_temp_animation))
 	check_environment()
 	if(status != FISH_DEAD)
+		ADD_TRAIT(src, TRAIT_UNCOMPOSTABLE, REF(src)) //Composting a food that is not real food wouldn't work anyway.
 		START_PROCESSING(SSobj, src)
 
 	//stops new fish from being able to reproduce right away.
@@ -176,22 +175,29 @@
 		progenitors = full_capitalize(name) //default value
 
 	register_evolutions()
-	make_edible()
 
 ///Main proc that makes the fish edible.
-/obj/item/fish/proc/make_edible()
+/obj/item/fish/proc/make_edible(weight_val)
 	var/foodtypes = get_food_types()
 	if(foodtypes & RAW)
 		AddComponent(/datum/component/infective, GLOB.floor_diseases.Copy(), weak = TRUE, weak_infection_chance = PERFORM_ALL_TESTS(edible_fish) ? 100 : 15)
+	else
+		AddComponent(/datum/component/germ_sensitive)
+	var/bites_to_finish = weight_val / FISH_WEIGHT_BITE_DIVISOR
+	create_reagents(INFINITY) //We'll set this to the total volume of the reagents right after generate_fish_reagents() is over
+	generate_fish_reagents(bites_to_finish)
+	reagents.maximum_volume = reagents.total_volume
 	AddComponent(/datum/component/edible, \
-		food_flags = FOOD_NO_EXAMINE|FOOD_REAGENTLESS|FOOD_NO_BITECOUNT, \
+		food_flags = FOOD_NO_EXAMINE|FOOD_NO_BITECOUNT, \
 		foodtypes = foodtypes, \
+		volume = reagents.total_volume, \
 		eat_time = 1.5 SECONDS, \
-		junkiness = 10, \
+		bite_consumption = reagents.total_volume / bites_to_finish, \
 		after_eat = CALLBACK(src, PROC_REF(after_eat)), \
 		check_liked = CALLBACK(src, PROC_REF(check_liked)), \
+		reagent_purity = 1, \
 	)
-	RegisterSignals(src, list(COMSIG_ITEM_FRIED, TRAIT_FOOD_BBQ_GRILLED), PROC_REF(on_fish_cooked))
+	RegisterSignals(src, list(COMSIG_ITEM_FRIED, COMSIG_ITEM_BARBEQUE_GRILLED), PROC_REF(on_fish_cooked))
 
 ///A proc that returns the food types the edible component has when initialized.
 /obj/item/fish/proc/get_food_types()
@@ -200,15 +206,54 @@
 ///Kill the fish, remove the raw and gore food types, and the infectiveness too if not under-cooked.
 /obj/item/fish/proc/on_fish_cooked(datum/source, cooking_time)
 	SIGNAL_HANDLER
+	SHOULD_NOT_OVERRIDE(TRUE)
 	adjust_health(0)
+
+	//Remove the blood from the reagents holder and reward the player with some extra nutriment added to the fish.
+	var/datum/reagent/consumable/nutriment/protein/protein = reagents.has_reagent(/datum/reagent/consumable/nutriment/protein, check_subtypes = TRUE)
+	var/datum/reagent/blood/blood = reagents.has_reagent(/datum/reagent/blood)
+	var/old_blood_volume = blood?.volume
+	reagents.del_reagent(/datum/reagent/blood)
+
+	///Make space for the additional nutriment
+	var/volume_mult = 1
+	if(bites_amount)
+		var/initial_bites_left = (weight / FISH_WEIGHT_BITE_DIVISOR)
+		var/bites_left = initial_bites_left - bites_amount
+		volume_mult =  initial_bites_left / bites_left
+	adjust_reagents_capacity((protein?.volume - old_blood_volume) * volume_mult)
+
+	///Add the extra nutriment
+	if(protein)
+		reagents.multiply_single_reagent(/datum/reagent/consumable/nutriment/protein, 2)
+
 	var/datum/component/edible/edible = GetComponent(/datum/component/edible)
 	edible.foodtypes &= ~(RAW|GORE)
 	if(cooking_time >= FISH_SAFE_COOKING_DURATION)
-		qdel(GetComponent(/datum/component/infective))
+		well_cooked()
+
+	///override the signals so they don't mess with blood and proteins again.
+	RegisterSignals(src, list(COMSIG_ITEM_FRIED, COMSIG_ITEM_BARBEQUE_GRILLED), PROC_REF(on_fish_cooked_again), TRUE)
+
+///Just kill the fish, again, and perhaps remove the infective comp.
+/obj/item/fish/proc/on_fish_cooked_again(datum/source, cooking_time)
+	SIGNAL_HANDLER
+	adjust_health(0)
+	if(cooking_time >= FISH_SAFE_COOKING_DURATION)
+		well_cooked()
+
+///The fish is well cooked. Change how the fish tastes, remove the infective comp and add the relative trait.
+/obj/item/fish/proc/well_cooked()
+	qdel(GetComponent(/datum/component/infective))
+	AddComponent(/datum/component/germ_sensitive)
+	ADD_TRAIT(src, TRAIT_FISH_WELL_COOKED, INNATE_TRAIT)
+	var/datum/reagent/consumable/nutriment/protein/protein = reagents.has_reagent(/datum/reagent/consumable/nutriment/protein, check_subtypes = TRUE)
+	if(protein)
+		protein.data = get_fish_taste_cooked()
 
 ///Checks if the fish is liked or not when eaten by a human.
 /obj/item/fish/proc/check_liked(mob/living/eater)
-	if(HAS_TRAIT(eater, TRAIT_PACIFISM))
+	if(HAS_TRAIT(eater, TRAIT_PACIFISM) && (status == FISH_ALIVE ||HAS_MIND_TRAIT(eater, TRAIT_NAIVE)))
 		eater.add_mood_event("eating_fish", /datum/mood_event/pacifist_eating_fish_item)
 		return FOOD_TOXIC
 	if(HAS_TRAIT(eater, TRAIT_AGEUSIA))
@@ -222,41 +267,82 @@
  */
 /obj/item/fish/proc/after_eat(mob/living/eater, mob/living/feeder)
 	SHOULD_CALL_PARENT(TRUE)
-	var/datum/reagents/abstract_holder
-	if(!abstract_holder)
-		abstract_holder = new (25, NO_REACT)
-	var/list/reagents_to_add = get_edible_reagents_to_add()
-	SEND_SIGNAL(src, COMSIG_EDIBLE_FISH_EATEN, reagents_to_add, eater)
-	abstract_holder.add_reagent_list(reagents_to_add, added_purity = 1)
-	var/datum/reagent/consumable/nutriment/protein/protein = abstract_holder.has_reagent(/datum/reagent/consumable/nutriment/protein, check_subtypes = TRUE)
-	if(protein)
-		protein.data = list("raw fish" = 2.5, "scales" = 1) //Make the fish taste like... fish.
-	abstract_holder.trans_to(eater, abstract_holder.total_volume, transferred_by = feeder, methods = INGEST)
-
-	//Just to be sure that it's empty for the next time.
-	abstract_holder.remove_all(25)
+	if(!reagents.total_volume)
+		return
 	bites_amount++
 	var/bites_to_finish = weight / FISH_WEIGHT_BITE_DIVISOR
-	if(round(bites_amount, 1) >= bites_to_finish)
-		return FOOD_AFTER_EAT_CONSUME_ANYWAY
-	adjust_health(health - (initial(health) / bites_to_finish) * 2)
-	if(status == FISH_ALIVE && prob(50) && feeder.is_holding(src))
-		to_chat(feeder, "[src] slips out of your hands in pain!")
-		var/target_turf = get_ranged_target_turf(get_turf(src), pick(GLOB.alldirs))
-		throw_at(target_turf, 2)
+	adjust_health(health - (initial(health) / bites_to_finish) * 3)
+	if(status == FISH_ALIVE && prob(50) && feeder.is_holding(src) && feeder.dropItemToGround(src))
+		to_chat(feeder, span_warning("[src] slips out of your hands in pain!"))
+		var/turf/target_turf = get_ranged_target_turf(get_turf(src), pick(GLOB.alldirs), 2)
+		throw_at(target_turf)
+
+///A proc that returns a static reagent holder with a set reagents that you'd get when eating this fish.
+/obj/item/fish/proc/generate_fish_reagents(multiplier = 1)
+	SHOULD_NOT_OVERRIDE(TRUE)
+	var/list/reagents_to_add = get_base_edible_reagents_to_add()
+	SEND_SIGNAL(src, COMSIG_GENERATE_REAGENTS_TO_ADD, reagents_to_add)
+	if(multiplier != 1)
+		for(var/reagent in reagents_to_add)
+			reagents_to_add[reagent] *= multiplier
+	reagents.add_reagent_list(reagents_to_add, added_purity = 1)
+	var/datum/reagent/consumable/nutriment/protein/protein = reagents.has_reagent(/datum/reagent/consumable/nutriment/protein, check_subtypes = TRUE)
+	if(protein)
+		protein.data = HAS_TRAIT(src, TRAIT_FISH_WELL_COOKED) ? get_fish_taste_cooked() : get_fish_taste()
+
+/obj/item/fish/proc/get_fish_taste()
+	return list("raw fish" = 2.5, "scales" = 1)
+
+/obj/item/fish/proc/get_fish_taste_cooked()
+	return list("cooked fish" = 2)
 
 ///The proc that adds in the main reagents this fish has when eaten (without accounting for traits)
-/obj/item/fish/proc/get_edible_reagents_to_add()
+/obj/item/fish/proc/get_base_edible_reagents_to_add()
 	var/return_list = list(
 		/datum/reagent/consumable/nutriment/protein = 2,
 		/datum/reagent/blood = 1,
 	)
+	//It has been at the very least under-cooked.
 	if(HAS_TRAIT(src, TRAIT_FOOD_FRIED) || HAS_TRAIT(src, TRAIT_FOOD_BBQ_GRILLED))
 		return_list[/datum/reagent/consumable/nutriment/protein] *= 2
 		return_list -= /datum/reagent/blood
 	if(required_fluid_type == AQUARIUM_FLUID_SALTWATER)
-		return_list[/datum/reagent/consumable/salt] = 0.5
+		return_list[/datum/reagent/consumable/salt] = 0.4
 	return return_list
+
+///adjusts the maximum volume of the fish reagents holder and update the amount of food to bite
+/obj/item/fish/proc/adjust_reagents_capacity(amount_to_add)
+	if(!reagents)
+		return
+	reagents.maximum_volume += amount_to_add
+	var/bites_to_finish = weight / FISH_WEIGHT_BITE_DIVISOR
+	///updates how many units of reagent one bite takes if edible.
+	if(IS_EDIBLE(src))
+		AddComponent(/datum/component/edible, bite_consumption = reagents.maximum_volume / bites_to_finish)
+
+///Grinding a fish replaces some the protein it has with blood and gibs. You ain't getting a clean smoothie out of it.
+/obj/item/fish/on_grind()
+	. = ..()
+	if(!reagents)
+		return
+	reagents.convert_reagent(/datum/reagent/consumable/nutriment/protein, /datum/reagent/consumable/liquidgibs, 0.4, include_source_subtypes = TRUE)
+	reagents.convert_reagent(/datum/reagent/consumable/nutriment/protein, /datum/reagent/blood, 0.2, include_source_subtypes = TRUE)
+
+///When processed, the reagents inside this fish will be passed to the created atoms.
+/obj/item/fish/UsedforProcessing(mob/living/user, obj/item/used_item, list/chosen_option, list/created_atoms)
+	var/created_len = length(created_atoms)
+	for(var/atom/movable/created as anything in created_atoms)
+		if(!created.reagents)
+			continue
+		for(var/datum/reagent/reagent as anything in reagents.reagent_list)
+			var/transfer_vol = reagent.volume / created_len
+			var/datum/reagent/result_reagent = created.reagents.has_reagent(reagent.type)
+			if(!result_reagent)
+				created.reagents.add_reagent(reagent.type, transfer_vol, reagents.copy_data(reagent), reagents.chem_temp, reagent.purity, reagent.ph, no_react = TRUE)
+				continue
+			var/multiplier = transfer_vol / result_reagent.volume
+			created.reagents.multiply_single_reagent(reagent.type, multiplier)
+	return ..()
 
 /obj/item/fish/update_icon_state()
 	if(status == FISH_DEAD && icon_state_dead)
@@ -295,6 +381,8 @@
 	if(HAS_MIND_TRAIT(user, TRAIT_EXAMINE_FISH))
 		. += span_notice("It's [size] cm long.")
 		. += span_notice("It weighs [weight] g.")
+	if(bites_amount)
+		. += span_warning("It's been bitten by someone.")
 
 ///Randomizes weight and size.
 /obj/item/fish/proc/randomize_size_and_weight(base_size = average_size, base_weight = average_weight, deviation = weight_size_deviation)
@@ -355,6 +443,24 @@
 	if(weight)
 		for(var/reagent_type in grind_results)
 			grind_results[reagent_type] /= FLOOR(weight/FISH_GRIND_RESULTS_WEIGHT_DIVISOR, 0.1)
+		if(reagents) //This fish has reagents. Adjust the maximum volume of the reagent holder and do some math to adjut the reagents too.
+			var/new_weight_ratio = new_weight / weight
+			var/volume_diff = reagents.maximum_volume * new_weight_ratio - reagents.maximum_volume
+			if(new_weight_ratio > weight)
+				adjust_reagents_capacity(volume_diff)
+				///As always, we want to maintain proportions here, so we need to get the ratio of bites left and initial bites left.
+				var/weight_diff = new_weight - weight
+				var/multiplier = weight_diff / FISH_WEIGHT_BITE_DIVISOR
+				var/initial_bites_left = weight / FISH_WEIGHT_BITE_DIVISOR
+				var/bites_left = initial_bites_left - bites_amount
+				var/amount_to_gen = bites_left / initial_bites_left * multiplier
+				generate_fish_reagents(amount_to_gen)
+			else
+				reagents.multiply_reagents(new_weight_ratio)
+				adjust_reagents_capacity(volume_diff)
+	else
+		make_edible(weight_val = new_weight)
+
 	weight = new_weight
 
 	if(weight >= FISH_WEIGHT_SLOWDOWN)
@@ -558,13 +664,15 @@
 		if(FISH_ALIVE)
 			status = FISH_ALIVE
 			health = initial(health) // since the fishe has been revived
-			bites_amount = 0
+			regenerate_bites(bites_amount)
 			last_feeding = world.time //reset hunger
 			check_environment()
 			START_PROCESSING(SSobj, src)
+			ADD_TRAIT(src, TRAIT_UNCOMPOSTABLE, INNATE_TRAIT)
 		if(FISH_DEAD)
 			status = FISH_DEAD
 			STOP_PROCESSING(SSobj, src)
+			REMOVE_TRAIT(src, TRAIT_UNCOMPOSTABLE, INNATE_TRAIT)
 			stop_flopping()
 			if(!silent)
 				var/message = span_notice(replacetext(death_text, "%SRC", "[src]"))
@@ -648,16 +756,27 @@
 	adjust_health(health + health_change_per_second * seconds_per_tick)
 
 /obj/item/fish/proc/adjust_health(amount)
-	if(status == FISH_DEAD)
+	if(status == FISH_DEAD || amount == health)
 		return
 	var/pre_health = health
 	var/initial_health = initial(health)
 	health = clamp(amount, 0, initial_health)
 	if(health <= 0)
 		set_status(FISH_DEAD)
-	else if(amount > pre_health && bites_amount && pre_health != initial_health)
-		bites_amount *= max(1 - (amount - pre_health) / (initial_health - pre_health), 0)
+		return
+	if(amount < pre_health || !bites_amount)
+		return
+	var/health_to_pre_health_diff = amount - pre_health
+	var/init_health_to_pre_diff = initial_health - pre_health
+	var/bites_to_recover = bites_amount * (health_to_pre_health_diff / init_health_to_pre_diff)
+	regenerate_bites(bites_to_recover)
 
+/obj/item/fish/proc/regenerate_bites(amount)
+	amount = min(amount, bites_amount)
+	if(amount <= 0)
+		return
+	bites_amount -= amount
+	generate_fish_reagents(amount)
 
 /obj/item/fish/proc/ready_to_reproduce(being_targeted = FALSE)
 	var/obj/structure/aquarium/aquarium = loc

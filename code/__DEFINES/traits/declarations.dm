@@ -800,6 +800,8 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_HAUNTED "haunted"
 /// An item that, if it has contents, will ignore its contents when scanning for contraband.
 #define TRAIT_CONTRABAND_BLOCKER "contraband_blocker"
+/// For edible items that cannot be composted inside hydro trays
+#define TRAIT_UNCOMPOSTABLE "uncompostable"
 
 //quirk traits
 #define TRAIT_ALCOHOL_TOLERANCE "alcohol_tolerance"
@@ -965,6 +967,7 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_FISH_AMPHIBIOUS "fish_amphibious"
 ///Trait needed for the lubefish evolution
 #define TRAIT_FISH_FED_LUBE "fish_fed_lube"
+#define TRAIT_FISH_WELL_COOKED "fish_well_cooked"
 #define TRAIT_FISH_NO_HUNGER "fish_no_hunger"
 ///It comes from a fish case. Relevant for bounties so far.
 #define TRAIT_FISH_FROM_CASE "fish_from_case"

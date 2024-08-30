@@ -328,7 +328,16 @@
 
 /datum/reagent/toxin/mindbreaker/fish
 	name = "Jellyfish Hallucinogen"
-	description = "A hallucinogen structurally similar to the mindbreaker toxin, but with weaker molecular bonds, making it easily degradeable by heat and cooking."
+	description = "A hallucinogen structurally similar to the mindbreaker toxin, but with weaker molecular bonds, making it easily degradeable by heat."
+
+/datum/reagent/toxin/mindbreaker/fish/on_new(data)
+	. = ..()
+	if(holder?.my_atom)
+		RegisterSignals(holder.my_atom, list(COMSIG_ITEM_FRIED, TRAIT_FOOD_BBQ_GRILLED), PROC_REF(on_atom_cooked))
+
+/datum/reagent/toxin/mindbreaker/fish/proc/on_atom_cooked(datum/source, cooking_time)
+	SIGNAL_HANDLER
+	holder.del_reagent(type)
 
 /datum/reagent/toxin/plantbgone
 	name = "Plant-B-Gone"

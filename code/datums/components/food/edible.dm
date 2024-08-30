@@ -78,9 +78,8 @@ Behavior that's still missing from this component that original food items had t
 	RegisterSignal(parent, COMSIG_ATOM_ATTACK_ANIMAL, PROC_REF(UseByAnimal))
 	RegisterSignal(parent, COMSIG_ATOM_CHECKPARTS, PROC_REF(OnCraft))
 	RegisterSignal(parent, COMSIG_OOZE_EAT_ATOM, PROC_REF(on_ooze_eat))
-	if(!(food_flags & FOOD_REAGENTLESS))
-		RegisterSignal(parent, COMSIG_FOOD_INGREDIENT_ADDED, PROC_REF(edible_ingredient_added))
-		RegisterSignal(parent, COMSIG_ATOM_CREATEDBY_PROCESSING, PROC_REF(OnProcessed))
+	RegisterSignal(parent, COMSIG_FOOD_INGREDIENT_ADDED, PROC_REF(edible_ingredient_added))
+	RegisterSignal(parent, COMSIG_ATOM_CREATEDBY_PROCESSING, PROC_REF(OnProcessed))
 
 	if(isturf(parent))
 		RegisterSignal(parent, COMSIG_ATOM_ENTERED, PROC_REF(on_entered))
@@ -196,8 +195,6 @@ Behavior that's still missing from this component that original food items had t
 
 /// Sets up the initial reagents of the food.
 /datum/component/edible/proc/setup_initial_reagents(list/reagents, reagent_purity)
-	if(food_flags & FOOD_REAGENTLESS)
-		return
 	var/atom/owner = parent
 	if(owner.reagents)
 		owner.reagents.maximum_volume = volume
@@ -268,7 +265,7 @@ Behavior that's still missing from this component that original food items had t
 		for(var/datum/reagent/reagent as anything in owner.reagents.reagent_list)
 			examine_list += span_notice("- [reagent.name] [reagent.volume]u: [round(reagent.purity * 100)]% pure")
 
-	if(!HAS_TRAIT(user, TRAIT_REMOTE_TASTING) || (food_flags & FOOD_REAGENTLESS))
+	if(!HAS_TRAIT(user, TRAIT_REMOTE_TASTING))
 		return
 	var/fraction = min(bite_consumption / owner.reagents.total_volume, 1)
 	checkLiked(fraction, user)
@@ -314,15 +311,14 @@ Behavior that's still missing from this component that original food items had t
 /datum/component/edible/proc/OnCraft(datum/source, list/parts_list, datum/crafting_recipe/food/recipe)
 	SIGNAL_HANDLER
 
-	if(!(food_flags & FOOD_REAGENTLESS))
-		var/atom/this_food = parent
-		for(var/obj/item/food/crafted_part in parts_list)
-			if(!crafted_part.reagents)
-				continue
-			this_food.reagents.maximum_volume += crafted_part.reagents.maximum_volume
-			crafted_part.reagents.trans_to(this_food.reagents, crafted_part.reagents.maximum_volume)
+	var/atom/this_food = parent
+	for(var/obj/item/food/crafted_part in parts_list)
+		if(!crafted_part.reagents)
+			continue
+		this_food.reagents.maximum_volume += crafted_part.reagents.maximum_volume
+		crafted_part.reagents.trans_to(this_food.reagents, crafted_part.reagents.maximum_volume)
 
-		this_food.reagents.maximum_volume = ROUND_UP(this_food.reagents.maximum_volume) // Just because I like whole numbers for this.
+	this_food.reagents.maximum_volume = ROUND_UP(this_food.reagents.maximum_volume) // Just because I like whole numbers for this.
 
 	BLACKBOX_LOG_FOOD_MADE(parent.type)
 
@@ -330,7 +326,7 @@ Behavior that's still missing from this component that original food items had t
 /datum/component/edible/proc/IsFoodGone(atom/owner, mob/living/feeder)
 	if(QDELETED(owner) || !(IS_EDIBLE(owner)))
 		return TRUE
-	if((food_flags & FOOD_REAGENTLESS) || owner.reagents.total_volume)
+	if(owner.reagents.total_volume)
 		return FALSE
 	return TRUE
 
@@ -460,15 +456,14 @@ Behavior that's still missing from this component that original food items had t
 /datum/component/edible/proc/TakeBite(mob/living/eater, mob/living/feeder)
 
 	var/atom/owner = parent
-	var/use_reagents = !(food_flags & FOOD_REAGENTLESS)
 
-	if(!owner?.reagents && use_reagents)
-		stack_trace("[eater] failed to bite [owner], because [owner] had no reagents and doesn't have the FOOD_REAGENTLESS flag.")
+	if(!owner.reagents)
+		stack_trace("[eater] failed to bite [owner], because [owner] had no reagents.")
 		return FALSE
 	if(eater.satiety > -200)
 		eater.satiety -= junkiness
 	playsound(eater.loc,'sound/items/eatfood.ogg', rand(10,50), TRUE)
-	if(!owner.reagents?.total_volume && use_reagents)
+	if(!owner.reagents.total_volume)
 		return
 	var/sig_return = SEND_SIGNAL(parent, COMSIG_FOOD_EATEN, eater, feeder, bitecount, bite_consumption)
 	if(sig_return & DESTROY_FOOD)
@@ -480,21 +475,17 @@ Behavior that's still missing from this component that original food items had t
 		apply_buff(eater)
 
 	var/fraction = 0.3
-	if(use_reagents)
-		fraction = min(bite_consumption / owner.reagents.total_volume, 1)
-		owner.reagents.trans_to(eater, bite_consumption, transferred_by = feeder, methods = INGEST)
+	fraction = min(bite_consumption / owner.reagents.total_volume, 1)
+	owner.reagents.trans_to(eater, bite_consumption, transferred_by = feeder, methods = INGEST)
 	bitecount++
 
 	checkLiked(fraction, eater)
 
-	var/consumed = FALSE
-	if(use_reagents && !owner.reagents.total_volume)
+	if(!owner.reagents.total_volume)
 		On_Consume(eater, feeder)
-		consumed = TRUE
 
 	//Invoke our after eat callback if it is valid
-	if(after_eat?.Invoke(eater, feeder, bitecount) == FOOD_AFTER_EAT_CONSUME_ANYWAY && !consumed)
-		On_Consume(eater, feeder)
+	after_eat?.Invoke(eater, feeder, bitecount)
 
 	//Invoke the eater's stomach's after_eat callback if valid
 	if(iscarbon(eater))
@@ -720,8 +711,7 @@ Behavior that's still missing from this component that original food items had t
 		return COMPONENT_ATOM_EATEN
 
 	if(foodtypes & edible_flags)
-		if(!(food_flags & FOOD_REAGENTLESS))
-			food.reagents.trans_to(eater, food.reagents.total_volume, transferred_by = eater)
+		food.reagents.trans_to(eater, food.reagents.total_volume, transferred_by = eater)
 		eater.visible_message(span_warning("[src] eats [food]!"), span_notice("You eat [food]."))
 		playsound(get_turf(eater),'sound/items/eatfood.ogg', rand(30,50), TRUE)
 		qdel(food)

@@ -48,7 +48,7 @@
 /obj/item/food/grown/onion/red/make_processable()
 	AddElement(/datum/element/processable, TOOL_KNIFE, /obj/item/food/onion_slice/red, 2, 15, screentip_verb = "Cut")
 
-/obj/item/food/grown/onion/UsedforProcessing(mob/living/user, obj/item/I, list/chosen_option)
+/obj/item/food/grown/onion/UsedforProcessing(mob/living/user, obj/item/I, list/chosen_option, list/created_atoms)
 	var/datum/effect_system/fluid_spread/smoke/chem/cry_about_it = new //Since the onion is destroyed when it's sliced,
 	var/splat_location = get_turf(src) //we need to set up the smoke beforehand
 	cry_about_it.attach(splat_location)

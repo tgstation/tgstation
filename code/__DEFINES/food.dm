@@ -172,16 +172,13 @@ GLOBAL_LIST_INIT(food_buffs, list(
 #define FOOD_FINGER_FOOD (1<<1)
 /// Examining this edible won't show infos on food types, bites and remote tasting etc.
 #define FOOD_NO_EXAMINE (1<<2)
-/// For edibles that don't conventionally use reagents. Use with caution and perhaps a few callbacks to manage special behavior.
-#define FOOD_REAGENTLESS (1<<3)
 /// This food item doesn't track bitecounts, use responsibly.
-#define FOOD_NO_BITECOUNT (1<<4)
+#define FOOD_NO_BITECOUNT (1<<3)
 
 DEFINE_BITFIELD(food_flags, list(
 	"FOOD_FINGER_FOOD" = FOOD_FINGER_FOOD,
 	"FOOD_IN_CONTAINER" = FOOD_IN_CONTAINER,
 	"FOOD_NO_EXAMINE" = FOOD_NO_EXAMINE,
-	"FOOD_REAGENTLESS" = FOOD_REAGENTLESS,
 	"FOOD_NO_BITECOUNT" = FOOD_NO_BITECOUNT,
 ))
 

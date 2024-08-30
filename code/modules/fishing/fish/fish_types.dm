@@ -27,6 +27,9 @@
 	compatible_types = list(/obj/item/fish/goldfish, /obj/item/fish/three_eyes)
 	fish_traits = list(/datum/fish_trait/recessive)
 
+/obj/item/fish/goldfish/gill/get_fish_taste()
+	return list("raw fish" = 2.5, "objection" = 1)
+
 /obj/item/fish/angelfish
 	name = "angelfish"
 	desc = "Young Angelfish often live in groups, while adults prefer solitary life. They become territorial and aggressive toward other fish when they reach adulthood."
@@ -113,7 +116,7 @@
 	RegisterSignal(src, COMSIG_FISH_BEFORE_GROWING, PROC_REF(growth_checks))
 	RegisterSignal(src, COMSIG_FISH_FINISH_GROWING, PROC_REF(on_growth))
 
-/obj/item/fish/tadpole/make_edible()
+/obj/item/fish/tadpole/make_edible(weight_val)
 	return
 
 /obj/item/fish/tadpole/set_status(new_status, silent = FALSE)
@@ -157,6 +160,9 @@
 	compatible_types = list(/obj/item/fish/clownfish/lube)
 	required_temperature_min = MIN_AQUARIUM_TEMP+22
 	required_temperature_max = MIN_AQUARIUM_TEMP+30
+
+/obj/item/fish/clownfish/get_fish_taste()
+	return list("raw fish" = 2, "something funny" = 1)
 
 /obj/item/fish/clownfish/lube
 	name = "lubefish"
@@ -264,7 +270,7 @@
 
 /obj/item/fish/gunner_jellyfish
 	name = "gunner jellyfish"
-	desc = "So called due to their resemblance to an artillery shell, the gunner jellyfish is native to Tizira, where it is enjoyed as a delicacy. Produces a mild hallucinogen that is destroyed by cooking."
+	desc = "So called due to their resemblance to an artillery shell, the gunner jellyfish is native to Tizira, where it is enjoyed as a delicacy when grilled or fried. Produces a mild hallucinogen that is destroyed by cooking."
 	icon_state = "gunner_jellyfish"
 	required_fluid_type = AQUARIUM_FLUID_SALTWATER
 	stable_population = 4
@@ -273,6 +279,16 @@
 	required_temperature_min = MIN_AQUARIUM_TEMP+24
 	required_temperature_max = MIN_AQUARIUM_TEMP+32
 	beauty = FISH_BEAUTY_GOOD
+
+/obj/item/fish/gunner_jellyfish/Initialize(mapload, apply_qualities = TRUE)
+	. = ..()
+	AddElement(/datum/element/quality_food_ingredient, FOOD_COMPLEXITY_2)
+
+/obj/item/fish/gunner_jellyfish/get_fish_taste()
+	return list("cold jelly" = 2)
+
+/obj/item/fish/gunner_jellyfish/get_fish_taste_cooked()
+	return list("crunchy tenderness" = 2)
 
 /obj/item/fish/needlefish
 	name = "needlefish"
@@ -306,6 +322,12 @@
 	fish_movement_type = /datum/fish_movement/slow
 	required_temperature_min = MIN_AQUARIUM_TEMP+10
 	required_temperature_max = MIN_AQUARIUM_TEMP+32
+
+/obj/item/fish/chasm_crab/get_fish_taste()
+	return list("raw prawn" = 2)
+
+/obj/item/fish/chasm_crab/get_fish_taste_cooked()
+	return list("cooked prawn" = 2)
 
 /// Commonly found on the mining fishing spots. Can be grown into lobstrosities
 /obj/item/fish/chasm_crab
@@ -345,6 +367,12 @@
 	. = ..()
 	RegisterSignal(src, COMSIG_FISH_BEFORE_GROWING, PROC_REF(growth_checks))
 	RegisterSignal(src, COMSIG_FISH_FINISH_GROWING, PROC_REF(on_growth))
+
+/obj/item/fish/chasm_crab/get_fish_taste()
+	return list("raw crab" = 2)
+
+/obj/item/fish/chasm_crab/get_fish_taste_cooked()
+	return list("cooked crab" = 2)
 
 ///A chasm crab growth speed is determined by its initial weight and size, ergo bigger crabs for faster lobstrosities
 /obj/item/fish/chasm_crab/update_size_and_weight(new_size = average_size, new_weight = average_weight)
@@ -438,6 +466,9 @@
 	required_temperature_max = MIN_AQUARIUM_TEMP+40
 	beauty = FISH_BEAUTY_BAD
 
+/obj/item/fish/emulsijack/get_fish_taste()
+	return list("raw fish" = 2, "acid" = 1) //no scales
+
 /obj/item/fish/jumpercable
 	name = "monocloning jumpercable"
 	desc = "A surprisingly useful if nasty looking creation from the syndicate fish labs. Drop one in a tank, and \
@@ -485,10 +516,16 @@
 	//stable pop reflects the config for how many mice migrate. powerful...
 	stable_population = CONFIG_GET(number/mice_roundstart)
 
-/obj/item/fish/ratfish/get_food_types()
-	return MEAT|RAW|GORE|GROSS //Not-so-quite-seafood
+/obj/item/fish/ratfish/get_fish_taste()
+	return list("vermin" = 2, "maintenance" = 1)
 
-/obj/item/fish/ratfish/get_edible_reagents_to_add()
+/obj/item/fish/ratfish/get_fish_taste_cooked()
+	return list("cooked vermin" = 2, "burned fur" = 0.5)
+
+/obj/item/fish/ratfish/get_food_types()
+	return MEAT|RAW|GORE //Not-so-quite-seafood
+
+/obj/item/fish/ratfish/get_base_edible_reagents_to_add()
 	var/return_list = ..()
 	return_list[/datum/reagent/rat_spit] = 1
 	return return_list
@@ -512,6 +549,9 @@
 	evolution_types = list(/datum/fish_evolution/purple_sludgefish)
 	beauty = FISH_BEAUTY_NULL
 
+/obj/item/fish/sludgefish/get_fish_taste()
+	return list("raw fish" = 2, "eau de toilet" = 1)
+
 /obj/item/fish/sludgefish/purple
 	name = "purple sludgefish"
 	desc = "A misshapen, fragile, loosely fish-like living goop. This one has developed sexual reproduction mechanisms, and a purple tint to boot."
@@ -534,7 +574,6 @@
 	stable_population = 4
 	health = 150
 	fillet_type = /obj/item/slime_extract/grey
-	grind_results = list(/datum/reagent/toxin/slimejelly = 10)
 	fish_traits = list(/datum/fish_trait/toxin_immunity, /datum/fish_trait/crossbreeder)
 	favorite_bait = list(
 		list(
@@ -553,8 +592,8 @@
 /obj/item/fish/slimefish/get_food_types()
 	return SEAFOOD|TOXIC
 
-/obj/item/fish/slimefish/get_edible_reagents_to_add()
-	return list(/datum/reagent/toxin/slimejelly = 2)
+/obj/item/fish/slimefish/get_base_edible_reagents_to_add()
+	return list(/datum/reagent/toxin/slimejelly = 5)
 
 /obj/item/fish/boned
 	name = "unmarine bonemass"
@@ -579,7 +618,7 @@
 	evolution_types = list(/datum/fish_evolution/mastodon)
 	beauty = FISH_BEAUTY_UGLY
 
-/obj/item/fish/boned/make_edible()
+/obj/item/fish/boned/make_edible(weight_val)
 	return //it's all bones and no meat.
 
 /obj/item/fish/mastodon
@@ -611,8 +650,8 @@
 	fish_traits = list(/datum/fish_trait/heavy, /datum/fish_trait/amphibious, /datum/fish_trait/revival, /datum/fish_trait/carnivore, /datum/fish_trait/predator, /datum/fish_trait/aggressive)
 	beauty = FISH_BEAUTY_BAD
 
-/obj/item/fish/mastodon/make_edible()
-	return //it's all bones and no meat.
+/obj/item/fish/mastodon/make_edible(weight_val)
+	return //it's all bones and gibs.
 
 /obj/item/fish/holo
 	name = "holographic goldfish"
@@ -626,7 +665,6 @@
 	average_size = 30
 	average_weight = 500
 	required_fluid_type = AQUARIUM_FLUID_ANADROMOUS
-	grind_results = null
 	fillet_type = null
 	death_text = "%SRC gently disappears."
 	fish_traits = list(/datum/fish_trait/no_mating) //just to be sure, these shouldn't reproduce
@@ -645,6 +683,9 @@
 	if(status == FISH_DEAD)
 		animate(src, alpha = 0, 3 SECONDS, easing = SINE_EASING)
 		QDEL_IN(src, 3 SECONDS)
+
+/obj/item/fish/holo/make_edible(weight_val)
+	return
 
 /obj/item/fish/holo/crab
 	name = "holographic crab"
@@ -760,6 +801,9 @@
 	///maximum bonus damage when winded up
 	var/maximum_bonus = 25
 
+/obj/item/fish/lavaloop/get_fish_taste()
+	return list("chewy fish" = 2)
+
 /obj/item/fish/lavaloop/get_food_types()
 	return SEAFOOD|MEAT|GORE //Well-cooked in lava
 
@@ -835,6 +879,9 @@
 	electrogenesis_power = 20 MEGA JOULES
 	beauty = FISH_BEAUTY_GOOD
 
+/obj/item/fish/zipzap/get_fish_taste()
+	return list("raw fish" = 2, "anxiety" = 1)
+
 /obj/item/fish/sockeye_salmon
 	name = "sockeye salmon"
 	desc = "A fairly common and iconic salmon endemic of the Pacific Ocean. At some point imported into outer space, where we're now."
@@ -849,7 +896,7 @@
 	fillet_type = /obj/item/food/fishmeat/salmon
 	beauty = FISH_BEAUTY_GOOD
 
-/obj/item/fish/slimefish/get_edible_reagents_to_add()
+/obj/item/fish/slimefish/get_base_edible_reagents_to_add()
 	var/return_list = ..()
 	return_list[/datum/reagent/consumable/nutriment/fat] = 1
 	return return_list
@@ -927,6 +974,12 @@
 		),
 	)
 
+/obj/item/fish/sand_crab/get_fish_taste()
+	return list("raw crab" = 2)
+
+/obj/item/fish/sand_crab/get_fish_taste_cooked()
+	return list("cooked crab" = 2)
+
 /obj/item/fish/bumpy
 	name = "bump-fish"
 	desc = "An misshapen fish-thing all covered in stubby little tendrils"
@@ -970,6 +1023,9 @@
 		),
 	)
 
+/obj/item/fish/three_eyes/get_fish_taste()
+	return list("raw fish" = 2.5, "chemical wastes" = 0.4)
+
 /obj/item/fish/three_eyes/gill
 	name = "McGill"
 	desc = "A great rubber duck tool for Lawyers who can't get a grasp over their case. It looks kinda different today..."
@@ -978,6 +1034,12 @@
 	show_in_catalog = FALSE
 	stable_population = 1
 	random_case_rarity = FISH_RARITY_NOPE
+
+/obj/item/fish/three_eyes/gill/get_fish_taste()
+	return list("raw fish" = 2.5, "objection" = 1)
+
+/obj/item/fish/three_eyes/gill/get_fish_taste_cooked()
+	return list("cooked fish" = 2)
 
 /obj/item/fish/swordfish
 	name = "swordfish"
@@ -1123,6 +1185,9 @@
 	. = ..()
 	AddElement(/datum/element/update_icon_updates_onmob)
 
+/obj/item/fish/chainsawfish/get_fish_taste()
+	return list("raw fish" = 2.5, "anger" = 1)
+
 /obj/item/fish/chainsawfish/update_icon_state()
 	if(status == FISH_DEAD)
 		inhand_icon_state = "chainsawfish_dead"
@@ -1223,6 +1288,12 @@
 /obj/item/fish/soul/get_food_types()
 	return MEAT|RAW|GORE //Not-so-quite-seafood
 
+/obj/item/fish/soul/get_fish_taste()
+	return list("meat" = 2, "soulfulness" = 1)
+
+/obj/item/fish/soul/get_fish_taste_cooked()
+	return list("cooked meat" = 2)
+
 /obj/item/fish/skin_crab
 	name = "skin crab"
 	desc = "<i>\"And on the eighth day, a demential mockery of both humanity and crabity was made.\"<i> Fascinating."
@@ -1243,3 +1314,9 @@
 	)
 	fillet_type = /obj/item/food/meat/slab/rawcrab
 	random_case_rarity = FISH_RARITY_NOPE
+
+/obj/item/fish/skin_crab/get_fish_taste()
+	return list("raw crab" = 2)
+
+/obj/item/fish/skin_crab/get_fish_taste_cooked()
+	return list("cooked crab" = 2)
