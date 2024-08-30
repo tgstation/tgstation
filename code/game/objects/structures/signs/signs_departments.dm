@@ -4,27 +4,6 @@
 /obj/structure/sign/departments
 	icon = 'icons/obj/structures/departmental_signs.dmi'
 	is_editable = TRUE
-	var/emissive_type
-
-/obj/structure/sign/departments/Initialize(mapload)
-	. = ..()
-	if (!emissive_type)
-		return
-	var/area/cur_area = get_area(src)
-	if (!isnull(cur_area))
-		RegisterSignal(cur_area, COMSIG_AREA_POWER_CHANGE, PROC_REF(power_check))
-
-/obj/structure/sign/departments/proc/power_check()
-	SIGNAL_HANDLER
-	update_appearance()
-
-/obj/structure/sign/departments/update_overlays()
-	. = ..()
-	if (!emissive_type)
-		return
-	var/area/cur_area = get_area(src)
-	if (!isnull(cur_area) && cur_area.power_light)
-		. += emissive_appearance(icon, emissive_type, src)
 
 ///////MEDBAY
 
@@ -55,7 +34,6 @@ WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/structure/sign/departments/medbay)
 	name = "\improper Medbay sign"
 	sign_change_name = "Generic Medical Alt"
 	icon_state = "department_med"
-	emissive_type = "department_e"
 
 WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/structure/sign/departments/medbay/alt)
 
@@ -72,7 +50,6 @@ WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/structure/sign/departments/exam_room)
 	sign_change_name = "Department - Medbay: Chemistry"
 	desc = "A sign labelling an area containing chemical equipment."
 	icon_state = "department_chem"
-	emissive_type = "department_e"
 
 WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/structure/sign/departments/chemistry)
 
@@ -87,7 +64,6 @@ WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/structure/sign/departments/chemistry/alt)
 	sign_change_name = "Department - Medbay: Pharmacy"
 	desc = "A sign labelling an area containing pharmacy equipment."
 	icon_state = "department_chem"
-	emissive_type = "department_e"
 
 WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/structure/sign/departments/chemistry/pharmacy)
 
@@ -96,7 +72,6 @@ WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/structure/sign/departments/chemistry/pharmac
 	sign_change_name = "Department - Medbay: Psychology"
 	desc = "A sign labelling an area where the Psychologist works, they can probably help you get your head straight."
 	icon_state = "department_psych"
-	emissive_type = "department_e"
 
 WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/structure/sign/departments/psychology)
 
@@ -123,7 +98,6 @@ WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/structure/sign/departments/morgue)
 	sign_change_name = "Department - Engineering"
 	desc = "A sign labelling an area where engineers work."
 	icon_state = "department_engi"
-	emissive_type = "department_e"
 
 WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/structure/sign/departments/engineering)
 
@@ -134,7 +108,6 @@ WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/structure/sign/departments/engineering)
 	sign_change_name = "Department - Science"
 	desc = "A sign labelling an area where research and science is performed."
 	icon_state = "department_sci"
-	emissive_type = "department_e"
 
 WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/structure/sign/departments/science)
 
@@ -150,7 +123,6 @@ WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/structure/sign/departments/science/alt)
 	sign_change_name = "Department - Science: Xenobiology"
 	desc = "A sign labelling an area where xenobiological entities are researched."
 	icon_state = "department_xeno"
-	emissive_type = "department_e"
 
 WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/structure/sign/departments/xenobio)
 
@@ -184,7 +156,6 @@ WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/structure/sign/departments/rndserver)
 	sign_change_name = "Department - Botany (Flower)"
 	desc = "A sign labelling an area as a place where plants are grown."
 	icon_state = "department_hydro"
-	emissive_type = "department_e"
 
 WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/structure/sign/departments/botany)
 
@@ -219,7 +190,6 @@ WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/structure/sign/departments/custodian)
 	sign_change_name = "Department - Chapel"
 	desc = "A sign labelling a religious area."
 	icon_state = "department_chapel"
-	emissive_type = "department_e"
 
 WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/structure/sign/departments/holy)
 
@@ -236,7 +206,6 @@ WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/structure/sign/departments/holy)
 	sign_change_name = "Department - Legal"
 	desc = "A sign labelling an area where the Lawyers work, apply here for arrivals shuttle whiplash settlement."
 	icon_state = "department_lawyer"
-	emissive_type = "department_e"
 
 WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/structure/sign/departments/lawyer)
 
@@ -247,7 +216,6 @@ WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/structure/sign/departments/lawyer)
 	sign_change_name = "Department - Cargo"
 	desc = "A sign labelling an area where cargo ships dock."
 	icon_state = "department_cargo"
-	emissive_type = "department_e"
 
 WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/structure/sign/departments/cargo)
 
@@ -266,7 +234,6 @@ WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/structure/sign/departments/exodrone)
 	sign_change_name = "Department - Security"
 	desc = "A sign labelling an area where the law is law."
 	icon_state = "department_sec"
-	emissive_type = "department_e"
 
 WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/structure/sign/departments/security)
 
@@ -277,7 +244,6 @@ WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/structure/sign/departments/security)
 	sign_change_name = "Location - Restroom"
 	desc = "A sign labelling a restroom."
 	icon_state = "department_wc"
-	emissive_type = "department_e"
 
 WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/structure/sign/departments/restroom)
 
@@ -302,7 +268,6 @@ WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/structure/sign/departments/maint/alt)
 	sign_change_name = "Location - Evacuation"
 	desc = "A sign labelling an area where evacuation procedures take place."
 	icon_state = "department_evac"
-	emissive_type = "department_evac_e"
 	is_editable = TRUE
 	///This var detemines which arrow overlay to use.
 	var/arrow_direction_state = "evac_overlay_f"
@@ -341,7 +306,6 @@ WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/structure/sign/departments/drop)
 	sign_change_name = "Location - Courtroom"
 	desc = "A sign labelling the courtroom, where the ever sacred Space Law is upheld."
 	icon_state = "department_law"
-	emissive_type = "department_e"
 
 WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/structure/sign/departments/court)
 
