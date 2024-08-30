@@ -139,7 +139,7 @@ GLOBAL_LIST_INIT(food_quality_events, list(
 	FOOD_QUALITY_TOP = /datum/mood_event/food/top,
 ))
 
-/// Weighted lists of crafted food buffs randomly given according to crafting_complexity unless the food has a specific buff
+/// Crafted food buffs grouped by crafting_complexity
 GLOBAL_LIST_INIT(food_buffs, list(
 	FOOD_COMPLEXITY_1 = list(
 		/datum/status_effect/food/haste = 1,
@@ -152,9 +152,11 @@ GLOBAL_LIST_INIT(food_buffs, list(
 	),
 	FOOD_COMPLEXITY_4 = list(
 		/datum/status_effect/food/haste = 1,
+		/datum/status_effect/food/trait/shockimmune = 1,
 	),
 	FOOD_COMPLEXITY_5 = list(
 		/datum/status_effect/food/haste = 1,
+		/datum/status_effect/food/trait/shockimmune = 2,
 	),
 ))
 

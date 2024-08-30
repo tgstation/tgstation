@@ -611,9 +611,6 @@
 			data["name"] = "[data["name"]] [recipe.result_amount]x"
 		data["desc"] = recipe.desc || initial(atom.desc)
 
-	if(ispath(recipe.result, /obj/item/food))
-		var/obj/item/food/food = recipe.result
-		data["has_food_effect"] = !!food.crafted_food_buff
 
 	// Crafting
 	if(recipe.non_craftable)

@@ -13,7 +13,7 @@
 	category = CAT_EGG
 
 /datum/crafting_recipe/food/omelette
-	name = "Omelette du fromage"
+	name = "Omelette"
 	reqs = list(
 		/obj/item/food/egg = 2,
 		/obj/item/food/cheese/wedge = 2
