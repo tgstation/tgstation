@@ -177,7 +177,7 @@ const ItemList = ({ item }) => {
   const fallback = (
     <Icon name="spinner" lineHeight="32px" size={3} spin color="gray" />
   );
-  const [itemCount, setItemCount] = useState<number>(1);
+  const [itemCount, setItemCount] = useState(1);
   return (
     <Stack>
       <Stack.Item>
