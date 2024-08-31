@@ -5,6 +5,7 @@
 	icon = 'icons/obj/structures.dmi'
 	icon_state = "speaking_tile"
 	layer = FLY_LAYER
+	plane = ABOVE_GAME_PLANE
 	resistance_flags = INDESTRUCTIBLE
 	var/speaking = FALSE
 	var/times_spoken_to = 0
