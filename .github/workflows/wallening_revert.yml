@@ -7,15 +7,20 @@ on:
   pull_request:
     types:
       - closed
-      - labeled
     branches:
       - 1989-11-09
+  workflow_dispatch:
+    inputs:
+      pr_number:
+        description: 'Conflicting Pull Request Number'
+        required: true
+        type: string
+
 
 jobs:
   generate-master-pr:
     name: Move Process Along
     runs-on: ubuntu-latest
-    if: (github.event_name == 'closed' && !contains(github.event.pull_request.labels.*.name, 'Do Not Merge')) || contains(github.event.pull_request.labels.*.name, 'Do Not Merge')
     steps:
       - name: Setup dotnet
         uses: actions/setup-dotnet@v4
@@ -31,8 +36,8 @@ jobs:
           private-key: ${{ secrets.APP_PRIVATE_KEY }}
 
       - name: Close Pull
-        if: contains(github.event.pull_request.labels.*.name, 'Do Not Merge')
-        run: gh pr close --comment "Skipping this PR" --delete-branch "1"
+        if: github.event_name == 'workflow_dispatch'
+        run: gh pr close --comment "Skipping this PR" --delete-branch "${{ inputs.pr_number }}"
         env:
           GH_TOKEN: ${{ steps.app-token-generation.outputs.token }}
 
@@ -54,7 +59,7 @@ jobs:
       - name: Run Helper (Next)
         if: ${{ vars.WALLENING_REVERT_PR != '' }}
         id: helper-next
-        run: dotnet wallening_helper/Tgstation.WalleningRevertHelper.dll next ${{ steps.app-token-generation.outputs.token }} ${{ github.event.pull_request.number }} ${{ vars.WALLENING_REVERT_PR }}
+        run: dotnet wallening_helper/Tgstation.WalleningRevertHelper.dll next ${{ steps.app-token-generation.outputs.token }} ${{ inputs.pr_number || github.event.pull_request.number }} ${{ vars.WALLENING_REVERT_PR }}
 
       - name: Enable Automerge (Init)
         if: ${{ vars.WALLENING_REVERT_PR == '' }}
