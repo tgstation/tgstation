@@ -662,7 +662,7 @@
 	name = "pod control computer"
 	locked = TRUE
 	possible_destinations = "pod_asteroid"
-	icon = 'icons/obj/machines/wallmounts.dmi'
+	icon = 'icons/obj/machines/pod_computer.dmi'
 	icon_state = "pod_off"
 	circuit = /obj/item/circuitboard/computer/emergency_pod
 	light_color = LIGHT_COLOR_BLUE
@@ -755,12 +755,13 @@
 	name = "emergency space helmet"
 	icon_state = "syndicate-helm-orange"
 	inhand_icon_state = "syndicate-helm-orange"
+	slowdown = 1.5
 
 /obj/item/clothing/suit/space/orange
 	name = "emergency space suit"
 	icon_state = "syndicate-orange"
 	inhand_icon_state = "syndicate-orange"
-	slowdown = 3
+	slowdown = 1.5
 
 /obj/item/pickaxe/emergency
 	name = "emergency disembarkation tool"
@@ -775,11 +776,15 @@
 	icon_state = "wall_safe_locked"
 	var/unlocked = FALSE
 
+/obj/item/storage/pod/Initialize(mapload)
+	. = ..()
+	find_and_hang_on_wall()
+
 /obj/item/storage/pod/update_icon_state()
 	. = ..()
 	icon_state = "wall_safe[unlocked ? "" : "_locked"]"
 
-MAPPING_DIRECTIONAL_HELPERS(/obj/item/storage/pod, 32)
+WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/item/storage/pod)
 
 /obj/item/storage/pod/PopulateContents()
 	new /obj/item/clothing/head/helmet/space/orange(src)

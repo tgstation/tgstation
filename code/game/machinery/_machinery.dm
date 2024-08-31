@@ -183,10 +183,9 @@
 
 	return INITIALIZE_HINT_LATELOAD
 
-/obj/machinery/LateInitialize()
+/obj/machinery/LateInitialize(mapload)
 	SHOULD_NOT_OVERRIDE(TRUE)
-	post_machine_initialize()
-	CheckParts()
+	post_machine_initialize(/* mapload = */ mapload)
 
 /obj/machinery/Destroy(force)
 	SSmachines.unregister_machine(src)
@@ -203,7 +202,7 @@
  * ensuring power works on all machines unless exempted with NO_POWER_USE.
  * This is the proc to override if you want to do anything in LateInitialize.
  */
-/obj/machinery/proc/post_machine_initialize()
+/obj/machinery/proc/post_machine_initialize(mapload)
 	SHOULD_CALL_PARENT(TRUE)
 	power_change()
 	if(use_power == NO_POWER_USE)
@@ -687,10 +686,11 @@
 	return ..()
 
 /obj/machinery/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
-	add_fingerprint(usr)
-	update_last_used(usr)
-	if(HAS_AI_ACCESS(usr) && !GLOB.cameranet.checkTurfVis(get_turf(src))) //We check if they're an AI specifically here, so borgs can still access off-camera stuff.
-		to_chat(usr, span_warning("You can no longer connect to this device!"))
+	var/mob/user = ui.user
+	add_fingerprint(user)
+	update_last_used(user)
+	if(isAI(user) && !GLOB.cameranet.checkTurfVis(get_turf(src))) //We check if they're an AI specifically here, so borgs/adminghosts/human wand can still access off-camera stuff.
+		to_chat(user, span_warning("You can no longer connect to this device!"))
 		return FALSE
 	return ..()
 

@@ -6,7 +6,7 @@
 #define AIRLOCK_STATE_OUTOPEN "outopen"
 
 /obj/machinery/airlock_controller
-	icon = 'icons/obj/machines/wallmounts.dmi'
+	icon = 'icons/obj/machines/airlock_machines.dmi'
 	icon_state = "airlock_control_standby"
 	base_icon_state = "airlock_control"
 
@@ -21,7 +21,6 @@
 	var/airpump_tag
 	var/sensor_tag
 	var/sanitize_external
-
 	var/datum/weakref/interior_door_ref
 	var/datum/weakref/exterior_door_ref
 	var/datum/weakref/pump_ref
@@ -34,9 +33,14 @@
 
 	var/processing = FALSE
 
+WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/machinery/airlock_controller)
+
+/obj/machinery/airlock_controller/Initialize(mapload)
+	. = ..()
+	find_and_hang_on_wall()
+
 /obj/machinery/airlock_controller/post_machine_initialize()
 	. = ..()
-
 	var/obj/machinery/door/interior_door = GLOB.objects_by_id_tag[interior_door_tag]
 	if (!isnull(interior_door_tag) && !istype(interior_door))
 		stack_trace("interior_door_tag is set to [interior_door_tag], which is not a door ([interior_door || "null"])")
@@ -244,7 +248,7 @@
 
 	return data
 
-/obj/machinery/airlock_controller/ui_act(action, params)
+/obj/machinery/airlock_controller/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if(.)
 		return
@@ -304,6 +308,8 @@
 	interior_door_tag = INCINERATOR_SYNDICATELAVA_AIRLOCK_INTERIOR
 	sanitize_external = TRUE
 	sensor_tag = INCINERATOR_SYNDICATELAVA_AIRLOCK_SENSOR
+
+WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/machinery/airlock_controller/incinerator_syndicatelava)
 
 /obj/machinery/airlock_controller/update_icon_state()
 	icon_state = "[base_icon_state]_[processing ? "process" : "standby"]"

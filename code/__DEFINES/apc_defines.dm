@@ -14,10 +14,6 @@
 /// The APCs cover is missing.
 #define APC_COVER_REMOVED 2
 
-// APC visuals
-/// Pixel offset of the APC from the floor turf
-#define APC_PIXEL_OFFSET 25
-
 // APC charging status:
 /// The APC is not charging.
 #define APC_NOT_CHARGING 0
@@ -64,7 +60,8 @@
 /// The wire value used to reset the APCs wires after one's EMPed.
 #define APC_RESET_EMP "emp"
 
-// update_state
+// update_overlay
+
 // Bitshifts: (If you change the status values to be something other than an int or able to exceed 3 you will need to change these too)
 /// The bit shift for the APCs cover status.
 #define UPSTATE_COVER_SHIFT (0)
@@ -73,36 +70,38 @@
 	/// The bitflag representing the APCs cover being missing for icon purposes.
 	#define UPSTATE_OPENED2 (APC_COVER_REMOVED << UPSTATE_COVER_SHIFT)
 
-// Bitflags:
-/// The APC has a power cell.
-#define UPSTATE_CELL_IN (1<<2)
-/// The APC is broken or damaged.
-#define UPSTATE_BROKE (1<<3)
-/// The APC is undergoing maintenance.
-#define UPSTATE_MAINT (1<<4)
-/// The APCs wires are exposed.
-#define UPSTATE_WIREEXP (1<<5)
+//These need to be greated then the largest shift you're using for the other bitflags
+/// Bit shift for the charging status of the APC.
+#define UPOVERLAY_CHARGING_SHIFT (12)
+/// Bit shift for the equipment status of the APC.
+#define UPOVERLAY_EQUIPMENT_SHIFT (14)
+/// Bit shift for the lighting channel status of the APC.
+#define UPOVERLAY_LIGHTING_SHIFT (16)
+/// Bit shift for the environment channel status of the APC.
+#define UPOVERLAY_ENVIRON_SHIFT (18)
 
-// update_overlay
 // Bitflags:
 /// Bitflag indicating that the APCs operating status overlay should be shown.
-#define UPOVERLAY_OPERATING (1<<0)
+#define UPOVERLAY_OPERATING (1<<2)
 /// Bitflag indicating that the APCs locked status overlay should be shown.
-#define UPOVERLAY_LOCKED (1<<1)
-
-// Bitshifts: (If you change the status values to be something other than an int or able to exceed 3 you will need to change these too)
-/// Bit shift for the charging status of the APC.
-#define UPOVERLAY_CHARGING_SHIFT (2)
-/// Bit shift for the equipment status of the APC.
-#define UPOVERLAY_EQUIPMENT_SHIFT (4)
-/// Bit shift for the lighting channel status of the APC.
-#define UPOVERLAY_LIGHTING_SHIFT (6)
-/// Bit shift for the environment channel status of the APC.
-#define UPOVERLAY_ENVIRON_SHIFT (8)
+#define UPOVERLAY_LOCKED (1<<3)
+/// The APC has a power cell.
+#define UPSTATE_CELL_IN (1<<4)
+/// The APC is broken or damaged.
+#define UPSTATE_BROKE (1<<5)
+/// The APC is undergoing maintenance.
+#define UPSTATE_MAINT (1<<6)
+/// The APCs wires are exposed.
+#define UPSTATE_WIREEXP (1<<7)
+/// The APC has a terminal deployed
+#define UPOVERLAY_TERMINAL (1<<8)
+/// The APC has its electronics inserted
+#define UPOVERLAY_ELECTRONICS_INSERT (1<<9)
+/// The APC has its electronics fastened
+#define UPOVERLAY_ELECTRONICS_FASTENED (1<<10)
 
 #define APC_AI_NO_MALF 0
 #define APC_AI_NO_HACK 1
 #define APC_AI_HACK_NO_SHUNT 2
 #define APC_AI_HACK_SHUNT_HERE 3
 #define APC_AI_HACK_SHUNT_ANOTHER 4
-

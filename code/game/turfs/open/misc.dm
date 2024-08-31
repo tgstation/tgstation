@@ -3,7 +3,7 @@
 /// Please do not bloat this. Love you <3
 /turf/open/misc
 	name = "coder/mapper fucked up"
-	desc = "report on github please"
+	desc = "report on GitHub please"
 
 	flags_1 = NO_SCREENTIPS_1 | CAN_BE_DIRTY_1
 	turf_flags = IS_SOLID | NO_RUST
@@ -84,8 +84,8 @@
 	return FALSE
 
 /turf/open/misc/rcd_act(mob/user, obj/item/construction/rcd/the_rcd, list/rcd_data)
-	if(rcd_data["[RCD_DESIGN_MODE]"] == RCD_TURF)
-		if(rcd_data["[RCD_DESIGN_PATH]"] != /turf/open/floor/plating/rcd)
+	if(rcd_data[RCD_DESIGN_MODE] == RCD_TURF)
+		if(rcd_data[RCD_DESIGN_PATH] != /turf/open/floor/plating/rcd)
 			return FALSE
 
 		place_on_top(/turf/open/floor/plating, flags = CHANGETURF_INHERIT_AIR)

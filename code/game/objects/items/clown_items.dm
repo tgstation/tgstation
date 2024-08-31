@@ -14,7 +14,7 @@
 	name = "soap"
 	desc = "A cheap bar of soap. Doesn't smell."
 	gender = PLURAL
-	icon = 'icons/obj/watercloset.dmi'
+	icon = 'icons/obj/cosmetic.dmi'
 	icon_state = "soap"
 	inhand_icon_state = "soap"
 	worn_icon_state = "soap"
@@ -74,7 +74,7 @@
 /obj/item/soap/nanotrasen/cyborg
 
 /obj/item/soap/deluxe
-	desc = "A deluxe Waffle Co. brand bar of soap. Smells of high-class luxury."
+	desc = "A deluxe Waffle Corporation brand bar of soap. Smells of high-class luxury."
 	grind_results = list(/datum/reagent/consumable/aloejuice = 10, /datum/reagent/lye = 10)
 	icon_state = "soapdeluxe"
 	inhand_icon_state = "soapdeluxe"
@@ -257,7 +257,7 @@
 /obj/item/bikehorn/rubberducky
 	name = "rubber ducky"
 	desc = "Rubber ducky you're so fine, you make bathtime lots of fuuun. Rubber ducky I'm awfully fooooond of yooooouuuu~" //thanks doohl
-	icon = 'icons/obj/watercloset.dmi'
+	icon = 'icons/obj/toys/toy.dmi'
 	icon_state = "rubberducky"
 	inhand_icon_state = "rubberducky"
 	lefthand_file = 'icons/mob/inhands/items_lefthand.dmi'

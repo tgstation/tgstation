@@ -7,22 +7,6 @@
 /obj/effect/spawner/structure/window/reinforced/plasma/plastitanium,
 /turf/open/floor/plating,
 /area/shuttle/pirate)
-"ab" = (
-/obj/structure/chair/comfy/shuttle{
-	dir = 8
-	},
-/obj/machinery/turretid{
-	icon_state = "control_kill";
-	lethal = 1;
-	locked = 0;
-	pixel_y = -24;
-	req_access = null
-	},
-/obj/effect/turf_decal/tile/dark_blue/anticorner/contrasted{
-	dir = 8
-	},
-/turf/open/floor/iron/dark,
-/area/shuttle/pirate)
 "ad" = (
 /obj/machinery/button/door/directional/south{
 	id = "interdynebridge";
@@ -152,28 +136,6 @@
 	},
 /turf/open/floor/iron/dark,
 /area/shuttle/pirate)
-"aD" = (
-/obj/machinery/power/apc/auto_name/directional/north{
-	cell_type = /obj/item/stock_parts/power_store/battery/bluespace;
-	start_charge = 100
-	},
-/obj/effect/mapping_helpers/apc/cut_AI_wire,
-/obj/effect/turf_decal/tile/dark_blue/anticorner/contrasted{
-	dir = 1
-	},
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
-/obj/machinery/power/smes/magical,
-/obj/structure/cable,
-/turf/open/floor/iron/dark,
-/area/shuttle/pirate)
-"aF" = (
-/obj/machinery/computer/camera_advanced/shuttle_docker/syndicate/pirate{
-	dir = 4;
-	x_offset = 0;
-	y_offset = 7
-	},
-/turf/open/floor/iron/dark,
-/area/shuttle/pirate)
 "aG" = (
 /obj/effect/turf_decal/tile/dark_blue/half/contrasted{
 	dir = 8
@@ -291,7 +253,7 @@
 /area/shuttle/pirate)
 "aS" = (
 /obj/effect/turf_decal/tile/dark_blue/opposingcorners,
-/obj/structure/closet/crate/freezer/blood,
+/obj/structure/closet/crate/freezer/blood/interdyne,
 /obj/machinery/light/small/blacklight/directional/south,
 /obj/machinery/iv_drip,
 /turf/open/floor/iron/dark,
@@ -740,6 +702,14 @@
 /obj/structure/extinguisher_cabinet/directional/south,
 /turf/open/floor/iron/dark,
 /area/shuttle/pirate)
+"HP" = (
+/obj/machinery/computer/camera_advanced/shuttle_docker/syndicate/pirate{
+	dir = 4;
+	x_offset = 0;
+	y_offset = 7
+	},
+/turf/open/floor/iron/dark,
+/area/shuttle/pirate)
 "Iv" = (
 /obj/machinery/power/shuttle_engine/propulsion{
 	dir = 4
@@ -765,6 +735,20 @@
 	id = "interdynebridge"
 	},
 /turf/open/floor/plating,
+/area/shuttle/pirate)
+"NW" = (
+/obj/machinery/power/apc/auto_name/directional/north{
+	cell_type = /obj/item/stock_parts/power_store/battery/bluespace;
+	start_charge = 100
+	},
+/obj/effect/mapping_helpers/apc/cut_AI_wire,
+/obj/effect/turf_decal/tile/dark_blue/anticorner/contrasted{
+	dir = 1
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
+/obj/machinery/power/smes/magical,
+/obj/structure/cable,
+/turf/open/floor/iron/dark,
 /area/shuttle/pirate)
 "Oe" = (
 /obj/effect/turf_decal/tile/dark_blue{
@@ -809,6 +793,21 @@
 	max_integrity = 10000
 	},
 /turf/closed/wall/mineral/plastitanium/nodiagonal,
+/area/shuttle/pirate)
+"TJ" = (
+/obj/structure/chair/comfy/shuttle{
+	dir = 8
+	},
+/obj/machinery/turretid/directional/south{
+	icon_state = "control_kill";
+	lethal = 1;
+	locked = 0;
+	req_access = null
+	},
+/obj/effect/turf_decal/tile/dark_blue/anticorner/contrasted{
+	dir = 8
+	},
+/turf/open/floor/iron/dark,
 /area/shuttle/pirate)
 "Ur" = (
 /obj/effect/turf_decal/tile/dark_blue/anticorner/contrasted{
@@ -956,7 +955,7 @@ af
 aO
 aj
 ey
-aF
+HP
 aj
 aW
 aR
@@ -974,7 +973,7 @@ Tr
 vz
 ae
 an
-ab
+TJ
 aj
 aj
 aj
@@ -983,7 +982,7 @@ fY
 bX
 iD
 aj
-aD
+NW
 aG
 ep
 aj

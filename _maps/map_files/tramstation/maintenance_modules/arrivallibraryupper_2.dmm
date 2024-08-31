@@ -22,14 +22,20 @@
 "r" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/table,
-/obj/effect/spawner/random/clothing/gloves,
+/obj/effect/spawner/random/clothing/gloves{
+	pixel_y = 9
+	},
 /turf/open/floor/iron/smooth,
 /area/station/maintenance/port/aft)
 "s" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/table,
-/obj/effect/spawner/random/bureaucracy/folder,
-/obj/effect/spawner/random/bureaucracy/pen,
+/obj/effect/spawner/random/bureaucracy/folder{
+	pixel_y = 10
+	},
+/obj/effect/spawner/random/bureaucracy/pen{
+	pixel_y = 9
+	},
 /turf/open/floor/iron/smooth,
 /area/station/maintenance/port/aft)
 "y" = (

@@ -200,13 +200,6 @@ GLOBAL_VAR_INIT(bsa_unlock, FALSE)
 			top_layer.icon_state = "top_east"
 	add_overlay(top_layer)
 
-/obj/machinery/bsa/full/on_changed_z_level(turf/old_turf, turf/new_turf, same_z_layer, notify_contents)
-	if(same_z_layer)
-		return ..()
-	cut_overlay(top_layer)
-	get_layer()
-	return ..()
-
 /obj/machinery/bsa/full/proc/fire(mob/user, turf/bullseye)
 	reload()
 
@@ -299,7 +292,7 @@ GLOBAL_VAR_INIT(bsa_unlock, FALSE)
 		data["target"] = get_target_name()
 	return data
 
-/obj/machinery/computer/bsa_control/ui_act(action, params)
+/obj/machinery/computer/bsa_control/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if(.)
 		return

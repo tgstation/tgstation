@@ -32,6 +32,7 @@
 	mouse_opacity = MOUSE_OPACITY_OPAQUE // Easier to click on in melee, they're giant targets anyway
 	flags_1 = PREVENT_CONTENTS_EXPLOSION_1
 	can_buckle_to = FALSE
+	shadow_type = SHADOW_LARGE // Making an educated guess that they're big
 	/// Crusher loot dropped when the megafauna is killed with a crusher
 	var/list/crusher_loot
 	/// Achievement given to surrounding players when the megafauna is killed
@@ -64,7 +65,7 @@
 	if(gps_name && true_spawn)
 		AddComponent(/datum/component/gps, gps_name)
 	ADD_TRAIT(src, TRAIT_SPACEWALK, INNATE_TRAIT)
-	add_traits(list(TRAIT_NO_TELEPORT, TRAIT_MARTIAL_ARTS_IMMUNE), MEGAFAUNA_TRAIT)
+	add_traits(list(TRAIT_NO_TELEPORT), MEGAFAUNA_TRAIT)
 	grant_actions_by_list(attack_action_types)
 
 /mob/living/simple_animal/hostile/megafauna/Moved(atom/old_loc, movement_dir, forced, list/old_locs, momentum_change = TRUE)
