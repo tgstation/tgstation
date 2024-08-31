@@ -886,9 +886,9 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen/splash)
 /atom/movable/screen/hunger/update_appearance(updates)
 	var/old_state = state
 	update_hunger_state() // Do this before we call all the other update procs
-	. = ..()
 	if(state == old_state) // Let's not be wasteful
 		return
+	. = ..()
 	if(state == HUNGER_STATE_FINE)
 		SetInvisibility(INVISIBILITY_ABSTRACT, name)
 		return
@@ -906,9 +906,10 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen/splash)
 		remove_filter("hunger_outline")
 
 	// Update color of the food
-	underlays -= food_image
-	food_image.color = state == HUNGER_STATE_FAT ? COLOR_DARK : null
-	underlays += food_image
+	if((state == HUNGER_STATE_FAT) != (old_state == HUNGER_STATE_FAT))
+		underlays -= food_image
+		food_image.color = state == HUNGER_STATE_FAT ? COLOR_DARK : null
+		underlays += food_image
 
 /atom/movable/screen/hunger/update_icon_state()
 	. = ..()
