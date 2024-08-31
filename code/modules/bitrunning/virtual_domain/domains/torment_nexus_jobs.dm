@@ -291,6 +291,7 @@
 		robot.current_node = starter_node
 		robot.starting_node = starter_node
 		our_controller.animatronics += robot
+		robot.our_controller = our_controller
 	var/obj/machinery/computer/security/bitrunner/camera_console = locate(/obj/machinery/computer/security/bitrunner) in created_atoms
 	var/obj/bitrunning/animatronic_phone/our_phone = locate(/obj/bitrunning/animatronic_phone) in created_atoms
 	var/obj/machinery/door/poddoor/left_door = locate(/obj/machinery/door/poddoor/bitrunner_left) in created_atoms

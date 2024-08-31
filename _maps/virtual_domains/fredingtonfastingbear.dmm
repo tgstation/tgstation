@@ -12,7 +12,6 @@
 /obj/structure/mop_bucket/janitorialcart,
 /obj/effect/turf_decal/tile/blue/opposingcorners,
 /obj/effect/turf_decal/tile/blue/opposingcorners,
-/obj/effect/decal/cleanable/greenglow,
 /obj/machinery/light/very_dim/directional/east,
 /turf/open/floor/iron/kitchen,
 /area/virtual_domain)
@@ -288,14 +287,6 @@
 /area/virtual_domain)
 "nX" = (
 /obj/structure/chair/sofa/corp/left,
-/turf/open/floor/iron/kitchen,
-/area/virtual_domain)
-"ob" = (
-/obj/effect/turf_decal/tile/bar/opposingcorners,
-/obj/effect/turf_decal/tile/bar/opposingcorners,
-/obj/effect/turf_decal/tile/blue/opposingcorners,
-/obj/effect/turf_decal/tile/blue/opposingcorners,
-/obj/effect/decal/cleanable/greenglow,
 /turf/open/floor/iron/kitchen,
 /area/virtual_domain)
 "of" = (
@@ -668,6 +659,7 @@
 	pixel_x = -9;
 	pixel_y = -15
 	},
+/obj/bitrunning/animatronic_movement_node/security/kills_you,
 /turf/open/floor/iron/cafeteria,
 /area/virtual_domain)
 "Dz" = (
@@ -752,7 +744,9 @@
 /turf/open/floor/iron/kitchen,
 /area/virtual_domain)
 "HE" = (
-/obj/bitrunning/animatronic_movement_node/janitor/kills_you,
+/obj/bitrunning/animatronic_movement_node/engineering/kills_you{
+	dir = 1
+	},
 /turf/open/floor/iron/cafeteria,
 /area/virtual_domain)
 "HG" = (
@@ -837,7 +831,9 @@
 /turf/open/floor/iron/kitchen,
 /area/virtual_domain)
 "JO" = (
-/obj/bitrunning/animatronic_movement_node/standard/kills_you,
+/obj/bitrunning/animatronic_movement_node/standard/kills_you{
+	dir = 1
+	},
 /turf/open/floor/iron/cafeteria,
 /area/virtual_domain)
 "Ke" = (
@@ -1049,7 +1045,6 @@
 /turf/open/floor/iron/kitchen,
 /area/virtual_domain)
 "TW" = (
-/obj/bitrunning/animatronic_movement_node/engineering/kills_you,
 /turf/open/floor/iron/cafeteria,
 /area/virtual_domain)
 "Uj" = (
@@ -1119,7 +1114,7 @@
 /obj/effect/turf_decal/tile/blue/opposingcorners,
 /obj/effect/turf_decal/tile/blue/opposingcorners,
 /obj/bitrunning/animatronic_movement_node/janitor/hallway2{
-	dir = 4
+	dir = 1
 	},
 /turf/open/floor/iron/kitchen,
 /area/virtual_domain)
@@ -1184,7 +1179,9 @@
 /turf/open/floor/iron/kitchen,
 /area/virtual_domain)
 "YT" = (
-/obj/bitrunning/animatronic_movement_node/security/kills_you,
+/obj/bitrunning/animatronic_movement_node/janitor/kills_you{
+	dir = 1
+	},
 /turf/open/floor/iron/cafeteria,
 /area/virtual_domain)
 "Zf" = (
@@ -1872,7 +1869,7 @@ td
 PV
 LU
 yz
-ob
+yz
 bL
 Fc
 Cm

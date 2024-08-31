@@ -74,14 +74,14 @@
 		switch(which_side)
 			if(BITRUNNING_DOORBLOCK_RIGHT)
 				if(our_controller.right_door.density)
-					our_controller.right_door.open()
+					INVOKE_ASYNC(our_controller.right_door, TYPE_PROC_REF(/obj/machinery/door/poddoor, open))
 				else
-					our_controller.right_door.close()
+					INVOKE_ASYNC(our_controller.right_door, TYPE_PROC_REF(/obj/machinery/door/poddoor, close))
 			if(BITRUNNING_DOORBLOCK_LEFT)
 				if(our_controller.left_door.density)
-					our_controller.left_door.open()
+					INVOKE_ASYNC(our_controller.left_door, TYPE_PROC_REF(/obj/machinery/door/poddoor, open))
 				else
-					our_controller.left_door.close()
+					INVOKE_ASYNC(our_controller.left_door, TYPE_PROC_REF(/obj/machinery/door/poddoor, close))
 	update_icon()
 
 /obj/bitrunning/door_button/update_icon(updates)
@@ -318,8 +318,8 @@
 	camera_console.set_is_operational(TRUE)
 	left_door.set_is_operational(TRUE)
 	right_door.set_is_operational(TRUE)
-	left_door.open(TRUE)
-	right_door.open(TRUE)
+	INVOKE_ASYNC(left_door, TYPE_PROC_REF(/obj/machinery/door/poddoor, open))
+	INVOKE_ASYNC(right_door, TYPE_PROC_REF(/obj/machinery/door/poddoor, open))
 	left_light.set_on(FALSE)
 	right_light.set_on(FALSE)
 	my_clock.set_light(0)
@@ -352,12 +352,25 @@
 
 /obj/bitrunning/animatronic_controller/proc/movement_tick()
 	for(var/obj/bitrunning/animatronic/robot in animatronics)
+		if(robot.current_movement)
+			continue // we're already moving
 		var/movement_roll = rand(1,20)
 		if(ai_levels[robot.type] >= movement_roll)
-			if(!robot.can_move(src))
+			if(!robot.can_move())
 				continue
 			var/chosen_node = pick(robot.current_node.possible_movement_nodes)
 			var/obj/bitrunning/animatronic_movement_node/next_node = pathfinding_nodes[chosen_node]
+			robot.moving_node = next_node
+			robot.current_movement = GLOB.move_manager.jps_move(
+				robot,
+				next_node,
+				delay = robot.movespeed,
+				diagonal_handling = DIAGONAL_REMOVE_ALL,
+				flags = MOVEMENT_LOOP_START_FAST|MOVEMENT_LOOP_IGNORE_PRIORITY
+			)
+			robot.RegisterSignal(robot.current_movement, COMSIG_MOVELOOP_POSTPROCESS, TYPE_PROC_REF(/obj/bitrunning/animatronic, move_loop_postprocess))
+
+/*
 			var/blocked = FALSE
 			if(next_node.kill_node)
 				if(next_node.blocking_door == BITRUNNING_DOORBLOCK_RIGHT && right_door.density)
@@ -373,6 +386,7 @@
 			robot.setDir(next_node.dir)
 			robot.on_move(blocked, src)
 			robot.current_node = next_node
+*/
 
 /obj/bitrunning/animatronic_controller/proc/drain_power()
 	power_left--
@@ -407,8 +421,8 @@
 	camera_console.shut_down = TRUE
 	left_door.set_is_operational(FALSE)
 	right_door.set_is_operational(FALSE)
-	left_door.open(TRUE)
-	right_door.open(TRUE)
+	INVOKE_ASYNC(left_door, TYPE_PROC_REF(/obj/machinery/door/poddoor, open))
+	INVOKE_ASYNC(right_door, TYPE_PROC_REF(/obj/machinery/door/poddoor, open))
 	left_light.set_on(FALSE)
 	right_light.set_on(FALSE)
 	my_clock.update_icon()
@@ -441,7 +455,7 @@
 			jumpscare.Shake(5, 5, 2 SECONDS)
 			markiplier.playsound_local(get_turf(src), 'sound/effects/explosion1.ogg', 100, FALSE)
 			addtimer(CALLBACK(src, PROC_REF(delete_jumpscare), markiplier, jumpscare), 2 SECONDS, TIMER_DELETE_ME | TIMER_CLIENT_TIME)
-		markiplier.emote("scream")
+		INVOKE_ASYNC(markiplier, TYPE_PROC_REF(/mob, emote), "scream")
 	our_phone.started_night = FALSE
 	our_phone.phone_ring = new(our_phone, TRUE)
 
@@ -457,23 +471,72 @@
 	icon_state = "frederick"
 	density = TRUE
 	anchored = TRUE
+	move_force = MOVE_FORCE_STRONG // shove people out of the way if they're in the way
 	flags_1 = INDESTRUCTIBLE
+	var/obj/bitrunning/animatronic_controller/our_controller
 	var/obj/bitrunning/animatronic_movement_node/starting_node
 	var/obj/bitrunning/animatronic_movement_node/current_node
+	var/obj/bitrunning/animatronic_movement_node/moving_node
+	var/datum/move_loop/current_movement
+	var/movespeed = 3
 
-/obj/bitrunning/animatronic/proc/on_move(blocked, obj/bitrunning/animatronic_controller/animatronic_controller_used)
+/obj/bitrunning/animatronic/Initialize(mapload)
+	. = ..()
+	AddElement(/datum/element/footstep, FOOTSTEP_OBJ_SERVO, 1, -6, sound_vary = TRUE)
+
+/obj/bitrunning/animatronic/proc/move_loop_postprocess(datum/move_loop/source, result)
+	SIGNAL_HANDLER
+	if(result == MOVELOOP_FAILURE)
+		if(moving_node.blocking_door) // We probably failed to move because the door was blocked.
+			on_blocked()
+			UnregisterSignal(current_movement, COMSIG_MOVELOOP_POSTPROCESS)
+			GLOB.move_manager.stop_looping(src)
+			moving_node = our_controller.pathfinding_nodes[moving_node.failure_reset_id]
+			current_movement = GLOB.move_manager.jps_move(
+				src,
+				moving_node,
+				delay = movespeed,
+				diagonal_handling = DIAGONAL_REMOVE_ALL,
+				flags = MOVEMENT_LOOP_START_FAST|MOVEMENT_LOOP_IGNORE_PRIORITY
+			)
+			RegisterSignal(current_movement, COMSIG_MOVELOOP_POSTPROCESS, TYPE_PROC_REF(/obj/bitrunning/animatronic, move_loop_postprocess))
+		else
+			// Fuck it, we teleport, we have to get to our next node.
+			UnregisterSignal(current_movement, COMSIG_MOVELOOP_POSTPROCESS)
+			GLOB.move_manager.stop_looping(src)
+			current_movement = null
+			src.forceMove(get_turf(moving_node))
+			src.setDir(moving_node.dir)
+			src.current_node = moving_node
+			on_move()
+	else
+		if(get_turf(src) == get_turf(moving_node)) // we've arrived
+			src.current_node = moving_node
+			src.moving_node = null
+			UnregisterSignal(current_movement, COMSIG_MOVELOOP_POSTPROCESS)
+			GLOB.move_manager.stop_looping(src)
+			current_movement = null
+			setDir(current_node.dir)
+			on_move()
+			if(current_node.kill_node)
+				our_controller.you_failed(src) // kill 'em all
+
+/obj/bitrunning/animatronic/proc/on_move()
 	return
 
-/obj/bitrunning/animatronic/proc/can_move(obj/bitrunning/animatronic_controller/animatronic_controller_used)
+/obj/bitrunning/animatronic/proc/can_move()
 	return TRUE
+
+/obj/bitrunning/animatronic/proc/on_blocked()
+	return
 
 /obj/bitrunning/animatronic/standard
 	name = "Standard Cyborg"
 	desc = "The most famous cast member of the Nanotrasen Cyborg Band! He may not work the station anymore, but he loves to entertain bored crewmembers! \
 	Are you ready for Standard Cyborg?"
 
-/obj/bitrunning/animatronic/standard/on_move(blocked, obj/bitrunning/animatronic_controller/animatronic_controller_used)
-	playsound(animatronic_controller_used, 'sound/voice/insane_low_laugh.ogg', 100, vary = TRUE)
+/obj/bitrunning/animatronic/standard/on_move()
+	playsound(our_controller, 'sound/voice/insane_low_laugh.ogg', 100, vary = TRUE)
 
 /obj/bitrunning/animatronic/janitor
 	name = "Janitor Cyborg"
@@ -489,22 +552,22 @@
 	name = "Security Cyborg"
 	icon_state = "fawxie"
 	desc = "After their retirement from the station, the Security Cyborg now keeps the peace at the pizza parlor and makes sure diners are happy and safe!"
+	movespeed = 1 // secborg go zoom
 
-/obj/bitrunning/animatronic/security/can_move(obj/bitrunning/animatronic_controller/animatronic_controller_used)
+/obj/bitrunning/animatronic/security/can_move()
 	if(current_node.node_id != "stage3_security") // still on stage, we can camera stall him
-		if(length(animatronic_controller_used.camera_console.concurrent_users) && animatronic_controller_used.camera_console.active_camera && animatronic_controller_used.camera_console.active_camera.c_tag == "Security Cove")
+		if(length(our_controller.camera_console.concurrent_users) && our_controller.camera_console.active_camera && our_controller.camera_console.active_camera.c_tag == "Security Cove")
 			return FALSE // keeping an eye on the Security Cyborg keeps him contained, unless he's already escaped
 	return TRUE
 
-/obj/bitrunning/animatronic/security/on_move(blocked, obj/bitrunning/animatronic_controller/animatronic_controller_used)
-	if(blocked)
-		animatronic_controller_used.power_left -= 1 + (animatronic_controller_used.security_attacks * 5)
-		animatronic_controller_used.security_attacks++
-		if(animatronic_controller_used.power_left <= 0)
-			animatronic_controller_used.power_left = 0
-			animatronic_controller_used.power_outage()
-		animatronic_controller_used.my_power.update_icon()
-		playsound(animatronic_controller_used.left_door, 'sound/items/gas_tank_drop.ogg', 125, FALSE)
+/obj/bitrunning/animatronic/security/on_blocked(blocked)
+	our_controller.power_left -= 1 + (our_controller.security_attacks * 5)
+	our_controller.security_attacks++
+	if(our_controller.power_left <= 0)
+		our_controller.power_left = 0
+		our_controller.power_outage()
+	our_controller.my_power.update_icon()
+	playsound(our_controller.left_door, 'sound/items/gas_tank_drop.ogg', 125, FALSE)
 
 /obj/bitrunning/animatronic_movement_node
 	name = "Animatronic Pathfinding Node"
