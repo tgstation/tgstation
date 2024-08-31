@@ -41,6 +41,7 @@
 	icon = 'icons/obj/tram/tram_indicator.dmi'
 	custom_materials = list(/datum/material/titanium = SHEET_MATERIAL_AMOUNT * 4, /datum/material/iron = SHEET_MATERIAL_AMOUNT * 2, /datum/material/glass = SHEET_MATERIAL_AMOUNT * 2)
 	result_path = /obj/machinery/transport/destination_sign/indicator
+	pixel_shift = 32
 
 /obj/machinery/transport/destination_sign/Initialize(mapload)
 	. = ..()
