@@ -90,13 +90,13 @@ GLOBAL_LIST_EMPTY(default_lighting_underlays_by_z)
 		(red_corner.cache_g + green_corner.cache_g + blue_corner.cache_g + alpha_corner.cache_g + \
 		red_corner.cache_b + green_corner.cache_b + blue_corner.cache_b + alpha_corner.cache_b == 8))
 		//anything that passes the first case is very likely to pass the second, and addition is a little faster in this case
-		current_underlay.icon_state = "transparent-[affected_turf.lighting_state]"
+		current_underlay.icon_state = "lighting_transparent"
 		current_underlay.color = null
 	else if(!set_luminosity)
-		current_underlay.icon_state = "dark-[affected_turf.lighting_state]"
+		current_underlay.icon_state = "lighting_dark"
 		current_underlay.color = null
 	else
-		current_underlay.icon_state = affected_turf.lighting_state
+		current_underlay.icon_state = null
 		current_underlay.color = list(
 			red_corner.cache_r, red_corner.cache_g, red_corner.cache_b, 00,
 			green_corner.cache_r, green_corner.cache_g, green_corner.cache_b, 00,
