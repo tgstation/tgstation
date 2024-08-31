@@ -25,7 +25,7 @@ GLOBAL_LIST_INIT(floor_diseases, list(
 
 	RegisterSignal(parent, COMSIG_ATOM_EXAMINE, PROC_REF(examine))
 	RegisterSignal(parent, COMSIG_MOVABLE_MOVED, PROC_REF(handle_movement))
-	RegisterSignal(parent, COMSIG_COMPONENT_CLEAN_ACT, PROC_REF(wash)) //Wash germs off dirty things
+	RegisterSignals(parent, list(COMSIG_COMPONENT_CLEAN_ACT, COMSIG_ITEM_FRIED, COMSIG_ITEM_BARBEQUE_GRILLED), PROC_REF(delete_germs))
 
 	RegisterSignals(parent, list(
 		COMSIG_ITEM_DROPPED, //Dropped into the world
@@ -50,6 +50,8 @@ GLOBAL_LIST_INIT(floor_diseases, list(
 		COMSIG_ATOM_EXAMINE,
 		COMSIG_ATOM_EXITED,
 		COMSIG_COMPONENT_CLEAN_ACT,
+		COMSIG_ITEM_FRIED,
+		COMSIG_ITEM_BARBEQUE_GRILLED,
 		COMSIG_ITEM_DROPPED,
 		COMSIG_ITEM_PICKUP,
 		COMSIG_MOVABLE_MOVED,
