@@ -101,6 +101,7 @@
 	maptext_width = 480
 
 /atom/movable/screen/swap_hand
+	plane = HUD_PLANE
 	name = "swap hand"
 
 /atom/movable/screen/swap_hand/Click()
