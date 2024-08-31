@@ -22,9 +22,7 @@
 "j" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/spawner/random/engineering/atmospherics_portable,
-/obj/effect/decal/cleanable/cobweb{
-	pixel_y = 24
-	},
+/obj/effect/decal/cleanable/cobweb,
 /turf/open/floor/iron/smooth,
 /area/station/maintenance/department/eva)
 "l" = (
@@ -41,9 +39,7 @@
 "q" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/table,
-/obj/effect/spawner/random/entertainment/gambling{
-	pixel_y = 10
-	},
+/obj/effect/spawner/random/entertainment/gambling,
 /turf/open/floor/iron/smooth,
 /area/station/maintenance/department/eva)
 "s" = (
