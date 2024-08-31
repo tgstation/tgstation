@@ -7,6 +7,12 @@
 	volume = 100
 	ignore_walls = FALSE // we dont want to ring to other bitrunners
 
+/datum/looping_sound/annoying_light_hum
+	mid_sounds = list('sound/misc/bitrunner/light_hum.ogg' = 1)
+	mid_length = 1 SECONDS
+	volume = 25
+	ignore_walls = FALSE
+
 /obj/bitrunning/animatronic_phone
 	name = "red phone"
 	desc = "It's ringing for you. Pick it up to begin the night."
@@ -163,6 +169,10 @@
 	if(!shut_down)
 		. = ..()
 
+/obj/machinery/computer/security/bitrunner/update_overlays()
+	if(!shut_down)
+		. = ..()
+
 /obj/machinery/digital_clock/bitrunner
 	var/obj/bitrunning/animatronic_controller/my_controller
 
@@ -301,6 +311,11 @@
 	var/six_minute_timer
 	var/power_drain_timer
 	var/every_minute_timer
+	var/lightsout_1_timer // every 5 seconds, 20% chance to make standard appear
+	var/lightsout_1_current = 0 // once this hits 4 force to next
+	var/lightsout_2_timer // every 5 seconds, 20% chance to stop har har har har har
+	var/lightsout_2_current = 0 // once this hits 4 force to next
+	var/lightsout_3_timer // every 2 seconds, 20% chance to kill
 	var/active_drains = 0
 	var/obj/machinery/door/poddoor/left_door
 	var/obj/machinery/door/poddoor/right_door
@@ -308,14 +323,18 @@
 	var/obj/machinery/light/small/dim/right_light
 	var/obj/machinery/digital_clock/bitrunner/my_clock
 	var/obj/machinery/digital_clock/bitrunner_power/my_power
+	var/datum/looping_sound/annoying_light_hum/annoying_light_hum
 
 /obj/bitrunning/animatronic_controller/proc/start_night()
+	annoying_light_hum = new(src, TRUE)
 	power_left = 100
 	minutes_passed = 0
 	security_attacks = 0
 	ai_levels = starting_ai_levels
 	camera_console.shut_down = FALSE
 	camera_console.set_is_operational(TRUE)
+	camera_console.set_light(camera_console.brightness_on)
+	camera_console.update_icon()
 	left_door.set_is_operational(TRUE)
 	right_door.set_is_operational(TRUE)
 	INVOKE_ASYNC(left_door, TYPE_PROC_REF(/obj/machinery/door/poddoor, open))
@@ -330,9 +349,16 @@
 		robot.forceMove(get_turf(robot.starting_node))
 		robot.setDir(robot.starting_node.dir)
 		robot.current_node = robot.starting_node
-	movement_process_timer = addtimer(CALLBACK(src, PROC_REF(movement_tick)), 5 SECONDS, TIMER_STOPPABLE | TIMER_LOOP | TIMER_DELETE_ME)
-	every_minute_timer = addtimer(CALLBACK(src, PROC_REF(minute_tick)), 1 MINUTES, TIMER_STOPPABLE | TIMER_LOOP | TIMER_DELETE_ME)
-	six_minute_timer = addtimer(CALLBACK(src, PROC_REF(victory)), 6 MINUTES, TIMER_STOPPABLE | TIMER_DELETE_ME)
+		robot.set_light_on(FALSE)
+	for(var/obj/machinery/light/lightbulb in range(10, src))
+		if(lightbulb == left_light || lightbulb == right_light)
+			continue
+		lightbulb.cam_break_toggle = FALSE
+		lightbulb.no_low_power = FALSE
+		lightbulb.set_on(TRUE)
+	movement_process_timer = addtimer(CALLBACK(src, PROC_REF(movement_tick)), 5 SECONDS, TIMER_CLIENT_TIME | TIMER_STOPPABLE | TIMER_LOOP | TIMER_DELETE_ME)
+	every_minute_timer = addtimer(CALLBACK(src, PROC_REF(minute_tick)), TIMER_CLIENT_TIME | 1 MINUTES, TIMER_STOPPABLE | TIMER_LOOP | TIMER_DELETE_ME)
+	six_minute_timer = addtimer(CALLBACK(src, PROC_REF(victory)), 6 MINUTES, TIMER_CLIENT_TIME | TIMER_STOPPABLE | TIMER_DELETE_ME)
 	power_drain_timer = addtimer(CALLBACK(src, PROC_REF(drain_power)), 9.6 SECONDS, TIMER_STOPPABLE | TIMER_DELETE_ME)
 
 /obj/bitrunning/animatronic_controller/proc/minute_tick()
@@ -366,7 +392,8 @@
 				next_node,
 				delay = robot.movespeed,
 				diagonal_handling = DIAGONAL_REMOVE_ALL,
-				flags = MOVEMENT_LOOP_START_FAST|MOVEMENT_LOOP_IGNORE_PRIORITY
+				flags = MOVEMENT_LOOP_START_FAST|MOVEMENT_LOOP_IGNORE_PRIORITY,
+				avoid = robot.door_we_hate
 			)
 			robot.RegisterSignal(robot.current_movement, COMSIG_MOVELOOP_POSTPROCESS, TYPE_PROC_REF(/obj/bitrunning/animatronic, move_loop_postprocess))
 
@@ -416,9 +443,17 @@
 
 /obj/bitrunning/animatronic_controller/proc/power_outage()
 	deltimer(power_drain_timer)
+	deltimer(movement_process_timer)
+	deltimer(every_minute_timer)
+	deltimer(our_phone.speech_loop)
 	SStgui.close_uis(camera_console)
+	for(var/mob/markiplier in range(3, src))
+		if(markiplier.hud_used && markiplier.client)
+			markiplier.hud_used.show_hud(HUD_STYLE_NOHUD)
 	camera_console.set_is_operational(FALSE)
 	camera_console.shut_down = TRUE
+	camera_console.set_light(0)
+	camera_console.update_icon()
 	left_door.set_is_operational(FALSE)
 	right_door.set_is_operational(FALSE)
 	INVOKE_ASYNC(left_door, TYPE_PROC_REF(/obj/machinery/door/poddoor, open))
@@ -427,15 +462,77 @@
 	right_light.set_on(FALSE)
 	my_clock.update_icon()
 	my_power.update_icon()
+	playsound(src, 'sound/misc/bitrunner/power_outage.ogg', vol = 100, vary = FALSE)
+	QDEL_NULL(annoying_light_hum)
+	for(var/obj/machinery/light/lightbulb in range(10, src))
+		if(lightbulb == left_light || lightbulb == right_light)
+			continue
+		lightbulb.no_low_power = TRUE
+		lightbulb.set_on(FALSE)
+	lightsout_1_current = 0
+	lightsout_2_current = 0
+	lightsout_1_timer = addtimer(CALLBACK(src, PROC_REF(lightsout_1_roll)), 5 SECONDS, TIMER_CLIENT_TIME | TIMER_STOPPABLE | TIMER_LOOP | TIMER_DELETE_ME)
+
+
+/obj/bitrunning/animatronic_controller/proc/lightsout_1_roll()
+	if(prob(20) || lightsout_1_current >= 4)
+		var/obj/bitrunning/animatronic_movement_node/standard_kill_node = pathfinding_nodes["kills_you_standard"]
+		var/obj/bitrunning/animatronic/standard_module = locate(/obj/bitrunning/animatronic/standard) in animatronics
+		standard_module.forceMove(get_turf(standard_kill_node))
+		standard_module.set_light_on(TRUE)
+		standard_module.setDir(NORTH)
+		playsound(standard_module, 'sound/misc/bitrunner/standard_jingle.ogg', 100, FALSE, use_reverb = TRUE, channel = CHANNEL_JUKEBOX)
+		deltimer(lightsout_1_timer)
+		lightsout_2_timer = addtimer(CALLBACK(src, PROC_REF(lightout_2_roll)), 5 SECONDS, TIMER_CLIENT_TIME | TIMER_STOPPABLE | TIMER_LOOP | TIMER_DELETE_ME)
+		for(var/i in 1 to 25)
+			standard_module.set_light_on(standard_module.light_on ? FALSE : TRUE)
+			sleep(rand(2, 10))
+	else
+		lightsout_1_current++
+
+/obj/bitrunning/animatronic_controller/proc/lightout_2_roll()
+	if(prob(20) || lightsout_2_current >= 4)
+		var/obj/bitrunning/animatronic/standard_module = locate(/obj/bitrunning/animatronic/standard) in animatronics
+		standard_module.forceMove(get_turf(standard_module.starting_node))
+		standard_module.set_light_on(FALSE)
+		for(var/mob/markiplier in range(3, src))
+			markiplier.stop_sound_channel(CHANNEL_JUKEBOX)
+		deltimer(lightsout_2_timer)
+		lightsout_3_timer = addtimer(CALLBACK(src, PROC_REF(lightout_3_roll)), 2 SECONDS, TIMER_CLIENT_TIME | TIMER_STOPPABLE | TIMER_LOOP | TIMER_DELETE_ME)
+	else
+		lightsout_2_current++
+
+/obj/bitrunning/animatronic_controller/proc/lightout_3_roll()
+	if(prob(20))
+		var/obj/bitrunning/animatronic/standard_module = locate(/obj/bitrunning/animatronic/standard) in animatronics
+		you_failed(standard_module)
+		deltimer(lightsout_3_timer)
 
 /obj/bitrunning/animatronic_controller/proc/victory()
 	deltimer(movement_process_timer)
 	deltimer(six_minute_timer)
 	deltimer(power_drain_timer)
 	deltimer(every_minute_timer)
+	deltimer(lightsout_1_timer)
+	deltimer(lightsout_2_timer)
+	deltimer(lightsout_3_timer)
 	SStgui.close_uis(camera_console)
+	power_left = 100
+	for(var/obj/machinery/light/lightbulb in range(10, src))
+		if(lightbulb == left_light || lightbulb == right_light)
+			continue
+		lightbulb.no_low_power = FALSE
+		lightbulb.set_on(TRUE)
 	minutes_passed = 6
 	my_clock.update_icon() // show me that 6 AM
+	my_power.update_icon()
+	camera_console.set_is_operational(TRUE)
+	camera_console.shut_down = FALSE
+	camera_console.set_light(camera_console.brightness_on)
+	camera_console.update_icon()
+	for(var/mob/markiplier in range(3, get_turf(src)))
+		if(markiplier.hud_used && markiplier.client)
+			markiplier.hud_used.show_hud(HUD_STYLE_STANDARD)
 	playsound(src, 'sound/misc/announce.ogg', 100, FALSE)
 	our_phone.say("Congratulations on making it through the night! Here's your nightly bonus.")
 	new /obj/structure/closet/crate/secure/bitrunning/encrypted(get_turf(src))
@@ -445,9 +542,14 @@
 	deltimer(six_minute_timer)
 	deltimer(power_drain_timer)
 	deltimer(every_minute_timer)
+	deltimer(lightsout_1_timer)
+	deltimer(lightsout_2_timer)
+	deltimer(lightsout_3_timer)
 	SStgui.close_uis(camera_console)
 	for(var/mob/markiplier in range(3, get_turf(src)))
 		if(markiplier.client)
+			if(markiplier.hud_used)
+				markiplier.hud_used.show_hud(HUD_STYLE_NOHUD)
 			var/image/jumpscare = image(icon = killer_robot.icon, loc = markiplier, icon_state = killer_robot.icon_state, dir = SOUTH)
 			jumpscare.transform = jumpscare.transform.Scale(16, 16)
 			SET_PLANE(jumpscare, ABOVE_HUD_PLANE, markiplier)
@@ -462,6 +564,8 @@
 /obj/bitrunning/animatronic_controller/proc/delete_jumpscare(mob/markiplier, image/jumpscare)
 	markiplier?.client?.images -= jumpscare
 	qdel(jumpscare)
+	if(markiplier.hud_used && markiplier.client)
+		markiplier.hud_used.show_hud(HUD_STYLE_STANDARD)
 
 /obj/bitrunning/animatronic
 	name = "Frederick Fastbearington"
@@ -478,11 +582,9 @@
 	var/obj/bitrunning/animatronic_movement_node/current_node
 	var/obj/bitrunning/animatronic_movement_node/moving_node
 	var/datum/move_loop/current_movement
-	var/movespeed = 3
-
-/obj/bitrunning/animatronic/Initialize(mapload)
-	. = ..()
-	AddElement(/datum/element/footstep, FOOTSTEP_OBJ_SERVO, 1, -6, sound_vary = TRUE)
+	var/movespeed = 2
+	var/side_we_hate = BITRUNNING_DOORBLOCK_RIGHT
+	var/turf/door_we_hate
 
 /obj/bitrunning/animatronic/proc/move_loop_postprocess(datum/move_loop/source, result)
 	SIGNAL_HANDLER
@@ -497,7 +599,8 @@
 				moving_node,
 				delay = movespeed,
 				diagonal_handling = DIAGONAL_REMOVE_ALL,
-				flags = MOVEMENT_LOOP_START_FAST|MOVEMENT_LOOP_IGNORE_PRIORITY
+				flags = MOVEMENT_LOOP_START_FAST|MOVEMENT_LOOP_IGNORE_PRIORITY,
+				avoid = door_we_hate, // this is such a hack lol but it works
 			)
 			RegisterSignal(current_movement, COMSIG_MOVELOOP_POSTPROCESS, TYPE_PROC_REF(/obj/bitrunning/animatronic, move_loop_postprocess))
 		else
@@ -534,6 +637,19 @@
 	name = "Standard Cyborg"
 	desc = "The most famous cast member of the Nanotrasen Cyborg Band! He may not work the station anymore, but he loves to entertain bored crewmembers! \
 	Are you ready for Standard Cyborg?"
+	side_we_hate = BITRUNNING_DOORBLOCK_LEFT
+	light_system = OVERLAY_LIGHT_BEAM
+	light_color = COLOR_WHITE
+	light_range = 2
+	light_power = 0.3
+	light_on = FALSE
+
+/obj/bitrunning/animatronic/standard/can_move()
+	if(current_node.viewing_camera && length(our_controller.camera_console.concurrent_users) && our_controller.camera_console.active_camera)
+		var/obj/machinery/camera/actual_camera = our_controller.camera_console.active_camera
+		if(actual_camera.c_tag == current_node.viewing_camera)
+			return FALSE // standard doesn't move if you're looking at him
+	return TRUE
 
 /obj/bitrunning/animatronic/standard/on_move()
 	playsound(our_controller, 'sound/voice/insane_low_laugh.ogg', 100, vary = TRUE)
@@ -542,22 +658,25 @@
 	name = "Janitor Cyborg"
 	icon_state = "bannie"
 	desc = "Working hard to keep the pizza parlor clean, the Janitor Cyborg never misses a spill, and will always be there for you on a predictable basis!"
+	side_we_hate = BITRUNNING_DOORBLOCK_RIGHT
 
 /obj/bitrunning/animatronic/engineering
 	name = "Engineering Cyborg"
 	icon_state = "cheeka"
 	desc = "The Engineering Cyborg keeps this pizza place ship-shape and ready to serve patrons, along with using their welder to cook our famous welding fuel pizza!"
+	side_we_hate = BITRUNNING_DOORBLOCK_LEFT
 
 /obj/bitrunning/animatronic/security
 	name = "Security Cyborg"
 	icon_state = "fawxie"
 	desc = "After their retirement from the station, the Security Cyborg now keeps the peace at the pizza parlor and makes sure diners are happy and safe!"
 	movespeed = 1 // secborg go zoom
+	side_we_hate = BITRUNNING_DOORBLOCK_RIGHT
 
 /obj/bitrunning/animatronic/security/can_move()
 	if(current_node.node_id != "stage3_security") // still on stage, we can camera stall him
-		if(length(our_controller.camera_console.concurrent_users) && our_controller.camera_console.active_camera && our_controller.camera_console.active_camera.c_tag == "Security Cove")
-			return FALSE // keeping an eye on the Security Cyborg keeps him contained, unless he's already escaped
+		if(length(our_controller.camera_console.concurrent_users))
+			return FALSE // keeping an eye on the cameras keeps him contained, unless he's already escaped
 	return TRUE
 
 /obj/bitrunning/animatronic/security/on_blocked(blocked)
@@ -584,6 +703,7 @@
 	var/kill_node = FALSE
 	var/failure_reset_id
 	var/blocking_door
+	var/viewing_camera
 
 /obj/bitrunning/animatronic_movement_node/Initialize(mapload)
 	. = ..()
@@ -596,6 +716,7 @@
 /obj/bitrunning/animatronic_movement_node/standard/stage
 	node_id = "stage_standard"
 	possible_movement_nodes = list("tables_standard")
+	viewing_camera = "Stage"
 
 /obj/bitrunning/animatronic_movement_node/standard/tables
 	node_id = "tables_standard"
@@ -604,6 +725,7 @@
 /obj/bitrunning/animatronic_movement_node/standard/bathroom
 	node_id = "bathroom_standard"
 	possible_movement_nodes = list("kitchen_standard")
+	viewing_camera = "Bathrooms"
 
 /obj/bitrunning/animatronic_movement_node/standard/kitchen
 	node_id = "kitchen_standard"
@@ -612,10 +734,12 @@
 /obj/bitrunning/animatronic_movement_node/standard/hallway
 	node_id = "hallway_standard"
 	possible_movement_nodes = list("door_standard")
+	viewing_camera = "East Hallway 1"
 
 /obj/bitrunning/animatronic_movement_node/standard/door
 	node_id = "door_standard"
 	possible_movement_nodes = list("kills_you_standard")
+	viewing_camera = "East Hallway 2"
 
 /obj/bitrunning/animatronic_movement_node/standard/kills_you
 	node_id = "kills_you_standard"

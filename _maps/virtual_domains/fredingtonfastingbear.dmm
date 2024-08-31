@@ -292,9 +292,6 @@
 "of" = (
 /obj/structure/railing,
 /obj/effect/decal/cleanable/fuel_pool/hivis,
-/obj/machinery/camera/directional/west{
-	c_tag = "Stage"
-	},
 /turf/open/floor/wood,
 /area/virtual_domain)
 "oO" = (
@@ -560,7 +557,7 @@
 /obj/structure/railing,
 /obj/effect/decal/cleanable/blood/tracks,
 /obj/machinery/camera/directional/east{
-	c_tag = "Stage 2"
+	c_tag = "Stage"
 	},
 /turf/open/floor/wood,
 /area/virtual_domain)

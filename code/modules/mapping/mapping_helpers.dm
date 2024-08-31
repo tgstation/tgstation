@@ -1500,3 +1500,14 @@ INITIALIZE_IMMEDIATE(/obj/effect/mapping_helpers/no_atoms_ontop)
 	if(!blood_dna)
 		blood_dna = list("Unknown DNA" = random_blood_type())
 	target.add_blood_DNA(blood_dna)
+
+
+/obj/effect/mapping_helpers/do_not_path_hint
+	name = "do not path hint"
+	layer = ABOVE_NORMAL_TURF_LAYER
+	late = TRUE
+
+/obj/effect/mapping_helpers/do_not_path_hint/LateInitialize()
+	var/turf/turf_found = get_turf(src)
+	turf_found.jps_heuristic_cost = 65000
+	qdel(src)

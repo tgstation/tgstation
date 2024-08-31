@@ -111,6 +111,10 @@ GLOBAL_LIST_EMPTY(station_turfs)
 	/// Never directly access this, use get_explosive_block() instead
 	var/inherent_explosive_resistance = -1
 
+	/// How expensive is this tile for pathfinding purposes?
+	/// Use for when you don't want JPS to path over a turf.
+	var/jps_heuristic_cost = 0
+
 
 /turf/vv_edit_var(var_name, new_value)
 	var/static/list/banned_edits = list(NAMEOF_STATIC(src, x), NAMEOF_STATIC(src, y), NAMEOF_STATIC(src, z))

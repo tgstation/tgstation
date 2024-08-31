@@ -284,14 +284,6 @@
 	if(!our_controller)
 		CRASH("No Animatronic Controller!!!")
 	our_controller.starting_ai_levels = src.starting_ai_levels
-	for(var/obj/bitrunning/animatronic/robot in created_atoms)
-		var/obj/bitrunning/animatronic_movement_node/starter_node = locate(/obj/bitrunning/animatronic_movement_node) in get_turf(robot)
-		if(!starter_node)
-			CRASH("[robot] MISSING STARTER NODE ON ITS TURF")
-		robot.current_node = starter_node
-		robot.starting_node = starter_node
-		our_controller.animatronics += robot
-		robot.our_controller = our_controller
 	var/obj/machinery/computer/security/bitrunner/camera_console = locate(/obj/machinery/computer/security/bitrunner) in created_atoms
 	var/obj/bitrunning/animatronic_phone/our_phone = locate(/obj/bitrunning/animatronic_phone) in created_atoms
 	var/obj/machinery/door/poddoor/left_door = locate(/obj/machinery/door/poddoor/bitrunner_left) in created_atoms
@@ -315,6 +307,19 @@
 	our_controller.my_clock.my_controller = our_controller
 	our_controller.my_power = my_power
 	our_controller.my_power.my_controller = our_controller
+
+	for(var/obj/bitrunning/animatronic/robot in created_atoms)
+		var/obj/bitrunning/animatronic_movement_node/starter_node = locate(/obj/bitrunning/animatronic_movement_node) in get_turf(robot)
+		if(!starter_node)
+			CRASH("[robot] MISSING STARTER NODE ON ITS TURF")
+		robot.current_node = starter_node
+		robot.starting_node = starter_node
+		our_controller.animatronics += robot
+		robot.our_controller = our_controller
+		if(robot.side_we_hate == BITRUNNING_DOORBLOCK_LEFT)
+			robot.door_we_hate = get_turf(left_door)
+		else if (robot.side_we_hate == BITRUNNING_DOORBLOCK_RIGHT)
+			robot.door_we_hate = get_turf(right_door)
 
 	for(var/obj/machinery/camera/active_camera in created_atoms)
 		active_camera.network = list("[REF(our_controller)]")
