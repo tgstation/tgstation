@@ -1,12 +1,9 @@
 name: Wallening Revert
 
 on:
-  push:
-    paths:
-    - '.github/workflows/wallening_revert.yml'
   pull_request:
     types:
-      - closed
+      - labeled
     branches:
       - 1989-11-09
 
@@ -14,6 +11,7 @@ jobs:
   generate-master-pr:
     name: Move Process Along
     runs-on: ubuntu-latest
+    if: contains(github.event.pull_request.labels.*.name, 'Do Not Merge')
     steps:
       - name: Setup dotnet
         uses: actions/setup-dotnet@v4
@@ -28,6 +26,11 @@ jobs:
           app-id: ${{ secrets.APP_ID }}
           private-key: ${{ secrets.APP_PRIVATE_KEY }}
 
+      - name: Close Pull
+        run: gh pr close --comment "Skipping this PR" --delete-branch "1"
+        env:
+          GH_TOKEN: ${{ steps.app-token-generation.outputs.token }}
+
       - name: Checkout
         uses: actions/checkout@v4
         with:
@@ -38,26 +41,11 @@ jobs:
       - name: Build Helper
         run: dotnet publish tools/Tgstation.WalleningRevertHelper/Tgstation.WalleningRevertHelper.csproj -c Release -o wallening_helper
 
-      - name: Run Helper (Init)
-        if: ${{ vars.WALLENING_REVERT_PR == '' }}
-        id: helper-init
-        run: dotnet wallening_helper/Tgstation.WalleningRevertHelper.dll init ${{ steps.app-token-generation.outputs.token }}
-
       - name: Run Helper (Next)
-        if: ${{ vars.WALLENING_REVERT_PR != '' }}
         id: helper-next
         run: dotnet wallening_helper/Tgstation.WalleningRevertHelper.dll next ${{ steps.app-token-generation.outputs.token }} ${{ github.event.pull_request.number }} ${{ vars.WALLENING_REVERT_PR }}
 
-      - name: Enable Automerge (Init)
-        if: ${{ vars.WALLENING_REVERT_PR == '' }}
-        uses: peter-evans/enable-pull-request-automerge@v3
-        with:
-          token: ${{ steps.app-token-generation.outputs.token }}
-          pull-request-number: ${{ steps.helper-init.outputs.nextpr }}
-          merge-method: squash
-
       - name: Enable Automerge (Next)
-        if: ${{ vars.WALLENING_REVERT_PR != '' }}
         uses: peter-evans/enable-pull-request-automerge@v3
         with:
           token: ${{ steps.app-token-generation.outputs.token }}
