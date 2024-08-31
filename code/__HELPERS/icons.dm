@@ -1239,6 +1239,8 @@ GLOBAL_LIST_EMPTY(transformation_animation_objects)
 	var/mutable_appearance/alert_overlay = new(source)
 	alert_overlay.pixel_x = 0
 	alert_overlay.pixel_y = 0
+	alert_overlay.pixel_z = 0
+	alert_overlay.pixel_w = 0
 
 	var/scale = 1
 	var/list/icon_dimensions = get_icon_dimensions(source.icon)
