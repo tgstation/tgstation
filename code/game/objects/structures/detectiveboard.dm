@@ -25,7 +25,7 @@
 
 MAPPING_DIRECTIONAL_HELPERS(/obj/structure/detectiveboard, 32)
 
-/obj/structure/detectiveboard/Initialize(mapload,  ndir, building)
+/obj/structure/detectiveboard/Initialize(mapload)
 	. = ..()
 
 	if(mapload)
@@ -36,8 +36,6 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/detectiveboard, 32)
 
 	register_context()
 	find_and_hang_on_wall()
-
-/obj/structure/detectiveboard/
 
 /// Attaching evidences: photo and papers
 
