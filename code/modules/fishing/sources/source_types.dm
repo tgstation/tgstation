@@ -235,7 +235,7 @@
 		fish_table[reward_path] = rand(1, 4)
 
 ///Difficulty has to be calculated before the rest, because of how it influences jump chances
-/datum/fish_source/portal/random/calculate_difficulty(result, obj/item/fishing_rod/rod, mob/fisherman, datum/fishing_challenge/challenge)
+/datum/fish_source/portal/random/calculate_difficulty(datum/fishing_challenge/challenge, result, obj/item/fishing_rod/rod, mob/fisherman)
 	. = ..()
 	. += rand(-10, 15)
 

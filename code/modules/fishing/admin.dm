@@ -56,7 +56,7 @@ ADMIN_VERB(fishing_calculator, R_DEBUG, "Fishing Calculator", "A calculator... f
 				var/list/info = list()
 				info["result"] = result_type
 				info["weight"] = modified_table[result_type] || 0
-				info["difficulty"] = spot.calculate_difficulty(result_type,temporary_rod, user)
+				info["difficulty"] = spot.calculate_difficulty(result_type, temporary_rod, user) + /datum/fishing_challenge::difficulty
 				info["count"] = spot.fish_counts[result_type] || "Infinite"
 				result_table += list(info)
 			current_table = result_table

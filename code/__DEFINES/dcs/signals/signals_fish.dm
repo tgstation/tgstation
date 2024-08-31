@@ -22,6 +22,10 @@
 ///From /obj/item/fish/update_fish_force: (weight_rank, bonus_malus)
 #define COMSIG_FISH_FORCE_UPDATED "fish_force_updated"
 
+/// Rolling a reward path for a fishing challenge
+#define COMSIG_FISHING_CHALLENGE_ROLL_REWARD "fishing_roll_reward"
+/// Adjusting the difficulty of a rishing challenge, often based on the reward path
+#define COMSIG_FISHING_CHALLENGE_GET_DIFFICULTY "fishing_get_difficulty"
 /// Fishing challenge completed
 #define COMSIG_FISHING_CHALLENGE_COMPLETED "fishing_completed"
 /// Sent to the fisherman when the reward is dispensed: (reward)

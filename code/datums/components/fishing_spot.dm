@@ -89,15 +89,10 @@
 		return COMPONENT_NO_AFTERATTACK
 	// In case the fishing source has anything else to do before beginning to fish.
 	fish_source.on_start_fishing(rod, user, parent)
-	start_fishing_challenge(rod, user)
-	return COMPONENT_NO_AFTERATTACK
-
-/datum/component/fishing_spot/proc/start_fishing_challenge(obj/item/fishing_rod/rod, mob/user)
-	/// Roll what we caught based on modified table
-	var/result = fish_source.roll_reward(rod, user)
-	var/datum/fishing_challenge/challenge = new(src, result, rod, user)
+	var/datum/fishing_challenge/challenge = new(src, rod, user)
 	fish_source.pre_challenge_started(rod, user, challenge)
 	challenge.start(user)
+	return COMPONENT_NO_AFTERATTACK
 
 /datum/component/fishing_spot/proc/return_fishing_spot(datum/source, list/fish_spot_container)
 	fish_spot_container[NPC_FISHING_SPOT] = fish_source
