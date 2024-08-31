@@ -5,7 +5,6 @@
 #define BASE_HEATING_ENERGY (40 KILO JOULES)
 
 /obj/machinery/space_heater
-	SET_BASE_VISUAL_PIXEL(0, DEPTH_OFFSET)
 	anchored = FALSE
 	density = TRUE
 	interaction_flags_machine = INTERACT_MACHINE_WIRES_IF_OPEN | INTERACT_MACHINE_ALLOW_SILICON | INTERACT_MACHINE_OPEN

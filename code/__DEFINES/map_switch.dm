@@ -6,7 +6,3 @@
 #else
 #define MAP_SWITCH(compile_time, map_time) ##map_time
 #endif
-
-#ifndef CBT
-#define MAP_EDITOR
-#endif // I'd add another but idk what to call it
