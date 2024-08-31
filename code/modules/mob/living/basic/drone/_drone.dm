@@ -165,6 +165,7 @@
 		/obj/item/storage/part_replacer,
 		/obj/item/soap,
 		/obj/item/holosign_creator,
+		/obj/item/radio,
 	)
 	/// machines whitelisted from being shy with
 	var/list/shy_machine_whitelist = list(
