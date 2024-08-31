@@ -136,8 +136,6 @@ DEFINE_BITFIELD(turret_flags, list(
 	if(!has_cover)
 		INVOKE_ASYNC(src, PROC_REF(popUp))
 
-	RegisterSignal(src, COMSIG_HIT_BY_SABOTEUR, PROC_REF(on_saboteur))
-
 	AddElement(/datum/element/hostile_machine)
 
 ///Toggles the turret on or off depending on the value of the turn_on arg.
@@ -158,10 +156,9 @@ DEFINE_BITFIELD(turret_flags, list(
 		addtimer(CALLBACK(src, PROC_REF(toggle_on), TRUE), duration + 1) //the cooldown isn't over until the tick after its end.
 	toggle_on(FALSE)
 
-/obj/machinery/porta_turret/proc/on_saboteur(datum/source, disrupt_duration)
-	SIGNAL_HANDLER
+/obj/machinery/porta_turret/on_saboteur(datum/source, disrupt_duration)
 	INVOKE_ASYNC(src, PROC_REF(set_disabled), disrupt_duration)
-	return COMSIG_SABOTEUR_SUCCESS
+	return TRUE
 
 /obj/machinery/porta_turret/proc/check_should_process()
 	if (datum_flags & DF_ISPROCESSING)

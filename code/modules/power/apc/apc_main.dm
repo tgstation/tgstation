@@ -206,7 +206,6 @@
 	register_context()
 	addtimer(CALLBACK(src, PROC_REF(update)), 0.5 SECONDS)
 	RegisterSignal(SSdcs, COMSIG_GLOB_GREY_TIDE, PROC_REF(grey_tide))
-	RegisterSignal(src, COMSIG_HIT_BY_SABOTEUR, PROC_REF(on_saboteur))
 	update_appearance()
 
 	var/static/list/hovering_mob_typechecks = list(
@@ -239,12 +238,10 @@
 		disconnect_terminal()
 	return ..()
 
-/obj/machinery/power/apc/proc/on_saboteur(datum/source, disrupt_duration)
-	SIGNAL_HANDLER
-
+/obj/machinery/power/apc/on_saboteur(datum/source, disrupt_duration)
 	disrupt_duration *= 0.1 // so, turns out, failure timer is in seconds, not deciseconds; without this, disruptions last 10 times as long as they probably should
 	energy_fail(disrupt_duration)
-	return COMSIG_SABOTEUR_SUCCESS
+	return TRUE
 
 /obj/machinery/power/apc/on_set_is_operational(old_value)
 	update_area_power_usage(!old_value)

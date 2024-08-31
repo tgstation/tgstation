@@ -1,3 +1,7 @@
+///Override on subtype to add behaviour. Whatever happens when we are sabotaged
+/datum/proc/on_saboteur(datum/source, disrupt_duration)
+	return FALSE
+
 /obj/projectile/energy/fisher
 	name = "attenuated kinetic force"
 	alpha = 0
@@ -19,7 +23,7 @@
 
 	var/success = FALSE
 	for(var/atom/disrupted as anything in things_to_disrupt)
-		if(SEND_SIGNAL(disrupted, COMSIG_HIT_BY_SABOTEUR, disrupt_duration) & COMSIG_SABOTEUR_SUCCESS)
+		if(disrupted.on_saboteur(src, disrupt_duration))
 			success = TRUE
 
 	if(success && ismob(firer))

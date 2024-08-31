@@ -462,7 +462,6 @@
 		else
 			cell = new preload_cell_type(src)
 	RegisterSignal(src, COMSIG_ATOM_ATTACKBY, PROC_REF(convert))
-	RegisterSignal(src, COMSIG_HIT_BY_SABOTEUR, PROC_REF(on_saboteur))
 	update_appearance()
 
 /obj/item/melee/baton/security/get_cell()
@@ -497,14 +496,14 @@
 	qdel(item)
 	qdel(src)
 
-/obj/item/melee/baton/security/proc/on_saboteur(datum/source, disrupt_duration)
-	SIGNAL_HANDLER
+/obj/item/melee/baton/security/on_saboteur(datum/source, disrupt_duration)
 	if(!active)
-		return
+		return FALSE
 	toggle_light()
 	active = FALSE
 	update_appearance()
-	return COMSIG_SABOTEUR_SUCCESS
+	return TRUE
+
 /obj/item/melee/baton/security/Exited(atom/movable/mov_content)
 	. = ..()
 	if(mov_content == cell)

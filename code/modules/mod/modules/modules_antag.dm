@@ -558,9 +558,9 @@
 	if(get_dist(mod.wearer, target) > 4)
 		balloon_alert(mod.wearer, "can't reach [target]!")
 		return
-	if(istype(target, /obj/machinery/light))
-		var/obj/machinery/light/turning_off = target
-		turning_off.on_saboteur(src)
+	if(istype(target, /obj/machinery/power/apc)) //Bit too strong for a module so this is blacklisted
+		balloon_alert(mod.wearer, "cant disable [target]!")
+		return
 
 	var/list/things_to_disrupt = list(target)
 	if(isliving(target))

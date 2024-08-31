@@ -239,7 +239,6 @@
 	RegisterSignal(src, COMSIG_LIVING_CULT_SACRIFICED, PROC_REF(on_cult_sacrificed))
 	RegisterSignals(src, list(COMSIG_LIVING_ADJUST_BRUTE_DAMAGE, COMSIG_LIVING_ADJUST_BURN_DAMAGE), PROC_REF(on_shell_damaged))
 	RegisterSignal(src, COMSIG_LIVING_ADJUST_STAMINA_DAMAGE, PROC_REF(on_shell_weakened))
-	RegisterSignal(src, COMSIG_HIT_BY_SABOTEUR, PROC_REF(on_saboteur))
 
 /mob/living/silicon/pai/make_laws()
 	laws = new /datum/ai_laws/pai()
@@ -353,11 +352,10 @@
 	to_chat(src, span_danger("WARN: Holochasis range restrictions disabled."))
 	return TRUE
 
-/mob/living/silicon/pai/proc/on_saboteur(datum/source, disrupt_duration)
-	SIGNAL_HANDLER
+/mob/living/silicon/pai/on_saboteur(datum/source, disrupt_duration)
 	set_silence_if_lower(disrupt_duration)
 	balloon_alert(src, "muted!")
-	return COMSIG_SABOTEUR_SUCCESS
+	return TRUE
 
 /**
  * Resets the pAI and any emagged status.

@@ -78,7 +78,6 @@
 	. = ..()
 	visor_toggling()
 	update_appearance()
-	RegisterSignal(src, COMSIG_HIT_BY_SABOTEUR, PROC_REF(on_saboteur))
 
 /obj/item/clothing/head/helmet/space/plasmaman/examine()
 	. = ..()
@@ -194,13 +193,12 @@
 
 	update_item_action_buttons()
 
-/obj/item/clothing/head/helmet/space/plasmaman/proc/on_saboteur(datum/source, disrupt_duration)
-	SIGNAL_HANDLER
+/obj/item/clothing/head/helmet/space/plasmaman/on_saboteur(datum/source, disrupt_duration)
 	if(!helmet_on)
-		return
+		return FALSE
 	helmet_on = FALSE
 	update_appearance()
-	return COMSIG_SABOTEUR_SUCCESS
+	return TRUE
 
 /obj/item/clothing/head/helmet/space/plasmaman/attack_hand_secondary(mob/user)
 	..()

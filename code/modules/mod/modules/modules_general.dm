@@ -379,12 +379,6 @@
 	/// Maximum range we can set.
 	var/max_range = 5
 
-/obj/item/mod/module/flashlight/on_suit_activation()
-	RegisterSignal(mod.wearer, COMSIG_HIT_BY_SABOTEUR, PROC_REF(on_saboteur))
-
-/obj/item/mod/module/flashlight/on_suit_deactivation(deleting = FALSE)
-	UnregisterSignal(mod.wearer, COMSIG_HIT_BY_SABOTEUR)
-
 /obj/item/mod/module/flashlight/on_activation()
 	set_light_flags(light_flags | LIGHT_ATTACHED)
 	set_light_on(active)
@@ -394,11 +388,10 @@
 	set_light_flags(light_flags & ~LIGHT_ATTACHED)
 	set_light_on(active)
 
-/obj/item/mod/module/flashlight/proc/on_saboteur(datum/source, disrupt_duration)
-	SIGNAL_HANDLER
+/obj/item/mod/module/flashlight/on_saboteur(datum/source, disrupt_duration)
 	if(active)
 		on_deactivation()
-		return COMSIG_SABOTEUR_SUCCESS
+		return TRUE
 
 /obj/item/mod/module/flashlight/on_process(seconds_per_tick)
 	active_power_cost = base_power * light_range

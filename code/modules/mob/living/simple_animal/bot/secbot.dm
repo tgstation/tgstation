@@ -145,7 +145,6 @@
 	)
 	AddElement(/datum/element/connect_loc, loc_connections)
 	AddComponent(/datum/component/security_vision, judgement_criteria = NONE, update_judgement_criteria = CALLBACK(src, PROC_REF(judgement_criteria)))
-	RegisterSignal(src, COMSIG_HIT_BY_SABOTEUR, PROC_REF(on_saboteur))
 
 /mob/living/simple_animal/bot/secbot/Destroy()
 	QDEL_NULL(weapon)
@@ -169,12 +168,11 @@
 	GLOB.move_manager.stop_looping(src)
 	last_found = world.time
 
-/mob/living/simple_animal/bot/secbot/proc/on_saboteur(datum/source, disrupt_duration)
-	SIGNAL_HANDLER
+/mob/living/simple_animal/bot/secbot/on_saboteur(datum/source, disrupt_duration)
 	if(!(security_mode_flags & SECBOT_SABOTEUR_AFFECTED))
 		security_mode_flags |= SECBOT_SABOTEUR_AFFECTED
 		addtimer(CALLBACK(src, PROC_REF(remove_saboteur_effect)), disrupt_duration)
-		return COMSIG_SABOTEUR_SUCCESS
+		return TRUE
 
 /mob/living/simple_animal/bot/secbot/proc/remove_saboteur_effect()
 	security_mode_flags &= ~SECBOT_SABOTEUR_AFFECTED

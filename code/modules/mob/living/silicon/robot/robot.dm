@@ -19,7 +19,6 @@
 	AddElement(/datum/element/ridable, /datum/component/riding/creature/cyborg)
 	RegisterSignal(src, COMSIG_PROCESS_BORGCHARGER_OCCUPANT, PROC_REF(charge))
 	RegisterSignal(src, COMSIG_LIGHT_EATER_ACT, PROC_REF(on_light_eater))
-	RegisterSignal(src, COMSIG_HIT_BY_SABOTEUR, PROC_REF(on_saboteur))
 
 	robot_modules_background = new()
 	robot_modules_background.icon_state = "block"
@@ -452,12 +451,11 @@
 	return COMPONENT_BLOCK_LIGHT_EATER
 
 /// special handling for getting shot with a light disruptor/saboteur e.g. the fisher
-/mob/living/silicon/robot/proc/on_saboteur(datum/source, disrupt_duration)
-	SIGNAL_HANDLER
+/mob/living/silicon/robot/on_saboteur(datum/source, disrupt_duration)
 	if(lamp_enabled)
 		toggle_headlamp(TRUE)
 		balloon_alert(src, "headlamp off!")
-	return COMSIG_SABOTEUR_SUCCESS
+	return TRUE
 
 /**
  * Handles headlamp smashing

@@ -151,7 +151,6 @@
 /obj/machinery/power/floodlight/Initialize(mapload)
 	. = ..()
 	RegisterSignal(src, COMSIG_OBJ_PAINTED, TYPE_PROC_REF(/obj/machinery/power/floodlight, on_color_change))  //update light color when color changes
-	RegisterSignal(src, COMSIG_HIT_BY_SABOTEUR, PROC_REF(on_saboteur))
 	register_context()
 
 /obj/machinery/power/floodlight/proc/on_color_change(obj/machinery/power/flood_light, mob/user, obj/item/toy/crayon/spraycan/spraycan, is_dark_color)
@@ -297,10 +296,9 @@
 /obj/machinery/power/floodlight/attack_ai(mob/user)
 	return attack_hand(user)
 
-/obj/machinery/power/floodlight/proc/on_saboteur(datum/source, disrupt_duration)
-	SIGNAL_HANDLER
+/obj/machinery/power/floodlight/on_saboteur(datum/source, disrupt_duration)
 	atom_break(ENERGY) // technically,
-	return COMSIG_SABOTEUR_SUCCESS
+	return TRUE
 
 /obj/machinery/power/floodlight/atom_break(damage_flag)
 	. = ..()
