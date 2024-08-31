@@ -56,8 +56,6 @@
 	user.remove_alt_appearance("sneaking_mission[REF(src)]")
 	var/obj/item/master = parent
 	var/image/image = image(master, loc = user)
-	image.pixel_y -= source.base_pixel_y
-	image.pixel_z -= source.base_pixel_z
 	image.copy_overlays(master)
 	image.override = TRUE
 	image.layer = ABOVE_MOB_LAYER
