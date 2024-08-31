@@ -4,6 +4,8 @@ on:
   push:
     paths:
     - '.github/workflows/wallening_revert.yml'
+    branches:
+      - 1989-11-09
   pull_request:
     types:
       - closed
