@@ -5,19 +5,13 @@
 "e" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/bed/maint,
-/obj/effect/decal/cleanable/cobweb/cobweb2{
-	pixel_y = 24
-	},
-/turf/open/floor/plating,
-/area/station/maintenance/department/security)
-"h" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/structure/sign/poster/contraband/random,
+/obj/effect/decal/cleanable/cobweb/cobweb2,
 /turf/open/floor/plating,
 /area/station/maintenance/department/security)
 "k" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/spawner/random/trash/cigbutt,
+/obj/structure/sign/poster/contraband/random/directional/east,
 /turf/open/floor/plating,
 /area/station/maintenance/department/security)
 "n" = (
@@ -30,9 +24,7 @@
 "r" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/table,
-/obj/effect/spawner/random/contraband/cannabis{
-	pixel_y = 9
-	},
+/obj/effect/spawner/random/contraband/cannabis,
 /obj/effect/spawner/random/contraband/narcotics,
 /turf/open/floor/plating,
 /area/station/maintenance/department/security)
@@ -51,9 +43,7 @@
 "v" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/table,
-/obj/effect/spawner/random/medical/minor_healing{
-	pixel_y = 13
-	},
+/obj/effect/spawner/random/medical/minor_healing,
 /obj/effect/spawner/random/medical/injector,
 /turf/open/floor/plating,
 /area/station/maintenance/department/security)
@@ -190,7 +180,7 @@ a
 "}
 (9,1,1) = {"
 p
-h
+n
 E
 r
 a
