@@ -225,7 +225,7 @@ After that some startup commits on this branch need to be reverted then it can b
 			if (conflicted)
 			{
 				var originalPR = await client.PullRequest.Get("tgstation", "tgstation", nextPr);
-				body += $"\n\nThis PR appears to be conflicting. Please push a resolution and enable auto-merge. Pinging original author @{originalPR.User.Login} and merger @{originalPR.MergedBy.Login} for assistance.\n\nAlternatively, close the PR to skip it. The original PR will be labelled `Lost to Wallening Revert`.";
+				body += $"\n\nThis PR appears to be conflicting. Please push a resolution and enable auto-merge. Pinging original author @{originalPR.User.Login} and merger @{originalPR.MergedBy.Login} for assistance.\n\nAlternatively, **label** the PR with `Do Not Merge` to skip it. The original PR will be labelled `Lost to Wallening Revert`.";
 				title += " (CONFLICTS)";
 			}
 
