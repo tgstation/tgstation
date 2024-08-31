@@ -11,12 +11,13 @@
 "h" = (
 /obj/item/storage/toolbox/syndicate,
 /obj/item/multitool,
-/obj/structure/rack,
-/obj/machinery/button/door/directional/east{
+/obj/machinery/button/door{
 	id = "lavalandsyndi_telecomms";
-	req_access = list("syndicate");
-	name = "Telecomms Blast Door Control"
+	name = "Telecomms Blast Door Control";
+	pixel_x = 26;
+	req_access = list("syndicate")
 	},
+/obj/structure/rack,
 /turf/open/floor/wood,
 /area/ruin/syndicate_lava_base/telecomms)
 "j" = (
@@ -34,13 +35,13 @@
 /turf/closed/wall/mineral/plastitanium/nodiagonal,
 /area/ruin/syndicate_lava_base/telecomms)
 "n" = (
+/obj/structure/noticeboard/directional/north,
 /obj/effect/turf_decal/siding/wood{
 	dir = 4
 	},
 /obj/effect/turf_decal/tile/red{
 	dir = 4
 	},
-/obj/structure/sign/poster/contraband/syndiemoth/directional/north,
 /turf/open/floor/iron/dark,
 /area/ruin/syndicate_lava_base/telecomms)
 "q" = (
@@ -82,9 +83,10 @@
 /obj/item/paper/monitorkey{
 	pixel_x = 5
 	},
-/obj/item/radio/intercom/directional/south{
+/obj/item/radio/intercom{
+	freerange = 1;
 	name = "Syndicate Radio Intercom";
-	freerange = 1
+	pixel_y = -26
 	},
 /turf/open/floor/iron/dark,
 /area/ruin/syndicate_lava_base/telecomms)
@@ -129,14 +131,10 @@
 /turf/open/floor/iron/dark,
 /area/ruin/syndicate_lava_base/telecomms)
 "Q" = (
+/obj/structure/sign/poster/contraband/syndiemoth/directional/south,
 /obj/structure/table/wood,
-/obj/item/paper_bin{
-	pixel_y = 8
-	},
-/obj/item/pen{
-	pixel_y = 8
-	},
-/obj/structure/noticeboard/directional/south,
+/obj/item/paper_bin,
+/obj/item/pen,
 /turf/open/floor/wood,
 /area/ruin/syndicate_lava_base/telecomms)
 "R" = (
