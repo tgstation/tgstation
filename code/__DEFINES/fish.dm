@@ -6,6 +6,11 @@
 // Baseline fishing difficulty levels
 #define FISHING_DEFAULT_DIFFICULTY 15
 #define FISHING_EASY_DIFFICULTY 10
+/**
+ * The minimum value of the difficulty of the minigame (unless it reaches 0 than it's auto-win)
+ * Any lower than this and the fish will be way too lethargic for the minigame to be engaging in the slightest.
+ */
+#define FISHING_MINIMUM_DIFFICULTY 6
 
 /// Difficulty modifier when bait is fish's favorite
 #define FAV_BAIT_DIFFICULTY_MOD -5

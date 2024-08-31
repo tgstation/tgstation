@@ -361,13 +361,18 @@
 		var/damage = CEILING((world.time - start_time)/10 * FISH_DAMAGE_PER_SECOND, 1)
 		reward.adjust_health(reward.health - damage)
 
+///Get the difficulty and other variables, than start the minigame
 /datum/fishing_challenge/proc/start_minigame_phase(auto_reel = FALSE)
 	var/list/difficulty_holder = list(0)
 	SEND_SIGNAL(src, COMSIG_FISHING_CHALLENGE_GET_DIFFICULTY, reward_path, used_rod, user, difficulty_holder)
 	difficulty = difficulty_holder[1]
-	difficulty = clamp(round(difficulty), FISHING_EASY_DIFFICULTY - 5, 100)
+	//If you manage to be so well-equipped and skilled to completely crush the difficulty, just skip to the reward.
+	if(difficulty <= 0)
+		complete(TRUE)
+		return
+	difficulty = clamp(round(difficulty), FISHING_MINIMUM_DIFFICULTY, 100)
 
-	if(difficulty > FISHING_EASY_DIFFICULTY)
+	if(difficulty > FISHING_DEFAULT_DIFFICULTY)
 		completion -= MAX_FISH_COMPLETION_MALUS * (difficulty * 0.01)
 
 	if(HAS_MIND_TRAIT(user, TRAIT_REVEAL_FISH))
