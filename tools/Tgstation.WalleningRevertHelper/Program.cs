@@ -154,11 +154,11 @@ After that some startup commits on this branch need to be reverted then it can b
 			{
 				var previousPR = await client.PullRequest.Get("tgstation", "tgstation", closedPRNumber.Value);
 
-				var previousOriginalPR = Int32.Parse(Regex.Match(previousPR.Title, "Post Wallening Replay PR #([0-9][1-9]+)").Groups[1].Value);
+				var previousOriginalPR = Int32.Parse(Regex.Match(previousPR.Title, "Post Wallening Replay PR #([0-9][0-9]+)").Groups[1].Value);
 
 				var newBody = Regex.Replace(
 					walleningPR.Body,
-					@$"  - \[ \] #{previousOriginalPR} - Reverted in ([0-9a-f])+",
+					@$"  - \[ \] #{previousOriginalPR} - Reverted in ([0-9a-f]+)",
 					previousPR.Merged
 						? $"  - [x] #{previousOriginalPR} - Reverted in $1"
 						: $"  - ~~[ ] #{previousOriginalPR} - Reverted in $1~~ (SKIPPED)");
