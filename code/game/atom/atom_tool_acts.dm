@@ -109,6 +109,16 @@
 			act_result = is_left_clicking ? welder_act(user, tool) : welder_act_secondary(user, tool)
 		if(TOOL_ANALYZER)
 			act_result = is_left_clicking ? analyzer_act(user, tool) : analyzer_act_secondary(user, tool)
+		// DOPPLER EDIT ADDITION START - REAGENT FORGING TOOLS
+		if(TOOL_BILLOW)
+			act_result = is_left_clicking ? billow_act(user, tool) : billow_act_secondary(user, tool)
+		if(TOOL_TONG)
+			act_result = is_left_clicking ? tong_act(user, tool) : tong_act_secondary(user, tool)
+		if(TOOL_HAMMER)
+			act_result = is_left_clicking ? hammer_act(user, tool) : hammer_act_secondary(user, tool)
+		if(TOOL_BLOWROD)
+			act_result = is_left_clicking ? blowrod_act(user, tool) : blowrod_act_secondary(user, tool)
+		// DOPPLER EDIT ADDITION END
 
 	if(!act_result)
 		return NONE

@@ -205,6 +205,7 @@
 /proc/get_sfx(soundin)
 	if(!istext(soundin))
 		return soundin
+	soundin = get_sfx_doppler(soundin) // DOPPLER EDIT ADDITION - MODULAR SOUNDS
 	switch(soundin)
 		if(SFX_SHATTER)
 			soundin = pick('sound/effects/glassbr1.ogg','sound/effects/glassbr2.ogg','sound/effects/glassbr3.ogg')

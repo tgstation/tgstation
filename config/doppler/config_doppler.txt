@@ -1,0 +1,2 @@
+## Combat indicator, comment out to disable it
+COMBAT_INDICATOR
