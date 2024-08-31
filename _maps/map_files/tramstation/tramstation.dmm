@@ -15793,14 +15793,6 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
-/obj/machinery/button/door/directional/north{
-	pixel_x = -6;
-	id = "QMLoaddoor"
-	},
-/obj/machinery/button/door/directional/north{
-	pixel_x = 6;
-	id = "QMLoaddoor2"
-	},
 /obj/machinery/camera/directional/north{
 	c_tag = "Cargo - Warehouse North"
 	},
@@ -18463,6 +18455,21 @@
 /obj/machinery/atmospherics/pipe/smart/simple/cyan/visible,
 /turf/open/floor/plating,
 /area/station/engineering/atmos/pumproom)
+"frz" = (
+/obj/machinery/conveyor{
+	dir = 4;
+	id = "QMLoad2"
+	},
+/obj/effect/turf_decal/stripes/line,
+/obj/effect/turf_decal/trimline/brown/filled/line{
+	dir = 1
+	},
+/obj/machinery/button/door/directional/north{
+	pixel_x = 6;
+	id = "QMLoaddoor2"
+	},
+/turf/open/floor/iron,
+/area/station/cargo/storage)
 "frB" = (
 /obj/effect/spawner/random/engineering/tracking_beacon,
 /obj/machinery/light/warm/directional/east,
@@ -45026,8 +45033,8 @@
 /turf/closed/wall/r_wall,
 /area/station/engineering/supermatter)
 "oMh" = (
-/obj/structure/secure_safe/directional/east,
 /obj/machinery/airalarm/directional/north,
+/obj/structure/detectiveboard/directional/east,
 /turf/open/floor/carpet,
 /area/station/security/detectives_office)
 "oMz" = (
@@ -48487,6 +48494,7 @@
 /obj/effect/turf_decal/trimline/purple/filled/line{
 	dir = 4
 	},
+/obj/machinery/vending/cytopro,
 /turf/open/floor/iron/white,
 /area/station/science/xenobiology)
 "pWC" = (
@@ -57936,6 +57944,10 @@
 /obj/effect/turf_decal/trimline/brown/filled/line{
 	dir = 5
 	},
+/obj/machinery/button/door/directional/north{
+	pixel_x = -6;
+	id = "QMLoaddoor"
+	},
 /turf/open/floor/iron,
 /area/station/cargo/storage)
 "tki" = (
@@ -60501,6 +60513,7 @@
 /obj/machinery/light_switch/directional/west{
 	pixel_y = 13
 	},
+/obj/structure/secure_safe/directional/south,
 /turf/open/floor/iron/grimy,
 /area/station/security/detectives_office)
 "udZ" = (
@@ -182529,7 +182542,7 @@ aac
 aac
 aaa
 aaa
-akr
+cTU
 tjS
 hFV
 mmi
@@ -184585,8 +184598,8 @@ aac
 aac
 aac
 aac
-akr
-xAJ
+cTU
+frz
 bYR
 haS
 udQ

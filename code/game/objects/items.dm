@@ -711,7 +711,7 @@
 /obj/item/proc/on_equipped(mob/user, slot, initial = FALSE)
 	SHOULD_NOT_OVERRIDE(TRUE)
 	equipped(user, slot, initial)
-	if(SEND_SIGNAL(src, COMSIG_ITEM_POST_EQUIPPED, user, slot) && COMPONENT_EQUIPPED_FAILED)
+	if(SEND_SIGNAL(src, COMSIG_ITEM_POST_EQUIPPED, user, slot) & COMPONENT_EQUIPPED_FAILED)
 		return FALSE
 	return TRUE
 
@@ -1318,7 +1318,7 @@
  * Then, it checks tiny items.
  * After all that, it returns TRUE if the item is set to be discovered. Otherwise, it returns FALSE.
  *
- * This works similarily to /suicide_act: if you want an item to have a unique interaction, go to that item
+ * This works similarly to /suicide_act: if you want an item to have a unique interaction, go to that item
  * and give it an /on_accidental_consumption proc override. For a simple example of this, check out the nuke disk.
  *
  * Arguments
@@ -1343,7 +1343,7 @@
 			return
 		source_item?.reagents?.add_reagent(/datum/reagent/blood, 2)
 
-	else if(custom_materials?.len) //if we've got materials, lets see whats in it
+	else if(custom_materials?.len) //if we've got materials, let's see what's in it
 		// How many mats have we found? You can only be affected by two material datums by default
 		var/found_mats = 0
 		// How much of each material is in it? Used to determine if the glass should break

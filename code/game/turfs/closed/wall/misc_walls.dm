@@ -50,6 +50,13 @@
 	. = ..()
 	AddElement(/datum/element/rust)
 
+/turf/closed/wall/heretic_rust
+	color = MAP_SWITCH(null, COLOR_GREEN_GRAY)
+
+/turf/closed/wall/heretic_rust/Initialize(mapload)
+	. = ..()
+	AddElement(/datum/element/rust/heretic)
+
 /turf/closed/wall/r_wall/rust
 	name = "rusted reinforced wall"
 	desc = "A huge chunk of rusted reinforced metal."
@@ -60,6 +67,14 @@
 /turf/closed/wall/r_wall/rust/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/rust)
+
+/turf/closed/wall/r_wall/heretic_rust
+	color = MAP_SWITCH(null, COLOR_GREEN_GRAY)
+	icon = 'icons/turf/walls/rusty_reinforced_wall.dmi'
+
+/turf/closed/wall/r_wall/heretic_rust/Initialize(mapload)
+	. = ..()
+	AddElement(/datum/element/rust/heretic)
 
 /turf/closed/wall/mineral/bronze
 	name = "clockwork wall"
