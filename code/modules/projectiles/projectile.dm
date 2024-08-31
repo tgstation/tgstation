@@ -982,15 +982,11 @@
 	trajectory_ignore_forcemove = FALSE
 
 	starting = source_loc
-	// Find the last atom movable in our loc chain, or if we're a turf use us
-	var/atom/source_position = get_highest_loc(source, /atom/movable) || source
-	pixel_x = source_position.pixel_x
-	pixel_y = source_position.pixel_y
-	pixel_w = source_position.pixel_w
-	pixel_z = source_position.pixel_z
+	pixel_x = source.pixel_x
+	pixel_y = source.pixel_y
 	original = target
 	if(length(modifiers))
-		var/list/calculated = calculate_projectile_angle_and_pixel_offsets(source_position, target_loc && target, modifiers)
+		var/list/calculated = calculate_projectile_angle_and_pixel_offsets(source, target_loc && target, modifiers)
 
 		p_x = calculated[2]
 		p_y = calculated[3]
@@ -1025,7 +1021,8 @@
 		var/turf/source_loc = get_turf(source)
 		var/turf/target_loc = get_turf(target)
 		var/dx = ((target_loc.x - source_loc.x) * world.icon_size) + (target.pixel_x - source.pixel_x) + (p_x - (world.icon_size / 2))
-		var/dy = ((target_loc.y - source_loc.y) * world.icon_size) + (target.pixel_y - source.pixel_y) + (target.pixel_z - source.pixel_z) + (p_y - (world.icon_size / 2))
+		var/dy = ((target_loc.y - source_loc.y) * world.icon_size) + (target.pixel_y - source.pixel_y) + (p_y - (world.icon_size / 2))
+
 		angle = ATAN2(dy, dx)
 		return list(angle, p_x, p_y)
 
@@ -1044,15 +1041,13 @@
 	var/list/screen_loc_Y = splittext(screen_loc_params[2],":")
 
 	var/tx = (text2num(screen_loc_X[1]) - 1) * world.icon_size + text2num(screen_loc_X[2])
-	// We are here trying to lower our target location by the firing source's visual offset
-	// So visually things make a nice straight line while properly accounting for actual physical position 
-	var/ty = (text2num(screen_loc_Y[1]) - 1) * world.icon_size + text2num(screen_loc_Y[2]) - source.pixel_z
+	var/ty = (text2num(screen_loc_Y[1]) - 1) * world.icon_size + text2num(screen_loc_Y[2])
 
 	//Calculate the "resolution" of screen based on client's view and world's icon size. This will work if the user can view more tiles than average.
 	var/list/screenview = view_to_pixels(user.client.view)
 
 	var/ox = round(screenview[1] / 2) - user.client.pixel_x //"origin" x
-	var/oy = round(screenview[2] / 2) - user.client.pixel_y - source.pixel_z //"origin" y
+	var/oy = round(screenview[2] / 2) - user.client.pixel_y //"origin" y
 	angle = ATAN2(tx - oy, ty - ox)
 	return list(angle, p_x, p_y)
 
