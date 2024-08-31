@@ -2,7 +2,6 @@
 
 // Modular Computer - A machinery that is mostly just a host to the Modular Computer item.
 /obj/machinery/modular_computer
-	SET_BASE_VISUAL_PIXEL(0, DEPTH_OFFSET)
 	name = "modular computer"
 	desc = "You shouldn't see this. If you do, report it." //they should be examining the processor instead
 	icon = 'icons/obj/machines/modular_console.dmi'
