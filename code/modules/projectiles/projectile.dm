@@ -456,9 +456,8 @@
 				store_hitscan_collision(point_cache)
 			return TRUE
 
-	if(!HAS_TRAIT(src, TRAIT_ALWAYS_HIT_ZONE))
-		var/distance = get_dist(T, starting) // Get the distance between the turf shot from and the mob we hit and use that for the calculations.
-		def_zone = ran_zone(def_zone, clamp(accurate_range - (accuracy_falloff * distance), 5, 100)) //Lower accurancy/longer range tradeoff. 7 is a balanced number to use.
+	var/distance = get_dist(T, starting) // Get the distance between the turf shot from and the mob we hit and use that for the calculations.
+	def_zone = ran_zone(def_zone, clamp(accurate_range - (accuracy_falloff * distance), 5, 100)) //Lower accurancy/longer range tradeoff. 7 is a balanced number to use.
 
 	return process_hit(T, select_target(T, A, A), A) // SELECT TARGET FIRST!
 

@@ -534,9 +534,6 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 /// Mobs with this trait cannot be hit by projectiles, meaning the projectiles will just go through.
 #define TRAIT_UNHITTABLE_BY_PROJECTILES "unhittable_by_projectiles"
 
-/// Projectile with this trait will always hit the defined zone of a struck living mob.
-#define TRAIT_ALWAYS_HIT_ZONE "always_hit_zone"
-
 /// Mobs with this trait do care about a few grisly things, such as digging up graves. They also really do not like bringing people back to life or tending wounds, but love autopsies and amputations.
 #define TRAIT_MORBID "morbid"
 
