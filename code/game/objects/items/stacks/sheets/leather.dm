@@ -245,6 +245,8 @@ GLOBAL_LIST_INIT(leather_recipes, list ( \
 	icon_state = "sinew"
 	novariants = TRUE
 	merge_type = /obj/item/stack/sheet/sinew
+	drop_sound = 'sound/effects/meatslap.ogg'
+	pickup_sound = 'sound/effects/meatslap.ogg'
 
 /obj/item/stack/sheet/sinew/Initialize(mapload, new_amount, merge, list/mat_override, mat_amt)
 	. = ..()
