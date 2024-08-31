@@ -65,6 +65,7 @@
 
 	if(isfish(target) || istype(target, /obj/structure/aquarium))
 		scanned_item = WEAKREF(target)
+		SEND_SIGNAL(src, COMSIG_FISH_ANALYZER_ANALYZE_STATUS, target, user)
 		ui_interact(user)
 		return ITEM_INTERACT_SUCCESS
 
