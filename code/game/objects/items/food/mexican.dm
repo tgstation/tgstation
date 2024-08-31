@@ -203,6 +203,7 @@
 	desc = "Some tortilla chips with a cup of zesty salsa. Highly addictive!"
 	icon = 'icons/obj/food/mexican.dmi'
 	icon_state = "chipsandsalsa"
+	trash_type = /obj/item/reagent_containers/cup/bowl
 	food_reagents = list(
 		/datum/reagent/consumable/nutriment = 4,
 		/datum/reagent/consumable/capsaicin = 2,
@@ -332,6 +333,7 @@
 	desc = "A not-so liquid salsa made of pineapples, tomatoes, onions, and chilis. Makes for delightfully contrasting flavors."
 	icon = 'icons/obj/food/mexican.dmi'
 	icon_state = "pineapple_salsa"
+	trash_type = /obj/item/reagent_containers/cup/bowl
 	food_reagents = list(
 		/datum/reagent/consumable/nutriment = 6,
 		/datum/reagent/consumable/nutriment/vitamin = 6,
