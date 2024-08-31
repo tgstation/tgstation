@@ -1,9 +1,4 @@
-/**
- * This element should be applied to wall-mounted machines/structures,
- * so that if the wall it's "hanging" from is broken or deconstructed,
- * the wall-hung structure will deconstruct.
- */
-
+// This element should be applied to wall-mounted machines/structures, so that if the wall it's "hanging" from is broken or deconstructed, the wall-hung structure will deconstruct.
 /datum/component/wall_mounted
 	dupe_mode = COMPONENT_DUPE_ALLOWED
 	/// The wall our object is currently linked to.
@@ -93,12 +88,11 @@
  *	@param custom_drop_callback If set, will use this callback instead of the default deconstruct callback.
  */
 /obj/proc/find_and_hang_on_wall(directional = TRUE, custom_drop_callback)
-	AddElement(/datum/element/wall_mount)
 	if(istype(get_area(src), /area/shuttle))
 		return FALSE //For now, we're going to keep the component off of shuttles to avoid the turf changing issue. We'll hit that later really;
 	var/turf/attachable_wall
 	if(directional)
-		attachable_wall = get_step(src, REVERSE_DIR(dir))
+		attachable_wall = get_step(src, dir)
 	else
 		attachable_wall = loc ///Pull from the curent object loc
 	if(!iswallturf(attachable_wall))
