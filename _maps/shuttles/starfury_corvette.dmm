@@ -12,6 +12,26 @@
 "ac" = (
 /turf/open/floor/iron/dark,
 /area/shuttle/sbc_corvette)
+"ae" = (
+/obj/machinery/turretid{
+	ailock = 1;
+	desc = "A specially designed set of turret controls. Looks to be covered in protective casing to prevent AI interfacing.";
+	icon_state = "control_kill";
+	lethal = 1;
+	name = "Ship Turret Control";
+	pixel_x = 32;
+	pixel_y = -2;
+	req_access = list("syndicate")
+	},
+/obj/machinery/button/door{
+	id = "SBC_corvette_blast";
+	name = "Corvette Blast Doors";
+	pixel_x = 32;
+	pixel_y = 8;
+	req_access = list("syndicate_leader")
+	},
+/turf/open/floor/iron/dark,
+/area/shuttle/sbc_corvette)
 "ag" = (
 /obj/machinery/computer/shuttle/starfury/corvette{
 	dir = 8
@@ -35,6 +55,33 @@
 	specialfunctions = 4
 	},
 /turf/open/floor/mineral/plastitanium,
+/area/shuttle/sbc_corvette)
+"ai" = (
+/obj/machinery/computer/camera_advanced/shuttle_docker/syndicate/corvette{
+	dir = 8;
+	y_offset = 0;
+	x_offset = -3
+	},
+/obj/effect/turf_decal/stripes/red/line{
+	dir = 4
+	},
+/turf/open/floor/iron/dark,
+/area/shuttle/sbc_corvette)
+"aj" = (
+/obj/machinery/door/airlock/external{
+	id_tag = "SBC_corvette_bolt";
+	name = "Syndicate Corvette Airlock"
+	},
+/obj/docking_port/mobile/syndicate_corvette{
+	preferred_direction = 1;
+	port_direction = 4
+	},
+/obj/structure/fans/tiny,
+/obj/effect/mapping_helpers/airlock/access/all/syndicate/general,
+/obj/effect/turf_decal/siding/thinplating_new/dark{
+	dir = 1
+	},
+/turf/open/floor/plating,
 /area/shuttle/sbc_corvette)
 "ak" = (
 /obj/structure/chair/comfy/shuttle{
@@ -246,6 +293,13 @@
 	},
 /turf/open/floor/iron/dark,
 /area/shuttle/sbc_corvette)
+"aO" = (
+/obj/machinery/door/poddoor/preopen{
+	id = "SBC_corvette_blast"
+	},
+/obj/effect/spawner/structure/window/reinforced/plasma/plastitanium,
+/turf/open/floor/plating,
+/area/shuttle/sbc_corvette)
 "aP" = (
 /obj/machinery/door/airlock/hatch{
 	name = "Syndicate Corvette Cockpit"
@@ -327,24 +381,6 @@
 "aZ" = (
 /turf/open/floor/catwalk_floor/iron_dark,
 /area/shuttle/sbc_corvette)
-"jy" = (
-/obj/machinery/turretid/directional/south{
-	ailock = 1;
-	desc = "A specially designed set of turret controls. Looks to be covered in protective casing to prevent AI interfacing.";
-	icon_state = "control_kill";
-	lethal = 1;
-	name = "Ship Turret Control";
-	req_access = list("syndicate")
-	},
-/obj/machinery/button/door{
-	id = "SBC_corvette_blast";
-	name = "Corvette Blast Doors";
-	pixel_x = 32;
-	pixel_y = 8;
-	req_access = list("syndicate_leader")
-	},
-/turf/open/floor/iron/dark,
-/area/shuttle/sbc_corvette)
 "qH" = (
 /obj/structure/table,
 /obj/item/wrench,
@@ -384,13 +420,6 @@
 	},
 /turf/closed/wall/mineral/plastitanium/nodiagonal,
 /area/shuttle/sbc_corvette)
-"CN" = (
-/obj/machinery/door/poddoor/preopen{
-	id = "SBC_corvette_blast"
-	},
-/obj/effect/spawner/structure/window/reinforced/plasma/plastitanium,
-/turf/open/floor/plating,
-/area/shuttle/sbc_corvette)
 "Jb" = (
 /obj/machinery/computer/security{
 	network = list("SBC_Corvette")
@@ -408,33 +437,6 @@
 	dir = 6
 	},
 /turf/open/floor/mineral/plastitanium/red,
-/area/shuttle/sbc_corvette)
-"Ms" = (
-/obj/machinery/door/airlock/external{
-	id_tag = "SBC_corvette_bolt";
-	name = "Syndicate Corvette Airlock"
-	},
-/obj/docking_port/mobile/syndicate_corvette{
-	preferred_direction = 1;
-	port_direction = 4
-	},
-/obj/structure/fans/tiny,
-/obj/effect/mapping_helpers/airlock/access/all/syndicate/general,
-/obj/effect/turf_decal/siding/thinplating_new/dark{
-	dir = 1
-	},
-/turf/open/floor/plating,
-/area/shuttle/sbc_corvette)
-"Nu" = (
-/obj/machinery/computer/camera_advanced/shuttle_docker/syndicate/corvette{
-	dir = 8;
-	y_offset = 0;
-	x_offset = -3
-	},
-/obj/effect/turf_decal/stripes/red/line{
-	dir = 4
-	},
-/turf/open/floor/iron/dark,
 /area/shuttle/sbc_corvette)
 
 (1,1,1) = {"
@@ -507,7 +509,7 @@ aT
 aZ
 aU
 as
-Ms
+aj
 "}
 (9,1,1) = {"
 aM
@@ -537,29 +539,29 @@ ay
 aM
 "}
 (12,1,1) = {"
-CN
+aO
 qH
 ac
 aW
-jy
+ae
 aQ
-CN
+aO
 "}
 (13,1,1) = {"
-CN
-CN
-Nu
+aO
+aO
+ai
 ag
 ap
-CN
-CN
+aO
+aO
 "}
 (14,1,1) = {"
 aa
-CN
-CN
-CN
-CN
-CN
+aO
+aO
+aO
+aO
+aO
 aa
 "}
