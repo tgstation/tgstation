@@ -142,6 +142,7 @@ GLOBAL_LIST_INIT(transit_tube_recipes, list(
 /datum/pipe_info/meter
 	icon_state = "meter"
 	dirtype = PIPE_ONEDIR
+	all_layers = TRUE
 
 /datum/pipe_info/meter/New(label)
 	name = label
