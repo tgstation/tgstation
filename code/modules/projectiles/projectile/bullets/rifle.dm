@@ -154,6 +154,7 @@
 	embed_type = /datum/embed_data/rebar_hydrogen
 	embed_falloff_tile = -3
 	shrapnel_type = /obj/item/ammo_casing/rebar/hydrogen
+	accurate_range = 205 //15 tiles before falloff starts to kick in
 
 /obj/projectile/bullet/rebar/hydrogen/Impact(atom/A)
 	. = ..()

@@ -209,6 +209,10 @@
 	var/wound_falloff_tile
 	///How much we want to drop the embed_chance value, if we can embed, per tile, for falloff purposes
 	var/embed_falloff_tile
+	///How much accuracy is lost for each tile travelled
+	var/accuracy_falloff = 7
+	///How much accuracy before falloff starts to matter. Formula is range - falloff * tiles travelled
+	var/accurate_range = 100
 	var/static/list/projectile_connections = list(COMSIG_ATOM_ENTERED = PROC_REF(on_entered))
 	/// If true directly targeted turfs can be hit
 	var/can_hit_turfs = FALSE
@@ -454,7 +458,7 @@
 
 	if(!HAS_TRAIT(src, TRAIT_ALWAYS_HIT_ZONE))
 		var/distance = get_dist(T, starting) // Get the distance between the turf shot from and the mob we hit and use that for the calculations.
-		def_zone = ran_zone(def_zone, max(100-(7*distance), 5)) //Lower accurancy/longer range tradeoff. 7 is a balanced number to use.
+		def_zone = ran_zone(def_zone, clamp(accurate_range - (accuracy_falloff * distance), 5, 100)) //Lower accurancy/longer range tradeoff. 7 is a balanced number to use.
 
 	return process_hit(T, select_target(T, A, A), A) // SELECT TARGET FIRST!
 
