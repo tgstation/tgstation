@@ -1,7 +1,6 @@
 #define MAX_CONTAINER_PRINT_AMOUNT 50
 
 /obj/machinery/chem_master
-	SET_BASE_VISUAL_PIXEL(0, DEPTH_OFFSET)
 	name = "ChemMaster 3000"
 	desc = "Used to separate chemicals and distribute them in a variety of forms."
 	icon = 'icons/obj/medical/chemical.dmi'

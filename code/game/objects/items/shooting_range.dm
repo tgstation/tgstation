@@ -1,5 +1,4 @@
 /obj/item/target
-	SET_BASE_VISUAL_PIXEL(0, DEPTH_OFFSET)
 	name = "shooting target"
 	desc = "A shooting target."
 	icon = 'icons/obj/structures.dmi'
