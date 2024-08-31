@@ -218,7 +218,7 @@
 	///Make space for the additional nutriment
 	var/volume_mult = 1
 	if(bites_amount)
-		var/initial_bites_left = (weight / FISH_WEIGHT_BITE_DIVISOR)
+		var/initial_bites_left = weight / FISH_WEIGHT_BITE_DIVISOR
 		var/bites_left = initial_bites_left - bites_amount
 		volume_mult =  initial_bites_left / bites_left
 	adjust_reagents_capacity((protein?.volume - old_blood_volume) * volume_mult)
