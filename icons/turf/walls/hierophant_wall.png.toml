@@ -1,4 +1,0 @@
-template = "bitmask/walls"
-
-[animation]
-delays = [ 1 ]
