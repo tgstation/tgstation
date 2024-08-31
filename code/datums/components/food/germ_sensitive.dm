@@ -25,7 +25,7 @@ GLOBAL_LIST_INIT(floor_diseases, list(
 
 	RegisterSignal(parent, COMSIG_ATOM_EXAMINE, PROC_REF(examine))
 	RegisterSignal(parent, COMSIG_MOVABLE_MOVED, PROC_REF(handle_movement))
-	RegisterSignals(parent, list(COMSIG_COMPONENT_CLEAN_ACT, COMSIG_ITEM_FRIED, COMSIG_ITEM_BARBEQUE_GRILLED), PROC_REF(delete_germs))
+	RegisterSignals(parent, list(COMSIG_COMPONENT_CLEAN_ACT, COMSIG_ITEM_FRIED, COMSIG_ITEM_BARBEQUE_GRILLED, COMSIG_ATOM_FIRE_ACT), PROC_REF(delete_germs))
 
 	RegisterSignals(parent, list(
 		COMSIG_ITEM_DROPPED, //Dropped into the world
@@ -52,6 +52,7 @@ GLOBAL_LIST_INIT(floor_diseases, list(
 		COMSIG_COMPONENT_CLEAN_ACT,
 		COMSIG_ITEM_FRIED,
 		COMSIG_ITEM_BARBEQUE_GRILLED,
+		COMSIG_ATOM_FIRE_ACT,
 		COMSIG_ITEM_DROPPED,
 		COMSIG_ITEM_PICKUP,
 		COMSIG_MOVABLE_MOVED,
@@ -118,9 +119,9 @@ GLOBAL_LIST_INIT(floor_diseases, list(
 	var/random_disease = pick_weight(GLOB.floor_diseases)
 	parent.AddComponent(/datum/component/infective, new random_disease, weak = TRUE)
 
-/datum/component/germ_sensitive/proc/wash()
+/datum/component/germ_sensitive/proc/delete_germs()
 	SIGNAL_HANDLER
-	if(infective)
+	if(!infective)
 		infective = FALSE
 		qdel(parent.GetComponent(/datum/component/infective))
 		return COMPONENT_CLEANED
