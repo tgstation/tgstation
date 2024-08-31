@@ -35,18 +35,18 @@ jobs:
           app-id: ${{ secrets.APP_ID }}
           private-key: ${{ secrets.APP_PRIVATE_KEY }}
 
-      - name: Close Pull
-        if: github.event_name == 'workflow_dispatch'
-        run: gh pr close --comment "Skipping this PR" --delete-branch "${{ inputs.pr_number }}"
-        env:
-          GH_TOKEN: ${{ steps.app-token-generation.outputs.token }}
-
       - name: Checkout
         uses: actions/checkout@v4
         with:
           ref: 1989-11-09
           fetch-depth: 610
           token: ${{ steps.app-token-generation.outputs.token }}
+
+      - name: Close Pull
+        if: github.event_name == 'workflow_dispatch'
+        run: gh pr close --comment "Skipping this PR" --delete-branch "${{ inputs.pr_number }}"
+        env:
+          GH_TOKEN: ${{ steps.app-token-generation.outputs.token }}
 
       - name: Build Helper
         run: dotnet publish tools/Tgstation.WalleningRevertHelper/Tgstation.WalleningRevertHelper.csproj -c Release -o wallening_helper
