@@ -369,6 +369,7 @@
 							data = S.amount
 							S = locate(S.type) in Deletion
 							S.add(data)
+							S.use(data)
 						surroundings -= S
 			else
 				var/atom/movable/I
