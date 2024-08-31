@@ -41,23 +41,19 @@
 /obj/structure/table,
 /obj/machinery/light/small/directional/north,
 /obj/item/reagent_containers/cup/glass/bottle/moonshine{
-	pixel_x = 3;
-	pixel_y = 15
+	pixel_x = 8;
+	pixel_y = 5
 	},
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/greater)
 "m" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/table/wood/poker,
-/obj/effect/spawner/random/entertainment/money_medium{
-	pixel_y = 12
-	},
+/obj/effect/spawner/random/entertainment/money_small,
+/obj/effect/spawner/random/entertainment/money_medium,
 /obj/item/reagent_containers/cup/glass/bottle/beer/almost_empty{
 	pixel_y = 15;
 	pixel_x = -9
-	},
-/obj/effect/spawner/random/entertainment/money_medium{
-	pixel_y = 12
 	},
 /turf/open/floor/iron/smooth,
 /area/station/maintenance/starboard/greater)
@@ -95,9 +91,7 @@
 "t" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/spawner/random/engineering/canister,
-/obj/effect/decal/cleanable/cobweb/cobweb2{
-	pixel_y = 24
-	},
+/obj/effect/decal/cleanable/cobweb/cobweb2,
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/greater)
 "v" = (
@@ -114,9 +108,7 @@
 "A" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/table/wood/poker,
-/obj/effect/spawner/random/entertainment/dice{
-	pixel_y = 12
-	},
+/obj/effect/spawner/random/entertainment/dice,
 /turf/open/floor/iron/smooth,
 /area/station/maintenance/starboard/greater)
 "B" = (
@@ -139,13 +131,8 @@
 "H" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/table/wood,
-/obj/effect/spawner/random/food_or_drink/booze{
-	pixel_y = 12
-	},
-/obj/effect/spawner/random/food_or_drink/booze{
-	pixel_y = 12;
-	pixel_x = 8
-	},
+/obj/effect/spawner/random/food_or_drink/booze,
+/obj/effect/spawner/random/food_or_drink/booze,
 /turf/open/floor/iron/smooth,
 /area/station/maintenance/starboard/greater)
 "J" = (
@@ -178,9 +165,7 @@
 /area/station/maintenance/starboard/greater)
 "Q" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/effect/decal/cleanable/cobweb{
-	pixel_y = 24
-	},
+/obj/effect/decal/cleanable/cobweb,
 /obj/modular_map_connector,
 /turf/open/floor/iron/smooth,
 /area/station/maintenance/starboard/greater)
