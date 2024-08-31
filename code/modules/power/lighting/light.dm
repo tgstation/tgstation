@@ -12,7 +12,6 @@
 	power_channel = AREA_USAGE_LIGHT //Lights are calc'd via area so they dont need to be in the machine list
 	always_area_sensitive = TRUE
 	light_angle = 170
-	light_flags = LIGHT_IGNORE_OFFSET
 	///What overlay the light should use
 	var/overlay_icon = 'icons/obj/lighting_overlay.dmi'
 	///base description and icon_state
@@ -114,7 +113,8 @@
 	if(is_station_level(z))
 		RegisterSignal(SSdcs, COMSIG_GLOB_GREY_TIDE_LIGHT, PROC_REF(grey_tide)) //Only put the signal on station lights
 
-	set_light(l_dir = dir)
+	// Light projects out backwards from the dir of the light
+	set_light(l_dir = REVERSE_DIR(dir))
 	RegisterSignal(src, COMSIG_LIGHT_EATER_ACT, PROC_REF(on_light_eater))
 	RegisterSignal(src, COMSIG_HIT_BY_SABOTEUR, PROC_REF(on_saboteur))
 	AddElement(/datum/element/atmos_sensitive, mapload)
@@ -144,19 +144,16 @@
 
 /obj/machinery/light/setDir(newdir)
 	. = ..()
-	set_light(l_dir = dir)
+	set_light(l_dir = REVERSE_DIR(dir))
 
 // If we're adjacent to the source, we make this sorta indentation for our light to ensure it stays lit (and to make distances look right)
 // By shifting the light position we use forward a bit, towards something that isn't off by 0.5 from being in angle
 // Because angle calculation is kinda harsh it's hard to find a happy point between fulldark and fullbright for the corners behind the light. this is good enough tho
 /obj/machinery/light/get_light_offset()
 	var/list/hand_back = ..()
-	if(dir & SOUTH)
-		hand_back[2] -= 1
-	if(dir & EAST)
-		hand_back[1] += 0.5
-	if(dir & WEST)
-		hand_back[1] -= 0.5
+	var/list/dir_offset = dir2offset(REVERSE_DIR(dir))
+	hand_back[1] += dir_offset[1] * 0.5
+	hand_back[2] += dir_offset[2] * 0.5
 	return hand_back
 
 /obj/machinery/light/update_icon_state()
@@ -735,10 +732,6 @@
 	fitting = "bulb"
 	nightshift_brightness = 3
 	fire_brightness = 4.5
-
-// No hanging for us brother
-/obj/machinery/light/floor/find_and_hang_on_wall(directional, custom_drop_callback)
-	return
 
 /obj/machinery/light/floor/get_light_offset()
 	return list(0, 0)
