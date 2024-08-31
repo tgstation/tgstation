@@ -24,9 +24,7 @@
 "n" = (
 /obj/structure/table,
 /obj/effect/decal/cleanable/dirt,
-/obj/effect/spawner/random/food_or_drink/refreshing_beverage{
-	pixel_y = 13
-	},
+/obj/effect/spawner/random/food_or_drink/refreshing_beverage,
 /turf/open/floor/iron/smooth,
 /area/station/maintenance/central/lesser)
 "p" = (
@@ -45,9 +43,7 @@
 /area/station/maintenance/central/lesser)
 "B" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/effect/decal/cleanable/cobweb/cobweb2{
-	pixel_y = 24
-	},
+/obj/effect/decal/cleanable/cobweb/cobweb2,
 /obj/structure/rack,
 /obj/effect/spawner/random/maintenance/four,
 /turf/open/floor/plating,
@@ -67,9 +63,7 @@
 /area/station/maintenance/central/lesser)
 "L" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/effect/decal/cleanable/cobweb{
-	pixel_y = 24
-	},
+/obj/effect/decal/cleanable/cobweb,
 /obj/structure/closet,
 /obj/effect/spawner/random/maintenance/two,
 /obj/effect/spawner/random/engineering/material,

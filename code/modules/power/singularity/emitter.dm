@@ -1,5 +1,4 @@
 /obj/machinery/power/emitter
-	SET_BASE_VISUAL_PIXEL(0, DEPTH_OFFSET)
 	name = "emitter"
 	desc = "A heavy-duty industrial laser, often used in containment fields and power generation."
 	icon = 'icons/obj/machines/engine/singularity.dmi'
