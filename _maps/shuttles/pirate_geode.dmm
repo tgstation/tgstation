@@ -230,6 +230,18 @@
 /obj/effect/turf_decal/stripes/white/line,
 /turf/open/floor/iron/dark,
 /area/shuttle/pirate)
+"nR" = (
+/obj/effect/turf_decal/lunar_sand/plating,
+/obj/effect/turf_decal/weather/dirt{
+	dir = 5
+	},
+/obj/structure/table/wood,
+/obj/machinery/cell_charger,
+/obj/item/stock_parts/power_store/cell/high,
+/obj/item/stock_parts/power_store/cell/high,
+/obj/item/stock_parts/power_store/cell/high,
+/turf/open/floor/plating,
+/area/shuttle/pirate)
 "oa" = (
 /obj/effect/turf_decal/lunar_sand/plating,
 /obj/effect/turf_decal/weather/dirt{
@@ -237,6 +249,20 @@
 	},
 /obj/effect/mob_spawn/ghost_role/human/pirate/lustrous{
 	color = "#4f98ff"
+	},
+/turf/open/floor/plating,
+/area/shuttle/pirate)
+"oU" = (
+/obj/effect/turf_decal/lunar_sand/plating,
+/obj/effect/turf_decal/weather/dirt{
+	dir = 4
+	},
+/obj/machinery/turretid{
+	icon_state = "control_kill";
+	lethal = 1;
+	locked = 0;
+	pixel_y = -24;
+	req_access = null
 	},
 /turf/open/floor/plating,
 /area/shuttle/pirate)
@@ -401,6 +427,16 @@
 /obj/item/gun/energy/laser/retro,
 /turf/open/floor/plating,
 /area/shuttle/pirate)
+"vY" = (
+/obj/machinery/computer/camera_advanced/shuttle_docker/syndicate/pirate{
+	dir = 8;
+	x_offset = -8
+	},
+/obj/effect/turf_decal/weather/dirt{
+	dir = 3
+	},
+/turf/open/floor/plating,
+/area/shuttle/pirate)
 "wd" = (
 /obj/effect/turf_decal/lunar_sand/plating,
 /obj/effect/turf_decal/weather/dirt{
@@ -445,6 +481,12 @@
 "yh" = (
 /obj/structure/cable,
 /turf/closed/wall/mineral/iron,
+/area/shuttle/pirate)
+"yu" = (
+/obj/effect/turf_decal/stripes/white/line{
+	dir = 8
+	},
+/turf/open/floor/plating/airless,
 /area/shuttle/pirate)
 "yz" = (
 /obj/structure/flora/lunar_plant/style_3,
@@ -519,18 +561,6 @@
 /obj/effect/turf_decal/lunar_sand,
 /turf/closed/wall/mineral/iron,
 /area/shuttle/pirate)
-"CD" = (
-/obj/effect/turf_decal/lunar_sand/plating,
-/obj/effect/turf_decal/weather/dirt{
-	dir = 5
-	},
-/obj/structure/table/wood,
-/obj/machinery/cell_charger,
-/obj/item/stock_parts/power_store/cell/high,
-/obj/item/stock_parts/power_store/cell/high,
-/obj/item/stock_parts/power_store/cell/high,
-/turf/open/floor/plating,
-/area/shuttle/pirate)
 "Ds" = (
 /obj/machinery/loot_locator,
 /turf/open/misc/dirt/station,
@@ -574,19 +604,6 @@
 /obj/effect/turf_decal/lunar_sand/plating,
 /obj/structure/showcase/machinery/tv/broken,
 /obj/structure/table/wood,
-/turf/open/floor/plating,
-/area/shuttle/pirate)
-"Ft" = (
-/obj/effect/turf_decal/lunar_sand/plating,
-/obj/effect/turf_decal/weather/dirt{
-	dir = 4
-	},
-/obj/machinery/turretid/directional/south{
-	icon_state = "control_kill";
-	lethal = 1;
-	locked = 0;
-	req_access = null
-	},
 /turf/open/floor/plating,
 /area/shuttle/pirate)
 "Fx" = (
@@ -705,12 +722,6 @@
 /obj/structure/reagent_dispensers/fueltank,
 /turf/open/misc/dirt/station,
 /area/shuttle/pirate)
-"Lp" = (
-/obj/machinery/power/shuttle_engine/propulsion{
-	dir = 8
-	},
-/turf/open/floor/plating/airless,
-/area/shuttle/pirate)
 "Mc" = (
 /obj/effect/turf_decal/lunar_sand/plating,
 /obj/effect/turf_decal/weather/dirt{
@@ -821,6 +832,12 @@
 "OX" = (
 /obj/structure/sign/poster/contraband/bountyhunters,
 /turf/closed/wall/mineral/iron,
+/area/shuttle/pirate)
+"Pq" = (
+/obj/machinery/power/shuttle_engine/propulsion{
+	dir = 8
+	},
+/turf/open/floor/plating/airless,
 /area/shuttle/pirate)
 "Pr" = (
 /obj/structure/table/wood,
@@ -960,22 +977,6 @@
 	},
 /turf/open/floor/plating,
 /area/shuttle/pirate)
-"Zh" = (
-/obj/machinery/computer/camera_advanced/shuttle_docker/syndicate/pirate{
-	dir = 8;
-	x_offset = -8
-	},
-/obj/effect/turf_decal/weather/dirt{
-	dir = 3
-	},
-/turf/open/floor/plating,
-/area/shuttle/pirate)
-"Zm" = (
-/obj/effect/turf_decal/stripes/white/line{
-	dir = 8
-	},
-/turf/open/floor/plating/airless,
-/area/shuttle/pirate)
 "Zw" = (
 /turf/open/floor/iron/stairs,
 /area/shuttle/pirate)
@@ -1005,15 +1006,15 @@ lt
 lt
 lt
 lt
-Zm
-Zm
+yu
+yu
 jh
-Zm
-Zm
-Zm
+yu
+yu
+yu
 jh
-Zm
-Zm
+yu
+yu
 lt
 lt
 lt
@@ -1026,15 +1027,15 @@ lt
 lt
 mv
 Od
-Lp
-Lp
+Pq
+Pq
 jx
-Lp
-Lp
-Lp
+Pq
+Pq
+Pq
 jx
-Lp
-Lp
+Pq
+Pq
 Od
 mv
 lt
@@ -1112,7 +1113,7 @@ jx
 Od
 Sy
 zS
-CD
+nR
 WR
 Oq
 Mc
@@ -1346,7 +1347,7 @@ qp
 oV
 Hm
 Mz
-Ft
+oU
 tD
 nD
 lz
@@ -1366,7 +1367,7 @@ Od
 DT
 vj
 vP
-Zh
+vY
 DT
 Rv
 uP
