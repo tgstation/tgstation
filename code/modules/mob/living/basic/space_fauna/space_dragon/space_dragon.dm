@@ -50,7 +50,6 @@
 	lighting_cutoff_red = 12
 	lighting_cutoff_green = 15
 	lighting_cutoff_blue = 34
-	shadow_type = SHADOW_LARGE
 
 	/// The colour of the space dragon
 	var/chosen_colour
