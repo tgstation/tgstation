@@ -6,6 +6,7 @@
 	pixel_x = -16
 
 	layer = FLY_LAYER
+	plane = ABOVE_GAME_PLANE
 
 	///Strength of the shield we apply
 	var/shielding_strength
