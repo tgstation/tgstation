@@ -122,7 +122,7 @@
 /area/station/maintenance/starboard/greater)
 "r" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/sign/warning/vacuum/external,
+/obj/structure/sign/warning/vacuum/external/directional/north,
 /turf/open/floor/iron/smooth,
 /area/station/maintenance/starboard/greater)
 "s" = (
@@ -150,9 +150,7 @@
 /area/station/maintenance/starboard/greater)
 "v" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/effect/decal/cleanable/cobweb/cobweb2{
-	pixel_y = 24
-	},
+/obj/effect/decal/cleanable/cobweb/cobweb2,
 /obj/effect/spawner/random/engineering/canister,
 /turf/open/floor/iron/smooth,
 /area/station/maintenance/starboard/greater)
@@ -222,12 +220,14 @@
 /area/station/maintenance/starboard/greater)
 "G" = (
 /obj/effect/decal/cleanable/dirt,
+/obj/structure/sink{
+	pixel_y = 15
+	},
 /obj/structure/mirror/directional/north,
 /obj/item/reagent_containers/cup/bucket{
 	pixel_x = -10;
 	pixel_y = 18
 	},
-/obj/structure/sink/directional/north,
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/greater)
 "H" = (
@@ -264,22 +264,18 @@
 "O" = (
 /obj/structure/cable/multilayer/multiz,
 /obj/effect/turf_decal/stripes/end,
+/obj/structure/sign/warning/electric_shock/directional/north,
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/sign/warning/electric_shock,
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/greater)
 "P" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/effect/decal/cleanable/cobweb/cobweb2{
-	pixel_y = 24
-	},
+/obj/effect/decal/cleanable/cobweb/cobweb2,
 /turf/open/floor/iron/smooth,
 /area/station/maintenance/starboard/greater)
 "Q" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/effect/decal/cleanable/cobweb/cobweb2{
-	pixel_y = 24
-	},
+/obj/effect/decal/cleanable/cobweb/cobweb2,
 /obj/effect/spawner/random/structure/steam_vent,
 /turf/open/floor/iron/smooth,
 /area/station/maintenance/starboard/greater)
