@@ -545,3 +545,47 @@
 
 /obj/item/gun/medbeam/mod
 	name = "MOD medbeam"
+
+/obj/item/mod/module/stealth/wraith
+	stealth_alpha = 30
+	module_type = MODULE_ACTIVE
+	cooldown_time = 3 SECONDS
+
+/obj/item/mod/module/stealth/wraith/on_select_use(atom/target)
+	. = ..()
+	if(!.)
+		return
+	if(get_dist(mod.wearer, target) > 4)
+		balloon_alert(mod.wearer, "can't reach [target]!")
+		return
+	if(istype(target, /obj/machinery/light))
+		var/obj/machinery/light/turning_off = target
+		turning_off.on_saboteur(src)
+
+	var/list/things_to_disrupt = list(target)
+	if(isliving(target))
+		var/mob/living/live_target = target
+		things_to_disrupt += live_target.get_all_gear()
+
+	for(var/atom/disrupted as anything in things_to_disrupt)
+		disrupted.on_saboteur(src, 1 MINUTES)
+
+/obj/item/mod/module/stealth/wraith/on_suit_activation()
+	if(bumpoff)
+		RegisterSignal(mod.wearer, COMSIG_LIVING_MOB_BUMP, PROC_REF(unstealth))
+	RegisterSignal(mod.wearer, COMSIG_LIVING_UNARMED_ATTACK, PROC_REF(on_unarmed_attack))
+	RegisterSignal(mod.wearer, COMSIG_ATOM_BULLET_ACT, PROC_REF(on_bullet_act))
+	RegisterSignals(mod.wearer, list(COMSIG_MOB_ITEM_ATTACK, COMSIG_ATOM_ATTACKBY, COMSIG_ATOM_ATTACK_HAND, COMSIG_ATOM_HITBY, COMSIG_ATOM_HULK_ATTACK, COMSIG_ATOM_ATTACK_PAW, COMSIG_CARBON_CUFF_ATTEMPTED), PROC_REF(unstealth))
+	animate(mod.wearer, alpha = stealth_alpha, time = 1.5 SECONDS)
+	drain_power(use_energy_cost)
+
+/obj/item/mod/module/stealth/wraith/on_suit_deactivation(deleting)
+	if(bumpoff)
+		UnregisterSignal(mod.wearer, COMSIG_LIVING_MOB_BUMP)
+	UnregisterSignal(mod.wearer, list(COMSIG_LIVING_UNARMED_ATTACK, COMSIG_MOB_ITEM_ATTACK, COMSIG_ATOM_ATTACKBY, COMSIG_ATOM_ATTACK_HAND, COMSIG_ATOM_BULLET_ACT, COMSIG_ATOM_HITBY, COMSIG_ATOM_HULK_ATTACK, COMSIG_ATOM_ATTACK_PAW, COMSIG_CARBON_CUFF_ATTEMPTED))
+	animate(mod.wearer, alpha = 255, time = 1.5 SECONDS)
+
+/obj/item/mod/module/stealth/wraith/unstealth(datum/source)
+	. = ..()
+	if(mod.active)
+		addtimer(CALLBACK(src, PROC_REF(on_suit_activation)), 5 SECONDS)
