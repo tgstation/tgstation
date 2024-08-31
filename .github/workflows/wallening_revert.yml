@@ -7,6 +7,7 @@ on:
   pull_request:
     types:
       - closed
+      - labeled
     branches:
       - 1989-11-09
 
@@ -14,6 +15,7 @@ jobs:
   generate-master-pr:
     name: Move Process Along
     runs-on: ubuntu-latest
+    if: (github.event_name == 'closed' && !contains(github.event.pull_request.labels.*.name, 'Do Not Merge')) || contains(github.event.pull_request.labels.*.name, 'Do Not Merge')
     steps:
       - name: Setup dotnet
         uses: actions/setup-dotnet@v4
@@ -27,6 +29,12 @@ jobs:
         with:
           app-id: ${{ secrets.APP_ID }}
           private-key: ${{ secrets.APP_PRIVATE_KEY }}
+
+      - name: Close Pull
+        if: contains(github.event.pull_request.labels.*.name, 'Do Not Merge')
+        run: gh pr close --comment "Skipping this PR" --delete-branch "1"
+        env:
+          GH_TOKEN: ${{ steps.app-token-generation.outputs.token }}
 
       - name: Checkout
         uses: actions/checkout@v4
