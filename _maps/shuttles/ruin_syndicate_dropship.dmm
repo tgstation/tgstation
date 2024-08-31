@@ -436,12 +436,13 @@
 /turf/open/floor/plating/airless,
 /area/shuttle/ruin/caravan/syndicate3)
 "TT" = (
-/obj/machinery/turretid/directional/south{
+/obj/machinery/turretid{
 	ailock = 1;
 	desc = "A specially designed set of turret controls. Looks to be covered in protective casing to prevent AI interfacing.";
 	icon_state = "control_kill";
 	lethal = 1;
 	name = "Shuttle turret control";
+	pixel_y = 34;
 	req_access = list("syndicate")
 	},
 /obj/structure/chair/comfy/shuttle{
