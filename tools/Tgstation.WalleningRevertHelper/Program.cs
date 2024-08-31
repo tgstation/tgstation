@@ -220,17 +220,20 @@ After that some startup commits on this branch need to be reverted then it can b
 			}
 
 			var body = $"This pull request replays #{nextPr} onto the wallening revert branch.";
+
+			var title = $"Post Wallening Replay PR #{nextPr} [MDB Ignore][IDB Ignore]";
 			if (conflicted)
 			{
 				var originalPR = await client.PullRequest.Get("tgstation", "tgstation", nextPr);
 				body += $"\n\nThis PR appears to be conflicting. Please push a resolution and merge it. Pinging original author @{originalPR.User.Login} and merger @{originalPR.MergedBy.Login} for assistance.\n\nAlternatively, close the PR to skip it. The original PR will be labelled `Lost to Wallening Revert`.";
+				title += " (CONFLICTS)";
 			}
 
 			var remote = repo.Network.Remotes.First();
 			var forcePushString = String.Format(CultureInfo.InvariantCulture, "+{0}:{0}", branch.CanonicalName);
 			repo.Network.Push(remote, forcePushString, pushOptions);
 
-			var pr = await client.PullRequest.Create("tgstation", "tgstation", new NewPullRequest($"Post Wallening Replay PR #{nextPr}", branchName, "1989-11-09")
+			var pr = await client.PullRequest.Create("tgstation", "tgstation", new NewPullRequest(, branchName, "1989-11-09")
 			{
 				Draft = conflicted,
 				Body = body,
