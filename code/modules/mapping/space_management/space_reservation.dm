@@ -55,6 +55,10 @@
 	for(var/turf/reserved_turf as anything in release_turfs)
 		SEND_SIGNAL(reserved_turf, COMSIG_TURF_RESERVATION_RELEASED, src)
 
+		// immediately disconnect from atmos
+		reserved_turf.blocks_air = TRUE
+		CALCULATE_ADJACENT_TURFS(reserved_turf, KILL_EXCITED)
+
 	// Makes the linter happy, even tho we don't await this
 	INVOKE_ASYNC(SSmapping, TYPE_PROC_REF(/datum/controller/subsystem/mapping, reserve_turfs), release_turfs)
 
@@ -93,7 +97,7 @@
 
 		// Its no longer unused, but its also not "used"
 		cordon_turf.turf_flags &= ~UNUSED_RESERVATION_TURF
-		cordon_turf.ChangeTurf(/turf/cordon, /turf/cordon)
+		cordon_turf.empty(/turf/cordon, /turf/cordon)
 		SSmapping.unused_turfs["[cordon_turf.z]"] -= cordon_turf
 		// still gets linked to us though
 		SSmapping.used_turfs[cordon_turf] = src
@@ -187,7 +191,7 @@
 		SSmapping.unused_turfs["[T.z]"] -= T
 		SSmapping.used_turfs[T] = src
 		T.turf_flags = (T.turf_flags | RESERVATION_TURF) & ~UNUSED_RESERVATION_TURF
-		T.ChangeTurf(turf_type, turf_type_is_baseturf ? turf_type : null)
+		T.empty(turf_type, turf_type_is_baseturf ? turf_type : null)
 
 	bottom_left_turfs += BL
 	top_right_turfs += TR
