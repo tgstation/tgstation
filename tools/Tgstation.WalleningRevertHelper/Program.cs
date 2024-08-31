@@ -223,7 +223,7 @@ After that some startup commits on this branch need to be reverted then it can b
 			if (conflicted)
 			{
 				var originalPR = await client.PullRequest.Get("tgstation", "tgstation", nextPr);
-				body += $"\n\nThis PR appears to be conflicting. Please push a resolution and enable auto-merge. Pinging original author @{originalPR.User.Login} and @tgstation/commit-access for assistance.\n\nAlternatively, **execute the `Wallening Revert` action from the GitHub actions view with THIS PR's number (Not the one in the title) as input** to skip it ([Link](https://github.com/tgstation/tgstation/actions/workflows/wallening_revert.yml)). The original PR will be labelled `Lost to Wallening Revert`.";
+				body += $"\n\nThis PR appears to be conflicting. Please push a resolution and enable auto-merge. Pinging original author @{originalPR.User.Login} and @tgstation/commit-access for assistance.\n\nAlternatively, if the PR is **NOT** conflicting, close it to skip it. If it **is** conflicting, you need to run the following [GitHub CLI](https://cli.github.com) command to **in your local repository** skip it:\n\n```\ngh repo set-default tgstation/tgstation\ngh workflow run \"Wallening Revert\" --ref 1989-11-09 -f pr_number=<THIS PR NUMBER>\n```\nIf this PR is skipped, the original PR will be labelled `Lost to Wallening Revert`.";
 				title += " (CONFLICTS)";
 			}
 
@@ -234,6 +234,11 @@ After that some startup commits on this branch need to be reverted then it can b
 			var pr = await client.PullRequest.Create("tgstation", "tgstation", new NewPullRequest(title, branchName, "1989-11-09")
 			{
 				Body = body,
+			});
+
+			pr = await client.PullRequest.Update("tgstation", "tgstation", pr.Number, new PullRequestUpdate
+			{
+				Body = body.Replace("<THIS PR NUMBER>", pr.Number.ToString())
 			});
 
 			if (!conflicted)
