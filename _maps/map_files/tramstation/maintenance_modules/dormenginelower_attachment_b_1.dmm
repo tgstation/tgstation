@@ -74,9 +74,7 @@
 /obj/effect/turf_decal/trimline/yellow/filled/line{
 	dir = 4
 	},
-/obj/item/wrench{
-	pixel_y = 10
-	},
+/obj/item/wrench,
 /turf/open/floor/iron/smooth,
 /area/station/maintenance/central/lesser)
 "t" = (
@@ -92,12 +90,8 @@
 "v" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/table,
-/obj/machinery/cell_charger{
-	pixel_y = 10
-	},
-/obj/item/stock_parts/power_store/cell/high/empty{
-	pixel_y = 10
-	},
+/obj/machinery/cell_charger,
+/obj/item/stock_parts/power_store/cell/high/empty,
 /obj/effect/turf_decal/trimline/yellow/filled/line{
 	dir = 4
 	},
