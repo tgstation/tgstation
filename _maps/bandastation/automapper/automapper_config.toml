@@ -16,3 +16,11 @@
 # required_map = "MetaStation.dmm"
 # coordinates = [133, 182, 1]
 # trait_name = "Station"
+
+# Зона кекипажа
+[templates.CentCom_kekypaj]
+map_files = ["CentCom.dmm"]
+directory = "_maps/bandastation/automapper/templates/centcom/"
+required_map = "builtin"
+coordinates = [12, 53, 1]
+trait_name = "CentCom"

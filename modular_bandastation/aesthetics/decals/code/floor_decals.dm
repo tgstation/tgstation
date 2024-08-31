@@ -122,3 +122,11 @@ LINE_DECAL_SUBTYPE_HELPER(/obj/effect/turf_decal/line/neutral)
 LINE_DECAL_SUBTYPE_HELPER(/obj/effect/turf_decal/line/dark)
 
 #undef LINE_DECAL_SUBTYPE_HELPER
+
+// NT LOGO //
+
+/obj/effect/turf_decal/logo
+	name = "logo_nt"
+	icon = 'modular_bandastation/aesthetics/decals/icons/nanotrasen_logo.dmi'
+	icon_state = "ntlogo_sec"
+	layer = TURF_PLATING_DECAL_LAYER

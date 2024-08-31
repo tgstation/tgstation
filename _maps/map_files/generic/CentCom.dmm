@@ -4473,18 +4473,6 @@
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron/dark,
 /area/centcom/central_command_areas/control)
-"uz" = (
-/obj/docking_port/stationary{
-	dir = 4;
-	dwidth = 25;
-	height = 50;
-	json_key = "emergency";
-	name = "CentCom Emergency Shuttle Dock";
-	shuttle_id = "emergency_away";
-	width = 50
-	},
-/turf/open/space,
-/area/space)
 "uA" = (
 /obj/structure/chair{
 	dir = 4
@@ -63780,7 +63768,7 @@ aa
 aa
 aa
 aa
-uz
+ad
 aa
 aa
 aa
