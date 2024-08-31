@@ -1,12 +1,12 @@
 /*
-         ／＞　 フ   meow! this dm file contains greyscale configs for any clothes we add. please name
+         ／＞　 フ   meow! this dm file contains greyscale configs for any neck clothes we add. please name
         | 　_　_| /  them in obvious, easy to search ways that are consistent with your item paths <3
       ／` ミ＿xノ
      /　　　　 |
     /　 ヽ　　 ﾉ
     │　　|　|　|
 ／￣|　　 |　|　|
-(￣ヽ＿_ヽ_)__)
+(￣ヽ＿_ヽ_)__)_)
 ＼二)
 */
 
