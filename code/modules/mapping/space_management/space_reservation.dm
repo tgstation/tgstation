@@ -28,6 +28,9 @@
 	/// The turf type the reservation is initially made with
 	var/turf_type = /turf/open/space
 
+	/// Do we override baseturfs with turf_type?
+	var/turf_type_is_baseturf = TRUE
+
 	///Distance away from the cordon where we can put a "sort-cordon" and run some extra code (see make_repel). 0 makes nothing happen
 	var/pre_cordon_distance = 0
 
@@ -138,6 +141,9 @@
 	if(!HAS_TRAIT(enterer, TRAIT_FREE_HYPERSPACE_SOFTCORDON_MOVEMENT))
 		space_dump(source, enterer)
 
+/datum/turf_reservation/turf_not_baseturf
+	turf_type_is_baseturf = FALSE
+
 /// Internal proc which handles reserving the area for the reservation.
 /datum/turf_reservation/proc/_reserve_area(width, height, zlevel)
 	src.width = width
@@ -181,7 +187,7 @@
 		SSmapping.unused_turfs["[T.z]"] -= T
 		SSmapping.used_turfs[T] = src
 		T.turf_flags = (T.turf_flags | RESERVATION_TURF) & ~UNUSED_RESERVATION_TURF
-		T.ChangeTurf(turf_type, turf_type)
+		T.ChangeTurf(turf_type, turf_type_is_baseturf ? turf_type : null)
 
 	bottom_left_turfs += BL
 	top_right_turfs += TR
