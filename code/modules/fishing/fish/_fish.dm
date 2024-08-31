@@ -186,7 +186,7 @@
 	var/bites_to_finish = weight_val / FISH_WEIGHT_BITE_DIVISOR
 	create_reagents(INFINITY) //We'll set this to the total volume of the reagents right after generate_fish_reagents() is over
 	generate_fish_reagents(bites_to_finish)
-	reagents.maximum_volume = reagents.total_volume
+	reagents.maximum_volume = round(reagents.total_volume * 1.25) //make some meager space for condiments.
 	AddComponent(/datum/component/edible, \
 		food_flags = FOOD_NO_EXAMINE|FOOD_NO_BITECOUNT, \
 		foodtypes = foodtypes, \
@@ -220,7 +220,7 @@
 	if(bites_amount)
 		var/initial_bites_left = weight / FISH_WEIGHT_BITE_DIVISOR
 		var/bites_left = initial_bites_left - bites_amount
-		volume_mult =  initial_bites_left / bites_left
+		volume_mult = initial_bites_left / bites_left
 	adjust_reagents_capacity((protein?.volume - old_blood_volume) * volume_mult)
 
 	///Add the extra nutriment
