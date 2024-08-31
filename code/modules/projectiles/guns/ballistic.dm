@@ -474,7 +474,7 @@
 	return ..()
 
 /obj/item/gun/ballistic/shoot_live_shot(mob/living/user, pointblank = 0, atom/pbtarget = null, message = 1)
-	if(!chambered)
+	if(isnull(chambered))
 		return ..()
 	if(can_misfire && chambered.can_misfire != FALSE)
 		misfire_probability += misfire_percentage_increment
