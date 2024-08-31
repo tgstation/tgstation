@@ -71,7 +71,7 @@ GLOBAL_LIST_INIT(specific_fish_icons, generate_specific_fish_icons())
 	var/list/currently_on_regen
 	/// Text shown as baloon alert when you roll a dud in the table
 	var/duds = list("it was nothing", "the hook is empty")
-	/// Baseline difficulty for fishing in this spot
+	/// Baseline difficulty for fishing in this spot. THIS IS ADDED TO THE DEFAULT DIFFICULTY OF THE MINIGAME (15)
 	var/fishing_difficulty = FISHING_DEFAULT_DIFFICULTY
 	/// How the spot type is described in fish catalog section about fish sources, will be skipped if null
 	var/catalog_description
