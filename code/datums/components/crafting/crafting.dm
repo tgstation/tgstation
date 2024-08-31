@@ -365,8 +365,8 @@
 						if(!locate(S.type) in Deletion)
 							Deletion += S
 						else
-							SD = locate(S.type) in Deletion
-							SD.add(S.amount) // add to our tally stack, SD
+							SD = SD || locate(S.type) in Deletion
+							SD.add(S.amount) // add the amount to our tally stack, SD
 							qdel(S) // We can just delete it straight away as it's going to be fully consumed anyway
 						surroundings -= S
 			else
