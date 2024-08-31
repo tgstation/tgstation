@@ -184,9 +184,7 @@
 "kD" = (
 /obj/structure/chair/comfy/shuttle,
 /obj/effect/decal/cleanable/dirt,
-/obj/effect/decal/cleanable/cobweb{
-	pixel_y = 24
-	},
+/obj/effect/decal/cleanable/cobweb,
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/central)
 "ll" = (
@@ -262,9 +260,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/structure/cable,
-/obj/effect/decal/cleanable/cobweb/cobweb2{
-	pixel_y = 24
-	},
+/obj/effect/decal/cleanable/cobweb/cobweb2,
 /turf/open/floor/catwalk_floor,
 /area/station/maintenance/starboard/central)
 "rI" = (
@@ -489,9 +485,7 @@
 "QA" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/closet/emcloset,
-/obj/effect/decal/cleanable/cobweb/cobweb2{
-	pixel_y = 24
-	},
+/obj/effect/decal/cleanable/cobweb/cobweb2,
 /turf/open/floor/iron/smooth,
 /area/station/maintenance/starboard/central)
 "QI" = (
@@ -554,9 +548,7 @@
 "WM" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/spawner/random/engineering/atmospherics_portable,
-/obj/effect/decal/cleanable/cobweb/cobweb2{
-	pixel_y = 24
-	},
+/obj/effect/decal/cleanable/cobweb/cobweb2,
 /turf/open/floor/iron/smooth,
 /area/station/maintenance/starboard/central)
 "Xj" = (

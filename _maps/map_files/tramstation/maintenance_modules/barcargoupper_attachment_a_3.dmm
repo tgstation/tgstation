@@ -5,13 +5,9 @@
 "c" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/table/wood,
-/obj/item/reagent_containers/cup/glass/shaker{
-	pixel_y = 9;
-	pixel_x = -6
-	},
+/obj/item/reagent_containers/cup/glass/shaker,
 /obj/structure/desk_bell{
-	pixel_x = 7;
-	pixel_y = 16
+	pixel_x = 7
 	},
 /turf/open/floor/iron/smooth,
 /area/station/maintenance/department/cargo)
@@ -51,9 +47,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/table/wood,
 /obj/machinery/light/small/directional/north,
-/obj/item/storage/box/beanbag{
-	pixel_y = 11
-	},
+/obj/item/storage/box/beanbag,
 /turf/open/floor/iron/smooth,
 /area/station/maintenance/department/cargo)
 "K" = (
@@ -64,19 +58,13 @@
 	pixel_x = -7
 	},
 /obj/effect/spawner/random/food_or_drink/booze{
-	spawn_random_offset = 1;
-	pixel_y = 9;
-	pixel_x = -3
+	spawn_random_offset = 1
 	},
 /obj/effect/spawner/random/food_or_drink/booze{
-	spawn_random_offset = 1;
-	pixel_y = 19;
-	pixel_x = 4
+	spawn_random_offset = 1
 	},
 /obj/effect/spawner/random/food_or_drink/booze{
-	spawn_random_offset = 1;
-	pixel_y = 9;
-	pixel_x = 9
+	spawn_random_offset = 1
 	},
 /turf/open/floor/iron/smooth,
 /area/station/maintenance/department/cargo)
