@@ -19,7 +19,6 @@
 #define MBOX_DURATION_STANDBY (2.7 SECONDS)
 
 GLOBAL_LIST_INIT(mystery_box_guns, list(
-	/obj/item/gun/energy/lasercannon,
 	/obj/item/gun/energy/recharge/ebow/large,
 	/obj/item/gun/energy/e_gun,
 	/obj/item/gun/energy/e_gun/nuclear,
@@ -45,6 +44,7 @@ GLOBAL_LIST_INIT(mystery_box_guns, list(
 	/obj/item/gun/ballistic/automatic/m90/unrestricted,
 	/obj/item/gun/ballistic/automatic/tommygun,
 	/obj/item/gun/ballistic/automatic/wt550,
+	/obj/item/gun/ballistic/automatic/smartgun,
 	/obj/item/gun/ballistic/rifle/sniper_rifle,
 	/obj/item/gun/ballistic/rifle/boltaction,
 ))
