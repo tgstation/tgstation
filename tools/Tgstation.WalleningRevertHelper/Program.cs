@@ -154,7 +154,7 @@ After that some startup commits on this branch need to be reverted then it can b
 			{
 				var previousPR = await client.PullRequest.Get("tgstation", "tgstation", closedPRNumber.Value);
 
-				var previousOriginalPR = Int32.Parse(Regex.Match(previousPR.Title, "Post Wallening Replay PR #([0-9][0-9]+)").Groups[1].Value);
+				var previousOriginalPR = Int32.Parse(Regex.Match(previousPR.Title, "Post Wallening Replay PR #([1-9][0-9]+)").Groups[1].Value);
 
 				var newBody = Regex.Replace(
 					walleningPR.Body,
@@ -225,7 +225,7 @@ After that some startup commits on this branch need to be reverted then it can b
 			if (conflicted)
 			{
 				var originalPR = await client.PullRequest.Get("tgstation", "tgstation", nextPr);
-				body += $"\n\nThis PR appears to be conflicting. Please push a resolution and merge it. Pinging original author @{originalPR.User.Login} and merger @{originalPR.MergedBy.Login} for assistance.\n\nAlternatively, close the PR to skip it. The original PR will be labelled `Lost to Wallening Revert`.";
+				body += $"\n\nThis PR appears to be conflicting. Please push a resolution and enable auto-merge. Pinging original author @{originalPR.User.Login} and merger @{originalPR.MergedBy.Login} for assistance.\n\nAlternatively, close the PR to skip it. The original PR will be labelled `Lost to Wallening Revert`.";
 				title += " (CONFLICTS)";
 			}
 
@@ -235,7 +235,6 @@ After that some startup commits on this branch need to be reverted then it can b
 
 			var pr = await client.PullRequest.Create("tgstation", "tgstation", new NewPullRequest(title, branchName, "1989-11-09")
 			{
-				Draft = conflicted,
 				Body = body,
 			});
 
