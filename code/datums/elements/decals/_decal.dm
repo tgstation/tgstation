@@ -37,7 +37,7 @@
 		decal.Detach(source)
 
 	for(var/result in resulting_decals_params)
-		source.AddElement(/datum/element/decal, result["icon"], result["icon_state"], result["dir"], PLANE_TO_TRUE(result["plane"]), result["layer"], result["alpha"], result["color"], result["pixel_w"], result["pixel_z"], result["smoothing"], result["cleanable"], result["desc"])
+		source.AddElement(/datum/element/decal, result["icon"], result["icon_state"], result["dir"], PLANE_TO_TRUE(result["plane"]), result["layer"], result["alpha"], result["color"], result["smoothing"], result["cleanable"], result["desc"])
 
 
 /datum/element/decal/proc/get_rotated_parameters(old_dir,new_dir)
@@ -45,7 +45,6 @@
 	if(directional) //Even when the dirs are the same rotation is coming out as not 0 for some reason
 		rotation = SIMPLIFY_DEGREES(dir2angle(new_dir)-dir2angle(old_dir))
 		new_dir = turn(pic.dir,-rotation)
-	var/list/pixels = rotate_pixel_offset(pic.pixel_w, pic.pixel_z, rotation)
 	return list(
 		"icon" = pic.icon,
 		"icon_state" = base_icon_state,
@@ -54,20 +53,20 @@
 		"layer" = pic.layer,
 		"alpha" = pic.alpha,
 		"color" = pic.color,
-		"pixel_w" = pixels[1],
-		"pixel_z" = pixels[2],
 		"smoothing" = smoothing,
 		"cleanable" = cleanable,
 		"desc" = description
 	)
 
-/datum/element/decal/Attach(atom/target, _icon, _icon_state, _dir, _plane=FLOAT_PLANE, _layer=FLOAT_LAYER, _alpha=255, _color, _pixel_w = 0, _pixel_z = 0, _smoothing, _cleanable=FALSE, _description, mutable_appearance/_pic)
+
+
+/datum/element/decal/Attach(atom/target, _icon, _icon_state, _dir, _plane=FLOAT_PLANE, _layer=FLOAT_LAYER, _alpha=255, _color, _smoothing, _cleanable=FALSE, _description, mutable_appearance/_pic)
 	. = ..()
 	if(!isatom(target))
 		return ELEMENT_INCOMPATIBLE
 	if(_pic)
 		pic = _pic
-	else if(!generate_appearance(_icon, _icon_state, _dir, _plane, _layer, _color, _alpha, _pixel_w, _pixel_z, _smoothing, target))
+	else if(!generate_appearance(_icon, _icon_state, _dir, _plane, _layer, _color, _alpha, _smoothing, target))
 		return ELEMENT_INCOMPATIBLE
 	description = _description
 	cleanable = _cleanable
@@ -102,7 +101,7 @@
  * all args are fed into creating an image, they are byond vars for images you'll recognize in the byond docs
  * (except source, source is the object whose appearance we're copying.)
  */
-/datum/element/decal/proc/generate_appearance(_icon, _icon_state, _dir, _plane, _layer, _color, _alpha, _pixel_w, _pixel_z, _smoothing, source)
+/datum/element/decal/proc/generate_appearance(_icon, _icon_state, _dir, _plane, _layer, _color, _alpha, _smoothing, source)
 	if(!_icon || !_icon_state)
 		return FALSE
 	var/temp_image = image(_icon, null, isnull(_smoothing) ? _icon_state : "[_icon_state]-[_smoothing]", _layer, _dir)
@@ -111,8 +110,6 @@
 	SET_PLANE_EXPLICIT(pic, _plane, atom_source)
 	pic.color = _color
 	pic.alpha = _alpha
-	pic.pixel_w = _pixel_w
-	pic.pixel_z = _pixel_z
 	return TRUE
 
 /datum/element/decal/Detach(atom/source)
@@ -156,7 +153,7 @@
 	if(new_turf == source)
 		return
 	Detach(source)
-	new_turf.AddElement(type, pic.icon, base_icon_state, directional, pic.plane, pic.layer, pic.alpha, pic.color, pic.pixel_w, pic.pixel_z, smoothing, cleanable, description)
+	new_turf.AddElement(type, pic.icon, base_icon_state, directional, pic.plane, pic.layer, pic.alpha, pic.color, smoothing, cleanable, description)
 
 /datum/element/decal/proc/shuttle_rotate(datum/source, list/datum/element/decal/rotating)
 	SIGNAL_HANDLER
@@ -175,5 +172,5 @@
 		return NONE
 
 	Detach(source)
-	source.AddElement(type, pic.icon, base_icon_state, directional, PLANE_TO_TRUE(pic.plane), pic.layer, pic.alpha, pic.color, pic.pixel_w, pic.pixel_z, smoothing_junction, cleanable, description)
+	source.AddElement(type, pic.icon, base_icon_state, directional, PLANE_TO_TRUE(pic.plane), pic.layer, pic.alpha, pic.color, smoothing_junction, cleanable, description)
 	return NONE
