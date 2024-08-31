@@ -69,9 +69,9 @@
 	base_icon_state = "[initial(base_icon_state)][flipped_visor ? "-novisor" : ""]"
 	icon_state = base_icon_state
 	if (flipped_visor)
-		flags_cover &= ~HEADCOVERSEYES
+		flags_cover &= ~HEADCOVERSEYES | PEPPERPROOF
 	else
-		flags_cover |= HEADCOVERSEYES
+		flags_cover |= HEADCOVERSEYES | PEPPERPROOF
 	update_appearance()
 	return CLICK_ACTION_SUCCESS
 
