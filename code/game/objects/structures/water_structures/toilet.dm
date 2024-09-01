@@ -1,8 +1,7 @@
 /obj/structure/toilet
-	SET_BASE_VISUAL_PIXEL(0, DEPTH_OFFSET)
 	name = "toilet"
 	desc = "The HT-451, a torque rotation-based, waste disposal unit for small matter. This one seems remarkably clean."
-	icon = 'icons/obj/structures/watercloset.dmi'
+	icon = 'icons/obj/watercloset.dmi'
 	icon_state = "toilet00" //The first number represents if the toilet lid is up, the second is if the cistern is open.
 	base_icon_state = "toilet"
 	density = FALSE
