@@ -81,6 +81,10 @@ GLOBAL_LIST_INIT(specific_fish_icons, generate_specific_fish_icons())
 	var/explosive_malus = FALSE
 	/// If explosive_malus is true, this will be used to keep track of the turfs where an explosion happened for when we'll spawn the loot.
 	var/list/exploded_turfs
+	///When linked to a fishing portal, this will be the icon_state of this option in the radial menu
+	var/radial_state = "default"
+	///When selected by the fishing portal, this will be the icon_state of the overlay shown on the machine.
+	var/overlay_state = "portal_aquarium"
 	/// Mindless mobs that can fish will never pull up items on this list
 	var/static/list/profound_fisher_blacklist = typecacheof(list(
 		/mob/living/basic/mining/lobstrosity,

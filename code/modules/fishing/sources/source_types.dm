@@ -88,12 +88,9 @@
 		/obj/item/fish/three_eyes = 3,
 	)
 	catalog_description = "Aquarium dimension (Fishing portal generator)"
+	radial_state = "fish_tank"
 	///The name of this option shown in the radial menu on the fishing portal generator
 	var/radial_name = "Aquarium"
-	///The icon state shown for this option in the radial menu
-	var/radial_state = "fish_tank"
-	///The icon state of the overlay shown on the machine when active.
-	var/overlay_state = "portal_aquarium"
 
 /datum/fish_source/portal/beach
 	fish_table = list(
@@ -381,6 +378,12 @@
 		/obj/item/fish/holo/halffish = 5,
 	)
 	fishing_difficulty = FISHING_EASY_DIFFICULTY
+
+/datum/fish_source/holographic/on_fishing_spot_init(datum/component/fishing_spot/spot)
+	ADD_TRAIT(spot.parent, TRAIT_UNLINKABLE_FISHING_SPOT, REF(src)) //You would have to be inside the holodeck anyway...
+
+/datum/fish_source/holographic/on_fishing_spot_del(datum/component/fishing_spot/spot)
+	REMOVE_TRAIT(spot.parent, TRAIT_UNLINKABLE_FISHING_SPOT, REF(src))
 
 /datum/fish_source/holographic/reason_we_cant_fish(obj/item/fishing_rod/rod, mob/fisherman, atom/parent)
 	. = ..()
