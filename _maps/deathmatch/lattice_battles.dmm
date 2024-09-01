@@ -1,0 +1,994 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"bm" = (
+/obj/structure/lattice/catwalk,
+/obj/structure/closet/crate/large/hats,
+/turf/open/chasm,
+/area/deathmatch/fullbright)
+"bz" = (
+/obj/structure/railing/unbreakable{
+	dir = 1
+	},
+/obj/item/clothing/head/cone,
+/obj/effect/playeronly_barrier,
+/turf/open/misc/asteroid/moon,
+/area/deathmatch/fullbright)
+"cN" = (
+/obj/structure/railing/unbreakable{
+	dir = 8
+	},
+/obj/effect/playeronly_barrier,
+/turf/open/misc/asteroid/moon,
+/area/deathmatch/fullbright)
+"df" = (
+/obj/structure/lattice/catwalk,
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/chasm,
+/area/deathmatch/fullbright)
+"dM" = (
+/turf/open/chasm,
+/area/deathmatch/fullbright)
+"eK" = (
+/obj/structure/lattice/catwalk,
+/obj/effect/landmark/deathmatch_player_spawn,
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/chasm,
+/area/deathmatch/fullbright)
+"gz" = (
+/obj/structure/flora/rock/pile/style_random,
+/turf/open/misc/asteroid/moon,
+/area/deathmatch/fullbright)
+"gN" = (
+/turf/closed/mineral/random,
+/area/deathmatch/fullbright)
+"gW" = (
+/obj/structure/railing/unbreakable{
+	dir = 1
+	},
+/obj/structure/flora/lunar_plant/style_1,
+/obj/effect/playeronly_barrier,
+/turf/open/misc/asteroid/moon,
+/area/deathmatch/fullbright)
+"ho" = (
+/obj/structure/flora/lunar_plant/style_1,
+/obj/effect/playeronly_barrier,
+/obj/structure/railing/unbreakable{
+	dir = 6
+	},
+/turf/open/misc/asteroid/moon,
+/area/deathmatch/fullbright)
+"hH" = (
+/obj/structure/railing/unbreakable{
+	dir = 5
+	},
+/obj/structure/flora/rock/pile/style_random,
+/obj/structure/flora/lunar_plant/style_3,
+/obj/effect/playeronly_barrier,
+/turf/open/misc/asteroid/moon,
+/area/deathmatch/fullbright)
+"jb" = (
+/obj/structure/flora/rock/style_random,
+/turf/open/misc/asteroid/moon,
+/area/deathmatch/fullbright)
+"lO" = (
+/obj/structure/railing/unbreakable{
+	dir = 9
+	},
+/obj/structure/flora/rock/pile/style_random,
+/obj/structure/flora/lunar_plant/style_3,
+/obj/effect/playeronly_barrier,
+/turf/open/misc/asteroid/moon,
+/area/deathmatch/fullbright)
+"rE" = (
+/obj/structure/flora/rock/pile/style_random,
+/turf/closed/mineral/random,
+/area/deathmatch/fullbright)
+"sl" = (
+/mob/living/basic/spider/giant/hunter/away_caves,
+/obj/effect/decal/cleanable/cobweb/cobweb2,
+/obj/structure/spider/stickyweb,
+/turf/open/misc/asteroid/moon,
+/area/deathmatch/fullbright)
+"sQ" = (
+/obj/structure/flora/lunar_plant/style_2,
+/turf/open/misc/asteroid/moon,
+/area/deathmatch/fullbright)
+"tw" = (
+/obj/structure/railing/unbreakable{
+	dir = 4
+	},
+/obj/effect/playeronly_barrier,
+/turf/open/misc/asteroid/moon,
+/area/deathmatch/fullbright)
+"tL" = (
+/obj/structure/railing/unbreakable,
+/obj/effect/playeronly_barrier,
+/turf/open/misc/asteroid/moon,
+/area/deathmatch/fullbright)
+"uJ" = (
+/obj/structure/railing/unbreakable{
+	dir = 4
+	},
+/obj/item/clothing/head/cone,
+/obj/effect/playeronly_barrier,
+/turf/open/misc/asteroid/moon,
+/area/deathmatch/fullbright)
+"uO" = (
+/obj/structure/lattice/catwalk,
+/obj/structure/closet/crate/critter,
+/mob/living/basic/mothroach,
+/mob/living/basic/mothroach,
+/mob/living/basic/mothroach,
+/turf/open/chasm,
+/area/deathmatch/fullbright)
+"vk" = (
+/obj/structure/lattice/catwalk,
+/turf/open/chasm,
+/area/deathmatch/fullbright)
+"vr" = (
+/obj/structure/flora/lunar_plant/style_2,
+/obj/structure/spider/stickyweb/very_sticky,
+/turf/open/misc/asteroid/moon,
+/area/deathmatch/fullbright)
+"wb" = (
+/obj/structure/lattice/catwalk,
+/obj/effect/landmark/deathmatch_player_spawn,
+/turf/open/chasm,
+/area/deathmatch/fullbright)
+"yB" = (
+/obj/structure/railing/unbreakable{
+	dir = 8
+	},
+/obj/structure/flora/lunar_plant/style_1,
+/obj/effect/playeronly_barrier,
+/turf/open/misc/asteroid/moon,
+/area/deathmatch/fullbright)
+"AS" = (
+/mob/living/basic/pet/cat/space,
+/turf/open/misc/asteroid/moon,
+/area/deathmatch/fullbright)
+"BL" = (
+/obj/structure/railing/unbreakable{
+	dir = 1
+	},
+/obj/effect/playeronly_barrier,
+/turf/open/misc/asteroid/moon,
+/area/deathmatch/fullbright)
+"Cf" = (
+/obj/structure/flora/rock/pile/style_random,
+/obj/structure/flora/lunar_plant/style_3,
+/turf/open/misc/asteroid/moon,
+/area/deathmatch/fullbright)
+"CI" = (
+/mob/living/basic/pet/dog/corgi/puppy/void,
+/turf/open/misc/asteroid/moon,
+/area/deathmatch/fullbright)
+"CP" = (
+/obj/structure/lattice/catwalk,
+/obj/item/clothing/head/cone,
+/turf/open/chasm,
+/area/deathmatch/fullbright)
+"Dk" = (
+/mob/living/basic/wumborian_fugu,
+/turf/open/misc/asteroid/moon,
+/area/deathmatch/fullbright)
+"He" = (
+/turf/open/misc/asteroid/moon,
+/area/deathmatch/fullbright)
+"Ia" = (
+/obj/machinery/power/floodlight,
+/obj/structure/lattice/catwalk,
+/turf/open/chasm,
+/area/deathmatch/fullbright)
+"IT" = (
+/obj/structure/lattice/catwalk,
+/obj/effect/landmark/deathmatch_player_spawn,
+/obj/effect/decal/cleanable/rubble,
+/turf/open/chasm,
+/area/deathmatch/fullbright)
+"JE" = (
+/obj/structure/railing/unbreakable{
+	dir = 10
+	},
+/obj/structure/flora/lunar_plant/style_1,
+/obj/effect/playeronly_barrier,
+/turf/open/misc/asteroid/moon,
+/area/deathmatch/fullbright)
+"KO" = (
+/obj/structure/closet/crate/cardboard,
+/turf/open/misc/asteroid/moon,
+/area/deathmatch/fullbright)
+"LN" = (
+/obj/structure/railing/corner,
+/obj/effect/playeronly_barrier,
+/turf/open/misc/asteroid/moon,
+/area/deathmatch/fullbright)
+"MF" = (
+/obj/structure/lattice,
+/turf/open/chasm,
+/area/deathmatch/fullbright)
+"MZ" = (
+/obj/item/clothing/head/cone,
+/turf/open/misc/asteroid/moon,
+/area/deathmatch/fullbright)
+"Nf" = (
+/obj/effect/landmark/deathmatch_player_spawn,
+/obj/structure/lattice,
+/turf/open/chasm,
+/area/deathmatch/fullbright)
+"NA" = (
+/obj/structure/flora/lunar_plant/style_2,
+/obj/effect/playeronly_barrier,
+/turf/open/misc/asteroid/moon,
+/area/deathmatch/fullbright)
+"NG" = (
+/obj/structure/lattice/catwalk,
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/structure/closet/crate/cardboard,
+/obj/item/statuebust,
+/turf/open/chasm,
+/area/deathmatch/fullbright)
+"NI" = (
+/obj/structure/lattice/catwalk,
+/obj/effect/decal/cleanable/rubble,
+/turf/open/chasm,
+/area/deathmatch/fullbright)
+"NY" = (
+/obj/effect/playeronly_barrier,
+/obj/structure/railing/unbreakable,
+/turf/open/misc/asteroid/moon,
+/area/deathmatch/fullbright)
+"OF" = (
+/obj/machinery/power/port_gen/pacman/pre_loaded,
+/turf/open/misc/asteroid/moon,
+/area/deathmatch/fullbright)
+"St" = (
+/mob/living/basic/spider/giant/nurse/away_caves,
+/turf/open/misc/asteroid/moon,
+/area/deathmatch/fullbright)
+"Sv" = (
+/obj/structure/lattice/catwalk,
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/decal/cleanable/rubble,
+/turf/open/chasm,
+/area/deathmatch/fullbright)
+"SL" = (
+/obj/structure/flora/rock/pile/style_random,
+/obj/structure/flora/lunar_plant/style_3,
+/obj/effect/playeronly_barrier,
+/turf/open/misc/asteroid/moon,
+/area/deathmatch/fullbright)
+"Uy" = (
+/obj/item/clothing/head/cone,
+/obj/effect/playeronly_barrier,
+/obj/structure/railing/corner/unbreakable{
+	dir = 1
+	},
+/turf/open/misc/asteroid/moon,
+/area/deathmatch/fullbright)
+"UU" = (
+/obj/structure/railing{
+	dir = 9
+	},
+/obj/structure/flora/rock/style_random,
+/obj/effect/playeronly_barrier,
+/turf/open/misc/asteroid/moon,
+/area/deathmatch/fullbright)
+"Xf" = (
+/obj/structure/flora/rock/pile/style_random,
+/obj/structure/spider/stickyweb,
+/turf/open/misc/asteroid/moon,
+/area/deathmatch/fullbright)
+"Xk" = (
+/obj/structure/lattice/catwalk,
+/obj/machinery/power/floodlight,
+/turf/open/chasm,
+/area/deathmatch/fullbright)
+"Xo" = (
+/obj/structure/flora/rock/style_random,
+/obj/effect/playeronly_barrier,
+/turf/open/misc/asteroid/moon,
+/area/deathmatch/fullbright)
+"Yu" = (
+/obj/structure/flora/rock/pile/style_random,
+/obj/structure/railing/unbreakable{
+	dir = 6
+	},
+/obj/structure/flora/lunar_plant/style_3,
+/obj/effect/playeronly_barrier,
+/turf/open/misc/asteroid/moon,
+/area/deathmatch/fullbright)
+"YH" = (
+/obj/effect/playeronly_barrier,
+/turf/open/misc/asteroid/moon,
+/area/deathmatch/fullbright)
+"YV" = (
+/obj/structure/lattice/catwalk,
+/obj/item/clothing/head/cone,
+/obj/effect/decal/cleanable/rubble,
+/turf/open/chasm,
+/area/deathmatch/fullbright)
+"Zp" = (
+/obj/effect/decal/cleanable/garbage,
+/turf/open/misc/asteroid/moon,
+/area/deathmatch/fullbright)
+"ZH" = (
+/obj/structure/flora/rock/pile/style_random,
+/mob/living/basic/cow/moonicorn,
+/turf/open/misc/asteroid/moon,
+/area/deathmatch/fullbright)
+
+(1,1,1) = {"
+rE
+gN
+gN
+gN
+gN
+gN
+gN
+gN
+gN
+gN
+gN
+gN
+gN
+gN
+gN
+gN
+gN
+gN
+gN
+gN
+gN
+gN
+gN
+gN
+gN
+"}
+(2,1,1) = {"
+gN
+gN
+He
+He
+jb
+gN
+gN
+gN
+gN
+gN
+gN
+gN
+gN
+gN
+gN
+gN
+gN
+gN
+gN
+gN
+gN
+gN
+gN
+gN
+gN
+"}
+(3,1,1) = {"
+gN
+He
+He
+Dk
+He
+KO
+gN
+gN
+gN
+gN
+gN
+gN
+gN
+gN
+gN
+gN
+gN
+gN
+gN
+gN
+gN
+gN
+gN
+gN
+gN
+"}
+(4,1,1) = {"
+gN
+jb
+Cf
+He
+LN
+tw
+uJ
+tw
+tw
+Yu
+gN
+gN
+gN
+gN
+gN
+gN
+gN
+gN
+gN
+gN
+gN
+gN
+gN
+gN
+gN
+"}
+(5,1,1) = {"
+gN
+gN
+OF
+Zp
+NY
+dM
+MF
+MF
+MF
+MF
+MF
+gN
+gN
+gN
+gN
+gN
+gN
+gN
+gN
+MF
+gN
+gN
+gN
+gN
+gN
+"}
+(6,1,1) = {"
+gN
+gN
+gN
+MZ
+ho
+vk
+MF
+vk
+vk
+MF
+MF
+MF
+vk
+df
+vk
+df
+vk
+MF
+dM
+dM
+lO
+gN
+gN
+gN
+gN
+"}
+(7,1,1) = {"
+gN
+gN
+gN
+gN
+gN
+MF
+MF
+wb
+vk
+vk
+MF
+vk
+wb
+vk
+vk
+vk
+vk
+wb
+MF
+dM
+bz
+gN
+gN
+gN
+gN
+"}
+(8,1,1) = {"
+gN
+gN
+gN
+gN
+JE
+MF
+vk
+vk
+vk
+vk
+vk
+NI
+vk
+vk
+vk
+vk
+MF
+vk
+MF
+MF
+BL
+sQ
+gN
+gN
+gN
+"}
+(9,1,1) = {"
+gN
+gN
+sQ
+YH
+tL
+MF
+vk
+vk
+vk
+CP
+vk
+vk
+vk
+vk
+vk
+CP
+MF
+vk
+vk
+MF
+BL
+ZH
+gN
+gN
+gN
+"}
+(10,1,1) = {"
+gN
+gN
+gN
+AS
+tL
+MF
+vk
+MF
+MF
+vk
+df
+Sv
+vk
+MF
+vk
+df
+MF
+vk
+vk
+MF
+gW
+jb
+gN
+gN
+gN
+"}
+(11,1,1) = {"
+gN
+gN
+gN
+CI
+tL
+MF
+vk
+df
+MF
+MF
+vk
+vk
+MF
+MF
+vk
+df
+vk
+vk
+df
+vk
+hH
+gN
+gN
+gN
+gN
+"}
+(12,1,1) = {"
+gN
+gN
+gN
+jb
+tL
+MF
+vk
+vk
+vk
+vk
+vk
+vk
+vk
+vk
+vk
+vk
+vk
+vk
+df
+NG
+gN
+gN
+gN
+gN
+gN
+"}
+(13,1,1) = {"
+gN
+gN
+gN
+gN
+Yu
+MF
+MF
+eK
+vk
+vk
+vk
+vk
+wb
+CP
+vk
+vk
+vk
+wb
+vk
+Xk
+gN
+gN
+gN
+gN
+gN
+"}
+(14,1,1) = {"
+gN
+gN
+gN
+gN
+gN
+Ia
+MF
+vk
+vk
+vk
+vk
+vk
+vk
+vk
+vk
+NI
+vk
+vk
+vk
+gN
+gN
+gN
+gN
+gN
+gN
+"}
+(15,1,1) = {"
+gN
+gN
+gN
+gN
+gN
+gN
+bm
+df
+vk
+vk
+vk
+MF
+MF
+vk
+vk
+vk
+MF
+MF
+vk
+gN
+gN
+gN
+gN
+gN
+gN
+"}
+(16,1,1) = {"
+gN
+gN
+gN
+gN
+gN
+gN
+gN
+MF
+MF
+vk
+vk
+MF
+vk
+vk
+vk
+df
+MF
+vk
+vk
+gN
+gN
+gN
+gN
+gN
+gN
+"}
+(17,1,1) = {"
+gN
+gN
+gN
+gN
+gN
+gN
+MF
+MF
+vk
+vk
+NI
+vk
+vk
+vk
+vk
+CP
+vk
+vk
+vk
+gN
+gN
+gN
+gN
+gN
+gN
+"}
+(18,1,1) = {"
+gN
+gN
+gN
+gN
+gN
+MF
+MF
+MF
+vk
+vk
+YV
+vk
+MF
+MF
+vk
+vk
+vk
+vk
+df
+gN
+gN
+gN
+gN
+gN
+gN
+"}
+(19,1,1) = {"
+gN
+gN
+gN
+gN
+SL
+dM
+MF
+Nf
+vk
+vk
+vk
+MF
+Nf
+MF
+MF
+vk
+vk
+IT
+vk
+uO
+gN
+gN
+gN
+gN
+gN
+"}
+(20,1,1) = {"
+gN
+gN
+gN
+gN
+dM
+dM
+dM
+MF
+MF
+vk
+MF
+MF
+MF
+MF
+MF
+MF
+vk
+vk
+MF
+MF
+UU
+gN
+gN
+gN
+gN
+"}
+(21,1,1) = {"
+gN
+gN
+gN
+SL
+dM
+dM
+dM
+dM
+uO
+gN
+gN
+gN
+gN
+gN
+gN
+gN
+vk
+MF
+dM
+dM
+BL
+St
+Xf
+gN
+gN
+"}
+(22,1,1) = {"
+gN
+gN
+gN
+jb
+NA
+dM
+SL
+gN
+gN
+gN
+gN
+gN
+gN
+gN
+gN
+gN
+gN
+lO
+yB
+cN
+Uy
+vr
+gN
+gN
+gN
+"}
+(23,1,1) = {"
+gN
+gN
+gN
+gN
+gz
+Xo
+gN
+gN
+gN
+gN
+gN
+gN
+gN
+gN
+gN
+gN
+gN
+gN
+sl
+gz
+gN
+gN
+gN
+gN
+gN
+"}
+(24,1,1) = {"
+gN
+gN
+gN
+gN
+gN
+gN
+gN
+gN
+gN
+gN
+gN
+gN
+gN
+gN
+gN
+gN
+gN
+gN
+gN
+gN
+gN
+gN
+gN
+gN
+gN
+"}
+(25,1,1) = {"
+gN
+gN
+gN
+gN
+gN
+gN
+gN
+gN
+gN
+gN
+gN
+gN
+gN
+gN
+gN
+gN
+gN
+gN
+gN
+gN
+gN
+gN
+gN
+gN
+gN
+"}
