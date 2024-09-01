@@ -1,5 +1,5 @@
 /obj/machinery/computer/shuttle/custom_shuttle
-	name = "Nanotrasen fight control system"
+	name = "Nanotrasen Flight Control System"
 	desc = "A shuttle control computer."
 	icon_screen = "shuttle"
 	icon_keyboard = "tech_key"
