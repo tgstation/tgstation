@@ -3697,6 +3697,7 @@
 #include "code\modules\cargo\markets\market_items\clothing.dm"
 #include "code\modules\cargo\markets\market_items\consumables.dm"
 #include "code\modules\cargo\markets\market_items\hostages.dm"
+#include "code\modules\cargo\markets\market_items\local_goods.dm"
 #include "code\modules\cargo\markets\market_items\misc.dm"
 #include "code\modules\cargo\markets\market_items\stolen_goods.dm"
 #include "code\modules\cargo\markets\market_items\tools.dm"
