@@ -1,6 +1,0 @@
-
-/obj/machinery/turretid{dir=@UNSET} : /obj/machinery/turretid/directional/south{@OLD;dir=@SKIP;pixel_x=@SKIP;pixel_y=@SKIP}
-/obj/machinery/turretid{dir=1} : /obj/machinery/turretid/directional/south{@OLD;dir=@SKIP;pixel_x=@SKIP;pixel_y=@SKIP}
-/obj/machinery/turretid{dir=2} : /obj/machinery/turretid/directional/north{@OLD;dir=@SKIP;pixel_x=@SKIP;pixel_y=@SKIP}
-/obj/machinery/turretid{dir=4} : /obj/machinery/turretid/directional/east{@OLD;dir=@SKIP;pixel_x=@SKIP;pixel_y=@SKIP}
-/obj/machinery/turretid{dir=8} : /obj/machinery/turretid/directional/west{@OLD;dir=@SKIP;pixel_x=@SKIP;pixel_y=@SKIP}
