@@ -2,7 +2,7 @@
 /obj/structure/ladder
 	name = "ladder"
 	desc = "A sturdy metal ladder."
-	icon = 'icons/obj/fluff/general.dmi'
+	icon = 'icons/obj/structures.dmi'
 	icon_state = "ladder11"
 	anchored = TRUE
 	obj_flags = CAN_BE_HIT | BLOCK_Z_OUT_DOWN
