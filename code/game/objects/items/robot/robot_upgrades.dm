@@ -218,6 +218,16 @@
 
 	items_to_add = list(/obj/item/plunger/cyborg)
 
+/obj/item/borg/upgrade/janitor_glass
+	name = "janitor cyborg glass reserve"
+	desc = "Glass, for janitorial needs. Mostly for filling out light dispensers, or rebuilding savagely destroyed windows."
+	icon_state = "module_janitor"
+	require_model = TRUE
+	model_type = list(/obj/item/robot_model/janitor)
+	model_flags = BORG_MODEL_JANITOR
+
+	items_to_add = list(/obj/item/stack/sheet/glass)
+
 /obj/item/borg/upgrade/syndicate
 	name = "illegal equipment module"
 	desc = "Unlocks the hidden, deadlier functions of a cyborg."
