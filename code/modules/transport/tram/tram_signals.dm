@@ -304,17 +304,14 @@
 	// degraded signal operating conditions of any type show blue
 	var/idle_aspect = operating_status == TRANSPORT_SYSTEM_NORMAL ? XING_STATE_GREEN : XING_STATE_MALF
 	var/datum/transport_controller/linear/tram/tram = transport_ref?.resolve()
-
-	// broken or misconfigured
-	if(!is_operational || !inbound || !outbound)
-		set_signal_state(XING_STATE_MALF, force = !is_operational)
-		return PROCESS_KILL
+	if(tram.controller_status & COMM_ERROR)
+		idle_aspect = XING_STATE_MALF
 
 	// Check for stopped states. Will kill the process since tram starting up will restart process.
-	if(!tram || !tram.controller_operational || !tram.controller_active)
+	if(!tram || !tram.controller_operational || !tram.controller_active || !is_operational || !inbound || !outbound)
 		// Tram missing, we lost power, or something isn't right
 		// Set idle and stop processing, since the tram won't be moving
-		set_signal_state(XING_STATE_GREEN, force = !is_operational)
+		set_signal_state(idle_aspect, force = !is_operational)
 		return PROCESS_KILL
 
 	var/obj/structure/transport/linear/tram_part = tram.return_closest_platform_to(src)
