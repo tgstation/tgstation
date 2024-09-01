@@ -226,7 +226,7 @@
 /obj/machinery/fishing_portal_generator/proc/deactivate()
 	if(!active)
 		return
-	if(istype(active.fish_source, /datum/fish_source/portal))
+	if(!istype(active.fish_source, /datum/fish_source/portal))
 		for(var/atom/spot as anything in linked_fishing_spots)
 			if(linked_fishing_spots[spot] == active.fish_source)
 				UnregisterSignal(spot, COMSIG_MOVABLE_Z_CHANGED)
