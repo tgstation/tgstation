@@ -34,18 +34,9 @@
 	dir = 8
 	},
 /obj/structure/table/wood,
-/obj/item/food/meat/slab/human/mutant/lizard{
-	pixel_x = 3;
-	pixel_y = 2
-	},
-/obj/item/food/meat/slab/human/mutant/lizard{
-	pixel_y = 10;
-	pixel_x = -3
-	},
-/obj/item/food/meat/slab/human/mutant/lizard{
-	pixel_y = 17;
-	pixel_x = 5
-	},
+/obj/item/food/meat/slab/human/mutant/lizard,
+/obj/item/food/meat/slab/human/mutant/lizard,
+/obj/item/food/meat/slab/human/mutant/lizard,
 /turf/open/indestructible/necropolis,
 /area/ruin/powered/gluttony)
 "eb" = (
@@ -55,16 +46,13 @@
 /obj/structure/table/wood,
 /obj/item/food/meat/slab/corgi{
 	pixel_x = 3;
-	pixel_y = 4
+	pixel_y = 1
 	},
 /obj/item/food/meat/slab/corgi{
 	pixel_x = 5;
-	pixel_y = 18
+	pixel_y = 5
 	},
-/obj/item/knife/combat/bone{
-	pixel_y = 10;
-	pixel_x = -4
-	},
+/obj/item/knife/combat/bone,
 /turf/open/indestructible/necropolis,
 /area/ruin/powered/gluttony)
 "eq" = (
@@ -89,10 +77,7 @@
 /area/ruin/powered/gluttony)
 "fa" = (
 /obj/structure/table/wood,
-/obj/item/food/meat/slab/human{
-	pixel_y = 13;
-	pixel_x = -4
-	},
+/obj/item/food/meat/slab/human,
 /obj/structure/stone_tile/block/cracked{
 	dir = 8
 	},
@@ -126,9 +111,7 @@
 /turf/open/misc/asteroid/basalt/lava_land_surface,
 /area/lavaland/surface/outdoors)
 "ie" = (
-/obj/item/veilrender/vealrender{
-	pixel_y = 4
-	},
+/obj/item/veilrender/vealrender,
 /obj/structure/stone_tile/slab/cracked{
 	dir = 6
 	},
@@ -172,13 +155,8 @@
 	dir = 1
 	},
 /obj/structure/table/wood,
-/obj/item/spear/bonespear{
-	pixel_y = 9
-	},
-/obj/item/slime_extract/silver{
-	pixel_y = 12;
-	pixel_x = -7
-	},
+/obj/item/spear/bonespear,
+/obj/item/slime_extract/silver,
 /turf/open/indestructible/necropolis,
 /area/ruin/powered/gluttony)
 "ls" = (
@@ -246,12 +224,6 @@
 /area/ruin/powered/gluttony)
 "rg" = (
 /obj/structure/stone_tile/block/burnt,
-/obj/item/clothing/gloves/butchering{
-	pixel_x = -2;
-	pixel_y = 6
-	},
-/obj/effect/mob_spawn/corpse/human/miner,
-/obj/effect/decal/cleanable/blood,
 /turf/open/indestructible/necropolis,
 /area/ruin/powered/gluttony)
 "vU" = (
@@ -288,14 +260,8 @@
 	dir = 1
 	},
 /obj/structure/table/wood,
-/obj/item/food/meat/slab/goliath{
-	pixel_y = 5;
-	pixel_x = 4
-	},
-/obj/item/food/meat/slab/human/mutant/ethereal{
-	pixel_y = 15;
-	pixel_x = -9
-	},
+/obj/item/food/meat/slab/goliath,
+/obj/item/food/meat/slab/human/mutant/ethereal,
 /turf/open/indestructible/necropolis,
 /area/ruin/powered/gluttony)
 "zd" = (
@@ -316,7 +282,7 @@
 	dir = 4
 	},
 /obj/effect/decal/cleanable/blood/tracks{
-	dir = 8
+	dir = 5
 	},
 /turf/open/indestructible/necropolis,
 /area/ruin/powered/gluttony)
@@ -388,6 +354,8 @@
 /obj/structure/stone_tile/slab/cracked{
 	dir = 1
 	},
+/obj/effect/mob_spawn/corpse/human/miner,
+/obj/item/clothing/gloves/butchering,
 /turf/open/indestructible/necropolis,
 /area/ruin/powered/gluttony)
 "IM" = (
@@ -523,9 +491,7 @@
 	dir = 8
 	},
 /obj/structure/table/wood,
-/obj/item/food/meat/slab/human/mutant/moth{
-	pixel_y = 10
-	},
+/obj/item/food/meat/slab/human/mutant/moth,
 /turf/open/indestructible/necropolis,
 /area/ruin/powered/gluttony)
 "WR" = (
@@ -538,6 +504,9 @@
 "YG" = (
 /obj/structure/stone_tile/block/burnt{
 	dir = 4
+	},
+/obj/effect/decal/cleanable/blood/tracks{
+	dir = 10
 	},
 /turf/open/indestructible/necropolis,
 /area/ruin/powered/gluttony)

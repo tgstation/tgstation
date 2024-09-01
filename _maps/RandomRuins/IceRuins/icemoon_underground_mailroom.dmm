@@ -12,6 +12,10 @@
 /obj/effect/turf_decal/siding/yellow,
 /turf/open/floor/iron/smooth_large,
 /area/ruin/powered/mailroom)
+"aG" = (
+/obj/structure/sign/warning/cold_temp,
+/turf/closed/indestructible/reinforced,
+/area/ruin/powered/mailroom)
 "ba" = (
 /obj/structure/window/reinforced/spawner/directional/east,
 /turf/open/floor/iron/textured,
@@ -31,28 +35,7 @@
 	dir = 4
 	},
 /obj/effect/decal/remains/human,
-/obj/item/paper/crumpled/bloody/fluff/stations/lavaland/mailroom/waiting{
-	pixel_x = 8;
-	pixel_y = -5
-	},
 /turf/open/floor/iron/white,
-/area/ruin/powered/mailroom)
-"cM" = (
-/obj/effect/turf_decal/stripes{
-	dir = 8
-	},
-/obj/item/mail/junkmail,
-/turf/open/floor/plating/snowed/smoothed/icemoon,
-/area/ruin/powered/mailroom)
-"cP" = (
-/obj/structure/sign/poster/official/obey/directional/north,
-/turf/open/floor/plating/snowed/smoothed/icemoon,
-/area/ruin/powered/mailroom)
-"dj" = (
-/obj/structure/filingcabinet/chestdrawer/wheeled,
-/obj/item/food/bonbon,
-/obj/item/storage/fancy/heart_box,
-/turf/open/floor/carpet/green,
 /area/ruin/powered/mailroom)
 "dC" = (
 /obj/effect/turf_decal/siding/yellow,
@@ -78,9 +61,14 @@
 /obj/structure/holobox,
 /turf/open/floor/plating/snowed/smoothed/icemoon,
 /area/ruin/powered/mailroom)
+"hj" = (
+/obj/structure/filingcabinet/chestdrawer/wheeled,
+/obj/item/storage/fancy/heart_box,
+/obj/item/food/bonbon,
+/turf/open/floor/carpet/royalblack,
+/area/ruin/powered/mailroom)
 "hk" = (
 /obj/effect/decal/cleanable/blood/drip,
-/obj/machinery/light_switch/directional/east,
 /turf/open/floor/carpet/royalblack,
 /area/ruin/powered/mailroom)
 "hN" = (
@@ -89,6 +77,7 @@
 /area/ruin/powered/mailroom)
 "iO" = (
 /obj/item/food/grown/coffee/robusta,
+/obj/machinery/light_switch/directional/west,
 /turf/open/floor/iron/smooth_large,
 /area/ruin/powered/mailroom)
 "iV" = (
@@ -106,7 +95,6 @@
 /obj/item/mail/junkmail,
 /obj/item/mail/junkmail,
 /obj/item/mail/junkmail,
-/obj/structure/sign/poster/official/obey/directional/north,
 /turf/open/floor/iron/smooth_large,
 /area/ruin/powered/mailroom)
 "jm" = (
@@ -116,6 +104,21 @@
 /obj/item/mail/junkmail,
 /turf/open/floor/iron/smooth_large,
 /area/ruin/powered/mailroom)
+"jx" = (
+/obj/structure/chair/plastic{
+	dir = 4
+	},
+/obj/item/flashlight/glowstick/orange,
+/turf/open/floor/iron/white,
+/area/ruin/powered/mailroom)
+"kZ" = (
+/obj/structure/filingcabinet/chestdrawer/wheeled,
+/obj/item/paper/valentine,
+/obj/item/grenade/c4,
+/obj/item/clothing/accessory/medal/conduct,
+/obj/item/paper/crumpled/muddy/fluff/instructions,
+/turf/open/floor/carpet/royalblack,
+/area/ruin/powered/mailroom)
 "lI" = (
 /turf/closed/mineral/random/snow,
 /area/icemoon/underground/unexplored)
@@ -123,9 +126,7 @@
 /turf/closed/indestructible/reinforced,
 /area/ruin/powered/mailroom)
 "mA" = (
-/obj/structure/fence/corner{
-	dir = 4
-	},
+/obj/structure/fence/corner,
 /turf/open/misc/asteroid/snow/icemoon,
 /area/icemoon/underground/explored)
 "np" = (
@@ -137,7 +138,6 @@
 "nM" = (
 /obj/machinery/telecomms/relay/preset/mining,
 /obj/effect/turf_decal/siding/thinplating,
-/obj/structure/sign/poster/official/obey/directional/north,
 /turf/open/floor/iron,
 /area/ruin/powered/mailroom)
 "nS" = (
@@ -179,10 +179,6 @@
 /obj/machinery/light/small/red/directional/west,
 /turf/open/floor/plating/snowed/smoothed/icemoon,
 /area/ruin/powered/mailroom)
-"rZ" = (
-/obj/item/flashlight/glowstick/orange,
-/turf/open/floor/iron/white,
-/area/ruin/powered/mailroom)
 "sA" = (
 /obj/machinery/modular_computer/preset/civilian{
 	dir = 8
@@ -207,9 +203,7 @@
 /turf/open/floor/plating/snowed/smoothed/icemoon,
 /area/ruin/powered/mailroom)
 "vU" = (
-/obj/structure/sign/departments/cargo{
-	name = "\improper Main Redirection Services"
-	},
+/obj/structure/sign/departments/cargo,
 /turf/closed/indestructible/reinforced,
 /area/ruin/powered/mailroom)
 "vV" = (
@@ -229,13 +223,9 @@
 /obj/item/trash/can,
 /turf/open/misc/asteroid/snow/icemoon,
 /area/icemoon/underground/explored)
-"xU" = (
-/obj/effect/decal/cleanable/plasma,
-/turf/open/floor/plating/snowed/smoothed/icemoon,
-/area/ruin/powered/mailroom)
 "yb" = (
 /obj/item/screwdriver{
-	pixel_x = -8;
+	pixel_x = -6;
 	pixel_y = 6
 	},
 /obj/structure/flora/rock/icy/style_random,
@@ -253,8 +243,11 @@
 /area/ruin/powered/mailroom)
 "AS" = (
 /obj/structure/filingcabinet,
-/obj/structure/sign/poster/official/obey/directional/north,
 /turf/open/floor/carpet/royalblack,
+/area/ruin/powered/mailroom)
+"AX" = (
+/obj/structure/sign/warning/no_smoking/circle,
+/turf/closed/indestructible/reinforced,
 /area/ruin/powered/mailroom)
 "BZ" = (
 /obj/effect/turf_decal/trimline/white/arrow_ccw{
@@ -265,19 +258,23 @@
 	},
 /turf/open/floor/plating,
 /area/ruin/powered/mailroom)
+"CW" = (
+/obj/structure/sign/poster/official/obey,
+/turf/closed/indestructible/reinforced,
+/area/ruin/powered/mailroom)
 "DR" = (
-/obj/structure/fence/post,
+/obj/structure/fence/post{
+	dir = 4
+	},
 /turf/open/misc/asteroid/snow/icemoon,
 /area/icemoon/underground/explored)
 "DY" = (
 /obj/structure/table/reinforced,
-/obj/item/toy/figure/cargotech{
-	pixel_x = -6;
-	pixel_y = 12
-	},
-/obj/machinery/door/window/half{
-	pixel_y = 12
-	},
+/obj/machinery/door/window/left/directional/north,
+/obj/structure/window/spawner/directional/east,
+/obj/item/toy/figure/cargotech,
+/obj/item/paper/crumpled/bloody/fluff/stations/lavaland/mailroom/waiting,
+/obj/machinery/door/window/left/directional/south,
 /turf/open/floor/noslip,
 /area/ruin/powered/mailroom)
 "FC" = (
@@ -288,14 +285,6 @@
 /obj/structure/sign/poster/ripped,
 /turf/closed/indestructible/reinforced,
 /area/ruin/powered/mailroom)
-"GA" = (
-/obj/structure/filingcabinet/chestdrawer/wheeled,
-/obj/item/paper/crumpled/muddy/fluff/instructions,
-/obj/item/clothing/accessory/medal/conduct,
-/obj/item/grenade/c4,
-/obj/item/paper/valentine,
-/turf/open/floor/carpet/green,
-/area/ruin/powered/mailroom)
 "HH" = (
 /turf/open/floor/iron/smooth_corner{
 	dir = 4
@@ -303,16 +292,12 @@
 /area/ruin/powered/mailroom)
 "HL" = (
 /obj/structure/table/greyscale,
-/obj/item/flashlight/lamp{
-	pixel_y = 11
-	},
-/obj/item/trash/candle{
-	pixel_x = -3;
-	pixel_y = 3
-	},
+/obj/item/flashlight/lamp,
+/obj/item/trash/candle,
 /turf/open/floor/carpet/royalblack,
 /area/ruin/powered/mailroom)
 "IZ" = (
+/obj/item/food/strawberryicecreamsandwich,
 /turf/open/floor/iron/smooth_corner{
 	dir = 1
 	},
@@ -328,7 +313,7 @@
 /area/ruin/powered/mailroom)
 "Js" = (
 /obj/structure/fence/corner{
-	dir = 8
+	dir = 1
 	},
 /turf/open/misc/asteroid/snow/icemoon,
 /area/icemoon/underground/explored)
@@ -348,7 +333,6 @@
 /area/ruin/powered/mailroom)
 "Mr" = (
 /obj/machinery/computer/launchpad,
-/obj/structure/sign/poster/ripped/directional/north,
 /turf/open/floor/iron/smooth_large,
 /area/ruin/powered/mailroom)
 "Mz" = (
@@ -364,22 +348,11 @@
 /obj/effect/turf_decal/siding/thinplating/corner{
 	dir = 8
 	},
-/obj/structure/sign/poster/official/obey/directional/north,
 /turf/open/floor/carpet/royalblack,
 /area/ruin/powered/mailroom)
 "MT" = (
 /obj/structure/window/reinforced/spawner/directional/east,
 /obj/machinery/light/cold/directional/north,
-/obj/structure/sign/warning/no_smoking/circle/directional/north{
-	pixel_x = -5;
-	pixel_y = 27
-	},
-/turf/open/floor/iron/textured,
-/area/ruin/powered/mailroom)
-"No" = (
-/obj/structure/window/reinforced/spawner/directional/east,
-/obj/item/clothing/suit/hooded/wintercoat,
-/obj/effect/decal/remains/human,
 /turf/open/floor/iron/textured,
 /area/ruin/powered/mailroom)
 "NE" = (
@@ -392,10 +365,7 @@
 /turf/open/floor/carpet/green,
 /area/ruin/powered/mailroom)
 "Pk" = (
-/obj/item/multitool{
-	pixel_x = -15;
-	pixel_y = -8
-	},
+/obj/item/multitool,
 /obj/structure/ice_stasis,
 /turf/open/misc/asteroid/snow/icemoon,
 /area/icemoon/underground/explored)
@@ -411,7 +381,6 @@
 /obj/effect/turf_decal/siding/thinplating/corner,
 /obj/item/paper/crumpled/fluff/poem,
 /obj/structure/closet/crate/bin,
-/obj/structure/sign/poster/ripped/directional/north,
 /turf/open/floor/carpet/royalblack,
 /area/ruin/powered/mailroom)
 "PQ" = (
@@ -425,12 +394,15 @@
 	},
 /turf/open/floor/plating/snowed/smoothed/icemoon,
 /area/ruin/powered/mailroom)
+"Qx" = (
+/obj/structure/sign/poster/official/obey,
+/turf/closed/wall/r_wall,
+/area/ruin/powered/mailroom)
 "QU" = (
 /obj/effect/turf_decal/bot,
 /obj/item/pressure_plate/hologrid{
 	reward = /obj/item/keycard/icebox/processing
 	},
-/obj/structure/sign/warning/cold_temp/directional/north,
 /turf/open/floor/plating,
 /area/ruin/powered/mailroom)
 "Rn" = (
@@ -452,7 +424,6 @@
 /area/ruin/powered/mailroom)
 "SY" = (
 /obj/machinery/launchpad,
-/obj/machinery/light_switch/directional/north,
 /turf/open/floor/iron/smooth_large,
 /area/ruin/powered/mailroom)
 "To" = (
@@ -480,14 +451,9 @@
 /area/icemoon/underground/explored)
 "Vz" = (
 /obj/item/paper_bin{
-	pixel_y = 9;
-	pixel_x = 6
+	pixel_y = 5
 	},
 /obj/structure/table/rolling,
-/obj/item/food/strawberryicecreamsandwich{
-	pixel_x = -8;
-	pixel_y = 3
-	},
 /turf/open/floor/iron/smooth_large,
 /area/ruin/powered/mailroom)
 "VG" = (
@@ -496,6 +462,7 @@
 /turf/open/floor/plating/snowed/smoothed/icemoon,
 /area/ruin/powered/mailroom)
 "Wj" = (
+/obj/machinery/status_display/evac/directional/west,
 /obj/structure/chair/plastic{
 	dir = 4
 	},
@@ -503,7 +470,6 @@
 	pixel_x = 4;
 	pixel_y = 3
 	},
-/obj/machinery/status_display/evac/directional/north,
 /turf/open/floor/iron/white,
 /area/ruin/powered/mailroom)
 "Wr" = (
@@ -519,10 +485,16 @@
 "WE" = (
 /turf/closed/wall/r_wall,
 /area/ruin/powered/mailroom)
+"Xa" = (
+/obj/structure/sign/warning/secure_area,
+/turf/closed/indestructible/reinforced,
+/area/ruin/powered/mailroom)
 "Xi" = (
 /obj/effect/turf_decal/loading_area{
 	dir = 4
 	},
+/obj/effect/decal/remains/human,
+/obj/item/clothing/suit/hooded/wintercoat,
 /turf/open/floor/iron/textured,
 /area/ruin/powered/mailroom)
 "XO" = (
@@ -543,12 +515,7 @@
 /area/icemoon/underground/explored)
 "Ze" = (
 /obj/machinery/vending/coffee,
-/obj/structure/sign/poster/ripped/directional/north,
 /turf/open/floor/carpet/royalblack,
-/area/ruin/powered/mailroom)
-"Zy" = (
-/obj/item/mail/junkmail,
-/turf/open/floor/plating/snowed/smoothed/icemoon,
 /area/ruin/powered/mailroom)
 "ZV" = (
 /obj/structure/chair/office/light{
@@ -583,7 +550,7 @@ dG
 (2,1,1) = {"
 lI
 yb
-dR
+zr
 qv
 pd
 iV
@@ -591,7 +558,7 @@ lI
 iV
 iV
 qv
-dR
+zr
 lI
 iV
 iV
@@ -614,7 +581,7 @@ iV
 iV
 iV
 iV
-dR
+zr
 lI
 Pk
 lI
@@ -629,7 +596,7 @@ lI
 (4,1,1) = {"
 iV
 iV
-dR
+zr
 bK
 iV
 iV
@@ -637,7 +604,7 @@ iV
 iV
 iV
 pd
-dR
+zr
 lI
 lI
 lI
@@ -652,7 +619,7 @@ lI
 (5,1,1) = {"
 iV
 iV
-dR
+zr
 qv
 iV
 xL
@@ -701,7 +668,7 @@ iV
 ms
 ms
 ms
-ms
+Gn
 ms
 ms
 ms
@@ -709,7 +676,7 @@ ms
 ms
 Yk
 ms
-zr
+dR
 Js
 iV
 lI
@@ -726,11 +693,11 @@ SY
 iO
 MC
 Wr
-ms
+Xa
 Wj
 ch
 Mi
-Mi
+jx
 ms
 UB
 DR
@@ -752,7 +719,7 @@ az
 TN
 XU
 XU
-rZ
+XU
 Se
 DY
 iV
@@ -790,19 +757,19 @@ lI
 (11,1,1) = {"
 lI
 iV
-ms
+CW
 jh
 XO
 HH
 Jd
-ms
+AX
 MT
 ba
-No
+ba
 Xi
 vU
 iV
-dR
+zr
 iV
 iV
 iV
@@ -818,15 +785,15 @@ jm
 vV
 US
 To
-ms
+aG
 QU
 BZ
 wc
 qp
 ms
-zr
+dR
 mA
-Vq
+iV
 iV
 iV
 lI
@@ -843,7 +810,7 @@ Yk
 Yk
 ms
 ms
-WE
+Qx
 ms
 ms
 ms
@@ -860,19 +827,19 @@ lI
 lI
 iV
 ms
-cM
+cg
 Qb
 cg
-cM
+cg
 PD
 qP
-cM
+cg
 ms
 AS
 FC
 Rn
 au
-Rn
+hj
 ms
 iV
 iV
@@ -883,21 +850,21 @@ lI
 lI
 iV
 ms
-cP
 nS
 nS
-xU
+nS
+nS
 nS
 nS
 uA
 ms
 Ze
 NN
-dj
+NN
 sA
 HL
 ms
-iV
+Vq
 iV
 lI
 lI
@@ -911,8 +878,8 @@ nS
 nS
 nS
 nS
-Zy
-xU
+nS
+nS
 ms
 PO
 NN
@@ -930,16 +897,16 @@ lI
 iV
 ms
 AP
-Zy
+nS
 nS
 oU
 nS
-gi
+nS
 nS
 ms
 nM
 NN
-GA
+NN
 Sm
 SA
 ms
@@ -958,16 +925,16 @@ VG
 nS
 VG
 oI
-Zy
+gi
 ms
 MP
 hk
 KK
 ZV
-Rn
+kZ
 ms
 iV
-Vq
+iV
 iV
 lI
 "}
@@ -976,18 +943,18 @@ iV
 iV
 ms
 ms
-ms
+CW
 ms
 ms
 Gn
 ms
 ms
 ms
-ms
-ms
-ms
-ms
-ms
+Gn
+CW
+Gn
+CW
+CW
 ms
 iV
 iV
