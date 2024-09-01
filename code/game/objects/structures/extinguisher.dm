@@ -1,8 +1,8 @@
 /obj/structure/extinguisher_cabinet
 	name = "extinguisher cabinet"
 	desc = "A small wall mounted cabinet designed to hold a fire extinguisher."
-	icon = 'icons/obj/structures/cabinet.dmi'
-	icon_state = "cabinet"
+	icon = 'icons/obj/wallmounts.dmi'
+	icon_state = "extinguisher_closed"
 	anchored = TRUE
 	density = FALSE
 	max_integrity = 200
@@ -10,7 +10,7 @@
 	var/obj/item/extinguisher/stored_extinguisher
 	var/opened = FALSE
 
-WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/structure/extinguisher_cabinet)
+MAPPING_DIRECTIONAL_HELPERS(/obj/structure/extinguisher_cabinet, 29)
 
 /obj/structure/extinguisher_cabinet/Initialize(mapload, ndir, building)
 	. = ..()
@@ -21,7 +21,6 @@ WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/structure/extinguisher_cabinet)
 	update_appearance(UPDATE_ICON)
 	register_context()
 	find_and_hang_on_wall()
-	AddComponent(/datum/component/examine_balloon, pixel_y_offset = 36)
 
 /obj/structure/extinguisher_cabinet/add_context(atom/source, list/context, obj/item/held_item, mob/user)
 	. = ..()
@@ -140,6 +139,25 @@ WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/structure/extinguisher_cabinet)
 		opened = !opened
 		update_appearance(UPDATE_ICON)
 
+/obj/structure/extinguisher_cabinet/update_icon_state()
+	icon_state = "extinguisher"
+
+	if(isnull(stored_extinguisher))
+		icon_state += ""
+	else if(istype(stored_extinguisher, /obj/item/extinguisher/mini))
+		icon_state += "_mini"
+	else if(istype(stored_extinguisher, /obj/item/extinguisher/advanced))
+		icon_state += "_advanced"
+	else if(istype(stored_extinguisher, /obj/item/extinguisher/crafted))
+		icon_state += "_crafted"
+	else if(istype(stored_extinguisher, /obj/item/extinguisher))
+		icon_state += "_default"
+
+	if(!opened)
+		icon_state += "_closed"
+
+	return ..()
+
 /obj/structure/extinguisher_cabinet/atom_break(damage_flag)
 	. = ..()
 	if(!broken)
@@ -150,6 +168,7 @@ WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/structure/extinguisher_cabinet)
 			stored_extinguisher = null
 		update_appearance(UPDATE_ICON)
 
+
 /obj/structure/extinguisher_cabinet/atom_deconstruct(disassembled = TRUE)
 	if(disassembled)
 		new /obj/item/wallframe/extinguisher_cabinet(loc)
@@ -159,18 +178,10 @@ WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/structure/extinguisher_cabinet)
 		stored_extinguisher.forceMove(loc)
 		stored_extinguisher = null
 
-/obj/structure/extinguisher_cabinet/update_overlays()
-	. = ..()
-	if(stored_extinguisher)
-		. += stored_extinguisher.cabinet_icon_state
-	if(opened)
-		. += "cabinet_door_open"
-	else
-		. += "cabinet_door_closed"
-
 /obj/item/wallframe/extinguisher_cabinet
 	name = "extinguisher cabinet frame"
 	desc = "Used for building wall-mounted extinguisher cabinets."
-	icon = 'icons/obj/structures/cabinet.dmi'
-	icon_state = "cabinet"
+	icon = 'icons/obj/wallmounts.dmi'
+	icon_state = "extinguisher_assembly"
 	result_path = /obj/structure/extinguisher_cabinet
+	pixel_shift = 29
