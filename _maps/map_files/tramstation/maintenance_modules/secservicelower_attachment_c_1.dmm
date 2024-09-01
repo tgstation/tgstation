@@ -87,14 +87,8 @@
 "O" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/table,
-/obj/effect/spawner/random/food_or_drink/booze{
-	pixel_x = 5;
-	pixel_y = 12
-	},
-/obj/effect/spawner/random/entertainment/cigarette_pack{
-	pixel_y = 10;
-	pixel_x = -2
-	},
+/obj/effect/spawner/random/food_or_drink/booze,
+/obj/effect/spawner/random/entertainment/cigarette_pack,
 /turf/open/floor/iron/smooth,
 /area/station/maintenance/port/central)
 "Q" = (

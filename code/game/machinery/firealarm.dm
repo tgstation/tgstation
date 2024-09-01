@@ -5,14 +5,15 @@
 /obj/item/wallframe/firealarm
 	name = "fire alarm frame"
 	desc = "Used for building fire alarms."
-	icon = 'icons/obj/machines/firealarm.dmi'
+	icon = 'icons/obj/machines/wallmounts.dmi'
 	icon_state = "fire_bitem"
 	result_path = /obj/machinery/firealarm
+	pixel_shift = 26
 
 /obj/machinery/firealarm
 	name = "fire alarm"
 	desc = "Pull this in case of emergency. Thus, keep pulling it forever."
-	icon = 'icons/obj/machines/firealarm.dmi'
+	icon = 'icons/obj/machines/wallmounts.dmi'
 	icon_state = "fire0"
 	max_integrity = 250
 	integrity_failure = 0.4
@@ -79,7 +80,6 @@
 	)
 	AddElement(/datum/element/contextual_screentip_mob_typechecks, hovering_mob_typechecks)
 	find_and_hang_on_wall()
-	AddComponent(/datum/component/examine_balloon)
 	update_appearance()
 
 
@@ -162,34 +162,40 @@
 
 /obj/machinery/firealarm/update_overlays()
 	. = ..()
-	if(machine_stat & NOPOWER || panel_open)
+	if(machine_stat & NOPOWER)
+		return
+
+	if(panel_open)
 		return
 
 	if(obj_flags & EMAGGED)
 		. += mutable_appearance(icon, "fire_emag")
-		. += emissive_appearance(icon, "fire_emag", src, alpha = src.alpha)
+		. += emissive_appearance(icon, "fire_emag_e", src, alpha = src.alpha)
 		set_light(l_color = LIGHT_COLOR_BLUE)
+
 	else if(!(my_area?.fire || LAZYLEN(my_area?.active_firelocks)))
-		if(my_area?.fire_detect) //If this is false, leave the green light missing. A good hint to anyone paying attention.
+		if(my_area?.fire_detect) //If this is false, someone disabled it. Leave the light missing, a good hint to anyone paying attention.
 			if(is_station_level(z))
 				var/current_level = SSsecurity_level.get_current_level_as_number()
 				. += mutable_appearance(icon, "fire_[current_level]")
-				. += emissive_appearance(icon, "fire_[current_level]", src, alpha = src.alpha)
+				. += emissive_appearance(icon, "fire_level_e", src, alpha = src.alpha)
 				set_light(l_color = SSsecurity_level?.current_security_level?.fire_alarm_light_color || LIGHT_COLOR_BLUEGREEN)
 			else
-				. += mutable_appearance(icon, "fire_0")
-				. += emissive_appearance(icon, "fire_0", src, alpha = src.alpha)
+				. += mutable_appearance(icon, "fire_offstation")
+				. += emissive_appearance(icon, "fire_level_e", src, alpha = src.alpha)
 				set_light(l_color = LIGHT_COLOR_FAINT_BLUE)
 		else
+			. += mutable_appearance(icon, "fire_disabled")
+			. += emissive_appearance(icon, "fire_level_e", src, alpha = src.alpha)
 			set_light(l_color = COLOR_WHITE)
 
-	else if(my_area?.fire_detect && my_area?.fire) // If there's an actual fire
-		. += mutable_appearance(icon, "fire_actual")
-		. += emissive_appearance(icon, "fire_actual", src, alpha = src.alpha)
+	else if(my_area?.fire_detect && my_area?.fire)
+		. += mutable_appearance(icon, "fire_alerting")
+		. += emissive_appearance(icon, "fire_alerting_e", src, alpha = src.alpha)
 		set_light(l_color = LIGHT_COLOR_INTENSE_RED)
-	else // Someone's just pulled the alarm
-		. += mutable_appearance(icon, "fire_pulled")
-		. += emissive_appearance(icon, "fire_pulled", src, alpha = src.alpha)
+	else
+		. += mutable_appearance(icon, "fire_alerting")
+		. += emissive_appearance(icon, "fire_alerting_e", src, alpha = src.alpha)
 		set_light(l_color = LIGHT_COLOR_INTENSE_RED)
 
 /obj/machinery/firealarm/emp_act(severity)
@@ -251,7 +257,6 @@
 	soundloop.start() //Manually pulled fire alarms will make the sound, rather than the doors.
 	SEND_SIGNAL(src, COMSIG_FIREALARM_ON_TRIGGER)
 	update_use_power(ACTIVE_POWER_USE)
-	update_appearance()
 
 /**
  * Resets all firelocks in the area. Also tells the area to disable alarm lighting, if it was enabled.
@@ -273,7 +278,6 @@
 	soundloop.stop()
 	SEND_SIGNAL(src, COMSIG_FIREALARM_ON_RESET)
 	update_use_power(IDLE_POWER_USE)
-	update_appearance()
 
 /obj/machinery/firealarm/attack_hand(mob/user, list/modifiers)
 	if(buildstage != FIRE_ALARM_BUILD_SECURED)
@@ -406,7 +410,7 @@
 	return FALSE
 
 /obj/machinery/firealarm/rcd_act(mob/user, obj/item/construction/rcd/the_rcd, list/rcd_data)
-	switch(rcd_data[RCD_DESIGN_MODE])
+	switch(rcd_data["[RCD_DESIGN_MODE]"])
 		if(RCD_WALLFRAME)
 			balloon_alert(user, "circuit installed")
 			buildstage = FIRE_ALARM_BUILD_NO_WIRES
@@ -480,7 +484,7 @@
 		balloon_alert(user, "thermal sensors [my_area.fire_detect ? "enabled" : "disabled"]")
 		user.log_message("[ my_area.fire_detect ? "enabled" : "disabled" ] firelock sensors using [src].", LOG_GAME)
 
-WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/machinery/firealarm)
+MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/firealarm, 26)
 
 /*
  * Return of Party button
