@@ -16,7 +16,7 @@
 	///The maximum number of fishing spots it can be linked to
 	var/max_fishing_spots = 1
 	///If true, the fishing portal can stay connected to a linked fishing spot even on different z-levels
-	var/retain_linked_fishing_spot = FALSE
+	var/long_range_link = FALSE
 
 /obj/machinery/fishing_portal_generator/Initialize(mapload)
 	. = ..()
@@ -38,14 +38,14 @@
 /obj/machinery/fishing_portal_generator/RefreshParts()
 	. = ..()
 	max_fishing_spots = 0
-	retain_linked_fishing_spot = FALSE
+	long_range_link = FALSE
 	for(var/datum/stock_part/matter_bin/matter_bin in component_parts)
 		max_fishing_spots += matter_bin.tier * 0.5
 	max_fishing_spots = round(max_fishing_spots)
 	for(var/datum/stock_part/capacitor/capacitor in component_parts)
 		if(capacitor.tier >= 3)
-			retain_linked_fishing_spot = TRUE
-	if(!retain_linked_fishing_spot)
+			long_range_link = TRUE
+	if(!long_range_link)
 		check_fishing_spot_z()
 	if(length(linked_fishing_spots) > max_fishing_spots)
 		if(active)
@@ -62,6 +62,9 @@
 	return ITEM_INTERACT_SUCCESS
 
 /obj/machinery/fishing_portal_generator/multitool_act(mob/living/user, obj/item/multitool/tool)
+	if(machine_stat & NOPOWER)
+		balloon_alert(user, "no power!")
+		return ITEM_INTERACT_BLOCKING
 	var/unlink = tool.buffer == src
 	tool.set_buffer(unlink ? null : src)
 	balloon_alert(user, "fish-porter [unlink ? "un" : ""]linked")
@@ -72,6 +75,9 @@
 	return ITEM_INTERACT_SUCCESS
 
 /obj/machinery/fishing_portal_generator/multitool_act_secondary(mob/living/user, obj/item/tool)
+	if(machine_stat & NOPOWER)
+		balloon_alert(user, "no power!")
+		return ITEM_INTERACT_BLOCKING
 	if(!length(linked_fishing_spots))
 		balloon_alert(user, "nothing to unlink!")
 		return ITEM_INTERACT_BLOCKING
@@ -175,7 +181,7 @@
 	check_fishing_spot_z()
 
 /obj/machinery/fishing_portal_generator/proc/check_fishing_spot_z()
-	if(!active || retain_linked_fishing_spot || istype(active.fish_source, /datum/fish_source/portal))
+	if(!active || long_range_link || istype(active.fish_source, /datum/fish_source/portal))
 		return
 	var/turf/new_turf = get_turf(src)
 	if(!new_turf)
@@ -191,16 +197,21 @@
 /obj/machinery/fishing_portal_generator/proc/activate(datum/fish_source/selected_source, mob/user)
 	if(QDELETED(selected_source))
 		return
-
+	if(machine_stat & NOPOWER)
+		balloon_alert(user, "no power!")
+		return ITEM_INTERACT_BLOCKING
 	if(!istype(selected_source, /datum/fish_source/portal)) //likely from a linked fishing spot
 		var/abort = TRUE
 		for(var/atom/spot as anything in linked_fishing_spots)
 			if(linked_fishing_spots[spot] != selected_source)
 				continue
+			if(long_range_link)
+				abort = FALSE
 			var/turf/spot_turf = get_turf(spot)
 			var/turf/turf = get_turf(src)
 			if(turf.z == spot_turf.z || (is_station_level(turf.z) && is_station_level(spot_turf.z)))
 				abort = FALSE
+			if(!abort)
 				RegisterSignal(spot, COMSIG_MOVABLE_Z_CHANGED, PROC_REF(on_fishing_spot_z_level_changed))
 			break
 		if(abort)
@@ -208,7 +219,8 @@
 			return
 
 	active = AddComponent(/datum/component/fishing_spot, selected_source)
-	use_power = ACTIVE_POWER_USE
+	if(use_power != NO_POWER_USE)
+		use_power = ACTIVE_POWER_USE
 	update_icon()
 
 /obj/machinery/fishing_portal_generator/proc/deactivate()
@@ -220,7 +232,8 @@
 				UnregisterSignal(spot, COMSIG_MOVABLE_Z_CHANGED)
 	QDEL_NULL(active)
 	if(!QDELETED(src))
-		use_power = IDLE_POWER_USE
+		if(use_power != NO_POWER_USE)
+			use_power = IDLE_POWER_USE
 		update_icon()
 
 /obj/machinery/fishing_portal_generator/proc/on_fishing_spot_z_level_changed(atom/spot/turf/old_turf, turf/new_turf, same_z_layer)

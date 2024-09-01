@@ -148,6 +148,54 @@
 	. = ..()
 	probability = 0 //works around the global list initialization skipping abstract/impossible evolutions.
 
+///A test that checks that fishing portals can be linked and function as expected
+/datum/unit_test/fish_portal_gen_linking
+
+/datum/unit_test/fish_portal_gen_linking/Run()
+	var/mob/living/carbon/human/consistent/user = allocate(/mob/living/carbon/human/consistent)
+	var/obj/machinery/fishing_portal_generator/portal = allocate(/obj/machinery/fishing_portal_generator/no_power)
+	var/obj/structure/toilet/unit_test/fishing_spot = new(get_turf(user)) //This is deleted during the test
+	var/obj/structure/moisture_trap/extra_spot = allocate(/obj/structure/moisture_trap)
+	var/obj/machinery/hydroponics/constructable/inaccessible = allocate(/obj/machinery/hydroponics/constructable)
+	ADD_TRAIT(inaccessible, TRAIT_UNFISHABLE, INNATE_TRAIT)
+	var/obj/item/multitool/tool = allocate(/obj/item/multitool)
+	var/datum/fish_source/toilet/fish_source = GLOB.preset_fish_sources[/datum/fish_source/toilet]
+
+	portal.max_fishing_spots = 1 //We've no scrying orb to know if it'll be buffed or nerfed this in the future. We only have space for one here.
+	portal.activate(fish_source, user)
+	TEST_ASSERT(!portal.active, "[portal] was activated with a fish source from an unlinked fishing spot")
+	portal.multitool_act(user, tool)
+	TEST_ASSERT_EQUAL(tool.buffer, portal, "[portal] wasn't set as buffer for [tool]")
+	fishing_spot.tool_act(user, tool)
+	TEST_ASSERT_EQUAL(LAZYACCESS(portal.linked_fishing_spots, fishing_spot), fish_source, "We tried linking [portal] to the fishing spot but didn't succeed.")
+	portal.activate(fish_source, user)
+	TEST_ASSERT(portal.active?.fish_source == fish_source, "[portal] can't acces a fish source from a linked fishing spot")
+	//Let's move the fishing spot away. This is fine as long as the portal moves to another z level, away from the toilet
+	var/obj/effect/landmark/start/new_player = locate() in GLOB.newplayer_start
+	portal.forceMove(new_player)
+	TEST_ASSERT(!portal.active, "[portal] (not upgraded) is still active though the fishing spot is on another z-level.[portal.z == fishing_spot.z ? " Actually they're still on the same level!" : ""]")
+	portal.long_range_link = TRUE
+	portal.activate(fish_source, user)
+	TEST_ASSERT(portal.active?.fish_source == fish_source, "[portal] can't acces a fish source from a linked fishing spot on a different z-level despite being upgraded")
+	fishing_spot.forceMove(new_player)
+	portal.forceMove(get_turf(user))
+	TEST_ASSERT(portal.active?.fish_source == fish_source, "[portal] (upgraded) deactivated while changing z-level")
+	extra_spot.tool_act(user, tool)
+	TEST_ASSERT_EQUAL(length(portal.linked_fishing_spots), 1, "We managed to link to another fishing spot when there's only space for one")
+	TEST_ASSERT_EQUAL(LAZYACCESS(portal.linked_fishing_spots, fishing_spot), fish_source, "linking to another fishing spot fouled up the other linked spots")
+	QDEL_NULL(fishing_spot)
+	TEST_ASSERT(!portal.active, "[portal] is still deleted to the fish source after we deleted the associated fishing spot")
+	inaccessible.tool_act(user, tool)
+	TEST_ASSERT(length(portal.linked_fishing_spots), "We managed to link to an unlinkable fishing spot")
+
+/obj/machinery/fishing_portal_generator/no_power
+	use_power = NO_POWER_USE
+
+/obj/structure/toilet/unit_test/fishing_spot/Initialize(mapload)
+	. = ..()
+	if(!HAS_TRAIT(src, TRAIT_FISHING_SPOT)) //Ensure this toilet has a fishing spot because only maploaded ones have it.
+		AddElement(/datum/element/lazy_fishing_spot, /datum/fish_source/toilet)
+
 // we want no default spawns in this unit test
 /datum/chasm_detritus/restricted/bodies/no_defaults
 	default_contents_chance = 0
