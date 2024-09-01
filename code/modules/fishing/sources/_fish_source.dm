@@ -283,7 +283,7 @@ GLOBAL_LIST(fishing_property_cache)
 /datum/fish_source/proc/get_fish_table()
 	var/list/table = fish_table.Copy()
 	for(var/result in table)
-		if(fish_counts[result] <= 0)
+		if((result in fish_counts) && fish_counts[result] <= 0)
 			table -= result
 	return table
 
