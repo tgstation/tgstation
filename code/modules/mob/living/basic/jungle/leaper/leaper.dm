@@ -33,8 +33,6 @@
 	ai_controller = /datum/ai_controller/basic_controller/leaper
 	move_resist = MOVE_FORCE_VERY_STRONG
 	pull_force = MOVE_FORCE_VERY_STRONG
-	shadow_type = SHADOW_LARGE
-
 	///appearance when we dead
 	var/mutable_appearance/dead_overlay
 	///appearance when we are alive
