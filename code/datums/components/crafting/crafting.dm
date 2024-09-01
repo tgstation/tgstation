@@ -367,7 +367,7 @@
 						else
 							SD = SD || locate(S.type) in Deletion
 							SD.add(S.amount) // add the amount to our tally stack, SD
-							qdel(S) // We can just delete it straight away as it's going to be fully consumed anyway
+							qdel(S) // We can just delete it straight away as it's going to be fully consumed anyway, saving some overhead from calling use()
 						surroundings -= S
 			else
 				var/atom/movable/I
