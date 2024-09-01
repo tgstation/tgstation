@@ -7,7 +7,7 @@ GLOBAL_VAR_INIT(glowshrooms, 0)
 	anchored = TRUE
 	opacity = FALSE
 	density = FALSE
-	icon = 'icons/turf/overlays.dmi'
+	icon = 'icons/obj/lighting.dmi'
 	icon_state = "glowshroom" //replaced in New
 	layer = ABOVE_NORMAL_TURF_LAYER
 	max_integrity = GLOWSHROOM_BASE_INTEGRITY
@@ -38,8 +38,6 @@ GLOBAL_VAR_INIT(glowshrooms, 0)
 		/turf/open/water,
 	))
 
-WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/structure/glowshroom)
-
 /obj/structure/glowshroom/glowcap
 	name = "glowcap"
 	desc = "Mycena Ruthenia, a species of mushroom that, while it does glow in the dark, is not actually bioluminescent."
@@ -51,8 +49,6 @@ WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/structure/glowshroom)
 	desc = "Mycena Umbra, a species of mushroom that emits shadow instead of light."
 	icon_state = "shadowshroom"
 	myseed = /obj/item/seeds/glowshroom/shadowshroom
-
-WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/structure/glowshroom/single)
 
 /// Mapping object, a glowshroom that doesn't spread or die
 /obj/structure/glowshroom/single
@@ -98,7 +94,15 @@ WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/structure/glowshroom/single)
 	setDir(calc_dir())
 	base_icon_state = initial(icon_state)
 	if(!floor)
-		find_and_hang_on_wall()
+		switch(dir) //offset to make it be on the wall rather than on the floor
+			if(NORTH)
+				pixel_y = 32
+			if(SOUTH)
+				pixel_y = -32
+			if(EAST)
+				pixel_x = 32
+			if(WEST)
+				pixel_x = -32
 		icon_state = "[base_icon_state][rand(1,3)]"
 	else //if on the floor, glowshroom on-floor sprite
 		icon_state = base_icon_state
