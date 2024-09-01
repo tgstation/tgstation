@@ -1149,6 +1149,7 @@
 #include "code\datums\components\jukebox.dm"
 #include "code\datums\components\keep_me_secure.dm"
 #include "code\datums\components\knockoff.dm"
+#include "code\datums\components\leanable.dm"
 #include "code\datums\components\leash.dm"
 #include "code\datums\components\life_link.dm"
 #include "code\datums\components\light_eater.dm"
