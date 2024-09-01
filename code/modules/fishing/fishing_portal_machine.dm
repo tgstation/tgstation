@@ -121,13 +121,12 @@
 	if(length(linked_fishing_spots) >= max_fishing_spots)
 		spot.balloon_alert(user, "cannot link more!")
 		return ITEM_INTERACT_BLOCKING
-	if(linked_fishing_spots)
-		for(var/other_spot in linked_fishing_spots)
-			var/datum/fish_source/stored = linked_fishing_spots[other_spot]
-			if(stored == source)
-				spot.balloon_alert(user, "already linked!")
-				playsound(src, 'sound/machines/buzz-sigh.ogg', 15, FALSE, extrarange = SHORT_RANGE_SOUND_EXTRARANGE)
-				return ITEM_INTERACT_BLOCKING
+	for(var/other_spot in linked_fishing_spots)
+		var/datum/fish_source/stored = linked_fishing_spots[other_spot]
+		if(stored == source)
+			spot.balloon_alert(user, "already linked!")
+			playsound(src, 'sound/machines/buzz-sigh.ogg', 15, FALSE, extrarange = SHORT_RANGE_SOUND_EXTRARANGE)
+			return ITEM_INTERACT_BLOCKING
 	if(HAS_TRAIT(spot, TRAIT_UNLINKABLE_FISHING_SPOT))
 		spot.balloon_alert(user, "unlinkable fishing spot!")
 		playsound(src, 'sound/machines/buzz-sigh.ogg', 15, FALSE, extrarange = SHORT_RANGE_SOUND_EXTRARANGE)

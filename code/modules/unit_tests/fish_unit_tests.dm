@@ -184,14 +184,14 @@
 	TEST_ASSERT_EQUAL(length(portal.linked_fishing_spots), 1, "We managed to link to another fishing spot when there's only space for one")
 	TEST_ASSERT_EQUAL(LAZYACCESS(portal.linked_fishing_spots, fishing_spot), fish_source, "linking to another fishing spot fouled up the other linked spots")
 	QDEL_NULL(fishing_spot)
-	TEST_ASSERT(!portal.active, "[portal] is still deleted to the fish source after we deleted the associated fishing spot")
+	TEST_ASSERT(!portal.active, "[portal] is still linked to the fish source of the deleted fishing spot it's associated to")
 	tool.melee_attack_chain(user, inaccessible)
 	TEST_ASSERT(length(portal.linked_fishing_spots), "We managed to link to an unlinkable fishing spot")
 
 /obj/machinery/fishing_portal_generator/no_power
 	use_power = NO_POWER_USE
 
-/obj/structure/toilet/unit_test/fishing_spot/Initialize(mapload)
+/obj/structure/toilet/unit_test/Initialize(mapload)
 	. = ..()
 	if(!HAS_TRAIT(src, TRAIT_FISHING_SPOT)) //Ensure this toilet has a fishing spot because only maploaded ones have it.
 		AddElement(/datum/element/lazy_fishing_spot, /datum/fish_source/toilet)
