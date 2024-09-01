@@ -4,7 +4,6 @@
 ************************/
 
 /obj/machinery/porta_turret_cover
-	SET_BASE_VISUAL_PIXEL(0, DEPTH_OFFSET)
 	name = "turret"
 	icon = 'icons/obj/weapons/turrets.dmi'
 	icon_state = "turretCover"
