@@ -1462,6 +1462,7 @@
 #include "code\datums\elements\eyestab.dm"
 #include "code\datums\elements\falling_hazard.dm"
 #include "code\datums\elements\firestacker.dm"
+#include "code\datums\elements\fish_safe_storage.dm"
 #include "code\datums\elements\floorloving.dm"
 #include "code\datums\elements\footstep.dm"
 #include "code\datums\elements\footstep_override.dm"
