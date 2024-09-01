@@ -391,18 +391,11 @@ SUBSYSTEM_DEF(dynamic)
 		advisory_string += "Your sector's advisory level is White Dwarf. Our surveillance has ruled out any and all potential threats known in our database, eliminating most risks to our assets in the Spinward Sector. We advise a lower level of security, alongside distributing resources on potential profit."
 		return advisory_string
 
+	//Green shifts won't show on the status report so players won't suicide because >no valids
+	if(shown_threat <= 20)
+		shown_threat = rand(21, 79)
+
 	switch(round(shown_threat))
-		if(0 to 19)
-			switch(rand(1,3))
-				if(1)
-					advisory_string += "Advisory Level: <b>Yellow Star</b></center><BR>"
-					advisory_string += "Your sector's advisory level is Yellow Star. Surveillance shows a credible risk of enemy attack against our assets in the Spinward Sector. We advise a heightened level of security alongside maintaining vigilance against potential threats."
-				if(2)
-					advisory_string += "Advisory Level: <b>Orange Star</b></center><BR>"
-					advisory_string += "Your sector's advisory level is Orange Star. Upon reviewing your sector's intelligence, the Department has determined that the risk of enemy activity is moderate to severe. At this advisory, we recommend maintaining a higher degree of security and reviewing red alert protocols with command and the crew."
-				if(3)
-					advisory_string += "Advisory Level: <b>Red Star</b></center><BR>"
-					advisory_string += "Your sector's advisory level is Red Star. The Department of Intelligence has decrypted Cybersun communications suggesting a high likelihood of attacks on Nanotrasen assets within the Spinward Sector. Stations in the region are advised to remain highly vigilant for signs of enemy activity and to be on high alert."
 		if(20 to 39)
 			advisory_string += "Advisory Level: <b>Yellow Star</b></center><BR>"
 			advisory_string += "Your sector's advisory level is Yellow Star. Surveillance shows a credible risk of enemy attack against our assets in the Spinward Sector. We advise a heightened level of security alongside maintaining vigilance against potential threats."
