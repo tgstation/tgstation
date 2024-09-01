@@ -36,9 +36,9 @@
 	///reference to thr original icons
 	var/static/list/original_options = list(
 		"Color Pick" = icon(icon = 'icons/hud/radial.dmi', icon_state = "omni"),
-		"Glow Stick" = icon(icon = 'icons/obj/toys/toy.dmi', icon_state = "glowstick"),
+		"Glow Stick" = icon(icon = 'icons/obj/lighting.dmi', icon_state = "glowstick"),
 		"Deconstruct" = icon(icon = 'icons/obj/tools.dmi', icon_state = "wrench"),
-		"Light Fixture" = icon(icon = 'icons/obj/service/janitor.dmi', icon_state = "tube"),
+		"Light Fixture" = icon(icon = 'icons/obj/lighting.dmi', icon_state = "ltube"),
 	)
 	///will contain the original icons modified with the color choice
 	var/list/display_options = list()

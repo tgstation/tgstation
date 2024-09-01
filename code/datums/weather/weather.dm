@@ -59,10 +59,7 @@
 	/// Since it's above everything else, this is the layer used by default.
 	var/overlay_layer = AREA_LAYER
 	/// Plane for the overlay
-	var/overlay_plane = WEATHER_PLANE
-	/// Should the weather draw with frills?
-	/// If so it needs to operate on the WEATHER_PLANE
-	var/has_frills = TRUE
+	var/overlay_plane = AREA_PLANE
 	/// If the weather has no purpose other than looks
 	var/aesthetic = FALSE
 	/// Used by mobs (or movables containing mobs, such as enviro bags) to prevent them from being affected by the weather.
@@ -91,8 +88,6 @@
 /datum/weather/New(z_levels)
 	..()
 	impacted_z_levels = z_levels
-	if(has_frills && overlay_plane != WEATHER_PLANE)
-		stack_trace("[type] created with frills but not on the area plane, this will break to hell")
 
 /**
  * Telegraphs the beginning of the weather on the impacted z levels
@@ -104,7 +99,7 @@
 /datum/weather/proc/telegraph()
 	if(stage == STARTUP_STAGE)
 		return
-	SEND_GLOBAL_SIGNAL(COMSIG_WEATHER_TELEGRAPH(type), src)
+	SEND_GLOBAL_SIGNAL(COMSIG_WEATHER_TELEGRAPH(type))
 	stage = STARTUP_STAGE
 	var/list/affectareas = list()
 	for(var/V in get_areas(area_type))
@@ -134,14 +129,14 @@
 /datum/weather/proc/start()
 	if(stage >= MAIN_STAGE)
 		return
-	SEND_GLOBAL_SIGNAL(COMSIG_WEATHER_START(type), src)
+	SEND_GLOBAL_SIGNAL(COMSIG_WEATHER_START(type))
 	stage = MAIN_STAGE
 	update_areas()
 	send_alert(weather_message, weather_sound)
 	if(!perpetual)
 		addtimer(CALLBACK(src, PROC_REF(wind_down)), weather_duration)
 	for(var/area/impacted_area as anything in impacted_areas)
-		SEND_SIGNAL(impacted_area, COMSIG_WEATHER_BEGAN_IN_AREA(type), src)
+		SEND_SIGNAL(impacted_area, COMSIG_WEATHER_BEGAN_IN_AREA(type))
 
 /**
  * Weather enters the winding down phase, stops effects
@@ -153,7 +148,7 @@
 /datum/weather/proc/wind_down()
 	if(stage >= WIND_DOWN_STAGE)
 		return
-	SEND_GLOBAL_SIGNAL(COMSIG_WEATHER_WINDDOWN(type), src)
+	SEND_GLOBAL_SIGNAL(COMSIG_WEATHER_WINDDOWN(type))
 	stage = WIND_DOWN_STAGE
 	update_areas()
 	send_alert(end_message, end_sound)
@@ -169,12 +164,12 @@
 /datum/weather/proc/end()
 	if(stage == END_STAGE)
 		return
-	SEND_GLOBAL_SIGNAL(COMSIG_WEATHER_END(type), src)
+	SEND_GLOBAL_SIGNAL(COMSIG_WEATHER_END(type))
 	stage = END_STAGE
 	SSweather.processing -= src
 	update_areas()
 	for(var/area/impacted_area as anything in impacted_areas)
-		SEND_SIGNAL(impacted_area, COMSIG_WEATHER_ENDED_IN_AREA(type), src)
+		SEND_SIGNAL(impacted_area, COMSIG_WEATHER_ENDED_IN_AREA(type))
 
 // handles sending all alerts
 /datum/weather/proc/send_alert(alert_msg, alert_sfx)
@@ -265,23 +260,9 @@
 		// I prefer it to creating 2 extra plane masters however, so it's a cost I'm willing to pay
 		// LU
 		if(use_glow)
-			var/mutable_appearance/glow_overlay = mutable_appearance('icons/effects/glow_weather.dmi', weather_state, overlay_layer, null, WEATHER_GLOW_PLANE, 100, offset_const = offset)
+			var/mutable_appearance/glow_overlay = mutable_appearance('icons/effects/glow_weather.dmi', weather_state, overlay_layer, null, ABOVE_LIGHTING_PLANE, 100, offset_const = offset)
 			glow_overlay.color = weather_color
 			gen_overlay_cache += glow_overlay
-			if(has_frills)
-				var/mutable_appearance/glow_frill_overlay = mutable_appearance('icons/effects/glow_weather.dmi', "[weather_state]_top", overlay_layer, null, WEATHER_FRILL_GLOW_PLANE, 100, offset_const = offset)
-				glow_frill_overlay.color = weather_color
-				glow_frill_overlay.pixel_z = 32
-				gen_overlay_cache += glow_frill_overlay
-
-		if(has_frills)
-			var/mutable_appearance/weather_frill_overlay = mutable_appearance('icons/effects/weather_effects.dmi', "[weather_state]_top", overlay_layer, plane = WEATHER_FRILL_PLANE, offset_const = offset)
-			weather_frill_overlay.color = weather_color
-			weather_frill_overlay.pixel_z = 32
-			gen_overlay_cache += weather_frill_overlay
-			// draw before main overlay so we don't render above it
-			var/mutable_appearance/weather_frill_mask = mutable_appearance('icons/effects/alphacolors.dmi', "white", overlay_layer, plane = WEATHER_MASK_PLANE, offset_const = offset)
-			gen_overlay_cache += weather_frill_mask
 
 		var/mutable_appearance/weather_overlay = mutable_appearance('icons/effects/weather_effects.dmi', weather_state, overlay_layer, plane = overlay_plane, offset_const = offset)
 		weather_overlay.color = weather_color
