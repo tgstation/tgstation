@@ -186,7 +186,7 @@
 	QDEL_NULL(fishing_spot)
 	TEST_ASSERT(!portal.active, "[portal] is still linked to the fish source of the deleted fishing spot it's associated to")
 	tool.melee_attack_chain(user, inaccessible)
-	TEST_ASSERT(length(portal.linked_fishing_spots), "We managed to link to an unlinkable fishing spot")
+	TEST_ASSERT(!length(portal.linked_fishing_spots), "We managed to link to an unlinkable fishing spot")
 
 /obj/machinery/fishing_portal_generator/no_power
 	use_power = NO_POWER_USE
