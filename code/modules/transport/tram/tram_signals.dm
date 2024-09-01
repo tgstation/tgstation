@@ -244,6 +244,8 @@
 		operating_status = TRANSPORT_LOCAL_FAULT
 	else if(isnull(tram) || tram.controller_status & COMM_ERROR)
 		operating_status = TRANSPORT_REMOTE_FAULT
+		update_operating()
+		return
 	else
 		operating_status = TRANSPORT_SYSTEM_NORMAL
 
