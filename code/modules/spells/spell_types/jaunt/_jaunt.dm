@@ -62,6 +62,7 @@
 
 	var/obj/effect/dummy/phased_mob/jaunt = new jaunt_type(loc_override || get_turf(jaunter), jaunter)
 	RegisterSignal(jaunt, COMSIG_MOB_EJECTED_FROM_JAUNT, PROC_REF(on_jaunt_exited))
+	RegisterSignal(jaunter, COMSIG_MOB_STATCHANGE, PROC_REF(on_jaunt_exited))
 	check_flags &= ~AB_CHECK_PHASED
 	jaunter.add_traits(list(TRAIT_MAGICALLY_PHASED, TRAIT_RUNECHAT_HIDDEN, TRAIT_WEATHER_IMMUNE), REF(src))
 	// Don't do the feedback until we have runechat hidden.
@@ -106,6 +107,7 @@
  */
 /datum/action/cooldown/spell/jaunt/proc/on_jaunt_exited(obj/effect/dummy/phased_mob/jaunt, mob/living/unjaunter)
 	SHOULD_CALL_PARENT(TRUE)
+	UnregisterSignal(unjaunter, COMSIG_MOB_STATCHANGE)
 	check_flags |= AB_CHECK_PHASED
 	unjaunter.remove_traits(list(TRAIT_MAGICALLY_PHASED, TRAIT_RUNECHAT_HIDDEN, TRAIT_WEATHER_IMMUNE), REF(src))
 	// This needs to happen at the end, after all the traits and stuff is handled
@@ -118,3 +120,12 @@
 	var/obj/effect/dummy/phased_mob/jaunt = remove_from.loc
 	jaunt.eject_jaunter()
 	return ..()
+
+/// Signal proc for [COMSIG_MOB_STATCHANGE], to throw us out of the jaunt if we lose consciousness.
+/datum/action/cooldown/spell/jaunt/proc/on_stat_change(mob/living/source, new_stat, old_stat)
+	SIGNAL_HANDLER
+	exit_jaunt(source)
+	if(!is_jaunting(source))
+		return
+	var/obj/effect/dummy/phased_mob/jaunt = source.loc
+	jaunt.eject_jaunter()
