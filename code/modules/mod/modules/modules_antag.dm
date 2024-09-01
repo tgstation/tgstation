@@ -555,6 +555,8 @@
 	. = ..()
 	if(!.)
 		return
+	if(target == mod.wearer)
+		return
 	if(get_dist(mod.wearer, target) > 4)
 		balloon_alert(mod.wearer, "can't reach [target]!")
 		return
@@ -568,7 +570,8 @@
 		things_to_disrupt += live_target.get_all_gear()
 
 	for(var/atom/disrupted as anything in things_to_disrupt)
-		disrupted.on_saboteur(src, 1 MINUTES)
+		if(disrupted.on_saboteur(src, 1 MINUTES))
+			mod.add_charge(DEFAULT_CHARGE_DRAIN * 250)
 
 /obj/item/mod/module/stealth/wraith/on_suit_activation()
 	if(bumpoff)
