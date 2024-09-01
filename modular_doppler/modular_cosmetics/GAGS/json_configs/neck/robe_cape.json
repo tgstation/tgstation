@@ -1,0 +1,10 @@
+{
+	"robe_cape": [
+		{
+			"type": "icon_state",
+			"icon_state": "robe_cape",
+			"blend_mode": "overlay",
+			"color_ids": [ 1 ]
+		}
+	]
+}

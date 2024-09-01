@@ -10,16 +10,46 @@
 ＼二)
 */
 
+/////////
+//CAPES//
+/////////
+
+/datum/greyscale_config/robe_cape
+	name = "Robe Cape"
+	icon_file = 'modular_doppler/modular_cosmetics/GAGS/icons/obj/neck.dmi'
+	json_config = 'modular_doppler/modular_cosmetics/GAGS/json_configs/neck/robe_cape.json'
+
+/datum/greyscale_config/robe_cape/worn
+	name = "Robe Cape (Worn)"
+	icon_file = 'modular_doppler/modular_cosmetics/GAGS/icons/mob/neck.dmi'
+
+/datum/greyscale_config/long_cape
+	name = "Long Cape"
+	icon_file = 'modular_doppler/modular_cosmetics/GAGS/icons/obj/neck.dmi'
+	json_config = 'modular_doppler/modular_cosmetics/GAGS/json_configs/neck/long_cape.json'
+
+/datum/greyscale_config/long_cape/worn
+	name = "Long Cape (Worn)"
+	icon_file = 'modular_doppler/modular_cosmetics/GAGS/icons/mob/neck.dmi'
+
+/datum/greyscale_config/wide_cape
+	name = "Wide Cape"
+	icon_file = 'modular_doppler/modular_cosmetics/GAGS/icons/obj/neck.dmi'
+	json_config = 'modular_doppler/modular_cosmetics/GAGS/json_configs/neck/wide_cape.json'
+
+/datum/greyscale_config/wide_cape/worn
+	name = "Wide Cape (Worn)"
+	icon_file = 'modular_doppler/modular_cosmetics/GAGS/icons/mob/neck.dmi'
 
 ///////////
 //COLLARS//
 ///////////
+
 /datum/greyscale_config/collar
 	name = "Collar"
 	icon_file = 'modular_doppler/modular_cosmetics/GAGS/icons/collar.dmi'
 	json_config = 'modular_doppler/modular_cosmetics/GAGS/json_configs/collar/bell.json'
 
-// Bell
 /datum/greyscale_config/collar/bell
 	name = "Bell Collar"
 	json_config = 'modular_doppler/modular_cosmetics/GAGS/json_configs/collar/bell.json'
@@ -28,7 +58,6 @@
 	name = "Bell Collar (Worn)"
 	json_config = 'modular_doppler/modular_cosmetics/GAGS/json_configs/collar/bell_worn.json'
 
-// Choker
 /datum/greyscale_config/collar/choker
 	name = "Choker"
 	json_config = 'modular_doppler/modular_cosmetics/GAGS/json_configs/collar/choker.json'
@@ -37,7 +66,6 @@
 	name = "Choker (Worn)"
 	json_config = 'modular_doppler/modular_cosmetics/GAGS/json_configs/collar/choker_worn.json'
 
-// Thin Choker
 /datum/greyscale_config/collar/thinchoker
 	name = "Thin Choker"
 	json_config = 'modular_doppler/modular_cosmetics/GAGS/json_configs/collar/thinchoker.json'
@@ -46,7 +74,6 @@
 	name = "Thin Choker (Worn)"
 	json_config = 'modular_doppler/modular_cosmetics/GAGS/json_configs/collar/thinchoker_worn.json'
 
-// Cow
 /datum/greyscale_config/collar/cow
 	name = "Cowbell Collar"
 	json_config = 'modular_doppler/modular_cosmetics/GAGS/json_configs/collar/cow.json'
@@ -55,7 +82,6 @@
 	name = "Cowbell Collar (Worn)"
 	json_config = 'modular_doppler/modular_cosmetics/GAGS/json_configs/collar/cow_worn.json'
 
-// Cross
 /datum/greyscale_config/collar/cross
 	name = "Cross Collar"
 	json_config = 'modular_doppler/modular_cosmetics/GAGS/json_configs/collar/cross.json'
@@ -64,7 +90,6 @@
 	name = "Cross Collar (Worn)"
 	json_config = 'modular_doppler/modular_cosmetics/GAGS/json_configs/collar/cross_worn.json'
 
-// Holo
 /datum/greyscale_config/collar/holo
 	name = "Holo Collar"
 	json_config = 'modular_doppler/modular_cosmetics/GAGS/json_configs/collar/holo.json'
@@ -73,7 +98,6 @@
 	name = "Holo Collar (Worn)"
 	json_config = 'modular_doppler/modular_cosmetics/GAGS/json_configs/collar/holo_worn.json'
 
-// Leather
 /datum/greyscale_config/collar/leather
 	name = "Leather Collar"
 	json_config = 'modular_doppler/modular_cosmetics/GAGS/json_configs/collar/leather.json'
@@ -82,7 +106,6 @@
 	name = "Leather Collar (Worn)"
 	json_config = 'modular_doppler/modular_cosmetics/GAGS/json_configs/collar/leather_worn.json'
 
-// Pet
 /datum/greyscale_config/collar/pet
 	name = "Pet Collar"
 	json_config = 'modular_doppler/modular_cosmetics/GAGS/json_configs/collar/pet.json'
@@ -91,7 +114,6 @@
 	name = "Pet Collar (Worn)"
 	json_config = 'modular_doppler/modular_cosmetics/GAGS/json_configs/collar/pet_worn.json'
 
-// Spiked
 /datum/greyscale_config/collar/spike
 	name = "Spiked Collar"
 	json_config = 'modular_doppler/modular_cosmetics/GAGS/json_configs/collar/spike.json'

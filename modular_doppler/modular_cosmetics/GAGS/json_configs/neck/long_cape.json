@@ -1,0 +1,56 @@
+{
+	"long_cape": [
+		{
+			"type": "icon_state",
+			"icon_state": "long_cape",
+			"blend_mode": "overlay",
+			"color_ids": [ 1 ]
+		},
+		{
+			"type": "icon_state",
+			"icon_state": "long_cape_top",
+			"blend_mode": "overlay",
+			"color_ids": [ 2 ]
+		},
+		{
+			"type": "icon_state",
+			"icon_state": "long_cape_trim",
+			"blend_mode": "overlay",
+			"color_ids": [ 3 ]
+		},
+		{
+			"type": "icon_state",
+			"icon_state": "long_cape_side",
+			"blend_mode": "overlay",
+			"color_ids": [ 4 ]
+		}
+
+	],
+		"long_cape_t": [
+			{
+				"type": "icon_state",
+				"icon_state": "long_cape_t",
+				"blend_mode": "overlay",
+				"color_ids": [ 1 ]
+			},
+			{
+				"type": "icon_state",
+				"icon_state": "long_cape_top",
+				"blend_mode": "overlay",
+				"color_ids": [ 2 ]
+			},
+			{
+				"type": "icon_state",
+				"icon_state": "long_cape_trim_t",
+				"blend_mode": "overlay",
+				"color_ids": [ 3 ]
+			},
+			{
+				"type": "icon_state",
+				"icon_state": "long_cape_side",
+				"blend_mode": "overlay",
+				"color_ids": [ 4 ]
+			}
+
+		]
+}
