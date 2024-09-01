@@ -458,6 +458,12 @@
 		if(RANDOM_ANY)
 			drawing = pick(all_drawables)
 
+	if(drawing in graffiti_large_h)
+		paint_mode = PAINT_LARGE_HORIZONTAL
+		text_buffer = ""
+	else
+		paint_mode = PAINT_NORMAL
+
 	var/istagger = HAS_TRAIT(user, TRAIT_TAGGER)
 	var/cost = all_drawables[drawing] || CRAYON_COST_DEFAULT
 	if(istype(target, /obj/item/canvas))
