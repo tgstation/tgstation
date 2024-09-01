@@ -10,9 +10,11 @@
 
 
 /obj/machinery/computer/shuttle/custom_shuttle/proc/linkShuttle(new_id)
-	shuttleId = new_id
-	possible_destinations = "whiteship_home;shuttle[new_id]_custom;"
-	return TRUE
+	if(shuttleId=="")
+		shuttleId = new_id
+		possible_destinations = "whiteship_home;shuttle[new_id]_custom;"
+		return TRUE
+	return FALSE
 
 
 //docking cam
@@ -50,5 +52,7 @@
 	return ..()
 
 /obj/machinery/computer/camera_advanced/shuttle_docker/custom/proc/linkShuttle(new_id)
-	shuttleId = new_id
-	shuttlePortId = "shuttle[new_id]_custom"
+	if(shuttleId=="")
+		shuttleId = new_id
+		return TRUE
+	return FALSE

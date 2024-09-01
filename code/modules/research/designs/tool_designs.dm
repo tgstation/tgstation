@@ -432,6 +432,6 @@
 	id = "shuttle_creator"
 	build_path = /obj/item/shuttle_creator
 	build_type = PROTOLATHE
-	materials = list(/datum/material/iron = 8000, /datum/material/titanium = 5000, /datum/material/bluespace = 5000)
+	materials = list(/datum/material/iron = 1000, /datum/material/titanium = 500, /datum/material/bluespace = 100)
 	category = list("Tool Designs")
 	departmental_flags = DEPARTMENT_BITFLAG_SCIENCE | DEPARTMENT_BITFLAG_ENGINEERING

@@ -405,7 +405,7 @@
 	departmental_flags = DEPARTMENT_BITFLAG_SCIENCE | DEPARTMENT_BITFLAG_ENGINEERING
 
 /datum/design/board/shuttle/shuttle_docker
-	name = "Computer Design (Private Navigation Computer)"
+	name = "Computer Design (Shuttle Navigation Computer)"
 	desc = "Allows for the construction of circuit boards used to build a console that enables the targetting of custom flight locations"
 	id = "shuttle_docker"
 	build_path = /obj/item/circuitboard/computer/shuttle/docker
