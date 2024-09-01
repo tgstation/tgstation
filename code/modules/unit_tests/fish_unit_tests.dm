@@ -171,13 +171,13 @@
 	portal.activate(fish_source, user)
 	TEST_ASSERT(portal.active?.fish_source == fish_source, "[portal] can't acces a fish source from a linked fishing spot")
 	//Let's move the fishing spot away. This is fine as long as the portal moves to another z level, away from the toilet
-	var/obj/effect/landmark/start/new_player = locate() in GLOB.newplayer_start
-	portal.forceMove(new_player)
+	var/turf/other_z_turf = pick(GLOB.newplayer_start)
+	portal.forceMove(other_z_turf)
 	TEST_ASSERT(!portal.active, "[portal] (not upgraded) is still active though the fishing spot is on another z-level.[portal.z == fishing_spot.z ? " Actually they're still on the same level!" : ""]")
 	portal.long_range_link = TRUE
 	portal.activate(fish_source, user)
 	TEST_ASSERT(portal.active?.fish_source == fish_source, "[portal] can't acces a fish source from a linked fishing spot on a different z-level despite being upgraded")
-	fishing_spot.forceMove(new_player)
+	fishing_spot.forceMove(other_z_turf)
 	portal.forceMove(get_turf(user))
 	TEST_ASSERT(portal.active?.fish_source == fish_source, "[portal] (upgraded) deactivated while changing z-level")
 	tool.melee_attack_chain(user, extra_spot)
