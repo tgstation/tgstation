@@ -252,7 +252,7 @@
 	var/list/allowed_stickers = list()
 
 	for(var/obj/item/sticker/sticker_type as anything in subtypesof(/obj/item/sticker))
-		if(!sticker_type::contraband)
+		if(!sticker_type::exclude_from_random)
 			allowed_stickers += sticker_type
 
 	return allowed_stickers

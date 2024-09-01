@@ -30,8 +30,8 @@
 
 	/// `list` or `null`, contains possible alternate `icon_states`.
 	var/list/icon_states
-	/// Whether sticker is legal and allowed to generate inside non-syndicate boxes.
-	var/contraband = FALSE
+	/// This sticker won't be generated inside random sticker packs.
+	var/exclude_from_random = FALSE
 	/// Text added to the atom's examine when stickered.
 	var/examine_text
 
@@ -125,7 +125,7 @@
 	name = "blue R sticker"
 	desc = "A sticker of FUCK THE SYSTEM, the galaxy's premiere hardcore punk band."
 	icon_state = "revhead"
-	examine_text = "It has a sticker of <b>FUCK THE SYSTEM</b>, the galaxy's premiere hardcore punk band."
+	examine_text = "There is a sticker displaying <b>FUCK THE SYSTEM</b>, the galaxy's premiere hardcore punk band."
 
 /obj/item/sticker/pslime
 	name = "slime plushie sticker"
@@ -155,8 +155,8 @@
 /obj/item/sticker/chief_engineer
 	name = "CE approved sticker"
 	icon_state = "ce_approved"
-	contraband = TRUE
-	examine_text = "It has a sticker displaying the <b>Chief Engineer's SEAL OF APPROVAL.</b>"
+	exclude_from_random = TRUE
+	examine_text = "There is a sticker displaying the <b>Chief Engineer's SEAL OF APPROVAL.</b>"
 
 /obj/item/sticker/clown
 	name = "clown sticker"
@@ -173,17 +173,17 @@
 /obj/item/sticker/skub
 	name = "skub sticker"
 	icon_state = "skub"
-	examine_text = "It has a sticker displaying <b>Skubtide, Stationwide!</b>"
+	examine_text = "There is a sticker displaying <b>Skubtide, Stationwide!</b>"
 
 /obj/item/sticker/anti_skub
 	name = "anti-skub sticker"
 	icon_state = "anti_skub"
-	examine_text = "It has an <b>anti-skub</b> sticker."
+	examine_text = "There is an <b>anti-skub</b> sticker."
 
 /obj/item/sticker/syndicate
 	name = "syndicate sticker"
 	icon_state = "synd"
-	contraband = TRUE
+	exclude_from_random = TRUE
 
 /obj/item/sticker/syndicate/Initialize(mapload)
 	. = ..()
