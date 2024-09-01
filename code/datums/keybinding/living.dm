@@ -152,24 +152,3 @@
 	var/mob/living/M = user.mob
 	M.toggle_move_intent()
 	return TRUE
-
-/datum/keybinding/living/toggle_examine_balloons
-	hotkey_keys = list("Shift")
-	name = "toggle_examine_balloons"
-	full_name = "Examine wallmounts"
-	description = "Held down to view wallmounts more closely, release to stop"
-	keybind_signal = COMSIG_KB_LIVING_TOGGLEMOVEINTENT_DOWN
-
-/datum/keybinding/living/toggle_examine_balloons/down(client/user)
-	. = ..()
-
-	var/datum/hud/our_hud = user.mob.hud_used
-	for(var/atom/movable/screen/plane_master/balloons in our_hud.get_true_plane_masters(EXAMINE_BALLOONS_PLANE))
-		animate(balloons, 0.2 SECONDS, alpha = 255)
-
-/datum/keybinding/living/toggle_examine_balloons/up(client/user)
-	. = ..()
-
-	var/datum/hud/our_hud = user.mob.hud_used
-	for(var/atom/movable/screen/plane_master/balloons in our_hud.get_true_plane_masters(EXAMINE_BALLOONS_PLANE))
-		animate(balloons, 0.2 SECONDS, alpha = 0)
