@@ -237,7 +237,7 @@
 			use_power = IDLE_POWER_USE
 		update_icon()
 
-/obj/machinery/fishing_portal_generator/proc/on_fishing_spot_z_level_changed(atom/spot/turf/old_turf, turf/new_turf, same_z_layer)
+/obj/machinery/fishing_portal_generator/proc/on_fishing_spot_z_level_changed(atom/spot, turf/old_turf, turf/new_turf, same_z_layer)
 	SIGNAL_HANDLER
 	var/turf/turf = get_turf(src)
 	if(turf.z != new_turf.z && !(is_station_level(turf.z) && is_station_level(new_turf.z)))

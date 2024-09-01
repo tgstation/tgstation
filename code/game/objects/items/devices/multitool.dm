@@ -38,6 +38,7 @@
 /obj/item/multitool/Destroy()
 	if(buffer)
 		remove_buffer(buffer)
+	return ..()
 
 /obj/item/multitool/examine(mob/user)
 	. = ..()

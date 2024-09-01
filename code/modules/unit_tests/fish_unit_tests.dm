@@ -166,7 +166,7 @@
 	TEST_ASSERT(!portal.active, "[portal] was activated with a fish source from an unlinked fishing spot")
 	portal.multitool_act(user, tool)
 	TEST_ASSERT_EQUAL(tool.buffer, portal, "[portal] wasn't set as buffer for [tool]")
-	fishing_spot.tool_act(user, tool)
+	tool.melee_attack_chain(user, fishing_spot)
 	TEST_ASSERT_EQUAL(LAZYACCESS(portal.linked_fishing_spots, fishing_spot), fish_source, "We tried linking [portal] to the fishing spot but didn't succeed.")
 	portal.activate(fish_source, user)
 	TEST_ASSERT(portal.active?.fish_source == fish_source, "[portal] can't acces a fish source from a linked fishing spot")
@@ -180,12 +180,12 @@
 	fishing_spot.forceMove(new_player)
 	portal.forceMove(get_turf(user))
 	TEST_ASSERT(portal.active?.fish_source == fish_source, "[portal] (upgraded) deactivated while changing z-level")
-	extra_spot.tool_act(user, tool)
+	tool.melee_attack_chain(user, extra_spot)
 	TEST_ASSERT_EQUAL(length(portal.linked_fishing_spots), 1, "We managed to link to another fishing spot when there's only space for one")
 	TEST_ASSERT_EQUAL(LAZYACCESS(portal.linked_fishing_spots, fishing_spot), fish_source, "linking to another fishing spot fouled up the other linked spots")
 	QDEL_NULL(fishing_spot)
 	TEST_ASSERT(!portal.active, "[portal] is still deleted to the fish source after we deleted the associated fishing spot")
-	inaccessible.tool_act(user, tool)
+	tool.melee_attack_chain(user, inaccessible)
 	TEST_ASSERT(length(portal.linked_fishing_spots), "We managed to link to an unlinkable fishing spot")
 
 /obj/machinery/fishing_portal_generator/no_power
