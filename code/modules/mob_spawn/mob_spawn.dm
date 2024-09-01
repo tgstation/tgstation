@@ -239,7 +239,7 @@
 			spawned_mob.key = mob_possessor.key
 	var/datum/mind/spawned_mind = spawned_mob.mind
 	if(spawned_mind)
-		spawned_mob.mind.set_assigned_role_with_greeting(SSjob.get_job_type(spawner_job_path))
+		spawned_mob.mind.set_assigned_role_with_greeting(SSjob.GetJobType(spawner_job_path))
 		spawned_mind.name = spawned_mob.real_name
 
 	if(show_flavor)

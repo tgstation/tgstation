@@ -190,7 +190,7 @@ ADMIN_VERB(respawn_character, R_ADMIN, "Respawn Character", "Respawn a player th
 		if(findtext(G_found.real_name,"monkey"))
 			if(tgui_alert(user,"This character appears to have been a monkey. Would you like to respawn them as such?",,list("Yes","No")) == "Yes")
 				var/mob/living/carbon/human/species/monkey/new_monkey = new
-				SSjob.send_to_late_join(new_monkey)
+				SSjob.SendToLateJoin(new_monkey)
 				G_found.mind.transfer_to(new_monkey) //be careful when doing stuff like this! I've already checked the mind isn't in use
 				new_monkey.key = G_found.key
 				to_chat(new_monkey, "You have been fully respawned. Enjoy the game.", confidential = TRUE)
@@ -202,7 +202,7 @@ ADMIN_VERB(respawn_character, R_ADMIN, "Respawn Character", "Respawn a player th
 
 	//Ok, it's not a monkey. So, spawn a human.
 	var/mob/living/carbon/human/new_character = new//The mob being spawned.
-	SSjob.send_to_late_join(new_character)
+	SSjob.SendToLateJoin(new_character)
 
 	var/datum/record/locked/record_found //Referenced to later to either randomize or not randomize the character.
 	if(G_found.mind && !G_found.mind.active) //mind isn't currently in use by someone/something
@@ -225,7 +225,7 @@ ADMIN_VERB(respawn_character, R_ADMIN, "Respawn Character", "Respawn a player th
 	else
 		new_character.mind_initialize()
 	if(is_unassigned_job(new_character.mind.assigned_role))
-		new_character.mind.set_assigned_role(SSjob.get_job_type(SSjob.overflow_role))
+		new_character.mind.set_assigned_role(SSjob.GetJobType(SSjob.overflow_role))
 
 	new_character.key = G_found.key
 
@@ -242,7 +242,7 @@ ADMIN_VERB(respawn_character, R_ADMIN, "Respawn Character", "Respawn a player th
 	//Now for special roles and equipment.
 	var/datum/antagonist/traitor/traitordatum = new_character.mind.has_antag_datum(/datum/antagonist/traitor)
 	if(traitordatum)
-		SSjob.equip_rank(new_character, new_character.mind.assigned_role, new_character.client)
+		SSjob.EquipRank(new_character, new_character.mind.assigned_role, new_character.client)
 		new_character.mind.give_uplink(silent = TRUE, antag_datum = traitordatum)
 
 	switch(new_character.mind.special_role)
@@ -271,7 +271,7 @@ ADMIN_VERB(respawn_character, R_ADMIN, "Respawn Character", "Respawn a player th
 					new_character = new_character.AIize()
 				else
 					if(!traitordatum) // Already equipped there.
-						SSjob.equip_rank(new_character, new_character.mind.assigned_role, new_character.client)//Or we simply equip them.
+						SSjob.EquipRank(new_character, new_character.mind.assigned_role, new_character.client)//Or we simply equip them.
 
 	//Announces the character on all the systems, based on the record.
 	if(!record_found && (new_character.mind.assigned_role.job_flags & JOB_CREW_MEMBER))
