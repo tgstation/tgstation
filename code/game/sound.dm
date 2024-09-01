@@ -472,6 +472,8 @@
 				'sound/creatures/monkey/monkey_screech_6.ogg',
 				'sound/creatures/monkey/monkey_screech_7.ogg',
 			)
+		if(SFX_TOOL_SWITCH)
+			soundin = 'sound/items/handling/tool_switch.ogg'
 		if(SFX_STONE_DROP)
 			soundin = pick(
 				'sound/items/stones/stone_drop1.ogg',
