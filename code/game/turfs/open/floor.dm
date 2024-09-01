@@ -267,7 +267,7 @@
 	var/selected_direction = rcd_data[RCD_BUILD_DIRECTION] || user.dir
 	switch(rcd_data[RCD_DESIGN_MODE])
 		if(RCD_TURF)
-			if(rcd_data[RCD_DESIGN_PATH] != /turf/open/floor/plating/rcd)
+			if(rcd_data["[RCD_DESIGN_PATH]"] != /turf/open/floor/plating/rcd)
 				return FALSE
 
 			var/obj/structure/girder/girder = locate() in src
@@ -278,7 +278,7 @@
 			return TRUE
 		if(RCD_WINDOWGRILLE)
 			//check if we are building a window
-			var/obj/structure/window/window_path = rcd_data[RCD_DESIGN_PATH]
+			var/obj/structure/window/window_path = rcd_data["[RCD_DESIGN_PATH]"]
 			if(!ispath(window_path))
 				CRASH("Invalid window path type in RCD: [window_path]")
 
@@ -291,12 +291,14 @@
 				WD.set_anchored(TRUE)
 				return TRUE
 
-			if(locate(/obj/structure/window_frame) in src)
+			//build grills to deal with full tile windows
+			if(locate(/obj/structure/grille) in src)
 				return FALSE
-			new /obj/structure/window_frame(src)
+			var/obj/structure/grille/new_grille = new(src)
+			new_grille.set_anchored(TRUE)
 			return TRUE
 		if(RCD_AIRLOCK)
-			var/obj/machinery/door/airlock_type = rcd_data[RCD_DESIGN_PATH]
+			var/obj/machinery/door/airlock_type = rcd_data["[RCD_DESIGN_PATH]"]
 
 			if(ispath(airlock_type, /obj/machinery/door/window))
 				if(!valid_build_direction(src, selected_direction, is_fulltile = FALSE))
@@ -330,9 +332,8 @@
 			var/atom/new_door = assembly.finish_door()
 			new_door?.setDir(selected_direction)
 			return TRUE
-
 		if(RCD_STRUCTURE)
-			var/atom/movable/design_type = rcd_data[RCD_DESIGN_PATH]
+			var/atom/movable/design_type = rcd_data["[RCD_DESIGN_PATH]"]
 
 			//map absolute types to basic subtypes
 			var/atom/movable/locate_type = design_type

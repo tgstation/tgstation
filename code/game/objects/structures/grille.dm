@@ -4,8 +4,8 @@
 /obj/structure/grille
 	desc = "A flimsy framework of iron rods."
 	name = "grille"
-	icon = 'icons/obj/smooth_structures/grille.dmi'
-	icon_state = "grille-0"
+	icon = 'icons/obj/structures.dmi'
+	icon_state = "grille"
 	base_icon_state = "grille"
 	density = TRUE
 	anchored = TRUE
@@ -15,11 +15,10 @@
 	armor_type = /datum/armor/structure_grille
 	max_integrity = 50
 	integrity_failure = 0.4
-	smoothing_flags = SMOOTH_BITMASK
-	smoothing_groups = SMOOTH_GROUP_GRILLE
-	canSmoothWith = SMOOTH_GROUP_GRILLE
 	var/rods_type = /obj/item/stack/rods
 	var/rods_amount = 2
+	/// Whether or not we're disappearing but dramatically
+	var/dramatically_disappearing = FALSE
 
 /datum/armor/structure_grille
 	melee = 50
@@ -40,44 +39,17 @@
 	. = ..()
 	update_appearance()
 
-/obj/structure/grille/update_icon(updates=ALL)
-	if(QDELETED(src))
+/obj/structure/grille/update_appearance(updates)
+	if(QDELETED(src) || broken)
 		return
 
-	var/old_base_state = base_icon_state
-	var/ratio = atom_integrity / max_integrity
-	if(ratio <= 0.7)
-		icon = 'icons/obj/smooth_structures/grille_damaged.dmi'
-		base_icon_state = "grille_damaged"
-	else
-		icon = 'icons/obj/smooth_structures/grille.dmi'
-		base_icon_state = "grille"
-
-	if(old_base_state != base_icon_state)
-		icon_state = "[base_icon_state]-[smoothing_junction]"
-
-	var/old_smoothing_flags = smoothing_flags
-	if(broken)
-		icon = 'icons/obj/smooth_structures/tall_structure_variations.dmi'
-		icon_state = "grille-broken"
-		base_icon_state = "grille-broken"
-		smoothing_flags = NONE
-		smoothing_groups = null
-		canSmoothWith = null
-	else
-		smoothing_flags = initial(smoothing_flags)
-		smoothing_groups = initial(smoothing_groups)
-		canSmoothWith = initial(canSmoothWith)
-		SETUP_SMOOTHING()
 	. = ..()
+	if((updates & UPDATE_SMOOTHING) && (smoothing_flags & USES_SMOOTHING))
+		QUEUE_SMOOTH(src)
 
-	if(!(updates & UPDATE_SMOOTHING))
-		return
-	if(old_smoothing_flags == smoothing_flags && (smoothing_flags & USES_SMOOTHING))
-		return
-	// If our flags changed, update EVERYBODY
-	QUEUE_SMOOTH(src)
-	QUEUE_SMOOTH_NEIGHBORS(src)
+/obj/structure/grille/update_icon_state()
+	icon_state = "[base_icon_state][((atom_integrity / max_integrity) <= 0.5) ? "50_[rand(0, 3)]" : null]"
+	return ..()
 
 /obj/structure/grille/examine(mob/user)
 	. = ..()
@@ -117,7 +89,7 @@
 	return FALSE
 
 /obj/structure/grille/rcd_act(mob/user, obj/item/construction/rcd/the_rcd, list/rcd_data)
-	switch(rcd_data[RCD_DESIGN_MODE])
+	switch(rcd_data["[RCD_DESIGN_MODE]"])
 		if(RCD_DECONSTRUCT)
 			qdel(src)
 			return TRUE
@@ -131,7 +103,7 @@
 			if(!clear_tile(user))
 				return FALSE
 
-			var/obj/structure/window/window_path = rcd_data[RCD_DESIGN_PATH]
+			var/obj/structure/window/window_path = rcd_data["[RCD_DESIGN_PATH]"]
 			if(!ispath(window_path))
 				CRASH("Invalid window path type in RCD: [window_path]")
 
@@ -327,21 +299,21 @@
 /obj/structure/grille/atom_break()
 	. = ..()
 	if(!broken)
+		icon_state = "brokengrille"
 		set_density(FALSE)
 		atom_integrity = 20
 		broken = TRUE
 		rods_amount = 1
 		var/obj/item/dropped_rods = new rods_type(drop_location(), rods_amount)
 		transfer_fingerprints_to(dropped_rods)
-		update_appearance()
 
 /obj/structure/grille/proc/repair_grille()
 	if(broken)
+		icon_state = "grille"
 		set_density(TRUE)
 		atom_integrity = max_integrity
 		broken = FALSE
 		rods_amount = 2
-		update_appearance()
 		return TRUE
 	return FALSE
 
@@ -396,15 +368,36 @@
 /obj/structure/grille/get_dumping_location()
 	return null
 
+/obj/structure/grille/proc/temporary_shatter(time_to_go = 0 SECONDS, time_to_return = 4 SECONDS)
+	if(dramatically_disappearing)
+		return
+
+	//dissapear in 1 second
+	dramatically_disappearing = TRUE
+	addtimer(CALLBACK(src, TYPE_PROC_REF(/atom/movable, moveToNullspace)), time_to_go) //woosh
+
+	// come back in 1 + 4 seconds
+	addtimer(VARSET_CALLBACK(src, atom_integrity, atom_integrity), time_to_go + time_to_return) //set the health back (icon is updated on move)
+	addtimer(CALLBACK(src, TYPE_PROC_REF(/atom/movable, forceMove), loc), time_to_go + time_to_return) //we back boys
+	addtimer(VARSET_CALLBACK(src, dramatically_disappearing, FALSE), time_to_go + time_to_return) //also set the var back
+
+/// Do some very specific checks to see if we *would* get shocked. Returns TRUE if it's shocked
+/obj/structure/grille/proc/is_shocked()
+	var/turf/turf = get_turf(src)
+	var/obj/structure/cable/cable = turf.get_cable_node()
+	var/list/powernet_info = get_powernet_info_from_source(cable)
+
+	if(!powernet_info)
+		return FALSE
+
+	var/datum/powernet/powernet = powernet_info["powernet"]
+	return !!powernet.get_electrocute_damage()
+
 /obj/structure/grille/broken // Pre-broken grilles for map placement
-	icon = 'icons/obj/smooth_structures/tall_structure_variations.dmi'
-	icon_state = "grille-broken"
+	icon_state = "brokengrille"
 	density = FALSE
 	broken = TRUE
 	rods_amount = 1
-	smoothing_flags = null
-	smoothing_groups = null
-	canSmoothWith = null
 
 /obj/structure/grille/broken/Initialize(mapload)
 	. = ..()
