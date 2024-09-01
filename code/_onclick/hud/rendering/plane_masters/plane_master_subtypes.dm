@@ -177,7 +177,6 @@
 	name = "Floor"
 	documentation = "The well, floor. This is mostly used as a sorting mechanism, but it also lets us create a \"border\" around the game world plane, so its drop shadow will actually work."
 	plane = FLOOR_PLANE
-	render_target = FLOOR_PLANE_RENDER_TARGET
 	render_relay_planes = list(RENDER_PLANE_GAME, LIGHT_MASK_PLANE)
 
 /atom/movable/screen/plane_master/transparent_floor
@@ -195,18 +194,17 @@
 
 /atom/movable/screen/plane_master/wall
 	name = "Wall"
-	documentation = "Holds a mirror of all walls. Separate so we can use this + space and floor planes as a guide for where byond blackness is NOT."
+	documentation = "Holds all walls. We render this onto the game world. Separate so we can use this + space and floor planes as a guide for where byond blackness is NOT."
 	plane = WALL_PLANE
-	render_relay_planes = list(LIGHT_MASK_PLANE, RENDER_PLANE_WALL_WEATHER_MASK)
+	render_relay_planes = list(RENDER_PLANE_GAME_WORLD, LIGHT_MASK_PLANE)
 
 /atom/movable/screen/plane_master/wall/Initialize(mapload, datum/hud/hud_owner, datum/plane_master_group/home, offset)
 	. = ..()
 	add_relay_to(GET_NEW_PLANE(EMISSIVE_RENDER_PLATE, offset), relay_layer = EMISSIVE_WALL_LAYER, relay_color = GLOB.em_block_color)
 
-/atom/movable/screen/plane_master/game_misc
-	name = "Game Misc"
-	documentation = "Exists to hold anything we want to be a part of the \"game world\" that isn't held by other plane masters that point at the world rendering plate.\
-		<br>This is done partially to support parallaxing, since we can only parallax inputs, but it's also done so sidemap can operate as we'd like"
+/atom/movable/screen/plane_master/game
+	name = "Game"
+	documentation = "Holds most non floor/wall things. Anything on this plane \"wants\" to interlayer depending on position."
 	plane = GAME_PLANE
 	render_relay_planes = list(RENDER_PLANE_GAME_WORLD)
 
@@ -216,66 +214,6 @@
 	plane = ABOVE_GAME_PLANE
 	render_relay_planes = list(RENDER_PLANE_GAME_WORLD)
 
-/atom/movable/screen/plane_master/hidden_walls
-	name = "Hidden Walls"
-	documentation = "Holds portions of walls that are not typically visible.\
-		<br>Alpha'd up if that isn't the case, so basically if you have SEE_TURFS or an equivilant"
-	plane = HIDDEN_WALL_PLANE
-	render_relay_planes = list(RENDER_PLANE_GAME_WORLD)
-
-/atom/movable/screen/plane_master/hidden_walls/Initialize(mapload, datum/hud/hud_owner, datum/plane_master_group/home, offset)
-	. = ..()
-	add_relay_to(GET_NEW_PLANE(EMISSIVE_RENDER_PLATE, offset), relay_layer = EMISSIVE_FRILL_LAYER, relay_color = GLOB.em_block_color)
-
-/atom/movable/screen/plane_master/hidden_walls/show_to(mob/mymob)
-	. = ..()
-	if(!.)
-		return
-
-	handle_sight(mymob, mymob.sight, NONE)
-	RegisterSignal(mymob, COMSIG_MOB_SIGHT_CHANGE, PROC_REF(handle_sight), override = TRUE)
-
-/atom/movable/screen/plane_master/hidden_walls/hide_from(mob/oldmob)
-	. = ..()
-	UnregisterSignal(oldmob, COMSIG_MOB_SIGHT_CHANGE)
-
-/atom/movable/screen/plane_master/hidden_walls/proc/handle_sight(mob/source, new_sight, old_sight)
-	if(new_sight & (SEE_TURFS|SEE_THRU))
-		enable_alpha()
-	else
-		disable_alpha()
-
-///Contains wall frills
-/atom/movable/screen/plane_master/frill
-	name = "Frill"
-	documentation = "Contains frills, or the upper parts of some 3/4th'd structures.\
-		<br>Is masked by a few things, the floor and client visible images"
-	plane = FRILL_PLANE
-	// Clicking on a frill can't get you the wall it's on (cause it's not overlayed onto it)
-	// So this just fucks people up, we should simply make it transparent.
-	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
-	render_relay_planes = list(RENDER_PLANE_FRILL, RENDER_PLANE_WALL_WEATHER_MASK)
-
-/atom/movable/screen/plane_master/frill/Initialize(mapload, datum/hud/hud_owner, datum/plane_master_group/home, offset)
-	. = ..()
-	add_relay_to(GET_NEW_PLANE(EMISSIVE_RENDER_PLATE, offset), relay_layer = EMISSIVE_FRILL_LAYER, relay_color = GLOB.em_block_color)
-
-/atom/movable/screen/plane_master/frill_mask
-	name = "Frill Mask"
-	documentation = "Masks the frill plane, this allows us to hide frills around the area of our mob, or really just as we desire"
-	plane = FRILL_MASK_PLANE
-	render_target = FRILL_MASK_RENDER_TARGET
-	render_relay_planes = list()
-
-// Not entirely sure how required this is, it's the plane we use for things that sit "on" walls
-/atom/movable/screen/plane_master/frill_over
-	name = "Over Frill"
-	documentation = "Holds anything that should sit ON TOP of the frill plane.\
-		<br>I'd love to do this with layers, but we alpha out the frill plane so I can't."
-	plane = OVER_FRILL_PLANE
-	render_relay_planes = list(RENDER_PLANE_GAME_WORLD)
-
-/// Wallening todo: this doesn't like, work
 /atom/movable/screen/plane_master/seethrough
 	name = "Seethrough"
 	documentation = "Holds the seethrough versions (done using image overrides) of large objects. Mouse transparent, so you can click through them."
@@ -302,54 +240,8 @@
 
 /atom/movable/screen/plane_master/area
 	name = "Area"
-	documentation = "Holds the areas themselves, which ends up meaning it holds any overlays/effects we apply to areas that are otherwise unhomed"
+	documentation = "Holds the areas themselves, which ends up meaning it holds any overlays/effects we apply to areas. NOT snow or rad storms, those go on above lighting"
 	plane = AREA_PLANE
-
-/atom/movable/screen/plane_master/weather_mask
-	name = "Weather Mask"
-	documentation = "Deliniates between places WITH weather active and places without.\
-		<br>Used currently just to ensure frills draw properly"
-	plane = WEATHER_MASK_PLANE
-	render_target = WEATHER_MASK_RENDER_TARGET
-	render_relay_planes = list()
-	start_hidden = TRUE
-
-/atom/movable/screen/plane_master/weather_mask/set_home(datum/plane_master_group/home)
-	. = ..()
-	if(!.)
-		return
-	home.AddComponent(/datum/component/hide_weather_planes, src)
-
-/atom/movable/screen/plane_master/weather
-	name = "Weather"
-	documentation = "Holds the main tiling 32x32 sprites of weather. We mask against walls that are on the edge of weather effects."
-	plane = WEATHER_PLANE
-	start_hidden = TRUE
-
-/atom/movable/screen/plane_master/weather/set_home(datum/plane_master_group/home)
-	. = ..()
-	if(!.)
-		return
-	home.AddComponent(/datum/component/hide_weather_planes, src)
-	add_filter("wall_mask", 1, alpha_mask_filter(render_source = OFFSET_RENDER_TARGET(WALL_WEATHER_MASK_RENDER_TARGET, offset), flags = MASK_INVERSE))
-
-// using this as a mask against weather might be kinda? weird cause of potential double transforms. idk how I feel bout it tbh. works for now?
-// weather is weird on multiz stacks anyway so idkkkkk
-/atom/movable/screen/plane_master/weather_frill
-	name = "Weather Frills"
-	documentation = "Holds the \"frills\" of weather, so at its top it can reach up to touch the turf above some and look 3d."
-	plane = WEATHER_FRILL_PLANE
-	start_hidden = TRUE
-
-/atom/movable/screen/plane_master/weather_frill/set_home(datum/plane_master_group/home)
-	. = ..()
-	if(!.)
-		return
-	home.AddComponent(/datum/component/hide_weather_planes, src)
-
-/atom/movable/screen/plane_master/weather_frill/Initialize(mapload, datum/hud/hud_owner, datum/plane_master_group/home, offset)
-	. = ..()
-	add_filter("weather_mask", 1, alpha_mask_filter(render_source = OFFSET_RENDER_TARGET(WEATHER_MASK_RENDER_TARGET, offset), flags = MASK_INVERSE))
 
 /atom/movable/screen/plane_master/massive_obj
 	name = "Massive object"
@@ -387,57 +279,12 @@
 	blend_mode = BLEND_MULTIPLY
 	critical = PLANE_CRITICAL_DISPLAY
 
-/atom/movable/screen/plane_master/darkness_mask
-	name = "Darkness Mask"
-	documentation = "Masks out bits of the world that would otherwise be lit up, but should be hidden due to say, being on the other side of an airlock."
-	plane = DARKNESS_MASK_PLANE
-	render_target = DARKNESS_MASK_RENDER_TARGET
-	appearance_flags = PLANE_MASTER|NO_CLIENT_COLOR
-	render_relay_planes = list(RENDER_PLANE_GAME)
-	critical = PLANE_CRITICAL_DISPLAY
-	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
-
-/atom/movable/screen/plane_master/darkness_mask/Initialize(mapload, datum/hud/hud_owner, datum/plane_master_group/home, offset)
-	. = ..()
-	// Ensures any speck of white means darkness at the end
-	add_filter("bump_color", 2, color_matrix_filter(list(255,0,0,0, 0,255,0,0, 0,0,255,0, 0,0,0,255, 0,0,0,0)))
-	// Converts white to darkness, and black to transparency
-	add_filter("color_to_opacity", 3, color_matrix_filter(list(0,0,0,1/3, 0,0,0,1/3, 0,0,0,1/3, 0,0,0,0, 0,0,0,0)))
-
 /atom/movable/screen/plane_master/above_lighting
 	name = "Above lighting"
 	plane = ABOVE_LIGHTING_PLANE
 	documentation = "Anything on the game plane that needs a space to draw on that will be above the lighting plane.\
 		<br>Mostly little alerts and effects, also sometimes contains things that are meant to look as if they glow."
 
-/atom/movable/screen/plane_master/weather_glow
-	name = "Weather Glow"
-	documentation = "Holds the glowing parts of the main tiling 32x32 sprites of weather. Exists because we need to mask away walls RIGHT below us."
-	plane = WEATHER_GLOW_PLANE
-	start_hidden = TRUE
-
-/atom/movable/screen/plane_master/weather_glow/set_home(datum/plane_master_group/home)
-	. = ..()
-	if(!.)
-		return
-	home.AddComponent(/datum/component/hide_weather_planes, src)
-	add_filter("wall_mask", 1, alpha_mask_filter(render_source = OFFSET_RENDER_TARGET(WALL_WEATHER_MASK_RENDER_TARGET, offset), flags = MASK_INVERSE))
-
-/atom/movable/screen/plane_master/weather_frill_glow
-	name = "Weather Glow Frills"
-	documentation = "Very similar to weather frills except it draws above lighting. Reaches up to touch unweathered turfs."
-	plane = WEATHER_FRILL_GLOW_PLANE
-	start_hidden = TRUE
-
-/atom/movable/screen/plane_master/weather_frill_glow/Initialize(mapload, datum/hud/hud_owner, datum/plane_master_group/home, offset)
-	. = ..()
-	add_filter("weather_mask", 1, alpha_mask_filter(render_source = OFFSET_RENDER_TARGET(WEATHER_MASK_RENDER_TARGET, offset), flags = MASK_INVERSE))
-
-/atom/movable/screen/plane_master/weather_frill_glow/set_home(datum/plane_master_group/home)
-	. = ..()
-	if(!.)
-		return
-	home.AddComponent(/datum/component/hide_weather_planes, src)
 /**
  * Handles emissive overlays and emissive blockers.
  */
@@ -449,12 +296,8 @@
 	plane = EMISSIVE_PLANE
 	appearance_flags = PLANE_MASTER|NO_CLIENT_COLOR
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
-	render_relay_planes = list()
+	render_relay_planes = list(EMISSIVE_RENDER_PLATE)
 	critical = PLANE_CRITICAL_DISPLAY
-
-/atom/movable/screen/plane_master/emissive/Initialize(mapload, datum/hud/hud_owner, datum/plane_master_group/home, offset)
-	. = ..()
-	add_relay_to(GET_NEW_PLANE(EMISSIVE_RENDER_PLATE, offset), relay_layer = EMISSIVE_PLANE_LAYER)
 
 /atom/movable/screen/plane_master/pipecrawl
 	name = "Pipecrawl"
@@ -579,11 +422,3 @@
 	appearance_flags = PLANE_MASTER|NO_CLIENT_COLOR
 	render_relay_planes = list(RENDER_PLANE_MASTER)
 	offsetting_flags = BLOCKS_PLANE_OFFSETTING|OFFSET_RELAYS_MATCH_HIGHEST
-
-/atom/movable/screen/plane_master/examine_balloons
-	name = "Examine Balloons"
-	documentation = "The balloons that appear above objects (often wallmounts) when holding shift."
-	plane = EXAMINE_BALLOONS_PLANE
-	appearance_flags = PLANE_MASTER|NO_CLIENT_COLOR
-	render_relay_planes = list(RENDER_PLANE_GAME_WORLD)
-	alpha = 0

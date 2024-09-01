@@ -5,7 +5,8 @@
 
 /turf/closed/indestructible/binary
 	name = "tear in the fabric of reality"
-	icon = 'icons/turf/walls/binary_wall.dmi'
+	icon = 'icons/turf/floors.dmi'
+	icon_state = "binary"
 
 /obj/effect/baseturf_helper/virtual_domain
 	name = "virtual domain baseturf editor"
