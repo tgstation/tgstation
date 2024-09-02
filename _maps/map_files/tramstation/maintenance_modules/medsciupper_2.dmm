@@ -76,6 +76,7 @@
 /obj/structure/closet/crate,
 /obj/effect/spawner/random/maintenance/three,
 /obj/effect/spawner/random/engineering/flashlight,
+/obj/effect/decal/cleanable/cobweb/cobweb2,
 /turf/open/floor/iron/smooth,
 /area/station/maintenance/department/medical)
 "hR" = (
@@ -245,14 +246,8 @@
 "FQ" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/table,
-/obj/effect/spawner/random/food_or_drink/booze{
-	pixel_y = 11;
-	pixel_x = -7
-	},
-/obj/effect/spawner/random/food_or_drink/booze{
-	pixel_y = 9;
-	pixel_x = 6
-	},
+/obj/effect/spawner/random/food_or_drink/booze,
+/obj/effect/spawner/random/food_or_drink/booze,
 /turf/open/floor/iron/smooth,
 /area/station/maintenance/department/science)
 "Gb" = (
@@ -347,6 +342,7 @@
 /obj/effect/turf_decal/stripes/end{
 	dir = 1
 	},
+/obj/structure/sign/warning/electric_shock/directional/south,
 /turf/open/floor/plating,
 /area/station/maintenance/department/medical)
 "Pn" = (
@@ -360,12 +356,8 @@
 "Qx" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/table,
-/obj/item/trash/candle{
-	pixel_y = 12
-	},
-/obj/effect/spawner/random/food_or_drink/dinner{
-	pixel_y = 10
-	},
+/obj/item/trash/candle,
+/obj/effect/spawner/random/food_or_drink/dinner,
 /turf/open/floor/iron/smooth,
 /area/station/maintenance/department/medical)
 "QR" = (
@@ -420,13 +412,6 @@
 /area/station/maintenance/department/science)
 "Xc" = (
 /turf/open/openspace,
-/area/station/maintenance/department/medical)
-"Xz" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/effect/decal/cleanable/cobweb/cobweb2{
-	pixel_y = 24
-	},
-/turf/open/floor/iron/smooth,
 /area/station/maintenance/department/medical)
 "Yf" = (
 /turf/closed/wall,
@@ -1097,7 +1082,7 @@ nm
 nm
 nm
 Sz
-Xz
+Kw
 hi
 KS
 cJ
