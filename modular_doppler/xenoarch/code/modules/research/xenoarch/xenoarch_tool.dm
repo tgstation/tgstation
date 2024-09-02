@@ -287,10 +287,10 @@
 	new /obj/item/pickaxe(src)
 	new /obj/item/paper/fluff/xenoarch_guide(src)
 
-/obj/structure/closet/xenoarch/ashwalker_version
+/obj/structure/closet/xenoarch/tribal_version
 	name = "dusty xenoarchaeology equipment locker"
 
-/obj/structure/closet/xenoarch/ashwalker_version/PopulateContents()
+/obj/structure/closet/xenoarch/tribal_version/PopulateContents()
 	. = ..()
 	new /obj/item/xenoarch/handheld_recoverer(src)
 

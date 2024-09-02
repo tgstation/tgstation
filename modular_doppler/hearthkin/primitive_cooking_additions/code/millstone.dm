@@ -1,6 +1,3 @@
-#define MILLSTONE_STAMINA_MINIMUM 50 //What is the amount of stam damage that we prevent mill use at
-#define MILLSTONE_STAMINA_USE 100 //How much stam damage is given to people when the mill is used
-
 /obj/structure/millstone
 	name = "millstone"
 	desc = "Two big disks of something heavy and tough. Put a plant between them and spin, and you'll end up with seeds and a really ground up plant."
@@ -16,6 +13,8 @@
 	drag_slowdown = 2
 	/// The maximum number of items this structure can store
 	var/maximum_contained_items = 10
+	/// Is the millstone processing plants? If true, prevents most interactions with the millstone
+	var/in_use = FALSE
 
 /obj/structure/millstone/examine(mob/user)
 	. = ..()
@@ -50,6 +49,10 @@
 	return ..()
 
 /obj/structure/millstone/click_alt(mob/user)
+	if(in_use) // If the millstone is currently in use by someone then we cannot use it
+		balloon_alert(user, "millstone busy")
+		return CLICK_ACTION_BLOCKING
+
 	if(!length(contents))
 		balloon_alert(user, "nothing inside!")
 		return CLICK_ACTION_BLOCKING
@@ -59,6 +62,9 @@
 	return CLICK_ACTION_SUCCESS
 
 /obj/structure/millstone/click_ctrl_shift(mob/user)
+	if(in_use) // If the millstone is currently in use by someone then we cannot use it
+		balloon_alert(user, "millstone busy")
+		return
 	set_anchored(!anchored)
 	balloon_alert(user, "[anchored ? "secured" : "unsecured"]")
 
@@ -71,6 +77,10 @@
 		target_item.forceMove(get_turf(src))
 
 /obj/structure/millstone/attack_hand_secondary(mob/user, list/modifiers)
+	if(in_use) // If the millstone is currently in use by someone then we cannot use it
+		balloon_alert(user, "millstone busy")
+		return
+
 	. = ..()
 	if(. == SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN)
 		return
@@ -82,6 +92,10 @@
 	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
 /obj/structure/millstone/crowbar_act(mob/living/user, obj/item/tool)
+	if(in_use) // If the millstone is currently in use by someone then we cannot use it
+		balloon_alert(user, "millstone busy")
+		return
+
 	. = ..()
 	balloon_alert_to_viewers("disassembling...")
 	if(!do_after(user, 2 SECONDS, src))
@@ -89,6 +103,10 @@
 	deconstruct(TRUE)
 
 /obj/structure/millstone/attackby(obj/item/attacking_item, mob/user)
+	if(in_use) // If the millstone is currently in use by someone then we cannot use it
+		balloon_alert(user, "millstone busy")
+		return
+
 	if(istype(attacking_item, /obj/item/storage/bag))
 		if(length(contents) >= maximum_contained_items)
 			balloon_alert(user, "already full")
@@ -125,12 +143,12 @@
 
 /// Takes the content's seeds and spits them out on the turf, as well as grinding whatever the contents may be
 /obj/structure/millstone/proc/mill_it_up(mob/living/carbon/human/user)
-	if(!length(contents))
-		balloon_alert(user, "nothing to mill")
+	if(in_use) // If the millstone is currently in use by someone then we cannot use it
+		balloon_alert(user, "millstone busy")
 		return
 
-	if(user.getStaminaLoss() > MILLSTONE_STAMINA_MINIMUM)
-		balloon_alert(user, "too tired")
+	if(!length(contents))
+		balloon_alert(user, "nothing to mill")
 		return
 
 	if(!length(contents) || !in_range(src, user))
@@ -138,19 +156,18 @@
 
 	balloon_alert_to_viewers("grinding...")
 
+	in_use = TRUE
+
 	flick("millstone_spin", src)
 	playsound(src, 'sound/effects/stonedoor_openclose.ogg', 50, TRUE)
 
-	user.adjustStaminaLoss(MILLSTONE_STAMINA_USE) // Prevents spamming it
-
 	if(!do_after(user, 5 SECONDS, target = src))
 		balloon_alert_to_viewers("stopped grinding")
+		in_use = FALSE
 		return
 
+	in_use = FALSE
 	for(var/target_item as anything in contents)
 		seedify(target_item, t_max = 1)
 
 	balloon_alert_to_viewers("finished grinding")
-
-#undef MILLSTONE_STAMINA_MINIMUM
-#undef MILLSTONE_STAMINA_USE
