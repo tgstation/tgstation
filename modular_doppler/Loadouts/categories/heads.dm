@@ -1,7 +1,3 @@
-/datum/loadout_item/head/kitty
-	name = "Kitty Ears"
-	item_path = /obj/item/clothing/head/costume/kitty
-
 /datum/loadout_item/head/chicken
 	name = "Chicken Hat"
 	item_path = /obj/item/clothing/head/costume/chicken
@@ -9,10 +5,6 @@
 /datum/loadout_item/head/griffin
 	name = "Griffin Hat"
 	item_path = /obj/item/clothing/head/costume/griffin
-
-/datum/loadout_item/head/rabbit
-	name = "Rabbit Ears"
-	item_path = /obj/item/clothing/head/costume/rabbitears
 
 /datum/loadout_item/head/tv_head
 	name = "TV Head"
