@@ -15,8 +15,6 @@ GLOBAL_LIST_INIT(duplicate_forbidden_vars, list(
 	"contents",
 	"cooldowns",
 	"_datum_components",
-	"external_organs",
-	"external_organs_slot",
 	"group",
 	"hand_bodyparts",
 	"held_items",
