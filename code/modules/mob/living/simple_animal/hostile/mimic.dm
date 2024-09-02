@@ -38,8 +38,6 @@ GLOBAL_LIST_INIT(animatable_blacklist, typecacheof(list(
 	faction = list(FACTION_MIMIC)
 	move_to_delay = 9
 	del_on_death = 1
-	shadow_type = SHADOW_NONE // crates dont have shadows
-
 	///A cap for items in the mimic. Prevents the mimic from eating enough stuff to cause lag when opened.
 	var/storage_capacity = 50
 	///A cap for mobs. Mobs count towards the item cap. Same purpose as above.
