@@ -21,7 +21,7 @@
 	var/immerse_overlay_color = "#5AAA88"
 
 	/// Fishing element for this specific water tile
-	var/datum/fish_source/fishing_datum = /datum/fish_source/portal
+	var/datum/fish_source/fishing_datum = /datum/fish_source/river
 
 /turf/open/water/Initialize(mapload)
 	. = ..()
