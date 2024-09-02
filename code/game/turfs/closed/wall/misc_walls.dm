@@ -2,9 +2,11 @@
 	name = "runed metal wall"
 	desc = "A cold metal wall engraved with indecipherable symbols. Studying them causes your head to pound."
 	icon = 'icons/turf/walls/cult_wall.dmi'
+	icon_state = "cult_wall-0"
+	base_icon_state = "cult_wall"
 	turf_flags = IS_SOLID
-	smoothing_groups = SMOOTH_GROUP_WALLS + SMOOTH_GROUP_TALL_WALLS + SMOOTH_GROUP_CLOSED_TURFS + SMOOTH_GROUP_BOSS_WALLS
-	canSmoothWith = SMOOTH_GROUP_WALLS + SMOOTH_GROUP_BOSS_WALLS
+	smoothing_flags = SMOOTH_BITMASK
+	canSmoothWith = null
 	sheet_type = /obj/item/stack/sheet/runed_metal
 	sheet_amount = 1
 	girder_type = /obj/structure/girder/cult
@@ -28,20 +30,19 @@
 	new /obj/effect/temp_visual/cult/turf(get_turf(src))
 
 /turf/closed/wall/ice
-	icon = 'icons/turf/walls/iced_metal_wall.dmi'
+	icon = 'icons/turf/walls/icedmetal_wall.dmi'
+	icon_state = "icedmetal_wall-0"
+	base_icon_state = "icedmetal_wall"
 	desc = "A wall covered in a thick sheet of ice."
 	turf_flags = IS_SOLID
+	smoothing_flags = SMOOTH_BITMASK
+	canSmoothWith = null
 	rcd_memory = null
 	hardness = 35
 	slicing_duration = 150 //welding through the ice+metal
 	bullet_sizzle = TRUE
 
 /turf/closed/wall/rust
-	name = "rusted wall"
-	desc = "A rusted metal wall."
-	icon = 'icons/turf/walls/rusty_wall.dmi'
-	smoothing_flags = SMOOTH_BITMASK
-	hardness = 45
 	//SDMM supports colors, this is simply for easier mapping
 	//and should be removed on initialize
 	color = MAP_SWITCH(null, COLOR_ORANGE_BROWN)
@@ -58,11 +59,10 @@
 	AddElement(/datum/element/rust/heretic)
 
 /turf/closed/wall/r_wall/rust
-	name = "rusted reinforced wall"
-	desc = "A huge chunk of rusted reinforced metal."
-	icon = 'icons/turf/walls/rusty_reinforced_wall.dmi'
-	smoothing_flags = SMOOTH_BITMASK
-	hardness = 15
+	//SDMM supports colors, this is simply for easier mapping
+	//and should be removed on initialize
+	color = MAP_SWITCH(null, COLOR_ORANGE_BROWN)
+	base_decon_state = "rusty_r_wall"
 
 /turf/closed/wall/r_wall/rust/Initialize(mapload)
 	. = ..()
@@ -80,18 +80,20 @@
 	name = "clockwork wall"
 	desc = "A huge chunk of bronze, decorated like gears and cogs."
 	icon = 'icons/turf/walls/clockwork_wall.dmi'
+	icon_state = "clockwork_wall-0"
+	base_icon_state = "clockwork_wall"
 	turf_flags = IS_SOLID
 	smoothing_flags = SMOOTH_BITMASK
 	sheet_type = /obj/item/stack/sheet/bronze
 	sheet_amount = 2
 	girder_type = /obj/structure/girder/bronze
-	smoothing_groups = SMOOTH_GROUP_CLOCK_WALLS + SMOOTH_GROUP_WALLS + SMOOTH_GROUP_TALL_WALLS + SMOOTH_GROUP_CLOSED_TURFS
-	canSmoothWith = SMOOTH_GROUP_CLOCK_WALLS
 
 /turf/closed/wall/rock
 	name = "reinforced rock"
 	desc = "It has metal struts that need to be welded away before it can be mined."
-	icon = 'icons/turf/walls/reinforced_red_rock_wall.dmi'
+	icon = 'icons/turf/walls/reinforced_rock.dmi'
+	icon_state = "porous_rock-0"
+	base_icon_state = "porous_rock"
 	turf_flags = NO_RUST
 	sheet_amount = 1
 	hardness = 50
@@ -112,14 +114,6 @@
 	smoothing_flags = NONE
 	canSmoothWith = null
 	smoothing_groups = null
-	use_splitvis = FALSE
-
-/turf/closed/wall/fake_hierophant
-	name = "vibrant wall"
-	desc = "A wall made out of a strange metal. The squares on it pulse in a predictable pattern."
-	icon = 'icons/turf/walls/hierophant_wall.dmi'
-	smoothing_groups = SMOOTH_GROUP_HIERO_WALL + SMOOTH_GROUP_TALL_WALLS
-	canSmoothWith = SMOOTH_GROUP_HIERO_WALL
 
 /turf/closed/wall/material/meat
 	name = "living wall"
