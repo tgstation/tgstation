@@ -279,7 +279,7 @@
 	/// Tracks the antag datum's 'team' for showing in the ghost orbit menu
 	var/datum/team/primitive_catgirls/feline_team
 
-	var/list/antag_recipes = list(
+	antag_recipes = list(
 		/datum/crafting_recipe/boneaxe,
 		/datum/crafting_recipe/bonespear,
 		/datum/crafting_recipe/bonedagger,
@@ -289,16 +289,6 @@
 		/datum/crafting_recipe/white_pelt_bed,
 		/datum/crafting_recipe/frozen_breath,
 	)
-
-/datum/antagonist/primitive_catgirl/on_gain()
-	. = ..()
-	for(var/recipe_datum in antag_recipes)
-		owner.teach_crafting_recipe(recipe_datum)
-
-/datum/antagonist/primitive_catgirl/on_removal()
-	. = ..()
-	for(var/recipe_datum in antag_recipes)
-		owner.unteach_crafting_recipe(recipe_datum)
 
 /datum/antagonist/primitive_catgirl/Destroy()
 	feline_team = null
