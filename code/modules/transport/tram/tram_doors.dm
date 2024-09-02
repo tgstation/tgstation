@@ -1,11 +1,12 @@
+#define TRAM_DOOR_WARNING_TIME (0.9 SECONDS)
+#define TRAM_DOOR_CYCLE_TIME (0.6 SECONDS)
+#define TRAM_DOOR_CRUSH_TIME (0.7 SECONDS)
 #define TRAM_DOOR_RECYCLE_TIME (2.7 SECONDS)
 
 /obj/machinery/door/airlock/tram
 	name = "tram door"
 	icon = 'icons/obj/doors/airlocks/tram/tram.dmi'
 	overlays_file = 'icons/obj/doors/airlocks/tram/tram-overlays.dmi'
-	// YET TO BE UPDATED TO 3/4ths
-	short_rendering = TRUE
 	multi_tile = TRUE
 	opacity = FALSE
 	assemblytype = /obj/structure/door_assembly/multi_tile/door_assembly_tram
@@ -16,8 +17,6 @@
 	doorOpen = 'sound/machines/tramopen.ogg'
 	doorClose = 'sound/machines/tramclose.ogg'
 	autoclose = FALSE
-	greyscale_config = null
-	greyscale_colors = null
 	/// Weakref to the tram we're attached
 	var/datum/weakref/transport_ref
 	var/retry_counter
@@ -29,28 +28,6 @@
 	if(!id_tag)
 		id_tag = assign_random_name()
 
-/obj/machinery/door/airlock/tram/animation_length(animation)
-	switch(animation)
-		if(DOOR_OPENING_ANIMATION)
-			return 1.3 SECONDS
-		if(DOOR_CLOSING_ANIMATION)
-			return 2 SECONDS
-
-/obj/machinery/door/airlock/tram/animation_segment_delay(animation)
-	switch(animation)
-		if(AIRLOCK_OPENING_TRANSPARENT)
-			return 0.6 SECONDS
-		if(AIRLOCK_OPENING_PASSABLE)
-			return 0.9 SECONDS
-		if(AIRLOCK_OPENING_FINISHED)
-			return 0.9 SECONDS
-		if(AIRLOCK_CLOSING_UNPASSABLE)
-			return 0.9 SECONDS
-		if(AIRLOCK_CLOSING_OPAQUE)
-			return 0.7 SECONDS
-		if(AIRLOCK_CLOSING_FINISHED)
-			return 0.9 SECONDS
-
 /obj/machinery/door/airlock/tram/open(forced = DEFAULT_DOOR_CHECKS)
 	if(operating || welded || locked || seal)
 		return FALSE
@@ -61,16 +38,16 @@
 	if(forced == DEFAULT_DOOR_CHECKS && (!hasPower() || wires.is_cut(WIRE_OPEN)))
 		return FALSE
 
-	SEND_SIGNAL(src, COMSIG_AIRLOCK_OPEN, forced)
+	SEND_SIGNAL(src, COMSIG_AIRLOCK_OPEN, FALSE)
 	operating = TRUE
-	update_icon(ALL, AIRLOCK_OPENING)
+	update_icon(ALL, AIRLOCK_OPENING, TRUE)
 
 	if(forced >= BYPASS_DOOR_CHECKS)
 		playsound(src, 'sound/machines/airlockforced.ogg', vol = 40, vary = FALSE)
-		sleep(animation_segment_delay(AIRLOCK_OPENING_TRANSPARENT))
+		sleep(TRAM_DOOR_CYCLE_TIME)
 	else
 		playsound(src, doorOpen, vol = 40, vary = FALSE)
-		sleep(animation_segment_delay(AIRLOCK_OPENING_PASSABLE))
+		sleep(TRAM_DOOR_WARNING_TIME)
 
 	set_density(FALSE)
 	if(!isnull(filler))
@@ -78,10 +55,10 @@
 	update_freelook_sight()
 	flags_1 &= ~PREVENT_CLICK_UNDER_1
 	air_update_turf(TRUE, FALSE)
-	sleep(animation_segment_delay(AIRLOCK_OPENING_FINISHED))
+	sleep(TRAM_DOOR_WARNING_TIME)
 	layer = OPEN_DOOR_LAYER
+	update_icon(ALL, AIRLOCK_OPEN, TRUE)
 	operating = FALSE
-	update_icon(ALL, AIRLOCK_OPEN)
 
 	return TRUE
 
@@ -117,8 +94,8 @@
 	playsound(src, doorClose, vol = 40, vary = FALSE)
 	operating = TRUE
 	layer = CLOSED_DOOR_LAYER
-	update_icon(ALL, AIRLOCK_CLOSING)
-	sleep(animation_segment_delay(AIRLOCK_CLOSING_UNPASSABLE))
+	update_icon(ALL, AIRLOCK_CLOSING, 1)
+	sleep(TRAM_DOOR_WARNING_TIME)
 	if(!hungry_door)
 		for(var/turf/checked_turf in locs)
 			for(var/atom/movable/blocker in checked_turf)
@@ -126,11 +103,11 @@
 					say("Please stand clear of the doors!")
 					playsound(src, 'sound/machines/buzz-sigh.ogg', 60, vary = FALSE, extrarange = SHORT_RANGE_SOUND_EXTRARANGE)
 					layer = OPEN_DOOR_LAYER
+					update_icon(ALL, AIRLOCK_OPEN, 1)
 					operating = FALSE
-					update_icon(ALL, AIRLOCK_OPEN)
 					return FALSE
 	SEND_SIGNAL(src, COMSIG_AIRLOCK_CLOSE)
-	sleep(animation_segment_delay(AIRLOCK_CLOSING_OPAQUE))
+	sleep(TRAM_DOOR_CRUSH_TIME)
 	set_density(TRUE)
 	if(!isnull(filler))
 		filler.set_density(TRUE)
@@ -139,9 +116,9 @@
 	air_update_turf(TRUE, TRUE)
 	crush()
 	crushing_in_progress = FALSE
-	sleep(animation_segment_delay(AIRLOCK_CLOSING_FINISHED))
+	sleep(TRAM_DOOR_WARNING_TIME)
+	update_icon(ALL, AIRLOCK_CLOSED, 1)
 	operating = FALSE
-	update_icon(ALL, AIRLOCK_CLOSED)
 	retry_counter = 0
 	return TRUE
 
@@ -260,4 +237,7 @@
 	open(forced = BYPASS_DOOR_CHECKS)
 	return
 
+#undef TRAM_DOOR_WARNING_TIME
+#undef TRAM_DOOR_CYCLE_TIME
+#undef TRAM_DOOR_CRUSH_TIME
 #undef TRAM_DOOR_RECYCLE_TIME
