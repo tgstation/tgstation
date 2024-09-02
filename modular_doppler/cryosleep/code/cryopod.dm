@@ -154,7 +154,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/computer/cryopod, 32)
 	/// Whether the cryopod respects the minimum time someone has to be disconnected before they can be put into cryo by another player
 	var/allow_timer_override = FALSE
 	/// Minimum time for someone to be SSD before another player can cryo them.
-	var/ssd_time = 30 MINUTES //Replace with "cryo_min_ssd_time" CONFIG
+	var/ssd_time = CONFIG_GET(number/cryo_min_ssd_time) //"cryo_min_ssd_time" in CONFIG
 
 	/// Time until despawn when a mob enters a cryopod. You cannot other people in pods unless they're catatonic.
 	var/time_till_despawn = 30 SECONDS

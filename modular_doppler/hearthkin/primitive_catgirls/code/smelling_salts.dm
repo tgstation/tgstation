@@ -66,5 +66,4 @@
 		carbon_target.grab_ghost()
 
 	carbon_target.revive()
-	// to_chat(carbon_target, span_userdanger("[CONFIG_GET(string/blackoutpolicy)]"))
 	log_combat(user, carbon_target, "revived", src)
