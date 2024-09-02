@@ -66,7 +66,7 @@ xxx xxx xxx
 		var/right = turn(dir, -90)
 		var/opposite = REVERSE_DIR(dir)
 		// Need to encode diagonals here because it's possible, even if it is always false
-		var/list/acceptable_adjacents = new /list(largest_dir + 1)
+		var/list/acceptable_adjacents = new /list(largest_dir)
 		// Alright, what directions are acceptable to us
 		for(var/connectable_dir in (cardinals + NONE))
 			// And what border objects INSIDE those directions are alright
@@ -84,6 +84,7 @@ xxx xxx xxx
 			else if (connectable_dir == right)
 				smoothable_dirs[dir] = right
 			// If it's straight on we'll include our direction as a link
+			// Then include the two edges on the other side as diagonals
 			else if(connectable_dir == dir)
 				smoothable_dirs[opposite] = dir
 				smoothable_dirs[left] = dir_to_junction(dir | left)
@@ -458,43 +459,8 @@ xxx xxx xxx
 	#undef BITMASK_FOUND
 	#undef SEARCH_ADJ_IN_DIR
 
-GLOBAL_LIST_INIT(possible_smoothing_junctions, all_smoothing_junctions())
-
-/proc/all_smoothing_junctions()
-	var/list/junctions = list()
-	for(var/base in 0 to NORTH_JUNCTION|SOUTH_JUNCTION|EAST_JUNCTION|WEST_JUNCTION) // all the cardinals
-		junctions += base
-		if(base == 0)
-			continue
-		// Now we check for matching diagonals
-		if(base & NORTH_JUNCTION)
-			if(base & WEST_JUNCTION)
-				junctions += base | NORTHWEST_JUNCTION
-			if(base & EAST_JUNCTION)
-				junctions += base | NORTHEAST_JUNCTION
-		if(base & SOUTH_JUNCTION)
-			if(base & WEST_JUNCTION)
-				junctions += base | SOUTHWEST_JUNCTION
-			if(base & EAST_JUNCTION)
-				junctions += base | SOUTHEAST_JUNCTION
-	return junctions
-
-/// Takes an input smoothing junction, filters out the components of it that are invalid according to how dmis are built
-/proc/make_smoothing_junction_valid(input_junction)
-	// You need both cardinal junctions to allow a corresponding diagonal junction
-	if(input_junction & NORTHWEST_JUNCTION && (input_junction & (NORTH_JUNCTION|WEST_JUNCTION)) != (NORTH_JUNCTION|WEST_JUNCTION))
-		input_junction &= ~NORTHWEST_JUNCTION
-	if(input_junction & NORTHEAST_JUNCTION && (input_junction & (NORTH_JUNCTION|EAST_JUNCTION)) != (NORTH_JUNCTION|EAST_JUNCTION))
-		input_junction &= ~NORTHEAST_JUNCTION
-	if(input_junction & SOUTHWEST_JUNCTION && (input_junction & (SOUTH_JUNCTION|WEST_JUNCTION)) != (SOUTH_JUNCTION|WEST_JUNCTION))
-		input_junction &= ~SOUTHWEST_JUNCTION
-	if(input_junction & SOUTHEAST_JUNCTION && (input_junction & (SOUTH_JUNCTION|EAST_JUNCTION)) != (SOUTH_JUNCTION|EAST_JUNCTION))
-		input_junction &= ~SOUTHEAST_JUNCTION
-	return input_junction
-
 ///Changes the icon state based on the new junction bitmask
 /atom/proc/set_smoothed_icon_state(new_junction)
-	SEND_SIGNAL(src, COMSIG_ATOM_SET_SMOOTHED_ICON_STATE, new_junction)
 	. = smoothing_junction
 	smoothing_junction = new_junction
 	icon_state = "[base_icon_state]-[smoothing_junction]"
@@ -502,7 +468,6 @@ GLOBAL_LIST_INIT(possible_smoothing_junctions, all_smoothing_junctions())
 
 /turf/closed/set_smoothed_icon_state(new_junction)
 	// Avoid calling ..() here to avoid setting icon_state twice, which is expensive given how hot this proc is
-	SEND_SIGNAL(src, COMSIG_ATOM_SET_SMOOTHED_ICON_STATE, new_junction) // I know I know
 	var/old_junction = smoothing_junction
 	smoothing_junction = new_junction
 
@@ -689,7 +654,6 @@ GLOBAL_LIST_INIT(possible_smoothing_junctions, all_smoothing_junctions())
 	smoothing_flags = SMOOTH_CORNERS|SMOOTH_DIAGONAL_CORNERS|SMOOTH_BORDER
 	smoothing_groups = null
 	canSmoothWith = null
-	use_splitvis = FALSE
 
 #undef NO_ADJ_FOUND
 #undef ADJ_FOUND
