@@ -1,7 +1,7 @@
 /obj/structure/chair/pew
 	name = "wooden pew"
 	desc = "Kneel here and pray."
-	icon = 'icons/obj/structures/chairs_wide.dmi'
+	icon = 'icons/obj/chairs_wide.dmi'
 	icon_state = "pewmiddle"
 	resistance_flags = FLAMMABLE
 	max_integrity = 70
@@ -22,13 +22,21 @@
 	gen_armrest()
 	return ..()
 
+/obj/structure/chair/pew/left/on_changed_z_level(turf/old_turf, turf/new_turf, same_z_layer, notify_contents)
+	if(same_z_layer)
+		return ..()
+	cut_overlay(leftpewarmrest)
+	QDEL_NULL(leftpewarmrest)
+	gen_armrest()
+	return ..()
+
 /obj/structure/chair/pew/left/proc/gen_armrest()
 	leftpewarmrest = GetLeftPewArmrest()
 	leftpewarmrest.layer = ABOVE_MOB_LAYER
 	update_leftpewarmrest()
 
 /obj/structure/chair/pew/left/proc/GetLeftPewArmrest()
-	return mutable_appearance('icons/obj/structures/chairs_wide.dmi', "pewend_left_armrest")
+	return mutable_appearance('icons/obj/chairs_wide.dmi', "pewend_left_armrest")
 
 /obj/structure/chair/pew/left/Destroy()
 	QDEL_NULL(leftpewarmrest)
@@ -57,13 +65,19 @@
 	gen_armrest()
 	return ..()
 
+/obj/structure/chair/pew/right/on_changed_z_level(turf/old_turf, turf/new_turf, same_z_layer, notify_contents)
+	cut_overlay(rightpewarmrest)
+	QDEL_NULL(rightpewarmrest)
+	gen_armrest()
+	return ..()
+
 /obj/structure/chair/pew/right/proc/gen_armrest()
 	rightpewarmrest = GetRightPewArmrest()
 	rightpewarmrest.layer = ABOVE_MOB_LAYER
 	update_rightpewarmrest()
 
 /obj/structure/chair/pew/right/proc/GetRightPewArmrest()
-	return mutable_appearance('icons/obj/structures/chairs_wide.dmi', "pewend_right_armrest")
+	return mutable_appearance('icons/obj/chairs_wide.dmi', "pewend_right_armrest")
 
 /obj/structure/chair/pew/right/Destroy()
 	QDEL_NULL(rightpewarmrest)
