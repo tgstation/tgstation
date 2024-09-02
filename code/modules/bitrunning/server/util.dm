@@ -1,4 +1,4 @@
-#define MAX_DISTANCE 4 // How far crates can spawn from the server
+#define MAX_DISTANCE 6 // How far crates can spawn from the server
 
 
 /// Resets the cooldown state and updates icons

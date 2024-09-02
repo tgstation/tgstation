@@ -31,6 +31,8 @@
 	var/multiplayer_bonus = 1.1
 	///The radio the console can speak into
 	var/obj/item/radio/radio
+	/// What radio channel should we be using?
+	var/radio_channel_to_use = RADIO_CHANNEL_SUPPLY
 	/// The amount of points in the system, used to purchase maps
 	var/points = 0
 	/// Keeps track of the number of times someone has built a hololadder
@@ -64,7 +66,10 @@
 	. = ..()
 
 	radio = new(src)
-	radio.keyslot = new /obj/item/encryptionkey/headset_cargo()
+	if(!bitrunning_network == BITRUNNER_DOMAIN_SECURITY)
+		radio.keyslot = new /obj/item/encryptionkey/headset_cargo()
+	else
+		radio.keyslot = new /obj/item/encryptionkey/headset_sec
 	radio.set_listening(FALSE)
 	radio.recalculateChannels()
 
@@ -197,3 +202,20 @@
 	bitrunning_network = BITRUNNER_DOMAIN_SECURITY
 	bitrunning_id = "torment_nexus"
 	broadcasting = TRUE // lets the Warden monitor them in their pod/lets the crew watch them work so they know punishment is real
+	radio_channel_to_use = RADIO_CHANNEL_SECURITY
+
+/obj/machinery/quantum_server/prisoner/solo1
+	name = "torment nexus #1"
+	bitrunning_id = "solo_nexus_1"
+
+/obj/machinery/quantum_server/prisoner/solo2
+	name = "torment nexus #2"
+	bitrunning_id = "solo_nexus_2"
+
+/obj/machinery/quantum_server/prisoner/solo3
+	name = "torment nexus #3"
+	bitrunning_id = "solo_nexus_3"
+
+/obj/machinery/quantum_server/prisoner/group
+	name = "co-operative torment nexus"
+	bitrunning_id = "coop_nexus"

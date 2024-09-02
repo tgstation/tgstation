@@ -338,7 +338,7 @@
 /area/virtual_domain)
 "rc" = (
 /obj/effect/decal/cleanable/blood/splatter,
-/turf/closed/indestructible/reinforced,
+/turf/closed/wall/r_wall,
 /area/virtual_domain)
 "re" = (
 /obj/structure/chair/comfy/black{
@@ -492,7 +492,7 @@
 /turf/open/floor/iron,
 /area/virtual_domain)
 "vG" = (
-/obj/structure/closet/secure_closet/freezer/kitchen,
+/obj/bitrunning/animatronic_movement_node/engineering/kitchen,
 /turf/open/floor/iron/kitchen/small,
 /area/virtual_domain)
 "vR" = (
@@ -713,7 +713,6 @@
 /area/virtual_domain)
 "Gn" = (
 /obj/machinery/light/built/directional/east,
-/obj/effect/decal/cleanable/food/tomato_smudge,
 /obj/machinery/camera/directional/east{
 	c_tag = "Kitchen"
 	},
@@ -987,9 +986,7 @@
 /turf/open/floor/iron/kitchen,
 /area/virtual_domain)
 "Sr" = (
-/obj/effect/decal/cleanable/blood/footprints{
-	dir = 4
-	},
+/obj/machinery/telecomms/relay/preset/auto/bitrunning,
 /turf/open/floor/iron/kitchen,
 /area/virtual_domain)
 "SE" = (
@@ -1916,7 +1913,7 @@ Fc
 Fc
 Fc
 Fc
-Cm
+Fc
 Cm
 Cm
 Cm
@@ -1961,9 +1958,9 @@ Dx
 YT
 vw
 Fc
-Cm
-Cm
-Cm
+Ux
+Ux
+Fc
 Cm
 Cm
 Cm
@@ -2008,9 +2005,9 @@ TW
 JO
 Vd
 Fc
-Cm
-Cm
-Cm
+Ux
+Sr
+Fc
 Cm
 Cm
 Cm
@@ -2055,9 +2052,9 @@ ud
 HE
 vw
 Fc
-Cm
-Cm
-Cm
+Ux
+Ux
+Fc
 Cm
 Cm
 Cm
@@ -2104,7 +2101,7 @@ Fc
 Fc
 Fc
 Fc
-Cm
+Fc
 Cm
 Cm
 Cm
@@ -2421,7 +2418,7 @@ aV
 aV
 aV
 FA
-Yx
+vG
 OM
 Fc
 Cm
@@ -2467,7 +2464,7 @@ Ux
 Fc
 Fc
 Fc
-vG
+aV
 aV
 Zf
 Fc
@@ -2505,7 +2502,7 @@ Fc
 Fc
 Fc
 Ux
-Sr
+Ux
 Fc
 Fc
 Fc
@@ -2514,7 +2511,7 @@ Fc
 Fc
 Cm
 Fc
-vG
+Yx
 aV
 fy
 Fc
@@ -2552,7 +2549,7 @@ Cm
 Cm
 Fc
 Ux
-Sr
+Ux
 Fc
 Cm
 Cm

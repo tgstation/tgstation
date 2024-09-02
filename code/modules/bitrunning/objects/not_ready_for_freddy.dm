@@ -218,6 +218,8 @@
 	return return_overlays
 
 /obj/machinery/digital_clock/bitrunner_power
+	name = "power meter"
+	desc = "Keep track of the pizzaria's power stores."
 	icon = 'icons/obj/machines/bitrunning.dmi'
 	icon_state = "power_base"
 	var/obj/bitrunning/animatronic_controller/my_controller
@@ -481,7 +483,10 @@
 		standard_module.forceMove(get_turf(standard_kill_node))
 		standard_module.set_light_on(TRUE)
 		standard_module.setDir(NORTH)
-		playsound(standard_module, 'sound/misc/bitrunner/standard_jingle.ogg', 100, FALSE, use_reverb = TRUE, channel = CHANNEL_JUKEBOX)
+		if(prob(1))
+			playsound(standard_module, 'sound/misc/bitrunner/standard_jingle_easter_egg.ogg', 100, FALSE, use_reverb = TRUE, channel = CHANNEL_JUKEBOX)
+		else
+			playsound(standard_module, 'sound/misc/bitrunner/standard_jingle_normal.ogg', 100, FALSE, use_reverb = TRUE, channel = CHANNEL_JUKEBOX)
 		deltimer(lightsout_1_timer)
 		lightsout_2_timer = addtimer(CALLBACK(src, PROC_REF(lightout_2_roll)), 5 SECONDS, TIMER_CLIENT_TIME | TIMER_STOPPABLE | TIMER_LOOP | TIMER_DELETE_ME)
 		for(var/i in 1 to 25)
@@ -672,6 +677,11 @@
 	desc = "After their retirement from the station, the Security Cyborg now keeps the peace at the pizza parlor and makes sure diners are happy and safe!"
 	movespeed = 1 // secborg go zoom
 	side_we_hate = BITRUNNING_DOORBLOCK_RIGHT
+
+
+/obj/bitrunning/animatronic/security/Initialize(mapload)
+	. = ..()
+	AddElement(/datum/element/footstep, FOOTSTEP_OBJ_SERVO, 1, -6, sound_vary = TRUE)
 
 /obj/bitrunning/animatronic/security/can_move()
 	if(current_node.node_id != "stage3_security") // still on stage, we can camera stall him

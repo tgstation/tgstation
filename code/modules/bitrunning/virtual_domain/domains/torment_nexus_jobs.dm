@@ -1,13 +1,14 @@
-/datum/lazy_template/virtual_domain/janitor_work_test
+/datum/lazy_template/virtual_domain/janitor_work
 	name = "Janitorial Work: Test"
-	desc = "Cremwmeber causing janitorial issues? Teach them how to clean up."
+	desc = "Crewmember causing janitorial issues? Teach them how to clean up."
 	help_text = "Test domain for janitorial work."
 	key = "janitor_work_test"
 	map_name = "janitor_work_test"
 	bitrunning_network = BITRUNNER_DOMAIN_SECURITY
 	forced_outfit = /datum/outfit/job/prisoner/janitor
+	test_only = TRUE
 
-/datum/lazy_template/virtual_domain/janitor_work_test/setup_domain(list/created_atoms)
+/datum/lazy_template/virtual_domain/janitor_work/setup_domain(list/created_atoms)
 	for(var/obj/effect/landmark/bitrunning/bitrunner_spawn/spawner in created_atoms)
 		custom_spawns += spawner
 
@@ -27,10 +28,20 @@
 	uniform = /obj/item/clothing/under/rank/prisoner
 	head = /obj/item/clothing/head/soft/purple
 	belt = /obj/item/storage/belt/janitor
-	ears = null
+	ears = /obj/item/radio/headset
 	shoes = /obj/item/clothing/shoes/galoshes
 	skillchips = null
 	backpack_contents = null
+
+/datum/lazy_template/virtual_domain/janitor_work/mischief
+	name = "Janitorial Work: Mischief"
+	desc = "A syndicate incursion in the Cargo Bay was put down. Clean up the revolt."
+	help_text = "Take things one room at a time. Pace yourself and you will accomplish the work."
+	key = "janitor_work_mischief"
+	map_name = "janitor_work_mischief"
+	reward_points = BITRUNNER_REWARD_MIN
+	difficulty = BITRUNNER_DIFFICULTY_NONE
+	test_only = FALSE
 
 /datum/lazy_template/virtual_domain/customer_push_test
 	name = "Tourist Assistance: Test"
@@ -51,7 +62,7 @@
 	suit = /obj/item/clothing/suit/apron
 	uniform = /obj/item/clothing/under/rank/prisoner
 	head = /obj/item/clothing/head/collectable/chef
-	ears = null
+	ears = /obj/item/radio/headset
 	shoes = /obj/item/clothing/shoes/laceup
 	skillchips = null
 	backpack_contents = null
@@ -76,7 +87,7 @@
 	uniform = /obj/item/clothing/under/rank/prisoner
 	head = null
 	glasses = /obj/item/clothing/glasses/science
-	ears = null
+	ears = /obj/item/radio/headset
 	shoes = /obj/item/clothing/shoes/sneakers/purple
 	skillchips = null
 	backpack_contents = null
@@ -104,7 +115,7 @@
 	name = "Night Guard"
 	uniform = /obj/item/clothing/under/rank/purple_guy
 	head = /obj/item/clothing/head/purple_guy
-	ears = null
+	ears = /obj/item/radio/headset
 	shoes = /obj/item/clothing/shoes/laceup
 	skillchips = null
 	backpack_contents = null

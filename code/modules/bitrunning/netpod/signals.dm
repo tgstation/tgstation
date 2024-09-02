@@ -36,6 +36,7 @@
 	account.bitrunning_points += reward_points * 100
 
 
+
 /// The domain has been fully purged, so we should double check our avatar is deleted
 /obj/machinery/netpod/proc/on_domain_scrubbed(datum/source)
 	SIGNAL_HANDLER

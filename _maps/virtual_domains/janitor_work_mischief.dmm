@@ -1,0 +1,1969 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"ak" = (
+/obj/structure/table,
+/obj/item/toner,
+/obj/item/hand_labeler,
+/obj/item/stack/package_wrap,
+/obj/item/stack/package_wrap,
+/obj/item/stack/package_wrap,
+/obj/item/storage/box,
+/obj/item/storage/box,
+/obj/item/storage/box,
+/obj/effect/spawner/random/bureaucracy/birthday_wrap,
+/obj/effect/turf_decal/tile/brown,
+/turf/open/floor/iron,
+/area/virtual_domain/fullbright)
+"bd" = (
+/obj/machinery/door/airlock/maintenance,
+/obj/structure/holosign/barrier,
+/turf/open/floor/plating,
+/area/virtual_domain/fullbright)
+"be" = (
+/obj/effect/mob_spawn/corpse/human/security,
+/obj/effect/decal/cleanable/blood/gibs/body,
+/turf/open/floor/iron,
+/area/virtual_domain/fullbright)
+"bw" = (
+/obj/effect/turf_decal/tile/brown{
+	dir = 8
+	},
+/obj/structure/bodycontainer/crematorium{
+	dir = 4;
+	id = "crematoriumBitrunning"
+	},
+/obj/machinery/button/crematorium/indestructible/directional/north{
+	id = "crematoriumBitrunning"
+	},
+/turf/open/floor/iron,
+/area/virtual_domain/fullbright)
+"ch" = (
+/obj/item/ammo_casing/shotgun/buckshot/spent,
+/obj/item/ammo_casing/shotgun/buckshot/spent,
+/obj/item/ammo_casing/shotgun/buckshot/spent,
+/obj/item/gun/ballistic/shotgun/sc_pump{
+	pixel_x = -12;
+	pixel_y = 5
+	},
+/obj/effect/decal/cleanable/blood/gibs/core,
+/obj/effect/decal/cleanable/blood/footprints,
+/obj/effect/decal/cleanable/blood/trails{
+	dir = 5
+	},
+/obj/effect/decal/cleanable/blood/trails,
+/turf/open/floor/iron,
+/area/virtual_domain/fullbright)
+"cn" = (
+/obj/machinery/door/airlock/mining/glass{
+	id_tag = "cargooffice";
+	name = "Cargo Office"
+	},
+/obj/structure/holosign/barrier,
+/turf/open/floor/iron,
+/area/virtual_domain/fullbright)
+"co" = (
+/obj/effect/turf_decal/delivery,
+/obj/effect/mob_spawn/corpse/human/cook,
+/obj/effect/decal/cleanable/blood/gibs,
+/obj/effect/decal/cleanable/blood/trails{
+	dir = 8
+	},
+/turf/open/floor/iron,
+/area/virtual_domain/fullbright)
+"cG" = (
+/obj/machinery/light/directional/north,
+/obj/machinery/digital_clock/directional/north,
+/obj/effect/decal/cleanable/blood/gibs,
+/turf/open/floor/iron,
+/area/virtual_domain/fullbright)
+"dh" = (
+/obj/effect/turf_decal/tile/brown{
+	dir = 8
+	},
+/obj/effect/decal/cleanable/blood/trails,
+/turf/open/floor/iron,
+/area/virtual_domain/fullbright)
+"di" = (
+/obj/effect/mob_spawn/corpse/human/security,
+/obj/item/gun/energy/laser{
+	pixel_x = -12;
+	pixel_y = -12
+	},
+/obj/effect/decal/cleanable/blood/footprints{
+	dir = 8
+	},
+/obj/effect/decal/cleanable/blood/trails{
+	dir = 4
+	},
+/turf/open/floor/iron,
+/area/virtual_domain/fullbright)
+"dX" = (
+/obj/effect/mob_spawn/corpse/human/security,
+/obj/item/gun/energy/laser{
+	pixel_x = 7;
+	pixel_y = -10
+	},
+/obj/effect/decal/cleanable/blood/footprints{
+	dir = 8
+	},
+/obj/effect/decal/cleanable/blood/trails{
+	dir = 4
+	},
+/obj/effect/decal/cleanable/blood,
+/turf/open/floor/iron,
+/area/virtual_domain/fullbright)
+"eC" = (
+/obj/structure/noticeboard/directional/north,
+/obj/effect/mob_spawn/corpse/human/charredskeleton,
+/obj/effect/decal/cleanable/ash/large,
+/obj/item/gun/ballistic/automatic/l6_saw/toy/unrestricted,
+/obj/item/ammo_casing/m7mm,
+/obj/item/ammo_casing/m7mm,
+/obj/item/ammo_casing/m7mm,
+/obj/item/ammo_casing/m7mm,
+/obj/item/ammo_casing/m7mm,
+/obj/item/ammo_casing/m7mm,
+/obj/item/ammo_casing/m7mm,
+/obj/item/ammo_casing/m7mm,
+/obj/item/ammo_casing/m7mm,
+/obj/item/ammo_casing/m7mm,
+/obj/item/ammo_casing/m7mm,
+/obj/item/ammo_casing/m7mm,
+/obj/item/ammo_casing/m7mm,
+/obj/item/ammo_casing/m7mm,
+/obj/item/ammo_casing/m7mm,
+/obj/item/ammo_casing/m7mm,
+/obj/item/ammo_casing/m7mm,
+/obj/item/ammo_casing/m7mm,
+/obj/item/ammo_casing/m7mm,
+/obj/item/ammo_casing/m7mm,
+/obj/item/ammo_casing/m7mm,
+/obj/item/ammo_casing/m7mm,
+/obj/item/ammo_casing/m7mm,
+/obj/item/ammo_casing/m7mm,
+/obj/item/ammo_casing/m7mm,
+/obj/item/ammo_casing/m7mm,
+/obj/item/ammo_casing/m7mm,
+/obj/item/ammo_casing/m7mm,
+/obj/item/ammo_casing/m7mm,
+/obj/item/ammo_casing/m7mm,
+/obj/item/ammo_casing/m7mm,
+/obj/item/ammo_casing/m7mm,
+/obj/item/ammo_casing/m7mm,
+/obj/item/ammo_casing/m7mm,
+/obj/item/ammo_casing/m7mm,
+/obj/item/ammo_casing/m7mm,
+/obj/item/ammo_casing/m7mm,
+/obj/item/ammo_casing/m7mm,
+/obj/item/ammo_casing/m7mm,
+/obj/item/ammo_casing/m7mm,
+/obj/item/ammo_casing/m7mm,
+/obj/item/ammo_casing/m7mm,
+/obj/item/ammo_casing/m7mm,
+/obj/item/ammo_casing/m7mm,
+/obj/item/ammo_casing/m7mm,
+/obj/item/ammo_casing/m7mm,
+/obj/item/ammo_casing/m7mm,
+/obj/item/ammo_casing/m7mm,
+/obj/item/ammo_casing/m7mm,
+/obj/item/ammo_casing/m7mm,
+/obj/item/ammo_casing/m7mm,
+/obj/item/ammo_casing/m7mm,
+/obj/item/ammo_casing/m7mm,
+/obj/item/ammo_casing/m7mm,
+/obj/item/ammo_casing/m7mm,
+/obj/item/ammo_casing/m7mm,
+/turf/open/floor/iron,
+/area/virtual_domain/fullbright)
+"eE" = (
+/obj/effect/turf_decal/tile/red/half/contrasted{
+	dir = 4
+	},
+/obj/effect/decal/cleanable/blood/trails,
+/obj/effect/decal/cleanable/blood/trails{
+	dir = 10
+	},
+/obj/effect/decal/cleanable/blood,
+/turf/open/floor/iron,
+/area/virtual_domain/fullbright)
+"fn" = (
+/obj/effect/turf_decal/bot,
+/obj/effect/mob_spawn/corpse/human/assistant,
+/obj/effect/decal/cleanable/blood/gibs,
+/turf/open/floor/iron,
+/area/virtual_domain/fullbright)
+"fw" = (
+/obj/effect/turf_decal/bot,
+/obj/structure/noticeboard/hop{
+	pixel_y = 36
+	},
+/obj/effect/decal/cleanable/blood/gibs,
+/obj/effect/mob_spawn/corpse/human/charredskeleton,
+/obj/item/gun/ballistic/shotgun/sc_pump{
+	pixel_x = -5;
+	pixel_y = -13
+	},
+/obj/item/ammo_casing/shotgun/buckshot/spent,
+/obj/item/ammo_casing/shotgun/buckshot/spent,
+/obj/effect/decal/cleanable/ash/large,
+/turf/open/floor/iron,
+/area/virtual_domain/fullbright)
+"gm" = (
+/obj/effect/turf_decal/tile/brown{
+	dir = 8
+	},
+/obj/effect/mob_spawn/corpse/human/security,
+/obj/effect/decal/cleanable/blood/footprints,
+/obj/effect/decal/cleanable/blood/footprints,
+/obj/effect/decal/cleanable/blood/trails,
+/obj/effect/decal/cleanable/blood,
+/turf/open/floor/iron,
+/area/virtual_domain/fullbright)
+"gJ" = (
+/turf/closed/indestructible/binary,
+/area/virtual_domain/fullbright)
+"gR" = (
+/turf/open/floor/plating,
+/area/virtual_domain/fullbright)
+"hH" = (
+/obj/effect/turf_decal/tile/brown/fourcorners,
+/obj/effect/turf_decal/stripes/white/line{
+	dir = 4
+	},
+/obj/effect/turf_decal/stripes/white/line{
+	dir = 8
+	},
+/obj/effect/decal/cleanable/blood/footprints{
+	dir = 8
+	},
+/obj/machinery/door/airlock/mining/glass{
+	id_tag = "cargooffice";
+	name = "Cargo Office"
+	},
+/turf/open/floor/iron/dark/textured,
+/area/virtual_domain/fullbright)
+"hL" = (
+/obj/effect/mob_spawn/corpse/human/security,
+/obj/effect/decal/cleanable/blood/footprints,
+/obj/effect/decal/cleanable/blood/trails,
+/obj/effect/decal/cleanable/blood,
+/turf/open/floor/iron,
+/area/virtual_domain/fullbright)
+"hW" = (
+/obj/machinery/mineral/ore_redemption{
+	input_dir = 8;
+	output_dir = 4
+	},
+/obj/machinery/door/firedoor,
+/obj/machinery/door/window/left/directional/east{
+	name = "Ore Redemtion Window";
+	req_access = list("mineral_storeroom")
+	},
+/turf/open/floor/iron/dark,
+/area/virtual_domain/fullbright)
+"ig" = (
+/obj/machinery/piratepad/civilian,
+/obj/effect/turf_decal/loading_area,
+/obj/effect/turf_decal/tile/brown,
+/turf/open/floor/iron,
+/area/virtual_domain/fullbright)
+"ih" = (
+/obj/item/gun/energy/laser{
+	pixel_x = 11;
+	pixel_y = -8
+	},
+/obj/effect/decal/cleanable/blood/footprints{
+	dir = 8
+	},
+/obj/effect/decal/cleanable/blood/footprints{
+	dir = 1
+	},
+/obj/effect/decal/cleanable/blood/footprints,
+/obj/effect/decal/cleanable/blood/gibs,
+/obj/effect/decal/cleanable/blood/trails{
+	dir = 4
+	},
+/obj/effect/decal/cleanable/blood/trails{
+	dir = 10
+	},
+/turf/open/floor/iron,
+/area/virtual_domain/fullbright)
+"iw" = (
+/obj/structure/window/reinforced/spawner/directional/north,
+/obj/structure/table/reinforced,
+/obj/item/stack/wrapping_paper{
+	pixel_x = 3;
+	pixel_y = 4
+	},
+/obj/item/stack/package_wrap{
+	pixel_x = -1;
+	pixel_y = -1
+	},
+/obj/item/dest_tagger,
+/obj/effect/turf_decal/tile/brown/half/contrasted{
+	dir = 1
+	},
+/obj/machinery/power/apc/auto_name/directional/east,
+/turf/open/floor/iron,
+/area/virtual_domain/fullbright)
+"iH" = (
+/turf/closed/wall/r_wall,
+/area/virtual_domain/fullbright)
+"jf" = (
+/obj/effect/decal/cleanable/blood,
+/obj/effect/decal/cleanable/generic,
+/turf/open/floor/iron,
+/area/virtual_domain/fullbright)
+"jk" = (
+/obj/effect/turf_decal/tile/brown{
+	dir = 8
+	},
+/obj/structure/reagent_dispensers/watertank/high,
+/turf/open/floor/iron,
+/area/virtual_domain/fullbright)
+"jy" = (
+/obj/item/ammo_casing/shotgun/buckshot/spent,
+/obj/effect/decal/cleanable/blood,
+/turf/open/floor/iron,
+/area/virtual_domain/fullbright)
+"kl" = (
+/obj/effect/decal/cleanable/blood/footprints{
+	dir = 8
+	},
+/turf/open/floor/iron,
+/area/virtual_domain/fullbright)
+"kn" = (
+/turf/closed/wall,
+/area/virtual_domain/fullbright)
+"kJ" = (
+/obj/machinery/door/poddoor/shutters/preopen{
+	dir = 8;
+	id = "hopqueue";
+	name = "HoP Queue Shutters"
+	},
+/obj/effect/turf_decal/loading_area{
+	dir = 4
+	},
+/obj/structure/sign/warning/electric_shock/directional/north,
+/obj/effect/decal/cleanable/blood/gibs,
+/turf/open/floor/iron,
+/area/virtual_domain/fullbright)
+"lo" = (
+/obj/effect/landmark/bitrunning/bitrunner_spawn,
+/turf/open/floor/iron,
+/area/virtual_domain/fullbright)
+"lA" = (
+/obj/effect/decal/cleanable/blood/footprints,
+/obj/effect/decal/cleanable/blood,
+/obj/effect/decal/cleanable/shreds,
+/turf/open/floor/iron,
+/area/virtual_domain/fullbright)
+"ma" = (
+/obj/item/ammo_casing/shotgun/buckshot/spent,
+/obj/effect/decal/cleanable/crayon{
+	icon_state = "revolution";
+	color = "#A46106"
+	},
+/turf/open/floor/iron,
+/area/virtual_domain/fullbright)
+"mN" = (
+/obj/effect/turf_decal/tile/blue{
+	dir = 4
+	},
+/obj/effect/mob_spawn/corpse/human/charredskeleton,
+/obj/item/ammo_casing/shotgun/buckshot/spent,
+/obj/effect/decal/cleanable/ash/large,
+/obj/effect/decal/cleanable/blood/footprints,
+/obj/effect/decal/cleanable/blood/trails,
+/obj/effect/decal/cleanable/blood,
+/turf/open/floor/iron,
+/area/virtual_domain/fullbright)
+"ng" = (
+/obj/effect/spawner/structure/window,
+/turf/open/floor/plating,
+/area/virtual_domain/fullbright)
+"nF" = (
+/obj/machinery/photocopier,
+/obj/item/radio/intercom/directional/north,
+/obj/effect/decal/cleanable/shreds,
+/turf/open/floor/iron,
+/area/virtual_domain/fullbright)
+"nL" = (
+/obj/structure/reagent_dispensers/watertank/high,
+/turf/open/floor/iron,
+/area/virtual_domain/fullbright)
+"nN" = (
+/obj/machinery/light/directional/south,
+/turf/closed/wall/mineral/silver,
+/area/virtual_domain/fullbright)
+"nQ" = (
+/obj/structure/barricade/wooden{
+	pixel_y = -11
+	},
+/turf/open/floor/iron,
+/area/virtual_domain/fullbright)
+"nU" = (
+/obj/structure/table/reinforced,
+/obj/item/hand_labeler{
+	pixel_y = 8
+	},
+/obj/item/hand_labeler{
+	pixel_y = 8
+	},
+/obj/item/storage/box,
+/obj/item/storage/box,
+/obj/item/storage/box,
+/turf/open/floor/iron,
+/area/virtual_domain/fullbright)
+"oh" = (
+/obj/effect/turf_decal/tile/brown/half/contrasted{
+	dir = 8
+	},
+/obj/effect/mob_spawn/corpse/human/charredskeleton,
+/obj/effect/decal/cleanable/ash/large,
+/obj/effect/decal/cleanable/blood/gibs,
+/obj/item/gun/ballistic/automatic/c20r,
+/turf/open/floor/iron,
+/area/virtual_domain/fullbright)
+"oB" = (
+/obj/effect/turf_decal/tile/blue,
+/obj/effect/decal/cleanable/blood/footprints,
+/obj/effect/decal/cleanable/blood/trails,
+/turf/open/floor/iron,
+/area/virtual_domain/fullbright)
+"oH" = (
+/obj/machinery/firealarm/directional/west,
+/obj/machinery/modular_computer/preset/cargochat/cargo{
+	dir = 4
+	},
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/turf_decal/tile/brown/half/contrasted{
+	dir = 1
+	},
+/turf/open/floor/iron,
+/area/virtual_domain/fullbright)
+"pi" = (
+/turf/closed/wall/mineral/silver,
+/area/virtual_domain/fullbright)
+"pW" = (
+/obj/effect/turf_decal/tile/blue/half/contrasted{
+	dir = 4
+	},
+/obj/item/ammo_casing/shotgun/buckshot/spent,
+/obj/item/ammo_casing/shotgun/buckshot/spent,
+/obj/item/ammo_casing/shotgun/buckshot/spent,
+/obj/item/gun/ballistic/shotgun/sc_pump{
+	pixel_x = -5;
+	pixel_y = -13
+	},
+/obj/effect/decal/cleanable/blood/gibs/core,
+/obj/effect/decal/cleanable/blood/footprints,
+/obj/effect/decal/cleanable/blood/trails{
+	dir = 10
+	},
+/obj/effect/decal/cleanable/blood/trails{
+	dir = 9
+	},
+/turf/open/floor/iron,
+/area/virtual_domain/fullbright)
+"qu" = (
+/obj/effect/turf_decal/tile/blue,
+/obj/item/ammo_casing/shotgun/buckshot/spent,
+/obj/effect/decal/cleanable/blood/footprints,
+/obj/effect/decal/cleanable/blood/trails,
+/obj/effect/decal/cleanable/blood,
+/turf/open/floor/iron,
+/area/virtual_domain/fullbright)
+"qN" = (
+/obj/effect/decal/cleanable/blood/footprints,
+/obj/effect/decal/cleanable/blood/trails,
+/turf/open/floor/iron,
+/area/virtual_domain/fullbright)
+"qS" = (
+/obj/structure/closet/crate,
+/obj/effect/spawner/random/maintenance,
+/obj/effect/turf_decal/tile/brown,
+/turf/open/floor/iron,
+/area/virtual_domain/fullbright)
+"rj" = (
+/obj/effect/decal/cleanable/blood/footprints{
+	dir = 8
+	},
+/obj/effect/decal/cleanable/blood/gibs,
+/turf/open/floor/iron,
+/area/virtual_domain/fullbright)
+"rk" = (
+/obj/item/ammo_casing/shotgun/buckshot/spent,
+/obj/item/ammo_casing/shotgun/buckshot/spent,
+/obj/effect/decal/cleanable/blood/footprints,
+/obj/effect/decal/cleanable/blood/trails,
+/obj/effect/decal/cleanable/blood/trails,
+/turf/open/floor/iron,
+/area/virtual_domain/fullbright)
+"sp" = (
+/obj/effect/turf_decal/tile/red{
+	dir = 4
+	},
+/obj/structure/holosign/barrier,
+/obj/effect/decal/cleanable/blood/trails,
+/turf/open/floor/iron,
+/area/virtual_domain/fullbright)
+"sE" = (
+/obj/effect/turf_decal/bot,
+/obj/effect/mob_spawn/corpse/human/bartender,
+/obj/effect/decal/cleanable/blood/gibs,
+/turf/open/floor/iron,
+/area/virtual_domain/fullbright)
+"sS" = (
+/obj/structure/chair/office{
+	dir = 4
+	},
+/turf/open/floor/iron,
+/area/virtual_domain/fullbright)
+"sU" = (
+/obj/machinery/door/airlock/mining/glass{
+	id_tag = "cargooffice";
+	name = "Cargo Office"
+	},
+/obj/effect/decal/cleanable/blood/footprints{
+	dir = 8
+	},
+/obj/effect/decal/cleanable/blood/trails{
+	dir = 4
+	},
+/turf/open/floor/iron,
+/area/virtual_domain/fullbright)
+"ta" = (
+/obj/effect/decal/cleanable/blood/footprints,
+/turf/open/floor/iron,
+/area/virtual_domain/fullbright)
+"tB" = (
+/obj/effect/mob_spawn/corpse/human/miner,
+/obj/effect/decal/cleanable/blood,
+/turf/open/floor/iron,
+/area/virtual_domain/fullbright)
+"uh" = (
+/obj/structure/window/reinforced/spawner/directional/north,
+/obj/structure/filingcabinet/filingcabinet,
+/obj/effect/turf_decal/tile/brown/half/contrasted{
+	dir = 1
+	},
+/turf/open/floor/iron,
+/area/virtual_domain/fullbright)
+"uq" = (
+/obj/effect/mob_spawn/corpse/human/bitrunner,
+/obj/effect/decal/cleanable/blood/footprints{
+	dir = 8
+	},
+/obj/effect/decal/cleanable/blood/trails{
+	dir = 4
+	},
+/obj/effect/decal/cleanable/blood,
+/turf/open/floor/iron,
+/area/virtual_domain/fullbright)
+"uv" = (
+/obj/effect/turf_decal/tile/brown{
+	dir = 8
+	},
+/obj/structure/sign/departments/cargo/directional/west,
+/obj/structure/holosign/barrier,
+/obj/effect/decal/cleanable/blood/trails,
+/turf/open/floor/iron,
+/area/virtual_domain/fullbright)
+"vg" = (
+/obj/item/gun/energy/laser{
+	pixel_x = -12;
+	pixel_y = 16
+	},
+/obj/effect/mob_spawn/corpse/human/security,
+/obj/effect/decal/cleanable/blood/footprints,
+/obj/effect/decal/cleanable/blood/trails,
+/obj/effect/decal/cleanable/blood,
+/turf/open/floor/iron,
+/area/virtual_domain/fullbright)
+"vT" = (
+/obj/item/ammo_casing/shotgun/buckshot/spent,
+/obj/effect/decal/cleanable/blood/gibs/body,
+/turf/open/floor/iron,
+/area/virtual_domain/fullbright)
+"we" = (
+/obj/structure/extinguisher_cabinet/directional/east,
+/obj/effect/turf_decal/tile/blue,
+/obj/effect/mob_spawn/corpse/human/security,
+/obj/effect/decal/cleanable/blood/footprints,
+/obj/effect/decal/cleanable/blood/trails,
+/turf/open/floor/iron,
+/area/virtual_domain/fullbright)
+"wj" = (
+/obj/effect/mob_spawn/corpse/human/charredskeleton,
+/obj/item/ammo_casing/shotgun/buckshot/spent,
+/obj/effect/decal/cleanable/blood/gibs/core,
+/obj/effect/decal/cleanable/ash/large,
+/obj/effect/decal/cleanable/blood/footprints,
+/turf/open/floor/iron,
+/area/virtual_domain/fullbright)
+"wY" = (
+/obj/machinery/photobooth,
+/turf/open/floor/iron,
+/area/virtual_domain/fullbright)
+"wZ" = (
+/obj/structure/table,
+/obj/effect/turf_decal/tile/brown/half/contrasted,
+/obj/item/storage/box/bandages{
+	pixel_x = -6;
+	pixel_y = 6
+	},
+/obj/item/food/cheesiehonkers,
+/turf/open/floor/iron,
+/area/virtual_domain/fullbright)
+"xg" = (
+/obj/effect/decal/cleanable/blood/footprints{
+	dir = 1
+	},
+/obj/effect/decal/cleanable/blood/footprints,
+/obj/effect/decal/cleanable/blood/gibs,
+/obj/effect/decal/cleanable/blood/trails,
+/obj/effect/decal/cleanable/generic,
+/obj/effect/decal/cleanable/shreds,
+/turf/open/floor/iron,
+/area/virtual_domain/fullbright)
+"xF" = (
+/obj/structure/guillotine,
+/turf/open/floor/iron,
+/area/virtual_domain/fullbright)
+"xZ" = (
+/obj/effect/decal/cleanable/blood/gibs/body,
+/obj/item/ammo_casing/m7mm,
+/obj/item/ammo_casing/m7mm,
+/obj/item/ammo_casing/m7mm,
+/obj/item/ammo_casing/m7mm,
+/obj/item/ammo_casing/m7mm,
+/obj/item/ammo_casing/m7mm,
+/obj/item/ammo_casing/m7mm,
+/obj/item/ammo_casing/m7mm,
+/obj/item/ammo_casing/m7mm,
+/obj/item/ammo_casing/m7mm,
+/obj/item/ammo_casing/m7mm,
+/obj/item/ammo_casing/m7mm,
+/obj/item/ammo_casing/m7mm,
+/obj/item/ammo_casing/m7mm,
+/obj/item/ammo_casing/m7mm,
+/obj/item/ammo_casing/m7mm,
+/obj/item/ammo_casing/m7mm,
+/obj/item/ammo_casing/m7mm,
+/turf/open/floor/iron,
+/area/virtual_domain/fullbright)
+"yg" = (
+/obj/effect/decal/cleanable/shreds,
+/turf/open/floor/iron,
+/area/virtual_domain/fullbright)
+"yh" = (
+/obj/machinery/light/directional/south,
+/obj/effect/turf_decal/tile/brown/anticorner/contrasted,
+/obj/effect/decal/cleanable/blood,
+/turf/open/floor/iron,
+/area/virtual_domain/fullbright)
+"ym" = (
+/obj/effect/turf_decal/stripes/white/line,
+/obj/effect/turf_decal/stripes/white/line{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/neutral/fourcorners,
+/turf/closed/wall/mineral/silver,
+/area/virtual_domain/fullbright)
+"yA" = (
+/obj/machinery/door/firedoor,
+/obj/machinery/door/window/left/directional/west{
+	name = "Delivery Desk";
+	req_access = list("shipping")
+	},
+/obj/effect/turf_decal/bot,
+/obj/structure/table/reinforced,
+/obj/structure/desk_bell{
+	pixel_x = 7
+	},
+/turf/open/floor/iron,
+/area/virtual_domain/fullbright)
+"yC" = (
+/obj/machinery/computer/cargo{
+	dir = 4
+	},
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/iron,
+/area/virtual_domain/fullbright)
+"yP" = (
+/obj/effect/turf_decal/arrows,
+/obj/item/ammo_casing/shotgun/buckshot/spent,
+/obj/effect/decal/cleanable/blood,
+/turf/open/floor/iron,
+/area/virtual_domain/fullbright)
+"ze" = (
+/obj/effect/turf_decal/bot,
+/obj/effect/mob_spawn/corpse/human/doctor,
+/obj/effect/decal/cleanable/blood/gibs,
+/turf/open/floor/iron,
+/area/virtual_domain/fullbright)
+"zh" = (
+/obj/machinery/door/airlock/mining{
+	name = "Mining Dock"
+	},
+/obj/structure/holosign/barrier,
+/turf/open/floor/iron,
+/area/virtual_domain/fullbright)
+"zo" = (
+/obj/effect/decal/cleanable/blood/gibs,
+/obj/effect/decal/cleanable/blood,
+/obj/effect/decal/cleanable/generic,
+/turf/open/floor/iron,
+/area/virtual_domain/fullbright)
+"zq" = (
+/obj/structure/sign/nanotrasen{
+	pixel_y = 32
+	},
+/turf/open/floor/iron,
+/area/virtual_domain/fullbright)
+"zr" = (
+/obj/structure/table/reinforced,
+/obj/item/storage/box/bodybags{
+	pixel_y = 15;
+	pixel_x = -6
+	},
+/obj/item/reagent_containers/cup/bucket{
+	pixel_x = -6;
+	pixel_y = 6
+	},
+/obj/item/mop,
+/obj/item/storage/bag/trash{
+	pixel_x = 5;
+	pixel_y = 16
+	},
+/obj/item/reagent_containers/spray/cleaner{
+	pixel_x = 7;
+	pixel_y = 8
+	},
+/obj/machinery/light/directional/east,
+/turf/open/floor/iron/textured,
+/area/virtual_domain/fullbright)
+"zB" = (
+/obj/effect/turf_decal/tile/brown{
+	dir = 8
+	},
+/obj/item/gun/energy/laser{
+	pixel_x = -4;
+	pixel_y = 10
+	},
+/obj/effect/decal/cleanable/blood/footprints,
+/obj/effect/decal/cleanable/blood/trails,
+/turf/open/floor/iron,
+/area/virtual_domain/fullbright)
+"zC" = (
+/obj/structure/chair{
+	dir = 8
+	},
+/obj/machinery/power/apc/auto_name/directional/east,
+/obj/effect/decal/cleanable/blood/gibs/old,
+/turf/open/floor/iron,
+/area/virtual_domain/fullbright)
+"zE" = (
+/obj/structure/barricade/wooden{
+	pixel_y = -11
+	},
+/obj/structure/barricade/wooden{
+	dir = 4;
+	pixel_x = -10
+	},
+/turf/open/floor/iron,
+/area/virtual_domain/fullbright)
+"zT" = (
+/obj/machinery/newscaster/directional/north,
+/obj/effect/decal/cleanable/blood/gibs,
+/obj/item/ammo_casing/c45,
+/obj/item/ammo_casing/c45,
+/obj/item/ammo_casing/c45,
+/obj/item/ammo_casing/c45,
+/obj/item/ammo_casing/c45,
+/obj/item/ammo_casing/c45,
+/obj/item/ammo_casing/c45,
+/obj/item/ammo_casing/c45,
+/obj/item/ammo_casing/c45,
+/obj/item/ammo_casing/c45,
+/obj/item/ammo_casing/c45,
+/obj/item/ammo_casing/c45,
+/obj/item/ammo_casing/c45,
+/obj/item/ammo_casing/c45,
+/obj/item/ammo_casing/c45,
+/obj/item/ammo_casing/c45,
+/obj/item/ammo_casing/c45,
+/obj/item/ammo_casing/c45,
+/obj/item/ammo_casing/c45,
+/obj/item/ammo_casing/c45,
+/obj/item/ammo_casing/c45,
+/obj/item/ammo_casing/c45,
+/turf/open/floor/iron,
+/area/virtual_domain/fullbright)
+"zV" = (
+/obj/item/ammo_casing/m7mm,
+/obj/item/ammo_casing/m7mm,
+/obj/item/ammo_casing/m7mm,
+/obj/item/ammo_casing/m7mm,
+/obj/item/ammo_casing/m7mm,
+/obj/item/ammo_casing/m7mm,
+/obj/item/ammo_casing/m7mm,
+/obj/item/ammo_casing/m7mm,
+/obj/item/ammo_casing/m7mm,
+/obj/item/ammo_casing/m7mm,
+/obj/item/ammo_casing/m7mm,
+/obj/item/ammo_casing/m7mm,
+/obj/item/ammo_casing/m7mm,
+/obj/item/ammo_casing/m7mm,
+/obj/item/ammo_casing/m7mm,
+/obj/effect/decal/cleanable/blood,
+/obj/effect/decal/cleanable/crayon{
+	icon_state = "revolution";
+	color = "#A46106"
+	},
+/turf/open/floor/iron,
+/area/virtual_domain/fullbright)
+"zZ" = (
+/obj/effect/turf_decal/tile/blue,
+/obj/effect/decal/cleanable/blood/footprints,
+/obj/structure/holosign/barrier,
+/obj/effect/decal/cleanable/blood,
+/turf/open/floor/iron,
+/area/virtual_domain/fullbright)
+"Ar" = (
+/obj/machinery/light/directional/south,
+/turf/open/floor/iron,
+/area/virtual_domain/fullbright)
+"BQ" = (
+/obj/machinery/light/directional/west,
+/obj/effect/mob_spawn/corpse/human/clown,
+/obj/effect/decal/cleanable/blood/trails,
+/obj/effect/decal/cleanable/blood,
+/turf/open/floor/iron,
+/area/virtual_domain/fullbright)
+"BZ" = (
+/obj/effect/turf_decal/stripes/white/line,
+/obj/effect/turf_decal/stripes/white/line{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/neutral/fourcorners,
+/obj/machinery/door/airlock/public/glass,
+/turf/open/floor/iron/dark/textured,
+/area/virtual_domain/fullbright)
+"Cf" = (
+/obj/item/stamp{
+	pixel_x = -3;
+	pixel_y = 3
+	},
+/obj/item/stamp/denied{
+	pixel_x = 4;
+	pixel_y = -2
+	},
+/obj/structure/table,
+/obj/machinery/status_display/supply/directional/north,
+/turf/open/floor/iron,
+/area/virtual_domain/fullbright)
+"Cu" = (
+/obj/structure/chair{
+	dir = 8
+	},
+/obj/effect/mob_spawn/corpse/human/bitrunner,
+/obj/effect/decal/cleanable/crayon{
+	icon_state = "revolution";
+	color = "#A46106"
+	},
+/turf/open/floor/iron,
+/area/virtual_domain/fullbright)
+"Df" = (
+/obj/structure/table/reinforced,
+/obj/item/radio/intercom/directional/south,
+/obj/item/paper_bin{
+	pixel_x = -3
+	},
+/obj/item/pen{
+	pixel_x = -3
+	},
+/obj/item/folder/yellow{
+	pixel_x = 4
+	},
+/turf/open/floor/iron,
+/area/virtual_domain/fullbright)
+"Dr" = (
+/obj/effect/turf_decal/tile/brown{
+	dir = 8
+	},
+/obj/effect/mob_spawn/corpse/human/charredskeleton,
+/obj/effect/decal/cleanable/blood/gibs/core,
+/obj/effect/decal/cleanable/ash/large,
+/obj/effect/decal/cleanable/blood/footprints,
+/obj/effect/decal/cleanable/blood/trails,
+/turf/open/floor/iron,
+/area/virtual_domain/fullbright)
+"DA" = (
+/obj/structure/chair{
+	dir = 8
+	},
+/obj/effect/decal/cleanable/blood,
+/obj/effect/decal/cleanable/crayon{
+	icon_state = "revolution";
+	color = "#A46106"
+	},
+/turf/open/floor/iron,
+/area/virtual_domain/fullbright)
+"DU" = (
+/obj/effect/decal/cleanable/blood/footprints,
+/obj/effect/decal/cleanable/blood/gibs,
+/obj/effect/decal/cleanable/generic,
+/turf/open/floor/iron,
+/area/virtual_domain/fullbright)
+"Eb" = (
+/obj/machinery/door/window/right/directional/east{
+	name = "Incoming Mail";
+	req_access = list("shipping")
+	},
+/turf/open/floor/plating,
+/area/virtual_domain/fullbright)
+"EE" = (
+/obj/effect/turf_decal/tile/brown/half/contrasted{
+	dir = 1
+	},
+/obj/effect/mob_spawn/corpse/human/security,
+/obj/item/gun/energy/laser{
+	pixel_x = 4;
+	pixel_y = 5
+	},
+/turf/open/floor/iron,
+/area/virtual_domain/fullbright)
+"Gh" = (
+/obj/structure/barricade/wooden,
+/turf/open/floor/iron,
+/area/virtual_domain/fullbright)
+"Gu" = (
+/obj/machinery/telecomms/relay/preset/auto/bitrunning,
+/turf/closed/indestructible/binary,
+/area/virtual_domain/fullbright)
+"GD" = (
+/obj/effect/turf_decal/tile/brown{
+	dir = 8
+	},
+/obj/effect/decal/cleanable/blood/gibs,
+/obj/effect/decal/cleanable/blood/footprints,
+/obj/structure/holosign/barrier,
+/obj/effect/decal/cleanable/blood/trails,
+/turf/open/floor/iron,
+/area/virtual_domain/fullbright)
+"GH" = (
+/obj/structure/chair/office{
+	dir = 4
+	},
+/obj/effect/decal/cleanable/shreds,
+/turf/open/floor/iron,
+/area/virtual_domain/fullbright)
+"Hd" = (
+/obj/structure/chair/office{
+	dir = 8
+	},
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/blood,
+/obj/effect/decal/cleanable/shreds,
+/turf/open/floor/iron,
+/area/virtual_domain/fullbright)
+"HD" = (
+/obj/machinery/button/crematorium/indestructible/directional/north{
+	id = "crematoriumBitrunning"
+	},
+/turf/open/floor/iron,
+/area/virtual_domain/fullbright)
+"HF" = (
+/obj/effect/decal/cleanable/blood/footprints{
+	dir = 1
+	},
+/obj/effect/decal/cleanable/blood/footprints,
+/obj/effect/decal/cleanable/blood/trails,
+/obj/effect/decal/cleanable/blood/trails{
+	dir = 6
+	},
+/obj/effect/decal/cleanable/shreds,
+/turf/open/floor/iron,
+/area/virtual_domain/fullbright)
+"HK" = (
+/obj/effect/decal/cleanable/blood/footprints{
+	dir = 8
+	},
+/obj/effect/decal/cleanable/blood/trails{
+	dir = 4
+	},
+/turf/open/floor/iron,
+/area/virtual_domain/fullbright)
+"HM" = (
+/obj/item/paper_bin{
+	pixel_x = -3;
+	pixel_y = 7
+	},
+/obj/item/clipboard,
+/obj/item/pen/red,
+/obj/structure/table,
+/obj/machinery/janitorial_scanner{
+	area_name = "Cargo Office"
+	},
+/turf/open/floor/iron,
+/area/virtual_domain/fullbright)
+"HS" = (
+/obj/machinery/door/poddoor/shutters/preopen{
+	dir = 8;
+	id = "hopqueue";
+	name = "HoP Queue Shutters"
+	},
+/obj/effect/turf_decal/loading_area{
+	dir = 8
+	},
+/obj/machinery/digital_clock/directional/south,
+/obj/effect/decal/cleanable/blood/gibs,
+/obj/effect/decal/cleanable/blood/trails{
+	dir = 8
+	},
+/turf/open/floor/iron,
+/area/virtual_domain/fullbright)
+"Iq" = (
+/obj/effect/turf_decal/loading_area{
+	dir = 4
+	},
+/obj/item/ammo_casing/shotgun/buckshot/spent,
+/obj/effect/decal/cleanable/blood/gibs/old,
+/turf/open/floor/iron,
+/area/virtual_domain/fullbright)
+"It" = (
+/obj/effect/spawner/structure/window/reinforced,
+/obj/structure/cable,
+/obj/machinery/door/poddoor/shutters/indestructible{
+	dir = 4
+	},
+/turf/open/floor/plating,
+/area/virtual_domain/fullbright)
+"IP" = (
+/obj/machinery/firealarm/directional/west,
+/obj/structure/barricade/wooden{
+	dir = 4;
+	pixel_x = -10
+	},
+/turf/open/floor/iron,
+/area/virtual_domain/fullbright)
+"Jq" = (
+/obj/effect/turf_decal/bot,
+/obj/effect/decal/cleanable/blood/footprints{
+	dir = 8
+	},
+/obj/effect/decal/cleanable/blood/trails{
+	dir = 4
+	},
+/turf/open/floor/iron,
+/area/virtual_domain/fullbright)
+"Jz" = (
+/obj/effect/decal/cleanable/blood/footprints,
+/obj/effect/decal/cleanable/blood/trails,
+/obj/effect/decal/cleanable/blood,
+/turf/open/floor/iron,
+/area/virtual_domain/fullbright)
+"JB" = (
+/obj/effect/turf_decal/delivery,
+/obj/item/ammo_casing/shotgun/buckshot/spent,
+/obj/item/ammo_casing/shotgun/buckshot/spent,
+/obj/item/ammo_casing/shotgun/buckshot/spent,
+/obj/item/ammo_casing/shotgun/buckshot/spent,
+/obj/effect/decal/cleanable/blood/gibs,
+/obj/effect/mob_spawn/corpse/human/assistant,
+/turf/open/floor/iron,
+/area/virtual_domain/fullbright)
+"JN" = (
+/obj/effect/turf_decal/tile/brown{
+	dir = 8
+	},
+/obj/effect/decal/cleanable/blood/gibs,
+/obj/item/ammo_casing/c45,
+/obj/item/ammo_casing/c45,
+/obj/item/ammo_casing/c45,
+/obj/item/ammo_casing/c45,
+/obj/item/ammo_casing/c45,
+/obj/item/ammo_casing/c45,
+/obj/item/ammo_casing/c45,
+/obj/item/ammo_casing/c45,
+/obj/item/ammo_casing/c45,
+/obj/item/ammo_casing/c45,
+/obj/item/ammo_casing/c45,
+/obj/item/ammo_casing/c45,
+/obj/item/ammo_casing/c45,
+/obj/item/ammo_casing/c45,
+/obj/item/ammo_casing/c45,
+/obj/item/ammo_casing/c45,
+/obj/effect/decal/cleanable/blood,
+/turf/open/floor/iron,
+/area/virtual_domain/fullbright)
+"JW" = (
+/obj/machinery/computer/cargo{
+	dir = 1
+	},
+/turf/open/floor/iron,
+/area/virtual_domain/fullbright)
+"Km" = (
+/obj/effect/turf_decal/tile/brown/half/contrasted{
+	dir = 1
+	},
+/turf/open/floor/iron,
+/area/virtual_domain/fullbright)
+"KQ" = (
+/obj/item/gun/energy/laser,
+/obj/effect/decal/cleanable/blood/footprints{
+	dir = 8
+	},
+/obj/effect/decal/cleanable/blood/trails{
+	dir = 4
+	},
+/turf/open/floor/iron,
+/area/virtual_domain/fullbright)
+"Lq" = (
+/obj/item/ammo_casing/shotgun/buckshot/spent,
+/obj/effect/decal/cleanable/blood/gibs/core,
+/obj/effect/decal/cleanable/blood/footprints,
+/obj/effect/decal/cleanable/blood/trails,
+/turf/open/floor/iron,
+/area/virtual_domain/fullbright)
+"Me" = (
+/obj/effect/turf_decal/tile/brown/fourcorners,
+/obj/effect/turf_decal/stripes/white/line{
+	dir = 4
+	},
+/obj/effect/turf_decal/stripes/white/line{
+	dir = 8
+	},
+/obj/item/gun/ballistic/shotgun/sc_pump{
+	pixel_x = 1;
+	pixel_y = 8
+	},
+/obj/effect/decal/cleanable/blood/footprints{
+	dir = 8
+	},
+/obj/machinery/door/airlock/mining/glass{
+	id_tag = "cargooffice";
+	name = "Cargo Office"
+	},
+/turf/open/floor/iron/dark/textured,
+/area/virtual_domain/fullbright)
+"Or" = (
+/obj/structure/table,
+/obj/item/storage/medkit/regular{
+	pixel_x = 6;
+	pixel_y = -5
+	},
+/obj/item/multitool,
+/obj/item/trash/cheesie,
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/turf_decal/tile/brown/half/contrasted,
+/turf/open/floor/iron,
+/area/virtual_domain/fullbright)
+"Pc" = (
+/obj/effect/landmark/bitrunning/cache_goal_turf,
+/obj/effect/turf_decal/loading_area{
+	dir = 4
+	},
+/obj/structure/railing,
+/obj/machinery/light/directional/north,
+/turf/open/indestructible/bitrunning_transport,
+/area/virtual_domain/fullbright)
+"Ps" = (
+/obj/effect/turf_decal/tile/brown/half/contrasted{
+	dir = 4
+	},
+/obj/effect/decal/cleanable/blood,
+/turf/open/floor/iron,
+/area/virtual_domain/fullbright)
+"Px" = (
+/obj/item/ammo_casing/shotgun/buckshot/spent,
+/obj/item/ammo_casing/shotgun/buckshot/spent,
+/obj/effect/decal/cleanable/blood/footprints,
+/obj/effect/decal/cleanable/blood/trails,
+/turf/open/floor/iron,
+/area/virtual_domain/fullbright)
+"PA" = (
+/obj/effect/mob_spawn/corpse/human/security,
+/obj/effect/decal/cleanable/blood/trails,
+/turf/open/floor/iron,
+/area/virtual_domain/fullbright)
+"PE" = (
+/obj/structure/table/reinforced,
+/obj/item/bodybag{
+	pixel_y = 17;
+	pixel_x = 7
+	},
+/obj/item/bodybag{
+	pixel_y = 13;
+	pixel_x = 7
+	},
+/obj/item/bodybag{
+	pixel_y = 9;
+	pixel_x = 7
+	},
+/obj/item/storage/box/bodybags{
+	pixel_y = 15;
+	pixel_x = -6
+	},
+/obj/item/storage/box/bodybags{
+	pixel_y = 6;
+	pixel_x = -6
+	},
+/turf/open/floor/iron/textured,
+/area/virtual_domain/fullbright)
+"PZ" = (
+/obj/effect/spawner/structure/window/reinforced,
+/turf/open/floor/plating,
+/area/virtual_domain/fullbright)
+"Qf" = (
+/obj/effect/decal/cleanable/blood/trails,
+/turf/open/floor/iron,
+/area/virtual_domain/fullbright)
+"QA" = (
+/obj/machinery/light_switch/directional/west,
+/obj/machinery/autolathe,
+/turf/open/floor/iron,
+/area/virtual_domain/fullbright)
+"QL" = (
+/obj/structure/closet/crate,
+/obj/effect/spawner/random/bureaucracy/birthday_wrap,
+/obj/effect/turf_decal/tile/brown{
+	dir = 8
+	},
+/turf/open/floor/iron,
+/area/virtual_domain/fullbright)
+"Rj" = (
+/obj/effect/turf_decal/tile/red,
+/obj/effect/decal/cleanable/blood/trails,
+/obj/machinery/janitorial_scanner{
+	area_name = "Hallway"
+	},
+/obj/effect/decal/cleanable/blood,
+/turf/open/floor/iron,
+/area/virtual_domain/fullbright)
+"RS" = (
+/turf/open/floor/iron,
+/area/virtual_domain/fullbright)
+"So" = (
+/obj/effect/turf_decal/bot,
+/obj/item/ammo_casing/shotgun/buckshot/spent,
+/obj/effect/decal/cleanable/blood/footprints{
+	dir = 8
+	},
+/obj/effect/decal/cleanable/blood,
+/obj/effect/decal/cleanable/crayon{
+	icon_state = "revolution";
+	color = "#A46106"
+	},
+/turf/open/floor/iron,
+/area/virtual_domain/fullbright)
+"Sp" = (
+/obj/effect/turf_decal/bot,
+/obj/effect/decal/cleanable/blood/gibs,
+/obj/effect/decal/cleanable/blood,
+/turf/open/floor/iron,
+/area/virtual_domain/fullbright)
+"SH" = (
+/obj/structure/table/reinforced,
+/obj/machinery/door/firedoor,
+/obj/machinery/door/window/left/directional/west{
+	name = "Cargo Desk";
+	req_access = list("cargo")
+	},
+/obj/structure/desk_bell{
+	pixel_x = 7
+	},
+/obj/item/papercutter,
+/turf/open/floor/iron,
+/area/virtual_domain/fullbright)
+"SI" = (
+/obj/effect/turf_decal/tile/brown{
+	dir = 8
+	},
+/obj/structure/sign/departments/cargo/directional/west,
+/obj/item/gun/energy/laser,
+/obj/item/gun/energy/laser{
+	pixel_x = 7;
+	pixel_y = -10
+	},
+/obj/effect/decal/cleanable/blood/footprints,
+/obj/effect/decal/cleanable/blood/trails,
+/turf/open/floor/iron,
+/area/virtual_domain/fullbright)
+"Tm" = (
+/obj/structure/table,
+/obj/machinery/fax{
+	fax_name = "Cargo Office";
+	name = "Cargo Office Fax Machine"
+	},
+/obj/effect/turf_decal/tile/brown{
+	dir = 1
+	},
+/turf/open/floor/iron,
+/area/virtual_domain/fullbright)
+"TB" = (
+/obj/effect/decal/cleanable/blood/footprints{
+	dir = 8
+	},
+/obj/effect/decal/cleanable/blood/trails{
+	dir = 4
+	},
+/obj/effect/decal/cleanable/blood,
+/obj/effect/decal/cleanable/generic,
+/turf/open/floor/iron,
+/area/virtual_domain/fullbright)
+"TN" = (
+/obj/effect/turf_decal/tile/brown{
+	dir = 8
+	},
+/obj/machinery/janitorial_submit,
+/turf/open/floor/iron,
+/area/virtual_domain/fullbright)
+"Us" = (
+/obj/item/ammo_casing/shotgun/buckshot/spent,
+/obj/item/ammo_casing/shotgun/buckshot/spent,
+/obj/item/ammo_casing/shotgun/buckshot/spent,
+/obj/item/ammo_casing/shotgun/buckshot/spent,
+/obj/effect/decal/cleanable/blood/gibs,
+/obj/effect/decal/cleanable/blood/footprints,
+/turf/open/floor/iron,
+/area/virtual_domain/fullbright)
+"Uz" = (
+/obj/effect/turf_decal/tile/brown/half/contrasted{
+	dir = 8
+	},
+/obj/structure/barricade/wooden,
+/turf/open/floor/iron,
+/area/virtual_domain/fullbright)
+"UB" = (
+/obj/structure/table/reinforced,
+/obj/machinery/door/window/left/directional/west{
+	name = "Reception Window"
+	},
+/obj/structure/desk_bell{
+	pixel_x = 7
+	},
+/obj/machinery/door/window/brigdoor/right/directional/east{
+	name = "Head of Personnel's Desk";
+	req_access = list("hop")
+	},
+/obj/machinery/flasher/directional/south{
+	id = "hopflash";
+	pixel_y = -23
+	},
+/obj/machinery/door/firedoor,
+/obj/structure/holosign/barrier,
+/obj/machinery/door/poddoor/shutters/indestructible{
+	dir = 4
+	},
+/turf/open/floor/iron,
+/area/virtual_domain/fullbright)
+"UF" = (
+/obj/machinery/computer/piratepad_control/civilian{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/brown,
+/turf/open/floor/iron,
+/area/virtual_domain/fullbright)
+"UQ" = (
+/obj/machinery/firealarm/directional/north,
+/obj/structure/chair{
+	dir = 8
+	},
+/obj/machinery/janitorial_scanner{
+	area_name = "Cargo Lobby"
+	},
+/obj/effect/decal/cleanable/blood,
+/turf/open/floor/iron,
+/area/virtual_domain/fullbright)
+"UW" = (
+/obj/effect/mob_spawn/corpse/human/miner,
+/turf/open/floor/iron,
+/area/virtual_domain/fullbright)
+"Vm" = (
+/obj/machinery/computer/cargo/request,
+/turf/open/floor/iron,
+/area/virtual_domain/fullbright)
+"VC" = (
+/obj/effect/decal/cleanable/blood/gibs,
+/obj/effect/decal/cleanable/blood/footprints,
+/obj/effect/decal/cleanable/blood/trails,
+/turf/open/floor/iron,
+/area/virtual_domain/fullbright)
+"Wn" = (
+/obj/effect/decal/cleanable/blood/footprints,
+/obj/effect/decal/cleanable/generic,
+/turf/open/floor/iron,
+/area/virtual_domain/fullbright)
+"Wy" = (
+/obj/effect/decal/cleanable/blood/gibs/old,
+/turf/open/floor/iron,
+/area/virtual_domain/fullbright)
+"WJ" = (
+/obj/item/ammo_casing/shotgun/buckshot/spent,
+/obj/item/gun/ballistic/shotgun/sc_pump{
+	pixel_x = -19;
+	pixel_y = 4
+	},
+/obj/effect/decal/cleanable/blood/footprints,
+/obj/effect/decal/cleanable/blood/trails,
+/obj/effect/decal/cleanable/blood,
+/turf/open/floor/iron,
+/area/virtual_domain/fullbright)
+"WQ" = (
+/obj/effect/turf_decal/tile/brown{
+	dir = 8
+	},
+/obj/item/ammo_casing/shotgun/buckshot/spent,
+/obj/item/ammo_casing/shotgun/buckshot/spent,
+/obj/item/gun/ballistic/shotgun/sc_pump{
+	pixel_x = -9;
+	pixel_y = -15
+	},
+/obj/effect/mob_spawn/corpse/human/security,
+/obj/effect/decal/cleanable/blood/footprints,
+/obj/effect/decal/cleanable/blood/trails,
+/obj/effect/decal/cleanable/blood,
+/turf/open/floor/iron,
+/area/virtual_domain/fullbright)
+"WW" = (
+/obj/effect/mapping_helpers/requests_console/supplies,
+/obj/machinery/camera/directional/west{
+	c_tag = "Cargo Bay Office"
+	},
+/obj/machinery/rnd/production/techfab/department/cargo,
+/turf/open/floor/iron,
+/area/virtual_domain/fullbright)
+"Xe" = (
+/obj/machinery/conveyor_switch/oneway{
+	id = "packageSort2"
+	},
+/obj/effect/turf_decal/tile/brown/half/contrasted{
+	dir = 1
+	},
+/turf/open/floor/iron,
+/area/virtual_domain/fullbright)
+"Xp" = (
+/obj/machinery/door/airlock/mining/glass{
+	id_tag = "innercargo";
+	name = "Cargo Bay"
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/structure/holosign/barrier,
+/turf/open/floor/iron,
+/area/virtual_domain/fullbright)
+"Xq" = (
+/obj/machinery/light/directional/east,
+/obj/effect/mob_spawn/corpse/human/charredskeleton,
+/obj/effect/decal/cleanable/ash/large,
+/obj/effect/decal/cleanable/blood/gibs/body,
+/obj/effect/decal/cleanable/blood/trails,
+/obj/item/gun/ballistic/automatic/c20r,
+/turf/open/floor/iron,
+/area/virtual_domain/fullbright)
+"XD" = (
+/obj/machinery/light/directional/west,
+/obj/effect/turf_decal/tile/brown{
+	dir = 8
+	},
+/obj/effect/decal/cleanable/blood/footprints,
+/obj/effect/decal/cleanable/blood/trails,
+/obj/effect/decal/cleanable/blood,
+/turf/open/floor/iron,
+/area/virtual_domain/fullbright)
+"XW" = (
+/obj/machinery/door/airlock/mining/glass{
+	name = "Delivery Office"
+	},
+/obj/effect/mapping_helpers/airlock/access/all/supply/general,
+/obj/structure/holosign/barrier,
+/turf/open/floor/iron,
+/area/virtual_domain/fullbright)
+"YN" = (
+/obj/effect/mob_spawn/corpse/human/security,
+/obj/item/gun/energy/laser,
+/turf/open/floor/iron,
+/area/virtual_domain/fullbright)
+"Zo" = (
+/obj/machinery/door/airlock/mining/glass{
+	id_tag = "innercargo";
+	name = "Cargo Bay"
+	},
+/obj/structure/cable,
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/obj/structure/holosign/barrier,
+/turf/open/floor/iron,
+/area/virtual_domain/fullbright)
+"Zs" = (
+/obj/effect/decal/cleanable/blood/footprints{
+	dir = 1
+	},
+/obj/effect/decal/cleanable/blood/footprints,
+/obj/effect/decal/cleanable/blood/gibs,
+/obj/effect/decal/cleanable/blood/trails{
+	dir = 1
+	},
+/turf/open/floor/iron,
+/area/virtual_domain/fullbright)
+"Zx" = (
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
+	dir = 4
+	},
+/obj/effect/decal/cleanable/blood/footprints{
+	dir = 1
+	},
+/obj/effect/decal/cleanable/blood/footprints{
+	dir = 1
+	},
+/obj/effect/decal/cleanable/blood/footprints,
+/obj/effect/decal/cleanable/blood/trails{
+	dir = 1
+	},
+/obj/effect/decal/cleanable/shreds,
+/turf/open/floor/iron,
+/area/virtual_domain/fullbright)
+
+(1,1,1) = {"
+gJ
+gJ
+gJ
+gJ
+gJ
+gJ
+gJ
+gJ
+gJ
+gJ
+gJ
+gJ
+Gu
+gJ
+gJ
+gJ
+gJ
+gJ
+gJ
+gJ
+"}
+(2,1,1) = {"
+gJ
+gJ
+gJ
+kn
+kn
+ng
+Xp
+Zo
+ng
+kn
+kn
+kn
+kn
+kn
+kn
+gJ
+gJ
+gJ
+gJ
+gJ
+"}
+(3,1,1) = {"
+gJ
+gJ
+gJ
+kn
+nF
+JN
+oh
+Uz
+Tm
+QA
+WW
+oH
+yC
+Or
+kn
+gJ
+gJ
+gJ
+gJ
+gJ
+"}
+(4,1,1) = {"
+gJ
+gJ
+gJ
+kn
+eC
+xZ
+zV
+Gh
+Zx
+Zs
+ih
+EE
+Hd
+wZ
+kn
+gJ
+gJ
+gJ
+gJ
+gJ
+"}
+(5,1,1) = {"
+gJ
+gJ
+kn
+kn
+kn
+zT
+Xq
+xg
+HF
+be
+KQ
+Wn
+Ps
+yh
+kn
+gJ
+gJ
+gJ
+gJ
+gJ
+"}
+(6,1,1) = {"
+gJ
+gJ
+kn
+gR
+kn
+cn
+kn
+Cf
+zo
+jf
+di
+lA
+DU
+ta
+zh
+gJ
+gJ
+gJ
+gJ
+gJ
+"}
+(7,1,1) = {"
+gJ
+kn
+kn
+Eb
+kn
+RS
+PZ
+HM
+GH
+JW
+TB
+yg
+Sp
+QL
+PZ
+gJ
+gJ
+gJ
+gJ
+gJ
+"}
+(8,1,1) = {"
+gJ
+kn
+Xe
+RS
+IP
+zE
+PZ
+PZ
+SH
+PZ
+sU
+kn
+hW
+PZ
+kn
+gJ
+gJ
+gJ
+gJ
+gJ
+"}
+(9,1,1) = {"
+gJ
+kn
+Km
+RS
+RS
+nQ
+PZ
+Vm
+JB
+So
+uq
+ma
+Iq
+qS
+PZ
+gJ
+gJ
+gJ
+gJ
+gJ
+"}
+(10,1,1) = {"
+gJ
+kn
+Km
+xF
+RS
+nQ
+XW
+jy
+vT
+rj
+HK
+Wy
+UW
+UF
+PZ
+gJ
+gJ
+gJ
+gJ
+gJ
+"}
+(11,1,1) = {"
+gJ
+kn
+uh
+RS
+RS
+Ar
+kn
+cG
+tB
+kl
+Jq
+RS
+yP
+ig
+PZ
+gJ
+gJ
+gJ
+gJ
+gJ
+"}
+(12,1,1) = {"
+gJ
+kn
+iw
+nU
+sS
+Df
+kn
+UQ
+DA
+YN
+dX
+Cu
+zC
+ak
+PZ
+gJ
+gJ
+gJ
+gJ
+gJ
+"}
+(13,1,1) = {"
+gJ
+kn
+kn
+PZ
+yA
+PZ
+kn
+kn
+ng
+Me
+hH
+ng
+kn
+kn
+pi
+pi
+pi
+pi
+pi
+gJ
+"}
+(14,1,1) = {"
+gJ
+gJ
+SI
+zB
+gm
+GD
+XD
+Dr
+WQ
+ch
+wj
+dh
+BQ
+uv
+ym
+bw
+TN
+jk
+pi
+gJ
+"}
+(15,1,1) = {"
+gJ
+gJ
+hL
+vg
+qN
+qN
+Jz
+Px
+rk
+Us
+WJ
+Qf
+Qf
+Qf
+BZ
+RS
+lo
+nL
+pi
+gJ
+"}
+(16,1,1) = {"
+gJ
+gJ
+oB
+we
+zZ
+PA
+VC
+qu
+pW
+mN
+Lq
+Rj
+eE
+sp
+ym
+HD
+lo
+nL
+pi
+gJ
+"}
+(17,1,1) = {"
+gJ
+gJ
+iH
+iH
+iH
+bd
+iH
+iH
+kJ
+ng
+ng
+ng
+HS
+iH
+pi
+zq
+lo
+RS
+pi
+gJ
+"}
+(18,1,1) = {"
+gJ
+gJ
+gJ
+gJ
+gJ
+gJ
+gJ
+iH
+fw
+ze
+fn
+sE
+co
+wY
+pi
+Pc
+PE
+zr
+pi
+gJ
+"}
+(19,1,1) = {"
+gJ
+gJ
+gJ
+gJ
+gJ
+gJ
+gJ
+iH
+iH
+iH
+iH
+It
+UB
+kn
+pi
+pi
+pi
+nN
+pi
+gJ
+"}
+(20,1,1) = {"
+gJ
+gJ
+gJ
+gJ
+gJ
+gJ
+gJ
+gJ
+gJ
+gJ
+gJ
+gJ
+gJ
+gJ
+gJ
+gJ
+gJ
+gJ
+gJ
+gJ
+"}

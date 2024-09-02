@@ -315,6 +315,10 @@
 	},
 /turf/open/floor/iron,
 /area/virtual_domain/fullbright)
+"Q" = (
+/obj/machinery/telecomms/relay/preset/auto/bitrunning,
+/turf/closed/indestructible/binary,
+/area/virtual_domain/fullbright)
 "R" = (
 /obj/effect/mob_spawn/corpse/human/doctor,
 /turf/open/floor/iron,
@@ -515,7 +519,7 @@ x
 y
 h
 L
-s
+Q
 "}
 (6,1,1) = {"
 s

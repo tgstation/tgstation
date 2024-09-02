@@ -27,6 +27,10 @@
 /obj/bitrunning/customer_speech,
 /turf/open/floor/iron/textured,
 /area/virtual_domain/fullbright)
+"k" = (
+/obj/machinery/telecomms/relay/preset/auto/bitrunning,
+/turf/closed/indestructible/binary,
+/area/virtual_domain/fullbright)
 "n" = (
 /obj/bitrunning/customer_waiter/west/slow,
 /turf/open/floor/iron/textured,
@@ -261,7 +265,7 @@ Q
 i
 s
 Y
-a
+k
 "}
 (7,1,1) = {"
 a

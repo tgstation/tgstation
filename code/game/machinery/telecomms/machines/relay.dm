@@ -100,3 +100,8 @@
 /obj/machinery/telecomms/relay/preset/auto
 	hide = TRUE
 	autolinkers = list("autorelay")
+
+/obj/machinery/telecomms/relay/preset/auto/bitrunning/Initialize(mapload)
+	. = ..()
+	for(var/obj/machinery/telecomms/telecomms_machine in GLOB.telecomms_list)
+		add_automatic_link(telecomms_machine)

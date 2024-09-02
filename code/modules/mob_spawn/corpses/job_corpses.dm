@@ -88,3 +88,9 @@
 	name = JOB_BITRUNNER
 	outfit = /datum/outfit/job/bitrunner
 	icon_state = "corpsecargotech"
+
+
+/obj/effect/mob_spawn/corpse/human/security
+	name = JOB_SECURITY_OFFICER
+	outfit = /datum/outfit/job/security
+	icon_state = "corpsegreytider"

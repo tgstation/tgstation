@@ -111,6 +111,10 @@
 	},
 /turf/open/floor/iron/textured,
 /area/virtual_domain/fullbright)
+"K" = (
+/obj/machinery/telecomms/relay/preset/auto/bitrunning,
+/turf/closed/indestructible/binary,
+/area/virtual_domain/fullbright)
 "L" = (
 /obj/structure/window/reinforced/spawner/directional/west,
 /obj/structure/window/reinforced/spawner/directional/south,
@@ -351,7 +355,7 @@ x
 x
 o
 q
-I
+K
 I
 I
 I

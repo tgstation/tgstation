@@ -45,12 +45,13 @@
 	var/datum/outfit/to_wear = new outfit_path()
 
 	to_wear.belt = /obj/item/bitrunning_host_monitor
-	to_wear.ears = null
+	if(!bitrunning_network == BITRUNNER_DOMAIN_SECURITY) // prisoners get a radio so they aren't completely isolated, and some additional clothes
+		to_wear.ears = null
+		to_wear.gloves = null
+		to_wear.suit = null
 	to_wear.glasses = null
-	to_wear.gloves = null
 	to_wear.l_pocket = null
 	to_wear.r_pocket = null
-	to_wear.suit = null
 	to_wear.suit_store = null
 
 	avatar.equipOutfit(to_wear, visualsOnly = TRUE)
