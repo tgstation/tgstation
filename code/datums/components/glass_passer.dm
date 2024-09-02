@@ -26,9 +26,9 @@
 /datum/component/glass_passer/proc/cross_over(mob/passer, atom/crosser)
 	SIGNAL_HANDLER
 
-	if(istype(crosser, /obj/structure/window_frame))
-		var/obj/structure/window_frame/framefriend = crosser
-		if(framefriend.is_shocked()) //prevent passage of shocked
+	if(istype(crosser, /obj/structure/grille))
+		var/obj/structure/grille/grillefriend = crosser
+		if(grillefriend.is_shocked()) //prevent passage of shocked
 			crosser.balloon_alert(passer, "is shocked!")
 			return COMPONENT_BLOCK_CROSS
 

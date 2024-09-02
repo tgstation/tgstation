@@ -1,6 +1,5 @@
 #define STASIS_TOGGLE_COOLDOWN 50
 /obj/machinery/stasis
-	SET_BASE_VISUAL_PIXEL(0, DEPTH_OFFSET)
 	name = "lifeform stasis unit"
 	desc = "A not so comfortable looking bed with some nozzles at the top and bottom. It will keep someone in stasis."
 	icon = 'icons/obj/machines/stasis.dmi'
