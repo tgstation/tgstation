@@ -307,7 +307,7 @@
 	reqs = list(
 		/obj/item/pipe = 8,
 		/obj/item/stack/sheet/mineral/wood = 15,
-		/obj/item/stack/sheet/mineral/iron = 10,
+		/obj/item/stack/sheet/iron = 10,
 		/obj/item/storage/toolbox = 1,
 		/obj/item/stack/rods = 10,
 		/obj/item/assembly/igniter = 2,
