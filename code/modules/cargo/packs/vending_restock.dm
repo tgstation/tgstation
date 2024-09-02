@@ -19,13 +19,6 @@
 	crate_name = "cigarette supply crate"
 	crate_type = /obj/structure/closet/crate
 
-/datum/supply_pack/vending/science/cytopro
-	name = "Cytology Vendor Supply Crate"
-	desc = "For all your vat-growing needs! Contains a CytoPro machine refill."
-	cost = CARGO_CRATE_VALUE * 3
-	contains = list(/obj/item/vending_refill/cytopro)
-	crate_name = "cytopro supply crate"
-
 /datum/supply_pack/vending/dinnerware
 	name = "Dinnerware Supply Crate"
 	desc = "More knives for the chef."

@@ -54,7 +54,7 @@
 	cost = 1
 	route = PATH_MOON
 	depth = 3
-	research_tree_icon_path = 'icons/ui/antags/heretic/knowledge.dmi'
+	research_tree_icon_path = 'icons/ui_icons/antags/heretic/knowledge.dmi'
 	research_tree_icon_state = "grasp_moon"
 
 /datum/heretic_knowledge/moon_grasp/on_gain(mob/user, datum/antagonist/heretic/our_heretic)
@@ -148,7 +148,7 @@
 	gain_text = "His wit was sharp as a blade, cutting through the lie to bring us joy."
 	next_knowledge = list(/datum/heretic_knowledge/spell/moon_ringleader)
 	route = PATH_MOON
-	research_tree_icon_path = 'icons/ui/antags/heretic/knowledge.dmi'
+	research_tree_icon_path = 'icons/ui_icons/antags/heretic/knowledge.dmi'
 	research_tree_icon_state = "blade_upgrade_moon"
 
 /datum/heretic_knowledge/blade_upgrade/moon/do_melee_effects(mob/living/source, mob/living/target, obj/item/melee/sickly_blade/blade)
