@@ -6365,6 +6365,7 @@
 #include "modular_doppler\icspawn\observer_spawn.dm"
 #include "modular_doppler\icspawn\spell.dm"
 #include "modular_doppler\languages\language_datums.dm"
+#include "modular_doppler\Loadouts\categories\shoes.dm"
 #include "modular_doppler\modular_cosmetics\code\jacket_pockets.dm"
 #include "modular_doppler\modular_cosmetics\code\neck\collar.dm"
 #include "modular_doppler\modular_cosmetics\code\suits\jacket.dm"
