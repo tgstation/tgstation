@@ -154,11 +154,11 @@ After that some startup commits on this branch need to be reverted then it can b
 			{
 				var previousPR = await client.PullRequest.Get("tgstation", "tgstation", closedPRNumber.Value);
 
-				var previousOriginalPR = Int32.Parse(Regex.Match(previousPR.Title, "Post Wallening Replay PR #([0-9][1-9]+)").Groups[1].Value);
+				var previousOriginalPR = Int32.Parse(Regex.Match(previousPR.Title, "Post Wallening Replay PR #([1-9][0-9]+)").Groups[1].Value);
 
 				var newBody = Regex.Replace(
 					walleningPR.Body,
-					@$"  - \[ \] #{previousOriginalPR} - Reverted in ([0-9a-f])+",
+					@$"  - \[ \] #{previousOriginalPR} - Reverted in ([0-9a-f]+)",
 					previousPR.Merged
 						? $"  - [x] #{previousOriginalPR} - Reverted in $1"
 						: $"  - ~~[ ] #{previousOriginalPR} - Reverted in $1~~ (SKIPPED)");
@@ -215,25 +215,30 @@ After that some startup commits on this branch need to be reverted then it can b
 
 			bool conflicted = result.Status == MergeStatus.Conflicts;
 			if (conflicted)
-			{
 				repo.Reset(ResetMode.Hard, preMergeSha);
-			}
 
 			var body = $"This pull request replays #{nextPr} onto the wallening revert branch.";
+
+			var title = $"Post Wallening Replay PR #{nextPr} [MDB Ignore][IDB Ignore]";
 			if (conflicted)
 			{
 				var originalPR = await client.PullRequest.Get("tgstation", "tgstation", nextPr);
-				body += $"\n\nThis PR appears to be conflicting. Please push a resolution and merge it. Pinging original author @{originalPR.User.Login} and merger @{originalPR.MergedBy.Login} for assistance.\n\nAlternatively, close the PR to skip it. The original PR will be labelled `Lost to Wallening Revert`.";
+				body += $"\n\nThis PR appears to be conflicting. Please push a resolution and enable auto-merge. Pinging original author @{originalPR.User.Login} and @tgstation/commit-access for assistance.\n\nAlternatively, if the PR is **NOT** conflicting, close it to skip it. If it **is** conflicting, you need to run the following [GitHub CLI](https://cli.github.com) command to **in your local repository** skip it:\n\n```\ngh repo set-default tgstation/tgstation\ngh workflow run \"Wallening Revert\" --ref 1989-11-09 -f pr_number=<THIS PR NUMBER>\n```\nIf this PR is skipped, the original PR will be labelled `Lost to Wallening Revert`.";
+				title += " (CONFLICTS)";
 			}
 
 			var remote = repo.Network.Remotes.First();
 			var forcePushString = String.Format(CultureInfo.InvariantCulture, "+{0}:{0}", branch.CanonicalName);
 			repo.Network.Push(remote, forcePushString, pushOptions);
 
-			var pr = await client.PullRequest.Create("tgstation", "tgstation", new NewPullRequest($"Post Wallening Replay PR #{nextPr}", branchName, "1989-11-09")
+			var pr = await client.PullRequest.Create("tgstation", "tgstation", new NewPullRequest(title, branchName, "1989-11-09")
 			{
-				Draft = conflicted,
 				Body = body,
+			});
+
+			pr = await client.PullRequest.Update("tgstation", "tgstation", pr.Number, new PullRequestUpdate
+			{
+				Body = body.Replace("<THIS PR NUMBER>", pr.Number.ToString())
 			});
 
 			if (!conflicted)
