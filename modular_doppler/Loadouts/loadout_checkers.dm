@@ -25,6 +25,8 @@
 		GLOB.all_loadout_datums[spawned_type.item_path] = spawned_type
 		. |= spawned_type
 
+/datum/loadout_category
+	var/erp_category = FALSE
 
 /datum/loadout_item
 	/// If set, is a list of job names of which can get the loadout item

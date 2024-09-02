@@ -1,5 +1,9 @@
 /// -- Outfit and mob helpers to equip our loadout items. --
 
+/// Called after a loadout item gets a custom description
+/atom/proc/on_loadout_custom_described()
+	return
+
 /// An empty outfit we fill in with our loadout items to dress our dummy.
 /datum/outfit/player_loadout
 	name = "Player Loadout"

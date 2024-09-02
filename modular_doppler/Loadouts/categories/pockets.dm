@@ -1,3 +1,7 @@
+// Because plushes have a second desc var that needs to be updated
+/obj/item/toy/plush/on_loadout_custom_described()
+	normal_desc = desc
+
 // The wallet loadout item is special, and puts the player's ID and other small items into it on initialize (fancy!)
 /datum/loadout_item/pocket_items/wallet
 	name = "Wallet"

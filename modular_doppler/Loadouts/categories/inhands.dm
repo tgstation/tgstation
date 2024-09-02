@@ -1,3 +1,4 @@
+
 /datum/loadout_item/inhand/cane/crutch
 	name = "Crutch"
 	item_path = /obj/item/cane/crutch
