@@ -41,10 +41,6 @@
 	clawfootstep = FOOTSTEP_WATER
 	heavyfootstep = FOOTSTEP_WATER
 
-/turf/open/misc/beach/coast/Initialize(mapload)
-	. = ..()
-	ADD_TRAIT(src, TRAIT_MESSAGE_IN_A_BOTTLE_LOCATION, INNATE_TRAIT)
-
 /turf/open/misc/beach/coast/break_tile()
 	. = ..()
 	icon_state = "beach"

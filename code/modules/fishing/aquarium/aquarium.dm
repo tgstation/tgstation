@@ -15,7 +15,7 @@
 	density = TRUE
 	anchored = FALSE
 
-	icon = 'icons/obj/structures/aquarium/tanks.dmi'
+	icon = 'icons/obj/aquarium/tanks.dmi'
 	icon_state = "aquarium_map"
 
 	integrity_failure = 0.3

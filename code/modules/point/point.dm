@@ -7,30 +7,22 @@
  *
  * Not intended as a replacement for the mob verb
  */
-/atom/movable/proc/point_at(atom/pointed_atom, intentional = FALSE)
+/atom/movable/proc/point_at(atom/pointed_atom)
 	if(!isturf(loc))
-		return FALSE
+		return
 
 	if (pointed_atom in src)
 		create_point_bubble(pointed_atom)
-		return FALSE
+		return
 
 	var/turf/tile = get_turf(pointed_atom)
 	if (!tile)
-		return FALSE
+		return
 
 	var/turf/our_tile = get_turf(src)
 	var/obj/visual = new /obj/effect/temp_visual/point(our_tile, invisibility)
 
-	SEND_SIGNAL(src, COMSIG_MOVABLE_POINTED, pointed_atom, visual, intentional)
-
 	animate(visual, pixel_x = (tile.x - our_tile.x) * world.icon_size + pointed_atom.pixel_x, pixel_y = (tile.y - our_tile.y) * world.icon_size + pointed_atom.pixel_y, time = 1.7, easing = EASE_OUT)
-	return TRUE
-
-/mob/point_at(atom/pointed_atom, intentional = FALSE)
-	. = ..()
-	if(.)
-		face_atom(pointed_atom)
 
 /atom/movable/proc/create_point_bubble(atom/pointed_atom)
 	var/mutable_appearance/thought_bubble = mutable_appearance(
@@ -117,6 +109,7 @@
 	if(client && !(pointing_at in view(client.view, src)))
 		return FALSE
 
-	point_at(pointing_at, TRUE)
+	point_at(pointing_at)
 
+	SEND_SIGNAL(src, COMSIG_MOB_POINTED, pointing_at)
 	return TRUE
