@@ -94,6 +94,8 @@ https://www.zapsplat.com/sound-effect-category/sleigh-bells/
 tada_fanfare.ogg is adapted from plasterbrain's "Tada Fanfare A", which is public domain (CC 0):
 https://freesound.org/people/plasterbrain/sounds/397355/
 
+mountedgun.ogg and mountedgunend.ogg are most likely from a stock sound of a magnum firing ,"44 MAGNUM A", from sound ideas 6000. However, its heavily truncated, so could be any number of gunshots.
+
 glockenspiel_ping.ogg is adapted from FunWithSound's "Short Success Sound Glockenspiel Treasure Video Game", which is public domain (CC 0):
 https://freesound.org/people/FunWithSound/sounds/456965/
 
