@@ -10,7 +10,7 @@
 	use_power = NO_POWER_USE
 
 	var/active = FALSE
-	var/power_gen = 5000
+	var/power_gen = 5 KILO JOULES
 	var/power_output = 1
 	var/consumption = 0
 	var/datum/looping_sound/generator/soundloop
@@ -81,13 +81,13 @@
 /obj/machinery/power/port_gen/pacman
 	name = "\improper P.A.C.M.A.N.-type portable generator"
 	circuit = /obj/item/circuitboard/machine/pacman
-	power_gen = 5000
+	power_gen = 10 KILO JOULES
 	var/sheets = 0
 	var/max_sheets = 50
 	var/sheet_name = ""
 	var/sheet_path = /obj/item/stack/sheet/mineral/plasma
 	var/sheet_left = 0 // How much is left of the sheet
-	var/time_per_sheet = 60
+	var/time_per_sheet = 180
 	var/current_heat = 0
 
 /obj/machinery/power/port_gen/pacman/Initialize(mapload)
@@ -108,8 +108,8 @@
 		icon_state = "portgen1_0"
 		base_icon_state = "portgen1"
 		max_sheets = 20
-		time_per_sheet = 20
-		power_gen = 15000
+		time_per_sheet = 60
+		power_gen = 30 KILO JOULES
 		sheet_path = /obj/item/stack/sheet/mineral/uranium
 
 /obj/machinery/power/port_gen/pacman/examine(mob/user)
@@ -274,8 +274,8 @@
 	icon_state = "portgen1_0"
 	base_icon_state = "portgen1"
 	max_sheets = 20
-	time_per_sheet = 20
-	power_gen = 15000
+	time_per_sheet = 60
+	power_gen = 30 KILO JOULES
 	sheet_path = /obj/item/stack/sheet/mineral/uranium
 
 /obj/machinery/power/port_gen/pacman/pre_loaded
