@@ -115,7 +115,7 @@
 	shot_delay = 2
 	firing_shakes_camera = FALSE
 
-/obj/structure/mounted_gun/pipeexamine_more(mob/user)
+/obj/structure/mounted_gun/pipe/examine_more(mob/user)
 	. = ..()
 	. += span_notice("<b><i>Looking down at the [name], you recall a tale told to you in some distant memory...</i></b>")
 
