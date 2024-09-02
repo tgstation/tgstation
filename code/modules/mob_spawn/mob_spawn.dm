@@ -32,6 +32,8 @@
 	var/skin_tone
 	/// Weakref to the mob this spawner created - just if you needed to do something with it.
 	var/datum/weakref/spawned_mob_ref
+	/// DOPPLER SHIFT ADDITION: allowing players to have their current character loaded
+	var/allow_prefs = TRUE
 
 /obj/effect/mob_spawn/Initialize(mapload)
 	. = ..()
@@ -93,7 +95,20 @@
 				if(!ispath(outfit_override[outfit_var]) && !isnull(outfit_override[outfit_var]))
 					CRASH("outfit_override var on [mob_name] spawner has incorrect values! it must be an assoc list with outfit \"var\" = path | null")
 				outfit.vars[outfit_var] = outfit_override[outfit_var]
-		spawned_human.equipOutfit(outfit)
+		//spawned_human.equipOutfit(outfit) /// DOPPLER SHIFT REMOVAL
+		/// DOPPLER SHIFT ADDITION BEGIN
+		if(allow_prefs && spawned_human.client)
+			spawned_human.client?.prefs.safe_transfer_prefs_to(spawned_human)
+			SSquirks.AssignQuirks(spawned_human, spawned_human.client)
+			spawned_human.equip_outfit_and_loadout(outfit, spawned_human.client?.prefs)
+		else
+			spawned_human.equipOutfit(outfit)
+	else if(allow_prefs && spawned_mob.client)
+		var/mob/living/carbon/human/spawned_human = spawned_mob
+		spawned_human.client?.prefs.safe_transfer_prefs_to(spawned_human)
+		SSquirks.AssignQuirks(spawned_human, spawned_human.client)
+		spawned_human.equip_outfit_and_loadout(new /datum/outfit(), spawned_human.client?.prefs)
+		/// DOPPLER SHIFT ADDITION END
 
 ///these mob spawn subtypes do not trigger until attacked by a ghost.
 /obj/effect/mob_spawn/ghost_role
@@ -157,9 +172,14 @@
 	LAZYADD(ckeys_trying_to_spawn, user_ckey)
 
 	if(prompt_ghost)
-		var/prompt = "Become [prompt_name]?"
+		var/realname = user.client?.prefs?.read_preference(/datum/preference/name/real_name) || "yourself" /// DOPPLER SHIFT ADDITION
+		var/prompt = "Become [prompt_name] as [realname]?" /// DOPPLER SHIFT EDIT: adding your name to it
 		if(!temp_body && user.can_reenter_corpse && user.mind)
 			prompt += " (Warning, You can no longer be revived!)"
+		/// DOPPLER SHIFT ADDITION BEGIN
+		if(allow_prefs)
+			prompt += "\nYou will be loaded in with your current character, [realname] - loadout & quirks included!  Make sure they fit the role!"
+		/// DOPPLER SHIFT ADDITION END
 		var/ghost_role = tgui_alert(usr, prompt, buttons = list("Yes", "No"), timeout = 10 SECONDS)
 		if(ghost_role != "Yes" || !loc || QDELETED(user))
 			LAZYREMOVE(ckeys_trying_to_spawn, user_ckey)

@@ -1,0 +1,10 @@
+{
+	"choker": [
+		{
+			"type": "icon_state",
+			"icon_state": "choker_mob",
+			"blend_mode": "overlay",
+			"color_ids": [ 1 ]
+		}
+	]
+}
