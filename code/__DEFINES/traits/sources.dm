@@ -45,7 +45,8 @@
 
 /// Trait given by an Action datum
 #define ACTION_TRAIT "action"
-
+///A trait given by someone blocking.
+#define BLOCKING_TRAIT "blocking"
 #define CLOTHING_TRAIT "clothing"
 #define HELMET_TRAIT "helmet"
 /// inherited from the mask
