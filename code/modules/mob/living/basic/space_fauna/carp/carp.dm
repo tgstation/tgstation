@@ -43,7 +43,6 @@
 	habitable_atmos = null
 	minimum_survivable_temperature = 0
 	maximum_survivable_temperature = 1500
-	death_offset_y = -10
 
 	/// Cytology cells you can swab from this creature
 	var/cell_line = CELL_LINE_TABLE_CARP
