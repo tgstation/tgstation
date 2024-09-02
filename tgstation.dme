@@ -6370,6 +6370,8 @@
 #include "modular_doppler\Loadouts\categories\glasses.dm"
 #include "modular_doppler\Loadouts\categories\gloves.dm"
 #include "modular_doppler\Loadouts\categories\heads.dm"
+#include "modular_doppler\Loadouts\categories\inhands.dm"
+#include "modular_doppler\Loadouts\categories\masks.dm"
 #include "modular_doppler\Loadouts\categories\shoes.dm"
 #include "modular_doppler\modular_cosmetics\code\jacket_pockets.dm"
 #include "modular_doppler\modular_cosmetics\code\neck\collar.dm"
