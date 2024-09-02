@@ -25,11 +25,11 @@
 
 /datum/loadout_item/mask/plaguedoctor
 	name = "Plague Doctor Mask"
-	item_path = /obj/item/clothing/mask/plaguedoctor
+	item_path = /obj/item/clothing/mask/gas/plaguedoctor
 
 /datum/loadout_item/mask/clown
 	name = "Clown Mask"
-	item_path = /obj/item/clothing/mask/clown_hat
+	item_path = /obj/item/clothing/mask/gas/clown_hat
 
 /datum/loadout_item/mask/balaclava
 	name = "Balaclava"
