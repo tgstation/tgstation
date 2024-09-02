@@ -24,7 +24,7 @@
 
 /obj/item/clothing/neck/long_cape/Initialize(mapload)
 	. = ..()
-	AddComponent(/datum/component/toggle_clothes, "long_cape_t")
+	AddComponent(/datum/component/toggle_icon)
 
 /obj/item/clothing/neck/wide_cape
 	name = "wide cape"
@@ -52,7 +52,7 @@
 
 /obj/item/clothing/neck/face_scarf/Initialize(mapload)
 	. = ..()
-	AddComponent(/datum/component/toggle_clothes, "face_scarf_t")
+	AddComponent(/datum/component/toggle_icon)
 
 ///////////////
 //MISCELLANIA//

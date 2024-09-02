@@ -1,0 +1,33 @@
+{
+	"chokha": [
+		{
+			"type": "icon_state",
+			"icon_state": "chokha",
+			"blend_mode": "overlay",
+			"color_ids": [ 1 ]
+		},
+		{
+			"type": "icon_state",
+			"icon_state": "chokha_shirt",
+			"blend_mode": "overlay",
+			"color_ids": [ 2 ]
+		},
+		{
+			"type": "icon_state",
+			"icon_state": "chokha_collar",
+			"blend_mode": "overlay",
+			"color_ids": [ 3 ]
+		},
+		{
+			"type": "icon_state",
+			"icon_state": "chokha_paulets",
+			"blend_mode": "overlay",
+			"color_ids": [ 4 ]
+		},
+		{
+			"type": "icon_state",
+			"icon_state": "chokha_misc",
+			"blend_mode": "overlay"
+		}
+	]
+}

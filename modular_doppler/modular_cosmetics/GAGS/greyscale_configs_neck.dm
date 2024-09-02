@@ -1,5 +1,5 @@
 /*
-         ／＞　 フ   meow! this dm file contains greyscale configs for any clothes we add. please name
+         ／＞　 フ   meow! this dm file contains greyscale datums for any clothes we add. please name
         | 　_　_| /  them in obvious, easy to search ways that are consistent with your item paths <3
       ／` ミ＿xノ
      /　　　　 |
@@ -40,6 +40,31 @@
 /datum/greyscale_config/wide_cape/worn
 	name = "Wide Cape (Worn)"
 	icon_file = 'modular_doppler/modular_cosmetics/GAGS/icons/mob/neck.dmi'
+
+/datum/greyscale_config/ranger_poncho
+	name = "Ranger Poncho"
+	icon_file = 'modular_doppler/modular_cosmetics/GAGS/icons/obj/neck.dmi'
+	json_config = 'modular_nova/modules/GAGS/json_configs/ranger_poncho/ranger_poncho.json'
+
+/datum/greyscale_config/ranger_poncho/worn
+	name = "Ranger Poncho (Worn)"
+	icon_file = 'modular_doppler/modular_cosmetics/GAGS/icons/mob/neck.dmi'
+	json_config = 'modular_nova/modules/GAGS/json_configs/ranger_poncho/ranger_poncho_worn.json'
+
+///////////
+//SCARVES//
+///////////
+
+/datum/greyscale_config/face_scarf
+	name = "Face Scarf"
+	icon_file = 'modular_skyrat/modules/GAGS/icons/face_scarf.dmi'
+	json_config = 'modular_skyrat/modules/GAGS/json_configs/neck/face_scarf.json'
+
+/datum/greyscale_config/face_scarf/worn
+	name = "Face Scarf (Worn)"
+	icon_file = 'modular_skyrat/modules/GAGS/icons/face_scarf_worn.dmi'
+
+
 
 ///////////
 //COLLARS//

@@ -213,6 +213,15 @@
 //COATS//
 /////////
 
+/obj/item/clothing/suit/jacket/doppler/chokha
+	name = "\improper Iseurian chokha"
+	desc = "A ceremonial woolen coat sporting a high neck and decorative gunpowder cases on the breast. The label on this one bears the Iseurian Revolutionary flag."
+	icon_state = "chokha"
+	greyscale_config = /datum/greyscale_config/chokha
+	greyscale_config_worn = /datum/greyscale_config/chokha/worn
+	greyscale_colors = "#1c1c1c#491618#1c1c1c#491618"
+	flags_1 = IS_PLAYER_COLORABLE_1
+
 /obj/item/clothing/suit/jacket/doppler/fur_coat
 	name = "rugged fur coat"
 	desc = "Even in an age where any large mammal can be grown in situ at industrial levels some insist on having \
