@@ -22,25 +22,17 @@
 			continue
 
 		var/datum/loadout_item/spawned_type = new found_type()
-		// Let's sanitize in case somebody inserted the player's byond name instead of ckey in canonical form
-		if(spawned_type.ckeywhitelist)
-			for (var/i = 1, i <= length(spawned_type.ckeywhitelist), i++)
-				spawned_type.ckeywhitelist[i] = ckey(spawned_type.ckeywhitelist[i])
 		GLOB.all_loadout_datums[spawned_type.item_path] = spawned_type
 		. |= spawned_type
 
 
 /datum/loadout_item
-	/// If set, it's a list containing ckeys which only can get the item
-	var/list/ckeywhitelist
 	/// If set, is a list of job names of which can get the loadout item
 	var/list/restricted_roles
 	/// If set, is a list of job names of which can't get the loadout item
 	var/list/blacklisted_roles
 	/// If set, is a list of species which can get the loadout item
 	var/list/restricted_species
-	/// Whether the item is restricted to supporters
-	var/donator_only
 	/// Whether the item requires a specific season in order to be available
 	var/required_season = null
 	/// If the item won't appear when the ERP config is disabled
@@ -110,11 +102,6 @@
 				to_chat(target, span_warning("You were unable to get a loadout item ([initial(item_path.name)]) due to species restrictions!"))
 			return FALSE
 
-	if(LAZYLEN(ckeywhitelist) && !(client?.ckey in ckeywhitelist))
-		if(client && !silent)
-			to_chat(target, span_warning("You were unable to get a loadout item ([initial(item_path.name)]) due to not being apart of its CKEY whitelist!"))
-		return FALSE
-
 	return TRUE
 
 
@@ -133,7 +120,6 @@
 
 /datum/loadout_item/to_ui_data()
 	var/list/formatted_item = ..()
-	formatted_item["ckey_whitelist"] = ckeywhitelist
 	formatted_item["restricted_roles"] = restricted_roles
 	formatted_item["blacklisted_roles"] = blacklisted_roles
 	formatted_item["restricted_species"] = restricted_species
@@ -172,4 +158,4 @@
 		loadout[item_path] -= INFO_DESCRIBED
 
 	manager.preferences.update_preference(GLOB.preference_entries[/datum/preference/loadout], loadout)
-	return TRUE // just so that it updates the UI. Gonna change it later, upstream.
+	return TRUE
