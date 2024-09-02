@@ -6,6 +6,7 @@
 	icon_state = "cowl_neck"
 	worn_icon = 'modular_doppler/modular_cosmetics/icons/mob/under/miscellania.dmi'
 	female_sprite_flags = FEMALE_UNIFORM_NO_BREASTS
+	can_adjust = FALSE
 
 /obj/item/clothing/under/collared_shirt
 	name = "collared shirt and trousers"
@@ -15,6 +16,7 @@
 	icon_state = "collared_shirt"
 	worn_icon = 'modular_doppler/modular_cosmetics/icons/mob/under/miscellania.dmi'
 	female_sprite_flags = FEMALE_UNIFORM_NO_BREASTS
+	can_adjust = FALSE
 
 /obj/item/clothing/under/moto_leggings
 	name = "'Naka' moto leggings"
@@ -24,3 +26,5 @@
 	icon = 'modular_doppler/modular_cosmetics/icons/obj/under/miscellania.dmi'
 	icon_state = "moto_leggings"
 	worn_icon = 'modular_doppler/modular_cosmetics/icons/mob/under/miscellania.dmi'
+	body_parts_covered = GROIN|LEGS
+	can_adjust = FALSE
