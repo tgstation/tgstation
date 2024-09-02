@@ -35,13 +35,11 @@
 "m" = (
 /obj/item/fishing_rod{
 	pixel_x = 5;
-	pixel_y = 4
+	pixel_y = -5
 	},
+/obj/item/fishing_rod,
 /obj/item/fishing_rod{
-	pixel_y = 8
-	},
-/obj/item/fishing_rod{
-	pixel_y = 12;
+	pixel_y = 5;
 	pixel_x = -5
 	},
 /obj/structure/table/wood,
