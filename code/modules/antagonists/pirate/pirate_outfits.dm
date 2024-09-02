@@ -42,7 +42,6 @@
 	belt = /obj/item/gun/magic/midas_hand
 	l_pocket = /obj/item/coin/gold/doubloon
 
-
 /datum/outfit/pirate/space
 	name = "Space Pirate (EVA)"
 
@@ -55,8 +54,6 @@
 	name = "Space Pirate Captain (EVA)"
 
 	head = /obj/item/clothing/head/helmet/space/pirate
-
-	id_trim = /datum/id_trim/pirate/captain
 
 /datum/outfit/pirate/silverscale
 	name = "Silver Scale Member"
@@ -154,8 +151,6 @@
 	suit = /obj/item/clothing/suit/jacket/oversized
 	head = /obj/item/clothing/head/costume/crown
 
-	id_trim = /datum/id_trim/pirate/captain
-
 /datum/outfit/pirate/medieval
 	name = "Medieval Warmonger"
 
@@ -186,5 +181,3 @@
 	belt = /obj/item/gun/magic/hook
 	l_pocket = /obj/item/tank/internals/emergency_oxygen
 	r_pocket = /obj/item/flashlight/lantern
-
-	skillchips = list(/obj/item/skillchip/big_pointer) //they don't have an id, so this is needed
