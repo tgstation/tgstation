@@ -3847,6 +3847,7 @@
 #include "code\modules\clothing\gloves\costume.dm"
 #include "code\modules\clothing\gloves\insulated.dm"
 #include "code\modules\clothing\gloves\plasmaman.dm"
+#include "code\modules\clothing\gloves\punch_mitts.dm"
 #include "code\modules\clothing\gloves\special.dm"
 #include "code\modules\clothing\gloves\tacklers.dm"
 #include "code\modules\clothing\head\_head.dm"
