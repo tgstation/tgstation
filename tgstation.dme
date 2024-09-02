@@ -2427,6 +2427,7 @@
 #include "code\game\objects\items\devices\anomaly_releaser.dm"
 #include "code\game\objects\items\devices\battle_royale.dm"
 #include "code\game\objects\items\devices\beacon.dm"
+#include "code\game\objects\items\devices\broadcast_camera.dm"
 #include "code\game\objects\items\devices\chameleonproj.dm"
 #include "code\game\objects\items\devices\destabilizing_crystal.dm"
 #include "code\game\objects\items\devices\desynchronizer.dm"
