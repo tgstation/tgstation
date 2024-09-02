@@ -4,7 +4,6 @@
 /**********************Mineral processing unit console**************************/
 
 /obj/machinery/mineral
-	SET_BASE_VISUAL_PIXEL(0, DEPTH_OFFSET)
 	processing_flags = START_PROCESSING_MANUALLY
 	subsystem_type = /datum/controller/subsystem/processing/fastprocess
 	/// The current direction of `input_turf`, in relation to the machine.
