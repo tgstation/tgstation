@@ -66,7 +66,7 @@
 			"products" = list(
 				/obj/item/camera = 3,
 				/obj/item/camera_film = 5,
-				/obj/item/cardpack/resin = 20, //Both card packs have had their count raised to 20 from 10 until card persistance is implimented.
+				/obj/item/cardpack/resin = 20, //Both card packs have had their count raised to 20 from 10 until card persistence is implemented.
 				/obj/item/cardpack/series_one = 20,
 				/obj/item/dyespray = 3,
 				/obj/item/hourglass = 2,
