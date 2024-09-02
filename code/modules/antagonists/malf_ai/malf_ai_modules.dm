@@ -777,7 +777,7 @@ GLOBAL_LIST_INIT(malf_modules, subtypesof(/datum/ai_module))
 /datum/action/innate/ai/emergency_lights
 	name = "Disable Emergency Lights"
 	desc = "Disables all emergency lighting. Note that emergency lights can be restored through reboot at an APC."
-	button_icon = 'icons/obj/machines/lighting.dmi'
+	button_icon = 'icons/obj/lighting.dmi'
 	button_icon_state = "floor_emergency"
 	uses = 1
 

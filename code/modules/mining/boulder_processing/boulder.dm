@@ -7,7 +7,7 @@
 	name = "boulder"
 	desc = "This rocks."
 	icon_state = "ore"
-	icon = 'icons/obj/mining_zones/ore.dmi'
+	icon = 'icons/obj/ore.dmi'
 	item_flags = NO_MAT_REDEMPTION | SLOWS_WHILE_IN_HAND
 	throw_range = 2
 	throw_speed = 0.5
