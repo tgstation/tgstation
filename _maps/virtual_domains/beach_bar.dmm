@@ -2,6 +2,7 @@
 "ab" = (
 /obj/machinery/vending/cigarette/beach,
 /obj/effect/turf_decal/sand,
+/obj/structure/sign/poster/contraband/have_a_puff/directional/west,
 /turf/open/floor/iron,
 /area/virtual_domain/fullbright)
 "ag" = (
@@ -67,18 +68,6 @@
 /obj/item/reagent_containers/pill/lsd,
 /obj/item/reagent_containers/pill/lsd,
 /obj/item/reagent_containers/pill/lsd,
-/obj/item/reagent_containers/pill/zoom{
-	pixel_y = 12;
-	pixel_x = 5
-	},
-/obj/item/reagent_containers/pill/zoom{
-	pixel_y = 12;
-	pixel_x = 5
-	},
-/obj/item/reagent_containers/pill/zoom{
-	pixel_y = 12;
-	pixel_x = 5
-	},
 /turf/open/floor/wood,
 /area/virtual_domain/fullbright)
 "cv" = (
@@ -292,9 +281,7 @@
 /area/virtual_domain/fullbright)
 "oP" = (
 /obj/structure/table/wood,
-/obj/machinery/reagentgrinder{
-	pixel_y = 8
-	},
+/obj/machinery/reagentgrinder,
 /turf/open/floor/wood,
 /area/virtual_domain/fullbright)
 "pr" = (
@@ -318,6 +305,10 @@
 /obj/structure/extinguisher_cabinet/directional/south,
 /turf/open/misc/beach/sand,
 /area/virtual_domain/fullbright)
+"qg" = (
+/obj/structure/sign/poster/contraband/space_up/directional/west,
+/turf/open/floor/wood,
+/area/virtual_domain/fullbright)
 "qR" = (
 /obj/effect/spawner/structure/window,
 /obj/structure/curtain,
@@ -333,6 +324,10 @@
 "rc" = (
 /obj/machinery/light/directional/east,
 /turf/open/floor/wood,
+/area/virtual_domain/fullbright)
+"ri" = (
+/obj/structure/sign/poster/official/fruit_bowl,
+/turf/closed/wall/mineral/wood/nonmetal,
 /area/virtual_domain/fullbright)
 "rm" = (
 /obj/item/storage/crayons,
@@ -465,17 +460,13 @@
 /area/lavaland/surface/outdoors/virtual_domain)
 "xk" = (
 /obj/structure/table/wood/poker,
-/obj/item/storage/dice{
-	pixel_y = 10
-	},
-/obj/item/stack/spacecash/c1000{
-	pixel_y = 4
-	},
+/obj/item/storage/dice,
+/obj/item/stack/spacecash/c1000,
 /turf/open/floor/wood,
 /area/virtual_domain/fullbright)
 "xq" = (
-/obj/structure/window/reinforced/half/directional/west,
-/obj/structure/window/reinforced/half/directional/south,
+/obj/structure/window/reinforced/spawner/directional/west,
+/obj/structure/window/reinforced/spawner/directional/south,
 /obj/item/megaphone,
 /turf/open/floor/wood,
 /area/virtual_domain/fullbright)
@@ -495,12 +486,19 @@
 /turf/open/floor/wood,
 /area/virtual_domain/fullbright)
 "xR" = (
-/obj/structure/window/reinforced/half/directional/east,
-/obj/structure/window/reinforced/half/directional/north,
+/obj/structure/window/reinforced/spawner/directional/east,
+/obj/structure/window/reinforced/spawner/directional/north,
 /obj/structure/chair/stool/directional/south,
 /obj/item/storage/backpack/duffelbag,
 /obj/item/clothing/under/shorts/red,
 /obj/item/clothing/glasses/sunglasses,
+/turf/open/floor/wood,
+/area/virtual_domain/fullbright)
+"ya" = (
+/obj/structure/table/wood,
+/obj/item/reagent_containers/pill/zoom,
+/obj/item/reagent_containers/pill/zoom,
+/obj/item/reagent_containers/pill/zoom,
 /turf/open/floor/wood,
 /area/virtual_domain/fullbright)
 "yi" = (
@@ -544,7 +542,7 @@
 /turf/open/floor/plating,
 /area/virtual_domain/fullbright)
 "yX" = (
-/obj/structure/chair/stool/bar/directional/north,
+/obj/structure/chair/stool/bar/directional/south,
 /turf/open/floor/carpet/red,
 /area/virtual_domain/fullbright)
 "zn" = (
@@ -595,8 +593,7 @@
 /area/virtual_domain/fullbright)
 "AP" = (
 /obj/machinery/chem_dispenser/drinks/beer/fullupgrade{
-	dir = 1;
-	pixel_y = 8
+	dir = 1
 	},
 /obj/structure/table/wood,
 /turf/open/floor/wood,
@@ -604,12 +601,11 @@
 "Br" = (
 /obj/structure/table/wood/poker,
 /obj/item/toy/cards/deck/cas{
-	pixel_x = -6;
-	pixel_y = 8
+	pixel_x = -6
 	},
 /obj/item/toy/cards/deck/cas/black{
 	pixel_x = -6;
-	pixel_y = 17
+	pixel_y = 2
 	},
 /turf/open/floor/wood,
 /area/virtual_domain/fullbright)
@@ -629,9 +625,7 @@
 /area/virtual_domain/fullbright)
 "BJ" = (
 /obj/structure/table/wood/poker,
-/obj/item/toy/cards/deck{
-	pixel_y = 10
-	},
+/obj/item/toy/cards/deck,
 /turf/open/floor/wood,
 /area/virtual_domain/fullbright)
 "BM" = (
@@ -653,7 +647,7 @@
 /turf/open/floor/iron/grimy,
 /area/virtual_domain/fullbright)
 "CA" = (
-/obj/structure/window/reinforced/half/directional/east,
+/obj/structure/window/reinforced/spawner/directional/east,
 /obj/effect/mob_spawn/ghost_role/human/beach/lifeguard,
 /turf/open/floor/wood,
 /area/virtual_domain/fullbright)
@@ -661,6 +655,10 @@
 /obj/machinery/vending/dinnerware,
 /obj/machinery/light/directional/east,
 /turf/open/floor/wood,
+/area/virtual_domain/fullbright)
+"Db" = (
+/obj/machinery/barsign/all_access,
+/turf/closed/wall/mineral/wood/nonmetal,
 /area/virtual_domain/fullbright)
 "Ds" = (
 /obj/machinery/door/airlock/public/glass{
@@ -678,12 +676,9 @@
 /turf/closed/wall/mineral/sandstone,
 /area/virtual_domain/fullbright)
 "Em" = (
-/obj/item/reagent_containers/condiment/enzyme{
-	pixel_y = 14
-	},
+/obj/item/reagent_containers/condiment/enzyme,
 /obj/item/reagent_containers/cup/beaker{
-	pixel_x = 5;
-	pixel_y = 3
+	pixel_x = 5
 	},
 /obj/structure/table,
 /turf/open/floor/wood,
@@ -695,12 +690,11 @@
 /area/virtual_domain/fullbright)
 "Ev" = (
 /obj/structure/reagent_dispensers/beerkeg,
-/obj/structure/sign/poster/official/high_class_martini/directional/north,
 /turf/open/floor/wood,
 /area/virtual_domain/fullbright)
 "EC" = (
-/obj/machinery/barsign/all_access/directional/north,
-/turf/open/misc/beach/sand,
+/obj/structure/sign/warning/gas_mask/directional/west,
+/turf/open/floor/plating,
 /area/virtual_domain/fullbright)
 "EP" = (
 /obj/machinery/light/directional/north,
@@ -722,6 +716,12 @@
 /obj/item/reagent_containers/cup/bottle/nutrient/ez,
 /turf/open/floor/pod/light,
 /area/virtual_domain/fullbright)
+"FS" = (
+/obj/effect/turf_decal/sand,
+/obj/structure/sign/warning/no_smoking/circle/directional/east,
+/obj/machinery/light/directional/east,
+/turf/open/misc/beach/sand,
+/area/virtual_domain/fullbright)
 "FY" = (
 /obj/structure/mineral_door/wood,
 /turf/open/floor/wood,
@@ -736,19 +736,12 @@
 /turf/open/misc/beach/sand,
 /area/virtual_domain/fullbright)
 "GA" = (
-/obj/structure/window/reinforced/half/directional/north,
-/obj/structure/window/reinforced/half/directional/west,
-/obj/item/bikehorn/airhorn{
-	pixel_y = 11;
-	pixel_x = 6
-	},
+/obj/structure/window/reinforced/spawner/directional/north,
+/obj/structure/window/reinforced/spawner/directional/west,
+/obj/item/bikehorn/airhorn,
 /obj/structure/table/wood,
-/obj/item/storage/medkit/regular{
-	pixel_y = 8
-	},
-/obj/item/storage/medkit/brute{
-	pixel_y = 7
-	},
+/obj/item/storage/medkit/regular,
+/obj/item/storage/medkit/brute,
 /turf/open/floor/wood,
 /area/virtual_domain/fullbright)
 "Hs" = (
@@ -774,13 +767,8 @@
 /area/virtual_domain/fullbright)
 "Iv" = (
 /obj/structure/table/wood,
-/obj/item/reagent_containers/condiment/peppermill{
-	pixel_y = 5
-	},
-/obj/item/reagent_containers/condiment/soysauce{
-	pixel_y = 9;
-	pixel_x = 9
-	},
+/obj/item/reagent_containers/condiment/peppermill,
+/obj/item/reagent_containers/condiment/soysauce,
 /turf/open/floor/wood,
 /area/virtual_domain/fullbright)
 "IH" = (
@@ -816,6 +804,10 @@
 "JY" = (
 /obj/structure/flora/rock/style_random,
 /turf/open/misc/beach/sand,
+/area/virtual_domain/fullbright)
+"Kd" = (
+/obj/structure/sign/warning/secure_area,
+/turf/closed/wall/mineral/sandstone,
 /area/virtual_domain/fullbright)
 "KH" = (
 /obj/structure/mineral_door/wood{
@@ -913,6 +905,7 @@
 /turf/open/misc/beach/sand,
 /area/virtual_domain/fullbright)
 "Pg" = (
+/obj/structure/sign/poster/official/high_class_martini/directional/west,
 /obj/effect/mob_spawn/ghost_role/human/bartender{
 	dir = 4
 	},
@@ -924,7 +917,6 @@
 /area/virtual_domain/fullbright)
 "Qb" = (
 /obj/machinery/griddle,
-/obj/structure/sign/poster/official/fruit_bowl/directional/north,
 /turf/open/floor/wood,
 /area/virtual_domain/fullbright)
 "Qu" = (
@@ -937,8 +929,7 @@
 /area/virtual_domain/fullbright)
 "QX" = (
 /obj/machinery/chem_dispenser/drinks/fullupgrade{
-	dir = 1;
-	pixel_y = 8
+	dir = 1
 	},
 /obj/structure/table/wood,
 /obj/machinery/light/small/directional/east,
@@ -972,8 +963,7 @@
 /area/virtual_domain/fullbright)
 "SD" = (
 /obj/machinery/door/airlock/sandstone{
-	name = "Bar Access";
-	dir = 4
+	name = "Bar Access"
 	},
 /turf/open/floor/wood,
 /area/virtual_domain/fullbright)
@@ -1112,7 +1102,7 @@
 /turf/open/misc/beach/sand,
 /area/virtual_domain/fullbright)
 "Zb" = (
-/obj/structure/chair/stool/bar/directional/north,
+/obj/structure/sign/poster/official/cohiba_robusto_ad/directional/west,
 /turf/open/floor/wood,
 /area/virtual_domain/fullbright)
 "Zd" = (
@@ -1619,7 +1609,7 @@ LD
 LD
 Fn
 Fn
-Fn
+Kd
 Fn
 Fn
 bQ
@@ -1660,7 +1650,7 @@ Fn
 LD
 pT
 LD
-LD
+EC
 LD
 pT
 PM
@@ -1695,8 +1685,8 @@ kv
 Al
 Fn
 VA
+kT
 Zb
-TG
 TG
 Fn
 Fn
@@ -1785,7 +1775,7 @@ yX
 ag
 kT
 BJ
-Zb
+kT
 Fn
 as
 ab
@@ -2008,7 +1998,7 @@ Zt
 BD
 Iv
 BM
-BM
+Db
 Nr
 wD
 yl
@@ -2052,7 +2042,7 @@ TG
 TG
 mX
 BM
-EC
+wD
 wD
 Au
 wD
@@ -2094,7 +2084,7 @@ BM
 aw
 TG
 TG
-BM
+ya
 wD
 wD
 YJ
@@ -2133,7 +2123,7 @@ BM
 Em
 TG
 mq
-BM
+ri
 Qb
 TG
 TG
@@ -2224,9 +2214,9 @@ TG
 TG
 CO
 BM
-Nr
-Yi
 wD
+Yi
+XL
 wD
 wD
 wD
@@ -2615,7 +2605,7 @@ Gh
 Ud
 Ud
 Ud
-ys
+FS
 aE
 aE
 aE
@@ -2647,7 +2637,7 @@ TG
 TG
 TG
 TG
-TG
+qg
 TG
 Fn
 Fn
