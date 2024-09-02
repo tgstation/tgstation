@@ -5,6 +5,7 @@
 	max_integrity = 120
 	impressiveness = 18 // Carved from the bones of a massive creature, it's going to be a specticle to say the least
 	layer = ABOVE_ALL_MOB_LAYER
+	plane = ABOVE_GAME_PLANE
 	custom_materials = list(/datum/material/bone=SHEET_MATERIAL_AMOUNT*5)
 	abstract_type = /obj/structure/statue/bone
 
@@ -71,7 +72,8 @@
 	turf_type = /turf/open/misc/asteroid/basalt/wasteland
 	baseturfs = /turf/open/misc/asteroid/basalt/wasteland
 	icon = 'icons/turf/walls/rock_wall.dmi'
-	smoothing_flags = SMOOTH_BITMASK
+	base_icon_state = "rock_wall"
+	smoothing_flags = SMOOTH_BITMASK | SMOOTH_BORDER
 
 /turf/closed/mineral/strong/wasteland/drop_ores()
 	if(prob(10))
@@ -85,16 +87,13 @@
 /obj/structure/sink/oil_well //You're not going to enjoy bathing in this...
 	name = "oil well"
 	desc = "A bubbling pool of oil. This would probably be valuable, had bluespace technology not destroyed the need for fossil fuels 200 years ago."
-	icon = 'icons/obj/mining_zones/terrain.dmi'
+	icon = 'icons/obj/watercloset.dmi'
 	icon_state = "puddle-oil"
 	dispensedreagent = /datum/reagent/fuel/oil
-
-// This is a hole
-/obj/structure/sink/oil_well/find_and_hang_on_wall(directional, custom_drop_callback, wall_layer)
-	return
+	pixel_shift = 0
 
 /obj/structure/sink/oil_well/Initialize(mapload)
-	. = ..()
+	.=..()
 	create_reagents(20)
 	reagents.add_reagent(dispensedreagent, 20)
 	//I'm pretty much aware that, because how oil wells and sinks work, attackby() won't work unless in combat mode.
