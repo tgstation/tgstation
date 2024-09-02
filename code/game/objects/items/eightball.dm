@@ -63,7 +63,9 @@
 
 	shaking = TRUE
 
-	start_shaking(user)
+	if (!start_shaking(user))
+		return
+
 	if(do_after(user, shake_time))
 		say(get_answer())
 
@@ -73,7 +75,7 @@
 	shaking = FALSE
 
 /obj/item/toy/eightball/proc/start_shaking(mob/user)
-	return
+	return TRUE
 
 /obj/item/toy/eightball/proc/get_answer()
 	return pick(possible_answers)
@@ -98,8 +100,7 @@
 /obj/item/toy/eightball/haunted
 	shake_time = 30 SECONDS
 	cooldown_time = 3 MINUTES
-	var/last_message = "Nothing!"
-	var/selected_message
+	var/selected_message = "Nothing!"
 	//these kind of store the same thing but one is easier to work with.
 	var/list/votes = list()
 	var/list/voted = list()
@@ -137,7 +138,6 @@
 	for (var/answer in haunted_answers)
 		votes[answer] = 0
 	SSpoints_of_interest.make_point_of_interest(src)
-	become_hearing_sensitive()
 
 /obj/item/toy/eightball/haunted/MakeHaunted()
 	return FALSE
@@ -150,20 +150,19 @@
 	interact(user)
 	return ..()
 
-/obj/item/toy/eightball/haunted/Hear(message, atom/movable/speaker, message_langs, raw_message, radio_freq, spans, list/message_mods = list(), message_range)
-	. = ..()
-	last_message = raw_message
-
 /obj/item/toy/eightball/haunted/start_shaking(mob/user)
 	// notify ghosts that someone's shaking a haunted eightball
 	// and inform them of the message, (hopefully a yes/no question)
-	selected_message = last_message
+	selected_message = tgui_input_text(user, "What is your question?", "Eightball") || initial(selected_message)
+	if (!(src in user.held_items))
+		return FALSE
 	notify_ghosts(
 		"[user] is shaking [src], hoping to get an answer to \"[selected_message]\"",
 		source = src,
 		header = "Magic eightball",
 		click_interact = TRUE,
 	)
+	return TRUE
 
 /obj/item/toy/eightball/haunted/get_answer()
 	var/top_amount = 0
@@ -211,13 +210,13 @@
 	data["question"] = selected_message
 
 	data["answers"] = list()
-	for(var/pa in haunted_answers)
-		var/list/L = list()
-		L["answer"] = pa
-		L["amount"] = votes[pa]
-		L["selected"] = voted[user.ckey]
+	for(var/vote in haunted_answers)
+		var/list/answer_data = list()
+		answer_data["answer"] = vote
+		answer_data["amount"] = votes[vote]
+		answer_data["selected"] = voted[user.ckey]
 
-		data["answers"] += list(L)
+		data["answers"] += list(answer_data)
 	return data
 
 /obj/item/toy/eightball/haunted/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
