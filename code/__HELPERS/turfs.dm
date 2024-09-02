@@ -217,9 +217,6 @@ Turf and target are separate in case you want to teleport some distance from a t
 		return atom_turf
 
 	var/list/offsets = get_visual_offset(checked_atom)
-	// If we're on the upper half of a turf lower our y offset by 16 to hopefully better account for like, sidemap rendering and such
-	if(offsets[2] >= 16 && (checked_atom.layer < TOPDOWN_LAYER || checked_atom.layer > BACKGROUND_LAYER))
-		offsets[2] -= 16
 	return pixel_offset_turf(atom_turf, offsets)
 
 /**
