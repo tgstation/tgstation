@@ -1184,16 +1184,18 @@ GLOBAL_LIST_EMPTY(vending_machines_to_restock)
 	return TRUE
 
 /obj/machinery/vending/interact(mob/user)
-	if (!HAS_AI_ACCESS(user))
-		if(seconds_electrified && !(machine_stat & NOPOWER))
-			if(shock(user, 100))
-				return
+	if (HAS_AI_ACCESS(user))
+		return ..()
 
-		if(tilted && !user.buckled && !isAdminGhostAI(user))
-			to_chat(user, span_notice("You begin righting [src]."))
-			if(do_after(user, 5 SECONDS, target=src))
-				untilt(user)
+	if(seconds_electrified && !(machine_stat & NOPOWER))
+		if(shock(user, 100))
 			return
+
+	if(tilted && !user.buckled)
+		to_chat(user, span_notice("You begin righting [src]."))
+		if(do_after(user, 5 SECONDS, target=src))
+			untilt(user)
+		return
 
 	return ..()
 
@@ -1317,7 +1319,7 @@ GLOBAL_LIST_EMPTY(vending_machines_to_restock)
 
 	.["extended_inventory"] = extended_inventory
 
-/obj/machinery/vending/ui_act(action, params)
+/obj/machinery/vending/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if(.)
 		return
@@ -1766,7 +1768,7 @@ GLOBAL_LIST_EMPTY(vending_machines_to_restock)
 			)
 			.["vending_machine_input"] += list(data)
 
-/obj/machinery/vending/custom/ui_act(action, params)
+/obj/machinery/vending/custom/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if(.)
 		return

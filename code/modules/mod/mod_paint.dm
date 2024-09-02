@@ -55,7 +55,7 @@
 	data["currentColor"] = current_color
 	return data
 
-/obj/item/mod/paint/ui_act(action, list/params)
+/obj/item/mod/paint/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if(.)
 		return
