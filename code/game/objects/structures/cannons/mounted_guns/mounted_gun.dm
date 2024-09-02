@@ -82,9 +82,9 @@
 		if(loaded_gun)
 
 			if (times_fired < shots_in_gun)
-				playsound(src, fire_sound, 50, TRUE)
+				playsound(src, fire_sound, 50, FALSE, 5)
 			else
-				playsound(src, last_fire_sound, 50, TRUE)
+				playsound(src, last_fire_sound, 50, TRUE, 5)
 			var/obj/projectile/fired_projectile = new projectile_type(get_turf(src))
 			fired_projectile.firer = src
 			fired_projectile.fired_from = src
@@ -135,7 +135,7 @@
 				shake_camera(shaken_mob, 3, 1)
 			icon_state = icon_state_fire
 		if(loaded_gun)
-			playsound(src, fire_sound, 50, TRUE)
+			playsound(src, fire_sound, 50, TRUE, 5)
 
 			var/list_of_projectiles = list(
 			/obj/projectile/bullet/junk = 40,
@@ -158,10 +158,10 @@
 	fully_loaded_gun = FALSE
 	icon_state = icon_state_base
 
-/obj/structure/mounted_gun/canister_gatling //for the funny skeleton pirates! (WIP)
+/obj/structure/mounted_gun/canister_gatling //for the funny skeleton pirates!
 
 	name = "Canister Gatling Gun"
-	desc = "''Quantity has a quality all its own.''"
+	desc = "''Quantity has a quality of its own.''"
 	icon_state = "canister_gatling"
 	icon_state_base = "canister_gatling"
 	icon_state_fire = "canister_gatling_fire"
