@@ -2757,6 +2757,7 @@
 #include "code\game\objects\structures\cannons\cannon.dm"
 #include "code\game\objects\structures\cannons\cannon_instructions.dm"
 #include "code\game\objects\structures\cannons\cannonballs.dm"
+#include "code\game\objects\structures\cannons\mounted_guns\mounted_gun.dm"
 #include "code\game\objects\structures\construction_console\construction_actions.dm"
 #include "code\game\objects\structures\construction_console\construction_console.dm"
 #include "code\game\objects\structures\construction_console\construction_console_aux.dm"
