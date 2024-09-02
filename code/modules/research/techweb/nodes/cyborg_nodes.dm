@@ -99,7 +99,7 @@
 		"borg_upgrade_expand",
 		"borg_upgrade_prt",
 		"borg_upgrade_plunger",
-		"borg_upgrade_janitorial_glass",
+		"borg_upgrade_high_capacity_replacer",
 		"borg_upgrade_selfrepair",
 		"borg_upgrade_thrusters",
 		"borg_upgrade_trashofholding",

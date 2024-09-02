@@ -1592,14 +1592,14 @@
 		RND_CATEGORY_MECHFAB_CYBORG_MODULES + RND_SUBCATEGORY_MECHFAB_CYBORG_MODULES_JANITOR
 	)
 
-/datum/design/borg_upgrade_janitorial_glass
-	name = "Janitorial Glass Reserves"
-	id = "borg_upgrade_janitorial_glass"
+/datum/design/borg_upgrade_high_capacity_replacer
+	name = "High Capacity Light Replacer"
+	id = "borg_upgrade_high_capacity_replacer"
 	build_type = MECHFAB
-	build_path = /obj/item/borg/upgrade/plunger
+	build_path = /obj/item/borg/upgrade/high_capacity_light_replacer
 	materials = list(
 		/datum/material/iron = SHEET_MATERIAL_AMOUNT*1.125,
-		/datum/material/glass = HALF_SHEET_MATERIAL_AMOUNT*0.75,
+		/datum/material/glass = SHEET_MATERIAL_AMOUNT*0.75,
 	)
 	construction_time = 4 SECONDS
 	category = list(
