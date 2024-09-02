@@ -12,7 +12,7 @@
 		fish_source = configuration
 	else
 		return COMPONENT_INCOMPATIBLE
-	fish_source.on_fishing_spot_init(src)
+	fish_source.on_fishing_spot_init()
 	RegisterSignal(parent, COMSIG_ATOM_ATTACKBY, PROC_REF(handle_attackby))
 	RegisterSignal(parent, COMSIG_FISHING_ROD_CAST, PROC_REF(handle_cast))
 	RegisterSignal(parent, COMSIG_ATOM_EXAMINE, PROC_REF(on_examined))
@@ -22,7 +22,6 @@
 	ADD_TRAIT(parent, TRAIT_FISHING_SPOT, REF(src))
 
 /datum/component/fishing_spot/Destroy()
-	fish_source.on_fishing_spot_del(src)
 	fish_source = null
 	return ..()
 
