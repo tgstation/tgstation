@@ -1,0 +1,4 @@
+author: "Hardly"
+delete-after: True
+changes:
+  - sound: "Added sounds for conveyor belt switches"
