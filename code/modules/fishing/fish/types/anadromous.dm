@@ -32,6 +32,7 @@
 	desc = "A long-bodied predator with a snout that almost looks like a beak. Definitely not a weapon to swing around."
 	icon = 'icons/obj/aquarium/wide.dmi'
 	icon_state = "pike"
+	inhand_icon_state = "pike"
 	dedicated_in_aquarium_icon = 'icons/obj/aquarium/fish.dmi'
 	dedicated_in_aquarium_icon_state = "pike_small"
 	base_pixel_x = -16

@@ -169,6 +169,7 @@
 	name = "armored pike"
 	desc = "A long-bodied, metal-clad predator with a snout that almost looks like an halberd. Definitely a weapon to swing around."
 	icon_state = "armored_pike"
+	inhand_icon_state = "armored_pike"
 	dedicated_in_aquarium_icon_state = "armored_pike_small"
 	attack_verb_continuous = list("attacks", "pokes", "jabs", "tears", "lacerates", "gores")
 	attack_verb_simple = list("attack", "poke", "jab", "tear", "lacerate", "gore")
