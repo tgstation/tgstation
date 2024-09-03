@@ -173,7 +173,7 @@
 					for(var/shape in picked_item.supported_bodyshapes)
 						if(humie.bodyshape & shape)
 							altbody = picked_item.greyscale_config_worn_bodyshapes["[shape]"]
-							item_target.bodyshape_icon_files["[shape]"] = SSgreyscale.GetColoredIconByType(initial(altbody), initial(picked_item.greyscale_colors))
+							item_target.bodyshape_icon_files["[shape]"] = SSgreyscale.GetColoredIconByType(altbody, initial(picked_item.greyscale_colors))
 							item_target.worn_icon = item_target.bodyshape_icon_files["[shape]"]
 			/// DOPPLER SHIFT ADDITION END
 
