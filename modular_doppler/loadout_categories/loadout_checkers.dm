@@ -1,5 +1,9 @@
 // -- The loadout item datum and related procs. --
 
+/// Called after a loadout item gets a custom description
+/atom/proc/on_loadout_custom_described()
+	return
+
 /*
  * Generate a list of singleton loadout_item datums from all subtypes of [type_to_generate]
  *
@@ -69,6 +73,9 @@
  * Returns TRUE if there is an important_for_life item in the slot that the loadout item would normally occupy, FALSE otherwise
  */
 /datum/loadout_item/proc/pre_equip_item(datum/outfit/outfit, datum/outfit/outfit_important_for_life, mob/living/carbon/human/equipper, visuals_only = FALSE)
+	outfit_important_for_life = equipper.dna.species.outfit_important_for_life
+	if(!outfit_important_for_life || !pre_equip_item(outfit, outfit_important_for_life, src, visuals_only))
+		insert_path_into_outfit(outfit, src, visuals_only)
 	if(!visuals_only)
 		LAZYADD(outfit.backpack_contents, item_path)
 

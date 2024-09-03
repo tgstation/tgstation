@@ -6367,7 +6367,6 @@
 #include "modular_doppler\icspawn\spell.dm"
 #include "modular_doppler\languages\language_datums.dm"
 #include "modular_doppler\loadout_categories\loadout_checkers.dm"
-#include "modular_doppler\loadout_categories\loadout_outfit_helpers.dm"
 #include "modular_doppler\loadout_categories\categories\belts.dm"
 #include "modular_doppler\loadout_categories\categories\clothing.dm"
 #include "modular_doppler\loadout_categories\categories\ears.dm"
