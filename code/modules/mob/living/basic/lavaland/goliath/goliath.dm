@@ -183,7 +183,6 @@
 	icon_dead = "ancient_goliath_dead"
 	tentacle_warning_state = "ancient_goliath_preattack"
 	tameable = FALSE
-	shadow_type = SHADOW_LARGE
 
 /// Rare Goliath variant which occasionally replaces the normal mining mob, releases shitloads of tentacles
 /mob/living/basic/mining/goliath/ancient/immortal
@@ -228,5 +227,5 @@
 /obj/item/goliath_saddle
 	name = "goliath saddle"
 	desc = "This rough saddle will give you a serviceable seat upon a goliath! Provided you can get one to stand still."
-	icon = 'icons/obj/mining_zones/equipment.dmi'
+	icon = 'icons/obj/mining.dmi'
 	icon_state = "goliath_saddle"
