@@ -293,6 +293,7 @@
 	dir = 8
 	},
 /obj/machinery/status_display/ai/directional/north,
+/obj/structure/closet/secure_closet/cytology,
 /turf/open/floor/iron/smooth_large,
 /area/station/science/cytology)
 "afz" = (
@@ -69816,7 +69817,7 @@
 /area/icemoon/underground/explored)
 "uNH" = (
 /obj/structure/railing,
-/obj/structure/closet/secure_closet/cytology,
+/obj/machinery/vending/cytopro,
 /turf/open/floor/iron/smooth_large,
 /area/station/science/cytology)
 "uNV" = (
