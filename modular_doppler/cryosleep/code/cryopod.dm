@@ -153,8 +153,8 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/computer/cryopod, 32)
 	var/open_icon_state = "cryopod-open"
 	/// Whether the cryopod respects the minimum time someone has to be disconnected before they can be put into cryo by another player
 	var/allow_timer_override = FALSE
-	/// Minimum time for someone to be SSD before another player can cryo them.
-	var/ssd_time = CONFIG_GET(number/cryo_min_ssd_time) //"cryo_min_ssd_time" in CONFIG
+	/// Minimum time for someone to be SSD before another player can cryo them. Customizable in "cryo_min_ssd_time" in config_doppler
+	var/ssd_time = 15 MINUTES
 
 	/// Time until despawn when a mob enters a cryopod. You cannot other people in pods unless they're catatonic.
 	var/time_till_despawn = 30 SECONDS
@@ -174,6 +174,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/computer/cryopod, 32)
 
 /obj/machinery/cryopod/Initialize(mapload)
 	..()
+	ssd_time = CONFIG_GET(number/cryo_min_ssd_time)
 	if(!quiet)
 		GLOB.valid_cryopods += src
 	return INITIALIZE_HINT_LATELOAD //Gotta populate the cryopod computer GLOB first
@@ -263,18 +264,6 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/computer/cryopod, 32)
 		else if(istype(objective.target) && objective.target == mob_occupant.mind)
 			if(!istype(objective, /datum/objective/contract))
 				return
-			// var/datum/opposing_force/affected_contractor = objective.owner.opposing_force
-			// var/datum/contractor_hub/affected_contractor_hub = affected_contractor.contractor_hub
-			// for(var/datum/syndicate_contract/affected_contract as anything in affected_contractor_hub.assigned_contracts)
-			// 	if(!(affected_contract.contract == objective))
-			// 		continue
-			// 	var/contract_id = affected_contract.id
-			// 	affected_contractor_hub.create_single_contract(objective.owner, affected_contract.payout_type)
-			// 	affected_contractor_hub.assigned_contracts[contract_id].status = CONTRACT_STATUS_ABORTED
-			// 	if (affected_contractor_hub.current_contract == objective)
-			// 		affected_contractor_hub.current_contract = null
-			// 	to_chat(objective.owner.current, "<BR>[span_userdanger("Contract target out of reach. Contract rerolled.")]")
-			// 	break
 		else if(istype(objective.target) && objective.target == mob_occupant.mind)
 			var/old_target = objective.target
 			objective.target = null

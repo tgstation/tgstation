@@ -3,3 +3,6 @@ COMBAT_INDICATOR
 
 ## How long until someone can be put in cryo if they are SSD, default is 9000 (15 minutes)
 CRYO_MIN_SSD_TIME 9000
+
+## Primitive demihumans
+ROUNDSTART_RACES primitive_felinid

@@ -32,12 +32,12 @@
 	/// The cached string to display for additional info on who joined and who left.
 	/// Nulled every time someone joins or leaves to ensure it gets re-generated.
 	var/join_and_leave_log_cache = null
-	/// The minimum time someone needs to be SSD before they can be put back in
-	var/ssd_time = CONFIG_GET(number/cryo_min_ssd_time)
-
+	/// The minimum time someone needs to be SSD before they can be put back in. Shares config "cryo_min_ssd_time" with cryopod
+	var/ssd_time = 15 MINUTES
 /obj/effect/mob_spawn/ghost_role/human/primitive_catgirl/Initialize(mapload)
 	. = ..()
 	team = new /datum/team/primitive_catgirls()
+	ssd_time = CONFIG_GET(number/cryo_min_ssd_time)
 
 /obj/effect/mob_spawn/ghost_role/human/primitive_catgirl/Destroy()
 	team = null

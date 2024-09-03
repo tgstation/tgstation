@@ -59,16 +59,19 @@
 	hearthkin.dna.remove_mutation(/datum/mutation/human/olfaction)
 
 /datum/species/human/felinid/primitive/prepare_human_for_preview(mob/living/carbon/human/human_for_preview)
-	human_for_preview.hairstyle = "Blunt Bangs Alt"
-	human_for_preview.hair_color = "#323442"
+	human_for_preview.set_haircolor("#323442", update = FALSE)
+	human_for_preview.set_hairstyle("Blunt Bangs Alt", update = TRUE)
 	human_for_preview.skin_tone = "mediterranean"
 
-	human_for_preview.update_body_parts()
+	var/obj/item/organ/internal/ears/cat/cat_ears = human_for_preview.get_organ_by_type(/obj/item/organ/internal/ears/cat)
+	var/obj/item/organ/external/tail/cat/cat_tail = human_for_preview.get_organ_by_type(/obj/item/organ/external/tail/cat)
+	if (cat_ears)
+		cat_ears.color = human_for_preview.hair_color
+	if (cat_tail)
+		cat_tail.color = human_for_preview.hair_color
+	if (cat_ears || cat_tail)
+		human_for_preview.update_body()
 
-	human_for_preview.dna.species.mutant_bodyparts["tail"] = list(MUTANT_INDEX_NAME = "Cat", MUTANT_INDEX_COLOR_LIST = list(human_for_preview.hair_color))
-	human_for_preview.dna.species.mutant_bodyparts["ears"] = list(MUTANT_INDEX_NAME = "Cat", MUTANT_INDEX_COLOR_LIST = list(human_for_preview.hair_color))
-
-	human_for_preview.update_mutant_bodyparts()
 	human_for_preview.update_body(is_creating = TRUE)
 
 /datum/species/human/felinid/primitive/get_species_description()
