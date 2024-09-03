@@ -22,6 +22,7 @@
 
 	species_language_holder = /datum/language_holder/primitive_felinid
 	// language_prefs_whitelist = list(/datum/language/primitive_catgirl) //this needs a dedicated module for language
+	// always_customizable = TRUE  //this needs a dedicated module for species customization
 
 	bodytemp_normal = 270 // If a normal human gets hugged by one it's gonna feel cold
 	bodytemp_heat_damage_limit = 283 // To them normal station atmos would be sweltering
@@ -33,8 +34,6 @@
 		TRAIT_RESISTCOLD,
 		TRAIT_USES_SKINTONES,
 	)
-
-	// always_customizable = TRUE  //this needs a dedicated module for species customization
 
 /datum/species/human/felinid/primitive/on_species_gain(mob/living/carbon/new_primitive, datum/species/old_species, pref_load)
 	. = ..()

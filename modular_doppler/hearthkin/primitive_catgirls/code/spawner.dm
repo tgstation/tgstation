@@ -21,9 +21,6 @@
 	var/datum/team/primitive_catgirls/team
 
 	restricted_species = list(/datum/species/human/felinid/primitive)
-	quirks_enabled = TRUE
-	random_appearance = FALSE
-	loadout_enabled = FALSE
 	infinite_use = TRUE
 	deletes_on_zero_uses_left = FALSE
 
