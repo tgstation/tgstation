@@ -45033,8 +45033,8 @@
 /turf/closed/wall/r_wall,
 /area/station/engineering/supermatter)
 "oMh" = (
-/obj/structure/secure_safe/directional/east,
 /obj/machinery/airalarm/directional/north,
+/obj/structure/detectiveboard/directional/east,
 /turf/open/floor/carpet,
 /area/station/security/detectives_office)
 "oMz" = (
@@ -60513,6 +60513,7 @@
 /obj/machinery/light_switch/directional/west{
 	pixel_y = 13
 	},
+/obj/structure/secure_safe/directional/south,
 /turf/open/floor/iron/grimy,
 /area/station/security/detectives_office)
 "udZ" = (
