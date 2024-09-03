@@ -11,14 +11,18 @@
 
 /obj/structure/aquarium
 	name = "aquarium"
-	desc = "A vivivarium in which aquatic fuana and flora are usually kept and displayed."
+	desc = "A vivarium in which aquatic fauna and flora are usually kept and displayed."
 	density = TRUE
-	anchored = TRUE
+	anchored = FALSE
 
-	icon = 'icons/obj/aquarium.dmi'
+	icon = 'icons/obj/aquarium/tanks.dmi'
 	icon_state = "aquarium_map"
 
 	integrity_failure = 0.3
+
+	/// The icon state is used for mapping so mappers know what they're placing. This prefixes the real icon used in game.
+	/// For an example, "aquarium" gives the base sprite of "aquarium_base", the glass is "aquarium_glass_water", and so on.
+	var/icon_prefix = "aquarium"
 
 	var/fluid_type = AQUARIUM_FLUID_FRESHWATER
 	var/fluid_temp = DEFAULT_AQUARIUM_TEMP
@@ -31,23 +35,26 @@
 	var/last_feeding
 
 	/// Can fish reproduce in this quarium.
-	var/allow_breeding = FALSE
+	var/allow_breeding = TRUE
 
 	//This is the area where fish can swim
 	var/aquarium_zone_min_px = 2
 	var/aquarium_zone_max_px = 31
 	var/aquarium_zone_min_py = 10
-	var/aquarium_zone_max_py = 24
+	var/aquarium_zone_max_py = 28
 
 	var/list/fluid_types = list(AQUARIUM_FLUID_SALTWATER, AQUARIUM_FLUID_FRESHWATER, AQUARIUM_FLUID_SULPHWATEVER, AQUARIUM_FLUID_AIR)
 
-	var/panel_open = TRUE
+	var/panel_open = FALSE
 
 	///Current layers in use by aquarium contents
 	var/list/used_layers = list()
 
 	/// /obj/item/fish in the aquarium, sorted by type - does not include things with aquarium visuals that are not fish
 	var/list/tracked_fish_by_type
+
+	/// Var used to keep track of the current beauty of the aquarium, which can be throughfully changed by aquarium content.
+	var/current_beauty = 150
 
 /obj/structure/aquarium/Initialize(mapload)
 	. = ..()
@@ -57,7 +64,9 @@
 	RegisterSignal(src, COMSIG_ATOM_WAS_ATTACKED, PROC_REF(on_attacked))
 	create_reagents(6, SEALED_CONTAINER)
 	RegisterSignal(reagents, COMSIG_REAGENTS_NEW_REAGENT, PROC_REF(start_autofeed))
-	AddComponent(/datum/component/plumbing/aquarium)
+	AddComponent(/datum/component/plumbing/aquarium, start = anchored)
+	if(current_beauty)
+		AddElement(/datum/element/beauty, current_beauty)
 	ADD_KEEP_TOGETHER(src, INNATE_TRAIT)
 
 /obj/structure/aquarium/proc/track_if_fish(atom/source, atom/initialized)
@@ -138,20 +147,20 @@
 /obj/structure/aquarium/update_icon()
 	. = ..()
 	///"aquarium_map" is used for mapping, so mappers can tell what it's.
-	icon_state = "aquarium_base"
+	icon_state = icon_prefix + "_base"
 
 /obj/structure/aquarium/update_overlays()
 	. = ..()
 	if(panel_open)
-		. += "panel"
+		. += icon_prefix + "_panel"
 
 	///The glass overlay
 	var/suffix = fluid_type == AQUARIUM_FLUID_AIR ? "air" : "water"
 	if(broken)
 		suffix += "_broken"
-		. += mutable_appearance(icon, "aquarium_glass_cracks", layer = layer + AQUARIUM_BORDERS_LAYER)
-	. += mutable_appearance(icon, "aquarium_glass_[suffix]", layer = layer + AQUARIUM_GLASS_LAYER)
-	. += mutable_appearance(icon, "aquarium_borders", layer = layer + AQUARIUM_BORDERS_LAYER)
+		. += mutable_appearance(icon, icon_prefix + "_glass_cracks", layer = layer + AQUARIUM_BORDERS_LAYER)
+	. += mutable_appearance(icon, icon_prefix + "_glass_[suffix]", layer = layer + AQUARIUM_GLASS_LAYER)
+	. += mutable_appearance(icon, icon_prefix + "_borders", layer = layer + AQUARIUM_BORDERS_LAYER)
 
 /obj/structure/aquarium/examine(mob/user)
 	. = ..()
@@ -188,9 +197,9 @@
 		var/obj/item/stack/sheet/glass/glass = item
 		if(istype(glass))
 			if(glass.get_amount() < 2)
-				to_chat(user, span_warning("You need two glass sheets to fix the case!"))
+				balloon_alert(user, "it needs two sheets!")
 				return
-			to_chat(user, span_notice("You start fixing [src]..."))
+			balloon_alert(user, "fixing the aquarium...")
 			if(do_after(user, 2 SECONDS, target = src))
 				glass.use(2)
 				broken = FALSE
@@ -198,10 +207,18 @@
 				update_appearance()
 			return TRUE
 	else
-		var/datum/component/aquarium_content/content_component = item.GetComponent(/datum/component/aquarium_content)
-		if(content_component && content_component.is_ready_to_insert(src) && user.transferItemToLoc(item, src))
-			update_appearance()
-			return TRUE
+		var/insert_attempt = SEND_SIGNAL(item, COMSIG_TRY_INSERTING_IN_AQUARIUM, src)
+		switch(insert_attempt)
+			if(COMSIG_CAN_INSERT_IN_AQUARIUM)
+				if(!user.transferItemToLoc(item, src))
+					user.balloon_alert(user, "stuck to your hand!")
+					return TRUE
+				balloon_alert(user, "added to aquarium")
+				update_appearance()
+				return TRUE
+			if(COMSIG_CANNOT_INSERT_IN_AQUARIUM)
+				balloon_alert(user, "cannot add to aquarium!")
+				return TRUE
 
 	if(istype(item, /obj/item/fish_feed) && !panel_open)
 		if(!item.reagents.total_volume)
@@ -212,6 +229,21 @@
 			fish.feed(item.reagents)
 		balloon_alert(user, "fed the fish")
 		return TRUE
+	if(istype(item, /obj/item/aquarium_upgrade))
+		var/obj/item/aquarium_upgrade/upgrade = item
+		if(upgrade.upgrade_from_type != type)
+			balloon_alert(user, "wrong kind of aquarium!")
+			return
+		balloon_alert(user, "upgrading...")
+		if(!do_after(user, 5 SECONDS, src))
+			return
+		var/obj/structure/aquarium/upgraded_aquarium = new upgrade.upgrade_to_type(loc)
+		for(var/atom/movable/moving in contents)
+			moving.forceMove(upgraded_aquarium)
+		balloon_alert(user, "upgraded")
+		qdel(upgrade)
+		qdel(src)
+		return
 	return ..()
 
 /obj/structure/aquarium/proc/on_attacked(datum/source, mob/attacker, attack_flags)
@@ -251,24 +283,27 @@
 
 ///Apply mood bonus depending on aquarium status
 /obj/structure/aquarium/proc/admire(mob/living/user)
-	to_chat(user,span_notice("You take a moment to watch [src]."))
-	if(do_after(user, 5 SECONDS, target = src))
-		var/alive_fish = 0
-		var/dead_fish = 0
-		var/list/tracked_fish = get_fishes()
-		for(var/obj/item/fish/fish in tracked_fish)
-			if(fish.status == FISH_ALIVE)
-				alive_fish++
-			else
-				dead_fish++
-		//Check if there are live fish - good mood
-		//All fish dead - bad mood.
-		//No fish - nothing.
-		if(alive_fish > 0)
-			user.add_mood_event("aquarium", /datum/mood_event/aquarium_positive)
-		else if(dead_fish > 0)
-			user.add_mood_event("aquarium", /datum/mood_event/aquarium_negative)
-		// Could maybe scale power of this mood with number/types of fish
+	user.balloon_alert(user, "admiring aquarium...")
+	if(!do_after(user, 5 SECONDS, target = src))
+		return
+	var/alive_fish = 0
+	var/dead_fish = 0
+	var/list/tracked_fish = get_fishes()
+	for(var/obj/item/fish/fish in tracked_fish)
+		if(fish.status == FISH_ALIVE)
+			alive_fish++
+		else
+			dead_fish++
+
+	var/morb = HAS_TRAIT(user, TRAIT_MORBID)
+	//Check if there are live fish - good mood
+	//All fish dead - bad mood.
+	//No fish - nothing.
+	if(alive_fish > 0)
+		user.add_mood_event("aquarium", morb ? /datum/mood_event/morbid_aquarium_bad : /datum/mood_event/aquarium_positive)
+	else if(dead_fish > 0)
+		user.add_mood_event("aquarium", morb ? /datum/mood_event/morbid_aquarium_good : /datum/mood_event/aquarium_negative)
+	// Could maybe scale power of this mood with number/types of fish
 
 /obj/structure/aquarium/ui_data(mob/user)
 	. = ..()
@@ -288,7 +323,7 @@
 	.["maxTemperature"] = max_fluid_temp
 	.["fluidTypes"] = fluid_types
 
-/obj/structure/aquarium/ui_act(action, params)
+/obj/structure/aquarium/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if(.)
 		return
@@ -354,6 +389,26 @@
 #undef AQUARIUM_GLASS_LAYER
 #undef AQUARIUM_BORDERS_LAYER
 #undef AQUARIUM_BELOW_GLASS_LAYER
+
+/obj/structure/aquarium/lawyer
+	anchored = TRUE
+
+/obj/structure/aquarium/lawyer/Initialize(mapload)
+	. = ..()
+
+	new /obj/item/aquarium_prop/sand(src)
+	new /obj/item/aquarium_prop/seaweed(src)
+
+	if(prob(85))
+		new /obj/item/fish/goldfish/gill(src)
+		reagents.add_reagent(/datum/reagent/consumable/nutriment, 2)
+	else
+		new /obj/item/fish/three_eyes/gill(src)
+		reagents.add_reagent(/datum/reagent/toxin/mutagen, 2) //three eyes goldfish feed on mutagen.
+
+
+/obj/structure/aquarium/prefilled
+	anchored = TRUE
 
 /obj/structure/aquarium/prefilled/Initialize(mapload)
 	. = ..()

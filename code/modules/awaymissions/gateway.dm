@@ -86,11 +86,11 @@ GLOBAL_LIST_EMPTY(gateway_destinations)
 		. = "Exit gateway unpowered."
 
 /datum/gateway_destination/gateway/get_target_turf()
-	return get_step(target_gateway.portal,SOUTH)
+	return get_step(target_gateway.portal, target_gateway.dir)
 
 /datum/gateway_destination/gateway/post_transfer(atom/movable/AM)
 	. = ..()
-	addtimer(CALLBACK(AM, TYPE_PROC_REF(/atom/movable, setDir),SOUTH),0)
+	addtimer(CALLBACK(AM, TYPE_PROC_REF(/atom/movable, setDir), target_gateway.dir),0)
 
 /* Special home destination, so we can check exile implants */
 /datum/gateway_destination/gateway/home
@@ -134,7 +134,7 @@ GLOBAL_LIST_EMPTY(gateway_destinations)
 	invisibility = INVISIBILITY_ABSTRACT
 
 /obj/effect/gateway_portal_bumper/Bumped(atom/movable/AM)
-	if(get_dir(src,AM) == SOUTH)
+	if(get_dir(src,AM) == gateway?.dir)
 		playsound(src, 'sound/effects/gateway_travel.ogg', 70, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
 		gateway.Transfer(AM)
 
@@ -359,7 +359,7 @@ GLOBAL_LIST_EMPTY(gateway_destinations)
 			destinations += list(possible_destination.get_ui_data())
 	.["destinations"] = destinations
 
-/obj/machinery/computer/gateway_control/ui_act(action, list/params)
+/obj/machinery/computer/gateway_control/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if(.)
 		return

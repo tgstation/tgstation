@@ -9,7 +9,7 @@
 #define COMSIG_OBJ_DEFAULT_UNFASTEN_WRENCH "obj_default_unfasten_wrench"
 ///from base of /turf/proc/levelupdate(). (intact) true to hide and false to unhide
 #define COMSIG_OBJ_HIDE "obj_hide"
-/// from /obj/item/toy/crayon/spraycan/afterattack: (user, spraycan, color_is_dark)
+/// from /obj/item/toy/crayon/spraycan/use_on: (user, spraycan, color_is_dark)
 #define COMSIG_OBJ_PAINTED "obj_painted"
 	#define DONT_USE_SPRAYCAN_CHARGES (1<<0)
 /// from /obj/obj_reskin: (mob/user, skin)
@@ -153,16 +153,13 @@
 
 /// Sebt from obj/item/ui_action_click(): (mob/user, datum/action)
 #define COMSIG_ITEM_UI_ACTION_CLICK "item_action_click"
-	/// Return to prevent the default behavior (attack_selfing) from ocurring.
+	/// Return to prevent the default behavior (attack_selfing) from occurring.
 	#define COMPONENT_ACTION_HANDLED (1<<0)
 
 /// Sent from obj/item/item_action_slot_check(): (mob/user, datum/action, slot)
 #define COMSIG_ITEM_UI_ACTION_SLOT_CHECKED "item_action_slot_checked"
-	/// Return to prevent the default behavior (attack_selfing) from ocurring.
+	/// Return to prevent the default behavior (attack_selfing) from occurring.
 	#define COMPONENT_ITEM_ACTION_SLOT_INVALID (1<<0)
-
-/// Sent from /obj/item/attack_atom(): (atom/attacked_atom, mob/living/user)
-#define COMSIG_ITEM_POST_ATTACK_ATOM "item_post_attack_atom"
 
 ///from base of mob/living/carbon/attacked_by(): (mob/living/carbon/target, mob/living/user, hit_zone)
 #define COMSIG_ITEM_ATTACK_ZONE "item_attack_zone"
@@ -208,7 +205,7 @@
 #define COMSIG_STACK_CAN_MERGE "stack_can_merge"
 	#define CANCEL_STACK_MERGE (1<<0)
 
-///from /obj/item/book/bible/afterattack(): (mob/user, proximity)
+///from /obj/item/book/bible/interact_with_atom(): (mob/user)
 #define COMSIG_BIBLE_SMACKED "bible_smacked"
 	///stops the bible chain from continuing. When all of the effects of the bible smacking have been moved to a signal we can kill this
 	#define COMSIG_END_BIBLE_CHAIN (1<<0)
@@ -343,6 +340,10 @@
 #define COMSIG_GUN_CHAMBER_PROCESSED "gun_chamber_processed"
 ///called in /obj/item/gun/ballistic/process_chamber (casing)
 #define COMSIG_CASING_EJECTED "casing_ejected"
+///called in /obj/item/gun/ballistic/sawoff(mob/user, obj/item/saw, handle_modifications) : (mob/user)
+#define COMSIG_GUN_BEING_SAWNOFF "gun_being_sawnoff"
+	#define COMPONENT_CANCEL_SAWING_OFF (1<<0)
+#define COMSIG_GUN_SAWN_OFF "gun_sawn_off"
 
 // Jetpack things
 // Please kill me
@@ -388,10 +389,16 @@
 ///sent to targets during the process_hit proc of projectiles
 #define COMSIG_PROJECTILE_PREHIT "com_proj_prehit"
 	#define PROJECTILE_INTERRUPT_HIT (1<<0)
+///from /obj/projectile/pixel_move(): ()
+#define COMSIG_PROJECTILE_PIXEL_STEP "projectile_pixel_step"
+///sent to self during the process_hit proc of projectiles
+#define COMSIG_PROJECTILE_SELF_PREHIT "com_proj_prehit"
 ///from the base of /obj/projectile/Range(): ()
 #define COMSIG_PROJECTILE_RANGE "projectile_range"
 ///from the base of /obj/projectile/on_range(): ()
 #define COMSIG_PROJECTILE_RANGE_OUT "projectile_range_out"
+///from the base of /obj/projectile/process(): ()
+#define COMSIG_PROJECTILE_BEFORE_MOVE "projectile_before_move"
 ///from [/obj/item/proc/tryEmbed] sent when trying to force an embed (mainly for projectiles and eating glass)
 #define COMSIG_EMBED_TRY_FORCE "item_try_embed"
 	#define COMPONENT_EMBED_SUCCESS (1<<1)
@@ -450,8 +457,6 @@
 
 ///from base of /obj/item/attack(): (mob/living, mob/living, params)
 #define COMSIG_ITEM_ATTACK "item_attack"
-///from base of /obj/item/attack(): (mob/living, mob/living, params)
-#define COMSIG_ITEM_POST_ATTACK "item_post_attack" // called only if the attack was executed
 ///from base of obj/item/attack_self(): (/mob)
 #define COMSIG_ITEM_ATTACK_SELF "item_attack_self"
 //from base of obj/item/attack_self_secondary(): (/mob)
@@ -467,14 +472,8 @@
 	#define COMPONENT_SECONDARY_CALL_NORMAL_ATTACK_CHAIN (1<<2)
 /// From base of [/obj/item/proc/attack_secondary()]: (atom/target, mob/user, params)
 #define COMSIG_ITEM_ATTACK_SECONDARY "item_attack_secondary"
-///from base of obj/item/afterattack(): (atom/target, mob/user, proximity_flag, click_parameters)
+///from base of [obj/item/attack()]: (atom/target, mob/user, proximity_flag, click_parameters)
 #define COMSIG_ITEM_AFTERATTACK "item_afterattack"
-	/// Flag for when /afterattack potentially acts on an item.
-	/// Used for the swap hands/drop tutorials to know when you might just be trying to do something normally.
-	/// Does not necessarily imply success, or even that it did hit an item, just intent.
-	#define COMPONENT_AFTERATTACK_PROCESSED_ITEM (1<<0)
-///from base of obj/item/afterattack_secondary(): (atom/target, mob/user, proximity_flag, click_parameters)
-#define COMSIG_ITEM_AFTERATTACK_SECONDARY "item_afterattack_secondary"
 ///from base of obj/item/embedded(): (atom/target, obj/item/bodypart/part)
 #define COMSIG_ITEM_EMBEDDED "item_embedded"
 ///from base of datum/component/embedded/safeRemove(): (mob/living/carbon/victim)
@@ -495,7 +494,7 @@
 ///from base of /obj/item/mmi/set_brainmob(): (mob/living/brain/new_brainmob)
 #define COMSIG_MMI_SET_BRAINMOB "mmi_set_brainmob"
 
-/// from base of /obj/item/slimepotion/speed/afterattack(): (obj/target, /obj/src, mob/user)
+/// from base of /obj/item/slimepotion/speed/interact_with_atom(): (obj/target, /obj/src, mob/user)
 #define COMSIG_SPEED_POTION_APPLIED "speed_potion"
 	#define SPEED_POTION_STOP (1<<0)
 
@@ -531,7 +530,10 @@
 /// from /datum/component/dart_insert/on_reskin()
 #define COMSIG_DART_INSERT_PARENT_RESKINNED "dart_insert_parent_reskinned"
 
+/// from /datum/element/undertile/hide()
+#define COMSIG_UNDERTILE_UPDATED "undertile_updated"
+
 /// Sent from /obj/item/update_weight_class(). (old_w_class, new_w_class)
 #define COMSIG_ITEM_WEIGHT_CLASS_CHANGED "item_weight_class_changed"
-/// Sent from /obj/item/update_weight_class(), to it's loc. (obj/item/changed_item, old_w_class, new_w_class)
+/// Sent from /obj/item/update_weight_class(), to its loc. (obj/item/changed_item, old_w_class, new_w_class)
 #define COMSIG_ATOM_CONTENTS_WEIGHT_CLASS_CHANGED "atom_contents_weight_class_changed"

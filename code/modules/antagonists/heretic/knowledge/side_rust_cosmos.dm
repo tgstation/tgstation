@@ -17,6 +17,9 @@
 	result_atoms = list(/obj/item/reagent_containers/cup/beaker/eldritch)
 	cost = 1
 	route = PATH_SIDE
+	depth = 4
+	research_tree_icon_path = 'icons/obj/antags/eldritch.dmi'
+	research_tree_icon_state = "eldritch_flask"
 
 /datum/heretic_knowledge/entropy_pulse
 	name = "Pulse of Entropy"
@@ -28,6 +31,10 @@
 	)
 	cost = 0
 	route = PATH_SIDE
+	research_tree_icon_path = 'icons/mob/actions/actions_ecult.dmi'
+	research_tree_icon_state = "corrode"
+	research_tree_icon_frame = 10
+	depth = 4
 	var/rusting_range = 8
 
 /datum/heretic_knowledge/entropy_pulse/on_finished_recipe(mob/living/user, list/selected_atoms, turf/loc)
@@ -60,6 +67,9 @@
 	curse_color = "#c1ffc9"
 	cost = 1
 	route = PATH_SIDE
+	research_tree_icon_path = 'icons/ui_icons/antags/heretic/knowledge.dmi'
+	research_tree_icon_state = "curse_corrosion"
+	depth = 8
 
 /datum/heretic_knowledge/curse/corrosion/curse(mob/living/carbon/human/chosen_mob, boosted = FALSE)
 	to_chat(chosen_mob, span_danger("You feel very ill..."))
@@ -76,7 +86,7 @@
 
 /datum/heretic_knowledge/summon/rusty
 	name = "Rusted Ritual"
-	desc = "Allows you to transmute a pool of vomit, some cable coil, and 5 sheets of iron into a Rust Walker. \
+	desc = "Allows you to transmute a pool of vomit, some cable coil, and 10 sheets of iron into a Rust Walker. \
 		Rust Walkers excel at spreading rust and are moderately strong in combat."
 	gain_text = "I combined my knowledge of creation with my desire for corruption. The Marshal knew my name, and the Rusted Hills echoed out."
 	next_knowledge = list(
@@ -85,19 +95,12 @@
 	)
 	required_atoms = list(
 		/obj/effect/decal/cleanable/vomit = 1,
-		/obj/item/stack/sheet/iron = 5,
+		/obj/item/stack/sheet/iron = 10,
 		/obj/item/stack/cable_coil = 15,
 	)
 	mob_to_summon = /mob/living/basic/heretic_summon/rust_walker
 	cost = 1
 	route = PATH_SIDE
 	poll_ignore_define = POLL_IGNORE_RUST_SPIRIT
+	depth = 8
 
-/datum/heretic_knowledge/summon/rusty/cleanup_atoms(list/selected_atoms)
-	var/obj/item/bodypart/head/ritual_head = locate() in selected_atoms
-	if(!ritual_head)
-		CRASH("[type] required a head bodypart, yet did not have one in selected_atoms when it reached cleanup_atoms.")
-
-	// Spill out any brains or stuff before we delete it.
-	ritual_head.drop_organs()
-	return ..()

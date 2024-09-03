@@ -134,14 +134,8 @@
 	/// What job does this mob have
 	var/job = null//Living
 
-	/// Can this mob enter shuttles
-	var/move_on_shuttle = 1
-
 	/// bitflags defining which status effects can be inflicted (replaces canknockdown, canstun, etc)
 	var/status_flags = CANSTUN|CANKNOCKDOWN|CANUNCONSCIOUS|CANPUSH
-
-	/// Can they interact with station electronics
-	var/has_unlimited_silicon_privilege = FALSE
 
 	///Calls relay_move() to whatever this is set to when the mob tries to move
 	var/atom/movable/remote_control
@@ -194,3 +188,6 @@
 	var/active_typing_indicator
 	///the icon currently used for the thinking indicator's bubble
 	var/active_thinking_indicator
+
+	/// A ref of the area we're taking our ambient loop from.
+	var/area/ambience_tracked_area

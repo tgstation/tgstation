@@ -129,9 +129,10 @@
 
 /turf/open/floor/plating/foam
 	name = "metal foam plating"
-	desc = "Thin, fragile flooring created with metal foam."
+	desc = "Thin, fragile flooring created with metal foam. Designed to be easily replacable by tiling when applied to in a combat stance."
 	icon_state = "foam_plating"
 	upgradable = FALSE
+	attachment_holes = FALSE
 
 /turf/open/floor/plating/foam/burn_tile()
 	return //jetfuel can't melt steel foam
@@ -175,8 +176,8 @@
 	ScrapeAway(flags = CHANGETURF_INHERIT_AIR)
 	return TRUE
 
-/turf/open/floor/plating/foam/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
-	return user.combat_mode ? ITEM_INTERACT_SKIP_TO_ATTACK : ITEM_INTERACT_BLOCKING // Fuck you
+/turf/open/floor/plating/foam/welder_act(mob/living/user, obj/item/I)
+	return NONE // Fuck you
 
 //reinforced plating deconstruction states
 #define PLATE_INTACT 0

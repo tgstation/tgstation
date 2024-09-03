@@ -29,7 +29,7 @@
 
 /datum/ai_behavior/find_and_set/hoard_location/search_tactic(datum/ai_controller/controller, locate_path, search_range)
 	for(var/turf/open/candidate in oview(search_range, controller.pawn))
-		if(isspaceturf(candidate) || isopenspaceturf(candidate))
+		if(is_space_or_openspace(candidate))
 			continue
 		if(candidate.is_blocked_turf(source_atom = controller.pawn))
 			continue

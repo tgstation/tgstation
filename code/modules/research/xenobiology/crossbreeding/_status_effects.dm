@@ -589,11 +589,11 @@
 		return ..()
 	cooldown = max_cooldown
 	var/list/batteries = list()
-	for(var/obj/item/stock_parts/cell/C in owner.get_all_contents())
+	for(var/obj/item/stock_parts/power_store/C in owner.get_all_contents())
 		if(C.charge < C.maxcharge)
 			batteries += C
 	if(batteries.len)
-		var/obj/item/stock_parts/cell/ToCharge = pick(batteries)
+		var/obj/item/stock_parts/power_store/ToCharge = pick(batteries)
 		ToCharge.charge += min(ToCharge.maxcharge - ToCharge.charge, ToCharge.maxcharge/10) //10% of the cell, or to maximum.
 	return ..()
 
@@ -706,7 +706,7 @@
 	if(healthcheck && (healthcheck - owner.health) > 5)
 		owner.visible_message(span_warning("[linked_extract] notices the sudden change in [owner]'s physical health, and activates!"))
 		do_sparks(5,FALSE,owner)
-		var/F = find_safe_turf(zlevels = owner.z, extended_safety_checks = TRUE)
+		var/F = find_safe_turf(zlevel = owner.z, extended_safety_checks = TRUE)
 		var/range = 0
 		if(!F)
 			F = get_turf(owner)
@@ -1079,7 +1079,7 @@
 		var/obj/item/slimecross/stabilized/rainbow/X = linked_extract
 		if(istype(X))
 			if(X.regencore)
-				X.regencore.afterattack(owner,owner,TRUE)
+				X.regencore.interact_with_atom(owner, owner)
 				X.regencore = null
 				owner.visible_message(span_warning("[owner] flashes a rainbow of colors, and [owner.p_their()] skin is coated in a milky regenerative goo!"))
 				qdel(src)

@@ -103,7 +103,7 @@ multiple modular subtrees with behaviors
 		return
 	var/list/temp_subtree_list = list()
 	for(var/subtree in planning_subtrees)
-		var/subtree_instance = SSai_controllers.ai_subtrees[subtree]
+		var/subtree_instance = GLOB.ai_subtrees[subtree]
 		temp_subtree_list += subtree_instance
 	planning_subtrees = temp_subtree_list
 
@@ -124,7 +124,7 @@ multiple modular subtrees with behaviors
 
 	var/turf/pawn_turf = get_turf(pawn)
 	if(pawn_turf)
-		SSai_controllers.ai_controllers_by_zlevel[pawn_turf.z] += src
+		GLOB.ai_controllers_by_zlevel[pawn_turf.z] += src
 
 	SEND_SIGNAL(src, COMSIG_AI_CONTROLLER_POSSESSED_PAWN)
 
@@ -176,7 +176,15 @@ multiple modular subtrees with behaviors
 	if(ai_status == AI_STATUS_OFF)
 		return
 
-	if(exited && (get_dist(pawn, (islist(exited) ? exited[1] : exited)) <= interesting_dist)) //is our target in between interesting cells?
+	var/distance = INFINITY
+	if(islist(exited))
+		var/list/exited_list = exited
+		distance = get_dist(pawn, exited_list[1])
+	else if(isatom(exited))
+		var/atom/exited_atom = exited
+		distance = get_dist(pawn, exited_atom)
+
+	if(distance <= interesting_dist) //is our target in between interesting cells?
 		return
 
 	if(should_idle())
@@ -240,14 +248,11 @@ multiple modular subtrees with behaviors
 		if((mob_pawn?.client && !continue_processing_when_client))
 			return
 	if(old_turf)
-		SSai_controllers.ai_controllers_by_zlevel[old_turf.z] -= src
-	if(new_turf)
-		SSai_controllers.ai_controllers_by_zlevel[new_turf.z] += src
-		var/new_level_clients = SSmobs.clients_by_zlevel[new_turf.z].len
-		if(new_level_clients)
-			set_ai_status(AI_STATUS_IDLE)
-		else
-			set_ai_status(AI_STATUS_OFF)
+		GLOB.ai_controllers_by_zlevel[old_turf.z] -= src
+	if(isnull(new_turf))
+		return
+	GLOB.ai_controllers_by_zlevel[new_turf.z] += src
+	reset_ai_status()
 
 ///Abstract proc for initializing the pawn to the new controller
 /datum/ai_controller/proc/TryPossessPawn(atom/new_pawn)
@@ -264,9 +269,9 @@ multiple modular subtrees with behaviors
 		ai_movement.stop_moving_towards(src)
 	var/turf/pawn_turf = get_turf(pawn)
 	if(pawn_turf)
-		SSai_controllers.ai_controllers_by_zlevel[pawn_turf.z] -= src
+		GLOB.ai_controllers_by_zlevel[pawn_turf.z] -= src
 	if(ai_status)
-		SSai_controllers.ai_controllers_by_status[ai_status] -= src
+		GLOB.ai_controllers_by_status[ai_status] -= src
 	pawn.ai_controller = null
 	pawn = null
 	if(destroy)
@@ -378,15 +383,25 @@ multiple modular subtrees with behaviors
 
 	//remove old status, if we've got one
 	if(ai_status)
-		SSai_controllers.ai_controllers_by_status[ai_status] -= src
+		GLOB.ai_controllers_by_status[ai_status] -= src
+	stop_previous_processing()
 	ai_status = new_ai_status
-	SSai_controllers.ai_controllers_by_status[new_ai_status] += src
+	GLOB.ai_controllers_by_status[new_ai_status] += src
 	switch(ai_status)
 		if(AI_STATUS_ON)
 			START_PROCESSING(SSai_behaviors, src)
-		if(AI_STATUS_OFF, AI_STATUS_IDLE)
-			STOP_PROCESSING(SSai_behaviors, src)
+		if(AI_STATUS_IDLE)
+			START_PROCESSING(SSidle_ai_behaviors, src)
 			CancelActions()
+		if(AI_STATUS_OFF)
+			CancelActions()
+
+/datum/ai_controller/proc/stop_previous_processing()
+	switch(ai_status)
+		if(AI_STATUS_ON)
+			STOP_PROCESSING(SSai_behaviors, src)
+		if(AI_STATUS_IDLE)
+			STOP_PROCESSING(SSidle_ai_behaviors, src)
 
 /datum/ai_controller/proc/PauseAi(time)
 	paused_until = world.time + time
@@ -625,7 +640,7 @@ multiple modular subtrees with behaviors
 /datum/ai_controller/proc/post_blackboard_key_set(key)
 	if (isnull(pawn))
 		return
-	SEND_SIGNAL(pawn, COMSIG_AI_BLACKBOARD_KEY_SET(key))
+	SEND_SIGNAL(pawn, COMSIG_AI_BLACKBOARD_KEY_SET(key), key)
 
 /**
  * Adds the passed "thing" to the associated key
@@ -715,6 +730,8 @@ multiple modular subtrees with behaviors
 /datum/ai_controller/proc/clear_blackboard_key(key)
 	if(isnull(blackboard[key]))
 		return
+	if(pawn && (SEND_SIGNAL(pawn, COMSIG_AI_BLACKBOARD_KEY_PRECLEAR(key))))
+		return
 	CLEAR_AI_DATUM_TARGET(blackboard[key], key)
 	blackboard[key] = null
 	if(isnull(pawn))
@@ -754,6 +771,19 @@ multiple modular subtrees with behaviors
 
 	CRASH("remove_thing_from_blackboard_key called with an invalid \"thing\" argument ([thing]). \
 		(The passed value is not tracked in the passed list.)")
+
+///removes a tracked object from a lazylist
+/datum/ai_controller/proc/remove_from_blackboard_lazylist_key(key, thing)
+	var/lazylist = blackboard[key]
+	if(isnull(lazylist))
+		return
+	for(var/key_index in lazylist)
+		if(thing == key_index || lazylist[key_index] == thing)
+			CLEAR_AI_DATUM_TARGET(thing, key)
+			lazylist -= key_index
+			break
+	if(!LAZYLEN(lazylist))
+		clear_blackboard_key(key)
 
 /// Signal proc to go through every key and remove the datum from all keys it finds
 /datum/ai_controller/proc/sig_remove_from_blackboard(datum/source)

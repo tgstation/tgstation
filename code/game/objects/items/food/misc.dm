@@ -16,6 +16,87 @@
 	juice_typepath = /datum/reagent/consumable/watermelonjuice
 	w_class = WEIGHT_CLASS_SMALL
 
+/obj/item/food/watermelonmush
+	name = "watermelon mush"
+	desc = "A plop of watery goodness."
+	icon = 'icons/obj/service/hydroponics/harvest.dmi'
+	icon_state = "watermelonpulp"
+	food_reagents = list(
+		/datum/reagent/water = 2,
+		/datum/reagent/consumable/nutriment/vitamin = 0.1,
+		/datum/reagent/consumable/nutriment = 0.5,
+	)
+	tastes = list("watermelon" = 1)
+	foodtypes = FRUIT
+	food_flags = FOOD_FINGER_FOOD
+	juice_typepath = /datum/reagent/consumable/watermelonjuice
+	w_class = WEIGHT_CLASS_SMALL
+
+/obj/item/food/holymelonslice
+	name = "holymelon slice"
+	desc = "A slice of holy goodness."
+	icon = 'icons/obj/service/hydroponics/harvest.dmi'
+	icon_state = "holymelonslice"
+	food_reagents = list(
+		/datum/reagent/water/holywater = 0.5,
+		/datum/reagent/consumable/nutriment/vitamin = 0.2,
+		/datum/reagent/consumable/nutriment = 1,
+	)
+	tastes = list("holymelon" = 1)
+	foodtypes = FRUIT
+	food_flags = FOOD_FINGER_FOOD
+	juice_typepath = /datum/reagent/water/holywater
+	w_class = WEIGHT_CLASS_SMALL
+
+/obj/item/food/holymelonmush
+	name = "holymelon mush"
+	desc = "A plop of holy goodness."
+	icon = 'icons/obj/service/hydroponics/harvest.dmi'
+	icon_state = "holymelonpulp"
+	food_reagents = list(
+		/datum/reagent/water/holywater = 1,
+		/datum/reagent/consumable/nutriment/vitamin = 0.1,
+		/datum/reagent/consumable/nutriment = 0.5,
+	)
+	tastes = list("holymelon" = 1)
+	foodtypes = FRUIT
+	food_flags = FOOD_FINGER_FOOD
+	juice_typepath = /datum/reagent/water/holywater
+	w_class = WEIGHT_CLASS_SMALL
+
+/obj/item/food/barrelmelonslice
+	name = "barrelmelon slice"
+	desc = "A slice of beery goodness."
+	icon = 'icons/obj/service/hydroponics/harvest.dmi'
+	icon_state = "barrelmelonslice"
+	food_reagents = list(
+		/datum/reagent/consumable/ethanol/beer = 1,
+		/datum/reagent/consumable/nutriment/vitamin = 0.2,
+		/datum/reagent/consumable/nutriment = 1,
+	)
+	tastes = list("beer" = 1)
+	foodtypes = FRUIT
+	food_flags = FOOD_FINGER_FOOD
+	juice_typepath = /datum/reagent/consumable/ethanol/beer
+	w_class = WEIGHT_CLASS_SMALL
+
+/obj/item/food/barrelmelonmush
+	name = "barrelmelon mush"
+	desc = "A plop of beery goodness."
+	icon = 'icons/obj/service/hydroponics/harvest.dmi'
+	icon_state = "barrelmelonpulp"
+	food_reagents = list(
+		/datum/reagent/consumable/ethanol/beer = 2,
+		/datum/reagent/consumable/nutriment/vitamin = 0.1,
+		/datum/reagent/consumable/nutriment = 0.5,
+	)
+	tastes = list("beer" = 1)
+	foodtypes = FRUIT
+	food_flags = FOOD_FINGER_FOOD
+	juice_typepath = /datum/reagent/consumable/ethanol/beer
+	w_class = WEIGHT_CLASS_SMALL
+
+
 /obj/item/food/appleslice
 	name = "apple slice"
 	desc = "The perfect after-school snack."
@@ -184,7 +265,7 @@
 
 /obj/item/food/melonfruitbowl
 	name = "melon fruit bowl"
-	desc = "For people who wants edible fruit bowls."
+	desc = "For people who want to experience an explosion of flavour."
 	icon_state = "melonfruitbowl"
 	food_reagents = list(
 		/datum/reagent/consumable/nutriment = 6,
@@ -210,6 +291,14 @@
 	tastes = list("grain alcohol" = 1, "fruit" = 1)
 	foodtypes = FRUIT | ALCOHOL
 	crafting_complexity = FOOD_COMPLEXITY_2
+
+/obj/item/food/melonkeg/CheckParts(list/parts_list)
+	. = ..()
+	var/obj/item/reagent_containers/cup/glass/bottle/bottle = locate() in contents
+	if(!bottle)
+		return
+	if(bottle.message_in_a_bottle)
+		bottle.message_in_a_bottle.forceMove(drop_location())
 
 /obj/item/food/honeybar
 	name = "honey nut bar"

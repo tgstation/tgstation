@@ -47,3 +47,6 @@
 
 /// Checks that maploaded mobs with either the `atmos_requirements` or `body_temp_sensitive`
 /datum/unit_test/focus_only/atmos_and_temp_requirements
+
+/// Ensures only whitelisted planes can have TOPDOWN_LAYERing, and vis versa
+/datum/unit_test/focus_only/topdown_filtering

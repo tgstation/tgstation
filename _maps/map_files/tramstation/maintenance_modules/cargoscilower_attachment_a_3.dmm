@@ -21,7 +21,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/table,
 /obj/machinery/cell_charger,
-/obj/item/stock_parts/cell/high/empty,
+/obj/item/stock_parts/power_store/cell/high/empty,
 /turf/open/floor/iron/smooth,
 /area/station/maintenance/starboard/central)
 "n" = (
@@ -86,14 +86,14 @@
 "Y" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/table,
-/obj/item/stock_parts/cell/empty{
+/obj/item/stock_parts/power_store/cell/empty{
 	pixel_x = -5
 	},
-/obj/item/stock_parts/cell/empty{
+/obj/item/stock_parts/power_store/cell/empty{
 	pixel_x = 2;
 	pixel_y = 8
 	},
-/obj/item/stock_parts/cell/empty{
+/obj/item/stock_parts/power_store/cell/empty{
 	pixel_x = 7
 	},
 /turf/open/floor/iron/smooth,

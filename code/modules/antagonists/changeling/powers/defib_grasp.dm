@@ -6,6 +6,7 @@
 		while we are dead or in stasis. Will also stun cyborgs momentarily."
 	owner_has_control = FALSE
 	dna_cost = 0
+	disabled_by_fire = FALSE
 
 	/// Flags to pass to fully heal when we get zapped
 	var/heal_flags = HEAL_DAMAGE|HEAL_BODY|HEAL_STATUS|HEAL_CC_STATUS

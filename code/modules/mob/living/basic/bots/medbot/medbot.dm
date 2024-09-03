@@ -6,7 +6,6 @@
 	icon = 'icons/mob/silicon/aibots.dmi'
 	icon_state = "medibot0"
 	base_icon_state = "medibot"
-	density = FALSE
 	health = 20
 	maxHealth = 20
 	speed = 2
@@ -211,9 +210,9 @@
 // Actions received from TGUI
 /mob/living/basic/bot/medbot/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
-	if(. || !isliving(ui.user) || (bot_access_flags & BOT_COVER_LOCKED) && !HAS_SILICON_ACCESS(ui.user))
+	var/mob/user = ui.user
+	if(. || !isliving(ui.user) || (bot_access_flags & BOT_COVER_LOCKED) && !HAS_SILICON_ACCESS(user))
 		return
-	var/mob/living/our_user = ui.user
 	switch(action)
 		if("heal_threshold")
 			var/adjust_num = round(text2num(params["threshold"]))
@@ -230,7 +229,7 @@
 			medical_mode_flags ^= MEDBOT_STATIONARY_MODE
 		if("sync_tech")
 			if(!linked_techweb)
-				to_chat(our_user, span_notice("No research techweb connected."))
+				to_chat(user, span_notice("No research techweb connected."))
 				return
 			var/oldheal_amount = heal_amount
 			var/tech_boosters

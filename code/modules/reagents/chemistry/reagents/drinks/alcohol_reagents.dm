@@ -10,7 +10,7 @@
 	metabolization_rate = 0.5 * REAGENTS_METABOLISM
 	creation_purity = 1 // impure base reagents are a big no-no
 	ph = 7.33
-	burning_temperature = 2193//ethanol burns at 1970C (at it's peak)
+	burning_temperature = 2193//ethanol burns at 1970C (at its peak)
 	burning_volume = 0.1
 	default_container = /obj/item/reagent_containers/cup/glass/bottle/beer
 	fallback_icon = 'icons/obj/drinks/bottles.dmi'
@@ -344,6 +344,27 @@
 	taste_description = "spiked butterscotch"
 	ph = 6.5
 	default_container = /obj/item/reagent_containers/cup/glass/bottle/rum
+
+/datum/reagent/consumable/ethanol/rum/aged
+	name = "Aged Rum"
+	description = "Sink me! That's some fancy rum to share with buckoos."
+	color = "#c0b675" // rgb: 192,183,117
+	boozepwr = 70
+	taste_description = "extra-spiked butterscotch"
+	default_container = /obj/item/reagent_containers/cup/glass/bottle/rum/aged
+	quality = DRINK_FANTASTIC
+	metabolized_traits = list(TRAIT_STRONG_STOMACH)
+
+/datum/reagent/consumable/ethanol/rum/aged/on_mob_metabolize(mob/living/drinker)
+	. = ..()
+	drinker.add_blocked_language(subtypesof(/datum/language) - /datum/language/piratespeak, LANGUAGE_DRINK)
+	drinker.grant_language(/datum/language/piratespeak, source = LANGUAGE_DRINK)
+
+/datum/reagent/consumable/ethanol/rum/aged/on_mob_end_metabolize(mob/living/drinker)
+	if(!QDELING(drinker))
+		drinker.remove_blocked_language(subtypesof(/datum/language), LANGUAGE_DRINK)
+		drinker.remove_language(/datum/language/piratespeak, source = LANGUAGE_DRINK)
+	return ..()
 
 /datum/reagent/consumable/ethanol/tequila
 	name = "Tequila"
@@ -1610,7 +1631,7 @@
 	if(liver && HAS_TRAIT(liver, TRAIT_LAW_ENFORCEMENT_METABOLISM))
 		var/need_mob_update
 		need_mob_update = drinker.heal_bodypart_damage(2 * REM * seconds_per_tick, 2 * REM *  seconds_per_tick, updating_health = FALSE, required_bodytype = affected_bodytype)
-		need_mob_update += drinker.adjustStaminaLoss(-2 * REM * seconds_per_tick, updating_stamina = FALSE, required_biotype = affected_biotype)
+		need_mob_update += drinker.adjustStaminaLoss(-5 * REM * seconds_per_tick, updating_stamina = FALSE, required_biotype = affected_biotype)
 		if(need_mob_update)
 			return UPDATE_MOB_HEALTH
 
@@ -1655,7 +1676,8 @@
 	need_mob_update += drinker.adjustFireLoss(-heal_amt, updating_health = FALSE, required_bodytype = affected_bodytype)
 	need_mob_update += drinker.adjustToxLoss(-heal_amt, updating_health = FALSE, required_biotype = affected_biotype)
 	need_mob_update += drinker.adjustOxyLoss(-heal_amt, updating_health = FALSE, required_biotype = affected_biotype, required_respiration_type = affected_respiration_type)
-	need_mob_update += drinker.adjustStaminaLoss(-heal_amt, updating_stamina = FALSE, required_biotype = affected_biotype)
+	// heal stamina loss on first metabolization, but only to a max of 20
+	need_mob_update += drinker.adjustStaminaLoss(max(-heal_amt * 5, -20), updating_stamina = FALSE, required_biotype = affected_biotype)
 	if(need_mob_update)
 		drinker.updatehealth()
 	drinker.visible_message(span_warning("[drinker] shivers with renewed vigor!"), span_notice("One taste of [LOWER_TEXT(name)] fills you with energy!"))
@@ -1754,28 +1776,32 @@
 	quality = DRINK_GOOD
 	taste_description = "bitter, creamy cacao"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
-	var/obj/item/shield/mighty_shield
+	var/datum/weakref/mighty_shield
 
 /datum/reagent/consumable/ethanol/alexander/on_mob_metabolize(mob/living/drinker)
 	. = ..()
 	if(ishuman(drinker))
 		var/mob/living/carbon/human/the_human = drinker
 		for(var/obj/item/shield/the_shield in the_human.contents)
-			mighty_shield = the_shield
-			mighty_shield.block_chance += 10
+			mighty_shield = WEAKREF(the_shield)
+			the_shield.block_chance += 10
 			to_chat(the_human, span_notice("[the_shield] appears polished, although you don't recall polishing it."))
+			break
 
 /datum/reagent/consumable/ethanol/alexander/on_mob_life(mob/living/drinker, seconds_per_tick, times_fired)
-	if(mighty_shield && !(mighty_shield in drinker.contents)) //If you had a shield and lose it, you lose the reagent as well. Otherwise this is just a normal drink.
+	var/obj/item/shield/the_shield = mighty_shield?.resolve()
+	if(the_shield && !(the_shield in drinker.contents)) //If you had a shield and lose it, you lose the reagent as well. Otherwise this is just a normal drink.
 		holder.remove_reagent(type, volume)
 		return
 	return ..()
 
 /datum/reagent/consumable/ethanol/alexander/on_mob_end_metabolize(mob/living/drinker)
 	. = ..()
-	if(mighty_shield)
-		mighty_shield.block_chance -= 10
-		to_chat(drinker,span_notice("You notice [mighty_shield] looks worn again. Weird."))
+	var/obj/item/shield/the_shield = mighty_shield?.resolve()
+	if(the_shield)
+		the_shield.block_chance -= 10
+		to_chat(drinker,span_notice("You notice [the_shield] looks worn again. Weird."))
+		mighty_shield = null
 
 /datum/reagent/consumable/ethanol/amaretto_alexander
 	name = "Amaretto Alexander"
@@ -2080,7 +2106,7 @@
 		need_mob_update = drinker.heal_bodypart_damage(1 * REM * seconds_per_tick, 1 * REM * seconds_per_tick, updating_health = FALSE)
 		need_mob_update += drinker.adjustOxyLoss(-1 * REM * seconds_per_tick, updating_health = FALSE, required_biotype = affected_biotype, required_respiration_type = affected_respiration_type)
 		need_mob_update += drinker.adjustToxLoss(-1 * REM * seconds_per_tick, updating_health = FALSE, required_biotype = affected_biotype)
-		need_mob_update += drinker.adjustStaminaLoss(-1  * REM * seconds_per_tick, updating_stamina = FALSE, required_biotype = affected_biotype)
+		need_mob_update += drinker.adjustStaminaLoss(-5  * REM * seconds_per_tick, updating_stamina = FALSE, required_biotype = affected_biotype)
 		if(need_mob_update)
 			return UPDATE_MOB_HEALTH
 
@@ -2137,7 +2163,7 @@
 	. = ..()
 	if(SPT_PROB(2, seconds_per_tick))
 		to_chat(drinker, span_notice("[pick("You feel disregard for the rule of law.", "You feel pumped!", "Your head is pounding.", "Your thoughts are racing..")]"))
-	if(drinker.adjustStaminaLoss(-0.25 * drinker.get_drunk_amount() * REM * seconds_per_tick, updating_stamina = FALSE, required_biotype = affected_biotype))
+	if(drinker.adjustStaminaLoss(-0.5 * drinker.get_drunk_amount() * REM * seconds_per_tick, updating_stamina = FALSE, required_biotype = affected_biotype))
 		return UPDATE_MOB_HEALTH
 
 /datum/reagent/consumable/ethanol/old_timer

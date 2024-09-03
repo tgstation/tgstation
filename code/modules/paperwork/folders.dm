@@ -77,7 +77,7 @@
 			return
 		to_chat(user, span_notice("You put [weapon] into [src]."))
 		update_appearance()
-	else if(istype(weapon, /obj/item/pen))
+	else if(IS_WRITING_UTENSIL(weapon))
 		rename(user, weapon)
 
 /obj/item/folder/attack_self(mob/user)
@@ -106,7 +106,7 @@
 
 	return data
 
-/obj/item/folder/ui_act(action, params)
+/obj/item/folder/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if(.)
 		return

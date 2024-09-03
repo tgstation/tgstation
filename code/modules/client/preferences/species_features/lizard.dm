@@ -29,20 +29,20 @@
 	category = PREFERENCE_CATEGORY_FEATURES
 	main_feature_name = "Body markings"
 	should_generate_icons = TRUE
-	relevant_mutant_bodypart = "body_markings"
+	relevant_body_markings = /datum/bodypart_overlay/simple/body_marking/lizard
 
 /datum/preference/choiced/lizard_body_markings/init_possible_values()
-	return assoc_to_keys_features(SSaccessories.body_markings_list)
+	return assoc_to_keys_features(SSaccessories.lizard_markings_list)
 
 /datum/preference/choiced/lizard_body_markings/icon_for(value)
-	var/datum/sprite_accessory/sprite_accessory = SSaccessories.body_markings_list[value]
+	var/datum/sprite_accessory/sprite_accessory = SSaccessories.lizard_markings_list[value]
 
 	var/icon/final_icon = icon('icons/mob/human/species/lizard/bodyparts.dmi', "lizard_chest_m")
 
 	if (sprite_accessory.icon_state != "none")
 		var/icon/body_markings_icon = icon(
 			'icons/mob/human/species/lizard/lizard_misc.dmi',
-			"m_body_markings_[sprite_accessory.icon_state]_ADJ",
+			"male_[sprite_accessory.icon_state]_chest",
 		)
 
 		final_icon.Blend(body_markings_icon, ICON_OVERLAY)
@@ -55,7 +55,7 @@
 	return final_icon
 
 /datum/preference/choiced/lizard_body_markings/apply_to_human(mob/living/carbon/human/target, value)
-	target.dna.features["body_markings"] = value
+	target.dna.features["lizard_markings"] = value
 
 /datum/preference/choiced/lizard_frills
 	savefile_key = "feature_lizard_frills"
@@ -93,13 +93,51 @@
 	savefile_key = "feature_lizard_legs"
 	savefile_identifier = PREFERENCE_CHARACTER
 	category = PREFERENCE_CATEGORY_SECONDARY_FEATURES
-	relevant_mutant_bodypart = "legs"
 
 /datum/preference/choiced/lizard_legs/init_possible_values()
-	return assoc_to_keys_features(SSaccessories.legs_list)
+	return list(NORMAL_LEGS, DIGITIGRADE_LEGS)
 
 /datum/preference/choiced/lizard_legs/apply_to_human(mob/living/carbon/human/target, value)
 	target.dna.features["legs"] = value
+	// Hack to update the dummy in the preference menu
+	// (Because digi legs are ONLY handled on species change)
+	if(!isdummy(target) || target.dna.species.digitigrade_customization == DIGITIGRADE_NEVER)
+		return
+
+	var/list/correct_legs = target.dna.species.bodypart_overrides.Copy() & list(BODY_ZONE_R_LEG, BODY_ZONE_L_LEG)
+
+	if(value == DIGITIGRADE_LEGS)
+		correct_legs[BODY_ZONE_R_LEG] = /obj/item/bodypart/leg/right/digitigrade
+		correct_legs[BODY_ZONE_L_LEG] = /obj/item/bodypart/leg/left/digitigrade
+
+	for(var/obj/item/bodypart/old_part as anything in target.bodyparts)
+		if(old_part.change_exempt_flags & BP_BLOCK_CHANGE_SPECIES)
+			continue
+
+		var/path = correct_legs[old_part.body_zone]
+		if(!path)
+			continue
+		var/obj/item/bodypart/new_part = new path()
+		new_part.replace_limb(target, TRUE)
+		new_part.update_limb(is_creating = TRUE)
+		qdel(old_part)
+
+/datum/preference/choiced/lizard_legs/is_accessible(datum/preferences/preferences)
+	if(!..())
+		return FALSE
+	var/datum/species/species_type = preferences.read_preference(/datum/preference/choiced/species)
+	return initial(species_type.digitigrade_customization) == DIGITIGRADE_OPTIONAL
+
+
+/datum/preference/choiced/lizard_legs/is_accessible(datum/preferences/preferences)
+	. = ..()
+
+	if(!.)
+		return
+
+	var/datum/species/species_type = preferences.read_preference(/datum/preference/choiced/species)
+
+	return initial(species_type.digitigrade_customization) & DIGITIGRADE_OPTIONAL
 
 /datum/preference/choiced/lizard_snout
 	savefile_key = "feature_lizard_snout"
@@ -121,7 +159,7 @@
 	savefile_key = "feature_lizard_spines"
 	savefile_identifier = PREFERENCE_CHARACTER
 	category = PREFERENCE_CATEGORY_SECONDARY_FEATURES
-	relevant_mutant_bodypart = "spines"
+	relevant_external_organ = /obj/item/organ/external/spines
 
 /datum/preference/choiced/lizard_spines/init_possible_values()
 	return assoc_to_keys_features(SSaccessories.spines_list)
@@ -142,5 +180,4 @@
 	target.dna.features["tail_lizard"] = value
 
 /datum/preference/choiced/lizard_tail/create_default_value()
-	var/datum/sprite_accessory/tails/lizard/smooth/tail = /datum/sprite_accessory/tails/lizard/smooth
-	return initial(tail.name)
+	return /datum/sprite_accessory/tails/lizard/smooth::name

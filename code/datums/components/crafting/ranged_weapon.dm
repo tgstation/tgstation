@@ -72,20 +72,17 @@
 	blacklist += subtypesof(/obj/item/gun/energy/e_gun)
 
 /datum/crafting_recipe/beam_rifle
-	name = "Particle Acceleration Rifle"
-	result = /obj/item/gun/energy/beam_rifle
+	name = "Event Horizon Anti-Existential Beam Rifle"
+	result = /obj/item/gun/energy/event_horizon
 	reqs = list(
-		/obj/item/gun/energy/e_gun = 1,
-		/obj/item/assembly/signaler/anomaly/flux = 1,
+		/obj/item/assembly/signaler/anomaly/flux = 2,
 		/obj/item/assembly/signaler/anomaly/grav = 1,
+		/obj/item/assembly/signaler/anomaly/vortex = (MAX_CORES_VORTEX - 1),
+		/obj/item/assembly/signaler/anomaly/bluespace = 1,
 		/obj/item/weaponcrafting/gunkit/beam_rifle = 1,
 	)
-	time = 10 SECONDS
+	time = 30 SECONDS //Maybe the delay will make you reconsider your choices
 	category = CAT_WEAPON_RANGED
-
-/datum/crafting_recipe/beam_rifle/New()
-	..()
-	blacklist += subtypesof(/obj/item/gun/energy/e_gun)
 
 /datum/crafting_recipe/ebow
 	name = "Energy Crossbow"
@@ -225,7 +222,7 @@
 
 /datum/crafting_recipe/rebarxbowforced
 	name = "Forced Rebar Crossbow"
-	desc = "Get an extra shot in your crossbow... for a chance of shooting yourself when you fire it."
+	desc = "A much quicker reload... for a chance of shooting yourself when you fire it."
 	result = /obj/item/gun/ballistic/rifle/rebarxbow/forced
 	reqs = list(
 		/obj/item/gun/ballistic/rifle/rebarxbow = 1,
@@ -357,7 +354,7 @@
 		/obj/item/stack/cable_coil = 5,
 		/obj/item/pipe = 1,
 		/obj/item/stock_parts/micro_laser = 1,
-		/obj/item/stock_parts/cell = 1,
+		/obj/item/stock_parts/power_store/cell = 1,
 		/obj/item/assembly/mousetrap = 1,
 	)
 	tool_behaviors = list(TOOL_SCREWDRIVER, TOOL_WRENCH)
@@ -370,10 +367,35 @@
 	reqs = list(
 		/obj/item/gun/energy/disabler/smoothbore = 1,
 		/obj/item/stack/sheet/mineral/gold = 5,
-		/obj/item/stock_parts/cell/hyper = 1,
+		/obj/item/stock_parts/power_store/cell/hyper = 1,
 		/datum/reagent/reaction_agent/speed_agent = 10,
 	)
 	tool_behaviors = list(TOOL_SCREWDRIVER)
 	time = 20 SECONDS
 	category = CAT_WEAPON_RANGED
 	crafting_flags = CRAFT_CHECK_DENSITY | CRAFT_MUST_BE_LEARNED
+
+/datum/crafting_recipe/shortbow
+	name = "Shortbow"
+	result = /obj/item/gun/ballistic/bow/shortbow
+	reqs = list(
+		/obj/item/stack/sheet/mineral/wood = 4,
+		/obj/item/stack/sheet/cloth = 2,
+		/obj/item/stack/sheet/iron = 1,
+	)
+	tool_paths = list(
+		/obj/item/hatchet,
+	)
+	time = 30 SECONDS
+	category = CAT_WEAPON_RANGED
+	crafting_flags = CRAFT_CHECK_DENSITY | CRAFT_MUST_BE_LEARNED
+
+/datum/crafting_recipe/photoncannon
+	name = "Photon Cannon"
+	result = /obj/item/gun/energy/photon
+	reqs = list(
+		/obj/item/assembly/signaler/anomaly/flux = 1,
+		/obj/item/weaponcrafting/gunkit/photon = 1,
+	)
+	time = 10 SECONDS
+	category = CAT_WEAPON_RANGED

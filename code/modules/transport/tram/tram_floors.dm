@@ -183,7 +183,7 @@
 	integrity_failure = 0.75
 	armor_type = /datum/armor/tram_floor
 	layer = TRAM_FLOOR_LAYER
-	plane = FLOOR_PLANE
+	plane = GAME_PLANE
 	obj_flags = BLOCK_Z_OUT_DOWN | BLOCK_Z_OUT_UP
 	appearance_flags = PIXEL_SCALE|KEEP_TOGETHER
 	var/secured = TRUE

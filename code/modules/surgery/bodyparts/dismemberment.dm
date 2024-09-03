@@ -4,7 +4,7 @@
 		return FALSE
 	return TRUE
 
-///Remove target limb from it's owner, with side effects.
+///Remove target limb from its owner, with side effects.
 /obj/item/bodypart/proc/dismember(dam_type = BRUTE, silent=TRUE, wounding_type)
 	if(!owner || (bodypart_flags & BODYPART_UNREMOVABLE))
 		return FALSE
@@ -231,10 +231,8 @@
 		for(var/obj/item/head_item as anything in list(owner.glasses, owner.ears, owner.wear_mask, owner.head))
 			owner.dropItemToGround(head_item, force = TRUE)
 
-	qdel(owner.GetComponent(/datum/component/creamed)) //clean creampie overlay flushed emoji
-
 	//Handle dental implants
-	for(var/datum/action/item_action/hands_free/activate_pill/pill_action in owner.actions)
+	for(var/datum/action/item_action/activate_pill/pill_action in owner.actions)
 		pill_action.Remove(owner)
 		var/obj/pill = pill_action.target
 		if(pill)
@@ -342,7 +340,7 @@
 
 	//Handle dental implants
 	for(var/obj/item/reagent_containers/pill/pill in src)
-		for(var/datum/action/item_action/hands_free/activate_pill/pill_action in pill.actions)
+		for(var/datum/action/item_action/activate_pill/pill_action in pill.actions)
 			pill.forceMove(new_head_owner)
 			pill_action.Grant(new_head_owner)
 			break
@@ -354,8 +352,8 @@
 		sexy_chad.hair_color = hair_color
 		sexy_chad.facial_hairstyle = facial_hairstyle
 		sexy_chad.facial_hair_color = facial_hair_color
-		sexy_chad.grad_style = gradient_styles?.Copy()
-		sexy_chad.grad_color = gradient_colors?.Copy()
+		sexy_chad.grad_style = gradient_styles.Copy()
+		sexy_chad.grad_color = gradient_colors.Copy()
 		sexy_chad.lip_style = lip_style
 		sexy_chad.lip_color = lip_color
 
@@ -404,12 +402,12 @@
 				qdel(phantom_loss)
 
 		//Copied from /datum/species/proc/on_species_gain()
-		for(var/obj/item/organ/external/organ_path as anything in dna.species.external_organs)
+		for(var/obj/item/organ/organ_path as anything in dna.species.mutant_organs)
 			//Load a persons preferences from DNA
 			var/zone = initial(organ_path.zone)
 			if(zone != limb_zone)
 				continue
-			var/obj/item/organ/external/new_organ = SSwardrobe.provide_type(organ_path)
+			var/obj/item/organ/new_organ = SSwardrobe.provide_type(organ_path)
 			new_organ.Insert(src)
 
 		update_body_parts()

@@ -81,7 +81,7 @@ Charged extracts:
 	effect_desc = "Creates a hypercharged slime cell battery, which has high capacity but takes longer to recharge."
 
 /obj/item/slimecross/charged/yellow/do_effect(mob/user)
-	new /obj/item/stock_parts/cell/high/slime_hypercharged(get_turf(user))
+	new /obj/item/stock_parts/power_store/cell/high/slime_hypercharged(get_turf(user))
 	user.visible_message(span_notice("[src] sparks violently, and swells with electric power!"))
 	..()
 

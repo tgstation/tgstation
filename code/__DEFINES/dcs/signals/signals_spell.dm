@@ -74,6 +74,10 @@
 #define COMSIG_MOB_EJECTED_FROM_JAUNT "spell_mob_eject_jaunt"
 /// Sent from datum/action/cooldown/spell/jaunt/exit_jaunt, after the mob exited jaunt: (datum/action/cooldown/spell/spell)
 #define COMSIG_MOB_AFTER_EXIT_JAUNT "spell_mob_after_exit_jaunt"
+/// Sent from /obj/effect/dummy/phased_mob/proc/phased_check when moving to the holder object: (/obj/effect/dummy/phased_mob, mob/living/phaser, turf/newloc)
+#define COMSIG_MOB_PHASED_CHECK "mob_phased_check"
+	/// Return this to cancel the phased move
+	#define COMPONENT_BLOCK_PHASED_MOVE (1 << 0)
 
 /// Sent from/datum/action/cooldown/spell/jaunt/bloodcrawl/slaughter_demon/try_enter_jaunt,
 /// to any unconscious / critical mobs being dragged when the jaunter enters blood:
@@ -109,7 +113,7 @@
 // Charge
 /// Sent from /datum/action/cooldown/spell/charge/cast(), to the item in hand being charged: (datum/action/cooldown/spell/spell, mob/user)
 #define COMSIG_ITEM_MAGICALLY_CHARGED "item_magic_charged"
-	/// Return if an item was successfuly recharged
+	/// Return if an item was successful recharged
 	#define COMPONENT_ITEM_CHARGED (1 << 0)
 	/// Return if the item had a negative side effect occur while recharging
 	#define COMPONENT_ITEM_BURNT_OUT (1 << 1)

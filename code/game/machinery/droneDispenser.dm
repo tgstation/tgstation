@@ -27,7 +27,7 @@
 
 	var/mode = DRONE_READY
 	var/timer
-	var/cooldownTime = 1800 //3 minutes
+	var/cooldownTime = 3 MINUTES
 	var/production_time = 30
 	//The item the dispenser will create
 	var/dispense_type = /obj/effect/mob_spawn/ghost_role/drone
@@ -59,7 +59,8 @@
 		MATCONTAINER_EXAMINE, \
 		allowed_items = /obj/item/stack \
 	)
-	materials.insert_amount_mat(starting_amount)
+	materials.insert_amount_mat(starting_amount, /datum/material/iron)
+	materials.insert_amount_mat(starting_amount, /datum/material/glass)
 	materials.precise_insertion = TRUE
 	using_materials = list(/datum/material/iron = iron_cost, /datum/material/glass = glass_cost)
 	REGISTER_REQUIRED_MAP_ITEM(1, 1)
@@ -136,6 +137,19 @@
 	recharge_sound = null
 	recharge_message = null
 
+// A dispenser that produces binoculars, for the MediSim shuttle.
+/obj/machinery/drone_dispenser/binoculars
+	name = "binoculars fabricator"
+	desc = "A hefty machine that periodically creates a pair of binoculars. Really, Nanotrasen? We're getting this lazy?"
+	dispense_type = /obj/item/binoculars
+	starting_amount = SHEET_MATERIAL_AMOUNT * 2.5 //Redudant
+	maximum_idle = 1
+	cooldownTime = 5 SECONDS
+	iron_cost = 0
+	glass_cost = 0
+	energy_used = 0
+	end_create_message = "dispenses a pair of binoculars."
+
 /obj/machinery/drone_dispenser/examine(mob/user)
 	. = ..()
 	var/material_requirement_string = "It needs "
@@ -155,7 +169,7 @@
 	if((machine_stat & (NOPOWER|BROKEN)) || !anchored)
 		return
 
-	if(!materials.has_materials(using_materials))
+	if((glass_cost != 0 || iron_cost != 0) && !materials.has_materials(using_materials))
 		return // We require more minerals
 
 	// We are currently in the middle of something

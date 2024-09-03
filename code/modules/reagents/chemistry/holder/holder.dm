@@ -235,6 +235,7 @@
 	var/total_removed_amount = 0
 	var/remove_amount = 0
 	var/list/cached_reagents = reagent_list
+	var/list/removed_reagents = list()
 	for(var/datum/reagent/cached_reagent as anything in cached_reagents)
 		//check for specific type or subtypes
 		if(!include_subtypes)
@@ -243,19 +244,26 @@
 		else if(!istype(cached_reagent, reagent_type))
 			continue
 
+		//reduce the volume
 		remove_amount = min(cached_reagent.volume, amount)
 		cached_reagent.volume -= remove_amount
 
-		update_total()
-		if(!safety)//So it does not handle reactions when it need not to
-			handle_reactions()
-		SEND_SIGNAL(src, COMSIG_REAGENTS_REM_REAGENT, QDELING(cached_reagent) ? reagent_type : cached_reagent, amount)
-
+		//record the changes
+		removed_reagents[cached_reagent] = remove_amount
 		total_removed_amount += remove_amount
 
 		//if we reached here means we have found our specific reagent type so break
 		if(!include_subtypes)
-			return total_removed_amount
+			break
+
+	//inform others about our reagents being removed
+	for(var/datum/reagent/removed_reagent as anything in removed_reagents)
+		SEND_SIGNAL(src, COMSIG_REAGENTS_REM_REAGENT, removed_reagent, removed_reagents[removed_reagent])
+
+	//update the holder & handle reactions
+	update_total()
+	if(!safety)
+		handle_reactions()
 
 	return round(total_removed_amount, CHEMICAL_VOLUME_ROUNDING)
 
@@ -336,26 +344,29 @@
 		stack_trace("invalid reagent path passed to convert reagent [source_reagent_typepath]")
 		return FALSE
 
-	var/reagent_amount
-	var/reagent_purity
-	var/reagent_ph
+	var/reagent_amount = 0
+	var/reagent_purity = 0
+	var/reagent_ph = 0
 	if(include_source_subtypes)
 		reagent_ph = ph
 		var/weighted_purity
 		var/list/reagent_type_list = typecacheof(source_reagent_typepath)
 		for(var/datum/reagent/reagent as anything in reagent_list)
-			if(reagent.type in reagent_type_list)
+			if(is_type_in_typecache(reagent, reagent_type_list))
 				weighted_purity += reagent.volume * reagent.purity
 				reagent_amount += reagent.volume
 				remove_reagent(reagent.type, reagent.volume * multiplier)
 		reagent_purity = weighted_purity / reagent_amount
 	else
 		var/datum/reagent/source_reagent = has_reagent(source_reagent_typepath)
-		reagent_amount = source_reagent.volume
-		reagent_purity = source_reagent.purity
-		reagent_ph = source_reagent.ph
-		remove_reagent(source_reagent_typepath, reagent_amount)
-	add_reagent(target_reagent_typepath, reagent_amount * multiplier, reagtemp = chem_temp, added_purity = reagent_purity, added_ph = reagent_ph)
+		if(istype(source_reagent))
+			reagent_amount = source_reagent.volume
+			reagent_purity = source_reagent.purity
+			reagent_ph = source_reagent.ph
+			remove_reagent(source_reagent_typepath, reagent_amount)
+
+	if(reagent_amount > 0)
+		add_reagent(target_reagent_typepath, reagent_amount * multiplier, reagtemp = chem_temp, added_purity = reagent_purity, added_ph = reagent_ph)
 
 /// Removes all reagents
 /datum/reagents/proc/clear_reagents()
@@ -432,8 +443,6 @@
 			target_holder = target.reagents
 			target_atom = target
 
-	var/cached_amount = amount
-
 	// Prevents small amount problems, as well as zero and below zero amounts.
 	amount = round(min(amount, total_volume, target_holder.maximum_volume - target_holder.total_volume), CHEMICAL_QUANTISATION_LEVEL)
 	if(amount <= 0)
@@ -469,7 +478,9 @@
 
 		if(preserve_data)
 			trans_data = copy_data(reagent)
-		if(reagent.intercept_reagents_transfer(target_holder, cached_amount))
+		if(reagent.intercept_reagents_transfer(target_holder, amount))
+			update_total()
+			target_holder.update_total()
 			continue
 		transfered_amount = target_holder.add_reagent(reagent.type, transfer_amount * multiplier, trans_data, chem_temp, reagent.purity, reagent.ph, no_react = TRUE, ignore_splitting = reagent.chemical_flags & REAGENT_DONOTSPLIT) //we only handle reaction after every reagent has been transferred.
 		if(!transfered_amount)
@@ -504,8 +515,6 @@
 		log_target.add_hiddenprint(transferred_by) //log prints so admins can figure out who touched it last.
 		log_combat(transferred_by, log_target, "transferred reagents to", my_atom, "which had [get_external_reagent_log_string(transfer_log)]")
 
-	update_total()
-	target_holder.update_total()
 	if(!no_react)
 		target_holder.handle_reactions()
 		src.handle_reactions()
@@ -603,7 +612,7 @@
 	. = 0
 
 	//responsible for removing reagents and computing total ph & volume
-	//all it's code was taken out of del_reagent() initially for efficiency purposes
+	//all its code was taken out of del_reagent() initially for efficiency purposes
 	while(chem_index <= num_reagents)
 		var/datum/reagent/reagent = cached_reagents[chem_index]
 		chem_index += 1

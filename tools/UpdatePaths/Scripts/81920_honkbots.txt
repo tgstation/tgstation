@@ -1,0 +1,1 @@
+/mob/living/simple_animal/bot/secbot/honkbot/@SUBTYPES : /mob/living/basic/bot/honkbot/@SUBTYPES{@OLD}

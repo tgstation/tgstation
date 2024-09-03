@@ -138,7 +138,7 @@
 			disabled += body_part
 		missing -= body_part.body_zone
 		for(var/obj/item/I in body_part.embedded_objects)
-			if(I.isEmbedHarmless())
+			if(I.is_embed_harmless())
 				msg += "<B>[t_He] [t_has] [icon2html(I, user)] \a [I] stuck to [t_his] [body_part.name]!</B>\n"
 			else
 				msg += "<B>[t_He] [t_has] [icon2html(I, user)] \a [I] embedded in [t_his] [body_part.name]!</B>\n"

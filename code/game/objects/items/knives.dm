@@ -21,7 +21,6 @@
 	attack_verb_simple = list("slash", "stab", "slice", "tear", "lacerate", "rip", "dice", "cut")
 	sharpness = SHARP_EDGED
 	armor_type = /datum/armor/item_knife
-	var/bayonet = FALSE //Can this be attached to a gun?
 	wound_bonus = 5
 	bare_wound_bonus = 15
 	tool_behaviour = TOOL_KNIFE
@@ -77,9 +76,8 @@
 	/// Bleed stacks applied when an organic mob target is hit
 	var/bleed_stacks_per_hit = 3
 
-/obj/item/knife/bloodletter/afterattack(atom/target, mob/user, proximity_flag, click_parameters)
-	. = ..()
-	if(!isliving(target) || !proximity_flag)
+/obj/item/knife/bloodletter/afterattack(atom/target, mob/user, click_parameters)
+	if(!isliving(target))
 		return
 	var/mob/living/M = target
 	if(!(M.mob_biotypes & MOB_ORGANIC))
@@ -126,13 +124,18 @@
 	icon_state = "buckknife"
 	worn_icon_state = "buckknife"
 	desc = "A military combat utility survival knife."
-	embedding = list("pain_mult" = 4, "embed_chance" = 65, "fall_chance" = 10, "ignore_throwspeed_threshold" = TRUE)
+	embed_type = /datum/embed_data/combat_knife
 	force = 20
 	throwforce = 20
 	attack_verb_continuous = list("slashes", "stabs", "slices", "tears", "lacerates", "rips", "cuts")
 	attack_verb_simple = list("slash", "stab", "slice", "tear", "lacerate", "rip", "cut")
-	bayonet = TRUE
 	slot_flags = ITEM_SLOT_MASK
+
+/datum/embed_data/combat_knife
+	pain_mult = 4
+	embed_chance = 65
+	fall_chance = 10
+	ignore_throwspeed_threshold = TRUE
 
 /obj/item/knife/combat/Initialize(mapload)
 	. = ..()
@@ -158,11 +161,23 @@
 	icon = 'icons/obj/weapons/stabby.dmi'
 	icon_state = "survivalknife"
 	worn_icon_state = "survivalknife"
-	embedding = list("pain_mult" = 4, "embed_chance" = 35, "fall_chance" = 10)
+	embed_type = /datum/embed_data/combat_knife/weak
 	desc = "A hunting grade survival knife."
 	force = 15
 	throwforce = 15
-	bayonet = TRUE
+
+/obj/item/knife/combat/root
+	name = "cahn'root dagger"
+	icon = 'icons/obj/weapons/stabby.dmi'
+	icon_state = "rootdagger"
+	worn_icon_state = "root_dagger"
+	lefthand_file = 'icons/mob/inhands/weapons/swords_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/weapons/swords_righthand.dmi'
+	inhand_icon_state = "rootshiv"
+	embed_type = /datum/embed_data/combat_knife/weak
+	desc = "A root dagger, deceptively sharp. Perfect to hide and stab someone with, or make a couple and throw them at enemies."
+	force = 15
+	throwforce = 15
 
 /obj/item/knife/combat/bone
 	name = "bone dagger"
@@ -173,18 +188,22 @@
 	lefthand_file = 'icons/mob/inhands/weapons/swords_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/swords_righthand.dmi'
 	desc = "A sharpened bone. The bare minimum in survival."
-	embedding = list("pain_mult" = 4, "embed_chance" = 35, "fall_chance" = 10)
+	embed_type = /datum/embed_data/combat_knife/weak
 	obj_flags = parent_type::obj_flags & ~CONDUCTS_ELECTRICITY
-	slot_flags = NONE
 	force = 15
 	throwforce = 15
 	custom_materials = null
+
+/datum/embed_data/combat_knife/weak
+	embed_chance = 35
 
 /obj/item/knife/combat/cyborg
 	name = "cyborg knife"
 	icon = 'icons/obj/items_cyborg.dmi'
 	icon_state = "knife_cyborg"
+	worn_icon_state = "knife_cyborg" //error sprite - this shouldn't have been dropped
 	desc = "A cyborg-mounted plasteel knife. Extremely sharp and durable."
+	slot_flags = NONE //you can't put this in your mouth
 
 /obj/item/knife/shiv
 	name = "glass shiv"
@@ -274,3 +293,18 @@
 /obj/item/knife/shiv/carrot/suicide_act(mob/living/carbon/user)
 	user.visible_message(span_suicide("[user] forcefully drives \the [src] into [user.p_their()] eye! It looks like [user.p_theyre()] trying to commit suicide!"))
 	return BRUTELOSS
+
+/obj/item/knife/shiv/parsnip
+	name = "parsnip shiv"
+	icon_state = "parsnipshiv"
+	inhand_icon_state = "parsnipshiv"
+	desc = "Truly putting 'snip' in the 'parsnip', and it's not sub-par either!"
+	custom_materials = null
+
+/obj/item/knife/shiv/root
+	name = "cahn'root shiv"
+	icon_state = "rootshiv"
+	inhand_icon_state = "rootshiv"
+	desc = "A root sharpened into a shiv. A root source of someone's stab wounds soon, most likely."
+	custom_materials = null
+

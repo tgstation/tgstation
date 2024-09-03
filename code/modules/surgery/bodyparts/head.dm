@@ -54,9 +54,15 @@
 	var/facial_hair_hidden = FALSE
 
 	/// Gradient styles, if any
-	var/list/gradient_styles = null
+	var/list/gradient_styles = list(
+		"None",	//Hair gradient style
+		"None",	//Facial hair gradient style
+	)
 	/// Gradient colors, if any
-	var/list/gradient_colors = null
+	var/list/gradient_colors = list(
+		COLOR_BLACK,	//Hair gradient color
+		COLOR_BLACK,	//Facial hair gradient color
+	)
 
 	/// An override color that can be cleared later, affects both hair and facial hair
 	var/override_hair_color = null
@@ -69,6 +75,9 @@
 	var/lip_color
 	///Current lipstick trait, if any (such as TRAIT_KISS_OF_DEATH)
 	var/stored_lipstick_trait
+
+	/// How many teeth the head's species has, humans have 32 so that's the default. Used for a limit to dental pill implants.
+	var/teeth_count = 32
 
 	/// Offset to apply to equipment worn on the ears
 	var/datum/worn_feature_offset/worn_ears_offset
@@ -132,7 +141,7 @@
 	if (!can_dismember)
 		return FALSE
 
-	if(owner.stat < HARD_CRIT)
+	if(!HAS_TRAIT(owner, TRAIT_CURSED) && owner.stat < HARD_CRIT)
 		return FALSE
 
 	return ..()

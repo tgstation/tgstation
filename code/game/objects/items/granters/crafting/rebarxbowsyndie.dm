@@ -1,5 +1,5 @@
 /obj/item/book/granter/crafting_recipe/dusting/rebarxbowsyndie_ammo
-	name = "SYNDICATE REBAR CROSSBOW OWNERS MANUAL"
+	name = "SYNDICATE REBAR CROSSBOW AMMO CRAFTING MANUAL"
 	desc = "This book will self destruct upon being read a second time."
 	crafting_recipe_types = list(
 		/datum/crafting_recipe/rebarsyndie

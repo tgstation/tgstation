@@ -94,7 +94,7 @@ GLOBAL_DATUM(current_anonymous_theme, /datum/anonymous_theme)
 			return
 		var/mob/living/carbon/human/human_mob = player
 		var/original_name = player.real_name //id will not be changed if you do not do this
-		randomize_human(player) //do this first so the special name can be given
+		randomize_human_normie(player) //do this first so the special name can be given
 		player.fully_replace_character_name(original_name, anonymous_name(player))
 		if(extras_enabled)
 			player_extras(player)

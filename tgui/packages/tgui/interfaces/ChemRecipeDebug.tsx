@@ -1,7 +1,4 @@
-import { BooleanLike } from 'common/react';
 import { useState } from 'react';
-
-import { useBackend } from '../backend';
 import {
   Box,
   Button,
@@ -11,7 +8,10 @@ import {
   Section,
   Stack,
   Tabs,
-} from '../components';
+} from 'tgui-core/components';
+import { BooleanLike } from 'tgui-core/react';
+
+import { useBackend } from '../backend';
 import { Window } from '../layouts';
 import { ActiveReaction, ReactionDisplay } from './ChemHeater';
 import { Beaker, BeakerSectionDisplay } from './common/BeakerDisplay';

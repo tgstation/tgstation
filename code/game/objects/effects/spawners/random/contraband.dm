@@ -25,6 +25,12 @@
 		/obj/item/reagent_containers/pill/maintenance = 5,
 	)
 
+
+/obj/effect/spawner/random/contraband/make_item(spawn_loc, type_path_to_make)
+	var/obj/item/made = ..()
+	ADD_TRAIT(made, TRAIT_CONTRABAND, INNATE_TRAIT)
+	return made
+
 /obj/effect/spawner/random/contraband/plus
 	name = "contraband loot spawner plus"
 	desc = "Where'd ya find this?"
@@ -139,6 +145,13 @@
 		/obj/effect/mine/explosive = 2,
 		/obj/item/restraints/legcuffs/beartrap/prearmed = 5, //not really a landmine, but still a good threat
 		/obj/effect/mine/shrapnel = 5,
+	)
+
+/obj/effect/spawner/random/contraband/qm_rocket
+	name = "QMs dud rocket spawner"
+	loot = list(
+		/obj/item/ammo_casing/rocket/reverse = 85,
+		/obj/item/ammo_casing/rocket = 15,
 	)
 
 /obj/effect/spawner/random/contraband/grenades

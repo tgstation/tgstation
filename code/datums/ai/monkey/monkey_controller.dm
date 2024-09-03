@@ -80,7 +80,7 @@ have ways of interacting with a specific mob and control it.
 		living_pawn.AddElement(/datum/element/relay_attackers)
 	RegisterSignal(new_pawn, COMSIG_ATOM_WAS_ATTACKED, PROC_REF(on_attacked))
 	RegisterSignal(new_pawn, COMSIG_LIVING_START_PULL, PROC_REF(on_startpulling))
-	RegisterSignal(new_pawn, COMSIG_LIVING_TRY_SYRINGE, PROC_REF(on_try_syringe))
+	RegisterSignals(new_pawn, list(COMSIG_LIVING_TRY_SYRINGE_INJECT, COMSIG_LIVING_TRY_SYRINGE_WITHDRAW), PROC_REF(on_try_syringe))
 	RegisterSignal(new_pawn, COMSIG_CARBON_CUFF_ATTEMPTED, PROC_REF(on_attempt_cuff))
 	RegisterSignal(new_pawn, COMSIG_MOB_MOVESPEED_UPDATED, PROC_REF(update_movespeed))
 
@@ -92,7 +92,8 @@ have ways of interacting with a specific mob and control it.
 	UnregisterSignal(pawn, list(
 		COMSIG_ATOM_WAS_ATTACKED,
 		COMSIG_LIVING_START_PULL,
-		COMSIG_LIVING_TRY_SYRINGE,
+		COMSIG_LIVING_TRY_SYRINGE_INJECT,
+		COMSIG_LIVING_TRY_SYRINGE_WITHDRAW,
 		COMSIG_CARBON_CUFF_ATTEMPTED,
 		COMSIG_MOB_MOVESPEED_UPDATED,
 	))
@@ -133,7 +134,7 @@ have ways of interacting with a specific mob and control it.
 	for(var/obj/item/item in oview(2, living_pawn))
 		nearby_items += item
 
-	for(var/obj/item/item in living_pawn.held_items) // If we've got some garbage in out hands thats going to stop us from effectivly attacking, we should get rid of it.
+	for(var/obj/item/item in living_pawn.held_items) // If we've got some garbage in out hands that's going to stop us from effectively attacking, we should get rid of it.
 		if(item.force < 2)
 			living_pawn.dropItemToGround(item)
 
@@ -150,7 +151,7 @@ have ways of interacting with a specific mob and control it.
 	if(!weapon || (weapon in living_pawn.held_items))
 		return FALSE
 
-	if(weapon.force < 2) // our bite does 2 damage on avarage, no point in settling for anything less
+	if(weapon.force < 2) // our bite does 2 damage on average, no point in settling for anything less
 		return FALSE
 
 	set_blackboard_key(BB_MONKEY_PICKUPTARGET, weapon)

@@ -20,7 +20,7 @@
 	savefile_identifier = PREFERENCE_CHARACTER
 	category = PREFERENCE_CATEGORY_SECONDARY_FEATURES
 	can_randomize = FALSE
-	relevant_mutant_bodypart = "ears"
+	relevant_external_organ = /obj/item/organ/internal/ears/cat
 
 /datum/preference/choiced/ears/init_possible_values()
 	return assoc_to_keys_features(SSaccessories.ears_list)
@@ -29,5 +29,4 @@
 	target.dna.features["ears"] = value
 
 /datum/preference/choiced/ears/create_default_value()
-	var/datum/sprite_accessory/ears/cat/ears = /datum/sprite_accessory/ears/cat
-	return initial(ears.name)
+	return /datum/sprite_accessory/ears/cat::name

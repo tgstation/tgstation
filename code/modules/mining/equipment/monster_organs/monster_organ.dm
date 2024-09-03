@@ -8,24 +8,21 @@
 	desc = "Inject certain types of monster organs with this stabilizer to prevent their rapid decay."
 	w_class = WEIGHT_CLASS_TINY
 
-/obj/item/mining_stabilizer/afterattack(obj/item/organ/target_organ, mob/user, proximity)
-	. = ..()
-	if (!proximity)
-		return
-	. |= AFTERATTACK_PROCESSED_ITEM
-
-	var/obj/item/organ/internal/monster_core/target_core = target_organ
-	if (!istype(target_core, /obj/item/organ/internal/monster_core))
+/obj/item/mining_stabilizer/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
+	if(!isorgan(interacting_with))
+		return NONE
+	var/obj/item/organ/internal/monster_core/target_core = interacting_with
+	if (!istype(target_core))
 		balloon_alert(user, "invalid target!")
-		return .
+		return ITEM_INTERACT_BLOCKING
 
 	if (!target_core.preserve())
 		balloon_alert(user, "organ decayed!")
-		return .
+		return ITEM_INTERACT_BLOCKING
 
 	balloon_alert(user, "organ stabilized")
 	qdel(src)
-	return .
+	return ITEM_INTERACT_SUCCESS
 
 /**
  * Useful organs which drop as loot from a mining creature.
@@ -39,7 +36,7 @@
 	icon = 'icons/obj/medical/organs/mining_organs.dmi'
 	icon_state = "hivelord_core"
 	actions_types = list(/datum/action/cooldown/monster_core_action)
-	visual = FALSE
+
 	item_flags = NOBLUDGEON
 	slot = ORGAN_SLOT_MONSTER_CORE
 	organ_flags = ORGAN_ORGANIC
@@ -69,10 +66,9 @@
 	deltimer(decay_timer)
 	return ..()
 
-/obj/item/organ/internal/monster_core/Insert(mob/living/carbon/target_carbon, special = FALSE, movement_flags)
+/obj/item/organ/internal/monster_core/mob_insert(mob/living/carbon/target_carbon, special = FALSE, movement_flags)
 	. = ..()
-	if(!.)
-		return
+
 	if (inert)
 		to_chat(target_carbon, span_notice("[src] breaks down as you try to insert it."))
 		qdel(src)
@@ -83,7 +79,7 @@
 	target_carbon.visible_message(span_notice("[src] stabilizes as it's inserted."))
 	return TRUE
 
-/obj/item/organ/internal/monster_core/Remove(mob/living/carbon/target_carbon, special, movement_flags)
+/obj/item/organ/internal/monster_core/mob_remove(mob/living/carbon/target_carbon, special, movement_flags)
 	if (!inert && !special)
 		owner.visible_message(span_notice("[src] rapidly decays as it's removed."))
 		go_inert()
@@ -135,12 +131,9 @@
 	icon_state = initial(icon_state)
 	return ..()
 
-/obj/item/organ/internal/monster_core/afterattack(atom/target, mob/user, proximity_flag)
-	. = ..()
-	if (!proximity_flag)
-		return
-	try_apply(target, user)
-	return . | AFTERATTACK_PROCESSED_ITEM
+/obj/item/organ/internal/monster_core/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
+	try_apply(interacting_with, user)
+	return ITEM_INTERACT_SUCCESS
 
 /obj/item/organ/internal/monster_core/attack_self(mob/user)
 	if (!user.can_perform_action(src, FORBID_TELEKINESIS_REACH|ALLOW_RESTING))

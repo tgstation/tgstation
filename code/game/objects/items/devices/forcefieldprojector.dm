@@ -21,41 +21,42 @@
 	/// Checks to make sure the projector isn't busy with making another forcefield.
 	var/force_proj_busy = FALSE
 
-/obj/item/forcefield_projector/afterattack(atom/target, mob/user, proximity_flag)
-	. = ..()
-	if(!check_allowed_items(target, not_inside = TRUE))
-		return
-	. |= AFTERATTACK_PROCESSED_ITEM
-	if(istype(target, /obj/structure/projected_forcefield))
-		var/obj/structure/projected_forcefield/F = target
+/obj/item/forcefield_projector/ranged_interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
+	return interact_with_atom(interacting_with, user, modifiers)
+
+/obj/item/forcefield_projector/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
+	if(!check_allowed_items(interacting_with, not_inside = TRUE))
+		return NONE
+	if(istype(interacting_with, /obj/structure/projected_forcefield))
+		var/obj/structure/projected_forcefield/F = interacting_with
 		if(F.generator == src)
 			to_chat(user, span_notice("You deactivate [F]."))
 			qdel(F)
-			return
-	var/turf/T = get_turf(target)
+			return ITEM_INTERACT_BLOCKING
+	var/turf/T = get_turf(interacting_with)
 	var/obj/structure/projected_forcefield/found_field = locate() in T
 	if(found_field)
 		to_chat(user, span_warning("There is already a forcefield in that location!"))
-		return
+		return ITEM_INTERACT_BLOCKING
 	if(T.density)
-		return
+		return ITEM_INTERACT_BLOCKING
 	if(get_dist(T,src) > field_distance_limit)
-		return
-	if (get_turf(src) == T)
+		return ITEM_INTERACT_BLOCKING
+	if(get_turf(src) == T)
 		to_chat(user, span_warning("Target is too close, aborting!"))
-		return
+		return ITEM_INTERACT_BLOCKING
 	if(LAZYLEN(current_fields) >= max_fields)
 		to_chat(user, span_warning("[src] cannot sustain any more forcefields!"))
-		return
+		return ITEM_INTERACT_BLOCKING
 	if(force_proj_busy)
 		to_chat(user, span_notice("[src] is busy creating a forcefield."))
-		return
+		return ITEM_INTERACT_BLOCKING
 	playsound(loc, 'sound/machines/click.ogg', 20, TRUE)
 	if(creation_time)
 		force_proj_busy = TRUE
-		if(!do_after(user, creation_time, target = target))
+		if(!do_after(user, creation_time, target = interacting_with))
 			force_proj_busy = FALSE
-			return
+			return ITEM_INTERACT_BLOCKING
 		force_proj_busy = FALSE
 
 	playsound(src,'sound/weapons/resonator_fire.ogg',50,TRUE)
@@ -63,6 +64,7 @@
 	var/obj/structure/projected_forcefield/F = new(T, src)
 	current_fields += F
 	user.changeNext_move(CLICK_CD_MELEE)
+	return ITEM_INTERACT_SUCCESS
 
 /obj/item/forcefield_projector/attack_self(mob/user)
 	if(LAZYLEN(current_fields))

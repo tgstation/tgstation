@@ -7,7 +7,7 @@
 	name = "elite"
 	desc = "An elite monster, found in one of the strange tumors on lavaland."
 	icon = 'icons/mob/simple/lavaland/lavaland_elites.dmi'
-	faction = list(FACTION_BOSS)
+	faction = list(FACTION_MINING, FACTION_BOSS)
 	robust_searching = TRUE
 	ranged_ignores_vision = TRUE
 	ranged = TRUE
@@ -272,8 +272,8 @@ While using this makes the system rely on OnFire, it still gives options for tim
 			var/obj/effect/temp_visual/heal/H = new /obj/effect/temp_visual/heal(get_turf(mychild))
 			H.color = COLOR_RED
 
-/obj/structure/elite_tumor/attackby(obj/item/attacking_item, mob/user, params)
-	. = ..()
+/obj/structure/elite_tumor/item_interaction(mob/living/user, obj/item/attacking_item, list/modifiers)
+	. = NONE
 	if(istype(attacking_item, /obj/item/organ/internal/monster_core/regenerative_core) && activity == TUMOR_INACTIVE && !boosted)
 		var/obj/item/organ/internal/monster_core/regenerative_core/core = attacking_item
 		visible_message(span_boldwarning("As [user] drops the core into [src], [src] appears to swell."))
@@ -282,7 +282,7 @@ While using this makes the system rely on OnFire, it still gives options for tim
 		set_light_range(6)
 		desc = "[desc]  This one seems to glow with a strong intensity."
 		qdel(core)
-		return TRUE
+		return ITEM_INTERACT_SUCCESS
 
 /obj/structure/elite_tumor/proc/arena_checks()
 	if(activity != TUMOR_ACTIVE || QDELETED(src))
@@ -368,26 +368,26 @@ While using this makes the system rely on OnFire, it still gives options for tim
 	throw_speed = 3
 	throw_range = 5
 
-/obj/item/tumor_shard/afterattack(atom/target, mob/user, proximity_flag)
-	. = ..()
-	if(istype(target, /mob/living/simple_animal/hostile/asteroid/elite) && proximity_flag)
-		var/mob/living/simple_animal/hostile/asteroid/elite/E = target
-		if(E.stat != DEAD || E.sentience_type != SENTIENCE_BOSS || !E.key)
-			user.visible_message(span_notice("It appears [E] is unable to be revived right now.  Perhaps try again later."))
-			return
-		E.faction = list("[REF(user)]")
-		E.revive(HEAL_ALL)
-		user.visible_message(span_notice("[user] stabs [E] with [src], reviving it."))
-		E.playsound_local(get_turf(E), 'sound/effects/magic.ogg', 40, 0)
-		to_chat(E, "<span class='userdanger'>You have been revived by [user]. While you can't speak to them, you owe [user] a great debt.  Assist [user.p_them()] in achieving [user.p_their()] goals, regardless of risk.</span>")
-		to_chat(E, "<span class='big bold'>Note that you now share the loyalties of [user].  You are expected not to intentionally sabotage their faction unless commanded to!</span>")
-		E.maxHealth = E.maxHealth * 0.4
-		E.health = E.maxHealth
-		E.desc = "[E.desc] However, this one appears to be less wild in nature, and calmer around people."
-		E.sentience_type = SENTIENCE_ORGANIC
-		qdel(src)
-	else
-		to_chat(user, span_info("[src] only works on the corpse of a sentient lavaland elite."))
+/obj/item/tumor_shard/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
+	if(!istype(interacting_with, /mob/living/simple_animal/hostile/asteroid/elite))
+		return NONE
+
+	var/mob/living/simple_animal/hostile/asteroid/elite/E = interacting_with
+	if(E.stat != DEAD || E.sentience_type != SENTIENCE_BOSS || !E.key)
+		user.visible_message(span_notice("It appears [E] is unable to be revived right now. Perhaps try again later."))
+		return ITEM_INTERACT_BLOCKING
+	E.faction = list("[REF(user)]")
+	E.revive(HEAL_ALL)
+	user.visible_message(span_notice("[user] stabs [E] with [src], reviving it."))
+	E.playsound_local(get_turf(E), 'sound/effects/magic.ogg', 40, 0)
+	to_chat(E, "<span class='userdanger'>You have been revived by [user]. While you can't speak to them, you owe [user] a great debt.  Assist [user.p_them()] in achieving [user.p_their()] goals, regardless of risk.</span>")
+	to_chat(E, "<span class='big bold'>Note that you now share the loyalties of [user].  You are expected not to intentionally sabotage their faction unless commanded to!</span>")
+	E.maxHealth = E.maxHealth * 0.4
+	E.health = E.maxHealth
+	E.desc = "[E.desc] However, this one appears to be less wild in nature, and calmer around people."
+	E.sentience_type = SENTIENCE_ORGANIC
+	qdel(src)
+	return ITEM_INTERACT_SUCCESS
 
 /obj/effect/temp_visual/elite_tumor_wall
 	name = "magic wall"
@@ -408,12 +408,12 @@ While using this makes the system rely on OnFire, it still gives options for tim
 
 /obj/effect/temp_visual/elite_tumor_wall/Initialize(mapload, new_caster)
 	. = ..()
-	if(smoothing_flags & (SMOOTH_CORNERS|SMOOTH_BITMASK))
+	if(smoothing_flags & USES_SMOOTHING)
 		QUEUE_SMOOTH_NEIGHBORS(src)
 		QUEUE_SMOOTH(src)
 
 /obj/effect/temp_visual/elite_tumor_wall/Destroy()
-	if(smoothing_flags & (SMOOTH_CORNERS|SMOOTH_BITMASK))
+	if(smoothing_flags & USES_SMOOTHING)
 		QUEUE_SMOOTH_NEIGHBORS(src)
 	return ..()
 

@@ -137,12 +137,12 @@
 	return 0
 
 /obj/item/proc/get_volume_by_throwforce_and_or_w_class()
-		if(throwforce && w_class)
-				return clamp((throwforce + w_class) * 5, 30, 100)// Add the item's throwforce to its weight class and multiply by 5, then clamp the value between 30 and 100
-		else if(w_class)
-				return clamp(w_class * 8, 20, 100) // Multiply the item's weight class by 8, then clamp the value between 20 and 100
-		else
-				return 0
+	if(throwforce && w_class)
+		return clamp((throwforce + w_class) * 5, 30, 100)// Add the item's throwforce to its weight class and multiply by 5, then clamp the value between 30 and 100
+	else if(w_class)
+		return clamp(w_class * 8, 20, 100) // Multiply the item's weight class by 8, then clamp the value between 20 and 100
+	else
+		return 0
 
 /mob/living/proc/set_combat_mode(new_mode, silent = TRUE)
 	if(combat_mode == new_mode)
@@ -254,22 +254,23 @@
 /mob/living/proc/grabbedby(mob/living/user, supress_message = FALSE)
 	if(user == src || anchored || !isturf(user.loc))
 		return FALSE
+
 	if(!user.pulling || user.pulling != src)
 		user.start_pulling(src, supress_message = supress_message)
 		return
-	// This line arbitrarily prevents any non-carbon from upgrading grabs
-	if(!iscarbon(user))
-		return
+
 	if(!(status_flags & CANPUSH) || HAS_TRAIT(src, TRAIT_PUSHIMMUNE))
 		to_chat(user, span_warning("[src] can't be grabbed more aggressively!"))
 		return FALSE
+
 	if(user.grab_state >= GRAB_AGGRESSIVE && HAS_TRAIT(user, TRAIT_PACIFISM))
 		to_chat(user, span_warning("You don't want to risk hurting [src]!"))
 		return FALSE
+
 	grippedby(user)
 
 //proc to upgrade a simple pull into a more aggressive grab.
-/mob/living/proc/grippedby(mob/living/carbon/user, instant = FALSE)
+/mob/living/proc/grippedby(mob/living/user, instant = FALSE)
 	if(user.grab_state >= user.max_grab)
 		return
 	user.changeNext_move(CLICK_CD_GRABBING)
@@ -410,7 +411,7 @@
 
 	if(!user.get_bodypart(BODY_ZONE_HEAD))
 		return FALSE
-	if(user.is_muzzled() || user.is_mouth_covered(ITEM_SLOT_MASK))
+	if(user.is_mouth_covered(ITEM_SLOT_MASK))
 		to_chat(user, span_warning("You can't bite with your mouth covered!"))
 		return FALSE
 
@@ -658,7 +659,7 @@
 		playsound(target, 'sound/effects/glassbash.ogg', 50, TRUE, -1)
 	else
 		do_attack_animation(target, ATTACK_EFFECT_DISARM)
-		playsound(target, 'sound/weapons/thudswoosh.ogg', 50, TRUE, -1)
+		playsound(target, 'sound/weapons/shove.ogg', 50, TRUE, -1)
 	if (ishuman(target) && isnull(weapon))
 		var/mob/living/carbon/human/human_target = target
 		human_target.w_uniform?.add_fingerprint(src)
@@ -699,6 +700,7 @@
 			return
 		if((shove_flags & SHOVE_BLOCKED) && !(shove_flags & (SHOVE_KNOCKDOWN_BLOCKED|SHOVE_CAN_KICK_SIDE)))
 			target.Knockdown(SHOVE_KNOCKDOWN_SOLID)
+			target.apply_status_effect(/datum/status_effect/next_shove_stuns)
 			target.visible_message(span_danger("[name] shoves [target.name], knocking [target.p_them()] down!"),
 				span_userdanger("You're knocked down from a shove by [name]!"), span_hear("You hear aggressive shuffling followed by a loud thud!"), COMBAT_MESSAGE_RANGE, src)
 			to_chat(src, span_danger("You shove [target.name], knocking [target.p_them()] down!"))
@@ -707,6 +709,7 @@
 
 	if(shove_flags & SHOVE_CAN_KICK_SIDE) //KICK HIM IN THE NUTS
 		target.Paralyze(SHOVE_CHAIN_PARALYZE)
+		target.apply_status_effect(/datum/status_effect/no_side_kick)
 		target.visible_message(span_danger("[name] kicks [target.name] onto [target.p_their()] side!"),
 						span_userdanger("You're kicked onto your side by [name]!"), span_hear("You hear aggressive shuffling followed by a loud thud!"), COMBAT_MESSAGE_RANGE, src)
 		to_chat(src, span_danger("You kick [target.name] onto [target.p_their()] side!"))
@@ -719,10 +722,8 @@
 	//Take their lunch money
 	var/target_held_item = target.get_active_held_item()
 	var/append_message = weapon ? " with [weapon]" : ""
-	if(!is_type_in_typecache(target_held_item, GLOB.shove_disarming_types)) //It's too expensive we'll get caught
-		target_held_item = null
-
-	if(target_held_item && target.get_timed_status_effect_duration(/datum/status_effect/staggered))
+	// If it's in our typecache, they're staggered and it exists, disarm. If they're knocked down, disarm too.
+	if(target_held_item && target.get_timed_status_effect_duration(/datum/status_effect/staggered) && is_type_in_typecache(target_held_item, GLOB.shove_disarming_types) || target_held_item && target.body_position == LYING_DOWN)
 		target.dropItemToGround(target_held_item)
 		append_message = "causing [target.p_them()] to drop [target_held_item]"
 		target.visible_message(span_danger("[target.name] drops \the [target_held_item]!"),

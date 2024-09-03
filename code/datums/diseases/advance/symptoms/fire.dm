@@ -2,7 +2,7 @@
  * Slightly hidden.
  * Lowers resistance tremendously.
  * Decreases stage speed tremendously.
- * Decreases transmittablity tremendously.
+ * Decreases transmittability tremendously.
  * Fatal level
  * Bonus: Ignites infected mob.
  */
@@ -65,7 +65,7 @@
 				warn_mob(living_mob)
 
 			if(infective)
-				A.spread(advanced_stage ? 4 : 2)
+				A.airborne_spread(advanced_stage ? 4 : 2)
 
 /datum/symptom/fire/proc/warn_mob(mob/living/living_mob)
 	if(prob(33.33))

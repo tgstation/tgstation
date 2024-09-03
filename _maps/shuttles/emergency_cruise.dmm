@@ -130,7 +130,13 @@
 /obj/effect/turf_decal/trimline/blue/mid_joiner{
 	dir = 4
 	},
-/mob/living/basic/bot/medbot/stationary,
+/mob/living/basic/bot/medbot/stationary{
+	damage_type_healer = "all_damage";
+	heal_amount = 5;
+	heal_threshold = 0;
+	skin = "advanced";
+	name = "Doctor Rumack"
+	},
 /turf/open/floor/iron/white/smooth_large,
 /area/shuttle/escape)
 "dw" = (
@@ -402,7 +408,7 @@
 /turf/closed/wall/mineral/titanium,
 /area/shuttle/escape)
 "jy" = (
-/obj/machinery/sleeper{
+/obj/machinery/sleeper/syndie/fullupgrade/nt{
 	dir = 8
 	},
 /turf/open/floor/iron/dark/small,
@@ -531,13 +537,19 @@
 /obj/effect/turf_decal/trimline/blue/mid_joiner{
 	dir = 1
 	},
-/obj/structure/window/reinforced/spawner/directional/west,
 /obj/structure/window/reinforced/spawner/directional/south,
 /obj/structure/table/reinforced,
+/obj/item/surgery_tray/full/advanced,
 /obj/item/book/manual/wiki/surgery,
 /obj/item/stack/medical/mesh/advanced,
 /obj/item/stack/medical/gauze/twelve,
 /obj/item/stack/medical/suture/medicated,
+/obj/structure/window/reinforced/spawner/directional/west,
+/obj/item/defibrillator/compact/combat/loaded/nanotrasen{
+	combat = 0;
+	safety = 1
+	},
+/obj/item/healthanalyzer/advanced,
 /turf/open/floor/iron/white/smooth_large,
 /area/shuttle/escape)
 "lw" = (
@@ -845,7 +857,6 @@
 "sz" = (
 /obj/machinery/shuttle_manipulator{
 	desc = "A holographic display of the cruise shuttle we're on right now.";
-	layer = 2.7;
 	max_integrity = 99999;
 	name = "shuttle holographic display"
 	},
@@ -1266,6 +1277,10 @@
 	pixel_x = 6;
 	pixel_y = 10
 	},
+/obj/item/storage/pill_bottle/mannitol{
+	pixel_x = -7;
+	pixel_y = 3
+	},
 /turf/open/floor/iron/white,
 /area/shuttle/escape)
 "Bd" = (
@@ -1329,7 +1344,6 @@
 	density = 1;
 	icon = 'icons/obj/machines/shuttle_manipulator.dmi';
 	icon_state = "hologram_on";
-	layer = 2.8;
 	light_color = "#2cb2e8";
 	light_range = 2;
 	max_integrity = 7500;
@@ -1342,7 +1356,6 @@
 	desc = "This is the shuttle we're on. It's amazing what Nanotrasen can do once they actually put more than ten seconds of effort into their projects.";
 	icon = 'icons/obj/machines/shuttle_manipulator.dmi';
 	icon_state = "hologram_whiteship";
-	layer = 4;
 	light_color = "#2cb2e8";
 	light_range = 7;
 	max_integrity = 75000;
@@ -1371,7 +1384,9 @@
 /turf/template_noop,
 /area/shuttle/escape)
 "Cr" = (
-/obj/machinery/atmospherics/components/unary/thermomachine/freezer,
+/obj/machinery/atmospherics/components/unary/thermomachine/freezer{
+	dir = 4
+	},
 /turf/open/floor/iron/dark/small,
 /area/shuttle/escape)
 "Cu" = (
@@ -1433,8 +1448,8 @@
 	dir = 1
 	},
 /obj/effect/turf_decal/trimline/blue/filled/line,
-/obj/structure/window/reinforced/spawner/directional/west,
 /obj/machinery/computer/operating,
+/obj/structure/window/reinforced/spawner/directional/west,
 /turf/open/floor/iron/white,
 /area/shuttle/escape)
 "DV" = (
@@ -1630,7 +1645,7 @@
 /turf/open/floor/carpet/executive,
 /area/shuttle/escape)
 "Jl" = (
-/mob/living/simple_animal/bot/vibebot,
+/mob/living/basic/bot/vibebot,
 /turf/open/floor/iron,
 /area/shuttle/escape)
 "Jo" = (
@@ -1760,7 +1775,7 @@
 	dir = 1
 	},
 /obj/effect/turf_decal/trimline/blue/filled/line,
-/obj/machinery/medical_kiosk,
+/obj/machinery/stasis,
 /turf/open/floor/iron/white,
 /area/shuttle/escape)
 "LU" = (
@@ -1784,9 +1799,9 @@
 /obj/effect/turf_decal/trimline/blue/mid_joiner{
 	dir = 8
 	},
-/obj/structure/window/reinforced/spawner/directional/west,
 /obj/machinery/iv_drip,
 /obj/item/reagent_containers/blood/o_minus,
+/obj/structure/window/reinforced/spawner/directional/west,
 /turf/open/floor/iron/white/smooth_large,
 /area/shuttle/escape)
 "Mt" = (
@@ -3186,9 +3201,9 @@ jt
 ij
 ij
 jt
-Jl
 qt
 Jl
+qt
 jt
 rG
 Um

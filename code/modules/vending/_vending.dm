@@ -271,7 +271,7 @@ GLOBAL_LIST_EMPTY(vending_machines_to_restock)
 				 */
 				var/max_amount = rand(CEILING(product_record.amount * 0.5, 1), product_record.amount)
 				product_record.amount = rand(0, max_amount)
-				credits_contained += rand(0, 1) //randomly add a few credits to the machine to make it look like it's been used, proportional to the amount missing.
+				credits_contained += rand(1, 5) //randomly add a few credits to the machine to make it look like it's been used, proportional to the amount missing.
 			if(tiltable && prob(6)) // 1 in 17 chance to start tilted (as an additional hint to the station trait behind it)
 				INVOKE_ASYNC(src, PROC_REF(tilt), loc)
 				credits_contained = 0 // If it's tilted, it's been looted, so no credits for you.
@@ -283,7 +283,6 @@ GLOBAL_LIST_EMPTY(vending_machines_to_restock)
 	register_context()
 
 /obj/machinery/vending/Destroy()
-	QDEL_NULL(wires)
 	QDEL_NULL(coin)
 	QDEL_NULL(bill)
 	QDEL_NULL(sec_radio)
@@ -397,7 +396,7 @@ GLOBAL_LIST_EMPTY(vending_machines_to_restock)
 				return
 
 /**
- * Build the inventory of the vending machine from it's product and record lists
+ * Build the inventory of the vending machine from its product and record lists
  *
  * This builds up a full set of /datum/data/vending_products from the product list of the vending machine type
  * Arguments:
@@ -832,8 +831,8 @@ GLOBAL_LIST_EMPTY(vending_machines_to_restock)
  * Args:
  * * turf/target: The turf to fall onto. Cannot be null.
  * * damage: The raw numerical damage to do by default.
- * * chance_to_crit: The percent chance of a critical hit occuring. Default: 0
- * * forced_crit_case: If given a value from crushing.dm, [target] and it's contents will always be hit with that specific critical hit. Default: null
+ * * chance_to_crit: The percent chance of a critical hit occurring. Default: 0
+ * * forced_crit_case: If given a value from crushing.dm, [target] and its contents will always be hit with that specific critical hit. Default: null
  * * paralyze_time: The time, in deciseconds, a given mob/living will be paralyzed for if crushed.
  * * crush_dir: The direction the crush is coming from. Default: dir of src to [target].
  * * damage_type: The type of damage to do. Default: BRUTE
@@ -1074,11 +1073,9 @@ GLOBAL_LIST_EMPTY(vending_machines_to_restock)
 			var/mob/living/carbon/carbon_target = atom_target
 			for(var/i in 1 to num_shards)
 				var/obj/item/shard/shard = new /obj/item/shard(get_turf(carbon_target))
-				shard.embedding = list(embed_chance = 100, ignore_throwspeed_threshold = TRUE, impact_pain_mult = 1, pain_chance = 5)
-				shard.updateEmbedding()
+				shard.set_embed(/datum/embed_data/glass_candy)
 				carbon_target.hitby(shard, skipcatch = TRUE, hitpush = FALSE)
-				shard.embedding = list()
-				shard.updateEmbedding()
+				shard.set_embed(initial(shard.embed_type))
 			return TRUE
 		if (VENDOR_CRUSH_CRIT_PIN) // pin them beneath the machine until someone untilts it
 			if (!isliving(atom_target))
@@ -1187,16 +1184,18 @@ GLOBAL_LIST_EMPTY(vending_machines_to_restock)
 	return TRUE
 
 /obj/machinery/vending/interact(mob/user)
-	if (!HAS_AI_ACCESS(user))
-		if(seconds_electrified && !(machine_stat & NOPOWER))
-			if(shock(user, 100))
-				return
+	if (HAS_AI_ACCESS(user))
+		return ..()
 
-		if(tilted && !user.buckled && !isAdminGhostAI(user))
-			to_chat(user, span_notice("You begin righting [src]."))
-			if(do_after(user, 5 SECONDS, target=src))
-				untilt(user)
+	if(seconds_electrified && !(machine_stat & NOPOWER))
+		if(shock(user, 100))
 			return
+
+	if(tilted && !user.buckled)
+		to_chat(user, span_notice("You begin righting [src]."))
+		if(do_after(user, 5 SECONDS, target=src))
+			untilt(user)
+		return
 
 	return ..()
 
@@ -1259,6 +1258,15 @@ GLOBAL_LIST_EMPTY(vending_machines_to_restock)
 			ref = REF(record),
 		)
 
+		var/atom/printed = record.product_path
+		// If it's not GAGS and has no innate colors we have to care about, we use DMIcon
+		if(ispath(printed, /atom) \
+			&& (!initial(printed.greyscale_config) || !initial(printed.greyscale_colors)) \
+			&& !initial(printed.color) \
+		)
+			static_record["icon"] = initial(printed.icon)
+			static_record["icon_state"] = initial(printed.icon_state)
+
 		var/list/category = record.category || default_category
 		if (!isnull(category))
 			if (!(category["name"] in categories))
@@ -1311,7 +1319,7 @@ GLOBAL_LIST_EMPTY(vending_machines_to_restock)
 
 	.["extended_inventory"] = extended_inventory
 
-/obj/machinery/vending/ui_act(action, params)
+/obj/machinery/vending/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if(.)
 		return
@@ -1447,6 +1455,8 @@ GLOBAL_LIST_EMPTY(vending_machines_to_restock)
 	var/obj/item/vended_item
 	if(!LAZYLEN(item_record.returned_products)) //always give out free returned stuff first, e.g. to avoid walling a traitor objective in a bag behind paid items
 		vended_item = new item_record.product_path(get_turf(src))
+		if(vended_item.type in contraband)
+			ADD_TRAIT(vended_item, TRAIT_CONTRABAND, INNATE_TRAIT)
 		on_dispense(vended_item)
 	else
 		vended_item = LAZYACCESS(item_record.returned_products, LAZYLEN(item_record.returned_products)) //first in, last out
@@ -1652,6 +1662,7 @@ GLOBAL_LIST_EMPTY(vending_machines_to_restock)
 		return
 	var/credits_to_remove = min(CREDITS_DUMP_THRESHOLD, round(credits_contained))
 	var/obj/item/holochip/holochip = new(loc, credits_to_remove)
+	playsound(src, 'sound/effects/cashregister.ogg', 40, TRUE)
 	credits_contained = max(0, credits_contained - credits_to_remove)
 	SSblackbox.record_feedback("amount", "vending machine looted", holochip.credits)
 
@@ -1757,7 +1768,7 @@ GLOBAL_LIST_EMPTY(vending_machines_to_restock)
 			)
 			.["vending_machine_input"] += list(data)
 
-/obj/machinery/vending/custom/ui_act(action, params)
+/obj/machinery/vending/custom/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if(.)
 		return
@@ -1777,7 +1788,7 @@ GLOBAL_LIST_EMPTY(vending_machines_to_restock)
 			speak("\The [src] has been linked to [card_used].")
 
 	if(compartmentLoadAccessCheck(user))
-		if(istype(attack_item, /obj/item/pen))
+		if(IS_WRITING_UTENSIL(attack_item))
 			name = tgui_input_text(user, "Set name", "Name", name, 20)
 			desc = tgui_input_text(user, "Set description", "Description", desc, 60)
 			slogan_list += tgui_input_text(user, "Set slogan", "Slogan", "Epic", 60)

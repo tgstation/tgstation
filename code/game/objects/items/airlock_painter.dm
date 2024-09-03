@@ -219,20 +219,17 @@
 	. = ..()
 	stored_custom_color = stored_color
 
-/obj/item/airlock_painter/decal/afterattack(atom/target, mob/user, proximity)
-	. = ..()
-	if(!proximity)
-		balloon_alert(user, "get closer!")
-		return
-
-	if(isfloorturf(target) && use_paint(user))
-		paint_floor(target)
+/obj/item/airlock_painter/decal/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
+	if(isfloorturf(interacting_with) && use_paint(user))
+		paint_floor(interacting_with)
+		return ITEM_INTERACT_SUCCESS
+	return NONE
 
 /**
  * Actually add current decal to the floor.
  *
  * Responsible for actually adding the element to the turf for maximum flexibility.area
- * Can be overriden for different decal behaviors.
+ * Can be overridden for different decal behaviors.
  * Arguments:
  * * target - The turf being painted to
 */
@@ -301,7 +298,7 @@
 	.["current_dir"] = stored_dir
 	.["current_custom_color"] = stored_custom_color
 
-/obj/item/airlock_painter/decal/ui_act(action, list/params)
+/obj/item/airlock_painter/decal/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if(.)
 		return

@@ -57,15 +57,30 @@
 	return if_no_id
 
 //repurposed proc. Now it combines get_id_name() and get_face_name() to determine a mob's name variable. Made into a separate proc as it'll be useful elsewhere
-/mob/living/carbon/human/get_visible_name(add_id_name = TRUE)
-	if(HAS_TRAIT(src, TRAIT_UNKNOWN))
-		return "Unknown"
-	var/list/identity = list(null, null)
+/mob/living/carbon/human/get_visible_name(add_id_name = TRUE, force_real_name = FALSE)
+	var/list/identity = list(null, null, null)
 	SEND_SIGNAL(src, COMSIG_HUMAN_GET_VISIBLE_NAME, identity)
 	var/signal_face = LAZYACCESS(identity, VISIBLE_NAME_FACE)
 	var/signal_id = LAZYACCESS(identity, VISIBLE_NAME_ID)
+	var/force_set = LAZYACCESS(identity, VISIBLE_NAME_FORCED)
+	if(force_set) // our name is overriden by something
+		return signal_face // no need to null-check, because force_set will always set a signal_face
 	var/face_name = !isnull(signal_face) ? signal_face : get_face_name("")
 	var/id_name = !isnull(signal_id) ? signal_id : get_id_name("")
+	if (force_real_name)
+		var/fake_name
+		if (face_name && face_name != real_name)
+			fake_name = face_name
+		if(add_id_name && id_name && id_name != real_name)
+			if (!isnull(fake_name) && id_name != face_name)
+				fake_name = "[fake_name]/[id_name]"
+			else
+				fake_name = id_name
+		if (HAS_TRAIT(src, TRAIT_UNKNOWN) || (!face_name && !id_name))
+			fake_name = "Unknown"
+		return "[real_name][fake_name ? " (as [fake_name])" : ""]"
+	if(HAS_TRAIT(src, TRAIT_UNKNOWN))
+		return "Unknown"
 	if(face_name)
 		if(add_id_name && id_name && (id_name != face_name))
 			return "[face_name] (as [id_name])"
@@ -95,6 +110,11 @@
 	var/obj/item/card/id/id = wear_id
 	if(HAS_TRAIT(src, TRAIT_UNKNOWN))
 		. = if_no_id //You get NOTHING, no id name, good day sir
+		var/list/identity = list(null, null, null)
+		SEND_SIGNAL(src, COMSIG_HUMAN_GET_FORCED_NAME, identity)
+		if(identity[VISIBLE_NAME_FORCED])
+			. = identity[VISIBLE_NAME_FACE] // to return forced names when unknown, instead of ID
+			return
 	if(istype(wallet))
 		id = wallet.front_id
 	if(istype(id))
@@ -293,6 +313,11 @@
 			return MONKEY_HEIGHT_DWARF
 		else
 			return HUMAN_HEIGHT_DWARF
+	if(HAS_TRAIT(src, TRAIT_TOO_TALL))
+		if(ismonkey(src))
+			return MONKEY_HEIGHT_TALL
+		else
+			return HUMAN_HEIGHT_TALLEST
 
 	else if(ismonkey(src))
 		return MONKEY_HEIGHT_MEDIUM
@@ -315,6 +340,8 @@
 	clone.fully_replace_character_name(null, dna.real_name)
 	copy_clothing_prefs(clone)
 	clone.age = age
+	clone.voice = voice
+	clone.pitch = pitch
 	dna.transfer_identity(clone, transfer_SE = TRUE, transfer_species = TRUE)
 
 	clone.dress_up_as_job(SSjob.GetJob(job))
@@ -322,7 +349,7 @@
 	for(var/datum/quirk/original_quircks as anything in quirks)
 		clone.add_quirk(original_quircks.type, override_client = client)
 	for(var/datum/mutation/human/mutations in dna.mutations)
-		clone.dna.add_mutation(mutations)
+		clone.dna.add_mutation(mutations, MUT_NORMAL)
 
 	clone.updateappearance(mutcolor_update = TRUE, mutations_overlay_update = TRUE)
 	clone.domutcheck()
@@ -358,3 +385,30 @@
 	var/damage = ((min_damage / 4) + (max_damage / 4)) / 2 // We expect you to have 4 functional limbs- if you have fewer you're probably not going to be so good at lifting
 
 	return ceil(damage * (ceil(athletics_level / 2)) * fitness_modifier * maxHealth)
+
+/mob/living/carbon/human/proc/item_heal(mob/user, brute_heal, burn_heal, heal_message_brute, heal_message_burn, required_bodytype)
+	var/obj/item/bodypart/affecting = src.get_bodypart(check_zone(user.zone_selected))
+	if (!affecting || !(affecting.bodytype & required_bodytype))
+		to_chat(user, span_warning("[affecting] is already in good condition!"))
+		return FALSE
+
+	var/brute_damaged = affecting.brute_dam > 0
+	var/burn_damaged = affecting.burn_dam > 0
+
+	var/nothing_to_heal = ((brute_heal <= 0 || !brute_damaged) && (burn_heal <= 0 || !burn_damaged))
+	if (nothing_to_heal)
+		to_chat(user, span_notice("[affecting] is already in good condition!"))
+		return FALSE
+
+	src.update_damage_overlays()
+	var/message
+	if ((brute_damaged && brute_heal > 0) && (burn_damaged && burn_heal > 0))
+		message = "[heal_message_brute] and [heal_message_burn] on"
+	else if (brute_damaged && brute_heal > 0)
+		message = "[heal_message_brute] on"
+	else
+		message = "[heal_message_burn] on"
+	affecting.heal_damage(brute_heal, burn_heal, required_bodytype)
+	user.visible_message(span_notice("[user] fixes some of the [message] [src]'s [affecting.name]."), \
+		span_notice("You fix some of the [message] [src == user ? "your" : "[src]'s"] [affecting.name]."))
+	return TRUE

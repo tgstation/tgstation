@@ -1,104 +1,83 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "aK" = (
-/obj/structure/rack,
-/obj/effect/spawner/random/entertainment/cigarette_pack,
-/obj/effect/spawner/random/entertainment/cigarette_pack,
-/obj/effect/spawner/random/entertainment/cigarette_pack,
-/obj/effect/spawner/random/entertainment/lighter,
-/obj/effect/spawner/random/entertainment/lighter,
-/obj/effect/spawner/random/entertainment/lighter,
-/obj/machinery/light/directional/south,
-/obj/machinery/airalarm/directional/west,
-/turf/open/floor/iron,
-/area/ruin/lizard_gaslava)
-"bT" = (
 /obj/structure/table/reinforced,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/general/hidden,
-/turf/open/floor/iron,
-/area/ruin/lizard_gaslava)
-"ck" = (
-/obj/machinery/duct,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/general/hidden,
-/turf/open/floor/iron/smooth,
-/area/ruin/lizard_gaslava)
-"dm" = (
-/obj/machinery/door/airlock/engineering,
-/obj/machinery/duct,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/general/hidden,
-/turf/open/floor/iron/smooth,
-/area/ruin/lizard_gaslava)
-"fy" = (
-/obj/machinery/light/directional/south,
-/obj/structure/table/reinforced,
-/obj/item/stack/sheet/mineral/plasma/thirty,
-/obj/item/stack/sheet/mineral/plasma/five,
-/obj/item/stack/sheet/mineral/plasma/five,
-/obj/item/stack/sheet/mineral/plasma/five,
-/obj/item/stack/sheet/mineral/plasma/five,
-/obj/machinery/light/directional/north,
-/turf/open/misc/ashplanet/rocky,
-/area/ruin/lizard_gaslava)
-"fF" = (
-/obj/effect/turf_decal/arrows{
-	dir = 8
+/obj/structure/window/reinforced/spawner/directional/south,
+/turf/open/floor/iron{
+	baseturfs = /turf/open/misc/asteroid/basalt/lava_land_surface
 	},
-/turf/open/misc/ashplanet/rocky,
-/area/ruin/lizard_gaslava)
-"fH" = (
-/turf/open/misc/ashplanet/rocky,
-/area/ruin/lizard_gaslava)
-"fX" = (
-/obj/structure/sink/directional/east{
-	has_water_reclaimer = 0
-	},
-/turf/open/misc/ashplanet/rocky,
-/area/ruin/lizard_gaslava)
-"go" = (
-/obj/machinery/power/terminal{
-	dir = 1
-	},
-/obj/structure/cable,
-/turf/open/floor/iron/smooth,
-/area/ruin/lizard_gaslava)
-"ia" = (
-/obj/effect/spawner/random/structure/billboard/lizardsgas,
-/obj/effect/turf_decal/arrows{
+/area/ruin/thelizardsgas_lavaland)
+"aW" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/general/hidden/layer4,
+/obj/structure/railing{
 	dir = 4
 	},
-/turf/open/misc/ashplanet/rocky,
-/area/ruin/lizard_gaslava)
-"iK" = (
 /obj/structure/cable,
-/obj/machinery/power/rtg/advanced,
-/obj/effect/turf_decal/bot,
-/turf/open/floor/iron/smooth,
-/area/ruin/lizard_gaslava)
-"jY" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/pink/hidden,
+/obj/effect/turf_decal/stripes/end{
+	dir = 1
+	},
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/plating/lavaland_atmos{
+	baseturfs = /turf/open/misc/asteroid/basalt/lava_land_surface
+	},
+/area/ruin/thelizardsgas_lavaland)
+"bT" = (
 /obj/structure/window/reinforced/spawner/directional/west,
-/obj/structure/window/reinforced/spawner/directional/north,
-/obj/structure/rack,
-/obj/item/reagent_containers/condiment/yoghurt{
-	pixel_x = -3;
-	pixel_y = 1
+/obj/item/food/popsicle/creamsicle_berry{
+	pixel_y = 4;
+	pixel_x = -1
 	},
-/obj/item/reagent_containers/condiment/yoghurt{
-	pixel_x = 6;
-	pixel_y = -1
+/obj/item/food/popsicle/creamsicle_berry{
+	pixel_y = 1;
+	pixel_x = 5
 	},
-/turf/open/floor/iron/freezer,
-/area/ruin/lizard_gaslava)
-"ks" = (
-/obj/structure/sign/warning/fire/directional/north,
+/obj/item/food/popsicle/creamsicle_orange,
+/obj/item/food/popsicle/creamsicle_orange{
+	pixel_y = 6;
+	pixel_x = 3
+	},
+/obj/structure/closet/crate/freezer,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/general/hidden/layer4,
+/turf/open/floor/iron/freezer{
+	baseturfs = /turf/open/misc/asteroid/basalt/lava_land_surface
+	},
+/area/ruin/thelizardsgas_lavaland)
+"cc" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/pink/hidden,
+/obj/structure/sign/warning/no_smoking/directional/east,
+/turf/open/floor/asphalt/lavaland,
+/area/ruin/thelizardsgas_lavaland)
+"ck" = (
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/general/hidden/layer2,
+/mob/living/basic/lizard{
+	name = "Zarpo";
+	desc = "This little guy is a survivor, that's for sure."
+	},
+/obj/machinery/light/small/directional/west,
+/turf/open/floor/iron/smooth{
+	baseturfs = /turf/open/misc/asteroid/basalt/lava_land_surface
+	},
+/area/ruin/thelizardsgas_lavaland)
+"dm" = (
+/obj/structure/cable,
 /obj/machinery/duct,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/general/hidden,
-/obj/machinery/light/small/dim/directional/north,
-/turf/open/floor/iron/smooth,
-/area/ruin/lizard_gaslava)
-"mn" = (
-/obj/structure/reagent_dispensers/plumbed/fuel,
-/turf/open/floor/iron/smooth,
-/area/ruin/lizard_gaslava)
-"mz" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/general/hidden/layer2,
+/turf/open/floor/iron/smooth{
+	baseturfs = /turf/open/misc/asteroid/basalt/lava_land_surface
+	},
+/area/ruin/thelizardsgas_lavaland)
+"dC" = (
+/obj/structure/sign/warning/fire/directional/north,
+/obj/machinery/atmospherics/components/unary/outlet_injector/monitored/plasma_input{
+	dir = 4;
+	chamber_id = "lizardgaslava"
+	},
+/turf/open/floor/engine/plasma{
+	initial_gas_mix = "plasma=30000;TEMP=293.15"
+	},
+/area/ruin/thelizardsgas_lavaland)
+"dI" = (
 /obj/structure/rack,
 /obj/item/food/candy,
 /obj/item/food/candy,
@@ -110,69 +89,82 @@
 /obj/item/food/chocolatebar{
 	pixel_y = 6
 	},
-/obj/structure/sign/poster/contraband/hacking_guide/directional/north,
-/turf/open/floor/iron,
-/area/ruin/lizard_gaslava)
-"mG" = (
-/obj/effect/turf_decal/arrows{
-	dir = 4
+/obj/structure/sign/poster/contraband/space_cola/directional/north,
+/turf/open/floor/iron{
+	baseturfs = /turf/open/misc/asteroid/basalt/lava_land_surface
 	},
-/turf/open/misc/ashplanet/rocky,
-/area/ruin/lizard_gaslava)
-"mY" = (
-/obj/effect/spawner/random/structure/billboard/lizardsgas,
-/obj/effect/turf_decal/arrows{
+/area/ruin/thelizardsgas_lavaland)
+"dT" = (
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/pink/hidden,
+/obj/structure/railing{
 	dir = 8
 	},
-/turf/open/misc/ashplanet/rocky,
-/area/ruin/lizard_gaslava)
-"nc" = (
+/obj/effect/turf_decal/stripes/end{
+	dir = 1
+	},
+/turf/open/floor/plating/lavaland_atmos{
+	baseturfs = /turf/open/misc/asteroid/basalt/lava_land_surface
+	},
+/area/ruin/thelizardsgas_lavaland)
+"fj" = (
+/turf/open/floor/asphalt/lavaland,
+/area/ruin/thelizardsgas_lavaland)
+"fl" = (
 /obj/effect/decal/cleanable/dirt/dust,
-/obj/machinery/duct,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/general/hidden,
-/turf/open/floor/iron/smooth,
-/area/ruin/lizard_gaslava)
-"ng" = (
-/obj/machinery/door/airlock/external/ruin,
-/turf/open/floor/plating,
-/area/ruin/lizard_gaslava)
-"om" = (
+/obj/structure/cable,
+/obj/structure/sign/poster/contraband/starkist/directional/north,
+/turf/open/floor/iron{
+	baseturfs = /turf/open/misc/asteroid/basalt/lava_land_surface
+	},
+/area/ruin/thelizardsgas_lavaland)
+"fy" = (
 /obj/effect/turf_decal/arrows{
 	dir = 1
 	},
-/turf/open/misc/ashplanet/rocky,
-/area/ruin/lizard_gaslava)
-"pp" = (
-/obj/structure/sign/poster/contraband/jumbo_bar/directional/east,
-/turf/open/floor/iron,
-/area/ruin/lizard_gaslava)
-"pJ" = (
-/turf/open/floor/iron/smooth,
-/area/ruin/lizard_gaslava)
-"rM" = (
-/obj/structure/window/reinforced/spawner/directional/north,
-/obj/structure/window/reinforced/spawner/directional/east,
-/obj/structure/rack,
-/obj/item/food/cheese/mozzarella{
-	pixel_y = 5;
-	pixel_x = -5
-	},
-/obj/item/food/cheese/mozzarella{
-	pixel_y = -4;
-	pixel_x = 1
-	},
-/obj/item/food/cheese/wheel,
-/obj/item/food/cheese/cheese_curds,
-/obj/item/food/cheese/curd_cheese,
-/turf/open/floor/iron/freezer,
-/area/ruin/lizard_gaslava)
-"sY" = (
-/obj/machinery/door/airlock/external/ruin,
+/turf/open/floor/asphalt/lavaland,
+/area/lavaland/surface/outdoors)
+"fF" = (
+/obj/machinery/portable_atmospherics/canister,
+/turf/open/misc/asteroid/basalt/lava_land_surface,
+/area/lavaland/surface/outdoors)
+"fH" = (
 /obj/machinery/duct,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/general/hidden,
-/turf/open/floor/plating,
-/area/ruin/lizard_gaslava)
-"tD" = (
+/turf/open/floor/asphalt/lavaland,
+/area/ruin/thelizardsgas_lavaland)
+"fO" = (
+/obj/machinery/atmospherics/components/unary/vent_pump/siphon/monitored/plasma_output{
+	dir = 8;
+	chamber_id = "lizardgaslava"
+	},
+/turf/open/floor/engine/plasma{
+	initial_gas_mix = "plasma=30000;TEMP=293.15"
+	},
+/area/ruin/thelizardsgas_lavaland)
+"fX" = (
+/obj/structure/sink/gasstation{
+	dir = 4;
+	pixel_x = -14
+	},
+/turf/open/floor/asphalt/lavaland,
+/area/ruin/thelizardsgas_lavaland)
+"fZ" = (
+/obj/structure/cable,
+/obj/structure/sign/poster/contraband/robust_softdrinks/directional/east,
+/turf/open/floor/iron{
+	baseturfs = /turf/open/misc/asteroid/basalt/lava_land_surface
+	},
+/area/ruin/thelizardsgas_lavaland)
+"go" = (
+/obj/structure/cable,
+/obj/machinery/atmospherics/components/unary/vent_pump/on/layer2,
+/obj/machinery/light/small/directional/east,
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/iron/smooth{
+	baseturfs = /turf/open/misc/asteroid/basalt/lava_land_surface
+	},
+/area/ruin/thelizardsgas_lavaland)
+"ia" = (
 /obj/structure/rack,
 /obj/item/food/chips{
 	pixel_x = 7
@@ -189,109 +181,289 @@
 	pixel_y = -4;
 	pixel_x = -5
 	},
-/turf/open/floor/iron,
-/area/ruin/lizard_gaslava)
+/obj/machinery/light/directional/north,
+/turf/open/floor/iron{
+	baseturfs = /turf/open/misc/asteroid/basalt/lava_land_surface
+	},
+/area/ruin/thelizardsgas_lavaland)
+"iK" = (
+/obj/structure/cable,
+/obj/machinery/power/rtg/advanced,
+/obj/effect/turf_decal/bot,
+/obj/structure/sign/warning/electric_shock/directional/north,
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/iron/smooth{
+	baseturfs = /turf/open/misc/asteroid/basalt/lava_land_surface
+	},
+/area/ruin/thelizardsgas_lavaland)
+"iN" = (
+/obj/machinery/airalarm/directional/west,
+/obj/machinery/computer/security/telescreen/entertainment/directional/south,
+/obj/machinery/computer/atmos_control/noreconnect{
+	atmos_chambers = list("lizardgaslava"="Plasma Supply");
+	dir = 4;
+	name = "gas tank monitor";
+	desc = "This computer connects to and controls the sensors and equipment in a nearby pressurised gas reservoir."
+	},
+/turf/open/floor/iron{
+	baseturfs = /turf/open/misc/asteroid/basalt/lava_land_surface
+	},
+/area/ruin/thelizardsgas_lavaland)
+"iP" = (
+/obj/machinery/atmospherics/components/unary/vent_pump/on/layer2{
+	dir = 8
+	},
+/turf/open/floor/iron{
+	baseturfs = /turf/open/misc/asteroid/basalt/lava_land_surface
+	},
+/area/ruin/thelizardsgas_lavaland)
+"iT" = (
+/obj/structure/rack,
+/obj/item/food/cornchips/random,
+/obj/item/food/cornchips/random,
+/obj/item/food/cornchips/random,
+/obj/item/food/cornchips/random,
+/obj/item/food/cornchips/random,
+/obj/item/food/cornchips/random,
+/obj/structure/sign/poster/contraband/eat/directional/north,
+/turf/open/floor/iron{
+	baseturfs = /turf/open/misc/asteroid/basalt/lava_land_surface
+	},
+/area/ruin/thelizardsgas_lavaland)
+"jY" = (
+/obj/structure/window/reinforced/spawner/directional/south,
+/obj/structure/window/reinforced/spawner/directional/east,
+/obj/item/storage/cans/sixbeer,
+/obj/item/storage/cans/sixsoda,
+/obj/structure/closet/crate/freezer,
+/turf/open/floor/iron/freezer{
+	baseturfs = /turf/open/misc/asteroid/basalt/lava_land_surface
+	},
+/area/ruin/thelizardsgas_lavaland)
+"ks" = (
+/obj/structure/sign/warning/fire/directional/north,
+/obj/structure/reagent_dispensers/fueltank/large{
+	anchored = 1;
+	can_be_unanchored = 1
+	},
+/obj/structure/railing{
+	dir = 8
+	},
+/obj/structure/railing{
+	dir = 4
+	},
+/obj/machinery/light/dim/directional/south,
+/turf/open/floor/asphalt/lavaland,
+/area/ruin/thelizardsgas_lavaland)
+"lI" = (
+/obj/effect/spawner/random/structure/billboard/roadsigns,
+/turf/open/misc/asteroid/basalt/lava_land_surface,
+/area/lavaland/surface/outdoors)
+"mn" = (
+/obj/structure/sign/poster/official/plasma_effects/directional/east,
+/obj/structure/reagent_dispensers/plumbed/storage{
+	dir = 8;
+	reagent_id = /datum/reagent/toxin/plasma;
+	name = "plasma storage tank";
+	tank_volume = 2500
+	},
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/iron/smooth{
+	baseturfs = /turf/open/misc/asteroid/basalt/lava_land_surface
+	},
+/area/ruin/thelizardsgas_lavaland)
+"mz" = (
+/obj/structure/table/reinforced,
+/obj/structure/closet/mini_fridge{
+	pixel_y = 5
+	},
+/obj/effect/spawner/random/food_or_drink/refreshing_beverage,
+/obj/effect/spawner/random/food_or_drink/refreshing_beverage,
+/obj/effect/spawner/random/food_or_drink/refreshing_beverage,
+/obj/effect/spawner/random/food_or_drink/booze,
+/obj/effect/spawner/random/food_or_drink/booze,
+/obj/effect/spawner/random/food_or_drink/booze,
+/obj/structure/window/reinforced/spawner/directional/north,
+/obj/structure/window/reinforced/spawner/directional/west,
+/turf/open/floor/iron{
+	baseturfs = /turf/open/misc/asteroid/basalt/lava_land_surface
+	},
+/area/ruin/thelizardsgas_lavaland)
+"mG" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/general/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/general/hidden/layer4,
+/obj/structure/noticeboard/directional/north,
+/turf/open/floor/iron/smooth{
+	baseturfs = /turf/open/misc/asteroid/basalt/lava_land_surface
+	},
+/area/ruin/thelizardsgas_lavaland)
+"mJ" = (
+/obj/structure/chair/sofa/left/maroon{
+	dir = 4
+	},
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/iron/smooth{
+	baseturfs = /turf/open/misc/asteroid/basalt/lava_land_surface
+	},
+/area/ruin/thelizardsgas_lavaland)
+"mY" = (
+/obj/structure/chair/sofa/right/maroon{
+	dir = 4
+	},
+/obj/structure/cable,
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/iron/smooth{
+	baseturfs = /turf/open/misc/asteroid/basalt/lava_land_surface
+	},
+/area/ruin/thelizardsgas_lavaland)
+"nc" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/general/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/general/hidden/layer4,
+/obj/structure/sign/poster/fluff/lizards_gas_payment/directional/west,
+/turf/open/floor/iron{
+	baseturfs = /turf/open/misc/asteroid/basalt/lava_land_surface
+	},
+/area/ruin/thelizardsgas_lavaland)
+"ng" = (
+/obj/structure/cable,
+/obj/structure/railing{
+	dir = 8
+	},
+/obj/effect/turf_decal/stripes/end,
+/turf/open/floor/plating/lavaland_atmos{
+	baseturfs = /turf/open/misc/asteroid/basalt/lava_land_surface
+	},
+/area/ruin/thelizardsgas_lavaland)
+"nX" = (
+/obj/structure/sign/poster/contraband/tipper_cream_soda/directional/south,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/general/hidden/layer4,
+/turf/open/floor/iron{
+	baseturfs = /turf/open/misc/asteroid/basalt/lava_land_surface
+	},
+/area/ruin/thelizardsgas_lavaland)
+"om" = (
+/turf/open/floor/asphalt/lavaland,
+/area/lavaland/surface/outdoors)
+"ou" = (
+/obj/structure/cable,
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer4,
+/turf/open/floor/iron/smooth{
+	baseturfs = /turf/open/misc/asteroid/basalt/lava_land_surface
+	},
+/area/ruin/thelizardsgas_lavaland)
+"oD" = (
+/obj/effect/spawner/random/trash/crushed_can,
+/turf/open/misc/asteroid/basalt/lava_land_surface,
+/area/lavaland/surface/outdoors)
+"pp" = (
+/obj/machinery/light/directional/south,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/general/hidden/layer4,
+/turf/open/floor/iron{
+	baseturfs = /turf/open/misc/asteroid/basalt/lava_land_surface
+	},
+/area/ruin/thelizardsgas_lavaland)
+"pJ" = (
+/turf/open/floor/iron/smooth{
+	baseturfs = /turf/open/misc/asteroid/basalt/lava_land_surface
+	},
+/area/ruin/thelizardsgas_lavaland)
+"qk" = (
+/obj/structure/cable,
+/obj/effect/spawner/random/structure/closet_maintenance,
+/obj/structure/sign/poster/fluff/lizards_gas_power/directional/north,
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/iron/smooth{
+	baseturfs = /turf/open/misc/asteroid/basalt/lava_land_surface
+	},
+/area/ruin/thelizardsgas_lavaland)
+"qO" = (
+/obj/structure/sign/warning/fire/directional/south,
+/obj/structure/reagent_dispensers/fueltank/large{
+	anchored = 1;
+	can_be_unanchored = 1
+	},
+/obj/structure/railing{
+	dir = 8
+	},
+/obj/structure/railing{
+	dir = 4
+	},
+/obj/machinery/light/dim/directional/north,
+/turf/open/floor/asphalt/lavaland,
+/area/ruin/thelizardsgas_lavaland)
+"rr" = (
+/obj/machinery/atmospherics/components/unary/vent_pump/on/layer2{
+	dir = 1
+	},
+/turf/open/floor/iron/smooth{
+	baseturfs = /turf/open/misc/asteroid/basalt/lava_land_surface
+	},
+/area/ruin/thelizardsgas_lavaland)
+"rv" = (
+/obj/structure/sign/warning/fire/directional/north,
+/obj/machinery/atmospherics/components/unary/vent_pump/siphon/monitored/plasma_output{
+	dir = 8;
+	chamber_id = "lizardgaslava"
+	},
+/turf/open/floor/engine/plasma{
+	initial_gas_mix = "plasma=30000;TEMP=293.15"
+	},
+/area/ruin/thelizardsgas_lavaland)
+"rM" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/machinery/atmospherics/components/unary/vent_pump/on/layer2{
+	dir = 8
+	},
+/turf/open/floor/iron{
+	baseturfs = /turf/open/misc/asteroid/basalt/lava_land_surface
+	},
+/area/ruin/thelizardsgas_lavaland)
+"rW" = (
+/obj/machinery/portable_atmospherics/canister/plasma{
+	filled = 0.05
+	},
+/turf/open/misc/asteroid/basalt/lava_land_surface,
+/area/lavaland/surface/outdoors)
+"sY" = (
+/obj/structure/table/reinforced,
+/obj/item/food/sandwich/blt{
+	pixel_y = 6;
+	pixel_x = -2
+	},
+/obj/item/food/little_shiro_sandwich{
+	pixel_y = 1
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/general/hidden/layer2,
+/turf/open/floor/iron{
+	baseturfs = /turf/open/misc/asteroid/basalt/lava_land_surface
+	},
+/area/ruin/thelizardsgas_lavaland)
+"tk" = (
+/obj/structure/chair/stool/bar/directional/east,
+/turf/open/floor/iron{
+	baseturfs = /turf/open/misc/asteroid/basalt/lava_land_surface
+	},
+/area/ruin/thelizardsgas_lavaland)
+"tD" = (
+/obj/machinery/duct,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/general/hidden/layer2,
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/general/hidden/layer4,
+/obj/machinery/door/airlock/grunge,
+/turf/open/floor/iron/smooth{
+	baseturfs = /turf/open/misc/asteroid/basalt/lava_land_surface
+	},
+/area/ruin/thelizardsgas_lavaland)
 "ub" = (
 /obj/structure/railing{
 	dir = 9
 	},
-/turf/open/misc/ashplanet/rocky,
-/area/ruin/lizard_gaslava)
+/obj/machinery/atmospherics/pipe/smart/manifold4w/pink/hidden,
+/obj/structure/girder/reinforced,
+/turf/open/floor/asphalt/lavaland,
+/area/ruin/thelizardsgas_lavaland)
 "uV" = (
-/obj/machinery/atmospherics/components/unary/vent_pump/on{
-	dir = 8
-	},
-/turf/open/floor/iron,
-/area/ruin/lizard_gaslava)
-"vt" = (
-/obj/machinery/duct,
-/obj/machinery/atmospherics/components/tank/oxygen{
-	dir = 4
-	},
-/turf/open/floor/iron/smooth,
-/area/ruin/lizard_gaslava)
-"vH" = (
-/obj/machinery/atmospherics/components/unary/vent_pump/on{
-	dir = 1
-	},
-/obj/machinery/light/small/dim/directional/south,
-/turf/open/floor/iron/smooth,
-/area/ruin/lizard_gaslava)
-"wl" = (
-/obj/structure/sink/directional/west{
-	has_water_reclaimer = 0
-	},
-/turf/open/misc/ashplanet/rocky,
-/area/ruin/lizard_gaslava)
-"xH" = (
-/obj/machinery/light/directional/south,
-/turf/open/misc/ashplanet/rocky,
-/area/ruin/lizard_gaslava)
-"xW" = (
-/turf/open/floor/iron,
-/area/ruin/lizard_gaslava)
-"yH" = (
-/obj/structure/rack,
-/obj/item/food/sticko/nutty{
-	pixel_y = 5;
-	pixel_x = -5
-	},
-/obj/item/food/sticko{
-	pixel_y = 2;
-	pixel_x = 6
-	},
-/turf/open/floor/iron,
-/area/ruin/lizard_gaslava)
-"Ag" = (
-/obj/structure/table,
-/obj/item/coffee_cartridge,
-/obj/item/coffee_cartridge,
-/obj/effect/mapping_helpers/apc/cell_10k,
-/obj/effect/mapping_helpers/apc/unlocked,
-/obj/machinery/power/apc/auto_name/directional/north,
-/obj/structure/cable,
-/turf/open/floor/iron/smooth,
-/area/ruin/lizard_gaslava)
-"Ao" = (
-/obj/structure/sign/poster/contraband/tipper_cream_soda/directional/south,
-/turf/open/floor/iron,
-/area/ruin/lizard_gaslava)
-"Bf" = (
-/mob/living/basic/lizard,
-/obj/machinery/atmospherics/components/unary/vent_pump/on{
-	dir = 4
-	},
-/turf/open/floor/iron,
-/area/ruin/lizard_gaslava)
-"BH" = (
-/obj/structure/table/reinforced,
-/obj/item/food/hotdog{
-	pixel_y = 4;
-	pixel_x = -2
-	},
-/obj/item/food/hotdog{
-	pixel_y = -3;
-	pixel_x = 1
-	},
-/obj/machinery/atmospherics/pipe/smart/manifold4w/general/hidden,
-/turf/open/floor/iron,
-/area/ruin/lizard_gaslava)
-"BX" = (
-/obj/effect/decal/cleanable/dirt/dust,
-/obj/machinery/light/directional/south,
-/turf/open/floor/iron,
-/area/ruin/lizard_gaslava)
-"DI" = (
-/turf/template_noop,
-/area/template_noop)
-"Ef" = (
-/obj/effect/decal/cleanable/dirt/dust,
-/obj/machinery/atmospherics/components/unary/vent_pump/on{
-	dir = 8
-	},
-/turf/open/floor/iron,
-/area/ruin/lizard_gaslava)
-"Eh" = (
 /obj/structure/table/reinforced,
 /obj/item/food/honeybar{
 	pixel_y = 5;
@@ -318,102 +490,719 @@
 	pixel_x = 2
 	},
 /obj/effect/decal/cleanable/dirt/dust,
-/turf/open/floor/iron,
-/area/ruin/lizard_gaslava)
-"El" = (
-/obj/structure/window/reinforced/spawner/directional/west,
-/obj/structure/rack,
-/obj/item/food/popsicle/creamsicle_berry{
-	pixel_y = 4;
-	pixel_x = -1
+/obj/structure/cable,
+/turf/open/floor/iron{
+	baseturfs = /turf/open/misc/asteroid/basalt/lava_land_surface
 	},
-/obj/item/food/popsicle/creamsicle_berry{
-	pixel_y = 1;
-	pixel_x = 5
-	},
-/obj/item/food/popsicle/creamsicle_orange,
-/obj/item/food/popsicle/creamsicle_orange{
-	pixel_y = 6;
-	pixel_x = 3
-	},
-/turf/open/floor/iron/freezer,
-/area/ruin/lizard_gaslava)
-"Es" = (
-/obj/structure/sign/warning/fire/directional/south,
-/obj/effect/decal/cleanable/dirt/dust,
-/obj/machinery/atmospherics/components/unary/vent_pump/on{
-	dir = 1
-	},
-/turf/open/floor/iron/smooth,
-/area/ruin/lizard_gaslava)
-"EA" = (
+/area/ruin/thelizardsgas_lavaland)
+"vb" = (
 /obj/structure/window/reinforced/spawner/directional/east,
-/obj/structure/rack,
 /obj/item/storage/fancy/egg_box,
 /obj/item/storage/fancy/egg_box{
 	pixel_y = 9
 	},
 /obj/item/storage/fancy/pickles_jar,
-/turf/open/floor/iron/freezer,
-/area/ruin/lizard_gaslava)
-"FA" = (
+/obj/structure/closet/crate/freezer,
+/turf/open/floor/iron/freezer{
+	baseturfs = /turf/open/misc/asteroid/basalt/lava_land_surface
+	},
+/area/ruin/thelizardsgas_lavaland)
+"vi" = (
+/obj/structure/cable,
+/obj/structure/railing,
+/obj/effect/turf_decal/stripes/line,
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
+	},
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/plating/lavaland_atmos{
+	baseturfs = /turf/open/misc/asteroid/basalt/lava_land_surface
+	},
+/area/ruin/thelizardsgas_lavaland)
+"vt" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/general/hidden/layer2,
+/obj/structure/cable,
+/obj/machinery/duct,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/general/hidden/layer4,
+/turf/open/floor/iron/smooth{
+	baseturfs = /turf/open/misc/asteroid/basalt/lava_land_surface
+	},
+/area/ruin/thelizardsgas_lavaland)
+"vH" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/general/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/general/hidden/layer4,
+/turf/open/floor/iron{
+	baseturfs = /turf/open/misc/asteroid/basalt/lava_land_surface
+	},
+/area/ruin/thelizardsgas_lavaland)
+"wl" = (
+/obj/structure/sink/gasstation{
+	dir = 8;
+	pixel_x = 14
+	},
+/turf/open/floor/asphalt/lavaland,
+/area/ruin/thelizardsgas_lavaland)
+"wY" = (
+/obj/structure/table,
+/obj/structure/sign/poster/official/festive/directional/south,
+/obj/item/wrench,
+/obj/item/universal_scanner{
+	pixel_y = 6;
+	pixel_x = 7
+	},
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/iron/smooth{
+	baseturfs = /turf/open/misc/asteroid/basalt/lava_land_surface
+	},
+/area/ruin/thelizardsgas_lavaland)
+"xw" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/pink/hidden,
+/turf/open/floor/asphalt/lavaland,
+/area/ruin/thelizardsgas_lavaland)
+"xH" = (
+/obj/machinery/door/window/right/directional/east,
+/obj/machinery/door/window/left/directional/west,
+/turf/open/floor/iron{
+	baseturfs = /turf/open/misc/asteroid/basalt/lava_land_surface
+	},
+/area/ruin/thelizardsgas_lavaland)
+"xW" = (
+/turf/open/floor/iron{
+	baseturfs = /turf/open/misc/asteroid/basalt/lava_land_surface
+	},
+/area/ruin/thelizardsgas_lavaland)
+"yH" = (
+/obj/structure/cable,
+/obj/machinery/duct,
+/turf/open/floor/iron{
+	baseturfs = /turf/open/misc/asteroid/basalt/lava_land_surface
+	},
+/area/ruin/thelizardsgas_lavaland)
+"zr" = (
+/obj/structure/window/reinforced/spawner/directional/west,
+/obj/structure/window/reinforced/spawner/directional/north,
+/obj/item/reagent_containers/condiment/yoghurt{
+	pixel_x = -3;
+	pixel_y = 1
+	},
+/obj/item/reagent_containers/condiment/yoghurt{
+	pixel_x = 6;
+	pixel_y = -1
+	},
+/obj/structure/closet/crate/freezer,
+/turf/open/floor/iron/freezer{
+	baseturfs = /turf/open/misc/asteroid/basalt/lava_land_surface
+	},
+/area/ruin/thelizardsgas_lavaland)
+"Ag" = (
+/obj/structure/table,
+/obj/item/coffee_cartridge,
+/obj/item/coffee_cartridge,
+/obj/effect/mapping_helpers/apc/cell_10k,
+/obj/effect/mapping_helpers/apc/unlocked,
+/obj/machinery/power/apc/auto_name/directional/north,
+/obj/structure/cable,
+/turf/open/floor/iron/smooth{
+	baseturfs = /turf/open/misc/asteroid/basalt/lava_land_surface
+	},
+/area/ruin/thelizardsgas_lavaland)
+"Ao" = (
+/turf/open/misc/asteroid/basalt/lava_land_surface,
+/area/lavaland/surface/outdoors)
+"Bf" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/general/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/general/hidden/layer4,
+/turf/open/floor/iron{
+	baseturfs = /turf/open/misc/asteroid/basalt/lava_land_surface
+	},
+/area/ruin/thelizardsgas_lavaland)
+"Bp" = (
+/obj/structure/cable,
+/obj/effect/spawner/structure/window/reinforced/plasma,
+/obj/machinery/duct,
+/turf/open/floor/plating/lavaland_baseturf,
+/area/ruin/thelizardsgas_lavaland)
+"Bz" = (
+/obj/structure/window/reinforced/spawner/directional/north,
+/obj/structure/window/reinforced/spawner/directional/east,
+/obj/item/food/cheese/mozzarella{
+	pixel_y = 5;
+	pixel_x = -5
+	},
+/obj/item/food/cheese/mozzarella{
+	pixel_y = -4;
+	pixel_x = 1
+	},
+/obj/item/food/cheese/wheel,
+/obj/item/food/cheese/cheese_curds,
+/obj/item/food/cheese/curd_cheese,
+/obj/structure/closet/crate/freezer,
+/turf/open/floor/iron/freezer{
+	baseturfs = /turf/open/misc/asteroid/basalt/lava_land_surface
+	},
+/area/ruin/thelizardsgas_lavaland)
+"BH" = (
 /obj/structure/railing{
 	dir = 8
 	},
-/turf/open/misc/ashplanet/rocky,
-/area/ruin/lizard_gaslava)
-"FC" = (
-/obj/structure/sign/poster/fluff/lizards_gas_power/directional/west,
-/turf/open/floor/iron/smooth,
-/area/ruin/lizard_gaslava)
-"FL" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/pink/hidden,
+/turf/open/floor/asphalt/lavaland,
+/area/ruin/thelizardsgas_lavaland)
+"BU" = (
+/obj/machinery/atmospherics/components/unary/outlet_injector/monitored/plasma_input{
+	dir = 4;
+	chamber_id = "lizardgaslava"
+	},
+/turf/open/floor/engine/plasma{
+	initial_gas_mix = "plasma=30000;TEMP=293.15"
+	},
+/area/ruin/thelizardsgas_lavaland)
+"BX" = (
 /obj/effect/decal/cleanable/dirt/dust,
-/obj/machinery/light/directional/north,
-/turf/open/floor/iron,
-/area/ruin/lizard_gaslava)
+/obj/machinery/light/directional/south,
+/turf/open/floor/iron{
+	baseturfs = /turf/open/misc/asteroid/basalt/lava_land_surface
+	},
+/area/ruin/thelizardsgas_lavaland)
+"Cs" = (
+/obj/structure/cable,
+/obj/effect/spawner/structure/window/reinforced/plasma,
+/turf/open/floor/plating/lavaland_baseturf,
+/area/ruin/thelizardsgas_lavaland)
+"Cx" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/structure/cable,
+/turf/open/floor/iron{
+	baseturfs = /turf/open/misc/asteroid/basalt/lava_land_surface
+	},
+/area/ruin/thelizardsgas_lavaland)
+"CJ" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/pink/hidden,
+/obj/structure/railing{
+	dir = 4
+	},
+/obj/structure/cable,
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/plating/lavaland_atmos{
+	baseturfs = /turf/open/misc/asteroid/basalt/lava_land_surface
+	},
+/area/ruin/thelizardsgas_lavaland)
+"CR" = (
+/obj/structure/cable,
+/obj/machinery/duct,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/general/hidden/layer2,
+/obj/machinery/door/airlock/maintenance_hatch,
+/turf/open/floor/iron/smooth{
+	baseturfs = /turf/open/misc/asteroid/basalt/lava_land_surface
+	},
+/area/ruin/thelizardsgas_lavaland)
+"Dw" = (
+/obj/structure/cable,
+/turf/open/floor/iron{
+	baseturfs = /turf/open/misc/asteroid/basalt/lava_land_surface
+	},
+/area/ruin/thelizardsgas_lavaland)
+"DI" = (
+/turf/template_noop,
+/area/template_noop)
+"Ef" = (
+/obj/effect/spawner/structure/window/reinforced/plasma,
+/obj/structure/cable,
+/turf/open/floor/plating/lavaland_atmos{
+	baseturfs = /turf/open/misc/asteroid/basalt/lava_land_surface
+	},
+/area/ruin/thelizardsgas_lavaland)
+"Eh" = (
+/obj/machinery/atmospherics/components/tank/oxygen{
+	dir = 8
+	},
+/turf/open/floor/iron/smooth{
+	baseturfs = /turf/open/misc/asteroid/basalt/lava_land_surface
+	},
+/area/ruin/thelizardsgas_lavaland)
+"El" = (
+/obj/structure/sign/poster/official/pda_ad/directional/south,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/general/hidden/layer4,
+/turf/open/floor/iron{
+	baseturfs = /turf/open/misc/asteroid/basalt/lava_land_surface
+	},
+/area/ruin/thelizardsgas_lavaland)
+"Es" = (
+/obj/machinery/door/airlock/external/ruin,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/general/hidden,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/general/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/general/hidden/layer4,
+/obj/effect/mapping_helpers/airlock/cyclelink_helper_multi{
+	cycle_id = "lizardgas_lavaland_entrance"
+	},
+/turf/open/floor/iron/smooth{
+	baseturfs = /turf/open/misc/asteroid/basalt/lava_land_surface
+	},
+/area/ruin/thelizardsgas_lavaland)
+"EA" = (
+/turf/closed/wall/r_wall,
+/area/ruin/thelizardsgas_lavaland)
+"FA" = (
+/turf/closed/wall/r_wall{
+	baseturfs = /turf/open/floor/plating/lavaland_baseturf
+	},
+/area/ruin/thelizardsgas_lavaland)
+"FC" = (
+/obj/effect/spawner/structure/window/reinforced/plasma,
+/obj/structure/cable,
+/turf/open/floor/plating,
+/area/ruin/thelizardsgas_lavaland)
+"FL" = (
+/obj/structure/railing{
+	dir = 4
+	},
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/pink/hidden,
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/plating/lavaland_atmos{
+	baseturfs = /turf/open/misc/asteroid/basalt/lava_land_surface
+	},
+/area/ruin/thelizardsgas_lavaland)
+"Gg" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/general/hidden/layer4,
+/turf/open/floor/iron{
+	baseturfs = /turf/open/misc/asteroid/basalt/lava_land_surface
+	},
+/area/ruin/thelizardsgas_lavaland)
+"Gu" = (
+/obj/effect/spawner/random/structure/billboard/lizardsgas,
+/turf/open/misc/asteroid/basalt/lava_land_surface,
+/area/lavaland/surface/outdoors)
 "Gv" = (
-/obj/structure/table/reinforced,
-/obj/structure/window/reinforced/spawner/directional/north,
-/obj/structure/window/reinforced/spawner/directional/east,
-/obj/item/food/sandwich/blt{
-	pixel_y = 6;
-	pixel_x = -2
+/obj/machinery/duct,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/general/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/general/hidden/layer4,
+/obj/structure/cable,
+/turf/open/floor/iron{
+	baseturfs = /turf/open/misc/asteroid/basalt/lava_land_surface
 	},
-/obj/item/food/little_shiro_sandwich{
-	pixel_y = 1
-	},
-/turf/open/floor/iron,
-/area/ruin/lizard_gaslava)
+/area/ruin/thelizardsgas_lavaland)
 "GK" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/pink/hidden,
+/turf/open/misc/asteroid/basalt/lava_land_surface,
+/area/lavaland/surface/outdoors)
+"Hz" = (
+/obj/structure/cable,
+/obj/structure/railing,
+/obj/effect/turf_decal/stripes/end{
+	dir = 4
+	},
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/plating/lavaland_atmos{
+	baseturfs = /turf/open/misc/asteroid/basalt/lava_land_surface
+	},
+/area/ruin/thelizardsgas_lavaland)
+"HB" = (
+/obj/effect/spawner/random/trash/cigbutt,
+/turf/open/misc/asteroid/basalt/lava_land_surface,
+/area/lavaland/surface/outdoors)
+"HI" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/structure/cable,
+/obj/machinery/duct,
+/turf/open/floor/iron{
+	baseturfs = /turf/open/misc/asteroid/basalt/lava_land_surface
+	},
+/area/ruin/thelizardsgas_lavaland)
+"HL" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/spawner/random/trash/food_packaging,
+/turf/open/floor/iron{
+	baseturfs = /turf/open/misc/asteroid/basalt/lava_land_surface
+	},
+/area/ruin/thelizardsgas_lavaland)
+"HS" = (
+/obj/structure/rack,
+/obj/item/reagent_containers/condiment/vegetable_oil{
+	pixel_y = 5;
+	pixel_x = -1
+	},
+/obj/item/reagent_containers/condiment/vegetable_oil{
+	pixel_y = 1;
+	pixel_x = 3
+	},
+/obj/item/reagent_containers/condiment/olive_oil,
+/obj/structure/cable,
+/turf/open/floor/iron{
+	baseturfs = /turf/open/misc/asteroid/basalt/lava_land_surface
+	},
+/area/ruin/thelizardsgas_lavaland)
+"HW" = (
+/obj/machinery/door/airlock/external/ruin,
+/obj/effect/mapping_helpers/airlock/cyclelink_helper_multi{
+	cycle_id = "lizardgas_lavaland_entrance"
+	},
+/turf/open/floor/iron/smooth{
+	baseturfs = /turf/open/misc/asteroid/basalt/lava_land_surface
+	},
+/area/ruin/thelizardsgas_lavaland)
+"IC" = (
+/obj/structure/cable,
+/obj/structure/railing,
+/obj/effect/turf_decal/stripes/end{
+	dir = 8
+	},
+/turf/open/floor/plating/lavaland_atmos{
+	baseturfs = /turf/open/misc/asteroid/basalt/lava_land_surface
+	},
+/area/ruin/thelizardsgas_lavaland)
+"IU" = (
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer4{
+	dir = 8
+	},
+/turf/open/floor/iron{
+	baseturfs = /turf/open/misc/asteroid/basalt/lava_land_surface
+	},
+/area/ruin/thelizardsgas_lavaland)
+"JB" = (
+/obj/machinery/air_sensor{
+	chamber_id = "lizardgaslava"
+	},
+/turf/open/floor/engine/plasma{
+	initial_gas_mix = "plasma=30000;TEMP=293.15"
+	},
+/area/ruin/thelizardsgas_lavaland)
+"JK" = (
+/obj/machinery/atmospherics/components/unary/vent_pump/siphon/monitored/plasma_output{
+	dir = 8;
+	chamber_id = "lizardgaslava"
+	},
+/obj/item/toy/plush/lizard_plushie/space/green{
+	desc = "A famous lizard, in plushy form.";
+	name = "Bingo"
+	},
+/turf/open/floor/engine/plasma{
+	initial_gas_mix = "plasma=30000;TEMP=293.15"
+	},
+/area/ruin/thelizardsgas_lavaland)
+"JX" = (
+/obj/machinery/duct,
+/obj/machinery/light/directional/north,
+/obj/structure/sign/warning/chem_diamond/directional/north,
+/turf/open/floor/asphalt/lavaland,
+/area/ruin/thelizardsgas_lavaland)
+"Kb" = (
+/obj/machinery/atmospherics/components/unary/portables_connector/visible{
+	dir = 8
+	},
+/turf/open/misc/asteroid/basalt/lava_land_surface,
+/area/lavaland/surface/outdoors)
+"Kc" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer4{
+	dir = 1
+	},
+/turf/open/floor/iron/smooth{
+	baseturfs = /turf/open/misc/asteroid/basalt/lava_land_surface
+	},
+/area/ruin/thelizardsgas_lavaland)
+"Kl" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/general/hidden/layer4,
+/obj/machinery/light_switch/directional/south,
+/turf/open/floor/iron{
+	baseturfs = /turf/open/misc/asteroid/basalt/lava_land_surface
+	},
+/area/ruin/thelizardsgas_lavaland)
+"Km" = (
+/obj/structure/table/reinforced,
+/turf/open/floor/iron{
+	baseturfs = /turf/open/misc/asteroid/basalt/lava_land_surface
+	},
+/area/ruin/thelizardsgas_lavaland)
+"KJ" = (
+/obj/structure/railing{
+	dir = 1
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/pink/hidden,
+/turf/open/floor/asphalt/lavaland,
+/area/ruin/thelizardsgas_lavaland)
+"Lh" = (
+/obj/structure/cable,
+/obj/structure/sign/poster/official/fruit_bowl/directional/east,
+/turf/open/floor/iron/smooth{
+	baseturfs = /turf/open/misc/asteroid/basalt/lava_land_surface
+	},
+/area/ruin/thelizardsgas_lavaland)
+"Mv" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/structure/rack,
+/obj/effect/spawner/random/entertainment/cigarette_pack,
+/obj/effect/spawner/random/entertainment/cigarette_pack,
+/obj/effect/spawner/random/entertainment/cigarette_pack,
+/obj/effect/spawner/random/entertainment/lighter,
+/obj/effect/spawner/random/entertainment/lighter,
+/obj/effect/spawner/random/entertainment/lighter,
+/obj/structure/sign/poster/contraband/smoke/directional/west,
+/turf/open/floor/iron{
+	baseturfs = /turf/open/misc/asteroid/basalt/lava_land_surface
+	},
+/area/ruin/thelizardsgas_lavaland)
+"MX" = (
+/obj/effect/spawner/structure/window/reinforced/plasma,
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/general/hidden/layer4,
+/turf/open/floor/iron,
+/area/ruin/thelizardsgas_lavaland)
+"Nr" = (
+/obj/effect/spawner/random/trash/food_packaging,
+/obj/structure/cable,
+/obj/machinery/duct,
+/turf/open/floor/iron{
+	baseturfs = /turf/open/misc/asteroid/basalt/lava_land_surface
+	},
+/area/ruin/thelizardsgas_lavaland)
+"NY" = (
+/obj/structure/closet/crate/preopen,
+/obj/effect/spawner/random/trash/deluxe_garbage,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/general/hidden/layer4,
+/turf/open/floor/iron/smooth{
+	baseturfs = /turf/open/misc/asteroid/basalt/lava_land_surface
+	},
+/area/ruin/thelizardsgas_lavaland)
+"Om" = (
 /obj/structure/railing{
 	dir = 10
 	},
-/turf/open/misc/ashplanet/rocky,
-/area/ruin/lizard_gaslava)
-"HI" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/pink/hidden,
+/obj/structure/girder/reinforced,
+/turf/open/floor/asphalt/lavaland,
+/area/ruin/thelizardsgas_lavaland)
+"Ov" = (
 /obj/structure/table/reinforced,
-/obj/structure/closet/mini_fridge{
+/obj/structure/window/reinforced/spawner/directional/north,
+/obj/structure/window/reinforced/spawner/directional/east,
+/obj/item/food/hotdog{
+	pixel_y = 4;
+	pixel_x = -2
+	},
+/obj/item/food/hotdog{
+	pixel_y = -3;
+	pixel_x = 1
+	},
+/turf/open/floor/iron{
+	baseturfs = /turf/open/misc/asteroid/basalt/lava_land_surface
+	},
+/area/ruin/thelizardsgas_lavaland)
+"PS" = (
+/obj/effect/turf_decal/bot,
+/obj/structure/cable,
+/obj/structure/bed/dogbed{
+	name = "Zarpo's bed";
+	desc = "A comfy-looking lizard bed. Looks a lot like a dog bed."
+	},
+/turf/open/floor/iron/smooth{
+	baseturfs = /turf/open/misc/asteroid/basalt/lava_land_surface
+	},
+/area/ruin/thelizardsgas_lavaland)
+"Qb" = (
+/obj/structure/cable,
+/obj/structure/sign/poster/contraband/moffuchis_pizza/directional/north,
+/turf/open/floor/iron{
+	baseturfs = /turf/open/misc/asteroid/basalt/lava_land_surface
+	},
+/area/ruin/thelizardsgas_lavaland)
+"Qt" = (
+/obj/structure/sign/poster/contraband/jumbo_bar/directional/east,
+/obj/structure/cable,
+/turf/open/floor/iron{
+	baseturfs = /turf/open/misc/asteroid/basalt/lava_land_surface
+	},
+/area/ruin/thelizardsgas_lavaland)
+"Rq" = (
+/obj/machinery/light/directional/south,
+/obj/structure/sign/warning/chem_diamond/directional/south,
+/obj/machinery/duct,
+/turf/open/floor/asphalt/lavaland,
+/area/ruin/thelizardsgas_lavaland)
+"Ry" = (
+/obj/structure/rack,
+/obj/item/food/sticko/nutty{
+	pixel_y = 5;
+	pixel_x = -5
+	},
+/obj/item/food/sticko{
+	pixel_y = 2;
+	pixel_x = 6
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/general/hidden/layer4,
+/turf/open/floor/iron{
+	baseturfs = /turf/open/misc/asteroid/basalt/lava_land_surface
+	},
+/area/ruin/thelizardsgas_lavaland)
+"RA" = (
+/turf/closed/wall{
+	baseturfs = /turf/open/floor/plating/lavaland_baseturf
+	},
+/area/ruin/thelizardsgas_lavaland)
+"RK" = (
+/obj/structure/railing{
+	dir = 4
+	},
+/obj/structure/cable,
+/obj/effect/turf_decal/stripes/end,
+/turf/open/floor/plating/lavaland_atmos{
+	baseturfs = /turf/open/misc/asteroid/basalt/lava_land_surface
+	},
+/area/ruin/thelizardsgas_lavaland)
+"SL" = (
+/obj/structure/cable,
+/obj/structure/railing,
+/obj/effect/turf_decal/stripes/line,
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
+	},
+/turf/open/floor/plating/lavaland_atmos{
+	baseturfs = /turf/open/misc/asteroid/basalt/lava_land_surface
+	},
+/area/ruin/thelizardsgas_lavaland)
+"SZ" = (
+/obj/structure/cable,
+/obj/machinery/light/directional/north,
+/turf/open/floor/iron{
+	baseturfs = /turf/open/misc/asteroid/basalt/lava_land_surface
+	},
+/area/ruin/thelizardsgas_lavaland)
+"Ty" = (
+/obj/structure/railing,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/pink/hidden,
+/turf/open/floor/asphalt/lavaland,
+/area/ruin/thelizardsgas_lavaland)
+"TA" = (
+/obj/machinery/power/terminal{
+	dir = 1
+	},
+/obj/structure/cable,
+/obj/effect/spawner/random/trash/deluxe_garbage,
+/turf/open/floor/iron/smooth{
+	baseturfs = /turf/open/misc/asteroid/basalt/lava_land_surface
+	},
+/area/ruin/thelizardsgas_lavaland)
+"TI" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/pink/hidden,
+/obj/machinery/duct,
+/turf/open/floor/asphalt/lavaland,
+/area/ruin/thelizardsgas_lavaland)
+"Uk" = (
+/obj/machinery/duct,
+/obj/machinery/atmospherics/components/unary/portables_connector/visible{
+	dir = 4
+	},
+/turf/open/floor/asphalt/lavaland,
+/area/ruin/thelizardsgas_lavaland)
+"Ux" = (
+/obj/structure/table,
+/obj/machinery/coffeemaker{
 	pixel_y = 5
 	},
-/obj/effect/spawner/random/food_or_drink/refreshing_beverage,
-/obj/effect/spawner/random/food_or_drink/refreshing_beverage,
-/obj/effect/spawner/random/food_or_drink/refreshing_beverage,
-/obj/effect/spawner/random/food_or_drink/booze,
-/obj/effect/spawner/random/food_or_drink/booze,
-/obj/effect/spawner/random/food_or_drink/booze,
-/obj/structure/window/reinforced/spawner/directional/north,
-/turf/open/floor/iron,
-/area/ruin/lizard_gaslava)
-"HL" = (
-/obj/effect/decal/cleanable/dirt/dust,
+/obj/machinery/computer/security/telescreen/entertainment/directional/north,
+/obj/machinery/airalarm/directional/west,
+/turf/open/floor/iron/smooth{
+	baseturfs = /turf/open/misc/asteroid/basalt/lava_land_surface
+	},
+/area/ruin/thelizardsgas_lavaland)
+"UK" = (
+/obj/structure/cable,
+/obj/machinery/power/smes/full,
+/turf/open/floor/iron/smooth{
+	baseturfs = /turf/open/misc/asteroid/basalt/lava_land_surface
+	},
+/area/ruin/thelizardsgas_lavaland)
+"UZ" = (
+/obj/structure/sign/warning/fire/directional/north,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/pink/hidden,
+/turf/open/misc/asteroid/basalt/lava_land_surface,
+/area/lavaland/surface/outdoors)
+"VD" = (
 /obj/machinery/duct,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/general/hidden,
-/turf/open/floor/iron,
-/area/ruin/lizard_gaslava)
-"HS" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/general/hidden/layer2,
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/general/hidden/layer4,
+/turf/open/floor/iron{
+	baseturfs = /turf/open/misc/asteroid/basalt/lava_land_surface
+	},
+/area/ruin/thelizardsgas_lavaland)
+"VQ" = (
+/obj/machinery/light/small/dim/directional/north,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/general/hidden/layer4,
+/turf/open/floor/iron/smooth{
+	baseturfs = /turf/open/misc/asteroid/basalt/lava_land_surface
+	},
+/area/ruin/thelizardsgas_lavaland)
+"Wa" = (
+/obj/machinery/duct,
+/obj/machinery/atmospherics/components/unary/portables_connector/visible{
+	dir = 8
+	},
+/turf/open/floor/asphalt/lavaland,
+/area/ruin/thelizardsgas_lavaland)
+"WY" = (
+/turf/open/floor/engine/plasma{
+	initial_gas_mix = "plasma=30000;TEMP=293.15"
+	},
+/area/ruin/thelizardsgas_lavaland)
+"Xe" = (
+/obj/effect/spawner/structure/window/reinforced/plasma,
+/obj/structure/cable,
+/obj/machinery/atmospherics/components/binary/pump/on/pink/visible{
+	dir = 8;
+	target_pressure = 4100
+	},
+/turf/open/floor/plating/lavaland_atmos{
+	baseturfs = /turf/open/misc/asteroid/basalt/lava_land_surface
+	},
+/area/ruin/thelizardsgas_lavaland)
+"Xo" = (
+/obj/structure/sign/warning/fire/directional/north,
+/turf/template_noop,
+/area/template_noop)
+"XB" = (
+/obj/structure/sign/warning/fire/directional/north,
+/obj/machinery/atmospherics/components/unary/passive_vent/layer4{
+	dir = 8
+	},
+/turf/open/misc/asteroid/basalt/lava_land_surface,
+/area/lavaland/surface/outdoors)
+"Yx" = (
+/obj/structure/cable,
+/obj/structure/railing{
+	dir = 8
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/pink/hidden,
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/plating/lavaland_atmos{
+	baseturfs = /turf/open/misc/asteroid/basalt/lava_land_surface
+	},
+/area/ruin/thelizardsgas_lavaland)
+"Zf" = (
 /obj/structure/window/reinforced/spawner/directional/west,
 /obj/structure/window/reinforced/spawner/directional/south,
-/obj/structure/rack,
 /obj/item/food/cornuto{
 	pixel_y = 4;
 	pixel_x = -3
@@ -430,167 +1219,32 @@
 	pixel_y = -5;
 	pixel_x = -3
 	},
-/turf/open/floor/iron/freezer,
-/area/ruin/lizard_gaslava)
-"HW" = (
-/obj/machinery/door/airlock/external/ruin,
-/obj/machinery/duct,
-/turf/open/floor/plating,
-/area/ruin/lizard_gaslava)
-"IU" = (
-/obj/effect/decal/cleanable/dirt/dust,
-/obj/machinery/light/directional/south,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/general/hidden,
-/turf/open/floor/iron,
-/area/ruin/lizard_gaslava)
-"JX" = (
-/obj/structure/railing,
-/turf/open/misc/ashplanet/rocky,
-/area/ruin/lizard_gaslava)
-"Kl" = (
-/obj/structure/rack,
-/obj/item/food/cornchips/random,
-/obj/item/food/cornchips/random,
-/obj/item/food/cornchips/random,
-/obj/item/food/cornchips/random,
-/obj/item/food/cornchips/random,
-/obj/item/food/cornchips/random,
-/obj/machinery/light/directional/north,
-/turf/open/floor/iron,
-/area/ruin/lizard_gaslava)
-"Km" = (
-/obj/structure/table/reinforced,
-/turf/open/floor/iron,
-/area/ruin/lizard_gaslava)
-"KJ" = (
-/obj/structure/railing{
-	dir = 1
+/obj/structure/closet/crate/freezer,
+/turf/open/floor/iron/freezer{
+	baseturfs = /turf/open/misc/asteroid/basalt/lava_land_surface
 	},
-/turf/open/misc/ashplanet/rocky,
-/area/ruin/lizard_gaslava)
-"Mv" = (
-/obj/effect/decal/cleanable/dirt/dust,
-/obj/structure/sign/poster/fluff/lizards_gas_payment/directional/west,
-/turf/open/floor/iron,
-/area/ruin/lizard_gaslava)
-"Nr" = (
-/obj/structure/window/plasma/spawner/directional/west,
-/obj/structure/window/spawner/directional/east,
-/obj/effect/spawner/random/structure/grille,
-/turf/open/floor/plating,
-/area/ruin/lizard_gaslava)
-"Ov" = (
-/obj/structure/table,
-/obj/machinery/coffeemaker{
-	pixel_y = 5
-	},
-/turf/open/floor/iron/smooth,
-/area/ruin/lizard_gaslava)
-"PS" = (
-/obj/effect/turf_decal/bot,
-/obj/structure/cable,
-/obj/machinery/power/rtg/advanced,
-/turf/open/floor/iron/smooth,
-/area/ruin/lizard_gaslava)
-"Qb" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/general/hidden,
-/turf/open/floor/iron,
-/area/ruin/lizard_gaslava)
-"Qt" = (
-/obj/effect/decal/cleanable/dirt/dust,
-/turf/open/floor/iron,
-/area/ruin/lizard_gaslava)
-"Rq" = (
-/obj/machinery/computer/security/telescreen/bar{
-	pixel_y = -32
-	},
-/obj/effect/decal/cleanable/dirt/dust,
-/turf/open/floor/iron,
-/area/ruin/lizard_gaslava)
-"RA" = (
-/turf/closed/wall,
-/area/ruin/lizard_gaslava)
-"RK" = (
-/obj/machinery/light/directional/east,
-/turf/open/misc/ashplanet/rocky,
-/area/ruin/lizard_gaslava)
-"SL" = (
-/obj/machinery/duct,
-/turf/open/misc/ashplanet/rocky,
-/area/ruin/lizard_gaslava)
-"SZ" = (
-/obj/machinery/duct,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/general/hidden,
-/turf/open/floor/iron,
-/area/ruin/lizard_gaslava)
-"TA" = (
-/obj/machinery/atmospherics/components/unary/vent_pump/on,
-/turf/open/floor/iron/smooth,
-/area/ruin/lizard_gaslava)
-"Uk" = (
-/obj/machinery/duct,
-/obj/machinery/light/directional/north,
-/turf/open/misc/ashplanet/rocky,
-/area/ruin/lizard_gaslava)
-"UK" = (
-/obj/structure/cable,
-/obj/machinery/power/smes/engineering,
-/turf/open/floor/iron/smooth,
-/area/ruin/lizard_gaslava)
-"VD" = (
-/obj/effect/spawner/random/trash/food_packaging,
-/turf/open/floor/iron,
-/area/ruin/lizard_gaslava)
-"Wa" = (
-/obj/structure/rack,
-/obj/item/reagent_containers/condiment/vegetable_oil{
-	pixel_y = 5;
-	pixel_x = -1
-	},
-/obj/item/reagent_containers/condiment/vegetable_oil{
-	pixel_y = 1;
-	pixel_x = 3
-	},
-/obj/item/reagent_containers/condiment/olive_oil,
-/turf/open/floor/iron,
-/area/ruin/lizard_gaslava)
-"Xe" = (
-/obj/structure/window/reinforced/spawner/directional/south,
-/obj/structure/window/reinforced/spawner/directional/east,
-/obj/structure/rack,
-/obj/item/storage/cans/sixbeer,
-/obj/item/storage/cans/sixsoda,
-/turf/open/floor/iron/freezer,
-/area/ruin/lizard_gaslava)
-"Zf" = (
-/obj/machinery/door/airlock/glass,
-/turf/open/floor/iron,
-/area/ruin/lizard_gaslava)
+/area/ruin/thelizardsgas_lavaland)
 
 (1,1,1) = {"
 DI
 DI
 DI
-fF
-fF
-mY
+DI
+DI
+ub
+BH
+BH
+BH
+BH
+BH
+BH
+BH
+BH
+Om
 DI
 DI
 DI
 DI
-DI
-DI
-DI
-DI
-DI
-DI
-DI
-DI
-DI
-DI
-ia
-mG
-mG
 DI
 DI
 "}
@@ -598,647 +1252,367 @@ DI
 DI
 DI
 DI
+DI
+DI
+KJ
 fH
+Wa
 fH
+Wa
+Wa
 fH
-DI
-DI
-DI
-DI
-DI
-DI
-DI
-DI
-DI
-DI
-DI
-DI
-DI
-DI
+Wa
 fH
-fH
-fH
+Ty
+DI
+DI
+DI
+DI
 DI
 DI
 "}
 (3,1,1) = {"
 DI
 DI
+om
+fy
+om
+xw
+fH
+wl
+fj
+wl
+wl
+fj
+wl
+fH
+xw
+om
+fy
 DI
-fH
-fH
-fH
 DI
-DI
-ub
-FA
-FA
-FA
-FA
-FA
-FA
-FA
-FA
-GK
-DI
-DI
-fH
-fH
-fH
 DI
 DI
 "}
 (4,1,1) = {"
 DI
-DI
-DI
-fH
-fH
-fH
-DI
-DI
-KJ
-fH
-SL
-SL
-SL
-SL
-SL
-SL
-SL
+om
+om
+fy
+om
+xw
+Rq
+FA
+qO
+FA
+FA
+ks
+FA
 JX
+xw
+om
+fy
+om
 DI
-DI
-fH
-fH
-fH
 DI
 DI
 "}
 (5,1,1) = {"
 DI
 DI
-DI
-fH
-fH
-fH
 om
-fH
-fH
-fH
-wl
-fH
-wl
-wl
-fH
-wl
-SL
-fH
-fH
+fy
 om
+xw
 fH
+fX
+fj
+fX
+fX
+fj
+fX
 fH
-fH
+xw
+om
+fy
+om
+om
 DI
 DI
 "}
 (6,1,1) = {"
 DI
 DI
-DI
+HB
+Gu
+Ao
+xw
 fH
-fH
-fH
-om
-fH
-fH
-xH
-RA
-fy
-RA
-RA
-fy
-RA
 Uk
 fH
+Uk
+Uk
 fH
-om
+Uk
 fH
-fH
-fH
+xw
+oD
+lI
+Ao
+DI
 DI
 DI
 "}
 (7,1,1) = {"
 DI
 DI
+Ao
+Ao
+Ao
+xw
+xw
+TI
+xw
+xw
+xw
+cc
+xw
+xw
+xw
+GK
+Ao
+Ao
 DI
-fH
-fH
-fH
-om
-fH
-fH
-fH
-fX
-fH
-fX
-fX
-fH
-fX
-SL
-fH
-fH
-om
-fH
-fH
-fH
 DI
 DI
 "}
 (8,1,1) = {"
 DI
 DI
-DI
-DI
-DI
-DI
-DI
-DI
-fH
-fH
-SL
-SL
-SL
-SL
-SL
-SL
-SL
-fH
-DI
-DI
-DI
-DI
+fF
+Ao
+HB
+FA
+Cs
+Bp
+Cs
+FA
+FA
+FA
+HW
+HW
+FA
+UZ
+Ao
+Ao
 DI
 DI
 DI
 "}
 (9,1,1) = {"
-DI
-DI
-DI
-DI
-DI
-DI
-DI
-DI
-RK
-fH
-fH
-fH
-fH
-fH
-fH
-SL
-fH
-RK
-DI
-DI
-DI
-DI
-DI
-DI
-DI
+FA
+FA
+FC
+FC
+FA
+FA
+iT
+yH
+mz
+Mv
+iN
+RA
+VQ
+Kc
+FA
+dT
+Yx
+Yx
+ng
+EA
+Xo
 "}
 (10,1,1) = {"
-DI
-DI
-DI
-DI
-DI
-DI
-DI
-DI
+FA
+Ux
+mJ
+mY
+wY
 RA
+ia
 Nr
-Nr
-Nr
+Ov
+tk
+BX
 RA
-RA
-RA
-HW
-ng
-RA
-DI
-DI
-DI
-DI
-DI
-DI
+mG
+rr
+FA
+Xe
+Xe
+Xe
+Ef
+IC
 DI
 "}
 (11,1,1) = {"
-DI
-DI
-DI
-DI
-DI
-DI
-DI
-DI
+FA
+Ag
+pJ
+ou
+NY
 RA
-Kl
-xW
+dI
 HI
-Mv
+Km
 aK
+xH
 RA
-ks
 Es
-RA
-DI
-DI
-DI
-DI
-DI
-DI
+HW
+FA
+rv
+JK
+fO
+Ef
+vi
 DI
 "}
 (12,1,1) = {"
-DI
-DI
-DI
-RA
-RA
-RA
-RA
-RA
-RA
+FA
+qk
+Lh
+go
+vt
 tD
 VD
 Gv
 Bf
-Rq
-RA
+vH
+Bf
 nc
 vH
-RA
-DI
-DI
-DI
-DI
-DI
-DI
+Kl
+FA
+WY
+JB
+WY
+Ef
+vi
 DI
 "}
 (13,1,1) = {"
-DI
-DI
-DI
+FA
 RA
-Ov
-FC
-mn
-vt
 RA
-mz
-Qt
-Km
+RA
+CR
+RA
+fl
+zr
 bT
 Zf
-RA
+xW
 sY
-ng
-RA
-DI
-DI
-DI
-DI
-DI
-DI
+Ry
+El
+FA
+WY
+WY
+WY
+Ef
+SL
 DI
 "}
 (14,1,1) = {"
-DI
-DI
-DI
-RA
-Ag
-pJ
+FA
+UK
 TA
 ck
 dm
-SZ
-SZ
-HL
-SZ
-HL
-SZ
-SZ
-IU
 RA
-DI
-DI
-DI
-DI
-DI
-DI
+SZ
+iP
+IU
+HL
+xW
+rM
+IU
+pp
+FA
+dC
+BU
+BU
+Ef
+SL
 DI
 "}
 (15,1,1) = {"
-DI
-DI
-DI
-RA
-UK
-go
+FA
 iK
 PS
+Eh
+mn
 RA
-Qt
 Qb
-xW
-xW
+Bz
+vb
 jY
-El
+xW
 HS
 uV
-RA
-DI
-DI
-DI
-DI
-DI
-DI
+nX
+FA
+Xe
+Xe
+Xe
+Ef
+Hz
 DI
 "}
 (16,1,1) = {"
-DI
-DI
-DI
-RA
-RA
-RA
-RA
-RA
-RA
-xW
-BH
-yH
+FA
+FA
+FA
+FA
+FA
+FA
+Cx
+Dw
 Qt
-xW
-VD
-Qt
-Ao
-RA
-DI
-DI
-DI
-DI
-DI
-DI
-DI
+Dw
+Cx
+fZ
+Dw
+Gg
+MX
+aW
+CJ
+FL
+RK
+EA
+Xo
 "}
 (17,1,1) = {"
 DI
 DI
-DI
-DI
-DI
-DI
-DI
-DI
-RA
-xW
-Ef
-xW
-xW
-rM
-EA
-Xe
-xW
-RA
-DI
-DI
-DI
-DI
-DI
-DI
-DI
-"}
-(18,1,1) = {"
-DI
-DI
-DI
-DI
-DI
-DI
-DI
-DI
-RA
-FL
-Wa
-Eh
-xW
-Qt
-pp
-xW
-BX
-RA
-DI
-DI
-DI
-DI
-DI
-DI
-DI
-"}
-(19,1,1) = {"
-DI
-DI
-DI
-DI
-DI
-DI
-DI
-DI
-RA
-RA
-RA
-RA
-RA
-RA
-RA
-RA
-RA
-RA
-DI
-DI
-DI
-DI
-DI
-DI
-DI
-"}
-(20,1,1) = {"
-DI
-DI
-DI
-DI
-DI
-DI
-DI
-DI
-DI
-DI
-DI
-DI
-DI
-DI
-DI
-DI
-DI
-DI
-DI
-DI
-DI
-DI
-DI
-DI
-DI
-"}
-(21,1,1) = {"
-DI
-DI
-DI
-DI
-DI
-DI
-DI
-DI
-DI
-DI
-DI
-DI
-DI
-DI
-DI
-DI
-DI
-DI
-DI
-DI
-DI
-DI
-DI
-DI
-DI
-"}
-(22,1,1) = {"
-DI
-DI
-DI
-DI
-DI
-DI
-DI
-DI
-DI
-DI
-DI
-DI
-DI
-DI
-DI
-DI
-DI
-DI
-DI
-DI
-DI
-DI
-DI
-DI
-DI
-"}
-(23,1,1) = {"
-DI
-DI
-DI
-DI
-DI
-DI
-DI
-DI
-DI
-DI
-DI
-DI
-DI
-DI
-DI
-DI
-DI
-DI
-DI
-DI
-DI
-DI
-DI
-DI
-DI
-"}
-(24,1,1) = {"
-DI
-DI
-DI
-DI
-DI
-DI
-DI
-DI
-DI
-DI
-DI
-DI
-DI
-DI
-DI
-DI
-DI
-DI
-DI
-DI
-DI
-DI
-DI
-DI
-DI
-"}
-(25,1,1) = {"
-DI
-DI
-DI
-DI
-DI
-DI
-DI
-DI
-DI
-DI
-DI
-DI
-DI
-DI
-DI
-DI
-DI
-DI
-DI
-DI
-DI
-DI
-DI
+Ao
+fF
+fF
+FA
+FA
+FA
+FA
+FA
+FA
+FA
+FA
+FA
+FA
+XB
+Kb
+Ao
+rW
 DI
 DI
 "}

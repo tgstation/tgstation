@@ -1,5 +1,5 @@
 /obj/item/seeds/cotton
-	name = "pack of cotton seeds"
+	name = "cotton seed pack"
 	desc = "A pack of seeds that'll grow into a cotton plant. Assistants make good free labor if neccesary."
 	icon_state = "seed-cotton"
 	species = "cotton"
@@ -34,30 +34,18 @@
 	var/cotton_name = "raw cotton"
 
 /obj/item/grown/cotton/attack_self(mob/user)
-	user.show_message(span_notice("You pull some [cotton_name] out of the [name]!"), MSG_VISUAL)
-	var/seed_modifier = 0
+	var/cotton_count = 1
 	if(seed)
-		seed_modifier = round(seed.potency / 25)
-	var/obj/item/stack/cotton = new cotton_type(user.loc, 1 + seed_modifier)
-	var/old_cotton_amount = cotton.amount
-	for(var/obj/item/stack/potential_stack in user.loc)
-		if(QDELETED(potential_stack))
-			continue
-		if(potential_stack == cotton)
-			continue
-		if(!istype(potential_stack, cotton_type))
-			continue
-		if(potential_stack.amount >= potential_stack.max_amount)
-			continue
-		potential_stack.attackby(cotton, user)
+		cotton_count += round(seed.potency / 25)
 
-	if(cotton.amount > old_cotton_amount)
-		to_chat(user, span_notice("You add the newly-formed [cotton_name] to the stack. It now contains [cotton.amount] [cotton_name]."))
+	user.balloon_alert(user, "pulled [cotton_count] piece\s")
+	new cotton_type(user.drop_location(), cotton_count)
 	qdel(src)
+
 
 //reinforced mutated variant
 /obj/item/seeds/cotton/durathread
-	name = "pack of durathread seeds"
+	name = "durathread seed pack"
 	desc = "A pack of seeds that'll grow into an extremely durable thread that could easily rival plasteel if woven properly."
 	icon_state = "seed-durathread"
 	species = "durathread"

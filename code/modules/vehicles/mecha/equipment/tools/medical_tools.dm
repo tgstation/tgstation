@@ -72,7 +72,8 @@
 	data["contained_reagents"] = get_reagent_data(patient.reagents.reagent_list)
 
 	var/obj/item/mecha_parts/mecha_equipment/medical/syringe_gun/shooter = locate(/obj/item/mecha_parts/mecha_equipment/medical/syringe_gun) in chassis
-	data["injectible_reagents"] = get_reagent_data(shooter.reagents.reagent_list)
+	if(shooter)
+		data["injectible_reagents"] = get_reagent_data(shooter.reagents.reagent_list)
 	return data
 
 /obj/item/mecha_parts/mecha_equipment/medical/sleeper/handle_ui_act(action, list/params)
@@ -81,11 +82,12 @@
 			go_out()
 			return TRUE
 	var/obj/item/mecha_parts/mecha_equipment/medical/syringe_gun/shooter = locate() in chassis
-	for(var/datum/reagent/medication in shooter.reagents.reagent_list)
-		if(action == ("inject_reagent_" + medication.name))
-			inject_reagent(medication, shooter)
-			break // or maybe return TRUE? i'm not certain
-				
+	if(shooter)
+		for(var/datum/reagent/medication in shooter.reagents.reagent_list)
+			if(action == ("inject_reagent_" + medication.name))
+				inject_reagent(medication, shooter)
+				break // or maybe return TRUE? i'm not certain
+
 	return FALSE
 
 /obj/item/mecha_parts/mecha_equipment/medical/sleeper/action(mob/source, atom/atomtarget, list/modifiers)

@@ -16,6 +16,9 @@
 	item_flags = NO_MAT_REDEMPTION | NOBLUDGEON
 	has_ammobar = TRUE
 	actions_types = list(/datum/action/item_action/rcd_scan)
+	drop_sound = 'sound/items/handling/rcd_drop.ogg'
+	pickup_sound = 'sound/items/handling/rcd_pickup.ogg'
+	sound_vary = TRUE
 
 	/// main category of currently selected design[Structures, Airlocks, Airlock Access]
 	var/root_category
@@ -70,11 +73,16 @@
 	construction_mode = mode
 
 	GLOB.rcd_list += src
+	AddElement(/datum/element/openspace_item_click_handler)
 
 /obj/item/construction/rcd/Destroy()
 	QDEL_NULL(airlock_electronics)
 	GLOB.rcd_list -= src
 	. = ..()
+
+/obj/item/construction/rcd/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
+	. = ..()
+	playsound(src, SFX_TOOL_SWITCH, 20, TRUE)
 
 /obj/item/construction/rcd/ui_action_click(mob/user, actiontype)
 	if (!COOLDOWN_FINISHED(src, destructive_scan_cooldown))
@@ -102,7 +110,7 @@
 			T.rcd_act(user, src, list("[RCD_DESIGN_MODE]" = RCD_TURF, "[RCD_DESIGN_PATH]" = /turf/open/floor/plating/rcd))
 		useResource(16, user)
 		activate()
-		playsound(loc, 'sound/machines/click.ogg', 50, 1)
+		playsound(get_turf(user), SFX_TOOL_SWITCH, 20, TRUE)
 		user.gib(DROP_ALL_REMAINS)
 		return MANUAL_SUICIDE
 
@@ -143,7 +151,7 @@
 
 			//check if we can build our window on the grill
 			if(target_turf.is_blocked_turf(exclude_mobs = !is_full_tile, source_atom = null, ignore_atoms = structures_to_ignore, type_list = TRUE))
-				playsound(loc, 'sound/machines/click.ogg', 50, TRUE)
+				playsound(get_turf(user), SFX_TOOL_SWITCH, 20, TRUE)
 				balloon_alert(user, "something is blocking the turf")
 				return FALSE
 
@@ -154,7 +162,7 @@
 		else if(rcd_mode == RCD_TURF && rcd_structure == /turf/open/floor/plating/rcd  && (!istype(target_turf, /turf/open/floor) || istype(target, /obj/structure/girder)))
 			//if a player builds a wallgirder on top of himself manually with iron sheets he can't finish the wall if he is still on the girder. Exclude the girder itself when checking for other dense objects on the turf
 			if(istype(target, /obj/structure/girder) && target_turf.is_blocked_turf(exclude_mobs = FALSE, source_atom = null, ignore_atoms = list(target)))
-				playsound(loc, 'sound/machines/click.ogg', 50, TRUE)
+				playsound(get_turf(user), SFX_TOOL_SWITCH, 20, TRUE)
 				balloon_alert(user, "something is on the girder!")
 				return FALSE
 
@@ -189,7 +197,7 @@
 
 			//check if the structure can fit on this turf
 			if(target_turf.is_blocked_turf(exclude_mobs = ignore_mobs, source_atom = null, ignore_atoms = ignored_types, type_list = TRUE))
-				playsound(loc, 'sound/machines/click.ogg', 50, TRUE)
+				playsound(get_turf(user), SFX_TOOL_SWITCH, 20, TRUE)
 				balloon_alert(user, "something is on the tile!")
 				return FALSE
 
@@ -254,7 +262,7 @@
 	if(ranged)
 		var/atom/beam_source = owner ? owner : user
 		beam = beam_source.Beam(target, icon_state = "rped_upgrade", time = delay)
-	if(delay && !do_after(user, delay, target = target)) // no need for do_after with no delay
+	if(!build_delay(user, delay, target = target)) // no need for do_after with no delay
 		qdel(rcd_effect)
 		if(!isnull(beam))
 			qdel(beam)
@@ -379,6 +387,7 @@
 			construction_mode = mode
 			rcd_design_path = design["[RCD_DESIGN_PATH]"]
 			design_title = initial(rcd_design_path.name)
+			blueprint_changed = TRUE
 
 		else
 			airlock_electronics.do_action(action, params)
@@ -389,29 +398,38 @@
 	. = ..()
 	ui_interact(user)
 
-/obj/item/construction/rcd/afterattack(atom/target, mob/user, proximity_flag, click_parameters)
+/obj/item/construction/rcd/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
 	. = ..()
-	//proximity check for normal rcd & range check for arcd
-	if((!proximity_flag && !ranged) || (ranged && !range_check(target, user)))
-		return FALSE
+	if(. & ITEM_INTERACT_ANY_BLOCKER)
+		return .
 
-	//do the work
 	mode = construction_mode
-	rcd_create(target, user)
+	rcd_create(interacting_with, user)
+	return ITEM_INTERACT_SUCCESS
 
-	return . | AFTERATTACK_PROCESSED_ITEM
+/obj/item/construction/rcd/ranged_interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
+	if(!ranged || !range_check(interacting_with, user))
+		return ITEM_INTERACT_BLOCKING
 
-/obj/item/construction/rcd/afterattack_secondary(atom/target, mob/user, proximity_flag, click_parameters)
-	. = ..()
-	//proximity check for normal rcd & range check for arcd
-	if((!proximity_flag && !ranged) || (ranged && !range_check(target, user)))
-		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+	mode = construction_mode
+	rcd_create(interacting_with, user)
+	return ITEM_INTERACT_SUCCESS
 
-	//do the work
+/obj/item/construction/rcd/interact_with_atom_secondary(atom/interacting_with, mob/living/user, list/modifiers)
 	mode = RCD_DECONSTRUCT
-	rcd_create(target, user)
+	rcd_create(interacting_with, user)
+	return ITEM_INTERACT_SUCCESS
 
-	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+/obj/item/construction/rcd/ranged_interact_with_atom_secondary(atom/interacting_with, mob/living/user, list/modifiers)
+	if(!ranged || !range_check(interacting_with, user))
+		return ITEM_INTERACT_BLOCKING
+
+	mode = RCD_DECONSTRUCT
+	rcd_create(interacting_with, user)
+	return ITEM_INTERACT_SUCCESS
+
+/obj/item/construction/rcd/handle_openspace_click(turf/target, mob/user, list/modifiers)
+	interact_with_atom(target, user, modifiers)
 
 /obj/item/construction/rcd/proc/detonate_pulse()
 	audible_message("<span class='danger'><b>[src] begins to vibrate and \
@@ -506,6 +524,7 @@
 	max_matter = INFINITY
 	matter = INFINITY
 	upgrade = RCD_ALL_UPGRADES & ~RCD_UPGRADE_SILO_LINK
+	delay_mod = 0.1
 
 // Ranged RCD
 /obj/item/construction/rcd/arcd

@@ -49,7 +49,7 @@
 	initialize_controller_action_type(/datum/action/vehicle/sealed/thank, VEHICLE_CONTROL_KIDNAPPED)
 
 /obj/vehicle/sealed/car/clowncar/auto_assign_occupant_flags(mob/M)
-	if(ishuman(M))
+	if(ishuman(M) && driver_amount() < max_drivers)
 		var/mob/living/carbon/human/H = M
 		if(is_clown_job(H.mind?.assigned_role) || !enforce_clown_role) //Ensures only clowns can drive the car. (Including more at once)
 			add_control_flags(H, VEHICLE_CONTROL_DRIVE)

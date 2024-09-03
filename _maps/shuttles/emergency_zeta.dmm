@@ -23,7 +23,7 @@
 	pixel_x = -10;
 	pixel_y = 6
 	},
-/obj/item/stock_parts/cell/infinite/abductor{
+/obj/item/stock_parts/power_store/cell/infinite/abductor{
 	pixel_x = 5
 	},
 /turf/open/floor/plating/abductor,

@@ -3,7 +3,7 @@
 	desc = "Allows a creature to voluntary shoot their tongue out as a deadly weapon."
 	quality = POSITIVE
 	text_gain_indication = span_notice("Your feel like you can throw your voice.")
-	instability = 15
+	instability = POSITIVE_INSTABILITY_MINI // worthless. also serves as a bit of a hint that it's not good
 	power_path = /datum/action/cooldown/spell/tongue_spike
 
 	energy_coeff = 1
@@ -48,13 +48,7 @@
 	force = 2
 	throwforce = 25
 	throw_speed = 4
-	embedding = list(
-		"impact_pain_mult" = 0,
-		"embedded_pain_multiplier" = 15,
-		"embed_chance" = 100,
-		"embedded_fall_chance" = 0,
-		"embedded_ignore_throwspeed_threshold" = TRUE,
-	)
+	embed_type = /datum/embed_data/tongue_spike
 	w_class = WEIGHT_CLASS_SMALL
 	sharpness = SHARP_POINTY
 	custom_materials = list(/datum/material/biomass = SMALL_MATERIAL_AMOUNT * 5)
@@ -62,6 +56,13 @@
 	var/datum/weakref/fired_by_ref
 	/// if we missed our target
 	var/missed = TRUE
+
+/datum/embed_data/tongue_spike
+	impact_pain_mult = 0
+	pain_mult = 15
+	embed_chance = 100
+	fall_chance = 0
+	ignore_throwspeed_threshold = TRUE
 
 /obj/item/hardened_spike/Initialize(mapload, mob/living/carbon/source)
 	. = ..()
@@ -89,7 +90,7 @@
 	desc = "Allows a creature to voluntary shoot their tongue out as biomass, allowing a long range transfer of chemicals."
 	quality = POSITIVE
 	text_gain_indication = span_notice("Your feel like you can really connect with people by throwing your voice.")
-	instability = 15
+	instability = POSITIVE_INSTABILITY_MINOR // slightly less worthless. slightly.
 	locked = TRUE
 	power_path = /datum/action/cooldown/spell/tongue_spike/chem
 	energy_coeff = 1
@@ -110,16 +111,13 @@
 	desc = "Hardened biomass, shaped into... something."
 	icon_state = "tonguespikechem"
 	throwforce = 2
-	embedding = list(
-		"impact_pain_mult" = 0,
-		"embedded_pain_multiplier" = 0,
-		"embed_chance" = 100,
-		"embedded_fall_chance" = 0,
-		"embedded_pain_chance" = 0,
-		"embedded_ignore_throwspeed_threshold" = TRUE,  //never hurts once it's in you
-	)
+	embed_type = /datum/embed_data/tongue_spike/chem
 	/// Whether the tongue's already embedded in a target once before
 	var/embedded_once_alread = FALSE
+
+/datum/embed_data/tongue_spike/chem
+	pain_mult = 0
+	pain_chance = 0
 
 /obj/item/hardened_spike/chem/embedded(mob/living/carbon/human/embedded_mob)
 	. = ..()

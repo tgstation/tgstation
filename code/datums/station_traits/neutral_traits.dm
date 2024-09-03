@@ -7,6 +7,11 @@
 	report_message = "Rumors has it that the clown planet has been sending support packages to clowns in this system."
 	trait_to_give = STATION_TRAIT_BANANIUM_SHIPMENTS
 
+/datum/station_trait/bananium_shipment/get_pulsar_message()
+	var/advisory_string = "Advisory Level: <b>Clown Planet</b></center><BR>"
+	advisory_string += "Your sector's advisory level is Clown Planet! Our bike horns have picked up on a large bananium stash. Clowns show a large influx of clowns on your station. We highly advise you to slip any threats to keep Honkotrasen assets within the Banana Sector. The Department of Intelligence advises defending chemistry from any clowns that are trying to make baldium or space lube."
+	return advisory_string
+
 /datum/station_trait/unnatural_atmosphere
 	name = "Unnatural atmospherical properties"
 	trait_type = STATION_TRAIT_NEUTRAL
@@ -122,6 +127,11 @@
 	. = ..()
 	SSstation.announcer = /datum/centcom_announcer/intern
 
+/datum/station_trait/announcement_intern/get_pulsar_message()
+	var/advisory_string = "Advisory Level: <b>(TITLE HERE)</b></center><BR>"
+	advisory_string += "(Copy/Paste the summary provided by the Threat Intelligence Office in this field. You shouldn't have any trouble with this just make sure to replace this message before hitting the send button. Also, make sure there's coffee ready for the meeting at 06:00 when you're done.)"
+	return advisory_string
+
 /datum/station_trait/announcement_medbot
 	name = "Announcement \"System\""
 	trait_type = STATION_TRAIT_NEUTRAL
@@ -187,6 +197,7 @@
 		if(length(birthday_options))
 			birthday_person = pick(birthday_options)
 			birthday_person_name = birthday_person.real_name
+			ADD_TRAIT(birthday_person, TRAIT_BIRTHDAY_BOY, REF(src))
 	addtimer(CALLBACK(src, PROC_REF(announce_birthday)), 10 SECONDS)
 
 /datum/station_trait/birthday/proc/check_valid_override()
@@ -372,62 +383,18 @@
 
 /datum/station_trait/linked_closets/on_round_start()
 	. = ..()
-	var/list/roundstart_non_secure_closets = GLOB.roundstart_station_closets.Copy()
-	for(var/obj/structure/closet/closet in roundstart_non_secure_closets)
-		if(closet.secure)
-			roundstart_non_secure_closets -= closet
+	var/list/roundstart_closets = GLOB.roundstart_station_closets.Copy()
 
 	/**
-	 * The number of links to perform.
-	 * Combined with 50/50 the probability of the link being triangular, the boundaries of any given
-	 * on-station, non-secure closet being linked are as high as 1 in 7/8 and as low as 1 in 16-17,
-	 * nearing an a mean of 1 in 9 to 11/12 the more repetitions are done.
-	 *
-	 * There are more than 220 roundstart closets on meta, around 150 of which aren't secure,
-	 * so, about 13 to 17 closets will be affected by this most of the times.
+	 * The number of links to perform. the chance of a closet being linked are about 1 in 10
+	 * There are more than 220 roundstart closets on meta, so, about 22 closets will be affected on average.
 	 */
-	var/number_of_links = round(length(roundstart_non_secure_closets) * (rand(350, 450)*0.0001), 1)
+	var/number_of_links = round(length(roundstart_closets) * (rand(400, 430)*0.0001), 1)
 	for(var/repetition in 1 to number_of_links)
-		var/closets_left = length(roundstart_non_secure_closets)
-		if(closets_left < 2)
-			return
 		var/list/targets = list()
-		for(var/how_many in 1 to min(closets_left, rand(2,3)))
-			targets += pick_n_take(roundstart_non_secure_closets)
-		if(closets_left == 1) //there's only one closet left. Let's not leave it alone.
-			targets += roundstart_non_secure_closets[1]
+		for(var/how_many in 1 to rand(2,3))
+			targets += pick_n_take(roundstart_closets)
 		GLOB.eigenstate_manager.create_new_link(targets)
-
-/datum/station_trait/triple_ai
-	name = "AI Triumvirate"
-	trait_type = STATION_TRAIT_NEUTRAL
-	trait_flags = parent_type::trait_flags | STATION_TRAIT_REQUIRES_AI
-	show_in_report = TRUE
-	weight = 1
-	report_message = "Your station has been instated with three Nanotrasen Artificial Intelligence models."
-
-/datum/station_trait/triple_ai/New()
-	. = ..()
-	RegisterSignal(SSjob, COMSIG_OCCUPATIONS_SETUP, PROC_REF(on_occupations_setup))
-
-/datum/station_trait/triple_ai/revert()
-	UnregisterSignal(SSjob, COMSIG_OCCUPATIONS_SETUP)
-	return ..()
-
-/datum/station_trait/triple_ai/proc/on_occupations_setup(datum/controller/subsystem/job/source)
-	SIGNAL_HANDLER
-
-	//allows for latejoining AIs
-	for(var/obj/effect/landmark/start/ai/secondary/secondary_ai_spawn in GLOB.start_landmarks_list)
-		secondary_ai_spawn.latejoin_active = TRUE
-
-	var/datum/station_trait/job/human_ai/ai_trait = locate() in SSstation.station_traits
-	//human AI quirk will handle adding its own job positions, but for now don't allow more AI slots.
-	if(ai_trait)
-		return
-	for(var/datum/job/ai/ai_datum in SSjob.joinable_occupations)
-		ai_datum.spawn_positions = 3
-		ai_datum.total_positions = 3
 
 
 #define PRO_SKUB "pro-skub"
@@ -561,3 +528,15 @@
 #undef SKUB_IDFC
 #undef RANDOM_SKUB
 
+/// Crew don't ever spawn as enemies of the station. Obsesseds, blob infection, space changelings etc can still happen though
+/datum/station_trait/background_checks
+	name = "Station-Wide Background Checks"
+	report_message = "We replaced the intern doing your crew's background checks with a trained screener for this shift! That said, our enemies may just find another way to infiltrate the station, so be careful."
+	trait_type = STATION_TRAIT_NEUTRAL
+	weight = 1
+	show_in_report = TRUE
+	can_revert = FALSE
+
+	dynamic_category = RULESET_CATEGORY_NO_WITTING_CREW_ANTAGONISTS
+	threat_reduction = 15
+	dynamic_threat_id = "Background Checks"

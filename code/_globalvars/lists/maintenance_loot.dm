@@ -111,7 +111,7 @@ GLOBAL_LIST_INIT(common_loot, list( //common: basic items
 		/obj/item/stack/rods/twentyfive = 1,
 		/obj/item/stack/sheet/iron/twenty = 1,
 		/obj/item/stack/sheet/mineral/plasma = 1,
-		/obj/item/stock_parts/cell = 1,
+		/obj/item/stock_parts/power_store/cell = 1,
 
 		//assemblies
 		/obj/item/assembly/health = 1,
@@ -133,7 +133,7 @@ GLOBAL_LIST_INIT(common_loot, list( //common: basic items
 		/obj/item/reagent_containers/cup/rag = 1,
 		/obj/item/reagent_containers/hypospray/medipen/pumpup = 2,
 		/obj/item/reagent_containers/syringe = 1,
-		/obj/item/stock_parts/cell/lead = 1,
+		/obj/item/stock_parts/power_store/cell/lead = 1,
 		/obj/item/storage/box/matches = 1,
 		/obj/item/storage/fancy/cigarettes/dromedaryco = 1,
 		) = 1,
@@ -151,6 +151,7 @@ GLOBAL_LIST_INIT(common_loot, list( //common: basic items
 		/obj/item/stack/spacecash/c10 = 1,
 		/obj/item/stack/sticky_tape = 1,
 		/obj/item/tank/internals/emergency_oxygen = 1,
+		/obj/item/paper/paperslip/fishing_tip = 1,
 
 		//light sources
 		/obj/effect/spawner/random/decoration/glowstick = 1,
@@ -205,7 +206,7 @@ GLOBAL_LIST_INIT(uncommon_loot, list(//uncommon: useful items
 		/obj/item/seeds/kronkus = 1,
 		/obj/item/seeds/odious_puffball = 1,
 		/obj/item/stack/sheet/mineral/wood/fifty = 1,
-		/obj/item/stock_parts/cell/high = 1,
+		/obj/item/stock_parts/power_store/cell/high = 1,
 		/obj/item/storage/box/clown = 1,
 		/obj/item/weaponcrafting/receiver = 1,
 		/obj/item/book/granter/crafting_recipe/death_sandwich = 1,
@@ -312,7 +313,7 @@ GLOBAL_LIST_INIT(rarity_loot, list(//rare: really good items
 	list(//equipment
 		/obj/item/clothing/glasses/hud/security = 1,
 		/obj/item/clothing/glasses/sunglasses = 1,
-		/obj/item/clothing/gloves/color/black = 1,
+		/obj/item/clothing/gloves/color/black/security = 1,
 		/obj/item/clothing/gloves/color/yellow = 1,
 		/obj/item/clothing/gloves/tackler/combat = 1,
 		/obj/item/clothing/head/helmet/toggleable/justice = 1,

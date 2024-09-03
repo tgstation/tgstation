@@ -254,6 +254,7 @@ GLOBAL_VAR_INIT(revolutionary_win, FALSE)
 	name = "Wizard"
 	antag_flag = ROLE_WIZARD
 	antag_datum = /datum/antagonist/wizard
+	ruleset_category = parent_type::ruleset_category |  RULESET_CATEGORY_NO_WITTING_CREW_ANTAGONISTS
 	flags = HIGH_IMPACT_RULESET
 	minimum_required_age = 14
 	restricted_roles = list(
@@ -395,6 +396,7 @@ GLOBAL_VAR_INIT(revolutionary_win, FALSE)
 /datum/dynamic_ruleset/roundstart/nuclear
 	name = "Nuclear Emergency"
 	antag_flag = ROLE_OPERATIVE
+	ruleset_category = parent_type::ruleset_category |  RULESET_CATEGORY_NO_WITTING_CREW_ANTAGONISTS
 	antag_datum = /datum/antagonist/nukeop
 	var/datum/antagonist/antag_leader_datum = /datum/antagonist/nukeop/leader
 	minimum_required_age = 14
@@ -572,7 +574,7 @@ GLOBAL_VAR_INIT(revolutionary_win, FALSE)
 /// Checks for revhead loss conditions and other antag datums.
 /datum/dynamic_ruleset/roundstart/revs/proc/check_eligible(datum/mind/M)
 	var/turf/T = get_turf(M.current)
-	if(!considered_afk(M) && considered_alive(M) && is_station_level(T.z) && !M.antag_datums?.len && !HAS_TRAIT(M, TRAIT_MINDSHIELD))
+	if(!considered_afk(M) && considered_alive(M) && is_station_level(T.z) && !M.antag_datums?.len && !HAS_MIND_TRAIT(M.current, TRAIT_UNCONVERTABLE))
 		return TRUE
 	return FALSE
 
@@ -618,6 +620,7 @@ GLOBAL_VAR_INIT(revolutionary_win, FALSE)
 	antag_datum = /datum/antagonist/nukeop/clownop
 	antag_flag = ROLE_CLOWN_OPERATIVE
 	antag_flag_override = ROLE_OPERATIVE
+	ruleset_category = parent_type::ruleset_category |  RULESET_CATEGORY_NO_WITTING_CREW_ANTAGONISTS
 	antag_leader_datum = /datum/antagonist/nukeop/leader/clownop
 	requirements = list(101,101,101,101,101,101,101,101,101,101)
 	required_role = ROLE_CLOWN_OPERATIVE

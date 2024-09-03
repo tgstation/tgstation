@@ -12,7 +12,7 @@
 
 /obj/item/bot_assembly/attackby(obj/item/I, mob/user, params)
 	..()
-	if(istype(I, /obj/item/pen))
+	if(IS_WRITING_UTENSIL(I))
 		rename_bot()
 		return
 
@@ -323,11 +323,9 @@
 				if(!can_finish_build(attacking_item, user))
 					return
 				to_chat(user, span_notice("You add the [attacking_item] to [src]! Honk!"))
-				var/mob/living/simple_animal/bot/secbot/honkbot/new_honkbot = new(drop_location())
+				var/mob/living/basic/bot/honkbot/new_honkbot = new(drop_location())
 				new_honkbot.name = created_name
-				new_honkbot.limiting_spam = TRUE // only long enough to hear the first ping.
 				playsound(new_honkbot, 'sound/machines/ping.ogg', 50, TRUE, -1)
-				new_honkbot.baton_type = attacking_item.type
 				qdel(attacking_item)
 				qdel(src)
 
@@ -496,8 +494,8 @@
 				if(!can_finish_build(I, user))
 					return
 				to_chat(user, span_notice("You add the [I] to [src]! Beep Boop!"))
-				var/mob/living/simple_animal/bot/firebot/F = new(drop_location())
-				F.name = created_name
+				var/mob/living/basic/bot/firebot/firebot = new(drop_location())
+				firebot.name = created_name
 				qdel(I)
 				qdel(src)
 

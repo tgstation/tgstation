@@ -22,6 +22,9 @@
 	var/list/stack_overlays
 	var/scan_state = "" //Used by mineral turfs for their scan overlay.
 	var/spreadChance = 0 //Also used by mineral turfs for spreading veins
+	drop_sound = SFX_STONE_DROP
+	pickup_sound = SFX_STONE_PICKUP
+	sound_vary = TRUE
 
 /obj/item/stack/ore/update_overlays()
 	. = ..()
@@ -197,6 +200,9 @@ GLOBAL_LIST_INIT(sand_recipes, list(\
 	mine_experience = 10
 	scan_state = "rock_Diamond"
 	merge_type = /obj/item/stack/ore/diamond
+
+/obj/item/stack/ore/diamond/five
+	amount = 5
 
 /obj/item/stack/ore/bananium
 	name = "bananium ore"
@@ -403,7 +409,7 @@ GLOBAL_LIST_INIT(sand_recipes, list(\
 
 /*****************************Coin********************************/
 
-// The coin's value is a value of it's materials.
+// The coin's value is a value of its materials.
 // Yes, the gold standard makes a come-back!
 // This is the only way to make coins that are possible to produce on station actually worth anything.
 /obj/item/coin
@@ -646,20 +652,18 @@ GLOBAL_LIST_INIT(sand_recipes, list(\
 			continue
 		target_airlock.lock()
 
-/obj/item/coin/eldritch/afterattack(atom/target_atom, mob/user, proximity)
-	. = ..()
-	if(!proximity)
-		return
+/obj/item/coin/eldritch/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
+	if(!istype(interacting_with, /obj/machinery/door/airlock))
+		return NONE
 	if(!IS_HERETIC(user))
-		var/mob/living/living_user = user
-		living_user.adjustBruteLoss(5)
-		living_user.adjustFireLoss(5)
-		return
-	if(istype(target_atom, /obj/machinery/door/airlock))
-		var/obj/machinery/door/airlock/target_airlock = target_atom
-		to_chat(user, span_warning("You insert [src] into the airlock."))
-		target_airlock.emag_act(user, src)
-		qdel(src)
+		user.adjustBruteLoss(5)
+		user.adjustFireLoss(5)
+		return ITEM_INTERACT_BLOCKING
+	var/obj/machinery/door/airlock/target_airlock = interacting_with
+	to_chat(user, span_warning("You insert [src] into the airlock."))
+	target_airlock.emag_act(user, src)
+	qdel(src)
+	return ITEM_INTERACT_SUCCESS
 
 #undef GIBTONITE_QUALITY_HIGH
 #undef GIBTONITE_QUALITY_LOW

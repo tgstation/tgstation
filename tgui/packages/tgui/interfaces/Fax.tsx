@@ -49,6 +49,9 @@ export const Fax = (props) => {
         (sortFax: FaxInfo) => sortFax.fax_name,
       )
     : [];
+  const special_networks = data.syndicate_network
+    ? data.special_faxes
+    : data.special_faxes.filter((fax: FaxSpecial) => !fax.emag_needed);
   return (
     <Window width={340} height={540}>
       <Window.Content scrollable>
@@ -81,14 +84,11 @@ export const Fax = (props) => {
           </LabeledList.Item>
         </Section>
         <Section title="Send">
-          {faxes.length !== 0 ? (
+          {faxes.length === 0 && special_networks.length === 0 ? (
+            "The fax couldn't detect any other faxes on the network."
+          ) : (
             <Box mt={0.4}>
-              {(data.syndicate_network
-                ? data.special_faxes
-                : data.special_faxes.filter(
-                    (fax: FaxSpecial) => !fax.emag_needed,
-                  )
-              ).map((special: FaxSpecial) => (
+              {special_networks.map((special: FaxSpecial) => (
                 <Button
                   key={special.fax_id}
                   tooltip={special.fax_name}
@@ -104,25 +104,25 @@ export const Fax = (props) => {
                   {special.fax_name}
                 </Button>
               ))}
-              {faxes.map((fax: FaxInfo) => (
-                <Button
-                  key={fax.fax_id}
-                  tooltip={fax.fax_name}
-                  disabled={!data.has_paper}
-                  color={fax.syndicate_network ? 'red' : 'blue'}
-                  onClick={() =>
-                    act('send', {
-                      id: fax.fax_id,
-                      name: fax.fax_name,
-                    })
-                  }
-                >
-                  {fax.fax_name}
-                </Button>
-              ))}
+              {faxes.length !== 0
+                ? faxes.map((fax: FaxInfo) => (
+                    <Button
+                      key={fax.fax_id}
+                      tooltip={fax.fax_name}
+                      disabled={!data.has_paper}
+                      color={fax.syndicate_network ? 'red' : 'blue'}
+                      onClick={() =>
+                        act('send', {
+                          id: fax.fax_id,
+                          name: fax.fax_name,
+                        })
+                      }
+                    >
+                      {fax.fax_name}
+                    </Button>
+                  ))
+                : null}
             </Box>
-          ) : (
-            "The fax couldn't detect any other faxes on the network."
           )}
         </Section>
         <Section

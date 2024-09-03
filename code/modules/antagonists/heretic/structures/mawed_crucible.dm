@@ -57,6 +57,10 @@
 		return span_notice("It's at <b>[round(atom_integrity * 100 / max_integrity)]%</b> stability.")
 	return ..()
 
+// no breaky herety thingy
+/obj/structure/destructible/eldritch_crucible/rust_heretic_act()
+	return
+
 /obj/structure/destructible/eldritch_crucible/attacked_by(obj/item/weapon, mob/living/user)
 	if(!iscarbon(user))
 		return ..()

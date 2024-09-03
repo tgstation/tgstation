@@ -18,11 +18,19 @@
 /// support the "use gender" option.
 #define PREFERENCE_PRIORITY_BODY_TYPE 5
 
+/// Used for preferences that rely on body setup being finalized.
+#define PREFERENCE_PRORITY_LATE_BODY_TYPE 6
+
+/// Equpping items based on preferences.
+/// Should happen after species and body type to make sure it looks right.
+/// Mostly redundant, but a safety net for saving/loading.
+#define PREFERENCE_PRIORITY_LOADOUT 7
+
 /// The priority at which names are decided, needed for proper randomization.
-#define PREFERENCE_PRIORITY_NAMES 6
+#define PREFERENCE_PRIORITY_NAMES 8
 
 /// Preferences that aren't names, but change the name changes set by PREFERENCE_PRIORITY_NAMES.
-#define PREFERENCE_PRIORITY_NAME_MODIFICATIONS 7
+#define PREFERENCE_PRIORITY_NAME_MODIFICATIONS 9
 
 /// The maximum preference priority, keep this updated, but don't use it for `priority`.
 #define MAX_PREFERENCE_PRIORITY PREFERENCE_PRIORITY_NAME_MODIFICATIONS
@@ -103,9 +111,9 @@ GLOBAL_LIST_INIT(preference_entries_by_key, init_preference_entries_by_key())
 	/// DOES have random body on, will this already be randomized?
 	var/randomize_by_default = TRUE
 
-	/// If the selected species has this in its /datum/species/mutant_bodyparts,
+	/// If the selected species has this in its /datum/species/body_markings,
 	/// will show the feature as selectable.
-	var/relevant_mutant_bodypart = null
+	var/relevant_body_markings = null
 
 	/// If the selected species has this in its /datum/species/inherent_traits,
 	/// will show the feature as selectable.
@@ -324,10 +332,10 @@ GLOBAL_LIST_INIT(preference_entries_by_key, init_preference_entries_by_key())
 	SHOULD_NOT_SLEEP(TRUE)
 
 	if ( \
-		!isnull(relevant_mutant_bodypart) \
-		|| !isnull(relevant_inherent_trait) \
+		!isnull(relevant_inherent_trait) \
 		|| !isnull(relevant_external_organ) \
 		|| !isnull(relevant_head_flag) \
+		|| !isnull(relevant_body_markings) \
 	)
 		var/species_type = preferences.read_preference(/datum/preference/choiced/species)
 

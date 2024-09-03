@@ -1,4 +1,4 @@
-///This datum is an abstract class that can be overriden for different types of movement
+///This datum is an abstract class that can be overridden for different types of movement
 /datum/ai_movement
 	///Assoc list ist of controllers that are currently moving as key, and what they are moving to as value
 	var/list/moving_controllers = list()
@@ -45,6 +45,9 @@
 		var/mob/living/pawn_mob = pawn
 		if(!(pawn_mob.mobility_flags & MOBILITY_MOVE))
 			can_move = FALSE
+
+	if(HAS_TRAIT(pawn, TRAIT_NO_TRANSFORM))
+		can_move = FALSE
 
 	return can_move
 

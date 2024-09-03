@@ -76,7 +76,7 @@ export async function processTestMerges({ github, context }) {
 		const existingComment =
 			comments.repository.pullRequest.comments.nodes.find(
 				(comment) =>
-					comment.author.login === "github-actions" &&
+					comment.author?.login === "github-actions" &&
 					comment.body.startsWith(TEST_MERGE_COMMENT_HEADER)
 			);
 

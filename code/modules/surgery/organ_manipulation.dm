@@ -55,7 +55,7 @@
 	)
 
 /datum/surgery/organ_manipulation/mechanic
-	name = "Prosthesis organ manipulation"
+	name = "Hardware Manipulation"
 	requires_bodypart_type = BODYTYPE_ROBOTIC
 	surgery_flags = SURGERY_SELF_OPERABLE | SURGERY_REQUIRE_LIMB
 	possible_locs = list(BODY_ZONE_CHEST, BODY_ZONE_HEAD)
@@ -110,7 +110,7 @@
 	)
 
 /datum/surgery/organ_manipulation/mechanic/external
-	name = "Prosthetic feature manipulation"
+	name = "Chassis Manipulation"
 	possible_locs = list(
 		BODY_ZONE_CHEST,
 		BODY_ZONE_HEAD,
@@ -128,7 +128,7 @@
 		/datum/surgery_step/mechanic_close,
 	)
 
-///Organ manipulation base class. Do not use, it wont work. Use it's subtypes
+///Organ manipulation base class. Do not use, it wont work. Use its subtypes
 /datum/surgery_step/manipulate_organs
 	name = "manipulate organs"
 	repeatable = TRUE
@@ -239,22 +239,20 @@
 			tool = tool.contents[1]
 		target_organ = tool
 		user.temporarilyRemoveItemFromInventory(target_organ, TRUE)
-		if(target_organ.Insert(target))
-			if(apparatus)
-				apparatus.icon_state = initial(apparatus.icon_state)
-				apparatus.desc = initial(apparatus.desc)
-				apparatus.cut_overlays()
-			display_results(
-				user,
-				target,
-				span_notice("You insert [tool] into [target]'s [target.parse_zone_with_bodypart(target_zone)]."),
-				span_notice("[user] inserts [tool] into [target]'s [target.parse_zone_with_bodypart(target_zone)]!"),
-				span_notice("[user] inserts something into [target]'s [target.parse_zone_with_bodypart(target_zone)]!"),
-			)
-			display_pain(target, "Your [target.parse_zone_with_bodypart(target_zone)] throbs with pain as your new [tool.name] comes to life!")
-			target_organ.on_surgical_insertion(user, target, target_zone, tool)
-		else
-			target_organ.forceMove(target.loc)
+		target_organ.Insert(target)
+		if(apparatus)
+			apparatus.icon_state = initial(apparatus.icon_state)
+			apparatus.desc = initial(apparatus.desc)
+			apparatus.cut_overlays()
+		display_results(
+			user,
+			target,
+			span_notice("You insert [tool] into [target]'s [target.parse_zone_with_bodypart(target_zone)]."),
+			span_notice("[user] inserts [tool] into [target]'s [target.parse_zone_with_bodypart(target_zone)]!"),
+			span_notice("[user] inserts something into [target]'s [target.parse_zone_with_bodypart(target_zone)]!"),
+		)
+		display_pain(target, "Your [target.parse_zone_with_bodypart(target_zone)] throbs with pain as your new [tool.name] comes to life!")
+		target_organ.on_surgical_insertion(user, target, target_zone, tool)
 
 	else if(current_type == "extract")
 		if(target_organ && target_organ.owner == target)

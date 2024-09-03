@@ -676,20 +676,20 @@ GLOBAL_LIST_INIT(gaslist_cache, init_gaslist_cache())
 	return FALSE
 
 /// Pumps gas from src to output_air. Amount depends on target_pressure
-/datum/gas_mixture/proc/pump_gas_to(datum/gas_mixture/output_air, target_pressure, specific_gas = null)
-	var/temperature_delta = abs(temperature - output_air.temperature)
+/datum/gas_mixture/proc/pump_gas_to(datum/gas_mixture/output_air, target_pressure, specific_gas = null, datum/gas_mixture/output_pipenet_air = null)
+	var/datum/gas_mixture/input_air = specific_gas ? remove_specific_ratio(specific_gas, 1) : src
+	var/temperature_delta = abs(input_air.temperature - output_air.temperature)
 	var/datum/gas_mixture/removed
-	var/transfer_moles
+
+	var/transfer_moles_output = input_air.gas_pressure_calculate(output_air, target_pressure, temperature_delta <= 5)
+	var/transfer_moles_pipenet = output_pipenet_air?.volume ? input_air.gas_pressure_calculate(output_pipenet_air, target_pressure, temperature_delta <= 5) : 0
+	var/transfer_moles = max(transfer_moles_output, transfer_moles_pipenet)
 
 	if(specific_gas)
-		// This is necessary because the specific heat capacity of a gas might be different from our gasmix.
-		var/datum/gas_mixture/temporary = remove_specific_ratio(specific_gas, 1)
-		transfer_moles = temporary.gas_pressure_calculate(output_air, target_pressure, temperature_delta <= 5)
-		removed = temporary.remove_specific(specific_gas, transfer_moles)
-		merge(temporary)
+		removed = input_air.remove_specific(specific_gas, transfer_moles)
+		merge(input_air) // Merge the remaining gas back to the input node
 	else
-		transfer_moles = gas_pressure_calculate(output_air, target_pressure, temperature_delta <= 5)
-		removed = remove(transfer_moles)
+		removed = input_air.remove(transfer_moles)
 
 	if(!removed)
 		return FALSE
@@ -698,18 +698,20 @@ GLOBAL_LIST_INIT(gaslist_cache, init_gaslist_cache())
 	return removed
 
 /// Releases gas from src to output air. This means that it can not transfer air to gas mixture with higher pressure.
-/datum/gas_mixture/proc/release_gas_to(datum/gas_mixture/output_air, target_pressure, rate=1)
+/datum/gas_mixture/proc/release_gas_to(datum/gas_mixture/output_air, target_pressure, rate=1, datum/gas_mixture/output_pipenet_air = null)
 	var/output_starting_pressure = output_air.return_pressure()
 	var/input_starting_pressure = return_pressure()
 
 	//Need at least 10 KPa difference to overcome friction in the mechanism
-	if(output_starting_pressure >= min(target_pressure,input_starting_pressure-10))
+	if(output_starting_pressure >= min(target_pressure, input_starting_pressure-10))
 		return FALSE
 	//Can not have a pressure delta that would cause output_pressure > input_pressure
 	target_pressure = output_starting_pressure + min(target_pressure - output_starting_pressure, (input_starting_pressure - output_starting_pressure)/2)
 	var/temperature_delta = abs(temperature - output_air.temperature)
 
-	var/transfer_moles = gas_pressure_calculate(output_air, target_pressure, temperature_delta <= 5)
+	var/transfer_moles_output = gas_pressure_calculate(output_air, target_pressure, temperature_delta <= 5)
+	var/transfer_moles_pipenet = output_pipenet_air?.volume ? gas_pressure_calculate(output_pipenet_air, target_pressure, temperature_delta <= 5) : 0
+	var/transfer_moles = max(transfer_moles_output, transfer_moles_pipenet)
 
 	//Actually transfer the gas
 	var/datum/gas_mixture/removed = remove(transfer_moles * rate)

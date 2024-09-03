@@ -3,10 +3,10 @@
 /datum/ai_controller/basic_controller/raptor
 	blackboard = list(
 		BB_INTERACTIONS_WITH_OWNER = list(
-			"Pecks",
-			"Nuzzles",
-			"Wags tail against",
-			"Playfully leans against"
+			"pecks",
+			"nuzzles",
+			"wags their tail against",
+			"playfully leans against"
 		),
 		BB_TARGETING_STRATEGY = /datum/targeting_strategy/basic/raptor,
 		BB_PET_TARGETING_STRATEGY = /datum/targeting_strategy/basic/raptor,
@@ -46,9 +46,10 @@
 
 /datum/targeting_strategy/basic/raptor
 
-//dont attack anyone with the neutral faction.
+//dont attack anyone that shares our factions.
 /datum/targeting_strategy/basic/raptor/faction_check(datum/ai_controller/controller, mob/living/living_mob, mob/living/the_target)
-	return (the_target.faction.Find(FACTION_NEUTRAL) || the_target.faction.Find(FACTION_RAPTOR))
+	. = ..()
+	return .
 
 /datum/ai_controller/basic_controller/baby_raptor
 	blackboard = list(

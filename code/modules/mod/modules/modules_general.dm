@@ -54,7 +54,7 @@
 
 /obj/item/mod/module/storage/large_capacity
 	name = "MOD expanded storage module"
-	desc = "Reverse engineered by Nakamura Engineering from Donk Corporation designs, this system of hidden compartments \
+	desc = "Reverse engineered by Nakamura Engineering from Donk Company designs, this system of hidden compartments \
 		is entirely within the suit, distributing items and weight evenly to ensure a comfortable experience for the user; \
 		whether smuggling, or simply hauling."
 	icon_state = "storage_large"
@@ -108,8 +108,6 @@
 	overlay_state_inactive = "module_jetpack"
 	overlay_state_active = "module_jetpack_on"
 	required_slots = list(ITEM_SLOT_BACK)
-	/// Do we give the wearer a speed buff.
-	var/full_speed = FALSE
 	/// Do we have stabilizers? If yes the user won't move from inertia.
 	var/stabilize = TRUE
 	/// Callback to see if we can thrust the user.
@@ -143,14 +141,6 @@
 		/datum/effect_system/trail_follow/ion/grav_allowed \
 	)
 
-/obj/item/mod/module/jetpack/on_activation()
-	if(full_speed)
-		mod.wearer.add_movespeed_modifier(/datum/movespeed_modifier/jetpack/fullspeed)
-
-/obj/item/mod/module/jetpack/on_deactivation(display_message = TRUE, deleting = FALSE)
-	if(full_speed)
-		mod.wearer.remove_movespeed_modifier(/datum/movespeed_modifier/jetpack/fullspeed)
-
 /obj/item/mod/module/jetpack/get_configuration()
 	. = ..()
 	.["stabilizers"] = add_ui_configuration("Stabilizers", "bool", stabilize)
@@ -166,15 +156,6 @@
 	if(!drain_power(use_energy_cost))
 		return FALSE
 	return TRUE
-
-/obj/item/mod/module/jetpack/advanced
-	name = "MOD advanced ion jetpack module"
-	desc = "An improvement on the previous model of electric thrusters. This one achieves higher speeds through \
-		mounting of more jets and application of red paint."
-	icon_state = "jetpack_advanced"
-	overlay_state_inactive = "module_jetpackadv"
-	overlay_state_active = "module_jetpackadv_on"
-	full_speed = TRUE
 
 /// Cooldown to use if we didn't actually launch a jump jet
 #define FAILED_ACTIVATION_COOLDOWN 3 SECONDS
@@ -193,9 +174,6 @@
 	required_slots = list(ITEM_SLOT_BACK)
 
 /obj/item/mod/module/jump_jet/on_use()
-	. = ..()
-	if (!.)
-		return FALSE
 	if (DOING_INTERACTION(mod.wearer, mod.wearer))
 		balloon_alert(mod.wearer, "busy!")
 		return
@@ -308,7 +286,6 @@
 	icon_state = "apparatus"
 	complexity = 1
 	incompatible_modules = list(/obj/item/mod/module/mouthhole)
-	overlay_state_inactive = "module_apparatus"
 	required_slots = list(ITEM_SLOT_HEAD|ITEM_SLOT_MASK)
 	/// Former flags of the helmet.
 	var/former_helmet_flags = NONE
@@ -473,7 +450,7 @@
 ///Dispenser - Dispenses an item after a time passes.
 /obj/item/mod/module/dispenser
 	name = "MOD burger dispenser module"
-	desc = "A rare piece of technology reverse-engineered from a prototype found in a Donk Corporation vessel. \
+	desc = "A rare piece of technology reverse-engineered from a prototype found in a Donk Company vessel. \
 		This can draw incredible amounts of power from the suit's charge to create edible organic matter in the \
 		palm of the wearer's glove; however, research seemed to have entirely stopped at burgers. \
 		Notably, all attempts to get it to dispense Earl Grey tea have failed."
@@ -734,6 +711,7 @@
 		attached_hat = hat
 		var/obj/item/clothing/helmet = mod.get_part_from_slot(ITEM_SLOT_HEAD)
 		if(istype(helmet))
+			helmet.attach_clothing_traits(attached_hat.clothing_traits)
 			former_flags = helmet.flags_cover
 			former_visor_flags = helmet.visor_flags_cover
 			helmet.flags_cover |= attached_hat.flags_cover
@@ -756,11 +734,12 @@
 		balloon_alert(user, "hat removed")
 	else
 		balloon_alert_to_viewers("the hat falls to the floor!")
-	attached_hat = null
 	var/obj/item/clothing/helmet = mod.get_part_from_slot(ITEM_SLOT_HEAD)
 	if(istype(helmet))
+		helmet.detach_clothing_traits(attached_hat)
 		helmet.flags_cover = former_flags
 		helmet.visor_flags_cover = former_visor_flags
+	attached_hat = null
 	mod.wearer.update_clothing(mod.slot_flags)
 
 /obj/item/mod/module/hat_stabilizer/syndicate
@@ -882,16 +861,10 @@
 	return ..()
 
 /obj/item/mod/module/recycler/on_activation()
-	. = ..()
-	if(!.)
-		return
 	connector = AddComponent(/datum/component/connect_loc_behalf, mod.wearer, loc_connections)
 	RegisterSignal(mod.wearer, COMSIG_MOVABLE_MOVED, PROC_REF(on_wearer_moved))
 
 /obj/item/mod/module/recycler/on_deactivation(display_message, deleting = FALSE)
-	. = ..()
-	if(!.)
-		return
 	QDEL_NULL(connector)
 	UnregisterSignal(mod.wearer, COMSIG_MOVABLE_MOVED, PROC_REF(on_wearer_moved))
 
@@ -979,3 +952,99 @@
 	attempt_insert_storage(product)
 	balloon_alert(mod.wearer, "ammo box dispensed.")
 	playsound(src, 'sound/machines/microwave/microwave-end.ogg', 50, TRUE)
+
+/obj/item/mod/module/fishing_glove
+	name = "MOD fishing glove module"
+	desc = "A MOD module that takes in an external fishing rod to enable the user to fish without having to hold one."
+	icon_state = "fishing_glove"
+	complexity = 1
+	overlay_state_inactive = "fishing_glove"
+	incompatible_modules = (/obj/item/mod/module/fishing_glove)
+	required_slots = list(ITEM_SLOT_GLOVES)
+	var/obj/item/fishing_rod/equipped
+
+/obj/item/mod/module/fishing_glove/Initialize(mapload)
+	. = ..()
+	register_context()
+
+/obj/item/mod/module/fishing_glove/add_context(atom/source, list/context, obj/item/held_item, mob/user)
+	if(!held_item && equipped)
+		context[SCREENTIP_CONTEXT_RMB] = "Remove rod"
+		return CONTEXTUAL_SCREENTIP_SET
+	if(istype(held_item, /obj/item/fishing_rod))
+		context[SCREENTIP_CONTEXT_LMB] = "Insert rod"
+		return CONTEXTUAL_SCREENTIP_SET
+
+/obj/item/mod/module/fishing_glove/examine(mob/user)
+	. = ..()
+	. += span_info("You can [EXAMINE_HINT("right-click")] the modsuit gloves to open the fishing rod interface once attached and activated.")
+	if(equipped)
+		. += span_info("it has a [icon2html(equipped, user)] installed. [EXAMINE_HINT("Right-Click")] to remove it.")
+
+/obj/item/mod/module/fishing_glove/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if(!istype(tool, /obj/item/fishing_rod))
+		return ..()
+	if(equipped)
+		balloon_alert(user, "remove current rod first!")
+	if(!user.transferItemToLoc(tool, src))
+		user.balloon_alert(user, "it's stuck!")
+	equipped = tool
+	balloon_alert(user, "rod inserted")
+	playsound(src, 'sound/items/click.ogg', 50, TRUE)
+	return ITEM_INTERACT_SUCCESS
+
+/obj/item/mod/module/fishing_glove/attack_hand_secondary(mob/user, list/modifiers)
+	. = ..()
+	if(. == SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN)
+		return
+	if(!equipped)
+		return
+	user.put_in_hands(equipped)
+	balloon_alert(user, "rod removed")
+	playsound(src, 'sound/items/click.ogg', 50, TRUE)
+	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+
+/obj/item/mod/module/fishing_glove/Exited(atom/movable/gone)
+	if(gone == equipped)
+		equipped = null
+		var/obj/item/gloves = mod?.get_part_from_slot(ITEM_SLOT_GLOVES)
+		if(gloves && !QDELETED(mod))
+			qdel(gloves.GetComponent(/datum/component/profound_fisher))
+
+/obj/item/mod/module/fishing_glove/on_suit_activation()
+	if(!equipped)
+		return
+	var/obj/item/gloves = mod.get_part_from_slot(ITEM_SLOT_GLOVES)
+	if(gloves)
+		gloves.AddComponent(/datum/component/profound_fisher, equipped)
+
+/obj/item/mod/module/fishing_glove/on_suit_deactivation(deleting = FALSE)
+	var/obj/item/gloves = mod.get_part_from_slot(ITEM_SLOT_GLOVES)
+	if(gloves && !deleting)
+		qdel(gloves.GetComponent(/datum/component/profound_fisher))
+
+/obj/item/mod/module/shock_absorber
+	name = "MOD shock absorption module"
+	desc = "A module that makes the user resistant to the knockdown inflicted by Stun Batons."
+	icon_state = "no_baton"
+	complexity = 1
+	use_energy_cost = DEFAULT_CHARGE_DRAIN
+	incompatible_modules = list(/obj/item/mod/module/shock_absorber)
+	required_slots = list(ITEM_SLOT_BACK|ITEM_SLOT_BELT)
+
+/obj/item/mod/module/shock_absorber/on_suit_activation()
+	. = ..()
+	ADD_TRAIT(mod.wearer, TRAIT_BATON_RESISTANCE, REF(src))
+	RegisterSignal(mod.wearer, COMSIG_MOB_BATONED, PROC_REF(mob_batoned))
+
+/obj/item/mod/module/shock_absorber/on_suit_deactivation(deleting)
+	. = ..()
+	REMOVE_TRAIT(mod.wearer, TRAIT_BATON_RESISTANCE, REF(src))
+	UnregisterSignal(mod.wearer, COMSIG_MOB_BATONED)
+
+/obj/item/mod/module/shock_absorber/proc/mob_batoned(datum/source)
+	SIGNAL_HANDLER
+	drain_power(use_energy_cost)
+	var/datum/effect_system/lightning_spread/sparks = new /datum/effect_system/lightning_spread
+	sparks.set_up(number = 5, cardinals_only = TRUE, location = mod.wearer.loc)
+	sparks.start()

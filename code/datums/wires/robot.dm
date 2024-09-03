@@ -35,10 +35,11 @@
 		if(WIRE_AI) // Pulse to pick a new AI.
 			if(!R.emagged)
 				var/new_ai
+				var/is_a_syndi_borg = (ROLE_SYNDICATE in R.faction)
 				if(user)
-					new_ai = select_active_ai(user, R.z)
+					new_ai = select_active_ai(user, R.z, !is_a_syndi_borg, is_a_syndi_borg)
 				else
-					new_ai = select_active_ai(R, R.z)
+					new_ai = select_active_ai(R, R.z, !is_a_syndi_borg, is_a_syndi_borg)
 				R.notify_ai(AI_NOTIFICATION_CYBORG_DISCONNECTED)
 				if(new_ai && (new_ai != R.connected_ai))
 					R.set_connected_ai(new_ai)

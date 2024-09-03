@@ -122,7 +122,7 @@
 	return bleed_amt
 
 /datum/wound/slash/flesh/get_bleed_rate_of_change()
-	//basically if a species doesn't bleed, the wound is stagnant and will not heal on it's own (nor get worse)
+	//basically if a species doesn't bleed, the wound is stagnant and will not heal on its own (nor get worse)
 	if(!limb.can_bleed())
 		return BLOOD_FLOW_STEADY
 	if(HAS_TRAIT(victim, TRAIT_BLOODY_MESS))
@@ -137,7 +137,7 @@
 	if (!victim || HAS_TRAIT(victim, TRAIT_STASIS))
 		return
 
-	// in case the victim has the NOBLOOD trait, the wound will simply not clot on it's own
+	// in case the victim has the NOBLOOD trait, the wound will simply not clot on its own
 	if(limb.can_bleed())
 		set_blood_flow(min(blood_flow, WOUND_SLASH_MAX_BLOODFLOW))
 
@@ -188,18 +188,23 @@
 	else if(istype(I, /obj/item/stack/medical/suture))
 		return suture(I, user)
 
-/datum/wound/slash/flesh/try_handling(mob/living/carbon/human/user)
-	if(user.pulling != victim || user.zone_selected != limb.body_zone || !isfelinid(user) || !victim.try_inject(user, injection_flags = INJECT_TRY_SHOW_ERROR_MESSAGE))
+/datum/wound/slash/flesh/try_handling(mob/living/user)
+	if(user.pulling != victim || !HAS_TRAIT(user, TRAIT_WOUND_LICKER) || !victim.try_inject(user, injection_flags = INJECT_TRY_SHOW_ERROR_MESSAGE))
 		return FALSE
+	if(!isnull(user.hud_used?.zone_select) && user.zone_selected != limb.body_zone)
+		return FALSE
+
 	if(DOING_INTERACTION_WITH_TARGET(user, victim))
 		to_chat(user, span_warning("You're already interacting with [victim]!"))
 		return
-	if(user.is_mouth_covered())
-		to_chat(user, span_warning("Your mouth is covered, you can't lick [victim]'s wounds!"))
-		return
-	if(!user.get_organ_slot(ORGAN_SLOT_TONGUE))
-		to_chat(user, span_warning("You can't lick wounds without a tongue!")) // f in chat
-		return
+	if(iscarbon(user))
+		var/mob/living/carbon/carbon_user = user
+		if(carbon_user.is_mouth_covered())
+			to_chat(user, span_warning("Your mouth is covered, you can't lick [victim]'s wounds!"))
+			return
+		if(!carbon_user.get_organ_slot(ORGAN_SLOT_TONGUE))
+			to_chat(user, span_warning("You can't lick wounds without a tongue!")) // f in chat
+			return
 
 	lick_wounds(user)
 	return TRUE

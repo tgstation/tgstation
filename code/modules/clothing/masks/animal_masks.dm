@@ -16,7 +16,7 @@ GLOBAL_LIST_INIT(cursed_animal_masks, list(
 /obj/item/clothing/mask/animal
 	w_class = WEIGHT_CLASS_SMALL
 	clothing_flags = VOICEBOX_TOGGLABLE
-	modifies_speech = TRUE
+	var/modifies_speech = TRUE
 	flags_cover = MASKCOVERSMOUTH
 
 	var/animal_type ///what kind of animal the masks represents. used for automatic name and description generation.
@@ -32,6 +32,17 @@ GLOBAL_LIST_INIT(cursed_animal_masks, list(
 	if(cursed)
 		make_cursed()
 
+/obj/item/clothing/mask/animal/equipped(mob/M, slot)
+	. = ..()
+	if ((slot & ITEM_SLOT_MASK) && modifies_speech)
+		RegisterSignal(M, COMSIG_MOB_SAY, PROC_REF(handle_speech))
+	else
+		UnregisterSignal(M, COMSIG_MOB_SAY)
+
+/obj/item/clothing/mask/animal/dropped(mob/M)
+	. = ..()
+	UnregisterSignal(M, COMSIG_MOB_SAY)
+
 /obj/item/clothing/mask/animal/vv_edit_var(vname, vval)
 	if(vname == NAMEOF(src, cursed))
 		if(vval)
@@ -39,6 +50,14 @@ GLOBAL_LIST_INIT(cursed_animal_masks, list(
 				make_cursed()
 		else if(cursed)
 			clear_curse()
+	if(vname == NAMEOF(src, modifies_speech) && ismob(loc))
+		var/mob/M = loc
+		if(M.get_item_by_slot(ITEM_SLOT_MASK) == src)
+			if(vval)
+				if(!modifies_speech)
+					RegisterSignal(M, COMSIG_MOB_SAY, PROC_REF(handle_speech))
+			else if(modifies_speech)
+				UnregisterSignal(M, COMSIG_MOB_SAY)
 	return ..()
 
 /obj/item/clothing/mask/animal/examine(mob/user)
@@ -90,7 +109,9 @@ GLOBAL_LIST_INIT(cursed_animal_masks, list(
 				UnregisterSignal(M, COMSIG_MOB_SAY)
 			M.update_worn_mask()
 
-/obj/item/clothing/mask/animal/handle_speech(datum/source, list/speech_args)
+/obj/item/clothing/mask/animal/proc/handle_speech(datum/source, list/speech_args)
+	SIGNAL_HANDLER
+
 	if(clothing_flags & VOICEBOX_DISABLED)
 		return
 	if(!modifies_speech || !LAZYLEN(animal_sounds))

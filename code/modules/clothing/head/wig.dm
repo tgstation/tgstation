@@ -60,20 +60,22 @@
 		add_atom_colour(newcolor, FIXED_COLOUR_PRIORITY)
 	update_appearance()
 
-/obj/item/clothing/head/wig/afterattack(mob/living/carbon/human/target, mob/user)
-	. = ..()
-	if(!istype(target))
-		return
+/obj/item/clothing/head/wig/ranged_interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
+	return interact_with_atom(interacting_with, user, modifiers)
 
+/obj/item/clothing/head/wig/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
+	if(!ishuman(interacting_with) || interacting_with == user)
+		return NONE
+	var/mob/living/carbon/human/target = interacting_with
 	if(target.head)
 		var/obj/item/clothing/head = target.head
 		if((head.flags_inv & HIDEHAIR) && !istype(head, /obj/item/clothing/head/wig))
 			to_chat(user, span_warning("You can't get a good look at [target.p_their()] hair!"))
-			return
+			return ITEM_INTERACT_BLOCKING
 	var/obj/item/bodypart/head/noggin = target.get_bodypart(BODY_ZONE_HEAD)
 	if(!noggin)
 		to_chat(user, span_warning("[target.p_They()] have no head!"))
-		return
+		return ITEM_INTERACT_BLOCKING
 
 	var/selected_hairstyle = null
 	var/selected_hairstyle_color = null
@@ -90,6 +92,7 @@
 		add_atom_colour(selected_hairstyle_color, FIXED_COLOUR_PRIORITY)
 		hairstyle = selected_hairstyle
 		update_appearance()
+	return ITEM_INTERACT_SUCCESS
 
 /obj/item/clothing/head/wig/random/Initialize(mapload)
 	hairstyle = pick(SSaccessories.hairstyles_list - "Bald") //Don't want invisible wig

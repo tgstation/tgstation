@@ -62,11 +62,23 @@
 	. = ..()
 	. += status_string()
 
-/obj/item/lightreplacer/pre_attack(atom/target, mob/living/user, params)
-	. = ..()
-	if(.)
-		return
-	return do_action(target, user) //if we are attacking a valid target[light, floodlight or turf] stop here
+/obj/item/lightreplacer/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
+	return do_action(interacting_with, user) ? ITEM_INTERACT_SUCCESS : NONE
+
+/obj/item/lightreplacer/ranged_interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
+	// has no bluespace capabilities
+	if(!bluespace_toggle)
+		return NONE
+	// target not in range
+	if(interacting_with.z != user.z)
+		return NONE
+	// target not in view
+	if(!(interacting_with in view(7, get_turf(user))))
+		user.balloon_alert(user, "out of range!")
+		return ITEM_INTERACT_BLOCKING
+
+	//replace lights & stuff
+	return do_action(interacting_with, user) ? ITEM_INTERACT_SUCCESS : NONE
 
 /obj/item/lightreplacer/attackby(obj/item/insert, mob/user, params)
 	. = ..()
@@ -121,7 +133,7 @@
 			if(src.uses >= max_uses)
 				break
 
-			//consume the item only if it's an light tube,bulb or shard
+			//consume the item only if it's a light tube, bulb or shard
 			loaded = FALSE
 			if(istype(item_to_check, /obj/item/light))
 				var/obj/item/light/found_light = item_to_check
@@ -196,7 +208,7 @@
 	for(var/obj/machinery/light/target in user.loc)
 		replace_light(target, user)
 		on_a_light = TRUE
-	if(!on_a_light) //So we dont give a ballon alert when we just used replace_light
+	if(!on_a_light) //So we don't give a balloon alert when we just used replace_light
 		user.balloon_alert(user, "[uses] lights, [bulb_shards]/[BULB_SHARDS_REQUIRED] fragments")
 
 /**
@@ -239,23 +251,6 @@
 
 	return FALSE
 
-/obj/item/lightreplacer/afterattack(atom/target, mob/user, proximity)
-	. = ..()
-
-	// has no bluespace capabilities
-	if(!bluespace_toggle)
-		return
-	// target not in range
-	if(target.z != user.z)
-		return
-	// target not in view
-	if(!(target in view(7, get_turf(user))))
-		user.balloon_alert(user, "out of range!")
-		return
-
-	//replace lights & stuff
-	do_action(target, user)
-
 /obj/item/lightreplacer/proc/status_string()
 	return "It has [uses] light\s remaining (plus [bulb_shards]/[BULB_SHARDS_REQUIRED] fragment\s)."
 
@@ -283,11 +278,14 @@
 		return TRUE
 	return FALSE
 
-/obj/item/lightreplacer/proc/Charge(mob/user)
-	charge += 1
-	if(charge > 3)
-		add_uses(1)
-		charge = 1
+#define LIGHT_CHARGE_COEFF 30000
+/obj/item/lightreplacer/proc/Charge(mob/user, coeff)
+	charge += coeff
+	if(charge > LIGHT_CHARGE_COEFF)
+		add_uses(floor(charge / LIGHT_CHARGE_COEFF))
+		charge = charge % LIGHT_CHARGE_COEFF
+
+#undef LIGHT_CHARGE_COEFF
 
 /obj/item/lightreplacer/proc/replace_light(obj/machinery/light/target, mob/living/user)
 	//Confirm that it's a light we're testing, because afterattack runs this for everything on a given turf and will runtime

@@ -10,9 +10,13 @@
 #define MANIFEST_ERROR_ITEM (1 << 2)
 
 /obj/item/paper/fluff/jobs/cargo/manifest
+	can_become_message_in_bottle = FALSE //A lot of these are spawned each round, they'd only dilute the pool and make it boring.
 	var/order_cost = 0
 	var/order_id = 0
 	var/errors = 0
+
+/obj/item/paper/requisition
+	can_become_message_in_bottle = FALSE //A lot of these are spawned each round, they'd only dilute the pool and make it boring.
 
 /obj/item/paper/fluff/jobs/cargo/manifest/Initialize(mapload, id, cost, manifest_can_fail = TRUE)
 	. = ..()
@@ -99,7 +103,7 @@
 	return round(cost)
 
 /datum/supply_order/proc/generateRequisition(turf/T)
-	var/obj/item/paper/requisition_paper = new(T)
+	var/obj/item/paper/requisition/requisition_paper = new(T)
 
 	requisition_paper.name = "requisition form - #[id] ([pack.name])"
 	var/requisition_text = "<h2>[station_name()] Supply Requisition</h2>"
@@ -185,6 +189,9 @@
 	else
 		account_holder = "Cargo"
 	var/obj/structure/closet/crate/crate = pack.generate(A, paying_account)
+	if(pack.contraband)
+		for(var/atom/movable/item_within as anything in crate.get_all_contents())
+			ADD_TRAIT(item_within, TRAIT_CONTRABAND, INNATE_TRAIT)
 	if(department_destination)
 		crate.AddElement(/datum/element/deliver_first, department_destination, pack.cost)
 	generateManifest(crate, account_holder, pack, pack.cost)

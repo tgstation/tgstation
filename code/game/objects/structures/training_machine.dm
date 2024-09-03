@@ -79,7 +79,7 @@
  *
  * Will not respond if moving and emagged, so once you set it to go it can't be stopped!
  */
-/obj/structure/training_machine/ui_act(action, params)
+/obj/structure/training_machine/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if(.)
 		return
@@ -360,12 +360,17 @@
 	///Number of hits made since the Lap button (alt-click) was last pushed
 	var/lap_hits = 0
 
-/obj/item/training_toolbox/afterattack(atom/target, mob/living/user, proximity)
+/obj/item/training_toolbox/pre_attack(atom/A, mob/living/user, params)
 	. = ..()
-	if (!proximity || target == user || !user.combat_mode)
-		return
-	if (check_hit(target))
-		user.changeNext_move(CLICK_CD_MELEE)
+	if(.)
+		return .
+	if(A == user || !user.combat_mode)
+		return .
+	if(!check_hit(A))
+		return .
+	user.changeNext_move(CLICK_CD_MELEE)
+	user.do_attack_animation(A)
+	return TRUE
 
 /**
  * Check if we should increment the hit counter

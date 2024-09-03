@@ -87,9 +87,9 @@
 			return ..()
 		var/list/modifiers = params2list(params)
 		if(istype(held_item, /obj/item/reagent_containers/syringe) && LAZYACCESS(modifiers, RIGHT_CLICK))
-			held_item.afterattack_secondary(beaker, user, Adjacent(user), params)
+			held_item.interact_with_atom_secondary(beaker, user)
 		else
-			held_item.afterattack(beaker, user, Adjacent(user), params)
+			held_item.interact_with_atom(beaker, user)
 		SStgui.update_uis(src)
 		return TRUE
 
@@ -153,7 +153,7 @@
 	data["resistances"] = get_resistance_data(blood)
 	return data
 
-/obj/machinery/computer/pandemic/ui_act(action, params)
+/obj/machinery/computer/pandemic/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if(.)
 		return

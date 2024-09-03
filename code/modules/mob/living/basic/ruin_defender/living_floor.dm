@@ -35,7 +35,7 @@
 	move_resist = INFINITY
 	density = FALSE
 	combat_mode = TRUE
-	layer = TURF_LAYER
+	layer = LOW_FLOOR_LAYER
 	plane = FLOOR_PLANE
 	faction = list(FACTION_HOSTILE)
 	melee_damage_lower = 20

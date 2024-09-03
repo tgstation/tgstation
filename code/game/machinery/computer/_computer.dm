@@ -93,7 +93,7 @@
 		return
 	for(var/obj/item/circuitboard/computer/board in src.contents)
 		if(!contents || board.GetComponent(/datum/component/gps))
-			return
+			CRASH("[src] Called imprint_gps without setting gps_tag")
 		board.AddComponent(/datum/component/gps, "[tracker]")
 		balloon_alert_to_viewers("board tracker enabled", vision_distance = 1)
 
@@ -134,6 +134,12 @@
 	SHOULD_CALL_PARENT(TRUE)
 	. = ..()
 	update_use_power(ACTIVE_POWER_USE)
+
+/obj/machinery/computer/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
+	SHOULD_CALL_PARENT(TRUE)
+	. = ..()
+	if(!issilicon(ui.user))
+		playsound(src, SFX_KEYBOARD_CLICKS, 10, TRUE, FALSE)
 
 /obj/machinery/computer/ui_close(mob/user)
 	SHOULD_CALL_PARENT(TRUE)

@@ -265,12 +265,20 @@
 	description = "We pulled this one out of Mothball just for you!"
 	occupancy_limit = "40"
 
+
 /datum/map_template/shuttle/emergency/birdshot
 	suffix = "catwalk"
 	name = "Catwalk Station Emergency Shuttle"
 	credit_cost = CARGO_CRATE_VALUE * 5
 	description = "A standard sized shuttle, featuring a medbay and brig, along with an elevated bridge."
 	occupancy_limit = "40"
+
+/datum/map_template/shuttle/emergency/wawa
+	suffix = "wawa"
+	name = "Wawa Stand-in Emergency Shuttle"
+	description = "Due to a recent clerical error in the funding department, a lot of funding went to lizard plushies. Due to the costs, Nanotrasen has supplied a nearby garbage truck as a stand-in. Better learn how to share spots."
+	credit_cost = CARGO_CRATE_VALUE * 6
+	occupancy_limit = "25"
 
 /datum/map_template/shuttle/emergency/scrapheap
 	suffix = "scrapheap"
@@ -432,7 +440,7 @@
 /datum/map_template/shuttle/emergency/lance
 	suffix = "lance"
 	name = "The Lance Crew Evacuation System"
-	description = "A brand new shuttle by Nanotrasen's finest in shuttle-engineering, it's designed to tactically slam into a destroyed station, dispatching threats and saving crew at the same time! Be careful to stay out of it's path."
+	description = "A brand new shuttle by Nanotrasen's finest in shuttle-engineering, it's designed to tactically slam into a destroyed station, dispatching threats and saving crew at the same time! Be careful to stay out of its path."
 	admin_notes = "WARNING: This shuttle is designed to crash into the station. It has turrets, similar to the raven."
 	credit_cost = CARGO_CRATE_VALUE * 70
 	occupancy_limit = "50"

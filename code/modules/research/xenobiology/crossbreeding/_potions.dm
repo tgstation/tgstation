@@ -11,27 +11,25 @@ Slimecrossing Potions
 	icon = 'icons/obj/medical/chemical.dmi'
 	icon_state = "potpurple"
 
-/obj/item/slimepotion/extract_cloner/afterattack(obj/item/target, mob/user , proximity)
-	if(!proximity)
-		return
-	. |= AFTERATTACK_PROCESSED_ITEM
-	if(is_reagent_container(target))
-		return ..(target, user, proximity)
-	if(istype(target, /obj/item/slimecross))
-		to_chat(user, span_warning("[target] is too complex for the potion to clone!"))
-		return
-	if(!istype(target, /obj/item/slime_extract))
-		return
-	var/obj/item/slime_extract/S = target
+/obj/item/slimepotion/extract_cloner/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
+	. = ..()
+	if(. & ITEM_INTERACT_ANY_BLOCKER)
+		return .
+	if(istype(interacting_with, /obj/item/slimecross))
+		to_chat(user, span_warning("[interacting_with] is too complex for the potion to clone!"))
+		return ITEM_INTERACT_BLOCKING
+	if(!istype(interacting_with, /obj/item/slime_extract))
+		return ITEM_INTERACT_BLOCKING
+	var/obj/item/slime_extract/S = interacting_with
 	if(S.recurring)
-		to_chat(user, span_warning("[target] is too complex for the potion to clone!"))
-		return
+		to_chat(user, span_warning("[interacting_with] is too complex for the potion to clone!"))
+		return ITEM_INTERACT_BLOCKING
 	var/path = S.type
-	var/obj/item/slime_extract/C = new path(get_turf(target))
+	var/obj/item/slime_extract/C = new path(get_turf(interacting_with))
 	C.extract_uses = S.extract_uses
-	to_chat(user, span_notice("You pour the potion onto [target], and the fluid solidifies into a copy of it!"))
+	to_chat(user, span_notice("You pour the potion onto [interacting_with], and the fluid solidifies into a copy of it!"))
 	qdel(src)
-	return
+	return ITEM_INTERACT_SUCCESS
 
 //Peace potion - Charged Light Pink
 /obj/item/slimepotion/peacepotion
@@ -107,34 +105,34 @@ Slimecrossing Potions
 	icon_state = "potblue"
 	var/uses = 2
 
-/obj/item/slimepotion/spaceproof/afterattack(obj/item/clothing/C, mob/user, proximity)
+/obj/item/slimepotion/spaceproof/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
 	. = ..()
-	if(!uses)
+	if(. & ITEM_INTERACT_ANY_BLOCKER)
+		return .
+	if(uses <= 0)
 		qdel(src)
-		return
-	if(!proximity)
-		return
-	if(!istype(C))
+		return ITEM_INTERACT_BLOCKING
+	var/obj/item/clothing/clothing = interacting_with
+	if(!istype(clothing))
 		to_chat(user, span_warning("The potion can only be used on clothing!"))
-		return
-	. |= AFTERATTACK_PROCESSED_ITEM
-	if(istype(C, /obj/item/clothing/suit/space))
-		to_chat(user, span_warning("The [C] is already pressure-resistant!"))
-		return . | ..()
-	if(C.min_cold_protection_temperature == SPACE_SUIT_MIN_TEMP_PROTECT && C.clothing_flags & STOPSPRESSUREDAMAGE)
-		to_chat(user, span_warning("The [C] is already pressure-resistant!"))
-		return . | ..()
-	to_chat(user, span_notice("You slather the blue gunk over the [C], making it airtight."))
-	C.name = "pressure-resistant [C.name]"
-	C.remove_atom_colour(WASHABLE_COLOUR_PRIORITY)
-	C.add_atom_colour(COLOR_NAVY, FIXED_COLOUR_PRIORITY)
-	C.min_cold_protection_temperature = SPACE_SUIT_MIN_TEMP_PROTECT
-	C.cold_protection = C.body_parts_covered
-	C.clothing_flags |= STOPSPRESSUREDAMAGE
+		return ITEM_INTERACT_BLOCKING
+	if(istype(clothing, /obj/item/clothing/suit/space))
+		to_chat(user, span_warning("The [interacting_with] is already pressure-resistant!"))
+		return ITEM_INTERACT_BLOCKING
+	if(clothing.min_cold_protection_temperature == SPACE_SUIT_MIN_TEMP_PROTECT && (clothing.clothing_flags & STOPSPRESSUREDAMAGE))
+		to_chat(user, span_warning("The [interacting_with] is already pressure-resistant!"))
+		return ITEM_INTERACT_BLOCKING
+	to_chat(user, span_notice("You slather the blue gunk over the [clothing], making it airtight."))
+	clothing.name = "pressure-resistant [clothing.name]"
+	clothing.remove_atom_colour(WASHABLE_COLOUR_PRIORITY)
+	clothing.add_atom_colour(COLOR_NAVY, FIXED_COLOUR_PRIORITY)
+	clothing.min_cold_protection_temperature = SPACE_SUIT_MIN_TEMP_PROTECT
+	clothing.cold_protection = clothing.body_parts_covered
+	clothing.clothing_flags |= STOPSPRESSUREDAMAGE
 	uses--
-	if(!uses)
+	if(uses <= 0)
 		qdel(src)
-	return .
+	return ITEM_INTERACT_SUCCESS
 
 //Enhancer potion - Charged Cerulean
 /obj/item/slimepotion/enhancer/max
@@ -152,29 +150,30 @@ Slimecrossing Potions
 	resistance_flags = LAVA_PROOF | FIRE_PROOF
 	var/uses = 2
 
-/obj/item/slimepotion/lavaproof/afterattack(obj/item/C, mob/user, proximity)
+/obj/item/slimepotion/lavaproof/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
 	. = ..()
-	if(!uses)
+	if(. & ITEM_INTERACT_ANY_BLOCKER)
+		return .
+	if(uses <= 0)
 		qdel(src)
-		return ..()
-	if(!proximity)
-		return ..()
-	if(!istype(C))
+		return ITEM_INTERACT_BLOCKING
+	if(!isitem(interacting_with))
 		to_chat(user, span_warning("You can't coat this with lavaproofing fluid!"))
-		return ..()
-	. |= AFTERATTACK_PROCESSED_ITEM
-	to_chat(user, span_notice("You slather the red gunk over the [C], making it lavaproof."))
-	C.name = "lavaproof [C.name]"
-	C.remove_atom_colour(WASHABLE_COLOUR_PRIORITY)
-	C.add_atom_colour(COLOR_MAROON, FIXED_COLOUR_PRIORITY)
-	C.resistance_flags |= LAVA_PROOF
-	if (isclothing(C))
-		var/obj/item/clothing/CL = C
-		CL.clothing_flags |= LAVAPROTECT
+		return ITEM_INTERACT_BLOCKING
+
+	var/obj/item/clothing = interacting_with
+	to_chat(user, span_notice("You slather the red gunk over the [clothing], making it lavaproof."))
+	clothing.name = "lavaproof [clothing.name]"
+	clothing.remove_atom_colour(WASHABLE_COLOUR_PRIORITY)
+	clothing.add_atom_colour(COLOR_MAROON, FIXED_COLOUR_PRIORITY)
+	clothing.resistance_flags |= LAVA_PROOF
+	if (isclothing(clothing))
+		var/obj/item/clothing/clothing_real = clothing
+		clothing_real.clothing_flags |= LAVAPROTECT
 	uses--
-	if(!uses)
+	if(uses <= 0)
 		qdel(src)
-	return .
+	return ITEM_INTERACT_SUCCESS
 
 //Revival potion - Charged Grey
 /obj/item/slimepotion/slime_reviver
@@ -183,15 +182,21 @@ Slimecrossing Potions
 	icon = 'icons/obj/medical/chemical.dmi'
 	icon_state = "potsilver"
 
-/obj/item/slimepotion/slime_reviver/attack(mob/living/basic/slime/revive_target, mob/user)
+/obj/item/slimepotion/slime_reviver/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
+	. = ..()
+	if(. & ITEM_INTERACT_ANY_BLOCKER)
+		return .
+	var/mob/living/basic/slime/revive_target = interacting_with
 	if(!isslime(revive_target))
 		to_chat(user, span_warning("The potion only works on slimes!"))
-		return ..()
+		return ITEM_INTERACT_BLOCKING
 	if(revive_target.stat != DEAD)
 		to_chat(user, span_warning("The slime is still alive!"))
-		return
+		return ITEM_INTERACT_BLOCKING
 	if(revive_target.maxHealth <= 0)
 		to_chat(user, span_warning("The slime is too unstable to return!"))
+		return ITEM_INTERACT_BLOCKING
+	user.do_attack_animation(interacting_with)
 	revive_target.revive(HEAL_ALL)
 	revive_target.set_stat(CONSCIOUS)
 	revive_target.visible_message(span_notice("[revive_target] is filled with renewed vigor and blinks awake!"))
@@ -199,6 +204,7 @@ Slimecrossing Potions
 	revive_target.health -= 10
 	revive_target.regenerate_icons()
 	qdel(src)
+	return ITEM_INTERACT_SUCCESS
 
 //Stabilizer potion - Charged Blue
 /obj/item/slimepotion/slime/chargedstabilizer

@@ -272,7 +272,7 @@ world
 	Blend(mask_icon, ICON_ADD)
 
 /// Converts an rgb color into a list storing hsva
-/// Exists because it's useful to have a guarenteed alpha value
+/// Exists because it's useful to have a guaranteed alpha value
 /proc/rgb2hsv(rgb)
 	var/list/hsv = rgb2num(rgb, COLORSPACE_HSV)
 	if(length(hsv) < 4)
@@ -420,6 +420,10 @@ world
 				} \
 				current_layer = base_layer + appearance.layer + current_layer / 1000; \
 			} \
+			/* If we are using topdown rendering, chop that part off so things layer together as expected */ \
+			if((current_layer >= TOPDOWN_LAYER && current_layer < EFFECTS_LAYER) || current_layer > TOPDOWN_LAYER + EFFECTS_LAYER) { \
+				current_layer -= TOPDOWN_LAYER; \
+			} \
 			for (var/index_to_compare_to in 1 to layers.len) { \
 				var/compare_to = layers[index_to_compare_to]; \
 				if (current_layer < layers[compare_to]) { \
@@ -431,9 +435,10 @@ world
 		}
 
 	var/static/icon/flat_template = icon('icons/blanks/32x32.dmi', "nothing")
+	var/icon/flat = icon(flat_template)
 
 	if(!appearance || appearance.alpha <= 0)
-		return icon(flat_template)
+		return flat
 
 	if(start)
 		if(!defdir)
@@ -474,10 +479,15 @@ world
 	if(!base_icon_dir)
 		base_icon_dir = curdir
 
+	// Expand our canvas to fit if we're too big
+	if(render_icon)
+		var/icon/active_icon = icon(curicon)
+		if(active_icon.Width() != 32 || active_icon.Height() != 32)
+			flat.Scale(active_icon.Width(), active_icon.Height())
+
 	var/curblend = appearance.blend_mode || defblend
 
 	if(appearance.overlays.len || appearance.underlays.len)
-		var/icon/flat = icon(flat_template)
 		// Layers will be a sorted list of icons/overlays, based on the order in which they are displayed
 		var/list/layers = list()
 		var/image/copy
@@ -805,11 +815,11 @@ GLOBAL_LIST_EMPTY(friendly_animal_types)
 
 /// generates a filename for a given asset.
 /// like generate_asset_name(), except returns the rsc reference and the rsc file hash as well as the asset name (sans extension)
-/// used so that certain asset files dont have to be hashed twice
+/// used so that certain asset files don't have to be hashed twice
 /proc/generate_and_hash_rsc_file(file, dmi_file_path)
 	var/rsc_ref = fcopy_rsc(file)
 	var/hash
-	//if we have a valid dmi file path we can trust md5'ing the rsc file because we know it doesnt have the bug described in http://www.byond.com/forum/post/2611357
+	//if we have a valid dmi file path we can trust md5'ing the rsc file because we know it doesn't have the bug described in http://www.byond.com/forum/post/2611357
 	if(dmi_file_path)
 		hash = md5(rsc_ref)
 	else //otherwise, we need to do the expensive fcopy() workaround
@@ -835,7 +845,7 @@ GLOBAL_LIST_EMPTY(friendly_animal_types)
 			fdel(savefile_path)
 		return new /savefile(savefile_path)
 	catch(var/exception/error)
-		// if we failed to create a dummy once, try again; maybe someone slept somewhere they shouldnt have
+		// if we failed to create a dummy once, try again; maybe someone slept somewhere they shouldn't have
 		if(from_failure) // this *is* the retry, something fucked up
 			CRASH("get_dummy_savefile failed to create a dummy savefile: '[error]'")
 		return get_dummy_savefile(from_failure = TRUE)
@@ -880,18 +890,18 @@ GLOBAL_LIST_EMPTY(friendly_animal_types)
 		var/atom/atom_icon = icon
 		icon = atom_icon.icon
 		//atom icons compiled in from 'icons/path/to/dmi_file.dmi' are weird and not really icon objects that you generate with icon().
-		//if theyre unchanged dmi's then they're stringifiable to "icons/path/to/dmi_file.dmi"
+		//if they're unchanged dmi's then they're stringifiable to "icons/path/to/dmi_file.dmi"
 
 	if(isicon(icon) && isfile(icon))
-		//icons compiled in from 'icons/path/to/dmi_file.dmi' at compile time are weird and arent really /icon objects,
-		///but they pass both isicon() and isfile() checks. theyre the easiest case since stringifying them gives us the path we want
+		//icons compiled in from 'icons/path/to/dmi_file.dmi' at compile time are weird and aren't really /icon objects,
+		///but they pass both isicon() and isfile() checks. they're the easiest case since stringifying them gives us the path we want
 		var/icon_ref = text_ref(icon)
 		var/locate_icon_string = "[locate(icon_ref)]"
 
 		icon_path = locate_icon_string
 
 	else if(isicon(icon) && "[icon]" == "/icon")
-		// icon objects generated from icon() at runtime are icons, but they ARENT files themselves, they represent icon files.
+		// icon objects generated from icon() at runtime are icons, but they AREN'T files themselves, they represent icon files.
 		// if the files they represent are compile time dmi files in the rsc, then
 		// the rsc reference returned by fcopy_rsc() will be stringifiable to "icons/path/to/dmi_file.dmi"
 		var/rsc_ref = fcopy_rsc(icon)
@@ -950,7 +960,7 @@ GLOBAL_LIST_EMPTY(friendly_animal_types)
 	if(!length(targets))
 		return
 
-	//check if the given object is associated with a dmi file in the icons folder. if it is then we dont need to do a lot of work
+	//check if the given object is associated with a dmi file in the icons folder. if it is then we don't need to do a lot of work
 	//for asset generation to get around byond limitations
 	var/icon_path = get_icon_dmi_path(thing)
 
@@ -994,7 +1004,7 @@ GLOBAL_LIST_EMPTY(friendly_animal_types)
 
 	var/list/name_and_ref = generate_and_hash_rsc_file(icon2collapse, icon_path)//pretend that tuples exist
 
-	var/rsc_ref = name_and_ref[1] //weird object thats not even readable to the debugger, represents a reference to the icons rsc entry
+	var/rsc_ref = name_and_ref[1] //weird object that's not even readable to the debugger, represents a reference to the icons rsc entry
 	var/file_hash = name_and_ref[2]
 	key = "[name_and_ref[3]].png"
 
@@ -1125,7 +1135,7 @@ GLOBAL_LIST_EMPTY(transformation_animation_objects)
 	if((x_dimension == world.icon_size) && (y_dimension == world.icon_size))
 		return image_to_center
 
-	//Offset the image so that it's bottom left corner is shifted this many pixels
+	//Offset the image so that its bottom left corner is shifted this many pixels
 	//This makes it infinitely easier to draw larger inhands/images larger than world.iconsize
 	//but still use them in game
 	var/x_offset = -((x_dimension / world.icon_size) - 1) * (world.icon_size * 0.5)
@@ -1229,6 +1239,8 @@ GLOBAL_LIST_EMPTY(transformation_animation_objects)
 	var/mutable_appearance/alert_overlay = new(source)
 	alert_overlay.pixel_x = 0
 	alert_overlay.pixel_y = 0
+	alert_overlay.pixel_z = 0
+	alert_overlay.pixel_w = 0
 
 	var/scale = 1
 	var/list/icon_dimensions = get_icon_dimensions(source.icon)

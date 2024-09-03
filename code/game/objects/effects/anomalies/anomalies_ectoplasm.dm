@@ -2,7 +2,7 @@
 	name = "ectoplasm anomaly"
 	desc = "It looks like the souls of the damned are trying to break into the realm of the living again. How upsetting."
 	icon_state = "ectoplasm"
-	aSignal = /obj/item/assembly/signaler/anomaly/ectoplasm
+	anomaly_core = /obj/item/assembly/signaler/anomaly/ectoplasm
 	lifespan = ANOMALY_COUNTDOWN_TIMER + 2 SECONDS //This one takes slightly longer, because it can run away.
 	move_chance = 0 //prevents it from moving around so ghosts can actually move it with decent accuracy
 

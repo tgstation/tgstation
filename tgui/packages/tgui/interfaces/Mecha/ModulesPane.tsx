@@ -474,26 +474,28 @@ const SnowflakeSleeper = (props) => {
         ))}
       </LabeledList.Item>
       <LabeledList.Item label="Reagent Injection">
-        {injectible_reagents.map((reagent) => (
-          <LabeledList.Item
-            className="candystripe"
-            key={reagent.name}
-            label={reagent.name}
-          >
-            <LabeledList.Item label={`${reagent.volume}u`}>
-              <Button
-                onClick={() =>
-                  act('equip_act', {
-                    ref: ref,
-                    gear_action: `inject_reagent_${reagent.name}`,
-                  })
-                }
+        {injectible_reagents
+          ? injectible_reagents.map((reagent) => (
+              <LabeledList.Item
+                className="candystripe"
+                key={reagent.name}
+                label={reagent.name}
               >
-                Inject
-              </Button>
-            </LabeledList.Item>
-          </LabeledList.Item>
-        ))}
+                <LabeledList.Item label={`${reagent.volume}u`}>
+                  <Button
+                    onClick={() =>
+                      act('equip_act', {
+                        ref: ref,
+                        gear_action: `inject_reagent_${reagent.name}`,
+                      })
+                    }
+                  >
+                    Inject
+                  </Button>
+                </LabeledList.Item>
+              </LabeledList.Item>
+            ))
+          : 'Unavailable'}
       </LabeledList.Item>
     </>
   );

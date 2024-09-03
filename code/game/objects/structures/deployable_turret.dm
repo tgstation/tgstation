@@ -213,7 +213,7 @@
 
 /obj/machinery/deployable_turret/hmg
 	name = "heavy machine gun turret"
-	desc = "A heavy caliber machine gun commonly used by Nanotrasen forces, famed for it's ability to give people on the receiving end more holes than normal."
+	desc = "A heavy caliber machine gun commonly used by Nanotrasen forces, famed for its ability to give people on the receiving end more holes than normal."
 	icon_state = "hmg"
 	max_integrity = 250
 	projectile_type = /obj/projectile/bullet/manned_turret/hmg
@@ -259,11 +259,11 @@
 	M.attacked_by(src, user)
 	add_fingerprint(user)
 
-/obj/item/gun_control/afterattack(atom/targeted_atom, mob/user, flag, params)
-	. = ..()
-	. |= AFTERATTACK_PROCESSED_ITEM
-	var/modifiers = params2list(params)
+/obj/item/gun_control/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
 	var/obj/machinery/deployable_turret/E = user.buckled
-	E.calculated_projectile_vars = calculate_projectile_angle_and_pixel_offsets(user, targeted_atom, modifiers)
-	E.direction_track(user, targeted_atom)
-	E.checkfire(targeted_atom, user)
+	E.calculated_projectile_vars = calculate_projectile_angle_and_pixel_offsets(user, interacting_with, modifiers)
+	E.direction_track(user, interacting_with)
+	E.checkfire(interacting_with, user)
+
+/obj/item/gun_control/ranged_interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
+	return interact_with_atom(interacting_with, user, modifiers)

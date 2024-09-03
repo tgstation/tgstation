@@ -36,6 +36,8 @@
 
 #define VENDING_MACHINE_TRAIT "vending_machine"
 
+///A trait given by a held item
+#define HELD_ITEM_TRAIT "held-item-trait"
 #define ABSTRACT_ITEM_TRAIT "abstract-item"
 /// A trait given by any status effect
 #define STATUS_EFFECT_TRAIT "status-effect"
@@ -45,7 +47,8 @@
 
 /// Trait given by an Action datum
 #define ACTION_TRAIT "action"
-
+///A trait given by someone blocking.
+#define BLOCKING_TRAIT "blocking"
 #define CLOTHING_TRAIT "clothing"
 #define HELMET_TRAIT "helmet"
 /// inherited from the mask
@@ -190,6 +193,8 @@
 #define MOD_TRAIT "mod"
 /// Trait applied to tram passengers
 #define TRAM_PASSENGER_TRAIT "tram-passenger"
+/// Trait given by a fulton extraction pack
+#define FULTON_PACK_TRAIT "fulton-pack"
 
 /// Trait granted by the berserker hood.
 #define BERSERK_TRAIT "berserk_trait"
@@ -223,8 +228,6 @@
 #define SPEED_TRAIT "speed_trait"
 /// Trait given to mobs that have been autopsied
 #define AUTOPSY_TRAIT "autopsy_trait"
-/// Trait given by [/datum/status_effect/blessing_of_insanity]
-#define MAD_WIZARD_TRAIT "mad_wizard_trait"
 
 ///From the market_crash event
 #define MARKET_CRASH_EVENT_TRAIT "crashed_market_event"
@@ -292,3 +295,6 @@
 
 /// Trait when a drink was renamed by a shaker
 #define SHAKER_LABEL_TRAIT "shaker_trait"
+
+/// Trait added by style component
+#define STYLE_TRAIT "style"

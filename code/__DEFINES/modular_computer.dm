@@ -41,7 +41,7 @@
 #define PROGRAM_CATEGORY_SCIENCE "Science"
 
 ///The default amount a program should take in cell use.
-#define PROGRAM_BASIC_CELL_USE 15
+#define PROGRAM_BASIC_CELL_USE 2 WATTS
 
 ///This app grants a minor protection against being PDA bombed if installed.
 ///(can sometimes prevent it from being sent, while wasting a PDA bomb from the sender).

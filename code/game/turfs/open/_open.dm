@@ -1,4 +1,5 @@
 /turf/open
+	layer = LOW_FLOOR_LAYER
 	plane = FLOOR_PLANE
 	///negative for faster, positive for slower
 	var/slowdown = 0
@@ -11,7 +12,11 @@
 	/// Determines the type of damage overlay that will be used for the tile
 	var/damaged_dmi = null
 	var/broken = FALSE
+	/// Are broken overlays smoothed? if they are we have to change a little bit about how we render them
+	var/smooth_broken = FALSE
 	var/burnt = FALSE
+	/// Are burnt overlays smoothed? if they are we have to change a little bit about how we render them
+	var/smooth_burnt = FALSE
 
 
 /// Returns a list of every turf state considered "broken".
@@ -47,7 +52,7 @@
 	if(broken)
 		var/mutable_appearance/broken_appearance = mutable_appearance(damaged_dmi, pick(broken_states()))
 
-		if(smoothing_flags && !(smoothing_flags & SMOOTH_BROKEN_TURF))
+		if(smoothing_flags && !smooth_broken)
 			var/matrix/translation = new
 			translation.Translate(-LARGE_TURF_SMOOTHING_X_OFFSET, -LARGE_TURF_SMOOTHING_Y_OFFSET)
 			broken_appearance.transform = translation
@@ -62,7 +67,7 @@
 		else
 			burnt_appearance = mutable_appearance(damaged_dmi, pick(broken_states()))
 
-		if(smoothing_flags && !(smoothing_flags & SMOOTH_BURNT_TURF))
+		if(smoothing_flags && !smooth_burnt)
 			var/matrix/translation = new
 			translation.Translate(-LARGE_TURF_SMOOTHING_X_OFFSET, -LARGE_TURF_SMOOTHING_Y_OFFSET)
 			burnt_appearance.transform = translation
@@ -157,6 +162,9 @@
 
 /turf/open/indestructible/light
 	icon_state = "light_on-1"
+	light_range = 3
+	light_color = LIGHT_COLOR_CYAN
+	light_on = TRUE
 
 /turf/open/indestructible/permalube
 	icon_state = "darkfull"
@@ -317,7 +325,7 @@
 	for(var/mob/living/L in contents)
 		if(L.bodytemperature <= 50 && !HAS_TRAIT(L, TRAIT_RESISTCOLD))
 			L.apply_status_effect(/datum/status_effect/freon)
-	MakeSlippery(TURF_WET_PERMAFROST, 50)
+	MakeSlippery(TURF_WET_PERMAFROST, 10 SECONDS)
 	return TRUE
 
 /turf/open/proc/water_vapor_gas_act()
@@ -407,10 +415,10 @@
 /turf/open/get_dumping_location()
 	return src
 
-/turf/open/proc/ClearWet()//Nuclear option of immediately removing slipperyness from the tile instead of the natural drying over time
+/turf/open/proc/ClearWet()//Nuclear option of immediately removing slipperiness from the tile instead of the natural drying over time
 	qdel(GetComponent(/datum/component/wet_floor))
 
-/// Builds with rods. This doesn't exist to be overriden, just to remove duplicate logic for turfs that want
+/// Builds with rods. This doesn't exist to be overridden, just to remove duplicate logic for turfs that want
 /// To support floor tile creation
 /// I'd make it a component, but one of these things is space. So no.
 /turf/open/proc/build_with_rods(obj/item/stack/rods/used_rods, mob/user)

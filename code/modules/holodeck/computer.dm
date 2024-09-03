@@ -146,10 +146,10 @@ GLOBAL_LIST_INIT(typecache_holodeck_linked_floorcheck_ok, typecacheof(list(/turf
 		data["emagged"] = TRUE
 		data["emag_programs"] = emag_programs
 	data["program"] = program
-	data["can_toggle_safety"] = issilicon(user) || isAdminGhostAI(user)
+	data["can_toggle_safety"] = HAS_SILICON_ACCESS(user)
 	return data
 
-/obj/machinery/computer/holodeck/ui_act(action, params)
+/obj/machinery/computer/holodeck/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if(.)
 		return
@@ -293,6 +293,8 @@ GLOBAL_LIST_INIT(typecache_holodeck_linked_floorcheck_ok, typecacheof(list(/turf
 
 		if(isstructure(holo_object))
 			holo_object.obj_flags |= NO_DEBRIS_AFTER_DECONSTRUCTION
+			if(istype(holo_object, /obj/structure/closet))
+				RegisterSignal(holo_object, COMSIG_CLOSET_CONTENTS_INITIALIZED, PROC_REF(register_contents))
 			return
 
 		if(ismachinery(holo_object))
@@ -303,6 +305,14 @@ GLOBAL_LIST_INIT(typecache_holodeck_linked_floorcheck_ok, typecacheof(list(/turf
 			if(istype(holo_machine, /obj/machinery/button))
 				var/obj/machinery/button/holo_button = holo_machine
 				holo_button.setup_device()
+
+/obj/machinery/computer/holodeck/proc/register_contents(obj/structure/closet/storage)
+	SIGNAL_HANDLER
+
+	for(var/atom/movable/item as anything in storage.get_all_contents_type(/atom/movable))
+		if(item == storage)
+			continue
+		add_to_spawned(item)
 
 /**
  * A separate proc for objects that weren't loaded by the template nor spawned by holo effects
@@ -369,7 +379,7 @@ GLOBAL_LIST_INIT(typecache_holodeck_linked_floorcheck_ok, typecacheof(list(/turf
 				derez(item)
 	for(var/obj/effect/holodeck_effect/holo_effect as anything in effects)
 		holo_effect.tick()
-	update_mode_power_usage(ACTIVE_POWER_USE, active_power_usage + spawned.len * 3 + effects.len * 5)
+	update_mode_power_usage(ACTIVE_POWER_USE, initial(active_power_usage) + spawned.len * 3 + effects.len * 5)
 
 /obj/machinery/computer/holodeck/proc/toggle_power(toggleOn = FALSE)
 	if(active == toggleOn)

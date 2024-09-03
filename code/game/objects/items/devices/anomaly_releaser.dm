@@ -19,32 +19,28 @@
 	///Can we be used infinitely?
 	var/infinite = FALSE
 
-/obj/item/anomaly_releaser/afterattack(atom/target, mob/user, proximity_flag, click_parameters)
-	. = ..()
-
-	if(used || !proximity_flag || !istype(target, /obj/item/assembly/signaler/anomaly))
-		return
-
-	if(!do_after(user, 3 SECONDS, target))
-		return
+/obj/item/anomaly_releaser/interact_with_atom(atom/target, mob/living/user, list/modifiers)
+	if(!istype(target, /obj/item/assembly/signaler/anomaly))
+		return NONE
 
 	if(used)
-		return
+		return ITEM_INTERACT_BLOCKING
+	if(!do_after(user, 3 SECONDS, target))
+		return ITEM_INTERACT_BLOCKING
+	if(used)
+		return ITEM_INTERACT_BLOCKING
 
 	var/obj/item/assembly/signaler/anomaly/core = target
-
 	if(!core.anomaly_type)
-		return
+		return ITEM_INTERACT_BLOCKING
 
 	var/obj/effect/anomaly/anomaly = new core.anomaly_type(get_turf(core))
 	anomaly.stabilize()
 	log_combat(user, anomaly, "released", object = src, addition = "in [get_area(target)].")
 
-	if(infinite)
-		return
-
-	icon_state = used_icon_state
-	used = TRUE
-	name = "used " + name
-
-	qdel(core)
+	if(!infinite)
+		icon_state = used_icon_state
+		used = TRUE
+		name = "used " + name
+		qdel(core)
+	return ITEM_INTERACT_SUCCESS

@@ -11,7 +11,8 @@ GLOBAL_LIST_INIT(channel_tokens, list(
 	RADIO_CHANNEL_SUPPLY = RADIO_TOKEN_SUPPLY,
 	RADIO_CHANNEL_SERVICE = RADIO_TOKEN_SERVICE,
 	MODE_BINARY = MODE_TOKEN_BINARY,
-	RADIO_CHANNEL_AI_PRIVATE = RADIO_TOKEN_AI_PRIVATE
+	RADIO_CHANNEL_AI_PRIVATE = RADIO_TOKEN_AI_PRIVATE,
+	RADIO_CHANNEL_ENTERTAINMENT = RADIO_TOKEN_ENTERTAINMENT,
 ))
 
 /obj/item/radio/headset
@@ -26,7 +27,7 @@ GLOBAL_LIST_INIT(channel_tokens, list(
 	custom_materials = list(/datum/material/iron=SMALL_MATERIAL_AMOUNT * 0.75)
 	subspace_transmission = TRUE
 	canhear_range = 0 // can't hear headsets from very far away
-
+	interaction_flags_mouse_drop = FORBID_TELEKINESIS_REACH
 	slot_flags = ITEM_SLOT_EARS
 	dog_fashion = null
 	var/obj/item/encryptionkey/keyslot2 = null
@@ -49,7 +50,7 @@ GLOBAL_LIST_INIT(channel_tokens, list(
 	if(item_flags & IN_INVENTORY && loc == user)
 		// construction of frequency description
 		var/list/avail_chans = list("Use [RADIO_KEY_COMMON] for the currently tuned frequency")
-		if(translate_binary)
+		if(special_channels & RADIO_SPECIAL_BINARY)
 			avail_chans += "use [MODE_TOKEN_BINARY] for [MODE_BINARY]"
 		if(length(channels))
 			for(var/i in 1 to length(channels))
@@ -91,11 +92,9 @@ GLOBAL_LIST_INIT(channel_tokens, list(
 	. = ..()
 	.["headset"] = TRUE
 
-/obj/item/radio/headset/MouseDrop(mob/over, src_location, over_location)
-	var/mob/headset_user = usr
-	if((headset_user == over) && headset_user.can_perform_action(src, FORBID_TELEKINESIS_REACH))
-		return attack_self(headset_user)
-	return ..()
+/obj/item/radio/headset/mouse_drop_dragged(atom/over, mob/user, src_location, over_location, params)
+	if(user == over)
+		return attack_self(user)
 
 /// Grants all the languages this headset allows the mob to understand via installed chips.
 /obj/item/radio/headset/proc/grant_headset_languages(mob/grant_to)
@@ -205,6 +204,13 @@ GLOBAL_LIST_INIT(channel_tokens, list(
 	worn_icon_state = "srv_headset"
 	keyslot = /obj/item/encryptionkey/headset_srvmed
 
+/obj/item/radio/headset/headset_srvent
+	name = "press headset"
+	desc = "A headset allowing the wearer to communicate with service and broadcast to entertainment channel."
+	icon_state = "srvent_headset"
+	worn_icon_state = "srv_headset"
+	keyslot = /obj/item/encryptionkey/headset_srvent
+
 /obj/item/radio/headset/headset_com
 	name = "command radio headset"
 	desc = "A headset with a commanding channel."
@@ -301,13 +307,26 @@ GLOBAL_LIST_INIT(channel_tokens, list(
 
 /obj/item/radio/headset/headset_cargo/mining
 	name = "mining radio headset"
-	desc = "Headset used by shaft miners."
+	desc = "Headset used by shaft miners. It has a mining network uplink which allows the user to quickly transmit commands to their comrades and amplifies their voice in low-pressure environments."
 	icon_state = "mine_headset"
 	worn_icon_state = "mine_headset"
 	// "puts the antenna down" while the headset is off
 	overlay_speaker_idle = "headset_up"
 	overlay_mic_idle = "headset_up"
 	keyslot = /obj/item/encryptionkey/headset_mining
+
+/obj/item/radio/headset/headset_cargo/mining/Initialize(mapload)
+	. = ..()
+	AddComponent(/datum/component/callouts, ITEM_SLOT_EARS, examine_text = span_info("Use ctrl-click to enable or disable callouts."))
+
+/obj/item/radio/headset/headset_cargo/mining/equipped(mob/living/carbon/human/user, slot)
+	. = ..()
+	if(slot & ITEM_SLOT_EARS)
+		ADD_TRAIT(user, TRAIT_SPEECH_BOOSTER, CLOTHING_TRAIT)
+
+/obj/item/radio/headset/headset_cargo/mining/dropped(mob/living/carbon/human/user)
+	. = ..()
+	REMOVE_TRAIT(user, TRAIT_SPEECH_BOOSTER, CLOTHING_TRAIT)
 
 /obj/item/radio/headset/headset_srv
 	name = "service radio headset"
@@ -419,12 +438,7 @@ GLOBAL_LIST_INIT(channel_tokens, list(
 			if(!(ch_name in src.channels))
 				LAZYSET(channels, ch_name, keyslot2.channels[ch_name])
 
-		if(keyslot2.translate_binary)
-			translate_binary = TRUE
-		if(keyslot2.syndie)
-			syndie = TRUE
-		if(keyslot2.independent)
-			independent = TRUE
+		special_channels |= keyslot2.special_channels
 
 		for(var/ch_name in channels)
 			secure_radio_connections[ch_name] = add_radio(src, GLOB.radiochannels[ch_name])

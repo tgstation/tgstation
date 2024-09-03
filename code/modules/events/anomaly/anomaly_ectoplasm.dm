@@ -8,7 +8,7 @@
 	typepath = /datum/round_event/anomaly/anomaly_ectoplasm
 	min_players = 30
 	max_occurrences = 2
-	weight = 4 //Rare because of it's wacky and silly nature
+	weight = 4 //Rare because of its wacky and silly nature
 	category = EVENT_CATEGORY_ANOMALIES
 	min_wizard_trigger_potency = 0
 	max_wizard_trigger_potency = 3

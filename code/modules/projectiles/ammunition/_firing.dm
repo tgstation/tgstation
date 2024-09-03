@@ -52,12 +52,19 @@
 	loaded_projectile.suppressed = quiet
 
 	if(isgun(fired_from))
-		var/obj/item/gun/G = fired_from
-		loaded_projectile.damage *= G.projectile_damage_multiplier
-		loaded_projectile.stamina *= G.projectile_damage_multiplier
+		var/obj/item/gun/gun = fired_from
 
-		loaded_projectile.wound_bonus += G.projectile_wound_bonus
-		loaded_projectile.bare_wound_bonus += G.projectile_wound_bonus
+		var/integrity_mult = 0.5 + gun.get_integrity_percentage() * 0.5
+		if(integrity_mult >= 0.95) //Guns that are only mildly smudged don't debuff projectiles.
+			integrity_mult = 1
+
+		loaded_projectile.damage *= gun.projectile_damage_multiplier * integrity_mult
+		loaded_projectile.stamina *= gun.projectile_damage_multiplier * integrity_mult
+
+		loaded_projectile.wound_bonus += gun.projectile_wound_bonus
+		loaded_projectile.wound_bonus *= loaded_projectile.wound_bonus >= 0 ? 1 : 2 - integrity_mult
+		loaded_projectile.bare_wound_bonus += gun.projectile_wound_bonus
+		loaded_projectile.bare_wound_bonus *= loaded_projectile.bare_wound_bonus >= 0 ? 1 : 2 - integrity_mult
 
 	if(tk_firing(user, fired_from))
 		loaded_projectile.ignore_source_check = TRUE
@@ -81,9 +88,7 @@
 	var/direct_target
 	if(target && curloc.Adjacent(targloc, target=targloc, mover=src)) //if the target is right on our location or adjacent (including diagonally if reachable) we'll skip the travelling code in the proj's fire()
 		direct_target = target
-	if(!direct_target)
-		var/modifiers = params2list(params)
-		loaded_projectile.preparePixelProjectile(target, fired_from, modifiers, spread)
+	loaded_projectile.preparePixelProjectile(target, fired_from, params2list(params), spread)
 	var/obj/projectile/loaded_projectile_cache = loaded_projectile
 	loaded_projectile = null
 	loaded_projectile_cache.fire(null, direct_target)

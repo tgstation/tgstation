@@ -241,7 +241,7 @@
 /datum/crafting_recipe/food/bacid_pie
 	reqs = list(
 		/obj/item/food/pie/plain = 1,
-		/obj/item/stock_parts/cell = 2,
+		/obj/item/stock_parts/power_store/cell = 2,
 	)
 	result = /obj/item/food/pie/bacid_pie
 	category = CAT_PIE

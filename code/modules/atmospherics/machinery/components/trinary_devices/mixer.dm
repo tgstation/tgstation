@@ -27,13 +27,14 @@
 	context[SCREENTIP_CONTEXT_ALT_LMB] = "Maximize target pressure"
 	return CONTEXTUAL_SCREENTIP_SET
 
-/obj/machinery/atmospherics/components/trinary/mixer/CtrlClick(mob/user)
-	if(can_interact(user))
+/obj/machinery/atmospherics/components/trinary/mixer/click_ctrl(mob/user)
+	if(is_operational)
 		on = !on
 		balloon_alert(user, "turned [on ? "on" : "off"]")
 		investigate_log("was turned [on ? "on" : "off"] by [key_name(user)]", INVESTIGATE_ATMOS)
 		update_appearance()
-	return ..()
+		return CLICK_ACTION_SUCCESS
+	return CLICK_ACTION_BLOCKING
 
 /obj/machinery/atmospherics/components/trinary/mixer/click_alt(mob/user)
 	if(target_pressure == MAX_OUTPUT_PRESSURE)
@@ -149,7 +150,7 @@
 	data["node2_concentration"] = round(node2_concentration*100, 1)
 	return data
 
-/obj/machinery/atmospherics/components/trinary/mixer/ui_act(action, params)
+/obj/machinery/atmospherics/components/trinary/mixer/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if(.)
 		return
@@ -248,6 +249,18 @@
 /obj/machinery/atmospherics/components/trinary/mixer/airmix/flipped
 	icon_state = "mixer_on-0_f"
 	flipped = TRUE
+
+/obj/machinery/atmospherics/components/trinary/mixer/airmix/flipped/layer1
+	piping_layer = 1
+
+/obj/machinery/atmospherics/components/trinary/mixer/airmix/flipped/layer2
+	piping_layer = 2
+
+/obj/machinery/atmospherics/components/trinary/mixer/airmix/flipped/layer4
+	piping_layer = 4
+
+/obj/machinery/atmospherics/components/trinary/mixer/airmix/flipped/layer5
+	piping_layer = 5
 
 /obj/machinery/atmospherics/components/trinary/mixer/airmix/flipped/inverse
 	node1_concentration = O2STANDARD

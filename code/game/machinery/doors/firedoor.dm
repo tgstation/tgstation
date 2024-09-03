@@ -431,6 +431,10 @@
 	ignore_alarms = FALSE
 	if(!alarm_type || active) // If we have no alarm type, or are already active, go away
 		return
+	// Do we even care about temperature?
+	for(var/area/place in affecting_areas)
+		if(!place.fire_detect) // If any area is set to disable detection
+			return
 	// Otherwise, reactivate ourselves
 	start_activation_process(alarm_type)
 
@@ -546,7 +550,7 @@
 
 	if(density)
 		being_held_open = TRUE
-		user.balloon_alert_to_viewers("holding [src] open", "holding [src] open")
+		user.balloon_alert_to_viewers("holding firelock open", "holding firelock open")
 		COOLDOWN_START(src, activation_cooldown, REACTIVATION_DELAY)
 		open()
 		if(QDELETED(user))
@@ -583,7 +587,7 @@
 	UnregisterSignal(user, COMSIG_LIVING_SET_BODY_POSITION)
 	UnregisterSignal(user, COMSIG_QDELETING)
 	if(user)
-		user.balloon_alert_to_viewers("released [src]", "released [src]")
+		user.balloon_alert_to_viewers("released firelock", "released firelock")
 
 /obj/machinery/door/firedoor/attack_ai(mob/user)
 	add_fingerprint(user)
@@ -603,22 +607,43 @@
 /obj/machinery/door/firedoor/attack_alien(mob/user, list/modifiers)
 	add_fingerprint(user)
 	if(welded)
-		to_chat(user, span_warning("[src] refuses to budge!"))
+		balloon_alert(user, "refuses to budge!")
 		return
 	open()
 	if(active)
 		addtimer(CALLBACK(src, PROC_REF(correct_state)), 2 SECONDS, TIMER_UNIQUE)
 
-/obj/machinery/door/firedoor/do_animate(animation)
-	switch(animation)
-		if("opening")
-			flick("[base_icon_state]_opening", src)
-		if("closing")
-			flick("[base_icon_state]_closing", src)
-
 /obj/machinery/door/firedoor/update_icon_state()
 	. = ..()
-	icon_state = "[base_icon_state]_[density ? "closed" : "open"]"
+	switch(animation)
+		if(DOOR_OPENING_ANIMATION)
+			icon_state = "[base_icon_state]_opening"
+		if(DOOR_CLOSING_ANIMATION)
+			icon_state = "[base_icon_state]_closing"
+		if(DOOR_DENY_ANIMATION)
+			icon_state = "[base_icon_state]_deny"
+		else
+			icon_state = "[base_icon_state]_[density ? "closed" : "open"]"
+
+/obj/machinery/door/firedoor/animation_length(animation)
+	switch(animation)
+		if(DOOR_OPENING_ANIMATION)
+			return 1.2 SECONDS
+		if(DOOR_CLOSING_ANIMATION)
+			return 1.2 SECONDS
+		if(DOOR_DENY_ANIMATION)
+			return 0.3 SECONDS
+
+/obj/machinery/door/firedoor/animation_segment_delay(animation)
+	switch(animation)
+		if(DOOR_OPENING_PASSABLE)
+			return 1.0 SECONDS
+		if(DOOR_OPENING_FINISHED)
+			return 1.2 SECONDS
+		if(DOOR_CLOSING_UNPASSABLE)
+			return 0.2 SECONDS
+		if(DOOR_CLOSING_FINISHED)
+			return 1.2 SECONDS
 
 /obj/machinery/door/firedoor/update_overlays()
 	. = ..()

@@ -83,7 +83,7 @@
 		Cannibalize_Body(slime)
 
 	regenerate_limbs?.build_all_button_icons(UPDATE_BUTTON_STATUS)
-	return HANDLE_BLOOD_NO_NUTRITION_DRAIN|HANDLE_BLOOD_NO_EFFECTS
+	return HANDLE_BLOOD_NO_NUTRITION_DRAIN|HANDLE_BLOOD_NO_OXYLOSS
 
 /datum/species/jelly/proc/Cannibalize_Body(mob/living/carbon/human/H)
 	var/list/limbs_to_consume = list(BODY_ZONE_R_ARM, BODY_ZONE_L_ARM, BODY_ZONE_R_LEG, BODY_ZONE_L_LEG) - H.get_missing_limbs()
@@ -412,7 +412,7 @@
 
 	return data
 
-/datum/action/innate/swap_body/ui_act(action, params)
+/datum/action/innate/swap_body/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if(.)
 		return

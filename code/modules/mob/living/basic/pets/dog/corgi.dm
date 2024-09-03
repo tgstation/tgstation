@@ -472,7 +472,7 @@
 	unique_pet = TRUE
 	held_state = "narsian"
 	/// Mobs we will consume in the name of Nar'Sie
-	var/static/list/edible_types = list(/mob/living/simple_animal/pet, /mob/living/basic/pet)
+	var/static/list/edible_types = list(/mob/living/basic/pet)
 
 /mob/living/basic/pet/dog/corgi/narsie/Initialize(mapload)
 	. = ..()
@@ -544,9 +544,9 @@
 	pass_flags = PASSMOB
 	ai_controller = /datum/ai_controller/basic_controller/dog/puppy
 	mob_size = MOB_SIZE_SMALL
-	collar_icon_state = "puppy"
 	strippable_inventory_slots = list(/datum/strippable_item/pet_collar, /datum/strippable_item/corgi_id) //puppies are too small to handle hats and back slot items
 	can_breed = FALSE
+	collar_icon_state = "puppy"
 
 //PUPPY IAN! SQUEEEEEEEEE~
 /mob/living/basic/pet/dog/corgi/puppy/ian

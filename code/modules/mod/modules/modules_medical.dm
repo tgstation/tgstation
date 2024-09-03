@@ -119,19 +119,25 @@
 	volume = 30
 	inject_flags = INJECT_CHECK_PENETRATE_THICK
 
-///Organ Thrower - Lets you shoot organs, immediately replacing them if the target has the organ manipulation surgery.
-/obj/item/mod/module/organ_thrower
-	name = "MOD organ thrower module"
+/obj/item/reagent_containers/syringe/mod/update_reagent_overlay()
+	if(reagents?.total_volume)
+		var/mutable_appearance/filling_overlay = mutable_appearance('icons/obj/medical/reagent_fillings.dmi', "mod[get_rounded_vol()]")
+		filling_overlay.color = mix_color_from_reagents(reagents.reagent_list)
+		. += filling_overlay
+
+///Organizer - Lets you shoot organs, immediately replacing them if the target has the organ manipulation surgery.
+/obj/item/mod/module/organizer
+	name = "MOD organizer module"
 	desc = "A device recovered from a crashed Interdyne Pharmaceuticals vessel, \
 		this module has been unearthed for better or for worse. \
-		It's an arm-mounted device utilizing technology similar to modern-day part replacers, \
-		capable of storing and inserting organs into open patients. \
+		It's an arm-mounted device utilizing technology similar to modern rapid part exchange devices, \
+		capable of instantly replacing up to 5 organs at once in surgery without the need to remove them first, even from range. \
 		It's recommended by the DeForest Medical Corporation to not inform patients it has been used."
-	icon_state = "organ_thrower"
+	icon_state = "organizer"
 	module_type = MODULE_ACTIVE
 	complexity = 2
 	use_energy_cost = DEFAULT_CHARGE_DRAIN
-	incompatible_modules = list(/obj/item/mod/module/organ_thrower, /obj/item/mod/module/microwave_beam)
+	incompatible_modules = list(/obj/item/mod/module/organizer, /obj/item/mod/module/microwave_beam)
 	cooldown_time = 0.5 SECONDS
 	required_slots = list(ITEM_SLOT_GLOVES)
 	/// How many organs the module can hold.
@@ -139,7 +145,7 @@
 	/// A list of all our organs.
 	var/organ_list = list()
 
-/obj/item/mod/module/organ_thrower/on_select_use(atom/target)
+/obj/item/mod/module/organizer/on_select_use(atom/target)
 	. = ..()
 	if(!.)
 		return
@@ -206,16 +212,20 @@
 				continue
 			succeed = TRUE
 			break
-	if(succeed)
-		var/list/organs_to_boot_out = organ_receiver.get_organ_slot(organ.slot)
-		for(var/obj/item/organ/organ_evacced as anything in organs_to_boot_out)
-			if(organ_evacced.organ_flags & ORGAN_UNREMOVABLE)
-				continue
-			organ_evacced.Remove(target)
-			organ_evacced.forceMove(get_turf(target))
-		organ.Insert(target)
-	else
+
+	if(!succeed)
 		organ.forceMove(drop_location())
+		organ = null
+		return
+
+	var/list/organs_to_boot_out = organ_receiver.get_organ_slot(organ.slot)
+	for(var/obj/item/organ/organ_evacced as anything in organs_to_boot_out)
+		if(organ_evacced.organ_flags & ORGAN_UNREMOVABLE)
+			continue
+		organ_evacced.Remove(target, special = TRUE)
+		organ_evacced.forceMove(get_turf(target))
+
+	organ.Insert(target)
 	organ = null
 
 ///Patrient Transport - Generates hardlight bags you can put people in.
@@ -400,12 +410,21 @@
 		/datum/surgery/advanced/pacify,
 		/datum/surgery/healing/combo/upgraded/femto,
 		/datum/surgery/advanced/brainwashing,
+		/datum/surgery/advanced/brainwashing/mechanic,
 		/datum/surgery/advanced/bioware/nerve_splicing,
+		/datum/surgery/advanced/bioware/nerve_splicing/mechanic,
 		/datum/surgery/advanced/bioware/nerve_grounding,
+		/datum/surgery/advanced/bioware/nerve_grounding/mechanic,
 		/datum/surgery/advanced/bioware/vein_threading,
+		/datum/surgery/advanced/bioware/vein_threading/mechanic,
 		/datum/surgery/advanced/bioware/muscled_veins,
+		/datum/surgery/advanced/bioware/muscled_veins/mechanic,
 		/datum/surgery/advanced/bioware/ligament_hook,
+		/datum/surgery/advanced/bioware/ligament_hook/mechanic,
 		/datum/surgery/advanced/bioware/ligament_reinforcement,
+		/datum/surgery/advanced/bioware/ligament_reinforcement/mechanic,
 		/datum/surgery/advanced/bioware/cortex_imprint,
+		/datum/surgery/advanced/bioware/cortex_imprint/mechanic,
 		/datum/surgery/advanced/bioware/cortex_folding,
+		/datum/surgery/advanced/bioware/cortex_folding/mechanic,
 	)

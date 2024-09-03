@@ -1,12 +1,9 @@
 .JobIcon {
-  align-items: center;
   background: black;
-  display: flex;
   height: 20px;
-  justify-content: center;
-  margin-right: -1px;
-  padding-left: 2px;
+  padding: 1px 1px 0 1px;
   overflow: hidden;
+  width: 20px;
 }
 
 .OrbitItem__selected {

@@ -178,6 +178,7 @@
 			"desc" = P.desc || P.name, // If there is a description, use it. Otherwise use the pack's name.
 			"goody" = P.goody,
 			"access" = P.access,
+			"contraband" = P.contraband,
 		))
 	return data
 
@@ -328,7 +329,7 @@
 			else
 				//create the paper from the SSshuttle.shopping_list
 				if(length(SSshuttle.shopping_list))
-					var/obj/item/paper/requisition_paper = new(get_turf(src))
+					var/obj/item/paper/requisition/requisition_paper = new(get_turf(src))
 					requisition_paper.name = "requisition form - [station_time_timestamp()]"
 					var/requisition_text = "<h2>[station_name()] Supply Requisition</h2>"
 					requisition_text += "<hr/>"

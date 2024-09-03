@@ -125,6 +125,10 @@
 /obj/structure/plaque/static_plaque/golden/commission/tram
 	desc = "Spinward Sector Station SS-13\n'Tram' Class Outpost\nCommissioned 11/03/2561\n'Making Moves'"
 
+// Wawastation: added add date here
+/obj/structure/plaque/static_plaque/golden/commission/wawa
+	desc = "Spinward Sector Station SS-13\n'Wawa' Class Outpost\nCommissioned 11/03/add here\n'Forever Vertical'"
+
 // North Star: added Apr 13, 2023 (#74371)
 /obj/structure/plaque/static_plaque/golden/commission/northstar
 	desc = "Spinward Sector Ship SS-13\n'North Star' Class Vessel\nCommissioned 13/04/2563\n'New Opportunities'"

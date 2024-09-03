@@ -227,8 +227,8 @@
 /obj/effect/dumpeet_target
 	name = "Landing Zone Indicator"
 	desc = "A holographic projection designating the landing zone of something. It's probably best to stand back."
-	icon = 'icons/mob/actions/actions_items.dmi'
-	icon_state = "sniper_zoom"
+	icon = 'icons/mob/telegraphing/telegraph_holographic.dmi'
+	icon_state = "target_circle"
 	layer = PROJECTILE_HIT_THRESHHOLD_LAYER
 	light_range = 2
 	var/obj/effect/dumpeet_fall/DF

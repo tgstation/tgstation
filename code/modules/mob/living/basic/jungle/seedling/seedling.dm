@@ -30,6 +30,7 @@
 	lighting_cutoff_green = 20
 	lighting_cutoff_blue = 25
 	mob_size = MOB_SIZE_LARGE
+	faction = list(FACTION_PLANTS)
 	attack_sound = 'sound/weapons/bladeslice.ogg'
 	attack_vis_effect = ATTACK_EFFECT_SLASH
 	ai_controller = /datum/ai_controller/basic_controller/seedling
@@ -206,7 +207,7 @@
 /mob/living/basic/seedling/meanie
 	maxHealth = 400
 	health = 400
-	faction = list(FACTION_JUNGLE)
+	faction = list(FACTION_JUNGLE, FACTION_PLANTS)
 	ai_controller = /datum/ai_controller/basic_controller/seedling/meanie
 	seedling_commands = list(
 		/datum/pet_command/idle,

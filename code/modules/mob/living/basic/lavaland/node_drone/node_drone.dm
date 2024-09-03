@@ -26,7 +26,9 @@
 	faction = list(FACTION_STATION, FACTION_NEUTRAL)
 	light_range = 4
 	basic_mob_flags = DEL_ON_DEATH
-
+	move_force = MOVE_FORCE_VERY_STRONG
+	move_resist = MOVE_FORCE_VERY_STRONG
+	pull_force = MOVE_FORCE_VERY_STRONG
 	speak_emote = list("chirps")
 	response_help_continuous = "pets"
 	response_help_simple = "pet"
@@ -72,6 +74,31 @@
 	if(flying_state == FLY_IN_STATE || flying_state == FLY_OUT_STATE)
 		icon_state = "mining_node_flying"
 
+/mob/living/basic/node_drone/update_overlays()
+	. = ..()
+	if(attached_vent)
+		var/time_remaining = COOLDOWN_TIMELEFT(attached_vent, wave_cooldown)
+		var/wave_timers
+		switch(attached_vent?.boulder_size)
+			if(BOULDER_SIZE_SMALL)
+				wave_timers = WAVE_DURATION_SMALL
+			if(BOULDER_SIZE_MEDIUM)
+				wave_timers = WAVE_DURATION_MEDIUM
+			if(BOULDER_SIZE_LARGE)
+				wave_timers = WAVE_DURATION_LARGE
+		var/remaining_fraction = (time_remaining / wave_timers)
+		if(remaining_fraction <= 0.3)
+			. += "node_progress_4"
+			return
+		if(remaining_fraction <= 0.55)
+			. += "node_progress_3"
+			return
+		if(remaining_fraction <= 0.80)
+			. += "node_progress_2"
+			return
+		. += "node_progress_1"
+		return
+
 /mob/living/basic/node_drone/proc/arrive(obj/structure/ore_vent/parent_vent)
 	attached_vent = parent_vent
 	maxHealth = 300 + ((attached_vent.boulder_size/BOULDER_SIZE_SMALL) * 100)
@@ -85,14 +112,17 @@
 /**
  * Called when wave defense is completed. Visually flicks the escape sprite and then deletes the mob.
  */
-/mob/living/basic/node_drone/proc/escape()
+/mob/living/basic/node_drone/proc/escape(success)
 	var/funny_ending = FALSE
 	flying_state = FLY_OUT_STATE
 	update_appearance(UPDATE_ICON_STATE)
 	if(prob(1))
 		say("I have to go now, my planet needs me.")
 		funny_ending = TRUE
-	visible_message(span_notice("The drone flies away to safety as the vent is secured."))
+	if(success)
+		visible_message(span_notice("The drone flies away to safety as the vent is secured."))
+	else
+		visible_message(span_danger("The drone flies away after failing to open the vent!"))
 	animate(src, pixel_z = 400, time = 2 SECONDS, easing = QUAD_EASING|EASE_IN, flags = ANIMATION_PARALLEL)
 	sleep(2 SECONDS)
 	if(funny_ending)
@@ -101,14 +131,15 @@
 	qdel(src)
 
 
-/mob/living/basic/node_drone/proc/pre_escape()
+/mob/living/basic/node_drone/proc/pre_escape(success = TRUE)
+	if(buckled)
+		buckled.unbuckle_mob(src)
 	if(attached_vent)
-		attached_vent.unbuckle_mob(src)
 		attached_vent = null
 	if(!escaping)
 		escaping = TRUE
 		flick("mining_node_escape", src)
-		addtimer(CALLBACK(src, PROC_REF(escape)), 1.9 SECONDS)
+		addtimer(CALLBACK(src, PROC_REF(escape), success), 1.9 SECONDS)
 		return
 
 /// The node drone AI controller

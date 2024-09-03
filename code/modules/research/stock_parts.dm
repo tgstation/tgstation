@@ -37,19 +37,24 @@ If you create T5+ please take a pass at mech_fabricator.dm. The parts being good
 		user.Beam(attacked_machinery, icon_state = "rped_upgrade", time = 0.5 SECONDS)
 	return TRUE
 
-/obj/item/storage/part_replacer/afterattack(obj/attacked_object, mob/living/user, adjacent, params)
-	. = ..()
-	if(!works_from_distance || adjacent) // Adjacent things = already handled by pre-attack
-		return .
+/obj/item/storage/part_replacer/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
+	if(part_replace_action(interacting_with, user))
+		return ITEM_INTERACT_SUCCESS
+	return NONE
 
-	if(part_replace_action(attacked_object, user))
-		user.Beam(attacked_object, icon_state = "rped_upgrade", time = 0.5 SECONDS)
-		return . | AFTERATTACK_PROCESSED_ITEM
-
-	if(istype(attacked_object, /obj/structure/frame))
-		attacked_object.item_interaction(user, src) // Cursed snowflake but we need to handle frame ranged interaction here
-		user.Beam(attacked_object, icon_state = "rped_upgrade", time = 0.5 SECONDS)
-		return . | AFTERATTACK_PROCESSED_ITEM
+/obj/item/storage/part_replacer/ranged_interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
+	if(!works_from_distance)
+		return NONE
+	if(part_replace_action(interacting_with, user))
+		user.Beam(interacting_with, icon_state = "rped_upgrade", time = 0.5 SECONDS)
+		return ITEM_INTERACT_SUCCESS
+	if(istype(interacting_with, /obj/structure/frame))
+		// Cursed snowflake but we need to handle frame ranged interaction here
+		// Likely no longer necessary with the new framework, revisit later
+		interacting_with.item_interaction(user, src)
+		user.Beam(interacting_with, icon_state = "rped_upgrade", time = 0.5 SECONDS)
+		return ITEM_INTERACT_SUCCESS
+	return NONE
 
 /obj/item/storage/part_replacer/proc/play_rped_sound()
 	//Plays the sound for RPED exhanging or installing parts.
@@ -90,8 +95,8 @@ If you create T5+ please take a pass at mech_fabricator.dm. The parts being good
 /obj/item/storage/part_replacer/bluespace/proc/on_part_entered(datum/source, obj/item/inserted_component)
 	SIGNAL_HANDLER
 
-	if(istype(inserted_component, /obj/item/stock_parts/cell))
-		var/obj/item/stock_parts/cell/inserted_cell = inserted_component
+	if(istype(inserted_component, /obj/item/stock_parts/power_store))
+		var/obj/item/stock_parts/power_store/inserted_cell = inserted_component
 		if(inserted_cell.rigged || inserted_cell.corrupted)
 			message_admins("[ADMIN_LOOKUPFLW(usr)] has inserted rigged/corrupted [inserted_cell] into [src].")
 			usr.log_message("has inserted rigged/corrupted [inserted_cell] into [src].", LOG_GAME)
@@ -139,7 +144,7 @@ If you create T5+ please take a pass at mech_fabricator.dm. The parts being good
 		new /obj/item/stock_parts/servo(src)
 		new /obj/item/stock_parts/micro_laser(src)
 		new /obj/item/stock_parts/matter_bin(src)
-		new /obj/item/stock_parts/cell/high(src)
+		new /obj/item/stock_parts/power_store/cell/high(src)
 
 /obj/item/storage/part_replacer/bluespace/tier2
 
@@ -150,7 +155,7 @@ If you create T5+ please take a pass at mech_fabricator.dm. The parts being good
 		new /obj/item/stock_parts/servo/nano(src)
 		new /obj/item/stock_parts/micro_laser/high(src)
 		new /obj/item/stock_parts/matter_bin/adv(src)
-		new /obj/item/stock_parts/cell/super(src)
+		new /obj/item/stock_parts/power_store/cell/super(src)
 
 /obj/item/storage/part_replacer/bluespace/tier3
 
@@ -161,7 +166,7 @@ If you create T5+ please take a pass at mech_fabricator.dm. The parts being good
 		new /obj/item/stock_parts/servo/pico(src)
 		new /obj/item/stock_parts/micro_laser/ultra(src)
 		new /obj/item/stock_parts/matter_bin/super(src)
-		new /obj/item/stock_parts/cell/hyper(src)
+		new /obj/item/stock_parts/power_store/cell/hyper(src)
 
 /obj/item/storage/part_replacer/bluespace/tier4
 
@@ -172,7 +177,7 @@ If you create T5+ please take a pass at mech_fabricator.dm. The parts being good
 		new /obj/item/stock_parts/servo/femto(src)
 		new /obj/item/stock_parts/micro_laser/quadultra(src)
 		new /obj/item/stock_parts/matter_bin/bluespace(src)
-		new /obj/item/stock_parts/cell/bluespace(src)
+		new /obj/item/stock_parts/power_store/cell/bluespace(src)
 
 /obj/item/storage/part_replacer/cargo //used in a cargo crate
 

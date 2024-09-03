@@ -281,7 +281,7 @@ GLOBAL_DATUM(cargo_ripley, /obj/vehicle/sealed/mecha/ripley/cargo)
 	return ..()
 
 /obj/vehicle/sealed/mecha/ripley/cargo/populate_parts()
-	cell = new /obj/item/stock_parts/cell/high(src)
+	cell = new /obj/item/stock_parts/power_store/cell/high(src)
 	//No scanmod for Big Bess
 	capacitor = new /obj/item/stock_parts/capacitor(src)
 	servo = new /obj/item/stock_parts/servo(src)
@@ -338,7 +338,7 @@ GLOBAL_DATUM(cargo_ripley, /obj/vehicle/sealed/mecha/ripley/cargo)
 		))
 	return data
 
-/obj/item/mecha_parts/mecha_equipment/ejector/ui_act(action, list/params)
+/obj/item/mecha_parts/mecha_equipment/ejector/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if(.)
 		return TRUE
@@ -382,7 +382,7 @@ GLOBAL_DATUM(cargo_ripley, /obj/vehicle/sealed/mecha/ripley/cargo)
 	to_chat(source, span_warning("You don't have the room to remove [cuffs]!"))
 	return COMSIG_MOB_BLOCK_CUFF_REMOVAL
 
-/obj/item/mecha_parts/mecha_equipment/ejector/seccage/ui_act(action, list/params)
+/obj/item/mecha_parts/mecha_equipment/ejector/seccage/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	if(action == "eject")
 		var/mob/passenger = locate(params["cargoref"]) in contents
 		if(!passenger)

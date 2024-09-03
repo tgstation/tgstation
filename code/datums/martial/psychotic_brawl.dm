@@ -1,6 +1,7 @@
 /datum/martial_art/psychotic_brawling
 	name = "Psychotic Brawling"
 	id = MARTIALART_PSYCHOBRAWL
+	pacifist_style = TRUE
 
 /datum/martial_art/psychotic_brawling/disarm_act(mob/living/attacker, mob/living/defender)
 	return psycho_attack(attacker, defender)
@@ -75,6 +76,8 @@
 					carbon_defender.adjustOrganLoss(ORGAN_SLOT_BRAIN, 5)
 			attacker.Stun(rand(1 SECONDS, 4.5 SECONDS))
 			defender.Stun(rand(0.5 SECONDS, 3 SECONDS))
+			if(HAS_TRAIT(attacker, TRAIT_PACIFISM))
+				attacker.add_mood_event("bypassed_pacifism", /datum/mood_event/pacifism_bypassed)
 		if(5,6)
 			atk_verb = pick("kick", "hit", "slam")
 			if(defender.check_block(attacker, 0, "[attacker]'s [atk_verb]", UNARMED_ATTACK))
@@ -94,6 +97,8 @@
 			var/throwtarget = get_edge_target_turf(attacker, get_dir(attacker, get_step_away(defender, attacker)))
 			defender.throw_at(throwtarget, 4, 2, attacker)//So stuff gets tossed around at the same time.
 			defender.Paralyze(6 SECONDS)
+			if(HAS_TRAIT(attacker, TRAIT_PACIFISM))
+				attacker.add_mood_event("bypassed_pacifism", /datum/mood_event/pacifism_bypassed)
 		if(7,8)
 			return MARTIAL_ATTACK_INVALID //Resume default behaviour
 

@@ -4,9 +4,9 @@
 	desc = "A genome that causes the holder's skin to become transparent over time."
 	quality = POSITIVE
 	difficulty = 16
-	text_gain_indication = "<span class='notice'>You feel one with your surroundings.</span>"
-	text_lose_indication = "<span class='notice'>You feel oddly exposed.</span>"
-	instability = 25
+	text_gain_indication = span_notice("You feel one with your surroundings.")
+	text_lose_indication = span_notice("You feel oddly exposed.")
+	instability = POSITIVE_INSTABILITY_MAJOR
 	power_coeff = 1
 
 /datum/mutation/human/chameleon/on_acquiring(mob/living/carbon/human/owner)

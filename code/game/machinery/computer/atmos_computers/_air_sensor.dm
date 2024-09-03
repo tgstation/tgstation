@@ -57,7 +57,7 @@
 
 /obj/machinery/air_sensor/examine(mob/user)
 	. = ..()
-	. += span_notice("Use multitool to link it to an injector/vent or reset it's ports")
+	. += span_notice("Use multitool to link it to an injector/vent or reset its ports")
 	. += span_notice("Click with hand to turn it off.")
 
 /obj/machinery/air_sensor/attack_hand(mob/living/user, list/modifiers)
@@ -196,7 +196,7 @@
 		if(initial(sensor.chamber_id) != target_chamber)
 			continue
 
-		//make real air sensor in it's place
+		//make real air sensor in its place
 		var/obj/machinery/air_sensor/new_sensor = new sensor(get_turf(src))
 		new_sensor.inlet_id = input_id
 		new_sensor.outlet_id = output_id

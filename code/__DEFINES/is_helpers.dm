@@ -49,6 +49,8 @@ GLOBAL_LIST_INIT(turfs_openspace, typecacheof(list(
 
 #define isspaceturf(A) (istype(A, /turf/open/space))
 
+#define is_space_or_openspace(A) (isopenspaceturf(A) || isspaceturf(A))
+
 #define isfloorturf(A) (istype(A, /turf/open/floor))
 
 #define ismiscturf(A) (istype(A, /turf/open/misc))
@@ -66,6 +68,8 @@ GLOBAL_LIST_INIT(turfs_openspace, typecacheof(list(
 #define ischasm(A) (istype(A, /turf/open/chasm))
 
 #define isplatingturf(A) (istype(A, /turf/open/floor/plating))
+
+#define iscatwalkturf(A) (istype(A, /turf/open/floor/catwalk_floor))
 
 #define isasteroidturf(A) (istype(A, /turf/open/misc/asteroid))
 
@@ -135,18 +139,14 @@ GLOBAL_LIST_INIT(turfs_pass_meteor, typecacheof(list(
 
 //Silicon mobs
 #define issilicon(A) (istype(A, /mob/living/silicon))
-///Define on whether A has access to Silicon stuff either through being a silicon, admin ghost or is a non-silicon holding the Silicon remote.
-///This can only be used for instances where you are not specifically looking for silicon, but access.
-#define HAS_SILICON_ACCESS(A) (istype(A, /mob/living/silicon) || isAdminGhostAI(A) || A.has_unlimited_silicon_privilege || istype(A.get_active_held_item(), /obj/item/machine_remote))
-
 #define isAI(A) (istype(A, /mob/living/silicon/ai))
-///Define on whether A has access to AI stuff either through being a AI, admin ghost, or is a non-silicon holding the Silicon remote
-///This can only be used for instances where you are not specifically looking for silicon, but access.
-#define HAS_AI_ACCESS(A) (istype(A, /mob/living/silicon/ai) || isAdminGhostAI(A) || istype(A.get_active_held_item(), /obj/item/machine_remote))
-
 #define iscyborg(A) (istype(A, /mob/living/silicon/robot))
-
 #define ispAI(A) (istype(A, /mob/living/silicon/pai))
+
+///This is used to see if you have Silicon access. This includes things like Admins, Drones, Bots, and Human wands.
+#define HAS_SILICON_ACCESS(possible_silicon) (HAS_TRAIT(possible_silicon, TRAIT_SILICON_ACCESS) || isAdminGhostAI(possible_silicon))
+///This is used to see if you have the access of an AI. This doesn't mean you are an AI, just have the same access as one.
+#define HAS_AI_ACCESS(possible_ai) (HAS_TRAIT(possible_ai, TRAIT_AI_ACCESS) || isAdminGhostAI(possible_ai))
 
 // basic mobs
 #define isbasicmob(A) (istype(A, /mob/living/basic))
@@ -230,6 +230,8 @@ GLOBAL_LIST_INIT(turfs_pass_meteor, typecacheof(list(
 #define isgrenade(A) (istype(A, /obj/item/grenade))
 
 #define islandmine(A) (istype(A, /obj/effect/mine))
+
+#define iscloset(A) (istype(A, /obj/structure/closet))
 
 #define issupplypod(A) (istype(A, /obj/structure/closet/supplypod))
 

@@ -23,6 +23,7 @@
 	if(length(give_turf_traits))
 		give_turf_traits = string_list(give_turf_traits)
 		AddElement(/datum/element/give_turf_traits, give_turf_traits)
+	AddElement(/datum/element/footstep_override, footstep = FOOTSTEP_CATWALK)
 
 /datum/armor/structure_lattice
 	melee = 50
@@ -98,10 +99,6 @@
 	obj_flags = CAN_BE_HIT | BLOCK_Z_OUT_DOWN | BLOCK_Z_IN_UP
 	give_turf_traits = list(TRAIT_TURF_IGNORE_SLOWDOWN, TRAIT_LAVA_STOPPED, TRAIT_CHASM_STOPPED, TRAIT_IMMERSE_STOPPED, TRAIT_HYPERSPACE_STOPPED)
 
-/obj/structure/lattice/catwalk/Initialize(mapload)
-	. = ..()
-	AddElement(/datum/element/footstep_override, footstep = FOOTSTEP_CATWALK)
-
 /obj/structure/lattice/catwalk/deconstruction_hints(mob/user)
 	return span_notice("The supporting rods look like they could be <b>cut</b>.")
 
@@ -112,6 +109,7 @@
 	..()
 
 /obj/structure/lattice/catwalk/atom_deconstruct(disassembled = TRUE)
+	..()
 	var/turf/T = loc
 	for(var/obj/structure/cable/C in T)
 		C.deconstruct()

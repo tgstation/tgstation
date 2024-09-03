@@ -69,6 +69,7 @@ export const NtosCardContent = (props) => {
     trimAccess,
     wildcardFlags,
     wildcardSlots,
+    hasTrim,
   } = data;
 
   return (
@@ -93,7 +94,11 @@ export const NtosCardContent = (props) => {
             />
           }
         >
-          <TemplateDropdown templates={templates} />
+          {hasTrim ? (
+            <TemplateDropdown templates={templates} />
+          ) : (
+            'Templates require a trim already applied to the card. Please use an ID Painter to apply a trim.'
+          )}
         </Section>
       )}
       <Stack mt={1}>

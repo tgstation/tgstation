@@ -1,0 +1,6 @@
+author: "AyIong"
+delete-after: True
+changes:
+  - qol: "Stat Panel settings moved to personal tab"
+  - bugfix: "Stat Panel tabs no longer create horizontal scrollbar by default, but you can return it into the settings"
+  - bugfix: "Hovering over a truncated statpanel button, doesn't blocks the button below it anymore"

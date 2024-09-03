@@ -25,9 +25,8 @@
 /obj/effect/turf_decal/tile/yellow/half/contrasted{
 	dir = 4
 	},
-/obj/machinery/atmospherics/components/tank/air{
-	dir = 8;
-	piping_layer = 4
+/obj/machinery/atmospherics/components/tank/air/layer4{
+	dir = 8
 	},
 /obj/structure/window/reinforced/spawner/directional/west,
 /turf/open/floor/plating/icemoon,

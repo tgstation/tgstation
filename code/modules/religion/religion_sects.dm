@@ -146,7 +146,7 @@
 	do not heal organic limbs. You can now sacrifice cells, with favor depending on their charge."
 	tgui_icon = "robot"
 	alignment = ALIGNMENT_NEUT
-	desired_items = list(/obj/item/stock_parts/cell = "with battery charge")
+	desired_items = list(/obj/item/stock_parts/power_store = "with battery charge")
 	rites_list = list(/datum/religion_rites/synthconversion, /datum/religion_rites/machine_blessing)
 	altar_icon_state = "convertaltar-blue"
 	max_favor = 2500
@@ -196,7 +196,7 @@
 	blessed.add_mood_event("blessing", /datum/mood_event/blessing)
 	return TRUE
 
-/datum/religion_sect/mechanical/on_sacrifice(obj/item/stock_parts/cell/power_cell, mob/living/chap)
+/datum/religion_sect/mechanical/on_sacrifice(obj/item/stock_parts/power_store/cell/power_cell, mob/living/chap)
 	if(!istype(power_cell))
 		return
 

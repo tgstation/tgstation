@@ -14,6 +14,7 @@
 	demolition_mod = 1.25
 	w_class = WEIGHT_CLASS_SMALL
 	usesound = 'sound/items/ratchet.ogg'
+	operating_sound = list('sound/items/ratchet_fast.ogg', 'sound/items/ratchet_slow.ogg')
 	custom_materials = list(/datum/material/iron=SMALL_MATERIAL_AMOUNT*1.5)
 	drop_sound = 'sound/items/handling/wrench_drop.ogg'
 	pickup_sound = 'sound/items/handling/wrench_pickup.ogg'

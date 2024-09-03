@@ -451,7 +451,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/table,
 /obj/machinery/cell_charger,
-/obj/item/stock_parts/cell/high,
+/obj/item/stock_parts/power_store/cell/high,
 /turf/open/floor/pod/light,
 /area/shuttle/pirate)
 "bm" = (
@@ -475,7 +475,7 @@
 	pixel_x = 6;
 	pixel_y = 12
 	},
-/obj/item/clothing/mask/cigarette/cigar,
+/obj/item/cigarette/cigar,
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/stripes/line,
 /turf/open/floor/wood,
@@ -837,8 +837,7 @@
 	},
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/rack{
-	dir = 8;
-	layer = 2.9
+	dir = 8
 	},
 /obj/item/storage/box/lethalshot,
 /obj/item/gun/ballistic/shotgun/automatic/combat{

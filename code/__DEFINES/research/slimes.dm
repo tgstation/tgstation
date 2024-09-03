@@ -11,15 +11,15 @@
 #define SLIME_MAX_POWER 10
 
 ///The maximum amount of nutrition a slime can contain
-#define SLIME_MAX_NUTRITION 1000
+#define SLIME_MAX_NUTRITION 200
 ///The starting nutrition of a slime
-#define SLIME_STARTING_NUTRITION 700
+#define SLIME_STARTING_NUTRITION 100
 /// Above it we grow our amount_grown and our power_level, below it we can eat
-#define SLIME_GROW_NUTRITION 800
+#define SLIME_GROW_NUTRITION 150
 /// Below this, we feel hungry
-#define SLIME_HUNGER_NUTRITION 500
+#define SLIME_HUNGER_NUTRITION 50
 /// Below this, we feel starving
-#define SLIME_STARVE_NUTRITION 200
+#define SLIME_STARVE_NUTRITION 10
 
 ///The slime is not hungry. It might try to feed anyways.
 #define SLIME_HUNGER_NONE 0
@@ -44,12 +44,12 @@
 #define SLIME_TYPE_BLUE "blue"
 #define SLIME_TYPE_BLUESPACE "bluespace"
 #define SLIME_TYPE_CERULEAN "cerulean"
-#define SLIME_TYPE_DARK_BLUE "dark blue"
-#define SLIME_TYPE_DARK_PURPLE "dark purple"
+#define SLIME_TYPE_DARK_BLUE "dark-blue"
+#define SLIME_TYPE_DARK_PURPLE "dark-purple"
 #define SLIME_TYPE_GOLD "gold"
 #define SLIME_TYPE_GREEN "green"
 #define SLIME_TYPE_GREY "grey"
-#define SLIME_TYPE_LIGHT_PINK "light pink"
+#define SLIME_TYPE_LIGHT_PINK "light-pink"
 #define SLIME_TYPE_METAL "metal"
 #define SLIME_TYPE_OIL "oil"
 #define SLIME_TYPE_ORANGE "orange"
@@ -61,3 +61,6 @@
 #define SLIME_TYPE_SEPIA "sepia"
 #define SLIME_TYPE_SILVER "silver"
 #define SLIME_TYPE_YELLOW "yellow"
+
+// The alpha value of transperent slime types
+#define SLIME_TRANSPARENCY_ALPHA 180

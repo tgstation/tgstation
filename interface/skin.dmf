@@ -70,8 +70,8 @@ window "mainwindow"
 		menu = "menu"
 	elem "split"
 		type = CHILD
-		pos = 3,0
-		size = 634x440
+		pos = 0,0
+		size = 640x440
 		anchor1 = 0,0
 		anchor2 = 100,100
 		saved-params = "splitter"
@@ -159,58 +159,67 @@ window "infowindow"
 		is-vert = false
 	elem "changelog"
 		type = BUTTON
-		pos = 16,5
-		size = 104x20
-		anchor1 = 3,0
-		anchor2 = 19,0
+		pos = 5,5
+		size = 90x20
+		anchor1 = 1,0
+		anchor2 = 15,0
 		saved-params = "is-checked"
 		text = "Changelog"
 		command = "changelog"
 	elem "rules"
 		type = BUTTON
-		pos = 120,5
-		size = 100x20
-		anchor1 = 19,0
-		anchor2 = 34,0
+		pos = 95,5
+		size = 90x20
+		anchor1 = 15,0
+		anchor2 = 29,0
 		saved-params = "is-checked"
 		text = "Rules"
 		command = "rules"
 	elem "wiki"
 		type = BUTTON
-		pos = 220,5
-		size = 100x20
-		anchor1 = 34,0
-		anchor2 = 50,0
+		pos = 185,5
+		size = 90x20
+		anchor1 = 29,0
+		anchor2 = 43,0
 		saved-params = "is-checked"
 		text = "Wiki"
 		command = "wiki"
 	elem "forum"
 		type = BUTTON
-		pos = 320,5
-		size = 100x20
-		anchor1 = 50,0
-		anchor2 = 66,0
+		pos = 275,5
+		size = 90x20
+		anchor1 = 43,0
+		anchor2 = 57,0
 		saved-params = "is-checked"
 		text = "Forum"
 		command = "forum"
 	elem "github"
 		type = BUTTON
-		pos = 420,5
-		size = 100x20
-		anchor1 = 66,0
-		anchor2 = 81,0
+		pos = 365,5
+		size = 90x20
+		anchor1 = 57,0
+		anchor2 = 71,0
 		saved-params = "is-checked"
 		text = "Github"
 		command = "github"
 	elem "report-issue"
 		type = BUTTON
-		pos = 520,5
-		size = 100x20
-		anchor1 = 81,0
-		anchor2 = 97,0
+		pos = 455,5
+		size = 90x20
+		anchor1 = 71,0
+		anchor2 = 85,0
 		saved-params = "is-checked"
 		text = "Report Issue"
 		command = "report-issue"
+	elem "fullscreen-toggle"
+		type = BUTTON
+		pos = 545,5
+		size = 90x20
+		anchor1 = 85,0
+		anchor2 = 99,0
+		saved-params = "is-checked"
+		text = "Fullscreen"
+		command = "fullscreen"
 
 window "outputwindow"
 	elem "outputwindow"

@@ -45,7 +45,7 @@
 	to_chat(user, span_notice("You change the platform ID on [src] to [selected_platform]."))
 
 ///set safety bypass
-/obj/item/assembly/control/transport/remote/CtrlClick(mob/user)
+/obj/item/assembly/control/transport/remote/item_ctrl_click(mob/user)
 	switch(options)
 		if(!RAPID_MODE)
 			options |= RAPID_MODE
@@ -53,6 +53,7 @@
 			options &= ~RAPID_MODE
 	update_appearance()
 	balloon_alert(user, "mode: [options ? "fast" : "safe"]")
+	return CLICK_ACTION_SUCCESS
 
 /obj/item/assembly/control/transport/remote/examine(mob/user)
 	. = ..()

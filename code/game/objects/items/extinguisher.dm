@@ -18,7 +18,7 @@
 	attack_verb_simple = list("slam", "whack", "bash", "thunk", "batter", "bludgeon", "thrash")
 	dog_fashion = /datum/dog_fashion/back
 	resistance_flags = FIRE_PROOF
-	interaction_flags_click = NEED_DEXTERITY|NEED_HANDS
+	interaction_flags_click = NEED_DEXTERITY|NEED_HANDS|ALLOW_RESTING
 	/// The max amount of water this extinguisher can hold.
 	var/max_water = 50
 	/// Does the welder extinguisher start with water.
@@ -32,7 +32,11 @@
 	/// Can we refill this at a water tank?
 	var/refilling = FALSE
 	/// What tank we need to refill this.
-	var/tanktype = /obj/structure/reagent_dispensers/watertank
+	var/tanktypes = list(
+		/obj/structure/reagent_dispensers/watertank,
+		/obj/structure/reagent_dispensers/plumbed,
+		/obj/structure/reagent_dispensers/water_cooler,
+	)
 	/// something that should be replaced with base_icon_state
 	var/sprite_name = "fire_extinguisher"
 	/// Maximum distance launched water will travel.
@@ -48,10 +52,19 @@
 	. = ..()
 	var/static/list/slapcraft_recipe_list = list(/datum/crafting_recipe/ghettojetpack)
 
-	AddComponent(
-		/datum/component/slapcrafting,\
+	AddElement(
+		/datum/element/slapcrafting,\
 		slapcraft_recipes = slapcraft_recipe_list,\
 	)
+
+	register_context()
+
+/obj/item/extinguisher/add_context(atom/source, list/context, obj/item/held_item, mob/user)
+	if(held_item != src)
+		return
+	context[SCREENTIP_CONTEXT_LMB] = "Engage nozzle"
+	context[SCREENTIP_CONTEXT_ALT_LMB] = "Empty"
+	return CONTEXTUAL_SCREENTIP_SET
 
 /obj/item/extinguisher/empty
 	starting_water = FALSE
@@ -122,7 +135,10 @@
 	tank_holder_icon_state = "holder_foam_extinguisher"
 	dog_fashion = null
 	chem = /datum/reagent/firefighting_foam
-	tanktype = /obj/structure/reagent_dispensers/foamtank
+	tanktypes = list(
+		/obj/structure/reagent_dispensers/foamtank,
+		/obj/structure/reagent_dispensers/plumbed,
+	)
 	sprite_name = "foam_extinguisher"
 	precision = TRUE
 	max_water = 100
@@ -133,7 +149,7 @@
 /obj/item/extinguisher/suicide_act(mob/living/carbon/user)
 	if (!safety && (reagents.total_volume >= 1))
 		user.visible_message(span_suicide("[user] puts the nozzle to [user.p_their()] mouth. It looks like [user.p_theyre()] trying to extinguish the spark of life!"))
-		afterattack(user,user)
+		interact_with_atom(user, user)
 		return OXYLOSS
 	else if (safety && (reagents.total_volume >= 1))
 		user.visible_message(span_warning("[user] puts the nozzle to [user.p_their()] mouth... The safety's still on!"))
@@ -169,9 +185,13 @@
 		. += span_notice("Alt-click to empty it.")
 
 /obj/item/extinguisher/proc/AttemptRefill(atom/target, mob/user)
-	if(istype(target, tanktype) && target.Adjacent(user))
+	if(is_type_in_list(target, tanktypes) && target.Adjacent(user))
 		if(reagents.total_volume == reagents.maximum_volume)
 			balloon_alert(user, "already full!")
+			return TRUE
+		// Make sure we're refilling with the proper chem.
+		if(!(target.reagents.has_reagent(chem, check_subtypes = TRUE)))
+			balloon_alert(user, "can't refill with this liquid!")
 			return TRUE
 		var/obj/structure/reagent_dispensers/W = target //will it work?
 		var/transferred = W.reagents.trans_to(src, max_water, transferred_by = user)
@@ -187,67 +207,65 @@
 	else
 		return FALSE
 
-/obj/item/extinguisher/afterattack(atom/target, mob/user , flag)
-	. = ..()
-	// Make it so the extinguisher doesn't spray yourself when you click your inventory items
-	if (target.loc == user)
-		return
+/obj/item/extinguisher/ranged_interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
+	return interact_with_atom(interacting_with, user, modifiers)
 
-	. |= AFTERATTACK_PROCESSED_ITEM
+/obj/item/extinguisher/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
+	if (interacting_with.loc == user)
+		return NONE
 
 	if(refilling)
 		refilling = FALSE
+		return NONE
+	if(safety)
+		return NONE
+
+	if (src.reagents.total_volume < 1)
+		balloon_alert(user, "it's empty!")
 		return .
-	if (!safety)
 
+	if (world.time < src.last_use + 12)
+		return .
 
-		if (src.reagents.total_volume < 1)
-			balloon_alert(user, "it's empty!")
-			return .
+	src.last_use = world.time
 
-		if (world.time < src.last_use + 12)
-			return .
+	playsound(src.loc, 'sound/effects/extinguish.ogg', 75, TRUE, -3)
 
-		src.last_use = world.time
+	var/direction = get_dir(src,interacting_with)
 
-		playsound(src.loc, 'sound/effects/extinguish.ogg', 75, TRUE, -3)
+	if(user.buckled && isobj(user.buckled) && !user.buckled.anchored)
+		var/obj/B = user.buckled
+		var/movementdirection = REVERSE_DIR(direction)
+		addtimer(CALLBACK(src, TYPE_PROC_REF(/obj/item/extinguisher, move_chair), B, movementdirection), 0.1 SECONDS)
+	else
+		user.newtonian_move(REVERSE_DIR(direction))
 
-		var/direction = get_dir(src,target)
+	//Get all the turfs that can be shot at
+	var/turf/T = get_turf(interacting_with)
+	var/turf/T1 = get_step(T,turn(direction, 90))
+	var/turf/T2 = get_step(T,turn(direction, -90))
+	var/list/the_targets = list(T,T1,T2)
+	if(precision)
+		var/turf/T3 = get_step(T1, turn(direction, 90))
+		var/turf/T4 = get_step(T2,turn(direction, -90))
+		the_targets.Add(T3,T4)
 
-		if(user.buckled && isobj(user.buckled) && !user.buckled.anchored)
-			var/obj/B = user.buckled
-			var/movementdirection = REVERSE_DIR(direction)
-			addtimer(CALLBACK(src, TYPE_PROC_REF(/obj/item/extinguisher, move_chair), B, movementdirection), 0.1 SECONDS)
-		else
-			user.newtonian_move(REVERSE_DIR(direction))
-
-		//Get all the turfs that can be shot at
-		var/turf/T = get_turf(target)
-		var/turf/T1 = get_step(T,turn(direction, 90))
-		var/turf/T2 = get_step(T,turn(direction, -90))
-		var/list/the_targets = list(T,T1,T2)
+	var/list/water_particles = list()
+	for(var/a in 1 to 5)
+		var/obj/effect/particle_effect/water/extinguisher/water = new /obj/effect/particle_effect/water/extinguisher(get_turf(src))
+		var/my_target = pick(the_targets)
+		water_particles[water] = my_target
+		// If precise, remove turf from targets so it won't be picked more than once
 		if(precision)
-			var/turf/T3 = get_step(T1, turn(direction, 90))
-			var/turf/T4 = get_step(T2,turn(direction, -90))
-			the_targets.Add(T3,T4)
+			the_targets -= my_target
+		var/datum/reagents/water_reagents = new /datum/reagents(5)
+		water.reagents = water_reagents
+		water_reagents.my_atom = water
+		reagents.trans_to(water, 1, transferred_by = user)
 
-		var/list/water_particles = list()
-		for(var/a in 1 to 5)
-			var/obj/effect/particle_effect/water/extinguisher/water = new /obj/effect/particle_effect/water/extinguisher(get_turf(src))
-			var/my_target = pick(the_targets)
-			water_particles[water] = my_target
-			// If precise, remove turf from targets so it won't be picked more than once
-			if(precision)
-				the_targets -= my_target
-			var/datum/reagents/water_reagents = new /datum/reagents(5)
-			water.reagents = water_reagents
-			water_reagents.my_atom = water
-			reagents.trans_to(water, 1, transferred_by = user)
-
-		//Make em move dat ass, hun
-		move_particles(water_particles)
-
-	return .
+	//Make em move dat ass, hun
+	move_particles(water_particles)
+	return ITEM_INTERACT_SKIP_TO_ATTACK // You can smack while spraying
 
 //Particle movement loop
 /obj/item/extinguisher/proc/move_particles(list/particles)
@@ -298,5 +316,8 @@
 	name = "fire extender"
 	desc = "A traditional red fire extinguisher. Made in Britain... wait, what?"
 	chem = /datum/reagent/fuel
-	tanktype = /obj/structure/reagent_dispensers/fueltank
+	tanktypes = list(
+		/obj/structure/reagent_dispensers/fueltank,
+		/obj/structure/reagent_dispensers/plumbed
+	)
 	cooling_power = 0

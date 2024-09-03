@@ -45,6 +45,40 @@
 	gold_core_spawnable = NO_SPAWN
 	unique_pet = TRUE
 
+/mob/living/basic/pet/dog/bullterrier/guarddog //hostile dog variant for space ruins
+	name = "\improper guard dog"
+	real_name = "guard dog"
+	desc = "A vicious bull terrier. They look aggressive and territorial."
+	collar_icon_state = "spiked"
+	//slightly weaker than a bear, but not as slow
+	health = 60
+	maxHealth = 60
+	obj_damage = 20
+	melee_damage_lower = 10
+	melee_damage_upper = 15
+	wound_bonus = -25
+	bare_wound_bonus = 45
+	sharpness = SHARP_EDGED
+	gold_core_spawnable = HOSTILE_SPAWN
+	faction = list(FACTION_HOSTILE)
+	ai_controller = /datum/ai_controller/basic_controller/guarddog
+
+/datum/ai_controller/basic_controller/guarddog
+	blackboard = list(
+		BB_TARGETING_STRATEGY = /datum/targeting_strategy/basic,
+		BB_PET_TARGETING_STRATEGY = /datum/targeting_strategy/basic/not_friends,
+		BB_AGGRO_RANGE = 7,
+		BB_TARGET_MINIMUM_STAT = HARD_CRIT,
+	)
+
+	ai_movement = /datum/ai_movement/basic_avoidance
+	idle_behavior = /datum/idle_behavior/idle_random_walk
+	planning_subtrees = list(
+		/datum/ai_planning_subtree/target_retaliate,
+		/datum/ai_planning_subtree/simple_find_target,
+		/datum/ai_planning_subtree/basic_melee_attack_subtree,
+	)
+
 /mob/living/basic/pet/dog/breaddog //Most of the code originates from Cak
 	name = "Kobun"
 	real_name = "Kobun"

@@ -63,7 +63,7 @@ GLOBAL_LIST_INIT(dye_registry, list(
 		DYE_QM = /obj/item/clothing/gloves/color/brown,
 		DYE_CAPTAIN = /obj/item/clothing/gloves/captain,
 		DYE_HOP = /obj/item/clothing/gloves/color/grey,
-		DYE_HOS = /obj/item/clothing/gloves/color/black,
+		DYE_HOS = /obj/item/clothing/gloves/color/black/security,
 		DYE_CE = /obj/item/clothing/gloves/chief_engineer,
 		DYE_RD = /obj/item/clothing/gloves/color/grey,
 		DYE_CMO = /obj/item/clothing/gloves/latex/nitrile,
@@ -276,13 +276,9 @@ GLOBAL_LIST_INIT(dye_registry, list(
 	new /obj/item/food/meat/slab/corgi(loc)
 	qdel(src)
 
-/mob/living/simple_animal/pet/machine_wash(obj/machinery/washing_machine/washer)
-	washer.bloody_mess = TRUE
-	investigate_log("has been gibbed by a washing machine.", INVESTIGATE_DEATHS)
-	gib()
-
 /mob/living/basic/pet/machine_wash(obj/machinery/washing_machine/washer)
 	washer.bloody_mess = TRUE
+	investigate_log("has been gibbed by a washing machine.", INVESTIGATE_DEATHS)
 	gib()
 
 /obj/item/machine_wash(obj/machinery/washing_machine/washer)
@@ -337,33 +333,33 @@ GLOBAL_LIST_INIT(dye_registry, list(
 	default_unfasten_wrench(user, tool)
 	return ITEM_INTERACT_SUCCESS
 
-/obj/machinery/washing_machine/attackby(obj/item/W, mob/living/user, params)
-	if(default_deconstruction_screwdriver(user, null, null, W))
+/obj/machinery/washing_machine/screwdriver_act(mob/living/user, obj/item/tool)
+	if (!state_open)
+		default_deconstruction_screwdriver(user, null, null, tool)
 		update_appearance()
-		return
+		return ITEM_INTERACT_SUCCESS
+	return ITEM_INTERACT_BLOCKING
 
-	else if(!user.combat_mode)
-		if (!state_open)
-			to_chat(user, span_warning("Open the door first!"))
-			return TRUE
+/obj/machinery/washing_machine/item_interaction(mob/living/user, obj/item/item, list/modifiers)
+	if(user.combat_mode)
+		return NONE
+	if (!state_open)
+		to_chat(user, span_warning("Open the door first!"))
+		return ITEM_INTERACT_BLOCKING
+	if(bloody_mess)
+		to_chat(user, span_warning("[src] must be cleaned up first!"))
+		return ITEM_INTERACT_BLOCKING
+	if(contents.len >= max_wash_capacity)
+		to_chat(user, span_warning("The washing machine is full!"))
+		return ITEM_INTERACT_BLOCKING
+	if(!user.transferItemToLoc(item, src))
+		to_chat(user, span_warning("\The [item] is stuck to your hand, you cannot put it in the washing machine!"))
+		return ITEM_INTERACT_BLOCKING
+	if(item.dye_color)
+		color_source = item
+	update_appearance()
+	return ITEM_INTERACT_SUCCESS
 
-		if(bloody_mess)
-			to_chat(user, span_warning("[src] must be cleaned up first!"))
-			return TRUE
-
-		if(contents.len >= max_wash_capacity)
-			to_chat(user, span_warning("The washing machine is full!"))
-			return TRUE
-
-		if(!user.transferItemToLoc(W, src))
-			to_chat(user, span_warning("\The [W] is stuck to your hand, you cannot put it in the washing machine!"))
-			return TRUE
-		if(W.dye_color)
-			color_source = W
-		update_appearance()
-
-	else
-		return ..()
 
 /obj/machinery/washing_machine/attack_hand(mob/living/user, list/modifiers)
 	. = ..()
@@ -378,7 +374,7 @@ GLOBAL_LIST_INIT(dye_registry, list(
 		if(L.buckled || L.has_buckled_mobs())
 			return
 		if(state_open)
-			if(istype(L, /mob/living/simple_animal/pet) || istype(L, /mob/living/basic/pet))
+			if(istype(L, /mob/living/basic/pet))
 				L.forceMove(src)
 				update_appearance()
 		return

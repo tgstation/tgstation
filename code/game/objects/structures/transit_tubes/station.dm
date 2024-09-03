@@ -14,6 +14,7 @@
 	exit_delay = 1
 	enter_delay = 2
 	tube_construction = /obj/structure/c_transit_tube/station
+
 	var/open_status = STATION_TUBE_CLOSED
 	var/pod_moving = FALSE
 	var/cooldown_delay = 50
@@ -40,14 +41,9 @@
 				pod.update_appearance()
 				return
 
-
 //pod insertion
-/obj/structure/transit_tube/station/MouseDrop_T(obj/structure/c_transit_tube_pod/R, mob/user)
-	if(isliving(user))
-		var/mob/living/L = user
-		if(L.incapacitated())
-			return
-	if (!istype(R) || get_dist(user, src) > 1 || get_dist(src,R) > 1)
+/obj/structure/transit_tube/station/mouse_drop_receive(obj/structure/c_transit_tube_pod/R, mob/user, params)
+	if (!istype(R) || get_dist(user, src) > 1 || get_dist(src, R) > 1)
 		return
 	for(var/obj/structure/transit_tube_pod/pod in loc)
 		return //no fun allowed

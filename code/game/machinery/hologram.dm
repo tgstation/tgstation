@@ -39,9 +39,9 @@ Possible to do for anyone motivated enough:
 	icon = 'icons/obj/machines/floor.dmi'
 	icon_state = "holopad0"
 	base_icon_state = "holopad"
-	layer = LOW_OBJ_LAYER
 	/// The plane is set such that it shows up without being covered by pipes/wires in a map editor, we change this on initialize.
-	plane = GAME_PLANE
+	layer = MAP_SWITCH(ABOVE_OPEN_TURF_LAYER, LOW_OBJ_LAYER)
+	plane = MAP_SWITCH(FLOOR_PLANE, GAME_PLANE)
 	req_access = list(ACCESS_KEYCARD_AUTH) //Used to allow for forced connecting to other (not secure) holopads. Anyone can make a call, though.
 	max_integrity = 300
 	armor_type = /datum/armor/machinery_holopad
@@ -101,9 +101,6 @@ Possible to do for anyone motivated enough:
 
 /obj/machinery/holopad/Initialize(mapload)
 	. = ..()
-	/// We set the plane on mapload such that we can see the holopad render over atmospherics pipe and cabling in a map editor (without initialization), but so it gets that "inset" look in the floor in-game.
-	SET_PLANE_IMPLICIT(src, FLOOR_PLANE)
-	update_appearance()
 
 	var/static/list/hovering_mob_typechecks = list(
 		/mob/living/silicon = list(
@@ -311,7 +308,7 @@ Possible to do for anyone motivated enough:
 		data["holo_calls"] += list(call_data)
 	return data
 
-/obj/machinery/holopad/ui_act(action, list/params)
+/obj/machinery/holopad/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if(.)
 		return
@@ -594,7 +591,7 @@ For the other part of the code, check silicon say.dm. Particularly robot talk.*/
 /obj/machinery/holopad/proc/SetLightsAndPower()
 	var/total_users = LAZYLEN(masters) + LAZYLEN(holo_calls)
 	update_use_power(total_users > 0 ? ACTIVE_POWER_USE : IDLE_POWER_USE)
-	update_mode_power_usage(ACTIVE_POWER_USE, active_power_usage + HOLOPAD_PASSIVE_POWER_USAGE + (HOLOGRAM_POWER_USAGE * total_users))
+	update_mode_power_usage(ACTIVE_POWER_USE, initial(active_power_usage) + HOLOPAD_PASSIVE_POWER_USAGE + (HOLOGRAM_POWER_USAGE * total_users))
 	if(total_users || replay_mode)
 		set_light(2)
 	else

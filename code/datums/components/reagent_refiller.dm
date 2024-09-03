@@ -33,11 +33,11 @@
 	return ..()
 
 /datum/component/reagent_refiller/RegisterWithParent()
-	RegisterSignal(parent, COMSIG_ITEM_AFTERATTACK, PROC_REF(refill))
+	RegisterSignal(parent, COMSIG_ITEM_INTERACTING_WITH_ATOM, PROC_REF(refill))
 	RegisterSignal(parent, COMSIG_ATOM_EXITED, PROC_REF(delete_self))
 
 /datum/component/reagent_refiller/UnregisterFromParent()
-	UnregisterSignal(parent, list(COMSIG_ITEM_AFTERATTACK, COMSIG_ATOM_EXITED))
+	UnregisterSignal(parent, list(COMSIG_ITEM_INTERACTING_WITH_ATOM, COMSIG_ATOM_EXITED))
 
 /datum/component/reagent_refiller/proc/delete_self()
 	SIGNAL_HANDLER
@@ -47,8 +47,6 @@
 /// Preps the reagent container for being refilled
 /datum/component/reagent_refiller/proc/refill()
 	SIGNAL_HANDLER
-
-	. |= COMPONENT_AFTERATTACK_PROCESSED_ITEM
 
 	var/obj/item/reagent_containers/container = parent
 	var/amount = min((container.amount_per_transfer_from_this + container.reagents.total_volume), container.reagents.total_volume)

@@ -110,7 +110,7 @@
 		return BULLET_ACT_HIT
 
 	var/turf/origin_turf = get_turf(target)
-	var/turf/destination_turf = find_safe_turf()
+	var/turf/destination_turf = find_safe_turf(extended_safety_checks = TRUE)
 
 	if(do_teleport(target, destination_turf, channel=TELEPORT_CHANNEL_MAGIC))
 		for(var/t in list(origin_turf, destination_turf))

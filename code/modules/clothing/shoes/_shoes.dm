@@ -115,9 +115,10 @@
  * *
  * * state: SHOES_UNTIED, SHOES_TIED, or SHOES_KNOTTED, depending on what you want them to become
  * * user: used to check to see if we're the ones unknotting our own laces
+ * * force_lacing: boolean. if TRUE, ignores can_be_tied
  */
-/obj/item/clothing/shoes/proc/adjust_laces(state, mob/user)
-	if(!can_be_tied)
+/obj/item/clothing/shoes/proc/adjust_laces(state, mob/user, force_lacing = FALSE)
+	if(!can_be_tied && !force_lacing)
 		return
 
 	var/mob/living/carbon/human/our_guy

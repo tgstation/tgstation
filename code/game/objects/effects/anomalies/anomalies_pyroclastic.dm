@@ -5,7 +5,7 @@
 	var/ticks = 0
 	/// How many seconds between each gas release
 	var/releasedelay = 10
-	aSignal = /obj/item/assembly/signaler/anomaly/pyro
+	anomaly_core = /obj/item/assembly/signaler/anomaly/pyro
 
 /obj/effect/anomaly/pyro/Initialize(mapload, new_lifespan, drops_core)
 	. = ..()
@@ -46,7 +46,7 @@
 ///Bigger, meaner, immortal pyro anomaly
 /obj/effect/anomaly/pyro/big
 	immortal = TRUE
-	aSignal = null
+	anomaly_core = null
 	releasedelay = 2
 	move_force = MOVE_FORCE_OVERPOWERING
 

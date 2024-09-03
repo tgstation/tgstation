@@ -75,15 +75,16 @@
 		sigdev = null
 	return ..()
 
-/obj/item/pressure_plate/CtrlClick(mob/user)
+/obj/item/pressure_plate/item_ctrl_click(mob/user)
 	if(protected)
 		to_chat(user, span_warning("You can't quite seem to turn this pressure plate off..."))
-		return
+		return CLICK_ACTION_BLOCKING
 	active = !active
-	if (active == TRUE)
+	if (active)
 		to_chat(user, span_notice("You turn [src] on."))
 	else
 		to_chat(user, span_notice("You turn [src] off."))
+	return CLICK_ACTION_SUCCESS
 
 ///Called from COMSIG_OBJ_HIDE to toggle the active part, because yeah im not making a special exception on the element to support it
 /obj/item/pressure_plate/proc/ToggleActive(datum/source, underfloor_accessibility)

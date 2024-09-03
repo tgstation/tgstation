@@ -117,7 +117,7 @@
 			data["requests"] = request_list
 	return data
 
-/obj/machinery/computer/message_monitor/ui_act(action, params)
+/obj/machinery/computer/message_monitor/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if(.)
 		return .
@@ -268,6 +268,9 @@
 		ui = new(user, src, "MessageMonitor", name)
 		ui.open()
 
+/obj/machinery/computer/message_monitor/ui_assets(mob/user)
+	. = ..()
+	. += get_asset_datum(/datum/asset/spritesheet/chat)
 
 #undef MSG_MON_SCREEN_MAIN
 #undef MSG_MON_SCREEN_LOGS

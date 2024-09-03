@@ -22,6 +22,9 @@
 	slot_flags = ITEM_SLOT_BACK
 	worn_icon = 'icons/mob/clothing/back.dmi' //since these can also get thrown into suit storage slots. if something goes on the belt, set this to null.
 	hitsound = 'sound/weapons/smash.ogg'
+	pickup_sound = 'sound/items/gas_tank_pick_up.ogg'
+	drop_sound = 'sound/items/gas_tank_drop.ogg'
+	sound_vary = TRUE
 	pressure_resistance = ONE_ATMOSPHERE * 5
 	force = 5
 	throwforce = 10
@@ -36,7 +39,7 @@
 	var/igniting = FALSE
 	/// The gases this tank contains. Don't modify this directly, use return_air() to get it instead
 	var/datum/gas_mixture/air_contents = null
-	/// The volume of this tank. Among other things gas tank explosions (including TTVs) scale off of this. Be sure to account for that if you change this or you will break ~~toxins~~ordinance.
+	/// The volume of this tank. Among other things gas tank explosions (including TTVs) scale off of this. Be sure to account for that if you change this or you will break ~~toxins~~ ordinance.
 	var/volume = TANK_STANDARD_VOLUME
 	/// Whether the tank is currently leaking.
 	var/leaking = FALSE
@@ -69,7 +72,7 @@
 	if (QDELETED(breathing_mob))
 		breathing_mob = null
 		return
-	// Close open air tank if it got dropped by it's current user.
+	// Close open air tank if it got dropped by its current user.
 	if (loc != breathing_mob)
 		breathing_mob.cutoff_internals()
 
@@ -83,11 +86,13 @@
 /// Called by carbons after they connect the tank to their breathing apparatus.
 /obj/item/tank/proc/after_internals_opened(mob/living/carbon/carbon_target)
 	breathing_mob = carbon_target
+	playsound(loc, 'sound/items/internals_on.ogg', 15, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
 	RegisterSignal(carbon_target, COMSIG_MOB_GET_STATUS_TAB_ITEMS, PROC_REF(get_status_tab_item))
 
 /// Called by carbons after they disconnect the tank from their breathing apparatus.
 /obj/item/tank/proc/after_internals_closed(mob/living/carbon/carbon_target)
 	breathing_mob = null
+	playsound(loc, 'sound/items/internals_off.ogg', 15, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
 	UnregisterSignal(carbon_target, COMSIG_MOB_GET_STATUS_TAB_ITEMS)
 
 /obj/item/tank/proc/get_status_tab_item(mob/living/source, list/items)
@@ -251,7 +256,7 @@
 	if(istype(carbon_user) && (carbon_user.external == src || carbon_user.internal == src))
 		.["connected"] = TRUE
 
-/obj/item/tank/ui_act(action, params)
+/obj/item/tank/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if(.)
 		return
@@ -413,6 +418,16 @@
 	if(tank_assembly)
 		tank_assembly.attack_hand()
 
+/obj/item/tank/attack_self(mob/user, modifiers)
+	if (tank_assembly)
+		tank_assembly.attack_self(user)
+		return TRUE
+	return ..()
+
+/obj/item/tank/attack_self_secondary(mob/user, modifiers)
+	. = ..()
+	ui_interact(user)
+
 /obj/item/tank/Move()
 	. = ..()
 	if(tank_assembly)
@@ -445,7 +460,7 @@
 		balloon_alert(user, "can't reach!")
 		return
 
-	if((src in user.get_equipped_items(include_pockets = TRUE, include_accessories = TRUE)) && !user.canUnEquip(src))
+	if((src in user.get_equipped_items(INCLUDE_POCKETS | INCLUDE_ACCESSORIES)) && !user.canUnEquip(src))
 		balloon_alert(user, "it's stuck!")
 		return
 

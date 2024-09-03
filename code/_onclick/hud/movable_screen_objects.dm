@@ -6,7 +6,7 @@
 
 
 //Movable Screen Object
-//Not tied to the grid, places it's center where the cursor is
+//Not tied to the grid, places its center where the cursor is
 
 /atom/movable/screen/movable
 	mouse_drag_pointer = 'icons/effects/mouse_pointers/screen_drag.dmi'
@@ -20,7 +20,7 @@
 /atom/movable/screen/movable/snap
 	snap2grid = TRUE
 
-/atom/movable/screen/movable/MouseDrop(over_object, src_location, over_location, src_control, over_control, params)
+/atom/movable/screen/movable/mouse_drop_dragged(atom/over, mob/user, src_location, over_location, params)
 	var/position = mouse_params_to_position(params)
 	if(!position)
 		return

@@ -12,12 +12,16 @@
 	var/datum/species/selected_species
 	var/valid_species = list()
 
-/obj/item/debug/human_spawner/afterattack(atom/target, mob/user, proximity)
-	..()
-	if(isturf(target))
-		var/mob/living/carbon/human/H = new /mob/living/carbon/human(target)
+/obj/item/debug/human_spawner/ranged_interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
+	return interact_with_atom(interacting_with, user, modifiers)
+
+/obj/item/debug/human_spawner/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
+	if(isturf(interacting_with))
+		var/mob/living/carbon/human/H = new /mob/living/carbon/human(interacting_with)
 		if(selected_species)
 			H.set_species(selected_species)
+		return ITEM_INTERACT_SUCCESS
+	return NONE
 
 /obj/item/debug/human_spawner/attack_self(mob/user)
 	..()
@@ -138,6 +142,10 @@
 			tool_behaviour = TOOL_ROLLINGPIN
 		if("Wire Brush")
 			tool_behaviour = TOOL_RUSTSCRAPER
+
+/obj/item/debug/omnitool/item_spawner
+	name = "spawntool"
+	color = COLOR_ADMIN_PINK
 
 /obj/item/debug/omnitool/item_spawner/attack_self(mob/user)
 	if(!user || !user.client)

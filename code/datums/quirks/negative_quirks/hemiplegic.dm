@@ -16,7 +16,7 @@
 	associated_typepath = /datum/quirk/hemiplegic
 	customization_options = list(/datum/preference/choiced/hemiplegic)
 
-/datum/quirk/hemiplegic/add_unique(client/client_source)
+/datum/quirk/hemiplegic/add(client/client_source)
 	var/datum/brain_trauma/severe/paralysis/hemiplegic/side_choice = GLOB.side_choice_hemiplegic[client_source?.prefs?.read_preference(/datum/preference/choiced/hemiplegic)]
 	if(isnull(side_choice))  // Client gone or they chose a random side
 		side_choice = GLOB.side_choice_hemiplegic[pick(GLOB.side_choice_hemiplegic)]

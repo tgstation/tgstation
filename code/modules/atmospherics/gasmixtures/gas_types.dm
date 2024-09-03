@@ -45,7 +45,7 @@
 |||| only by meta_gas_list().            ||||
 \*||||||||||||||||||||||||||||||||||||||||*/
 
-//This is a plot created using the values for gas exports. Each gas has a value that works as it's kind of soft-cap, which limits you from making billions of credits per sale, based on the base_value variable on the gasses themselves. Most of these gasses as a result have a rather low value when sold, like nitrogen and oxygen at 1500 and 600 respectively at their maximum value. The
+//This is a plot created using the values for gas exports. Each gas has a value that works as its kind of soft-cap, which limits you from making billions of credits per sale, based on the base_value variable on the gasses themselves. Most of these gasses as a result have a rather low value when sold, like nitrogen and oxygen at 1500 and 600 respectively at their maximum value. The
 /datum/gas
 	var/id = ""
 	var/specific_heat = 0
@@ -108,7 +108,7 @@
 	dangerous = TRUE
 	rarity = 800
 	base_value = 1.5
-	desc = "A flammable gas with many other curious properties. It's research is one of NT's primary objective."
+	desc = "A flammable gas with many other curious properties. Its research is one of NT's primary objective."
 	primary_color = "#ffc0cb"
 
 /datum/gas/water_vapor
@@ -220,7 +220,7 @@
 	fusion_power = -5
 	rarity = 10
 	base_value = 5
-	desc = "A coolant gas. Mainly used for it's endothermic reaction with oxygen."
+	desc = "A coolant gas. Mainly used for its endothermic reaction with oxygen."
 	primary_color = "#afeeee"
 
 /datum/gas/hydrogen
@@ -267,7 +267,7 @@
 	moles_visible = MOLES_GAS_VISIBLE
 	rarity = 1
 	base_value = 7
-	desc = "A highly toxic gas, it's production is highly regulated on top of being difficult. It also breaks down when in contact with nitrogen."
+	desc = "A highly toxic gas, its production is highly regulated on top of being difficult. It also breaks down when in contact with nitrogen."
 	primary_color = "#006400"
 
 /datum/gas/halon
@@ -289,7 +289,7 @@
 	fusion_power = 7
 	rarity = 50
 	base_value = 3.5
-	desc = "A very inert gas produced by the fusion of hydrogen and it's derivatives."
+	desc = "A very inert gas produced by the fusion of hydrogen and its derivatives."
 	primary_color = "#f0f8ff"
 
 /datum/gas/antinoblium

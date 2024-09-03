@@ -79,6 +79,15 @@
 	end_sound = 'sound/machines/microwave/microwave-end.ogg'
 	volume = 90
 
+/datum/looping_sound/lathe_print
+	mid_sounds = list('sound/machines/lathe/lathe_print.ogg' = 1)
+	mid_length = 20
+	volume = 50
+	vary = TRUE
+	ignore_walls = FALSE
+	falloff_distance = 1
+	mid_length_vary = 10
+
 /datum/looping_sound/jackpot
 	mid_length = 11
 	mid_sounds = list('sound/machines/roulettejackpot.ogg' = 1)
@@ -107,7 +116,7 @@
 	start_sound = 'sound/machines/computer/computer_start.ogg'
 	start_length = 7.2 SECONDS
 	start_volume = 10
-	mid_sounds = list('sound/machines/computer/computer_mid1.ogg', 'sound/machines/computer/computer_mid2.ogg')
+	mid_sounds = list('sound/machines/computer/computer_mid1.ogg' = 1, 'sound/machines/computer/computer_mid2.ogg' = 1)
 	mid_length = 1.8 SECONDS
 	end_sound = 'sound/machines/computer/computer_end.ogg'
 	end_volume = 10
@@ -120,7 +129,7 @@
 	mid_sounds = list('sound/machines/gravgen/gravgen_mid1.ogg' = 1, 'sound/machines/gravgen/gravgen_mid2.ogg' = 1, 'sound/machines/gravgen/gravgen_mid3.ogg' = 1, 'sound/machines/gravgen/gravgen_mid4.ogg' = 1)
 	mid_length = 1.8 SECONDS
 	extra_range = 10
-	volume = 40
+	volume = 20
 	falloff_distance = 5
 	falloff_exponent = 20
 
@@ -151,3 +160,18 @@
 		'sound/machines/terminal_button08.ogg' = 1,
 	)
 	mid_length = 0.3 SECONDS
+
+/datum/looping_sound/soup
+	mid_sounds = list(
+		'sound/effects/soup_boil1.ogg' = 1,
+		'sound/effects/soup_boil2.ogg' = 1,
+		'sound/effects/soup_boil3.ogg' = 1,
+		'sound/effects/soup_boil4.ogg' = 1,
+		'sound/effects/soup_boil5.ogg' = 1,
+	)
+	mid_length = 3 SECONDS
+	volume = 80
+	end_sound = 'sound/effects/soup_boil_end.ogg'
+	end_volume = 60
+	extra_range = MEDIUM_RANGE_SOUND_EXTRARANGE
+	falloff_exponent = 4

@@ -363,6 +363,18 @@
 /obj/machinery/atmospherics/components/tank/air
 	name = "pressure tank (Air)"
 
+/obj/machinery/atmospherics/components/tank/air/layer1
+	piping_layer = 1
+
+/obj/machinery/atmospherics/components/tank/air/layer2
+	piping_layer = 2
+
+/obj/machinery/atmospherics/components/tank/air/layer4
+	piping_layer = 4
+
+/obj/machinery/atmospherics/components/tank/air/layer5
+	piping_layer = 5
+
 /obj/machinery/atmospherics/components/tank/air/Initialize(mapload)
 	. = ..()
 	fill_to_pressure(/datum/gas/oxygen, safety_margin = (O2STANDARD * 0.5))

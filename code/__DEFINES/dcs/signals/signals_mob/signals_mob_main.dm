@@ -50,7 +50,7 @@
 	#define COMSIG_MOB_CLIENT_BLOCK_PRE_MOVE COMPONENT_MOVABLE_BLOCK_PRE_MOVE
 	/// The argument of move_args which corresponds to the loc we're moving to
 	#define MOVE_ARG_NEW_LOC 1
-	/// The arugment of move_args which dictates our movement direction
+	/// The argument of move_args which dictates our movement direction
 	#define MOVE_ARG_DIRECTION 2
 /// From base of /client/Move(): (direction, old_dir)
 #define COMSIG_MOB_CLIENT_MOVED "mob_client_moved"
@@ -72,7 +72,7 @@
 #define COMSIG_MOB_MIND_TRANSFERRED_INTO "mob_mind_transferred_into"
 ///from mind/transfer_from. Sent to the mob the mind is being transferred out of.
 #define COMSIG_MOB_MIND_TRANSFERRED_OUT_OF "mob_mind_transferred_out_of"
-/// From /mob/proc/ghostize() Called when a mob sucessfully ghosts
+/// From /mob/proc/ghostize() Called when a mob successfully ghosts
 #define COMSIG_MOB_GHOSTIZED "mob_ghostized"
 
 ///from base of obj/allowed(mob/M): (/obj) returns ACCESS_ALLOWED if mob has id access to the obj
@@ -138,6 +138,7 @@
 	#define SPEECH_FILTERPROOF 8
 	#define SPEECH_RANGE 9
 	#define SPEECH_SAYMODE 10
+	#define SPEECH_MODS 11
 
 ///from /mob/say_dead(): (mob/speaker, message)
 #define COMSIG_MOB_DEADSAY "mob_deadsay"
@@ -155,7 +156,7 @@
 ///Mob is trying to open the wires of a target [/atom], from /datum/wires/interactable(): (atom/target)
 #define COMSIG_TRY_WIRES_INTERACT "try_wires_interact"
 	#define COMPONENT_CANT_INTERACT_WIRES (1<<0)
-///Mob is trying to emote, from /datum/emote/proc/run_emote(): (key, params, type_override, intentional)
+///Mob is trying to emote, from /datum/emote/proc/run_emote(): (key, params, type_override, intentional, emote)
 #define COMSIG_MOB_PRE_EMOTED "mob_pre_emoted"
 	#define COMPONENT_CANT_EMOTE (1<<0)
 #define COMSIG_MOB_EMOTED(emote_key) "mob_emoted_[emote_key]"
@@ -181,16 +182,14 @@
 #define COMSIG_MOB_ATTACK_HAND "mob_attack_hand"
 ///from base of /obj/item/attack(): (mob/M, mob/user)
 #define COMSIG_MOB_ITEM_ATTACK "mob_item_attack"
-///from base of obj/item/afterattack(): (atom/target, obj/item/weapon, proximity_flag, click_parameters)
-#define COMSIG_MOB_ITEM_AFTERATTACK "mob_item_afterattack"
-///from base of obj/item/afterattack_secondary(): (atom/target, obj/item/weapon, proximity_flag, click_parameters)
-#define COMSIG_MOB_ITEM_AFTERATTACK_SECONDARY "mob_item_afterattack_secondary"
 ///from base of mob/RangedAttack(): (atom/A, modifiers)
 #define COMSIG_MOB_ATTACK_RANGED "mob_attack_ranged"
 ///from base of mob/ranged_secondary_attack(): (atom/target, modifiers)
 #define COMSIG_MOB_ATTACK_RANGED_SECONDARY "mob_attack_ranged_secondary"
-///From base of atom/ctrl_click(): (atom/A)
+///From base of /mob/base_click_ctrl: (atom/A)
 #define COMSIG_MOB_CTRL_CLICKED "mob_ctrl_clicked"
+///From base of /mob/base_click_ctrl_shift: (atom/A)
+#define COMSIG_MOB_CTRL_SHIFT_CLICKED "mob_ctrl_shift_clicked"
 ///From base of mob/update_movespeed():area
 #define COMSIG_MOB_MOVESPEED_UPDATED "mob_update_movespeed"
 /// From /atom/movable/screen/zone_sel/proc/set_selected_zone.
@@ -207,7 +206,7 @@
 ///Sent by pilot of mech in /obj/vehicle/sealed/mecha/on_mouseclick when using mech equipment : (/obj/vehicle/sealed/mecha/mech)
 #define COMSIG_MOB_USED_MECH_EQUIPMENT "mob_used_mech_equipment"
 ///Sent by pilot of mech in /obj/vehicle/sealed/mecha/on_mouseclick when triggering mech punch : (/obj/vehicle/sealed/mecha/mech)
-#define COMSIG_MOB_USED_MECH_MELEE "mob_used_mech_melee"
+#define COMSIG_MOB_USED_CLICK_MECH_MELEE "mob_used_click_mech_melee"
 
 ///from living/flash_act(), when a mob is successfully flashed.
 #define COMSIG_MOB_FLASHED "mob_flashed"
@@ -244,6 +243,9 @@
 
 /// from /mob/proc/slip(): (knockdown_amonut, obj/slipped_on, lube_flags [mobs.dm], paralyze, force_drop)
 #define COMSIG_MOB_SLIPPED "mob_slipped"
+
+/// From the base of /datum/component/callouts/proc/callout_picker(mob/user, atom/clicked_atom): (datum/callout_option/callout, atom/target)
+#define COMSIG_MOB_CREATED_CALLOUT "mob_created_callout"
 
 /// from /mob/proc/key_down(): (key, client/client, full_key)
 #define COMSIG_MOB_KEYDOWN "mob_key_down"

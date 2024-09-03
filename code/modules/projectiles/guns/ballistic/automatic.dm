@@ -41,12 +41,12 @@
 	fire_delay = 2
 	burst_size = 3
 	pin = /obj/item/firing_pin/implant/pindicate
-	can_bayonet = TRUE
-	knife_x_offset = 26
-	knife_y_offset = 12
 	mag_display = TRUE
 	mag_display_ammo = TRUE
 	empty_indicator = TRUE
+
+/obj/item/gun/ballistic/automatic/c20r/add_bayonet_point()
+	AddComponent(/datum/component/bayonet_attachable, offset_x = 26, offset_y = 12)
 
 /obj/item/gun/ballistic/automatic/c20r/update_overlays()
 	. = ..()
@@ -75,9 +75,6 @@
 	can_suppress = FALSE
 	burst_size = 1
 	actions_types = list()
-	can_bayonet = TRUE
-	knife_x_offset = 25
-	knife_y_offset = 12
 	mag_display = TRUE
 	mag_display_ammo = TRUE
 	empty_indicator = TRUE
@@ -86,20 +83,36 @@
 	. = ..()
 	AddComponent(/datum/component/automatic_fire, 0.3 SECONDS)
 
-/obj/item/gun/ballistic/automatic/plastikov
-	name = "\improper PP-95 SMG"
-	desc = "An ancient 9mm submachine gun pattern updated and simplified to lower costs, though perhaps simplified too much."
-	icon_state = "plastikov"
-	inhand_icon_state = "plastikov"
-	accepted_magazine_type = /obj/item/ammo_box/magazine/plastikov9mm
-	burst_size = 5
-	spread = 25
-	can_suppress = FALSE
+/obj/item/gun/ballistic/automatic/wt550/add_bayonet_point()
+	AddComponent(/datum/component/bayonet_attachable, offset_x = 25, offset_y = 12)
+
+/obj/item/gun/ballistic/automatic/smartgun
+	name = "\improper Abielle Smart-SMG"
+	desc = "An old experiment in smart-weapon technology that guides bullets towards the target the gun was aimed at when fired. \
+		While the tracking functions worked fine, the gun is prone to insanely wide spread thanks to it's practically non-existant barrel."
+	icon_state = "smartgun"
+	inhand_icon_state = "smartgun"
+	accepted_magazine_type = /obj/item/ammo_box/magazine/smartgun
+	burst_size = 4
+	fire_delay = 1
+	spread = 40
+	dual_wield_spread = 20
 	actions_types = list()
-	projectile_damage_multiplier = 0.35 //It's like 10.5 damage per bullet, it's close enough to 10 shots
+	bolt_type = BOLT_TYPE_LOCKING
+	can_suppress = FALSE
 	mag_display = TRUE
 	empty_indicator = TRUE
-	fire_sound = 'sound/weapons/gun/smg/shot_alt.ogg'
+	click_on_low_ammo = FALSE
+	/// List of the possible firing sounds
+	var/list/firing_sound_list = list(
+		'sound/weapons/gun/smartgun/smartgun_shoot_1.ogg',
+		'sound/weapons/gun/smartgun/smartgun_shoot_2.ogg',
+		'sound/weapons/gun/smartgun/smartgun_shoot_3.ogg',
+	)
+
+/obj/item/gun/ballistic/automatic/smartgun/fire_sounds()
+	var/picked_fire_sound = pick(firing_sound_list)
+	playsound(src, picked_fire_sound, fire_sound_volume, vary_fire_sound)
 
 /obj/item/gun/ballistic/automatic/mini_uzi
 	name = "\improper Type U3 Uzi"
@@ -159,17 +172,18 @@
 	underbarrel = new /obj/item/gun/ballistic/revolver/grenadelauncher/unrestricted(src)
 	update_appearance()
 
-/obj/item/gun/ballistic/automatic/m90/afterattack_secondary(atom/target, mob/living/user, proximity_flag, click_parameters)
-	underbarrel.afterattack(target, user, proximity_flag, click_parameters)
-	return SECONDARY_ATTACK_CONTINUE_CHAIN
+/obj/item/gun/ballistic/automatic/m90/try_fire_gun(atom/target, mob/living/user, params)
+	if(LAZYACCESS(params2list(params), RIGHT_CLICK))
+		return underbarrel.try_fire_gun(target, user, params)
+	return ..()
 
-/obj/item/gun/ballistic/automatic/m90/attackby(obj/item/A, mob/user, params)
-	if(isammocasing(A))
-		if(istype(A, underbarrel.magazine.ammo_type))
+/obj/item/gun/ballistic/automatic/m90/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if(isammocasing(tool))
+		if(istype(tool, underbarrel.magazine.ammo_type))
 			underbarrel.attack_self(user)
-			underbarrel.attackby(A, user, params)
-	else
-		..()
+			underbarrel.attackby(tool, user, list2params(modifiers))
+		return ITEM_INTERACT_BLOCKING
+	return ..()
 
 /obj/item/gun/ballistic/automatic/tommygun
 	name = "\improper Thompson SMG"
@@ -276,15 +290,15 @@
 	. += "l6_door_[cover_open ? "open" : "closed"]"
 
 
-/obj/item/gun/ballistic/automatic/l6_saw/afterattack(atom/target as mob|obj|turf, mob/living/user as mob|obj, flag, params)
-	. |= AFTERATTACK_PROCESSED_ITEM
-
+/obj/item/gun/ballistic/automatic/l6_saw/try_fire_gun(atom/target, mob/living/user, params)
 	if(cover_open)
 		balloon_alert(user, "close the cover!")
-		return
-	else
-		. |= ..()
+		return FALSE
+
+	. = ..()
+	if(.)
 		update_appearance()
+	return .
 
 //ATTACK HAND IGNORING PARENT RETURN VALUE
 /obj/item/gun/ballistic/automatic/l6_saw/attack_hand(mob/user, list/modifiers)

@@ -69,9 +69,7 @@
 /obj/effect/turf_decal/trimline/blue/filled/line{
 	dir = 9
 	},
-/obj/machinery/chem_dispenser{
-	layer = 2.7
-	},
+/obj/machinery/chem_dispenser,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/travelers_rest)
@@ -437,7 +435,7 @@
 /obj/item/storage/box/lights/tubes,
 /obj/item/clothing/glasses/night,
 /obj/item/stock_parts/capacitor/super,
-/obj/item/stock_parts/cell/high,
+/obj/item/stock_parts/power_store/cell/high,
 /obj/effect/turf_decal/trimline/brown/filled/line{
 	dir = 6
 	},

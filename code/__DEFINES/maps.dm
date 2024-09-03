@@ -176,11 +176,13 @@ Always compile, always use that verb, and always make sure that it works for wha
 
 #define BIOME_LOW_HEAT "low_heat"
 #define BIOME_LOWMEDIUM_HEAT "lowmedium_heat"
+#define BIOME_MEDIUM_HEAT "medium_heat"
 #define BIOME_HIGHMEDIUM_HEAT "highmedium_heat"
 #define BIOME_HIGH_HEAT "high_heat"
 
 #define BIOME_LOW_HUMIDITY "low_humidity"
 #define BIOME_LOWMEDIUM_HUMIDITY "lowmedium_humidity"
+#define BIOME_MEDIUM_HUMIDITY "medium_humidity"
 #define BIOME_HIGHMEDIUM_HUMIDITY "highmedium_humidity"
 #define BIOME_HIGH_HUMIDITY "high_humidity"
 
@@ -220,3 +222,13 @@ Always compile, always use that verb, and always make sure that it works for wha
 
 /// Checks the job changes in the map config for the passed change key.
 #define CHECK_MAP_JOB_CHANGE(job, change) SSmapping.config.job_changes?[job]?[change]
+
+///Identifiers for away mission spawnpoints
+#define AWAYSTART_BEACH "AWAYSTART_BEACH"
+#define AWAYSTART_MUSEUM "AWAYSTART_MUSEUM"
+#define AWAYSTART_RESEARCH "AWAYSTART_RESEARCH"
+#define AWAYSTART_CAVES "AWAYSTART_CAVES"
+#define AWAYSTART_MOONOUTPOST "AWAYSTART_MOONOUTPOST"
+#define AWAYSTART_SNOWCABIN "AWAYSTART_SNOWCABIN"
+#define AWAYSTART_SNOWDIN "AWAYSTART_SNOWDIN"
+#define AWAYSTART_UNDERGROUND "AWAYSTART_UNDERGROUND"

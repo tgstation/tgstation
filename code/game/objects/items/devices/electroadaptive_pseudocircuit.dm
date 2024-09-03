@@ -55,19 +55,18 @@
 	addtimer(CALLBACK(src, PROC_REF(recharge)), ROUND_UP(recharge_time))
 	return TRUE //The actual circuit magic itself is done on a per-object basis
 
-/obj/item/electroadaptive_pseudocircuit/afterattack(atom/target, mob/living/user, proximity)
-	. = ..()
-	if(!proximity)
-		return
-	. |= AFTERATTACK_PROCESSED_ITEM
-	if(!is_type_in_typecache(target, recycleable_circuits))
-		return
+/obj/item/electroadaptive_pseudocircuit/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
+	if(!is_type_in_typecache(interacting_with, recycleable_circuits))
+		return NONE
 	circuits++
 	maptext = MAPTEXT(circuits)
-	user.visible_message(span_notice("User breaks down [target] with [src]."), \
-	span_notice("You recycle [target] into [src]. It now has material for <b>[circuits]</b> circuits."))
+	user.visible_message(
+		span_notice("User breaks down [interacting_with] with [src]."),
+		span_notice("You recycle [interacting_with] into [src]. It now has material for <b>[circuits]</b> circuits.")
+	)
 	playsound(user, 'sound/items/deconstruct.ogg', 50, TRUE)
-	qdel(target)
+	qdel(interacting_with)
+	return ITEM_INTERACT_SUCCESS
 
 /obj/item/electroadaptive_pseudocircuit/proc/recharge()
 	playsound(src, 'sound/machines/chime.ogg', 25, TRUE)

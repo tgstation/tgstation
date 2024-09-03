@@ -12,6 +12,8 @@ LINEN BINS
 	righthand_file = 'icons/mob/inhands/items/bedsheet_righthand.dmi'
 	icon_state = "sheetwhite"
 	inhand_icon_state = "sheetwhite"
+	drop_sound = 'sound/items/handling/cloth_drop.ogg'
+	pickup_sound = 'sound/items/handling/cloth_pickup.ogg'
 	slot_flags = ITEM_SLOT_NECK
 	layer = BELOW_MOB_LAYER
 	throwforce = 0
@@ -57,20 +59,38 @@ LINEN BINS
 
 	return NONE
 
-/obj/item/bedsheet/attack_secondary(mob/living/target, mob/living/user, params)
-	if(!user.CanReach(target))
-		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
-	if(target.body_position != LYING_DOWN)
-		return ..()
+/obj/item/bedsheet/interact_with_atom_secondary(atom/interacting_with, mob/living/user, list/modifiers)
+	if(!isliving(interacting_with))
+		return NONE
+	var/mob/living/to_cover = interacting_with
+	if(to_cover.body_position != LYING_DOWN)
+		return ITEM_INTERACT_BLOCKING
 	if(!user.dropItemToGround(src))
-		return ..()
+		return ITEM_INTERACT_BLOCKING
 
-	forceMove(get_turf(target))
+	forceMove(get_turf(to_cover))
 	balloon_alert(user, "covered")
-	coverup(target)
+	coverup(to_cover)
 	add_fingerprint(user)
 
-	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+	return ITEM_INTERACT_SUCCESS
+
+/obj/item/bedsheet/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	// Handle wirecutters here so we still tear it up in combat mode
+	if(tool.tool_behaviour != TOOL_WIRECUTTER && !tool.get_sharpness())
+		return NONE
+
+	// We cannot get free cloth from holograms
+	if(flags_1 & HOLOGRAM_1)
+		return ITEM_INTERACT_BLOCKING
+
+	var/obj/item/stack/shreds = new stack_type(get_turf(src), stack_amount)
+	if(!QDELETED(shreds)) // Stacks merged
+		transfer_fingerprints_to(shreds)
+		shreds.add_fingerprint(user)
+	to_chat(user, span_notice("You tear [src] up."))
+	qdel(src)
+	return ITEM_INTERACT_SUCCESS
 
 /obj/item/bedsheet/attack_self(mob/living/user)
 	if(!user.CanReach(src)) //No telekinetic grabbing.
@@ -83,10 +103,15 @@ LINEN BINS
 	coverup(user)
 	add_fingerprint(user)
 
+/obj/item/bedsheet/click_alt(mob/living/user)
+	setDir(REVERSE_DIR(dir))
+	return CLICK_ACTION_SUCCESS
+
 /obj/item/bedsheet/proc/coverup(mob/living/sleeper)
 	layer = ABOVE_MOB_LAYER
 	pixel_x = 0
 	pixel_y = 0
+	pixel_z = sleeper.pixel_z // Account for possible mob elevation
 	balloon_alert(sleeper, "covered")
 	var/angle = sleeper.lying_prev
 	dir = angle2dir(angle + 180) // 180 flips it to be the same direction as the mob
@@ -107,6 +132,7 @@ LINEN BINS
 	balloon_alert(sleeper, "smoothed sheets")
 	layer = initial(layer)
 	SET_PLANE_IMPLICIT(src, initial(plane))
+	pixel_z = 0
 	signal_sleeper = null
 
 // We need to do this in case someone picks up a bedsheet while a mob is covered up
@@ -120,23 +146,8 @@ LINEN BINS
 	UnregisterSignal(sleeper, COMSIG_MOVABLE_MOVED)
 	UnregisterSignal(sleeper, COMSIG_LIVING_SET_BODY_POSITION)
 	UnregisterSignal(sleeper, COMSIG_QDELETING)
+	pixel_z = 0
 	signal_sleeper = null
-
-/obj/item/bedsheet/attackby(obj/item/I, mob/user, params)
-	if(I.tool_behaviour == TOOL_WIRECUTTER || I.get_sharpness())
-		if (!(flags_1 & HOLOGRAM_1))
-			var/obj/item/stack/shreds = new stack_type(get_turf(src), stack_amount)
-			if(!QDELETED(shreds)) //stacks merged
-				transfer_fingerprints_to(shreds)
-				shreds.add_fingerprint(user)
-		qdel(src)
-		to_chat(user, span_notice("You tear [src] up."))
-	else
-		return ..()
-
-/obj/item/bedsheet/click_alt(mob/living/user)
-	dir = REVERSE_DIR(dir)
-	return CLICK_ACTION_SUCCESS
 
 /obj/item/bedsheet/blue
 	icon_state = "sheetblue"
@@ -565,9 +576,12 @@ LINEN BINS
 	desc = "It looks rather cosy."
 	icon = 'icons/obj/structures.dmi'
 	icon_state = "linenbin-full"
+	base_icon_state = "linenbin"
 	anchored = TRUE
+	pass_flags = PASSTABLE
 	resistance_flags = FLAMMABLE
 	max_integrity = 70
+	anchored_tabletop_offset = 6
 	/// The number of bedsheets in the bin
 	var/amount = 10
 	/// A list of actual sheets within the bin
@@ -581,6 +595,10 @@ LINEN BINS
 	anchored = FALSE
 
 
+/obj/structure/bedsheetbin/Initialize(mapload)
+	. = ..()
+	register_context()
+
 /obj/structure/bedsheetbin/examine(mob/user)
 	. = ..()
 	if(amount < 1)
@@ -590,15 +608,37 @@ LINEN BINS
 	else
 		. += "There are [amount] bed sheets in the bin."
 
+/obj/structure/bedsheetbin/add_context(atom/source, list/context, obj/item/held_item, mob/living/user)
+	if(isnull(held_item))
+		if(amount)
+			context[SCREENTIP_CONTEXT_LMB] = "Take bedsheet"
+			return CONTEXTUAL_SCREENTIP_SET
+		return
+
+	if(istype(held_item, /obj/item/bedsheet))
+		context[SCREENTIP_CONTEXT_LMB] = "Put in"
+		return CONTEXTUAL_SCREENTIP_SET
+
+	if(held_item.tool_behaviour == TOOL_SCREWDRIVER)
+		context[SCREENTIP_CONTEXT_RMB] = "Disassemble"
+		. = CONTEXTUAL_SCREENTIP_SET
+	else if(held_item.tool_behaviour == TOOL_WRENCH)
+		context[SCREENTIP_CONTEXT_RMB] = "[anchored ? "Una" : "A"]nchor"
+		. = CONTEXTUAL_SCREENTIP_SET
+
+	if(amount && held_item.w_class < WEIGHT_CLASS_BULKY)
+		context[SCREENTIP_CONTEXT_LMB] = "Hide item in"
+		. = CONTEXTUAL_SCREENTIP_SET
+	return .
 
 /obj/structure/bedsheetbin/update_icon_state()
 	switch(amount)
 		if(0)
-			icon_state = "linenbin-empty"
+			icon_state = "[base_icon_state]-empty"
 		if(1 to 5)
-			icon_state = "linenbin-half"
+			icon_state = "[base_icon_state]-half"
 		else
-			icon_state = "linenbin-full"
+			icon_state = "[base_icon_state]-full"
 	return ..()
 
 /obj/structure/bedsheetbin/fire_act(exposed_temperature, exposed_volume)
@@ -607,7 +647,7 @@ LINEN BINS
 		update_appearance()
 	..()
 
-/obj/structure/bedsheetbin/screwdriver_act(mob/living/user, obj/item/tool)
+/obj/structure/bedsheetbin/screwdriver_act_secondary(mob/living/user, obj/item/tool)
 	if(amount)
 		to_chat(user, span_warning("The [src] must be empty first!"))
 		return ITEM_INTERACT_SUCCESS
@@ -617,27 +657,45 @@ LINEN BINS
 		qdel(src)
 		return ITEM_INTERACT_SUCCESS
 
-/obj/structure/bedsheetbin/wrench_act(mob/living/user, obj/item/tool)
+/obj/structure/bedsheetbin/wrench_act_secondary(mob/living/user, obj/item/tool)
 	. = ..()
 	default_unfasten_wrench(user, tool, time = 0.5 SECONDS)
 	return ITEM_INTERACT_SUCCESS
 
-/obj/structure/bedsheetbin/attackby(obj/item/I, mob/user, params)
-	if(istype(I, /obj/item/bedsheet))
-		if(!user.transferItemToLoc(I, src))
-			return
-		sheets.Add(I)
-		amount++
-		to_chat(user, span_notice("You put [I] in [src]."))
-		update_appearance()
+/obj/structure/bedsheetbin/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if(istype(tool, /obj/item/bedsheet))
+		return bedsheet_act(user, tool)
 
-	else if(amount && !hidden && I.w_class < WEIGHT_CLASS_BULKY) //make sure there's sheets to hide it among, make sure nothing else is hidden in there.
-		if(!user.transferItemToLoc(I, src))
-			to_chat(user, span_warning("\The [I] is stuck to your hand, you cannot hide it among the sheets!"))
-			return
-		hidden = I
-		to_chat(user, span_notice("You hide [I] among the sheets."))
+	// Everything else we try to hide
+	return hide_item_act(user, tool)
 
+/obj/structure/bedsheetbin/proc/bedsheet_act(mob/living/user, obj/item/tool)
+	if(!user.transferItemToLoc(tool, src, silent = FALSE))
+		return ITEM_INTERACT_BLOCKING
+	sheets.Add(tool)
+	amount++
+	to_chat(user, span_notice("You put [tool] in [src]."))
+	update_appearance()
+	return ITEM_INTERACT_SUCCESS
+
+/obj/structure/bedsheetbin/proc/hide_item_act(mob/living/user, obj/item/tool)
+	if(user.combat_mode)
+		return NONE
+	if(tool.w_class >= WEIGHT_CLASS_BULKY)
+		balloon_alert(user, "too big!")
+		return ITEM_INTERACT_BLOCKING
+	if(!amount)
+		balloon_alert(user, "nothing to hide under!")
+		return ITEM_INTERACT_BLOCKING
+	if(hidden)
+		balloon_alert(user, "already something there!")
+		return ITEM_INTERACT_BLOCKING
+	if(!user.transferItemToLoc(tool, src, silent = FALSE))
+		to_chat(user, span_warning("\The [tool] is stuck to your hand, you cannot hide it among the sheets!"))
+		return ITEM_INTERACT_BLOCKING
+	hidden = tool
+	to_chat(user, span_notice("You hide [tool] among the sheets."))
+	return ITEM_INTERACT_SUCCESS
 
 /obj/structure/bedsheetbin/attack_paw(mob/user, list/modifiers)
 	return attack_hand(user, modifiers)
@@ -696,3 +754,13 @@ LINEN BINS
 
 	add_fingerprint(user)
 	return COMPONENT_CANCEL_ATTACK_CHAIN
+
+/obj/structure/bedsheetbin/basket
+	name = "linen basket"
+	icon_state = "linenbasket-full"
+	base_icon_state = "linenbasket"
+
+/obj/structure/bedsheetbin/empty/basket
+	name = "linen basket"
+	icon_state = "linenbasket-empty"
+	base_icon_state = "linenbasket"

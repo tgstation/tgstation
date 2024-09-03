@@ -35,8 +35,8 @@
 /mob/living/basic/heretic_summon/armsy/Initialize(mapload, spawn_bodyparts = TRUE, worm_length = 6)
 	. = ..()
 	AddElement(/datum/element/wall_smasher, ENVIRONMENT_SMASH_RWALLS)
-	AddElement(\
-		/datum/element/amputating_limbs,\
+	AddComponent(\
+		/datum/component/amputating_limbs,\
 		surgery_time = 0 SECONDS,\
 		surgery_verb = "tears",\
 		minimum_stat = CONSCIOUS,\

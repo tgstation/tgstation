@@ -3,14 +3,14 @@
 	/// Stops the rest of the help
 	#define COMPONENT_BLOCK_HELP_ACT (1<<0)
 
-///Called from /mob/living/carbon/help_shake_act, before any hugs have ocurred. (mob/living/helper)
+///Called from /mob/living/carbon/help_shake_act, before any hugs have occurred. (mob/living/helper)
 #define COMSIG_CARBON_PRE_MISC_HELP "carbon_pre_misc_help"
-	/// Stops the rest of help act (hugging, etc) from occuring
+	/// Stops the rest of help act (hugging, etc) from occurring
 	#define COMPONENT_BLOCK_MISC_HELP (1<<0)
 
-///Called from /mob/living/carbon/help_shake_act on the person being helped, after any hugs have ocurred. (mob/living/helper)
+///Called from /mob/living/carbon/help_shake_act on the person being helped, after any hugs have occurred. (mob/living/helper)
 #define COMSIG_CARBON_HELP_ACT "carbon_help"
-///Called from /mob/living/carbon/help_shake_act on the helper, after any hugs have ocurred. (mob/living/helped)
+///Called from /mob/living/carbon/help_shake_act on the helper, after any hugs have occurred. (mob/living/helped)
 #define COMSIG_CARBON_HELPED "carbon_helped_someone"
 
 ///When a carbon slips. Called on /turf/open/handle_slip()
@@ -57,8 +57,6 @@
 /// Called from bodypart being removed /obj/item/bodypart/proc/drop_limb(mob/living/carbon/old_owner, special, dismembered)
 #define COMSIG_BODYPART_REMOVED "bodypart_removed"
 
-/// from /mob/living/carbon/enter_stamcrit()
-#define COMSIG_CARBON_ENTER_STAMCRIT "carbon_enter_stamcrit"
 ///from base of mob/living/carbon/soundbang_act(): (list(intensity))
 #define COMSIG_CARBON_SOUNDBANG "carbon_soundbang"
 ///from /item/organ/proc/Insert() (/obj/item/organ/)
@@ -97,11 +95,11 @@
 	#define COMPONENT_OVERRIDE_HEALTH_HUD (1<<0)
 ///Called when a carbon updates their sanity (source = carbon)
 #define COMSIG_CARBON_SANITY_UPDATE "carbon_sanity_update"
-///Called when a carbon attempts to breath, before the breath has actually occured
+///Called when a carbon attempts to breath, before the breath has actually occurred
 #define COMSIG_CARBON_ATTEMPT_BREATHE "carbon_attempt_breathe"
 	// Prevents the breath
 	#define COMSIG_CARBON_BLOCK_BREATH (1 << 0)
-///Called when a carbon breathes, before the breath has actually occured
+///Called when a carbon breathes, before the breath has actually occurred
 #define COMSIG_CARBON_PRE_BREATHE "carbon_pre_breathe"
 ///Called when a carbon updates their mood
 #define COMSIG_CARBON_MOOD_UPDATE "carbon_mood_update"
@@ -135,6 +133,10 @@
 	#define VISIBLE_NAME_FACE 1
 	//Index for the name of the id
 	#define VISIBLE_NAME_ID 2
+	//Index for whether their name is being overridden instead of obfuscated
+	#define VISIBLE_NAME_FORCED 3
+///from /mob/living/carbon/human/get_id_name; only returns if the mob has TRAIT_UNKNOWN and it's being overridden: (identity)
+#define COMSIG_HUMAN_GET_FORCED_NAME "human_get_forced_name"
 
 // Mob transformation signals
 ///Called when a human turns into a monkey, from /mob/living/carbon/proc/finish_monkeyize()
@@ -157,5 +159,14 @@
 	#define HANDLE_BLOOD_HANDLED (1<<0)
 	/// Return to skip default nutrition -> blood conversion
 	#define HANDLE_BLOOD_NO_NUTRITION_DRAIN (1<<1)
-	/// Return to skip oxyloss and similar effecst from blood level
-	#define HANDLE_BLOOD_NO_EFFECTS (1<<2)
+	/// Return to skip oxyloss and similar effects from blood level
+	#define HANDLE_BLOOD_NO_OXYLOSS (1<<2)
+
+/// from /datum/status_effect/limp/proc/check_step(mob/whocares, OldLoc, Dir, forced) iodk where it should go
+#define COMSIG_CARBON_LIMPING "mob_limp_check"
+	#define COMPONENT_CANCEL_LIMP (1<<0)
+
+///Called from on_acquiring(mob/living/carbon/human/acquirer)
+#define COMSIG_MUTATION_GAINED "mutation_gained"
+///Called from on_losing(mob/living/carbon/human/owner)
+#define COMSIG_MUTATION_LOST "mutation_lost"

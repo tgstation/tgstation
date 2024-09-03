@@ -930,7 +930,7 @@
 /area/deathmatch)
 "LY" = (
 /obj/structure/closet/secure_closet,
-/obj/item/gun/energy/beam_rifle,
+/obj/item/gun/energy/xray,
 /turf/open/indestructible/vault,
 /area/deathmatch)
 "Mc" = (

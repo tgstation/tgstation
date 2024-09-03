@@ -124,7 +124,7 @@ GLOBAL_LIST_EMPTY(order_console_products)
 		))
 	return data
 
-/obj/machinery/computer/order_console/ui_act(action, params)
+/obj/machinery/computer/order_console/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if(.)
 		return
@@ -201,7 +201,7 @@ GLOBAL_LIST_EMPTY(order_console_products)
 					ordered_paths += item.item_path
 			podspawn(list(
 				"target" = get_turf(living_user),
-				"style" = STYLE_BLUESPACE,
+				"style" = /datum/pod_style/advanced,
 				"spawn" = ordered_paths,
 			))
 			grocery_list.Cut()

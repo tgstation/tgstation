@@ -177,7 +177,7 @@
 		fdel(jsonpath)
 	else
 		json = list()
-	json[id] = serialize_list()
+	json[id] = serialize_list(semvers = list())
 	WRITE_FILE(jsonpath, json_encode(json))
 
 /datum/picture/proc/Copy(greyscale = FALSE, cropx = 0, cropy = 0)

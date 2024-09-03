@@ -109,6 +109,8 @@
 	var/mob/living/victim = entered
 	if(IS_HERETIC(victim))
 		return
+	if(victim.can_block_magic(MAGIC_RESISTANCE))
+		return
 	victim.apply_status_effect(/datum/status_effect/rust_corruption)
 
 /datum/element/rust/heretic/proc/on_exited(turf/source, atom/movable/gone)

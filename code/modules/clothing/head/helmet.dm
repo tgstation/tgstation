@@ -4,6 +4,7 @@
 	icon = 'icons/obj/clothing/head/helmet.dmi'
 	worn_icon = 'icons/mob/clothing/head/helmet.dmi'
 	icon_state = "helmet"
+	base_icon_state = "helmet"
 	inhand_icon_state = "helmet"
 	armor_type = /datum/armor/head_helmet
 	cold_protection = HEAD
@@ -31,6 +32,7 @@
 	AddElement(/datum/element/update_icon_updates_onmob)
 
 /obj/item/clothing/head/helmet/sec
+	var/flipped_visor = FALSE
 
 /obj/item/clothing/head/helmet/sec/Initialize(mapload)
 	. = ..()
@@ -60,6 +62,29 @@
 
 	return ..()
 
+/obj/item/clothing/head/helmet/sec/click_alt(mob/user)
+	flipped_visor = !flipped_visor
+	balloon_alert(user, "visor flipped")
+	// base_icon_state is modified for seclight attachment component
+	base_icon_state = "[initial(base_icon_state)][flipped_visor ? "-novisor" : ""]"
+	icon_state = base_icon_state
+	if (flipped_visor)
+		flags_cover &= ~HEADCOVERSEYES
+	else
+		flags_cover |= HEADCOVERSEYES
+	update_appearance()
+	return CLICK_ACTION_SUCCESS
+
+/obj/item/clothing/head/helmet/press
+	name = "press helmet"
+	desc = "A blue helmet used to distinguish <i>non-combatant</i> \"PRESS\" members, like if anyone cares."
+	icon_state = "helmet_press"
+
+/obj/item/clothing/head/helmet/press/worn_overlays(mutable_appearance/standing, isinhands, icon_file)
+	. = ..()
+	if(!isinhands)
+		. += emissive_appearance(icon_file, "[icon_state]-emissive", src, alpha = src.alpha)
+
 /obj/item/clothing/head/helmet/alt
 	name = "bulletproof helmet"
 	desc = "A bulletproof combat helmet that excels in protecting the wearer against traditional projectile weaponry and explosives to a minor extent."
@@ -86,6 +111,7 @@
 	name = "tactical combat helmet"
 	desc = "A tactical black helmet, sealed from outside hazards with a plate of glass and not much else."
 	icon_state = "marine_command"
+	base_icon_state = "marine_command"
 	inhand_icon_state = "marine_helmet"
 	armor_type = /datum/armor/helmet_marine
 	min_cold_protection_temperature = SPACE_HELM_MIN_TEMP_PROTECT
@@ -111,18 +137,21 @@
 /obj/item/clothing/head/helmet/marine/security
 	name = "marine heavy helmet"
 	icon_state = "marine_security"
+	base_icon_state = "marine_security"
 
 /obj/item/clothing/head/helmet/marine/engineer
 	name = "marine utility helmet"
 	icon_state = "marine_engineer"
+	base_icon_state = "marine_engineer"
 
 /obj/item/clothing/head/helmet/marine/medic
 	name = "marine medic helmet"
 	icon_state = "marine_medic"
+	base_icon_state = "marine_medic"
 
 /obj/item/clothing/head/helmet/marine/pmc
 	icon_state = "marine"
-	desc = "A tactical black helmet, designed to protect one's head from various injuries sustained in operations. Its stellar survivability making up is for it's lack of space worthiness"
+	desc = "A tactical black helmet, designed to protect one's head from various injuries sustained in operations. Its stellar survivability making up is for its lack of space worthiness"
 	min_cold_protection_temperature = HELMET_MIN_TEMP_PROTECT
 	max_heat_protection_temperature = HELMET_MAX_TEMP_PROTECT
 	clothing_flags = null
@@ -395,6 +424,7 @@
 	armor_type = /datum/armor/helmet_knight
 	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE|HIDEHAIR|HIDESNOUT
 	flags_cover = HEADCOVERSEYES | HEADCOVERSMOUTH
+	resistance_flags = NONE
 	strip_delay = 80
 	dog_fashion = null
 	clothing_traits = list(TRAIT_HEAD_INJURY_BLOCKED)
@@ -423,25 +453,6 @@
 	inhand_icon_state = null
 	armor_type = /datum/armor/knight_greyscale
 	material_flags = MATERIAL_EFFECTS | MATERIAL_ADD_PREFIX | MATERIAL_COLOR | MATERIAL_AFFECT_STATISTICS //Can change color and add prefix
-
-/obj/item/clothing/head/helmet/skull
-	name = "skull helmet"
-	desc = "An intimidating tribal helmet, it doesn't look very comfortable."
-	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE|HIDESNOUT
-	flags_cover = HEADCOVERSEYES
-	armor_type = /datum/armor/helmet_skull
-	icon_state = "skull"
-	inhand_icon_state = null
-	strip_delay = 100
-
-/datum/armor/helmet_skull
-	melee = 35
-	bullet = 25
-	laser = 25
-	energy = 35
-	bomb = 25
-	fire = 50
-	acid = 50
 
 /obj/item/clothing/head/helmet/durathread
 	name = "durathread helmet"
@@ -530,8 +541,9 @@
 	desc = "A cheaply made kettle helmet with an added faceplate to protect your eyes and mouth."
 	icon_state = "military"
 	inhand_icon_state = "knight_helmet"
-	flags_inv = HIDEEARS|HIDEEYES|HIDEFACE|HIDEHAIR|HIDESNOUT
+	flags_inv = HIDEEARS|HIDEEYES|HIDEFACE|HIDESNOUT
 	flags_cover = HEADCOVERSEYES | HEADCOVERSMOUTH | PEPPERPROOF
+	flash_protect = FLASH_PROTECTION_FLASH
 	strip_delay = 80
 	dog_fashion = null
 	armor_type = /datum/armor/helmet_military
@@ -558,6 +570,7 @@
 	armor_type = /datum/armor/helmet_warlord
 	flags_inv = HIDEEARS|HIDEEYES|HIDEFACE|HIDEMASK|HIDEHAIR|HIDEFACIALHAIR|HIDESNOUT
 	flags_cover = HEADCOVERSEYES | HEADCOVERSMOUTH | PEPPERPROOF
+	flash_protect = FLASH_PROTECTION_FLASH
 	slowdown = 0.2
 
 /datum/armor/helmet_warlord
@@ -569,3 +582,106 @@
 	fire = 50
 	acid = 50
 	wound = 30
+
+/obj/item/clothing/head/helmet/durability/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK, damage_type = BRUTE)
+	take_damage(1, BRUTE, 0, 0)
+
+/obj/item/clothing/head/helmet/durability/watermelon
+	name = "Watermelon Helmet"
+	desc = "A helmet cut out from a watermelon. Might take a few hits, but don't expect it whitstand much."
+	icon_state = "watermelon"
+	inhand_icon_state = "watermelon"
+	flags_inv = HIDEEARS
+	dog_fashion = /datum/dog_fashion/head/watermelon
+	armor_type = /datum/armor/helmet_watermelon
+	max_integrity = 15
+
+/obj/item/clothing/head/helmet/durability/watermelon/fire_resist
+	resistance_flags = FIRE_PROOF
+	armor_type = /datum/armor/helmet_watermelon_fr
+
+/datum/armor/helmet_watermelon
+	melee = 15
+	bullet = 10
+	energy = 10
+	bomb = 10
+	fire = 0
+	acid = 25
+	wound = 5
+
+/datum/armor/helmet_watermelon_fr
+	melee = 15
+	bullet = 10
+	energy = 10
+	bomb = 10
+	fire = 15
+	acid = 30
+	wound = 5
+
+/obj/item/clothing/head/helmet/durability/holymelon
+	name = "Holymelon Helmet"
+	desc = "A helmet from a hollowed out holymelon. Might take a few hits, but don't expect it whitstand much."
+	icon_state = "holymelon"
+	inhand_icon_state = "holymelon"
+	flags_inv = HIDEEARS
+	dog_fashion = /datum/dog_fashion/head/holymelon
+	armor_type = /datum/armor/helmet_watermelon
+	max_integrity = 15
+	var/decayed = FALSE
+
+/obj/item/clothing/head/helmet/durability/holymelon/fire_resist
+	resistance_flags = FIRE_PROOF
+	armor_type = /datum/armor/helmet_watermelon_fr
+
+/obj/item/clothing/head/helmet/durability/holymelon/Initialize(mapload)
+	. = ..()
+	if(decayed)
+		decay()
+		return
+
+	AddComponent(
+		/datum/component/anti_magic, \
+		antimagic_flags = MAGIC_RESISTANCE_HOLY, \
+		inventory_flags = ITEM_SLOT_OCLOTHING, \
+		charges = 1, \
+		drain_antimagic = CALLBACK(src, PROC_REF(drain_antimagic)), \
+		expiration = CALLBACK(src, PROC_REF(decay)) \
+	)
+
+/obj/item/clothing/head/helmet/durability/holymelon/proc/drain_antimagic(mob/user)
+	to_chat(user, span_warning("[src] looses a bit of its shimmer and glossiness..."))
+
+/obj/item/clothing/head/helmet/durability/holymelon/proc/decay()
+	take_damage(8, BRUTE, 0, 0)
+
+/obj/item/clothing/head/helmet/durability/barrelmelon
+	name = "Barrelmelon Helmet"
+	desc = "A helmet from hollowed out barrelmelon. As sturdy as if made from actual wood, though its rigid structure makes it break up quicker."
+	icon_state = "barrelmelon"
+	inhand_icon_state = "barrelmelon"
+	flags_inv = HIDEEARS
+	dog_fashion = /datum/dog_fashion/head/barrelmelon
+	armor_type = /datum/armor/helmet_barrelmelon
+	max_integrity = 10
+
+/obj/item/clothing/head/helmet/durability/barrelmelon/fire_resist
+	resistance_flags = FIRE_PROOF
+	armor_type = /datum/armor/helmet_barrelmelon_fr
+
+/datum/armor/helmet_barrelmelon
+	melee = 25
+	bullet = 20
+	energy = 15
+	bomb = 10
+	fire = 0
+	acid = 35
+	wound = 10
+
+/datum/armor/helmet_barrelmelon_fr
+	melee = 25
+	bullet = 20
+	energy = 15
+	bomb = 10
+	fire = 20
+	acid = 40
+	wound = 10

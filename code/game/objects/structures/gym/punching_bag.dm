@@ -57,12 +57,16 @@
 			stamina_exhaustion = 2
 	if (is_heavy_gravity)
 		stamina_exhaustion *= 1.5
-	
+
+	var/obj/item/organ/internal/cyberimp/chest/spine/potential_spine = user.get_organ_slot(ORGAN_SLOT_SPINE)
+	if(istype(potential_spine))
+		stamina_exhaustion *= potential_spine.athletics_boost_multiplier
+
 	if(HAS_TRAIT(user, TRAIT_STRENGTH)) //The strong get reductions to stamina damage taken while exercising
 		stamina_exhaustion *= 0.5
 
 	user.adjustStaminaLoss(stamina_exhaustion)
-	user.mind?.adjust_experience(/datum/skill/athletics, is_heavy_gravity ? 0.2 : 0.1)
+	user.mind?.adjust_experience(/datum/skill/athletics, is_heavy_gravity ? 0.6 : 0.3)
 	user.apply_status_effect(/datum/status_effect/exercised)
 
 /obj/structure/punching_bag/wrench_act_secondary(mob/living/user, obj/item/tool)

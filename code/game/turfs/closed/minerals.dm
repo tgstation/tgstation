@@ -276,7 +276,7 @@
 /turf/closed/mineral/random
 	/// What are the base odds that this turf spawns a mineral in the wall on initialize?
 	var/mineralChance = 13
-	/// Does this mineral determine it's random chance and mineral contents based on proximity to a vent? Overrides mineralChance and mineralAmt.
+	/// Does this mineral determine its random chance and mineral contents based on proximity to a vent? Overrides mineralChance and mineralAmt.
 	var/proximity_based = FALSE
 
 /// Returns a list of the chances for minerals to spawn.
@@ -547,6 +547,12 @@
 	mineralType = /obj/item/stack/ore/iron
 	scan_state = "rock_Iron"
 
+/turf/closed/mineral/iron/volcanic
+	turf_type = /turf/open/misc/asteroid/basalt/lava_land_surface
+	baseturfs = /turf/open/misc/asteroid/basalt/lava_land_surface
+	initial_gas_mix = LAVALAND_DEFAULT_ATMOS
+	defer_change = TRUE
+
 /turf/closed/mineral/iron/ice
 	icon_state = "icerock_iron"
 	icon = MAP_SWITCH('icons/turf/walls/icerock_wall.dmi', 'icons/turf/mining.dmi')
@@ -561,9 +567,21 @@
 	mineralType = /obj/item/stack/ore/uranium
 	scan_state = "rock_Uranium"
 
+/turf/closed/mineral/uranium/volcanic
+	turf_type = /turf/open/misc/asteroid/basalt/lava_land_surface
+	baseturfs = /turf/open/misc/asteroid/basalt/lava_land_surface
+	initial_gas_mix = LAVALAND_DEFAULT_ATMOS
+	defer_change = TRUE
+
 /turf/closed/mineral/diamond
 	mineralType = /obj/item/stack/ore/diamond
 	scan_state = "rock_Diamond"
+
+/turf/closed/mineral/diamond/volcanic
+	turf_type = /turf/open/misc/asteroid/basalt/lava_land_surface
+	baseturfs = /turf/open/misc/asteroid/basalt/lava_land_surface
+	initial_gas_mix = LAVALAND_DEFAULT_ATMOS
+	defer_change = TRUE
 
 /turf/closed/mineral/diamond/ice
 	icon_state = "icerock_iron"
@@ -589,6 +607,12 @@
 	mineralType = /obj/item/stack/ore/silver
 	scan_state = "rock_Silver"
 
+/turf/closed/mineral/silver/volcanic
+	turf_type = /turf/open/misc/asteroid/basalt/lava_land_surface
+	baseturfs = /turf/open/misc/asteroid/basalt/lava_land_surface
+	initial_gas_mix = LAVALAND_DEFAULT_ATMOS
+	defer_change = TRUE
+
 /turf/closed/mineral/silver/ice/icemoon
 	turf_type = /turf/open/misc/asteroid/snow/ice/icemoon
 	baseturfs = /turf/open/misc/asteroid/snow/ice/icemoon
@@ -598,9 +622,21 @@
 	mineralType = /obj/item/stack/ore/titanium
 	scan_state = "rock_Titanium"
 
+/turf/closed/mineral/titanium/volcanic
+	turf_type = /turf/open/misc/asteroid/basalt/lava_land_surface
+	baseturfs = /turf/open/misc/asteroid/basalt/lava_land_surface
+	initial_gas_mix = LAVALAND_DEFAULT_ATMOS
+	defer_change = TRUE
+
 /turf/closed/mineral/plasma
 	mineralType = /obj/item/stack/ore/plasma
 	scan_state = "rock_Plasma"
+
+/turf/closed/mineral/plasma/volcanic
+	turf_type = /turf/open/misc/asteroid/basalt/lava_land_surface
+	baseturfs = /turf/open/misc/asteroid/basalt/lava_land_surface
+	initial_gas_mix = LAVALAND_DEFAULT_ATMOS
+	defer_change = TRUE
 
 /turf/closed/mineral/plasma/ice
 	icon_state = "icerock_plasma"
@@ -616,6 +652,12 @@
 	mineralType = /obj/item/stack/ore/bananium
 	mineralAmt = 3
 	scan_state = "rock_Bananium"
+
+/turf/closed/mineral/bananium/volcanic
+	turf_type = /turf/open/misc/asteroid/basalt/lava_land_surface
+	baseturfs = /turf/open/misc/asteroid/basalt/lava_land_surface
+	initial_gas_mix = LAVALAND_DEFAULT_ATMOS
+	defer_change = TRUE
 
 /turf/closed/mineral/bscrystal
 	mineralType = /obj/item/stack/ore/bluespace_crystal
@@ -736,7 +778,10 @@
 
 /turf/closed/mineral/gibtonite/attackby(obj/item/attacking_item, mob/living/user, params)
 	var/previous_stage = stage
-	if(istype(attacking_item, /obj/item/mining_scanner) || istype(attacking_item, /obj/item/t_scanner/adv_mining_scanner) && stage == GIBTONITE_ACTIVE)
+	if(istype(attacking_item, /obj/item/goliath_infuser_hammer) && stage == GIBTONITE_ACTIVE)
+		user.visible_message(span_notice("[user] digs [attacking_item] to [src]..."), span_notice("Your tendril hammer instictively digs and wraps around [src] to stop it..."))
+		defuse(user)
+	else if(istype(attacking_item, /obj/item/mining_scanner) || istype(attacking_item, /obj/item/t_scanner/adv_mining_scanner) && stage == GIBTONITE_ACTIVE)
 		user.visible_message(span_notice("[user] holds [attacking_item] to [src]..."), span_notice("You use [attacking_item] to locate where to cut off the chain reaction and attempt to stop it..."))
 		defuse(user)
 	..()

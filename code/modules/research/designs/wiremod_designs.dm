@@ -39,7 +39,7 @@
 	name = "Component ( NULL ENTRY )"
 	desc = "A component that goes into an integrated circuit."
 	build_type = COMPONENT_PRINTER
-	materials = list(/datum/material/glass =HALF_SHEET_MATERIAL_AMOUNT)
+	materials = list(/datum/material/glass = HALF_SHEET_MATERIAL_AMOUNT)
 	departmental_flags = DEPARTMENT_BITFLAG_SCIENCE
 	category = list(
 		RND_CATEGORY_CIRCUITRY + RND_SUBCATEGORY_CIRCUITRY_COMPONENTS
@@ -466,6 +466,11 @@
 	name = "Associative List Pick Component"
 	id = "comp_assoc_list_pick"
 	build_path = /obj/item/circuit_component/list_pick/assoc
+
+/datum/design/component/bci/bci_camera
+	name = "BCI Camera"
+	id = "comp_camera_bci"
+	build_path = /obj/item/circuit_component/remotecam/bci
 
 /datum/design/compact_remote_shell
 	name = "Compact Remote Shell"

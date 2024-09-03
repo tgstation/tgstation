@@ -74,7 +74,7 @@
 #define EXP_TYPE_ADMIN "Admin"
 
 //Flags in the players table in the db
-#define DB_FLAG_EXEMPT 1
+#define DB_FLAG_EXEMPT (1<<0)
 
 #define DEFAULT_CYBORG_NAME "Default Cyborg Name"
 
@@ -142,3 +142,17 @@
 
 /// The key used for sprite accessories that should never actually be applied to the player.
 #define SPRITE_ACCESSORY_NONE "None"
+
+// Loadout
+/// Used to make something not recolorable even if it's capable
+#define DONT_GREYSCALE -1
+// Loadout item info keys
+// Changing these will break existing loadouts
+/// Tracks GAGS color information
+#define INFO_GREYSCALE "greyscale"
+/// Used to set custom names
+#define INFO_NAMED "name"
+/// Used for specific alt-reskins, like the pride pin
+#define INFO_RESKIN "reskin"
+/// Handles which layer the item will be on, for accessories
+#define INFO_LAYER "layer"

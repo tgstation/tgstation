@@ -76,24 +76,9 @@
 	return
 
 /// Signal proc for [COMSIG_ITEM_AFTERATTACK] that allows for effects after an attack is done
-/datum/plant_gene/trait/attack/proc/after_plant_attack(obj/item/source, atom/target, mob/user, proximity_flag, click_parameters)
+/datum/plant_gene/trait/attack/proc/after_plant_attack(obj/item/source, atom/target, mob/user, click_parameters)
 	SIGNAL_HANDLER
-
-	if(!proximity_flag)
-		return
-
-	if(!ismovable(target))
-		return
-
-	. |= COMPONENT_AFTERATTACK_PROCESSED_ITEM
-
-	if(isobj(target))
-		var/obj/object_target = target
-		if(!(object_target.obj_flags & CAN_BE_HIT))
-			return .
-
 	INVOKE_ASYNC(src, PROC_REF(after_attack_effect), source, target, user)
-	return .
 
 /*
  * Effects done when we hit people with our plant, AFTER the attack is done.

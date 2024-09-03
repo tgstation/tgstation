@@ -151,19 +151,20 @@ Chilling extracts:
 	var/list/allies = list()
 	var/active = FALSE
 
-/obj/item/slimecross/chilling/bluespace/afterattack(atom/target, mob/user, proximity)
-	if(!proximity || !isliving(target) || active)
-		return
-	if(HAS_TRAIT(target, TRAIT_NO_TELEPORT))
-		to_chat(user, span_warning("[target] resists being linked with [src]!"))
-		return
-	if(target in allies)
-		allies -= target
-		to_chat(user, span_notice("You unlink [src] with [target]."))
+/obj/item/slimecross/chilling/bluespace/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
+	if(!isliving(interacting_with) || active)
+		return NONE
+	user.do_attack_animation(interacting_with)
+	if(HAS_TRAIT(interacting_with, TRAIT_NO_TELEPORT))
+		to_chat(user, span_warning("[interacting_with] resists being linked with [src]!"))
+		return ITEM_INTERACT_BLOCKING
+	if(interacting_with in allies)
+		allies -= interacting_with
+		to_chat(user, span_notice("You unlink [src] with [interacting_with]."))
 	else
-		allies |= target
-		to_chat(user, span_notice("You link [src] with [target]."))
-	return
+		allies += interacting_with
+		to_chat(user, span_notice("You link [src] with [interacting_with]."))
+	return ITEM_INTERACT_SUCCESS
 
 /obj/item/slimecross/chilling/bluespace/do_effect(mob/user)
 	if(allies.len <= 0)
@@ -193,16 +194,17 @@ Chilling extracts:
 	effect_desc = "Touching someone with it adds/removes them from a list. Activating the extract stops time for 30 seconds, and everyone on the list is immune, except the user."
 	var/list/allies = list()
 
-/obj/item/slimecross/chilling/sepia/afterattack(atom/target, mob/user, proximity)
-	if(!proximity || !isliving(target))
-		return
-	if(target in allies)
-		allies -= target
-		to_chat(user, span_notice("You unlink [src] with [target]."))
+/obj/item/slimecross/chilling/sepia/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
+	if(!isliving(interacting_with))
+		return NONE
+	user.do_attack_animation(interacting_with)
+	if(interacting_with in allies)
+		allies -= interacting_with
+		to_chat(user, span_notice("You unlink [src] with [interacting_with]."))
 	else
-		allies |= target
-		to_chat(user, span_notice("You link [src] with [target]."))
-	return
+		allies += interacting_with
+		to_chat(user, span_notice("You link [src] with [interacting_with]."))
+	return ITEM_INTERACT_SUCCESS
 
 /obj/item/slimecross/chilling/sepia/do_effect(mob/user)
 	user.visible_message(span_warning("[src] shatters, freezing time itself!"))

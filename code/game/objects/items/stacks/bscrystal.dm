@@ -21,6 +21,8 @@
 	points = 0
 	refined_type = null
 	merge_type = /obj/item/stack/ore/bluespace_crystal/refined
+	drop_sound = null //till I make a better one
+	pickup_sound = null
 
 /obj/item/stack/ore/bluespace_crystal/Initialize(mapload, new_amount, merge = TRUE, list/mat_override=null, mat_amt=1)
 	. = ..()
@@ -33,7 +35,7 @@
 /obj/item/stack/ore/bluespace_crystal/attack_self(mob/user)
 	user.visible_message(span_warning("[user] crushes [src]!"), span_danger("You crush [src]!"))
 	new /obj/effect/particle_effect/sparks(loc)
-	playsound(loc, 'sound/effects/portal_travel.ogg', 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
+	playsound(loc, SFX_PORTAL_ENTER, 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
 	blink_mob(user)
 	use(1)
 
@@ -45,7 +47,7 @@
 		visible_message(span_notice("[src] fizzles and disappears upon impact!"))
 		var/turf/T = get_turf(hit_atom)
 		new /obj/effect/particle_effect/sparks(T)
-		playsound(loc, 'sound/effects/portal_travel.ogg', 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
+		playsound(loc, SFX_PORTAL_ENTER, 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
 		if(isliving(hit_atom))
 			blink_mob(hit_atom)
 		use(1)
@@ -60,6 +62,8 @@
 	refined_type = null
 	grind_results = list(/datum/reagent/bluespace = 10, /datum/reagent/silicon = 20)
 	merge_type = /obj/item/stack/ore/bluespace_crystal/artificial
+	drop_sound = null //till I make a better one
+	pickup_sound = null
 
 //Polycrystals, aka stacks
 /obj/item/stack/sheet/bluespace_crystal
@@ -78,6 +82,7 @@
 	merge_type = /obj/item/stack/sheet/bluespace_crystal
 	material_type = /datum/material/bluespace
 	var/crystal_type = /obj/item/stack/ore/bluespace_crystal/refined
+
 
 /obj/item/stack/sheet/bluespace_crystal/attack_self(mob/user)// to prevent the construction menu from ever happening
 	to_chat(user, span_warning("You cannot crush the polycrystal in-hand, try breaking one off."))

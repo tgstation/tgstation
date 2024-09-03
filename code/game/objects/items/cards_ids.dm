@@ -56,6 +56,7 @@
 	icon_state = "card_grey"
 	worn_icon_state = "nothing"
 	slot_flags = ITEM_SLOT_ID
+	interaction_flags_click = FORBID_TELEKINESIS_REACH
 	armor_type = /datum/armor/card_id
 	resistance_flags = FIRE_PROOF | ACID_PROOF
 
@@ -424,13 +425,11 @@
 		user.visible_message(span_notice("[user] shows you: [icon2html(src, viewers(user))] [src.name][minor]."), span_notice("You show \the [src.name][minor]."))
 	add_fingerprint(user)
 
-/obj/item/card/id/afterattack_secondary(atom/target, mob/user, proximity_flag, click_parameters)
-	. = ..()
-	if(. == SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN)
-		return
-	if(!proximity_flag || !check_allowed_items(target) || !isfloorturf(target))
-		return
-	try_project_paystand(user, target)
+/obj/item/card/id/interact_with_atom_secondary(atom/interacting_with, mob/living/user, list/modifiers)
+	if(!check_allowed_items(interacting_with) || !isfloorturf(interacting_with))
+		return NONE
+	try_project_paystand(user, interacting_with)
+	return ITEM_INTERACT_SUCCESS
 
 /obj/item/card/id/attack_self_secondary(mob/user, modifiers)
 	. = ..()
@@ -454,7 +453,7 @@
 	if(!COOLDOWN_FINISHED(src, last_holopay_projection))
 		balloon_alert(user, "still recharging")
 		return
-	if(can_be_used_in_payment(user))
+	if(!can_be_used_in_payment(user))
 		balloon_alert(user, "no account!")
 		to_chat(user, span_warning("You need a valid bank account to do this."))
 		return
@@ -478,7 +477,7 @@
 	var/obj/structure/holopay/new_store = new(projection)
 	if(new_store?.assign_card(projection, src))
 		COOLDOWN_START(src, last_holopay_projection, HOLOPAY_PROJECTION_INTERVAL)
-		playsound(projection, "sound/effects/empulse.ogg", 40, TRUE)
+		playsound(projection, 'sound/effects/empulse.ogg', 40, TRUE)
 		my_store = new_store
 
 /**
@@ -553,26 +552,26 @@
 				if(ispath(trim))
 					SSid_access.apply_trim_to_card(src, trim)
 
-/obj/item/card/id/attackby(obj/item/W, mob/user, params)
-	if(istype(W, /obj/item/rupee))
+/obj/item/card/id/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if(istype(tool, /obj/item/rupee))
 		to_chat(user, span_warning("Your ID smartly rejects the strange shard of glass. Who knew, apparently it's not ACTUALLY valuable!"))
-		return
-	else if(iscash(W))
-		insert_money(W, user)
-		return
-	else if(istype(W, /obj/item/storage/bag/money))
-		var/obj/item/storage/bag/money/money_bag = W
+		return ITEM_INTERACT_BLOCKING
+	else if(iscash(tool))
+		return insert_money(tool, user) ? ITEM_INTERACT_SUCCESS : ITEM_INTERACT_BLOCKING
+	else if(istype(tool, /obj/item/storage/bag/money))
+		var/obj/item/storage/bag/money/money_bag = tool
 		var/list/money_contained = money_bag.contents
 		var/money_added = mass_insert_money(money_contained, user)
-		if (money_added)
-			to_chat(user, span_notice("You stuff the contents into the card! They disappear in a puff of bluespace smoke, adding [money_added] worth of credits to the linked account."))
-		return
-	else
-		return ..()
+		if(!money_added)
+			return ITEM_INTERACT_BLOCKING
+		to_chat(user, span_notice("You stuff the contents into the card! They disappear in a puff of bluespace smoke, adding [money_added] worth of credits to the linked account."))
+		return ITEM_INTERACT_SUCCESS
+	return NONE
 
 /**
  * Insert credits or coins into the ID card and add their value to the associated bank account.
  *
+ * Returns TRUE if the money was successfully inserted, FALSE otherwise.
  * Arguments:
  * money - The item to attempt to convert to credits and insert into the card.
  * user - The user inserting the item.
@@ -585,11 +584,11 @@
 
 	if(!registered_account)
 		to_chat(user, span_warning("[src] doesn't have a linked account to deposit [money] into!"))
-		return
+		return FALSE
 	var/cash_money = money.get_item_credit_value()
 	if(!cash_money)
 		to_chat(user, span_warning("[money] doesn't seem to be worth anything!"))
-		return
+		return FALSE
 	registered_account.adjust_money(cash_money, "System: Deposit")
 	SSblackbox.record_feedback("amount", "credits_inserted", cash_money)
 	log_econ("[cash_money] credits were inserted into [src] owned by [src.registered_name]")
@@ -600,6 +599,7 @@
 
 	to_chat(user, span_notice("The linked account now reports a balance of [registered_account.account_balance] cr."))
 	qdel(money)
+	return TRUE
 
 /**
  * Insert multiple money or money-equivalent items at once.
@@ -633,9 +633,6 @@
 /obj/item/card/id/proc/alt_click_can_use_id(mob/living/user)
 	if(!isliving(user))
 		return FALSE
-	if(!user.can_perform_action(src, FORBID_TELEKINESIS_REACH))
-		return FALSE
-
 	return TRUE
 
 /// Attempts to set a new bank account on the ID card.
@@ -706,13 +703,11 @@
 		registered_account.bank_card_talk(span_warning("ERROR: The linked account requires [difference] more credit\s to perform that withdrawal."), TRUE)
 		return CLICK_ACTION_BLOCKING
 
-/obj/item/card/id/alt_click_secondary(mob/user)
-	. = ..()
+/obj/item/card/id/click_alt_secondary(mob/user)
 	if(!alt_click_can_use_id(user))
-		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+		return
 	if(!registered_account || registered_account.replaceable)
 		set_new_account(user)
-		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
 /obj/item/card/id/proc/pay_debt(user)
 	var/amount_to_pay = tgui_input_number(user, "How much do you want to pay? (Max: [registered_account.account_balance] cr)", "Debt Payment", max_value = min(registered_account.account_balance, registered_account.account_debt))
@@ -840,6 +835,11 @@
 /obj/item/card/id/proc/get_trim_sechud_icon_state()
 	return trim?.sechud_icon_state || SECHUD_UNKNOWN
 
+/obj/item/card/id/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
+	if(iscash(interacting_with))
+		return insert_money(interacting_with, user) ? ITEM_INTERACT_SUCCESS : ITEM_INTERACT_BLOCKING
+	return NONE
+
 /obj/item/card/id/away
 	name = "\proper a perfectly generic identification card"
 	desc = "A perfectly generic identification card. Looks like it could use some flavor."
@@ -959,20 +959,41 @@
 
 	return ..()
 
-
-/obj/item/card/id/advanced/attackby(obj/item/W, mob/user, params)
+/obj/item/card/id/advanced/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
 	. = ..()
-	if(istype(W, /obj/item/toy/crayon))
-		var/obj/item/toy/crayon/our_crayon = W
-		if(tgui_alert(usr, "Recolor Department or Subdepartment?", "Recoloring ID...", list("Department", "Subdepartment")) == "Department")
-			if(!do_after(user, 2 SECONDS)) // Doesn't technically require a spraycan's cap to be off but shhh
-				return
+	if(.)
+		return .
+
+	if(istype(tool, /obj/item/toy/crayon))
+		return recolor_id(user, tool)
+
+/obj/item/card/id/advanced/proc/recolor_id(mob/living/user, obj/item/toy/crayon/our_crayon)
+	if(our_crayon.is_capped)
+		balloon_alert(user, "take the cap off first!")
+		return ITEM_INTERACT_BLOCKING
+	var/choice = tgui_alert(usr, "Recolor Department or Subdepartment?", "Recoloring ID...", list("Department", "Subdepartment"))
+	if(isnull(choice) \
+		|| QDELETED(user) \
+		|| QDELETED(src) \
+		|| QDELETED(our_crayon) \
+		|| !usr.can_perform_action(src, ALLOW_RESTING) \
+		|| !usr.can_perform_action(our_crayon, ALLOW_RESTING) \
+	)
+		return ITEM_INTERACT_BLOCKING
+
+	switch(choice)
+		if("Department")
+			if(!do_after(user, 2 SECONDS))
+				return ITEM_INTERACT_BLOCKING
 			department_color_override = our_crayon.paint_color
 			balloon_alert(user, "recolored")
-		else if(do_after(user, 1 SECONDS))
+		if("Subdepartment")
+			if(!do_after(user, 1 SECONDS))
+				return ITEM_INTERACT_BLOCKING
 			subdepartment_color_override = our_crayon.paint_color
 			balloon_alert(user, "recolored")
-		update_icon()
+	update_icon()
+	return ITEM_INTERACT_SUCCESS
 
 /obj/item/card/id/advanced/proc/update_intern_status(datum/source, mob/user, slot)
 	SIGNAL_HANDLER
@@ -1281,27 +1302,38 @@
 	/// Time left on a card till they can leave.
 	var/time_left = 0
 
-/obj/item/card/id/advanced/prisoner/attackby(obj/item/card/id/C, mob/user)
-	..()
-	var/list/id_access = C.GetAccess()
+/obj/item/card/id/advanced/prisoner/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	. = ..()
+	if(.)
+		return .
+
+	if(isidcard(tool))
+		return set_sentence_time(user, tool)
+
+/obj/item/card/id/advanced/prisoner/proc/set_sentence_time(mob/living/user, obj/item/card/id/our_card)
+	var/list/id_access = our_card.GetAccess()
 	if(!(ACCESS_BRIG in id_access))
-		return FALSE
-	if(loc != user)
+		balloon_alert(user, "access denied!")
+		return ITEM_INTERACT_BLOCKING
+	if(!user.is_holding(src))
 		to_chat(user, span_warning("You must be holding the ID to continue!"))
-		return FALSE
-	if(timed)
+		return ITEM_INTERACT_BLOCKING
+
+	if(timed) // If we already have a time set, reset the card
 		timed = FALSE
 		time_to_assign = initial(time_to_assign)
 		registered_name = initial(registered_name)
 		STOP_PROCESSING(SSobj, src)
-		to_chat(user, "Restating prisoner ID to default parameters.")
-		return
+		to_chat(user, "Resetting prisoner ID to default parameters.")
+		return ITEM_INTERACT_SUCCESS
+
 	var/choice = tgui_input_number(user, "Sentence time in seconds", "Sentencing")
-	if(!choice || QDELETED(user) || QDELETED(src) || !usr.can_perform_action(src, FORBID_TELEKINESIS_REACH) || loc != user)
-		return FALSE
+	if(isnull(choice) || QDELETED(user) || QDELETED(src) || !user.can_perform_action(src, FORBID_TELEKINESIS_REACH) || !user.is_holding(src))
+		return ITEM_INTERACT_BLOCKING
 	time_to_assign = choice
-	to_chat(user, "You set the sentence time to [time_to_assign] seconds.")
+	to_chat(user, "You set the sentence time to [DisplayTimeText(time_to_assign * 10)].")
 	timed = TRUE
+	return ITEM_INTERACT_SUCCESS
 
 /obj/item/card/id/advanced/prisoner/proc/start_timer()
 	say("Sentence started, welcome to the corporate rehabilitation center!")
@@ -1313,10 +1345,15 @@
 		return
 
 	if(timed)
-		if(time_left <= 0)
+		if(time_to_assign > 0)
+			. += span_notice("The digital timer on the card is set to [DisplayTimeText(time_to_assign * 10)]. The timer will start once the prisoner passes through the prison gate scanners.")
+		else if(time_left <= 0)
 			. += span_notice("The digital timer on the card has zero seconds remaining. You leave a changed man, but a free man nonetheless.")
 		else
-			. += span_notice("The digital timer on the card has [time_left] seconds remaining. Don't do the crime if you can't do the time.")
+			. += span_notice("The digital timer on the card has [DisplayTimeText(time_left * 10)] remaining. Don't do the crime if you can't do the time.")
+
+	. += span_notice("[EXAMINE_HINT("Swipe")] a security ID on the card to [timed ? "re" : ""]set the genpop sentence time.")
+	. += span_notice("Remember to [EXAMINE_HINT("swipe")] the card on a genpop locker to link it.")
 
 /obj/item/card/id/advanced/prisoner/process(seconds_per_tick)
 	if(!timed)
@@ -1400,68 +1437,59 @@
 	theft_target = null
 	return ..()
 
-/obj/item/card/id/advanced/chameleon/afterattack(atom/target, mob/user, proximity, click_parameters)
-	. = ..()
-	if(!proximity)
-		return
-
-	if(isidcard(target))
-		theft_target = WEAKREF(target)
+/obj/item/card/id/advanced/chameleon/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
+	if(isidcard(interacting_with))
+		theft_target = WEAKREF(interacting_with)
 		ui_interact(user)
-		return . | AFTERATTACK_PROCESSED_ITEM
+		return ITEM_INTERACT_SUCCESS
+	return ..()
 
-/obj/item/card/id/advanced/chameleon/pre_attack_secondary(atom/target, mob/living/user, params)
-	. = ..()
-	if(. == SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN)
-		return .
-
+/obj/item/card/id/advanced/chameleon/interact_with_atom_secondary(atom/interacting_with, mob/living/user, list/modifiers)
 	// If we're attacking a human, we want it to be covert. We're not ATTACKING them, we're trying
 	// to sneakily steal their accesses by swiping our agent ID card near them. As a result, we
-	// return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN to cancel any part of the following the attack chain.
-	if(ishuman(target))
-		target.balloon_alert(user, "scanning ID card...")
+	// return ITEM_INTERACT_BLOCKING to cancel any part of the following the attack chain.
+	if(ishuman(interacting_with))
+		interacting_with.balloon_alert(user, "scanning ID card...")
 
-		if(!do_after(user, 2 SECONDS, target))
-			target.balloon_alert(user, "interrupted!")
-			return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+		if(!do_after(user, 2 SECONDS, interacting_with))
+			interacting_with.balloon_alert(user, "interrupted!")
+			return ITEM_INTERACT_BLOCKING
 
-		var/mob/living/carbon/human/human_target = target
-
+		var/mob/living/carbon/human/human_target = interacting_with
 		var/list/target_id_cards = human_target.get_all_contents_type(/obj/item/card/id)
 
 		if(!length(target_id_cards))
-			target.balloon_alert(user, "no IDs!")
-			return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+			interacting_with.balloon_alert(user, "no IDs!")
+			return ITEM_INTERACT_BLOCKING
 
 		var/selected_id = pick(target_id_cards)
-		target.balloon_alert(user, UNLINT("IDs synced"))
+		interacting_with.balloon_alert(user, UNLINT("IDs synced"))
 		theft_target = WEAKREF(selected_id)
 		ui_interact(user)
-		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+		return ITEM_INTERACT_SUCCESS
 
-	if(isitem(target))
-		var/obj/item/target_item = target
+	if(isitem(interacting_with))
+		var/obj/item/target_item = interacting_with
 
-		target.balloon_alert(user, "scanning ID card...")
+		interacting_with.balloon_alert(user, "scanning ID card...")
 
 		var/list/target_id_cards = target_item.get_all_contents_type(/obj/item/card/id)
-
 		var/target_item_id = target_item.GetID()
 
 		if(target_item_id)
 			target_id_cards |= target_item_id
 
 		if(!length(target_id_cards))
-			target.balloon_alert(user, "no IDs!")
-			return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+			interacting_with.balloon_alert(user, "no IDs!")
+			return ITEM_INTERACT_BLOCKING
 
 		var/selected_id = pick(target_id_cards)
-		target.balloon_alert(user, UNLINT("IDs synced"))
+		interacting_with.balloon_alert(user, UNLINT("IDs synced"))
 		theft_target = WEAKREF(selected_id)
 		ui_interact(user)
-		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+		return ITEM_INTERACT_SUCCESS
 
-	return .
+	return NONE
 
 /obj/item/card/id/advanced/chameleon/ui_interact(mob/user, datum/tgui/ui)
 	ui = SStgui.try_update_ui(user, src, ui)
@@ -1526,7 +1554,7 @@
 
 	return data
 
-/obj/item/card/id/advanced/chameleon/ui_act(action, list/params)
+/obj/item/card/id/advanced/chameleon/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if(.)
 		return
@@ -1776,11 +1804,10 @@
 		voice_name += " (as [scribbled_name])"
 	stored_name[NAME_PART_INDEX] = voice_name
 
-/obj/item/card/cardboard/attackby(obj/item/item, mob/living/user, params)
-	if(user.can_write(item, TRUE))
-		INVOKE_ASYNC(src, PROC_REF(modify_card), user, item)
-		return TRUE
-	return ..()
+/obj/item/card/cardboard/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if(user.can_write(tool, TRUE))
+		INVOKE_ASYNC(src, PROC_REF(modify_card), user, tool)
+		return ITEM_INTERACT_SUCCESS
 
 ///Lets the user write a name, assignment or trim on the card, or reset it. Only the name is important for the component.
 /obj/item/card/cardboard/proc/modify_card(mob/living/user, obj/item/item)

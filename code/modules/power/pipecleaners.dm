@@ -29,6 +29,7 @@ By design, d1 is the smallest direction and d2 is the highest
 	icon = 'icons/obj/pipes_n_cables/pipe_cleaner.dmi'
 	icon_state = "0-1"
 	layer = WIRE_LAYER //Above hidden pipes, GAS_PIPE_HIDDEN_LAYER
+	plane = FLOOR_PLANE
 	anchored = TRUE
 	obj_flags = CAN_BE_HIT
 	color = CABLE_HEX_COLOR_RED
@@ -402,7 +403,7 @@ By design, d1 is the smallest direction and d2 is the highest
 
 	// exisiting pipe_cleaner doesn't point at our position or we have a supplied direction, so see if it's a stub
 	else if(C.d1 == 0)
-							// if so, make it a full pipe_cleaner pointing from it's old direction to our dirn
+							// if so, make it a full pipe_cleaner pointing from its old direction to our dirn
 		var/nd1 = C.d2 // these will be the new directions
 		var/nd2 = dirn
 

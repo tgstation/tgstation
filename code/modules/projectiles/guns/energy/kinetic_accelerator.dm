@@ -7,10 +7,8 @@
 	ammo_type = list(/obj/item/ammo_casing/energy/kinetic)
 	item_flags = NONE
 	obj_flags = UNIQUE_RENAME
+	resistance_flags = FIRE_PROOF
 	weapon_weight = WEAPON_LIGHT
-	can_bayonet = TRUE
-	knife_x_offset = 20
-	knife_y_offset = 12
 	gun_flags = NOT_A_REAL_GUN
 	///List of all mobs that projectiles fired from this gun will ignore.
 	var/list/ignored_mob_types
@@ -19,6 +17,9 @@
 	///The max capacity of modkits the PKA can have installed at once.
 	var/max_mod_capacity = 100
 
+/obj/item/gun/energy/recharge/kinetic_accelerator/add_bayonet_point()
+	AddComponent(/datum/component/bayonet_attachable, offset_x = 20, offset_y = 12)
+
 /obj/item/gun/energy/recharge/kinetic_accelerator/Initialize(mapload)
 	. = ..()
 	// Only actual KAs can be converted
@@ -26,8 +27,8 @@
 		return
 	var/static/list/slapcraft_recipe_list = list(/datum/crafting_recipe/ebow)
 
-	AddComponent(
-		/datum/component/slapcrafting,\
+	AddElement(
+		/datum/element/slapcrafting,\
 		slapcraft_recipes = slapcraft_recipe_list,\
 	)
 
@@ -82,6 +83,9 @@
 			modkit_upgrade.forceMove(drop_location()) //uninstallation handled in Exited(), or /mob/living/silicon/robot/remove_from_upgrades() for borgs
 	else
 		to_chat(user, span_notice("There are no modifications currently installed."))
+
+/obj/item/gun/energy/recharge/kinetic_accelerator/try_fire_gun(atom/target, mob/living/user, params)
+	return fire_gun(target, user, user.Adjacent(target) && !isturf(target), params)
 
 /obj/item/gun/energy/recharge/kinetic_accelerator/attack_hand_secondary(mob/user, list/modifiers)
 	. = ..()
@@ -191,6 +195,10 @@
 	var/pressure_decrease = 0.25
 	var/obj/item/gun/energy/recharge/kinetic_accelerator/kinetic_gun
 
+/obj/projectile/kinetic/Initialize(mapload)
+	. = ..()
+	AddComponent(/datum/component/parriable_projectile, parry_callback = CALLBACK(src, PROC_REF(on_parry)))
+
 /obj/projectile/kinetic/Destroy()
 	kinetic_gun = null
 	return ..()
@@ -207,6 +215,13 @@
 		name = "weakened [name]"
 		damage = damage * pressure_decrease
 		pressure_decrease_active = TRUE
+
+/obj/projectile/kinetic/proc/on_parry(mob/user)
+	SIGNAL_HANDLER
+
+	// Ensure that if the user doesn't have tracer mod we're still visible
+	icon_state = "ka_tracer"
+	update_appearance()
 
 /obj/projectile/kinetic/on_range()
 	strike_thing()
@@ -253,6 +268,8 @@
 	require_model = TRUE
 	model_type = list(/obj/item/robot_model/miner)
 	model_flags = BORG_MODEL_MINER
+	//Most modkits are supposed to allow duplicates. The ones that don't should be blocked by PKA code anyways.
+	allow_duplicates = TRUE
 	var/denied_type = null
 	var/maximum_of_type = 1
 	var/cost = 30

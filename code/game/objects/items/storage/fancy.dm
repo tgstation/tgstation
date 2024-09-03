@@ -202,7 +202,7 @@
 	w_class = WEIGHT_CLASS_TINY
 	throwforce = 0
 	slot_flags = ITEM_SLOT_BELT
-	spawn_type = /obj/item/clothing/mask/cigarette/space_cigarette
+	spawn_type = /obj/item/cigarette/space_cigarette
 	spawn_count = 6
 	custom_price = PAYCHECK_CREW
 	age_restricted = TRUE
@@ -233,18 +233,18 @@
 /obj/item/storage/fancy/cigarettes/Initialize(mapload)
 	. = ..()
 	atom_storage.display_contents = FALSE
-	atom_storage.set_holdable(list(/obj/item/clothing/mask/cigarette, /obj/item/lighter))
+	atom_storage.set_holdable(list(/obj/item/cigarette, /obj/item/lighter))
 	register_context()
 
 /obj/item/storage/fancy/cigarettes/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
 	. = ..()
 	if(interacting_with != user) // you can quickly put a cigarette in your mouth only
 		return ..()
-	quick_remove_item(/obj/item/clothing/mask/cigarette, user, equip_to_mouth = TRUE)
+	quick_remove_item(/obj/item/cigarette, user, equip_to_mouth = TRUE)
 
 /obj/item/storage/fancy/cigarettes/attack_hand_secondary(mob/user, list/modifiers)
 	. = ..()
-	quick_remove_item(/obj/item/clothing/mask/cigarette, user)
+	quick_remove_item(/obj/item/cigarette, user)
 	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
 /obj/item/storage/fancy/cigarettes/click_alt(mob/user)
@@ -252,7 +252,7 @@
 	if(lighter)
 		quick_remove_item(lighter, user)
 	else
-		quick_remove_item(/obj/item/clothing/mask/cigarette, user)
+		quick_remove_item(/obj/item/cigarette, user)
 	return CLICK_ACTION_SUCCESS
 
 /// Removes an item or puts it in mouth from the packet, if any
@@ -316,49 +316,49 @@
 	desc = "A packet of six imported DromedaryCo cancer sticks. A label on the packaging reads, \"Wouldn't a slow death make a change?\""
 	icon_state = "dromedary"
 	base_icon_state = "dromedary"
-	spawn_type = /obj/item/clothing/mask/cigarette/dromedary
+	spawn_type = /obj/item/cigarette/dromedary
 
 /obj/item/storage/fancy/cigarettes/cigpack_uplift
 	name = "\improper Uplift Smooth packet"
 	desc = "Your favorite brand, now menthol flavored."
 	icon_state = "uplift"
 	base_icon_state = "uplift"
-	spawn_type = /obj/item/clothing/mask/cigarette/uplift
+	spawn_type = /obj/item/cigarette/uplift
 
 /obj/item/storage/fancy/cigarettes/cigpack_robust
 	name = "\improper Robust packet"
 	desc = "Smoked by the robust."
 	icon_state = "robust"
 	base_icon_state = "robust"
-	spawn_type = /obj/item/clothing/mask/cigarette/robust
+	spawn_type = /obj/item/cigarette/robust
 
 /obj/item/storage/fancy/cigarettes/cigpack_robustgold
 	name = "\improper Robust Gold packet"
 	desc = "Smoked by the truly robust."
 	icon_state = "robustg"
 	base_icon_state = "robustg"
-	spawn_type = /obj/item/clothing/mask/cigarette/robustgold
+	spawn_type = /obj/item/cigarette/robustgold
 
 /obj/item/storage/fancy/cigarettes/cigpack_carp
 	name = "\improper Carp Classic packet"
 	desc = "Since 2313."
 	icon_state = "carp"
 	base_icon_state = "carp"
-	spawn_type = /obj/item/clothing/mask/cigarette/carp
+	spawn_type = /obj/item/cigarette/carp
 
 /obj/item/storage/fancy/cigarettes/cigpack_syndicate
 	name = "cigarette packet"
 	desc = "An obscure brand of cigarettes."
 	icon_state = "syndie"
 	base_icon_state = "syndie"
-	spawn_type = /obj/item/clothing/mask/cigarette/syndicate
+	spawn_type = /obj/item/cigarette/syndicate
 
 /obj/item/storage/fancy/cigarettes/cigpack_midori
 	name = "\improper Midori Tabako packet"
 	desc = "You can't understand the runes, but the packet smells funny."
 	icon_state = "midori"
 	base_icon_state = "midori"
-	spawn_type = /obj/item/clothing/mask/cigarette/rollie/nicotine
+	spawn_type = /obj/item/cigarette/rollie/nicotine
 
 /obj/item/storage/fancy/cigarettes/cigpack_candy
 	name = "\improper Timmy's First Candy Smokes packet"
@@ -366,42 +366,42 @@
 	icon_state = "candy"
 	base_icon_state = "candy"
 	contents_tag = "candy cigarette"
-	spawn_type = /obj/item/clothing/mask/cigarette/candy
+	spawn_type = /obj/item/cigarette/candy
 	candy = TRUE
 	age_restricted = FALSE
 
 /obj/item/storage/fancy/cigarettes/cigpack_candy/Initialize(mapload)
 	. = ..()
 	if(prob(7))
-		spawn_type = /obj/item/clothing/mask/cigarette/candy/nicotine //uh oh!
+		spawn_type = /obj/item/cigarette/candy/nicotine //uh oh!
 
 /obj/item/storage/fancy/cigarettes/cigpack_shadyjims
 	name = "\improper Shady Jim's Super Slims packet"
 	desc = "Is your weight slowing you down? Having trouble running away from gravitational singularities? Can't stop stuffing your mouth? Smoke Shady Jim's Super Slims and watch all that fat burn away. Guaranteed results!"
 	icon_state = "shadyjim"
 	base_icon_state = "shadyjim"
-	spawn_type = /obj/item/clothing/mask/cigarette/shadyjims
+	spawn_type = /obj/item/cigarette/shadyjims
 
 /obj/item/storage/fancy/cigarettes/cigpack_xeno
 	name = "\improper Xeno Filtered packet"
 	desc = "Loaded with 100% pure slime. And also nicotine."
 	icon_state = "slime"
 	base_icon_state = "slime"
-	spawn_type = /obj/item/clothing/mask/cigarette/xeno
+	spawn_type = /obj/item/cigarette/xeno
 
 /obj/item/storage/fancy/cigarettes/cigpack_cannabis
 	name = "\improper Freak Brothers' Special packet"
 	desc = "A label on the packaging reads, \"Endorsed by Phineas, Freddy and Franklin.\""
 	icon_state = "midori"
 	base_icon_state = "midori"
-	spawn_type = /obj/item/clothing/mask/cigarette/rollie/cannabis
+	spawn_type = /obj/item/cigarette/rollie/cannabis
 
 /obj/item/storage/fancy/cigarettes/cigpack_mindbreaker
 	name = "\improper Leary's Delight packet"
 	desc = "Banned in over 36 galaxies."
 	icon_state = "shadyjim"
 	base_icon_state = "shadyjim"
-	spawn_type = /obj/item/clothing/mask/cigarette/rollie/mindbreaker
+	spawn_type = /obj/item/cigarette/rollie/mindbreaker
 
 /obj/item/storage/fancy/rollingpapers
 	name = "rolling paper pack"
@@ -437,14 +437,14 @@
 	base_icon_state = "cigarcase"
 	w_class = WEIGHT_CLASS_NORMAL
 	contents_tag = "premium cigar"
-	spawn_type = /obj/item/clothing/mask/cigarette/cigar/premium
+	spawn_type = /obj/item/cigarette/cigar/premium
 	spawn_count = 5
 	spawn_coupon = FALSE
 	display_cigs = FALSE
 
 /obj/item/storage/fancy/cigarettes/cigars/Initialize(mapload)
 	. = ..()
-	atom_storage.set_holdable(/obj/item/clothing/mask/cigarette/cigar)
+	atom_storage.set_holdable(/obj/item/cigarette/cigar)
 
 /obj/item/storage/fancy/cigarettes/cigars/update_icon_state()
 	. = ..()
@@ -456,7 +456,7 @@
 	if(!open_status)
 		return
 	var/cigar_position = 1 //generate sprites for cigars in the box
-	for(var/obj/item/clothing/mask/cigarette/cigar/smokes in contents)
+	for(var/obj/item/cigarette/cigar/smokes in contents)
 		. += "[smokes.icon_off]_[cigar_position]"
 		cigar_position++
 
@@ -465,14 +465,14 @@
 	desc = "A case of imported Cohiba cigars, renowned for their strong flavor."
 	icon_state = "cohibacase"
 	base_icon_state = "cohibacase"
-	spawn_type = /obj/item/clothing/mask/cigarette/cigar/cohiba
+	spawn_type = /obj/item/cigarette/cigar/cohiba
 
 /obj/item/storage/fancy/cigarettes/cigars/havana
 	name = "\improper premium Havanian cigar case"
 	desc = "A case of classy Havanian cigars."
 	icon_state = "cohibacase"
 	base_icon_state = "cohibacase"
-	spawn_type = /obj/item/clothing/mask/cigarette/cigar/havana
+	spawn_type = /obj/item/cigarette/cigar/havana
 
 /*
  * Heart Shaped Box w/ Chocolates

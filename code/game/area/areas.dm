@@ -128,7 +128,7 @@
  * A list of teleport locations
  *
  * Adding a wizard area teleport list because motherfucking lag -- Urist
- * I am far too lazy to make it a proper list of areas so I'll just make it run the usual telepot routine at the start of the game
+ * I am far too lazy to make it a proper list of areas so I'll just make it run the usual teleport routine at the start of the game
  */
 GLOBAL_LIST_EMPTY(teleportlocs)
 
@@ -168,9 +168,9 @@ GLOBAL_LIST_EMPTY(teleportlocs)
 	return ..()
 
 /*
- * Initalize this area
+ * Initialize this area
  *
- * intializes the dynamic area lighting and also registers the area with the z level via
+ * initializes the dynamic area lighting and also registers the area with the z level via
  * reg_in_areas_in_z
  *
  * returns INITIALIZE_HINT_LATELOAD
@@ -414,7 +414,7 @@ GLOBAL_LIST_EMPTY(teleportlocs)
 /**
  * Update the icon state of the area
  *
- * Im not sure what the heck this does, somethign to do with weather being able to set icon
+ * I'm not sure what the heck this does, something to do with weather being able to set icon
  * states on areas?? where the heck would that even display?
  */
 /area/update_icon_state()
@@ -439,7 +439,7 @@ GLOBAL_LIST_EMPTY(teleportlocs)
 /**
  * Returns int 1 or 0 if the area has power for the given channel
  *
- * evalutes a mixture of variables mappers can set, requires_power, always_unpowered and then
+ * evaluates a mixture of variables mappers can set, requires_power, always_unpowered and then
  * per channel power_equip, power_light, power_environ
  */
 /area/proc/powered(chan) // return true if the area has power to given channel
@@ -540,26 +540,9 @@ GLOBAL_LIST_EMPTY(teleportlocs)
 	for(var/atom/movable/recipient as anything in arrived.important_recursive_contents[RECURSIVE_CONTENTS_AREA_SENSITIVE])
 		SEND_SIGNAL(recipient, COMSIG_ENTER_AREA, src)
 
-	if(!isliving(arrived))
-		return
-
-	var/mob/living/L = arrived
-	if(!L.ckey)
-		return
-
-	if(ambient_buzz != old_area.ambient_buzz)
-		L.refresh_looping_ambience()
-
-///Tries to play looping ambience to the mobs.
-/mob/proc/refresh_looping_ambience()
-	var/area/my_area = get_area(src)
-
-	if(!(client?.prefs.read_preference(/datum/preference/toggle/sound_ship_ambience)) || !my_area.ambient_buzz)
-		SEND_SOUND(src, sound(null, repeat = 0, wait = 0, channel = CHANNEL_BUZZ))
-		return
-
-	SEND_SOUND(src, sound(my_area.ambient_buzz, repeat = 1, wait = 0, volume = my_area.ambient_buzz_vol, channel = CHANNEL_BUZZ))
-
+	if(ismob(arrived))
+		var/mob/mob = arrived
+		mob.update_ambience_area(src)
 
 /**
  * Called when an atom exits an area
@@ -584,6 +567,7 @@ GLOBAL_LIST_EMPTY(teleportlocs)
 		beauty = 0
 		return FALSE //Too big
 	beauty = totalbeauty / areasize
+	SEND_SIGNAL(src, COMSIG_AREA_BEAUTY_UPDATED)
 
 /**
  * Setup an area (with the given name)

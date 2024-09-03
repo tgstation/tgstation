@@ -58,17 +58,16 @@
 	icon_state = "[choice]"
 	playsound(src, 'sound/machines/click.ogg', 40, TRUE)
 
-/obj/item/universal_scanner/afterattack(obj/object, mob/user, proximity)
-	. = ..()
-	if(!istype(object) || !proximity)
-		return
-	. |= AFTERATTACK_PROCESSED_ITEM
+/obj/item/universal_scanner/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
+	if(!isobj(interacting_with))
+		return NONE
 	if(scanning_mode == SCAN_EXPORTS)
-		export_scan(object, user)
-		return .
+		export_scan(interacting_with, user)
+		return ITEM_INTERACT_SUCCESS
 	if(scanning_mode == SCAN_PRICE_TAG)
-		price_tag(target = object, user = user)
-	return .
+		price_tag(interacting_with, user)
+		return ITEM_INTERACT_SUCCESS
+	return NONE
 
 /obj/item/universal_scanner/attackby(obj/item/attacking_item, mob/user, params)
 	. = ..()
@@ -123,11 +122,12 @@
 		new_custom_price = chosen_price
 		to_chat(user, span_notice("[src] will now give things a [new_custom_price] cr tag."))
 
-/obj/item/universal_scanner/CtrlClick(mob/user)
-	. = ..()
+/obj/item/universal_scanner/item_ctrl_click(mob/user)
+	. = CLICK_ACTION_BLOCKING
 	if(scanning_mode == SCAN_SALES_TAG)
 		payments_acc = null
 		to_chat(user, span_notice("You clear the registered account."))
+		return CLICK_ACTION_SUCCESS
 
 /obj/item/universal_scanner/click_alt(mob/user)
 	if(!scanning_mode == SCAN_SALES_TAG)
@@ -165,7 +165,7 @@
 			context[SCREENTIP_CONTEXT_LMB] = "Scan for export value"
 	return CONTEXTUAL_SCREENTIP_SET
 /**
- * Scans an object, target, and provides it's export value based on selling to the cargo shuttle, to mob/user.
+ * Scans an object, target, and provides its export value based on selling to the cargo shuttle, to mob/user.
  */
 /obj/item/universal_scanner/proc/export_scan(obj/target, mob/user)
 	var/datum/export_report/report = export_item_and_contents(target, dry_run = TRUE)
@@ -240,7 +240,7 @@
 				to_chat(user, span_warning("Bank account not detected. Handling tip not registered."))
 
 /**
- * Scans an object, target, and sets it's custom_price variable to new_custom_price, presenting it to the user.
+ * Scans an object, target, and sets its custom_price variable to new_custom_price, presenting it to the user.
  */
 /obj/item/universal_scanner/proc/price_tag(obj/target, mob/user)
 	if(isitem(target))

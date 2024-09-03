@@ -38,6 +38,16 @@
 	var/priority = 0
 	/// What path is this on. If set to "null", assumed to be unreachable (or abstract).
 	var/route
+	/// In case we want to override the default UI icon getter and plug in our own icon instead.
+	/// if research_tree_icon_path is not null, research_tree_icon_state must also be specified or things may break
+	var/research_tree_icon_path
+	var/research_tree_icon_state
+	var/research_tree_icon_frame = 1
+	var/research_tree_icon_dir = SOUTH
+	/// Level of knowledge tree where this knowledge should be in the UI
+	var/depth = 1
+	///Determines what kind of monster ghosts will ignore from here on out. Defaults to POLL_IGNORE_HERETIC_MONSTER, but we define other types of monsters for more granularity.
+	var/poll_ignore_define = POLL_IGNORE_HERETIC_MONSTER
 
 /datum/heretic_knowledge/New()
 	if(!mutually_exclusive)
@@ -145,7 +155,9 @@
 		return FALSE
 
 	for(var/result in result_atoms)
-		new result(loc)
+		var/atom/result_item = new result(loc)
+		if(isitem(result_item))
+			ADD_TRAIT(result_item, TRAIT_CONTRABAND, INNATE_TRAIT)
 	return TRUE
 
 /**
@@ -216,7 +228,7 @@
 
 /**
  * A knowledge subtype for knowledge that can only
- * have a limited amount of it's resulting atoms
+ * have a limited amount of its resulting atoms
  * created at once.
  */
 /datum/heretic_knowledge/limited_amount
@@ -225,8 +237,6 @@
 	var/limit = 1
 	/// A list of weakrefs to all items we've created.
 	var/list/datum/weakref/created_items
-	/// if we have all the blades then we don’t want to tear our hands off
-	var/valid_blades = FALSE
 
 /datum/heretic_knowledge/limited_amount/Destroy(force)
 	LAZYCLEARLIST(created_items)
@@ -239,14 +249,8 @@
 			LAZYREMOVE(created_items, ref)
 
 	if(LAZYLEN(created_items) >= limit)
-		for(var/obj/item/melee/sickly_blade/is_blade_ritual as anything in result_atoms)
-			valid_blades = blades_limit_check(user)
-			break
-		if(valid_blades)
-			return TRUE
-		else
-			loc.balloon_alert(user, "ritual failed, at limit!")
-			return FALSE
+		loc.balloon_alert(user, "ritual failed, at limit!")
+		return FALSE
 
 	return TRUE
 
@@ -254,35 +258,7 @@
 	for(var/result in result_atoms)
 		var/atom/created_thing = new result(loc)
 		LAZYADD(created_items, WEAKREF(created_thing))
-		if(istype(created_thing, /obj/item/melee/sickly_blade))
-			add_to_list_sickly_blade(user, created_thing)
 	return TRUE
-
-/datum/heretic_knowledge/limited_amount/proc/add_to_list_sickly_blade(mob/living/heretic, obj/item/melee/sickly_blade/created_blade)
-	var/obj/item/melee/sickly_blade/blade_check = created_blade
-	var/datum/antagonist/heretic/our_heretic = IS_HERETIC(heretic)
-	if(!isnull(our_heretic))
-		blade_check.owner = our_heretic
-		LAZYADD(our_heretic.blades_list, blade_check)
-
-/datum/heretic_knowledge/limited_amount/proc/blades_limit_check(mob/living/heretic)
-	var/datum/antagonist/heretic/our_heretic = IS_HERETIC(heretic)
-	var/success_check = FALSE
-	for(var/obj/item/melee/sickly_blade/blades_in_list as anything in our_heretic.blades_list)
-		if(get_turf(heretic) == get_turf(blades_in_list))
-			continue
-		success_check = TRUE
-		LAZYREMOVE(our_heretic.blades_list, blades_in_list)
-		var/mob/living/living_target = recursive_loc_check(src, /mob/living)
-		if(living_target)
-			living_target.apply_damage(15)
-			var/obj/item/bodypart/thief_hand = living_target.get_bodypart(BODY_ZONE_L_ARM)
-			if(!isnull(thief_hand))
-				thief_hand.dismember(BRUTE)
-			to_chat(living_target, span_boldwarning("You feel severe pain in your hand as if otherworldly powers tore it from inside. [blades_in_list] collapse and disappeared.. maybe it never existed?"))
-		qdel(blades_in_list)
-		break
-	return success_check
 
 /**
  * A knowledge subtype for limited_amount knowledge
@@ -297,6 +273,7 @@
 	limit = 2
 	cost = 1
 	priority = MAX_KNOWLEDGE_PRIORITY - 5
+	depth = 2
 
 /datum/heretic_knowledge/limited_amount/starting/New()
 	. = ..()
@@ -321,6 +298,7 @@
 	abstract_parent_type = /datum/heretic_knowledge/mark
 	mutually_exclusive = TRUE
 	cost = 2
+	depth = 5
 	/// The status effect typepath we apply on people on mansus grasp.
 	var/datum/status_effect/eldritch/mark_type
 
@@ -386,6 +364,7 @@
 	abstract_parent_type = /datum/heretic_knowledge/blade_upgrade
 	mutually_exclusive = TRUE
 	cost = 2
+	depth = 9
 
 /datum/heretic_knowledge/blade_upgrade/on_gain(mob/user, datum/antagonist/heretic/our_heretic)
 	RegisterSignal(user, COMSIG_HERETIC_BLADE_ATTACK, PROC_REF(on_eldritch_blade))
@@ -559,11 +538,23 @@
 	abstract_parent_type = /datum/heretic_knowledge/summon
 	/// Typepath of a mob to summon when we finish the recipe.
 	var/mob/living/mob_to_summon
-	///Determines what kind of monster ghosts will ignore from here on out. Defaults to POLL_IGNORE_HERETIC_MONSTER, but we define other types of monsters for more granularity.
-	var/poll_ignore_define = POLL_IGNORE_HERETIC_MONSTER
 
 /datum/heretic_knowledge/summon/on_finished_recipe(mob/living/user, list/selected_atoms, turf/loc)
-	var/mob/living/summoned = new mob_to_summon(loc)
+	return summon_ritual_mob(user, loc, mob_to_summon)
+
+/**
+ * Creates the ritual mob and grabs a ghost for it
+ *
+ * * user - the mob doing the summoning
+ * * loc - where the summon is happening
+ * * mob_to_summon - either a mob instance or a mob typepath
+ */
+/datum/heretic_knowledge/proc/summon_ritual_mob(mob/living/user, turf/loc, mob/living/mob_to_summon)
+	var/mob/living/summoned
+	if(isliving(mob_to_summon))
+		summoned = mob_to_summon
+	else
+		summoned = new mob_to_summon(loc)
 	summoned.ai_controller?.set_ai_status(AI_STATUS_OFF)
 	// Fade in the summon while the ghost poll is ongoing.
 	// Also don't let them mess with the summon while waiting
@@ -613,6 +604,9 @@
 	mutually_exclusive = TRUE
 	cost = 1
 	priority = MAX_KNOWLEDGE_PRIORITY - 10 // A pretty important midgame ritual.
+	depth = 6
+	research_tree_icon_path = 'icons/obj/antags/eldritch.dmi'
+	research_tree_icon_state = "book_open"
 	/// Whether we've done the ritual. Only doable once.
 	var/was_completed = FALSE
 
@@ -646,7 +640,6 @@
 		/obj/item/restraints/handcuffs/cable/zipties,
 		/obj/item/circular_saw,
 		/obj/item/scalpel,
-		/obj/item/binoculars,
 		/obj/item/clothing/gloves/color/yellow,
 		/obj/item/melee/baton/security,
 		/obj/item/clothing/glasses/sunglasses,
@@ -683,7 +676,7 @@
 	return !was_completed
 
 /datum/heretic_knowledge/knowledge_ritual/on_finished_recipe(mob/living/user, list/selected_atoms, turf/loc)
-	var/datum/antagonist/heretic/our_heretic = IS_HERETIC(user)
+	var/datum/antagonist/heretic/our_heretic = GET_HERETIC(user)
 	our_heretic.knowledge_points += KNOWLEDGE_RITUAL_POINTS
 	was_completed = TRUE
 
@@ -706,6 +699,9 @@
 	cost = 2
 	priority = MAX_KNOWLEDGE_PRIORITY + 1 // Yes, the final ritual should be ABOVE the max priority.
 	required_atoms = list(/mob/living/carbon/human = 3)
+	depth = 11
+	//use this to store the achievement typepath
+	var/datum/award/achievement/misc/ascension_achievement
 
 /datum/heretic_knowledge/ultimate/on_research(mob/user, datum/antagonist/heretic/our_heretic)
 	. = ..()
@@ -727,7 +723,7 @@
 	return TRUE
 
 /datum/heretic_knowledge/ultimate/recipe_snowflake_check(mob/living/user, list/atoms, list/selected_atoms, turf/loc)
-	var/datum/antagonist/heretic/heretic_datum = IS_HERETIC(user)
+	var/datum/antagonist/heretic/heretic_datum = GET_HERETIC(user)
 	if(!can_be_invoked(heretic_datum))
 		return FALSE
 
@@ -748,7 +744,7 @@
 	return (sacrifice.stat == DEAD) && !ismonkey(sacrifice)
 
 /datum/heretic_knowledge/ultimate/on_finished_recipe(mob/living/user, list/selected_atoms, turf/loc)
-	var/datum/antagonist/heretic/heretic_datum = IS_HERETIC(user)
+	var/datum/antagonist/heretic/heretic_datum = GET_HERETIC(user)
 	heretic_datum.ascended = TRUE
 
 	// Show the cool red gradiant in our UI
@@ -766,6 +762,8 @@
 		source = user,
 		header = "A Heretic is Ascending!",
 	)
+	if(!isnull(ascension_achievement))
+		user.client?.give_award(ascension_achievement, user)
 	heretic_datum.increase_rust_strength()
 	return TRUE
 
