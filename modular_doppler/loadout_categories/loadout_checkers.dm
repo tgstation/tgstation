@@ -1,5 +1,4 @@
 // -- The loadout item datum and related procs. --
-
 /// Called after a loadout item gets a custom description
 /atom/proc/on_loadout_custom_described()
 	return
@@ -110,9 +109,7 @@
 			if(client && !silent)
 				to_chat(target, span_warning("You were unable to get a loadout item ([initial(item_path.name)]) due to species restrictions!"))
 			return FALSE
-
 	return TRUE
-
 
 /datum/loadout_item/get_ui_buttons()
 	var/list/buttons = ..()
@@ -124,7 +121,6 @@
 			"button_icon" = FA_ICON_PEN,
 			"active_key" = INFO_DESCRIBED,
 		))
-
 	return buttons
 
 /datum/loadout_item/to_ui_data()
@@ -133,16 +129,12 @@
 	formatted_item["blacklisted_roles"] = blacklisted_roles
 	formatted_item["restricted_species"] = restricted_species
 
-
 	return formatted_item
-
 
 /datum/loadout_item/handle_loadout_action(datum/preference_middleware/loadout/manager, mob/user, action, params)
 	if(action == "set_description" && can_be_named)
 		return set_description(manager, user)
-
 	return ..()
-
 
 /// Sets the description of the item.
 /datum/loadout_item/proc/set_description(datum/preference_middleware/loadout/manager, mob/user)

@@ -47,3 +47,8 @@ This proc particulalrly is useful if you wish for a specific item to do somethin
 
 `/datum/loadout_item/proc/pre_equip_item`
 Useful for doing checks on a item before it gets equipped for whatever reason, most of the time check to see if the slot would affect someone who has a item there they need to survive, I.E. Plasmamen.
+
+### Can be applied to
+
+`/datum/loadout_item/proc/can_be_applied_to`
+Checkes if the item passes requirements and isn't blacklisted based on role or species or restricted to specific role
