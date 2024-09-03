@@ -1,0 +1,4 @@
+author: "vinylspiders"
+delete-after: True
+changes:
+  - bugfix: "due to a clerical error, all ballistic guns were shipping with built-in silencers. this has been resolved-they will now make noise once again when fired."

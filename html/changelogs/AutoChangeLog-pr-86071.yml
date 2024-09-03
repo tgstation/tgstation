@@ -1,0 +1,4 @@
+author: "LT3"
+delete-after: True
+changes:
+  - bugfix: "Ice Box lower floor maints is properly protected during radstorms"

@@ -1,0 +1,4 @@
+author: "vinylspiders"
+delete-after: True
+changes:
+  - bugfix: "fixes a crafting exploit that allowed you to get more resources back from disassembling than you put into the recipe"

@@ -1,0 +1,4 @@
+author: "Absolucy"
+delete-after: True
+changes:
+  - bugfix: "You will now be ejected from any jaunt (i.e bloodcrawl or shadow walk) if you lose consciousness somehow during the jaunt."

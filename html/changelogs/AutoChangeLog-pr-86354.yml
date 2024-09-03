@@ -1,0 +1,4 @@
+author: "00-Steven"
+delete-after: True
+changes:
+  - bugfix: "Big manipulator hands now move smoothly with the base when it's moved."

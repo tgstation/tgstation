@@ -1,0 +1,4 @@
+author: "Watermelon914"
+delete-after: True
+changes:
+  - bugfix: "Fixed a bug that breaks signal handlers on an object if one of the signal handlers doesn't return a number value."
