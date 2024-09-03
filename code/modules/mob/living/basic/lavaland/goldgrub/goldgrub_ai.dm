@@ -42,7 +42,7 @@
 ///consume food!
 /datum/ai_planning_subtree/find_and_hunt_target/hunt_ores
 	target_key = BB_ORE_TARGET
-	hunting_behavior = /datum/ai_behavior/hunt_target/unarmed_attack_target/hunt_ores
+	hunting_behavior = /datum/ai_behavior/hunt_target/interact_with_target/hunt_ores
 	finding_behavior = /datum/ai_behavior/find_hunt_target/hunt_ores
 	hunt_targets = list(/obj/item/stack/ore)
 	hunt_chance = 90
@@ -65,13 +65,13 @@
 
 	return can_see(source, target, radius)
 
-/datum/ai_behavior/hunt_target/unarmed_attack_target/hunt_ores
+/datum/ai_behavior/hunt_target/interact_with_target/hunt_ores
 	always_reset_target = TRUE
 
 ///break boulders so that we can find more food!
 /datum/ai_planning_subtree/find_and_hunt_target/harvest_vents
 	target_key = BB_VENT_TARGET
-	hunting_behavior = /datum/ai_behavior/hunt_target/unarmed_attack_target //We call the ore vent's produce_boulder() proc here to produce a single boulder.
+	hunting_behavior = /datum/ai_behavior/hunt_target/interact_with_target //We call the ore vent's produce_boulder() proc here to produce a single boulder.
 	finding_behavior = /datum/ai_behavior/find_hunt_target/harvest_vents
 	hunt_targets = list(/obj/structure/ore_vent)
 	hunt_chance = 25
@@ -95,7 +95,7 @@
 ///break boulders so that we can find more food!
 /datum/ai_planning_subtree/find_and_hunt_target/break_boulders
 	target_key = BB_BOULDER_TARGET
-	hunting_behavior = /datum/ai_behavior/hunt_target/unarmed_attack_target //We process boulders once every tap, so we dont need to do anything special here
+	hunting_behavior = /datum/ai_behavior/hunt_target/interact_with_target //We process boulders once every tap, so we dont need to do anything special here
 	finding_behavior = /datum/ai_behavior/find_hunt_target/break_boulders
 	hunt_targets = list(/obj/item/boulder)
 	hunt_chance = 100 //If we can, we should always break boulders.

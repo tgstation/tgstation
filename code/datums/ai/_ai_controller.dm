@@ -344,6 +344,32 @@ multiple modular subtrees with behaviors
 			ProcessBehavior(action_seconds_per_tick, current_behavior)
 			return
 
+///Can this pawn interact with objects?
+/datum/ai_controller/proc/ai_can_interact()
+	SHOULD_CALL_PARENT(TRUE)
+	return !QDELETED(pawn)
+
+///Interact with objects
+/datum/ai_controller/proc/ai_interact(target, combat_mode, modifiers)
+	if(!ai_can_interact())
+		return FALSE
+
+	var/atom/final_target = isdatum(target) ? target : blackboard[target] //incase we got a blackboard key instead
+
+	if(QDELETED(final_target))
+		return FALSE
+
+	var/mob/living/living_pawn = pawn
+	if(isnull(combat_mode))
+		living_pawn.ClickOn(final_target, modifiers)
+		return TRUE
+
+	var/old_combat_mode = living_pawn.combat_mode
+	living_pawn.set_combat_mode(combat_mode)
+	living_pawn.ClickOn(final_target, modifiers)
+	living_pawn.set_combat_mode(old_combat_mode)
+	return TRUE
+
 ///Determines whether the AI can currently make a new plan
 /datum/ai_controller/proc/able_to_plan()
 	. = TRUE

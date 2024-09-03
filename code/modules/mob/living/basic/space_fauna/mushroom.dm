@@ -168,10 +168,10 @@
 
 /datum/ai_planning_subtree/find_and_hunt_target/mushroom_food
 	target_key = BB_LOW_PRIORITY_HUNTING_TARGET
-	hunting_behavior = /datum/ai_behavior/hunt_target/unarmed_attack_target/mushroom_food
+	hunting_behavior = /datum/ai_behavior/hunt_target/interact_with_target/mushroom_food
 	hunt_targets = list(/obj/item/food/grown/mushroom)
 	hunt_range = 6
 
-/datum/ai_behavior/hunt_target/unarmed_attack_target/mushroom_food
+/datum/ai_behavior/hunt_target/interact_with_target/mushroom_food
 	hunt_cooldown = 15 SECONDS
 	always_reset_target = TRUE

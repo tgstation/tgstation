@@ -35,11 +35,8 @@
 
 	controller.set_blackboard_key(hiding_location_key, hiding_target)
 
-	if(hiding_target) //Slap it!
-		basic_mob.melee_attack(hiding_target)
-	else
-		basic_mob.melee_attack(target)
-
+	var/atom/final_target = hiding_target || target
+	controller.ai_interact(target = final_target, combat_mode = TRUE)
 	if(terminate_after_action)
 		return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_SUCCEEDED
 	return AI_BEHAVIOR_DELAY
