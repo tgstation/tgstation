@@ -51,6 +51,10 @@
 	AddElement(/datum/element/elevation, pixel_shift = 8)
 	register_context()
 
+/obj/machinery/portable_atmospherics/on_construction(mob/user)
+	. = ..()
+	set_anchored(FALSE)
+
 /obj/machinery/portable_atmospherics/on_deconstruction(disassembled)
 	if(nob_crystal_inserted)
 		new /obj/item/hypernoblium_crystal(src)

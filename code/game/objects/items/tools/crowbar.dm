@@ -191,7 +191,7 @@
 	desc = "A hydraulic prying tool, simple but powerful."
 	icon = 'icons/obj/items_cyborg.dmi'
 	icon_state = "toolkit_engiborg_crowbar"
-	worn_icon_state = "crowbar"
+	worn_icon_state = "toolkit_engiborg_crowbar" //error sprite - this shouldn't have been dropped
 	usesound = 'sound/items/jaws_pry.ogg'
 	force = 10
 	toolspeed = 0.5

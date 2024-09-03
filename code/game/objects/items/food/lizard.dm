@@ -156,6 +156,7 @@
 	desc = "Another example of cultural crossover between lizards and humans, desert snail escargot is closer to the Roman dish cocleas than the contemporary French escargot. It's a common street food in the desert cities."
 	icon = 'icons/obj/food/lizard.dmi'
 	icon_state = "lizard_escargot"
+	trash_type = /obj/item/reagent_containers/cup/bowl
 	food_reagents = list(
 		/datum/reagent/consumable/nutriment/protein = 6,
 		/datum/reagent/consumable/nutriment/vitamin = 4,
@@ -188,6 +189,7 @@
 	desc = "One of the many human foods to make its way to the lizards was french fries, which are called poms-franzisks in Draconic. When topped with barbecued meat and sauce, they make a hearty meal."
 	icon = 'icons/obj/food/lizard.dmi'
 	icon_state = "lizard_fries"
+	trash_type = /obj/item/plate
 	food_reagents = list(
 		/datum/reagent/consumable/nutriment = 4,
 		/datum/reagent/consumable/nutriment/protein = 6,
@@ -887,7 +889,7 @@
 
 /obj/item/food/burger/rootrib
 	name = "rootrib"
-	desc = "An elusive rib shaped burger with limited availablity across the galaxy. Now meeting subhuman requirements."
+	desc = "An elusive rib shaped burger with limited availability across the galaxy. Now meeting subhuman requirements."
 	icon_state = "rootrib"
 	icon = 'icons/obj/food/lizard.dmi'
 	food_reagents = list(

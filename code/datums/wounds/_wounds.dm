@@ -127,7 +127,7 @@
 
 	return ..()
 
-/// If we should have an actionspeed_mod, ensures we do and updates its slowdown. Otherwise, ensures we dont have one
+/// If we should have an actionspeed_mod, ensures we do and updates its slowdown. Otherwise, ensures we don't have one
 /// by qdeleting any existing modifier.
 /datum/wound/proc/update_actionspeed_modifier()
 	if (should_have_actionspeed_modifier())
@@ -323,7 +323,7 @@
 	SIGNAL_HANDLER
 	qdel(src)
 
-/// Remove the wound from whatever it's afflicting, and cleans up whateverstatus effects it had or modifiers it had on interaction times. ignore_limb is used for detachments where we only want to forget the victim
+/// Remove the wound from whatever it's afflicting, and cleans up whatever status effects it had or modifiers it had on interaction times. ignore_limb is used for detachments where we only want to forget the victim
 /datum/wound/proc/remove_wound(ignore_limb, replaced = FALSE)
 	//TODO: have better way to tell if we're getting removed without replacement (full heal) scar stuff
 	var/old_victim = victim
@@ -341,7 +341,7 @@
 
 	if(limb && !ignore_limb)
 		set_limb(null, replaced) // since we're removing limb's ref to us, we should do the same
-		// if you want to keep the ref, do it externally, theres no reason for us to remember it
+		// if you want to keep the ref, do it externally, there's no reason for us to remember it
 
 	if (ismob(old_victim))
 		var/mob/mob_victim = old_victim
@@ -688,7 +688,7 @@
 /datum/wound/proc/get_limb_examine_description()
 	return
 
-/// Gets the flat percentage chance increment of a dismember occuring, if a dismember is attempted (requires mangled flesh and bone). returning 15 = +15%.
+/// Gets the flat percentage chance increment of a dismember occurring, if a dismember is attempted (requires mangled flesh and bone). returning 15 = +15%.
 /datum/wound/proc/get_dismember_chance_bonus(existing_chance)
 	SHOULD_BE_PURE(TRUE)
 

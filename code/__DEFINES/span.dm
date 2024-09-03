@@ -48,6 +48,7 @@
 #define span_drone(str) ("<span class='drone'>" + str + "</span>")
 #define span_engradio(str) ("<span class='engradio'>" + str + "</span>")
 #define span_extremelybig(str) ("<span class='extremelybig'>" + str + "</span>")
+#define span_enteradio(str) ("<span class='enteradio'>" + str + "</span>")
 #define span_game_say(str) ("<span class='game say'>" + str + "</span>")
 #define span_ghostalert(str) ("<span class='ghostalert'>" + str + "</span>")
 #define span_green(str) ("<span class='green'>" + str + "</span>")

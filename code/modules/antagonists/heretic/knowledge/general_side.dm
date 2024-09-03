@@ -18,7 +18,7 @@
 
 /datum/heretic_knowledge/reroll_targets/recipe_snowflake_check(mob/living/user, list/atoms, list/selected_atoms, turf/loc)
 
-	var/datum/antagonist/heretic/heretic_datum = IS_HERETIC(user)
+	var/datum/antagonist/heretic/heretic_datum = GET_HERETIC(user)
 	// Check first if they have a Living Heart. If it's missing, we should
 	// throw a fail to show the heretic that there's no point in rerolling
 	// if you don't have a heart to track the targets in the first place.
@@ -29,7 +29,7 @@
 	return TRUE
 
 /datum/heretic_knowledge/reroll_targets/on_finished_recipe(mob/living/user, list/selected_atoms, turf/loc)
-	var/datum/antagonist/heretic/heretic_datum = IS_HERETIC(user)
+	var/datum/antagonist/heretic/heretic_datum = GET_HERETIC(user)
 	for(var/mob/living/carbon/human/target as anything in heretic_datum.sac_targets)
 		heretic_datum.remove_sacrifice_target(target)
 
