@@ -170,9 +170,7 @@
 /area/station/maintenance/department/medical)
 "om" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/effect/decal/cleanable/cobweb{
-	pixel_y = 24
-	},
+/obj/effect/decal/cleanable/cobweb,
 /obj/structure/window/spawner/directional/east,
 /obj/structure/closet/crate/trashcart/filled,
 /turf/open/floor/plating,
@@ -202,6 +200,7 @@
 /obj/effect/turf_decal/stripes/end{
 	dir = 1
 	},
+/obj/structure/sign/warning/electric_shock/directional/south,
 /turf/open/floor/plating,
 /area/station/maintenance/department/medical)
 "vz" = (
@@ -384,13 +383,8 @@
 	},
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/table,
-/obj/effect/spawner/random/food_or_drink/booze{
-	pixel_y = 17;
-	pixel_x = 9
-	},
-/obj/effect/spawner/random/food_or_drink/snack{
-	pixel_y = 10
-	},
+/obj/effect/spawner/random/food_or_drink/booze,
+/obj/effect/spawner/random/food_or_drink/snack,
 /turf/open/floor/iron/smooth,
 /area/station/maintenance/department/medical)
 "GQ" = (
@@ -533,9 +527,7 @@
 /area/station/maintenance/department/medical)
 "SR" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/effect/decal/cleanable/cobweb{
-	pixel_y = 24
-	},
+/obj/effect/decal/cleanable/cobweb,
 /turf/open/floor/iron/smooth,
 /area/station/maintenance/department/science)
 "To" = (
