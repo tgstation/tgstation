@@ -36584,6 +36584,10 @@
 	},
 /turf/open/floor/iron,
 /area/station/engineering/atmos)
+"mzv" = (
+/obj/docking_port/stationary/syndicate/northeast,
+/turf/open/space/basic,
+/area/space)
 "mzx" = (
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
@@ -118681,7 +118685,7 @@ dDB
 dDB
 dDB
 dDB
-dDB
+mzv
 dDB
 dDB
 dDB
