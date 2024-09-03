@@ -4,6 +4,3 @@
 #define DB_QUERY_FINISHED 1
 /// When there was a problem with the execution of a query.
 #define DB_QUERY_BROKEN 2
-
-///The probability of non-maploaded photos and papers being saved as bottle messages at the end of the round.
-#define MESSAGE_BOTTLE_CHANCE 0.2
