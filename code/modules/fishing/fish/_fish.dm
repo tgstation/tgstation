@@ -2,7 +2,7 @@
 /obj/item/fish
 	name = "generic looking aquarium fish"
 	desc = "very bland"
-	icon = 'icons/obj/structures/aquarium/fish.dmi'
+	icon = 'icons/obj/aquarium/fish.dmi'
 	icon_state = "bugfish"
 	lefthand_file = 'icons/mob/inhands/fish_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/fish_righthand.dmi'
@@ -84,8 +84,6 @@
 	var/list/compatible_types
 	/// A list of possible evolutions. If set, offsprings may be of a different, new fish type if conditions are met.
 	var/list/evolution_types
-	/// The species' name(s) of the parents of the fish. Shown by the fish analyzer.
-	var/progenitors
 
 	// Fishing related properties
 
@@ -169,7 +167,6 @@
 	if(apply_qualities)
 		apply_traits() //Make sure traits are applied before size and weight.
 		update_size_and_weight()
-		progenitors = full_capitalize(name) //default value
 
 	register_evolutions()
 
@@ -518,7 +515,7 @@
 
 /obj/item/fish/proc/update_aquarium_appearance(datum/source, obj/effect/aquarium/visual)
 	SIGNAL_HANDLER
-	visual.icon = dedicated_in_aquarium_icon
+	visual.icon = dedicated_in_aquarium_icon || icon
 	visual.icon_state = dedicated_in_aquarium_icon_state || "[initial(icon_state)]_small"
 	visual.color = aquarium_vc_color
 
@@ -738,12 +735,6 @@
 		partner.breeding_wait = world.time + breeding_timeout
 	else //Make a close of this fish.
 		new_fish.update_size_and_weight(size, weight, TRUE)
-		new_fish.progenitors = initial(name)
-	if(partner && type != partner.type)
-		var/string = "[initial(name)] - [initial(partner.name)]"
-		new_fish.progenitors = full_capitalize(string)
-	else
-		new_fish.progenitors = full_capitalize(initial(name))
 
 	breeding_wait = world.time + breeding_timeout
 

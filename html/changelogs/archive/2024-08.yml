@@ -802,3 +802,29 @@
   - rscadd: Added salt electrolysis reaction
   SmArtKar:
   - bugfix: Bioscrambler anomalies no longer affect inorganic species
+2024-08-28:
+  Melbert:
+  - bugfix: Juicing and grinding should break less
+  Vekter:
+  - bugfix: Fixed an issue causing Quartermaster office access to show in the wrong
+      area on Plexagon Access Management.
+  - bugfix: Fixed an inconsistency in the naming for QM Office access.
+  grungussuss:
+  - bugfix: after 4 years, computer sound loop now works properly
+2024-08-29:
+  FeudeyTF:
+  - rscadd: Added board for detective's evidences
+  Rhials:
+  - rscadd: Smokey remains have appeared in maintenance. Make sure to walk when near
+      them!
+  SmArtKar:
+  - bugfix: Stagger animation is no longer horrilbly jittery
+  Xackii:
+  - qol: revolver in roundstart holsters is on the last slot and not on first
+2024-08-30:
+  SmArtKar:
+  - bugfix: Projectiles no longer always play turf hit sound
+  - balance: Plexagon Crew Manifest is now a default PDA app for everyone, and is
+      free.
+  - balance: Plexagon Crew Manifest no longer provides Detomatix resistance, but security
+      records and status display control now do.
