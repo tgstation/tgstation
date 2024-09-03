@@ -25,7 +25,6 @@
 	faction = list(FACTION_MUSHROOM)
 	speak_emote = list("squeaks")
 	death_message = "fainted!"
-	shadow_type = SHADOW_SMALL
 
 	ai_controller = /datum/ai_controller/basic_controller/mushroom
 	var/cap_color = "#ffffff"
@@ -35,6 +34,10 @@
 	var/bruised = FALSE
 	///If we hit three, another mushroom's gonna eat us
 	var/faint_ticker = 0
+	///Where we store our cap icons so we dont generate them constantly to update our icon
+	var/static/mutable_appearance/cap_living
+	///Where we store our cap icons so we dont generate them constantly to update our icon
+	var/static/mutable_appearance/cap_dead
 	///Cooldown that tracks how long its been since revival
 	COOLDOWN_DECLARE(recovery_cooldown)
 
@@ -43,12 +46,14 @@
 	melee_damage_lower = rand(3, 5)
 	melee_damage_upper = rand(10,20)
 	maxHealth = rand(50,70)
+	cap_living = cap_living || mutable_appearance(icon, "mushroom_cap")
+	cap_dead = cap_dead || mutable_appearance(icon, "mushroom_cap_dead")
 	cap_color = rgb(rand(0, 255), rand(0, 255), rand(0, 255))
+	update_mushroomcap()
 	health = maxHealth
 	AddElement(/datum/element/swabable, CELL_LINE_TABLE_WALKING_MUSHROOM, CELL_VIRUS_TABLE_GENERIC_MOB, 1, 5)
 	ADD_TRAIT(src, TRAIT_VENTCRAWLER_ALWAYS, INNATE_TRAIT)
 	RegisterSignal(src, COMSIG_HOSTILE_POST_ATTACKINGTARGET, PROC_REF(on_attacked_target))
-	update_appearance()
 
 /mob/living/basic/mushroom/UnarmedAttack(atom/attack_target, proximity_flag, list/modifiers)
 	. = ..()
@@ -91,18 +96,24 @@
 		return
 
 	icon_state = "mushroom_color"
-	update_appearance()
+	update_mushroomcap()
 
-/mob/living/basic/mushroom/update_overlays()
+/mob/living/basic/mushroom/death(gibbed)
 	. = ..()
-	var/cap_state = (stat == DEAD) ? "mushroom_cap" : "mushroom_cap_dead"
-	var/mutable_appearance/little_hat = mutable_appearance(icon, cap_state)
-	little_hat.color = cap_color
-	. += little_hat
+	update_mushroomcap()
+
+/mob/living/basic/mushroom/proc/update_mushroomcap()
+	cut_overlays()
+	cap_living.color = cap_color
+	cap_dead.color = cap_color
+	if(stat == DEAD)
+		add_overlay(cap_dead)
+	else
+		add_overlay(cap_living)
 
 /mob/living/basic/mushroom/proc/recover(obj/item/mush_meal)
 	visible_message(span_notice("[src] eats [mush_meal]!"))
-	update_appearance()
+	update_mushroomcap()
 	qdel(mush_meal)
 	if(!COOLDOWN_FINISHED(src, recovery_cooldown))
 		return
@@ -142,9 +153,6 @@
 		shroomslice.reagents.add_reagent(/datum/reagent/medicine/omnizine, powerlevel)
 		shroomslice.reagents.add_reagent(/datum/reagent/medicine/synaptizine, powerlevel)
 
-
-
-
 /datum/ai_controller/basic_controller/mushroom
 	blackboard = list(
 		BB_TARGETING_STRATEGY = /datum/targeting_strategy/basic/mushroom,
@@ -168,10 +176,6 @@
 
 /datum/ai_planning_subtree/find_and_hunt_target/mushroom_food
 	target_key = BB_LOW_PRIORITY_HUNTING_TARGET
-	hunting_behavior = /datum/ai_behavior/hunt_target/interact_with_target/mushroom_food
+	hunting_behavior = /datum/ai_behavior/hunt_target/interact_with_target/reset_target
 	hunt_targets = list(/obj/item/food/grown/mushroom)
 	hunt_range = 6
-
-/datum/ai_behavior/hunt_target/interact_with_target/mushroom_food
-	hunt_cooldown = 15 SECONDS
-	always_reset_target = TRUE
