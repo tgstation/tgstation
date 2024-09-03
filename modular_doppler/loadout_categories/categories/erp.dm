@@ -4,6 +4,7 @@
 	erp_category = TRUE
 	type_to_generate = /datum/loadout_item/erp
 	tab_order = /datum/loadout_category/pocket::tab_order + 1
+	var/max_allowed = MAX_ALLOWED_ERP_ITEMS
 
 /datum/loadout_category/erp/New()
 	. = ..()

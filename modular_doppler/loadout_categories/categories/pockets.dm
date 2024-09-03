@@ -1,3 +1,6 @@
+/datum/loadout_category/pocket
+	max_allowed = MAX_ALLOWED_MISC_ITEMS
+
 // Because plushes have a second desc var that needs to be updated
 /obj/item/toy/plush/on_loadout_custom_described()
 	normal_desc = desc
