@@ -1,30 +1,7 @@
-
 //departmental signs
 
 /obj/structure/sign/departments
-	icon = 'icons/obj/structures/departmental_signs.dmi'
 	is_editable = TRUE
-	var/emissive_type
-
-/obj/structure/sign/departments/Initialize(mapload)
-	. = ..()
-	if (!emissive_type)
-		return
-	var/area/cur_area = get_area(src)
-	if (!isnull(cur_area))
-		RegisterSignal(cur_area, COMSIG_AREA_POWER_CHANGE, PROC_REF(power_check))
-
-/obj/structure/sign/departments/proc/power_check()
-	SIGNAL_HANDLER
-	update_appearance()
-
-/obj/structure/sign/departments/update_overlays()
-	. = ..()
-	if (!emissive_type)
-		return
-	var/area/cur_area = get_area(src)
-	if (!isnull(cur_area) && cur_area.power_light)
-		. += emissive_appearance(icon, emissive_type, src)
 
 ///////MEDBAY
 
@@ -34,14 +11,14 @@
 	desc = "A sign labelling an area of the medical department."
 	icon_state = "med"
 
-WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/structure/sign/departments/med)
+MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sign/departments/med, 32)
 
 /obj/structure/sign/departments/med_alt
 	name = "\improper Medbay sign"
 	sign_change_name = "Department - Medbay Alt"
 	icon_state = "medbay"
 
-WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/structure/sign/departments/med_alt)
+MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sign/departments/med_alt, 32)
 
 /obj/structure/sign/departments/medbay
 	name = "\improper Medbay sign"
@@ -49,15 +26,14 @@ WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/structure/sign/departments/med_alt)
 	desc = "The intergalactic symbol of medical institutions. You'll probably get help here."
 	icon_state = "bluecross"
 
-WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/structure/sign/departments/medbay)
+MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sign/departments/medbay, 32)
 
 /obj/structure/sign/departments/medbay/alt
 	name = "\improper Medbay sign"
 	sign_change_name = "Generic Medical Alt"
-	icon_state = "department_med"
-	emissive_type = "department_e"
+	icon_state = "bluecross2"
 
-WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/structure/sign/departments/medbay/alt)
+MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sign/departments/medbay/alt, 32)
 
 /obj/structure/sign/departments/exam_room
 	name = "\improper Exam Room sign"
@@ -65,40 +41,37 @@ WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/structure/sign/departments/medbay/alt)
 	desc = "A guidance sign which reads 'Exam Room'."
 	icon_state = "examroom"
 
-WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/structure/sign/departments/exam_room)
+MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sign/departments/exam_room, 32)
 
 /obj/structure/sign/departments/chemistry
 	name = "\improper Chemistry sign"
 	sign_change_name = "Department - Medbay: Chemistry"
 	desc = "A sign labelling an area containing chemical equipment."
-	icon_state = "department_chem"
-	emissive_type = "department_e"
+	icon_state = "chemistry1"
 
-WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/structure/sign/departments/chemistry)
+MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sign/departments/chemistry, 32)
 
 /obj/structure/sign/departments/chemistry/alt
 	sign_change_name = "Department - Medbay: Chemistry Alt"
 	icon_state = "chemistry2"
 
-WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/structure/sign/departments/chemistry/alt)
+MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sign/departments/chemistry/alt, 32)
 
 /obj/structure/sign/departments/chemistry/pharmacy
 	name = "\improper Pharmacy sign"
 	sign_change_name = "Department - Medbay: Pharmacy"
 	desc = "A sign labelling an area containing pharmacy equipment."
-	icon_state = "department_chem"
-	emissive_type = "department_e"
+	icon_state = "pharmacy"
 
-WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/structure/sign/departments/chemistry/pharmacy)
+MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sign/departments/chemistry/pharmacy, 32)
 
 /obj/structure/sign/departments/psychology
 	name = "\improper Psychology sign"
 	sign_change_name = "Department - Medbay: Psychology"
 	desc = "A sign labelling an area where the Psychologist works, they can probably help you get your head straight."
-	icon_state = "department_psych"
-	emissive_type = "department_e"
+	icon_state = "psychology"
 
-WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/structure/sign/departments/psychology)
+MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sign/departments/psychology, 32)
 
 /obj/structure/sign/departments/virology
 	name = "\improper Virology sign"
@@ -106,7 +79,7 @@ WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/structure/sign/departments/psychology)
 	desc = "A sign labelling an area where the virologist's laboratory is located."
 	icon_state = "pharmacy"
 
-WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/structure/sign/departments/virology)
+MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sign/departments/virology, 32)
 
 /obj/structure/sign/departments/morgue
 	name = "\improper Morgue sign"
@@ -114,7 +87,7 @@ WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/structure/sign/departments/virology)
 	desc = "A sign labelling an area where the station stores its ever-piling bodies."
 	icon_state = "morgue"
 
-WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/structure/sign/departments/morgue)
+MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sign/departments/morgue, 32)
 
 ///////ENGINEERING
 
@@ -122,10 +95,9 @@ WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/structure/sign/departments/morgue)
 	name = "\improper Engineering sign"
 	sign_change_name = "Department - Engineering"
 	desc = "A sign labelling an area where engineers work."
-	icon_state = "department_engi"
-	emissive_type = "department_e"
+	icon_state = "engine"
 
-WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/structure/sign/departments/engineering)
+MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sign/departments/engineering, 32)
 
 ///////SCIENCE
 
@@ -133,49 +105,45 @@ WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/structure/sign/departments/engineering)
 	name = "\improper Science sign"
 	sign_change_name = "Department - Science"
 	desc = "A sign labelling an area where research and science is performed."
-	icon_state = "department_sci"
-	emissive_type = "department_e"
+	icon_state = "science1"
 
-WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/structure/sign/departments/science)
+MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sign/departments/science, 32)
 
 /obj/structure/sign/departments/science/alt
 	sign_change_name = "Department - Science Alt"
 	icon_state = "science2"
 
-WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/structure/sign/departments/science/alt)
-
+MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sign/departments/science/alt, 32)
 
 /obj/structure/sign/departments/xenobio
 	name = "\improper Xenobiology sign"
 	sign_change_name = "Department - Science: Xenobiology"
 	desc = "A sign labelling an area where xenobiological entities are researched."
-	icon_state = "department_xeno"
-	emissive_type = "department_e"
+	icon_state = "xenobio1"
 
-WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/structure/sign/departments/xenobio)
+MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sign/departments/xenobio, 32)
 
-// Wallening todo: we need a new sprite for this
 /obj/structure/sign/departments/xenobio/alt
 	sign_change_name = "Department - Science: Xenobiology Alt"
 	icon_state = "xenobio2"
 
-WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/structure/sign/departments/xenobio/alt)
+MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sign/departments/xenobio/alt, 32)
 
-// Wallening todo: new sprite for htis, clear it out of signs.dmi
 /obj/structure/sign/departments/genetics
 	name = "\improper Genetics sign"
 	sign_change_name = "Department - Science: Genetics"
 	desc = "A sign labelling an area where the field of genetics is researched."
 	icon_state = "gene"
 
-WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/structure/sign/departments/genetics)
+MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sign/departments/genetics, 32)
+
 /obj/structure/sign/departments/rndserver
 	name ="\improper R&D Server sign"
 	sign_change_name = "Department - Science: R&D Server"
 	desc = "A sign labelling an area where scientific data is stored."
 	icon_state = "rndserver"
 
-WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/structure/sign/departments/rndserver)
+MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sign/departments/rndserver, 32)
 
 ///////SERVICE
 
@@ -183,28 +151,27 @@ WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/structure/sign/departments/rndserver)
 	name = "\improper Botany sign"
 	sign_change_name = "Department - Botany (Flower)"
 	desc = "A sign labelling an area as a place where plants are grown."
-	icon_state = "department_hydro"
-	emissive_type = "department_e"
+	icon_state = "hydro1"
 
-WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/structure/sign/departments/botany)
+MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sign/departments/botany, 32)
 
 /obj/structure/sign/departments/botany/alt1
 	sign_change_name = "Department - Botany (Tray)"
 	icon_state = "hydro2"
 
-WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/structure/sign/departments/botany/alt1)
+MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sign/departments/botany/alt1, 32)
 
 /obj/structure/sign/departments/botany/alt2
 	sign_change_name = "Department - Botany (Watering Can)"
 	icon_state = "hydro3"
 
-WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/structure/sign/departments/botany/alt2)
+MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sign/departments/botany/alt2, 32)
 
 /obj/structure/sign/departments/botany/botany/alt3
 	sign_change_name = "Department - Botany (Tray) Alt"
 	icon_state = "botany"
 
-WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/structure/sign/departments/botany/alt3)
+MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sign/departments/botany/alt3, 32)
 
 /obj/structure/sign/departments/custodian
 	name = "\improper Janitor sign"
@@ -212,16 +179,15 @@ WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/structure/sign/departments/botany/alt3)
 	desc = "A sign labelling an area where the janitor works."
 	icon_state = "custodian"
 
-WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/structure/sign/departments/custodian)
+MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sign/departments/custodian, 32)
 
 /obj/structure/sign/departments/holy
 	name = "\improper Chapel sign"
 	sign_change_name = "Department - Chapel"
 	desc = "A sign labelling a religious area."
-	icon_state = "department_chapel"
-	emissive_type = "department_e"
+	icon_state = "holy"
 
-WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/structure/sign/departments/holy)
+MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sign/departments/holy, 32)
 
 /obj/structure/sign/departments/holy_alt
 	name = "\improper Chapel sign"
@@ -229,16 +195,15 @@ WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/structure/sign/departments/holy)
 	desc = "A sign labelling a religious area."
 	icon_state = "chapel"
 
-WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/structure/sign/departments/holy)
+MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sign/departments/holy, 32)
 
 /obj/structure/sign/departments/lawyer
 	name = "\improper Legal Department sign"
 	sign_change_name = "Department - Legal"
 	desc = "A sign labelling an area where the Lawyers work, apply here for arrivals shuttle whiplash settlement."
-	icon_state = "department_lawyer"
-	emissive_type = "department_e"
+	icon_state = "lawyer"
 
-WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/structure/sign/departments/lawyer)
+MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sign/departments/lawyer, 32)
 
 ///////SUPPLY
 
@@ -246,10 +211,9 @@ WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/structure/sign/departments/lawyer)
 	name = "\improper Cargo sign"
 	sign_change_name = "Department - Cargo"
 	desc = "A sign labelling an area where cargo ships dock."
-	icon_state = "department_cargo"
-	emissive_type = "department_e"
+	icon_state = "cargo"
 
-WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/structure/sign/departments/cargo)
+MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sign/departments/cargo, 32)
 
 /obj/structure/sign/departments/exodrone
 	name = "\improper Exodrone sign"
@@ -257,7 +221,7 @@ WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/structure/sign/departments/cargo)
 	desc = "A sign labelling an area where exodrones are used."
 	icon_state = "exodrone"
 
-WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/structure/sign/departments/exodrone)
+MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sign/departments/exodrone, 32)
 
 ///////SECURITY
 
@@ -265,10 +229,9 @@ WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/structure/sign/departments/exodrone)
 	name = "\improper Security sign"
 	sign_change_name = "Department - Security"
 	desc = "A sign labelling an area where the law is law."
-	icon_state = "department_sec"
-	emissive_type = "department_e"
+	icon_state = "security"
 
-WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/structure/sign/departments/security)
+MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sign/departments/security, 32)
 
 ////MISC LOCATIONS
 
@@ -276,10 +239,9 @@ WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/structure/sign/departments/security)
 	name = "\improper Restroom sign"
 	sign_change_name = "Location - Restroom"
 	desc = "A sign labelling a restroom."
-	icon_state = "department_wc"
-	emissive_type = "department_e"
+	icon_state = "restroom"
 
-WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/structure/sign/departments/restroom)
+MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sign/departments/restroom, 32)
 
 /obj/structure/sign/departments/maint
 	name = "\improper Maintenance Tunnel sign"
@@ -287,7 +249,7 @@ WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/structure/sign/departments/restroom)
 	desc = "A sign labelling an area where the departments of the station are linked together."
 	icon_state = "mait1"
 
-WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/structure/sign/departments/maint)
+MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sign/departments/maint, 32)
 
 /obj/structure/sign/departments/maint/alt
 	name = "\improper Maintenance Tunnel sign"
@@ -295,38 +257,15 @@ WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/structure/sign/departments/maint)
 	desc = "A sign labelling an area where the departments of the station are linked together."
 	icon_state = "mait2"
 
-WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/structure/sign/departments/maint/alt)
+MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sign/departments/maint/alt, 32)
 
 /obj/structure/sign/departments/evac
 	name = "\improper Evacuation sign"
 	sign_change_name = "Location - Evacuation"
 	desc = "A sign labelling an area where evacuation procedures take place."
-	icon_state = "department_evac"
-	emissive_type = "department_evac_e"
-	is_editable = TRUE
-	///This var detemines which arrow overlay to use.
-	var/arrow_direction_state = "evac_overlay_f"
+	icon_state = "evac"
 
-/obj/structure/sign/departments/evac/Initialize(mapload)
-	. = ..()
-	add_overlay(arrow_direction_state)
-
-/obj/structure/sign/departments/evac/fore
-	arrow_direction_state = "evac_overlay_f"
-
-/obj/structure/sign/departments/evac/aft
-	arrow_direction_state = "evac_overlay_a"
-
-/obj/structure/sign/departments/evac/starboard
-	arrow_direction_state = "evac_overlay_s"
-
-/obj/structure/sign/departments/evac/port
-	arrow_direction_state = "evac_overlay_p"
-
-WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/structure/sign/departments/evac/fore)
-WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/structure/sign/departments/evac/aft)
-WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/structure/sign/departments/evac/starboard)
-WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/structure/sign/departments/evac/port)
+MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sign/departments/evac, 32)
 
 /obj/structure/sign/departments/drop
 	name = "\improper Drop Pods sign"
@@ -334,31 +273,29 @@ WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/structure/sign/departments/evac/port)
 	desc = "A sign labelling an area where drop pod loading procedures take place."
 	icon_state = "drop"
 
-WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/structure/sign/departments/drop)
+MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sign/departments/drop, 32)
 
 /obj/structure/sign/departments/court
 	name = "\improper Courtroom sign"
 	sign_change_name = "Location - Courtroom"
 	desc = "A sign labelling the courtroom, where the ever sacred Space Law is upheld."
-	icon_state = "department_law"
-	emissive_type = "department_e"
+	icon_state = "court"
 
-WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/structure/sign/departments/court)
+MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sign/departments/court, 32)
 
-// Wallening todo: here down, too
 /obj/structure/sign/departments/telecomms
 	name = "\improper Telecommunications sign"
 	sign_change_name = "Location - Telecommunications"
 	desc = "A sign labelling an area where the station's radio and NTnet servers are stored."
 	icon_state = "telecomms"
 
-WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/structure/sign/departments/telecomms)
+MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sign/departments/telecomms, 32)
 
 /obj/structure/sign/departments/telecomms/alt
 	icon_state = "telecomms2"
 	sign_change_name = "Location - Telecommunications Alt"
 
-WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/structure/sign/departments/telecomms/alt)
+MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sign/departments/telecomms/alt, 32)
 
 /obj/structure/sign/departments/aiupload
 	name = "\improper AI Upload sign"
@@ -366,7 +303,7 @@ WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/structure/sign/departments/telecomms/alt)
 	desc = "A sign labelling an area where laws are uploaded to the station's AI and cyborgs."
 	icon_state = "aiupload"
 
-WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/structure/sign/departments/aiupload)
+MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sign/departments/aiupload, 32)
 
 /obj/structure/sign/departments/aisat
 	name = "\improper AI Satellite sign"
@@ -374,7 +311,7 @@ WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/structure/sign/departments/aiupload)
 	desc = "A sign labelling the AI's heavily-fortified satellite."
 	icon_state = "aisat"
 
-WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/structure/sign/departments/aisat)
+MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sign/departments/aisat, 32)
 
 /obj/structure/sign/departments/vault
 	name = "\improper Vault sign"
@@ -382,4 +319,4 @@ WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/structure/sign/departments/aisat)
 	desc = "A sign labelling a saferoom where the station's resources and self-destruct are secured."
 	icon_state = "vault"
 
-WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/structure/sign/departments/vault)
+MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sign/departments/vault, 32)
