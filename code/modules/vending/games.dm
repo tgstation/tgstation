@@ -58,6 +58,7 @@
 				/obj/item/skillchip/sabrage = 2,
 				/obj/item/skillchip/useless_adapter = 5,
 				/obj/item/skillchip/wine_taster = 2,
+				/obj/item/skillchip/big_pointer = 2,
 			),
 		),
 		list(
