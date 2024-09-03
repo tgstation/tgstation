@@ -36,6 +36,9 @@
 			drop_immediately = basic_mob_flags & DEL_ON_DEATH,\
 		)
 	RegisterSignal(src, COMSIG_ATOM_WAS_ATTACKED, PROC_REF(check_ashwalker_peace_violation))
+	// We add this to ensure that mobs will actually receive the above signal, as some will lack AI
+	// handling for retaliation and attack special cases
+	AddElement(/datum/element/relay_attackers)
 
 /mob/living/basic/mining/proc/add_ranged_armour(list/vulnerable_projectiles)
 	AddElement(\

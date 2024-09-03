@@ -8832,6 +8832,7 @@
 "diI" = (
 /obj/machinery/light/small/directional/north,
 /obj/machinery/computer/security,
+/obj/structure/detectiveboard/directional/north,
 /turf/open/floor/carpet,
 /area/station/security/detectives_office)
 "diM" = (
@@ -10268,15 +10269,27 @@
 /area/station/service/theater)
 "dGs" = (
 /obj/structure/table/reinforced,
-/obj/item/storage/pill_bottle/epinephrine,
-/obj/item/stack/sheet/mineral/plasma{
-	pixel_y = 12
-	},
 /obj/effect/turf_decal/trimline/yellow/filled/line{
 	dir = 4
 	},
 /obj/effect/turf_decal/trimline/yellow/filled/mid_joiner{
 	dir = 4
+	},
+/obj/item/hand_labeler{
+	pixel_x = 3;
+	pixel_y = 5
+	},
+/obj/item/storage/pill_bottle/epinephrine{
+	pixel_x = -9;
+	pixel_y = 1
+	},
+/obj/item/stack/sheet/mineral/plasma{
+	pixel_y = 14;
+	pixel_x = 3
+	},
+/obj/item/hand_labeler_refill{
+	pixel_x = 10;
+	pixel_y = -2
 	},
 /turf/open/floor/iron/white/smooth_edge{
 	dir = 4
@@ -17276,6 +17289,7 @@
 /area/station/science/research)
 "ggl" = (
 /obj/machinery/camera/autoname/directional/west,
+/obj/structure/water_source/puddle,
 /turf/open/floor/grass,
 /area/station/service/hydroponics/garden)
 "ggu" = (
@@ -21370,6 +21384,12 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating,
 /area/station/science/xenobiology)
+"hAS" = (
+/obj/machinery/hydroponics/soil,
+/obj/effect/decal/cleanable/dirt,
+/obj/item/cultivator/rake,
+/turf/open/floor/grass,
+/area/station/security/prison/garden)
 "hAV" = (
 /obj/structure/table/wood,
 /obj/item/flashlight/flare/candle{
@@ -24723,6 +24743,7 @@
 /obj/machinery/hydroponics/soil,
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/cable,
+/obj/item/plant_analyzer,
 /turf/open/floor/grass,
 /area/station/security/prison/garden)
 "iNv" = (
@@ -39047,6 +39068,11 @@
 /obj/effect/turf_decal/tile/dark_blue,
 /turf/open/floor/iron,
 /area/station/command/bridge)
+"nPw" = (
+/obj/structure/water_source/puddle,
+/obj/item/reagent_containers/cup/watering_can,
+/turf/open/floor/grass,
+/area/station/security/prison/garden)
 "nPM" = (
 /obj/effect/turf_decal/trimline/yellow/filled/line{
 	dir = 4
@@ -46365,6 +46391,10 @@
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/plating,
 /area/station/maintenance/department/cargo)
+"qwB" = (
+/obj/item/shovel/spade,
+/turf/open/floor/grass,
+/area/station/security/prison/garden)
 "qwG" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -52503,6 +52533,7 @@
 /area/station/engineering/atmos)
 "syF" = (
 /obj/effect/landmark/start/prisoner,
+/obj/item/plant_analyzer,
 /turf/open/floor/grass,
 /area/station/security/prison/garden)
 "syL" = (
@@ -53692,6 +53723,12 @@
 	},
 /turf/open/floor/iron,
 /area/station/security/brig)
+"sUD" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/structure/cable,
+/turf/open/floor/catwalk_floor,
+/area/station/maintenance/central/lesser)
 "sUI" = (
 /obj/machinery/door/airlock{
 	name = "Kitchen Cold Room"
@@ -58844,9 +58881,7 @@
 "uJq" = (
 /obj/machinery/computer/records/medical,
 /obj/effect/turf_decal/tile/red/fourcorners,
-/obj/machinery/computer/security/telescreen/cmo/directional/north{
-	name = "Medbay Monitor"
-	},
+/obj/machinery/computer/security/telescreen/med_sec/directional/north,
 /turf/open/floor/iron/dark,
 /area/station/security/checkpoint/medical)
 "uJt" = (
@@ -82451,8 +82486,8 @@ iUF
 dUc
 xrb
 xrb
-dEG
-dEG
+nPw
+qwB
 iqf
 cKn
 pjt
@@ -82964,7 +82999,7 @@ cLf
 dUc
 cLf
 xrb
-nEx
+hAS
 syF
 ckc
 sqk
@@ -83735,7 +83770,7 @@ cLf
 iUF
 cLf
 sNu
-nEx
+hAS
 rXZ
 vjm
 hbw
@@ -93551,7 +93586,7 @@ dTU
 pMD
 acc
 kYl
-jUd
+sUD
 dGc
 fDN
 enu

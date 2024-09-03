@@ -1,4 +1,0 @@
-author: "Ghommie"
-delete-after: True
-changes:
-  - bugfix: "Fixes projectiles facing north if ricocheting, deflected or homing"

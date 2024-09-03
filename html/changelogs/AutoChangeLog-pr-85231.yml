@@ -1,4 +1,0 @@
-author: "LT3"
-delete-after: True
-changes:
-  - bugfix: "Fixed disease outbreak announcement sometimes missing the disease name"

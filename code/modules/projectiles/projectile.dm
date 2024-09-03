@@ -296,6 +296,12 @@
 		hitx = target.pixel_x + rand(-8, 8)
 		hity = target.pixel_y + rand(-8, 8)
 
+	if(isturf(target) && hitsound_wall)
+		var/volume = clamp(vol_by_damage() + 20, 0, 100)
+		if(suppressed)
+			volume = 5
+		playsound(loc, hitsound_wall, volume, TRUE, -1)
+
 	if(damage > 0 && (damage_type == BRUTE || damage_type == BURN) && iswallturf(target_turf) && prob(75))
 		var/turf/closed/wall/target_wall = target_turf
 		if(impact_effect_type && !hitscan)
@@ -308,11 +314,7 @@
 	if(!isliving(target))
 		if(impact_effect_type && !hitscan)
 			new impact_effect_type(target_turf, hitx, hity)
-		if(isturf(target) && hitsound_wall)
-			var/volume = clamp(vol_by_damage() + 20, 0, 100)
-			if(suppressed)
-				volume = 5
-			playsound(loc, hitsound_wall, volume, TRUE, -1)
+
 		return BULLET_ACT_HIT
 
 	var/mob/living/living_target = target
@@ -569,6 +571,9 @@
 	if((target.pass_flags_self & pass_flags) && !direct_target)
 		return FALSE
 	if(HAS_TRAIT(target, TRAIT_UNHITTABLE_BY_PROJECTILES))
+		if(!HAS_TRAIT(target, TRAIT_BLOCKING_PROJECTILES) && isliving(target))
+			var/mob/living/living_target = target
+			living_target.block_projectile_effects()
 		return FALSE
 	if(!ignore_source_check && firer)
 		var/mob/M = firer

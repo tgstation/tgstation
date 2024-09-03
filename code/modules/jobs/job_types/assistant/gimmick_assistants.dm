@@ -167,6 +167,7 @@
 	belt = /obj/item/storage/belt/utility/full
 	head = /obj/item/clothing/head/utility/hardhat
 	uniform = /obj/item/clothing/under/color/yellow
+	l_pocket = /obj/item/modular_computer/pda/assistant
 
 	outfit_weight = 6
 

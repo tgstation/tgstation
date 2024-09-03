@@ -40,6 +40,8 @@
 	circuit = null
 	interaction_flags_atom = INTERACT_ATOM_UI_INTERACT | INTERACT_ATOM_NO_FINGERPRINT_INTERACT | INTERACT_ATOM_NO_FINGERPRINT_ATTACK_HAND | INTERACT_MACHINE_REQUIRES_SIGHT
 	frame_type = /obj/item/wallframe/telescreen/entertainment
+	/// Virtual radio inside of the entertainment monitor to broadcast audio
+	var/obj/item/radio/entertainment/speakers/speakers
 	var/icon_state_off = "entertainment_blank"
 	var/icon_state_on = "entertainment"
 
@@ -55,8 +57,13 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/computer/security/telescreen/entertai
 	. = ..()
 	RegisterSignal(src, COMSIG_CLICK, PROC_REF(BigClick))
 	find_and_hang_on_wall()
+	speakers = new(src)
 
-// Bypass clickchain to allow humans to use the telescreen from a distance
+/obj/machinery/computer/security/telescreen/entertainment/Destroy()
+	. = ..()
+	QDEL_NULL(speakers)
+
+/// Bypass clickchain to allow humans to use the telescreen from a distance
 /obj/machinery/computer/security/telescreen/entertainment/proc/BigClick()
 	SIGNAL_HANDLER
 
@@ -66,7 +73,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/computer/security/telescreen/entertai
 
 	INVOKE_ASYNC(src, TYPE_PROC_REF(/atom, interact), usr)
 
-///Sets the monitor's icon to the selected state, and says an announcement
+/// Sets the monitor's icon to the selected state, and says an announcement
 /obj/machinery/computer/security/telescreen/entertainment/proc/notify(on, announcement)
 	if(on && icon_state == icon_state_off)
 		icon_state = icon_state_on
@@ -185,10 +192,22 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/computer/security/telescreen/ce, 32)
 	frame_type = /obj/item/wallframe/telescreen/cmo
 
 /obj/item/wallframe/telescreen/cmo
-	name = "\improper Chief Engineer'stelescreen frame"
+	name = "\improper Chief Medical Officer's telescreen frame"
 	result_path = /obj/machinery/computer/security/telescreen/cmo
 
 MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/computer/security/telescreen/cmo, 32)
+
+/obj/machinery/computer/security/telescreen/med_sec
+	name = "\improper medical telescreen"
+	desc = "A telescreen with access to the medbay's camera network."
+	network = list(CAMERANET_NETWORK_MEDBAY)
+	frame_type = /obj/item/wallframe/telescreen/med_sec
+
+/obj/item/wallframe/telescreen/med_sec
+	name = "\improper medical telescreen frame"
+	result_path = /obj/machinery/computer/security/telescreen/med_sec
+
+MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/computer/security/telescreen/med_sec, 32)
 
 /obj/machinery/computer/security/telescreen/vault
 	name = "vault monitor"

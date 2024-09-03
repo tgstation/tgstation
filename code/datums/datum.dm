@@ -111,6 +111,9 @@
 	tag = null
 	datum_flags &= ~DF_USE_TAG //In case something tries to REF us
 	weak_reference = null //ensure prompt GCing of weakref.
+	if(!(datum_flags & DF_STATIC_OBJECT))
+		DREAMLUAU_CLEAR_REF_USERDATA(vars) // vars ceases existing when src does, so we need to clear any lua refs to it that exist.
+		DREAMLUAU_CLEAR_REF_USERDATA(src)
 
 	if(_active_timers)
 		var/list/timers = _active_timers
@@ -340,7 +343,7 @@
 	. = ..()
 	update_item_action_buttons()
 
-/** Update a filter's parameter to the new one. If the filter doesnt exist we won't do anything.
+/** Update a filter's parameter to the new one. If the filter doesn't exist we won't do anything.
  *
  * Arguments:
  * * name - Filter name
@@ -358,7 +361,7 @@
 			filter_data[name][thing] = new_params[thing]
 	update_filters()
 
-/** Update a filter's parameter and animate this change. If the filter doesnt exist we won't do anything.
+/** Update a filter's parameter and animate this change. If the filter doesn't exist we won't do anything.
  * Basically a [datum/proc/modify_filter] call but with animations. Unmodified filter parameters are kept.
  *
  * Arguments:

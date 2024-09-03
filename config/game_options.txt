@@ -185,6 +185,10 @@ ALLOW_AI_MULTICAM
 ## 600 is one minute.
 GATEWAY_DELAY 18000
 
+## Overrides to gateway delay for specific away mission start points.
+GATEWAY_DELAYS_BY_ID AWAYSTART_BEACH 6000
+GATEWAY_DELAYS_BY_ID AWAYSTART_MUSEUM 9000
+
 ## The probability of the gateway mission being a config one
 CONFIG_GATEWAY_CHANCE 0
 

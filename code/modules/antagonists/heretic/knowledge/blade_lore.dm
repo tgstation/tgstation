@@ -1,7 +1,5 @@
 /**
  * # The path of Blades. Stab stab.
- * Spell names are in this language: ARAMAIC
- * Both are related: Aramaic-Damascus-Blade
  *
  * Goes as follows:
  *

@@ -10596,9 +10596,7 @@
 	},
 /obj/effect/turf_decal/tile/red/fourcorners,
 /obj/machinery/light/small/directional/west,
-/obj/machinery/computer/security/telescreen/cmo/directional/west{
-	name = "Medbay Monitor"
-	},
+/obj/machinery/computer/security/telescreen/med_sec/directional/west,
 /turf/open/floor/iron/dark,
 /area/station/security/checkpoint/medical)
 "dQO" = (
@@ -15539,13 +15537,10 @@
 /turf/open/floor/plating/airless,
 /area/station/solars/port/fore)
 "fzr" = (
-/obj/structure/table,
-/obj/effect/turf_decal/stripes/line,
-/obj/effect/spawner/random/food_or_drink/seed{
-	spawn_all_loot = 1;
-	spawn_random_offset = 1
-	},
-/turf/open/floor/iron,
+/obj/structure/window/spawner/directional/south,
+/obj/structure/window/spawner/directional/west,
+/obj/structure/water_source/puddle,
+/turf/open/floor/grass,
 /area/station/service/hydroponics/garden)
 "fzE" = (
 /obj/structure/sign/warning/vacuum/external/directional/north,
@@ -20133,7 +20128,6 @@
 /area/station/cargo/sorting)
 "hlj" = (
 /obj/structure/table/wood,
-/obj/structure/secure_safe/directional/east,
 /obj/machinery/computer/security/wooden_tv{
 	pixel_x = 3;
 	pixel_y = 2
@@ -20143,6 +20137,7 @@
 	name = "detective's office shutters control";
 	req_access = list("detective")
 	},
+/obj/structure/detectiveboard/directional/east,
 /turf/open/floor/carpet,
 /area/station/security/detectives_office)
 "hlq" = (
@@ -38990,6 +38985,7 @@
 /obj/effect/turf_decal/trimline/green/filled/line{
 	dir = 9
 	},
+/obj/structure/cable,
 /turf/open/floor/iron,
 /area/station/security/prison/garden)
 "nNw" = (
@@ -39528,6 +39524,10 @@
 /obj/structure/table,
 /obj/structure/extinguisher_cabinet/directional/west,
 /obj/effect/turf_decal/stripes/line,
+/obj/effect/spawner/random/food_or_drink/seed{
+	spawn_all_loot = 1;
+	spawn_random_offset = 1
+	},
 /turf/open/floor/iron,
 /area/station/service/hydroponics/garden)
 "nYU" = (
@@ -40409,7 +40409,6 @@
 /obj/machinery/hydroponics/soil,
 /obj/item/cultivator,
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/cable,
 /turf/open/floor/grass,
 /area/station/security/prison/garden)
 "opG" = (
@@ -50064,6 +50063,11 @@
 	},
 /turf/open/floor/iron,
 /area/station/engineering/break_room)
+"rJh" = (
+/obj/structure/window/reinforced/spawner/directional/north,
+/obj/structure/secure_safe/directional/west,
+/turf/open/floor/iron/grimy,
+/area/station/security/detectives_office)
 "rJk" = (
 /obj/machinery/door/airlock{
 	name = "Theater Backstage"
@@ -50759,8 +50763,6 @@
 /turf/open/floor/iron/white,
 /area/station/medical/virology)
 "rVb" = (
-/obj/structure/sink/directional/west,
-/obj/item/reagent_containers/cup/watering_can,
 /obj/effect/turf_decal/trimline/green/filled/line{
 	dir = 4
 	},
@@ -51193,7 +51195,6 @@
 "sbX" = (
 /obj/machinery/hydroponics/soil,
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/cable,
 /obj/item/plant_analyzer,
 /turf/open/floor/grass,
 /area/station/security/prison/garden)
@@ -55374,6 +55375,7 @@
 /obj/effect/turf_decal/trimline/green/filled/line{
 	dir = 8
 	},
+/obj/structure/cable,
 /turf/open/floor/iron,
 /area/station/security/prison/garden)
 "tCF" = (
@@ -63870,6 +63872,12 @@
 /obj/structure/reagent_dispensers/fueltank,
 /turf/open/floor/iron,
 /area/station/science/robotics/mechbay)
+"wsG" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/water_source/puddle,
+/obj/item/reagent_containers/cup/watering_can,
+/turf/open/floor/grass,
+/area/station/security/prison/garden)
 "wsI" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/structure/cable,
@@ -65138,7 +65146,6 @@
 /turf/open/floor/iron/white,
 /area/station/science/robotics/lab)
 "wRF" = (
-/obj/structure/window/spawner/directional/west,
 /obj/structure/flora/rock/pile,
 /turf/open/floor/grass,
 /area/station/service/hydroponics/garden)
@@ -87403,7 +87410,7 @@ aaa
 lMJ
 aaa
 aaa
-aaa
+cmB
 cmB
 cmB
 cmB
@@ -87661,7 +87668,7 @@ lMJ
 aaa
 aaa
 cmB
-cmB
+wsG
 opF
 sbX
 jTi
@@ -99516,7 +99523,7 @@ sWV
 sWV
 sWV
 qJb
-fEn
+rJh
 hME
 olw
 olw

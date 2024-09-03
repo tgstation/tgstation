@@ -1426,7 +1426,7 @@
 /turf/open/indestructible/plating,
 /area/awaymission/museum)
 "lz" = (
-/obj/effect/landmark/awaystart,
+/obj/effect/landmark/awaystart/museum,
 /obj/structure/flora/bush/sparsegrass/style_random,
 /turf/open/floor/grass,
 /area/awaymission/museum)
@@ -3095,7 +3095,7 @@
 /turf/open/floor/iron/smooth_large,
 /area/awaymission/museum)
 "zd" = (
-/obj/effect/landmark/awaystart,
+/obj/effect/landmark/awaystart/museum,
 /turf/open/floor/grass,
 /area/awaymission/museum)
 "zg" = (
@@ -4503,7 +4503,7 @@
 	},
 /area/awaymission/museum)
 "KN" = (
-/obj/effect/landmark/awaystart,
+/obj/effect/landmark/awaystart/museum,
 /obj/effect/turf_decal/siding/wood{
 	dir = 1
 	},

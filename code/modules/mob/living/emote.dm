@@ -4,6 +4,16 @@
 	mob_type_allowed_typecache = /mob/living
 	mob_type_blacklist_typecache = list(/mob/living/brain)
 
+/datum/emote/living/taunt
+	key = "taunt"
+	key_third_person = "taunts"
+	message = "taunts!"
+	cooldown = 1.6 SECONDS //note when changing this- this is used by the matrix taunt to block projectiles.
+
+/datum/emote/living/taunt/run_emote(mob/living/user, params, type_override, intentional)
+	. = ..()
+	user.spin(TAUNT_EMOTE_DURATION, 0.1 SECONDS)
+
 /datum/emote/living/blush
 	key = "blush"
 	key_third_person = "blushes"
@@ -248,6 +258,9 @@
 	. = ..()
 	var/kiss_type = /obj/item/hand_item/kisser
 
+	if(HAS_TRAIT(user, TRAIT_SYNDIE_KISS))
+		kiss_type = /obj/item/hand_item/kisser/syndie
+
 	if(HAS_TRAIT(user, TRAIT_KISS_OF_DEATH))
 		kiss_type = /obj/item/hand_item/kisser/death
 
@@ -352,6 +365,7 @@
 	message_mime = "acts out a scream!"
 	emote_type = EMOTE_VISIBLE | EMOTE_AUDIBLE
 	mob_type_blacklist_typecache = list(/mob/living/brain, /mob/living/carbon/human)
+	sound_wall_ignore = TRUE
 
 /datum/emote/living/scream/run_emote(mob/user, params, type_override, intentional = FALSE)
 	if(!intentional && HAS_TRAIT(user, TRAIT_ANALGESIA))
@@ -394,6 +408,7 @@
 	message = "sighs."
 	message_mime = "acts out an exaggerated silent sigh."
 	emote_type = EMOTE_VISIBLE | EMOTE_AUDIBLE
+	vary = TRUE
 
 /datum/emote/living/sigh/run_emote(mob/living/user, params, type_override, intentional)
 	. = ..()
@@ -401,6 +416,11 @@
 		return
 	var/image/emote_animation = image('icons/mob/human/emote_visuals.dmi', user, "sigh")
 	flick_overlay_global(emote_animation, GLOB.clients, 2.0 SECONDS)
+
+/datum/emote/living/sigh/get_sound(mob/living/carbon/human/user)
+	if(!istype(user))
+		return
+	return user.dna.species.get_sigh_sound(user)
 
 /datum/emote/living/sit
 	key = "sit"
@@ -423,6 +443,13 @@
 	message = "sniffs."
 	message_mime = "sniffs silently."
 	emote_type = EMOTE_VISIBLE | EMOTE_AUDIBLE
+	vary = TRUE
+
+/datum/emote/living/sniff/get_sound(mob/living/carbon/human/user)
+	if(!istype(user))
+		return
+	return user.dna.species.get_sniff_sound(user)
+
 
 /datum/emote/living/snore
 	key = "snore"

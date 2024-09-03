@@ -13,7 +13,7 @@
 	name = "aquarium"
 	desc = "A vivarium in which aquatic fauna and flora are usually kept and displayed."
 	density = TRUE
-	anchored = TRUE
+	anchored = FALSE
 
 	icon = 'icons/obj/aquarium/tanks.dmi'
 	icon_state = "aquarium_map"
@@ -35,13 +35,13 @@
 	var/last_feeding
 
 	/// Can fish reproduce in this quarium.
-	var/allow_breeding = FALSE
+	var/allow_breeding = TRUE
 
 	//This is the area where fish can swim
 	var/aquarium_zone_min_px = 2
 	var/aquarium_zone_max_px = 31
 	var/aquarium_zone_min_py = 10
-	var/aquarium_zone_max_py = 24
+	var/aquarium_zone_max_py = 28
 
 	var/list/fluid_types = list(AQUARIUM_FLUID_SALTWATER, AQUARIUM_FLUID_FRESHWATER, AQUARIUM_FLUID_SULPHWATEVER, AQUARIUM_FLUID_AIR)
 
@@ -64,7 +64,7 @@
 	RegisterSignal(src, COMSIG_ATOM_WAS_ATTACKED, PROC_REF(on_attacked))
 	create_reagents(6, SEALED_CONTAINER)
 	RegisterSignal(reagents, COMSIG_REAGENTS_NEW_REAGENT, PROC_REF(start_autofeed))
-	AddComponent(/datum/component/plumbing/aquarium)
+	AddComponent(/datum/component/plumbing/aquarium, start = anchored)
 	if(current_beauty)
 		AddElement(/datum/element/beauty, current_beauty)
 	ADD_KEEP_TOGETHER(src, INNATE_TRAIT)
@@ -323,7 +323,7 @@
 	.["maxTemperature"] = max_fluid_temp
 	.["fluidTypes"] = fluid_types
 
-/obj/structure/aquarium/ui_act(action, params)
+/obj/structure/aquarium/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if(.)
 		return
@@ -390,15 +390,25 @@
 #undef AQUARIUM_BORDERS_LAYER
 #undef AQUARIUM_BELOW_GLASS_LAYER
 
+/obj/structure/aquarium/lawyer
+	anchored = TRUE
+
 /obj/structure/aquarium/lawyer/Initialize(mapload)
 	. = ..()
 
 	new /obj/item/aquarium_prop/sand(src)
 	new /obj/item/aquarium_prop/seaweed(src)
 
-	new /obj/item/fish/goldfish/gill(src)
+	if(prob(85))
+		new /obj/item/fish/goldfish/gill(src)
+		reagents.add_reagent(/datum/reagent/consumable/nutriment, 2)
+	else
+		new /obj/item/fish/three_eyes/gill(src)
+		reagents.add_reagent(/datum/reagent/toxin/mutagen, 2) //three eyes goldfish feed on mutagen.
 
-	reagents.add_reagent(/datum/reagent/consumable/nutriment, 2)
+
+/obj/structure/aquarium/prefilled
+	anchored = TRUE
 
 /obj/structure/aquarium/prefilled/Initialize(mapload)
 	. = ..()

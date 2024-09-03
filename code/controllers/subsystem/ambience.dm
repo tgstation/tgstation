@@ -124,7 +124,7 @@ SUBSYSTEM_DEF(ambience)
 		client.current_ambient_sound = null
 		return
 
-	//Station ambience is dependant on a functioning and charged APC with enviorment power enabled.
+	//Station ambience is dependent on a functioning and charged APC with environment power enabled.
 	if(!is_mining_level(my_area.z) && ((!my_area.apc || !my_area.apc.operating || !my_area.apc.cell?.charge && my_area.requires_power || !my_area.power_environ)))
 		SEND_SOUND(src, sound(null, repeat = 0, wait = 0, channel = CHANNEL_BUZZ))
 		client.current_ambient_sound = null

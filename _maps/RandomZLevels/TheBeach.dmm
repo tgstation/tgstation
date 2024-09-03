@@ -102,6 +102,17 @@
 "bi" = (
 /turf/open/floor/iron/white/textured_large,
 /area/awaymission/beach)
+"bo" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 9
+	},
+/obj/effect/turf_decal/tile/dark/half{
+	pixel_y = -1;
+	pixel_x = 5;
+	dir = 8
+	},
+/turf/open/water/beach,
+/area/awaymission/beach)
 "bx" = (
 /obj/effect/turf_decal/sand,
 /obj/machinery/door/airlock/wood{
@@ -277,16 +288,6 @@
 "dr" = (
 /obj/structure/musician/piano,
 /turf/open/floor/wood,
-/area/awaymission/beach)
-"dx" = (
-/obj/structure/sign/directions/dorms/directional/north{
-	pixel_y = 35
-	},
-/obj/structure/sign/directions/medical/directional/north{
-	pixel_y = 29
-	},
-/obj/machinery/computer/slot_machine,
-/turf/open/floor/wood/large,
 /area/awaymission/beach)
 "dL" = (
 /obj/machinery/door/airlock/public/glass{
@@ -504,6 +505,10 @@
 	dir = 8
 	},
 /turf/closed/wall/mineral/wood,
+/area/awaymission/beach)
+"gq" = (
+/obj/item/broken_bottle,
+/turf/open/misc/beach/sand,
 /area/awaymission/beach)
 "gw" = (
 /obj/item/stack/sheet/mineral/sandstone{
@@ -894,17 +899,6 @@
 /obj/structure/table/wood,
 /turf/open/floor/wood/large,
 /area/awaymission/beach)
-"lk" = (
-/obj/effect/turf_decal/siding/wood{
-	dir = 9
-	},
-/obj/effect/turf_decal/tile/dark/half{
-	pixel_y = -1;
-	pixel_x = 5;
-	dir = 8
-	},
-/turf/open/water/beach,
-/area/awaymission/beach)
 "ll" = (
 /obj/machinery/door/airlock/wood{
 	name = "Room 11";
@@ -1189,6 +1183,10 @@
 /obj/effect/turf_decal/siding/dark_red{
 	dir = 8
 	},
+/turf/open/misc/beach/sand,
+/area/awaymission/beach)
+"pq" = (
+/obj/effect/spawner/random/trash/cigbutt,
 /turf/open/misc/beach/sand,
 /area/awaymission/beach)
 "pr" = (
@@ -1688,7 +1686,7 @@
 "vq" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/mapping_helpers/broken_floor,
-/obj/effect/landmark/awaystart,
+/obj/effect/landmark/awaystart/beach,
 /turf/open/floor/plating,
 /area/awaymission/beach)
 "vx" = (
@@ -2573,13 +2571,6 @@
 	},
 /turf/open/misc/beach/sand,
 /area/awaymission/beach)
-"FJ" = (
-/obj/item/instrument/guitar{
-	pixel_y = 4;
-	pixel_x = -1
-	},
-/turf/open/misc/beach/coast,
-/area/awaymission/beach)
 "FK" = (
 /obj/item/toy/seashell{
 	pixel_x = 12;
@@ -2856,6 +2847,17 @@
 /obj/machinery/light/directional/west,
 /turf/open/floor/wood/large,
 /area/awaymission/beach)
+"Jv" = (
+/obj/item/paper/fluff/old_pirate_note{
+	pixel_x = -5;
+	pixel_y = -7
+	},
+/obj/item/pen/fountain{
+	pixel_y = -11;
+	pixel_x = -8
+	},
+/turf/open/misc/beach/sand,
+/area/awaymission/beach)
 "JF" = (
 /obj/structure/marker_beacon/burgundy,
 /turf/open/water/beach,
@@ -2959,6 +2961,13 @@
 	pixel_x = 11
 	},
 /turf/open/misc/beach/sand,
+/area/awaymission/beach)
+"KQ" = (
+/obj/item/instrument/guitar{
+	pixel_y = 4;
+	pixel_x = -1
+	},
+/turf/open/misc/beach/coast,
 /area/awaymission/beach)
 "KV" = (
 /obj/effect/decal/cleanable/dirt,
@@ -3330,6 +3339,12 @@
 	},
 /turf/open/misc/beach/sand,
 /area/awaymission/beach)
+"Pb" = (
+/obj/item/fishing_rod,
+/obj/structure/closet/crate/trashcart,
+/obj/item/reagent_containers/cup/glass/bottle/rum/aged,
+/turf/open/misc/beach/sand,
+/area/awaymission/beach)
 "Pe" = (
 /turf/open/misc/beach/coast{
 	dir = 5
@@ -3376,6 +3391,11 @@
 /obj/effect/turf_decal/siding/wood{
 	dir = 5
 	},
+/turf/open/misc/beach/sand,
+/area/awaymission/beach)
+"PU" = (
+/obj/effect/mob_spawn/corpse/human/old_pirate_captain,
+/obj/structure/bed/maint,
 /turf/open/misc/beach/sand,
 /area/awaymission/beach)
 "Qe" = (
@@ -3586,7 +3606,7 @@
 /area/awaymission/beach)
 "SB" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/effect/landmark/awaystart,
+/obj/effect/landmark/awaystart/beach,
 /turf/open/floor/plating,
 /area/awaymission/beach)
 "SI" = (
@@ -3994,6 +4014,16 @@
 /turf/open/floor/iron/white/textured_large,
 /area/awaymission/beach)
 "Zp" = (
+/turf/open/floor/wood/large,
+/area/awaymission/beach)
+"Zs" = (
+/obj/structure/sign/directions/dorms/directional/north{
+	pixel_y = 35
+	},
+/obj/structure/sign/directions/medical/directional/north{
+	pixel_y = 29
+	},
+/obj/machinery/computer/slot_machine,
 /turf/open/floor/wood/large,
 /area/awaymission/beach)
 "Zt" = (
@@ -7415,8 +7445,8 @@ XB
 XB
 Vf
 YV
-VY
-VY
+Pb
+gq
 hL
 ni
 XB
@@ -7672,8 +7702,8 @@ XB
 XB
 Vf
 VY
-VY
-VY
+pq
+PU
 Er
 BK
 XB
@@ -7929,7 +7959,7 @@ XB
 XB
 Vf
 VY
-VY
+Jv
 VY
 VY
 BK
@@ -8187,7 +8217,7 @@ XB
 Vf
 IZ
 VY
-VY
+pq
 VY
 BK
 XB
@@ -13210,7 +13240,7 @@ xv
 xv
 xv
 xv
-dx
+Zs
 Zp
 Zp
 mb
@@ -16284,7 +16314,7 @@ vx
 Bq
 Xd
 Ej
-lk
+bo
 LC
 XB
 XB
@@ -29420,7 +29450,7 @@ VY
 VY
 Rn
 VY
-FJ
+KQ
 xv
 CG
 Gh

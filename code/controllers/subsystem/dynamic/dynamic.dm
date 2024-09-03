@@ -140,10 +140,10 @@ SUBSYSTEM_DEF(dynamic)
 	/// The maximum amount of time for antag random events to be hijacked.
 	var/random_event_hijack_maximum = 18 MINUTES
 
-	/// What is the lower bound of when the roundstart annoucement is sent out?
+	/// What is the lower bound of when the roundstart announcement is sent out?
 	var/waittime_l = 600
 
-	/// What is the higher bound of when the roundstart annoucement is sent out?
+	/// What is the higher bound of when the roundstart announcement is sent out?
 	var/waittime_h = 1800
 
 	/// A number between 0 and 100. The maximum amount of threat allowed to generate.
@@ -999,7 +999,7 @@ SUBSYSTEM_DEF(dynamic)
 #define MAXIMUM_DYN_DISTANCE 5
 
 /**
- * Returns the comulative distribution of threat centre and width, and a random location of -0.5 to 0.5
+ * Returns the comulative distribution of threat centre and width, and a random location of -5 to 5
  * plus or minus the otherwise unattainable lower and upper percentiles. All multiplied by the maximum
  * threat and then rounded to the nearest interval.
  * rand() calls without arguments returns a value between 0 and 1, allowing for smaller intervals.

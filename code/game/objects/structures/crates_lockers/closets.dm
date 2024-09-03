@@ -1193,6 +1193,8 @@ GLOBAL_LIST_EMPTY(roundstart_station_closets)
 	if(!toggle())
 		return
 	if(was_opened)
+		if (!target.Move(get_turf(src), get_dir(target, src)))
+			return
 		target.forceMove(src)
 	else
 		target.Knockdown(SHOVE_KNOCKDOWN_SOLID)

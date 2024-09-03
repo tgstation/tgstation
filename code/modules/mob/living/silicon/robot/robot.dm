@@ -583,6 +583,7 @@
 
 /mob/living/silicon/robot/updatehealth()
 	..()
+	update_damage_particles()
 	if(!model.breakable_modules)
 		return
 
@@ -680,6 +681,9 @@
 		builtInCamera.toggle_cam(src, 0)
 	if(full_heal_flags & HEAL_ADMIN)
 		locked = TRUE
+	if(eye_flash_timer)
+		deltimer(eye_flash_timer)
+		eye_flash_timer = null
 	src.set_stat(CONSCIOUS)
 	notify_ai(AI_NOTIFICATION_NEW_BORG)
 	toggle_headlamp(FALSE, TRUE) //This will reenable borg headlamps if doomsday is currently going on still.
@@ -870,7 +874,7 @@
 	lawupdate = TRUE
 	lawsync()
 	if(radio && AI.radio) //AI keeps all channels, including Syndie if it is a Traitor
-		if(AI.radio.syndie)
+		if((AI.radio.special_channels & RADIO_SPECIAL_SYNDIE))
 			radio.make_syndie()
 		radio.subspace_transmission = TRUE
 		radio.channels = AI.radio.channels

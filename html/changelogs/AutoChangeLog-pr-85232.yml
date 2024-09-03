@@ -1,4 +1,0 @@
-author: "00-Steven"
-delete-after: True
-changes:
-  - bugfix: "Fixes borgs not being able to place apparatus-held items on tables. As a side-effect, they can now combat mode right click splash containers as normal instead of having their own right-click floor splash."

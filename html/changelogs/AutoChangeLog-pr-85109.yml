@@ -1,4 +1,0 @@
-author: "Jacquerel"
-delete-after: True
-changes:
-  - balance: "If a bluespace cookie fails to teleport you then you will trip over."

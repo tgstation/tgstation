@@ -221,7 +221,7 @@
 
 /datum/supply_pack/goody/fishing_toolbox
 	name = "Fishing Toolbox"
-	desc = "Complete toolbox set for your fishing adventure. Advanced hooks and lines sold separetely."
+	desc = "Complete toolbox set for your fishing adventure. Contains a valuable tip. Advanced hooks and lines sold separetely."
 	cost = PAYCHECK_CREW * 2
 	contains = list(/obj/item/storage/toolbox/fishing)
 
@@ -311,7 +311,7 @@
 
 /datum/supply_pack/goody/climbing_hook
 	name = "Climbing Hook Single-Pack"
-	desc = "A less cheap imported climbing hook. Absolutely no use outside of planetary stations."
+	desc = "A less cheap imported climbing hook. Absolutely no use outside of multi-floor stations."
 	cost = PAYCHECK_CREW * 5
 	contains = list(/obj/item/climbing_hook)
 
@@ -321,3 +321,9 @@
 	cost = PAYCHECK_COMMAND * 18
 	access_view = ACCESS_WEAPONS
 	contains = list(/obj/item/gun/ballistic/shotgun/doublebarrel)
+
+/datum/supply_pack/goody/experimental_medication
+	name = "Experimental Medication Single-Pack"
+	desc = "A single bottle of Interdyne brand experimental medication, used for treating people suffering from hereditary manifold disease."
+	cost = PAYCHECK_CREW * 6.5
+	contains = list(/obj/item/storage/pill_bottle/sansufentanyl)

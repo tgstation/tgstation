@@ -26,7 +26,6 @@ GLOBAL_LIST_INIT(command_strings, list(
 
 	maximum_survivable_temperature = INFINITY
 	minimum_survivable_temperature = 0
-	has_unlimited_silicon_privilege = TRUE
 
 	sentience_type = SENTIENCE_ARTIFICIAL
 	status_flags = NONE //no default canpush
@@ -109,6 +108,7 @@ GLOBAL_LIST_INIT(command_strings, list(
 /mob/living/basic/bot/Initialize(mapload)
 	. = ..()
 
+	add_traits(list(TRAIT_SILICON_ACCESS, TRAIT_REAGENT_SCANNER, TRAIT_UNOBSERVANT), INNATE_TRAIT)
 	AddElement(/datum/element/ai_retaliate)
 	RegisterSignal(src, COMSIG_MOVABLE_MOVED, PROC_REF(handle_loop_movement))
 	RegisterSignal(src, COMSIG_ATOM_WAS_ATTACKED, PROC_REF(after_attacked))
@@ -517,7 +517,6 @@ GLOBAL_LIST_INIT(command_strings, list(
 	if(istype(item_to_drop, /obj/item/stock_parts/power_store/cell))
 		var/obj/item/stock_parts/power_store/cell/dropped_cell = item_to_drop
 		dropped_cell.charge = 0
-		dropped_cell.update_appearance()
 		return
 
 	if(istype(item_to_drop, /obj/item/storage))
