@@ -92,12 +92,6 @@
 /obj/structure/sign/clock/directional/north,
 /turf/open/floor/wood,
 /area/awaymission/beach)
-"aY" = (
-/obj/effect/spawner/message_in_a_bottle/low_prob,
-/turf/open/misc/beach/coast{
-	dir = 4
-	},
-/area/awaymission/beach)
 "bg" = (
 /obj/structure/no_effect_signpost{
 	pixel_y = 6;
@@ -117,7 +111,6 @@
 	pixel_x = 5;
 	dir = 8
 	},
-/obj/effect/spawner/message_in_a_bottle/low_prob,
 /turf/open/water/beach,
 /area/awaymission/beach)
 "bx" = (
@@ -326,10 +319,6 @@
 "dV" = (
 /obj/effect/turf_decal/siding/blue,
 /turf/open/misc/beach/sand,
-/area/awaymission/beach)
-"dY" = (
-/obj/effect/spawner/message_in_a_bottle/low_prob,
-/turf/open/misc/beach/coast/corner,
 /area/awaymission/beach)
 "ea" = (
 /obj/structure/table/bronze,
@@ -564,10 +553,6 @@
 "hf" = (
 /obj/effect/turf_decal/siding/wood/corner,
 /turf/open/water/beach,
-/area/awaymission/beach)
-"hh" = (
-/obj/effect/spawner/message_in_a_bottle/low_prob,
-/turf/open/misc/beach/coast,
 /area/awaymission/beach)
 "ho" = (
 /obj/effect/turf_decal/siding/wood{
@@ -1558,12 +1543,6 @@
 	},
 /turf/open/floor/eighties,
 /area/awaymission/beach)
-"uf" = (
-/obj/effect/spawner/message_in_a_bottle/low_prob,
-/turf/open/misc/beach/coast/corner{
-	dir = 8
-	},
-/area/awaymission/beach)
 "ug" = (
 /obj/structure/chair/stool/directional/south,
 /turf/open/floor/iron/freezer,
@@ -1760,11 +1739,6 @@
 	dir = 10
 	},
 /turf/open/floor/wood/large,
-/area/awaymission/beach)
-"wi" = (
-/obj/structure/closet/crate/bin,
-/obj/effect/spawner/message_in_a_bottle/low_prob,
-/turf/open/floor/wood,
 /area/awaymission/beach)
 "wt" = (
 /obj/machinery/vending/cigarette/beach,
@@ -2059,10 +2033,6 @@
 	pixel_y = 2
 	},
 /turf/open/floor/wood/large,
-/area/awaymission/beach)
-"Am" = (
-/obj/effect/spawner/message_in_a_bottle/low_prob,
-/turf/open/water/beach,
 /area/awaymission/beach)
 "Ar" = (
 /turf/open/floor/carpet/blue,
@@ -2803,12 +2773,6 @@
 /obj/item/clothing/head/soft/green,
 /turf/open/misc/beach/sand,
 /area/awaymission/beach)
-"Iu" = (
-/obj/effect/spawner/message_in_a_bottle/low_prob,
-/turf/open/misc/beach/coast/corner{
-	dir = 4
-	},
-/area/awaymission/beach)
 "Iw" = (
 /obj/effect/spawner/structure/window,
 /turf/open/floor/plating,
@@ -3003,7 +2967,6 @@
 	pixel_y = 4;
 	pixel_x = -1
 	},
-/obj/effect/spawner/message_in_a_bottle/low_prob,
 /turf/open/misc/beach/coast,
 /area/awaymission/beach)
 "KV" = (
@@ -3277,12 +3240,6 @@
 	pixel_y = 4
 	},
 /turf/open/misc/beach/sand,
-/area/awaymission/beach)
-"No" = (
-/obj/effect/spawner/message_in_a_bottle/low_prob,
-/turf/open/misc/beach/coast{
-	dir = 1
-	},
 /area/awaymission/beach)
 "NF" = (
 /obj/item/toy/seashell{
@@ -3655,11 +3612,6 @@
 "SI" = (
 /mob/living/basic/crab/kreb,
 /turf/open/misc/beach/sand,
-/area/awaymission/beach)
-"SX" = (
-/obj/structure/closet/crate/trashcart/filled,
-/obj/effect/spawner/message_in_a_bottle/low_prob,
-/turf/open/floor/wood/large,
 /area/awaymission/beach)
 "Th" = (
 /obj/structure/table/wood,
@@ -4065,10 +4017,10 @@
 /turf/open/floor/wood/large,
 /area/awaymission/beach)
 "Zs" = (
-/obj/structure/sign/directions/dorms/north_arrow{
+/obj/structure/sign/directions/dorms/directional/north{
 	pixel_y = 35
 	},
-/obj/structure/sign/directions/medical/north_arrow{
+/obj/structure/sign/directions/medical/directional/north{
 	pixel_y = 29
 	},
 /obj/machinery/computer/slot_machine,
@@ -7491,7 +7443,7 @@ XB
 XB
 XB
 XB
-No
+Vf
 YV
 Pb
 gq
@@ -7748,7 +7700,7 @@ XB
 XB
 XB
 XB
-No
+Vf
 VY
 pq
 PU
@@ -8521,7 +8473,7 @@ XB
 XB
 Pe
 Fb
-uf
+tJ
 zr
 VY
 BK
@@ -11471,7 +11423,7 @@ FM
 LJ
 Gn
 kI
-wi
+cp
 xv
 Zp
 xv
@@ -11489,7 +11441,7 @@ VP
 vM
 Zt
 xv
-Iu
+MF
 Wb
 It
 VY
@@ -12238,7 +12190,7 @@ XB
 XB
 XB
 XB
-Am
+XB
 xv
 xv
 xv
@@ -13828,7 +13780,7 @@ hL
 Le
 Le
 Le
-Iu
+MF
 VY
 VY
 VY
@@ -14808,7 +14760,7 @@ XB
 XB
 HV
 mi
-SX
+uV
 xv
 eE
 un
@@ -15121,7 +15073,7 @@ VY
 VY
 ls
 VY
-hh
+BK
 XB
 XB
 XB
@@ -17657,7 +17609,7 @@ xv
 xv
 xv
 xv
-aY
+Fb
 mf
 VY
 KL
@@ -22831,7 +22783,7 @@ VY
 EC
 VY
 VY
-dY
+Kh
 Rj
 XB
 XB
@@ -25371,7 +25323,7 @@ XB
 XB
 XB
 MZ
-Iu
+MF
 VY
 xv
 xv
@@ -25659,7 +25611,7 @@ VY
 VY
 Ff
 VY
-hh
+BK
 XB
 XB
 XB
@@ -28713,7 +28665,7 @@ XB
 XB
 XB
 XB
-No
+Vf
 wA
 VY
 xi
@@ -29744,7 +29696,7 @@ XB
 XB
 XB
 XB
-No
+Vf
 VY
 VY
 IZ
