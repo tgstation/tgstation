@@ -253,14 +253,10 @@
 /obj/item/clothing/under/rank/prisoner/skirt
 	name = "prison jumpskirt"
 	desc = "Standardised Nanotrasen prisoner-wear. Its suit sensors are stuck in the \"Fully On\" position."
-	icon_state = "jumpskirt"
+	icon_state = "/obj/item/clothing/under/rank/prisoner/skirt"
+	post_init_icon_state = "jumpskirt"
 	icon_preview = 'icons/obj/fluff/previews.dmi'
 	icon_state_preview = "prisonskirt"
-	greyscale_colors = "#ff8300"
-	greyscale_config = /datum/greyscale_config/jumpsuit/prison
-	greyscale_config_worn = /datum/greyscale_config/jumpsuit/prison/worn
-	greyscale_config_inhand_left = /datum/greyscale_config/jumpsuit/prison/inhand_left
-	greyscale_config_inhand_right = /datum/greyscale_config/jumpsuit/prison/inhand_right
 	body_parts_covered = CHEST|GROIN|ARMS
 	dying_key = DYE_REGISTRY_JUMPSKIRT
 	female_sprite_flags = FEMALE_UNIFORM_TOP_ONLY

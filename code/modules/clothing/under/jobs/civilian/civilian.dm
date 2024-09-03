@@ -192,7 +192,7 @@
 
 /obj/item/clothing/under/rank/civilian/lawyer/bluesuit/skirt
 	name = "blue buttondown suitskirt"
-	icon_state = "/obj/item/clothing/under/rank/civilian/lawyer/skirt"
+	icon_state = "/obj/item/clothing/under/rank/civilian/lawyer/bluesuit/skirt"
 	post_init_icon_state = "buttondown_skirt"
 	greyscale_config = /datum/greyscale_config/buttondown_skirt
 	greyscale_config_worn = /datum/greyscale_config/buttondown_skirt/worn

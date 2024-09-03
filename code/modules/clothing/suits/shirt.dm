@@ -26,7 +26,7 @@
 /obj/item/clothing/suit/costume/wellworn_shirt/skub
 	name = "pro-skub shirt"
 	desc = "A worn out, curiously comfortable t-shirt proclaiming your pro-skub stance. Fuck those anti-skubbies."
-	icon_state = "/obj/item/clothing/suit/costume/skub"
+	icon_state = "/obj/item/clothing/suit/costume/wellworn_shirt/skub"
 	post_init_icon_state = "wellworn_shirt_pro_skub"
 	greyscale_colors = "#FFFF4D"
 	greyscale_config = /datum/greyscale_config/wellworn_shirt_skub
@@ -41,7 +41,7 @@
 /obj/item/clothing/suit/costume/wellworn_shirt/graphic
 	name = "well-worn graphic shirt"
 	desc = "A worn out, curiously comfortable t-shirt with a character from Phanic the Weasel on the front. It adds some charm points to itself and the wearer, and reminds you of when the series was still good; way back in 2500."
-	icon_state = "/obj/item/clothing/suit/costume/graphic"
+	icon_state = "/obj/item/clothing/suit/costume/wellworn_shirt/graphic"
 	post_init_icon_state = "wellworn_shirt_gamer"
 	greyscale_colors = "#FFFFFF#46B45B"
 	greyscale_config = /datum/greyscale_config/wellworn_shirt_graphic
@@ -57,7 +57,7 @@
 /obj/item/clothing/suit/costume/wellworn_shirt/wornout
 	name = "worn-out shirt"
 	desc = "A pretty grubby, yet still comfortable t-shirt. You've been sleeping in this one for a bit too long."
-	icon_state = "/obj/item/clothing/suit/costume/wornout"
+	icon_state = "/obj/item/clothing/suit/costume/wellworn_shirt/wornout"
 	post_init_icon_state = "wornout_shirt"
 
 /obj/item/clothing/suit/costume/wellworn_shirt/wornout/graphic
@@ -101,6 +101,4 @@
 /obj/item/clothing/suit/costume/wellworn_shirt/messy/graphic/gamer
 	name = "gamer shirt"
 	desc = "A baggy, extremely well-used shirt with vintage game character Phanic the Weasel far-too-boldly displayed on the chest. Your mind cannot hope to withstand the assault of remembering the Phanic Phanart you've seen; let alone the stench of this top."
-	icon_state = "/obj/item/clothing/suit/costume/wellworn_shirt/messy/graphic/gamer"
-	post_init_icon_state = "messyworn_shirt_gamer"
 	greyscale_colors = "#FFFFFF#46B45B"

@@ -125,7 +125,6 @@
 /obj/item/clothing/mask/bandana/black
 	name = "black bandana"
 	desc = "A fine black bandana with nanotech lining."
-	icon_state = "/obj/item/clothing/mask/bandana/black"
 	greyscale_colors = "#2e2e2e"
 	flags_1 = NONE
 
@@ -161,7 +160,6 @@
 /obj/item/clothing/mask/bandana/striped/black
 	name = "striped bandana"
 	desc = "A fine black and white bandana with nanotech lining and a stripe across."
-	icon_state = "/obj/item/clothing/mask/bandana/striped/black"
 	greyscale_colors = "#2e2e2e#C6C6C6"
 	flags_1 = NONE
 
@@ -221,7 +219,6 @@
 
 /obj/item/clothing/mask/bandana/skull/black
 	desc = "A fine black bandana with nanotech lining and a skull emblem."
-	icon_state = "/obj/item/clothing/mask/bandana/skull/black"
 	greyscale_colors = "#2e2e2e#C6C6C6"
 	flags_1 = NONE
 

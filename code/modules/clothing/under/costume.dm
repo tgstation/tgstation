@@ -430,8 +430,8 @@
 	name = "Martial Artist Gi"
 	desc = "Assistant, nukie, whatever. You can beat anyone; it's called hard work!"
 	icon = 'icons/map_icons/items.dmi'
-	icon_state = "/obj/item/clothing/under/color"
-	post_init_icon_state = "/obj/item/clothing/under/costume/gi"
+	icon_state = "/obj/item/clothing/under/costume/gi"
+	post_init_icon_state = "martial_arts_gi"
 	greyscale_config = /datum/greyscale_config/gi
 	greyscale_config_worn = /datum/greyscale_config/gi/worn
 	greyscale_colors = "#f1eeee#000000"
