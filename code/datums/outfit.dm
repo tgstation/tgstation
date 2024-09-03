@@ -376,8 +376,11 @@
 		for(var/i in 1 to num_to_load)
 			preload += type_to_load
 	//Load in belt gear and shit
-	for(var/datum/type_to_load in belt_contents)
-		for(var/i in 1 to belt_contents[type_to_load])
+	for(var/type_to_load in belt_contents)
+		var/num_to_load = belt_contents[type_to_load]
+		if(!isnum(num_to_load))
+			num_to_load = 1
+		for(var/i in 1 to num_to_load)
 			preload += type_to_load
 	preload += belt
 	preload += ears
