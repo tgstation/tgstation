@@ -2616,8 +2616,7 @@
 	dir = 8
 	},
 /obj/item/radio/intercom/syndicate{
-	pixel_x = -32;
-	
+	pixel_x = -32
 	},
 /turf/open/floor/iron/grimy,
 /area/centcom/central_command_areas/courtroom)
