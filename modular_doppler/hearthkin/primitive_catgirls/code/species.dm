@@ -1,5 +1,3 @@
-#define SPECIES_FELINE_PRIMITIVE "primitive_felinid" //This should go on a dedicated define DNA file
-
 /mob/living/carbon/human/species/felinid/primitive
 	race = /datum/species/human/felinid/primitive
 
