@@ -10476,10 +10476,6 @@
 	},
 /turf/open/floor/iron/smooth,
 /area/station/maintenance/solars/starboard/fore)
-"eba" = (
-/obj/docking_port/stationary/syndicate/northeast,
-/turf/open/space/basic,
-/area/space)
 "ebe" = (
 /obj/structure/hoop{
 	dir = 4;
@@ -119175,7 +119171,7 @@ dDB
 dDB
 dDB
 dDB
-eba
+dDB
 dDB
 dDB
 dDB
