@@ -266,7 +266,6 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/detectiveboard, 32)
 	)
 	resistance_flags = FLAMMABLE
 	result_path = /obj/structure/detectiveboard
-	inverse_dir = FALSE
 
 /datum/evidence
 	var/name = "None"
