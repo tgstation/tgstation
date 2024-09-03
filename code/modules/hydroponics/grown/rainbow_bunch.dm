@@ -23,7 +23,9 @@
 	seed = /obj/item/seeds/rainbow_bunch
 	name = "rainbow flower"
 	desc = "A beautiful flower capable of being used for most dyeing processes."
-	icon_state = "map_flower"
+	icon = 'icons/map_icons/items.dmi'
+	icon_state = "/obj/item/food/grown/rainbow_flower"
+	post_init_icon_state = "map_flower"
 	slot_flags = ITEM_SLOT_HEAD
 	alternate_worn_layer = ABOVE_BODY_FRONT_HEAD_LAYER
 	force = 0
