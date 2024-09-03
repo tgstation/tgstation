@@ -22,7 +22,7 @@
 	var/sprite_height
 
 	///this icon file will be used for in-aquarium visual for the fish
-	var/dedicated_in_aquarium_icon = 'icons/obj/structures/aquarium/fish.dmi'
+	var/dedicated_in_aquarium_icon = 'icons/obj/aquarium/fish.dmi'
 	/**
 	 * The icon_state that will be used for in-aquarium visual for the fish
 	 * If not set, "[initial(icon_state)]_small" will be used instead
