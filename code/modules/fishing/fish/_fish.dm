@@ -178,7 +178,7 @@
 
 /obj/item/fish/interact_with_atom_secondary(atom/interacting_with, mob/living/user, list/modifiers)
 	if(!HAS_TRAIT(interacting_with, TRAIT_CATCH_AND_RELEASE))
-		return
+		return NONE
 	if(HAS_TRAIT(src, TRAIT_NODROP))
 		balloon_alert(user, "it's stuck to your hand!")
 		return ITEM_INTERACT_BLOCKING
@@ -219,7 +219,7 @@
 	. = ..()
 	if(HAS_MIND_TRAIT(user, TRAIT_EXAMINE_DEEPER_FISH))
 		if(status == FISH_DEAD)
-			. += span_deadsay(HAS_MIND_TRAIT(user, TRAIT_NAIVE) ? "it's taking the big snooze" : "it's dead.")
+			. += span_deadsay("It's [HAS_MIND_TRAIT(user, TRAIT_NAIVE) ? "taking the big snooze" : "dead"].")
 		else
 			var/list/warnings = list()
 			if(is_hungry())
@@ -229,7 +229,7 @@
 			if(health < initial(health) * 0.6)
 				warnings += "sick"
 				if(length(warnings))
-					. += span_warning("it's [english_list(warnings)]")
+					. += span_warning("It's [english_list(warnings)].")
 	if(HAS_MIND_TRAIT(user, TRAIT_EXAMINE_FISH))
 		. += span_notice("It's [size] cm long.")
 		. += span_notice("It weighs [weight] g.")
