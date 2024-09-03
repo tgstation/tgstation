@@ -734,7 +734,7 @@
 			"id": "legion",
 			"name": "Legion",
 			"desc": "They are the cursed, damned souls of civilizations born and lost in the flames of Indecipheres, conglomerated into a lump of emaciated bodies, wandering the realms they used to rule... or something along those lines, anyway.",
-			"rules": "When Legion is destroyed, search your deck for a creature card cosing 3 or less and add it to your hand. Shuffle your deck afterward.",
+			"rules": "When Legion is destroyed, search your deck for a creature card costing 3 or less and add it to your hand. Shuffle your deck afterward.",
 			"icon_state": "legion",
 			"power": "2",
 			"resolve": "1",
