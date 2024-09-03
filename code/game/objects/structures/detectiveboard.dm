@@ -167,7 +167,6 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/detectiveboard, 32)
 			cases -= case
 			current_case = cases.len
 			update_appearance(UPDATE_ICON)
-			. = TRUE
 			return TRUE
 		if("rename_case")
 			var/new_name = tgui_input_text(user, "Please ender the case new name",  "Detective's Board")
