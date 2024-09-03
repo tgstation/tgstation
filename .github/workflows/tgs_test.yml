@@ -19,7 +19,6 @@ on:
   pull_request:
     branches:
     - 'project/**'
-    - 1989-11-09
     paths:
     - '.tgs.yml'
     - '.github/workflows/tgs_test.yml'
