@@ -54,12 +54,6 @@
 	addtimer(CALLBACK(src, PROC_REF(progress_growth)), growth_time/4)
 	countdown.start()
 
-/obj/structure/alien/resin/flower_bud/make_splitvis()
-	return
-
-/obj/structure/alien/resin/flower_bud/get_icon()
-	return 'icons/obj/structures/smooth/alien/resin_membrane.dmi'
-
 /obj/structure/alien/resin/flower_bud/run_atom_armor(damage_amount, damage_type, damage_flag = 0, attack_dir)
 	if((trait_flags & SPACEVINE_HEAT_RESISTANT) && damage_type == BURN)
 		damage_amount = 0
