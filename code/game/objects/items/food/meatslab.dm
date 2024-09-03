@@ -150,7 +150,7 @@
 	blood_decal_type = null
 
 /obj/item/food/meat/slab/human/mutant/skeleton/make_processable()
-	return //skeletons dont have cutlets
+	return //skeletons don't have cutlets
 
 /obj/item/food/meat/slab/human/mutant/zombie
 	name = "meat (rotten)"
@@ -353,7 +353,7 @@
 /obj/item/food/meat/rawbacon
 	name = "raw piece of bacon"
 	desc = "A raw piece of bacon."
-	icon_state = "bacon"
+	icon_state = "baconb"
 	bite_consumption = 2
 	food_reagents = list(
 		/datum/reagent/consumable/nutriment/protein = 2,
@@ -369,7 +369,7 @@
 /obj/item/food/meat/bacon
 	name = "piece of bacon"
 	desc = "A delicious piece of bacon."
-	icon_state = "baconcooked"
+	icon_state = "baconcookedb"
 	food_reagents = list(
 		/datum/reagent/consumable/nutriment/protein = 2,
 		/datum/reagent/consumable/nutriment/vitamin = 1,

@@ -3,7 +3,6 @@
 #define TRANSIT_PIPEDISPENSER 2
 
 /obj/machinery/pipedispenser
-	SET_BASE_VISUAL_PIXEL(0, DEPTH_OFFSET)
 	name = "pipe dispenser"
 	icon = 'icons/obj/machines/lathes.dmi'
 	icon_state = "pipe_d"

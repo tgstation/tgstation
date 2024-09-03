@@ -52,21 +52,18 @@
 	/// Native FOV that will be applied if a config is enabled
 	var/native_fov = FOV_90_DEGREES
 
-/obj/item/organ/internal/eyes/Insert(mob/living/carbon/eye_recipient, special = FALSE, movement_flags = DELETE_IF_REPLACED)
+/obj/item/organ/internal/eyes/mob_insert(mob/living/carbon/receiver, special, movement_flags)
 	// If we don't do this before everything else, heterochromia will be reset leading to eye_color_right no longer being accurate
-	if(ishuman(eye_recipient))
-		var/mob/living/carbon/human/human_recipient = eye_recipient
+	if(ishuman(receiver))
+		var/mob/living/carbon/human/human_recipient = receiver
 		old_eye_color_left = human_recipient.eye_color_left
 		old_eye_color_right = human_recipient.eye_color_right
 
 	. = ..()
 
-	if(!.)
-		return
-
-	eye_recipient.cure_blind(NO_EYES)
+	receiver.cure_blind(NO_EYES)
 	apply_damaged_eye_effects()
-	refresh(eye_recipient, call_update = TRUE)
+	refresh(receiver, call_update = TRUE)
 
 /// Refreshes the visuals of the eyes
 /// If call_update is TRUE, we also will call update_body
@@ -94,31 +91,32 @@
 	if(call_update)
 		affected_human.update_body()
 
-/obj/item/organ/internal/eyes/Remove(mob/living/carbon/eye_owner, special, movement_flags)
+/obj/item/organ/internal/eyes/mob_remove(mob/living/carbon/organ_owner, special, movement_flags)
 	. = ..()
-	if(ishuman(eye_owner))
-		var/mob/living/carbon/human/human_owner = eye_owner
+
+	if(ishuman(organ_owner))
+		var/mob/living/carbon/human/human_owner = organ_owner
 		if(initial(eye_color_left))
 			human_owner.eye_color_left = old_eye_color_left
 		if(initial(eye_color_right))
 			human_owner.eye_color_right = old_eye_color_right
 		if(native_fov)
-			eye_owner.remove_fov_trait(type)
+			organ_owner.remove_fov_trait(type)
 		if(!special)
 			human_owner.update_body()
 
 	// Cure blindness from eye damage
-	eye_owner.cure_blind(EYE_DAMAGE)
-	eye_owner.cure_nearsighted(EYE_DAMAGE)
+	organ_owner.cure_blind(EYE_DAMAGE)
+	organ_owner.cure_nearsighted(EYE_DAMAGE)
 	// Eye blind and temp blind go to, even if this is a bit of cheesy way to clear blindness
-	eye_owner.remove_status_effect(/datum/status_effect/eye_blur)
-	eye_owner.remove_status_effect(/datum/status_effect/temporary_blindness)
+	organ_owner.remove_status_effect(/datum/status_effect/eye_blur)
+	organ_owner.remove_status_effect(/datum/status_effect/temporary_blindness)
 	// Then become blind anyways (if not special)
 	if(!special)
-		eye_owner.become_blind(NO_EYES)
+		organ_owner.become_blind(NO_EYES)
 
-	eye_owner.update_tint()
-	eye_owner.update_sight()
+	organ_owner.update_tint()
+	organ_owner.update_sight()
 
 #define OFFSET_X 1
 #define OFFSET_Y 2
@@ -351,7 +349,7 @@
 	desc = "It's two flashlights rigged together with some wire. Why would you put these in someone's head?"
 	eye_color_left ="fee5a3"
 	eye_color_right ="fee5a3"
-	icon = 'icons/obj/devices/lighting.dmi'
+	icon = 'icons/obj/lighting.dmi'
 	icon_state = "flashlight_eyes"
 	flash_protect = FLASH_PROTECTION_WELDER
 	tint = INFINITY
@@ -428,7 +426,7 @@
 	deactivate(close_ui = TRUE)
 
 /// Set the initial color of the eyes on insert to be the mob's previous eye color.
-/obj/item/organ/internal/eyes/robotic/glow/Insert(mob/living/carbon/eye_recipient, special = FALSE, movement_flags = DELETE_IF_REPLACED)
+/obj/item/organ/internal/eyes/robotic/glow/mob_insert(mob/living/carbon/eye_recipient, special = FALSE, movement_flags = DELETE_IF_REPLACED)
 	. = ..()
 	left_eye_color_string = old_eye_color_left
 	right_eye_color_string = old_eye_color_right

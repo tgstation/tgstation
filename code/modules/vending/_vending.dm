@@ -53,7 +53,6 @@ GLOBAL_LIST_EMPTY(vending_machines_to_restock)
  * Captalism in the year 2525, everything in a vending machine, even love
  */
 /obj/machinery/vending
-	SET_BASE_VISUAL_PIXEL(0, DEPTH_OFFSET)
 	name = "\improper Vendomat"
 	desc = "A generic vending machine."
 	icon = 'icons/obj/machines/vending.dmi'
@@ -832,7 +831,7 @@ GLOBAL_LIST_EMPTY(vending_machines_to_restock)
  * Args:
  * * turf/target: The turf to fall onto. Cannot be null.
  * * damage: The raw numerical damage to do by default.
- * * chance_to_crit: The percent chance of a critical hit occuring. Default: 0
+ * * chance_to_crit: The percent chance of a critical hit occurring. Default: 0
  * * forced_crit_case: If given a value from crushing.dm, [target] and its contents will always be hit with that specific critical hit. Default: null
  * * paralyze_time: The time, in deciseconds, a given mob/living will be paralyzed for if crushed.
  * * crush_dir: The direction the crush is coming from. Default: dir of src to [target].
