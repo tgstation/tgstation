@@ -11,7 +11,9 @@
 /obj/item/clothing/under/trek/command
 	name = "command uniform"
 	desc = "An outdated uniform worn by command officers."
-	icon_state = "trek_tos_com" //Shirt has gold wrist-bands
+	icon = 'icons/map_icons/items.dmi'
+	icon_state = "/obj/item/clothing/under/trek/command"
+	post_init_icon_state = "trek_tos_com" //Shirt has gold wrist-bands
 	inhand_icon_state = "y_suit"
 	greyscale_config = /datum/greyscale_config/trek
 	greyscale_config_worn = /datum/greyscale_config/trek/worn
@@ -20,7 +22,9 @@
 /obj/item/clothing/under/trek/engsec
 	name = "engsec uniform"
 	desc = "An outdated uniform worn by engineering/security officers."
-	icon_state = "trek_tos_sec" //Tucked-in shirt
+	icon = 'icons/map_icons/items.dmi'
+	icon_state = "/obj/item/clothing/under/trek/engsec"
+	post_init_icon_state = "trek_tos_sec" //Tucked-in shirt
 	inhand_icon_state = "r_suit"
 	greyscale_config = /datum/greyscale_config/trek
 	greyscale_config_worn = /datum/greyscale_config/trek/worn
@@ -29,7 +33,9 @@
 /obj/item/clothing/under/trek/medsci
 	name = "medsci uniform"
 	desc = "An outdated worn by medical/science officers."
-	icon_state = "trek_tos"
+	icon = 'icons/map_icons/items.dmi'
+	icon_state = "/obj/item/clothing/under/trek/medsci"
+	post_init_icon_state = "trek_tos"
 	inhand_icon_state = "b_suit"
 	greyscale_config = /datum/greyscale_config/trek
 	greyscale_config_worn = /datum/greyscale_config/trek/worn

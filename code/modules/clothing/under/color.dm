@@ -112,116 +112,145 @@
 
 /obj/item/clothing/under/color/blue
 	name = "blue jumpsuit"
+	icon_state = "/obj/item/clothing/under/color/blue"
 	greyscale_colors = "#52aecc"
 
 /obj/item/clothing/under/color/jumpskirt/blue
 	name = "blue jumpskirt"
+	icon_state = "/obj/item/clothing/under/color/jumpskirt/blue"
 	greyscale_colors = "#52aecc"
 
 /obj/item/clothing/under/color/green
 	name = "green jumpsuit"
+	icon_state = "/obj/item/clothing/under/color/green"
 	greyscale_colors = "#9ed63a"
 
 /obj/item/clothing/under/color/jumpskirt/green
 	name = "green jumpskirt"
+	icon_state = "/obj/item/clothing/under/color/jumpskirt/green"
 	greyscale_colors = "#9ed63a"
 
 /obj/item/clothing/under/color/orange
 	name = "orange jumpsuit"
 	desc = "Don't wear this near paranoid security officers."
+	icon_state = "/obj/item/clothing/under/color/orange"
 	greyscale_colors = "#ff8c19"
 
 /obj/item/clothing/under/color/jumpskirt/orange
 	name = "orange jumpskirt"
+	icon_state = "/obj/item/clothing/under/color/jumpskirt/orange"
 	greyscale_colors = "#ff8c19"
 
 /obj/item/clothing/under/color/pink
 	name = "pink jumpsuit"
 	desc = "Just looking at this makes you feel <i>fabulous</i>."
+	icon_state = "/obj/item/clothing/under/color/pink"
 	greyscale_colors = "#ffa69b"
 
 /obj/item/clothing/under/color/jumpskirt/pink
 	name = "pink jumpskirt"
+	icon_state = "/obj/item/clothing/under/color/jumpskirt/pink"
 	greyscale_colors = "#ffa69b"
 
 /obj/item/clothing/under/color/red
 	name = "red jumpsuit"
+	icon_state = "/obj/item/clothing/under/color/red"
 	greyscale_colors = "#eb0c07"
 
 /obj/item/clothing/under/color/jumpskirt/red
 	name = "red jumpskirt"
+	icon_state = "/obj/item/clothing/under/color/jumpskirt/red"
 	greyscale_colors = "#eb0c07"
 
 /obj/item/clothing/under/color/white
 	name = "white jumpsuit"
+	icon_state = "/obj/item/clothing/under/color/white"
 	greyscale_colors = "#ffffff"
 
 /obj/item/clothing/under/color/jumpskirt/white
 	name = "white jumpskirt"
+	icon_state = "/obj/item/clothing/under/color/jumpskirt/white"
 	greyscale_colors = "#ffffff"
 
 /obj/item/clothing/under/color/yellow
 	name = "yellow jumpsuit"
+	icon_state = "/obj/item/clothing/under/color/yellow"
 	greyscale_colors = "#ffe14d"
 
 /obj/item/clothing/under/color/jumpskirt/yellow
 	name = "yellow jumpskirt"
+	icon_state = "/obj/item/clothing/under/color/jumpskirt/yellow"
 	greyscale_colors = "#ffe14d"
 
 /obj/item/clothing/under/color/darkblue
 	name = "dark blue jumpsuit"
+	icon_state = "/obj/item/clothing/under/color/darkblue"
 	greyscale_colors = "#3285ba"
 
 /obj/item/clothing/under/color/jumpskirt/darkblue
 	name = "dark blue jumpskirt"
+	icon_state = "/obj/item/clothing/under/color/jumpskirt/darkblue"
 	greyscale_colors = "#3285ba"
 
 /obj/item/clothing/under/color/teal
 	name = "teal jumpsuit"
+	icon_state = "/obj/item/clothing/under/color/teal"
 	greyscale_colors = "#77f3b7"
 
 /obj/item/clothing/under/color/jumpskirt/teal
 	name = "teal jumpskirt"
+	icon_state = "/obj/item/clothing/under/color/jumpskirt/teal"
 	greyscale_colors = "#77f3b7"
 
 /obj/item/clothing/under/color/lightpurple
 	name = "light purple jumpsuit"
+	icon_state = "/obj/item/clothing/under/color/lightpurple"
 	greyscale_colors = "#9f70cc"
 
 /obj/item/clothing/under/color/jumpskirt/lightpurple
 	name = "light purple jumpskirt"
+	icon_state = "/obj/item/clothing/under/color/jumpskirt/lightpurple"
 	greyscale_colors = "#9f70cc"
 
 /obj/item/clothing/under/color/darkgreen
 	name = "dark green jumpsuit"
+	icon_state = "/obj/item/clothing/under/color/darkgreen"
 	greyscale_colors = "#6fbc22"
 
 /obj/item/clothing/under/color/jumpskirt/darkgreen
 	name = "dark green jumpskirt"
+	icon_state = "/obj/item/clothing/under/color/jumpskirt/darkgreen"
 	greyscale_colors = "#6fbc22"
 
 /obj/item/clothing/under/color/lightbrown
 	name = "light brown jumpsuit"
+	icon_state = "/obj/item/clothing/under/color/lightbrown"
 	greyscale_colors = "#c59431"
 
 /obj/item/clothing/under/color/jumpskirt/lightbrown
 	name = "light brown jumpskirt"
+	icon_state = "/obj/item/clothing/under/color/jumpskirt/lightbrown"
 	greyscale_colors = "#c59431"
 
 /obj/item/clothing/under/color/brown
 	name = "brown jumpsuit"
+	icon_state = "/obj/item/clothing/under/color/brown"
 	greyscale_colors = "#a17229"
 
 /obj/item/clothing/under/color/jumpskirt/brown
 	name = "brown jumpskirt"
+
+	icon_state = "/obj/item/clothing/under/color/jumpskirt/brown"
 	greyscale_colors = "#a17229"
 
 /obj/item/clothing/under/color/maroon
 	name = "maroon jumpsuit"
+	icon_state = "/obj/item/clothing/under/color/maroon"
 	greyscale_colors = "#cc295f"
 
 /obj/item/clothing/under/color/jumpskirt/maroon
 	name = "maroon jumpskirt"
+	icon_state = "/obj/item/clothing/under/color/jumpskirt/maroon"
 	greyscale_colors = "#cc295f"
 
 /obj/item/clothing/under/color/rainbow
