@@ -18,7 +18,9 @@ do { \
 /obj/item/clothing/under/chameleon
 	name = "black jumpsuit"
 	desc = "It's a plain jumpsuit. It has a small dial on the wrist."
-	icon_state = "jumpsuit"
+	icon = 'icons/map_icons/items.dmi'
+	icon_state = "/obj/item/clothing/under/chameleon"
+	post_init_icon_state = "jumpsuit"
 	greyscale_colors = "#3f3f3f"
 	greyscale_config = /datum/greyscale_config/jumpsuit
 	greyscale_config_worn = /datum/greyscale_config/jumpsuit/worn

@@ -7,8 +7,9 @@
 	greyscale_config_worn = /datum/greyscale_config/jumpsuit/worn
 	greyscale_config_inhand_left = /datum/greyscale_config/jumpsuit/inhand_left
 	greyscale_config_inhand_right = /datum/greyscale_config/jumpsuit/inhand_right
-	icon = 'icons/obj/clothing/under/color.dmi'
-	icon_state = "jumpsuit"
+	icon = 'icons/map_icons/items.dmi'
+	icon_state = "/obj/item/clothing/under/color"
+	post_init_icon_state = "jumpsuit"
 	inhand_icon_state = "jumpsuit"
 	worn_icon_state = "jumpsuit"
 	worn_icon = 'icons/mob/clothing/under/color.dmi'
@@ -18,7 +19,8 @@
 	body_parts_covered = CHEST|GROIN|ARMS
 	dying_key = DYE_REGISTRY_JUMPSKIRT
 	female_sprite_flags = FEMALE_UNIFORM_TOP_ONLY
-	icon_state = "jumpskirt"
+	icon_state = "/obj/item/clothing/under/color/jumpskirt"
+	post_init_icon_state = "jumpskirt"
 	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION_NO_NEW_ICON
 
 /// Returns a random, acceptable jumpsuit typepath
@@ -33,7 +35,9 @@
 	)
 
 /obj/item/clothing/under/color/random
+	icon = 'icons/obj/clothing/under/color.dmi'
 	icon_state = "random_jumpsuit"
+	greyscale_colors = null
 
 /obj/item/clothing/under/color/random/Initialize(mapload)
 	..()
@@ -54,7 +58,9 @@
 	)
 
 /obj/item/clothing/under/color/jumpskirt/random
+	icon = 'icons/obj/clothing/under/color.dmi'
 	icon_state = "random_jumpsuit" //Skirt variant needed
+	greyscale_colors = null
 
 /obj/item/clothing/under/color/jumpskirt/random/Initialize(mapload)
 	..()
@@ -83,16 +89,19 @@
 /obj/item/clothing/under/color/grey
 	name = "grey jumpsuit"
 	desc = "A tasteful grey jumpsuit that reminds you of the good old days."
+	icon_state = "/obj/item/clothing/under/color/grey"
 	greyscale_colors = "#b3b3b3"
 
 /obj/item/clothing/under/color/jumpskirt/grey
 	name = "grey jumpskirt"
 	desc = "A tasteful grey jumpskirt that reminds you of the good old days."
+	icon_state = "/obj/item/clothing/under/color/jumpskirt/grey"
 	greyscale_colors = "#b3b3b3"
 
 /obj/item/clothing/under/color/grey/ancient
 	name = "ancient jumpsuit"
 	desc = "A terribly ragged and frayed grey jumpsuit. It looks like it hasn't been washed in over a decade."
+	icon = 'icons/obj/clothing/under/color.dmi'
 	icon_state = "grey_ancient"
 	inhand_icon_state = "gy_suit"
 	greyscale_config = null
