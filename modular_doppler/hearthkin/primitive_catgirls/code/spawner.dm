@@ -15,6 +15,7 @@
 		being reckless with the outsiders will not have the Gods be so kind."
 	spawner_job_path = /datum/job/primitive_catgirl
 	interaction_flags_mouse_drop = NEED_DEXTERITY
+	allow_loadout = FALSE
 
 	/// The team the spawner will assign players to and use to keep track of people that have already used the spawner
 	var/datum/team/primitive_catgirls/team
