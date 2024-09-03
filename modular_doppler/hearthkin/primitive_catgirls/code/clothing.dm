@@ -22,8 +22,8 @@
 	icon = 'modular_doppler/hearthkin/primitive_catgirls/icons/clothing_greyscale.dmi'
 	worn_icon = 'modular_doppler/hearthkin/primitive_catgirls/icons/clothing_greyscale.dmi'
 	body_parts_covered = GROIN
-	// greyscale_config = /datum/greyscale_config/primitive_catgirl_wraps
-	// greyscale_config_worn = /datum/greyscale_config/primitive_catgirl_wraps/worn
+	greyscale_config = /datum/greyscale_config/primitive_catgirl_wraps
+	greyscale_config_worn = /datum/greyscale_config/primitive_catgirl_wraps/worn
 	greyscale_colors = "#cec8bf#364660"
 	flags_1 = IS_PLAYER_COLORABLE_1
 	has_sensor = FALSE
@@ -35,8 +35,8 @@
 	icon = 'modular_doppler/hearthkin/primitive_catgirls/icons/clothing_greyscale.dmi'
 	worn_icon = 'modular_doppler/hearthkin/primitive_catgirls/icons/clothing_greyscale.dmi'
 	body_parts_covered = GROIN|CHEST
-	// greyscale_config = /datum/greyscale_config/primitive_catgirl_tailored_dress
-	// greyscale_config_worn = /datum/greyscale_config/primitive_catgirl_tailored_dress/worn
+	greyscale_config = /datum/greyscale_config/primitive_catgirl_tailored_dress
+	greyscale_config_worn = /datum/greyscale_config/primitive_catgirl_tailored_dress/worn
 	greyscale_colors = "#cec8bf#364660"
 	flags_1 = IS_PLAYER_COLORABLE_1
 	has_sensor = FALSE
@@ -48,11 +48,32 @@
 	icon = 'modular_doppler/hearthkin/primitive_catgirls/icons/clothing_greyscale.dmi'
 	worn_icon = 'modular_doppler/hearthkin/primitive_catgirls/icons/clothing_greyscale.dmi'
 	body_parts_covered = GROIN|CHEST
-	// greyscale_config = /datum/greyscale_config/primitive_catgirl_tunic
-	// greyscale_config_worn = /datum/greyscale_config/primitive_catgirl_tunic/worn
+	greyscale_config = /datum/greyscale_config/primitive_catgirl_tunic
+	greyscale_config_worn = /datum/greyscale_config/primitive_catgirl_tunic/worn
 	greyscale_colors = "#cec8bf#faece4#594032"
 	flags_1 = IS_PLAYER_COLORABLE_1
 	has_sensor = FALSE
+
+/obj/item/clothing/under/dress/skirt/loincloth
+	name = "loincloth"
+	desc = "A simple elegant cloth, to use wrapped around your waist and groin."
+	icon_state = "loincloth"
+	icon = 'modular_doppler/hearthkin/primitive_catgirls/icons/loincloth.dmi'
+	worn_icon = 'modular_doppler/hearthkin/primitive_catgirls/icons/loincloth.dmi'
+	greyscale_config = /datum/greyscale_config/loincloth
+	greyscale_config_worn = /datum/greyscale_config/loincloth/worn
+	greyscale_colors = "#413069"
+	flags_1 = IS_PLAYER_COLORABLE_1
+	body_parts_covered = GROIN|LEGS
+	has_sensor = NO_SENSORS
+	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION_NO_NEW_ICON
+
+/obj/item/clothing/under/dress/skirt/loincloth/loincloth_alt
+	name = "shorter loincloth"
+	desc = "A simple elegant cloth, to use wrapped around your waist and groin. This one uses a shorter cloth."
+	icon_state = "loincloth_alt"
+	greyscale_config = /datum/greyscale_config/loincloth_alt
+	greyscale_config_worn = /datum/greyscale_config/loincloth_alt/worn
 
 // Hands
 
@@ -62,8 +83,8 @@
 	icon_state = "armwraps"
 	icon = 'modular_doppler/hearthkin/primitive_catgirls/icons/clothing_greyscale.dmi'
 	worn_icon = 'modular_doppler/hearthkin/primitive_catgirls/icons/clothing_greyscale.dmi'
-	// greyscale_config = /datum/greyscale_config/primitive_catgirl_armwraps
-	// greyscale_config_worn = /datum/greyscale_config/primitive_catgirl_armwraps/worn
+	greyscale_config = /datum/greyscale_config/primitive_catgirl_armwraps
+	greyscale_config_worn = /datum/greyscale_config/primitive_catgirl_armwraps/worn
 	greyscale_colors = "#cec8bf"
 	flags_1 = IS_PLAYER_COLORABLE_1
 
@@ -73,8 +94,8 @@
 	icon_state = "gauntlets"
 	icon = 'modular_doppler/hearthkin/primitive_catgirls/icons/clothing_greyscale.dmi'
 	worn_icon = 'modular_doppler/hearthkin/primitive_catgirls/icons/clothing_greyscale.dmi'
-	// greyscale_config = /datum/greyscale_config/primitive_catgirl_gauntlets
-	// greyscale_config_worn = /datum/greyscale_config/primitive_catgirl_gauntlets/worn
+	greyscale_config = /datum/greyscale_config/primitive_catgirl_gauntlets
+	greyscale_config_worn = /datum/greyscale_config/primitive_catgirl_gauntlets/worn
 	greyscale_config_inhand_left = null
 	greyscale_config_inhand_right = null
 	greyscale_colors = "#cec8bf#c55a1d"
@@ -92,8 +113,8 @@
 	cold_protection = CHEST
 	min_cold_protection_temperature = FIRE_SUIT_MIN_TEMP_PROTECT
 	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION_NO_NEW_ICON
-	// greyscale_config = /datum/greyscale_config/primitive_catgirl_coat
-	// greyscale_config_worn = /datum/greyscale_config/primitive_catgirl_coat/worn
+	greyscale_config = /datum/greyscale_config/primitive_catgirl_coat
+	greyscale_config_worn = /datum/greyscale_config/primitive_catgirl_coat/worn
 	greyscale_colors = "#594032#cec8bf"
 	flags_1 = IS_PLAYER_COLORABLE_1
 
@@ -108,8 +129,8 @@
 	icon_state = "boots"
 	icon = 'modular_doppler/hearthkin/primitive_catgirls/icons/clothing_greyscale.dmi'
 	worn_icon = 'modular_doppler/hearthkin/primitive_catgirls/icons/clothing_greyscale.dmi'
-	// greyscale_config = /datum/greyscale_config/primitive_catgirl_boots
-	// greyscale_config_worn = /datum/greyscale_config/primitive_catgirl_boots/worn
+	greyscale_config = /datum/greyscale_config/primitive_catgirl_boots
+	greyscale_config_worn = /datum/greyscale_config/primitive_catgirl_boots/worn
 	greyscale_colors = "#594032#cec8bf"
 	flags_1 = IS_PLAYER_COLORABLE_1
 
@@ -146,8 +167,8 @@
 	icon_state = "ferroniere"
 	icon = 'modular_doppler/hearthkin/primitive_catgirls/icons/clothing_greyscale.dmi'
 	worn_icon = 'modular_doppler/hearthkin/primitive_catgirls/icons/clothing_greyscale.dmi'
-	// greyscale_config = /datum/greyscale_config/primitive_catgirl_ferroniere
-	// greyscale_config_worn = /datum/greyscale_config/primitive_catgirl_ferroniere/worn
+	greyscale_config = /datum/greyscale_config/primitive_catgirl_ferroniere
+	greyscale_config_worn = /datum/greyscale_config/primitive_catgirl_ferroniere/worn
 	greyscale_colors = "#f1f6ff#364660"
 	w_class = WEIGHT_CLASS_TINY
 	flags_1 = IS_PLAYER_COLORABLE_1
@@ -178,3 +199,55 @@
 	)
 
 	result = /obj/item/clothing/suit/armor/forging_plate_armor/hearthkin
+
+//Pelts
+/obj/item/clothing/head/pelt
+	icon = 'modular_doppler/hearthkin/primitive_catgirls/icons/pelt.dmi'
+	worn_icon = 'modular_doppler/hearthkin/primitive_catgirls/icons/pelt_worn.dmi'
+	name = "bear pelt"
+	desc = "A luxurious bear pelt, good to keep warm in winter. Or to sleep through it."
+	icon_state = "bearpelt_brown"
+	inhand_icon_state = "cowboy_hat_brown"
+	cold_protection = CHEST|HEAD
+	min_cold_protection_temperature = FIRE_SUIT_MIN_TEMP_PROTECT
+
+/obj/item/clothing/head/pelt/black
+	icon_state = "bearpelt_black"
+	inhand_icon_state = "cowboy_hat_black"
+
+/obj/item/clothing/head/pelt/white
+	icon_state = "bearpelt_white"
+	inhand_icon_state = "cowboy_hat_white"
+
+/obj/item/clothing/head/pelt/tiger
+	name = "shiny tiger pelt"
+	desc = "A vibrant tiger pelt, particularly fabulous."
+	icon_state = "tigerpelt_shiny"
+	inhand_icon_state = "cowboy_hat_grey"
+
+/obj/item/clothing/head/pelt/snow_tiger
+	name = "snow tiger pelt"
+	desc = "A pelt of a less vibrant tiger, but rather warm."
+	icon_state = "tigerpelt_snow"
+	inhand_icon_state = "cowboy_hat_white"
+
+/obj/item/clothing/head/pelt/pink_tiger
+	name = "pink tiger pelt"
+	desc = "A particularly vibrant tiger pelt, for those who want to be the most fabulous at parties."
+	icon_state = "tigerpelt_pink"
+	inhand_icon_state = "cowboy_hat_red"
+
+/obj/item/clothing/head/pelt/wolf
+	name = "wolf pelt"
+	desc = "A fuzzy wolf pelt that demands respect as a hunter... assuming it wasn't just purchased, that is, for all the glory but none of the credit."
+	worn_icon = 'modular_doppler/hearthkin/primitive_catgirls/icons/pelt_big.dmi'
+	icon_state = "wolfpelt_brown"
+
+/obj/item/clothing/head/pelt/wolf/black
+	icon_state = "wolfpelt_gray"
+	inhand_icon_state = "cowboy_hat_grey"
+
+/obj/item/clothing/head/pelt/wolf/white
+	icon_state = "wolfpelt_white"
+	inhand_icon_state = "cowboy_hat_white"
+//End Pelts
