@@ -13767,7 +13767,6 @@
 "eTu" = (
 /obj/effect/turf_decal/tile/neutral,
 /obj/structure/table,
-/obj/item/trash/waffles,
 /turf/open/floor/iron,
 /area/station/hallway/primary/central)
 "eTZ" = (
