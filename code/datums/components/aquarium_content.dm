@@ -274,7 +274,6 @@
 			dead_animation()
 			return
 
-
 /// Create looping random path animation, pixel offsets parameters include offsets already
 /datum/component/aquarium_content/proc/swim_animation()
 	var/avg_width = round(sprite_width / 2)
@@ -328,16 +327,7 @@
 /datum/component/aquarium_content/proc/on_fish_petted()
 	SIGNAL_HANDLER
 
-	if(isnull(vc_obj))
-		return
-
 	new /obj/effect/temp_visual/heart(get_turf(parent))
-	set_vc_base_position()
-	animate(vc_obj, transform = matrix().Turn(45), time = 0.3 SECONDS) //little happy animation
-	animate(transform = matrix().Turn(45), time = 0.3 SECONDS)
-	animate(transform = matrix().Turn(45), time = 0.3 SECONDS)
-	animate(transform = matrix().Turn(45), time = 0.3 SECONDS)
-	addtimer(CALLBACK(src, PROC_REF(generate_animation), TRUE), 1.2 SECONDS)
 
 /datum/component/aquarium_content/proc/randomize_base_position()
 	var/list/aq_properties = current_aquarium.get_surface_properties()

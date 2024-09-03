@@ -370,9 +370,11 @@
 			item?.forceMove(drop_location())
 			to_chat(user, span_notice("You take out [item] from [src]."))
 		if("rename_fish")
+			var/new_name = sanitize_name(params["chosen_name"])
+			if(!new_name)
+				return
 			var/atom/movable/fish = locate(params["fish_reference"]) in contents
-			var/chosen_name = params["chosen_name"]
-			fish.name = chosen_name
+			fish.name = new_name
 
 /obj/structure/aquarium/ui_interact(mob/user, datum/tgui/ui)
 	. = ..()
