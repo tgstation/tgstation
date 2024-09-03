@@ -66,6 +66,8 @@
 		reagents.add_reagent(/datum/reagent/fuel, max_fuel)
 	update_appearance()
 
+	var/datum/looping_sound/gas_tool/gas_loop = new(src)
+
 /obj/item/weldingtool/update_icon_state()
 	if(welding)
 		inhand_icon_state = "[initial(inhand_icon_state)]1"
@@ -247,12 +249,14 @@
 			hitsound = 'sound/items/welder.ogg'
 			update_appearance()
 			START_PROCESSING(SSobj, src)
+			gas_loop.start()
 		else
 			balloon_alert(user, "no fuel!")
 			switched_off(user)
 	else
 		playsound(loc, deactivation_sound, 50, TRUE)
 		switched_off(user)
+		gas_loop.stop()
 
 /// Switches the welder off
 /obj/item/weldingtool/proc/switched_off(mob/user)

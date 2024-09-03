@@ -1,4 +1,4 @@
-/datum/looping_sound/typing
+/datum/looping_sound/gas_tool
 mid_sounds = list(
 	'sound/items/gas_tool/gas_mid1.ogg',
 	'sound/items/gas_tool/gas_mid2.ogg',
