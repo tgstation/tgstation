@@ -59,3 +59,17 @@
 	message_admins("[ADMIN_LOOKUPFLW(user)] has upgraded [ADMIN_LOOKUPFLW(AI)] with a [src].")
 	qdel(src)
 	return TRUE
+
+
+/obj/item/power_transfer
+	name = "power transfer upgrade"
+	desc = "A legal upgrade that allows an artificial intelligence to directly provide power to APCs from a distance"
+
+/obj/item/power_transfer/pre_attack(atom/A, mob/living/user, proximity)
+	if(!proximity)
+		return ..()
+	if(!isAI(A))
+		return ..()
+	var/mob/living/silicon/ai/AI = A
+
+

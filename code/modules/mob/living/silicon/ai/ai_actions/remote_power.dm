@@ -1,0 +1,25 @@
+/datum/action/innate/ai/ranged/power_apc
+	name = "remotely power APC"
+	desc = "Use to remotely power an APC."
+	button_icon_state = "vendor_tilt"
+	ranged_mousepointer = 'icons/effects/mouse_pointers/supplypod_target.dmi'
+	enable_text = span_notice("You prepare to power any APC you see.")
+	disable_text = span_notice("You stop focusing on powering APCs.")
+
+/datum/action/innate/ai/ranged/power_apc/do_ability(mob/living/caller, atom/clicked_on)
+
+	if (!isAI(caller))
+		return FALSE
+	var/mob/living/silicon/ai/ai_caller = caller
+
+	if(ai_caller.incapacitated())
+		unset_ranged_ability(caller)
+		return FALSE
+
+	if(!isapc(clicked_on))
+		clicked_on.balloon_alert(ai_caller, "not an APC!")
+		return FALSE
+	var/obj/machinery/power/apc/apc = clicked_on
+	apc.add_load(1000)
+
+
