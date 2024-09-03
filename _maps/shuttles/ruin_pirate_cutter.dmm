@@ -69,14 +69,6 @@
 /obj/effect/turf_decal/tile/red/half/contrasted,
 /turf/open/floor/iron,
 /area/shuttle/ruin/caravan/pirate)
-"hy" = (
-/obj/structure/table,
-/obj/machinery/cell_charger,
-/obj/item/stack/cable_coil,
-/obj/item/stock_parts/power_store/cell/high,
-/obj/effect/turf_decal/bot,
-/turf/open/floor/plating,
-/area/shuttle/ruin/caravan/pirate)
 "iM" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
 /obj/structure/cable,
@@ -135,6 +127,23 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
 /obj/effect/turf_decal/tile/red/half/contrasted,
 /turf/open/floor/iron,
+/area/shuttle/ruin/caravan/pirate)
+"lN" = (
+/obj/structure/chair/office{
+	dir = 4
+	},
+/obj/machinery/turretid{
+	icon_state = "control_kill";
+	lethal = 1;
+	locked = 0;
+	pixel_y = -30;
+	req_access = null
+	},
+/mob/living/basic/trooper/pirate/ranged{
+	environment_smash = 0
+	},
+/obj/effect/turf_decal/tile/neutral/fourcorners,
+/turf/open/floor/iron/dark,
 /area/shuttle/ruin/caravan/pirate)
 "me" = (
 /obj/effect/mapping_helpers/airlock/cyclelink_helper,
@@ -252,6 +261,14 @@
 /turf/open/floor/iron/white/side{
 	dir = 1
 	},
+/area/shuttle/ruin/caravan/pirate)
+"ti" = (
+/obj/structure/table,
+/obj/machinery/cell_charger,
+/obj/item/stack/cable_coil,
+/obj/item/stock_parts/power_store/cell/high,
+/obj/effect/turf_decal/bot,
+/turf/open/floor/plating,
 /area/shuttle/ruin/caravan/pirate)
 "ua" = (
 /obj/structure/table,
@@ -699,22 +716,6 @@
 /obj/structure/window/reinforced/spawner/directional/east,
 /turf/open/floor/plating/airless,
 /area/shuttle/ruin/caravan/pirate)
-"Uv" = (
-/obj/structure/chair/office{
-	dir = 4
-	},
-/obj/machinery/turretid/directional/south{
-	icon_state = "control_kill";
-	lethal = 1;
-	locked = 0;
-	req_access = null
-	},
-/mob/living/basic/trooper/pirate/ranged{
-	environment_smash = 0
-	},
-/obj/effect/turf_decal/tile/neutral/fourcorners,
-/turf/open/floor/iron/dark,
-/area/shuttle/ruin/caravan/pirate)
 "UH" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden{
 	dir = 4
@@ -906,7 +907,7 @@ xq
 iM
 se
 ZU
-hy
+ti
 Kc
 Jv
 "}
@@ -1142,7 +1143,7 @@ Jv
 Jv
 ph
 JP
-Uv
+lN
 ya
 Yi
 Jv

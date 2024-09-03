@@ -1,7 +1,7 @@
 /obj/item/climbing_hook
 	name = "climbing hook"
 	desc = "Standard hook with rope to scale up holes. The rope is of average quality, but due to your weight amongst other factors, may not withstand extreme use."
-	icon = 'icons/obj/mining_zones/equipment.dmi'
+	icon = 'icons/obj/mining.dmi'
 	icon_state = "climbingrope"
 	inhand_icon_state = "crowbar_brass"
 	lefthand_file = 'icons/mob/inhands/equipment/tools_lefthand.dmi'

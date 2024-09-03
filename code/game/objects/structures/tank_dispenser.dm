@@ -1,10 +1,9 @@
 #define TANK_DISPENSER_CAPACITY 10
 
 /obj/structure/tank_dispenser
-	SET_BASE_VISUAL_PIXEL(0, DEPTH_OFFSET)
 	name = "tank dispenser"
 	desc = "A simple yet bulky storage device for gas tanks."
-	icon = 'icons/obj/canisters.dmi'
+	icon = 'icons/obj/structures.dmi'
 	icon_state = "dispenser"
 	density = TRUE
 	anchored = TRUE
