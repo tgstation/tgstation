@@ -121,7 +121,7 @@ GLOBAL_LIST_INIT(floor_diseases, list(
 
 /datum/component/germ_sensitive/proc/delete_germs()
 	SIGNAL_HANDLER
-	if(!infective)
+	if(infective)
 		infective = FALSE
 		qdel(parent.GetComponent(/datum/component/infective))
 		return COMPONENT_CLEANED
