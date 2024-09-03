@@ -340,7 +340,7 @@
 	.["fluidTypes"] = fluid_types
 	.["heart_icon"] = 'icons/effects/effects.dmi'
 
-/obj/structure/aquarium/ui_act(action, params)
+/obj/structure/aquarium/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if(.)
 		return
@@ -419,9 +419,13 @@
 	new /obj/item/aquarium_prop/sand(src)
 	new /obj/item/aquarium_prop/seaweed(src)
 
-	new /obj/item/fish/goldfish/gill(src)
+	if(prob(85))
+		new /obj/item/fish/goldfish/gill(src)
+		reagents.add_reagent(/datum/reagent/consumable/nutriment, 2)
+	else
+		new /obj/item/fish/three_eyes/gill(src)
+		reagents.add_reagent(/datum/reagent/toxin/mutagen, 2) //three eyes goldfish feed on mutagen.
 
-	reagents.add_reagent(/datum/reagent/consumable/nutriment, 2)
 
 /obj/structure/aquarium/prefilled
 	anchored = TRUE

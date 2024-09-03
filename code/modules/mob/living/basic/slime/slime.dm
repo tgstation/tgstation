@@ -286,7 +286,7 @@
 /mob/living/basic/slime/proc/on_slime_pre_attack(mob/living/basic/slime/our_slime, atom/target, proximity, modifiers)
 	SIGNAL_HANDLER
 
-	if(LAZYACCESS(modifiers, RIGHT_CLICK) && isliving(target) && target != src && usr == src)
+	if(LAZYACCESS(modifiers, RIGHT_CLICK) && isliving(target) && target != src)
 		if(our_slime.can_feed_on(target))
 			our_slime.start_feeding(target)
 		return COMPONENT_HOSTILE_NO_ATTACK

@@ -19,6 +19,10 @@
 #define COMSIG_FISH_FED "fish_on_fed"
 ///from /obj/item/fish/pet_fish
 #define COMSIG_FISH_PETTED "fish_petted"
+///From /obj/item/fish/update_size_and_weight: (new_size, new_weight)
+#define COMSIG_FISH_UPDATE_SIZE_AND_WEIGHT "fish_update_size_and_weight"
+///From /obj/item/fish/update_fish_force: (weight_rank, bonus_malus)
+#define COMSIG_FISH_FORCE_UPDATED "fish_force_updated"
 
 /// Fishing challenge completed
 #define COMSIG_FISHING_CHALLENGE_COMPLETED "fishing_completed"
