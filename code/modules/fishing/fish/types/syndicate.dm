@@ -48,11 +48,11 @@
 /obj/item/fish/chainsawfish
 	name = "chainsawfish"
 	desc = "A very, very angry bioweapon, whose sole purpose is to rip and tear."
-	icon = 'icons/obj/structures/aquarium/wide.dmi'
+	icon = 'icons/obj/aquarium/wide.dmi'
 	icon_state = "chainsawfish"
 	inhand_icon_state = "chainsawfish"
 	icon_state_dead = "chainsawfish_dead"
-	dedicated_in_aquarium_icon = 'icons/obj/structures/aquarium/fish.dmi'
+	dedicated_in_aquarium_icon = 'icons/obj/aquarium/fish.dmi'
 	dedicated_in_aquarium_icon_state = "chainsaw_small"
 	force = 22
 	demolition_mod = 1.5

@@ -30,13 +30,13 @@
 	},
 /obj/structure/table/wood,
 /obj/item/gun/energy/laser/musket{
-	pixel_y = 15
-	},
-/obj/item/gun/energy/laser/musket{
-	pixel_y = 9
+	pixel_y = 7
 	},
 /obj/item/gun/energy/laser/musket{
 	pixel_y = 2
+	},
+/obj/item/gun/energy/laser/musket{
+	pixel_y = -3
 	},
 /turf/open/floor/wood,
 /area/virtual_domain/protected_space/fullbright)
@@ -54,16 +54,14 @@
 /area/virtual_domain/protected_space/fullbright)
 "cX" = (
 /obj/effect/decal/cleanable/dirt/dust,
-/obj/item/claymore/cutlass{
-	pixel_y = 8
-	},
-/obj/structure/table/wood,
-/obj/item/gun/energy/laser{
-	pixel_y = 8
-	},
+/obj/item/claymore/cutlass,
 /obj/item/clothing/head/costume/pirate/bandana/armored{
 	pixel_x = -9;
 	pixel_y = 7
+	},
+/obj/structure/table/wood,
+/obj/item/gun/energy/laser{
+	pixel_y = -3
 	},
 /turf/open/floor/wood{
 	icon_state = "wood_large"
@@ -286,9 +284,7 @@
 /area/virtual_domain/protected_space)
 "qE" = (
 /obj/structure/table/wood,
-/obj/item/book/manual/wiki/ordnance{
-	pixel_y = 8
-	},
+/obj/item/book/manual/wiki/ordnance,
 /turf/open/floor/carpet/blue,
 /area/virtual_domain)
 "qS" = (
