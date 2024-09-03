@@ -250,6 +250,7 @@ const CalculateHappiness = (props) => {
     <Box>
       {Array.from({ length: 5 }, (_, index) => (
         <DmIcon
+          key={index}
           ml={index === 0 ? 0 : -6}
           icon={heartIcon}
           icon_state={happiness >= index ? 'full_heart' : 'empty_heart'}
