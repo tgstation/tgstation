@@ -266,7 +266,7 @@
 	occupancy_limit = "40"
 
 
-/datum/map_template/shuttle/emergency/birdshot
+/datum/map_template/shuttle/emergency/emergency_catwalk
 	suffix = "catwalk"
 	name = "Catwalk Station Emergency Shuttle"
 	credit_cost = CARGO_CRATE_VALUE * 5
