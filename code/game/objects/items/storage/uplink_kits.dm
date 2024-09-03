@@ -584,7 +584,6 @@
 	new /obj/item/storage/backpack/satchel(src)
 	new /obj/item/modular_computer/pda/heads(src)
 	new /obj/item/clipboard(src)
-	new /obj/item/skillchip/big_pointer(src)
 
 /obj/item/storage/box/syndie_kit/chameleon/broken/PopulateContents()
 	new /obj/item/clothing/under/chameleon/broken(src)
