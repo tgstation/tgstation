@@ -181,7 +181,7 @@
 /obj/item/clothing/under/rank/civilian/lawyer/bluesuit
 	name = "blue buttondown suit"
 	worn_icon = 'icons/mob/clothing/under/shorts_pants_shirts.dmi'
-	icon = 'icons/map_icons/items.dmi'
+	icon = 'icons/map_icons/clothing.dmi'
 	icon_state = "/obj/item/clothing/under/rank/civilian/lawyer/bluesuit"
 	post_init_icon_state = "buttondown_slacks"
 	greyscale_config = /datum/greyscale_config/buttondown_slacks

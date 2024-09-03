@@ -14,7 +14,7 @@
 /obj/item/clothing/under/dress/striped
 	name = "striped dress"
 	desc = "Fashion in space."
-	icon = 'icons/map_icons/items.dmi'
+	icon = 'icons/map_icons/clothing.dmi'
 	icon_state = "/obj/item/clothing/under/dress/striped"
 	post_init_icon_state = "stripeddress"
 	inhand_icon_state = null
@@ -27,7 +27,7 @@
 /obj/item/clothing/under/dress/sailor
 	name = "sailor dress"
 	desc = "Formal wear for a leading lady."
-	icon = 'icons/map_icons/items.dmi'
+	icon = 'icons/map_icons/clothing.dmi'
 	icon_state = "/obj/item/clothing/under/dress/sailor"
 	post_init_icon_state = "sailor_dress"
 	greyscale_config = /datum/greyscale_config/sailor_dress
@@ -47,7 +47,7 @@
 /obj/item/clothing/under/dress/eveninggown
 	name = "evening gown"
 	desc = "Fancy dress for space bar singers."
-	icon = 'icons/map_icons/items.dmi'
+	icon = 'icons/map_icons/clothing.dmi'
 	icon_state = "/obj/item/clothing/under/dress/eveninggown"
 	post_init_icon_state = "evening_gown"
 	inhand_icon_state = null
@@ -59,7 +59,7 @@
 /obj/item/clothing/under/dress/skirt
 	name = "cardigan skirt"
 	desc = "A nice skirt with a cute cardigan, very fancy!"
-	icon = 'icons/map_icons/items.dmi'
+	icon = 'icons/map_icons/clothing.dmi'
 	icon_state = "/obj/item/clothing/under/dress/skirt"
 	post_init_icon_state = "cardiganskirt"
 	greyscale_config = /datum/greyscale_config/cardiganskirt
@@ -95,7 +95,7 @@
 /obj/item/clothing/under/dress/tango
 	name = "tango dress"
 	desc = "Filled with Latin fire."
-	icon = 'icons/map_icons/items.dmi'
+	icon = 'icons/map_icons/clothing.dmi'
 	icon_state = "/obj/item/clothing/under/dress/tango"
 	post_init_icon_state = "tango"
 	custom_price = PAYCHECK_CREW
@@ -107,7 +107,7 @@
 /obj/item/clothing/under/dress/sundress
 	name = "sundress"
 	desc = "Makes you want to frolic in a field of daisies."
-	icon = 'icons/map_icons/items.dmi'
+	icon = 'icons/map_icons/clothing.dmi'
 	icon_state = "/obj/item/clothing/under/dress/sundress"
 	post_init_icon_state = "sundress"
 	custom_price = PAYCHECK_CREW

@@ -7,7 +7,7 @@
 	name = "beanie"
 	desc = "A stylish beanie. The perfect winter accessory for those with a keen fashion sense, and those who just can't handle a cold breeze on their heads."
 	worn_icon = 'icons/mob/clothing/head/beanie.dmi'
-	icon = 'icons/map_icons/items.dmi'
+	icon = 'icons/map_icons/clothing.dmi'
 	icon_state = "/obj/item/clothing/head/beanie"
 	post_init_icon_state = "beanie"
 	icon_preview = 'icons/obj/fluff/previews.dmi'

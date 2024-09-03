@@ -311,7 +311,7 @@
 /obj/item/clothing/under/costume/buttondown/slacks
 	name = "buttondown shirt with slacks"
 	desc = "A fancy buttondown shirt with slacks."
-	icon = 'icons/map_icons/items.dmi'
+	icon = 'icons/map_icons/clothing.dmi'
 	icon_state = "/obj/item/clothing/under/costume/buttondown/slacks"
 	post_init_icon_state = "buttondown_slacks"
 	greyscale_config = /datum/greyscale_config/buttondown_slacks
@@ -326,7 +326,7 @@
 /obj/item/clothing/under/costume/buttondown/shorts
 	name = "buttondown shirt with shorts"
 	desc = "A fancy buttondown shirt with shorts."
-	icon = 'icons/map_icons/items.dmi'
+	icon = 'icons/map_icons/clothing.dmi'
 	icon_state = "/obj/item/clothing/under/costume/buttondown/shorts"
 	post_init_icon_state = "buttondown_shorts"
 	greyscale_config = /datum/greyscale_config/buttondown_shorts
@@ -337,7 +337,7 @@
 /obj/item/clothing/under/costume/buttondown/skirt
 	name = "buttondown shirt with skirt"
 	desc = "A fancy buttondown shirt with skirt."
-	icon = 'icons/map_icons/items.dmi'
+	icon = 'icons/map_icons/clothing.dmi'
 	icon_state = "/obj/item/clothing/under/costume/buttondown/skirt"
 	post_init_icon_state = "buttondown_skirt"
 	greyscale_config = /datum/greyscale_config/buttondown_skirt
@@ -367,7 +367,7 @@
 
 /obj/item/clothing/under/costume/football_suit
 	name = "football uniform"
-	icon = 'icons/map_icons/items.dmi'
+	icon = 'icons/map_icons/clothing.dmi'
 	icon_state = "/obj/item/clothing/under/costume/football_suit"
 	post_init_icon_state = "football_suit"
 	can_adjust = FALSE
@@ -429,7 +429,7 @@
 /obj/item/clothing/under/costume/gi
 	name = "Martial Artist Gi"
 	desc = "Assistant, nukie, whatever. You can beat anyone; it's called hard work!"
-	icon = 'icons/map_icons/items.dmi'
+	icon = 'icons/map_icons/clothing.dmi'
 	icon_state = "/obj/item/clothing/under/costume/gi"
 	post_init_icon_state = "martial_arts_gi"
 	greyscale_config = /datum/greyscale_config/gi

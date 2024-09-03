@@ -190,7 +190,7 @@
 	name = "white shielded vest"
 	desc = "Standard issue vest for playing capture the flag."
 	worn_icon = 'icons/mob/clothing/suits/ctf.dmi'
-	icon = 'icons/map_icons/items.dmi'
+	icon = 'icons/map_icons/clothing.dmi'
 	icon_state = "/obj/item/clothing/suit/armor/vest/ctf"
 	post_init_icon_state = "standard"
 	// Adding TRAIT_NODROP is done when the CTF spawner equips people

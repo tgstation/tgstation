@@ -1,7 +1,7 @@
 /obj/item/clothing/under/shorts
 	name = "shorts"
 	desc = "A pair of comfy shorts."
-	icon = 'icons/map_icons/items.dmi'
+	icon = 'icons/map_icons/clothing.dmi'
 	icon_state = "/obj/item/clothing/under/shorts"
 	post_init_icon_state = "shorts"
 	greyscale_config = /datum/greyscale_config/shorts

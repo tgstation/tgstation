@@ -11,7 +11,7 @@
 	flags_1 = IS_PLAYER_COLORABLE_1
 	name = "bandana"
 	desc = "A fine bandana with nanotech lining."
-	icon = 'icons/map_icons/items.dmi'
+	icon = 'icons/map_icons/clothing.dmi'
 	icon_state = "/obj/item/clothing/mask/bandana"
 	post_init_icon_state = "bandana"
 	icon_state_preview = "bandana_cloth"
@@ -226,7 +226,7 @@
 	name = "facescarf"
 	desc = "Cover your face like in the cowboy movies. It also has breathtube so you can wear it everywhere!"
 	actions_types = list(/datum/action/item_action/adjust)
-	icon = 'icons/map_icons/items.dmi'
+	icon = 'icons/map_icons/clothing.dmi'
 	icon_state = "/obj/item/clothing/mask/facescarf"
 	post_init_icon_state = "facescarf"
 	inhand_icon_state = "greyscale_facescarf"

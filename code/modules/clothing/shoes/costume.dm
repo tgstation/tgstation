@@ -69,7 +69,7 @@
 /obj/item/clothing/shoes/glow
 	name = "glow shoes"
 	desc = "t3h c00L3st sh03z j00'LL 3v3r f1nd."
-	icon = 'icons/map_icons/items.dmi'
+	icon = 'icons/map_icons/clothing.dmi'
 	icon_state = "/obj/item/clothing/shoes/glow"
 	post_init_icon_state = "glow_shoes"
 	inhand_icon_state = null
@@ -107,7 +107,7 @@
 /obj/item/clothing/shoes/jester_shoes
 	name = "jester shoes"
 	desc = "Shoes that jingle with every step!!"
-	icon = 'icons/map_icons/items.dmi'
+	icon = 'icons/map_icons/clothing.dmi'
 	icon_state = "/obj/item/clothing/shoes/jester_shoes"
 	post_init_icon_state = "jester_map"
 	inhand_icon_state = null

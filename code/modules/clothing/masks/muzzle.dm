@@ -36,7 +36,7 @@
 /obj/item/clothing/mask/muzzle/tape
 	name = "tape piece"
 	desc = "A piece of tape that can be put over someone's mouth."
-	icon = 'icons/map_icons/items.dmi'
+	icon = 'icons/map_icons/clothing.dmi'
 	icon_state = "/obj/item/clothing/mask/muzzle/tape"
 	post_init_icon_state = "tape_piece"
 	worn_icon_state = "tape_piece_worn"

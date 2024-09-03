@@ -1,7 +1,7 @@
 /obj/item/clothing/under/ethereal_tunic
 	name = "ethereal tunic"
 	desc = "A simple sleeveless tunic worn over an undersuit, it glows in the dark!"
-	icon = 'icons/map_icons/items.dmi'
+	icon = 'icons/map_icons/clothing.dmi'
 	icon_state = "/obj/item/clothing/under/ethereal_tunic"
 	post_init_icon_state = "eth_tunic"
 	worn_icon = 'icons/mob/clothing/under/ethereal.dmi'

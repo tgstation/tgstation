@@ -63,7 +63,7 @@
 /obj/item/clothing/head/wizard/marisa
 	name = "witch hat"
 	desc = "Strange-looking hat-wear. Makes you want to cast fireballs."
-	icon = 'icons/map_icons/items.dmi'
+	icon = 'icons/map_icons/clothing.dmi'
 	icon_state = "/obj/item/clothing/head/wizard/marisa"
 	post_init_icon_state = "witch_hat"
 	greyscale_colors = "#343640#e0cab8#e0cab8"

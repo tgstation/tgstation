@@ -41,6 +41,7 @@ PROCESSING_SUBSYSTEM_DEF(greyscale)
 	var/static/list/types_that_get_their_own_file = list(
 		"turfs" = /turf, // None of these yet but it's harmless to be prepared
 		"mobs" = /mob, // Ditto
+		"clothing" = /obj/item/clothing,
 		"items" = /obj/item,
 		"objects" = /obj,
 	)

@@ -1,7 +1,7 @@
 /obj/item/clothing/suit/costume/wellworn_shirt
 	name = "well-worn shirt"
 	desc = "A worn out, curiously comfortable t-shirt. You wouldn't go so far as to say it feels like being hugged when you wear it, but it's pretty close. Good for sleeping in."
-	icon = 'icons/map_icons/items.dmi'
+	icon = 'icons/map_icons/clothing.dmi'
 	icon_state = "/obj/item/clothing/suit/costume/wellworn_shirt"
 	post_init_icon_state = "wellworn_shirt"
 	inhand_icon_state = null

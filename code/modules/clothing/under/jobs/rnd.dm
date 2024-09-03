@@ -37,7 +37,7 @@
 	name = "research director's tan suit"
 	desc = "Maybe you'll engineer your own half-man, half-pig creature some day. Its fabric provides minor protection from biological contaminants."
 	worn_icon = 'icons/mob/clothing/under/shorts_pants_shirts.dmi'
-	icon = 'icons/map_icons/items.dmi'
+	icon = 'icons/map_icons/clothing.dmi'
 	icon_state = "/obj/item/clothing/under/rank/rnd/research_director/alt"
 	post_init_icon_state = "buttondown_slacks"
 	greyscale_config = /datum/greyscale_config/buttondown_slacks

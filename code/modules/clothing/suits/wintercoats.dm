@@ -658,7 +658,7 @@
 /obj/item/clothing/suit/hooded/wintercoat/custom
 	name = "tailored winter coat"
 	desc = "A heavy jacket made from 'synthetic' animal furs, with custom colors."
-	icon = 'icons/map_icons/items.dmi'
+	icon = 'icons/map_icons/clothing.dmi'
 	icon_state = "/obj/item/clothing/suit/hooded/wintercoat/custom"
 	post_init_icon_state = "coatwinter"
 	hood_down_overlay_suffix = ""

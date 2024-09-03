@@ -43,7 +43,7 @@
 /obj/item/clothing/suit/apron/overalls
 	name = "coveralls"
 	desc = "A set of overalls, good for protecting thinner clothes from the elements."
-	icon = 'icons/map_icons/items.dmi'
+	icon = 'icons/map_icons/clothing.dmi'
 	icon_state = "/obj/item/clothing/suit/apron/overalls"
 	post_init_icon_state = "overalls"
 	inhand_icon_state = ""
@@ -261,7 +261,7 @@
 
 /obj/item/clothing/suit/toggle/lawyer/greyscale
 	name = "formal suit jacket"
-	icon = 'icons/map_icons/items.dmi'
+	icon = 'icons/map_icons/clothing.dmi'
 	icon_state = "/obj/item/clothing/suit/toggle/lawyer/greyscale"
 	post_init_icon_state = "jacket_lawyer"
 	inhand_icon_state = ""
@@ -274,7 +274,7 @@
 /obj/item/clothing/suit/toggle/suspenders
 	name = "suspenders"
 	desc = "They suspend the illusion of the mime's play."
-	icon = 'icons/map_icons/items.dmi'
+	icon = 'icons/map_icons/clothing.dmi'
 	icon_state = "/obj/item/clothing/suit/toggle/suspenders"
 	post_init_icon_state = "suspenders"
 	worn_icon = 'icons/mob/clothing/suits/utility.dmi'

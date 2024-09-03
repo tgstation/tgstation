@@ -124,7 +124,7 @@
 /obj/item/clothing/head/caphat/beret
 	name = "captain's beret"
 	desc = "For the Captains known for their sense of fashion."
-	icon = 'icons/map_icons/items.dmi'
+	icon = 'icons/map_icons/clothing.dmi'
 	icon_state = "/obj/item/clothing/head/caphat/beret"
 	post_init_icon_state = "beret_badge"
 	greyscale_config = /datum/greyscale_config/beret_badge
@@ -386,7 +386,7 @@
 /obj/item/clothing/head/beret
 	name = "beret"
 	desc = "A beret, a mime's favorite headwear."
-	icon = 'icons/map_icons/items.dmi'
+	icon = 'icons/map_icons/clothing.dmi'
 	icon_state = "/obj/item/clothing/head/beret"
 	post_init_icon_state = "beret"
 	icon_preview = 'icons/obj/clothing/head/beret.dmi'
@@ -447,7 +447,7 @@
 /obj/item/clothing/head/hats/hos/beret
 	name = "head of security's beret"
 	desc = "A robust beret for the Head of Security, for looking stylish while not sacrificing protection."
-	icon = 'icons/map_icons/items.dmi'
+	icon = 'icons/map_icons/clothing.dmi'
 	icon_state = "/obj/item/clothing/head/hats/hos/beret"
 	post_init_icon_state = "beret_badge"
 	greyscale_config = /datum/greyscale_config/beret_badge
@@ -776,7 +776,7 @@
 /obj/item/clothing/head/beret/durathread
 	name = "durathread beret"
 	desc = "A beret made from durathread, its resilient fibers provide some protection to the wearer."
-	icon = 'icons/map_icons/items.dmi'
+	icon = 'icons/map_icons/clothing.dmi'
 	icon_state = "/obj/item/clothing/head/beret/durathread"
 	post_init_icon_state = "beret_badge"
 	icon_preview = 'icons/obj/fluff/previews.dmi'
@@ -808,7 +808,7 @@
 /obj/item/clothing/head/beret/centcom_formal
 	name = "\improper CentCom Formal Beret"
 	desc = "Sometimes, a compromise between fashion and defense needs to be made. Thanks to Nanotrasen's most recent nano-fabric durability enhancements, this time, it's not the case."
-	icon = 'icons/map_icons/items.dmi'
+	icon = 'icons/map_icons/clothing.dmi'
 	icon_state = "/obj/item/clothing/head/beret/centcom_formal"
 	post_init_icon_state = "beret_badge"
 	greyscale_config = /datum/greyscale_config/beret_badge
@@ -838,7 +838,7 @@
 /obj/item/clothing/head/beret/militia
 	name = "\improper Militia General's Beret"
 	desc = "A rallying cry for the inhabitants of the Spinward Sector, the heroes that wear this keep the horrors of the galaxy at bay. Call them, and they'll be there in a minute!"
-	icon = 'icons/map_icons/items.dmi'
+	icon = 'icons/map_icons/clothing.dmi'
 	icon_state = "/obj/item/clothing/head/beret/militia"
 	post_init_icon_state = "beret_badge"
 	greyscale_config = /datum/greyscale_config/beret_badge

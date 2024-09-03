@@ -134,7 +134,7 @@
 
 /obj/item/clothing/head/costume/fancy
 	name = "fancy hat"
-	icon = 'icons/map_icons/items.dmi'
+	icon = 'icons/map_icons/clothing.dmi'
 	icon_state = "/obj/item/clothing/head/costume/fancy"
 	post_init_icon_state = "fancy_hat"
 	greyscale_colors = "#E3C937#782A81"
@@ -144,7 +144,7 @@
 
 /obj/item/clothing/head/costume/football_helmet
 	name = "football helmet"
-	icon = 'icons/map_icons/items.dmi'
+	icon = 'icons/map_icons/clothing.dmi'
 	icon_state = "/obj/item/clothing/head/costume/football_helmet"
 	post_init_icon_state = "football_helmet"
 	greyscale_colors = "#D74722"

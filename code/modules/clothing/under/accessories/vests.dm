@@ -2,7 +2,7 @@
 /obj/item/clothing/accessory/waistcoat
 	name = "waistcoat"
 	desc = "For some classy, murderous fun."
-	icon = 'icons/map_icons/items.dmi'
+	icon = 'icons/map_icons/clothing.dmi'
 	icon_state = "/obj/item/clothing/accessory/waistcoat"
 	post_init_icon_state = "waistcoat"
 	inhand_icon_state = "wcoat"

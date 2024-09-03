@@ -1,7 +1,7 @@
 /obj/item/clothing/suit/hooded/ethereal_raincoat
 	name = "ethereal raincoat"
 	desc = " A raincoat commonly worn by travelers or tourists not too fond of Sprout's rainy weather."
-	icon = 'icons/map_icons/items.dmi'
+	icon = 'icons/map_icons/clothing.dmi'
 	icon_state = "/obj/item/clothing/suit/hooded/ethereal_raincoat"
 	post_init_icon_state = "eth_raincoat"
 	worn_icon = 'icons/mob/clothing/suits/ethereal.dmi'

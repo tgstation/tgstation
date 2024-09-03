@@ -1,7 +1,7 @@
 /obj/item/clothing/head/frenchberet
 	name = "french beret"
 	desc = "A quality beret, infused with the aroma of chain-smoking, wine-swilling Parisians. You feel less inclined to engage in military conflict, for some reason."
-	icon = 'icons/map_icons/items.dmi'
+	icon = 'icons/map_icons/clothing.dmi'
 	icon_state = "/obj/item/clothing/head/frenchberet"
 	post_init_icon_state = "beret"
 	greyscale_config = /datum/greyscale_config/beret

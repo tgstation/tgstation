@@ -230,7 +230,7 @@
 /obj/item/clothing/under/rank/prisoner
 	name = "prison jumpsuit"
 	desc = "Standardised Nanotrasen prisoner-wear. Its suit sensors are stuck in the \"Fully On\" position."
-	icon = 'icons/map_icons/items.dmi'
+	icon = 'icons/map_icons/clothing.dmi'
 	icon_state = "/obj/item/clothing/under/rank/prisoner"
 	post_init_icon_state = "jumpsuit"
 	icon_preview = 'icons/obj/fluff/previews.dmi'

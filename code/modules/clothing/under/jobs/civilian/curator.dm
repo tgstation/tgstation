@@ -31,7 +31,7 @@
 /obj/item/clothing/under/rank/civilian/curator/nasa
 	name = "\improper NASA jumpsuit"
 	desc = "It has a NASA logo on it and is made of space-proofed materials."
-	icon = 'icons/map_icons/items.dmi'
+	icon = 'icons/map_icons/clothing.dmi'
 	icon_state = "/obj/item/clothing/under/rank/civilian/curator/nasa"
 	post_init_icon_state = "jumpsuit"
 	inhand_icon_state = "jumpsuit"

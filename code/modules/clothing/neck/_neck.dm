@@ -21,7 +21,7 @@
 /obj/item/clothing/neck/bowtie
 	name = "bow tie"
 	desc = "A small neosilk bowtie."
-	icon = 'icons/map_icons/items.dmi'
+	icon = 'icons/map_icons/clothing.dmi'
 	icon_state = "/obj/item/clothing/neck/bowtie"
 	post_init_icon_state = "bowtie_greyscale"
 	inhand_icon_state = "" //no inhands
@@ -43,7 +43,7 @@
 /obj/item/clothing/neck/tie
 	name = "slick tie"
 	desc = "A neosilk tie."
-	icon = 'icons/map_icons/items.dmi'
+	icon = 'icons/map_icons/clothing.dmi'
 	icon_state = "/obj/item/clothing/neck/tie"
 	post_init_icon_state = "tie_greyscale_tied"
 	inhand_icon_state = "" //no inhands
@@ -346,7 +346,7 @@
 
 /obj/item/clothing/neck/scarf
 	name = "scarf"
-	icon = 'icons/map_icons/items.dmi'
+	icon = 'icons/map_icons/clothing.dmi'
 	icon_state = "/obj/item/clothing/neck/scarf"
 	post_init_icon_state = "scarf"
 	icon_preview = 'icons/obj/fluff/previews.dmi'
@@ -416,7 +416,7 @@
 
 /obj/item/clothing/neck/large_scarf
 	name = "large scarf"
-	icon = 'icons/map_icons/items.dmi'
+	icon = 'icons/map_icons/clothing.dmi'
 	icon_state = "/obj/item/clothing/neck/large_scarf"
 	post_init_icon_state = "large_scarf"
 	icon_preview = 'icons/obj/fluff/previews.dmi'
@@ -452,7 +452,7 @@
 
 /obj/item/clothing/neck/infinity_scarf
 	name = "infinity scarf"
-	icon = 'icons/map_icons/items.dmi'
+	icon = 'icons/map_icons/clothing.dmi'
 	icon_state = "/obj/item/clothing/neck/infinity_scarf"
 	post_init_icon_state = "infinity_scarf"
 	w_class = WEIGHT_CLASS_TINY

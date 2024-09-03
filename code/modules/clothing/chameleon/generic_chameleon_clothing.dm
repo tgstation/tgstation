@@ -18,7 +18,7 @@ do { \
 /obj/item/clothing/under/chameleon
 	name = "black jumpsuit"
 	desc = "It's a plain jumpsuit. It has a small dial on the wrist."
-	icon = 'icons/map_icons/items.dmi'
+	icon = 'icons/map_icons/clothing.dmi'
 	icon_state = "/obj/item/clothing/under/chameleon"
 	post_init_icon_state = "jumpsuit"
 	greyscale_colors = "#3f3f3f"
@@ -219,7 +219,7 @@ do { \
 /obj/item/clothing/shoes/chameleon
 	name = "black shoes"
 	desc = "A pair of black shoes."
-	icon = 'icons/map_icons/items.dmi'
+	icon = 'icons/map_icons/clothing.dmi'
 	icon_state = "/obj/item/clothing/shoes/chameleon"
 	post_init_icon_state = "sneakers"
 	inhand_icon_state = "sneakers_back"

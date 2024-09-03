@@ -35,7 +35,7 @@
 /obj/item/clothing/mask/kitsune
 	name = "kitsune mask"
 	desc = "Porcelain mask made in the style of the Sol-3 region. It is painted to look like a kitsune."
-	icon = 'icons/map_icons/items.dmi'
+	icon = 'icons/map_icons/clothing.dmi'
 	icon_state = "/obj/item/clothing/mask/kitsune"
 	post_init_icon_state = "kitsune"
 	inhand_icon_state = null
@@ -50,7 +50,7 @@
 /obj/item/clothing/mask/rebellion
 	name = "rebellion mask"
 	desc = "Mask that is usually used during rebellions by insurgents. It covers the entire face and makes you unrecognizable."
-	icon = 'icons/map_icons/items.dmi'
+	icon = 'icons/map_icons/clothing.dmi'
 	icon_state = "/obj/item/clothing/mask/rebellion"
 	post_init_icon_state = "rebellion_mask"
 	inhand_icon_state = null

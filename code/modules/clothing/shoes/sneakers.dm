@@ -1,6 +1,6 @@
 /obj/item/clothing/shoes/sneakers
 	dying_key = DYE_REGISTRY_SNEAKERS
-	icon = 'icons/map_icons/items.dmi'
+	icon = 'icons/map_icons/clothing.dmi'
 	icon_state = "/obj/item/clothing/shoes/sneakers"
 	post_init_icon_state = "sneakers"
 	inhand_icon_state = "sneakers_back"
