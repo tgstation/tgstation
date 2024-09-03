@@ -1,0 +1,4 @@
+author: "SmArtKar"
+delete-after: True
+changes:
+  - bugfix: "Cardborg costume no longer gets its appearance deleted when you drop a second hat/suit you are holding in your hand"
