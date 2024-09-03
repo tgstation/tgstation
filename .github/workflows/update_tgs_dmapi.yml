@@ -9,6 +9,9 @@ jobs:
   update-dmapi:
     runs-on: ubuntu-22.04
     name: Update the TGS DMAPI
+    permissions:
+      contents: write
+      pull-requests: write
     steps:
     - name: Clone
       uses: actions/checkout@v4
@@ -29,11 +32,22 @@ jobs:
     - name: Commit and Push
       continue-on-error: true
       run: |
-        git config user.name "tgstation-server-ci[bot]"
-        git config user.email "161980869+tgstation-server-ci[bot]@users.noreply.github.com"
+        git config user.name "tgstation-ci[bot]"
+        git config user.email "179393467+tgstation-ci[bot]@users.noreply.github.com"
         git add .
         git commit -m 'Update TGS DMAPI'
         git push -f -u origin tgs-dmapi-update
+
+    - name: Generate App Token
+      id: app-token-generation
+      uses: actions/create-github-app-token@v1
+      if: env.APP_PRIVATE_KEY != '' && env.APP_ID != ''
+      with:
+        app-id: ${{ secrets.APP_ID }}
+        private-key: ${{ secrets.APP_PRIVATE_KEY }}
+      env:
+        APP_PRIVATE_KEY: ${{ secrets.APP_PRIVATE_KEY }}
+        APP_ID: ${{ secrets.APP_ID }}
 
     - name: Create Pull Request
       uses: repo-sync/pull-request@v2
@@ -45,4 +59,4 @@ jobs:
         pr_body: "This pull request updates the TGS DMAPI to the latest version. Please note any changes that may be breaking or unimplemented in your codebase by checking what changes are in the definitions file: code/__DEFINES/tgs.dm before merging.\n\n${{ steps.dmapi-update.outputs.release-notes }}"
         pr_label: "Tools"
         pr_allow_empty: false
-        github_token: ${{ secrets.COMFY_ORANGE_PAT }}
+        github_token: ${{ steps.app-token-generation.outputs.token || secrets.GITHUB_TOKEN }}
