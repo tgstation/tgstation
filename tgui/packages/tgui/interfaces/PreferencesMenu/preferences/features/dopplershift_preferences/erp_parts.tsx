@@ -16,7 +16,7 @@ export const vagina_color: Feature<string[]> = {
 };
 
 export const has_breasts: FeatureToggle = {
-  name: 'Add Breasts',
+  name: 'Add Genitals: Breasts',
   category: 'GAMEPLAY',
   description: `
     When toggled, adds breasts to your character.

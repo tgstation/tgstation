@@ -32,7 +32,7 @@
 	savefile_key = "snout_color"
 	savefile_identifier = PREFERENCE_CHARACTER
 	category = PREFERENCE_CATEGORY_SUPPLEMENTAL_FEATURES
-	relevant_external_organ = /obj/item/organ/external/snout
+	//relevant_external_organ = /obj/item/organ/external/snout
 
 /datum/preference/tri_color/snout_color/create_default_value()
 	return list(sanitize_hexcolor("[pick("7F", "FF")][pick("7F", "FF")][pick("7F", "FF")]"),
@@ -66,7 +66,7 @@
 	savefile_key = "horns_color"
 	savefile_identifier = PREFERENCE_CHARACTER
 	category = PREFERENCE_CATEGORY_SUPPLEMENTAL_FEATURES
-	relevant_external_organ = /obj/item/organ/external/horns
+	//relevant_external_organ = /obj/item/organ/external/horns
 
 /datum/preference/tri_color/horns_color/create_default_value()
 	return list(sanitize_hexcolor("[pick("7F", "FF")][pick("7F", "FF")][pick("7F", "FF")]"),
@@ -100,7 +100,7 @@
 	savefile_key = "frills_color"
 	savefile_identifier = PREFERENCE_CHARACTER
 	category = PREFERENCE_CATEGORY_SUPPLEMENTAL_FEATURES
-	relevant_external_organ = /obj/item/organ/external/frills
+	//relevant_external_organ = /obj/item/organ/external/frills
 
 /datum/preference/tri_color/frills_color/create_default_value()
 	return list(sanitize_hexcolor("[pick("7F", "FF")][pick("7F", "FF")][pick("7F", "FF")]"),
@@ -134,7 +134,7 @@
 	savefile_key = "tail_color"
 	savefile_identifier = PREFERENCE_CHARACTER
 	category = PREFERENCE_CATEGORY_SUPPLEMENTAL_FEATURES
-	relevant_external_organ = /obj/item/organ/external/tail
+	//relevant_external_organ = /obj/item/organ/external/tail
 
 /datum/preference/tri_color/tail_color/create_default_value()
 	return list(sanitize_hexcolor("[pick("7F", "FF")][pick("7F", "FF")][pick("7F", "FF")]"),
@@ -169,7 +169,7 @@
 	savefile_identifier = PREFERENCE_CHARACTER
 	category = PREFERENCE_CATEGORY_SUPPLEMENTAL_FEATURES
 	//TODO: we might need to change this to a different organ type, it's hard to say
-	relevant_external_organ = /obj/item/organ/internal/ears
+	//relevant_external_organ = /obj/item/organ/internal/ears
 
 /datum/preference/tri_color/ears_color/create_default_value()
 	return list(sanitize_hexcolor("[pick("7F", "FF")][pick("7F", "FF")][pick("7F", "FF")]"),
@@ -203,7 +203,7 @@
 	savefile_key = "spines_color"
 	savefile_identifier = PREFERENCE_CHARACTER
 	category = PREFERENCE_CATEGORY_SUPPLEMENTAL_FEATURES
-	relevant_external_organ = /obj/item/organ/external/spines
+	//relevant_external_organ = /obj/item/organ/external/spines
 
 /datum/preference/tri_color/spines_color/create_default_value()
 	return list(sanitize_hexcolor("[pick("7F", "FF")][pick("7F", "FF")][pick("7F", "FF")]"),
@@ -237,7 +237,7 @@
 	savefile_key = "caps_color"
 	savefile_identifier = PREFERENCE_CHARACTER
 	category = PREFERENCE_CATEGORY_SUPPLEMENTAL_FEATURES
-	relevant_external_organ = /obj/item/organ/external/tail
+	//relevant_external_organ = /obj/item/organ/external/tail
 
 /datum/preference/tri_color/caps_color/create_default_value()
 	return list(sanitize_hexcolor("[pick("7F", "FF")][pick("7F", "FF")][pick("7F", "FF")]"),
@@ -271,7 +271,6 @@
 	savefile_key = "moth_markings_color"
 	savefile_identifier = PREFERENCE_CHARACTER
 	category = PREFERENCE_CATEGORY_SUPPLEMENTAL_FEATURES
-	relevant_body_markings = /datum/bodypart_overlay/simple/body_marking/moth
 
 /datum/preference/tri_color/moth_markings_color/create_default_value()
 	return list(sanitize_hexcolor("[pick("7F", "FF")][pick("7F", "FF")][pick("7F", "FF")]"),
@@ -305,7 +304,6 @@
 	savefile_key = "body_markings_color"
 	savefile_identifier = PREFERENCE_CHARACTER
 	category = PREFERENCE_CATEGORY_SUPPLEMENTAL_FEATURES
-	relevant_body_markings = /datum/bodypart_overlay/simple/body_marking/lizard
 
 /datum/preference/tri_color/body_markings_color/create_default_value()
 	return list(sanitize_hexcolor("[pick("7F", "FF")][pick("7F", "FF")][pick("7F", "FF")]"),
@@ -339,7 +337,7 @@
 	savefile_key = "wings_color"
 	savefile_identifier = PREFERENCE_CHARACTER
 	category = PREFERENCE_CATEGORY_SUPPLEMENTAL_FEATURES
-	relevant_external_organ = /obj/item/organ/external/wings
+	//relevant_external_organ = /obj/item/organ/external/wings
 
 /datum/preference/tri_color/wings_color/create_default_value()
 	return list(sanitize_hexcolor("[pick("7F", "FF")][pick("7F", "FF")][pick("7F", "FF")]"),
@@ -374,7 +372,7 @@
 	savefile_key = "moth_antennae_color"
 	savefile_identifier = PREFERENCE_CHARACTER
 	category = PREFERENCE_CATEGORY_SUPPLEMENTAL_FEATURES
-	relevant_external_organ = /obj/item/organ/external/wings
+	//relevant_external_organ = /obj/item/organ/external/wings
 
 /datum/preference/tri_color/moth_antennae_color/create_default_value()
 	return list(sanitize_hexcolor("[pick("7F", "FF")][pick("7F", "FF")][pick("7F", "FF")]"),

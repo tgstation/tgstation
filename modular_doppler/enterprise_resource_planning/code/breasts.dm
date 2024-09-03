@@ -1,6 +1,10 @@
 /datum/species/get_features()
 	var/list/features = ..()
-	features += GLOB.preference_entries[/datum/preference/choiced/breasts]
+
+	features += /datum/preference/choiced/breasts
+
+	GLOB.features_by_species[type] = features
+
 	return features
 
 

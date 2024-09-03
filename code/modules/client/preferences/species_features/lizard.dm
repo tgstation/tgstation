@@ -15,11 +15,22 @@
 
 	if (!isnull(sprite_accessory))
 		var/icon/accessory_icon = icon(sprite_accessory.icon, "m_[key]_[sprite_accessory.icon_state]_ADJ", EAST)
+		/// DOPPLER SHIFT ADDITION BEGIN
+		accessory_icon.Blend(COLOR_RED, ICON_MULTIPLY)
+		var/icon/accessory_icon_2 = icon(sprite_accessory.icon, "m_[key]_[sprite_accessory.icon_state]_ADJ", EAST)
+		accessory_icon_2.Blend(COLOR_VIBRANT_LIME, ICON_MULTIPLY)
+		var/icon/accessory_icon_3 = icon(sprite_accessory.icon, "m_[key]_[sprite_accessory.icon_state]_ADJ", EAST)
+		accessory_icon_3.Blend(COLOR_BLUE, ICON_MULTIPLY)
+		/// DOPPLER SHIFT ADDITION END
 		final_icon.Blend(accessory_icon, ICON_OVERLAY)
+		/// DOPPLER SHIFT ADDITION BEGIN
+		final_icon.Blend(accessory_icon_2, ICON_OVERLAY)
+		final_icon.Blend(accessory_icon_3, ICON_OVERLAY)
+		/// DOPPLER SHIFT ADDITION END
 
 	final_icon.Crop(11, 20, 23, 32)
 	final_icon.Scale(32, 32)
-	final_icon.Blend(COLOR_VIBRANT_LIME, ICON_MULTIPLY)
+	//final_icon.Blend(COLOR_VIBRANT_LIME, ICON_MULTIPLY) /// DOPPLER SHIFT REMOVAL
 
 	return final_icon
 
@@ -40,14 +51,27 @@
 	var/icon/final_icon = icon('icons/mob/human/species/lizard/bodyparts.dmi', "lizard_chest_m")
 
 	if (sprite_accessory.icon_state != "none")
-		var/icon/body_markings_icon = icon(
+		/// DOPPLER SHIFT REMOVAL BEGIN
+		/*var/icon/body_markings_icon = icon(
 			'icons/mob/human/species/lizard/lizard_misc.dmi',
 			"male_[sprite_accessory.icon_state]_chest",
 		)
 
-		final_icon.Blend(body_markings_icon, ICON_OVERLAY)
+		final_icon.Blend(body_markings_icon, ICON_OVERLAY)*/
+		/// DOPPLER SHIFT REMOVAL END
+		/// DOPPLER SHIFT ADDITION BEGIN
+		var/icon/markings_icon_1 = icon(sprite_accessory.icon, "male_[sprite_accessory.icon_state]_chest")
+		markings_icon_1.Blend(COLOR_RED, ICON_MULTIPLY)
+		var/icon/markings_icon_2 = icon(sprite_accessory.icon, "male_[sprite_accessory.icon_state]_chest_2")
+		markings_icon_2.Blend(COLOR_VIBRANT_LIME, ICON_MULTIPLY)
+		var/icon/markings_icon_3 = icon(sprite_accessory.icon, "male_[sprite_accessory.icon_state]_chest_3")
+		markings_icon_3.Blend(COLOR_BLUE, ICON_MULTIPLY)
+		final_icon.Blend(markings_icon_1, ICON_OVERLAY)
+		final_icon.Blend(markings_icon_2, ICON_OVERLAY)
+		final_icon.Blend(markings_icon_3, ICON_OVERLAY)
+		/// DOPPLER SHIFT ADDITION END
 
-	final_icon.Blend(COLOR_VIBRANT_LIME, ICON_MULTIPLY)
+	//final_icon.Blend(COLOR_VIBRANT_LIME, ICON_MULTIPLY) /// DOPPLER SHIFT REMOVAL
 	final_icon.Crop(10, 8, 22, 23)
 	final_icon.Scale(26, 32)
 	final_icon.Crop(-2, 1, 29, 32)
