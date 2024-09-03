@@ -47,7 +47,7 @@
 	var/can_off_process = FALSE
 	/// When fuel was last removed.
 	var/burned_fuel_for = 0
-
+	var/datum/looping_sound/gas_tool/soundloop
 	var/activation_sound = 'sound/items/welderactivate.ogg'
 	var/deactivation_sound = 'sound/items/welderdeactivate.ogg'
 
@@ -66,7 +66,7 @@
 		reagents.add_reagent(/datum/reagent/fuel, max_fuel)
 	update_appearance()
 
-	var/datum/looping_sound/gas_tool/gas_loop = new(src)
+	soundloop = new(src, FALSE)
 
 /obj/item/weldingtool/update_icon_state()
 	if(welding)
@@ -74,6 +74,10 @@
 	else
 		inhand_icon_state = "[initial(inhand_icon_state)]"
 	return ..()
+
+/obj/item/weldingtool/Destroy(force)
+	. = ..()
+	QDEL_NULL(soundloop)
 
 
 /obj/item/weldingtool/update_overlays()
@@ -249,14 +253,14 @@
 			hitsound = 'sound/items/welder.ogg'
 			update_appearance()
 			START_PROCESSING(SSobj, src)
-			gas_loop.start()
+			soundloop.start()
 		else
 			balloon_alert(user, "no fuel!")
 			switched_off(user)
 	else
 		playsound(loc, deactivation_sound, 50, TRUE)
 		switched_off(user)
-		gas_loop.stop()
+		soundloop.stop()
 
 /// Switches the welder off
 /obj/item/weldingtool/proc/switched_off(mob/user)
