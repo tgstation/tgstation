@@ -25,16 +25,28 @@
 	energy = 100
 	bomb = 10
 
+/obj/structure/railing/unbreakable
+	resistance_flags = INDESTRUCTIBLE
+
 /obj/structure/railing/corner //aesthetic corner sharp edges hurt oof ouch
 	icon_state = "railing_corner"
 	density = FALSE
 	climbable = FALSE
 
+/obj/structure/railing/corner/unbreakable
+	resistance_flags = INDESTRUCTIBLE
+
 /obj/structure/railing/corner/end //end of a segment of railing without making a loop
 	icon_state = "railing_end"
 
+/obj/structure/railing/corner/end/unbreakable
+	resistance_flags = INDESTRUCTIBLE
+
 /obj/structure/railing/corner/end/flip //same as above but flipped around
 	icon_state = "railing_end_flip"
+
+/obj/structure/railing/corner/end/flip/unbreakable
+	resistance_flags = INDESTRUCTIBLE
 
 /obj/structure/railing/Initialize(mapload)
 	. = ..()
@@ -61,11 +73,6 @@
 	AddElement(/datum/element/contextual_screentip_tools, tool_behaviors)
 
 	AddComponent(/datum/component/simple_rotation, ROTATION_NEEDS_ROOM)
-	update_appearance()
-
-/obj/structure/railing/update_appearance(updates)
-	. = ..()
-	update_layering()
 
 /obj/structure/railing/examine(mob/user)
 	. = ..()
@@ -123,15 +130,6 @@
 	if(!(to_dir & dir))
 		return TRUE
 	return ..()
-
-/obj/structure/railing/proc/update_layering()
-	// If we're on a north edge, render as if we were "higher" then we are
-	if(dir & NORTH)
-		pixel_y = 32
-		pixel_z = -32
-	else
-		pixel_y = 0
-		pixel_z = 0
 
 /obj/structure/railing/proc/on_exit(datum/source, atom/movable/leaving, direction)
 	SIGNAL_HANDLER

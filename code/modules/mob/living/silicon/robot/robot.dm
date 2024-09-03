@@ -301,7 +301,7 @@
 		else
 			eye_lights.icon_state = "[model.special_light_key ? "[model.special_light_key]":"[model.cyborg_base_icon]"]_e"
 			eye_lights.color = COLOR_WHITE
-			SET_PLANE_EXPLICIT(eye_lights, GAME_PLANE, src)
+			SET_PLANE_EXPLICIT(eye_lights, ABOVE_GAME_PLANE, src)
 		eye_lights.icon = icon
 		add_overlay(eye_lights)
 
@@ -874,7 +874,7 @@
 	lawupdate = TRUE
 	lawsync()
 	if(radio && AI.radio) //AI keeps all channels, including Syndie if it is a Traitor
-		if(AI.radio.syndie)
+		if((AI.radio.special_channels & RADIO_SPECIAL_SYNDIE))
 			radio.make_syndie()
 		radio.subspace_transmission = TRUE
 		radio.channels = AI.radio.channels

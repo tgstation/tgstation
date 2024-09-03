@@ -1,0 +1,4 @@
+author: "vinylspiders"
+delete-after: True
+changes:
+  - bugfix: "fixed 'Enable Radio Noise' pref only being respected for deaf people"

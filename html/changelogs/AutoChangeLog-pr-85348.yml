@@ -1,4 +1,0 @@
-author: "Ben10Omintrix"
-delete-after: True
-changes:
-  - bugfix: "idle basic mobs will now plan behaviors rather than completely shut down"

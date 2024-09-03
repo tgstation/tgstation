@@ -23,7 +23,7 @@
 	var/dud_flags = NONE
 	///Is this grenade currently armed?
 	var/active = FALSE
-	///Is it a cluster grenade? We dont wanna spam admin logs with these.
+	///Is it a cluster grenade? We don't wanna spam admin logs with these.
 	var/type_cluster = FALSE
 	///How long it takes for a grenade to explode after being armed
 	var/det_time = 5 SECONDS
@@ -48,7 +48,7 @@
 	var/shrapnel_type
 	/// the higher this number, the more projectiles are created as shrapnel
 	var/shrapnel_radius
-	///Did we add the component responsible for spawning sharpnel to this?
+	///Did we add the component responsible for spawning shrapnel to this?
 	var/shrapnel_initialized
 
 /obj/item/grenade/Initialize(mapload)
@@ -61,7 +61,7 @@
 	playsound(src, 'sound/items/eatfood.ogg', 50, TRUE)
 	arm_grenade(user, det_time)
 	user.transferItemToLoc(src, user, TRUE)//>eat a grenade set to 5 seconds >rush captain
-	sleep(det_time)//so you dont die instantly
+	sleep(det_time)//so you don't die instantly
 	return dud_flags ? SHAME : BRUTELOSS
 
 /obj/item/grenade/atom_deconstruct(disassembled = TRUE)

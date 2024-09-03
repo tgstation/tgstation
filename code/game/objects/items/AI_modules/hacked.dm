@@ -55,7 +55,7 @@
 		to_chat(sender, span_warning("You should use [src] on an AI upload console or the AI core itself."))
 		return
 	if(malf_candidate.mind?.has_antag_datum(/datum/antagonist/malf_ai)) //Already malf
-		to_chat(sender, span_warning("Unknown error occured. Upload process aborted."))
+		to_chat(sender, span_warning("Unknown error occurred. Upload process aborted."))
 		return
 
 	var/datum/antagonist/malf_ai/infected/malf_datum = new (give_objectives = TRUE, new_boss = sender.mind)

@@ -40,7 +40,6 @@ SUBSYSTEM_DEF(accessories) // just 'accessories' for brevity
 	var/list/horns_list
 	var/list/frills_list
 	var/list/spines_list
-	var/list/legs_list
 	var/list/tail_spines_list
 
 	//Mutant Human bits
@@ -99,14 +98,13 @@ SUBSYSTEM_DEF(accessories) // just 'accessories' for brevity
 	frills_list = init_sprite_accessory_subtypes(/datum/sprite_accessory/frills, add_blank = TRUE)[DEFAULT_SPRITE_LIST]
 	spines_list = init_sprite_accessory_subtypes(/datum/sprite_accessory/spines, add_blank = TRUE)[DEFAULT_SPRITE_LIST]
 	tail_spines_list = init_sprite_accessory_subtypes(/datum/sprite_accessory/tail_spines, add_blank = TRUE)[DEFAULT_SPRITE_LIST]
-	legs_list = init_sprite_accessory_subtypes(/datum/sprite_accessory/legs)[DEFAULT_SPRITE_LIST]
 	caps_list = init_sprite_accessory_subtypes(/datum/sprite_accessory/caps)[DEFAULT_SPRITE_LIST]
 	moth_wings_list = init_sprite_accessory_subtypes(/datum/sprite_accessory/moth_wings)[DEFAULT_SPRITE_LIST]
 	moth_antennae_list = init_sprite_accessory_subtypes(/datum/sprite_accessory/moth_antennae)[DEFAULT_SPRITE_LIST]
 	moth_markings_list = init_sprite_accessory_subtypes(/datum/sprite_accessory/moth_markings, add_blank = TRUE)[DEFAULT_SPRITE_LIST]
 	pod_hair_list = init_sprite_accessory_subtypes(/datum/sprite_accessory/pod_hair)[DEFAULT_SPRITE_LIST]
 
-/// This proc just intializes all /datum/sprite_accessory/hair_gradient into an list indexed by gradient-style name
+/// This proc just initializes all /datum/sprite_accessory/hair_gradient into an list indexed by gradient-style name
 /datum/controller/subsystem/accessories/proc/init_hair_gradients()
 	hair_gradients_list = list()
 	facial_hair_gradients_list = list()

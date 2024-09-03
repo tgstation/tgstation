@@ -15,7 +15,6 @@
 
 ///Universal IV that can drain blood or feed reagents over a period of time from or to a replaceable container
 /obj/machinery/iv_drip
-	SET_BASE_VISUAL_PIXEL(0, DEPTH_OFFSET)
 	name = "\improper IV drip"
 	desc = "An IV drip with an advanced infusion pump that can both drain blood into and inject liquids from attached containers."
 	icon = 'icons/obj/medical/iv_drip.dmi'
@@ -107,7 +106,7 @@
 		.["containerMaxVolume"] = drip_reagents.maximum_volume
 		.["containerReagentColor"] = mix_color_from_reagents(drip_reagents.reagent_list)
 
-/obj/machinery/iv_drip/ui_act(action, params)
+/obj/machinery/iv_drip/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if(.)
 		return
