@@ -547,9 +547,13 @@
 	name = "MOD medbeam"
 
 /obj/item/mod/module/stealth/wraith
+
+	desc = "A more destructive adaptation of the stealth module. The Wraith Module does not simply bend light around the user to obscure their visual pattern, but actively attacks and overloads surrounding light emitting objects, repurposing this energy to power the suit. It is possible that this technology has its origins in Spider Clan advancements, but the exact source of the Wraith Module is highly disputed. No group has stepped forward to claim it as their handiwork due to the political consequences of having stolen Spider Clan tech and their inevitable retaliation for such transgressions. Most point fingers at Cybersun Industries, but murmurs suggest it could even be even more clandestine organizations amongst the Syndicate branches. Whatever the case, if you are looking at one of these right now, don’t show it to a space ninja."
+	name = "MOD Wraith Cloaking Module"
+	icon_state = "cloak_traitor"
 	stealth_alpha = 30
 	module_type = MODULE_ACTIVE
-	cooldown_time = 3 SECONDS
+	cooldown_time = 2 SECONDS
 
 /obj/item/mod/module/stealth/wraith/on_select_use(atom/target)
 	. = ..()
