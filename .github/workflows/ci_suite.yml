@@ -8,6 +8,7 @@ on:
     - 'gh-readonly-queue/project/**'
   pull_request:
     branches:
+    - master
     - 'project/**'
   merge_group:
     branches:

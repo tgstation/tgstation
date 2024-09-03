@@ -18,6 +18,7 @@ on:
     - 'tools/tgs_test/**'
   pull_request:
     branches:
+    - master
     - 'project/**'
     paths:
     - '.tgs.yml'
