@@ -776,3 +776,55 @@
   - rscadd: Added crates of the following varieties; Interdyne, Interdyne freezer,
       Tiger Co-Op, S.E.L.F. MI13, A.R.C., Cybersun (4 colour variants), Waffle Corp,
       Donk, Gorlex, Gorlex weapons, DeForest, Nakamure Engineeing, Robust Industries
+2024-08-26:
+  GPeckman:
+  - bugfix: The instagib, ragecage, mech madness, secu-ring, shooting range, and sniper
+      elite deathmatch maps are available again.
+  Ghommie:
+  - bugfix: Fixes the chainsaw evolution for goldfishes.
+  Majkl-J:
+  - rscadd: Achievement for eating 500 cigarettes
+  - balance: Cigarettes are now edible
+  - code_imp: Adds a variable to hide the food examine on the edible element
+  - bugfix: SSPolling no longer fills in the candidate list with empty entries to
+      guarantee it returns a list size of amount_to_pick
+  SmArtKar:
+  - spellcheck: Fixed a typo on snowdin shuttle transi(s)t consoles
+  grungussuss:
+  - sound: lead pipe has sound
+  vinylspiders:
+  - bugfix: wet hides and hairless hides no longer make metal clanging noises when
+      picked up/dropped
+2024-08-27:
+  Ben10Omintrix:
+  - bugfix: fixes blob spore and slime AI endlessly attacking the dead
+  Sakamoto4ka:
+  - rscadd: Added salt electrolysis reaction
+  SmArtKar:
+  - bugfix: Bioscrambler anomalies no longer affect inorganic species
+2024-08-28:
+  Melbert:
+  - bugfix: Juicing and grinding should break less
+  Vekter:
+  - bugfix: Fixed an issue causing Quartermaster office access to show in the wrong
+      area on Plexagon Access Management.
+  - bugfix: Fixed an inconsistency in the naming for QM Office access.
+  grungussuss:
+  - bugfix: after 4 years, computer sound loop now works properly
+2024-08-29:
+  FeudeyTF:
+  - rscadd: Added board for detective's evidences
+  Rhials:
+  - rscadd: Smokey remains have appeared in maintenance. Make sure to walk when near
+      them!
+  SmArtKar:
+  - bugfix: Stagger animation is no longer horrilbly jittery
+  Xackii:
+  - qol: revolver in roundstart holsters is on the last slot and not on first
+2024-08-30:
+  SmArtKar:
+  - bugfix: Projectiles no longer always play turf hit sound
+  - balance: Plexagon Crew Manifest is now a default PDA app for everyone, and is
+      free.
+  - balance: Plexagon Crew Manifest no longer provides Detomatix resistance, but security
+      records and status display control now do.

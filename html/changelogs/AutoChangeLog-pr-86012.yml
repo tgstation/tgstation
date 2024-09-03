@@ -1,4 +1,0 @@
-author: "Majkl-J"
-delete-after: True
-changes:
-  - bugfix: "SSPolling no longer fills in the candidate list with empty entries to guarantee it returns a list size of amount_to_pick"

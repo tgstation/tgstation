@@ -7,7 +7,6 @@
 	greyscale_colors = "#67A364#a92323"
 	max_capacity = parent_type::max_capacity * 2
 	var/static/list/datum/computer_file/head_programs = list(
-		/datum/computer_file/program/crew_manifest,
 		/datum/computer_file/program/status,
 		/datum/computer_file/program/science,
 		/datum/computer_file/program/robocontrol,
@@ -105,7 +104,6 @@
 	inserted_item = /obj/item/pen/red/security
 	starting_programs = list(
 		/datum/computer_file/program/records/security,
-		/datum/computer_file/program/crew_manifest,
 		/datum/computer_file/program/robocontrol,
 	)
 
@@ -115,7 +113,6 @@
 	inserted_item = /obj/item/pen/red/security
 	starting_programs = list(
 		/datum/computer_file/program/records/security,
-		/datum/computer_file/program/crew_manifest,
 		/datum/computer_file/program/robocontrol,
 	)
 
@@ -126,7 +123,6 @@
 	inserted_item = /obj/item/pen/red/security
 	starting_programs = list(
 		/datum/computer_file/program/records/security,
-		/datum/computer_file/program/crew_manifest,
 		/datum/computer_file/program/robocontrol,
 	)
 
@@ -220,7 +216,6 @@
 	greyscale_colors = "#FAFAFA#000099#1f2026"
 	starting_programs = list(
 		/datum/computer_file/program/records/medical,
-		/datum/computer_file/program/crew_manifest,
 	)
 
 /**
@@ -381,7 +376,6 @@
 	greyscale_colors = "#333333#000099#3F96CC"
 	starting_programs = list(
 		/datum/computer_file/program/records/medical,
-		/datum/computer_file/program/crew_manifest,
 		/datum/computer_file/program/robocontrol,
 	)
 
@@ -398,7 +392,6 @@
 	name = "bridge assistant PDA"
 	greyscale_colors = "#374f7e#a92323"
 	starting_programs = list(
-		/datum/computer_file/program/crew_manifest,
 		/datum/computer_file/program/status,
 	)
 
@@ -408,7 +401,6 @@
 	inserted_item = /obj/item/pen/fountain
 	starting_programs = list(
 		/datum/computer_file/program/records/security,
-		/datum/computer_file/program/crew_manifest,
 		/datum/computer_file/program/coupon, //veteran discount
 		/datum/computer_file/program/skill_tracker,
 	)

@@ -35,7 +35,7 @@
 	 */
 
 	/// Icon used for in aquarium sprite
-	var/icon = 'icons/obj/structures/aquarium/fish.dmi'
+	var/icon = 'icons/obj/aquarium/fish.dmi'
 	/// If this is set this icon state will be used for the holder while icon_state will only be used for item/catalog. Transformation from source_width/height WON'T be applied.
 	var/icon_state
 	/// Applied to vc object only for use with greyscaled icons.
