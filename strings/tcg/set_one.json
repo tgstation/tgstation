@@ -1493,7 +1493,7 @@
 			"id": "scientist_moth",
 			"name": "Scientist (Moth)",
 			"desc": "Moths are a common sight in Nanotrasen research departments, acting as integral ideas guys for new clothing designs and lighting innovations.",
-			"rules": "Enemy creatuers cannot block this unit if it is attacking directly.",
+			"rules": "Enemy creatures cannot block this unit if it is attacking directly.",
 			"icon_state": "scientist_moth",
 			"power": "2",
 			"resolve": "2",
