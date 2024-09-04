@@ -418,7 +418,7 @@
 
 ///Initialize the minigame hud and register some signals to make it work.
 /datum/fishing_challenge/proc/prepare_minigame_hud()
-	if(!user.client || user.incapacitated())
+	if(!user.client || user.incapacitated)
 		return FALSE
 	. = TRUE
 	fishing_hud = new
