@@ -316,7 +316,7 @@
 	SEND_SIGNAL(src, COMSIG_FISH_FORCE_UPDATED, weight_rank, bonus_malus)
 
 	if(force >=15 && hitsound == SFX_DEFAULT_FISH_SLAP) // don't override special attack sounds
-		hitsound = SFX_DEFAULT_FISH_SLAP // do more damage - do heavier slap sound
+		hitsound = SFX_ALT_FISH_SLAP // do more damage - do heavier slap sound
 
 ///A proc that makes the fish slightly stronger or weaker if there's a noticeable discrepancy between size and weight.
 /obj/item/fish/proc/calculate_fish_force_bonus(bonus_malus)
