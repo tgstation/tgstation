@@ -536,9 +536,6 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 /// Mobs with this trait cannot be hit by projectiles, meaning the projectiles will just go through.
 #define TRAIT_UNHITTABLE_BY_PROJECTILES "unhittable_by_projectiles"
 
-/// Projectile with this trait will always hit the defined zone of a struck living mob.
-#define TRAIT_ALWAYS_HIT_ZONE "always_hit_zone"
-
 /// Mobs with this trait do care about a few grisly things, such as digging up graves. They also really do not like bringing people back to life or tending wounds, but love autopsies and amputations.
 #define TRAIT_MORBID "morbid"
 
@@ -680,9 +677,6 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 
 ///This mob is currently blocking a projectile.
 #define TRAIT_BLOCKING_PROJECTILES "blocking_projectiles"
-/// This turf contains something using split visibility
-#define TRAIT_CONTAINS_SPLITVIS "contains_splitvis"
-
 ///Lava will be safe to cross while it has this trait.
 #define TRAIT_LAVA_STOPPED "lava_stopped"
 ///Chasms will be safe to cross while they've this trait.
@@ -885,10 +879,6 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 /// Trait applied when the MMI component is added to an [/obj/item/integrated_circuit]
 #define TRAIT_COMPONENT_MMI "component_mmi"
 
-/// Trait applied when the turf is being masked by the [/datum/component/vis_block] component
-/// Without cutting out ALL of the center, requiring extra trickery to make seeing both sides reveal the inside
-#define TRAIT_INNER_DARKNESS "inner_darkness"
-
 /// Trait applied when an integrated circuit/module becomes undupable
 #define TRAIT_CIRCUIT_UNDUPABLE "circuit_undupable"
 
@@ -1002,9 +992,6 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
  * instead of one that's also shared with other movables, thus making editing its appearance possible.
  */
 #define TRAIT_UNIQUE_IMMERSE "unique_immerse"
-
-/// Don't render a drop shadow
-#define TRAIT_SHADOWLESS "shadowless"
 
 /// This item is currently under the control of telekinesis
 #define TRAIT_TELEKINESIS_CONTROLLED "telekinesis_controlled"
@@ -1260,9 +1247,6 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_ITEM_OBJECTIVE_BLOCKED "item_objective_blocked"
 /// This trait lets you attach limbs to any player without surgery.
 #define TRAIT_EASY_ATTACH "easy_attach"
-
-///Attached to objects currently on window frames, tables and such, allowing them to walk on other objects without the climbing delay
-#define TRAIT_ON_CLIMBABLE "on_climbable"
 
 ///Trait given to the birthday boy
 #define TRAIT_BIRTHDAY_BOY "birthday_boy"

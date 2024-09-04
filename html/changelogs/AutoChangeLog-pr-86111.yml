@@ -1,0 +1,4 @@
+author: "Time-Green"
+delete-after: True
+changes:
+  - qol: "Unsettle (Voidwalker) doesn't go on cooldown if line of sight is broken"

@@ -1,0 +1,4 @@
+author: "Ben10Omintrix"
+delete-after: True
+changes:
+  - bugfix: "wooden fences will no longer appear pitch black in lower levels of icebox"

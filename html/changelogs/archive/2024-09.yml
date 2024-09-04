@@ -1,0 +1,59 @@
+2024-09-04:
+  00-Steven:
+  - balance: Fax machines with hacked input servos can now send chap slices and cookies.
+      Please accept them.
+  - bugfix: Buckling yourself to a bed or stasis bed will now make you actually use
+      the headrest/pillow and face up.
+  - qol: Multi-z disposal segments can actually be made with an RPD.
+  - image: Upwards multi-z disposal segments no longer have wonky sprites.
+  - bugfix: Big manipulator hands now move smoothly with the base when it's moved.
+  Absolucy:
+  - bugfix: You will now be ejected from any jaunt (i.e bloodcrawl or shadow walk)
+      if you lose consciousness somehow during the jaunt.
+  Artemchik542:
+  - bugfix: typo in CRUSH_CRIT_PARAPLEGIC
+  AyIong:
+  - qol: Stat Panel settings moved to personal tab
+  - bugfix: Stat Panel tabs no longer create horizontal scrollbar by default, but
+      you can return it into the settings
+  - bugfix: Hovering over a truncated statpanel button, doesn't blocks the button
+      below it anymore
+  FeudeyTF:
+  - bugfix: fixed detective board placing
+  Hardly:
+  - sound: Added sounds for conveyor belt switches
+  JohnFulpWillard:
+  - bugfix: Ice cream vats can be refilled with beakers again.
+  LT3:
+  - bugfix: You can now put Skub back in the Skub box, as intended
+  - bugfix: Ice Box lower floor maints is properly protected during radstorms
+  - bugfix: Fixed malfunctioning tram crossing signals sometimes staying green
+  Melbert:
+  - bugfix: Some spy items should spawn less broken
+  Redrover1760:
+  - bugfix: Fixed light overloads not draining significant amounts of energy.
+  - bugfix: Power sinks now drain APCs at a significant rate instead of glacially
+      slow.
+  - balance: Power sinks are adjusted to not explode within 30 seconds of the average
+      power output a station produces.
+  SmArtKar:
+  - image: Added new sprites for hellfire lasers
+  - bugfix: Cardborg costume no longer gets its appearance deleted when you drop a
+      second hat/suit you are holding in your hand
+  Watermelon914:
+  - bugfix: Fixed a bug that breaks signal handlers on an object if one of the signal
+      handlers doesn't return a number value.
+  Xackii:
+  - bugfix: fixed that screwdriwing radio headset in combat mode don't do anything.
+  alien3301:
+  - balance: When silicons use their radio they will not whisper out loud anymore
+  grungussuss:
+  - sound: being sacrificed by a heretic is now spookier
+  grungussuss and kayozz:
+  - sound: gravity generator has a new sound
+  vinylspiders:
+  - bugfix: due to a clerical error, all ballistic guns were shipping with built-in
+      silencers. this has been resolved-they will now make noise once again when fired.
+  - bugfix: fixes a crafting exploit that allowed you to get more resources back from
+      disassembling than you put into the recipe
+  - bugfix: fixed 'Enable Radio Noise' pref only being respected for deaf people
