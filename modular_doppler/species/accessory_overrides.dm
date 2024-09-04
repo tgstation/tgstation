@@ -21,16 +21,15 @@
 	layers = EXTERNAL_ADJACENT | EXTERNAL_ADJACENT_2 | EXTERNAL_ADJACENT_3
 
 /datum/bodypart_overlay/mutant/snout/color_image(image/overlay, draw_layer, obj/item/bodypart/limb)
+	if(limb.owner == null)
+		return ..()
 	if(draw_layer == bitflag_to_layer(EXTERNAL_ADJACENT))
 		overlay.color = limb.owner.dna.features["snout_color_1"]
-		return overlay
 	else if(draw_layer == bitflag_to_layer(EXTERNAL_ADJACENT_2))
 		overlay.color = limb.owner.dna.features["snout_color_2"]
-		return overlay
 	else if(draw_layer == bitflag_to_layer(EXTERNAL_ADJACENT_3))
 		overlay.color = limb.owner.dna.features["snout_color_3"]
-		return overlay
-	return overlay
+	return ..()
 
 //core toggle
 /datum/preference/toggle/snout
@@ -42,6 +41,9 @@
 /datum/preference/toggle/snout/apply_to_human(mob/living/carbon/human/target, value)
 	if(value == FALSE)
 		target.dna.features["snout"] = "None"
+
+/datum/preference/toggle/snout/create_default_value()
+	return FALSE
 
 /datum/species/regenerate_organs(mob/living/carbon/target, datum/species/old_species, replace_current = TRUE, list/excluded_zones, visual_only = FALSE)
 	. = ..()
@@ -66,6 +68,9 @@
 		return TRUE
 	return FALSE
 
+/datum/preference/choiced/lizard_snout/create_default_value()
+	return pick(SSaccessories.snouts_list["None"])
+
 
 
 
@@ -78,16 +83,15 @@
 	layers = EXTERNAL_ADJACENT | EXTERNAL_ADJACENT_2 | EXTERNAL_ADJACENT_3
 
 /datum/bodypart_overlay/mutant/horns/color_image(image/overlay, draw_layer, obj/item/bodypart/limb)
+	if(limb.owner == null)
+		return ..()
 	if(draw_layer == bitflag_to_layer(EXTERNAL_ADJACENT))
 		overlay.color = limb.owner.dna.features["horns_color_1"]
-		return overlay
 	else if(draw_layer == bitflag_to_layer(EXTERNAL_ADJACENT_2))
 		overlay.color = limb.owner.dna.features["horns_color_2"]
-		return overlay
 	else if(draw_layer == bitflag_to_layer(EXTERNAL_ADJACENT_3))
 		overlay.color = limb.owner.dna.features["horns_color_3"]
-		return overlay
-	return overlay
+	return ..()
 
 //core toggle
 /datum/preference/toggle/horns
@@ -99,6 +103,9 @@
 /datum/preference/toggle/horns/apply_to_human(mob/living/carbon/human/target, value)
 	if(value == FALSE)
 		target.dna.features["horns"] = "None"
+
+/datum/preference/toggle/horns/create_default_value()
+	return FALSE
 
 /datum/species/regenerate_organs(mob/living/carbon/target, datum/species/old_species, replace_current = TRUE, list/excluded_zones, visual_only = FALSE)
 	. = ..()
@@ -123,6 +130,9 @@
 		return TRUE
 	return FALSE
 
+/datum/preference/choiced/lizard_horns/create_default_value()
+	return pick(SSaccessories.horns_list["None"])
+
 
 
 
@@ -135,16 +145,15 @@
 	layers = EXTERNAL_ADJACENT | EXTERNAL_ADJACENT_2 | EXTERNAL_ADJACENT_3
 
 /datum/bodypart_overlay/mutant/frills/color_image(image/overlay, draw_layer, obj/item/bodypart/limb)
+	if(limb.owner == null)
+		return ..()
 	if(draw_layer == bitflag_to_layer(EXTERNAL_ADJACENT))
 		overlay.color = limb.owner.dna.features["frills_color_1"]
-		return overlay
 	else if(draw_layer == bitflag_to_layer(EXTERNAL_ADJACENT_2))
 		overlay.color = limb.owner.dna.features["frills_color_2"]
-		return overlay
 	else if(draw_layer == bitflag_to_layer(EXTERNAL_ADJACENT_3))
 		overlay.color = limb.owner.dna.features["frills_color_3"]
-		return overlay
-	return overlay
+	return ..()
 
 //core toggle
 /datum/preference/toggle/frills
@@ -156,6 +165,9 @@
 /datum/preference/toggle/frills/apply_to_human(mob/living/carbon/human/target, value)
 	if(value == FALSE)
 		target.dna.features["frills"] = "None"
+
+/datum/preference/toggle/frills/create_default_value()
+	return FALSE
 
 /datum/species/regenerate_organs(mob/living/carbon/target, datum/species/old_species, replace_current = TRUE, list/excluded_zones, visual_only = FALSE)
 	. = ..()
@@ -180,6 +192,9 @@
 		return TRUE
 	return FALSE
 
+/datum/preference/choiced/lizard_frills/create_default_value()
+	return pick(SSaccessories.frills_list["None"])
+
 
 
 
@@ -197,13 +212,15 @@
 	return image(icon, gender_string + icon_state + "_" + limb.body_zone, layer = layer)
 
 /datum/bodypart_overlay/simple/body_marking/lizard/color_image(image/overlay, draw_layer, obj/item/bodypart/limb)
+	if(limb.owner == null)
+		return ..()
 	if(draw_layer == bitflag_to_layer(EXTERNAL_ADJACENT))
 		overlay.color = limb.owner.dna.features["body_markings_color_1"]
-		return overlay
 	else if(draw_layer == bitflag_to_layer(EXTERNAL_ADJACENT_2))
 		overlay.color = limb.owner.dna.features["body_markings_color_2"]
-		return overlay
 	else if(draw_layer == bitflag_to_layer(EXTERNAL_ADJACENT_3))
 		overlay.color = limb.owner.dna.features["body_markings_color_3"]
-		return overlay
-	return overlay
+	return ..()
+
+/datum/preference/choiced/lizard_body_markings/create_default_value()
+	return pick(SSaccessories.lizard_markings_list["None"])

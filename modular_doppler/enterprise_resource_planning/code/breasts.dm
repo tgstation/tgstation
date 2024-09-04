@@ -52,25 +52,21 @@
 	return SSaccessories.breasts_list
 
 /datum/bodypart_overlay/mutant/breasts/color_image(image/overlay, draw_layer, obj/item/bodypart/limb)
+	if(limb.owner == null)
+		return ..()
 	if(draw_layer == bitflag_to_layer(EXTERNAL_ADJACENT))
 		overlay.color = limb.owner.dna.features["breasts_color_1"]
-		return overlay
 	else if(draw_layer == bitflag_to_layer(EXTERNAL_BEHIND))
 		overlay.color = limb.owner.dna.features["breasts_color_1"]
-		return overlay
 	else if(draw_layer == bitflag_to_layer(EXTERNAL_ADJACENT_2))
 		overlay.color = limb.owner.dna.features["breasts_color_2"]
-		return overlay
 	else if(draw_layer == bitflag_to_layer(EXTERNAL_BEHIND_2))
 		overlay.color = limb.owner.dna.features["breasts_color_2"]
-		return overlay
 	else if(draw_layer == bitflag_to_layer(EXTERNAL_ADJACENT_3))
 		overlay.color = limb.owner.dna.features["breasts_color_3"]
-		return overlay
 	else if(draw_layer == bitflag_to_layer(EXTERNAL_BEHIND_3))
 		overlay.color = limb.owner.dna.features["breasts_color_3"]
-		return overlay
-	return overlay
+	return ..()
 
 /datum/bodypart_overlay/mutant/breasts/mutant_bodyparts_layertext(layer)
 	switch(layer)
@@ -105,6 +101,9 @@
 	if(value == FALSE)
 		//to_chat(world, "Begone, boobs.")
 		target.dna.features["breasts"] = "Bare"
+
+/datum/preference/toggle/breasts/create_default_value()
+	return FALSE
 
 /datum/species/regenerate_organs(mob/living/carbon/target, datum/species/old_species, replace_current = TRUE, list/excluded_zones, visual_only = FALSE)
 	. = ..()
@@ -149,6 +148,9 @@
 	//to_chat(world, "Applying [value] to [target]'s boobs...")
 	target.dna.features["breasts"] = value
 	//to_chat(world, "Applied!")
+
+/datum/preference/choiced/breasts/create_default_value()
+	return pick(SSaccessories.breasts_list["None"])
 
 /datum/preference/choiced/breasts/is_accessible(datum/preferences/preferences)
 	. = ..()

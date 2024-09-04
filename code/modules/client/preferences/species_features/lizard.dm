@@ -17,9 +17,9 @@
 		var/icon/accessory_icon = icon(sprite_accessory.icon, "m_[key]_[sprite_accessory.icon_state]_ADJ", EAST)
 		/// DOPPLER SHIFT ADDITION BEGIN
 		accessory_icon.Blend(COLOR_RED, ICON_MULTIPLY)
-		var/icon/accessory_icon_2 = icon(sprite_accessory.icon, "m_[key]_[sprite_accessory.icon_state]_ADJ", EAST)
+		var/icon/accessory_icon_2 = icon(sprite_accessory.icon, "m_[key]_[sprite_accessory.icon_state]_ADJ_2", EAST)
 		accessory_icon_2.Blend(COLOR_VIBRANT_LIME, ICON_MULTIPLY)
-		var/icon/accessory_icon_3 = icon(sprite_accessory.icon, "m_[key]_[sprite_accessory.icon_state]_ADJ", EAST)
+		var/icon/accessory_icon_3 = icon(sprite_accessory.icon, "m_[key]_[sprite_accessory.icon_state]_ADJ_3", EAST)
 		accessory_icon_3.Blend(COLOR_BLUE, ICON_MULTIPLY)
 		/// DOPPLER SHIFT ADDITION END
 		final_icon.Blend(accessory_icon, ICON_OVERLAY)
