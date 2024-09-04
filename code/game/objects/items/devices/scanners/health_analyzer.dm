@@ -417,6 +417,7 @@
 /obj/item/healthanalyzer/proc/print_report(mob/user)
 	var/obj/item/paper/report_paper = new(get_turf(src))
 
+	report_paper.color = COLOR_STARLIGHT
 	report_paper.name = "Health scan report"
 	var/report_text = "<center><B>Health scan report</B></center><HR><BR>"
 	report_text += last_scan_text
