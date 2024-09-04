@@ -2424,9 +2424,6 @@
 /obj/machinery/door/airlock/engineering/glass{
 	name = "Gravity Generator"
 	},
-/obj/effect/mapping_helpers/airlock/cyclelink_helper{
-	dir = 4
-	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/structure/cable,
 /turf/open/floor/iron,
