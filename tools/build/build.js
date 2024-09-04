@@ -216,6 +216,7 @@ export const DmTarget = new Juke.Target({
     'html/**',
     'icons/**',
     'interface/**',
+    'sound/**',
     `${DME_NAME}.dme`,
     'signia_modules/**', ///SIGNIA EDIT: Stops the build tool from skipping changes in the modular folder
     NamedVersionFile,

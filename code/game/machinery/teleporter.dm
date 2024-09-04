@@ -1,5 +1,4 @@
 /obj/machinery/teleport
-	SET_BASE_VISUAL_PIXEL(0, DEPTH_OFFSET)
 	name = "teleport"
 	icon = 'icons/obj/machines/teleporter.dmi'
 	density = TRUE

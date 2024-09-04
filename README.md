@@ -9,6 +9,8 @@
 
 This is my personal codebase. Please have fun and look around.
 
+*All github inquiries (such as moderation actions) may be handled via the /tg/station discord [#coding-general](https://discord.com/channels/326822144233439242/326831214667235328). Simply ping the `@Maintainer` role, following the guide on asking questions located in the channel description, with your issue!*
+
 ## DOWNLOADING
 [Downloading](.github/guides/DOWNLOADING.md)
 

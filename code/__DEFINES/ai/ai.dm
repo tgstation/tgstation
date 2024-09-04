@@ -68,7 +68,7 @@
 ///macro for whether it's appropriate to resist right now, used by resist subtree
 #define SHOULD_RESIST(source) (source.on_fire || source.buckled || HAS_TRAIT(source, TRAIT_RESTRAINED) || (source.pulledby && source.pulledby.grab_state > GRAB_PASSIVE))
 ///macro for whether the pawn can act, used generally to prevent some horrifying ai disasters
-#define IS_DEAD_OR_INCAP(source) (source.incapacitated() || source.stat)
+#define IS_DEAD_OR_INCAP(source) (source.incapacitated || source.stat)
 
 GLOBAL_LIST_INIT(all_radial_directions, list(
 	"NORTH" = image(icon = 'icons/testing/turf_analysis.dmi', icon_state = "red_arrow", dir = NORTH),

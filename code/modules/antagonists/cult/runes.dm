@@ -512,7 +512,7 @@ structure_check() searches for nearby cultist structures required for the invoca
 		fail_invoke()
 		return
 	var/obj/effect/rune/teleport/actual_selected_rune = potential_runes[input_rune_key] //what rune does that key correspond to?
-	if(!Adjacent(user) || QDELETED(src) || user.incapacitated() || !actual_selected_rune)
+	if(!Adjacent(user) || QDELETED(src) || user.incapacitated || !actual_selected_rune)
 		fail_invoke()
 		return
 
@@ -781,7 +781,7 @@ GLOBAL_VAR_INIT(narsie_summon_count, 0)
 /obj/effect/rune/raise_dead/proc/validness_checks(mob/living/target_mob, mob/living/user)
 	if(QDELETED(user))
 		return FALSE
-	if(!Adjacent(user) || user.incapacitated())
+	if(!Adjacent(user) || user.incapacitated)
 		return FALSE
 	if(QDELETED(target_mob))
 		return FALSE
@@ -846,7 +846,7 @@ GLOBAL_VAR_INIT(narsie_summon_count, 0)
 		return
 	var/mob/living/cultist_to_summon = tgui_input_list(user, "Who do you wish to call to [src]?", "Followers of the Geometer", cultists)
 	var/fail_logmsg = "Summon Cultist rune activated by [user] at [COORD(src)] failed - "
-	if(!Adjacent(user) || !src || QDELETED(src) || user.incapacitated())
+	if(!Adjacent(user) || !src || QDELETED(src) || user.incapacitated)
 		return
 	if(isnull(cultist_to_summon))
 		to_chat(user, "<span class='cult italic'>You require a summoning target!</span>")
