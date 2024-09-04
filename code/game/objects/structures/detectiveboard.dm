@@ -114,12 +114,8 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/detectiveboard, 32)
 						data_evidence["text"] = paper.raw_text_inputs[1].raw_text
 			data_evidences += list(data_evidence)
 		data_case["evidences"] = data_evidences
-		data_cases += list(data_case)
-
-	data["data_connections"] = list()
-	if(cases.len > 0)
 		var/list/connections = list()
-		for(var/datum/evidence/evidence in cases[current_case].evidences)
+		for(var/datum/evidence/evidence in case.evidences)
 			for(var/datum/evidence/connection in evidence.connections)
 				var/list/from_pos = get_pin_position(evidence)
 				var/list/to_pos = get_pin_position(connection)
@@ -130,13 +126,15 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/detectiveboard, 32)
 				if(!found_in_connections)
 					var/list/data_connection = list("color" = "red", "from" = from_pos, "to" = to_pos)
 					connections += list(data_connection)
-		data["data_connections"] = connections
+		data_case["connections"] = connections
+		data_cases += list(data_case)
+
 	data["cases"] = data_cases
 	data["current_case"] = current_case
 	return data
 
 /obj/structure/detectiveboard/proc/get_pin_position(datum/evidence/evidence)
-	return list("x" =  evidence.x + 15, "y" =  evidence.y + 45)
+	return list("x" =  evidence.x + 15, "y" =  evidence.y + 15)
 
 /obj/structure/detectiveboard/ui_act(action, params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
@@ -147,10 +145,10 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/detectiveboard, 32)
 		if("add_case")
 			var/new_case = tgui_input_text(user, "Please enter the case name", "Detective's Board")
 			if(!new_case)
-				return
+				return FALSE
 			var/case_color = tgui_input_list(user, "Please choose case color", "Detective's Board", case_colors)
 			if(!case_color)
-				return
+				return FALSE
 
 			var/datum/case/case = new (new_case, case_color)
 			cases += case
@@ -266,6 +264,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/detectiveboard, 32)
 	)
 	resistance_flags = FLAMMABLE
 	result_path = /obj/structure/detectiveboard
+	pixel_shift = 32
 
 /datum/evidence
 	var/name = "None"
