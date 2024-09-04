@@ -8,7 +8,7 @@
 /obj/structure/detectiveboard
 	name = "detective notice board"
 	desc = "A board for linking evidence to crimes."
-	icon = 'icons/obj/structures/wallmounts.dmi'
+	icon = 'icons/obj/wallmounts.dmi'
 	icon_state = "noticeboard"
 	density = FALSE
 	anchored = TRUE
@@ -28,20 +28,23 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/detectiveboard, 32)
 /obj/structure/detectiveboard/Initialize(mapload)
 	. = ..()
 
-	if(!mapload)
-		return
-	for(var/obj/item/item in loc)
-		if(istype(item, /obj/item/paper) || istype(item, /obj/item/photo))
-			item.forceMove(src)
-			cases[current_case].notices++
+	if(mapload)
+		for(var/obj/item/item in loc)
+			if(istype(item, /obj/item/paper) || istype(item, /obj/item/photo))
+				item.forceMove(src)
+				cases[current_case].notices++
+
+	register_context()
+	find_and_hang_on_wall()
 
 /// Attaching evidences: photo and papers
 
 /obj/structure/detectiveboard/attackby(obj/item/item, mob/user, params)
-	if(!cases.len)
-		to_chat(user, "There are no cases!")
-		return
 	if(istype(item, /obj/item/paper) || istype(item, /obj/item/photo))
+		if(!cases.len)
+			to_chat(user, "There are no cases!")
+			return
+
 		if(attaching_evidence)
 			to_chat(user, "You already attaching evidence!")
 			return
@@ -224,6 +227,8 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/detectiveboard, 32)
 
 /obj/structure/detectiveboard/update_overlays()
 	. = ..()
+	if(!cases.len)
+		return
 	if(cases[current_case].notices < MAX_ICON_NOTICES)
 		. += "notices_[cases[current_case].notices]"
 	else
@@ -254,7 +259,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/detectiveboard, 32)
 /obj/item/wallframe/detectiveboard
 	name = "detective notice board"
 	desc = "A board for linking evidence to crimes."
-	icon = 'icons/obj/structures/wallmounts.dmi'
+	icon = 'icons/obj/wallmounts.dmi'
 	icon_state = "noticeboard"
 	custom_materials = list(
 		/datum/material/wood = SHEET_MATERIAL_AMOUNT,
