@@ -184,7 +184,7 @@
 /datum/martial_art/the_sleeping_carp/proc/can_deflect(mob/living/carp_user)
 	if(!can_use(carp_user) || !carp_user.combat_mode)
 		return FALSE
-	if(carp_user.incapacitated(IGNORE_GRAB)) //NO STUN
+	if(INCAPACITATED_IGNORING(carp_user, INCAPABLE_GRAB)) //NO STUN
 		return FALSE
 	if(!(carp_user.mobility_flags & MOBILITY_USE)) //NO UNABLE TO USE
 		return FALSE
@@ -263,11 +263,10 @@
 	AddComponent(/datum/component/two_handed, \
 		force_unwielded = 10, \
 		force_wielded = 24, \
-		icon_wielded = "[base_icon_state]1", \
 	)
 
 /obj/item/staff/bostaff/update_icon_state()
-	icon_state = "[base_icon_state]0"
+	icon_state = inhand_icon_state = "[base_icon_state][HAS_TRAIT(src, TRAIT_WIELDED)]"
 	return ..()
 
 /obj/item/staff/bostaff/attack(mob/target, mob/living/user, params)

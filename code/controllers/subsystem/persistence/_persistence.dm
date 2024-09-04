@@ -43,12 +43,21 @@ SUBSYSTEM_DEF(persistence)
 	/// List of persistene ids which piggy banks.
 	var/list/queued_broken_piggy_ids
 
-	var/list/broken_piggy_banks
-
 	var/rounds_since_engine_exploded = 0
 	var/delam_highscore = 0
 	var/tram_hits_this_round = 0
 	var/tram_hits_last_round = 0
+
+	/// A json database to data/message_bottles.json
+	var/datum/json_database/message_bottles_database
+	/// An index used to create unique ids for the message bottles database
+	var/message_bottles_index = 0
+	/**
+	 * A list of non-maploaded photos or papers that met the 0.2% chance to be saved in the message bottles database
+	 * because I don't want the database to feel empty unless there's someone constantly throwing bottles in the
+	 * sea or beach/ocean fishing portals.
+	 */
+	var/list/queued_message_bottles
 
 /datum/controller/subsystem/persistence/Initialize()
 	load_poly()
@@ -74,10 +83,12 @@ SUBSYSTEM_DEF(persistence)
 	save_scars()
 	save_custom_outfits()
 	save_delamination_counter()
+	save_queued_message_bottles()
 	if(SStransport.can_fire)
 		for(var/datum/transport_controller/linear/tram/transport as anything in SStransport.transports_by_type[TRANSPORT_TYPE_TRAM])
 			save_tram_history(transport.specific_transport_id)
 		save_tram_counter()
+
 
 ///Loads up Poly's speech buffer.
 /datum/controller/subsystem/persistence/proc/load_poly()

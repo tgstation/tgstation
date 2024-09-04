@@ -11,7 +11,7 @@
 	crafting_complexity = FOOD_COMPLEXITY_2
 	/// type is spawned 5 at a time and replaces this pie when processed by cutting tool
 	var/obj/item/food/pieslice/slice_type
-	/// so that the yield can change if it isnt 5
+	/// so that the yield can change if it isn't 5
 	var/yield = 5
 
 /obj/item/food/pie/make_processable()
@@ -38,6 +38,27 @@
 	tastes = list("pie" = 1)
 	foodtypes = GRAIN
 	crafting_complexity = FOOD_COMPLEXITY_2
+
+/obj/item/food/pie/plain/Initialize(mapload)
+	. = ..()
+	AddComponent(/datum/component/customizable_reagent_holder, /obj/item/food/pie/empty, CUSTOM_INGREDIENT_ICON_FILL, max_ingredients = 8)
+
+/obj/item/food/pie/empty
+	name = "pie"
+	desc = "A custom pie made by a crazed chef."
+	icon_state = "pie_custom"
+	foodtypes = GRAIN
+	slice_type = /obj/item/food/pieslice/empty
+
+/obj/item/food/pieslice/empty
+	name = "pie slice"
+	desc = "A custom pie slice made by a crazed chef."
+	icon_state = "pie_custom_slice"
+	foodtypes = GRAIN
+
+/obj/item/food/pieslice/empty/Initialize(mapload)
+	. = ..()
+	AddComponent(/datum/component/customizable_reagent_holder, null, CUSTOM_INGREDIENT_ICON_FILL, max_ingredients = 8)
 
 /obj/item/food/pie/cream
 	name = "banana cream pie"
@@ -77,7 +98,7 @@
 		living_target_getting_hit.visible_message(span_warning("[living_target_getting_hit] is creamed by [src]!"), span_userdanger("You've been creamed by [src]!"))
 		playsound(living_target_getting_hit, SFX_DESECRATION, 50, TRUE)
 	if(is_creamable && is_type_in_typecache(hit_atom, GLOB.creamable))
-		hit_atom.AddComponent(/datum/component/creamed, src)
+		hit_atom.AddComponent(/datum/component/face_decal/creampie, "creampie", EXTERNAL_FRONT)
 	qdel(src)
 
 /obj/item/food/pie/cream/nostun
@@ -316,6 +337,7 @@
 	)
 	tastes = list("nothing" = 3)
 	foodtypes = GRAIN
+	crafted_food_buff = /datum/status_effect/food/trait/mute
 
 /obj/item/food/pie/berrytart
 	name = "berry tart"

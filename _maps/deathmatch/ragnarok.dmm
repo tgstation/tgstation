@@ -1,0 +1,2160 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"aJ" = (
+/obj/item/wallframe/painting/eldritch/beauty,
+/turf/open/floor/plating/heretic_rust,
+/area/deathmatch)
+"aN" = (
+/obj/structure/flora/rock/pile/jungle/style_random,
+/turf/open/misc/asteroid/moon,
+/area/deathmatch)
+"bb" = (
+/obj/structure/flora/coconuts,
+/turf/open/misc/dirt/jungle,
+/area/deathmatch)
+"bj" = (
+/obj/effect/turf_decal/siding/wood/corner,
+/obj/structure/bonfire/prelit,
+/turf/open/floor/wood/large,
+/area/deathmatch)
+"bn" = (
+/turf/closed/wall/mineral/bronze,
+/area/deathmatch)
+"bv" = (
+/obj/effect/turf_decal/weather/dirt{
+	dir = 4
+	},
+/obj/effect/turf_decal/siding/wood,
+/turf/open/water/jungle,
+/area/deathmatch)
+"bI" = (
+/turf/open/misc/asteroid/moon,
+/area/deathmatch)
+"bO" = (
+/obj/structure/fluff/clockwork/alloy_shards/medium,
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/misc/asteroid/moon,
+/area/deathmatch)
+"bU" = (
+/turf/open/indestructible/plating,
+/area/deathmatch)
+"cb" = (
+/obj/effect/decal/cleanable/blood,
+/obj/effect/turf_decal/weather/dirt{
+	dir = 6
+	},
+/turf/open/floor/cult,
+/area/deathmatch)
+"cr" = (
+/obj/effect/decal/cleanable/blood/gibs,
+/turf/open/floor/cult,
+/area/deathmatch)
+"cs" = (
+/obj/structure/flora/grass/jungle/b/style_random,
+/obj/effect/turf_decal/weather/dirt{
+	dir = 5
+	},
+/turf/open/misc/dirt/jungle/wasteland,
+/area/deathmatch)
+"cH" = (
+/obj/effect/turf_decal/weather/dirt{
+	dir = 8
+	},
+/turf/open/floor/cult,
+/area/deathmatch)
+"cR" = (
+/obj/effect/landmark/deathmatch_player_spawn,
+/obj/effect/turf_decal/weather/dirt,
+/turf/open/misc/asteroid/moon,
+/area/deathmatch)
+"cT" = (
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/wood/tile,
+/area/deathmatch)
+"dv" = (
+/obj/structure/fluff/clockwork/clockgolem_remains,
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/bronze,
+/area/deathmatch)
+"dI" = (
+/obj/effect/turf_decal/weather/dirt{
+	dir = 6
+	},
+/turf/open/misc/dirt/jungle/wasteland,
+/area/deathmatch)
+"dS" = (
+/obj/structure/flora/rock/pile/jungle/style_random,
+/turf/open/misc/grass/jungle,
+/area/deathmatch)
+"eB" = (
+/obj/effect/spawner/random/decoration/glowstick/on,
+/turf/open/misc/dirt/jungle,
+/area/deathmatch)
+"eG" = (
+/obj/effect/turf_decal/siding/wood,
+/obj/structure/flora/grass/jungle/b/style_random,
+/turf/open/misc/grass/jungle,
+/area/deathmatch)
+"eL" = (
+/obj/effect/decal/remains/human,
+/turf/open/floor/plating/heretic_rust,
+/area/deathmatch)
+"eU" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/decal/remains/human,
+/turf/open/floor/plating/heretic_rust,
+/area/deathmatch)
+"fc" = (
+/obj/effect/rune/wall,
+/obj/effect/turf_decal/weather/dirt{
+	dir = 10
+	},
+/obj/effect/turf_decal/weather/dirt{
+	dir = 1
+	},
+/turf/open/floor/cult,
+/area/deathmatch)
+"fl" = (
+/obj/structure/fake_stairs/wood,
+/turf/open/misc/grass/jungle,
+/area/deathmatch)
+"ft" = (
+/obj/effect/turf_decal/siding/wood/end,
+/obj/effect/turf_decal/siding/wood{
+	dir = 1
+	},
+/turf/open/water/jungle,
+/area/deathmatch)
+"fO" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/turf_decal/weather/dirt{
+	dir = 4
+	},
+/turf/open/floor/plating/heretic_rust,
+/area/deathmatch)
+"fW" = (
+/obj/structure/flora/rock/pile/style_random,
+/obj/structure/fluff/clockwork/alloy_shards/medium,
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/misc/asteroid/moon,
+/area/deathmatch)
+"gi" = (
+/obj/effect/turf_decal/siding/wood,
+/obj/structure/flora/bush/jungle/a/style_random,
+/turf/open/misc/grass/jungle,
+/area/deathmatch)
+"gx" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 1
+	},
+/obj/structure/flora/coconuts,
+/turf/open/misc/dirt/jungle,
+/area/deathmatch)
+"gz" = (
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/cult,
+/area/deathmatch)
+"gJ" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 1
+	},
+/obj/effect/turf_decal/siding/wood{
+	dir = 4
+	},
+/turf/open/misc/grass/jungle,
+/area/deathmatch)
+"hg" = (
+/obj/effect/visible_heretic_influence,
+/obj/effect/turf_decal/weather/dirt{
+	dir = 4
+	},
+/turf/open/floor/plating/heretic_rust,
+/area/deathmatch)
+"hr" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 4
+	},
+/obj/structure/flora/grass/jungle/b/style_random,
+/turf/open/misc/grass/jungle,
+/area/deathmatch)
+"hw" = (
+/obj/structure/flora/bush/jungle/b/style_random,
+/turf/open/misc/grass/jungle,
+/area/deathmatch)
+"hV" = (
+/turf/open/chasm/jungle,
+/area/deathmatch)
+"hY" = (
+/mob/living/carbon/human/species/monkey,
+/obj/item/flashlight/flare/torch,
+/turf/open/misc/grass/jungle,
+/area/deathmatch)
+"ih" = (
+/obj/effect/turf_decal/siding/wood/corner{
+	dir = 8
+	},
+/obj/structure/flora/bush/jungle/b/style_random,
+/turf/open/misc/grass/jungle,
+/area/deathmatch)
+"ij" = (
+/obj/structure/flora/rock/pile/style_random,
+/turf/open/misc/asteroid/moon,
+/area/deathmatch)
+"iq" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 4
+	},
+/turf/open/misc/grass/jungle,
+/area/deathmatch)
+"iJ" = (
+/obj/effect/turf_decal/weather/dirt{
+	dir = 9
+	},
+/turf/open/water/jungle,
+/area/deathmatch)
+"iO" = (
+/obj/structure/flora/bush/jungle/b/style_random,
+/obj/effect/decal/cleanable/cobweb/cobweb2,
+/turf/open/misc/dirt/jungle/dark,
+/area/deathmatch)
+"jb" = (
+/obj/effect/turf_decal/siding/wood/corner,
+/obj/effect/turf_decal/siding/wood{
+	dir = 1
+	},
+/obj/effect/turf_decal/weather/dirt{
+	dir = 6
+	},
+/turf/open/water/jungle,
+/area/deathmatch)
+"jv" = (
+/obj/structure/flora/grass/jungle/b/style_random,
+/turf/open/misc/grass/jungle,
+/area/deathmatch)
+"jC" = (
+/obj/item/food/grown/banana,
+/turf/open/misc/asteroid/moon,
+/area/deathmatch)
+"jI" = (
+/obj/effect/rune/wall,
+/obj/effect/turf_decal/weather/dirt{
+	dir = 6
+	},
+/turf/open/floor/cult,
+/area/deathmatch)
+"jL" = (
+/obj/structure/flora/rock/style_random,
+/turf/open/misc/asteroid/moon,
+/area/deathmatch)
+"jP" = (
+/obj/effect/decal/cleanable/blood/innards,
+/turf/open/floor/cult,
+/area/deathmatch)
+"kc" = (
+/obj/structure/flora/grass/jungle/b/style_random,
+/obj/effect/turf_decal/weather/dirt{
+	dir = 4
+	},
+/turf/open/misc/dirt/jungle/wasteland,
+/area/deathmatch)
+"ku" = (
+/obj/structure/flora/tree/jungle/style_random,
+/obj/item/food/grown/banana/bunch,
+/turf/open/misc/grass/jungle,
+/area/deathmatch)
+"lr" = (
+/obj/effect/turf_decal/siding/wood,
+/obj/structure/bonfire/prelit,
+/turf/open/floor/wood/large,
+/area/deathmatch)
+"lx" = (
+/obj/effect/turf_decal/siding/wood,
+/turf/open/misc/dirt/jungle,
+/area/deathmatch)
+"lC" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/turf_decal/weather/dirt{
+	dir = 10
+	},
+/turf/open/floor/cult,
+/area/deathmatch)
+"lK" = (
+/obj/structure/chair/wood/wings{
+	dir = 1
+	},
+/obj/effect/landmark/deathmatch_player_spawn,
+/turf/open/floor/wood/tile,
+/area/deathmatch)
+"lR" = (
+/obj/effect/turf_decal/weather/dirt{
+	dir = 4
+	},
+/turf/open/floor/plating/heretic_rust,
+/area/deathmatch)
+"lX" = (
+/obj/effect/rune/blood_boil,
+/obj/effect/turf_decal/weather/dirt,
+/obj/effect/turf_decal/weather/dirt{
+	dir = 1
+	},
+/turf/open/floor/cult,
+/area/deathmatch)
+"mr" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/vomit,
+/turf/open/indestructible/plating,
+/area/deathmatch)
+"mD" = (
+/obj/effect/decal/cleanable/cobweb/cobweb2,
+/obj/effect/turf_decal/weather/dirt{
+	dir = 8
+	},
+/turf/open/floor/cult,
+/area/deathmatch)
+"nO" = (
+/obj/structure/flora/bush/jungle/c/style_random,
+/turf/open/misc/grass/jungle,
+/area/deathmatch)
+"ou" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 1
+	},
+/obj/effect/turf_decal/weather/dirt{
+	dir = 8
+	},
+/turf/open/water/jungle,
+/area/deathmatch)
+"ox" = (
+/obj/effect/cosmic_rune,
+/turf/open/floor/plating/heretic_rust,
+/area/deathmatch)
+"oB" = (
+/turf/closed/wall/mineral/wood/nonmetal,
+/area/deathmatch)
+"oC" = (
+/obj/structure/flora/grass/jungle/b/style_random,
+/turf/open/misc/dirt/jungle/wasteland,
+/area/deathmatch)
+"oF" = (
+/obj/structure/flora/rock/pile/style_random,
+/obj/effect/decal/cleanable/rubble,
+/obj/effect/turf_decal/weather/dirt,
+/turf/open/misc/asteroid/moon,
+/area/deathmatch)
+"oO" = (
+/obj/effect/turf_decal/weather/dirt{
+	dir = 6
+	},
+/turf/open/water/jungle,
+/area/deathmatch)
+"pr" = (
+/obj/structure/flora/bush/jungle/a/style_random,
+/obj/effect/decal/cleanable/ants/fire,
+/turf/open/misc/grass/jungle,
+/area/deathmatch)
+"px" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/decal/cleanable/rubble,
+/turf/open/misc/asteroid/moon,
+/area/deathmatch)
+"pz" = (
+/obj/effect/decal/cleanable/cobweb,
+/obj/effect/decal/cleanable/dirt,
+/obj/item/wallframe/painting/eldritch/vines,
+/turf/open/indestructible/plating,
+/area/deathmatch)
+"pF" = (
+/obj/effect/rune/blood_boil,
+/obj/effect/decal/cleanable/blood/tracks,
+/obj/effect/turf_decal/weather/dirt{
+	dir = 10
+	},
+/obj/effect/turf_decal/weather/dirt{
+	dir = 4
+	},
+/turf/open/floor/cult,
+/area/deathmatch)
+"qa" = (
+/turf/open/misc/grass/jungle,
+/area/deathmatch)
+"qg" = (
+/turf/open/floor/wood/tile,
+/area/deathmatch)
+"qh" = (
+/obj/effect/turf_decal/weather/dirt{
+	dir = 10
+	},
+/turf/open/water/jungle,
+/area/deathmatch)
+"qk" = (
+/obj/effect/decal/cleanable/blood/footprints,
+/obj/effect/turf_decal/weather/dirt,
+/obj/item/flashlight/flare/culttorch,
+/turf/open/floor/cult,
+/area/deathmatch)
+"qp" = (
+/obj/effect/turf_decal/siding/wood/corner{
+	dir = 4
+	},
+/obj/structure/flora/tree/jungle/small/style_random,
+/obj/structure/flora/coconuts,
+/turf/open/misc/grass/jungle,
+/area/deathmatch)
+"qL" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 8
+	},
+/obj/effect/turf_decal/siding/wood/corner,
+/turf/open/misc/grass/jungle,
+/area/deathmatch)
+"rc" = (
+/obj/structure/fluff/clockwork/alloy_shards,
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/bronze/flat,
+/area/deathmatch)
+"rh" = (
+/obj/structure/fluff/clockwork/alloy_shards/medium,
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/decal/cleanable/oil/slippery,
+/turf/open/misc/asteroid/moon,
+/area/deathmatch)
+"rm" = (
+/obj/structure/flora/rock/pile/jungle/large/style_random,
+/turf/open/misc/grass/jungle,
+/area/deathmatch)
+"rD" = (
+/obj/effect/turf_decal/siding/wood,
+/obj/effect/turf_decal/weather/dirt{
+	dir = 4
+	},
+/turf/open/water/jungle,
+/area/deathmatch)
+"rH" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 4
+	},
+/turf/open/misc/dirt/jungle,
+/area/deathmatch)
+"sa" = (
+/obj/structure/flora/rock/style_random,
+/obj/effect/decal/cleanable/cobweb,
+/obj/effect/decal/cleanable/rubble,
+/turf/open/misc/asteroid/moon,
+/area/deathmatch)
+"sd" = (
+/obj/structure/table/bronze,
+/obj/item/toy/clockwork_watch,
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/bronze,
+/area/deathmatch)
+"sC" = (
+/obj/structure/flora/grass/jungle/b/style_random,
+/turf/open/misc/dirt/jungle,
+/area/deathmatch)
+"sE" = (
+/obj/effect/visible_heretic_influence,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/indestructible/plating,
+/area/deathmatch)
+"sF" = (
+/obj/effect/decal/cleanable/blood/footprints,
+/turf/open/floor/cult,
+/area/deathmatch)
+"sJ" = (
+/obj/effect/turf_decal/weather/dirt{
+	dir = 8
+	},
+/obj/effect/turf_decal/weather/dirt{
+	dir = 4
+	},
+/turf/open/floor/cult,
+/area/deathmatch)
+"tl" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/closed/wall/r_wall/heretic_rust,
+/area/deathmatch)
+"tm" = (
+/obj/effect/turf_decal/weather/dirt{
+	dir = 4
+	},
+/turf/open/misc/dirt/jungle/wasteland,
+/area/deathmatch)
+"tE" = (
+/obj/effect/rune/malformed{
+	icon_state = "hierophant";
+	color = "#FFFF00"
+	},
+/obj/effect/landmark/deathmatch_player_spawn,
+/turf/open/floor/bronze/filled,
+/area/deathmatch)
+"uT" = (
+/obj/structure/table/bronze,
+/obj/item/clockwork_alloy,
+/obj/item/stack/sheet/bronze/thirty,
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/bronze,
+/area/deathmatch)
+"vI" = (
+/obj/structure/flora/tree/jungle/small/style_random,
+/obj/structure/flora/coconuts,
+/turf/open/misc/grass/jungle,
+/area/deathmatch)
+"vR" = (
+/obj/structure/rack/skeletal,
+/obj/item/clothing/head/helmet/chaplain/cage{
+	pixel_y = 11;
+	pixel_x = -1
+	},
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/wood/tile,
+/area/deathmatch)
+"wf" = (
+/obj/structure/rack/skeletal,
+/obj/item/clothing/head/helmet/chaplain{
+	pixel_y = 9
+	},
+/turf/open/floor/wood/tile,
+/area/deathmatch)
+"wv" = (
+/obj/effect/turf_decal/siding/wood,
+/turf/open/floor/wood/large,
+/area/deathmatch)
+"wH" = (
+/obj/effect/turf_decal/siding/wood/corner,
+/turf/open/floor/wood/large,
+/area/deathmatch)
+"wP" = (
+/obj/structure/flora/rock/style_random,
+/obj/effect/turf_decal/weather/dirt{
+	dir = 8
+	},
+/turf/open/misc/asteroid/moon,
+/area/deathmatch)
+"wR" = (
+/obj/structure/flora/rock/pile/jungle/style_random,
+/turf/open/misc/dirt/jungle,
+/area/deathmatch)
+"xc" = (
+/obj/structure/flora/grass/jungle/a/style_random,
+/mob/living/carbon/human/species/monkey,
+/turf/open/misc/grass/jungle,
+/area/deathmatch)
+"xx" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/item/flashlight/flare/culttorch,
+/turf/open/floor/cult,
+/area/deathmatch)
+"xC" = (
+/obj/effect/rune/wall,
+/obj/effect/turf_decal/weather/dirt,
+/turf/open/floor/cult,
+/area/deathmatch)
+"ye" = (
+/obj/effect/decal/cleanable/blood/tracks,
+/turf/open/floor/cult,
+/area/deathmatch)
+"yv" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/turf_decal/weather/dirt{
+	dir = 6
+	},
+/turf/open/floor/cult,
+/area/deathmatch)
+"yY" = (
+/obj/effect/decal/cleanable/vomit,
+/obj/effect/spawner/random/decoration/glowstick/on,
+/turf/open/floor/plating/heretic_rust,
+/area/deathmatch)
+"zo" = (
+/obj/structure/flora/rock/pile/jungle/style_random,
+/obj/effect/landmark/deathmatch_player_spawn,
+/turf/open/misc/grass/jungle,
+/area/deathmatch)
+"zX" = (
+/obj/structure/girder/bronze,
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/bronze/flat,
+/area/deathmatch)
+"Ab" = (
+/obj/effect/decal/cleanable/blood,
+/obj/effect/turf_decal/weather/dirt{
+	dir = 9
+	},
+/obj/effect/turf_decal/weather/dirt,
+/obj/item/flashlight/flare/culttorch,
+/turf/open/floor/cult,
+/area/deathmatch)
+"An" = (
+/obj/structure/fluff/clockwork/alloy_shards/large,
+/obj/effect/decal/cleanable/cobweb/cobweb2,
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/bronze,
+/area/deathmatch)
+"Ar" = (
+/obj/effect/decal/cleanable/blood,
+/obj/effect/turf_decal/weather/dirt{
+	dir = 5
+	},
+/turf/open/floor/cult,
+/area/deathmatch)
+"Av" = (
+/obj/structure/flora/rock/pile/style_random,
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/misc/asteroid/moon,
+/area/deathmatch)
+"AE" = (
+/obj/effect/turf_decal/weather/dirt{
+	dir = 4
+	},
+/turf/open/floor/cult,
+/area/deathmatch)
+"AN" = (
+/obj/structure/sacrificealtar,
+/obj/item/knife/bloodletter{
+	name = "McGuffin";
+	desc = "An occult looking dagger that is cold to the touch. Somehow, the flawless orb on the pommel is made entirely of liquid blood. Honestly pretty disappointing as far as Mcguffins go."
+	},
+/turf/open/floor/wood/tile,
+/area/deathmatch)
+"AO" = (
+/obj/effect/decal/cleanable/ants,
+/turf/closed/wall/heretic_rust,
+/area/deathmatch)
+"Ba" = (
+/obj/structure/destructible/cult/pylon,
+/turf/open/floor/cult,
+/area/deathmatch)
+"Bd" = (
+/obj/effect/turf_decal/weather/dirt{
+	dir = 6
+	},
+/turf/open/floor/plating/heretic_rust,
+/area/deathmatch)
+"Be" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/plating/heretic_rust,
+/area/deathmatch)
+"Bi" = (
+/obj/item/food/grown/banana,
+/turf/open/floor/plating/heretic_rust,
+/area/deathmatch)
+"Bl" = (
+/obj/effect/landmark/deathmatch_player_spawn,
+/turf/open/misc/grass/jungle,
+/area/deathmatch)
+"Bp" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 1
+	},
+/obj/effect/turf_decal/weather/dirt{
+	dir = 6
+	},
+/turf/open/water/jungle,
+/area/deathmatch)
+"CB" = (
+/obj/structure/destructible/eldritch_crucible,
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/vomit,
+/obj/effect/heretic_rune/big,
+/turf/open/indestructible/plating,
+/area/deathmatch)
+"CE" = (
+/obj/effect/turf_decal/weather/dirt{
+	dir = 4
+	},
+/obj/effect/turf_decal/weather/dirt{
+	dir = 8
+	},
+/turf/open/water/jungle,
+/area/deathmatch)
+"CR" = (
+/mob/living/carbon/human/species/monkey,
+/turf/open/misc/grass/jungle,
+/area/deathmatch)
+"Dn" = (
+/obj/structure/girder/cult,
+/turf/open/floor/cult,
+/area/deathmatch)
+"Do" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 1
+	},
+/obj/effect/turf_decal/weather/dirt{
+	dir = 9
+	},
+/turf/open/water/jungle,
+/area/deathmatch)
+"Ds" = (
+/obj/effect/turf_decal/weather/dirt{
+	dir = 8
+	},
+/obj/effect/turf_decal/siding/wood,
+/turf/open/water/jungle,
+/area/deathmatch)
+"Du" = (
+/obj/structure/flora/rock/pile/style_random,
+/obj/effect/turf_decal/weather/dirt{
+	dir = 9
+	},
+/obj/item/flashlight/flare/torch,
+/turf/open/misc/asteroid/moon,
+/area/deathmatch)
+"DA" = (
+/obj/effect/turf_decal/weather/dirt{
+	dir = 8
+	},
+/obj/effect/turf_decal/weather/dirt{
+	dir = 6
+	},
+/turf/open/water/jungle,
+/area/deathmatch)
+"EF" = (
+/obj/effect/decal/cleanable/dirt,
+/turf/open/indestructible/plating,
+/area/deathmatch)
+"Fj" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/misc/asteroid/moon,
+/area/deathmatch)
+"Fn" = (
+/obj/item/food/grown/banana/bunch,
+/turf/open/misc/grass/jungle,
+/area/deathmatch)
+"FK" = (
+/turf/open/misc/dirt/jungle,
+/area/deathmatch)
+"FO" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 4
+	},
+/obj/effect/turf_decal/siding/wood,
+/turf/open/floor/wood/large,
+/area/deathmatch)
+"FQ" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/ants,
+/turf/open/misc/grass/jungle,
+/area/deathmatch)
+"FS" = (
+/obj/structure/fluff/clockwork/alloy_shards/medium_gearbit,
+/obj/effect/decal/cleanable/cobweb/cobweb2,
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/bronze,
+/area/deathmatch)
+"Ga" = (
+/obj/effect/landmark/deathmatch_player_spawn,
+/obj/effect/turf_decal/weather/dirt,
+/turf/open/misc/dirt/jungle/wasteland,
+/area/deathmatch)
+"GD" = (
+/obj/structure/flora/bush/jungle/a/style_random,
+/turf/open/misc/grass/jungle,
+/area/deathmatch)
+"GE" = (
+/obj/effect/decal/cleanable/blood,
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/turf_decal/weather/dirt{
+	dir = 4
+	},
+/obj/effect/turf_decal/weather/dirt{
+	dir = 6
+	},
+/turf/open/floor/cult,
+/area/deathmatch)
+"GO" = (
+/obj/item/food/grown/banana,
+/turf/open/misc/grass/jungle,
+/area/deathmatch)
+"GS" = (
+/obj/structure/girder/bronze,
+/obj/effect/decal/cleanable/cobweb/cobweb2,
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/bronze/flat,
+/area/deathmatch)
+"HN" = (
+/obj/structure/flora/rock/pile/jungle/large/style_random,
+/obj/item/flashlight/flare/torch,
+/turf/open/misc/grass/jungle,
+/area/deathmatch)
+"HS" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/bronze/filled,
+/area/deathmatch)
+"HV" = (
+/obj/effect/rune/empower,
+/obj/effect/decal/cleanable/blood,
+/turf/open/floor/cult,
+/area/deathmatch)
+"Ic" = (
+/obj/effect/decal/cleanable/ants,
+/turf/open/misc/dirt/jungle,
+/area/deathmatch)
+"Ig" = (
+/turf/closed/indestructible/rock,
+/area/deathmatch)
+"Ik" = (
+/obj/structure/flora/bush/jungle/b/style_random,
+/obj/structure/flora/grass/jungle/b/style_random,
+/turf/open/misc/grass/jungle,
+/area/deathmatch)
+"Io" = (
+/obj/structure/fluff/clockwork/blind_eye,
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/bronze/filled,
+/area/deathmatch)
+"IG" = (
+/obj/structure/flora/bush/jungle/b/style_random,
+/mob/living/carbon/human/species/monkey,
+/turf/open/misc/grass/jungle,
+/area/deathmatch)
+"IM" = (
+/obj/effect/decal/cleanable/blood/footprints,
+/obj/effect/turf_decal/weather/dirt{
+	dir = 1
+	},
+/turf/open/floor/cult,
+/area/deathmatch)
+"Jf" = (
+/turf/open/misc/dirt/jungle/dark,
+/area/deathmatch)
+"JF" = (
+/obj/structure/flora/grass/jungle/a/style_random,
+/turf/open/misc/dirt/jungle/wasteland,
+/area/deathmatch)
+"JL" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 8
+	},
+/turf/open/misc/grass/jungle,
+/area/deathmatch)
+"Kg" = (
+/turf/open/water/jungle,
+/area/deathmatch)
+"Kl" = (
+/obj/effect/spawner/structure/window/bronze,
+/turf/open/misc/asteroid/moon,
+/area/deathmatch)
+"KL" = (
+/turf/open/floor/cult,
+/area/deathmatch)
+"KT" = (
+/obj/effect/turf_decal/siding/wood/corner{
+	dir = 1
+	},
+/turf/open/chasm/jungle,
+/area/deathmatch)
+"Lf" = (
+/obj/structure/fluff/clockwork/alloy_shards,
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/misc/asteroid/moon,
+/area/deathmatch)
+"LC" = (
+/obj/effect/decal/cleanable/blood/gibs/down,
+/turf/open/floor/cult,
+/area/deathmatch)
+"LU" = (
+/obj/structure/flora/grass/jungle/a/style_random,
+/turf/open/misc/grass/jungle,
+/area/deathmatch)
+"My" = (
+/obj/structure/table/wood,
+/obj/item/food/grown/holymelon,
+/turf/open/floor/wood/tile,
+/area/deathmatch)
+"MM" = (
+/obj/effect/turf_decal/siding/wood/corner{
+	dir = 4
+	},
+/turf/open/chasm/jungle,
+/area/deathmatch)
+"Nf" = (
+/obj/structure/girder/cult,
+/turf/open/misc/dirt/jungle/dark,
+/area/deathmatch)
+"NQ" = (
+/obj/effect/turf_decal/weather/dirt{
+	dir = 4
+	},
+/turf/open/water/jungle,
+/area/deathmatch)
+"NX" = (
+/obj/effect/turf_decal/weather/dirt{
+	dir = 8
+	},
+/obj/effect/turf_decal/siding/wood{
+	dir = 1
+	},
+/turf/open/water/jungle,
+/area/deathmatch)
+"Or" = (
+/obj/structure/flora/tree/jungle/style_random,
+/obj/structure/flora/coconuts,
+/turf/open/misc/grass/jungle,
+/area/deathmatch)
+"Ov" = (
+/obj/effect/turf_decal/siding/wood,
+/turf/open/misc/grass/jungle,
+/area/deathmatch)
+"Pi" = (
+/obj/effect/turf_decal/weather/dirt{
+	dir = 6
+	},
+/obj/effect/turf_decal/siding/wood,
+/turf/open/water/jungle,
+/area/deathmatch)
+"Px" = (
+/obj/structure/flora/tree/jungle/style_random,
+/turf/open/misc/grass/jungle,
+/area/deathmatch)
+"PH" = (
+/obj/effect/visible_heretic_influence,
+/turf/open/misc/dirt/jungle,
+/area/deathmatch)
+"PI" = (
+/turf/open/floor/wood/large,
+/area/deathmatch)
+"PU" = (
+/obj/structure/flora/bush/jungle/c/style_random,
+/obj/structure/flora/rock/style_random,
+/turf/open/misc/asteroid/moon,
+/area/deathmatch)
+"Qf" = (
+/turf/closed/wall/r_wall,
+/area/deathmatch)
+"QF" = (
+/obj/effect/visible_heretic_influence,
+/turf/open/misc/dirt/jungle/wasteland,
+/area/deathmatch)
+"QO" = (
+/obj/effect/forcefield/cult,
+/turf/open/misc/dirt/jungle/dark,
+/area/deathmatch)
+"QQ" = (
+/turf/closed/wall/r_wall/heretic_rust,
+/area/deathmatch)
+"Rj" = (
+/obj/structure/flora/rock/style_random,
+/obj/effect/turf_decal/weather/dirt,
+/turf/open/misc/asteroid/moon,
+/area/deathmatch)
+"Rm" = (
+/obj/effect/forcefield/cult/permanent,
+/turf/open/misc/dirt/jungle/dark,
+/area/deathmatch)
+"RE" = (
+/obj/structure/bonfire/prelit,
+/turf/open/misc/grass/jungle,
+/area/deathmatch)
+"RL" = (
+/obj/effect/turf_decal/siding/wood,
+/obj/structure/flora/rock/pile/jungle/style_random,
+/turf/open/misc/dirt/jungle,
+/area/deathmatch)
+"RW" = (
+/obj/effect/decal/cleanable/shreds,
+/turf/open/misc/asteroid/moon,
+/area/deathmatch)
+"Sf" = (
+/obj/effect/rune/wall,
+/turf/open/misc/dirt/jungle/dark,
+/area/deathmatch)
+"Sh" = (
+/obj/effect/decal/cleanable/blood/gibs/up,
+/turf/open/floor/cult,
+/area/deathmatch)
+"Sp" = (
+/obj/structure/fluff/clockwork/alloy_shards/small,
+/obj/structure/fluff/clockwork/fallen_armor,
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/bronze,
+/area/deathmatch)
+"Sw" = (
+/turf/open/misc/dirt/jungle/wasteland,
+/area/deathmatch)
+"SC" = (
+/turf/closed/wall/heretic_rust,
+/area/deathmatch)
+"SE" = (
+/obj/effect/turf_decal/weather/dirt{
+	dir = 5
+	},
+/turf/open/water/jungle,
+/area/deathmatch)
+"SW" = (
+/obj/effect/turf_decal/siding/wood/corner{
+	dir = 1
+	},
+/obj/structure/flora/grass/jungle/b/style_random,
+/obj/effect/turf_decal/siding/wood,
+/obj/effect/turf_decal/siding/wood{
+	dir = 4
+	},
+/turf/open/misc/grass/jungle,
+/area/deathmatch)
+"Ti" = (
+/obj/effect/decal/cleanable/vomit,
+/obj/effect/turf_decal/weather/dirt{
+	dir = 4
+	},
+/turf/open/indestructible/plating,
+/area/deathmatch)
+"To" = (
+/obj/structure/flora/bush/jungle/c/style_random,
+/obj/structure/flora/grass/jungle/b/style_random,
+/obj/structure/flora/rock/pile/jungle/large/style_random,
+/turf/open/misc/grass/jungle,
+/area/deathmatch)
+"TE" = (
+/obj/structure/flora/rock/pile/style_random,
+/obj/effect/landmark/deathmatch_player_spawn,
+/turf/open/misc/asteroid/moon,
+/area/deathmatch)
+"TN" = (
+/obj/effect/turf_decal/weather/dirt{
+	dir = 8
+	},
+/turf/open/water/jungle,
+/area/deathmatch)
+"TX" = (
+/obj/structure/flora/grass/jungle/b/style_random,
+/obj/effect/decal/cleanable/ants/fire,
+/turf/open/misc/grass/jungle,
+/area/deathmatch)
+"UI" = (
+/obj/effect/turf_decal/weather/dirt{
+	dir = 9
+	},
+/turf/open/floor/cult,
+/area/deathmatch)
+"UM" = (
+/obj/structure/flora/bush/jungle/b/style_random,
+/obj/effect/turf_decal/siding/wood,
+/turf/open/misc/grass/jungle,
+/area/deathmatch)
+"UQ" = (
+/obj/structure/rack/skeletal,
+/obj/item/clothing/head/helmet/chaplain/witchunter_hat{
+	pixel_y = 8;
+	pixel_x = -1
+	},
+/turf/open/floor/wood/tile,
+/area/deathmatch)
+"UX" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/decal/cleanable/vomit,
+/turf/open/floor/plating/heretic_rust,
+/area/deathmatch)
+"UY" = (
+/turf/open/floor/plating/heretic_rust,
+/area/deathmatch)
+"Vm" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 1
+	},
+/obj/structure/flora/grass/jungle/b/style_random,
+/turf/open/misc/dirt/jungle,
+/area/deathmatch)
+"Vv" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 1
+	},
+/turf/open/water/jungle,
+/area/deathmatch)
+"VF" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 1
+	},
+/obj/effect/turf_decal/siding/wood{
+	dir = 4
+	},
+/obj/effect/turf_decal/siding/wood{
+	dir = 8
+	},
+/obj/structure/flora/bush/jungle/b/style_random,
+/turf/open/misc/grass/jungle,
+/area/deathmatch)
+"VP" = (
+/obj/effect/spawner/random/decoration/glowstick/on,
+/turf/open/indestructible/plating,
+/area/deathmatch)
+"VY" = (
+/obj/structure/table/bronze,
+/obj/item/clothing/shoes/bronze,
+/obj/item/clothing/suit/costume/bronze,
+/obj/item/clothing/head/costume/bronze,
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/item/flashlight/flare/torch,
+/turf/open/floor/bronze/flat,
+/area/deathmatch)
+"VZ" = (
+/obj/effect/turf_decal/siding/wood/corner,
+/turf/open/misc/grass/jungle,
+/area/deathmatch)
+"Wm" = (
+/obj/structure/fluff/clockwork/alloy_shards/medium,
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/bronze,
+/area/deathmatch)
+"Wp" = (
+/obj/structure/flora/grass/jungle/b/style_random,
+/turf/open/misc/dirt/jungle/dark,
+/area/deathmatch)
+"Xa" = (
+/obj/structure/rack/skeletal,
+/obj/item/clothing/head/helmet/chaplain/ancient{
+	pixel_y = 6
+	},
+/turf/open/floor/wood/tile,
+/area/deathmatch)
+"XL" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/item/wallframe/painting/eldritch/weeping,
+/turf/open/floor/plating/heretic_rust,
+/area/deathmatch)
+"XT" = (
+/turf/closed/wall/mineral/cult/artificer,
+/area/deathmatch)
+"Yn" = (
+/obj/effect/decal/cleanable/ants,
+/turf/open/misc/grass/jungle,
+/area/deathmatch)
+"Ys" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 4
+	},
+/obj/structure/flora/rock/pile/jungle/style_random,
+/turf/open/misc/dirt/jungle,
+/area/deathmatch)
+"Yv" = (
+/obj/structure/flora/tree/jungle/small/style_random,
+/turf/open/misc/grass/jungle,
+/area/deathmatch)
+"Yx" = (
+/obj/structure/flora/rock/pile/jungle/style_random,
+/obj/effect/turf_decal/siding/wood/corner{
+	dir = 4
+	},
+/turf/open/misc/grass/jungle,
+/area/deathmatch)
+"YA" = (
+/obj/effect/decal/cleanable/blood/gibs/limb,
+/obj/effect/turf_decal/weather/dirt{
+	dir = 10
+	},
+/turf/open/floor/cult,
+/area/deathmatch)
+"YI" = (
+/obj/effect/turf_decal/weather/dirt{
+	dir = 4
+	},
+/turf/open/floor/wood/large,
+/area/deathmatch)
+"YN" = (
+/obj/structure/girder/cult,
+/obj/effect/turf_decal/weather/dirt{
+	dir = 6
+	},
+/turf/open/floor/cult,
+/area/deathmatch)
+"YY" = (
+/obj/structure/girder/cult,
+/obj/effect/turf_decal/weather/dirt{
+	dir = 9
+	},
+/turf/open/floor/cult,
+/area/deathmatch)
+"Zj" = (
+/obj/structure/flora/grass/jungle/b/style_random,
+/obj/effect/turf_decal/siding/wood,
+/obj/effect/turf_decal/siding/wood{
+	dir = 4
+	},
+/turf/open/misc/grass/jungle,
+/area/deathmatch)
+"Zw" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/wood/tile,
+/area/deathmatch)
+"ZJ" = (
+/obj/structure/destructible/cult/pants_altar,
+/obj/effect/rune/apocalypse{
+	req_cultists = 999
+	},
+/obj/item/knife/ritual,
+/turf/open/floor/cult,
+/area/deathmatch)
+"ZR" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 1
+	},
+/obj/effect/turf_decal/siding/wood{
+	dir = 8
+	},
+/obj/effect/turf_decal/siding/wood/corner,
+/turf/open/misc/grass/jungle,
+/area/deathmatch)
+"ZY" = (
+/obj/structure/bonfire/prelit,
+/turf/open/misc/dirt/jungle,
+/area/deathmatch)
+
+(1,1,1) = {"
+Ig
+Ig
+Ig
+Ig
+Ig
+Ig
+Ig
+Ig
+Ig
+Ig
+Ig
+Ig
+Ig
+Ig
+Ig
+Ig
+Ig
+Ig
+Ig
+Ig
+Ig
+Ig
+Ig
+Ig
+Ig
+Ig
+Ig
+Ig
+Ig
+"}
+(2,1,1) = {"
+Ig
+Ig
+Ig
+Ig
+Ig
+Ig
+Ig
+Ig
+Ig
+Ig
+SC
+SC
+SC
+Ig
+Ig
+Ig
+Ig
+Ig
+Ig
+Ig
+Ig
+Ig
+Ig
+Ig
+Ig
+Ig
+Ig
+Ig
+Ig
+"}
+(3,1,1) = {"
+Ig
+Ig
+Ig
+Ig
+Ig
+Ig
+Ig
+Ig
+Ig
+sa
+UY
+UY
+TE
+QQ
+QQ
+QQ
+Ig
+Ig
+Ig
+Ig
+Ig
+Ig
+Ig
+Ig
+Ig
+Ig
+Ig
+Ig
+Ig
+"}
+(4,1,1) = {"
+Ig
+Ig
+Ig
+Ig
+Ig
+Ig
+Ig
+bI
+qa
+Px
+qa
+dS
+bU
+UY
+UY
+bU
+QQ
+Ig
+Ig
+Ig
+Ig
+Ig
+Ig
+Ig
+Ig
+Ig
+Ig
+Ig
+Ig
+"}
+(5,1,1) = {"
+Ig
+Ig
+Ig
+Ig
+Ig
+Ig
+ij
+dS
+GO
+qa
+qa
+Sw
+oC
+EF
+Sw
+Sw
+Sw
+Px
+Ig
+Ig
+Ig
+Ig
+Ig
+Ig
+Ig
+Ig
+Ig
+Ig
+Ig
+"}
+(6,1,1) = {"
+Ig
+Ig
+Ig
+Ig
+Ig
+jL
+jv
+CR
+LU
+Yn
+Sw
+Sw
+yY
+aJ
+bU
+QQ
+QF
+Sw
+LU
+Ig
+Ig
+Ig
+Ig
+Ig
+Ig
+Ig
+Ig
+Ig
+Ig
+"}
+(7,1,1) = {"
+Ig
+Ig
+Ig
+Ig
+jL
+ij
+qa
+hw
+qa
+Sw
+oC
+SC
+sE
+UY
+Be
+ox
+Qf
+Sw
+Sw
+IG
+ij
+jL
+Ig
+Ig
+Ig
+Ig
+Ig
+Ig
+Ig
+"}
+(8,1,1) = {"
+Ig
+Ig
+Ig
+Ig
+bI
+nO
+HN
+qa
+vI
+oC
+QQ
+QQ
+UY
+Be
+UY
+bU
+UX
+Bi
+oC
+LU
+LU
+dS
+Ig
+Ig
+Ig
+Ig
+Ig
+Ig
+Ig
+"}
+(9,1,1) = {"
+Ig
+Ig
+Ig
+ij
+qa
+qa
+LU
+qa
+Sw
+JF
+QQ
+pz
+UY
+CB
+eL
+Be
+XL
+VP
+AO
+tm
+qa
+vI
+pr
+Ig
+Ig
+Ig
+Ig
+Ig
+Ig
+"}
+(10,1,1) = {"
+Ig
+Ig
+Ig
+aN
+qa
+qa
+Or
+Bl
+QF
+Qf
+tl
+UY
+eU
+UY
+UY
+UY
+SC
+kc
+Ga
+PH
+FK
+FK
+FK
+ZY
+Ig
+Ig
+Ig
+Ig
+Ig
+"}
+(11,1,1) = {"
+Ig
+Ig
+Ig
+GD
+qa
+LU
+Fn
+qa
+Sw
+Sw
+oC
+UY
+UY
+EF
+UY
+mr
+dI
+lx
+PI
+Vm
+iJ
+TN
+qh
+FK
+wR
+Ig
+Ig
+Ig
+Ig
+"}
+(12,1,1) = {"
+Ig
+Ig
+wR
+ZY
+Ic
+FK
+FK
+sC
+LU
+pr
+Sw
+Ti
+fO
+lR
+hg
+Bd
+FK
+lx
+PI
+NX
+NQ
+NQ
+NQ
+TN
+CE
+DA
+Ig
+Ig
+Ig
+"}
+(13,1,1) = {"
+Ig
+Ig
+iJ
+TN
+TN
+TN
+qh
+FK
+FK
+FK
+cs
+FK
+eB
+SC
+FK
+sC
+iJ
+Ds
+PI
+Bp
+FK
+FK
+wR
+SE
+FK
+sC
+Ig
+Ig
+Ig
+"}
+(14,1,1) = {"
+Ig
+Ig
+SE
+NQ
+NQ
+NQ
+Kg
+TN
+qh
+FK
+FK
+iJ
+qh
+RL
+PI
+Do
+Kg
+Pi
+PI
+gx
+FK
+qa
+FK
+FK
+FK
+Du
+Ig
+Ig
+Ig
+"}
+(15,1,1) = {"
+Ig
+Ig
+sC
+sC
+FK
+bb
+SE
+NQ
+bv
+PI
+ou
+NQ
+Kg
+Ds
+ft
+Vv
+oO
+FK
+ZY
+qa
+GD
+qa
+jv
+Yn
+GD
+RW
+jL
+Ig
+Ig
+"}
+(16,1,1) = {"
+Ig
+Ig
+wP
+GD
+qa
+Wp
+ZY
+FK
+RL
+PI
+Bp
+bb
+SE
+rD
+YI
+jb
+rH
+Ys
+iq
+iq
+hr
+qp
+GO
+hY
+qa
+ij
+Ig
+Ig
+Ig
+"}
+(17,1,1) = {"
+Ig
+Ig
+jC
+xc
+QO
+fc
+Nf
+Sf
+Rm
+yv
+Jf
+FK
+sC
+FK
+sC
+lx
+oB
+qg
+qg
+qg
+vR
+gJ
+qa
+rm
+jv
+nO
+Ig
+Ig
+Ig
+"}
+(18,1,1) = {"
+Ig
+Ig
+ij
+Px
+Nf
+lX
+Wp
+Jf
+Ab
+Sf
+Jf
+qa
+GD
+qa
+qa
+gi
+Xa
+cT
+My
+qg
+qg
+fl
+jv
+qa
+qa
+ku
+Ig
+Ig
+Ig
+"}
+(19,1,1) = {"
+Ig
+Ig
+PU
+cR
+Jf
+Ar
+cH
+cH
+KL
+YA
+QO
+Jf
+Yv
+qa
+RE
+Ov
+qg
+qg
+AN
+lK
+qg
+VF
+qa
+VZ
+iq
+Yx
+Ig
+Ig
+Ig
+"}
+(20,1,1) = {"
+Ig
+Ig
+Ig
+oF
+Nf
+Wp
+gz
+KL
+jP
+KL
+lC
+Sf
+Jf
+qa
+qa
+Ov
+wf
+qg
+My
+qg
+cT
+fl
+VZ
+Zj
+bj
+Ig
+Ig
+Ig
+Ig
+"}
+(21,1,1) = {"
+Ig
+Ig
+Ig
+Rj
+XT
+YY
+Sh
+ye
+ZJ
+ye
+LC
+pF
+XT
+qa
+FQ
+eG
+oB
+Zw
+qg
+qg
+UQ
+ZR
+Zj
+wH
+FO
+KT
+Ig
+Ig
+Ig
+"}
+(22,1,1) = {"
+Ig
+Ig
+XT
+KL
+sJ
+AE
+KL
+cr
+KL
+AE
+jI
+Nf
+Jf
+qa
+qa
+ih
+JL
+JL
+JL
+JL
+qL
+SW
+wH
+FO
+KT
+hV
+Ig
+Ig
+Ig
+"}
+(23,1,1) = {"
+Ig
+Ig
+XT
+GE
+ij
+Jf
+IM
+sF
+qk
+Nf
+Wp
+Jf
+jv
+hY
+qa
+qa
+qa
+qa
+qa
+qa
+Ov
+wH
+FO
+KT
+hV
+hV
+Ig
+Ig
+Ig
+"}
+(24,1,1) = {"
+Ig
+Ig
+Ig
+Wp
+Nf
+UI
+KL
+Ba
+xC
+Jf
+Jf
+qa
+qa
+jv
+To
+qa
+qa
+jv
+Or
+TX
+Ov
+wv
+KT
+hV
+hV
+Ig
+Ig
+Ig
+Ig
+"}
+(25,1,1) = {"
+Ig
+Ig
+XT
+mD
+KL
+HV
+gz
+KL
+YN
+Wp
+qa
+qa
+Yn
+qa
+qa
+qa
+jv
+qa
+dS
+qa
+UM
+lr
+MM
+hV
+Ig
+Ig
+Ig
+Ig
+Ig
+"}
+(26,1,1) = {"
+Ig
+Ig
+Ig
+XT
+xx
+KL
+Nf
+Sf
+Jf
+RE
+Px
+Ik
+GO
+qa
+nO
+jL
+Av
+bO
+rc
+bn
+Ig
+Ig
+Ig
+Ig
+Ig
+Ig
+Ig
+Ig
+Ig
+"}
+(27,1,1) = {"
+Ig
+Ig
+Ig
+Ig
+Dn
+cb
+Wp
+Jf
+qa
+jv
+qa
+qa
+qa
+jL
+bI
+Ig
+Lf
+px
+fW
+dv
+Sp
+zX
+bn
+Ig
+Ig
+Ig
+Ig
+Ig
+Ig
+"}
+(28,1,1) = {"
+Ig
+Ig
+Ig
+Ig
+Ig
+iO
+jL
+ij
+zo
+Ig
+Ig
+Ig
+Ig
+Ig
+Ig
+Ig
+An
+HS
+Fj
+Fj
+rh
+sd
+Kl
+Ig
+Ig
+Ig
+Ig
+Ig
+Ig
+"}
+(29,1,1) = {"
+Ig
+Ig
+Ig
+Ig
+Ig
+Ig
+Ig
+Ig
+Ig
+Ig
+Ig
+Ig
+Ig
+Ig
+Ig
+Ig
+bn
+GS
+Wm
+tE
+Io
+uT
+Kl
+Ig
+Ig
+Ig
+Ig
+Ig
+Ig
+"}
+(30,1,1) = {"
+Ig
+Ig
+Ig
+Ig
+Ig
+Ig
+Ig
+Ig
+Ig
+Ig
+Ig
+Ig
+Ig
+Ig
+Ig
+Ig
+Ig
+Ig
+Kl
+FS
+VY
+bn
+Ig
+Ig
+Ig
+Ig
+Ig
+Ig
+Ig
+"}
+(31,1,1) = {"
+Ig
+Ig
+Ig
+Ig
+Ig
+Ig
+Ig
+Ig
+Ig
+Ig
+Ig
+Ig
+Ig
+Ig
+Ig
+Ig
+Ig
+Ig
+Ig
+Ig
+Ig
+Ig
+Ig
+Ig
+Ig
+Ig
+Ig
+Ig
+Ig
+"}

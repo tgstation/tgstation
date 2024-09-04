@@ -81,9 +81,9 @@
 		return
 
 /obj/item/inducer/attackby(obj/item/used_item, mob/user)
+	var/obj/item/stock_parts/power_store/our_cell = get_cell()
 	if(istype(used_item, /obj/item/stock_parts/power_store))
 		if(opened)
-			var/obj/item/stock_parts/power_store/our_cell = get_cell()
 			if(isnull(our_cell))
 				if(!user.transferItemToLoc(used_item, src))
 					return
@@ -94,6 +94,15 @@
 			else
 				to_chat(user, span_warning("[src] already has \a [our_cell] installed!"))
 				return
+
+	if (istype(used_item, /obj/item/stack/sheet/mineral/plasma) && !isnull(our_cell))
+		if(our_cell.charge == our_cell.maxcharge)
+			balloon_alert(user, "already fully charged!")
+			return
+		used_item.use(1)
+		our_cell.give(1.5 * STANDARD_CELL_CHARGE)
+		balloon_alert(user, "cell recharged")
+		return
 
 	if(cantbeused(user))
 		return
@@ -187,7 +196,7 @@
 	opened = TRUE
 
 /obj/item/inducer/orderable
-	cell_type = /obj/item/stock_parts/power_store/cell/inducer_supply
+	cell_type = /obj/item/stock_parts/power_store/battery/upgraded
 	opened = FALSE
 
 /obj/item/inducer/sci
