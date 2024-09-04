@@ -307,14 +307,30 @@
 
 /obj/structure/aquarium/ui_data(mob/user)
 	. = ..()
-	.["fluid_type"] = fluid_type
+	.["fluidType"] = fluid_type
 	.["temperature"] = fluid_temp
-	.["allow_breeding"] = allow_breeding
-	.["feeding_interval"] = feeding_interval / (1 MINUTES)
-	var/list/content_data = list()
-	for(var/atom/movable/fish in contents)
-		content_data += list(list("name"=fish.name,"ref"=ref(fish)))
-	.["contents"] = content_data
+	.["allowBreeding"] = allow_breeding
+	.["FishData"] = list()
+	.["feedingInterval"] = feeding_interval / (1 MINUTES)
+	.["PropData"] = list()
+	for(var/atom/movable/item in contents)
+		if(isfish(item))
+			var/obj/item/fish/fish = item
+			.["fishData"] += list(list(
+				"fish_ref" = REF(fish),
+				"fish_name" = fish.name,
+				"fish_happiness" = fish.get_happiness_value(),
+				"fish_icon" = fish::icon,
+				"fish_icon_state" = fish::icon_state,
+				"fish_health" = fish.health,
+			))
+			continue
+		.["propData"] += list(list(
+			"prop_ref" = REF(item),
+			"prop_name" = item.name,
+			"prop_icon" = item::icon,
+			"prop_icon_state" = item::icon_state,
+		))
 
 /obj/structure/aquarium/ui_static_data(mob/user)
 	. = ..()
@@ -322,6 +338,7 @@
 	.["minTemperature"] = min_fluid_temp
 	.["maxTemperature"] = max_fluid_temp
 	.["fluidTypes"] = fluid_types
+	.["heart_icon"] = 'icons/effects/effects.dmi'
 
 /obj/structure/aquarium/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
@@ -345,14 +362,19 @@
 		if("feeding_interval")
 			feeding_interval = params["feeding_interval"] MINUTES
 			. = TRUE
-		if("remove")
-			var/atom/movable/inside = locate(params["ref"]) in contents
-			if(inside)
-				if(isitem(inside))
-					user.put_in_hands(inside)
-				else
-					inside.forceMove(get_turf(src))
-				to_chat(user,span_notice("You take out [inside] from [src]."))
+		if("pet_fish")
+			var/obj/item/fish/fish = locate(params["fish_reference"]) in contents
+			fish?.pet_fish(user)
+		if("remove_item")
+			var/atom/movable/item = locate(params["item_reference"]) in contents
+			item?.forceMove(drop_location())
+			to_chat(user, span_notice("You take out [item] from [src]."))
+		if("rename_fish")
+			var/new_name = sanitize_name(params["chosen_name"])
+			if(!new_name)
+				return
+			var/atom/movable/fish = locate(params["fish_reference"]) in contents
+			fish.name = new_name
 
 /obj/structure/aquarium/ui_interact(mob/user, datum/tgui/ui)
 	. = ..()

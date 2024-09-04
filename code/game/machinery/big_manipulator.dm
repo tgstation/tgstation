@@ -58,7 +58,6 @@
 		return
 	if(!manipulator_hand)
 		create_manipulator_hand()
-	manipulator_hand.forceMove(get_turf(src))
 
 /obj/machinery/big_manipulator/wrench_act(mob/living/user, obj/item/tool)
 	. = ..()
@@ -103,8 +102,9 @@
 
 /// Creat manipulator hand effect on manipulator core.
 /obj/machinery/big_manipulator/proc/create_manipulator_hand()
-	manipulator_hand = new/obj/effect/big_manipulator_hand(get_turf(src))
+	manipulator_hand = new/obj/effect/big_manipulator_hand(src)
 	manipulator_hand.dir = take_here
+	vis_contents += manipulator_hand
 
 /// Check servo tier and change manipulator speed, power_use and colour.
 /obj/machinery/big_manipulator/proc/manipulator_lvl()

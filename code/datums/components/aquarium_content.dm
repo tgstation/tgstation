@@ -24,7 +24,6 @@
 	//Current layer for the visual object
 	var/base_layer
 
-
 	/**
 	 *  Fish sprite how to:
 	 *  Need to be centered on 16,16 in the dmi and facing left by default.
@@ -97,6 +96,7 @@
 	ADD_TRAIT(parent, TRAIT_FISH_CASE_COMPATIBILE, REF(src))
 	RegisterSignal(parent, COMSIG_TRY_INSERTING_IN_AQUARIUM, PROC_REF(is_ready_to_insert))
 	RegisterSignal(parent, COMSIG_MOVABLE_MOVED, PROC_REF(enter_aquarium))
+	RegisterSignal(parent, COMSIG_FISH_PETTED, PROC_REF(on_fish_petted))
 
 	//If component is added to something already in aquarium at the time initialize it properly.
 	var/atom/movable/movable_parent = parent
@@ -274,7 +274,6 @@
 			dead_animation()
 			return
 
-
 /// Create looping random path animation, pixel offsets parameters include offsets already
 /datum/component/aquarium_content/proc/swim_animation()
 	var/avg_width = round(sprite_width / 2)
@@ -324,6 +323,11 @@
 		current_aquarium.free_layer(base_layer)
 	base_layer = current_aquarium.request_layer(layer_mode)
 	vc_obj.layer = base_layer
+
+/datum/component/aquarium_content/proc/on_fish_petted()
+	SIGNAL_HANDLER
+
+	new /obj/effect/temp_visual/heart(get_turf(parent))
 
 /datum/component/aquarium_content/proc/randomize_base_position()
 	var/list/aq_properties = current_aquarium.get_surface_properties()

@@ -300,7 +300,6 @@
 /area/ruin/pizzeria)
 "kr" = (
 /obj/structure/table,
-/obj/item/trash/waffles,
 /obj/effect/turf_decal/tile/blue/opposingcorners{
 	dir = 1
 	},
