@@ -6,7 +6,7 @@
 /obj/machinery/portable_atmospherics/canister
 	name = "canister"
 	desc = "A canister for the storage of gas."
-	icon = 'icons/map_icons.dmi'
+	icon = 'icons/map_icons/objects.dmi'
 	icon_state = "/obj/machinery/portable_atmospherics/canister"
 	post_init_icon_state = ""
 	greyscale_config = /datum/greyscale_config/canister
