@@ -528,7 +528,7 @@ BLIND     // can't see anything
 	update_appearance() //most of the time the sprite changes
 
 /obj/item/clothing/proc/can_use(mob/user)
-	return istype(user) && !user.incapacitated()
+	return istype(user) && !user.incapacitated
 
 /obj/item/clothing/proc/spawn_shreds()
 	new /obj/effect/decal/cleanable/shreds(get_turf(src), name)

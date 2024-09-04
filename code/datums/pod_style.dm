@@ -56,7 +56,7 @@
 	glow_color = "blue"
 	id = "deathsquad"
 
-/datum/pod_style/advanced
+/datum/pod_style/cultist
 	name = "bloody supply pod"
 	ui_name = "Cultist"
 	desc = "A Nanotrasen supply pod covered in scratch-marks, blood, and strange runes."
@@ -67,7 +67,7 @@
 /datum/pod_style/missile
 	name = "cruise missile"
 	ui_name = "Missile"
-	desc = "A big ass missile that didn't seem to fully detonate. It was likely launched from some far-off deep space missile silo. There appears to be an auxillery payload hatch on the side, though manually opening it is likely impossible."
+	desc = "A big ass missile that didn't seem to fully detonate. It was likely launched from some far-off deep space missile silo. There appears to be an auxiliary payload hatch on the side, though manually opening it is likely impossible."
 	shape = POD_SHAPE_OTHER
 	icon_state = "missile"
 	has_door = FALSE
@@ -79,7 +79,7 @@
 /datum/pod_style/missile/syndicate
 	name = "\improper Syndicate cruise missile"
 	ui_name = "Syndie Missile"
-	desc = "A big ass, blood-red missile that didn't seem to fully detonate. It was likely launched from some deep space Syndicate missile silo. There appears to be an auxillery payload hatch on the side, though manually opening it is likely impossible."
+	desc = "A big ass, blood-red missile that didn't seem to fully detonate. It was likely launched from some deep space Syndicate missile silo. There appears to be an auxiliary payload hatch on the side, though manually opening it is likely impossible."
 	icon_state = "smissile"
 	id = "syndie_missile"
 

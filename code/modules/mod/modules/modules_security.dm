@@ -269,7 +269,7 @@
 	dispense_type = /obj/item/grenade/mirage
 
 /obj/item/mod/module/dispenser/mirage/on_use()
-	var/obj/item/grenade/mirage/grenade = .
+	var/obj/item/grenade/mirage/grenade = ..()
 	grenade.arm_grenade(mod.wearer)
 
 /obj/item/grenade/mirage
@@ -331,9 +331,6 @@
 	RegisterSignal(dampening_field, COMSIG_DAMPENER_RELEASE, PROC_REF(release_projectile))
 
 /obj/item/mod/module/projectile_dampener/on_deactivation(display_message, deleting = FALSE)
-	. = ..()
-	if(!.)
-		return
 	QDEL_NULL(dampening_field)
 
 /obj/item/mod/module/projectile_dampener/proc/dampen_projectile(datum/source, obj/projectile/projectile)
@@ -571,7 +568,7 @@
 	projectile.ricochets_max += 1
 	projectile.min_ricochets += 1
 	projectile.ricochet_incidence_leeway = 0 //allows the projectile to bounce at any angle.
-	ADD_TRAIT(projectile, TRAIT_ALWAYS_HIT_ZONE, MOD_TRAIT)
+	projectile.accuracy_falloff = 0
 
 #undef SHOOTING_ASSISTANT_OFF
 #undef STORMTROOPER_MODE

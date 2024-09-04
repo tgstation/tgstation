@@ -29,7 +29,7 @@
 					/obj/item/reagent_containers/hypospray/medipen/ekit = 3,
 					/obj/item/reagent_containers/hypospray/medipen/blood_loss = 3)
 	crate_name = "medipen crate"
-	crate_type = /obj/structure/closet/crate/medical
+	crate_type = /obj/structure/closet/crate/deforest
 
 /datum/supply_pack/medical/coroner_crate
 	name = "Autopsy Kit"
@@ -121,7 +121,7 @@
 /datum/supply_pack/medical/experimentalmedicine
 	name = "Experimental Medicine Crate"
 	desc = "A crate containing the medication required for living with Hereditary Manifold Sickness, Sansufentanyl."
-	cost = CARGO_CRATE_VALUE * 2
+	cost = CARGO_CRATE_VALUE * 3
 	contains = list(/obj/item/storage/pill_bottle/sansufentanyl = 2)
 	crate_name = "experimental medicine crate"
 	crate_type = /obj/structure/closet/crate/medical
@@ -138,6 +138,7 @@
 		/obj/item/emergency_bed,
 	)
 	crate_name = "surgical supplies crate"
+	crate_type = /obj/structure/closet/crate/deforest
 
 /datum/supply_pack/medical/salglucanister
 	name = "Heavy-Duty Saline Canister"
@@ -187,6 +188,6 @@
 	name = "Strong-Arm Implant Set"
 	desc = "A crate containing two implants, which can be surgically implanted to empower the strength of human arms. Warranty void if exposed to electromagnetic pulses."
 	cost = CARGO_CRATE_VALUE * 6
-	contains = list(/obj/item/organ/internal/cyberimp/arm/muscle = 2)
+	contains = list(/obj/item/organ/internal/cyberimp/arm/strongarm = 2)
 	crate_name = "Strong-Arm implant crate"
 	discountable = SUPPLY_PACK_RARE_DISCOUNTABLE

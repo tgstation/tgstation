@@ -74,7 +74,7 @@
 /obj/item/soap/nanotrasen/cyborg
 
 /obj/item/soap/deluxe
-	desc = "A deluxe Waffle Co. brand bar of soap. Smells of high-class luxury."
+	desc = "A deluxe Waffle Corporation brand bar of soap. Smells of high-class luxury."
 	grind_results = list(/datum/reagent/consumable/aloejuice = 10, /datum/reagent/lye = 10)
 	icon_state = "soapdeluxe"
 	inhand_icon_state = "soapdeluxe"
@@ -88,6 +88,13 @@
 	inhand_icon_state = "soapsyndie"
 	worn_icon_state = "soapsyndie"
 	cleanspeed = 0.5 SECONDS //faster than mops so it's useful for traitors who want to clean crime scenes
+
+/obj/item/soap/drone
+	name = "\improper integrated soap module"
+	inhand_icon_state = "soapnt"
+	worn_icon_state = "soapnt"
+	cleanspeed = 0.5 SECONDS //can be changed if someone isn't happy
+	uses = INFINITY
 
 /obj/item/soap/omega
 	name = "\improper Omega soap"

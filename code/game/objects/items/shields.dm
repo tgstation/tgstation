@@ -99,6 +99,15 @@
 	max_integrity = 55
 	w_class = WEIGHT_CLASS_NORMAL
 
+/obj/item/shield/buckler/moonflower
+	name = "moonflower buckler"
+	desc = "A buckler made from a steel-cap reinforced moonflower."
+	icon_state = "moonflower_buckler"
+	inhand_icon_state = "moonflower_buckler"
+	block_chance = 40
+	max_integrity = 40
+	w_class = WEIGHT_CLASS_NORMAL
+
 /obj/item/shield/kite
 	name = "kite shield"
 	desc = "Protect your internal organs with this almond shaped shield."
@@ -140,6 +149,8 @@
 	shield_break_sound = 'sound/effects/glassbr3.ogg'
 	shield_break_leftover = /obj/item/shard
 	armor_type = /datum/armor/item_shield/riot
+	pickup_sound = 'sound/items/plastic_shield_pick_up.ogg'
+	drop_sound = 'sound/items/plastic_shield_drop.ogg'
 
 /obj/item/shield/riot/Initialize(mapload)
 	. = ..()
@@ -273,7 +284,7 @@
 
 /obj/item/shield/energy
 	name = "combat energy shield"
-	desc = "A hardlight shield capable of reflecting blocked energy projectiles, as well las providing well-rounded defense from most all other attacks."
+	desc = "A hardlight shield capable of reflecting blocked energy projectiles, as well as providing well-rounded defense from most all other attacks."
 	icon_state = "eshield"
 	inhand_icon_state = "eshield"
 	w_class = WEIGHT_CLASS_TINY
@@ -344,7 +355,7 @@
 
 /obj/item/shield/energy/advanced
 	name = "advanced combat energy shield"
-	desc = "A hardlight shield capable of reflecting all energy projectiles, as well las providing well-rounded defense from most all other attacks. \
+	desc = "A hardlight shield capable of reflecting all energy projectiles, as well as providing well-rounded defense from most all other attacks. \
 		Often employed by Nanotrasen deathsquads."
 	icon_state = "advanced_eshield"
 	inhand_icon_state = "advanced_eshield"

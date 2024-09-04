@@ -1,3 +1,6 @@
+/// If anyone changes the hydraulic sound effect I sure hope they update this...
+#define HYDRAULIC_SFX_DURATION (2 SECONDS)
+
 ///coordinate and control movement across linked transport_controllers. allows moving large single multitile platforms and many 1 tile platforms.
 ///also is capable of linking platforms across linked z levels
 /datum/transport_controller/linear
@@ -10,6 +13,7 @@
 		/obj/machinery/power/supermatter_crystal,
 		/obj/structure/holosign,
 		/obj/machinery/field,
+		/obj/structure/fluff/tram_rail,
 	)
 
 	///whether the lift handled by this transport_controller datum is multitile as opposed to nxm platforms per z level
@@ -31,9 +35,6 @@
 
 	///bitfield of various transport states
 	var/controller_status = NONE
-
-	///if true, the platform cannot be manually moved.
-	var/controls_locked = FALSE
 
 	/// probability of being thrown hard during an emergency stop
 	var/throw_chance = 17.5
@@ -343,10 +344,8 @@
 	// Get the lowest or highest platform according to which direction we're moving
 	var/obj/structure/transport/linear/prime_lift = return_closest_platform_to_z(direction == UP ? world.maxz : 0)
 
-	// If anyone changes the hydraulic sound effect I sure hope they update this variable...
-	var/hydraulic_sfx_duration = 2 SECONDS
 	// ...because we use the duration of the sound effect to make it last for roughly the duration of the lift travel
-	playsound(prime_lift, 'sound/mecha/hydraulic.ogg', 25, vary = TRUE, frequency = clamp(hydraulic_sfx_duration / lift_move_duration, 0.33, 3))
+	playsound(prime_lift, 'sound/mecha/hydraulic.ogg', 25, vary = TRUE, frequency = clamp(HYDRAULIC_SFX_DURATION / lift_move_duration, 0.33, 3))
 
 	// Move the platform after a timer
 	addtimer(CALLBACK(src, PROC_REF(move_lift_vertically), direction, user), lift_move_duration, TIMER_UNIQUE)
@@ -465,6 +464,7 @@
 
 	// Close all lift doors
 	update_lift_doors(action = CYCLE_CLOSED)
+	sleep(1.1 SECONDS)
 	// Approach the desired z-level one step at a time
 	for(var/i in 1 to z_difference)
 		if(!Check_lift_move(direction))
@@ -482,7 +482,7 @@
 		if(QDELETED(src) || QDELETED(prime_lift))
 			return
 
-	addtimer(CALLBACK(src, PROC_REF(open_lift_doors_callback)), 2 SECONDS)
+	update_lift_doors(get_zs_we_are_on(), action = CYCLE_OPEN)
 	SEND_SIGNAL(src, COMSIG_LIFT_SET_DIRECTION, 0)
 	controls_lock(FALSE)
 	return TRUE
@@ -636,3 +636,5 @@
 		lift_to_reset.reset_contents(consider_anything_past, foreign_objects, foreign_non_player_mobs, consider_player_mobs)
 
 	return TRUE
+
+#undef HYDRAULIC_SFX_DURATION

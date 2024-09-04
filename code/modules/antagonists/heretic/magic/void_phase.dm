@@ -12,8 +12,8 @@
 	school = SCHOOL_FORBIDDEN
 	cooldown_time = 30 SECONDS
 
-	invocation = "Sunya'sthiti!"
-	invocation_type = INVOCATION_SHOUT
+	invocation = "RE'L'TY PH'S'E."
+	invocation_type = INVOCATION_WHISPER
 	spell_requirements = NONE
 
 	cast_range = 9

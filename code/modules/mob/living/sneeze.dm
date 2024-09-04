@@ -57,6 +57,7 @@
 	spread = 40
 	damage_type = BRUTE
 	damage = 0
+	hitsound = null
 
 	/// Call this when we hit something
 	var/datum/callback/sneezie_callback

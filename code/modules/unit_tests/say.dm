@@ -237,9 +237,9 @@
 	// Normally speaking, if there isn't a functional telecomms array on the same z-level, then handheld radios
 	// have a short delay before sending the message. We use the centcom frequency to get around this.
 	speaker_radio.set_frequency(FREQ_CENTCOM)
-	speaker_radio.independent = TRUE
+	speaker_radio.special_channels = RADIO_SPECIAL_CENTCOM
 	listener_radio.set_frequency(FREQ_CENTCOM)
-	listener_radio.independent = TRUE
+	listener_radio.special_channels = RADIO_SPECIAL_CENTCOM
 
 	var/pangram_quote = "The quick brown fox jumps over the lazy dog"
 

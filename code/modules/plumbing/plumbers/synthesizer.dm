@@ -89,7 +89,7 @@
 
 	.["current_reagent"] = initial(reagent_id.name)
 
-/obj/machinery/plumbing/synthesizer/ui_act(action, params)
+/obj/machinery/plumbing/synthesizer/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if(.)
 		return

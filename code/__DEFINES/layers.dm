@@ -145,9 +145,9 @@
 #define WIRE_LAYER (9 + TOPDOWN_LAYER)
 #define GLASS_FLOOR_LAYER (10 + TOPDOWN_LAYER)
 #define TRAM_RAIL_LAYER (11 + TOPDOWN_LAYER)
+#define ABOVE_OPEN_TURF_LAYER (12 + TOPDOWN_LAYER)
 ///catwalk overlay of /turf/open/floor/plating/catwalk_floor
-#define CATWALK_LAYER (12 + TOPDOWN_LAYER)
-#define ABOVE_OPEN_TURF_LAYER (13 + TOPDOWN_LAYER)
+#define CATWALK_LAYER (13 + TOPDOWN_LAYER)
 
 //WALL_PLANE layers
 #define BELOW_CLOSED_TURF_LAYER 2.053
@@ -253,7 +253,7 @@
 
 //---------- EMISSIVES -------------
 //Layering order of these is not particularly meaningful.
-//Important part is the seperation of the planes for control via plane_master
+//Important part is the separation of the planes for control via plane_master
 
 /// The layer you should use if you _really_ don't want an emissive overlay to be blocked.
 #define EMISSIVE_LAYER_UNBLOCKABLE 9999
