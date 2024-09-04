@@ -540,3 +540,22 @@
 	dynamic_category = RULESET_CATEGORY_NO_WITTING_CREW_ANTAGONISTS
 	threat_reduction = 15
 	dynamic_threat_id = "Background Checks"
+
+/datum/station_trait/to_terry
+	name = "Emergency Workplace Relocation"
+	report_message = "Right before you all boarded your shuttles to travel to your expected worksite, Syndicate threat actors disclosed the location of the site on several malicious channels, thus you will be relocated to an alternative workplace to continue your duties to the company. Glory to NanoTranesen"
+	trait_type = STATION_TRAIT_NEUTRAL
+	weight = 0.3
+	show_in_report = TRUE
+	can_revert = TRUE
+	var/destination = ""
+
+/datum/station_trait/to_terry/New()
+	destination = pick(
+	"bagil.tgstation13.org:2337",
+	"sybil.tgstation13.org:1337",
+	"terry.tgstation13.org:3336",
+	"campbell.tgstation13.org:6337",)
+
+/datum/station_trait/to_terry/proc/on_job_after_spawn(datum/source, datum/job/job, mob/living/spawned, client/player_client)
+	player_client << link(destination)

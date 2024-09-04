@@ -16,3 +16,4 @@
 /proc/unvalidated_client_error(client/target)
 	to_chat(target, span_warning("You are not fully initialized yet! Please wait a moment."))
 	log_access("Client [key_name(target)] attempted to execute a verb before being fully initialized.")
+link()
