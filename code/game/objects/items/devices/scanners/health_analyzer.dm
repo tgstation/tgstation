@@ -2,7 +2,6 @@
 #define SCANMODE_HEALTH 0
 #define SCANMODE_WOUND 1
 #define SCANMODE_COUNT 2 // Update this to be the number of scan modes if you add more
-var/list/report_list = list()
 
 /obj/item/healthanalyzer
 	name = "health analyzer"
@@ -31,6 +30,7 @@ var/list/report_list = list()
 	custom_price = PAYCHECK_COMMAND
 	/// If this analyzer will give a bonus to wound treatments apon woundscan.
 	var/give_wound_treatment_bonus = FALSE
+	var/last_scan_text
 
 /obj/item/healthanalyzer/Initialize(mapload)
 	. = ..()
@@ -89,6 +89,7 @@ var/list/report_list = list()
 	switch (scanmode)
 		if (SCANMODE_HEALTH)
 			healthscan(user, M, mode, advanced)
+			last_scan_text = healthscan(user, M, mode, advanced, tochat = FALSE)
 		if (SCANMODE_WOUND)
 			woundscan(user, M, src)
 
@@ -406,7 +407,6 @@ var/list/report_list = list()
 
 	if(tochat)
 		to_chat(user, examine_block(jointext(render_list, "")), trailing_newline = FALSE, type = MESSAGE_TYPE_INFO)
-		report_list = render_list
 	else
 		return(jointext(render_list, ""))
 
@@ -414,12 +414,12 @@ var/list/report_list = list()
 	. = ..()
 	print_report()
 
-/obj/item/healthanalyzer/proc/print_report()
+/obj/item/healthanalyzer/proc/print_report(mob/user)
 	var/obj/item/paper/report_paper = new(get_turf(src))
 
 	report_paper.name = "Health scan report"
 	var/report_text = "<center><B>Health scan report</B></center><HR><BR>"
-	report_text += jointext(report_list, "<BR>")
+	report_text += last_scan_text
 
 	report_paper.add_raw_text(report_text)
 	report_paper.update_appearance()
@@ -429,7 +429,7 @@ var/list/report_list = list()
 		printer.put_in_hands(report_paper)
 		balloon_alert(printer, "logs cleared")
 
-	report_list = list()
+	report_text = list()
 
 /proc/chemscan(mob/living/user, mob/living/target)
 	if(user.incapacitated())
