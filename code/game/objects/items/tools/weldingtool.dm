@@ -260,7 +260,6 @@
 	else
 		playsound(loc, deactivation_sound, 50, TRUE)
 		switched_off(user)
-		soundloop.stop()
 
 /// Switches the welder off
 /obj/item/weldingtool/proc/switched_off(mob/user)
@@ -270,7 +269,7 @@
 	damtype = BRUTE
 	hitsound = SFX_SWING_HIT
 	update_appearance()
-
+	soundloop.stop()
 
 /obj/item/weldingtool/examine(mob/user)
 	. = ..()

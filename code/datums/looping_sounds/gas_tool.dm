@@ -5,3 +5,5 @@
 		'sound/items/gas_tool/gas_mid3.ogg' = 1,
 		)
 	falloff_distance = 2
+	volume = 30
+	abrupt_end = TRUE

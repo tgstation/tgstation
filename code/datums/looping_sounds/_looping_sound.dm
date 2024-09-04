@@ -42,6 +42,8 @@
 	var/use_reverb = TRUE
 	/// Are we ignoring walls? Defaults to TRUE.
 	var/ignore_walls = TRUE
+	/// Does the loop abruptly end when stop() is called? Will ignore end sounds. Defaults to FALSE.
+	var/abrupt_end = FALSE
 
 	// State stuff
 	/// The source of the sound, or the recipient of the sound.
@@ -63,6 +65,8 @@
 	var/direct
 	/// Sound channel to play on, random if not provided
 	var/sound_channel
+	/// Sound channel the current sound is using
+	var/current_sound_channel
 
 /datum/looping_sound/New(_parent, start_immediately = FALSE, _direct = FALSE, _skip_starting_sounds = FALSE)
 	if(!mid_sounds)
@@ -151,7 +155,8 @@
 /datum/looping_sound/proc/play(soundfile, volume_override)
 	var/sound/sound_to_play = sound(soundfile)
 	if(direct)
-		sound_to_play.channel = sound_channel || SSsounds.random_available_channel()
+		current_sound_channel = sound_channel || SSsounds.random_available_channel()
+		sound_to_play.channel = current_sound_channel
 		sound_to_play.volume = volume_override || volume //Use volume as fallback if theres no override
 		SEND_SOUND(parent, sound_to_play)
 	else
