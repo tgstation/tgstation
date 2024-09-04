@@ -77,7 +77,7 @@
 #define ui_building "EAST-4:22,SOUTH:21"
 #define ui_language_menu "EAST-4:6,SOUTH:21"
 #define ui_navigate_menu "EAST-4:22,SOUTH:5"
-#define ui_floor_menu "EAST-4:14,SOUTH:37"
+#define ui_floor_changer "EAST-3:24, SOUTH+1:3"
 
 //Upper left (action buttons)
 #define ui_action_palette "WEST+0:23,NORTH-1:5"
@@ -110,6 +110,9 @@
 #define ui_living_pull "EAST-1:28,CENTER-3:15"
 #define ui_living_healthdoll "EAST-1:28,CENTER-1:15"
 
+//Humans
+#define ui_human_floor_changer "EAST-4:22, SOUTH+1:7"
+
 //Drones
 #define ui_drone_drop "CENTER+1:18,SOUTH:5"
 #define ui_drone_pull "CENTER+1.5:2,SOUTH:5"
@@ -132,7 +135,7 @@
 #define ui_borg_alerts "CENTER+4:21,SOUTH:5"
 #define ui_borg_language_menu "CENTER+4:19,SOUTH+1:6"
 #define ui_borg_navigate_menu "CENTER+4:19,SOUTH+1:6"
-#define ui_borg_floor_menu "CENTER+4:-13,SOUTH+1:6"
+#define ui_borg_floor_changer "CENTER+4:-13,SOUTH+1:6"
 
 //Aliens
 #define ui_alien_health "EAST,CENTER-1:15"
@@ -141,7 +144,7 @@
 #define ui_alien_storage_r "CENTER+1:18,SOUTH:5"
 #define ui_alien_language_menu "EAST-4:20,SOUTH:5"
 #define ui_alien_navigate_menu "EAST-4:20,SOUTH:5"
-#define ui_alien_floor_menu "EAST-4:-12,SOUTH:5"
+#define ui_alien_floor_changer "EAST-4:-12,SOUTH:5"
 
 //AI
 #define ui_ai_core "BOTTOM:6,RIGHT-4"
@@ -150,7 +153,7 @@
 #define ui_ai_state_laws "BOTTOM:6,RIGHT-1"
 #define ui_ai_mod_int "BOTTOM:6,RIGHT"
 #define ui_ai_language_menu "BOTTOM+1:8,RIGHT-1:30"
-#define ui_ai_floor_menu "BOTTOM+1:8,RIGHT-1:14"
+#define ui_ai_floor_changer "BOTTOM+1:8,RIGHT-1:14"
 
 #define ui_ai_crew_monitor "BOTTOM:6,CENTER-1"
 #define ui_ai_crew_manifest "BOTTOM:6,CENTER"
@@ -193,7 +196,7 @@
 #define ui_ghost_pai "SOUTH: 6, CENTER+1:24"
 #define ui_ghost_minigames "SOUTH: 6, CENTER+2:24"
 #define ui_ghost_language_menu "SOUTH: 22, CENTER+3:8"
-#define ui_ghost_floor_menu "SOUTH: 6, CENTER+3:8"
+#define ui_ghost_floor_changer "SOUTH: 6, CENTER+3:8"
 
 //Blobbernauts
 #define ui_blobbernaut_overmind_health "EAST-1:28,CENTER+0:19"

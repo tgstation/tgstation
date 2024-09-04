@@ -70,14 +70,15 @@
 	using.icon = ui_style
 	static_inventory += using
 
-	using = new /atom/movable/screen/floor_menu(null, src)
-	using.icon = ui_style
-	static_inventory += using
-
 	action_intent = new /atom/movable/screen/combattoggle/flashy(null, src)
 	action_intent.icon = ui_style
 	action_intent.screen_loc = ui_combat_toggle
 	static_inventory += action_intent
+
+	floor_change = new /atom/movable/screen/floor_changer(null, src)
+	floor_change.icon = ui_style
+	floor_change.screen_loc = ui_human_floor_changer
+	static_inventory += floor_change
 
 
 	using = new /atom/movable/screen/mov_intent(null, src)

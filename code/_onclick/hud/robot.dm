@@ -87,11 +87,6 @@
 	using.screen_loc = ui_borg_navigate_menu
 	static_inventory += using
 
-// Z-level floor change
-	using = new /atom/movable/screen/floor_menu(null, src)
-	using.screen_loc = ui_borg_floor_menu
-	static_inventory += using
-
 //Radio
 	using = new /atom/movable/screen/robot/radio(null, src)
 	using.screen_loc = ui_borg_radio
