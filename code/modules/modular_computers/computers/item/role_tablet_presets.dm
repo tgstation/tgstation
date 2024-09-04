@@ -215,7 +215,7 @@
 
 /obj/item/modular_computer/pda/medical/paramedic
 	name = "paramedic PDA"
-	icon_state = "/obj/item/modular_computer/pda/paramedic"
+	icon_state = "/obj/item/modular_computer/pda/medical/paramedic"
 	greyscale_config = /datum/greyscale_config/tablet/stripe_double
 	greyscale_colors = "#28334D#000099#3F96CC"
 	starting_programs = list(
