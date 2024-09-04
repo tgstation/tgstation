@@ -344,6 +344,7 @@
 	taste_description = "spiked butterscotch"
 	ph = 6.5
 	default_container = /obj/item/reagent_containers/cup/glass/bottle/rum
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
 /datum/reagent/consumable/ethanol/rum/aged
 	name = "Aged Rum"
