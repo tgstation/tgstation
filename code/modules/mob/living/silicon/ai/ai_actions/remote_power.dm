@@ -34,7 +34,7 @@
 
 	var/obj/machinery/power/apc/apc = clicked_on
 	var/obj/item/stock_parts/power_store/cell = apc.get_cell()
-	cell.give(STANDARD_BATTERY_CHARGE*0.4)
+	cell.give(STANDARD_BATTERY_CHARGE)
 	ai_caller.battery -= 50
 
 
