@@ -186,14 +186,14 @@
 
 /datum/pet_command/point_targeting/add_new_friend(mob/living/tamer)
 	. = ..()
-	RegisterSignal(tamer, COMSIG_MOB_POINTED, PROC_REF(on_point))
+	RegisterSignal(tamer, COMSIG_MOVABLE_POINTED, PROC_REF(on_point))
 
 /datum/pet_command/point_targeting/remove_friend(mob/living/unfriended)
 	. = ..()
-	UnregisterSignal(unfriended, COMSIG_MOB_POINTED)
+	UnregisterSignal(unfriended, COMSIG_MOVABLE_POINTED)
 
 /// Target the pointed atom for actions
-/datum/pet_command/point_targeting/proc/on_point(mob/living/friend, atom/pointed_atom)
+/datum/pet_command/point_targeting/proc/on_point(mob/living/friend, atom/pointed_atom, obj/effect/temp_visual/point/point)
 	SIGNAL_HANDLER
 
 	var/mob/living/parent = weak_parent.resolve()
