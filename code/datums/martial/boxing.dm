@@ -7,8 +7,10 @@
 	name = "Boxing"
 	id = MARTIALART_BOXING
 	pacifist_style = TRUE
-	///Boolean on whether we are sportsmanlike in our tussling; TRUE means we have restrictions
+	/// Boolean on whether we are sportsmanlike in our tussling; TRUE means we have restrictions
 	var/honorable_boxer = TRUE
+	/// Default damage type for our boxing.
+	var/default_damage_type = STAMINA
 	/// List of traits applied to users of this martial art.
 	var/list/boxing_traits = list(TRAIT_BOXING_READY)
 	/// Balloon alert cooldown for warning our boxer to alternate their blows to get more damage
@@ -40,9 +42,15 @@
 
 	if(findtext(streak, LEFT_RIGHT_COMBO) || findtext(streak, RIGHT_LEFT_COMBO))
 		reset_streak()
+		// If we have an extra effect from the combo, perform it here. By default, we have no extra effect.
+		perform_extra_effect(attacker, defender)
 		return combo_multiplier * 1.5
 
 	return combo_multiplier
+
+/// An extra effect on some moves and attacks.
+/datum/martial_art/boxing/proc/perform_extra_effect(mob/living/attacker, mob/living/defender)
+	return
 
 /datum/martial_art/boxing/disarm_act(mob/living/attacker, mob/living/defender)
 	if(honor_check(defender))
@@ -88,8 +96,8 @@
 	// If true, grants experience for punching; we only gain experience if we punch another boxer.
 	var/grant_experience = FALSE
 
-	// What type of damage does our kind of boxing do? Defaults to STAMINA, unless you're performing EVIL BOXING
-	var/damage_type = honorable_boxer ? STAMINA : attacker.get_attack_type()
+	// What type of damage does our kind of boxing do? Defaults to STAMINA for normal boxing, unless you're performing EVIL BOXING. Subtypes use different damage types.
+	var/damage_type = honorable_boxer ? default_damage_type : attacker.get_attack_type()
 
 	attacker.do_attack_animation(defender, ATTACK_EFFECT_PUNCH)
 
@@ -147,11 +155,11 @@
 
 	log_combat(attacker, defender, "punched (boxing) ")
 
+	if(defender.stat == DEAD || !honor_check(defender)) //early returning here so we don't worry about knockout probs or experience gain
+		return TRUE
+
 	if(grant_experience)
 		skill_experience_adjustment(attacker, (damage/lower_force))
-
-	if(defender.stat == DEAD || !honor_check(defender)) //early returning here so we don't worry about knockout probs
-		return TRUE
 
 	//Determine our attackers athletics level as a knockout probability bonus
 	var/attacker_athletics_skill =  (attacker.mind?.get_skill_modifier(/datum/skill/athletics, SKILL_RANDS_MODIFIER) + base_unarmed_effectiveness)
@@ -165,6 +173,18 @@
 	if(!prob(final_knockout_probability))
 		return TRUE
 
+	crit_effect(attacker, defender, armor_block, damage_type, damage)
+
+	experience_earned *= 2 //Double our experience gain on a crit hit
+
+	playsound(defender, 'sound/effects/coin2.ogg', 40, TRUE)
+	new /obj/effect/temp_visual/crit(get_turf(defender))
+	skill_experience_adjustment(attacker, experience_earned) //double experience for a successful crit
+
+	return TRUE
+
+/// Our crit effect. For normal boxing, this applies a stagger, then applies a knockout if they're staggered. Other types of boxing apply different kinds of effects.
+/datum/martial_art/boxing/proc/crit_effect(mob/living/attacker, mob/living/defender, armor_block = 0, damage_type = STAMINA, damage = 0)
 	if(defender.get_timed_status_effect_duration(/datum/status_effect/staggered))
 		defender.visible_message(
 			span_danger("[attacker] knocks [defender] out with a haymaker!"),
@@ -188,14 +208,6 @@
 		defender.adjust_staggered_up_to(STAGGERED_SLOWDOWN_LENGTH, 10 SECONDS)
 		to_chat(attacker, span_danger("You stagger [defender] with a haymaker!"))
 		log_combat(attacker, defender, "staggered (boxing) ")
-
-	experience_earned *= 2 //Double our experience gain on a crit hit
-
-	playsound(defender, 'sound/effects/coin2.ogg', 40, TRUE)
-	new /obj/effect/temp_visual/crit(get_turf(defender))
-	skill_experience_adjustment(attacker, experience_earned) //double experience for a successful crit
-
-	return TRUE
 
 /// Returns whether whoever is checked by this proc is complying with the rules of boxing. The boxer cannot block non-boxers, and cannot apply their scariest moves against non-boxers.
 /datum/martial_art/boxing/proc/honor_check(mob/living/possible_boxer)
@@ -254,8 +266,9 @@
 		return NONE
 
 	if(istype(attacker) && boxer.Adjacent(attacker))
-		attacker.apply_damage(10, STAMINA)
+		attacker.apply_damage(10, default_damage_type)
 		boxer.apply_damage(5, STAMINA)
+		perform_extra_effect(boxer, attacker)
 
 	boxer.visible_message(
 		span_danger("[boxer] [block_text]s [attack_text]!"),
@@ -271,6 +284,8 @@
 		return FALSE
 	return ..()
 
+// Boxing Variants!
+
 /// Evil Boxing; for sick, evil scoundrels. Has no honor, making it more lethal (therefore unable to be used by pacifists).
 /// Grants Strength and Stimmed to speed up any experience gain.
 
@@ -280,6 +295,68 @@
 	pacifist_style = FALSE
 	honorable_boxer = FALSE
 	boxing_traits = list(TRAIT_BOXING_READY, TRAIT_STRENGTH, TRAIT_STIMMED)
+
+/// Hunter Boxing: for the uncaring, completely deranged one-spacer ecological disaster.
+/// The honor check accepts boxing ready targets, OR various biotypes as valid targets. Uses a special crit effect rather than the standard one (against monsters).
+/// I guess technically, this allows for lethal boxing. If you want.
+/datum/martial_art/boxing/hunter
+	name = "Hunter Boxing"
+	id = MARTIALART_HUNTER_BOXING
+	pacifist_style = FALSE
+	default_damage_type = BRUTE
+	boxing_traits = list(TRAIT_BOXING_READY)
+	/// The mobs we are looking for to pass the honor check
+	var/honorable_mob_biotypes = MOB_BEAST | MOB_SPECIAL | MOB_PLANT | MOB_BUG
+	/// Our crit shout words. First word is then paired with a second word to form an attack name.
+	var/list/first_word_strike = list("Extinction", "Brutalization", "Explosion", "Adventure", "Thunder", "Lightning", "Sonic", "Atomizing", "Whirlwind", "Tornado", "Shark", "Falcon")
+	var/list/second_word_strike = list(" Punch", " Pawnch", "-punch", " Jab", " Hook", " Fist", " Uppercut", " Straight", " Strike", " Lunge")
+
+/datum/martial_art/boxing/hunter/honor_check(mob/living/possible_boxer)
+	if(HAS_TRAIT(possible_boxer, TRAIT_BOXING_READY))
+		return TRUE
+
+	if(possible_boxer.mob_biotypes & MOB_HUMANOID && !istype(possible_boxer, /mob/living/simple_animal/hostile/megafauna)) //We're after animals, not people. Unless they want to box. (Or a megafauna)
+		return FALSE
+
+	if(possible_boxer.mob_biotypes & honorable_mob_biotypes) //We're after animals, not people
+		return TRUE
+
+	return FALSE //rather than default assume TRUE, we default assume FALSE. After all, there could be mobs that are none of our biotypes and also not humanoid. By default, they would be valid for being boxed if TRUE.
+
+// Our hunter boxer applies a rebuke and double damage against the target of their crit. If the target is humanoid, we just perform our regular crit effect instead.
+
+/datum/martial_art/boxing/hunter/crit_effect(mob/living/attacker, mob/living/defender, armor_block = 0, damage_type = STAMINA, damage = 0)
+	if(defender.mob_biotypes & MOB_HUMANOID && !istype(defender, /mob/living/simple_animal/hostile/megafauna))
+		return ..() //Applies the regular crit effect if it is a normal human, and not a megafauna
+
+	var/first_word_pick = pick(first_word_strike)
+	var/second_word_pick = pick(second_word_strike)
+
+	defender.visible_message(
+		span_danger("[attacker] knocks the absolute bajeezus out of [defender] utilizing the terrifying [first_word_pick][second_word_pick]!!!"),
+		span_userdanger("You have the absolute bajeezus knocked out of you by [attacker]!!!"),
+		span_hear("You hear a sickening sound of flesh hitting flesh!"),
+		COMBAT_MESSAGE_RANGE,
+		attacker,
+	)
+	to_chat(attacker, span_danger("You knock the absolute bajeezus out of [defender] out with the terrifying [first_word_pick][second_word_pick]!!!"))
+	if(ishuman(attacker))
+		var/mob/living/carbon/human/human_attacker = attacker
+		human_attacker.force_say()
+		human_attacker.say("[first_word_pick][second_word_pick]!!!", forced = "hunter boxing enthusiastic battlecry")
+	defender.apply_status_effect(/datum/status_effect/rebuked)
+	defender.apply_damage(damage * 2, default_damage_type, BODY_ZONE_CHEST, armor_block) //deals double our damage AGAIN
+	attacker.reagents.add_reagent(/datum/reagent/medicine/omnizine/godblood, 3) //Get a little healing in return for a successful crit
+	log_combat(attacker, defender, "hunter crit punched (boxing)")
+
+// Our hunter boxer speeds up their attacks when completing a combo against a valid target, and does a sizable amount of extra damage.
+
+/datum/martial_art/boxing/hunter/perform_extra_effect(mob/living/attacker, mob/living/defender)
+	if(defender.mob_biotypes & MOB_HUMANOID && !istype(defender, /mob/living/simple_animal/hostile/megafauna))
+		return // Does not apply to humans (who aren't megafauna)
+
+	attacker.changeNext_move(CLICK_CD_RAPID)
+	defender.apply_damage(rand(15,20), default_damage_type, BODY_ZONE_CHEST)
 
 #undef LEFT_RIGHT_COMBO
 #undef RIGHT_LEFT_COMBO

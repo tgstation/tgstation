@@ -18,7 +18,7 @@ Difficulty: Extremely Hard
 	attack_verb_continuous = "pummels"
 	attack_verb_simple = "pummels"
 	attack_sound = 'sound/weapons/sonic_jackhammer.ogg'
-	mob_biotypes = MOB_ORGANIC|MOB_HUMANOID
+	mob_biotypes = MOB_ORGANIC|MOB_HUMANOID|MOB_SPECIAL
 	light_color = COLOR_LIGHT_GRAYISH_RED
 	movement_type = GROUND
 	weather_immunities = list(TRAIT_SNOWSTORM_IMMUNE)
@@ -44,7 +44,6 @@ Difficulty: Extremely Hard
 	death_sound = SFX_BODYFALL
 	footstep_type = FOOTSTEP_MOB_HEAVY
 	summon_line = "I'M WIDE AWAKE! AND YOU'RE WIIIIIIIDE OPEN!"
-	shadow_type = SHADOW_MEDIUM
 	/// If the demonic frost miner is in its enraged state
 	var/enraged = FALSE
 	/// If the demonic frost miner is currently transforming to its enraged state
@@ -239,7 +238,7 @@ Difficulty: Extremely Hard
 /obj/item/resurrection_crystal
 	name = "resurrection crystal"
 	desc = "When used by anything holding it, this crystal gives them a second chance at life if they die."
-	icon = 'icons/obj/mining_zones/equipment.dmi'
+	icon = 'icons/obj/mining.dmi'
 	icon_state = "demonic_crystal"
 
 /obj/item/resurrection_crystal/attack_self(mob/living/user)

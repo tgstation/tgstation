@@ -290,15 +290,15 @@
 /// Procs for moving soul in and out off stone
 
 /// Transfer the mind of a carbon mob (which is then dusted) into a shade mob inside src.
-/// If forced, sacrifical and stat checks are skipped.
+/// If forced, sacrificial and stat checks are skipped.
 /obj/item/soulstone/proc/capture_soul(mob/living/carbon/victim, mob/user, forced = FALSE)
-	if(!iscarbon(victim)) //TODO: Add sacrifice stoning for non-organics, just because you have no body doesnt mean you dont have a soul
+	if(!iscarbon(victim)) //TODO: Add sacrifice stoning for non-organics, just because you have no body doesn't mean you don't have a soul
 		return FALSE
 	if(contents.len)
 		return FALSE
 
 	if(!forced)
-		var/datum/antagonist/cult/cultist = IS_CULTIST(user)
+		var/datum/antagonist/cult/cultist = GET_CULTIST(user)
 		if(cultist)
 			var/datum/team/cult/cult_team = cultist.get_team()
 			if(victim.mind && cult_team.is_sacrifice_target(victim.mind))

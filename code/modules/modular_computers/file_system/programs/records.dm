@@ -29,6 +29,7 @@
 	download_access = list(ACCESS_SECURITY, ACCESS_FLAG_COMMAND)
 	program_flags = PROGRAM_ON_NTNET_STORE
 	mode = "security"
+	detomatix_resistance = DETOMATIX_RESIST_MINOR
 
 /datum/computer_file/program/records/proc/GetRecordsReadable()
 	var/list/all_records = list()

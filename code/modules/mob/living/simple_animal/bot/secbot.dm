@@ -1,12 +1,10 @@
 /mob/living/simple_animal/bot/secbot
-	SET_BASE_VISUAL_PIXEL(0, 9)
 	name = "\improper Securitron"
 	desc = "A little security robot. He looks less than thrilled."
 	icon = 'icons/mob/silicon/aibots.dmi'
 	icon_state = "secbot"
 	light_color = "#f56275"
 	light_power = 0.8
-	shadow_offset_y = 3
 	density = FALSE
 	anchored = FALSE
 	health = 25
@@ -204,9 +202,10 @@
 	return data
 
 // Actions received from TGUI
-/mob/living/simple_animal/bot/secbot/ui_act(action, params)
+/mob/living/simple_animal/bot/secbot/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
-	if(. || (bot_cover_flags & BOT_COVER_LOCKED && !HAS_SILICON_ACCESS(usr)))
+	var/mob/user = ui.user
+	if(. || (bot_cover_flags & BOT_COVER_LOCKED && !HAS_SILICON_ACCESS(user)))
 		return
 
 	switch(action)

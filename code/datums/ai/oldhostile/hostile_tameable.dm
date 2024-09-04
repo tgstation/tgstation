@@ -89,14 +89,14 @@
 	if(pawn.Adjacent(pawn, new_friend))
 		new_friend.visible_message("<b>[pawn]</b> looks at [new_friend] in a friendly manner!", span_notice("[pawn] looks at you in a friendly manner!"))
 	set_blackboard_key(BB_HOSTILE_FRIEND, new_friend)
-	RegisterSignal(new_friend, COMSIG_MOVABLE_POINTED, PROC_REF(check_point))
+	RegisterSignal(new_friend, COMSIG_MOB_POINTED, PROC_REF(check_point))
 	RegisterSignal(new_friend, COMSIG_MOB_SAY, PROC_REF(check_verbal_command))
 
 /// Someone is being mean to us, take them off our friends (add actual enemies behavior later)
 /datum/ai_controller/hostile_friend/proc/unfriend()
 	var/mob/living/old_friend = blackboard[BB_HOSTILE_FRIEND]
 	if(old_friend)
-		UnregisterSignal(old_friend, list(COMSIG_MOVABLE_POINTED, COMSIG_MOB_SAY))
+		UnregisterSignal(old_friend, list(COMSIG_MOB_POINTED, COMSIG_MOB_SAY))
 	clear_blackboard_key(BB_HOSTILE_FRIEND)
 
 /// Someone is looking at us, if we're currently carrying something then show what it is, and include a message if they're our friend
@@ -202,7 +202,7 @@
 			set_blackboard_key(BB_HOSTILE_ORDER_MODE, HOSTILE_COMMAND_ATTACK)
 
 /// Someone we like is pointing at something, see if it's something we might want to interact with (like if they might want us to fetch something for them)
-/datum/ai_controller/hostile_friend/proc/check_point(mob/pointing_friend, atom/movable/pointed_movable, obj/effect/temp_visual/point/point)
+/datum/ai_controller/hostile_friend/proc/check_point(mob/pointing_friend, atom/movable/pointed_movable)
 	SIGNAL_HANDLER
 
 	var/mob/living/simple_animal/hostile/living_pawn = pawn

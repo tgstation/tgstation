@@ -1,7 +1,6 @@
 /obj/structure/displaycase
-	SET_BASE_VISUAL_PIXEL(0, DEPTH_OFFSET)
 	name = "display case"
-	icon = 'icons/obj/storage/storage.dmi'
+	icon = 'icons/obj/structures.dmi'
 	icon_state = "glassbox"
 	desc = "A display case for prized possessions."
 	density = TRUE
@@ -223,7 +222,7 @@
 /obj/structure/displaycase_chassis
 	name = "display case chassis"
 	desc = "The wooden base of a display case."
-	icon = 'icons/obj/storage/storage.dmi'
+	icon = 'icons/obj/structures.dmi'
 	icon_state = "glassbox_chassis"
 	resistance_flags = FLAMMABLE
 	anchored = TRUE
@@ -412,7 +411,7 @@
 		data["showpiece_icon"] = icon2base64(getFlatIcon(showpiece, no_anim=TRUE))
 	return data
 
-/obj/structure/displaycase/trophy/ui_act(action, params)
+/obj/structure/displaycase/trophy/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if(.)
 		return
@@ -527,7 +526,7 @@
 	data["product_icon"] = showpiece ? icon2base64(getFlatIcon(showpiece, no_anim=TRUE)) : null
 	return data
 
-/obj/structure/displaycase/forsale/ui_act(action, params)
+/obj/structure/displaycase/forsale/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if(.)
 		return

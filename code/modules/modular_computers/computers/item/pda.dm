@@ -38,6 +38,7 @@
 		/datum/computer_file/program/messenger,
 		/datum/computer_file/program/nt_pay,
 		/datum/computer_file/program/notepad,
+		/datum/computer_file/program/crew_manifest,
 	)
 	///List of items that can be stored in a PDA
 	var/static/list/contained_item = list(
@@ -419,7 +420,7 @@
 	return TRUE
 
 /obj/item/modular_computer/pda/silicon/ui_state(mob/user)
-	return GLOB.reverse_contained_state
+	return GLOB.deep_inventory_state
 
 /obj/item/modular_computer/pda/silicon/cyborg/syndicate
 	icon_state = "tablet-silicon-syndicate"

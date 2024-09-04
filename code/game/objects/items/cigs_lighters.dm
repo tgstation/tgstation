@@ -129,9 +129,10 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 //////////////////
 //FINE SMOKABLES//
 //////////////////
+
 /obj/item/cigarette
 	name = "cigarette"
-	desc = "A roll of tobacco and nicotine."
+	desc = "A roll of tobacco and nicotine. It is not food."
 	icon = 'icons/obj/cigarettes.dmi'
 	icon_state = "cigoff"
 	inhand_icon_state = "cigon" //gets overriden during intialize(), just have it for unit test sanity.
@@ -180,6 +181,8 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	VAR_PRIVATE/obj/effect/abstract/particle_holder/mob_smoke
 	/// How long the current mob has been smoking this cigarette
 	VAR_FINAL/how_long_have_we_been_smokin = 0 SECONDS
+	/// Which people ate cigarettes and how many
+	var/static/list/cigarette_eaters = list()
 
 /obj/item/cigarette/Initialize(mapload)
 	. = ..()
@@ -194,11 +197,36 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	icon_state = icon_off
 	inhand_icon_state = inhand_icon_off
 
+	// "It is called a cigarette"
+	AddComponent(/datum/component/edible,\
+		initial_reagents = list_reagents,\
+		food_flags = null,\
+		foodtypes = JUNKFOOD,\
+		volume = 50,\
+		eat_time = 0 SECONDS,\
+		tastes = list("a never before experienced flavour.", "finally sitting down after standing your entire life"),\
+		eatverbs = list("taste"),\
+		bite_consumption = 50,\
+		junkiness = 0,\
+		reagent_purity = null,\
+		on_consume = CALLBACK(src, PROC_REF(on_consume)),\
+		show_examine = FALSE, \
+	)
+
 /obj/item/cigarette/Destroy()
 	STOP_PROCESSING(SSobj, src)
 	QDEL_NULL(mob_smoke)
 	QDEL_NULL(cig_smoke)
 	return ..()
+
+/obj/item/cigarette/proc/on_consume(mob/living/eater, mob/living/feeder)
+	if(isnull(eater.client))
+		return
+	var/ckey = eater.client.ckey
+	// We must have more!
+	cigarette_eaters[ckey]++
+	if(cigarette_eaters[ckey] >= 500)
+		eater.client.give_award(/datum/award/achievement/misc/cigarettes)
 
 /obj/item/cigarette/equipped(mob/equipee, slot)
 	. = ..()

@@ -2,10 +2,8 @@
 as well as a location where a hidden item can somtimes be retrieved
 at the cost of risking a vicious bite.**/
 /obj/structure/moisture_trap
-	SET_BASE_VISUAL_PIXEL(0, DEPTH_OFFSET)
 	name = "moisture trap"
 	desc = "A device installed in order to control moisture in poorly ventilated areas.\nThe stagnant water inside basin seems to produce serious biofouling issues when improperly maintained.\nThis unit in particular seems to be teeming with life!\nWho thought mother Gaia could assert herself so vigoriously in this sterile and desolate place?"
-	icon = 'icons/obj/maintenance_loot.dmi'
 	icon_state = "moisture_trap"
 	anchored = TRUE
 	density = FALSE
@@ -250,7 +248,6 @@ at the cost of risking a vicious bite.**/
 /obj/structure/steam_vent
 	name = "steam vent"
 	desc = "A device periodically filtering out moisture particles from the nearby walls and windows. It's only possible due to the moisture traps nearby."
-	icon = 'icons/obj/maintenance_loot.dmi'
 	icon_state = "steam_vent"
 	anchored = TRUE
 	density = FALSE

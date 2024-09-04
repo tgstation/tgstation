@@ -62,7 +62,7 @@
 /obj/machinery/computer/order_console/mining/retrieve_points(obj/item/card/id/id_card)
 	return round(id_card.registered_account.mining_points)
 
-/obj/machinery/computer/order_console/mining/ui_act(action, params)
+/obj/machinery/computer/order_console/mining/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if(!.)
 		flick("mining-deny", src)
@@ -134,7 +134,7 @@
 /obj/item/mining_voucher
 	name = "mining voucher"
 	desc = "A token to redeem a piece of equipment. Use it on a mining equipment vendor."
-	icon = 'icons/obj/mining_zones/equipment.dmi'
+	icon = 'icons/obj/mining.dmi'
 	icon_state = "mining_voucher"
 	w_class = WEIGHT_CLASS_TINY
 

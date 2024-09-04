@@ -749,7 +749,7 @@
 /obj/machinery/transport/tram_controller
 	name = "tram controller"
 	desc = "Makes the tram go, or something. Holds the tram's electronics, controls, and maintenance panel. A sticker above the card reader says 'Engineering access only.'"
-	icon = 'icons/obj/structures/tram/tram_controllers.dmi'
+	icon = 'icons/obj/tram/tram_controllers.dmi'
 	icon_state = "tram-controller"
 	base_icon_state = "tram"
 	anchored = TRUE
@@ -1096,7 +1096,7 @@
 
 	return data
 
-/obj/machinery/transport/tram_controller/ui_act(action, params)
+/obj/machinery/transport/tram_controller/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if (.)
 		return
@@ -1188,7 +1188,8 @@
 /obj/item/wallframe/tram/controller
 	name = "tram controller cabinet"
 	desc = "A box that contains the equipment to control a tram. Just secure to the tram wall."
-	icon = 'icons/obj/structures/tram/tram_controllers.dmi'
+	icon = 'icons/obj/tram/tram_controllers.dmi'
 	icon_state = "tram-controller"
 	custom_materials = list(/datum/material/titanium = SHEET_MATERIAL_AMOUNT * 4, /datum/material/iron = SHEET_MATERIAL_AMOUNT * 2, /datum/material/glass = SHEET_MATERIAL_AMOUNT * 2)
 	result_path = /obj/machinery/transport/tram_controller
+	pixel_shift = 32
