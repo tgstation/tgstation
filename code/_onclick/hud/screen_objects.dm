@@ -358,15 +358,19 @@
 	icon = 'icons/hud/screen_midnight.dmi'
 	icon_state = "floor_change"
 	screen_loc = ui_floor_changer
+	var/vertical = FALSE
 
 /atom/movable/screen/floor_changer/Click(location,control,params)
 	var/list/modifiers = params2list(params)
 
-	// Click() should always have ICON_X within its parameters
-	// so not checking for this to be valid should be fine
-	var/mouse_position = text2num(LAZYACCESS(modifiers, ICON_X))
+	var/mouse_position
 
-	if(mouse_position < 16)
+	if(vertical)
+		mouse_position = text2num(LAZYACCESS(modifiers, ICON_Y))
+	else
+		mouse_position = text2num(LAZYACCESS(modifiers, ICON_X))
+
+	if(mouse_position > 16)
 		to_chat(world, "up")
 		usr.down()
 		return
@@ -374,6 +378,10 @@
 	to_chat(world, "down")
 	usr.up()
 	return
+
+/atom/movable/screen/floor_changer/vertical
+	icon_state = "floor_change_v"
+	vertical = TRUE
 
 /atom/movable/screen/spacesuit
 	name = "Space suit cell status"
