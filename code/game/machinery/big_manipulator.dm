@@ -2,8 +2,9 @@
 /obj/machinery/big_manipulator
 	name = "Big Manipulator"
 	desc = "Take and drop objects. Innovation..."
-	icon = 'icons/obj/machines/big_manipulator_parts/big_manipulator_core.dmi'
-	icon_state = "core"
+	icon = 'icons/map_icons/objects.dmi'
+	icon_state = "/obj/machinery/big_manipulator"
+	post_init_icon_state = "core"
 	density = TRUE
 	circuit = /obj/item/circuitboard/machine/big_manipulator
 	greyscale_colors = "#d8ce13"

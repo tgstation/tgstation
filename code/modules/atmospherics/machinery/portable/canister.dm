@@ -209,6 +209,7 @@
 
 /obj/machinery/portable_atmospherics/canister/nitrium
 	name = "Nitrium canister"
+	icon_state = "/obj/machinery/portable_atmospherics/canister/nitrium"
 	gas_type = /datum/gas/nitrium
 	greyscale_config = /datum/greyscale_config/canister
 	greyscale_colors = "#7b4732"
@@ -244,7 +245,7 @@
 
 /obj/machinery/portable_atmospherics/canister/plasma
 	name = "Plasma canister"
-	icon_state = "/obj/machinery/portable_atmospherics/canister/toxins"
+	icon_state = "/obj/machinery/portable_atmospherics/canister/plasma"
 	gas_type = /datum/gas/plasma
 	greyscale_config = /datum/greyscale_config/canister/hazard
 	greyscale_colors = "#f62800#000000"
@@ -277,7 +278,6 @@
 /obj/machinery/portable_atmospherics/canister/fusion_test
 	name = "fusion test canister"
 	desc = "Don't be a badmin."
-	icon_state = "/obj/machinery/portable_atmospherics/canister/fusion_test"
 	temp_limit = 1e12
 	pressure_limit = 1e14
 
@@ -291,6 +291,7 @@
 /obj/machinery/portable_atmospherics/canister/anesthetic_mix
 	name = "Anesthetic mix"
 	desc = "A mixture of N2O and Oxygen"
+	icon_state = "/obj/machinery/portable_atmospherics/canister/anesthetic_mix"
 	greyscale_config = /datum/greyscale_config/canister/double_stripe
 	greyscale_colors = "#9fba6c#3d4680"
 

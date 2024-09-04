@@ -1,8 +1,9 @@
 #define THERMOMACHINE_POWER_CONVERSION 0.01
 
 /obj/machinery/atmospherics/components/unary/thermomachine
-	icon = 'icons/obj/machines/atmospherics/thermomachine.dmi'
-	icon_state = "thermo_base"
+	icon = 'icons/map_icons/objects.dmi'
+	icon_state = "/obj/machinery/atmospherics/components/unary/thermomachine"
+	post_init_icon_state = "thermo_base"
 	plane = GAME_PLANE
 
 	interaction_flags_atom = INTERACT_ATOM_ATTACK_HAND | INTERACT_ATOM_UI_INTERACT
@@ -347,15 +348,16 @@
 
 /obj/machinery/atmospherics/components/unary/thermomachine/freezer/on
 	on = TRUE
-	icon_state = "thermo_base_1"
+	icon_state = "/obj/machinery/atmospherics/components/unary/thermomachine/freezer/on"
+	post_init_icon_state = "thermo_base_1"
 
 /obj/machinery/atmospherics/components/unary/thermomachine/freezer/on/Initialize(mapload)
 	. = ..()
 	if(target_temperature == initial(target_temperature))
 		target_temperature = min_temperature
+
 /obj/machinery/atmospherics/components/unary/thermomachine/freezer/on/coldroom
 	name = "Cold room temperature control unit"
-	icon_state = "thermo_base_1"
 	greyscale_colors = COLOR_CYAN
 
 /obj/machinery/atmospherics/components/unary/thermomachine/freezer/on/coldroom/Initialize(mapload)
@@ -378,6 +380,7 @@
 
 /obj/machinery/atmospherics/components/unary/thermomachine/heater/on
 	on = TRUE
-	icon_state = "thermo_base_1"
+	icon_state = "/obj/machinery/atmospherics/components/unary/thermomachine/heater/on"
+	post_init_icon_state = "thermo_base_1"
 
 #undef THERMOMACHINE_POWER_CONVERSION

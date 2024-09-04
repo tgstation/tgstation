@@ -1,8 +1,9 @@
 #define TANK_PLATING_SHEETS 12
 
 /obj/machinery/atmospherics/components/tank
-	icon = 'icons/obj/pipes_n_cables/stationary_canisters.dmi'
-	icon_state = "smooth"
+	icon = 'icons/map_icons/objects.dmi'
+	icon_state = "/obj/machinery/atmospherics/components/tank"
+	post_init_icon_state = "smooth"
 
 	name = "pressure tank"
 	desc = "A large vessel containing pressurized gas."
