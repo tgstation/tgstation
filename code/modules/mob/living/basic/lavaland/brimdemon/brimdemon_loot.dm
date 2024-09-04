@@ -8,7 +8,7 @@
 	var/static/list/comic_phrases = list("BOOM", "BANG", "KABLOW", "KAPOW", "OUCH", "BAM", "KAPOW", "WHAM", "POW", "KABOOM")
 
 /obj/item/crusher_trophy/brimdemon_fang/effect_desc()
-	return "mark detonation creates visual and audiosensory effects on the target"
+	return "visual and audiosensory effects on the target upon mark detonation"
 
 /obj/item/crusher_trophy/brimdemon_fang/on_mark_detonation(mob/living/target, mob/living/user)
 	target.balloon_alert_to_viewers("[pick(comic_phrases)]!")
