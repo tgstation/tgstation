@@ -325,8 +325,6 @@
 
 ///Few checks to determine if we can deflect bullets
 /datum/heretic_knowledge/ultimate/void_final/proc/can_deflect(mob/living/ascended_heretic)
-	if(ascended_heretic.incapacitated(IGNORE_GRAB))
-		return FALSE
 	if(!(ascended_heretic.mobility_flags & MOBILITY_USE))
 		return FALSE
 	if(!isturf(ascended_heretic.loc))
