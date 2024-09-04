@@ -1,5 +1,0 @@
-author: "00-Steven"
-delete-after: True
-changes:
-  - qol: "Multi-z disposal segments can actually be made with an RPD."
-  - image: "Upwards multi-z disposal segments no longer have wonky sprites."
