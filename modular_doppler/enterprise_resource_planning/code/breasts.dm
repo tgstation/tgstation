@@ -56,16 +56,22 @@
 		return ..()
 	if(draw_layer == bitflag_to_layer(EXTERNAL_ADJACENT))
 		overlay.color = limb.owner.dna.features["breasts_color_1"]
+		return overlay
 	else if(draw_layer == bitflag_to_layer(EXTERNAL_BEHIND))
 		overlay.color = limb.owner.dna.features["breasts_color_1"]
+		return overlay
 	else if(draw_layer == bitflag_to_layer(EXTERNAL_ADJACENT_2))
 		overlay.color = limb.owner.dna.features["breasts_color_2"]
+		return overlay
 	else if(draw_layer == bitflag_to_layer(EXTERNAL_BEHIND_2))
 		overlay.color = limb.owner.dna.features["breasts_color_2"]
+		return overlay
 	else if(draw_layer == bitflag_to_layer(EXTERNAL_ADJACENT_3))
 		overlay.color = limb.owner.dna.features["breasts_color_3"]
+		return overlay
 	else if(draw_layer == bitflag_to_layer(EXTERNAL_BEHIND_3))
 		overlay.color = limb.owner.dna.features["breasts_color_3"]
+		return overlay
 	return ..()
 
 /datum/bodypart_overlay/mutant/breasts/mutant_bodyparts_layertext(layer)
