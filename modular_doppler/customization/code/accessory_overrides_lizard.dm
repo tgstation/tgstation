@@ -4,6 +4,7 @@
 	features += /datum/preference/choiced/lizard_snout
 	features += /datum/preference/choiced/lizard_frills
 	features += /datum/preference/choiced/lizard_horns
+	features += /datum/preference/choiced/lizard_body_markings
 
 	GLOB.features_by_species[type] = features
 

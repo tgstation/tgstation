@@ -1,6 +1,6 @@
 //snouts
 /datum/sprite_accessory/snouts/none
-	icon = 'modular_doppler/species/fallbacks.dmi'
+	icon = 'modular_doppler/customization/icons/fallbacks.dmi'
 	name = "None"
 	icon_state = "none"
 
@@ -8,4 +8,4 @@
 	feature_key = "tail"
 
 /datum/sprite_accessory/lizard_markings
-	icon = 'modular_doppler/species/lizards/icons/lizard_markings.dmi'
+	icon = 'modular_doppler/customization/species/lizards/icons/lizard_markings.dmi'

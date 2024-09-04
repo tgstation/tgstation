@@ -1,6 +1,6 @@
 //snouts
 /datum/sprite_accessory/snouts/slugcat
-	icon = 'modular_doppler/species/scugs/icons/slugcat_external.dmi'
+	icon = 'modular_doppler/customization/species/scugs/icons/slugcat_external.dmi'
 	name = "Slugcat"
 	icon_state = "scug_standard"
 
@@ -14,7 +14,7 @@
 
 //frills
 /datum/sprite_accessory/frills/slugcat
-	icon = 'modular_doppler/species/scugs/icons/slugcat_external.dmi'
+	icon = 'modular_doppler/customization/species/scugs/icons/slugcat_external.dmi'
 	name = "Slugcat"
 	icon_state = "scug_aquatic"
 
@@ -32,7 +32,7 @@
 
 //horns
 /datum/sprite_accessory/horns/slugcat
-	icon = 'modular_doppler/species/scugs/icons/slugcat_external.dmi'
+	icon = 'modular_doppler/customization/species/scugs/icons/slugcat_external.dmi'
 	name = "Slugcat"
 	icon_state = "scug_standard"
 
@@ -62,7 +62,7 @@
 
 //tails
 /datum/sprite_accessory/tails/lizard/slugcat
-	icon = 'modular_doppler/species/scugs/icons/slugcat_tails.dmi'
+	icon = 'modular_doppler/customization/species/scugs/icons/slugcat_tails.dmi'
 	name = "Slugcat"
 	icon_state = "scug_std"
 
@@ -72,7 +72,7 @@
 
 //body markings
 /datum/sprite_accessory/lizard_markings/slugcat
-	icon = 'modular_doppler/species/scugs/icons/slugcat_markings.dmi'
+	icon = 'modular_doppler/customization/species/scugs/icons/slugcat_markings.dmi'
 	name = "Slugcat Underbelly"
 	icon_state = "scug_lbelly"
 	gender_specific = TRUE
