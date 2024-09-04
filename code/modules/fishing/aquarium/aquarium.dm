@@ -310,9 +310,9 @@
 	.["fluidType"] = fluid_type
 	.["temperature"] = fluid_temp
 	.["allowBreeding"] = allow_breeding
-	.["fishData"] = list()
+	.["FishData"] = list()
 	.["feedingInterval"] = feeding_interval / (1 MINUTES)
-	.["propData"] = list()
+	.["PropData"] = list()
 	for(var/atom/movable/item in contents)
 		if(isfish(item))
 			var/obj/item/fish/fish = item

@@ -22,8 +22,8 @@ type Data = {
   minTemperature: number;
   maxTemperature: number;
   fluidTypes: string[];
-  fishData: fishData[];
-  propData: propData[];
+  fishData: FishData[];
+  propData: PropData[];
   allowBreeding: BooleanLike;
   feedingInterval: number;
   heartIcon: string;
@@ -31,7 +31,7 @@ type Data = {
   heartEmptyIconState: string;
 };
 
-type fishData = {
+type FishData = {
   fish_ref: string;
   fish_name: string;
   fish_happiness: number;
@@ -40,7 +40,7 @@ type fishData = {
   fish_health: number;
 };
 
-type propData = {
+type PropData = {
   prop_ref: string;
   prop_name: string;
   prop_icon: string;
