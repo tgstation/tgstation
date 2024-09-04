@@ -271,7 +271,7 @@ GLOBAL_LIST_INIT(heretic_start_knowledge, initialize_starting_knowledge())
 /datum/heretic_knowledge/codex_cicatrix/cleanup_atoms(list/selected_atoms)
 	var/mob/living/body = locate() in selected_atoms
 	if(!body)
-		return
+		return ..()
 	// A golem or an android doesn't have skin!
 	var/exterior_text = "skin"
 	// If carbon, it's the limb. If not, it's the body.
