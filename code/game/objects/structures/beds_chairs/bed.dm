@@ -15,6 +15,7 @@
 	anchored = TRUE
 	can_buckle = TRUE
 	buckle_lying = 90
+	buckle_dir = SOUTH
 	resistance_flags = FLAMMABLE
 	max_integrity = 100
 	integrity_failure = 0.35
@@ -32,6 +33,7 @@
 	AddElement(/datum/element/soft_landing)
 	if(elevation)
 		AddElement(/datum/element/elevation, pixel_shift = elevation)
+	update_buckle_vars(dir)
 	register_context()
 
 /obj/structure/bed/examine(mob/user)
@@ -50,6 +52,13 @@
 	else if(has_buckled_mobs())
 		context[SCREENTIP_CONTEXT_LMB] = "Unbuckle"
 		return CONTEXTUAL_SCREENTIP_SET
+
+/obj/structure/bed/setDir(newdir)
+	. = ..()
+	update_buckle_vars(newdir)
+
+/obj/structure/bed/proc/update_buckle_vars(newdir)
+	buckle_lying = newdir & NORTHEAST ? 270 : 90
 
 /obj/structure/bed/atom_deconstruct(disassembled = TRUE)
 	if(build_stack_type)
