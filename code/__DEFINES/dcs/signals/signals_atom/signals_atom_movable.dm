@@ -122,6 +122,9 @@
 ///from base of /datum/component/splat/splat: (hit_atom)
 #define COMSIG_MOVABLE_SPLAT "movable_splat"
 
+///from base of /atom/movable/point_at: (atom/A, obj/effect/temp_visual/point/point)
+#define COMSIG_MOVABLE_POINTED "movable_pointed"
+
 /// Sent to movables when they are being stolen by a spy: (mob/living/spy, datum/spy_bounty/bounty)
 #define COMSIG_MOVABLE_SPY_STEALING "movable_spy_stealing"
 /// Called when something is pushed by a living mob bumping it: (mob/living/pusher, push force)

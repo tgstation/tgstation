@@ -23,7 +23,18 @@
 	if(!radio_enabled) //AI cannot speak if radio is disabled (via intellicard) or depowered.
 		to_chat(src, span_danger("Your radio transmitter is offline!"))
 		return FALSE
-	..()
+	. = ..()
+	if(.)
+		return .
+	if(message_mods[MODE_HEADSET])
+		if(radio)
+			radio.talk_into(src, message, , spans, language, message_mods)
+		return NOPASS
+	else if(message_mods[RADIO_EXTENSION] in GLOB.radiochannels)
+		if(radio)
+			radio.talk_into(src, message, message_mods[RADIO_EXTENSION], spans, language, message_mods)
+			return NOPASS
+	return FALSE
 
 //For holopads only. Usable by AI.
 /mob/living/silicon/ai/proc/holopad_talk(message, language)

@@ -120,7 +120,8 @@
 GLOBAL_LIST_INIT(splattable, zebra_typecacheof(list(
 	/mob/living/carbon/human = "human",
 	/mob/living/basic/pet/dog/corgi = "corgi",
-	/mob/living/silicon/ai = "ai")))
+	/mob/living/silicon/ai = "ai",
+)))
 
 /datum/component/face_decal/splat
 	///The mood_event that we add

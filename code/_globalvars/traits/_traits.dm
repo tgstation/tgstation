@@ -654,9 +654,6 @@ GLOBAL_LIST_INIT(traits_by_type, list(
 	/obj/machinery/modular_computer = list(
 		"TRAIT_MODPC_INTERACTING_WITH_FRAME" = TRAIT_MODPC_INTERACTING_WITH_FRAME,
 	),
-	/obj/projectile = list(
-		"TRAIT_ALWAYS_HIT_ZONE" = TRAIT_ALWAYS_HIT_ZONE,
-	),
 	/obj/structure = list(
 		"TRAIT_RADSTORM_IMMUNE" = TRAIT_RADSTORM_IMMUNE,
 	),

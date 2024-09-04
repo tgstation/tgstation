@@ -11,7 +11,10 @@
 	throw_range = 8
 	attack_verb_continuous = list("slaps", "whacks")
 	attack_verb_simple = list("slap", "whack")
-	hitsound = 'sound/weapons/slap.ogg'
+	hitsound = SFX_DEFAULT_FISH_SLAP
+	drop_sound = 'sound/creatures/fish/fish_drop1.ogg'
+	pickup_sound = SFX_FISH_PICKUP
+	sound_vary = TRUE
 	///The grind results of the fish. They scale with the weight of the fish.
 	grind_results = list(/datum/reagent/blood = 5, /datum/reagent/consumable/liquidgibs = 5)
 	obj_flags = UNIQUE_RENAME
@@ -284,6 +287,8 @@
 
 ///Reset weapon-related variables of this items and recalculates those values based on the fish weight and size.
 /obj/item/fish/proc/update_fish_force()
+	if(force >= 15 && hitsound == SFX_ALT_FISH_SLAP)
+		hitsound = SFX_DEFAULT_FISH_SLAP
 	force = initial(force)
 	throwforce = initial(throwforce)
 	throw_range = initial(throw_range)
@@ -311,6 +316,9 @@
 	throwforce = force
 
 	SEND_SIGNAL(src, COMSIG_FISH_FORCE_UPDATED, weight_rank, bonus_malus)
+
+	if(force >=15 && hitsound == SFX_DEFAULT_FISH_SLAP) // don't override special attack sounds
+		hitsound = SFX_ALT_FISH_SLAP // do more damage - do heavier slap sound
 
 ///A proc that makes the fish slightly stronger or weaker if there's a noticeable discrepancy between size and weight.
 /obj/item/fish/proc/calculate_fish_force_bonus(bonus_malus)
