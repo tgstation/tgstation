@@ -195,7 +195,7 @@
 	name = "Heated Rebar Crossbow"
 	desc = "A handcrafted crossbow. \
 		   Aside from conventional sharpened iron rods, it can also fire specialty ammo made from the atmos crystalizer - zaukerite, metallic hydrogen, and healium rods all work. \
-		   Very slow to reload - you can craft the crossbow with a crowbar to try loosen the crossbar, but risks a misfire, or worse..."
+		   Very slow to reload - you can craft the crossbow with a crowbar to loosen the crossbar, but risk a misfire, or worse..."
 	icon = 'icons/obj/weapons/guns/ballistic.dmi'
 	icon_state = "rebarxbow"
 	inhand_icon_state = "rebarxbow"
