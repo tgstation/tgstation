@@ -285,7 +285,7 @@
 
 ///Reset weapon-related variables of this items and recalculates those values based on the fish weight and size.
 /obj/item/fish/proc/update_fish_force()
-	if(force <= 15 && hitsound == SFX_ALT_FISH_SLAP)
+	if(force >= 15 && hitsound == SFX_ALT_FISH_SLAP)
 		hitsound = SFX_DEFAULT_FISH_SLAP
 	force = initial(force)
 	throwforce = initial(throwforce)
