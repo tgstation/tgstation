@@ -1,7 +1,8 @@
 /obj/item/modular_computer/pda
 	name = "pda"
-	icon = 'icons/obj/devices/modular_pda.dmi'
-	icon_state = "pda"
+	icon = 'icons/map_icons/items.dmi'
+	icon_state = "/obj/item/modular_computer/pda"
+	post_init_icon_state = "pda"
 	worn_icon_state = "nothing"
 	base_icon_state = "tablet"
 	greyscale_config = /datum/greyscale_config/tablet
@@ -264,6 +265,7 @@
  */
 /obj/item/modular_computer/pda/nukeops
 	name = "nuclear pda"
+	icon_state = "/obj/item/modular_computer/pda/nukeops"
 	device_theme = PDA_THEME_SYNDICATE
 	comp_light_luminosity = 6.3 //matching a flashlight
 	light_color = COLOR_RED
@@ -283,6 +285,7 @@
 
 /obj/item/modular_computer/pda/syndicate_contract_uplink
 	name = "contractor tablet"
+	icon_state = "/obj/item/modular_computer/pda/syndicate_contract_uplink"
 	device_theme = PDA_THEME_SYNDICATE
 	icon_state_menu = "contractor-assign"
 	comp_light_luminosity = 6.3
@@ -302,7 +305,9 @@
  */
 /obj/item/modular_computer/pda/silicon
 	name = "modular interface"
+	icon = 'icons/obj/devices/modular_pda.dmi'
 	icon_state = "tablet-silicon"
+	post_init_icon_state = null
 	base_icon_state = "tablet-silicon"
 	greyscale_config = null
 	greyscale_colors = null
