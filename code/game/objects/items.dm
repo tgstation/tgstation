@@ -86,7 +86,7 @@
 	///Sound uses when dropping the item, or when its thrown.
 	var/drop_sound
 	///Do the drop and pickup sounds vary?
-	var/sound_vary = FALSE
+	var/sound_vary = TRUE
 	///Whether or not we use stealthy audio levels for this item's attack sounds
 	var/stealthy_audio = FALSE
 	///Sound which is produced when blocking an attack

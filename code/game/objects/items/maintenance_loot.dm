@@ -23,6 +23,7 @@
 	pickup_sound = 'sound/items/lead_pipe_pickup.ogg'
 	drop_sound = 'sound/items/lead_pipe_drop.ogg'
 	hitsound = 'sound/items/lead_pipe_hit.ogg'
+	sound_vary = TRUE
 
 //A good battery early in the shift. Source of lead & sulfuric acid reagents.
 //Add lead material to this once implemented.
