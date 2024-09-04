@@ -1,4 +1,0 @@
-author: "00-Steven"
-delete-after: True
-changes:
-  - bugfix: "Buckling yourself to a bed or stasis bed will now make you actually use the headrest/pillow and face up."
