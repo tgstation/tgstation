@@ -6,7 +6,6 @@
  * All spiders can produce webbing.
  */
 /mob/living/basic/spider/giant
-	SET_BASE_VISUAL_PIXEL(0, 6)
 	name = "giant spider"
 	desc = "Furry and black, it makes you shudder to look at it. This one has deep red eyes."
 	icon_state = "guard"
@@ -22,7 +21,6 @@
 	ai_controller = /datum/ai_controller/basic_controller/giant_spider
 	bite_injection_flags = INJECT_CHECK_PENETRATE_THICK
 	max_grab = GRAB_AGGRESSIVE
-	shadow_offset_y = 6
 	/// Actions to grant on Initialize
 	var/list/innate_actions = null
 

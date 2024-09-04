@@ -1,0 +1,4 @@
+author: "JohnFulpWillard"
+delete-after: True
+changes:
+  - qol: "Smartfridges now lets you set how many pills you want to vend, rather than popping out a second separate tgui window."
