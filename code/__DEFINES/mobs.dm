@@ -881,6 +881,8 @@ GLOBAL_LIST_INIT(layers_to_offset, list(
 
 /// Possible value of [/atom/movable/buckle_lying]. If set to a different (positive-or-zero) value than this, the buckling thing will force a lying angle on the buckled.
 #define NO_BUCKLE_LYING -1
+/// Possible value of [/atom/movable/buckle_dir]. If set to a different (positive-or-zero) value than this, the buckling thing will force a dir on the buckled.
+#define BUCKLE_MATCH_DIR -1
 
 // Flags for fully_heal().
 
@@ -993,10 +995,3 @@ GLOBAL_LIST_INIT(layers_to_offset, list(
 #define BUTT_SPRITE_PLASMA "plasma"
 #define BUTT_SPRITE_FUZZY "fuzzy"
 #define BUTT_SPRITE_SLIME "slime"
-
-// Type of shadow used for drop shadows, really they're mostly just an icon state
-/// Don't bother applying the drop shadow component at all if this is provided as the shadow type
-#define SHADOW_NONE "none"
-#define SHADOW_SMALL "small"
-#define SHADOW_MEDIUM "medium"
-#define SHADOW_LARGE "large"

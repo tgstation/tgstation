@@ -584,7 +584,6 @@
 	new /obj/item/storage/backpack/satchel(src)
 	new /obj/item/modular_computer/pda/heads(src)
 	new /obj/item/clipboard(src)
-	new /obj/item/skillchip/big_pointer(src)
 
 /obj/item/storage/box/syndie_kit/chameleon/broken/PopulateContents()
 	new /obj/item/clothing/under/chameleon/broken(src)
@@ -684,14 +683,7 @@
 		group.register(i)
 	desc += " The implants are registered to the \"[group.name]\" group."
 
-/obj/item/storage/box/syndie_kit/stickers
-	name = "sticker kit"
-
-/obj/item/storage/box/syndie_kit/stickers/Initialize(mapload)
-	. = ..()
-	atom_storage.max_slots = 8
-
-/obj/item/storage/box/syndie_kit/stickers/PopulateContents()
+/obj/item/storage/box/stickers/syndie_kit/PopulateContents()
 	var/list/types = subtypesof(/obj/item/sticker/syndicate)
 
 	for(var/i in 1 to atom_storage.max_slots)

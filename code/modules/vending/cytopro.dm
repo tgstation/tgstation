@@ -20,7 +20,7 @@
 		/obj/item/clothing/head/bio_hood/scientist = 3,
 		/obj/item/reagent_containers/dropper = 5,
 		/obj/item/reagent_containers/syringe = 5,
-		/obj/item/petri_dish/random = 6
+		/obj/item/petri_dish/random = 6,
 	)
 	contraband = list(
 		/obj/item/knife/kitchen = 3,
