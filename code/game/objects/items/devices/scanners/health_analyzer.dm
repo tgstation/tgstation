@@ -2,6 +2,7 @@
 #define SCANMODE_HEALTH 0
 #define SCANMODE_WOUND 1
 #define SCANMODE_COUNT 2 // Update this to be the number of scan modes if you add more
+var/report_list = list()
 
 /obj/item/healthanalyzer
 	name = "health analyzer"
@@ -38,7 +39,7 @@
 /obj/item/healthanalyzer/examine(mob/user)
 	. = ..()
 	if(src.mode != SCANNER_NO_MODE)
-		. += span_notice("Alt-click [src] to toggle the limb damage readout.")
+		. += span_notice("Alt-click [src] to toggle the limb damage readout. Ctrl-shift-click to print readout report.")
 
 /obj/item/healthanalyzer/suicide_act(mob/living/carbon/user)
 	user.visible_message(span_suicide("[user] begins to analyze [user.p_them()]self with [src]! The display shows that [user.p_theyre()] dead!"))
@@ -405,8 +406,30 @@
 
 	if(tochat)
 		to_chat(user, examine_block(jointext(render_list, "")), trailing_newline = FALSE, type = MESSAGE_TYPE_INFO)
+		report_list = render_list
 	else
 		return(jointext(render_list, ""))
+
+/obj/item/healthanalyzer/click_ctrl_shift(mob/user)
+	. = ..()
+	print_report()
+
+/obj/item/healthanalyzer/proc/print_report()
+	var/obj/item/paper/report_paper = new(get_turf(src))
+
+	report_paper.name = "Health scan report"
+	var/report_text = "<center><B>Health scan report</B></center><HR><BR>"
+	report_text += jointext(report_list, "<BR>")
+
+	report_paper.add_raw_text(report_text)
+	report_paper.update_appearance()
+
+	if(ismob(loc))
+		var/mob/printer = loc
+		printer.put_in_hands(report_paper)
+		balloon_alert(printer, "logs cleared")
+
+	report_list = list()
 
 /proc/chemscan(mob/living/user, mob/living/target)
 	if(user.incapacitated())
