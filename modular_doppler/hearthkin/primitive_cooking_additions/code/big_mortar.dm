@@ -1,6 +1,3 @@
-#define LARGE_MORTAR_STAMINA_MINIMUM 50 //What is the amount of stam damage that we prevent mortar use at
-#define LARGE_MORTAR_STAMINA_USE 70 //How much stam damage is given to people when the mortar is used
-
 /obj/structure/large_mortar
 	name = "large mortar"
 	desc = "A large bowl perfect for grinding or juicing a large number of things at once."
@@ -16,6 +13,7 @@
 	)
 	/// The maximum number of items this structure can store
 	var/maximum_contained_items = 10
+	var/in_use = FALSE
 
 /obj/structure/large_mortar/Initialize(mapload)
 	. = ..()
@@ -34,6 +32,10 @@
 	return ..()
 
 /obj/structure/large_mortar/click_alt(mob/user)
+	if(in_use) // If the big mortar is currently in use by someone then we cannot use it
+		balloon_alert(user, "big mortar busy")
+		return CLICK_ACTION_BLOCKING
+
 	if(!length(contents))
 		balloon_alert(user, "nothing inside")
 		return CLICK_ACTION_BLOCKING
@@ -51,6 +53,10 @@
 		target_item.forceMove(get_turf(src))
 
 /obj/structure/large_mortar/attack_hand_secondary(mob/user, list/modifiers)
+	if(in_use) // If the big mortar is currently in use by someone then we cannot use it
+		balloon_alert(user, "big mortar busy")
+		return
+
 	. = ..()
 	if(. == SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN)
 		return
@@ -63,10 +69,18 @@
 	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
 /obj/structure/large_mortar/attackby(obj/item/attacking_item, mob/living/carbon/human/user)
+	if(in_use) // If the big mortar is currently in use by someone then we cannot use it
+		balloon_alert(user, "big mortar busy")
+		return
+
 	if(attacking_item.is_refillable())
 		return
 
 /obj/structure/large_mortar/item_interaction(mob/living/user, obj/item/tool, list/modifiers, is_right_clicking)
+	if(in_use) // If the big mortar is currently in use by someone then we cannot use it
+		balloon_alert(user, "big mortar busy")
+		return ITEM_INTERACT_BLOCKING
+
 	. = ..()
 	if(. || user.combat_mode || tool.is_refillable())
 		return .
@@ -108,10 +122,6 @@
 		)
 		var/picked_option = show_radial_menu(user, src, choose_options, radius = 38, require_near = TRUE)
 
-		if(user.getStaminaLoss() > LARGE_MORTAR_STAMINA_MINIMUM)
-			balloon_alert(user, "too tired!")
-			return ITEM_INTERACT_BLOCKING
-
 		if(!in_range(src, user) || !user.is_holding(tool) || !picked_option)
 			return ITEM_INTERACT_BLOCKING
 		var/act_verb = LOWER_TEXT(picked_option)
@@ -132,11 +142,14 @@
 			return ITEM_INTERACT_BLOCKING
 
 		balloon_alert_to_viewers("[act_verb_ing]...")
+
+		in_use = TRUE
+
 		if(!do_after(user, 5 SECONDS, target = src))
 			balloon_alert_to_viewers("stopped [act_verb_ing]")
+			in_use = FALSE
 			return ITEM_INTERACT_BLOCKING
 
-		user.adjustStaminaLoss(LARGE_MORTAR_STAMINA_USE) //This is a bit more tiring than a normal sized mortar and pestle
 		switch(picked_option)
 			if("Juice")
 				for(var/obj/item/target_item as anything in contents)
@@ -160,6 +173,7 @@
 			if("Mix")
 				mix()
 
+		in_use = FALSE
 		return ITEM_INTERACT_SUCCESS
 
 	if(!tool.grind_results && !tool.juice_typepath)
@@ -219,6 +233,3 @@
 	//Recipe to make whipped cream
 	if (reagents.has_reagent(/datum/reagent/consumable/cream))
 		reagents.convert_reagent(/datum/reagent/consumable/cream, /datum/reagent/consumable/whipped_cream)
-
-#undef LARGE_MORTAR_STAMINA_MINIMUM
-#undef LARGE_MORTAR_STAMINA_USE

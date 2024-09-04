@@ -1,7 +1,7 @@
 /obj/item/target/archery
 	name = "archery target"
 	desc = "A shooting target, specifically for bows."
-	icon = 'modular_doppler/tribal_extended/icons/items_and_weapons.dmi'
+	icon = 'modular_doppler/hearthkin/tribal_extended/icons/items_and_weapons.dmi'
 	icon_state = "archery_target"
 	// impact_sound = SFX_BULLET_IMPACT_WOOD
 

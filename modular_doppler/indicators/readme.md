@@ -12,6 +12,9 @@ SSD Indicator - Automatically shows when a player has disconnected
 Typing Indicator - Shows when a player is typing
 Emote Popup - Added from another module because it was only by Combat Indicator
 
+`COMBAT_INDICATOR` was added in the configuration file `config\doppler\config_doppler.txt`. Comment out to disable the module.
+
+
 ### TG Proc Changes:
 Combat Indicator
  - ADDITION: code/modules/mob/living/death.dm > /mob/living/death()
@@ -28,7 +31,8 @@ SSD Indicator
 
 ### Defines:
 
-N/A
+- `code\__DEFINES\~doppler_defines\keybinds.dm`
+- `code\__DEFINES\~doppler_defines\signals.dm`
 
 ### Included files:
 

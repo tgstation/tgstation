@@ -4,7 +4,7 @@ MODULE ID: XENOARCH
 
 ### Description:
 
-Xenoarch: Archaeology based around foreign bodies. Dig up encased relics of a time long past (or dig up our garbage on accident). 
+Xenoarch: Archaeology based around foreign bodies. Dig up encased relics of a time long past (or dig up our garbage on accident).
 
 ### TG Proc Changes:
 
@@ -16,7 +16,8 @@ N/A
 
 ### Included files:
 
-N/A
+- `code\__DEFINES\~doppler_defines\traits.dm` xenoarch magnification trait
+- `code\__DEFINES\~doppler_defines\techweb_nodes.dm` techweb nodes
 
 ### Credits:
 

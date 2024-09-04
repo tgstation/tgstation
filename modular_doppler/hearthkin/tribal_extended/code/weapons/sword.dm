@@ -1,10 +1,10 @@
 /obj/item/claymore/bone
 	name = "bone sword"
 	desc = "Jagged pieces of bone are tied to what looks like a goliaths femur."
-	icon = 'modular_doppler/tribal_extended/icons/items_and_weapons.dmi'
-	lefthand_file = 'modular_doppler/tribal_extended/icons/swords_lefthand.dmi'
-	righthand_file = 'modular_doppler/tribal_extended/icons/swords_righthand.dmi'
-	worn_icon = 'modular_doppler/tribal_extended/icons/back.dmi'
+	icon = 'modular_doppler/hearthkin/tribal_extended/icons/items_and_weapons.dmi'
+	lefthand_file = 'modular_doppler/hearthkin/tribal_extended/icons/swords_lefthand.dmi'
+	righthand_file = 'modular_doppler/hearthkin/tribal_extended/icons/swords_righthand.dmi'
+	worn_icon = 'modular_doppler/hearthkin/tribal_extended/icons/back.dmi'
 	icon_state = "bone_sword"
 	inhand_icon_state = "bone_sword"
 	worn_icon_state = "bone_sword"

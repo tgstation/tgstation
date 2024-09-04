@@ -215,10 +215,6 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/computer/cryopod, 32)
 		if(mob_occupant && mob_occupant.stat != DEAD)
 			to_chat(occupant, span_notice("<b>You feel cool air surround you. You go numb as your senses turn inward.</b>"))
 
-		var/mob/living/carbon/human/human_occupant = occupant
-		if(istype(human_occupant) && human_occupant.mind)
-			human_occupant.save_individual_persistence(mob_occupant.ckey || mob_occupant.mind?.key)
-
 		COOLDOWN_START(src, despawn_world_time, time_till_despawn)
 
 /obj/machinery/cryopod/open_machine(drop = TRUE, density_to_set = FALSE)
