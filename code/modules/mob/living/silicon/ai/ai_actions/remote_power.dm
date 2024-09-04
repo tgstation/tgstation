@@ -1,7 +1,15 @@
+/datum/ai_module/power_apc
+	name = "Remote Power"
+	description = "remotely powers an APC from a distance"
+	one_purchase = TRUE
+	power_type = /datum/action/innate/ai/ranged/power_apc
+	unlock_text = span_notice("Remote APC power systems online.")
+
 /datum/action/innate/ai/ranged/power_apc
 	name = "remotely power APC"
 	desc = "Use to remotely power an APC."
-	button_icon_state = "vendor_tilt"
+	button_icon = 'icons/obj/machines/APC.dmi'
+	button_icon_state = "frame"
 	ranged_mousepointer = 'icons/effects/mouse_pointers/supplypod_target.dmi'
 	enable_text = span_notice("You prepare to power any APC you see.")
 	disable_text = span_notice("You stop focusing on powering APCs.")
@@ -19,7 +27,15 @@
 	if(!isapc(clicked_on))
 		clicked_on.balloon_alert(ai_caller, "not an APC!")
 		return FALSE
+
+	if(ai_caller.battery - 50 <= 0)
+		to_chat(ai_caller, span_warning("You do not have the battery to charge an APC!"))
+		return FALSE
+
 	var/obj/machinery/power/apc/apc = clicked_on
-	apc.add_load(1000)
+	var/obj/item/stock_parts/power_store/cell = apc.get_cell()
+	cell.give(STANDARD_BATTERY_CHARGE*0.4)
+	ai_caller.battery -= 50
+
 
 

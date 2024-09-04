@@ -197,7 +197,7 @@
 				"name" = category,
 				"items" = (category == malf_ai.malf_picker.selected_cat ? list() : null))
 			for(var/module in malf_ai.malf_picker.possible_modules[category])
-				var/datum/ai_module/mod = malf_ai.malf_picker.possible_modules[category][module]
+				var/datum/ai_module/malf/mod = malf_ai.malf_picker.possible_modules[category][module]
 				cat["items"] += list(list(
 					"name" = mod.name,
 					"cost" = mod.cost,
@@ -222,7 +222,7 @@
 			for(var/category in malf_ai.malf_picker.possible_modules)
 				buyable_items += malf_ai.malf_picker.possible_modules[category]
 			for(var/key in buyable_items)
-				var/datum/ai_module/valid_mod = buyable_items[key]
+				var/datum/ai_module/malf/valid_mod = buyable_items[key]
 				if(valid_mod.name == item_name)
 					malf_ai.malf_picker.purchase_module(malf_ai, valid_mod)
 					return TRUE
