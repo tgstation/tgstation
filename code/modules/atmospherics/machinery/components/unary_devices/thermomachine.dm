@@ -349,7 +349,7 @@
 /obj/machinery/atmospherics/components/unary/thermomachine/freezer/on
 	on = TRUE
 	icon_state = "/obj/machinery/atmospherics/components/unary/thermomachine/freezer/on"
-	post_init_icon_state = "thermo_base_1"
+	post_init_icon_state = "thermo_1"
 
 /obj/machinery/atmospherics/components/unary/thermomachine/freezer/on/Initialize(mapload)
 	. = ..()
@@ -358,6 +358,7 @@
 
 /obj/machinery/atmospherics/components/unary/thermomachine/freezer/on/coldroom
 	name = "Cold room temperature control unit"
+	icon_state = "/obj/machinery/atmospherics/components/unary/thermomachine/freezer/on/coldroom"
 	greyscale_colors = COLOR_CYAN
 
 /obj/machinery/atmospherics/components/unary/thermomachine/freezer/on/coldroom/Initialize(mapload)
@@ -381,6 +382,6 @@
 /obj/machinery/atmospherics/components/unary/thermomachine/heater/on
 	on = TRUE
 	icon_state = "/obj/machinery/atmospherics/components/unary/thermomachine/heater/on"
-	post_init_icon_state = "thermo_base_1"
+	post_init_icon_state = "thermo_1"
 
 #undef THERMOMACHINE_POWER_CONVERSION

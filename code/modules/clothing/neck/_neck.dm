@@ -166,8 +166,6 @@
 
 /obj/item/clothing/neck/tie/red/hitman
 	desc = "This is a $47,000 custom-tailored Référence Du Tueur À Gages tie. The clot is from neosilkworms raised at a tie microfarm in Cookwell, from a secret pattern passed down by monk tailors since the twenty-first century!"
-	icon_state = "/obj/item/clothing/neck/tie/red/hitman"
-	post_init_icon_state = "tie_greyscale_untied"
 	tie_timer = 1 SECONDS // You're a professional.
 
 /obj/item/clothing/neck/tie/red/hitman/tied
