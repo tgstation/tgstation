@@ -152,7 +152,6 @@
 	pickup_sound = 'sound/items/plastic_shield_pick_up.ogg'
 	drop_sound = 'sound/items/plastic_shield_drop.ogg'
 
-
 /obj/item/shield/riot/Initialize(mapload)
 	. = ..()
 	var/static/list/slapcraft_recipe_list = list(/datum/crafting_recipe/strobeshield)
