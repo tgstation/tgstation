@@ -318,8 +318,8 @@
 	bare_wound_bonus = 5
 	clumsy_knockdown_time = 15 SECONDS
 	active = FALSE
-	pickup_sound = 'sound/items/stun_baton_pick_up.ogg'
-	drop_sound = 'sound/items/stun_baton_drop.ogg'
+	pickup_sound = 'sound/items/baton/telescopic_baton_folded_pickup.ogg'
+	drop_sound = 'sound/items/baton/telescopic_baton_folded_drop.ogg'
 
 	/// The sound effecte played when our baton is extended.
 	var/on_sound = 'sound/weapons/batonextend.ogg'
@@ -376,6 +376,8 @@
 	inhand_icon_state = active ? on_inhand_icon_state : null // When inactive, there is no inhand icon_state.
 	if(user)
 		balloon_alert(user, active ? "extended" : "collapsed")
+	drop_sound = 'sound/items/baton/telescopic_baton_unfolded_drop.ogg'
+	pickup_sound = 'sound/items/baton/telescopic_baton_unfolded_pickup.ogg'
 	playsound(src, on_sound, 50, TRUE)
 	return COMPONENT_NO_DEFAULT_MESSAGE
 
@@ -401,6 +403,11 @@
 	on_inhand_icon_state = "contractor_baton_on"
 	on_sound = 'sound/weapons/contractorbatonextend.ogg'
 	active_force = 16
+
+/obj/item/melee/baton/telescopic/contractor_baton/on_transform()
+	. = ..()
+	drop_sound = 'sound/items/baton/telescopic_baton_unfolded_active_drop.ogg'
+	pickup_sound = 'sound/items/baton/telescopic_baton_unfolded_active_pickup.ogg'
 
 /obj/item/melee/baton/telescopic/contractor_baton/get_wait_description()
 	return span_danger("The baton is still charging!")
@@ -438,8 +445,8 @@
 	light_on = FALSE
 	light_color = LIGHT_COLOR_ORANGE
 	light_power = 0.5
-	pickup_sound = 'sound/items/stun_baton_pick_up.ogg'
-	drop_sound = 'sound/items/stun_baton_drop.ogg'
+	pickup_sound = 'sound/items/baton/stun_baton_inactive_pickup.ogg'
+	drop_sound = 'sound/items/baton/stun_baton_inactive_drop.ogg'
 
 
 	var/throw_stun_chance = 35
@@ -565,8 +572,10 @@
 		playsound(src, SFX_SPARKS, 75, TRUE, -1)
 		toggle_light(user)
 		do_sparks(1, TRUE, src)
+		drop_sound = 'sound/items/baton/stun_baton_active_drop.ogg'
+		pickup_sound = 'sound/items/baton/stun_baton_active_pickup.ogg'
 	else
-		active = FALSE
+		turn_off()
 		if(!cell)
 			balloon_alert(user, "no power source!")
 		else
@@ -579,6 +588,14 @@
 	set_light_on(!light_on)
 	return
 
+/obj/item/melee/baton/security/proc/turn_off()
+	active = FALSE
+	set_light_on(FALSE)
+	update_appearance()
+	playsound(src, SFX_SPARKS, 75, TRUE, -1)
+	drop_sound = 'sound/items/baton/stun_baton_inactive_drop.ogg'
+	pickup_sound = 'sound/items/baton/stun_baton_inactive_pickup.ogg'
+
 /obj/item/melee/baton/security/proc/deductcharge(deducted_charge)
 	if(!cell)
 		return
@@ -587,10 +604,7 @@
 	. = cell.use(deducted_charge)
 	if(active && cell.charge < cell_hit_cost)
 		//we're below minimum, turn off
-		active = FALSE
-		set_light_on(FALSE)
-		update_appearance()
-		playsound(src, SFX_SPARKS, 75, TRUE, -1)
+		turn_off()
 
 /obj/item/melee/baton/security/clumsy_check(mob/living/carbon/human/user)
 	. = ..()
