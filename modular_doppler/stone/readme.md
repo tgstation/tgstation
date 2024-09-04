@@ -20,6 +20,6 @@ N/A
 
 ### Included files that are not contained in this module:
 
-N/A
+- `code\__DEFINES\icon_smoothing.dm` added the smoothing group `SMOOTH_GROUP_STONE_WALLS`used in `/turf/closed/wall/mineral/stone`
 
 ### Credits:
