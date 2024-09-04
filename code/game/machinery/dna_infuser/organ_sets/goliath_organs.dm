@@ -16,8 +16,9 @@
 	name = "goliath eyes"
 	desc = "goliath DNA infused into what was once some normal eyes."
 
-	icon = 'icons/obj/medical/organs/infuser_organs.dmi'
-	icon_state = "eyes"
+	icon = 'icons/map_icons/items.dmi'
+	icon_state = "/obj/item/organ/internal/eyes/night_vision/goliath"
+	post_init_icon_state = "eyes"
 	greyscale_config = /datum/greyscale_config/mutant_organ
 	greyscale_colors = GOLIATH_COLORS
 
@@ -39,8 +40,9 @@
 	name = "mutated goliath-lungs"
 	desc = "goliath DNA infused into what was once some normal lungs."
 
-	icon = 'icons/obj/medical/organs/infuser_organs.dmi'
-	icon_state = "lungs"
+	icon = 'icons/map_icons/items.dmi'
+	icon_state = "/obj/item/organ/internal/lungs/lavaland/goliath"
+	post_init_icon_state = "lungs"
 	greyscale_config = /datum/greyscale_config/mutant_organ
 	greyscale_colors = GOLIATH_COLORS
 
@@ -54,8 +56,9 @@
 	name = "mutated goliath-brain"
 	desc = "goliath DNA infused into what was once a normal brain."
 
-	icon = 'icons/obj/medical/organs/infuser_organs.dmi'
-	icon_state = "brain"
+	icon = 'icons/map_icons/items.dmi'
+	icon_state = "/obj/item/organ/internal/brain/goliath"
+	post_init_icon_state = "brain"
 	greyscale_config = /datum/greyscale_config/mutant_organ
 	greyscale_colors = GOLIATH_COLORS
 	can_smoothen_out = FALSE
@@ -162,8 +165,9 @@
 	name = "mutated goliath-heart"
 	desc = "goliath DNA infused into what was once a normal heart."
 
-	icon = 'icons/obj/medical/organs/infuser_organs.dmi'
-	icon_state = "heart"
+	icon = 'icons/map_icons/items.dmi'
+	icon_state = "/obj/item/organ/internal/heart/goliath"
+	post_init_icon_state = "heart"
 	greyscale_config = /datum/greyscale_config/mutant_organ
 	greyscale_colors = GOLIATH_COLORS
 
