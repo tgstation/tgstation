@@ -877,6 +877,23 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/window/reinforced/tinted/frosted/spaw
 	anchored = FALSE
 	state = WINDOW_OUT_OF_FRAME
 
+/obj/structure/window/reinforced/plasma/plastitanium/indestructible
+	name = "hardened plastitanium window"
+	flags_1 = PREVENT_CLICK_UNDER_1
+	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
+
+/obj/structure/window/reinforced/plasma/plastitanium/indestructible/welder_act(mob/living/user, obj/item/tool)
+	return NONE
+
+/obj/structure/window/reinforced/plasma/plastitanium/indestructible/screwdriver_act(mob/living/user, obj/item/tool)
+	return NONE
+
+/obj/structure/window/reinforced/plasma/plastitanium/indestructible/wrench_act(mob/living/user, obj/item/tool)
+	return NONE
+
+/obj/structure/window/reinforced/plasma/plastitanium/indestructible/crowbar_act(mob/living/user, obj/item/tool)
+	return NONE
+
 /obj/structure/window/paperframe
 	name = "paper frame"
 	desc = "A fragile separator made of thin wood and paper."
