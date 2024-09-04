@@ -509,6 +509,8 @@
 			)
 		if(SFX_DEFAULT_FISH_SLAP)
 			soundin = 'sound/creatures/fish/fish_slap1.ogg'
+		if(SFX_ALT_FISH_SLAP)
+			soundin = 'sound/creatures/fish/fish_slap2.ogg'
 		if(SFX_FISH_PICKUP)
 			soundin = pick(
 				'sound/creatures/fish/fish_pickup1.ogg',
