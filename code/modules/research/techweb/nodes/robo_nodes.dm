@@ -68,7 +68,7 @@
 
 /datum/techweb_node/ai_laws
 	id = TECHWEB_NODE_AI_LAWS
-	display_name = "Advanced AI Laws"
+	display_name = "Advanced AI Upgrades"
 	description = "Delving into sophisticated AI directives, with hopes that they won't lead to humanity's extinction."
 	prereq_ids = list(TECHWEB_NODE_AI)
 	design_ids = list(
@@ -93,5 +93,6 @@
 		"freeformcore_module",
 		"onehuman_module",
 		"purge_module",
+		"ai_power_upgrade"
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_3_POINTS)
