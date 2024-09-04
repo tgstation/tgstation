@@ -232,3 +232,9 @@
 	desc = "Successfully carry a boulder from Lavaland all the way to Centcom, without ever dropping it. We must imagine you're happy to unlock this."
 	database_id = MEDAL_SISYPHUS
 	icon_state = "sisyphus"
+
+/datum/award/achievement/misc/cigarettes
+	name = "Unhealthy snacks"
+	desc = "You were curious to taste it. And then another. You must have more!"
+	database_id = MEDAL_CIGARETTES
+	icon_state = "cigarettes"

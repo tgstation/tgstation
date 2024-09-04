@@ -1,0 +1,9 @@
+author: "EnterTheJake"
+delete-after: True
+changes:
+  - rscadd: "A Syndicate Rebar Quiver has been added to the uplink"
+  - qol: "Left clicking with a rebar crossbow will now draw/undraw the string."
+  - balance: "Rebar quivers are now a neck slot item."
+  - balance: " Hydrogen bolts damage has been upped to 55 brute and can now pierce through walls, they no longer have infinite piercing and can no longer embed however."
+  - code_imp: "removed the TRAIT_ALWAYS_HIT_ZONE, replaced with 2 new variables."
+  - bugfix: "fixes rebar crossbows having a higher capacity than intended if a bolt had already been chambered."
