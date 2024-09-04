@@ -2,7 +2,7 @@
 #define SCANMODE_HEALTH 0
 #define SCANMODE_WOUND 1
 #define SCANMODE_COUNT 2 // Update this to be the number of scan modes if you add more
-var/report_list = list()
+var/list/report_list = list()
 
 /obj/item/healthanalyzer
 	name = "health analyzer"
