@@ -922,12 +922,12 @@ GLOBAL_LIST_EMPTY(cached_storage_typecaches)
 	return open_storage_on_signal(source, user) ? CLICK_ACTION_SUCCESS : NONE
 
 /// Opens the storage to the mob, showing them the contents to their UI.
-/datum/storage/proc/open_storage(mob/to_show)
+/datum/storage/proc/open_storage(mob/to_show, can_reach_target = parent) // DOPPLER EDIT ADDITION -- Original: /datum/storage/proc/open_storage(mob/to_show)
 	if(isobserver(to_show))
 		show_contents(to_show)
 		return FALSE
 
-	if(!isliving(to_show) || !to_show.can_perform_action(parent, ALLOW_RESTING | FORBID_TELEKINESIS_REACH))
+	if(!isliving(to_show) || !to_show.can_perform_action(can_reach_target, ALLOW_RESTING | FORBID_TELEKINESIS_REACH)) // DOPPLER EDIT CHANGE -- ORIGINAL: if(!isliving(to_show) || !to_show.can_perform_action(parent, ALLOW_RESTING | FORBID_TELEKINESIS_REACH))
 		return FALSE
 
 	if(locked)
