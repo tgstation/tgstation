@@ -1,4 +1,4 @@
-import { FeatureTriColorInput, FeatureColorInput, Feature } from '../base';
+import { FeatureTriColorInput, Feature } from '../base';
 
 export const fluff_color: Feature<string[]> = {
   name: 'Fluff Color',

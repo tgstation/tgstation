@@ -1,4 +1,4 @@
-import { FeatureTriColorInput, FeatureColorInput, Feature, CheckboxInput, FeatureToggle } from '../base';
+import { FeatureTriColorInput, Feature, CheckboxInput, FeatureToggle } from '../base';
 
 export const penis_color: Feature<string[]> = {
   name: 'Penis Color',

@@ -1,4 +1,4 @@
-import { FeatureTriColorInput, FeatureColorInput, Feature, CheckboxInput, FeatureToggle } from '../base';
+import { FeatureTriColorInput, Feature, CheckboxInput, FeatureToggle } from '../base';
 
 export const has_snout: FeatureToggle = {
   name: 'Add Part: Snout',
