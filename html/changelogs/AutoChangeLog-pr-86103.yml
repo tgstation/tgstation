@@ -1,0 +1,5 @@
+author: "Hardly"
+delete-after: True
+changes:
+  - sound: "Plumbing Constructor and Rapid-Tiling-Device now has RCD's pick up and UI sounds"
+  - bugfix: "Fixes ghosts being able to interact with the RCD, RPLD and RPDs"
