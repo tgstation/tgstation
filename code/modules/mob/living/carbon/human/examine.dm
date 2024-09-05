@@ -408,7 +408,7 @@
 	else
 		. += "\[Record Missing\]"
 		. += "\[Record Missing\]"
-	. += "<a href='?src=[REF(src)];hud=m;evaluation=1;examine_time=[world.time]'>\[Medical evaluation\]</a><br>"
+	. += "<a href='?src=[REF(src)];hud=m;evaluation=1;examine_time=[world.time]'>\[Medical evaluation\]</a>"
 	. += "<a href='?src=[REF(src)];hud=m;quirk=1;examine_time=[world.time]'>\[See quirks\]</a>"
 
 /// Collects information displayed about src when examined by a user with a security HUD.
