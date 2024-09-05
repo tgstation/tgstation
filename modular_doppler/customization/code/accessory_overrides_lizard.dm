@@ -55,7 +55,7 @@
 /datum/species/regenerate_organs(mob/living/carbon/target, datum/species/old_species, replace_current = TRUE, list/excluded_zones, visual_only = FALSE)
 	. = ..()
 	if(target.dna.features["snout"])
-		if(target.dna.features["snout"] != /datum/sprite_accessory/snouts/none::name)
+		if(target.dna.features["snout"] != /datum/sprite_accessory/snouts/none::name && target.dna.features["snout"] != /datum/sprite_accessory/blank::name)
 			var/obj/item/organ/replacement = SSwardrobe.provide_type(/obj/item/organ/external/snout)
 			replacement.Insert(target, special = TRUE, movement_flags = DELETE_IF_REPLACED)
 			return .
@@ -122,7 +122,7 @@
 /datum/species/regenerate_organs(mob/living/carbon/target, datum/species/old_species, replace_current = TRUE, list/excluded_zones, visual_only = FALSE)
 	. = ..()
 	if(target.dna.features["horns"])
-		if(target.dna.features["horns"] != /datum/sprite_accessory/horns/none::name)
+		if(target.dna.features["horns"] != /datum/sprite_accessory/horns/none::name && target.dna.features["horns"] != /datum/sprite_accessory/blank::name)
 			var/obj/item/organ/replacement = SSwardrobe.provide_type(/obj/item/organ/external/horns)
 			replacement.Insert(target, special = TRUE, movement_flags = DELETE_IF_REPLACED)
 			return .
@@ -189,7 +189,7 @@
 /datum/species/regenerate_organs(mob/living/carbon/target, datum/species/old_species, replace_current = TRUE, list/excluded_zones, visual_only = FALSE)
 	. = ..()
 	if(target.dna.features["frills"])
-		if(target.dna.features["frills"] != /datum/sprite_accessory/frills/none::name)
+		if(target.dna.features["frills"] != /datum/sprite_accessory/frills/none::name && target.dna.features["frills"] != /datum/sprite_accessory/blank::name)
 			var/obj/item/organ/replacement = SSwardrobe.provide_type(/obj/item/organ/external/frills)
 			replacement.Insert(target, special = TRUE, movement_flags = DELETE_IF_REPLACED)
 			return .
@@ -268,7 +268,7 @@
 	if(target == null)
 		return
 	if(target.dna.features["tail_lizard"])
-		if(target.dna.features["tail_lizard"] != /datum/sprite_accessory/tails/lizard/none::name)
+		if(target.dna.features["tail_lizard"] != /datum/sprite_accessory/tails/lizard/none::name && target.dna.features["tail_lizard"] != /datum/sprite_accessory/blank::name)
 			var/obj/item/organ/replacement = SSwardrobe.provide_type(/obj/item/organ/external/tail/lizard)
 			replacement.Insert(target, special = TRUE, movement_flags = DELETE_IF_REPLACED)
 			return .
@@ -393,7 +393,7 @@
 //manually adding them now
 /datum/species/add_body_markings(mob/living/carbon/human/hooman)
 	. = ..()
-	if(hooman.dna.features["lizard_markings"] && hooman.dna.features["lizard_markings"] != /datum/sprite_accessory/lizard_markings/none::name) //loop through possible species markings
+	if(hooman.dna.features["lizard_markings"] && hooman.dna.features["lizard_markings"] != /datum/sprite_accessory/lizard_markings/none::name && hooman.dna.features["snout"] != /datum/sprite_accessory/blank::name) //loop through possible species markings
 		var/datum/bodypart_overlay/simple/body_marking/markings = new /datum/bodypart_overlay/simple/body_marking/lizard() // made to die... mostly because we cant use initial on lists but its convenient and organized
 		var/accessory_name = hooman.dna.features[markings.dna_feature_key] //get the accessory name from dna
 		var/datum/sprite_accessory/moth_markings/accessory = markings.get_accessory(accessory_name) //get the actual datum
