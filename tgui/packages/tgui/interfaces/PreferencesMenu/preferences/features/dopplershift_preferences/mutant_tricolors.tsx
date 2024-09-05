@@ -1,4 +1,9 @@
-import { FeatureTriColorInput, Feature, CheckboxInput, FeatureToggle } from '../base';
+import {
+  CheckboxInput,
+  Feature,
+  FeatureToggle,
+  FeatureTriColorInput,
+} from '../base';
 
 export const has_snout: FeatureToggle = {
   name: 'Add Part: Snout',
@@ -14,8 +19,6 @@ export const snout_color: Feature<string[]> = {
   component: FeatureTriColorInput,
 };
 
-
-
 export const has_horns: FeatureToggle = {
   name: 'Add Part: Horns',
   category: 'GAMEPLAY',
@@ -29,8 +32,6 @@ export const horns_color: Feature<string[]> = {
   name: 'Horns Color',
   component: FeatureTriColorInput,
 };
-
-
 
 export const has_frills: FeatureToggle = {
   name: 'Add Part: Frills',
@@ -46,8 +47,6 @@ export const frills_color: Feature<string[]> = {
   component: FeatureTriColorInput,
 };
 
-
-
 export const has_tail: FeatureToggle = {
   name: 'Add Part: Tail',
   category: 'GAMEPLAY',
@@ -61,8 +60,6 @@ export const tail_color: Feature<string[]> = {
   name: 'Tail Color',
   component: FeatureTriColorInput,
 };
-
-
 
 export const has_ears: FeatureToggle = {
   name: 'Add Part: Snout',
@@ -78,8 +75,6 @@ export const ears_color: Feature<string[]> = {
   component: FeatureTriColorInput,
 };
 
-
-
 export const has_spines: FeatureToggle = {
   name: 'Add Part: Spines',
   category: 'GAMEPLAY',
@@ -94,8 +89,6 @@ export const spines_color: Feature<string[]> = {
   component: FeatureTriColorInput,
 };
 
-
-
 export const has_caps: FeatureToggle = {
   name: 'Add Part: Snout',
   category: 'GAMEPLAY',
@@ -109,8 +102,6 @@ export const caps_color: Feature<string[]> = {
   name: 'Caps Color',
   component: FeatureTriColorInput,
 };
-
-
 
 export const has_markings: FeatureToggle = {
   name: 'Add Part: Basic Markings',
@@ -140,8 +131,6 @@ export const moth_markings_color: Feature<string[]> = {
   component: FeatureTriColorInput,
 };
 
-
-
 export const has_wings: FeatureToggle = {
   name: 'Add Part: Wings',
   category: 'GAMEPLAY',
@@ -169,8 +158,6 @@ export const moth_wings_color: Feature<string[]> = {
   name: 'Moth Wings Color',
   component: FeatureTriColorInput,
 };
-
-
 
 export const has_antennae: FeatureToggle = {
   name: 'Add Part: Antennae',

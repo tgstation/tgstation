@@ -41,7 +41,7 @@
 
 /obj/item/organ/external/tail/on_bodypart_insert(obj/item/bodypart/bodypart)
 	/// DOPPLER SHIFT ADDITION BEGIN
-	// damnit TG your own code fails CI for reasons unclear
+	// damnit TG your own code fails CI for reasons unclear - TODO, stack trace this to eventually figure out how it's ending up with null owners
 	if(bodypart == null)
 		return ..()
 	if(bodypart.owner == null)

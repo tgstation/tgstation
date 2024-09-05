@@ -106,7 +106,8 @@ export const FeatureTriColorInput = (props: FeatureValueProps<string[]>) => {
               preference: props.featureId,
               value: index + 1,
             });
-          }}>
+          }}
+        >
           <Stack align="center" fill>
             <Stack.Item>
               <Box
@@ -120,8 +121,8 @@ export const FeatureTriColorInput = (props: FeatureValueProps<string[]>) => {
                   width: '11px',
                   ...(props.shrink
                     ? {
-                      'margin': '1px',
-                    }
+                        margin: '1px',
+                      }
                     : {}),
                 }}
               />
