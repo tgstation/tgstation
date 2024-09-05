@@ -1,0 +1,4 @@
+author: "TwistedSilicon"
+delete-after: True
+changes:
+  - bugfix: "The Codex Cicatrix ritual now consumes the item in the case where a hide was used instead of a corpse. No more free books."
