@@ -118,7 +118,8 @@
 GLOBAL_LIST_INIT(creamable, typecacheof(list(
 	/mob/living/carbon/human,
 	/mob/living/basic/pet/dog/corgi,
-	/mob/living/silicon/ai)))
+	/mob/living/silicon/ai,
+)))
 
 /datum/component/face_decal/creampie/Initialize()
 	. = ..()

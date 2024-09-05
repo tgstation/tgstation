@@ -29,7 +29,6 @@ INITIALIZE_IMMEDIATE(/obj/effect/landmark)
 	icon = 'icons/mob/landmarks.dmi'
 	icon_state = "x"
 	anchored = TRUE
-	plane = GAME_PLANE
 	layer = MOB_LAYER
 	var/jobspawn_override = FALSE
 	var/delete_after_roundstart = TRUE

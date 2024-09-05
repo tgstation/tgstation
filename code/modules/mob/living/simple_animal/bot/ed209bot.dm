@@ -1,10 +1,7 @@
 /mob/living/simple_animal/bot/secbot/ed209
-	SET_BASE_VISUAL_PIXEL(0, 9)
 	name = "\improper ED-209 Security Robot"
 	desc = "A security robot. He looks less than thrilled."
 	icon_state = "ed209"
-	shadow_type = SHADOW_LARGE
-	shadow_offset_y = 1
 	light_color = "#f84e4e"
 	density = TRUE
 	health = 100
@@ -45,7 +42,7 @@
 	var/list/targets = list()
 	for(var/mob/living/carbon/nearby_carbon in view(7, src)) //Let's find us a target
 		var/threatlevel = 0
-		if(nearby_carbon.incapacitated())
+		if(nearby_carbon.incapacitated)
 			continue
 		threatlevel = nearby_carbon.assess_threat(judgement_criteria)
 		if(threatlevel < THREAT_ASSESS_DANGEROUS)
