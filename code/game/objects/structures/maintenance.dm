@@ -2,7 +2,6 @@
 as well as a location where a hidden item can somtimes be retrieved
 at the cost of risking a vicious bite.**/
 /obj/structure/moisture_trap
-	SET_BASE_VISUAL_PIXEL(0, DEPTH_OFFSET)
 	name = "moisture trap"
 	desc = "A device installed in order to control moisture in poorly ventilated areas.\nThe stagnant water inside basin seems to produce serious biofouling issues when improperly maintained.\nThis unit in particular seems to be teeming with life!\nWho thought mother Gaia could assert herself so vigoriously in this sterile and desolate place?"
 	icon_state = "moisture_trap"
@@ -32,7 +31,7 @@ at the cost of risking a vicious bite.**/
 
 /obj/structure/moisture_trap/Initialize(mapload)
 	. = ..()
-	ADD_TRAIT(src, TRAIT_FISH_SAFE_STORAGE, TRAIT_GENERIC)
+	AddElement(/datum/element/fish_safe_storage)
 	AddElement(/datum/element/swabable, CELL_LINE_TABLE_MOIST, CELL_VIRUS_TABLE_GENERIC, rand(2,4), 20)
 	if(prob(40))
 		critter_infested = FALSE
@@ -227,7 +226,7 @@ at the cost of risking a vicious bite.**/
 /obj/structure/destructible/cult/pants_altar/proc/check_menu(mob/user)
 	if(!istype(user))
 		return FALSE
-	if(user.incapacitated() || !user.Adjacent(src))
+	if(user.incapacitated || !user.Adjacent(src))
 		return FALSE
 	return TRUE
 

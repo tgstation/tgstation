@@ -1,7 +1,6 @@
 
 // SUIT STORAGE UNIT /////////////////
 /obj/machinery/suit_storage_unit
-	SET_BASE_VISUAL_PIXEL(0, DEPTH_OFFSET)
 	name = "suit storage unit"
 	desc = "An industrial unit made to hold and decontaminate irradiated equipment. It comes with a built-in UV cauterization mechanism. A small warning label advises that organic matter should not be placed into the unit."
 	icon = 'icons/obj/machines/suit_storage.dmi'
@@ -231,7 +230,7 @@
 
 /obj/machinery/suit_storage_unit/update_overlays()
 	. = ..()
-	//if things arent powered, these show anyways
+	//if things aren't powered, these show anyways
 	if(panel_open)
 		. += "[base_icon_state]_panel"
 	if(state_open)
@@ -794,7 +793,7 @@
 */
 /obj/machinery/suit_storage_unit/default_deconstruction_screwdriver(mob/user, icon_state_open, icon_state_closed, obj/item/screwdriver)
 	if(screwdriver.tool_behaviour == TOOL_SCREWDRIVER && (uv || locked))
-		to_chat(user, span_warning("You cant open the panel while its [locked ? "locked" : "decontaminating"]"))
+		to_chat(user, span_warning("You can't open the panel while its [locked ? "locked" : "decontaminating"]"))
 		return TRUE
 	return ..()
 
