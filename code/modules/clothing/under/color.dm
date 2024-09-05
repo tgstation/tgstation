@@ -256,7 +256,9 @@
 /obj/item/clothing/under/color/rainbow
 	name = "rainbow jumpsuit"
 	desc = "A multi-colored jumpsuit!"
+	icon = 'icons/obj/clothing/under/color.dmi'
 	icon_state = "rainbow"
+	post_init_icon_state = null
 	inhand_icon_state = "rainbow"
 	greyscale_config = null
 	greyscale_config_inhand_left = null
@@ -269,7 +271,9 @@
 /obj/item/clothing/under/color/jumpskirt/rainbow
 	name = "rainbow jumpskirt"
 	desc = "A multi-colored jumpskirt!"
+	icon = 'icons/obj/clothing/under/color.dmi'
 	icon_state = "rainbow_skirt"
+	post_init_icon_state = null
 	inhand_icon_state = "rainbow"
 	greyscale_config = null
 	greyscale_config_inhand_left = null

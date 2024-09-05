@@ -35,7 +35,9 @@
 /obj/item/clothing/neck/bowtie/rainbow
 	name = "rainbow bow tie"
 	desc = "An extremely large neosilk rainbow-colored bowtie."
+	icon = 'icons/obj/clothing/neck.dmi'
 	icon_state = "bowtie_rainbow"
+	post_init_icon_state = null
 	greyscale_config = null
 	greyscale_config_worn = null
 	greyscale_colors = null
@@ -183,7 +185,9 @@
 /obj/item/clothing/neck/tie/horrible
 	name = "horrible tie"
 	desc = "A neosilk tie. This one is disgusting."
+	icon = 'icons/obj/clothing/neck.dmi'
 	icon_state = "horribletie"
+	post_init_icon_state = null
 	clip_on = TRUE
 	greyscale_config = null
 	greyscale_config_worn = null
@@ -191,7 +195,9 @@
 
 /obj/item/clothing/neck/tie/disco
 	name = "horrific necktie"
+	icon = 'icons/obj/clothing/neck.dmi'
 	icon_state = "eldritch_tie"
+	post_init_icon_state = null
 	desc = "The necktie is adorned with a garish pattern. It's disturbingly vivid. Somehow you feel as if it would be wrong to ever take it off. It's your friend now. You will betray it if you change it for some boring scarf."
 	clip_on = TRUE
 	greyscale_config = null
@@ -200,8 +206,10 @@
 
 /obj/item/clothing/neck/tie/detective
 	name = "loose tie"
+	icon = 'icons/obj/clothing/neck.dmi'
 	desc = "A loosely tied necktie, a perfect accessory for the over-worked detective."
 	icon_state = "detective"
+	post_init_icon_state = null
 	clip_on = TRUE
 	greyscale_config = null
 	greyscale_config_worn = null

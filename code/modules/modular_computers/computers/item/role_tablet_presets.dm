@@ -324,7 +324,9 @@
 
 /obj/item/modular_computer/pda/clown
 	name = "clown PDA"
+	icon = 'icons/obj/devices/modular_pda.dmi'
 	icon_state = "/obj/item/modular_computer/pda/clown"
+	post_init_icon_state = null
 	inserted_disk = /obj/item/computer_disk/virus/clown
 	icon_state = "pda-clown"
 	greyscale_config = null
@@ -386,6 +388,7 @@
 /obj/item/modular_computer/pda/curator
 	name = "curator PDA"
 	desc = "A small experimental microcomputer."
+	icon = 'icons/obj/devices/modular_pda.dmi'
 	greyscale_config = null
 	greyscale_colors = null
 	icon_state = "pda-library"
@@ -442,6 +445,7 @@
 
 /obj/item/modular_computer/pda/human_ai
 	name = "modular interface"
+	icon = 'icons/obj/devices/modular_pda.dmi'
 	icon_state = "pda-silicon-human"
 	post_init_icon_state = null
 	base_icon_state = "pda-silicon-human"
@@ -488,6 +492,7 @@
 
 /obj/item/modular_computer/pda/clear
 	name = "clear PDA"
+	icon = 'icons/obj/devices/modular_pda.dmi'
 	icon_state = "pda-clear"
 	post_init_icon_state = null
 	greyscale_config = null
