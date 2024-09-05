@@ -143,7 +143,7 @@
 	user.visible_message(span_suicide("[user] shakes up [src] with a rattle and lifts it to [user.p_their()] mouth, spraying paint across [user.p_their()] teeth!"))
 	user.say("WITNESS ME!!", forced="spraycan suicide")
 	playsound(src, 'sound/effects/spray.ogg', 5, TRUE, 5)
-	suicider.update_lips("spray_face", paint_color)
+	suicider.AddComponent(/datum/component/face_decal, "spray", EXTERNAL_ADJACENT, paint_color)
 	return OXYLOSS
 
 /obj/effect/decal/cleanable/traitor_rune

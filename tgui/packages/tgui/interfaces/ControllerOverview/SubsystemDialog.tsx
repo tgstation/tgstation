@@ -24,6 +24,7 @@ export function SubsystemDialog(props: Props) {
     next_fire,
     tick_overrun,
     tick_usage,
+    usage_per_tick,
   } = subsystem;
 
   return (
@@ -42,12 +43,17 @@ export function SubsystemDialog(props: Props) {
           <LabeledList.Item label="Init Order">{init_order}</LabeledList.Item>
           <LabeledList.Item label="Last Fire">{last_fire}</LabeledList.Item>
           <LabeledList.Item label="Next Fire">{next_fire}</LabeledList.Item>
-          <LabeledList.Item label="Cost">{cost_ms}ms</LabeledList.Item>
+          <LabeledList.Item label="Cost">
+            {cost_ms.toFixed(2)}ms
+          </LabeledList.Item>
           <LabeledList.Item label="Tick Usage">
-            {(tick_usage * 0.01).toFixed(2)}%
+            {tick_usage.toFixed(2)}%
+          </LabeledList.Item>
+          <LabeledList.Item label="Avg Usage Per Tick">
+            {usage_per_tick.toFixed(2)}%
           </LabeledList.Item>
           <LabeledList.Item label="Tick Overrun">
-            {(tick_overrun * 0.01).toFixed(2)}%
+            {tick_overrun.toFixed(2)}%
           </LabeledList.Item>
           {initialization_failure_message && (
             <LabeledList.Item color="bad">

@@ -82,6 +82,20 @@
 	pellets = 6
 	variance = 25
 
+/obj/item/ammo_casing/shotgun/buckshot/old
+	projectile_type = /obj/projectile/bullet/pellet/shotgun_buckshot/old
+	can_misfire = TRUE
+	misfire_increment = 2
+	integrity_damage = 4
+
+/obj/item/ammo_casing/shotgun/buckshot/old/fire_casing(atom/target, mob/living/user, params, distro, quiet, zone_override, spread, atom/fired_from)
+	. = ..()
+	if(!fired_from)
+		return
+
+	var/datum/effect_system/fluid_spread/smoke/smoke = new
+	smoke.set_up(0, holder = fired_from, location = fired_from)
+
 /obj/item/ammo_casing/shotgun/buckshot/spent
 	projectile_type = null
 

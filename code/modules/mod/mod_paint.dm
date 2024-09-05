@@ -55,7 +55,7 @@
 	data["currentColor"] = current_color
 	return data
 
-/obj/item/mod/paint/ui_act(action, list/params)
+/obj/item/mod/paint/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if(.)
 		return
@@ -126,7 +126,7 @@
 	mod.theme.set_skin(mod, pick)
 
 /obj/item/mod/paint/proc/check_menu(obj/item/mod/control/mod, mob/user)
-	if(user.incapacitated() || !user.is_holding(src) || !mod || mod.active || mod.activating)
+	if(user.incapacitated || !user.is_holding(src) || !mod || mod.active || mod.activating)
 		return FALSE
 	return TRUE
 

@@ -62,7 +62,7 @@
 /obj/machinery/computer/order_console/mining/retrieve_points(obj/item/card/id/id_card)
 	return round(id_card.registered_account.mining_points)
 
-/obj/machinery/computer/order_console/mining/ui_act(action, params)
+/obj/machinery/computer/order_console/mining/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if(!.)
 		flick("mining-deny", src)
@@ -121,7 +121,7 @@
 /obj/machinery/computer/order_console/mining/proc/check_menu(obj/item/mining_voucher/voucher, mob/living/redeemer)
 	if(!istype(redeemer))
 		return FALSE
-	if(redeemer.incapacitated())
+	if(redeemer.incapacitated)
 		return FALSE
 	if(QDELETED(voucher))
 		return FALSE

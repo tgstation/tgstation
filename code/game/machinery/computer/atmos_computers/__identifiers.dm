@@ -1,7 +1,7 @@
 // ATMOSIA GAS MONITOR SUITE TAGS
 // Things that use these include atmos control monitors, sensors, inputs, and outlets.
 // They last three adds _sensor, _in, and _out respectively to the id_tag variable.
-// Dont put underscores here, we use them as delimiters.
+// Don't put underscores here, we use them as delimiters.
 
 #define ATMOS_GAS_MONITOR_O2 GAS_O2
 #define ATMOS_GAS_MONITOR_PLAS GAS_PLASMA

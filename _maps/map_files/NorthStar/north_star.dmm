@@ -34444,6 +34444,7 @@
 	dir = 8
 	},
 /obj/item/radio/intercom/directional/north,
+/obj/structure/detectiveboard/directional/east,
 /turf/open/floor/carpet,
 /area/station/security/detectives_office)
 "iWW" = (
@@ -52447,6 +52448,7 @@
 	},
 /obj/structure/cable,
 /obj/machinery/power/apc/auto_name/directional/west,
+/obj/machinery/vending/cytopro,
 /turf/open/floor/iron,
 /area/station/science/cytology)
 "nxm" = (
