@@ -12,6 +12,9 @@
 	banned_upgrades = RCD_ALL_UPGRADES & ~RCD_UPGRADE_SILO_LINK
 	matter = 200
 	max_matter = 200
+	drop_sound = 'sound/items/handling/rcd_drop.ogg'
+	pickup_sound = 'sound/items/handling/rcd_pickup.ogg'
+	sound_vary = TRUE
 
 	///category of design selected
 	var/selected_category
@@ -152,11 +155,9 @@
 
 	return data
 
-/obj/item/construction/plumbing/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
-	. = ..()
+/obj/item/construction/plumbing/handle_ui_act(action, params, datum/tgui/ui, datum/ui_state/state)
 	playsound(src, SFX_TOOL_SWITCH, 20, TRUE)
 
-/obj/item/construction/plumbing/handle_ui_act(action, params, datum/tgui/ui, datum/ui_state/state)
 	switch(action)
 		if("color")
 			var/color = params["paint_color"]

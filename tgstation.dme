@@ -1414,6 +1414,7 @@
 #include "code\datums\elements\beauty.dm"
 #include "code\datums\elements\bed_tucking.dm"
 #include "code\datums\elements\befriend_petting.dm"
+#include "code\datums\elements\block_turf_fingerprints.dm"
 #include "code\datums\elements\blocks_explosives.dm"
 #include "code\datums\elements\body_temp_sensitive.dm"
 #include "code\datums\elements\bombable_turf.dm"

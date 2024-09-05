@@ -1,0 +1,4 @@
+author: "grungussuss"
+delete-after: True
+changes:
+  - sound: "some more items will vary in pitch when picking them up and placing them down"

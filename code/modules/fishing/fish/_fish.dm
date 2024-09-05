@@ -9,7 +9,6 @@
 	name = "generic looking aquarium fish"
 	desc = "very bland"
 	icon = 'icons/obj/aquarium/fish.dmi'
-	icon_state = "bugfish"
 	lefthand_file = 'icons/mob/inhands/fish_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/fish_righthand.dmi'
 	force = 6
@@ -26,25 +25,20 @@
 	obj_flags = UNIQUE_RENAME
 	item_flags = IMMUTABLE_SLOW|SLOWS_WHILE_IN_HAND
 
-	/// Resulting width of aquarium visual icon - default size of "fish_greyscale" state
-	var/sprite_width = 5
-	/// Resulting height of aquarium visual icon - default size of "fish_greyscale" state
-	var/sprite_height = 3
+	/// width of aquarium visual icon
+	var/sprite_width
+	/// height of aquarium visual icon
+	var/sprite_height
 
-	/// Original width of aquarium visual icon - used to calculate scaledown factor
-	var/source_width = 32
-	/// Original height of aquarium visual icon - used to calculate scaledown factor
-	var/source_height = 32
-
+	///this icon file will be used for in-aquarium visual for the fish
+	var/dedicated_in_aquarium_icon = 'icons/obj/aquarium/fish.dmi'
 	/**
-	 * If present and it also has a dedicated icon state, this icon file will
-	 * be used for in-aquarium visual for the fish instead of its icon
+	 * The icon_state that will be used for in-aquarium visual for the fish
+	 * If not set, "[initial(icon_state)]_small" will be used instead
 	 */
-	var/dedicated_in_aquarium_icon
-	/// If present this icon will be used for in-aquarium visual for the fish instead of icon_state
 	var/dedicated_in_aquarium_icon_state
 
-	/// If present aquarium visual will be this color
+	/// If present aquarium visual will be of this color
 	var/aquarium_vc_color
 
 	/// Required fluid type for this fish to live.
