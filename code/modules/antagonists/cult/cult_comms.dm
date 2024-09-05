@@ -120,7 +120,7 @@
 		if(!team_member.current)
 			continue
 		team_member.current.update_mob_action_buttons()
-		if(team_member.current.incapacitated())
+		if(team_member.current.incapacitated)
 			continue
 		SEND_SOUND(team_member.current, 'sound/hallucinations/im_here1.ogg')
 		to_chat(team_member.current, span_cult_large("Acolyte [nominee] has asserted that [nominee.p_theyre()] worthy of leading the cult. A vote will be called shortly."))
@@ -129,19 +129,19 @@
 
 ///Polls all Cultists on whether the person putting themselves forward should be made the Cult Leader, if they can actually be such.
 /proc/poll_cultists_for_leader(mob/living/nominee, datum/team/cult/team)
-	if(QDELETED(nominee) || nominee.incapacitated())
+	if(QDELETED(nominee) || nominee.incapacitated)
 		team.cult_vote_called = FALSE
 		for(var/datum/mind/team_member as anything in team.members)
 			if(!team_member.current)
 				continue
 			team_member.current.update_mob_action_buttons()
-			if(team_member.current.incapacitated())
+			if(team_member.current.incapacitated)
 				continue
 			to_chat(team_member.current,span_cult_large("[nominee] has died in the process of attempting to start a vote!"))
 		return FALSE
 	var/list/mob/living/asked_cultists = list()
 	for(var/datum/mind/team_member as anything in team.members)
-		if(!team_member.current || team_member.current == nominee || team_member.current.incapacitated())
+		if(!team_member.current || team_member.current == nominee || team_member.current.incapacitated)
 			continue
 		SEND_SOUND(team_member.current, 'sound/magic/exit_blood.ogg')
 		asked_cultists += team_member.current
@@ -161,13 +161,13 @@
 		chat_text_border_icon = mutable_appearance('icons/effects/effects.dmi', "cult_master_logo")
 		)
 	)
-	if(QDELETED(nominee) || nominee.incapacitated())
+	if(QDELETED(nominee) || nominee.incapacitated)
 		team.cult_vote_called = FALSE
 		for(var/datum/mind/team_member as anything in team.members)
 			if(!team_member.current)
 				continue
 			team_member.current.update_mob_action_buttons()
-			if(team_member.current.incapacitated())
+			if(team_member.current.incapacitated)
 				continue
 			to_chat(team_member.current,span_cult_large("[nominee] has died in the process of attempting to win the cult's support!"))
 		return FALSE
@@ -177,7 +177,7 @@
 			if(!team_member.current)
 				continue
 			team_member.current.update_mob_action_buttons()
-			if(team_member.current.incapacitated())
+			if(team_member.current.incapacitated)
 				continue
 			to_chat(team_member.current,span_cult_large("[nominee] has gone catatonic in the process of attempting to win the cult's support!"))
 		return FALSE
@@ -187,7 +187,7 @@
 			if(!team_member.current)
 				continue
 			team_member.current.update_mob_action_buttons()
-			if(team_member.current.incapacitated())
+			if(team_member.current.incapacitated)
 				continue
 			to_chat(team_member.current, span_cult_large("[nominee] could not win the cult's support and shall continue to serve as an acolyte."))
 		return FALSE

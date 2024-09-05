@@ -122,6 +122,8 @@
 	message = "строит гримасу."
 
 /datum/emote/living/jump
+	key = "jump"
+	key_third_person = "jumps"
 	name = "прыгнуть"
 	message = "прыгает!"
 

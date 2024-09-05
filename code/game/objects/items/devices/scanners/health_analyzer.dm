@@ -132,7 +132,7 @@
  * tochat - Whether to immediately post the result into the chat of the user, otherwise it will return the results.
  */
 /proc/healthscan(mob/user, mob/living/target, mode = SCANNER_VERBOSE, advanced = FALSE, tochat = TRUE)
-	if(user.incapacitated())
+	if(user.incapacitated)
 		return
 
 	// the final list of strings to render
@@ -409,7 +409,7 @@
 		return(jointext(render_list, ""))
 
 /proc/chemscan(mob/living/user, mob/living/target)
-	if(user.incapacitated())
+	if(user.incapacitated)
 		return
 
 	if(istype(target) && target.reagents)
@@ -495,7 +495,7 @@
 
 /// Displays wounds with extended information on their status vs medscanners
 /proc/woundscan(mob/user, mob/living/carbon/patient, obj/item/healthanalyzer/scanner, simple_scan = FALSE)
-	if(!istype(patient) || user.incapacitated())
+	if(!istype(patient) || user.incapacitated)
 		return
 
 	var/render_list = ""
@@ -664,7 +664,7 @@
 
 /// Checks the individual for any diseases that are visible to the scanner, and displays the diseases in the attacked to the attacker.
 /proc/diseasescan(mob/user, mob/living/carbon/patient, obj/item/healthanalyzer/simple/scanner)
-	if(!istype(patient) || user.incapacitated())
+	if(!istype(patient) || user.incapacitated)
 		return
 
 	var/list/render = list()

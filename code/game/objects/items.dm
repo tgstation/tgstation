@@ -39,6 +39,12 @@
 	///The config type to use for greyscaled belt overlays. Both this and greyscale_colors must be assigned to work.
 	var/greyscale_config_belt
 
+	/// Greyscale config used when generating digitigrade versions of the sprite.
+	var/digitigrade_greyscale_config_worn
+	/// Greyscale colors used when generating digitigrade versions of the sprite.
+	/// Optional - If not set it will default to normal greyscale colors, or approximate them if those are unset as well
+	var/digitigrade_greyscale_colors
+
 	/* !!!!!!!!!!!!!!! IMPORTANT !!!!!!!!!!!!!!
 
 		IF YOU ADD MORE ICON CRAP TO THIS
@@ -705,7 +711,7 @@
 /obj/item/proc/on_equipped(mob/user, slot, initial = FALSE)
 	SHOULD_NOT_OVERRIDE(TRUE)
 	equipped(user, slot, initial)
-	if(SEND_SIGNAL(src, COMSIG_ITEM_POST_EQUIPPED, user, slot) && COMPONENT_EQUIPPED_FAILED)
+	if(SEND_SIGNAL(src, COMSIG_ITEM_POST_EQUIPPED, user, slot) & COMPONENT_EQUIPPED_FAILED)
 		return FALSE
 	return TRUE
 
@@ -788,7 +794,7 @@
 	set category = "Object"
 	set name = "Pick up"
 
-	if(usr.incapacitated() || !Adjacent(usr))
+	if(usr.incapacitated || !Adjacent(usr))
 		return
 
 	if(isliving(usr))
@@ -1075,7 +1081,7 @@
 			var/timedelay = usr.client.prefs.read_preference(/datum/preference/numeric/tooltip_delay) / 100
 			tip_timer = addtimer(CALLBACK(src, PROC_REF(openTip), location, control, params, usr), timedelay, TIMER_STOPPABLE)//timer takes delay in deciseconds, but the pref is in milliseconds. dividing by 100 converts it.
 		if(usr.client.prefs.read_preference(/datum/preference/toggle/item_outlines))
-			if(istype(L) && L.incapacitated())
+			if(istype(L) && L.incapacitated)
 				apply_outline(COLOR_RED_GRAY) //if they're dead or handcuffed, let's show the outline as red to indicate that they can't interact with that right now
 			else
 				apply_outline() //if the player's alive and well we send the command with no color set, so it uses the theme's color
@@ -1312,7 +1318,7 @@
  * Then, it checks tiny items.
  * After all that, it returns TRUE if the item is set to be discovered. Otherwise, it returns FALSE.
  *
- * This works similarily to /suicide_act: if you want an item to have a unique interaction, go to that item
+ * This works similarly to /suicide_act: if you want an item to have a unique interaction, go to that item
  * and give it an /on_accidental_consumption proc override. For a simple example of this, check out the nuke disk.
  *
  * Arguments
@@ -1337,7 +1343,7 @@
 			return
 		source_item?.reagents?.add_reagent(/datum/reagent/blood, 2)
 
-	else if(custom_materials?.len) //if we've got materials, lets see whats in it
+	else if(custom_materials?.len) //if we've got materials, let's see what's in it
 		// How many mats have we found? You can only be affected by two material datums by default
 		var/found_mats = 0
 		// How much of each material is in it? Used to determine if the glass should break
@@ -1456,8 +1462,8 @@
 	pickup_animation.appearance_flags = APPEARANCE_UI_IGNORE_ALPHA
 
 	var/direction = get_dir(source, target)
-	var/to_x = target.base_pixel_x
-	var/to_y = target.base_pixel_y
+	var/to_x = target.base_pixel_x + target.base_pixel_w
+	var/to_y = target.base_pixel_y + target.base_pixel_z
 
 	if(direction & NORTH)
 		to_y += 32

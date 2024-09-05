@@ -159,7 +159,7 @@
 	. = ..()
 	ui_interact(user)
 
-/obj/item/canvas/ui_act(action, params)
+/obj/item/canvas/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if(.)
 		return
@@ -545,6 +545,8 @@
 		/obj/item/canvas/twentythree_twentythree,
 		/obj/item/canvas/twentyfour_twentyfour,
 	)
+	/// the type of wallframe it 'disassembles' into
+	var/wallframe_type = /obj/item/wallframe/painting
 
 /obj/structure/sign/painting/Initialize(mapload, dir, building)
 	. = ..()
@@ -564,6 +566,16 @@
 			SStgui.update_uis(src)
 	else
 		return ..()
+
+/obj/structure/sign/painting/knock_down(mob/living/user)
+	var/turf/drop_turf
+	if(user)
+		drop_turf = get_turf(user)
+	else
+		drop_turf = drop_location()
+	current_canvas?.forceMove(drop_turf)
+	var/obj/item/wallframe/frame = new wallframe_type(drop_turf)
+	frame.update_integrity(get_integrity()) //Transfer how damaged it is.
 
 /obj/structure/sign/painting/examine(mob/user)
 	. = ..()
@@ -768,6 +780,7 @@
 		/obj/item/canvas/thirtysix_twentyfour,
 		/obj/item/canvas/fortyfive_twentyseven,
 	)
+	wallframe_type = /obj/item/wallframe/painting/large
 
 /obj/structure/sign/painting/large/Initialize(mapload)
 	. = ..()

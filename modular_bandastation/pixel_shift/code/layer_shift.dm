@@ -7,7 +7,7 @@
 	set name = "Shift Layer Upwards"
 	set category = "IC"
 
-	if(incapacitated())
+	if(build_incapacitated())
 		to_chat(src, span_warning("You can't do that right now!"))
 		return
 
@@ -23,7 +23,7 @@
 	set name = "Shift Layer Downwards"
 	set category = "IC"
 
-	if(incapacitated())
+	if(build_incapacitated())
 		to_chat(src, span_warning("You can't do that right now!"))
 		return
 

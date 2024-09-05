@@ -344,6 +344,28 @@
 	taste_description = "spiked butterscotch"
 	ph = 6.5
 	default_container = /obj/item/reagent_containers/cup/glass/bottle/rum
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+
+/datum/reagent/consumable/ethanol/rum/aged
+	name = "Aged Rum"
+	description = "Sink me! That's some fancy rum to share with buckoos."
+	color = "#c0b675" // rgb: 192,183,117
+	boozepwr = 70
+	taste_description = "extra-spiked butterscotch"
+	default_container = /obj/item/reagent_containers/cup/glass/bottle/rum/aged
+	quality = DRINK_FANTASTIC
+	metabolized_traits = list(TRAIT_STRONG_STOMACH)
+
+/datum/reagent/consumable/ethanol/rum/aged/on_mob_metabolize(mob/living/drinker)
+	. = ..()
+	drinker.add_blocked_language(subtypesof(/datum/language) - /datum/language/piratespeak, LANGUAGE_DRINK)
+	drinker.grant_language(/datum/language/piratespeak, source = LANGUAGE_DRINK)
+
+/datum/reagent/consumable/ethanol/rum/aged/on_mob_end_metabolize(mob/living/drinker)
+	if(!QDELING(drinker))
+		drinker.remove_blocked_language(subtypesof(/datum/language), LANGUAGE_DRINK)
+		drinker.remove_language(/datum/language/piratespeak, source = LANGUAGE_DRINK)
+	return ..()
 
 /datum/reagent/consumable/ethanol/tequila
 	name = "Tequila"

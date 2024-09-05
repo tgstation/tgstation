@@ -64,7 +64,7 @@
 /datum/greyscale_layer/proc/CrossVerify()
 	return
 
-/// Used to actualy create the layer using the given colors
+/// Used to actually create the layer using the given colors
 /// Do not override, use InternalGenerate instead
 /datum/greyscale_layer/proc/Generate(list/colors, list/render_steps, icon/new_icon)
 	var/list/processed_colors = list()
