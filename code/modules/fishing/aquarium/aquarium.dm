@@ -425,7 +425,7 @@
 		new /obj/item/fish/goldfish/gill(src)
 		reagents.add_reagent(/datum/reagent/consumable/nutriment, 2)
 	else
-		new /obj/item/fish/three_eyes/gill(src)
+		new /obj/item/fish/goldfish/three_eyes/gill(src)
 		reagents.add_reagent(/datum/reagent/toxin/mutagen, 2) //three eyes goldfish feed on mutagen.
 
 

@@ -25,12 +25,13 @@
 	var/base_layer
 
 	/**
-	 *  Fish sprite how to:
-	 *  Need to be centered on 16,16 in the dmi and facing left by default.
-	 *  sprite_height/sprite_width is the size it will have in aquarium and used to control animation boundaries.
-	 *  source_height/source_width is the size of the original icon (ideally only the non-empty parts)
+	 * Fish sprite how to:
+	 * The aquarium icon state needs to be centered on 16,16 in the dmi and facing left by default.
+	 * sprite_width/sprite_height are the sizes it will have in aquarium and used to control animation boundaries.
+	 * Ideally these two vars represent the size of the aquarium icon state, but they can be one or two units shorter
+	 * to give more room for the visual to float around inside the aquarium, since the aquarium tank frame overlay will likely
+	 * cover the extra pixels anyway.
 	 */
-
 
 	/// Icon used for in aquarium sprite
 	var/icon = 'icons/obj/aquarium/fish.dmi'
@@ -50,10 +51,6 @@
 	//Target sprite size for path/position calculations.
 	var/sprite_height = 3
 	var/sprite_width = 3
-
-	//This is the size of the source sprite. This will be used to calculate scale down factor.
-	var/source_width = 32
-	var/source_height = 32
 
 	/// Currently playing animation
 	var/current_animation
@@ -112,18 +109,9 @@
 	sprite_width = fish.sprite_width
 	aquarium_vc_color = fish.aquarium_vc_color
 
-	if(fish.dedicated_in_aquarium_icon_state)
-		if(fish.dedicated_in_aquarium_icon)
-			icon = fish.dedicated_in_aquarium_icon
-		icon_state = fish.dedicated_in_aquarium_icon_state
-		base_transform = matrix()
-	else
-		icon_state = fish.icon_state
-		var/matrix/matrix = matrix()
-		var/x_scale = fish.sprite_width / fish.source_width
-		var/y_scale = fish.sprite_height / fish.source_height
-		matrix.Scale(x_scale, y_scale)
-		base_transform = matrix
+	icon = fish.dedicated_in_aquarium_icon
+	icon_state = fish.dedicated_in_aquarium_icon_state
+	base_transform = matrix()
 
 	randomize_position = TRUE
 
