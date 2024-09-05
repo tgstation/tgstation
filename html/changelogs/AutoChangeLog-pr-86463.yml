@@ -1,0 +1,4 @@
+author: "vinylspiders"
+delete-after: True
+changes:
+  - bugfix: "fixed a bug that could sometimes cause jump boots users to retain the floating trait indefinitely when using the ability"

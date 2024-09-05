@@ -1,4 +1,5 @@
 /datum/ert
+	///The base type of mob spawned by this ERT.
 	var/mobtype = /mob/living/carbon/human
 	///Antag datum team for this type of ERT.
 	var/team = /datum/team/ert
@@ -30,6 +31,8 @@
 	var/datum/map_template/ert_template
 	/// If we should actually _use_ the ert_template custom shuttle
 	var/use_custom_shuttle = TRUE
+	/// Used for spawning bodies for your ERT. Unless customized in the Summon-ERT verb settings, will be overridden and should not be defined at the datum level.
+	var/mob/living/carbon/human/mob_type
 
 /datum/ert/New()
 	if (!polldesc)

@@ -104,6 +104,8 @@
 	l_pocket = /obj/item/healthanalyzer/advanced
 	additional_radio = /obj/item/encryptionkey/heads/cmo
 
+	skillchips = list(/obj/item/skillchip/entrails_reader)
+
 /datum/outfit/centcom/ert/medic/alert
 	name = "ERT Medic - High Alert"
 
@@ -132,6 +134,9 @@
 	glasses = /obj/item/clothing/glasses/meson/engine
 	l_pocket = /obj/item/rcd_ammo/large
 	additional_radio = /obj/item/encryptionkey/heads/ce
+
+
+	skillchips = list(/obj/item/skillchip/job/engineer)
 
 /datum/outfit/centcom/ert/engineer/alert
 	name = "ERT Engineer - High Alert"
@@ -520,6 +525,9 @@
 	glasses = /obj/item/clothing/glasses/hud/health/sunglasses
 	additional_radio = /obj/item/encryptionkey/heads/cmo
 
+
+	skillchips = list(/obj/item/skillchip/entrails_reader)
+
 /datum/outfit/centcom/ert/marine/engineer
 	name = "Marine Engineer"
 
@@ -532,6 +540,8 @@
 	belt = /obj/item/storage/belt/utility/full/powertools/rcd
 	glasses = /obj/item/clothing/glasses/hud/diagnostic/sunglasses
 	additional_radio = /obj/item/encryptionkey/heads/ce
+
+	skillchips = list(/obj/item/skillchip/job/engineer)
 
 /datum/outfit/centcom/militia
 	name = "Militia Man"

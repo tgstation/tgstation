@@ -14,7 +14,6 @@
 /mob/living/silicon/ai/blob_act(obj/structure/blob/B)
 	if (stat != DEAD)
 		adjustBruteLoss(60)
-		updatehealth()
 		return TRUE
 	return FALSE
 
@@ -64,7 +63,7 @@
 	. = ..()
 	if(user.combat_mode)
 		return
-	if(stat != DEAD && !incapacitated() && (client || deployed_shell?.client))
+	if(stat != DEAD && !incapacitated && (client || deployed_shell?.client))
 		// alive and well AIs control their floor bolts
 		balloon_alert(user, "the AI's bolt motors resist.")
 		return ITEM_INTERACT_SUCCESS
