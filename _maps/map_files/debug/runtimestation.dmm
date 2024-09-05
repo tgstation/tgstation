@@ -593,6 +593,13 @@
 	},
 /turf/open/floor/iron,
 /area/station/construction)
+"dN" = (
+/obj/machinery/navbeacon{
+	location = "1-Southwest";
+	codes_txt = "patrol;next_patrol=2-Northwest"
+	},
+/turf/open/floor/iron,
+/area/station/commons/storage/primary)
 "dP" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
@@ -1313,6 +1320,13 @@
 	},
 /turf/open/floor/iron,
 /area/station/cargo/storage)
+"pY" = (
+/obj/machinery/navbeacon{
+	codes_txt = "patrol;next_patrol=1-Southwest";
+	location = "4-Southeast"
+	},
+/turf/open/floor/iron,
+/area/station/commons/storage/primary)
 "pZ" = (
 /obj/machinery/light/directional/north,
 /obj/machinery/camera/directional/north,
@@ -1364,6 +1378,14 @@
 "qQ" = (
 /turf/open/floor/engine,
 /area/station/cargo/miningoffice)
+"qR" = (
+/obj/effect/landmark/start,
+/obj/machinery/navbeacon{
+	codes_txt = "delivery;dir=4";
+	location = "Center"
+	},
+/turf/open/floor/iron,
+/area/station/commons/storage/primary)
 "rh" = (
 /obj/machinery/door/airlock,
 /obj/structure/cable,
@@ -1581,6 +1603,13 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/iron,
 /area/station/cargo/miningoffice)
+"wR" = (
+/obj/machinery/navbeacon{
+	codes_txt = "patrol;next_patrol=3-Northeast";
+	location = "2-Northwest"
+	},
+/turf/open/floor/iron,
+/area/station/commons/storage/primary)
 "wU" = (
 /turf/closed/wall/r_wall,
 /area/station/science/explab)
@@ -2037,6 +2066,13 @@
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron/dark,
 /area/station/engineering/gravity_generator)
+"JJ" = (
+/obj/machinery/navbeacon{
+	codes_txt = "patrol;next_patrol=4-Southeast";
+	location = "3-Northeast"
+	},
+/turf/open/floor/iron,
+/area/station/commons/storage/primary)
 "JV" = (
 /obj/machinery/camera/autoname/directional/east,
 /obj/effect/turf_decal/stripes/line{
@@ -7394,14 +7430,14 @@ bE
 cS
 qv
 dJ
+wR
 dJ
 dJ
 dJ
 dJ
 dJ
 dJ
-dJ
-dJ
+dN
 dJ
 dJ
 cS
@@ -7765,7 +7801,7 @@ dt
 dJ
 dD
 dJ
-dI
+qR
 dJ
 XZ
 dJ
@@ -8130,14 +8166,14 @@ Sj
 by
 jk
 dJ
-dJ
+JJ
 dJ
 dJ
 yl
 dJ
 dJ
 dJ
-dJ
+pY
 dJ
 dJ
 cS
