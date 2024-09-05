@@ -90,7 +90,7 @@
 	AddElement(/datum/element/death_drops, death_loot)
 	apply_dynamic_human_appearance(src, mob_spawn_path = /obj/effect/mob_spawn/corpse/human/revolutionary, l_hand = weapon_of_choice)
 
-	var/gender = pick("male", "female", "enby")
+	gender = pick(MALE, FEMALE, PLURAL)
 	var/first_name
 	switch(gender)
 		if("male")
