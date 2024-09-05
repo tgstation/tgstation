@@ -2,7 +2,7 @@
 /obj/structure/ladder
 	name = "ladder"
 	desc = "A sturdy metal ladder."
-	icon = 'icons/obj/fluff/general.dmi'
+	icon = 'icons/obj/structures.dmi'
 	icon_state = "ladder11"
 	anchored = TRUE
 	obj_flags = CAN_BE_HIT | BLOCK_Z_OUT_DOWN
@@ -182,7 +182,7 @@
 		INVOKE_ASYNC(src, PROC_REF(start_travelling), user, going_up)
 
 /obj/structure/ladder/proc/check_menu(mob/user, is_ghost)
-	if(user.incapacitated() || (!user.Adjacent(src)))
+	if(user.incapacitated || (!user.Adjacent(src)))
 		return FALSE
 	return TRUE
 

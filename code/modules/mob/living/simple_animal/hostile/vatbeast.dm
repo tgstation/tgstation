@@ -1,6 +1,5 @@
 ///Vatbeasts are creatures from vatgrowing and are literaly a beast in a vat, yup. They are designed to be a powerful mount roughly equal to a gorilla in power.
 /mob/living/simple_animal/hostile/vatbeast
-	SET_BASE_VISUAL_PIXEL(0, 7)
 	name = "vatbeast"
 	desc = "A strange molluscoidal creature carrying a busted growing vat.\nYou wonder if this burden is a voluntary undertaking in order to achieve comfort and protection, or simply because the creature is fused to its metal shell?"
 	icon = 'icons/mob/vatgrowing.dmi'
@@ -26,7 +25,6 @@
 	attack_sound = 'sound/weapons/punch3.ogg'
 	attack_verb_continuous = "slaps"
 	attack_verb_simple = "slap"
-	shadow_offset_y = 5
 
 /mob/living/simple_animal/hostile/vatbeast/Initialize(mapload)
 	. = ..()

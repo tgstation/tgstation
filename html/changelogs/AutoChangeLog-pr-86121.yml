@@ -1,0 +1,4 @@
+author: "SmArtKar"
+delete-after: True
+changes:
+  - bugfix: "Acromegaly no longer makes you bonk your head on airlocks while you're inside of objects"

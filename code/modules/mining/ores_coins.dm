@@ -9,7 +9,7 @@
 
 /obj/item/stack/ore
 	name = "rock"
-	icon = 'icons/obj/mining_zones/ore.dmi'
+	icon = 'icons/obj/ore.dmi'
 	icon_state = "ore"
 	inhand_icon_state = null
 	full_w_class = WEIGHT_CLASS_BULKY
@@ -237,7 +237,7 @@ GLOBAL_LIST_INIT(sand_recipes, list(\
 /obj/item/gibtonite
 	name = "gibtonite ore"
 	desc = "Extremely explosive if struck with mining equipment, Gibtonite is often used by miners to speed up their work by using it as a mining charge. This material is illegal to possess by unauthorized personnel under space law."
-	icon = 'icons/obj/mining_zones/ore.dmi'
+	icon = 'icons/obj/ore.dmi'
 	icon_state = "gibtonite"
 	inhand_icon_state = "Gibtonite ore"
 	w_class = WEIGHT_CLASS_BULKY
@@ -517,7 +517,7 @@ GLOBAL_LIST_INIT(sand_recipes, list(\
 		playsound(user.loc, 'sound/items/coinflip.ogg', 50, TRUE)
 		var/oldloc = loc
 		sleep(1.5 SECONDS)
-		if(loc == oldloc && user && !user.incapacitated())
+		if(loc == oldloc && user && !user.incapacitated)
 			user.visible_message(span_notice("[user] flips [src]. It lands on [coinflip]."), \
 				span_notice("You flip [src]. It lands on [coinflip]."), \
 				span_hear("You hear the clattering of loose change."))
@@ -599,7 +599,7 @@ GLOBAL_LIST_INIT(sand_recipes, list(\
 		playsound(user.loc, 'sound/items/coinflip.ogg', 50, TRUE)
 		var/oldloc = loc
 		sleep(1.5 SECONDS)
-		if(loc == oldloc && user && !user.incapacitated())
+		if(loc == oldloc && user && !user.incapacitated)
 			user.visible_message(span_notice("[user] flips [src]. It lands on [coinflip]."), \
 				span_notice("You flip [src]. It lands on [coinflip]."), \
 				span_hear("You hear the clattering of loose change."))
