@@ -155,9 +155,8 @@
 	target.dna.features["breasts"] = value
 	//to_chat(world, "Applied!")
 
-//random isn't ideal but CI is forcing our hands here
-/*/datum/preference/choiced/breasts/create_default_value()
-	return pick(SSaccessories.breasts_list["None"])*/
+/datum/preference/choiced/breasts/create_default_value()
+	return "Bare"
 
 /datum/preference/choiced/breasts/is_accessible(datum/preferences/preferences)
 	. = ..()

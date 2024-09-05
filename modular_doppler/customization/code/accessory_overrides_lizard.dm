@@ -75,9 +75,8 @@
 		return TRUE
 	return FALSE
 
-//random isn't ideal but CI is forcing our hands here
-/*/datum/preference/choiced/lizard_snout/create_default_value()
-	return pick(SSaccessories.snouts_list["None"])*/
+/datum/preference/choiced/lizard_snout/create_default_value()
+	return "None"
 
 
 
@@ -143,9 +142,8 @@
 		return TRUE
 	return FALSE
 
-//random isn't ideal but CI is forcing our hands here
-/*/datum/preference/choiced/lizard_horns/create_default_value()
-	return pick(SSaccessories.horns_list["None"])*/
+/datum/preference/choiced/lizard_horns/create_default_value()
+	return "None"
 
 
 
@@ -211,9 +209,8 @@
 		return TRUE
 	return FALSE
 
-//random isn't ideal but CI is forcing our hands here
-/*/datum/preference/choiced/lizard_frills/create_default_value()
-	return pick(SSaccessories.frills_list["None"])*/
+/datum/preference/choiced/lizard_frills/create_default_value()
+	return "None"
 
 
 
@@ -295,9 +292,8 @@
 		return TRUE
 	return FALSE
 
-//random isn't ideal but CI is forcing our hands here
-/*/datum/preference/choiced/lizard_tail/create_default_value()
-	return /datum/sprite_accessory/tails/lizard/none::name*/
+/datum/preference/choiced/lizard_tail/create_default_value()
+	return "None"
 
 /datum/preference/choiced/lizard_tail/icon_for(value)
 	var/datum/sprite_accessory/sprite_accessory = SSaccessories.tails_list_lizard[value]
@@ -367,9 +363,8 @@
 		return overlay
 	return ..()
 
-//random isn't ideal but CI is forcing our hands here
-/*/datum/preference/choiced/lizard_body_markings/create_default_value()
-	return pick(SSaccessories.lizard_markings_list["None"])*/
+/datum/preference/choiced/lizard_body_markings/create_default_value()
+	return "None"
 
 //toggle prefs
 /datum/preference/toggle/markings
