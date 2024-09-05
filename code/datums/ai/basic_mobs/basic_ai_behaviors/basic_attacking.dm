@@ -8,8 +8,6 @@
 	. = ..()
 	if(!controller.blackboard[targeting_strategy_key])
 		CRASH("No targeting strategy was supplied in the blackboard for [controller.pawn]")
-	if(HAS_TRAIT(controller.pawn, TRAIT_HANDS_BLOCKED))
-		return FALSE
 	//Hiding location is priority
 	var/atom/target = controller.blackboard[hiding_location_key] || controller.blackboard[target_key]
 	if(QDELETED(target))
