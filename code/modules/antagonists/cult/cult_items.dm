@@ -911,7 +911,7 @@ Striking a noncultist, however, will tear their flesh."}
 			cultists |= cult_mind.current
 
 	var/mob/living/cultist_to_receive = tgui_input_list(user, "Who do you wish to call to [src]?", "Followers of the Geometer", (cultists - user))
-	if(QDELETED(src) || loc != user || user.incapacitated())
+	if(QDELETED(src) || loc != user || user.incapacitated)
 		return ITEM_INTERACT_BLOCKING
 	if(isnull(cultist_to_receive))
 		to_chat(user, span_cult_italic("You require a destination!"))

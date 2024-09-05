@@ -175,7 +175,7 @@ Buildable meters
 	set name = "Invert Pipe"
 	set src in view(1)
 
-	if ( usr.incapacitated() )
+	if ( usr.incapacitated )
 		return
 
 	do_a_flip()
