@@ -93,7 +93,7 @@
 	gender = pick(MALE, FEMALE, PLURAL)
 	var/first_name
 	switch(gender)
-		if("male")
+		if(MALE)
 			first_name = pick(GLOB.first_names_male)
 			death_sound = pick(male_screams + monkey_screeches)
 		if("female")
