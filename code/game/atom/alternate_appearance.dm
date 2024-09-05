@@ -61,7 +61,6 @@ GLOBAL_LIST_EMPTY(active_alternate_appearances)
 
 /// Registers some signals to track the mob's state to determine if they should be seeing the hud still
 /datum/atom_hud/alternate_appearance/proc/track_mob(mob/new_viewer)
-	SHOULD_CALL_PARENT(TRUE)
 	return
 
 /datum/atom_hud/alternate_appearance/hide_from(mob/former_viewer, absolute)
@@ -72,7 +71,6 @@ GLOBAL_LIST_EMPTY(active_alternate_appearances)
 
 /// Unregisters the signals that were tracking the mob's state
 /datum/atom_hud/alternate_appearance/proc/untrack_mob(mob/former_viewer)
-	SHOULD_CALL_PARENT(TRUE)
 	return
 
 /datum/atom_hud/alternate_appearance/proc/check_hud(mob/source)
@@ -133,7 +131,6 @@ GLOBAL_LIST_EMPTY(active_alternate_appearances)
 		QDEL_NULL(ghost_appearance)
 
 /datum/atom_hud/alternate_appearance/basic/track_mob(mob/new_viewer)
-	. = ..()
 	RegisterSignals(new_viewer, list(
 		COMSIG_MOB_ANTAGONIST_REMOVED,
 		COMSIG_MOB_GHOSTIZED,
@@ -142,7 +139,6 @@ GLOBAL_LIST_EMPTY(active_alternate_appearances)
 	), PROC_REF(check_hud), override = TRUE)
 
 /datum/atom_hud/alternate_appearance/basic/untrack_mob(mob/former_viewer)
-	. = ..()
 	UnregisterSignal(former_viewer, list(
 		COMSIG_MOB_ANTAGONIST_REMOVED,
 		COMSIG_MOB_GHOSTIZED,
