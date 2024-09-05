@@ -46,7 +46,8 @@
 
 	var/obj/item/item_parent = parent
 	item_parent.atom_storage?.open_storage(clicker, signal_source)
-	animate_target(signal_source)
+	if(!isorgan(item_parent))
+		animate_target(signal_source)
 	return CLICK_ACTION_SUCCESS
 
 /// Signal handler for COMSIG_MOB_UNEQUIPPED_ITEM. Handles unregistering signals.
@@ -86,6 +87,6 @@
 	SIGNAL_HANDLER
 
 	var/obj/item/organ/visible_organ = parent
-	var/examine_text = span_notice("[user.p_Theyre()] holding [icon2html(visible_organ.contents[1], examined)] a <b>[visible_organ.contents[1].name]</b> with [user.p_their()] tail.")
+	var/examine_text = span_notice("[user.p_Theyre()] holding [icon2html(visible_organ.contents[1], examined)] \a <b>[visible_organ.contents[1].name]</b> with [user.p_their()] tail.")
 
 	examine_list += examine_text
