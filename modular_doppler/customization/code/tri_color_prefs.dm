@@ -357,12 +357,12 @@
 
 // Gotta add to the selector too
 // TODO: can we migrate off of moth_wings for this?
-/datum/preference/choiced/moth_wings/compile_constant_data()
+/*/datum/preference/choiced/wings/compile_constant_data()
 	var/list/data = ..()
 
 	data[SUPPLEMENTAL_FEATURE_KEY] = /datum/preference/tri_color/wings_color::savefile_key
 
-	return data
+	return data*/
 
 
 
@@ -391,7 +391,7 @@
 	return TRUE
 
 // Gotta add to the selector too
-/datum/preference/choiced/moth_wings/compile_constant_data()
+/datum/preference/choiced/moth_antennae/compile_constant_data()
 	var/list/data = ..()
 
 	data[SUPPLEMENTAL_FEATURE_KEY] = /datum/preference/tri_color/moth_antennae_color::savefile_key
