@@ -37,7 +37,7 @@
 	SIGNAL_HANDLER
 
 	if (isliving(equipper) && !(equipper.get_slot_by_item(parent) & (ITEM_SLOT_HANDS|ITEM_SLOT_POCKETS)))
-		RegisterSignal(equipper, COMSIG_MOB_UNEQUIPPED_ITEM, PROC_REF(mob_unequipped_item), override = TRUE)
+		RegisterSignal(equipper, COMSIG_MOB_UNEQUIPPED_ITEM, PROC_REF(mob_unequipped_item))
 		RegisterSignal(equipper, COMSIG_CLICK_ALT, PROC_REF(mob_alt_clicked_on))
 
 /// Signal handler for COMSIG_CLICK_ALT. Handles the actual opening of storage.
