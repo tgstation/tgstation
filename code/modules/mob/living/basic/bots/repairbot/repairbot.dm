@@ -65,7 +65,7 @@
 	///our color
 	var/toolbox_color = "#445eb3"
 	///toolbox type we drop on death
-	var/toolbox
+	var/toolbox = /obj/item/storage/toolbox
 
 /mob/living/basic/bot/repairbot/Initialize(mapload)
 	. = ..()
@@ -172,6 +172,8 @@
 			return
 
 /mob/living/basic/bot/repairbot/Exited(atom/movable/gone, direction)
+	if(gone == our_welder)
+		our_welder = null
 	if(gone == our_tiles)
 		our_tiles = null
 	if(gone == our_iron)
