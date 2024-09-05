@@ -33,7 +33,7 @@
 
 /datum/orderable_item/bitrunning_tech/flip_skillchip
 	item_path = /obj/item/skillchip/matrix_taunt
-	cost_per_order = 2000
+	cost_per_order = 1500
 
 /datum/orderable_item/bitrunning_tech/pka_mod
 	item_path = /obj/item/bitrunning_disk/item/pka_mods
