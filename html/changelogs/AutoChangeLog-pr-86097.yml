@@ -1,0 +1,4 @@
+author: "Majkl-J"
+delete-after: True
+changes:
+  - bugfix: "Embed updating now actually updates embeds"

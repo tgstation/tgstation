@@ -1,0 +1,4 @@
+author: "SmArtKar"
+delete-after: True
+changes:
+  - bugfix: "Changelings can no longer spawn undetectable spider eggs inside of vents"
