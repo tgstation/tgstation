@@ -350,7 +350,7 @@ multiple modular subtrees with behaviors
 	return !QDELETED(pawn)
 
 ///Interact with objects
-/datum/ai_controller/proc/ai_interact(target, combat_mode, modifiers)
+/datum/ai_controller/proc/ai_interact(target, combat_mode, list/modifiers)
 	if(!ai_can_interact())
 		return FALSE
 
