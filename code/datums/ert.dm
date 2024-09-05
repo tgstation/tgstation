@@ -1,6 +1,4 @@
 /datum/ert
-	///The base type of mob spawned by this ERT.
-	var/mobtype = /mob/living/carbon/human
 	///Antag datum team for this type of ERT.
 	var/team = /datum/team/ert
 	///Do we open the doors to the "high-impact" weapon/explosive cabinets? Used for combat-focused ERTs.
