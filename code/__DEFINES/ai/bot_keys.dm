@@ -168,3 +168,11 @@ DEFINE_BITFIELD(repairbot_flags, list(
 #define BB_GIRDER_BUILD_ABILITY "girder_build_ability"
 ///key that holds breached floors we should repair
 #define BB_BREACHED_FLOOR "breached_floor"
+///key that holds our emagged speech
+#define BB_REPAIRBOT_EMAGGED_SPEECH "emagged_speech"
+///key that holds our normal speech
+#define BB_REPAIRBOT_NORMAL_SPEECH "normal_speech"
+///key that holds the thing we should deconstruct
+#define BB_DECONSTRUCT_TARGET "deconstruct_target"
+///key that holds our speech timer
+#define BB_REPAIRBOT_SPEECH_COOLDOWN "speech_cooldown"

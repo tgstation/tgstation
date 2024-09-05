@@ -36711,7 +36711,7 @@
 "jBf" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/table/reinforced,
-/ovj/item/bot_assembly/repairbot,
+/obj/item/bot_assembly/repairbot,
 /turf/open/floor/pod/dark,
 /area/station/maintenance/floor2/starboard/aft)
 "jBm" = (

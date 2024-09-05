@@ -1,6 +1,10 @@
+#define REPAIRBOT_SPEECH_TIMER 30 SECONDS
+
 /datum/ai_controller/basic_controller/bot/repairbot
 	planning_subtrees = list(
+		/datum/ai_planning_subtree/repairbot_speech,
 		/datum/ai_planning_subtree/manage_unreachable_list,
+		/datum/ai_planning_subtree/repairbot_deconstruction,
 		/datum/ai_planning_subtree/respond_to_summon,
 		/datum/ai_planning_subtree/replace_floors/breaches,
 		/datum/ai_planning_subtree/wall_girder,
@@ -22,6 +26,59 @@
 	)
 	ai_traits = PAUSE_DURING_DO_AFTER
 
+///subtree to deconstruct things when we're emagged
+/datum/ai_planning_subtree/repairbot_deconstruction
+
+/datum/ai_planning_subtree/repairbot_deconstruction/SelectBehaviors(datum/ai_controller/basic_controller/bot/controller, seconds_per_tick)
+	var/mob/living/basic/bot/living_bot = controller.pawn
+	if(!(living_bot.bot_access_flags & BOT_COVER_EMAGGED))
+		return
+	var/static/list/things_to_deconstruct = typecacheof(
+		/obj/structure/window,
+		/turf/open/floor,
+		/turf/closed/wall,
+	)
+	if(!controller.blackboard_key_exists(BB_DECONSTRUCT_TARGET))
+		controller.queue_behavior(/datum/ai_behavior/bot_search/deconstructable, BB_DECONSTRUCT_TARGET, things_to_deconstruct)
+		return SUBTREE_RETURN_FINISH_PLANNING
+	controller.queue_behavior(/datum/ai_behavior/bot_interact, BB_DECONSTRUCT_TARGET)
+
+/datum/ai_behavior/bot_search/deconstructable
+
+/datum/ai_behavior/bot_search/deconstructable/valid_target(datum/ai_controller/basic_controller/bot/controller, atom/my_target)
+	return (!(my_target.resistance_flags & INDESTRUCTIBLE) && !isgroundlessturf(my_target))
+
+///subtree to control bot speech
+/datum/ai_planning_subtree/repairbot_speech
+
+/datum/ai_planning_subtree/replace_floors/SelectBehaviors(datum/ai_controller/basic_controller/bot/controller, seconds_per_tick)
+	if(controller.blackboard[BB_REPAIRBOT_SPEECH_COOLDOWN] > world.time)
+		return
+	var/static/list/keys_to_look = list(
+		BB_WELDER_TARGET,
+		BB_WINDOW_FRAMETARGET,
+		BB_TILELESS_FLOOR,
+		BB_BREACHED_FLOOR,
+		BB_GIRDER_TO_WALL_TARGET,
+		BB_GIRDER_TARGET,
+		BB_DECONSTRUCT_TARGET,
+	)
+	for(var/key in keys_to_look)
+		if(controller.blackboard_key_exists(keys_to_look))
+			controller.queue_behavior(/datum/ai_behavior/repairbot_speech, key)
+			return
+
+/datum/ai_behavior/repairbot_speech
+	behavior_flags = AI_BEHAVIOR_CAN_PLAN_DURING_EXECUTION
+
+/datum/ai_behavior/repairbot_speech/perform(seconds_per_tick, datum/ai_controller/controller, target_key)
+	var/datum/action/cooldown/bot_announcement/announcement = controller.blackboard[BB_ANNOUNCE_ABILITY]
+	var/list/speech_to_pick_from = (target_key == BB_DECONSTRUCT_TARGET) ? controller.blackboard[BB_REPAIRBOT_EMAGGED_SPEECH] : controller.blackboard[BB_REPAIRBOT_NORMAL_SPEECH]
+	if(!length(speech_to_pick_from))
+		return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_FAILED
+	announcement.announce(pick(speech_to_pick_from))
+	controller.set_blackboard_key(BB_REPAIRBOT_SPEECH_COOLDOWN, world.time + REPAIRBOT_SPEECH_TIMER)
+	return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_SUCCEEDED
 
 ///subtree to replace iron platings
 /datum/ai_planning_subtree/replace_floors
@@ -65,7 +122,6 @@
 	if(istype(my_target, /turf/open/floor/plating) && !can_see(controller.pawn, my_target, 5))
 		return FALSE
 	return !istype(get_area(my_target), /area/space)
-
 
 ///subtree to fix hull breaches
 /datum/ai_planning_subtree/replace_floors/breaches
@@ -149,7 +205,7 @@
 	if(controller.blackboard_key_exists(BB_WINDOW_FRAMETARGET))
 		controller.queue_behavior(/datum/ai_behavior/bot_interact, BB_WINDOW_FRAMETARGET)
 		return SUBTREE_RETURN_FINISH_PLANNING
-	var/static/list/searchable_grilles = typecacheof(list(/obj/structure/grille, /obj/structure/window_frame))
+	var/static/list/searchable_grilles = typecacheof(list(/obj/structure/grille))
 	controller.queue_behavior(/datum/ai_behavior/bot_search/valid_grille_target, BB_WINDOW_FRAMETARGET, searchable_grilles)
 
 /datum/ai_behavior/bot_search/valid_grille_target/valid_target(datum/ai_controller/basic_controller/bot/controller, obj/structure/my_target)
@@ -190,6 +246,6 @@
 /datum/ai_behavior/bot_search/valid_window_fix
 
 /datum/ai_behavior/bot_search/valid_window_fix/valid_target(datum/ai_controller/basic_controller/bot/controller, obj/my_target)
-
 	return (my_target.get_integrity() < my_target.max_integrity || !my_target.anchored)
 
+#undef REPAIRBOT_SPEECH_TIMER

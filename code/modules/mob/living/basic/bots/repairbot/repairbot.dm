@@ -33,11 +33,13 @@
 	var/obj/item/screwdriver/our_screwdriver
 	///our iron rods
 	var/obj/item/stack/rods/our_rods
+	///our rcd object we use to deconstruct when emagged
+	var/obj/item/construction/rcd/deconstruction_device
 	///possible interactions
 	var/static/list/possible_stack_interactions = list(
 		/obj/item/stack/sheet/iron = typecacheof(list(/obj/structure/girder)),
 		/obj/item/stack/tile = typecacheof(list(/turf/open/space, /turf/open/floor/plating)),
-		/obj/item/stack/sheet/glass = typecacheof(list(/obj/structure/grille, /obj/structure/window_frame)),
+		/obj/item/stack/sheet/glass = typecacheof(list(/obj/structure/grille)),
 	)
 	var/static/list/possible_tool_interactions = list(
 		/obj/item/weldingtool/repairbot = typecacheof(list(/obj/machinery, /obj/structure/window)),
@@ -67,10 +69,11 @@
 
 /mob/living/basic/bot/repairbot/Initialize(mapload)
 	. = ..()
+	ai_controller.set_blackboard_key(BB_REPAIRBOT_EMAGGED_SPEECH, emagged_voicelines)
+	ai_controller.set_blackboard_key(BB_REPAIRBOT_NORMAL_SPEECH, neutral_voicelines)
 	var/static/list/abilities = list(
 		/datum/action/cooldown/mob_cooldown/bot/build_girder = BB_GIRDER_BUILD_ABILITY,
 	)
-	ADD_TRAIT(src, TRAIT_SHADOWLESS, INNATE_TRAIT)
 	grant_actions_by_list(abilities)
 	add_traits(list(TRAIT_SPACEWALK, TRAIT_NEGATES_GRAVITY, TRAIT_MOB_MERGE_STACKS, TRAIT_FIREDOOR_OPENER), INNATE_TRAIT)
 	our_welder = new(src)
@@ -124,6 +127,10 @@
 	. = ..()
 
 	if(!. || !proximity_flag)
+		return
+
+	if(bot_access_flags & BOT_COVER_EMAGGED)
+		deconstruction_device.interact_with_atom_secondary(src, target, modifiers)
 		return
 
 	//priority interactions
@@ -228,7 +235,7 @@
 
 /mob/living/basic/bot/repairbot/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
-	if(. || !isliving(ui.user) || (bot_access_flags & BOT_COVER_LOCKED) && !(ui.user.has_unlimited_silicon_privilege))
+	if(. || !isliving(ui.user) || (bot_access_flags & BOT_COVER_LOCKED) && !(HAS_SILICON_ACCESS(ui.user)))
 		return
 	switch(action)
 		if("fix_breaches")
@@ -242,6 +249,11 @@
 		if("build_girders")
 			repairbot_flags ^= REPAIRBOT_BUILD_GIRDERS
 
+/mob/living/basic/bot/repairbot/emag_act(mob/user, obj/item/card/emag/emag_card)
+	. = ..()
+	if(!(bot_access_flags & BOT_COVER_EMAGGED) || !isnull(deconstruction_device))
+		return
+	deconstruction_device = new(src)
 
 /obj/item/weldingtool/repairbot
 	max_fuel = INFINITY
