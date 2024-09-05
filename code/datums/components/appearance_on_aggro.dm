@@ -38,7 +38,7 @@
 /datum/component/appearance_on_aggro/proc/on_set_target(mob/living/source)
 	SIGNAL_HANDLER
 
-	var/atom/target = source.ai_controller.blackboard[target_key]
+	var/atom/target = source.ai_controller?.blackboard[target_key]
 	if (QDELETED(target))
 		return
 
@@ -65,11 +65,11 @@
 	SIGNAL_HANDLER
 	if (source.stat == DEAD)
 		return
-	source.icon_state = source.ai_controller.blackboard_key_exists(target_key) ? aggro_state : initial(source.icon_state)
+	source.icon_state = source.ai_controller?.blackboard_key_exists(target_key) ? aggro_state : initial(source.icon_state)
 
 /datum/component/appearance_on_aggro/proc/on_overlays_updated(mob/living/basic/source, list/overlays)
 	SIGNAL_HANDLER
 
-	if(!(source.ai_controller.blackboard_key_exists(target_key)))
+	if(!(source.ai_controller?.blackboard_key_exists(target_key)))
 		return
 	overlays += aggro_overlay
