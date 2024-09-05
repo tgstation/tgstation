@@ -66731,12 +66731,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/plating,
 /area/station/maintenance/aft/lesser)
-"tNN" = (
-/obj/structure/flora/tree/pine/style_random,
-/obj/structure/marker_beacon/cerulean,
-/obj/effect/mapping_helpers/no_atoms_ontop,
-/turf/open/misc/asteroid/snow/icemoon,
-/area/icemoon/surface/outdoors/unexplored/rivers/no_monsters)
 "tNY" = (
 /obj/machinery/door/firedoor,
 /turf/open/floor/iron,
@@ -69340,9 +69334,6 @@
 /obj/structure/cable,
 /turf/open/floor/plating,
 /area/station/security/processing)
-"uFg" = (
-/turf/open/misc/asteroid/snow/icemoon,
-/area/icemoon/surface/outdoors/unexplored/rivers/no_monsters)
 "uFh" = (
 /turf/open/floor/plating,
 /area/station/construction)
@@ -267414,9 +267405,9 @@ wNO
 (215,1,3) = {"
 wNO
 wNO
-wNO
-wNO
-tNN
+bln
+bln
+lgH
 kDs
 kDs
 kDs
@@ -267671,9 +267662,9 @@ wNO
 (216,1,3) = {"
 wNO
 wNO
-wNO
-wNO
-wNO
+bln
+bln
+bln
 kDs
 kDs
 kDs
@@ -267928,9 +267919,9 @@ wNO
 (217,1,3) = {"
 wNO
 wNO
-wNO
-wNO
-wNO
+bln
+bln
+bln
 bln
 hHG
 hHG
@@ -268185,7 +268176,7 @@ wNO
 (218,1,3) = {"
 wNO
 wNO
-wNO
+bln
 tkU
 tkU
 lgH
@@ -268959,7 +268950,7 @@ wNO
 tkU
 tkU
 tkU
-uFg
+bln
 hHG
 hHG
 hHG
@@ -271270,7 +271261,7 @@ wNO
 wNO
 wNO
 wNO
-wNO
+bln
 tkU
 bln
 hHG
@@ -271527,7 +271518,7 @@ wNO
 wNO
 wNO
 wNO
-wNO
+bln
 tkU
 bln
 hHG
@@ -271784,7 +271775,7 @@ wNO
 wNO
 wNO
 wNO
-wNO
+bln
 tkU
 bln
 hHG
@@ -272041,7 +272032,7 @@ wNO
 wNO
 wNO
 wNO
-wNO
+bln
 tkU
 bln
 hHG
@@ -272297,9 +272288,9 @@ wNO
 (234,1,3) = {"
 wNO
 wNO
-wNO
-wNO
-wNO
+bln
+bln
+bln
 lgH
 hHG
 hHG
@@ -272555,8 +272546,8 @@ wNO
 wNO
 wNO
 lgH
-wNO
-wNO
+bln
+bln
 bln
 hHG
 hHG
@@ -272812,8 +272803,8 @@ wNO
 wNO
 wNO
 aaX
-wNO
-wNO
+bln
+bln
 bln
 hHG
 hHG
@@ -273069,8 +273060,8 @@ wNO
 wNO
 wNO
 fhB
-wNO
-wNO
+bln
+bln
 bln
 hHG
 hHG
@@ -273325,9 +273316,9 @@ wNO
 (238,1,3) = {"
 wNO
 wNO
-wNO
-wNO
-wNO
+bln
+bln
+bln
 lgH
 hHG
 hHG
@@ -273584,7 +273575,7 @@ wNO
 wNO
 wNO
 wNO
-wNO
+bln
 bln
 hHG
 hHG
@@ -273841,7 +273832,7 @@ wNO
 wNO
 wNO
 wNO
-wNO
+bln
 bln
 hHG
 hHG
@@ -274098,7 +274089,7 @@ wNO
 wNO
 wNO
 wNO
-wNO
+bln
 bln
 hHG
 hHG
@@ -274355,7 +274346,7 @@ wNO
 wNO
 wNO
 wNO
-wNO
+bln
 bln
 hHG
 hHG
@@ -274612,7 +274603,7 @@ wNO
 wNO
 wNO
 wNO
-wNO
+bln
 lgH
 hHG
 hHG
@@ -274869,7 +274860,7 @@ wNO
 wNO
 wNO
 wNO
-wNO
+bln
 bln
 hHG
 hHG
@@ -275126,7 +275117,7 @@ wNO
 wNO
 wNO
 wNO
-wNO
+bln
 bln
 hHG
 hHG
@@ -275383,7 +275374,7 @@ wNO
 wNO
 wNO
 wNO
-wNO
+bln
 lgH
 hHG
 hHG
@@ -275640,7 +275631,7 @@ wNO
 wNO
 wNO
 wNO
-wNO
+bln
 bln
 hHG
 hHG
@@ -275897,7 +275888,7 @@ wNO
 wNO
 wNO
 wNO
-wNO
+bln
 bln
 hHG
 hHG
@@ -276154,7 +276145,7 @@ wNO
 wNO
 wNO
 wNO
-wNO
+bln
 bln
 hHG
 hHG
@@ -276411,7 +276402,7 @@ wNO
 wNO
 wNO
 wNO
-wNO
+bln
 lgH
 hHG
 hHG
@@ -276668,7 +276659,7 @@ wNO
 wNO
 wNO
 wNO
-wNO
+bln
 bln
 hHG
 hHG
@@ -276925,7 +276916,7 @@ wNO
 wNO
 wNO
 wNO
-wNO
+bln
 bln
 hHG
 hHG
@@ -277182,7 +277173,7 @@ wNO
 wNO
 wNO
 wNO
-wNO
+bln
 lgH
 hHG
 hHG
@@ -277439,7 +277430,7 @@ wNO
 wNO
 wNO
 wNO
-wNO
+bln
 bln
 hHG
 hHG
@@ -277696,7 +277687,7 @@ wNO
 wNO
 wNO
 wNO
-wNO
+bln
 bln
 hHG
 hHG
