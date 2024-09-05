@@ -13,6 +13,8 @@
 /datum/component/accessable_storage/UnregisterFromParent()
 	UnregisterSignal(parent, list(COMSIG_ITEM_EQUIPPED, COMSIG_ATOM_STORED_ITEM, COMSIG_ATOM_REMOVED_ITEM))
 
+// Subtype specifically for organs that offer the ability to hold 1 item
+// Some tails are intended to do this. they gain a text prompt on examine
 /datum/component/accessable_storage/organ
 
 /datum/component/accessable_storage/organ/Initialize()
