@@ -99,7 +99,7 @@
 		if("female")
 			first_name = pick(GLOB.first_names_female)
 			death_sound = pick(female_screams + monkey_screeches)
-		if("enby")
+		if(PLURAL)
 			first_name = pick(GLOB.first_names)
 			death_sound = pick(male_screams + female_screams + monkey_screeches)
 
