@@ -133,7 +133,6 @@
 	icon_state = "/obj/item/clothing/mask/bandana/white"
 	greyscale_colors = "#DCDCDC"
 	flags_1 = NONE
-	icon_state_preview = "bandana_cloth"
 
 /obj/item/clothing/mask/bandana/durathread
 	name = "durathread bandana"
