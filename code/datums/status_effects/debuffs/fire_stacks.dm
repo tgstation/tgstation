@@ -136,6 +136,12 @@
 	/// Type of mob light emitter we use when on fire
 	var/moblight_type = /obj/effect/dummy/lighting_obj/moblight/fire
 
+/datum/status_effect/fire_handler/fire_stacks/get_examine_text()
+	if(owner.on_fire)
+		return
+
+	return "[owner.p_They()] are covered in something flammable."
+
 /datum/status_effect/fire_handler/fire_stacks/proc/owner_touched_sparks()
 	SIGNAL_HANDLER
 
@@ -293,6 +299,9 @@
 
 	enemy_types = list(/datum/status_effect/fire_handler/fire_stacks)
 	stack_modifier = -1
+
+/datum/status_effect/fire_handler/wet_stacks/get_examine_text()
+	return "[owner.p_They()] look[owner.p_s()] a little soaked."
 
 /datum/status_effect/fire_handler/wet_stacks/tick(seconds_between_ticks)
 	adjust_stacks(-0.5 * seconds_between_ticks)
