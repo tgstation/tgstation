@@ -14,7 +14,6 @@
 	icon = 'icons/map_icons/clothing.dmi'
 	icon_state = "/obj/item/clothing/mask/bandana"
 	post_init_icon_state = "bandana"
-	icon_state_preview = "bandana_cloth"
 	inhand_icon_state = "greyscale_bandana"
 	greyscale_config = /datum/greyscale_config/bandana
 	greyscale_config_worn = /datum/greyscale_config/bandana/worn
