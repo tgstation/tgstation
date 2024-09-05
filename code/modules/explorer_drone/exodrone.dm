@@ -63,7 +63,7 @@ GLOBAL_LIST_EMPTY(exodrone_launchers)
 
 /obj/item/exodrone/Initialize(mapload)
 	. = ..()
-	if(name == "exploration drone")
+	if(name == initial(name))
 		name = pick(strings(EXODRONE_FILE,"probe_names"))
 		if(name_counter[name])
 			name_counter[name]++
