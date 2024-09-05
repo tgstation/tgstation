@@ -76,7 +76,7 @@
 	return FALSE
 
 /datum/preference/choiced/lizard_snout/create_default_value()
-	return "None"
+	return /datum/sprite_accessory/snouts/none::name
 
 
 
@@ -143,7 +143,7 @@
 	return FALSE
 
 /datum/preference/choiced/lizard_horns/create_default_value()
-	return "None"
+	return /datum/sprite_accessory/horns/none::name
 
 
 
@@ -210,7 +210,7 @@
 	return FALSE
 
 /datum/preference/choiced/lizard_frills/create_default_value()
-	return "None"
+	return /datum/sprite_accessory/frills/none::name
 
 
 
@@ -293,7 +293,7 @@
 	return FALSE
 
 /datum/preference/choiced/lizard_tail/create_default_value()
-	return "None"
+	return /datum/sprite_accessory/tails/lizard/none::name
 
 /datum/preference/choiced/lizard_tail/icon_for(value)
 	var/datum/sprite_accessory/sprite_accessory = SSaccessories.tails_list_lizard[value]
@@ -364,7 +364,7 @@
 	return ..()
 
 /datum/preference/choiced/lizard_body_markings/create_default_value()
-	return "None"
+	return /datum/sprite_accessory/lizard_markings/none::name
 
 //toggle prefs
 /datum/preference/toggle/markings

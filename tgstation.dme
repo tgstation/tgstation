@@ -19,6 +19,7 @@
 #include "code\_compile_options.dm"
 #include "code\_experiments.dm"
 #include "code\world.dm"
+#include "code\~doppler_earliest_defines.dm"
 #include "code\__DEFINES\__globals.dm"
 #include "code\__DEFINES\_atoms.dm"
 #include "code\__DEFINES\_bitfields.dm"

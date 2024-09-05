@@ -156,7 +156,7 @@
 	//to_chat(world, "Applied!")
 
 /datum/preference/choiced/breasts/create_default_value()
-	return "Bare"
+	return /datum/sprite_accessory/breasts/bare::name
 
 /datum/preference/choiced/breasts/is_accessible(datum/preferences/preferences)
 	. = ..()
