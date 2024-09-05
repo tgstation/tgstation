@@ -330,7 +330,7 @@
 			force *= material.strength_modifier
 			throwforce *= material.strength_modifier
 			if(material.item_sound_override)
-			hitsound = material.item_sound_override
+				hitsound = material.item_sound_override
 
 	if(force >=15 && hitsound == SFX_DEFAULT_FISH_SLAP) // don't override special attack sounds
 		hitsound = SFX_ALT_FISH_SLAP // do more damage - do heavier slap sound
