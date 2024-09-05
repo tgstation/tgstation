@@ -441,7 +441,6 @@
 		/datum/surgery/blood_filter,
 		/datum/surgery/brain_surgery,
 		/datum/surgery/coronary_bypass,
-		/datum/surgery/coronary_bypass,
 		/datum/surgery/ear_surgery,
 		/datum/surgery/eye_surgery,
 		/datum/surgery/hepatectomy,
