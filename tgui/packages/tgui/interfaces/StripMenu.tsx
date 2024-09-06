@@ -213,6 +213,13 @@ const SLOTS: Record<
     gridSpot: getGridSpotKey([4, 5]),
     image: 'inventory-pocket.png',
   },
+  // Doppler station addition start
+  tail: {
+    displayName: 'tail',
+    gridSpot: getGridSpotKey([3, 3]),
+    image: 'inventory-belt.png',
+  },
+  // Doppler station addition end
 };
 
 enum ObscuringLevel {

@@ -45,9 +45,15 @@
 	SIGNAL_HANDLER
 
 	var/obj/item/item_parent = parent
-	item_parent.atom_storage?.open_storage(clicker, signal_source)
-	if(!isorgan(item_parent))
+	if(isorgan(item_parent))
+		var/mob/organ_owner = item_parent.loc.loc
+		if(organ_owner != clicker)
+			return NONE
+	else
 		animate_target(signal_source)
+
+	item_parent.atom_storage?.open_storage(clicker, signal_source)
+
 	return CLICK_ACTION_SUCCESS
 
 /// Signal handler for COMSIG_MOB_UNEQUIPPED_ITEM. Handles unregistering signals.
