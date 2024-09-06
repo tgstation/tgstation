@@ -11,7 +11,7 @@
 	shoes = /obj/item/clothing/shoes/workboots/sapper
 
 	box = /obj/item/storage/box/survival/engineer
-	back = /obj/item/storage/toolbox/guncase/nova/carwo_large_case/sapper
+	back = /obj/item/storage/toolbox/guncase/modular/carwo_large_case/sapper
 	backpack_contents = list(
 		/obj/item/storage/backpack/satchel/flat/empty =1,
 		/obj/item/grenade/chem_grenade/metalfoam = 1,
@@ -131,11 +131,11 @@
 	new /obj/item/inducer/syndicate(src)
 	new /obj/item/weldingtool/abductor(src)
 
-/obj/item/storage/toolbox/guncase/nova/carwo_large_case/sapper
+/obj/item/storage/toolbox/guncase/modular/carwo_large_case/sapper
 	name = "compact tool case"
 	desc = "A wide yellow tool case with foam inserts laid out to fit a fire axe, tools, cable coils and even grenades."
 
-/obj/item/storage/toolbox/guncase/nova/carwo_large_case/sapper/PopulateContents()
+/obj/item/storage/toolbox/guncase/modular/carwo_large_case/sapper/PopulateContents()
 	return
 
 /datum/id_trim/sapper

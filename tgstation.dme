@@ -6394,6 +6394,8 @@
 #include "modular_doppler\modular_cosmetics\code\neck\collar.dm"
 #include "modular_doppler\modular_cosmetics\code\suits\jacket.dm"
 #include "modular_doppler\modular_cosmetics\GAGS\greyscale_configs_neck.dm"
+#include "modular_doppler\modular_weapons\code\gunsets.dm"
+#include "modular_doppler\modular_weapons\company_and_or_faction_based\carwo_defense_systems\gunsets.dm"
 #include "modular_doppler\pixel_shift\living.dm"
 #include "modular_doppler\pixel_shift\living_movement.dm"
 #include "modular_doppler\pixel_shift\code\pixel_shift_component.dm"
