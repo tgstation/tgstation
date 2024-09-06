@@ -46,13 +46,18 @@
 
 	if(isnull(ai_controller))
 		return
-
+	// This doesn't do what you think it does, it removes the path images, but does not remove it from huds
 	clear_path_hud()
+
+	// This must happen before you clear the active hud list below, or you will leak client images
+	var/list/path_huds_watching_me = list(GLOB.huds[DATA_HUD_DIAGNOSTIC], GLOB.huds[DATA_HUD_BOT_PATH])
+	for(var/datum/atom_hud/hud as anything in path_huds_watching_me)
+		hud.remove_atom_from_hud(src)
 
 	var/list/path_images = active_hud_list[DIAG_PATH_HUD]
 	LAZYCLEARLIST(path_images)
 
-	var/list/path_huds_watching_me = list(GLOB.huds[DATA_HUD_DIAGNOSTIC], GLOB.huds[DATA_HUD_BOT_PATH])
+
 
 	var/atom/move_target = ai_controller.current_movement_target
 	if(move_target != ai_controller.blackboard[BB_BEACON_TARGET])
@@ -61,9 +66,6 @@
 	var/list/our_path = source.movement_path
 	if(!length(our_path))
 		return
-
-	for(var/datum/atom_hud/hud as anything in path_huds_watching_me)
-		hud.remove_atom_from_hud(src)
 
 	for(var/index in 1 to our_path.len)
 		if(index == 1 || index == our_path.len)
