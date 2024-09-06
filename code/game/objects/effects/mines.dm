@@ -289,12 +289,3 @@
 	var/obj/effect/particle_effect/fluid/smoke/poof = new (get_turf(src))
 	poof.lifetime = 3
 	qdel(src)
-
-
-/obj/item/minespawner/bwoink
-	name = "bwoinkmine deployment device"
-	desc = "When activated, will deploy an Smile Protection landmine after 3 seconds passes, perfect for high ranking Clown officers looking to entertain their audience from afar."
-	icon = 'icons/obj/devices/tracker.dmi'
-	icon_state = "beacon"
-
-	var/mine_type = /obj/effect/mine/sound/bwoink
