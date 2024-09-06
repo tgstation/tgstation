@@ -23,6 +23,7 @@
 	jaunter.forceMove(src)
 	if(ismob(jaunter))
 		var/mob/mob_jaunter = jaunter
+		RegisterSignal(mob_jaunter, COMSIG_MOB_STATCHANGE, PROC_REF(on_stat_change))
 		mob_jaunter.reset_perspective(src)
 
 /obj/effect/dummy/phased_mob/Destroy()
@@ -55,6 +56,7 @@
 /obj/effect/dummy/phased_mob/Exited(atom/movable/gone, direction)
 	. = ..()
 	if(gone == jaunter)
+		UnregisterSignal(jaunter, COMSIG_MOB_STATCHANGE)
 		SEND_SIGNAL(src, COMSIG_MOB_EJECTED_FROM_JAUNT, jaunter)
 		jaunter = null
 
@@ -98,3 +100,9 @@
 		newloc = can_z_move(direction, get_turf(src), newloc, ZMOVE_INCAPACITATED_CHECKS | ZMOVE_FEEDBACK | ZMOVE_ALLOW_ANCHORED, user)
 
 	return newloc
+
+/// Signal proc for [COMSIG_MOB_STATCHANGE], to throw us out of the jaunt if we lose consciousness.
+/obj/effect/dummy/phased_mob/proc/on_stat_change(mob/living/source, new_stat, old_stat)
+	SIGNAL_HANDLER
+	if(source == jaunter && source.stat != CONSCIOUS)
+		eject_jaunter()

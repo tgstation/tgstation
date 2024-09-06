@@ -117,7 +117,7 @@
 /obj/item/plunger
 	name = "plunger"
 	desc = "It's a plunger for plunging."
-	icon = 'icons/obj/tools.dmi'
+	icon = 'icons/obj/watercloset.dmi'
 	icon_state = "plunger"
 	worn_icon_state = "plunger"
 

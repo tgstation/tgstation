@@ -232,7 +232,7 @@
 /datum/martial_art/boxing/proc/check_block(mob/living/boxer, atom/movable/hitby, damage, attack_text, attack_type, ...)
 	SIGNAL_HANDLER
 
-	if(!can_use(boxer) || !boxer.throw_mode || boxer.incapacitated(IGNORE_GRAB))
+	if(!can_use(boxer) || !boxer.throw_mode || INCAPACITATED_IGNORING(boxer, INCAPABLE_GRAB))
 		return NONE
 
 	if(attack_type != UNARMED_ATTACK)

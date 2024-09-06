@@ -115,6 +115,7 @@
 	icon_state = "frontwalltop"
 	density = FALSE
 	layer = ABOVE_ALL_MOB_LAYER //except for the stairs tile, which should be set to OBJ_LAYER aka 3.
+	plane = ABOVE_GAME_PLANE
 
 
 /obj/structure/fluff/bus/passable/seat
@@ -206,11 +207,12 @@
 	density = TRUE
 	deconstructible = FALSE
 	layer = ABOVE_ALL_MOB_LAYER
+	plane = ABOVE_GAME_PLANE
 
 /obj/structure/fluff/beach_towel
 	name = "beach towel"
 	desc = "A towel decorated in various beach-themed designs."
-	icon = 'icons/obj/structures/railings.dmi'
+	icon = 'icons/obj/railings.dmi'
 	icon_state = "railing"
 	density = FALSE
 	anchored = TRUE
@@ -281,7 +283,7 @@
 /obj/structure/fluff/tram_rail
 	name = "tram rail"
 	desc = "Great for trams, not so great for skating."
-	icon = 'icons/obj/structures/tram/tram_rails.dmi'
+	icon = 'icons/obj/tram/tram_rails.dmi'
 	icon_state = "rail"
 	layer = TRAM_RAIL_LAYER
 	plane = FLOOR_PLANE
