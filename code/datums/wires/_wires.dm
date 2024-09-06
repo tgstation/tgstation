@@ -41,8 +41,11 @@
 	/// If every instance of these wires should be random. Prevents wires from showing up in station blueprints.
 	var/randomize = FALSE
 
-	/// The trait someone needs in order to see these wires
-	var/my_wire_trait = TRAIT_KNOW_ENGI_WIRES
+	/// Here we define a callback that, if returned true, allows the user to see this device's wires
+	/// With this method, details of what would allow someone to reveal these wires is immediately obvious
+	/// in the item definition without the possibility of having to dig through a callstack of redefined procs
+	/// or added procs
+	var/my_wire_callback = null
 
 	/// Lazy assoc list of refs to mobs to refs to photos they have studied for wires
 	var/list/studied_photos
@@ -272,11 +275,10 @@
 				if(LAZYACCESS(studied_photos, REF(user.mind)) == REF(photo))
 					return TRUE
 
-	// If an engineer shouldn't know these wires, we can override this for another trait
-	if(HAS_TRAIT(user, my_wire_trait))
-		return TRUE
+	// Assuming we haven't overriden this, they don't know these wires
+	return my_wire_callback
 
-	return FALSE
+
 
 /**
  * Whether the given wire should always be revealed.
