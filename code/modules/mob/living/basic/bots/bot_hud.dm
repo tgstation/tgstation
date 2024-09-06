@@ -77,6 +77,8 @@
 
 		var/image/path_display = image(icon = path_image_icon, loc = current_turf, icon_state = path_image_icon_state, layer = GAME_PLANE, dir = next_direction)
 
+		SET_PLANE(path_display, GAME_PLANE, current_turf)
+
 		if((ISDIAGONALDIR(next_direction) && (previous_direction & (NORTH|SOUTH))))
 			var/turn_value = (next_direction == SOUTHWEST || next_direction == NORTHEAST) ? 90 : -90
 			path_display.transform = path_display.transform.Turn(turn_value)
