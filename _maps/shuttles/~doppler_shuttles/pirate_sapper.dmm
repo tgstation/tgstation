@@ -1,0 +1,728 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"cz" = (
+/obj/machinery/light/floor,
+/turf/open/floor/mineral/titanium/white,
+/area/shuttle/pirate/sapper)
+"dZ" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
+	dir = 8
+	},
+/turf/open/floor/mineral/titanium/white,
+/area/shuttle/pirate/sapper)
+"fn" = (
+/obj/structure/cable,
+/obj/machinery/door/poddoor/shutters/window{
+	id = "pirate_sapper_shutter_L";
+	dir = 8
+	},
+/obj/structure/fans/tiny/forcefield{
+	dir = 4
+	},
+/turf/open/floor/plating,
+/area/shuttle/pirate/sapper)
+"fK" = (
+/obj/structure/chair/comfy/shuttle{
+	dir = 1
+	},
+/turf/open/floor/mineral/titanium/white,
+/area/shuttle/pirate/sapper)
+"fP" = (
+/obj/structure/cable/layer1,
+/obj/structure/rack,
+/obj/machinery/light/floor,
+/obj/machinery/power/terminal{
+	dir = 4;
+	cable_layer = 1
+	},
+/obj/effect/decal/cleanable/plasma,
+/obj/item/storage/medkit/frontier/stocked,
+/turf/open/floor/plating,
+/area/shuttle/pirate/sapper)
+"gr" = (
+/obj/structure/lattice,
+/obj/structure/marker_beacon/yellow,
+/obj/machinery/button/door/directional/south{
+	id = "pirate_sapper_shutter_R";
+	req_access = list("sapper_ship")
+	},
+/turf/open/space/basic,
+/area/shuttle/pirate/sapper)
+"hQ" = (
+/obj/machinery/porta_turret/syndicate/energy/sapper{
+	dir = 8
+	},
+/turf/closed/wall/mineral/titanium,
+/area/shuttle/pirate/sapper)
+"hV" = (
+/obj/structure/cable/layer1,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/turf/open/floor/catwalk_floor/iron_white,
+/area/shuttle/pirate/sapper)
+"jZ" = (
+/obj/effect/decal/cleanable/wrapping,
+/turf/open/floor/catwalk_floor/iron_white,
+/area/shuttle/pirate/sapper)
+"lZ" = (
+/obj/machinery/light/floor,
+/obj/effect/decal/cleanable/robot_debris/limb,
+/obj/item/trash/empty_side_pack/yangyu{
+	pixel_x = -6;
+	pixel_y = -6
+	},
+/turf/open/floor/mineral/titanium/white,
+/area/shuttle/pirate/sapper)
+"mE" = (
+/obj/machinery/button/door/directional/north{
+	id = "pirate_sapper_shutter_L";
+	req_access = list("sapper_ship")
+	},
+/turf/open/floor/catwalk_floor/iron_white,
+/area/shuttle/pirate/sapper)
+"mL" = (
+/obj/structure/cable/layer1,
+/obj/machinery/space_heater,
+/obj/effect/decal/cleanable/shreds,
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/plating,
+/area/shuttle/pirate/sapper)
+"mY" = (
+/turf/closed/wall/mineral/titanium/overspace,
+/area/shuttle/pirate/sapper)
+"nt" = (
+/obj/machinery/rnd/production/colony_lathe,
+/obj/structure/sign/poster/contraband/rebels_unite/directional/north,
+/obj/effect/turf_decal/stripes/box,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/engine,
+/area/shuttle/pirate/sapper)
+"nE" = (
+/obj/machinery/button/door/directional/north{
+	id = "pirate_sapper_shutter_R";
+	req_access = list("sapper_ship")
+	},
+/obj/effect/decal/cleanable/ash,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/catwalk_floor/iron_white,
+/area/shuttle/pirate/sapper)
+"nM" = (
+/obj/structure/cable,
+/obj/machinery/door/poddoor/shutters/window{
+	id = "pirate_sapper_shutter_R";
+	dir = 4
+	},
+/obj/structure/fans/tiny/forcefield{
+	dir = 4
+	},
+/obj/docking_port/mobile/pirate/sapper{
+	dir = 4
+	},
+/turf/open/floor/plating,
+/area/shuttle/pirate/sapper)
+"pt" = (
+/obj/structure/cable/layer1,
+/obj/machinery/light/cold/directional/east,
+/obj/structure/sign/warning/directional/south,
+/obj/structure/closet/crate/engineering/electrical,
+/obj/item/stack/cable_coil/thirty,
+/obj/item/stack/cable_coil/thirty,
+/obj/item/stack/cable_coil/thirty,
+/obj/item/stack/cable_coil/thirty,
+/obj/item/trash/energybar,
+/obj/effect/decal/cleanable/dirt,
+/obj/item/stock_parts/power_store/cell/high,
+/obj/item/stock_parts/power_store/cell/high,
+/obj/item/stock_parts/power_store/cell/high,
+/obj/item/stock_parts/power_store/cell/high,
+/turf/open/floor/catwalk_floor/iron_white,
+/area/shuttle/pirate/sapper)
+"pH" = (
+/obj/item/rcd_ammo/large{
+	pixel_x = 8
+	},
+/obj/item/rcd_ammo/large{
+	pixel_x = -3;
+	pixel_y = -4
+	},
+/obj/item/rcd_ammo/large{
+	pixel_x = -9;
+	pixel_y = 9
+	},
+/obj/effect/decal/cleanable/oil,
+/turf/open/floor/mineral/titanium/white,
+/area/shuttle/pirate/sapper)
+"qq" = (
+/obj/structure/table/reinforced,
+/obj/machinery/turretid{
+	icon_state = "control_off";
+	lethal = 1;
+	locked = 0;
+	req_access = list("sapper_ship");
+	pixel_y = 4;
+	pixel_x = -1;
+	control_area = "/area/shuttle/pirate/sapper";
+	enabled = 0
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
+	},
+/obj/item/food/vendor_tray_meal/mushroom_fry{
+	pixel_x = -5
+	},
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/mineral/titanium/white,
+/area/shuttle/pirate/sapper)
+"qL" = (
+/obj/machinery/computer/shuttle/pirate/sapper,
+/obj/machinery/light/floor,
+/obj/structure/cable/layer1,
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
+	},
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/mineral/titanium/white,
+/area/shuttle/pirate/sapper)
+"rL" = (
+/obj/machinery/light/floor,
+/obj/effect/decal/cleanable/oil,
+/turf/open/floor/mineral/titanium/white,
+/area/shuttle/pirate/sapper)
+"sr" = (
+/obj/machinery/computer/monitor,
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
+	},
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/mineral/titanium/white,
+/area/shuttle/pirate/sapper)
+"sM" = (
+/obj/structure/cable,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/catwalk_floor/iron_white,
+/area/shuttle/pirate/sapper)
+"tM" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/machinery/atmospherics/components/tank/air/layer4,
+/obj/structure/cable/layer1,
+/turf/open/floor/plating,
+/area/shuttle/pirate/sapper)
+"ua" = (
+/obj/structure/chair/comfy/shuttle{
+	dir = 1
+	},
+/obj/structure/cable/layer1,
+/turf/open/floor/mineral/titanium/white,
+/area/shuttle/pirate/sapper)
+"uz" = (
+/obj/structure/window/reinforced/spawner/directional/north{
+	pixel_y = 1
+	},
+/obj/machinery/power/shuttle_engine/heater,
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/turf/open/floor/plating/airless,
+/area/shuttle/pirate/sapper)
+"uD" = (
+/obj/item/clothing/mask/gas/atmos/sapper{
+	pixel_x = -2;
+	pixel_y = -3
+	},
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/mineral/titanium/white,
+/area/shuttle/pirate/sapper)
+"vB" = (
+/obj/structure/cable/layer1,
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/machinery/power/port_gen/pacman/pre_loaded{
+	cable_layer = 1;
+	anchored = 1
+	},
+/turf/open/floor/plating,
+/area/shuttle/pirate/sapper)
+"wf" = (
+/obj/machinery/computer/camera_advanced/shuttle_docker/syndicate/pirate/sapper,
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
+	},
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/mineral/titanium/white,
+/area/shuttle/pirate/sapper)
+"xf" = (
+/obj/item/stack/sheet/iron/twenty,
+/obj/item/stack/sheet/glass{
+	amount = 20
+	},
+/obj/item/stack/sheet/plastic/five,
+/obj/item/stack/sheet/mineral/titanium{
+	amount = 5
+	},
+/obj/item/stack/sheet/mineral/gold{
+	amount = 5
+	},
+/obj/machinery/ore_silo/colony_lathe,
+/obj/item/stack/sheet/mineral/silver{
+	amount = 5
+	},
+/obj/structure/sign/poster/contraband/power/directional/north,
+/obj/effect/turf_decal/stripes/box,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/engine,
+/area/shuttle/pirate/sapper)
+"xA" = (
+/turf/open/floor/catwalk_floor/iron_white,
+/area/shuttle/pirate/sapper)
+"yt" = (
+/obj/machinery/light/floor,
+/obj/effect/decal/cleanable/plastic,
+/obj/item/pizzabox/vegetable{
+	open = 1
+	},
+/turf/open/floor/mineral/titanium/white,
+/area/shuttle/pirate/sapper)
+"yx" = (
+/obj/structure/window/reinforced/spawner/directional/north{
+	pixel_y = 1
+	},
+/obj/machinery/power/shuttle_engine/heater,
+/turf/open/floor/plating/airless,
+/area/shuttle/pirate/sapper)
+"yE" = (
+/turf/closed/wall/mineral/titanium,
+/area/shuttle/pirate/sapper)
+"zy" = (
+/obj/structure/lattice,
+/obj/structure/marker_beacon/yellow,
+/turf/open/space/basic,
+/area/shuttle/pirate/sapper)
+"Bp" = (
+/obj/structure/table/reinforced,
+/obj/machinery/button/door/directional{
+	id = "pirate_sapper_shutter";
+	pixel_x = 6;
+	req_access = list("sapper_ship")
+	},
+/obj/machinery/recharger{
+	pixel_x = -6;
+	pixel_y = 3
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
+	},
+/obj/item/reagent_containers/cup/glass/waterbottle/tea/strawberry{
+	pixel_x = 6;
+	pixel_y = 15
+	},
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/mineral/titanium/white,
+/area/shuttle/pirate/sapper)
+"BT" = (
+/obj/machinery/power/smes/ship{
+	cable_layer = 1
+	},
+/obj/item/toy/plush/nova/deer{
+	pixel_y = 17;
+	pixel_x = 3;
+	name = "powerful deer plushie"
+	},
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/structure/cable/layer1,
+/turf/open/floor/plating,
+/area/shuttle/pirate/sapper)
+"CM" = (
+/obj/structure/chair/comfy/shuttle{
+	dir = 1
+	},
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/mineral/titanium/white,
+/area/shuttle/pirate/sapper)
+"Dl" = (
+/obj/machinery/door/poddoor/shutters{
+	id = "pirate_sapper_shutter_L";
+	dir = 8
+	},
+/obj/structure/fans/tiny/forcefield{
+	dir = 4
+	},
+/turf/open/floor/plating,
+/area/shuttle/pirate/sapper)
+"DT" = (
+/mob/living/basic/bot/medbot/sapper,
+/turf/open/floor/catwalk_floor/iron_white,
+/area/shuttle/pirate/sapper)
+"DZ" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
+	dir = 4
+	},
+/turf/open/floor/mineral/titanium/white,
+/area/shuttle/pirate/sapper)
+"EE" = (
+/obj/structure/cable/layer1,
+/obj/machinery/airalarm/directional/east{
+	req_access = list("sapper_ship")
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/structure/closet/crate/engineering,
+/obj/item/pipe_dispenser,
+/obj/item/pipe_dispenser,
+/obj/item/rpd_upgrade/unwrench,
+/obj/item/rpd_upgrade/unwrench,
+/obj/item/airlock_painter,
+/obj/item/airlock_painter/decal,
+/obj/item/airlock_painter/decal/tile,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/catwalk_floor/iron_white,
+/area/shuttle/pirate/sapper)
+"Ih" = (
+/turf/closed/wall/mineral/titanium/nodiagonal,
+/area/shuttle/pirate/sapper)
+"In" = (
+/obj/machinery/power/shuttle_engine/propulsion,
+/obj/effect/turf_decal/stripes/line,
+/turf/open/floor/plating/airless,
+/area/shuttle/pirate/sapper)
+"IH" = (
+/obj/structure/cable/layer1,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/item/storage/pouch/material,
+/obj/item/stack/sheet/mineral/sandbags{
+	amount = 15
+	},
+/obj/structure/closet{
+	icon_state = "eng";
+	icon_door = "eng_tool"
+	},
+/obj/item/stack/sheet/plasteel/twenty,
+/obj/item/stack/sheet/iron/twenty,
+/obj/item/stack/sheet/rglass{
+	amount = 20
+	},
+/obj/item/holosign_creator/atmos,
+/obj/item/radio/intercom/directional/west,
+/obj/effect/decal/cleanable/dirt,
+/obj/item/stack/sheet/mineral/wood{
+	amount = 20
+	},
+/obj/item/storage/toolbox/emergency/turret/mag_fed/spider/sapper/pre_filled,
+/obj/item/target_designator/restricted,
+/turf/open/floor/catwalk_floor/iron_white,
+/area/shuttle/pirate/sapper)
+"JD" = (
+/obj/structure/cable,
+/obj/item/ammo_box/magazine/wt550m9{
+	pixel_y = -3;
+	pixel_x = -5
+	},
+/obj/item/ammo_box/magazine/wt550m9{
+	pixel_y = 6;
+	pixel_x = 6
+	},
+/turf/open/floor/catwalk_floor/iron_white,
+/area/shuttle/pirate/sapper)
+"JF" = (
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/catwalk_floor/iron_white,
+/area/shuttle/pirate/sapper)
+"Mi" = (
+/obj/machinery/power/shuttle_engine/propulsion,
+/obj/effect/turf_decal/stripes/line{
+	dir = 10
+	},
+/turf/open/floor/plating/airless,
+/area/shuttle/pirate/sapper)
+"Ml" = (
+/obj/structure/cable/layer1,
+/obj/machinery/power/apc/auto_name/directional/west{
+	cable_layer = 1;
+	req_access = list("sapper_ship")
+	},
+/obj/structure/table/reinforced,
+/obj/effect/spawner/random/food_or_drink/donkpockets,
+/obj/item/reagent_containers/condiment/ketchup{
+	pixel_x = -5;
+	pixel_y = 13
+	},
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/turf/open/floor/catwalk_floor/iron_white,
+/area/shuttle/pirate/sapper)
+"Mz" = (
+/obj/structure/lattice,
+/obj/structure/marker_beacon/yellow,
+/obj/machinery/button/door/directional/south{
+	id = "pirate_sapper_shutter_L";
+	req_access = list("sapper_ship")
+	},
+/turf/open/space/basic,
+/area/shuttle/pirate/sapper)
+"NX" = (
+/obj/structure/window/reinforced/spawner/directional/north{
+	pixel_y = 1
+	},
+/obj/machinery/power/shuttle_engine/heater,
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
+/turf/open/floor/plating/airless,
+/area/shuttle/pirate/sapper)
+"Oc" = (
+/obj/structure/cable/layer1,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/item/storage/pouch/material,
+/obj/item/stack/sheet/mineral/sandbags{
+	amount = 15
+	},
+/obj/structure/closet{
+	icon_state = "eng";
+	icon_door = "eng_tool"
+	},
+/obj/item/stack/sheet/plasteel/twenty,
+/obj/item/stack/sheet/iron/twenty,
+/obj/item/stack/sheet/rglass{
+	amount = 20
+	},
+/obj/item/holosign_creator/atmos,
+/obj/item/radio/intercom/directional/east,
+/obj/effect/decal/cleanable/dirt,
+/obj/item/stack/sheet/mineral/wood{
+	amount = 20
+	},
+/obj/item/storage/toolbox/emergency/turret/mag_fed/spider/sapper/pre_filled,
+/obj/item/target_designator/restricted,
+/turf/open/floor/catwalk_floor/iron_white,
+/area/shuttle/pirate/sapper)
+"Sa" = (
+/obj/structure/cable,
+/turf/open/floor/catwalk_floor/iron_white,
+/area/shuttle/pirate/sapper)
+"SP" = (
+/obj/machinery/porta_turret/syndicate/energy/sapper{
+	dir = 4
+	},
+/turf/closed/wall/mineral/titanium,
+/area/shuttle/pirate/sapper)
+"Tb" = (
+/obj/machinery/power/shuttle_engine/propulsion,
+/obj/effect/turf_decal/stripes/line{
+	dir = 6
+	},
+/turf/open/floor/plating/airless,
+/area/shuttle/pirate/sapper)
+"Tx" = (
+/obj/machinery/door/poddoor/shutters{
+	id = "pirate_sapper_shutter_R";
+	dir = 4
+	},
+/obj/structure/fans/tiny/forcefield{
+	dir = 4
+	},
+/turf/open/floor/plating,
+/area/shuttle/pirate/sapper)
+"TF" = (
+/obj/effect/decal/cleanable/robot_debris/up,
+/obj/item/toy/crayon/spraycan,
+/turf/open/floor/mineral/titanium/white,
+/area/shuttle/pirate/sapper)
+"Vt" = (
+/obj/structure/cable,
+/obj/item/powersink/creditminer,
+/obj/machinery/piratepad/sapper,
+/obj/effect/turf_decal/delivery/white,
+/obj/item/paper/fluff/sapper_recovery_instructions,
+/turf/open/floor/plating,
+/area/shuttle/pirate/sapper)
+"Wo" = (
+/obj/item/clothing/mask/gas/atmos/sapper/partner{
+	pixel_x = 2;
+	pixel_y = 4
+	},
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/mineral/titanium/white,
+/area/shuttle/pirate/sapper)
+"WY" = (
+/obj/machinery/computer/piratepad_control/sapper,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/catwalk_floor/iron_white,
+/area/shuttle/pirate/sapper)
+"Xc" = (
+/obj/structure/cable/layer1,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/effect/decal/cleanable/plastic,
+/turf/open/floor/catwalk_floor/iron_white,
+/area/shuttle/pirate/sapper)
+"Xr" = (
+/obj/structure/cable/layer1,
+/obj/machinery/light/cold/directional/west,
+/obj/structure/sign/warning/directional/south,
+/obj/structure/table/reinforced,
+/obj/machinery/microwave/engineering/cell_included,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/catwalk_floor/iron_white,
+/area/shuttle/pirate/sapper)
+"XX" = (
+/obj/effect/spawner/structure/window/reinforced/shuttle,
+/obj/machinery/door/poddoor/shutters/preopen{
+	id = "pirate_sapper_shutter"
+	},
+/obj/structure/cable/layer1,
+/turf/open/floor/plating,
+/area/shuttle/pirate/sapper)
+"Yo" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/effect/mapping_helpers/broken_floor,
+/turf/open/floor/plating,
+/area/shuttle/pirate/sapper)
+"Yx" = (
+/turf/open/space/basic,
+/area/template_noop)
+"Zc" = (
+/obj/structure/cable/layer1,
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/turf/open/floor/catwalk_floor/iron_white,
+/area/shuttle/pirate/sapper)
+
+(1,1,1) = {"
+Yx
+Yx
+Mz
+mY
+Dl
+fn
+Dl
+mY
+zy
+Yx
+Yx
+"}
+(2,1,1) = {"
+Yx
+yE
+hQ
+Ih
+mE
+sM
+xA
+Ih
+hQ
+yE
+Yx
+"}
+(3,1,1) = {"
+yE
+Ih
+nt
+IH
+hV
+Zc
+hV
+Ml
+Xr
+Ih
+mY
+"}
+(4,1,1) = {"
+XX
+wf
+CM
+hV
+TF
+Sa
+dZ
+jZ
+mL
+uz
+Mi
+"}
+(5,1,1) = {"
+XX
+Bp
+uD
+hV
+rL
+JD
+yt
+xA
+vB
+yx
+In
+"}
+(6,1,1) = {"
+XX
+qL
+ua
+hV
+DT
+Vt
+WY
+xA
+fP
+yx
+In
+"}
+(7,1,1) = {"
+XX
+qq
+Wo
+hV
+lZ
+Sa
+cz
+xA
+BT
+yx
+In
+"}
+(8,1,1) = {"
+XX
+sr
+fK
+Xc
+DZ
+Sa
+pH
+Yo
+tM
+NX
+Tb
+"}
+(9,1,1) = {"
+yE
+Ih
+xf
+Oc
+hV
+Zc
+hV
+EE
+pt
+Ih
+mY
+"}
+(10,1,1) = {"
+Yx
+yE
+SP
+Ih
+nE
+Sa
+JF
+Ih
+SP
+yE
+Yx
+"}
+(11,1,1) = {"
+Yx
+Yx
+gr
+mY
+Tx
+nM
+Tx
+mY
+zy
+Yx
+Yx
+"}

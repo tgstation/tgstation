@@ -266,6 +266,7 @@ GLOBAL_LIST_INIT(human_invader_antagonists, list(
 	/datum/antagonist/nukeop,
 	/datum/antagonist/pirate,
 	/datum/antagonist/wizard,
+	/datum/antagonist/sapper, // DOPPLER ADDITION - sapper gang antag ⚡
 ))
 
 /// Returns true if the given mob has an antag datum which is assigned to a human antagonist who doesn't spawn on the space station
