@@ -27,9 +27,10 @@
 		name = "[initial(name)] [name_extension]"
 	if(icon_state == "circuit_map") // some circuitboards have cool custom sprites
 		set_greyscale(new_config = /datum/greyscale_config/circuit)
-	var/turf/my_turf = get_turf(src)
-	if(mapload && !is_station_level(my_turf.z))
-		onstation = FALSE
+	if(mapload)
+		var/turf/my_turf = get_turf(src)
+		if(!is_station_level(my_turf.z))
+			onstation = FALSE
 	return ..()
 
 /obj/item/circuitboard/proc/apply_default_parts(obj/machinery/machine)
