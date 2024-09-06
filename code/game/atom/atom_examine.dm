@@ -22,7 +22,7 @@
 	. = list()
 	. += get_name_chaser(user)
 	if(desc)
-		. += desc
+		. += "<i>[desc]</i>"
 
 	if(custom_materials)
 		var/list/materials_list = list()
