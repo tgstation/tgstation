@@ -121,7 +121,7 @@
 			id_species ||= dna.species.name
 			id_blood_type ||= dna.blood_type
 
-		var/id_examine = separator_hr("This is <em>[src]'s ID card</em>.")
+		var/id_examine = span_slightly_larger(separator_hr("This is <em>[src]'s ID card</em>."))
 		id_examine += "<div class='img_by_text_container'>"
 		id_examine += "[id_icon]"
 		id_examine += "<div class='img_text'>"
