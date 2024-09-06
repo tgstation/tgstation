@@ -3,8 +3,8 @@
 	desc = "Holds tools. but is more easily hidden underneeth clothing."
 	icon_state = "compact_utility"
 	inhand_icon_state = "compact_utility"
-	worn_icon_state = "none"
-	worn_icon = "none"
+	worn_icon_state = "hidden_icon"
+	worn_icon = "hidden_icon"
 	custom_premium_price = PAYCHECK_CREW * 1.5
 	icon = 'modular_doppler/modular_items/icons/belts.dmi'
 	lefthand_file = 'modular_doppler/modular_items/icons/belt_lefthand.dmi'
@@ -20,8 +20,8 @@
 	desc = "Can hold various medical equipment. Its smaller size makes it easier to hide under clothing."
 	icon_state = "compact_medical"
 	inhand_icon_state = "compact_utility"
-	worn_icon_state = "none"
-	worn_icon = "none"
+	worn_icon_state = "hidden_icon"
+	worn_icon = "hidden_icon"
 	icon = 'modular_doppler/modular_items/icons/belts.dmi'
 	lefthand_file = 'modular_doppler/modular_items/icons/belt_lefthand.dmi'
 	righthand_file = 'modular_doppler/modular_items/icons/belt_righthand.dmi'
