@@ -62,6 +62,11 @@
 	if(active)
 		on_deactivating()
 
+/obj/item/broadcast_camera/dropped(mob/user, silent)
+	. = ..()
+	if(active)
+		on_deactivating()
+
 /// When activating the camera
 /obj/item/broadcast_camera/proc/on_activating()
 	if(!iscarbon(loc))
