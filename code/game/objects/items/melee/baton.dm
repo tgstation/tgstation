@@ -320,6 +320,7 @@
 	active = FALSE
 	pickup_sound = 'sound/items/stun_baton_pick_up.ogg'
 	drop_sound = 'sound/items/stun_baton_drop.ogg'
+	sound_vary = TRUE
 
 	/// The sound effecte played when our baton is extended.
 	var/on_sound = 'sound/weapons/batonextend.ogg'
@@ -440,6 +441,7 @@
 	light_power = 0.5
 	pickup_sound = 'sound/items/stun_baton_pick_up.ogg'
 	drop_sound = 'sound/items/stun_baton_drop.ogg'
+	sound_vary = TRUE
 
 
 	var/throw_stun_chance = 35

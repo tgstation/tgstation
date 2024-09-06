@@ -365,9 +365,10 @@ GLOBAL_LIST_INIT(transit_tube_recipes, list(
 
 /obj/item/pipe_dispenser/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
-	playsound(src, SFX_TOOL_SWITCH, 20, TRUE)
 	if(.)
 		return
+
+	playsound(src, SFX_TOOL_SWITCH, 20, TRUE)
 
 	var/playeffect = TRUE
 	switch(action)
@@ -688,7 +689,7 @@ GLOBAL_LIST_INIT(transit_tube_recipes, list(
 	if(multi_layer)
 		balloon_alert(source_mob, "turn off multi layer!")
 		return
-	if(source_mob.incapacitated(IGNORE_RESTRAINTS|IGNORE_STASIS))
+	if(INCAPACITATED_IGNORING(source_mob, INCAPABLE_RESTRAINTS|INCAPABLE_STASIS))
 		return
 	if(source_mob.get_active_held_item() != src)
 		return
