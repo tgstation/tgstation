@@ -44,13 +44,10 @@
 /obj/item/broadcast_camera/attack_self(mob/user, modifiers)
 	. = ..()
 	activate = !activate
-	icon_state = "[base_icon_state][activate]"
 	if(activate)
 		on_activating()
-		playsound(src, 'sound/misc/radio_talk.ogg', 100, TRUE)
 	else
 		on_deactivating()
-		playsound(src, 'sound/misc/radio_receive.ogg', 100, TRUE)
 
 /obj/item/broadcast_camera/attack_self_secondary(mob/user, modifiers)
 	. = ..()
@@ -60,10 +57,17 @@
 	. = ..()
 	. += span_notice("Broadcast name is <b>[broadcast_name]</b>")
 
+/obj/item/broadcast_camera/on_enter_storage(datum/storage/master_storage)
+	. = ..()
+	if(activate)
+		on_deactivating()
+
 /// When activating the camera
 /obj/item/broadcast_camera/proc/on_activating()
 	if(!iscarbon(loc))
 		return
+	activate = TRUE
+	icon_state = "[base_icon_state][activate]"
 	/// The carbon who wielded the camera, allegedly
 	var/mob/living/carbon/wielding_carbon = loc
 
@@ -83,6 +87,8 @@
 
 /// When deactivating the camera
 /obj/item/broadcast_camera/proc/on_deactivating()
+	activate = FALSE
+	icon_state = "[base_icon_state][activate]"
 	QDEL_NULL(internal_camera)
 	QDEL_NULL(internal_radio)
 
