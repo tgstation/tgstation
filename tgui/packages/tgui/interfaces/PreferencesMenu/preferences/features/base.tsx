@@ -95,6 +95,55 @@ export const FeatureColorInput = (props: FeatureValueProps<string>) => {
   );
 };
 
+/* DOPPLER SHIFT ADDITION BEGIN: tricolor inputs */
+export const FeatureTriColorInput = (props: FeatureValueProps<string[]>) => {
+  const buttonFromValue = (index) => {
+    return (
+      <Stack.Item>
+        <Button
+          onClick={() => {
+            props.act('set_tricolor_preference', {
+              preference: props.featureId,
+              value: index + 1,
+            });
+          }}
+        >
+          <Stack align="center" fill>
+            <Stack.Item>
+              <Box
+                style={{
+                  background: props.value[index].startsWith('#')
+                    ? props.value[index]
+                    : `#${props.value[index]}`,
+                  border: '2px solid white',
+                  boxSizing: 'content-box',
+                  height: '11px',
+                  width: '11px',
+                  ...(props.shrink
+                    ? {
+                        margin: '1px',
+                      }
+                    : {}),
+                }}
+              />
+            </Stack.Item>
+
+            {!props.shrink && <Stack.Item>Change</Stack.Item>}
+          </Stack>
+        </Button>
+      </Stack.Item>
+    );
+  };
+  return (
+    <Stack align="center" fill>
+      {buttonFromValue(0)}
+      {buttonFromValue(1)}
+      {buttonFromValue(2)}
+    </Stack>
+  );
+};
+/* DOPPLER SHIFT ADDITION END */
+
 export type FeatureToggle = Feature<BooleanLike, boolean>;
 
 export const CheckboxInput = (
