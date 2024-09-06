@@ -165,9 +165,9 @@
 		adjust_to_normal()
 
 	if((supports_variations_flags & CLOTHING_DIGITIGRADE_VARIATION) && ishuman(user))
-		var/mob/living/carbon/human/wearer = user
 		/// DOPPLER SHFIT REMOVAL BEGIN
-		/*if(wearer.bodyshape & BODYSHAPE_DIGITIGRADE)
+		/*var/mob/living/carbon/human/wearer = user
+		if(wearer.bodyshape & BODYSHAPE_DIGITIGRADE)
 			adjusted = DIGITIGRADE_STYLE*/
 		/// DOPPLER SHIFT REMOVAL END
 		update_appearance() /// DOPPLER SHIFT EDIT: Bumping indentation back one tick
