@@ -31,6 +31,7 @@
 /datum/strippable_item/mob_item_slot/tail/start_equip(atom/source, obj/item/equipping, mob/user)
 	if(!iscarbon(source))
 		return FALSE
+	warn_owner(source)
 	if(!do_after(user, TAIL_EQUIP_DELAY, source))
 		return FALSE
 	if(!user.temporarilyRemoveItemFromInventory(equipping))
