@@ -66,6 +66,7 @@ Slimecrossing Weapons
 	attack_verb_simple = list("bash", "pound", "slam")
 	item_flags = SLOWS_WHILE_IN_HAND
 	breakable_by_damage = FALSE
+	shield_bash_sound = 'sound/effects/glassknock.ogg'
 
 /datum/armor/shield_adamantineshield
 	melee = 50
