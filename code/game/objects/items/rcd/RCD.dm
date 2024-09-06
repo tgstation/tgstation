@@ -32,8 +32,7 @@
 	var/construction_mode
 	/// The path of the structure the rcd is currently creating
 	var/atom/movable/rcd_design_path
-	///our currently selected direction
-	var/selected_direction
+
 	/// Owner of this rcd. It can either be a construction console, player, or mech.
 	var/atom/owner
 	/// used by arcd, can this rcd work from a range
@@ -69,9 +68,8 @@
 	var/list/design = GLOB.rcd_designs[root_category][design_category][1]
 
 	rcd_design_path = design["[RCD_DESIGN_PATH]"]
-	design_title = RCD_SPRITESHEET_PATH_KEY(rcd_design_path)
+	design_title = initial(rcd_design_path.name)
 	mode = design["[RCD_DESIGN_MODE]"]
-
 	construction_mode = mode
 
 	GLOB.rcd_list += src
@@ -81,10 +79,6 @@
 	QDEL_NULL(airlock_electronics)
 	GLOB.rcd_list -= src
 	. = ..()
-
-/obj/item/construction/rcd/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
-	. = ..()
-	playsound(src, SFX_TOOL_SWITCH, 20, TRUE)
 
 /obj/item/construction/rcd/ui_action_click(mob/user, actiontype)
 	if (!COOLDOWN_FINISHED(src, destructive_scan_cooldown))
@@ -104,12 +98,12 @@
 	mode = RCD_TURF
 	user.visible_message(span_suicide("[user] sets the RCD to 'Wall' and points it down [user.p_their()] throat! It looks like [user.p_theyre()] trying to commit suicide!"))
 	if(checkResource(16, user)) // It takes 16 resources to construct a wall
-		var/success = T.rcd_act(user, src, list(RCD_DESIGN_MODE = RCD_TURF, RCD_DESIGN_PATH = /turf/open/floor/plating/rcd, RCD_BUILD_DIRECTION = selected_direction))
+		var/success = T.rcd_act(user, src, list("[RCD_DESIGN_MODE]" = RCD_TURF, "[RCD_DESIGN_PATH]" = /turf/open/floor/plating/rcd))
 		T = get_turf(user)
 		// If the RCD placed a floor instead of a wall, having a wall without plating under it is cursed
 		// There isn't an easy programmatical way to check if rcd_act will place a floor or a wall, so just repeat using it for free
 		if(success && isopenturf(T))
-			T.rcd_act(user, src, list(RCD_DESIGN_MODE = RCD_TURF, RCD_DESIGN_PATH = /turf/open/floor/plating/rcd))
+			T.rcd_act(user, src, list("[RCD_DESIGN_MODE]" = RCD_TURF, "[RCD_DESIGN_PATH]" = /turf/open/floor/plating/rcd))
 		useResource(16, user)
 		activate()
 		playsound(get_turf(user), SFX_TOOL_SWITCH, 20, TRUE)
@@ -128,8 +122,8 @@
  * * [mob][user]- the user
  */
 /obj/item/construction/rcd/proc/can_place(atom/target, list/rcd_results, mob/user)
-	var/rcd_mode = rcd_results[RCD_DESIGN_MODE]
-	var/atom/movable/rcd_structure = rcd_results[RCD_DESIGN_PATH]
+	var/rcd_mode = rcd_results["[RCD_DESIGN_MODE]"]
+	var/atom/movable/rcd_structure = rcd_results["[RCD_DESIGN_PATH]"]
 	/**
 	 *For anything that does not go an a wall we have to make sure that turf is clear for us to put the structure on it
 	 *If we are just trying to destory something then this check is not nessassary
@@ -143,11 +137,11 @@
 			var/is_full_tile = initial(window_type.fulltile)
 
 			var/list/structures_to_ignore
-			if(istype(target, /obj/structure/window_frame))
+			if(istype(target, /obj/structure/grille))
 				if(is_full_tile) //if we are trying to build full-tile windows we ignore the grille
-					structures_to_ignore = list(/obj/structure/window_frame)
+					structures_to_ignore = list(/obj/structure/grille)
 				else //when building directional windows we ignore the grill and other directional windows
-					structures_to_ignore = list(/obj/structure/window_frame, /obj/structure/window)
+					structures_to_ignore = list(/obj/structure/grille, /obj/structure/window)
 			else //for directional windows we ignore other directional windows as they can be in diffrent directions on the turf.
 				structures_to_ignore = list(/obj/structure/window)
 
@@ -222,9 +216,8 @@
 	var/list/rcd_results = target.rcd_vals(user, src)
 	if(!rcd_results)
 		return FALSE
-	rcd_results[RCD_DESIGN_MODE] = mode
-	rcd_results[RCD_DESIGN_PATH] = rcd_design_path
-	rcd_results[RCD_BUILD_DIRECTION] = selected_direction
+	rcd_results["[RCD_DESIGN_MODE]"] = mode
+	rcd_results["[RCD_DESIGN_PATH]"] = rcd_design_path
 
 	var/delay = rcd_results["delay"] * delay_mod
 	if (
@@ -238,10 +231,10 @@
 
 	var/target_name = target.name //Store this information before it gets mutated by the rcd.
 	var/target_path = target.type
-	var/atom/design_path = rcd_results[RCD_DESIGN_PATH]
+	var/atom/design_path = rcd_results["[RCD_DESIGN_PATH]"]
 	var/location = AREACOORD(target)
 	if(_rcd_create_effect(target, user, delay, rcd_results))
-		log_tool("[key_name(user)] used [src] to [rcd_results[RCD_DESIGN_MODE] != RCD_DECONSTRUCT ? "construct [initial(design_path.name)]([design_path])" : "deconstruct [target_name]([target_path])"] at [location]")
+		log_tool("[key_name(user)] used [src] to [rcd_results["[RCD_DESIGN_MODE]"] != RCD_DECONSTRUCT ? "construct [initial(design_path.name)]([design_path])" : "deconstruct [target_name]([target_path])"] at [location]")
 
 	current_active_effects -= 1
 
@@ -255,7 +248,7 @@
  * * rcd_results- list of params which contains the cost & build mode to create the structure
  */
 /obj/item/construction/rcd/proc/_rcd_create_effect(atom/target, mob/user, delay, list/rcd_results)
-	var/obj/effect/constructing_effect/rcd_effect = new(get_turf(target), delay, rcd_results[RCD_DESIGN_MODE], upgrade)
+	var/obj/effect/constructing_effect/rcd_effect = new(get_turf(target), delay, rcd_results["[RCD_DESIGN_MODE]"], upgrade)
 
 	//resource & structure placement sanity checks before & after delay along with beam effects
 	if(!checkResource(rcd_results["cost"], user) || !can_place(target, rcd_results, user))
@@ -313,8 +306,6 @@
 		data["root_categories"] += category
 	data["selected_root"] = root_category
 
-	var/datum/asset/spritesheet/rcd/rcd_sheet = get_asset_datum(/datum/asset/spritesheet/rcd)
-
 	data["categories"] = list()
 	for(var/sub_category as anything in GLOB.rcd_designs[root_category])
 		var/list/target_category =  GLOB.rcd_designs[root_category][sub_category]
@@ -331,9 +322,9 @@
 		for(var/list/design as anything in target_category)
 			var/atom/movable/design_path = design[RCD_DESIGN_PATH]
 
-			var/design_name = RCD_SPRITESHEET_PATH_KEY(design_path)
-			var/icon_id = rcd_sheet.icon_size_id(sanitize_css_class_name(design_name))
-			designs += list(list("title" = design_name, "icon" = sanitize_css_class_name(design_name), "icon_id" = icon_id))
+			var/design_name = initial(design_path.name)
+
+			designs += list(list("title" = design_name, "icon" = sanitize_css_class_name(design_name)))
 		data["categories"] += list(list("cat_name" = sub_category, "designs" = designs))
 
 	return data
@@ -344,7 +335,6 @@
 	//main categories
 	data["selected_category"] = design_category
 	data["selected_design"] = design_title
-	data["selected_direction"] = dir2text(selected_direction)
 
 	//merge airlock_electronics ui data with this
 	var/list/airlock_data = airlock_electronics.ui_data(user)
@@ -354,6 +344,7 @@
 	return data
 
 /obj/item/construction/rcd/handle_ui_act(action, params, datum/tgui/ui, datum/ui_state/state)
+	playsound(src, SFX_TOOL_SWITCH, 20, TRUE)
 
 	switch(action)
 		if("root_category")
@@ -361,11 +352,6 @@
 			if(GLOB.rcd_designs[new_root] != null) //is a valid category
 				root_category = new_root
 				update_static_data_for_all_viewers()
-
-		if("select_direction")
-			var/new_dir = text2dir(params["selected_direction"])
-			selected_direction = (isnull(new_dir) || new_dir == selected_direction || !(new_dir in GLOB.cardinals)) ? null : new_dir
-			return TRUE
 
 		if("design")
 			//read and validate params from UI
@@ -394,10 +380,10 @@
 			if(design == null) //not a valid design
 				return TRUE
 			design_category = category_name
-			mode = design[RCD_DESIGN_MODE]
+			mode = design["[RCD_DESIGN_MODE]"]
 			construction_mode = mode
-			rcd_design_path = design[RCD_DESIGN_PATH]
-			design_title = RCD_SPRITESHEET_PATH_KEY(rcd_design_path)
+			rcd_design_path = design["[RCD_DESIGN_PATH]"]
+			design_title = initial(rcd_design_path.name)
 			blueprint_changed = TRUE
 
 		else
