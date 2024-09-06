@@ -275,6 +275,19 @@
 /obj/structure/cable,
 /turf/open/floor/pod/dark,
 /area/shuttle/pirate)
+"jX" = (
+/obj/effect/turf_decal/tile/dark/full,
+/obj/item/reagent_containers/cup/bucket{
+	pixel_x = -9;
+	pixel_y = -4
+	},
+/obj/item/stock_parts/power_store/cell/lead{
+	pixel_y = -8;
+	pixel_x = 2
+	},
+/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4,
+/turf/open/floor/pod/light,
+/area/shuttle/pirate)
 "kK" = (
 /obj/structure/rack,
 /obj/structure/window/reinforced/tinted/spawner/directional/east,
@@ -321,19 +334,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold/scrubbers/hidden/layer2,
 /turf/open/floor/pod/dark,
-/area/shuttle/pirate)
-"ly" = (
-/obj/effect/turf_decal/tile/dark/full,
-/obj/item/reagent_containers/cup/bucket{
-	pixel_x = -9;
-	pixel_y = -4
-	},
-/obj/item/stock_parts/power_store/cell/lead{
-	pixel_y = -8;
-	pixel_x = 2
-	},
-/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4,
-/turf/open/floor/pod/light,
 /area/shuttle/pirate)
 "lE" = (
 /turf/open/floor/iron/grimy,
@@ -888,36 +888,9 @@
 /obj/machinery/firealarm/directional/east,
 /turf/open/floor/iron,
 /area/shuttle/pirate)
-"Ax" = (
-/obj/structure/sign/departments/vault/directional/north,
-/obj/effect/turf_decal/trimline/dark_blue/filled/end{
-	dir = 8
-	},
-/obj/structure/railing{
-	dir = 10
-	},
-/obj/machinery/shower/directional/south,
-/obj/effect/turf_decal/box,
-/obj/structure/fluff/shower_drain,
-/turf/open/floor/iron/dark,
-/area/shuttle/pirate)
 "AB" = (
 /obj/effect/turf_decal/trimline/dark_blue/arrow_cw,
 /turf/open/floor/plating/airless,
-/area/shuttle/pirate)
-"AU" = (
-/obj/machinery/door/window/brigdoor/right/directional/east{
-	req_access = list("syndicate")
-	},
-/obj/effect/turf_decal/siding/dark{
-	dir = 4
-	},
-/obj/machinery/turretid/directional/south{
-	icon_state = "control_kill";
-	lethal = 1;
-	req_access = list("syndicate")
-	},
-/turf/open/floor/iron/white,
 /area/shuttle/pirate)
 "Bf" = (
 /obj/effect/turf_decal/stripes{
@@ -1044,6 +1017,19 @@
 	},
 /obj/structure/bed/medical/emergency,
 /obj/structure/curtain,
+/turf/open/floor/iron/dark,
+/area/shuttle/pirate)
+"Dr" = (
+/obj/structure/sign/departments/vault/directional/north,
+/obj/effect/turf_decal/trimline/dark_blue/filled/end{
+	dir = 8
+	},
+/obj/structure/railing{
+	dir = 10
+	},
+/obj/machinery/shower/directional/south,
+/obj/effect/turf_decal/box,
+/obj/structure/fluff/shower_drain,
 /turf/open/floor/iron/dark,
 /area/shuttle/pirate)
 "Dy" = (
@@ -1387,6 +1373,21 @@
 /obj/machinery/firealarm/directional/west,
 /turf/open/floor/pod/dark,
 /area/shuttle/pirate)
+"KZ" = (
+/obj/machinery/door/window/brigdoor/right/directional/east{
+	req_access = list("syndicate")
+	},
+/obj/effect/turf_decal/siding/dark{
+	dir = 4
+	},
+/obj/machinery/turretid{
+	icon_state = "control_kill";
+	lethal = 1;
+	pixel_y = -24;
+	req_access = list("syndicate")
+	},
+/turf/open/floor/iron/white,
+/area/shuttle/pirate)
 "Lf" = (
 /turf/open/floor/pod/dark,
 /area/shuttle/pirate)
@@ -1416,6 +1417,17 @@
 	dir = 4
 	},
 /area/shuttle/pirate)
+"LV" = (
+/obj/machinery/computer/camera_advanced/shuttle_docker/syndicate/pirate{
+	y_offset = 11;
+	x_offset = -4;
+	view_range = 10
+	},
+/obj/effect/turf_decal/trimline/dark_blue/filled/line{
+	dir = 5
+	},
+/turf/open/floor/iron,
+/area/shuttle/pirate)
 "LX" = (
 /turf/open/floor/plating/airless,
 /area/shuttle/pirate)
@@ -1441,17 +1453,6 @@
 /obj/item/clothing/gloves/combat,
 /obj/item/storage/backpack/security,
 /turf/open/floor/iron/smooth,
-/area/shuttle/pirate)
-"Mb" = (
-/obj/machinery/computer/camera_advanced/shuttle_docker/syndicate/pirate{
-	y_offset = 11;
-	x_offset = -4;
-	view_range = 10
-	},
-/obj/effect/turf_decal/trimline/dark_blue/filled/line{
-	dir = 5
-	},
-/turf/open/floor/iron,
 /area/shuttle/pirate)
 "Mu" = (
 /obj/effect/turf_decal/stripes{
@@ -2123,7 +2124,7 @@ hK
 oJ
 Rv
 NW
-AU
+KZ
 hK
 Cf
 lE
@@ -2265,7 +2266,7 @@ WR
 "}
 (13,1,1) = {"
 Rh
-Mb
+LV
 ev
 mA
 pO
@@ -2425,7 +2426,7 @@ OC
 Mu
 OC
 hK
-Ax
+Dr
 BG
 XX
 wM
@@ -2456,7 +2457,7 @@ wM
 qm
 do
 hK
-ly
+jX
 ac
 xQ
 Yu

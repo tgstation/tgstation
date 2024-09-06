@@ -116,9 +116,13 @@
 			path = pick(generated_domain.mob_modules)
 
 		var/datum/modular_mob_segment/segment = new path()
-		segment.spawn_mobs(get_turf(landmark))
-		mutation_candidate_refs += segment.spawned_mob_refs
+
+		var/list/mob_spawns = landmark.spawn_mobs(get_turf(landmark), segment)
+		if(length(mob_spawns))
+			mutation_candidate_refs += mob_spawns
+
 		qdel(landmark)
+		qdel(segment)
 
 	return TRUE
 
