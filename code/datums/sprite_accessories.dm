@@ -1724,9 +1724,11 @@
 /datum/sprite_accessory/lizard_markings
 	icon = 'icons/mob/human/species/lizard/lizard_markings.dmi'
 
-/datum/sprite_accessory/lizard_markings/none
+/// DOPPLER SHIFT REMOVAL BEGIN
+/*/datum/sprite_accessory/lizard_markings/none
 	name = "None"
-	icon_state = "none"
+	icon_state = "none"*/
+/// DOPPLER SHIFT REMOVAL END
 
 /datum/sprite_accessory/lizard_markings/dtiger
 	name = "Dark Tiger Body"
@@ -1752,10 +1754,12 @@
 	icon = 'icons/mob/human/species/lizard/lizard_tails.dmi'
 	spine_key = SPINE_KEY_LIZARD
 
-/datum/sprite_accessory/tails/lizard/none
+/// DOPPLER SHIFT REMOVAL BEGIN
+/*/datum/sprite_accessory/tails/lizard/none
 	name = SPRITE_ACCESSORY_NONE
 	icon_state = "none"
-	natural_spawn = FALSE
+	natural_spawn = FALSE*/
+/// DOPPLER SHIFT REMOVAL END
 
 /datum/sprite_accessory/tails/lizard/smooth
 	name = "Smooth"
