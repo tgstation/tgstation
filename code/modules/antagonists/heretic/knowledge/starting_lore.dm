@@ -271,7 +271,7 @@ GLOBAL_LIST_INIT(heretic_start_knowledge, initialize_starting_knowledge())
 /datum/heretic_knowledge/codex_cicatrix/cleanup_atoms(list/selected_atoms)
 	var/mob/living/body = locate() in selected_atoms
 	if(!body)
-		return
+		return ..()
 	// A golem or an android doesn't have skin!
 	var/exterior_text = "skin"
 	// If carbon, it's the limb. If not, it's the body.
@@ -340,6 +340,6 @@ GLOBAL_LIST_INIT(heretic_start_knowledge, initialize_starting_knowledge())
 			return FALSE
 
 	to_chat(user, span_danger(span_big("Your ambition is ravaged, but something powerful remains in its wake...")))
-	var/drain_message = pick(strings(HERETIC_INFLUENCE_FILE, "drain_message"))
+	var/drain_message = pick_list(HERETIC_INFLUENCE_FILE, "drain_message")
 	to_chat(user, span_hypnophrase(span_big("[drain_message]")))
 	return .

@@ -76,6 +76,7 @@
 		/obj/item/wrench,
 		/obj/item/spess_knife,
 		/obj/item/melee/sickly_blade/lock,
+		/obj/item/reagent_containers/cup/soda_cans,
 	))
 
 /obj/item/storage/belt/utility/chief

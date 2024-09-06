@@ -18,7 +18,7 @@
 	return ..()
 
 /mob/living/silicon/ai/radio(message, list/message_mods = list(), list/spans, language)
-	if(incapacitated())
+	if(incapacitated)
 		return FALSE
 	if(!radio_enabled) //AI cannot speak if radio is disabled (via intellicard) or depowered.
 		to_chat(src, span_danger("Your radio transmitter is offline!"))
@@ -67,7 +67,7 @@
 	set desc = "Display a list of vocal words to announce to the crew."
 	set category = "AI Commands"
 
-	if(incapacitated())
+	if(incapacitated)
 		return
 
 	var/dat = {"
@@ -106,7 +106,7 @@
 
 	last_announcement = message
 
-	if(incapacitated())
+	if(incapacitated)
 		return
 
 	if(control_disabled)
