@@ -63,7 +63,7 @@
 	var/turf/target_turf = get_turf(target)
 	if(get_dist(source, target) > length)
 		return FALSE
-	if(current == target_turf || source.CanReach(target))//they are on the same turf, source can see the target
+	if(current == target_turf || source.CanReach(target))//they are on the same turf or in reach, source can see the target
 		return TRUE
 	var/list/steps = get_steps_to(source, target)
 	if(isnull(steps) || length(steps) > length)
