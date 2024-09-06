@@ -703,6 +703,9 @@ GLOBAL_LIST_INIT(human_heights_to_offsets, list(
 #define DAMAGE_LAYER 28
 /// Jumpsuit clothing layer
 #define UNIFORM_LAYER 27
+/// DOPPLER SHIFT ADDITION BEGIN
+#define BANDAGE_LAYER 26.5
+/// DOPPLER SHIFT ADDITION END
 /// ID card layer
 #define ID_LAYER 26
 /// ID card layer (might be deprecated)

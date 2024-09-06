@@ -357,6 +357,12 @@ GLOBAL_LIST_INIT(admin_visible_traits, list(
 	/obj/item/organ/internal/lungs = list(
 		"TRAIT_SPACEBREATHING" = TRAIT_SPACEBREATHING,
 	),
+	// DOPPLER EDIT ADDITION START - MODULAR TRAITS
+	/obj/item/toy/plush/modular = list(
+		"TRAIT_DETECTIVE" = TRAIT_DETECTIVE,
+		"TRAIT_TWITCH_ADAPTED" = TRAIT_TWITCH_ADAPTED,
+	),
+	// DOPPLER EDIT ADDITION END
 ))
 
 /// value -> trait name, generated as needed for adminning.

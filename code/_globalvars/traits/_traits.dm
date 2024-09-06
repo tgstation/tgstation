@@ -658,6 +658,12 @@ GLOBAL_LIST_INIT(traits_by_type, list(
 		"TRAIT_TURF_IGNORE_SLIPPERY" = TRAIT_TURF_IGNORE_SLIPPERY,
 		"TRAIT_TURF_IGNORE_SLOWDOWN" = TRAIT_TURF_IGNORE_SLOWDOWN,
 	),
+	// DOPPLER EDIT ADDITION START - MODULAR TRAITS
+	/obj/item/toy/plush/modular = list(
+		"TRAIT_DETECTIVE" = TRAIT_DETECTIVE,
+		"TRAIT_TWITCH_ADAPTED" = TRAIT_TWITCH_ADAPTED,
+	),
+	// DOPPLER EDIT ADDITION END
 ))
 
 /// value -> trait name, list of ALL traits that exist in the game, used for any type of accessing.
