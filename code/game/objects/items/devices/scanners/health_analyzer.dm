@@ -31,6 +31,7 @@
 	/// If this analyzer will give a bonus to wound treatments apon woundscan.
 	var/give_wound_treatment_bonus = FALSE
 	var/last_scan_text
+	var/scanner_busy = FALSE
 
 /obj/item/healthanalyzer/Initialize(mapload)
 	. = ..()
@@ -412,14 +413,22 @@
 
 /obj/item/healthanalyzer/click_ctrl_shift(mob/user)
 	. = ..()
-	print_report()
+	if(!LAZYLEN(last_scan_text))
+		balloon_alert(user, "no scans!")
+		return
+	if(scanner_busy)
+		balloon_alert(user, "analyzer busy!")
+		return
+	scanner_busy = TRUE
+	balloon_alert(user, "printing report...")
+	addtimer(CALLBACK(src, PROC_REF(print_report)), 2 SECONDS)
 
 /obj/item/healthanalyzer/proc/print_report(mob/user)
 	var/obj/item/paper/report_paper = new(get_turf(src))
 
 	report_paper.color = COLOR_STARLIGHT
 	report_paper.name = "Health scan report"
-	var/report_text = "<center><B>Health scan report</B></center><HR><BR>"
+	var/report_text = "<center><B>Health scan report. Time of scan: [station_time_timestamp()]</B></center><HR><BR>"
 	report_text += last_scan_text
 
 	report_paper.add_raw_text(report_text)
@@ -431,6 +440,7 @@
 		balloon_alert(printer, "logs cleared")
 
 	report_text = list()
+	scanner_busy = FALSE
 
 /proc/chemscan(mob/living/user, mob/living/target)
 	if(user.incapacitated())
