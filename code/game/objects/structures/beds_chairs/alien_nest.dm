@@ -3,7 +3,7 @@
 /obj/structure/bed/nest
 	name = "alien nest"
 	desc = "It's a gruesome pile of thick, sticky resin shaped like a nest."
-	icon = 'icons/obj/structures/smooth/alien/nest.dmi'
+	icon = 'icons/obj/smooth_structures/alien/nest.dmi'
 	icon_state = "nest-0"
 	base_icon_state = "nest"
 	max_integrity = 120
@@ -38,7 +38,7 @@
 		unbuckle_mob(captive)
 		add_fingerprint(hero)
 		return
-
+	
 	captive.visible_message(span_warning("[captive.name] struggles to break free from the gelatinous resin!"),
 		span_notice("You struggle to break free from the gelatinous resin... (Stay still for about a minute and a half.)"),
 		span_hear("You hear squelching..."))
@@ -56,7 +56,7 @@
 	add_fingerprint(hero)
 
 /obj/structure/bed/nest/user_buckle_mob(mob/living/M, mob/user, check_loc = TRUE)
-	if ( !ismob(M) || (get_dist(src, user) > 1) || (M.loc != src.loc) || user.incapacitated() || M.buckled )
+	if ( !ismob(M) || (get_dist(src, user) > 1) || (M.loc != src.loc) || user.incapacitated || M.buckled )
 		return
 
 	if(M.get_organ_by_type(/obj/item/organ/internal/alien/plasmavessel))

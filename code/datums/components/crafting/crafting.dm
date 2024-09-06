@@ -308,7 +308,6 @@
 	var/datum/reagents/holder
 	var/list/surroundings
 	var/list/Deletion = list()
-	var/data
 	var/amt
 	var/list/requirements = list()
 	if(R.reqs)
@@ -358,7 +357,7 @@
 							SD = new S.type()
 							Deletion += SD
 						S.use(amt)
-						SD = locate(S.type) in Deletion
+						SD = SD || locate(S.type) in Deletion // SD might be already set here, no sense in searching for it again
 						SD.amount += amt
 						continue main_loop
 					else
@@ -366,9 +365,9 @@
 						if(!locate(S.type) in Deletion)
 							Deletion += S
 						else
-							data = S.amount
-							S = locate(S.type) in Deletion
-							S.add(data)
+							SD = SD || locate(S.type) in Deletion
+							SD.add(S.amount) // add the amount to our tally stack, SD
+							qdel(S) // We can just delete it straight away as it's going to be fully consumed anyway, saving some overhead from calling use()
 						surroundings -= S
 			else
 				var/atom/movable/I

@@ -369,7 +369,7 @@
 /obj/item/stack/proc/radial_check(mob/builder)
 	if(QDELETED(builder) || QDELETED(src))
 		return FALSE
-	if(builder.incapacitated())
+	if(builder.incapacitated)
 		return FALSE
 	if(!builder.is_holding(src))
 		return FALSE

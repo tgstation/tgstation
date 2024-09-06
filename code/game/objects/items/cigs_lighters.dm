@@ -244,7 +244,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	if(!QDELETED(src) && !QDELETED(dropee) && how_long_have_we_been_smokin >= 4 SECONDS && iscarbon(dropee) && iscarbon(loc))
 		var/mob/living/carbon/smoker = dropee
 		// This relies on the fact that dropped is called before slot is nulled
-		if(src == smoker.wear_mask && !smoker.incapacitated())
+		if(src == smoker.wear_mask && !smoker.incapacitated)
 			long_exhale(smoker)
 
 	UnregisterSignal(dropee, list(COMSIG_HUMAN_FORCESAY, COMSIG_ATOM_DIR_CHANGE))
