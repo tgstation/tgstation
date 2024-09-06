@@ -298,4 +298,3 @@
 	icon_state = "beacon"
 
 	var/mine_type = /obj/effect/mine/sound/bwoink
-	var/active = FALSE
