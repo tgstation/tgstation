@@ -21,7 +21,7 @@
 	light_power = 0.3
 	light_on = FALSE
 	/// Is camera streaming
-	var/activate = FALSE
+	var/active = FALSE
 	/// The name of the broadcast
 	var/broadcast_name = "Curator News"
 	/// The networks it broadcasts to, default is CAMERANET_NETWORK_CURATOR
@@ -43,8 +43,8 @@
 
 /obj/item/broadcast_camera/attack_self(mob/user, modifiers)
 	. = ..()
-	activate = !activate
-	if(activate)
+	active = !active
+	if(active)
 		on_activating()
 	else
 		on_deactivating()
@@ -59,15 +59,15 @@
 
 /obj/item/broadcast_camera/on_enter_storage(datum/storage/master_storage)
 	. = ..()
-	if(activate)
+	if(active)
 		on_deactivating()
 
 /// When activating the camera
 /obj/item/broadcast_camera/proc/on_activating()
 	if(!iscarbon(loc))
 		return
-	activate = TRUE
-	icon_state = "[base_icon_state][activate]"
+	active = TRUE
+	icon_state = "[base_icon_state][active]"
 	/// The carbon who wielded the camera, allegedly
 	var/mob/living/carbon/wielding_carbon = loc
 
@@ -87,8 +87,8 @@
 
 /// When deactivating the camera
 /obj/item/broadcast_camera/proc/on_deactivating()
-	activate = FALSE
-	icon_state = "[base_icon_state][activate]"
+	active = FALSE
+	icon_state = "[base_icon_state][active]"
 	QDEL_NULL(internal_camera)
 	QDEL_NULL(internal_radio)
 
