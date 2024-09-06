@@ -16,9 +16,6 @@
 	id = "pirate_sapper_shutter_L";
 	dir = 8
 	},
-/obj/structure/fans/tiny/forcefield{
-	dir = 4
-	},
 /turf/open/floor/plating,
 /area/shuttle/pirate/sapper)
 "fK" = (
@@ -47,12 +44,6 @@
 	req_access = list("sapper_ship")
 	},
 /turf/open/space/basic,
-/area/shuttle/pirate/sapper)
-"hQ" = (
-/obj/machinery/porta_turret/syndicate/energy/sapper{
-	dir = 8
-	},
-/turf/closed/wall/mineral/titanium,
 /area/shuttle/pirate/sapper)
 "hV" = (
 /obj/structure/cable/layer1,
@@ -109,9 +100,6 @@
 /obj/structure/cable,
 /obj/machinery/door/poddoor/shutters/window{
 	id = "pirate_sapper_shutter_R";
-	dir = 4
-	},
-/obj/structure/fans/tiny/forcefield{
 	dir = 4
 	},
 /obj/docking_port/mobile/pirate/sapper{
@@ -320,13 +308,13 @@
 /obj/machinery/power/smes/ship{
 	cable_layer = 1
 	},
-/obj/item/toy/plush/nova/deer{
-	pixel_y = 17;
-	pixel_x = 3;
-	name = "powerful deer plushie"
-	},
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/structure/cable/layer1,
+/obj/item/toy/plush/modular/deer{
+	name = "powerful deer plushie";
+	pixel_x = 3;
+	pixel_y = 17
+	},
 /turf/open/floor/plating,
 /area/shuttle/pirate/sapper)
 "CM" = (
@@ -340,9 +328,6 @@
 /obj/machinery/door/poddoor/shutters{
 	id = "pirate_sapper_shutter_L";
 	dir = 8
-	},
-/obj/structure/fans/tiny/forcefield{
-	dir = 4
 	},
 /turf/open/floor/plating,
 /area/shuttle/pirate/sapper)
@@ -385,7 +370,6 @@
 "IH" = (
 /obj/structure/cable/layer1,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/item/storage/pouch/material,
 /obj/item/stack/sheet/mineral/sandbags{
 	amount = 15
 	},
@@ -404,8 +388,6 @@
 /obj/item/stack/sheet/mineral/wood{
 	amount = 20
 	},
-/obj/item/storage/toolbox/emergency/turret/mag_fed/spider/sapper/pre_filled,
-/obj/item/target_designator/restricted,
 /turf/open/floor/catwalk_floor/iron_white,
 /area/shuttle/pirate/sapper)
 "JD" = (
@@ -469,7 +451,6 @@
 "Oc" = (
 /obj/structure/cable/layer1,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/item/storage/pouch/material,
 /obj/item/stack/sheet/mineral/sandbags{
 	amount = 15
 	},
@@ -488,19 +469,11 @@
 /obj/item/stack/sheet/mineral/wood{
 	amount = 20
 	},
-/obj/item/storage/toolbox/emergency/turret/mag_fed/spider/sapper/pre_filled,
-/obj/item/target_designator/restricted,
 /turf/open/floor/catwalk_floor/iron_white,
 /area/shuttle/pirate/sapper)
 "Sa" = (
 /obj/structure/cable,
 /turf/open/floor/catwalk_floor/iron_white,
-/area/shuttle/pirate/sapper)
-"SP" = (
-/obj/machinery/porta_turret/syndicate/energy/sapper{
-	dir = 4
-	},
-/turf/closed/wall/mineral/titanium,
 /area/shuttle/pirate/sapper)
 "Tb" = (
 /obj/machinery/power/shuttle_engine/propulsion,
@@ -512,9 +485,6 @@
 "Tx" = (
 /obj/machinery/door/poddoor/shutters{
 	id = "pirate_sapper_shutter_R";
-	dir = 4
-	},
-/obj/structure/fans/tiny/forcefield{
 	dir = 4
 	},
 /turf/open/floor/plating,
@@ -599,13 +569,13 @@ Yx
 (2,1,1) = {"
 Yx
 yE
-hQ
+yE
 Ih
 mE
 sM
 xA
 Ih
-hQ
+yE
 yE
 Yx
 "}
@@ -703,13 +673,13 @@ mY
 (10,1,1) = {"
 Yx
 yE
-SP
+yE
 Ih
 nE
 Sa
 JF
 Ih
-SP
+yE
 yE
 Yx
 "}

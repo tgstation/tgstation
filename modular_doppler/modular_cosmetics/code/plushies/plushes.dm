@@ -1,5 +1,9 @@
 /// Welcome to the coziest, snuggest .dm in the repo!
 //	All the plushes live here, joy! 🐻💖
+/obj/item/toy/plush/modular
+	icon = 'modular_doppler/modular_cosmetics/icons/obj/plushes/plushes.dmi'
+	inhand_icon_state = null
+
 /obj/item/toy/plush/modular/deer
 	name = "deer plushie"
 	desc = "An adorable stuffed toy that resembles a deer."
