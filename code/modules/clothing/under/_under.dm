@@ -170,7 +170,8 @@
 		if(wearer.bodyshape & BODYSHAPE_DIGITIGRADE)
 			adjusted = DIGITIGRADE_STYLE*/
 		/// DOPPLER SHIFT REMOVAL END
-		update_appearance() /// DOPPLER SHIFT EDIT: Bumping indentation back one tick
+		update_appearance()
+		/// DOPPLER SHIFT EDITS END
 
 /obj/item/clothing/under/equipped(mob/living/user, slot)
 	..()
