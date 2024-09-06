@@ -140,7 +140,7 @@
 	if(owner.on_fire)
 		return
 
-	return "[owner.p_They()] are covered in something flammable."
+	return "[owner.p_They()] [owner.p_are()] covered in something flammable."
 
 /datum/status_effect/fire_handler/fire_stacks/proc/owner_touched_sparks()
 	SIGNAL_HANDLER
