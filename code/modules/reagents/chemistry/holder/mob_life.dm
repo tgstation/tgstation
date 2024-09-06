@@ -30,7 +30,8 @@
 		liver_tolerance = liver.toxTolerance * liver_health_percent
 		provide_pain_message = HAS_NO_TOXIN
 
-	for(var/datum/reagent/toxin/toxin in cached_reagents)
+	for(var/datum/reagent/reagent as anything in cached_reagents)
+		var/datum/reagent/toxin/toxin
 		if(istype(reagent, /datum/reagent/toxin))
 			toxin = reagent
 		// skip metabolizing effects for small units of toxins
