@@ -213,3 +213,17 @@
 	key_third_person = "signs"
 	message_param = "signs the number %t."
 	hands_use_check = TRUE
+
+/datum/emote/living/carbon/human/felinid/meow
+	key = "meow"
+	key_third_person = "meows"
+	message = "meows."
+	message_mime = "pantomimes meowing!"
+	audio_cooldown = 10 SECONDS
+	vary = TRUE
+	emote_type = EMOTE_AUDIBLE | EMOTE_VISIBLE
+
+/datum/emote/living/carbon/human/felinid/get_sound(mob/living/carbon/human/user)
+	if(!istype(user))
+		return
+	return user.dna.species.get_meow_sound(user)

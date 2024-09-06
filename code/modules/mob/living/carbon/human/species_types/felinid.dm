@@ -108,6 +108,18 @@
 		return 'sound/voice/human/female_sniff.ogg'
 	return 'sound/voice/human/male_sniff.ogg'
 
+/datum/species/human/felinid/get_meow_sound(mob/living/carbon/human/felinid)
+	if(felinid.physique == FEMALE)
+		return pick(
+			'sound/voice/cat/female_meow1.ogg',
+			'sound/voice/cat/female_meow2.ogg',
+			'sound/voice/cat/female_meow3.ogg',
+		)
+	return pick(
+		'sound/voice/cat/male_meow1.ogg',
+		'sound/voice/cat/male_meow2.ogg',
+		)
+
 
 
 /proc/mass_purrbation()

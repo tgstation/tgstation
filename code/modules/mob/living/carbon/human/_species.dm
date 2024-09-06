@@ -1457,6 +1457,10 @@ GLOBAL_LIST_EMPTY(features_by_species)
 /datum/species/proc/get_sneeze_sound(mob/living/carbon/human/human)
 	return
 
+/// Returns the felinid meow sound.
+/datum/species/proc/get_meow_sound(mob/living/carbon/human/human)
+	return
+
 /datum/species/proc/get_types_to_preload()
 	var/list/to_store = list()
 	to_store += mutant_organs

@@ -745,27 +745,3 @@
 
 /datum/emote/living/carbon/whistle/get_sound(mob/living/user)
 	return 'sound/voice/human/whistle1.ogg'
-
-/datum/emote/living/carbon/meow
-	key = "meow"
-	key_third_person = "meows"
-	message = "meows."
-	message_mime = "pantomimes meowing!"
-	audio_cooldown = 1 SECONDS
-	vary = TRUE
-	emote_type = EMOTE_AUDIBLE | EMOTE_VISIBLE
-
-/datum/emote/living/carbon/human/whistle/get_sound(mob/living/user)
-	return 'sound/creatures/cat/oranges_meow1.ogg'
-
-/datum/emote/living/carbon/human/meow
-	key = "meow"
-	key_third_person = "meows"
-	message = "meows."
-	message_mime = "pantomimes meowing!"
-	audio_cooldown = 1 SECONDS
-	vary = TRUE
-	emote_type = EMOTE_AUDIBLE | EMOTE_VISIBLE
-
-/datum/emote/living/carbon/human/whistle/get_sound(mob/living/user)
-	return 'sound/creatures/cat/oranges_meow1.ogg'
