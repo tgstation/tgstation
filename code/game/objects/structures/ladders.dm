@@ -182,7 +182,7 @@
 		INVOKE_ASYNC(src, PROC_REF(start_travelling), user, going_up)
 
 /obj/structure/ladder/proc/check_menu(mob/user, is_ghost)
-	if(user.incapacitated() || (!user.Adjacent(src)))
+	if(user.incapacitated || (!user.Adjacent(src)))
 		return FALSE
 	return TRUE
 

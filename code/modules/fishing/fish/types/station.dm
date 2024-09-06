@@ -2,6 +2,8 @@
 	name = "ratfish"
 	desc = "A rat exposed to the murky waters of maintenance too long. Any higher power, if it revealed itself, would state that the ratfish's continued existence is extremely unwelcome."
 	icon_state = "ratfish"
+	sprite_width = 7
+	sprite_height = 5
 	random_case_rarity = FISH_RARITY_RARE
 	required_fluid_type = AQUARIUM_FLUID_FRESHWATER
 	stable_population = 10 //set by New, but this is the default config value
@@ -27,7 +29,6 @@
 	name = "sludgefish"
 	desc = "A misshapen, fragile, loosely fish-like living goop, the only thing that'd ever thrive in the acidic and claustrophobic cavities of the station's organic waste disposal system."
 	icon_state = "sludgefish"
-	dedicated_in_aquarium_icon_state = "sludgefish_small"
 	sprite_width = 7
 	sprite_height = 6
 	required_fluid_type = AQUARIUM_FLUID_SULPHWATEVER
@@ -46,7 +47,6 @@
 	name = "purple sludgefish"
 	desc = "A misshapen, fragile, loosely fish-like living goop. This one has developed sexual reproduction mechanisms, and a purple tint to boot."
 	icon_state = "sludgefish_purple"
-	dedicated_in_aquarium_icon_state = "sludgefish_purple_small"
 	random_case_rarity = FISH_RARITY_NOPE
 	fish_traits = list(/datum/fish_trait/parthenogenesis)
 
@@ -55,7 +55,6 @@
 	desc = "Kids, this is what happens when a slime overcomes its hydrophobic nature. It goes glug glug."
 	icon_state = "slimefish"
 	icon_state_dead = "slimefish_dead"
-	dedicated_in_aquarium_icon_state = "slimefish_small"
 	sprite_width = 7
 	sprite_height = 7
 	do_flop_animation = FALSE //it already has a cute bouncy wiggle. :3

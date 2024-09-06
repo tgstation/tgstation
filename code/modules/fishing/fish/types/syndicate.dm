@@ -6,6 +6,8 @@
 	random_case_rarity = FISH_RARITY_GOOD_LUCK_FINDING_THIS
 	required_fluid_type = AQUARIUM_FLUID_ANADROMOUS
 	stable_population = 3
+	sprite_width = 7
+	sprite_height = 3
 	fish_traits = list(/datum/fish_trait/emulsijack)
 	required_temperature_min = MIN_AQUARIUM_TEMP+5
 	required_temperature_max = MIN_AQUARIUM_TEMP+40
@@ -17,6 +19,8 @@
 	icon_state = "donkfish"
 	random_case_rarity = FISH_RARITY_VERY_RARE
 	stable_population = 4
+	sprite_width = 5
+	sprite_height = 4
 	fillet_type = /obj/item/food/fishmeat/donkfish
 	fish_traits = list(/datum/fish_trait/yucky)
 	required_temperature_min = MIN_AQUARIUM_TEMP+15
@@ -28,8 +32,7 @@
 	desc = "A surprisingly useful if nasty looking creation from the syndicate fish labs. Drop one in a tank, and \
 		watch it self-feed and multiply. Generates more and more power as a growing swarm!"
 	icon_state = "jumpercable"
-	dedicated_in_aquarium_icon_state = "jumpercable_small"
-	sprite_width = 17
+	sprite_width = 16
 	sprite_height = 5
 	stable_population = 12
 	average_size = 110
@@ -52,8 +55,6 @@
 	icon_state = "chainsawfish"
 	inhand_icon_state = "chainsawfish"
 	icon_state_dead = "chainsawfish_dead"
-	dedicated_in_aquarium_icon = 'icons/obj/aquarium/fish.dmi'
-	dedicated_in_aquarium_icon_state = "chainsaw_small"
 	force = 22
 	demolition_mod = 1.5
 	block_chance = 15
@@ -170,7 +171,6 @@
 	desc = "A long-bodied, metal-clad predator with a snout that almost looks like an halberd. Definitely a weapon to swing around."
 	icon_state = "armored_pike"
 	inhand_icon_state = "armored_pike"
-	dedicated_in_aquarium_icon_state = "armored_pike_small"
 	attack_verb_continuous = list("attacks", "pokes", "jabs", "tears", "lacerates", "gores")
 	attack_verb_simple = list("attack", "poke", "jab", "tear", "lacerate", "gore")
 	hitsound = 'sound/weapons/bladeslice.ogg'

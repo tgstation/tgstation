@@ -3,8 +3,10 @@
 	desc = "Despite common belief, goldfish do not have three-second memories. \
 		They can actually remember things that happened up to three months ago."
 	icon_state = "goldfish"
-	sprite_width = 8
-	sprite_height = 8
+	dedicated_in_aquarium_icon_state = "fish_greyscale"
+	aquarium_vc_color = "#D8540D"
+	sprite_width = 5
+	sprite_height = 3
 	stable_population = 9
 	average_size = 20
 	average_weight = 200
@@ -13,7 +15,7 @@
 	required_temperature_min = MIN_AQUARIUM_TEMP+18
 	required_temperature_max = MIN_AQUARIUM_TEMP+26
 	evolution_types = list(/datum/fish_evolution/three_eyes, /datum/fish_evolution/chainsawfish)
-	compatible_types = list(/obj/item/fish/goldfish/gill, /obj/item/fish/three_eyes, /obj/item/fish/three_eyes/gill)
+	compatible_types = list(/obj/item/fish/goldfish/gill, /obj/item/fish/goldfish/three_eyes, /obj/item/fish/goldfish/three_eyes/gill)
 
 /obj/item/fish/goldfish/Initialize(mapload, apply_qualities = TRUE)
 	. = ..()
@@ -26,16 +28,43 @@
 	random_case_rarity = FISH_RARITY_NOPE
 	show_in_catalog = FALSE
 	beauty = FISH_BEAUTY_GOOD
-	compatible_types = list(/obj/item/fish/goldfish, /obj/item/fish/three_eyes)
+	compatible_types = list(/obj/item/fish/goldfish, /obj/item/fish/goldfish/three_eyes)
 	fish_traits = list(/datum/fish_trait/recessive)
+
+/obj/item/fish/goldfish/three_eyes
+	name = "three-eyed goldfish"
+	desc = "A goldfish with an extra half a pair of eyes. You wonder what it's been feeding on lately..."
+	icon_state = "three_eyes"
+	stable_population = 4
+	fish_traits = list(/datum/fish_trait/recessive, /datum/fish_trait/shiny_lover)
+	compatible_types = list(/obj/item/fish/goldfish, /obj/item/fish/goldfish/gill, /obj/item/fish/goldfish/three_eyes/gill)
+	beauty = FISH_BEAUTY_GOOD
+	fishing_difficulty_modifier = 10
+	random_case_rarity = FISH_RARITY_VERY_RARE
+	food = /datum/reagent/toxin/mutagen
+	favorite_bait = list(
+		list(
+			"Type" = "Reagent",
+			"Value" = /datum/reagent/toxin/mutagen,
+			"Amount" = 3,
+		),
+	)
+
+/obj/item/fish/goldfish/three_eyes/gill
+	name = "McGill"
+	desc = "A great rubber duck tool for Lawyers who can't get a grasp over their case. It looks kinda different today..."
+	compatible_types = list(/obj/item/fish/goldfish, /obj/item/fish/goldfish/three_eyes)
+	beauty = FISH_BEAUTY_GREAT
+	show_in_catalog = FALSE
+	stable_population = 1
+	random_case_rarity = FISH_RARITY_NOPE
 
 /obj/item/fish/angelfish
 	name = "angelfish"
 	desc = "Young Angelfish often live in groups, while adults prefer solitary life. They become territorial and aggressive toward other fish when they reach adulthood."
 	icon_state = "angelfish"
-	dedicated_in_aquarium_icon_state = "bigfish"
+	sprite_width = 4
 	sprite_height = 7
-	source_height = 7
 	average_size = 30
 	average_weight = 500
 	stable_population = 3
@@ -47,8 +76,8 @@
 	name = "guppy"
 	desc = "Guppy is also known as rainbow fish because of the brightly colored body and fins."
 	icon_state = "guppy"
-	dedicated_in_aquarium_icon_state = "fish_greyscale"
-	aquarium_vc_color = "#91AE64"
+	sprite_width = 5
+	sprite_height = 2
 	sprite_width = 8
 	sprite_height = 5
 	average_size = 30
@@ -61,8 +90,8 @@
 	name = "plasma tetra"
 	desc = "Due to their small size, tetras are prey to many predators in their watery world, including eels, crustaceans, and invertebrates."
 	icon_state = "plastetra"
-	dedicated_in_aquarium_icon_state = "fish_greyscale"
-	aquarium_vc_color = "#D30EB0"
+	sprite_width = 4
+	sprite_height = 2
 	average_size = 30
 	average_weight = 500
 	stable_population = 3
@@ -73,8 +102,8 @@
 	name = "catfish"
 	desc = "A catfish has about 100,000 taste buds, and their bodies are covered with them to help detect chemicals present in the water and also to respond to touch."
 	icon_state = "catfish"
-	dedicated_in_aquarium_icon_state = "fish_greyscale"
-	aquarium_vc_color = "#907420"
+	sprite_width = 8
+	sprite_height = 4
 	average_size = 80
 	average_weight = 1600
 	weight_size_deviation = 0.35
@@ -94,8 +123,8 @@
 	desc = "A fish overflowing with crippling anxiety and electric potential. Worried about the walls of its tank closing in constantly. Both literally and as a general metaphorical unease about life's direction."
 	icon_state = "zipzap"
 	icon_state_dead = "zipzap_dead"
-	sprite_width = 8
-	sprite_height = 8
+	sprite_width = 6
+	sprite_height = 3
 	stable_population = 3
 	average_size = 30
 	average_weight = 500
@@ -117,7 +146,6 @@
 	name = "tadpole"
 	desc = "The larval spawn of an amphibian. A very minuscle, round creature with a long tail it uses to swim around."
 	icon_state = "tadpole"
-	dedicated_in_aquarium_icon_state = "tadpole small"
 	average_size = 3
 	average_weight = 10
 	sprite_width = 3
@@ -162,44 +190,14 @@
 /obj/item/fish/tadpole/get_export_price(price, percent)
 	return 2 //two credits. Tadpoles aren't really that valueable.
 
-/obj/item/fish/three_eyes
-	name = "three-eyed goldfish"
-	desc = "A goldfish with an extra half a pair of eyes. You wonder what it's been feeding on lately..."
-	icon_state = "three_eyes"
-	sprite_width = 8
-	sprite_height = 8
-	average_size = 25
-	average_weight = 400
-	stable_population = 4
-	fish_traits = list(/datum/fish_trait/recessive, /datum/fish_trait/shiny_lover)
-	compatible_types = list(/obj/item/fish/goldfish, /obj/item/fish/goldfish/gill, /obj/item/fish/three_eyes/gill)
-	beauty = FISH_BEAUTY_GOOD
-	fishing_difficulty_modifier = 10
-	random_case_rarity = FISH_RARITY_VERY_RARE
-	food = /datum/reagent/toxin/mutagen
-	favorite_bait = list(
-		list(
-			FISH_BAIT_TYPE = FISH_BAIT_REAGENT,
-			FISH_BAIT_VALUE = /datum/reagent/toxin/mutagen,
-			FISH_BAIT_AMOUNT = 3,
-		),
-	)
-
-/obj/item/fish/three_eyes/gill
-	name = "McGill"
-	desc = "A great rubber duck tool for Lawyers who can't get a grasp over their case. It looks kinda different today..."
-	compatible_types = list(/obj/item/fish/goldfish, /obj/item/fish/three_eyes)
-	beauty = FISH_BEAUTY_GREAT
-	show_in_catalog = FALSE
-	stable_population = 1
-	random_case_rarity = FISH_RARITY_NOPE
-
 /obj/item/fish/perch
 	name = "perch"
 	desc = "An all around popular panfish, game fish and unfortunate prey to other, bigger predators."
 	icon_state = "perch"
 	dedicated_in_aquarium_icon_state = "fish_greyscale"
 	aquarium_vc_color = "#9D8C64"
+	sprite_width = 5
+	sprite_height = 3
 	stable_population = 7
 	average_size = 25
 	average_weight = 400

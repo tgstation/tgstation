@@ -3,7 +3,6 @@
 	name = "chasm chrab"
 	desc = "The young of the lobstrosity mature in pools below the earth, eating what falls in until large enough to clamber out. Those found near the station are well-fed."
 	icon_state = "chrab"
-	dedicated_in_aquarium_icon_state = "chrab_small"
 	sprite_height = 9
 	sprite_width = 8
 	stable_population = 4
@@ -97,7 +96,6 @@
 	name = "arctic chrab"
 	desc = "A subspecies of chasm chrabs that has adapted to the cold climate and lack of abysmal holes of the icemoon."
 	icon_state = "arctic_chrab"
-	dedicated_in_aquarium_icon_state = "arctic_chrab_small"
 	required_temperature_min = ICEBOX_MIN_TEMPERATURE-20
 	required_temperature_max = MIN_AQUARIUM_TEMP+15
 	evolution_types = list(/datum/fish_evolution/chasm_chrab)
@@ -109,7 +107,6 @@
 	name = "unmarine bonemass"
 	desc = "What one could mistake for fish remains, is in reality a species that chose to discard its weak flesh a long time ago. A living fossil, in its most literal sense."
 	icon_state = "bonemass"
-	dedicated_in_aquarium_icon_state = "bonemass_small"
 	sprite_width = 10
 	sprite_height = 7
 	fish_movement_type = /datum/fish_movement/zippy
@@ -142,7 +139,6 @@
 	min_pressure = HAZARD_LOW_PRESSURE
 	required_temperature_min = MIN_AQUARIUM_TEMP+30
 	required_temperature_max = MIN_AQUARIUM_TEMP+35
-	aquarium_vc_color = "#ce7e1d"
 	fish_traits = list(
 		/datum/fish_trait/carnivore,
 		/datum/fish_trait/heavy,

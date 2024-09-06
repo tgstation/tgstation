@@ -2,7 +2,6 @@
 	name = "sand surfer"
 	desc = "A bronze alien \"fish\" living and swimming underneath faraway sandy places."
 	icon_state = "sand_surfer"
-	dedicated_in_aquarium_icon_state = "sand_surfer_small"
 	sprite_height = 6
 	sprite_width = 6
 	stable_population = 5
@@ -45,7 +44,6 @@
 	name = "bump-fish"
 	desc = "An misshapen fish-thing all covered in stubby little tendrils"
 	icon_state = "bumpy"
-	dedicated_in_aquarium_icon_state = "bumpy_small"
 	sprite_height = 4
 	sprite_width = 5
 	stable_population = 4
@@ -65,8 +63,8 @@
 	name = "cosmostarfish"
 	desc = "A peculiar, gravity-defying, echinoderm-looking critter from hyperspace."
 	icon_state = "starfish"
-	dedicated_in_aquarium_icon_state = "starfish_small"
 	icon_state_dead = "starfish_dead"
+	sprite_height = 3
 	sprite_width = 4
 	average_size = 30
 	average_weight = 300

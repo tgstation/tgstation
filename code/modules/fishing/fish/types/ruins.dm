@@ -4,8 +4,6 @@
 	desc = "A monster of exposed muscles and innards, wrapped in a fish-like skeleton. You don't remember ever seeing it on the catalog."
 	icon = 'icons/obj/aquarium/wide.dmi'
 	icon_state = "mastodon"
-	dedicated_in_aquarium_icon = 'icons/obj/aquarium/fish.dmi'
-	dedicated_in_aquarium_icon_state = "mastodon_small"
 	base_pixel_x = -16
 	pixel_x = -16
 	sprite_width = 12
@@ -33,7 +31,6 @@
 	name = "soulfish"
 	desc = "A distant yet vaguely close critter, like a long lost relative. You feel your soul rejuvenated just from looking at it... Also, what the fuck is this shit?!"
 	icon_state = "soulfish"
-	dedicated_in_aquarium_icon_state = "soul_small"
 	sprite_width = 7
 	sprite_height = 6
 	average_size = 60
@@ -58,7 +55,6 @@
 	name = "skin crab"
 	desc = "<i>\"And on the eighth day, a demential mockery of both humanity and crabity was made.\"<i> Fascinating."
 	icon_state = "skin_crab"
-	dedicated_in_aquarium_icon_state = "skin_crab_small"
 	sprite_width = 7
 	sprite_height = 6
 	average_size = 40

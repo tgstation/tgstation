@@ -2,10 +2,9 @@
 	name = "clownfish"
 	desc = "Clownfish catch prey by swimming onto the reef, attracting larger fish, and luring them back to the anemone. The anemone will sting and eat the larger fish, leaving the remains for the clownfish."
 	icon_state = "clownfish"
-	dedicated_in_aquarium_icon_state = "clownfish_small"
 	required_fluid_type = AQUARIUM_FLUID_SALTWATER
-	sprite_width = 8
-	sprite_height = 5
+	sprite_width = 7
+	sprite_height = 4
 	average_size = 30
 	average_weight = 500
 	stable_population = 4
@@ -20,7 +19,6 @@
 	desc = "A clownfish exposed to cherry-flavored lube for far too long. First discovered the days following a cargo incident around the seas of Europa, when thousands of thousands of thousands..."
 	icon_state = "lubefish"
 	random_case_rarity = FISH_RARITY_VERY_RARE
-	dedicated_in_aquarium_icon_state = "lubefish_small"
 	fish_traits = list(/datum/fish_trait/picky_eater, /datum/fish_trait/lubed)
 	evolution_types = null
 	compatible_types = list(/obj/item/fish/clownfish)
@@ -32,7 +30,8 @@
 	name = "cardinalfish"
 	desc = "Cardinalfish are often found near sea urchins, where the fish hide when threatened."
 	icon_state = "cardinalfish"
-	dedicated_in_aquarium_icon_state = "fish_greyscale"
+	sprite_width = 6
+	sprite_height = 3
 	required_fluid_type = AQUARIUM_FLUID_SALTWATER
 	average_size = 30
 	average_weight = 500
@@ -45,8 +44,8 @@
 	name = "green chromis"
 	desc = "The Chromis can vary in color from blue to green depending on the lighting and distance from the lights."
 	icon_state = "greenchromis"
-	dedicated_in_aquarium_icon_state = "fish_greyscale"
-	aquarium_vc_color = "#00ff00"
+	sprite_width = 5
+	sprite_height = 3
 	required_fluid_type = AQUARIUM_FLUID_SALTWATER
 	average_size = 30
 	average_weight = 500
@@ -60,8 +59,8 @@
 	name = "firefish goby"
 	desc = "To communicate in the wild, the firefish uses its dorsal fin to alert others of potential danger."
 	icon_state = "firefish"
-	sprite_width = 6
-	sprite_height = 5
+	sprite_width = 5
+	sprite_height = 3
 	required_fluid_type = AQUARIUM_FLUID_SALTWATER
 	average_size = 30
 	average_weight = 500
@@ -77,7 +76,7 @@
 	icon_state = "pufferfish"
 	required_fluid_type = AQUARIUM_FLUID_SALTWATER
 	sprite_width = 8
-	sprite_height = 8
+	sprite_height = 6
 	average_size = 60
 	average_weight = 1000
 	stable_population = 3
@@ -93,10 +92,8 @@
 	icon_state = "lanternfish"
 	required_fluid_type = AQUARIUM_FLUID_SALTWATER
 	random_case_rarity = FISH_RARITY_VERY_RARE
-	source_width = 28
-	source_height = 21
-	sprite_width = 8
-	sprite_height = 8
+	sprite_width = 6
+	sprite_height = 5
 	average_size = 50
 	average_weight = 1000
 	stable_population = 3
@@ -109,7 +106,6 @@
 	name = "stingray"
 	desc = "A type of ray, most known for its venomous stinger. Despite that, They're normally docile, if not a bit easily frightened."
 	icon_state = "stingray"
-	dedicated_in_aquarium_icon_state = "stingray_small"
 	stable_population = 4
 	sprite_height = 7
 	sprite_width = 8
@@ -126,8 +122,6 @@
 	icon = 'icons/obj/aquarium/wide.dmi'
 	icon_state = "swordfish"
 	inhand_icon_state = "swordfish"
-	dedicated_in_aquarium_icon = 'icons/obj/aquarium/fish.dmi'
-	dedicated_in_aquarium_icon_state = "swordfish_small"
 	force = 18
 	sharpness = SHARP_EDGED
 	attack_verb_continuous = list("slashes", "cuts", "pierces")
@@ -222,7 +216,6 @@
 	name = "squid"
 	desc = "An elongated mollusk with eight tentacles, natural camouflage and ink clouds to spray at predators. One of the most intelligent, well-equipped invertebrates out there."
 	icon_state = "squid"
-	dedicated_in_aquarium_icon_state = "squid_small"
 	sprite_width = 4
 	sprite_height = 5
 	stable_population = 6
@@ -238,7 +231,6 @@
 	name = "monkfish"
 	desc = "A member of the Lophiid family of anglerfish. It goes by several different names, however none of them will make it look any prettier, nor any less delicious."
 	icon_state = "monkfish"
-	dedicated_in_aquarium_icon_state = "monkfish_small"
 	required_fluid_type = AQUARIUM_FLUID_SALTWATER
 	sprite_height = 7
 	sprite_width = 7
@@ -265,7 +257,6 @@
 	name = "plaice"
 	desc = "Perhaps the most prominent flatfish in the space-market. Nature really pulled out the rolling pin on this one."
 	icon_state = "plaice"
-	dedicated_in_aquarium_icon_state = "plaice_small"
 	sprite_height = 7
 	sprite_width = 6
 	required_fluid_type = AQUARIUM_FLUID_SALTWATER

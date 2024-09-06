@@ -59,7 +59,7 @@
 		/obj/item/fish/sockeye_salmon = 1,
 		/obj/item/fish/arctic_char = 1,
 		/obj/item/fish/pike = 1,
-		/obj/item/fish/three_eyes = 1,
+		/obj/item/fish/goldfish/three_eyes = 1,
 	)
 	fish_counts = list(
 		/obj/item/fish/pike = 3,
@@ -100,7 +100,7 @@
 		/obj/item/fish/guppy = 10,
 		/obj/item/fish/angelfish = 10,
 		/obj/item/fish/perch = 5,
-		/obj/item/fish/three_eyes = 3,
+		/obj/item/fish/goldfish/three_eyes = 3,
 	)
 	catalog_description = "Aquarium dimension (Fishing portal generator)"
 	///The name of this option shown in the radial menu on the fishing portal generator
@@ -239,7 +239,6 @@
 
 	///rewards not found in other fishing portals
 	fish_table = list(
-		/obj/item/fish/three_eyes = 3,
 		/obj/item/fish/holo/checkered = 1,
 	)
 

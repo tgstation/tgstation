@@ -2,7 +2,6 @@
 	name = "sockeye salmon"
 	desc = "A fairly common and iconic salmon endemic of the Pacific Ocean. At some point imported into outer space, where we're now."
 	icon_state = "sockeye"
-	dedicated_in_aquarium_icon_state = "sockeye_small"
 	sprite_width = 6
 	sprite_height = 4
 	stable_population = 6
@@ -16,7 +15,6 @@
 	name = "arctic char"
 	desc = "A cold-water anadromous fish widespread around the Northern Hemisphere of Earth, yet it has somehow found a way here."
 	icon_state = "arctic_char"
-	dedicated_in_aquarium_icon_state = "arctic_char"
 	sprite_width = 7
 	sprite_height = 4
 	stable_population = 6
@@ -33,8 +31,6 @@
 	icon = 'icons/obj/aquarium/wide.dmi'
 	icon_state = "pike"
 	inhand_icon_state = "pike"
-	dedicated_in_aquarium_icon = 'icons/obj/aquarium/fish.dmi'
-	dedicated_in_aquarium_icon_state = "pike_small"
 	base_pixel_x = -16
 	pixel_x = -16
 	stable_population = 4
