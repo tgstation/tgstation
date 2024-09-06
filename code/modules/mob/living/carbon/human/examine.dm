@@ -1,3 +1,6 @@
+/// Adds a newline to the examine list if the above entry is not empty and is not the first element in the list
+#define ADD_NEWLINE_IF_NECESSARY(list) if(list && list[length(list)] && length(list) > 1) { list += "" }
+
 /mob/living/carbon/human/examine(mob/user)
 	var/obscure_name = FALSE
 	var/obscure_examine = FALSE
@@ -98,8 +101,8 @@
 		. += "[t_He] [t_is] wearing [wear_id.get_examine_string(user)]."
 		. += wear_id.get_id_examine_strings(user)
 
-	if(length(.) > 1)
-		. += "" // give us some space between clothing examine and the rest
+	// give us some space between clothing examine and the rest
+	ADD_NEWLINE_IF_NECESSARY(.)
 
 	var/appears_dead = FALSE
 	var/just_sleeping = FALSE
@@ -114,11 +117,8 @@
 			just_sleeping = TRUE
 
 		if(!just_sleeping)
-			// put in a newline between whatever above and the death message, if there isn't already one
 			// since this is relatively important and giving it space makes it easier to read
-			if(.[length(.)])
-				. += ""
-
+			ADD_NEWLINE_IF_NECESSARY(.)
 			if(HAS_TRAIT(src, TRAIT_SUICIDED))
 				. += span_warning("[t_He] appear[p_s()] to have committed suicide... there is no hope of recovery.")
 
@@ -309,10 +309,15 @@
 				if(HAS_TRAIT(src, TRAIT_DUMB))
 					. += "[t_He] [t_has] a stupid expression on [t_his] face."
 		if(get_organ_by_type(/obj/item/organ/internal/brain) && isnull(ai_controller))
+			var/npc_message = ""
 			if(!key)
-				. += span_deadsay("[t_He] [t_is] totally catatonic. The stresses of life in deep-space must have been too much for [t_him]. Any recovery is unlikely.")
+				npc_message = "[t_He] [t_is] totally catatonic. The stresses of life in deep-space must have been too much for [t_him]. Any recovery is unlikely."
 			else if(!client)
-				. += span_deadsay("[t_He] [t_has] a blank, absent-minded stare and appears completely unresponsive to anything. [t_He] may snap out of it soon.")
+				npc_message ="[t_He] [t_has] a blank, absent-minded stare and appears completely unresponsive to anything. [t_He] may snap out of it soon."
+			if(npc_message)
+				// give some space since this is usually near the end
+				ADD_NEWLINE_IF_NECESSARY(.)
+				. += span_deadsay(npc_message)
 
 	var/scar_severity = 0
 	for(var/datum/scar/scar as anything in all_scars)
@@ -320,7 +325,7 @@
 			scar_severity += scar.severity
 
 	if(scar_severity >= 1)
-		. += "" // since this is a more of a chaser, give it space
+		ADD_NEWLINE_IF_NECESSARY(.)
 		switch(scar_severity)
 			if(1 to 4)
 				. += span_tinynoticeital("[t_He] [t_has] visible scarring, you can look again to take a closer look...")
@@ -349,7 +354,8 @@
 			. += "<hr>[jointext(get_sechud_examine_info(user, target_record), "<br>")]"
 
 	if(isobserver(user))
-		. += "<br><b>Quirks:</b> [get_quirk_string(FALSE, CAT_QUIRK_ALL)]"
+		ADD_NEWLINE_IF_NECESSARY(.)
+		. += "<b>Quirks:</b> [get_quirk_string(FALSE, CAT_QUIRK_ALL)]"
 
 	.[length(.)] += "</span>"
 	SEND_SIGNAL(src, COMSIG_ATOM_EXAMINE, user, .)
@@ -452,3 +458,5 @@
 		if(101 to INFINITY)
 			age_text = "withering away"
 	. += list(span_notice("[p_They()] appear[p_s()] to be [age_text]."))
+
+#undef ADD_NEWLINE_IF_NECESSARY
