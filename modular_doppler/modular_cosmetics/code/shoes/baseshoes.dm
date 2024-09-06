@@ -1,4 +1,5 @@
 /obj/item/clothing/shoes
+	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION
 	supported_bodyshapes = list(BODYSHAPE_HUMANOID, BODYSHAPE_DIGITIGRADE)
 	bodyshape_icon_files = list(BODYSHAPE_HUMANOID_T = 'icons/mob/clothing/feet.dmi',
 		BODYSHAPE_DIGITIGRADE_T = 'modular_doppler/modular_cosmetics/icons/mob/shoes/basefeet_digi.dmi')
@@ -6,6 +7,7 @@
 
 
 /obj/item/clothing/shoes/sneakers
+	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION
 	supported_bodyshapes = list(BODYSHAPE_HUMANOID, BODYSHAPE_DIGITIGRADE)
 
 /obj/item/clothing/shoes/sneakers/Initialize(mapload)

@@ -17,20 +17,24 @@
 	icon_greyscale = 'modular_doppler/customization/species/scugs/icons/bodyparts.dmi'
 	limb_id = SPECIES_SLUGCAT
 
-/obj/item/bodypart/leg/left/digitigrade/slugcat
+/obj/item/bodypart/leg/left/lizard/slugcat
 	icon_greyscale = 'modular_doppler/customization/species/scugs/icons/bodyparts.dmi'
-	limb_id = BODYPART_ID_DIGITIGRADE
-	bodyshape = BODYSHAPE_HUMANOID | BODYSHAPE_DIGITIGRADE
+	limb_id = SPECIES_SLUGCAT
+
+/obj/item/bodypart/leg/left/digitigrade/slugcat/
+	icon_greyscale = 'modular_doppler/customization/species/scugs/icons/bodyparts.dmi'
 
 /obj/item/bodypart/leg/left/digitigrade/slugcat/update_limb(dropping_limb = FALSE, is_creating = FALSE)
 	. = ..()
 	if(limb_id == SPECIES_LIZARD)
 		limb_id = SPECIES_SLUGCAT
 
-/obj/item/bodypart/leg/right/digitigrade/slugcat
+/obj/item/bodypart/leg/right/lizard/slugcat
 	icon_greyscale = 'modular_doppler/customization/species/scugs/icons/bodyparts.dmi'
-	limb_id = BODYPART_ID_DIGITIGRADE
-	bodyshape = BODYSHAPE_HUMANOID | BODYSHAPE_DIGITIGRADE
+	limb_id = SPECIES_SLUGCAT
+
+/obj/item/bodypart/leg/right/digitigrade/slugcat/
+	icon_greyscale = 'modular_doppler/customization/species/scugs/icons/bodyparts.dmi'
 
 /obj/item/bodypart/leg/right/digitigrade/slugcat/update_limb(dropping_limb = FALSE, is_creating = FALSE)
 	. = ..()

@@ -38,6 +38,10 @@
 		BODY_ZONE_CHEST = /obj/item/bodypart/chest/slugcat,
 		BODY_ZONE_L_ARM = /obj/item/bodypart/arm/left/lizard/slugcat,
 		BODY_ZONE_R_ARM = /obj/item/bodypart/arm/right/lizard/slugcat,
+		BODY_ZONE_L_LEG = /obj/item/bodypart/leg/left/lizard/slugcat,
+		BODY_ZONE_R_LEG = /obj/item/bodypart/leg/right/lizard/slugcat,
+	)
+	digi_leg_overrides = list(
 		BODY_ZONE_L_LEG = /obj/item/bodypart/leg/left/digitigrade/slugcat,
 		BODY_ZONE_R_LEG = /obj/item/bodypart/leg/right/digitigrade/slugcat,
 	)
