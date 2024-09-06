@@ -83,7 +83,6 @@
 		jaunter.put_in_hands(right_hand)
 
 	RegisterSignal(jaunter, SIGNAL_REMOVETRAIT(TRAIT_ALLOW_HERETIC_CASTING), PROC_REF(on_focus_lost))
-	RegisterSignal(jaunter, COMSIG_MOB_STATCHANGE, PROC_REF(on_stat_change))
 	playsound(our_turf, 'sound/magic/cosmic_energy.ogg', 50, TRUE, -1, FALSE, TRUE)
 	our_turf.visible_message(span_warning("[jaunter] sinks into [our_turf]!"))
 	new /obj/effect/temp_visual/space_explosion(our_turf)
