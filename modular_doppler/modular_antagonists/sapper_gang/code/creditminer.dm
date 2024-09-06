@@ -46,10 +46,10 @@
 	. = ..()
 	switch(mode)
 		if(1) //On turning off
-			playsound(src, 'modular_doppler/~master_files/sound/machines/creditminer_stop.wav', 50, FALSE)
+			playsound(src, 'modular_doppler/modular_sounds/machines/creditminer_stop.wav', 50, FALSE)
 
 		if(2) //On turning on
-			playsound(src, 'modular_doppler/~master_files/sound/machines/creditminer_start.wav', 50, FALSE)
+			playsound(src, 'modular_doppler/modular_sounds/machines/creditminer_start.wav', 50, FALSE)
 
 /obj/item/powersink/creditminer/process()
 	. = ..()
@@ -85,14 +85,14 @@
 	if(cash_pulse >= 1)
 		cash_out += cash_pulse
 		balloon_alert_to_viewers("mined [trunc(cash_pulse)]cr")
-		playsound(src, 'modular_doppler/~master_files/sound/machines/creditminer_drain.wav', 50, FALSE)
+		playsound(src, 'modular_doppler/modular_sounds/machines/creditminer_drain.wav', 50, FALSE)
 
 /obj/item/powersink/creditminer/release_heat()
 	. = ..()
 	if(!internal_heat)
 		return
 	if(mode < 2) //sfx if we release heat, but don't overlap the drain sfx
-		playsound(src, 'modular_doppler/~master_files/sound/machines/creditminer_vent.wav', 50, FALSE)
+		playsound(src, 'modular_doppler/modular_sounds/machines/creditminer_vent.wav', 50, FALSE)
 	new /obj/effect/temp_visual/mook_dust(get_turf(src))
 
 /// Credit Miner crafting recipe (Incase the intial one explodes)

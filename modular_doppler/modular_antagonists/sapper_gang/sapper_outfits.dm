@@ -56,9 +56,9 @@
 /obj/item/clothing/mask/gas/atmos/sapper
 	name = "\improper Sapper gas mask"
 	desc = "A modified black gas mask with a yellow painted bottom and digitally expressive eyes, its framing is <b>laser-reflective</b>."
-	icon = 'modular_doppler/sapper_gang/icons/sapper_obj.dmi'
+	icon = 'modular_doppler/modular_antagonists/sapper_gang/icons/sapper_obj.dmi'
 	icon_state = "mask_one"
-	worn_icon = 'modular_doppler/sapper_gang/icons/sapper.dmi'
+	worn_icon = 'modular_doppler/modular_antagonists/sapper_gang/icons/sapper.dmi'
 	var/hit_reflect_chance = 35
 
 /obj/item/clothing/mask/gas/atmos/sapper/partner
@@ -73,10 +73,10 @@
 /obj/item/clothing/under/sapper
 	name = "\improper Sapper slacks"
 	desc = "A sleek black jacket with <b>laser-reflective</b> 'heatsilk' lining and a high-visibility pair of slacks, comfortable, safe, efficient."
-	icon = 'modular_doppler/sapper_gang/icons/sapper_obj.dmi'
+	icon = 'modular_doppler/modular_antagonists/sapper_gang/icons/sapper_obj.dmi'
 	icon_state = "suit_pants"
 	body_parts_covered = CHEST|GROIN|ARMS // The pants or skirt grant no protection, that's what the boots are for
-	worn_icon = 'modular_doppler/sapper_gang/icons/sapper.dmi'
+	worn_icon = 'modular_doppler/modular_antagonists/sapper_gang/icons/sapper.dmi'
 	inhand_icon_state = "engi_suit"
 	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION_NO_NEW_ICON
 	has_sensor = NO_SENSORS
@@ -100,10 +100,10 @@
 /obj/item/clothing/shoes/workboots/sapper
 	name = "black work boots"
 	desc = "Lace-up steel-tipped shiny black workboots, nothing can get through these."
-	icon = 'modular_doppler/sapper_gang/icons/sapper_obj.dmi'
+	icon = 'modular_doppler/modular_antagonists/sapper_gang/icons/sapper_obj.dmi'
 	icon_state = "jackboots"
 	body_parts_covered = FEET|LEGS
-	worn_icon = 'modular_doppler/sapper_gang/icons/sapper.dmi'
+	worn_icon = 'modular_doppler/modular_antagonists/sapper_gang/icons/sapper.dmi'
 //	worn_icon_digi = DIGITIGRADE_SHOES_FILE
 	inhand_icon_state = "jackboots"
 	armor_type = /datum/armor/shoes_combat
@@ -115,9 +115,9 @@
 /obj/item/storage/belt/utility/sapper
 	name = "black toolbelt"
 	desc = "A tactical toolbelt, what makes it tactical? The color."
-	icon = 'modular_doppler/sapper_gang/icons/sapper_obj.dmi'
+	icon = 'modular_doppler/modular_antagonists/sapper_gang/icons/sapper_obj.dmi'
 	icon_state = "belt"
-	worn_icon = 'modular_doppler/sapper_gang/icons/sapper.dmi'
+	worn_icon = 'modular_doppler/modular_antagonists/sapper_gang/icons/sapper.dmi'
 	inhand_icon_state = "security"
 	worn_icon_state = "belt"
 	preload = FALSE
@@ -141,7 +141,7 @@
 /datum/id_trim/sapper
 	assignment = "Sapper"
 	trim_state = "trim_sapper"
-	trim_icon = 'modular_doppler/~master_files/icons/obj/card.dmi'
+	trim_icon = 'modular_doppler/modular_antagonists/sapper_gang/icons/sapper_trim.dmi'
 	department_color = COLOR_ORANGE
 	subdepartment_color = COLOR_ORANGE
 	sechud_icon_state = SECHUD_SAPPER
