@@ -6375,6 +6375,7 @@
 #include "interface\fonts\spess_font.dm"
 #include "interface\fonts\tiny_unicode.dm"
 #include "interface\fonts\vcr_osd_mono.dm"
+#include "modular_doppler\cell_component\code\cell_component.dm"
 #include "modular_doppler\colony_fabricator\code\colony_fabricator.dm"
 #include "modular_doppler\colony_fabricator\code\looping_sounds.dm"
 #include "modular_doppler\colony_fabricator\code\repacking_element.dm"

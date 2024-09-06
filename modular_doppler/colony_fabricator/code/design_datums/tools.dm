@@ -52,7 +52,7 @@
 	name = "Arc Welder"
 	id = "colony_arc_welder"
 	build_type = COLONY_FABRICATOR
-	build_path = /obj/item/weldingtool/electric/arc_welder
+	build_path = /obj/item/weldingtool/arc_welder
 	materials = list(
 		/datum/material/iron = HALF_SHEET_MATERIAL_AMOUNT,
 		/datum/material/glass = HALF_SHEET_MATERIAL_AMOUNT,
