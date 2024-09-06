@@ -50,7 +50,7 @@
 		outfit_uniform.sensor_mode = SENSOR_OFF
 		equipped.update_suit_sensors()
 
-	SSquirks.AssignQuirks(equipped, equipped.client, TRUE, TRUE, null, FALSE, equipped)
+	SSquirks.AssignQuirks(equipped, equipped.client)
 
 
 /obj/item/clothing/mask/gas/atmos/sapper
@@ -141,9 +141,9 @@
 /datum/id_trim/sapper
 	assignment = "Sapper"
 	trim_state = "trim_sapper"
-	trim_icon = 'modular_doppler/modular_antagonists/sapper_gang/icons/sapper_trim.dmi'
-	department_color = COLOR_ORANGE
-	subdepartment_color = COLOR_ORANGE
+	trim_icon = 'modular_doppler/overwrites/card/card.dmi'
+	department_color = COLOR_ENGINEERING_ORANGE
+	subdepartment_color = COLOR_ENGINEERING_ORANGE
 	sechud_icon_state = SECHUD_SAPPER
 	access = list(ACCESS_SAPPER_SHIP)
 	threat_modifier = 2

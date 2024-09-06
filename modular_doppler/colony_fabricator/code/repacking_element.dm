@@ -20,28 +20,34 @@
 	src.disassemble_objects = disassemble_objects
 
 	RegisterSignal(target, COMSIG_ATOM_EXAMINE, PROC_REF(examine))
-	RegisterSignal(target, COMSIG_ATOM_ATTACK_HAND_SECONDARY, PROC_REF(on_right_click))
+	RegisterSignal(target, COMSIG_CLICK_ALT, PROC_REF(on_alt_click))
 	RegisterSignal(target, COMSIG_ATOM_REQUESTING_CONTEXT_FROM_ITEM, PROC_REF(on_requesting_context_from_item))
 
 /datum/element/repackable/Detach(datum/target)
 	. = ..()
 	UnregisterSignal(target, COMSIG_ATOM_EXAMINE)
-	UnregisterSignal(target, COMSIG_ATOM_ATTACK_HAND_SECONDARY)
+	UnregisterSignal(target, COMSIG_CLICK_ALT)
 	UnregisterSignal(target, list(COMSIG_ATOM_ATTACKBY, COMSIG_ATOM_REQUESTING_CONTEXT_FROM_ITEM))
 
 /datum/element/repackable/proc/examine(datum/source, mob/user, list/examine_list)
 	SIGNAL_HANDLER
 
-	examine_list += span_notice("It can be <b>repacked</b> with <b>right click</b>.")
+	examine_list += span_notice("It can be <b>repacked</b> with <b>alt-click</b>.")
 
 /// Checks if the user can actually interact with the structures in question, then invokes the proc to make it repack
-/datum/element/repackable/proc/on_right_click(atom/source, mob/user)
+/datum/element/repackable/proc/on_alt_click(atom/source, mob/user)
 	SIGNAL_HANDLER
 
-	if(!user.can_perform_action(source, NEED_DEXTERITY))
+	var/mob/living/living_user = user
+	if(DOING_INTERACTION_WITH_TARGET(user, source))
+		return
+	if(istype(living_user) && living_user.combat_mode)
+		return
+	if(!living_user.can_perform_action(source, NEED_DEXTERITY))
 		return
 
 	INVOKE_ASYNC(src, PROC_REF(repack), source, user)
+	return CLICK_ACTION_SUCCESS
 
 /// Removes the element target and spawns a new one of whatever item_to_pack_into is
 /datum/element/repackable/proc/repack(atom/source, mob/user)
