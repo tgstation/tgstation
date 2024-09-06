@@ -6,7 +6,7 @@
 	var/obscure_examine = FALSE
 
 	if(isliving(user))
-		if(HAS_TRAIT(user, TRAIT_PROSOPAGNOSIA) || HAS_TRAIT(user, TRAIT_INVISIBLE_MAN))
+		if(HAS_TRAIT(user, TRAIT_PROSOPAGNOSIA) || HAS_TRAIT(src, TRAIT_INVISIBLE_MAN))
 			obscure_name = TRUE
 		if(HAS_TRAIT(src, TRAIT_UNKNOWN))
 			obscure_name = TRUE
