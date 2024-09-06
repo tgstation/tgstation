@@ -325,6 +325,7 @@
 	var/unfolded_pickup_sound = 'sound/items/baton/telescopic_baton_unfolded_pickup.ogg'
 	pickup_sound = 'sound/items/baton/telescopic_baton_folded_pickup.ogg'
 	drop_sound = 'sound/items/baton/telescopic_baton_folded_drop.ogg'
+	sound_vary = TRUE
 	/// The sound effecte played when our baton is extended.
 	var/on_sound = 'sound/weapons/batonextend.ogg'
 	/// The inhand iconstate used when our baton is extended.
@@ -456,6 +457,7 @@
 	var/active_pickup_sound = 'sound/items/baton/stun_baton_active_pickup.ogg'
 	drop_sound = 'sound/items/baton/stun_baton_inactive_drop.ogg'
 	pickup_sound = 'sound/items/baton/stun_baton_inactive_pickup.ogg'
+	sound_vary = TRUE
 
 	var/throw_stun_chance = 35
 	var/obj/item/stock_parts/power_store/cell

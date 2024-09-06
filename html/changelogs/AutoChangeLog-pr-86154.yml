@@ -1,6 +1,0 @@
-author: "LT3"
-delete-after: True
-changes:
-  - rscadd: "Added Chief Engineer SEAL OF APPROVAL sticker"
-  - code_imp: "Stickers now come in sticker packs, not boxes"
-  - code_imp: "Stickers can now add examine text to whatever they're stuck on"

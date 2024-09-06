@@ -1,4 +1,0 @@
-author: "Bisar"
-delete-after: True
-changes:
-  - code_imp: "The (currently unused) TGUI checkbox components returns a BYOND friendly list of the indexes of any choices now."
