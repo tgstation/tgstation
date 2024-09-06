@@ -1,8 +1,0 @@
-author: "jlsnow301"
-delete-after: True
-changes:
-  - rscadd: "Added two new bitrunning maps: Grasslands Hunt and Meta Central."
-  - rscadd: "Deer are now more complex animals, granting them enhanced ability to run amok and chew your favorite plants."
-  - balance: "Reduced the cost of most BR vendor items."
-  - bugfix: "Fixes an issue where modular virtual domains spawned less mobs than intended."
-  - bugfix: "These modular spawns are now valid mutation targets to become an antagonist."

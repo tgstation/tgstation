@@ -1,4 +1,0 @@
-author: "Y0SH1M4S73R"
-delete-after: True
-changes:
-  - admin: "Dreamluau provides a more informative error message when trying to pass references to qdeleted datums back to BYOND."
