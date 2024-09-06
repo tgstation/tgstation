@@ -108,7 +108,7 @@ GLOBAL_LIST_INIT(fish_evolutions, init_subtypes_w_path_keys(/datum/fish_evolutio
 /datum/fish_evolution/three_eyes
 	name = "Three-eyed Goldfish"
 	probability = 3
-	new_fish_type = /obj/item/fish/three_eyes
+	new_fish_type = /obj/item/fish/goldfish/three_eyes
 	new_traits = list(/datum/fish_trait/recessive)
 
 /datum/fish_evolution/chainsawfish

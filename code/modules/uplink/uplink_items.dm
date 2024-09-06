@@ -172,6 +172,8 @@
 		ADD_TRAIT(created, TRAIT_CONTRABAND, INNATE_TRAIT)
 		for(var/obj/contained as anything in created.get_all_contents())
 			ADD_TRAIT(contained, TRAIT_CONTRABAND, INNATE_TRAIT)
+
+	if(isgun(created))
 		replace_pin(created)
 	else if(istype(created, /obj/item/storage/toolbox/guncase))
 		for(var/obj/item/gun/gun in created)

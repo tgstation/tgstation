@@ -91,11 +91,9 @@
 	sync_mind()
 
 	//Reload alternate appearances
-	for(var/v in GLOB.active_alternate_appearances)
-		if(!v)
-			continue
-		var/datum/atom_hud/alternate_appearance/AA = v
-		AA.onNewMob(src)
+	for(var/datum/atom_hud/alternate_appearance/alt_hud as anything in GLOB.active_alternate_appearances)
+		if(!alt_hud.apply_to_new_mob(src))
+			alt_hud.hide_from(src, absolute = TRUE)
 
 	update_client_colour()
 	update_mouse_pointer()
