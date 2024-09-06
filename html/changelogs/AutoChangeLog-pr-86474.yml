@@ -1,5 +1,0 @@
-author: "OverwatchVoice"
-delete-after: True
-changes:
-  - spellcheck: "Changed description of Rebar crossbow."
-  - bugfix: "Rebar crossbow description will no longer lie about it's missfire potential."
