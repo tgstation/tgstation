@@ -166,9 +166,11 @@
 
 	if((supports_variations_flags & CLOTHING_DIGITIGRADE_VARIATION) && ishuman(user))
 		var/mob/living/carbon/human/wearer = user
-		if(wearer.bodyshape & BODYSHAPE_DIGITIGRADE)
-			adjusted = DIGITIGRADE_STYLE
-			update_appearance()
+		/// DOPPLER SHFIT REMOVAL BEGIN
+		/*if(wearer.bodyshape & BODYSHAPE_DIGITIGRADE)
+			adjusted = DIGITIGRADE_STYLE*/
+		/// DOPPLER SHIFT REMOVAL END
+		update_appearance() /// DOPPLER SHIFT EDIT: Bumping indentation back one tick
 
 /obj/item/clothing/under/equipped(mob/living/user, slot)
 	..()
