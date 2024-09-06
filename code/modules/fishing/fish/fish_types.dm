@@ -5,8 +5,10 @@
 	desc = "Despite common belief, goldfish do not have three-second memories. \
 		They can actually remember things that happened up to three months ago."
 	icon_state = "goldfish"
-	sprite_width = 8
-	sprite_height = 8
+	dedicated_in_aquarium_icon_state = "fish_greyscale"
+	aquarium_vc_color = "#D8540D"
+	sprite_width = 5
+	sprite_height = 3
 	stable_population = 3
 	average_size = 30
 	average_weight = 500
@@ -15,7 +17,7 @@
 	required_temperature_min = MIN_AQUARIUM_TEMP+18
 	required_temperature_max = MIN_AQUARIUM_TEMP+26
 	evolution_types = list(/datum/fish_evolution/three_eyes, /datum/fish_evolution/chainsawfish)
-	compatible_types = list(/obj/item/fish/goldfish/gill, /obj/item/fish/three_eyes, /obj/item/fish/three_eyes/gill)
+	compatible_types = list(/obj/item/fish/goldfish/gill, /obj/item/fish/goldfish/three_eyes, /obj/item/fish/goldfish/three_eyes/gill)
 
 /obj/item/fish/goldfish/gill
 	name = "McGill"
@@ -24,16 +26,43 @@
 	random_case_rarity = FISH_RARITY_NOPE
 	show_in_catalog = FALSE
 	beauty = FISH_BEAUTY_GOOD
-	compatible_types = list(/obj/item/fish/goldfish, /obj/item/fish/three_eyes)
+	compatible_types = list(/obj/item/fish/goldfish, /obj/item/fish/goldfish/three_eyes)
 	fish_traits = list(/datum/fish_trait/recessive)
+
+/obj/item/fish/goldfish/three_eyes
+	name = "three-eyed goldfish"
+	desc = "A goldfish with an extra half a pair of eyes. You wonder what it's been feeding on lately..."
+	icon_state = "three_eyes"
+	stable_population = 4
+	fish_traits = list(/datum/fish_trait/recessive, /datum/fish_trait/shiny_lover)
+	compatible_types = list(/obj/item/fish/goldfish, /obj/item/fish/goldfish/gill, /obj/item/fish/goldfish/three_eyes/gill)
+	beauty = FISH_BEAUTY_GOOD
+	fishing_difficulty_modifier = 10
+	random_case_rarity = FISH_RARITY_VERY_RARE
+	food = /datum/reagent/toxin/mutagen
+	favorite_bait = list(
+		list(
+			"Type" = "Reagent",
+			"Value" = /datum/reagent/toxin/mutagen,
+			"Amount" = 3,
+		),
+	)
+
+/obj/item/fish/goldfish/three_eyes/gill
+	name = "McGill"
+	desc = "A great rubber duck tool for Lawyers who can't get a grasp over their case. It looks kinda different today..."
+	compatible_types = list(/obj/item/fish/goldfish, /obj/item/fish/goldfish/three_eyes)
+	beauty = FISH_BEAUTY_GREAT
+	show_in_catalog = FALSE
+	stable_population = 1
+	random_case_rarity = FISH_RARITY_NOPE
 
 /obj/item/fish/angelfish
 	name = "angelfish"
 	desc = "Young Angelfish often live in groups, while adults prefer solitary life. They become territorial and aggressive toward other fish when they reach adulthood."
 	icon_state = "angelfish"
-	dedicated_in_aquarium_icon_state = "bigfish"
+	sprite_width = 4
 	sprite_height = 7
-	source_height = 7
 	average_size = 30
 	average_weight = 500
 	stable_population = 3
@@ -45,10 +74,8 @@
 	name = "guppy"
 	desc = "Guppy is also known as rainbow fish because of the brightly colored body and fins."
 	icon_state = "guppy"
-	dedicated_in_aquarium_icon_state = "fish_greyscale"
-	aquarium_vc_color = "#91AE64"
-	sprite_width = 8
-	sprite_height = 5
+	sprite_width = 5
+	sprite_height = 2
 	average_size = 30
 	average_weight = 500
 	stable_population = 6
@@ -59,8 +86,8 @@
 	name = "plasma tetra"
 	desc = "Due to their small size, tetras are prey to many predators in their watery world, including eels, crustaceans, and invertebrates."
 	icon_state = "plastetra"
-	dedicated_in_aquarium_icon_state = "fish_greyscale"
-	aquarium_vc_color = "#D30EB0"
+	sprite_width = 4
+	sprite_height = 2
 	average_size = 30
 	average_weight = 500
 	stable_population = 3
@@ -71,8 +98,8 @@
 	name = "catfish"
 	desc = "A catfish has about 100,000 taste buds, and their bodies are covered with them to help detect chemicals present in the water and also to respond to touch."
 	icon_state = "catfish"
-	dedicated_in_aquarium_icon_state = "fish_greyscale"
-	aquarium_vc_color = "#907420"
+	sprite_width = 8
+	sprite_height = 4
 	average_size = 80
 	average_weight = 1600
 	weight_size_deviation = 0.35
@@ -91,7 +118,6 @@
 	name = "tadpole"
 	desc = "The larval spawn of an amphibian. A very minuscle, round creature with a long tail it uses to swim around."
 	icon_state = "tadpole"
-	dedicated_in_aquarium_icon_state = "tadpole small"
 	average_size = 3
 	average_weight = 10
 	sprite_width = 3
@@ -142,10 +168,9 @@
 	name = "clownfish"
 	desc = "Clownfish catch prey by swimming onto the reef, attracting larger fish, and luring them back to the anemone. The anemone will sting and eat the larger fish, leaving the remains for the clownfish."
 	icon_state = "clownfish"
-	dedicated_in_aquarium_icon_state = "clownfish_small"
 	required_fluid_type = AQUARIUM_FLUID_SALTWATER
-	sprite_width = 8
-	sprite_height = 5
+	sprite_width = 7
+	sprite_height = 4
 	average_size = 30
 	average_weight = 500
 	stable_population = 4
@@ -160,7 +185,6 @@
 	desc = "A clownfish exposed to cherry-flavored lube for far too long. First discovered the days following a cargo incident around the seas of Europa, when thousands of thousands of thousands..."
 	icon_state = "lubefish"
 	random_case_rarity = FISH_RARITY_VERY_RARE
-	dedicated_in_aquarium_icon_state = "lubefish_small"
 	fish_traits = list(/datum/fish_trait/picky_eater, /datum/fish_trait/lubed)
 	evolution_types = null
 	compatible_types = list(/obj/item/fish/clownfish)
@@ -172,8 +196,9 @@
 	name = "cardinalfish"
 	desc = "Cardinalfish are often found near sea urchins, where the fish hide when threatened."
 	icon_state = "cardinalfish"
-	dedicated_in_aquarium_icon_state = "fish_greyscale"
 	required_fluid_type = AQUARIUM_FLUID_SALTWATER
+	sprite_width = 6
+	sprite_height = 3
 	average_size = 30
 	average_weight = 500
 	stable_population = 4
@@ -185,9 +210,9 @@
 	name = "green chromis"
 	desc = "The Chromis can vary in color from blue to green depending on the lighting and distance from the lights."
 	icon_state = "greenchromis"
-	dedicated_in_aquarium_icon_state = "fish_greyscale"
-	aquarium_vc_color = "#00ff00"
 	required_fluid_type = AQUARIUM_FLUID_SALTWATER
+	sprite_width = 5
+	sprite_height = 3
 	average_size = 30
 	average_weight = 500
 	stable_population = 5
@@ -200,8 +225,8 @@
 	name = "firefish goby"
 	desc = "To communicate in the wild, the firefish uses its dorsal fin to alert others of potential danger."
 	icon_state = "firefish"
-	sprite_width = 6
-	sprite_height = 5
+	sprite_width = 5
+	sprite_height = 3
 	required_fluid_type = AQUARIUM_FLUID_SALTWATER
 	average_size = 30
 	average_weight = 500
@@ -217,7 +242,7 @@
 	icon_state = "pufferfish"
 	required_fluid_type = AQUARIUM_FLUID_SALTWATER
 	sprite_width = 8
-	sprite_height = 8
+	sprite_height = 6
 	average_size = 60
 	average_weight = 1000
 	stable_population = 3
@@ -233,10 +258,8 @@
 	icon_state = "lanternfish"
 	required_fluid_type = AQUARIUM_FLUID_SALTWATER
 	random_case_rarity = FISH_RARITY_VERY_RARE
-	source_width = 28
-	source_height = 21
-	sprite_width = 8
-	sprite_height = 8
+	sprite_width = 6
+	sprite_height = 5
 	average_size = 50
 	average_weight = 1000
 	stable_population = 3
@@ -250,6 +273,8 @@
 	name = "dwarf moonfish"
 	desc = "Ordinarily in the wild, the Zagoskian moonfish is around the size of a tuna, however through selective breeding a smaller breed suitable for being kept as an aquarium pet has been created."
 	icon_state = "dwarf_moonfish"
+	sprite_height = 6
+	sprite_width = 6
 	required_fluid_type = AQUARIUM_FLUID_SALTWATER
 	stable_population = 2
 	fillet_type = /obj/item/food/fishmeat/moonfish
@@ -263,6 +288,8 @@
 	name = "gunner jellyfish"
 	desc = "So called due to their resemblance to an artillery shell, the gunner jellyfish is native to Tizira, where it is enjoyed as a delicacy. Produces a mild hallucinogen that is destroyed by cooking."
 	icon_state = "gunner_jellyfish"
+	sprite_height = 4
+	sprite_width = 5
 	required_fluid_type = AQUARIUM_FLUID_SALTWATER
 	stable_population = 4
 	fillet_type = /obj/item/food/fishmeat/gunner_jellyfish
@@ -274,7 +301,7 @@
 	name = "needlefish"
 	desc = "A tiny, transparent fish which resides in large schools in the oceans of Tizira. A common food for other, larger fish."
 	icon_state = "needlefish"
-	dedicated_in_aquarium_icon_state = "needlefish_small"
+	sprite_height = 3
 	sprite_width = 7
 	required_fluid_type = AQUARIUM_FLUID_SALTWATER
 	stable_population = 12
@@ -290,7 +317,6 @@
 	name = "armorfish"
 	desc = "A small shellfish native to Tizira's oceans, known for its exceptionally hard shell. Consumed similarly to prawns."
 	icon_state = "armorfish"
-	dedicated_in_aquarium_icon_state = "armorfish_small"
 	sprite_height = 5
 	sprite_width = 6
 	average_size = 25
@@ -308,7 +334,6 @@
 	name = "chasm chrab"
 	desc = "The young of the lobstrosity mature in pools below the earth, eating what falls in until large enough to clamber out. Those found near the station are well-fed."
 	icon_state = "chrab"
-	dedicated_in_aquarium_icon_state = "chrab_small"
 	sprite_height = 9
 	sprite_width = 8
 	stable_population = 4
@@ -401,7 +426,6 @@
 	name = "arctic chrab"
 	desc = "A subspecies of chasm chrabs that has adapted to the cold climate and lack of abysmal holes of the icemoon."
 	icon_state = "arctic_chrab"
-	dedicated_in_aquarium_icon_state = "arctic_chrab_small"
 	required_temperature_min = ICEBOX_MIN_TEMPERATURE-20
 	required_temperature_max = MIN_AQUARIUM_TEMP+15
 	evolution_types = list(/datum/fish_evolution/chasm_chrab)
@@ -416,6 +440,8 @@
 	random_case_rarity = FISH_RARITY_VERY_RARE
 	required_fluid_type = AQUARIUM_FLUID_FRESHWATER
 	stable_population = 4
+	sprite_width = 5
+	sprite_height = 4
 	fillet_type = /obj/item/food/fishmeat/donkfish
 	fish_traits = list(/datum/fish_trait/yucky)
 	required_temperature_min = MIN_AQUARIUM_TEMP+15
@@ -429,6 +455,8 @@
 	random_case_rarity = FISH_RARITY_GOOD_LUCK_FINDING_THIS
 	required_fluid_type = AQUARIUM_FLUID_ANADROMOUS
 	stable_population = 3
+	sprite_width = 7
+	sprite_height = 3
 	fish_traits = list(/datum/fish_trait/emulsijack)
 	required_temperature_min = MIN_AQUARIUM_TEMP+5
 	required_temperature_max = MIN_AQUARIUM_TEMP+40
@@ -439,8 +467,7 @@
 	desc = "A surprisingly useful if nasty looking creation from the syndicate fish labs. Drop one in a tank, and \
 		watch it self-feed and multiply. Generates more and more power as a growing swarm!"
 	icon_state = "jumpercable"
-	dedicated_in_aquarium_icon_state = "jumpercable_small"
-	sprite_width = 17
+	sprite_width = 16
 	sprite_height = 5
 	stable_population = 12
 	average_size = 110
@@ -460,6 +487,8 @@
 	name = "ratfish"
 	desc = "A rat exposed to the murky waters of maintenance too long. Any higher power, if it revealed itself, would state that the ratfish's continued existence is extremely unwelcome."
 	icon_state = "ratfish"
+	sprite_width = 7
+	sprite_height = 5
 	random_case_rarity = FISH_RARITY_RARE
 	required_fluid_type = AQUARIUM_FLUID_FRESHWATER
 	stable_population = 10 //set by New, but this is the default config value
@@ -485,7 +514,6 @@
 	name = "sludgefish"
 	desc = "A misshapen, fragile, loosely fish-like living goop, the only thing that'd ever thrive in the acidic and claustrophobic cavities of the station's organic waste disposal system."
 	icon_state = "sludgefish"
-	dedicated_in_aquarium_icon_state = "sludgefish_small"
 	sprite_width = 7
 	sprite_height = 6
 	required_fluid_type = AQUARIUM_FLUID_SULPHWATEVER
@@ -504,7 +532,6 @@
 	name = "purple sludgefish"
 	desc = "A misshapen, fragile, loosely fish-like living goop. This one has developed sexual reproduction mechanisms, and a purple tint to boot."
 	icon_state = "sludgefish_purple"
-	dedicated_in_aquarium_icon_state = "sludgefish_purple_small"
 	random_case_rarity = FISH_RARITY_NOPE
 	fish_traits = list(/datum/fish_trait/parthenogenesis)
 
@@ -513,7 +540,6 @@
 	desc = "Kids, this is what happens when a slime overcomes its hydrophobic nature. It goes glug glug."
 	icon_state = "slimefish"
 	icon_state_dead = "slimefish_dead"
-	dedicated_in_aquarium_icon_state = "slimefish_small"
 	sprite_width = 7
 	sprite_height = 7
 	do_flop_animation = FALSE //it already has a cute bouncy wiggle. :3
@@ -542,7 +568,6 @@
 	name = "unmarine bonemass"
 	desc = "What one could mistake for fish remains, is in reality a species that chose to discard its weak flesh a long time ago. A living fossil, in its most literal sense."
 	icon_state = "bonemass"
-	dedicated_in_aquarium_icon_state = "bonemass_small"
 	sprite_width = 10
 	sprite_height = 7
 	fish_movement_type = /datum/fish_movement/zippy
@@ -564,10 +589,8 @@
 /obj/item/fish/mastodon
 	name = "unmarine mastodon"
 	desc = "A monster of exposed muscles and innards, wrapped in a fish-like skeleton. You don't remember ever seeing it on the catalog."
-	icon = 'icons/obj/structures/aquarium/wide.dmi'
+	icon = 'icons/obj/aquarium/wide.dmi'
 	icon_state = "mastodon"
-	dedicated_in_aquarium_icon = 'icons/obj/structures/aquarium/fish.dmi'
-	dedicated_in_aquarium_icon_state = "mastodon_small"
 	base_pixel_x = -16
 	pixel_x = -16
 	sprite_width = 12
@@ -593,14 +616,16 @@
 /obj/item/fish/holo
 	name = "holographic goldfish"
 	desc = "A holographic representation of a common goldfish, slowly flickering out, removed from its holo-habitat."
-	icon_state = "goldfish"
+	icon_state = /obj/item/fish/goldfish::icon_state
 	show_in_catalog = FALSE
 	random_case_rarity = FISH_RARITY_NOPE
-	sprite_width = 8
-	sprite_height = 8
+	dedicated_in_aquarium_icon_state = /obj/item/fish/goldfish::dedicated_in_aquarium_icon_state
+	aquarium_vc_color = /obj/item/fish/goldfish::aquarium_vc_color
+	sprite_width = /obj/item/fish/goldfish::sprite_width
+	sprite_height = /obj/item/fish/goldfish::sprite_height
 	stable_population = 1
-	average_size = 30
-	average_weight = 500
+	average_size = /obj/item/fish/goldfish::average_size
+	average_weight = /obj/item/fish/goldfish::average_weight
 	required_fluid_type = AQUARIUM_FLUID_ANADROMOUS
 	grind_results = null
 	fillet_type = null
@@ -626,7 +651,9 @@
 	name = "holographic crab"
 	desc = "A holographic represantion of a soul-crushingly soulless crab, unlike the cuter ones occasionally roaming around. It stares at you, with empty, beady eyes."
 	icon_state = "crab"
-	dedicated_in_aquarium_icon_state = "crab_small"
+	dedicated_in_aquarium_icon_state = null
+	aquarium_vc_color = null
+	average_size = 30
 	average_weight = 1000
 	sprite_height = 6
 	sprite_width = 10
@@ -634,54 +661,68 @@
 /obj/item/fish/holo/puffer
 	name = "holographic pufferfish"
 	desc ="A holographic representation of 100% safe-to-eat pufferfish... that is, if holographic fishes were even edible."
-	icon_state = "pufferfish"
-	sprite_width = 8
-	sprite_height = 8
-	average_size = 60
-	average_weight = 1000
+	icon_state = /obj/item/fish/pufferfish::icon_state
+	dedicated_in_aquarium_icon_state = /obj/item/fish/pufferfish::dedicated_in_aquarium_icon_state
+	aquarium_vc_color = /obj/item/fish/pufferfish::aquarium_vc_color
+	average_size = /obj/item/fish/pufferfish::average_size
+	average_weight = /obj/item/fish/pufferfish::average_weight
+	sprite_height = /obj/item/fish/pufferfish::sprite_height
+	sprite_width = /obj/item/fish/pufferfish::sprite_width
 	beauty = FISH_BEAUTY_GOOD
 
 /obj/item/fish/holo/angel
 	name = "holographic angelfish"
 	desc = "A holographic representation of a angelfish. I got nothing snarky to say about this one."
-	icon_state = "angelfish"
-	dedicated_in_aquarium_icon_state = "bigfish"
-	sprite_height = 7
+	icon_state = /obj/item/fish/angelfish::icon_state
+	dedicated_in_aquarium_icon_state = /obj/item/fish/angelfish::dedicated_in_aquarium_icon_state
+	aquarium_vc_color = /obj/item/fish/angelfish::aquarium_vc_color
+	average_size = /obj/item/fish/angelfish::average_size
+	average_weight = /obj/item/fish/angelfish::average_weight
+	sprite_height = /obj/item/fish/angelfish::sprite_height
+	sprite_width = /obj/item/fish/angelfish::sprite_width
 
 /obj/item/fish/holo/clown
 	name = "holographic clownfish"
 	icon_state = "holo_clownfish"
 	desc = "A holographic representation of a clownfish, or at least how they used to look like five centuries ago."
-	dedicated_in_aquarium_icon_state = "holo_clownfish_small"
-	required_fluid_type = AQUARIUM_FLUID_SALTWATER
-	sprite_width = 8
-	sprite_height = 5
+	dedicated_in_aquarium_icon_state = null
+	aquarium_vc_color = /obj/item/fish/clownfish::aquarium_vc_color
+	average_size = /obj/item/fish/clownfish::average_size
+	average_weight = /obj/item/fish/clownfish::average_weight
+	sprite_height = /obj/item/fish/clownfish::sprite_height
+	sprite_width = /obj/item/fish/clownfish::sprite_width
 
 /obj/item/fish/holo/checkered
 	name = "unrendered holographic fish"
 	desc = "A checkered silhoutte of searing purple and pitch black presents itself before your eyes, like a tear in fabric of reality. It hurts to watch."
 	icon_state = "checkered" //it's a meta joke, buddy.
-	dedicated_in_aquarium_icon_state = "checkered_small"
+	dedicated_in_aquarium_icon_state = null
+	aquarium_vc_color = null
+	average_size = 30
+	average_weight = 500
 	sprite_width = 4
+	sprite_height = 3
 	beauty = FISH_BEAUTY_NULL
 
 /obj/item/fish/holo/halffish
 	name = "holographic half-fish"
 	desc = "A holographic representation of... a fish reduced to all bones, except for its head. Isn't it supposed to be dead? Ehr, holo-dead?"
 	icon_state = "half_fish"
-	dedicated_in_aquarium_icon_state = "half_fish_small"
+	dedicated_in_aquarium_icon_state = null
+	aquarium_vc_color = null
 	sprite_height = 4
 	sprite_width = 10
 	average_size = 50
+	average_weight = 500
 	beauty = FISH_BEAUTY_UGLY
 
 /obj/item/fish/starfish
 	name = "cosmostarfish"
 	desc = "A peculiar, gravity-defying, echinoderm-looking critter from hyperspace."
 	icon_state = "starfish"
-	dedicated_in_aquarium_icon_state = "starfish_small"
 	icon_state_dead = "starfish_dead"
 	sprite_width = 4
+	sprite_height = 3
 	average_size = 30
 	average_weight = 300
 	stable_population = 3
@@ -724,7 +765,6 @@
 	min_pressure = HAZARD_LOW_PRESSURE
 	required_temperature_min = MIN_AQUARIUM_TEMP+30
 	required_temperature_max = MIN_AQUARIUM_TEMP+35
-	aquarium_vc_color = "#ce7e1d"
 	fish_traits = list(
 		/datum/fish_trait/carnivore,
 		/datum/fish_trait/heavy,
@@ -788,8 +828,8 @@
 	desc = "A fish overflowing with crippling anxiety and electric potential. Worried about the walls of its tank closing in constantly. Both literally and as a general metaphorical unease about life's direction."
 	icon_state = "zipzap"
 	icon_state_dead = "zipzap_dead"
-	sprite_width = 8
-	sprite_height = 8
+	sprite_width = 6
+	sprite_height = 3
 	stable_population = 3
 	average_size = 30
 	average_weight = 500
@@ -811,7 +851,6 @@
 	name = "sockeye salmon"
 	desc = "A fairly common and iconic salmon endemic of the Pacific Ocean. At some point imported into outer space, where we're now."
 	icon_state = "sockeye"
-	dedicated_in_aquarium_icon_state = "sockeye_small"
 	sprite_width = 6
 	sprite_height = 4
 	stable_population = 6
@@ -825,7 +864,6 @@
 	name = "arctic char"
 	desc = "A cold-water anadromous fish widespread around the Northern Hemisphere of Earth, yet it has somehow found a way here."
 	icon_state = "arctic_char"
-	dedicated_in_aquarium_icon_state = "arctic_char"
 	sprite_width = 7
 	sprite_height = 4
 	stable_population = 6
@@ -840,7 +878,6 @@
 	name = "stingray"
 	desc = "A type of ray, most known for its venomous stinger. Despite that, They're normally docile, if not a bit easily frightened."
 	icon_state = "stingray"
-	dedicated_in_aquarium_icon_state = "stingray_small"
 	stable_population = 4
 	sprite_height = 7
 	sprite_width = 8
@@ -855,7 +892,6 @@
 	name = "sand surfer"
 	desc = "A bronze alien \"fish\" living and swimming underneath faraway sandy places."
 	icon_state = "sand_surfer"
-	dedicated_in_aquarium_icon_state = "sand_surfer_small"
 	sprite_height = 6
 	sprite_width = 6
 	stable_population = 5
@@ -875,7 +911,6 @@
 	name = "burrower crab"
 	desc = "A sand-dwelling crustacean. It looks like a crab and tastes like a crab, but waddles like a fish."
 	icon_state = "crab"
-	dedicated_in_aquarium_icon_state = "crab_small"
 	sprite_height = 6
 	sprite_width = 10
 	average_size = 60
@@ -898,7 +933,6 @@
 	name = "bump-fish"
 	desc = "An misshapen fish-thing all covered in stubby little tendrils"
 	icon_state = "bumpy"
-	dedicated_in_aquarium_icon_state = "bumpy_small"
 	sprite_height = 4
 	sprite_width = 5
 	stable_population = 4
@@ -914,46 +948,12 @@
 		),
 	)
 
-/obj/item/fish/three_eyes
-	name = "three-eyed goldfish"
-	desc = "A goldfish with an extra half a pair of eyes. You wonder what it's been feeding on lately..."
-	icon_state = "three_eyes"
-	sprite_width = 8
-	sprite_height = 8
-	average_size = 30
-	average_weight = 500
-	stable_population = 4
-	fish_traits = list(/datum/fish_trait/recessive, /datum/fish_trait/shiny_lover)
-	compatible_types = list(/obj/item/fish/goldfish, /obj/item/fish/goldfish/gill, /obj/item/fish/three_eyes/gill)
-	beauty = FISH_BEAUTY_GOOD
-	fishing_difficulty_modifier = 10
-	random_case_rarity = FISH_RARITY_VERY_RARE
-	food = /datum/reagent/toxin/mutagen
-	favorite_bait = list(
-		list(
-			"Type" = "Reagent",
-			"Value" = /datum/reagent/toxin/mutagen,
-			"Amount" = 3,
-		),
-	)
-
-/obj/item/fish/three_eyes/gill
-	name = "McGill"
-	desc = "A great rubber duck tool for Lawyers who can't get a grasp over their case. It looks kinda different today..."
-	compatible_types = list(/obj/item/fish/goldfish, /obj/item/fish/three_eyes)
-	beauty = FISH_BEAUTY_GREAT
-	show_in_catalog = FALSE
-	stable_population = 1
-	random_case_rarity = FISH_RARITY_NOPE
-
 /obj/item/fish/swordfish
 	name = "swordfish"
 	desc = "A large billfish, most famous for its elongated bill, while also fairly popular for cooking, and as a fearsome weapon in the hands of a veteran spess-fisherman."
-	icon = 'icons/obj/structures/aquarium/wide.dmi'
+	icon = 'icons/obj/aquarium/wide.dmi'
 	icon_state = "swordfish"
 	inhand_icon_state = "swordfish"
-	dedicated_in_aquarium_icon = 'icons/obj/structures/aquarium/fish.dmi'
-	dedicated_in_aquarium_icon_state = "swordfish_small"
 	force = 18
 	sharpness = SHARP_EDGED
 	attack_verb_continuous = list("slashes", "cuts", "pierces")
@@ -1046,12 +1046,10 @@
 /obj/item/fish/chainsawfish
 	name = "chainsawfish"
 	desc = "A very, very angry bioweapon, whose sole purpose is to rip and tear."
-	icon = 'icons/obj/structures/aquarium/wide.dmi'
+	icon = 'icons/obj/aquarium/wide.dmi'
 	icon_state = "chainsawfish"
 	inhand_icon_state = "chainsawfish"
 	icon_state_dead = "chainsawfish_dead"
-	dedicated_in_aquarium_icon = 'icons/obj/structures/aquarium/fish.dmi'
-	dedicated_in_aquarium_icon_state = "chainsaw_small"
 	force = 22
 	demolition_mod = 1.5
 	block_chance = 15
@@ -1167,7 +1165,6 @@
 	name = "soulfish"
 	desc = "A distant yet vaguely close critter, like a long lost relative. You feel your soul rejuvenated just from looking at it... Also, what the fuck is this shit?!"
 	icon_state = "soulfish"
-	dedicated_in_aquarium_icon_state = "soul_small"
 	sprite_width = 7
 	sprite_height = 6
 	average_size = 60
@@ -1191,7 +1188,6 @@
 	name = "skin crab"
 	desc = "<i>\"And on the eighth day, a demential mockery of both humanity and crabity was made.\"<i> Fascinating."
 	icon_state = "skin_crab"
-	dedicated_in_aquarium_icon_state = "skin_crab_small"
 	sprite_width = 7
 	sprite_height = 6
 	average_size = 40

@@ -14,7 +14,6 @@
 #define SMES_INPUT_ATTEMPT 9
 
 /obj/machinery/power/smes
-	SET_BASE_VISUAL_PIXEL(0, DEPTH_OFFSET)
 	name = "power storage unit"
 	desc = "A high-capacity superconducting magnetic energy storage (SMES) unit."
 	icon_state = "smes"
@@ -137,7 +136,7 @@
 		if(isnull(choice) \
 			|| !user.is_holding(installing_cable) \
 			|| !user.Adjacent(src) \
-			|| user.incapacitated() \
+			|| user.incapacitated \
 			|| !can_place_terminal(user, installing_cable, silent = TRUE) \
 		)
 			return ITEM_INTERACT_BLOCKING

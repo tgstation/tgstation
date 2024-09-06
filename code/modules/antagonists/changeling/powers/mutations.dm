@@ -498,6 +498,7 @@
 	lefthand_file = 'icons/mob/inhands/antag/changeling_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/antag/changeling_righthand.dmi'
 	block_chance = 50
+	is_bashable = FALSE
 
 	var/remaining_uses //Set by the changeling ability.
 

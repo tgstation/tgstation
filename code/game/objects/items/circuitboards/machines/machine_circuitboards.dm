@@ -943,6 +943,9 @@
 		/obj/item/stack/cable_coil = 1,
 		/obj/item/stack/sheet/glass = 2)
 
+/obj/item/circuitboard/machine/sleeper/syndie
+	build_path = /obj/machinery/sleeper/syndie
+
 /obj/item/circuitboard/machine/sleeper/fullupgrade
 	build_path = /obj/machinery/sleeper/syndie/fullupgrade
 	req_components = list(
