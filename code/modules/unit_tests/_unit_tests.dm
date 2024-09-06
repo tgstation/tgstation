@@ -224,6 +224,7 @@
 #include "preferences.dm"
 #include "projectiles.dm"
 #include "quirks.dm"
+#include "radio_channel_sanity.dm"
 #include "range_return.dm"
 #include "rcd.dm"
 #include "reagent_container_defaults.dm"
