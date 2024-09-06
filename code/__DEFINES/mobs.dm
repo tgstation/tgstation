@@ -690,12 +690,20 @@ GLOBAL_LIST_INIT(human_heights_to_offsets, list(
 #define MUTATIONS_LAYER 35
 /// Mutantrace features (tail when looking south) that must appear behind the body parts
 #define BODY_BEHIND_LAYER 34
+/// DOPPLER SHIFT ADDITION BEGIN
+#define BODY_BEHIND_LAYER_2 33.99
+#define BODY_BEHIND_LAYER_3 33.98
+/// DOPPLER SHIFT ADDITION END
 /// Layer for bodyparts that should appear behind every other bodypart - Mostly, legs when facing WEST or EAST
 #define BODYPARTS_LOW_LAYER 33
 /// Layer for most bodyparts, appears above BODYPARTS_LOW_LAYER and below BODYPARTS_HIGH_LAYER
 #define BODYPARTS_LAYER 32
 /// Mutantrace features (snout, body markings) that must appear above the body parts
 #define BODY_ADJ_LAYER 31
+/// DOPPLER SHIFT ADDITION BEGIN
+#define BODY_ADJ_LAYER_2 30.99
+#define BODY_ADJ_LAYER_3 30.98
+/// DOPPLER SHIFT ADDITION END
 /// Underwear, undershirts, socks, eyes, lips(makeup)
 #define BODY_LAYER 30
 /// Mutations that should appear above body, body_adj and bodyparts layer (e.g. laser eyes)
@@ -746,6 +754,10 @@ GLOBAL_LIST_INIT(human_heights_to_offsets, list(
 #define HANDS_LAYER 7
 /// Body front layer. Usually used for mutant bodyparts that need to be in front of stuff (e.g. cat ears)
 #define BODY_FRONT_LAYER 6
+/// DOPPLER SHIFT ADDITION BEGIN
+#define BODY_FRONT_LAYER_2 5.99
+#define BODY_FRONT_LAYER_3 5.98
+/// DOPPLER SHIFT ADDITION END
 /// Special body layer that actually require to be above the hair (e.g. lifted welding goggles)
 #define ABOVE_BODY_FRONT_GLASSES_LAYER 5
 /// Special body layer for the rare cases where something on the head needs to be above everything else (e.g. flowers)
@@ -807,10 +819,25 @@ GLOBAL_LIST_INIT(layers_to_offset, list(
 //Bitflags for the layers a bodypart overlay can draw on (can be drawn on multiple layers)
 /// Draws overlay on the BODY_FRONT_LAYER
 #define EXTERNAL_FRONT (1 << 0)
-/// Draws overlay on the BODY_ADJ_LAYER
+/// DOPPLER SHIFT REMOVAL BEGIN
+/*/// Draws overlay on the BODY_ADJ_LAYER
 #define EXTERNAL_ADJACENT (1 << 1)
 /// Draws overlay on the BODY_BEHIND_LAYER
-#define EXTERNAL_BEHIND (1 << 2)
+#define EXTERNAL_BEHIND (1 << 2) */
+/// DOPPLER SHIFT REMOVAL END
+/// DOPPLER SHIFT ADDITION BEGIN
+//Front extra-color layers.
+#define EXTERNAL_FRONT_2 (1 << 1)
+#define EXTERNAL_FRONT_3 (1 << 2)
+//Updated adjacent & extra-color layers.
+#define EXTERNAL_ADJACENT (1 << 3)
+#define EXTERNAL_ADJACENT_2 (1 << 4)
+#define EXTERNAL_ADJACENT_3 (1 << 5)
+//Updated behind & extra-color layers.
+#define EXTERNAL_BEHIND (1 << 6)
+#define EXTERNAL_BEHIND_2 (1 << 7)
+#define EXTERNAL_BEHIND_3 (1 << 8)
+/// DOPPLER SHIFT ADDITION END
 /// Draws organ on all EXTERNAL layers
 #define ALL_EXTERNAL_OVERLAYS EXTERNAL_FRONT | EXTERNAL_ADJACENT | EXTERNAL_BEHIND
 
