@@ -6,5 +6,5 @@
 	for(var/radio_key in GLOB.department_radio_keys)
 		var/radio_channel = GLOB.department_radio_keys[radio_key]
 		if(checked_channel_keys[radio_key])
-			TEST_FAIL("Duplicate radio channel token found for [radio_channel]! \":[radio_key]\" is also being used by [checked_channel_keys[channel_token]]!")
-		checked_channel_keys[channel_token] = radio_channel
+			TEST_FAIL("Duplicate radio channel token found for [radio_channel]! \":[radio_key]\" is also being used by [checked_channel_keys[radio_key]]!")
+		checked_channel_keys[radio_key] = radio_channel
