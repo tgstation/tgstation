@@ -31,7 +31,7 @@ SSD Indicator
 
 ### Defines:
 
-- `code\__DEFINES\~doppler_defines\keybinds.dm`
+- `code\__DEFINES\~doppler_defines\keybindings.dm`
 - `code\__DEFINES\~doppler_defines\signals.dm`
 
 ### Included files:

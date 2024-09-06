@@ -15,8 +15,8 @@ N/A
 
 ### Defines:
 
-- `code\__DEFINES\~doppler_defines\DNA.dm` species id
 - `code\__DEFINES\~doppler_defines\is_helpers.dm` is_type identificator for species
+- `code\__DEFINES\~doppler_defines\species.dm` species id
 
 ### Master file additions
 
