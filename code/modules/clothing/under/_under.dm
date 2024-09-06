@@ -112,6 +112,7 @@
 		to_chat(user, span_notice("You repair the suit sensors on [src] with [cabling]."))
 		cabling.use(1)
 		has_sensor = HAS_SENSORS
+		update_sensor_hud()
 		return TRUE
 
 	if(istype(attacking_item, /obj/item/clothing/accessory))
@@ -133,6 +134,7 @@
 		has_sensor = BROKEN_SENSORS
 	else if(damaged_state == CLOTHING_PRISTINE && has_sensor == BROKEN_SENSORS)
 		has_sensor = HAS_SENSORS
+	update_sensor_hud()
 	update_appearance()
 
 /obj/item/clothing/under/emp_act(severity)
@@ -147,6 +149,7 @@
 		if(ismob(loc))
 			var/mob/M = loc
 			to_chat(M,span_warning("[src]'s sensors short out!"))
+			update_sensor_hud()
 
 	else
 		sensor_mode = pick(SENSOR_OFF, SENSOR_OFF, SENSOR_OFF, SENSOR_LIVING, SENSOR_LIVING, SENSOR_VITALS, SENSOR_VITALS, SENSOR_COORDS)
