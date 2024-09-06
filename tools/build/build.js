@@ -79,6 +79,7 @@ export const ForceRecutParameter = new Juke.Parameter({
   type: 'boolean',
   name: "force-recut",
 });
+
 export const SkipIconCutter = new Juke.Parameter({
   type: 'boolean',
   name: "skip-icon-cutter",
