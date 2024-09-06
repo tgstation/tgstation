@@ -305,3 +305,4 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/detectiveboard, 32)
 #undef MAX_EVIDENCE_Y
 #undef MAX_EVIDENCE_X
 #undef MAX_ICON_NOTICES
+#undef MAX_CASES
