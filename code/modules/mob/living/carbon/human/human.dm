@@ -88,6 +88,56 @@
 
 /mob/living/carbon/human/Topic(href, href_list)
 
+	if(href_list["see_id"])
+		var/mob/viewer = usr
+		var/can_see_still = (viewer in viewers(src))
+
+		var/obj/item/card/id/id = wear_id?.GetID()
+		var/same_id = id && (href_list["id_ref"] == REF(id) || href_list["id_name"] == id.registered_name)
+		if(!same_id && can_see_still)
+			to_chat(viewer, span_notice("[p_They()] [p_are()] no longer wearing that ID card."))
+			return
+
+		var/viable_time = can_see_still ? 3 MINUTES : 1 MINUTES // assuming 3min is the length of a hop line visit - give some leeway if they're still in sight
+		if(!same_id || (text2num(href_list["examine_time"]) + viable_time) < world.time)
+			to_chat(viewer, span_notice("You don't have that good of a memory. Examine [p_them()] again."))
+			return
+		if(HAS_TRAIT(src, TRAIT_UNKNOWN))
+			to_chat(viewer, span_notice("You can't make out that ID anymore."))
+			return
+
+		var/id_name = id.registered_name
+		var/id_age = id.registered_age
+		var/id_job = id.assignment
+		// Should probably be recorded on the ID, but this is easier (albiet more restrictive) on chameleon ID users
+		var/datum/record/crew/record = find_record(id_name)
+		var/id_blood_type = record?.blood_type
+		var/id_gender = record?.gender
+		var/id_species = record?.species
+		var/id_icon = jointext(id.get_id_examine_strings(viewer), "")
+		// Fill in some blanks for chameleon IDs to maintain the illusion of a real ID
+		if(istype(id, /obj/item/card/id/advanced/chameleon))
+			id_gender ||= gender
+			id_species ||= dna.species.name
+			id_blood_type ||= dna.blood_type
+
+		var/id_examine = separator_hr("This is <em>[src]'s ID card</em>.")
+		id_examine += "<div class='img_by_text_container'>"
+		id_examine += "[id_icon]"
+		id_examine += "<div class='img_text'>"
+		id_examine += jointext(list(
+			"&bull; Name: [id_name || "Unknown"]",
+			"&bull; Job: [id_job || "Unassigned"]",
+			"&bull; Age: [id_age || "Unknown"]",
+			"&bull; Gender: [id_gender || "Unknown"]",
+			"&bull; Blood Type: [id_blood_type || "?"]",
+			"&bull; Species: [id_species || "Unknown"]",
+		), "<br>")
+		id_examine += "</div>" // container
+		id_examine += "</div>" // text
+
+		to_chat(viewer, examine_block(span_info(id_examine)))
+
 ///////HUDs///////
 	if(href_list["hud"])
 		if(!ishuman(usr) && !isobserver(usr))
@@ -97,7 +147,7 @@
 		if(!HAS_TRAIT(human_or_ghost_user, TRAIT_SECURITY_HUD) && !HAS_TRAIT(human_or_ghost_user, TRAIT_MEDICAL_HUD))
 			return
 		if((text2num(href_list["examine_time"]) + 1 MINUTES) < world.time)
-			to_chat(human_or_ghost_user, "[span_notice("It's too late to use this now!")]")
+			to_chat(human_or_ghost_user, span_notice("It's too late to use this now!"))
 			return
 		var/datum/record/crew/target_record = find_record(perpname)
 		if(href_list["photo_front"] || href_list["photo_side"])

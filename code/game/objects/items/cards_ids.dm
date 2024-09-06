@@ -174,10 +174,10 @@
 
 /obj/item/card/id/get_id_examine_strings(mob/user)
 	. = ..()
-	. += list("[icon2html(get_cached_flat_icon(), user, extra_classes = "bigicon")]")
+	. += list("[icon2html(get_cached_flat_icon(), user, extra_classes = "hugeicon")]")
 
-/obj/item/card/id/get_examine_string(mob/user, thats = FALSE)
-	return "[icon2html(get_cached_flat_icon(), user)] [thats? "That's ":""][get_examine_name(user)]"
+/obj/item/card/id/get_examine_icon(mob/user)
+	return icon2html(get_cached_flat_icon(), user)
 
 /**
  * Helper proc, checks whether the ID card can hold any given set of wildcards.
@@ -1924,10 +1924,10 @@
 
 /obj/item/card/cardboard/get_id_examine_strings(mob/user)
 	. = ..()
-	. += list("[icon2html(get_cached_flat_icon(), user, extra_classes = "bigicon")]")
+	. += list("[icon2html(get_cached_flat_icon(), user, extra_classes = "hugeicon")]")
 
-/obj/item/card/cardboard/get_examine_string(mob/user, thats = FALSE)
-	return "[icon2html(get_cached_flat_icon(), user)] [thats? "That's ":""][get_examine_name(user)]"
+/obj/item/card/cardboard/get_examine_icon(mob/user)
+	return icon2html(get_cached_flat_icon(), user)
 
 /obj/item/card/cardboard/examine(mob/user)
 	. = ..()

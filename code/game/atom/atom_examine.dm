@@ -1,6 +1,14 @@
 /atom
-	///If non-null, overrides a/an/some in all cases
+	/// If non-null, overrides a/an/some in all cases
 	var/article
+	/// Text that appears preceding the name in examine()
+	var/examine_thats = "That's"
+
+/mob/living/carbon/human
+	examine_thats = "This is"
+
+/mob/living/silicon/robot
+	examine_thats = "This is"
 
 /**
  * Called when a mob examines (shift click or verb) this atom
@@ -11,12 +19,7 @@
  * Produces a signal [COMSIG_ATOM_EXAMINE]
  */
 /atom/proc/examine(mob/user)
-	var/examine_string = get_examine_string(user, thats = TRUE)
-	if(examine_string)
-		. = list("[examine_string].")
-	else
-		. = list()
-
+	. = list()
 	. += get_name_chaser(user)
 	if(desc)
 		. += desc
@@ -75,20 +78,33 @@
  * [COMSIG_ATOM_GET_EXAMINE_NAME] signal
  */
 /atom/proc/get_examine_name(mob/user)
-	var/list/override = list(article, null, "<b>[name]</b>")
+	var/list/override = list(article, null, "<em>[get_visible_name()]</em>")
 	SEND_SIGNAL(src, COMSIG_ATOM_GET_EXAMINE_NAME, user, override)
 
 	if(!isnull(override[EXAMINE_POSITION_ARTICLE]))
 		override -= null // IF there is no "before", don't try to join it
-		return jointext(override, " ")
+		return "<em>[jointext(override, " ")]</em>"
 	if(!isnull(override[EXAMINE_POSITION_BEFORE]))
 		override -= null // There is no article, don't try to join it
-		return "\a [jointext(override, " ")]"
-	return "\a <b>[src]</b>"
+		return "\a <em>[jointext(override, " ")]</em>"
+	return "\a <em>[src]</em>"
 
-///Generate the full examine string of this atom (including icon for goonchat)
-/atom/proc/get_examine_string(mob/user, thats = FALSE)
-	return "[icon2html(src, user)] [thats? "That's ":""][get_examine_name(user)]"
+/mob/living/get_examine_name(mob/user)
+	return get_visible_name()
+
+/// Icon displayed in examine
+/atom/proc/get_examine_icon(mob/user)
+	return icon2html(src, user)
+
+/**
+ * Formats the atom's name into a string for use in examine (as the "title" of the atom)
+ *
+ * * user - the mob examining the atom
+ * * thats - whether to include "That's", or similar (mobs use "This is") before the name
+ */
+/atom/proc/examine_title(mob/user, thats = FALSE)
+	var/examine_icon = get_examine_icon(user)
+	return "[examine_icon ? "[examine_icon] " : ""][thats ? "[examine_thats] ":""][get_examine_name(user)]"
 
 /**
  * Returns an extended list of examine strings for any contained ID cards.
@@ -98,7 +114,6 @@
  */
 /atom/proc/get_id_examine_strings(mob/user)
 	. = list()
-	return
 
 ///Used to insert text after the name but before the description in examine()
 /atom/proc/get_name_chaser(mob/user, list/name_chaser = list())

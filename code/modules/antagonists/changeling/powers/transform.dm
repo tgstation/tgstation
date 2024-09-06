@@ -156,10 +156,10 @@
 
 /obj/item/changeling/id/get_id_examine_strings(mob/user)
 	. = ..()
-	. += list("[icon2html(get_cached_flat_icon(), user, extra_classes = "bigicon")]")
+	. += list("[icon2html(get_cached_flat_icon(), user, extra_classes = "hugeicon")]")
 
-/obj/item/changeling/id/get_examine_string(mob/user, thats = FALSE)
-	return "[icon2html(get_cached_flat_icon(), user)] [thats? "That's ":""][get_examine_name(user)]" //displays all overlays in chat
+/obj/item/changeling/id/get_examine_icon(mob/user)
+	return icon2html(get_cached_flat_icon(), user)
 
 //Change our DNA to that of somebody we've absorbed.
 /datum/action/changeling/transform/sting_action(mob/living/carbon/human/user)

@@ -787,6 +787,10 @@ h2.alert {
   font-size: 60%;
 }
 
+.slightly_larger {
+  font-size: 115%;
+}
+
 .big {
   font-size: 185%;
 }
@@ -992,6 +996,7 @@ h2.alert {
   border-bottom: 1px dashed #000;
 }
 
+// Provides a horizontal bar with text in the middle
 .separator {
   display: flex;
   align-items: center;
@@ -1011,6 +1016,23 @@ h2.alert {
 
 .separator:not(:empty)::after {
   margin-left: 0.25em;
+}
+
+// Used to display images besides text
+.img_by_text_container {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.img_by_text_container img {
+  width: 2.5em; // a css guru can probably dehardcode this later
+  height: auto;
+  margin-right: 12px;
+}
+
+.img_by_text_container .img_text {
+  flex-grow: 1;
 }
 
 $alert-stripe-colors: (

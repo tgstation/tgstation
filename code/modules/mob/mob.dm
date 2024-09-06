@@ -525,25 +525,29 @@
 		return
 
 	face_atom(examinify)
-	var/list/result
+	var/result_combined
 	if(client)
 		LAZYINITLIST(client.recent_examines)
-		var/ref_to_atom = ref(examinify)
+		var/ref_to_atom = REF(examinify)
 		var/examine_time = client.recent_examines[ref_to_atom]
 		if(examine_time && (world.time - examine_time < EXAMINE_MORE_WINDOW))
-			result = examinify.examine_more(src)
+			var/list/result = examinify.examine_more(src)
 			if(!length(result))
 				result += span_notice("<i>You examine [examinify] closer, but find nothing of interest...</i>")
+			result_combined = jointext(result, "<br>")
+
 		else
-			result = examinify.examine(src)
-			SEND_SIGNAL(src, COMSIG_MOB_EXAMINING, examinify, result)
 			client.recent_examines[ref_to_atom] = world.time // set to when we last normal examine'd them
 			addtimer(CALLBACK(src, PROC_REF(clear_from_recent_examines), ref_to_atom), RECENT_EXAMINE_MAX_WINDOW)
 			handle_eye_contact(examinify)
-	else
-		result = examinify.examine(src) // if a tree is examined but no client is there to see it, did the tree ever really exist?
 
-	to_chat(src, examine_block("<span class='infoplain'>[jointext(result, "<br>")]</span>"))
+	if(!result_combined)
+		var/list/result = examinify.examine(src)
+		var/atom_title = examinify.examine_title(src, thats = TRUE)
+		SEND_SIGNAL(src, COMSIG_MOB_EXAMINING, examinify, result)
+		result_combined = (atom_title ? "[span_slightly_larger(separator_hr("[atom_title]."))]" : "") + jointext(result, "<br>")
+
+	to_chat(src, examine_block(span_infoplain(result_combined)))
 	SEND_SIGNAL(src, COMSIG_MOB_EXAMINATE, examinify)
 
 /mob/proc/blind_examine_check(atom/examined_thing)
@@ -639,7 +643,7 @@
 	// check to see if their face is blocked or, if not, a signal blocks it
 	if(examined_mob.is_face_visible() && SEND_SIGNAL(src, COMSIG_MOB_EYECONTACT, examined_mob, TRUE) != COMSIG_BLOCK_EYECONTACT)
 		var/msg = span_smallnotice("You make eye contact with [examined_mob].")
-		addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(to_chat), src, msg), 3) // so the examine signal has time to fire and this will print after
+		addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(to_chat), src, msg), 0.3 SECONDS) // so the examine signal has time to fire and this will print after
 
 	if(!imagined_eye_contact && is_face_visible() && SEND_SIGNAL(examined_mob, COMSIG_MOB_EYECONTACT, src, FALSE) != COMSIG_BLOCK_EYECONTACT)
 		var/msg = span_smallnotice("[src] makes eye contact with you.")
