@@ -93,6 +93,8 @@
 	SIGNAL_HANDLER
 
 	var/obj/item/organ/visible_organ = parent
-	var/examine_text = span_notice("[user.p_Theyre()] holding [icon2html(visible_organ.contents[1], examined)] \a <b>[visible_organ.contents[1].name]</b> with [user.p_their()] tail.")
+	if(!length(visible_organ.contents))
+		return
+	var/examine_text = span_notice("[user.p_Theyre()] holding [icon2html(visible_organ.contents[1], examined)] \a <b>[visible_organ.contents[1].name]</b> with [user.p_their()] [visible_organ.name].")
 
 	examine_list += examine_text
