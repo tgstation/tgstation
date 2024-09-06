@@ -83,11 +83,11 @@
 
 	if(!isnull(override[EXAMINE_POSITION_ARTICLE]))
 		override -= null // IF there is no "before", don't try to join it
-		return "<em>[jointext(override, " ")]</em>"
+		return jointext(override, " ")
 	if(!isnull(override[EXAMINE_POSITION_BEFORE]))
 		override -= null // There is no article, don't try to join it
-		return "\a <em>[jointext(override, " ")]</em>"
-	return "\a <em>[src]</em>"
+		return "\a [jointext(override, " ")]"
+	return "\a [src]"
 
 /mob/living/get_examine_name(mob/user)
 	return get_visible_name()
@@ -104,7 +104,7 @@
  */
 /atom/proc/examine_title(mob/user, thats = FALSE)
 	var/examine_icon = get_examine_icon(user)
-	return "[examine_icon ? "[examine_icon] " : ""][thats ? "[examine_thats] ":""][get_examine_name(user)]"
+	return "[examine_icon ? "[examine_icon] " : ""][thats ? "[examine_thats] ":""]<em>[get_examine_name(user)]</em>"
 
 /**
  * Returns an extended list of examine strings for any contained ID cards.
