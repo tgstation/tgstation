@@ -54,7 +54,7 @@ GLOBAL_LIST_INIT(department_radio_keys, list(
 
 	// Admin
 	"з" = MODE_ADMIN,
-	"в" = MODE_KEY_DEADMIN,
+	"в" = MODE_DEADMIN,
 
 	// Misc
 	"щ" = RADIO_CHANNEL_AI_PRIVATE,
