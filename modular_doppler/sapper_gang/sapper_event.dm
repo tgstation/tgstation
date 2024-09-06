@@ -9,7 +9,6 @@
 	delay = 1 HOURS
 	requirements = list(14,10,7,7,7,7,7,7,7,7)
 	enemy_roles = list(
-		JOB_ENGINEERING_GUARD,
 		JOB_ATMOSPHERIC_TECHNICIAN,
 		JOB_STATION_ENGINEER,
 		JOB_CHIEF_ENGINEER,

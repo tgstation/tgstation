@@ -95,7 +95,7 @@
 	desc = "A sleek black jacket with <b>laser-reflective</b> 'heatsilk' lining and a high-visibility skirt, comfortable, safe, efficient."
 	icon_state = "suit_skirt"
 	female_sprite_flags = FEMALE_UNIFORM_TOP_ONLY
-	gets_cropped_on_taurs = FALSE
+//	gets_cropped_on_taurs = FALSE
 
 /obj/item/clothing/shoes/workboots/sapper
 	name = "black work boots"
@@ -104,7 +104,7 @@
 	icon_state = "jackboots"
 	body_parts_covered = FEET|LEGS
 	worn_icon = 'modular_doppler/sapper_gang/icons/sapper.dmi'
-	worn_icon_digi = DIGITIGRADE_SHOES_FILE
+//	worn_icon_digi = DIGITIGRADE_SHOES_FILE
 	inhand_icon_state = "jackboots"
 	armor_type = /datum/armor/shoes_combat
 

@@ -36,37 +36,6 @@
 	shuttleId = "pirate_sapper"
 	shuttlePortId = "sapper_custom"
 
-/obj/machinery/porta_turret/syndicate/energy/sapper
-	stun_projectile = /obj/projectile/beam/weak
-	stun_projectile_sound = 'sound/weapons/laser.ogg'
-	faction = list(FACTION_SAPPER)
-	req_access = list(ACCESS_SAPPER_SHIP)
-	on = FALSE
-
-/obj/item/storage/toolbox/emergency/turret/mag_fed/spider/sapper
-	name = "offensive turret capsule"
-	desc = "A deployable turret used for aggressive expansion and zone defense. It is chambered to fire <i>4.6x30mm</i> auto-rifle ammunition."
-	icon_state = "sapper_toolbox"
-	inhand_icon_state = null
-	setting_change = FALSE
-	turret_safety = FALSE
-	flags_on = TRUE
-	faction = list(FACTION_SAPPER)
-	turret_type = /obj/machinery/porta_turret/syndicate/toolbox/mag_fed/spider/sapper
-	mag_types_allowed = list(/obj/item/ammo_box/magazine/wt550m9)
-
-/obj/item/storage/toolbox/emergency/turret/mag_fed/spider/sapper/pre_filled/PopulateContents()
-	new /obj/item/ammo_box/magazine/wt550m9(src)
-
-/obj/machinery/porta_turret/syndicate/toolbox/mag_fed/spider/sapper
-	name = "\improper Sapper Spider Turret"
-	desc = "A deployable turret used for aggressive expansion and zone defense. It is chambered to fire .35 Sol ammunition."
-	base_icon_state = "sapper"
-	max_integrity = 115
-	shot_delay = 2 SECONDS
-	faction = list(FACTION_SAPPER)
-	mag_box_type = /obj/item/storage/toolbox/emergency/turret/mag_fed/spider/pre_filled
-
 /mob/living/basic/bot/medbot/sapper
 	name = "Manon"
 	medkit_type = /obj/item/storage/medkit/fire
