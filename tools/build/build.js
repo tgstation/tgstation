@@ -63,6 +63,7 @@ export const DefineParameter = new Juke.Parameter({
   alias: 'D',
 });
 
+
 export const PortParameter = new Juke.Parameter({
   type: 'string',
   alias: 'p',
@@ -77,6 +78,10 @@ export const CiParameter = new Juke.Parameter({ type: 'boolean' });
 export const ForceRecutParameter = new Juke.Parameter({
   type: 'boolean',
   name: "force-recut",
+});
+export const SkipIconCutter = new Juke.Parameter({
+  type: 'boolean',
+  name: "skip-icon-cutter",
 });
 
 export const WarningParameter = new Juke.Parameter({
@@ -204,10 +209,10 @@ export const DmMapsIncludeTarget = new Juke.Target({
 });
 
 export const DmTarget = new Juke.Target({
-  parameters: [DefineParameter, DmVersionParameter, WarningParameter, NoWarningParameter],
+  parameters: [DefineParameter, DmVersionParameter, WarningParameter, NoWarningParameter, SkipIconCutter],
   dependsOn: ({ get }) => [
     get(DefineParameter).includes('ALL_MAPS') && DmMapsIncludeTarget,
-    IconCutterTarget,
+    !get(SkipIconCutter) && IconCutterTarget,
   ],
   inputs: [
     '_maps/map_files/generic/**',
