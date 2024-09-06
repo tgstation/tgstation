@@ -371,12 +371,10 @@
 		mouse_position = text2num(LAZYACCESS(modifiers, ICON_X))
 
 	if(mouse_position > 16)
-		to_chat(world, "up")
-		usr.down()
+		usr.up()
 		return
 
-	to_chat(world, "down")
-	usr.up()
+	usr.down()
 	return
 
 /atom/movable/screen/floor_changer/vertical
