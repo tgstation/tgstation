@@ -137,11 +137,12 @@
 	return ..()
 
 /obj/item/defibrillator/mouse_drop_dragged(atom/over_object, mob/user, src_location, over_location, params)
-	if(ismob(loc))
-		var/mob/M = loc
-		if(istype(over_object, /atom/movable/screen/inventory/hand))
-			var/atom/movable/screen/inventory/hand/H = over_object
-			M.putItemFromInventoryInHandIfPossible(src, H.held_index)
+	if(!ismob(loc))
+		return
+	var/mob/living_mob = loc
+	if(!living_mob.incapacitated && istype(over_object, /atom/movable/screen/inventory/hand))
+		var/atom/movable/screen/inventory/hand/hand = over_object
+		living_mob.putItemFromInventoryInHandIfPossible(src, hand.held_index)
 
 /obj/item/defibrillator/screwdriver_act(mob/living/user, obj/item/tool)
 	if(!cell || !cell_removable)

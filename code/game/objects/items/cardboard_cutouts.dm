@@ -149,7 +149,7 @@
 /obj/item/cardboard_cutout/proc/check_menu(mob/living/user, obj/item/toy/crayon/crayon)
 	if(!istype(user))
 		return FALSE
-	if(user.incapacitated())
+	if(user.incapacitated)
 		return FALSE
 	if(pushed_over)
 		to_chat(user, span_warning("Right [src] first!"))
