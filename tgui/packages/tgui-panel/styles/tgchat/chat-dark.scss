@@ -974,6 +974,27 @@ em {
   border-bottom: 1px dashed #fff;
 }
 
+.separator {
+  display: flex;
+  align-items: center;
+  text-align: center;
+}
+
+.separator::before,
+.separator::after {
+  content: '';
+  flex: 1;
+  border-bottom: 1px solid #a4bad6;
+}
+
+.separator:not(:empty)::before {
+  margin-right: 0.25em;
+}
+
+.separator:not(:empty)::after {
+  margin-left: 0.25em;
+}
+
 $alert-stripe-colors: (
   'default': #00283a,
   'green': #003d00,

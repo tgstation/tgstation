@@ -992,6 +992,27 @@ h2.alert {
   border-bottom: 1px dashed #000;
 }
 
+.separator {
+  display: flex;
+  align-items: center;
+  text-align: center;
+}
+
+.separator::before,
+.separator::after {
+  content: '';
+  flex: 1;
+  border-bottom: 1px solid #111a27;
+}
+
+.separator:not(:empty)::before {
+  margin-right: 0.25em;
+}
+
+.separator:not(:empty)::after {
+  margin-left: 0.25em;
+}
+
 $alert-stripe-colors: (
   'default': #b3bfff,
   'green': #adffad,
