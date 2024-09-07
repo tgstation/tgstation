@@ -221,17 +221,9 @@ jobs:
       minor: ${{ matrix.setup.minor }}
       max_required_byond_client: ${{needs.collect_data.outputs.max_required_byond_client}}
 
-  check_alternate_tests:
-    name: Check Alternate Tests
-    needs: run_alternate_tests
-    runs-on: ubuntu-22.04
-    timeout-minutes: 5
-    steps:
-      - run: echo Alternate tests passed.
-
   compare_screenshots:
-    if: (!failure() && !cancelled())
-    needs: [run_all_tests, run_alternate_tests]
+    if: needs.collect_data.outputs.alternate_tests == '[]' || needs.run_alternate_tests.result == 'success'
+    needs: [ collect_data, run_all_tests, run_alternate_tests ]
     name: Compare Screenshot Tests
     timeout-minutes: 15
     runs-on: ubuntu-22.04
