@@ -286,7 +286,7 @@ jobs:
 
   completion_gate: # Serves as a non-moving target for branch rulesets
     name: Completion Gate
-    needs: [ test_windows, compare_screenshots ]
+    needs: [ test_windows, compare_screenshots, compile_all_maps ]
     runs-on: ubuntu-latest
     steps:
       - name: Mandatory Empty Step
