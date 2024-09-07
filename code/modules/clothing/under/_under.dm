@@ -109,7 +109,7 @@
 /obj/item/clothing/under/attackby(obj/item/attacking_item, mob/user, params)
 	if(has_sensor == BROKEN_SENSORS && istype(attacking_item, /obj/item/stack/cable_coil))
 		var/obj/item/stack/cable_coil/cabling = attacking_item
-		balloon_alert(user, "suit sensors repaired!")
+		to_chat(user, span_notice("You repair the suit sensors on [src] with [cabling]."))
 		cabling.use(1)
 		has_sensor = HAS_SENSORS
 		update_sensor_hud()
