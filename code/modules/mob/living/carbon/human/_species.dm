@@ -573,7 +573,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
 			sample_overlay = new overlay_path()
 			organs_to_randomize[overlay_path] = sample_overlay
 
-		new_features["[sample_overlay.feature_key]"] = sample_overlay.get_random_appearance().name
+		new_features["[sample_overlay.feature_key]"] = /datum/sprite_accessory/blank::name // DOPPLER EDIT - no more random features, old code: new_features["[sample_overlay.feature_key]"] = sample_overlay.get_random_appearance().name
 
 	return new_features
 
