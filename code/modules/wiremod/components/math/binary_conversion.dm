@@ -42,10 +42,10 @@
 	if(number.value < 0)
 		is_negative = TRUE
 		to_convert = -to_convert
-
-	for(var/iteration in 1 to length(bit_array))
+	var/len = length(bit_array)
+	for(var/iteration in 1 to len)
 		var/datum/port/output/bit = bit_array[iteration]
 		if(iteration == 1 && is_negative)
 			bit.set_output(1)
 			continue
-		bit.set_output(!!(to_convert & (1<<(length(bit_array) - iteration))))
+		bit.set_output(!!(to_convert & (1<< (len - iteration))))
