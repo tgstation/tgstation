@@ -73499,7 +73499,7 @@
 /area/station/security/prison/rec)
 "vwG" = (
 /obj/machinery/vending/security{
-	onstation_override = 1
+	all_products_free = 0
 	},
 /obj/effect/turf_decal/tile/red/half/contrasted{
 	dir = 8

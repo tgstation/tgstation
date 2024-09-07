@@ -18,7 +18,7 @@ import { DmIcon, Input } from '../components';
 import { Window } from '../layouts';
 
 type VendingData = {
-  onstation: boolean;
+  all_products_free: boolean;
   department: string;
   jobDiscount: number;
   displayed_currency_icon: string;
@@ -82,7 +82,7 @@ export const Vending = (props) => {
   const { data } = useBackend<VendingData>();
 
   const {
-    onstation,
+    all_products_free,
     product_records = [],
     coin_records = [],
     hidden_records = [],
@@ -134,7 +134,7 @@ export const Vending = (props) => {
     <Window width={450} height={600}>
       <Window.Content>
         <Stack fill vertical>
-          {!!onstation && (
+          {!all_products_free && (
             <Stack.Item>
               <UserDetails />
             </Stack.Item>
@@ -218,7 +218,7 @@ const ProductDisplay = (props: {
   } = props;
   const {
     stock,
-    onstation,
+    all_products_free,
     user,
     displayed_currency_icon,
     displayed_currency_name,
@@ -231,7 +231,7 @@ const ProductDisplay = (props: {
       title="Products"
       buttons={
         <Stack>
-          {!!onstation && user && (
+          {!all_products_free && user && (
             <Stack.Item fontSize="16px" color="green">
               {(user && user.cash) || 0}
               {displayed_currency_name}{' '}
@@ -277,15 +277,15 @@ const ProductDisplay = (props: {
 const VendingRow = (props) => {
   const { data } = useBackend<VendingData>();
   const { custom, product, productStock } = props;
-  const { access, department, jobDiscount, onstation, user } = data;
-  const free = !onstation || product.price === 0;
+  const { access, department, jobDiscount, all_products_free, user } = data;
+  const free = !!all_products_free || product.price === 0;
   const discount = !product.premium && department === user?.department;
   const remaining = custom ? product.amount : productStock.amount;
   const redPrice = Math.round(product.price * jobDiscount);
   const disabled =
     remaining === 0 ||
-    (onstation && !user) ||
-    (onstation &&
+    (!all_products_free && !user) ||
+    (!all_products_free &&
       !access &&
       (discount ? redPrice : product.price) > user?.cash);
 

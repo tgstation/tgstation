@@ -139,7 +139,7 @@
 "bq" = (
 /obj/structure/cable/layer1,
 /obj/machinery/vending/sovietsoda{
-	onstation_override = 1
+	all_products_free = 0
 	},
 /obj/structure/sign/poster/contraband/clown/directional/east,
 /obj/machinery/duct,
@@ -527,7 +527,7 @@
 "dU" = (
 /obj/structure/cable/layer1,
 /obj/machinery/vending/cigarette/syndicate{
-	onstation_override = 1
+	all_products_free = 0
 	},
 /obj/machinery/duct,
 /obj/effect/mapping_helpers/broken_machine,
@@ -544,7 +544,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer4,
 /obj/machinery/duct,
 /obj/machinery/vending/clothing{
-	onstation_override = 1
+	all_products_free = 0
 	},
 /obj/machinery/firealarm/directional/south,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden{
@@ -1378,7 +1378,7 @@
 /area/ruin/space/has_grav/hauntedtradingpost/office/meetingroom)
 "lT" = (
 /obj/machinery/vending/cola/black{
-	onstation_override = 1
+	all_products_free = 0
 	},
 /obj/machinery/duct,
 /obj/effect/mapping_helpers/broken_machine,
@@ -1866,7 +1866,7 @@
 /obj/structure/cable/layer1,
 /obj/machinery/duct,
 /obj/machinery/vending/assist{
-	onstation_override = 1
+	all_products_free = 0
 	},
 /obj/machinery/camera/xray/directional/west,
 /turf/open/floor/catwalk_floor/iron_smooth,
@@ -2475,7 +2475,7 @@
 /obj/structure/cable/layer1,
 /obj/machinery/duct,
 /obj/machinery/vending/cola/shamblers{
-	onstation_override = 1
+	all_products_free = 0
 	},
 /turf/open/floor/catwalk_floor/iron_smooth,
 /area/ruin/space/has_grav/hauntedtradingpost/public/corridor)
@@ -4199,7 +4199,7 @@
 "KH" = (
 /obj/structure/cable/layer1,
 /obj/machinery/vending/donksnack{
-	onstation_override = 1
+	all_products_free = 0
 	},
 /obj/machinery/duct,
 /obj/machinery/camera/autoname/directional/west{
@@ -4516,7 +4516,7 @@
 "MO" = (
 /obj/machinery/duct,
 /obj/machinery/vending/snack{
-	onstation_override = 1
+	all_products_free = 0
 	},
 /turf/open/floor/catwalk_floor/iron_smooth,
 /area/ruin/space/has_grav/hauntedtradingpost/public/corridor)
@@ -4616,7 +4616,7 @@
 "NY" = (
 /obj/structure/cable/layer1,
 /obj/machinery/vending/coffee{
-	onstation_override = 1
+	all_products_free = 0
 	},
 /obj/machinery/duct,
 /turf/open/floor/catwalk_floor/iron_smooth,
@@ -4755,7 +4755,7 @@
 "Pk" = (
 /obj/structure/cable/layer1,
 /obj/machinery/vending/tool{
-	onstation_override = 1
+	all_products_free = 0
 	},
 /obj/structure/sign/poster/contraband/donk_co/directional/west,
 /obj/machinery/duct,
@@ -4886,7 +4886,7 @@
 "QM" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer4,
 /obj/machinery/vending/sovietsoda{
-	onstation_override = 1
+	all_products_free = 0
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden{
 	pipe_color = "#FF7B00";
@@ -5415,7 +5415,7 @@
 /obj/structure/cable/layer1,
 /obj/machinery/duct,
 /obj/machinery/vending/medical{
-	onstation_override = 1;
+	all_products_free = 0;
 	name = "\improper CyberMed +"
 	},
 /turf/open/floor/catwalk_floor/iron_smooth,
@@ -5635,7 +5635,7 @@
 /area/ruin/space/has_grav/hauntedtradingpost/office)
 "Ww" = (
 /obj/machinery/vending/coffee{
-	onstation_override = 1
+	all_products_free = 0
 	},
 /obj/structure/cable/layer1,
 /obj/machinery/duct,
@@ -5712,7 +5712,7 @@
 "Xe" = (
 /obj/structure/cable/layer1,
 /obj/machinery/vending/cola/shamblers{
-	onstation_override = 1
+	all_products_free = 0
 	},
 /obj/machinery/duct,
 /obj/effect/overloader_trap,
@@ -5802,7 +5802,7 @@
 /area/ruin/space/has_grav/hauntedtradingpost/public)
 "XK" = (
 /obj/machinery/vending/donksnack{
-	onstation_override = 1
+	all_products_free = 0
 	},
 /obj/machinery/duct,
 /turf/open/floor/catwalk_floor/iron_smooth,

@@ -18,7 +18,7 @@
 	greyscale_colors = CIRCUIT_COLOR_GENERIC
 	var/build_path = null
 	///determines if the circuit board originated from a vendor off station or not.
-	var/onstation = TRUE
+	var/all_products_free = FALSE
 	///determines if the board requires specific levels of parts. (ie specifically a femto menipulator vs generic manipulator)
 	var/specific_parts = FALSE
 
