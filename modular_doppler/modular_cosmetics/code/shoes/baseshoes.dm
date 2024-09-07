@@ -9,22 +9,16 @@
 /obj/item/clothing/shoes/sneakers
 	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION
 	supported_bodyshapes = list(BODYSHAPE_HUMANOID, BODYSHAPE_DIGITIGRADE)
+	greyscale_config_worn_bodyshapes = list(BODYSHAPE_HUMANOID_T = /datum/greyscale_config/sneakers/worn,
+		BODYSHAPE_DIGITIGRADE_T = /datum/greyscale_config/sneakers/worn/digi)
 
-/obj/item/clothing/shoes/sneakers/Initialize(mapload)
-	. = ..()
-	greyscale_config_worn_bodyshapes = list()
-	greyscale_config_worn_bodyshapes["[BODYSHAPE_HUMANOID]"] = /datum/greyscale_config/sneakers/worn
-	greyscale_config_worn_bodyshapes["[BODYSHAPE_DIGITIGRADE]"] = /datum/greyscale_config/sneakers/worn/digi
+/obj/item/clothing/shoes/sneakers/orange
+	greyscale_config_worn_bodyshapes = list(BODYSHAPE_HUMANOID_T = /datum/greyscale_config/sneakers_orange/worn,
+		BODYSHAPE_DIGITIGRADE_T = /datum/greyscale_config/sneakers_orange/worn/digi)
 
-/obj/item/clothing/shoes/sneakers/orange/Initialize(mapload)
-	. = ..()
-	greyscale_config_worn_bodyshapes["[BODYSHAPE_HUMANOID]"] = /datum/greyscale_config/sneakers_orange/worn
-	greyscale_config_worn_bodyshapes["[BODYSHAPE_DIGITIGRADE]"] = /datum/greyscale_config/sneakers_orange/worn/digi
-
-/obj/item/clothing/shoes/sneakers/marisa/Initialize(mapload)
-	. = ..()
-	greyscale_config_worn_bodyshapes["[BODYSHAPE_HUMANOID]"] = /datum/greyscale_config/sneakers_marisa/worn
-	greyscale_config_worn_bodyshapes["[BODYSHAPE_DIGITIGRADE]"] = /datum/greyscale_config/sneakers_marisa/worn/digi
+/obj/item/clothing/shoes/sneakers/marisa
+	greyscale_config_worn_bodyshapes = list(BODYSHAPE_HUMANOID_T = /datum/greyscale_config/sneakers_marisa/worn,
+		BODYSHAPE_DIGITIGRADE_T = /datum/greyscale_config/sneakers_marisa/worn/digi)
 
 
 
