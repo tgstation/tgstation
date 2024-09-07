@@ -1,4 +1,5 @@
 #define MAX_ICON_NOTICES 8
+#define MAX_CASES 8
 #define MAX_EVIDENCE_Y 3500
 #define MAX_EVIDENCE_X 1180
 
@@ -143,6 +144,8 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/detectiveboard, 32)
 	var/mob/user = ui.user
 	switch(action)
 		if("add_case")
+			if(cases.len == MAX_CASES)
+				return FALSE
 			var/new_case = tgui_input_text(user, "Please enter the case name", "Detective's Board")
 			if(!new_case)
 				return FALSE
@@ -152,22 +155,23 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/detectiveboard, 32)
 
 			var/datum/case/case = new (new_case, case_color)
 			cases += case
-			current_case = cases.len
+			current_case = clamp(cases.len, 1, MAX_CASES)
 			update_appearance(UPDATE_ICON)
 			return TRUE
 		if("set_case")
 			if(cases && params["case"] && params["case"] <= cases.len)
-				current_case = params["case"]
+				current_case = clamp(params["case"], 1, MAX_CASES)
 				update_appearance(UPDATE_ICON)
 				return TRUE
 		if("remove_case")
 			var/datum/case/case = locate(params["case_ref"]) in cases
-			for(var/datum/evidence/evidence in case.evidences)
-				remove_item(evidence.item, user)
-			cases -= case
-			current_case = cases.len
-			update_appearance(UPDATE_ICON)
-			return TRUE
+			if(case)
+				for(var/datum/evidence/evidence in case.evidences)
+					remove_item(evidence.item, user)
+				cases -= case
+				current_case = clamp(cases.len, 1, MAX_CASES)
+				update_appearance(UPDATE_ICON)
+				return TRUE
 		if("rename_case")
 			var/new_name = tgui_input_text(user, "Please ender the case new name",  "Detective's Board")
 			if(new_name)
@@ -301,3 +305,4 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/detectiveboard, 32)
 #undef MAX_EVIDENCE_Y
 #undef MAX_EVIDENCE_X
 #undef MAX_ICON_NOTICES
+#undef MAX_CASES
