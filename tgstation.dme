@@ -6485,6 +6485,7 @@
 #include "modular_doppler\modular_food_drinks_and_chems\food_and_drinks\drink_reagents.dm"
 #include "modular_doppler\modular_food_drinks_and_chems\food_and_drinks\drinks.dm"
 #include "modular_doppler\modular_food_drinks_and_chems\food_and_drinks\drinks_recipes.dm"
+#include "modular_doppler\modular_items\invisible_gear.dm"
 #include "modular_doppler\modular_mob_spawn\code\mob_spawn.dm"
 #include "modular_doppler\modular_sounds\code\sounds.dm"
 #include "modular_doppler\modular_traits\code\neutral.dm"
