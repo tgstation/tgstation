@@ -185,7 +185,7 @@
 
 /mob/living/carbon/human/proc/update_sensor_list()
 	var/obj/item/clothing/under/U = w_uniform
-	if(istype(U) && U.has_sensor > NO_SENSORS && U.sensor_mode)
+	if(istype(U) && U.has_sensor != NO_SENSORS && U.sensor_mode)
 		GLOB.suit_sensors_list |= src
 	else
 		GLOB.suit_sensors_list -= src
