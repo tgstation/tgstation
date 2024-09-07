@@ -134,7 +134,7 @@ export const Vending = (props) => {
     <Window width={450} height={600}>
       <Window.Content>
         <Stack fill vertical>
-          {!all_products_free && (
+          {!!onstation && (
             <Stack.Item>
               <UserDetails />
             </Stack.Item>
@@ -278,7 +278,7 @@ const VendingRow = (props) => {
   const { data } = useBackend<VendingData>();
   const { custom, product, productStock } = props;
   const { access, department, jobDiscount, all_products_free, user } = data;
-  const free = !!all_products_free || product.price === 0;
+  const free = all_products_free || product.price === 0;
   const discount = !product.premium && department === user?.department;
   const remaining = custom ? product.amount : productStock.amount;
   const redPrice = Math.round(product.price * jobDiscount);

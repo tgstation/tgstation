@@ -1226,6 +1226,7 @@ GLOBAL_LIST_EMPTY(vending_machines_to_restock)
 
 /obj/machinery/vending/ui_static_data(mob/user)
 	var/list/data = list()
+	data["onstation"] = onstation
 	data["all_products_free"] = all_products_free
 	data["department"] = payment_department
 	data["jobDiscount"] = DEPARTMENT_DISCOUNT
