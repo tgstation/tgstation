@@ -3,6 +3,7 @@
 	desc = "You shouldn't be seeing this. Yell at Naaka."
 	icon = 'modular_doppler/modular_cosmetics/icons/obj/under/doppler_uniforms.dmi'
 	worn_icon = 'modular_doppler/modular_cosmetics/icons/mob/under/doppler_uniforms.dmi'
+	digitigrade_greyscale_config_worn = null
 	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION
 	supported_bodyshapes = list(BODYSHAPE_HUMANOID, BODYSHAPE_DIGITIGRADE)
 	bodyshape_icon_files = list(BODYSHAPE_HUMANOID_T = 'modular_doppler/modular_cosmetics/icons/mob/under/doppler_uniforms.dmi',

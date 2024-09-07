@@ -87,7 +87,8 @@
 		context[SCREENTIP_CONTEXT_LMB] = "Repair suit sensors"
 		changed = TRUE
 
-	if(can_adjust && adjusted != DIGITIGRADE_STYLE)
+	//if(can_adjust && adjusted != DIGITIGRADE_STYLE) /// DOPPLER SHIFT REMOVAL
+	if(can_adjust) /// DOPPLER SHIFT REPLACEMENT
 		context[SCREENTIP_CONTEXT_ALT_LMB] =  "Wear [adjusted == ALT_STYLE ? "normally" : "casually"]"
 		changed = TRUE
 
@@ -164,14 +165,15 @@
 	if(adjusted == ALT_STYLE)
 		adjust_to_normal()
 
+	/// DOPPLER SHFIT REMOVAL BEGIN
+	/*
 	if((supports_variations_flags & CLOTHING_DIGITIGRADE_VARIATION) && ishuman(user))
-		/// DOPPLER SHFIT REMOVAL BEGIN
-		/*var/mob/living/carbon/human/wearer = user
+		var/mob/living/carbon/human/wearer = user
 		if(wearer.bodyshape & BODYSHAPE_DIGITIGRADE)
-			adjusted = DIGITIGRADE_STYLE*/
-		/// DOPPLER SHIFT REMOVAL END
+			adjusted = DIGITIGRADE_STYLE
 		update_appearance()
-		/// DOPPLER SHIFT EDITS END
+	*/
+	/// DOPPLER SHIFT REMOVAL END
 
 /obj/item/clothing/under/equipped(mob/living/user, slot)
 	..()
@@ -412,8 +414,10 @@
 /// Returns the new state
 /obj/item/clothing/under/proc/toggle_jumpsuit_adjust()
 	switch(adjusted)
-		if(DIGITIGRADE_STYLE)
-			return
+		/// DOPPLER SHIFT REMOVAL BEGIN
+		/*if(DIGITIGRADE_STYLE)
+			return*/
+		/// DOPPLER SHIFT REMOVAL END
 
 		if(NORMAL_STYLE)
 			adjust_to_alt()
