@@ -16,20 +16,27 @@
 	var/charge_upper = 30
 	var/charge_lower = 20
 	//With default settings, this will charge between 80% and 110% of every chargable item on you. Unless you drop it or something.
+	//Speaking of, this is how much damage this does when used as a grenade/dropped
+	var/zap_damage = 33
+	//AoE range of zap nade usage (in tiles from centre)
+	var/zap_range = 1
+	//And how much stun time it inflicts
+	var/stun_time = 1.5 SECONDS
 
 /obj/item/inducer_cell/interact(mob/user)
 	if(!burntout)
+		do_sparks(number = 2, source = src)
+		playsound(src, SFX_SPARKS, 65, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
 		inductive_charge()
+		burntout = TRUE
+		icon_state = "inducer_cell"
 	return ..()
 
 /obj/item/inducer_cell/proc/inductive_charge(mob/user)
-	burntout = TRUE
 	if(src.loc != user.loc)
+
 		return
-	icon_state = "inducer_cell"
-	do_sparks(number = 2, source = src)
 	src.Shake(2, 1, cycle_time)
-	playsound(src, SFX_SPARKS, 100, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
 	pulse_amount--
 	if(pulse_amount <= 0)
 		addtimer(CALLBACK(src, PROC_REF(inductive_charge)), cycle_time)

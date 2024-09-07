@@ -346,6 +346,11 @@
 /obj/effect/turf_decal/siding/wideplating_new/dark,
 /turf/open/indestructible/asphalt/outdoors,
 /area/deathmatch)
+"eQ" = (
+/obj/machinery/door/poddoor/shutters/indestructible,
+/obj/effect/spawner/structure/window/reinforced,
+/turf/open/indestructible/plating,
+/area/deathmatch)
 "fd" = (
 /obj/structure/table/reinforced/ctf,
 /obj/item/paper_bin,
@@ -816,7 +821,7 @@
 /turf/open/indestructible/vault,
 /area/deathmatch)
 "kY" = (
-/obj/effect/spawner/structure/window/reinforced/plasma/plastitanium/indestructible,
+/obj/effect/spawner/structure/window/reinforced/plasma/plastitanium,
 /turf/open/indestructible/plating/reinforced,
 /area/deathmatch)
 "kZ" = (
@@ -987,6 +992,13 @@
 	pixel_y = -3
 	},
 /turf/open/floor/grass,
+/area/deathmatch)
+"nB" = (
+/obj/machinery/door/airlock/public/glass{
+	name = "Rofl Brothers Outlet"
+	},
+/obj/machinery/door/poddoor/shutters/indestructible,
+/turf/open/indestructible/plating,
 /area/deathmatch)
 "nL" = (
 /turf/open/indestructible/large/textured,
@@ -1554,6 +1566,11 @@
 	proj_pass_rate = 60
 	},
 /turf/open/indestructible/asphalt/outdoors,
+/area/deathmatch)
+"tQ" = (
+/turf/closed/indestructible/fakedoor{
+	name = "Hab Block 512"
+	},
 /area/deathmatch)
 "tW" = (
 /obj/structure/shipping_container/gorlex/red,
@@ -3103,6 +3120,10 @@
 /obj/effect/turf_decal/siding/wideplating_new/dark,
 /turf/open/indestructible/asphalt/outdoors,
 /area/deathmatch)
+"OB" = (
+/obj/effect/spawner/structure/window/reinforced/plasma/plastitanium/indestructible,
+/turf/open/indestructible/plating/reinforced,
+/area/deathmatch)
 "OC" = (
 /obj/structure/closet/crate/large,
 /obj/effect/turf_decal/stripes/line{
@@ -3554,6 +3575,10 @@
 /area/deathmatch)
 "Va" = (
 /obj/structure/closet/crate/secure/wafflecorp,
+/obj/item/gun/ballistic/revolver/syndicate{
+	pixel_y = 8
+	},
+/obj/item/gun/ballistic/automatic/c20r,
 /turf/open/indestructible/dark,
 /area/deathmatch)
 "Vd" = (
@@ -4066,7 +4091,7 @@ or
 or
 or
 tn
-BB
+eQ
 Nm
 zM
 gb
@@ -4126,7 +4151,7 @@ or
 or
 or
 tn
-BB
+eQ
 Te
 zM
 kp
@@ -4186,7 +4211,7 @@ or
 or
 or
 tn
-BT
+nB
 Jr
 zM
 kp
@@ -4306,7 +4331,7 @@ or
 or
 or
 tn
-BB
+BT
 Jr
 zM
 OY
@@ -5341,8 +5366,8 @@ iT
 UH
 yE
 qP
-JP
-vv
+Jr
+aR
 tn
 or
 or
@@ -5401,8 +5426,8 @@ Ko
 ZA
 UH
 Hi
-Jr
-aR
+JC
+vv
 tn
 or
 or
@@ -5461,8 +5486,8 @@ Gp
 Xi
 UH
 Jr
-JC
-vv
+XB
+TG
 tn
 or
 or
@@ -5521,7 +5546,7 @@ UH
 UH
 UH
 Jr
-XB
+nx
 TG
 tn
 or
@@ -5581,7 +5606,7 @@ UH
 rQ
 JP
 Jr
-nx
+gl
 TG
 tn
 or
@@ -5641,7 +5666,7 @@ UH
 Hc
 xD
 iL
-gl
+XB
 TG
 tn
 or
@@ -5701,8 +5726,8 @@ UH
 UH
 UH
 Jr
-XB
-TG
+bW
+vv
 tn
 or
 or
@@ -5761,8 +5786,8 @@ UH
 UH
 UH
 qP
-bW
-vv
+JP
+BB
 tn
 or
 or
@@ -5822,7 +5847,7 @@ pn
 BL
 Hi
 qP
-aR
+tQ
 tn
 tn
 or
@@ -5882,7 +5907,7 @@ av
 UH
 Jr
 Ux
-vv
+BB
 BB
 tn
 or
@@ -7175,7 +7200,7 @@ pP
 AO
 AO
 Zw
-kY
+OB
 LW
 OS
 Ea
@@ -7185,8 +7210,8 @@ ik
 uB
 vv
 vv
-kY
-kY
+OB
+OB
 vv
 vv
 tn
