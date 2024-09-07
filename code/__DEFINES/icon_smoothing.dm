@@ -162,6 +162,10 @@ DEFINE_BITFIELD(smoothing_junction, list(
 #define SMOOTH_GROUP_BAMBOO_WALLS S_TURF(17) //![/turf/closed/wall/mineral/bamboo, /obj/structure/falsewall/bamboo]
 #define SMOOTH_GROUP_PLASTINUM_WALLS S_TURF(18) //![turf/closed/indestructible/riveted/plastinum]
 
+//DOPPLER EDIT ADDITION
+#define SMOOTH_GROUP_STONE_WALLS S_OBJ(20) ///turf/closed/wall/mineral/stone, /obj/structure/falsewall/stone
+//DOPPLER EDIT END
+
 #define SMOOTH_GROUP_PAPERFRAME S_OBJ(21) ///obj/structure/window/paperframe, /obj/structure/mineral_door/paperframe
 
 #define SMOOTH_GROUP_WINDOW_FULLTILE S_OBJ(22) ///turf/closed/indestructible/fakeglass, /obj/structure/window/fulltile, /obj/structure/window/reinforced/fulltile, /obj/structure/window/reinforced/tinted/fulltile, /obj/structure/window/plasma/fulltile, /obj/structure/window/reinforced/plasma/fulltile
