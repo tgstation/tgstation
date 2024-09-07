@@ -77,7 +77,7 @@
 		. += span_notice("Complexity level: [complexity]")
 
 /// Looks through the MODsuit's parts to see if it has the parts required to support this module
-/obj/item/mod/module/proc/has_required_parts(obj/item/mod/control/mod, list/parts, need_extended = FALSE)
+/obj/item/mod/module/proc/has_required_parts(list/parts, need_extended = FALSE)
 	if(!length(required_slots))
 		return TRUE
 	var/total_slot_flags = NONE
@@ -93,6 +93,10 @@
 			break
 		needed_slots -= needed_slot
 	return !length(needed_slots)
+
+/// Additional checks for whenever a module can be installed into a suit or not
+/obj/item/mod/module/proc/can_install(obj/item/mod/control/mod)
+	return TRUE
 
 /// Called when the module is selected from the TGUI, radial or the action button
 /obj/item/mod/module/proc/on_select()
