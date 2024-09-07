@@ -238,12 +238,11 @@
 /turf/open/floor/mineral/plastitanium/red,
 /area/ruin/syndielab)
 "nT" = (
-/obj/structure/window/reinforced/plasma/plastitanium,
-/obj/structure/grille,
 /obj/machinery/atmospherics/components/binary/pump/on/dark/hidden{
 	dir = 1;
 	target_pressure = 180
 	},
+/obj/effect/spawner/structure/window/reinforced/plasma/plastitanium,
 /turf/open/floor/mineral/plastitanium/red,
 /area/ruin/syndielab)
 "oA" = (
@@ -286,8 +285,7 @@
 /turf/open/floor/mineral/plastitanium,
 /area/ruin/syndielab)
 "qC" = (
-/obj/structure/window/reinforced/plasma/plastitanium,
-/obj/structure/grille,
+/obj/effect/spawner/structure/window/reinforced/plasma/plastitanium,
 /turf/open/floor/mineral/plastitanium/red,
 /area/ruin/syndielab)
 "ry" = (
