@@ -1,0 +1,16 @@
+{
+	"gauntlets": [
+		{
+			"type": "icon_state",
+			"icon_state": "armwraps",
+			"blend_mode": "overlay",
+			"color_ids": [ 1 ]
+		},
+		{
+			"type": "icon_state",
+			"icon_state": "gauntlets",
+			"blend_mode": "overlay",
+			"color_ids": [ 2 ]
+		}
+	]
+}
