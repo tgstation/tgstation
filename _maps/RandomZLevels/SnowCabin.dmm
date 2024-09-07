@@ -4122,7 +4122,7 @@
 	pixel_x = -1;
 	pixel_y = 10
 	},
-/obj/item/gun/ballistic/shotgun/toy/unrestricted{
+/obj/item/gun/ballistic/shotgun/toy{
 	pixel_y = -2
 	},
 /obj/effect/light_emitter{
