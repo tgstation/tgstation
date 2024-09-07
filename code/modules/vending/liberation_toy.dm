@@ -13,8 +13,6 @@
 		/obj/item/toy/sword = 12,
 		/obj/item/dualsaber/toy = 12,
 		/obj/item/toy/foamblade = 12,
-		/obj/item/clothing/head/syndicatefake = 8,
-		/obj/item/clothing/suit/syndicatefake = 8,
 		/obj/item/gun/ballistic/automatic/pistol/toy/riot = 8,
 		/obj/item/gun/ballistic/automatic/toy/riot = 8,
 		/obj/item/gun/ballistic/shotgun/toy/riot = 8,
