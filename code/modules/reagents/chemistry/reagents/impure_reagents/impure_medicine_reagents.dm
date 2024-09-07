@@ -230,7 +230,7 @@ Basically, we fill the time between now and 2s from now with hands based off the
 //Just the removed itching mechanism - omage to its origins.
 /datum/reagent/inverse/ichiyuri/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
 	. = ..()
-	if(prob(resetting_probability) && !(HAS_TRAIT(affected_mob, TRAIT_RESTRAINED) || affected_mob.incapacitated()))
+	if(prob(resetting_probability) && !(HAS_TRAIT(affected_mob, TRAIT_RESTRAINED) || affected_mob.incapacitated))
 		. = TRUE
 		if(spammer < world.time)
 			to_chat(affected_mob,span_warning("You can't help but itch yourself."))

@@ -96,7 +96,7 @@
 			return FALSE
 
 		//dead men tell no tales, incapacitated men fight no fights
-		if(attacker_controller.incapacitated())
+		if(attacker_controller.incapacitated)
 			return FALSE
 		//if the attacker_controller isn't next to the attacking toy (and doesn't have telekinesis), the battle ends
 		if(!in_range(attacker, attacker_controller) && !(attacker_controller.dna.check_mutation(/datum/mutation/human/telekinesis)))
@@ -106,7 +106,7 @@
 
 		//if it's PVP and the opponent is not next to the defending(src) toy (and doesn't have telekinesis), the battle ends
 		if(opponent)
-			if(opponent.incapacitated())
+			if(opponent.incapacitated)
 				return FALSE
 			if(!in_range(src, opponent) && !(opponent.dna.check_mutation(/datum/mutation/human/telekinesis)))
 				opponent.visible_message(span_notice("[opponent.name] separates from [src], ending the battle."), \
