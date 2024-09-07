@@ -22,12 +22,13 @@
 
 /obj/item/clothing/head/helmet/monkey_sentience/examine(mob/user)
 	. = ..()
-	. += span_boldwarning("---WARNING: REMOVAL OF HELMET ON SUBJECT MAY LEAD TO:---")
+	. += span_boldwarning("---WARNING: REMOVAL OF HELMET ON SUBJECT, OR REPEATED SENTIENCE GENERATION FAILURES MAY LEAD TO:---")
 	. += span_warning("BLOOD RAGE")
 	. += span_warning("BRAIN DEATH")
 	. += span_warning("PRIMAL GENE ACTIVATION")
 	. += span_warning("GENETIC MAKEUP MASS SUSCEPTIBILITY")
-	. += span_boldnotice("Ask your CMO if mind magnification is right for you.")
+	. += span_notice("Warranty voided if helmet is placed after more than ") + span_boldnotice("two") + span_notice(" mind magnification failures.")
+	. += span_boldnotice("Ask your CMO if mind magnification is right for you!")
 
 /obj/item/clothing/head/helmet/monkey_sentience/update_icon_state()
 	. = ..()
