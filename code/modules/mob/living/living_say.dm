@@ -47,7 +47,7 @@ GLOBAL_LIST_INIT(department_radio_keys, init_department_radio_keys_list())
 		list("ш" = MODE_INTERCOM),
 
 		// Department
-		list("о" = MODE_DEPARTMENT),
+		list("д" = MODE_DEPARTMENT),
 		list("с" = RADIO_CHANNEL_COMMAND),
 		list("т" = RADIO_CHANNEL_SCIENCE),
 		list("ь" = RADIO_CHANNEL_MEDICAL),
@@ -66,7 +66,7 @@ GLOBAL_LIST_INIT(department_radio_keys, init_department_radio_keys_list())
 
 		// Misc
 		list("щ" = RADIO_CHANNEL_AI_PRIVATE),
-		list("р" = RADIO_CHANNEL_ENTERTAINMENT),
+		list("κ" = RADIO_CHANNEL_ENTERTAINMENT),
 	)
 
 	// Let's enforce no dupes, stack_trace when it happens so it is easily trackable.
