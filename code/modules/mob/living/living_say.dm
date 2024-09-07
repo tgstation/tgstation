@@ -1,65 +1,84 @@
 GLOBAL_LIST_INIT(department_radio_prefixes, list(":", "."))
 
-GLOBAL_LIST_INIT(department_radio_keys, list(
-	// Location
-	MODE_KEY_R_HAND = MODE_R_HAND,
-	MODE_KEY_L_HAND = MODE_L_HAND,
-	MODE_KEY_INTERCOM = MODE_INTERCOM,
+GLOBAL_LIST_INIT(department_radio_keys, init_department_radio_keys_list())
 
-	// Department
-	MODE_KEY_DEPARTMENT = MODE_DEPARTMENT,
-	RADIO_KEY_COMMAND = RADIO_CHANNEL_COMMAND,
-	RADIO_KEY_SCIENCE = RADIO_CHANNEL_SCIENCE,
-	RADIO_KEY_MEDICAL = RADIO_CHANNEL_MEDICAL,
-	RADIO_KEY_ENGINEERING = RADIO_CHANNEL_ENGINEERING,
-	RADIO_KEY_SECURITY = RADIO_CHANNEL_SECURITY,
-	RADIO_KEY_SUPPLY = RADIO_CHANNEL_SUPPLY,
-	RADIO_KEY_SERVICE = RADIO_CHANNEL_SERVICE,
+/**
+ * Initialize the department radio keys global list, enforcing a strict no-dupes rule from the get-go
+ * Otherwise it is very easy for one of the defines to be a dupe, which will result in the value being overwritten and lead to unexpected behavior.
+ */
+/proc/init_department_radio_keys_list()
+	/// The list that will be returned
+	var/list/dept_radio_keys = list()
+	/// The list before we double check that there are no dupes. It's in list(list()) form because otherwise dupe keys will silently overwrite the previous value and that is very hard to track.
+	var/list/dept_radio_keys_raw = list(
+		// Location
+		list(MODE_KEY_R_HAND = MODE_R_HAND),
+		list(MODE_KEY_L_HAND = MODE_L_HAND),
+		list(MODE_KEY_INTERCOM = MODE_INTERCOM),
 
-	// Faction
-	RADIO_KEY_SYNDICATE = RADIO_CHANNEL_SYNDICATE,
-	RADIO_KEY_UPLINK = RADIO_CHANNEL_UPLINK,
-	RADIO_KEY_CENTCOM = RADIO_CHANNEL_CENTCOM,
+		// Department
+		list(MODE_KEY_DEPARTMENT = MODE_DEPARTMENT),
+		list(RADIO_KEY_COMMAND = RADIO_CHANNEL_COMMAND),
+		list(RADIO_KEY_SCIENCE = RADIO_CHANNEL_SCIENCE),
+		list(RADIO_KEY_MEDICAL = RADIO_CHANNEL_MEDICAL),
+		list(RADIO_KEY_ENGINEERING = RADIO_CHANNEL_ENGINEERING),
+		list(RADIO_KEY_SECURITY = RADIO_CHANNEL_SECURITY),
+		list(RADIO_KEY_SERVICE = RADIO_CHANNEL_SERVICE),
 
-	// Admin
-	MODE_KEY_ADMIN = MODE_ADMIN,
-	MODE_KEY_DEADMIN = MODE_DEADMIN,
-	MODE_KEY_PUPPET = MODE_PUPPET,
+		// Faction
+		list(RADIO_KEY_SYNDICATE = RADIO_CHANNEL_SYNDICATE),
+		list(RADIO_KEY_UPLINK = RADIO_CHANNEL_UPLINK),
+		list(RADIO_KEY_CENTCOM = RADIO_CHANNEL_CENTCOM),
 
-	// Misc
-	RADIO_KEY_AI_PRIVATE = RADIO_CHANNEL_AI_PRIVATE, // AI Upload channel
-	RADIO_KEY_ENTERTAINMENT = RADIO_CHANNEL_ENTERTAINMENT, // Entertainment monitors
+		// Admin
+		list(MODE_KEY_ADMIN = MODE_ADMIN),
+		list(MODE_KEY_DEADMIN = MODE_DEADMIN),
+		list(MODE_KEY_PUPPET = MODE_PUPPET),
 
+		// Misc
+		list(RADIO_KEY_AI_PRIVATE = RADIO_CHANNEL_AI_PRIVATE), // AI Upload channel
+		list(RADIO_KEY_ENTERTAINMENT = RADIO_CHANNEL_ENTERTAINMENT), // Entertainment monitors
 
-	//kinda localization -- rastaf0
-	//same keys as above, but on russian keyboard layout.
-	// Location
-	"к" = MODE_R_HAND,
-	"л" = MODE_L_HAND,
-	"ш" = MODE_INTERCOM,
+		//kinda localization -- rastaf0
+		//same keys as above, but on russian keyboard layout.
+		// Location
+		list("к" = MODE_R_HAND),
+		list("л" = MODE_L_HAND),
+		list("ш" = MODE_INTERCOM),
 
-	// Department
-	"р" = MODE_DEPARTMENT,
-	"с" = RADIO_CHANNEL_COMMAND,
-	"т" = RADIO_CHANNEL_SCIENCE,
-	"ь" = RADIO_CHANNEL_MEDICAL,
-	"у" = RADIO_CHANNEL_ENGINEERING,
-	"ы" = RADIO_CHANNEL_SECURITY,
-	"г" = RADIO_CHANNEL_SUPPLY,
-	"м" = RADIO_CHANNEL_SERVICE,
+		// Department
+		list("р" = MODE_DEPARTMENT),
+		list("с" = RADIO_CHANNEL_COMMAND),
+		list("т" = RADIO_CHANNEL_SCIENCE),
+		list("ь" = RADIO_CHANNEL_MEDICAL),
+		list("у" = RADIO_CHANNEL_ENGINEERING),
+		list("ы" = RADIO_CHANNEL_SECURITY),
+		list("г" = RADIO_CHANNEL_SUPPLY),
+		list("м" = RADIO_CHANNEL_SERVICE),
 
-	// Faction
-	"е" = RADIO_CHANNEL_SYNDICATE,
-	"н" = RADIO_CHANNEL_CENTCOM,
+		// Faction
+		list("е" = RADIO_CHANNEL_SYNDICATE),
+		list("н" = RADIO_CHANNEL_CENTCOM),
 
-	// Admin
-	"з" = MODE_ADMIN,
-	"в" = MODE_DEADMIN,
+		// Admin
+		list("а" = MODE_ADMIN),
+		list("в" = MODE_DEADMIN),
 
-	// Misc
-	"щ" = RADIO_CHANNEL_AI_PRIVATE,
-	"з" = RADIO_CHANNEL_ENTERTAINMENT,
-))
+		// Misc
+		list("щ" = RADIO_CHANNEL_AI_PRIVATE),
+		list("з" = RADIO_CHANNEL_ENTERTAINMENT),
+	)
+
+	// Let's enforce no dupes, stack_trace when it happens so it is easily trackable.
+	for(var/list/radio_key_value_pair as anything in dept_radio_keys_raw)
+		for(var/radio_key in radio_key_value_pair)
+			if(dept_radio_keys[radio_key])
+				stack_trace("Tried to add a duplicate entry in GLOB.department_radio_keys for the channel \"[radio_key_value_pair[radio_key]]\"! \
+					The key \"[radio_key]\" is already being used for \"[dept_radio_keys[radio_key]]!\"")
+				continue
+			dept_radio_keys += list("[radio_key]" = radio_key_value_pair[radio_key])
+
+	return dept_radio_keys
 
 /**
  * Whitelist of saymodes or radio extensions that can be spoken through even if not fully conscious.
