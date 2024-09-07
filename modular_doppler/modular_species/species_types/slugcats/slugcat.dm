@@ -29,7 +29,7 @@
 	payday_modifier = 1.0
 	changesource_flags = MIRROR_BADMIN | WABBAJACK | MIRROR_PRIDE | MIRROR_MAGIC | RACE_SWAP | ERT_SPAWN | SLIME_EXTRACT
 	inert_mutation = /datum/mutation/human/mute
-	death_sound = 'modular_doppler/customization/species/scugs/sounds/scugdeath.ogg'
+	death_sound = 'modular_doppler/modular_species/species_types/slugcats/sounds/scugdeath.ogg'
 	species_language_holder = /datum/language_holder/slugcat
 	digitigrade_customization = DIGITIGRADE_OPTIONAL
 
@@ -45,7 +45,7 @@
 /// SOUNDS BREAKER
 /datum/species/slugcat/get_scream_sound(mob/living/carbon/human/scug)
 	return pick(
-		'modular_doppler/customization/species/scugs/sounds/scugscream_1.ogg',
+		'modular_doppler/modular_species/species_types/slugcats/sounds/scugscream_1.ogg',
 	)
 
 /datum/species/slugcat/get_cough_sound(mob/living/carbon/human/scug)
@@ -85,7 +85,7 @@
 	return 'sound/voice/human/male_sneeze1.ogg'
 
 /datum/species/lizard/get_laugh_sound(mob/living/carbon/human/scug)
-	return 'modular_doppler/customization/species/scugs/sounds/scuglaugh_1.ogg'
+	return 'modular_doppler/modular_species/species_types/slugcats/sounds/scuglaugh_1.ogg'
 
 /datum/species/lizard/get_sigh_sound(mob/living/carbon/human/scug)
 	if(scug.physique == FEMALE)
