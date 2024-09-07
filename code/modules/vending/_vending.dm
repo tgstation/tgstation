@@ -258,13 +258,7 @@ GLOBAL_LIST_EMPTY(vending_machines_to_restock)
 	power_change()
 
 	if(mapload) //check if it was initially created off station during mapload.
-		if(!is_station_level(z))
-			if(!onstation_override)
-				onstation = FALSE
-			if(circuit)
-				circuit.onstation = onstation //sync up the circuit so the pricing schema is carried over if it's reconstructed.
-
-		else if(HAS_TRAIT(SSstation, STATION_TRAIT_VENDING_SHORTAGE))
+		if(HAS_TRAIT(SSstation, STATION_TRAIT_VENDING_SHORTAGE))
 			for (var/datum/data/vending_product/product_record as anything in product_records + coin_records + hidden_records)
 				/**
 				 * in average, it should be 37.5% of the max amount, rounded up to the nearest int,
@@ -276,8 +270,6 @@ GLOBAL_LIST_EMPTY(vending_machines_to_restock)
 			if(tiltable && prob(6)) // 1 in 17 chance to start tilted (as an additional hint to the station trait behind it)
 				INVOKE_ASYNC(src, PROC_REF(tilt), loc)
 				credits_contained = 0 // If it's tilted, it's been looted, so no credits for you.
-	else if(circuit && (circuit.onstation != onstation)) //check if they're not the same to minimize the amount of edited values.
-		onstation = circuit.onstation //if it was constructed outside mapload, sync the vendor up with the circuit's var so you can't bypass price requirements by moving / reconstructing it off station.
 	if(onstation && !onstation_override)
 		AddComponent(/datum/component/payment, 0, SSeconomy.get_dep_account(payment_department), PAYMENT_VENDING)
 		GLOB.vending_machines_to_restock += src //We need to keep track of the final onstation vending machines so we can keep them restocked.

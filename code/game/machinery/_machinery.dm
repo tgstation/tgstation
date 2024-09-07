@@ -159,10 +159,18 @@
 	fire = 50
 	acid = 70
 
-/obj/machinery/Initialize(mapload)
+/obj/machinery/Initialize(mapload, obj/structure/frame/machine/frame_with_parts = null, mob/living/builder = null, obj/item/building_tool = null)
 	. = ..()
 	SSmachines.register_machine(src)
 
+	if(frame_with_parts && istype(frame_with_parts, /obj/structure/frame/machine))
+		circuit = frame_with_parts.circuit
+		component_parts = frame_with_parts?.components
+		for (var/obj/new_part in component_parts)
+			new_part.forceMove(src)
+		//Inform machine that its finished & cleanup
+		RefreshParts()
+		on_construction(builder)
 	if(ispath(circuit, /obj/item/circuitboard))
 		circuit = new circuit(src)
 		circuit.apply_default_parts(src)
