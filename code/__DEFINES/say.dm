@@ -31,8 +31,8 @@
 #define MODE_WHISPER_CRIT "whispercrit"
 
 #define MODE_DEPARTMENT "department"
-#define MODE_KEY_DEPARTMENT "h"
-#define MODE_TOKEN_DEPARTMENT ":h"
+#define MODE_KEY_DEPARTMENT "r"
+#define MODE_TOKEN_DEPARTMENT ":r"
 
 #define MODE_ADMIN "admin"
 #define MODE_KEY_ADMIN "p"
