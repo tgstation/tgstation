@@ -577,6 +577,15 @@ GLOBAL_LIST_INIT(wire_node_generating_types, typecacheof(list(/obj/structure/gri
 
 /obj/item/stack/cable_coil/proc/try_heal_loop(atom/interacting_with, mob/living/user, repeating = FALSE)
 	var/mob/living/carbon/human/attacked_humanoid = interacting_with
+	var/obj/item/clothing/under/uniform = attacked_humanoid.w_uniform
+	if(uniform && uniform.has_sensor == BROKEN_SENSORS)
+		to_chat(user, span_notice("You repair the suit sensors on [uniform] with [src]."))
+		balloon_alert(interacting_with, "suit sensors repaired!")
+		use(1)
+		uniform.has_sensor = HAS_SENSORS
+		attacked_humanoid.med_hud_set_status()
+		return ITEM_INTERACT_SUCCESS
+
 	var/obj/item/bodypart/affecting = attacked_humanoid.get_bodypart(check_zone(user.zone_selected))
 	if(isnull(affecting) || !IS_ROBOTIC_LIMB(affecting))
 		return NONE
