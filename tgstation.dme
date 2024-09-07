@@ -6477,6 +6477,7 @@
 #include "modular_doppler\modular_cosmetics\code\neck\collar.dm"
 #include "modular_doppler\modular_cosmetics\code\storage\rings.dm"
 #include "modular_doppler\modular_cosmetics\code\suits\jacket.dm"
+#include "modular_doppler\modular_cosmetics\code\under\miscellania.dm"
 #include "modular_doppler\modular_cosmetics\GAGS\greyscale_configs_neck.dm"
 #include "modular_doppler\modular_crafting\code\crafting_extended.dm"
 #include "modular_doppler\modular_crafting\code\sheet_types.dm"
