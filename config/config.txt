@@ -2,6 +2,7 @@
 
 $include game_options.txt
 $include dbconfig.txt
+$include doppler/config_doppler.txt
 $include comms.txt
 $include logging.txt
 $include resources.txt

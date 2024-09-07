@@ -357,6 +357,14 @@ GLOBAL_LIST_INIT(admin_visible_traits, list(
 	/obj/item/organ/internal/lungs = list(
 		"TRAIT_SPACEBREATHING" = TRAIT_SPACEBREATHING,
 	),
+	// DOPPLER EDIT ADDITION START - DOPPLER TRAITS
+	/obj/item/clothing/suit/jacket/doppler = list(
+		"TRAIT_CURRENTLY_GLASSBLOWING" = TRAIT_CURRENTLY_GLASSBLOWING,
+		"TRAIT_FELINE" = TRAIT_FELINE,
+		"TRAIT_GLASSBLOWING" = TRAIT_GLASSBLOWING,
+		"TRAIT_XENOARCH_QUALIFIED" = TRAIT_XENOARCH_QUALIFIED,
+	),
+	// DOPPLER EDIT ADDITION END
 ))
 
 /// value -> trait name, generated as needed for adminning.
