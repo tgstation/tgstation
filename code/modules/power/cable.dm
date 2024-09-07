@@ -579,7 +579,7 @@ GLOBAL_LIST_INIT(wire_node_generating_types, typecacheof(list(/obj/structure/gri
 	var/mob/living/carbon/human/attacked_humanoid = interacting_with
 	var/obj/item/clothing/under/uniform = attacked_humanoid.w_uniform
 	if(uniform && uniform.has_sensor == BROKEN_SENSORS)
-		to_chat(user, span_notice("You repair the suit sensors on [uniform] with [src]."))
+		visible_message(span_notice("[user] repairs the suit sensors on [interacting_with] with [src]."))
 		use(1)
 		uniform.has_sensor = HAS_SENSORS
 		return ITEM_INTERACT_SUCCESS
