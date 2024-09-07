@@ -31,14 +31,14 @@
 #define MODE_WHISPER_CRIT "whispercrit"
 
 #define MODE_DEPARTMENT "department"
-#define MODE_KEY_DEPARTMENT "q"
-#define MODE_TOKEN_DEPARTMENT ":q"
+#define MODE_KEY_DEPARTMENT "d"
+#define MODE_TOKEN_DEPARTMENT ":d"
 
 #define MODE_ADMIN "admin"
 #define MODE_KEY_ADMIN "p"
 
 #define MODE_DEADMIN "deadmin"
-#define MODE_KEY_DEADMIN "d"
+#define MODE_KEY_DEADMIN "J"
 
 #define MODE_PUPPET "puppet"
 #define MODE_KEY_PUPPET "j"
