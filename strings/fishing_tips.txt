@@ -40,3 +40,5 @@ In a jiffy, you can scoop tadpoles from ponds with your bare hands, place them i
 The legendary fishing hat isn't just cosmetic. Space carps (as well as young lobstrosities and frogs) do truly fear those who wear it.
 Have you ever heard a lobster or crab talk? Well, neither have I, but they say they're quite the fishy punsters.
 You can get an experiscanner from science to perform fish scanning experiments, which can unlock more modules for the fishing portal, as well as fishing technology nodes (better equipment) for research.
+If you have enough credits, you can buy a set of fishing lures from cargo. Each lure allows you to catch different species of fish and won't get consumed, however they need to be spun at intervals to work.
+This may sound silly, but squids and their ink sacs can be used as weapons to temporarily blind people.
