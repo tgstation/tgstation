@@ -1,3 +1,6 @@
+///Fired in combat_indicator.dm, used for syncing CI between mech and pilot
+#define COMSIG_MOB_CI_TOGGLED "mob_ci_toggled"
+
 // Power signals
 /// Sent when an obj/item calls item_use_power: (use_amount, user, check_only)
 #define COMSIG_ITEM_POWER_USE "item_use_power"

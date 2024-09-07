@@ -40,5 +40,5 @@ GLOBAL_LIST_INIT(colonist_suit_allowed, list(
 	/obj/item/analyzer,
 	/obj/item/storage/medkit,
 	/obj/item/fireaxe/metal_h2_axe,
-//	/obj/item/forging/reagent_weapon, remember to uncomment when weapon forging is added
+	/obj/item/forging/reagent_weapon,
 ))

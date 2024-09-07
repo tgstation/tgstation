@@ -1,3 +1,4 @@
+#define span_italics(str) ("<span class='italics'>" + str + "</span>")
 #define span_pink(str) ("<span class='pink'>" + str + "</span>")
 #define span_brown(str) ("<span class='brown'>" + str + "</span>")
 #define span_cyan(str) ("<span class='cyan'>" + str + "</span>")
