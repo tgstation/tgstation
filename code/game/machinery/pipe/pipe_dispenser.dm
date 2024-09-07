@@ -3,7 +3,6 @@
 #define TRANSIT_PIPEDISPENSER 2
 
 /obj/machinery/pipedispenser
-	SET_BASE_VISUAL_PIXEL(0, DEPTH_OFFSET)
 	name = "pipe dispenser"
 	icon = 'icons/obj/machines/lathes.dmi'
 	icon_state = "pipe_d"
@@ -188,6 +187,9 @@
 
 //Allow you to drag-drop disposal pipes and transit tubes into it
 /obj/machinery/pipedispenser/disposal/mouse_drop_receive(obj/structure/pipe, mob/user, params)
+	if(user.incapacitated)
+		return
+
 	if (!istype(pipe, /obj/structure/disposalconstruct) && !istype(pipe, /obj/structure/c_transit_tube) && !istype(pipe, /obj/structure/c_transit_tube_pod))
 		return
 

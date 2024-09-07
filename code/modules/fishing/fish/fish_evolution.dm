@@ -108,7 +108,7 @@ GLOBAL_LIST_INIT(fish_evolutions, init_subtypes_w_path_keys(/datum/fish_evolutio
 /datum/fish_evolution/three_eyes
 	name = "Three-eyed Goldfish"
 	probability = 3
-	new_fish_type = /obj/item/fish/three_eyes
+	new_fish_type = /obj/item/fish/goldfish/three_eyes
 	new_traits = list(/datum/fish_trait/recessive)
 
 /datum/fish_evolution/chainsawfish
@@ -119,6 +119,8 @@ GLOBAL_LIST_INIT(fish_evolutions, init_subtypes_w_path_keys(/datum/fish_evolutio
 	conditions_note = "The fish needs to be unusually big and aggressive"
 
 /datum/fish_evolution/chainsawfish/check_conditions(obj/item/fish/source, obj/item/fish/mate, obj/structure/aquarium/aquarium)
-	if(source.size >= 60 && source.size >= 1000 && (/datum/fish_trait/aggressive in source.fish_traits))
+	var/double_avg_size = /obj/item/fish/goldfish::average_size * 2
+	var/double_avg_weight = /obj/item/fish/goldfish::average_weight * 2
+	if(source.size >= double_avg_size && source.weight >= double_avg_weight && (/datum/fish_trait/aggressive in source.fish_traits))
 		return ..()
 	return FALSE

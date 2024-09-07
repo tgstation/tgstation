@@ -271,7 +271,7 @@
 
 	//catpeople: make any felinid near the target to face the target, chance for felinids to pounce at the light, stepping to the target
 	for(var/mob/living/carbon/human/target_felinid in view(1, targloc))
-		if(!isfelinid(target_felinid) || target_felinid.stat == DEAD || target_felinid.is_blind() || target_felinid.incapacitated())
+		if(!isfelinid(target_felinid) || target_felinid.stat == DEAD || target_felinid.is_blind() || target_felinid.incapacitated)
 			continue
 		if(target_felinid.body_position == STANDING_UP)
 			target_felinid.setDir(get_dir(target_felinid, targloc)) // kitty always looks at the light

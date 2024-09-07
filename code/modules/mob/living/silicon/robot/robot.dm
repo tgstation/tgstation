@@ -301,7 +301,7 @@
 		else
 			eye_lights.icon_state = "[model.special_light_key ? "[model.special_light_key]":"[model.cyborg_base_icon]"]_e"
 			eye_lights.color = COLOR_WHITE
-			SET_PLANE_EXPLICIT(eye_lights, GAME_PLANE, src)
+			SET_PLANE_EXPLICIT(eye_lights, ABOVE_GAME_PLANE, src)
 		eye_lights.icon = icon
 		add_overlay(eye_lights)
 
@@ -389,7 +389,7 @@
 	return ..()
 
 /mob/living/silicon/robot/execute_mode()
-	if(incapacitated())
+	if(incapacitated)
 		return
 	var/obj/item/W = get_active_held_item()
 	if(W)
@@ -936,7 +936,7 @@
 		M.visible_message(span_warning("[M] really can't seem to mount [src]..."))
 		return
 
-	if(stat || incapacitated())
+	if(stat || incapacitated)
 		return
 	if(model && !model.allow_riding)
 		M.visible_message(span_boldwarning("Unfortunately, [M] just can't seem to hold onto [src]!"))

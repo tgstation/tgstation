@@ -606,7 +606,7 @@
 	alert_type = null
 
 /datum/status_effect/spasms/tick(seconds_between_ticks)
-	if(owner.stat >= UNCONSCIOUS || owner.incapacitated() || HAS_TRAIT(owner, TRAIT_HANDS_BLOCKED) || HAS_TRAIT(owner, TRAIT_IMMOBILIZED))
+	if(owner.stat >= UNCONSCIOUS || owner.incapacitated || HAS_TRAIT(owner, TRAIT_HANDS_BLOCKED) || HAS_TRAIT(owner, TRAIT_IMMOBILIZED))
 		return
 	if(!prob(15))
 		return
