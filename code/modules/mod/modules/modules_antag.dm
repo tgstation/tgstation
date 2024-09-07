@@ -525,6 +525,7 @@
 	if(istype(head_cover))
 		head_cover.flash_protect = FLASH_PROTECTION_WELDER_HYPER_SENSITIVE
 	old_tongue = mod.wearer.get_organ_slot(ORGAN_SLOT_TONGUE)
+	old_tongue.Remove(mod.wearer, special = TRUE)
 	old_tongue.forceMove(src)
 	robotic_voice = new()
 	robotic_voice.Insert(mod.wearer)
