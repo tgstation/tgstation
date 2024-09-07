@@ -8,25 +8,25 @@
 /datum/unit_test/radio_saymode_channel_sanity/Run()
 	say_keys_by_channel = list()
 
-	// We are getting our radio keys from GLOB.department_radio_keys mostly
+	// Build the master list. We are getting our radio keys from GLOB.department_radio_keys mostly
 	for(var/radio_key in GLOB.department_radio_keys)
 		say_keys_by_channel.Add(list(list(
 			GLOB.department_radio_keys[radio_key] = radio_key
 		)))
 
-	// Check the radio obj channel keys for any missing entries in GLOB.channel_tokens and GLOB.department_radio_keys
+	// Also check the radio objects for any channels that were assigned to the object but that are missing from GLOB.channel_tokens and GLOB.department_radio_keys
 	for(var/obj/item/radio as anything in typesof(/obj/item/radio))
 		radio = new radio.type // initial doesn't work on lists, temporarily instantiate one
 		check_radio_channels(radio)
 		qdel(radio)
 
-	// Add saymode tokens (like changeling :g, xeno :x, etc)
+	// Add saymode tokens to our master list (like changeling :g, xeno :x, etc)
 	for(var/datum/saymode/say_mode as anything in typesof(/datum/saymode))
 		if(isnull(initial(say_mode.key)))
 			continue
 		say_keys_by_channel.Add(list(list("[say_mode.mode]" = say_mode.key)))
 
-	// Now check for duplicate keys
+	// Now check to see if there are any duplicate keys in the master list that we put together
 	checked_channel_keys = list()
 	for(var/list/channel_key_value_pair in say_keys_by_channel)
 		for(var/channel in channel_key_value_pair)
@@ -34,7 +34,7 @@
 			check_for_duplicate_keys(channel, key)
 			checked_channel_keys[key] = channel
 
-/// Check if each radio channel actually appears in GLOB.channel_tokens and GLOB.department_radio_keys, which they should
+/// Check if each radio channel on the instantiated radio type actually appears in GLOB.channel_tokens and GLOB.department_radio_keys, which they should
 /datum/unit_test/radio_saymode_channel_sanity/proc/check_radio_channels(obj/item/radio/radio_to_check)
 	for(var/channel in radio_to_check.channels)
 		var/channel_token = GLOB.channel_tokens[channel]
