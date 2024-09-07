@@ -19,6 +19,7 @@ import { Window } from '../layouts';
 
 type VendingData = {
   all_products_free: boolean;
+  onstation: boolean;
   department: string;
   jobDiscount: number;
   displayed_currency_icon: string;
@@ -82,7 +83,7 @@ export const Vending = (props) => {
   const { data } = useBackend<VendingData>();
 
   const {
-    all_products_free,
+    onstation,
     product_records = [],
     coin_records = [],
     hidden_records = [],
