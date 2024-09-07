@@ -1,0 +1,8 @@
+author: "Ghommie"
+delete-after: True
+changes:
+  - rscadd: "Added fishing lures to the game. They don't get used up like baits and let you catch specific kinds of fish, though they need to be spun every few seconds. The whole set can be ordered from cargo for 450 credits."
+  - balance: "The magnet hook now removes dud chances."
+  - rscadd: "Added five new fish types: perch, two types of pike, monkfish, plaice and squid. Squids have a fairly special ink production trait, which lets you use them (unless dead) to ink people face at close range, and can be butchered for an ink sac, which can either be processed into canned squid ink, or thrown at someone."
+  - bugfix: "Refactored throwing a little. Some items (specifically components/elements) won't be triggered when caught. no more plates shattering despite being caught for example."
+  - rscadd: "Goldfish, lavaloops, needlefish and armorfish can now be used as baits."
