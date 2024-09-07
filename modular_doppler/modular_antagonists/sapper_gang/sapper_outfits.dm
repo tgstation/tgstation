@@ -141,7 +141,7 @@
 /datum/id_trim/sapper
 	assignment = "Sapper"
 	trim_state = "trim_sapper"
-	trim_icon = 'modular_doppler/overwrites/card/card.dmi'
+	trim_icon = 'modular_doppler/modular_antagonists/sapper_gang/icons/card.dmi'
 	department_color = COLOR_ENGINEERING_ORANGE
 	subdepartment_color = COLOR_ENGINEERING_ORANGE
 	sechud_icon_state = SECHUD_SAPPER
