@@ -73,8 +73,8 @@ GLOBAL_LIST_INIT(department_radio_keys, init_department_radio_keys_list())
 	for(var/list/radio_key_value_pair as anything in dept_radio_keys_raw)
 		for(var/radio_key in radio_key_value_pair)
 			if(dept_radio_keys[radio_key])
-				stack_trace("Tried to add a duplicate entry in GLOB.department_radio_keys for the channel \"[radio_key_value_pair[radio_key]]\"! \
-					The key \"[radio_key]\" is already being used for \"[dept_radio_keys[radio_key]]!\"")
+				stack_trace("Tried to instantiate GLOB.department_radio_keys with a duplicate key for the channel \"[radio_key_value_pair[radio_key]]\"! \
+					The key \"[radio_key]\" is already being used for \"[dept_radio_keys[radio_key]]!\" Each saymode/radio channel key must be unique.")
 				continue
 			dept_radio_keys += list("[radio_key]" = radio_key_value_pair[radio_key])
 

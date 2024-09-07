@@ -47,13 +47,16 @@
 				break
 
 		if(isnull(channel_token))
-			TEST_FAIL("Radio channel [channel] is missing an entry in GLOB.channel_tokens! Please add it.")
+			TEST_FAIL("The radio channel \"[channel]\" found on [radio_to_check] ([radio_to_check.type]) is missing an entry in GLOB.channel_tokens! \
+				Please add an entry for it to this list.")
 		if(isnull(channel_key_in_dept_radio_keys))
 			say_keys_by_channel.Add(list(list("[channel]" = replacetext(GLOB.channel_tokens[channel], ":", ""))))
-			TEST_FAIL("Radio channel [channel] is missing an entry in GLOB.department_radio_keys! Please add it.")
+			TEST_FAIL("The radio channel \"[channel]\" found on [radio_to_check] ([radio_to_check.type]) is missing an entry in GLOB.department_radio_keys! \
+				Please add an entry for it to this list.")
 	return TRUE
 
 /// Check if we have the same keys appearing twice for any given chat channels
 /datum/unit_test/radio_saymode_channel_sanity/proc/check_for_duplicate_keys(channel, key)
 	if(checked_channel_keys[key])
-		TEST_FAIL("Duplicate radio channel token found for [channel]! \":[key]\" is also being used by [checked_channel_keys[key]]!")
+		TEST_FAIL("An in-use saymode/radio channel key was found for \"[channel]\" \":[key]\" is also being used by \"[checked_channel_keys[key]]\". \
+			To fix this, find a unique key for this channel.")
