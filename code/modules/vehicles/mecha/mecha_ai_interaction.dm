@@ -102,7 +102,6 @@
 	AI.eyeobj?.RegisterSignal(src, COMSIG_MOVABLE_MOVED, TYPE_PROC_REF(/mob/camera/ai_eye, update_visibility))
 	AI.controlled_equipment = src
 	AI.remote_control = src
-	AI.ShutOffDoomsdayDevice()
 	add_occupant(AI)
 	to_chat(AI, AI.can_dominate_mechs ? span_greenannounce("Takeover of [name] complete! You are now loaded onto the onboard computer. Do not attempt to leave the station sector!") :\
 		span_notice("You have been uploaded to a mech's onboard computer."))
