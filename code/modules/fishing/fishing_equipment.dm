@@ -403,10 +403,10 @@
 		This a simple non-exhaustive set of instructions on how to use fishing lures, some information may \
 		be slightly incorrect or oversimplified.<br><br>\
 
-		First and foremost, fishing lures are <b>inedible, artificia baits</b> sturdy enough to not end up being \
+		First and foremost, fishing lures are <b>inedible, artificial baits</b> sturdy enough to not end up being \
 		consumed by the hungry fish. However, they need to be <b>spun at intervals</b> to replicate \
-		the motion of a prey or organic bait to tempt the fish, since a piece of plastic and metal ins't \
-		by itself all that appetitizing. <b>Different lures</b> can be used to catch <b>different fish</b>.<br><br>\
+		the motion of a prey or organic bait and tempt the fish, since a piece of plastic and metal ins't \
+		all that appetitizing by itself. <b>Different lures</b> can be used to catch <b>different fish</b>.<br><br>\
 
 		To help you, each lure comes with a <b>small light</b> diode that's attached to the <b>float</b> of your fishing rod. \
 		A float is basically the thing bobbing up'n'down above the fishing spot. \
