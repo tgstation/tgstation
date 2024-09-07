@@ -1,0 +1,22 @@
+{
+	"big_jacket": [
+		{
+			"type": "icon_state",
+			"icon_state": "big_jacket_obj",
+			"blend_mode": "overlay",
+			"color_ids": [ 1 ]
+		},
+		{
+			"type": "icon_state",
+			"icon_state": "big_jacket_cuffs_obj",
+			"blend_mode": "overlay",
+			"color_ids": [ 2 ]
+		},
+		{
+			"type": "icon_state",
+			"icon_state": "big_jacket_drive_obj",
+			"blend_mode": "overlay",
+			"color_ids": [ 3 ]
+		}
+	]
+}
