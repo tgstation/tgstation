@@ -119,6 +119,9 @@
 /// From base of area/Exited(): (area/left, direction)
 #define COMSIG_MOVABLE_EXITED_AREA "movable_exited_area"
 
+///from base of /datum/component/splat/splat: (hit_atom)
+#define COMSIG_MOVABLE_SPLAT "movable_splat"
+
 ///from base of /atom/movable/point_at: (atom/A, obj/effect/temp_visual/point/point)
 #define COMSIG_MOVABLE_POINTED "movable_pointed"
 
