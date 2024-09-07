@@ -43,9 +43,6 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/barsign, 32)
 	chosen_sign = sign
 	update_appearance()
 
-/obj/machinery/barsign/wall_mount_common_plane(direction)
-	return TRUE
-
 /obj/machinery/barsign/update_icon_state()
 	if(!(machine_stat & BROKEN) && (!(machine_stat & NOPOWER) || machine_stat & EMPED) && chosen_sign && chosen_sign.icon_state)
 		icon_state = chosen_sign.icon_state
@@ -428,7 +425,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/barsign, 32)
 /datum/barsign/maltroach
 	name = "Maltroach"
 	icon_state = "maltroach"
-	desc = "Mothroaches politely greet you into the bar, or are they greeting eachother?"
+	desc = "Mothroaches politely greet you into the bar, or are they greeting each other?"
 	neon_color = "#649e8a"
 
 /datum/barsign/rock_bottom
@@ -543,6 +540,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/barsign/all_access, 32)
 	custom_materials = list(
 		/datum/material/iron = SHEET_MATERIAL_AMOUNT,
 	)
+	pixel_shift = 32
 
 /obj/item/wallframe/barsign/Initialize(mapload)
 	. = ..()

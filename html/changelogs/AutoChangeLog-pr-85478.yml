@@ -1,4 +1,0 @@
-author: "00-Steven"
-delete-after: True
-changes:
-  - bugfix: "Fixes getting a \"You are too far away!\" interaction block on inventory items when inside of another object. This includes accessing storage or using your PDA from a closet, or as pAI using your digital messenger while inside of your card."

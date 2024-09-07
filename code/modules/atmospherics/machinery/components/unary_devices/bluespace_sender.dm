@@ -1,5 +1,5 @@
 /obj/machinery/atmospherics/components/unary/bluespace_sender
-	icon = 'icons/obj/machines/atmospherics/bluespace_gas_vendor.dmi'
+	icon = 'icons/obj/machines/atmospherics/bluespace_gas_selling.dmi'
 	icon_state = "bluespace_sender_off"
 	base_icon_state = "bluespace_sender"
 	name = "Bluespace Gas Sender"
@@ -198,7 +198,7 @@ GLOBAL_LIST_EMPTY_TYPED(bluespace_senders, /obj/machinery/atmospherics/component
 	data["credits"] = credits_gained
 	return data
 
-/obj/machinery/atmospherics/components/unary/bluespace_sender/ui_act(action, params)
+/obj/machinery/atmospherics/components/unary/bluespace_sender/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if(.)
 		return

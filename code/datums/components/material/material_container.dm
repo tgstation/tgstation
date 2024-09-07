@@ -124,10 +124,10 @@
  * Material Validation : Checks how much materials are available, Extracts materials from items if the container can hold them
  * Material Removal    : Removes material from the container
  *
- * Each Proc furthur belongs to a specific category
+ * Each Proc further belongs to a specific category
  * LOW LEVEL:  Procs that are used internally & should not be used anywhere else unless you know what your doing
  * MID LEVEL:  Procs that can be used by machines(like recycler, stacking machines) to bypass majority of checks
- * HIGH LEVEL: Procs that can be used by anyone publically and guarentees safty checks & limits
+ * HIGH LEVEL: Procs that can be used by anyone publicly and guarantees safety checks & limits
  */
 
 //================================Material Insertion procs==============================
@@ -236,7 +236,7 @@
 	//do the insert
 	var/last_inserted_id = insert_item_materials(target, multiplier, context)
 	if(!isnull(last_inserted_id))
-		if(delete_item || target != weapon) //we could have split the stack ourself
+		if(delete_item || target != weapon) //we could have split the stack ourselves
 			qdel(target) //item gone
 		return material_amount
 	else if(!isnull(item_stack) && item_stack != target) //insertion failed, merge the split stack back into the original
@@ -250,7 +250,7 @@
 
 //===================================HIGH LEVEL===================================================
 /**
- * inserts an item from the players hand into the container. Loops through all the contents inside reccursively
+ * inserts an item from the players hand into the container. Loops through all the contents inside recursively
  * Does all explicit checking for mat flags & callbacks to check if insertion is valid
  * This proc is what you should be using for almost all cases
  *
@@ -584,7 +584,7 @@
 	for(var/x in mats) //Loop through all required materials
 		var/wanted = OPTIMAL_COST(mats[x] * coefficient) * multiplier
 		if(!has_enough_of_material(x, wanted))//Not a category, so just check the normal way
-			testing("didnt have: [x] wanted: [wanted]")
+			testing("didn't have: [x] wanted: [wanted]")
 			return FALSE
 
 	return TRUE
@@ -605,7 +605,7 @@
 	//round amount
 	amt = OPTIMAL_COST(amt)
 
-	//get ref if nessassary
+	//get ref if necessary
 	if(!istype(mat))
 		mat = GET_MATERIAL_REF(mat)
 

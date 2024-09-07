@@ -45,8 +45,6 @@
 	for(var/i in mirror_options)
 		mirror_options[i] = icon('icons/hud/radial.dmi', i)
 
-WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/structure/mirror)
-
 /obj/structure/mirror/Initialize(mapload)
 	. = ..()
 	var/static/list/reflection_filter = alpha_mask_filter(icon = icon('icons/obj/watercloset.dmi', "mirror_mask"))
@@ -63,7 +61,9 @@ WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/structure/mirror)
 		return FALSE
 	return TRUE
 
-/obj/structure/mirrr/Initialize(mapload)
+MAPPING_DIRECTIONAL_HELPERS(/obj/structure/mirror, 28)
+
+/obj/structure/mirror/Initialize(mapload)
 	. = ..()
 	find_and_hang_on_wall()
 
@@ -74,7 +74,7 @@ WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/structure/mirror)
 	. = ..()
 	atom_break(null, mapload)
 
-WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/structure/mirror/broken)
+MAPPING_DIRECTIONAL_HELPERS(/obj/structure/mirror/broken, 28)
 
 /obj/structure/mirror/attack_hand(mob/living/carbon/human/user)
 	. = ..()
@@ -88,7 +88,7 @@ WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/structure/mirror/broken)
 	return display_radial_menu(user)
 
 /obj/structure/mirror/proc/display_radial_menu(mob/living/carbon/human/user)
-	var/pick = show_radial_menu(user, src, mirror_options, user, radius = 36, require_near = TRUE)
+	var/pick = show_radial_menu(user, src, mirror_options, user, radius = 36, require_near = TRUE, tooltips = TRUE)
 	if(!pick)
 		return TRUE //get out
 
@@ -312,14 +312,13 @@ WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/structure/mirror/broken)
 		/datum/material/silver = SHEET_MATERIAL_AMOUNT,
 	)
 	result_path = /obj/structure/mirror
+	pixel_shift = 28
 
 /obj/structure/mirror/magic
 	name = "magic mirror"
 	desc = "Turn and face the strange... face."
 	icon_state = "magic_mirror"
 	mirror_options = MAGIC_MIRROR_OPTIONS
-
-WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/structure/mirror/magic)
 
 /obj/structure/mirror/magic/Initialize(mapload)
 	. = ..()
@@ -383,12 +382,36 @@ WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/structure/mirror/magic)
 	desc = "Pride cometh before the..."
 	race_flags = MIRROR_PRIDE
 	mirror_options = PRIDE_MIRROR_OPTIONS
+	/// If the last user has altered anything about themselves
+	var/changed = FALSE
+
+/obj/structure/mirror/magic/pride/display_radial_menu(mob/living/carbon/human/user)
+	var/pick = show_radial_menu(user, src, mirror_options, user, radius = 36, require_near = TRUE, tooltips = TRUE)
+	if(!pick)
+		return TRUE //get out
+
+	changed = TRUE
+	switch(pick)
+		if(CHANGE_HAIR)
+			change_hair(user)
+		if(CHANGE_BEARD)
+			change_beard(user)
+		if(CHANGE_RACE)
+			change_race(user)
+		if(CHANGE_SEX) // sex: yes
+			change_sex(user)
+		if(CHANGE_NAME)
+			change_name(user)
+		if(CHANGE_EYES)
+			change_eyes(user)
+
+	return display_radial_menu(user)
 
 /obj/structure/mirror/magic/pride/attack_hand(mob/living/carbon/human/user)
+	changed = FALSE
 	. = ..()
-	if(.)
-		return TRUE
-
+	if (!changed)
+		return
 	user.visible_message(
 		span_bolddanger("The ground splits beneath [user] as [user.p_their()] hand leaves the mirror!"),
 		span_notice("Perfect. Much better! Now <i>nobody</i> will be able to resist yo-"),

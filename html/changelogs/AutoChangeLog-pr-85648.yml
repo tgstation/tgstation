@@ -1,5 +1,0 @@
-author: "SmArtKar"
-delete-after: True
-changes:
-  - qol: "Circuit components can now be recycles in circuit printers, and automatically do so upon being removed if a circuit has a linked printer"
-  - spellcheck: "Recycling a single item no longer outputs a line with a rogue space infront of it"

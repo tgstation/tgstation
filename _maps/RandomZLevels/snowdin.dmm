@@ -1909,11 +1909,6 @@
 	},
 /turf/open/floor/iron/cafeteria,
 /area/awaymission/snowdin/post/messhall)
-"ht" = (
-/obj/structure/table,
-/obj/item/trash/waffles,
-/turf/open/floor/iron/cafeteria,
-/area/awaymission/snowdin/post/messhall)
 "hu" = (
 /obj/structure/chair{
 	dir = 8
@@ -5245,7 +5240,7 @@
 	desc = "A console meant for calling and sending a transit ferry. It seems iced-over and non-functional.";
 	dir = 4;
 	icon_screen = null;
-	name = "Shuttle Transist Console"
+	name = "Shuttle Transit Console"
 	},
 /turf/open/floor/iron/dark/snowdin,
 /area/awaymission/snowdin/outside)
@@ -5830,7 +5825,7 @@
 	desc = "A console meant for calling and sending a transit ferry. It seems iced-over and non-functional.";
 	dir = 1;
 	icon_screen = null;
-	name = "Shuttle Transist Console"
+	name = "Shuttle Transit Console"
 	},
 /turf/open/floor/mineral/titanium/blue,
 /area/awaymission/snowdin/post/broken_shuttle)
@@ -25007,7 +25002,7 @@ Kd
 ex
 fJ
 gA
-ht
+hq
 hW
 iH
 jz
