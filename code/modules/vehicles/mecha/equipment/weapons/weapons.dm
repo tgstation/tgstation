@@ -74,11 +74,7 @@
 			projectile_obj.hit_prone_targets = shooter.combat_mode
 		projectile_obj.fire()
 		if(!projectile_obj.suppressed && firing_effect_type)
-			var/obj/effect/fire_effect = new firing_effect_type(get_turf(src), chassis.dir)
-			fire_effect.pixel_y = chassis.pixel_y
-			fire_effect.pixel_z = chassis.pixel_z
-			fire_effect.pixel_x = chassis.pixel_x
-			fire_effect.pixel_w = chassis.pixel_w
+			new firing_effect_type(get_turf(src), chassis.dir)
 		playsound(chassis, fire_sound, 50, TRUE)
 
 		log_combat(source, target, "fired [projectile_obj] at", src, "from [chassis] at [get_area_name(src, TRUE)]")

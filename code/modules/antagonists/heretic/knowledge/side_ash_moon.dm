@@ -40,7 +40,7 @@
 	curse_color = "#f19a9a"
 	cost = 1
 	route = PATH_SIDE
-	research_tree_icon_path = 'icons/ui/antags/heretic/knowledge.dmi'
+	research_tree_icon_path = 'icons/ui_icons/antags/heretic/knowledge.dmi'
 	research_tree_icon_state = "curse_paralysis"
 	depth = 8
 

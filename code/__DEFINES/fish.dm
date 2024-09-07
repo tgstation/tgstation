@@ -67,9 +67,11 @@
 #define FISHING_MINIGAME_RULE_FLIP (1 << 5)
 ///Skip the biting phase and go straight to the minigame, avoiding the penalty for having slow reflexes.
 #define FISHING_MINIGAME_AUTOREEL (1 << 6)
+///The fish will fade in and out at intervals
+#define FISHING_MINIGAME_RULE_CAMO (1 << 7)
 
 ///all the effects that are active and will last for a few seconds before triggering a cooldown
-#define FISHING_MINIGAME_ACTIVE_EFFECTS (FISHING_MINIGAME_RULE_ANTIGRAV|FISHING_MINIGAME_RULE_FLIP)
+#define FISHING_MINIGAME_ACTIVE_EFFECTS (FISHING_MINIGAME_RULE_ANTIGRAV|FISHING_MINIGAME_RULE_FLIP|FISHING_MINIGAME_RULE_CAMO)
 
 /// The default additive value for fishing hook catch weight modifiers.
 #define FISHING_DEFAULT_HOOK_BONUS_ADDITIVE 0
@@ -183,8 +185,20 @@
 /// The height of the minigame slider. Not in pixels, but minigame units.
 #define FISHING_MINIGAME_AREA 1000
 
+///Defines for fish properties from the collect_fish_properties proc
+#define FISH_PROPERTIES_FAV_BAIT "fav_bait"
+#define FISH_PROPERTIES_BAD_BAIT "bad_bait"
+#define FISH_PROPERTIES_TRAITS "fish_traits"
 #define FISH_PROPERTIES_BEAUTY_SCORE "beauty_score"
 #define FISH_PROPERTIES_EVOLUTIONS "evolutions"
+
+///Define for favorite and disliked baits that aren't just item typepaths.
+#define FISH_BAIT_TYPE "Type"
+#define FISH_BAIT_FOODTYPE "Foodtype"
+#define FISH_BAIT_REAGENT "Reagent"
+#define FISH_BAIT_VALUE "Value"
+#define FISH_BAIT_AMOUNT "Amount"
+
 
 ///We multiply the weight of fish inside the loot table by this value if we are goofy enough to fish without a bait.
 #define FISH_WEIGHT_MULT_WITHOUT_BAIT 0.15

@@ -265,10 +265,8 @@
 		if (blocks_emissive == EMISSIVE_BLOCK_UNIQUE)
 			if(em_block)
 				SET_PLANE(em_block, EMISSIVE_PLANE, src)
-				em_block.render_source = render_target
 			else if(!QDELETED(src))
-				if(!render_target)
-					render_target = ref(src)
+				render_target = ref(src)
 				em_block = new(null, src)
 			return em_block
 		// Implied else if (blocks_emissive == EMISSIVE_BLOCK_NONE) -> return
@@ -1285,16 +1283,22 @@
 /atom/movable/proc/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
 	set waitfor = FALSE
 	var/hitpush = TRUE
-	var/impact_signal = SEND_SIGNAL(src, COMSIG_MOVABLE_PRE_IMPACT, hit_atom, throwingdatum)
-	if(impact_signal & COMPONENT_MOVABLE_IMPACT_FLIP_HITPUSH)
-		hitpush = FALSE // hacky, tie this to something else or a proper workaround later
-
-	if(impact_signal && (impact_signal & COMPONENT_MOVABLE_IMPACT_NEVERMIND))
+	var/impact_flags = pre_impact(hit_atom, throwingdatum)
+	if(impact_flags & COMPONENT_MOVABLE_IMPACT_NEVERMIND)
 		return // in case a signal interceptor broke or deleted the thing before we could process our hit
-	if(SEND_SIGNAL(hit_atom, COMSIG_ATOM_PREHITBY, src, throwingdatum) & COMSIG_HIT_PREVENTED)
-		return
-	SEND_SIGNAL(src, COMSIG_MOVABLE_IMPACT, hit_atom, throwingdatum)
-	return hit_atom.hitby(src, throwingdatum=throwingdatum, hitpush=hitpush)
+	if(impact_flags & COMPONENT_MOVABLE_IMPACT_FLIP_HITPUSH)
+		hitpush = FALSE
+	var/caught = hit_atom.hitby(src, throwingdatum=throwingdatum, hitpush=hitpush)
+	SEND_SIGNAL(src, COMSIG_MOVABLE_IMPACT, hit_atom, throwingdatum, caught)
+	return caught
+
+///Called before we attempt to call hitby and send the COMSIG_MOVABLE_IMPACT signal
+/atom/movable/proc/pre_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
+	var/impact_flags = SEND_SIGNAL(src, COMSIG_MOVABLE_PRE_IMPACT, hit_atom, throwingdatum)
+	var/target_flags = SEND_SIGNAL(hit_atom, COMSIG_ATOM_PREHITBY, src, throwingdatum)
+	if(target_flags & COMSIG_HIT_PREVENTED)
+		impact_flags |= COMPONENT_MOVABLE_IMPACT_NEVERMIND
+	return impact_flags
 
 /atom/movable/hitby(atom/movable/hitting_atom, skipcatch, hitpush = TRUE, blocked, datum/thrownthing/throwingdatum)
 	if(HAS_TRAIT(src, TRAIT_NO_THROW_HITPUSH))
@@ -1729,17 +1733,3 @@
 	if(!("[REF(target)]" in faction_src))
 		faction_target -= "[REF(target)]" //same thing here.
 	return faction_check(faction_src, faction_target, TRUE)
-
-/// Offsets this movable based on dir (in context of wallmounts)
-/// Yes yes mothblocks I know this is not modular but I don't want to make the element bespoke
-/// Insert ranting about element key generation here
-/// This proc is filled in by the directional macros, should not need to manually touch it unless something is wrong
-/atom/movable/proc/wall_mount_offset(direction)
-	return
-
-/// Returns true if we should layer in common with the general game
-/// If false, render over the frill plane insted
-/atom/movable/proc/wall_mount_common_plane(direction)
-	if(direction == SOUTH)
-		return TRUE
-	return FALSE

@@ -4,7 +4,6 @@
 /datum/autowiki/fish/generate()
 	var/output = ""
 
-	var/list/fish_properties = collect_fish_properties()
 	var/datum/reagent/def_food = /obj/item/fish::food
 	var/def_food_name = initial(def_food.name)
 	var/def_feeding = /obj/item/fish::feeding_frequency
@@ -27,7 +26,7 @@
 		if(!fish::show_in_catalog)
 			continue
 
-		var/list/properties = fish_properties[fish]
+		var/list/properties = SSfishing.fish_properties[fish]
 
 		var/description = escape_value(fish::desc)
 		var/list/extra_info = list()
@@ -55,9 +54,9 @@
 			"fluid" = escape_value(fish::required_fluid_type),
 			"temperature" = "[fish::required_temperature_min] - [fish::required_temperature_max] K",
 			"stable_population" = fish::stable_population,
-			"traits" = generate_traits(properties[NAMEOF(fish, fish_traits)]),
-			"favorite_baits" = generate_baits(properties[NAMEOF(fish, favorite_bait)]),
-			"disliked_baits" = generate_baits(properties[NAMEOF(fish, disliked_bait)], TRUE),
+			"traits" = generate_traits(properties[FISH_PROPERTIES_TRAITS]),
+			"favorite_baits" = generate_baits(properties[FISH_PROPERTIES_FAV_BAIT]),
+			"disliked_baits" = generate_baits(properties[FISH_PROPERTIES_BAD_BAIT], TRUE),
 			"beauty_score" = properties[FISH_PROPERTIES_BEAUTY_SCORE],
 		))
 
@@ -395,7 +394,6 @@
 			"min_max_temp" = "[evolution.required_temperature_min] - [evolution.required_temperature_max] K",
 			"notes" = escape_value(evolution.conditions_note),
 			"result_icon" = evolution.show_result_on_wiki ? FISH_AUTOWIKI_FILENAME(evolution.new_fish_type) : FISH_SOURCE_AUTOWIKI_QUESTIONMARK,
-
 		))
 
 	return output
@@ -404,7 +402,42 @@
 	var/output = ""
 
 	for(var/obj/item/fish/fish as anything in GLOB.fishes_by_fish_evolution[evo_type])
+		if(!initial(fish.show_in_catalog))
+			continue
 		output += include_template("Autowiki/FishEvolutionCandidate", list(
+			"name" = escape_value(full_capitalize(initial(fish.name))),
+			"icon" = FISH_AUTOWIKI_FILENAME(fish),
+		))
+
+	return output
+
+/datum/autowiki/fish_lure
+	page = "Template:Autowiki/Content/Fish/Lure"
+
+/datum/autowiki/fish_lure/generate()
+	var/output = ""
+
+	for(var/obj/item/fishing_lure/lure as anything in SSfishing.lure_catchables)
+		var/state = initial(lure.icon_state)
+		var/filename = SANITIZE_FILENAME("[state]_wiki_lure")
+		output += "\n\n" + include_template("Autowiki/FishLure", list(
+			"name" = escape_value(full_capitalize(initial(lure.name))),
+			"desc" = escape_value(initial(lure.name)),
+			"icon" = filename,
+			"catchables" = build_catchables(SSfishing.lure_catchables[lure]),
+		))
+
+		upload_icon(icon(icon = initial(lure.icon), icon_state = state), filename)
+
+	return output
+
+/datum/autowiki/fish_lure/proc/build_catchables(list/catchables)
+	var/output = ""
+
+	for(var/obj/item/fish/fish as anything in catchables)
+		if(!initial(fish.show_in_catalog))
+			continue
+		output += include_template("Autowiki/FishLureCatchables", list(
 			"name" = escape_value(full_capitalize(initial(fish.name))),
 			"icon" = FISH_AUTOWIKI_FILENAME(fish),
 		))

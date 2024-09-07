@@ -15,7 +15,6 @@
 	. = ..()
 	var/static/fish_info
 	if(!fish_info)
-		var/list/fish_list_properties = collect_fish_properties()
 		fish_info = list()
 		for(var/obj/item/fish/fish as anything in subtypesof(/obj/item/fish))
 			if(!initial(fish.show_in_catalog))
@@ -37,7 +36,7 @@
 			else
 				fish_data["feed"] = "[AQUARIUM_COMPANY] Fish Feed"
 			fish_data["fishing_tips"] = build_fishing_tips(fish)
-			fish_data["beauty"] = fish_list_properties[fish][FISH_PROPERTIES_BEAUTY_SCORE]
+			fish_data["beauty"] = SSfishing.fish_properties[fish][FISH_PROPERTIES_BEAUTY_SCORE]
 
 			fish_info += list(fish_data)
 
@@ -50,12 +49,12 @@
 		return initial(bait_item.name)
 	if(islist(bait))
 		var/list/special_identifier = bait
-		switch(special_identifier["Type"])
-			if("Foodtype")
-				return jointext(bitfield_to_list(special_identifier["Value"], FOOD_FLAGS_IC),",")
-			if("Reagent")
-				var/datum/reagent/prototype = special_identifier["Value"]
-				return "[initial(prototype.name)] (at least [special_identifier["Amount"]]u)"
+		switch(special_identifier[FISH_BAIT_TYPE])
+			if(FISH_BAIT_FOODTYPE)
+				return jointext(bitfield_to_list(special_identifier[FISH_BAIT_VALUE], FOOD_FLAGS_IC),",")
+			if(FISH_BAIT_REAGENT)
+				var/datum/reagent/prototype = special_identifier[FISH_BAIT_VALUE]
+				return "[initial(prototype.name)] (at least [special_identifier[FISH_BAIT_AMOUNT]]u)"
 			else
 				stack_trace("Unknown bait identifier in fish favourite/disliked list")
 				return "SOMETHING VERY WEIRD"
@@ -72,9 +71,9 @@
 		if(source.catalog_description && (fish_type in source.fish_table))
 			spot_descriptions += source.catalog_description
 	.["spots"] = english_list(spot_descriptions, nothing_text = "Unknown")
-	var/list/fish_list_properties = collect_fish_properties()
-	var/list/fav_bait = fish_list_properties[fishy][NAMEOF(fishy, favorite_bait)]
-	var/list/disliked_bait = fish_list_properties[fishy][NAMEOF(fishy, disliked_bait)]
+	var/list/fish_list_properties = SSfishing.fish_properties
+	var/list/fav_bait = fish_list_properties[fishy][FISH_PROPERTIES_FAV_BAIT]
+	var/list/disliked_bait = fish_list_properties[fishy][FISH_PROPERTIES_BAD_BAIT]
 	var/list/bait_list = list()
 	// Favourite/Disliked bait
 	for(var/bait_type_or_trait in fav_bait)
@@ -86,7 +85,7 @@
 	.["disliked_bait"] = english_list(bait_list, nothing_text = "None")
 	// Fish traits description
 	var/list/trait_descriptions = list()
-	var/list/fish_traits = fish_list_properties[fishy][NAMEOF(fishy, fish_traits)]
+	var/list/fish_traits = fish_list_properties[fishy][FISH_PROPERTIES_TRAITS]
 	var/fish_difficulty = initial(fishy.fishing_difficulty_modifier)
 	for(var/fish_trait in fish_traits)
 		var/datum/fish_trait/trait = GLOB.fish_traits[fish_trait]

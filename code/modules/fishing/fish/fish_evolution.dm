@@ -119,7 +119,7 @@ GLOBAL_LIST_EMPTY(fishes_by_fish_evolution)
 
 /datum/fish_evolution/three_eyes
 	probability = 3
-	new_fish_type = /obj/item/fish/three_eyes
+	new_fish_type = /obj/item/fish/goldfish/three_eyes
 	new_traits = list(/datum/fish_trait/recessive)
 
 /datum/fish_evolution/chainsawfish
