@@ -1,2 +1,3 @@
+#define COMSIG_KB_LIVING_COMBAT_INDICATOR "keybinding_living_combat_indicator"
 #define COMSIG_KB_MOB_PIXEL_SHIFT_DOWN "keybinding_mob_pixel_shift_down"
 #define COMSIG_KB_MOB_PIXEL_SHIFT_UP "keybinding_mob_pixel_shift_up"
