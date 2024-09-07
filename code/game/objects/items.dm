@@ -831,36 +831,30 @@
 	. = ..()
 	do_drop_animation(master_storage.parent)
 
-/obj/item/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
-	if(QDELETED(hit_atom))
-		return
-	if(SEND_SIGNAL(src, COMSIG_MOVABLE_PRE_IMPACT, hit_atom, throwingdatum) & COMPONENT_MOVABLE_IMPACT_NEVERMIND)
-		return
-	if(SEND_SIGNAL(hit_atom, COMSIG_ATOM_PREHITBY, src, throwingdatum) & COMSIG_HIT_PREVENTED)
-		return
-
-	SEND_SIGNAL(src, COMSIG_MOVABLE_IMPACT, hit_atom, throwingdatum)
-	if(get_temperature() && isliving(hit_atom))
-		var/mob/living/L = hit_atom
-		L.ignite_mob()
-	var/itempush = 1
+/obj/item/pre_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
+	var/impact_flags = ..()
 	if(w_class < WEIGHT_CLASS_BULKY)
-		itempush = 0 //too light to push anything
-	if(isliving(hit_atom)) //Living mobs handle hit sounds differently.
-		var/volume = get_volume_by_throwforce_and_or_w_class()
-		if (throwforce > 0 || HAS_TRAIT(src, TRAIT_CUSTOM_TAP_SOUND))
-			if (mob_throw_hit_sound)
-				playsound(hit_atom, mob_throw_hit_sound, volume, TRUE, -1)
-			else if(hitsound)
-				playsound(hit_atom, hitsound, volume, TRUE, -1)
-			else
-				playsound(hit_atom, 'sound/weapons/genhit.ogg',volume, TRUE, -1)
-		else
-			playsound(hit_atom, 'sound/weapons/throwtap.ogg', 1, volume, -1)
+		impact_flags |= COMPONENT_MOVABLE_IMPACT_FLIP_HITPUSH
+	if(!(impact_flags & COMPONENT_MOVABLE_IMPACT_NEVERMIND) && get_temperature() && isliving(hit_atom))
+		var/mob/living/victim = hit_atom
+		victim.ignite_mob()
+	return impact_flags
 
-	else
+/obj/item/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
+	. = ..()
+	if(!isliving(hit_atom)) //Living mobs handle hit sounds differently.
 		playsound(src, drop_sound, YEET_SOUND_VOLUME, ignore_walls = FALSE)
-	return hit_atom.hitby(src, 0, itempush, throwingdatum=throwingdatum)
+		return
+	var/volume = get_volume_by_throwforce_and_or_w_class()
+	if (throwforce > 0 || HAS_TRAIT(src, TRAIT_CUSTOM_TAP_SOUND))
+		if (mob_throw_hit_sound)
+			playsound(hit_atom, mob_throw_hit_sound, volume, TRUE, -1)
+		else if(hitsound)
+			playsound(hit_atom, hitsound, volume, TRUE, -1)
+		else
+			playsound(hit_atom, 'sound/weapons/genhit.ogg',volume, TRUE, -1)
+	else
+		playsound(hit_atom, 'sound/weapons/throwtap.ogg', 1, volume, -1)
 
 /obj/item/throw_at(atom/target, range, speed, mob/thrower, spin=1, diagonals_first = 0, datum/callback/callback, force, gentle = FALSE, quickstart = TRUE)
 	if(HAS_TRAIT(src, TRAIT_NODROP))
@@ -1746,9 +1740,11 @@
 /obj/item/proc/set_embed(datum/embed_data/embed)
 	if(embed_data == embed)
 		return
+	if(isnull(get_embed())) // Add embed on objects that did not have it added
+		AddElement(/datum/element/embed)
 	if(!GLOB.embed_by_type[embed_data?.type])
 		qdel(embed_data)
-	embed_data = ispath(embed) ? get_embed_by_type(armor) : embed
+	embed_data = ispath(embed) ? get_embed_by_type(embed) : embed
 	SEND_SIGNAL(src, COMSIG_ITEM_EMBEDDING_UPDATE)
 
 /**
@@ -1763,3 +1759,37 @@
 	RETURN_TYPE(/obj/item)
 
 	return src
+
+/// Checks if the bait is liked by the fish type or not. Returns a multiplier that affects the chance of catching it.
+/obj/item/proc/check_bait(obj/item/fish/fish_type)
+	if(HAS_TRAIT(src, TRAIT_OMNI_BAIT))
+		return 1
+	var/catch_multiplier = 1
+	var/list/properties = SSfishing.fish_properties[fish_type]
+	//Bait matching likes doubles the chance
+	var/list/fav_bait = properties[FISH_PROPERTIES_FAV_BAIT]
+	for(var/bait_identifer in fav_bait)
+		if(is_matching_bait(src, bait_identifer))
+			catch_multiplier *= 2
+	//Bait matching dislikes
+	var/list/disliked_bait = properties[FISH_PROPERTIES_BAD_BAIT]
+	for(var/bait_identifer in disliked_bait)
+		if(is_matching_bait(src, bait_identifer))
+			catch_multiplier *= 0.5
+	return catch_multiplier
+
+/// Helper proc that checks if a bait matches identifier from fav/disliked bait list
+/proc/is_matching_bait(obj/item/bait, identifier)
+	if(ispath(identifier)) //Just a path
+		return istype(bait, identifier)
+	if(!islist(identifier))
+		return HAS_TRAIT(bait, identifier)
+	var/list/special_identifier = identifier
+	switch(special_identifier[FISH_BAIT_TYPE])
+		if(FISH_BAIT_FOODTYPE)
+			var/obj/item/food/food_bait = bait
+			return istype(food_bait) && food_bait.foodtypes & special_identifier[FISH_BAIT_VALUE]
+		if(FISH_BAIT_REAGENT)
+			return bait.reagents?.has_reagent(special_identifier[FISH_BAIT_VALUE], special_identifier[FISH_BAIT_AMOUNT], check_subtypes = TRUE)
+		else
+			CRASH("Unknown bait identifier in fish favourite/disliked list")

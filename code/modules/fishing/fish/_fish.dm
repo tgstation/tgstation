@@ -208,6 +208,8 @@
 	if(HAS_MIND_TRAIT(user, TRAIT_EXAMINE_FISH))
 		. += span_notice("It's [size] cm long.")
 		. += span_notice("It weighs [weight] g.")
+		if(HAS_TRAIT(src, TRAIT_FISHING_BAIT))
+			. += span_smallnoticeital("It can be used as a fishing bait.")
 
 ///Randomizes weight and size.
 /obj/item/fish/proc/randomize_size_and_weight(base_size = average_size, base_weight = average_weight, deviation = weight_size_deviation)
@@ -255,7 +257,7 @@
 				inhand_icon_state = "fish_huge"
 			update_weight_class(WEIGHT_CLASS_GIGANTIC)
 
-	if(size > FISH_SIZE_TWO_HANDS_REQUIRED)
+	if(size > FISH_SIZE_TWO_HANDS_REQUIRED || (HAS_TRAIT(src, TRAIT_FISH_SHOULD_TWOHANDED) && w_class >= WEIGHT_CLASS_BULKY))
 		inhand_icon_state = "[inhand_icon_state]_wielded"
 		AddComponent(/datum/component/two_handed, require_twohands = TRUE)
 
@@ -316,6 +318,15 @@
 	throwforce = force
 
 	SEND_SIGNAL(src, COMSIG_FISH_FORCE_UPDATED, weight_rank, bonus_malus)
+
+
+	if(material_flags & MATERIAL_EFFECTS) //struck by metal gen or something.
+		for(var/current_material in custom_materials)
+			var/datum/material/material = GET_MATERIAL_REF(current_material)
+			force *= material.strength_modifier
+			throwforce *= material.strength_modifier
+			if(material.item_sound_override)
+				hitsound = material.item_sound_override
 
 	if(force >=15 && hitsound == SFX_DEFAULT_FISH_SLAP) // don't override special attack sounds
 		hitsound = SFX_ALT_FISH_SLAP // do more damage - do heavier slap sound
