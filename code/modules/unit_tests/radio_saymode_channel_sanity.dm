@@ -11,7 +11,7 @@
 	// Build the master list. We are getting our radio keys from GLOB.department_radio_keys mostly
 	for(var/radio_key in GLOB.department_radio_keys)
 		say_keys_by_channel.Add(list(list(
-			GLOB.department_radio_keys[radio_key] = radio_key
+			GLOB.department_radio_keys[radio_key] = radio_key,
 		)))
 
 	// Also check the radio objects for any channels that were assigned to the object but that are missing from GLOB.channel_tokens and GLOB.department_radio_keys
