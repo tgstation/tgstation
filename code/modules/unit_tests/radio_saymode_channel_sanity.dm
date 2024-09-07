@@ -50,7 +50,6 @@
 			TEST_FAIL("The radio channel \"[channel]\" found on [radio_to_check] ([radio_to_check.type]) is missing an entry in GLOB.channel_tokens! \
 				Please add an entry for it to this list.")
 		if(isnull(channel_key_in_dept_radio_keys))
-			say_keys_by_channel.Add(list(list("[channel]" = replacetext(GLOB.channel_tokens[channel], ":", ""))))
 			TEST_FAIL("The radio channel \"[channel]\" found on [radio_to_check] ([radio_to_check.type]) is missing an entry in GLOB.department_radio_keys! \
 				Please add an entry for it to this list.")
 	return TRUE
