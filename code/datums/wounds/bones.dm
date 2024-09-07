@@ -150,7 +150,7 @@
 				victim.visible_message(
 					span_smalldanger("A thin stream of blood drips from [victim]'s mouth from the blow to [victim.p_their()] chest."),
 					span_danger("You cough up a bit of blood from the blow to your chest."),
-					vision_distance=  COMBAT_MESSAGE_RANGE,
+					vision_distance = COMBAT_MESSAGE_RANGE,
 				)
 				victim.bleed(blood_bled, TRUE)
 			if(14 to 19)
