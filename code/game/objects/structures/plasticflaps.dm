@@ -2,7 +2,7 @@
 	name = "airtight plastic flaps"
 	desc = "Heavy duty, airtight, plastic flaps. Definitely can't get past those. No way."
 	gender = PLURAL
-	icon = 'icons/obj/structures/tall.dmi'
+	icon = 'icons/obj/structures.dmi'
 	icon_state = "plasticflaps"
 	armor_type = /datum/armor/structure_plasticflaps
 	density = FALSE
@@ -24,24 +24,20 @@
 
 /obj/structure/plasticflaps/Initialize(mapload)
 	. = ..()
-	// Render targeting big icons shifts em down, lets counteract
-	pixel_z = 16
-	AddElement(/datum/element/render_over_keep_hitbox)
-	// We need to shift overlays drawn to use down to counteract the counteraction. I hate byond
-	AddComponent(/datum/component/vis_block, "standard", "standard", parent_z_shift = -16)
+	alpha = 0
+	gen_overlay()
 	air_update_turf(TRUE, TRUE)
-	if(mapload)
-		return INITIALIZE_HINT_LATELOAD
 
-/obj/structure/plasticflaps/LateInitialize(mapload)
-	if(mapload)
-		auto_align()
+/obj/structure/plasticflaps/on_changed_z_level(turf/old_turf, turf/new_turf, same_z_layer, notify_contents)
+	if(same_z_layer)
+		return ..()
+	SSvis_overlays.remove_vis_overlay(src, managed_vis_overlays)
+	gen_overlay()
+	return ..()
 
-/obj/structure/plasticflaps/Destroy()
-	var/atom/oldloc = loc
-	. = ..()
-	if (oldloc)
-		oldloc.air_update_turf(TRUE, FALSE)
+/obj/structure/plasticflaps/proc/gen_overlay()
+	var/turf/our_turf = get_turf(src)
+	SSvis_overlays.add_vis_overlay(src, icon, icon_state, ABOVE_MOB_LAYER, MUTATE_PLANE(GAME_PLANE, our_turf), dir, add_appearance_flags = RESET_ALPHA) //you see mobs under it, but you hit them like they are above it
 
 /obj/structure/plasticflaps/examine(mob/user)
 	. = ..()
@@ -128,5 +124,12 @@
 		if(living_mover.body_position == STANDING_UP && living_mover.mob_size != MOB_SIZE_TINY && !(HAS_TRAIT(living_mover, TRAIT_VENTCRAWLER_ALWAYS) || HAS_TRAIT(living_mover, TRAIT_VENTCRAWLER_NUDE)))
 			return FALSE //If you're not laying down, or a small creature, or a ventcrawler, then no pass.
 
+
 /obj/structure/plasticflaps/atom_deconstruct(disassembled = TRUE)
 	new /obj/item/stack/sheet/plastic/five(loc)
+
+/obj/structure/plasticflaps/Destroy()
+	var/atom/oldloc = loc
+	. = ..()
+	if (oldloc)
+		oldloc.air_update_turf(TRUE, FALSE)
