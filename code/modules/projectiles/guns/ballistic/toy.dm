@@ -14,16 +14,17 @@
 	item_flags = NONE
 	gun_flags = TOY_FIREARM_OVERLAY | NOT_A_REAL_GUN
 	casing_ejector = FALSE
+	custom_price = 	PAYCHECK_CREW * 2.4
 
-/obj/item/gun/ballistic/automatic/toy/unrestricted
-	pin = /obj/item/firing_pin
-
+/obj/item/gun/ballistic/automatic/toy/riot
+	spawn_magazine_type = /obj/item/ammo_box/magazine/toy/smg/riot
 /obj/item/gun/ballistic/automatic/pistol/toy
 	name = "foam force pistol"
 	desc = "A small, easily concealable toy handgun. Ages 8 and up."
 	accepted_magazine_type = /obj/item/ammo_box/magazine/toy/pistol
 	fire_sound = 'sound/items/syringeproj.ogg'
 	gun_flags = TOY_FIREARM_OVERLAY | NOT_A_REAL_GUN
+	custom_price = 	PAYCHECK_CREW * 1.6
 
 /obj/item/gun/ballistic/automatic/pistol/toy/riot
 	spawn_magazine_type = /obj/item/ammo_box/magazine/toy/pistol/riot
@@ -46,14 +47,15 @@
 	weapon_weight = WEAPON_LIGHT
 	pb_knockback = 0
 	gun_flags = TOY_FIREARM_OVERLAY | NOT_A_REAL_GUN
+	custom_price = 	PAYCHECK_CREW * 2.4
 
 /obj/item/gun/ballistic/shotgun/toy/handle_chamber(empty_chamber = TRUE, from_firing = TRUE, chamber_next_round = TRUE)
 	. = ..()
 	if(chambered && !chambered.loaded_projectile)
 		qdel(chambered)
 
-/obj/item/gun/ballistic/shotgun/toy/unrestricted
-	pin = /obj/item/firing_pin
+/obj/item/gun/ballistic/shotgun/toy/riot
+	spawn_magazine_type = /obj/item/ammo_box/magazine/internal/shot/toy/riot
 
 /obj/item/gun/ballistic/shotgun/toy/crossbow
 	name = "foam force crossbow"
@@ -73,6 +75,9 @@
 	w_class = WEIGHT_CLASS_SMALL
 	gun_flags = NONE
 
+/obj/item/gun/ballistic/shotgun/toy/crossbow/riot
+	spawn_magazine_type =  /obj/item/ammo_box/magazine/internal/shot/toy/crossbow/riot
+
 /obj/item/gun/ballistic/automatic/c20r/toy //This is the syndicate variant with syndicate firing pin and riot darts.
 	name = "donksoft SMG"
 	desc = "A bullpup three-round burst toy SMG, designated 'C-20r'. Ages 8 and up."
@@ -83,6 +88,7 @@
 	casing_ejector = FALSE
 	clumsy_check = FALSE
 	gun_flags = TOY_FIREARM_OVERLAY | NOT_A_REAL_GUN
+	custom_premium_price = PAYCHECK_COMMAND * 2.8
 
 /obj/item/gun/ballistic/automatic/c20r/toy/unrestricted //Use this for actual toys
 	pin = /obj/item/firing_pin
@@ -102,6 +108,7 @@
 	casing_ejector = FALSE
 	clumsy_check = FALSE
 	gun_flags = TOY_FIREARM_OVERLAY | NOT_A_REAL_GUN
+	custom_premium_price = PAYCHECK_COMMAND * 2.8
 
 /obj/item/gun/ballistic/automatic/l6_saw/toy/unrestricted //Use this for actual toys
 	pin = /obj/item/firing_pin

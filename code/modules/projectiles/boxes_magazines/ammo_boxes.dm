@@ -149,6 +149,8 @@
 	ammo_type = /obj/item/ammo_casing/foam_dart
 	max_ammo = 40
 	custom_materials = list(/datum/material/iron = SMALL_MATERIAL_AMOUNT*5)
+	custom_price = 	PAYCHECK_CREW * 2
+	custom_premium_price = PAYCHECK_CREW * 4
 
 /obj/item/ammo_box/foambox/mini
 	icon_state = "foambox_mini"
@@ -159,6 +161,8 @@
 	icon_state = "foambox_riot"
 	ammo_type = /obj/item/ammo_casing/foam_dart/riot
 	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT*25)
+	custom_price = PAYCHECK_COMMAND
+	custom_premium_price = PAYCHECK_COMMAND * 2
 
 /obj/item/ammo_box/foambox/riot/mini
 	icon_state = "foambox_riot_mini"

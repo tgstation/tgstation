@@ -251,6 +251,7 @@
 	icon_state = "syndballoon"
 	inhand_icon_state = "syndballoon"
 	random_color = FALSE
+	custom_premium_price = 999
 
 /obj/item/toy/balloon/syndicate/pickup(mob/living/user)
 	. = ..()
