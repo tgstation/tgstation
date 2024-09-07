@@ -4,7 +4,7 @@
 	icon_state = "compact_utility"
 	inhand_icon_state = "compact_utility"
 	worn_icon_state = "hidden_icon"
-	worn_icon = "hidden_icon"
+	worn_icon = 'modular_doppler/modular_items/icons/belts.dmi'
 	custom_premium_price = PAYCHECK_CREW * 1.5
 	icon = 'modular_doppler/modular_items/icons/belts.dmi'
 	lefthand_file = 'modular_doppler/modular_items/icons/belt_lefthand.dmi'
@@ -21,7 +21,7 @@
 	icon_state = "compact_medical"
 	inhand_icon_state = "compact_utility"
 	worn_icon_state = "hidden_icon"
-	worn_icon = "hidden_icon"
+	worn_icon = 'modular_doppler/modular_items/icons/belts.dmi'
 	icon = 'modular_doppler/modular_items/icons/belts.dmi'
 	lefthand_file = 'modular_doppler/modular_items/icons/belt_lefthand.dmi'
 	righthand_file = 'modular_doppler/modular_items/icons/belt_righthand.dmi'
