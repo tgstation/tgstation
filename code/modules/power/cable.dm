@@ -583,7 +583,6 @@ GLOBAL_LIST_INIT(wire_node_generating_types, typecacheof(list(/obj/structure/gri
 		balloon_alert(interacting_with, "suit sensors repaired!")
 		use(1)
 		uniform.has_sensor = HAS_SENSORS
-		attacked_humanoid.med_hud_set_status()
 		return ITEM_INTERACT_SUCCESS
 
 	var/obj/item/bodypart/affecting = attacked_humanoid.get_bodypart(check_zone(user.zone_selected))
