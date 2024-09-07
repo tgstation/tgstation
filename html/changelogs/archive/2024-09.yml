@@ -165,3 +165,30 @@
   vinylspiders:
   - bugfix: fixed a bug that could sometimes cause jump boots users to retain the
       floating trait indefinitely when using the ability
+2024-09-07:
+  Ben10Omintrix:
+  - bugfix: fixes basic mobs not losing their aggroed appearance after death
+  Ghommie:
+  - rscadd: Added fishing lures to the game. They don't get used up like baits and
+      let you catch specific kinds of fish, though they need to be spun every few
+      seconds. The whole set can be ordered from cargo for 450 credits.
+  - balance: The magnet hook now removes dud chances.
+  - rscadd: 'Added five new fish types: perch, two types of pike, monkfish, plaice
+      and squid. Squids have a fairly special ink production trait, which lets you
+      use them (unless dead) to ink people face at close range, and can be butchered
+      for an ink sac, which can either be processed into canned squid ink, or thrown
+      at someone.'
+  - bugfix: Refactored throwing a little. Some items (specifically components/elements)
+      won't be triggered when caught. no more plates shattering despite being caught
+      for example.
+  - rscadd: Goldfish, lavaloops, needlefish and armorfish can now be used as baits.
+  MrStonedOne:
+  - bugfix: Fixed the taskbar/menu bar icon showing the virgin orange byond icon instead
+      of the chad blue ss13 icon.
+  Rhials:
+  - rscadd: Code-Violet Medical Support ERT teams have been rolled out for deployment
+      to Space Station 13 and related Nanotrasen Installations.
+  Singul0:
+  - bugfix: Fixes makarov-stechkin mix up on forgotten ship virtual domain.
+  Xackii:
+  - qol: You don't need two hands to stream with broadcast camera.
