@@ -188,7 +188,7 @@
 	balloon_alert(user, "fish released")
 	var/goodbye_text = "Bye bye [name]."
 	if(status == FISH_DEAD && !HAS_MIND_TRAIT(user, TRAIT_NAIVE))
-		goodbye_text += "May it rest in peace..."
+		goodbye_text = "May it rest in peace..."
 	user.visible_message(span_notice("[user] releases [src] into [interacting_with]"), \
 		span_notice("You release [src] into [interacting_with]. [goodbye_text]"), \
 		span_notice("You hear a splash."))
