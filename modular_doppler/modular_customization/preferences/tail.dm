@@ -11,6 +11,19 @@
 	///	This variable is read by the regenerate_organs() proc to know what organ subtype to give
 	var/tail_type = NO_VARIATION
 
+/datum/dna/initialize_dna(newblood_type, create_mutation_blocks = TRUE, randomize_features = TRUE)
+	. = ..()
+	/// Weirdness Check Zone: kill incorrect tails
+	if(randomize_features)
+		if(species.id != /datum/species/human/felinid::id)
+			features["tail_cat"] = /datum/sprite_accessory/tails/human/none::name
+			features["ears"] = SPRITE_ACCESSORY_NONE // TODO: we probably need to change this down the line when we add custom ear options
+		if(species.id != /datum/species/monkey::id)
+			features["tail_monkey"] = /datum/sprite_accessory/tails/monkey/none::name
+		if(species.id != /datum/species/human/felinid::id)
+			features["tail_cat"] = /datum/sprite_accessory/tails/human/none::name
+	update_dna_identity()
+
 /datum/species/regenerate_organs(mob/living/carbon/target, datum/species/old_species, replace_current = TRUE, list/excluded_zones, visual_only = FALSE)
 	. = ..()
 	if(target == null)

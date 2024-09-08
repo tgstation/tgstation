@@ -8,7 +8,8 @@
 							/datum/language/movespeak = list(LANGUAGE_ATOM))
 
 
-
+/mob/living/carbon/human/species/slugcat
+	race = /datum/species/slugcat
 /datum/species/slugcat
 	// The Slugcats of Talon III
 	name = "\improper Slugcat"
