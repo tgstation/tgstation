@@ -192,3 +192,14 @@
   - bugfix: Fixes makarov-stechkin mix up on forgotten ship virtual domain.
   Xackii:
   - qol: You don't need two hands to stream with broadcast camera.
+2024-09-08:
+  EnterTheJake:
+  - balance: Syndicate quiver is now small sized instead of Bulky.
+  FeudeyTF:
+  - bugfix: fixed removing last case
+  SmArtKar:
+  - bugfix: Mouthhole module can no longer be installed on MODsuits that don't cover
+      the mouth
+  - image: Civilian MODsuit got a resprite
+  grungussuss:
+  - sound: fish sounds are louder

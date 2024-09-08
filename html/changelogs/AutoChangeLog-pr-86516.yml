@@ -1,4 +1,0 @@
-author: "FeudeyTF"
-delete-after: True
-changes:
-  - bugfix: "fixed removing last case"
