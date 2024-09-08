@@ -62,14 +62,13 @@ multiple modular subtrees with behaviors
 	var/can_idle = TRUE
 	///What distance should we be checking for interesting things when considering idling/deidling? Defaults to AI_DEFAULT_INTERESTING_DIST
 	var/interesting_dist = AI_DEFAULT_INTERESTING_DIST
-	/// are we even able to plan?
-	var/able_to_plan = TRUE
-
 	/// TRUE if we're able to run, FALSE if we aren't
 	/// Should not be set manually, override get_able_to_run() instead
 	/// Make sure you hook update_able_to_run() in setup_able_to_run() to whatever parameters changing that you added
 	/// Otherwise we will not pay attention to them changing
 	var/able_to_run = FALSE
+	/// are we even able to plan?
+	var/able_to_plan = TRUE
 
 /datum/ai_controller/New(atom/new_pawn)
 	change_ai_movement_type(ai_movement)
