@@ -35,6 +35,18 @@
 	name = "Greyscale Winter Coat"
 	item_path = /obj/item/clothing/suit/hooded/wintercoat/custom
 
+/datum/loadout_item/suit/fur_coat
+	name = "Rugged Fur Coat"
+	item_path = /obj/item/clothing/suit/jacket/doppler/fur_coat
+
+/datum/loadout_item/suit/wrap_coat
+	name = "Wrap Coat"
+	item_path = /obj/item/clothing/suit/jacket/doppler/wrap_coat
+
+/datum/loadout_item/suit/red_coat
+	name = "Marsian PLA Trenchcoat"
+	item_path = /obj/item/clothing/suit/jacket/doppler/red_trench
+
 /*
 *	SUITS / SUIT JACKETS
 */
@@ -54,6 +66,14 @@
 /datum/loadout_item/suit/purple_suit_jacket
 	name = "Purple Formal Suit Jacket"
 	item_path = /obj/item/clothing/suit/toggle/lawyer/purple
+
+/datum/loadout_item/suit/long_suit_jacket
+	name = "Long Suit Jacket"
+	item_path = /obj/item/clothing/suit/jacket/doppler/long_suit_jacket
+
+/datum/loadout_item/suit/short_suit_jacket
+	name = "Short Suit Jacket"
+	item_path = /obj/item/clothing/suit/jacket/doppler/short_suit_jacket
 
 /*
 *	SUSPENDERS
@@ -142,6 +162,26 @@
 /datum/loadout_item/suit/ethereal_raincoat
 	name = "Ethereal Raincoat"
 	item_path = /obj/item/clothing/suit/hooded/ethereal_raincoat
+
+/datum/loadout_item/suit/big_jacket
+	name = "Alpha Atelier Pilot Jacket"
+	item_path = /obj/item/clothing/suit/jacket/doppler/big_jacket
+
+/datum/loadout_item/suit/chokha
+	name = "Chokha Coat"
+	item_path = /obj/item/clothing/suit/jacket/doppler/chokha
+
+/datum/loadout_item/suit/field_jacket
+	name = "Field Jacket"
+	item_path = /obj/item/clothing/suit/jacket/doppler/field_jacket
+
+/datum/loadout_item/suit/tan_field_jacket
+	name = "Tan Field Jacket"
+	item_path = /obj/item/clothing/suit/jacket/doppler/field_jacket/tan
+
+/datum/loadout_item/suit/leather_hoodie
+	name = "Leather Jacket with Hoodie"
+	item_path = /obj/item/clothing/suit/hooded/doppler/leather_hoodie
 
 /*
 *	COSTUMES
@@ -301,6 +341,68 @@
 	name = "Quartermaster's Overcoat"
 	item_path = /obj/item/clothing/suit/jacket/quartermaster
 	restricted_roles = list(JOB_QUARTERMASTER)
+
+/datum/loadout_item/suit/departmental_jacket
+	name = "Work Jacket"
+	item_path = /obj/item/clothing/suit/jacket/doppler/departmental_jacket
+
+/datum/loadout_item/suit/engi_dep_jacket
+	name = "Engineering Department Jacket"
+	item_path = /obj/item/clothing/suit/jacket/doppler/departmental_jacket/engi
+	restricted_roles = list(
+		JOB_CHIEF_ENGINEER,
+		JOB_STATION_ENGINEER,
+		JOB_ATMOSPHERIC_TECHNICIAN,
+		)
+
+/datum/loadout_item/suit/med_dep_jacket
+	name = "Medical Department Jacket"
+	item_path = /obj/item/clothing/suit/jacket/doppler/departmental_jacket/med
+	restricted_roles = list(
+		JOB_CHIEF_MEDICAL_OFFICER,
+		JOB_MEDICAL_DOCTOR,
+		JOB_CHEMIST,
+		JOB_PSYCHOLOGIST,
+	)
+
+/datum/loadout_item/suit/cargo_dep_jacket
+	name = "Cargo Department Jacket"
+	item_path = /obj/item/clothing/suit/jacket/doppler/departmental_jacket/supply
+	restricted_roles = list(
+		JOB_QUARTERMASTER,
+		JOB_CARGO_TECHNICIAN,
+		JOB_SHAFT_MINER,
+	)
+
+/datum/loadout_item/suit/sec_dep_jacket_blu
+	name = "Blue Security Department Jacket"
+	item_path = /obj/item/clothing/suit/jacket/doppler/departmental_jacket/sec
+	restricted_roles = list(
+		JOB_HEAD_OF_SECURITY,
+		JOB_SECURITY_OFFICER,
+		JOB_WARDEN,
+		JOB_DETECTIVE,
+	)
+
+/datum/loadout_item/suit/sec_dep_jacket_red
+	name = "Red Security Department Jacket"
+	item_path = /obj/item/clothing/suit/jacket/doppler/departmental_jacket/sec/red
+	restricted_roles = list(
+		JOB_HEAD_OF_SECURITY,
+		JOB_SECURITY_OFFICER,
+		JOB_WARDEN,
+		JOB_DETECTIVE,
+	)
+
+/datum/loadout_item/suit/sec_dep_jacket_red
+	name = "Security Medic Jacket"
+	item_path = /obj/item/clothing/suit/jacket/doppler/sec_medic
+	restricted_roles = list(
+		JOB_HEAD_OF_SECURITY,
+		JOB_SECURITY_OFFICER,
+		JOB_WARDEN,
+		JOB_DETECTIVE,
+	)
 
 /*
 *	FAMILIES
