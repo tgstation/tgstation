@@ -192,9 +192,10 @@ GLOBAL_LIST_EMPTY(vending_machines_to_restock)
 	  */
 	var/onstation = TRUE
 	/**
-	 * A variable to change on a per instance basis on the map that allows the instance to ignore the above variable's effects.
+	 * DO NOT APPLY THIS GLOBALLY. For mapping var edits only.
+	 * A variable to change on a per instance basis that allows the instance to avoid having onstation set for them during mapload.
 	 * Setting this to TRUE means that the vending machine is treated as if it were still onstation if it spawns off-station during mapload.
-	 * Useful to force cost and ID requirements or to specify an off-station machine that will be affected by machine-brand intelligence. DO NOT APPLY THIS GLOBALLY.
+	 * Useful to specify an off-station machine that will be affected by machine-brand intelligence for whatever reason.
 	 */
 	var/onstation_override = FALSE
 	/**
