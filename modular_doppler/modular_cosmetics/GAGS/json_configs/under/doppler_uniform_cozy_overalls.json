@@ -1,0 +1,42 @@
+{
+	"doppler_cozy_overalls": [
+		{
+			"type": "icon_state",
+			"icon_state": "gags_pants",
+			"blend_mode": "overlay",
+			"color_ids": [ 1 ]
+		},
+		{
+			"type": "icon_state",
+			"icon_state": "gags_cozy",
+			"blend_mode": "overlay",
+			"color_ids": [ 2 ]
+		},
+		{
+			"type": "icon_state",
+			"icon_state": "gags_overalls",
+			"blend_mode": "overlay",
+			"color_ids": [ 1 ]
+		}
+	],
+	"doppler_cozy_overalls_d": [
+		{
+			"type": "icon_state",
+			"icon_state": "gags_pants_d",
+			"blend_mode": "overlay",
+			"color_ids": [ 1 ]
+		},
+		{
+			"type": "icon_state",
+			"icon_state": "gags_cozy_d",
+			"blend_mode": "overlay",
+			"color_ids": [ 2 ]
+		},
+		{
+			"type": "icon_state",
+			"icon_state": "gags_overalls_d",
+			"blend_mode": "overlay",
+			"color_ids": [ 1 ]
+		}
+	]
+}

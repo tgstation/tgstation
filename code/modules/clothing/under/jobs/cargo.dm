@@ -30,6 +30,10 @@
 	inhand_icon_state = "lb_suit"
 	body_parts_covered = CHEST|GROIN|ARMS
 	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION
+	/// DOPPLER SHIFT ADDITION BEGIN
+	supported_bodyshapes = list(BODYSHAPE_HUMANOID, BODYSHAPE_DIGITIGRADE)
+	bodyshape_icon_files = list(BODYSHAPE_HUMANOID_T = DEFAULT_UNIFORM_FILE, BODYSHAPE_DIGITIGRADE_T = DIGITIGRADE_UNIFORM_FILE)
+	/// DOPPLER SHIFT ADDITION END
 
 /obj/item/clothing/under/rank/cargo/tech/skirt
 	name = "cargo technician's skirt"

@@ -39,6 +39,31 @@
 	///The config type to use for greyscaled belt overlays. Both this and greyscale_colors must be assigned to work.
 	var/greyscale_config_belt
 
+	/// Greyscale config used when generating digitigrade versions of the sprite.
+	var/digitigrade_greyscale_config_worn
+	/// Greyscale colors used when generating digitigrade versions of the sprite.
+	/// Optional - If not set it will default to normal greyscale colors, or approximate them if those are unset as well
+	var/digitigrade_greyscale_colors
+
+	/// DOPPLER SHIFT ADDITION BEGIN
+	// A list to take the place of GREYSCALE_CONFIG_WORN used for alternate bodyshapes (e.g, Digitigrade)
+	// Use bodyshape IDs as the keys to a greyscale config for the alternate version.
+	// For instance, greyscale_config_worn_bodyshapes[BODYSHAPE_DIGITIGRADE] = /datum/greyscale_config/trek/worn_digi
+	// If you include multiple variants, make sure to include the default value of the worn config as BODYSHAPE_HUMANOID.
+	// This helps avoid Fuckery(tm) with dyes, changelings, chameleons, etc.
+	var/list/greyscale_config_worn_bodyshapes
+	/// Used with the above to help switch between greyscale configs cleanly and avoid Fuckery(tm).
+	var/greyscale_config_last_bodyshape
+
+	/// Used with both greyscales and eventually icon_state variants to allow MOAR BODYSHAPES
+	// this needs to contain a list of supported numerical IDs and be ordered in TOP PRIORITY to BOTTOM PRIORITY (e.g, DigiFemme > Digi > Femme > Normal)
+	var/list/supported_bodyshapes
+	/// Used to pick alternative worn_icon files
+	// See above; sort by TOP PRIORITY to BOTTOM PRIORITY with the bodyshapes as keys (DIGI | FEMME > DIGI > FEMME > HUMANOID)
+	// !!KEYS IN THIS SHOULD BE IDENTICAL TO SUPPORTED_BODYSHAPES!!
+	var/list/bodyshape_icon_files
+	/// DOPPLER SHIFT ADDITION END
+
 	/* !!!!!!!!!!!!!!! IMPORTANT !!!!!!!!!!!!!!
 
 		IF YOU ADD MORE ICON CRAP TO THIS
@@ -407,7 +432,15 @@
 	. = ..()
 	if(!greyscale_colors)
 		return
-	if(greyscale_config_worn)
+	/// DOPPLER SHIFT ADDITION BEGIN
+	if(greyscale_config_worn_bodyshapes && greyscale_config_last_bodyshape)
+		if(greyscale_config_worn_bodyshapes[greyscale_config_last_bodyshape])
+			greyscale_config_worn = greyscale_config_worn_bodyshapes[greyscale_config_last_bodyshape]
+			bodyshape_icon_files["[greyscale_config_last_bodyshape]"] = SSgreyscale.GetColoredIconByType(greyscale_config_worn, greyscale_colors)
+			worn_icon = bodyshape_icon_files["[greyscale_config_last_bodyshape]"]
+		else
+			worn_icon = SSgreyscale.GetColoredIconByType(greyscale_config_worn, greyscale_colors)
+	else if(greyscale_config_worn) /// DOPPLER SHIFT EDIT END
 		worn_icon = SSgreyscale.GetColoredIconByType(greyscale_config_worn, greyscale_colors)
 	if(greyscale_config_inhand_left)
 		lefthand_file = SSgreyscale.GetColoredIconByType(greyscale_config_inhand_left, greyscale_colors)
@@ -717,6 +750,14 @@
  * polling ghosts while it's just being equipped as a visual preview for a dummy.
  */
 /obj/item/proc/visual_equipped(mob/user, slot, initial = FALSE)
+	/// DOPPLER SHIFT ADDITION BEGIN
+	if(ishuman(user))
+		var/mob/living/carbon/human/humie = user
+		for(var/shape in supported_bodyshapes)
+			if(humie.bodyshape & shape)
+				greyscale_config_last_bodyshape = "[shape]"
+		update_greyscale()
+	/// DOPPLER SHIFT ADDITION END
 	return
 
 /**
