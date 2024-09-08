@@ -32,7 +32,7 @@
 
 	for(var/datum/reagent/reagent as anything in cached_reagents)
 		var/datum/reagent/toxin/toxin
-		if(!liverless && istype(reagent, /datum/reagent/toxin))
+		if(istype(reagent, /datum/reagent/toxin))
 			toxin = reagent
 		// skip metabolizing effects for small units of toxins
 		if(toxin && liver && !dead)
@@ -49,7 +49,7 @@
 		// If applicable, calculate any toxin-related liver damage
 		// Note: we have to do this AFTER metabolize_reagent, because we want handle_reagent to run before we make the determination.
 		// The order is really important unfortunately.
-		if(toxin && liver && liver.filterToxins && !HAS_TRAIT(owner, TRAIT_TOXINLOVER))
+		if(toxin && !liverless && liver && liver.filterToxins && !HAS_TRAIT(owner, TRAIT_TOXINLOVER))
 			if(toxin.affected_organ_flags && !(liver.organ_flags & toxin.affected_organ_flags)) //this particular toxin does not affect this type of organ
 				continue
 
