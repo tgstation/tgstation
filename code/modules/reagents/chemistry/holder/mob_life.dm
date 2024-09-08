@@ -32,7 +32,7 @@
 
 	for(var/datum/reagent/reagent as anything in cached_reagents)
 		var/datum/reagent/toxin/toxin
-		if(istype(reagent, /datum/reagent/toxin))
+		if(!liverless && istype(reagent, /datum/reagent/toxin))
 			toxin = reagent
 		// skip metabolizing effects for small units of toxins
 		if(toxin && liver && !dead)
