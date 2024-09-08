@@ -57,3 +57,149 @@
   - bugfix: fixes a crafting exploit that allowed you to get more resources back from
       disassembling than you put into the recipe
   - bugfix: fixed 'Enable Radio Noise' pref only being respected for deaf people
+2024-09-05:
+  Archimus12:
+  - bugfix: Makes the Cytology Vendor sell science bio suits instead of medical bio
+      suits.
+  - bugfix: Makes the Cytology Vendor sell science lab coats instead of normal lab
+      coats.
+  Astrogem2:
+  - spellcheck: fixed a few typos with energy shield descriptions.
+  Ben10Omintrix:
+  - bugfix: aquarium ui now displays props and fishes correctly
+  - refactor: able_to_run and incapacitated have been refactored to be event based
+  - bugfix: wooden fences will no longer appear pitch black in lower levels of icebox
+  - qol: gives aquariums a new easier to use UI
+  Bisar:
+  - code_imp: The (currently unused) TGUI checkbox components returns a BYOND friendly
+      list of the indexes of any choices now.
+  EnterTheJake:
+  - rscadd: A Syndicate Rebar Quiver has been added to the uplink
+  - qol: Left clicking with a rebar crossbow will now draw/undraw the string.
+  - balance: Rebar quivers are now a neck slot item.
+  - balance: ' Hydrogen bolts damage has been upped to 55 brute and can now pierce
+      through walls, they no longer have infinite piercing and can no longer embed
+      however.'
+  - code_imp: removed the TRAIT_ALWAYS_HIT_ZONE, replaced with 2 new variables.
+  - bugfix: fixes rebar crossbows having a higher capacity than intended if a bolt
+      had already been chambered.
+  FeudeyTF:
+  - bugfix: fixed an UI problems of evidence board
+  Ghommie:
+  - bugfix: Rum can be synthetized again.
+  JohnFulpWillard:
+  - qol: Smartfridges now lets you set how many pills you want to vend, rather than
+      popping out a second separate tgui window.
+  LT3:
+  - rscadd: Added Chief Engineer SEAL OF APPROVAL sticker
+  - code_imp: Stickers now come in sticker packs, not boxes
+  - code_imp: Stickers can now add examine text to whatever they're stuck on
+  Rhials:
+  - spellcheck: Anomaly suicides now use proper grammar.
+  - bugfix: Anomaly suicides work again.
+  Time-Green:
+  - qol: Unsettle (Voidwalker) doesn't go on cooldown if line of sight is broken
+  grungussuss:
+  - sound: fish now have new sounds
+  oranges:
+  - rscadd: ghosts can now jump, bhop your way to life
+  r3dj4ck0424:
+  - rscadd: The vendor of cytology equipment, the CytoPro, is once again available
+      in your local science department!
+2024-09-06:
+  Absolucy:
+  - refactor: Refactored some functions related to line-of-sight and reach to improve
+      performance.
+  Ghommie:
+  - bugfix: Syndie sleepers now drop the appropriate syndicate sleeper boards.
+  - bugfix: fixed a few minor nits with aquarium fish visuals.
+  - qol: You can kill germs by actually cooking the food (i.e. frying and grilling)
+      now, or by setting it on fire.
+  Hardly:
+  - sound: Plumbing Constructor and Rapid-Tiling-Device now has RCD's pick up and
+      UI sounds
+  - bugfix: Fixes ghosts being able to interact with the RCD, RPLD and RPDs
+  Jewelry-x:
+  - spellcheck: fixed a wrong extension in the RUNNING_A_SERVER.md
+  KazooBard:
+  - qol: All cans (soda cans etc) fit on utility belts now. Drink on the job!
+  LT3:
+  - image: 'The ''shit is fucked'' default turf no longer flashes
+
+      /:cl'
+  Majkl-J:
+  - bugfix: Embed updating now actually updates embeds
+  Melbert:
+  - refactor: Refactored heretic influences a tiny bit, now ghosts can see them! Report
+      any oddities.
+  OverwatchVoice:
+  - spellcheck: Changed description of Rebar crossbow.
+  - bugfix: Rebar crossbow description will no longer lie about it's missfire potential.
+  Rhials:
+  - bugfix: Runtime station has delivery beacons and navbeacons again.
+  Singul0:
+  - sound: adds sounds for energy shieldbashing
+  - code_imp: Shieldbashing feature is now consistent across all shield types
+  SmArtKar:
+  - bugfix: Changelings can no longer spawn undetectable spider eggs inside of vents
+  - bugfix: Acromegaly no longer makes you bonk your head on airlocks while you're
+      inside of objects
+  TwistedSilicon:
+  - bugfix: The Codex Cicatrix ritual now consumes the item in the case where a hide
+      was used instead of a corpse. No more free books.
+  Y0SH1M4S73R:
+  - admin: Dreamluau provides a more informative error message when trying to pass
+      references to qdeleted datums back to BYOND.
+  grungussuss:
+  - sound: some more items will vary in pitch when picking them up and placing them
+      down
+  jlsnow301:
+  - rscadd: 'Added two new bitrunning maps: Grasslands Hunt and Meta Central.'
+  - rscadd: Deer are now more complex animals, granting them enhanced ability to run
+      amok and chew your favorite plants.
+  - balance: Reduced the cost of most BR vendor items.
+  - bugfix: Fixes an issue where modular virtual domains spawned less mobs than intended.
+  - bugfix: These modular spawns are now valid mutation targets to become an antagonist.
+  r3dj4ck0424:
+  - spellcheck: made the grammar on the brimdemon horn crusher trophy nicer
+  vinylspiders:
+  - bugfix: fixed a bug that could sometimes cause jump boots users to retain the
+      floating trait indefinitely when using the ability
+2024-09-07:
+  Ben10Omintrix:
+  - bugfix: fixes basic mobs not losing their aggroed appearance after death
+  Ghommie:
+  - rscadd: Added fishing lures to the game. They don't get used up like baits and
+      let you catch specific kinds of fish, though they need to be spun every few
+      seconds. The whole set can be ordered from cargo for 450 credits.
+  - balance: The magnet hook now removes dud chances.
+  - rscadd: 'Added five new fish types: perch, two types of pike, monkfish, plaice
+      and squid. Squids have a fairly special ink production trait, which lets you
+      use them (unless dead) to ink people face at close range, and can be butchered
+      for an ink sac, which can either be processed into canned squid ink, or thrown
+      at someone.'
+  - bugfix: Refactored throwing a little. Some items (specifically components/elements)
+      won't be triggered when caught. no more plates shattering despite being caught
+      for example.
+  - rscadd: Goldfish, lavaloops, needlefish and armorfish can now be used as baits.
+  MrStonedOne:
+  - bugfix: Fixed the taskbar/menu bar icon showing the virgin orange byond icon instead
+      of the chad blue ss13 icon.
+  Rhials:
+  - rscadd: Code-Violet Medical Support ERT teams have been rolled out for deployment
+      to Space Station 13 and related Nanotrasen Installations.
+  Singul0:
+  - bugfix: Fixes makarov-stechkin mix up on forgotten ship virtual domain.
+  Xackii:
+  - qol: You don't need two hands to stream with broadcast camera.
+2024-09-08:
+  EnterTheJake:
+  - balance: Syndicate quiver is now small sized instead of Bulky.
+  FeudeyTF:
+  - bugfix: fixed removing last case
+  SmArtKar:
+  - bugfix: Mouthhole module can no longer be installed on MODsuits that don't cover
+      the mouth
+  - image: Civilian MODsuit got a resprite
+  grungussuss:
+  - sound: fish sounds are louder

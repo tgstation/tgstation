@@ -49,18 +49,22 @@
   padding: 5px;
   color: black;
   min-width: 200px;
+  max-width: 300px;
   background-color: white;
   border: 2px solid grey;
   -ms-user-select: none;
   user-select: none;
+  text-wrap: wrap;
   cursor: pointer;
 }
 
 .Evidence__Box__TextBox {
   border-top: 1px solid #eaeaea;
-  word-wrap: break-word;
+  text-wrap: wrap;
   padding: 5px 0;
   margin-top: 5px;
+  max-width: 240px;
+  text-align: center;
 
   &.title {
     border-top: none;
@@ -72,8 +76,8 @@
   position: relative;
   background-color: #edcf64;
   padding: 5px;
-  min-height: 730px;
   overflow: hidden;
+  height: 95%;
 }
 
 .Evidence__Icon {

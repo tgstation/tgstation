@@ -1,5 +1,0 @@
-author: "Archimus12"
-delete-after: True
-changes:
-  - bugfix: "Makes the Cytology Vendor sell science bio suits instead of medical bio suits."
-  - bugfix: "Makes the Cytology Vendor sell science lab coats instead of normal lab coats."

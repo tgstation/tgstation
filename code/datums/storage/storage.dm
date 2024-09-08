@@ -738,7 +738,7 @@ GLOBAL_LIST_EMPTY(cached_storage_typecaches)
 /datum/storage/proc/on_mousedrop_onto(datum/source, atom/over_object, mob/user)
 	SIGNAL_HANDLER
 
-	if(ismecha(user.loc) || !user.canUseStorage())
+	if(ismecha(user.loc) || user.incapacitated || !user.canUseStorage())
 		return
 
 	if(istype(over_object, /atom/movable/screen/inventory/hand))
@@ -826,6 +826,9 @@ GLOBAL_LIST_EMPTY(cached_storage_typecaches)
 	if(dropping.atom_storage) // If it has storage it should be trying to dump, not insert.
 		return
 	if(!iscarbon(user) && !isdrone(user))
+		return
+	var/mob/living/user_living = user
+	if(user_living.incapacitated)
 		return
 
 	attempt_insert(dropping, user)
