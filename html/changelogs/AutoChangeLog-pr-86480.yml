@@ -1,0 +1,5 @@
+author: "Sealed101"
+delete-after: True
+changes:
+  - bugfix: "fixed borg exoskeletons not dropping when a borg is manually deconstructed"
+  - bugfix: "borg upgrade modules are now dropped when a borg is deconstructed"
