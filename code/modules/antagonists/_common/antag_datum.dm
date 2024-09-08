@@ -64,6 +64,15 @@ GLOBAL_LIST_EMPTY(antagonists)
 	/// A path to the audio stinger that plays upon gaining this datum.
 	var/stinger_sound
 
+	/// Shuttle events we can spawn during hijack
+	/// Formatted as below:
+	/// 	list(
+	///			STAGE_2 = list(/datum/shuttle_event/simple_spawner/black_hole = 1, NONE = 50),
+	///			STAGE_3 = list(/datum/shuttle_event/simple_spawner/black_hole = 1, NONE = 30),
+	///			STAGE_4 = list(/datum/shuttle_event/simple_spawner/black_hole = 1, NONE = 20),
+	/// 	)
+	var/list/hijack_shuttle_events = list()
+
 	//ANTAG UI
 
 	///name of the UI that will try to open, right now using a generic ui

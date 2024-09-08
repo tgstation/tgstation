@@ -19,6 +19,12 @@
 	hardcore_random_bonus = TRUE
 	stinger_sound = 'sound/ambience/antag/tatoralert.ogg'
 
+	hijack_shuttle_events = list(
+		STAGE_2 = list(/datum/shuttle_event/simple_spawner/black_hole = 1, NONE = 50),
+		STAGE_3 = list(/datum/shuttle_event/simple_spawner/black_hole = 2, NONE = 50),
+		STAGE_4 = list(/datum/shuttle_event/simple_spawner/black_hole = 3, NONE = 50),
+	)
+
 	///The flag of uplink that this traitor is supposed to have.
 	var/uplink_flag_given = UPLINK_TRAITORS
 
