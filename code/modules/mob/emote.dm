@@ -163,6 +163,6 @@
 
 // Avoids playing sounds if we're a ghost
 /datum/emote/jump/should_play_sound(mob/user, intentional)
-	if ishuman(user)
+	if(isliving(user))
 		return ..()
 	return FALSE
