@@ -12,7 +12,7 @@
 	target.dna.features["tail_cat"] = value
 
 /datum/preference/choiced/tail_human/create_default_value()
-	var/datum/sprite_accessory/tails/human/cat/tail = /datum/sprite_accessory/tails/human/cat
+	var/datum/sprite_accessory/tails/human/cat/tail = /datum/sprite_accessory/tails/human/none /// DOPPLER SHIFT EDIT: none subtype to keep it empty
 	return initial(tail.name)
 
 /datum/preference/choiced/ears

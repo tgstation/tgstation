@@ -31,7 +31,7 @@
 	name = "No Tail"
 	icon_state = "none"
 
-/datum/sprite_accessory/tails/human/cat/none
+/datum/sprite_accessory/tails/human/none
 	icon = 'modular_doppler/modular_customization/accessories/code/~overrides/icons/fallbacks.dmi'
 	name = "No Tail"
 	icon_state = "none"
