@@ -75,7 +75,7 @@
 	machine_name = "ShadyCigs Deluxe"
 	icon_state = "refill_smoke"
 
-/obj/machinery/vending/cigarette/pre_throw(obj/item/I)
-	if(istype(I, /obj/item/lighter))
-		var/obj/item/lighter/L = I
-		L.set_lit(TRUE)
+/obj/machinery/vending/cigarette/pre_throw(obj/item/thrown_item)
+	if(istype(obj/item/thrown_item, /obj/item/lighter))
+		var/obj/item/lighter/thrown_lighter = thrown_item
+		thrown_lighter.set_lit(TRUE)

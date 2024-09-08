@@ -6,7 +6,6 @@
 	icon_deny = "sec-deny"
 	panel_type = "panel6"
 	light_mask = "sec-light-mask"
-	req_access = list(ACCESS_SECURITY)
 	products = list(
 		/obj/item/restraints/handcuffs = 8,
 		/obj/item/restraints/handcuffs/cable/zipties = 10,
@@ -38,14 +37,14 @@
 	extra_price = PAYCHECK_COMMAND * 1.5
 	payment_department = ACCOUNT_SEC
 
-/obj/machinery/vending/security/pre_throw(obj/item/I)
-	if(isgrenade(I))
-		var/obj/item/grenade/G = I
-		G.arm_grenade()
-	else if(istype(I, /obj/item/flashlight))
-		var/obj/item/flashlight/F = I
-		F.set_light_on(TRUE)
-		F.update_brightness()
+/obj/machinery/vending/security/pre_throw(obj/item/thrown_item)
+	if(isgrenade(thrown_item))
+		var/obj/item/grenade/thrown_grenade = thrown_item
+		thrown_grenade.arm_grenade()
+	else if(istype(thrown_item, /obj/item/flashlight))
+		var/obj/item/flashlight/thrown_flashlight = thrown_item
+		thrown_flashlight.set_light_on(TRUE)
+		thrown_flashlight.update_brightness()
 
 /obj/item/vending_refill/security
 	machine_name = "SecTech"
