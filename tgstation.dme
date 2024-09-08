@@ -6547,3 +6547,4 @@
 #include "modular_doppler\xenoarch\code\modules\research\xenoarch\xenoarch_machine.dm"
 #include "modular_doppler\xenoarch\code\modules\research\xenoarch\xenoarch_reward.dm"
 #include "modular_doppler\xenoarch\code\modules\research\xenoarch\xenoarch_tool.dm"
+// END_INCLUDE

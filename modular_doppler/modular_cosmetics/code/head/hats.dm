@@ -9,7 +9,7 @@
 
 /obj/item/clothing/head/beret/medical/virologist
 	name = "virologist beret"
-	desc = "Sneezing in this expensive beret would be a waste of a good beret."
+	desc = "Sneezing in this expensive hat would be a waste of a good beret."
 	greyscale_colors = "#FFFFFF#198019"
 
 /obj/item/clothing/head/beret/atmos

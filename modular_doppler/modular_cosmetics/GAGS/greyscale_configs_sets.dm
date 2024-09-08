@@ -15,36 +15,36 @@
 
 /datum/greyscale_config/maid_neck_cover
 	name = "Maid Neck Cover"
-	icon_file = 'modular_skyrat/modules/GAGS/icons/maid_costume.dmi'
-	json_config = 'modular_skyrat/modules/GAGS/json_configs/costumes/maid_neck_cover.json'
+	icon_file = 'modular_doppler/modular_cosmetics/GAGS/icons/obj/maid_costume.dmi'
+	json_config = 'modular_doppler/modular_cosmetics/GAGS/json_configs/maid/maid_neck_cover.json'
 
 /datum/greyscale_config/maid_neck_cover/worn
 	name = "Maid Neck Cover (Worn)"
-	icon_file = 'modular_skyrat/modules/GAGS/icons/maid_costume_worn.dmi'
+	icon_file = 'modular_doppler/modular_cosmetics/GAGS/icons/mob/maid_costume_worn.dmi'
 
 /datum/greyscale_config/maid_arm_covers
 	name = "Maid Arm Covers"
-	icon_file = 'modular_skyrat/modules/GAGS/icons/maid_costume.dmi'
-	json_config = 'modular_skyrat/modules/GAGS/json_configs/costumes/maid_arm_covers.json'
+	icon_file = 'modular_doppler/modular_cosmetics/GAGS/icons/obj/maid_costume.dmi'
+	json_config = 'modular_doppler/modular_cosmetics/GAGS/json_configs/maid/maid_arm_covers.json'
 
 /datum/greyscale_config/maid_arm_covers/worn
 	name = "Maid Arm Covers (Worn)"
-	icon_file = 'modular_skyrat/modules/GAGS/icons/maid_costume_worn.dmi'
+	icon_file = 'modular_doppler/modular_cosmetics/GAGS/icons/mob/maid_costume_worn.dmi'
 
 /datum/greyscale_config/maid_costume
 	name = "Maid Costume"
-	icon_file = 'modular_skyrat/modules/GAGS/icons/maid_costume.dmi'
-	json_config = 'modular_skyrat/modules/GAGS/json_configs/costumes/maid_costume.json'
+	icon_file = 'modular_doppler/modular_cosmetics/GAGS/icons/obj/maid_costume.dmi'
+	json_config = 'modular_doppler/modular_cosmetics/GAGS/json_configs/maid/maid_costume.json'
 
 /datum/greyscale_config/maid_costume/worn
 	name = "Maid Costume (Worn)"
-	icon_file = 'modular_skyrat/modules/GAGS/icons/maid_costume_worn.dmi'
+	icon_file = 'modular_doppler/modular_cosmetics/GAGS/icons/mob/maid_costume_worn.dmi'
 
 /datum/greyscale_config/maid_headband
 	name = "Maid Headband"
-	icon_file = 'modular_skyrat/modules/GAGS/icons/maid_costume.dmi'
-	json_config = 'modular_skyrat/modules/GAGS/json_configs/costumes/maid_headband.json'
+	icon_file = 'modular_doppler/modular_cosmetics/GAGS/icons/obj/maid_costume.dmi'
+	json_config = 'modular_doppler/modular_cosmetics/GAGS/json_configs/maid/maid_headband.json'
 
 /datum/greyscale_config/maid_headband/worn
 	name = "Maid Headband (Worn)"
-	icon_file = 'modular_skyrat/modules/GAGS/icons/maid_costume_worn.dmi'
+	icon_file = 'modular_doppler/modular_cosmetics/GAGS/icons/mob/maid_costume_worn.dmi'

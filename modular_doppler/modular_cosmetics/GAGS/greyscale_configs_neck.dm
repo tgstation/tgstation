@@ -58,12 +58,12 @@
 
 /datum/greyscale_config/face_scarf
 	name = "Face Scarf"
-	icon_file = 'modular_skyrat/modules/GAGS/icons/face_scarf.dmi'
+	icon_file = 'modular_doppler/modular_cosmetics/GAGS/icons/obj/neck.dmi'
 	json_config = 'modular_skyrat/modules/GAGS/json_configs/neck/face_scarf.json'
 
 /datum/greyscale_config/face_scarf/worn
 	name = "Face Scarf (Worn)"
-	icon_file = 'modular_skyrat/modules/GAGS/icons/face_scarf_worn.dmi'
+	icon_file = 'modular_doppler/modular_cosmetics/GAGS/icons/mob/neck.dmi'
 
 
 
