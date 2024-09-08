@@ -1790,10 +1790,12 @@
 
 /datum/sprite_accessory/tails/monkey
 
-/datum/sprite_accessory/tails/monkey/none
+/// DOPPLER SHIFT REMOVAL BEGIN
+/*/datum/sprite_accessory/tails/monkey/none
 	name = SPRITE_ACCESSORY_NONE
 	icon_state = "none"
-	natural_spawn = FALSE
+	natural_spawn = FALSE*/
+/// DOPPLER SHIFT REMOVAL END
 
 /datum/sprite_accessory/tails/monkey/default
 	name = "Monkey"

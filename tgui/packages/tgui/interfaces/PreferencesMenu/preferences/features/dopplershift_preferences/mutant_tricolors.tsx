@@ -1,9 +1,11 @@
 import {
   CheckboxInput,
   Feature,
+  FeatureChoiced,
   FeatureToggle,
   FeatureTriColorInput,
 } from '../base';
+import { FeatureDropdownInput } from '../dropdowns';
 
 export const has_snout: FeatureToggle = {
   name: 'Add Part: Snout',
@@ -47,13 +49,13 @@ export const frills_color: Feature<string[]> = {
   component: FeatureTriColorInput,
 };
 
-export const has_tail: FeatureToggle = {
+export const tail_type: FeatureChoiced = {
   name: 'Add Part: Tail',
   category: 'GAMEPLAY',
   description: `
-    When toggled, adds a tail to your character.
+    Choose which tail to add to your character, if any.
   `,
-  component: CheckboxInput,
+  component: FeatureDropdownInput,
 };
 
 export const tail_color: Feature<string[]> = {

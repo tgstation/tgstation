@@ -152,14 +152,26 @@
 
 	return TRUE
 
-// Gotta add to the selector too
+// Add the selector to ALL THE TAILS!
 /datum/preference/choiced/lizard_tail/compile_constant_data()
 	var/list/data = ..()
-
 	data[SUPPLEMENTAL_FEATURE_KEY] = /datum/preference/tri_color/tail_color::savefile_key
-
 	return data
 
+/datum/preference/choiced/tail_human/compile_constant_data()
+	var/list/data = ..()
+	data[SUPPLEMENTAL_FEATURE_KEY] = /datum/preference/tri_color/tail_color::savefile_key
+	return data
+
+/datum/preference/choiced/monkey_tail/compile_constant_data()
+	var/list/data = ..()
+	data[SUPPLEMENTAL_FEATURE_KEY] = /datum/preference/tri_color/tail_color::savefile_key
+	return data
+
+/datum/preference/choiced/dog_tail/compile_constant_data()
+	var/list/data = ..()
+	data[SUPPLEMENTAL_FEATURE_KEY] = /datum/preference/tri_color/tail_color::savefile_key
+	return data
 
 
 /// Ears colors!

@@ -20,7 +20,28 @@
 	name = "No Horns"
 	icon_state = "none"
 
+/// Tail time
+/datum/sprite_accessory/tails/none
+	icon = 'modular_doppler/modular_customization/accessories/code/~overrides/icons/fallbacks.dmi'
+	name = "No Tail"
+	icon_state = "none"
+
 /datum/sprite_accessory/tails/lizard/none
+	icon = 'modular_doppler/modular_customization/accessories/code/~overrides/icons/fallbacks.dmi'
+	name = "No Tail"
+	icon_state = "none"
+
+/datum/sprite_accessory/tails/human/cat/none
+	icon = 'modular_doppler/modular_customization/accessories/code/~overrides/icons/fallbacks.dmi'
+	name = "No Tail"
+	icon_state = "none"
+
+/datum/sprite_accessory/tails/monkey/none
+	icon = 'modular_doppler/modular_customization/accessories/code/~overrides/icons/fallbacks.dmi'
+	name = "No Tail"
+	icon_state = "none"
+
+/datum/sprite_accessory/tails/dog/none
 	icon = 'modular_doppler/modular_customization/accessories/code/~overrides/icons/fallbacks.dmi'
 	name = "No Tail"
 	icon_state = "none"
