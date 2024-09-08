@@ -52,6 +52,8 @@
 
 	/// Toggles whether this action is usable or not
 	var/action_disabled = FALSE
+	/// Can this action be shared with our rider?
+	var/can_be_shared = TRUE
 
 /datum/action/New(Target)
 	link_to(Target)

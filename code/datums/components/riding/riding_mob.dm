@@ -7,7 +7,9 @@
 	var/can_use_abilities = FALSE
 	/// shall we require riders to go through the riding minigame if they arent in our friends list
 	var/require_minigame = FALSE
-	/// list of blacklisted abilities that cant be shared
+	/// unsharable abilities that we will force to be shared anyway
+	var/list/override_unsharable_abilities = list()
+	/// abilities that are always blacklisted from sharing
 	var/list/blacklist_abilities = list()
 
 /datum/component/riding/creature/Initialize(mob/living/riding_mob, force = FALSE, ride_check_flags = NONE, potion_boost = FALSE)
@@ -167,6 +169,8 @@
 
 	for(var/datum/action/action as anything in ridden_creature.actions)
 		if(is_type_in_list(action, blacklist_abilities))
+			continue
+		if(!action.can_be_shared && !is_type_in_list(action, override_unsharable_abilities))
 			continue
 		action.GiveAction(rider)
 
@@ -504,7 +508,6 @@
 /datum/component/riding/creature/leaper
 	can_force_unbuckle = FALSE
 	can_use_abilities = TRUE
-	blacklist_abilities = list(/datum/action/cooldown/toggle_seethrough)
 	ride_check_flags = JUST_FRIEND_RIDERS
 
 /datum/component/riding/creature/leaper/handle_specials()

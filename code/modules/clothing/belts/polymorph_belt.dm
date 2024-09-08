@@ -104,6 +104,7 @@
 	invocation_type = INVOCATION_NONE
 	spell_requirements = NONE
 	possible_shapes = list(/mob/living/basic/cockroach)
+	can_be_shared = FALSE
 	/// Amount of time it takes us to transform back or forth
 	var/channel_time = 3 SECONDS
 
