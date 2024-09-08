@@ -143,7 +143,7 @@ DEFINE_BITFIELD(turret_flags, list(
 /obj/machinery/porta_turret/proc/toggle_on(turn_on = TRUE)
 	if(on == turn_on)
 		return
-	if(on && !COOLDOWN_FINISHED(src, disabled_time))
+	if(turn_on && !COOLDOWN_FINISHED(src, disabled_time))
 		return
 	on = turn_on
 	check_should_process()
