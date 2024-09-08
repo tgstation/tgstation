@@ -125,16 +125,18 @@
 	return (exposed_temperature >= heat_capacity || to_be_destroyed)
 
 /turf/atmos_expose(datum/gas_mixture/air, exposed_temperature)
-	if(exposed_temperature >= max_fire_temperature_sustained)
+	if(exposed_temperature >= heat_capacity)
 		to_be_destroyed = TRUE
+	if(to_be_destroyed && exposed_temperature >= max_fire_temperature_sustained)
+		max_fire_temperature_sustained = min(exposed_temperature, max_fire_temperature_sustained + heat_capacity / 4) //Ramp up to 100% yeah?
 	if(to_be_destroyed && !changing_turf)
-		burn_turf(exposed_temperature)
+		burn_turf()
 
-/turf/proc/burn_turf(exposed_temperature)
+/turf/proc/burn_turf()
 	burn_tile()
 	var/chance_of_deletion
 	if (heat_capacity) //beware of division by zero
-		chance_of_deletion = exposed_temperature / (max_fire_temperature_sustained + exposed_temperature)*100 // at 25'000 kelvin we have 55% chance of melting //there is no problem with prob(23456), min() was redundant --rastaf0
+		chance_of_deletion = max_fire_temperature_sustained / heat_capacity * 8 //there is no problem with prob(23456), min() was redundant --rastaf0
 	else
 		chance_of_deletion = 100
 	if(prob(chance_of_deletion))
