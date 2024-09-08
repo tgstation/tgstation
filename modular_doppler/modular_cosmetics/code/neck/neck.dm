@@ -24,7 +24,7 @@
 
 /obj/item/clothing/neck/long_cape/Initialize(mapload)
 	. = ..()
-	AddComponent(/datum/component/toggle_icon)
+	AddComponent(/datum/component/toggle_icon, "cape")
 
 /obj/item/clothing/neck/wide_cape
 	name = "wide cape"
@@ -35,6 +35,20 @@
 	greyscale_colors = "#867361#4d433d#b2a69c"
 	flags_1 = IS_PLAYER_COLORABLE_1
 	body_parts_covered = CHEST|ARMS
+
+/obj/item/clothing/neck/ranger_poncho
+	name = "ranger poncho"
+	desc = "Aim for the Heart, Ramon."
+	icon_state = "ranger_poncho"
+	greyscale_config = /datum/greyscale_config/ranger_poncho
+	greyscale_config_worn = /datum/greyscale_config/ranger_poncho/worn
+	greyscale_colors = "#917A57#858585"
+	flags_1 = IS_PLAYER_COLORABLE_1
+	heat_protection = CHEST
+
+/obj/item/clothing/neck/ranger_poncho/Initialize(mapload)
+	. = ..()
+	AddComponent(/datum/component/toggle_icon, "poncho")
 
 ///////////
 //SCARVES//
@@ -52,7 +66,7 @@
 
 /obj/item/clothing/neck/face_scarf/Initialize(mapload)
 	. = ..()
-	AddComponent(/datum/component/toggle_icon)
+	AddComponent(/datum/component/toggle_icon, "scarf")
 
 ///////////////
 //MISCELLANIA//

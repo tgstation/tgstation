@@ -6479,6 +6479,7 @@
 #include "modular_doppler\modular_cosmetics\code\neck\neck.dm"
 #include "modular_doppler\modular_cosmetics\code\storage\rings.dm"
 #include "modular_doppler\modular_cosmetics\code\suits\jacket.dm"
+#include "modular_doppler\modular_cosmetics\code\suits\shirts.dm"
 #include "modular_doppler\modular_cosmetics\code\under\miscellania.dm"
 #include "modular_doppler\modular_cosmetics\GAGS\greyscale_configs_neck.dm"
 #include "modular_doppler\modular_cosmetics\GAGS\greyscale_configs_sets.dm"

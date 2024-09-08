@@ -230,6 +230,21 @@
 	. = ..()
 	AddComponent(/datum/component/toggle_icon, "button")
 
+/obj/item/clothing/suit/jacket/doppler/big_jacket
+	name = "\improper Alpha Atelier pilot jacket"
+	desc = "An exacting reproduction of the pilot jackets worn in the infancy of faster than light travel, \
+		right down the precise tension of thread spun on the precisely correct looms. The pilots it pays homage \
+		to worked in small ships and in close proximity to their supercooled drives and needed extreme insulation, \
+		hence the bulk."
+	icon_state = "big_jacket"
+	greyscale_config = /datum/greyscale_config/big_jacket
+	greyscale_config_worn = /datum/greyscale_config/big_jacket/worn
+	greyscale_colors = "#666633#333300#666633"
+	flags_1 = IS_PLAYER_COLORABLE_1
+	body_parts_covered = CHEST|ARMS
+	cold_protection = CHEST|ARMS
+	min_cold_protection_temperature = FIRE_SUIT_MIN_TEMP_PROTECT
+
 /////////
 //COATS//
 /////////

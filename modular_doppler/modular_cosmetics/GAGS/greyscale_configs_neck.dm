@@ -45,12 +45,12 @@
 /datum/greyscale_config/ranger_poncho
 	name = "Ranger Poncho"
 	icon_file = 'modular_doppler/modular_cosmetics/GAGS/icons/obj/neck.dmi'
-	json_config = 'modular_nova/modules/GAGS/json_configs/ranger_poncho/ranger_poncho.json'
+	json_config = 'modular_doppler/modular_cosmetics/GAGS/json_configs/neck/ranger_poncho.json'
 
 /datum/greyscale_config/ranger_poncho/worn
 	name = "Ranger Poncho (Worn)"
 	icon_file = 'modular_doppler/modular_cosmetics/GAGS/icons/mob/neck.dmi'
-	json_config = 'modular_nova/modules/GAGS/json_configs/ranger_poncho/ranger_poncho_worn.json'
+	json_config = 'modular_doppler/modular_cosmetics/GAGS/json_configs/neck/ranger_poncho_worn.json'
 
 ///////////
 //SCARVES//
@@ -59,7 +59,7 @@
 /datum/greyscale_config/face_scarf
 	name = "Face Scarf"
 	icon_file = 'modular_doppler/modular_cosmetics/GAGS/icons/obj/neck.dmi'
-	json_config = 'modular_skyrat/modules/GAGS/json_configs/neck/face_scarf.json'
+	json_config = 'modular_doppler/modular_cosmetics/GAGS/json_configs/neck/face_scarf.json'
 
 /datum/greyscale_config/face_scarf/worn
 	name = "Face Scarf (Worn)"

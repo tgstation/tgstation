@@ -1,0 +1,10 @@
+{
+	"dagger_mantle": [
+		{
+			"type": "icon_state",
+			"icon_state": "dagger_mantle_obj",
+			"blend_mode": "overlay",
+			"color_ids": [ 1 ]
+		}
+	]
+}
