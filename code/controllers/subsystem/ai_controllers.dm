@@ -26,10 +26,10 @@ SUBSYSTEM_DEF(ai_controllers)
 		if(!COOLDOWN_FINISHED(ai_controller, failed_planning_cooldown))
 			continue
 
-		if(!ai_controller.able_to_plan())
+		if(!ai_controller.able_to_plan)
 			continue
 		ai_controller.SelectBehaviors(wait * 0.1)
-		if(!LAZYLEN(ai_controller.current_behaviors)) //Still no plan
+		if(!length(ai_controller.current_behaviors)) //Still no plan
 			COOLDOWN_START(ai_controller, failed_planning_cooldown, AI_FAILED_PLANNING_COOLDOWN)
 
 	our_cost = MC_AVERAGE(our_cost, TICK_DELTA_TO_MS(TICK_USAGE_REAL - timer))
