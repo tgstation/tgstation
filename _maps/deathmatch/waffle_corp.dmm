@@ -290,8 +290,9 @@
 /turf/open/indestructible/large/textured,
 /area/deathmatch)
 "ea" = (
-/obj/structure/sign/poster/ripped/directional/north,
-/turf/open/indestructible/stone,
+/turf/closed/indestructible/fakedoor{
+	name = "Hab Block 512"
+	},
 /area/deathmatch)
 "ec" = (
 /obj/structure/table/wood,
@@ -345,11 +346,6 @@
 /obj/effect/turf_decal/box/corners,
 /obj/effect/turf_decal/siding/wideplating_new/dark,
 /turf/open/indestructible/asphalt/outdoors,
-/area/deathmatch)
-"eQ" = (
-/obj/machinery/door/poddoor/shutters/indestructible,
-/obj/effect/spawner/structure/window/reinforced,
-/turf/open/indestructible/plating,
 /area/deathmatch)
 "fd" = (
 /obj/structure/table/reinforced/ctf,
@@ -602,6 +598,10 @@
 	},
 /turf/open/floor/grass,
 /area/deathmatch)
+"iv" = (
+/obj/structure/sign/poster/ripped/directional/west,
+/turf/open/indestructible/stone,
+/area/deathmatch)
 "iH" = (
 /obj/effect/turf_decal/box/corners{
 	dir = 4
@@ -706,7 +706,10 @@
 /obj/structure/table/reinforced/ctf,
 /obj/item/keycard/yellow{
 	pixel_y = 8;
-	pixel_x = 2
+	pixel_x = 2;
+	puzzle_id = "waffle_arg2";
+	name = "keycard";
+	desc = "A yellow keycard."
 	},
 /obj/effect/turf_decal/tile/dark_blue{
 	dir = 8
@@ -924,6 +927,7 @@
 	pixel_x = 4
 	},
 /obj/structure/closet/crate/trashcart,
+/obj/structure/sign/poster/ripped/directional/north,
 /turf/open/indestructible/stone,
 /area/deathmatch)
 "mf" = (
@@ -938,6 +942,11 @@
 /area/deathmatch)
 "my" = (
 /obj/structure/flora/bush/fullgrass/style_3,
+/obj/effect/decal/cleanable/crayon{
+	icon_state = "Newton";
+	pixel_y = 32;
+	paint_colour = "#8b0000"
+	},
 /turf/open/floor/grass,
 /area/deathmatch)
 "mz" = (
@@ -992,13 +1001,6 @@
 	pixel_y = -3
 	},
 /turf/open/floor/grass,
-/area/deathmatch)
-"nB" = (
-/obj/machinery/door/airlock/public/glass{
-	name = "Rofl Brothers Outlet"
-	},
-/obj/machinery/door/poddoor/shutters/indestructible,
-/turf/open/indestructible/plating,
 /area/deathmatch)
 "nL" = (
 /turf/open/indestructible/large/textured,
@@ -1276,6 +1278,18 @@
 /obj/item/paperwork,
 /turf/open/indestructible/vault,
 /area/deathmatch)
+"qH" = (
+/obj/effect/turf_decal/tile/dark_blue/half/contrasted{
+	dir = 4
+	},
+/obj/item/keycard/syndicate_fridge{
+	puzzle_id = "waffle_arg3";
+	name = "keycard";
+	desc = "A grey keycard."
+	},
+/obj/item/target,
+/turf/open/indestructible/dark,
+/area/deathmatch)
 "qL" = (
 /obj/structure/flora/bush/leavy/style_3{
 	pixel_x = -5;
@@ -1409,6 +1423,10 @@
 /area/deathmatch)
 "so" = (
 /turf/open/indestructible/large/textured_half,
+/area/deathmatch)
+"sz" = (
+/obj/effect/spawner/structure/window/reinforced/plasma/plastitanium/indestructible,
+/turf/open/indestructible/plating/reinforced,
 /area/deathmatch)
 "sD" = (
 /obj/effect/mapping_helpers/broken_floor,
@@ -1567,11 +1585,6 @@
 	},
 /turf/open/indestructible/asphalt/outdoors,
 /area/deathmatch)
-"tQ" = (
-/turf/closed/indestructible/fakedoor{
-	name = "Hab Block 512"
-	},
-/area/deathmatch)
 "tW" = (
 /obj/structure/shipping_container/gorlex/red,
 /obj/effect/turf_decal/box/corners{
@@ -1677,7 +1690,6 @@
 	pixel_y = 6
 	},
 /obj/effect/decal/cleanable/dirt/dust,
-/obj/structure/sign/poster/ripped/directional/north,
 /turf/open/indestructible/stone,
 /area/deathmatch)
 "vB" = (
@@ -1873,6 +1885,13 @@
 /obj/structure/mystery_box/guns,
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/indestructible/stone,
+/area/deathmatch)
+"zA" = (
+/obj/machinery/door/airlock/public/glass{
+	name = "Rofl Brothers Outlet"
+	},
+/obj/machinery/door/poddoor/shutters/indestructible,
+/turf/open/indestructible/plating,
 /area/deathmatch)
 "zJ" = (
 /obj/item/trash/waffles,
@@ -3034,6 +3053,11 @@
 /obj/effect/decal/cleanable/oil,
 /turf/open/indestructible/asphalt/outdoors,
 /area/deathmatch)
+"Od" = (
+/obj/machinery/door/poddoor/shutters/indestructible,
+/obj/effect/spawner/structure/window/reinforced,
+/turf/open/indestructible/plating,
+/area/deathmatch)
 "Oh" = (
 /obj/structure/rack,
 /obj/item/reagent_containers/cup/glass/waterbottle/large{
@@ -3119,10 +3143,6 @@
 	},
 /obj/effect/turf_decal/siding/wideplating_new/dark,
 /turf/open/indestructible/asphalt/outdoors,
-/area/deathmatch)
-"OB" = (
-/obj/effect/spawner/structure/window/reinforced/plasma/plastitanium/indestructible,
-/turf/open/indestructible/plating/reinforced,
 /area/deathmatch)
 "OC" = (
 /obj/structure/closet/crate/large,
@@ -3552,6 +3572,11 @@
 "UI" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/light/small/broken/directional/north,
+/obj/effect/decal/cleanable/crayon{
+	icon_state = "stickman";
+	pixel_y = 32;
+	paint_colour = "#EEDDEE"
+	},
 /turf/open/indestructible/stone,
 /area/deathmatch)
 "UO" = (
@@ -3688,7 +3713,9 @@
 /area/deathmatch)
 "WN" = (
 /obj/structure/closet/crate/bin,
-/obj/machinery/puzzle/button/directional/east,
+/obj/machinery/puzzle/button/directional/east{
+	id = "waffle_arg"
+	},
 /turf/open/indestructible/stone,
 /area/deathmatch)
 "WO" = (
@@ -4091,7 +4118,7 @@ or
 or
 or
 tn
-eQ
+Od
 Nm
 zM
 gb
@@ -4151,7 +4178,7 @@ or
 or
 or
 tn
-eQ
+Od
 Te
 zM
 kp
@@ -4211,7 +4238,7 @@ or
 or
 or
 tn
-nB
+zA
 Jr
 zM
 kp
@@ -4740,7 +4767,7 @@ BB
 BB
 BB
 BB
-ea
+Jr
 LQ
 NZ
 BB
@@ -4797,7 +4824,7 @@ gK
 Jr
 gc
 Jr
-Jr
+iv
 Jr
 qP
 qP
@@ -5202,10 +5229,10 @@ lp
 lp
 lp
 vv
-vv
-vv
-vv
-vv
+BB
+BB
+BB
+BB
 SY
 Jr
 Ml
@@ -5265,7 +5292,7 @@ tn
 tn
 tn
 tn
-vv
+BB
 Bl
 pa
 aG
@@ -5325,7 +5352,7 @@ or
 or
 or
 tn
-vv
+BB
 UH
 Jr
 FZ
@@ -5385,7 +5412,7 @@ or
 or
 or
 tn
-vv
+BB
 Vp
 Jr
 UH
@@ -5505,7 +5532,7 @@ or
 or
 or
 tn
-vv
+BB
 my
 LI
 Eh
@@ -5565,7 +5592,7 @@ or
 or
 or
 tn
-vv
+BB
 vv
 vv
 vk
@@ -5847,7 +5874,7 @@ pn
 BL
 Hi
 qP
-tQ
+ea
 tn
 tn
 or
@@ -7198,9 +7225,9 @@ tn
 tn
 pP
 AO
-AO
+qH
 Zw
-OB
+sz
 LW
 OS
 Ea
@@ -7210,8 +7237,8 @@ ik
 uB
 vv
 vv
-OB
-OB
+sz
+sz
 vv
 vv
 tn
