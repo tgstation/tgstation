@@ -94,6 +94,10 @@
 		needed_slots -= needed_slot
 	return !length(needed_slots)
 
+/// Additional checks for whenever a module can be installed into a suit or not
+/obj/item/mod/module/proc/can_install(obj/item/mod/control/mod)
+	return TRUE
+
 /// Called when the module is selected from the TGUI, radial or the action button
 /obj/item/mod/module/proc/on_select()
 	if(!mod.wearer)

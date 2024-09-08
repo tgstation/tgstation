@@ -17,7 +17,7 @@
 	if(!pick)
 		return
 	var/part_reference = display_names[pick]
-	var/obj/item/part = locate(part_reference) in mod_parts
+	var/obj/item/part = locate(part_reference) in get_parts()
 	if(!istype(part) || user.incapacitated)
 		return
 	if(active || activating)
