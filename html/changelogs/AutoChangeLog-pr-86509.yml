@@ -1,0 +1,4 @@
+author: "vinylspiders"
+delete-after: True
+changes:
+  - bugfix: "fixed a race condition that was causing carpotoxin to cause liver damage to felinids despite being immune"
