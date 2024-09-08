@@ -83,6 +83,7 @@
 	icon_state = "med_down"
 	base_icon_state = "med"
 	anchored = FALSE
+	buckle_lying = 270 // Flipped from regular beds because the sprites are flipped
 	resistance_flags = NONE
 	build_stack_type = /obj/item/stack/sheet/mineral/titanium
 	build_stack_amount = 1
@@ -105,6 +106,9 @@
 	AddElement(/datum/element/noisy_movement)
 	if(anchored)
 		update_appearance()
+
+/obj/structure/bed/medical/update_buckle_vars(newdir)
+	buckle_lying = newdir & NORTHEAST ? 90 : 270 // Flipped from regular beds because the sprites are flipped
 
 /obj/structure/bed/medical/add_context(atom/source, list/context, obj/item/held_item, mob/living/user)
 	. = ..()
