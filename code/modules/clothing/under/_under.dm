@@ -8,6 +8,8 @@
 	slot_flags = ITEM_SLOT_ICLOTHING
 	interaction_flags_click = NEED_DEXTERITY
 	armor_type = /datum/armor/clothing_under
+	supports_variations_flags = CLOTHING_DIGITIGRADE_MASK
+	digitigrade_greyscale_config_worn = /datum/greyscale_config/jumpsuit/worn_digi
 	equip_sound = 'sound/items/equip/jumpsuit_equip.ogg'
 	drop_sound = 'sound/items/handling/cloth_drop.ogg'
 	pickup_sound = 'sound/items/handling/cloth_pickup.ogg'
@@ -85,7 +87,8 @@
 		context[SCREENTIP_CONTEXT_LMB] = "Repair suit sensors"
 		changed = TRUE
 
-	if(can_adjust && adjusted != DIGITIGRADE_STYLE)
+	//if(can_adjust && adjusted != DIGITIGRADE_STYLE) /// DOPPLER SHIFT REMOVAL
+	if(can_adjust) /// DOPPLER SHIFT REPLACEMENT
 		context[SCREENTIP_CONTEXT_ALT_LMB] =  "Wear [adjusted == ALT_STYLE ? "normally" : "casually"]"
 		changed = TRUE
 
@@ -162,11 +165,15 @@
 	if(adjusted == ALT_STYLE)
 		adjust_to_normal()
 
+	/// DOPPLER SHFIT REMOVAL BEGIN
+	/*
 	if((supports_variations_flags & CLOTHING_DIGITIGRADE_VARIATION) && ishuman(user))
 		var/mob/living/carbon/human/wearer = user
 		if(wearer.bodyshape & BODYSHAPE_DIGITIGRADE)
 			adjusted = DIGITIGRADE_STYLE
-			update_appearance()
+		update_appearance()
+	*/
+	/// DOPPLER SHIFT REMOVAL END
 
 /obj/item/clothing/under/equipped(mob/living/user, slot)
 	..()
@@ -407,8 +414,10 @@
 /// Returns the new state
 /obj/item/clothing/under/proc/toggle_jumpsuit_adjust()
 	switch(adjusted)
-		if(DIGITIGRADE_STYLE)
-			return
+		/// DOPPLER SHIFT REMOVAL BEGIN
+		/*if(DIGITIGRADE_STYLE)
+			return*/
+		/// DOPPLER SHIFT REMOVAL END
 
 		if(NORMAL_STYLE)
 			adjust_to_alt()

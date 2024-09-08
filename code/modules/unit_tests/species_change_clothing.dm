@@ -9,12 +9,14 @@
 	morphing_human.equipOutfit(/datum/outfit/job/assistant/consistent)
 	morphing_human.dna.features["legs"] = DIGITIGRADE_LEGS //you WILL have digitigrade legs
 
-	var/obj/item/human_shoes = morphing_human.get_item_by_slot(ITEM_SLOT_FEET)
+	/// DOPPLER SHIFT REMOVAL BEGIN - fuck tg and their stupid lizard racism gimmicks, genuinely
+	/*var/obj/item/human_shoes = morphing_human.get_item_by_slot(ITEM_SLOT_FEET)
 	human_shoes.supports_variations_flags = NONE //do not fit lizards at all costs.
 	morphing_human.set_species(/datum/species/lizard)
 	var/obj/item/lizard_shoes = morphing_human.get_item_by_slot(ITEM_SLOT_FEET)
 
-	TEST_ASSERT_NOTEQUAL(human_shoes, lizard_shoes, "Lizard still has shoes after changing species.")
+	TEST_ASSERT_NOTEQUAL(human_shoes, lizard_shoes, "Lizard still has shoes after changing species.")*/
+	/// DOPPLER SHIFT REMOVAL END
 
 	// Testing whether item-species restrictions properly blocks changing into a blacklisted species.
 	morphing_human.set_species(/datum/species/monkey)
