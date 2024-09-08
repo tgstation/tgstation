@@ -202,7 +202,7 @@
 		return
 
 	RegisterSignal(our_plant, COMSIG_PLANT_ON_SLIP, PROC_REF(squash_plant))
-	RegisterSignal(our_plant, COMSIG_MOVABLE_IMPACT, PROC_REF(squash_plant))
+	RegisterSignal(our_plant, COMSIG_MOVABLE_IMPACT, PROC_REF(squash_plant_if_not_caught))
 	RegisterSignal(our_plant, COMSIG_ITEM_ATTACK_SELF, PROC_REF(squash_plant))
 
 /*
@@ -238,6 +238,10 @@
 		our_plant.reagents?.expose(things)
 
 	qdel(our_plant)
+
+/datum/plant_gene/trait/squash/proc/squash_plant_if_not_caught(datum/source, atom/hit_atom, datum/thrownthing/throwing_datum, caught)
+	if(!caught)
+		squash_plant(source, hit_atom)
 
 /*
  * Makes plant slippery, unless it has a grown-type trash. Then the trash gets slippery.

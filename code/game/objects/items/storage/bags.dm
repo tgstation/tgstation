@@ -607,6 +607,7 @@
 	desc = "A specialized quiver meant to hold any kind of bolts intended for use with the rebar crossbow. \
 		Clearly a better design than a cut up oxygen tank..."
 	slot_flags = ITEM_SLOT_NECK
+	w_class = WEIGHT_CLASS_SMALL
 	resistance_flags = LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
 	actions_types = list(/datum/action/item_action/reload_rebar)
 
