@@ -186,12 +186,14 @@
 	if(!do_after(src, 3 SECONDS, interacting_with))
 		return ITEM_INTERACT_BLOCKING
 	balloon_alert(user, "fish released")
-	var/fish_dead_not_naive = status == FISH_DEAD && !HAS_MIND_TRAIT(user, TRAIT_NAIVE)
+	var/goodbye_text = "Bye bye [name]."
+	if(status == FISH_DEAD && !HAS_MIND_TRAIT(user, TRAIT_NAIVE))
+		goodbye_text += "May it rest in peace..."
 	user.visible_message(span_notice("[user] releases [src] into [interacting_with]"), \
-		span_notice("You release [src] into [interacting_with]. [fish_dead_not_naive ? "May it rest in peace..." : "Bye bye [name]."]"), \
+		span_notice("You release [src] into [interacting_with]. [goodbye_text]"), \
 		span_notice("You hear a splash."))
 	playsound(interacting_with, 'sound/effects/splash.ogg', 50)
-	SEND_SIGNAL(interacting_with, TRAIT_FISH_RELEASED_INTO, src)
+	SEND_SIGNAL(interacting_with, COMSIG_FISH_RELEASED_INTO, src)
 	qdel(src)
 	return ITEM_INTERACT_SUCCESS
 

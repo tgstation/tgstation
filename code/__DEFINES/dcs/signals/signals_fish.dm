@@ -23,7 +23,7 @@
 #define COMSIG_FISH_FORCE_UPDATED "fish_force_updated"
 
 ///From /obj/item/fish/interact_with_atom_secondary, sent to the target: (fish)
-#define TRAIT_FISH_RELEASED_INTO "fish_released_into"
+#define COMSIG_FISH_RELEASED_INTO "fish_released_into"
 
 /// Fishing challenge completed
 #define COMSIG_FISHING_CHALLENGE_COMPLETED "fishing_completed"
