@@ -63,12 +63,15 @@ GLOBAL_LIST_EMPTY(exodrone_launchers)
 
 /obj/item/exodrone/Initialize(mapload)
 	. = ..()
-	name = pick(strings(EXODRONE_FILE,"probe_names"))
-	if(name_counter[name])
-		name_counter[name]++
-		name = "[name] \Roman[name_counter[name]]"
+	if(name == /obj/item/exodrone::name)
+		name = pick(strings(EXODRONE_FILE,"probe_names"))
+		if(name_counter[name])
+			name_counter[name]++
+			name = "[name] \Roman[name_counter[name]]"
+		else
+			name_counter[name] = 1
 	else
-		name_counter[name] = 1
+		name = name
 	GLOB.exodrones += src
 	// Cargo storage
 	create_storage(max_slots = EXODRONE_CARGO_SLOTS, canthold = GLOB.blacklisted_cargo_types)
