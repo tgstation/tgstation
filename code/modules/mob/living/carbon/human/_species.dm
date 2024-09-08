@@ -1406,7 +1406,6 @@ GLOBAL_LIST_EMPTY(features_by_species)
 
 	for (var/preference_type in GLOB.preference_entries)
 		var/datum/preference/preference = GLOB.preference_entries[preference_type]
-
 		if ( \
 			(preference.relevant_inherent_trait in inherent_traits) \
 			|| (preference.relevant_external_organ in get_mut_organs()) \
@@ -1470,6 +1469,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
 	mut_organs += mutantliver
 	mut_organs += mutantstomach
 	mut_organs += mutantappendix
+	return mut_organs
 
 /datum/species/proc/get_types_to_preload()
 	return get_mut_organs(FALSE)
