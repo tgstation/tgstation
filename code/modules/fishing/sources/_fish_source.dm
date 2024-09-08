@@ -225,7 +225,7 @@ GLOBAL_LIST_INIT(specific_fish_icons, generate_specific_fish_icons())
 /datum/fish_source/proc/simple_dispense_reward(reward_path, atom/spawn_location, turf/fishing_spot)
 	if(isnull(reward_path))
 		return null
-	if(reward_path in fish_counts) // This is limited count result
+	if(!isnull(fish_counts[reward_path])) // This is limited count result
 		//Somehow, we're trying to spawn an expended reward.
 		if(fish_counts[reward_path] <= 0)
 			return null
@@ -283,7 +283,7 @@ GLOBAL_LIST(fishing_property_cache)
 /datum/fish_source/proc/get_fish_table()
 	var/list/table = fish_table.Copy()
 	for(var/result in table)
-		if((result in fish_counts) && fish_counts[result] <= 0)
+		if(!isnull(fish_counts[result]) && fish_counts[result] <= 0)
 			table -= result
 	return table
 
