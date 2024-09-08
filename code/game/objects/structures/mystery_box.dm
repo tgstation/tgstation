@@ -142,7 +142,7 @@ GLOBAL_LIST_INIT(mystery_fishing, list(
 	/// Stores the current sound channel we're using so we can cut off our own sounds as needed. Randomized after each roll
 	var/current_sound_channel
 	/// How many time can it still be used?
-	var/uses_left
+	var/uses_left = INFINITY
 	/// A list of weakrefs to mind datums of people that opened it and how many times.
 	var/list/datum/weakref/minds_that_opened_us
 
