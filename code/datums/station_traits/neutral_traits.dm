@@ -479,7 +479,7 @@
 		return
 
 	if((skub_stance == RANDOM_SKUB && prob(50)) || skub_stance == PRO_SKUB)
-		var/obj/item/storage/box/skub/boxie = new(spawned.loc)
+		var/obj/item/storage/box/stickers/skub/boxie = new(spawned.loc)
 		spawned.equip_to_slot_if_possible(boxie, ITEM_SLOT_BACKPACK, indirect_action = TRUE)
 		if(ishuman(spawned))
 			var/obj/item/clothing/suit/costume/wellworn_shirt/skub/shirt = new(spawned.loc)
@@ -496,24 +496,28 @@
 		shirt.forceMove(boxie)
 
 /// A box containing a skub, for easier carry because skub is a bulky item.
-/obj/item/storage/box/skub
-	name = "skub box"
-	desc = "A box to store your skub and pro-skub shirt in. A label on the back reads: \"Skubtide, Stationwide\"."
-	icon_state = "hugbox"
-	illustration = "skub"
+/obj/item/storage/box/stickers/skub
+	name = "skub fan pack"
+	desc = "A vinyl pouch to store your skub and pro-skub shirt in. A label on the back reads: \"Skubtide, Stationwide\"."
+	icon_state = "skubpack"
+	illustration = "label_skub"
+	w_class = WEIGHT_CLASS_SMALL
 
-/obj/item/storage/box/skub/Initialize(mapload)
+/obj/item/storage/box/stickers/skub/Initialize(mapload)
 	. = ..()
+	atom_storage.max_slots = 3
 	atom_storage.exception_hold = typecacheof(list(/obj/item/skub, /obj/item/clothing/suit/costume/wellworn_shirt/skub))
 
-/obj/item/storage/box/skub/PopulateContents()
+/obj/item/storage/box/stickers/skub/PopulateContents()
 	new /obj/item/skub(src)
 	new /obj/item/sticker/skub(src)
 	new /obj/item/sticker/skub(src)
 
 /obj/item/storage/box/stickers/anti_skub
-	name = "anti-skub stickers box"
-	desc = "The enemy may have been given a skub and a shirt, but I've more stickers! Plus the box can hold my anti-skub shirt."
+	name = "anti-skub stickers pack"
+	desc = "The enemy may have been given a skub and a shirt, but I've got more stickers! Plus the pack can hold my anti-skub shirt."
+	icon_state = "skubpack"
+	illustration = "label_anti_skub"
 
 /obj/item/storage/box/stickers/anti_skub/Initialize(mapload)
 	. = ..()
