@@ -1,7 +1,7 @@
 /obj/structure/railing
 	name = "railing"
 	desc = "Basic railing meant to protect idiots like you from falling."
-	icon = 'icons/obj/structures/railings.dmi'
+	icon = 'icons/obj/railings.dmi'
 	icon_state = "railing"
 	flags_1 = ON_BORDER_1
 	obj_flags = CAN_BE_HIT | BLOCKS_CONSTRUCTION_DIR
@@ -73,11 +73,6 @@
 	AddElement(/datum/element/contextual_screentip_tools, tool_behaviors)
 
 	AddComponent(/datum/component/simple_rotation, ROTATION_NEEDS_ROOM)
-	update_appearance()
-
-/obj/structure/railing/update_appearance(updates)
-	. = ..()
-	update_layering()
 
 /obj/structure/railing/examine(mob/user)
 	. = ..()
@@ -136,15 +131,6 @@
 		return TRUE
 	return ..()
 
-/obj/structure/railing/proc/update_layering()
-	// If we're on a north edge, render as if we were "higher" then we are
-	if(dir & NORTH)
-		pixel_y = 32
-		pixel_z = -32
-	else
-		pixel_y = 0
-		pixel_z = 0
-
 /obj/structure/railing/proc/on_exit(datum/source, atom/movable/leaving, direction)
 	SIGNAL_HANDLER
 
@@ -177,7 +163,7 @@
 /obj/structure/railing/wooden_fence
 	name = "wooden fence"
 	desc = "wooden fence meant to keep animals in."
-	icon = 'icons/obj/structures/railings.dmi'
+	icon = 'icons/obj/structures.dmi'
 	icon_state = "wooden_railing"
 	item_deconstruct = /obj/item/stack/sheet/mineral/wood
 	layer = ABOVE_MOB_LAYER
@@ -197,9 +183,9 @@
 
 
 /obj/structure/railing/corner/end/wooden_fence
-	icon = 'icons/obj/structures/railings.dmi'
+	icon = 'icons/obj/structures.dmi'
 	icon_state = "wooden_railing_corner"
 
 /obj/structure/railing/corner/end/flip/wooden_fence
-	icon = 'icons/obj/structures/railings.dmi'
+	icon = 'icons/obj/structures.dmi'
 	icon_state = "wooden_railing_corner_flipped"

@@ -1,0 +1,4 @@
+author: "Thunder12345"
+delete-after: True
+changes:
+  - bugfix: "Freed up a trapped bookshelf in Birdshot's library"

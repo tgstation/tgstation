@@ -1,0 +1,4 @@
+author: "Rhials"
+delete-after: True
+changes:
+  - balance: "Hallucinatory anomalies now have a wider range, and will spawn hallucinatory decoys of itself to mislead you."
