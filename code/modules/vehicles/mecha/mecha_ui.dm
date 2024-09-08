@@ -121,26 +121,26 @@
 					))
 					if(ui_selected_module_index == module_index)
 						ui_selected_module_index = null
-					continue
-				var/obj/item/mecha_parts/mecha_equipment/module = islist(equipment) ? equipment[i] : equipment
-				data += list(list(
-					"slot" = category,
-					"icon" = module.icon_state,
-					"name" = module.name,
-					"desc" = module.desc,
-					"detachable" = module.detachable,
-					"integrity" = (module.get_integrity()/module.max_integrity),
-					"can_be_toggled" = module.can_be_toggled,
-					"can_be_triggered" = module.can_be_triggered,
-					"active" = module.active,
-					"active_label" = module.active_label,
-					"equip_cooldown" = module.equip_cooldown && DisplayTimeText(module.equip_cooldown),
-					"energy_per_use" = module.energy_drain,
-					"snowflake" = module.get_snowflake_data(),
-					"ref" = REF(module),
-				))
-				if(isnull(ui_selected_module_index))
-					ui_selected_module_index = module_index
+				else
+					var/obj/item/mecha_parts/mecha_equipment/module = islist(equipment) ? equipment[i] : equipment
+					data += list(list(
+						"slot" = category,
+						"icon" = module.icon_state,
+						"name" = module.name,
+						"desc" = module.desc,
+						"detachable" = module.detachable,
+						"integrity" = (module.get_integrity()/module.max_integrity),
+						"can_be_toggled" = module.can_be_toggled,
+						"can_be_triggered" = module.can_be_triggered,
+						"active" = module.active,
+						"active_label" = module.active_label,
+						"equip_cooldown" = module.equip_cooldown && DisplayTimeText(module.equip_cooldown),
+						"energy_per_use" = module.energy_drain,
+						"snowflake" = module.get_snowflake_data(),
+						"ref" = REF(module),
+					))
+					if(isnull(ui_selected_module_index))
+						ui_selected_module_index = module_index
 				module_index++
 	return data
 
