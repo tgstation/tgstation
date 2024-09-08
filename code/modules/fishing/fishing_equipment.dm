@@ -398,21 +398,21 @@
 	name = "instructions paper"
 	icon_state = "slipfull"
 	show_written_words = FALSE
-	desc = "A piece of grey paper with an how-to for dummies about fishing lures printed on it. Smells cheap."
+	desc = "A piece of grey paper with a how-to for dummies about fishing lures printed on it. Smells cheap."
 	default_raw_text =  "<b>Thank you for buying this set.</b><br>\
 		This a simple non-exhaustive set of instructions on how to use fishing lures, some information may \
 		be slightly incorrect or oversimplified.<br><br>\
 
-		First and foremost, fishing lures are <b>inedible, artificia baits</b>, fairly sturdy so that \
-		they won't be destroyed by the hungry fish. However, they need to be <b>spun at intervals</b> to replicate \
-		the motion of a prey or organic bait to tempt the fish, since a piece of plastic and metal ins't \
-		by itself all that tasty. <b>Different lures</b> can be used to catch <b>different fish</b>.<br><br>\
+		First and foremost, fishing lures are <b>inedible, artificial baits</b> sturdy enough to not end up being \
+		consumed by the hungry fish. However, they need to be <b>spun at intervals</b> to replicate \
+		the motion of a prey or organic bait and tempt the fish, since a piece of plastic and metal ins't \
+		all that appetitizing by itself. <b>Different lures</b> can be used to catch <b>different fish</b>.<br><br>\
 
-		To help you, each lure comes with <b>a small light</b> that's attached to the <b>float</b> of your fishing rod. \
-		For those who don't know it, the float is basically the thing bobbing up'n'down above the fishing spot. \
-		The light will flash <b>green<b> and a sound cue will be played when the bait is <b>ready<b> to be spun. \
+		To help you, each lure comes with a <b>small light</b> diode that's attached to the <b>float</b> of your fishing rod. \
+		A float is basically the thing bobbing up'n'down above the fishing spot. \
+		The light will flash <b>green</b> and a <b>sound</b> cue will be played when the lure is <b>ready</b> to be spun. \
 		Do <b>not</b> spin while the light is still <b>red</b>.<br><br>\
-		That's all, best of luck to your angling journey.<br><br>"
+		That's all, best of luck to your angling journey."
 
 #undef MAGNET_HOOK_BONUS_MULTIPLIER
 #undef RESCUE_HOOK_FISH_MULTIPLIER
