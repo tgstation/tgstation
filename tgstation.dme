@@ -6465,7 +6465,6 @@
 #include "modular_doppler\modular_cosmetics\code\hats\doppler_command_hats.dm"
 #include "modular_doppler\modular_cosmetics\code\head\hats.dm"
 #include "modular_doppler\modular_cosmetics\code\neck\collar.dm"
-#include "modular_doppler\modular_cosmetics\code\neck\collar.dm"
 #include "modular_doppler\modular_cosmetics\code\neck\doppler_command_mantles.dm"
 #include "modular_doppler\modular_cosmetics\code\neck\neck.dm"
 #include "modular_doppler\modular_cosmetics\code\shoes\baseshoes.dm"
