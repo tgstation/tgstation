@@ -429,7 +429,7 @@ GLOBAL_LIST_EMPTY(virtual_pets_list)
 
 	var/static/list/possible_emotes = list(
 		/datum/emote/flip,
-		/datum/emote/living/jump,
+		/datum/emote/jump,
 		/datum/emote/living/shiver,
 		/datum/emote/spin,
 		/datum/emote/silicon/beep,
