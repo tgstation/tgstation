@@ -30,3 +30,4 @@
 #_maps/RandomRuins/IceRuins/icemoon_underground_abandoned_homestead.dmm
 #_maps/RandomRuins/IceRuins/icemoon_underground_abandoned_plasma_facility.dmm
 #_maps/RandomRuins/IceRuins/icemoon_underground_frozen_comms.dmm
+#_maps/RandomRuins/IceRuins/icemoon_underground_syndielab
