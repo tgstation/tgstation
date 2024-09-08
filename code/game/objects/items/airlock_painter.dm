@@ -229,12 +229,12 @@
  * Actually add current decal to the floor.
  *
  * Responsible for actually adding the element to the turf for maximum flexibility.area
- * Can be overriden for different decal behaviors.
+ * Can be overridden for different decal behaviors.
  * Arguments:
  * * target - The turf being painted to
 */
 /obj/item/airlock_painter/decal/proc/paint_floor(turf/open/floor/target)
-	target.AddElement(/datum/element/decal, 'icons/turf/decals.dmi', stored_decal_total, stored_dir, null, null, alpha, color, null, null, null, FALSE, null)
+	target.AddElement(/datum/element/decal, 'icons/turf/decals.dmi', stored_decal_total, stored_dir, null, null, alpha, color, null, FALSE, null)
 
 /**
  * Return the final icon_state for the given decal options
@@ -438,7 +438,7 @@
 		decal_color = rgba_regex.group[1]
 		decal_alpha = text2num(rgba_regex.group[2], 16)
 
-	target.AddElement(/datum/element/decal, 'icons/turf/decals.dmi', source_decal, source_dir, null, null, decal_alpha, decal_color, null, null, null, FALSE, null)
+	target.AddElement(/datum/element/decal, 'icons/turf/decals.dmi', source_decal, source_dir, null, null, decal_alpha, decal_color, null, FALSE, null)
 
 /datum/asset/spritesheet/decals/tiles
 	name = "floor_tile_decals"

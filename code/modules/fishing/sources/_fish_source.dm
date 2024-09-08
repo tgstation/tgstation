@@ -8,30 +8,51 @@ GLOBAL_LIST_INIT(preset_fish_sources, init_subtypes_w_path_keys(/datum/fish_sour
  * A lot of the icons here may be a tad inaccurate, but since we're limited to the free font awesome icons we
  * have access to, we got to make do.
  */
-GLOBAL_LIST_INIT(specific_fish_icons, zebra_typecacheof(list(
-	/mob/living/basic/carp = FISH_ICON_DEF,
-	/mob/living/basic/mining = FISH_ICON_HOSTILE,
-	/obj/effect/decal/remains = FISH_ICON_BONE,
-	/obj/effect/mob_spawn/corpse = FISH_ICON_BONE,
-	/obj/item/coin = FISH_ICON_COIN,
-	/obj/item/fish = FISH_ICON_DEF,
-	/obj/item/fish/armorfish = FISH_ICON_CRAB,
-	/obj/item/fish/boned = FISH_ICON_BONE,
-	/obj/item/fish/chasm_crab = FISH_ICON_CRAB,
-	/obj/item/fish/gunner_jellyfish = FISH_ICON_JELLYFISH,
-	/obj/item/fish/holo/crab = FISH_ICON_CRAB,
-	/obj/item/fish/holo/puffer = FISH_ICON_CHUNKY,
-	/obj/item/fish/mastodon = FISH_ICON_BONE,
-	/obj/item/fish/pufferfish = FISH_ICON_CHUNKY,
-	/obj/item/fish/slimefish = FISH_ICON_SLIME,
-	/obj/item/fish/sludgefish = FISH_ICON_SLIME,
-	/obj/item/fish/starfish = FISH_ICON_STAR,
-	/obj/item/storage/wallet = FISH_ICON_COIN,
-	/obj/item/stack/sheet/bone = FISH_ICON_BONE,
-	/obj/item/stack/sheet/mineral = FISH_ICON_GEM,
-	/obj/item/stack/ore = FISH_ICON_GEM,
-	/obj/structure/closet/crate = FISH_ICON_COIN,
-)))
+GLOBAL_LIST_INIT(specific_fish_icons, generate_specific_fish_icons())
+
+/proc/generate_specific_fish_icons()
+	var/list/return_list = zebra_typecacheof(list(
+		/mob/living/basic/axolotl = FISH_ICON_CRITTER,
+		/mob/living/basic/frog = FISH_ICON_CRITTER,
+		/mob/living/basic/carp = FISH_ICON_DEF,
+		/mob/living/basic/mining = FISH_ICON_HOSTILE,
+		/obj/effect/decal/remains = FISH_ICON_BONE,
+		/obj/effect/mob_spawn/corpse = FISH_ICON_BONE,
+		/obj/effect/spawner/message_in_a_bottle = FISH_ICON_BOTTLE,
+		/obj/item/coin = FISH_ICON_COIN,
+		/obj/item/fish = FISH_ICON_DEF,
+		/obj/item/fish/armorfish = FISH_ICON_CRAB,
+		/obj/item/fish/boned = FISH_ICON_BONE,
+		/obj/item/fish/chainsawfish = FISH_ICON_WEAPON,
+		/obj/item/fish/chasm_crab = FISH_ICON_CRAB,
+		/obj/item/fish/gunner_jellyfish = FISH_ICON_JELLYFISH,
+		/obj/item/fish/holo/crab = FISH_ICON_CRAB,
+		/obj/item/fish/holo/puffer = FISH_ICON_CHUNKY,
+		/obj/item/fish/jumpercable = FISH_ICON_ELECTRIC,
+		/obj/item/fish/lavaloop = FISH_ICON_WEAPON,
+		/obj/item/fish/mastodon = FISH_ICON_BONE,
+		/obj/item/fish/pike/armored = FISH_ICON_WEAPON,
+		/obj/item/fish/pufferfish = FISH_ICON_CHUNKY,
+		/obj/item/fish/sand_crab = FISH_ICON_CRAB,
+		/obj/item/fish/skin_crab = FISH_ICON_CRAB,
+		/obj/item/fish/slimefish = FISH_ICON_SLIME,
+		/obj/item/fish/sludgefish = FISH_ICON_SLIME,
+		/obj/item/fish/starfish = FISH_ICON_STAR,
+		/obj/item/fish/stingray = FISH_ICON_WEAPON,
+		/obj/item/fish/swordfish = FISH_ICON_WEAPON,
+		/obj/item/fish/zipzap = FISH_ICON_ELECTRIC,
+		/obj/item/seeds/grass = FISH_ICON_SEED,
+		/obj/item/seeds/random = FISH_ICON_SEED,
+		/obj/item/storage/wallet = FISH_ICON_COIN,
+		/obj/item/stack/sheet/bone = FISH_ICON_BONE,
+		/obj/item/stack/sheet/mineral = FISH_ICON_GEM,
+		/obj/item/stack/ore = FISH_ICON_GEM,
+		/obj/structure/closet/crate = FISH_ICON_COIN,
+		/obj/structure/mystery_box = FISH_ICON_COIN,
+	))
+
+	return_list[FISHING_RANDOM_SEED] = FISH_ICON_SEED
+	return return_list
 
 /**
  * Where the fish actually come from - every fishing spot has one assigned but multiple fishing holes
@@ -45,6 +66,10 @@ GLOBAL_LIST_INIT(specific_fish_icons, zebra_typecacheof(list(
 	var/list/fish_table = list()
 	/// If a key from fish_table is present here, that fish is availible in limited quantity and is reduced by one on successful fishing
 	var/list/fish_counts = list()
+	/// Any limited quantity stuff in this list will be readded to the counts after a while
+	var/list/fish_count_regen
+	/// A list of stuff that's currently waiting to be readded to fish_counts
+	var/list/currently_on_regen
 	/// Text shown as baloon alert when you roll a dud in the table
 	var/duds = list("it was nothing", "the hook is empty")
 	/// Baseline difficulty for fishing in this spot
@@ -75,8 +100,11 @@ GLOBAL_LIST_INIT(specific_fish_icons, zebra_typecacheof(list(
 	return ..()
 
 ///Called when src is set as the fish source of a fishing spot component
-/datum/fish_source/proc/on_fishing_spot_init(/datum/component/fishing_spot/spot)
+/datum/fish_source/proc/on_fishing_spot_init(datum/component/fishing_spot/spot)
 	return
+
+///Called whenever a fishing spot with this fish source attached is deleted
+/datum/fish_source/proc/on_fishing_spot_del(datum/component/fishing_spot/spot)
 
 /// Can we fish in this spot at all. Returns DENIAL_REASON or null if we're good to go
 /datum/fish_source/proc/reason_we_cant_fish(obj/item/fishing_rod/rod, mob/fisherman, atom/parent)
@@ -112,8 +140,8 @@ GLOBAL_LIST_INIT(specific_fish_icons, zebra_typecacheof(list(
 		// In the future non-fish rewards can have variable difficulty calculated here
 		return
 
-	var/list/fish_list_properties = collect_fish_properties()
 	var/obj/item/fish/caught_fish = result
+	var/list/fish_properties = SSfishing.fish_properties[caught_fish]
 	// Baseline fish difficulty
 	. += initial(caught_fish.fishing_difficulty_modifier)
 
@@ -121,18 +149,18 @@ GLOBAL_LIST_INIT(specific_fish_icons, zebra_typecacheof(list(
 	if(rod.bait)
 		var/obj/item/bait = rod.bait
 		//Fav bait makes it easier
-		var/list/fav_bait = fish_list_properties[caught_fish][NAMEOF(caught_fish, favorite_bait)]
+		var/list/fav_bait = fish_properties[FISH_PROPERTIES_FAV_BAIT]
 		for(var/bait_identifer in fav_bait)
 			if(is_matching_bait(bait, bait_identifer))
 				. += FAV_BAIT_DIFFICULTY_MOD
 		//Disliked bait makes it harder
-		var/list/disliked_bait = fish_list_properties[caught_fish][NAMEOF(caught_fish, disliked_bait)]
+		var/list/disliked_bait = fish_properties[FISH_PROPERTIES_BAD_BAIT]
 		for(var/bait_identifer in disliked_bait)
 			if(is_matching_bait(bait, bait_identifer))
 				. += DISLIKED_BAIT_DIFFICULTY_MOD
 
 	// Matching/not matching fish traits and equipment
-	var/list/fish_traits = fish_list_properties[caught_fish][NAMEOF(caught_fish, fish_traits)]
+	var/list/fish_traits = fish_properties[FISH_PROPERTIES_TRAITS]
 
 	var/additive_mod = 0
 	var/multiplicative_mod = 1
@@ -146,8 +174,8 @@ GLOBAL_LIST_INIT(specific_fish_icons, zebra_typecacheof(list(
 	. *= multiplicative_mod
 
 /// In case you want more complex rules for specific spots
-/datum/fish_source/proc/roll_reward(obj/item/fishing_rod/rod, mob/fisherman)
-	return pick_weight(get_modified_fish_table(rod,fisherman))
+/datum/fish_source/proc/roll_reward(obj/item/fishing_rod/rod, mob/fisherman, atom/location)
+	return pick_weight(get_modified_fish_table(rod, fisherman, location)) || FISHING_DUD
 
 /**
  * Used to register signals or add traits and the such right after conditions have been cleared
@@ -171,7 +199,7 @@ GLOBAL_LIST_INIT(specific_fish_icons, zebra_typecacheof(list(
 		return
 	var/obj/item/fish/caught = source.reward_path
 	user.add_mob_memory(/datum/memory/caught_fish, protagonist = user, deuteragonist = initial(caught.name))
-	var/turf/fishing_spot = get_turf(source.lure)
+	var/turf/fishing_spot = get_turf(source.float)
 	var/atom/movable/reward = dispense_reward(source.reward_path, user, fishing_spot)
 	if(source.used_rod)
 		SEND_SIGNAL(source.used_rod, COMSIG_FISHING_ROD_CAUGHT_FISH, reward, user)
@@ -198,15 +226,25 @@ GLOBAL_LIST_INIT(specific_fish_icons, zebra_typecacheof(list(
 /datum/fish_source/proc/simple_dispense_reward(reward_path, atom/spawn_location, turf/fishing_spot)
 	if(isnull(reward_path))
 		return null
-	if((reward_path in fish_counts)) // This is limited count result
+	if(reward_path in fish_counts) // This is limited count result
 		fish_counts[reward_path] -= 1
-		if(!fish_counts[reward_path])
-			fish_counts -= reward_path //Ran out of these since rolling (multiple fishermen on same source most likely)
-			fish_table -= reward_path
+		var/regen_time = fish_count_regen?[reward_path]
+		if(regen_time)
+			LAZYADDASSOC(currently_on_regen, reward_path, 1)
+			if(currently_on_regen[reward_path] == 1)
+				addtimer(CALLBACK(src, PROC_REF(regen_count), reward_path), regen_time)
 
 	var/atom/movable/reward = spawn_reward(reward_path, spawn_location, fishing_spot)
 	SEND_SIGNAL(src, COMSIG_FISH_SOURCE_REWARD_DISPENSED, reward)
 	return reward
+
+/datum/fish_source/proc/regen_count(reward_path, regen_time)
+	fish_counts[reward_path] += 1
+	currently_on_regen[reward_path] -= 1
+	if(!currently_on_regen[reward_path])
+		LAZYREMOVE(currently_on_regen, reward_path)
+	else
+		addtimer(CALLBACK(src, PROC_REF(regen_count), reward_path), regen_time)
 
 /// Spawns a reward from a atom path right where the fisherman is. Part of the dispense_reward() logic.
 /datum/fish_source/proc/spawn_reward(reward_path, atom/spawn_location, turf/fishing_spot)
@@ -222,42 +260,16 @@ GLOBAL_LIST_INIT(specific_fish_icons, zebra_typecacheof(list(
 		caught_fish.randomize_size_and_weight()
 	return reward
 
-/// Cached fish list properties so we don't have to initalize fish every time, init deffered
-GLOBAL_LIST(fishing_property_cache)
-
-/// Awful workaround around initial(x.list_variable) not being a thing while trying to keep some semblance of being structured
-/proc/collect_fish_properties()
-	if(GLOB.fishing_property_cache == null)
-		var/list/fish_property_table = list()
-		for(var/fish_type in subtypesof(/obj/item/fish))
-			var/obj/item/fish/fish = new fish_type(null, FALSE)
-			fish_property_table[fish_type] = list()
-			fish_property_table[fish_type][NAMEOF(fish, favorite_bait)] = fish.favorite_bait.Copy()
-			fish_property_table[fish_type][NAMEOF(fish, disliked_bait)] = fish.disliked_bait.Copy()
-			fish_property_table[fish_type][NAMEOF(fish, fish_traits)] = fish.fish_traits.Copy()
-			QDEL_NULL(fish)
-		GLOB.fishing_property_cache = fish_property_table
-	return GLOB.fishing_property_cache
-
-/// Checks if bait matches identifier from fav/disliked bait list
-/datum/fish_source/proc/is_matching_bait(obj/item/bait, identifier)
-	if(ispath(identifier)) //Just a path
-		return istype(bait, identifier)
-	if(islist(identifier))
-		var/list/special_identifier = identifier
-		switch(special_identifier["Type"])
-			if("Foodtype")
-				var/obj/item/food/food_bait = bait
-				return istype(food_bait) && food_bait.foodtypes & special_identifier["Value"]
-			if("Reagent")
-				return bait.reagents?.has_reagent(special_identifier["Value"], special_identifier["Amount"], check_subtypes = TRUE)
-			else
-				CRASH("Unknown bait identifier in fish favourite/disliked list")
-	else
-		return HAS_TRAIT(bait, identifier)
+/// Returns the fish table, with with the unavailable items from fish_counts removed.
+/datum/fish_source/proc/get_fish_table()
+	var/list/table = fish_table.Copy()
+	for(var/result in table)
+		if(fish_counts[result] == 0)
+			table -= result
+	return table
 
 /// Builds a fish weights table modified by bait/rod/user properties
-/datum/fish_source/proc/get_modified_fish_table(obj/item/fishing_rod/rod, mob/fisherman)
+/datum/fish_source/proc/get_modified_fish_table(obj/item/fishing_rod/rod, mob/fisherman, atom/location)
 	var/obj/item/bait = rod.bait
 	///An exponent used to level out the difference in probabilities between fishes/mobs on the table depending on bait quality.
 	var/leveling_exponent = 0
@@ -277,9 +289,9 @@ GLOBAL_LIST(fishing_property_cache)
 		else if(HAS_TRAIT(bait, TRAIT_BASIC_QUALITY_BAIT))
 			result_multiplier = 2
 			leveling_exponent = 0.1
-		final_table -= FISHING_DUD
 
-	var/list/fish_list_properties = collect_fish_properties()
+	if(HAS_TRAIT(rod, TRAIT_ROD_REMOVE_FISHING_DUD))
+		final_table -= FISHING_DUD
 
 
 	if(HAS_TRAIT(fisherman, TRAIT_PROFOUND_FISHER) && !fisherman.client)
@@ -289,37 +301,17 @@ GLOBAL_LIST(fishing_property_cache)
 		final_table[result] += rod.hook?.get_hook_bonus_additive(result)//Decide on order here so it can be multiplicative
 
 		if(ispath(result, /obj/item/fish))
-			//Modify fish roll chance
-			var/obj/item/fish/caught_fish = result
-
 			if(bait)
 				final_table[result] = round(final_table[result] * result_multiplier, 1)
-				if(!HAS_TRAIT(bait, TRAIT_OMNI_BAIT))
-					//Bait matching likes doubles the chance
-					var/list/fav_bait = fish_list_properties[result][NAMEOF(caught_fish, favorite_bait)]
-					for(var/bait_identifer in fav_bait)
-						if(is_matching_bait(bait, bait_identifer))
-							final_table[result] *= 2
-					//Bait matching dislikes
-					var/list/disliked_bait = fish_list_properties[result][NAMEOF(caught_fish, disliked_bait)]
-					for(var/bait_identifer in disliked_bait)
-						if(is_matching_bait(bait, bait_identifer))
-							final_table[result] = round(final_table[result] * 0.5, 1)
+				var/mult = bait.check_bait(result)
+				final_table[result] = round(final_table[result] * mult, 1)
+				if(mult > 1 && HAS_TRAIT(bait, TRAIT_BAIT_ALLOW_FISHING_DUD))
+					final_table -= FISHING_DUD
 			else
 				final_table[result] = round(final_table[result] * 0.15, 1) //Fishing without bait is not going to be easy
 
 			// Apply fish trait modifiers
-			var/list/fish_traits = fish_list_properties[caught_fish][NAMEOF(caught_fish, fish_traits)]
-			var/additive_mod = 0
-			var/multiplicative_mod = 1
-			for(var/fish_trait in fish_traits)
-				var/datum/fish_trait/trait = GLOB.fish_traits[fish_trait]
-				var/list/mod = trait.catch_weight_mod(rod, fisherman)
-				additive_mod += mod[ADDITIVE_FISHING_MOD]
-				multiplicative_mod *= mod[MULTIPLICATIVE_FISHING_MOD]
-
-			final_table[result] += additive_mod
-			final_table[result] = round(final_table[result] * multiplicative_mod, 1)
+			final_table[result] = get_fish_trait_catch_mods(final_table[result], result, rod, fisherman, location)
 
 		if(final_table[result] <= 0)
 			final_table -= result
@@ -343,6 +335,63 @@ GLOBAL_LIST(fishing_property_cache)
 
 	return final_table
 
+/datum/fish_source/proc/get_fish_trait_catch_mods(weight, obj/item/fish/fish, obj/item/fishing_rod/rod, mob/user, atom/location)
+	if(!ispath(fish, /obj/item/fish))
+		return weight
+	var/multiplier = 1
+	for(var/fish_trait in SSfishing.fish_properties[fish][FISH_PROPERTIES_TRAITS])
+		var/datum/fish_trait/trait = GLOB.fish_traits[fish_trait]
+		var/list/mod = trait.catch_weight_mod(rod, user, location, fish)
+		weight += mod[ADDITIVE_FISHING_MOD]
+		multiplier *= mod[MULTIPLICATIVE_FISHING_MOD]
+
+	return round(weight * multiplier, 1)
+
+///returns true if this fishing spot has fish that are shown in the catalog.
+/datum/fish_source/proc/has_known_fishes()
+	for(var/reward in fish_table)
+		if(!ispath(reward, /obj/item/fish))
+			continue
+		var/obj/item/fish/prototype = reward
+		if(initial(prototype.show_in_catalog))
+			return TRUE
+	return FALSE
+
+///Add a string with the names of catchable fishes to the examine text.
+/datum/fish_source/proc/get_catchable_fish_names(mob/user, atom/location, list/examine_text)
+	var/list/known_fishes = list()
+
+	var/obj/item/fishing_rod/rod = user.get_active_held_item()
+	if(!istype(rod))
+		rod = null
+
+	for(var/reward in fish_table)
+		if(!ispath(reward, /obj/item/fish))
+			continue
+		var/obj/item/fish/prototype = reward
+		if(initial(prototype.show_in_catalog))
+			var/init_name = initial(prototype.name)
+			if(rod)
+				var/init_weight = fish_table[reward]
+				var/weight = (rod.bait ? rod.bait.check_bait(prototype) : 1)
+				weight = get_fish_trait_catch_mods(weight, reward, rod, user, location)
+				if(weight > init_weight)
+					init_name = span_bold(init_name)
+					if(weight/init_weight >= 3.5)
+						init_name = "<u>init_name</u>"
+				else if(weight < init_weight)
+					init_name = span_small(reward)
+			known_fishes += init_name
+
+	if(!length(known_fishes))
+		return
+
+	var/info = "You can catch the following fish here"
+
+	if(rod)
+		info = span_tooltip("boldened are the fish you're more likely to catch with your current setup. The opposite is true for smaller names", info)
+	examine_text += span_info("[info]: [english_list(known_fishes)].")
+
 /datum/fish_source/proc/spawn_reward_from_explosion(atom/location, severity)
 	if(!explosive_malus)
 		explosive_spawn(location, severity)
@@ -360,17 +409,17 @@ GLOBAL_LIST(fishing_property_cache)
 		explosive_spawn(turf, exploded_turfs[turf], multiplier)
 	exploded_turfs = null
 
-/datum/fish_source/proc/explosive_spawn(location, severity, multiplier = 1)
+/datum/fish_source/proc/explosive_spawn(atom/location, severity, multiplier = 1)
 	for(var/i in 1 to (severity + 2))
 		if(!prob((100 + 100 * severity)/i * multiplier))
 			continue
-		var/reward_loot = pick_weight(fish_table)
+		var/reward_loot = pick_weight(get_fish_table())
 		var/atom/movable/reward = simple_dispense_reward(reward_loot, location, location)
 		if(isnull(reward))
 			continue
 		if(isfish(reward))
 			var/obj/item/fish/fish = reward
-			fish.set_status(FISH_DEAD)
+			fish.set_status(FISH_DEAD, silent = TRUE)
 		if(isitem(reward))
 			reward.pixel_x = rand(-9, 9)
 			reward.pixel_y = rand(-9, 9)

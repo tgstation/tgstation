@@ -16,7 +16,7 @@
  */
 /proc/get_path_to(atom/movable/caller, atom/end, max_distance = 30, mintargetdist, access=list(), simulated_only = TRUE, turf/exclude, skip_first=TRUE, diagonal_handling=DIAGONAL_REMOVE_CLUNKY)
 	var/list/hand_around = list()
-	// We're guarenteed that list will be the first list in pathfinding_finished's argset because of how callback handles the arguments list
+	// We're guaranteed that list will be the first list in pathfinding_finished's argset because of how callback handles the arguments list
 	var/datum/callback/await = list(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(pathfinding_finished), hand_around))
 	if(!SSpathfinder.pathfind(caller, end, max_distance, mintargetdist, access, simulated_only, exclude, skip_first, diagonal_handling, await))
 		return list()
@@ -49,7 +49,7 @@
  */
 /proc/get_swarm_path_to(atom/movable/caller, atom/end, max_distance = 30, mintargetdist, age = MAP_REUSE_INSTANT, access = list(), simulated_only = TRUE, turf/exclude, skip_first=TRUE)
 	var/list/hand_around = list()
-	// We're guarenteed that list will be the first list in pathfinding_finished's argset because of how callback handles the arguments list
+	// We're guaranteed that list will be the first list in pathfinding_finished's argset because of how callback handles the arguments list
 	var/datum/callback/await = list(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(pathfinding_finished), hand_around))
 	if(!SSpathfinder.swarmed_pathfind(caller, end, max_distance, mintargetdist, age, access, simulated_only, exclude, skip_first, await))
 		return list()
@@ -62,7 +62,7 @@
 
 /proc/get_sssp(atom/movable/caller, max_distance = 30, access = list(), simulated_only = TRUE, turf/exclude)
 	var/list/hand_around = list()
-	// We're guarenteed that list will be the first list in pathfinding_finished's argset because of how callback handles the arguments list
+	// We're guaranteed that list will be the first list in pathfinding_finished's argset because of how callback handles the arguments list
 	var/datum/callback/await = list(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(pathfinding_finished), hand_around))
 	if(!SSpathfinder.build_map(caller, get_turf(caller), max_distance, access, simulated_only, exclude, await))
 		return null
@@ -335,7 +335,7 @@
 	src.has_gravity = construct_from.has_gravity()
 	if(ismob(construct_from))
 		var/mob/living/mob_construct = construct_from
-		src.incapacitated = mob_construct.incapacitated()
+		src.incapacitated = mob_construct.incapacitated
 		if(mob_construct.buckled)
 			src.buckled_info = new(mob_construct.buckled, access, no_id, call_depth + 1)
 	if(isobserver(construct_from))
