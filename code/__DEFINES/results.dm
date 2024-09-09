@@ -2,8 +2,8 @@
 /// This define is so you can at a glance know if something is just returning a normal list or a Result list
 #define RESULT /list
 
-#define RESULT_IS_ERROR 1
-#define RESULT_IS_OK 2
+#define IS_ERROR 1
+#define IS_OK 2
 
 #define RESULT_OK(VALUE) list(VALUE, IS_OK)
 #define RESULT_ERR(ERROR) list(ERROR, IS_ERROR)
@@ -25,7 +25,7 @@
 	if(RESULT_IS_OK(RET)) { \
 		##OUT = RESULT_UNWRAP_UNSAFE(##RET); \
 	} else { \
-		if(##ERR_HANDLER(RET[1]) == ERR_HANDLE_RETURN) { \
+		if(##ERR_HANDLER(RET[1]) == RESULT_ERR_HANDLE_RETURN) { \
 			return; \
 		}; \
 	};

@@ -8,7 +8,7 @@
 /datum/greyscale_layer/New(icon_file, list/json_data)
 	if(!json_readers)
 		json_readers = list()
-		for(var/path in subtypesof(/datum/json_reader))
+		for(var/path in subtypesof(/datum/value_guard))
 			json_readers[path] = new path
 
 	json_data -= "type" // This is used to look us up and doesn't need to be verified like the rest of the data
@@ -40,7 +40,7 @@
 		if(!(keyname in vars))
 			stack_trace("[src] expects a value from '[keyname]' but has no var to hold the output.")
 			continue
-		var/datum/json_reader/reader = required_values[keyname] || optional_values[keyname]
+		var/datum/value_guard/reader = required_values[keyname] || optional_values[keyname]
 		reader = json_readers[reader]
 		if(!reader)
 			stack_trace("[src] has an invalid json reader type '[required_values[keyname]]' for key '[keyname]'.")
@@ -61,8 +61,8 @@
 /// The lists are formatted like keyname:keytype_define.
 /// The key name is assigned to the var named the same on the layer type.
 /datum/greyscale_layer/proc/GetExpectedValues(list/required_values, list/optional_values)
-	optional_values[NAMEOF(src, color_ids)] = /datum/json_reader/number_color_list
-	required_values[NAMEOF(src, blend_mode)] = /datum/json_reader/blend_mode
+	optional_values[NAMEOF(src, color_ids)] = /datum/value_guard/number_color_list
+	required_values[NAMEOF(src, blend_mode)] = /datum/value_guard/blend_mode
 
 /// Use this proc for extra verification needed by a particular layer, gets run after all greyscale configs have finished reading their json files.
 /datum/greyscale_layer/proc/CrossVerify()
@@ -106,7 +106,7 @@
 
 /datum/greyscale_layer/icon_state/GetExpectedValues(list/required_values, list/optional_values)
 	. = ..()
-	required_values[NAMEOF(src, icon_state)] = /datum/json_reader/text
+	required_values[NAMEOF(src, icon_state)] = /datum/value_guard/text
 
 /datum/greyscale_layer/icon_state/InternalGenerate(list/colors, list/render_steps, icon/new_icon)
 	. = ..()
@@ -122,7 +122,7 @@
 
 /datum/greyscale_layer/color_matrix/GetExpectedValues(list/required_values, list/optional_values)
 	. = ..()
-	required_values[NAMEOF(src, color_matrix)] = /datum/json_reader/color_matrix
+	required_values[NAMEOF(src, color_matrix)] = /datum/value_guard/color_matrix
 
 /datum/greyscale_layer/color_matrix/InternalGenerate(list/colors, list/render_steps, icon/new_icon)
 	. = ..()
@@ -137,8 +137,8 @@
 
 /datum/greyscale_layer/reference/GetExpectedValues(list/required_values, list/optional_values)
 	. = ..()
-	optional_values[NAMEOF(src, icon_state)] = /datum/json_reader/text
-	required_values[NAMEOF(src, reference_type)] = /datum/json_reader/greyscale_config
+	optional_values[NAMEOF(src, icon_state)] = /datum/value_guard/text
+	required_values[NAMEOF(src, reference_type)] = /datum/value_guard/greyscale_config
 
 /datum/greyscale_layer/reference/DiskRefresh()
 	. = ..()
