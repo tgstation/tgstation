@@ -43435,7 +43435,6 @@
 /obj/item/book/manual/wiki/security_space_law{
 	pixel_x = 9
 	},
-/obj/structure/table/reinforced,
 /obj/item/pen/red{
 	pixel_y = 7;
 	pixel_x = 9
