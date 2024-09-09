@@ -168,6 +168,7 @@
 	body_parts_covered = CHEST|GROIN|LEGS
 	flags_inv = HIDEJUMPSUIT
 	dog_fashion = /datum/dog_fashion/back
+	var/in_use = FALSE
 
 /obj/item/clothing/suit/costume/cardborg/equipped(mob/living/user, slot)
 	..()
@@ -176,17 +177,33 @@
 
 /obj/item/clothing/suit/costume/cardborg/dropped(mob/living/user)
 	..()
+	if (!in_use)
+		return
 	user.remove_alt_appearance("standard_borg_disguise")
+	in_use = FALSE
+	var/mob/living/carbon/human/human_user = user
+	if (istype(human_user.head, /obj/item/clothing/head/costume/cardborg))
+		UnregisterSignal(human_user.head, COMSIG_ITEM_DROPPED)
 
-/obj/item/clothing/suit/costume/cardborg/proc/disguise(mob/living/carbon/human/H, obj/item/clothing/head/costume/cardborg/borghead)
-	if(istype(H))
-		if(!borghead)
-			borghead = H.head
-		if(istype(borghead, /obj/item/clothing/head/costume/cardborg)) //why is this done this way? because equipped() is called BEFORE THE ITEM IS IN THE SLOT WHYYYY
-			var/image/I = image(icon = 'icons/mob/silicon/robots.dmi' , icon_state = "robot", loc = H)
-			I.override = 1
-			I.add_overlay(mutable_appearance('icons/mob/silicon/robots.dmi', "robot_e")) //gotta look realistic
-			add_alt_appearance(/datum/atom_hud/alternate_appearance/basic/silicons, "standard_borg_disguise", I) //you look like a robot to robots! (including yourself because you're totally a robot)
+/obj/item/clothing/suit/costume/cardborg/proc/disguise(mob/living/carbon/human/human_user, obj/item/clothing/head/costume/cardborg/borghead)
+	if(!istype(human_user))
+		return
+	if(!borghead)
+		borghead = human_user.head
+	if(!istype(borghead, /obj/item/clothing/head/costume/cardborg)) //why is this done this way? because equipped() is called BEFORE THE ITEM IS IN THE SLOT WHYYYY
+		return
+	RegisterSignal(borghead, COMSIG_ITEM_DROPPED, PROC_REF(helmet_drop)) // Don't need to worry about qdeleting since dropped will be called from there
+	in_use = TRUE
+	var/image/override_image = image(icon = 'icons/mob/silicon/robots.dmi' , icon_state = "robot", loc = human_user)
+	override_image.override = TRUE
+	override_image.add_overlay(mutable_appearance('icons/mob/silicon/robots.dmi', "robot_e")) //gotta look realistic
+	add_alt_appearance(/datum/atom_hud/alternate_appearance/basic/silicons, "standard_borg_disguise", override_image) //you look like a robot to robots! (including yourself because you're totally a robot)
+
+/obj/item/clothing/suit/costume/cardborg/proc/helmet_drop(datum/source, mob/living/user)
+	SIGNAL_HANDLER
+	UnregisterSignal(source, COMSIG_ITEM_DROPPED)
+	user.remove_alt_appearance("standard_borg_disguise")
+	in_use = FALSE
 
 /obj/item/clothing/suit/costume/snowman
 	name = "snowman outfit"

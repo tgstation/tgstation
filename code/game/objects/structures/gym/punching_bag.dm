@@ -1,5 +1,4 @@
 /obj/structure/punching_bag
-	SET_BASE_VISUAL_PIXEL(0, DEPTH_OFFSET)
 	name = "punching bag"
 	desc = "A punching bag. Can you get to speed level 4???"
 	icon = 'icons/obj/fluff/gym_equipment.dmi'
