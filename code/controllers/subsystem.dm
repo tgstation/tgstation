@@ -19,7 +19,7 @@
 	/// Time to wait (in deciseconds) between each call to fire(). Must be a positive integer.
 	var/wait = 20
 
-	/// Priority Weight: When mutiple subsystems need to run in the same tick, higher priority subsystems will be given a higher share of the tick before MC_TICK_CHECK triggers a sleep, higher priority subsystems also run before lower priority subsystems
+	/// Priority Weight: When multiple subsystems need to run in the same tick, higher priority subsystems will be given a higher share of the tick before MC_TICK_CHECK triggers a sleep, higher priority subsystems also run before lower priority subsystems
 	var/priority = FIRE_PRIORITY_DEFAULT
 
 	/// [Subsystem Flags][SS_NO_INIT] to control binary behavior. Flags must be set at compile time or before preinit finishes to take full effect. (You can also restart the mc to force them to process again)
@@ -272,7 +272,7 @@
 /datum/controller/subsystem/proc/OnConfigLoad()
 
 /**
- * Used to initialize the subsystem. This is expected to be overriden by subtypes.
+ * Used to initialize the subsystem. This is expected to be overridden by subtypes.
  */
 /datum/controller/subsystem/Initialize()
 	return SS_INIT_NONE

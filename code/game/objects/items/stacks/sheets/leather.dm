@@ -239,7 +239,7 @@ GLOBAL_LIST_INIT(leather_recipes, list ( \
  */
 /obj/item/stack/sheet/sinew
 	name = "watcher sinew"
-	icon = 'icons/obj/mining_zones/equipment.dmi'
+	icon = 'icons/obj/mining.dmi'
 	desc = "Long stringy filaments which presumably came from a watcher's wings."
 	singular_name = "watcher sinew"
 	icon_state = "sinew"
@@ -348,6 +348,8 @@ GLOBAL_LIST_INIT(sinew_recipes, list ( \
 	icon_state = "sheet-hairlesshide"
 	inhand_icon_state = null
 	merge_type = /obj/item/stack/sheet/hairlesshide
+	pickup_sound = 'sound/items/skin_pick_up.ogg'
+	drop_sound = 'sound/items/skin_drop.ogg'
 
 /obj/item/stack/sheet/hairlesshide/examine(mob/user)
 	. = ..()
@@ -361,6 +363,8 @@ GLOBAL_LIST_INIT(sinew_recipes, list ( \
 	icon_state = "sheet-wetleather"
 	inhand_icon_state = null
 	merge_type = /obj/item/stack/sheet/wethide
+	pickup_sound = 'sound/items/skin_pick_up.ogg'
+	drop_sound = 'sound/items/skin_drop.ogg'
 	/// Reduced when exposed to high temperatures
 	var/wetness = 30
 	/// Kelvin to start drying

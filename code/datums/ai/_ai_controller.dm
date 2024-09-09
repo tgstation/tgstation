@@ -63,6 +63,12 @@ multiple modular subtrees with behaviors
 	///What distance should we be checking for interesting things when considering idling/deidling? Defaults to AI_DEFAULT_INTERESTING_DIST
 	var/interesting_dist = AI_DEFAULT_INTERESTING_DIST
 
+	/// TRUE if we're able to run, FALSE if we aren't
+	/// Should not be set manually, override get_able_to_run() instead
+	/// Make sure you hook update_able_to_run() in setup_able_to_run() to whatever parameters changing that you added
+	/// Otherwise we will not pay attention to them changing
+	var/able_to_run = FALSE
+
 /datum/ai_controller/New(atom/new_pawn)
 	change_ai_movement_type(ai_movement)
 	init_subtrees()
@@ -109,6 +115,7 @@ multiple modular subtrees with behaviors
 
 ///Proc to move from one pawn to another, this will destroy the target's existing controller.
 /datum/ai_controller/proc/PossessPawn(atom/new_pawn)
+	SHOULD_CALL_PARENT(TRUE)
 	if(pawn) //Reset any old signals
 		UnpossessPawn(FALSE)
 
@@ -133,6 +140,8 @@ multiple modular subtrees with behaviors
 	RegisterSignal(pawn, COMSIG_MOB_STATCHANGE, PROC_REF(on_stat_changed))
 	RegisterSignal(pawn, COMSIG_MOB_LOGIN, PROC_REF(on_sentience_gained))
 	RegisterSignal(pawn, COMSIG_QDELETING, PROC_REF(on_pawn_qdeleted))
+	update_able_to_run()
+	setup_able_to_run()
 
 	our_cells = new(interesting_dist, interesting_dist, 1)
 	set_new_cells()
@@ -260,11 +269,13 @@ multiple modular subtrees with behaviors
 
 ///Proc for deinitializing the pawn to the old controller
 /datum/ai_controller/proc/UnpossessPawn(destroy)
+	SHOULD_CALL_PARENT(TRUE)
 	if(isnull(pawn))
 		return // instantiated without an applicable pawn, fine
 
 	set_ai_status(AI_STATUS_OFF)
 	UnregisterSignal(pawn, list(COMSIG_MOVABLE_Z_CHANGED, COMSIG_MOB_LOGIN, COMSIG_MOB_LOGOUT, COMSIG_MOB_STATCHANGE, COMSIG_QDELETING))
+	clear_able_to_run()
 	if(ai_movement.moving_controllers[src])
 		ai_movement.stop_moving_towards(src)
 	var/turf/pawn_turf = get_turf(pawn)
@@ -277,8 +288,19 @@ multiple modular subtrees with behaviors
 	if(destroy)
 		qdel(src)
 
-///Returns TRUE if the ai controller can actually run at the moment.
-/datum/ai_controller/proc/able_to_run()
+/datum/ai_controller/proc/setup_able_to_run()
+	// paused_until is handled by PauseAi() manually
+	RegisterSignals(pawn, list(SIGNAL_ADDTRAIT(TRAIT_AI_PAUSED), SIGNAL_REMOVETRAIT(TRAIT_AI_PAUSED)), PROC_REF(update_able_to_run))
+
+/datum/ai_controller/proc/clear_able_to_run()
+	UnregisterSignal(pawn, list(SIGNAL_ADDTRAIT(TRAIT_AI_PAUSED), SIGNAL_REMOVETRAIT(TRAIT_AI_PAUSED)))
+
+/datum/ai_controller/proc/update_able_to_run()
+	SIGNAL_HANDLER
+	able_to_run = get_able_to_run()
+
+///Returns TRUE if the ai controller can actually run at the moment, FALSE otherwise
+/datum/ai_controller/proc/get_able_to_run()
 	if(HAS_TRAIT(pawn, TRAIT_AI_PAUSED))
 		return FALSE
 	if(world.time < paused_until)
@@ -288,7 +310,7 @@ multiple modular subtrees with behaviors
 ///Runs any actions that are currently running
 /datum/ai_controller/process(seconds_per_tick)
 
-	if(!able_to_run())
+	if(!able_to_run)
 		GLOB.move_manager.stop_looping(pawn) //stop moving
 		return //this should remove them from processing in the future through event-based stuff.
 
@@ -405,6 +427,8 @@ multiple modular subtrees with behaviors
 
 /datum/ai_controller/proc/PauseAi(time)
 	paused_until = world.time + time
+	update_able_to_run()
+	addtimer(CALLBACK(src, PROC_REF(update_able_to_run)), time)
 
 /datum/ai_controller/proc/modify_cooldown(datum/ai_behavior/behavior, new_cooldown)
 	behavior_cooldowns[behavior] = new_cooldown

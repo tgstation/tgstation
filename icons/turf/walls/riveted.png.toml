@@ -1,0 +1,2 @@
+output_name = "riveted"
+template = "bitmask/diagonal_32x32.toml"

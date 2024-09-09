@@ -32,7 +32,7 @@
 	return ..()
 
 /obj/machinery/airlock_sensor
-	icon = 'icons/obj/machines/airlock_machines.dmi'
+	icon = 'icons/obj/machines/wallmounts.dmi'
 	icon_state = "airlock_sensor_off"
 	base_icon_state = "airlock_sensor"
 	name = "airlock sensor"
@@ -45,10 +45,6 @@
 	var/on = TRUE
 	var/alert = FALSE
 
-/obj/machinery/airlock_sensor/Initialize(mapload)
-	. = ..()
-	find_and_hang_on_wall()
-
 /obj/machinery/airlock_sensor/incinerator_ordmix
 	id_tag = INCINERATOR_ORDMIX_AIRLOCK_SENSOR
 	master_tag = INCINERATOR_ORDMIX_AIRLOCK_CONTROLLER
@@ -60,8 +56,6 @@
 /obj/machinery/airlock_sensor/incinerator_syndicatelava
 	id_tag = INCINERATOR_SYNDICATELAVA_AIRLOCK_SENSOR
 	master_tag = INCINERATOR_SYNDICATELAVA_AIRLOCK_CONTROLLER
-
-WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/machinery/airlock_sensor/incinerator_syndicatelava)
 
 /obj/machinery/airlock_sensor/update_icon_state()
 	if(!on)

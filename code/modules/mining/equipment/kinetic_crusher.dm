@@ -6,7 +6,7 @@
  * a good tradeoff and a decent playstyle.
  */
 /obj/item/kinetic_crusher
-	icon = 'icons/obj/mining_zones/equipment.dmi'
+	icon = 'icons/obj/mining.dmi'
 	icon_state = "crusher"
 	inhand_icon_state = "crusher0"
 	lefthand_file = 'icons/mob/inhands/weapons/hammers_lefthand.dmi'

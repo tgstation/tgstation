@@ -233,7 +233,7 @@ By design, d1 is the smallest direction and d2 is the highest
 		return FALSE
 	if(!user.is_holding(src))
 		return FALSE
-	if(user.incapacitated())
+	if(user.incapacitated)
 		return FALSE
 	return TRUE
 

@@ -102,6 +102,17 @@
 "bi" = (
 /turf/open/floor/iron/white/textured_large,
 /area/awaymission/beach)
+"bo" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 9
+	},
+/obj/effect/turf_decal/tile/dark/half{
+	pixel_y = -1;
+	pixel_x = 5;
+	dir = 8
+	},
+/turf/open/water/beach,
+/area/awaymission/beach)
 "bx" = (
 /obj/effect/turf_decal/sand,
 /obj/machinery/door/airlock/wood{
@@ -277,16 +288,6 @@
 "dr" = (
 /obj/structure/musician/piano,
 /turf/open/floor/wood,
-/area/awaymission/beach)
-"dx" = (
-/obj/structure/sign/directions/dorms/north_arrow{
-	pixel_y = 35
-	},
-/obj/structure/sign/directions/medical/north_arrow{
-	pixel_y = 29
-	},
-/obj/machinery/computer/slot_machine,
-/turf/open/floor/wood/large,
 /area/awaymission/beach)
 "dL" = (
 /obj/machinery/door/airlock/public/glass{
@@ -897,17 +898,6 @@
 	},
 /obj/structure/table/wood,
 /turf/open/floor/wood/large,
-/area/awaymission/beach)
-"lk" = (
-/obj/effect/turf_decal/siding/wood{
-	dir = 9
-	},
-/obj/effect/turf_decal/tile/dark/half{
-	pixel_y = -1;
-	pixel_x = 5;
-	dir = 8
-	},
-/turf/open/water/beach,
 /area/awaymission/beach)
 "ll" = (
 /obj/machinery/door/airlock/wood{
@@ -2581,13 +2571,6 @@
 	},
 /turf/open/misc/beach/sand,
 /area/awaymission/beach)
-"FJ" = (
-/obj/item/instrument/guitar{
-	pixel_y = 4;
-	pixel_x = -1
-	},
-/turf/open/misc/beach/coast,
-/area/awaymission/beach)
 "FK" = (
 /obj/item/toy/seashell{
 	pixel_x = 12;
@@ -2978,6 +2961,13 @@
 	pixel_x = 11
 	},
 /turf/open/misc/beach/sand,
+/area/awaymission/beach)
+"KQ" = (
+/obj/item/instrument/guitar{
+	pixel_y = 4;
+	pixel_x = -1
+	},
+/turf/open/misc/beach/coast,
 /area/awaymission/beach)
 "KV" = (
 /obj/effect/decal/cleanable/dirt,
@@ -4024,6 +4014,16 @@
 /turf/open/floor/iron/white/textured_large,
 /area/awaymission/beach)
 "Zp" = (
+/turf/open/floor/wood/large,
+/area/awaymission/beach)
+"Zs" = (
+/obj/structure/sign/directions/dorms/directional/north{
+	pixel_y = 35
+	},
+/obj/structure/sign/directions/medical/directional/north{
+	pixel_y = 29
+	},
+/obj/machinery/computer/slot_machine,
 /turf/open/floor/wood/large,
 /area/awaymission/beach)
 "Zt" = (
@@ -13240,7 +13240,7 @@ xv
 xv
 xv
 xv
-dx
+Zs
 Zp
 Zp
 mb
@@ -16314,7 +16314,7 @@ vx
 Bq
 Xd
 Ej
-lk
+bo
 LC
 XB
 XB
@@ -29450,7 +29450,7 @@ VY
 VY
 Rn
 VY
-FJ
+KQ
 xv
 CG
 Gh

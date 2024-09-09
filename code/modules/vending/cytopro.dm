@@ -15,18 +15,18 @@
 		/obj/item/storage/box/monkeycubes = 3,
 		/obj/item/biopsy_tool = 3,
 		/obj/item/clothing/under/rank/rnd/scientist = 5,
-		/obj/item/clothing/suit/toggle/labcoat = 5,
-		/obj/item/clothing/suit/bio_suit = 3,
-		/obj/item/clothing/head/bio_hood = 3,
+		/obj/item/clothing/suit/toggle/labcoat/science = 5,
+		/obj/item/clothing/suit/bio_suit/scientist = 3,
+		/obj/item/clothing/head/bio_hood/scientist = 3,
 		/obj/item/reagent_containers/dropper = 5,
-		/obj/item/reagent_containers/syringe = 5
+		/obj/item/reagent_containers/syringe = 5,
+		/obj/item/petri_dish/random = 6,
 	)
 	contraband = list(
 		/obj/item/knife/kitchen = 3,
-		/obj/item/petri_dish/random = 6
 	)
 	refill_canister = /obj/item/vending_refill/cytopro
-	default_price = PAYCHECK_CREW * 0.6
+	default_price = PAYCHECK_CREW * 1
 	extra_price = PAYCHECK_COMMAND * 0.5
 	payment_department = ACCOUNT_SCI
 

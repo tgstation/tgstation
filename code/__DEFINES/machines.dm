@@ -52,7 +52,7 @@
 #define BYPASS_DOOR_CHECKS 2
 
 //used in design to specify which machine can build it
-//Note: More than one of these can be added to a design but imprinter and lathe designs are incompatable.
+//Note: More than one of these can be added to a design but imprinter and lathe designs are incompatible.
 #define IMPRINTER (1<<0) //For circuits. Uses glass/chemicals.
 #define PROTOLATHE (1<<1) //New stuff. Uses various minerals
 #define AUTOLATHE (1<<2) //Prints basic designs without research

@@ -314,7 +314,7 @@
 		speaker = v.source
 		spans |= "virtual-speaker"
 
-	// Ignore virtual speaker (most often radio messages) from ourself
+	// Ignore virtual speaker (most often radio messages) from ourselves
 	if (originalSpeaker != src && speaker == src)
 		return
 

@@ -1,0 +1,114 @@
+{
+	"closed": [
+		{
+			"type": "icon_state",
+			"icon_state": "base_closed",
+			"blend_mode": "overlay",
+			"color_ids": [ 1 ]
+		},
+		{
+			"type": "icon_state",
+			"icon_state": "frame_closed",
+			"blend_mode": "overlay"
+		}
+	],
+	"open": [
+		{
+			"type": "icon_state",
+			"icon_state": "base_open",
+			"blend_mode": "overlay",
+			"color_ids": [ 1 ]
+		},
+		{
+			"type": "icon_state",
+			"icon_state": "frame_open",
+			"blend_mode": "overlay"
+		}
+	],
+	"opening": [
+		{
+			"type": "icon_state",
+			"icon_state": "base_opening",
+			"blend_mode": "overlay",
+			"color_ids": [ 1 ]
+		},
+		{
+			"type": "icon_state",
+			"icon_state": "frame_opening",
+			"blend_mode": "overlay"
+		}
+	],
+	"closing": [
+		{
+			"type": "icon_state",
+			"icon_state": "base_closing",
+			"blend_mode": "overlay",
+			"color_ids": [ 1 ]
+		},
+		{
+			"type": "icon_state",
+			"icon_state": "frame_closing",
+			"blend_mode": "overlay"
+		}
+	],
+	"construction": [
+		{
+			"type": "icon_state",
+			"icon_state": "base_construction",
+			"blend_mode": "overlay",
+			"color_ids": [ 1 ]
+		},
+		{
+			"type": "icon_state",
+			"icon_state": "frame_construction",
+			"blend_mode": "overlay"
+		}
+	],
+	"fill_closed": [
+		{
+			"type": "icon_state",
+			"icon_state": "fill_closed",
+			"blend_mode": "overlay",
+			"color_ids": [ 1 ]
+		}
+	],
+	"fill_open": [
+		{
+			"type": "icon_state",
+			"icon_state": "fill_open",
+			"blend_mode": "overlay",
+			"color_ids": [ 1 ]
+		}
+	],
+	"fill_opening": [
+		{
+			"type": "icon_state",
+			"icon_state": "fill_opening",
+			"blend_mode": "overlay",
+			"color_ids": [ 1 ]
+		}
+	],
+	"fill_closing": [
+		{
+			"type": "icon_state",
+			"icon_state": "fill_closing",
+			"blend_mode": "overlay",
+			"color_ids": [ 1 ]
+		}
+	],
+	"fill_construction": [
+		{
+			"type": "icon_state",
+			"icon_state": "fill_construction",
+			"blend_mode": "overlay",
+			"color_ids": [ 1 ]
+		}
+	],
+	"" : [
+		{
+			"type": "icon_state",
+			"icon_state": "fill_open",
+			"blend_mode": "overlay"
+		}
+	]
+}

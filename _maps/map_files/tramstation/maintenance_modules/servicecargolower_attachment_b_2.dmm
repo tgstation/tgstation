@@ -91,9 +91,7 @@
 /obj/structure/table,
 /obj/structure/window/reinforced/spawner/directional/north,
 /obj/structure/window/reinforced/spawner/directional/east,
-/obj/effect/spawner/random/engineering/tool{
-	pixel_y = 10
-	},
+/obj/effect/spawner/random/engineering/tool,
 /obj/machinery/door/poddoor/shutters/preopen{
 	name = "Privacy Shutter";
 	id = "supportourtroops"

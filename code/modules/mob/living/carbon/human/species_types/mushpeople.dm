@@ -6,7 +6,7 @@
 
 	fixed_mut_color = "#DBBF92"
 
-	external_organs = list(/obj/item/organ/external/mushroom_cap = "Round")
+	mutant_organs = list(/obj/item/organ/external/mushroom_cap = "Round")
 
 	inherent_traits = list(
 		TRAIT_MUTANT_COLORS,

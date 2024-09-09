@@ -175,6 +175,8 @@ SUBSYSTEM_DEF(polling)
 	UNTIL(new_poll.finished)
 	if(!(amount_to_pick > 0))
 		return new_poll.signed_up
+	if(length(new_poll.signed_up) < amount_to_pick)
+		return new_poll.signed_up
 	for(var/pick in 1 to amount_to_pick)
 		new_poll.chosen_candidates += pick_n_take(new_poll.signed_up)
 	if(announce_chosen)

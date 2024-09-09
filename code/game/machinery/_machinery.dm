@@ -183,9 +183,9 @@
 
 	return INITIALIZE_HINT_LATELOAD
 
-/obj/machinery/LateInitialize(mapload)
+/obj/machinery/LateInitialize()
 	SHOULD_NOT_OVERRIDE(TRUE)
-	post_machine_initialize(/* mapload = */ mapload)
+	post_machine_initialize()
 
 /obj/machinery/Destroy(force)
 	SSmachines.unregister_machine(src)
@@ -202,7 +202,7 @@
  * ensuring power works on all machines unless exempted with NO_POWER_USE.
  * This is the proc to override if you want to do anything in LateInitialize.
  */
-/obj/machinery/proc/post_machine_initialize(mapload)
+/obj/machinery/proc/post_machine_initialize()
 	SHOULD_CALL_PARENT(TRUE)
 	power_change()
 	if(use_power == NO_POWER_USE)

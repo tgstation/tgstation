@@ -1,22 +1,22 @@
 /obj/machinery/modular_shield_generator
 	name = "modular shield generator"
-	desc = "A forcefield generator, it seems more stationary than its cousins. It cant handle G-force and will require frequent reboots when built on mobile craft."
+	desc = "A forcefield generator, it seems more stationary than its cousins. It can't handle G-force and will require frequent reboots when built on mobile craft."
 	icon = 'icons/obj/machines/modular_shield_generator.dmi'
 	icon_state = "gen_recovering_closed"
 	density = TRUE
 	circuit = /obj/item/circuitboard/machine/modular_shield_generator
 	processing_flags = START_PROCESSING_ON_INIT
 
-	///Doesnt actually control it, just tells us if its running or not, you can control by calling procs activate_shields and deactivate_shields
+	///Doesn't actually control it, just tells us if its running or not, you can control by calling procs activate_shields and deactivate_shields
 	var/active = FALSE
 
 	///If the generator is currently spawning the forcefield in
 	var/initiating = FALSE
 
-	///Determins if we can turn it on or not, no longer recovering when back to max strength
+	///Determines if we can turn it on or not, no longer recovering when back to max strength
 	var/recovering = TRUE
 
-	///Determins max health of the shield
+	///Determines max health of the shield
 	var/max_strength = 40
 
 	///Current health of shield
@@ -28,13 +28,13 @@
 	///The regeneration that the shield can support
 	var/current_regeneration
 
-	///Determins the max radius the shield can support
+	///Determines the max radius the shield can support
 	var/max_radius = 3
 
 	///Current radius the shield is set to, minimum 3
 	var/radius = 3
 
-	///Determins if we only generate a shield on space turfs or not
+	///Determines if we only generate a shield on space turfs or not
 	var/exterior_only = FALSE
 
 	///The lazy list of shields that are ours
@@ -286,7 +286,7 @@
 				return
 			var/change_radius = max(1,(text2num(params["new_radius"])))
 			if(change_radius >= 10)
-				radius = round(change_radius)//if its over 10 we dont allow decimals
+				radius = round(change_radius)//if its over 10 we don't allow decimals
 				return
 			radius = change_radius
 
@@ -370,7 +370,7 @@
 			recovering = FALSE
 			calculate_regeneration()
 			update_icon_state()
-		end_processing() //we dont care about continuing to update the alpha, we want to show history of damage to show its unstable
+		end_processing() //we don't care about continuing to update the alpha, we want to show history of damage to show its unstable
 	if (active)
 		var/random_num = rand(1,deployed_shields.len)
 		var/obj/structure/emergency_shield/modular/random_shield = deployed_shields[random_num]
@@ -383,7 +383,7 @@
 /obj/machinery/modular_shield/module
 
 	name = "modular shield debugger" //Filler name and sprite for testing
-	desc = "This is filler for testing you shouldn`t see this."
+	desc = "This is filler for testing you shouldn't see this."
 	icon = 'icons/obj/machines/mech_bay.dmi'
 	icon_state = "recharge_port"
 	density = TRUE
@@ -677,7 +677,7 @@
 	color = "#00ffff"
 	density = FALSE
 	alpha = 100
-	resistance_flags = INDESTRUCTIBLE //the shield itself is indestructible or atleast should be
+	resistance_flags = INDESTRUCTIBLE //the shield itself is indestructible or at least should be
 	no_damage_feedback = "weakening the generator sustaining it"
 
 	///The shield generator sustaining us

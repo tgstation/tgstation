@@ -9,12 +9,14 @@
 /obj/structure/chair/comfy/shuttle{
 	dir = 4
 	},
-/obj/machinery/turretid/directional/south{
+/obj/machinery/turretid{
 	ailock = 1;
 	desc = "A specially designed set of turret controls. Looks to be covered in protective casing to prevent AI interfacing.";
 	icon_state = "control_kill";
 	lethal = 1;
 	name = "Shuttle turret control";
+	pixel_x = 32;
+	pixel_y = -28;
 	req_access = list("syndicate")
 	},
 /obj/structure/cable,
