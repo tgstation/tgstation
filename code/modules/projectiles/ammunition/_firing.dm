@@ -83,11 +83,7 @@
 	if(loaded_projectile.firer)
 		firing_dir = get_dir(fired_from, target)
 	if(!loaded_projectile.suppressed && firing_effect_type && !tk_firing(user, fired_from))
-		var/obj/effect/fire_effect = new firing_effect_type(get_turf(src), firing_dir)
-		fire_effect.pixel_y = user.pixel_y
-		fire_effect.pixel_z = user.pixel_z
-		fire_effect.pixel_x = user.pixel_x
-		fire_effect.pixel_w = user.pixel_w
+		new firing_effect_type(get_turf(src), firing_dir)
 
 	var/direct_target
 	if(target && curloc.Adjacent(targloc, target=targloc, mover=src)) //if the target is right on our location or adjacent (including diagonally if reachable) we'll skip the travelling code in the proj's fire()
