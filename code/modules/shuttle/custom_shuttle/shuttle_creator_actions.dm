@@ -81,10 +81,10 @@
 			return
 		if(shuttle_creator.linkedShuttleId)
 			return
-		if(GLOB.custom_shuttle_count > CUSTOM_SHUTTLE_LIMIT)
+		if(GLOB.custom_shuttle_count > shuttle_limit)
 			to_chat(C, "<span class='warning'>Shuttle limit reached, sorry.</span>")
 			return
-		if(shuttle_creator.loggedTurfs.len > SHUTTLE_CREATOR_MAX_SIZE)
+		if(shuttle_creator.loggedTurfs.len > max_shuttle_size)
 			to_chat(C, "<span class='warning'>This shuttle is too large!</span>")
 			return
 		if(!shuttle_creator.getNonShuttleDirection(T))

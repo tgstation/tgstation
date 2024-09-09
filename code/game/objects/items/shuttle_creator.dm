@@ -23,6 +23,7 @@ GLOBAL_VAR_INIT(custom_shuttle_count, 0)		//The amount of custom shuttles create
 	throw_range = 5
 	w_class = WEIGHT_CLASS_NORMAL
 	resistance_flags = FIRE_PROOF
+	///is this shuttle creator
 	var/ready = TRUE
 	//pre-designation
 	var/override_max_shuttles = FALSE
@@ -35,6 +36,8 @@ GLOBAL_VAR_INIT(custom_shuttle_count, 0)		//The amount of custom shuttles create
 	var/datum/shuttle_creator_overlay_holder/overlay_holder
 	//After designation
 	var/linkedShuttleId
+	var/shuttle_limit = CONFIG_GET(number/max_shuttle_count)
+	var/max_shuttle_size = CONFIG_GET(number/max_shuttle_size)
 
 /obj/item/shuttle_creator/Initialize(mapload)
 	. = ..()
@@ -54,9 +57,9 @@ GLOBAL_VAR_INIT(custom_shuttle_count, 0)		//The amount of custom shuttles create
 	..()
 	if(linkedShuttleId)
 		return
-	if(GLOB.custom_shuttle_count > CUSTOM_SHUTTLE_LIMIT && !override_max_shuttles)
+	if(GLOB.custom_shuttle_count > shuttle_limit && !override_max_shuttles)
 		to_chat(user, "<span class='warning'>Too many shuttles have been created.</span>")
-		message_admins("[ADMIN_FLW(user)] attempted to create a shuttle, however [CUSTOM_SHUTTLE_LIMIT] have already been created.")
+		message_admins("[ADMIN_FLW(user)] attempted to create a shuttle, however [shuttle_limit] have already been created.")
 		return
 	if(!internal_shuttle_creator)
 		return
@@ -161,17 +164,6 @@ GLOBAL_VAR_INIT(custom_shuttle_count, 0)		//The amount of custom shuttles create
 		position = WEST
 	return position
 
-/obj/item/shuttle_creator/proc/invertDir(input_dir)
-	if(input_dir == NORTH)
-		return SOUTH
-	else if(input_dir == SOUTH)
-		return NORTH
-	else if(input_dir == EAST)
-		return WEST
-	else if(input_dir == WEST)
-		return EAST
-	return null
-
 /obj/item/shuttle_creator/proc/shuttle_create_docking_port(atom/target, mob/user)
 
 	if(loggedTurfs.len == 0 || !recorded_shuttle_area)
@@ -182,13 +174,13 @@ GLOBAL_VAR_INIT(custom_shuttle_count, 0)		//The amount of custom shuttles create
 
 	var/obj/docking_port/mobile/port = new /obj/docking_port/mobile(get_turf(target))
 	var/obj/docking_port/stationary/stationary_port = new /obj/docking_port/stationary(get_turf(target))
-	port.callTime = 100
-	port.dir = 1	//Point away from space.
+	port.callTime = 10 SECONDS
+	port.dir = NORTH	//Point away from space.
 	port.shuttle_id = "custom_[GLOB.custom_shuttle_count]"
 	linkedShuttleId = port.shuttle_id
-	port.ignitionTime = 25
+	port.ignitionTime = 3 SECONDS
 	port.name = "Custom Shuttle"
-	port.port_direction = 2
+	port.port_direction = SOUTH
 	port.preferred_direction = 4
 	port.area_type = recorded_shuttle_area
 	port.can_move_docking_ports = TRUE
@@ -196,7 +188,7 @@ GLOBAL_VAR_INIT(custom_shuttle_count, 0)		//The amount of custom shuttles create
 	stationary_port.area_type = overwritten_area
 
 	var/portDirection = getNonShuttleDirection(get_turf(port))
-	var/invertedDir = invertDir(portDirection)
+	var/invertedDir = REVERSE_DIR(portDirection)
 	if(!portDirection || !invertedDir)
 		to_chat(usr, "<span class='warning'>Shuttle creation aborted, docking airlock must be on an external wall. Please select a new airlock.</span>")
 		port.Destroy()
@@ -221,7 +213,7 @@ GLOBAL_VAR_INIT(custom_shuttle_count, 0)		//The amount of custom shuttles create
 		var/area/cur_area = curT.loc
 		//Add the area to the shuttle <3
 		if(istype(cur_area, recorded_shuttle_area))
-			if(istype(curT, /turf/open/space))
+			if(isspaceturf(curT))
 				continue
 			if(length(curT.baseturfs) < 2)
 				continue
@@ -243,8 +235,8 @@ GLOBAL_VAR_INIT(custom_shuttle_count, 0)		//The amount of custom shuttles create
 	//Clear highlights
 	overlay_holder.clear_highlights()
 	GLOB.custom_shuttle_count ++
-	message_admins("[ADMIN_LOOKUPFLW(user)] created a new shuttle with a [src] at [ADMIN_VERBOSEJMP(user)] ([GLOB.custom_shuttle_count] custom shuttles, limit is [CUSTOM_SHUTTLE_LIMIT])")
-	log_game("[key_name(user)] created a new shuttle with a [src] at [AREACOORD(user)] ([GLOB.custom_shuttle_count] custom shuttles, limit is [CUSTOM_SHUTTLE_LIMIT])")
+	message_admins("[ADMIN_LOOKUPFLW(user)] created a new shuttle with a [src] at [ADMIN_VERBOSEJMP(user)] ([GLOB.custom_shuttle_count] custom shuttles, limit is [shuttle_limit])")
+	log_game("[key_name(user)] created a new shuttle with a [src] at [AREACOORD(user)] ([GLOB.custom_shuttle_count] custom shuttles, limit is [shuttle_limit])")
 	return TRUE
 
 /obj/item/shuttle_creator/proc/create_shuttle_area(mob/user)
@@ -258,9 +250,6 @@ GLOBAL_VAR_INIT(custom_shuttle_count, 0)		//The amount of custom shuttles create
 	var/area/oldA = loggedOldArea
 	var/str = stripped_input(user, "Shuttle Name:", "Blueprint Editing", "", MAX_NAME_LEN)
 	if(!str || !length(str))
-		return FALSE
-	if(length(str) > 50)
-		to_chat(user, "<span class='warning'>The provided ship name is too long, blares the [src]</span>")
 		return FALSE
 	newS = new /area/shuttle/custom/powered()
 	newS.setup(str)
@@ -289,8 +278,8 @@ GLOBAL_VAR_INIT(custom_shuttle_count, 0)		//The amount of custom shuttles create
 	if(!turfs)
 		to_chat(usr, "<span class='warning'>Shuttles must be created in an airtight space, ensure that the shuttle is airtight, including corners.</span>")
 		return FALSE
-	if(turfs.len + loggedTurfs.len > SHUTTLE_CREATOR_MAX_SIZE)
-		to_chat(usr, "<span class='warning'>The [src]'s internal cooling system wizzes violently and a message appears on the screen, \"Caution, this device can only handle the creation of shuttles up to [SHUTTLE_CREATOR_MAX_SIZE] units in size. Please reduce your shuttle by [turfs.len-SHUTTLE_CREATOR_MAX_SIZE]. Sorry for the inconvinience\"</span>")
+	if(turfs.len + loggedTurfs.len > max_shuttle_size)
+		to_chat(usr, "<span class='warning'>The [src]'s internal cooling system wizzes violently and a message appears on the screen, \"Caution, this device can only handle the creation of shuttles up to [max_shuttle_size] units in size. Please reduce your shuttle by [turfs.len-max_shuttle_size]. Sorry for the inconvinience\"</span>")
 		return FALSE
 	//Check to see if it's a valid shuttle
 	for(var/i in 1 to turfs.len)
