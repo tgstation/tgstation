@@ -1,0 +1,4 @@
+author: "Rhials"
+delete-after: True
+changes:
+  - bugfix: "Modifies the mapping around the icebox cliffside, guaranteeing a bit more openness."
