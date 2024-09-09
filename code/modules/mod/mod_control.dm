@@ -572,6 +572,11 @@
 			balloon_alert(user, "[new_module] incompatible with [src]'s parts!")
 			playsound(src, 'sound/machines/scanbuzz.ogg', 25, TRUE, SILENCED_SOUND_EXTRARANGE)
 		return
+	if(!new_module.can_install(src))
+		if(user)
+			balloon_alert(user, "[new_module] cannot be installed into [src]!")
+			playsound(src, 'sound/machines/scanbuzz.ogg', 25, TRUE, SILENCED_SOUND_EXTRARANGE)
+		return
 	new_module.forceMove(src)
 	modules += new_module
 	complexity += new_module.complexity
