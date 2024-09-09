@@ -20,7 +20,7 @@
 		moved_inside(M)
 
 /obj/vehicle/sealed/mecha/enter_checks(mob/M)
-	if(M.incapacitated())
+	if(M.incapacitated)
 		return FALSE
 	if(atom_integrity <= 0)
 		to_chat(M, span_warning("You cannot get in the [src], it has been destroyed!"))

@@ -20,7 +20,7 @@
 	if(check_friendship && (REF(meal) in faction))
 		return FALSE
 
-	if(check_adjacent && !Adjacent(meal))
+	if(check_adjacent && (!Adjacent(meal) || !isturf(loc)))
 		return FALSE
 
 	if(meal.stat == DEAD)

@@ -108,7 +108,7 @@ SUBSYSTEM_DEF(time_track)
 		text2file(sendmaps_json,"bad_sendmaps.json")
 		can_fire = FALSE
 		return
-	var/send_maps_sort = send_maps_data.Copy() //Doing it like this guarentees us a properly sorted list
+	var/send_maps_sort = send_maps_data.Copy() //Doing it like this guarantees us a properly sorted list
 
 	for(var/list/packet in send_maps_data)
 		send_maps_sort[packet["name"]] = packet

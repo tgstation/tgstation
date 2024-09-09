@@ -13,11 +13,13 @@ export type SubsystemData = {
   ref: string;
   tick_overrun: number;
   tick_usage: number;
+  usage_per_tick: number;
 };
 
 export type ControllerData = {
   world_time: number;
   fast_update: BooleanLike;
+  rolling_length: number;
   map_cpu: number;
   subsystems: SubsystemData[];
 };
