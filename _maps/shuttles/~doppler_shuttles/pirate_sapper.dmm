@@ -278,6 +278,14 @@
 "yE" = (
 /turf/closed/wall/mineral/titanium,
 /area/shuttle/pirate/sapper)
+"zk" = (
+/obj/structure/cable,
+/obj/item/storage/toolbox/emergency/turret{
+	pixel_x = 10;
+	pixel_y = 9
+	},
+/turf/open/floor/catwalk_floor/iron_white,
+/area/shuttle/pirate/sapper)
 "zy" = (
 /obj/structure/lattice,
 /obj/structure/marker_beacon/yellow,
@@ -392,13 +400,9 @@
 /area/shuttle/pirate/sapper)
 "JD" = (
 /obj/structure/cable,
-/obj/item/ammo_box/magazine/wt550m9{
-	pixel_y = -3;
-	pixel_x = -5
-	},
-/obj/item/ammo_box/magazine/wt550m9{
-	pixel_y = 6;
-	pixel_x = 6
+/obj/item/storage/toolbox/emergency/turret{
+	pixel_x = -8;
+	pixel_y = -4
 	},
 /turf/open/floor/catwalk_floor/iron_white,
 /area/shuttle/pirate/sapper)
@@ -650,7 +654,7 @@ sr
 fK
 Xc
 DZ
-Sa
+zk
 pH
 Yo
 tM
