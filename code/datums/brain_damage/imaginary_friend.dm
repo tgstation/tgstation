@@ -263,7 +263,7 @@
 			speech_bubble_recipients.Add(user.client)
 
 	var/image/bubble = image('icons/mob/effects/talk.dmi', src, "[bubble_type][say_test(message)]", FLY_LAYER)
-	SET_PLANE_EXPLICIT(bubble, GAME_PLANE, src)
+	SET_PLANE_EXPLICIT(bubble, ABOVE_GAME_PLANE, src)
 	bubble.appearance_flags = APPEARANCE_UI_IGNORE_ALPHA
 	INVOKE_ASYNC(GLOBAL_PROC, GLOBAL_PROC_REF(flick_overlay_global), bubble, speech_bubble_recipients, 3 SECONDS)
 	LAZYADD(update_on_z, bubble)

@@ -77,7 +77,7 @@
 /obj/item/wirecutters/cyborg
 	name = "powered wirecutters"
 	desc = "Cuts wires with the power of ELECTRICITY. Faster than normal wirecutters."
-	icon = 'icons/mob/silicon/robot_items.dmi'
+	icon = 'icons/obj/items_cyborg.dmi'
 	icon_state = "toolkit_engiborg_cutters"
 	worn_icon_state = "cutters"
 	toolspeed = 0.5

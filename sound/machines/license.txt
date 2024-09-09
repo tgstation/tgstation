@@ -8,3 +8,7 @@ This is licensed under CC-BY 4.0, found at https://creativecommons.org/licenses/
 
 shutter.ogg adapted from Joseph Sardin on BigSoundBank
 https://bigsoundbank.com/detail-2475-manual-roller-shutter-closing-out-2.html
+
+lever_start.ogg and lever_stop.ogg are made by A_Kuha on FreeSound
+https://freesound.org/people/A_Kuha/sounds/676412
+This is licensed under CC-0, found at https://creativecommons.org/publicdomain/zero/1.0/

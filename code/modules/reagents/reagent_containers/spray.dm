@@ -154,7 +154,7 @@
 	set name = "Empty Spray Bottle"
 	set category = "Object"
 	set src in usr
-	if(usr.incapacitated())
+	if(usr.incapacitated)
 		return
 	if (tgui_alert(usr, "Are you sure you want to empty that?", "Empty Bottle:", list("Yes", "No")) != "Yes")
 		return

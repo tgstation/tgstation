@@ -5,7 +5,7 @@
 /obj/structure/transport/linear
 	name = "linear transport module"
 	desc = "A lightweight lift platform. It moves."
-	icon = 'icons/obj/structures/smooth/catwalk.dmi'
+	icon = 'icons/obj/smooth_structures/catwalk.dmi'
 	icon_state = "catwalk-0"
 	base_icon_state = "catwalk"
 	density = FALSE
@@ -612,7 +612,7 @@
 	if(!isliving(user))
 		return FALSE
 	// Gotta be awake and aware
-	if(user.incapacitated())
+	if(user.incapacitated)
 		return FALSE
 	// Maintain the god given right to fight an elevator
 	if(user.combat_mode)
@@ -704,7 +704,7 @@
  * * boolean, FALSE if the menu should be closed, TRUE if the menu is clear to stay opened.
  */
 /obj/structure/transport/linear/proc/check_menu(mob/user, starting_loc)
-	if(user.incapacitated() || !user.Adjacent(src) || starting_loc != src.loc)
+	if(user.incapacitated || !user.Adjacent(src) || starting_loc != src.loc)
 		return FALSE
 	return TRUE
 
@@ -854,7 +854,7 @@
 /obj/structure/transport/linear/tram
 	name = "tram subfloor"
 	desc = "The subfloor lattice of the tram. You can build a tram wall frame by using <b>titanium sheets,</b> or place down <b>thermoplastic tram floor tiles.</b>"
-	icon = 'icons/obj/structures/tram/tram_structure.dmi'
+	icon = 'icons/obj/tram/tram_structure.dmi'
 	icon_state = "subfloor"
 	base_icon_state = null
 	density = FALSE
