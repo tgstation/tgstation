@@ -28,6 +28,10 @@
 #define CRAFT_CHECK_DENSITY (1<<5)
 /// If the created atom will gain custom mat datums
 #define CRAFT_APPLIES_MATS (1<<6)
+/// Crafting passes reagents of components to the finished product
+#define CRAFT_TRANSFERS_REAGENTS (1<<7)
+/// Crafting clears all reagents present in the finished product
+#define CRAFT_CLEARS_REAGENTS (1<<8)
 
 //food/drink crafting defines
 //When adding new defines, please make sure to also add them to the encompassing list
