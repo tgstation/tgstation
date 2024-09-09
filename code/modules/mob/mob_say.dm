@@ -216,6 +216,7 @@
 				mods[MODE_HEADSET] = TRUE
 		else if((key in GLOB.department_radio_prefixes) && length(message) > length(key) + 1 && !mods[RADIO_EXTENSION])
 			mods[RADIO_KEY] = message[1 + length(key)]
+			var/radio_extension = GLOB.department_radio_keys[mods[RADIO_KEY]]
 			if(isnull(radio_extension)) // intelligently use lowercase if there doesn't exist an uppercase version of that letter in department_radio_keys
 				mods[RADIO_KEY] = LOWER_TEXT(mods[RADIO_KEY])
 				mods[RADIO_EXTENSION] = GLOB.department_radio_keys[mods[RADIO_KEY]]
