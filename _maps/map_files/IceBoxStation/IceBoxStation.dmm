@@ -1453,10 +1453,6 @@
 	dir = 1
 	},
 /area/station/hallway/secondary/exit/departure_lounge)
-"ave" = (
-/obj/structure/stairs/west,
-/turf/open/openspace,
-/area/station/maintenance/starboard/aft)
 "avh" = (
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/smooth,
@@ -265545,7 +265541,7 @@ enq
 nkH
 qQa
 bgx
-ave
+gti
 wpn
 jCl
 xWo
