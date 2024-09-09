@@ -123,7 +123,7 @@
 	return generate_tail_icon(chosen_tail)
 
 //	Cat
-/datum/preference/choiced/tail_human // its a lie
+/datum/preference/choiced/tail_human // it's a lie
 	category = PREFERENCE_CATEGORY_CLOTHING
 	relevant_external_organ = null
 	should_generate_icons = TRUE
@@ -143,7 +143,7 @@
 	target.dna.features["tail_cat"] = value
 
 /datum/preference/choiced/tail_human/icon_for(value)
-	var/datum/sprite_accessory/chosen_tail = SSaccessories.tails_list_human[value] // its a lie
+	var/datum/sprite_accessory/chosen_tail = SSaccessories.tails_list_human[value]
 	return generate_tail_icon(chosen_tail)
 
 //	Monkey
