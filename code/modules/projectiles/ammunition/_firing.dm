@@ -52,12 +52,19 @@
 	loaded_projectile.suppressed = quiet
 
 	if(isgun(fired_from))
-		var/obj/item/gun/G = fired_from
-		loaded_projectile.damage *= G.projectile_damage_multiplier
-		loaded_projectile.stamina *= G.projectile_damage_multiplier
+		var/obj/item/gun/gun = fired_from
 
-		loaded_projectile.wound_bonus += G.projectile_wound_bonus
-		loaded_projectile.bare_wound_bonus += G.projectile_wound_bonus
+		var/integrity_mult = 0.5 + gun.get_integrity_percentage() * 0.5
+		if(integrity_mult >= 0.95) //Guns that are only mildly smudged don't debuff projectiles.
+			integrity_mult = 1
+
+		loaded_projectile.damage *= gun.projectile_damage_multiplier * integrity_mult
+		loaded_projectile.stamina *= gun.projectile_damage_multiplier * integrity_mult
+
+		loaded_projectile.wound_bonus += gun.projectile_wound_bonus
+		loaded_projectile.wound_bonus *= loaded_projectile.wound_bonus >= 0 ? 1 : 2 - integrity_mult
+		loaded_projectile.bare_wound_bonus += gun.projectile_wound_bonus
+		loaded_projectile.bare_wound_bonus *= loaded_projectile.bare_wound_bonus >= 0 ? 1 : 2 - integrity_mult
 
 	if(tk_firing(user, fired_from))
 		loaded_projectile.ignore_source_check = TRUE
@@ -76,11 +83,7 @@
 	if(loaded_projectile.firer)
 		firing_dir = get_dir(fired_from, target)
 	if(!loaded_projectile.suppressed && firing_effect_type && !tk_firing(user, fired_from))
-		var/obj/effect/fire_effect = new firing_effect_type(get_turf(src), firing_dir)
-		fire_effect.pixel_y = user.pixel_y
-		fire_effect.pixel_z = user.pixel_z
-		fire_effect.pixel_x = user.pixel_x
-		fire_effect.pixel_w = user.pixel_w
+		new firing_effect_type(get_turf(src), firing_dir)
 
 	var/direct_target
 	if(target && curloc.Adjacent(targloc, target=targloc, mover=src)) //if the target is right on our location or adjacent (including diagonally if reachable) we'll skip the travelling code in the proj's fire()

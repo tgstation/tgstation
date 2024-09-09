@@ -50,9 +50,7 @@
 
 GLOBAL_LIST_INIT(nonoverlaying_gases, typecache_of_gases_with_no_overlays())
 ///Returns a list of overlays of every gas in the mixture
-///Duplicate of code logic of update_visuals(), keep both up to date
-///Macro in case it ever needs to be used in hotcode
-#define GAS_OVERLAYS(gases, out_var, z_layer_turf, junction)\
+#define GAS_OVERLAYS(gases, out_var, z_layer_turf)\
 	do { \
 		out_var = list();\
 		var/offset = GET_TURF_PLANE_OFFSET(z_layer_turf) + 1;\
@@ -62,7 +60,7 @@ GLOBAL_LIST_INIT(nonoverlaying_gases, typecache_of_gases_with_no_overlays())
 			var/_GAS_META = _GAS[GAS_META];\
 			if(_GAS[MOLES] <= _GAS_META[META_GAS_MOLES_VISIBLE]) continue;\
 			var/_GAS_OVERLAY = _GAS_META[META_GAS_OVERLAY][offset];\
-			out_var += _GAS_OVERLAY[min(TOTAL_VISIBLE_STATES, CEILING(_GAS[MOLES] / MOLES_GAS_VISIBLE_STEP, 1))][junction + 1];\
+			out_var += _GAS_OVERLAY[min(TOTAL_VISIBLE_STATES, CEILING(_GAS[MOLES] / MOLES_GAS_VISIBLE_STEP, 1))];\
 		} \
 	}\
 	while (FALSE)
@@ -84,7 +82,7 @@ GLOBAL_LIST_INIT(atmos_adjacent_savings, list(0,0))
 	turf.archived_cycle = SSair.times_fired;\
 	turf.temperature_archived = turf.temperature;
 
-/* Fetch the energy transferred when two gas mixtures's temperature equalize.
+/* Fetch the energy transferred when two gas mixtures' temperature equalize.
  *
  * To equalize two gas mixtures, we simply pool the energy and divide it by the pooled heat capacity.
  * T' = (W1+W2) / (C1+C2)
@@ -109,7 +107,7 @@ GLOBAL_LIST_INIT(atmos_adjacent_savings, list(0,0))
  * Not immediately obvious, but saves us operation time.
  *
  * We put a lot of parentheses here because the numbers get really really big.
- * By prioritizing the division we try to tone the number down so we dont get overflows.
+ * By prioritizing the division we try to tone the number down so we don't get overflows.
  *
  * Arguments:
  * * temperature_delta: T2 - T1. [/datum/gas_mixture/var/temperature]

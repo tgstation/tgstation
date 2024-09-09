@@ -1,4 +1,0 @@
-author: "mc-oofert"
-delete-after: True
-changes:
-  - bugfix: "breaking certain terrain in deathmatch doesnt instantly breach to space"

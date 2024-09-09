@@ -8,6 +8,7 @@
 	desc = "A generic brand of lipstick."
 	icon = 'icons/obj/cosmetic.dmi'
 	icon_state = "lipstick"
+	base_icon_state = "lipstick"
 	inhand_icon_state = "lipstick"
 	w_class = WEIGHT_CLASS_TINY
 	interaction_flags_click = NEED_DEXTERITY|NEED_HANDS|ALLOW_RESTING
@@ -18,6 +19,8 @@
 	var/style = "lipstick"
 	/// A trait that's applied while someone has this lipstick applied, and is removed when the lipstick is removed
 	var/lipstick_trait
+	/// Can this lipstick spawn randomly
+	var/random_spawn = TRUE
 
 /obj/item/lipstick/Initialize(mapload)
 	. = ..()
@@ -34,8 +37,8 @@
 	. += "Alt-click to change the style."
 
 /obj/item/lipstick/update_icon_state()
-	icon_state = "[initial(icon_state)][open ? "_uncap" : null]"
-	inhand_icon_state = "[initial(icon_state)][open ? "open" : null]"
+	icon_state = "[base_icon_state][open ? "_uncap" : null]"
+	inhand_icon_state = "[base_icon_state][open ? "open" : null]"
 	return ..()
 
 /obj/item/lipstick/update_overlays()
@@ -72,7 +75,7 @@
 /obj/item/lipstick/proc/check_menu(mob/living/user)
 	if(!istype(user))
 		return FALSE
-	if(user.incapacitated() || !user.is_holding(src))
+	if(user.incapacitated || !user.is_holding(src))
 		return FALSE
 	return TRUE
 
@@ -104,13 +107,16 @@
 	name = "\improper Kiss of Death"
 	desc = "An incredibly potent tube of lipstick made from the venom of the dreaded Yellow Spotted Space Lizard, as deadly as it is chic. Try not to smear it!"
 	lipstick_trait = TRAIT_KISS_OF_DEATH
+	random_spawn = FALSE
 
 /obj/item/lipstick/syndie
 	name = "syndie lipstick"
 	desc = "Syndicate branded lipstick with a killer dose of kisses. Observe safety regulations!"
 	icon_state = "slipstick"
+	base_icon_state = "slipstick"
 	lipstick_color = COLOR_SYNDIE_RED
 	lipstick_trait = TRAIT_SYNDIE_KISS
+	random_spawn = FALSE
 
 /obj/item/lipstick/random
 	name = "lipstick"
@@ -123,7 +129,7 @@
 	if(!possible_colors)
 		possible_colors = list()
 		for(var/obj/item/lipstick/lipstick_path as anything in (typesof(/obj/item/lipstick) - src.type))
-			if(!initial(lipstick_path.lipstick_color))
+			if(!initial(lipstick_path.lipstick_color) || !initial(lipstick_path.random_spawn))
 				continue
 			possible_colors[initial(lipstick_path.lipstick_color)] = initial(lipstick_path.name)
 	lipstick_color = pick(possible_colors)
@@ -196,7 +202,7 @@
 /obj/item/razor/suicide_act(mob/living/carbon/user)
 	user.visible_message(span_suicide("[user] begins shaving [user.p_them()]self without the razor guard! It looks like [user.p_theyre()] trying to commit suicide!"))
 	shave(user, BODY_ZONE_PRECISE_MOUTH)
-	shave(user, BODY_ZONE_HEAD)//doesnt need to be BODY_ZONE_HEAD specifically, but whatever
+	shave(user, BODY_ZONE_HEAD)//doesn't need to be BODY_ZONE_HEAD specifically, but whatever
 	return BRUTELOSS
 
 /obj/item/razor/proc/shave(mob/living/carbon/human/skinhead, location = BODY_ZONE_PRECISE_MOUTH)

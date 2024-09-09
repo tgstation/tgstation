@@ -12,7 +12,7 @@
 		fish_source = configuration
 	else
 		return COMPONENT_INCOMPATIBLE
-	fish_source.on_fishing_spot_init()
+	fish_source.on_fishing_spot_init(src)
 	RegisterSignal(parent, COMSIG_ATOM_ATTACKBY, PROC_REF(handle_attackby))
 	RegisterSignal(parent, COMSIG_FISHING_ROD_CAST, PROC_REF(handle_cast))
 	RegisterSignal(parent, COMSIG_ATOM_EXAMINE, PROC_REF(on_examined))
@@ -22,6 +22,7 @@
 	ADD_TRAIT(parent, TRAIT_FISHING_SPOT, REF(src))
 
 /datum/component/fishing_spot/Destroy()
+	fish_source.on_fishing_spot_del(src)
 	fish_source = null
 	return ..()
 
@@ -43,15 +44,7 @@
 	if(!HAS_MIND_TRAIT(user, TRAIT_EXAMINE_FISHING_SPOT))
 		return
 
-	var/has_known_fishes = FALSE
-	for(var/reward in fish_source.fish_table)
-		if(!ispath(reward, /obj/item/fish))
-			continue
-		var/obj/item/fish/prototype = reward
-		if(initial(prototype.show_in_catalog))
-			has_known_fishes = TRUE
-			break
-	if(!has_known_fishes)
+	if(!fish_source.has_known_fishes())
 		return
 
 	examine_text += span_tinynoticeital("This is a fishing spot. You can look again to list its fishes...")
@@ -61,18 +54,7 @@
 	if(!HAS_MIND_TRAIT(user, TRAIT_EXAMINE_FISHING_SPOT))
 		return
 
-	var/list/known_fishes = list()
-	for(var/reward in fish_source.fish_table)
-		if(!ispath(reward, /obj/item/fish))
-			continue
-		var/obj/item/fish/prototype = reward
-		if(initial(prototype.show_in_catalog))
-			known_fishes += initial(prototype.name)
-
-	if(!length(known_fishes))
-		return
-
-	examine_text += span_info("You can catch the following fish here: [english_list(known_fishes)].")
+	fish_source.get_catchable_fish_names(user, parent, examine_text)
 
 /datum/component/fishing_spot/proc/try_start_fishing(obj/item/possibly_rod, mob/user)
 	SIGNAL_HANDLER
@@ -93,7 +75,7 @@
 
 /datum/component/fishing_spot/proc/start_fishing_challenge(obj/item/fishing_rod/rod, mob/user)
 	/// Roll what we caught based on modified table
-	var/result = fish_source.roll_reward(rod, user)
+	var/result = fish_source.roll_reward(rod, user, parent)
 	var/datum/fishing_challenge/challenge = new(src, result, rod, user)
 	fish_source.pre_challenge_started(rod, user, challenge)
 	challenge.start(user)

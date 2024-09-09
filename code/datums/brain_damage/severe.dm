@@ -407,7 +407,7 @@
 	var/obj/item/bodypart/bodypart = owner.get_bodypart(owner.get_random_valid_zone(even_weights = TRUE))
 	if(!(bodypart && IS_ORGANIC_LIMB(bodypart)) && bodypart.bodypart_flags & BODYPART_PSEUDOPART)
 		return
-	if(owner.incapacitated())
+	if(owner.incapacitated)
 		return
 	bodypart.receive_damage(scratch_damage)
 	if(SPT_PROB(33, seconds_per_tick))

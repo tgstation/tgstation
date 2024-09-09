@@ -1,5 +1,0 @@
-author: "SmArtKar"
-delete-after: True
-changes:
-  - bugfix: "Fixed nuke toggle, smite and machine upgrade admin verbs using incorrect sorting"
-  - admin: "Updated nuke toggle, smite and machine upgrade admin verbs to use TGUI"

@@ -13,9 +13,6 @@
  */
 
 /obj/structure/table
-	// Shift tables down to avoid layering headaches
-	SET_BASE_PIXEL_NOMAP(0, -8)
-	SET_BASE_VISUAL_PIXEL(0, 8)
 	name = "table"
 	desc = "A square piece of iron standing on four metal legs. It can not move."
 	icon = 'icons/obj/smooth_structures/table.dmi'
@@ -40,10 +37,6 @@
 	var/buildstackamount = 1
 	var/framestackamount = 2
 	var/deconstruction_ready = TRUE
-	var/bottom_placable_y = 9
-	var/top_placable_y = 37
-	var/bottom_placable_x = 4
-	var/top_placable_x = 28
 
 /obj/structure/table/Initialize(mapload, _buildstack)
 	. = ..()
@@ -67,7 +60,6 @@
 ///Adds the element used to make the object climbable, and also the one that shift the mob buckled to it up.
 /obj/structure/table/proc/make_climbable()
 	AddElement(/datum/element/climbable)
-	AddComponent(/datum/component/climb_walkable)
 	AddElement(/datum/element/elevation, pixel_shift = 12)
 
 /obj/structure/table/add_context(atom/source, list/context, obj/item/held_item, mob/living/user)
@@ -151,6 +143,15 @@
 
 /obj/structure/table/attack_tk(mob/user)
 	return
+
+/obj/structure/table/CanAllowThrough(atom/movable/mover, border_dir)
+	. = ..()
+	if(.)
+		return
+	if(mover.throwing)
+		return TRUE
+	if(locate(/obj/structure/table) in get_turf(mover))
+		return TRUE
 
 /obj/structure/table/CanAStarPass(to_dir, datum/can_pass_info/pass_info)
 	if(!density)
@@ -307,10 +308,9 @@
 		return ITEM_INTERACT_BLOCKING
 	// Items are centered by default, but we move them if click ICON_X and ICON_Y are available
 	if(LAZYACCESS(modifiers, ICON_X) && LAZYACCESS(modifiers, ICON_Y))
-		//Clamp it so that the icon never moves more than 16 pixels in either direction (thus leaving the table turf)
-		// +- 8 to bound it to a typical item hitbox (16x16) instead of the assumed max of 32x32
-		tool.pixel_x = clamp(text2num(LAZYACCESS(modifiers, ICON_X)) - 16, bottom_placable_x - 8, top_placable_x + 8)
-		tool.pixel_y = clamp(text2num(LAZYACCESS(modifiers, ICON_Y)) - 16, bottom_placable_y - 8, top_placable_y + 8)
+		// Clamp it so that the icon never moves more than 16 pixels in either direction (thus leaving the table turf)
+		tool.pixel_x = clamp(text2num(LAZYACCESS(modifiers, ICON_X)) - 16, -(world.icon_size*0.5), world.icon_size*0.5)
+		tool.pixel_y = clamp(text2num(LAZYACCESS(modifiers, ICON_Y)) - 16, -(world.icon_size*0.5), world.icon_size*0.5)
 	AfterPutItemOnTable(tool, user)
 	return ITEM_INTERACT_SUCCESS
 
@@ -336,26 +336,10 @@
 	return FALSE
 
 /obj/structure/table/rcd_act(mob/user, obj/item/construction/rcd/the_rcd, list/rcd_data)
-	if(rcd_data[RCD_DESIGN_MODE] == RCD_DECONSTRUCT)
+	if(rcd_data["[RCD_DESIGN_MODE]"] == RCD_DECONSTRUCT)
 		qdel(src)
 		return TRUE
 	return FALSE
-
-/obj/structure/table/set_smoothed_icon_state(new_junction)
-	. = ..()
-	bottom_placable_x = initial(bottom_placable_x)
-	bottom_placable_y = initial(bottom_placable_y)
-	top_placable_x = initial(top_placable_x)
-	top_placable_y = initial(top_placable_y)
-	// Allow free movement if we smooth in a direction, while handling bounding
-	if(new_junction & NORTH)
-		top_placable_y = 32 + 8
-	if(new_junction & SOUTH)
-		bottom_placable_y = 0 - 8
-	if(new_junction & EAST)
-		top_placable_x = 32 + 8
-	if(new_junction & WEST)
-		bottom_placable_x = 0 - 8
 
 /obj/structure/table/proc/table_living(datum/source, mob/living/shover, mob/living/target, shove_flags, obj/item/weapon)
 	SIGNAL_HANDLER
@@ -387,8 +371,6 @@
 
 ///Table on wheels
 /obj/structure/table/rolling
-	SET_BASE_PIXEL(0, 0)
-	SET_BASE_VISUAL_PIXEL(0, DEPTH_OFFSET)
 	name = "Rolling table"
 	desc = "An NT brand \"Rolly poly\" rolling table. It can and will move."
 	anchored = FALSE
@@ -397,11 +379,6 @@
 	canSmoothWith = null
 	icon = 'icons/obj/smooth_structures/rollingtable.dmi'
 	icon_state = "rollingtable"
-	// this one's 32x32 so it uses different clickable bounds
-	bottom_placable_y = 12
-	top_placable_y = 29
-	bottom_placable_x = 4
-	top_placable_x = 28
 	/// Lazylist of the items that we have on our surface.
 	var/list/attached_items = null
 
@@ -766,7 +743,6 @@
  */
 
 /obj/structure/table/optable
-	SET_BASE_VISUAL_PIXEL(0, DEPTH_OFFSET)
 	name = "operating table"
 	desc = "Used for advanced medical procedures."
 	icon = 'icons/obj/medical/surgery_table.dmi'

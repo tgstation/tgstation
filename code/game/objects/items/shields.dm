@@ -26,6 +26,10 @@
 	var/shield_break_sound = 'sound/effects/bang.ogg'
 	/// baton bash cooldown
 	COOLDOWN_DECLARE(baton_bash)
+	/// is shield bashable?
+	var/is_bashable = TRUE
+	/// sound when a shield is bashed
+	var/shield_bash_sound = 'sound/effects/shieldbash.ogg'
 
 /datum/armor/item_shield
 	melee = 50
@@ -60,6 +64,19 @@
 			. += span_info("It appears heavily damaged.")
 		if(0 to 25)
 			. += span_warning("It's falling apart!")
+
+/obj/item/shield/item_interaction(mob/living/user, obj/item/tool, list/modifiers, is_right_clicking)
+	. = ..()
+	if(. & ITEM_INTERACT_ANY_BLOCKER)
+		return .
+	if(!istype(tool, /obj/item/melee/baton) || !is_bashable)
+		return .
+	if(!COOLDOWN_FINISHED(src, baton_bash))
+		return ITEM_INTERACT_BLOCKING
+	user.visible_message(span_warning("[user] bashes [src] with [tool]!"))
+	playsound(src, shield_bash_sound, 50, TRUE)
+	COOLDOWN_START(src, baton_bash, BATON_BASH_COOLDOWN)
+	return ITEM_INTERACT_SUCCESS
 
 /obj/item/shield/proc/on_shield_block(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", damage = 0, attack_type = MELEE_ATTACK, damage_type = BRUTE)
 	if(!breakable_by_damage || (damage_type != BRUTE && damage_type != BURN))
@@ -162,13 +179,6 @@
 	)
 
 /obj/item/shield/riot/attackby(obj/item/attackby_item, mob/user, params)
-	if(istype(attackby_item, /obj/item/melee/baton))
-		if(!COOLDOWN_FINISHED(src, baton_bash))
-			return
-		user.visible_message(span_warning("[user] bashes [src] with [attackby_item]!"))
-		playsound(user.loc, 'sound/effects/shieldbash.ogg', 50, TRUE)
-		COOLDOWN_START(src, baton_bash, BATON_BASH_COOLDOWN)
-		return
 	if(istype(attackby_item, /obj/item/stack/sheet/mineral/titanium))
 		if (atom_integrity >= max_integrity)
 			to_chat(user, span_warning("[src] is already in perfect condition."))
@@ -284,7 +294,7 @@
 
 /obj/item/shield/energy
 	name = "combat energy shield"
-	desc = "A hardlight shield capable of reflecting blocked energy projectiles, as well las providing well-rounded defense from most all other attacks."
+	desc = "A hardlight shield capable of reflecting blocked energy projectiles, as well as providing well-rounded defense from most all other attacks."
 	icon_state = "eshield"
 	inhand_icon_state = "eshield"
 	w_class = WEIGHT_CLASS_TINY
@@ -296,6 +306,8 @@
 	throw_speed = 3
 	breakable_by_damage = FALSE
 	block_sound = 'sound/weapons/block_blade.ogg'
+	is_bashable = FALSE // Gotta wait till it activates y'know
+	shield_bash_sound = 'sound/effects/energyshieldbash.ogg'
 	/// Force of the shield when active.
 	var/active_force = 10
 	/// Throwforce of the shield when active.
@@ -344,6 +356,7 @@
 	if(user)
 		balloon_alert(user, active ? "activated" : "deactivated")
 	playsound(src, active ? 'sound/weapons/saberon.ogg' : 'sound/weapons/saberoff.ogg', 35, TRUE)
+	is_bashable = !is_bashable
 	return COMPONENT_NO_DEFAULT_MESSAGE
 
 /obj/item/shield/energy/proc/can_disarm_attack(datum/source, mob/living/victim, mob/living/user, send_message = TRUE)
@@ -355,7 +368,7 @@
 
 /obj/item/shield/energy/advanced
 	name = "advanced combat energy shield"
-	desc = "A hardlight shield capable of reflecting all energy projectiles, as well las providing well-rounded defense from most all other attacks. \
+	desc = "A hardlight shield capable of reflecting all energy projectiles, as well as providing well-rounded defense from most all other attacks. \
 		Often employed by Nanotrasen deathsquads."
 	icon_state = "advanced_eshield"
 	inhand_icon_state = "advanced_eshield"
