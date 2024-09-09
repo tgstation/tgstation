@@ -26,7 +26,7 @@
 	if(!isliving(user))
 		return FALSE
 	var/mob/living/L = user
-	if(L.incapacitated())
+	if(L.incapacitated)
 		return FALSE
 	return TRUE
 
