@@ -123,38 +123,38 @@ GLOBAL_LIST_EMPTY(announcement_systems)
 	data["newheadToggle"] = newheadToggle
 	return data
 
-/obj/machinery/announcement_system/ui_act(action, param)
+/obj/machinery/announcement_system/ui_act(action, param, datum/tgui/ui)
 	. = ..()
 	if(.)
 		return
-	if(!usr.can_perform_action(src, ALLOW_SILICON_REACH))
+	if(!ui.user.can_perform_action(src, ALLOW_SILICON_REACH))
 		return
 	if(machine_stat & BROKEN)
 		visible_message(span_warning("[src] buzzes."), span_hear("You hear a faint buzz."))
-		playsound(src.loc, 'sound/machines/buzz-two.ogg', 50, TRUE)
+		playsound(loc, 'sound/machines/buzz-two.ogg', 50, TRUE)
 		return
 	switch(action)
 		if("ArrivalText")
 			var/NewMessage = trim(html_encode(param["newText"]), MAX_MESSAGE_LEN)
-			if(!usr.can_perform_action(src, ALLOW_SILICON_REACH))
+			if(!ui.user.can_perform_action(src, ALLOW_SILICON_REACH))
 				return
 			if(NewMessage)
 				arrival = NewMessage
-				usr.log_message("updated the arrivals announcement to: [NewMessage]", LOG_GAME)
+				ui.user.log_message("updated the arrivals announcement to: [NewMessage]", LOG_GAME)
 		if("NewheadText")
 			var/NewMessage = trim(html_encode(param["newText"]), MAX_MESSAGE_LEN)
-			if(!usr.can_perform_action(src, ALLOW_SILICON_REACH))
+			if(!ui.user.can_perform_action(src, ALLOW_SILICON_REACH))
 				return
 			if(NewMessage)
 				newhead = NewMessage
-				usr.log_message("updated the head announcement to: [NewMessage]", LOG_GAME)
+				ui.user.log_message("updated the head announcement to: [NewMessage]", LOG_GAME)
 		if("NewheadToggle")
 			newheadToggle = !newheadToggle
 			update_appearance()
 		if("ArrivalToggle")
 			arrivalToggle = !arrivalToggle
 			update_appearance()
-	add_fingerprint(usr)
+	add_fingerprint(ui.user)
 
 /obj/machinery/announcement_system/attack_robot(mob/living/silicon/user)
 	. = attack_ai(user)
@@ -172,7 +172,7 @@ GLOBAL_LIST_EMPTY(announcement_systems)
 		return
 
 	arrival = pick("#!@%ERR-34%2 CANNOT LOCAT@# JO# F*LE!", "CRITICAL ERROR 99.", "ERR)#: DA#AB@#E NOT F(*ND!")
-	newhead = pick("OV#RL()D: \[UNKNOWN??\] DET*#CT)D!", "ER)#R - B*@ TEXT F*O(ND!", "AAS.exe is not responding. NanoOS is searching for a solution to the problem.")
+	newhead = pick("OV#RL()D: \[UNKNOWN??] DET*#CT)D!", "ER)#R - B*@ TEXT F*O(ND!", "AAS.exe is not responding. NanoOS is searching for a solution to the problem.")
 
 /obj/machinery/announcement_system/emp_act(severity)
 	. = ..()
