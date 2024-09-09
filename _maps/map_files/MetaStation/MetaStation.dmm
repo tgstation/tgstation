@@ -1768,13 +1768,15 @@
 /turf/open/floor/iron,
 /area/station/science/research)
 "aHW" = (
-/obj/machinery/door/airlock/mining{
-	name = "Drone Storage Room"
-	},
+/obj/machinery/door/airlock/maintenance/glass,
 /obj/effect/mapping_helpers/airlock/access/any/supply/maintenance,
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/effect/mapping_helpers/airlock/abandoned,
+/obj/effect/mapping_helpers/airlock/unres{
+	dir = 4
+	},
 /turf/open/floor/plating,
 /area/station/maintenance/port/fore)
 "aIl" = (
@@ -17994,6 +17996,7 @@
 /area/station/command/teleporter)
 "gBT" = (
 /obj/effect/turf_decal/loading_area,
+/obj/effect/landmark/navigate_destination,
 /turf/open/floor/plating/reinforced,
 /area/station/cargo/drone_bay)
 "gBY" = (
@@ -43988,10 +43991,9 @@
 /turf/open/floor/iron/white/side,
 /area/station/science/lobby)
 "pDw" = (
-/obj/effect/turf_decal/loading_area,
-/obj/effect/landmark/navigate_destination,
-/turf/open/floor/plating/reinforced,
-/area/station/cargo/drone_bay)
+/obj/structure/falsewall,
+/turf/open/floor/plating,
+/area/station/maintenance/port/fore)
 "pDx" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/external{
@@ -54148,6 +54150,10 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/green/visible,
 /turf/open/floor/engine,
 /area/station/engineering/supermatter/room)
+"tdg" = (
+/obj/effect/turf_decal/loading_area,
+/turf/open/floor/plating/reinforced,
+/area/station/cargo/drone_bay)
 "tds" = (
 /obj/effect/turf_decal/box/corners{
 	dir = 8
@@ -87720,7 +87726,7 @@ dxo
 hlE
 hKg
 apF
-pDw
+gBT
 nPE
 bBr
 wok
@@ -87977,7 +87983,7 @@ tkf
 wZo
 hKg
 fHx
-gBT
+tdg
 gqW
 vrp
 hox
@@ -88472,7 +88478,7 @@ pma
 pma
 pma
 hZQ
-jXu
+pDw
 jXu
 aHW
 jXu
