@@ -1,5 +1,4 @@
 /obj/machinery/byteforge
-	SET_BASE_VISUAL_PIXEL(0, DEPTH_OFFSET)
 	name = "byteforge"
 
 	circuit = /obj/item/circuitboard/machine/byteforge

@@ -19,7 +19,7 @@
 /datum/voucher_set/crusher_kit
 	name = "Crusher Kit"
 	description = "Contains a kinetic crusher and a pocket fire extinguisher. Kinetic crusher is a versatile melee mining tool capable both of mining and fighting local fauna, however it is difficult to use effectively for anyone but most skilled and/or suicidal miners."
-	icon = 'icons/obj/mining_zones/equipment.dmi'
+	icon = 'icons/obj/mining.dmi'
 	icon_state = "crusher"
 	set_items = list(
 		/obj/item/extinguisher/mini,
@@ -29,7 +29,7 @@
 /datum/voucher_set/extraction_kit
 	name = "Extraction and Rescue Kit"
 	description = "Contains a fulton extraction pack and a beacon signaller, which allows you to send back home minerals, items and dead bodies without having to use the mining shuttle. And as a bonus, you get 30 marker beacons to help you better mark your path."
-	icon = 'icons/obj/mining_zones/fulton.dmi'
+	icon = 'icons/obj/fulton.dmi'
 	icon_state = "extraction_pack"
 	set_items = list(
 		/obj/item/extraction_pack,
@@ -40,7 +40,7 @@
 /datum/voucher_set/resonator_kit
 	name = "Resonator Kit"
 	description = "Contains a resonator and a pocket fire extinguisher. Resonator is a handheld device that creates small fields of energy that resonate until they detonate, crushing rock. It does increased damage in low pressure."
-	icon = 'icons/obj/mining_zones/equipment.dmi'
+	icon = 'icons/obj/mining.dmi'
 	icon_state = "resonator"
 	set_items = list(
 		/obj/item/extinguisher/mini,

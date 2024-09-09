@@ -395,7 +395,7 @@
 	playsound(loc, 'sound/weapons/thudswoosh.ogg', 50, TRUE, -1)
 
 	// Shake animation
-	if (incapacitated())
+	if (incapacitated)
 		shake_up_animation()
 
 /mob/proc/shake_up_animation()

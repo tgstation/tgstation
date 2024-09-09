@@ -53,7 +53,6 @@ GLOBAL_LIST_EMPTY(vending_machines_to_restock)
  * Captalism in the year 2525, everything in a vending machine, even love
  */
 /obj/machinery/vending
-	SET_BASE_VISUAL_PIXEL(0, DEPTH_OFFSET)
 	name = "\improper Vendomat"
 	desc = "A generic vending machine."
 	icon = 'icons/obj/machines/vending.dmi'
@@ -989,7 +988,7 @@ GLOBAL_LIST_EMPTY(vending_machines_to_restock)
 	var/list/weighted_crits = list()
 
 	weighted_crits[CRUSH_CRIT_SHATTER_LEGS] = 100
-	weighted_crits[CRUSH_CRIT_PARAPALEGIC] = 80
+	weighted_crits[CRUSH_CRIT_PARAPLEGIC] = 80
 	weighted_crits[CRUSH_CRIT_HEADGIB] = 20
 	weighted_crits[CRUSH_CRIT_SQUISH_LIMB] = 100
 
@@ -1028,7 +1027,7 @@ GLOBAL_LIST_EMPTY(vending_machines_to_restock)
 			if(left_leg || right_leg)
 				carbon_target.visible_message(span_danger("[carbon_target]'s legs shatter with a sickening crunch!"), span_userdanger("Your legs shatter with a sickening crunch!"))
 			return TRUE
-		if(CRUSH_CRIT_PARAPALEGIC) // paralyze this binch
+		if(CRUSH_CRIT_PARAPLEGIC) // paralyze this binch
 			// the new paraplegic gets like 4 lines of losing their legs so skip them
 			if (!iscarbon(atom_target))
 				return FALSE
