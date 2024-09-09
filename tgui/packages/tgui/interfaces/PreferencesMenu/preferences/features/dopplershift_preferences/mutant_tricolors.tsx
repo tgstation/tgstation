@@ -58,6 +58,15 @@ export const tail_type: FeatureChoiced = {
   component: FeatureDropdownInput,
 };
 
+export const ear_type: FeatureChoiced = {
+  name: 'Add Part: Ears',
+  category: 'GAMEPLAY',
+  description: `
+    Choose which animal ears to add to your character, if any.
+  `,
+  component: FeatureDropdownInput,
+};
+
 export const tail_color: Feature<string[]> = {
   name: 'Tail Color',
   component: FeatureTriColorInput,

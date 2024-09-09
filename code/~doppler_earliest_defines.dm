@@ -24,6 +24,11 @@
 	name = "No Horns"
 	icon_state = "none"
 
+/datum/sprite_accessory/ears/none
+	icon = 'modular_doppler/modular_customization/accessories/code/~overrides/icons/fallbacks.dmi'
+	name = "No Ears"
+	icon_state = "none"
+
 /// Tail time
 /datum/sprite_accessory/tails/none
 	icon = 'modular_doppler/modular_customization/accessories/code/~overrides/icons/fallbacks.dmi'
