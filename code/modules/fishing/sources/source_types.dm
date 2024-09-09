@@ -183,6 +183,7 @@
 	fish_table = list(
 		FISHING_DUD = 5,
 		/obj/item/fish/starfish = 6,
+		/obj/item/fish/baby_carp = 6,
 		/obj/item/stack/ore/bluespace_crystal = 2,
 		/mob/living/basic/carp = 2,
 	)
@@ -504,3 +505,20 @@
 
 	var/picked_path = pick(seeds_to_draw_from)
 	return new picked_path(get_turf(fishing_spot))
+
+/datum/fish_source/carp_rift
+	fish_table = list(
+		FISHING_DUD = 3,
+		/obj/item/fish/baby_carp = 5,
+		/mob/living/basic/carp = 1,
+		/mob/living/basic/carp/passive = 1,
+		/mob/living/basic/carp/mega = 1,
+		/obj/item/clothing/head/fedora/carpskin = 1,
+		/obj/item/toy/plush/carpplushie = 1,
+		/obj/item/toy/plush/carpplushie/dehy_carp/peaceful = 1,
+		/obj/item/knife/carp = 1,
+	)
+	fish_counts = list(
+		/mob/living/basic/carp/mega = 2,
+	)
+	fishing_difficulty = FISHING_DEFAULT_DIFFICULTY + 18

@@ -56,7 +56,7 @@
 	else if(weight >= 1500)
 		multiplier += min(0.1 * round((weight - 1000) / 500), 2)
 
-	AddComponent(/datum/component/fish_growth, lob_type, initial(growth_rate) * multiplier)
+	AddComponent(/datum/component/fish_growth, lob_type, growth_rate * multiplier)
 
 /obj/item/fish/chasm_crab/proc/growth_checks(datum/source, seconds_per_tick)
 	SIGNAL_HANDLER
