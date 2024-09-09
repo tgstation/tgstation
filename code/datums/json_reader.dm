@@ -1,4 +1,4 @@
- RESULT_ERR/**
+/**
  * Takes a json value and converts it to a specific output value type.
  */
 /datum/value_guard
