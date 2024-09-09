@@ -27,21 +27,21 @@
 	icon_state = "none"
 
 /datum/sprite_accessory/tails/lizard/none
-	icon = 'modular_doppler/modular_customization/accessories/code/~overrides/icons/fallbacks.dmi'
-	name = "No Tail"
-	icon_state = "none"
+	icon = /datum/sprite_accessory/tails/none::icon
+	name = /datum/sprite_accessory/tails/none::name
+	icon_state = /datum/sprite_accessory/tails/none::icon_state
 
 /datum/sprite_accessory/tails/human/none
-	icon = 'modular_doppler/modular_customization/accessories/code/~overrides/icons/fallbacks.dmi'
-	name = "No Tail"
-	icon_state = "none"
+	icon = /datum/sprite_accessory/tails/none::icon
+	name = /datum/sprite_accessory/tails/none::name
+	icon_state = /datum/sprite_accessory/tails/none::icon_state
 
 /datum/sprite_accessory/tails/monkey/none
-	icon = 'modular_doppler/modular_customization/accessories/code/~overrides/icons/fallbacks.dmi'
-	name = "No Tail"
-	icon_state = "none"
+	icon = /datum/sprite_accessory/tails/none::icon
+	name = /datum/sprite_accessory/tails/none::name
+	icon_state = /datum/sprite_accessory/tails/none::icon_state
 
 /datum/sprite_accessory/tails/dog/none
-	icon = 'modular_doppler/modular_customization/accessories/code/~overrides/icons/fallbacks.dmi'
-	name = "No Tail"
-	icon_state = "none"
+	icon = /datum/sprite_accessory/tails/none::icon
+	name = /datum/sprite_accessory/tails/none::name
+	icon_state = /datum/sprite_accessory/tails/none::icon_state
