@@ -1,8 +1,7 @@
 /obj/item/target
-	SET_BASE_VISUAL_PIXEL(0, DEPTH_OFFSET)
 	name = "shooting target"
 	desc = "A shooting target."
-	icon = 'icons/obj/art/cardboard_cutout.dmi'
+	icon = 'icons/obj/structures.dmi'
 	icon_state = "target_h"
 	density = FALSE
 	max_integrity = 1800

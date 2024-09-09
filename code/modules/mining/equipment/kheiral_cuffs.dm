@@ -3,7 +3,7 @@
 /obj/item/kheiral_cuffs
 	name = "\improper Kheiral cuffs"
 	desc = "A prototype wrist communicator powered by Kheiral Matter. When both ends are clamped to one wrist, acts as a signal range booster for your suit sensors.\n<i>A small engraving on the inside reads, \"NOT HANDCUFFS\"</i>"
-	icon = 'icons/obj/mining_zones/equipment.dmi'
+	icon = 'icons/obj/mining.dmi'
 	icon_state = "strand"
 	worn_icon_state = "strandcuff"
 	slot_flags = ITEM_SLOT_GLOVES

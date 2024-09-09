@@ -68,7 +68,17 @@ GLOBAL_LIST_EMPTY(heretic_sacrifice_landmarks)
 	fire_brightness = 3.5
 	bulb_power = 0.5
 
-WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/machinery/light/very_dim)
+/obj/machinery/light/very_dim/directional/north
+	dir = NORTH
+
+/obj/machinery/light/very_dim/directional/south
+	dir = SOUTH
+
+/obj/machinery/light/very_dim/directional/east
+	dir = EAST
+
+/obj/machinery/light/very_dim/directional/west
+	dir = WEST
 
 // Rooms for where heretic sacrifices send people.
 /area/centcom/heretic_sacrifice

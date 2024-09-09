@@ -9,6 +9,8 @@ jobs:
   compile:
     name: "Compile changelogs"
     runs-on: ubuntu-22.04
+    permissions:
+      contents: write
     steps:
       - name: "Check for ACTION_ENABLER secret and pass true to output if it exists to be checked by later steps"
         id: value_holder
@@ -18,37 +20,54 @@ jobs:
           unset SECRET_EXISTS
           if [ -n "$ENABLER_SECRET" ]; then SECRET_EXISTS=true ; fi
           echo "ACTIONS_ENABLED=$SECRET_EXISTS" >> $GITHUB_OUTPUT
+
       - name: "Setup python"
         if: steps.value_holder.outputs.ACTIONS_ENABLED
         uses: actions/setup-python@v1
         with:
           python-version: '3.x'
+
       - name: "Install deps"
         if: steps.value_holder.outputs.ACTIONS_ENABLED
         run: |
           python -m pip install --upgrade pip
           python -m pip install pyyaml
           sudo apt-get install  dos2unix
+
       - name: "Checkout"
         if: steps.value_holder.outputs.ACTIONS_ENABLED
         uses: actions/checkout@v4
         with:
           fetch-depth: 25
           persist-credentials: false
+
       - name: "Compile"
         if: steps.value_holder.outputs.ACTIONS_ENABLED
         run: |
           python tools/ss13_genchangelog.py html/changelogs
+
       - name: Commit
         if: steps.value_holder.outputs.ACTIONS_ENABLED
         run: |
-          git config --local user.email "action@github.com"
-          git config --local user.name "Changelogs"
+          git config --local user.name "tgstation-ci[bot]"
+          git config --local user.email "179393467+tgstation-ci[bot]@users.noreply.github.com"
           git pull origin master
           git add html/changelogs
           git commit -m "Automatic changelog compile [ci skip]" -a || true
+
+      - name: Generate App Token
+        id: app-token-generation
+        uses: actions/create-github-app-token@v1
+        if: env.APP_PRIVATE_KEY != '' && env.APP_ID != ''
+        with:
+          app-id: ${{ secrets.APP_ID }}
+          private-key: ${{ secrets.APP_PRIVATE_KEY }}
+        env:
+          APP_PRIVATE_KEY: ${{ secrets.APP_PRIVATE_KEY }}
+          APP_ID: ${{ secrets.APP_ID }}
+
       - name: "Push"
         if: steps.value_holder.outputs.ACTIONS_ENABLED
         uses: ad-m/github-push-action@master
         with:
-          github_token: ${{ secrets.COMFY_ORANGE_PAT || secrets.GITHUB_TOKEN }}
+          github_token: ${{ steps.app-token-generation.outputs.token || secrets.GITHUB_TOKEN }}

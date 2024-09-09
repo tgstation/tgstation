@@ -1,7 +1,7 @@
 //Water source, use the type water_source for unlimited water sources like classic sinks.
 /obj/structure/water_source
 	name = "Water Source"
-	icon = 'icons/obj/structures/watercloset.dmi'
+	icon = 'icons/obj/watercloset.dmi'
 	icon_state = "sink"
 	desc = "A sink used for washing one's hands and face. This one seems to be infinite!"
 	anchored = TRUE
@@ -133,7 +133,6 @@
 /obj/structure/water_source/puddle //splishy splashy ^_^
 	name = "puddle"
 	desc = "A puddle used for washing one's hands and face."
-	icon = 'icons/obj/mining_zones/terrain.dmi'
 	icon_state = "puddle"
 	base_icon_state = "puddle"
 	resistance_flags = UNACIDABLE

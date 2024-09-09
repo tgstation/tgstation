@@ -206,11 +206,11 @@
 /turf/open/floor/iron,
 /area/shuttle/escape)
 "eZ" = (
-/obj/structure/sign/directions/medical/north_arrow,
-/obj/structure/sign/directions/command/north_arrow{
+/obj/structure/sign/directions/medical/directional/north,
+/obj/structure/sign/directions/command/directional/north{
 	pixel_y = 38
 	},
-/obj/structure/sign/directions/arrival/north_arrow{
+/obj/structure/sign/directions/arrival/directional/north{
 	pixel_y = 26
 	},
 /obj/effect/turf_decal/trimline/white/line{
@@ -873,7 +873,7 @@
 /turf/open/floor/plating/airless,
 /area/shuttle/escape)
 "sZ" = (
-/obj/structure/sign/directions/engineering/east_arrow,
+/obj/structure/sign/directions/engineering/directional/east,
 /obj/structure/rack,
 /obj/effect/turf_decal/trimline/brown/filled/corner,
 /obj/effect/turf_decal/trimline/brown/filled/corner{
@@ -919,13 +919,13 @@
 /turf/open/floor/iron/stairs/medium,
 /area/shuttle/escape)
 "tP" = (
-/obj/structure/sign/directions/command/north_arrow{
+/obj/structure/sign/directions/command/directional/north{
 	pixel_y = 38
 	},
-/obj/structure/sign/directions/arrival/north_arrow{
+/obj/structure/sign/directions/arrival/directional/north{
 	pixel_y = 26
 	},
-/obj/structure/sign/directions/medical/east_arrow{
+/obj/structure/sign/directions/medical/directional/east{
 	pixel_x = 0;
 	pixel_y = 32
 	},
@@ -1111,7 +1111,7 @@
 /turf/open/floor/iron,
 /area/shuttle/escape)
 "xH" = (
-/obj/structure/sign/directions/engineering/west_arrow,
+/obj/structure/sign/directions/engineering/directional/west,
 /obj/effect/turf_decal/trimline/brown/filled/corner{
 	dir = 8
 	},
@@ -1229,7 +1229,7 @@
 /turf/open/floor/iron,
 /area/shuttle/escape)
 "Am" = (
-/obj/structure/sign/directions/dorms/south_arrow,
+/obj/structure/sign/directions/dorms/directional/south,
 /turf/open/floor/iron,
 /area/shuttle/escape)
 "Av" = (
@@ -1630,7 +1630,7 @@
 /turf/open/floor/iron/white,
 /area/shuttle/escape)
 "Jj" = (
-/obj/structure/sign/directions/supply/south_arrow,
+/obj/structure/sign/directions/supply/directional/south,
 /obj/effect/turf_decal/trimline/white/line{
 	dir = 1
 	},
@@ -2123,11 +2123,11 @@
 /turf/open/floor/iron/dark,
 /area/shuttle/escape)
 "Ut" = (
-/obj/structure/sign/directions/dorms/south_arrow{
+/obj/structure/sign/directions/dorms/directional/south{
 	pixel_y = -38
 	},
-/obj/structure/sign/directions/supply/south_arrow,
-/obj/structure/sign/directions/medical/south_arrow{
+/obj/structure/sign/directions/supply/directional/south,
+/obj/structure/sign/directions/medical/directional/south{
 	pixel_y = -26
 	},
 /turf/open/floor/iron,
@@ -2269,7 +2269,7 @@
 /turf/open/floor/wood/parquet,
 /area/shuttle/escape)
 "XJ" = (
-/obj/structure/sign/directions/command/north_arrow,
+/obj/structure/sign/directions/command/directional/north,
 /turf/open/floor/carpet/red,
 /area/shuttle/escape)
 "XK" = (
