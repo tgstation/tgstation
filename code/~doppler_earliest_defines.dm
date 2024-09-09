@@ -49,3 +49,6 @@
 	icon = /datum/sprite_accessory/tails/none::icon
 	name = DOPPLER_SPRITE_ACCESSORY_NOTAIL
 	icon_state = /datum/sprite_accessory/tails/none::icon_state
+
+/// Linter sacrifice.  We only need this in the one file I suppose.
+#undef DOPPLER_SPRITE_ACCESSORY_NOTAIL
