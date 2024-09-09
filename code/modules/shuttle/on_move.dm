@@ -327,7 +327,7 @@ All ShuttleMove procs go here
 /obj/structure/ladder/afterShuttleMove(turf/oldT, list/movement_force, shuttle_dir, shuttle_preferred_direction, move_dir, rotation)
 	. = ..()
 	if (!(resistance_flags & INDESTRUCTIBLE))
-		LateInitialize(/* mapload = */ FALSE)
+		LateInitialize()
 
 /obj/structure/ladder/onShuttleMove(turf/newT, turf/oldT, list/movement_force, move_dir, obj/docking_port/stationary/old_dock, obj/docking_port/mobile/moving_dock)
 	if (resistance_flags & INDESTRUCTIBLE)

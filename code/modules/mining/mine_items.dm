@@ -521,7 +521,7 @@
 /obj/structure/minecart_rail
 	name = "cart rail"
 	desc = "Carries carts along the track."
-	icon = 'icons/obj/structures/track.dmi'
+	icon = 'icons/obj/track.dmi'
 	icon_state = "track"
 	layer = TRAM_RAIL_LAYER
 	plane = FLOOR_PLANE

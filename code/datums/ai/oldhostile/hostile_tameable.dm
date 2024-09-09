@@ -50,7 +50,19 @@
 	if(buckler != blackboard[BB_HOSTILE_FRIEND])
 		return COMPONENT_BLOCK_BUCKLE
 
-/datum/ai_controller/hostile_friend/able_to_run()
+/datum/ai_controller/hostile_friend/on_stat_changed(mob/living/source, new_stat)
+	. = ..()
+	update_able_to_run()
+
+/datum/ai_controller/hostile_friend/setup_able_to_run()
+	. = ..()
+	RegisterSignal(pawn, COMSIG_MOB_INCAPACITATE_CHANGED, PROC_REF(update_able_to_run))
+
+/datum/ai_controller/hostile_friend/clear_able_to_run()
+	UnregisterSignal(pawn, list(COMSIG_MOB_INCAPACITATE_CHANGED, COMSIG_MOB_STATCHANGE))
+	return ..()
+
+/datum/ai_controller/hostile_friend/get_able_to_run()
 	var/mob/living/living_pawn = pawn
 
 	if(IS_DEAD_OR_INCAP(living_pawn))
@@ -129,7 +141,7 @@
 /datum/ai_controller/hostile_friend/proc/check_menu(mob/user)
 	if(!istype(user))
 		CRASH("A non-mob is trying to issue an order to [pawn].")
-	if(user.incapacitated() || !can_see(user, pawn))
+	if(user.incapacitated || !can_see(user, pawn))
 		return FALSE
 	return TRUE
 

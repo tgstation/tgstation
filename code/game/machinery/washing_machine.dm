@@ -174,7 +174,6 @@ GLOBAL_LIST_INIT(dye_registry, list(
 ))
 
 /obj/machinery/washing_machine
-	SET_BASE_VISUAL_PIXEL(0, DEPTH_OFFSET)
 	name = "washing machine"
 	desc = "Gets rid of those pesky bloodstains, or your money back!"
 	icon = 'icons/obj/machines/washing_machine.dmi'
