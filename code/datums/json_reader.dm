@@ -1,25 +1,30 @@
+/**
+ * Takes a json value and converts it to a specific output value type.
+ */
+/datum/value_guard
+
 /// Takes a json list and extracts a single value.
 /// Subtypes represent different conversions of that value.
-/datum/json_reader
+/datum/value_guard
 
 /// Takes a value read directly from json and verifies/converts as needed to a result
-/datum/json_reader/proc/ReadJson(value)
-	return
+/datum/value_guard/proc/ReadJson(value) -> RESULT
+	RESULT_ERR("NOT IMPLEMENTED")
 
-/datum/json_reader/text/ReadJson(value)
+/datum/value_guard/text/ReadJson(value)
 	if(!istext(value))
-		CRASH("Text value expected but got '[value]'")
-	return value
+		RESULT_ERR("Text value expected but got '[value]'")
+	return RESULT_OK(value)
 
-/datum/json_reader/number/ReadJson(value)
+/datum/value_guard/number/ReadJson(value)
 	var/newvalue = text2num(value)
 	if(!isnum(newvalue))
-		CRASH("Number expected but got [newvalue]")
-	return newvalue
+		RESULT_ERR("Number expected but got [newvalue]")
+	return RESULT_OK(newvalue)
 
-/datum/json_reader/number_color_list/ReadJson(list/value)
+/datum/value_guard/number_color_list/ReadJson(list/value)
 	if(!istype(value))
-		CRASH("Expected a list but got [value]")
+		RESULT_ERR("Expected a list but got [value]")
 	var/list/new_values = list()
 	for(var/number_string in value)
 		var/new_value = text2num(number_string)
@@ -29,13 +34,13 @@
 				continue
 			new_value = number_string
 		new_values += new_value
-	return new_values
+	return RESULT_OK(new_values)
 
-/datum/json_reader/color_matrix/ReadJson(list/value)
+/datum/value_guard/color_matrix/ReadJson(list/value)
 	if(!istype(value))
-		CRASH("Expected a list but got [value]")
+		RESULT_ERR("Expected a list but got [value]")
 	if(length(value) > 5 || length(value) < 4)
-		CRASH("Color matrix must contain 4 or 5 rows")
+		RESULT_ERR("Color matrix must contain 4 or 5 rows")
 	var/list/new_values = list()
 	for(var/list/row in value)
 		var/list/interpreted_row = list()
@@ -50,9 +55,9 @@
 			else
 				interpreted_row += number
 		new_values += interpreted_row
-	return new_values
+	return RESULT_OK(new_values)
 
-/datum/json_reader/blend_mode
+/datum/value_guard/blend_mode
 	var/static/list/blend_modes = list(
 		"add" = ICON_ADD,
 		"subtract" = ICON_SUBTRACT,
@@ -62,14 +67,14 @@
 		"underlay" = ICON_UNDERLAY,
 	)
 
-/datum/json_reader/blend_mode/ReadJson(value)
+/datum/value_guard/blend_mode/ReadJson(value)
 	var/new_value = blend_modes[LOWER_TEXT(value)]
 	if(isnull(new_value))
-		CRASH("Blend mode expected but got '[value]'")
-	return new_value
+		RESULT_ERR("Blend mode expected but got '[value]'")
+	return RESULT_OK(new_value)
 
-/datum/json_reader/greyscale_config/ReadJson(value)
+/datum/value_guard/greyscale_config/ReadJson(value)
 	var/newvalue = SSgreyscale.configurations[value]
 	if(!newvalue)
-		CRASH("Greyscale configuration type expected but got '[value]'")
-	return newvalue
+		RESULT_ERR("Greyscale configuration type expected but got '[value]'")
+	return RESULT_OK(newvalue)

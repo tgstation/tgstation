@@ -45,12 +45,16 @@
 		if(!reader)
 			stack_trace("[src] has an invalid json reader type '[required_values[keyname]]' for key '[keyname]'.")
 			continue
-		vars[keyname] = reader.ReadJson(json_data[keyname])
+		RESULT_UNWRAP(reader.ReadJson(json_data[keyname]), vars[keyname], HandleGuardError)
 
 	// Final check to make sure we got everything we needed
 	for(var/keyname in required_values)
 		if(isnull(json_data[keyname]))
 			stack_trace("[src] is missing required json data key '[keyname]'.")
+
+/datum/greyscale_layer/proc/HandleGuardError(error_message)
+	stack_trace(error_message)
+	return // dear ninja, do this yourself
 
 /// Gathers information from the layer about what variables are expected in the json.
 /// Override and add to the two argument lists if you want extra information in your layer.
