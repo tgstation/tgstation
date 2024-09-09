@@ -153,6 +153,23 @@
 	playsound(src, MANUAL_TELEPORT_SOUND, 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
 	return TRUE
 
+/obj/machinery/brm/attack_ai(mob/user)
+	. = ..()
+	if(. || panel_open)
+		return
+	if(!handle_teleport_conditions(user))
+		return
+
+	var/result = pre_collect_boulder()
+	if(result == TURF_BLOCKED_BY_BOULDER)
+		balloon_alert(user, "no space")
+	else if(result)
+		balloon_alert(user, "teleporting")
+
+	COOLDOWN_START(src, manual_teleport_cooldown, TELEPORTATION_TIME)
+
+	return TRUE
+
 /obj/machinery/brm/attack_robot(mob/user)
 	. = ..()
 	if(. || panel_open)
@@ -205,6 +222,17 @@
 	else
 		end_processing()
 	update_appearance(UPDATE_ICON_STATE)
+
+/obj/machinery/brm/attack_ai_secondary(mob/user, list/modifiers)
+	. = ..()
+	if(. == SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN || panel_open)
+		return
+	if(!anchored)
+		balloon_alert(user, "anchor first!")
+		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+
+	toggle_auto_on(user)
+	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
 /obj/machinery/brm/attack_robot_secondary(mob/user, list/modifiers)
 	. = ..()

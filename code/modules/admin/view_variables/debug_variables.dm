@@ -29,7 +29,7 @@
 
 	return "[.][item]</li>"
 
-// This is split into a seperate proc mostly to make errors that happen not break things too much
+// This is split into a separate proc mostly to make errors that happen not break things too much
 /proc/_debug_variable_value(name, value, level, datum/owner, sanitize, display_flags)
 	if(isappearance(value))
 		value = get_vv_appearance(value)
@@ -64,11 +64,11 @@
 		var/datum/datum_value = value
 		return datum_value.debug_variable_value(name, level, owner, sanitize, display_flags)
 
-	if(islist(value) || (name in GLOB.vv_special_lists)) // Some special lists arent detectable as a list through istype
+	if(islist(value) || (name in GLOB.vv_special_lists)) // Some special lists aren't detectable as a list through istype
 		var/list/list_value = value
 		var/list/items = list()
 
-		// This is becuse some lists either dont count as lists or a locate on their ref will return null
+		// This is because some lists either don't count as lists or a locate on their ref will return null
 		var/link_vars = "Vars=[REF(value)]"
 		if(name in GLOB.vv_special_lists)
 			link_vars = "Vars=[REF(owner)];special_varname=[name]"

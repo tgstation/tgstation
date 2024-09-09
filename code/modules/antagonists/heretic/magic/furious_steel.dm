@@ -11,7 +11,7 @@
 
 	school = SCHOOL_FORBIDDEN
 	cooldown_time = 60 SECONDS
-	invocation = "Ham'sana-qasep!"
+	invocation = "F'LSH'NG S'LV'R!"
 	invocation_type = INVOCATION_SHOUT
 
 	spell_requirements = NONE

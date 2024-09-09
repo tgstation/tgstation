@@ -60,9 +60,23 @@
  */
 /obj/item/food/bait/doughball/synthetic
 	name = "synthetic doughball"
-	icon_state = "doughball"
+	icon_state = "doughball_blue"
 	preserved_food = TRUE
 
 /obj/item/food/bait/doughball/synthetic/Initialize(mapload)
 	. = ..()
 	ADD_TRAIT(src, TRAIT_OMNI_BAIT, INNATE_TRAIT)
+
+///Found in the can of omni-baits, only available from the super fishing toolbox, from the fishing mystery box.
+/obj/item/food/bait/doughball/synthetic/super
+	name = "super-doughball"
+	desc = "No fish will be able to resist this."
+	bait_quality = TRAIT_GREAT_QUALITY_BAIT
+
+///Used by the advanced fishing rod
+/obj/item/food/bait/doughball/syntethic/unconsumable
+
+/obj/item/food/bait/doughball/synthetic/unconsumable/Initialize(mapload)
+	. = ..()
+	ADD_TRAIT(src, TRAIT_BAIT_UNCONSUMABLE, INNATE_TRAIT)
+

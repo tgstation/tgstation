@@ -1,7 +1,5 @@
 /**
  * # The path of Ash.
- * Spell names are in this language: OLD NORDIC
- * Both are related: Nordic Mythology-Yggdrassil-Ash Tree Genus-Ash
  *
  * Goes as follows:
  *
@@ -233,7 +231,7 @@
 		text = "[generate_heretic_text()] Fear the blaze, for the Ashlord, [user.real_name] has ascended! The flames shall consume all! [generate_heretic_text()]",
 		title = "[generate_heretic_text()]",
 		sound = 'sound/ambience/antag/heretic/ascend_ash.ogg',
-		color_override = "white",
+		color_override = "pink",
 	)
 
 	var/datum/action/cooldown/spell/fire_sworn/circle_spell = new(user.mind)

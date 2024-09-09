@@ -130,7 +130,7 @@
 /// Returns a new /datum/pathfind/sssp based off our settings
 /// Will have an invalid source mob, no max distance, and no ending callback
 /datum/path_map/proc/settings_to_path()
-	// Default creation to not set any vars incidentially
+	// Default creation to not set any vars incidentally
 	var/static/mob/jeremy = new()
 	var/datum/pathfind/sssp/based_on_what = new()
 	based_on_what.setup(pass_info, null, INFINITY, pass_space, avoid)
@@ -155,7 +155,7 @@
 		working_index -= 1
 
 	var/list/hand_around = list()
-	// We're guarenteed that hand_around will be the first list in pathfinding_finished's argset because of how callback handles the arguments list
+	// We're guaranteed that hand_around will be the first list in pathfinding_finished's argset because of how callback handles the arguments list
 	var/datum/callback/await = CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(pathfinding_finished), hand_around)
 
 	// We're gonna build a pathfind datum from our settings and set it running

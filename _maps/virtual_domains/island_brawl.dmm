@@ -2540,7 +2540,7 @@
 /area/virtual_domain)
 "GD" = (
 /obj/effect/landmark/bitrunning/permanent_exit,
-/turf/open/floor/bitrunning_transport,
+/turf/open/indestructible/bitrunning_transport,
 /area/virtual_domain/protected_space/fullbright)
 "GI" = (
 /turf/open/floor/iron/dark/textured_large,

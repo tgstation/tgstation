@@ -384,7 +384,7 @@ Congratulations! You are now trained for invasive xenobiology research!"}
 
 /obj/item/melee/baton/abductor/proc/SleepAttack(mob/living/target, mob/living/user)
 	playsound(src, on_stun_sound, 50, TRUE, -1)
-	if(target.incapacitated(IGNORE_RESTRAINTS|IGNORE_GRAB))
+	if(INCAPACITATED_IGNORING(target, INCAPABLE_RESTRAINTS|INCAPABLE_GRAB))
 		if(target.can_block_magic(MAGIC_RESISTANCE_MIND))
 			to_chat(user, span_warning("The specimen has some kind of mental protection that is interfering with the sleep inducement! It seems you've been foiled."))
 			target.visible_message(span_danger("[user] tried to induced sleep in [target] with [src], but is unsuccessful!"), \
@@ -689,7 +689,7 @@ Congratulations! You are now trained for invasive xenobiology research!"}
 /obj/item/abductor/alien_omnitool/proc/check_menu(mob/user)
 	if(!istype(user))
 		return FALSE
-	if(user.incapacitated() || !user.Adjacent(src))
+	if(user.incapacitated || !user.Adjacent(src))
 		return FALSE
 	return TRUE
 

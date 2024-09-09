@@ -3,7 +3,7 @@
 	desc = "I feel bad for the heartless bastard who lost this."
 	icon_state = "heart-on"
 	base_icon_state = "heart"
-	visual = FALSE
+
 	zone = BODY_ZONE_CHEST
 	slot = ORGAN_SLOT_HEART
 	item_flags = NO_BLOOD_ON_ITEM

@@ -43,7 +43,7 @@
 	if(HAS_TRAIT(SSstation, STATION_TRAIT_RADIOACTIVE_NEBULA))
 		new /obj/item/storage/pill_bottle/potassiodide(src)
 
-	if(LAZYLEN(SSmapping.multiz_levels))
+	if(length(SSmapping.levels_by_trait(ZTRAIT_STATION)) > 1)
 		new /obj/item/climbing_hook/emergency(src)
 
 /obj/item/storage/box/survival/radio/PopulateContents()
