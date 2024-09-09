@@ -59,7 +59,10 @@
 	icon = 'modular_doppler/modular_antagonists/sapper_gang/icons/sapper_obj.dmi'
 	icon_state = "mask_one"
 	worn_icon = 'modular_doppler/modular_antagonists/sapper_gang/icons/sapper.dmi'
-	var/hit_reflect_chance = 35
+	supported_bodyshapes = list(BODYSHAPE_HUMANOID, BODYSHAPE_SNOUTED)
+	bodyshape_icon_files = list(BODYSHAPE_HUMANOID_T = 'modular_doppler/modular_antagonists/sapper_gang/icons/sapper.dmi',
+		BODYSHAPE_SNOUTED_T = 'modular_doppler/modular_antagonists/sapper_gang/icons/sapper.dmi')
+	var/hit_reflect_chance = 45
 
 /obj/item/clothing/mask/gas/atmos/sapper/partner
 	icon_state = "mask_two"
@@ -82,7 +85,7 @@
 	has_sensor = NO_SENSORS
 	armor_type = /datum/armor/clothing_under/rank_security
 	can_adjust = FALSE
-	var/hit_reflect_chance = 55
+	var/hit_reflect_chance = 65
 
 /obj/item/clothing/under/sapper/sapper/IsReflect(def_zone)
 	if(!(def_zone in list(BODY_ZONE_CHEST, BODY_ZONE_PRECISE_GROIN, BODY_ZONE_L_ARM, BODY_ZONE_R_ARM)))
