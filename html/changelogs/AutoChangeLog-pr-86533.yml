@@ -1,4 +1,0 @@
-author: "SmArtKar"
-delete-after: True
-changes:
-  - bugfix: "Fixed prosthetic quirk dropping organs underneath you when spawning"

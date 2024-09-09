@@ -1,5 +1,0 @@
-author: "grungussuss"
-delete-after: True
-changes:
-  - sound: "changed sounds for stun baton, stun prod, contractor baton and telescopic baton"
-  - code_imp: "made it easier to modify turning on and turning off for batons"

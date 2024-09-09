@@ -203,3 +203,38 @@
   - image: Civilian MODsuit got a resprite
   grungussuss:
   - sound: fish sounds are louder
+2024-09-09:
+  Ben10Omintrix:
+  - bugfix: basic mobs will now act hostile again
+  Ghommie:
+  - spellcheck: fixed a few wording and markdown issues on the instructions paper
+      for fishing lures.
+  Jackraxxus:
+  - bugfix: You can deploy MODsuit parts individually again.
+  Kylerace:
+  - bugfix: some bot paths will show up to users with diagnostic huds again
+  Melbert:
+  - bugfix: '[Icebox] Fixed one set of stairs'
+  Rhials:
+  - balance: Hallucinatory anomalies now have a wider range, and will spawn hallucinatory
+      decoys of itself to mislead you.
+  Sealed101:
+  - bugfix: fixed borg exoskeletons not dropping when a borg is manually deconstructed
+  - bugfix: borg upgrade modules are now dropped when a borg is deconstructed
+  SmArtKar:
+  - bugfix: Fixed prosthetic quirk dropping organs underneath you when spawning
+  - bugfix: EMPing turrets temporarily disables them once again
+  Thunder12345:
+  - bugfix: Freed up a trapped bookshelf in Birdshot's library
+  TwistedSilicon:
+  - bugfix: Mech equipment is no longer broken in the UI for specific conditions.
+  grungussuss:
+  - sound: changed sounds for stun baton, stun prod, contractor baton and telescopic
+      baton
+  - code_imp: made it easier to modify turning on and turning off for batons
+  - sound: gloves have equip, drop and pickup sounds.
+  vinylspiders:
+  - bugfix: certain text input fields in the character setup menu will now update
+      properly when swapping character slots
+  - bugfix: fixed a race condition that was causing carpotoxin to cause liver damage
+      to felinids despite being immune
