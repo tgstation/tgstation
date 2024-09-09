@@ -70,7 +70,11 @@
 #define BB_LOBSTROSITY_TARGET_LIMB "BB_lobstrosity_target_limb"
 /// We increment this counter every time we try to move while dragging an arm and if we go too long we'll give up trying to get out of line of sight and just eat the fingers
 #define BB_LOBSTROSITY_FINGER_LUST "BB_lobstrosity_finger_lust"
+/// Does this carp still target lying mobs even if they aren't stunned, and flee from sary fishermen?
 #define BB_LOBSTROSITY_NAIVE_HUNTER "BB_lobstrosity_naive_hunter"
+
+/// Does this carp run from scary fishermen?
+#define BB_CARPS_FEAR_FISHERMAN "BB_carp_fear_fisherman"
 
 // eyeball keys
 ///the death glare ability
@@ -284,3 +288,19 @@
 //netguardians
 /// rocket launcher
 #define BB_NETGUARDIAN_ROCKET_ABILITY "netguardian_rocket"
+
+//deer
+///our water target
+#define BB_DEER_WATER_TARGET "deer_water_target"
+///our grass target
+#define BB_DEER_GRASS_TARGET "deer_grass_target"
+///our tree target
+#define BB_DEER_TREE_TARGET "deer_tree_target"
+///our temporary playmate
+#define BB_DEER_PLAYFRIEND "deer_playfriend"
+///our home target
+#define BB_DEER_TREEHOME "deer_home"
+///our resting duration
+#define BB_DEER_RESTING "deer_resting"
+///time till our next rest duration
+#define BB_DEER_NEXT_REST_TIMER "deer_next_rest_timer"

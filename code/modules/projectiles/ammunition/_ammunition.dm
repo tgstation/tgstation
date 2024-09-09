@@ -35,6 +35,13 @@
 	/// How much force is applied when fired in zero-G
 	var/newtonian_force = 1
 
+	///If set to true or false, this ammunition can or cannot misfire, regardless the gun can_misfire setting
+	var/can_misfire = null
+	///This is how much misfire probability is added to the gun when it fires this casing.
+	var/misfire_increment = 0
+	///If set, this casing will damage any gun it's fired from by the specified amount
+	var/integrity_damage = 0
+
 /obj/item/ammo_casing/spent
 	name = "spent bullet casing"
 	loaded_projectile = null

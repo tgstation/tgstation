@@ -24,6 +24,9 @@ GLOBAL_PROTECT(lua_state_stack)
 	/// Whether the timer.lua script has been included into this lua context state.
 	var/timer_enabled = FALSE
 
+	/// Whether to supress logging BYOND runtimes for this state.
+	var/supress_runtimes = FALSE
+
 	/// Callbacks that need to be ran on next tick
 	var/list/functions_to_execute = list()
 
@@ -38,7 +41,10 @@ GLOBAL_PROTECT(lua_state_stack)
 		return
 	display_name = _name
 	internal_id = DREAMLUAU_NEW_STATE()
-	if(!isnum(internal_id))
+	if(isnull(internal_id))
+		stack_trace("dreamluau is not loaded")
+		qdel(src)
+	else if(!isnum(internal_id))
 		stack_trace(internal_id)
 		qdel(src)
 
@@ -51,6 +57,8 @@ GLOBAL_PROTECT(lua_state_stack)
 		return
 	var/status = result["status"]
 	if(!verbose && status != "error" && status != "panic" && status != "runtime" && !(result["name"] == "input" && (status == "finished" || length(result["return_values"]))))
+		return
+	if(status == "runtime" && supress_runtimes)
 		return
 	var/append_to_log = TRUE
 	var/index_of_log

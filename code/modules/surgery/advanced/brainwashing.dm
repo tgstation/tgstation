@@ -81,7 +81,7 @@
 	if(!target.mind)
 		to_chat(user, span_warning("[target] doesn't respond to the brainwashing, as if [target.p_they()] lacked a mind..."))
 		return FALSE
-	if(HAS_TRAIT(target, TRAIT_MINDSHIELD))
+	if(HAS_MIND_TRAIT(target, TRAIT_UNCONVERTABLE))
 		to_chat(user, span_warning("You hear a faint buzzing from a device inside [target]'s brain, and the brainwashing is erased."))
 		return FALSE
 	display_results(

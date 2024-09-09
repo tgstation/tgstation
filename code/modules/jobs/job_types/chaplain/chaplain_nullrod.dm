@@ -574,6 +574,7 @@
 	attack_verb_simple = list("smash", "slam", "whack", "thwack")
 	icon = 'icons/obj/weapons/staff.dmi'
 	icon_state = "bostaff0"
+	base_icon_state = "bostaff"
 	inhand_icon_state = "bostaff0"
 	worn_icon_state = "bostaff0"
 	lefthand_file = 'icons/mob/inhands/weapons/staves_lefthand.dmi'
@@ -585,11 +586,10 @@
 	AddComponent(/datum/component/two_handed, \
 		force_unwielded = 14, \
 		force_wielded = 18, \
-		icon_wielded = "[base_icon_state]1", \
 	)
 
 /obj/item/nullrod/bostaff/update_icon_state()
-	icon_state = "[base_icon_state]0"
+	icon_state = inhand_icon_state = "[base_icon_state][HAS_TRAIT(src, TRAIT_WIELDED)]"
 	return ..()
 
 
@@ -704,6 +704,28 @@
 	attack_verb_simple = list("stab", "poke", "slash", "clock")
 	hitsound = 'sound/weapons/bladeslice.ogg'
 	menu_description = "A pointy spear which penetrates armor a little. Can be worn only on the belt."
+
+// Unholy version of above, since the gamemode is dead in the water
+
+/obj/item/brass_spear
+	name = "dull brass spear"
+	desc = "An ancient spear made of brass. The point seems sharp, but it feels so dull.. you get a feeling brass isn't good nonmagical material for a weapon."
+	icon = 'icons/obj/weapons/spear.dmi'
+	icon_state = "ratvarian_spear"
+	inhand_icon_state = "ratvarian_spear"
+	lefthand_file = 'icons/mob/inhands/antag/clockwork_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/antag/clockwork_righthand.dmi'
+	slot_flags = ITEM_SLOT_BELT
+	force = 15
+	throw_speed = 3
+	throw_range = 7
+	throwforce = 15
+	armour_penetration = 10
+	sharpness = SHARP_POINTY
+	w_class = WEIGHT_CLASS_HUGE
+	attack_verb_continuous = list("stabs", "pokes", "slashes", "clocks")
+	attack_verb_simple = list("stab", "poke", "slash", "clock")
+	hitsound = 'sound/weapons/bladeslice.ogg'
 
 // Nullblade - For when you really want to feel like rolling dice during combat
 

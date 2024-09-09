@@ -130,7 +130,7 @@
 		this_destination["id"] = destination.platform_code
 		. += list(this_destination)
 
-/obj/machinery/computer/tram_controls/ui_act(action, params)
+/obj/machinery/computer/tram_controls/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if(.)
 		return

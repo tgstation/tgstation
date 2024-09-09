@@ -155,3 +155,95 @@
 	siemens_coefficient = 0.3
 	clothing_traits = list(TRAIT_QUICKER_CARRY, TRAIT_CHUNKYFINGERS)
 	clothing_flags = THICKMATERIAL
+
+///A pair of gloves that both allow the user to fish without the need of a held fishing rod and provides athletics experience.
+/obj/item/clothing/gloves/fishing
+	name = "athletic fishing gloves"
+	desc = "A pair of gloves to fish without a fishing rod but your raw <b>athletics</b> strength. It doubles as a good workout device. <i><b>WARNING</b>: May cause injuries when catching bigger fish.</i>"
+	icon_state = "fishing_gloves"
+
+/obj/item/clothing/gloves/fishing/Initialize(mapload)
+	. = ..()
+	AddComponent(/datum/component/profound_fisher, new /obj/item/fishing_rod/mob_fisher/athletic(src))
+
+/obj/item/clothing/gloves/fishing/equipped(mob/user, slot)
+	. = ..()
+	if(slot == ITEM_SLOT_GLOVES)
+		RegisterSignal(user, SIGNAL_ADDTRAIT(TRAIT_ACTIVELY_FISHING), PROC_REF(begin_workout))
+
+/obj/item/clothing/gloves/fishing/dropped(mob/user)
+	UnregisterSignal(user, list(SIGNAL_ADDTRAIT(TRAIT_ACTIVELY_FISHING), SIGNAL_REMOVETRAIT(TRAIT_ACTIVELY_FISHING)))
+	STOP_PROCESSING(SSprocessing, src)
+	return ..()
+
+/obj/item/clothing/gloves/fishing/proc/begin_workout(datum/source)
+	SIGNAL_HANDLER
+	RegisterSignal(source, SIGNAL_REMOVETRAIT(TRAIT_ACTIVELY_FISHING), PROC_REF(stop_workout))
+	if(HAS_TRAIT(source, TRAIT_PROFOUND_FISHER)) //Only begin working out if we're fishing with these gloves and not some other fishing rod..
+		START_PROCESSING(SSprocessing, src)
+
+/obj/item/clothing/gloves/fishing/proc/stop_workout(datum/source)
+	SIGNAL_HANDLER
+	UnregisterSignal(source, SIGNAL_REMOVETRAIT(TRAIT_ACTIVELY_FISHING))
+	STOP_PROCESSING(SSprocessing, src)
+
+/obj/item/clothing/gloves/fishing/process(seconds_per_tick)
+	var/mob/living/wearer = loc
+	var/list/trait_source = GET_TRAIT_SOURCES(wearer, TRAIT_ACTIVELY_FISHING)
+	var/datum/fishing_challenge/challenge = trait_source[1]
+	var/stamina_exhaustion = 2.5 + challenge.difficulty * 0.025
+	var/is_heavy_gravity = wearer.has_gravity() > STANDARD_GRAVITY
+	var/obj/item/organ/internal/cyberimp/chest/spine/potential_spine = wearer.get_organ_slot(ORGAN_SLOT_SPINE)
+	if(istype(potential_spine))
+		stamina_exhaustion *= potential_spine.athletics_boost_multiplier
+	if(HAS_TRAIT(wearer, TRAIT_STRENGTH))
+		stamina_exhaustion *= 0.5
+
+	var/experience = 0.3 + challenge.difficulty * 0.003
+	if(is_heavy_gravity)
+		stamina_exhaustion *= 1.5
+		experience *= 2
+
+	wearer.adjustStaminaLoss(stamina_exhaustion)
+	wearer.mind?.adjust_experience(/datum/skill/athletics, experience)
+	wearer.apply_status_effect(/datum/status_effect/exercised)
+
+///The internal fishing rod of the athletic fishing gloves. The more athletic you're, the easier the minigame will be.
+/obj/item/fishing_rod/mob_fisher/athletic
+	icon = /obj/item/clothing/gloves/fishing::icon
+	icon_state = /obj/item/clothing/gloves/fishing::icon_state
+	line = null
+	bait = null
+	ui_description = "The integrated fishing rod of a pair of athletic fishing gloves"
+
+/obj/item/fishing_rod/mob_fisher/athletic/Initialize(mapload)
+	. = ..()
+	RegisterSignal(src, COMSIG_FISHING_ROD_CAUGHT_FISH, PROC_REF(noodling_is_dangerous))
+
+/obj/item/fishing_rod/mob_fisher/athletic/get_fishing_overlays()
+	return list()
+
+/obj/item/fishing_rod/mob_fisher/athletic/hook_hit(atom/atom_hit_by_hook_projectile, mob/user)
+	difficulty_modifier = -3 * user.mind?.get_skill_level(/datum/skill/athletics)
+	return ..()
+
+/obj/item/fishing_rod/mob_fisher/athletic/proc/noodling_is_dangerous(datum/source, atom/movable/reward, mob/living/user)
+	SIGNAL_HANDLER
+	if(!isfish(reward))
+		return
+	var/damage = 0
+	var/obj/item/fish/fishe = reward
+	switch(fishe.w_class)
+		if(WEIGHT_CLASS_BULKY)
+			damage = 10
+		if(WEIGHT_CLASS_HUGE)
+			damage = 14
+		if(WEIGHT_CLASS_GIGANTIC)
+			damage = 18
+	if(!damage && fishe.weight >= 2000)
+		damage = 5
+	damage = round(damage * fishe.weight * 0.0005)
+	if(damage)
+		var/body_zone = pick(BODY_ZONE_R_ARM, BODY_ZONE_L_ARM)
+		user.apply_damage(damage, BRUTE, body_zone, user.run_armor_check(body_zone, MELEE))
+		playsound(src,'sound/weapons/bite.ogg', damage * 2, TRUE)

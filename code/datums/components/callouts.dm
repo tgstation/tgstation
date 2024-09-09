@@ -111,7 +111,7 @@
 	for(var/datum/callout_option/callout_option as anything in callout_options)
 		callout_items[callout_option] = image(icon = 'icons/hud/radial.dmi', icon_state = callout_option::icon_state)
 
-	var/datum/callout_option/selection = show_radial_menu(user, get_turf(clicked_atom), callout_items, entry_animation = FALSE, click_on_hover = TRUE)
+	var/datum/callout_option/selection = show_radial_menu(user, get_turf(clicked_atom), callout_items, entry_animation = FALSE, click_on_hover = TRUE, user_space = TRUE)
 	if (!selection)
 		return
 

@@ -124,10 +124,10 @@
  * Material Validation : Checks how much materials are available, Extracts materials from items if the container can hold them
  * Material Removal    : Removes material from the container
  *
- * Each Proc furthur belongs to a specific category
+ * Each Proc further belongs to a specific category
  * LOW LEVEL:  Procs that are used internally & should not be used anywhere else unless you know what your doing
  * MID LEVEL:  Procs that can be used by machines(like recycler, stacking machines) to bypass majority of checks
- * HIGH LEVEL: Procs that can be used by anyone publically and guarentees safty checks & limits
+ * HIGH LEVEL: Procs that can be used by anyone publicly and guarantees safety checks & limits
  */
 
 //================================Material Insertion procs==============================
@@ -236,7 +236,7 @@
 	//do the insert
 	var/last_inserted_id = insert_item_materials(target, multiplier, context)
 	if(!isnull(last_inserted_id))
-		if(delete_item || target != weapon) //we could have split the stack ourself
+		if(delete_item || target != weapon) //we could have split the stack ourselves
 			qdel(target) //item gone
 		return material_amount
 	else if(!isnull(item_stack) && item_stack != target) //insertion failed, merge the split stack back into the original
@@ -250,7 +250,7 @@
 
 //===================================HIGH LEVEL===================================================
 /**
- * inserts an item from the players hand into the container. Loops through all the contents inside reccursively
+ * inserts an item from the players hand into the container. Loops through all the contents inside recursively
  * Does all explicit checking for mat flags & callbacks to check if insertion is valid
  * This proc is what you should be using for almost all cases
  *
@@ -259,7 +259,7 @@
  * * user - the mob inserting this item
  * * context - the atom performing the operation, this is the last argument sent in COMSIG_MATCONTAINER_ITEM_CONSUMED and is used mostly for silo logging
  */
-/datum/component/material_container/proc/user_insert(obj/item/held_item, mob/living/user, atom/context = parent)
+/datum/component/material_container/proc/user_insert(obj/item/held_item, mob/living/user, atom/context = parent, forced_type = FALSE)
 	set waitfor = FALSE
 	. = 0
 
@@ -297,7 +297,7 @@
 		if(SEND_SIGNAL(src, COMSIG_MATCONTAINER_PRE_USER_INSERT, target_item, user) & MATCONTAINER_BLOCK_INSERT)
 			continue
 		//item is either indestructible, not allowed for redemption or not in the allowed types
-		if((target_item.resistance_flags & INDESTRUCTIBLE) || (target_item.item_flags & NO_MAT_REDEMPTION) || (allowed_item_typecache && !is_type_in_typecache(target_item, allowed_item_typecache)))
+		if((target_item.resistance_flags & INDESTRUCTIBLE) || (target_item.item_flags & NO_MAT_REDEMPTION) || (allowed_item_typecache && !is_type_in_typecache(target_item, allowed_item_typecache) && !forced_type))
 			if(!(mat_container_flags & MATCONTAINER_SILENT))
 				var/list/status_data = chat_msgs["[MATERIAL_INSERT_ITEM_FAILURE]"] || list()
 				var/list/item_data = status_data[target_item.name] || list()
@@ -455,9 +455,9 @@
 					if(MATERIAL_INSERT_ITEM_SUCCESS) //no problems full item was consumed
 						if(chat_data["stack"])
 							var/sheets = min(count, amount) //minimum between sheets inserted vs sheets consumed(values differ for alloys)
-							to_chat(user, span_notice("[sheets > 1 ? sheets : ""] [item_name][sheets > 1 ? "s were" : " was"] added to [parent]."))
+							to_chat(user, span_notice("[sheets > 1 ? "[sheets] " : ""][item_name][sheets > 1 ? "s were" : " was"] added to [parent]."))
 						else
-							to_chat(user, span_notice("[count > 1 ? count : ""] [item_name][count > 1 ? "s" : ""], worth [amount] sheets, [count > 1 ? "were" : "was"] added to [parent]."))
+							to_chat(user, span_notice("[count > 1 ? "[count] " : ""][item_name][count > 1 ? "s" : ""], worth [amount] sheets, [count > 1 ? "were" : "was"] added to [parent]."))
 					if(MATERIAL_INSERT_ITEM_NO_SPACE) //no space
 						to_chat(user, span_warning("[parent] has no space to accept [item_name]!"))
 					if(MATERIAL_INSERT_ITEM_NO_MATS) //no materials inside these items
@@ -584,7 +584,7 @@
 	for(var/x in mats) //Loop through all required materials
 		var/wanted = OPTIMAL_COST(mats[x] * coefficient) * multiplier
 		if(!has_enough_of_material(x, wanted))//Not a category, so just check the normal way
-			testing("didnt have: [x] wanted: [wanted]")
+			testing("didn't have: [x] wanted: [wanted]")
 			return FALSE
 
 	return TRUE
@@ -605,7 +605,7 @@
 	//round amount
 	amt = OPTIMAL_COST(amt)
 
-	//get ref if nessassary
+	//get ref if necessary
 	if(!istype(mat))
 		mat = GET_MATERIAL_REF(mat)
 

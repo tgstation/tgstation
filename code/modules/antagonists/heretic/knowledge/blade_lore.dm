@@ -1,7 +1,5 @@
 /**
  * # The path of Blades. Stab stab.
- * Spell names are in this language: ARAMAIC
- * Both are related: Aramaic-Damascus-Blade
  *
  * Goes as follows:
  *
@@ -149,7 +147,7 @@
 	if(!riposte_ready)
 		return
 
-	if(source.incapacitated(IGNORE_GRAB))
+	if(INCAPACITATED_IGNORING(source, INCAPABLE_GRAB))
 		return
 
 	var/mob/living/attacker = hitby.loc
