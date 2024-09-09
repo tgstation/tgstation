@@ -168,7 +168,6 @@
 	righthand_file = 'modular_doppler/deforest_medical_items/icons/inhands/cases_righthand.dmi'
 	inhand_icon_state = "surgeon"
 	worn_icon = 'modular_doppler/deforest_medical_items/icons/worn/worn.dmi'
-//	worn_icon_teshari = 'modular_doppler/deforest_medical_items/icons/worn/worn_teshari.dmi'
 	worn_icon_state = "frontier"
 	pickup_sound = 'sound/items/handling/cloth_pickup.ogg'
 	drop_sound = 'sound/items/handling/cloth_drop.ogg'
@@ -201,7 +200,6 @@
 	righthand_file = 'modular_doppler/deforest_medical_items/icons/inhands/cases_righthand.dmi'
 	inhand_icon_state = "satchel"
 	worn_icon = 'modular_doppler/deforest_medical_items/icons/worn/worn.dmi'
-//	worn_icon_teshari = 'modular_doppler/deforest_medical_items/icons/worn/worn_teshari.dmi'
 	equip_sound = 'sound/items/equip/jumpsuit_equip.ogg'
 	pickup_sound = 'sound/items/handling/cloth_pickup.ogg'
 	drop_sound = 'sound/items/handling/cloth_drop.ogg'

@@ -1,3 +1,11 @@
+/*(:`--..___...-''``-._             |`. _       this module allows us to to add pockets to garments we make either with an individualized \
+  	```--...--.      . `-..__      .`/   _\   / proc or by making a child of an item that already has that proc attached. it's intended for \
+            	`\     '       ```--`.    />    suit slot clothes!
+            	: :   :               `:`-'
+            	 `.:.  `.._--...___     ``--...__
+                	``--..,)       ```----....__,)  this ascii cat was credited to Felix Lee!*/
+
+
 //the pockets themselves
 
 /datum/storage/pockets/jacket

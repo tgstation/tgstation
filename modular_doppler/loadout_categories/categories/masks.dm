@@ -59,3 +59,7 @@
 /datum/loadout_item/mask/surgical
 	name = "Surgical Mask"
 	item_path = /obj/item/clothing/mask/surgical
+
+/datum/loadout_item/mask/frontier
+	name = "Frontier Gas Mask"
+	item_path = /obj/item/clothing/mask/gas/atmos/frontier_colonist

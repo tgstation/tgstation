@@ -7,8 +7,9 @@
 	icon = 'modular_doppler/kahraman_equipment/icons/clothes/clothing.dmi'
 	icon_state = "jumpsuit"
 	worn_icon = 'modular_doppler/kahraman_equipment/icons/clothes/clothing_worn.dmi'
-//	worn_icon_digi = 'modular_doppler/kahraman_equipment/icons/clothes/clothing_worn_digi.dmi'
-//	worn_icon_teshari = 'modular_doppler/kahraman_equipment/icons/clothes/clothing_worn_teshari.dmi'
+	supported_bodyshapes = list(BODYSHAPE_HUMANOID, BODYSHAPE_DIGITIGRADE)
+	bodyshape_icon_files = list(BODYSHAPE_HUMANOID_T = 'modular_doppler/kahraman_equipment/icons/clothes/clothing.dmi',
+		BODYSHAPE_DIGITIGRADE_T = 'modular_doppler/kahraman_equipment/icons/clothes/clothing_worn_digi.dmi')
 	worn_icon_state = "jumpsuit"
 	sensor_mode = SENSOR_COORDS
 	random_sensor = FALSE
@@ -26,8 +27,9 @@
 	icon = 'modular_doppler/kahraman_equipment/icons/clothes/clothing.dmi'
 	icon_state = "boots"
 	worn_icon = 'modular_doppler/kahraman_equipment/icons/clothes/clothing_worn.dmi'
-//	worn_icon_digi = 'modular_doppler/kahraman_equipment/icons/clothes/clothing_worn_digi.dmi'
-//	worn_icon_teshari = 'modular_doppler/kahraman_equipment/icons/clothes/clothing_worn_teshari.dmi'
+	supported_bodyshapes = list(BODYSHAPE_HUMANOID, BODYSHAPE_DIGITIGRADE)
+	bodyshape_icon_files = list(BODYSHAPE_HUMANOID_T = 'modular_doppler/kahraman_equipment/icons/clothes/clothing.dmi',
+		BODYSHAPE_DIGITIGRADE_T = 'modular_doppler/kahraman_equipment/icons/clothes/clothing_worn_digi.dmi')
 	worn_icon_state = "boots"
 	armor_type = /datum/armor/colonist_clothing
 	resistance_flags = NONE
@@ -46,8 +48,6 @@
 	icon = 'modular_doppler/kahraman_equipment/icons/clothes/clothing.dmi'
 	icon_state = "jacket"
 	worn_icon = 'modular_doppler/kahraman_equipment/icons/clothes/clothing_worn.dmi'
-	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION_NO_NEW_ICON
-//	worn_icon_teshari = 'modular_doppler/kahraman_equipment/icons/clothes/clothing_worn_teshari.dmi'
 	worn_icon_state = "jacket"
 	slot_flags = ITEM_SLOT_OCLOTHING|ITEM_SLOT_NECK
 	armor_type = /datum/armor/colonist_clothing
@@ -86,8 +86,6 @@
 	icon = 'modular_doppler/kahraman_equipment/icons/clothes/clothing.dmi'
 	icon_state = "flak"
 	worn_icon = 'modular_doppler/kahraman_equipment/icons/clothes/clothing_worn.dmi'
-	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION_NO_NEW_ICON
-//	worn_icon_teshari = 'modular_doppler/kahraman_equipment/icons/clothes/clothing_worn_teshari.dmi'
 	worn_icon_state = "flak"
 	body_parts_covered = CHEST
 	cold_protection = CHEST|GROIN
@@ -113,8 +111,6 @@
 	soft_type = "cap"
 	soft_suffix = null
 	worn_icon = 'modular_doppler/kahraman_equipment/icons/clothes/clothing_worn.dmi'
-//	supports_variations_flags = CLOTHING_SNOUTED_VARIATION_NO_NEW_ICON
-//	worn_icon_teshari = 'modular_doppler/kahraman_equipment/icons/clothes/clothing_worn_teshari.dmi'
 	worn_icon_state = "cap"
 
 /obj/item/clothing/head/soft/frontier_colonist/Initialize(mapload)
@@ -136,8 +132,6 @@
 	icon = 'modular_doppler/kahraman_equipment/icons/clothes/clothing.dmi'
 	icon_state = "tanker"
 	worn_icon = 'modular_doppler/kahraman_equipment/icons/clothes/clothing_worn.dmi'
-//	supports_variations_flags = CLOTHING_SNOUTED_VARIATION_NO_NEW_ICON
-//	worn_icon_teshari = 'modular_doppler/kahraman_equipment/icons/clothes/clothing_worn_teshari.dmi'
 	worn_icon_state = "tanker"
 	armor_type = /datum/armor/colonist_armor
 	resistance_flags = NONE
@@ -157,8 +151,6 @@
 	icon = 'modular_doppler/kahraman_equipment/icons/clothes/clothing.dmi'
 	icon_state = "radio"
 	worn_icon = 'modular_doppler/kahraman_equipment/icons/clothes/clothing_worn.dmi'
-//	supports_variations_flags = CLOTHING_SNOUTED_VARIATION_NO_NEW_ICON
-//	worn_icon_teshari = 'modular_doppler/kahraman_equipment/icons/clothes/clothing_worn_teshari.dmi'
 	worn_icon_state = "radio"
 	alternate_worn_layer = FACEMASK_LAYER + 0.5
 	subspace_transmission = FALSE
@@ -177,8 +169,6 @@
 	icon = 'modular_doppler/kahraman_equipment/icons/clothes/clothing.dmi'
 	icon_state = "gloves"
 	worn_icon = 'modular_doppler/kahraman_equipment/icons/clothes/clothing_worn.dmi'
-	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION_NO_NEW_ICON
-//	worn_icon_teshari = 'modular_doppler/kahraman_equipment/icons/clothes/clothing_worn_teshari.dmi'
 	worn_icon_state = "gloves"
 	greyscale_colors = "#3a373e"
 	siemens_coefficient = 0.25 // Doesn't insulate you entirely, but makes you a little more resistant
@@ -203,8 +193,9 @@
 	icon = 'modular_doppler/kahraman_equipment/icons/clothes/clothing.dmi'
 	icon_state = "mask"
 	worn_icon = 'modular_doppler/kahraman_equipment/icons/clothes/clothing_worn.dmi'
-//	worn_icon_digi = 'modular_doppler/kahraman_equipment/icons/clothes/clothing_worn_digi.dmi'
-//	worn_icon_teshari = 'modular_doppler/kahraman_equipment/icons/clothes/clothing_worn_teshari.dmi'
+	supported_bodyshapes = list(BODYSHAPE_HUMANOID, BODYSHAPE_SNOUTED)
+	bodyshape_icon_files = list(BODYSHAPE_HUMANOID_T = 'modular_doppler/kahraman_equipment/icons/clothes/clothing.dmi',
+		BODYSHAPE_SNOUTED_T = 'modular_doppler/kahraman_equipment/icons/clothes/clothing_worn_digi.dmi')
 	worn_icon_state = "mask"
 	flags_inv = HIDEEYES|HIDEFACE|HIDEFACIALHAIR|HIDESNOUT
 	armor_type = /datum/armor/colonist_hazard

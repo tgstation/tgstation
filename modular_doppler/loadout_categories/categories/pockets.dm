@@ -231,3 +231,11 @@
 /datum/loadout_item/pocket_items/drugs_liberty
 	name = "Liberty Cap Seeds"
 	item_path = /obj/item/seeds/liberty
+
+/*
+*	MEDICAL
+*/
+
+/datum/loadout_item/pocket_items/civil_defense
+	name = "Civil Defense Med-kit"
+	item_path = /obj/item/storage/medkit/civil_defense

@@ -19,7 +19,15 @@
 
 
 // This is so the linen reskin shows properly in the suit storage.
-/obj/item/storage/bag/plants/build_worn_icon(default_layer, default_icon_file, isinhands, female_uniform, override_state, override_file, mutant_styles)
+/obj/item/storage/bag/plants/build_worn_icon(
+	default_layer = 0,
+	default_icon_file = null,
+	isinhands = FALSE,
+	female_uniform = NO_FEMALE_UNIFORM,
+	override_state = null,
+	override_file = null,
+	mob/living/carbon/human/humie = null,
+)
 	if(default_layer == SUIT_STORE_LAYER && current_skin == RESKIN_LINEN)
 		override_file = 'modular_doppler/hearthkin/primitive_cooking_additions/icons/plant_bag_worn_mirror.dmi'
 

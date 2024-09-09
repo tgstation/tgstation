@@ -109,11 +109,17 @@ There are several things that need to be remembered:
 		var/handled_by_bodyshape = TRUE
 		var/icon_file
 		var/woman
+		/// DOPPLER ADDITION BEGIN
+		for(var/shape in uniform.supported_bodyshapes)
+			if(bodyshape & shape)
+				icon_file = uniform.bodyshape_icon_files["[shape]"]
+		/// DOPPLER SHIFT REMOVAL BEGIN
 		//BEGIN SPECIES HANDLING
-		if((bodyshape & BODYSHAPE_DIGITIGRADE) && (uniform.supports_variations_flags & CLOTHING_DIGITIGRADE_VARIATION))
-			icon_file = DIGITIGRADE_UNIFORM_FILE
+		/*if((bodyshape & BODYSHAPE_DIGITIGRADE) && (uniform.supports_variations_flags & CLOTHING_DIGITIGRADE_VARIATION))
+			icon_file = DIGITIGRADE_UNIFORM_FILE*/
+		/// DOPPLER SHIFT REMOVAL END
 		//Female sprites have lower priority than digitigrade sprites
-		else if(dna.species.sexes && (bodyshape & BODYSHAPE_HUMANOID) && physique == FEMALE && !(uniform.female_sprite_flags & NO_FEMALE_UNIFORM)) //Agggggggghhhhh
+		if(dna.species.sexes && (bodyshape & BODYSHAPE_HUMANOID) && physique == FEMALE && !(uniform.female_sprite_flags & NO_FEMALE_UNIFORM)) //Agggggggghhhhh /// DOPPLER SHIFT EDIT END
 			woman = TRUE
 
 		if(!icon_exists(icon_file, RESOLVE_ICON_STATE(uniform)))
@@ -128,6 +134,7 @@ There are several things that need to be remembered:
 			female_uniform = woman ? uniform.female_sprite_flags : null,
 			override_state = target_overlay,
 			override_file = handled_by_bodyshape ? icon_file : null,
+			humie = src, /// DOPPLER SHIFT ADDITION
 		)
 
 		var/obj/item/bodypart/chest/my_chest = get_bodypart(BODY_ZONE_CHEST)
@@ -155,7 +162,13 @@ There are several things that need to be remembered:
 
 		var/icon_file = 'icons/mob/clothing/id.dmi'
 
-		id_overlay = wear_id.build_worn_icon(default_layer = ID_LAYER, default_icon_file = icon_file)
+		/// DOPPLER SHIFT ADDITION BEGIN
+		for(var/shape in wear_id.supported_bodyshapes)
+			if(bodyshape & shape)
+				icon_file = wear_id.bodyshape_icon_files["[shape]"]
+		/// DOPPLER SHIFT ADDITION END
+
+		id_overlay = wear_id.build_worn_icon(default_layer = ID_LAYER, default_icon_file = icon_file, humie = src) /// DOPPLER SHIFT EDIT
 
 		if(!id_overlay)
 			return
@@ -200,7 +213,13 @@ There are several things that need to be remembered:
 
 		var/icon_file = 'icons/mob/clothing/hands.dmi'
 
-		var/mutable_appearance/gloves_overlay = gloves.build_worn_icon(default_layer = GLOVES_LAYER, default_icon_file = icon_file)
+		/// DOPPLER SHIFT ADDITION BEGIN
+		for(var/shape in gloves.supported_bodyshapes)
+			if(bodyshape & shape)
+				icon_file = gloves.bodyshape_icon_files["[shape]"]
+		/// DOPPLER SHIFT ADDITION END
+
+		var/mutable_appearance/gloves_overlay = gloves.build_worn_icon(default_layer = GLOVES_LAYER, default_icon_file = icon_file, humie = src) /// DOPPLER SHIFT EDIT
 
 		var/feature_y_offset = 0
 		//needs to be typed, hand_bodyparts can have nulls
@@ -237,7 +256,13 @@ There are several things that need to be remembered:
 
 		var/icon_file = 'icons/mob/clothing/eyes.dmi'
 
-		var/mutable_appearance/glasses_overlay = glasses.build_worn_icon(default_layer = GLASSES_LAYER, default_icon_file = icon_file)
+		/// DOPPLER SHIFT ADDITION BEGIN
+		for(var/shape in glasses.supported_bodyshapes)
+			if(bodyshape & shape)
+				icon_file = glasses.bodyshape_icon_files["[shape]"]
+		/// DOPPLER SHIFT ADDITION END
+
+		var/mutable_appearance/glasses_overlay = glasses.build_worn_icon(default_layer = GLASSES_LAYER, default_icon_file = icon_file, humie = src) /// DOPPLER SHIFT EDIT
 		my_head.worn_glasses_offset?.apply_offset(glasses_overlay)
 		overlays_standing[GLASSES_LAYER] = glasses_overlay
 	apply_overlay(GLASSES_LAYER)
@@ -266,7 +291,13 @@ There are several things that need to be remembered:
 
 		var/icon_file = 'icons/mob/clothing/ears.dmi'
 
-		var/mutable_appearance/ears_overlay = ears.build_worn_icon(default_layer = EARS_LAYER, default_icon_file = icon_file)
+		/// DOPPLER SHIFT ADDITION BEGIN
+		for(var/shape in ears.supported_bodyshapes)
+			if(bodyshape & shape)
+				icon_file = ears.bodyshape_icon_files["[shape]"]
+		/// DOPPLER SHIFT ADDITION END
+
+		var/mutable_appearance/ears_overlay = ears.build_worn_icon(default_layer = EARS_LAYER, default_icon_file = icon_file, humie = src) /// DOPPLER SHIFT EDIT
 		my_head.worn_ears_offset?.apply_offset(ears_overlay)
 		overlays_standing[EARS_LAYER] = ears_overlay
 	apply_overlay(EARS_LAYER)
@@ -290,7 +321,13 @@ There are several things that need to be remembered:
 
 		var/icon_file = 'icons/mob/clothing/neck.dmi'
 
-		var/mutable_appearance/neck_overlay = worn_item.build_worn_icon(default_layer = NECK_LAYER, default_icon_file = icon_file)
+		/// DOPPLER SHIFT ADDITION BEGIN
+		for(var/shape in worn_item.supported_bodyshapes)
+			if(bodyshape & shape)
+				icon_file = worn_item.bodyshape_icon_files["[shape]"]
+		/// DOPPLER SHIFT ADDITION END
+
+		var/mutable_appearance/neck_overlay = worn_item.build_worn_icon(default_layer = NECK_LAYER, default_icon_file = icon_file, humie = src) /// DOPPLER SHIFT EDIT
 		var/obj/item/bodypart/chest/my_chest = get_bodypart(BODY_ZONE_CHEST)
 		my_chest?.worn_belt_offset?.apply_offset(neck_overlay)
 		overlays_standing[NECK_LAYER] = neck_overlay
@@ -319,7 +356,13 @@ There are several things that need to be remembered:
 
 		var/icon_file = DEFAULT_SHOES_FILE
 
-		var/mutable_appearance/shoes_overlay = shoes.build_worn_icon(default_layer = SHOES_LAYER, default_icon_file = icon_file)
+		/// DOPPLER SHIFT ADDITION BEGIN
+		for(var/shape in shoes.supported_bodyshapes)
+			if(bodyshape & shape)
+				icon_file = shoes.bodyshape_icon_files["[shape]"]
+		/// DOPPLER SHIFT ADDITION END
+
+		var/mutable_appearance/shoes_overlay = shoes.build_worn_icon(default_layer = SHOES_LAYER, default_icon_file = icon_file, humie = src) /// DOPPLER SHIFT EDIT
 		if(!shoes_overlay)
 			return
 
@@ -357,7 +400,15 @@ There are several things that need to be remembered:
 		if(check_obscured_slots(transparent_protection = TRUE) & ITEM_SLOT_SUITSTORE)
 			return
 
-		var/mutable_appearance/s_store_overlay = worn_item.build_worn_icon(default_layer = SUIT_STORE_LAYER, default_icon_file = 'icons/mob/clothing/belt_mirror.dmi')
+		/// DOPPLER SHIFT ADDITION BEGIN
+		var/icon_file = 'icons/mob/clothing/belt_mirror.dmi'
+
+		for(var/shape in worn_item.supported_bodyshapes)
+			if(bodyshape & shape)
+				icon_file = worn_item.bodyshape_icon_files["[shape]"]
+		/// DOPPLER SHIFT ADDITION END
+
+		var/mutable_appearance/s_store_overlay = worn_item.build_worn_icon(default_layer = SUIT_STORE_LAYER, default_icon_file = icon_file, humie = src) /// DOPPLER SHIFT EDIT
 		var/obj/item/bodypart/chest/my_chest = get_bodypart(BODY_ZONE_CHEST)
 		my_chest?.worn_suit_storage_offset?.apply_offset(s_store_overlay)
 		overlays_standing[SUIT_STORE_LAYER] = s_store_overlay
@@ -381,7 +432,13 @@ There are several things that need to be remembered:
 
 		var/icon_file = 'icons/mob/clothing/head/default.dmi'
 
-		var/mutable_appearance/head_overlay = head.build_worn_icon(default_layer = HEAD_LAYER, default_icon_file = icon_file)
+		/// DOPPLER SHIFT ADDITION BEGIN
+		for(var/shape in head.supported_bodyshapes)
+			if(bodyshape & shape)
+				icon_file = head.bodyshape_icon_files["[shape]"]
+		/// DOPPLER SHIFT ADDITION END
+
+		var/mutable_appearance/head_overlay = head.build_worn_icon(default_layer = HEAD_LAYER, default_icon_file = icon_file, humie = src) /// DOPPLER SHIFT EDIT
 		var/obj/item/bodypart/head/my_head = get_bodypart(BODY_ZONE_HEAD)
 		my_head?.worn_head_offset?.apply_offset(head_overlay)
 		overlays_standing[HEAD_LAYER] = head_overlay
@@ -407,7 +464,13 @@ There are several things that need to be remembered:
 
 		var/icon_file = 'icons/mob/clothing/belt.dmi'
 
-		var/mutable_appearance/belt_overlay = belt.build_worn_icon(default_layer = BELT_LAYER, default_icon_file = icon_file)
+		/// DOPPLER SHIFT ADDITION BEGIN
+		for(var/shape in belt.supported_bodyshapes)
+			if(bodyshape & shape)
+				icon_file = belt.bodyshape_icon_files["[shape]"]
+		/// DOPPLER SHIFT ADDITION END
+
+		var/mutable_appearance/belt_overlay = belt.build_worn_icon(default_layer = BELT_LAYER, default_icon_file = icon_file, humie = src) /// DOPPLER SHIFT EDIT
 		var/obj/item/bodypart/chest/my_chest = get_bodypart(BODY_ZONE_CHEST)
 		my_chest?.worn_belt_offset?.apply_offset(belt_overlay)
 		overlays_standing[BELT_LAYER] = belt_overlay
@@ -430,7 +493,13 @@ There are several things that need to be remembered:
 
 		var/icon_file = DEFAULT_SUIT_FILE
 
-		var/mutable_appearance/suit_overlay = wear_suit.build_worn_icon(default_layer = SUIT_LAYER, default_icon_file = icon_file)
+		/// DOPPLER SHIFT ADDITION BEGIN
+		for(var/shape in wear_suit.supported_bodyshapes)
+			if(bodyshape & shape)
+				icon_file = wear_suit.bodyshape_icon_files["[shape]"]
+		/// DOPPLER SHIFT ADDITION END
+
+		var/mutable_appearance/suit_overlay = wear_suit.build_worn_icon(default_layer = SUIT_LAYER, default_icon_file = icon_file, humie = src) /// DOPPLER SHIFT EDIT
 		var/obj/item/bodypart/chest/my_chest = get_bodypart(BODY_ZONE_CHEST)
 		my_chest?.worn_suit_offset?.apply_offset(suit_overlay)
 		overlays_standing[SUIT_LAYER] = suit_overlay
@@ -482,7 +551,13 @@ There are several things that need to be remembered:
 
 		var/icon_file = 'icons/mob/clothing/mask.dmi'
 
-		var/mutable_appearance/mask_overlay = wear_mask.build_worn_icon(default_layer = FACEMASK_LAYER, default_icon_file = icon_file)
+		/// DOPPLER SHIFT ADDITION BEGIN
+		for(var/shape in wear_mask.supported_bodyshapes)
+			if(bodyshape & shape)
+				icon_file = wear_mask.bodyshape_icon_files["[shape]"]
+		/// DOPPLER SHIFT ADDITION END
+
+		var/mutable_appearance/mask_overlay = wear_mask.build_worn_icon(default_layer = FACEMASK_LAYER, default_icon_file = icon_file, humie = src) /// DOPPLER SHIFT EDIT
 		my_head.worn_mask_offset?.apply_offset(mask_overlay)
 		overlays_standing[FACEMASK_LAYER] = mask_overlay
 
@@ -506,7 +581,13 @@ There are several things that need to be remembered:
 
 		var/icon_file = 'icons/mob/clothing/back.dmi'
 
-		back_overlay = back.build_worn_icon(default_layer = BACK_LAYER, default_icon_file = icon_file)
+		/// DOPPLER SHIFT ADDITION BEGIN
+		for(var/shape in worn_item.supported_bodyshapes)
+			if(bodyshape & shape)
+				icon_file = worn_item.bodyshape_icon_files["[shape]"]
+		/// DOPPLER SHIFT ADDITION END
+
+		back_overlay = back.build_worn_icon(default_layer = BACK_LAYER, default_icon_file = icon_file, humie = src) /// DOPPLER SHIFT EDIT
 
 		if(!back_overlay)
 			return
@@ -539,19 +620,79 @@ There are several things that need to be remembered:
 
 		var/mutable_appearance/hand_overlay
 		var/icon_file = held_index % 2 == 0 ? worn_item.righthand_file : worn_item.lefthand_file
-		hand_overlay = worn_item.build_worn_icon(default_layer = HANDS_LAYER, default_icon_file = icon_file, isinhands = TRUE)
+		hand_overlay = worn_item.build_worn_icon(default_layer = HANDS_LAYER, default_icon_file = icon_file, isinhands = TRUE, humie = src) /// DOPPLER SHIFT EDIT
 		var/obj/item/bodypart/arm/held_in_hand = hand_bodyparts[held_index]
 		held_in_hand?.held_hand_offset?.apply_offset(hand_overlay)
 
 		hands += hand_overlay
 	return hands
 
-/proc/wear_female_version(t_color, icon, layer, type, greyscale_colors)
-	var/index = "[t_color]-[greyscale_colors]"
-	var/icon/female_clothing_icon = GLOB.female_clothing_icons[index]
-	if(!female_clothing_icon) 	//Create standing/laying icons if they don't exist
-		generate_female_clothing(index, t_color, icon, type)
-	return mutable_appearance(GLOB.female_clothing_icons[index], layer = -layer)
+/// Modifies a sprite slightly to conform to female body shapes
+/proc/wear_female_version(icon_state, icon, type, greyscale_colors)
+	var/index = "[icon_state]-[greyscale_colors]"
+	var/static/list/female_clothing_icons = list()
+	var/icon/female_clothing_icon = female_clothing_icons[index]
+	if(!female_clothing_icon) //Create standing/laying icons if they don't exist
+		var/female_icon_state = "female[type == FEMALE_UNIFORM_FULL ? "_full" : ((!type || type & FEMALE_UNIFORM_TOP_ONLY) ? "_top" : "")][type & FEMALE_UNIFORM_NO_BREASTS ? "_no_breasts" : ""]"
+		var/icon/female_cropping_mask = icon('icons/mob/clothing/under/masking_helpers.dmi', female_icon_state)
+		female_clothing_icon = icon(icon, icon_state)
+		female_clothing_icon.Blend(female_cropping_mask, ICON_MULTIPLY)
+		female_clothing_icon = fcopy_rsc(female_clothing_icon)
+		female_clothing_icons[index] = female_clothing_icon
+
+	return icon(female_clothing_icon)
+
+// These coordonates point to roughly somewhere in the middle of the left leg
+// Used in approximating what color the pants of clothing should be
+#define LEG_SAMPLE_X_LOWER 13
+#define LEG_SAMPLE_X_UPPER 14
+
+#define LEG_SAMPLE_Y_LOWER 8
+#define LEG_SAMPLE_Y_UPPER 9
+
+/// Modifies a sprite to conform to digitigrade body shapes
+/proc/wear_digi_version(icon/base_icon, key, greyscale_config = /datum/greyscale_config/jumpsuit/worn_digi, greyscale_colors)
+	ASSERT(key, "wear_digi_version: no key passed")
+	ASSERT(ispath(greyscale_config, /datum/greyscale_config), "wear_digi_version: greyscale_config is not a valid path (got: [greyscale_config])")
+	// items with greyscale colors containing multiple colors are invalid
+	if(isnull(greyscale_colors) || length(SSgreyscale.ParseColorString(greyscale_colors)) > 1)
+		var/pant_color
+		// approximates the color of the pants by sampling a few pixels in the middle of the left leg
+		for(var/x in LEG_SAMPLE_X_LOWER to LEG_SAMPLE_X_UPPER)
+			for(var/y in LEG_SAMPLE_Y_LOWER to LEG_SAMPLE_Y_UPPER)
+				var/xy_color = base_icon.GetPixel(x, y)
+				pant_color = pant_color ? BlendRGB(pant_color, xy_color, 0.5) : xy_color
+
+		greyscale_colors = pant_color || "#1d1d1d" // black pants always look good
+
+	var/index = "[key]-[greyscale_config]-[greyscale_colors]"
+	var/static/list/digitigrade_clothing_icons = list()
+	var/icon/digitigrade_clothing_icon = digitigrade_clothing_icons[index]
+	if(!digitigrade_clothing_icon)
+		var/static/icon/torso_mask
+		if(!torso_mask)
+			torso_mask = icon('icons/mob/clothing/under/masking_helpers.dmi', "digi_torso_mask")
+		var/static/icon/leg_mask
+		if(!leg_mask)
+			leg_mask = icon('icons/mob/clothing/under/masking_helpers.dmi', "digi_leg_mask")
+
+		base_icon.Blend(leg_mask, ICON_SUBTRACT) // cuts the legs off
+
+		var/icon/leg_icon = SSgreyscale.GetColoredIconByType(greyscale_config, greyscale_colors)
+		leg_icon.Blend(torso_mask, ICON_SUBTRACT) // cuts the torso off
+
+		base_icon.Blend(leg_icon, ICON_OVERLAY) // puts the new legs on
+
+		digitigrade_clothing_icon = fcopy_rsc(base_icon)
+		digitigrade_clothing_icons[index] = digitigrade_clothing_icon
+
+	return icon(digitigrade_clothing_icon)
+
+#undef LEG_SAMPLE_X_LOWER
+#undef LEG_SAMPLE_X_UPPER
+
+#undef LEG_SAMPLE_Y_LOWER
+#undef LEG_SAMPLE_Y_UPPER
 
 /mob/living/carbon/human/proc/get_overlays_copy(list/unwantedLayers)
 	var/list/out = new
@@ -678,20 +819,47 @@ generate/load female uniform sprites matching all previously decided variables
 	female_uniform = NO_FEMALE_UNIFORM,
 	override_state = null,
 	override_file = null,
+	mob/living/carbon/human/humie = null,
 )
 
 	//Find a valid icon_state from variables+arguments
 	var/t_state = override_state || (isinhands ? inhand_icon_state : worn_icon_state) || icon_state
+	/// DOPPLER SHIFT ADDITION BEGIN
+	/// IMPORTANT NOTE: Keep the humie var!
+	var/chosen_worn_icon = worn_icon
+	if(ishuman(humie))
+		for(var/shape in supported_bodyshapes)
+			if(humie.bodyshape & shape)
+				chosen_worn_icon = bodyshape_icon_files["[shape]"]
 	//Find a valid icon file from variables+arguments
-	var/file2use = override_file || (isinhands ? null : worn_icon) || default_icon_file
+	var/file2use = override_file || (isinhands ? null : chosen_worn_icon) || default_icon_file /// DOPPLER SHIFT EDIT END
 	//Find a valid layer from variables+arguments
 	var/layer2use = alternate_worn_layer || default_layer
 
-	var/mutable_appearance/standing
+	var/mob/living/carbon/wearer = loc
+	var/is_digi = istype(wearer) && (wearer.bodyshape & BODYSHAPE_DIGITIGRADE) && !wearer.is_digitigrade_squished()
+
+	var/mutable_appearance/standing // this is the actual resulting MA
+	var/icon/building_icon // used to construct an icon across multiple procs before converting it to MA
 	if(female_uniform)
-		standing = wear_female_version(t_state, file2use, layer2use, female_uniform, greyscale_colors) //should layer2use be in sync with the adjusted value below? needs testing - shiz
-	if(!standing)
-		standing = mutable_appearance(file2use, t_state, -layer2use)
+		building_icon = wear_female_version(
+			icon_state = t_state,
+			icon = file2use,
+			type = female_uniform,
+			greyscale_colors = greyscale_colors,
+		)
+	if(!isinhands && is_digi && (supports_variations_flags & CLOTHING_DIGITIGRADE_MASK))
+		building_icon = wear_digi_version(
+			base_icon = building_icon || icon(file2use, t_state),
+			key = "[t_state]-[file2use]-[female_uniform]",
+			greyscale_config = digitigrade_greyscale_config_worn || greyscale_config_worn,
+			greyscale_colors = digitigrade_greyscale_colors || greyscale_colors || color,
+		)
+	if(building_icon)
+		standing = mutable_appearance(building_icon, layer = -layer2use)
+
+	// no special handling done, default it
+	standing ||= mutable_appearance(file2use, t_state, layer = -layer2use)
 
 	//Get the overlays for this item when it's being worn
 	//eg: ammo counters, primed grenade flashes, etc.

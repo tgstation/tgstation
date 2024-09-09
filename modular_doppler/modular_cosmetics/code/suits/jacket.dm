@@ -189,13 +189,14 @@
 
 /obj/item/clothing/suit/jacket/doppler/field_jacket/tan
 	name = "venerable old tan jacket"
-	desc = "A lightened field jacket with ample pockets, intended for arid deployments some decades now and now \
+	desc = "A lightened field jacket with ample pockets, intended for arid deployments some decades ago and now \
 	serving a second life as a fashion item."
 	icon_state = "tan_field_jacket"
 
 /obj/item/clothing/suit/hooded/doppler/leather_hoodie
 	name = "leather jacket with hoodie"
-	desc = ""
+	desc = "The leather jacket itself takes after workwear stylings for denim and canvas chore coats, looking \
+	something like a fetishistic rock take on blue collar. The hoodie? That's just a hoodie."
 	icon_state = "leatherhoodie"
 	body_parts_covered = CHEST|GROIN|ARMS
 	hoodtype = /obj/item/clothing/head/hooded/leather
@@ -208,6 +209,26 @@
 	worn_icon = 'modular_doppler/modular_cosmetics/icons/mob/head/hoods.dmi'
 	flags_inv = HIDEHAIR
 	armor_type = /datum/armor/jacket_armor
+
+/obj/item/clothing/suit/jacket/doppler/long_suit_jacket
+	name = "long severe suit jacket"
+	desc = "A severe jacket with built up shoulders and an aggressively suppressed waistline that features a dramatic, \
+	coatlike length. The synthwoolen blended fabric is smooth and soft while preserving a dense worsted pile."
+	icon_state = "long_suit_jacket"
+
+/obj/item/clothing/suit/jacket/doppler/long_suit_jacket/Initialize(mapload)
+	. = ..()
+	AddComponent(/datum/component/toggle_icon, "button")
+
+/obj/item/clothing/suit/jacket/doppler/short_suit_jacket
+	name = "severe suit jacket"
+	desc = "A severe suit jacket with tall shoulders and a slim silhoutte. Over the years single button jackets like this \
+	one have prevailed over two and three button jackets."
+	icon_state = "suit_jacket"
+
+/obj/item/clothing/suit/jacket/doppler/short_suit_jacket/Initialize(mapload)
+	. = ..()
+	AddComponent(/datum/component/toggle_icon, "button")
 
 /////////
 //COATS//

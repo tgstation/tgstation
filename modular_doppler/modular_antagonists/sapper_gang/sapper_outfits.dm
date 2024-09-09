@@ -104,7 +104,9 @@
 	icon_state = "jackboots"
 	body_parts_covered = FEET|LEGS
 	worn_icon = 'modular_doppler/modular_antagonists/sapper_gang/icons/sapper.dmi'
-//	worn_icon_digi = DIGITIGRADE_SHOES_FILE
+	supported_bodyshapes = list(BODYSHAPE_HUMANOID, BODYSHAPE_DIGITIGRADE)
+	bodyshape_icon_files = list(BODYSHAPE_HUMANOID_T = 'modular_doppler/modular_antagonists/sapper_gang/icons/sapper.dmi',
+		BODYSHAPE_DIGITIGRADE_T = 'modular_doppler/modular_cosmetics/icons/mob/shoes/basefeet_digi.dmi')
 	inhand_icon_state = "jackboots"
 	armor_type = /datum/armor/shoes_combat
 

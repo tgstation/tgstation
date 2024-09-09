@@ -23,3 +23,7 @@
 /datum/loadout_item/ears/earmuffs
 	name = "Earmuffs"
 	item_path = /obj/item/clothing/ears/earmuffs
+
+/datum/loadout_item/ears/frontier
+	name = "Frontier Radio"
+	item_path = /obj/item/radio/headset/headset_frontier_colonist
