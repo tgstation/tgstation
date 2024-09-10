@@ -4,7 +4,15 @@ import { useState } from 'react';
 import { DmIcon, Icon } from 'tgui-core/components';
 
 import { useBackend } from '../backend';
-import { Box, Button, Input, NoticeBox, Section, Stack } from '../components';
+import {
+  Box,
+  Button,
+  Input,
+  NoticeBox,
+  NumberInput,
+  Section,
+  Stack,
+} from '../components';
 import { Window } from '../layouts';
 
 type Item = {
@@ -169,6 +177,7 @@ const ItemList = ({ item }) => {
   const fallback = (
     <Icon name="spinner" lineHeight="32px" size={3} spin color="gray" />
   );
+  const [itemCount, setItemCount] = useState(1);
   return (
     <Stack>
       <Stack.Item>
@@ -236,29 +245,20 @@ const ItemList = ({ item }) => {
           onClick={() =>
             act('Release', {
               path: item.path,
-              amount: 1,
+              amount: itemCount,
             })
           }
         >
           Vend
         </Button>
-      </Stack.Item>
-      <Stack.Item>
-        <Button
-          py="4px"
-          mt="4px"
-          height="24px"
-          lineHeight="16px"
-          disabled={item.amount <= 1}
-          onClick={(e) => {
-            act('Release', {
-              path: item.path,
-              amount: item.amount,
-            });
-          }}
-        >
-          Amount
-        </Button>
+        <NumberInput
+          width="25px"
+          minValue={1}
+          maxValue={item.amount}
+          step={1}
+          value={itemCount}
+          onChange={(value) => setItemCount(value)}
+        />
       </Stack.Item>
     </Stack>
   ) as any;

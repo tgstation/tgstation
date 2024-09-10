@@ -123,7 +123,6 @@
 
 /datum/id_trim/pirate/captain/silverscale
 	assignment = "Silver Scale VIP"
-	big_pointer = TRUE
 
 //Trims for Dangerous Research, used in ``dangerous_research.dm``
 /datum/id_trim/away/dangerous_research

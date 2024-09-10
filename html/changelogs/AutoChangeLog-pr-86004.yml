@@ -1,4 +1,0 @@
-author: "vinylspiders"
-delete-after: True
-changes:
-  - bugfix: "wet hides and hairless hides no longer make metal clanging noises when picked up/dropped"

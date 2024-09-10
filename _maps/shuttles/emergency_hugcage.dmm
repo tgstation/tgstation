@@ -279,11 +279,11 @@
 /turf/open/floor/catwalk_floor/titanium,
 /area/shuttle/escape)
 "FW" = (
-/obj/structure/sign/directions/security/north_arrow,
-/obj/structure/sign/directions/medical/north_arrow{
+/obj/structure/sign/directions/security/directional/north,
+/obj/structure/sign/directions/medical/directional/north{
 	pixel_y = 40
 	},
-/obj/structure/sign/directions/command/north_arrow{
+/obj/structure/sign/directions/command/directional/north{
 	pixel_y = 24
 	},
 /turf/open/floor/mineral/titanium/blue,
