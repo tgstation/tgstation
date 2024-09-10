@@ -414,11 +414,12 @@ Difficulty: Hard
 		deltimer(respawn_timer_id)
 		respawn_timer_id = null
 		return
-	if(respawn_timer_id || client)
+	if(respawn_timer_id || client || !spawned_beacon_ref)
 		return
-	addtimer(CALLBACK(src, PROC_REF(send_me_home)), flags = TIMER_STOPPABLE|TIMER_DELETE_ME)
+	respawn_timer_id = addtimer(CALLBACK(src, PROC_REF(send_me_home)), 30 SECONDS, flags = TIMER_STOPPABLE|TIMER_DELETE_ME)
 
 /mob/living/simple_animal/hostile/megafauna/hierophant/proc/send_me_home()
+	respawn_timer_id = null
 	var/obj/effect/hierophant/beacon = spawned_beacon_ref.resolve()
 	if(!beacon || client)
 		return
