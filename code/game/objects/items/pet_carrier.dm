@@ -182,7 +182,7 @@
 	add_occupant(target)
 
 /obj/item/pet_carrier/proc/add_occupant(mob/living/occupant)
-	if(occupant in occupants || !istype(occupant))
+	if((occupant in occupants) || !istype(occupant))
 		return
 	occupant.forceMove(src)
 	occupants += occupant

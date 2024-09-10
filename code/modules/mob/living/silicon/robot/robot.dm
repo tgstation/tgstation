@@ -504,14 +504,19 @@
 	lampButton?.update_appearance()
 	update_icons()
 
+///Completely deconstructs the borg, dropping the MMI/posibrain, removing applied upgrades and stripping the exoskeleton of all limbs,
+///while also burning out the flashes and prying out the cabling and the cell used in construction
 /mob/living/silicon/robot/proc/cyborg_deconstruct()
 	SEND_SIGNAL(src, COMSIG_BORG_SAFE_DECONSTRUCT)
 	if(shell)
 		undeploy()
 	var/turf/drop_to = drop_location()
-	if (robot_suit)
+	//remove installed upgrades
+	for(var/obj/item/borg/upgrade/upgrade_to_remove in upgrades)
+		upgrade_to_remove.forceMove(drop_to)
+	if(robot_suit)
 		robot_suit.drop_all_parts(drop_to)
-
+		robot_suit.forceMove(drop_to)
 	else
 		new /obj/item/robot_suit(drop_to)
 		new /obj/item/bodypart/leg/left/robot(drop_to)
