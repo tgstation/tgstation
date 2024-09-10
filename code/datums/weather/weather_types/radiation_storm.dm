@@ -34,28 +34,28 @@
 	status_alarm(TRUE)
 
 
-/datum/weather/rad_storm/weather_act(mob/living/L)
+/datum/weather/rad_storm/weather_act(mob/living/living)
 	if(!prob(mutate_chance))
 		return
 
-	if(!ishuman(L))
+	if(!ishuman(living) || HAS_TRAIT(living, TRAIT_GODMODE))
 		return
 
-	var/mob/living/carbon/human/H = L
-	if(!H.can_mutate() || H.status_flags & GODMODE)
+	var/mob/living/carbon/human/human = living
+	if(!human.can_mutate())
 		return
 
-	if(HAS_TRAIT(H, TRAIT_RADIMMUNE))
+	if(HAS_TRAIT(human, TRAIT_RADIMMUNE))
 		return
 
-	if (SSradiation.wearing_rad_protected_clothing(H))
+	if (SSradiation.wearing_rad_protected_clothing(human))
 		return
 
-	H.random_mutate_unique_identity()
-	H.random_mutate_unique_features()
+	human.random_mutate_unique_identity()
+	human.random_mutate_unique_features()
 
 	if(prob(50))
-		do_mutate(L)
+		do_mutate(human)
 
 /datum/weather/rad_storm/end()
 	if(..())
