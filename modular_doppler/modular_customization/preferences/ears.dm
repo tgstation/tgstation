@@ -40,10 +40,10 @@
 	return list(NO_VARIATION) + (GLOB.mutant_variations)
 
 /datum/preference/choiced/ear_variation/apply_to_human(mob/living/carbon/human/target, chosen_variation)
+	target.dna.ear_type = chosen_variation
 	if(chosen_variation == NO_VARIATION)
 		target.dna.features["ears"] = /datum/sprite_accessory/ears/none::name
-	else
-		target.dna.ear_type = chosen_variation
+
 
 ///	All current ear types to choose from
 //	Cat
@@ -64,6 +64,7 @@
 	return /datum/sprite_accessory/ears/none::name
 
 /datum/preference/choiced/ears/apply_to_human(mob/living/carbon/human/target, value)
+	..()
 	if(target.dna.ear_type == CAT)
 		target.dna.features["ears"] = value
 

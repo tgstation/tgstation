@@ -37,11 +37,9 @@
 	return list(NO_VARIATION) + (GLOB.mutant_variations)
 
 /datum/preference/choiced/snout_variation/apply_to_human(mob/living/carbon/human/target, chosen_variation)
+	target.dna.snout_type = chosen_variation
 	if(chosen_variation == NO_VARIATION)
 		target.dna.features["snout"] = /datum/sprite_accessory/snouts/none::name
-	else
-		target.dna.snout_type = chosen_variation
-
 
 ///	All current snout types to choose from
 //	Lizard
@@ -54,6 +52,11 @@
 	if(chosen_variation == LIZARD)
 		return TRUE
 	return FALSE
+
+/datum/preference/choiced/lizard_snout/apply_to_human(mob/living/carbon/human/target, value)
+	..()
+	if(target.dna.snout_type == LIZARD)
+		target.dna.features["snout"] = value
 
 /datum/preference/choiced/lizard_snout/create_default_value()
 	return /datum/sprite_accessory/snouts/none::name
@@ -81,7 +84,8 @@
 	return /datum/sprite_accessory/snouts_more/bunny/none::name
 
 /datum/preference/choiced/bunny_snout/apply_to_human(mob/living/carbon/human/target, value)
-	target.dna.features["snout"] = value
+	if(target.dna.snout_type == BUNNY)
+		target.dna.features["snout"] = value
 
 /datum/preference/choiced/bunny_snout/icon_for(value)
 	var/datum/sprite_accessory/chosen_snout = SSaccessories.snouts_list_bunny[value]

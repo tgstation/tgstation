@@ -8,3 +8,7 @@
 
 /datum/bodypart_overlay/mutant/snout/bunny/get_global_feature_list()
 	return SSaccessories.snouts_list_bunny
+
+/// Lizard snout
+//	TG's lizard snout is its parent type
+/obj/item/organ/external/snout/lizard
