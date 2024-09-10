@@ -19,7 +19,6 @@
 #define MBOX_DURATION_STANDBY (2.7 SECONDS)
 
 GLOBAL_LIST_INIT(mystery_box_guns, list(
-	/obj/item/gun/energy/lasercannon,
 	/obj/item/gun/energy/recharge/ebow/large,
 	/obj/item/gun/energy/e_gun,
 	/obj/item/gun/energy/e_gun/nuclear,
@@ -45,6 +44,7 @@ GLOBAL_LIST_INIT(mystery_box_guns, list(
 	/obj/item/gun/ballistic/automatic/m90/unrestricted,
 	/obj/item/gun/ballistic/automatic/tommygun,
 	/obj/item/gun/ballistic/automatic/wt550,
+	/obj/item/gun/ballistic/automatic/smartgun,
 	/obj/item/gun/ballistic/rifle/sniper_rifle,
 	/obj/item/gun/ballistic/rifle/boltaction,
 ))
@@ -85,6 +85,30 @@ GLOBAL_LIST_INIT(mystery_magic, list(
 	/obj/item/runic_vendor_scepter,
 ))
 
+GLOBAL_LIST_INIT(mystery_fishing, list(
+	/obj/item/storage/toolbox/fishing/master,
+	/obj/item/storage/box/fish_revival_kit,
+	/obj/item/circuitboard/machine/fishing_portal_generator/emagged,
+	/obj/item/fishing_rod/telescopic/master,
+	/obj/item/bait_can/super_baits,
+	/obj/item/storage/fish_case/tiziran,
+	/obj/item/storage/fish_case/syndicate,
+	/obj/item/claymore/cutlass/old,
+	/obj/item/gun/energy/laser/retro/old,
+	/obj/item/gun/energy/laser/musket,
+	/obj/item/gun/energy/disabler/smoothbore,
+	/obj/item/gun/ballistic/rifle/boltaction/surplus,
+	/obj/item/food/rationpack,
+	/obj/item/food/canned/squid_ink,
+	/obj/item/reagent_containers/cup/glass/bottle/rum/aged,
+	/obj/item/storage/bag/money/dutchmen,
+	/obj/item/language_manual/piratespeak,
+	/obj/item/clothing/head/costume/pirate/armored,
+	/obj/item/clothing/suit/costume/pirate/armored,
+	/obj/structure/cannon/mystery_box,
+	/obj/item/stack/cannonball/trashball/four,
+	/obj/item/stack/cannonball/four,
+))
 
 /obj/structure/mystery_box
 	name = "mystery box"
@@ -117,6 +141,10 @@ GLOBAL_LIST_INIT(mystery_magic, list(
 	var/grant_extra_mag = TRUE
 	/// Stores the current sound channel we're using so we can cut off our own sounds as needed. Randomized after each roll
 	var/current_sound_channel
+	/// How many time can it still be used?
+	var/uses_left
+	/// A list of weakrefs to mind datums of people that opened it and how many times.
+	var/list/datum/weakref/minds_that_opened_us
 
 /obj/structure/mystery_box/Initialize(mapload)
 	. = ..()
@@ -126,6 +154,7 @@ GLOBAL_LIST_INIT(mystery_magic, list(
 	QDEL_NULL(presented_item)
 	if(current_sound_channel)
 		SSsounds.free_sound_channel(current_sound_channel)
+	minds_that_opened_us = null
 	return ..()
 
 /obj/structure/mystery_box/attack_hand(mob/living/user, list/modifiers)
@@ -163,6 +192,11 @@ GLOBAL_LIST_INIT(mystery_magic, list(
 	current_sound_channel = SSsounds.reserve_sound_channel(src)
 	playsound(src, open_sound, 70, FALSE, channel = current_sound_channel, falloff_exponent = 10)
 	playsound(src, crate_open_sound, 80)
+	if(user.mind)
+		LAZYINITLIST(minds_that_opened_us)
+		var/datum/weakref/ref = WEAKREF(user.mind)
+		minds_that_opened_us[ref] += 1
+	uses_left--
 
 /// The box has finished choosing, mark it as available for grabbing
 /obj/structure/mystery_box/proc/present_weapon()
@@ -186,6 +220,9 @@ GLOBAL_LIST_INIT(mystery_magic, list(
 	box_close_timer = null
 	box_expire_timer = null
 	addtimer(CALLBACK(src, PROC_REF(ready_again)), MBOX_DURATION_STANDBY)
+	if(uses_left <= 0)
+		visible_message("[src] breaks down.")
+		deconstruct(disassembled = FALSE)
 
 /// The cooldown between activations has finished, shake to show that
 /obj/structure/mystery_box/proc/ready_again()
@@ -196,22 +233,26 @@ GLOBAL_LIST_INIT(mystery_magic, list(
 
 /// Someone attacked the box with an empty hand, spawn the shown prize and give it to them, then close the box
 /obj/structure/mystery_box/proc/grant_weapon(mob/living/user)
-	var/obj/item/instantiated_weapon = new presented_item.selected_path(src)
-	user.put_in_hands(instantiated_weapon)
-
-	if(isgun(instantiated_weapon)) // handle pins + possibly extra ammo
-		var/obj/item/gun/instantiated_gun = instantiated_weapon
-		instantiated_gun.unlock()
-		if(grant_extra_mag && istype(instantiated_gun, /obj/item/gun/ballistic))
-			var/obj/item/gun/ballistic/instantiated_ballistic = instantiated_gun
-			if(!instantiated_ballistic.internal_magazine)
-				var/obj/item/ammo_box/magazine/extra_mag = new instantiated_ballistic.spawn_magazine_type(loc)
-				user.put_in_hands(extra_mag)
-
+	var/atom/movable/instantiated_weapon = new presented_item.selected_path(loc)
 	user.visible_message(span_notice("[user] takes [presented_item] from [src]."), span_notice("You take [presented_item] from [src]."), vision_distance = COMBAT_MESSAGE_RANGE)
 	playsound(src, grant_sound, 70, FALSE, channel = current_sound_channel, falloff_exponent = 10)
 	close_box()
 
+	if(!isitem(instantiated_weapon))
+		return
+	user.put_in_hands(instantiated_weapon)
+
+	if(!isgun(instantiated_weapon))
+		return
+	// handle pins + possibly extra ammo
+	var/obj/item/gun/instantiated_gun = instantiated_weapon
+	instantiated_gun.unlock()
+	if(!grant_extra_mag || !istype(instantiated_gun, /obj/item/gun/ballistic))
+		return
+	var/obj/item/gun/ballistic/instantiated_ballistic = instantiated_gun
+	if(!instantiated_ballistic.internal_magazine)
+		var/obj/item/ammo_box/magazine/extra_mag = new instantiated_ballistic.spawn_magazine_type(loc)
+		user.put_in_hands(extra_mag)
 
 /obj/structure/mystery_box/guns
 	desc = "A wooden crate that seems equally magical and mysterious, capable of granting the user all kinds of different pieces of gear. This one seems focused on firearms."
@@ -231,6 +272,28 @@ GLOBAL_LIST_INIT(mystery_magic, list(
 /obj/structure/mystery_box/wands/generate_valid_types()
 	valid_types = GLOB.mystery_magic
 
+///One of a kind, rarely found by fishing in the ocean.
+/obj/structure/mystery_box/fishing
+	name = "treasure chest"
+	desc = "A pirate-y chest that seems equally magial and mysterious, capable of granting the user different pieces of gear."
+	icon_state = "treasure"
+	uses_left = 18
+	max_integrity = 100
+	damage_deflection = 30
+	grant_extra_mag = FALSE
+
+/obj/structure/mystery_box/handle_deconstruct(disassembled)
+	new /obj/item/stack/sheet/mineral/wood(drop_location(), 2)
+	return ..()
+
+/obj/structure/mystery_box/fishing/generate_valid_types()
+	valid_types = GLOB.mystery_fishing
+
+/obj/structure/mystery_box/fishing/activate(mob/living/user)
+	if(user.mind && minds_that_opened_us?[WEAKREF(user.mind)] >= 3)
+		to_chat(user, span_warning("[src] refuses to open to you anymore. Perhaps you should present it to someone else..."))
+		return
+	return ..()
 
 /// This represents the item that comes out of the box and is constantly changing before the box finishes deciding. Can probably be just an /atom or /movable.
 /obj/mystery_box_item
@@ -290,14 +353,14 @@ GLOBAL_LIST_INIT(mystery_magic, list(
 
 /// animate() isn't up to the task for queueing up icon changes, so this is the proc we call with timers to update our icon
 /obj/mystery_box_item/proc/update_random_icon(new_item_type)
-	var/obj/item/new_item = new_item_type
-	icon = initial(new_item.icon)
-	icon_state = initial(new_item.icon_state)
+	var/atom/movable/new_item = new_item_type
+	icon = new_item::icon
+	icon_state = new_item::icon_state
 
 /obj/mystery_box_item/proc/present_item()
-	var/obj/item/selected_item = selected_path
+	var/atom/movable/selected_item = selected_path
 	add_filter("ready_outline", 2, list("type" = "outline", "color" = COLOR_VIVID_YELLOW, "size" = 0.2))
-	name = initial(selected_item.name)
+	name = selected_item::name
 	parent_box.present_weapon()
 	claimable = TRUE
 

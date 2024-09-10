@@ -79,7 +79,7 @@
 			return
 		qdel(nullify_spell)
 	BS = possible_spells[entered_spell_name]
-	if(QDELETED(src) || owner.incapacitated() || !BS || (rune && !(locate(/obj/effect/rune/empower) in range(1, owner))) || (length(spells) >= limit))
+	if(QDELETED(src) || owner.incapacitated || !BS || (rune && !(locate(/obj/effect/rune/empower) in range(1, owner))) || (length(spells) >= limit))
 		return
 	to_chat(owner,span_warning("You begin to carve unnatural symbols into your flesh!"))
 	SEND_SOUND(owner, sound('sound/weapons/slice.ogg',0,1,10))
@@ -137,7 +137,7 @@
 	..()
 
 /datum/action/innate/cult/blood_spell/IsAvailable(feedback = FALSE)
-	if(!IS_CULTIST(owner) || owner.incapacitated() || (!charges && deletes_on_empty))
+	if(!IS_CULTIST(owner) || owner.incapacitated || (!charges && deletes_on_empty))
 		return FALSE
 	return ..()
 
@@ -162,14 +162,14 @@
 	name = "Stun"
 	desc = "Empowers your hand to stun and mute a victim on contact. Gets weaker depending on how many have joined the Cult."
 	button_icon_state = "hand"
-	magic_path = "/obj/item/melee/blood_magic/stun"
+	magic_path = /obj/item/melee/blood_magic/stun
 	health_cost = 10
 
 /datum/action/innate/cult/blood_spell/teleport
 	name = "Teleport"
 	desc = "Empowers your hand to teleport yourself or another cultist to a teleport rune on contact."
 	button_icon_state = "tele"
-	magic_path = "/obj/item/melee/blood_magic/teleport"
+	magic_path = /obj/item/melee/blood_magic/teleport
 	health_cost = 7
 
 /datum/action/innate/cult/blood_spell/emp
@@ -194,20 +194,20 @@
 	desc = "Empowers your hand to start handcuffing victim on contact, and mute them if successful."
 	button_icon_state = "cuff"
 	charges = 4
-	magic_path = "/obj/item/melee/blood_magic/shackles"
+	magic_path = /obj/item/melee/blood_magic/shackles
 
 /datum/action/innate/cult/blood_spell/construction
 	name = "Twisted Construction"
 	desc = "Empowers your hand to corrupt certain metalic objects.<br><u>Converts:</u><br>Plasteel into runed metal<br>50 metal into a construct shell<br>Living cyborgs into constructs after a delay<br>Cyborg shells into construct shells<br>Purified soulstones (and any shades inside) into cultist soulstones<br>Airlocks into brittle runed airlocks after a delay (harm intent)"
 	button_icon_state = "transmute"
-	magic_path = "/obj/item/melee/blood_magic/construction"
+	magic_path = /obj/item/melee/blood_magic/construction
 	health_cost = 12
 
 /datum/action/innate/cult/blood_spell/equipment
 	name = "Summon Combat Equipment"
 	desc = "Empowers your hand to summon combat gear onto a cultist you touch, including cult armor, a cult bola, and a cult sword. Not recommended for use before the blood cult's presence has been revealed."
 	button_icon_state = "equip"
-	magic_path = "/obj/item/melee/blood_magic/armor"
+	magic_path = /obj/item/melee/blood_magic/armor
 
 /datum/action/innate/cult/blood_spell/dagger
 	name = "Summon Ritual Dagger"
@@ -263,7 +263,7 @@
 	SEND_SOUND(caller, sound('sound/effects/ghost.ogg', FALSE, TRUE, 50))
 
 	var/image/sparkle_image = image('icons/effects/cult.dmi', clicked_on, "bloodsparkles", ABOVE_MOB_LAYER)
-	clicked_on.add_alt_appearance(/datum/atom_hud/alternate_appearance/basic/cult, "cult_apoc", sparkle_image, NONE)
+	clicked_on.add_alt_appearance(/datum/atom_hud/alternate_appearance/basic/has_antagonist/cult, "cult_apoc", sparkle_image, NONE)
 
 	addtimer(CALLBACK(clicked_on, TYPE_PROC_REF(/atom/, remove_alt_appearance), "cult_apoc", TRUE), 4 MINUTES, TIMER_OVERRIDE|TIMER_UNIQUE)
 	to_chat(caller, span_cult_bold("[clicked_on] has been cursed with living nightmares!"))
@@ -339,7 +339,7 @@
 	invocation = "Fel'th Dol Ab'orod!"
 	button_icon_state = "manip"
 	charges = 5
-	magic_path = "/obj/item/melee/blood_magic/manipulator"
+	magic_path = /obj/item/melee/blood_magic/manipulator
 	deletes_on_empty = FALSE
 
 // The "magic hand" items
@@ -433,13 +433,15 @@
 /obj/item/melee/blood_magic/stun/cast_spell(mob/living/target, mob/living/carbon/user)
 	if(!istype(target) || IS_CULTIST(target))
 		return
-	var/datum/antagonist/cult/cultist = IS_CULTIST(user)
-	var/datum/team/cult/cult_team = cultist.get_team()
+	var/datum/antagonist/cult/cultist = GET_CULTIST(user)
+	var/datum/team/cult/cult_team = cultist?.get_team()
 	var/effect_coef = 1
-	if(cult_team.cult_ascendent)
+	if(cult_team?.cult_ascendent)
 		effect_coef = 0.1
-	else if(cult_team.cult_risen)
+	else if(cult_team?.cult_risen)
 		effect_coef = 0.4
+	if(IS_CULTIST(user) && isnull(GET_CULTIST(user)))
+		effect_coef = 0.2
 	user.visible_message(
 		span_warning("[user] holds up [user.p_their()] hand, which explodes in a flash of red light!"),
 		span_cult_italic("You attempt to stun [target] with the spell!"),
@@ -513,7 +515,7 @@
 		to_chat(user, span_warning("You must pick a valid rune!"))
 		return
 	var/obj/effect/rune/teleport/actual_selected_rune = potential_runes[input_rune_key] //what rune does that key correspond to?
-	if(QDELETED(src) || !user || !user.is_holding(src) || user.incapacitated() || !actual_selected_rune)
+	if(QDELETED(src) || !user || !user.is_holding(src) || user.incapacitated || !actual_selected_rune)
 		return
 	var/turf/dest = get_turf(actual_selected_rune)
 	if(dest.is_blocked_turf(TRUE))
@@ -699,7 +701,7 @@
 /obj/item/melee/blood_magic/construction/proc/check_menu(mob/user)
 	if(!istype(user))
 		CRASH("The cult construct selection radial menu was accessed by something other than a valid user.")
-	if(user.incapacitated() || !user.Adjacent(src))
+	if(user.incapacitated || !user.Adjacent(src))
 		return FALSE
 	return TRUE
 
@@ -965,7 +967,7 @@
 /obj/item/melee/blood_magic/manipulator/proc/check_menu(mob/living/user)
 	if(!istype(user))
 		CRASH("The Blood Rites manipulator radial menu was accessed by something other than a valid user.")
-	if(user.incapacitated() || !user.Adjacent(src))
+	if(user.incapacitated || !user.Adjacent(src))
 		return FALSE
 	return TRUE
 
