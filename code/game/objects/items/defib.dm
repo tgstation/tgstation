@@ -493,7 +493,7 @@
 
 	do_help(H, user)
 
-/// Called whenever the paddles successfuly shock something
+/// Called whenever the paddles successfully shock something
 /obj/item/shockpaddles/proc/do_success()
 	if(busy)
 		busy = FALSE
@@ -708,7 +708,7 @@
 	base_icon_state = "syndiepaddles"
 
 /obj/item/shockpaddles/syndicate/nanotrasen
-	name = "elite nanotrasen defibrillator paddles"
+	name = "elite Nanotrasen defibrillator paddles"
 	desc = "A pair of paddles used to revive deceased ERT members. They possess both the ability to penetrate armor and to deliver powerful or disabling shocks offensively."
 	icon_state = "ntpaddles0"
 	inhand_icon_state = "ntpaddles0"

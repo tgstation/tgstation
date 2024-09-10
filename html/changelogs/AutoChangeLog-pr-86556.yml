@@ -1,0 +1,6 @@
+author: "00-Steven"
+delete-after: True
+changes:
+  - bugfix: "Fixed being buckled to medical/roller beds making you always use the headrest as a footrest."
+  - bugfix: "Fixed bedsheets/diskies/plushies/etc put on medical/roller beds facing the wrong direction."
+  - bugfix: "Fixed bedsheets/diskies/plushies/etc put on any bed facing the wrong direction on some beds."
