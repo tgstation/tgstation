@@ -89,17 +89,17 @@
 		/obj/item/reagent_containers/medigel/libital = 2,
 		/obj/item/reagent_containers/medigel/aiuri = 2,
 		/obj/item/reagent_containers/medigel/sterilizine = 1,
-		)
+	)
 	contraband = list(
 		/obj/item/reagent_containers/pill/tox = 3,
 		/obj/item/reagent_containers/pill/morphine = 4,
 		/obj/item/reagent_containers/pill/multiver = 6,
-		)
+	)
 	premium = list(
 		/obj/item/reagent_containers/medigel/synthflesh = 2,
 		/obj/item/storage/pill_bottle/psicodine = 2,
 		/obj/item/storage/pill_bottle/sansufentanyl = 1,
-		)
+	)
 	default_price = 50
 	extra_price = 100
 	payment_department = ACCOUNT_MED
