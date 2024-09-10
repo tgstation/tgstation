@@ -316,6 +316,7 @@ multiple modular subtrees with behaviors
 
 	if(!length(current_behaviors) && idle_behavior)
 		idle_behavior.perform_idle_behavior(seconds_per_tick, src) //Do some stupid shit while we have nothing to do
+		return
 
 	if(current_movement_target)
 		if(!isatom(current_movement_target))
