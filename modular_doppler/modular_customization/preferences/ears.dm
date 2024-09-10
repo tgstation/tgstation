@@ -63,6 +63,10 @@
 /datum/preference/choiced/ears/create_default_value()
 	return /datum/sprite_accessory/ears/none::name
 
+/datum/preference/choiced/ears/apply_to_human(mob/living/carbon/human/target, value)
+	if(target.dna.ear_type == CAT)
+		target.dna.features["ears"] = value
+
 /datum/preference/choiced/ears/icon_for(value)
 	var/datum/sprite_accessory/chosen_ears = SSaccessories.ears_list[value]
 	return generate_ears_icon(chosen_ears)
@@ -90,7 +94,8 @@
 	return /datum/sprite_accessory/ears_more/fox/none::name
 
 /datum/preference/choiced/fox_ears/apply_to_human(mob/living/carbon/human/target, value)
-	target.dna.features["ears"] = value
+	if(target.dna.ear_type == FOX)
+		target.dna.features["ears"] = value
 
 /datum/preference/choiced/fox_ears/icon_for(value)
 	var/datum/sprite_accessory/chosen_ears = SSaccessories.ears_list_fox[value]
@@ -119,7 +124,8 @@
 	return /datum/sprite_accessory/ears_more/dog/none::name
 
 /datum/preference/choiced/dog_ears/apply_to_human(mob/living/carbon/human/target, value)
-	target.dna.features["ears"] = value
+	if(target.dna.ear_type == DOG)
+		target.dna.features["ears"] = value
 
 /datum/preference/choiced/dog_ears/icon_for(value)
 	var/datum/sprite_accessory/chosen_ears = SSaccessories.ears_list_dog[value]
