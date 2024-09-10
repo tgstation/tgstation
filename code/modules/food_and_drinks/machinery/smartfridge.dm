@@ -343,7 +343,7 @@
 	if(ismob(weapon.loc))
 		var/mob/owner = weapon.loc
 		if(!owner.transferItemToLoc(weapon, src))
-			to_chat(usr, span_warning("\the [weapon] is stuck to your hand, you cannot put it in \the [src]!"))
+			to_chat(owner, span_warning("\the [weapon] is stuck to your hand, you cannot put it in \the [src]!"))
 			return FALSE
 		return TRUE
 	else
@@ -396,43 +396,39 @@
 	if(. || !ui.user.can_perform_action(src, FORBID_TELEKINESIS_REACH))
 		return
 
-	. = TRUE
 	var/mob/living_mob = ui.user
 
 	switch(action)
 		if("Release")
 			var/amount = text2num(params["amount"])
-			var/desired = 1
+			if(isnull(amount) || !isnum(amount))
+				return TRUE
 			var/dispensed_amount = 0
 
 			if(isAI(living_mob))
 				to_chat(living_mob, span_warning("[src] does not respect your authority!"))
-				return
+				return TRUE
 
-			if (amount > 1)
-				desired = tgui_input_number(living_mob, "How many items would you like to take out?", "Release", default = min(amount, 50), max_value = min(amount, 50))
-				if(!desired)
-					return
-
-			for(var/obj/item/dispensed_item in src)
-				if(desired <= 0)
+			for(var/obj/item/dispensed_item in contents)
+				if(amount <= 0)
 					break
 				var/item_name = "[dispensed_item.type]-[replacetext(replacetext(dispensed_item.name, "\proper", ""), "\improper", "")]"
-				if(params["path"] == item_name)
-					if(dispensed_item in component_parts)
-						CRASH("Attempted removal of [dispensed_item] component_part from smartfridge via smartfridge interface.")
-					//dispense the item
-					if(!living_mob.put_in_hands(dispensed_item))
-						dispensed_item.forceMove(drop_location())
-						adjust_item_drop_location(dispensed_item)
-					use_energy(active_power_usage)
-					dispensed_amount++
-					desired--
+				if(params["path"] != item_name)
+					continue
+				if(dispensed_item in component_parts)
+					CRASH("Attempted removal of [dispensed_item] component_part from smartfridge via smartfridge interface.")
+				//dispense the item
+				if(!living_mob.put_in_hands(dispensed_item))
+					dispensed_item.forceMove(drop_location())
+					adjust_item_drop_location(dispensed_item)
+				use_energy(active_power_usage)
+				dispensed_amount++
+				amount--
 			if(dispensed_amount && vend_sound)
 				playsound(src, vend_sound, 50, TRUE, extrarange = -3)
 			if (visible_contents)
 				update_appearance()
-			return
+			return TRUE
 
 	return FALSE
 
@@ -480,15 +476,16 @@
 	.["isdryer"] = TRUE
 	.["drying"] = drying
 
-/obj/machinery/smartfridge/drying/ui_act(action, params)
+/obj/machinery/smartfridge/drying/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if(.)
 		update_appearance() // This is to handle a case where the last item is taken out manually instead of through drying pop-out
 		return
 
+	var/mob/user = ui.user
 	switch(action)
 		if("Dry")
-			toggle_drying(FALSE, usr)
+			toggle_drying(FALSE, user)
 			return TRUE
 
 /obj/machinery/smartfridge/drying/powered()

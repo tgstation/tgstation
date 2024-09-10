@@ -5,7 +5,7 @@
 	type_to_generate = /datum/loadout_item/pocket_items
 	tab_order = /datum/loadout_category/head::tab_order + 5
 	/// How many pocket items are allowed
-	VAR_PRIVATE/max_allowed = 2
+	var/max_allowed = 2 // DOPPLER EDIT CAHANGE - ORIGINAL: VAR_PRIVATE/max_allowed = 2
 
 /datum/loadout_category/pocket/New()
 	. = ..()

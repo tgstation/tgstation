@@ -167,7 +167,7 @@
 	suffix = "icemoon_underground_frozen_comms.dmm"
 
 /datum/map_template/ruin/icemoon/underground/comms_agent
-	name = "Icemoon Listening Post"
+	name = "Ice-Ruin Listening Post"
 	id = "icemoon_comms_agent"
 	description = "Radio signals are being detected and the source is this completely innocent pile of snow."
 	suffix = "icemoon_underground_comms_agent.dmm"

@@ -34,11 +34,19 @@
 	var/datum/weakref/spawned_mob_ref
 	/// DOPPLER SHIFT ADDITION: allowing players to have their current character loaded
 	var/allow_prefs = TRUE
+	/// DOPPLER SHIFT ADDITION: allowing players to have their current loadout and clothes loaded
+	var/allow_loadout = TRUE
 
 /obj/effect/mob_spawn/Initialize(mapload)
 	. = ..()
 	if(faction)
 		faction = string_list(faction)
+
+/obj/effect/mob_spawn/Destroy()
+	spawned_mob_ref = null
+	if(istype(outfit))
+		QDEL_NULL(outfit)
+	return ..()
 
 /// Creates whatever mob the spawner makes. Return FALSE if we want to exit from here without doing that, returning NULL will be logged to admins.
 /obj/effect/mob_spawn/proc/create(mob/mob_possessor, newname)
@@ -100,14 +108,18 @@
 		if(allow_prefs && spawned_human.client)
 			spawned_human.client?.prefs.safe_transfer_prefs_to(spawned_human)
 			SSquirks.AssignQuirks(spawned_human, spawned_human.client)
-			spawned_human.equip_outfit_and_loadout(outfit, spawned_human.client?.prefs)
+			if(allow_loadout)
+				spawned_human.equip_outfit_and_loadout(outfit, spawned_human.client?.prefs)
+			else
+				spawned_human.equipOutfit(outfit)
 		else
 			spawned_human.equipOutfit(outfit)
 	else if(allow_prefs && spawned_mob.client)
 		var/mob/living/carbon/human/spawned_human = spawned_mob
 		spawned_human.client?.prefs.safe_transfer_prefs_to(spawned_human)
 		SSquirks.AssignQuirks(spawned_human, spawned_human.client)
-		spawned_human.equip_outfit_and_loadout(new /datum/outfit(), spawned_human.client?.prefs)
+		if(allow_loadout)
+			spawned_human.equip_outfit_and_loadout(new /datum/outfit(), spawned_human.client?.prefs)
 		/// DOPPLER SHIFT ADDITION END
 
 ///these mob spawn subtypes do not trigger until attacked by a ghost.
@@ -152,7 +164,7 @@
 	SSpoints_of_interest.make_point_of_interest(src)
 	LAZYADD(GLOB.mob_spawners[name], src)
 
-/obj/effect/mob_spawn/Destroy()
+/obj/effect/mob_spawn/ghost_role/Destroy()
 	var/list/spawners = GLOB.mob_spawners[name]
 	LAZYREMOVE(spawners, src)
 	if(!LAZYLEN(spawners))
@@ -178,7 +190,10 @@
 			prompt += " (Warning, You can no longer be revived!)"
 		/// DOPPLER SHIFT ADDITION BEGIN
 		if(allow_prefs)
-			prompt += "\nYou will be loaded in with your current character, [realname] - loadout & quirks included!  Make sure they fit the role!"
+			prompt += "\nYou will be loaded in with your current character, [realname] -"
+			if(allow_loadout)
+				prompt += " loadout &"
+			prompt += " quirks included!  Make sure they fit the role!"
 		/// DOPPLER SHIFT ADDITION END
 		var/ghost_role = tgui_alert(usr, prompt, buttons = list("Yes", "No"), timeout = 10 SECONDS)
 		if(ghost_role != "Yes" || !loc || QDELETED(user))
@@ -281,6 +296,7 @@
 
 ///these mob spawn subtypes trigger immediately (New or Initialize) and are not player controlled... since they're dead, you know?
 /obj/effect/mob_spawn/corpse
+	density = FALSE //these are pretty much abstract objects that leave a corpse in their place.
 	///when this mob spawn should auto trigger.
 	var/spawn_when = CORPSE_INSTANT
 

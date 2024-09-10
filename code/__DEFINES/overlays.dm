@@ -1,6 +1,6 @@
 // A reasonable number of maximum overlays an object needs
 // If you think you need more, rethink it
-#define MAX_ATOM_OVERLAYS 100
+#define MAX_ATOM_OVERLAYS 200 /// DOPPLER SHIFT EDIT: 200, up from 100
 
 /// Checks if an atom has reached the overlay limit, and make a loud error if it does.
 #define VALIDATE_OVERLAY_LIMIT(changed_on) \

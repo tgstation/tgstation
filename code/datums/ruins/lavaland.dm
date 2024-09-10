@@ -323,3 +323,10 @@
 	description = "Not every shuttle makes it back to CentCom."
 	suffix = "lavaland_surface_shuttle_wreckage.dmm"
 	allow_duplicates = FALSE
+
+/datum/map_template/ruin/lavaland/crashsite
+	name = "Lava-Ruin Pod Crashsite"
+	id = "crashsite"
+	description = "They launched too early"
+	suffix = "lavaland_surface_crashsite.dmm"
+	allow_duplicates = FALSE

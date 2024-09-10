@@ -39,7 +39,7 @@
 
 		for(var/area/station/hallway/area in GLOB.areas)
 			for(var/turf/open/floor in area.get_turfs_from_all_zlevels())
-				if(floor.Enter(vine))
+				if(!isopenspaceturf(floor) && floor.Enter(vine))
 					turfs += floor
 
 		qdel(vine)
@@ -64,7 +64,7 @@
 
 /datum/event_admin_setup/set_location/spacevine/apply_to_event(datum/round_event/spacevine/event)
 	event.override_turf = chosen_turf
-	
+
 /datum/event_admin_setup/multiple_choice/spacevine
 	input_text = "Select starting mutations."
 	min_choices = 0
@@ -88,7 +88,7 @@
 		type_choices += text2path(choice)
 	event.mutations_overridden = TRUE
 	event.override_mutations = type_choices
-	
+
 /datum/event_admin_setup/input_number/spacevine_potency
 	input_text = "Set vine's potency (effects mutation frequency + max severity)"
 	max_value = 100

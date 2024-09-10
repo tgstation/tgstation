@@ -121,14 +121,11 @@
 
 	if(chest)
 		chest.forceMove(drop_to)
-		new /obj/item/stack/cable_coil(drop_to, 1)
-		chest.wired = FALSE
-		chest.cell?.forceMove(drop_to)
+		chest.drop_organs()
 
 	if(head)
-		head.flash1?.forceMove(drop_to)
-		head.flash2?.forceMove(drop_to)
 		head.forceMove(drop_to)
+		head.drop_organs()
 
 /obj/item/robot_suit/proc/put_in_hand_or_drop(mob/living/user, obj/item/I) //normal put_in_hands() drops the item ontop of the player, this drops it at the suit's loc
 	if(!user.put_in_hands(I))
@@ -409,7 +406,7 @@
 	data["lawsync"] = lawsync
 	return data
 
-/obj/item/robot_suit/ui_act(action, list/params)
+/obj/item/robot_suit/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if(.)
 		return

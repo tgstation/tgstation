@@ -8,7 +8,7 @@
 	program_open_overlay = "research"
 	tgui_id = "NtosScipaper"
 	program_icon = "paper-plane"
-	download_access = list(ACCESS_ORDNANCE, ACCESS_SCIENCE, ACCESS_AWAY_SCIENCE)
+	download_access = list(ACCESS_ORDNANCE, ACCESS_SCIENCE, ACCESS_AWAY_SCIENCE, ACCESS_ATMOSPHERICS)
 
 	var/datum/techweb/linked_techweb
 	/// Unpublished, temporary paper datum.

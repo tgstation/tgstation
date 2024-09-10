@@ -1,0 +1,16 @@
+{
+	"wraps": [
+		{
+			"type": "icon_state",
+			"icon_state": "wraps_under_obj",
+			"blend_mode": "overlay",
+			"color_ids": [ 1 ]
+		},
+		{
+			"type": "icon_state",
+			"icon_state": "wraps_over_obj",
+			"blend_mode": "overlay",
+			"color_ids": [ 2 ]
+		}
+	]
+}

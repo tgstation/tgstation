@@ -84,6 +84,7 @@
 	atom_storage.max_specific_storage = WEIGHT_CLASS_SMALL
 	atom_storage.open_sound = 'sound/items/medkit_open.ogg'
 	atom_storage.open_sound_vary = TRUE
+	atom_storage.rustle_sound = 'sound/items/medkit_rustle.ogg'
 
 /obj/item/storage/medkit/regular
 	icon_state = "medkit"

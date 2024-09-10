@@ -1,0 +1,16 @@
+{
+	"ferroniere": [
+		{
+			"type": "icon_state",
+			"icon_state": "ferroniere_base",
+			"blend_mode": "overlay",
+			"color_ids": [ 1 ]
+		},
+		{
+			"type": "icon_state",
+			"icon_state": "ferroniere_gem",
+			"blend_mode": "overlay",
+			"color_ids": [ 2 ]
+		}
+	]
+}

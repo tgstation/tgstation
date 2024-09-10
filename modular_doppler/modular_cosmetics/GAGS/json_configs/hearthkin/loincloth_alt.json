@@ -1,0 +1,10 @@
+{
+	"loincloth_alt": [
+		{
+			"type": "icon_state",
+			"icon_state": "loincloth_alt_obj",
+			"blend_mode": "overlay",
+			"color_ids": [ 1 ]
+		}
+	]
+}
