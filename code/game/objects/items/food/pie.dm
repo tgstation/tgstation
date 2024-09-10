@@ -74,32 +74,17 @@
 	var/stunning = TRUE
 	crafting_complexity = FOOD_COMPLEXITY_3
 
-/obj/item/food/pie/cream/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
+/obj/item/food/pie/cream/Initialize(mapload)
 	. = ..()
-	if(!.) //if we're not being caught
-		splat(hit_atom)
+	AddComponent(/datum/component/splat, hit_callback = CALLBACK(src, PROC_REF(stun_and_blur)))
 
-/obj/item/food/pie/cream/proc/splat(atom/movable/hit_atom)
-	if(isliving(loc)) //someone caught us!
-		return
-	var/turf/hit_turf = get_turf(hit_atom)
-	new/obj/effect/decal/cleanable/food/pie_smudge(hit_turf)
-	if(reagents?.total_volume)
-		reagents.expose(hit_atom, TOUCH)
-	var/is_creamable = TRUE
-	if(isliving(hit_atom))
-		var/mob/living/living_target_getting_hit = hit_atom
-		if(stunning)
-			living_target_getting_hit.Paralyze(2 SECONDS) //splat!
-		if(iscarbon(living_target_getting_hit))
-			is_creamable = !!(living_target_getting_hit.get_bodypart(BODY_ZONE_HEAD))
-		if(is_creamable)
-			living_target_getting_hit.adjust_eye_blur(2 SECONDS)
-		living_target_getting_hit.visible_message(span_warning("[living_target_getting_hit] is creamed by [src]!"), span_userdanger("You've been creamed by [src]!"))
-		playsound(living_target_getting_hit, SFX_DESECRATION, 50, TRUE)
-	if(is_creamable && is_type_in_typecache(hit_atom, GLOB.creamable))
-		hit_atom.AddComponent(/datum/component/face_decal/creampie, "creampie", EXTERNAL_FRONT)
-	qdel(src)
+/obj/item/food/pie/cream/proc/stun_and_blur(mob/living/victim, can_splat_on)
+	if(stunning)
+		victim.Paralyze(2 SECONDS) //splat!
+	if(can_splat_on)
+		victim.adjust_eye_blur(2 SECONDS)
+	victim.visible_message(span_warning("[victim] is creamed by [src]!"), span_userdanger("You've been creamed by [src]!"))
+	playsound(victim, SFX_DESECRATION, 50, TRUE)
 
 /obj/item/food/pie/cream/nostun
 	stunning = FALSE

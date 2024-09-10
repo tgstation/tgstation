@@ -1,0 +1,4 @@
+author: "DaCoolBoss"
+delete-after: True
+changes:
+  - bugfix: "Added missing entries to server config file iceruinblacklist.txt"

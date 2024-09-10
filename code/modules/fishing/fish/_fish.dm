@@ -9,7 +9,6 @@
 	name = "generic looking aquarium fish"
 	desc = "very bland"
 	icon = 'icons/obj/aquarium/fish.dmi'
-	icon_state = "bugfish"
 	lefthand_file = 'icons/mob/inhands/fish_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/fish_righthand.dmi'
 	force = 6
@@ -26,25 +25,20 @@
 	obj_flags = UNIQUE_RENAME
 	item_flags = IMMUTABLE_SLOW|SLOWS_WHILE_IN_HAND
 
-	/// Resulting width of aquarium visual icon - default size of "fish_greyscale" state
-	var/sprite_width = 5
-	/// Resulting height of aquarium visual icon - default size of "fish_greyscale" state
-	var/sprite_height = 3
+	/// width of aquarium visual icon
+	var/sprite_width
+	/// height of aquarium visual icon
+	var/sprite_height
 
-	/// Original width of aquarium visual icon - used to calculate scaledown factor
-	var/source_width = 32
-	/// Original height of aquarium visual icon - used to calculate scaledown factor
-	var/source_height = 32
-
+	///this icon file will be used for in-aquarium visual for the fish
+	var/dedicated_in_aquarium_icon = 'icons/obj/aquarium/fish.dmi'
 	/**
-	 * If present and it also has a dedicated icon state, this icon file will
-	 * be used for in-aquarium visual for the fish instead of its icon
+	 * The icon_state that will be used for in-aquarium visual for the fish
+	 * If not set, "[initial(icon_state)]_small" will be used instead
 	 */
-	var/dedicated_in_aquarium_icon
-	/// If present this icon will be used for in-aquarium visual for the fish instead of icon_state
 	var/dedicated_in_aquarium_icon_state
 
-	/// If present aquarium visual will be this color
+	/// If present aquarium visual will be of this color
 	var/aquarium_vc_color
 
 	/// Required fluid type for this fish to live.
@@ -214,6 +208,8 @@
 	if(HAS_MIND_TRAIT(user, TRAIT_EXAMINE_FISH))
 		. += span_notice("It's [size] cm long.")
 		. += span_notice("It weighs [weight] g.")
+		if(HAS_TRAIT(src, TRAIT_FISHING_BAIT))
+			. += span_smallnoticeital("It can be used as a fishing bait.")
 
 ///Randomizes weight and size.
 /obj/item/fish/proc/randomize_size_and_weight(base_size = average_size, base_weight = average_weight, deviation = weight_size_deviation)
@@ -261,7 +257,7 @@
 				inhand_icon_state = "fish_huge"
 			update_weight_class(WEIGHT_CLASS_GIGANTIC)
 
-	if(size > FISH_SIZE_TWO_HANDS_REQUIRED)
+	if(size > FISH_SIZE_TWO_HANDS_REQUIRED || (HAS_TRAIT(src, TRAIT_FISH_SHOULD_TWOHANDED) && w_class >= WEIGHT_CLASS_BULKY))
 		inhand_icon_state = "[inhand_icon_state]_wielded"
 		AddComponent(/datum/component/two_handed, require_twohands = TRUE)
 
@@ -322,6 +318,15 @@
 	throwforce = force
 
 	SEND_SIGNAL(src, COMSIG_FISH_FORCE_UPDATED, weight_rank, bonus_malus)
+
+
+	if(material_flags & MATERIAL_EFFECTS) //struck by metal gen or something.
+		for(var/current_material in custom_materials)
+			var/datum/material/material = GET_MATERIAL_REF(current_material)
+			force *= material.strength_modifier
+			throwforce *= material.strength_modifier
+			if(material.item_sound_override)
+				hitsound = material.item_sound_override
 
 	if(force >=15 && hitsound == SFX_DEFAULT_FISH_SLAP) // don't override special attack sounds
 		hitsound = SFX_ALT_FISH_SLAP // do more damage - do heavier slap sound
