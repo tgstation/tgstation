@@ -1710,7 +1710,7 @@
 
 	// Pre-calc the damage increase since we'll be using it in all the possible
 	//  operations
-	var/damage_increase = rand(100/(connected_scanner.damage_coeff ** 2),250/(connected_scanner.damage_coeff ** 2))
+	var/damage_increase = rand(50/(connected_scanner.damage_coeff ** 2),125/(connected_scanner.damage_coeff ** 2))
 
 	switch(type)
 		if("ui")
