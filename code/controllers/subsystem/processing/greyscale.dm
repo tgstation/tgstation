@@ -57,7 +57,6 @@ PROCESSING_SUBSYSTEM_DEF(greyscale)
 	var/list/handled_types = list()
 	var/list/icons = list()
 	for(var/atom/fake as anything in subtypesof(atom_typepath))
-		CHECK_TICK
 		if(type_blacklist && type_blacklist[fake])
 			continue
 		handled_types[fake] = TRUE
@@ -74,7 +73,6 @@ PROCESSING_SUBSYSTEM_DEF(greyscale)
 
 	var/icon/holder = icon('icons/testing/greyscale_error.dmi')
 	for(var/state in icons)
-		CHECK_TICK
 		holder.Insert(icons[state], state)
 
 	var/filepath = "icons/map_icons/[filename].dmi"
