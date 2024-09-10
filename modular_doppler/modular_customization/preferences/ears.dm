@@ -20,6 +20,10 @@
 			var/obj/item/organ/replacement = SSwardrobe.provide_type(organ_path)
 			replacement.Insert(target, special = TRUE, movement_flags = DELETE_IF_REPLACED)
 			return .
+		else
+			var/obj/item/organ/default = SSwardrobe.provide_type(mutantears)
+			default.Insert(target, special = TRUE, movement_flags = DELETE_IF_REPLACED)
+			return .
 	var/obj/item/organ/internal/ears/old_part = target.get_organ_slot(ORGAN_SLOT_EARS)
 	if(istype(old_part))
 		old_part.Remove(target, special = TRUE, movement_flags = DELETE_IF_REPLACED)
