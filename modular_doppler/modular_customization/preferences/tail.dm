@@ -1,10 +1,10 @@
 /// SSAccessories setup
 /datum/controller/subsystem/accessories
-	var/list/tails_list_canine
+	var/list/tails_list_dog
 
 /datum/controller/subsystem/accessories/setup_lists()
 	. = ..()
-	tails_list_canine = init_sprite_accessory_subtypes(/datum/sprite_accessory/tails/dog)["default_sprites"] // FLAKY DEFINE: this should be using DEFAULT_SPRITE_LIST
+	tails_list_dog = init_sprite_accessory_subtypes(/datum/sprite_accessory/tails/dog)["default_sprites"] // FLAKY DEFINE: this should be using DEFAULT_SPRITE_LIST
 
 /datum/dna
 	///	This variable is read by the regenerate_organs() proc to know what organ subtype to give
@@ -66,15 +66,15 @@
 			target.dna.features["tail_cat"] = /datum/sprite_accessory/tails/human/none::name
 			target.dna.features["tail_monkey"] = /datum/sprite_accessory/tails/monkey/none::name
 			target.dna.features["tail_other"] = /datum/sprite_accessory/tails/none::name
-		if(REPTILE)
+		if(LIZARD)
 			target.dna.features["tail_cat"] = /datum/sprite_accessory/tails/human/none::name
 			target.dna.features["tail_monkey"] = /datum/sprite_accessory/tails/monkey/none::name
 			target.dna.features["tail_other"] = /datum/sprite_accessory/tails/none::name
-		if(FELINE)
+		if(CAT)
 			target.dna.features["tail_lizard"] = /datum/sprite_accessory/tails/lizard/none::name
 			target.dna.features["tail_monkey"] = /datum/sprite_accessory/tails/monkey/none::name
 			target.dna.features["tail_other"] = /datum/sprite_accessory/tails/none::name
-		if(SIMIAN)
+		if(MONKEY)
 			target.dna.features["tail_cat"] = /datum/sprite_accessory/tails/human/none::name
 			target.dna.features["tail_lizard"] = /datum/sprite_accessory/tails/lizard/none::name
 			target.dna.features["tail_other"] = /datum/sprite_accessory/tails/none::name
@@ -94,7 +94,7 @@
 /datum/preference/choiced/lizard_tail/is_accessible(datum/preferences/preferences)
 	. = ..()
 	var/chosen_variation = preferences.read_preference(/datum/preference/choiced/tail_variation)
-	if(chosen_variation == REPTILE)
+	if(chosen_variation == LIZARD)
 		return TRUE
 	return FALSE
 
@@ -118,7 +118,7 @@
 /datum/preference/choiced/tail_human/is_accessible(datum/preferences/preferences)
 	. = ..()
 	var/chosen_variation = preferences.read_preference(/datum/preference/choiced/tail_variation)
-	if(chosen_variation == FELINE)
+	if(chosen_variation == CAT)
 		return TRUE
 	return FALSE
 
@@ -142,7 +142,7 @@
 /datum/preference/choiced/monkey_tail/is_accessible(datum/preferences/preferences)
 	. = ..()
 	var/chosen_variation = preferences.read_preference(/datum/preference/choiced/tail_variation)
-	if(chosen_variation == SIMIAN)
+	if(chosen_variation == MONKEY)
 		return TRUE
 	return FALSE
 
@@ -166,12 +166,12 @@
 	main_feature_name = "Tail"
 
 /datum/preference/choiced/dog_tail/init_possible_values()
-	return assoc_to_keys_features(SSaccessories.tails_list_canine)
+	return assoc_to_keys_features(SSaccessories.tails_list_dog)
 
 /datum/preference/choiced/dog_tail/is_accessible(datum/preferences/preferences)
 	. = ..()
 	var/chosen_variation = preferences.read_preference(/datum/preference/choiced/tail_variation)
-	if(chosen_variation == CANINE)
+	if(chosen_variation == DOG)
 		return TRUE
 	return FALSE
 
@@ -182,7 +182,7 @@
 	target.dna.features["tail_other"] = value
 
 /datum/preference/choiced/dog_tail/icon_for(value)
-	var/datum/sprite_accessory/chosen_tail = SSaccessories.tails_list_canine[value]
+	var/datum/sprite_accessory/chosen_tail = SSaccessories.tails_list_dog[value]
 	return generate_tail_icon(chosen_tail)
 
 
@@ -221,9 +221,6 @@
 
 /// Overwrite lives here
 //	This is for the triple color channel
-/obj/item/organ/external/tail
-	name = "tail"
-
 /datum/bodypart_overlay/mutant/tail
 	layers = EXTERNAL_FRONT | EXTERNAL_FRONT_2 | EXTERNAL_FRONT_3 | EXTERNAL_BEHIND | EXTERNAL_BEHIND_2 | EXTERNAL_BEHIND_3
 	feature_key_sprite = "tail"

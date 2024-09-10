@@ -1,15 +1,16 @@
 /// SSAccessories setup
-/*datum/controller/subsystem/accessories
-
+/datum/controller/subsystem/accessories
+	var/list/ears_list_dog
+	var/list/ears_list_fox
 
 /datum/controller/subsystem/accessories/setup_lists()
 	. = ..()
-*/
+	ears_list_dog = init_sprite_accessory_subtypes(/datum/sprite_accessory/ears_more/dog)["default_sprites"] // FLAKY DEFINE: this should be using DEFAULT_SPRITE_LIST
+	ears_list_fox = init_sprite_accessory_subtypes(/datum/sprite_accessory/ears_more/fox)["default_sprites"]
 
 /datum/dna
 	///	This variable is read by the regenerate_organs() proc to know what organ subtype to give
 	var/ear_type = NO_VARIATION
-
 
 /datum/species/regenerate_organs(mob/living/carbon/target, datum/species/old_species, replace_current = TRUE, list/excluded_zones, visual_only = FALSE)
 	. = ..()
@@ -26,7 +27,6 @@
 
 
 /// Dropdown to select which ears you'll be rocking
-//	This is my third attempt at writing this, which means it has to be good
 /datum/preference/choiced/ear_variation
 	savefile_key = "ear_type"
 	savefile_identifier = PREFERENCE_CHARACTER
@@ -40,10 +40,10 @@
 	return list(NO_VARIATION) + (GLOB.mutant_variations)
 
 /datum/preference/choiced/ear_variation/apply_to_human(mob/living/carbon/human/target, chosen_variation)
-//	Read by the regenerate_organs() proc to know what organ subtype to grant
-	target.dna.ear_type = chosen_variation
 	if(chosen_variation == NO_VARIATION)
 		target.dna.features["ears"] = /datum/sprite_accessory/ears/none::name
+	else
+		target.dna.ear_type = chosen_variation
 
 ///	All current ear types to choose from
 //	Cat
@@ -56,7 +56,7 @@
 /datum/preference/choiced/ears/is_accessible(datum/preferences/preferences)
 	. = ..()
 	var/chosen_variation = preferences.read_preference(/datum/preference/choiced/ear_variation)
-	if(chosen_variation == FELINE)
+	if(chosen_variation == CAT)
 		return TRUE
 	return FALSE
 
@@ -68,6 +68,64 @@
 
 /datum/preference/choiced/ears/icon_for(value)
 	var/datum/sprite_accessory/chosen_ears = SSaccessories.ears_list[value]
+	return generate_ears_icon(chosen_ears)
+
+//	Fox
+/datum/preference/choiced/fox_ears
+	savefile_key = "feature_fox_ears"
+	savefile_identifier = PREFERENCE_CHARACTER
+	category = PREFERENCE_CATEGORY_CLOTHING
+	relevant_external_organ = null
+	should_generate_icons = TRUE
+	main_feature_name = "Ears"
+
+/datum/preference/choiced/fox_ears/init_possible_values()
+	return assoc_to_keys_features(SSaccessories.ears_list_fox)
+
+/datum/preference/choiced/fox_ears/is_accessible(datum/preferences/preferences)
+	. = ..()
+	var/chosen_variation = preferences.read_preference(/datum/preference/choiced/ear_variation)
+	if(chosen_variation == FOX)
+		return TRUE
+	return FALSE
+
+/datum/preference/choiced/fox_ears/create_default_value()
+	return /datum/sprite_accessory/ears_more/fox/none::name
+
+/datum/preference/choiced/fox_ears/apply_to_human(mob/living/carbon/human/target, value)
+	target.dna.features["ears"] = value
+
+/datum/preference/choiced/fox_ears/icon_for(value)
+	var/datum/sprite_accessory/chosen_ears = SSaccessories.ears_list_fox[value]
+	return generate_ears_icon(chosen_ears)
+
+//	Dog
+/datum/preference/choiced/dog_ears
+	savefile_key = "feature_dog_ears"
+	savefile_identifier = PREFERENCE_CHARACTER
+	category = PREFERENCE_CATEGORY_CLOTHING
+	relevant_external_organ = null
+	should_generate_icons = TRUE
+	main_feature_name = "Ears"
+
+/datum/preference/choiced/dog_ears/init_possible_values()
+	return assoc_to_keys_features(SSaccessories.ears_list_dog)
+
+/datum/preference/choiced/dog_ears/is_accessible(datum/preferences/preferences)
+	. = ..()
+	var/chosen_variation = preferences.read_preference(/datum/preference/choiced/ear_variation)
+	if(chosen_variation == DOG)
+		return TRUE
+	return FALSE
+
+/datum/preference/choiced/dog_ears/create_default_value()
+	return /datum/sprite_accessory/ears_more/dog/none::name
+
+/datum/preference/choiced/dog_ears/apply_to_human(mob/living/carbon/human/target, value)
+	target.dna.features["ears"] = value
+
+/datum/preference/choiced/dog_ears/icon_for(value)
+	var/datum/sprite_accessory/chosen_ears = SSaccessories.ears_list_dog[value]
 	return generate_ears_icon(chosen_ears)
 
 /// Proc to gen that icon
@@ -108,14 +166,12 @@
 
 /// Overwrite lives here
 //	This is for the triple color channel
-/obj/item/organ/internal/ears
-	name = "ears"
-
-/datum/bodypart_overlay/mutant/cat_ears
+/datum/bodypart_overlay/mutant/ears
 	layers = EXTERNAL_FRONT | EXTERNAL_FRONT_2 | EXTERNAL_FRONT_3 | EXTERNAL_ADJACENT | EXTERNAL_ADJACENT_2 | EXTERNAL_ADJACENT_3
+	feature_key = "ears"
 	feature_key_sprite = "ears"
 
-/datum/bodypart_overlay/mutant/cat_ears/color_image(image/overlay, draw_layer, obj/item/bodypart/limb)
+/datum/bodypart_overlay/mutant/ears/color_image(image/overlay, draw_layer, obj/item/bodypart/limb)
 	if(limb == null)
 		return ..()
 	if(limb.owner == null)

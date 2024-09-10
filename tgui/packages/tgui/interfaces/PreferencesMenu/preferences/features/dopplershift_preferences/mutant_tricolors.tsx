@@ -7,13 +7,13 @@ import {
 } from '../base';
 import { FeatureDropdownInput } from '../dropdowns';
 
-export const has_snout: FeatureToggle = {
+export const snout_type: FeatureChoiced = {
   name: 'Add Part: Snout',
   category: 'GAMEPLAY',
   description: `
-    When toggled, adds a snout to your character.
+    Pick what kind of snoot to add.
   `,
-  component: CheckboxInput,
+  component: FeatureDropdownInput,
 };
 
 export const snout_color: Feature<string[]> = {

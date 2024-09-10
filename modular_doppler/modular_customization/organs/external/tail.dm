@@ -17,7 +17,7 @@
 	feature_key = "tail_other"
 
 /datum/bodypart_overlay/mutant/tail/canine/get_global_feature_list()
-	return SSaccessories.tails_list_canine
+	return SSaccessories.tails_list_dog
 
 // Create the proximity monitor when we start wagging, thanks TG for this proc!
 /obj/item/organ/external/tail/dog/start_wag(mob/living/carbon/organ_owner, stop_after = INFINITY)
