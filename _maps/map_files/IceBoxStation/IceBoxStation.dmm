@@ -56941,9 +56941,6 @@
 	},
 /turf/open/floor/iron/dark/textured,
 /area/station/security/range)
-"qtv" = (
-/turf/open/genturf,
-/area/icemoon/surface/outdoors/nospawn)
 "qtw" = (
 /obj/machinery/door/airlock/security{
 	name = "Prison Forestry"
@@ -269753,7 +269750,7 @@ wNO
 wNO
 wNO
 bln
-qtv
+bln
 fwx
 kDs
 kDs
