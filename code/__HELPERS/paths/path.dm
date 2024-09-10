@@ -335,7 +335,7 @@
 	src.has_gravity = construct_from.has_gravity()
 	if(ismob(construct_from))
 		var/mob/living/mob_construct = construct_from
-		src.incapacitated = mob_construct.incapacitated()
+		src.incapacitated = mob_construct.incapacitated
 		if(mob_construct.buckled)
 			src.buckled_info = new(mob_construct.buckled, access, no_id, call_depth + 1)
 	if(isobserver(construct_from))

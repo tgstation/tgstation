@@ -101,7 +101,7 @@
 		CtrlClickOn(A)
 		return
 
-	if(incapacitated(IGNORE_RESTRAINTS|IGNORE_STASIS))
+	if(INCAPACITATED_IGNORING(src, INCAPABLE_RESTRAINTS|INCAPABLE_STASIS))
 		return
 
 	face_atom(A)
@@ -247,7 +247,8 @@
 	return TRUE
 
 /proc/CheckToolReach(atom/movable/here, atom/movable/there, reach)
-	if(!here || !there)
+	. = FALSE
+	if(QDELETED(here) || QDELETED(there))
 		return
 	switch(reach)
 		if(0)
@@ -258,14 +259,18 @@
 			var/obj/dummy = new(get_turf(here))
 			dummy.pass_flags |= PASSTABLE
 			dummy.SetInvisibility(INVISIBILITY_ABSTRACT)
-			for(var/i in 1 to reach) //Limit it to that many tries
-				var/turf/T = get_step(dummy, get_dir(dummy, there))
+			var/list/steps = get_steps_to(dummy, there)
+			if(isnull(steps) || length(steps) > reach) // If the path is further than the reach, no way we can reach it anyways.
+				qdel(dummy)
+				return FALSE
+			for(var/direction in steps)
+				var/turf/next_step = get_step(dummy, direction)
 				if(dummy.CanReach(there))
 					qdel(dummy)
 					return TRUE
-				if(!dummy.Move(T)) //we're blocked!
+				if(!dummy.Move(next_step)) // We're blocked, nope.
 					qdel(dummy)
-					return
+					return FALSE
 			qdel(dummy)
 
 /// Default behavior: ignore double clicks (the second click that makes the doubleclick call already calls for a normal click)

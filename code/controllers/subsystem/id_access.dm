@@ -398,6 +398,8 @@ SUBSYSTEM_DEF(id_access)
 
 	id_card.clear_access()
 	id_card.trim = trim
+	id_card.big_pointer = trim.big_pointer
+	id_card.pointer_color = trim.pointer_color
 
 	if(copy_access)
 		id_card.access = trim.access.Copy()
@@ -441,6 +443,8 @@ SUBSYSTEM_DEF(id_access)
 	id_card.department_color_override = trim.department_color
 	id_card.department_state_override = trim.department_state
 	id_card.subdepartment_color_override = trim.subdepartment_color
+	id_card.big_pointer = trim.big_pointer
+	id_card.pointer_color = trim.pointer_color
 
 	if(!check_forged || !id_card.forged)
 		id_card.assignment = trim.assignment
@@ -461,6 +465,8 @@ SUBSYSTEM_DEF(id_access)
 	id_card.department_color_override = null
 	id_card.department_state_override = null
 	id_card.subdepartment_color_override = null
+	id_card.big_pointer = id_card.trim.big_pointer
+	id_card.pointer_color = id_card.trim.pointer_color
 
 /**
  * Adds the accesses associated with a trim to an ID card.
