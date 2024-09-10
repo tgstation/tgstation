@@ -28,13 +28,19 @@
 	if(w_uniform && !(obscured & ITEM_SLOT_ICLOTHING) && !(w_uniform.item_flags & EXAMINE_SKIP))
 		//accessory
 		var/accessory_message = ""
+		var/sensor_message = ""
 		if(istype(w_uniform, /obj/item/clothing/under))
 			var/obj/item/clothing/under/undershirt = w_uniform
 			var/list/accessories = undershirt.list_accessories_with_icon(user)
 			if(length(accessories))
 				accessory_message = " with [english_list(accessories)] attached"
+			if(undershirt.has_sensor == BROKEN_SENSORS)
+				sensor_message = span_notice("The medical sensors on it are sparking.")
 
 		. += "[t_He] [t_is] wearing [w_uniform.get_examine_string(user)][accessory_message]."
+		if(sensor_message)
+			. += sensor_message
+
 	//head
 	if(head && !(obscured & ITEM_SLOT_HEAD) && !(head.item_flags & EXAMINE_SKIP))
 		. += "[t_He] [t_is] wearing [head.get_examine_string(user)] on [t_his] head."
