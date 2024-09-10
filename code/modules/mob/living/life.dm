@@ -10,6 +10,7 @@
  * - times_fired: The number of times SSmobs has fired
  */
 /mob/living/proc/Life(seconds_per_tick = SSMOBS_DT, times_fired)
+	set waitfor = FALSE
 	SHOULD_NOT_SLEEP(TRUE)
 
 	var/signal_result = SEND_SIGNAL(src, COMSIG_LIVING_LIFE, seconds_per_tick, times_fired)
