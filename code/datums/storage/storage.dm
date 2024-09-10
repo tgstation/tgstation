@@ -389,7 +389,7 @@ GLOBAL_LIST_EMPTY(cached_storage_typecaches)
 			user.balloon_alert(user, "no room!")
 		return FALSE
 
-	var/can_hold_it = isnull(can_hold) || is_type_in_typecache(to_insert, can_hold)
+	var/can_hold_it = isnull(can_hold) || is_type_in_typecache(to_insert, can_hold) || is_type_in_typecache(to_insert, exception_hold)
 	var/cant_hold_it = is_type_in_typecache(to_insert, cant_hold)
 	var/trait_says_no = HAS_TRAIT(to_insert, TRAIT_NO_STORAGE_INSERT)
 	if(!can_hold_it || cant_hold_it || trait_says_no)
@@ -738,7 +738,7 @@ GLOBAL_LIST_EMPTY(cached_storage_typecaches)
 /datum/storage/proc/on_mousedrop_onto(datum/source, atom/over_object, mob/user)
 	SIGNAL_HANDLER
 
-	if(ismecha(user.loc) || !user.canUseStorage())
+	if(ismecha(user.loc) || user.incapacitated || !user.canUseStorage())
 		return
 
 	if(istype(over_object, /atom/movable/screen/inventory/hand))
@@ -826,6 +826,9 @@ GLOBAL_LIST_EMPTY(cached_storage_typecaches)
 	if(dropping.atom_storage) // If it has storage it should be trying to dump, not insert.
 		return
 	if(!iscarbon(user) && !isdrone(user))
+		return
+	var/mob/living/user_living = user
+	if(user_living.incapacitated)
 		return
 
 	attempt_insert(dropping, user)

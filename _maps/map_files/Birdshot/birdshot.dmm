@@ -36584,6 +36584,10 @@
 	},
 /turf/open/floor/iron,
 /area/station/engineering/atmos)
+"mzv" = (
+/obj/docking_port/stationary/syndicate/northeast,
+/turf/open/space/basic,
+/area/space)
 "mzx" = (
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
@@ -41227,9 +41231,9 @@
 /turf/open/floor/iron/dark/small,
 /area/station/security/checkpoint/customs)
 "ohN" = (
-/obj/item/kirbyplants/random,
 /obj/item/radio/intercom/directional/north,
 /obj/machinery/firealarm/directional/west,
+/obj/machinery/vending/cytopro,
 /turf/open/floor/iron/white,
 /area/station/science/cytology)
 "oig" = (
@@ -52468,6 +52472,7 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
 	dir = 8
 	},
+/obj/item/kirbyplants/random,
 /turf/open/floor/iron/white,
 /area/station/science/cytology)
 "rYx" = (
@@ -93313,7 +93318,7 @@ hIm
 azq
 iTv
 wMg
-wKr
+lql
 vtr
 mcV
 iGq
@@ -118681,7 +118686,7 @@ dDB
 dDB
 dDB
 dDB
-dDB
+mzv
 dDB
 dDB
 dDB

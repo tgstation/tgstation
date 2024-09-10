@@ -1,8 +1,11 @@
+import { Connection } from '../common/Connections';
+
 export type DataCase = {
   ref: string;
   name: string;
   color: string;
   evidences: DataEvidence[];
+  connections: Connection[];
 };
 
 export type DataEvidence = {
