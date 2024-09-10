@@ -693,7 +693,7 @@
 /obj/item/crowbar/red,
 /obj/item/ammo_box/magazine/m9mm_aps,
 /obj/item/ammo_box/magazine/m9mm_aps,
-/obj/item/gun/ballistic/automatic/pistol,
+/obj/item/gun/ballistic/automatic/pistol/aps,
 /turf/open/floor/carpet/royalblack,
 /area/virtual_domain)
 "Cn" = (

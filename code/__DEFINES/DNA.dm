@@ -16,8 +16,8 @@
 #define MINOR_NEGATIVE 4
 
 
-//Mutation classes. Normal being on them, extra being additional mutations with instability and other being stuff you dont want people to fuck with like wizard mutate
-/// A mutation that can be activated and deactived by completing a sequence
+//Mutation classes. Normal being on them, extra being additional mutations with instability and other being stuff you don't want people to fuck with like wizard mutate
+/// A mutation that can be activated and deactivated by completing a sequence
 #define MUT_NORMAL 1
 /// A mutation that is in the mutations tab, and can be given and taken away through though the DNA console. Has a 0 before its name in the mutation section of the dna console
 #define MUT_EXTRA 2

@@ -83,15 +83,10 @@
 
 /datum/emote/flip/run_emote(mob/user, params , type_override, intentional)
 	. = ..()
-	user.SpinAnimation(HAS_TRAIT(user, TRAIT_SLOW_FLIP) ? FLIP_EMOTE_DURATION * 2 : FLIP_EMOTE_DURATION, 1)
+	user.SpinAnimation(FLIP_EMOTE_DURATION, 1)
 
 /datum/emote/flip/check_cooldown(mob/user, intentional)
-	var/slow_flipper = HAS_TRAIT(user, TRAIT_SLOW_FLIP)
-	if(slow_flipper)
-		cooldown *= 2
 	. = ..()
-	if(slow_flipper)
-		cooldown *= 0.5
 	if(.)
 		return
 	if(!can_run_emote(user, intentional=intentional))
@@ -147,3 +142,27 @@
 #undef BEYBLADE_DIZZINESS_DURATION
 #undef BEYBLADE_CONFUSION_INCREMENT
 #undef BEYBLADE_CONFUSION_LIMIT
+
+
+/datum/emote/jump
+	key = "jump"
+	key_third_person = "jumps"
+	message = "jumps!"
+	// Allows ghosts to jump
+	mob_type_ignore_stat_typecache = list(/mob/dead/observer)
+
+/datum/emote/jump/run_emote(mob/user, params, type_override, intentional)
+	. = ..()
+
+	var/original_transform = user.transform
+	animate(user, transform = user.transform.Translate(0, 4), time = 0.1 SECONDS, flags = ANIMATION_PARALLEL)
+	animate(transform = original_transform, time = 0.1 SECONDS)
+
+/datum/emote/jump/get_sound(mob/user)
+	return 'sound/weapons/thudswoosh.ogg'
+
+// Avoids playing sounds if we're a ghost
+/datum/emote/jump/should_play_sound(mob/user, intentional)
+	if(isliving(user))
+		return ..()
+	return FALSE

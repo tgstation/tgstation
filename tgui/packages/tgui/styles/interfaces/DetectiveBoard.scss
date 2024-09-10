@@ -1,0 +1,99 @@
+@use '../colors.scss';
+@use 'sass:color';
+@use 'sass:math';
+@use '../base.scss';
+
+.BoardTab {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  color: black;
+  min-height: 2.25em;
+  min-width: 4em;
+  border-radius: 5px 5px 0 0;
+}
+.BoardTab__Text {
+  margin-right: 5px;
+}
+.BoardTab__Contain {
+  flex-grow: 1;
+  margin: 0 0.5em;
+}
+.BoardTab__Perspective:not(.BoardTab__Contain) {
+  perspective-origin: 50%;
+  transform-origin: 50% 100%;
+  transform: perspective(100px) rotateX(25deg);
+}
+
+.BoardTab__Selected {
+  background-color: #edcf64;
+  border-bottom: 1px solid #edcf64;
+  transition: all 0.2s;
+}
+
+.BoardTabs {
+  display: flex;
+  align-items: stretch;
+  overflow: hidden;
+}
+.Evidence__Pin {
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+  background-color: #db2828;
+  border-radius: 20px;
+  width: 15px;
+  height: 15px;
+}
+
+.Evidence__Box {
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.4);
+  padding: 5px;
+  color: black;
+  min-width: 200px;
+  max-width: 300px;
+  background-color: white;
+  border: 2px solid grey;
+  -ms-user-select: none;
+  user-select: none;
+  text-wrap: wrap;
+  cursor: pointer;
+}
+
+.Evidence__Box__TextBox {
+  border-top: 1px solid #eaeaea;
+  text-wrap: wrap;
+  padding: 5px 0;
+  margin-top: 5px;
+  max-width: 240px;
+  text-align: center;
+
+  &.title {
+    border-top: none;
+    margin-top: 0;
+  }
+}
+
+.Board__Content {
+  position: relative;
+  background-color: #edcf64;
+  padding: 5px;
+  overflow: hidden;
+  height: 95%;
+}
+
+.Evidence__Icon {
+  margin-top: 5px;
+  border: 5px solid #e0e0e0;
+  width: 100%;
+}
+
+@each $color-name, $color-value in colors.$fg-map {
+  .BoardTab__#{$color-name} {
+    color: black;
+    background-color: $color-value;
+    transition: all 0.2s;
+    cursor: pointer;
+  }
+  .BoardTab__#{$color-name}:hover {
+    background-color: color.scale($color-value, $lightness: 25%);
+  }
+}

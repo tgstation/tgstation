@@ -644,7 +644,7 @@
 	for(var/key in whitelist)
 		.["whitelist"] += whitelist[key]
 
-/obj/item/blood_filter/ui_act(action, params)
+/obj/item/blood_filter/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if(.)
 		return

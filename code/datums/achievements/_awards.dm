@@ -67,7 +67,7 @@
 /datum/award/proc/parse_value(raw_value)
 	return default_value
 
-///Can be overriden for achievement specific events
+///Can be overridden for achievement specific events
 /datum/award/proc/on_unlock(mob/user)
 	return
 

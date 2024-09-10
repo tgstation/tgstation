@@ -52,7 +52,7 @@
  */
 /obj/item/fishing_line/auto_reel
 	name = "fishing line auto-reel"
-	desc = "A fishing line that automatically starts reeling in fish the moment they bite. Also good for hurling things at yourself."
+	desc = "A fishing line that automatically spins lures and begins reeling in fish the moment it bites. Also good for hurling things towards you."
 	icon_state = "reel_auto"
 	fishing_line_traits = FISHING_LINE_AUTOREEL
 	line_color = "#F88414"
@@ -163,6 +163,20 @@
 	rod_overlay_icon_state = "hook_treasure_overlay"
 	chasm_detritus_type = /datum/chasm_detritus/restricted/objects
 
+/obj/item/fishing_hook/magnet/Initialize(mapload)
+	. = ..()
+	RegisterSignal(src, COMSIG_FISHING_EQUIPMENT_SLOTTED, PROC_REF(hook_equipped))
+
+///We make sure that the fishng rod doesn't need a bait to reliably catch non-fish loot.
+/obj/item/fishing_hook/magnet/proc/hook_equipped(datum/source, obj/item/fishing_rod/rod)
+	SIGNAL_HANDLER
+	ADD_TRAIT(rod, TRAIT_ROD_REMOVE_FISHING_DUD, type)
+	RegisterSignal(src, COMSIG_MOVABLE_MOVED, PROC_REF(on_removed))
+
+/obj/item/fishing_hook/magnet/proc/on_removed(atom/movable/source, atom/old_loc, dir, forced)
+	SIGNAL_HANDLER
+	REMOVE_TRAIT(old_loc, TRAIT_ROD_REMOVE_FISHING_DUD, type)
+	UnregisterSignal(src, COMSIG_MOVABLE_MOVED)
 
 /obj/item/fishing_hook/magnet/get_hook_bonus_multiplicative(fish_type, datum/fish_source/source)
 	if(fish_type == FISHING_DUD || ispath(fish_type, /obj/item/fish))
@@ -170,7 +184,6 @@
 
 	// We multiply the odds by five for everything that's not a fish nor a dud
 	return MAGNET_HOOK_BONUS_MULTIPLIER
-
 
 /obj/item/fishing_hook/shiny
 	name = "shiny lure hook"
@@ -260,7 +273,6 @@
 	// Can hold fishing rod despite the size
 	var/static/list/exception_cache = typecacheof(list(
 		/obj/item/fishing_rod,
-		/obj/item/fishing_line,
 	))
 	atom_storage.exception_hold = exception_cache
 
@@ -269,6 +281,7 @@
 	new /obj/item/fishing_rod/unslotted(src)
 	new /obj/item/fishing_hook(src)
 	new /obj/item/fishing_line(src)
+	new /obj/item/paper/paperslip/fishing_tip(src)
 
 /obj/item/storage/toolbox/fishing/small
 	name = "compact fishing toolbox"
@@ -285,31 +298,121 @@
 	new /obj/item/fishing_rod/unslotted(src)
 	new /obj/item/fishing_hook(src)
 	new /obj/item/fishing_line(src)
+	new /obj/item/paper/paperslip/fishing_tip(src)
+
+/obj/item/storage/toolbox/fishing/master
+	name = "super fishing toolbox"
+	desc = "Contains EVERYTHING (almost) you need for your fishing trip."
+	icon_state = "gold"
+	inhand_icon_state = "toolbox_gold"
+
+/obj/item/storage/toolbox/fishing/master/PopulateContents()
+	new /obj/item/fishing_rod/telescopic/master(src)
+	new /obj/item/storage/box/fishing_hooks/master(src)
+	new /obj/item/storage/box/fishing_lines/master(src)
+	new /obj/item/bait_can/super_baits(src)
+	new /obj/item/fish_feed(src)
+	new /obj/item/aquarium_kit(src)
+	new /obj/item/fish_analyzer(src)
+	new /obj/item/experi_scanner(src)
 
 /obj/item/storage/box/fishing_hooks
 	name = "fishing hook set"
+	illustration = "fish"
 
 /obj/item/storage/box/fishing_hooks/PopulateContents()
-	. = ..()
 	new /obj/item/fishing_hook/magnet(src)
 	new /obj/item/fishing_hook/shiny(src)
 	new /obj/item/fishing_hook/weighted(src)
 
+/obj/item/storage/box/fishing_hooks/master
+
+/obj/item/storage/box/fishing_hooks/master/PopulateContents()
+	. = ..()
+	new /obj/item/fishing_hook/stabilized(src)
+	new /obj/item/fishing_hook/jaws(src)
+
 /obj/item/storage/box/fishing_lines
 	name = "fishing line set"
+	illustration = "fish"
 
 /obj/item/storage/box/fishing_lines/PopulateContents()
-	. = ..()
 	new /obj/item/fishing_line/bouncy(src)
 	new /obj/item/fishing_line/reinforced(src)
 	new /obj/item/fishing_line/cloaked(src)
 
+/obj/item/storage/box/fishing_lines/master
+
+/obj/item/storage/box/fishing_lines/master/PopulateContents()
+	. = ..()
+	new /obj/item/fishing_line/auto_reel(src)
+
 /obj/item/storage/box/fish_debug
 	name = "box full of fish"
+	illustration = "fish"
 
 /obj/item/storage/box/fish_debug/PopulateContents()
 	for(var/fish_type in subtypesof(/obj/item/fish))
 		new fish_type(src)
+
+///Used to give the average player info about fishing stuff that's unknown to many.
+/obj/item/paper/paperslip/fishing_tip
+	name = "fishing tip"
+	desc = "A slip of paper containing a pearl of wisdom about fishing within it, though you wish it were an actual pearl."
+
+/obj/item/paper/paperslip/fortune/Initialize(mapload)
+	default_raw_text = pick(GLOB.fishing_tips)
+	return ..()
+
+///From the fishing mystery box. It's basically a lazarus and a few bottles of strange reagents.
+/obj/item/storage/box/fish_revival_kit
+	name = "fish revival kit"
+	desc = "Become a fish doctor today."
+	illustration = "fish"
+
+/obj/item/storage/box/fish_revival_kit/PopulateContents()
+	new /obj/item/lazarus_injector(src)
+	new /obj/item/reagent_containers/cup/bottle/strange_reagent(src)
+	new /obj/item/reagent_containers/cup(src) //to splash the reagents on the fish.
+	new /obj/item/storage/fish_case(src)
+	new /obj/item/storage/fish_case(src)
+
+/obj/item/storage/box/fishing_lures
+	name = "fishing lures set"
+	desc = "A small tackle box containing all the fishing lures you will ever need to curb randomness."
+	icon_state = "plasticbox"
+	foldable_result = null
+	illustration = "fish"
+
+/obj/item/storage/box/fishing_lures/PopulateContents()
+	new /obj/item/paper/lures_instructions(src)
+	var/list/typesof = typesof(/obj/item/fishing_lure)
+	for(var/type in typesof)
+		new type (src)
+	atom_storage.set_holdable(/obj/item/fishing_lure) //can only hold lures
+	//adds an extra slot, so we can put back the lures even if we didn't take out the instructions.
+	atom_storage.max_slots = length(typesof) + 1
+	atom_storage.max_total_storage = WEIGHT_CLASS_SMALL * (atom_storage.max_slots + 1)
+
+/obj/item/paper/lures_instructions
+	name = "instructions paper"
+	icon_state = "slipfull"
+	show_written_words = FALSE
+	desc = "A piece of grey paper with a how-to for dummies about fishing lures printed on it. Smells cheap."
+	default_raw_text =  "<b>Thank you for buying this set.</b><br>\
+		This a simple non-exhaustive set of instructions on how to use fishing lures, some information may \
+		be slightly incorrect or oversimplified.<br><br>\
+
+		First and foremost, fishing lures are <b>inedible, artificial baits</b> sturdy enough to not end up being \
+		consumed by the hungry fish. However, they need to be <b>spun at intervals</b> to replicate \
+		the motion of a prey or organic bait and tempt the fish, since a piece of plastic and metal ins't \
+		all that appetitizing by itself. <b>Different lures</b> can be used to catch <b>different fish</b>.<br><br>\
+
+		To help you, each lure comes with a <b>small light</b> diode that's attached to the <b>float</b> of your fishing rod. \
+		A float is basically the thing bobbing up'n'down above the fishing spot. \
+		The light will flash <b>green</b> and a <b>sound</b> cue will be played when the lure is <b>ready</b> to be spun. \
+		Do <b>not</b> spin while the light is still <b>red</b>.<br><br>\
+		That's all, best of luck to your angling journey."
 
 #undef MAGNET_HOOK_BONUS_MULTIPLIER
 #undef RESCUE_HOOK_FISH_MULTIPLIER
