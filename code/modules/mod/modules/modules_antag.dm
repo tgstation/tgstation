@@ -561,7 +561,7 @@
 	if(target == mod.wearer)
 		return
 	if(get_dist(mod.wearer, target) > 6)
-		balloon_alert(mod.wearer, "can't reach [target]!")
+		balloon_alert(mod.wearer, "can't reach that!")
 		return
 	if(istype(target, /obj/machinery/power/apc)) //Bit too strong for a module so this is blacklisted
 		balloon_alert(mod.wearer, "cant disable apc!")
