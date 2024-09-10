@@ -1,3 +1,6 @@
+///	note from honkpocket
+//	please remember to atomize this file per accessory
+
 /// Fluff colors!
 /datum/preference/tri_color/fluff_color
 	priority = PREFERENCE_PRIORITY_BODY_TYPE

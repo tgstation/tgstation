@@ -63,9 +63,6 @@
 /datum/preference/choiced/ears/create_default_value()
 	return /datum/sprite_accessory/ears/none::name
 
-/datum/preference/choiced/ears/apply_to_human(mob/living/carbon/human/target, value)
-	target.dna.features["ears"] = value
-
 /datum/preference/choiced/ears/icon_for(value)
 	var/datum/sprite_accessory/chosen_ears = SSaccessories.ears_list[value]
 	return generate_ears_icon(chosen_ears)
