@@ -30,3 +30,8 @@
 #_maps/RandomRuins/IceRuins/icemoon_underground_abandoned_homestead.dmm
 #_maps/RandomRuins/IceRuins/icemoon_underground_abandoned_plasma_facility.dmm
 #_maps/RandomRuins/IceRuins/icemoon_underground_frozen_comms.dmm
+
+##DOPPLER
+#_maps/RandomRuins/IceRuins/doppler/icemoon_underground_abandoned_icewalker_den.dmm
+#_maps/RandomRuins/IceRuins/doppler/icemoon_underground_abandoned_sacred_temple.dmm
+#_maps/RandomRuins/IceRuins/doppler/icemoon_underground_magical_hotsprings.dmm

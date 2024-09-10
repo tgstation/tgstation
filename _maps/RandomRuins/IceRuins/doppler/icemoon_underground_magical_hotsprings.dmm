@@ -1,0 +1,546 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/turf/closed/mineral/snowmountain/icemoon{
+	icon_state = "icerock"
+	},
+/area/ruin/unpowered/magic_hotsprings)
+"l" = (
+/obj/item/food/grown/bluecherries,
+/turf/open/floor/grass/fairy{
+	initial_gas_mix = "ICEMOON_ATMOS"
+	},
+/area/ruin/unpowered/magic_hotsprings)
+"o" = (
+/obj/structure/flora/bush/lavendergrass/style_random,
+/obj/structure/flora/tree/mushroom/blue/reverse{
+	desc = "An exotic tree from other lands. It's a mistery how it came to sprout here."
+	},
+/turf/open/floor/grass/fairy{
+	initial_gas_mix = "ICEMOON_ATMOS"
+	},
+/area/ruin/unpowered/magic_hotsprings)
+"u" = (
+/obj/structure/spacevine{
+	name = "thick vines";
+	opacity = 1
+	},
+/turf/open/floor/grass/fairy{
+	initial_gas_mix = "ICEMOON_ATMOS"
+	},
+/area/ruin/unpowered/magic_hotsprings)
+"x" = (
+/turf/closed/mineral/snowmountain/icemoon/unscrapeable{
+	name = "ice cavern rock";
+	icon_state = "icerock"
+	},
+/area/ruin/unpowered/magic_hotsprings)
+"y" = (
+/obj/structure/flora/tree/mushroom/blue/reverse,
+/turf/open/floor/grass/fairy{
+	initial_gas_mix = "ICEMOON_ATMOS"
+	},
+/area/ruin/unpowered/magic_hotsprings)
+"z" = (
+/obj/item/food/grown/mushroom/jupitercup,
+/turf/open/floor/grass/fairy{
+	initial_gas_mix = "ICEMOON_ATMOS"
+	},
+/area/ruin/unpowered/magic_hotsprings)
+"C" = (
+/turf/open/floor/grass/fairy{
+	initial_gas_mix = "ICEMOON_ATMOS"
+	},
+/area/ruin/unpowered/magic_hotsprings)
+"H" = (
+/mob/living/basic/lightgeist{
+	light_color = "#42ECFF"
+	},
+/turf/open/water/hot_spring,
+/area/ruin/unpowered/magic_hotsprings)
+"I" = (
+/turf/open/water/hot_spring,
+/area/ruin/unpowered/magic_hotsprings)
+"J" = (
+/obj/structure/flora/bush/lavendergrass/style_random,
+/turf/closed/mineral/snowmountain/icemoon/unscrapeable{
+	name = "ice cavern rock";
+	icon_state = "icerock"
+	},
+/area/ruin/unpowered/magic_hotsprings)
+"O" = (
+/obj/structure/flora/bush/sparsegrass/style_random,
+/turf/open/floor/grass/fairy{
+	initial_gas_mix = "ICEMOON_ATMOS"
+	},
+/area/ruin/unpowered/magic_hotsprings)
+"Q" = (
+/obj/structure/flora/bush/lavendergrass/style_random,
+/turf/open/floor/grass/fairy{
+	initial_gas_mix = "ICEMOON_ATMOS"
+	},
+/area/ruin/unpowered/magic_hotsprings)
+"U" = (
+/turf/open/misc/asteroid/snow/icemoon,
+/area/icemoon/surface/outdoors/nospawn)
+"V" = (
+/obj/structure/flora/bush/lavendergrass/style_random,
+/obj/structure/flora/tree/mushroom/blue{
+	desc = "An exotic tree from other lands. It's a mistery how it came to sprout here."
+	},
+/turf/open/floor/grass/fairy{
+	initial_gas_mix = "ICEMOON_ATMOS"
+	},
+/area/ruin/unpowered/magic_hotsprings)
+"Y" = (
+/obj/structure/flora/grass/jungle/b/style_random,
+/turf/open/floor/grass/fairy{
+	initial_gas_mix = "ICEMOON_ATMOS"
+	},
+/area/ruin/unpowered/magic_hotsprings)
+"Z" = (
+/obj/item/food/grown/mushroom/libertycap,
+/turf/open/floor/grass/fairy{
+	initial_gas_mix = "ICEMOON_ATMOS"
+	},
+/area/ruin/unpowered/magic_hotsprings)
+
+(1,1,1) = {"
+U
+U
+U
+U
+U
+U
+U
+U
+U
+U
+U
+U
+U
+U
+U
+U
+U
+U
+U
+U
+"}
+(2,1,1) = {"
+U
+U
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+x
+x
+a
+a
+U
+U
+"}
+(3,1,1) = {"
+U
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+x
+C
+x
+a
+a
+U
+"}
+(4,1,1) = {"
+a
+a
+a
+a
+O
+Q
+a
+a
+a
+C
+Z
+O
+a
+x
+x
+C
+C
+x
+x
+a
+"}
+(5,1,1) = {"
+a
+a
+a
+Q
+z
+C
+C
+Y
+C
+Q
+C
+C
+C
+x
+u
+u
+C
+C
+x
+a
+"}
+(6,1,1) = {"
+a
+a
+a
+C
+C
+C
+Q
+C
+C
+C
+y
+l
+Y
+C
+z
+J
+x
+x
+x
+a
+"}
+(7,1,1) = {"
+a
+a
+C
+C
+I
+I
+C
+C
+C
+O
+C
+Q
+C
+C
+O
+C
+a
+a
+a
+a
+"}
+(8,1,1) = {"
+a
+C
+Q
+I
+I
+I
+I
+C
+I
+C
+I
+I
+I
+C
+C
+C
+C
+a
+a
+a
+"}
+(9,1,1) = {"
+a
+O
+C
+I
+I
+I
+I
+I
+I
+I
+I
+I
+I
+I
+C
+I
+C
+Q
+C
+a
+"}
+(10,1,1) = {"
+a
+l
+C
+I
+H
+I
+I
+I
+I
+I
+I
+I
+I
+I
+I
+I
+H
+C
+C
+a
+"}
+(11,1,1) = {"
+a
+Q
+C
+I
+I
+I
+I
+I
+I
+I
+I
+I
+I
+I
+I
+I
+I
+C
+O
+a
+"}
+(12,1,1) = {"
+a
+C
+C
+I
+I
+I
+I
+I
+I
+I
+I
+H
+I
+I
+I
+I
+I
+l
+C
+a
+"}
+(13,1,1) = {"
+a
+Y
+C
+I
+I
+I
+I
+I
+I
+C
+I
+I
+I
+I
+I
+I
+C
+C
+Q
+a
+"}
+(14,1,1) = {"
+a
+Z
+C
+C
+I
+I
+I
+C
+C
+C
+I
+I
+I
+I
+C
+C
+Y
+C
+Z
+a
+"}
+(15,1,1) = {"
+a
+a
+C
+l
+C
+O
+C
+C
+o
+C
+C
+C
+C
+C
+C
+V
+C
+C
+a
+a
+"}
+(16,1,1) = {"
+a
+a
+a
+C
+Q
+C
+C
+C
+Y
+z
+C
+Q
+C
+C
+C
+C
+Q
+a
+a
+a
+"}
+(17,1,1) = {"
+a
+a
+a
+a
+C
+C
+a
+a
+a
+C
+O
+a
+a
+C
+O
+C
+a
+a
+a
+a
+"}
+(18,1,1) = {"
+U
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+U
+"}
+(19,1,1) = {"
+U
+U
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+U
+U
+"}
+(20,1,1) = {"
+U
+U
+U
+U
+U
+U
+U
+U
+U
+U
+U
+U
+U
+U
+U
+U
+U
+U
+U
+U
+"}
