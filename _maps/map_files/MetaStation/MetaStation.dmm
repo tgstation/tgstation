@@ -22071,6 +22071,7 @@
 	dir = 8
 	},
 /obj/structure/railing,
+/obj/machinery/light/small/directional/east,
 /turf/open/floor/plating/reinforced,
 /area/station/cargo/storage)
 "hVX" = (
@@ -33211,9 +33212,6 @@
 /obj/machinery/computer/security/mining,
 /obj/structure/reagent_dispensers/wall/peppertank/directional/north,
 /obj/machinery/light/small/directional/north{
-	pixel_x = 11
-	},
-/obj/machinery/light/small/directional/north{
 	pixel_x = -11
 	},
 /turf/open/floor/iron/dark,
@@ -34542,6 +34540,7 @@
 	pixel_x = -6
 	},
 /obj/structure/sign/departments/exodrone/directional/north,
+/obj/machinery/light/small/directional/north,
 /turf/open/floor/plating/reinforced,
 /area/station/cargo/storage)
 "mpJ" = (
