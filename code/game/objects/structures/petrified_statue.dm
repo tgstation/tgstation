@@ -21,16 +21,16 @@
 		brain = save_brain
 	if(!living)
 		return
-		petrified_mob = living
-		if(living.buckled)
-			living.buckled.unbuckle_mob(living, force = TRUE)
-		living.visible_message(span_warning("[living]'s skin rapidly turns to marble!"), span_userdanger("Your body freezes up! Can't... move... can't... think..."))
-		living.forceMove(src)
-		living.add_traits(list(TRAIT_GODMODE, TRAIT_MUTE, TRAIT_NOBLOOD), STATUE_MUTE)
-		living.faction |= FACTION_MIMIC //Stops mimics from instaqdeling people in statues
-		atom_integrity = living.health + 100 //stoning damaged mobs will result in easier to shatter statues
-		max_integrity = atom_integrity
-		START_PROCESSING(SSobj, src)
+	petrified_mob = living
+	if(living.buckled)
+		living.buckled.unbuckle_mob(living, force = TRUE)
+	living.visible_message(span_warning("[living]'s skin rapidly turns to marble!"), span_userdanger("Your body freezes up! Can't... move... can't... think..."))
+	living.forceMove(src)
+	living.add_traits(list(TRAIT_GODMODE, TRAIT_MUTE, TRAIT_NOBLOOD), STATUE_MUTE)
+	living.faction |= FACTION_MIMIC //Stops mimics from instaqdeling people in statues
+	atom_integrity = living.health + 100 //stoning damaged mobs will result in easier to shatter statues
+	max_integrity = atom_integrity
+	START_PROCESSING(SSobj, src)
 
 /obj/structure/statue/petrified/process(seconds_per_tick)
 	if(!petrified_mob)
