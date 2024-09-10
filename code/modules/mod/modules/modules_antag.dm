@@ -564,7 +564,7 @@
 		balloon_alert(mod.wearer, "can't reach [target]!")
 		return
 	if(istype(target, /obj/machinery/power/apc)) //Bit too strong for a module so this is blacklisted
-		balloon_alert(mod.wearer, "cant disable [target]!")
+		balloon_alert(mod.wearer, "cant disable apc!")
 		return
 
 	var/list/things_to_disrupt = list(target)
