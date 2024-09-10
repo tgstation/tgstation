@@ -93,6 +93,7 @@
 
 /obj/item/food/fishmeat/carp/no_tox/Initialize(mapload)
 	food_reagents -= /datum/reagent/toxin/carpotoxin
+	return ..()
 
 /obj/item/food/fishmeat/moonfish
 	name = "moonfish fillet"

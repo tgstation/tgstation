@@ -794,6 +794,10 @@
 	to_chat(user, span_notice("[src] dances around!"))
 	addtimer(VARSET_CALLBACK(src, recently_petted, FALSE), 30 SECONDS)
 
+/obj/item/fish/update_atom_colour()
+	. = ..()
+	vc_color = color || initial(vc_color)
+
 /// Returns random fish, using random_case_rarity probabilities.
 /proc/random_fish_type(required_fluid)
 	var/static/probability_table

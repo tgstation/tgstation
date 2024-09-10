@@ -107,7 +107,9 @@
 		mind.set_level(/datum/skill/fishing, SKILL_LEVEL_APPRENTICE, TRUE)
 
 /mob/living/basic/space_dragon/proc/sharkify()
-	do_jitter_animation(100)
+	pixel_z -= 3
+	base_pixel_z -= 3
+	do_jitter_animation(150)
 	shark_form = TRUE
 	desc = "A piscine mutation of the fearsome leviathan whose flight defies modern physics. Said to be the other ultimate stage in the lige cycle of the Space Carp."
 	icon_state = icon_state == icon_living ? "sharkdragon" : "sharkdragon_dead"
