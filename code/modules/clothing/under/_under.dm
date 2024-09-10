@@ -347,6 +347,10 @@
 
 	sensor_mode = SENSOR_COORDS
 	balloon_alert(user, "set to tracking")
+	if(ishuman(loc))
+		var/mob/living/carbon/human/ooman = loc
+		if(ooman.w_uniform == src)
+			ooman.update_suit_sensors()
 	return CLICK_ACTION_SUCCESS
 
 /// Checks if the toggler is allowed to toggle suit sensors currently
