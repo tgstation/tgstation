@@ -1,0 +1,5 @@
+author: "Bisar"
+delete-after: True
+changes:
+  - bugfix: "The binary conversion circuit component should work again."
+  - code_imp: "The component also now supports representing negative numbers."
