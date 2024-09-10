@@ -621,7 +621,7 @@
 	balloon_alert(user, "set to [chosen_theme?.name || DIMENSION_CHOICE_RANDOM]")
 
 /obj/item/bombcore/dimensional/proc/check_menu(mob/user)
-	if(!user.is_holding(src) || user.incapacitated())
+	if(!user.is_holding(src) || user.incapacitated)
 		return FALSE
 	return TRUE
 

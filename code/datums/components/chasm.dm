@@ -14,7 +14,7 @@
 		/obj/effect/constructing_effect,
 		/obj/effect/dummy/phased_mob,
 		/obj/effect/ebeam,
-		/obj/effect/fishing_lure,
+		/obj/effect/fishing_float,
 		/obj/effect/hotspot,
 		/obj/effect/landmark,
 		/obj/effect/light_emitter/tendril,
@@ -251,14 +251,51 @@ GLOBAL_LIST_EMPTY(chasm_fallen_mobs)
 /obj/effect/abstract/chasm_storage/Entered(atom/movable/arrived)
 	. = ..()
 	if(isliving(arrived))
+		//Mobs that have fallen in reserved area should be deleted to avoid fishing stuff from the deathmatch or VR.
+		if(is_reserved_level(loc.z) && !istype(get_area(loc), /area/shuttle))
+			qdel(arrived)
+			return
 		RegisterSignal(arrived, COMSIG_LIVING_REVIVE, PROC_REF(on_revive))
-		GLOB.chasm_fallen_mobs += arrived
+		LAZYADD(GLOB.chasm_fallen_mobs[get_chasm_category(loc)], arrived)
 
 /obj/effect/abstract/chasm_storage/Exited(atom/movable/gone)
 	. = ..()
 	if(isliving(gone))
 		UnregisterSignal(gone, COMSIG_LIVING_REVIVE)
-		GLOB.chasm_fallen_mobs -= gone
+		LAZYREMOVE(GLOB.chasm_fallen_mobs[get_chasm_category(loc)], gone)
+
+/obj/effect/abstract/chasm_storage/on_changed_z_level(turf/old_turf, turf/new_turf, same_z_layer, notify_contents)
+	. = ..()
+	var/old_cat = get_chasm_category(old_turf)
+	var/new_cat = get_chasm_category(new_turf)
+	var/list/mobs = list()
+	for(var/mob/fallen in src)
+		mobs += fallen
+	LAZYREMOVE(GLOB.chasm_fallen_mobs[old_cat], mobs)
+	LAZYADD(GLOB.chasm_fallen_mobs[new_cat], mobs)
+
+/**
+ * Returns a key to store, remove and access fallen mobs depending on the z-level.
+ * This stops rescuing people from places that are waaaaaaaay too far-fetched.
+ */
+/proc/get_chasm_category(turf/turf)
+	var/z_level = turf?.z
+	var/area/area = get_area(turf)
+	if(istype(area, /area/shuttle)) //shuttle move between z-levels, so they're a special case.
+		return area
+
+	if(is_away_level(z_level))
+		return ZTRAIT_AWAY
+	if(is_mining_level(z_level))
+		return ZTRAIT_MINING
+	if(is_station_level(z_level))
+		return ZTRAIT_STATION
+	if(is_centcom_level(z_level))
+		return ZTRAIT_CENTCOM
+	if(is_reserved_level(z_level))
+		return ZTRAIT_RESERVED
+
+	return ZTRAIT_SPACE_RUINS
 
 #define CHASM_TRAIT "chasm trait"
 /**

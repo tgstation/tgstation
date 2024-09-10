@@ -1,6 +1,4 @@
 /mob/living/basic/tree
-	SET_BASE_VISUAL_PIXEL(0, 0) // It'll overlap walls, don't worry
-
 	name = "pine tree"
 	desc = "A pissed off tree-like alien. It seems annoyed with the festivities..."
 	icon = 'icons/obj/fluff/flora/pinetrees.dmi'
@@ -44,7 +42,6 @@
 	death_message = "is hacked into pieces!"
 
 	ai_controller = /datum/ai_controller/basic_controller/tree
-	shadow_type = SHADOW_NONE
 
 	///items that make us angry
 	var/list/infuriating_objects = list(/obj/item/chainsaw, /obj/item/hatchet, /obj/item/stack/sheet/mineral/wood)

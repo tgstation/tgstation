@@ -1,17 +1,23 @@
 /datum/fish_source/ocean
 	fish_table = list(
-		FISHING_DUD = 15,
-		/obj/item/coin/gold = 7,
-		/obj/item/fish/clownfish = 15,
-		/obj/item/fish/pufferfish = 15,
-		/obj/item/fish/cardinal = 15,
-		/obj/item/fish/greenchromis = 15,
+		FISHING_DUD = 10,
+		/obj/effect/spawner/message_in_a_bottle = 4,
+		/obj/item/coin/gold = 6,
+		/obj/item/fish/clownfish = 11,
+		/obj/item/fish/pufferfish = 11,
+		/obj/item/fish/cardinal = 11,
+		/obj/item/fish/greenchromis = 11,
+		/obj/item/fish/squid = 11,
+		/obj/item/fish/stingray = 8,
+		/obj/item/fish/plaice = 8,
+		/obj/item/fish/monkfish = 5,
 		/obj/item/fish/stingray = 10,
 		/obj/item/fish/lanternfish = 7,
 		/obj/item/fish/zipzap = 7,
 		/obj/item/fish/clownfish/lube = 5,
 		/obj/item/fish/swordfish = 5,
-		/obj/structure/mystery_box/fishing = 1,
+		/obj/item/fish/swordfish = 3,
+		/obj/structure/mystery_box/fishing = 2,
 	)
 	fish_counts = list(
 		/obj/item/fish/clownfish/lube = 2,
@@ -45,12 +51,21 @@
 		FISHING_DUD = 4,
 		/obj/item/fish/goldfish = 5,
 		/obj/item/fish/guppy = 5,
+		/obj/item/fish/perch = 4,
 		/obj/item/fish/angelfish = 4,
 		/obj/item/fish/catfish = 4,
+		/obj/item/fish/perch = 5,
 		/obj/item/fish/slimefish = 2,
 		/obj/item/fish/sockeye_salmon = 1,
 		/obj/item/fish/arctic_char = 1,
-		/obj/item/fish/three_eyes = 1,
+		/obj/item/fish/pike = 1,
+		/obj/item/fish/goldfish/three_eyes = 1,
+	)
+	fish_counts = list(
+		/obj/item/fish/pike = 3,
+	)
+	fish_count_regen = list(
+		/obj/item/fish/pike = 4 MINUTES,
 	)
 	fishing_difficulty = FISHING_DEFAULT_DIFFICULTY + 5
 
@@ -84,7 +99,8 @@
 		/obj/item/fish/goldfish = 10,
 		/obj/item/fish/guppy = 10,
 		/obj/item/fish/angelfish = 10,
-		/obj/item/fish/three_eyes = 3,
+		/obj/item/fish/perch = 5,
+		/obj/item/fish/goldfish/three_eyes = 3,
 	)
 	catalog_description = "Aquarium dimension (Fishing portal generator)"
 	///The name of this option shown in the radial menu on the fishing portal generator
@@ -96,16 +112,25 @@
 
 /datum/fish_source/portal/beach
 	fish_table = list(
-		FISHING_DUD = 10,
+		FISHING_DUD = 7,
+		/obj/effect/spawner/message_in_a_bottle = 3,
 		/obj/item/fish/clownfish = 10,
 		/obj/item/fish/pufferfish = 10,
 		/obj/item/fish/cardinal = 10,
 		/obj/item/fish/greenchromis = 10,
+		/obj/item/fish/squid = 8,
+		/obj/item/fish/plaice = 8,
 	)
 	catalog_description = "Beach dimension (Fishing portal generator)"
 	radial_name = "Beach"
 	radial_state = "palm_beach"
 	overlay_state = "portal_beach"
+
+/datum/fish_source/portal/beach/on_fishing_spot_init(datum/component/fishing_spot/spot)
+	ADD_TRAIT(spot.parent, TRAIT_MESSAGE_IN_A_BOTTLE_LOCATION, INNATE_TRAIT)
+
+/datum/fish_source/portal/beach/on_fishing_spot_del(datum/component/fishing_spot/spot)
+	REMOVE_TRAIT(spot.parent, TRAIT_MESSAGE_IN_A_BOTTLE_LOCATION, INNATE_TRAIT)
 
 /datum/fish_source/portal/chasm
 	background = "background_lavaland"
@@ -123,7 +148,8 @@
 
 /datum/fish_source/portal/ocean
 	fish_table = list(
-		FISHING_DUD = 5,
+		FISHING_DUD = 3,
+		/obj/effect/spawner/message_in_a_bottle = 2,
 		/obj/item/fish/lanternfish = 5,
 		/obj/item/fish/firefish = 5,
 		/obj/item/fish/dwarf_moonfish = 5,
@@ -132,6 +158,7 @@
 		/obj/item/fish/armorfish = 5,
 		/obj/item/fish/zipzap = 5,
 		/obj/item/fish/stingray = 4,
+		/obj/item/fish/monkfish = 4,
 		/obj/item/fish/swordfish = 3,
 	)
 	fish_counts = list(
@@ -145,6 +172,12 @@
 	radial_name = "Ocean"
 	overlay_state = "portal_ocean"
 	radial_state = "seaboat"
+
+/datum/fish_source/portal/ocean/on_fishing_spot_init(datum/component/fishing_spot/spot)
+	ADD_TRAIT(spot.parent, TRAIT_MESSAGE_IN_A_BOTTLE_LOCATION, INNATE_TRAIT)
+
+/datum/fish_source/portal/ocean/on_fishing_spot_del(datum/component/fishing_spot/spot)
+	REMOVE_TRAIT(spot.parent, TRAIT_MESSAGE_IN_A_BOTTLE_LOCATION, INNATE_TRAIT)
 
 /datum/fish_source/portal/hyperspace
 	fish_table = list(
@@ -170,13 +203,16 @@
 		/obj/item/fish/donkfish = 5,
 		/obj/item/fish/emulsijack = 5,
 		/obj/item/fish/jumpercable = 5,
-		/obj/item/fish/chainsawfish = 3,
+		/obj/item/fish/chainsawfish = 2,
+		/obj/item/fish/pike/armored = 2,
 	)
 	fish_counts = list(
 		/obj/item/fish/chainsawfish = 1,
+		/obj/item/fish/pike/armored = 1,
 	)
 	fish_count_regen = list(
 		/obj/item/fish/chainsawfish = 7 MINUTES,
+		/obj/item/fish/pike/armored = 7 MINUTES,
 	)
 	catalog_description = "Syndicate dimension (Fishing portal generator)"
 	radial_name = "Syndicate"
@@ -203,7 +239,6 @@
 
 	///rewards not found in other fishing portals
 	fish_table = list(
-		/obj/item/fish/three_eyes = 3,
 		/obj/item/fish/holo/checkered = 1,
 	)
 
@@ -254,7 +289,6 @@
 		new_traits |= pick_weight(weighted_traits)
 	caught_fish.inherit_traits(new_traits)
 	caught_fish.randomize_size_and_weight(deviation = 0.3)
-	caught_fish.progenitors = full_capitalize(caught_fish.name)
 	return caught_fish
 
 

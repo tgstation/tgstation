@@ -542,8 +542,8 @@ GLOBAL_LIST_INIT(skin_tone_names, list(
  * When passed the difference between two temperatures returns the amount of change to temperature to apply.
  * The change rate should be kept at a low value tween 0.16 and 0.02 for optimal results.
  * vars:
- * * temp_diff (required) The differance between two temperatures
- * * change_rate (optional)(Default: 0.06) The rate of range multiplyer
+ * * temp_diff (required) The difference between two temperatures
+ * * change_rate (optional)(Default: 0.06) The rate of range multiplier
  */
 /proc/get_temp_change_amount(temp_diff, change_rate = 0.06)
 	if(temp_diff < 0)

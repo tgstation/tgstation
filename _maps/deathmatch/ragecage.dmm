@@ -1,0 +1,500 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/obj/item/melee/baseball_bat,
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/indestructible/plating,
+/area/deathmatch)
+"b" = (
+/obj/effect/landmark/deathmatch_player_spawn,
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/indestructible/plating,
+/area/deathmatch)
+"c" = (
+/obj/item/cardboard_cutout/adaptive{
+	starting_cutout = "Private Security Officer"
+	},
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/item/cardboard_cutout/adaptive{
+	starting_cutout = "Private Security Officer"
+	},
+/turf/open/indestructible/plating,
+/area/deathmatch)
+"d" = (
+/obj/effect/spawner/structure/electrified_grille,
+/obj/structure/window/reinforced/spawner/directional/north,
+/turf/open/indestructible/plating,
+/area/deathmatch)
+"f" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/indestructible/plating,
+/area/deathmatch)
+"g" = (
+/obj/structure/window/reinforced/spawner/directional/south,
+/obj/effect/spawner/structure/electrified_grille,
+/obj/structure/window/reinforced/spawner/directional/west,
+/turf/open/indestructible/plating,
+/area/deathmatch)
+"i" = (
+/obj/effect/spawner/random/trash/mess,
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/indestructible/plating,
+/area/deathmatch)
+"k" = (
+/obj/effect/decal/cleanable/blood/tracks{
+	dir = 4
+	},
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/indestructible/plating,
+/area/deathmatch)
+"l" = (
+/obj/effect/decal/cleanable/blood,
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/indestructible/plating,
+/area/deathmatch)
+"m" = (
+/obj/structure/chair/comfy/shuttle{
+	dir = 8
+	},
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/item/cardboard_cutout/adaptive{
+	starting_cutout = "Private Security Officer"
+	},
+/turf/open/indestructible/plating,
+/area/deathmatch)
+"o" = (
+/turf/closed/indestructible/grille,
+/area/deathmatch)
+"p" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/machinery/power/rtg/debug{
+	power_gen = 50000;
+	name = "dumb idiot shocker powerer";
+	desc = "Dont touch the grilles idiot"
+	},
+/obj/structure/cable,
+/turf/open/indestructible/plating,
+/area/deathmatch)
+"q" = (
+/turf/closed/indestructible/fakedoor/engineering,
+/area/deathmatch)
+"t" = (
+/obj/effect/spawner/random/trash/graffiti,
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/indestructible/plating,
+/area/deathmatch)
+"u" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/structure/cable,
+/turf/open/indestructible/plating,
+/area/deathmatch)
+"w" = (
+/obj/effect/decal/cleanable/blood/gibs/limb,
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/indestructible/plating,
+/area/deathmatch)
+"x" = (
+/obj/structure/window/reinforced/spawner/directional/south,
+/obj/effect/spawner/structure/electrified_grille,
+/turf/open/indestructible/plating,
+/area/deathmatch)
+"z" = (
+/obj/effect/spawner/structure/electrified_grille,
+/obj/structure/window/reinforced/spawner/directional/north,
+/obj/structure/window/reinforced/spawner/directional/east,
+/turf/open/indestructible/plating,
+/area/deathmatch)
+"A" = (
+/obj/effect/spawner/structure/electrified_grille,
+/obj/structure/window/reinforced/spawner/directional/west,
+/turf/open/indestructible/plating,
+/area/deathmatch)
+"B" = (
+/obj/structure/chair/comfy/shuttle{
+	dir = 4
+	},
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/item/cardboard_cutout/adaptive{
+	starting_cutout = "Private Security Officer"
+	},
+/obj/structure/cable,
+/turf/open/indestructible/plating,
+/area/deathmatch)
+"C" = (
+/obj/effect/decal/cleanable/blood/tracks,
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/indestructible/plating,
+/area/deathmatch)
+"D" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/item/clothing/mask/gas,
+/turf/open/indestructible/plating,
+/area/deathmatch)
+"G" = (
+/turf/closed/indestructible/reinforced,
+/area/deathmatch)
+"H" = (
+/turf/closed/indestructible/fakedoor/maintenance,
+/area/deathmatch)
+"I" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/item/spear,
+/turf/open/indestructible/plating,
+/area/deathmatch)
+"K" = (
+/obj/effect/spawner/structure/electrified_grille,
+/obj/structure/window/reinforced/spawner/directional/south,
+/obj/structure/window/reinforced/spawner/directional/east,
+/turf/open/indestructible/plating,
+/area/deathmatch)
+"L" = (
+/obj/effect/spawner/structure/electrified_grille,
+/obj/structure/window/reinforced/spawner/directional/west,
+/obj/structure/window/reinforced/spawner/directional/north,
+/turf/open/indestructible/plating,
+/area/deathmatch)
+"M" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/item/flashlight/flare{
+	start_on = 1;
+	icon_state = "flare-on"
+	},
+/turf/open/indestructible/plating,
+/area/deathmatch)
+"N" = (
+/obj/effect/decal/cleanable/blood/gibs/down,
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/indestructible/plating,
+/area/deathmatch)
+"P" = (
+/obj/effect/spawner/structure/electrified_grille,
+/obj/structure/window/reinforced/spawner/directional/east,
+/turf/open/indestructible/plating,
+/area/deathmatch)
+"Q" = (
+/obj/effect/decal/cleanable/blood/tracks{
+	dir = 10
+	},
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/indestructible/plating,
+/area/deathmatch)
+"R" = (
+/obj/effect/spawner/structure/electrified_grille,
+/obj/structure/window/reinforced/spawner/directional/south,
+/turf/open/indestructible/plating,
+/area/deathmatch)
+"S" = (
+/obj/effect/decal/cleanable/blood/gibs/torso,
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/indestructible/plating,
+/area/deathmatch)
+"U" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/indestructible/plating,
+/area/deathmatch)
+"V" = (
+/obj/structure/chair/comfy/shuttle{
+	dir = 4
+	},
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/item/cardboard_cutout/adaptive{
+	starting_cutout = "Private Security Officer"
+	},
+/turf/open/indestructible/plating,
+/area/deathmatch)
+"X" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/item/storage/toolbox/mechanical/old,
+/turf/open/indestructible/plating,
+/area/deathmatch)
+
+(1,1,1) = {"
+G
+G
+H
+G
+o
+G
+H
+G
+H
+G
+o
+G
+H
+G
+G
+"}
+(2,1,1) = {"
+G
+p
+u
+U
+U
+U
+D
+U
+U
+U
+I
+U
+U
+f
+G
+"}
+(3,1,1) = {"
+G
+U
+B
+V
+V
+V
+V
+V
+V
+V
+c
+V
+V
+X
+G
+"}
+(4,1,1) = {"
+G
+U
+L
+A
+A
+A
+A
+A
+A
+A
+A
+A
+g
+U
+G
+"}
+(5,1,1) = {"
+G
+U
+d
+U
+U
+U
+l
+C
+Q
+t
+U
+U
+x
+U
+G
+"}
+(6,1,1) = {"
+G
+X
+d
+U
+M
+U
+U
+b
+k
+U
+U
+U
+x
+U
+q
+"}
+(7,1,1) = {"
+G
+U
+d
+U
+U
+t
+U
+U
+k
+U
+M
+U
+R
+U
+G
+"}
+(8,1,1) = {"
+G
+U
+d
+U
+U
+U
+i
+a
+U
+N
+U
+U
+R
+U
+o
+"}
+(9,1,1) = {"
+G
+D
+d
+U
+b
+U
+a
+U
+a
+U
+b
+t
+R
+D
+o
+"}
+(10,1,1) = {"
+G
+U
+d
+t
+U
+S
+U
+a
+U
+U
+U
+U
+R
+U
+o
+"}
+(11,1,1) = {"
+G
+I
+d
+U
+U
+U
+M
+U
+U
+U
+U
+U
+R
+U
+G
+"}
+(12,1,1) = {"
+G
+U
+d
+U
+U
+U
+U
+b
+t
+U
+U
+i
+R
+I
+q
+"}
+(13,1,1) = {"
+G
+U
+d
+U
+U
+w
+U
+U
+U
+U
+U
+M
+R
+U
+G
+"}
+(14,1,1) = {"
+G
+U
+z
+P
+P
+P
+P
+P
+P
+P
+P
+P
+K
+U
+G
+"}
+(15,1,1) = {"
+G
+U
+m
+m
+m
+m
+m
+m
+m
+m
+m
+m
+m
+U
+G
+"}
+(16,1,1) = {"
+G
+f
+U
+U
+X
+U
+U
+U
+U
+I
+U
+U
+U
+f
+G
+"}
+(17,1,1) = {"
+G
+G
+H
+G
+o
+G
+H
+G
+H
+G
+o
+G
+H
+G
+G
+"}

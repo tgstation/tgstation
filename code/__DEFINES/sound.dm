@@ -180,3 +180,7 @@ GLOBAL_LIST_INIT(announcer_keys, list(
 #define SFX_KEYBOARD_CLICKS "keyboard_clicks"
 #define SFX_STONE_DROP "stone_drop"
 #define SFX_STONE_PICKUP "stone_pickup"
+#define SFX_MUFFLED_SPEECH "muffspeech"
+#define SFX_DEFAULT_FISH_SLAP "default_fish_slap"
+#define SFX_ALT_FISH_SLAP "alt_fish_slap"
+#define SFX_FISH_PICKUP "fish_pickup"

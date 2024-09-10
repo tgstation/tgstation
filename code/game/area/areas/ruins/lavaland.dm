@@ -86,9 +86,6 @@
 /area/ruin/syndicate_lava_base/telecomms
 	name = "\improper Syndicate Lavaland Telecommunications"
 
-/area/ruin/syndicate_lava_base/hydroponics
-	name = "\improper Syndicate Lavaland Hydroponics"
-
 //Xeno Nest
 
 /area/ruin/unpowered/xenonest

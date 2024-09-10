@@ -3,7 +3,7 @@
 // will fit into empty /obj/machinery/light of the corresponding type
 
 /obj/item/light
-	icon = 'icons/obj/service/janitor.dmi'
+	icon = 'icons/obj/lighting.dmi'
 	force = 2
 	throwforce = 5
 	w_class = WEIGHT_CLASS_TINY
@@ -52,8 +52,8 @@
 /obj/item/light/tube
 	name = "light tube"
 	desc = "A replacement light tube."
-	icon_state = "tube"
-	base_state = "tube"
+	icon_state = "ltube"
+	base_state = "ltube"
 	inhand_icon_state = "ltube"
 	brightness = 8
 	custom_price = PAYCHECK_CREW * 0.5
@@ -73,8 +73,8 @@
 /obj/item/light/bulb
 	name = "light bulb"
 	desc = "A replacement light bulb."
-	icon_state = "bulb"
-	base_state = "bulb"
+	icon_state = "lbulb"
+	base_state = "lbulb"
 	inhand_icon_state = "contvapour"
 	lefthand_file = 'icons/mob/inhands/equipment/medical_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/medical_righthand.dmi'

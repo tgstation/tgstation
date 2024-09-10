@@ -495,4 +495,25 @@
 				'sound/items/stones/stone_pick_up1.ogg',
 				'sound/items/stones/stone_pick_up2.ogg',
 			)
+		if(SFX_MUFFLED_SPEECH)
+			soundin = pick(
+				'sound/effects/muffspeech/muffspeech1.ogg',
+				'sound/effects/muffspeech/muffspeech2.ogg',
+				'sound/effects/muffspeech/muffspeech3.ogg',
+				'sound/effects/muffspeech/muffspeech4.ogg',
+				'sound/effects/muffspeech/muffspeech5.ogg',
+				'sound/effects/muffspeech/muffspeech6.ogg',
+				'sound/effects/muffspeech/muffspeech7.ogg',
+				'sound/effects/muffspeech/muffspeech8.ogg',
+				'sound/effects/muffspeech/muffspeech9.ogg',
+			)
+		if(SFX_DEFAULT_FISH_SLAP)
+			soundin = 'sound/creatures/fish/fish_slap1.ogg'
+		if(SFX_ALT_FISH_SLAP)
+			soundin = 'sound/creatures/fish/fish_slap2.ogg'
+		if(SFX_FISH_PICKUP)
+			soundin = pick(
+				'sound/creatures/fish/fish_pickup1.ogg',
+				'sound/creatures/fish/fish_pickup2.ogg',
+			)
 	return soundin

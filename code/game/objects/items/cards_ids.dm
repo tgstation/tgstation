@@ -1887,7 +1887,7 @@
 /obj/item/card/cardboard/proc/after_input_check(mob/living/user, obj/item/item, input, value)
 	if(!input || (value && input == value))
 		return FALSE
-	if(QDELETED(user) || QDELETED(item) || QDELETED(src) || user.incapacitated() || !user.is_holding(item) || !user.CanReach(src) || !user.can_write(item))
+	if(QDELETED(user) || QDELETED(item) || QDELETED(src) || user.incapacitated || !user.is_holding(item) || !user.CanReach(src) || !user.can_write(item))
 		return FALSE
 	return TRUE
 

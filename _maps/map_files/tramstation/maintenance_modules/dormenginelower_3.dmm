@@ -43,8 +43,8 @@
 "fe" = (
 /obj/effect/turf_decal/stripes/end,
 /obj/structure/cable/multilayer/multiz,
+/obj/structure/sign/warning/electric_shock/directional/north,
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/sign/warning/electric_shock,
 /turf/open/floor/plating,
 /area/station/maintenance/central/lesser)
 "fE" = (
@@ -58,14 +58,14 @@
 /turf/closed/mineral/random/stationside/asteroid/porus,
 /area/station/asteroid)
 "gt" = (
+/obj/structure/cable,
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/structure/cable,
-/obj/structure/sign/warning/vacuum/external,
+/obj/structure/sign/warning/vacuum/external/directional/south,
 /turf/open/floor/catwalk_floor,
 /area/station/maintenance/central/lesser)
 "gQ" = (
@@ -303,9 +303,7 @@
 /area/station/maintenance/department/crew_quarters/dorms)
 "wo" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/effect/decal/cleanable/cobweb/cobweb2{
-	pixel_y = 24
-	},
+/obj/effect/decal/cleanable/cobweb/cobweb2,
 /turf/open/floor/iron/smooth,
 /area/station/maintenance/central/lesser)
 "wM" = (
@@ -481,9 +479,7 @@
 /area/station/maintenance/central/lesser)
 "Hw" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/effect/decal/cleanable/cobweb/cobweb2{
-	pixel_y = 24
-	},
+/obj/effect/decal/cleanable/cobweb/cobweb2,
 /obj/structure/rack,
 /obj/effect/spawner/random/maintenance/three,
 /obj/effect/spawner/random/engineering/material_cheap,
@@ -643,16 +639,13 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/table,
 /obj/item/clothing/gloves/color/purple{
-	pixel_y = 12
+	pixel_y = 4
 	},
 /obj/item/grenade/chem_grenade/cleaner{
-	pixel_x = 8;
-	pixel_y = 15
+	pixel_x = 7;
+	pixel_y = 9
 	},
-/obj/item/grenade/chem_grenade/cleaner{
-	pixel_y = 8;
-	pixel_x = 8
-	},
+/obj/item/grenade/chem_grenade/cleaner,
 /turf/open/floor/iron/smooth,
 /area/station/maintenance/central/lesser)
 "TZ" = (
@@ -662,10 +655,7 @@
 	pixel_x = 6;
 	pixel_y = 6
 	},
-/obj/item/grenade/chem_grenade/cleaner{
-	pixel_y = 16;
-	pixel_x = -7
-	},
+/obj/item/grenade/chem_grenade/cleaner,
 /obj/item/grenade/chem_grenade/cleaner{
 	pixel_y = 6;
 	pixel_x = -7
@@ -705,9 +695,7 @@
 /area/station/maintenance/central/lesser)
 "US" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/effect/decal/cleanable/cobweb{
-	pixel_y = 24
-	},
+/obj/effect/decal/cleanable/cobweb,
 /turf/open/floor/iron/smooth,
 /area/station/maintenance/central/lesser)
 "Vf" = (
@@ -720,12 +708,10 @@
 /area/station/maintenance/central/lesser)
 "Vr" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/effect/decal/cleanable/cobweb{
-	pixel_y = 24
-	},
+/obj/effect/decal/cleanable/cobweb,
+/obj/structure/sink/directional/south,
 /obj/structure/mirror/directional/north,
 /obj/item/lipstick/random,
-/obj/structure/sink/directional/north,
 /turf/open/floor/plating,
 /area/station/maintenance/central/lesser)
 "Vt" = (
@@ -2785,7 +2771,7 @@ cV
 cV
 cV
 cV
-gt
+oU
 cV
 cV
 cV
@@ -2821,7 +2807,7 @@ US
 CB
 oP
 zF
-gZ
+gt
 cV
 Xm
 Gs
