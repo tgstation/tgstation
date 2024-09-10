@@ -1,0 +1,12 @@
+author: "EnterTheJake"
+delete-after: True
+changes:
+  - rscadd: "New Heretic Side Knowledge, Void Prison."
+  - rscadd: "New Void Spell Void Conduit has now replaced Void Blast."
+  - balance: "Void Chill is now a stacking debuff, upon reaching the cap, makes the target unable to heat up."
+  - balance: "Aristocrat's way now grants immunity to ice and water slips on cold turfs."
+  - balance: " Void Cloak now grants low pressure resistance when visible."
+  - balance: "Void Phase and Void pull have received a minor CD reduction."
+  - balance: "Seeking Blade now applies a couple of stacks of void chill."
+  - balance: " Void Heretic Ascension has been overhauled, it's now protects the heretic from projectiles, destroys windows and airlocks and applies void chills to non heretics."
+  - image: "Void Blade and Void Chill have received some new sprites."
