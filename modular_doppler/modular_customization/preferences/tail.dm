@@ -1,10 +1,13 @@
 /// SSAccessories setup
 /datum/controller/subsystem/accessories
 	var/list/tails_list_dog
+	var/list/tails_list_fox
 
 /datum/controller/subsystem/accessories/setup_lists()
 	. = ..()
 	tails_list_dog = init_sprite_accessory_subtypes(/datum/sprite_accessory/tails/dog)["default_sprites"] // FLAKY DEFINE: this should be using DEFAULT_SPRITE_LIST
+	tails_list_fox = init_sprite_accessory_subtypes(/datum/sprite_accessory/tails/fox)["default_sprites"]
+
 
 /datum/dna
 	///	This variable is read by the regenerate_organs() proc to know what organ subtype to give
@@ -179,12 +182,42 @@
 	return /datum/sprite_accessory/tails/dog/none::name
 
 /datum/preference/choiced/dog_tail/apply_to_human(mob/living/carbon/human/target, value)
-	target.dna.features["tail_other"] = value
+	if(target.dna.tail_type == DOG)	// we will be sharing the 'tail_other' slot with multiple tail types
+		target.dna.features["tail_other"] = value
 
 /datum/preference/choiced/dog_tail/icon_for(value)
 	var/datum/sprite_accessory/chosen_tail = SSaccessories.tails_list_dog[value]
 	return generate_tail_icon(chosen_tail)
 
+//	Fox
+/datum/preference/choiced/fox_tail
+	savefile_key = "feature_fox_tail"
+	savefile_identifier = PREFERENCE_CHARACTER
+	category = PREFERENCE_CATEGORY_CLOTHING
+	relevant_external_organ = null
+	should_generate_icons = TRUE
+	main_feature_name = "Tail"
+
+/datum/preference/choiced/fox_tail/init_possible_values()
+	return assoc_to_keys_features(SSaccessories.tails_list_fox)
+
+/datum/preference/choiced/fox_tail/is_accessible(datum/preferences/preferences)
+	. = ..()
+	var/chosen_variation = preferences.read_preference(/datum/preference/choiced/tail_variation)
+	if(chosen_variation == FOX)
+		return TRUE
+	return FALSE
+
+/datum/preference/choiced/fox_tail/create_default_value()
+	return /datum/sprite_accessory/tails/fox/none::name
+
+/datum/preference/choiced/fox_tail/apply_to_human(mob/living/carbon/human/target, value)
+	if(target.dna.tail_type == FOX)
+		target.dna.features["tail_other"] = value
+
+/datum/preference/choiced/fox_tail/icon_for(value)
+	var/datum/sprite_accessory/chosen_tail = SSaccessories.tails_list_fox[value]
+	return generate_tail_icon(chosen_tail)
 
 /// Proc to gen that icon
 //	We don't wanna copy paste this

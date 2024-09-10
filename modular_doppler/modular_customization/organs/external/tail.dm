@@ -9,14 +9,14 @@
 	preference = "feature_dog_tail"
 	dna_block = null
 	wag_flags = WAG_ABLE
-	bodypart_overlay = /datum/bodypart_overlay/mutant/tail/canine
+	bodypart_overlay = /datum/bodypart_overlay/mutant/tail/dog
 	/// monitor used for the moodbuff
 	var/datum/proximity_monitor/advanced/dog_wag/mood_buff
 
-/datum/bodypart_overlay/mutant/tail/canine
+/datum/bodypart_overlay/mutant/tail/dog
 	feature_key = "tail_other"
 
-/datum/bodypart_overlay/mutant/tail/canine/get_global_feature_list()
+/datum/bodypart_overlay/mutant/tail/dog/get_global_feature_list()
 	return SSaccessories.tails_list_dog
 
 // Create the proximity monitor when we start wagging, thanks TG for this proc!
@@ -48,3 +48,17 @@
 	description = "That wagging tail's excitement is infectious!"
 	mood_change = 1
 	timeout = 30 SECONDS
+
+/// Fox tail
+//
+/obj/item/organ/external/tail/fox
+	preference = "feature_fox_tail"
+	dna_block = null
+	wag_flags = WAG_ABLE
+	bodypart_overlay = /datum/bodypart_overlay/mutant/tail/fox
+
+/datum/bodypart_overlay/mutant/tail/fox
+	feature_key = "tail_other"
+
+/datum/bodypart_overlay/mutant/tail/fox/get_global_feature_list()
+	return SSaccessories.tails_list_fox

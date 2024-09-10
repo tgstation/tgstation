@@ -17,8 +17,6 @@
 	if(target.dna.features["ears"])
 		if((target.dna.features["ears"] != /datum/sprite_accessory/ears/none::name && target.dna.features["ears"] != /datum/sprite_accessory/blank::name) && (target.dna.ear_type != NO_VARIATION))
 			var/obj/item/organ/organ_path = text2path("/obj/item/organ/internal/ears/[target.dna.ear_type]")
-			if(isnull(organ_path))
-				organ_path = mutantears ? mutantears : /obj/item/organ/internal/ears
 			var/obj/item/organ/replacement = SSwardrobe.provide_type(organ_path)
 			replacement.Insert(target, special = TRUE, movement_flags = DELETE_IF_REPLACED)
 			return .

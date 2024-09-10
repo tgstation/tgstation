@@ -60,6 +60,11 @@
 	name = DOPPLER_SPRITE_ACCESSORY_NOTAIL
 	icon_state = /datum/sprite_accessory/tails/none::icon_state
 
+/datum/sprite_accessory/tails/fox/none
+	icon = /datum/sprite_accessory/tails/none::icon
+	name = DOPPLER_SPRITE_ACCESSORY_NOTAIL
+	icon_state = /datum/sprite_accessory/tails/none::icon_state
+
 /// Lizard exclusive 🦎
 /datum/sprite_accessory/lizard_markings/none
 	icon = 'modular_doppler/modular_customization/accessories/code/~overrides/icons/fallbacks.dmi'
