@@ -44,7 +44,7 @@
 	machine_name = "NanoMed Plus"
 	icon_state = "refill_medical"
 
-/obj/machinery/vending/medical/syndicate_access
+/obj/machinery/vending/medical/syndicate
 	name = "\improper SyndiMed Plus"
 	initial_language_holder = /datum/language_holder/syndicate
 
