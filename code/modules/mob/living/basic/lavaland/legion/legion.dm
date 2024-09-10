@@ -10,7 +10,7 @@
 	icon_living = "legion"
 	icon_dead = "legion"
 	icon_gib = "syndicate_gib"
-	mob_biotypes = MOB_ORGANIC|MOB_HUMANOID
+	mob_biotypes = MOB_ORGANIC|MOB_SPECIAL|MOB_UNDEAD
 	basic_mob_flags = DEL_ON_DEATH
 	speed = 3
 	maxHealth = 75

@@ -17,6 +17,12 @@
 #define COMSIG_FISH_EATEN_BY_OTHER_FISH "fish_eaten_by_other_fish"
 ///From /obj/item/fish/feed: (fed_reagents, fed_reagent_type)
 #define COMSIG_FISH_FED "fish_on_fed"
+///from /obj/item/fish/pet_fish
+#define COMSIG_FISH_PETTED "fish_petted"
+///From /obj/item/fish/update_size_and_weight: (new_size, new_weight)
+#define COMSIG_FISH_UPDATE_SIZE_AND_WEIGHT "fish_update_size_and_weight"
+///From /obj/item/fish/update_fish_force: (weight_rank, bonus_malus)
+#define COMSIG_FISH_FORCE_UPDATED "fish_force_updated"
 
 /// Fishing challenge completed
 #define COMSIG_FISHING_CHALLENGE_COMPLETED "fishing_completed"
@@ -46,3 +52,9 @@
 
 /// From /obj/item/fish_analyzer/proc/analyze_status: (fish, user)
 #define COMSIG_FISH_ANALYZER_ANALYZE_STATUS "fish_analyzer_analyze_status"
+
+/// From /datum/component/fish_growth/on_fish_life: (seconds_per_tick)
+#define COMSIG_FISH_BEFORE_GROWING "fish_before_growing"
+	#define COMPONENT_DONT_GROW (1 << 0)
+/// From /datum/component/fish_growth/finish_growing: (result)
+#define COMSIG_FISH_FINISH_GROWING "fish_finish_growing"

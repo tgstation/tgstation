@@ -55,7 +55,7 @@
 	if(istype(target, /obj/machinery/door/firedoor) || istype(target, /obj/machinery/door/airlock))
 		var/obj/machinery/door/target_door = target
 		playsound(chassis, clampsound, 50, FALSE, -6)
-		target_door.try_to_crowbar(src, source)
+		target_door.try_to_crowbar(src, source, TRUE)
 		return ..()
 
 	if(isobj(target))
@@ -98,7 +98,7 @@
 			span_notice("[chassis] pushes you aside."))
 		return ..()
 
-	if(iscarbon(victim))//meme clamp here
+	if(iscarbon(victim) && killer_clamp)//meme clamp here
 		var/mob/living/carbon/carbon_victim = target
 		var/torn_off = FALSE
 		var/obj/item/bodypart/affected = carbon_victim.get_bodypart(BODY_ZONE_L_ARM)
@@ -120,7 +120,6 @@
 	if(isnull(victim)) //get gibbed stoopid
 		return ..()
 	victim.adjustOxyLoss(round(clamp_damage/2))
-	victim.updatehealth()
 	victim.visible_message(span_danger("[chassis] squeezes [victim]!"), \
 						span_userdanger("[chassis] squeezes you!"),\
 						span_hear("You hear something crack."))
@@ -172,7 +171,7 @@
 
 
 /**
- * Handles attemted refills of the extinguisher.
+ * Handles attempted refills of the extinguisher.
  *
  * The mech can only refill an extinguisher that is in front of it.
  * Only water tank objects can be used.
@@ -311,7 +310,7 @@
 	if(!(mecha.mecha_flags & PANEL_OPEN)) //non-removable upgrade, so lets make sure the pilot or owner has their say.
 		to_chat(user, span_warning("[mecha] panel must be open in order to allow this conversion kit."))
 		return FALSE
-	if(LAZYLEN(mecha.occupants)) //We're actualy making a new mech and swapping things over, it might get weird if players are involved
+	if(LAZYLEN(mecha.occupants)) //We're actually making a new mech and swapping things over, it might get weird if players are involved
 		to_chat(user, span_warning("[mecha] must be unoccupied before this conversion kit can be applied."))
 		return FALSE
 	if(!mecha.cell) //Turns out things break if the cell is missing

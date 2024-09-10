@@ -1,5 +1,7 @@
 /// Use in fish tables to denote miss chance.
 #define FISHING_DUD "dud"
+///Used in the the hydro tray fishing spot to define a random seed reward
+#define FISHING_RANDOM_SEED "Random seed"
 
 // Baseline fishing difficulty levels
 #define FISHING_DEFAULT_DIFFICULTY 15
@@ -13,11 +15,6 @@
 #define EXPERT_FISHER_DIFFICULTY_MOD -5
 
 #define FISH_TRAIT_MINOR_DIFFICULTY_BOOST 5
-
-// These define how the fish will behave in the minigame
-#define FISH_AI_DUMB "dumb"
-#define FISH_AI_ZIPPY "zippy"
-#define FISH_AI_SLOW "slow"
 
 ///Slot defines for the fishing rod and its equipment
 #define ROD_SLOT_BAIT "bait"
@@ -70,9 +67,11 @@
 #define FISHING_MINIGAME_RULE_FLIP (1 << 5)
 ///Skip the biting phase and go straight to the minigame, avoiding the penalty for having slow reflexes.
 #define FISHING_MINIGAME_AUTOREEL (1 << 6)
+///The fish will fade in and out at intervals
+#define FISHING_MINIGAME_RULE_CAMO (1 << 7)
 
 ///all the effects that are active and will last for a few seconds before triggering a cooldown
-#define FISHING_MINIGAME_ACTIVE_EFFECTS (FISHING_MINIGAME_RULE_ANTIGRAV|FISHING_MINIGAME_RULE_FLIP)
+#define FISHING_MINIGAME_ACTIVE_EFFECTS (FISHING_MINIGAME_RULE_ANTIGRAV|FISHING_MINIGAME_RULE_FLIP|FISHING_MINIGAME_RULE_CAMO)
 
 /// The default additive value for fishing hook catch weight modifiers.
 #define FISHING_DEFAULT_HOOK_BONUS_ADDITIVE 0
@@ -89,7 +88,12 @@
 #define FISH_ICON_GEM "gem"
 #define FISH_ICON_CRAB "crab"
 #define FISH_ICON_JELLYFISH "jellyfish"
+#define FISH_ICON_BOTTLE "bottle"
 #define FISH_ICON_BONE "bone"
+#define FISH_ICON_ELECTRIC "electric"
+#define FISH_ICON_WEAPON "weapon"
+#define FISH_ICON_CRITTER "critter"
+#define FISH_ICON_SEED "seed"
 
 #define AQUARIUM_ANIMATION_FISH_SWIM "fish"
 #define AQUARIUM_ANIMATION_FISH_DEAD "dead"
@@ -110,8 +114,11 @@
 ///Fish size thresholds for w_class.
 #define FISH_SIZE_TINY_MAX 30
 #define FISH_SIZE_SMALL_MAX 50
-#define FISH_SIZE_NORMAL_MAX 90
-#define FISH_SIZE_BULKY_MAX 130
+#define FISH_SIZE_NORMAL_MAX 80
+#define FISH_SIZE_BULKY_MAX 120
+///size threshold for requiring two-handed carry
+#define FISH_SIZE_TWO_HANDS_REQUIRED 135
+#define FISH_SIZE_HUGE_MAX 165
 
 ///The coefficient for maximum weight/size divergence relative to the averages.
 #define MAX_FISH_DEVIATION_COEFF 2.5
@@ -120,6 +127,15 @@
 #define FISH_GRIND_RESULTS_WEIGHT_DIVISOR 500
 ///The number of fillets is multiplied by the fish' size and divided by this.
 #define FISH_FILLET_NUMBER_SIZE_DIVISOR 30
+
+///The slowdown of the fish when carried begins at this value
+#define FISH_WEIGHT_SLOWDOWN 2100
+///The value of the slowdown equals to the weight divided by this (and then at the power of a sub-1 exponent)
+#define FISH_WEIGHT_SLOWDOWN_DIVISOR 500
+///The sub-one exponent that results in the final slowdown of the fish item
+#define FISH_WEIGHT_SLOWDOWN_EXPONENT 0.54
+///Used to calculate the force of the fish by comparing (1 + log(weight/this_define)) and the w_class of the item.
+#define FISH_WEIGHT_FORCE_DIVISOR 250
 
 ///The breeding timeout for newly instantiated fish is multiplied by this.
 #define NEW_FISH_BREEDING_TIMEOUT_MULT 2
@@ -164,3 +180,19 @@
 
 //Fish breeding stops if fish count exceeds this.
 #define AQUARIUM_MAX_BREEDING_POPULATION 20
+
+//Minigame defines
+/// The height of the minigame slider. Not in pixels, but minigame units.
+#define FISHING_MINIGAME_AREA 1000
+
+///Defines for fish properties from the collect_fish_properties proc
+#define FISH_PROPERTIES_FAV_BAIT "fav_bait"
+#define FISH_PROPERTIES_BAD_BAIT "bad_bait"
+#define FISH_PROPERTIES_TRAITS "fish_traits"
+
+///Define for favorite and disliked baits that aren't just item typepaths.
+#define FISH_BAIT_TYPE "Type"
+#define FISH_BAIT_FOODTYPE "Foodtype"
+#define FISH_BAIT_REAGENT "Reagent"
+#define FISH_BAIT_VALUE "Value"
+#define FISH_BAIT_AMOUNT "Amount"

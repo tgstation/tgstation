@@ -1,6 +1,6 @@
 // Eggplant
 /obj/item/seeds/eggplant
-	name = "pack of eggplant seeds"
+	name = "eggplant seed pack"
 	desc = "These seeds grow to produce berries that look nothing like eggs."
 	icon_state = "seed-eggplant"
 	species = "eggplant"
@@ -25,7 +25,7 @@
 
 // Egg-Plant
 /obj/item/seeds/eggplant/eggy
-	name = "pack of egg-plant seeds"
+	name = "egg-plant seed pack"
 	desc = "These seeds grow to produce berries that look a lot like eggs."
 	icon_state = "seed-eggy"
 	species = "eggy"

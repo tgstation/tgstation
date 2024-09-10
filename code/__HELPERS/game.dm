@@ -214,16 +214,16 @@
 		if(istype(atom_to_find, type))
 			return atom_to_find
 
-		while(!istype(atom_to_find.loc, type))
+		while(!istype(atom_to_find, type))
 			if(!atom_to_find.loc)
 				return
 			atom_to_find = atom_to_find.loc
 	else if(isatom(type))
 		atom_to_find = target
-		if(atom_to_find.loc == type)
+		if(atom_to_find == type)
 			return atom_to_find
 
-		while(atom_to_find.loc != type)
+		while(atom_to_find != type)
 			if(!atom_to_find.loc)
 				return
 			atom_to_find = atom_to_find.loc

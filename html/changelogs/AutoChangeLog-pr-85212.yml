@@ -1,4 +1,0 @@
-author: "afonamos2"
-delete-after: True
-changes:
-  - bugfix: "Firelocks will once again respect fire alarm's thermal sensors being disabled."

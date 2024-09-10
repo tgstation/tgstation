@@ -371,6 +371,12 @@
 		return TRUE
 	return ..()
 
+/obj/machinery/door/item_interaction_secondary(mob/living/user, obj/item/tool, list/modifiers)
+	// allows you to crowbar doors while in combat mode
+	if(user.combat_mode && tool.tool_behaviour == TOOL_CROWBAR)
+		return crowbar_act_secondary(user, tool)
+	return ..()
+
 /obj/machinery/door/welder_act_secondary(mob/living/user, obj/item/tool)
 	try_to_weld_secondary(tool, user)
 	return ITEM_INTERACT_SUCCESS
@@ -604,6 +610,10 @@
 
 /obj/machinery/door/morgue
 	icon = 'icons/obj/doors/doormorgue.dmi'
+
+/obj/machinery/door/morgue/Initialize(mapload)
+	. = ..()
+	AddComponent(/datum/component/redirect_attack_hand_from_turf)
 
 /obj/machinery/door/get_dumping_location()
 	return null

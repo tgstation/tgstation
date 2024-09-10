@@ -54,6 +54,8 @@
 		update_worn_shoes(update_obscured = FALSE)
 	if(obscured_flags & HIDEMASK)
 		update_worn_mask(update_obscured = FALSE)
+	if(obscured_flags & HIDEBELT)
+		update_worn_belt(update_obscured = FALSE)
 	if(obscured_flags & HIDEEARS)
 		update_worn_ears(update_obscured = FALSE)
 	if(obscured_flags & HIDEEYES)

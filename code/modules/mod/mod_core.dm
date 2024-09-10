@@ -173,7 +173,6 @@
 /obj/item/mod/core/standard/proc/uninstall_cell()
 	if(!cell)
 		return
-	cell.update_appearance()
 	cell = null
 	mod.update_charge_alert()
 

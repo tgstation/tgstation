@@ -17,6 +17,7 @@
 	cost = CARGO_CRATE_VALUE * 2
 	contains = list(/obj/item/gun/ballistic/shotgun/toy = 8)
 	crate_name = "foam force crate"
+	crate_type = /obj/structure/closet/crate/freezer/donk
 	discountable = SUPPLY_PACK_STD_DISCOUNTABLE
 
 /datum/supply_pack/imports/foamforce/bonus
@@ -30,6 +31,7 @@
 		/obj/item/ammo_box/magazine/toy/pistol = 2,
 	)
 	crate_name = "foam force crate"
+	crate_type = /obj/structure/closet/crate/freezer/donk
 
 /datum/supply_pack/imports/meatmeatmeatmeat // MEAT MEAT MEAT MEAT
 	name = "MEAT MEAT MEAT MEAT MEAT"
@@ -141,6 +143,7 @@
 		/obj/item/gun/ballistic/automatic/wt550 = 2,
 		/obj/item/ammo_box/magazine/wt550m9 = 2,
 	)
+	crate_type = /obj/structure/closet/crate/secure/gorlex_weapons/jammed
 
 /datum/supply_pack/imports/wt550ammo
 	name = "Smuggled WT-550 Ammo Crate"
@@ -153,7 +156,7 @@
 		/obj/item/ammo_box/magazine/wt550m9/wtic = 2,
 	)
 	crate_name = "emergency crate"
-	crate_type = /obj/structure/closet/crate/internals
+	crate_type = /obj/structure/closet/crate/secure/gorlex_weapons/jammed
 
 /datum/supply_pack/imports/shocktrooper
 	name = "Shocktrooper Crate"
@@ -169,6 +172,7 @@
 		/obj/item/clothing/suit/armor/vest,
 		/obj/item/clothing/head/helmet,
 	)
+	crate_type = /obj/structure/closet/crate/secure/gorlex_weapons/jammed
 
 /datum/supply_pack/imports/specialops
 	name = "Special Ops Crate"
@@ -184,6 +188,7 @@
 		/obj/item/switchblade,
 		/obj/item/grenade/mirage = 5,
 	)
+	crate_type = /obj/structure/closet/crate/secure/gorlex_weapons/jammed
 
 /datum/supply_pack/imports/russian
 	name = "Russian Surplus Military Gear Crate"
@@ -318,3 +323,20 @@
 	)
 	crate_name = "floortile camouflauge crate"
 	crate_type = /obj/structure/closet/crate/secure/weapon
+
+/**
+ * The Long To Short Range Bluespace Teleporter, used to deliver (black) market purchases more effiiently
+ * It can also be used to restock it, if you hit it with enough credits.
+ */
+/datum/supply_pack/imports/blackmarket_telepad
+	name = "Black Market LTSRBT"
+	desc = "Need a faster and better way of transporting your illegal goods from and to the \
+		station? Fear not, the Long-To-Short-Range-Bluespace-Transceiver (LTSRBT for short) \
+		is here to help. Contains a LTSRBT circuit, two bluespace crystals, and one ansible."
+	cost = CARGO_CRATE_VALUE * 10
+	contraband = TRUE
+	contains = list(
+		/obj/item/circuitboard/machine/ltsrbt,
+		/obj/item/stack/ore/bluespace_crystal/artificial = 2,
+		/obj/item/stock_parts/subspace/ansible,
+	)

@@ -435,3 +435,8 @@ GLOBAL_LIST_INIT(cable_colors, list(
 ))
 
 #define HUSK_COLOR_TONE rgb(96, 88, 80)
+
+#define CM_COLOR_SAT_MIN 0.6
+#define CM_COLOR_SAT_MAX 0.7
+#define CM_COLOR_LUM_MIN 0.65
+#define CM_COLOR_LUM_MAX 0.75

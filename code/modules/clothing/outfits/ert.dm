@@ -104,6 +104,8 @@
 	l_pocket = /obj/item/healthanalyzer/advanced
 	additional_radio = /obj/item/encryptionkey/heads/cmo
 
+	skillchips = list(/obj/item/skillchip/entrails_reader)
+
 /datum/outfit/centcom/ert/medic/alert
 	name = "ERT Medic - High Alert"
 
@@ -132,6 +134,9 @@
 	glasses = /obj/item/clothing/glasses/meson/engine
 	l_pocket = /obj/item/rcd_ammo/large
 	additional_radio = /obj/item/encryptionkey/heads/ce
+
+
+	skillchips = list(/obj/item/skillchip/job/engineer)
 
 /datum/outfit/centcom/ert/engineer/alert
 	name = "ERT Engineer - High Alert"
@@ -520,6 +525,9 @@
 	glasses = /obj/item/clothing/glasses/hud/health/sunglasses
 	additional_radio = /obj/item/encryptionkey/heads/cmo
 
+
+	skillchips = list(/obj/item/skillchip/entrails_reader)
+
 /datum/outfit/centcom/ert/marine/engineer
 	name = "Marine Engineer"
 
@@ -532,6 +540,8 @@
 	belt = /obj/item/storage/belt/utility/full/powertools/rcd
 	glasses = /obj/item/clothing/glasses/hud/diagnostic/sunglasses
 	additional_radio = /obj/item/encryptionkey/heads/ce
+
+	skillchips = list(/obj/item/skillchip/job/engineer)
 
 /datum/outfit/centcom/militia
 	name = "Militia Man"
@@ -563,3 +573,72 @@
 	head = /obj/item/clothing/head/beret/militia
 	l_hand = /obj/item/megaphone
 	suit_store = /obj/item/gun/energy/laser/musket/prime
+
+/datum/outfit/centcom/ert/medical_commander
+	name = "Chief EMT"
+	id = /obj/item/card/id/advanced/centcom/ert/medical
+	uniform = /obj/item/clothing/under/rank/medical/chief_medical_officer
+	l_pocket = /obj/item/healthanalyzer/advanced
+	shoes = /obj/item/clothing/shoes/sneakers/white
+	backpack_contents = list(
+		/obj/item/reagent_containers/hypospray/combat = 1,
+		/obj/item/storage/medkit/regular = 1,
+		/obj/item/storage/medkit/advanced = 1,
+		/obj/item/melee/baton/telescopic = 1,
+		/obj/item/gun/energy/pulse/pistol/loyalpin = 1,
+		/obj/item/stack/medical/poultice = 1, //These stacks contain 15 by default. Great for getting corpses to defib range without surgery.
+	)
+	belt = /obj/item/storage/belt/medical/ert
+	glasses = /obj/item/clothing/glasses/hud/health/sunglasses
+	additional_radio = /obj/item/encryptionkey/heads/cmo
+	mask = /obj/item/clothing/mask/surgical
+	back = /obj/item/mod/control/pre_equipped/emergency_medical/corpsman
+	gloves = null
+	suit = null
+	head = null
+	suit_store = /obj/item/tank/internals/oxygen
+
+/datum/outfit/centcom/ert/medical_technician
+	name = "EMT Paramedic"
+	id = /obj/item/card/id/advanced/centcom/ert/medical
+	uniform = /obj/item/clothing/under/rank/medical/scrubs/blue
+	l_pocket = /obj/item/healthanalyzer
+	backpack_contents = list(
+		/obj/item/reagent_containers/hypospray/combat = 1,
+		/obj/item/storage/medkit/regular = 1,
+		/obj/item/reagent_containers/syringe = 1,
+		/obj/item/reagent_containers/cup/bottle/formaldehyde = 1,
+		/obj/item/reagent_containers/medigel/sterilizine = 1,
+		/obj/item/bodybag = 2,
+	)
+	mask = /obj/item/clothing/mask/surgical
+	belt = /obj/item/storage/belt/medical/ert
+	glasses = /obj/item/clothing/glasses/hud/health
+	additional_radio = /obj/item/encryptionkey/heads/cmo
+	shoes = /obj/item/clothing/shoes/sneakers/blue
+	back = /obj/item/mod/control/pre_equipped/emergency_medical
+	gloves = null
+	suit = null
+	head = null
+	suit_store = /obj/item/tank/internals/oxygen
+
+/obj/item/mod/control/pre_equipped/emergency_medical
+	theme = /datum/mod_theme/medical
+	starting_frequency = MODLINK_FREQ_CENTCOM
+	applied_cell = /obj/item/stock_parts/power_store/cell/hyper
+	applied_modules = list(
+		/obj/item/mod/module/organizer,
+		/obj/item/mod/module/defibrillator,
+		/obj/item/mod/module/flashlight,
+		/obj/item/mod/module/health_analyzer,
+		/obj/item/mod/module/injector,
+		/obj/item/mod/module/surgical_processor/emergency,
+		/obj/item/mod/module/storage/large_capacity,
+	)
+
+/obj/item/mod/control/pre_equipped/emergency_medical/corpsman
+	theme = /datum/mod_theme/medical/corpsman
+
+///Identical to medical MODsuit, but uses the alternate skin by default.
+/datum/mod_theme/medical/corpsman
+	default_skin = "corpsman"

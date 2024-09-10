@@ -3,6 +3,7 @@ GLOBAL_LIST_INIT(high_priority_sentience, typecacheof(list(
 	/mob/living/basic/butterfly,
 	/mob/living/basic/carp/pet/cayenne,
 	/mob/living/basic/chicken,
+	/mob/living/basic/crab,
 	/mob/living/basic/cow,
 	/mob/living/basic/goat,
 	/mob/living/basic/lizard,
@@ -18,6 +19,7 @@ GLOBAL_LIST_INIT(high_priority_sentience, typecacheof(list(
 	/mob/living/simple_animal/bot/secbot/beepsky,
 	/mob/living/simple_animal/hostile/retaliate/goose/vomit,
 	/mob/living/basic/bear/snow/misha,
+	/mob/living/basic/mining/lobstrosity/juvenile,
 )))
 
 /datum/round_event_control/sentience

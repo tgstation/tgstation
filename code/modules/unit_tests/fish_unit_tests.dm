@@ -1,5 +1,21 @@
 #define TRAIT_FISH_TESTING "made_you_read_this"
 
+///Ensures that all fish have an aquarium icon state and that sprite_width and sprite_height have been set.
+/datum/unit_test/fish_aquarium_icons
+
+/datum/unit_test/fish_aquarium_icons/Run()
+	for(var/obj/item/fish/fish as anything in subtypesof(/obj/item/fish))
+		if(ispath(fish, /obj/item/fish/testdummy)) //We don't care about unit test fish.
+			continue
+		var/init_icon = fish::dedicated_in_aquarium_icon
+		var/init_icon_state = fish::dedicated_in_aquarium_icon_state || "[fish::icon_state]_small"
+		if(!icon_exists(init_icon, init_icon_state))
+			TEST_FAIL("[fish] with doesn't have a \"[init_icon_state]\" aquarium icon state in [init_icon]. Please make one.")
+		if(!fish::sprite_width)
+			TEST_FAIL("[fish] doesn't have a set sprite_width.")
+		if(!fish::sprite_height)
+			TEST_FAIL("[fish] doesn't have a set sprite_height.")
+
 ///Checks that things associated with fish size and weight work correctly.
 /datum/unit_test/fish_size_weight
 
@@ -76,10 +92,11 @@
 	incompatible_traits = list(/datum/fish_trait/dummy/two)
 	inheritability = 100
 	diff_traits_inheritability = 100
+	reagents_to_add = list(/datum/reagent = 10)
 
 /datum/fish_trait/dummy/apply_to_fish(obj/item/fish/fish)
+	. = ..()
 	ADD_TRAIT(fish, TRAIT_FISH_TESTING, FISH_TRAIT_DATUM)
-	fish.grind_results[/datum/reagent] = 10
 
 /datum/fish_trait/dummy/two
 	incompatible_traits = list(/datum/fish_trait/dummy)
@@ -226,10 +243,11 @@
 
 /datum/unit_test/raise_a_chasm_crab/Run()
 	var/obj/structure/aquarium/crab/aquarium = allocate(/obj/structure/aquarium/crab)
-	var/mob/living/basic/mining/lobstrosity/juvenile/lobster = aquarium.crabbie.grow_up(1) //one stands for a second
-	TEST_ASSERT(lobster, "The test aquarium's chasm crab didn't grow up into a lobstrosity.[aquarium.crabbie ? " The aquarium crab is still here and at about [aquarium.crabbie.maturation]% maturation" : ""]")
-	allocated |= lobster //make sure it's allocated and thus properly deleted when the test is over
+	SEND_SIGNAL(aquarium.crabbie, COMSIG_FISH_LIFE, 1) //give the fish growth component a small push.
+	var/mob/living/basic/mining/lobstrosity/juvenile/lobster = locate() in aquarium.loc
 	TEST_ASSERT_EQUAL(lobster.loc, get_turf(aquarium), "The lobstrosity didn't spawn on the aquarium's turf")
+	TEST_ASSERT(QDELETED(aquarium.crabbie), "The test aquarium's chasm crab didn't delete itself.")
+	allocated |= lobster //make sure it's allocated and thus properly deleted when the test is over
 	//While ideally impossible to have all traits because of incompatible ones, I want to be sure they don't error out.
 	for(var/trait_type in GLOB.fish_traits)
 		var/datum/fish_trait/trait = GLOB.fish_traits[trait_type]
@@ -258,15 +276,17 @@
 /datum/unit_test/explosive_fishing/Run()
 	var/datum/fish_source/source = GLOB.preset_fish_sources[/datum/fish_source/unit_test]
 	source.spawn_reward_from_explosion(run_loc_floor_bottom_left, 1)
-	if(length(source.fish_table))
+	if(source.fish_counts[/obj/item/wrench])
 		TEST_FAIL("The unit test item wasn't removed/spawned from fish_table during 'spawn_reward_from_explosion'.")
 
 /datum/fish_source/unit_test
 	fish_table = list(
 		/obj/item/wrench = 1,
+		/obj/item/screwdriver = INFINITY,
 	)
 	fish_counts = list(
 		/obj/item/wrench = 1,
+		/obj/item/screwdriver = 0,
 	)
 
 #undef TRAIT_FISH_TESTING
