@@ -504,8 +504,8 @@ SUBSYSTEM_DEF(air)
 		activate.excited = TRUE
 		active_turfs += activate
 	else if(activate.flags_1 & INITIALIZED_1)
-		for(var/turf/S in activate.atmos_adjacent_turfs)
-			add_to_active(S, TRUE)
+		for(var/turf/neighbor in activate.atmos_adjacent_turfs)
+			add_to_active(neighbor, TRUE)
 	else if(map_loading)
 		if(queued_for_activation)
 			queued_for_activation[activate] = activate
