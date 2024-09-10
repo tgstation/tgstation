@@ -13,6 +13,8 @@
 /datum/species/regenerate_organs(mob/living/carbon/target, datum/species/old_species, replace_current = TRUE, list/excluded_zones, visual_only = FALSE)
 	. = ..()
 	if(target.dna.features["snout"])
+		if(target.dna.snout_type == NO_VARIATION)
+			return .
 		if(target.dna.features["snout"] != /datum/sprite_accessory/snouts/none::name && target.dna.features["snout"] != /datum/sprite_accessory/blank::name)
 			var/obj/item/organ/organ_path = text2path("/obj/item/organ/external/snout/[target.dna.snout_type]")
 			var/obj/item/organ/replacement = SSwardrobe.provide_type(organ_path)
