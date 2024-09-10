@@ -847,7 +847,7 @@
 /obj/item/exodrone,
 /obj/effect/turf_decal/box,
 /turf/open/floor/plating/reinforced,
-/area/station/cargo/drone_bay)
+/area/station/cargo/storage)
 "apJ" = (
 /obj/structure/cable,
 /turf/open/floor/iron/dark,
@@ -4461,7 +4461,7 @@
 	dir = 8
 	},
 /turf/open/floor/iron/stairs,
-/area/station/cargo/drone_bay)
+/area/station/cargo/storage)
 "bBA" = (
 /obj/structure/disposalpipe/segment,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -6086,7 +6086,7 @@
 	dir = 10
 	},
 /turf/open/floor/plating/reinforced,
-/area/station/cargo/drone_bay)
+/area/station/cargo/storage)
 "cky" = (
 /obj/machinery/power/shieldwallgen,
 /obj/machinery/light/cold/directional/east,
@@ -10083,7 +10083,7 @@
 	},
 /obj/effect/landmark/start/cargo_technician,
 /turf/open/floor/plating/reinforced,
-/area/station/cargo/drone_bay)
+/area/station/cargo/storage)
 "dMv" = (
 /obj/machinery/holopad,
 /obj/structure/cable,
@@ -11828,7 +11828,7 @@
 /obj/item/fuel_pellet,
 /obj/item/fuel_pellet,
 /turf/open/floor/plating/reinforced,
-/area/station/cargo/drone_bay)
+/area/station/cargo/storage)
 "eoj" = (
 /obj/machinery/meter{
 	name = "Mixed Air Tank Out"
@@ -14889,9 +14889,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron/white,
 /area/station/science/xenobiology/hallway)
-"fru" = (
-/turf/closed/wall,
-/area/station/cargo/drone_bay)
 "frw" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/cobweb/cobweb2,
@@ -15622,7 +15619,7 @@
 /obj/machinery/exodrone_launcher,
 /obj/effect/turf_decal/box,
 /turf/open/floor/plating/reinforced,
-/area/station/cargo/drone_bay)
+/area/station/cargo/storage)
 "fHy" = (
 /obj/structure/window/reinforced/spawner/directional/east,
 /turf/open/floor/plating/airless,
@@ -17402,7 +17399,7 @@
 	},
 /obj/effect/landmark/start/cargo_technician,
 /turf/open/floor/plating/reinforced,
-/area/station/cargo/drone_bay)
+/area/station/cargo/storage)
 "gqX" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
@@ -17998,7 +17995,7 @@
 /obj/effect/turf_decal/loading_area,
 /obj/effect/landmark/navigate_destination,
 /turf/open/floor/plating/reinforced,
-/area/station/cargo/drone_bay)
+/area/station/cargo/storage)
 "gBY" = (
 /obj/structure/closet/emcloset,
 /obj/machinery/light/small/directional/west,
@@ -22075,7 +22072,7 @@
 	},
 /obj/structure/railing,
 /turf/open/floor/plating/reinforced,
-/area/station/cargo/drone_bay)
+/area/station/cargo/storage)
 "hVX" = (
 /obj/structure/toilet{
 	pixel_y = 8
@@ -24999,7 +24996,7 @@
 /obj/machinery/exoscanner,
 /obj/effect/turf_decal/delivery/white,
 /turf/open/floor/plating/reinforced,
-/area/station/cargo/drone_bay)
+/area/station/cargo/storage)
 "iTc" = (
 /obj/machinery/atmospherics/pipe/smart/manifold/purple/visible{
 	dir = 4
@@ -34546,7 +34543,7 @@
 	},
 /obj/structure/sign/departments/exodrone/directional/north,
 /turf/open/floor/plating/reinforced,
-/area/station/cargo/drone_bay)
+/area/station/cargo/storage)
 "mpJ" = (
 /obj/item/radio/intercom/directional/west,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -38920,7 +38917,7 @@
 	dir = 8
 	},
 /turf/open/floor/plating/reinforced,
-/area/station/cargo/drone_bay)
+/area/station/cargo/storage)
 "nPJ" = (
 /obj/structure/reagent_dispensers/watertank,
 /obj/effect/mapping_helpers/broken_floor,
@@ -51675,7 +51672,7 @@
 	dir = 10
 	},
 /turf/open/floor/plating/reinforced,
-/area/station/cargo/drone_bay)
+/area/station/cargo/storage)
 "smg" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/dark/visible,
 /obj/effect/mapping_helpers/airlock/locked,
@@ -54152,7 +54149,7 @@
 "tdg" = (
 /obj/effect/turf_decal/loading_area,
 /turf/open/floor/plating/reinforced,
-/area/station/cargo/drone_bay)
+/area/station/cargo/storage)
 "tds" = (
 /obj/effect/turf_decal/box/corners{
 	dir = 8
@@ -60620,7 +60617,7 @@
 	dir = 4
 	},
 /turf/open/floor/iron/stairs,
-/area/station/cargo/drone_bay)
+/area/station/cargo/storage)
 "vru" = (
 /obj/machinery/chem_master,
 /obj/effect/turf_decal/tile/yellow/half/contrasted,
@@ -87210,7 +87207,7 @@ kRe
 tid
 qTf
 hKg
-fru
+cbz
 ckw
 pCc
 ksA
