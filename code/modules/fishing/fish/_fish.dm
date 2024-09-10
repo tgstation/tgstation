@@ -821,12 +821,13 @@
 			)
 		var/body_zone = pick(BODY_ZONE_R_ARM, BODY_ZONE_L_ARM)
 		user.apply_damage((force * 0.2) + w_class * 2, BRUTE, body_zone, user.run_armor_check(body_zone, MELEE))
+		playsound(src,'sound/weapons/bite.ogg', 45, TRUE, -1)
 	else
 		if(in_aquarium)
 			to_chat(user, span_notice("[src] dances around!"))
 		else
 			to_chat(user, span_notice("You pet [src] as you hold it."))
-	playsound(src, 'sound/weapons/thudswoosh.ogg', 30, TRUE, -1)
+		playsound(src, 'sound/weapons/thudswoosh.ogg', 30, TRUE, -1)
 	addtimer(VARSET_CALLBACK(src, recently_petted, FALSE), 30 SECONDS)
 	return TRUE
 
