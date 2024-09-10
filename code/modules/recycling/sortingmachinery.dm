@@ -214,7 +214,7 @@
 	density = TRUE
 	interaction_flags_item = 0 // Disable the ability to pick it up. Wow!
 	layer = BELOW_OBJ_LAYER
-	pass_flags_self = PASSFLAPS
+	pass_flags_self = PASSSTRUCTURE
 	interaction_flags_atom = INTERACT_ATOM_ATTACK_HAND
 	w_class = WEIGHT_CLASS_GIGANTIC
 
