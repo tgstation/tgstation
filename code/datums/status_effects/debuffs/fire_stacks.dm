@@ -227,8 +227,9 @@
 		amount_to_heat = amount_to_heat ** (BODYTEMP_FIRE_TEMP_SOFTCAP / owner.bodytemperature)
 
 	victim.adjust_bodytemperature(amount_to_heat)
-	victim.add_mood_event("on_fire", /datum/mood_event/on_fire)
-	victim.add_mob_memory(/datum/memory/was_burning)
+	if (!(HAS_TRAIT(victim, TRAIT_RESISTHEAT)))
+		victim.add_mood_event("on_fire", /datum/mood_event/on_fire)
+		victim.add_mob_memory(/datum/memory/was_burning)
 
 /**
  * Handles mob ignition, should be the only way to set on_fire to TRUE
