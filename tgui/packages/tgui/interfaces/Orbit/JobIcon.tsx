@@ -13,7 +13,7 @@ type IconSettings = {
 };
 
 const normalIcon: IconSettings = {
-  dmi: 'icons/mob/huds/hud.dmi',
+  dmi: 'modular_doppler/overwrites/huds/hud.dmi' /* Doppler station edit, old code: dmi: 'icons/mob/huds/hud.dmi', */,
   transform: 'scale(2.3) translateX(9px) translateY(1px)',
 };
 

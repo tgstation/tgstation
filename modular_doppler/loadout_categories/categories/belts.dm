@@ -100,3 +100,23 @@
 /datum/loadout_item/belts/mining
 	name = "Explorer's Webbing"
 	item_path = /obj/item/storage/belt/mining
+
+/datum/loadout_item/belts/boarding_rig
+	name = "Chest Rig"
+	item_path = /obj/item/storage/belt/military
+
+/datum/loadout_item/belts/deforest_med
+	name = "Satchel Med-kit"
+	item_path = /obj/item/storage/backpack/duffelbag/deforest_medkit
+
+/datum/loadout_item/belts/frontier_med
+	name = "Frontier Med-kit"
+	item_path = /obj/item/storage/medkit/frontier
+
+/datum/loadout_item/belts/deforest_paramed
+	name = "Satchel Tech-kit"
+	item_path = /obj/item/storage/backpack/duffelbag/deforest_paramedic
+
+/datum/loadout_item/belts/deforest_surgical
+	name = "Firest Responder Med-kit"
+	item_path = /obj/item/storage/backpack/duffelbag/deforest_surgical

@@ -91,4 +91,10 @@
 	name = "Pirate Boots"
 	item_path = /obj/item/clothing/shoes/pirate
 
+/datum/loadout_item/shoes/colonial_boots
+	name = "Colonial Half-boots"
+	item_path = /obj/item/clothing/shoes/jackboots/colonial
 
+/datum/loadout_item/shoes/frontier_boots
+	name = "Heavy Boots"
+	item_path = /obj/item/clothing/shoes/jackboots/frontier_colonist
