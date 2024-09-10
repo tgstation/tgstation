@@ -78,6 +78,7 @@ GLOBAL_LIST_INIT(strippable_alien_humanoid_items, create_strippable_list(list(
 	SEND_SIGNAL(src, COMSIG_MOVABLE_SET_GRAB_STATE, newstate)
 	. = grab_state
 	grab_state = newstate
+	update_incapacitated()
 	switch(grab_state) // Current state.
 		if(GRAB_PASSIVE)
 			REMOVE_TRAIT(pulling, TRAIT_IMMOBILIZED, CHOKEHOLD_TRAIT)
@@ -101,7 +102,7 @@ GLOBAL_LIST_INIT(strippable_alien_humanoid_items, create_strippable_list(list(
 /mob/living/carbon/alien/adult/proc/can_consume(atom/movable/poor_soul)
 	if(!isliving(poor_soul) || pulling != poor_soul)
 		return FALSE
-	if(incapacitated() || grab_state < GRAB_AGGRESSIVE || stat != CONSCIOUS)
+	if(incapacitated || grab_state < GRAB_AGGRESSIVE || stat != CONSCIOUS)
 		return FALSE
 	if(get_dir(src, poor_soul) != dir) // Gotta face em 4head
 		return FALSE

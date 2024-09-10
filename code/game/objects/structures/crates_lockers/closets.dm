@@ -915,6 +915,8 @@ GLOBAL_LIST_EMPTY(roundstart_station_closets)
 /obj/structure/closet/mouse_drop_receive(atom/movable/O, mob/living/user, params)
 	if(!istype(O) || O.anchored || istype(O, /atom/movable/screen))
 		return
+	if(!istype(user) || user.incapacitated || user.body_position == LYING_DOWN)
+		return
 	if(user == O) //try to climb onto it
 		return ..()
 	if(!opened)
@@ -1189,13 +1191,13 @@ GLOBAL_LIST_EMPTY(roundstart_station_closets)
 		return
 	if(!opened && ((shove_flags & SHOVE_KNOCKDOWN_BLOCKED) || !(shove_flags & SHOVE_BLOCKED)))
 		return
-	var/was_opened = opened
-	if(!toggle())
-		return
-	if(was_opened)
+	if(opened)
+		if (target.loc != loc)
+			return
 		target.forceMove(src)
 	else
 		target.Knockdown(SHOVE_KNOCKDOWN_SOLID)
+	toggle()
 	update_icon()
 	target.visible_message(span_danger("[shover.name] shoves [target.name] into [src]!"),
 		span_userdanger("You're shoved into [src] by [shover.name]!"),

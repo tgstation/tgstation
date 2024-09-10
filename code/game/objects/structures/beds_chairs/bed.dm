@@ -15,6 +15,7 @@
 	anchored = TRUE
 	can_buckle = TRUE
 	buckle_lying = 90
+	buckle_dir = SOUTH
 	resistance_flags = FLAMMABLE
 	max_integrity = 100
 	integrity_failure = 0.35
@@ -24,17 +25,21 @@
 	var/build_stack_amount = 2
 	/// Mobs standing on it are nudged up by this amount. Also used to align the person back when buckled to it after init.
 	var/elevation = 8
+	/// If this bed can be deconstructed using a wrench
+	var/can_deconstruct = TRUE
 
 /obj/structure/bed/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/soft_landing)
 	if(elevation)
 		AddElement(/datum/element/elevation, pixel_shift = elevation)
+	update_buckle_vars(dir)
 	register_context()
 
 /obj/structure/bed/examine(mob/user)
 	. = ..()
-	. += span_notice("It's held together by a couple of <b>bolts</b>.")
+	if (can_deconstruct)
+		. += span_notice("It's held together by a couple of <b>bolts</b>.")
 
 /obj/structure/bed/add_context(atom/source, list/context, obj/item/held_item, mob/living/user)
 	if(held_item)
@@ -48,6 +53,13 @@
 		context[SCREENTIP_CONTEXT_LMB] = "Unbuckle"
 		return CONTEXTUAL_SCREENTIP_SET
 
+/obj/structure/bed/setDir(newdir)
+	. = ..()
+	update_buckle_vars(newdir)
+
+/obj/structure/bed/proc/update_buckle_vars(newdir)
+	buckle_lying = newdir & NORTHEAST ? 270 : 90
+
 /obj/structure/bed/atom_deconstruct(disassembled = TRUE)
 	if(build_stack_type)
 		new build_stack_type(loc, build_stack_amount)
@@ -56,6 +68,8 @@
 	return attack_hand(user, modifiers)
 
 /obj/structure/bed/wrench_act_secondary(mob/living/user, obj/item/weapon)
+	if (!can_deconstruct)
+		return NONE
 	..()
 	weapon.play_tool_sound(src)
 	deconstruct(disassembled = TRUE)

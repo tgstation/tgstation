@@ -4,3 +4,6 @@
 /// Always does *deathgasp when they die
 /// If unset mobs will only deathgasp if supplied a death sound or custom death message
 #define ALWAYS_DEATHGASP (1<<1)
+
+/// Getter for a mob/living's lying angle, otherwise protected
+#define GET_LYING_ANGLE(mob) (UNLINT(mob.lying_angle))

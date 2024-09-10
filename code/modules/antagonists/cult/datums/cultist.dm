@@ -281,3 +281,4 @@
 ///Used to check if the owner is counted as a secondary invoker for runes.
 /datum/antagonist/cult/proc/check_invoke_validity()
 	return TRUE
+

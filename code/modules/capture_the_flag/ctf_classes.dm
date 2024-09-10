@@ -55,7 +55,7 @@
 		var/obj/item/radio/headset = human_to_equip.ears
 		headset.set_frequency(team_radio_freq)
 		headset.freqlock = RADIO_FREQENCY_LOCKED
-		headset.independent = TRUE
+		headset.special_channels |= RADIO_SPECIAL_CENTCOM
 	human_to_equip.dna.species.stunmod = 0
 
 /datum/outfit/ctf/instagib

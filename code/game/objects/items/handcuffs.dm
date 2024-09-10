@@ -50,6 +50,7 @@
 	custom_price = PAYCHECK_COMMAND * 0.35
 	pickup_sound = 'sound/items/handcuffs_pick_up.ogg'
 	drop_sound = 'sound/items/handcuffs_drop.ogg'
+	sound_vary = TRUE
 
 	///How long it takes to handcuff someone
 	var/handcuff_time = 4 SECONDS
@@ -200,6 +201,8 @@
 	custom_materials = list(/datum/material/iron= SMALL_MATERIAL_AMOUNT * 1.5, /datum/material/glass= SMALL_MATERIAL_AMOUNT * 0.75)
 	breakouttime = 30 SECONDS
 	cuffsound = 'sound/weapons/cablecuff.ogg'
+	pickup_sound = null
+	drop_sound = null
 	restraint_strength = HANDCUFFS_TYPE_WEAK
 
 /obj/item/restraints/handcuffs/cable/Initialize(mapload, new_color)

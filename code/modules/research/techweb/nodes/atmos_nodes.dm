@@ -42,6 +42,12 @@
 		"pneumatic_seal",
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_1_POINTS)
+	experiments_to_unlock = list(
+		/datum/experiment/ordnance/gaseous/plasma,
+		/datum/experiment/ordnance/gaseous/nitrous_oxide,
+		/datum/experiment/ordnance/gaseous/bz,
+		/datum/experiment/ordnance/gaseous/noblium,
+	)
 
 /datum/techweb_node/plasma_control
 	id = TECHWEB_NODE_PLASMA_CONTROL
@@ -77,7 +83,6 @@
 		"crystallizer",
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_3_POINTS)
-	required_experiments = list(/datum/experiment/ordnance/gaseous/bz)
 	discount_experiments = list(/datum/experiment/ordnance/gaseous/nitrous_oxide = TECHWEB_TIER_3_POINTS)
 
 /datum/techweb_node/exp_tools
@@ -99,7 +104,7 @@
 		"magboots",
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_4_POINTS)
-	discount_experiments = list(/datum/experiment/ordnance/gaseous/noblium = TECHWEB_TIER_4_POINTS)
+	discount_experiments = list(/datum/experiment/ordnance/gaseous/bz = TECHWEB_TIER_4_POINTS)
 
 /datum/techweb_node/rcd_upgrade
 	id = TECHWEB_NODE_RCD_UPGRADE
@@ -116,3 +121,4 @@
 		"rpd_upgrade_unwrench",
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_5_POINTS)
+	discount_experiments = list(/datum/experiment/ordnance/gaseous/noblium = TECHWEB_TIER_5_POINTS)
