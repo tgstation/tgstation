@@ -194,7 +194,7 @@ GLOBAL_LIST_EMPTY(blob_nodes)
 		if(isnull(guy_turf) || !is_station_level(guy_turf.z))
 			continue
 
-		if(live_guy in GLOB.overminds || (live_guy.pass_flags & PASSBLOB))
+		if((live_guy in GLOB.overminds) || (live_guy.pass_flags & PASSBLOB))
 			continue
 
 		var/area/blob_area = get_area(guy_turf)

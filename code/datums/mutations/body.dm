@@ -160,8 +160,7 @@
 // This is specifically happening because they're not used to their new height and are stumbling around into machinery made for normal humans
 /datum/mutation/human/acromegaly/proc/head_bonk(mob/living/parent)
 	SIGNAL_HANDLER
-	var/turf/airlock_turf = get_turf(parent)
-	var/atom/movable/whacked_by = locate(/obj/machinery/door/airlock) in airlock_turf || locate(/obj/machinery/door/firedoor) in airlock_turf || locate(/obj/structure/mineral_door) in airlock_turf
+	var/atom/movable/whacked_by = (locate(/obj/machinery/door/airlock) in parent.loc) || (locate(/obj/machinery/door/firedoor) in parent.loc) || (locate(/obj/structure/mineral_door) in parent.loc)
 	if(!whacked_by || prob(100 - (8 *  GET_MUTATION_SYNCHRONIZER(src))))
 		return
 	to_chat(parent, span_danger("You hit your head on \the [whacked_by]'s header!"))

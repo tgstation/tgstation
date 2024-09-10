@@ -121,7 +121,7 @@
 			if(isnull(choice) \
 				|| !user.is_holding(item) \
 				|| !user.Adjacent(src) \
-				|| user.incapacitated() \
+				|| user.incapacitated \
 				|| !can_place_terminal(user, item, silent = TRUE) \
 			)
 				return

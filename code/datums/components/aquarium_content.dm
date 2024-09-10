@@ -18,10 +18,12 @@
 	var/obj/effect/aquarium/vc_obj
 
 	/**
-	 *  Fish sprite how to:
-	 *  Need to be centered on 16,16 in the dmi and facing left by default.
-	 *  sprite_height/sprite_width is the size it will have in aquarium and used to control animation boundaries.
-	 *  source_height/source_width is the size of the original icon (ideally only the non-empty parts)
+	 * Fish sprite how to:
+	 * The aquarium icon state needs to be centered on 16,16 in the dmi and facing left by default.
+	 * sprite_width/sprite_height are the sizes it will have in aquarium and used to control animation boundaries.
+	 * Ideally these two vars represent the size of the aquarium icon state, but they can be one or two units shorter
+	 * to give more room for the visual to float around inside the aquarium, since the aquarium tank frame overlay will likely
+	 * cover the extra pixels anyway.
 	 */
 
 	/// Currently playing animation
@@ -51,6 +53,7 @@
 	ADD_TRAIT(parent, TRAIT_FISH_CASE_COMPATIBILE, REF(src))
 	RegisterSignal(parent, COMSIG_TRY_INSERTING_IN_AQUARIUM, PROC_REF(is_ready_to_insert))
 	RegisterSignal(parent, COMSIG_MOVABLE_MOVED, PROC_REF(enter_aquarium))
+	RegisterSignal(parent, COMSIG_FISH_PETTED, PROC_REF(on_fish_petted))
 
 	if(isfish(parent))
 		RegisterSignal(parent, COMSIG_FISH_STATUS_CHANGED, PROC_REF(on_fish_status_changed))
@@ -164,6 +167,11 @@
 	if(vc_obj.layer)
 		current_aquarium.free_layer(vc_obj.layer)
 	vc_obj.layer = current_aquarium.request_layer(vc_obj.layer_mode)
+
+/datum/component/aquarium_content/proc/on_fish_petted()
+	SIGNAL_HANDLER
+
+	new /obj/effect/temp_visual/heart(get_turf(parent))
 
 /datum/component/aquarium_content/proc/on_removed(obj/structure/aquarium/source, atom/movable/gone, direction)
 	SIGNAL_HANDLER

@@ -104,6 +104,11 @@
 	/// Boolean value. If TRUE, the [Intern] tag gets prepended to this ID card when the label is updated.
 	var/is_intern = FALSE
 
+	///If true, the wearer will have bigger arrow when pointing at things. Passed down by trims.
+	var/big_pointer = FALSE
+	///If set, the arrow will have a different color.
+	var/pointer_color
+
 /datum/armor/card_id
 	fire = 100
 	acid = 100
@@ -144,12 +149,35 @@
 		QDEL_NULL(my_store)
 	return ..()
 
+/obj/item/card/id/equipped(mob/user, slot)
+	. = ..()
+	if(slot == ITEM_SLOT_ID)
+		RegisterSignal(user, COMSIG_MOVABLE_POINTED, PROC_REF(on_pointed))
+
+/obj/item/card/id/proc/on_pointed(mob/living/user, atom/pointed, obj/effect/temp_visual/point/point)
+	SIGNAL_HANDLER
+	if((!big_pointer && !pointer_color) || HAS_TRAIT(user, TRAIT_UNKNOWN))
+		return
+	if(point.icon_state != /obj/effect/temp_visual/point::icon_state) //it differs from the original icon_state already.
+		return
+	if(big_pointer)
+		point.icon_state = "arrow_large"
+	if(pointer_color)
+		point.icon_state = "[point.icon_state]_white"
+		point.color = pointer_color
+		var/mutable_appearance/highlight = mutable_appearance(point.icon, "[point.icon_state]_highlights", appearance_flags = RESET_COLOR)
+		point.add_overlay(highlight)
+
+/obj/item/card/id/dropped(mob/user)
+	UnregisterSignal(user, COMSIG_MOVABLE_POINTED)
+	return ..()
+
 /obj/item/card/id/get_id_examine_strings(mob/user)
 	. = ..()
-	. += list("[icon2html(get_cached_flat_icon(), user, extra_classes = "bigicon")]")
+	. += list("[icon2html(get_cached_flat_icon(), user, extra_classes = "hugeicon")]")
 
-/obj/item/card/id/get_examine_string(mob/user, thats = FALSE)
-	return "[icon2html(get_cached_flat_icon(), user)] [thats? "That's ":""][get_examine_name(user)]"
+/obj/item/card/id/get_examine_icon(mob/user)
+	return icon2html(get_cached_flat_icon(), user)
 
 /**
  * Helper proc, checks whether the ID card can hold any given set of wildcards.
@@ -1859,7 +1887,7 @@
 /obj/item/card/cardboard/proc/after_input_check(mob/living/user, obj/item/item, input, value)
 	if(!input || (value && input == value))
 		return FALSE
-	if(QDELETED(user) || QDELETED(item) || QDELETED(src) || user.incapacitated() || !user.is_holding(item) || !user.CanReach(src) || !user.can_write(item))
+	if(QDELETED(user) || QDELETED(item) || QDELETED(src) || user.incapacitated || !user.is_holding(item) || !user.CanReach(src) || !user.can_write(item))
 		return FALSE
 	return TRUE
 
@@ -1896,10 +1924,10 @@
 
 /obj/item/card/cardboard/get_id_examine_strings(mob/user)
 	. = ..()
-	. += list("[icon2html(get_cached_flat_icon(), user, extra_classes = "bigicon")]")
+	. += list("[icon2html(get_cached_flat_icon(), user, extra_classes = "hugeicon")]")
 
-/obj/item/card/cardboard/get_examine_string(mob/user, thats = FALSE)
-	return "[icon2html(get_cached_flat_icon(), user)] [thats? "That's ":""][get_examine_name(user)]"
+/obj/item/card/cardboard/get_examine_icon(mob/user)
+	return icon2html(get_cached_flat_icon(), user)
 
 /obj/item/card/cardboard/examine(mob/user)
 	. = ..()

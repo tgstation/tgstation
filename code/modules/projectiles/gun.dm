@@ -219,7 +219,7 @@
 				ignored_mobs = user
 		)
 
-	if(chambered.integrity_damage)
+	if(chambered?.integrity_damage)
 		take_damage(chambered.integrity_damage, sound_effect = FALSE)
 
 /obj/item/gun/atom_destruction(damage_flag)
