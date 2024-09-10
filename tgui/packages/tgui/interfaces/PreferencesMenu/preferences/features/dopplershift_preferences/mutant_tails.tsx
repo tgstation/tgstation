@@ -22,3 +22,12 @@ export const feature_fox_tail: FeatureChoiced = {
     return <FeatureDropdownInput buttons {...props} />;
   },
 };
+
+export const feature_bunny_tail: FeatureChoiced = {
+  name: 'Tail',
+  component: (
+    props: FeatureValueProps<string, string, FeatureChoicedServerData>,
+  ) => {
+    return <FeatureDropdownInput buttons {...props} />;
+  },
+};

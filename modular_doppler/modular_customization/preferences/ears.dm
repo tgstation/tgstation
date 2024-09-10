@@ -2,11 +2,13 @@
 /datum/controller/subsystem/accessories
 	var/list/ears_list_dog
 	var/list/ears_list_fox
+	var/list/ears_list_bunny
 
 /datum/controller/subsystem/accessories/setup_lists()
 	. = ..()
 	ears_list_dog = init_sprite_accessory_subtypes(/datum/sprite_accessory/ears_more/dog)["default_sprites"] // FLAKY DEFINE: this should be using DEFAULT_SPRITE_LIST
 	ears_list_fox = init_sprite_accessory_subtypes(/datum/sprite_accessory/ears_more/fox)["default_sprites"]
+	ears_list_bunny = init_sprite_accessory_subtypes(/datum/sprite_accessory/ears_more/bunny)["default_sprites"]
 
 /datum/dna
 	///	This variable is read by the regenerate_organs() proc to know what organ subtype to give
@@ -134,6 +136,37 @@
 	var/datum/sprite_accessory/chosen_ears = SSaccessories.ears_list_dog[value]
 	return generate_ears_icon(chosen_ears)
 
+//	Bunny
+/datum/preference/choiced/bunny_ears
+	savefile_key = "feature_bunny_ears"
+	savefile_identifier = PREFERENCE_CHARACTER
+	category = PREFERENCE_CATEGORY_CLOTHING
+	relevant_external_organ = null
+	should_generate_icons = TRUE
+	main_feature_name = "Ears"
+
+/datum/preference/choiced/bunny_ears/init_possible_values()
+	return assoc_to_keys_features(SSaccessories.ears_list_bunny)
+
+/datum/preference/choiced/bunny_ears/is_accessible(datum/preferences/preferences)
+	. = ..()
+	var/chosen_variation = preferences.read_preference(/datum/preference/choiced/ear_variation)
+	if(chosen_variation == BUNNY)
+		return TRUE
+	return FALSE
+
+/datum/preference/choiced/bunny_ears/create_default_value()
+	return /datum/sprite_accessory/ears_more/bunny/none::name
+
+/datum/preference/choiced/bunny_ears/apply_to_human(mob/living/carbon/human/target, value)
+	if(target.dna.ear_type == BUNNY)
+		target.dna.features["ears"] = value
+
+/datum/preference/choiced/bunny_ears/icon_for(value)
+	var/datum/sprite_accessory/chosen_ears = SSaccessories.ears_list_bunny[value]
+	return generate_ears_icon(chosen_ears)
+
+
 /// Proc to gen that icon
 //	We don't wanna copy paste this
 /datum/preference/choiced/proc/generate_ears_icon(chosen_ears)
@@ -145,15 +178,25 @@
 	final_icon.Blend(eyes, ICON_OVERLAY)
 
 	if (sprite_accessory.icon_state != "none")
-		var/icon/markings_icon_1 = icon(sprite_accessory.icon, "m_ears_[sprite_accessory.icon_state]_ADJ", SOUTH)
+		var/icon/markings_icon_1 = icon(sprite_accessory.icon, "m_ears_[sprite_accessory.icon_state]_BEHIND", SOUTH)
 		markings_icon_1.Blend(COLOR_RED, ICON_MULTIPLY)
-		var/icon/markings_icon_2 = icon(sprite_accessory.icon, "m_ears_[sprite_accessory.icon_state]_ADJ_2", SOUTH)
+		var/icon/markings_icon_2 = icon(sprite_accessory.icon, "m_ears_[sprite_accessory.icon_state]_BEHIND_2", SOUTH)
 		markings_icon_2.Blend(COLOR_VIBRANT_LIME, ICON_MULTIPLY)
-		var/icon/markings_icon_3 = icon(sprite_accessory.icon, "m_ears_[sprite_accessory.icon_state]_ADJ_3", SOUTH)
+		var/icon/markings_icon_3 = icon(sprite_accessory.icon, "m_ears_[sprite_accessory.icon_state]_BEHIND_3", SOUTH)
 		markings_icon_3.Blend(COLOR_BLUE, ICON_MULTIPLY)
 		final_icon.Blend(markings_icon_1, ICON_OVERLAY)
 		final_icon.Blend(markings_icon_2, ICON_OVERLAY)
 		final_icon.Blend(markings_icon_3, ICON_OVERLAY)
+		// adj breaker
+		var/icon/markings_icon_1_a = icon(sprite_accessory.icon, "m_ears_[sprite_accessory.icon_state]_ADJ", SOUTH)
+		markings_icon_1_a.Blend(COLOR_RED, ICON_MULTIPLY)
+		var/icon/markings_icon_2_a = icon(sprite_accessory.icon, "m_ears_[sprite_accessory.icon_state]_ADJ_2", SOUTH)
+		markings_icon_2_a.Blend(COLOR_VIBRANT_LIME, ICON_MULTIPLY)
+		var/icon/markings_icon_3_a = icon(sprite_accessory.icon, "m_ears_[sprite_accessory.icon_state]_ADJ_3", SOUTH)
+		markings_icon_3_a.Blend(COLOR_BLUE, ICON_MULTIPLY)
+		final_icon.Blend(markings_icon_1_a, ICON_OVERLAY)
+		final_icon.Blend(markings_icon_2_a, ICON_OVERLAY)
+		final_icon.Blend(markings_icon_3_a, ICON_OVERLAY)
 		// front breaker
 		var/icon/markings_icon_1_f = icon(sprite_accessory.icon, "m_ears_[sprite_accessory.icon_state]_FRONT", SOUTH)
 		markings_icon_1_f.Blend(COLOR_RED, ICON_MULTIPLY)
@@ -173,7 +216,7 @@
 /// Overwrite lives here
 //	This is for the triple color channel
 /datum/bodypart_overlay/mutant/ears
-	layers = EXTERNAL_FRONT | EXTERNAL_FRONT_2 | EXTERNAL_FRONT_3 | EXTERNAL_ADJACENT | EXTERNAL_ADJACENT_2 | EXTERNAL_ADJACENT_3
+	layers = EXTERNAL_FRONT | EXTERNAL_FRONT_2 | EXTERNAL_FRONT_3 | EXTERNAL_ADJACENT | EXTERNAL_ADJACENT_2 | EXTERNAL_ADJACENT_3 | EXTERNAL_BEHIND | EXTERNAL_BEHIND_2 | EXTERNAL_BEHIND_3
 	feature_key = "ears"
 	feature_key_sprite = "ears"
 
@@ -188,16 +231,25 @@
 	else if(draw_layer == bitflag_to_layer(EXTERNAL_ADJACENT))
 		overlay.color = limb.owner.dna.features["ears_color_1"]
 		return overlay
+	else if(draw_layer == bitflag_to_layer(EXTERNAL_BEHIND))
+		overlay.color = limb.owner.dna.features["ears_color_1"]
+		return overlay
 	else if(draw_layer == bitflag_to_layer(EXTERNAL_FRONT_2))
 		overlay.color = limb.owner.dna.features["ears_color_2"]
 		return overlay
 	else if(draw_layer == bitflag_to_layer(EXTERNAL_ADJACENT_2))
 		overlay.color = limb.owner.dna.features["ears_color_2"]
 		return overlay
+	else if(draw_layer == bitflag_to_layer(EXTERNAL_BEHIND_2))
+		overlay.color = limb.owner.dna.features["ears_color_2"]
+		return overlay
 	else if(draw_layer == bitflag_to_layer(EXTERNAL_FRONT_3))
 		overlay.color = limb.owner.dna.features["ears_color_3"]
 		return overlay
 	else if(draw_layer == bitflag_to_layer(EXTERNAL_ADJACENT_3))
+		overlay.color = limb.owner.dna.features["ears_color_3"]
+		return overlay
+	else if(draw_layer == bitflag_to_layer(EXTERNAL_BEHIND_3))
 		overlay.color = limb.owner.dna.features["ears_color_3"]
 		return overlay
 	return ..()

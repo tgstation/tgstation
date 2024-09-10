@@ -62,3 +62,18 @@
 
 /datum/bodypart_overlay/mutant/tail/fox/get_global_feature_list()
 	return SSaccessories.tails_list_fox
+
+/// Bunny tail
+//
+/obj/item/organ/external/tail/bunny
+	preference = "feature_bunny_tail"
+	dna_block = null
+	wag_flags = WAG_ABLE
+	bodypart_overlay = /datum/bodypart_overlay/mutant/tail/bunny
+
+/datum/bodypart_overlay/mutant/tail/bunny
+	feature_key = "tail_other"
+
+/datum/bodypart_overlay/mutant/tail/bunny/get_global_feature_list()
+	return SSaccessories.tails_list_bunny
+
