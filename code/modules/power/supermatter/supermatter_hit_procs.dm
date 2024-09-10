@@ -13,10 +13,8 @@
 		return NONE
 
 	var/kiss_power = 0
-	var/supermatter_kiss_power = 60
-
 	if (istype(projectile, /obj/projectile/kiss))
-		kiss_power = supermatter_kiss_power
+		kiss_power = 60
 	else if (istype(projectile, /obj/projectile/kiss/death))
 		kiss_power = 20000
 
