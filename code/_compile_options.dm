@@ -86,7 +86,7 @@
 // If this is uncommented, will attempt to load and initialize prof.dll/libprof.so by default.
 // Even if it's not defined, you can pass "tracy" via -params in order to try to load it.
 // We do not ship byond-tracy. Build it yourself here: https://github.com/mafemergency/byond-tracy/
-// #define USE_BYOND_TRACY
+#define USE_BYOND_TRACY
 
 // If defined, we will compile with FULL timer debug info, rather then a limited scope
 // Be warned, this increases timer creation cost by 5x
