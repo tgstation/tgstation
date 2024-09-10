@@ -13,10 +13,10 @@
 		return NONE
 
 	var/kiss_power = 0
-	if (istype(projectile, /obj/projectile/kiss))
-		kiss_power = 60
-	else if (istype(projectile, /obj/projectile/kiss/death))
+	if (istype(projectile, /obj/projectile/kiss/death))
 		kiss_power = 20000
+	else if (istype(projectile, /obj/projectile/kiss))
+		kiss_power = 60
 
 
 	if(!istype(projectile.firer, /obj/machinery/power/emitter))
