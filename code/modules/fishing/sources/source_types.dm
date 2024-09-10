@@ -1,17 +1,22 @@
 /datum/fish_source/ocean
 	fish_table = list(
-		FISHING_DUD = 11,
+		FISHING_DUD = 10,
 		/obj/effect/spawner/message_in_a_bottle = 4,
-		/obj/item/coin/gold = 7,
-		/obj/item/fish/clownfish = 15,
-		/obj/item/fish/pufferfish = 15,
-		/obj/item/fish/cardinal = 15,
-		/obj/item/fish/greenchromis = 15,
+		/obj/item/coin/gold = 6,
+		/obj/item/fish/clownfish = 11,
+		/obj/item/fish/pufferfish = 11,
+		/obj/item/fish/cardinal = 11,
+		/obj/item/fish/greenchromis = 11,
+		/obj/item/fish/squid = 11,
+		/obj/item/fish/stingray = 8,
+		/obj/item/fish/plaice = 8,
+		/obj/item/fish/monkfish = 5,
 		/obj/item/fish/stingray = 10,
 		/obj/item/fish/lanternfish = 7,
 		/obj/item/fish/zipzap = 7,
 		/obj/item/fish/clownfish/lube = 5,
 		/obj/item/fish/swordfish = 5,
+		/obj/item/fish/swordfish = 3,
 		/obj/structure/mystery_box/fishing = 2,
 	)
 	fish_counts = list(
@@ -46,12 +51,21 @@
 		FISHING_DUD = 4,
 		/obj/item/fish/goldfish = 5,
 		/obj/item/fish/guppy = 5,
+		/obj/item/fish/perch = 4,
 		/obj/item/fish/angelfish = 4,
 		/obj/item/fish/catfish = 4,
+		/obj/item/fish/perch = 5,
 		/obj/item/fish/slimefish = 2,
 		/obj/item/fish/sockeye_salmon = 1,
 		/obj/item/fish/arctic_char = 1,
+		/obj/item/fish/pike = 1,
 		/obj/item/fish/goldfish/three_eyes = 1,
+	)
+	fish_counts = list(
+		/obj/item/fish/pike = 3,
+	)
+	fish_count_regen = list(
+		/obj/item/fish/pike = 4 MINUTES,
 	)
 	fishing_difficulty = FISHING_DEFAULT_DIFFICULTY + 5
 
@@ -85,6 +99,7 @@
 		/obj/item/fish/goldfish = 10,
 		/obj/item/fish/guppy = 10,
 		/obj/item/fish/angelfish = 10,
+		/obj/item/fish/perch = 5,
 		/obj/item/fish/goldfish/three_eyes = 3,
 	)
 	catalog_description = "Aquarium dimension (Fishing portal generator)"
@@ -103,6 +118,8 @@
 		/obj/item/fish/pufferfish = 10,
 		/obj/item/fish/cardinal = 10,
 		/obj/item/fish/greenchromis = 10,
+		/obj/item/fish/squid = 8,
+		/obj/item/fish/plaice = 8,
 	)
 	catalog_description = "Beach dimension (Fishing portal generator)"
 	radial_name = "Beach"
@@ -141,6 +158,7 @@
 		/obj/item/fish/armorfish = 5,
 		/obj/item/fish/zipzap = 5,
 		/obj/item/fish/stingray = 4,
+		/obj/item/fish/monkfish = 4,
 		/obj/item/fish/swordfish = 3,
 	)
 	fish_counts = list(
@@ -185,13 +203,16 @@
 		/obj/item/fish/donkfish = 5,
 		/obj/item/fish/emulsijack = 5,
 		/obj/item/fish/jumpercable = 5,
-		/obj/item/fish/chainsawfish = 3,
+		/obj/item/fish/chainsawfish = 2,
+		/obj/item/fish/pike/armored = 2,
 	)
 	fish_counts = list(
 		/obj/item/fish/chainsawfish = 1,
+		/obj/item/fish/pike/armored = 1,
 	)
 	fish_count_regen = list(
 		/obj/item/fish/chainsawfish = 7 MINUTES,
+		/obj/item/fish/pike/armored = 7 MINUTES,
 	)
 	catalog_description = "Syndicate dimension (Fishing portal generator)"
 	radial_name = "Syndicate"
@@ -349,7 +370,7 @@
 	fish_table = list(
 		FISHING_DUD = 20,
 		/obj/item/fish/ratfish = 10,
-		/obj/item/fish/slimefish = 4
+		/obj/item/fish/slimefish = 4,
 	)
 	fishing_difficulty = FISHING_DEFAULT_DIFFICULTY + 10
 
@@ -379,6 +400,15 @@
 		/obj/item/fish/holo/halffish = 5,
 	)
 	fishing_difficulty = FISHING_EASY_DIFFICULTY
+
+/datum/fish_source/holographic/generate_wiki_contents(datum/autowiki/fish_sources/wiki)
+	var/obj/item/fish/prototype = /obj/item/fish/holo/checkered
+	return LIST_VALUE_WRAP_LISTS(list(
+		FISH_SOURCE_AUTOWIKI_NAME = "Holographic Fish",
+		FISH_SOURCE_AUTOWIKI_ICON = FISH_AUTOWIKI_FILENAME(prototype),
+		FISH_SOURCE_AUTOWIKI_WEIGHT = 100,
+		FISH_SOURCE_AUTOWIKI_NOTES = "Holographic fish disappears outside the Holodeck",
+	))
 
 /datum/fish_source/holographic/reason_we_cant_fish(obj/item/fishing_rod/rod, mob/fisherman, atom/parent)
 	. = ..()
@@ -424,7 +454,7 @@
 	fish_table = list(
 		FISHING_DUD = 25,
 		/obj/item/food/grown/grass = 25,
-		RANDOM_SEED = 16,
+		FISHING_RANDOM_SEED = 16,
 		/obj/item/seeds/grass = 6,
 		/obj/item/seeds/random = 1,
 		/mob/living/basic/frog = 1,
@@ -433,12 +463,54 @@
 	fish_counts = list(
 		/obj/item/food/grown/grass = 10,
 		/obj/item/seeds/grass = 4,
-		RANDOM_SEED = 4,
+		FISHING_RANDOM_SEED = 4,
 		/obj/item/seeds/random = 1,
 		/mob/living/basic/frog = 1,
 		/mob/living/basic/axolotl = 1,
 	)
 	fishing_difficulty = FISHING_EASY_DIFFICULTY - 5
+
+/datum/fish_source/hydro_tray/generate_wiki_contents(datum/autowiki/fish_sources/wiki)
+	var/list/data = list()
+	var/total_weight = 0
+	var/critter_weight = 0
+	var/seed_weight = 0
+	var/other_weight = 0
+	var/dud_weight = fish_table[FISHING_DUD]
+	for(var/content in fish_table)
+		var/weight = fish_table[content]
+		total_weight += weight
+		if(ispath(content, /mob/living))
+			critter_weight += weight
+		else if(ispath(content, /obj/item/food/grown) || ispath(content, /obj/item/seeds) || content == FISHING_RANDOM_SEED)
+			seed_weight += weight
+		else if(content != FISHING_DUD)
+			other_weight += weight
+
+	data += LIST_VALUE_WRAP_LISTS(list(
+		FISH_SOURCE_AUTOWIKI_NAME = FISH_SOURCE_AUTOWIKI_DUD,
+		FISH_SOURCE_AUTOWIKI_DUD = "",
+		FISH_SOURCE_AUTOWIKI_WEIGHT = PERCENT(dud_weight/total_weight),
+		FISH_SOURCE_AUTOWIKI_WEIGHT_SUFFIX = "WITHOUT A BAIT",
+		FISH_SOURCE_AUTOWIKI_NOTES = "",
+	))
+
+	data += LIST_VALUE_WRAP_LISTS(list(
+		FISH_SOURCE_AUTOWIKI_NAME = "Critter",
+		FISH_SOURCE_AUTOWIKI_DUD = "",
+		FISH_SOURCE_AUTOWIKI_WEIGHT = PERCENT(critter_weight/total_weight),
+		FISH_SOURCE_AUTOWIKI_NOTES = "A small creature, usually a frog or an axolotl",
+	))
+
+	if(other_weight)
+		data += LIST_VALUE_WRAP_LISTS(list(
+			FISH_SOURCE_AUTOWIKI_NAME = "Other Stuff",
+			FISH_SOURCE_AUTOWIKI_DUD = "",
+			FISH_SOURCE_AUTOWIKI_WEIGHT = PERCENT(other_weight/total_weight),
+			FISH_SOURCE_AUTOWIKI_NOTES = "Other stuff, who knows...",
+		))
+
+	return data
 
 /datum/fish_source/hydro_tray/reason_we_cant_fish(obj/item/fishing_rod/rod, mob/fisherman, atom/parent)
 	if(!istype(parent, /obj/machinery/hydroponics/constructable))
