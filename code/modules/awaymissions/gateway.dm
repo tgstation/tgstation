@@ -359,7 +359,7 @@ GLOBAL_LIST_EMPTY(gateway_destinations)
 			destinations += list(possible_destination.get_ui_data())
 	.["destinations"] = destinations
 
-/obj/machinery/computer/gateway_control/ui_act(action, list/params)
+/obj/machinery/computer/gateway_control/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if(.)
 		return

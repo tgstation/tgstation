@@ -172,7 +172,7 @@
 	data["full_random_bonus"] = initial(uses) + full_random_bonus
 	return data
 
-/obj/item/spellbook/ui_act(action, params)
+/obj/item/spellbook/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if(.)
 		return

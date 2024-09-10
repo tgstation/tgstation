@@ -612,7 +612,7 @@
 	if(!isliving(user))
 		return FALSE
 	// Gotta be awake and aware
-	if(user.incapacitated())
+	if(user.incapacitated)
 		return FALSE
 	// Maintain the god given right to fight an elevator
 	if(user.combat_mode)
@@ -704,7 +704,7 @@
  * * boolean, FALSE if the menu should be closed, TRUE if the menu is clear to stay opened.
  */
 /obj/structure/transport/linear/proc/check_menu(mob/user, starting_loc)
-	if(user.incapacitated() || !user.Adjacent(src) || starting_loc != src.loc)
+	if(user.incapacitated || !user.Adjacent(src) || starting_loc != src.loc)
 		return FALSE
 	return TRUE
 

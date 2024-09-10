@@ -43,7 +43,10 @@
 	/// Determines whether we play a rustle animation when inserting/removing items.
 	var/animated = TRUE
 	/// Determines whether we play a rustle sound when inserting/removing items.
-	var/rustle_sound = TRUE
+	var/do_rustle = TRUE
+	var/rustle_vary = TRUE
+	/// Path for the item's rustle sound.
+	var/rustle_sound = SFX_RUSTLE
 	/// The sound to play when we open/access the storage
 	var/open_sound
 	var/open_sound_vary = TRUE
@@ -386,7 +389,7 @@ GLOBAL_LIST_EMPTY(cached_storage_typecaches)
 			user.balloon_alert(user, "no room!")
 		return FALSE
 
-	var/can_hold_it = isnull(can_hold) || is_type_in_typecache(to_insert, can_hold)
+	var/can_hold_it = isnull(can_hold) || is_type_in_typecache(to_insert, can_hold) || is_type_in_typecache(to_insert, exception_hold)
 	var/cant_hold_it = is_type_in_typecache(to_insert, cant_hold)
 	var/trait_says_no = HAS_TRAIT(to_insert, TRAIT_NO_STORAGE_INSERT)
 	if(!can_hold_it || cant_hold_it || trait_says_no)
@@ -529,8 +532,8 @@ GLOBAL_LIST_EMPTY(cached_storage_typecaches)
 	if(silent)
 		return
 
-	if(rustle_sound)
-		playsound(parent, SFX_RUSTLE, 50, TRUE, -5)
+	if(do_rustle)
+		playsound(parent, rustle_sound, 50, rustle_vary, -5)
 
 	if(!silent_for_user)
 		to_chat(user, span_notice("You put [thing] [insert_preposition]to [parent]."))
@@ -560,7 +563,7 @@ GLOBAL_LIST_EMPTY(cached_storage_typecaches)
 		reset_item(thing)
 		thing.forceMove(remove_to_loc)
 
-		if(rustle_sound && !silent)
+		if(do_rustle && !silent)
 			playsound(parent, SFX_RUSTLE, 50, TRUE, -5)
 	else
 		thing.moveToNullspace()
@@ -735,7 +738,7 @@ GLOBAL_LIST_EMPTY(cached_storage_typecaches)
 /datum/storage/proc/on_mousedrop_onto(datum/source, atom/over_object, mob/user)
 	SIGNAL_HANDLER
 
-	if(ismecha(user.loc) || !user.canUseStorage())
+	if(ismecha(user.loc) || user.incapacitated || !user.canUseStorage())
 		return
 
 	if(istype(over_object, /atom/movable/screen/inventory/hand))
@@ -794,7 +797,7 @@ GLOBAL_LIST_EMPTY(cached_storage_typecaches)
 	if(dest_object.atom_storage)
 		to_chat(user, span_notice("You dump the contents of [parent] into [dest_object]."))
 
-		if(rustle_sound)
+		if(do_rustle)
 			playsound(parent, SFX_RUSTLE, 50, TRUE, -5)
 
 		for(var/obj/item/to_dump in real_location)
@@ -823,6 +826,9 @@ GLOBAL_LIST_EMPTY(cached_storage_typecaches)
 	if(dropping.atom_storage) // If it has storage it should be trying to dump, not insert.
 		return
 	if(!iscarbon(user) && !isdrone(user))
+		return
+	var/mob/living/user_living = user
+	if(user_living.incapacitated)
 		return
 
 	attempt_insert(dropping, user)
@@ -957,7 +963,7 @@ GLOBAL_LIST_EMPTY(cached_storage_typecaches)
 	if(animated)
 		animate_parent()
 
-	if(rustle_sound)
+	if(do_rustle && !silent)
 		playsound(parent, (open_sound ? open_sound : SFX_RUSTLE), 50, open_sound_vary, -5)
 
 	return TRUE

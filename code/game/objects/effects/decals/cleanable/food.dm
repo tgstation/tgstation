@@ -58,3 +58,14 @@
 	name = "flour"
 	desc = "It's still good. Four second rule!"
 	icon_state = "flour"
+
+/obj/effect/decal/cleanable/food/squid_ink
+	name = "ink smear"
+	desc = "a smear from some inky substance..."
+	icon = 'icons/mob/silicon/robots.dmi'
+	icon_state = "floor1"
+	color = COLOR_DARK
+
+/obj/effect/decal/cleanable/food/squid_ink/Initialize(mapload, list/datum/disease/diseases)
+	icon_state = "floor[rand(1, 7)]"
+	return ..()

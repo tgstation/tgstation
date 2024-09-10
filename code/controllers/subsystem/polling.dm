@@ -130,10 +130,9 @@ SUBSYSTEM_DEF(polling)
 
 		// Image to display
 		var/image/poll_image
-		if(ispath(alert_pic, /atom))
-			poll_image = image(alert_pic)
-		else if(isatom(alert_pic))
+		if(ispath(alert_pic, /atom) || isatom(alert_pic))
 			poll_image = new /mutable_appearance(alert_pic)
+			poll_image.pixel_z = 0
 		else if(!isnull(alert_pic))
 			poll_image = alert_pic
 		else
@@ -175,6 +174,8 @@ SUBSYSTEM_DEF(polling)
 	// Sleep until the time is up
 	UNTIL(new_poll.finished)
 	if(!(amount_to_pick > 0))
+		return new_poll.signed_up
+	if(length(new_poll.signed_up) < amount_to_pick)
 		return new_poll.signed_up
 	for(var/pick in 1 to amount_to_pick)
 		new_poll.chosen_candidates += pick_n_take(new_poll.signed_up)

@@ -117,7 +117,7 @@
 			data["requests"] = request_list
 	return data
 
-/obj/machinery/computer/message_monitor/ui_act(action, params)
+/obj/machinery/computer/message_monitor/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if(.)
 		return .

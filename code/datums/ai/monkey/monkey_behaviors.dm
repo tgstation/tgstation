@@ -197,7 +197,7 @@
 		var/can_shoot = gun?.can_shoot() || FALSE
 		if(gun && controller.blackboard[BB_MONKEY_GUN_WORKED] && prob(95))
 			// We attempt to attack even if we can't shoot so we get the effects of pulling the trigger
-			gun.melee_attack_chain(living_pawn, real_target)
+			gun.interact_with_atom(real_target, living_pawn)
 			controller.set_blackboard_key(BB_MONKEY_GUN_WORKED, can_shoot ? TRUE : prob(80)) // Only 20% likely to notice it didn't work
 			if(can_shoot)
 				controller.set_blackboard_key(BB_MONKEY_GUN_NEURONS_ACTIVATED, TRUE)

@@ -109,7 +109,7 @@
 			var/new_cycle_id = trim(params["passedCycleId"], 30)
 			passed_cycle_id = new_cycle_id
 
-/obj/item/electronics/airlock/ui_act(action, params)
+/obj/item/electronics/airlock/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if(.)
 		return
