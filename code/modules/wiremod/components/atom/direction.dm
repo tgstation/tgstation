@@ -31,7 +31,7 @@
 	. += create_ui_notice("Maximum Range: [max_range] tiles", "orange", "info")
 
 /obj/item/circuit_component/direction/populate_ports()
-	input_port = add_input_port("Organism", PORT_TYPE_ATOM)
+	input_port = add_input_port("Targeted Entity", PORT_TYPE_ATOM)
 
 	output = add_output_port("Direction", PORT_TYPE_STRING)
 	distance = add_output_port("Distance", PORT_TYPE_NUMBER)
