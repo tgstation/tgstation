@@ -1,0 +1,4 @@
+author: "SmArtKar"
+delete-after: True
+changes:
+  - bugfix: "Fixed locker shoving closing and opening the locker thrice, sending its victim to the backrooms"

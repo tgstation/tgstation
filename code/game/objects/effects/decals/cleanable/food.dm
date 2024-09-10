@@ -10,6 +10,9 @@
 	icon_state = "tomato_floor1"
 	random_icon_states = list("tomato_floor1", "tomato_floor2", "tomato_floor3")
 
+/obj/effect/decal/cleanable/food/tomato_smudge/can_bloodcrawl_in()
+	return TRUE // why? why not.
+
 /obj/effect/decal/cleanable/food/plant_smudge
 	name = "plant smudge"
 	desc = "Chlorophyll? More like borophyll!"

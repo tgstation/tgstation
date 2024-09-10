@@ -1,0 +1,4 @@
+author: "hack-wrench"
+delete-after: True
+changes:
+  - rscadd: "tape recorder now records speaker name"
