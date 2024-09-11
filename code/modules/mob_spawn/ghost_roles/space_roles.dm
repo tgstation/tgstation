@@ -186,8 +186,3 @@
 	mask = /obj/item/cigarette/cigar/havana
 	l_pocket = /obj/item/melee/energy/sword/saber/red
 	r_pocket = /obj/item/melee/baton/telescopic
-
-	skillchips = list(
-		/obj/item/skillchip/disk_verifier,
-		/obj/item/skillchip/big_pointer,
-	)

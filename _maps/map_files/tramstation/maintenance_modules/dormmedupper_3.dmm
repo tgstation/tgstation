@@ -68,15 +68,11 @@
 /turf/open/floor/plating,
 /area/station/maintenance/department/crew_quarters/dorms)
 "jc" = (
-/obj/structure/flora/bush/flowers_pp/style_random,
-/obj/machinery/light/small/directional/south,
-/turf/open/floor/grass,
+/turf/closed/wall,
 /area/station/asteroid)
 "ku" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/effect/decal/cleanable/cobweb{
-	pixel_y = 24
-	},
+/obj/effect/decal/cleanable/cobweb,
 /turf/open/floor/iron/smooth,
 /area/station/maintenance/department/crew_quarters/dorms)
 "kx" = (
@@ -113,13 +109,13 @@
 "pi" = (
 /obj/effect/turf_decal/stripes/end,
 /obj/structure/cable/multilayer/multiz,
+/obj/structure/sign/warning/electric_shock/directional/north,
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/sign/warning/electric_shock,
 /turf/open/floor/plating,
 /area/station/maintenance/department/crew_quarters/dorms)
 "pB" = (
 /turf/closed/wall,
-/area/station/commons/fitness/recreation)
+/area/station/hallway/primary/tram/center)
 "qf" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/spawner/random/engineering/tank,
@@ -260,13 +256,6 @@
 /obj/structure/cable,
 /turf/open/floor/catwalk_floor,
 /area/station/maintenance/department/crew_quarters/dorms)
-"FY" = (
-/obj/structure/railing{
-	dir = 1
-	},
-/obj/machinery/light/small/directional/east,
-/turf/open/floor/grass,
-/area/station/asteroid)
 "GE" = (
 /obj/structure/flora/bush/flowers_br/style_random,
 /turf/open/floor/grass,
@@ -297,9 +286,7 @@
 /area/station/commons/fitness/recreation)
 "Kx" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/effect/decal/cleanable/cobweb/cobweb2{
-	pixel_y = 24
-	},
+/obj/effect/decal/cleanable/cobweb/cobweb2,
 /turf/open/floor/iron/smooth,
 /area/station/maintenance/department/crew_quarters/dorms)
 "KO" = (
@@ -397,9 +384,7 @@
 /area/station/maintenance/department/crew_quarters/dorms)
 "VM" = (
 /obj/effect/turf_decal/sand/plating,
-/obj/effect/decal/cleanable/cobweb/cobweb2{
-	pixel_y = 24
-	},
+/obj/effect/decal/cleanable/cobweb/cobweb2,
 /obj/effect/spawner/random/trash/garbage,
 /turf/open/floor/plating,
 /area/station/maintenance/department/crew_quarters/dorms)
@@ -1315,7 +1300,7 @@ oy
 AG
 AG
 rO
-jc
+ca
 GW
 GW
 GW
@@ -1342,7 +1327,7 @@ AG
 rO
 cs
 cs
-pB
+jc
 ym
 ym
 cs
@@ -1372,7 +1357,7 @@ ym
 "}
 (27,1,1) = {"
 Cp
-FY
+Ms
 cs
 rO
 cs
@@ -1407,7 +1392,7 @@ ym
 "}
 (28,1,1) = {"
 rO
-pB
+jc
 cs
 cs
 cs

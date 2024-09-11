@@ -169,7 +169,7 @@
 /obj/item/multitool/cyborg
 	name = "electronic multitool"
 	desc = "Optimised version of a regular multitool. Streamlines processes handled by its internal microchip."
-	icon = 'icons/mob/silicon/robot_items.dmi'
+	icon = 'icons/obj/items_cyborg.dmi'
 	icon_state = "toolkit_engiborg_multitool"
 	toolspeed = 0.5
 
