@@ -185,6 +185,13 @@
 /obj/structure/bonfire/dense
 	density = TRUE
 
+/obj/structure/bonfire/dense/prelit/Initialize(mapload)
+	. = ..()
+	return INITIALIZE_HINT_LATELOAD
+
+/obj/structure/bonfire/dense/prelit/LateInitialize()
+	start_burning()
+
 /obj/structure/bonfire/prelit/Initialize(mapload)
 	. = ..()
 	return INITIALIZE_HINT_LATELOAD
