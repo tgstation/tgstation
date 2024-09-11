@@ -21813,7 +21813,7 @@
 /turf/open/floor/plating,
 /area/station/engineering/lobby)
 "gkN" = (
-/obj/machinery/vending/autodrobe/all_access,
+/obj/machinery/vending/autodrobe,
 /turf/open/floor/iron/dark/textured,
 /area/station/security/prison)
 "gkP" = (
@@ -25804,7 +25804,7 @@
 "hul" = (
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /obj/machinery/status_display/evac/directional/north,
-/obj/machinery/vending/autodrobe/all_access,
+/obj/machinery/vending/autodrobe,
 /turf/open/floor/iron,
 /area/station/commons/locker)
 "huq" = (
@@ -42554,7 +42554,7 @@
 	},
 /area/station/security/brig/entrance)
 "mqI" = (
-/obj/machinery/vending/boozeomat/all_access,
+/obj/machinery/vending/boozeomat,
 /turf/open/floor/plating,
 /area/station/maintenance/port/aft)
 "mqL" = (
@@ -56941,9 +56941,6 @@
 	},
 /turf/open/floor/iron/dark/textured,
 /area/station/security/range)
-"qtv" = (
-/turf/open/genturf,
-/area/icemoon/surface/outdoors/nospawn)
 "qtw" = (
 /obj/machinery/door/airlock/security{
 	name = "Prison Forestry"
@@ -269753,7 +269750,7 @@ wNO
 wNO
 wNO
 bln
-qtv
+bln
 fwx
 kDs
 kDs
