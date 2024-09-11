@@ -65,7 +65,7 @@
 	///Are currently sharkified or a plain space dragon?
 	var/shark_form = FALSE
 	///The amount of fish (weight) the space dragon has to eat to be sharkified and receive a cheevo for it.
-	var/fish_left = 35000 // 35 fish with a weight of 500.
+	var/fish_left = 15000 // 30 fish with a weight of 500.
 
 /mob/living/basic/space_dragon/Initialize(mapload)
 	. = ..()
@@ -107,11 +107,13 @@
 		mind.set_level(/datum/skill/fishing, SKILL_LEVEL_APPRENTICE, TRUE)
 
 /mob/living/basic/space_dragon/proc/sharkify()
+	if(shark_form)
+		return
 	pixel_z -= 3
 	base_pixel_z -= 3
 	do_jitter_animation(150)
 	shark_form = TRUE
-	desc = "A piscine mutation of the fearsome leviathan whose flight defies modern physics. Said to be the other ultimate stage in the lige cycle of the Space Carp."
+	desc = "A piscine mutation of the fearsome leviathan whose flight defies modern physics. Said to be the other ultimate stage in the life cycle of the Space Carp."
 	icon_state = icon_state == icon_living ? "sharkdragon" : "sharkdragon_dead"
 	icon_living = "sharkdragon"
 	icon_dead = "sharkdragon_dead"
@@ -251,7 +253,7 @@
 	new /obj/effect/decal/cleanable/vomit(loc)
 	playsound(src, 'sound/effects/splat.ogg', vol = 50, vary = TRUE)
 	visible_message(span_danger("[src] vomits up everything it ate so far!"))
-	for(var/mob/living/eaten in src)
+	for(var/atom/movable/eaten in src)
 		if(HAS_TRAIT(eaten, TRAIT_NOT_BARFABLE))
 			continue
 		eaten.forceMove(eaten.loc)
