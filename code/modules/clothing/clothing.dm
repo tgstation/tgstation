@@ -578,10 +578,3 @@ BLIND     // can't see anything
 /obj/item/clothing/remove_fantasy_bonuses(bonus)
 	set_armor(get_armor().generate_new_with_modifiers(list(ARMOR_ALL = -bonus)))
 	return ..()
-
-/obj/item/clothing/proc/update_sensor_hud()
-	if(!ishuman(loc))
-		return
-
-	var/mob/living/carbon/human/clothes_haver = loc
-	clothes_haver.med_hud_set_status()
