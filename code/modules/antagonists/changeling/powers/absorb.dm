@@ -57,7 +57,7 @@
 	is_absorbing = FALSE
 
 	changeling.adjust_chemicals(10)
-	changeling.can_respec = TRUE
+	changeling.can_respec++
 
 	if(target.stat != DEAD)
 		target.investigate_log("has died from being changeling absorbed.", INVESTIGATE_DEATHS)
