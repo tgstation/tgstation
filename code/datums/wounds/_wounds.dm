@@ -694,7 +694,7 @@
 
 	var/datum/wound_pregen_data/pregen_data = get_pregen_data()
 
-	if (WOUND_BLUNT in pregen_data.required_wounding_types && severity >= WOUND_SEVERITY_CRITICAL)
+	if ((WOUND_BLUNT in pregen_data.required_wounding_types) && severity >= WOUND_SEVERITY_CRITICAL)
 		return WOUND_CRITICAL_BLUNT_DISMEMBER_BONUS // we only require mangled bone (T2 blunt), but if there's a critical blunt, we'll add 15% more
 
 /// Returns our pregen data, which is practically guaranteed to exist, so this proc can safely be used raw.

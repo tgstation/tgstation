@@ -14,7 +14,7 @@
 	var/atom/target = controller.blackboard[target_key]
 	if(!length(emote_list) || isnull(target))
 		return AI_BEHAVIOR_FAILED | AI_BEHAVIOR_DELAY
-	run_emote(controller.pawn, target_key, emote_list)
+	run_emote(controller.pawn, target, emote_list)
 	return AI_BEHAVIOR_SUCCEEDED | AI_BEHAVIOR_DELAY
 
 

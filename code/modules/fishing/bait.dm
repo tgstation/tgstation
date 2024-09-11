@@ -1,6 +1,6 @@
 /obj/item/bait_can
 	name = "can o bait"
-	desc = "there's a lot of them in there, getting them out takes a while though"
+	desc = "there's a lot of them in there, getting them out takes a while though."
 	icon = 'icons/obj/fishing.dmi'
 	icon_state = "bait_can"
 	base_icon_state =  "bait_can"

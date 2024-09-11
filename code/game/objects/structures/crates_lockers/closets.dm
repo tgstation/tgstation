@@ -157,8 +157,8 @@ GLOBAL_LIST_EMPTY(roundstart_station_closets)
 	register_context()
 
 	if(opened)
-		opened = FALSE //nessassary because open() proc will early return if its true
-		if(open(special_effects = FALSE)) //closets which are meant to be open by default dont need to be animated open
+		opened = FALSE //necessary because open() proc will early return if its true
+		if(open(special_effects = FALSE)) //closets which are meant to be open by default don't need to be animated open
 			return
 	update_appearance()
 
@@ -1068,7 +1068,7 @@ GLOBAL_LIST_EMPTY(roundstart_station_closets)
 			addtimer(CALLBACK(src, PROC_REF(check_if_shake)), next_check_time)
 			return TRUE
 
-	// If we reach here, nobody is resisting, so dont shake
+	// If we reach here, nobody is resisting, so don't shake
 	return FALSE
 
 /obj/structure/closet/proc/bust_open()
@@ -1191,15 +1191,13 @@ GLOBAL_LIST_EMPTY(roundstart_station_closets)
 		return
 	if(!opened && ((shove_flags & SHOVE_KNOCKDOWN_BLOCKED) || !(shove_flags & SHOVE_BLOCKED)))
 		return
-	var/was_opened = opened
-	if(!toggle())
-		return
-	if(was_opened)
-		if (!target.Move(get_turf(src), get_dir(target, src)))
+	if(opened)
+		if (target.loc != loc)
 			return
 		target.forceMove(src)
 	else
 		target.Knockdown(SHOVE_KNOCKDOWN_SOLID)
+	toggle()
 	update_icon()
 	target.visible_message(span_danger("[shover.name] shoves [target.name] into [src]!"),
 		span_userdanger("You're shoved into [src] by [shover.name]!"),
