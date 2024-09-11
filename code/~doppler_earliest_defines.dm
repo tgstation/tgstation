@@ -13,6 +13,11 @@
 	name = DOPPLER_SPRITE_ACCESSORY_NOEARS
 	icon_state = "none"
 
+/datum/sprite_accessory/ears_more/lizard/none
+	icon = 'modular_doppler/modular_customization/accessories/code/~overrides/icons/fallbacks.dmi'
+	name = DOPPLER_SPRITE_ACCESSORY_NOEARS
+	icon_state = /datum/sprite_accessory/ears/none::icon_state
+
 /datum/sprite_accessory/ears_more/dog/none
 	icon = 'modular_doppler/modular_customization/accessories/code/~overrides/icons/fallbacks.dmi'
 	name = DOPPLER_SPRITE_ACCESSORY_NOEARS
@@ -32,6 +37,12 @@
 	icon = 'modular_doppler/modular_customization/accessories/code/~overrides/icons/fallbacks.dmi'
 	name = DOPPLER_SPRITE_ACCESSORY_NOEARS
 	icon_state = /datum/sprite_accessory/ears/none::icon_state
+
+/datum/sprite_accessory/ears_more/monkey/none
+	icon = 'modular_doppler/modular_customization/accessories/code/~overrides/icons/fallbacks.dmi'
+	name = DOPPLER_SPRITE_ACCESSORY_NOEARS
+	icon_state = /datum/sprite_accessory/ears/none::icon_state
+
 
 /datum/sprite_accessory/ears_more/deer/none
 	icon = 'modular_doppler/modular_customization/accessories/code/~overrides/icons/fallbacks.dmi'

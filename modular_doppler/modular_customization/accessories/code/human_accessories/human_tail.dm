@@ -4,3 +4,7 @@
 /datum/sprite_accessory/tails/humanoid/default
 	name = "Demon"
 	icon_state = "spade"
+
+/datum/sprite_accessory/tails/humanoid/horse
+	name = "Horse"
+	icon_state = "horse"

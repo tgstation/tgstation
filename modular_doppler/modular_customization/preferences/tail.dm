@@ -148,30 +148,6 @@
 	var/datum/sprite_accessory/chosen_tail = SSaccessories.tails_list_human[value]
 	return generate_tail_icon(chosen_tail)
 
-//	Monkey
-/datum/preference/choiced/monkey_tail
-	category = PREFERENCE_CATEGORY_CLOTHING
-	relevant_external_organ = null
-	should_generate_icons = TRUE
-	main_feature_name = "Tail"
-
-/datum/preference/choiced/monkey_tail/is_accessible(datum/preferences/preferences)
-	. = ..()
-	var/chosen_variation = preferences.read_preference(/datum/preference/choiced/tail_variation)
-	if(chosen_variation == MONKEY)
-		return TRUE
-	return FALSE
-
-/datum/preference/choiced/monkey_tail/create_default_value()
-	return /datum/sprite_accessory/tails/monkey/none::name
-
-/datum/preference/choiced/monkey_tail/apply_to_human(mob/living/carbon/human/target, value)
-	target.dna.features["tail_monkey"] = value
-
-/datum/preference/choiced/monkey_tail/icon_for(value)
-	var/datum/sprite_accessory/chosen_tail = SSaccessories.tails_list_monkey[value]
-	return generate_tail_icon(chosen_tail)
-
 //	Dog
 /datum/preference/choiced/dog_tail
 	savefile_key = "feature_dog_tail"
@@ -320,6 +296,30 @@
 
 /datum/preference/choiced/bird_tail/icon_for(value)
 	var/datum/sprite_accessory/chosen_tail = SSaccessories.tails_list_bird[value]
+	return generate_tail_icon(chosen_tail)
+
+//	Monkey
+/datum/preference/choiced/monkey_tail
+	category = PREFERENCE_CATEGORY_CLOTHING
+	relevant_external_organ = null
+	should_generate_icons = TRUE
+	main_feature_name = "Tail"
+
+/datum/preference/choiced/monkey_tail/is_accessible(datum/preferences/preferences)
+	. = ..()
+	var/chosen_variation = preferences.read_preference(/datum/preference/choiced/tail_variation)
+	if(chosen_variation == MONKEY)
+		return TRUE
+	return FALSE
+
+/datum/preference/choiced/monkey_tail/create_default_value()
+	return /datum/sprite_accessory/tails/monkey/none::name
+
+/datum/preference/choiced/monkey_tail/apply_to_human(mob/living/carbon/human/target, value)
+	target.dna.features["tail_monkey"] = value
+
+/datum/preference/choiced/monkey_tail/icon_for(value)
+	var/datum/sprite_accessory/chosen_tail = SSaccessories.tails_list_monkey[value]
 	return generate_tail_icon(chosen_tail)
 
 //	Deer

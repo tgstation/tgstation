@@ -5,6 +5,15 @@ import {
 } from '../base';
 import { FeatureDropdownInput } from '../dropdowns';
 
+export const feature_lizard_ears: FeatureChoiced = {
+  name: 'Ears',
+  component: (
+    props: FeatureValueProps<string, string, FeatureChoicedServerData>,
+  ) => {
+    return <FeatureDropdownInput buttons {...props} />;
+  },
+};
+
 export const feature_dog_ears: FeatureChoiced = {
   name: 'Ears',
   component: (
@@ -41,6 +50,14 @@ export const feature_mouse_ears: FeatureChoiced = {
   },
 };
 
+export const feature_monkey_ears: FeatureChoiced = {
+  name: 'Ears',
+  component: (
+    props: FeatureValueProps<string, string, FeatureChoicedServerData>,
+  ) => {
+    return <FeatureDropdownInput buttons {...props} />;
+  },
+};
 export const feature_deer_ears: FeatureChoiced = {
   name: 'Ears',
   component: (

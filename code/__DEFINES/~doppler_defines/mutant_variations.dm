@@ -3,13 +3,13 @@
 #define NO_VARIATION "none"
 #define CAT "cat"
 #define DOG "dog"
-#define FOX "fox" // nine tails
-#define LIZARD "lizard" // ears? and big tail
+#define FOX "fox"
+#define LIZARD "lizard"
 #define BUNNY "bunny"
-#define BIRD "bird" // ears?
+#define BIRD "bird"
 #define MOUSE "mouse"
 #define FISH "fish" // ears and tail
-#define MONKEY "monkey" // ears
+#define MONKEY "monkey"
 #define DEER "deer"
 #define BUG "bug" // ears and tail
 #define SYNTHETIC "synthetic"

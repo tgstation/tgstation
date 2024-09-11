@@ -3,6 +3,10 @@
 
 /datum/sprite_accessory/ears_more/humanoid/default
 	name = "Elf"
+	icon_state = "elf"
+
+/datum/sprite_accessory/ears_more/humanoid/elf_wide
+	name = "Elf (wide)"
 	icon_state = "elfwide"
 
 /datum/sprite_accessory/ears_more/humanoid/elf_long

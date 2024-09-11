@@ -6,6 +6,14 @@
 /datum/bodypart_overlay/mutant/ears/cat_ears/get_global_feature_list()
 	return SSaccessories.ears_list
 
+/// Lizard ears
+//
+/obj/item/organ/internal/ears/lizard
+	bodypart_overlay = /datum/bodypart_overlay/mutant/ears/lizard_ears
+
+/datum/bodypart_overlay/mutant/ears/lizard_ears/get_global_feature_list()
+	return SSaccessories.ears_list_lizard
+
 /// Fox ears
 //
 /obj/item/organ/internal/ears/fox
@@ -41,6 +49,15 @@
 
 /datum/bodypart_overlay/mutant/ears/mouse_ears/get_global_feature_list()
 	return SSaccessories.ears_list_mouse
+
+/// Monkey ears
+//
+/obj/item/organ/internal/ears/monkey
+	preference = "feature_monkey_ears"
+	bodypart_overlay = /datum/bodypart_overlay/mutant/ears/monkey_ears
+
+/datum/bodypart_overlay/mutant/ears/monkey_ears/get_global_feature_list()
+	return SSaccessories.ears_list_monkey
 
 /// Deer ears
 //
