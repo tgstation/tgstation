@@ -400,18 +400,13 @@
 	if(w_uniform && !(obscured & ITEM_SLOT_ICLOTHING) && !(w_uniform.item_flags & EXAMINE_SKIP))
 		//accessory
 		var/accessory_message = ""
-		var/sensor_message = ""
 		if(istype(w_uniform, /obj/item/clothing/under))
 			var/obj/item/clothing/under/undershirt = w_uniform
 			var/list/accessories = undershirt.list_accessories_with_icon(user)
 			if(length(accessories))
 				accessory_message = " with [english_list(accessories)] attached"
-			if(undershirt.has_sensor == BROKEN_SENSORS)
-				sensor_message = span_notice("The medical sensors on it are sparking.")
 
 		. += "[t_He] [t_is] wearing [w_uniform.examine_title(user)][accessory_message]."
-		if(sensor_message)
-			. += sensor_message
 	//head
 	if(head && !(obscured & ITEM_SLOT_HEAD) && !(head.item_flags & EXAMINE_SKIP))
 		. += "[t_He] [t_is] wearing [head.examine_title(user)] on [t_his] head."
@@ -559,5 +554,10 @@
 		if(101 to INFINITY)
 			age_text = "withering away"
 	. += list(span_notice("[p_They()] appear[p_s()] to be [age_text]."))
+
+	if(istype(w_uniform, /obj/item/clothing/under))
+		var/obj/item/clothing/under/undershirt = w_uniform
+		if(undershirt.has_sensor == BROKEN_SENSORS)
+			. += list(span_notice("The [undershirt]'s medical sensors are sparking."))
 
 #undef ADD_NEWLINE_IF_NECESSARY
