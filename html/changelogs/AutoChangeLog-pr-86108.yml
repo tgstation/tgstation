@@ -1,5 +1,0 @@
-author: "SmArtKar"
-delete-after: True
-changes:
-  - bugfix: "Mouthhole module can no longer be installed on MODsuits that don't cover the mouth"
-  - image: "Civilian MODsuit got a resprite"

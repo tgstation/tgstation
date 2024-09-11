@@ -1,7 +1,6 @@
 #define LIVER_DEFAULT_TOX_TOLERANCE 3 //amount of toxins the liver can filter out
 #define LIVER_DEFAULT_TOX_RESISTANCE 1 //lower values lower how harmful toxins are to the liver
 #define LIVER_FAILURE_STAGE_SECONDS 60 //amount of seconds before liver failure reaches a new stage
-#define MAX_TOXIN_LIVER_DAMAGE 2 //the max damage the liver can receive per second (~1 min at max damage will destroy liver)
 
 /obj/item/organ/internal/liver
 	name = "liver"
@@ -124,10 +123,6 @@
 			continue
 		ADD_TRAIT(replacement, readded_trait, JOB_TRAIT)
 
-#define HAS_SILENT_TOXIN 0 //don't provide a feedback message if this is the only toxin present
-#define HAS_NO_TOXIN 1
-#define HAS_PAINFUL_TOXIN 2
-
 /obj/item/organ/internal/liver/on_life(seconds_per_tick, times_fired)
 	. = ..()
 	//If your liver is failing, then we use the liverless version of metabolize
@@ -136,33 +131,7 @@
 		owner.reagents.metabolize(owner, seconds_per_tick, times_fired, can_overdose = TRUE, liverless = TRUE)
 		return
 
-	var/obj/belly = owner.get_organ_slot(ORGAN_SLOT_STOMACH)
-	var/list/cached_reagents = owner.reagents?.reagent_list
-	var/liver_damage = 0
-	var/provide_pain_message = HAS_NO_TOXIN
-
-	if(filterToxins && !HAS_TRAIT(owner, TRAIT_TOXINLOVER))
-		for(var/datum/reagent/toxin/toxin in cached_reagents)
-			if(toxin.affected_organ_flags && !(organ_flags & toxin.affected_organ_flags)) //this particular toxin does not affect this type of organ
-				continue
-			var/amount = toxin.volume
-			if(belly)
-				amount += belly.reagents.get_reagent_amount(toxin.type)
-
-			// a 15u syringe is a nice baseline to scale lethality by
-			liver_damage += ((amount/15) * toxin.toxpwr * toxin.liver_damage_multiplier) / liver_resistance
-
-			if(provide_pain_message != HAS_PAINFUL_TOXIN)
-				provide_pain_message = toxin.silent_toxin ? HAS_SILENT_TOXIN : HAS_PAINFUL_TOXIN
-
 	owner.reagents?.metabolize(owner, seconds_per_tick, times_fired, can_overdose = TRUE)
-
-	if(liver_damage)
-		apply_organ_damage(min(liver_damage * seconds_per_tick , MAX_TOXIN_LIVER_DAMAGE * seconds_per_tick))
-
-	if(provide_pain_message && damage > 10 && SPT_PROB(damage/6, seconds_per_tick)) //the higher the damage the higher the probability
-		to_chat(owner, span_warning("You feel a dull pain in your abdomen."))
-
 
 /obj/item/organ/internal/liver/handle_failing_organs(seconds_per_tick)
 	if(HAS_TRAIT(owner, TRAIT_STABLELIVER) || HAS_TRAIT(owner, TRAIT_LIVERLESS_METABOLISM))
@@ -303,10 +272,6 @@
 	. = ..()
 	AddElement(/datum/element/dangerous_surgical_removal)
 
-#undef HAS_SILENT_TOXIN
-#undef HAS_NO_TOXIN
-#undef HAS_PAINFUL_TOXIN
 #undef LIVER_DEFAULT_TOX_TOLERANCE
 #undef LIVER_DEFAULT_TOX_RESISTANCE
 #undef LIVER_FAILURE_STAGE_SECONDS
-#undef MAX_TOXIN_LIVER_DAMAGE

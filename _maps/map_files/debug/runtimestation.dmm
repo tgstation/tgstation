@@ -2541,8 +2541,7 @@
 "Xg" = (
 /obj/machinery/light/directional/east,
 /obj/machinery/vending/syndichem{
-	onstation = 0;
-	req_access = null
+	onstation = 0
 	},
 /turf/open/floor/iron,
 /area/station/medical/chemistry)
