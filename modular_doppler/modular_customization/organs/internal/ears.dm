@@ -73,6 +73,7 @@
 //
 /obj/item/organ/internal/ears/synthetic
 	preference = "feature_synth_ears"
+	organ_flags = ORGAN_ROBOTIC
 	bodypart_overlay = /datum/bodypart_overlay/mutant/ears/synthetic_ears
 
 /datum/bodypart_overlay/mutant/ears/synthetic_ears/get_global_feature_list()

@@ -1,5 +1,5 @@
 /datum/sprite_accessory/tails/synthetic
-	icon = 'modular_doppler/modular_customization/accessories/icons/non_species_specific/synth/synth_tail.dmi'
+	icon = 'modular_doppler/modular_customization/accessories/icons/synthetic/synth_tail.dmi'
 
 /datum/sprite_accessory/tails/synthetic/default
 	name = "Plug"

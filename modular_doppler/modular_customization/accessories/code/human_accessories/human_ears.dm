@@ -1,5 +1,5 @@
 /datum/sprite_accessory/ears_more/humanoid
-	icon = 'modular_doppler/modular_customization/accessories/icons/non_species_specific/human/human_ears.dmi'
+	icon = 'modular_doppler/modular_customization/accessories/icons/human/human_ears.dmi'
 
 /datum/sprite_accessory/ears_more/humanoid/default
 	name = "Elf"

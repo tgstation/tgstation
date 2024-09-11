@@ -1,5 +1,5 @@
 /datum/sprite_accessory/horns/humanoid
-	icon = 'modular_doppler/modular_customization/accessories/icons/non_species_specific/human/human_horns.dmi'
+	icon = 'modular_doppler/modular_customization/accessories/icons/human/human_horns.dmi'
 	name = "Oni"
 	icon_state = "oni"
 
