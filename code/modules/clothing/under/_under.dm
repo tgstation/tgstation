@@ -107,11 +107,7 @@
 		. += accessory_overlay
 
 /obj/item/clothing/under/attackby(obj/item/attacking_item, mob/user, params)
-	if(has_sensor == BROKEN_SENSORS && istype(attacking_item, /obj/item/stack/cable_coil))
-		var/obj/item/stack/cable_coil/cabling = attacking_item
-		to_chat(user, span_notice("You repair the suit sensors on [src] with [cabling]."))
-		cabling.use(1)
-		has_sensor = HAS_SENSORS
+	if(repair_sensors(attacking_item, user))
 		return TRUE
 
 	if(istype(attacking_item, /obj/item/clothing/accessory))
@@ -130,34 +126,10 @@
 /obj/item/clothing/under/update_clothes_damaged_state(damaged_state = CLOTHING_DAMAGED)
 	. = ..()
 	if(damaged_state == CLOTHING_SHREDDED && has_sensor > NO_SENSORS)
-		has_sensor = BROKEN_SENSORS
+		break_sensors()
 	else if(damaged_state == CLOTHING_PRISTINE && has_sensor == BROKEN_SENSORS)
-		has_sensor = HAS_SENSORS
+		repair_sensors(cable_required = FALSE)
 	update_appearance()
-
-/obj/item/clothing/under/emp_act(severity)
-	. = ..()
-	if(. & EMP_PROTECT_SELF)
-		return
-	if(has_sensor == NO_SENSORS || has_sensor == BROKEN_SENSORS)
-		return
-
-	if(severity <= EMP_HEAVY)
-		has_sensor = BROKEN_SENSORS
-		if(ismob(loc))
-			var/mob/M = loc
-			to_chat(M,span_warning("[src]'s sensors short out!"))
-
-	else
-		sensor_mode = pick(SENSOR_OFF, SENSOR_OFF, SENSOR_OFF, SENSOR_LIVING, SENSOR_LIVING, SENSOR_VITALS, SENSOR_VITALS, SENSOR_COORDS)
-		if(ismob(loc))
-			var/mob/M = loc
-			to_chat(M,span_warning("The sensors on the [src] change rapidly!"))
-
-	if(ishuman(loc))
-		var/mob/living/carbon/human/ooman = loc
-		if(ooman.w_uniform == src)
-			ooman.update_suit_sensors()
 
 /obj/item/clothing/under/visual_equipped(mob/user, slot)
 	. = ..()
@@ -176,19 +148,90 @@
 		freshly_laundered = FALSE
 		user.add_mood_event("fresh_laundry", /datum/mood_event/fresh_laundry)
 
+// Start suit sensor handling
+
+/// Change the suit sensor state to broken and update the mob's status on the global sensor list
+/obj/item/clothing/under/proc/break_sensors()
+	if(has_sensor == BROKEN_SENSORS || has_sensor == NO_SENSORS)
+		return
+
+	visible_message(span_warning("[src]'s medical sensors short out!"), blind_message = span_warning("The [src] makes an electronic sizzling sound!"), vision_distance = COMBAT_MESSAGE_RANGE)
+	has_sensor = BROKEN_SENSORS
+	sensor_malfunction()
+	update_wearer_status()
+
+/**
+ * Repair the suit sensors and update the mob's status on the global sensor list.
+ * Can be called either through player action such as repairing with coil, or as part of a general fixing proc
+ *
+ * Arguments:
+ * * attacking_item - the item being used for the repair, if any
+ * * user - mob that's doing the repair
+ * * cable_required - set to FALSE to bypass consuming cable coil
+ */
+/obj/item/clothing/under/proc/repair_sensors(obj/item/attacking_item, mob/user, cable_required = TRUE)
+	if(has_sensor != BROKEN_SENSORS)
+		return
+
+	if(cable_required)
+		if(!istype(attacking_item, /obj/item/stack/cable_coil))
+			return
+		var/obj/item/stack/cable_coil/cabling = attacking_item
+		if(!cabling.use(1))
+			return
+		cabling.visible_message(span_notice("[user] repairs the suit sensors on [src] with [cabling]."))
+
+	playsound(source = src, soundin = 'sound/effects/sparks4.ogg', vol = 100, vary = TRUE, extrarange = SHORT_RANGE_SOUND_EXTRARANGE, ignore_walls = FALSE)
+	has_sensor = HAS_SENSORS
+	update_wearer_status()
+
+	return TRUE
+
+/// If the item is being worn, a gentle reminder every 3-5 minutes that the sensors are broken
+/obj/item/clothing/under/proc/sensor_malfunction()
+	if(!QDELETED(src) && has_sensor == BROKEN_SENSORS && ishuman(loc))
+		do_sparks(number = 2, cardinal_only = FALSE, source = src)
+		addtimer(CALLBACK(src, PROC_REF(sensor_malfunction)), rand(BROKEN_SPARKS_MIN, BROKEN_SPARKS_MAX * 0.5), TIMER_UNIQUE | TIMER_NO_HASH_WAIT)
+
+/// If the item is being worn, update the mob's status on the global sensor list
+/obj/item/clothing/under/proc/update_wearer_status()
+	if(!ishuman(loc))
+		return
+
+	var/mob/living/carbon/human/ooman = loc
+	ooman.update_suit_sensors()
+
 /mob/living/carbon/human/update_suit_sensors()
 	. = ..()
 	update_sensor_list()
 
+/// Adds or removes a mob from the global suit sensors list based on sensor status and mode
 /mob/living/carbon/human/proc/update_sensor_list()
-	var/obj/item/clothing/under/U = w_uniform
-	if(istype(U) && U.has_sensor > NO_SENSORS && U.sensor_mode)
+	var/obj/item/clothing/under/uniform = w_uniform
+	if(istype(uniform) && uniform.has_sensor > NO_SENSORS && uniform.sensor_mode)
 		GLOB.suit_sensors_list |= src
 	else
 		GLOB.suit_sensors_list -= src
 
 /mob/living/carbon/human/dummy/update_sensor_list()
 	return
+
+/obj/item/clothing/under/emp_act(severity)
+	. = ..()
+	if(. & EMP_PROTECT_SELF)
+		return
+	if(has_sensor == NO_SENSORS || has_sensor == BROKEN_SENSORS)
+		return
+
+	if(severity <= EMP_HEAVY)
+		break_sensors()
+
+	else
+		sensor_mode = pick(SENSOR_OFF, SENSOR_OFF, SENSOR_OFF, SENSOR_LIVING, SENSOR_LIVING, SENSOR_VITALS, SENSOR_VITALS, SENSOR_COORDS)
+		playsound(source = src, soundin = 'sound/effects/sparks3.ogg', vol = 75, vary = TRUE, extrarange = SHORT_RANGE_SOUND_EXTRARANGE, ignore_walls = FALSE)
+		visible_message(span_warning("The [src]'s medical sensors flash and change rapidly!"), blind_message = span_warning("The [src] makes an electronic sizzling sound!"), vision_distance = COMBAT_MESSAGE_RANGE)
+
+	update_wearer_status()
 
 // End suit sensor handling
 
@@ -285,7 +328,7 @@
 	if(can_adjust)
 		. += "Alt-click on [src] to wear it [adjusted == ALT_STYLE ? "normally" : "casually"]."
 	if(has_sensor == BROKEN_SENSORS)
-		. += "Its sensors appear to be shorted out. You could repair it with some cabling."
+		. += span_warning("The medical sensors appear to be shorted out. You could repair it with some cabling.")
 	else if(has_sensor > NO_SENSORS)
 		switch(sensor_mode)
 			if(SENSOR_OFF)
@@ -305,7 +348,7 @@
 /obj/item/clothing/under/proc/list_accessories_with_icon(mob/user)
 	var/list/all_accessories = list()
 	for(var/obj/item/clothing/accessory/attached as anything in attached_accessories)
-		all_accessories += attached.get_examine_string(user)
+		all_accessories += attached.examine_title(user)
 
 	return all_accessories
 
