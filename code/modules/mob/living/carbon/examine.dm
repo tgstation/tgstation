@@ -563,4 +563,9 @@
 			age_text = "withering away"
 	. += list(span_notice("[p_They()] appear[p_s()] to be [age_text]."))
 
+	if(istype(w_uniform, /obj/item/clothing/under))
+		var/obj/item/clothing/under/undershirt = w_uniform
+		if(undershirt.has_sensor == BROKEN_SENSORS)
+			. += list(span_notice("The [undershirt]'s medical sensors are sparking."))
+
 #undef ADD_NEWLINE_IF_NECESSARY
