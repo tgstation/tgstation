@@ -1,6 +1,0 @@
-author: "Bisar"
-delete-after: True
-changes:
-  - balance: "AIs piloting mechs no longer die if they hit the supermatter, nor do they harmlessly snap back to their core. The shock now causes them to produce a massive EMP."
-  - balance: "Undid a balance change I did during the malf AI refactor. The doomsday countdown will no longer stop if a malf AI dominates a mech."
-  - bugfix: "Fixed a few bugs with AI shunting and AI mech death."

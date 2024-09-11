@@ -1,4 +1,0 @@
-author: "SmArtKar"
-delete-after: True
-changes:
-  - bugfix: "You no longer return to the station cuffed after being sacrificed by a heretic"

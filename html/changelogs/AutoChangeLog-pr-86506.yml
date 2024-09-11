@@ -1,6 +1,0 @@
-author: "Melbert"
-delete-after: True
-changes:
-  - qol: "The way examine looks has been updated."
-  - qol: "A person's ID card no longer appears with a big icon on examine. You can now click on their ID card (in the chat box) to get a bigger picture of it, as well as information about them."
-  - refactor: "Much of examine backend code has been refactored, report any odd looking text."
